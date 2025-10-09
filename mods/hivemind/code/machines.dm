@@ -213,13 +213,13 @@
 
 	update_icon()
 
-	var/obj/vine/hivemind/founded_wire = locate() in loc
+	var/obj/wireweed/master/founded_wire = locate() in loc
 	if(!founded_wire)
-		var/obj/vine/hivemind/wire = new(loc, new /datum/seed/wires)
+		var/obj/wireweed/master/wire = new(loc)
 		add_wireweed(wire)
 		wire.Process()
 	else
-		for(var/obj/vine/hivemind/W in range(6, src))
+		for(var/obj/wireweed/W in range(6, src))
 			if(W.master_node)
 				if(!(locate(type) in W.loc) && (get_dist(W, W.master_node) > 6) )
 					add_wireweed(W)
@@ -228,7 +228,7 @@
 /obj/machinery/hivemind_machine/node/Destroy()
 	hive_mind_ai.hives.Remove(src)
 	check_for_other()
-	for(var/obj/vine/hivemind/wire in my_wireweeds)
+	for(var/obj/wireweed/wire in my_wireweeds)
 		remove_wireweed(wire)
 	return ..()
 
@@ -248,8 +248,8 @@
 		icon_state = initial(icon_state)
 	use_ability()
 	//if we haven't any wireweeds at our location, let's make new one
-	if(!(locate(/obj/vine/hivemind) in loc))
-		var/obj/vine/hivemind/wireweed = new(loc, new /datum/seed/wires)
+	if(!(locate(/obj/wireweed/master) in loc))
+		var/obj/wireweed/master/wireweed = new(loc)
 		add_wireweed(wireweed)
 
 
@@ -273,15 +273,15 @@
 
 //there we binding or un-binding hive with wire
 //in this way, when our node will be destroyed, wireweeds will die too
-/obj/machinery/hivemind_machine/node/proc/add_wireweed(obj/vine/hivemind/wireweed)
-	if(wireweed.master_node)
-		wireweed.master_node.remove_wireweed(wireweed)
-	wireweed.master_node = src
-	my_wireweeds.Add(wireweed)
+/obj/machinery/hivemind_machine/node/proc/add_wireweed(obj/wireweed/W)
+	if(W.master_node)
+		W.master_node.remove_wireweed(W)
+	W.master_node = src
+	my_wireweeds.Add(W)
 
-/obj/machinery/hivemind_machine/node/proc/remove_wireweed(obj/vine/hivemind/wireweed)
-	my_wireweeds.Remove(wireweed)
-	wireweed.master_node = null
+/obj/machinery/hivemind_machine/node/proc/remove_wireweed(obj/wireweed/W)
+	my_wireweeds.Remove(W)
+	W.master_node = null
 
 //there we check for other nodes
 //if no any other hives will be found, game over

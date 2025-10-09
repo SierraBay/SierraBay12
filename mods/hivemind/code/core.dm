@@ -1,6 +1,9 @@
 //The Hivemind is a rogue AI using nanites.
 //The objective of this AI is to spread across the ship and destroy as much as possible.
 
+#define MAX_NODES_AMOUNT 	10
+#define MIN_NODES_RANGE		10
+
 
 var/datum/hivemind/hive_mind_ai
 

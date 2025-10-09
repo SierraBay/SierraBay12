@@ -1,45 +1,97 @@
 //Wireweeds are created by the AI's nanites to spread its connectivity through the ship.
 //When they reach any machine, they annihilate them and re-purpose them to the AI's needs. They are the 'hands' of our rogue AI.
 
-/obj/vine/hivemind
-	layer = 2
+// Hivemind wireweeds
+
+// Поскольку код с Эриса не работает, мы просто будем работать от блоба
+
+// Vine section
+/obj/wireweed
+	name = "strange wires"
+	desc = "strange wires"
+	icon = 'mods/hivemind/icons/hivemind.dmi'
+	icon_state = "wires"
+	layer = DECAL_LAYER
 	health_max = 80 //we are a little bit durable
+
+	density = FALSE
+	opacity = 0
+	mouse_opacity = 2
+	anchored = TRUE
+	damage_hitsound = 'sound/effects/attackblob.ogg'
+
+	health_resistances = list(
+		DAMAGE_BRUTE     = 0.23,
+		DAMAGE_BURN      = 1.24,
+		DAMAGE_FIRE      = 1.24,
+		DAMAGE_EXPLODE   = 0.23,
+		DAMAGE_STUN      = 0,
+		DAMAGE_EMP       = 2,
+		DAMAGE_RADIATION = 0,
+		DAMAGE_BIO       = 0,
+		DAMAGE_PAIN      = 0,
+		DAMAGE_TOXIN     = 0,
+		DAMAGE_GENETIC   = 0,
+		DAMAGE_OXY       = 0,
+		DAMAGE_BRAIN     = 0
+	)
+
 	var/list/killer_reagents = list("pacid", "sacid", "hclacid", "thermite")
 	//internals
 	var/obj/machinery/hivemind_machine/node/master_node
 	var/list/wires_connections = list("0", "0", "0", "0")
 
+	var/regen_rate = 2
+	var/expandType = /obj/wireweed
 
-/obj/vine/hivemind/New()
+/obj/wireweed/New()
 	..()
-	icon = 'mods/hivemind/icons/hivemind_obj.dmi'
 	spawn(2)
 		update_neighbors()
 
+/obj/wireweed/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
-/obj/vine/hivemind/Destroy()
+/obj/wireweed/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	if(master_node)
 		master_node.my_wireweeds.Remove(src)
 	return ..()
 
+/obj/wireweed/proc/regen()
+	restore_health(regen_rate)
 
-/obj/vine/hivemind/after_spread(obj/vine/child, turf/target_turf)
-	if(master_node)
-		master_node.add_wireweed(child)
-	spawn(1)
-		child.dir = get_dir(loc, target_turf) //actually this means nothing for wires, but need for animation
-		flick("spread_anim", child)
-		child.forceMove(target_turf)
-		update_icon()
+/obj/wireweed/proc/expand(turf/T)
+	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB) // We're using same logic
+		return
 
-// Насильно обновляем соседей - LordNest
-/obj/vine/proc/update_neighbors(location = loc)
+	if (!istype(T) || T.density) // We can go under machines or doors, but not through solid walls
+		return
+
+	else
+		var/obj/wireweed/child = new(T, min(get_current_health(), 30))
+		if(master_node)
+			master_node.add_wireweed(child)
+		spawn(1)
+			child.dir = get_dir(loc, T) //actually this means nothing for wires, but need for animation
+			flick("spread_anim", child)
+			child.forceMove(T)
+			for(var/obj/wireweed/neighbor in range(1, child))
+				neighbor.update_neighbors()
+// DIVERTER
+
+
+
+
+
+/obj/wireweed/proc/update_neighbors(location = loc)
 	for (var/dir in GLOB.cardinal)
-		var/obj/vine/hivemind/L = locate(/obj/vine/hivemind/, get_step(location, dir))
+		var/obj/wireweed/L = locate(/obj/wireweed, get_step(location, dir))
 		if(L)
 			L.update_icon()
 
-/obj/vine/hivemind/proc/try_to_assimilate()
+/obj/wireweed/proc/try_to_assimilate()
 	if(hive_mind_ai && master_node)
 		for(var/obj/machinery/machine_on_my_tile in loc)
 			var/can_assimilate = TRUE
@@ -73,33 +125,24 @@
 				assimilate(dead_body)
 
 
-/obj/vine/hivemind/update_neighbors()
+/obj/wireweed/update_neighbors()
 	..()
 	update_connections()
 	update_icon()
 
-
-/obj/vine/hivemind/spread_to(turf/target_turf) // Было - spread()
-	if(hive_mind_ai && master_node)
-		..()
-
-
-/obj/vine/hivemind/Process()
+/obj/wireweed/Process()
 	if(hive_mind_ai && master_node)
 		try_to_assimilate()
 		chem_handler()
+/*
 	else
 		//slow vanishing after node death
 		health_current -= 10
 		alpha = 255 * health_current/health_max
 		get_current_health()
+*/
 
-
-/obj/vine/hivemind/is_mature()
-	return TRUE
-
-
-/obj/vine/hivemind/update_icon()
+/obj/wireweed/update_icon()
 	overlays.Cut()
 	var/image/I
 	for(var/i = 1 to 4)
@@ -107,7 +150,7 @@
 		overlays += I
 	for(var/d in GLOB.cardinal)
 		var/turf/T = get_step(loc, d)
-		if((locate(/obj/structure/window) in T) || istype(T, /turf/simulated/wall))
+		if((locate(/obj/structure/wall_frame) in T) || istype(T, /turf/simulated/wall))
 			var/image/wall_hug_overlay = image(icon = src.icon, icon_state = "wall_hug", dir = d)
 			if (T.x < x)
 				wall_hug_overlay.pixel_x -= 32
@@ -121,9 +164,9 @@
 			overlays += wall_hug_overlay
 
 
-/obj/vine/hivemind/proc/update_connections(propagate = 0)
+/obj/wireweed/proc/update_connections(propagate = 0)
 	var/list/dirs = list()
-	for(var/obj/vine/hivemind/W in range(1, src) - src)
+	for(var/obj/wireweed/W in range(1, src) - src)
 		if(propagate)
 			W.update_connections()
 			W.update_icon()
@@ -131,9 +174,9 @@
 
 	wires_connections = dirs_to_corner_states(dirs)
 
-
-/obj/vine/hivemind/targets_in_range(obj/machinery/door/airlock/door)
-	if(!door || !istype(door))
+/*
+/obj/wireweed/targets_in_range(obj/machinery/door/airlock/door)
+	if(!istype(door) || !hive_mind_ai || !master_node)
 		return FALSE
 
 	//if our door isn't broken, we will try to break open. We can do only one action per call
@@ -160,29 +203,24 @@
 				return FALSE
 
 	return TRUE
+*/
 
-
-/obj/vine/hivemind/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(mover == src)
-		if(target.density)
-			return FALSE
-
-		if(locate(/obj/structure) in target)
-			for(var/obj/structure/S in target)
-				if(S.density)
-					return FALSE
-
-		if(locate(/obj/machinery/door) in target)
-			return FALSE
-
-		return TRUE
-	else
-		return ..()
+/obj/wireweed/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group || (height==0)) return 1
+	if(istype(mover, /mob/living/simple_animal/hostile/hivemind))
+		return 1
+	else if(istype(mover, /mob/living))
+		if(prob(20))
+			to_chat(mover, SPAN_WARNING("You get stuck in \the [src] for a moment."))
+			return 0
+	else if(istype(mover, /obj/item/projectile))
+		return 1
+	return 1
 
 
 
 //What a pity that we haven't some kind proc as special library to use it somewhere
-/obj/vine/hivemind/proc/anim_shake(atom/thing)
+/obj/wireweed/proc/anim_shake(atom/thing)
 	var/init_px = thing.pixel_x
 	var/shake_dir = pick(-1, 1)
 	animate(thing, transform=turn(matrix(), 8*shake_dir), pixel_x=init_px + 2*shake_dir, time=1)
@@ -190,7 +228,7 @@
 
 
 //assimilation process
-/obj/vine/hivemind/proc/assimilate(atom/subject)
+/obj/wireweed/proc/assimilate(atom/subject)
 	if(istype(subject, /obj/machinery) || istype(subject, /obj/item/modular_computer))
 		if(prob(hive_mind_ai.failure_chance))
 			//critical failure! This machine would be a dummy, which means - without any ability
@@ -212,7 +250,7 @@
 				var/picked_machine
 				var/list/possible_machines = subtypesof(/obj/machinery/hivemind_machine)
 
-				if(hive_mind_ai.hives.len < 10)
+				if(hive_mind_ai.hives.len < MAX_NODES_AMOUNT)
 					if(hive_mind_ai.evo_points < (hive_mind_ai.hives.len * 100)) //one hive per 100 EP
 						possible_machines -= /obj/machinery/hivemind_machine/node
 					else
@@ -252,38 +290,7 @@
 /////////////////////////>RESPONSE CODE<//////////////////////////
 //////////////////////////////////////////////////////////////////
 
-
-//in fact, this is some kind of reinforced wires, so we can't take samples from it and inject something too
-//but we still can slice it with something sharp
-
-/*
-/obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
-	. = ..()
-	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-
-	var/weapon_type
-	if (W.has_edge(weapon))
-		weapon_type = QUALITY_CUTTING
-	else if (W.has_quality(QUALITY_WELDING))
-		weapon_type = QUALITY_WELDING
-
-	if(weapon_type)
-		if(W.use_tool(user, src, WORKTIME_FAST, weapon_type, FAILCHANCE_EASY, required_stat = STAT_ROB))
-			user.visible_message(SPAN_DANGER("[user] cuts down [src]."), SPAN_DANGER("You cut down [src]."))
-			kill_health()
-			return
-		return
-	else
-		if(W.sharp && W.force >= 10)
-			health_current -= rand(W.force/2, W.force) //hm, maybe make damage based on player's robust stat?
-			user.visible_message(SPAN_DANGER("[user] slices [src]."), SPAN_DANGER("You slice [src]."))
-		else
-			user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
-								SPAN_DANGER("You try to slice [src], but it's useless!"))
-	get_current_health()
-*/
-
-/obj/vine/hivemind/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
+/obj/wireweed/use_weapon(obj/item/weapon/W, mob/user, list/click_params)
 	. = ..()
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
@@ -292,7 +299,7 @@
 		kill_health()
 		return
 	if(W.sharp && W.force >= 10)
-		health_current -= rand(W.force/2, W.force) //hm, maybe make damage based on player's robust stat?
+		health_current -= rand(W.force/2, W.force)
 		user.visible_message(SPAN_DANGER("[user] slices [src]."), SPAN_DANGER("You slice [src]."))
 	else
 		user.visible_message(SPAN_DANGER("[user] tries to slice [src] with [W], but seems to do nothing."),
@@ -301,22 +308,46 @@
 	return ..()
 
 //fire is effective, but there need some time to melt the covering
-/obj/vine/hivemind/fire_act()
+/obj/wireweed/fire_act()
 	health_current -= rand(1, 4)
 	get_current_health()
 
 
 //emp is effective too
 //it causes electricity failure, so our wireweeds just blowing up inside, what makes them fragile
-/obj/vine/hivemind/emp_act(severity)
+/obj/wireweed/emp_act(severity)
 	if(severity)
 		kill_health()
 	..()
 
 //Some acid and there's no problem
-/obj/vine/hivemind/proc/chem_handler()
+/obj/wireweed/proc/chem_handler()
 	for(var/obj/effect/smoke/chem/smoke in loc)
 		for(var/lethal in killer_reagents)
 			if(smoke.reagents.has_reagent(lethal))
 				kill_health()
 				return
+
+/obj/wireweed/proc/pulse(forceLeft, list/dirs)
+	sleep(4)
+	var/pushDir = pick(dirs)
+	var/turf/T = get_step(src, pushDir)
+	var/obj/wireweed/W = (locate() in T)
+	if(!W)
+		if(prob(get_current_health()))
+			expand(T)
+		return
+	if(forceLeft)
+		W.pulse(forceLeft - 1, dirs)
+
+// Master wireweed node. Because we don't wanna mess with machinery
+
+/obj/wireweed/master
+	var/growth_range = 20 // Maximal distance for new wireweed pieces from this core.
+	var/blob_may_process = 1
+	var/reported_low_damage = FALSE
+	var/times_to_pulse = 2
+
+/obj/wireweed/master/Process()
+	for(var/I in 1 to times_to_pulse)
+		pulse(20, GLOB.alldirs)
