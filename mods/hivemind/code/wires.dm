@@ -9,7 +9,7 @@
 /obj/wireweed
 	name = "strange wires"
 	desc = "strange wires"
-	icon = 'mods/hivemind/icons/hivemind.dmi'
+	icon = 'mods/hivemind/icons/hivemind_obj.dmi'
 	icon_state = "wires"
 	layer = CATWALK_LAYER
 	health_max = 80 //we are a little bit durable
@@ -18,15 +18,15 @@
 	opacity = 0
 	mouse_opacity = 2
 	anchored = TRUE
-	damage_hitsound = 'sound/effects/attackblob.ogg'
+	damage_hitsound = 'sound/effects/razorweb_break.ogg'
 
 	health_resistances = list(
-		DAMAGE_BRUTE     = 0.23,
-		DAMAGE_BURN      = 1.24,
-		DAMAGE_FIRE      = 1.24,
-		DAMAGE_EXPLODE   = 0.23,
+		DAMAGE_BRUTE     = 1,
+		DAMAGE_BURN      = 3,
+		DAMAGE_FIRE      = 3,
+		DAMAGE_EXPLODE   = 1,
 		DAMAGE_STUN      = 0,
-		DAMAGE_EMP       = 2,
+		DAMAGE_EMP       = 4,
 		DAMAGE_RADIATION = 0,
 		DAMAGE_BIO       = 0,
 		DAMAGE_PAIN      = 0,
@@ -37,6 +37,7 @@
 	)
 
 	var/list/killer_reagents = list("pacid", "sacid", "hclacid", "thermite")
+
 	//internals
 	var/obj/machinery/hivemind_machine/node/master_node
 	var/list/wires_connections = list("0", "0", "0", "0")
@@ -63,10 +64,10 @@
 	restore_health(regen_rate)
 
 /obj/wireweed/proc/expand(turf/T)
-	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB) // We're using same logic
+	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB || istype(T, /turf/simulated/open)) // We're using same logic plus open spaces won't became traps for personnel
 		return
 
-	if (!istype(T) || T.density) // We can go under machines or doors, but not through solid walls
+	if (!istype(T) || T.density || locate(/obj/structure/wall_frame) in T) // We can go under machines or doors, but not through solid walls plus wallframes
 		return
 
 	else
@@ -155,10 +156,11 @@
 	for(var/i = 1 to 4)
 		I = image(src.icon, "wires[wires_connections[i]]", dir = 1<<(i-1))
 		overlays += I
-	for(var/d in GLOB.cardinal)
-		var/turf/T = get_step(loc, d)
+	//wallhug
+	for(var/direction in GLOB.cardinal)
+		var/turf/T = get_step(loc, direction)
 		if((locate(/obj/structure/wall_frame) in T) || istype(T, /turf/simulated/wall))
-			var/image/wall_hug_overlay = image(icon = src.icon, icon_state = "wall_hug", dir = d)
+			var/image/wall_hug_overlay = image(icon = src.icon, icon_state = "wall_hug", dir = direction)
 			if (T.x < x)
 				wall_hug_overlay.pixel_x -= 32
 			else if (T.x > x)
@@ -169,7 +171,19 @@
 				wall_hug_overlay.pixel_y += 32
 			wall_hug_overlay.layer = ABOVE_WINDOW_LAYER
 			overlays += wall_hug_overlay
-
+		var/image/wall_hug_corner = (image(icon = src.icon, icon_state = "wall_corner", dir = direction))
+		var/turf/Y = get_step(loc, NORTH)
+		if((locate(/obj/structure/wall_frame) in T) && (locate(/obj/structure/wall_frame) in Y) || istype(T, /turf/simulated/wall) && istype(Y, /turf/simulated/wall))
+			if(T == Y)
+				overlays -= wall_hug_corner
+			if (T.x > x)
+				wall_hug_corner.pixel_x += 32
+				wall_hug_corner.pixel_y += 32
+			else if (T.x < x)
+				wall_hug_corner.pixel_x -= 32
+				wall_hug_corner.pixel_y += 32
+			wall_hug_corner.layer = ABOVE_WINDOW_LAYER
+			overlays += wall_hug_corner
 
 /obj/wireweed/proc/update_connections(propagate = 0)
 	var/list/dirs = list()
@@ -181,49 +195,18 @@
 
 	wires_connections = dirs_to_corner_states(dirs)
 
-/*
-/obj/wireweed/targets_in_range(obj/machinery/door/airlock/door)
-	if(!istype(door) || !hive_mind_ai || !master_node)
-		return FALSE
-
-	//if our door isn't broken, we will try to break open. We can do only one action per call
-	if(!(door.stat & MACHINE_BROKEN_GENERIC))
-		anim_shake(door)
-		//first, we open our panel to give our wireweeds access to exposed airlock's electronics
-		if(!door.p_open)
-			if(prob(20))
-				door.p_open = TRUE
-			return FALSE
-		//but if airlock is welded, we just shake it like we rummage inside
-		if(door.welded)
-			return FALSE
-		//if panel opened, we begin to destruct it from inside of airlock
-		if(door.p_open)
-			//bolts are down? Our wireweeds infest electronics, so this isn't a problem cause it part of us
-			if(door.locked)
-				if(prob(50))
-					door.unlock()
-				return FALSE
-			//and then, if airlock is closed, we begin destroy it electronics
-			if(door.density)
-				door.damage_health(rand(15, 50))
-				return FALSE
-
-	return TRUE
-*/
 
 /obj/wireweed/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/hivemind))
 		return 1
 	else if(istype(mover, /mob/living))
-		if(prob(20))
+		if(prob(10))
 			to_chat(mover, SPAN_WARNING("You get stuck in \the [src] for a moment."))
 			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return 1
 	return 1
-
 
 
 //What a pity that we haven't some kind proc as special library to use it somewhere
@@ -313,6 +296,11 @@
 							SPAN_DANGER("You try to slice [src], but it's useless!"))
 
 	return ..()
+
+/obj/wireweed/post_use_item(obj/item/tool, mob/user, interaction_handled, use_call, click_params)
+	. = ..()
+	if (interaction_handled && use_call == "weapon" && isWelder(tool))
+		playsound(loc, 'sound/items/Welder.ogg', 100, TRUE)
 
 //fire is effective, but there need some time to melt the covering
 /obj/wireweed/fire_act()

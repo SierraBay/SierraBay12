@@ -5,12 +5,16 @@
 //All code stored in modules/hivemind
 //============================================
 
+/proc/level_eight_announcement()
+	GLOB.using_map.level_x_biohazard_announcement(8)
+
 /datum/event/hivemind
 	announceWhen	= 300
 
 
 /datum/event/hivemind/announce()
-	level_seven_announcement()
+	level_eight_announcement()
+
 
 
 /datum/event/hivemind/start()
