@@ -20,12 +20,12 @@
 		"SNZ Speedboat" = list("nav_gas_station_starboard_j")
 		)
 
-	// initial_generic_waypoints = list(
-	// 	"nav_meatstation_1",
-	// 	"nav_meatstation_2",
-	// 	"nav_meatstation_3",
-	// 	"nav_meatstation_4",
-	// )
+	initial_generic_waypoints = list(
+		"nav_gas_station_1",
+		"nav_gas_station_2",
+		"nav_gas_station_3",
+		"nav_gas_station_4",
+	)
 
 /datum/map_template/ruin/away_site/gas_station
 	name = "Gas Station"
@@ -34,7 +34,7 @@
 	prefix = "mods/chichcontent/maps/insidiae/"
 	suffixes = list("gas_station.dmm")
 	spawn_cost = 1
-	// area_usage_test_exempted_root_areas = list(/area/meatstation)
+	area_usage_test_exempted_root_areas = list(/area/gas_station)
 
 
 
@@ -110,21 +110,23 @@
 	docking_controller = "gas_station_starboard_j"
 
 
-// /obj/shuttle_landmark/nav_meatstation/nav1
-// 	name = "Navpoint #1"
-// 	landmark_tag = "nav_meatstation_1"
 
-// /obj/shuttle_landmark/nav_meatstation/nav2
-// 	name = "Navpoint #2"
-// 	landmark_tag = "nav_meatstation_2"
+/obj/shuttle_landmark/nav_gas_station/nav1
+	name = "Navpoint #1"
+	landmark_tag = "nav_gas_station_1"
 
-// /obj/shuttle_landmark/nav_meatstation/nav3
-// 	name = "Navpoint #3"
-// 	landmark_tag = "nav_meatstation_3"
+/obj/shuttle_landmark/nav_gas_station/nav2
+	name = "Navpoint #2"
+	landmark_tag = "nav_gas_station_2"
 
-// /obj/shuttle_landmark/nav_meatstation/nav4
-// 	name = "Navpoint #4"
-// 	landmark_tag = "nav_meatstation_4"
+/obj/shuttle_landmark/nav_gas_station/nav3
+	name = "Navpoint #3"
+	landmark_tag = "nav_gas_station_3"
+
+/obj/shuttle_landmark/nav_gas_station/nav4
+	name = "Navpoint #4"
+	landmark_tag = "nav_gas_station_4"
+
 
 
 /area/gas_station/hall
@@ -165,7 +167,7 @@
 /obj/radiation_spot
 	name = "radiation spot"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "emppulse"
+	icon_state = "shieldsparkles"
 	var/radiation_power = 10 // +-25%
 	var/range = 5
 	var/chance = 40
