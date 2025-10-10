@@ -13,6 +13,7 @@
 #define LANDING_ZONE_RADIUS 15 // Used for autoplacing landmarks on exoplanets
 
 // Invisibility constants.
+#define INVISIBILITY_NONE        0
 #define INVISIBILITY_LIGHTING    20
 #define INVISIBILITY_LEVEL_ONE   35
 #define INVISIBILITY_LEVEL_TWO   45
@@ -287,7 +288,7 @@
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-#define INCREMENT_WORLD_Z_SIZE world.maxz++; if (length(SSzcopy.zlev_maximums)) { SSzcopy.calculate_zstack_limits() }
+#define INCREMENT_WORLD_Z_SIZE world.maxz++; if (length(SSzcopy.zlev_maximums)) { SSzcopy.calculate_zstack_limits() }; if(SSweather?.weather_by_z) { LIST_RESIZE(SSweather.weather_by_z, world.maxz)}
 
 //-- Masks for /atom/var/init_flags --
 //- machinery

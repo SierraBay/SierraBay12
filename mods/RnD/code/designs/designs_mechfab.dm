@@ -262,6 +262,14 @@
 	req_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 4, TECH_COMBAT = 4)
 	id = "augment_adaptive_binoculars"
 
+/datum/design/item/mechfab/augment/sonar
+	name = "Cyber sonar"
+	build_path = /obj/item/organ/internal/augment/active/sonar
+	materials = list(MATERIAL_SILVER = 100, MATERIAL_GOLD = 100, MATERIAL_GLASS = 2000)
+	// Basically, less effective thermals. But xenos can have one pre-installed, so only gold and silver
+	req_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 3, TECH_BIO = 4)
+	id = "augment_sonar"
+
 /datum/design/item/mechfab/augment/iatric_monitor
 	name = "Iatric monitor"
 	build_path = /obj/item/organ/internal/augment/active/iatric_monitor

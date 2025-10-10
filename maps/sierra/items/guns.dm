@@ -12,3 +12,7 @@
 	name = "corporate stun revolver"
 	desc = "This A&M X6 is fitted with an NT1019 chip which allows remote authorization of weapon functionality. It has a NanoTrasen emblem on the grip."
 	req_access = list(list(access_brig, access_heads, access_rd))
+
+/obj/item/gun/projectile/automatic/iso
+	name = "ISO-4 SMG"
+	desc = "A compact submachine gun designed for NanoTrasen Internal Security Operatives. Useful when bureaucracy no longer helps."

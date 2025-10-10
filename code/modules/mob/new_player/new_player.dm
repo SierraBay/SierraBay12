@@ -193,6 +193,7 @@
 
 			if(isnull(client.holder) && should_announce)
 				announce_ghost_joinleave(src)
+			log_and_message_admins("has joined the round as an observer.", client)
 
 			var/mob/living/carbon/human/dummy/mannequin = new()
 			client.prefs.dress_preview_mob(mannequin)

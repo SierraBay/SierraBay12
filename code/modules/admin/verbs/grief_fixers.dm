@@ -41,7 +41,7 @@
 		T.CutOverlays(unsorted_overlays)
 		T.zone = null
 		for(var/obj/gas_overlay/effect in T.vis_contents)
-			T.vis_contents -= effect
+			T.remove_vis_contents(effect)
 
 	to_chat(usr, "\[4/5\] - All turfs reset to roundstart values.")
 

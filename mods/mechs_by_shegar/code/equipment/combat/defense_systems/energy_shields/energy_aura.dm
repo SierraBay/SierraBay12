@@ -16,7 +16,7 @@
 
 /obj/aura/mechshield/added_to(mob/living/target)
 	. = ..()
-	target.vis_contents += src
+	target.add_vis_contents(src)
 	set_dir()
 	GLOB.dir_set_event.register(user, src, /obj/aura/mechshield/proc/update_dir)
 
@@ -32,7 +32,7 @@
 /obj/aura/mechshield/Destroy()
 	if(user)
 		GLOB.dir_set_event.unregister(user, src, /obj/aura/mechshield/proc/update_dir)
-		user.vis_contents -= src
+		user.remove_vis_contents(src)
 	shields = null
 	. = ..()
 

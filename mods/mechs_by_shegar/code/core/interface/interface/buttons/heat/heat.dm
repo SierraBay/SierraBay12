@@ -38,6 +38,6 @@
 	cutter = new /obj/mech_heat_cutter(src)
 	var/obj/spawned_obvodka = new /obj/obvodka(src)
 	overheat = new /obj/overheat(src)
-	vis_contents += cutter
-	vis_contents += spawned_obvodka
-	vis_contents += overheat
+	add_vis_contents(cutter)
+	add_vis_contents(spawned_obvodka)
+	add_vis_contents(overheat)

@@ -175,4 +175,4 @@
 /obj/effect/cold_mist_gas/Initialize()
 	. = ..()
 	b = new()
-	vis_contents += b
+	add_vis_contents(b)
