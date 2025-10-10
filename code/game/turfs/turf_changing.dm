@@ -151,7 +151,7 @@
 	if(istype(W) && W.zone_membership_candidate != old_zone_membership_candidate)
 		W.update_external_atmos_participation()
 
-	//W.update_weather(force_update_below = W.is_open() != old_is_open)
+	W.update_weather(force_update_below = W.is_open() != old_is_open)
 
 	for(var/turf/T as anything in RANGE_TURFS(src, 1))
 		T.update_icon()

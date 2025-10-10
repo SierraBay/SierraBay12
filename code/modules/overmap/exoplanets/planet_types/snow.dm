@@ -15,6 +15,7 @@
 		/mob/living/simple_animal/hostile/retaliate/beast/shantak
 	)
 	megafauna_types = list(/mob/living/simple_animal/hostile/retaliate/giant_crab)
+	banned_weather_conditions = list(/singleton/state/weather/rain)
 
 /obj/overmap/visitable/sector/exoplanet/snow/generate_atmosphere()
 	..()

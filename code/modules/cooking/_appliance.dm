@@ -376,7 +376,8 @@
 		recipe = select_recipe(container, appliance = appliance)
 
 	if (recipe)
-		var/list/results = recipe.CreateResult(container)
+		var/list/results = list()
+		results += recipe.CreateResult(container)
 
 		var/obj/temp = new /obj(src) //To prevent infinite loops, all results will be moved into a temporary location so they're not considered as inputs for other recipes
 

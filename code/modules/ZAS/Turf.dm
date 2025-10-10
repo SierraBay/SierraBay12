@@ -328,8 +328,8 @@ var/global/list/STANDARD_AIRMIX = list(
 	if (!include_heat_sources)
 		return gas
 
-	/*if (weather)
-		gas.temperature = weather.adjust_temperature(gas.temperature)*/
+	if (weather)
+		gas.temperature = weather.adjust_temperature(gas.temperature)
 	//TODO: port heat sources from nebula
 	//var/initial_temperature = gas.temperature
 	// if(length(affecting_heat_sources))
