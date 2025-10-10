@@ -20,6 +20,19 @@
 	update_icon()
 	return
 
+
+/obj/structure/stairs/ex_act(severity)
+	if(destroyed)
+		return
+	switch(severity)
+		if(EX_ACT_DEVASTATING)
+			Destroy()
+		if(EX_ACT_HEAVY)
+			if(prob(25))
+				Destroy()
+		if(EX_ACT_LIGHT)
+			return
+
 /obj/structure/stairs/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	. = ..()
 	if(destroyed)
