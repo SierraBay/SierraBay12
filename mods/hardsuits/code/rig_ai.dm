@@ -159,7 +159,7 @@
 	saved_power = current_power
 
 /obj/item/rig_module/simple_ai/proc/rig_messages_process(mob/living/carbon/human/H)
-	if(!message_queue.len)
+	if(!LAZYLEN(message_queue))
 		return 0
 
 	var/power_waste = 0
@@ -335,15 +335,15 @@
 	destroyed_message = voice.destroyed_message
 
 	// replacing default rig lines with lines from a custom voice, without changing anything else
-	for (var/i in 1 to health_warnings.len)
+	for (var/i in 1 to LAZYLEN(health_warnings))
 		var/datum/rig_warning/RW = health_warnings[i]
 		RW.message = voice.health_warnings[i]
 
-	for (var/i in 1 to breach_warnings.len)
+	for (var/i in 1 to LAZYLEN(breach_warnings))
 		var/datum/rig_warning/RW = breach_warnings[i]
 		RW.message = voice.breach_warnings[i]
 
-	for (var/i in 1 to energy_warnings.len)
+	for (var/i in 1 to LAZYLEN(energy_warnings))
 		var/datum/rig_warning/RW = energy_warnings[i]
 		RW.message = voice.energy_warnings[i]
 
@@ -354,7 +354,7 @@
 /obj/item/rig_module/simple_ai/advanced/on_rigdamage(mob/living/carbon/human/H, rig_damage)
 	if(rig_damage < 7)
 		return
-	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair/)
+	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair)
 	if(repair_module && !repair_module.active)
 		repair_module.activate(forced = TRUE)
 
@@ -362,7 +362,7 @@
 	if(H.stat == DEAD)
 		return
 
-	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser/)
+	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser)
 	if(!chem_disp)
 		return
 

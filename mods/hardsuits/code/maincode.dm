@@ -101,7 +101,7 @@
 //Repair a certain amount of brute or burn damage to the suit.
 /obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user, stop_messages = FALSE)
 
-	if(!can_breach || !breaches || !breaches.len || !damage)
+	if(!can_breach || !breaches || !LAZYLEN(breaches) || !damage)
 		if(!stop_messages)
 			to_chat(user, "There are no breaches to repair on \the [src].")
 		return
@@ -112,7 +112,7 @@
 		if(B.damtype == damtype)
 			valid_breaches += B
 
-	if(!valid_breaches.len)
+	if(!LAZYLEN(valid_breaches))
 		if(!stop_messages)
 			to_chat(user, "There are no breaches to repair on \the [src].")
 		return
