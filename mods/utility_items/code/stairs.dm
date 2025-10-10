@@ -39,14 +39,14 @@
 		if(!steel_added)
 			if(istype(tool, /obj/item/stack/material/steel))
 				var/obj/item/stack/material/steelsheet = tool
-				if(steelsheet.amount > 15)
+				if(steelsheet.amount > 10)
 					if(do_after(user, (rand(5,7)) SECONDS, src, DO_REPAIR_CONSTRUCT))
 						user.visible_message(
 							SPAN_NOTICE("\The [user] adds \a [steelsheet] to \the [src]."),
 						SPAN_NOTICE("You add \a [steelsheet] to \the [src].")
 					)
 						steel_added = TRUE
-						steelsheet.use(15)
+						steelsheet.use(10)
 						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(!welded)
 			if(isWelder(tool))
