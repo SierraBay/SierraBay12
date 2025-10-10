@@ -124,3 +124,8 @@
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/darkr
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/femine
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(asarobes)
+
+// Other robes
+/datum/gear/suit/moonlightrobe
+	display_name = "moonlight robe"
+	path = /obj/item/clothing/suit/storage/hooded/moonrobe
