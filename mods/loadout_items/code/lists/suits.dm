@@ -128,4 +128,5 @@
 // Other robes
 /datum/gear/suit/moonlightrobe
 	display_name = "moonlight robe"
+	allowed_roles = list(/datum/job/chief_steward, /datum/job/chaplain, /datum/job/janitor, /datum/job/cook, /datum/job/chef, /datum/job/steward, /datum/job/bartender, /datum/job/actor, /datum/job/hydro, /datum/job/librarian)
 	path = /obj/item/clothing/suit/storage/hooded/moonrobe
