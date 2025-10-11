@@ -147,7 +147,9 @@
 	/datum/job/janitor, \
 	/datum/job/cook, \
 	/datum/job/bartender, \
-	/datum/job/steward \
+	/datum/job/steward, \
+	/datum/job/actor, \
+	/datum/joh/chaplain \
 )
 
 //For members of the research department and jobs that are scientific
