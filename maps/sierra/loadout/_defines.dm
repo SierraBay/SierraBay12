@@ -149,7 +149,7 @@
 	/datum/job/bartender, \
 	/datum/job/steward, \
 	/datum/job/actor, \
-	/datum/joh/chaplain \
+	/datum/job/chaplain \
 )
 
 //For members of the research department and jobs that are scientific
