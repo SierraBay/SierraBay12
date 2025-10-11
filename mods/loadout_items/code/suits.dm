@@ -332,9 +332,10 @@
 	item_icons = list(slot_head_str = 'mods/loadout_items/icons/robes_moon_star.dmi')
 	icon_state = "moonlight_robe_hood"
 	item_state = "moonlight_robe_hood"
-	body_parts_covered = HEAD
+	visible_name = "unknown"
+	body_parts_covered = HEAD | FACE
 	cold_protection = HEAD
-	flags_inv = HIDEEARS | BLOCKHAIR
+	flags_inv = HIDEFACE | HIDEEARS | BLOCKHAIR
 	item_flags = ITEM_FLAG_WASHER_ALLOWED | ITEM_FLAG_INVALID_FOR_CHAMELEON
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 
