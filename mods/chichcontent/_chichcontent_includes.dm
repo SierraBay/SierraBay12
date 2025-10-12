@@ -5,7 +5,7 @@
 
 // INSIDIAE
 // away
-#include "code/insidiae/normandite.dm"
+// #include "code/insidiae/normandite.dm"
 //ruins
 #include "code/insidiae/fairy_ring.dm"
 #include "code/insidiae/field_of_suits.dm"
