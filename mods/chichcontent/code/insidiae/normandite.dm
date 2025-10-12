@@ -35,9 +35,9 @@
 /obj/overmap/visitable/ship/normandite/New()
 	name = "GTMS Normandite-[rand(3,19)]"
 	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B>\
-<I>Registration</I>: [name]\
-<I>Transponder</I>: Transmitting (IND), Grayson Terra\
+<B>Property of Grayson Manufactories:</B><br>
+<I>Registration</I>: [name]<br>
+<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
 <B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
 	..()
 
@@ -61,13 +61,13 @@
 	shuttle = "Utyug"
 	name = "GTSS Utyug"
 	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B>\
-<I>Registration</I>: GTSS Utyug\
-<I>Transponder</I>: Transmitting (IND), Grayson Terra\
+<B>Property of Grayson Manufactories:</B><br>
+<I>Registration</I>: GTSS Utyug<br>
+<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
 <B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 3 SECONDS
-	vessel_mass = 7000
+	vessel_mass = 5000
 	fore_dir = NORTH
 	skill_needed = SKILL_BASIC
 	vessel_size = SHIP_SIZE_SMALL
@@ -173,7 +173,7 @@
 
 /singleton/hierarchy/outfit/job/normandite
 	name = OUTFIT_JOB_NAME("Miner")
-	l_ear = null
+	l_ear = /obj/item/device/radio/headset/normandite
 	l_pocket = /obj/item/device/radio
 	uniform = /obj/item/clothing/under/grayson
 	shoes = /obj/item/clothing/shoes/workboots
@@ -191,6 +191,12 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	id = access_normandite
 	desc = "GTMS Employee"
 	region = ACCESS_REGION_NONE
+
+/obj/item/device/radio/headset/normandite
+	name = "mining bowman radio headset"
+	desc = "A headset used by tough space miners."
+	icon_state = "mine_headset_alt"
+	item_state = "mine_headset_alt"
 
 // nav points
 

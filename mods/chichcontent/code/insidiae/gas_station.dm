@@ -1,6 +1,6 @@
 /obj/overmap/visitable/sector/gas_station
 	name = "Abandoned Fuelling Station"
-	desc = ""
+	desc = "Sensors detect a damaged unpowered station with radiation hotspots. The highest level of radiation hazard is found in the center of the fore section."
 	icon_state = "object"
 
 	initial_restricted_waypoints = list(

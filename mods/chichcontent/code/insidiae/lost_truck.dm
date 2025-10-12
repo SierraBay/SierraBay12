@@ -1,15 +1,3 @@
-/area/ship/lost_truck
-	name = "Truck Interior"
-	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg')
-	icon_state = "amaint"
-
-/area/ship/lost_truck/exterior
-	name = "Truck Exterior"
-	icon_state = "engineering_supply"
-	turfs_airless = TRUE
-
-
-
 /obj/overmap/visitable/ship/lost_truck
 	name = "freighter"
 	desc = "Sensors detect an undamaged vessel and a small cloud of debris on the starboard side, no signs of activity."
@@ -92,3 +80,15 @@
 	name = "Restricted Waybill"
 	info = "<span style='font-family: Verdana; color: black'><center><B>CARGO TRANSFER MANIFEST</B><BR><B><span style=\"font-size: 18px\">ICCG POSTAL SERVICE<BR>MINISTRY OF COLONIAL DEVELOPMENT AND DEEP SPACE EXPLORATION</span></B></center><BR><B>Document Type:</B> Restricted Waybill - Quarantined Cargo<BR><B>Reference ID:</B> 91-RX-TAU-7741<BR><BR><B>1. ORIGIN</B><BR><B>Facility:</B> ICCG Postal Service Orbital Containment Facility 1<BR><B>System:</B> Vega<BR><B>Departure Timestamp:</B> 2286-07-15 03:12 GBST<BR><BR><B>2. DESTINATION</B><BR><B>Consignee:</B> Frontier Life Sciences Liaison - Outpost &#34;Crnjanski&#34;<BR><B>System:</B> Sirim<BR><B>ETA:</B> 2286-10-01 22:52 GBST<BR><BR><B>3. CARGO DETAILS</B><BR><B>Container ID:</B> 860715-00009-MCD<BR><B>Contents:</B> Sealed biocontainment module(s). Designation: &#34;Research Payload - Restricted Access&#34;. Not for diagnostic or clinical use. No personnel handling without Level-Authority Clearance.<BR><B>Declared Hazard Classification:</B> Bio-Containment - Xeno-Class, High Risk (internal classification).<BR><B>Net Mass:</B> 1,872 kg<BR><B>Volume:</B> 8.6 m³<BR><BR><B>4. SECURITY &amp; HANDLING</B><BR>Special Handling Instructions:<BR><ul><li>Do not breach, unseal, or otherwise access inner containment chambers under any circumstances.<BR><li>Maintain sealed transport envelope; do not subject to open-air transfer or routine cargo transloading.<BR><li>Only designated quarantine teams with written ICCG MinColDev Authorization may initiate integrity checks; all checks must be performe remotely or via approved isolation interface.<BR><li>In the event of anomalous telemetry or containment alarm, activate Containment Alert Protocol; follow established quarantine escalation - do not attempt on-site mitigation.<BR><li>No external sampling, biological assays, or improvisational sterilization procedures permitted.<BR><li>Container equipped with passive stabilization and internal inerting; do not apply manual agitation, high-energy fields, or thermal shock.</ul><B>5. TRANSPORT VESSEL</B><BR><B>Registry:</B> PS-TR-4427<BR><B>Crew Complement:</B> 1<BR><BR><B>6. CERTIFICATION</B><BR>I hereby certify that this shipment is accurately described above and is in proper condition for interstellar transport in accordance with provisions 82, 103.10, and 106.2 of the Interstellar Transport Code of the Ministry of Transportation of the Independent Colonial Confederation of Gilgamesh.<BR>The recipient has been notified of the quarantine status and arrival procedures.<BR><BR><B>Authorized Signatory:</B><BR>M. Armitage<BR>ICCG Postal Service - Containment Operations Supervisor, Facility 1</span>"
 	stamps = "<hr><i>This paper includes a linear freight-code sequence authenticated by the ICCG Postal Service.</i><BR><i>Verified with encrypted consignment hash certified by Ministry of Colonial Development and Deep Space Exploration.</i>"
+
+
+
+/area/ship/lost_truck
+	name = "Truck Interior"
+	ambience = list('sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg')
+	icon_state = "amaint"
+
+/area/ship/lost_truck/exterior
+	name = "Truck Exterior"
+	icon_state = "engineering_supply"
+	turfs_airless = TRUE
