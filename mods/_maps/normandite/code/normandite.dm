@@ -231,7 +231,7 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	var/c = pick(COLOR_BROWN_ORANGE, COLOR_DARK_ORANGE, COLOR_YELLOW_GRAY, COLOR_PALE_YELLOW, COLOR_WARM_YELLOW, COLOR_RED_GRAY, COLOR_BROWN, COLOR_DARK_GREEN_GRAY, COLOR_BOTTLE_GREEN, COLOR_DARK_GUNMETAL, COLOR_ASTEROID_ROCK)
 
 	if(!head)
-		var/headtype = pick(/obj/item/mech_component/sensors/light/salvage, /obj/item/mech_component/sensors/powerloader)
+		var/headtype = pick(/obj/item/mech_component/sensors/light, /obj/item/mech_component/sensors/powerloader)
 		head = new headtype(src)
 		head.color = c
 
