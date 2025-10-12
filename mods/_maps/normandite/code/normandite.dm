@@ -45,7 +45,7 @@
 	name = "Normandite"
 	id = "awaysite_normandite"
 	description = ""
-	prefix = "mods/chichcontent/maps/insidiae/"
+	prefix = "mods/_maps/normandite/maps/"
 	suffixes = list("normandite.dmm")
 	spawn_cost = 1
 	player_cost = 4

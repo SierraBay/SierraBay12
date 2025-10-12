@@ -38,6 +38,7 @@
 	corpse_outfits = list(/singleton/hierarchy/outfit/field_of_suits/eng, /singleton/hierarchy/outfit/field_of_suits/med, /singleton/hierarchy/outfit/field_of_suits/sci, /singleton/hierarchy/outfit/field_of_suits/sec)
 
 /singleton/hierarchy/outfit/field_of_suits
+	name = "Dead body on the Field of Suits"
 	suit = /obj/item/clothing/suit/space/void/excavation/field_of_suits
 	head = /obj/item/clothing/head/helmet/space/void/excavation/field_of_suits
 	mask = /obj/item/clothing/mask/breath

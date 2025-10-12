@@ -31,7 +31,7 @@
 	name = "Gas Station"
 	id = "awaysite_gas_station"
 	description = ""
-	prefix = "mods/chichcontent/maps/insidiae/"
+	prefix = "mods/_maps/general_maps/maps/"
 	suffixes = list("gas_station.dmm")
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/gas_station)
