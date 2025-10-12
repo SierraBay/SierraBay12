@@ -104,7 +104,7 @@
 	. = ..()
 	desc += pick(
 		"It stands on tiptoe, helmeted, one gloved hand cupping the head while the other grips a long probe fused seamlessly to the forearm.",
-		"It stands with arms crossed tightly over the chest, shoulders raised; the face is tilted upward, eyes narrowed and lips pursed. A dented helmet is fused as one piece with the head and neck.",
+		"It stands with arms crossed tightly over the chest, shoulders raised; the face is tilted upward. A dented helmet is fused as one piece with the head and neck.",
 		"It bends at the waist, head bowed low, one hand pressed to the throat and the other clutching the edge of a belt. A cracked helmet brim merges with the skull and neck as if grown from the same substance.",
 	)
 	desc += " The helmet is made entirely of the same concrete-like material, so the head is not visible."

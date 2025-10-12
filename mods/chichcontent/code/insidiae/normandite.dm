@@ -111,10 +111,10 @@
 	ideal_character_age = 30
 	minimal_player_age = 0
 	create_record = FALSE
-	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TRITONIAN, SPECIES_SPACER, SPECIES_VATGROWN, SPECIES_GRAVWORLDER)
+	whitelisted_species = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TRITONIAN, SPECIES_SPACER, SPECIES_VATGROWN, SPECIES_GRAVWORLDER, SPECIES_TAJARA)
 	outfit_type = /singleton/hierarchy/outfit/job/normandite
 	latejoin_at_spawnpoints = TRUE
-	required_language = list(LANGUAGE_HUMAN_RUSSIAN)
+	required_language = LANGUAGE_HUMAN_RUSSIAN
 	loadout_allowed = TRUE
 	access = list(access_normandite)
 	announced = FALSE
@@ -363,3 +363,41 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 
 /obj/paint/normandite/b
 	color = COLOR_DARK_BROWN
+
+// sensors
+
+/obj/machinery/computer/ship/sensors/normandite
+	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
+	base_type = /obj/machinery/computer/ship/sensors
+	print_language = LANGUAGE_HUMAN_RUSSIAN
+
+/obj/machinery/computer/ship/sensors/normandite/verb/sector_info()
+	set name = "Scan sector"
+	set category = "Object"
+	set src in oview(1)
+	sector_scan()
+
+/obj/machinery/computer/ship/sensors/normandite/proc/sector_scan()
+	var/text = "Сканирование сектора от [stationdate2text()], [stationtime2text()]<br />Обнаруженные объекты:<br />"
+
+	var/list/space_things = list()
+	var/obj/overmap/normandite = map_sectors["[get_z(src)]"]
+	for(var/zlevel in map_sectors)
+		var/obj/overmap/visitable/O = map_sectors[zlevel]
+		if(O.name == normandite.name)
+			continue
+		if(istype(O, /obj/overmap/visitable/ship/landable))
+			continue
+		if(O.hide_from_reports)
+			continue
+		space_things |= O
+
+	for(var/obj/overmap/visitable/O in space_things)
+		var/bearing = get_bearing(normandite, O)
+		var/location_desc = ", по азимуту [bearing]."
+		text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
+
+	playsound(src, pick('sound/effects/compbeep4.ogg', 'sound/effects/compbeep5.ogg'), 25, 1, 10)
+	sleep(2 SECONDS)
+
+	new/obj/item/paper(loc, text, "Sensor Readings", null, LANGUAGE_HUMAN_RUSSIAN)

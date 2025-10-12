@@ -5,8 +5,6 @@
 
 #include "code/insidiae/normandite.dm"
 
-#include "code/insidiae/black_box.dm"
-#include "code/insidiae/bottled_message.dm"
 #include "code/insidiae/fairy_ring.dm"
 #include "code/insidiae/field_of_suits.dm"
 #include "code/insidiae/gas_station.dm"

@@ -176,12 +176,13 @@
 	. = ..()
 	if(prob(chance))
 		var/turf/simulated/T = get_turf(src)
-		if(!T)
-			return
-		var/v = radiation_power/4
-		var/datum/radiation_source/S = new(T, radiation_power + rand(-v, v), FALSE)
-		S.range = range
-		SSradiation.add_source(S)
+		if(T)
+			var/v = radiation_power/4
+			var/datum/radiation_source/S = new(T, radiation_power + rand(-v, v), FALSE)
+			S.range = range
+			SSradiation.add_source(S)
+
+	return INITIALIZE_HINT_QDEL
 
 
 

@@ -8,6 +8,7 @@
 "t" = (/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "u" = (/turf/template_noop,/area/template_noop)
 "C" = (/obj/random/firstaid,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"D" = (/obj/landmark/clear,/obj/item/clothing/suit/space/void/iccgn/prepared,/turf/template_noop,/area/template_noop)
 "E" = (/obj/random/tank,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "F" = (/obj/random/trash,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "K" = (/obj/random/contraband,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
@@ -21,7 +22,7 @@
 (1,1,1) = {"
 uuuuuaaaauuuu
 uuaaaaaFaaauu
-uaaEaamafaauu
+uaDEaamafaauu
 uaaaeaaZataaa
 aCaaSnFKSiFaa
 uaaFaknCeYaaa
