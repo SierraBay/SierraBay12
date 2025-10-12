@@ -37,6 +37,7 @@
 		access_explorer,
 		access_eva,
 		access_bridge,
+		access_employment_records,
 		access_heads,
 		access_emergency_storage,
 		access_tech_storage,
@@ -221,7 +222,8 @@
 		access_expedition_shuttle,
 		access_guppy,
 		access_hangar,
-		access_research
+		access_research,
+		access_medical_records
 	)
 	software_on_spawn = list(/datum/computer_file/program/deck_management)
 

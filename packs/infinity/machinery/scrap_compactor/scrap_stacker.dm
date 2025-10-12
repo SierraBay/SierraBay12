@@ -1,6 +1,6 @@
 /obj/machinery/scrap/stacking_machine
 	name = "scrap stacking machine"
-	icon = 'icons/obj/machines/mining/mining_machines.dmi'
+	icon = 'mods/sierra_resprite/icons/mining.dmi'
 	icon_state = "stacker"
 	density = TRUE
 	anchored = TRUE
