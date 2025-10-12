@@ -27,7 +27,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("augment_med_hud","augment_sci_hud","augment_jani_hud","augment_sec_hud","augment_toolset_engineering","augment_toolset_surgery","augment_leukocyte_breeder","augment_iatric_monitor","augment_adaptive_binoculars","augment_glare_dampeners","augment_corrective_lenses",)
+	unlocks_designs = list("augment_med_hud","augment_sci_hud","augment_jani_hud","augment_sec_hud","augment_it_hud","augment_toolset_engineering","augment_toolset_surgery","augment_scanner","augment_leukocyte_breeder","augment_iatric_monitor","augment_adaptive_binoculars","augment_glare_dampeners","augment_corrective_lenses",)
 
 /datum/technology/robo/basic_hardsuitmods
 	name = "Basic Hardsuit Mods"
@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("augment_circuitry","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor")
+	unlocks_designs = list("augment_circuitry","augment_sonar","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_knuckles","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor")
 
 /datum/technology/robo/adv_hardsuits
 	name = "Advanced Hardsuits Mods"
