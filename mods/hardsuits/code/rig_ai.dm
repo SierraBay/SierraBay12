@@ -31,10 +31,6 @@
 	message = Message
 	sound = Sound
 
-/obj/item/rig_module
-	var/activate_on_start               // Set to TRUE for the device to automatically activate on suit equip
-	var/mount_type = 0                  // What mounts does this module use
-	var/show_toggle_button              // Set to TRUE for the device to show toggle button
 
 /obj/item/rig_module/simple_ai
 	name = "hardsuit automated diagnostic system"

@@ -8,10 +8,38 @@
 			return module
 	return null
 
+/datum/design/item/mechfab/rig/selfrepair
+	category = "Hardsuits"
+	name = "Self-repair Module"
+	build_path = /obj/item/rig_module/selfrepair
+	materials = list(MATERIAL_STEEL = 4000, MATERIAL_GLASS = 2000,  MATERIAL_PLASTIC = 3000)
+	req_tech = list(TECH_MAGNET = 4, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	id = "self_repair"
+	sort_string = "WCAZZ"
+
+/datum/design/item/mechfab/rig/simple_ai
+	category = "Hardsuits"
+	name = "AI-rig simple"
+	build_path = /obj/item/rig_module/simple_ai
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 2000,  MATERIAL_PLASTIC = 1000)
+	req_tech = list(TECH_DATA = 4, TECH_MATERIAL = 2, TECH_ENGINEERING = 5)
+	id = "ai_basic"
+	sort_string = "WCAXX"
+
+/datum/design/item/mechfab/rig/advanced_ai
+	category = "Hardsuits"
+	name = "AI-rig advanced"
+	build_path = /obj/item/rig_module/simple_ai/advanced
+	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 3000,  MATERIAL_SILVER = 2000)
+	req_tech = list(TECH_DATA = 4, TECH_MATERIAL = 4, TECH_ENGINEERING = 5)
+	id = "ai_advanced"
+	sort_string = "WCAXZ"
+
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
 	desc = "A somewhat complicated looking complex full of tools."
 	icon_state = "selfrepair"
+	icon = 'mods/hardsuits/icons/modules.dmi'
 	interface_name = "self-repair module"
 	interface_desc = "A module capable of repairing stuctural rig damage on the spot."
 	activate_string = "Begin repair"

@@ -1,3 +1,9 @@
+/obj/item/rig_module
+	var/activate_on_start               // Set to TRUE for the device to automatically activate on suit equip
+	var/mount_type = 0                  // What mounts does this module use
+	var/show_toggle_button              // Set to TRUE for the device to show toggle button
+
+
 /obj/item/rig_module/maneuvering_jets
 	show_toggle_button = TRUE
 
@@ -43,63 +49,6 @@
 /obj/item/rig_module/device/flash
 	show_toggle_button = TRUE
 
-
-
-/obj/item/rig/Process()
-
-	// If we've lost any parts, grab them back.
-	var/mob/living/M
-	for(var/obj/item/piece in list(gloves,boots,helmet,chest))
-		if(piece.loc != src && !(wearer && piece.loc == wearer))
-			if(istype(piece.loc, /mob/living))
-				M = piece.loc
-				M.drop_from_inventory(piece)
-			piece.forceMove(src)
-
-	var/changed = update_offline()
-	if(changed)
-		if(offline)
-			//notify the wearer
-			if(!canremove)
-				if (offline_slowdown < 3)
-					to_chat(wearer, SPAN_DANGER("Your suit beeps stridently, and suddenly goes dead."))
-				else
-					to_chat(wearer, SPAN_DANGER("Your suit beeps stridently, and suddenly you're wearing a leaden mass of metal and plastic composites instead of a powered suit."))
-			if(offline_vision_restriction >= TINT_MODERATE)
-				to_chat(wearer, SPAN_DANGER("The suit optics flicker and die, leaving you with restricted vision."))
-			else if(offline_vision_restriction >= TINT_BLIND)
-				to_chat(wearer, SPAN_DANGER("The suit optics drop out completely, drowning you in darkness."))
-
-			if(electrified > 0)
-				electrified = 0
-			for(var/obj/item/rig_module/module in installed_modules)
-				module.deactivate()
-		else
-			if(istype(wearer) && !wearer.wearing_rig)
-				wearer.wearing_rig = src
-				for(var/obj/item/rig_module/module in installed_modules)
-					if(module.activate_on_start)
-						module.activate()
-
-		set_slowdown_and_vision(!offline)
-		if(istype(chest))
-			chest.check_limb_support(wearer)
-
-	if(!offline)
-		if(cell && cell.charge > 0 && electrified > 0)
-			electrified--
-
-		if(malfunction_delay > 0)
-			malfunction_delay--
-		else if(malfunctioning)
-			malfunctioning--
-			malfunction()
-
-		for(var/obj/item/rig_module/module in installed_modules)
-			if(!cell.checked_use(module.Process() * CELLRATE))
-				module.deactivate()//turns off modules when your cell is dry
-
-
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)
 		return FALSE
@@ -117,9 +66,6 @@
 	var/mob/living/carbon/human/H = holder.wearer
 
 	var/datum/rig_charge/charge = charges[charge_selected]
-	if(damage > MODULE_NO_DAMAGE && prob(40))
-		to_chat(H, "<span class='warning'>[name] malfunctions and injects wrong chemical!</span>")
-		charge = charges[pick(charges)]
 
 	if(!charge)
 		return FALSE

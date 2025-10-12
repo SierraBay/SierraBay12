@@ -427,8 +427,7 @@
 		else
 			helmet.flags_inv |= HIDEMASK
 	update_icon(1)
-//[SIERRA-REMOVE] HARDSUITS
-/*
+
 /obj/item/rig/Process()
 
 	// If we've lost any parts, grab them back.
@@ -479,7 +478,6 @@
 		for(var/obj/item/rig_module/module in installed_modules)
 			if(!cell.checked_use(module.Process() * CELLRATE))
 				module.deactivate()//turns off modules when your cell is dry
-*///[SIERRA-REMOVE]
 
 //offline should not change outside this proc
 /obj/item/rig/proc/update_offline()
