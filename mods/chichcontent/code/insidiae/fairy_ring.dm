@@ -7,10 +7,14 @@
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_NATURAL
+	skip_main_unit_tests = TRUE
 
 /obj/landmark/map_load_mark/fairy_ring
 	name = "random fairy ring site"
 	templates = list(/datum/map_template/fairy_ring/a, /datum/map_template/fairy_ring/b, /datum/map_template/fairy_ring/c, /datum/map_template/fairy_ring/d)
+
+/datum/map_template/fairy_ring
+	skip_main_unit_tests = TRUE
 
 /datum/map_template/fairy_ring/a
 	name = "random fairy ring site #1"

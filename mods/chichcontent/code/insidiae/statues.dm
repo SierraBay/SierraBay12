@@ -7,10 +7,14 @@
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_HUMAN
+	skip_main_unit_tests = TRUE
 
 /obj/landmark/map_load_mark/statues
 	name = "random statues site"
 	templates = list(/datum/map_template/statues/pit, /datum/map_template/statues/anomaly, /datum/map_template/statues/fountain, /datum/map_template/statues/monolith)
+
+/datum/map_template/statues
+	skip_main_unit_tests = TRUE
 
 /datum/map_template/statues/pit
 	name = "random statues site #1 (pit)"

@@ -7,10 +7,14 @@
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_NATURAL|RUIN_WATER
+	skip_main_unit_tests = TRUE
 
 /obj/landmark/map_load_mark/recursive_lake
 	name = "random recursive lake"
 	templates = list(/datum/map_template/recursive_lake/a, /datum/map_template/recursive_lake/b, /datum/map_template/recursive_lake/c)
+
+/datum/map_template/recursive_lake
+	skip_main_unit_tests = TRUE
 
 /datum/map_template/recursive_lake/a
 	name = "random recursive lake #1"

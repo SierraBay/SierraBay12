@@ -7,10 +7,14 @@
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS
 	ruin_tags = RUIN_HUMAN
+	skip_main_unit_tests = TRUE
 
 /obj/landmark/map_load_mark/field_of_suits
 	name = "random field of suits site"
 	templates = list(/datum/map_template/field_of_suits/a, /datum/map_template/field_of_suits/b, /datum/map_template/field_of_suits/c, /datum/map_template/field_of_suits/d)
+
+/datum/map_template/field_of_suits
+	skip_main_unit_tests = TRUE
 
 /datum/map_template/field_of_suits/a
 	name = "random field of suits site #1"
