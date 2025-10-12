@@ -54,6 +54,7 @@
 	apc_test_exempt_areas = list(
 		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
 	)
+	area_usage_test_exempted_root_areas = list(/area/normandite)
 
 // utyug
 
