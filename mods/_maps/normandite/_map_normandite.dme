@@ -3,9 +3,5 @@
 
 #include "_map_normandite.dm"
 #include "code/normandite.dm"
-// #include "code/normandite_areas.dm"
-// #include "code/normandite_crew.dm"
-// #include "code/normandite_items.dm"
-// #include "code/normandite_structures.dm"
 
 #endif
