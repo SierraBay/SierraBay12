@@ -1,0 +1,14 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"f" = (/obj/landmark/map_load_mark/recursive_lake,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaafaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+aaaaaaaaa
+"}

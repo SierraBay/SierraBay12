@@ -1,0 +1,16 @@
+"a" = (/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"d" = (/obj/random/human_statue,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"u" = (/obj/random/human_statue{dir = 4},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"A" = (/obj/structure/fountain/strange,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"E" = (/obj/random/human_statue{dir = 8},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"Q" = (/turf/template_noop,/area/template_noop)
+"R" = (/obj/random/human_statue{dir = 1},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+QQaaQQQ
+QaadaaQ
+aaaaaaa
+auaAaEa
+QaaaaaQ
+QQQRaQQ
+"}
