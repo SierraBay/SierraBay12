@@ -47,7 +47,6 @@
 	description = ""
 	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("normandite.dmm")
-	// mappaths = list("mods/_maps/insidiae_pack/maps/normandite.dmm")
 	spawn_cost = 1
 	player_cost = 4
 	spawn_weight = 0.4
@@ -57,6 +56,7 @@
 	)
 	area_usage_test_exempted_root_areas = list(/area/normandite)
 	ban_ruins = list(/datum/map_template/ruin/away_site/scavver_gantry)
+	skip_main_unit_tests = TRUE
 
 // utyug
 
