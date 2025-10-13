@@ -2,7 +2,7 @@
 	name = "statues site"
 	id = "statues"
 	description = "Statues, they look like they are alive."
-	prefix = "mods/chichcontent/maps/insidiae/"
+	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("statues_base.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS
@@ -19,29 +19,29 @@
 /datum/map_template/statues/pit
 	name = "random statues site #1 (pit)"
 	id = "statues_1"
-	mappaths = list("mods/chichcontent/maps/insidiae/statues1.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/statues1.dmm")
 
 /datum/map_template/statues/anomaly
 	name = "random statues site #2 (anomaly)"
 	id = "statues_2"
-	mappaths = list("mods/chichcontent/maps/insidiae/statues2.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/statues2.dmm")
 
 /datum/map_template/statues/fountain
 	name = "random statues site #3 (fountain)"
 	id = "statues_3"
-	mappaths = list("mods/chichcontent/maps/insidiae/statues3.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/statues3.dmm")
 
 /datum/map_template/statues/monolith
 	name = "random statues site #4 (monolith)"
 	id = "statues_4"
-	mappaths = list("mods/chichcontent/maps/insidiae/statues4.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/statues4.dmm")
 
 
 
 /obj/structure/human_statue
 	name = "statue"
 	desc = "Suspiciously realistic, as if alive, the statue is made of a rough, colorless material resembling concrete. Pieces of decayed clothing cling to the dirt covering its surface. "
-	icon = 'mods/chichcontent/icons/insidiae/statues.dmi'
+	icon = 'mods/_maps/insidiae_pack/icons/statues.dmi'
 	icon_state = "statue"
 	var/standing_icon = "statue"
 	layer = BASE_HUMAN_LAYER
@@ -186,7 +186,7 @@
 /obj/random/human_statue
 	name = "random statue"
 	desc = "This is random statue."
-	icon = 'mods/chichcontent/icons/insidiae/statues.dmi'
+	icon = 'mods/_maps/insidiae_pack/icons/statues.dmi'
 	icon_state = "fullsuit"
 	spawn_nothing_percentage = 40
 

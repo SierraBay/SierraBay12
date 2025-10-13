@@ -31,7 +31,7 @@
 	name = "Gas Station"
 	id = "awaysite_gas_station"
 	description = ""
-	prefix = "mods/_maps/general_maps/maps/"
+	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("gas_station.dmm")
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/gas_station)

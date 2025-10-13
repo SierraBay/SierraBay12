@@ -2,7 +2,7 @@
 	name = "field of suits"
 	id = "field_of_suits"
 	description = "A field of old spacesuits and mysterious circumstances."
-	prefix = "mods/chichcontent/maps/insidiae/"
+	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("field_of_suits_base.dmm")
 	spawn_cost = 0.5
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS|TEMPLATE_FLAG_NO_RUINS
@@ -19,22 +19,22 @@
 /datum/map_template/field_of_suits/a
 	name = "random field of suits site #1"
 	id = "field_of_suits_1"
-	mappaths = list("mods/chichcontent/maps/insidiae/field_of_suits1.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/field_of_suits1.dmm")
 
 /datum/map_template/field_of_suits/b
 	name = "random field of suits site #2"
 	id = "field_of_suits_2"
-	mappaths = list("mods/chichcontent/maps/insidiae/field_of_suits2.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/field_of_suits2.dmm")
 
 /datum/map_template/field_of_suits/c
 	name = "random field of suits site #3"
 	id = "field_of_suits_3"
-	mappaths = list("mods/chichcontent/maps/insidiae/field_of_suits3.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/field_of_suits3.dmm")
 
 /datum/map_template/field_of_suits/d
 	name = "random field of suits site #4"
 	id = "field_of_suits_4"
-	mappaths = list("mods/chichcontent/maps/insidiae/field_of_suits4.dmm")
+	mappaths = list("mods/_maps/insidiae_pack/maps/field_of_suits4.dmm")
 
 
 

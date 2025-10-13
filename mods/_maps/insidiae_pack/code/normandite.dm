@@ -45,16 +45,17 @@
 	name = "Normandite"
 	id = "awaysite_normandite"
 	description = ""
-	prefix = "mods/_maps/normandite/maps/"
+	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("normandite.dmm")
 	spawn_cost = 1
 	player_cost = 4
-	spawn_weight = 0.3
+	spawn_weight = 0.4
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/utyug)
 	apc_test_exempt_areas = list(
 		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
 	)
 	area_usage_test_exempted_root_areas = list(/area/normandite)
+	ban_ruins = list(/datum/map_template/ruin/away_site/scavver_gantry)
 
 // utyug
 

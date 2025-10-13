@@ -20,7 +20,7 @@
 	name = "Lost Truck"
 	id = "awaysite_lost_truck"
 	description = "A looted old freighter."
-	prefix = "mods/_maps/general_maps/maps/"
+	prefix = "mods/_maps/insidiae_pack/maps/"
 	suffixes = list("lost_truck.dmm")
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/ship)

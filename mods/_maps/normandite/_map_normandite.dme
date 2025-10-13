@@ -1,7 +1,0 @@
-#ifndef MODPACK_MAP_NORMANDITE
-#define MODPACK_MAP_NORMANDITE
-
-#include "_map_normandite.dm"
-#include "code/normandite.dm"
-
-#endif
