@@ -694,7 +694,7 @@
 "Yf" = (/obj/machinery/atmospherics/pipe/manifold/visible/yellow{dir = 1},/turf/simulated/floor/tiled/techfloor,/area/normandite/engineering)
 "Yn" = (/obj/machinery/power/apc{dir = 4; req_access = list()},/obj/structure/cable/green{d2 = 8; icon_state = "0-8"},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/floor_decal/techfloor{dir = 4},/turf/simulated/floor/tiled/techfloor,/area/normandite/engineering)
 "Yt" = (/obj/structure/closet/crate/uranium,/obj/decal/cleanable/dirt,/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/engineering)
-"Yw" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/airlock/multi_tile,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/firedoor,/obj/floor_decal/industrial/hatch/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/engineering)
+"Yw" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/door/airlock/multi_tile,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/firedoor,/obj/floor_decal/industrial/hatch/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/engineering)
 "Yx" = (/obj/floor_decal/techfloor{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/normandite/hallway_starboard)
 "Yy" = (/turf/simulated/floor/tiled/techfloor,/area/normandite/engineering)
 "YE" = (/obj/floor_decal/techfloor{dir = 6},/turf/simulated/floor/tiled/techfloor,/area/normandite/hallway_port)
