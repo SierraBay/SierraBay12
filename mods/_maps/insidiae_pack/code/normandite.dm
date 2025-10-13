@@ -293,6 +293,8 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 	area_flags = AREA_FLAG_EXTERNAL
 	ambience = list('sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg','sound/ambience/ambispace3.ogg','sound/ambience/ambispace4.ogg','sound/ambience/ambispace5.ogg')
 
+/area/normandite/exterior/aft
+
 /area/normandite/center
 	name = "GTMS Normandite - Control Room"
 	icon_state = "bridge"
