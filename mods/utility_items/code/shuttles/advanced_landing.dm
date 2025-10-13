@@ -28,6 +28,8 @@
 	var/obj/overmap/visitable/we = map_sectors["[z_co]"]
 	var/turf/T = get_turf(we)
 	for(var/obj/overmap/visitable/candidate in T)
+		if(istype(candidate, /obj/overmap/visitable/star))
+			continue
 		if(candidate.map_z)
 			waypoints += candidate
 	return waypoints
