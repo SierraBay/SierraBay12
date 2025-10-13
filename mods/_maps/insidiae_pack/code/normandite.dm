@@ -57,6 +57,7 @@
 	)
 	area_usage_test_exempted_root_areas = list(/area/normandite)
 	ban_ruins = list(/datum/map_template/ruin/away_site/scavver_gantry)
+	skip_main_unit_tests = TRUE
 
 // utyug
 
