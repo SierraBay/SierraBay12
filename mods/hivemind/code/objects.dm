@@ -4,7 +4,7 @@
 //toxic shot, turret's ability use it
 /obj/item/projectile/goo
 	name = "toxic goo"
-	icon = 'mods/hivemind/icons/hivemind_machines.dmi'
+	icon = 'mods/hivemind/icons/hivemind_obj.dmi'
 	icon_state = "goo_proj"
 	damage = 15
 	damage_type = DAMAGE_BURN

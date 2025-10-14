@@ -286,7 +286,7 @@
 //if no any other hives will be found, game over
 /obj/machinery/hivemind_machine/node/proc/check_for_other()
 	if(hive_mind_ai)
-		if(!hive_mind_ai.hives.len)
+		if(!LAZYLEN(hive_mind_ai.hives))
 			hive_mind_ai.die()
 
 
@@ -338,7 +338,7 @@
 	if(!..())
 		return
 
-	if(!mob_to_spawn || spawned_creatures.len >= mob_amount)
+	if(!mob_to_spawn || LAZYLEN(spawned_creatures) >= mob_amount)
 		return
 	if(locate(/mob/living) in loc)
 		return
@@ -421,7 +421,7 @@
 							word = pick("CORRUPTED", "DESTRUCTED", "SIMULATATED", "SYMBIOSIS", "UTILIZATATED", "REMOVED", "ACQUIRED")
 						else
 							word = pick("REALLY WANT TO", "TAKE ALL OF THAT", "ARE YOU ENJOY IT", "NOT SUPPOSED TO BE", "THERE ARE NO ESCAPE", "HELP US")
-			if(word_num != msg_words.len)
+			if(word_num != LAZYLEN(msg_words))
 				word += " "
 			msg += word
 		msg += pick(".", "!")
@@ -496,7 +496,7 @@
 	for(var/mob/living/carbon/human/victim in GLOB.player_list)
 		if(victim.stat == CONSCIOUS)
 			possible_victims.Add(victim)
-	if(possible_victims.len)
+	if(LAZYLEN(possible_victims))
 		use_ability(pick(possible_victims))
 		set_cooldown()
 

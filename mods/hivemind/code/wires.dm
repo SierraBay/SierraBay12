@@ -240,8 +240,8 @@
 				var/picked_machine
 				var/list/possible_machines = subtypesof(/obj/machinery/hivemind_machine)
 
-				if(hive_mind_ai.hives.len < MAX_NODES_AMOUNT)
-					if(hive_mind_ai.evo_points < (hive_mind_ai.hives.len * 100)) //one hive per 100 EP
+				if(LAZYLEN(hive_mind_ai.hives) < MAX_NODES_AMOUNT)
+					if(hive_mind_ai.evo_points < (LAZYLEN(hive_mind_ai.hives) * 100)) //one hive per 100 EP
 						possible_machines -= /obj/machinery/hivemind_machine/node
 					else
 						//we make new nodes asap, cause it has higher priority to survive, so we force it here
