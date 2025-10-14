@@ -20,3 +20,8 @@
 		var/obj/decal/cleanable/spiderling_remains/goo = new /obj/decal/cleanable/spiderling_remains(target.loc)
 		goo.name = "green goo"
 		goo.desc = "An unidentifiable liquid. It smells awful."
+
+/obj/item/projectile/goo/weak
+	name = "weakened electrolyzed goo"
+	damage = 10
+	damage_type = DAMAGE_BURN

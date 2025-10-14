@@ -15,6 +15,7 @@
 	var/illumination_color = 	COLOR_LIGHTING_CYAN_MACHINERY
 	var/health = 				60
 	var/max_health = 			60
+	var/datum/hivemind_sdp/SDP			// Self-Defence Protocol holder
 	var/evo_points_required = 	0 		//how much EP hivemind must have to spawn this, used in price list to comparison
 	var/cooldown_time = 10 SECONDS		//each machine have their ability, this is cooldown of them
 	var/global_cooldown = FALSE			//if true, ability will be used only once in whole world, before cooldown reset
@@ -204,9 +205,9 @@
 	//internals
 	var/list/my_wireweeds = list()
 
-/obj/machinery/hivemind_machine/node/Initialize()
+/obj/machinery/hivemind_machine/node/New(loc, _name, _surname)
 	if(!hive_mind_ai)
-		hive_mind_ai = new /datum/hivemind
+		hive_mind_ai = new /datum/hivemind(_name, _surname)
 	. = ..()
 
 	hive_mind_ai.hives.Add(src)
@@ -222,6 +223,12 @@
 			if(W.master_node)
 				if(!(locate(type) in W.loc) && (get_dist(W, W.master_node) > 6) )
 					add_wireweed(W)
+
+	//self-defense protocol setting
+	var/list/possible_sdps = subtypesof(/datum/hivemind_sdp)
+	var/picked_sdp = pick(possible_sdps)
+	SDP = new picked_sdp(src)
+	SDP.set_master(src)
 
 
 /obj/machinery/hivemind_machine/node/Destroy()
@@ -534,7 +541,3 @@
 	flick("[icon_state]-anim", src)
 	if(target.psi && !target.psi.suppressed)
 		target.psi.backblast(rand(5,10))
-
-
-
-#undef HIVE_FACTION

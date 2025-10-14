@@ -5,7 +5,7 @@
 #define MIN_NODES_RANGE		10
 
 
-var/datum/hivemind/hive_mind_ai
+var/global/datum/hivemind/hive_mind_ai
 
 /datum/hivemind
 	var/name
@@ -30,14 +30,11 @@ var/datum/hivemind/hive_mind_ai
 	var/list/global_abilities_cooldown = list()
 	var/list/EP_price_list = list()
 
-/datum/hivemind/New()
+/datum/hivemind/New(_name, _surname)
 	..()
-	name = pick("Reclaimer", "Shaper", "Executor", "Assimilator",
-				"Exploiter", "Builder", "Creator",
-				"Connector", "Splicer", "Propagator")
+	name	= _name		? _name		: pick(GLOB.hive_names)
+	surname	= _surname	? _surname	: pick(GLOB.hive_surnames)
 
-	surname = pick("ALPHA", "BETA", "GAMMA", "DELTA", "OMEGA", "UTOPIA",
-					"SALVATION-X", "CHORUS", "ICARUS", "HEGEMONY", "HARMONY")
 	var/list/all_machines = subtypesof(/obj/machinery/hivemind_machine) - /obj/machinery/hivemind_machine/node
 	//price list building
 	//here we create list with EP price to compare it at annihilation proc

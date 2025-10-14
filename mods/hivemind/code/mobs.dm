@@ -213,7 +213,7 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed. Wait a minute, is that a blade?"
 	icon_state = "slicer"
 	attacktext = "slice"
-	density = 0
+	density = FALSE
 	speak_chance = 3
 	malfunction_chance = 15
 	mob_size = MOB_SMALL
@@ -256,7 +256,7 @@
 	name = "bot"
 	desc = "This one looks fine. Only sometimes it careens from one side to the other."
 	icon_state = "bomber"
-	density = 0
+	density = FALSE
 	speak_chance = 3
 	malfunction_chance = 15
 	mob_size = MOB_SMALL
@@ -289,7 +289,7 @@
 /mob/living/simple_animal/hostile/hivemind/bomber/death()
 	..()
 	gibs(loc, null, /obj/gibspawner/robot)
-	explosion(get_turf(src), 0, 0, 2)
+	explosion(get_turf(src), 1, EX_ACT_LIGHT)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/hivemind/bomber/attack_target()
@@ -305,7 +305,7 @@
 //Appears rarely than bomber or stinger
 //////////////////////////////////////////////////////////////////////////////
 
-/*
+
 /mob/living/simple_animal/hostile/hivemind/lobber
 	name = "Lobber"
 	desc = "A little cleaning robot. This one appears to have its cleaning solutions replaced with goo. It also appears to have its targeting protocols overridden..."
@@ -318,15 +318,16 @@
 	malfunction_chance = 10
 	ranged = TRUE
 	rapid = FALSE //Visual Studio screamed at me for trying to use FALSE/TRUE in procs below
-	minimum_distance = 3 //having minimum_distance too high often resulted in the mob trying to melee
-	fire_verb = "lobs a ball of goo" //reminder that the attack message is "\red <b>[src]</b> [fire_verb] at [target]!"
+//	fire_verb = "lobs a ball of goo" //reminder that the attack message is "\red <b>[src]</b> [fire_verb] at [target]!"
 	projectiletype = /obj/item/projectile/goo/weak //what projectile it uses. Since ranged_cooldown is 2 short seconds, it's better to have a weaker projectile
 	projectilesound = 'sound/effects/blobattack.ogg'
-	ranged_cooldown = 2 SECONDS
-	rarity_value = 50
 	mob_size = MOB_SMALL
-	pass_flags = PASSTABLE
+	pass_flags = PASS_FLAG_TABLE
 	ability_cooldown = 60 SECONDS
+
+	say_list_type = /datum/say_list/lobber
+
+/datum/say_list/lobber
 	speak = list(
 				"No more leaks, no more pain!",
 				"Steel is strong.",
@@ -334,7 +335,7 @@
 				"I'm still working on those bioreactors I promised!",
 				"I have finally arisen!",
 				)
-	target_speak = list(
+	say_maybe_target = list(
 				"Stay right there, and stand still!",
 				"Hold still! I think I know just the thing to make you beautiful!",
 				"This might hurt a little! Don't worry - it'll be worth it!",
@@ -358,7 +359,7 @@
 	if(rapid == FALSE)
 		rapid = TRUE
 		visible_message(SPAN_DANGER("<b>[name]</b> begins to shake violenty, sparks spurting out from its chassis!"), 1)
-		addtimer(CALLBACK(src, PROC_REF(overheat)), 10 SECONDS)
+		addtimer(new Callback(src, PROC_REF(overheat)), 10 SECONDS)
 		return
 
 
@@ -371,7 +372,6 @@
 		mulfunction()
 		special_ability_cooldown = world.time + ability_cooldown
 		return
-*/
 
 /mob/living/simple_animal/hostile/hivemind/lobber/death()
 	..()
@@ -423,11 +423,8 @@
 						"Wait! Hey! Can i fix that!? I'm an engineer, you fuck! Sto-op-op-p here, i know what to do!"
 						)
 
-/*
 
-TO DO - забрать у паука вот это /mob/living/simple_animal/hostile/giant_spider/tunneler/do_special_attack(atom/A)
-
-/mob/living/simple_animal/hostile/hivemind/hiborg/AttackingTarget()
+/mob/living/simple_animal/hostile/hivemind/hiborg/do_special_attack(target_mob)
 	if(!Adjacent(target_mob))
 		return
 
@@ -462,7 +459,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 					"I will fix you! Don't resist! Don't resist you rat!",
 					"I just want to replace that broken thing!"))
 
-*/
+
 
 /////////////////////////////////////HIMAN////////////////////////////////////
 //Hive + Man
@@ -551,7 +548,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 				stance = STANCE_ATTACKING
 
 
-/mob/living/simple_animal/hostile/hivemind/himan/AttackingTarget()
+/mob/living/simple_animal/hostile/hivemind/himan/afterattack()
 	if(fake_dead)
 		if(!Adjacent(target_mob))
 			return
@@ -702,7 +699,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 
 /* TO DO - Пофиксить диалоги о рыбалке
 /mob/living/simple_animal/hostile/hivemind/mechiver/speak()
-	if(!client && prob(speak_chance) && speak.len)
+	if(!client && prob(speak_chance) && LAZYLEN(speak))
 		if(pilot)
 			if(target_mob)
 				visible_message("<b>[name]'s pilot</b> says, [pick(pilot_target_speak)]")
@@ -738,8 +735,8 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 		if(passenger)
 			overlays += "mechiver-process"
 
-/* TO DO - переписать
-/mob/living/simple_animal/hostile/hivemind/mechiver/AttackingTarget()
+
+/mob/living/simple_animal/hostile/hivemind/mechiver/attack_target(target_mob)
 	if(!Adjacent(target_mob))
 		return
 
@@ -758,10 +755,10 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 			flick("mechiver-opening_wires", src)
 	passenger = target
 	target.loc = src
-	target.canmove = FALSE
-	target << SPAN_DANGER("You've gotten inside that thing! It's hard to see inside, there's something here, it moves around you!")
+	target.incapacitated(incapacitation_flags = INCAPACITATION_BUCKLED_FULLY)
+	target.visible_message(SPAN_DANGER("You've gotten inside that thing! It's hard to see inside, there's something here, it moves around you!"))
 	playsound(src, 'sound/effects/blobattack.ogg', 70, 1)
-	addtimer(CALLBACK(src, .proc/release_passenger), 40 SECONDS)
+	addtimer(new Callback(src, PROC_REF(release_passenger)), 40 SECONDS, TIMER_UNIQUE)
 
 
 
@@ -780,20 +777,19 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 					pilot = TRUE
 					return
 
-				H.hallucination = rand(30, 90)
+				H.hallucination(30,90)
 		//if mob is dead, we just rebuild it
 		if(passenger.stat == DEAD && !safely)
 			dead_body_restoration(passenger)
 
 		if(passenger) //if passenger still here, then just release him
-			passenger << SPAN_DANGER("[src] released you!")
-			passenger.canmove = TRUE
+			passenger.visible_message(SPAN_DANGER("[src] released you!"))
+			passenger.incapacitated(incapacitation_flags = INCAPACITATION_NONE)
 			passenger.loc = get_turf(src)
 			passenger = null
 			special_ability_cooldown = world.time + ability_cooldown
 		playsound(src, 'sound/effects/blobattack.ogg', 70, 1)
 
-// Здесь всё работает, просто комментим из-за коммента прока с пассажиром
 
 /mob/living/simple_animal/hostile/hivemind/mechiver/proc/dead_body_restoration(mob/living/corpse)
 	var/picked_mob
@@ -817,7 +813,6 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	qdel(passenger)
 	passenger = null
 
-// Здесь всё работает, просто комментим из-за коммента прока с пассажиром
 
 //we're not forgot to release our victim safely after death
 /mob/living/simple_animal/hostile/hivemind/mechiver/Destroy()
@@ -831,7 +826,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 	if(pilot)
 		gibs(loc, null, /obj/gibspawner/human)
 	qdel(src)
-*/
+
 
 /////////////////////////////////////PHASER///////////////////////////////////
 //Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
@@ -1001,7 +996,7 @@ TO DO - забрать у паука вот это /mob/living/simple_animal/hos
 
 
 /mob/living/simple_animal/hostile/hivemind/phaser/death()
-	if(my_copies.len)
+	if(LAZYLEN(my_copies))
 		for(var/mob/living/simple_animal/hostile/hivemind/phaser/My_copy in my_copies)
 			qdel(My_copy)
 	..()

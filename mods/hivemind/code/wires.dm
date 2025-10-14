@@ -45,10 +45,21 @@
 	var/regen_rate = 2
 	var/expandType = /obj/wireweed
 
+	var/my_area
+
 /obj/wireweed/New()
 	..()
 	spawn(2)
 		update_neighbors()
+
+	var/area/A = get_area(src)
+	if(!A)
+		QDEL_IN(src, 1)
+		return
+	my_area = A.name
+	if(!(my_area in GLOB.hivemind_areas))
+		GLOB.hivemind_areas.Add(my_area)
+	GLOB.hivemind_areas[my_area]++
 
 /obj/wireweed/Initialize()
 	. = ..()
@@ -58,6 +69,9 @@
 	STOP_PROCESSING(SSobj, src)
 	if(master_node)
 		master_node.my_wireweeds.Remove(src)
+	GLOB.hivemind_areas[my_area]--
+	if(!GLOB.hivemind_areas[my_area]) // Last wire in that area
+		GLOB.hivemind_areas.Remove(my_area)
 	return ..()
 
 /obj/wireweed/proc/regen()
@@ -334,3 +348,5 @@
 /obj/wireweed/master/Process()
 	for(var/I in 1 to times_to_pulse)
 		pulse(20, GLOB.alldirs)
+
+#undef HIVE_FACTION
