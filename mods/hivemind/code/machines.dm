@@ -331,7 +331,7 @@
 
 /obj/machinery/hivemind_machine/mob_spawner/Initialize()
 	..()
-	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber)
+	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber) // /mob/living/simple_animal/hostile/hivemind/lobber
 
 
 /obj/machinery/hivemind_machine/mob_spawner/Process()
@@ -532,8 +532,8 @@
 /obj/machinery/hivemind_machine/distractor/use_ability(mob/living/carbon/target)
 	target.hallucination(20,80)
 	flick("[icon_state]-anim", src)
-
-
+	if(target.psi && !target.psi.suppressed)
+		target.psi.backblast(rand(5,10))
 
 
 
