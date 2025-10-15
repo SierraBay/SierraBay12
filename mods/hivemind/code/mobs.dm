@@ -1003,3 +1003,77 @@
 	gibs(loc, null, /obj/gibspawner/human)
 	qdel(src)
 */
+
+
+/////////////////////////////////////TYRANT///////////////////////////////////
+//Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
+//Moves with teleportation only, can stun victim if he land on it
+//Also can hide in closets
+//Can't speak, no malfunctions
+//Appears from dead human body
+//////////////////////////////////////////////////////////////////////////////
+
+/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant
+	name = "Hivemind Tyrant"
+	desc = "Hivemind's will, manifested in flesh and metal."
+
+	faction = "hive"
+	mob_size = MOB_LARGE
+	icon = 'mods/hivemind/icons/64x64.dmi'
+	icon_state = "hivemind_tyrant"
+	icon_living = "hivemind_tyrant"
+	icon_dead = "hivemind_tyrant"
+	pixel_x = -16
+	ranged = TRUE
+
+	health = 1850
+	maxHealth = 1850 //Only way for it to show up right now is via adminbus OR Champion call (which gives it 150hp). For comparison Kaiser has 2000hp
+	break_stuff_probability = 95
+
+//	melee_damage_lower = 30
+//	melee_damage_upper = 35 //similar damage to the mechiver
+//	hivemind_min_cooldown = 50
+//	hivemind_max_cooldown = 80
+
+	projectiletype = /obj/item/projectile/goo
+
+/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/death()
+	..()
+	if(GLOB.hive_data_bool["tyrant_death_kills_hive"])
+		delhivetech()
+
+/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/proc/delhivetech()
+	var/othertyrant = 0
+	for(var/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/HT in world)
+		if(HT != src)
+			othertyrant = 1
+	if(othertyrant == 0)
+		for(var/obj/machinery/hivemind_machine/NODE in world)
+			NODE.destruct()
+
+/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/Life()
+
+	. = ..()
+	if(!.)
+		walk(src, 0)
+		return 0
+	if(client)
+		return 0
+
+/*
+/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/OpenFire()
+	ranged_cooldown = world.time + 120
+	walk(src, 0)
+	telegraph()
+	spawn(rand(hivemind_min_cooldown, hivemind_max_cooldown))
+		if(prob(50))
+			random_shots()
+			move_to_delay = initial(move_to_delay)
+			MoveToTarget()
+			return
+		else
+			select_spiral_attack()
+			move_to_delay = initial(move_to_delay)
+			MoveToTarget()
+			return
+*/

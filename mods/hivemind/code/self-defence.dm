@@ -125,8 +125,8 @@
 			champ_names = list("Swarmer Slicer", "Swarmer Destroyer", "Swarmer Annihilater", "Swarmer Stinger", "Swarmer Cutter", "Swarmer Dicer")
 			amount = 6
 			champion_path = /mob/living/simple_animal/hostile/hivemind/stinger
-	//	if("tyrant")
-	//		champion_path = /mob/living/simple_animal/hostile/megafauna/hivemind_tyrant
+		if("tyrant")
+			champion_path = /mob/living/simple_animal/hostile/hivemind/hivemind_tyrant
 		//Death of the tyrant = death of the hive. Players wont have to chase a bunch of nodes all over the ship around.
 		//Although this would be a problem if the players go after a undefended node, said node spawns the tyrant, tyrant dies, entire hive dies.
 		//Would be better if we could apply the death effect of the tyrant to the spawned champions.

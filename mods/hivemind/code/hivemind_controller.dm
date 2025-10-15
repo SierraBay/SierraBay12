@@ -3,8 +3,8 @@ GLOBAL_LIST_INIT(hive_data_bool)
 		"maximum_existing_mobs"			= FALSE, // Exact number set separately
 		"spread_on_lower_z_level"		= TRUE, // Spread via wires "falling down" from higher z-level
 //		"teleport_core_when_damaged"	= TRUE,
-//		"allow_tyrant_spawn"			= TRUE,
-//		"tyrant_death_kills_hive"		= TRUE
+		"allow_tyrant_spawn"			= TRUE,
+		"tyrant_death_kills_hive"		= TRUE
 		)
 
 GLOBAL_LIST_INIT(hive_data_float)
@@ -89,20 +89,19 @@ GLOBAL_VAR_INIT(hivemind_panel)
 		data += "<br>Area limit disabled."
 	data += "<a href='?src=\ref[src];set_area_limit=1'>\[SET\]</a>"
 
-//	data += "<br>Core oddity drop chance: [GLOB.hive_data_float["core_oddity_drop_chance"]] \
-//	<a href='?src=\ref[src];rig_gacha=1'>\[SET\]</a>"
+//	data += "<br>Core oddity drop chance: [GLOB.hive_data_float["core_oddity_drop_chance"]] (Add slash) //	<a href='?src=\ref[src];rig_gacha=1'>\[SET\]</a>"
 
 	data += "<br>Spread on z level below: [GLOB.hive_data_bool["spread_on_lower_z_level"] ? "Enabled" : "Disabled"] \
 	<a href='?src=\ref[src];toggle_gravity_spread=1'>\[TOGGLE\]</a>"
 
-//	data += "<br>Teleport core when damaged: [GLOB.hive_data_bool["teleport_core_when_damaged"] ? "Enabled" : "Disabled"] \
-//	<a href='?src=\ref[src];toggle_core_teleportation=1'>\[TOGGLE\]</a>"
+	data += "<br>Teleport core when damaged: [GLOB.hive_data_bool["teleport_core_when_damaged"] ? "Enabled" : "Disabled"] \
+	<a href='?src=\ref[src];toggle_core_teleportation=1'>\[TOGGLE\]</a>"
 
-//	data += "<br>Allow tyrant spawn: [GLOB.hive_data_bool["allow_tyrant_spawn"] ? "Enabled" : "Disabled"] \
-//	<a href='?src=\ref[src];toggle_tyrant_spawn=1'>\[TOGGLE\]</a>"
+	data += "<br>Allow tyrant spawn: [GLOB.hive_data_bool["allow_tyrant_spawn"] ? "Enabled" : "Disabled"] \
+	<a href='?src=\ref[src];toggle_tyrant_spawn=1'>\[TOGGLE\]</a>"
 
-//	data += "<br>Tyrant death kills hive: [GLOB.hive_data_bool["tyrant_death_kills_hive"] ? "Enabled" : "Disabled"] \
-//	<a href='?src=\ref[src];toggle_tyrant_gameover=1'>\[TOGGLE\]</a>"
+	data += "<br>Tyrant death kills hive: [GLOB.hive_data_bool["tyrant_death_kills_hive"] ? "Enabled" : "Disabled"] \
+	<a href='?src=\ref[src];toggle_tyrant_gameover=1'>\[TOGGLE\]</a>"
 
 	data += "</td></tr></table>"
 	show_browser(usr, data, "window=hive_main;size=600x600")
@@ -183,11 +182,11 @@ GLOBAL_VAR_INIT(hivemind_panel)
 	if(href_list["toggle_core_teleportation"])
 		GLOB.hive_data_bool["teleport_core_when_damaged"] = !GLOB.hive_data_bool["teleport_core_when_damaged"]
 
-//	if(href_list["toggle_tyrant_spawn"])
-//		GLOB.hive_data_bool["allow_tyrant_spawn"] = !GLOB.hive_data_bool["allow_tyrant_spawn"]
+	if(href_list["toggle_tyrant_spawn"])
+		GLOB.hive_data_bool["allow_tyrant_spawn"] = !GLOB.hive_data_bool["allow_tyrant_spawn"]
 
-//	if(href_list["toggle_tyrant_gameover"])
-//		GLOB.hive_data_bool["tyrant_death_kills_hive"] = !GLOB.hive_data_bool["tyrant_death_kills_hive"]
+	if(href_list["toggle_tyrant_gameover"])
+		GLOB.hive_data_bool["tyrant_death_kills_hive"] = !GLOB.hive_data_bool["tyrant_death_kills_hive"]
 
 	main_interact()
 
