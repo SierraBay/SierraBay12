@@ -6,6 +6,31 @@
 //But if players get some of these 'big guys', only teamwork, fast legs and trickery will works fine
 //So combine all of that to defeat them
 
+/datum/ai_holder/hivemnd
+	// Base
+	intelligence_level = AI_SMART
+
+	// Combat
+	pointblank = TRUE
+
+	// Cooperation
+	cooperative = TRUE
+
+	// Fleeing
+	flee_when_dying = FALSE
+
+	// Movement
+	wander = TRUE
+	wander_when_pulled = TRUE
+
+	// Pathfinding
+	use_astar = TRUE
+
+	// Targeting
+	hostile = TRUE
+
+	pry_flags = PRY_FLAG_AI_CONTROL_ONLY | PRY_FLAG_UNBOLT | PRY_FLAG_CAN_HACK
+
 
 /mob/living/simple_animal/hostile/hivemind
 	name = "creature"
@@ -22,10 +47,36 @@
 	ability_cooldown = 30 SECONDS
 	var/list/say_got_target = list()			//this is like speak list, but when we see our target
 
+	meat_type = null
+	meat_amount = 0
+	skin_material = null
+	skin_amount = 0
+	bone_material = null
+	bone_amount = 0
+
+	can_escape = TRUE
+	bleed_colour = SYNTH_BLOOD_COLOUR
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	min_gas = null
+	max_gas = null
+
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = 0,
+		"bullet" = 0,
+		"laser" = 0,
+		"energy" = 0,
+		"bomb" = 0,
+		"bio" = 100,
+		"rad" = 100
+	)
+
+
 	//internals
 	var/obj/machinery/hivemind_machine/master
 	var/special_ability_cooldown = 0		//use ability_cooldown, don't touch this
-	ai_holder = /datum/ai_holder/simple_animal/melee
+	ai_holder = /datum/ai_holder/hivemnd
 	// ВЫДАТЬ НАТУРАЛ ВЕАПОН
 
 /mob/living/simple_animal/hostile/hivemind/New()
@@ -166,7 +217,7 @@
 	var/icon/infested = new /icon(icon, icon_state)
 	var/icon/covering_mask = new /icon('mods/hivemind/icons/hivemind.dmi', "covering[rand(1, 3)]")
 	infested.Blend(covering_mask, ICON_MULTIPLY)
-	overlays += infested
+	AddOverlays(infested)
 
 	maxHealth = victim.maxHealth * 2 + 10
 	health = maxHealth
@@ -289,7 +340,7 @@
 /mob/living/simple_animal/hostile/hivemind/bomber/death()
 	..()
 	gibs(loc, null, /obj/gibspawner/robot)
-	explosion(get_turf(src), 1, EX_ACT_LIGHT)
+	explosion(get_turf(src), 0, 1, 2, 0, 0, 0, 0, 0)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/hivemind/bomber/attack_target()
@@ -487,8 +538,9 @@
 	var/fake_dead = FALSE
 	var/fake_dead_wait_time = 0
 	var/fake_death_cooldown = 0
-	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
-	say_list_type = /datum/say_list/hiborg
+	ai_holder = /datum/ai_holder/hivemind/himan
+	say_list_type = /datum/say_list/himan
+
 
 /datum/say_list/himan
 	speak = list(
@@ -508,7 +560,11 @@
 						"Hey! I'm friendly! Wait, it's just a-UGH"
 						)
 
-/* TO DO - переписать в холдер как для паука-невидимки
+/datum/ai_holder/hivemind/himan
+	pointblank = FALSE
+	cooperative = FALSE
+	flee_when_dying = TRUE
+
 /mob/living/simple_animal/hostile/hivemind/himan/Life()
 	. = ..()
 
@@ -524,19 +580,14 @@
 	//shhhh, there an ambush
 	if(fake_dead)
 		stance = STANCE_DISABLED
-
-
-/mob/living/simple_animal/hostile/hivemind/himan/speak()
-	if(!fake_dead)
-		..()
-
+		speak_chance = 0
 
 /mob/living/simple_animal/hostile/hivemind/himan/mulfunction()
 	if(fake_dead)
 		return
 	..()
 
-
+/*
 /mob/living/simple_animal/hostile/hivemind/himan/MoveToTarget()
 	if(!fake_dead)
 		..()
@@ -548,15 +599,15 @@
 				stance = STANCE_ATTACKING
 
 
-/mob/living/simple_animal/hostile/hivemind/himan/afterattack()
-	if(fake_dead)
-		if(!Adjacent(target_mob))
+/datum/ai_holder/hivemind/himan/post_melee_attack()
+	if(holder.fake_dead)
+		if(!holder.Adjacent(target_mob))
 			return
-		if(target_mob && (world.time > fake_dead_wait_time))
+		if(target_mob && (world.time > holder.fake_dead_wait_time))
 			awake()
 	else
 		..()
-
+*/
 //Shriek stuns our victims and make them deaf for a while
 /mob/living/simple_animal/hostile/hivemind/himan/special_ability()
 	visible_emote("screams!")
@@ -570,7 +621,7 @@
 				continue
 		victim.Weaken(5)
 		victim.ear_deaf = 40
-		victim << SPAN_WARNING("You hear loud and terrible scream!")
+		victim.visible_message(SPAN_WARNING("You hear loud and terrible scream!"))
 	special_ability_cooldown = world.time + ability_cooldown
 
 
@@ -596,7 +647,6 @@
 	stance = STANCE_IDLE
 	fake_death_cooldown = world.time + 2 MINUTES
 
-*/
 
 /////////////////////////////////////MECHIVER/////////////////////////////////
 //Mech + Hive + Driver
@@ -615,7 +665,7 @@
 	icon_dead = "mechiver-dead"
 	health = 450
 	maxHealth = 450
-	harm_intent_damage = 15
+	harm_intent_damage = 0
 	mob_size = MOB_LARGE
 	attacktext = "tramples"
 	ability_cooldown = 1 MINUTE
@@ -627,6 +677,20 @@
 	var/hatch_closed = TRUE
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/mechiver
+
+
+
+	natural_weapon = /obj/item/natural_weapon/juggernaut
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = ARMOR_MELEE_RESISTANT,
+		"bullet" = ARMOR_BALLISTIC_RESISTANT,
+		"laser" = ARMOR_LASER_MAJOR,
+		"energy" = ARMOR_ENERGY_RESISTANT,
+		"bomb" = ARMOR_BOMB_RESISTANT,
+		"bio" = 100,
+		"rad" = 100
+	)
 
 /datum/say_list/mechiver
 	//default speaking
@@ -677,11 +741,11 @@
 	//when we have passenger, we torture him
 	if(passenger && prob(15))
 		passenger.apply_damage(rand(5, 10), pick(DAMAGE_BRUTE, DAMAGE_BURN, DAMAGE_TOXIN))
-		passenger << SPAN_DANGER(pick(
+		passenger.visible_message(SPAN_DANGER(pick(
 								"Something grabs your neck!", "You hear whisper: \" It's okay, now you're sa-sa-safe! \"",
 								"You've been hit by something metal", "You almost can't feel your leg!", "Something liquid covers you!",
 								"You feel awful and smell something rotten", "Something sharp cut your cheek!",
-								"You feel something worm-like trying to wriggle into your skull through your ear..."))
+								"You feel something worm-like trying to wriggle into your skull through your ear...")))
 		anim_shake(src)
 		playsound(src, 'sound/effects/clang.ogg', 70, 1)
 
@@ -722,18 +786,18 @@
 		if(pilot)
 			flick("mechiver-opening", src)
 			icon_state = "mechiver-chief"
-			overlays += "mechiver-hands"
+			AddOverlays("mechiver-hands")
 		else
 			flick("mechiver-opening_wires", src)
 			icon_state = "mechiver-welcome"
-			overlays += "mechiver-wires"
+			AddOverlays("mechiver-wires")
 		hatch_closed = FALSE
 	else
 		overlays.Cut()
 		hatch_closed = TRUE
 		icon_state = "mechiver-closed"
 		if(passenger)
-			overlays += "mechiver-process"
+			AddOverlays("mechiver-process")
 
 
 /mob/living/simple_animal/hostile/hivemind/mechiver/attack_target(target_mob)
@@ -1036,6 +1100,17 @@
 //	hivemind_max_cooldown = 80
 
 	projectiletype = /obj/item/projectile/goo
+	natural_weapon = /obj/item/natural_weapon/juggernaut/behemoth
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = ARMOR_MELEE_MAJOR,
+		"bullet" = ARMOR_BALLISTIC_RESISTANT,
+		"laser" = ARMOR_LASER_MAJOR,
+		"energy" = ARMOR_ENERGY_RESISTANT,
+		"bomb" = ARMOR_BOMB_RESISTANT,
+		"bio" = 100,
+		"rad" = 100
+	)
 
 /mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/death()
 	..()

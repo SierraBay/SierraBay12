@@ -11,7 +11,7 @@
 	desc = "strange wires"
 	icon = 'mods/hivemind/icons/hivemind_obj.dmi'
 	icon_state = "wires"
-	layer = CATWALK_LAYER
+	layer = ABOVE_CATWALK_LAYER
 	health_max = 80 //we are a little bit durable
 
 	density = FALSE
@@ -184,7 +184,7 @@
 			else if (T.y > y)
 				wall_hug_overlay.pixel_y += 32
 			wall_hug_overlay.layer = ABOVE_WINDOW_LAYER
-			overlays += wall_hug_overlay
+			AddOverlays(wall_hug_overlay)
 		var/image/wall_hug_corner = (image(icon = src.icon, icon_state = "wall_corner", dir = direction))
 		var/turf/Y = get_step(loc, NORTH)
 		if((locate(/obj/structure/wall_frame) in T) && (locate(/obj/structure/wall_frame) in Y) || istype(T, /turf/simulated/wall) && istype(Y, /turf/simulated/wall))
@@ -197,7 +197,7 @@
 				wall_hug_corner.pixel_x -= 32
 				wall_hug_corner.pixel_y += 32
 			wall_hug_corner.layer = ABOVE_WINDOW_LAYER
-			overlays += wall_hug_corner
+			AddOverlays(wall_hug_corner)
 
 /obj/wireweed/proc/update_connections(propagate = 0)
 	var/list/dirs = list()

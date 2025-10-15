@@ -63,10 +63,10 @@ GLOBAL_VAR_INIT(hivemind_panel)
 		data += "<br>Hivemind [hive_mind_ai.name] [hive_mind_ai.surname] is active."
 		data += "<br>Evolution points: [hive_mind_ai.evo_points]"
 	//	data += "<br>Evolution level: [hive_mind_ai.evo_level]"
-		data += "<br>Nodes count: [hive_mind_ai.hives.len]"
+		data += "<br>Nodes count: [LAZYLEN(hive_mind_ai.hives)]"
 		data += "<br>Areas count: [LAZYLEN(GLOB.hivemind_areas)] \
 	//	<a href='?src=\ref[src];area_list_interact=1'>\[DETAILS\]</a>"
-		data += "<br>Mobs count: [GLOB.hivemind_mobs.len] \
+		data += "<br>Mobs count: [LAZYLEN(GLOB.hivemind_mobs)] \
 		<a href='?src=\ref[src];mob_list_interact=1'>\[DETAILS\]</a>"
 	else
 		data += "<br>Hivemind is not active. Yet."

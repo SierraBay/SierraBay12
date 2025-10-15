@@ -100,7 +100,7 @@
 				if(!O.CanPass(master, T))
 					continue
 		places_to_spawn.Add(T)
-	if(!places_to_spawn.len)
+	if(!LAZYLEN(places_to_spawn))
 		places_to_spawn.Add(get_turf(master))
 
 	var/mob/living/simple_animal/hostile/hivemind/champion
@@ -138,7 +138,7 @@
 		champion.health += 150
 		champion.malfunction_chance = 0
 		champion.name = "Champion "
-		if(i > champ_names.len)
+		if(i > LAZYLEN(champ_names))
 			champion.name = champion.name + " " + champ_names[LAZYLEN(champ_names)]
 		else
 			champion.name = champion.name + " " + champ_names[i]
