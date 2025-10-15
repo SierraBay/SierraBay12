@@ -350,3 +350,9 @@
 /datum/gear/suit/trench
 	display_name = "trenchcoat"
 	path = /obj/item/clothing/suit/storage/toggle/new_suit/trench
+
+// Other robes
+/datum/gear/suit/moonlightrobe
+	display_name = "moonlight robe"
+	allowed_roles = SERVICE_ROLES
+	path = /obj/item/clothing/suit/storage/hooded/moonrobe
