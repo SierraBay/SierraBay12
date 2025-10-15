@@ -11,7 +11,7 @@
 		owner.engage()
 		return 1
 	owner.Trigger()
-	return 1
+	return TRUE
 
 /obj/screen/movable/action_button/CtrlClick(mob/living/user)
 	if(istype(src, /datum/action/module_select))
@@ -53,7 +53,6 @@
 	if(!Checks())
 		return
 	if(istype(target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = target
 		module = target
 		if(module.holder)
 			module.engage()
@@ -84,7 +83,6 @@
 	if(!Checks())
 		return
 	if(istype(target, /obj/item/rig_module))
-		var/obj/item/rig_module/module = target
 		module = target
 		if(module.holder)
 			module.engage()

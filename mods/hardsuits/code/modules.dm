@@ -1,7 +1,3 @@
-// Called at the module init, used to fill module charges if needed
-/obj/item/rig_module/proc/init_charges()
-	return
-
 /obj/item/rig/proc/find_module(module_type)
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(istype(module, module_type))
@@ -52,9 +48,8 @@
 	module_cooldown = 0
 	origin_tech = "engineering=3;programming=3"
 
-/obj/item/rig_module/selfrepair/init_charges()
-	charges = list()
-	charges["metal"] = new /datum/rig_charge("metal", "metal", 30)
+	charges = list(
+		list("steel",   "steel",   /obj/item/stack/material/steel,  30))
 
 /obj/item/rig_module/selfrepair/activate(forced = FALSE)
 	if(!..())
@@ -62,7 +57,7 @@
 
 	var/mob/living/carbon/human/H = holder.wearer
 
-	to_chat(H, "<span class='notice'>Starting self-repair sequence</span>")
+	to_chat(H, SPAN_NOTICE("Starting self-repair sequence"))
 
 	return TRUE
 
@@ -74,10 +69,10 @@
 
 	if(!holder.chest.brute_damage && !holder.chest.burn_damage)
 		deactivate()
-		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		to_chat(H, SPAN_NOTICE("Self-repair is completed."))
 		return passive_power_cost
 
-	var/datum/rig_charge/charge = charges["metal"]
+	var/datum/rig_charge/charge = charges["steel"]
 
 	if(!charge)
 		deactivate()
@@ -100,7 +95,7 @@
 		active_power_cost = chargeuse * 150
 	else
 		deactivate()
-		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+		to_chat(H, SPAN_DANGER("Not enough materials to continue self-repair"))
 
 	return active_power_cost
 
@@ -109,7 +104,7 @@
 
 	if(istype(input_item, /obj/item/stack/material/steel) && istype(H) && user == H)
 		var/obj/item/stack/material/steel/metal = input_item
-		var/datum/rig_charge/charge = charges["metal"]
+		var/datum/rig_charge/charge = charges["steel"]
 
 		var/total_used = 30
 		total_used = min(total_used, 30 - charge.charges)
@@ -118,7 +113,7 @@
 		metal.use(total_used)
 		charge.charges += total_used
 		if(total_used)
-			to_chat(user, "<font color='notice'>You transfer [total_used] of metal lists into the suit reservoir.</font>")
+			to_chat(user, SPAN_NOTICE("You transfer [total_used] of metal lists into the suit reservoir."))
 		return TRUE
 
 	return FALSE
@@ -142,10 +137,10 @@
 
 	if(!holder.chest.brute_damage && !holder.chest.burn_damage && !DBP)
 		deactivate()
-		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		to_chat(H,SPAN_NOTICE("Self-repair is completed."))
 		return passive_power_cost
 
-	var/datum/rig_charge/charge = charges["metal"]
+	var/datum/rig_charge/charge = charges["steel"]
 
 	if(!charge)
 		deactivate()
@@ -180,6 +175,6 @@
 		active_power_cost = chargeuse * 200
 	else
 		deactivate()
-		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+		to_chat(H, SPAN_DANGER("Not enough materials to continue self-repair"))
 
 	return active_power_cost

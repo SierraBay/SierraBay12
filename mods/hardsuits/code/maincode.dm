@@ -63,7 +63,7 @@
 /obj/item/rig_module/proc/activate()
 
 	if(active || !engage())
-		return 0
+		return FALSE
 
 	active = 1
 
@@ -82,7 +82,7 @@
 /obj/item/rig_module/proc/deactivate()
 
 	if(!active)
-		return 0
+		return FALSE
 
 	active = 0
 
