@@ -1,4 +1,4 @@
-/datum/event/mob_spawning/whale
+/datum/event/mob_spawning/whale_migration
 	announceWhen = 5
 	endWhen = 10
 	wave_to_spawn = 2
