@@ -782,7 +782,7 @@
 	if(target_mob && !passenger && (get_dist(target_mob, src) <= 4) && !is_on_cooldown())
 		if(!hatch_closed)
 			return
-		overlays.Cut()
+		CutOverlays()
 		if(pilot)
 			flick("mechiver-opening", src)
 			icon_state = "mechiver-chief"
@@ -793,7 +793,7 @@
 			AddOverlays("mechiver-wires")
 		hatch_closed = FALSE
 	else
-		overlays.Cut()
+		CutOverlays()
 		hatch_closed = TRUE
 		icon_state = "mechiver-closed"
 		if(passenger)

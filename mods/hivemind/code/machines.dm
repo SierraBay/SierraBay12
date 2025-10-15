@@ -36,8 +36,8 @@
 		return TRUE
 
 
-/obj/machinery/hivemind_machine/update_icon()
-	overlays.Cut()
+/obj/machinery/hivemind_machine/on_update_icon()
+	CutOverlays()
 	if(stat & MACHINE_STAT_EMPED)
 		icon_state = "[icon_state]-disabled"
 	else
@@ -141,14 +141,14 @@
 /obj/machinery/hivemind_machine/proc/stun(amount)
 	set_light(0)
 	stat |= MACHINE_STAT_EMPED
-	update_icon()
+	on_update_icon()
 	if(amount)
 		addtimer(new Callback(src, .proc/unstun), amount SECONDS)
 
 
 /obj/machinery/hivemind_machine/proc/unstun()
 	stat &= ~ MACHINE_STAT_EMPED
-	update_icon()
+	on_update_icon()
 	set_light(2, 3, illumination_color)
 
 
@@ -212,7 +212,7 @@
 
 	hive_mind_ai.hives.Add(src)
 
-	update_icon()
+	on_update_icon()
 
 	var/obj/wireweed/master/founded_wire = locate() in loc
 	if(!founded_wire)
@@ -259,8 +259,8 @@
 		add_wireweed(wireweed)
 
 
-/obj/machinery/hivemind_machine/node/update_icon()
-	overlays.Cut()
+/obj/machinery/hivemind_machine/node/on_update_icon()
+	CutOverlays()
 	if(stat & MACHINE_STAT_EMPED)
 		icon_state = "core-disabled"
 		AddOverlays("core-smirk_disabled")
@@ -471,7 +471,7 @@
 
 /obj/machinery/hivemind_machine/screamer/use_ability(mob/living/target)
 	target.Weaken(5)
-	target << SPAN_WARNING("You hear a terrible shriek, there are many voices, a male, a female and synthetic noise.")
+	target.audible_message(SPAN_WARNING("You hear a terrible shriek, there are many voices, a male, a female and synthetic noise."))
 
 
 
@@ -509,7 +509,7 @@
 
 
 /obj/machinery/hivemind_machine/supplicant/use_ability(mob/living/target)
-	target << SPAN_NOTICE("<b>[pick(join_quotes)]</b>")
+	target.audible_message(SPAN_NOTICE("<b>[pick(join_quotes)]</b>"))
 
 
 //PSY-MODULATOR

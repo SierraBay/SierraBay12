@@ -151,7 +151,7 @@
 /obj/wireweed/update_neighbors()
 	..()
 	update_connections()
-	update_icon()
+	on_update_icon()
 
 /obj/wireweed/Process()
 	if(hive_mind_ai && master_node)
@@ -164,12 +164,12 @@
 		get_current_health()
 
 
-/obj/wireweed/update_icon()
-	overlays.Cut()
+/obj/wireweed/on_update_icon()
+	CutOverlays()
 	var/image/I
 	for(var/i = 1 to 4)
 		I = image(src.icon, "wires[wires_connections[i]]", dir = 1<<(i-1))
-		overlays += I
+		AddOverlays(I)
 	//wallhug
 	for(var/direction in GLOB.cardinal)
 		var/turf/T = get_step(loc, direction)
@@ -189,7 +189,7 @@
 		var/turf/Y = get_step(loc, NORTH)
 		if((locate(/obj/structure/wall_frame) in T) && (locate(/obj/structure/wall_frame) in Y) || istype(T, /turf/simulated/wall) && istype(Y, /turf/simulated/wall))
 			if(T == Y)
-				overlays -= wall_hug_corner
+				CutOverlays(wall_hug_corner)
 			if (T.x > x)
 				wall_hug_corner.pixel_x += 32
 				wall_hug_corner.pixel_y += 32
@@ -204,7 +204,7 @@
 	for(var/obj/wireweed/W in range(1, src) - src)
 		if(propagate)
 			W.update_connections()
-			W.update_icon()
+			W.on_update_icon()
 		dirs += get_dir(src, W)
 
 	wires_connections = dirs_to_corner_states(dirs)
@@ -269,7 +269,7 @@
 				if(!picked_machine)
 					picked_machine = pick(possible_machines)
 				var/obj/machinery/hivemind_machine/new_machine = new picked_machine(loc)
-				new_machine.update_icon()
+				new_machine.on_update_icon()
 
 	if(istype(subject, /mob/living) && !istype(subject, /mob/living/simple_animal/hostile/hivemind))
 		//human bodies
