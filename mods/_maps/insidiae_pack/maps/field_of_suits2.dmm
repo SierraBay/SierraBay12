@@ -11,7 +11,7 @@
 "F" = (/obj/random/trash,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "K" = (/obj/random/biggun,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "L" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
-"O" = (/obj/item/clothing/suit/space/void/iccgn/prepared,/obj/random/contraband,/obj/random/ammo,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"O" = (/obj/item/clothing/suit/space/void/pioneer/prepared,/obj/random/contraband,/obj/random/ammo,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "Q" = (/obj/random/powercell,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "S" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/random/technology_scanner,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
 "Y" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/decal/cleanable/remains,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
