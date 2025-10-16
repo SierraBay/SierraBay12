@@ -63,11 +63,7 @@ NanoBaseCallbacks = function () {
           var uiMapWidth = uiMapObject.width() * zoomLevel
           var uiMapHeight = uiMapObject.height() * zoomLevel
           uiMapObject.css({
-            zoom: zoomLevel,
-            left: '50%',
-            top: '50%',
-            marginLeft: '-' + Math.floor(uiMapWidth / 2) + 'px',
-            marginTop: '-' + Math.floor(uiMapHeight / 2) + 'px'
+            transform: 'scale(' + zoomLevel + ')',
           })
         })
       $('#uiMapImage').attr('src', updateData['config']['mapName'] + '-' + updateData['config']['mapZLevel'] + '.png')
