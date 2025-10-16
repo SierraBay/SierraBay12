@@ -16,7 +16,7 @@
 
 	density = FALSE
 	opacity = 0
-	mouse_opacity = 2
+	mouse_opacity = 1
 	anchored = TRUE
 	damage_hitsound = 'sound/effects/razorweb_break.ogg'
 
@@ -277,7 +277,7 @@
 			var/mob/living/L = subject
 			for(var/obj/item/W in L)
 				L.drop_from_inventory(W)
-			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan, /mob/living/simple_animal/hostile/hivemind/phaser)
+			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan)
 			new M(loc)
 		//robot corpses
 		else if(istype(subject, /mob/living/silicon))

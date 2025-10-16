@@ -61,6 +61,8 @@
 	min_gas = null
 	max_gas = null
 
+	ignore_hazard_flags = HAZARD_FLAG_SHARD
+
 	armor_type = /datum/extension/armor
 	natural_armor = list(
 		"melee" = 0,
@@ -334,7 +336,7 @@
 
 /mob/living/simple_animal/hostile/hivemind/bomber/Initialize()
 	..()
-	set_light(2, 1, "#820D1C")
+	set_light(2, 1, COMMS_COLOR_SECURITY)
 
 
 /mob/living/simple_animal/hostile/hivemind/bomber/death()
@@ -563,7 +565,6 @@
 /datum/ai_holder/hivemind/himan
 	pointblank = FALSE
 	cooperative = FALSE
-	flee_when_dying = TRUE
 
 /mob/living/simple_animal/hostile/hivemind/himan/Life()
 	. = ..()
@@ -678,7 +679,8 @@
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/mechiver
 
-
+	mob_flags = MOB_FLAG_UNPINNABLE
+	can_be_buckled = FALSE
 
 	natural_weapon = /obj/item/natural_weapon/juggernaut
 	armor_type = /datum/extension/armor
@@ -703,35 +705,8 @@
 				"Time to be-to be-to be whole.",
 				"Enter me, i'm be-best mech among all of these rusty buckets.",
 				"I'm dying. I can't see my ha-hands! I'm scared, hu-hu-hug me.",
+				"Get in! I've got a seat just for you.",
 				"I'm not done, it can't be... Hey! Hey you, enter me!")
-	//speaking with pilot
-	var/list/common_answers = list(
-								"Right, chief.",
-								"Yes.",
-								"Right.",
-								"True.",
-								"Yep.",
-								"That's right, chief.")
-	var/list/other_answers = list(
-								"Pathetic.",
-								"How curious.",
-								"We can use it.",
-								"Useless.",
-								"Disgusting")
-	//pilot quotes
-	var/list/pilot_target_speak = list(
-						"Hey! Hey you, wanna, hah, ri-i-ide? It's free!",
-						"Look at this one! Let's-s-s... Take it.",
-						"Wait a minute, we just want to fu-fu-fun with you!",
-						"I see you. We see you.",
-						"Get in! I've got a seat just for you.",
-						"Don't be afraid, it's almost painless.")
-	var/list/pilot_commontalk = list(
-						"They are so unfinished, so fragile-ile.",
-						"Look at these... Creatures, I've never seen them before.",
-						"Hah, did you hear that? They're trying to use some sort of we-wep-weapons!",
-						"Useless things, i'm not satisfied.",
-						"This place sucks, man. So creep-p-pew-wepy and no fun, only rudimentary creatures would enjoy living here.")
 
 
 /mob/living/simple_animal/hostile/hivemind/mechiver/Life()
@@ -760,20 +735,6 @@
 					walk_to(src, Corpse, 1, 1, 4)
 				break
 
-
-/* TO DO - Пофиксить диалоги о рыбалке
-/mob/living/simple_animal/hostile/hivemind/mechiver/speak()
-	if(!client && prob(speak_chance) && LAZYLEN(speak))
-		if(pilot)
-			if(target_mob)
-				visible_message("<b>[name]'s pilot</b> says, [pick(pilot_target_speak)]")
-				say(pick(common_answers))
-			else
-				visible_message("<b>[name]'s pilot</b> says, [pick(pilot_commontalk)]")
-				say(pick(other_answers))
-		else
-			..()
-*/
 
 //animations
 //updates every life tick
@@ -892,183 +853,6 @@
 	qdel(src)
 
 
-/////////////////////////////////////PHASER///////////////////////////////////
-//Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
-//Moves with teleportation only, can stun victim if he land on it
-//Also can hide in closets
-//Can't speak, no malfunctions
-//Appears from dead human body
-//////////////////////////////////////////////////////////////////////////////
-
-/mob/living/simple_animal/hostile/hivemind/phaser
-	name = "phaser"
-	desc = "A Crooked human with a strange device on its head. It twitches sometimes and... Why are you still looking? Run!"
-	icon = 'mods/hivemind/icons/hivemind.dmi'
-	icon_state = "phaser-1"
-	health = 120
-	maxHealth = 120
-	speak_chance = 0
-	malfunction_chance = 0
-	mob_size = MOB_MEDIUM
-	ability_cooldown = 2 MINUTES
-	//internals
-	var/can_use_special_ability = TRUE
-	var/list/my_copies = list()
-	ai_holder = /datum/ai_holder/simple_animal/melee/evasive
-
-/mob/living/simple_animal/hostile/hivemind/phaser/New()
-	..()
-	filters += filter(type="blur", size = 0)
-
-/* TO DO - наверное от туннелера код взять? Хотя тут у нас ещё и прятаться в шкафах можно, как понимаю - LordNest
-
-/mob/living/simple_animal/hostile/hivemind/phaser/Life()
-	stance = STANCE_DISABLED
-	. = ..()
-
-	//special ability using
-	if(world.time > special_ability_cooldown && can_use_special_ability)
-		if(target_mob && (health <= 50))
-			special_ability()
-
-	//closet hiding
-	if(!target_mob)
-		var/obj/structure/closet/C = locate() in get_turf(src)
-		if(C && loc != C)
-			if(!C.opened)
-				C.open(src)
-			if(C.opened)
-				C.close(src)
-		for(var/obj/structure/closet/Closet in view(src))
-			if(!Closet.locked && !Closet.welded)
-				phase_move_to(Closet)
-				break
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/AttackTarget()
-	if(target_mob && get_dist(src, target_mob) > 1)
-		stance = STANCE_ATTACK
-	..()
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/MoveToTarget()
-	if(!target_mob || SA_attackable(target_mob))
-		stance = STANCE_IDLE
-	if(target_mob in ListTargets(10))
-		if(get_dist(src, target_mob) > 1)
-			stance = STANCE_ATTACK
-			phase_move_to(target_mob, nearby = TRUE)
-		else
-			stance = STANCE_ATTACKING
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/proc/is_can_jump_on(turf/target)
-	if(!target || target.density || istype(target, /turf/space) || istype(target, /turf/simulated/open))
-		return FALSE
-
-	//to prevent reflection's stacking
-	var/mob/living/simple_animal/hostile/hivemind/phaser/P = locate() in target
-	if(P)
-		return FALSE
-
-	for(var/obj/O in target)
-		if(!O.CanPass(src, target))
-			return FALSE
-
-	return TRUE
-
-
-//first part of phase moving is just preparation
-/mob/living/simple_animal/hostile/hivemind/phaser/proc/phase_move_to(atom/target, nearby = FALSE)
-	var/turf/new_place
-	var/distance_to_target = get_dist(src, target)
-	var/turf/target_turf = get_turf(target)
-	//if our target is near, we move precisely to it
-	if(distance_to_target <= 3)
-		if(nearby)
-			for(var/d in GLOB.alldirs)
-				var/turf/nearby_turf = get_step(new_place, d)
-				if(is_can_jump_on(nearby_turf))
-					new_place = nearby_turf
-		else
-			new_place = target_turf
-
-	if(!new_place)
-		//there we make some kind of, you know, that creepy zig-zag moving
-		//we just take angle, distort it a bit and turn into dir
-		var/angle = Get_Angle(loc, target_turf)
-		angle += rand(5, 25)*pick(-1, 1)
-		if(angle < 0)
-			angle = 360 + angle
-		if(angle > 360)
-			angle = 360 - angle
-		var/tp_direction = angle2dir(angle)
-		new_place = get_ranged_target_turf(loc, tp_direction, rand(2, 4))
-
-	if(!is_can_jump_on(new_place))
-		return
-	//an animation
-	var/init_px = pixel_x
-	animate(src, pixel_x=init_px + 16*pick(-1, 1), time=5)
-	animate(pixel_x=init_px, time=6, easing=SINE_EASING)
-	animate(filters[1], size = 5, time = 5, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/phase_jump, new_place), 0.5 SECOND)
-
-
-//second part - is jump to target
-/mob/living/simple_animal/hostile/hivemind/phaser/proc/phase_jump(turf/place)
-	playsound(place, 'sound/effects/phasein.ogg', 60, 1)
-	animate(filters[1], size = 0, time = 5)
-	icon_state = "phaser-[rand(1,4)]"
-	src.loc = place
-	for(var/mob/living/L in loc)
-		if(L != src)
-			visible_message("<b>[src]</b> land on <b>[L]</b>!")
-			playsound(place, 'sound/effects/ghost2.ogg', 70, 1)
-			L.Weaken(3)
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/special_ability()
-	my_copies = list() //let's clean it up
-	var/possible_directions = GLOB.alldirs - GLOB.cardinal
-	var/turf/spawn_point = get_turf(src)
-	//we gives to copies our appearence and pick random direction for them
-	//with animation it's hard to say, who's real. And i hope it looks great
-	for(var/i = 1 to 3)
-		var/mob/living/simple_animal/hostile/hivemind/phaser/reflection = new type(spawn_point)
-		reflection.can_use_special_ability = FALSE
-		var/mutable_appearance/my_appearance = new(src)
-		reflection.appearance = my_appearance
-		my_copies.Add(reflection)
-
-		var/d = pick(possible_directions)
-		possible_directions -= d
-		var/turf/new_position = get_step(spawn_point, d)
-		if(reflection.is_can_jump_on(new_position))
-			spawn(1) //ugh, i know, i know, it's bad. Animation
-				reflection.forceMove(new_position)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, reflection), 60 SECONDS)
-	loc = get_step(spawn_point, possible_directions[1]) //there must left last direction
-	special_ability_cooldown = world.time + ability_cooldown
-	playsound(spawn_point, 'sound/effects/cascade.ogg', 100, 1)
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/closet_interaction()
-	var/obj/structure/closet/closed_closet = loc
-	if(closed_closet && istype(closed_closet) && closed_closet.welded)
-		phase_jump(closed_closet.loc)
-
-
-/mob/living/simple_animal/hostile/hivemind/phaser/death()
-	if(LAZYLEN(my_copies))
-		for(var/mob/living/simple_animal/hostile/hivemind/phaser/My_copy in my_copies)
-			qdel(My_copy)
-	..()
-	gibs(loc, null, /obj/gibspawner/human)
-	qdel(src)
-*/
-
-
 /////////////////////////////////////TYRANT///////////////////////////////////
 //Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
 //Moves with teleportation only, can stun victim if he land on it
@@ -1090,12 +874,13 @@
 	pixel_x = -16
 	ranged = TRUE
 
+	mob_flags = MOB_FLAG_UNPINNABLE
+	can_be_buckled = FALSE
+
 	health = 1850
-	maxHealth = 1850 //Only way for it to show up right now is via adminbus OR Champion call (which gives it 150hp). For comparison Kaiser has 2000hp
+	maxHealth = 1850 //Only way for it to show up right now is via adminbus OR Champion call (which gives it 150hp).
 	break_stuff_probability = 95
 
-//	melee_damage_lower = 30
-//	melee_damage_upper = 35 //similar damage to the mechiver
 //	hivemind_min_cooldown = 50
 //	hivemind_max_cooldown = 80
 
@@ -1134,21 +919,3 @@
 		return 0
 	if(client)
 		return 0
-
-/*
-/mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/OpenFire()
-	ranged_cooldown = world.time + 120
-	walk(src, 0)
-	telegraph()
-	spawn(rand(hivemind_min_cooldown, hivemind_max_cooldown))
-		if(prob(50))
-			random_shots()
-			move_to_delay = initial(move_to_delay)
-			MoveToTarget()
-			return
-		else
-			select_spiral_attack()
-			move_to_delay = initial(move_to_delay)
-			MoveToTarget()
-			return
-*/
