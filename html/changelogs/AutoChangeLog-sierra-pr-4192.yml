@@ -1,0 +1,5 @@
+author: Banditoz
+changes:
+  - {bugfix: The heart now stops when severed or forcibly removed from a 
+      patient.}
+delete-after: true
