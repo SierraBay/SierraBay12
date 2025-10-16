@@ -243,9 +243,10 @@
     background-image: url(uiIcons16Green.png);
     background-position: -48px -112px; /* Question Mark */
     background-repeat: no-repeat;
-    zoom: 0.125;
-    margin-left: -1px;
+    transform: scale(0.125);
     /*margin-bottom: -1px;*/
+	margin-left: -8px;
+    margin-bottom: 8px;
 }
 .mapIcon16.dead {
     background-image: url(uiIcons16Red.png);
