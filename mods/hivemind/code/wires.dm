@@ -67,6 +67,7 @@
 
 /obj/wireweed/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	. = ..()
 	if(master_node)
 		master_node.my_wireweeds.Remove(src)
 	GLOB.hivemind_areas[my_area]--
@@ -74,11 +75,15 @@
 		GLOB.hivemind_areas.Remove(my_area)
 	return ..()
 
+/obj/wireweed/on_death()
+	playsound(loc, 'sound/effects/razorweb_break.ogg', 50, 1)
+	qdel(src)
+
 /obj/wireweed/proc/regen()
 	restore_health(regen_rate)
 
 /obj/wireweed/proc/expand(turf/T)
-	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB || istype(T, /turf/simulated/open)) // We're using same logic plus open spaces won't became traps for personnel
+	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB || istype(T, /turf/simulated/open) & !locate(/obj/structure/catwalk) in T) // We're using same logic plus open spaces won't became traps for personnel
 		return
 
 	if (!istype(T) || T.density || locate(/obj/structure/wall_frame) in T) // We can go under machines or doors, but not through solid walls plus wallframes
@@ -162,7 +167,8 @@
 		health_current -= 10
 		alpha = 255 * health_current/health_max
 		get_current_health()
-
+		if(health_current == 0)
+			Destroy()
 
 /obj/wireweed/on_update_icon()
 	CutOverlays()
@@ -340,13 +346,14 @@
 // Master wireweed node. Because we don't wanna mess with machinery
 
 /obj/wireweed/master
-	var/growth_range = 20 // Maximal distance for new wireweed pieces from this core.
+	var/growth_range = 12 // Maximal distance for new wireweed pieces from this core.
 	var/blob_may_process = 1
 	var/reported_low_damage = FALSE
 	var/times_to_pulse = 1 // Because we not THAT dangerous as blob tiles
 
 /obj/wireweed/master/Process()
 	for(var/I in 1 to times_to_pulse)
-		pulse(20, GLOB.alldirs)
+		pulse(30, GLOB.alldirs)
+	..()
 
 #undef HIVE_FACTION

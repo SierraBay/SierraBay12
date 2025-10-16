@@ -157,16 +157,16 @@
 	. = ..()
 
 
-/obj/machinery/hivemind_machine/attack_hand(obj/item/I, mob/user)
-	if(I.force)
+/obj/machinery/hivemind_machine/use_weapon(obj/item/weapon, mob/user, list/click_params)
+	if(weapon.force)
 		user.do_attack_animation(src)
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
 		. = ..()
-		take_damage(I.force)
+		take_damage(weapon.force)
 	else
-		visible_message(SPAN_WARNING("[user] is trying to hit the [src] with [I], but it seems useless."))
+		visible_message(SPAN_WARNING("[user] is trying to hit the [src] with [weapon], but it seems useless."))
 		playsound(src, 'sound/weapons/Genhit.ogg', 30, 1)
 
 
