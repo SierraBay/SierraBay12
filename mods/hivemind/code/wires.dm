@@ -112,7 +112,7 @@
 	for (var/dir in GLOB.cardinal)
 		var/obj/wireweed/L = locate(/obj/wireweed, get_step(location, dir))
 		if(L)
-			L.update_icon()
+			L.on_update_icon()
 
 /obj/wireweed/proc/try_to_assimilate()
 	if(hive_mind_ai && master_node)
@@ -168,7 +168,7 @@
 	CutOverlays()
 	var/image/I
 	for(var/i = 1 to 4)
-		I = image(src.icon, "wires[wires_connections[i]]", dir = 1<<(i-1))
+		I = image(src.icon, "wires[wires_connections[i]]", dir = SHIFTL(1, i-1))
 		AddOverlays(I)
 	//wallhug
 	for(var/direction in GLOB.cardinal)
