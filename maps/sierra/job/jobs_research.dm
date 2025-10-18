@@ -124,7 +124,7 @@
 	ideal_character_age = 27
 	alt_titles = list(
 			"Biomechanical Engineer",
-			"Exosuit Technician",
+			"Mechatronic Technician",
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/roboticist
 	allowed_branches = list(
@@ -142,7 +142,6 @@
 			SKILL_DEVICES		=	SKILL_EXPERIENCED,
 			SKILL_ANATOMY		=	SKILL_TRAINED,
 			SKILL_MECH			=	HAS_PERK,
-			SKILL_MEDICAL		=	SKILL_BASIC,
 			SKILL_ELECTRICAL	=	SKILL_TRAINED
 		)
 
@@ -156,13 +155,14 @@
 			SKILL_ANATOMY		=	SKILL_EXPERIENCED
 		)
 
-	skill_points = 22
+	skill_points = 26
 
 	access = list(
 			access_robotics,
 			access_research,
 			access_tech_storage,
-			access_research_storage
+			access_research_storage,
+			access_medical_records
 		)
 
 

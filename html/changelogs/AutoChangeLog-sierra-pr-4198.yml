@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - {bugfix: Fix for AI core construction steps.}
+delete-after: true

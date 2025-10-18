@@ -1,0 +1,33 @@
+"a" = (/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"e" = (/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"f" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/item/device/radio,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"i" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/random/energy,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"k" = (/obj/landmark/corpse/field_of_suits_poor_fellow,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"m" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/decal/cleanable/remains,/obj/random/energy,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"n" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"t" = (/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"u" = (/turf/template_noop,/area/template_noop)
+"C" = (/obj/random/firstaid,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"D" = (/obj/landmark/clear,/obj/item/clothing/suit/space/void/pioneer/prepared,/turf/template_noop,/area/template_noop)
+"E" = (/obj/random/tank,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"F" = (/obj/random/trash,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"K" = (/obj/random/contraband,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"L" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/device/radio,/obj/decal/cleanable/remains,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"O" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/random/coin,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"Q" = (/obj/random/powercell,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"S" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"Y" = (/obj/item/clothing/suit/space/void/excavation/field_of_suits,/obj/item/clothing/head/helmet/space/void/excavation/field_of_suits,/obj/decal/cleanable/remains,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"Z" = (/obj/item/device/binoculars,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+uuuuuaaaauuuu
+uuaaaaaFaaauu
+uaDEaamafaauu
+uaaaeaaZataaa
+aCaaSnFKSiFaa
+uaaFaknCeYaaa
+uaaeLaaakaEau
+uKQaeSaOaFaau
+uuuaaaFaeauuu
+uuuuaauauuuuu
+"}

@@ -64,3 +64,42 @@
 
 	if(istype(loc, /obj/item/clothing/suit/space/void/exploration) || istype(loc, /obj/item/clothing/suit/space/void/atmos/alt))
 		return overlay_image(accessory_icons[slot], "colorcloak_fat", color, RESET_COLOR)
+
+// Different robes
+/obj/item/clothing/suit/storage/hooded/moonrobe
+	name = "moonlight robe"
+	desc = "A robe with a full moon and a guiding star depicted on the front and a young crescent moon on the back."
+	icon = 'maps/sierra/icons/obj/clothing/robes_moon_star.dmi'
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/robes_moon_star.dmi')
+	icon_state = "moonlight_male_robe"
+	item_state = "moonlight_male_robe"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)
+	armor = list(
+		bio = ARMOR_BIO_MINOR
+		)
+	action_button_name = "Toggle Moonlight Hood"
+	hoodtype = /obj/item/clothing/head/moonrobehood
+	allowed = list (/obj/item/pen, /obj/item/paper, /obj/item/device/flashlight,/obj/item/storage/fancy/smokable, /obj/item/storage/fancy/matches, /obj/item/reagent_containers/food/drinks/flask)
+	siemens_coefficient = 0.6
+
+/obj/item/clothing/head/moonrobehood
+	name = "moonlight hood"
+	desc = "A hood attached to a moonlight robe."
+	icon = 'maps/sierra/icons/obj/clothing/robes_moon_star.dmi'
+	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/robes_moon_star.dmi')
+	icon_state = "moonlight_robe_hood"
+	item_state = "moonlight_robe_hood"
+	visible_name = "unknown"
+	body_parts_covered = HEAD | FACE
+	cold_protection = HEAD
+	flags_inv = HIDEFACE | HIDEEARS | BLOCKHAIR
+	item_flags = ITEM_FLAG_WASHER_ALLOWED | ITEM_FLAG_INVALID_FOR_CHAMELEON
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/head/moonrobehood/attack_hand(mob/living/carbon/human/H)
+	if(src == H.head)
+		return
+	..()

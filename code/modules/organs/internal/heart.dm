@@ -36,6 +36,8 @@
 			if(pulse == PULSE_THREADY && prob(5))
 				take_internal_damage(0.5)
 		handle_blood()
+	else if(pulse)
+		stop() // heart was removed from the patient and the heart is still beating.. not anymore!
 	..()
 
 /obj/item/organ/internal/heart/proc/handle_pulse()
@@ -77,8 +79,7 @@
 		should_stop = should_stop || prob(max(0, owner.getBrainLoss() - owner.maxHealth * 0.75)) //brain failing to work heart properly
 		should_stop = should_stop || (prob(5) && pulse == PULSE_THREADY) //erratic heart patterns, usually caused by oxyloss
 		if(should_stop) // The heart has stopped due to going into traumatic or cardiovascular shock.
-			to_chat(owner, SPAN_DANGER("Your heart has stopped!"))
-			pulse = PULSE_NONE
+			stop()
 			return
 
 	// Pulse normally shouldn't go above PULSE_2FAST, unless extreme amounts of bad stuff in blood
@@ -98,6 +99,10 @@
 			pulse--
 		else
 			pulse++
+
+/obj/item/organ/internal/heart/proc/stop()
+	to_chat(owner, SPAN_DANGER("Your heart has stopped!"))
+	pulse = PULSE_NONE
 
 /obj/item/organ/internal/heart/proc/handle_heartbeat()
 	if(pulse >= PULSE_2FAST || owner.shock_stage >= 10 || is_below_sound_pressure(get_turf(owner)))

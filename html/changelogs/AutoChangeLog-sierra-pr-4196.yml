@@ -1,0 +1,7 @@
+author: Karl Johansson
+changes:
+  - {bugfix: The radio interceptor is now fixed. You can use it to intercept 
+      secure radio transmissions by tuning into the traitor frequency.}
+  - {rscadd: The radio interceptor can also be used to speak and listen on the 
+      traitor frequency.}
+delete-after: true

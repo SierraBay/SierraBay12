@@ -1,0 +1,5 @@
+author: limelier
+changes:
+  - {bugfix: Fix players with preference Low for an antag role not getting 
+      considered for the role}
+delete-after: true

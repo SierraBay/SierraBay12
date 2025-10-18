@@ -1,0 +1,20 @@
+"a" = (/obj/landmark/clear,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"m" = (/obj/structure/flora/ausbushes/brflowers,/obj/landmark/clear,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"A" = (/obj/fairy_ring_portal,/obj/landmark/clear,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"C" = (/obj/structure/flora/ausbushes/ppflowers,/obj/landmark/clear,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"X" = (/obj/structure/flora/ausbushes/ywflowers,/obj/landmark/clear,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"Z" = (/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+ZaaaZZaZZZZ
+ZZaaaaaaZZZ
+ZaaaXmXaaZZ
+ZaaCaaaCaaZ
+ZamaaaaamaZ
+aaXaaAaamaa
+aamaaaaaCaZ
+ZaaXaaamaaa
+aaaamCXaaZa
+aZZaaaaaZZZ
+ZZZZZaaaaZZ
+"}

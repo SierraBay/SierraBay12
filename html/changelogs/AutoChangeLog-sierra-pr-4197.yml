@@ -1,0 +1,4 @@
+author: Banditoz
+changes:
+  - {bugfix: Prying open a mech's cockpit is no longer instant.}
+delete-after: true

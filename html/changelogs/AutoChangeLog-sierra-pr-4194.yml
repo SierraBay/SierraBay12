@@ -1,0 +1,4 @@
+author: chichmuch
+changes:
+  - {bugfix: 'Хотфиксы INSIDIAE, реактор, экипировка, канистры, декали.'}
+delete-after: true

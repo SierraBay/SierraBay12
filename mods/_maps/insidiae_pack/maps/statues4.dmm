@@ -1,0 +1,19 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"c" = (/obj/structure/monolith,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"j" = (/obj/random/human_statue{dir = 4},/obj/landmark/clear,/turf/simulated/floor/exoplanet/water/shallow/tar,/area/template_noop)
+"y" = (/obj/landmark/clear,/turf/simulated/floor/exoplanet/water/shallow/tar,/area/template_noop)
+"C" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"L" = (/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"O" = (/obj/random/human_statue{dir = 4},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"Q" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"R" = (/obj/landmark/clear,/obj/structure/flora/ausbushes/sparsegrass,/turf/template_noop,/area/template_noop)
+"T" = (/obj/landmark/clear,/obj/structure/flora/ausbushes/lavendergrass,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+aaaLTaa
+aOLyyLa
+OQyyyyR
+LLyjcyL
+aLCyyLa
+aaLaLTa
+"}
