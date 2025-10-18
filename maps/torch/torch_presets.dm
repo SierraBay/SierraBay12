@@ -190,8 +190,29 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 		num2text(SUP_FREQ)   = list(access_radio_sup),
 		num2text(SRV_FREQ)   = list(access_radio_serv),
 		num2text(EXP_FREQ)   = list(access_radio_exp),
-		num2text(HAIL_FREQ)  = list(),
+		num2text(HAIL_FREQ)  = list()
 	)
+
+/datum/map/torch/intercept_internal_channels()
+	return list(
+		num2text(PUB_FREQ)   = list(),
+		num2text(AI_FREQ)    = list(access_synth),
+		num2text(ENT_FREQ)   = list(),
+		num2text(ERT_FREQ)   = list(access_cent_specops),
+		num2text(COMM_FREQ)  = list(access_radio_comm),
+		num2text(ENG_FREQ)   = list(access_radio_eng),
+		num2text(MED_FREQ)   = list(access_radio_med),
+		num2text(MED_I_FREQ) = list(access_radio_med),
+		num2text(SEC_FREQ)   = list(access_radio_sec),
+		num2text(SEC_I_FREQ) = list(access_radio_sec),
+		num2text(SCI_FREQ)   = list(access_radio_sci),
+		num2text(SUP_FREQ)   = list(access_radio_sup),
+		num2text(SRV_FREQ)   = list(access_radio_serv),
+		num2text(EXP_FREQ)   = list(access_radio_exp),
+		num2text(HAIL_FREQ)  = list(),
+		num2text(SYND_FREQ)  = list()
+	)
+
 
 /singleton/stock_part_preset/radio/receiver/vent_pump/guppy
 	frequency = 1431
