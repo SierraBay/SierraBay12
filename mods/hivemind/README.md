@@ -1,7 +1,7 @@
 
 #### Список PRов:
 
-- https://github.com/SierraBay/SierraBay12/pull/#####
+- https://github.com/SierraBay/SierraBay12/pull/3297
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -11,7 +11,7 @@
 <!-- Название мода. Не важно на русском или на английском. -->
 ## Мод-пример
 
-ID мода: EXAMPLE
+ID мода: MODPACK_HIVEMIND
 <!--
   Название модпака прописными буквами, СОЕДИНЁННЫМИ_ПОДЧЁРКИВАНИЕМ,
   которое ты будешь использовать для обозначения файлов.
@@ -19,8 +19,7 @@ ID мода: EXAMPLE
 
 ### Описание мода
 
-Этот мод служит примером для разработчиков и существует лишь для того,
-чтобы его можно было легко скопировать и вставить в другое место.
+Ивент с надмозгом. На данный момент в процессе технической отладки
 <!--
   Что он делает, что добавляет: что, куда, зачем и почему - всё здесь.
   А также любая полезная информация.
@@ -28,7 +27,9 @@ ID мода: EXAMPLE
 
 ### Изменения *кор кода*
 
-- `code/modules/mob/living.dm`: `proc/overriden_proc`, `var/overriden_var`
+- `code/modules/events/event_container.dm`: `/datum/event_container/major`
+- `code/modules/admin/admin_verbs.dm,`: `var/global/list/admin_verbs_fun = list(`
+
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,8 +40,6 @@ ID мода: EXAMPLE
 
 ### Оверрайды
 
-- `mods/_master_files/sound/my_cool_sound.ogg`
-- `mods/_master_files/code/my_modular_override.dm`: `proc/overriden_proc`, `var/overriden_var`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
@@ -50,7 +49,9 @@ ID мода: EXAMPLE
 
 ### Дефайны
 
-- `code/__defines/~mods/example.dm`: `EXAMPLE_SPEED_MULTIPLIER`, `EXAMPLE_SPEED_BASE`
+- `mods/hivemind/code/core.dm`: ` MAX_NODES_AMOUNT`, ` MAX_NODES_RANGE` 
+- `mods/hivemind/code/machines.dm`: `HIVE_FACTION`, `COLOR_LIGHTING_CYAN_MACHINERY`
+
 <!--
   Если требовалось добавить какие-либо дефайны, укажи файлы,
   в которые ты их добавил, а также перечисли имена.
@@ -61,7 +62,6 @@ ID мода: EXAMPLE
 
 ### Используемые файлы, не содержащиеся в модпаке
 
-- `mods/_master_files/icons/obj/alien.dmi`
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.
@@ -71,7 +71,7 @@ ID мода: EXAMPLE
 
 ### Авторы:
 
-Твой никнейм
+LordNest
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.
