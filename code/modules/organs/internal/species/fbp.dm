@@ -115,6 +115,7 @@
 	var/obj/item/device/mmi/stored_mmi
 	var/datum/mind/persistantMind //Mind that the organ will hold on to after being removed, used for transfer_and_delete
 	var/ownerckey // used in the event the owner is out of body
+	max_damage = 40 //[SIERRA-ADD]
 
 /obj/item/organ/internal/mmi_holder/Destroy()
 	stored_mmi = null
@@ -136,7 +137,7 @@
 /obj/item/organ/internal/mmi_holder/Process()
 	..()
 	if(owner?.is_asystole())
-		take_internal_damage(0.5)
+		take_internal_damage(0.25) //[SIERRA-EDIT] 0.5 было
 
 /obj/item/organ/internal/mmi_holder/handle_regeneration() // MMI will regenerate from small amounts of damage, e.g. damage that might occur when swapping a power cell
 	if(!damage || !owner || owner.is_asystole())
