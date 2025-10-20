@@ -181,14 +181,14 @@
 		if(src.hatch_state != HATCH_OPENED)
 			if(damage_amount <= (0.5 * max_damage) && (src.hatch_state != HATCH_OPENED))
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return
+				return TRUE
 			else
 				to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
-				return
+				return TRUE
 		else if(src.hatch_state == HATCH_OPENED && !src.expensive == 2)
 			if(damage_amount <= max_damage)
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return
+				return TRUE
 			else
 				to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
 		else if(src.hatch_state == HATCH_OPENED && src.expensive == 2)
@@ -200,14 +200,14 @@
 			if(src.hatch_state != HATCH_OPENED)
 				if(damage_amount <= (0.5 * max_damage) && (src.hatch_state != HATCH_OPENED))
 					robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-					return
+					return TRUE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
 					return
 			else if(src.hatch_state == HATCH_OPENED && !src.expensive == 1)
 				if(damage_amount <= max_damage)
 					robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-					return
+					return TRUE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
 			else if(src.hatch_state == HATCH_OPENED && src.expensive == 1)
@@ -221,14 +221,14 @@
 		if(src.hatch_state != HATCH_OPENED)
 			if(damage_amount <= (0.5 * max_damage))
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return
+				return TRUE
 			else
 				to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
 				return
 		else if(src.hatch_state == HATCH_OPENED)
 			if(damage_amount <= max_damage)
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return
+				return TRUE
 			else
 				to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
 				return

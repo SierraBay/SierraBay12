@@ -22,6 +22,14 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_SMALL
 	matter = list(MATERIAL_STEEL = 2000, MATERIAL_SILVER = 4000, MATERIAL_URANIUM = 4000)
+	item_icons = list(
+		slot_l_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+		slot_r_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+	)
+	item_state_slots = list(
+		slot_r_hand_str = "r_dmg",
+		slot_l_hand_str = "l_dmg"
+	)
 
 	var/status = TRUE
 	var/active = FALSE
@@ -126,15 +134,15 @@
 	if(!can_use(amount, M))
 		return 0
 	burn_nanomaterial(amount)
-	if(M)
-		set_light(5, 1, COLOR_SKY_BLUE)
-		addtimer(new Callback(src, TYPE_PROC_REF(/atom, update_icon)), 5)
-		tank.resourse_left = tank.resourse_left - amount
-	return 1
+	set_light(5, 1, COLOR_SKY_BLUE)
+	addtimer(new Callback(src, TYPE_PROC_REF(/atom, update_icon)), 5)
+	tank.resourse_left = tank.resourse_left - amount
 
 /obj/item/integrity_repair_tool/Process()
 	if(active)
-		if(!remove_nanomaterial(0.05))
+		if(remove_nanomaterial(0.05))
+			return
+		else
 			attack_self()
 
 /obj/item/integrity_repair_tool/proc/burn_nanomaterial(amount)
@@ -211,6 +219,14 @@
 	icon_state = "prosthetic_wiring_layerer"
 	origin_tech = list(TECH_MATERIAL = 6, TECH_ENGINEERING = 5)
 	var/uses = 3
+	item_icons = list(
+		slot_l_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+		slot_r_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+	)
+	item_state_slots = list(
+		slot_r_hand_str = "r_elect",
+		slot_l_hand_str = "l_elect"
+	)
 
 /obj/item/prosthetic_wiring_layerer/use_before(mob/living/M as mob, mob/user as mob)
 	if (istype(M,/mob/living/carbon/human))
@@ -260,6 +276,15 @@
 	var/status = TRUE
 	var/resource = "liquid skin"
 	var/obj/item/liquid_skin_tank/tank = /obj/item/liquid_skin_tank
+
+	item_icons = list(
+		slot_l_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+		slot_r_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
+	)
+	item_state_slots = list(
+		slot_r_hand_str = "r_skin",
+		slot_l_hand_str = "l_skin"
+	)
 
 /obj/item/synthskinsplayer/Initialize()
 	if(ispath(tank))
