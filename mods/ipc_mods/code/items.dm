@@ -115,6 +115,10 @@
 
 /obj/item/integrity_repair_tool/attack_self(mob/user as mob)
 	active = !active
+	if(active)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return
 
@@ -125,7 +129,7 @@
 	if(M)
 		set_light(5, 1, COLOR_SKY_BLUE)
 		addtimer(new Callback(src, TYPE_PROC_REF(/atom, update_icon)), 5)
-		tank.resourse_left -= amount
+		tank.resourse_left = tank.resourse_left - amount
 	return 1
 
 /obj/item/integrity_repair_tool/Process()
@@ -176,7 +180,7 @@
 
 	if(S.robo_repair(25, DAMAGE_BRUTE, "some broken elements", src, user))
 		update_icon()
-		tank.resourse_left -= 1
+		tank.resourse_left = tank.resourse_left - 1
 
 		return TRUE
 
@@ -208,7 +212,7 @@
 	origin_tech = list(TECH_MATERIAL = 6, TECH_ENGINEERING = 5)
 	var/uses = 3
 
-/obj/item/prosthetic_wiring_layerer/use_after(mob/living/M as mob, mob/user as mob)
+/obj/item/prosthetic_wiring_layerer/use_before(mob/living/M as mob, mob/user as mob)
 	if (istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/S = H.get_organ(user.zone_sel.selecting)
@@ -222,7 +226,7 @@
 			return TRUE
 
 		if(S.robo_repair(20, DAMAGE_BURN, "some burned elements", src, user))
-			uses -= 1
+			uses = uses - 1
 			if(uses < 0)
 				to_chat(user, SPAN_WARNING("It was last use of the [src]."))
 				qdel(src)

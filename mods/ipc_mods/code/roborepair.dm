@@ -1,4 +1,4 @@
-/obj/item/stack/cable_coil/use_after(mob/living/carbon/human/target, mob/living/user)
+/obj/item/stack/cable_coil/use_before(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
 	var/obj/item/organ/external/organ = target.organs_by_name[user.zone_sel.selecting]
@@ -14,9 +14,6 @@
 	var/use_amount = min(amount, ceil(organ.burn_dam / 3), 5)
 	if (!can_use(use_amount))
 		to_chat(user, SPAN_WARNING("You don't have enough of \the [src] left to repair \the [target]'s [organ.name]."))
-		return TRUE
-	if(organ.expensive)
-		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
 		return TRUE
 	if(organ.robo_repair(3 * use_amount, DAMAGE_BURN, "some damaged wiring", src, user))
 		use(use_amount)
@@ -85,7 +82,7 @@
 	else return FALSE
 
 
-/obj/item/stock_parts/capacitor/use_after(mob/living/carbon/human/target, mob/living/user)
+/obj/item/stock_parts/capacitor/use_before(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
 	var/obj/item/organ/external/organ = target.organs_by_name[user.zone_sel.selecting]
@@ -105,7 +102,7 @@
 			return TRUE
 
 
-/obj/item/stack/nanopaste/use_after(mob/living/M as mob, mob/user as mob)
+/obj/item/stack/nanopaste/use_before(mob/living/M as mob, mob/user as mob)
 	if (!istype(M) || !istype(user))
 		return FALSE
 	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
@@ -136,10 +133,13 @@
 
 		if(can_use(1))
 			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		if(S.robo_repair(15, DAMAGE_BRUTE, "some broken elements", src, user))
-			use(1)
-		if(S.robo_repair(15, DAMAGE_BURN, "some burned elements", src, user))
-			use(1)
+
+		if(S.brute_dam > S.burn_dam)
+			if(S.robo_repair(15, DAMAGE_BRUTE, "some broken elements", src, user))
+				use(1)
+		else
+			if(S.robo_repair(15, DAMAGE_BURN, "some burned elements", src, user))
+				use(1)
 		H.UpdateDamageIcon()
 		return TRUE
 
@@ -166,8 +166,7 @@
 			to_chat(user, SPAN_NOTICE("Nothing to fix!"))
 		return
 
-
-	else if(user == src.owner)
+	if(user == src.owner)
 		var/grasp
 		if(user.l_hand == tool && (src.body_part & (ARM_LEFT|HAND_LEFT)))
 			grasp = BP_L_HAND
@@ -178,7 +177,7 @@
 			to_chat(user, SPAN_WARNING("You can't reach your [src.name] while holding [tool] in your [owner.get_bodypart_name(grasp)]."))
 			return
 
-	else if(istype(tool, /obj/item/stack/nanopaste))
+	if(istype(tool, /obj/item/stack/nanopaste))
 		if(src.hatch_state != HATCH_OPENED)
 			if(damage_amount <= (0.5 * max_damage) && (src.hatch_state != HATCH_OPENED))
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
