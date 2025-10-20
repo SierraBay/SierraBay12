@@ -1,0 +1,27 @@
+"a" = (/obj/structure/flora/ausbushes/reedbush,/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
+"b" = (/turf/template_noop,/area/template_noop)
+"c" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/template_noop,/area/template_noop)
+"e" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"g" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/template_noop,/area/template_noop)
+"j" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"l" = (/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"q" = (/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"u" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"E" = (/obj/item/ore/slag,/obj/structure/hygiene/sink/puddle{icon = 'icons/obj/sinks.dmi'},/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"I" = (/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
+"P" = (/obj/structure/flora/ausbushes/leafybush,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"R" = (/obj/structure/flora/ausbushes/leafybush,/turf/template_noop,/area/template_noop)
+"T" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"U" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+
+(1,1,1) = {"
+bbIIIaIbb
+RIIluPIIc
+IajlallII
+IIqIIIqIa
+IUlIEaulI
+IlPIIIleI
+aIlTUllII
+bIIIITIaI
+bbIaIIIgb
+"}

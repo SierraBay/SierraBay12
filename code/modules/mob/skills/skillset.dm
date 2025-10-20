@@ -135,7 +135,7 @@
 	if (islist(skill_path))
 		for (var/path as anything in skill_path)
 			var/check_delay = skill_delay_mult(path, factor)
-			if (check_delay < final_delay)
+			if (isnull(final_delay) || check_delay < final_delay)
 				final_delay = check_delay
 	else
 		final_delay = skill_delay_mult(skill_path, factor)
