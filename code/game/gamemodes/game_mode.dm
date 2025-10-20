@@ -347,12 +347,11 @@ var/global/list/additional_antag_types = list()
 	return 0
 
 /// Get a list of players eligible for a specific antagonist role, prioritizing based on player preference.
+/// This returns a sorted list with all players with a particular antag role selected.
+/// The list of candidates are randomized, with High first, then Low afterwards.
 /datum/game_mode/proc/get_players_for_role(antag_id)
 	var/list/players = list()
 	var/list/candidates = list()
-
-	// Attempt to get the required number of candidates for the gamemode, or at least one if none are required
-	var/minimum_candidates = max(1, required_enemies)
 
 	var/list/all_antag_types = GLOB.all_antag_types_
 	var/datum/antagonist/antag_template = all_antag_types[antag_id]
@@ -360,29 +359,34 @@ var/global/list/additional_antag_types = list()
 		return candidates
 
 	// Assemble a list of active players without jobbans
-	for(var/mob/new_player/player in GLOB.player_list)
-		if(player.client)
-			if(GAME_STATE == RUNLEVEL_GAME && !player.ready) // Only consider ready players during pre-round.
+	for(var/mob/player in GLOB.player_list)
+		if(!player.client)
+			continue
+		// Only consider ready players during pre-round.
+		if(GAME_STATE == RUNLEVEL_SETUP)
+			var/mob/new_player/lobby_player = player
+			if (!istype(lobby_player))
 				continue
+			if (lobby_player.ready)
+				players += player
+		// All players are candidates (depending on role filtering below) if the game has started.
+		else if(GAME_STATE == RUNLEVEL_GAME)
 			players += player
 	shuffle(players, TRUE) // Shuffle to randomize selection order
 
 	// Initialize the candidate list with all of the people who have preference High for this role
-	for(var/mob/new_player/player in players)
-		if(!antag_id || (antag_id in player.client.prefs.be_special_role))
+	for(var/mob/player in players)
+		if(antag_id in player.client.prefs.be_special_role)
 			log_debug("[player.key] has [antag_id] set to High, so we are adding them to candidates.")
 			candidates += player.mind
 			players -= player
 
-	// Pull from people with preference Low if we do not have minimum_candidates yet
-	if(length(candidates) < minimum_candidates || !length(antag_templates))
-		for(var/mob/new_player/player in players)
-			if(!antag_id || (antag_id in player.client.prefs.may_be_special_role))
-				log_debug("[player.key] has [antag_id] set to Low, and we need more candidates, so we are adding them to candidates.")
-				candidates += player.mind
-				players -= player
-				if(length(candidates) >= minimum_candidates || length(players) == 0)
-					break
+	// Pull from people with preference Low
+	for(var/mob/player in players)
+		if(antag_id in player.client.prefs.may_be_special_role)
+			log_debug("[player.key] has [antag_id] set to Low, so we are adding them to candidates.")
+			candidates += player.mind
+			players -= player
 
 	return candidates
 
