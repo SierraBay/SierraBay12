@@ -163,7 +163,7 @@
 		if(location)
 			location.hotspot_expose(700, 5)
 
-/obj/item/integrity_repair_tool/use_before(mob/living/target, mob/living/user, click_parameters)
+/obj/item/integrity_repair_tool/use_after(mob/living/target, mob/living/user, click_parameters)
 	if (!ishuman(target))
 		return FALSE
 
@@ -228,7 +228,7 @@
 		slot_l_hand_str = "l_elect"
 	)
 
-/obj/item/prosthetic_wiring_layerer/use_before(mob/living/M as mob, mob/user as mob)
+/obj/item/prosthetic_wiring_layerer/use_after(mob/living/M as mob, mob/user as mob)
 	if (istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/S = H.get_organ(user.zone_sel.selecting)

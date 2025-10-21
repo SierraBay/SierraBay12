@@ -1,4 +1,4 @@
-/obj/item/stack/cable_coil/use_before(mob/living/carbon/human/target, mob/living/user)
+/obj/item/stack/cable_coil/use_after(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
 	var/obj/item/organ/external/organ = target.organs_by_name[user.zone_sel.selecting]
@@ -53,56 +53,7 @@
 
 	else return FALSE
 
-
-/obj/item/stock_parts/manipulator/use_before(mob/living/target, mob/living/user, click_parameters)
-	if (!ishuman(target))
-		return FALSE
-
-	var/target_zone = user.zone_sel.selecting
-	var/mob/living/carbon/human/H = target
-	var/obj/item/organ/external/S = H.organs_by_name[target_zone]
-
-	if (!S || !BP_IS_ROBOTIC(S) || user.a_intent != I_HELP)
-		return FALSE
-
-	var/list/all_surgeries = GET_SINGLETON_SUBTYPE_MAP(/singleton/surgery_step)
-	for (var/singleton in all_surgeries)
-		var/singleton/surgery_step/step = all_surgeries[singleton]
-		if (step.name && step.tool_quality(src) && step.can_use(user, H, target_zone, src))
-			return FALSE
-
-	if (BP_IS_BRITTLE(S))
-		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] is hard and brittle - \the [src] cannot repair it."))
-		return TRUE
-	if(S.robo_repair(25, DAMAGE_BRUTE, "some broken elements", src, user))
-		H.UpdateDamageIcon()
-		qdel(src)
-		return TRUE
-
-	else return FALSE
-
-
-/obj/item/stock_parts/capacitor/use_before(mob/living/carbon/human/target, mob/living/user)
-	if (!istype(target))
-		return FALSE
-	var/obj/item/organ/external/organ = target.organs_by_name[user.zone_sel.selecting]
-	if (!organ)
-		to_chat(user, SPAN_WARNING("\The [target] is missing that organ."))
-		return TRUE
-	if (!BP_IS_ROBOTIC(organ))
-		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] is not robotic. \The [src] is useless."))
-		return TRUE
-	if (BP_IS_BRITTLE(organ))
-		to_chat(user, SPAN_WARNING("\The [target]'s [organ.name] is hard and brittle - \the [src] cannot repair it."))
-		return TRUE
-	if(do_after(usr, 2.5 SECONDS, src, DO_PUBLIC_UNIQUE))
-		if(organ.robo_repair(25, DAMAGE_BURN, "some burned elements", src, user))
-			organ.owner.UpdateDamageIcon()
-			qdel(src)
-			return TRUE
-
-
-/obj/item/stack/nanopaste/use_before(mob/living/M as mob, mob/user as mob)
+/obj/item/stack/nanopaste/use_after(mob/living/M as mob, mob/user as mob)
 	if (!istype(M) || !istype(user))
 		return FALSE
 	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
@@ -148,17 +99,12 @@
 /obj/item/organ/external/robo_repair(repair_amount, damage_type, damage_desc, obj/item/tool, mob/living/user)
 	if((!BP_IS_ROBOTIC(src)))
 		return
-	var/component_to_replace
-	var/obj/item/stock_parts/manipulator/mani = new
-	var/obj/item/stock_parts/capacitor/cap = new
 	var/damage_amount
 	switch(damage_type)
 		if (DAMAGE_BRUTE)
 			damage_amount = brute_dam
-			component_to_replace = mani.name
 		if (DAMAGE_BURN)
 			damage_amount = burn_dam
-			component_to_replace = cap.name
 		else return 0
 
 	if(!damage_amount)
@@ -177,62 +123,19 @@
 			to_chat(user, SPAN_WARNING("You can't reach your [src.name] while holding [tool] in your [owner.get_bodypart_name(grasp)]."))
 			return
 
-	if(istype(tool, /obj/item/stack/nanopaste))
-		if(src.hatch_state != HATCH_OPENED)
-			if(damage_amount <= (0.5 * max_damage) && (src.hatch_state != HATCH_OPENED))
+	if(damage_amount <= (0.5 * max_damage))
+		if(expensive == 2)
+			if(istype(tool, /obj/item/prosthetic_wiring_layerer) || istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
 				return TRUE
-			else
-				to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
-				return TRUE
-		else if(src.hatch_state == HATCH_OPENED && !src.expensive == 2)
-			if(damage_amount <= max_damage)
-				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return TRUE
-			else
-				to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
-		else if(src.hatch_state == HATCH_OPENED && src.expensive == 2)
-			to_chat(user, SPAN_DANGER("Damage to [src.name] is to severe. [tool.name] cannot be used for repairs."))
-			return
 
-	else if(istype(tool, /obj/item/weldingtool) || (istype(tool, /obj/item/stack/cable_coil)))
-		if(src.expensive == 0 || src.expensive == 1)
-			if(src.hatch_state != HATCH_OPENED)
-				if(damage_amount <= (0.5 * max_damage) && (src.hatch_state != HATCH_OPENED))
-					robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-					return TRUE
-				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
-					return
-			else if(src.hatch_state == HATCH_OPENED && !src.expensive == 1)
-				if(damage_amount <= max_damage)
-					robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-					return TRUE
-				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
-			else if(src.hatch_state == HATCH_OPENED && src.expensive == 1)
-				to_chat(user, SPAN_DANGER("Damage to [src.name] is to severe. [tool.name] cannot be used for repairs."))
-				return
-		else if(src.expensive == 2)
-			to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
-			return
+		else if(expensive != 2)
+			robo_heal(damage_amount, damage_type, damage_desc, tool, user)
+			return TRUE
 
-	else if(istype(tool, /obj/item/integrity_repair_tool) || (istype(tool, /obj/item/prosthetic_wiring_layerer)))
-		if(src.hatch_state != HATCH_OPENED)
-			if(damage_amount <= (0.5 * max_damage))
-				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return TRUE
-			else
-				to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
-				return
-		else if(src.hatch_state == HATCH_OPENED)
-			if(damage_amount <= max_damage)
-				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-				return TRUE
-			else
-				to_chat(user, SPAN_DANGER("The damage is far too severe to repair, requires to replace [component_to_replace] with efficentcy rating = [max(1, expensive)]."))
-				return
-
+	else
+		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
+		return
 
 
 /obj/item/organ/external/proc/robo_heal(repair_amount, damage_type, damage_desc, obj/item/tool, mob/living/user)

@@ -1,79 +1,167 @@
-
 //////////////////////////////////////////////////////////////////
 //	robotic limb brute damage repair surgery step
 //////////////////////////////////////////////////////////////////
-/singleton/surgery_step/robotics/repair_brute_manipulator
-	name = "Repair damage to prosthetic with manipulator"
+/singleton/surgery_step/robotics/repair_brute
+	name = "Repair damage to prosthetic"
 	allowed_tools = list(
-		/obj/item/stock_parts/manipulator = 50
+		/obj/item/weldingtool = 35,
+		/obj/item/weldingtool/electric = 50,
+		/obj/item/gun/energy/plasmacutter = 25,
+		/obj/item/stock_parts/manipulator = 50,
+		/obj/item/integrity_repair_tool = 50,
+		/obj/item/stack/nanopaste = 50,
+		/obj/item/psychic_power/psiblade/master = 100
 	)
 
 	min_duration = 70
 	max_duration = 90
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
-	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
+	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_BASIC))
 		. += 5
-	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_EXPERIENCED))
+	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
 		. += 10
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 10
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	var/obj/item/stock_parts/manipulator = tool
+
 	if(affected)
 		if(!affected.brute_dam)
 			to_chat(user, SPAN_WARNING("There is no damage to repair."))
 			return FALSE
-		if(affected.expensive > manipulator.rating)
-			to_chat(user, SPAN_WARNING("\The [target]'s [affected.name] is too advanced to be repaired witch such simple [tool]."))
-			return FALSE
 		if(BP_IS_BRITTLE(affected))
 			to_chat(user, SPAN_WARNING("\The [target]'s [affected.name] is too brittle to be repaired normally."))
 			return FALSE
+		if(affected.expensive == 2)
+			if(istype(tool, /obj/item/integrity_repair_tool))
+				if(affected.brute_dam < affected.max_damage)
+					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
+			if(istype(tool, /obj/item/stock_parts/manipulator))
+				var/obj/item/stock_parts/manipulator = tool
+				if(manipulator.rating >= affected.expensive)
+					return TRUE
+			else
+				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				return FALSE
+
+		if(affected.expensive == 1)
+			if(istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
+				if(affected.brute_dam < affected.max_damage)
+					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
+			if(istype(tool, /obj/item/stock_parts/manipulator))
+				var/obj/item/stock_parts/manipulator = tool
+				if(manipulator.rating >= affected.expensive)
+					return TRUE
+			else
+				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				return FALSE
+
+		if(affected.expensive == 0)
+			if(isWelder(tool))
+				var/obj/item/weldingtool/welder = tool
+				if(!welder.remove_fuel(1,user))
+					return FALSE
+			if(istype(tool, /obj/item/gun/energy/plasmacutter))
+				var/obj/item/gun/energy/plasmacutter/cutter = tool
+				if(!cutter.slice(user))
+					return FALSE
 		return TRUE
 	return FALSE
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = ..()
 	if(affected && affected.hatch_state == HATCH_OPENED && ((affected.status & ORGAN_DISFIGURED) || affected.brute_dam > 0))
 		return affected
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	user.visible_message("[user] begins to install new [tool.name] to [target]'s [affected.name]'s" , \
-	"You begin to install new [tool.name] to [target]'s [affected.name]'s.")
-	playsound(target.loc, 'sound/items/Deconstruct.ogg', 15, 1)
+	user.visible_message("[user] begins to patch damage to [target]'s [affected.name]'s support structure with \the [tool]." , \
+	"You begin to patch damage to [target]'s [affected.name]'s support structure with \the [tool].")
+	playsound(target.loc, 'sound/items/Welder.ogg', 15, 1)
 	..()
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	user.visible_message(SPAN_NOTICE("[user] finishes install new [tool.name] to [target]'s [affected.name]"), \
-	SPAN_NOTICE("You finish install new [tool.name] to [target]'s [affected.name]"))
-	if(istype(tool, /obj/item/stock_parts/manipulator))
-		var/obj/item/stock_parts/manipulator = tool
-		affected.heal_damage((15*manipulator.rating),0,1,1)
-		affected.status &= ~ORGAN_DISFIGURED
-		qdel(tool)
+	user.visible_message(SPAN_NOTICE("[user] finishes patching damage to [target]'s [affected.name] with \the [tool]."), \
+	SPAN_NOTICE("You finish patching damage to [target]'s [affected.name] with \the [tool]."))
+	affected.heal_damage(rand(30,50),0,1,1)
+	affected.status &= ~ORGAN_DISFIGURED
+	qdel(tool)
 
-/singleton/surgery_step/robotics/repair_brute_manipulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_brute/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user]'s [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."),
 	SPAN_WARNING("Your [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
-	qdel(tool)
 
-/singleton/surgery_step/robotics/repair_burn_capacitor
-	name = "Repair burns on prosthetic with capacitor"
+
+//////////////////////////////////////////////////////////////////
+//	robotic limb brittleness repair surgery step
+//////////////////////////////////////////////////////////////////
+/singleton/surgery_step/robotics/repair_brittle
+	name = "Reinforce prosthetic"
+	allowed_tools = list(/obj/item/stack/nanopaste = 50)
+	min_duration = 50
+	max_duration = 60
+
+/singleton/surgery_step/robotics/repair_brittle/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+	. = ..()
+	if(user.skill_check(SKILL_ELECTRICAL, SKILL_TRAINED))
+		. += 10
+	if(user.skill_check(SKILL_CONSTRUCTION, SKILL_TRAINED))
+		. += 10
+	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+		. -= 15
+
+/singleton/surgery_step/robotics/repair_brittle/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = ..()
+	if(affected && BP_IS_BRITTLE(affected) && affected.hatch_state == HATCH_OPENED)
+		return affected
+
+/singleton/surgery_step/robotics/repair_brittle/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message("[user] begins to repair the brittle metal inside \the [target]'s [affected.name]." , \
+	"You begin to repair the brittle metal inside \the [target]'s [affected.name].")
+	playsound(target.loc, 'sound/items/bonegel.ogg', 50, TRUE)
+	..()
+
+/singleton/surgery_step/robotics/repair_brittle/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message(SPAN_NOTICE("[user] finishes repairing the brittle interior of \the [target]'s [affected.name]."), \
+	SPAN_NOTICE("You finish repairing the brittle interior of \the [target]'s [affected.name]."))
+	affected.status &= ~ORGAN_BRITTLE
+
+/singleton/surgery_step/robotics/repair_brittle/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	user.visible_message(SPAN_WARNING("[user] causes some of \the [target]'s [affected.name] to crumble!"),
+	SPAN_WARNING("You cause some of \the [target]'s [affected.name] to crumble!"))
+	target.apply_damage(rand(5,10), DAMAGE_BRUTE, affected)
+
+//////////////////////////////////////////////////////////////////
+//	robotic limb burn damage repair surgery step
+//////////////////////////////////////////////////////////////////
+
+/singleton/surgery_step/robotics/repair_burn
+	name = "Repair burns on prosthetic"
 	allowed_tools = list(
+		/obj/item/stack/nanopaste = 50,
+		/obj/item/stack/cable_coil = 50,
+		/obj/item/prosthetic_wiring_layerer = 50,
 		/obj/item/stock_parts/capacitor = 50
 	)
-	min_duration = 80
-	max_duration = 100
+	min_duration = 70
+	max_duration = 90
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/success_chance(mob/living/user, mob/living/carbon/human/target, obj/item/tool)
 	. = ..()
 
 	if(user.skill_check(SKILL_ELECTRICAL, SKILL_BASIC))
@@ -83,48 +171,80 @@
 	if(!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
 		. -= 10
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	var/obj/item/stock_parts/capacitor = tool
+
 	if(affected)
 		if(!affected.burn_dam)
 			to_chat(user, SPAN_WARNING("There is no damage to repair."))
 			return FALSE
-		if(affected.expensive > capacitor.rating)
-			to_chat(user, SPAN_WARNING("\The [target]'s [affected.name] is too advanced to be repaired witch such simple [tool]."))
-			return FALSE
 		if(BP_IS_BRITTLE(affected))
-			to_chat(user, SPAN_WARNING("\The [target]'s [affected.name] is too brittle for this kind of repair."))
+			to_chat(user, SPAN_WARNING("\The [target]'s [affected.name] is too brittle to be repaired normally."))
+			return FALSE
+		if(affected.expensive == 2)
+			if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+				if(affected.burn_dam < affected.max_damage)
+					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
+			if(istype(tool, /obj/item/stock_parts/capacitor))
+				var/obj/item/stock_parts/capacitor = tool
+				if(capacitor.rating >= affected.expensive)
+					return TRUE
+			else
+				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				return FALSE
+
+		if(affected.expensive == 1)
+			if(istype(tool, /obj/item/prosthetic_wiring_layerer) || istype(tool, /obj/item/stack/nanopaste))
+				if(affected.burn_dam < affected.max_damage)
+					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
+			if(istype(tool, /obj/item/stock_parts/capacitor))
+				var/obj/item/stock_parts/capacitor = tool
+				if(capacitor.rating >= affected.expensive)
+					return TRUE
+			else
+				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				return FALSE
+
+		if(affected.expensive == 0)
+			var/obj/item/stack/cable_coil/C = tool
+			if(istype(C))
+				if(!C.use(3))
+					to_chat(user, SPAN_WARNING("You need three or more cable pieces to repair this damage."))
+				else
+					return TRUE
 	return FALSE
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = ..()
 	if(affected && affected.hatch_state == HATCH_OPENED && ((affected.status & ORGAN_DISFIGURED) || affected.burn_dam > 0))
 		return affected
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	user.visible_message("[user] install new [tool.name] into [target]'s [affected.name]." , \
-	"You begin to install new [tool.name] into [target]'s [affected.name].")
+	user.visible_message("[user] begins to splice new cabling into [target]'s [affected.name]." , \
+	"You begin to splice new cabling into [target]'s [affected.name].")
 	playsound(target.loc, 'sound/items/Deconstruct.ogg', 15, 1)
 	..()
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
-	user.visible_message(SPAN_NOTICE("[user] finishes install new [tool.name] into [target]'s [affected.name]."), \
-	SPAN_NOTICE("You finishes install new [tool.name] into [target]'s [affected.name]."))
-	if(istype(tool, /obj/item/stock_parts/capacitor))
-		var/obj/item/stock_parts/capacitor = tool
-		affected.heal_damage(0,(15*capacitor.rating),1,1)
-		affected.status &= ~ORGAN_DISFIGURED
-		qdel(tool)
+	user.visible_message(SPAN_NOTICE("[user] finishes splicing cable into [target]'s [affected.name]."), \
+	SPAN_NOTICE("You finishes splicing new cable into [target]'s [affected.name]."))
+	affected.heal_damage(0,rand(30,50),1,1)
+	affected.status &= ~ORGAN_DISFIGURED
 
-/singleton/surgery_step/robotics/repair_burn_capacitor/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/singleton/surgery_step/robotics/repair_burn/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user] causes a short circuit in [target]'s [affected.name]!"),
 	SPAN_WARNING("You cause a short circuit in [target]'s [affected.name]!"))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
-	qdel(tool)
+
 
 
 

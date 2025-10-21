@@ -3,6 +3,11 @@
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"aLM" = (
+/obj/item/prosthetic_wiring_layerer,
+/obj/item/prosthetic_wiring_layerer,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "cpC" = (
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
@@ -39,12 +44,30 @@
 /obj/item/gun/magnetic/railgun/tcc,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"gFe" = (
+/obj/item/integrity_repair_tool,
+/obj/item/integrity_repair_tool,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"ieF" = (
+/obj/structure/closet/coffin/wooden,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"iNf" = (
+/obj/item/stack/nanopaste,
+/obj/item/stack/nanopaste,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "jjy" = (
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/liberia/atmos)
 "jDb" = (
 /obj/item/gun/projectile/automatic/nt41,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"kJs" = (
+/obj/structure/bed/chair,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "kSl" = (
@@ -59,8 +82,17 @@
 /obj/item/gun/energy/laser/xenofauna,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"mod" = (
+/obj/item/device/robotanalyzer,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "mJI" = (
 /mob/living/carbon/human/dummy,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"nog" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "nsq" = (
@@ -90,6 +122,13 @@
 "pxw" = (
 /turf/simulated/floor/exoplanet/titan_water/minimal,
 /area/liberia/atmos)
+"pGR" = (
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/capacitor,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "pSk" = (
 /obj/landmark{
 	name = "Observer-Start"
@@ -110,6 +149,13 @@
 /obj/item/clothing/suit/space/void/security,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"qZa" = (
+/obj/item/stock_parts/manipulator/nano,
+/obj/item/stock_parts/manipulator/nano,
+/obj/item/stock_parts/capacitor/adv,
+/obj/item/stock_parts/capacitor/adv,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "reO" = (
 /obj/item/gun/projectile/pistol/magnum_pistol,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -336,7 +382,7 @@ ooX
 ooX
 cpC
 cpC
-cpC
+gFe
 uzJ
 "}
 (8,1,1) = {"
@@ -361,8 +407,8 @@ ooX
 ooX
 ooX
 ooX
-cpC
-cpC
+nog
+aLM
 uzJ
 "}
 (9,1,1) = {"
@@ -387,8 +433,8 @@ ooX
 pSk
 ooX
 ooX
-cpC
-cpC
+kJs
+mod
 uzJ
 "}
 (10,1,1) = {"
@@ -414,7 +460,7 @@ ooX
 ooX
 ooX
 cpC
-cpC
+iNf
 uzJ
 "}
 (11,1,1) = {"
@@ -440,7 +486,7 @@ ooX
 ooX
 cpC
 cpC
-cpC
+pGR
 uzJ
 "}
 (12,1,1) = {"
@@ -466,7 +512,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+qZa
 uzJ
 "}
 (13,1,1) = {"
@@ -491,7 +537,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ieF
 cpC
 uzJ
 "}
