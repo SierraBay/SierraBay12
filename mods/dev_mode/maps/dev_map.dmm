@@ -93,6 +93,9 @@
 "nog" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/handcuffs/cable/red,
+/obj/item/handcuffs/cable/red,
+/obj/item/handcuffs/cable/red,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "nsq" = (

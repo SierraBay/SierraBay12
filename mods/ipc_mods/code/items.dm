@@ -218,7 +218,7 @@
 	icon = 'mods/ipc_mods/icons/ppt.dmi'
 	icon_state = "prosthetic_wiring_layerer"
 	origin_tech = list(TECH_MATERIAL = 6, TECH_ENGINEERING = 5)
-	var/uses = 3
+	var/amount = 3
 	item_icons = list(
 		slot_l_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
 		slot_r_hand_str = 'mods/ipc_mods/icons/ppt.dmi',
@@ -242,8 +242,8 @@
 			return TRUE
 
 		if(S.robo_repair(20, DAMAGE_BURN, "some burned elements", src, user))
-			uses = uses - 1
-			if(uses < 0)
+			amount = amount - 1
+			if(amount < 0)
 				to_chat(user, SPAN_WARNING("It was last use of the [src]."))
 				qdel(src)
 			H.UpdateDamageIcon()
@@ -251,8 +251,8 @@
 
 /obj/item/prosthetic_wiring_layerer/examine(mob/user, distance)
 	. = ..()
-	if(uses)
-		to_chat(user, "It has [uses] uses remaining.")
+	if(amount)
+		to_chat(user, "It has [amount] uses remaining.")
 
 
 /obj/item/synthskinsplayer

@@ -37,8 +37,12 @@
 			return FALSE
 		if(affected.expensive == 2)
 			if(istype(tool, /obj/item/integrity_repair_tool))
+				var/obj/item/integrity_repair_tool/integrity_repair_tool = tool
 				if(affected.brute_dam < affected.max_damage)
-					return TRUE
+					if(integrity_repair_tool.can_use(1))
+						return TRUE
+					else
+						return FALSE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
 					return FALSE
@@ -53,6 +57,14 @@
 		if(affected.expensive == 1)
 			if(istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
 				if(affected.brute_dam < affected.max_damage)
+					if(istype(tool, /obj/item/integrity_repair_tool))
+						var/obj/item/integrity_repair_tool/integrity_repair_tool = tool
+						if(affected.brute_dam < affected.max_damage)
+							if(integrity_repair_tool.can_use(1))
+								return FALSE
+					if(istype(tool, /obj/item/stack/nanopaste))
+						var/obj/item/stack/nanopaste = tool
+						nanopaste.use(1)
 					return TRUE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
@@ -60,20 +72,33 @@
 			if(istype(tool, /obj/item/stock_parts/manipulator))
 				var/obj/item/stock_parts/manipulator = tool
 				if(manipulator.rating >= affected.expensive)
+					qdel(tool)
 					return TRUE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
 				return FALSE
 
 		if(affected.expensive == 0)
-			if(isWelder(tool))
-				var/obj/item/weldingtool/welder = tool
-				if(!welder.remove_fuel(1,user))
-					return FALSE
-			if(istype(tool, /obj/item/gun/energy/plasmacutter))
-				var/obj/item/gun/energy/plasmacutter/cutter = tool
-				if(!cutter.slice(user))
-					return FALSE
+			if(affected.brute_dam < affected.max_damage)
+				if(istype(tool, /obj/item/integrity_repair_tool))
+					var/obj/item/integrity_repair_tool/integrity_repair_tool = tool
+					if(affected.brute_dam < affected.max_damage)
+						if(!integrity_repair_tool.can_use(1))
+							return FALSE
+				if(istype(tool, /obj/item/stack/nanopaste))
+					var/obj/item/stack/nanopaste = tool
+					nanopaste.use(1)
+				if(isWelder(tool))
+					var/obj/item/weldingtool/welder = tool
+					if(!welder.remove_fuel(1,user))
+						return FALSE
+				if(istype(tool, /obj/item/gun/energy/plasmacutter))
+					var/obj/item/gun/energy/plasmacutter/cutter = tool
+					if(!cutter.slice(user))
+						return FALSE
+			if(istype(tool, /obj/item/stock_parts/manipulator))
+				var/obj/item/stock_parts/manipulator = tool
+				qdel(tool)
 		return TRUE
 	return FALSE
 
@@ -183,7 +208,11 @@
 			return FALSE
 		if(affected.expensive == 2)
 			if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+				var/obj/item/prosthetic_wiring_layerer/prosthetic_wiring_layerer = tool
 				if(affected.burn_dam < affected.max_damage)
+					prosthetic_wiring_layerer.amount = prosthetic_wiring_layerer.amount - 1
+					if(prosthetic_wiring_layerer.amount < 1)
+						qdel(tool)
 					return TRUE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
@@ -191,6 +220,7 @@
 			if(istype(tool, /obj/item/stock_parts/capacitor))
 				var/obj/item/stock_parts/capacitor = tool
 				if(capacitor.rating >= affected.expensive)
+					qdel(tool)
 					return TRUE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
@@ -199,6 +229,14 @@
 		if(affected.expensive == 1)
 			if(istype(tool, /obj/item/prosthetic_wiring_layerer) || istype(tool, /obj/item/stack/nanopaste))
 				if(affected.burn_dam < affected.max_damage)
+					if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+						var/obj/item/prosthetic_wiring_layerer/prosthetic_wiring_layerer = tool
+						prosthetic_wiring_layerer.amount = prosthetic_wiring_layerer.amount - 1
+						if(prosthetic_wiring_layerer.amount < 1)
+							qdel(tool)
+					if(istype(tool, /obj/item/stack/nanopaste))
+						var/obj/item/stack/nanopaste = tool
+						nanopaste.use(1)
 					return TRUE
 				else
 					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
@@ -218,6 +256,16 @@
 					to_chat(user, SPAN_WARNING("You need three or more cable pieces to repair this damage."))
 				else
 					return TRUE
+			else
+				if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+					var/obj/item/prosthetic_wiring_layerer/prosthetic_wiring_layerer = tool
+					prosthetic_wiring_layerer.amount = prosthetic_wiring_layerer.amount - 1
+					if(prosthetic_wiring_layerer.amount < 1)
+						qdel(tool)
+				if(istype(tool, /obj/item/stack/nanopaste))
+					var/obj/item/stack/nanopaste = tool
+					nanopaste.use(1)
+				return TRUE
 	return FALSE
 
 /singleton/surgery_step/robotics/repair_burn/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
