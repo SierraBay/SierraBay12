@@ -219,7 +219,7 @@ var/global/list/mob_hat_cache = list()
 	if (istype(id))
 		var/id_name = GET_ID_NAME(id, tool)
 		// Reboot
-		if (stat == DEAD)
+		if (is_dead())
 			if (!config.allow_drone_spawn || emagged || health < -35)
 				USE_FEEDBACK_FAILURE("\The [src] interface is fried, and a distressing burned smell wafts from \his interior. You're not rebooting this one.")
 				return TRUE

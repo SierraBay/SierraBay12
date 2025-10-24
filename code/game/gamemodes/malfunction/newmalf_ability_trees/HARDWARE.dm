@@ -126,7 +126,7 @@
 	var/timer = 300
 	while(timer)
 		sleep(10)
-		if(!user || !user.bombing_station || user.stat == DEAD)
+		if(!user || !user.bombing_station || user.is_dead())
 			radio.autosay("Self destruct sequence has been cancelled.", "Self-Destruct Control")
 			to_chat(user, "** Self destruct sequence has been cancelled **")
 			return
