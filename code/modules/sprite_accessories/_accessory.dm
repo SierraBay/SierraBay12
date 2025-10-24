@@ -26,3 +26,4 @@
 	var/list/subspecies_allowed                    // Restrict some styles to specific species names
 	var/do_coloration = DO_COLORATION_USER         // Whether or not the accessory can be affected by colouration
 	var/blend = ICON_ADD
+	var/robo_paints = FALSE                     // Whether or not this accessory is a robotic accessory

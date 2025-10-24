@@ -49,11 +49,14 @@
 			if(istype(tool, /obj/item/stock_parts/manipulator))
 				var/obj/item/stock_parts/manipulator = tool
 				if(manipulator.rating >= affected.expensive)
+					qdel(tool)
 					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
 				return FALSE
-
 		if(affected.expensive == 1)
 			if(istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
 				if(affected.brute_dam < affected.max_damage)
@@ -74,6 +77,9 @@
 				if(manipulator.rating >= affected.expensive)
 					qdel(tool)
 					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
 				return FALSE
@@ -97,8 +103,8 @@
 					if(!cutter.slice(user))
 						return FALSE
 			if(istype(tool, /obj/item/stock_parts/manipulator))
-				var/obj/item/stock_parts/manipulator = tool
 				qdel(tool)
+				return TRUE
 		return TRUE
 	return FALSE
 
@@ -120,13 +126,12 @@
 	SPAN_NOTICE("You finish patching damage to [target]'s [affected.name] with \the [tool]."))
 	affected.heal_damage(rand(30,50),0,1,1)
 	affected.status &= ~ORGAN_DISFIGURED
-	qdel(tool)
 
 /singleton/surgery_step/robotics/repair_brute/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user]'s [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."),
 	SPAN_WARNING("Your [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."))
-	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
+	target.apply_damage(rand(5,20), DAMAGE_BURN, affected)
 
 
 //////////////////////////////////////////////////////////////////
@@ -169,7 +174,7 @@
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user] causes some of \the [target]'s [affected.name] to crumble!"),
 	SPAN_WARNING("You cause some of \the [target]'s [affected.name] to crumble!"))
-	target.apply_damage(rand(5,10), DAMAGE_BRUTE, affected)
+	target.apply_damage(rand(5,20), DAMAGE_BRUTE, affected)
 
 //////////////////////////////////////////////////////////////////
 //	robotic limb burn damage repair surgery step
@@ -222,6 +227,9 @@
 				if(capacitor.rating >= affected.expensive)
 					qdel(tool)
 					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
 				return FALSE
@@ -245,6 +253,9 @@
 				var/obj/item/stock_parts/capacitor = tool
 				if(capacitor.rating >= affected.expensive)
 					return TRUE
+				else
+					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					return FALSE
 			else
 				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
 				return FALSE
@@ -291,7 +302,7 @@
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_WARNING("[user] causes a short circuit in [target]'s [affected.name]!"),
 	SPAN_WARNING("You cause a short circuit in [target]'s [affected.name]!"))
-	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
+	target.apply_damage(rand(5,20), DAMAGE_BURN, affected)
 
 
 

@@ -1,8 +1,9 @@
 /datum/sprite_accessory/marking/ipc
 	icon = 'icons/mob/human_races/species/ipc/markings.dmi'
-	species_allowed = list(SPECIES_IPC)
+	species_allowed = list(SPECIES_IPC, SPECIES_FBP)
 	gender = NEUTER
 	do_coloration = TRUE
+	robo_paints = TRUE
 
 /datum/sprite_accessory/marking/ipc/head
 	body_parts = list(BP_HEAD)
@@ -10,11 +11,29 @@
 /datum/sprite_accessory/marking/ipc/torso
 	body_parts = list(BP_CHEST,BP_GROIN)
 
-/datum/sprite_accessory/marking/ipc/arms
-	body_parts = list(BP_R_ARM,BP_R_HAND,BP_L_ARM,BP_L_HAND)
+/datum/sprite_accessory/marking/ipc/arm/left
+	body_parts = list(BP_L_ARM)
 
-/datum/sprite_accessory/marking/ipc/legs
-	body_parts = list(BP_R_LEG,BP_R_FOOT,BP_L_LEG,BP_L_FOOT)
+/datum/sprite_accessory/marking/ipc/hand/left
+	body_parts = list(BP_L_HAND)
+
+/datum/sprite_accessory/marking/ipc/arm/right
+	body_parts = list(BP_R_ARM)
+
+/datum/sprite_accessory/marking/ipc/hand/right
+	body_parts = list(BP_R_HAND)
+
+/datum/sprite_accessory/marking/ipc/leg/left
+	body_parts = list(BP_L_LEG)
+
+/datum/sprite_accessory/marking/ipc/foot/left
+	body_parts = list(BP_L_FOOT)
+
+/datum/sprite_accessory/marking/ipc/leg/right
+	body_parts = list(BP_R_LEG)
+
+/datum/sprite_accessory/marking/ipc/foot/right
+	body_parts = list(BP_R_FOOT)
 
 //SHELLGUARD
 /datum/sprite_accessory/marking/ipc/head/shellguard
@@ -33,12 +52,36 @@
 	name = "Shellguard Colored Torso"
 	icon_state = "shellguard"
 
-/datum/sprite_accessory/marking/ipc/arms/shellguard
-	name = "Shellguard Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/shellguard
+	name = "Shellguard Colored Left Arm"
 	icon_state = "shellguard"
 
-/datum/sprite_accessory/marking/ipc/legs/shellguard
-	name = "Shellguard Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/shellguard
+	name = "Shellguard Colored Right Arm"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/hand/left/shellguard
+	name = "Shellguard Colored Left Hand"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/hand/right/shellguard
+	name = "Shellguard Colored Right Hand"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/leg/left/shellguard
+	name = "Shellguard Colored Left Leg"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/leg/right/shellguard
+	name = "Shellguard Colored Right Leg"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/foot/left/shellguard
+	name = "Shellguard Colored Left Foot"
+	icon_state = "shellguard"
+
+/datum/sprite_accessory/marking/ipc/foot/right/shellguard
+	name = "Shellguard Colored Right Foot"
 	icon_state = "shellguard"
 
 //XION
@@ -62,12 +105,36 @@
 	name = "Xion Colored Torso"
 	icon_state = "xion"
 
-/datum/sprite_accessory/marking/ipc/arms/xion
-	name = "Xion Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/xion
+	name = "Xion Colored Left Arm"
 	icon_state = "xion"
 
-/datum/sprite_accessory/marking/ipc/legs/xion
-	name = "Xion Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/xion
+	name = "Xion Colored Right Arm"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/hand/left/xion
+	name = "Xion Colored Left Hand"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/hand/right/xion
+	name = "Xion Colored Right Hand"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/leg/left/xion
+	name = "Xion Colored Left Leg"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/leg/right/xion
+	name = "Xion Colored Right Leg"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/foot/left/xion
+	name = "Xion Colored Left Foot"
+	icon_state = "xion"
+
+/datum/sprite_accessory/marking/ipc/foot/right/xion
+	name = "Xion Colored Right Foot"
 	icon_state = "xion"
 
 //XION ECON
@@ -79,12 +146,36 @@
 	name = "Xion Econ. Colored Torso"
 	icon_state = "xion_e"
 
-/datum/sprite_accessory/marking/ipc/arms/xion_e
-	name = "Xion Econ. Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/xion_e
+	name = "Xion Econ. Colored Left Arm"
 	icon_state = "xion_e"
 
-/datum/sprite_accessory/marking/ipc/legs/xion_e
-	name = "Xion Econ. Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/xion_e
+	name = "Xion Econ. Colored Right Arm"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/hand/left/xion_e
+	name = "Xion Econ. Colored Left Hand"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/hand/right/xion_e
+	name = "Xion Econ. Colored Right Hand"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/leg/left/xion_e
+	name = "Xion Econ. Colored Left Leg"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/leg/right/xion_e
+	name = "Xion Econ. Colored Right Leg"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/foot/left/xion_e
+	name = "Xion Econ. Colored Left Foot"
+	icon_state = "xion_e"
+
+/datum/sprite_accessory/marking/ipc/foot/right/xion_e
+	name = "Xion Econ. Colored Right Foot"
 	icon_state = "xion_e"
 
 //WARD-TAKAHASHI
@@ -108,12 +199,36 @@
 	name = "Ward-Takahashi GMB Colored Torso"
 	icon_state = "wt"
 
-/datum/sprite_accessory/marking/ipc/arms/wt
-	name = "Ward-Takahashi GMB Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/wt
+	name = "Ward-Takahashi GMB Colored Left Arm"
 	icon_state = "wt"
 
-/datum/sprite_accessory/marking/ipc/legs/wt
-	name = "Ward-Takahashi GMB Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/wt
+	name = "Ward-Takahashi GMB Colored Right Arm"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/hand/left/wt
+	name = "Ward-Takahashi GMB Colored Left Hand"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/hand/right/wt
+	name = "Ward-Takahashi GMB Colored Right Hand"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/leg/left/wt
+	name = "Ward-Takahashi GMB Colored Left Leg"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/leg/right/wt
+	name = "Ward-Takahashi GMB Colored Right Leg"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/foot/left/wt
+	name = "Ward-Takahashi GMB Colored Left Foot"
+	icon_state = "wt"
+
+/datum/sprite_accessory/marking/ipc/foot/right/wt
+	name = "Ward-Takahashi GMB Colored Right Foot"
 	icon_state = "wt"
 
 //BISHOP
@@ -133,12 +248,36 @@
 	name = "Bishop Torso Color Accents"
 	icon_state = "bishop"
 
-/datum/sprite_accessory/marking/ipc/arms/bishop
-	name = "Bishop Arms Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/left/bishop
+	name = "Bishop Left Arm Color Accents"
 	icon_state = "bishop"
 
-/datum/sprite_accessory/marking/ipc/legs/bishop
-	name = "Bishop Legs Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/right/bishop
+	name = "Bishop Right Arm Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/hand/left/bishop
+	name = "Bishop Left Hand Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/hand/right/bishop
+	name = "Bishop Right Hand Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/leg/left/bishop
+	name = "Bishop Left Leg Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/leg/right/bishop
+	name = "Bishop Right Leg Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/foot/left/bishop
+	name = "Bishop Left Foot Color Accents"
+	icon_state = "bishop"
+
+/datum/sprite_accessory/marking/ipc/foot/right/bishop
+	name = "Bishop Right Foot Color Accents"
 	icon_state = "bishop"
 
 //BISHOP ROOK
@@ -150,12 +289,36 @@
 	name = "Bishop Rook Torso Color Accents"
 	icon_state = "bishop_rook"
 
-/datum/sprite_accessory/marking/ipc/arms/b_rook
-	name = "Bishop Rook Arms Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/left/b_rook
+	name = "Bishop Rook Left Arm Color Accents"
 	icon_state = "bishop_rook"
 
-/datum/sprite_accessory/marking/ipc/legs/b_rook
-	name = "Bishop Rook Legs Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/right/b_rook
+	name = "Bishop Rook Right Arm Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/hand/left/b_rook
+	name = "Bishop Rook Left Hand Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/hand/right/b_rook
+	name = "Bishop Rook Right Hand Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/leg/left/b_rook
+	name = "Bishop Rook Left Leg Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/leg/right/b_rook
+	name = "Bishop Rook Right Leg Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/foot/left/b_rook
+	name = "Bishop Rook Left Foot Color Accents"
+	icon_state = "bishop_rook"
+
+/datum/sprite_accessory/marking/ipc/foot/right/b_rook
+	name = "Bishop Rook Right Foot Color Accents"
 	icon_state = "bishop_rook"
 
 //HEPHAESTUS
@@ -179,12 +342,36 @@
 	name = "Hephaestus Colored Torso"
 	icon_state = "hephaestus"
 
-/datum/sprite_accessory/marking/ipc/arms/hephaestus
-	name = "Hephaestus Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/hephaestus
+	name = "Hephaestus Colored Left Arm"
 	icon_state = "hephaestus"
 
-/datum/sprite_accessory/marking/ipc/legs/hephaestus
-	name = "Hephaestus Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/hephaestus
+	name = "Hephaestus Colored Right Arm"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/hand/left/hephaestus
+	name = "Hephaestus Colored Left Hand"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/hand/right/hephaestus
+	name = "Hephaestus Colored Right Hand"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/leg/left/hephaestus
+	name = "Hephaestus Colored Left Leg"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/leg/right/hephaestus
+	name = "Hephaestus Colored Right Leg"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/foot/left/hephaestus
+	name = "Hephaestus Colored Left Foot"
+	icon_state = "hephaestus"
+
+/datum/sprite_accessory/marking/ipc/foot/right/hephaestus
+	name = "Hephaestus Colored Right Foot"
 	icon_state = "hephaestus"
 
 //TITAN
@@ -196,12 +383,36 @@
 	name = "Hephaestus Titan Colored Torso"
 	icon_state = "titan"
 
-/datum/sprite_accessory/marking/ipc/arms/titan
-	name = "Hephaestus Titan Colored Arms"
+/datum/sprite_accessory/marking/ipc/arm/left/titan
+	name = "Hephaestus Titan Colored Left Arm"
 	icon_state = "titan"
 
-/datum/sprite_accessory/marking/ipc/legs/titan
-	name = "Hephaestus Titan Colored Legs"
+/datum/sprite_accessory/marking/ipc/arm/right/titan
+	name = "Hephaestus Titan Colored Right Arm"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/hand/left/titan
+	name = "Hephaestus Titan Colored Left Hand"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/hand/right/titan
+	name = "Hephaestus Titan Colored Right Hand"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/leg/left/titan
+	name = "Hephaestus Titan Colored Left Leg"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/leg/right/titan
+	name = "Hephaestus Titan Colored Right Leg"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/foot/left/titan
+	name = "Hephaestus Titan Colored Left Foot"
+	icon_state = "titan"
+
+/datum/sprite_accessory/marking/ipc/foot/right/titan
+	name = "Hephaestus Titan Colored Right Foot"
 	icon_state = "titan"
 
 //MORPHEUS
@@ -230,12 +441,36 @@
 	name = "Zeng-Hu Spirit Torso Color Accents"
 	icon_state = "zenghu"
 
-/datum/sprite_accessory/marking/ipc/arms/zenghu
-	name = "Zeng-Hu Spirit Arms Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/left/zenghu
+	name = "Zeng-Hu Spirit Left Arm Color Accents"
 	icon_state = "zenghu"
 
-/datum/sprite_accessory/marking/ipc/legs/zenghu
-	name = "Zeng-Hu Spirit Legs Color Accents"
+/datum/sprite_accessory/marking/ipc/arm/right/zenghu
+	name = "Zeng-Hu Spirit Right Arm Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/hand/left/zenghu
+	name = "Zeng-Hu Spirit Left Hand Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/hand/right/zenghu
+	name = "Zeng-Hu Spirit Right Hand Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/leg/left/zenghu
+	name = "Zeng-Hu Spirit Left Leg Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/leg/right/zenghu
+	name = "Zeng-Hu Spirit Right Leg Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/foot/left/zenghu
+	name = "Zeng-Hu Spirit Left Foot Color Accents"
+	icon_state = "zenghu"
+
+/datum/sprite_accessory/marking/ipc/foot/right/zenghu
+	name = "Zeng-Hu Spirit Right Foot Color Accents"
 	icon_state = "zenghu"
 
 

@@ -99,9 +99,9 @@
 /obj/item/integrity_repair_tool/proc/get_reourse()
 	return tank ? tank.resourse_left : 0
 
-/obj/item/integrity_repair_tool/proc/can_use(amount = 1, mob/user = null, interaction_message = "to complete this task.", silent = FALSE)
+/obj/item/integrity_repair_tool/proc/can_use(amount = 1, mob/user = null, interaction_message = "to complete this task.")
 	if (get_reourse() < amount)
-		if (!silent && user)
+		if (user)
 			to_chat(user, SPAN_WARNING("You need at least [amount] unit\s of [resource] [interaction_message]"))
 		return FALSE
 	return TRUE
@@ -130,20 +130,19 @@
 	update_icon()
 	return
 
-/obj/item/integrity_repair_tool/proc/remove_nanomaterial(amount = 0.1, mob/M = null)
-	if(!can_use(amount, M))
-		return 0
+/obj/item/integrity_repair_tool/proc/remove_nanomaterial(amount, mob/M = null)
+	if(tank.resourse_left > 0)
+		tank.resourse_left = tank.resourse_left - amount
+	else
+		tank.resourse_left = 0
+		return attack_self()
 	burn_nanomaterial(amount)
 	set_light(5, 1, COLOR_SKY_BLUE)
 	addtimer(new Callback(src, TYPE_PROC_REF(/atom, update_icon)), 5)
-	tank.resourse_left = tank.resourse_left - amount
 
 /obj/item/integrity_repair_tool/Process()
 	if(active)
-		if(remove_nanomaterial(0.05))
-			return
-		else
-			attack_self()
+		remove_nanomaterial(0.01)
 
 /obj/item/integrity_repair_tool/proc/burn_nanomaterial(amount)
 	if(!tank)

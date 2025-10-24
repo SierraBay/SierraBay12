@@ -154,6 +154,7 @@
 	)
 	speed_modifier = - 0.2
 	coolingefficiency = 0.4
+	expensive = 2
 
 /datum/robolimb/bishop/alt
 	company = "Bishop Alt."

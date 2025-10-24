@@ -480,7 +480,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_style"])
+		var/list/robo_limbs = list()
 		var/list/disallowed_markings = list()
+		var/list/prosthetic_temp = list()
 		for (var/M in pref.body_markings)
 			var/datum/sprite_accessory/marking/mark_style = GLOB.body_marking_styles_list[M]
 			disallowed_markings |= mark_style.disallows
@@ -489,11 +491,36 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			var/datum/sprite_accessory/S = usable_markings[M]
 			if(is_type_in_list(S, disallowed_markings) || (S.species_allowed && !(mob_species.get_bodytype() in S.species_allowed)) || (S.subspecies_allowed && !(mob_species.name in S.subspecies_allowed)))
 				usable_markings -= M
+		for(var/P in pref.organ_data)
+			if(pref.organ_data[P] == "cyborg")
+				robo_limbs += P
 
-		var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
-		if(new_marking && CanUseTopic(user))
-			pref.body_markings[new_marking] = "#000000" //New markings start black
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+		if(LAZYLEN(robo_limbs))
+			var/option = alert("Select which type of bodymarks to?", "select", "Flesh", "Robotic")
+			switch(option)
+				if("Flesh")
+					var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
+					if(new_marking && CanUseTopic(user))
+						pref.body_markings[new_marking] = "#000000" //New markings start black
+				if("Robotic")
+					if(LAZYLEN(robo_limbs))
+						var/bodypart = input(user, "Body Part for marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in robo_limbs
+						var/sorted
+						if(bodypart && CanUseTopic(user))
+							for(var/M in GLOB.body_marking_styles_list)
+								var/datum/sprite_accessory/marking/mark_style = GLOB.body_marking_styles_list[M]
+								if(mark_style.robo_paints == TRUE && !(M in prosthetic_temp))
+									if(bodypart in mark_style.body_parts)
+										LAZYADD(sorted, M)
+						var/new_robo_marking = input(user, "Choose marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in sorted
+						if(new_robo_marking && CanUseTopic(user))
+							pref.body_markings[new_robo_marking] = "#000000"
+		else
+			var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
+			if(new_marking && CanUseTopic(user))
+				pref.body_markings[new_marking] = "#000000" //New markings start black
+
+		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_remove"])
 		var/M = href_list["marking_remove"]
@@ -509,6 +536,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["reset_limbs"])
 		reset_limbs()
+		pref.body_markings.Cut()
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["limbs"])
