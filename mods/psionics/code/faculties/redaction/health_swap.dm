@@ -20,7 +20,7 @@
 		if(target.grabbed_by && target.grabbed_by == user)
 			to_chat(user, "Цель нужно продолжать держать в захвате!")
 			return
-
+		target.organs_psi_invisibility(user)
 		if(!do_after(user, 5 SECONDS, target, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
 			to_chat(user, "В таких условиях сосредоточиться просто невозможно!")
 			return
@@ -67,9 +67,7 @@
 		//Перенос брута
 		var/damage_steal = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_steal)
-		E.psiker_temp_invincible(1 MINUTES)
 		detected_organ.take_internal_damage(damage_steal)
-		detected_organ.psiker_temp_invincible(1 MINUTES)
 	return TRUE
 
 
@@ -97,9 +95,7 @@
 		//Перенос брута
 		var/damage_give = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_give)
-		E.psiker_temp_invincible(1 MINUTES)
 		detected_organ.take_internal_damage(damage_give)
-		detected_organ.psiker_temp_invincible(1 MINUTES)
 
 /mob/living/carbon/human
 	var/psi_buffer_take = 0 //Буфер забирания
@@ -127,11 +123,20 @@
 	var/psiker_invincible = FALSE
 	var/psiker_invincible_timer
 
+/mob/living/carbon/human/proc/organs_psi_invisibility(mob/living/carbon/human/psiker, time = 10 SECONDS)
+	for(var/thing in internal_organs)
+		var/obj/item/organ/internal/E = thing
+		var/obj/item/organ/internal/detected_organ = psiker.internal_organs_by_name[E.organ_tag]
+		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
+			continue
+		E.psiker_temp_invincible(10 SECONDS)
+		detected_organ.psiker_temp_invincible(10 SECONDS)
+
 ///Отключение псионической неуязвимости органов
 /obj/item/organ/internal/proc/clear_psiker_invinsibility()
 	psiker_invincible = FALSE
 
-/obj/item/organ/internal/proc/psiker_temp_invincible(invincible_time = 1 MINUTES)
+/obj/item/organ/internal/proc/psiker_temp_invincible(invincible_time = 10 SECONDS)
 	if(psiker_invincible_timer)
 		deltimer(psiker_invincible_timer)
 		psiker_invincible_timer = null
