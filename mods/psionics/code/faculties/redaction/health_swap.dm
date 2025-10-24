@@ -48,6 +48,8 @@
 		var/obj/item/organ/external/detected_organ = user.get_organ(E.organ_tag)
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
 			continue
+		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
+			continue
 		//Перенос брута
 		var/brute_steal = (E.brute_dam) * ((result_rank * 25)/100)
 		E.heal_damage(brute = brute_steal)
@@ -64,6 +66,8 @@
 		var/obj/item/organ/internal/detected_organ = user.internal_organs_by_name[E.organ_tag]
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
 			continue
+		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
+			continue
 		//Перенос брута
 		var/damage_steal = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_steal)
@@ -78,6 +82,8 @@
 		var/obj/item/organ/external/detected_organ = target.get_organ(E.organ_tag)
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
 			continue
+		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
+			continue
 		var/brute_give = (E.brute_dam) * ((result_rank * 25)/100)
 		//Перенос брута
 		E.heal_damage(brute = brute_give)
@@ -91,6 +97,8 @@
 		var/obj/item/organ/internal/E = thing
 		var/obj/item/organ/internal/detected_organ = target.internal_organs_by_name[E.organ_tag]
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
+			continue
+		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
 			continue
 		//Перенос брута
 		var/damage_give = (E.damage) * ((result_rank * 25)/100)
@@ -128,6 +136,8 @@
 		var/obj/item/organ/internal/E = thing
 		var/obj/item/organ/internal/detected_organ = psiker.internal_organs_by_name[E.organ_tag]
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
+			continue
+		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
 			continue
 		E.psiker_temp_invincible(10 SECONDS)
 		detected_organ.psiker_temp_invincible(10 SECONDS)
