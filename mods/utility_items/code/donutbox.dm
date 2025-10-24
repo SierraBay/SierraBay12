@@ -1,0 +1,6 @@
+/obj/item/storage/box/donut/New(loc, ...)
+	. = ..()
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in contents)
+		if(rand(1,6) == 1)
+			D.reagents.add_reagent(/datum/reagent/nutriment/sprinkles, 3)
+	update_icon()

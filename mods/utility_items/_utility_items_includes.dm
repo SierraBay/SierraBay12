@@ -61,4 +61,5 @@
 #include "code/supermatter.dm"
 #include "code/stealthbundlerework.dm"
 #include "code/stairs.dm"
+#include "code/donutbox.dm"
 #endif
