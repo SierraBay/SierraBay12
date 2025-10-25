@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 			var/obj/item/organ/internal/posibrain/P = W
 			B = P.brainmob
 
-		if(B.stat == DEAD)
+		if(B.is_dead())
 			to_chat(user, SPAN_WARNING("Sticking a dead [W.name] into the frame would sort of defeat the purpose."))
 			return TRUE
 

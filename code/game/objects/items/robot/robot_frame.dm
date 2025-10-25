@@ -87,7 +87,7 @@
 			to_chat(user, SPAN_WARNING("\The [W] does not seem to fit."))
 			return TRUE
 
-		if(B.stat == DEAD)
+		if(B.is_dead())
 			to_chat(user, SPAN_WARNING("Sticking a dead [W.name] into the frame would sort of defeat the purpose."))
 			return TRUE
 

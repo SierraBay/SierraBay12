@@ -11,7 +11,7 @@
 	var/installed = 0
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
-	if(R.stat == DEAD)
+	if(R.is_dead())
 		to_chat(usr, SPAN_WARNING("The [src] will not function on a deceased robot."))
 		return 1
 	return 0

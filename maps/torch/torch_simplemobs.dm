@@ -196,7 +196,7 @@
 
 /mob/living/simple_animal/hostile/human/fleet/space/ranged/on_update_icon()
 	..()
-	if(stat != DEAD)
+	if(!is_dead())
 		if(deactivated)
 			AddOverlays(image(icon, "disabled"))
 			return
@@ -285,7 +285,7 @@
 
 /mob/living/simple_animal/hostile/human/fleet/space/ranged/heavy/on_update_icon()
 	..()
-	if(stat != DEAD)
+	if(!is_dead())
 		if(deactivated)
 			AddOverlays(image(icon, "disabled"))
 			return

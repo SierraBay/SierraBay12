@@ -979,7 +979,7 @@
 				break
 
 //SIERRA-ADD
-		if(stat == DEAD || status_flags & FAKEDEATH)
+		if(is_dead())
 			holder.icon_state = "0" 	// X_X
 		else if(is_asystole())
 			holder.icon_state = "flatline"
@@ -989,7 +989,7 @@
 
 	if (GET_BIT(hud_updateflag, LIFE_HUD) && hud_list[LIFE_HUD])
 		var/image/holder = hud_list[LIFE_HUD]
-		if(stat == DEAD || status_flags & FAKEDEATH)
+		if(is_dead())
 			holder.icon_state = "huddead"
 //SIERRA-ADD VIRUSOLOGY
 		else if(foundVirus)
@@ -1014,7 +1014,7 @@
 			holder.icon_state = "hudhealthy"
 
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == DEAD)
+		if(is_real_dead())
 			holder2.icon_state = "huddead"
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"

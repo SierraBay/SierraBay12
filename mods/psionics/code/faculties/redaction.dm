@@ -12,7 +12,7 @@
 /singleton/psionic_power/redaction/proc/check_dead(mob/living/target)
 	if(!istype(target))
 		return FALSE
-	if(target.stat == DEAD || (target.status_flags & FAKEDEATH))
+	if(target.is_dead())
 		return TRUE
 	return FALSE
 
@@ -277,7 +277,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		if(target.stat != DEAD && !(target.status_flags & FAKEDEATH))
+		if(!target.is_dead())
 			to_chat(user, SPAN_WARNING("Этот человек ещё жив!"))
 			return TRUE
 

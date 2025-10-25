@@ -12,7 +12,7 @@
 		if(ambition)
 			text += "<br>Their goals for today were..."
 			text += "<br>[SPAN_NOTICE("[ambition.summarize()]")]"
-		if(P.current?.stat == DEAD && P.last_words)
+		if(P.current?.is_real_dead() && P.last_words)
 			text += "<br><b>Their last words were:</b> '[P.last_words]'"
 		if(!length(global_objectives) && length(P.objectives))
 			var/num = 1
@@ -39,7 +39,7 @@
 	var/role = ply.assigned_role ? "\improper[ply.assigned_role]" : (ply.special_role ? "\improper[ply.special_role]" : "unknown role")
 	var/text = "<br><b>[ply.name]</b> [(ply.current?.get_preference_value(/datum/client_preference/show_ckey_credits) == GLOB.PREF_SHOW) ? "(<b>[ply.key]</b>)" : ""] as \a <b>[role]</b> ("
 	if(ply.current)
-		if(ply.current.stat == DEAD)
+		if(ply.current.is_real_dead())
 			text += "died"
 		else if(isNotStationLevel(ply.current.z))
 			text += "fled"

@@ -18,7 +18,7 @@
 /mob/living/carbon/slime/proc/invalidFeedTarget(mob/living/living)
 	if (!istype(living))
 		return "This subject is incompatible..."
-	if (living.stat == DEAD)
+	if (living.is_dead())
 		return "This subject is dead..."
 	if (!Adjacent(living))
 		return "This subject is too far away..."
