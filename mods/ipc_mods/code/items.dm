@@ -442,3 +442,72 @@
 /obj/item/liquid_skin_tank/examine(mob/user, distance)
 	. = ..()
 	to_chat(user,"It has [liquid_left] of liquid skin remaining.")
+
+
+/obj/machinery/vending/roborepair
+	name = "Починись Сам"
+	desc = "A vending machine which dispenses repair tools for robo-limbs."
+	icon = 'mods/ipc_mods/icons/ppt.dmi'
+	icon_state = "repairvend"
+	icon_vend = "repairvend-vend"
+	icon_deny = "repairvend-deny"
+	base_type = /obj/machinery/vending/roborepair
+	maxrandom = 15
+	minrandom = 5
+	idle_power_usage = 200
+	vend_power_usage = 40000
+	product_ads = {"\
+		Сломался?!;\
+		Совсем разваливаешься;\
+		Прикупи инструменты, обеспечь себе завтра;\
+		Ржаветь начинаешь;\
+		Лучшие инструменты в галактике.;\
+		Кажется у тебя что то сломалось.;\
+	"}
+	antag_slogans = {"\
+		I love Sol!  Ha ha, just kidding.;\
+		Sol woke up and chose violence!;\
+		The worst joe for the average Joe.;\
+		Capitalism tiring you out? The boss tell you to perk up or ship out?;\
+		Tired of working for the man? Try a coffee. It won't help and it won't make you feel better either.\
+	"}
+	prices = list(
+		/obj/item/integrity_repair_tool = 900,
+		/obj/item/integrity_repair_tool_tank = 300,
+		/obj/item/prosthetic_wiring_layerer = 400,
+		/obj/item/synthskinsplayer = 1500,
+		/obj/item/liquid_skin_tank = 500,
+		/obj/item/stack/nanopaste = 600,
+		/obj/item/stack/cable_coil = 50,
+		/obj/item/weldingtool = 100,
+		/obj/item/stock_parts/manipulator = 150,
+		/obj/item/stock_parts/manipulator/nano = 350,
+		/obj/item/stock_parts/capacitor = 120,
+		/obj/item/stock_parts/capacitor/adv = 340,
+	)
+	products = list(
+		/obj/item/integrity_repair_tool = 0,
+		/obj/item/integrity_repair_tool_tank = 0,
+		/obj/item/prosthetic_wiring_layerer = 0,
+		/obj/item/synthskinsplayer = 0,
+		/obj/item/liquid_skin_tank = 0,
+		/obj/item/stack/nanopaste = 0,
+		/obj/item/stack/cable_coil = 0,
+		/obj/item/weldingtool = 0,
+		/obj/item/stock_parts/manipulator = 0,
+		/obj/item/stock_parts/manipulator/nano = 0,
+		/obj/item/stock_parts/capacitor = 0,
+		/obj/item/stock_parts/capacitor/adv = 0,
+	)
+	rare_products = list(
+		/obj/item/stock_parts/manipulator/pico = 10,
+		/obj/item/stock_parts/capacitor/super = 10,
+	)
+	antag = list(
+		/obj/item/organ/internal/shackles = 1,
+	)
+
+/obj/machinery/vending/coffee/on_update_icon()
+	..()
+	if (is_powered())
+		AddOverlays(image(icon, "[initial(icon_state)]-screen"))

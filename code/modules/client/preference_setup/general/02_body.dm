@@ -496,7 +496,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				robo_limbs += P
 
 		if(LAZYLEN(robo_limbs))
-			var/option = alert("Select which type of bodymarks to?", "select", "Flesh", "Robotic")
+			var/option = alert("Select which type of bodymarks?", "select", "Flesh", "Robotic")
 			switch(option)
 				if("Flesh")
 					var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
