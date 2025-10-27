@@ -110,7 +110,7 @@
 
 /obj/item/organ/internal/proc/bruise()
 	//SIERRA-ADD - PSY-HEALTH-SWAP
-	if(psiker_invincible)
+	if(psyker_invincible)
 		return
 	//SIERRA-ADD - PSY-HEALTH-SWAP
 	damage = max(damage, min_bruised_damage)
@@ -131,7 +131,7 @@
 
 /obj/item/organ/internal/proc/take_internal_damage(amount, silent=0)
 	//SIERRA-ADD - PSY-HEALTH-SWAP
-	if(psiker_invincible)
+	if(psyker_invincible)
 		return
 	//SIERRA-ADD - PSY-HEALTH-SWAP
 	if(BP_IS_ROBOTIC(src))

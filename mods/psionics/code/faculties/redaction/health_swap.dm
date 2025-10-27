@@ -32,16 +32,16 @@
 		var/red_rank = user.psi.get_rank(PSI_REDACTION) - 1
 		if(answer == "От меня к цели")
 			red_rank += target.psi_buffer_give
-			transfer_from_psiker_to_target(user, target, red_rank)
+			transfer_from_psyker_to_target(user, target, red_rank)
 		else if(answer == "От цели ко мне")
 			red_rank += target.psi_buffer_take
 			red_rank = clamp(red_rank, 0, 4)
-			transfer_from_target_to_psiker(user, target, red_rank)
+			transfer_from_target_to_psyker(user, target, red_rank)
 		setup_psi_swap_buffer(target, user.psi.get_rank(PSI_REDACTION) - 1)
 		return TRUE
 
 ///Отжимает брут урон с органов и конечностей и переносит к псионику
-/singleton/psionic_power/redaction/health_swap/proc/transfer_from_target_to_psiker(mob/living/carbon/human/user, mob/living/carbon/human/target, result_rank)
+/singleton/psionic_power/redaction/health_swap/proc/transfer_from_target_to_psyker(mob/living/carbon/human/user, mob/living/carbon/human/target, result_rank)
 	//Перенос у внешних органов
 	for(var/thing in target.organs)
 		var/obj/item/organ/external/E = thing
@@ -75,7 +75,7 @@
 	return TRUE
 
 
-/singleton/psionic_power/redaction/health_swap/proc/transfer_from_psiker_to_target(mob/living/carbon/human/user, mob/living/carbon/human/target, result_rank)
+/singleton/psionic_power/redaction/health_swap/proc/transfer_from_psyker_to_target(mob/living/carbon/human/user, mob/living/carbon/human/target, result_rank)
 	///Перенос с конечностей
 	for(var/thing in user.organs)
 		var/obj/item/organ/external/E = thing
@@ -128,27 +128,27 @@
 	target.psi_buffer_timer = addtimer(new Callback(target, TYPE_PROC_REF(/mob/living/carbon/human, clear_psi_buffer)), 3 MINUTES)
 
 /obj/item/organ/internal
-	var/psiker_invincible = FALSE
-	var/psiker_invincible_timer
+	var/psyker_invincible = FALSE
+	var/psyker_invincible_timer
 
-/mob/living/carbon/human/proc/organs_psi_invisibility(mob/living/carbon/human/psiker, time = 10 SECONDS)
+/mob/living/carbon/human/proc/organs_psi_invisibility(mob/living/carbon/human/psyker, time = 10 SECONDS)
 	for(var/thing in internal_organs)
 		var/obj/item/organ/internal/E = thing
-		var/obj/item/organ/internal/detected_organ = psiker.internal_organs_by_name[E.organ_tag]
+		var/obj/item/organ/internal/detected_organ = psyker.internal_organs_by_name[E.organ_tag]
 		if(BP_IS_ROBOTIC(E) || BP_IS_ROBOTIC(detected_organ))
 			continue
 		if(BP_IS_CRYSTAL(E) || BP_IS_CRYSTAL(detected_organ))
 			continue
-		E.psiker_temp_invincible(10 SECONDS)
-		detected_organ.psiker_temp_invincible(10 SECONDS)
+		E.psyker_temp_invincible(10 SECONDS)
+		detected_organ.psyker_temp_invincible(10 SECONDS)
 
 ///Отключение псионической неуязвимости органов
-/obj/item/organ/internal/proc/clear_psiker_invinsibility()
-	psiker_invincible = FALSE
+/obj/item/organ/internal/proc/clear_psyker_invinsibility()
+	psyker_invincible = FALSE
 
-/obj/item/organ/internal/proc/psiker_temp_invincible(invincible_time = 10 SECONDS)
-	if(psiker_invincible_timer)
-		deltimer(psiker_invincible_timer)
-		psiker_invincible_timer = null
-	psiker_invincible_timer = addtimer(new Callback(src, PROC_REF(clear_psiker_invinsibility)), invincible_time)
-	psiker_invincible = TRUE
+/obj/item/organ/internal/proc/psyker_temp_invincible(invincible_time = 10 SECONDS)
+	if(psyker_invincible_timer)
+		deltimer(psyker_invincible_timer)
+		psyker_invincible_timer = null
+	psyker_invincible_timer = addtimer(new Callback(src, PROC_REF(clear_psyker_invinsibility)), invincible_time)
+	psyker_invincible = TRUE
