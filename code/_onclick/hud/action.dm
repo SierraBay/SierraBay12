@@ -136,7 +136,7 @@
 	if (owner?.target)
 		tooltip_title = owner.target.name
 
-/*
+/* [SIERRA-REMOVE] - HARDSUITS
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
