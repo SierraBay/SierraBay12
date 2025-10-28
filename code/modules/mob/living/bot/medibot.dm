@@ -56,7 +56,7 @@
 	if(busy)
 		return
 
-	if(H.stat == DEAD)
+	if(H.is_dead())
 		var/death_message = pick("No! NO!", "Live, damnit! LIVE!", "I... I've never lost a patient before. Not today, I mean.")
 		say(death_message)
 		target = null
@@ -249,7 +249,7 @@
 	if(!..())
 		return 0
 
-	if(H.stat == DEAD) // He's dead, Jim
+	if(H.is_dead()) // He's dead, Jim
 		return 0
 
 	if(emagged)

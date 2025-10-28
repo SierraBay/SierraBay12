@@ -235,7 +235,7 @@
 		return 0
 
 	//OH SHIT.
-	if(holder.wearer.stat == DEAD)
+	if(holder.wearer.is_dead())
 		if(active)
 			engage(null, TRUE)
 

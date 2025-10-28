@@ -126,7 +126,7 @@
 				return FALSE
 
 		if (L.stat)
-			if (L.stat == DEAD && !handle_corpse) // Leave dead things alone
+			if (L.is_dead() && !handle_corpse) // Leave dead things alone
 				return FALSE
 			if (L.stat == UNCONSCIOUS)	// Do we have mauling? Yes? Then maul people who are sleeping but not SSD
 				if (mauling)

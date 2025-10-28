@@ -1,0 +1,17 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"o" = (/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"w" = (/obj/machinery/artifact,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"x" = (/turf/simulated/floor/exoplanet/water/shallow/tar,/area/template_noop)
+"I" = (/obj/floor_decal/asteroid,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+
+(1,1,1) = {"
+aaxxxxxaa
+axxxooxxa
+xxoooIoxx
+xIoxxxoox
+xooxwxxox
+xoIxxxxIx
+xxoooooox
+axxxxIoxx
+aaaxxxxxa
+"}

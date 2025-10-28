@@ -155,7 +155,6 @@ Please contact me on #coderbus IRC. ~Carn x
 #define HO_FIRE_LAYER       28 //If you're on fire
 #define HO_EFFECTS_LAYER    29
 #define TOTAL_LAYERS        30
-
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -750,7 +749,7 @@ var/global/list/damage_icon_parts = list()
 		queue_icon_update()
 
 /mob/living/carbon/human/proc/animate_tail_reset(update_icons=1)
-	if(stat != DEAD)
+	if(!is_dead())
 		set_tail_state("[species.get_tail(src)]_idle[rand(0,9)]")
 	else
 		set_tail_state("[species.get_tail(src)]_static")

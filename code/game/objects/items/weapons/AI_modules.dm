@@ -35,7 +35,7 @@ AI MODULES
 		to_chat(user, "You haven't selected an intelligence to transmit laws to!")
 		return
 
-	if(comp.current.stat == DEAD)
+	if(comp.current.is_dead())
 		to_chat(user, "Upload failed. No signal is being detected from the intelligence.")
 		return
 	if(istype(comp.current, /mob/living/silicon/ai))

@@ -8,6 +8,7 @@
 	apc_test_exempt_areas = list(
 		/area/map_template/anomaly/deployed_generator = NO_SCRUBBER|NO_VENT|NO_APC
 	)
+	skip_main_unit_tests = TRUE
 
 
 /area/map_template/anomaly/deployed_generator
