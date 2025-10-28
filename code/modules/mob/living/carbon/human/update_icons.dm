@@ -129,7 +129,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define HO_MUTATIONS_LAYER  2
 #define HO_SKIN_LAYER       3
 #define HO_SURGERY_LAYER    4 //bs12 specific.
-#define HO_SYNTH_SKIN_LAYER 5
+#define HO_SYNTH_SKIN_LAYER 5 //[SIERRA-ADD] Все последующие слои в ориге имеюют значени -1 от текущего
 #define HO_UNDERWEAR_LAYER  6
 #define HO_UNIFORM_LAYER    7
 #define HO_DAMAGE_LAYER     8
@@ -483,7 +483,7 @@ var/global/list/damage_icon_parts = list()
 	update_surgery(0)
 	UpdateDamageIcon()
 	queue_icon_update()
-	update_synth_skin()
+	update_synth_skin() //[SIERRA-ADD]
 	//Hud Stuff
 	update_hud()
 
@@ -831,6 +831,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)
 		queue_icon_update()
 
+//[SIERRA-ADD]
 /mob/living/carbon/human/proc/update_synth_skin()
 	overlays_standing[HO_SYNTH_SKIN_LAYER] = null
 	var/synth_icon = 'mods/ipc_mods/icons/pptdmg.dmi'
@@ -848,12 +849,12 @@ var/global/list/damage_icon_parts = list()
 	standing_image.AddOverlays(overlays_to_add)
 	overlays_standing[HO_SYNTH_SKIN_LAYER] = standing_image
 	queue_icon_update()
-
+//[/SIERRA-ADD]
 //Human Overlays Indexes/////////
 #undef HO_MUTATIONS_LAYER
 #undef HO_SKIN_LAYER
 #undef HO_SURGERY_LAYER
-#undef HO_SYNTH_SKIN_LAYER
+#undef HO_SYNTH_SKIN_LAYER //[SIERRA-ADD]
 #undef HO_UNDERWEAR_LAYER
 #undef HO_UNIFORM_LAYER
 #undef HO_DAMAGE_LAYER

@@ -49,16 +49,21 @@
 	var/turf/target_turf = get_turf(computer.target)
 	if (!target_turf)
 		return FALSE
-	use_power_oneoff(5 KILOWATTS)
+	use_power_oneoff(15 KILOWATTS) //[SIERRA-EDIT] 5 to 15
 	if (istype(computer.target, /obj/machinery/tele_beacon))
 		var/obj/machinery/tele_beacon = computer.target
-		tele_beacon.use_power_oneoff(1 KILOWATTS)
+		tele_beacon.use_power_oneoff(5 KILOWATTS) //[SIERRA-EDIT] 1 to 5
 
 	if (prob(interlude_chance))
 		GLOB.using_map.do_interlude_teleport(teleportee, target_turf, rand(30, 120))
 		computer.set_timer()
 		return TRUE
-
+	//[SIERRA-ADD]
+	if(istype(teleportee, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = teleportee
+		if(!H.reagents.get_reagent(/datum/reagent/inaprovaline))
+			H.set_confused(rand(8, 20))
+	//[/SIERRA-ADD]
 	if (interference && prob(75))
 		do_unstable_teleport_safe(teleportee)
 	else

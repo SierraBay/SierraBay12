@@ -480,9 +480,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["marking_style"])
-		var/list/robo_limbs = list()
 		var/list/disallowed_markings = list()
+		//[SIERRA-ADD]
+		var/list/robo_limbs = list()
 		var/list/prosthetic_temp = list()
+		//[//SIERRA-ADD]
 		for (var/M in pref.body_markings)
 			var/datum/sprite_accessory/marking/mark_style = GLOB.body_marking_styles_list[M]
 			disallowed_markings |= mark_style.disallows
@@ -491,6 +493,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			var/datum/sprite_accessory/S = usable_markings[M]
 			if(is_type_in_list(S, disallowed_markings) || (S.species_allowed && !(mob_species.get_bodytype() in S.species_allowed)) || (S.subspecies_allowed && !(mob_species.name in S.subspecies_allowed)))
 				usable_markings -= M
+		//[SIERRA-ADD/EDIT]
 		for(var/P in pref.organ_data)
 			if(pref.organ_data[P] == "cyborg")
 				robo_limbs += P
@@ -521,6 +524,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				pref.body_markings[new_marking] = "#000000" //New markings start black
 
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+		//[/SIERRA-ADD/EDIT]
 
 	else if(href_list["marking_remove"])
 		var/M = href_list["marking_remove"]
@@ -536,7 +540,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["reset_limbs"])
 		reset_limbs()
-		pref.body_markings.Cut()
+		pref.body_markings.Cut() //[SIERRA-ADD
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["limbs"])

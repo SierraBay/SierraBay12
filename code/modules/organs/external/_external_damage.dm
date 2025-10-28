@@ -108,12 +108,13 @@
 	//If there are still hurties to dispense
 	if (owner && spillover)
 		owner.shock_stage += spillover * config.organ_damage_spillover_multiplier
-
+	//[SIERRA-ADD]
 	if(have_synth_skin)
 		if(synth_skin_health > max_damage - damage)
 			synth_skin_health = max_damage - damage
 			if(synth_skin_health < 0.5 * max_damage)
 				owner.update_synth_skin()
+	//[/SIERRA-ADD]
 
 	// sync the organ's damage with its wounds
 	update_damages()
