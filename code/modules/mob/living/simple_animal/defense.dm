@@ -61,7 +61,7 @@
 /mob/living/simple_animal/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Butcher's Cleaver - Butcher dead mob
 	if (istype(tool, /obj/item/material/knife/kitchen/cleaver))
-		if (stat != DEAD)
+		if (!is_dead())
 			USE_FEEDBACK_FAILURE("\The [src] must be dead before you can butcher \him.")
 			return TRUE
 		if (!meat_type || !meat_amount)
@@ -96,7 +96,7 @@
 
 	// Medical - Attempt healing
 	if (istype(tool, /obj/item/stack/medical))
-		if (stat == DEAD)
+		if (is_dead())
 			USE_FEEDBACK_FAILURE("\The [src] is dead, medical items won't bring \him back to life.")
 			return TRUE
 		if (health >= maxHealth)

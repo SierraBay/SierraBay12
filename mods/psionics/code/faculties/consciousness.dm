@@ -62,7 +62,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		if(target.stat == DEAD || (target.status_flags & FAKEDEATH) || !target.client)
+		if(target.is_dead() || !target.client)
 			to_chat(user, SPAN_WARNING("[target] не в состоянии ответить вам."))
 			return FALSE
 
@@ -170,7 +170,7 @@
 			to_chat(user, SPAN_WARNING("Ты не можешь сконцентрироватся настолько далеко."))
 			return FALSE
 
-		if(target.stat == DEAD || (target.status_flags & FAKEDEATH) || !target.client)
+		if(target.is_dead() || !target.client)
 			to_chat(user, SPAN_WARNING("[target] не в состоянии ответить вам."))
 			return FALSE
 

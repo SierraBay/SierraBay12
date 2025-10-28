@@ -637,7 +637,14 @@
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
+/// Checks if a mob should be considered dead. Includes faked deaths and other situational conditions.
 /mob/proc/is_dead()
+	if (GET_FLAGS(status_flags, FAKEDEATH))
+		return TRUE
+	return is_real_dead()
+
+/// Checks if a mob is actually dead. Ignores faked deaths.
+/mob/proc/is_real_dead()
 	return stat == DEAD
 
 /mob/proc/is_mechanical()

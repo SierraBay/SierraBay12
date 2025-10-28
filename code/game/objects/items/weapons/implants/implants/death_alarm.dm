@@ -26,7 +26,7 @@
 
 	if(isnull(M)) // If the mob got gibbed
 		activate(null)
-	else if(M.stat == DEAD)
+	else if(M.is_dead())
 		activate("death")
 
 /obj/item/implant/death_alarm/activate(cause = "emp")

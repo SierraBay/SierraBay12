@@ -6,7 +6,7 @@
 
 /mob/proc/emote(act, m_type, message)
 	// s-s-snowflake
-	if((src.stat == DEAD || status_flags & FAKEDEATH) && act != "deathgasp")
+	if(is_dead() && act != "deathgasp")
 		return
 	if(usr == src) //client-called emote
 		if (client && (client.prefs.muted & MUTE_IC))
