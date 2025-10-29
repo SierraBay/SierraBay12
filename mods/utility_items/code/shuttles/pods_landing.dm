@@ -53,7 +53,8 @@
 
 /obj/shuttle_landmark/escape_pod/out/New()
 	.=..()
-	landmark_tag = "Nav_[name] - [rand(1, 1000)]"
+	if(GAME_STATE >= RUNLEVEL_GAME) // Fixing transit landmarks
+		landmark_tag = "Nav_[name] - [rand(1, 1000)]"
 
 
 //////////////////////////ESCAPE POD////////////////////////////
@@ -178,12 +179,21 @@
 			if(visit.map_z in possible_visits)
 				continue
 			possible_visits += visit
+
+	possible_visits += "Outer Space"
 	if(length(possible_visits))
 		destination_pod = input("Choose pod destination", "Pod Destination") as null|anything in possible_visits
+
+		if(destination_pod == "Outer Space")
+			linked.pod.next_location = linked.pod.waypoint_offsite
+			linked.pod.destination_chosen = TRUE
+			state("Pod destination set to outer space.")
+			return
 	else
 		linked.pod.next_location = linked.pod.waypoint_offsite
 		state("Pod destination set to outer space.")
 		return
+
 	var/x_destination = pick(rand(40, 160))
 	var/y_destination = pick(rand(40, 160))
 	var/z_destination = pick(destination_pod.map_z)
@@ -209,9 +219,9 @@
 
 
 
-/datum/evacuation_controller/starship/fast/finish_preparing_evac()
+/*/datum/evacuation_controller/starship/fast/finish_preparing_evac()
 	. = ..()
 	for (var/datum/shuttle/autodock/ferry/escape_pod/pod in escape_pods)
 		if (pod.arming_controller)
 			pod.arming_controller.arm()
-			pod.get_possible_destination()
+			pod.get_possible_destination()*/
