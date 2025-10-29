@@ -1,6 +1,7 @@
 //острова
 #include "flying_planet\clouds.dm"
 #include "flying_planet\flying.dm"
+#include "flying_planet\trees.dm"
 //Лёд
 #include "ice\ice_turf.dm"
 #include "ice\ice.dm"
