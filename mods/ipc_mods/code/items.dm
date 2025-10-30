@@ -6,8 +6,15 @@
 	path = /obj/item/organ/internal/shackles
 
 
+
+/datum/design/item/tool/integrity_repair_tool
+	name = "Integrity repair tool"
+	build_path = /obj/item/integrity_repair_tool
+	materials = list(MATERIAL_SILVER = 5000, MATERIAL_URANIUM = 750, MATERIAL_DIAMOND = 2000)
+	id = "integrity_repair_tool"
+
 /obj/item/integrity_repair_tool
-	name = "prosthetic integrity repair tool"
+	name = "integrity repair tool"
 	desc = "A piece of high-tech equipment used to repair the integrity of high-end prosthetics."
 	icon = 'mods/ipc_mods/icons/ppt.dmi'
 	icon_state = "integrity_repair_tool_idle"
@@ -192,6 +199,12 @@
 		return TRUE
 
 
+/datum/design/item/tool/integrity_repair_tool_tank
+	name = "Integrity repair tool tank"
+	build_path = /obj/item/integrity_repair_tool_tank
+	materials = list(MATERIAL_SILVER = 1000, MATERIAL_URANIUM = 350, MATERIAL_STEEL = 1000)
+	id = "integrity_repair_tool_tank"
+
 /obj/item/integrity_repair_tool_tank
 	name = "integrity repair tool tank"
 	desc = "A tank for high-tech equipment used to repair the integrity of high-end prosthetics."
@@ -210,6 +223,12 @@
 	to_chat(user,"It has [resourse_left] of nanomaterials remaining.")
 
 
+
+/datum/design/item/tool/prosthetic_wiring_layerer
+	name = "Wiring layerer"
+	build_path = /obj/item/prosthetic_wiring_layerer
+	materials = list(MATERIAL_SILVER = 1000, MATERIAL_URANIUM = 350, MATERIAL_GOLD = 1000)
+	id = "prosthetic_wiring_layerer"
 
 /obj/item/prosthetic_wiring_layerer
 	name = "prosthetic wiring layerer"
