@@ -82,6 +82,15 @@
 		return chambered.BB
 	return null
 
+/obj/item/gun/projectile/use_before(atom/target, mob/living/user, click_parameters)
+	//Masters can reload one-handed guns one-handed.
+	if (istype(target, /obj/item/ammo_magazine) && (target.loc == user || target.loc.loc == user)) //Get around bags, webbing, etc
+		if (user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
+			if (one_hand_penalty < 3)
+				load_ammo(target, user)
+				return TRUE
+	return ..()
+
 /obj/item/gun/projectile/handle_post_fire()
 	..()
 	if(chambered)
