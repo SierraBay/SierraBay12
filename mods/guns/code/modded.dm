@@ -230,6 +230,9 @@
 	accuracy = 1
 	one_hand_penalty = 4
 
+	barrel_thread = TRUE
+	silencer_offset = 6
+
 	//SMG
 	firemodes = list(
 		list(mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=4, burst_accuracy=null, dispersion=null),
@@ -271,6 +274,12 @@
 /obj/item/storage/box/ammo/smg_sol
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
+
+/obj/item/silencer/smg_sol
+	name = "large silencer"
+	desc = "A long and wide silencer for 10mm caliber weapon."
+	icon = 'mods/guns/icons/obj/smg_sol.dmi'
+	caliber = CALIBER_PISTOL
 
 /////////////////////////////////
 // Misc guns//
