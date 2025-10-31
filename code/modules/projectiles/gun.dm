@@ -390,7 +390,7 @@
 		var/old_dir = user.dir
 		var/mob/living/carbon/human/H = user
 		var/obj/item/tank/jetpack/jetpack = H.get_jetpack()
-		if(jetpack && !jetpack.stabilization_on)
+		if(!(jetpack && jetpack.on && jetpack.stabilization_on))
 			user.inertia_ignore = projectile
 			step(user,get_dir(target,user))
 			user.set_dir(old_dir)
