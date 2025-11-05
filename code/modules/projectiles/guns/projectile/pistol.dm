@@ -117,66 +117,22 @@
 	desc = "The Lumoco Arms P3 Whisper. A small, easily concealable gun."
 	icon = 'icons/obj/guns/holdout_pistol.dmi'
 	icon_state = "pistol"
-	item_state = null
+	item_state = "pistol"
 	w_class = ITEM_SIZE_SMALL
 	caliber = CALIBER_PISTOL_SMALL
 	fire_delay = 4
 	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ESOTERIC = 2)
 	magazine_type = /obj/item/ammo_magazine/pistol/small
 	allowed_magazines = /obj/item/ammo_magazine/pistol/small
-	var/obj/item/silencer/silencer
-
-/obj/item/gun/projectile/pistol/holdout/attack_hand(mob/user)
-	if(user.get_inactive_hand() == src)
-		if(silenced)
-			if (!user.IsHolding(src))
-				..()
-				return
-			if (silencer)
-				to_chat(user, SPAN_NOTICE("You unscrew \the [silencer] from \the [src]."))
-				user.put_in_hands(silencer)
-				silencer = null
-			silenced = FALSE
-			w_class = initial(w_class)
-			update_icon()
-			return
-	..()
-
-
-/obj/item/gun/projectile/pistol/holdout/use_tool(obj/item/tool, mob/user, list/click_params)
-	// Silencer - Attach silencer
-	if (istype(tool, /obj/item/silencer))
-		if (silenced)
-			if (silencer)
-				USE_FEEDBACK_FAILURE("\The [src] already has \a [silencer] attached.")
-			else
-				USE_FEEDBACK_FAILURE("\The [src] is already silenced.")
-			return TRUE
-		if (!user.unEquip(tool, src))
-			FEEDBACK_FAILURE(user, tool)
-			return TRUE
-		silenced = TRUE
-		silencer = tool
-		w_class = ITEM_SIZE_NORMAL
-		update_icon()
-		user.visible_message(
-			SPAN_NOTICE("\The [user] screws \a [tool] onto \a [src]."),
-			SPAN_NOTICE("You screw \a [tool] onto \a [src]."),
-			range = 2
-		)
-		return TRUE
-
-	return ..()
-
+	barrel_thread = TRUE
+	silencer_offset = -6
 
 /obj/item/gun/projectile/pistol/holdout/on_update_icon()
 	..()
-	if(silenced)
-		icon_state = "pistol-silencer"
+	if (silencer)
+		item_state = "[initial(item_state)]-silencer"
 	else
-		icon_state = "pistol"
-	if(!(ammo_magazine && length(ammo_magazine.stored_ammo)))
-		icon_state = "[icon_state]-e"
+		item_state = initial(item_state)
 
 /obj/item/silencer
 	name = "silencer"
@@ -184,6 +140,8 @@
 	icon = 'icons/obj/guns/holdout_pistol.dmi'
 	icon_state = "silencer"
 	w_class = ITEM_SIZE_SMALL
+	var/caliber = CALIBER_PISTOL_SMALL
+	var/silenced_sound = 'sound/weapons/gunshot/gunshot_suppressed.ogg'
 
 /obj/item/gun/projectile/pistol/broomstick
 	name = "broomstick"
