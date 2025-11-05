@@ -29,11 +29,6 @@
 
 /obj/overmap/visitable/ship/verne
 	name = "SRV Verne"
-	scanner_desc = @{"
-		<center><img src = sollogo.png></center><br>
-		<i>Registration</i>: Sol Research Vessel Verne<br>
-		<i>Transponder</i>: Transmitting (SCI), SCGRV<br>
-		<b>Notice</b>: Sensor array detects a medium-sized research vessel. It is owned by Ceti Institute of Technology and registered as Sol Central Government ship."}
 	contact_class = /decl/ship_contact_class/srv
 	vessel_mass = 10000
 	known_ships = list(/obj/overmap/visitable/ship/landable/verne)

@@ -34,11 +34,6 @@
 
 /obj/overmap/visitable/ship/normandite/New()
 	name = "GTMS Normandite-[rand(3,19)]"
-	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B><br>
-<I>Registration</I>: [name]<br>
-<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
-<B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
 	..()
 
 /datum/map_template/ruin/away_site/normandite
@@ -63,11 +58,6 @@
 /obj/overmap/visitable/ship/landable/utyug
 	shuttle = "Utyug"
 	name = "GTSS Utyug"
-	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B><br>
-<I>Registration</I>: GTSS Utyug<br>
-<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
-<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 3 SECONDS
 	vessel_mass = 5000
