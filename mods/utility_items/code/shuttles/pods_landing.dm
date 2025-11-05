@@ -89,7 +89,7 @@
 	.=..()
 	var/datum/computer/file/embedded_program/docking/simple/prog = SSshuttle.docking_registry[dock_target]
 	pod_controller = prog.master
-
+	next_location = null //have to choose it
 
 /datum/shuttle/autodock/ferry/escape_pod/proc/get_possible_destination()
 	if(destination_chosen)
@@ -180,7 +180,7 @@
 				continue
 			possible_visits += visit
 
-	possible_visits += "Outer Space"
+	//possible_visits += "Outer Space"
 	if(length(possible_visits))
 		destination_pod = input("Choose pod destination", "Pod Destination") as null|anything in possible_visits
 
