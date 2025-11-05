@@ -1,0 +1,119 @@
+
+<fieldset style="background-color: #202020;border-color: rgb(117, 117, 117);">
+	<legend style="text-align:center">IFF Transponder Control</legend>
+	<div class='item'>
+		<div class="itemLabel">
+			Broadcast Status
+		</div>
+		<div class="itemContent">
+			<span class="status {{:data.broadcast_enabled ? 'selected' : ''}}">{{:data.broadcast_enabled ? 'Broadcasting' : 'Silent'}}</span>
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Distress Signal
+		</div>
+		<div class="itemContent">
+			<span class="status {{:data.distress ? 'selected' : ''}}">{{:data.distress ? 'Active' : 'Inactive'}}</span>
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Bound Host
+		</div>
+		<div class="itemContent">
+			{{:data.host_name}} {{:data.host_coords ? '(' + data.host_coords + ')' : ''}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Read From Host
+		</div>
+		<div class="itemContent">
+			{{:helper.link('Fill Missing', 'download', { 'sync_from_host_fill' : 1 })}}
+			{{:helper.link('Overwrite All', 'download', { 'sync_from_host_overwrite' : 1 })}}
+		</div>
+	</div>
+</fieldset>
+
+<fieldset style="background-color: #202020;border-color: rgb(117, 117, 117);">
+	<legend style="text-align:center">Vessel Identity</legend>
+	<div class='item'>
+		<div class="itemLabel">
+			Registration
+		</div>
+		<div class="itemContent">
+			{{:data.registration || "Not Set"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Faction/Affiliation
+		</div>
+		<div class="itemContent">
+			{{:data.faction || "Not Set"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Transponder Code
+		</div>
+		<div class="itemContent">
+			{{:data.transponder || "Not Set"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Contact Class
+		</div>
+		<div class="itemContent">
+			{{:data.contact_class || "Unknown"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Vessel Mass
+		</div>
+		<div class="itemContent">
+			{{:data.vessel_mass ? data.vessel_mass + " tons" : "Not Set"}}
+		</div>
+	</div>
+</fieldset>
+
+<fieldset style="background-color: #202020;border-color: rgb(117, 117, 117);">
+	<legend style="text-align:center">Scan Information</legend>
+	<div class='item'>
+		<div class="itemLabel">
+			Header Image
+		</div>
+		<div class="itemContent">
+			{{:data.header_image ? "Set" : "Not Set"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Notice
+		</div>
+		<div class="itemContent">
+			{{:data.notice || "Not Set"}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class="itemLabel">
+			Scanner Description
+		</div>
+		<div class="itemContent">
+			{{:data.scanner_desc ? "Set" : "Not Set"}}
+			{{:helper.link('Edit', 'pencil', { 'edit_scanner_desc' : 1 })}}
+		</div>
+	</div>
+
+	<div class='item'>
+		<div class="itemLabel">
+			Scan Preview
+		</div>
+		<div class="itemContent">
+			<pre style="max-height: 220px; overflow-y: auto; white-space: pre-wrap;">{{:data.scan_preview || 'No preview available'}}</pre>
+		</div>
+	</div>
+</fieldset>
