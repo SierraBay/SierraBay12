@@ -58,6 +58,7 @@
 		var/burn_steal = (E.burn_dam) * ((result_rank * 25)/100)
 		E.heal_damage(burn = burn_steal)
 		detected_organ.take_external_damage(burn = burn_steal)
+		E.psy_swap_flags_to_organ(detected_organ)
 
 
 	//Перенос у внутренних органов
@@ -72,6 +73,7 @@
 		var/damage_steal = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_steal)
 		detected_organ.take_internal_damage(damage_steal)
+		E.psy_swap_flags_to_organ(detected_organ)
 	return TRUE
 
 
@@ -92,6 +94,7 @@
 		var/burn_give = (E.burn_dam) * ((result_rank * 25)/100)
 		E.heal_damage(burn = burn_give)
 		detected_organ.take_external_damage(burn = burn_give)
+		E.psy_swap_flags_to_organ(detected_organ)
 	//Перенос у внутренних органов
 	for(var/thing in user.internal_organs)
 		var/obj/item/organ/internal/E = thing
@@ -104,6 +107,7 @@
 		var/damage_give = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_give)
 		detected_organ.take_internal_damage(damage_give)
+		E.psy_swap_flags_to_organ(detected_organ)
 
 /mob/living/carbon/human
 	var/psi_buffer_take = 0 //Буфер забирания
@@ -142,6 +146,7 @@
 		E.psyker_temp_invincible(10 SECONDS)
 		detected_organ.psyker_temp_invincible(10 SECONDS)
 
+
 ///Отключение псионической неуязвимости органов
 /obj/item/organ/internal/proc/clear_psyker_invinsibility()
 	psyker_invincible = FALSE
@@ -152,3 +157,32 @@
 		psyker_invincible_timer = null
 	psyker_invincible_timer = addtimer(new Callback(src, PROC_REF(clear_psyker_invinsibility)), invincible_time)
 	psyker_invincible = TRUE
+
+/obj/item/organ/proc/psy_swap_flags_to_organ(obj/item/organ/input_organ)
+	if(status & ORGAN_BLEEDING)
+		status &= ~ORGAN_BLEEDING
+		input_organ.status |= ORGAN_BLEEDING
+
+	if(status & ORGAN_BROKEN)
+		status &= ~ORGAN_BROKEN
+		input_organ.status |= ORGAN_BROKEN
+
+	if(status & ORGAN_DEAD)
+		status &= ~ORGAN_DEAD
+		input_organ.status |= ORGAN_DEAD
+
+	if(status & ORGAN_MUTATED)
+		status &= ~ORGAN_MUTATED
+		input_organ.status |= ORGAN_MUTATED
+
+	if(status & ORGAN_ARTERY_CUT)
+		status &= ~ORGAN_ARTERY_CUT
+		input_organ.status |= ORGAN_ARTERY_CUT
+
+	if(status & ORGAN_TENDON_CUT)
+		status &= ~ORGAN_TENDON_CUT
+		input_organ.status |= ORGAN_TENDON_CUT
+
+	if(status & ORGAN_DISFIGURED)
+		status &= ~ORGAN_DISFIGURED
+		input_organ.status |= ORGAN_DISFIGURED
