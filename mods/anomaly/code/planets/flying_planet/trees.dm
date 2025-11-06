@@ -68,24 +68,30 @@
 /obj/flying_planet_deco/tree/proc/spawn_stiks()
 	var/sticks_ammout = rand(1, 3)
 	var/list/turfs = range(3, get_turf(src))
+	turfs = shuffle(turfs)
 	LAZYREMOVE(turfs, get_turf(src))
 	for(var/turf/T in turfs)
-		if(locate(/obj/flying_planet_deco/sticks) in T || locate(/obj/flying_planet_deco/logs) in T)
+		if(sticks_ammout <= 0)
+			break
+		if(locate(/obj/flying_planet_deco/sticks) in T)
 			continue
-		while(sticks_ammout > 0)
-			new /obj/flying_planet_deco/sticks(T)
-			sticks_ammout--
+		new /obj/flying_planet_deco/sticks(T)
+		sticks_ammout--
 
 /obj/flying_planet_deco/tree/proc/destroy_tree()
 	var/logs_ammout = rand(1, 3)
 	var/list/turfs = range(3, get_turf(src))
+	turfs = shuffle(turfs)
 	LAZYREMOVE(turfs, get_turf(src))
 	for(var/turf/T in turfs)
-		if(locate(/obj/flying_planet_deco/sticks) in T || locate(/obj/flying_planet_deco/logs) in T)
+		if(logs_ammout <= 0)
+			break
+		if(locate(/obj/flying_planet_deco/logs) in T)
 			continue
-		while(logs_ammout > 0)
-			new /obj/flying_planet_deco/logs(T)
-			logs_ammout--
+		new /obj/flying_planet_deco/logs(T)
+		logs_ammout--
+
+	new /obj/flying_planet_deco/pen (get_turf(src))
 	qdel(src)
 
 
