@@ -36,6 +36,17 @@
 	name = "GTMS Normandite-[rand(3,19)]"
 	..()
 
+/obj/overmap/visitable/ship/normandite/Initialize()
+	. = ..()
+	if(iff)
+		iff.set_header_image("<b>Property of Grayson Manufactories:</b><br>")
+		iff.set_registration("[name]")
+		iff.set_faction("Grayson Manufactories")
+		iff.set_transponder("Transmitting (IND), Grayson Terra")
+		iff.set_contact_class(/decl/ship_contact_class/normandite)
+		iff.set_notice("A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories.")
+	return .
+
 /datum/map_template/ruin/away_site/normandite
 	name = "Normandite"
 	id = "awaysite_normandite"

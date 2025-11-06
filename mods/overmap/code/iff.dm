@@ -41,7 +41,7 @@
 /obj/machinery/overmap_iff/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = list()
 	var/datum/iff_profile/P = ensure_profile()
-	
+
 	data["broadcast_enabled"] = broadcast_enabled
 	data["registration"] = P.registration
 	data["faction"] = P.faction
@@ -51,7 +51,7 @@
 	data["distress"] = P.distress
 	data["vessel_mass"] = P.vessel_mass
 	data["header_image"] = P.header_image
-	
+
 	var/decl/ship_contact_class/cls = P.contact_class
 	data["contact_class"] = cls ? cls.class_long : "Unknown"
 
@@ -90,10 +90,10 @@
 		seed_from_host(TRUE)
 		return TOPIC_REFRESH
 
-    // Editing is restricted: only scanner description can be changed by users.
+		// Editing is restricted: only scanner description can be changed by users.
 
 	// Ignore attempts to toggle broadcast/distress or edit other fields
-	if(href_list["toggle_broadcast"] || href_list["toggle_distress"] || href_list["edit_registration"] || href_list["edit_faction"] || href_list["edit_transponder"] || href_list["edit_notice"] || href_list["edit_vessel_mass"] || href_list["edit_header_image"]) 
+	if(href_list["toggle_broadcast"] || href_list["toggle_distress"] || href_list["edit_registration"] || href_list["edit_faction"] || href_list["edit_transponder"] || href_list["edit_notice"] || href_list["edit_vessel_mass"] || href_list["edit_header_image"])
 		return TOPIC_NOACTION
 
 	// Allow editing of scanner description only
