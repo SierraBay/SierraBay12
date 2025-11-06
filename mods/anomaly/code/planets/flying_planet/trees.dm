@@ -1,5 +1,6 @@
 /obj/flying_planet_deco
 	icon = 'mods/anomaly/icons/flying_deco.dmi'
+	anchored = TRUE
 
 ///Обьект реагирует на грави удар
 /obj/flying_planet_deco/proc/react_at_gravi()
@@ -54,6 +55,8 @@
 /obj/flying_planet_deco/tree/Click(location, control, params)
 	. = ..()
 	if(!ishuman(usr))
+		return
+	if(get_dist(usr, src) > 1.5)
 		return
 	var/mob/living/carbon/player = usr
 	if(!player.weakened)
