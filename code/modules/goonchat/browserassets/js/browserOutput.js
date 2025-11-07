@@ -62,7 +62,8 @@ var opts = {
 	'clientData': [],
 
 	'font': 'Arial',
-	'messageCombining': true
+	'messageCombining': true,
+	'renderingWorkaround': false
 
 };
 var replaceRegexes = {};
@@ -701,6 +702,7 @@ $(function() {
 		'shighlightColor': getCookie('highlightcolor'),
 		'sfont': getCookie('font'),
 		'smessagecombining': getCookie('messagecombining'),
+		'srenderingWorkaround': getCookie('renderingWorkaround'),
 		'stheme': getCookie('theme')
 	};
 
@@ -757,6 +759,12 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
+	if (savedConfig.srenderingWorkaround == 'true') {
+		opts.renderingWorkaround = false;
+	} else if (savedConfig.srenderingWorkaround == 'false') {
+		opts.renderingWorkaround = true;
+	}
+	$('body').toggleClass('renderingWorkaround', opts.renderingWorkaround);
 	(function() {
 		var dataCookie = getCookie('connData');
 		if (dataCookie) {
@@ -1111,6 +1119,13 @@ $(function() {
 	$('#toggleCombine').click(function(e) {
 		opts.messageCombining = !opts.messageCombining;
 		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
+	});
+
+	$('#renderingWorkaround').click(function(e) {
+		opts.renderingWorkaround = !opts.renderingWorkaround;
+		$('body').toggleClass('renderingWorkaround', opts.renderingWorkaround);
+		setCookie('renderingWorkaround', (opts.renderingWorkaround ? 'true' : 'false'), 36);
+		internalOutput('<span class="internal boldnshit">WINE (Linux/macOS) rendering workaround set to '+opts.renderingWorkaround+'</span>', 'internal');
 	});
 
 	$('img.icon').error(iconError);
