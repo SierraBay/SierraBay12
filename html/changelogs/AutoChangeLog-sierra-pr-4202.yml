@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Вирусы должны корректно удаляться при их лечении}
-delete-after: true
