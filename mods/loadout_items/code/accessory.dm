@@ -391,7 +391,7 @@ ranks - ec
 
 /obj/item/paper/iccgvisa
 	name = "ICCG Work Visa"
-	info = "<large><b>Рабочая виза Гильгамешской Колониальной Конфедерации</large></b></center><br><center><img src = terralogo.png><br><br><i><small>Выдано от имени Премьер-министра.</small></i></center><hr><BR>Настоящим документом разрешается предъявителю беспрепятственно передвигаться по территориям, колониям и космическому пространству ГКК с целью работы и трудовой деятельности."
+	info = "<center><b><large>Рабочая виза Гильгамешской Колониальной Конфедерации</large></b></center><br><center><img src = terralogo.png><br><br><i><small>Выдано от имени Премьер-министра.</small></i></center><hr><BR>Настоящим документом разрешается предъявителю беспрепятственно передвигаться по территориям, колониям и космическому пространству ГКК с целью работы и трудовой деятельности."
 	desc = "A flimsy piece of laminated cardboard issued by the ICCG."
 	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
 	on_turf_icon = 'mods/loadout_items/icons/on_turf_icons/obj_accessory.dmi'
