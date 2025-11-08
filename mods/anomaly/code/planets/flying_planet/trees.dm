@@ -1,5 +1,6 @@
 /obj/flying_planet_deco
 	icon = 'mods/anomaly/icons/flying_deco.dmi'
+	anchored = TRUE
 
 ///Обьект реагирует на грави удар
 /obj/flying_planet_deco/proc/react_at_gravi()
@@ -55,6 +56,8 @@
 	. = ..()
 	if(!ishuman(usr))
 		return
+	if(get_dist(usr, src) > 1.5)
+		return
 	var/mob/living/carbon/player = usr
 	if(!player.weakened)
 		to_chat(usr, SPAN_INFO("Я трогаю дерево...думаю я выгляжу глупо..."))
@@ -65,24 +68,30 @@
 /obj/flying_planet_deco/tree/proc/spawn_stiks()
 	var/sticks_ammout = rand(1, 3)
 	var/list/turfs = range(3, get_turf(src))
+	turfs = shuffle(turfs)
 	LAZYREMOVE(turfs, get_turf(src))
 	for(var/turf/T in turfs)
-		if(locate(/obj/flying_planet_deco/sticks) in T || locate(/obj/flying_planet_deco/logs) in T)
+		if(sticks_ammout <= 0)
+			break
+		if(locate(/obj/flying_planet_deco/sticks) in T)
 			continue
-		while(sticks_ammout > 0)
-			new /obj/flying_planet_deco/sticks(T)
-			sticks_ammout--
+		new /obj/flying_planet_deco/sticks(T)
+		sticks_ammout--
 
 /obj/flying_planet_deco/tree/proc/destroy_tree()
 	var/logs_ammout = rand(1, 3)
 	var/list/turfs = range(3, get_turf(src))
+	turfs = shuffle(turfs)
 	LAZYREMOVE(turfs, get_turf(src))
 	for(var/turf/T in turfs)
-		if(locate(/obj/flying_planet_deco/sticks) in T || locate(/obj/flying_planet_deco/logs) in T)
+		if(logs_ammout <= 0)
+			break
+		if(locate(/obj/flying_planet_deco/logs) in T)
 			continue
-		while(logs_ammout > 0)
-			new /obj/flying_planet_deco/logs(T)
-			logs_ammout--
+		new /obj/flying_planet_deco/logs(T)
+		logs_ammout--
+
+	new /obj/flying_planet_deco/pen (get_turf(src))
 	qdel(src)
 
 

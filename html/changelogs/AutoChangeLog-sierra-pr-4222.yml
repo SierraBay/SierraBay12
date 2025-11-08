@@ -1,5 +1,0 @@
-author: Banditoz
-changes:
-  - {bugfix: "If you're gibbed riding through disposals, everything on and inside
-      your person will be spat out on the other side."}
-delete-after: true

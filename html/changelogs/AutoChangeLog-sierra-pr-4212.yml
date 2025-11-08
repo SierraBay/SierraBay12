@@ -1,4 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Фикс открытия пода эвакуации при прыжке}
-delete-after: true

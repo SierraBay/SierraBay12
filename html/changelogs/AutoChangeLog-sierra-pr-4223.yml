@@ -1,7 +1,0 @@
-author: Karl Johansson
-changes:
-  - {balance: Master weapons expertise no longer waives the penalty for moving 
-      while shooting}
-  - {rscadd: Master weapons expertise now allows you to reload one-handed 
-      weapons like pistols with one hand.}
-delete-after: true
