@@ -10,45 +10,24 @@
 
 /obj/structure/setup_water_filter(mask_icon_state)
 	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)
-	filters = filter(type="alpha", icon = mask_icon)
+	filters = filter(type="alpha", icon = mask_icon, name = "water_overlay")
 
 /mob/living/setup_water_filter(mask_icon_state)
 	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)
-	filters = filter(type = "alpha", icon = mask_icon, x = 0)
+	filters += filter(type = "alpha", icon = mask_icon, x = 0, name = "water_overlay")
 	update_icons()
 
 /mob/living/carbon/human/setup_water_filter(mask_icon_state)
 	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)
-	for(var/i in overlays_standing)
-		if(!i)
-			continue
-		if(islist(i))
-			for(var/i_list in i)
-				i_list:filters = filter(type = "alpha", icon = mask_icon, x = 0)
-		else
-			i:filters = filter(type = "alpha", icon = mask_icon, x = 0)
+	filters += filter(type = "alpha", icon = mask_icon, x = 0, name = "water_overlay")
 	update_icons()
 
 /mob/living/carbon/human/adherent/setup_water_filter(mask_icon_state)
-	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_big.dmi', mask_icon_state)
-	for(var/i in overlays_standing)
-		if(!i)
-			continue
-		if(islist(i))
-			for(var/i_list in i)
-				i_list:filters = filter(type = "alpha", icon = mask_icon)
-		else
-			i:filters = filter(type = "alpha", icon = mask_icon)
+	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_small.dmi', mask_icon_state)
+	filters += filter(type = "alpha", icon = mask_icon, x = 0, name = "water_overlay")
 	update_icons()
 
 /mob/living/carbon/human/nabber/setup_water_filter(mask_icon_state)
 	var/icon/mask_icon = icon('mods/anomaly/icons/water_mask_big.dmi', mask_icon_state)
-	for(var/i in overlays_standing)
-		if(!i)
-			continue
-		if(islist(i))
-			for(var/i_list in i)
-				i_list:filters = filter(type = "alpha", icon = mask_icon)
-		else
-			i:filters = filter(type = "alpha", icon = mask_icon)
+	filters += filter(type = "alpha", icon = mask_icon, x = 0, name = "water_overlay")
 	update_icons()
