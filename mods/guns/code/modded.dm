@@ -275,12 +275,6 @@
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
 
-/obj/item/silencer/smg_sol
-	name = "large silencer"
-	desc = "A long and wide silencer for 10mm caliber weapon."
-	icon = 'mods/guns/icons/obj/smg_sol.dmi'
-	caliber = CALIBER_PISTOL
-
 /////////////////////////////////
 // Misc guns//
 /////////////////////////////////

@@ -1,3 +1,9 @@
+/obj/item/silencer/medium
+	name = "large silencer"
+	desc = "A long and wide silencer for 10mm caliber weapon."
+	icon = 'mods/guns/icons/obj/smg_sol.dmi'
+	caliber = CALIBER_PISTOL
+
 /obj/item/gun/projectile/revolver/foundation
 	icon = 'mods/guns/icons/obj/foundation.dmi'
 
@@ -8,6 +14,9 @@
 /obj/item/gun/projectile/automatic/machine_pistol
 	name = "MP6 machine pistol"
 	icon = 'mods/guns/icons/obj/machine_pistol.dmi'
+
+	barrel_thread = TRUE
+	silencer_offset = 6
 
 /obj/item/gun/projectile/automatic/merc_smg
 	name = "C-20r submachine gun"
