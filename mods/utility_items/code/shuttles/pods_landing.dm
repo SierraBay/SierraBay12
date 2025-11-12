@@ -161,7 +161,8 @@
 			to_chat(usr, SPAN_WARNING("No escape pod controller found nearby."))
 			return
 	else
-		get_possible_destinations()
+		if(CanPhysicallyInteractWith(usr, src))
+			get_possible_destinations()
 
 /obj/machinery/pod_set_destination/proc/get_possible_destinations()
 	if(linked.pod.current_location != linked.pod.waypoint_station)
