@@ -116,7 +116,7 @@
 
 	var/mob/living/carbon/target = null
 	for(var/mob/living/carbon/M in get_turf(src))
-		if(!iscultist(M) && M.stat != DEAD)
+		if(!iscultist(M) && !M.is_dead())
 			target = M
 			break
 
@@ -339,7 +339,7 @@
 			soul = O
 			break
 	while(user)
-		if(user.stat == DEAD)
+		if(user.is_dead())
 			return
 		if(user.key)
 			return
@@ -442,7 +442,7 @@
 		return fizzle(user)
 	var/turf/T = get_turf(src)
 	for(var/mob/living/M in T)
-		if(M.stat != DEAD && !iscultist(M))
+		if(!M.is_dead() && !iscultist(M))
 			victim = M
 			break
 	if(!victim)
@@ -451,7 +451,7 @@
 	for(var/mob/living/M in cultists)
 		M.say("Barhah hra zar[pick("'","`")]garis!")
 
-	while(victim && victim.loc == T && victim.stat != DEAD)
+	while(victim && victim.loc == T && !victim.is_dead())
 		var/list/mob/living/casters = get_cultists()
 		if(length(casters) < 3)
 			break
@@ -464,7 +464,7 @@
 			if(H.is_asystole())
 				H.adjustBrainLoss(2 + length(casters))
 		sleep(40)
-	if(victim && victim.loc == T && victim.stat == DEAD)
+	if(victim && victim.loc == T && victim.is_dead())
 		GLOB.cult.add_cultiness(CULTINESS_PER_SACRIFICE)
 		var/obj/item/device/soulstone/full/F = new(get_turf(src))
 		for(var/mob/M in cultists | get_cultists())
@@ -720,7 +720,7 @@
 	var/obj/item/device/soulstone/source
 	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	for(var/mob/living/carbon/human/M in get_turf(src))
-		if(M.stat == DEAD)
+		if(M.is_real_dead())
 			if(iscultist(M))
 				if(M.key)
 					target = M

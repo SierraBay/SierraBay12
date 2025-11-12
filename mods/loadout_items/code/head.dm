@@ -53,3 +53,100 @@
 /obj/item/clothing/head/soft/on_update_icon()
 	. = ..()
 	item_state = initial(item_state) + (flipped ? "_flipped" : "")
+
+/obj/item/clothing/head/beret/kms
+	name = "\improper KMS beret"
+	desc = "A white beret denoting KMS employee."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	icon_state = "kmsberet"
+	item_state = "kmsberet"
+
+/obj/item/clothing/head/bighat
+	name = "brown wide hat"
+	desc = "A brown hat with a wide brim and low crown. Yeehaw!"
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+
+	icon_state = "cowboy_wide"
+	item_state = "cowboy_wide"
+
+/obj/item/clothing/head/bighat/kgbhat
+	name = "black-red hat"
+	desc = "A black hat with a wide brim and low crown with red additions"
+	icon_state = "kgbhat"
+	item_state = "kgbhat"
+
+/obj/item/clothing/head/bighat/gunfighter
+	name = "white stetson hat"
+	desc = "A white hat with a slightly wide brim and high crown"
+	icon_state = "gunfighter"
+	item_state = "gunfighter"
+
+/obj/item/clothing/head/bighat/lawdog
+	name = "black stetson hat"
+	desc = "A black hat with a slightly wide brim and high crown"
+	icon_state = "lawdog"
+	item_state = "lawdog"
+
+/obj/item/clothing/head/bighat/black
+	name = "black wide hat"
+	desc = "A black hat with a wide brim and low crown."
+	icon_state = "blackhat"
+	item_state = "blackhat"
+
+/obj/item/clothing/head/wig
+	name = "wig"
+	desc = "A stylish hairstyle, in case you don't have your own hair."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	icon_state = "wig"
+	item_state_slots = list(
+		slot_l_hand_str = "pwig",
+		slot_r_hand_str = "pwig",
+		)
+	sprite_sheets = null
+	flags_inv = BLOCKHEADHAIR
+	color = "#ffffff"
+	var/datum/sprite_accessory/hair/hairstyle
+
+/obj/item/clothing/head/wig/Initialize()
+	. = ..()
+	if (!hairstyle)
+		hairstyle = GLOB.hair_styles_list["Bedhead"]
+
+/obj/item/clothing/head/wig/get_mob_overlay(mob/user_mob, slot)
+	var/image/ret = ..()
+
+	if(slot == slot_l_hand_str || slot == slot_r_hand_str)
+		return ret
+
+	if(slot == slot_head_str)
+		ret = new ()
+		var/icon/HI = icon(hairstyle.icon, "[hairstyle.icon_state]_s")
+		HI.Blend(color, ICON_AND)
+		ret.AddOverlays(HI)
+	return ret
+
+/obj/item/clothing/head/wig/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if (istype(tool, /obj/item/haircomb))
+		var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
+		var/list/valid_hairstyles = H.get_hair_styles()
+		hairstyle = valid_hairstyles[input(user, "Choose new hair style:", "Wig") as null|anything in valid_hairstyles - "Bald"]
+		if (!hairstyle)
+			hairstyle = GLOB.hair_styles_list["Bedhead"]
+		update_clothing_icon()
+		return TRUE
+	return ..()
+
+/obj/item/clothing/head/wig/proc/loadout_setup(mob/living/carbon/human/H)
+	var/singleton/species/human_species = GLOB.species_by_name[SPECIES_HUMAN]
+	var/list/valid_hairstyles = human_species.get_hair_styles()
+	valid_hairstyles -= "Bald"
+	var/loadout_hairstyle = valid_hairstyles[desc]
+	if (loadout_hairstyle)
+		hairstyle = loadout_hairstyle
+	desc = "A stylish hairstyle, in case you don't have your own hair."

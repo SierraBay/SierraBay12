@@ -1107,6 +1107,13 @@
 /atom/proc/get_overhead_text_y_offset()
 	return 0
 
+/atom/proc/get_affecting_weather()
+	return
+
+/atom/proc/is_outside()
+	var/turf/turf = get_turf(src)
+	return istype(turf) ? turf.is_outside() : OUTSIDE_UNCERTAIN
+
 /// Set this atom's color and light to match origin
 /atom/proc/copy_light_and_color(atom/origin)
 	if (istype(origin))
@@ -1132,7 +1139,7 @@
 			to_chat(user, SPAN_NOTICE("You're too far away from [src] to do that."))
 		return USE_FAIL_NON_ADJACENT
 
-	if(!(use_flags & USE_ALLOW_DEAD) && user.stat == DEAD)
+	if(!(use_flags & USE_ALLOW_DEAD) && user.is_real_dead())
 		if (show_messages)
 			to_chat(user, SPAN_NOTICE("How do you expect to do that when you're dead?"))
 		return USE_FAIL_DEAD

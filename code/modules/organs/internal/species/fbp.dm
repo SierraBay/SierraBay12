@@ -48,7 +48,7 @@
 	..()
 	if(!owner)
 		return
-	if(owner.stat == DEAD)	//not a drain anymore
+	if(owner.is_real_dead())	//not a drain anymore
 		return
 	var/cost = get_power_drain()
 	if(world.time - owner.l_move_time < 15)
@@ -97,7 +97,7 @@
 /obj/item/organ/internal/cell/replaced()
 	..()
 	// This is very ghetto way of rebooting an IPC. TODO better way.
-	if(owner && owner.stat == DEAD)
+	if(owner && owner.is_real_dead())
 		owner.set_stat(CONSCIOUS)
 		owner.visible_message(SPAN_DANGER("\The [owner] twitches visibly!"))
 
@@ -165,7 +165,7 @@
 	stored_mmi.update_icon()
 	icon_state = stored_mmi.icon_state
 
-	if(owner && owner.stat == DEAD)
+	if(owner && owner.is_real_dead())
 		owner.set_stat(CONSCIOUS)
 		owner.switch_from_dead_to_living_mob_list()
 		owner.visible_message(SPAN_DANGER("\The [owner] twitches visibly!"))

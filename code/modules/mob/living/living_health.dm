@@ -17,7 +17,7 @@
 
 
 /mob/living/health_dead()
-	if (stat == DEAD)
+	if (is_real_dead())
 		return TRUE
 	return ..()
 

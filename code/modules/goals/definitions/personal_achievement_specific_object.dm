@@ -17,7 +17,7 @@
 		if(ispath(progress))
 			if(ispath(progress, object_path) || ispath(object_path, progress))
 				success = TRUE
-		else if(isatom(progress))
+		else if(istom(progress))
 			var/atom/A = progress
 			if(istype(A, object_path) || ispath(object_path, A.type))
 				success = TRUE

@@ -184,6 +184,9 @@
 		if(O.can_embed() && (throw_damage > 5*O.w_class)) //Handles embedding for non-humans and simple_animals.
 			embed(O)
 
+	if (AM.IsFlameSource())
+		IgniteMob()
+
 	process_momentum(AM, TT)
 
 /mob/living/momentum_power(atom/movable/AM, datum/thrownthing/TT)

@@ -20,9 +20,10 @@
 
 /obj/overmap/visitable/sector/exoplanet/shrouded/generate_atmosphere()
 	..()
-	if (atmosphere)
-		atmosphere.temperature = rand(T0C, T20C)
-		atmosphere.update_values()
+	if (exterior_atmosphere)
+		exterior_atmosphere.temperature = rand(T0C, T20C)
+		exterior_atmosphere.update_values()
+		exterior_atmosphere.check_tile_graphic()
 
 /obj/overmap/visitable/sector/exoplanet/shrouded/get_atmosphere_color()
 	var/air_color = ..()
@@ -58,8 +59,8 @@
 	reagent_type = /datum/reagent/toxin/tar
 	dirt_color = "#3e3960"
 
-/turf/simulated/floor/exoplanet/water/shallow/tar/get_footstep_sound(mob/caller)
-	return get_footstep(/singleton/footsteps/water, caller)
+/turf/simulated/floor/exoplanet/water/shallow/tar/get_footstep_sound(mob/user)
+	return get_footstep(/singleton/footsteps/water, user)
 
 
 /turf/simulated/floor/exoplanet/shrouded

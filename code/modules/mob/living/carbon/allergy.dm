@@ -72,7 +72,7 @@ Also checks if medications that stop allergies from triggering are in system. Th
 	return
 
 /mob/living/carbon/handle_allergy()
-	if (stat == DEAD)
+	if (is_dead())
 		return
 	if (!HAS_TRAIT(src, /singleton/trait/malus/allergy))
 		return

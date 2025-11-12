@@ -100,7 +100,7 @@
 	report_progress("DEBUG ANOM: Выброс в процессе. Начинается стадия авроры, пробуждаем технику и устройства.")
 	//Перестаёт жечь ЭМИшкой
 	change_visual_weather(force_state = "calm")
-	for(var/obj/structure/aurora/aurora_structure in SSweather.aurora_sctructures)
+	for(var/obj/structure/aurora/aurora_structure in SSweatherold.aurora_sctructures)
 		if(my_area.z == aurora_structure.z)
 			aurora_structure.wake_up(rand(5 MINUTES, 9 MINUTES))
 	sleep(rand(10 MINUTES, 15 MINUTES))
@@ -117,7 +117,7 @@
 
 /datum/weather_manager/snow/stop_blowout()
 	if(!is_processing)
-		START_PROCESSING(SSweather, src)
+		START_PROCESSING(SSweatherold, src)
 	for(var/obj/weather/weather in connected_weather_turfs)
 		weather.blowout_status = FALSE
 		weather.icon_state = initial(weather.icon_state)

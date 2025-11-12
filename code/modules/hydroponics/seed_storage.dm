@@ -286,7 +286,7 @@
 				else
 					piles -= N
 					qdel(N)
-			else if (task == "purge")
+			else if (task == "purge" && (alert("Are you sure you want to purge all of \the [N.seed_type?.seed_name] seeds?", "Are you sure?", "No", "Yes") == "Yes"))
 				for (var/obj/O in N.seeds)
 					qdel(O)
 					piles -= N

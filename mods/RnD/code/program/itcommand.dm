@@ -76,12 +76,20 @@
 		open_file = href_list["PRG_openfile"]
 	if(href_list["PRG_newtextfile"])
 		. = TOPIC_HANDLED
+		var/newtype = input(usr, "Choose file type.") in list("BATCH", "TXT", "CFG")
 		var/newname = sanitize(input(usr, "Enter file name or leave blank to cancel:", "File rename"))
 		if(!newname)
 			return
 		if(!computer.create_data_file(newname, file_type = /datum/computer_file/data/text))
 			error = "File error: Unable to create file on disk."
 			return
+		switch(newtype)
+			if("TXT")
+				computer.create_data_file(newname, file_type = /datum/computer_file/data/text)
+			if("BATCH")
+				computer.create_data_file(newname, file_type = /datum/computer_file/data/coding/batch)
+			if("CFG")
+				computer.create_data_file(newname, file_type = /datum/computer_file/data/config)
 	if(href_list["PRG_deletefile"])
 		. = TOPIC_HANDLED
 		computer.delete_file(href_list["PRG_deletefile"])

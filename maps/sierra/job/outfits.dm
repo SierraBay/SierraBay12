@@ -334,12 +334,8 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/equip_ids(mob/living/carbon/human/H, rank, assignment, equip_adjustments)
 	. = ..()
-	var/obj/item/card/id/foundation_civilian/regis_card = new
-	if(rank)
-		regis_card.rank = rank
-	if(assignment)
-		regis_card.assignment = assignment
-	H.set_id_info(regis_card)
+	var/obj/item/card/operant_card/regis_card = new
+	regis_card.set_info(H)
 	H.equip_to_slot_or_store_or_drop(regis_card)
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/counselor/mentalist
@@ -550,7 +546,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	uniform = /obj/item/clothing/under/color/grey
 	head = /obj/item/clothing/head/beret/centcom/officer
 	gloves = /obj/item/clothing/gloves/thick/combat
-	id_types = list(/obj/item/card/id/centcom/ERT)
+	id_types = list(/obj/item/card/id/centcom/station/ert)
 //	pda_type = /obj/item/modular_computer/pda/ert
 	l_ear = /obj/item/device/radio/headset/ert
 	shoes = /obj/item/clothing/shoes/combat
@@ -558,6 +554,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/ert/leader
 	name = OUTFIT_JOB_NAME("ERT Leader - Sierra")
 	head = /obj/item/clothing/head/beret/centcom/captain
+	id_types = list(/obj/item/card/id/centcom/station/ert/leader)
 
 /singleton/hierarchy/outfit/job/sierra/passenger/vagabond
 	name = OUTFIT_JOB_NAME("Vagabond - Sierra")

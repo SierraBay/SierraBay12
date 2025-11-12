@@ -687,3 +687,7 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_sidetail3
 	name = "Side Tail 3"
 	icon_state = "hair_sidetail3"
+
+/datum/sprite_accessory/hair/modpack_hairs_port/short_ponytail
+	name = "Short Ponytail"
+	icon_state = "short_ponytail"

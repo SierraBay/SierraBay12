@@ -411,6 +411,10 @@
 	. = ..()
 
 	if(istype(L) && prob(75))
+		if (L.throwing)
+			var/datum/thrownthing/thrown_thing = L.throwing
+			if (get_turf(L) != thrown_thing.target_turf)
+				return
 		L.visible_message(
 			SPAN_WARNING("\The [L] starts flickering in and out of existence as they step onto the bluespace!"),
 			SPAN_WARNING("You feel your entire body tingle, and something pulling you away!")

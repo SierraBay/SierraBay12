@@ -328,6 +328,7 @@
 	return !failed_last_breath
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
+	. = ..()
 	if(!environment || (MUTATION_SPACERES in mutations))
 		return
 
@@ -978,7 +979,7 @@
 				break
 
 //SIERRA-ADD
-		if(stat == DEAD || status_flags & FAKEDEATH)
+		if(is_dead())
 			holder.icon_state = "0" 	// X_X
 		else if(is_asystole())
 			holder.icon_state = "flatline"
@@ -988,7 +989,7 @@
 
 	if (GET_BIT(hud_updateflag, LIFE_HUD) && hud_list[LIFE_HUD])
 		var/image/holder = hud_list[LIFE_HUD]
-		if(stat == DEAD || status_flags & FAKEDEATH)
+		if(is_dead())
 			holder.icon_state = "huddead"
 //SIERRA-ADD VIRUSOLOGY
 		else if(foundVirus)
@@ -1013,7 +1014,7 @@
 			holder.icon_state = "hudhealthy"
 
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == DEAD)
+		if(is_real_dead())
 			holder2.icon_state = "huddead"
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"
@@ -1140,12 +1141,12 @@
 	..()
 	adjust_stamina(100)
 	UpdateAppearance()
-
+/* Ушло в оверрайд //[SIERRA-REMOVE] fix FOV for consoles
 /mob/living/carbon/human/reset_view(atom/A)
 	..()
 	if(machine_visual && machine_visual != A)
 		machine_visual.remove_visual(src)
-
+*/
 /mob/living/carbon/human/handle_vision()
 	if(client)
 		client.screen.Remove(GLOB.global_hud.nvg, GLOB.global_hud.thermal, GLOB.global_hud.meson, GLOB.global_hud.science)

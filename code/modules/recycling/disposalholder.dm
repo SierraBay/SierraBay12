@@ -155,6 +155,10 @@
 	if(location)
 		location.assume_air(gas)  // vent all gas to turf
 
+/// Items "dropped into" actively moving disposals (such as gibbing) will stay inside disposals
+/obj/structure/disposalholder/onDropInto(atom/movable/AM)
+	return src
+
 /obj/structure/disposalholder/Destroy()
 	QDEL_NULL(gas)
 	active = 0

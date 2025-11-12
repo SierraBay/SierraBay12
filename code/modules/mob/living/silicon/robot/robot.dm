@@ -381,7 +381,7 @@
 	set category = "Silicon Commands"
 	set name = "Toggle Lights"
 
-	if(stat == DEAD)
+	if(is_dead())
 		return
 
 	lights_on = !lights_on

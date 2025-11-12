@@ -43,5 +43,16 @@
 /datum/antag_skill_setter/station/offstation
 	nm_type = /datum/nano_module/skill_ui/antag/station/offstation
 
+/datum/antag_skill_setter/generic/ert
+	nm_type = /datum/nano_module/skill_ui/antag/ert
+	// More default skills and less picker options for faster character customization
+	// ERT is given 1 EXP and 1 MASTER skill pick due to specializations
+	default_value = SKILL_TRAINED
+	base_skill_list = list(
+		SKILL_HAULING = SKILL_MASTER,
+		SKILL_WEAPONS = SKILL_EXPERIENCED,
+		SKILL_COMBAT = SKILL_EXPERIENCED
+	)
+
 //Placeholder for ai; defaults to experienced in everything like usual.
 /datum/antag_skill_setter/ai

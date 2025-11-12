@@ -268,6 +268,24 @@ var/global/list/gear_datums = list()
 				trait_checks += trait_entry
 			entry += "[english_list(trait_checks)]</i>"
 
+		// [SIERRA-ADD] - CHARACTER-TRAITS
+		if (allowed && LAZYLEN(G.allowed_mod_traits))
+			var/list/trait_checks_mod = list()
+			entry += "<br><i>"
+			for (var/trait_name in G.allowed_mod_traits)
+				var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
+				if (!T)
+					continue
+				var/trait_entry = "[T.name]"
+				if (LAZYISIN(pref.mod_traits, T.name))
+					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
+				else
+					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
+					allowed = FALSE
+				trait_checks_mod += trait_entry
+			entry += "[english_list(trait_checks_mod)]</i>"
+		// [/SIERRA-ADD]
+
 		// [SIERRA-ADD] - LOADOUT-ITEMS
 		if(allowed && G.allowed_factions)
 			var/good_background = 0
@@ -397,6 +415,9 @@ var/global/list/gear_datums = list()
 	///Traits required to spawn with this item.
 	var/list/allowed_traits
 	var/whitelisted        //Term to check the whitelist for..
+	// [SIERRA-ADD] - CHARACTER-TRAITS
+	var/list/allowed_mod_traits
+	// [/SIERRA-ADD]
 	var/sort_category = "General"
 	var/flags              //Special tweaks in New
 	var/custom_setup_proc  //Special tweak in New
@@ -435,6 +456,25 @@ var/global/list/gear_datums = list()
 	src.location = location
 
 /datum/gear/proc/spawn_item(user, location, metadata)
+	// [SIERRA-ADD] - CHARACTER-TRAITS
+	if(LAZYLEN(allowed_mod_traits))
+		var/mob/M = user
+		var/list/mod_traits = null
+		if(istype(M))
+			var/client/C = M.client
+			if(C && C.prefs)
+				mod_traits = C.prefs.mod_traits
+		var/ok = TRUE
+		for(var/trait_name in allowed_mod_traits)
+			var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
+			if(!mod_traits || !LAZYISIN(mod_traits, T.name))
+				ok = FALSE
+				break
+		if(!ok)
+			if(istype(M))
+				to_chat(M, SPAN_WARNING("У вас нет необходимого трейта для [display_name]."))
+			return null
+	// [/SIERRA-ADD]
 	var/datum/gear_data/gd = new(path, location)
 	for(var/datum/gear_tweak/gt in gear_tweaks)
 		gt.tweak_gear_data(metadata && metadata["[gt]"], gd)
@@ -445,7 +485,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/proc/spawn_on_mob(mob/living/carbon/human/H, metadata)
 	var/obj/item/item = spawn_item(H, H, metadata)
-	if(H.equip_to_slot_if_possible(item, slot, TRYEQUIP_REDRAW | TRYEQUIP_DESTROY | TRYEQUIP_FORCE))
+	if(H.equip_to_slot_if_possible(item, slot, TRYEQUIP_REDRAW | TRYEQUIP_DESTROY | TRYEQUIP_FORCE | TRYEQUIP_INSTANT))
 		. = item
 
 

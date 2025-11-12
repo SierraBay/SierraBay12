@@ -24,7 +24,7 @@
 		QDEL_NULL(particles)
 	particles = null
 	if (/obj/particle_emitter in vis_contents)
-		vis_contents -= /obj/particle_emitter
+		remove_vis_contents(/obj/particle_emitter)
 
 
 /atom/movable/proc/ModParticles(target, min, max, type = "circle", random = 1)
@@ -397,4 +397,4 @@
 /obj/particle_emitter/mist/gas/Initialize(mapload, time, _color)
 	. = ..()
 	b = new b(null)
-	vis_contents += b
+	add_vis_contents(b)

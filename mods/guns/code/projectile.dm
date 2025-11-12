@@ -24,6 +24,8 @@
 		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
 		)
 
+	silencer_offset = 8
+
 /obj/item/gun/projectile/automatic/sec_smg/on_update_icon()
 	..()
 	if(ammo_magazine)
@@ -133,3 +135,19 @@
 /obj/item/gun/projectile/automatic/nt41/on_update_icon()
 	..()
 	icon_state = (ammo_magazine)? "nt41" : "nt41-e"
+
+/obj/item/gun/projectile/automatic/nt41/empty
+	starts_loaded = FALSE
+
+/obj/item/ammo_magazine/n10mm/empty
+	initial_ammo = 0
+
+/obj/item/storage/box/ammo/nt41
+	name = "box of NT41 5.7x28 box magazines"
+	startswith = list(/obj/item/ammo_magazine/n10mm = 7)
+
+// Ammo Box
+
+/obj/item/ammobox/nt41
+	ammo_type = /obj/item/ammo_casing/nt28mm
+	ammo_count = 100

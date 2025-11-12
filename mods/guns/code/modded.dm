@@ -165,6 +165,11 @@
 	else
 		..()
 
+/obj/item/gun/energy/laser/bonfire/toggle_safety(mob/user)
+	..()
+	if(launcher)
+		launcher.safety_state = safety_state //Set the launcher's safety to be equivalent to the bullpup's.
+
 /obj/item/gun/energy/ionrifle/small/stupor
 	name = "Stupor ion pistol"
 	desc = "The HelTek Stupor-45 is a compact anti-drone weapon. Due to their small output of EMP, you need be marksman to disable human-sized synthetic. But it's still better, than nothing."
@@ -225,6 +230,9 @@
 	accuracy = 1
 	one_hand_penalty = 4
 
+	barrel_thread = TRUE
+	silencer_offset = 6
+
 	//SMG
 	firemodes = list(
 		list(mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=4, burst_accuracy=null, dispersion=null),
@@ -266,6 +274,12 @@
 /obj/item/storage/box/ammo/smg_sol
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
+
+/obj/item/silencer/smg_sol
+	name = "large silencer"
+	desc = "A long and wide silencer for 10mm caliber weapon."
+	icon = 'mods/guns/icons/obj/smg_sol.dmi'
+	caliber = CALIBER_PISTOL
 
 /////////////////////////////////
 // Misc guns//
@@ -350,6 +364,7 @@
 	icon_state = "smallcasing_f"
 
 /obj/item/projectile/bullet/pistol/holdout/ap
+	damage = 30
 	armor_penetration = 15
 	//[SIERRA-ADD] - Mechs-by-Shegar
 	mech_armor_penetration = 0
@@ -367,3 +382,8 @@
 /obj/item/storage/box/ammo/smg_nt/ap
 	name = "box of 7mm box magazines - armor piercing"
 	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)
+
+// Ammo Box
+
+/obj/item/ammobox/pistol/small_ap
+	ammo_type = /obj/item/ammo_casing/pistol/small/ap

@@ -132,7 +132,7 @@
 
 	if(!BP_IS_ROBOTIC(vision))
 
-		if(vision.owner.stat == DEAD || H.blinded)	//mob is dead or fully blind
+		if(vision.owner.is_dead() || H.blinded)	//mob is dead or fully blind
 			to_chat(user, SPAN_WARNING("\The [H]'s pupils do not react to the light!"))
 			return
 		if(MUTATION_XRAY in H.mutations)
@@ -157,7 +157,7 @@
 	//if someone wants to implement inspecting robot eyes here would be the place to do it.
 
 /obj/item/device/flashlight/upgraded
-	name = "\improper LED flashlight"
+	name = "high power flashlight"
 	desc = "An energy efficient flashlight."
 	icon_state = "biglight"
 	item_state = "biglight"

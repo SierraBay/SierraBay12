@@ -14,12 +14,14 @@
 	if(!istype(H))
 		return
 	var/singleton/cultural_info/culture = H.get_cultural_value(TAG_HOMEWORLD)
-	var/pob = culture ? culture.name : "Unset"
+	var/residence = culture
+	if (!culture.name || culture.name == HOME_SYSTEM_OTHER)
+		residence = "Unset"
 	if(H.dna)
 		fingerprint = md5(H.dna.uni_identity)
 	else
 		fingerprint = "N/A"
-	info = "\icon[src] [src]:\nName: [H.real_name]\nSpecies: [H.get_species()]\nPronouns: [H.pronouns]\nAge: [H.age]\nPlace of Birth: [pob]\nFingerprint: [fingerprint]"
+	info = "\icon[src] [src]:\nName: [H.real_name]\nSpecies: [H.get_species()]\nPronouns: [H.pronouns]\nAge: [H.age]\nResidence: [residence]\nFingerprint: [fingerprint]"
 
 /obj/item/passport/attack_self(mob/user as mob)
 	user.visible_message(

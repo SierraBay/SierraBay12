@@ -29,7 +29,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		CRASH("Someone gave [user.type] a [src.type] aura. This is invalid.")
-	if(!innate_heal || H.InStasis() || H.stat == DEAD)
+	if(!innate_heal || H.InStasis() || H.is_dead())
 		return FLAGS_OFF
 	if(H.nutrition < nutrition_damage_mult)
 		low_nut_warning()
@@ -137,7 +137,7 @@
 
 /obj/aura/regenerating/human/unathi/aura_check_life()
 	var/mob/living/carbon/human/H = user
-	if (!istype(H) || H.stat == DEAD)
+	if (!istype(H) || H.is_dead())
 		return AURA_CANCEL
 	if (H.stasis_value)
 		return AURA_FALSE

@@ -14,6 +14,8 @@
 	/// Descriptive string for currently loaded food object
 	var/loaded
 
+	var/loaded_icon = "loadedfood"
+
 	/// Whether the utensil is able to collect reagents from food
 	var/scoop_food = TRUE
 
@@ -109,6 +111,16 @@
 /obj/item/material/utensil/spork/plastic/default_material = MATERIAL_PLASTIC
 /obj/item/material/utensil/spork/silver/default_material = MATERIAL_SILVER
 /obj/item/material/utensil/spork/titanium/default_material = MATERIAL_TITANIUM
+
+/obj/item/material/utensil/chopsticks
+	name = "chopsticks"
+	desc = "It's a pair of chopsticks. You're holding them wrong."
+	icon_state = "chopsticks"
+	loaded_icon = "loadedfood_chopsticks"
+
+/obj/item/material/utensil/chopsticks/plastic/default_material = MATERIAL_PLASTIC
+/obj/item/material/utensil/chopsticks/silver/default_material = MATERIAL_SILVER
+/obj/item/material/utensil/chopsticks/titanium/default_material = MATERIAL_TITANIUM
 
 
 /obj/item/material/utensil/foon

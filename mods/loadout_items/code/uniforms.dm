@@ -698,3 +698,35 @@
 	worn_state = "kms_utility_uniform"
 	rolled_down = 0
 	gender_icons = 1
+
+/obj/item/clothing/under/thermoactive
+	name = "thermoactive uniform"
+	desc = "Synthetic cotton thermal uniform made for Chatka to protect local colonists from freezing atmosphere. Label says it was made in Iolaus"
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "thermoactive"
+	item_state = "thermoactive"
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/under/westernpants
+	name = "leather chaps"
+	desc = "Some leather pants. Label says it was made in Iolaus"
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "western_pants"
+	item_state = "western_pants"
+
+/obj/item/clothing/under/westernpants/black
+	name = "black leather chaps"
+	desc = "Some black leather pants. Label says it was made in Iolaus"
+	icon_state = "western_black"
+	item_state = "western_black"
+
+/obj/item/clothing/under/facloth
+	name = "Salvation Army uniform"
+	desc = "White top and black jeans with metal plate on leg. Label says it was made in Iolaus"
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "fa_cloth"
+	item_state = "fa_cloth"

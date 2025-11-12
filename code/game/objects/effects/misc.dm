@@ -61,6 +61,9 @@
 /obj/paint/brown
 	color = COLOR_DARK_BROWN
 
+/obj/paint/fleet
+	color = COLOR_DARK_BLUE_GRAY
+
 //Stripes the wall it spawns on, then dies
 /obj/paint_stripe
 	name = "stripe of paint"
@@ -172,4 +175,4 @@
 /obj/effect/cold_mist_gas/Initialize()
 	. = ..()
 	b = new()
-	vis_contents += b
+	add_vis_contents(b)

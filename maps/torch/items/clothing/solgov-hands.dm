@@ -61,3 +61,17 @@
 	desc = "These black duty gloves are made from durable synthetic materials. Standard issue to all ranks in the SCG Fleet."
 	icon_state = "fleet_gloves"
 	item_state = "fleet_gloves"
+
+/obj/item/clothing/gloves/thick/duty/solgov/fleet/combat // Combat gloves but fleet style
+	name = "fleet combat gloves"
+	desc = "These thick tactical gloves are somewhat resistant to fire and impact. They will also protect the wearer from electrical shocks"
+	siemens_coefficient = 0
+	force = 5
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_MINOR,
+		laser = ARMOR_LASER_MINOR,
+		energy = ARMOR_ENERGY_SMALL,
+		bomb = ARMOR_BOMB_MINOR,
+		bio = ARMOR_BIO_MINOR
+		)

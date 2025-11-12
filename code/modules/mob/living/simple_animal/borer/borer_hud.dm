@@ -18,7 +18,7 @@
 /obj/screen/borer/Click(location, control, params)
 	if(!istype(usr, /mob/living/simple_animal/borer))
 		return FALSE
-	if(usr.stat == DEAD)
+	if(usr.is_dead())
 		return FALSE
 	var/mob/living/simple_animal/borer/worm = usr
 	if(!worm.host)

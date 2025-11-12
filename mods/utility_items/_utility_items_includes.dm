@@ -4,6 +4,7 @@
 #include "_utility_items.dm"
 
 
+#include "code/armor.dm"
 #include "code/colony_random.dm"
 #include "code/multimeter.dm"
 #include "code/living_adv.dm"
@@ -58,4 +59,7 @@
 #include "code/boozeomat.dm"
 #include "code/cards_ids.dm"
 #include "code/supermatter.dm"
+#include "code/stealthbundlerework.dm"
+#include "code/stairs.dm"
+#include "code/lang_tweak.dm"
 #endif

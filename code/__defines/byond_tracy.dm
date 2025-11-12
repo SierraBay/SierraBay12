@@ -1,5 +1,6 @@
-// Implements https://github.com/mafemergency/byond-tracy
+// Implements https://github.com/spacestation13/byond-tracy
 // Client https://github.com/wolfpld/tracy
+// Start Tracy, run the Start Profiler verb, and connect! You'll start seeing profiling data.
 
 
 #ifdef PROFILE_FROM_BOOT
@@ -31,3 +32,4 @@
 	var/init = call_ext(lib, "init")()
 	if(init != "0")
 		CRASH("[lib] init error: [init]")
+	log_and_message_admins("has started the Tracy profiler.")

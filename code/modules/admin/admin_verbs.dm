@@ -134,7 +134,9 @@ var/global/list/admin_verbs_fun = list(
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
-	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
+	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
+	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
+	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
 	)
 
 var/global/list/admin_verbs_spawn = list(
@@ -218,7 +220,10 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
 	/client/proc/profiler_init_verb,
-	/datum/admins/proc/EnableDevtools
+	/datum/admins/proc/EnableDevtools,
+	/datum/admins/proc/force_initialize_weather,
+	/datum/admins/proc/force_weather_state,
+	/datum/admins/proc/force_kill_weather
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(

@@ -1,0 +1,16 @@
+"A" = (/obj/landmark/map_load_mark/fairy_ring,/turf/template_noop,/area/template_noop)
+"Z" = (/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZAZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+ZZZZZZZZZZZ
+"}

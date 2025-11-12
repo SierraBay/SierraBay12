@@ -166,3 +166,7 @@
 	desc = "A beret issued to NanoTrasen Internal Security operatives for awarding ceremonies. Even more difficult to keep clean than the regular service counterpart."
 	item_state = "isoberet_parade"
 	icon_state = "isoberet_parade"
+
+/obj/item/clothing/suit/armor/pcarrier/iso
+	accessories = list(/obj/item/clothing/accessory/armor_plate/tactical, /obj/item/clothing/accessory/arm_guards/heavy, /obj/item/clothing/accessory/leg_guards/heavy, /obj/item/clothing/accessory/storage/pouches/large)
+	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON

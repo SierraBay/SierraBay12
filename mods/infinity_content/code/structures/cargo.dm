@@ -171,6 +171,7 @@
 	load.set_dir(get_dir(loc, dest))
 	load.pixel_y = initial(load.pixel_y)
 	load.reset_plane_and_layer()
+	load.anchored = FALSE
 
 	cargoweight = 0
 	load = null

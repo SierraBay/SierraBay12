@@ -9,6 +9,7 @@
 		/datum/gear/uniform/corp_overalls,
 		/datum/gear/uniform/corp_flight,
 		/datum/gear/uniform/corp_exec_jacket,
+		/datum/gear/augment/head_vision
 	)
 
 //For all exploration crew
@@ -146,7 +147,9 @@
 	/datum/job/janitor, \
 	/datum/job/cook, \
 	/datum/job/bartender, \
-	/datum/job/steward \
+	/datum/job/steward, \
+	/datum/job/actor, \
+	/datum/job/chaplain \
 )
 
 //For members of the research department and jobs that are scientific
@@ -159,6 +162,7 @@
 //For jobs that spawn with weapons in their lockers
 #define ARMED_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/hos,\
+	/datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,\
 	/datum/job/officer, /datum/job/iso, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant \
 )
 

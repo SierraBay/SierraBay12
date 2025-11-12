@@ -7,6 +7,7 @@
 #include "code\traffic_control.dm"
 #include "code\boards.dm"
 #include "code\telemonitor.dm"
+#include "code\commands.dm"
 #include "code\scripting\Errors.dm"
 #include "code\scripting\IDE.dm"
 #include "code\scripting\Options.dm"
