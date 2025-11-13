@@ -15,3 +15,6 @@
 
 /obj/overmap/visitable/sector/exoplanet/snow
 	ruin_tags_blacklist = RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES|RUIN_GRAVI_ANOMALIES|RUIN_CHUDO_ANOMALIES
+
+/obj/overmap/visitable/sector/exoplanet/volcanic
+	ruin_tags_blacklist = RUIN_HOT_ANOMALIES|RUIN_ELECTRA_ANOMALIES|RUIN_GRAVI_ANOMALIES|RUIN_CHUDO_ANOMALIES

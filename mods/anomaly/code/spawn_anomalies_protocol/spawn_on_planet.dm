@@ -3,7 +3,7 @@
 	var/list/anomaly_planets_list = list(
 		/obj/overmap/visitable/sector/exoplanet/flying = 35,
 		/obj/overmap/visitable/sector/exoplanet/ice = 35,
-		/obj/overmap/visitable/sector/exoplanet/volcanic = 20,
+		/obj/overmap/visitable/sector/exoplanet/volcanic/anomaly = 20,
 		/obj/overmap/visitable/sector/exoplanet/water = 10
 
 	)

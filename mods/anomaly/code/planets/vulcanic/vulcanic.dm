@@ -1,4 +1,6 @@
-/obj/overmap/visitable/sector/exoplanet/volcanic
+/obj/overmap/visitable/sector/exoplanet/volcanic/anomaly
+	name = "anomaly volcanic exoplanet"
+	desc = "WARNING: high anomaly activity detected. A tectonically unstable planet, extremely rich in minerals."
 	can_spawn_anomalies = TRUE
 	anomalies_types = list(
 		/obj/anomaly/zharka = 5,
