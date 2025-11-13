@@ -172,15 +172,18 @@
 			log_and_message_admins("Hivemind failed to find a viable turf.")
 			return
 		if(new_location)
-			//We abandon our wires, so we lose everything
-			//Let's pay our price
-			if(istype(master, /obj/machinery/hivemind_machine/node))
-				var/obj/machinery/hivemind_machine/node/node = master
-				for(var/obj/wireweed in node.my_wireweeds)
-					node.remove_wireweed(wireweed)
+			break
+	//We abandon our wires, so we lose everything
+	//Let's pay our price
+	if(istype(master, /obj/machinery/hivemind_machine/node))
+		var/obj/machinery/hivemind_machine/node/node = master
+		for(var/obj/wireweed in node.my_wireweeds)
+			node.remove_wireweed(wireweed)
 			master.visible_message("[master] vanished in the air!")
 			playsound(master, 'sound/effects/cascade.ogg', 70, 1)
 			master.forceMove(new_location)
 			master.visible_message("[master] appeared from an air!")
 			playsound(master, 'sound/effects/cascade.ogg', 50, 1)
-			log_and_message_admins("Hivemind spawned in \the [get_area(new_location)]", location = new_location)
+
+
+	log_and_message_admins("Hivemind jumped to \the [get_area(new_location)]", location = new_location)
