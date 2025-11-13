@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(hive_data_bool)
 	hive_data_bool = list(
 		"maximum_existing_mobs"			= FALSE, // Exact number set separately
 		"spread_on_lower_z_level"		= TRUE, // Spread via wires "falling down" from higher z-level
-//		"teleport_core_when_damaged"	= TRUE,
+		"teleport_core_when_damaged"	= TRUE,
 		"allow_tyrant_spawn"			= TRUE,
 		"tyrant_death_kills_hive"		= TRUE
 		)

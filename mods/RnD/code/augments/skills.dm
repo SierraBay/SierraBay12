@@ -7,7 +7,6 @@
 	action_button_name = "Interact with shard port"
 	augment_flags = AUGMENT_BIOLOGICAL | AUGMENT_SCANNABLE
 	origin_tech = list(TECH_DATA = 2, TECH_BIO = 4)
-	var/active = FALSE
 
 	var/obj/item/neural_chip/chip
 
@@ -35,7 +34,7 @@
 		if (prob(100 - (20 * severity))) // 60% chance for EMP_ACT_LIGHT and 80% chance for EMP_ACT_HEAVY severity, respectively
 			to_chat(owner, SPAN_WARNING("You feel a wave of nausea as your [name] deactivates."))
 			active = FALSE
-
+/*
 /obj/item/organ/internal/augment/active/neural_interface/activate()
 
 	var/list/choices = list(
@@ -53,7 +52,7 @@
 			eject(owner)
 		if("Show Info")
 			show_info(owner)
-
+*/
 /*
 /obj/item/organ/internal/augment/active/neural_interface/proc/insert(mob/owner)
 	var/target
@@ -85,7 +84,7 @@
 */
 
 
-
+/*
 /obj/item/organ/internal/augment/active/neural_interface/onInstall()
 	if (owner.get_skill_value(chip.skill_type))
 	if (length(buffs))
@@ -94,7 +93,7 @@
 		if (A && istype(A))
 			active = TRUE
 			A.id = id
-
+*/
 
 /obj/item/organ/internal/augment/active/neural_interface/onRemove()
 	debuffing = FALSE
@@ -114,4 +113,4 @@
 /obj/item/neural_chip
 	name = "neural chip"
 	desc = "master neural chip object, i don't wanna chipin-in."
-	var/skill_type =
+	// var/skill_type =
