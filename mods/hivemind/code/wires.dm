@@ -278,6 +278,10 @@
 				new_machine.on_update_icon()
 				new_machine.consume(subject)
 
+	if(istype(subject, /obj/structure/mech_wreckage))
+		// If somebody lost mecha on our wires, well, you're cooked
+		new /mob/living/simple_animal/hostile/hivemind/mechiver(loc)
+
 	if(istype(subject, /mob/living) && !istype(subject, /mob/living/simple_animal/hostile/hivemind))
 		//human bodies
 		if(istype(subject, /mob/living/carbon/human))
