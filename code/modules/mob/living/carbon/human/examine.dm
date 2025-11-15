@@ -173,7 +173,7 @@
 
 	if (src.stat)
 		msg += "[SPAN_WARNING("[P.He] [P.is]n't responding to anything around [P.him] and seems to be unconscious.")]\n"
-		if((stat == DEAD || is_asystole() || losebreath || status_flags & FAKEDEATH) && distance <= 3)
+		if((is_dead() || is_asystole() || losebreath) && distance <= 3)
 			msg += "[SPAN_DANGER("[P.He] [P.does] not appear to be breathing.")]\n"
 
 	if (fire_stacks > 0)

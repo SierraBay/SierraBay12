@@ -111,7 +111,7 @@
 	var/sound_played
 
 	for(var/mob/living/L in T)
-		if (L.stat == DEAD)
+		if (L.is_dead())
 			continue
 		if (!sound_played)
 			playsound(loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -162,7 +162,7 @@
 	var/attackDir = pick(dirs)
 	var/turf/T = get_step(src, attackDir)
 	for(var/mob/living/victim in T)
-		if(victim.stat == DEAD)
+		if(victim.is_dead())
 			continue
 		attack_living(victim)
 

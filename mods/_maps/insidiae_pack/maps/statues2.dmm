@@ -1,0 +1,35 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/random/trash,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"f" = (/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"g" = (/obj/random/loot,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"j" = (/obj/random/powercell,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"l" = (/obj/random/loot,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"m" = (/obj/random/human_statue,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"r" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"t" = (/obj/structure/flora/ausbushes/lavendergrass,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"y" = (/obj/random/human_statue{dir = 1},/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"A" = (/obj/machinery/anomaly_container,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"D" = (/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"F" = (/obj/machinery/floodlight{dir = 4},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"G" = (/obj/random/human_statue,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"H" = (/obj/item/pickaxe/drill,/obj/item/device/ano_scanner,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"I" = (/obj/structure/closet/crate{opened = 1},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"K" = (/obj/random/toolbox,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"L" = (/obj/item/device/gps,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"M" = (/obj/random/medical/lite,/obj/random/tool,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"N" = (/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"O" = (/obj/random/firstaid,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"S" = (/obj/random/powercell,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"T" = (/obj/random/human_statue{dir = 4},/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"U" = (/obj/random/trash,/obj/landmark/clear,/turf/template_noop,/area/template_noop)
+"X" = (/obj/item/pickaxe/xeno/hand,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+"Y" = (/obj/structure/pit,/obj/machinery/artifact,/obj/landmark/clear,/turf/simulated/floor/exoplanet/barren,/area/template_noop)
+
+(1,1,1) = {"
+alDIfaa
+SNHmUAa
+FtjYbfD
+STbLXrD
+DKDMyga
+aDGaOla
+"}

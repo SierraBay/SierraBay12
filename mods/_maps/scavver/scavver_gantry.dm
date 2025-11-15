@@ -28,6 +28,7 @@
 		/area/scavver/harvestpod = NO_SCRUBBER|NO_VENT
 	)
 	spawn_weight = 0.67
+	// ban_ruins = list(/datum/map_template/ruin/away_site/normandite)
 
 /obj/submap_landmark/joinable_submap/scavver_gantry
 	name =  "Salvage Gantry"

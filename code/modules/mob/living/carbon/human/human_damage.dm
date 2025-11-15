@@ -9,7 +9,7 @@
 	health = maxHealth - getBrainLoss()
 
 	//TODO: fix husking
-	if(((maxHealth - getFireLoss()) < config.health_threshold_dead) && stat == DEAD)
+	if(((maxHealth - getFireLoss()) < config.health_threshold_dead) && is_real_dead())
 		ChangeToHusk()
 	return
 

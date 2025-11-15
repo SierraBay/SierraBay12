@@ -28,6 +28,7 @@
 #include "ntnet/_ntnet_includes.dm"
 #include "virusology/_virusology_includes.dm"
 #include "RnD/_RnD_includes.dm"
+#include "hivemind/_hivemind_includes.dm"
 #include "nyc_posters/_nyc_posters_includes.dm"
 #include "pixelshift/_pixelshift_includes.dm"
 #include "ssinput/_ssinput_includes.dm"

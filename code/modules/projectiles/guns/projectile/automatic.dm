@@ -153,6 +153,8 @@
 	accuracy_power = 7
 	one_hand_penalty = 3
 	fire_sound = 'sound/weapons/gunshot/gunshot_smg.ogg'
+	barrel_thread = TRUE
+	silencer_offset = 6
 
 	//machine pistol, like SMG but easier to one-hand with
 	firemodes = list(

@@ -871,8 +871,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disintegrate == DROPLIMB_BLUNT || disintegrate == DROPLIMB_BURN)
 		for(var/obj/item/organ/I in internal_organs)
 			I.removed()
-			if(!QDELETED(I) && isturf(I.loc))
-				I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			if(!QDELETED(I))
+				if(isturf(I.loc))
+					I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+				else
+					I.dropInto(I.loc)
 			I.take_general_damage(I.max_damage * Frand(0.5, 1.0))
 
 	removed(null, ignore_children)
@@ -903,12 +906,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 			compile_icon()
 			add_blood(victim)
 			SetTransform(rotation = rand(180))
-			forceMove(get_turf(src))
-			if(!clean && !skip_throw)
-				// Throw limb around.
-				if(src && istype(loc,/turf))
+			if (!src)
+				return
+			if (isturf(loc))
+				forceMove(get_turf(src))
+				if(!clean && !skip_throw)
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-				dir = 2
+			else
+				dropInto(loc)
+
 		if(DROPLIMB_BURN)
 			new /obj/decal/cleanable/ash(get_turf(victim))
 			for(var/obj/item/I in src)

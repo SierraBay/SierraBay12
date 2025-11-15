@@ -24,6 +24,8 @@
 		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sec_smg.dmi',
 		)
 
+	silencer_offset = 8
+
 /obj/item/gun/projectile/automatic/sec_smg/on_update_icon()
 	..()
 	if(ammo_magazine)

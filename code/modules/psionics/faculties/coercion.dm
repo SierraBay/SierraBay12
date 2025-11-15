@@ -66,7 +66,7 @@
 	if(!.)
 		return
 
-	if(target.stat == DEAD || (target.status_flags & FAKEDEATH) || !target.client)
+	if(target.is_dead() || !target.client)
 		to_chat(user, SPAN_WARNING("\The [target] is in no state for a mind-ream."))
 		return TRUE
 
@@ -80,7 +80,7 @@
 	to_chat(target, SPAN_NOTICE("<b>Your mind is compelled to answer: <i>[question]</i></b>"))
 
 	var/answer =  input(target, question, "Read Mind") as null|text
-	if(!answer || world.time > started_mindread + 60 SECONDS || user.stat != CONSCIOUS || target.stat == DEAD)
+	if(!answer || world.time > started_mindread + 60 SECONDS || user.stat != CONSCIOUS || target.is_dead())
 		to_chat(user, SPAN_NOTICE("<b>You receive nothing useful from \the [target].</b>"))
 	else
 		to_chat(user, SPAN_NOTICE("<b>You skim thoughts from the surface of \the [target]'s mind: <i>[answer]</i></b>"))
@@ -148,7 +148,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		if(target.stat == DEAD || (target.status_flags & FAKEDEATH))
+		if(target.is_dead())
 			to_chat(user, SPAN_WARNING("\The [target] is dead!"))
 			return TRUE
 		if(!target.mind || !target.key)

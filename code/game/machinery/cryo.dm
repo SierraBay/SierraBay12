@@ -286,7 +286,7 @@
 	if(air_contents.total_moles < 10)
 		return
 	if(occupant)
-		if(occupant.stat == DEAD)
+		if(occupant.is_dead())
 			return
 		occupant.set_stat(UNCONSCIOUS)
 		var/has_cryo_medicine = occupant.reagents.has_any_reagent(list(/datum/reagent/cryoxadone, /datum/reagent/clonexadone, /datum/reagent/nanitefluid)) >= REM

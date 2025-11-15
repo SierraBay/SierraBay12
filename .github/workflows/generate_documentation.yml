@@ -10,7 +10,7 @@ on:
   workflow_dispatch: # allows this workflow to be manually triggered
 
 env:
-  SPACEMAN_DMM_VERSION: suite-1.9
+  SPACEMAN_DMM_VERSION: suite-1.11
 
 jobs:
   PreFlight:

@@ -8,15 +8,29 @@ html, body {
 	margin: 0;
 	height: 100%;
 	color: #000000;
+	background-color: #fff;
 }
 body {
-	background: #fff;
+	background-color: #fff;
 	font-family: Verdana, sans-serif;
 	font-size: 13px;
 	line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	word-wrap: break-word;
+}
+
+.renderingWorkaround, .renderingWorkaround .entry {
+	animation: renderingWorkaround 1s infinite linear;
+}
+
+@keyframes renderingWorkaround {
+  0% {
+    background-color: #fcffff;
+  }
+  100% {
+    background-color: #ffffff;
+  }
 }
 
 em {

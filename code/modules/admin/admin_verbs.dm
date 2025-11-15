@@ -135,7 +135,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
 	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
-	/datum/admins/proc/mp_panel // [/SIERRA-ADD]
+	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
+	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
 	)
 
 var/global/list/admin_verbs_spawn = list(
