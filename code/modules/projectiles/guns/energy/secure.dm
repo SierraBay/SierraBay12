@@ -50,10 +50,28 @@
 	item_state = null
 	projectile_type = /obj/item/projectile/beam/stun
 	firemodes = list(
+<<<<<<< ours
 		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
 		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
 		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill")
+=======
+		list(
+			"mode_name" = "stun",
+			"projectile_type" = /obj/item/projectile/beam/stun,
+			"modifystate" = "energyrevolverstun"
+		),
+		list(
+			"mode_name" = "shock",
+			"projectile_type" = /obj/item/projectile/beam/stun/shock,
+			"modifystate" = "energyrevolvershock"
+		),
+		list(
+			"mode_name" = "kill",
+			"projectile_type" = /obj/item/projectile/beam,
+			"modifystate" = "energyrevolverkill"
+>>>>>>> theirs
 		)
+	)
 	req_access = list(list(access_brig, access_heads))
 	authorized_modes = list(ALWAYS_AUTHORIZED, AUTHORIZED)
 
