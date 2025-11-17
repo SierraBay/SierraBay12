@@ -34,6 +34,7 @@ var/global/list/pipe_colors = list(
 //--------------------------------------------
 
 /datum/pipe_icon_manager
+<<<<<<< ours
 	var/list/pipe_icons[]
 	var/list/manifold_icons[]
 	var/list/device_icons[]
@@ -44,6 +45,13 @@ var/global/list/pipe_colors = list(
 	//var/list/pipe_underlays_exposed[]
 	//var/list/pipe_underlays_intact[]
 	var/list/omni_icons[]
+=======
+	var/list/pipe_icons
+	var/list/manifold_icons
+	var/list/device_icons
+	var/list/underlays
+	var/list/omni_icons
+>>>>>>> theirs
 
 /datum/pipe_icon_manager/New()
 	check_icons()
