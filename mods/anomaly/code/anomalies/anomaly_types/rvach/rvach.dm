@@ -102,6 +102,7 @@
 	//Собираем все обьекты радиусом на 1 больше, чем расположены вспомогательные части рвачика
 	get_mobs_and_objs_in_view_fast(T, effect_range+1, victims, objs)
 	LAZYMERGELIST(victims, objs)
+	damage_trees()
 	for(var/atom/movable/detected_atom in victims)
 		if((!ismob(detected_atom) && !isitem(detected_atom)) || detected_atom.anchored)
 			continue
@@ -124,6 +125,12 @@
 			var/target_turf = get_ranged_target_turf(detected_atom, throw_dir, local_range_of_throw)
 			detected_atom.throw_at(target_turf, local_range_of_throw, 5)
 
+/obj/anomaly/rvach/proc/damage_trees()
+	for(var/obj/detected_obj in range(2, get_turf(src)))
+		if(!istype(detected_obj, /obj/flying_planet_deco))
+			continue
+		var/obj/flying_planet_deco/deco = detected_obj
+		deco.react_at_gravi()
 
 /proc/rvach_pull_around(atom/target, pull_range = 255)
 	for(var/atom/A in range(pull_range, target))

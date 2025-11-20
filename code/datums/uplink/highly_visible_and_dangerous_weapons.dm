@@ -202,7 +202,7 @@
 			now with even MORE stopping power."
 	antag_roles = list(MODE_MERCENARY)
 	item_cost = 75
-	path = /obj/item/gun/magnetic/railgun/tcc
+	path = /obj/item/gun/magnetic/railgun/tc
 
 /datum/uplink_item/item/visible_weapons/harpoonbomb
 	name = "Explosive Harpoon"

@@ -131,6 +131,11 @@
 					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, null, hardpoint_object.mech_layer )
 				else
 					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays_off.dmi', color, null, hardpoint_object.mech_layer )
+
+	for(var/overlay in new_overlays)
+		var/image/I = overlay
+		if(I)
+			I.filters = filters
 	SetOverlays(new_overlays)
 
 ///Функция генерирующая изображение модулей меха. Применяется в радиальном меню при ремонте

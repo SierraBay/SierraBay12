@@ -12,6 +12,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/map_template/anomaly/flying_home)
+"ba" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
+/area/map_template/anomaly/flying_home)
 "cH" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
@@ -73,6 +78,7 @@
 "jU" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/item/stack/material/wood,
+/obj/flying_planet_deco/tree,
 /turf/simulated/floor/exoplanet/grass,
 /area/map_template/anomaly/flying_home)
 "ke" = (
@@ -118,6 +124,11 @@
 	icon_state = "wood_broken0"
 	},
 /area/template_noop)
+"qW" = (
+/obj/structure/flora/bush,
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
+/area/map_template/anomaly/flying_home)
 "rR" = (
 /obj/item/stack/material/wood,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -151,6 +162,11 @@
 	icon_state = "wood_broken4"
 	},
 /area/map_template/anomaly/flying_home)
+"uG" = (
+/obj/item/stack/material/wood,
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
+/area/map_template/anomaly/flying_home)
 "uX" = (
 /obj/item/stack/material/wood,
 /obj/decal/cleanable/dirt,
@@ -161,6 +177,11 @@
 "vs" = (
 /turf/template_noop,
 /area/template_noop)
+"vy" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
+/area/map_template/anomaly/flying_home)
 "vK" = (
 /obj/item/stack/material/wood,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -198,6 +219,10 @@
 /obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/exoplanet/grass,
 /area/map_template/anomaly/flying_home)
+"xo" = (
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
+/area/template_noop)
 "xy" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/decal/cleanable/dirt,
@@ -254,6 +279,10 @@
 /obj/item/storage/toolbox/electrical,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
+/area/map_template/anomaly/flying_home)
+"EU" = (
+/obj/flying_planet_deco/tree,
+/turf/simulated/floor/exoplanet/grass,
 /area/map_template/anomaly/flying_home)
 "Fj" = (
 /turf/simulated/floor/wood,
@@ -416,7 +445,7 @@ vs
 vs
 vs
 vs
-zw
+EU
 xf
 vs
 zw
@@ -437,10 +466,10 @@ zw
 zw
 zw
 zw
-zw
+EU
 GM
 zw
-YF
+vy
 vs
 vs
 vs
@@ -449,7 +478,7 @@ vs
 "}
 (3,1,1) = {"
 vs
-oh
+qW
 GM
 Mu
 Mu
@@ -478,15 +507,15 @@ fM
 gM
 Mu
 Gt
-zw
+EU
 Gt
-zw
+EU
 vs
 "}
 (5,1,1) = {"
 vs
 GM
-zw
+EU
 Mu
 Em
 wx
@@ -535,7 +564,7 @@ WZ
 uX
 tQ
 Mu
-Gt
+ba
 "}
 (8,1,1) = {"
 GM
@@ -593,7 +622,7 @@ Zz
 "}
 (11,1,1) = {"
 vs
-zw
+EU
 zw
 Mu
 lm
@@ -605,7 +634,7 @@ aY
 Mu
 YF
 GM
-Gt
+ba
 zw
 vs
 "}
@@ -621,7 +650,7 @@ Mu
 Mu
 Mu
 Mu
-zw
+EU
 zw
 vs
 vs
@@ -629,7 +658,7 @@ vs
 "}
 (13,1,1) = {"
 vs
-GM
+uG
 Zz
 Xd
 Fj
@@ -648,7 +677,7 @@ vs
 (14,1,1) = {"
 vs
 vs
-Zz
+xo
 Uy
 Fj
 tQ
@@ -677,14 +706,14 @@ Ii
 Mu
 yQ
 zw
-YF
+vy
 vs
 vs
 "}
 (16,1,1) = {"
 vs
 vs
-YF
+vy
 Mu
 tQ
 Xd
@@ -696,7 +725,7 @@ Mu
 zw
 YF
 zw
-zw
+EU
 vs
 "}
 (17,1,1) = {"
@@ -718,18 +747,18 @@ vs
 vs
 "}
 (18,1,1) = {"
-YF
+vy
 GM
-YF
+vy
 zw
-YF
+vy
 GM
 zw
 jU
 zw
-zw
+EU
 YF
-zw
+EU
 YF
 vs
 vs
@@ -757,7 +786,7 @@ vs
 vs
 vs
 YF
-zw
+EU
 vs
 vs
 vs
