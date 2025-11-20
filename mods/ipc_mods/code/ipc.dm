@@ -122,25 +122,25 @@
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
 				to_chat(user, "You have no idea how to do that!")
 				return
-			user.visible_message("<span class='notice'>\The [user] starts to unscrew mounting nodes from \the [src].</span>", "<span class='notice'> You start to unscrew mounting nodes from \the [src]</span>")
+			user.visible_message(SPAN_NOTICE("\The [user] starts to unscrew mounting nodes from \the [src]."), SPAN_NOTICE(" You start to unscrew mounting nodes from \the [src]"))
 			if(do_after(user, 80, src))
-				user.visible_message("<span class='notice'>\The [user] successfully unscrewed the mounting nodes of the shackles from \the [src].</span>", "<span class='notice'> You have successfully unscrewed the mounting nodes of the shackles from \the [src]</span>")
+				user.visible_message(SPAN_NOTICE("\The [user] successfully unscrewed the mounting nodes of the shackles from \the [src]."), SPAN_NOTICE(" You have successfully unscrewed the mounting nodes of the shackles from \the [src]"))
 				shackle_set = FALSE
 			else
 				src.damage += min_bruised_damage
-				user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles severely damaging \the [src].</span>", "<span class='warning'> Your hand slips while removing the shackles severely damaging the \the [src]</span>")
+				user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles severely damaging \the [src]."), "<span class='warning'> Your hand slips while removing the shackles severely damaging the \the [src]"))
 
 		if(shackle_set && (istype(W, /obj/item/device/multitool/multimeter/datajack)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED)))
 				to_chat(user, "You have no idea how to do that!")
 				return
-			user.visible_message("<span class='notice'>\The [user] starts to connect the datajack to \the [src].</span>", "<span class='notice'> You start connect the datajack to \the [src]</span>")
+			user.visible_message(SPAN_NOTICE("\The [user] starts to connect the datajack to \the [src]."), SPAN_NOTICE(" You start connect the datajack to \the [src]"))
 			if(do_after(user, 80, src))
-				user.visible_message("<span class='notice'>\The [user] successfully established a connection to \the [src].</span>", "<span class='notice'> You have successfully established a connection to \the [src]</span>")
+				user.visible_message(SPAN_NOTICE("\The [user] successfully established a connection to \the [src]."), SPAN_NOTICE(" You have successfully established a connection to \the [src]"))
 				src.shackles_module.ui_interact(user)
 			else
 				src.damage += min_bruised_damage
-				user.visible_message("<span class='warning'>\The [user] something went wrong while connecting the datajack to \the [src].</span>", "<span class='warning'> Your hand slips while connecting the datajack to the \the [src]</span>")
+				user.visible_message("<span class='warning'>\The [user] something went wrong while connecting the datajack to \the [src]."), "<span class='warning'> Your hand slips while connecting the datajack to the \the [src]"))
 
 		if(!shackle_set && (istype(W, /obj/item/wirecutters)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
@@ -154,19 +154,19 @@
 				if(do_after(user, 100, src))
 					if(prob(5 * user.get_skill_value(SKILL_DEVICES)))
 						src.unshackle()
-						user.visible_message("<span class='notice'>\The [user] succesfully remove shackles from \the [src].</span>", "<span class='notice'> You succesfully remove shackles from \the [src]</span>")
+						user.visible_message(SPAN_NOTICE("\The [user] succesfully remove shackles from \the [src]."), SPAN_NOTICE(" You succesfully remove shackles from \the [src]"))
 					else
 						src.damage += max_damage
-						user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles completely ruining \the [src].</span>", "<span class='warning'> Your hand slips while removing the shackles completely ruining the \the [src]</span>")
+						user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles completely ruining \the [src]."), "<span class='warning'> Your hand slips while removing the shackles completely ruining the \the [src]"))
 				else
 					src.damage += min_bruised_damage
-					user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles severely damaging \the [src].</span>", "<span class='warning'> Your hand slips while removing the shackles severely damaging the \the [src]</span>")
+					user.visible_message("<span class='warning'>\The [user] hand slips while removing the shackles severely damaging \the [src]."), "<span class='warning'> Your hand slips while removing the shackles severely damaging the \the [src]"))
 
 			else
-				user.visible_message("<span class='notice'>\The [user] starts remove shackles from \the [src].</span>", "<span class='notice'> You start remove shackles from \the [src]</span>")
+				user.visible_message(SPAN_NOTICE("\The [user] starts remove shackles from \the [src]."), SPAN_NOTICE(" You start remove shackles from \the [src]"))
 				if(do_after(user, 80, src))
 					src.unshackle()
-					user.visible_message("<span class='notice'>\The [user] succesfully remove shackles from \the [src].</span>", "<span class='notice'> You succesfully remove shackles from \the [src]</span>")
+					user.visible_message(SPAN_NOTICE("\The [user] succesfully remove shackles from \the [src]."), SPAN_NOTICE(" You succesfully remove shackles from \the [src]"))
 				else
 					src.damage += min_bruised_damage
 					to_chat(user, SPAN_WARNING("Your hand slips while removing the shackles severely damaging the positronic brain."))
@@ -202,13 +202,13 @@
 		if(C.shackle == TRUE)
 			to_chat(user, "This positronic brain already have shackles module on it installed.")
 			return
-		user.visible_message("<span class='notice'>\The [user] starts to install shackles on \the [C].</span>", "<span class='notice'> You start to install shackles on \the [C]</span>")
+		user.visible_message(SPAN_NOTICE("\The [user] starts to install shackles on \the [C]."), SPAN_NOTICE(" You start to install shackles on \the [C]"))
 		if(do_after(user, 100, src))
 			C.shackle(laws)
 			C.shackles_module = src
 			C.shackles_module.owner = C.owner
 			user.unEquip(src, C)
-			user.visible_message("<span class='notice'>\The [user] installed shackles on \the [C].</span>", "<span class='notice'> You have successfully installed the shackles on \the [C]</span>")
+			user.visible_message(SPAN_NOTICE("\The [user] installed shackles on \the [C]."), SPAN_NOTICE(" You have successfully installed the shackles on \the [C]"))
 		else
 			C.damage += 40
 			to_chat(user, SPAN_WARNING("You have damaged the positronic brain"))
@@ -281,9 +281,10 @@
 
 
 /obj/item/organ/internal/shackles/CanUseTopic(mob/user)
-	if(user)
-		if(user.Adjacent(src) && user.stat != DEAD)
-			if(user.IsHolding(/obj/item/device/multitool/multimeter/datajack))
-				return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
-			return STATUS_CLOSE
+	if(!user)
+		return
+	if(user.Adjacent(src) && user.stat != DEAD)
+		if(user.IsHolding(/obj/item/device/multitool/multimeter/datajack))
+			return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
+		return STATUS_CLOSE
 	. = ..()

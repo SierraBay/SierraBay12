@@ -835,8 +835,6 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/proc/update_synth_skin()
 	overlays_standing[HO_SYNTH_SKIN_LAYER] = null
 	var/synth_icon = 'mods/ipc_mods/icons/pptdmg.dmi'
-	if(!synth_icon)
-		return
 	var/image/standing_image = image(synth_icon, icon_state = "00")
 	var/list/overlays_to_add = list()
 	for(var/obj/item/organ/external/O in organs)
