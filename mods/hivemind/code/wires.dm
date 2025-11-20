@@ -276,6 +276,11 @@
 					picked_machine = pick(possible_machines)
 				var/obj/machinery/hivemind_machine/new_machine = new picked_machine(loc)
 				new_machine.on_update_icon()
+				new_machine.consume(subject)
+
+	if(istype(subject, /obj/structure/mech_wreckage))
+		// If somebody lost mecha on our wires, well, you're cooked
+		new /mob/living/simple_animal/hostile/hivemind/mechiver(loc)
 
 	if(istype(subject, /mob/living) && !istype(subject, /mob/living/simple_animal/hostile/hivemind))
 		//human bodies

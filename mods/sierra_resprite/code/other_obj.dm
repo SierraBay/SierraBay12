@@ -49,6 +49,14 @@
 		AddOverlays(I)
 		i++
 
+/obj/item/storage/box/donut/Initialize(loc, ...)
+	. = ..()
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in contents)
+		if(rand(1,6) == 1)
+			D.reagents.add_reagent(/datum/reagent/nutriment/sprinkles, 3)
+	update_icon()
+
+
 /obj/item/storage/box/donut/empty
 	startswith = null
 

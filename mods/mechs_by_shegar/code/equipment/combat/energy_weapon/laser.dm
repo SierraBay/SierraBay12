@@ -49,8 +49,8 @@
 	fire_delay = 10
 	accuracy = 2
 	firemodes = list(
-		list(mode_name="standard mode", projectile_type= /obj/item/projectile/beam/incendiary_laser, apex_mode = FALSE),
-		list(mode_name="APEX-mode", projectile_type= /obj/item/projectile/beam/midlaser/heavy_apex, apex_mode = TRUE),
+		list("mode_name" = "standard mode", "projectile_type" =  /obj/item/projectile/beam/incendiary_laser, apex_mode = FALSE),
+		list("mode_name" = "APEX-mode", "projectile_type" =  /obj/item/projectile/beam/midlaser/heavy_apex, apex_mode = TRUE),
 		)
 
 

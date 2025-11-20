@@ -161,7 +161,7 @@
 			bitecount++
 			U.ClearOverlays()
 			U.loaded = "[src]"
-			var/image/I = new(U.icon, "loadedfood")
+			var/image/I = new(U.icon, U.loaded_icon)
 			I.color = src.filling_color
 			U.AddOverlays(I)
 

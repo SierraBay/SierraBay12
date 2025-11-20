@@ -11,7 +11,9 @@
 	/singleton/emote/audible/lizard_scream,
 	/singleton/emote/audible/lizard_roar,
 	/singleton/emote/audible/lizard_rumble,
-	/singleton/emote/audible/lizard_threat
+	/singleton/emote/audible/lizard_threat,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
 /singleton/species/unathi/yeosa/default_emotes = list(
@@ -27,7 +29,9 @@
 	/singleton/emote/audible/lizard_scream,
 	/singleton/emote/audible/lizard_roar,
 	/singleton/emote/audible/lizard_rumble,
-	/singleton/emote/audible/lizard_threat
+	/singleton/emote/audible/lizard_threat,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
 /singleton/emote/audible/lizard_bellow
@@ -82,11 +86,13 @@
 		/mob/living/carbon/human/unathi/verb/wag,
 		/mob/living/carbon/human/unathi/verb/qwag,
 		/mob/living/carbon/human/unathi/verb/swag,
+		/mob/living/carbon/human/unathi/verb/lizard_thump,
 		/mob/living/carbon/human/unathi/verb/lizard_bellow,
 		/mob/living/carbon/human/unathi/verb/lizard_squeal,
 		/mob/living/carbon/human/unathi/verb/lizard_roar,
 		/mob/living/carbon/human/unathi/verb/lizard_rumble,
-		/mob/living/carbon/human/unathi/verb/lizard_threat
+		/mob/living/carbon/human/unathi/verb/lizard_threat,
+		/mob/living/carbon/human/unathi/verb/lizard_hiss
 	)
 	LAZYADD(inherent_verbs, unathi_verbs)
 
@@ -119,6 +125,10 @@
 	set category = "Emote"
 	emote("threat")
 
+/mob/living/carbon/human/unathi/verb/lizard_hiss()
+	set name = "X - Шипеть"
+	set category = "Emote"
+	emote("lhiss")
 
 /mob/living/carbon/human/unathi/verb/swish()
 	set name = "X - Взмахнуть хвостом"
@@ -142,3 +152,8 @@
 	set name = "X - Остановить хвост"
 	set category = "Emote"
 	emote("swag")
+
+/mob/living/carbon/human/unathi/verb/lizard_thump()
+	set name = "X - Ударить хвостом"
+	set category = "Emote"
+	emote("thump")

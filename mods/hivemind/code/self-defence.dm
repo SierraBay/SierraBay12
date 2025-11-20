@@ -146,3 +146,44 @@
 			places_to_spawn -= spawn_loc
 	playsound(master, 'sound/effects/teleport.ogg', 80, 1)
 	champion.say(pick("You shall be destroyed!", "Fear me!", "Face me!", "You have lived for far too long!", "Die vermin!", "Fight me insect!", "There is no escape!"))
+
+
+//EMERGENCY JUMP
+//Teleports master to new location
+//Also disconnect wireweeds if this is node
+//Single usage
+/datum/hivemind_sdp/emergency_jump
+	name = "wOrm-hOle"
+
+
+/datum/hivemind_sdp/emergency_jump/check_conditions()
+	if(GLOB.hive_data_bool["teleport_core_when_damaged"] && master.health <= (hp_percent * 30))
+		execute()
+		turn_off()
+
+
+/datum/hivemind_sdp/emergency_jump/execute()
+	. = ..()
+	var/turf/new_location
+	for(var/i=1 to 100)
+		var/turf/T = pick_subarea_turf(/area/maintenance, list(GLOBAL_PROC_REF(is_station_turf), GLOBAL_PROC_REF(not_turf_contains_dense_objects)))
+		new_location = T
+		if(!new_location && i == 100)
+			log_and_message_admins("Hivemind failed to find a viable turf.")
+			return
+		if(new_location)
+			break
+	//We abandon our wires, so we lose everything
+	//Let's pay our price
+	if(istype(master, /obj/machinery/hivemind_machine/node))
+		var/obj/machinery/hivemind_machine/node/node = master
+		for(var/obj/wireweed in node.my_wireweeds)
+			node.remove_wireweed(wireweed)
+			master.visible_message("[master] vanished in the air!")
+			playsound(master, 'sound/effects/cascade.ogg', 70, 1)
+			master.forceMove(new_location)
+			master.visible_message("[master] appeared from an air!")
+			playsound(master, 'sound/effects/cascade.ogg', 50, 1)
+
+
+	log_and_message_admins("Hivemind jumped to \the [get_area(new_location)]", location = new_location)
