@@ -3,7 +3,7 @@
 #define HIVE_FACTION "hive"
 #define COLOR_LIGHTING_CYAN_MACHINERY					"#50edd9"
 
-
+#define REGENERATION_SPEED 		4
 
 /obj/machinery/hivemind_machine
 	name = "strange machine"
@@ -15,6 +15,7 @@
 	var/illumination_color = 	COLOR_LIGHTING_CYAN_MACHINERY
 	var/health = 				60
 	var/max_health = 			60
+	var/can_regenerate =		TRUE
 	var/datum/hivemind_sdp/SDP			// Self-Defence Protocol holder
 	var/evo_points_required = 	0 		//how much EP hivemind must have to spawn this, used in price list to comparison
 	var/cooldown_time = 10 SECONDS		//each machine have their ability, this is cooldown of them
@@ -22,6 +23,9 @@
 	var/list/spawned_creatures = list()	//which mobs machine can spawns, insert paths
 	//internal
 	var/cooldown = 0		//cooldown in world.time value
+	var/time_until_regen = 0
+	var/obj/assimilated_machinery
+	var/obj/item/stock_parts/circuitboard/saved_circuit
 
 
 /obj/machinery/hivemind_machine/Initialize()
@@ -32,7 +36,17 @@
 
 
 /obj/machinery/hivemind_machine/Process()
+
+	if(SDP)
+		SDP.check_conditions()
+
 	if(hive_mind_ai && !(stat & MACHINE_STAT_EMPED) && !is_on_cooldown())
+		//slow health regeneration
+		if(can_regenerate && (health != max_health) && (world.time > time_until_regen))
+			health += REGENERATION_SPEED
+			if(health > max_health)
+				health = max_health
+
 		return TRUE
 
 
@@ -43,6 +57,31 @@
 	else
 		icon_state = initial(icon_state)
 
+//Machinery consumption
+//Deleting things is a bad idea and cause lot of problems
+//So, now we just hide our assimilated machine and make it broken (temporary)
+//When our machine dies, assimilated machinery just unhide back
+/obj/machinery/hivemind_machine/proc/consume(obj/victim)
+	assimilated_machinery = victim
+	victim.alpha = 0
+	victim.anchored = TRUE
+	victim.mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+	if(istype(victim, /obj/machinery))
+		var/obj/machinery/target = victim
+		target.stat |= MACHINE_BROKEN_GENERIC
+		if(istype(victim, /obj/machinery/power/apc)) //APCs would be deleted
+			assimilated_machinery = null
+			qdel(victim)
+
+
+/obj/machinery/hivemind_machine/proc/drop_assimilated()
+	if(assimilated_machinery)
+		assimilated_machinery.alpha 		= 	initial(assimilated_machinery.alpha)
+		assimilated_machinery.mouse_opacity = 	initial(assimilated_machinery.mouse_opacity)
+		assimilated_machinery.anchored 		= 	initial(assimilated_machinery.anchored)
+		if(istype(assimilated_machinery, /obj/machinery))
+			var/obj/machinery/consumed = assimilated_machinery
+			consumed.stat &= ~MACHINE_BROKEN_GENERIC
 
 //sets cooldown
 //must be set manually
@@ -132,6 +171,7 @@
 
 /obj/machinery/hivemind_machine/proc/destruct()
 	playsound(src, 'mods/hivemind/sounds/insect_battle_screeching.ogg', 30, 1)
+	drop_assimilated()
 	gibs(loc, null, /obj/gibspawner/robot)
 	qdel(src)
 
@@ -200,7 +240,7 @@
 /obj/machinery/hivemind_machine/node
 	name = "strange hive"
 	desc = "Definitely not a big brother, but it's still watching you."
-	max_health = 320
+	max_health = 400
 	icon_state = "core"
 	//internals
 	var/list/my_wireweeds = list()
@@ -338,7 +378,7 @@
 
 /obj/machinery/hivemind_machine/mob_spawner/Initialize()
 	..()
-	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber) // /mob/living/simple_animal/hostile/hivemind/lobber
+	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber, /mob/living/simple_animal/hostile/hivemind/lobber)
 
 
 /obj/machinery/hivemind_machine/mob_spawner/Process()
@@ -541,3 +581,5 @@
 	flick("[icon_state]-anim", src)
 	if(target.psi && !target.psi.suppressed)
 		target.psi.backblast(rand(5,10))
+
+#undef REGENERATION_SPEED

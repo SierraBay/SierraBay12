@@ -8,9 +8,10 @@ html, body {
 	margin: 0;
 	height: 100%;
 	color: #a4bad6;
+	background-color: #171717;
 }
 body {
-	background: #171717;
+	background-color: #171717;
 	font-family: Verdana, sans-serif;
 	font-size: 13px;
 	color: #a4bad6;
@@ -22,7 +23,17 @@ body {
 	scrollbar-track-color:#171717;
 	scrollbar-highlight-color:#171717;
 }
-
+.renderingWorkaround, .renderingWorkaround .entry {
+	animation: renderingWorkaround 1s infinite linear;
+}
+@keyframes renderingWorkaround {
+  0% {
+    background-color: #171717;
+  }
+  100% {
+    background-color: #161717;
+  }
+}
 em {
 	font-style: normal;
 	font-weight: bold;

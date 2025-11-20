@@ -40,6 +40,7 @@
 
 //Parent gun type. Guns are weapons that can be aimed at mobs and act over a distance
 /obj/item/gun
+	abstract_type = /obj/item/gun
 	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'icons/obj/guns/gui.dmi'
@@ -390,7 +391,7 @@
 		var/old_dir = user.dir
 		var/mob/living/carbon/human/H = user
 		var/obj/item/tank/jetpack/jetpack = H.get_jetpack()
-		if(jetpack && !jetpack.stabilization_on)
+		if(!(jetpack && jetpack.on && jetpack.stabilization_on))
 			user.inertia_ignore = projectile
 			step(user,get_dir(target,user))
 			user.set_dir(old_dir)
@@ -425,11 +426,7 @@
 	// [SIERRA-REMOVE]
 	/*
 	var/stood_still = last_handled
-	//Not keeping gun active will throw off aim (for non-Masters)
-	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
-		stood_still = min(user.l_move_time, last_handled)
-	else
-		stood_still = max(user.l_move_time, last_handled)
+	stood_still = max(user.l_move_time, last_handled)
 
 	stood_still = max(0,round((world.time - stood_still)/10) - 1)
 	if(stood_still)

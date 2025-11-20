@@ -218,3 +218,14 @@
 	key = "squeal"
 	emote_message_3p = "USER squeals."
 	emote_sound = 'sound/voice/LizardSqueal.ogg'
+
+/singleton/emote/audible/lizard_thump
+	key = "thump"
+	emote_message_3p = "USER thumps USER_THEIR tail."
+	emote_sound = 'sound/voice/LizardThump.ogg'
+
+/singleton/emote/audible/lizard_hiss
+	key = "lhiss"
+	emote_message_3p_target = "USER hisses at TARGET."
+	emote_message_3p = "USER hisses."
+	emote_sound = 'sound/voice/LizardHiss.ogg'

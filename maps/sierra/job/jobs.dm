@@ -41,7 +41,7 @@
 		/datum/job/assistant, /datum/job/vagabond
 	)
 
-	access_modify_region = list(
+	access_modify_region = alist(
 		ACCESS_REGION_SECURITY = list(access_hos, access_change_ids),
 		ACCESS_REGION_MEDBAY = list(access_cmo, access_change_ids),
 		ACCESS_REGION_RESEARCH = list(access_rd, access_change_ids),
