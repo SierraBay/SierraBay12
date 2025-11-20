@@ -57,7 +57,7 @@
 		return FALSE
 
 	if(!charge_selected)
-		to_chat(holder.wearer, "<span class='danger'>You have not selected a chemical type.</span>")
+		to_chat(holder.wearer, SPAN_DANGER("You have not selected a chemical type."))
 		return FALSE
 
 	return use_charge(charge_selected, target)
@@ -73,7 +73,7 @@
 	var/chems_to_use = 10
 	if(charge.charges <= 0)
 		if(show_warnings)
-			to_chat(H, "<span class='danger'>Insufficient chems!</span>")
+			to_chat(H, SPAN_DANGER("Insufficient chems!"))
 		return FALSE
 	else if(charge.charges < chems_to_use)
 		chems_to_use = charge.charges
@@ -88,8 +88,8 @@
 		target_mob = H
 
 	if(target_mob != H)
-		to_chat(H, "<span class='danger'>You inject [target_mob] with [chems_to_use] unit\s of [charge.display_name].</span>")
-	to_chat(target_mob, "<span class='danger'>You feel a rushing in your veins as [chems_to_use] unit\s of [charge.display_name] [chems_to_use == 1 ? "is" : "are"] injected.</span>")
+		to_chat(H, SPAN_DANGER("You inject [target_mob] with [chems_to_use] unit\s of [charge.display_name]."))
+	to_chat(target_mob, SPAN_DANGER("You feel a rushing in your veins as [chems_to_use] unit\s of [charge.display_name] [chems_to_use == 1 ? "is" : "are"] injected."))
 	target_mob.reagents.add_reagent(charge.product_type, chems_to_use)
 
 	charge.charges -= chems_to_use
@@ -260,7 +260,7 @@
 							continue
 						possible_removals[module.name] = module
 
-					if(!length(possible_removals))
+					if(!LAZYLEN(possible_removals))
 						to_chat(user, SPAN_WARNING("There are no installed modules to remove."))
 						return TRUE
 

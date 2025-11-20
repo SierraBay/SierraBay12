@@ -167,7 +167,7 @@
 
 	if(damage) // if we are damaged show the message badly
 		message.text = stars(message.text, rand(50,100))
-	to_chat(H, "<span class='notice'>\[[voice_name]\]</span> <span class='[message.class]'>[message.text]</span>")
+	to_chat(H, SPAN_NOTICE("\[[voice_name]\]</span> <span class='[message.class]'>[message.text]"))
 	if(message.sound)
 		H.playsound_local(src, message.sound, 50)
 
