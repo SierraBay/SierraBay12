@@ -44,7 +44,10 @@ SUBSYSTEM_DEF(misc_slow)
 
 /datum/controller/subsystem/misc_slow/fire(resumed, no_mc_tick)
 	DoReconnects()
-
+	// [SIERRA-ADD]
+	if(!config.hub_visible)
+		world.update_hub_visibility(TRUE)
+	// [/SIERRA-ADD]
 
 /// Clear the state of members related to db connection maintenance
 /datum/controller/subsystem/misc_slow/proc/RecoverDoReconnects()
