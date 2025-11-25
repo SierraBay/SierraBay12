@@ -94,7 +94,7 @@
 /datum/hivemind_sdp/champion/execute()
 	. = ..()
 	var/list/places_to_spawn = list()
-	for(var/turf/T in orange(1, master))
+	for(var/turf/T in orange(2, master))
 		if(!T.density)
 			for(var/obj/O in T)
 				if(!O.CanPass(master, T))
