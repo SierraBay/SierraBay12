@@ -100,7 +100,6 @@
 				child.forceMove(below)
 				for(var/obj/wireweed/neighbor in range(1, child))
 					neighbor.update_neighbors()
-					break
 		else
 			return
 
