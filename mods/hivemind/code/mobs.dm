@@ -71,8 +71,8 @@
 		"laser" = 0,
 		"energy" = 0,
 		"bomb" = 0,
-		"bio" = 100,
-		"rad" = 100
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
 	)
 
 
@@ -372,7 +372,6 @@
 	malfunction_chance = 10
 	ranged = TRUE
 	rapid = FALSE //Visual Studio screamed at me for trying to use FALSE/TRUE in procs below
-//	fire_verb = "lobs a ball of goo" //reminder that the attack message is "\red <b>[src]</b> [fire_verb] at [target]!"
 	projectiletype = /obj/item/projectile/goo/weak //what projectile it uses. Since ranged_cooldown is 2 short seconds, it's better to have a weaker projectile
 	projectilesound = 'sound/effects/blobattack.ogg'
 	mob_size = MOB_SMALL
@@ -456,13 +455,25 @@
 	icon_dead = "hiborg-dead"
 	health = 220
 	maxHealth = 220
-	harm_intent_damage = 15
+	harm_intent_damage = 20
 	attacktext = "claws"
 	speed = 12
 	malfunction_chance = 15
 	mob_size = MOB_MEDIUM
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/hiborg
+
+	natural_weapon = /obj/item/natural_weapon/hivebot/strong
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = ARMOR_MELEE_RESISTANT,
+		"bullet" = ARMOR_BALLISTIC_PISTOL,
+		"laser" = ARMOR_LASER_SMALL,
+		"energy" = ARMOR_ENERGY_MINOR,
+		"bomb" = ARMOR_BOMB_MINOR,
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
+	)
 
 /datum/say_list/hiborg
 	speak = list("Everytime something breaks apart. Hell, I hate this job!",
@@ -544,6 +555,16 @@
 	ai_holder = /datum/ai_holder/hivemind/himan
 	say_list_type = /datum/say_list/himan
 
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = ARMOR_MELEE_SMALL,
+		"bullet" = ARMOR_BALLISTIC_MINOR,
+		"laser" = ARMOR_LASER_SMALL,
+		"energy" = ARMOR_RAD_RESISTANT,
+		"bomb" = ARMOR_BOMB_MINOR,
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
+	)
 
 /datum/say_list/himan
 	speak = list(
@@ -691,8 +712,8 @@
 		"laser" = ARMOR_LASER_MAJOR,
 		"energy" = ARMOR_ENERGY_RESISTANT,
 		"bomb" = ARMOR_BOMB_RESISTANT,
-		"bio" = 100,
-		"rad" = 100
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
 	)
 
 /datum/say_list/mechiver
@@ -894,8 +915,8 @@
 		"laser" = ARMOR_LASER_MAJOR,
 		"energy" = ARMOR_ENERGY_RESISTANT,
 		"bomb" = ARMOR_BOMB_RESISTANT,
-		"bio" = 100,
-		"rad" = 100
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
 	)
 
 /mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/death()
