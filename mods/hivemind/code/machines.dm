@@ -474,7 +474,7 @@
 		msg += pick(".", "!")
 		if(i != msg_cycles)
 			msg += " "
-	GLOB.global_announcer.autosay(msg, "unknown")
+	GLOB.global_announcer.autosay(msg, "unknown", "Common" , GLOB.using_map.station_levels)
 
 
 //SHRIEKER
