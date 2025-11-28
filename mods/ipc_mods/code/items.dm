@@ -355,6 +355,7 @@
 	if(tank && user.get_inactive_hand() == src)
 		user.visible_message("[user] removes \the [tank] from \the [src].", "You remove \the [tank] from \the [src].")
 		user.put_in_hands(tank)
+		tank.on_update_icon()
 		tank = null
 		w_class = initial(w_class)
 		force = initial(force)
@@ -413,8 +414,12 @@
 		to_chat(user, SPAN_WARNING("The [resource] left in the [tank] source attached to \the [src] is empty."))
 		return TRUE
 
+	if(S.damage >= (S.max_damage * 0.5))
+		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] need to be repaired first."))
+		return TRUE
+
 	if(S.synth_skin_health && S.synth_skin_health == S.max_damage)
-		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] synthetic skin is already fully repaired."))
+		to_chat(user, SPAN_GOOD("\The [target]'s [S.name] synthetic skin is already fully repaired."))
 		return TRUE
 
 	if(S.synth_skin_health && S.synth_skin_health < S.max_damage)
@@ -429,7 +434,7 @@
 		S.synth_skin_health = S.synth_skin_health + ceil(repair_amount_needed)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] synthetic skin has been repaired."))
-		H.update_synth_skin()
+		H.regenerate_icons()
 		update_icon()
 		return TRUE
 
@@ -464,7 +469,7 @@
 
 
 /obj/machinery/vending/roborepair
-	name = "Починись Сам"
+	name = "Repair Yourself"
 	desc = "A vending machine which dispenses repair tools for robo-limbs."
 	icon = 'mods/ipc_mods/icons/ppt.dmi'
 	icon_state = "repairvend"

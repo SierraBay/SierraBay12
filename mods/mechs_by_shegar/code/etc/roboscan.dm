@@ -99,7 +99,11 @@
 				if(!BP_IS_ROBOTIC(E))
 					continue
 				organ_found = 1
-				to_chat(user, "[E.name]: [SPAN_COLOR("red", E.brute_dam)] [SPAN_COLOR("#ffa500", E.burn_dam)][SPAN_COLOR("red", (E.status & ORGAN_BROKEN) ? "- INTERNAL STRUCTURE FRACTURED" : "")]")
+				if(!E.have_synth_skin)
+					to_chat(user, "[E.name]: [SPAN_COLOR("red", E.brute_dam)] [SPAN_COLOR("red", (get_wound_severity(E.brute_ratio) == "irreparable") ? " - IRREPARABLE DAMAGE" : "")] [SPAN_COLOR("#ffa500", E.burn_dam)] [SPAN_COLOR("#ffa500", (get_wound_severity(E.burn_ratio) == "irreparable") ? " - IRREPARABLE DAMAGE" : "")]")
+				else
+					to_chat(user, "[E.name]: [SPAN_COLOR("red", E.brute_dam)] [SPAN_COLOR("red", (get_wound_severity(E.brute_ratio) == "irreparable") ? " - IRREPARABLE DAMAGE" : "")] [SPAN_COLOR("#ffa500", E.burn_dam)] [SPAN_COLOR("#ffa500", (get_wound_severity(E.burn_ratio) == "irreparable") ? " - IRREPARABLE DAMAGE" : "")] [SPAN_COLOR("#96aa77", (E.max_damage - E.synth_skin_health))]")
+
 			if(!organ_found)
 				to_chat(user, "No prosthetics located.")
 

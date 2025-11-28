@@ -113,7 +113,7 @@
 		if(synth_skin_health > max_damage - damage)
 			synth_skin_health = max_damage - damage
 			if(synth_skin_health < 0.5 * max_damage)
-				owner.update_synth_skin()
+				owner.regenerate_icons()
 	//[/SIERRA-ADD]
 
 	// sync the organ's damage with its wounds
