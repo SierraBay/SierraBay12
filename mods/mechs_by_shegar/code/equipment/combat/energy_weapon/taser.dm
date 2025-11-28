@@ -14,8 +14,8 @@
 	burst = 1
 	projectile_type = /obj/item/projectile/beam/stun
 	firemodes = list(
-		list(mode_name="stun", projectile_type= /obj/item/projectile/beam/stun),
-		list(mode_name="shock", projectile_type= /obj/item/projectile/energy/electrode),
+		list("mode_name" = "stun", "projectile_type" =  /obj/item/projectile/beam/stun),
+		list("mode_name" = "shock", "projectile_type" =  /obj/item/projectile/energy/electrode),
 		)
 
 

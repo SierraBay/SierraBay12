@@ -241,7 +241,7 @@
 	burst = 10
 	fire_sound = 'mods/mechs_by_shegar/sounds/mecha_minigun.ogg'
 	firemodes = list(
-		list(mode_name="semi auto", burst=10, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		list("mode_name" = "semi auto", burst=10, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
 		)
 
 /obj/item/ammo_magazine/rifle/mech_minigun

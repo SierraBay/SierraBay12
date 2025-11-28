@@ -163,8 +163,8 @@ SUBSYSTEM_DEF(experience)
 		var/DBQuery/player_update_query = dbcon.NewQuery({"
 			UPDATE `erro_player`
 			SET
-				`exp` = [updated_exp],
-				`species_exp` = [updated_species_exp],
+				`exp` = '[updated_exp]',
+				`species_exp` = '[updated_species_exp]',
 				`lastseen` = NOW()
 			WHERE
 				`ckey` = '[sql_ckey]'

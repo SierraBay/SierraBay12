@@ -35,7 +35,7 @@
 	allowed_magazines = /obj/item/ammo_magazine/rifle/mech_machinegun
 	has_safety = FALSE
 	firemodes = list(
-		list(mode_name="semi auto", burst=4, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
+		list("mode_name" = "semi auto", burst=4, fire_delay=null, move_delay=null, one_hand_penalty=8, burst_accuracy=null, dispersion=null),
 		)
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/mounted/need_combat_skill()

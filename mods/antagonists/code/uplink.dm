@@ -91,3 +91,11 @@
 	item_cost = 24
 	path = /obj/item/device/blackout
 	desc = "A device which can create power surge in terminal, spread it in power network and temporally creating blackout."
+
+// Medium Silencer
+
+/datum/uplink_item/item/stealthy_weapons/medium_silencer
+	name = "10mm Silencer"
+	desc = "Silencer fittable with barrel-threaded guns with 10mm caliber, such MP6 or MSI-220."
+	item_cost = 8
+	path = /obj/item/silencer/medium
