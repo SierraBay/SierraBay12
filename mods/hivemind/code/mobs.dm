@@ -63,6 +63,7 @@
 
 	ignore_hazard_flags = HAZARD_FLAG_SHARD
 
+	natural_weapon = /obj/item/natural_weapon/hivebot
 	armor_type = /datum/extension/armor
 	natural_armor = list(
 		"melee" = 0,
@@ -765,7 +766,7 @@
 	if(!Adjacent(target_mob))
 		return
 
-	if(world.time > special_ability_cooldown && !passenger)
+	if(world.time > special_ability_cooldown && !passenger && target_mob != /mob/living/exosuit)
 		special_ability(target_mob)
 
 	..()
