@@ -1036,10 +1036,6 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
-			// [SIERRA-ADD] - EX666_ECOSYSTEM
-			if("utility_database")
-				sqlfdbkdbutil = value
-			// [/SIERRA-ADD]
 			else
 				log_misc("Unknown setting in config/dbconfig.txt: '[name]'")
 
