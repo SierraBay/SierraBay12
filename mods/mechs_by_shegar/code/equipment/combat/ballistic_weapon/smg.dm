@@ -22,7 +22,7 @@
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
 	has_safety = FALSE
 	firemodes = list(
-		list(mode_name="semi auto",burst=3, fire_delay=null,move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
+		list("mode_name" = "semi auto",burst=3, fire_delay=null,move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
 		)
 
 /obj/item/mech_equipment/mounted_system/taser/ballistic/smg/need_combat_skill()

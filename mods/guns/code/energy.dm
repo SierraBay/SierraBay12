@@ -116,8 +116,8 @@
 	icon = 'mods/guns/icons/obj/stunrevolver_secure.dmi'
 	projectile_type = /obj/item/projectile/beam/stun
 	firemodes = list(
-		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
-		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill")
+		list("mode_name" = "stun", "projectile_type" = /obj/item/projectile/beam/stun, "modifystate" = "energyrevolverstun"),
+		list("mode_name" = "shock", "projectile_type" = /obj/item/projectile/beam/stun/shock, "modifystate" = "energyrevolvershock"),
+		list("mode_name" = "kill", "projectile_type" = /obj/item/projectile/beam, "modifystate" = "energyrevolverkill")
 		)
 	req_access = list(list(access_brig, access_heads))

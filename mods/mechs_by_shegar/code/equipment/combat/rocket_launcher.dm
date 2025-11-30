@@ -18,7 +18,7 @@
 	max_shells = 4
 	starts_loaded = FALSE
 	firemodes = list(
-	mode_name="semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
+	"mode_name" = "semi auto",       burst=1, fire_delay=null,    move_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null,
 	)
 	//Если в списке что-то есть, то будет пускать только те патроны, которые есть в этом списке
 	var/list/white_list_ammo_types = list()
