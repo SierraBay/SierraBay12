@@ -94,7 +94,7 @@
 /mob/proc/check_fov()
 	var/mob/eyepath
 	if(client)
-		if(resting || lying || client.viewoffset)
+		if(client.viewoffset)
 			client.hide_mask()
 			return
 		//Trying to make FOV works for Mechs

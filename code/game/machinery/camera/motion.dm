@@ -17,7 +17,7 @@
 			triggerAlarm()
 	else if (detectTime == -1)
 		for (var/mob/target in motionTargets)
-			if (target.stat == DEAD)
+			if (target.is_dead())
 				lostTarget(target)
 			// See if the camera is still in range
 			if(!in_range(src, target))

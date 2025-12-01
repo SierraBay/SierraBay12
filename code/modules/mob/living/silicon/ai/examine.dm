@@ -2,7 +2,7 @@
 	. = ..()
 
 	var/msg = ""
-	if (src.stat == DEAD)
+	if (is_dead())
 		msg += "[SPAN_CLASS("deadsay", "It appears to be powered-down.")]\n"
 	else
 		var/damage_msg = ""

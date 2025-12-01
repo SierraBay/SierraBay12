@@ -84,7 +84,7 @@
 	var/brain_result = "normal"
 	if(H.should_have_organ(BP_BRAIN))
 		var/obj/item/organ/internal/brain/brain = H.internal_organs_by_name[BP_BRAIN]
-		if(!brain || H.stat == DEAD || (H.status_flags & FAKEDEATH))
+		if(!brain || H.is_dead())
 			brain_result = SPAN_CLASS("scan_danger", "none, patient is braindead")
 		else if(H.stat != DEAD)
 			if(H.has_brain_worms())
@@ -112,7 +112,7 @@
 		brain_result = SPAN_CLASS("scan_danger", "ERROR - Nonstandard biology")
 	dat += "Brain activity: [brain_result]."
 
-	if(H.stat == DEAD || (H.status_flags & FAKEDEATH))
+	if(H.is_dead())
 		dat += SPAN_CLASS("scan_warning", "[b]Time of Death:[endb] [time2text(worldtime2stationtime(H.timeofdeath), "hh:mm")]")
 
 	// Pulse rate.

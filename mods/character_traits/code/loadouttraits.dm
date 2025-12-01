@@ -23,11 +23,12 @@
 	display_name = "Diseases — Asthma Kit"
 	path = /obj/item/storage/box/asthma
 	cost = 2
+	flags = GEAR_HAS_NO_CUSTOMIZATION
 	allowed_mod_traits = list("Disease - Asthma")
 
 /obj/item/reagent_containers/pill/synaptizine
 	name = "Synaptizine (1u)"
-	desc = "Commonly used to treat hallucinations. Prescribed."
+	desc = "Commonly used to treat hallucinations."
 	icon_state = "pill3"
 
 /obj/item/reagent_containers/pill/synaptizine/New()
@@ -43,6 +44,31 @@
 
 /datum/gear/synaptizine_box
 	display_name = "Diseases — Hallucinations Kit"
+	description = "A bottle of Synaptizine pills. You've better had your prescription in medical records ready."
 	path = /obj/item/storage/pill_bottle/synaptizine
 	cost = 2
+	flags = GEAR_HAS_NO_CUSTOMIZATION
 	allowed_mod_traits = list("Disease - Hallucinations")
+
+/obj/item/reagent_containers/pill/tylenol
+	name = "Tylenol (5u)"
+	desc = "A mild chewable painkiller."
+	icon_state = "pill3"
+
+/obj/item/reagent_containers/pill/tylenol/New()
+	..()
+	reagents.add_reagent(/datum/reagent/paracetamol, 5)
+	color = reagents.get_color()
+
+/obj/item/storage/pill_bottle/tylenol
+	name = "pill bottle (Tylenol)"
+	desc = "Mild painkiller. Won't fix the cause of your headache (unlike cyanide), but might make it bearable."
+	startswith = list(/obj/item/reagent_containers/pill/tylenol = 4)
+	wrapper_color = "#c8a5dc"
+
+/datum/gear/tylenol_box
+	display_name = "Diseases — Headache Kit"
+	path = /obj/item/storage/pill_bottle/tylenol
+	cost = 2
+	flags = GEAR_HAS_NO_CUSTOMIZATION
+	allowed_mod_traits = list("Disease - Headaches")

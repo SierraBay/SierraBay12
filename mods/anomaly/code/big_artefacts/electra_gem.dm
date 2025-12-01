@@ -20,6 +20,7 @@
 		START_PROCESSING(SSanom, src)
 	electra_attack_cooldown = rand(20 SECONDS, 50 SECONDS)
 	last_electra_attack = world.time
+	new /obj/energy_ball(get_turf(src))
 
 //Пусть кусается молниями в пределах 3 турфов.
 /obj/structure/big_artefact/electra/Process()

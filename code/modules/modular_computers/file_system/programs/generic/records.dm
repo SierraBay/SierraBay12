@@ -24,7 +24,10 @@
 	if(active_record)
 		send_rsc(user, active_record.photo_front, "front_[active_record.uid].png")
 		send_rsc(user, active_record.photo_side, "side_[active_record.uid].png")
-		data["pic_edit"] = check_access(user, access_bridge) || check_access(user, access_security)
+		// [/SIERRA-EDIT] CREW_RECORDS_ACCESS
+		// data["pic_edit"] = check_access(user, access_bridge) || check_access(user, access_security) // SIERRA-EDIT - ORIGINAL
+		data["pic_edit"] = check_access(user, access_employment_records) || check_access(user, access_security_records)
+		// [SIERRA-EDIT]
 		data += active_record.generate_nano_data(user_access)
 	else
 		var/list/all_records = list()
@@ -37,9 +40,14 @@
 				"id" = R.uid
 			)))
 		data["all_records"] = all_records
-		data["creation"] = check_access(user, access_bridge)
-		data["dnasearch"] = check_access(user, access_medical) || check_access(user, access_forensics_lockers)
-		data["fingersearch"] = check_access(user, access_security)
+		// [/SIERRA-EDIT] CREW_RECORDS_ACCESS
+		// data["creation"] = check_access(user, access_bridge) // SIERRA-EDIT - ORIGINAL
+		// data["dnasearch"] = check_access(user, access_medical) || check_access(user, access_forensics_lockers) // SIERRA-EDIT - ORIGINAL
+		// data["fingersearch"] = check_access(user, access_security) // SIERRA-EDIT - ORIGINAL
+		data["creation"] = check_access(user, access_employment_records)
+		data["dnasearch"] = check_access(user, access_medical_records) || check_access(user, access_forensics_lockers)
+		data["fingersearch"] = check_access(user, access_security_records)
+		// [SIERRA-EDIT]
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)

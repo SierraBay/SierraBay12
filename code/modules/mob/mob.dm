@@ -217,7 +217,7 @@
 	. = 0
 	if(isturf(loc))
 		var/turf/turf = loc
-		. += turf.movement_delay
+		. += turf.get_terrain_movement_delay()
 	if (drowsyness > 0)
 		. += 6
 	if(lying) //Crawling, it's slower
@@ -388,6 +388,17 @@
 			update_inv_r_hand()
 		else
 			attack_empty_hand(BP_R_HAND)
+
+/mob/verb/activate_world_object()
+	set name = "Activate Object In World"
+	set category = "Object"
+
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	var/atom/hovered = click_handler.hovered_atom
+	if (!hovered)
+		return
+
+	usr.ClickOn(hovered, "", TRUE)
 
 /mob/proc/update_flavor_text(key)
 	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null, extra = 0)
@@ -637,7 +648,14 @@
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
+/// Checks if a mob should be considered dead. Includes faked deaths and other situational conditions.
 /mob/proc/is_dead()
+	if (GET_FLAGS(status_flags, FAKEDEATH))
+		return TRUE
+	return is_real_dead()
+
+/// Checks if a mob is actually dead. Ignores faked deaths.
+/mob/proc/is_real_dead()
 	return stat == DEAD
 
 /mob/proc/is_mechanical()

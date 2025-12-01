@@ -1139,7 +1139,7 @@
 			to_chat(user, SPAN_NOTICE("You're too far away from [src] to do that."))
 		return USE_FAIL_NON_ADJACENT
 
-	if(!(use_flags & USE_ALLOW_DEAD) && user.stat == DEAD)
+	if(!(use_flags & USE_ALLOW_DEAD) && user.is_real_dead())
 		if (show_messages)
 			to_chat(user, SPAN_NOTICE("How do you expect to do that when you're dead?"))
 		return USE_FAIL_DEAD

@@ -16,6 +16,10 @@
 	name = "table knife, aluminium"
 	path = /obj/item/material/utensil/knife
 
+/datum/fabricator_recipe/cutlery/chopsticks_aluminium
+	name = "chopsticks, aluminium"
+	path = /obj/item/material/utensil/chopsticks
+
 /datum/fabricator_recipe/cutlery/foon_aluminium
 	name = "foon, aluminium"
 	path = /obj/item/material/utensil/foon
@@ -36,6 +40,10 @@
 /datum/fabricator_recipe/cutlery/knife_plastic
 	name = "table knife, plastic"
 	path = /obj/item/material/utensil/knife/plastic
+
+/datum/fabricator_recipe/cutlery/chopsticks_plastic
+	name = "chopsticks, plastic"
+	path = /obj/item/material/utensil/chopsticks/plastic
 
 /datum/fabricator_recipe/cutlery/foon_plastic
 	name = "foon, plastic"

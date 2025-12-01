@@ -336,7 +336,7 @@
 					C.adjustFireLoss(20)
 					C.adjustBrainLoss(5)
 
-					if(C.stat == DEAD || !(C in contents)) //In case we die or are removed at any point.
+					if(C.is_real_dead() || !(C in contents)) //In case we die or are removed at any point.
 						cremating = 0
 						update()
 						break
@@ -372,7 +372,7 @@
 									shake_animation()
 
 
-			if(M.stat == DEAD)
+			if(M.is_real_dead())
 				if(round_is_spooky())
 					if(prob(50))
 						playsound(src, 'sound/effects/ghost.ogg', 10, 5)

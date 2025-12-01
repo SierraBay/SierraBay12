@@ -61,7 +61,10 @@
 	wires = new(src)
 	if(ispath(cell))
 		cell = new cell(src)
-	internal_channels = GLOB.using_map.default_internal_channels()
+	if (intercept)
+		internal_channels = GLOB.using_map.intercept_internal_channels()
+	else
+		internal_channels = GLOB.using_map.default_internal_channels()
 	GLOB.listening_objects += src
 
 	if(frequency < RADIO_LOW_FREQ || frequency > RADIO_HIGH_FREQ)
@@ -161,6 +164,8 @@
 /obj/item/device/radio/proc/list_internal_channels(mob/user)
 	var/dat[0]
 	for(var/internal_chan in internal_channels)
+		if (!syndie && (text2num(internal_chan) == SYND_FREQ)) //Only traitor shortwaves should be able to see the traitor frequency
+			continue
 		if(has_channel_access(user, internal_chan))
 			dat.Add(list(list("chan" = internal_chan, "display_name" = get_frequency_default_name(text2num(internal_chan)), "chan_span" = frequency_span_class(text2num(internal_chan)))))
 
@@ -972,9 +977,10 @@
 	name = "bulky radio"
 	desc = "A large radio fitted with several military-grade communication interception circuits."
 	icon_state = "radio"
-	intercept = 1
+	intercept = TRUE
+	syndie = TRUE
 	w_class = ITEM_SIZE_NORMAL
-
+	default_frequency = SYND_FREQ
 
 //The exosuit  radio subtype. It allows pilots to interact and consumes exosuit power
 

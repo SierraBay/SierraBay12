@@ -17,7 +17,7 @@
 /spell/aoe_turf/drain_blood/cast(list/targets, mob/user)
 	for(var/t in targets)
 		for(var/mob/living/L in t)
-			if(L.stat == DEAD || L == user)
+			if(L.is_dead() || L == user)
 				continue
 			//Hurt target
 			if(istype(L, /mob/living/carbon/human))

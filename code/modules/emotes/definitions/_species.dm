@@ -23,7 +23,9 @@
 	/singleton/emote/human/fastsway,
 	/singleton/emote/human/swag,
 	/singleton/emote/human/stopsway,
-	/singleton/emote/audible/lizard_bellow
+	/singleton/emote/audible/lizard_bellow,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
 /singleton/species/unathi/yeosa/default_emotes = list(
@@ -35,7 +37,9 @@
 	/singleton/emote/human/swag,
 	/singleton/emote/human/stopsway,
 	/singleton/emote/audible/lizard_bellow,
-	/singleton/emote/audible/lizard_squeal
+	/singleton/emote/audible/lizard_squeal,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
 /singleton/species/nabber/default_emotes = list(

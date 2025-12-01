@@ -50,7 +50,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(parent && parent.stat != DEAD)
+	if(parent && !parent.is_dead())
 		if(parent.stance == STANCE_IDLE && (pulledby || length(grabbed_by)))
 			var/enemies = pulledby ? list(pulledby) : grabbed_by
 			parent.ai_holder.attackers += enemies

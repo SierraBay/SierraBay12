@@ -14,4 +14,6 @@
 #include "code/other_obj.dm"
 #include "code/bathfixtures.dm"
 #include "code/machines.dm"
+#include "code/robolimbs.dm"
+#include "code/vendors.dm"
 #endif

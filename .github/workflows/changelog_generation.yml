@@ -16,13 +16,13 @@ jobs:
     if: github.repository == 'SierraBay/SierraBay12' # to prevent this running on forks
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
         with:
           fetch-depth: 0 # Otherwise, we will fail to push refs
           ref: dev-sierra
           token: ${{ secrets.BOT_TOKEN }}
       - name: Python setup
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548
         with:
           python-version: '3.x'
       - name: Install depends

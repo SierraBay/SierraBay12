@@ -27,6 +27,7 @@
 	habitability_weight = HABITABILITY_EXTREME
 	has_trees = FALSE
 	flora_diversity = 0
+	initial_weather_state = null //Можно убрать когда будет под новую подсистему
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()
 	exterior_atmosphere = new
@@ -169,3 +170,13 @@
 /obj/structure/ice_rock/Initialize()
 	.=..()
 	icon_state = pick(icon_state_list)
+
+/obj/structure/ice_rock/MouseDrop_T(mob/living/target, mob/living/user)
+	if(get_dist(src, user) > 1)
+		return
+	usr.forceMove(get_turf(src))
+	to_chat(usr, SPAN_GOOD("Вы с лёгкостью перемахиваете через глыбу."))
+
+/obj/structure/ice_rock/examine(mob/user, distance, infix, suffix)
+	. = ..()
+	to_chat(user, SPAN_GOOD("Перетащите спрайт персонажа на глыбу чтоб залезть на неё."))

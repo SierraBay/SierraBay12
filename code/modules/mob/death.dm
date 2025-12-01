@@ -27,7 +27,7 @@
 /mob/proc/dust(anim="dust-m",remains=/obj/decal/cleanable/ash)
 	death(1)
 
-	if(stat == DEAD)
+	if(is_real_dead())
 		ghostize(FALSE) //Ghosts the mob here so it keeps its sprite
 
 	var/atom/movable/fake_overlay/animation = null

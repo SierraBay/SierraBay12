@@ -46,6 +46,8 @@
 	status_flags = CANPUSH
 	flash_vulnerability = 0
 
+	ignore_hazard_flags = HAZARD_FLAG_SHARD
+
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile/foundation
 	say_list_type = /datum/say_list/foundation/traitor
 	ranged = TRUE

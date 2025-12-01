@@ -139,13 +139,13 @@
 		if(istitanwater(T))
 			var/turf/simulated/floor/exoplanet/titan_water/water = T
 			if(water.deep_status != MAX_DEEP)
-				SSweather.add_to_water_queue(water, "up") // Добавляем в очередь на углубление
+				SSweatherold.add_to_water_queue(water, "up") // Добавляем в очередь на углубление
 
 /datum/weather_manager/titan_rain/proc/weak_all_water()
 	for(var/turf/T in get_area_turfs(my_area))
 		if(istitanwater(T))
 			var/turf/simulated/floor/exoplanet/titan_water/water = T
-			SSweather.add_to_water_queue(water, "easiest") // Добавляем в очередь на макс глубины
+			SSweatherold.add_to_water_queue(water, "easiest") // Добавляем в очередь на макс глубины
 
 /datum/weather_manager/titan_rain/start_blowout()
 	if(activity_blocked_by_safe_protocol || !check_cunami_safety())

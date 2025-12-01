@@ -16,9 +16,9 @@
 		slot_belt_str = 'packs/infinity/icons/mob/onmob/onmob_belt.dmi'
 		)
 	firemodes = list(
-		list(mode_name="medium laser", projectile_type=/obj/item/projectile/beam/lkw),
-		list(mode_name="heavy laser", projectile_type=/obj/item/projectile/beam/pulse/lkw),
-		list(mode_name="light laser", projectile_type=/obj/item/projectile/beam/confuseray/lkw),
+		list("mode_name" = "medium laser", "projectile_type" = /obj/item/projectile/beam/lkw),
+		list("mode_name" = "heavy laser", "projectile_type" = /obj/item/projectile/beam/pulse/lkw),
+		list("mode_name" = "light laser", "projectile_type" = /obj/item/projectile/beam/confuseray/lkw),
 		)
 
 	bulk = GUN_BULK_SNIPER_RIFLE

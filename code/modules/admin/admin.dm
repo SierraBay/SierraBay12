@@ -1110,12 +1110,7 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 
 	if(!check_rights(R_SPAWN))	return
 
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
+	var/list/matches = typesof_filtered(/atom, object)
 
 	if(length(matches)==0)
 		return
@@ -1127,7 +1122,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-
+	var/reason = prevent_spawn_reason(chosen)
+	if (reason)
+		to_chat(usr, SPAN_WARNING("Cannot create a [chosen] - [reason]"))
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
