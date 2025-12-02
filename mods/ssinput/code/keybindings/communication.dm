@@ -21,6 +21,15 @@
 	user.mob.whisper_wrapper()
 	return TRUE
 
+/mob/verb/whisper_wrapper()
+	set name = ".Whisper"
+	set hidden = TRUE
+	SStyping.UpdateVerbState(client, TRUE)
+	var/message = input("","whisper (text)") as null | text
+	SStyping.UpdateVerbState(client, FALSE)
+	if (message)
+		whisper(message)
+
 
 /datum/keybinding/client/communication/ooc
 	hotkey_keys = list("F2")
