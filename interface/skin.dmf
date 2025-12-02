@@ -164,6 +164,9 @@ macro "macro"
 		name = "F3"
 		command = ".say"
 	elem
+		name = "Shift+T"
+		command = ".whisper"
+	elem
 		name = "F4"
 		command = ".me"
 	elem
