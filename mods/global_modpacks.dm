@@ -68,4 +68,3 @@
 #include "rocket_launchers/_rocket_launchers_includes.dm"
 #include "genreconfig/_genreconfig_includes.dm"
 #include "config/_config_includes.dm"
-#include "_maps/insidiae_pack/_map_insidiae_pack.dme"

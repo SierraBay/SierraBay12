@@ -28,7 +28,7 @@
 
 	ban_ruins = list(
 		/datum/map_template/ruin/away_site/scavver_gantry,
-		/datum/map_template/ruin/away_site/normandite
+		//datum/map_template/ruin/away_site/normandite
 	)
 
 /obj/submap_landmark/joinable_submap/salvage_ship
