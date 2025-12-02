@@ -21,6 +21,7 @@
 	user.mob.whisper_wrapper()
 	return TRUE
 
+// оставил верб тут, хз куда его можно запихнуть
 /mob/verb/whisper_wrapper()
 	set name = ".Whisper"
 	set hidden = TRUE
