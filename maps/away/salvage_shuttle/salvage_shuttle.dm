@@ -26,6 +26,11 @@
 		/area/derelict_cargo_ship/cockpit = NO_VENT
 	)
 
+	ban_ruins = list(
+		/datum/map_template/ruin/away_site/scavver_gantry,
+		/datum/map_template/ruin/away_site/normandite
+	)
+
 /obj/submap_landmark/joinable_submap/salvage_ship
 	name =  "Salvage Shuttle"
 	archetype = /singleton/submap_archetype/salvage_ship
