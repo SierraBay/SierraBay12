@@ -1085,24 +1085,24 @@
 /atom/proc/create_bullethole(obj/item/projectile/Proj)
 	var/p_x = Proj.p_x + rand(-8, 8)
 	var/p_y = Proj.p_y + rand(-8, 8)
-	var/obj/overlay/bmark/bullet_mark = new(src)
+	var/obj/overlay/bullet_hole/bullet_hole = new(src)
 
-	bullet_mark.pixel_x = p_x
-	bullet_mark.pixel_y = p_y
+	bullet_hole.pixel_x = p_x
+	bullet_hole.pixel_y = p_y
 
 	// offset correction
-	bullet_mark.pixel_x--
-	bullet_mark.pixel_y--
+	bullet_hole.pixel_x--
+	bullet_hole.pixel_y--
 
 	if(Proj.damage >= 50)
-		bullet_mark.icon_state = "scorch"
-		bullet_mark.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
+		bullet_hole.icon_state = "scorch"
+		bullet_hole.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
 	else
-		bullet_mark.icon_state = "light_scorch"
+		bullet_hole.icon_state = "light_scorch"
 
 /atom/proc/clear_bulletholes()
-	for(var/obj/overlay/bmark/bullet_mark in src)
-		qdel(bullet_mark)
+	for(var/obj/overlay/bullet_hole/bullet_hole in src)
+		qdel(bullet_hole)
 
 /atom/proc/get_overhead_text_x_offset()
 	return 0
