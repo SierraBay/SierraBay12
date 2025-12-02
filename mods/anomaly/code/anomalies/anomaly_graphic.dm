@@ -31,7 +31,7 @@
 	icon_state = "purple_electricity_constant"
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
-	delete_time = 4 SECONDS
+	delete_delay = 4 SECONDS
 
 /obj/anomaly/proc/do_momentum_animation()
 	if(activation_effect_type)
