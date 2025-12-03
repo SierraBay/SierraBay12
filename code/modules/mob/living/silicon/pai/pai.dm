@@ -84,6 +84,7 @@ GLOBAL_LIST_AS(possible_say_verbs, list(
 	light_wedge = LIGHT_OMNI
 
 	hud_type = /datum/hud/pai
+	status_flags = NO_ANTAG
 
 
 /mob/living/silicon/pai/Destroy()
@@ -94,7 +95,6 @@ GLOBAL_LIST_AS(possible_say_verbs, list(
 
 /mob/living/silicon/pai/Initialize(mapload, obj/item/device/paicard)
 	. = ..()
-	status_flags |= NO_ANTAG
 	add_language(LANGUAGE_HUMAN_EURO, TRUE)
 	verbs -= /mob/living/verb/ghost
 	software = default_pai_software.Copy()
@@ -321,6 +321,8 @@ GLOBAL_LIST_AS(possible_say_verbs, list(
 	if(.)
 		var/obj/item/holder/H = .
 		if(istype(H))
+			if(resting)
+				lay_down()
 			H.item_state = "pai-[icon_state]"
 			grabber.update_inv_l_hand()
 			grabber.update_inv_r_hand()
