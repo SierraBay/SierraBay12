@@ -1659,16 +1659,16 @@
 /turf/simulated/floor/tiled/dark,
 /area/bridge/meeting_room)
 "cV" = (
-/obj/machinery/computer/modular/preset/aislot/sysadmin{
-	dir = 1;
-	icon_state = "console"
-	},
 /obj/floor_decal/corner/blue/mono,
 /obj/machinery/power/apc/super/critical{
 	name = "south bump";
 	pixel_y = -24
 	},
 /obj/structure/cable/green,
+/obj/machinery/computer/modular/preset/aislot/sysadmin{
+	dir = 1;
+	icon_state = "console"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "cW" = (
@@ -4130,7 +4130,6 @@
 "iz" = (
 /obj/machinery/door/blast/regular/open{
 	density = 0;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -4359,7 +4358,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/aftstarboard)
 "jz" = (
-/obj/machinery/computer/modular/preset/cardslot/command,
 /obj/floor_decal/corner/blue/three_quarters{
 	dir = 1
 	},
@@ -4382,6 +4380,7 @@
 	pixel_x = 24;
 	pixel_y = 34
 	},
+/obj/machinery/computer/modular/preset/cardslot/command_eng,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "jA" = (
@@ -6094,7 +6093,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -6820,7 +6818,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry port";
 	name = "Port Bridge Blast Doors";
 	opacity = 0
@@ -9980,7 +9977,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -10178,7 +10174,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry port";
 	name = "Port Bridge Blast Doors";
 	opacity = 0
@@ -10626,7 +10621,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -11159,10 +11153,11 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/storage)
 "FE" = (
-/obj/machinery/computer/modular/preset/engineering{
-	dir = 1
-	},
 /obj/floor_decal/corner/blue/mono,
+/obj/machinery/computer/modular/preset/cardslot/command_sec{
+	dir = 1;
+	icon_state = "console"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "FG" = (
@@ -11607,7 +11602,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry star";
 	name = "Starboard Bridge Blast Doors";
 	opacity = 0
@@ -11858,7 +11852,6 @@
 "Ib" = (
 /obj/machinery/door/blast/regular/open{
 	density = 0;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -13880,7 +13873,7 @@
 /area/maintenance/bridge/forestarboard)
 "Ra" = (
 /obj/floor_decal/corner/blue/mono,
-/obj/machinery/computer/modular/preset/security,
+/obj/machinery/computer/modular/preset/cardslot/command,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "Rb" = (
@@ -14252,7 +14245,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -14697,7 +14689,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry star";
 	name = "Starboard Bridge Blast Doors";
 	opacity = 0
