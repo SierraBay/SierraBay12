@@ -10745,7 +10745,7 @@
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "phobos_mdwindow_58_bd";
-	name = "Mass Driver Blast Door"
+	name = "Co-axial Missile Launcher Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
