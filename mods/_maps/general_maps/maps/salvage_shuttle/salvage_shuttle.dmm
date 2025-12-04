@@ -314,12 +314,12 @@
 	dir = 4
 	},
 /obj/floor_decal/borderfloor{
-	dir = 4
+	dir = 5
 	},
 /obj/floor_decal/industrial/danger{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "dv" = (
 /obj/paint/green,
@@ -370,6 +370,10 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/sign/warning/high_voltage{
+	dir = 4;
+	pixel_x = -34
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "dT" = (
@@ -510,9 +514,9 @@
 	dir = 4
 	},
 /obj/floor_decal/borderfloor{
-	dir = 8
+	dir = 9
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "fT" = (
 /obj/machinery/atmospherics/unary/engine{
@@ -936,20 +940,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	master_tag = "crab_airlock";
-	name = "interior access button";
-	pixel_y = 23;
-	frequency = 1331;
-	pixel_x = -9
-	},
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk,
+/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
+	pixel_y = 23;
+	name = "Intercom (Crab)"
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "ly" = (
@@ -1159,7 +1159,10 @@
 	pixel_y = 23;
 	name = "Intercom (Crab)"
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "ob" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
@@ -1213,6 +1216,7 @@
 /obj/item/deck/cards,
 /obj/random/drinkbottle,
 /obj/random/junkfood,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal,
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
 "ol" = (
@@ -1336,12 +1340,12 @@
 	pixel_y = 0
 	},
 /obj/random/powercell,
-/obj/floor_decal/borderfloor{
-	dir = 8
-	},
 /obj/item/screwdriver,
 /obj/item/device/suit_cooling_unit,
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "qN" = (
 /obj/structure/cable/green{
@@ -1427,12 +1431,13 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/hailing{
-	dir = 4;
-	pixel_x = -24
-	},
 /obj/floor_decal/borderfloorblack{
 	dir = 10
+	},
+/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
+	dir = 4;
+	name = "Intercom (Crab)";
+	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
@@ -1725,6 +1730,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/random/junkfood,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "uP" = (
@@ -2029,9 +2035,9 @@
 	req_access = list()
 	},
 /obj/floor_decal/borderfloor{
-	dir = 4
+	dir = 6
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Ab" = (
 /obj/structure/closet/medical_wall/filled{
@@ -2910,7 +2916,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor/corner,
+/obj/floor_decal/borderfloor/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Ke" = (
 /obj/floor_decal/industrial/outline/blue,
@@ -3117,6 +3127,7 @@
 /obj/random/toolbox,
 /obj/item/stack/material/phoron/ten,
 /obj/item/device/flashlight,
+/obj/random/loot,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "NF" = (
@@ -3166,7 +3177,7 @@
 /obj/floor_decal/borderfloor{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Oi" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -3215,9 +3226,18 @@
 	icon_state = "4-8"
 	},
 /obj/structure/sign/warning/airlock{
-	pixel_y = 28
+	pixel_y = 28;
+	pixel_x = -6
 	},
 /obj/structure/catwalk,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	master_tag = "crab_airlock";
+	name = "interior access button";
+	pixel_y = 24;
+	frequency = 1331;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pg" = (
@@ -3600,7 +3620,7 @@
 /obj/floor_decal/borderfloor{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "TE" = (
 /obj/paint/brown,
@@ -3794,20 +3814,6 @@
 	initial_gas = null
 	},
 /area/salvage_shuttle/net)
-"WD" = (
-/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
-	dir = 1;
-	pixel_y = -32;
-	name = "Intercom (Crab)"
-	},
-/obj/structure/closet/secure_closet/personal/empty,
-/obj/item/storage/belt/utility/full,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/gloves/insulated,
-/obj/floor_decal/borderfloorblack,
-/obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/dark/monotile,
-/area/salvage_shuttle/cargo)
 "WI" = (
 /obj/machinery/computer/ship/engines{
 	dir = 1
@@ -8976,7 +8982,7 @@ TE
 ms
 TE
 lk
-WD
+Sg
 TE
 Qr
 Qr
