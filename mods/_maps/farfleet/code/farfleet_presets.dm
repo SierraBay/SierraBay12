@@ -47,7 +47,7 @@
 	program_icon_state = "munitions"
 	program_key_state = "security_key"
 	program_menu_icon = "bullet"
-	extended_desc = "Program for controlling munitions loading and arming systems."
+	extended_desc = "ICCGN Program for controlling munitions loading and arming systems."
 	requires_ntnet = FALSE
 	size = 8
 	category = PROG_COMMAND
@@ -59,9 +59,7 @@
 
 /datum/nano_module/program/munitions/iccg
 	name = "PC Munitions Control Program"
-	var/access_req = list(access_away_iccgn)
-	var/list/monitored_munitions = list()
-	var/obj/overmap/visitable/linked = null
+	access_req = list(access_away_iccgn)
 
 // Computer preset
 
