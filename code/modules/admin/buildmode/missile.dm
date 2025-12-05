@@ -24,13 +24,13 @@ Missiles can be spawned on the overmap or in the world, but its target MUST be a
 		to_chat("Missile type set to [missile_type]")
 
 /datum/build_mode/missile/OnClick(atom/clicked_atom, list/parameters)
-	if (parameters[MOUSE_2])
+	if (parameters["right"])
 		if ((isturf(clicked_atom) && (istype(clicked_atom, /turf/unsimulated/map)) || istype(clicked_atom, /obj/overmap/visitable) || istype(clicked_atom, /obj/overmap/projectile)))
 			target = clicked_atom
 			to_chat(user, SPAN_NOTICE("Target set to [clicked_atom]"))
 			return
 		to_chat(user, SPAN_WARNING("Invalid target - must be a visitable overmap sector, or an overmap turf."))
-	else if (parameters[MOUSE_1])
+	else if (parameters["left"])
 		if (!missile_type)
 			to_chat(user, SPAN_NOTICE("You must specify a missile type first!"))
 			return
