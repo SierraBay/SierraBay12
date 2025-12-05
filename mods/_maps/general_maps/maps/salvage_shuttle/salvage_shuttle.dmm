@@ -164,8 +164,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/hatch{
-	name = "Crab Dock";
-	door_color = "#917448"
+	name = "Crab Dock"
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -1401,8 +1400,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Crab Cargo Bay";
 	id_tag = "crab_cargo_inner";
-	frequency = 1331;
-	door_color = "#917448"
+	frequency = 1331
 	},
 /obj/machinery/door/blast/regular/open{
 	dir = 2;
@@ -2435,8 +2433,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
-	name = "Crab Break Room";
-	door_color = "#917448"
+	name = "Crab Break Room"
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -3455,8 +3452,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock/hatch{
-	name = "Crab Maintenance";
-	door_color = "#917448"
+	name = "Crab Maintenance"
 	},
 /obj/structure/cable/green{
 	d1 = 1;
