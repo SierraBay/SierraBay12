@@ -689,14 +689,12 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "bV" = (
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/missile/impact,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "bW" = (
@@ -2159,7 +2157,7 @@
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "phobos_md_58_bd";
-	name = "Mass Driver Blast Door"
+	name = "Co-axial Missile Launcher Tube"
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -2262,9 +2260,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/security)
 "he" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "phobos_md_58_con"
+/obj/machinery/door/blast/regular{
+	name = "loading bay";
+	id_tag = "phobos_md_58_bd_md"
 	},
 /turf/simulated/floor,
 /area/ship/phobos/disperser)
@@ -2542,12 +2540,10 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/interseptor)
 "iQ" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id_tag = "phobos_md_58"
-	},
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
+/obj/machinery/payload_interface{
+	id_tag = "phobos_md_58_bd";
+	allow_arming = 1;
+	name = "Co-axial Missile Launcher"
 	},
 /turf/simulated/floor,
 /area/ship/phobos/disperser)
@@ -2936,10 +2932,8 @@
 	dir = 4;
 	icon_state = "railing0-1"
 	},
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/missile/antispace,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "kC" = (
@@ -3947,14 +3941,10 @@
 /area/ship/phobos/hallway)
 "oj" = (
 /obj/machinery/conveyor{
-	id_tag = "phobos_md_58_con"
+	id = null;
+	id_tag = "phobos_md_58_bd"
 	},
-/obj/structure/ship_munition/ap_slug,
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/reinforced,
 /area/ship/phobos/disperser)
 "ol" = (
 /obj/structure/cable/green{
@@ -4644,15 +4634,13 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/maint/port)
 "qO" = (
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
 /obj/machinery/light/small/red,
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/missile/impact,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "qQ" = (
@@ -5068,9 +5056,18 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/maint/port)
 "sz" = (
-/obj/structure/disposaloutlet,
-/obj/structure/disposalpipe/trunk,
-/turf/simulated/floor,
+/obj/machinery/conveyor{
+	id = null;
+	id_tag = "phobos_md_58_bd_m"
+	},
+/obj/machinery/payload_interface{
+	id_tag = "phobos_md_58_bd_m";
+	name = "Co-axial Missile Launcher Load"
+	},
+/obj/structure/missile/probe{
+	dir = 2
+	},
+/turf/simulated/floor/reinforced,
 /area/ship/phobos/disperser)
 "sC" = (
 /obj/structure/cable/green{
@@ -5113,12 +5110,10 @@
 "sJ" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "phobos_md_58_con"
+	id = null;
+	id_tag = "phobos_md_58_bd"
 	},
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/reinforced,
 /area/ship/phobos/disperser)
 "sK" = (
 /obj/structure/cable/green{
@@ -5659,14 +5654,12 @@
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/maint/port)
 "vk" = (
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
 /obj/machinery/conveyor{
 	dir = 5;
-	id = "phobos_md_58_con"
+	id = null;
+	id_tag = "phobos_md_58_bd"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/reinforced,
 /area/ship/phobos/disperser)
 "vm" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -5694,10 +5687,8 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/structure/missile/impact,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "vs" = (
@@ -5986,14 +5977,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/engine/atmos)
 "wz" = (
-/obj/machinery/disposal/deliveryChute,
-/obj/structure/disposalpipe/trunk,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/window/westleft{
-	dir = 2
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
@@ -6527,13 +6513,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "yD" = (
-/obj/machinery/button/mass_driver{
-	desc = "A remote control switch for phobos Mass Driver Launcher.";
-	id_tag = "phobos_md_58";
-	pixel_x = -25;
-	pixel_y = -26;
-	req_access = list("ACCESS_PHOBOS")
-	},
 /obj/structure/bed/chair/comfy/black{
 	dir = 8
 	},
@@ -6824,12 +6803,11 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/ship/phobos/security/detective)
 "zN" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "phobos_md_58_maint";
+	name = "Co-axial Missile Launcher Maintenance"
 	},
-/obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced,
-/obj/paint/dark_gunmetal,
 /turf/simulated/floor,
 /area/ship/phobos/disperser)
 "zO" = (
@@ -7772,9 +7750,6 @@
 /turf/simulated/wall/r_wall/hull,
 /area/ship/phobos/engine/thrusterstarboard)
 "Ew" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "phobos_md_58_con"
-	},
 /obj/item/device/radio/intercom/map_preset/phobos{
 	pixel_y = 21
 	},
@@ -8184,17 +8159,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
-"Gk" = (
-/obj/structure/ship_munition/ap_slug{
-	dir = 8
-	},
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/obj/floor_decal/industrial/outline/grey,
-/turf/simulated/floor/tiled/techfloor,
-/area/ship/phobos/disperser/storage)
 "Gn" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -8625,6 +8589,11 @@
 	dir = 4
 	},
 /obj/floor_decal/corner/red/diagonal,
+/obj/machinery/button/blast_door{
+	id_tag = "phobos_md_58_bd_md";
+	name = "Co-axial Missile Launcher Load";
+	pixel_y = -25
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/phobos/disperser)
 "ID" = (
@@ -8932,6 +8901,9 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/missile/cargo/planet{
+	dir = 2
+	},
 /turf/simulated/floor/plating,
 /area/ship/phobos/disperser)
 "JX" = (
@@ -9063,7 +9035,6 @@
 /area/ship/phobos/medbay)
 "Ky" = (
 /obj/machinery/door/airlock/highsecurity{
-	autoset_access = 0;
 	icon_state = "closed";
 	name = "Fire Control"
 	},
@@ -10255,12 +10226,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterstarboard)
-"PD" = (
-/obj/machinery/conveyor{
-	id_tag = "phobos_md_58_con"
-	},
-/turf/simulated/floor,
-/area/ship/phobos/disperser)
 "PE" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -10780,7 +10745,7 @@
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "phobos_mdwindow_58_bd";
-	name = "Mass Driver Blast Door"
+	name = "Co-axial Missile Launcher Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /obj/wallframe_spawn/reinforced,
@@ -11692,9 +11657,9 @@
 	pixel_y = 28
 	},
 /obj/machinery/button/blast_door{
-	desc = "A remote control-switch for the Mass Driver's core.";
-	id_tag = "phobos_md_58_bd";
-	name = "Mass Driver Core Blast Doors";
+	desc = "A remote control-switch for the Missile Launcher maintenance hatch.";
+	id_tag = "phobos_md_58_maint";
+	name = "Co-axial Missile Launcher Maintenance";
 	pixel_x = -5;
 	pixel_y = 28
 	},
@@ -11970,25 +11935,23 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/security/detective)
 "WQ" = (
-/obj/machinery/computer/ship/navigation{
-	dir = 4;
-	icon_state = "computer"
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/computer/modular/preset/munitions/sol{
+	dir = 4
+	},
+/obj/machinery/computer/ship/navigation/telescreen{
+	pixel_y = -32
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "WR" = (
+/obj/structure/plasticflaps/airtight,
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "phobos_md_58_con"
+	id = null;
+	id_tag = "phobos_md_58_bd"
 	},
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "phobos_md_58_bd";
-	name = "Mass Driver Blast Door";
-	begins_closed = 0
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/reinforced,
 /area/ship/phobos/disperser)
 "WT" = (
 /obj/structure/cable/green{
@@ -12087,10 +12050,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/engine)
 "Xn" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -12102,6 +12061,10 @@
 	dir = 5
 	},
 /obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "Xo" = (
@@ -19127,7 +19090,7 @@ Pc
 Pc
 zN
 hw
-he
+sJ
 vn
 Bf
 Bf
@@ -19275,10 +19238,10 @@ Rm
 RA
 JT
 BP
-Pc
+he
 sz
 oj
-PD
+oj
 vk
 Ot
 Bf
@@ -19720,8 +19683,8 @@ OR
 Rh
 bT
 kB
-Gk
-Gk
+kB
+kB
 bb
 ch
 cr

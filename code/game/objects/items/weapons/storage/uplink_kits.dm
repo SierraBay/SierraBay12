@@ -36,6 +36,9 @@
 		/obj/item/reagent_containers/hypospray/autoinjector/mindbreaker
 		)
 
+/obj/item/storage/box/syndie_kit/imp_spider
+	startswith = list(/obj/item/implanter/mobspawner/spider)
+
 /obj/item/storage/box/syndie_kit/shuriken
 	startswith = list(
 		/obj/item/material/star/ninja,
@@ -169,3 +172,33 @@
 		/obj/item/device/dna_sampler,
 		/obj/item/reagent_containers/food/snacks/corpse_cube
 	)
+
+/obj/item/storage/box/syndie_kit/missile_he
+	startswith = list(
+		/obj/item/missile_equipment/payload/explosive,
+		/obj/item/missile_equipment/thruster/preset
+	)
+
+/obj/item/storage/box/syndie_kit/missile_he/Initialize()
+	. = ..()
+	make_exact_fit()
+
+/obj/item/storage/box/syndie_kit/missile_emp
+	startswith = list(
+		/obj/item/missile_equipment/payload/emp,
+		/obj/item/missile_equipment/thruster/preset
+	)
+
+/obj/item/storage/box/syndie_kit/missile_emp/Initialize()
+	. = ..()
+	make_exact_fit()
+
+/obj/item/storage/box/syndie_kit/missile_diffuser
+	startswith = list(
+		/obj/item/missile_equipment/payload/diffuser,
+		/obj/item/missile_equipment/thruster/preset
+	)
+
+/obj/item/storage/box/syndie_kit/missile_diffuser/Initialize()
+	. = ..()
+	make_exact_fit()
