@@ -42,3 +42,4 @@
 
 /obj/submap_landmark/spawnpoint/independent_salvager
 	name = "Independent Salvager"
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
