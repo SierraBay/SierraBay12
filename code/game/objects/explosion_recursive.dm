@@ -1,37 +1,4 @@
-<<<<<<< ours
 /*
-var/global/list/explosion_turfs = list()
-
-var/global/explosion_in_progress = 0
-
-
-/proc/explosion_rec(turf/epicenter, power, shaped)
-	var/loopbreak = 0
-	while(explosion_in_progress)
-		if(loopbreak >= 15) return
-		sleep(10)
-		loopbreak++
-
-	if(power <= 0) return
-	epicenter = get_turf(epicenter)
-//[SIERRA-ADD] - MODPACK_RND
-	if(!epicenter) return
-	for(var/obj/item/device/beacon/explosion_watcher/W in explosion_watcher_list)
-		if(get_dist(W, epicenter) < 10)
-			W.react_explosion(epicenter, power)
-//[/SIERRA-ADD] - MODPACK_RND
-
-	explosion_in_progress = 1
-	explosion_turfs = list()
-
-	explosion_turfs[epicenter] = power
-
-	//This steap handles the gathering of turfs which will be ex_act() -ed in the next step. It also ensures each turf gets the maximum possible amount of power dealt to it.
-	for(var/direction in GLOB.cardinal)
-		var/turf/T = get_step(epicenter, direction)
-		var/adj_power = power - epicenter.get_explosion_resistance()
-		if(shaped)
-=======
 #define EXPLOSION_MIN_POWER 0.05
 #define EXPLOSION_BUSY_TIMEOUT 10
 
@@ -71,7 +38,6 @@ GLOBAL_VAR_AS(running_explosions, 0)
 			continue
 		var/power_sibling = power_self
 		if (shaped)
->>>>>>> theirs
 			if (shaped == direction)
 				power_sibling *= 3
 			else if (shaped == reverse_direction(direction))
@@ -91,47 +57,6 @@ GLOBAL_VAR_AS(running_explosions, 0)
 		severity = clamp(severity, 1, 3)
 		severity = 4 - severity
 		severity = floor(severity)
-<<<<<<< ours
-
-		var/x = T.x
-		var/y = T.y
-		var/z = T.z
-		T.ex_act(severity)
-		if(!T)
-			T = locate(x,y,z)
-
-		var/throw_target = get_edge_target_turf(T, get_dir(epicenter,T))
-		for(var/atom_movable in T.contents)
-			var/atom/movable/AM = atom_movable
-			if(AM && AM.simulated && !T.protects_atom(AM))
-				AM.ex_act(severity)
-				if(!QDELETED(AM) && !AM.anchored)
-					addtimer(new Callback(AM, TYPE_PROC_REF(/atom/movable, throw_at), throw_target, 9/severity, 9/severity), 0)
-
-	explosion_turfs.Cut()
-	explosion_in_progress = 0
-
-
-//Code-wise, a safe value for power is something up to ~25 or ~30.. This does quite a bit of damage to the station.
-//direction is the direction that the spread took to come to this tile. So it is pointing in the main blast direction - meaning where this tile should spread most of it's force.
-/turf/proc/explosion_spread(power, direction)
-
-	if(explosion_turfs[src] >= power)
-		return //The turf already sustained and spread a power greated than what we are dealing with. No point spreading again.
-	explosion_turfs[src] = power
-/*
-	sleep(2)
-	var/obj/debugging/M = locate() in src
-	if (!M)
-		M = new(src, power, direction)
-	M.maptext = "[power] vs [src.get_explosion_resistance()]"
-	if(power > 10)
-		M.color = "#cccc00"
-	if(power > 20)
-		M.color = "#ffcc00"
-*/
-	var/spread_power = power - src.get_explosion_resistance() //This is the amount of power that will be spread to the tile in the direction of the blast
-=======
 		x = turf.x
 		y = turf.y
 		z = turf.z
@@ -159,7 +84,6 @@ GLOBAL_VAR_AS(running_explosions, 0)
 		return
 	turfs[src] = power
 	var/spread_power = power - get_explosion_resistance()
->>>>>>> theirs
 	if (spread_power <= 0)
 		return
 	var/spread_dir = direction
@@ -227,10 +151,5 @@ GLOBAL_VAR_AS(running_explosions, 0)
 /obj/machinery/door/get_explosion_resistance()
 	if (!density)
 		return 0
-<<<<<<< ours
-	else
-		return ..()
-*/
-=======
 	return ..()
->>>>>>> theirs
+*/
