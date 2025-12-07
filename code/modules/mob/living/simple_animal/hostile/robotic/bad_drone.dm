@@ -29,8 +29,8 @@
 		new corpse (loc)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/rogue_drone/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/rogue_drone/Process_Spacemove(allow_movement)
+	return TRUE
 
 /datum/ai_holder/simple_animal/rogue_drone
 	speak_chance = 1

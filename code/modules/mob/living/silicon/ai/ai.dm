@@ -465,7 +465,7 @@ var/global/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
-	if (!C || stat == DEAD) //C.can_use())
+	if (!C || is_dead()) //C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -676,7 +676,7 @@ var/global/list/ai_verbs_default = list(
 	to_chat(usr, SPAN_INFO("Your hologram will now [hologram_follow ? "follow" : "no longer follow"] you."))
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0, feedback = 1)
-	if(stat == DEAD)
+	if(is_dead())
 		if(feedback) to_chat(src, SPAN_WARNING("You are dead!"))
 		return 1
 
@@ -718,7 +718,7 @@ var/global/list/ai_verbs_default = list(
 		selected_sprite = new default_ai_icon()
 
 	icon = selected_sprite.icon
-	if(stat == DEAD)
+	if(is_dead())
 		icon_state = selected_sprite.dead_icon
 		set_light(1, 0.7, selected_sprite.dead_light)
 	else if(!has_power())

@@ -37,11 +37,11 @@
 
 
 /// Determine if the mob is the supplied species by text name, species path, or species instance name
-/mob/proc/is_species(datum/species/S)
+/mob/proc/is_species(singleton/species/S)
 	return FALSE
 
 
-/mob/living/carbon/is_species(datum/species/S)
+/mob/living/carbon/is_species(singleton/species/S)
 	if (!S || !species) return FALSE
 	if (istext(S)) return species.name == S
 	if (ispath(S)) return species.name == initial(S.name)
@@ -308,7 +308,7 @@ var/global/list/organ_rel_size = list(
 			aiEyeFlag = 1
 
 		var/x
-		for(x=0; x<duration, x++)
+		for(x=0; x<duration; x++)
 			if(aiEyeFlag)
 				M.client.eye = locate(dd_range(1,oldeye.loc.x+rand(-strength,strength),world.maxx),dd_range(1,oldeye.loc.y+rand(-strength,strength),world.maxy),oldeye.loc.z)
 			else
@@ -478,7 +478,7 @@ var/global/list/intents = list(I_HELP,I_DISARM,I_GRAB,I_HURT)
 
 #define SAFE_PERP -50
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
-	if(stat == DEAD)
+	if(is_dead())
 		return SAFE_PERP
 
 	return 0

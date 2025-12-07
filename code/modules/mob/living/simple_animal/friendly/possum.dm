@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/passive/opossum/on_update_icon()
 
-	if(stat == DEAD || (resting && is_angry))
+	if(is_dead() || (resting && is_angry))
 		icon_state = icon_dead
 	else if(resting || stat == UNCONSCIOUS)
 		icon_state = "[icon_living]_sleep"

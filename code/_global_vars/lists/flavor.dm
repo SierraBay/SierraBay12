@@ -1,8 +1,8 @@
 // Noises made when hit while typing.
-GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
+GLOBAL_LIST_AS(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
 
 // Some scary sounds.
-GLOBAL_LIST_INIT(scarySounds, list(
+GLOBAL_LIST_AS(scarySounds, list(
 	'sound/weapons/thudswoosh.ogg',
 	'sound/weapons/Taser.ogg',
 	'sound/weapons/armbomb.ogg',
@@ -25,14 +25,14 @@ GLOBAL_LIST_INIT(scarySounds, list(
 // Reference list for disposal sort junctions. Filled up by sorting junction's New()
 GLOBAL_LIST_EMPTY(tagger_locations)
 
-GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
+GLOBAL_LIST_AS(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
 	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
 	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
 	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
 	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
 	"Automated", "Experimental", "Augmented"))
 
-GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
+GLOBAL_LIST_AS(station_names, list("", "Stanford", "Dorf", "Alium",
 	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
 	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
 	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
 	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
 	"Robot", "Hats", "Pizza"))
 
-GLOBAL_LIST_INIT(station_suffixes, list("Station", "Frontier",
+GLOBAL_LIST_AS(station_suffixes, list("Station", "Frontier",
 	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
 	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
 	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
@@ -57,18 +57,18 @@ GLOBAL_LIST_INIT(station_suffixes, list("Station", "Frontier",
 	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
 	"Airstrip"))
 
-GLOBAL_LIST_INIT(greek_letters, list("Alpha", "Beta", "Gamma", "Delta",
+GLOBAL_LIST_AS(greek_letters, list("Alpha", "Beta", "Gamma", "Delta",
 	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
 	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
 	"Chi", "Psi", "Omega"))
 
-GLOBAL_LIST_INIT(phonetic_alphabet, list("Alpha", "Bravo", "Charlie",
+GLOBAL_LIST_AS(phonetic_alphabet, list("Alpha", "Bravo", "Charlie",
 	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
 	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
 	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
 	"Yankee", "Zulu"))
 
-GLOBAL_LIST_INIT(numbers_as_words, list("One", "Two", "Three", "Four",
+GLOBAL_LIST_AS(numbers_as_words, list("One", "Two", "Three", "Four",
 	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
 	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
 	"Eighteen", "Nineteen"))

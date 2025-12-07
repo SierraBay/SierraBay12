@@ -85,7 +85,7 @@
 			implant_jet = TRUE
 
 	if(implant_jet || (thrust && thrust.on && (allow_movement || thrust.stabilization_on) && thrust.allow_thrust(0.01, src)))
-		return 1
+		return TRUE
 
 	. = ..()
 

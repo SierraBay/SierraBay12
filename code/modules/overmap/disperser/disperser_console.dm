@@ -36,9 +36,16 @@
 	/// Round time where the next shot can start from
 	var/next_shot = 0
 	/// Time to wait between safe shots in deciseconds
-	var/const/coolinterval = 2 MINUTES
 
-	var/const/cal_count = 4
+	// [SIERRA-EDIT] - IMPULSE_CANNON
+	// var/const/coolinterval = 2 MINUTES
+
+	// var/const/cal_count = 4
+
+	var/coolinterval = 2 MINUTES
+
+	var/cal_count = 4
+	// [SIERRA-EDIT]
 
 /obj/machinery/computer/ship/disperser/Initialize()
 	. = ..()
@@ -197,7 +204,7 @@
 		return TOPIC_HANDLED
 
 	if (href_list["choose"])
-		overmapdir = sanitize_integer(text2num(href_list["choose"]), 0, 9, 0)
+		overmapdir = sanitize_integer(text2num(href_list["choose"]), 0, 10, 0)
 		reset_calibration()
 
 	if (href_list["setx"])

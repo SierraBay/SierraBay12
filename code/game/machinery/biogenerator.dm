@@ -32,6 +32,8 @@
 			/obj/item/reagent_containers/food/drinks/small_milk = 30,
 			/obj/item/reagent_containers/food/drinks/milk = 50,
 			/obj/item/reagent_containers/food/snacks/meat/syntiflesh = 50,
+			/obj/item/reagent_containers/food/snacks/meat/chicken/printed = 60,
+			/obj/item/reagent_containers/food/snacks/cutlet/ham/printed = 40,
 			/obj/item/storage/fancy/egg_box/full = 300),
 		"Nutrients" = list(
 			/obj/item/reagent_containers/glass/bottle/eznutrient = 60,
@@ -47,6 +49,7 @@
 			/obj/item/clothing/shoes/workboots = 400,
 			/obj/item/clothing/shoes/leather = 400,
 			/obj/item/clothing/shoes/dress = 400,
+			/obj/item/clothing/head/cowboy_hat = 400,
 			/obj/item/clothing/suit/leathercoat = 500,
 			/obj/item/clothing/suit/storage/toggle/brown_jacket = 500,
 			/obj/item/clothing/suit/storage/toggle/bomber = 500,

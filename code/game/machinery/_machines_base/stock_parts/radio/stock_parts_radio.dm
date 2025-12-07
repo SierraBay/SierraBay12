@@ -19,6 +19,10 @@
 	if(!id_tag)
 		id_tag = machine.id_tag
 
+/obj/item/stock_parts/radio/proc/set_id_tag(new_tag)
+	id_tag = new_tag
+	set_frequency(frequency, filter)
+
 /obj/item/stock_parts/radio/proc/set_frequency(new_frequency, new_filter)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency

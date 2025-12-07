@@ -94,14 +94,16 @@ var/global/solar_gen_rate = 1500
 		sunfrac = 0
 		return
 
+	var/sun_angle = get_solar_angle(z)
+
 	//find the smaller angle between the direction the panel is facing and the direction of the sun (the sign is not important here)
-	var/p_angle = min(abs(adir - GLOB.sun_angle), 360 - abs(adir - GLOB.sun_angle))
+	var/p_angle = min(abs(adir - sun_angle), 360 - abs(adir - sun_angle))
 
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
 		return
 
-	sunfrac = cos(p_angle) ** 2
+	sunfrac = (cos(p_angle) ** 2) - get_solar_distance_penalty(z)
 	//isn't the power received from the incoming light proportional to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
 /obj/machinery/power/solar/Process()
@@ -342,7 +344,7 @@ var/global/solar_gen_rate = 1500
 				cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 		if(2) // auto-tracking
 			if(connected_tracker)
-				connected_tracker.set_angle(GLOB.sun_angle)
+				connected_tracker.set_angle(get_solar_angle(z))
 
 	set_panels(cdir)
 	updateDialog()
@@ -372,28 +374,28 @@ var/global/solar_gen_rate = 1500
 	return TRUE
 
 /obj/machinery/power/solar_control/interact(mob/user)
-
+	var/sun_angle = get_solar_angle(z)
 	var/t = "<B>[SPAN_CLASS("highlight", "Generated power")]</B> : [round(lastgen)] W<BR>"
-	t += "<B>[SPAN_CLASS("highlight", "Star Orientation")]</B>: [GLOB.sun_angle]&deg ([angle2text(GLOB.sun_angle)])<BR>"
+	t += "<B>[SPAN_CLASS("highlight", "Star Orientation")]</B>: [sun_angle]&deg ([angle2text(sun_angle)])<BR>"
 	t += "<B>[SPAN_CLASS("highlight", "Array Orientation")]</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR>"
 	t += "<B>[SPAN_CLASS("highlight", "Tracking:")]</B><div class='statusDisplay'>"
 	switch(track)
 		if(0)
-			t += "[SPAN_CLASS("linkOn", "Off")] <A href='?src=\ref[src];track=1'>Timed</A> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "[SPAN_CLASS("linkOn", "Off")] <a href='byond://?src=\ref[src];track=1'>Timed</A> <a href='byond://?src=\ref[src];track=2'>Auto</A><BR>"
 		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> [SPAN_CLASS("linkOn", "Timed")] <A href='?src=\ref[src];track=2'>Auto</A><BR>"
+			t += "<a href='byond://?src=\ref[src];track=0'>Off</A> [SPAN_CLASS("linkOn", "Timed")] <a href='byond://?src=\ref[src];track=2'>Auto</A><BR>"
 		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> [SPAN_CLASS("linkOn", "Auto")]<BR>"
+			t += "<a href='byond://?src=\ref[src];track=0'>Off</A> <a href='byond://?src=\ref[src];track=1'>Timed</A> [SPAN_CLASS("linkOn", "Auto")]<BR>"
 
 	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",1,30,180)]</div><BR>"
 
 	t += "<B>[SPAN_CLASS("highlight", "Connected devices:")]</B><div class='statusDisplay'>"
 
-	t += "<A href='?src=\ref[src];search_connected=1'>Search for devices</A><BR>"
+	t += "<a href='byond://?src=\ref[src];search_connected=1'>Search for devices</A><BR>"
 	t += "Solar panels : [length(connected_panels)] connected<BR>"
 	t += "Solar tracker : [connected_tracker ? SPAN_GOOD("Found") : SPAN_BAD("Not found")]</div><BR>"
 
-	t += "<A href='?src=\ref[src];close=1'>Close</A>"
+	t += "<a href='byond://?src=\ref[src];close=1'>Close</A>"
 
 	var/datum/browser/popup = new(user, "solar", name)
 	popup.set_content(t)
@@ -443,7 +445,7 @@ var/global/solar_gen_rate = 1500
 		track = text2num(href_list["track"])
 		if(track == 2)
 			if(connected_tracker)
-				connected_tracker.set_angle(GLOB.sun_angle)
+				set_to_track_sun()
 				set_panels(cdir)
 		else if (track == 1) //begin manual tracking
 			src.targetdir = src.cdir
@@ -453,7 +455,7 @@ var/global/solar_gen_rate = 1500
 	if(href_list["search_connected"])
 		src.search_for_connected()
 		if(connected_tracker && track == 2)
-			connected_tracker.set_angle(GLOB.sun_angle)
+			set_to_track_sun()
 		src.set_panels(cdir)
 
 	interact(usr)
@@ -466,6 +468,12 @@ var/global/solar_gen_rate = 1500
 		S.occlusion()//and
 		S.update_icon() //update it
 	update_icon()
+
+/obj/machinery/power/solar_control/proc/set_to_track_sun()
+	if (GLOB.using_map?.using_sun)
+		connected_tracker.set_angle(get_solar_angle(z))
+	else
+		connected_tracker.set_angle(GLOB.sun_angle)
 
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
@@ -487,7 +495,7 @@ var/global/solar_gen_rate = 1500
 /obj/machinery/power/solar_control/autostart/Initialize()
 	search_for_connected()
 	if(connected_tracker && track == 2)
-		connected_tracker.set_angle(GLOB.sun_angle)
+		set_to_track_sun()
 		set_panels(cdir)
 	. = ..()
 
@@ -500,7 +508,7 @@ var/global/solar_gen_rate = 1500
 	info = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or phoron! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
 
 /proc/rate_control(S, V, C, Min=1, Max=5, Limit=null) //How not to name vars
-	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
+	var/href = "<a href='byond://?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
 	return rate

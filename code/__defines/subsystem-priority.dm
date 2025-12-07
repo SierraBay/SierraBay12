@@ -56,6 +56,7 @@
 #define SS_PRIORITY_CHAR_SETUP    25   // Writes player preferences to savefiles.
 #define SS_PRIORITY_GARBAGE       20   // Garbage collection.
 #define SS_PRIORITY_INACTIVITY    10  // Idle kicking.
+#define SS_PRIORITY_WEATHER       10   // Weather processing.
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)

@@ -44,3 +44,19 @@
 			AddOverlays(overlay_image(icon, "[base_icon_state]_locked", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
 		else
 			AddOverlays(overlay_image(icon, "[base_icon_state]_ready", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+
+/obj/machinery/suit_storage_unit/toggle_lock(mob/user)
+	if(!is_powered())
+		to_chat(user, SPAN_NOTICE("The unit is offline."))
+		return
+	if(!allowed(user))
+		FEEDBACK_ACCESS_DENIED(user, src)
+		return
+	if(occupant && safetieson)
+		to_chat(user, SPAN_WARNING("The Unit's safety protocols disallow locking when a biological form is detected inside its compartments."))
+		return
+	if(isopen)
+		return
+	islocked = !islocked
+	playsound(src, 'sound/machines/suitstorage_lockdoor.ogg', 50, 0)
+	update_icon()

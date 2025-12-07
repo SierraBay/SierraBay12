@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(rpd_pipe_selection, list(
+GLOBAL_LIST_AS(rpd_pipe_selection, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),
@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(rpd_pipe_selection, list(
 		new /datum/pipe/pipe_dispenser/scrubber/cap()),
 	))
 
-GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
+GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),
@@ -56,10 +56,18 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 		new /datum/pipe/pipe_dispenser/fuel/up(),
 		new /datum/pipe/pipe_dispenser/fuel/down()
 		),
+	/*SIERRA-EDIT старый список девайсов
 	new /datum/pipe/pipe_dispenser/device() = list(
 		new /datum/pipe/pipe_dispenser/device/universaladapter(),
 		new /datum/pipe/pipe_dispenser/device/gaspump(),
 		new /datum/pipe/pipe_dispenser/device/manualvalve()
+		)
+	*/
+	new /datum/pipe/pipe_dispenser/device() = list(
+		new /datum/pipe/pipe_dispenser/device/unaryvent(),
+		new /datum/pipe/pipe_dispenser/device/scrubber(),
+		new /datum/pipe/pipe_dispenser/device/universaladapter(),
+		new /datum/pipe/pipe_dispenser/device/connector()
 		)
 	))
 
@@ -97,12 +105,12 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 	. = list()
 	. += "<table>"
 	if(color_options)
-		. += "<tr><td>Color</td><td><a href='?src=\ref[src];color=\ref[src]'>[SPAN_COLOR(pipe_color, pipe_color)]</a></td></tr>"
+		. += "<tr><td>Color</td><td><a href='byond://?src=\ref[src];color=\ref[src]'>[SPAN_COLOR(pipe_color, pipe_color)]</a></td></tr>"
 	for(var/category in pipe_categories)
 		var/datum/pipe/cat = category
 		. += "<tr><td>[SPAN_COLOR("#517087", "<strong>[initial(cat.category)]</strong>")]</td></tr>"
 		for(var/datum/pipe/pipe in pipe_categories[category])
-			. += "<tr><td>[pipe.name]</td><td>[P.type == pipe.type ? SPAN_CLASS("linkOn", "Select") : "<a href='?src=\ref[src];select=\ref[pipe]'>Select</a>"]</td></tr>"
+			. += "<tr><td>[pipe.name]</td><td>[P.type == pipe.type ? SPAN_CLASS("linkOn", "Select") : "<a href='byond://?src=\ref[src];select=\ref[pipe]'>Select</a>"]</td></tr>"
 	.+= "</table>"
 	. = JOINTEXT(.)
 

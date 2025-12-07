@@ -68,10 +68,6 @@
 		return S.owner
 	return null
 
-
-
-//[SIERRA-REMOVE] - Mechs-by-Shegar - Всё это тут не надо
-/*
 /obj/machinery/sleeper/mounted/go_in()
 	..()
 	var/obj/item/mech_equipment/sleeper/S = loc
@@ -180,5 +176,3 @@
 
 #undef MEDIGEL_SALVE
 #undef MEDIGEL_SCAN
-*/
-//[SIERRA-REMOVE]

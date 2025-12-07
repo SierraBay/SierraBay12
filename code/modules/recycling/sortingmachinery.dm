@@ -358,6 +358,23 @@
 /obj/item/smallDelivery/attack_self(mob/user as mob)
 	to_chat(user, "You need a sharp tool to unwrap \the [src].")
 
+/// Allows GAS in hunting mode (and others with can_shred) to open the packaging wrap with their bare arms.
+/obj/item/smallDelivery/attack_self(mob/living/user)
+	if (istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/shredder = user
+		var/datum/pronouns/pronouns = choose_from_pronouns()
+		if (!shredder.species.can_shred(shredder, TRUE))
+			return ..()
+		user.visible_message(
+			SPAN_WARNING("\The [user] shreds \the [src] open with [pronouns.his] scythe-like arms!"),
+			SPAN_NOTICE("You shred \the [src] open with your scythe-like arms!")
+		)
+		playsound(loc, 'sound/weapons/slash.ogg', 100, TRUE)
+		unwrap(user)
+		return TRUE
+
+	return ..()
+
 /obj/item/smallDelivery/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	if (is_sharp(tool))
 		user.visible_message(
@@ -478,13 +495,14 @@
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 	for(var/i = 1 to length(GLOB.tagger_locations))
-		dat += "<td><a href='?src=\ref[src];nextTag=[GLOB.tagger_locations[i]]'>[GLOB.tagger_locations[i]]</a></td>"
+		var/encoded_tag = html_encode(GLOB.tagger_locations[i])
+		dat += "<td><a href='byond://?src=\ref[src];nextTag=[encoded_tag]'>[encoded_tag]</a></td>"
 
 		if (i%4==0)
 			dat += "</tr><tr>"
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
-	dat += "<br><a href='?src=\ref[src];nextTag=CUSTOM'>Enter custom location.</a>"
+	dat += "<br><a href='byond://?src=\ref[src];nextTag=CUSTOM'>Enter custom location.</a>"
 	show_browser(user, dat, "window=destTagScreen;size=450x375")
 	onclose(user, "destTagScreen")
 
@@ -492,8 +510,9 @@
 	openwindow(user)
 
 /obj/item/device/destTagger/OnTopic(user, href_list, state)
-	if(href_list["nextTag"] && (href_list["nextTag"] in GLOB.tagger_locations))
-		src.currTag = href_list["nextTag"]
+	var/decoded_tag = html_decode(href_list["nextTag"])
+	if(decoded_tag && (decoded_tag in GLOB.tagger_locations))
+		src.currTag = decoded_tag
 		to_chat(user, SPAN_NOTICE("You set [src] to <b>[src.currTag]</b>."))
 		playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		. = TOPIC_REFRESH

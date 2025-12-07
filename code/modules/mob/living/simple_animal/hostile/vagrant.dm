@@ -66,8 +66,8 @@
 			if(V.carried && length(V.gripping.virus2) == 0)
 				infect_virus2(V.gripping, V.carried, 1)
 			//[/SIERRA-ADD] VIRUSOLOGY
-/mob/living/simple_animal/hostile/vagrant/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/vagrant/Process_Spacemove(allow_movement)
+	return TRUE
 
 /mob/living/simple_animal/hostile/vagrant/bullet_act(obj/item/projectile/Proj)
 	if (status_flags & GODMODE)

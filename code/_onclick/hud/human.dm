@@ -225,7 +225,7 @@
 		hud_elements |= mymob.bodytemp
 
 	if(target.isSynthetic())
-		target.cells = new /obj/screen()
+		target.cells = new /obj/screen/cell()
 		target.cells.icon = 'icons/mob/screen1_robot.dmi'
 		target.cells.icon_state = "charge-empty"
 		target.cells.SetName("cell")

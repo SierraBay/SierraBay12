@@ -1,4 +1,4 @@
-/datum/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
+/singleton/species/proc/hug(mob/living/carbon/human/H, mob/living/target)
 
 	var/t_him = "them"
 	var/obj/item/organ/external/affecting

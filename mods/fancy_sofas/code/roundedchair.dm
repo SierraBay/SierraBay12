@@ -48,7 +48,7 @@
 	time = 10
 
 /datum/stack_recipe/furniture/chair/rounded/display_name()
-	return modifiers ? jointext(modifiers + ..(), " ") : ..()
+	return modifiers ? jointext(..(), " ") : ..()
 
 /datum/stack_recipe/furniture/chair/rounded
 	title = "rounded chair"
@@ -70,3 +70,12 @@ ROUNDEDCHAIR(green)
 ROUNDEDCHAIR(yellow)
 ROUNDEDCHAIR(light)
 #undef ROUNDEDCHAIR
+
+/material/generate_recipes()
+	.=..()
+	if(integrity >= 50 && hardness >= MATERIAL_FLEXIBLE + 10)
+		.=..()
+		. += new/datum/stack_recipe_list("padded [display_name] rounded chairs", create_recipe_list(/datum/stack_recipe/furniture/chair/rounded))
+		. += new/datum/stack_recipe_list("padded [display_name] right sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/r))
+		. += new/datum/stack_recipe_list("padded [display_name] middle sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/m))
+		. += new/datum/stack_recipe_list("padded [display_name] left sofas", create_recipe_list(/datum/stack_recipe/furniture/sofa/l))

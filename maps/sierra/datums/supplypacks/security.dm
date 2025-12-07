@@ -20,20 +20,20 @@
 	containername = "NanoTrasen light armor crate"
 
 /singleton/hierarchy/supply_pack/security/armory
-	name = "Weapons - Ballistic sidearms"
+	name = "Weapons - NT Mk58 sidearms"
 	containertype = /obj/structure/closet/crate/secure/weapon
 	contains = list(/obj/item/gun/projectile/pistol/sec = 4)
 	cost = 60
 	containername = "ballistic sidearms crate"
 
 /singleton/hierarchy/supply_pack/security/armory/laser
-	name = "Weapons - Laser carbines"
+	name = "Weapons - G40E laser carbines"
 	contains = list(/obj/item/gun/energy/laser/secure = 4)
 	cost = 60
 	containername = "laser carbines crate"
 
 /singleton/hierarchy/supply_pack/security/armory/laser/shady
-	name = "Weapons - Laser carbines (For disposal)"
+	name = "Weapons - G40E laser carbines (For disposal)"
 	contains = list(/obj/item/gun/energy/laser = 4)
 	cost = 80
 	contraband = 1
@@ -66,13 +66,77 @@
 
 */
 
+/singleton/hierarchy/supply_pack/security/armory/c20a
+	name = "Weapons - C20A carabines"
+	contains = list(/obj/item/gun/projectile/automatic/sec_smg/c20a/empty = 2)
+	cost = 40
+	containertype = /obj/structure/closet/crate/secure/weapon
+	containername = "\improper Ballistic PDW crate"
+	security_level = SUPPLY_SECURITY_ELEVATED
+
+/singleton/hierarchy/supply_pack/ammunition/p7_mag_carbine
+	name = "Magazines - 7mm C20A carbine, 8x"
+	contains = list(
+		/obj/item/ammo_magazine/smg_nt/empty = 8
+	)
+	cost = 10
+	containername = "C20A carbine magazines"
+
+/singleton/hierarchy/supply_pack/ammunition/p7_ap
+	name = "Ammunition - 7mm pistol, armor piercing, 200x"
+	contains = list(
+		/obj/item/ammobox/pistol/small_ap = 2
+	)
+	cost = 40
+	containername = "7mm pistol ap rounds (WARNING: LIVE AMMUNITION)"
+	access = access_hos
+	security_level = SUPPLY_SECURITY_HIGH
+
 /singleton/hierarchy/supply_pack/security/armory/pdw
-	name = "Weapons - Ballistic NT41"
-	contains = list(/obj/item/gun/projectile/automatic/nt41 = 2)
+	name = "Weapons - NT41 SMGs"
+	contains = list(/obj/item/gun/projectile/automatic/nt41/empty  = 2)
 	cost = 120
 	containername = "\improper Ballistic PDW crate"
 	security_level = SUPPLY_SECURITY_HIGH
 
+/singleton/hierarchy/supply_pack/ammunition/p28_mag
+	name = "Magazines - 5.7x28mm NT41, 8x"
+	contains = list(
+		/obj/item/ammo_magazine/n10mm/empty = 8
+	)
+	cost = 10
+	containername = "NT41 SMG magazines"
+
+/singleton/hierarchy/supply_pack/ammunition/p28_lethal
+	name = "Ammunition - 5.7x28mm smg lethal, 100x"
+	contains = list(
+		/obj/item/ammobox/nt41 = 1
+	)
+	cost = 20
+	containername = "5.7x28mm smg lethal rounds (WARNING: LIVE AMMUNITION)"
+	access = access_hos
+	security_level = SUPPLY_SECURITY_HIGH
+
+/singleton/hierarchy/supply_pack/ammunition/sg12_manstopper_shell
+	name = "Ammunition - 12g shotgun, manstopper shells, 32x"
+	contains = list(
+		/obj/item/ammobox/shotgun/manstopper = 1
+	)
+	cost = 20
+	containername = "12g shotgun manstopper shells (WARNING: LIVE AMMUNITION)"
+	access = access_hos
+	security_level = SUPPLY_SECURITY_ELEVATED
+
+/singleton/hierarchy/supply_pack/ammunition/sg12_dragon_shell
+	name = "Ammunition - 12g shotgun, dragon's breath shells, 32x"
+	contains = list(
+		/obj/item/ammobox/shotgun/dragon = 1
+	)
+	cost = 20
+	contraband = 1
+	containername = "12g shotgun dragon's breath shells (WARNING: LIVE AMMUNITION)"
+	access = access_hos
+	security_level = null
 
 /singleton/hierarchy/supply_pack/security/holster
 	name = "Misc - Holster crate"
@@ -107,23 +171,6 @@
  * OVERRIDES
  * =========
  */
-
-/singleton/hierarchy/supply_pack/security/pistolammorubber
-	name = "Ammunition - pistol rubber"
-	contains = list(/obj/item/ammo_magazine/pistol/double/rubber = 4)
-	cost = 20
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "pistol rubber ammunition crate"
-	access = access_security
-
-/singleton/hierarchy/supply_pack/security/pistolammo
-	name = "Ammunition - pistol magazines"
-	contains = list(/obj/item/ammo_magazine/pistol = 4)
-	cost = 30
-	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "pistol ammunition crate"
-	access = access_security
-	security_level = SUPPLY_SECURITY_ELEVATED
 
 /singleton/hierarchy/supply_pack/security/tacticalarmor
 	name = "Armor - Tactical"

@@ -13,13 +13,13 @@
 	health_min_damage = 10
 
 	/// Indicates whether the drive should show effects.
-	var/const/STATE_BROKEN = FLAG(0)
+	var/const/STATE_BROKEN = FLAG_01
 
 	/// Indicates whether the drive should use the unstable core effect.
-	var/const/STATE_UNSTABLE = FLAG(1)
+	var/const/STATE_UNSTABLE = FLAG_02
 
 	/// A field of STATE_* flags related to the drive.
-	var/state = EMPTY_BITFIELD
+	var/state = FLAGS_OFF
 
 	/// The token for the drive's idle loop
 	var/drive_sound
@@ -35,6 +35,8 @@
 	var/interlude_min_time = 30 SECONDS
 	var/interlude_max_time = 3 MINUTES
 
+	var/next_zap_time = 0
+
 
 /obj/machinery/bluespacedrive/Destroy()
 	QDEL_NULL(drive_sound)
@@ -44,11 +46,10 @@
 
 /obj/machinery/bluespacedrive/Initialize()
 	. = ..()
-	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 7)
+	drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 10)
 	AddParticles(/particles/torus/bluespace)
 	set_light(15, 1, COLOR_CYAN)
 	update_icon()
-
 
 /obj/machinery/bluespacedrive/on_update_icon()
 	ClearOverlays()
@@ -179,7 +180,6 @@
 	///List of mobs that can be swapped around when the pulse hits
 	var/list/mob/living/mobs_to_switch = list()
 	var/obj/machinery/bluespacedrive/parent
-	var/interlude_teleport_chance = 0
 	var/affect_chance = 0
 
 /datum/bubble_effect/bluespace_pulse/New(center_x, center_y, z, initial_radius, delta, parent)
@@ -234,7 +234,13 @@
 
 		//swap places with another mob
 		for (var/mob/living/mob as anything in mobs_to_switch)
+			var/swap_chance = affect_chance
 			if (!(mob.z in zlevels))
+				continue
+			if (istype(mob.loc, /turf/space) || istype(being.loc, /turf/space))
+				swap_chance = 10 //lots of mobs in space can cause the entire ship to get spaced, so lower the chance
+
+			if (prob(swap_chance))
 				continue
 
 			if (mob != being)

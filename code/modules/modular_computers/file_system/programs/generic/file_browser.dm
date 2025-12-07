@@ -15,7 +15,7 @@
 	var/error
 	usage_flags = PROGRAM_ALL
 	category = PROG_UTIL
-
+/*
 /datum/computer_file/program/filemanager/Topic(href, href_list)
 	if(..())
 		return TOPIC_HANDLED
@@ -47,13 +47,25 @@
 			return
 	if(href_list["PRG_usbdeletefile"])
 		. = TOPIC_HANDLED
-		computer.delete_file(href_list["PRG_usbdeletefile"], computer.get_component(PART_DRIVE))
+		if(istype(computer.holder, /obj/machinery/computer/modular))
+			var/obj/machinery/computer/modular/modular_machine = computer.holder
+			computer.delete_file(href_list["PRG_usbdeletefile"], modular_machine.portable_drive)
+		else
+			computer.delete_file(href_list["PRG_usbdeletefile"], computer.get_component(PART_DRIVE))
 	if(href_list["PRG_copytousb"])
 		. = TOPIC_HANDLED
-		computer.copy_between_disks(href_list["PRG_copytousb"], computer.get_component(PART_HDD), computer.get_component(PART_DRIVE))
+		if(istype(computer.holder, /obj/machinery/computer/modular))
+			var/obj/machinery/computer/modular/modular_machine = computer.holder
+			computer.copy_between_disks(href_list["PRG_copytousb"], computer.get_component(PART_HDD), modular_machine.portable_drive)
+		else
+			computer.copy_between_disks(href_list["PRG_copytousb"], computer.get_component(PART_HDD), computer.get_component(PART_DRIVE))
 	if(href_list["PRG_copyfromusb"])
 		. = TOPIC_HANDLED
-		computer.copy_between_disks(href_list["PRG_copyfromusb"], computer.get_component(PART_DRIVE), computer.get_component(PART_HDD))
+		if(istype(computer.holder, /obj/machinery/computer/modular))
+			var/obj/machinery/computer/modular/modular_machine = computer.holder
+			computer.copy_between_disks(href_list["PRG_copyfromusb"], modular_machine.portable_drive, computer.get_component(PART_HDD))
+		else
+			computer.copy_between_disks(href_list["PRG_copyfromusb"], computer.get_component(PART_DRIVE), computer.get_component(PART_HDD))
 	if(href_list["PRG_closefile"])
 		. = TOPIC_HANDLED
 		open_file = null
@@ -105,7 +117,7 @@
 //[/SIERRA-EDIT]
 	if(.)
 		SSnano.update_uis(NM)
-
+*/
 /datum/nano_module/program/computer_filemanager
 	name = "NTOS File Manager"
 
@@ -149,7 +161,12 @@
 					"undeletable" = F.undeletable
 				)))
 			data["files"] = files
-			var/obj/item/stock_parts/computer/hard_drive/portable/RHDD = PRG.computer.get_component(PART_DRIVE)
+			var/obj/item/stock_parts/computer/hard_drive/portable/RHDD
+			if(PRG.computer.get_component(PART_DRIVE))
+				RHDD = PRG.computer.get_component(PART_DRIVE)
+			else if(istype(PRG.computer.holder, /obj/machinery/computer/modular))
+				var/obj/machinery/computer/modular/modular_machine = PRG.computer.holder
+				RHDD = modular_machine.portable_drive
 			if(RHDD)
 				data["usbconnected"] = TRUE
 				var/list/usbfiles[0]

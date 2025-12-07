@@ -59,7 +59,7 @@
 		trail.start()
 
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(allow_movement)
 	return TRUE
 
 
@@ -217,7 +217,7 @@
 		return ..()
 	var/list/targets = list()
 	for (var/mob/living/M in oview(D.hostile_range, D))
-		if (M.stat == DEAD)
+		if (M.is_dead())
 			continue
 		if (M.type == D.type)
 			continue

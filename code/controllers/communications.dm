@@ -149,6 +149,7 @@ var/global/const/AIRLOCK_FREQ      = 1305 // Used by airlocks and buttons contro
 var/global/const/SHUTTLE_AIR_FREQ  = 1331 // Used by shuttles and shuttle-related atmos systems.
 var/global/const/AIRLOCK_AIR_FREQ  = 1379 // Used by some airlocks for atmos devices.
 var/global/const/EXTERNAL_AIR_FREQ = 1380 // Used by some external airlocks.
+var/global/const/CONVEYOR_FREQ     = 1390 // Used by conveyor belts.
 
 var/global/list/radiochannels = list(
 	"Common"		= PUB_FREQ,
@@ -158,7 +159,7 @@ var/global/list/radiochannels = list(
 	"Medical"		= MED_FREQ,
 	"Engineering"	= ENG_FREQ,
 	"Security" 		= SEC_FREQ,
-	"Response Team" = ERT_FREQ,
+	"ERT"           = ERT_FREQ,
 	"Special Ops" 	= DTH_FREQ,
 	"Mercenary" 	= SYND_FREQ,
 	"Raider"		= RAID_FREQ,
@@ -285,7 +286,7 @@ var/global/const/RADIO_MULEBOT = "radio_mulebot"
 var/global/const/RADIO_MAGNETS = "radio_magnet"
 
 // These are exposed to players, by name.
-GLOBAL_LIST_INIT(all_selectable_radio_filters, list(
+GLOBAL_LIST_AS(all_selectable_radio_filters, list(
 	RADIO_DEFAULT,
 	RADIO_TO_AIRALARM,
 	RADIO_FROM_AIRALARM,

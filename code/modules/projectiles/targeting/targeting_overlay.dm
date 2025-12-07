@@ -159,14 +159,15 @@
 	var/mob/living/carbon/human/user = owner
 
 	if (istype(user))
+		var/datum/pronouns/pronouns = user.choose_from_pronouns()
 		if (user.zone_sel.selecting == BP_MOUTH)
 			admin_attacker_log(user, "is getting ready to suicide with \a [thing]")
 			if (user.check_has_mouth() && !(user.check_mouth_coverage()))
-				gunpointedself = SPAN_DANGER("\The [owner] puts the barrel of \the [thing] in their mouth, ready to pull the trigger...")
+				gunpointedself = SPAN_DANGER("\The [owner] puts the barrel of \the [thing] in [pronouns.his] mouth, ready to pull the trigger...")
 			else
-				gunpointedself = SPAN_DANGER("\The [owner] aims \the [thing] at themselves, ready to pull the trigger...")
+				gunpointedself = SPAN_DANGER("\The [owner] aims \the [thing] at [pronouns.self], ready to pull the trigger...")
 		else
-			gunpointedself = SPAN_DANGER("\The [owner] aims \the [thing] at themselves!")
+			gunpointedself = SPAN_DANGER("\The [owner] aims \the [thing] at [pronouns.self]!")
 
 	if (aiming_at)
 		if (!no_target_change)

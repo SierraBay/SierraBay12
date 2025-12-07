@@ -358,6 +358,14 @@
 		to_chat(src, "You [locked ? "un" : ""]lock your panel.")
 		locked = !locked
 
+/mob/living/silicon/robot/verb/get_radio_channels()
+	set name = "Show Radio Channels"
+	set category = "Silicon Commands"
+
+	var/obj/item/device/radio/borg/borg_radio = silicon_radio
+	if (istype(borg_radio))
+		to_chat(src, borg_radio.radio_desc)
+
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
 		return null
@@ -373,7 +381,7 @@
 	set category = "Silicon Commands"
 	set name = "Toggle Lights"
 
-	if(stat == DEAD)
+	if(is_dead())
 		return
 
 	lights_on = !lights_on
@@ -659,7 +667,7 @@
 		if (!opened)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance panel must be opened before you can access the radio.")
 			return TRUE
-		if (tool.resolve_attackby(src, user, click_params))
+		if (tool.resolve_attackby(silicon_radio, user, click_params))
 			return TRUE
 
 	// ID Card - Toggle panel lock

@@ -24,7 +24,7 @@
 /spell/targeted/shapeshift/cast(list/targets, mob/user)
 	for(var/m in targets)
 		var/mob/living/M = m
-		if(M.stat == DEAD)
+		if(M.is_dead())
 			to_chat(user, "[name] can only transform living targets.")
 			continue
 		if(M.buckled)

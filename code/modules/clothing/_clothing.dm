@@ -182,7 +182,7 @@
 		if (length(display))
 			. += " with [english_list(display)] attached"
 		if (length(visible) > length(display))
-			. += ". <a href='?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
+			. += ". <a href='byond://?src=\ref[src];list_ungabunga=1'>\[See accessories\]</a>"
 
 /obj/item/clothing/proc/get_visible_accessories()
 	var/list/result = list()
@@ -207,7 +207,7 @@
 	. = ..()
 	var/datum/extension/armor/ablative/armor_datum = get_extension(src, /datum/extension/armor/ablative)
 	if(istype(armor_datum) && LAZYLEN(armor_datum.get_visible_damage()))
-		to_chat(user, SPAN_WARNING("It has some <a href='?src=\ref[src];list_armor_damage=1'>damage</a>."))
+		to_chat(user, SPAN_WARNING("It has some <a href='byond://?src=\ref[src];list_armor_damage=1'>damage</a>."))
 
 /obj/item/clothing/CanUseTopic(user)
 	if(user in view(get_turf(src)))
@@ -222,7 +222,7 @@
 			var/list/display = list()
 			for (var/obj/item/clothing/accessory/A in visible)
 				if (!(A.accessory_flags & ACCESSORY_HIDDEN))
-					display += "[icon2html(A, user)] \a [A]<a href='?src=\ref[A];examine=1'>\[?\]</a>"
+					display += "[icon2html(A, user)] \a [A]<a href='byond://?src=\ref[A];examine=1'>\[?\]</a>"
 			to_chat(user, "Attached to \the [src] are [english_list(display)].")
 		return TOPIC_HANDLED
 	if(href_list["list_armor_damage"])
@@ -240,6 +240,16 @@
 	if (attempt_store_item(tool, user))
 		return TRUE
 	return ..()
+
+/obj/item/clothing/transfer_blood(mob/living/carbon/human/target, target_zone)
+	. = ..()
+	if (.)
+		update_clothing_icon()
+
+/obj/item/clothing/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 3, list/source_blood_DNA = list())
+	. = ..()
+	if (amount)
+		update_clothing_icon()
 
 ///////////////////////////////////////////////////////////////////////
 // Ears: headsets, earmuffs and tiny objects
@@ -453,10 +463,10 @@ BLIND     // can't see anything
 		species_restricted -= SPECIES_UNATHI
 	return
 
-/obj/item/clothing/gloves/mob_can_equip(mob/user)
+/obj/item/clothing/gloves/mob_can_equip(mob/user, slot)
 	var/mob/living/carbon/human/H = user
 
-	if(istype(H.gloves, /obj/item/clothing/ring))
+	if(istype(H.gloves, /obj/item/clothing/ring) && slot == slot_gloves)
 		ring = H.gloves
 		if(!ring.undergloves)
 			to_chat(user, "You are unable to wear \the [src] as \the [H.gloves] are in the way.")
@@ -515,6 +525,7 @@ BLIND     // can't see anything
 	var/head_light_range = 4
 	var/brightness_on
 	var/on = 0
+	var/protects_against_weather = FALSE
 
 
 /obj/item/clothing/head/equipped(mob/user, slot)
@@ -876,7 +887,7 @@ BLIND     // can't see anything
 	)
 	slot_flags = SLOT_OCLOTHING
 	item_flags = ITEM_FLAG_WASHER_ALLOWED
-	blood_overlay_type = "suit"
+	blood_overlay_type = "suitblood"
 	siemens_coefficient = 0.9
 	w_class = ITEM_SIZE_NORMAL
 
@@ -885,6 +896,7 @@ BLIND     // can't see anything
 		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_suit_unathi.dmi',
 		SPECIES_NABBER = 'icons/mob/species/nabber/onmob_suit_gas.dmi'
 	)
+	var/protects_against_weather = FALSE
 
 /obj/item/clothing/suit/update_clothing_icon()
 	if (ismob(src.loc))

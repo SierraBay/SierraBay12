@@ -7,7 +7,7 @@
 
 //// Zombie Globals
 
-GLOBAL_LIST_INIT(zombie_messages, list(
+GLOBAL_LIST_AS(zombie_messages, list(
 	"stage1" = list(
 		"You feel uncomfortably warm.",
 		"You feel rather feverish.",
@@ -36,17 +36,17 @@ GLOBAL_LIST_INIT(zombie_messages, list(
 ))
 
 
-GLOBAL_LIST_INIT(zombie_species, list(\
+GLOBAL_LIST_AS(zombie_species, list(\
 	SPECIES_HUMAN, SPECIES_UNATHI, SPECIES_VOX,\
 	SPECIES_SKRELL, SPECIES_PROMETHEAN, SPECIES_ALIEN, SPECIES_YEOSA, SPECIES_VATGROWN,\
 	SPECIES_SPACER, SPECIES_TRITONIAN, SPECIES_GRAVWORLDER, SPECIES_MULE, SPECIES_MONKEY,\
-	SPECIES_FARWA, SPECIES_NEAERA, SPECIES_STOK
-))
+	SPECIES_FARWA, SPECIES_NEAERA, SPECIES_STOK, SPECIES_TAJARA, SPECIES_RESOMI
+)) // [SIERRA-ADD] - VIRUSOLOGY / SPECIES_TAJARA, SPECIES_RESOMI
 
 
 //// Zombie Types
 
-/datum/species/zombie
+/singleton/species/zombie
 	name = "Zombie"
 	name_plural = "Zombies"
 	blood_color = "#411111"
@@ -74,7 +74,8 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 	move_intents = list(/singleton/move_intent/zombie)
 	var/heal_rate = 0.5 // Regen.
 
-/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
+
+/singleton/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	H.mutations |= MUTATION_CLUMSY
 	H.mutations |= MUTATION_FERAL
 	H.mutations |= mNobreath //Byond doesn't like adding them all in one OR statement :(
@@ -117,7 +118,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 
 	..()
 
-/datum/species/zombie/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/zombie/handle_environment_special(mob/living/carbon/human/H)
 	if (H.stat == CONSCIOUS)
 		if (prob(5))
 			playsound(H.loc, 'sound/hallucinations/far_noise.ogg', 15, 1)
@@ -152,14 +153,14 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 			if (vuln > 0.10 && prob(8))
 				M.reagents.add_reagent(/datum/reagent/zombie, 0.5) // Infect 'em
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H)
+/singleton/species/zombie/handle_death(mob/living/carbon/human/H)
 	playsound(H, 'sound/hallucinations/wail.ogg', 30, 1)
 	return TRUE
 
-/datum/species/zombie/get_blood_name()
+/singleton/species/zombie/get_blood_name()
 	return "decaying blood"
 
-/datum/species/zombie/has_fine_manipulation(mob/living/carbon/human/H)
+/singleton/species/zombie/has_fine_manipulation(mob/living/carbon/human/H)
 	return (MUTATION_CLUMSY in H.mutations) ? FALSE : TRUE
 
 /singleton/move_intent/zombie
@@ -326,7 +327,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 		to_chat(usr, SPAN_WARNING("They don't look very appetizing!"))
 		return FALSE
 	return TRUE
-
+/* [SIERRA-REMOVE] - VIRUSOLOGY
 /datum/unarmed_attack/bite/sharp/zombie/apply_effects(mob/living/carbon/human/user, mob/living/carbon/human/target, attack_damage, zone)
 	..()
 
@@ -340,7 +341,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 		if (prob(vuln * 100)) //Protective infection chance
 			if (prob(min(100 - target.get_blocked_ratio(zone, DAMAGE_BRUTE) * 100, 30))) //General infection chance
 				target.reagents.add_reagent(/datum/reagent/zombie, 1) //Infect 'em
-
+*/ //[SIERRA-REMOVE] - VIRUSOLOGY
 
 /datum/reagent/zombie
 	name = "Liquid Corruption"
@@ -468,7 +469,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 		mind.special_role = ANTAG_ZOMBIE
 
 	species.handle_pre_spawn(src)
-	species = all_species[SPECIES_ZOMBIE]
+	species = GLOB.species_by_name[SPECIES_ZOMBIE]
 	species.handle_post_spawn(src)
 
 	if(!(MUTATION_HUSK in mutations))
@@ -511,7 +512,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 	var/mob/living/carbon/human/target
 	var/list/victims = list()
 	for (var/mob/living/carbon/human/L in get_turf(src))
-		if (L != src && (L.lying || L.stat == DEAD))
+		if (L != src && (L.lying || L.is_dead()))
 			if (L.is_zombie())
 				to_chat(src, SPAN_WARNING("\The [L] isn't fresh anymore!"))
 				continue
@@ -535,7 +536,7 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 	if (!target)
 		to_chat(src, SPAN_WARNING("You aren't on top of a victim!"))
 		return
-	if (get_turf(src) != get_turf(target) || !(target.lying || target.stat == DEAD))
+	if (get_turf(src) != get_turf(target) || !(target.lying || target.is_dead()))
 		to_chat(src, SPAN_WARNING("You're no longer on top of \the [target]!"))
 		return
 
@@ -549,13 +550,13 @@ GLOBAL_LIST_INIT(zombie_species, list(\
 	if (do_after(src, 5 SECONDS, target, DO_DEFAULT | DO_USER_UNIQUE_ACT, INCAPACITATION_KNOCKOUT))
 		admin_attack_log(src, target, "Consumed their victim.", "Was consumed.", "consumed")
 
-		if (!target.lying && target.stat != DEAD) //Check victims are still prone
+		if (!target.lying && !target.is_dead()) //Check victims are still prone
 			return
 
 		target.reagents.add_reagent(/datum/reagent/zombie, 35) //Just in case they haven't been infected already
 		if (target.getBruteLoss() > target.maxHealth * 1.5)
 			to_chat(src,SPAN_WARNING("You've scraped \the [target] down to the bones already!."))
-			if (target.stat != DEAD)
+			if (!target.is_real_dead())
 				target.zombify()
 			else if (!(MUTATION_SKELETON in target.mutations))
 				if (istype(target, /mob/living/carbon/human/monkey))

@@ -47,7 +47,7 @@
 			user.show_message(SPAN_NOTICE("Analyzing Results for [M]:\n\t Overall Status: [M.stat > 1 ? "fully disabled" : "[M.health - M.getHalLoss()]% functional"]"))
 			user.show_message("\t Key: [SPAN_COLOR("#ffa500", "Electronics")]/[SPAN_COLOR("red", "Brute")]", 1)
 			user.show_message("\t Damage Specifics: [SPAN_COLOR("#ffa500", BU)] - [SPAN_COLOR("red", BR)]")
-			if(M.stat == DEAD)
+			if(M.is_dead())
 				user.show_message(SPAN_NOTICE("Time of Failure: [time2text(worldtime2stationtime(M.timeofdeath))]"))
 			var/mob/living/silicon/robot/H = M
 			var/list/damaged = H.get_damaged_components(1,1,1)

@@ -33,9 +33,9 @@
 	print_language = LANGUAGE_SPACER
 
 
-/obj/machinery/computer/ship/sensors/attempt_hook_up(obj/overmap/visitable/ship/sector)
+/obj/machinery/computer/ship/sensors/sync_linked()
 	if (!(. = ..()))
-		return
+		return .
 	find_sensors()
 
 
@@ -93,7 +93,7 @@
 		return
 	for (var/obj/machinery/shipsensors/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/shipsensors))
 		if (linked.check_ownership(S))
-			LAZYADD(S.linked_consoles, src)
+			LAZYDISTINCTADD(S.linked_consoles, src)
 			S.link_ship(linked)
 			sensor_ref = weakref(S)
 			break
@@ -139,21 +139,20 @@
 				potential_contacts |= nearby
 
 		for (var/obj/overmap/visitable/contact in sensors.objects_in_view)
-			if (contact in sensors.contact_datums)
-				potential_contacts |= contact
-			else
-				var/bearing_variability = round(300/sensors.sensor_strength, 5)
-				unknown_contacts.Add(list(list(
-					"name" = contact.unknown_id,
-					"bearing" = inaccurate_bearing(get_bearing(linked, contact), bearing_variability),
-					"variability" = bearing_variability,
-					"progress" = sensors.objects_in_view[contact]
-				)))
+			if(contact.scannable)
+				if (contact in sensors.contact_datums)
+					potential_contacts |= contact
+				else
+					var/bearing_variability = round(300/sensors.sensor_strength, 5)
+					unknown_contacts.Add(list(list(
+						"name" = contact.unknown_id,
+						"bearing" = inaccurate_bearing(get_bearing(linked, contact), bearing_variability),
+						"variability" = bearing_variability,
+						"progress" = sensors.objects_in_view[contact]
+					)))
 
 		for (var/obj/overmap/contact in potential_contacts)
 			if (linked == contact)
-				continue
-			if (!contact.scannable)
 				continue
 			known_contacts.Add(list(list(
 				"name" = contact.name,

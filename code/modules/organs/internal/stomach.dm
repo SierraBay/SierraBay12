@@ -15,8 +15,8 @@
 	QDEL_NULL(ingested)
 	. = ..()
 
-/obj/item/organ/internal/stomach/New()
-	..()
+/obj/item/organ/internal/stomach/Initialize()
+	. = ..()
 	var/ingested_atom = owner ? owner : src
 	ingested = new/datum/reagents/metabolism(240, ingested_atom, CHEM_INGEST)
 	if(species.gluttonous)

@@ -41,6 +41,17 @@
 	if(!R)
 		R = new /datum/pref_record_reader/null(PREF_SER_VERSION)
 	player_setup.load_preferences(R)
+	for(var/datum/preferences_slot/slot in slot_priority_list)
+		var/datum/pref_record_reader/SR = load_pref_record(get_slot_key(slot.slot))
+		if(!SR)
+			SR = new /datum/pref_record_reader/null(PREF_SER_VERSION)
+		player_setup.load_slot(SR, slot)
+
+/datum/preferences/proc/load_slot(datum/preferences_slot/slot)
+	var/datum/pref_record_reader/R = load_pref_record(get_slot_key(slot.slot))
+	if(!R)
+		R = new /datum/pref_record_reader/null(PREF_SER_VERSION)
+	player_setup.load_slot(R, slot)
 
 /datum/preferences/proc/save_preferences()
 	var/datum/pref_record_writer/json_list/W = new(PREF_SER_VERSION)

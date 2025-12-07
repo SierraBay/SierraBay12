@@ -346,6 +346,9 @@ var/global/list/additional_antag_types = list()
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0
 
+/// Get a list of players eligible for a specific antagonist role, prioritizing based on player preference.
+/// This returns a sorted list with all players with a particular antag role selected.
+/// The list of candidates are randomized, with High first, then Low afterwards.
 /datum/game_mode/proc/get_players_for_role(antag_id)
 	var/list/players = list()
 	var/list/candidates = list()
@@ -355,42 +358,37 @@ var/global/list/additional_antag_types = list()
 	if(!antag_template)
 		return candidates
 
-	// If this is being called post-roundstart then it doesn't care about ready status.
-	if(GAME_STATE == RUNLEVEL_GAME)
-		for(var/mob/player in GLOB.player_list)
-			if(!player.client)
+	// Assemble a list of active players without jobbans
+	for(var/mob/player in GLOB.player_list)
+		if(!player.client)
+			continue
+		// Only consider ready players during pre-round.
+		if(GAME_STATE == RUNLEVEL_SETUP)
+			var/mob/new_player/lobby_player = player
+			if (!istype(lobby_player))
 				continue
-			if(istype(player, /mob/new_player))
-				continue
-			if(!antag_id || (antag_id in player.client.prefs.be_special_role))
-				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
-				candidates += player.mind
-	else
-		// Assemble a list of active players without jobbans.
-		for(var/mob/new_player/player in GLOB.player_list)
-			if( player.client && player.ready )
+			if (lobby_player.ready)
 				players += player
+		// All players are candidates (depending on role filtering below) if the game has started.
+		else if(GAME_STATE == RUNLEVEL_GAME)
+			players += player
+	shuffle(players, TRUE) // Shuffle to randomize selection order
 
-		// Get a list of all the people who want to be the antagonist for this round
-		for(var/mob/new_player/player in players)
-			if(!antag_id || (antag_id in player.client.prefs.be_special_role))
-				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
-				candidates += player.mind
-				players -= player
+	// Initialize the candidate list with all of the people who have preference High for this role
+	for(var/mob/player in players)
+		if(antag_id in player.client.prefs.be_special_role)
+			log_debug("[player.key] has [antag_id] set to High, so we are adding them to candidates.")
+			candidates += player.mind
+			players -= player
 
-		// If we don't have enough antags, draft people who voted for the round.
-		if(length(candidates) < required_enemies)
-			for(var/mob/new_player/player in players)
-				if(!antag_id || ((antag_id in player.client.prefs.be_special_role) || (antag_id in player.client.prefs.may_be_special_role)))
-					log_debug("[player.key] has not selected never for this role, so we are drafting them.")
-					candidates += player.mind
-					players -= player
-					if(length(candidates) == required_enemies || length(players) == 0)
-						break
+	// Pull from people with preference Low
+	for(var/mob/player in players)
+		if(antag_id in player.client.prefs.may_be_special_role)
+			log_debug("[player.key] has [antag_id] set to Low, so we are adding them to candidates.")
+			candidates += player.mind
+			players -= player
 
-	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than required_enemies
-							//			required_enemies if the number of people with that role set to yes is less than recomended_enemies,
-							//			Less if there are not enough valid players in the game entirely to make required_enemies.
+	return candidates
 
 /datum/game_mode/proc/num_players()
 	. = 0

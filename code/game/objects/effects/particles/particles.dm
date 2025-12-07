@@ -24,7 +24,7 @@
 		QDEL_NULL(particles)
 	particles = null
 	if (/obj/particle_emitter in vis_contents)
-		vis_contents -= /obj/particle_emitter
+		remove_vis_contents(/obj/particle_emitter)
 
 
 /atom/movable/proc/ModParticles(target, min, max, type = "circle", random = 1)
@@ -83,6 +83,21 @@
 	gravity = list(0, 1)
 	friction = 0.1
 	drift = generator("vector", list(-0.2, -0.3), list(0.2, 0.3))
+	color = "white"
+
+/particles/cooking_smoke
+	name = "cooking smoke"
+	width = 256
+	height = 256
+	count = 250
+	spawning = 3
+	lifespan = 30
+	fade = 20
+	fadein = 5
+	velocity = generator("box", list(-12, 16, 0), list(12, -4, 50), NORMAL_RAND)
+	gravity = list(0.1, 1)
+	friction = 0.3
+	drift = generator("sphere", 0, 1.5)
 	color = "white"
 
 
@@ -382,4 +397,4 @@
 /obj/particle_emitter/mist/gas/Initialize(mapload, time, _color)
 	. = ..()
 	b = new b(null)
-	vis_contents += b
+	add_vis_contents(b)

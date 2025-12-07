@@ -64,7 +64,7 @@
 /atom/ex_act(severity, turf_breaker)
 	var/max_health = get_max_health()
 	if (max_health)
-		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : EMPTY_BITFIELD
+		var/damage_flags = turf_breaker ? DAMAGE_FLAG_TURF_BREAKER : FLAGS_OFF
 		var/damage = 0
 		var/basic_health = 525 // За основу возьмем здоровье укрепленной стальной стены, и весь дамаг от взрывов будем считать в соотношении от неё
 		switch (severity)

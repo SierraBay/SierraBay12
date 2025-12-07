@@ -7,7 +7,7 @@
 	status = ORGAN_ROBOTIC
 	desc = "The internal liquid cooling system consists of a weighty humming cylinder and a small ribbed block connected by flexible tubes through which clear liquid flows."
 	var/refrigerant_max = 90	// Максимальное количество охладителя
-	var/refrigerant_rate = 5	// Чем больше это значение, тем сильнее будет идти нагрев владельца.
+	var/refrigerant_rate = 0	// Чем больше это значение, тем сильнее будет идти нагрев владельца. / теперь складывается от протезов
 	var/durability_factor = 30	// Чем больше это значение, тем сильнее будет идти нагрев владельца при повреждениях
 	var/safety = 1
 	damage_reduction = 0.8
@@ -97,12 +97,16 @@
 
 /obj/item/organ/internal/cooling_system/proc/get_tempgain()
 	var/obj/item/organ/internal/posibrain/ipc/posibrain = owner.internal_organs_by_name[BP_POSIBRAIN]
+	var/total_cooling_efficiency = 0
 	if(!posibrain)
 		return 0
 	if(owner.bodytemperature > 550 CELSIUS)
 		return 0
-	if(refrigerant_rate > 0)
-		return refrigerant_rate
+	for(var/obj/item/organ/external/part in owner.organs)
+		total_cooling_efficiency += part.coolingefficiency
+
+	refrigerant_rate = total_cooling_efficiency
+	return refrigerant_rate
 
 /obj/item/organ/internal/cooling_system/proc/get_coolant_remaining()
 	if(status & ORGAN_DEAD)

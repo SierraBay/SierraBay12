@@ -25,7 +25,7 @@
 				),
 			SETUP_SPECIES_ONMOB = list(
 				SPECIES_HUMAN = 'icons/mob/onmob/onmob_head.dmi',
-				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/onmob_head_unathi.dmi',
+				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/species/onmob_head_unathi.dmi',
 				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
 				SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi',
 				SPECIES_SKRELL = 'icons/mob/species/skrell/onmob_head_skrell.dmi'
@@ -45,7 +45,7 @@
 				),
 			SETUP_SPECIES_ONMOB = list(
 				SPECIES_HUMAN = 'icons/mob/onmob/onmob_suit.dmi',
-				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/onmob_suit_unathi.dmi',
+				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/species/onmob_suit_unathi.dmi',
 				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
 				SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi',
 				SPECIES_SKRELL = 'icons/mob/onmob/onmob_suit.dmi'
@@ -135,9 +135,9 @@
 	helmet_setup[SETUP_NAME] = "pilot voidsuit helmet"
 	helmet_setup[SETUP_ICON_STATE] = "rig0_pilot"
 	helmet_setup[SETUP_ITEM_STATE] = "pilot_helm"
-	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/obj_head_unathi.dmi'
-	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/obj_head_skrell.dmi'
-	helmet_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/onmob_head_skrell.dmi'
+	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/species/obj_head_unathi.dmi'
+	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/obj_head_skrell.dmi'
+	helmet_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/onmob_head_skrell.dmi'
 
 	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
 	suit_setup[SETUP_NAME] = "pilot voidsuit"
@@ -146,9 +146,9 @@
 			slot_l_hand_str = "s_suit",
 			slot_r_hand_str = "s_suit"
 		)
-	suit_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/obj_suit_unathi.dmi'
-	suit_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/obj_suit_skrell.dmi'
-	suit_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/onmob_suit_skrell.dmi'
+	suit_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/species/obj_suit_unathi.dmi'
+	suit_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/obj_suit_skrell.dmi'
+	suit_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/onmob_suit_skrell.dmi'
 
 /singleton/item_modifier/space_suit/sol/sierra
 	name = "Standard, SCG"
@@ -168,9 +168,9 @@
 				),
 			SETUP_SPECIES_ONMOB = list(
 				SPECIES_HUMAN = 'maps/torch/icons/mob/onmob_head_solgov.dmi',
-				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/onmob_head_unathi.dmi',
+				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/species/onmob_head_unathi.dmi',
 				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
-				SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi',				
+				SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi',
 				SPECIES_SKRELL = 'maps/torch/icons/mob/skrell/onmob_head_solgov_skrell.dmi'
 				)
 		),
@@ -188,7 +188,7 @@
 				),
 			SETUP_SPECIES_ONMOB = list(
 				SPECIES_HUMAN = 'maps/torch/icons/mob/onmob_suit_solgov.dmi',
-				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/onmob_suit_unathi.dmi',
+				SPECIES_UNATHI = 'mods/hardsuits/icons/voidsuits/species/onmob_suit_unathi.dmi',
 				SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
 				SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi',
 				SPECIES_SKRELL = 'maps/torch/icons/mob/skrell/onmob_suit_solgov_skrell.dmi'
@@ -219,16 +219,151 @@
 	helmet_setup[SETUP_NAME] = "exploration voidsuit helmet"
 	helmet_setup[SETUP_ICON_STATE] = "rig0_explorer"
 	helmet_setup[SETUP_ITEM_STATE] = "explorer_helm"
-	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/obj_head_unathi.dmi'
-	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/obj_head_skrell.dmi'
-	helmet_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/onmob_head_skrell.dmi'
+	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/species/obj_head_unathi.dmi'
+	helmet_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/obj_head_skrell.dmi'
+	helmet_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/onmob_head_skrell.dmi'
 
 	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
 	suit_setup[SETUP_NAME] = "exploration voidsuit"
 	suit_setup[SETUP_ICON_STATE] = "rig_explorer"
-	suit_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/obj_suit_unathi.dmi'
-	suit_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/obj_suit_skrell.dmi'
-	suit_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/onmob_suit_skrell.dmi'
+	suit_setup[SETUP_SPECIES_OBJ][SPECIES_UNATHI] = 'mods/hardsuits/icons/voidsuits/species/obj_suit_unathi.dmi'
+	suit_setup[SETUP_SPECIES_OBJ][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/obj_suit_skrell.dmi'
+	suit_setup[SETUP_SPECIES_ONMOB][SPECIES_SKRELL] = 'mods/hardsuits/icons/voidsuits/species/onmob_suit_skrell.dmi'
+
+/singleton/item_modifier/space_suit/mining
+	name = "Mining"
+
+/singleton/item_modifier/space_suit/mining/Initialize()
+	. = ..()
+	var/helmet_setup = type_setups[/obj/item/clothing/head/helmet/space]
+	helmet_setup[SETUP_NAME] = "mining voidsuit helmet"
+	helmet_setup[SETUP_ICON_STATE] = "rig0-mining"
+	helmet_setup[SETUP_ITEM_STATE] = "mining_helm"
+	helmet_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/hats.dmi'
+	)
+	helmet_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi'
+	)
+
+	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
+	suit_setup[SETUP_NAME] = "mining voidsuit"
+	suit_setup[SETUP_ICON_STATE] = "rig-mining"
+	suit_setup[SETUP_ITEM_STATE_SLOTS] = list(
+			slot_l_hand_str = "mining_voidsuit",
+			slot_r_hand_str = "mining_voidsuit"
+		)
+	suit_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/suits.dmi'
+	)
+	suit_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi'
+	)
+
+
+
+/singleton/item_modifier/space_suit/salvage //нет спрайтов для таяр и резоми тут, подайте спрайтов христа ради ;-;
+	name = "Salvage"
+
+/*/singleton/item_modifier/space_suit/salvage/Initialize()
+	. = ..()
+	var/helmet_setup = type_setups[/obj/item/clothing/head/helmet/space]
+	helmet_setup[SETUP_NAME] = "salvage voidsuit helmet"
+	helmet_setup[SETUP_ICON_STATE] = "rig0-salvage"
+	helmet_setup[SETUP_ITEM_STATE] = "salvage_helm"
+	helmet_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/hats.dmi'
+	) //пути уже заранее заготовлены, если кто-то захочет докинуть спрайты сальваж войда ксеноте
+	helmet_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi'
+	)
+
+	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
+	suit_setup[SETUP_NAME] = "salvage voidsuit"
+	suit_setup[SETUP_ICON_STATE] = "rig-salvage"
+	suit_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/suits.dmi'
+	)
+	suit_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi'
+	)
+*/
+
+/singleton/item_modifier/space_suit/science
+	name = "Science"
+
+/singleton/item_modifier/space_suit/science/Initialize()
+	. = ..()
+	var/helmet_setup = type_setups[/obj/item/clothing/head/helmet/space]
+	helmet_setup[SETUP_NAME] = "excavation voidsuit helmet"
+	helmet_setup[SETUP_ICON_STATE] = "rig0-excavation"
+	helmet_setup[SETUP_ITEM_STATE] = "excavation-helm"
+	helmet_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/hats.dmi'
+	)
+	helmet_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi'
+	)
+
+	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
+	suit_setup[SETUP_NAME] = "excavation voidsuit"
+	suit_setup[SETUP_ICON_STATE] = "rig-excavation"
+	suit_setup[SETUP_ITEM_STATE_SLOTS] = list(
+			slot_l_hand_str = "excavation_voidsuit",
+			slot_r_hand_str = "excavation_voidsuit"
+		)
+	suit_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/suits.dmi'
+	)
+	suit_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi'
+	)
+
+/singleton/item_modifier/space_suit/mercenary
+	name = "Mercenary"
+
+/singleton/item_modifier/space_suit/mercenary/Initialize()
+	. = ..()
+	var/helmet_setup = type_setups[/obj/item/clothing/head/helmet/space]
+	helmet_setup[SETUP_NAME] = "blood-red voidsuit helmet"
+	helmet_setup[SETUP_ICON_STATE] = "rig0-syndie"
+	helmet_setup[SETUP_ITEM_STATE] = "syndie_helm"
+	helmet_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/hats.dmi'
+	)
+	helmet_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_head_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/helmet.dmi'
+	)
+
+	var/suit_setup = type_setups[/obj/item/clothing/suit/space/void]
+	suit_setup[SETUP_NAME] = "blood-red voidsuit"
+	suit_setup[SETUP_ICON_STATE] = "rig-syndie"
+	suit_setup[SETUP_ITEM_STATE_SLOTS] = list(
+			slot_l_hand_str = "syndie_voidsuit",
+			slot_r_hand_str = "syndie_voidsuit"
+		)
+	suit_setup[SETUP_SPECIES_OBJ] = list(
+		SPECIES_RESOMI = 'packs/infinity/icons/obj/clothing/species/resomi/obj_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/obj/suits.dmi'
+	)
+	suit_setup[SETUP_SPECIES_ONMOB] = list(
+		SPECIES_RESOMI = 'mods/resomi/icons/clothing/onmob_suit_resomi.dmi',
+		SPECIES_TAJARA = 'mods/tajara/icons/sprite_sheets/suit.dmi'
+	)
 
 #undef SETUP_NAME
 #undef SETUP_OBJ_SHEET

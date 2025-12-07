@@ -153,7 +153,7 @@
 	. = ..()
 	if(user.skill_check(SKILL_FORENSICS, SKILL_TRAINED))
 		. += 40
-		if(target.stat == DEAD)
+		if(target.is_dead())
 			. += 40
 
 //////////////////////////////////////////////////////////////////

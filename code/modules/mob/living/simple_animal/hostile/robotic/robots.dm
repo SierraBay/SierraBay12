@@ -37,8 +37,8 @@
 	maxHealth = 100
 	health = 100
 
-/mob/living/simple_animal/hostile/hivebot/ranged_damage/fleet_robot/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/hivebot/ranged_damage/fleet_robot/Process_Spacemove(allow_movement)
+	return TRUE
 
 /datum/ai_holder/simple_animal/ranged/kiting/threatening/deimos
 	speak_chance = 0
@@ -270,7 +270,7 @@
 		explosion(loc, explosion_radius, explosion_max_power)
 		qdel(src)
 
-/mob/living/simple_animal/hostile/fleet_heavy/Process_Spacemove()
+/mob/living/simple_animal/hostile/fleet_heavy/Process_Spacemove(allow_movement)
 	return TRUE
 
 /obj/aura/mobshield
@@ -284,7 +284,7 @@
 
 /obj/aura/mobshield/added_to(mob/living/target)
 	. = ..()
-	target.vis_contents += src
+	target.add_vis_contents(src)
 	flick("shield_raise", src) //Animation on add / spawn
 	set_dir() //the whole dir bit is for rendering, if you dont use this just remove this and the GLOB.dir_set_event stuff
 	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/aura/mobshield, update_dir))
@@ -295,7 +295,7 @@
 /obj/aura/mobshield/Destroy()
 	if(user)
 		GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/aura/mechshield, update_dir))
-		user.vis_contents -= src
+		user.remove_vis_contents(src)
 	. = ..()
 
 /obj/aura/mobshield/proc/block_chance(damage, pen, atom/source, mob/attacker)
@@ -322,7 +322,7 @@
 		return AURA_FALSE|AURA_CANCEL
 	visible_message(SPAN_DANGER("\The [src]'s exposed back dents and buckles!"))
 	playsound(user,'sound/items/Welder2.ogg',35,1)
-	return EMPTY_BITFIELD
+	return FLAGS_OFF
 
 /obj/aura/mobshield/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	. = ..()

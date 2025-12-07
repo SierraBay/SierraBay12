@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(recomended_holoplants_colors, list(COLOR_PALE_RED_GRAY,COLOR_BLUE_GRAY,COLOR_PALE_GREEN_GRAY,COLOR_PALE_YELLOW,COLOR_PALE_PINK,COLOR_BABY_BLUE))
+GLOBAL_LIST_AS(recomended_holoplants_colors, list(COLOR_PALE_RED_GRAY,COLOR_BLUE_GRAY,COLOR_PALE_GREEN_GRAY,COLOR_PALE_YELLOW,COLOR_PALE_PINK,COLOR_BABY_BLUE))
 /obj/structure/holoplant
 	name = "holograph"
 	desc = "An strange flower pot. It have something like holograph projector."

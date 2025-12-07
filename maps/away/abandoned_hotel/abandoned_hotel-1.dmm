@@ -242,7 +242,7 @@
 /area/abandoned_hotel/buffet)
 "cg" = (
 /obj/floor_decal/corner/black/diagonal,
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -282,7 +282,7 @@
 /area/abandoned_hotel/buffet)
 "cK" = (
 /obj/floor_decal/corner/black/diagonal,
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/kafel_full,
 /area/abandoned_hotel/kitchen)
 "cT" = (
@@ -3250,7 +3250,7 @@
 "Ru" = (
 /obj/floor_decal/corner/black/diagonal,
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/kafel_full,
 /area/abandoned_hotel/kitchen)
 "RA" = (

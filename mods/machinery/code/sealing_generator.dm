@@ -5,6 +5,7 @@
 	icon_state = "sealgen"
 
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
+	obj_flags = OBJ_FLAG_ROTATABLE
 
 	anchored = FALSE
 	density = TRUE

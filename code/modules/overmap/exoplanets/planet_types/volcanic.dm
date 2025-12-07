@@ -14,6 +14,7 @@
 	flora_diversity = 3
 	fauna_types = list(/mob/living/simple_animal/thinbug, /mob/living/simple_animal/hostile/retaliate/beast/shantak/lava, /mob/living/simple_animal/hostile/retaliate/beast/charbaby)
 	megafauna_types = list(/mob/living/simple_animal/hostile/drake)
+	banned_weather_conditions = list(/singleton/state/weather/snow)
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/get_atmosphere_color()
 	var/air_color = ..()
@@ -21,11 +22,12 @@
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/xtreme = H.heat_level_2 + (rand(1,3) *  H.heat_level_2)
 	var/generator/new_temp = generator("num", H.heat_level_2, xtreme, UNIFORM_RAND)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /obj/overmap/visitable/sector/exoplanet/volcanic/adapt_seed(datum/seed/S)
 	..()
@@ -125,6 +127,7 @@
 	LAZYREMOVE(victims, weakref(AM))
 
 /turf/simulated/floor/exoplanet/lava/Process()
+	. = ..()
 	if(locate(/obj/structure/catwalk) in src)
 		victims = null
 		return PROCESS_KILL
@@ -141,8 +144,8 @@
 	if(!LAZYLEN(victims))
 		return PROCESS_KILL
 
-/turf/simulated/floor/exoplanet/lava/get_footstep_sound(mob/caller)
-	return get_footstep(/singleton/footsteps/lava, caller)
+/turf/simulated/floor/exoplanet/lava/get_footstep_sound(mob/user)
+	return get_footstep(/singleton/footsteps/lava, user)
 
 /turf/simulated/mineral/volcanic
 	name = "volcanic rock"

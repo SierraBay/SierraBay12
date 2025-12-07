@@ -25,7 +25,7 @@
 /datum/gear/accessory/armband_hydro
 	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/assistant)
 
-/datum/gear/accessory/ntaward
+/datum/gear/award/ntaward
 	allowed_roles = NANOTRASEN_ROLES
 	allowed_branches = list(/datum/mil_branch/employee)
 
@@ -60,18 +60,27 @@
 	display_name = "work visa"
 	description = "A work visa issued by the Sol Central Government for the purpose of work."
 	path = /obj/item/paper/workvisa
+	slot = slot_in_backpack
 	cost = 0
 
 /datum/gear/travelvisa
 	display_name = "travel visa"
 	description = "A travel visa issued by the Sol Central Government for the purpose of recreation."
 	path = /obj/item/paper/travelvisa
+	slot = slot_in_backpack
+	cost = 0
+
+/datum/gear/iccgvisa
+	display_name = "iccg work visa"
+	description = "A travel visa issued by the ICCG for the purpose of work."
+	path = /obj/item/paper/iccgvisa
+	slot = slot_in_backpack
 	cost = 0
 
 /datum/gear/utility/holster_belt
-	display_name = "holser belt"
+	display_name = "holster belt"
 	path = /obj/item/storage/belt/holster/general
-	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/adjutant)
+	allowed_roles = list(/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, /datum/job/iaa, /datum/job/iso, /datum/job/adjutant)
 
 /datum/gear/accessory/corpbadge
 	display_name = "investigator holobadge (IAA)"

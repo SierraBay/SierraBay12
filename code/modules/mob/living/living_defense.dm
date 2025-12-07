@@ -86,7 +86,7 @@
 	var/list/newargs = args - args[1]
 	for(var/a in auras)
 		var/obj/aura/aura = a
-		var/result = EMPTY_BITFIELD
+		var/result = FLAGS_OFF
 		switch(type)
 			if(AURA_TYPE_WEAPON)
 				result = aura.aura_check_weapon(arglist(newargs))
@@ -183,6 +183,9 @@
 
 		if(O.can_embed() && (throw_damage > 5*O.w_class)) //Handles embedding for non-humans and simple_animals.
 			embed(O)
+
+	if (AM.IsFlameSource())
+		IgniteMob()
 
 	process_momentum(AM, TT)
 

@@ -84,6 +84,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/flags = 0
 	var/evac_controller_type = /datum/evacuation_controller
 	var/use_overmap = 0		//If overmap should be used (including overmap space travel override)
+	var/using_sun = FALSE	//If overmap should have a star
 	var/overmap_size = 20		//Dimensions of overmap zlevel if overmap is used.
 	var/overmap_z = 0		//If 0 will generate overmap zlevel on init. Otherwise will populate the zlevel provided.
 	var/overmap_event_areas = 0 //How many event "clouds" will be generated
@@ -233,7 +234,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		TAG_RELIGION =  RELIGION_AGNOSTICISM
 	)
 
-	var/access_modify_region = list(
+	var/access_modify_region = alist(
 		ACCESS_REGION_SECURITY = list(access_hos, access_change_ids),
 		ACCESS_REGION_MEDBAY = list(access_cmo, access_change_ids),
 		ACCESS_REGION_RESEARCH = list(access_rd, access_change_ids),
@@ -529,12 +530,31 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		num2text(ENG_FREQ)   = list(access_engine_equip, access_atmospherics),
 		num2text(MED_FREQ)   = list(access_medical_equip),
 		num2text(MED_I_FREQ) = list(access_medical_equip),
-		num2text(SEC_FREQ)   = list(access_security),
-		num2text(SEC_I_FREQ) = list(access_security),
+		num2text(SEC_FREQ)   = list(access_brig),
+		num2text(SEC_I_FREQ) = list(access_brig),
 		num2text(SCI_FREQ)   = list(access_tox,access_robotics,access_xenobiology),
 		num2text(SUP_FREQ)   = list(access_cargo),
 		num2text(SRV_FREQ)   = list(access_janitor, access_hydroponics),
 		num2text(HAIL_FREQ)  = list(),
+	)
+
+/datum/map/proc/intercept_internal_channels()
+	return list(
+		num2text(PUB_FREQ)   = list(),
+		num2text(AI_FREQ)    = list(access_synth),
+		num2text(ENT_FREQ)   = list(),
+		num2text(ERT_FREQ)   = list(access_cent_specops),
+		num2text(COMM_FREQ)  = list(access_bridge),
+		num2text(ENG_FREQ)   = list(access_engine_equip, access_atmospherics),
+		num2text(MED_FREQ)   = list(access_medical_equip),
+		num2text(MED_I_FREQ) = list(access_medical_equip),
+		num2text(SEC_FREQ)   = list(access_brig),
+		num2text(SEC_I_FREQ) = list(access_brig),
+		num2text(SCI_FREQ)   = list(access_tox,access_robotics,access_xenobiology),
+		num2text(SUP_FREQ)   = list(access_cargo),
+		num2text(SRV_FREQ)   = list(access_janitor, access_hydroponics),
+		num2text(HAIL_FREQ)  = list(),
+		num2text(SYND_FREQ)  = list()
 	)
 
 /datum/map/proc/show_titlescreen(client/C)

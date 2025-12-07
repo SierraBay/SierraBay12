@@ -23,20 +23,23 @@ if(!click_handlers) { \
 	return ..()
 
 /// Removes this click handler on `/mob/Logout()`.
-var/global/const/CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT = FLAG(0)
+var/global/const/CLICK_HANDLER_REMOVE_ON_MOB_LOGOUT = FLAG_01
 /// Removes and prevents creation of the click handler if it is not the active handler for the mob.
-var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
+var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
 
 /datum/click_handler
 	/// The mob this click handler is attached to.
 	var/mob/user
+
+	/// The atom this click handler is hovering over
+	var/atom/hovered_atom
 
 	/**
 	 * Bitfield (Any of `CLICK_HANDLER_*`). Relevant flags to control the logic flow of this click handler.
 	 *
 	 * See `code\_onclick\click_handling.dm` for valid options.
 	 */
-	var/flags = EMPTY_BITFIELD
+	var/flags = FLAGS_OFF
 
 /datum/click_handler/New(mob/user)
 	..()
@@ -128,6 +131,27 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG(1)
  */
 /datum/click_handler/proc/OnMouseUp(object, location, params)
 	return
+
+/**
+ * Called on MouseEntered by `/client/MouseUp()` when this is the mob's currently active click handler
+ *
+ * See: https://www.byond.com/docs/ref/#/client/proc/MouseEntered
+ */
+/datum/click_handler/proc/OnMouseEntered(atom/object, location, control, params)
+	hovered_atom = object
+
+	object.MouseEntered(location,control,params)
+
+/**
+ * Called on MouseExited by `/client/MouseUp()` when this is the mob's currently active click handler
+ *
+ * See: https://www.byond.com/docs/ref/#/client/proc/MouseExited
+ */
+/datum/click_handler/proc/OnMouseExited(atom/object, location, control, params)
+	if (hovered_atom == object)
+		hovered_atom = null
+
+	object.MouseExited(location,control,params)
 
 /**
  * Called on MouseUp by `/client/MouseDrag()` when this is the mob's currently active click handler.

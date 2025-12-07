@@ -99,7 +99,10 @@
 			for(var/obj/item/spacecash/S in src)
 				var/list/moneyImages = S.getMoneyImages()
 				for(var/A in moneyImages)
-					var/image/money = image('icons/obj/money.dmi', A)
+					//SIERRA-EDIT - Изменение спрайта под новый спрайт денег
+					//var/image/money = image('icons/obj/money.dmi', A)
+					var/image/money = image('mods/utility_items/icons/money.dmi', A)
+					//SIERRA-EDIT
 					money.pixel_x = rand(-2, 3)
 					money.pixel_y = rand(-6, 6)
 					money.SetTransform(scale = 0.6)

@@ -199,6 +199,10 @@ var/global/list/debug_verbs = list (
 		to_chat(src, SPAN_WARNING("This debug tool can only be used while on a simulated turf."))
 		return
 
+	if(!location?.zone)
+		to_chat(src, SPAN_WARNING("The turf you are standing on does not have a zone."))
+		return
+
 	if(!usedZAScolors)
 		to_chat(src, "ZAS Test Colors")
 		to_chat(src, "Green = Zone you are standing in")
@@ -330,6 +334,6 @@ var/global/list/debug_verbs = list (
 	var/list/baddies = list("LEAKY PIPES")
 	for(var/obj/machinery/atmospherics/pipe/P as anything in SSmachines.get_machinery_of_type(/obj/machinery/atmospherics/pipe))
 		if(P.leaking)
-			baddies += "[P] ([P.x],[P.y],[P.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[P.x];Y=[P.y];Z=[P.z]'>JMP</a>)"
+			baddies += "[P] ([P.x],[P.y],[P.z] - <a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[P.x];Y=[P.y];Z=[P.z]'>JMP</a>)"
 
 	to_chat(usr,jointext(baddies, "<br>"))

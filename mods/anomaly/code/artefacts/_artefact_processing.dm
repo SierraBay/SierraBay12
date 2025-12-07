@@ -16,6 +16,8 @@
 
 /obj/item/artefact/Initialize()
 	. = ..()
+	prev_loc = get_turf(src)
+	LAZYADD(SSanom.artefacts_list_in_world , src)
 	user_long_check_cooldown = rand(3 SECONDS, 6 SECONDS)
 	user_check_cooldown = rand(2 SECONDS, 4 SECONDS)
 	additional_process_cooldown = rand(20 SECONDS, 50 SECONDS)
@@ -41,7 +43,8 @@
 	else if(current_user)
 		if(world.time - last_user_check >= user_check_cooldown)
 			last_user_check = world.time
-			update_current_user()
+			if(!update_current_user())
+				return
 		if(world.time - last_process_effect <= process_effect_cooldown)
 			return
 		process_artefact_effect_to_user()
@@ -56,6 +59,11 @@
 /obj/item/artefact/proc/process_artefact_effect_to_user()
 	return
 
+/obj/item/artefact/Destroy()
+	if(is_processing)
+		STOP_PROCESSING(SSanom, src)
+	LAZYREMOVE(SSanom.artefacts_list_in_world, src)
+	. = ..()
 
 //Добавляем и убираем ВЛАДЕЛЬЦЕВ(кто имеем в рюкзаке арт)
 /obj/item/artefact/pickup(mob/living/user)
@@ -71,10 +79,22 @@
 	// В случае перемещения предмета между contents или подбора, обновляет своего ПОЛЬЗОВАТЕЛЯ
 	if(current_user) //Юзер уже есть,
 		if(get_turf(current_user) != get_turf(src)) //проверяем,
-			current_user = null
+			disconnect_user(user)
+			return FALSE
+		return TRUE
 	else if(!current_user)
-		current_user = user
+		connect_user(user)
+		return TRUE
 
+/obj/item/artefact/proc/disconnect_user(mob/living/user)
+	stop_process_by_ssanom()
+	undeploy_signals()
+	current_user = null
+
+/obj/item/artefact/proc/connect_user(mob/living/user)
+	start_process_by_ssanom()
+	current_user = user
+	deploy_signals()
 
 /obj/item/artefact/proc/start_process_by_ssanom()
 	if(!is_processing)

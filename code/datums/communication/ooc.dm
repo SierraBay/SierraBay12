@@ -13,7 +13,7 @@
 		return
 
 	if(!C.holder)
-		if(!config.dooc_allowed && (C.mob.stat == DEAD))
+		if(!config.dooc_allowed && (C.mob.is_real_dead()))
 			to_chat(C, SPAN_DANGER("[name] for dead mobs has been turned off."))
 			return FALSE
 

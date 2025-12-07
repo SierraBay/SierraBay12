@@ -26,7 +26,7 @@ import io
 import re
 from pathlib import Path
 from ruamel import yaml
-from github import Github, InputGitAuthor
+from github import Github, Auth, InputGitAuthor
 
 CL_BODY = re.compile(r"(:cl:|🆑)(.+)?\r\n((.|\n|\r)+?)\r\n\/(:cl:|🆑)", re.MULTILINE)
 CL_SPLIT = re.compile(r"(^\w+):\s+(\w.+)", re.MULTILINE)
@@ -39,7 +39,8 @@ repo = os.getenv("GITHUB_REPOSITORY")
 token = os.getenv("BOT_TOKEN")
 sha = os.getenv("GITHUB_SHA")
 
-git = Github(token)
+auth = Auth.Token(token)
+git = Github(auth=auth)
 repo = git.get_repo(repo)
 commit = repo.get_commit(sha)
 pr_list = commit.get_pulls()
@@ -85,6 +86,7 @@ for k, v in cl_list:
 if write_cl['changes']:
     with io.StringIO() as cl_contents:
         yaml.indent(sequence=4, offset=2)
+        yaml.default_flow_style = False
         yaml.dump(write_cl, cl_contents)
         cl_contents.seek(0)
 

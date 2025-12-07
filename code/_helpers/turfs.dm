@@ -182,7 +182,7 @@
 			O.forceMove(new_turf)
 		else if(istype(O,/obj/effect))
 			var/obj/E = O
-			if(E.movable_flags & MOVABLE_FLAG_EFFECTMOVE)
+			if (HAS_FLAGS(E.movable_flags, MOVABLE_FLAG_EFFECTMOVE))
 				E.forceMove(new_turf)
 
 	for(var/mob/M in source)

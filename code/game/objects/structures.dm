@@ -128,6 +128,8 @@
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
+			M.clear_fullscreen("closet_vision") //[SIERRA-ADD] - FOV fix for closets
+			M.client.reload_fov()	//[SIERRA-ADD] - FOV fix for closets
 
 	for(var/atom/movable/AM in src)
 		AM.dropInto(loc)

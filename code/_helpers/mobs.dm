@@ -19,34 +19,35 @@
 		var/M = AM.get_mob()
 		if(M)
 			mobs += M
-
 	return mobs
+
 
 /proc/random_hair_style(gender, species = SPECIES_HUMAN)
 	var/h_style = "Bald"
-
-	var/datum/species/mob_species = all_species[species]
+	var/singleton/species/mob_species = GLOB.species_by_name[species]
 	var/list/valid_hairstyles = mob_species.get_hair_styles()
 	if(length(valid_hairstyles))
 		h_style = pick(valid_hairstyles)
-
 	return h_style
+
 
 /proc/random_facial_hair_style(gender, species = SPECIES_HUMAN)
 	var/f_style = "Shaved"
-	var/datum/species/mob_species = all_species[species]
+	var/singleton/species/mob_species = GLOB.species_by_name[species]
 	var/list/valid_facialhairstyles = mob_species.get_facial_hair_styles(gender)
 	if(length(valid_facialhairstyles))
 		f_style = pick(valid_facialhairstyles)
 		return f_style
 
+
 /proc/random_name(gender, species = SPECIES_HUMAN)
-	var/datum/species/current_species = all_species[species]
+	var/singleton/species/current_species = GLOB.species_by_name[species]
 	var/singleton/cultural_info/current_culture = SSculture.get_culture(current_species.default_cultural_info[TAG_CULTURE])
 	return current_culture.get_random_name(gender)
 
-/proc/random_skin_tone(datum/species/current_species)
-	var/species_tone = current_species ? 35 - current_species.max_skin_tone() : -185
+
+/proc/random_skin_tone(singleton/species/species)
+	var/species_tone = species ? 35 - species.max_skin_tone() : -185
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
 		if("afroamerican")	. = -115
@@ -154,6 +155,8 @@
 /mob/var/do_unique_user_handle = 0
 /// The mob currently interacting with the atom during a `do_after` timer. Used to validate `DO_TARGET_UNIQUE_ACT` flag checks.
 /atom/var/do_unique_target_user
+/// Integer. `world.time` of the last interrptuon this mob receives.
+/mob/var/do_user_interrupted = FALSE
 
 /proc/do_after(mob/user, delay, atom/target, do_flags = DO_DEFAULT, incapacitation_flags = INCAPACITATION_DEFAULT)
 	return !do_after_detailed(user, delay, target, do_flags, incapacitation_flags)
@@ -195,6 +198,10 @@
 			user_loc = get_turf(user)
 		if (target_loc)
 			target_loc = get_turf(target)
+
+	var/user_interruptable = FALSE
+	if (HAS_FLAGS(do_flags, DO_USER_INTERRUPT) || HAS_FLAGS(user.mob_flags, MOB_FLAG_DO_USER_INTERRUPT))
+		user_interruptable = TRUE
 
 	var/datum/progressbar/bar
 	if (do_flags & DO_SHOW_PROGRESS)
@@ -249,6 +256,9 @@
 		if (target_zone && user.zone_sel.selecting != target_zone)
 			. = DO_USER_SAME_ZONE
 			break
+		if (user_interruptable && (user.do_user_interrupted >= start_time || user.do_user_interrupt()))
+			. = DO_USER_INTERRUPT
+			break
 
 	if (. && do_feedback)
 		switch (.)
@@ -270,6 +280,8 @@
 				USE_FEEDBACK_FAILURE("You stop what you're doing with \the [target].")
 			if (DO_USER_SAME_ZONE)
 				USE_FEEDBACK_FAILURE("You must remain targeting the same zone to perform that action!")
+			if (DO_USER_INTERRUPT)
+				USE_FEEDBACK_FAILURE("You interrupted the action.")
 
 	if (bar)
 		qdel(bar)
@@ -277,6 +289,26 @@
 		user.do_unique_user_handle = 0
 	if ((do_flags & DO_TARGET_UNIQUE_ACT) && target)
 		target.do_unique_target_user = null
+
+
+/**
+ * Logic for interrupting `do_after()` calls where this atom is passed as the `user` parameter.
+ *
+ * Only called if `DO_USER_INTERRUPT` is passed, or this mob has the `MOB_FLAG_DO_USER_INTERRUPT` `mob_flag` set.
+ *
+ * Returns boolean. If `TRUE`, halts the timer.
+ */
+/mob/proc/do_user_interrupt()
+	return FALSE
+
+
+/client/verb/cancel_current_action()
+	set name = "Cancel Current Action"
+	set category = "Object"
+	if (!mob)
+		return
+	mob.do_user_interrupted = world.time
+
 
 /proc/able_mobs_in_oview(origin)
 	RETURN_TYPE(/list)

@@ -51,7 +51,6 @@
 	#include "game/lockdown.dm"
 
 	// --- ITEMS --- //
-	#include "items/ammo.dm"
 	#include "items/cards_ids.dm"
 	#include "items/documents.dm"
 	#include "items/encryption_keys.dm"
@@ -77,6 +76,7 @@
 
 	#include "items/clothing/clothing.dm"
 	#include "items/clothing/exploration.dm"
+	#include "items/clothing/new_uniform.dm"
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
@@ -140,6 +140,7 @@
 	#include "loadout/loadout_pda.dm"
 	#include "loadout/loadout_shoes.dm"
 	#include "loadout/loadout_suit.dm"
+	#include "loadout/loadout_augments.dm"
 	#include "loadout/loadout_tactical.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
@@ -148,7 +149,7 @@
 	// --- MAP FILES --- //
 
 		// ~SIERRA~ //
-	#include "z1-z5_sierra.dmm"
+	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
 	#include "../away/empty.dmm"
@@ -156,7 +157,7 @@
 		// ~AWAY SITES~ //
 	#include "../away/mining/mining.dm"
 	#include "../away/derelict/derelict.dm"
-	#include "../away/bearcat/bearcat.dm"
+	//#include "../away/bearcat/bearcat.dm" коммент как решение ошибки "duplicate definition" при добавлении мода "bearcat revived"
 	#include "../away/lost_supply_base/lost_supply_base.dm"
 	#include "../away/smugglers/smugglers.dm"
 	#include "../away/magshield/magshield.dm"
@@ -172,8 +173,10 @@
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
-	#include "../away/scavver/scavver_gantry.dm"
+	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
+	#include "../away/spy_station/spy_station.dm"
+	#include "../away/salvage_shuttle/salvage_shuttle.dm"
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"
 	#include "../event/placeholders/placeholders.dm"
@@ -185,25 +188,33 @@
 	// USED MODS
 	// Keep them in ascending alphabetical order, please
 
+	#include "../../mods/_maps/bearcat_revived/_map_bearcat_revived.dme"
+	#include "../../mods/_events/battlefield_event/_battlefield_event_includes.dme" // Одноразовый ивент.
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/_maps/general_maps/_map_general_maps.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
+	#include "../../mods/_maps/insidiae_pack/_map_insidiae_pack.dme"
+	#include "../../mods/_maps/voxship/_map_voxship.dme"
+	#include "../../mods/_maps/verne/_map_verne.dme"
+	#include "../../mods/_maps/mininghome/_map_mininghome.dme"
 	#include "../../mods/_maps/ascent_seedship/_map_ascent_seedship.dme"
 	#include "../../mods/_maps/ascent_caulship/_map_ascent_caulship.dme"
+
+	// Verne-verse
+	#include "../../mods/_maps/phobos/_map_phobos.dme"
+
 
 	#include "../../mods/antagonists/_antagonists_includes.dm"
 	#include "../../mods/ascent/_ascent_includes.dm"
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
-	#include "../../mods/guns/_guns_includes.dm"
 	#include "../../mods/jukebox_tapes/_jukebox_tapes_includes.dm"
 	#include "../../mods/legalese_language/_legalese_includes.dm"
-	#include "../../mods/petting_zoo/_petting_zoo_includes.dm"
 	#include "../../mods/resomi/_resomi_includes.dm"
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
@@ -213,6 +224,7 @@
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
+	// #include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -222,6 +234,7 @@
 
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
+	#include "../../packs/factions/scgf/_pack.dm"
 	#include "../../packs/factions/fa/_pack.dm"
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"

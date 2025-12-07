@@ -21,8 +21,6 @@
 	antag_tags = list(MODE_CHANGELING, MODE_RENEGADE)
 	require_all_templates = TRUE
 
-/*
-// This gamemodes depends on further fixes for their antags. So here the waiting room.
 /datum/game_mode/tralf
 	name = "Traitor & Malfunctioning AI"
 	round_description = "Traitor and a Malfunctioning AI are about to end your carrier."
@@ -33,4 +31,3 @@
 	end_on_antag_death = FALSE
 	antag_tags = list(MODE_TRAITOR, MODE_MALFUNCTION)
 	require_all_templates = TRUE
-*/

@@ -87,10 +87,10 @@ macro "macro"
 		command = "quick-equip"
 	elem
 		name = "CTRL+F"
-		command = "a-intent left"
+		command = "activate-object-in-world"
 	elem
 		name = "CTRL+G"
-		command = "a-intent right"
+		command = "activate-object-in-world"
 	elem
 		name = "CTRL+SHIFT+G"
 		command = ".configure graphics-hwmode on"
@@ -142,6 +142,9 @@ macro "macro"
 	elem
 		name = "CTRL+Subtract"
 		command = "move-down"
+	elem
+		name = "ESCAPE"
+		command = "Cancel-Current-Action"
 	elem
 		name = "F1"
 		command = "adminhelp"

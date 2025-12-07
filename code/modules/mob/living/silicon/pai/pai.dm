@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(possible_chassis, list(
+GLOBAL_LIST_AS(possible_chassis, list(
 		"Drone" = "drone",
 		"Cat" = "cat",
 		"Mouse" = "mouse",
@@ -7,10 +7,15 @@ GLOBAL_LIST_INIT(possible_chassis, list(
 		"Mushroom" = "mushroom",
 		"Corgi" = "corgi",
 		"Crow" = "crow",
-		"Humanoid" = "humanoid"
+		"Humanoid" = "humanoid",
+		//[SIERRA-ADD]
+		"Bat" = "bat",
+		"Chicken" = "chick",
+		"Parrot" = "parrot"
+		//[/SIERRA-ADD]
 		))
 
-GLOBAL_LIST_INIT(possible_say_verbs, list(
+GLOBAL_LIST_AS(possible_say_verbs, list(
 		"Robotic" = list("states","declares","queries"),
 		"Natural" = list("says","yells","asks"),
 		"Beep" = list("beeps","beeps loudly","boops"),
@@ -79,6 +84,7 @@ GLOBAL_LIST_INIT(possible_say_verbs, list(
 	light_wedge = LIGHT_OMNI
 
 	hud_type = /datum/hud/pai
+	status_flags = NO_ANTAG
 
 
 /mob/living/silicon/pai/Destroy()
@@ -89,7 +95,6 @@ GLOBAL_LIST_INIT(possible_say_verbs, list(
 
 /mob/living/silicon/pai/Initialize(mapload, obj/item/device/paicard)
 	. = ..()
-	status_flags |= NO_ANTAG
 	add_language(LANGUAGE_HUMAN_EURO, TRUE)
 	verbs -= /mob/living/verb/ghost
 	software = default_pai_software.Copy()
@@ -234,6 +239,7 @@ GLOBAL_LIST_INIT(possible_say_verbs, list(
 	stop_pulling()
 	resting = FALSE
 	anchored = FALSE
+	buckled?.unbuckle_mob()
 
 	// If we are being held, handle removing our holder from their inv.
 	var/obj/item/holder/H = loc
@@ -303,8 +309,12 @@ GLOBAL_LIST_INIT(possible_say_verbs, list(
 
 
 /mob/living/silicon/pai/attack_hand(mob/user as mob)
-	visible_message(SPAN_DANGER("[user] boops [src] on the head."))
-	fold()
+	if (user.a_intent == I_HELP)
+		visible_message(SPAN_NOTICE("[user] gently pets [src]."))
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	else
+		visible_message(SPAN_DANGER("[user] boops [src] on the head."))
+		fold()
 
 // No binary for pAIs.
 /mob/living/silicon/pai/binarycheck()
@@ -316,6 +326,8 @@ GLOBAL_LIST_INIT(possible_say_verbs, list(
 	if(.)
 		var/obj/item/holder/H = .
 		if(istype(H))
+			if(resting)
+				lay_down()
 			H.item_state = "pai-[icon_state]"
 			grabber.update_inv_l_hand()
 			grabber.update_inv_r_hand()

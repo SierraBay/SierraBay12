@@ -91,8 +91,8 @@
 	if(get_fingerprint())
 		A.add_partial_print(get_fingerprint())
 
-/obj/item/organ/external/New(mob/living/carbon/holder)
-	..()
+/obj/item/organ/external/Initialize()
+	. = ..()
 	if(isnull(pain_disability_threshold))
 		pain_disability_threshold = (max_damage * 0.75)
 	if(owner)
@@ -843,7 +843,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					)
 
 //Handles dismemberment
-/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent)
+/obj/item/organ/external/proc/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
 
 	if(!(limb_flags & ORGAN_FLAG_CAN_AMPUTATE) || !owner)
 		return
@@ -871,8 +871,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (disintegrate == DROPLIMB_BLUNT || disintegrate == DROPLIMB_BURN)
 		for(var/obj/item/organ/I in internal_organs)
 			I.removed()
-			if(!QDELETED(I) && isturf(I.loc))
-				I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			if(!QDELETED(I))
+				if(isturf(I.loc))
+					I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+				else
+					I.dropInto(I.loc)
 			I.take_general_damage(I.max_damage * Frand(0.5, 1.0))
 
 	removed(null, ignore_children)
@@ -903,12 +906,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 			compile_icon()
 			add_blood(victim)
 			SetTransform(rotation = rand(180))
-			forceMove(get_turf(src))
-			if(!clean)
-				// Throw limb around.
-				if(src && istype(loc,/turf))
+			if (!src)
+				return
+			if (isturf(loc))
+				forceMove(get_turf(src))
+				if(!clean && !skip_throw)
 					throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-				dir = 2
+			else
+				dropInto(loc)
+
 		if(DROPLIMB_BURN)
 			new /obj/decal/cleanable/ash(get_turf(victim))
 			for(var/obj/item/I in src)
@@ -1090,6 +1096,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return 1
 	return 0
 
+/* [SIERRA-REMOVE] - IPC_MODS Там тот же прок есть, закомментил, он два раза выполнялся, и это не нужно
 /obj/item/organ/external/robotize(company, skip_prosthetics = 0, keep_organs = 0)
 
 	if(BP_IS_ROBOTIC(src))
@@ -1142,6 +1149,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	CLEAR_FLAGS(status, ORGAN_ARTERY_CUT)
 
 	return 1
+*/
 
 /obj/item/organ/external/proc/get_damage()	//returns total damage
 	return (brute_dam+burn_dam)	//could use max_damage?
@@ -1368,19 +1376,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 //Adds autopsy data for used_weapon.
 /obj/item/organ/external/proc/add_autopsy_data(used_weapon, damage)
-	var/weapon_name
-
-	if(isatom(used_weapon))
-		var/atom/weapon = used_weapon
-		weapon_name = initial(weapon.name)
-	else
-		weapon_name = used_weapon
-
-	var/datum/autopsy_data/W = autopsy_data[weapon_name]
+	var/datum/autopsy_data/W = autopsy_data[used_weapon]
 	if(!W)
 		W = new()
-		W.weapon = weapon_name
-		autopsy_data[weapon_name] = W
+		W.weapon = used_weapon
+		autopsy_data[used_weapon] = W
 
 	W.hits += 1
 	W.damage += damage

@@ -53,6 +53,10 @@
 	display_name = "deck of tarot cards"
 	path = /obj/item/deck/tarot
 
+/datum/gear/hanafuda
+	display_name = "deck of hanafuda cards"
+	path = /obj/item/deck/hanafuda
+
 /datum/gear/holder
 	display_name = "card holder"
 	path = /obj/item/deck/holder
@@ -109,7 +113,7 @@
 
 /datum/gear/lunchbox/New()
 	..()
-	var/list/types = subtypesof(/obj/item/storage/lunchbox) - /obj/item/storage/lunchbox/caltrops
+	var/list/types = subtypesof(/obj/item/storage/lunchbox) - list(/obj/item/storage/lunchbox/caltrops, /obj/item/storage/lunchbox/ntmisprint)
 	var/list/options = list()
 	for (var/obj/item/storage/lunchbox/lunchbox as anything in types)
 		if (!initial(lunchbox.filled))
@@ -149,6 +153,7 @@
 	plushes["deer plush"] = /obj/item/toy/plushie/deer
 	plushes["blue squid plush"] = /obj/item/toy/plushie/squid_blue
 	plushes["orange squid plush"] = /obj/item/toy/plushie/squid_orange
+	plushes["bee plush"] = /obj/item/toy/plushie/bee
 	gear_tweaks += new /datum/gear_tweak/path(plushes)
 
 /datum/gear/workvisa

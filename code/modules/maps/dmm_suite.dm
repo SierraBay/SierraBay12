@@ -56,9 +56,9 @@
 //////////////////////////////////////////////////////////////
 
 //global datum that will preload variables on atoms instanciation
-GLOBAL_VAR_INIT(use_preloader, FALSE)
-GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
-GLOBAL_DATUM_INIT(maploader, /dmm_suite, new)
+GLOBAL_VAR_AS(use_preloader, FALSE)
+GLOBAL_TYPED_NEW(_preloader, /dmm_suite/preloader)
+GLOBAL_TYPED_NEW(maploader, /dmm_suite)
 
 /datum/map_load_metadata
 	var/bounds
@@ -384,7 +384,7 @@ GLOBAL_DATUM_INIT(maploader, /dmm_suite, new)
 			instance = new atype(null)
 			initialized_areas_by_type[atype] = instance
 		if(crds)
-			instance.contents.Add(crds)
+			ChangeArea(crds, instance)
 
 		if(GLOB.use_preloader && instance)
 			GLOB._preloader.load(instance)
