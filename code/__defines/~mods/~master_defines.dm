@@ -156,3 +156,11 @@
 //NTSH
 #define MODULAR_CONFIG_REMCON_SETTING "RemoteConnectionPass"
 ///NTSH
+
+//New aways testing mod, change to 1 in order to turn it on. Always turn it off afterwards.
+#define NEW_AWAYS_TESTING 0
+
+#if NEW_AWAYS_TESTING == 1
+	#define UNIT_TEST 1
+#endif
+//New aways testing mod

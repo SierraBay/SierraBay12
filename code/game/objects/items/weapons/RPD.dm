@@ -56,10 +56,18 @@ GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
 		new /datum/pipe/pipe_dispenser/fuel/up(),
 		new /datum/pipe/pipe_dispenser/fuel/down()
 		),
+	/*SIERRA-EDIT старый список девайсов
 	new /datum/pipe/pipe_dispenser/device() = list(
 		new /datum/pipe/pipe_dispenser/device/universaladapter(),
 		new /datum/pipe/pipe_dispenser/device/gaspump(),
 		new /datum/pipe/pipe_dispenser/device/manualvalve()
+		)
+	*/
+	new /datum/pipe/pipe_dispenser/device() = list(
+		new /datum/pipe/pipe_dispenser/device/unaryvent(),
+		new /datum/pipe/pipe_dispenser/device/scrubber(),
+		new /datum/pipe/pipe_dispenser/device/universaladapter(),
+		new /datum/pipe/pipe_dispenser/device/connector()
 		)
 	))
 
