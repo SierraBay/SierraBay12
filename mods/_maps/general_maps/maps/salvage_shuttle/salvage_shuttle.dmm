@@ -1,11 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ak" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "al" = (
@@ -22,40 +20,43 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 6
-	},
 /obj/structure/handrail{
 	dir = 1
 	},
 /obj/structure/sign/warning/airlock{
-	pixel_y = -32;
+	pixel_y = -34;
 	dir = 1
+	},
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
+/obj/floor_decal/techfloor/hole{
+	dir = 2
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "aY" = (
-/obj/floor_decal/industrial/outline/orange,
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	start_pressure = 1013.25;
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor{
+	dir = 5
+	},
+/obj/floor_decal/industrial/outline/orange,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "bb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
 	},
 /obj/item/device/radio/intercom/map_preset/salvage_shuttle{
 	dir = 8;
 	name = "Intercom (Crab)";
 	pixel_x = 24
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "bl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -64,13 +65,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "bm" = (
-/obj/floor_decal/industrial/traffic{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -78,11 +79,11 @@
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "bn" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
-/obj/structure/shuttle/engine/heater{
+/obj/paint/red,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/titanium,
 /area/salvage_shuttle/airlock)
 "br" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -96,6 +97,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "bH" = (
@@ -106,9 +111,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -116,7 +118,17 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/obj/floor_decal/techfloor/hole{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "bI" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -132,9 +144,6 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/lounge)
 "bN" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -143,10 +152,13 @@
 	frequency = 1331;
 	master_tag = "crab_airlock";
 	name = "exterior access button";
-	pixel_x = 24;
-	pixel_y = -8
+	pixel_x = 23;
+	pixel_y = -10
 	},
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "bX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -160,7 +172,12 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "cd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -174,15 +191,17 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/floor_decal/borderfloorwhite{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "cf" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
 /area/derelict_cargo_ship/quarters)
@@ -202,9 +221,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/structure/cable/green{
 	d1 = 2;
 	d2 = 4;
@@ -213,7 +229,8 @@
 /obj/structure/handrail{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "cG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -222,10 +239,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -235,11 +248,12 @@
 	command = "cycle_interior";
 	master_tag = "crab_secondary";
 	name = "interior access button";
-	pixel_y = 24;
+	pixel_y = 23;
 	frequency = 1331;
-	pixel_x = 8
+	pixel_x = 6
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "cH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -250,12 +264,16 @@
 	id_tag = "crab_cargo_hatch";
 	name = "Storage Hatch"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/fulltile,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "cN" = (
-/obj/floor_decal/corner/paleblue{
-	dir = 10
-	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/white/monotile,
 /area/derelict_cargo_ship/medbay)
@@ -263,14 +281,6 @@
 /obj/structure/curtain/open/bed,
 /obj/structure/bed,
 /obj/item/bedsheet/rd,
-/obj/machinery/power/apc{
-	dir = 4;
-	req_access = list()
-	},
-/obj/structure/cable/green{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/carpet,
 /area/salvage_shuttle/lounge)
 "dk" = (
@@ -285,11 +295,14 @@
 /obj/item/stack/cable_coil/green{
 	amount = 2
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "dp" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 20;
+	pixel_x = 0
 	},
 /obj/structure/cable/cyan{
 	d1 = 4;
@@ -299,7 +312,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 5
+	},
+/obj/floor_decal/industrial/danger{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "dv" = (
 /obj/paint/green,
@@ -332,22 +351,29 @@
 /obj/random/powercell,
 /obj/decal/cleanable/blood/splatter,
 /obj/structure/catwalk,
-/turf/simulated/floor/plating,
+/obj/structure/railing/mapped,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "dO" = (
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/smes/buildable/preset/salvage_shuttle,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/sign/warning/high_voltage{
+	dir = 4;
+	pixel_x = -34
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "dT" = (
 /obj/paint/green,
@@ -362,6 +388,9 @@
 /obj/structure/closet/medical_wall/filled{
 	pixel_y = 32
 	},
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
 "ej" = (
@@ -374,7 +403,9 @@
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "el" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "ev" = (
 /obj/paint/brown,
@@ -394,20 +425,23 @@
 /area/derelict_cargo_ship/quarters)
 "eH" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/alarm{
+	pixel_y = 20;
+	req_access = list()
+	},
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/machinery/alarm{
-	pixel_y = 23;
-	req_access = list()
-	},
+/obj/random/junk,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "eL" = (
 /obj/paint/green,
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "eM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -425,7 +459,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/floor_decal/industrial/warning,
 /obj/structure/table/rack,
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/mechanical,
@@ -434,14 +467,14 @@
 	dir = 1
 	},
 /obj/item/device/multitool,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
+/obj/item/deck/compact,
+/obj/item/extinguisher,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "eO" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	spawn_broken = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -449,6 +482,9 @@
 /obj/random/accessory,
 /obj/random/clothing,
 /obj/random/clothing,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/black,
 /area/derelict_cargo_ship/quarters)
 "eT" = (
@@ -459,30 +495,40 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "fg" = (
-/obj/floor_decal/industrial/outline/orange,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/engine_setup{
 	start_pressure = 7498
 	},
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/outline/orange,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "fr" = (
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/suit_storage_unit/engineering/salvage/crab,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "fT" = (
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/maintenance)
 "fW" = (
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
@@ -490,44 +536,47 @@
 	id_tag = "crab_cargo";
 	pixel_x = 19;
 	frequency = 1331;
-	cycle_to_external_air = 1
+	cycle_to_external_air = 1;
+	pixel_y = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/floor_decal/industrial/warning{
-	dir = 4;
-	icon_state = "warning"
-	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 8
-	},
 /obj/shuttle_landmark/nav_salvage_shuttle/crab,
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "fX" = (
 /obj/floor_decal/industrial/outline/orange,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor{
+	spawn_broken = 1;
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "gb" = (
 /obj/machinery/atmospherics/binary/pump/on{
-	dir = 1
+	dir = 1;
+	layer = 2.14
 	},
 /obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "gt" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
 /obj/floor_decal/techfloor/corner{
 	dir = 8
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
@@ -541,6 +590,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "gE" = (
@@ -549,13 +602,8 @@
 /area/derelict_cargo_ship/quarters)
 "gM" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "gR" = (
 /obj/paint/brown,
@@ -590,28 +638,27 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "hg" = (
 /obj/machinery/alarm{
-	pixel_y = 23;
+	pixel_y = 20;
 	req_access = list()
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "hn" = (
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/canister/hydrogen,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor{
+	dir = 9
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "hu" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
@@ -622,12 +669,15 @@
 /obj/item/material/shard/shrapnel/aluminium,
 /obj/item/material/shard/shrapnel/steel,
 /obj/item/stack/material/rods,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "hv" = (
 /obj/structure/curtain/open/bed,
 /obj/structure/bed,
 /obj/item/bedsheet/hop,
+/obj/random/plushie,
 /turf/simulated/floor/carpet,
 /area/salvage_shuttle/lounge)
 "hD" = (
@@ -648,14 +698,17 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -20
 	},
 /obj/structure/table/reinforced,
 /obj/random/junkfood,
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
+/turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "iD" = (
-/obj/paint/red,
+/obj/paint/brown,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 5
 	},
@@ -668,15 +721,17 @@
 	},
 /area/derelict_cargo_ship/maintenance)
 "iG" = (
-/obj/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/machinery/cryopod{
-	dir = 2
+/obj/floor_decal/techfloor{
+	dir = 10
 	},
-/obj/machinery/computer/cryopod{
-	pixel_y = 25
+/obj/machinery/recharge_station,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "iH" = (
 /obj/machinery/atmospherics/unary/engine{
@@ -685,7 +740,14 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/airlock)
 "jf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -697,10 +759,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 8;
@@ -710,12 +768,21 @@
 	command = "cycle_interior";
 	master_tag = "crab_secondary";
 	name = "interior access button";
-	pixel_y = -24;
+	pixel_y = -22;
 	frequency = 1331;
-	pixel_x = -24
+	pixel_x = -22
 	},
 /obj/structure/handrail{
 	dir = 1
+	},
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/hole/right{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
@@ -727,25 +794,25 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/firedoor,
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/machinery/door/airlock/hatch,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/derelict_cargo_ship/maintenance)
-"jo" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater{
+/obj/floor_decal/techfloor{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/maintenance)
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
+/area/derelict_cargo_ship/maintenance)
+"jo" = (
+/obj/item/stack/tile/techgrid,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
+/area/derelict_cargo_ship/maintenance)
 "js" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 9
@@ -754,6 +821,10 @@
 /obj/structure/catwalk,
 /obj/structure/handrail{
 	dir = 1
+	},
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
 	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
@@ -764,6 +835,7 @@
 	},
 /area/derelict_cargo_ship/cargo)
 "jz" = (
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "jL" = (
@@ -773,19 +845,16 @@
 	},
 /area/derelict_cargo_ship/cargo)
 "jW" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/random/tool,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "kg" = (
 /obj/structure/handrail,
-/obj/floor_decal/industrial/warning{
-	dir = 6;
-	icon_state = "warning"
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/turf/simulated/floor/plating,
 /area/salvage_shuttle/airlock)
 "kk" = (
 /obj/paint/green,
@@ -793,6 +862,16 @@
 /area/derelict_cargo_ship/quarters)
 "kr" = (
 /obj/structure/table/rack,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/masks,
+/obj/random/powercell,
+/obj/random/toolbox,
+/obj/item/crowbar/prybar,
+/obj/item/device/flashlight,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "kE" = (
@@ -805,11 +884,14 @@
 	id_tag = "crab_cargo_pump"
 	},
 /obj/structure/table/rack,
-/obj/machinery/airlock_sensor{
-	id_tag = "crab_cargo_sensor";
-	frequency = 1331;
-	pixel_y = 24
+/obj/floor_decal/techfloor{
+	dir = 1
 	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/loot,
+/obj/random/loot,
+/obj/random/soap,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "kX" = (
@@ -817,12 +899,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
 	},
 /obj/structure/cable/green{
 	d1 = 1;
@@ -833,18 +909,27 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 4
+	},
+/obj/floor_decal/techfloor/corner,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "li" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/firecloset,
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 9;
-	icon_state = "warning"
+/obj/structure/closet/firecloset{
+	pixel_x = 4;
+	pixel_y = 0
 	},
+/obj/floor_decal/borderfloorblack{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "lk" = (
@@ -854,34 +939,20 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	master_tag = "crab_airlock";
-	name = "interior access button";
-	pixel_y = 24;
-	frequency = 1331;
-	pixel_x = -8
-	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
+	pixel_y = 23;
+	name = "Intercom (Crab)"
+	},
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "ly" = (
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "lz" = (
@@ -889,16 +960,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/industrial/traffic{
-	dir = 6
-	},
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "lI" = (
 /obj/structure/table/steel_reinforced,
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/recharger,
 /obj/machinery/light{
 	dir = 4
@@ -908,12 +973,11 @@
 /area/derelict_cargo_ship/cockpit)
 "lJ" = (
 /obj/item/stack/material/rods,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "lW" = (
-/obj/floor_decal/industrial/warning/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump_out_external"
 	},
@@ -926,7 +990,10 @@
 	pixel_x = 24;
 	pixel_y = -10
 	},
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "ma" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
@@ -935,10 +1002,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
@@ -947,15 +1010,23 @@
 	id_tag = "crab_dock_inner";
 	name = "Crab External Access"
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "mm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/floor_decal/industrial/warning,
 /obj/machinery/sleeper,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "mq" = (
 /obj/paint/green,
@@ -986,20 +1057,23 @@
 /turf/simulated/floor/carpet/black,
 /area/derelict_cargo_ship/quarters)
 "mW" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "nm" = (
-/obj/structure/closet/emcloset,
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 8
+/obj/structure/closet/emcloset{
+	pixel_x = 4;
+	pixel_y = 0
 	},
+/obj/floor_decal/borderfloorblack{
+	dir = 4
+	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "nt" = (
@@ -1007,7 +1081,6 @@
 	name = "Maintenance";
 	initial_health_percent = 50
 	},
-/obj/structure/catwalk,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -1020,11 +1093,28 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "nv" = (
-/obj/floor_decal/industrial/warning,
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/obj/machinery/airlock_sensor{
+	id_tag = "crab_cargo_exterior_sensor";
+	frequency = 1331;
+	pixel_y = 20;
+	pixel_x = -22
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "nw" = (
 /obj/shuttle_landmark/nav_salvage_shuttle/nav1,
@@ -1032,9 +1122,6 @@
 /area/space)
 "nA" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/canister/air/airlock,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -1071,14 +1158,16 @@
 	pixel_y = 23;
 	name = "Intercom (Crab)"
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "ob" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_secondary_pump_out_external";
 	dir = 1
 	},
-/obj/floor_decal/industrial/warning,
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1331;
@@ -1092,20 +1181,13 @@
 	frequency = 1331;
 	pixel_x = -24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/airlock)
 "og" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/floor_decal/techfloor/corner{
-	dir = 8
-	},
-/obj/floor_decal/techfloor/corner{
-	dir = 4
-	},
-/obj/floor_decal/techfloor/corner{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 8;
@@ -1116,12 +1198,24 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/floor_decal/techfloor/corner{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 4
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "oh" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/light,
 /obj/item/deck/cards,
+/obj/random/drinkbottle,
+/obj/random/junkfood,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal,
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
 "ol" = (
@@ -1129,9 +1223,6 @@
 /turf/space,
 /area/derelict_cargo_ship/maintenance)
 "ow" = (
-/obj/floor_decal/industrial/traffic{
-	dir = 4
-	},
 /obj/structure/inflatable/wall,
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
@@ -1165,12 +1256,13 @@
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "pM" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	flickering = 1
+/obj/structure/reagent_dispensers/water_cooler{
+	pixel_x = -8;
+	dir = 4
 	},
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "pU" = (
@@ -1183,35 +1275,39 @@
 /area/derelict_cargo_ship/quarters)
 "qg" = (
 /obj/structure/closet/fridge/meat,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 21
+	pixel_x = 20;
+	pixel_y = -4
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "qh" = (
-/obj/floor_decal/industrial/warning,
-/obj/machinery/airlock_sensor{
-	id_tag = "crab_cargo_exterior_sensor";
-	frequency = 1331;
-	pixel_y = 24
+/obj/machinery/door/blast/regular/open{
+	density = 0;
+	icon_state = "pdoor0";
+	id_tag = "crab_shutters";
+	name = "Protective Shutters";
+	opacity = 0;
+	dir = 4;
+	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
 	},
-/obj/structure/handrail,
-/turf/simulated/floor/plating,
+/obj/structure/grille,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "qi" = (
 /obj/machinery/computer/ship/sensors{
 	dir = 1;
 	initial_health_percent = 10
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 1
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cockpit)
 "ql" = (
 /obj/structure/catwalk,
@@ -1224,25 +1320,31 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "qC" = (
 /obj/random/toolbox,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "qJ" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/recharger,
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list()
+	req_access = list();
+	pixel_y = 0
 	},
 /obj/random/powercell,
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/item/screwdriver,
+/obj/item/device/suit_cooling_unit,
+/obj/floor_decal/borderfloor{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "qN" = (
 /obj/structure/cable/green{
@@ -1250,15 +1352,17 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "qP" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -1271,7 +1375,7 @@
 /turf/simulated/floor/carpet/black,
 /area/derelict_cargo_ship/quarters)
 "qZ" = (
-/obj/paint/red,
+/obj/paint/brown,
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 8
 	},
@@ -1282,12 +1386,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1311,54 +1409,52 @@
 	name = "Storage Hatch"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "rG" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/floor_decal/industrial/traffic,
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "rK" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/machinery/computer/ship/sensors{
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/radio/intercom/hailing{
+/obj/floor_decal/borderfloorblack{
+	dir = 10
+	},
+/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
 	dir = 4;
+	name = "Intercom (Crab)";
 	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/dark/monotile,
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "rM" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
-/turf/simulated/floor/plating,
-/area/derelict_cargo_ship/maintenance)
+/obj/item/stack/tile/techgrey,
+/turf/space,
+/area/space)
 "rP" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
+/obj/paint/red,
+/turf/simulated/wall/titanium{
+	initial_health_percent = 66
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/airlock)
+/area/derelict_cargo_ship/cargo)
 "rT" = (
 /obj/machinery/shipsensors,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "rW" = (
 /obj/structure/cable/green{
@@ -1369,7 +1465,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/tiled,
+/obj/floor_decal/borderfloorblack{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "sb" = (
 /obj/paint/brown,
@@ -1396,7 +1495,7 @@
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "sH" = (
-/obj/paint/red,
+/obj/paint/brown,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
@@ -1404,12 +1503,14 @@
 /area/salvage_shuttle/maintenance)
 "sI" = (
 /obj/structure/table/standard,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
 /obj/machinery/appliance/cooker/microwave{
 	pixel_y = 6
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/floor_decal/borderfloorblack{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/derelict_cargo_ship/quarters)
@@ -1421,7 +1522,14 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1431,21 +1539,28 @@
 	name = "Bunk"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "sR" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel,
-/turf/simulated/floor/plating,
+/obj/paint/red,
+/turf/simulated/wall/titanium{
+	initial_health_percent = 66
+	},
 /area/derelict_cargo_ship/maintenance)
 "sT" = (
 /obj/paint/green,
 /turf/simulated/wall/titanium,
 /area/derelict_cargo_ship/cockpit)
 "sU" = (
-/obj/paint/red,
+/obj/paint/brown,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/maintenance)
@@ -1454,40 +1569,35 @@
 	start_pressure = 4559.63;
 	dir = 4
 	},
+/obj/floor_decal/techfloor{
+	dir = 6
+	},
 /obj/floor_decal/industrial/outline/blue,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "td" = (
-/obj/floor_decal/industrial/warning{
-	dir = 10;
-	icon_state = "warning"
-	},
 /obj/submap_landmark/joinable_submap/salvage_ship,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 5
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 8
+	},
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "te" = (
 /obj/machinery/constructable_frame/computerframe{
 	dir = 1
 	},
 /obj/item/stock_parts/circuitboard/broken,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "ti" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 8;
@@ -1500,9 +1610,14 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 21
+	pixel_x = 20
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "to" = (
 /obj/item/stack/material/plasteel,
@@ -1539,7 +1654,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/table/reinforced,
 /obj/random/drinkbottle,
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
+/turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
 "tG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1550,10 +1668,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
-	},
-/obj/floor_decal/techfloor/corner,
-/obj/floor_decal/techfloor{
-	dir = 1
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -1566,31 +1680,37 @@
 	frequency = 1331;
 	pixel_y = 24
 	},
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/corner,
+/obj/floor_decal/techfloor/hole/right{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "uf" = (
 /obj/machinery/door/airlock/external/bolted_open{
 	frequency = 1331;
 	id_tag = "crab_airlock_inner";
-	name = "Crab External Access"
+	name = "Crab External Access";
+	door_color = "#917448"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "ur" = (
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
-/obj/structure/shuttle/engine/heater{
+/obj/paint/red,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/titanium,
 /area/salvage_shuttle/maintenance)
 "uE" = (
 /obj/paint/brown,
@@ -1607,16 +1727,18 @@
 	pixel_y = 14
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/random/junkfood,
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup/metal,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "uP" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/paint/red,
+/turf/simulated/wall/titanium{
+	initial_health_percent = 10
+	},
 /area/derelict_cargo_ship/maintenance)
 "va" = (
 /obj/item/clothing/shoes/foamclog/flipflobster,
@@ -1625,6 +1747,7 @@
 /area/salvage_shuttle/lounge)
 "vb" = (
 /obj/item/material/shard/shrapnel/steel,
+/obj/floor_decal/borderfloor,
 /turf/simulated/floor/tiled{
 	spawn_broken = 1
 	},
@@ -1635,16 +1758,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
@@ -1663,9 +1786,6 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cockpit)
 "wc" = (
-/obj/floor_decal/techfloor{
-	dir = 9
-	},
 /obj/structure/handrail,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	dir = 8;
@@ -1674,7 +1794,14 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "crab_airlock_sensor";
 	frequency = 1331;
-	pixel_y = 24
+	pixel_y = 22;
+	pixel_x = 16
+	},
+/obj/floor_decal/techfloor{
+	dir = 9
+	},
+/obj/floor_decal/techfloor/hole{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
@@ -1686,16 +1813,13 @@
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/maintenance)
 "ws" = (
-/obj/paint/red,
+/obj/paint/brown,
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 8
 	},
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/airlock)
 "wt" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
@@ -1703,7 +1827,11 @@
 /obj/structure/table/rack,
 /obj/random/loot,
 /obj/random/loot,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "wN" = (
 /obj/machinery/atmospherics/pipe/vent{
@@ -1720,9 +1848,15 @@
 	dir = 4;
 	req_access = list()
 	},
+/obj/floor_decal/borderfloorwhite{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "wY" = (
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
 "xl" = (
@@ -1732,12 +1866,10 @@
 /area/derelict_cargo_ship/quarters)
 "xF" = (
 /obj/random/medical,
+/obj/floor_decal/borderfloorwhite,
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "xN" = (
-/obj/floor_decal/techfloor{
-	dir = 10
-	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_airlock_pump";
 	dir = 4
@@ -1746,6 +1878,12 @@
 	dir = 1
 	},
 /obj/machinery/light/small{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 10
+	},
+/obj/floor_decal/techfloor/hole{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
@@ -1769,15 +1907,24 @@
 	initial_health_percent = 80;
 	req_access = list()
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "ys" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump";
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /obj/structure/closet/crate,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/material,
+/obj/random/material,
+/obj/item/stack/material/phoron/ten,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "yv" = (
@@ -1800,7 +1947,6 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Cargo Bay"
 	},
-/obj/structure/catwalk,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -1811,17 +1957,20 @@
 /obj/item/stack/cable_coil/green{
 	amount = 2
 	},
-/turf/simulated/floor/plating,
-/area/derelict_cargo_ship/cargo)
-"zl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
+/area/derelict_cargo_ship/cargo)
+"zl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -1837,7 +1986,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "zo" = (
 /obj/structure/catwalk,
@@ -1882,14 +2032,21 @@
 	dir = 4;
 	req_access = list()
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 6
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Ab" = (
 /obj/structure/closet/medical_wall/filled{
 	pixel_x = 32
 	},
 /obj/structure/bed/chair/shuttle/blue{
-	dir = 8
+	dir = 8;
+	pixel_x = 6
+	},
+/obj/floor_decal/borderfloorwhite{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
@@ -1914,15 +2071,18 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/machinery/door/airlock/external/bolted{
 	frequency = 1380;
 	id_tag = "crab_dock_outer";
 	name = "Crab External Access"
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "AM" = (
@@ -1948,6 +2108,7 @@
 /area/space)
 "AZ" = (
 /obj/random/trash,
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "Bd" = (
@@ -1956,11 +2117,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
-/obj/floor_decal/industrial/warning/full,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "crab_dock_pump";
 	dir = 8
@@ -1968,24 +2124,26 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1380;
 	id_tag = "crab_dock_sensor";
-	pixel_x = -24;
-	pixel_y = -24
+	pixel_x = -14;
+	pixel_y = -20
 	},
+/obj/floor_decal/industrial/warning/full,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "Bi" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
+/obj/structure/grille,
+/obj/machinery/door/blast/regular/open{
+	density = 0;
+	icon_state = "pdoor0";
+	id_tag = "crab_shutters";
+	name = "Protective Shutters";
+	opacity = 0;
+	dir = 4;
+	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "crab_airlock_exterior_sensor";
-	frequency = 1331;
-	pixel_y = -20
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/obj/structure/handrail{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
 /area/salvage_shuttle/net)
 "Bm" = (
 /obj/structure/bed/chair/padded/black{
@@ -2012,7 +2170,11 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "BD" = (
 /obj/machinery/alarm{
@@ -2030,31 +2192,33 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/industrial/outline/orange,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "BN" = (
 /obj/item/tank/hydrogen,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "BS" = (
-/obj/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/techfloor,
 /area/salvage_shuttle/maintenance)
 "BU" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
-	},
-/obj/floor_decal/industrial/outline/blue,
 /obj/machinery/atmospherics/unary/tank/air{
 	start_pressure = 4559.63;
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Cf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2108,9 +2272,6 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cockpit)
 "Dy" = (
-/obj/floor_decal/industrial/traffic{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
@@ -2119,7 +2280,9 @@
 	dir = 5
 	},
 /obj/item/material/shard/shrapnel/titanium,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "DD" = (
 /obj/item/device/radio/intercom/map_preset/salvage_shuttle{
@@ -2145,8 +2308,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light_switch{
-	pixel_y = 22;
-	pixel_x = 22
+	pixel_y = 48;
+	pixel_x = 21
 	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2159,39 +2322,33 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/floor_decal/techfloor,
-/obj/floor_decal/techfloor/corner{
-	dir = 4
-	},
-/obj/floor_decal/techfloor/corner{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "DN" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/floor_decal/techfloor,
-/obj/floor_decal/techfloor/corner{
-	dir = 1
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "DO" = (
 /obj/structure/bed/chair/padded/black{
 	dir = 4
+	},
+/obj/floor_decal/borderfloor{
+	dir = 5
 	},
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
@@ -2200,36 +2357,34 @@
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/maintenance)
 "DX" = (
+/obj/machinery/door/airlock/external/bolted_open{
+	name = "Mayfly External Airlock";
+	id_tag = "mayfly_dock_inner"
+	},
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external/bolted_open{
-	name = "Mayfly External Airlock";
-	id_tag = "mayfly_dock_inner"
-	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid{
-	map_airless = 1
+	initial_gas = null
 	},
 /area/derelict_cargo_ship/maintenance)
 "Ea" = (
 /obj/machinery/alarm{
-	pixel_y = 23;
+	pixel_y = 20;
 	req_access = list()
+	},
+/obj/floor_decal/borderfloor{
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
 "Ek" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 2;
@@ -2242,17 +2397,25 @@
 	command = "cycle_interior";
 	master_tag = "crab_secondary";
 	name = "interior access button";
-	pixel_y = -24;
+	pixel_y = -22;
 	frequency = 1331;
 	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "El" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	req_access = list()
+	},
 /obj/structure/cable/green{
-	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet,
 /area/salvage_shuttle/lounge)
@@ -2272,7 +2435,14 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Crab Break Room"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/lounge)
 "Ep" = (
 /obj/machinery/door/airlock/external/bolted{
@@ -2283,14 +2453,24 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Et" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/decal/cleanable/blood,
 /obj/landmark/corpse/engineer,
+/obj/floor_decal/borderfloorwhite{
+	dir = 8
+	},
+/obj/decal/cleanable/blood,
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "Ew" = (
@@ -2302,7 +2482,9 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "ED" = (
 /obj/machinery/light/small{
@@ -2311,11 +2493,15 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /obj/decal/cleanable/blood/splatter,
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid{
-	broken = 2;
-	initial_health_percent = 50;
-	spawn_broken = 1
+	initial_gas = null
 	},
 /area/derelict_cargo_ship/maintenance)
 "EE" = (
@@ -2327,7 +2513,11 @@
 "EO" = (
 /obj/structure/table/rack,
 /obj/random/loot,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "EU" = (
 /obj/wallframe_spawn/reinforced/titanium,
@@ -2344,15 +2534,18 @@
 /area/salvage_shuttle/cockpit)
 "EY" = (
 /obj/wallframe_spawn,
+/obj/paint/brown,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/lounge)
 "Fl" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
+/obj/floor_decal/borderfloorwhite{
+	dir = 10
+	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
@@ -2361,17 +2554,17 @@
 	dir = 4
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 20
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/floor_decal/borderfloorwhite{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "Fy" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
@@ -2384,18 +2577,21 @@
 "FZ" = (
 /obj/structure/closet/fridge,
 /obj/random/drinkbottle,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/derelict_cargo_ship/quarters)
 "Gl" = (
-/obj/floor_decal/techfloor{
-	dir = 4
+/obj/structure/cable/green,
+/obj/machinery/power/apc{
+	req_access = list()
 	},
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
-/obj/structure/cable/green,
-/obj/machinery/power/apc{
-	req_access = list()
+/obj/floor_decal/techfloor{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
@@ -2409,10 +2605,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/floor_decal/borderfloor{
+	dir = 9
+	},
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
 "GJ" = (
-/obj/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/machinery/light/small{
 	dir = 8
@@ -2426,32 +2624,32 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
 	},
-/obj/floor_decal/industrial/warning/cee{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "He" = (
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/computer/ship/helm{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloorblack{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "Hi" = (
-/obj/machinery/atmospherics/unary/engine,
 /obj/structure/lattice,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/space,
 /area/derelict_cargo_ship/maintenance)
 "Hn" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
-	},
 /obj/structure/table/rack,
 /obj/machinery/light/small,
+/obj/floor_decal/borderfloorblack,
+/obj/random/smokes,
+/obj/random/junk,
+/obj/random/junkfood,
+/obj/random/material,
+/obj/item/extinguisher,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "Ho" = (
@@ -2462,22 +2660,47 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/firstaid,
+/obj/random/maintenance,
+/obj/random/medical,
+/obj/random/technology_scanner,
+/obj/random/firstaid,
+/obj/random/firstaid,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Hp" = (
-/obj/structure/net,
-/turf/space,
+/obj/machinery/door/blast/regular/open{
+	density = 0;
+	icon_state = "pdoor0";
+	id_tag = "crab_shutters";
+	name = "Protective Shutters";
+	opacity = 0;
+	dir = 4;
+	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "HB" = (
 /obj/item/stack/material/rods,
 /obj/item/material/shard/shrapnel/aluminium,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "HC" = (
 /obj/machinery/portable_atmospherics/canister/empty/hydrogen{
 	initial_health_percent = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "HM" = (
 /obj/structure/bed/chair/padded/black,
@@ -2494,7 +2717,9 @@
 	req_access = list()
 	},
 /obj/random/trash,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "HX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
@@ -2502,12 +2727,6 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "mayfly_dock_pump"
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
 	},
 /obj/floor_decal/industrial/warning/full,
 /obj/machinery/light/small{
@@ -2519,7 +2738,9 @@
 	id_tag = "mayfly_dock_sensor";
 	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "HY" = (
 /obj/item/stack/material/titanium,
@@ -2531,9 +2752,6 @@
 /area/space)
 "Ia" = (
 /obj/structure/table/standard,
-/obj/floor_decal/corner/paleblue{
-	dir = 9
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -2556,17 +2774,27 @@
 	name = "Crab External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "IC" = (
 /obj/machinery/atmospherics/unary/engine,
+/obj/structure/shuttle/engine/heater{
+	dir = 1;
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/maintenance)
 "ID" = (
+/obj/floor_decal/borderfloor{
+	dir = 1
+	},
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	spawn_broken = 1
+	dir = 1
 	},
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
@@ -2575,13 +2803,12 @@
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/lounge)
 "IK" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/structure/handrail{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/maintenance)
 "IM" = (
 /obj/paint/green,
@@ -2595,22 +2822,29 @@
 /turf/space,
 /area/derelict_cargo_ship/medbay)
 "IR" = (
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/door/airlock/external/bolted{
 	name = "Mayfly External Airlock";
 	id_tag = "mayfly_dock_outer"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "IU" = (
 /obj/structure/table/rack,
 /obj/random/drinkbottle,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "Jk" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -2620,27 +2854,25 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "Jo" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/visible/fuel,
-/turf/simulated/floor/plating,
+/obj/paint/red,
+/turf/simulated/wall/titanium,
 /area/derelict_cargo_ship/cargo)
 "Jp" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
 /obj/structure/cable/yellow,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
+/obj/floor_decal/techfloor{
+	dir = 8
 	},
-/obj/floor_decal/industrial/warning{
+/obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/item/stack/material/phoron/fifty,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/item/stack/material/phoron/ten,
+/obj/item/stack/material/phoron/ten,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "Jv" = (
 /obj/structure/bed/chair/padded/black,
@@ -2655,12 +2887,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -2668,8 +2894,16 @@
 /obj/machinery/oxygen_pump{
 	pixel_x = 28
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
 /obj/decal/cleanable/blood,
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/quarters)
 "Kc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2679,14 +2913,21 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor/corner,
+/obj/floor_decal/borderfloor/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Ke" = (
 /obj/floor_decal/industrial/outline/blue,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor{
+	spawn_broken = 1;
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Kh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2702,8 +2943,20 @@
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "Km" = (
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/crate,
+/obj/floor_decal/techfloor/hole/right{
+	dir = 1
+	},
+/obj/structure/closet/crate/plastic,
+/obj/item/stack/material/phoron/ten,
+/obj/item/stack/material/phoron/ten,
+/obj/item/device/oxycandle,
+/obj/item/device/oxycandle,
+/obj/item/device/oxycandle,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "KG" = (
@@ -2724,6 +2977,13 @@
 	id_tag = "crab_cargo_pump_out_internal"
 	},
 /obj/structure/table/rack,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/random/loot,
+/obj/random/tech_supply,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Lm" = (
@@ -2733,7 +2993,10 @@
 	},
 /area/derelict_cargo_ship/maintenance)
 "Ln" = (
-/turf/simulated/floor/plating,
+/obj/item/stack/tile,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "Ly" = (
 /obj/structure/table/rack,
@@ -2741,7 +3004,11 @@
 	dir = 1;
 	pixel_y = -26
 	},
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "LG" = (
 /turf/simulated/floor/tiled/dark/monotile,
@@ -2758,20 +3025,28 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
 "LS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/alarm{
-	pixel_y = 23;
+	pixel_y = 20;
 	req_access = list()
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/random/firstaid,
+/obj/floor_decal/borderfloorwhite{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/derelict_cargo_ship/medbay)
 "Me" = (
@@ -2786,17 +3061,17 @@
 "Mf" = (
 /obj/floor_decal/industrial/outline/orange,
 /obj/item/material/shard/shrapnel/steel,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/techfloor{
+	spawn_broken = 1;
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "MT" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 9
 	},
-/turf/simulated/floor/plating,
+/obj/paint/red,
+/turf/simulated/wall/titanium,
 /area/derelict_cargo_ship/cargo)
 "Nj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -2809,14 +3084,14 @@
 /obj/machinery/button/blast_door{
 	id_tag = "crab_cargo_hatch";
 	name = "Cargo Hatch";
-	pixel_x = 25;
-	pixel_y = -6
+	pixel_x = 27;
+	pixel_y = -8
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	master_tag = "crab_cargo";
 	name = "interior access button";
-	pixel_x = 24;
+	pixel_x = 22;
 	pixel_y = 6;
 	frequency = 1331
 	},
@@ -2826,24 +3101,30 @@
 /obj/floor_decal/techfloor/corner{
 	dir = 1
 	},
+/obj/floor_decal/techfloor/hole{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "No" = (
 /obj/machinery/light/small/red{
 	dir = 4
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "NA" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
-	},
 /obj/structure/table/rack,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -20;
+	pixel_y = 0
 	},
+/obj/floor_decal/borderfloorblack,
+/obj/random/toolbox,
+/obj/item/stack/material/phoron/ten,
+/obj/item/device/flashlight,
+/obj/random/loot,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "NF" = (
@@ -2855,9 +3136,6 @@
 /turf/space,
 /area/space)
 "NW" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump_out_external";
 	dir = 1
@@ -2865,16 +3143,22 @@
 /obj/machinery/nav_light/ventral{
 	pixel_x = 22
 	},
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/obj/structure/handrail{
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "NX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
 "Oa" = (
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -2887,14 +3171,17 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/engineering/salvage/crab,
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 8
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "Oi" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 20
 	},
 /turf/simulated/floor/lino,
 /area/derelict_cargo_ship/quarters)
@@ -2905,18 +3192,22 @@
 "Ov" = (
 /obj/structure/bed/chair/shuttle/black,
 /obj/landmark/corpse/bridgeofficer,
+/obj/floor_decal/borderfloor,
 /turf/simulated/floor/tiled{
 	spawn_broken = 1
 	},
 /area/derelict_cargo_ship/cockpit)
 "OC" = (
 /obj/machinery/shipsensors,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/airlock)
 "OP" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "OZ" = (
@@ -2926,19 +3217,25 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/floor_decal/techfloor{
-	dir = 1
-	},
-/obj/floor_decal/techfloor,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/sign/warning/airlock{
-	pixel_y = 32
+	pixel_y = 28;
+	pixel_x = -6
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	master_tag = "crab_airlock";
+	name = "interior access button";
+	pixel_y = 24;
+	frequency = 1331;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pg" = (
 /obj/paint/brown,
@@ -2954,10 +3251,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/floor_decal/techfloor/corner{
-	dir = 4
-	},
-/obj/floor_decal/techfloor/corner,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -2968,7 +3261,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pv" = (
 /obj/machinery/door/firedoor,
@@ -2994,6 +3288,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
@@ -3008,47 +3303,41 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "PV" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
+/obj/item/stack/tile/techgrey,
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/obj/structure/lattice,
-/turf/space,
 /area/derelict_cargo_ship/maintenance)
 "Qn" = (
 /obj/machinery/computer/dummy{
 	dir = 1;
 	initial_health_percent = 20
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "Qq" = (
-/obj/floor_decal/industrial/warning/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	dir = 4;
 	id_tag = "crab_airlock_pump_out_external"
 	},
-/turf/simulated/floor/plating,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "Qr" = (
 /turf/space,
 /area/space)
 "Qz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor{
-	dir = 8
-	},
-/obj/floor_decal/industrial/warning,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	dir = 8;
 	display_name = "Mayfly - Dock";
 	frequency = 1380;
 	id_tag = "mayfly_dock";
-	pixel_x = 24
+	pixel_x = 20
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -3058,12 +3347,17 @@
 	frequency = 1331;
 	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/derelict_cargo_ship/maintenance)
-"QJ" = (
-/obj/floor_decal/industrial/warning{
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
 	dir = 4
 	},
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
+/area/derelict_cargo_ship/maintenance)
+"QJ" = (
 /obj/machinery/computer/shuttle_control/explore/crab{
 	dir = 4
 	},
@@ -3075,48 +3369,30 @@
 	dir = 1;
 	req_access = list()
 	},
-/obj/machinery/firealarm{
-	pixel_x = -14;
-	pixel_y = 23
+/obj/floor_decal/borderfloorblack{
+	dir = 9
 	},
-/turf/simulated/floor/tiled/dark/monotile,
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "QZ" = (
-/obj/structure/grille,
-/obj/machinery/door/blast/regular/open{
-	density = 0;
-	icon_state = "pdoor0";
-	id_tag = "crab_shutters";
-	name = "Protective Shutters";
-	opacity = 0;
-	dir = 4;
-	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/net)
+/area/derelict_cargo_ship/maintenance)
 "Rb" = (
-/obj/machinery/door/blast/regular/open{
-	density = 0;
-	icon_state = "pdoor0";
-	id_tag = "crab_shutters";
-	name = "Protective Shutters";
-	opacity = 0;
-	dir = 4;
-	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/obj/structure/grille,
-/obj/floor_decal/industrial/warning,
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/net)
+/area/derelict_cargo_ship/cockpit)
 "Rt" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -20
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "Ru" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3137,10 +3413,16 @@
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/airlock)
 "RB" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
+/obj/structure/catwalk,
+/obj/machinery/airlock_sensor{
+	id_tag = "crab_airlock_exterior_sensor";
+	frequency = 1331;
+	pixel_y = -20;
+	pixel_x = -21
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/net)
 "RJ" = (
 /obj/paint/green,
@@ -3150,20 +3432,20 @@
 	},
 /area/derelict_cargo_ship/quarters)
 "Sg" = (
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
-	},
 /obj/structure/closet/secure_closet/personal/empty,
 /obj/item/storage/belt/utility/full,
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/gloves/insulated,
+/obj/floor_decal/borderfloorblack,
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/cargo)
 "Sh" = (
 /obj/structure/closet/emcloset,
 /obj/random/hardsuit,
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
 "Sj" = (
@@ -3178,42 +3460,55 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "Sk" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/maintenance)
 "Sl" = (
-/obj/machinery/recharge_station,
-/obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/machinery/computer/cryopod{
+	pixel_y = 20;
+	pixel_x = 0
+	},
+/obj/machinery/cryopod{
+	dir = 2
+	},
+/obj/floor_decal/industrial/outline/green,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "Sr" = (
-/obj/floor_decal/industrial/outline/blue,
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
+/obj/floor_decal/techfloor{
+	dir = 5
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
-	},
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/turf/simulated/floor/plating,
+/obj/floor_decal/industrial/outline/blue,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "Su" = (
 /obj/machinery/radio_beacon,
-/turf/simulated/floor/tiled/techfloor,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "Sv" = (
 /obj/machinery/light/small{
@@ -3221,19 +3516,21 @@
 	spawn_broken = 1
 	},
 /turf/simulated/floor/tiled/techfloor{
-	spawn_broken = 1
+	spawn_broken = 1;
+	initial_gas = null
 	},
 /area/derelict_cargo_ship/maintenance)
 "SF" = (
 /obj/structure/table/rack,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "SQ" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_secondary_pump_out_internal"
-	},
-/obj/floor_decal/techfloor{
-	dir = 10
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 4;
@@ -3242,6 +3539,10 @@
 	frequency = 1331;
 	cycle_to_external_air = 1
 	},
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor/corner,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "SS" = (
@@ -3252,9 +3553,6 @@
 /turf/simulated/wall/titanium,
 /area/salvage_shuttle/maintenance)
 "To" = (
-/obj/floor_decal/techfloor{
-	dir = 5
-	},
 /obj/structure/handrail,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_airlock_pump"
@@ -3266,6 +3564,9 @@
 	cycle_to_external_air = 1;
 	frequency = 1331
 	},
+/obj/floor_decal/techfloor{
+	dir = 5
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Tx" = (
@@ -3273,9 +3574,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/floor_decal/techfloor{
-	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -3286,8 +3584,14 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
 /obj/floor_decal/techfloor/corner{
 	dir = 1
+	},
+/obj/floor_decal/techfloor/corner{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/quarters)
@@ -3296,7 +3600,9 @@
 /obj/item/stack/cable_coil/green{
 	amount = 2
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "TA" = (
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
@@ -3304,9 +3610,13 @@
 	display_name = "Crab - Dock";
 	frequency = 1380;
 	id_tag = "crab_dock";
-	pixel_x = 24
+	pixel_x = 22;
+	pixel_y = 0
 	},
-/turf/simulated/floor/tiled/monotile,
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
+/turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
 "TE" = (
 /obj/paint/brown,
@@ -3316,6 +3626,9 @@
 /obj/structure/table/standard,
 /obj/random/donkpocket_box,
 /obj/item/material/knife/kitchen,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/derelict_cargo_ship/quarters)
 "TN" = (
@@ -3328,6 +3641,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/floor_decal/techfloor/corner,
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
@@ -3338,7 +3652,11 @@
 /obj/structure/table/rack,
 /obj/random/loot,
 /obj/random/loot,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/derelict_cargo_ship/cargo)
 "TS" = (
 /obj/item/stack/material/rods,
@@ -3352,7 +3670,9 @@
 	initial_health_percent = 60;
 	req_access = list()
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Uj" = (
 /obj/structure/cable/green{
@@ -3369,47 +3689,53 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/techfloor/grid{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Um" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /obj/structure/table/reinforced,
 /obj/random/action_figure,
-/turf/simulated/floor/tiled/dark/monotile,
-/area/derelict_cargo_ship/quarters)
-"Ut" = (
-/obj/floor_decal/industrial/warning,
-/obj/floor_decal/industrial/warning{
+/obj/floor_decal/borderfloorblack{
 	dir = 1
 	},
-/turf/simulated/floor/tiled/techfloor,
+/turf/simulated/floor/lino,
+/area/derelict_cargo_ship/quarters)
+"Ut" = (
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Uu" = (
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
 "UN" = (
-/obj/floor_decal/corner/paleblue{
-	dir = 10
-	},
 /obj/structure/bed/padded,
 /turf/simulated/floor/tiled/white/monotile,
 /area/derelict_cargo_ship/medbay)
 "US" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/floor_decal/industrial/warning/cee,
 /obj/structure/sign/warning{
-	pixel_x = 24;
-	pixel_y = -4;
-	name = "\improper WARNING: HATCH OPENS TO EXTERIOR"
+	pixel_x = 35;
+	pixel_y = -5;
+	name = "\improper WARNING: HATCH OPENS TO EXTERIOR";
+	dir = 8
 	},
 /obj/machinery/button/blast_door{
 	id_tag = "crab_cargo_hatch";
 	name = "Cargo Hatch";
-	pixel_x = 24;
-	pixel_y = 8
+	pixel_x = 23;
+	pixel_y = 8;
+	dir = 8
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Vc" = (
 /obj/item/stack/material/steel,
@@ -3417,7 +3743,9 @@
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Vn" = (
 /obj/shuttle_landmark/nav_salvage_shuttle/nav2,
@@ -3442,7 +3770,13 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/tiled,
+/obj/floor_decal/borderfloorblack/corner{
+	dir = 4
+	},
+/obj/floor_decal/borderfloorblack/corner{
+	dir = 2
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "VC" = (
 /obj/paint/red,
@@ -3454,11 +3788,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
 	},
-/obj/floor_decal/industrial/warning,
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Wt" = (
 /obj/structure/cable/green{
@@ -3475,36 +3806,11 @@
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "Wy" = (
-/obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
+/turf/simulated/floor/plating{
+	initial_gas = null
 	},
-/obj/structure/handrail{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/maintenance)
-"WD" = (
-/obj/item/device/radio/intercom/map_preset/salvage_shuttle{
-	dir = 1;
-	pixel_y = -32;
-	name = "Intercom (Crab)"
-	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
-	},
-/obj/structure/closet/secure_closet/personal/empty,
-/obj/item/storage/belt/utility/full,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/gloves/insulated,
-/turf/simulated/floor/tiled/dark/monotile,
-/area/salvage_shuttle/cargo)
+/area/salvage_shuttle/net)
 "WI" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/machinery/computer/ship/engines{
 	dir = 1
 	},
@@ -3514,9 +3820,13 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list()
+	req_access = list();
+	pixel_y = 0
 	},
-/turf/simulated/floor/tiled/dark/monotile,
+/obj/floor_decal/borderfloorblack{
+	dir = 6
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "WK" = (
 /obj/paint/green,
@@ -3525,23 +3835,27 @@
 	},
 /area/derelict_cargo_ship/medbay)
 "WM" = (
+/obj/floor_decal/borderfloor{
+	dir = 6
+	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/derelict_cargo_ship/cockpit)
 "WU" = (
-/obj/floor_decal/techfloor{
-	dir = 4
-	},
-/obj/floor_decal/techfloor/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 4
+	},
+/obj/floor_decal/techfloor{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "WW" = (
 /obj/machinery/atmospherics/unary/engine,
+/obj/structure/shuttle/engine/heater{
+	dir = 1;
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/derelict_cargo_ship/cargo)
 "Xe" = (
@@ -3549,22 +3863,23 @@
 	id_tag = "crab_cargo_pump_out_internal";
 	dir = 1
 	},
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/plastic,
+/obj/item/stack/net/thirty,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Xo" = (
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
+/obj/structure/lattice,
+/obj/structure/shuttle/engine/heater{
+	dir = 1;
+	pixel_y = -32
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/structure/table/rack,
-/obj/random/loot,
-/turf/simulated/floor/plating,
-/area/derelict_cargo_ship/cargo)
+/turf/space,
+/area/derelict_cargo_ship/maintenance)
 "Xz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -3575,7 +3890,8 @@
 /obj/machinery/door/airlock/external/bolted_open{
 	name = "Crab External Access";
 	frequency = 1331;
-	id_tag = "crab_secondary_inner"
+	id_tag = "crab_secondary_inner";
+	door_color = "#917448"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -3585,17 +3901,17 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/techfloor,
 /obj/floor_decal/techfloor{
-	dir = 1
+	dir = 8
 	},
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 "XB" = (
 /obj/structure/table/standard,
-/obj/floor_decal/corner/paleblue{
-	dir = 9
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
@@ -3605,14 +3921,15 @@
 	},
 /obj/random/plushie,
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	dir = 1
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/derelict_cargo_ship/medbay)
 "XF" = (
 /obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "XG" = (
 /obj/structure/cable/green{
@@ -3620,7 +3937,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled,
+/obj/floor_decal/borderfloorblack{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "XL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3632,7 +3952,8 @@
 /obj/machinery/door/airlock/external/bolted_open{
 	name = "Crab External Access";
 	frequency = 1331;
-	id_tag = "crab_secondary_inner"
+	id_tag = "crab_secondary_inner";
+	door_color = "#917448"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -3641,9 +3962,12 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/floor_decal/techfloor{
-	dir = 1
+	dir = 8
 	},
-/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "XO" = (
@@ -3653,27 +3977,49 @@
 "XT" = (
 /obj/structure/grille/broken,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/cockpit)
 "Ya" = (
 /obj/machinery/power/smes/buildable{
 	initial_health_percent = 20
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/derelict_cargo_ship/maintenance)
 "Yl" = (
 /obj/machinery/atmospherics/unary/engine{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
 /area/salvage_shuttle/maintenance)
 "Yq" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump"
 	},
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/airlock_sensor{
+	id_tag = "crab_cargo_sensor";
+	frequency = 1331;
+	pixel_y = 22;
+	pixel_x = -11
+	},
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/floor_decal/techfloor/hole/right,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Yv" = (
@@ -3683,14 +4029,17 @@
 /obj/machinery/button/blast_door{
 	id_tag = "crab_shutters";
 	name = "Protective Shutters Control";
-	pixel_y = -24;
-	pixel_x = -36
+	pixel_y = -22;
+	pixel_x = -34
 	},
 /obj/structure/bed/chair/shuttle/black{
 	dir = 8
 	},
 /obj/overmap/visitable/ship/landable/salvage_shuttle,
-/turf/simulated/floor/tiled,
+/obj/floor_decal/borderfloorblack/corner{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
 "Yz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -3698,6 +4047,9 @@
 	name = "John";
 	voice_name = "John";
 	real_name = "John"
+	},
+/obj/floor_decal/borderfloorblack{
+	dir = 1
 	},
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
@@ -3709,59 +4061,13 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/glass{
-	name = "Crab Cockpit"
+	name = "Crab Cockpit";
+	door_color = "#917448"
 	},
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/salvage_shuttle/cockpit)
-"YE" = (
-/obj/machinery/atmospherics/unary/engine{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/salvage_shuttle/airlock)
-"YK" = (
-/obj/machinery/door/blast/regular/open{
-	density = 0;
-	icon_state = "pdoor0";
-	id_tag = "crab_shutters";
-	name = "Protective Shutters";
-	opacity = 0;
-	dir = 4;
-	test_exemptions = list("DOOR_ON_APPROPRIATE_TURF")
-	},
-/obj/structure/net,
-/turf/space,
-/area/salvage_shuttle/net)
-"YL" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1"
-	},
-/obj/structure/table/rack,
-/obj/random/loot,
-/turf/simulated/floor/plating,
-/area/derelict_cargo_ship/cargo)
-"ZX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/external/bolted_open{
-	name = "Crab External Access";
-	frequency = 1331;
-	id_tag = "crab_secondary_inner"
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
 /obj/floor_decal/techfloor{
@@ -3770,6 +4076,55 @@
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
+/obj/floor_decal/industrial/hatch/yellow,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/salvage_shuttle/cockpit)
+"YE" = (
+/obj/machinery/atmospherics/unary/engine{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
+/area/salvage_shuttle/airlock)
+"YL" = (
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
+	},
+/obj/structure/table/rack,
+/obj/random/loot,
+/obj/floor_decal/techfloor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/derelict_cargo_ship/cargo)
+"ZX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/airlock/external/bolted_open{
+	name = "Crab External Access";
+	frequency = 1331;
+	id_tag = "crab_secondary_inner";
+	door_color = "#917448"
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/floor_decal/techfloor{
+	dir = 1
+	},
+/obj/floor_decal/techfloor,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/airlock)
 
@@ -5642,11 +5997,11 @@ Qr
 Qr
 Qr
 Qr
-ol
+Xo
 uP
 hu
 XF
-el
+QZ
 qC
 el
 EE
@@ -5742,14 +6097,14 @@ Qr
 Qr
 Qr
 Qr
-Qr
+rM
 Qr
 Hi
-PV
+ol
 Ya
 BN
 HB
-el
+jo
 Ue
 EE
 Vt
@@ -5948,9 +6303,9 @@ Qr
 Qr
 Qr
 Qr
-ol
-rM
-el
+Xo
+sR
+PV
 Sv
 dH
 BU
@@ -6269,7 +6624,7 @@ Bt
 kk
 kk
 yq
-Ln
+Rb
 Ov
 qi
 XT
@@ -6357,7 +6712,7 @@ Qr
 Qr
 Qr
 WW
-Jo
+rP
 Wt
 oM
 tB
@@ -6462,7 +6817,7 @@ WW
 Jo
 wt
 ak
-Xo
+YL
 ak
 YL
 FS
@@ -7901,11 +8256,11 @@ IE
 Ah
 Ah
 IE
-Rb
-YK
-YK
-YK
-QZ
+Qr
+Qr
+Qr
+Qr
+Qr
 ev
 vn
 vn
@@ -8106,9 +8461,9 @@ NX
 Bm
 nP
 nv
-Hp
-Hp
-Hp
+Wy
+Wy
+Wy
 RB
 Du
 XG
@@ -8623,7 +8978,7 @@ TE
 ms
 TE
 lk
-WD
+Sg
 TE
 Qr
 Qr
@@ -9222,7 +9577,7 @@ Qr
 Qr
 Qr
 Qr
-Wy
+IK
 wm
 eN
 zs
@@ -9530,7 +9885,7 @@ Qr
 Qr
 Qr
 Qr
-Dr
+DT
 cA
 Nj
 aY
@@ -9540,7 +9895,7 @@ TA
 zM
 nQ
 nA
-Ry
+nQ
 Qr
 Qr
 Qr
@@ -9632,7 +9987,7 @@ Qr
 Qr
 Qr
 Qr
-Dr
+DT
 sH
 sU
 qZ
@@ -9640,9 +9995,9 @@ qZ
 ma
 ws
 iD
-Ry
-Ry
-Ry
+nQ
+nQ
+nQ
 Qr
 Qr
 Qr
@@ -9737,10 +10092,10 @@ Qr
 Qr
 Dr
 Dr
-jo
+ur
 ur
 Bd
-rP
+bn
 bn
 Ry
 Ry
