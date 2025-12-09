@@ -19,7 +19,7 @@
 /singleton/psionic_power/energistics/disrupt/invoke(mob/living/user, mob/living/target)
 	if(user.zone_sel.selecting != BP_HEAD && user.zone_sel.selecting != BP_EYES && user.zone_sel.selecting != BP_MOUTH)
 		return FALSE
-	if(istype(target, /turf))
+	if(istype(target, isturf))
 		return FALSE
 	. = ..()
 	if(.)
@@ -38,7 +38,7 @@
 /singleton/psionic_power/energistics/electrocute/invoke(mob/living/user, mob/living/target)
 	if(user.zone_sel.selecting != BP_CHEST && user.zone_sel.selecting != BP_GROIN)
 		return FALSE
-	if(istype(target, /turf))
+	if(istype(target, isturf))
 		return FALSE
 	. = ..()
 	if(.)

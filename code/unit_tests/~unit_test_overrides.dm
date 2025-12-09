@@ -58,10 +58,10 @@ GLOBAL_LIST_EMPTY(unit_test_obj_random_weights_by_type)
 			GLOB.unit_test_obj_random_weights_by_type[path] = weight
 		return weight
 	// Would be nice to re-use how closets calculate size/weight but the difference between instances and paths prevents it.
-	if(ispath(path, /obj))
+	if(ispath(path, isobj))
 		var/obj/O = path
 		return initial(O.w_class) / 2
-	if(ispath(path, /mob))
+	if(ispath(path, ismob))
 		var/mob/M = path
 		return initial(M.mob_size)
 	if(ispath(path, /obj/structure) || ispath(path, /obj/machinery))
