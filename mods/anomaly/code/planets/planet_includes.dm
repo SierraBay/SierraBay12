@@ -15,4 +15,5 @@
 
 #include "_planet_spawn_core.dm"
 #include "another_planets.dm"
+#include "vulcanic\vulcanic.dm"
 #include "sargas.dm"

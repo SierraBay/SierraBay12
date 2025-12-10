@@ -1,40 +1,6 @@
-//Checks if all high bits in req_mask are set in bitfield
-#define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
-
-//Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
-		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
-	return text("#[][][]", textr, textg, textb)
-
 //Returns the middle-most value
 /proc/dd_range(low, high, num)
 	return max(low,min(high,num))
-
-//Returns whether or not A is the middle most value
-/proc/InRange(A, lower, upper)
-	if(A < lower) return 0
-	if(A > upper) return 0
-	return 1
 
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
@@ -367,12 +333,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	RETURN_TYPE(/list)
 	return follow_repository.get_follow_targets()
 
-//Forces a variable to be posative
-/proc/modulus(M)
-	if(M >= 0)
-		return M
-	if(M < 0)
-		return -M
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -424,20 +384,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-
-//returns random gauss number
-/proc/GaussRand(sigma)
-	var/x,y,rsq
-	do
-		x=2*rand()-1
-		y=2*rand()-1
-		rsq=x*x+y*y
-	while(rsq>1 || !rsq)
-	return sigma*y*sqrt(-2*log(rsq)/rsq)
-
-//returns random gauss number, rounded to 'roundto'
-/proc/GaussRandRound(sigma,roundto)
-	return round(GaussRand(sigma),roundto)
 
 /**
  * Retrieves the contents of this atom and all atoms contained within, recursively.

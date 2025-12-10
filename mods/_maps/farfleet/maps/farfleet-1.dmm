@@ -2426,10 +2426,9 @@
 /turf/simulated/floor,
 /area/ship/farfleet/engineering/fussion/control)
 "jJ" = (
+/obj/structure/lattice,
 /obj/machinery/shield_diffuser,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
+/turf/space,
 /area/space)
 "jO" = (
 /obj/machinery/sleeper{
@@ -12029,14 +12028,14 @@ aa
 aa
 aa
 aa
-aa
+jJ
 gE
 gX
 rR
 rR
 gX
 gE
-aa
+jJ
 aa
 aa
 aa
@@ -12151,14 +12150,14 @@ aa
 aa
 aa
 aa
-jJ
+aU
 MM
 lv
 mV
 VU
 lv
 Al
-jJ
+aU
 aa
 aa
 aa

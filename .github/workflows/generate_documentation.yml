@@ -49,7 +49,7 @@ jobs:
         run: |
           ~/dmdoc
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4a3abc783e1a24aeb44c16e869ad83caf6b4cc23
+        uses: JamesIves/github-pages-deploy-action@4ef313c6a410f0883308623d45510e4a11625465
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages

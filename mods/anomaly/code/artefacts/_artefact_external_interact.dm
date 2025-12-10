@@ -93,8 +93,9 @@
 /obj/item/artefact/proc/artefact_collected_by_player()
 	connected_to_anomaly = FALSE
 	SSanom.collected_artefacts_by_player++
-	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 50, points_type = "anom", source = "Сбор артефакта")
-	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 50, points_type = "evolution", source = "Сбор артефакта")
+	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 200, points_type = "mob", source = "Сбор артефакта")
+	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 200, points_type = "anomaly", source = "Сбор артефакта")
+	SSanom.add_points_to_storyteller(input_z_level = get_z(src), points_ammout = 200, points_type = "evolution", source = "Сбор артефакта")
 
 /mob/living/emp_act(severity)
 	var/list/result_effects = calculate_artefact_reaction(src, "ЭМИ")

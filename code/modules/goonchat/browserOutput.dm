@@ -58,10 +58,10 @@ GLOBAL_TYPED_AS(iconCache, /savefile, new("data/iconCache.sav"))
 	if (!winexists(owner, "browseroutput"))
 		set waitfor = FALSE
 		broken = TRUE
-		message_admins("Couldn't start chat for [key_name_admin(owner)]!")
-		. = FALSE
-		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
-		return
+		log_debug("Couldn't start chat for [key_name_admin(owner)]!")
+		if (owner.mob)
+			alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
+		return FALSE
 	if (owner && winget(owner, "browseroutput", "is-visible") == "true")
 		doneLoading()
 	else

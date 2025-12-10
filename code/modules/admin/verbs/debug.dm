@@ -413,7 +413,7 @@
 
 	var/dat = display_medical_data(H.get_raw_medical_data(mutations = TRUE), SKILL_MAX)
 
-	dat += text("<BR><a href='byond://?src=\ref[];mach_close=scanconsole'>Close</A>", usr)
+	dat += "<A href='byond://?src=\ref[usr];mach_close=scanconsole'>Close</A>"
 	show_browser(usr, dat, "window=scanconsole;size=430x600")
 
 /client/proc/cmd_analyse_health_context(mob/living/carbon/human/H as mob in GLOB.human_mobs)
