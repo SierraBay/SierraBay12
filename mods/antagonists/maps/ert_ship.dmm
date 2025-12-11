@@ -2634,6 +2634,10 @@
 	req_access = list("ACCESS_CENT_CAPTAIN");
 	id_tag = "ert_esoteric"
 	},
+/obj/item/silencer/medium,
+/obj/item/silencer/medium,
+/obj/item/silencer/medium,
+/obj/item/silencer/medium,
 /turf/unsimulated/floor/techfloor{
 	icon_state = "techfloor_grid"
 	},

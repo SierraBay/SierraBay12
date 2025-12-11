@@ -417,8 +417,7 @@ var/global/floorIsLava = 0
 
 	var/datum/feed_network/torch_network = news_network[1] //temp change until the UI can be updated to support switching networks.
 
-	var/dat
-	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
+	var/dat = "<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>"
 
 	switch(admincaster_screen)
 		if(0)
@@ -662,7 +661,7 @@ var/global/floorIsLava = 0
 		var/r = t
 		if( findtext(r,"##") )
 			r = copytext( r, 1, findtext(r,"##") )//removes the description
-		dat += text("<tr><td>[t] (<a href='byond://?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
+		dat += "<tr><td>[t] (<A href='byond://?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>"
 	dat += "</table>"
 	show_browser(usr, dat, "window=ban;size=400x400")
 
@@ -1110,12 +1109,7 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 
 	if(!check_rights(R_SPAWN))	return
 
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
+	var/list/matches = typesof_filtered(/atom, object)
 
 	if(length(matches)==0)
 		return
@@ -1127,7 +1121,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-
+	var/reason = prevent_spawn_reason(chosen)
+	if (reason)
+		to_chat(usr, SPAN_WARNING("Cannot create a [chosen] - [reason]"))
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)

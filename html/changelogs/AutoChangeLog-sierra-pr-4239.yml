@@ -1,5 +1,0 @@
-author: Spookerton
-changes:
-  - {tweak: Skrell headwear doesn't mention female/male in descriptions (but 
-      does in loadout).}
-delete-after: true

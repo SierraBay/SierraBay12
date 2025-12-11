@@ -43,7 +43,7 @@
 	else if(istype(W, /obj/item/pen))
 		var/n_name = sanitizeSafe(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text, MAX_NAME_LEN)
 		if((loc == usr && usr.stat == 0))
-			SetName("folder[(n_name ? text("- '[n_name]'") : null)]")
+			SetName("folder[(n_name ? "- '[n_name]'" : null)]")
 		return TRUE
 
 	return ..()

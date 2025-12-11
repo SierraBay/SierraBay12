@@ -14,7 +14,7 @@
 	desc = "This A&M X6 is fitted with an NT1019 chip which allows remote authorization of weapon functionality. It has an SCG emblem on the grip."
 	icon = 'icons/obj/guns/stunrevolver_secure.dmi'
 	icon_state = "energyrevolverstun100"
-	modifystate= "energyrevolverstun"
+	modifystate = "energyrevolverstun"
 	item_icons = list(
 		slot_l_hand_str = 'icons/mob/onmob/items/lefthand_guns_secure.dmi',
 		slot_r_hand_str = 'icons/mob/onmob/items/righthand_guns_secure.dmi'
@@ -50,10 +50,22 @@
 	item_state = null
 	projectile_type = /obj/item/projectile/beam/stun
 	firemodes = list(
-		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
-		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill")
+		list(
+			"mode_name" = "stun",
+			"projectile_type" = /obj/item/projectile/beam/stun,
+			"modifystate" = "energyrevolverstun"
+		),
+		list(
+			"mode_name" = "shock",
+			"projectile_type" = /obj/item/projectile/beam/stun/shock,
+			"modifystate" = "energyrevolvershock"
+		),
+		list(
+			"mode_name" = "kill",
+			"projectile_type" = /obj/item/projectile/beam,
+			"modifystate" = "energyrevolverkill"
 		)
+	)
 	req_access = list(list(access_brig, access_heads))
 	authorized_modes = list(ALWAYS_AUTHORIZED, AUTHORIZED)
 

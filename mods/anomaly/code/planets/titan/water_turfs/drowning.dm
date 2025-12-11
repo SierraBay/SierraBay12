@@ -15,8 +15,8 @@
 /turf/simulated/floor/exoplanet/titan_water/proc/drown_item(obj/input)
 	input.anchored = TRUE
 	visible_message(message = SPAN_BAD("[input] уходит на дно."), range = 7)
-	animate(input, alpha = 0, time = 10, easing = EASE_OUT)
-	sleep(11)
+	animate(input, alpha = 0, time = 1 SECONDS, easing = EASE_OUT)
+	sleep(1.1 SECONDS)
 	qdel(input)
 
 /turf/simulated/floor/exoplanet/titan_water/proc/drown_structure(obj/input)
@@ -26,15 +26,15 @@
 	for(var/mob/living/mobik in input.contents)
 		mobik.forceMove(get_turf(src))
 	visible_message(message = SPAN_BAD("[input] уходит на дно."), range = 7)
-	animate(input, alpha = 0, time = 10, easing = EASE_OUT)
-	sleep(11)
+	animate(input, alpha = 0, time = 1 SECONDS, easing = EASE_OUT)
+	sleep(1.1 SECONDS)
 	qdel(input)
 
 /turf/simulated/floor/exoplanet/titan_water/proc/drown_mech(mob/living/exosuit/mech)
 	mech.anchored = TRUE
 	visible_message(message = SPAN_BAD("[mech] уходит на дно."), range = 7)
-	animate(mech, alpha = 0, time = 10, easing = EASE_OUT)
-	sleep(11)
+	animate(mech, alpha = 0, time = 1 SECONDS, easing = EASE_OUT)
+	sleep(1.1 SECONDS)
 	mech.Destroy()
 
 //Снимем с персонажа:.
