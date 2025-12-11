@@ -20,6 +20,14 @@
 /obj/item/gun/energy/sniperrifle
 	name = "9E marksman energy rifle"
 	icon = 'mods/guns/icons/obj/laser_sniper.dmi'
+	icon_state = "sniper"
+	item_state = "laser"
+	wielded_item_state = "sniper-wielded"
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sniper.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sniper.dmi'
+		)
+
 
 /obj/item/gun/energy/pulse_rifle
 	wielded_item_state = "pulsecarbine-wielded"
