@@ -8,7 +8,7 @@
 //But if players get some of these 'big guys', only teamwork, fast legs and trickery will works fine
 //So combine all of that to defeat them
 
-/datum/ai_holder/hivemnd
+/datum/ai_holder/hivemind
 	// Base
 	intelligence_level = AI_SMART
 
@@ -27,6 +27,9 @@
 
 	// Pathfinding
 	use_astar = TRUE
+
+	// Shooting
+	firing_lanes = TRUE
 
 	// Targeting
 	hostile = TRUE
@@ -81,7 +84,7 @@
 	//internals
 	var/obj/machinery/hivemind_machine/master
 	var/special_ability_cooldown = 0		//use ability_cooldown, don't touch this
-	ai_holder = /datum/ai_holder/hivemnd
+	ai_holder = /datum/ai_holder/hivemind
 	// ВЫДАТЬ НАТУРАЛ ВЕАПОН
 
 /mob/living/simple_animal/hostile/hivemind/New()
@@ -275,7 +278,6 @@
 	mob_size = MOB_SMALL
 	pass_flags = PASS_FLAG_TABLE
 	speed = 4
-	ai_holder = /datum/ai_holder/simple_animal/melee
 	say_list_type = /datum/say_list/stinger
 
 /datum/say_list/stinger
@@ -318,7 +320,6 @@
 	mob_size = MOB_SMALL
 	pass_flags = PASS_FLAG_TABLE
 	speed = 6
-	ai_holder = /datum/ai_holder/simple_animal/destructive
 	say_list_type = /datum/say_list/bomber
 
 /datum/say_list/bomber
@@ -429,6 +430,34 @@
 		return
 
 /mob/living/simple_animal/hostile/hivemind/lobber/death()
+	..()
+	gibs(loc, null, /obj/gibspawner/robot)
+	qdel(src)
+
+
+/////////////////////////////////////HOUND//////////////////////////////////
+//Special ability: none
+//Fast and furious
+//High chance of malfunction
+//No speaking chance
+//Appears from dead small mobs or from hive spawner
+//////////////////////////////////////////////////////////////////////////////
+
+/mob/living/simple_animal/hostile/hivemind/hound
+	name = "strange beast"
+	desc = "A strange four-legged creature with a long trunk and many appendages on its back."
+	icon_state = "hound"
+	attacktext = "slice"
+	density = FALSE
+	speak_chance = 3
+	malfunction_chance = 15
+	mob_size = MOB_SMALL
+	pass_flags = PASS_FLAG_TABLE
+	speed = 14
+	movement_cooldown = 0
+	natural_weapon = /obj/item/natural_weapon/claws
+
+/mob/living/simple_animal/hostile/hivemind/hound/death()
 	..()
 	gibs(loc, null, /obj/gibspawner/robot)
 	qdel(src)

@@ -239,3 +239,196 @@
 	fake_dead = FALSE
 	stance = STANCE_IDLE
 	fake_death_cooldown = world.time + 2 MINUTES
+
+////////////////////////Treader///////////////////
+//Ranged just like the lobber, (deals more damage but needs longer to recharge, but given that ranged_cooldown does nothing not implemented yet)
+//When damaged, "releases a cloud of nanites" that heal all allies in view
+//A bit tanky, but moves slow
+//Death releases a EMP pulse
+/////////////////////////////////////////////////
+/mob/living/simple_animal/hostile/hivemind/treader
+	name = "Treader"
+	desc = "A human head with a screen shoved in its mouth, connected to a large column with another screen displaying a human face."
+	icon_state = "treader"
+	attacktext = "slapped"
+	health = 100
+	maxHealth = 100
+	malfunction_chance = 10
+	speak_chance = 2
+	speed = 6
+	ranged = TRUE
+	projectiletype = /obj/item/projectile/goo
+	projectilesound = 'sound/effects/blobattack.ogg'
+	mob_size = MOB_MEDIUM
+	ability_cooldown = 20 SECONDS
+
+	say_list_type = /datum/say_list/lobber
+
+/datum/say_list/lobber
+	speak = list(
+				"Hey, at least I got my head.",
+				"I can\'t... I can\'t feel my arms...",
+				"Oh god... my legs... where are my legs..."
+				)
+
+	say_got_target = list(
+				"You there! Cut off my head!",
+				"So sorry! Can\'t exactly control my head anymore.",
+				"S-shoot the screen! God I hope it won\'t hurt."
+				)
+
+/mob/living/simple_animal/hostile/hivemind/treader/Initialize()
+	..()
+	set_light(2, 1, COLOR_BLUE_LIGHT)
+
+/mob/living/simple_animal/hostile/hivemind/treader/Life()
+	if(!..())
+		return
+
+	if(maxHealth > health && world.time > special_ability_cooldown)
+		special_ability()
+
+
+/mob/living/simple_animal/hostile/hivemind/treader/special_ability()
+	visible_emote("vomits out a burst of rejuvenating nanites!")
+
+	for(var/mob/living/simple_animal/hostile/hivemind/ally in view(src))
+		ally.heal_overall_damage(10, 0)
+
+	special_ability_cooldown = world.time + ability_cooldown
+
+
+/mob/living/simple_animal/hostile/hivemind/treader/death()
+	..()
+	gibs(loc, null, /obj/gibspawner/robot)
+	empulse(get_turf(src), 1, 3)
+	qdel(src)
+
+
+/////////////////////////////////////PHASER///////////////////////////////////
+//Special ability: Superposition. Phaser exists at four locations. But, actually he vulnerable only at one. Other is just a copies
+//Moves with teleportation only, can stun victim if he land on it
+//Also can hide in closets
+//Can't speak, no malfunctions
+//Appears from dead human body
+//////////////////////////////////////////////////////////////////////////////
+
+/mob/living/simple_animal/hostile/hivemind/phaser
+	name = "Phaser"
+	desc = "A twisted human with a strange device on its head. Or for its head."
+	icon_state = "phaser"
+	health = 160
+	maxHealth = 160
+	attacktext = "warps"
+	speak_chance = 0
+	malfunction_chance = 0
+	mob_size = MOB_MEDIUM
+	ability_cooldown = 2 MINUTES
+
+	armor_type = /datum/extension/armor
+	natural_armor = list(
+		"melee" = ARMOR_MELEE_MINOR,
+		"bullet" = ARMOR_BALLISTIC_MINOR,
+		"laser" = ARMOR_LASER_MAJOR,
+		"energy" = ARMOR_RAD_RESISTANT,
+		"bomb" = ARMOR_BOMB_MINOR,
+		"bio" = ARMOR_BIO_SHIELDED,
+		"rad" = ARMOR_RAD_SHIELDED
+	)
+
+	movement_cooldown = 0 // Hunters are FAST.
+
+	ai_holder = /datum/ai_holder/hivemind/phaser
+
+	// Leaping is a special attack, so these values determine when leap can happen.
+	// Leaping won't occur if its on cooldown.
+	special_attack_min_range = 2
+	special_attack_max_range = 4
+	special_attack_cooldown = 10 SECONDS
+
+	var/leap_warmup = 1 SECOND // How long the leap telegraphing is.
+	var/leap_sound = 'sound/effects/ghost2.ogg'
+
+// Multiplies damage if the victim is stunned in some form, including a successful leap.
+/mob/living/simple_animal/hostile/hivemind/phaser/apply_bonus_melee_damage(atom/A, damage_amount)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(L.incapacitated(INCAPACITATION_DISABLED))
+			return damage_amount * 1.5
+	return ..()
+
+/mob/living/simple_animal/hostile/hivemind/phaser/New()
+	..()
+	filters += filter(type="blur", size = 0)
+
+// The actual leaping attack.
+/mob/living/simple_animal/hostile/hivemind/phaser/do_special_attack(atom/A)
+	set waitfor = FALSE
+	set_AI_busy(TRUE)
+
+	// Telegraph, since getting stunned suddenly feels bad.
+	do_windup_animation(A, leap_warmup)
+	sleep(leap_warmup) // For the telegraphing.
+
+	// Do the actual leap.
+	status_flags |= LEAPING // Lets us pass over everything.
+	visible_message(SPAN_DANGER("\The [src] phases out at \the [A]!"))
+	throw_at(get_step(get_turf(A), get_turf(src)), special_attack_max_range+1, 1, src)
+	playsound(src, leap_sound, 75, 1)
+
+	sleep(5) // For the throw to complete. It won't hold up the AI ticker due to waitfor being false.
+
+	if(status_flags & LEAPING)
+		status_flags &= ~LEAPING // Revert special passage ability.
+
+	var/turf/T = get_turf(src) // Where we landed. This might be different than A's turf.
+
+	. = FALSE
+
+	// Now for the stun.
+	var/mob/living/victim = null
+	for(var/mob/living/L in T) // So player-controlled spiders only need to click the tile to stun them.
+		if(L == src)
+			continue
+
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.check_shields(damage = 0, damage_source = src, attacker = src, def_zone = null, attack_text = "the leap"))
+				continue // We were blocked.
+
+		victim = L
+		break
+
+	if(victim)
+		victim.Weaken(2)
+		victim.visible_message(SPAN_DANGER("\The [src] knocks down \the [victim]!"))
+		to_chat(victim, SPAN_CLASS("critical", "\The [src] teleports right in front of you!"))
+		. = TRUE
+
+	set_AI_busy(FALSE)
+
+
+//second part - is jump to target
+/mob/living/simple_animal/hostile/hivemind/phaser/proc/phase_jump(turf/place)
+	playsound(place, 'sound/effects/phasein.ogg', 60, 1)
+	animate(filters[1], size = 0, time = 5)
+	icon_state = "phaser-[rand(1,4)]"
+	src.loc = place
+	for(var/mob/living/L in loc)
+		if(L != src)
+			visible_message("<b>[src]</b> land on <b>[L]</b>!")
+			playsound(place, 'sound/effects/ghost2.ogg', 70, 1)
+			L.Weaken(3)
+
+/mob/living/simple_animal/hostile/hivemind/phaser/death()
+	..()
+	gibs(loc, null, /obj/gibspawner/human)
+	qdel(src)
+
+/datum/ai_holder/hivemind/phaser
+	can_flee = TRUE
+
+/datum/ai_holder/hivemind/phaser/post_melee_attack(atom/A)
+	if(holder.Adjacent(A))
+		holder.IMove(get_step(holder, pick(GLOB.alldirs)))
+		holder.face_atom(A)

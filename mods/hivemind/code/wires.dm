@@ -323,7 +323,7 @@
 			var/mob/living/L = subject
 			for(var/obj/item/W in L)
 				L.drop_from_inventory(W)
-			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan)
+			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan, /mob/living/simple_animal/hostile/hivemind/phaser)
 			new M(loc)
 		//robot corpses
 		else if(istype(subject, /mob/living/silicon))
