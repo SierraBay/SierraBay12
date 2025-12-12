@@ -694,7 +694,7 @@ Ccomp's first proc.
 		if (alert(src, "Are you sure you want to do this? It may lag.", "Confirmation", "Yes", "No") == "No")
 			return
 
-	explosion(O, range, max_power)// [SIERRA-EDIT] MODPACK_EXPLOSION explosion(O, range, max_power, shaped=shaped)
+	explosion(O, range, max_power, shaped=shaped)
 	log_admin("[key_name(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])")
 	message_admins("[key_name_admin(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])", 1)
 
