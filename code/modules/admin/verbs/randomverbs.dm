@@ -684,14 +684,12 @@ Ccomp's first proc.
 			max_power = EX_ACT_HEAVY
 		if ("Light")
 			max_power = EX_ACT_LIGHT
-//[SIERRA-REMOVE] MODPACK_EXPLOSION
-/*
+
 	var/shaped = 0
 	if(alert(src, "Shaped explosion?", "Shape", "Yes", "No") == "Yes")
 		shaped = input("Shaped where to?", "Input")  as anything in list("NORTH","SOUTH","EAST","WEST")
 		shaped = text2dir(shaped)
-*/
-//[/SIERRA-REMOVE]
+
 	if (range > 20)
 		if (alert(src, "Are you sure you want to do this? It may lag.", "Confirmation", "Yes", "No") == "No")
 			return
