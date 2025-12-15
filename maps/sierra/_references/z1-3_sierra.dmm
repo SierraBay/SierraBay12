@@ -11509,7 +11509,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -57790,7 +57790,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/atmos)
 "mxm" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/machinery/button/toggle/valve/nacelle/third{
 	pixel_x = -6;
 	pixel_y = 25
@@ -61104,7 +61104,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/hallway/primary/thirddeck/fore)
 "nhI" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -92827,7 +92827,7 @@
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/sleep/bunk)
 "tWH" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/structure/cable/cyan{
@@ -97359,7 +97359,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/fore)
 "uTW" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24;
 	dir = 8

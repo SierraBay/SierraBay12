@@ -5051,7 +5051,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/space)
 "emT" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -24182,7 +24182,7 @@
 /turf/simulated/wall/r_titanium,
 /area/space)
 "uql" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24;
 	dir = 8
@@ -27648,7 +27648,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "xsO" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,

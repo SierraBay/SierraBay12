@@ -1169,7 +1169,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "dg" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4;
 	icon_state = "computer"
 	},
@@ -2590,7 +2590,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "ja" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -3840,7 +3840,7 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/atmos)
 "nP" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,

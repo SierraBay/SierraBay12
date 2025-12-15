@@ -31320,7 +31320,7 @@
 /turf/simulated/wall/prepainted,
 /area/medical/staging)
 "eAG" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -53987,7 +53987,7 @@
 /obj/floor_decal/corner/yellow/border{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -107140,7 +107140,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -123757,7 +123757,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/xenoflora)
 "sij" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -128457,7 +128457,7 @@
 	pixel_x = 16;
 	pixel_y = 29
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -131687,7 +131687,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/aft)
 "tok" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /turf/simulated/floor/plating,
 /area/crucian_hangar/start)
 "ton" = (
@@ -133009,7 +133009,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/hallway/primary/bridgedeck/center)
 "tzi" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/structure/cable/cyan{

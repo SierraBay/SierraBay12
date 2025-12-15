@@ -942,7 +942,7 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 6
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,

@@ -369,7 +369,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance)
 "bh" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/floor_decal/borderfloorblack{

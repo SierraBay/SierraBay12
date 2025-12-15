@@ -90,7 +90,7 @@
 "nj" = (/obj/structure/lattice,/obj/item/ore/iron,/obj/item/ore/uranium,/turf/space,/area/space)
 "nn" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk,/obj/decal/cleanable/vomit,/obj/item/paper/lost_truck_waybill/xeno{pixel_x = 10; pixel_y = -6},/turf/simulated/floor/plating,/area/ship/lost_truck)
 "nt" = (/obj/machinery/atmospherics/pipe/simple/hidden/black{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/blue,/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)
-"nz" = (/obj/item/boombox,/obj/machinery/computer/ship/engines,/obj/machinery/button/blast_door{id_tag = "lost-truck-bridge"; name = "Bridge Blast Doors"; pixel_x = -26},/turf/simulated/floor/tiled/dark/monotile,/area/ship/lost_truck)
+"nz" = (/obj/item/boombox,/obj/machinery/computer/modular/preset/helm,/obj/machinery/button/blast_door{id_tag = "lost-truck-bridge"; name = "Bridge Blast Doors"; pixel_x = -26},/turf/simulated/floor/tiled/dark/monotile,/area/ship/lost_truck)
 "nC" = (/obj/structure/lattice,/obj/item/ore/iron,/turf/space,/area/space)
 "nK" = (/obj/structure/titan_largecrate/medical/bags,/obj/structure/catwalk,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/space)
 "nT" = (/obj/machinery/atmospherics/pipe/simple/heat_exchanging{dir = 9},/turf/simulated/floor/airless,/area/ship/lost_truck/exterior)

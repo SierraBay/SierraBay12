@@ -149,7 +149,7 @@
 "iW" = (/obj/structure/railing/mapped,/obj/structure/railing/mapped{dir = 4; icon_state = "railing0-1"},/turf/space,/area/normandite/exterior/aft)
 "iZ" = (/obj/decal/cleanable/dirt,/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor,/area/normandite/ore_storage)
 "jb" = (/obj/wallframe_spawn/reinforced/hull,/obj/machinery/door/firedoor,/obj/paint/normandite/b,/obj/machinery/door/blast/regular/open{dir = 2; id_tag = "normandite_external"},/turf/simulated/floor/plating,/area/normandite/hallway_fore)
-"jc" = (/obj/machinery/computer/ship/engines{dir = 4},/obj/item/device/radio/intercom{dir = 4; pixel_x = -24},/obj/decal/cleanable/dirt,/obj/floor_decal/techfloor{dir = 9},/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/utyug)
+"jc" = (/obj/machinery/computer/modular/preset/helm{dir = 4},/obj/item/device/radio/intercom{dir = 4; pixel_x = -24},/obj/decal/cleanable/dirt,/obj/floor_decal/techfloor{dir = 9},/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/utyug)
 "jd" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/floor_decal/industrial/hatch/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/hallway_fore)
 "je" = (/obj/machinery/vending/engineering{dir = 8; pixel_x = 5; scan_id = 0},/obj/floor_decal/techfloor{dir = 4},/obj/floor_decal/techfloor{dir = 8},/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled/techfloor/grid,/area/normandite/engineering)
 "jm" = (/obj/shuttle_landmark/nav_normandite/west,/turf/space,/area/space)

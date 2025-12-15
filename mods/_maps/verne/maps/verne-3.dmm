@@ -5703,7 +5703,7 @@
 /turf/simulated/floor/tiled,
 /area/verne/common/messseating/small)
 "RP" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/floor_decal/corner/b_green/mono,
