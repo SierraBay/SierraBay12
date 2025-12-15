@@ -117,3 +117,12 @@ Pouches and kits
 	display_name = "Pencil case"
 	path = /obj/item/storage/fancy/pencilcase
 	cost = 2
+
+/****************
+Instruments
+****************/
+
+/datum/gear/utility/stellascope
+	display_name = "stellascope"
+	path = /obj/item/holosign_creator/stellascope
+	cost = 4
