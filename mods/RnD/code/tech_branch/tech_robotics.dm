@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_civil", "mech_control_module", "powerloader_head", "powerloader_body", "right_powerloader_arm", "left_powerloader_arm",  "right_powerloader_leg", "left_powerloader_leg", "quad_legs", "sphere_body")
+	unlocks_designs = list("mechfab","mech_software_engineering","mech_software_utility","treads","mech_frame", "mech_armour_civil", "mech_control_module", "powerloader_head", "powerloader_body", "right_powerloader_arm", "left_powerloader_arm", "right_powerloader_leg", "left_powerloader_leg", "quad_legs", "sphere_body")
 
 /datum/technology/robo/adv_augments
 	name = "Advanced Augments"
@@ -72,7 +72,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("augment_circuitry","augment_sonar","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_knuckles","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor")
+	unlocks_designs = list("augment_circuitry","augment_sonar","augment_nanounit","augment_wolverine","augment_blade","augment_powerfist","augment_knuckles","augment_booster_reflex","augment_booster_gunnery","augment_booster_muscles","augment_armor","augment_toolset_engineering_advanced")
 
 /datum/technology/robo/adv_hardsuits
 	name = "Advanced Hardsuits Mods"
