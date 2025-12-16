@@ -2799,7 +2799,6 @@
 #include "code\modules\overmap\projectiles\missiles\equipment\missile_equipment.dm"
 #include "code\modules\overmap\projectiles\missiles\equipment\payload\antimissile.dm"
 #include "code\modules\overmap\projectiles\missiles\equipment\payload\cargo.dm"
-#include "code\modules\overmap\projectiles\missiles\equipment\payload\breach.dm"
 #include "code\modules\overmap\projectiles\missiles\equipment\payload\diffuser.dm"
 #include "code\modules\overmap\projectiles\missiles\equipment\payload\emp.dm"
 #include "code\modules\overmap\projectiles\missiles\equipment\payload\explosive.dm"
