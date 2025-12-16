@@ -1216,7 +1216,7 @@
 /turf/simulated/floor/tiled,
 /area/space)
 "baU" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /obj/machinery/door/firedoor,
@@ -3624,7 +3624,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/space)
 "cYo" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /obj/machinery/door/firedoor{
@@ -16247,7 +16247,7 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/space)
 "nRR" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /obj/machinery/door/firedoor,
@@ -19441,7 +19441,7 @@
 	id_tag = "med_crit2";
 	name = "Infirmary Staging Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /obj/machinery/door/blast/regular/open{

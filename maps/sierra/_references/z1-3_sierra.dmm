@@ -1481,7 +1481,7 @@
 	id_tag = "infimary_staging_lockdown";
 	name = "Infirmary Staging Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /turf/simulated/floor/plating,
@@ -3207,7 +3207,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "aND" = (
@@ -3374,7 +3374,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -5971,7 +5971,7 @@
 	},
 /turf/simulated/floor/tiled/dark)
 "bsO" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging_patients"
 	},
 /turf/simulated/floor/plating,
@@ -6891,7 +6891,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/cable/green,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "processwindow"
 	},
 /turf/simulated/floor/plating,
@@ -8217,7 +8217,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "processwindow"
 	},
 /turf/simulated/floor/plating,
@@ -10409,7 +10409,7 @@
 	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,
@@ -11594,7 +11594,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -11738,7 +11738,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "cCn" = (
@@ -16235,7 +16235,7 @@
 	id_tag = "infimary_window_lockdown";
 	name = "Infirmary Window Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -18116,7 +18116,7 @@
 /obj/machinery/door/blast/shutters/open{
 	id_tag = "security_permabrig_sergeant_shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/sierra/sergeant)
 "dSy" = (
@@ -24881,7 +24881,7 @@
 	name = "Infirmary Window Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "fsD" = (
@@ -24920,7 +24920,7 @@
 	id_tag = "security_lockdown";
 	name = "Security Department Lockdown"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -26918,7 +26918,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "forensicswindow"
 	},
 /turf/simulated/floor/plating,
@@ -29146,7 +29146,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/tcommsat/computer)
 "gmx" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /turf/simulated/floor/plating,
@@ -34475,7 +34475,7 @@
 	name = "Infirmary Staging Shutters"
 	},
 /obj/structure/cable/cyan,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /turf/simulated/floor/plating,
@@ -38058,7 +38058,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "inl" = (
@@ -40324,7 +40324,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hos)
 "iJT" = (
@@ -43358,7 +43358,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/iaa)
 "jnI" = (
@@ -47132,7 +47132,7 @@
 	id_tag = "infimary_window_lockdown";
 	name = "Infirmary Window Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "keI" = (
@@ -49153,7 +49153,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -50122,7 +50122,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -50480,7 +50480,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "kSx" = (
@@ -51873,7 +51873,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "lhO" = (
@@ -53313,7 +53313,7 @@
 	id_tag = "infimary_window_lockdown";
 	name = "Infirmary Window Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -55778,7 +55778,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -63577,7 +63577,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/medical/office)
 "nIj" = (
@@ -67402,7 +67402,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "forensicswindow"
 	},
 /turf/simulated/floor/plating,
@@ -71332,7 +71332,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -73578,7 +73578,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/ce)
 "pNq" = (
@@ -76714,7 +76714,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bo_windows"
 	},
 /turf/simulated/floor/plating,
@@ -81225,7 +81225,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/iaa)
 "rxO" = (
@@ -81238,7 +81238,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "mental_health_windows"
 	},
 /turf/simulated/floor/plating,
@@ -86002,7 +86002,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "sAl" = (
@@ -86022,7 +86022,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "sAI" = (
@@ -88040,7 +88040,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -88711,7 +88711,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "tcB" = (
@@ -91581,7 +91581,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "tJh" = (
@@ -93880,7 +93880,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/sierra/equipment)
 "ukQ" = (
@@ -95728,7 +95728,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "mental_health_windows"
 	},
 /turf/simulated/floor/plating,
@@ -101058,7 +101058,7 @@
 	name = "Security Department Lockdown"
 	},
 /obj/structure/cable/green,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/security/range)
 "vGH" = (
@@ -106745,7 +106745,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/hos)
 "wQI" = (
@@ -107407,7 +107407,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,
@@ -108728,7 +108728,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,
@@ -109328,7 +109328,7 @@
 	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,

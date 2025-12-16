@@ -8,7 +8,7 @@
 	admin_log = TRUE
 
 /singleton/psionic_power/redaction/health_swap/invoke(mob/living/user, mob/living/carbon/human/target)
-	if(!ishuman(target) || user.zone_sel.selecting != BP_GROIN)
+	if(!ishuman(target) || user.zone_sel.selecting != BP_CHEST)
 		return FALSE
 	. = ..()
 	if(.)
@@ -38,6 +38,7 @@
 			red_rank = clamp(red_rank, 0, 4)
 			transfer_from_target_to_psyker(user, target, red_rank)
 		setup_psi_swap_buffer(target, user.psi.get_rank(PSI_REDACTION) - 1)
+		target.update_icon()
 		return TRUE
 
 ///Отжимает брут урон с органов и конечностей и переносит к псионику
@@ -58,7 +59,7 @@
 		var/burn_steal = (E.burn_dam) * ((result_rank * 25)/100)
 		E.heal_damage(burn = burn_steal)
 		detected_organ.take_external_damage(burn = burn_steal)
-		E.psy_swap_flags_to_organ(detected_organ)
+		E.psy_swap_flags_to_organ(detected_organ, result_rank)
 
 
 	//Перенос у внутренних органов
@@ -73,7 +74,7 @@
 		var/damage_steal = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_steal)
 		detected_organ.take_internal_damage(damage_steal)
-		E.psy_swap_flags_to_organ(detected_organ)
+		E.psy_swap_flags_to_organ(detected_organ, result_rank)
 	return TRUE
 
 
@@ -94,7 +95,7 @@
 		var/burn_give = (E.burn_dam) * ((result_rank * 25)/100)
 		E.heal_damage(burn = burn_give)
 		detected_organ.take_external_damage(burn = burn_give)
-		E.psy_swap_flags_to_organ(detected_organ)
+		E.psy_swap_flags_to_organ(detected_organ, result_rank)
 	//Перенос у внутренних органов
 	for(var/thing in user.internal_organs)
 		var/obj/item/organ/internal/E = thing
@@ -107,7 +108,7 @@
 		var/damage_give = (E.damage) * ((result_rank * 25)/100)
 		E.heal_damage(damage_give)
 		detected_organ.take_internal_damage(damage_give)
-		E.psy_swap_flags_to_organ(detected_organ)
+		E.psy_swap_flags_to_organ(detected_organ, result_rank)
 
 /mob/living/carbon/human
 	var/psi_buffer_take = 0 //Буфер забирания
@@ -158,31 +159,38 @@
 	psyker_invincible_timer = addtimer(new Callback(src, PROC_REF(clear_psyker_invinsibility)), invincible_time)
 	psyker_invincible = TRUE
 
-/obj/item/organ/proc/psy_swap_flags_to_organ(obj/item/organ/input_organ)
-	if(status & ORGAN_BLEEDING)
-		status &= ~ORGAN_BLEEDING
-		input_organ.status |= ORGAN_BLEEDING
+/obj/item/organ/proc/psy_swap_flags_to_organ(obj/item/organ/input_organ, result_rank)
+// Ученик
+	var/rank = result_rank - 1
+	if(rank >= PSI_RANK_APPRENTICE)
+		if(status & ORGAN_BLEEDING)
+			status &= ~ORGAN_BLEEDING
+			input_organ.status |= ORGAN_BLEEDING
 
-	if(status & ORGAN_BROKEN)
-		status &= ~ORGAN_BROKEN
-		input_organ.status |= ORGAN_BROKEN
+		if(status & ORGAN_BROKEN)
+			status &= ~ORGAN_BROKEN
+			input_organ.status |= ORGAN_BROKEN
 
-	if(status & ORGAN_DEAD)
-		status &= ~ORGAN_DEAD
-		input_organ.status |= ORGAN_DEAD
+// Оперант
+	if(rank >= PSI_RANK_OPERANT)
+		if(status & ORGAN_DISFIGURED)
+			status &= ~ORGAN_DISFIGURED
+			input_organ.status |= ORGAN_DISFIGURED
 
-	if(status & ORGAN_MUTATED)
-		status &= ~ORGAN_MUTATED
-		input_organ.status |= ORGAN_MUTATED
+		if(status & ORGAN_MUTATED)
+			status &= ~ORGAN_MUTATED
+			input_organ.status |= ORGAN_MUTATED
 
-	if(status & ORGAN_ARTERY_CUT)
-		status &= ~ORGAN_ARTERY_CUT
-		input_organ.status |= ORGAN_ARTERY_CUT
+// Мастер
+	if(rank >= PSI_RANK_MASTER)
+		if(status & ORGAN_ARTERY_CUT)
+			status &= ~ORGAN_ARTERY_CUT
+			input_organ.status |= ORGAN_ARTERY_CUT
 
-	if(status & ORGAN_TENDON_CUT)
-		status &= ~ORGAN_TENDON_CUT
-		input_organ.status |= ORGAN_TENDON_CUT
+		if(status & ORGAN_TENDON_CUT)
+			status &= ~ORGAN_TENDON_CUT
+			input_organ.status |= ORGAN_TENDON_CUT
 
-	if(status & ORGAN_DISFIGURED)
-		status &= ~ORGAN_DISFIGURED
-		input_organ.status |= ORGAN_DISFIGURED
+		if(status & ORGAN_DEAD)
+			status &= ~ORGAN_DEAD
+			input_organ.status |= ORGAN_DEAD

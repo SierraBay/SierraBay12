@@ -24,11 +24,11 @@
 	//Damage it
 	var/list/parts = list(head, body, L_arm, R_arm, L_leg, R_leg)
 	var/obj/item/mech_component/damaged = pick(parts)
-	damaged.take_burn_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+	damaged.take_brute_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
 	if(prob(33))
 		parts -= damaged
 		damaged = pick(parts)
-		damaged.take_burn_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
+		damaged.take_brute_damage((damaged.max_hp / 4 ) * MECH_COMPONENT_DAMAGE_DAMAGED)
 
 /mob/living/exosuit/premade/light/exploration/spawn_mech_equipment()
 	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_HEAD)
