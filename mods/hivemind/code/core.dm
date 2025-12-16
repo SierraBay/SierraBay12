@@ -12,11 +12,11 @@ var/global/datum/hivemind/hive_mind_ai
 	var/surname
 	var/evo_points = 0
 	var/evo_points_max = 1000
-	var/failure_chance = 55				//failure chance is lowers each 10 EP
+	var/failure_chance = 25				//failure chance is lowers each 10 EP
 	var/list/hives = list() 			//all functional hives stored here
 	//i know, whitelist is bad, but it's required here
 	var/list/restricted_machineries = list( /obj/machinery/light,					/obj/machinery/atmospherics,
-											/obj/machinery/portable_atmospherics,	/obj/machinery/door,
+											/obj/machinery/portable_atmospherics/canister,	/obj/machinery/door,
 											/obj/machinery/camera,					/obj/machinery/light_switch,
 											/obj/machinery/disposal,				/obj/machinery/firealarm,
 											/obj/machinery/alarm,					/obj/machinery/recharger,
@@ -24,7 +24,9 @@ var/global/datum/hivemind/hive_mind_ai
 											/obj/machinery/button,					/obj/machinery/ai_status_display,
 											/obj/machinery/status_display,			/obj/machinery/requests_console,
 											/obj/machinery/newscaster,				/obj/machinery/floor_light,
-											/obj/machinery/nuclearbomb,				/obj/machinery/flasher)
+											/obj/machinery/nuclearbomb,				/obj/machinery/flasher,
+											/obj/machinery/portable_atmospherics/hydroponics/soil, /obj/machinery/power/supermatter,
+											/obj/machinery/cryopod, /obj/machinery/bluespacedrive)
 
 	//internals
 	var/list/global_abilities_cooldown = list()
