@@ -378,7 +378,7 @@
 
 /obj/machinery/hivemind_machine/mob_spawner/Initialize()
 	..()
-	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber, /mob/living/simple_animal/hostile/hivemind/lobber)
+	mob_to_spawn = pick(/mob/living/simple_animal/hostile/hivemind/stinger, /mob/living/simple_animal/hostile/hivemind/bomber, /mob/living/simple_animal/hostile/hivemind/lobber, /mob/living/simple_animal/hostile/hivemind/hound)
 
 
 /obj/machinery/hivemind_machine/mob_spawner/Process()
@@ -474,7 +474,7 @@
 		msg += pick(".", "!")
 		if(i != msg_cycles)
 			msg += " "
-	GLOB.global_announcer.autosay(msg, "unknown")
+	GLOB.global_announcer.autosay(msg, "unknown", "Common" , GLOB.using_map.station_levels)
 
 
 //SHRIEKER
