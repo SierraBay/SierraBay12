@@ -79,9 +79,7 @@
 /obj/machinery/ion_engine/proc/get_thrust()
 	return thrust_limit * generated_thrust * on
 
-/obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion
+/obj/item/stock_parts/circuitboard/engine/ion
 	name = "circuit board (ion propulsion device)"
 	board_type = "machine"
 	icon_state = "mcontroller"

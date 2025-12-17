@@ -569,15 +569,7 @@
 "Yk" = (/obj/machinery/optable/ascent,/turf/simulated/floor/ascent/airless,/area/ship/ascent_inf/fore_starboard_jut)
 "Yo" = (/obj/wallframe_spawn/reinforced_phoron/titanium/ascent,/obj/machinery/atmospherics/pipe/simple/visible/red{dir = 4; icon_state = "intact"},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_starboard)
 "Yt" = (/obj/machinery/computer/ship/navigation/ascent{dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/bridge)
-"Yv" = (/obj/structure/table/rack/ascent,/obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion{pixel_y = -2},/obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion{pixel_y = 2},/obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion{pixel_y = 6},/obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion{pixel_y = 10},/turf/simulated/floor/ascent,/area/ship/ascent_inf/engineering)
+"Yv" = (/obj/structure/table/rack/ascent,/obj/item/stock_parts/circuitboard/engine/ion{pixel_y = -2},/obj/item/stock_parts/circuitboard/engine/ion{pixel_y = 2},/obj/item/stock_parts/circuitboard/engine/ion{pixel_y = 6},/obj/item/stock_parts/circuitboard/engine/ion{pixel_y = 10},/turf/simulated/floor/ascent,/area/ship/ascent_inf/engineering)
 "YB" = (/obj/structure/cable/cyan{d2 = 2; icon_state = "0-2"},/obj/machinery/power/smes/buildable/preset/ascent,/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_port)
 "YD" = (/obj/machinery/optable/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/wing_port)
 "YI" = (/obj/structure/bed/chair/padded/purple/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/bridge)

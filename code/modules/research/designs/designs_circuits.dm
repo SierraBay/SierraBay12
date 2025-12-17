@@ -808,9 +808,7 @@
 	id = "ionengine"
 	req_tech = list(TECH_BLUESPACE = 4, TECH_MATERIAL = 6)
 	materials = list(MATERIAL_GOLD = 250, MATERIAL_DIAMOND = 250, MATERIAL_URANIUM = 250, MATERIAL_PLASTIC = 1000, MATERIAL_ALUMINIUM = 1000)
-	build_path = /obj/item/stock_parts/circuitboard/modular_computer,
-/obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,/ion
+	build_path = /obj/item/stock_parts/circuitboard/engine/ion
 	sort_string = "XAAAB"
 
 // [SIERRA-ADD] - Fix unit test failing
