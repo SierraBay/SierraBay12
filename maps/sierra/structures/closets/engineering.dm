@@ -28,7 +28,7 @@
 		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/glasses/welding/superior,
 		/obj/item/material/clipboard,
-		/obj/item/folder/envelope/nuke,
+		/obj/item/folder/envelope/preset/nuke,
 		/obj/item/device/flashlight/upgraded,
 		/obj/item/storage/box/armband/engine,
 		/obj/item/device/multitool/multimeter,

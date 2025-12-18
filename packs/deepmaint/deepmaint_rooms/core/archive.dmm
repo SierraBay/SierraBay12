@@ -31,7 +31,7 @@
 /area/map_template/deepmaint)
 "ah" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -50,7 +50,7 @@
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/map_template/deepmaint)
 "ak" = (

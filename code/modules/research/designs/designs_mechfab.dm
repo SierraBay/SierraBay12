@@ -120,7 +120,7 @@
 
 /datum/design/item/mechfab/exosuit/basic_armour
 	name = "basic exosuit armour"
-	id = "mech_armour_basic"
+	id = "mech_armour_civil"
 	build_path = /obj/item/robot_parts/robot_component/armour/exosuit
 	time = 30
 	materials = list(MATERIAL_STEEL = 7500)
@@ -467,15 +467,13 @@
 	id   = "mech_sleeper"
 	build_path = /obj/item/mech_equipment/sleeper
 
-//[SIERRA-REMOVE] - Mechs-by-Shegar
-/*
+
 /datum/design/item/exosuit/mender
 	name = "mounted medigel spray"
 	id   = "mech_mender"
 	build_path = /obj/item/mech_equipment/mender
 	materials = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 15000, MATERIAL_ALUMINIUM = 15000)
-*/
-//[SIERRA-REMOVE]
+
 /datum/design/item/exosuit/extinguisher
 	name = "mounted extinguisher"
 	id   = "mech_extinguisher"
@@ -610,6 +608,13 @@
 	build_path = /obj/item/organ/internal/augment/active/polytool/engineer
 	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000)
 	id = "augment_toolset_engineering"
+
+/datum/design/item/mechfab/augment/engineering/advanced
+	name = "Advanced engineering toolset"
+	build_path = /obj/item/organ/internal/augment/active/polytool/engineer/advanced
+	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000, MATERIAL_PHORON = 1000)
+	req_tech = list(TECH_ENGINEERING = 5, TECH_POWER = 4)
+	id = "augment_toolset_engineering_advanced"
 
 /datum/design/item/mechfab/augment/surgery
 	name = "Surgical toolset"

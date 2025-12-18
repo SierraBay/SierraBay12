@@ -177,6 +177,15 @@
 	name = "fleet rank abbreviations"
 	info = {"Some "internal use only" reports on proper and improper ways of abbreviating fleet ranks and roles, including emphasis that "sub" is NOT an authorized way, shorthand or otherwise, to refer to sub lieutenant."}
 
+/obj/item/paper/memo/generic/misuseofcom
+	name = "misuse of communications"
+	info = {"Some "internal use only" reports on telecommunications use, reminding personnel that all telecommunications data is automatically relayed to command upon its transcription to the server, and that if you don't want command to hear something, don't say it on radio or in emails."}
+
+
+/obj/item/paper/memo/generic/identificationissues
+	name = "your xeno crew members and you"
+	info = {"An at-length article with multiple images of well-meaning charts and comparing images on how to respectfully refer to xeno crewmembers, and that the expectations on what gender they may be will be different from human expectations. It is seemingly bulletproof, up until you reach the lines regarding increasingly esoteric (and invasive) methods of deciding what pronouns to use for them, when it would be easier to just ask or look for them on their IDs cards."}
+
 
 // scgr memos
 
@@ -206,7 +215,7 @@
 
 /obj/item/paper/memo/scgr/yourjob
 	name = "\improper SCG and you"
-	info = {"Some "confidential" briefing documents, detailing the job of the SCGR in brief. It highlights they are a civilian, first and foremost, who functions as a general-purpose civil servant aboard the SEV Torch. They also should advise the Commanding Officer, assisting with bureaucratic affairs where required, and spearheading diplomatic negotations."}
+	info = {"Some "confidential" briefing documents, detailing the job of the SCGR in brief. It highlights they are a civilian, first and foremost, who functions as a general-purpose civil servant aboard the SEV Torch. They also should advise the Commanding Officer, assisting with bureaucratic affairs where required, and spearheading diplomatic negotations. At the bottom, underlined several times and in bold is "YOU ARE NOT A LAWYER"."}
 
 /obj/item/paper/memo/scgr/perdiemdeny
 	name = "per diem denials"
@@ -223,6 +232,10 @@
 /obj/item/paper/memo/scgr/senateminutes
 	name = "assembly floor proceedings"
 	info = {"A copy of the minutes from the Sol Assembly hearing over an emergency bill giving the SCG Defense Forces jurisdiction over the Expeditionary Corps (and by extension, the SEV Torch). The debate is vicious and devolves into angry bickering at points. The bill appears to have gotten uncomfortably close to being passed."}
+
+/obj/item/paper/memo/scgr/radicals
+	name = "radicalization investigation report"
+	info = {"A summary of a Senate investigation into the radicalization of government employees. The findings appear somewhat grim, with long lists of reports of politics seeping its way into the everyday functions of the Fleet, Diplomatic Service, SFP, and Expeditionary Corps. While the report clarifies that no major incidents have occurred thus far, the intertwining of politics and governmental operations will likely have grave consequences if let run rampant."}
 
 
 // command memos
@@ -279,27 +292,29 @@
 	name = "non-judicial punishments"
 	info = {"A "for official use only" memorandum detailing options with regards to non-judicially punishing uniformed servicemembers. Such punishments include admonishment/reprimand, forfeiture of pay, restriction, extra duty, and reduction in rank. The punishments available and their severity depend on the rank of the accused and the imposing officer."}
 
-/obj/item/paper/memo/command/recall
-	name = "order of recall"
-	info = {"A notice from the Helios Board of Admiralty regarding the urgent return of the Torch to Mars - the Board has ordered debriefing and review regarding the diplomatic meetings with the Terran Pioneer Corps and the field execution of SLT Kristen Rohtin. The document stresses that the ship be wary of any vessels, Fleet or otherwise, masking their transponders."}
-
-/obj/item/paper/memo/command/roguefleeties
-	name = "rogue fleet movements"
-	info = {"An "internal use only" memorandum sent from Expeditionary Command, detailing the last known locations and naval capacity of several rogue Fifth Fleet vessels, including the SFV Nathan Hale. The data available in the report is uncomfortably sparse."}
-
-/obj/item/paper/memo/command/outpostreport1
-	name = "\improper E-14b outpost report"
-	info = {"An "internal use only" memo detailing the status of the research outpost in the E-14b system. It states that construction is still underway, and suggests efforts would benefit from better communication between EC and Terran engineering personnel."}
-
-/obj/item/paper/memo/command/outpostreport2
-	name = "\improper E-14b outpost report"
-	info = {"An "internal use only" memo detailing the status of the research outpost in the E-14b system. It states that construction has been delayed due to a migration of native ambulatory fungus at the site, and requests that the EC begin looking into low-impact mushroom removal methods."}
+/obj/item/paper/memo/command/outpostreport
+	name = "E-14b outpost report"
+	info = {"An "internal use only" memo detailing the status of the research outpost in the E-14b system. It states that construction is overall complete, and suggests efforts in better communication between EC and Confederate engineering personnel have born fruit, with several listed examples of the formed bonds."}
 
 /obj/item/paper/memo/command/evasiveflight
 	name = "evasive flight maneuvers"
 	info = {"A hastily-penned report detailing strategies for evading ship-to-ship laser fire and missile strikes in the event of another attack on the Torch. The author highly recommends the tactical use of space dust and other debris, citing the successful evasive action taken during the attack by the SFV Nathan Hale."}
 
+/obj/item/paper/memo/command/confedsightings
+	name = "confederate naval protocols"
+	info = {"An "internal use only" memo sent from the Government Representative to the bridge crew reminding them that the SCG is, and will for the foreseeable future, be a peace with the GCC. As such, it is entirely unneeded to 'batten down the hatches' and prepare the ship for hostilities at the mere sighting of a Confederate Naval Vessel, and that such preparations implies Xenophobic tendencies and increases the probability of diplomatic incidents."}
 
+/obj/item/paper/memo/command/pioneerpranks
+	name = "pioneer prank reports"
+	info = {"An "internal use only" memo sent from Expeditionary Command reporting on an increase in "friendly pranks" between the Expeditionary Corps and Pioneerng Corps. The report details how the warming of relations between the two Corps has brought pranks usually kept within the Expeditonary Corps into the inter-Corps realm. The report advises Non-Expeditionary Corps personnel to interpret Pioneers acting oddly as nothing more than attempts at pranking a EC vessel. It lists an example of how a Pioneer crew used the derelict hull of a cargo vessel to scare the SEV Komarov into believing they were being followed by a ghost ship."}
+
+/obj/item/paper/memo/command/miranda
+	name = "miranda line caution"
+	info = {"A notice from the Ministry of Stellar Charts to the command of the SEV Torch. It is long and full of technical Cartography, but is quite clearly summarized when it says "although the Miranda Line was drawn as the edge of 'Known' Space during the Collapse of the Terran Commonwealth, the Space you are exploring was known to Humanity, but the charts were lost, it is not impossible for you to come across evidence of previous human presence."}
+
+/obj/item/paper/memo/command/testing
+	name = "research testing complaints"
+	info = {"A growing stack of interdepartmental complaints from various members of the Engineering department concerning the repeated instances of explosives testing in the Science department aboard the ship. It heavily implies that should further occurances of damage to the Vessel take place, engineering staff may "cause bureaucratic barricades". A handwritten note at the bottom of the memo from the Chief of Security advises heavy handed legal consequences for those involved with testing in the event of future explosive related incidents to prevent "understandable yet annoying actions" from the engineering department in the form of more paperwork.."}
 
 // supply memos
 
@@ -314,10 +329,6 @@
 /obj/item/paper/memo/supply/shotgunblues
 	name = "in defense of the bar"
 	info = {"An "internal use only" memo sent from the Executive Officer on behalf of Expeditionary Command detailing that the service department does not need self-defense weapons, and any arguments to the contrary will be handled internally. A personal memo has been added; an underlined "STOP ASKING US" penned onto the page."}
-
-/obj/item/paper/memo/supply/officelocation
-	name = "supply office location reminder"
-	info = {"An "internal use only" memo issued to supply staff, reminding them that the supply office is to the aft of the hangar, not the fore, and that they should ensure they know the way to work."}
 
 /obj/item/paper/memo/supply/shipping
 	name = "shipping report"
@@ -379,17 +390,29 @@
 	name = "radio damage complaint"
 	info = {"An "internal use only" report on complaints of garbled static emitting from radios during shifts with IPC crew members onboard. The report further goes onto state that when inquiring about this to IPC crew members on the radio, their radios would emit the same noises instead of getting a clear answer from them."}
 
-/obj/item/paper/memo/engineering/hulldamage
-	name = "damage control report"
-	info = {"An "internal use only" report on damages to the hull following the attack by the SFV Nathan Hale. It suggests that the repairs currently in place are temporary at best, and that the Torch will need hefty drydock maintenance before its next deep space mission. The report goes on to recommend petitioning EXO for additional funding for maintenance and upkeep."}
-
-/obj/item/paper/memo/engineering/tcommssabotage
-	name = "damage control report"
-	info = {"An "internal use only" report on damages to ship systems following the 5/14 sabotage incident. It suggests that the saboteur exploited a previously-unknown vulnerability in the ship's telecommunications systems to shut down long-range communications - the system will need a full inspection from DAIS management before it can be deemed properly secure again. How the saboteur discovered the exploit is still unknown."}
-
 /obj/item/paper/memo/engineering/bsddamage
 	name = "\improper Bluespace drive safety notice"
 	info = {"A "confidential" memo from Krri'gli Engineering regarding the new Bluespace drive. It explains in very slow and simple language that this is a "Bluespace drive", a very expensive and volatile piece of machinery, and that you should not break this one or remove the exotic particle shielding. The author does not appear to have a very high opinion of human engineering or mental faculties."}
+
+/obj/item/paper/memo/engineering/maintventing
+	name = "venting complaint"
+	info = {"A "sensitive" memo from a formerly Enlisted contractor aboard the Torch. In somewhat colourful language it outlines how a single breach of the hull anywhere in the maintenance corridors will vent the entirety of the corridors on that side of the vessel. Attached are almost identical copies of the complaint, each filed exactly a year before the previous one, dating back to the Torch's refit in 2305."}
+
+/obj/item/paper/memo/engineering/researchbombs
+	name = "testing complaint"
+	info = {"A draft of an "internal use only" memo from the Chief Engineer about repeated instances of Researchers testing explosives in the Misc Lab, resulting in damage to the vessel's thruster fuel storage tank. It states that should this keep happening, legal action will need to be taken against those testing to prevent the engineering staff from 'drowning the system in paperwork'."}
+
+/obj/item/paper/memo/engineering/slowstart
+	name = "slow power setup"
+	info = {"An "internal use only" report on complaints about failures to meet Engine Startup standards has led to Torch maneuvers being delayed, power outages in critical areas of the ship, and damage going unrepaired due to power setup still being performed late in the shift. It goes on to recommend Engineering set up reliable power generation and distribution before undertaking any non-standard modifications."}
+
+/obj/item/paper/memo/engineering/obtusecomms
+	name = "obtuse radio communications"
+	info = {"An "internal use only" report on complaints about obtuse and confusing radio abbreviation and protocols created by members of Engineering. The writer goes on at great length how slowing comms down to use ridiculous abbreviations and shorthand is not helpful, and that nonstandard radio etiquette is not required due to the clarity and use-case of the Torch's communication suite. It asks Engineering to talk normally and use common shorthand, but it highlights the rising use of Non-ZAC communications on net with another, less lengthy complaint. The author ends by asking why their nickname is 'NUB'"}
+
+/obj/item/paper/memo/engineering/browsinghabits
+	name = "intranet browsing methods"
+	info = {"An "internal use only" memo sent from the Chief Engineer, regarding the use of the Torch's local intranet and the brief periods when the vessel is in range of access to the extranet. It notes that, while information is freely available online, that all of these queries are logged as a mandatory security measure, and unsubtly hints that some crew members are racking up increasingly alarming browsing habits. It notes some ranging from how to bootleg chemicals, how to create bombs or homemade firearms, to accessing Wetskrell during shift hours."}
 
 
 // medical memos
@@ -496,8 +519,11 @@
 
 /obj/item/paper/memo/exploration/pioneers
 	name = "pioneers and you"
-	info = {"An "internal use only" memo detailing proper ettiquette for explorers interacting with Terran Pioneer Corps personnel. It stresses very heavily that yes, most Terrans do speak ZAC; no, you should not share your funny Pan-Slavic impression; and no, you should ABSOLUTELY not ask if they know any war criminals."}
+	info = {"An "internal use only" memo detailing proper ettiquette for explorers interacting with Confederate Pioneer Corps personnel. It stresses very heavily that yes, most Confederates do speak ZAC; no, you should not share your funny Pan-Slavic impression; and no, you should ABSOLUTELY not ask if they know any war criminals."}
 
+/obj/item/paper/memo/exploration/mice
+	name = "invasive species and shuttles"
+	info = {"Some "internal use only" documents that discuss the introduction of invasive species to terraformed or near-earth exoplanets through negligence and improper vermin control onboard spaceships. The document focuses almost exclusively on species that originate from Earth, with a highlight on Mice. Inspections of Hangar Bays, Landing Shuttles and Cargo is paramount to preventing an introduction of Invasive species. The author cites a report about the Charon landing while harboring an infestation of mice, and the ecological devastation that followed. "}
 
 // research memos
 
@@ -565,7 +591,13 @@
 	name = "contractor safety and you"
 	info = {"An "internal use only" corporate document reminding corporate liaisons to report any unsafe behavior from contractors that they either see directly or is reported to them. It goes on to explain that ensuring the health and safety compliance of those under contract not only helps to keep up an image of security but ensures that the reputation of EXO as a whole is not tarnished due to a workplace accident."}
 
+/obj/item/paper/memo/corporate/legion
+	name = "internal communications"
+	info = {"A stack of "confidential" communications inside the EXO pertaining to the recent encounter with the 'Legion'. The almost unregulated panic among some of the discussions is quite clear, with the overall worry more focused on possible financial losses then danger to the SCG or SCG personnel."}
 
+/obj/item/paper/memo/corporate/miranda
+	name = "miranda line memo"
+	info = {"A "secret" memo from the EXO Head Office. It is somewhat lacking in specifics, but is quite clear that should the Torch locate any traces of human presence past the Miranda Line, that any involvement whatsoever of the EXO or its subsidiaries in the presence is to be denied."}
 
 // security memos
 
@@ -612,3 +644,18 @@
 /obj/item/paper/memo/security/extremism
 	name = "anti-radicalization pamphlet"
 	info = {"An "internal use only" document detailing strategies for identifying signs and risk factors for radicalization, created in light of perceived extremism in the SCGF. It discusses low self-esteem, stress, marginalization, repeat disciplinary issues, and excessive interest in weaponry."}
+
+
+/obj/item/paper/memo/security/useofforce
+	name = "use of force complaint"
+	info = {"An inter-departmental memo from the Chief Medical Officer to the Chief of Security and Brig Chief about the amount of detainees treated for injuries "far greater then would be needed" following their detainment. It has a quite graphic description of a crewmember who's legs were broken for simply walking away from a master at arms."}
+
+
+/obj/item/paper/memo/security/testing
+	name = "research testing notice"
+	info = {"An inter-departmental memo from the Chief Engineer, co-signed by the Seinor Enlisted Advisor conserning repeated instances of the research department testing explosive devices aboard the vessel. Attached is a copy of the vessel's SOP pertaining to research operations, with in big bold letters "Testing of any explosives with risk of penetrating the hull or causing mass destruction must be done at an away site." with a note that the testing aboard has repeatedly caused damage to the thruster fuel storage tank, and that engineering staff are 'prepared to file as much paperwork that is required'."}
+
+/obj/item/paper/memo/security/goodcomms
+	name = "security comm report"
+	info = {"An "internal use only" report created by mid-level EXO Security Officers, complimenting Torch for their effective, direct and information focused radio-communication. The author mentions an abbreviation table from years ago that is no longer used. It ends by gently reminding members that gossiping in person is fine, but not to do it in recorded rooms like interrogation."}
+

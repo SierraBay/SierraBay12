@@ -1,14 +1,21 @@
 // Submap specific atom definitions.
 
-MANTIDIFY(/obj/item/storage/bag/trash/purple,    "sample collection carrier", "material storage")
-MANTIDIFY(/obj/structure/bed/chair/padded/purple,"mantid nest",               "resting place")
-MANTIDIFY(/obj/item/pickaxe/diamonddrill,        "lithobliterator",           "drilling")
-MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "propulsion")
+MANTIDIFY(/obj/item/storage/bag/trash/purple, 				"sample collection carrier",	"material storage")
+MANTIDIFY(/obj/structure/bed/chair/padded/purple,			"mantid nest",					"resting place")
+MANTIDIFY(/obj/item/pickaxe/diamonddrill,        			"lithobliterator",				"drilling")
+MANTIDIFY(/obj/item/tank/jetpack/carbondioxide, 			"maneuvering pack",				"propulsion")
+MANTIDIFY(/obj/item/device/scanner/plant, 		 			"gazefloranotator", 			"plant scanning")
+MANTIDIFY(/obj/item/device/scanner/xenobio, 	 			"xenonascerator", 				"xenolife scanning")
+MANTIDIFY(/obj/item/device/scanner/health, 		 			"healthoseefer", 				"medicine")
+MANTIDIFY(/obj/item/device/scanner/gas, 		 			"seegasoscanator", 				"atmospherics")
+MANTIDIFY(/obj/item/device/lightreplacer, 					"swabulpternator",				"light replacing")
+MANTIDIFY(/obj/item/reagent_containers/spray/sterilizine,	"cleaning agent sprayer",		"sterilizing")
+
 
 /obj/structure/bed/chair/padded/purple/ascent
 	icon_state = "nest_chair"
 	base_icon = "nest_chair"
-	icon = 'mods/ascent/icons/misc/ascent_doodads.dmi'
+	icon = 'mods/ascent/icons/obj/ascent_doodads.dmi'
 	buckle_pixel_shift = list(0,5,0)
 	pixel_z = 0
 
@@ -33,11 +40,55 @@ MANTIDIFY(/obj/item/tank/jetpack/carbondioxide,  "maneuvering pack",          "p
 	desc = "Some kind of strange alien lightbulb technology."
 	random_tone = FALSE
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/mantid
+	name = "mantid designs"
+	color = COLOR_ASCENT_PURPLE
+	icon = 'icons/obj/modular_components.dmi'
+	icon_state = "aislot"
+	designs = list(
+		/datum/design/autolathe/device_component,
+		/datum/design/autolathe/device_component/keyboard,
+		/datum/design/autolathe/device_component/tesla_component,
+		/datum/design/autolathe/device_component/radio_transmitter,
+		/datum/design/autolathe/device_component/radio_transmitter_event,
+		/datum/design/autolathe/device_component/radio_receiver,
+		/datum/design/autolathe/device_component/battery_backup_crap,
+		/datum/design/autolathe/device_component/battery_backup_stock,
+		/datum/design/autolathe/device_component/battery_backup_turbo,
+		/datum/design/autolathe/device_component/battery_backup_responsive,
+		/datum/design/autolathe/device_component/terminal,
+		/datum/design/autolathe/device_component/cable_coil,
+		/datum/design/autolathe/device_component/cell_device,
+		/datum/design/autolathe/engineering,
+		/datum/design/autolathe/engineering/airalarm,
+		/datum/design/autolathe/engineering/firealarm,
+		/datum/design/autolathe/engineering/powermodule,
+		/datum/design/autolathe/medical,
+		/datum/design/autolathe/medical/circularsaw,
+		/datum/design/autolathe/medical/surgicaldrill,
+		/datum/design/autolathe/medical/retractor,
+		/datum/design/autolathe/medical/dropper,
+		/datum/design/autolathe/medical/cautery,
+		/datum/design/autolathe/medical/hemostat,
+		/datum/design/autolathe/medical/beaker,
+		/datum/design/autolathe/medical/beaker_large,
+		/datum/design/autolathe/medical/beaker_insul,
+		/datum/design/autolathe/medical/beaker_insul_large,
+		/datum/design/autolathe/medical/vial,
+		/datum/design/autolathe/medical/syringe,
+		/datum/design/autolathe/medical/hypospray/autoinjector,
+		/datum/design/autolathe/tool/t_scanner,
+		/datum/design/autolathe/general/datacrystal,
+		/datum/design/autolathe/general/tube/large/cool,
+		/datum/design/autolathe/general/tube/cool,
+		/datum/design/autolathe/general/handcuffs,
+		)
+
 // Self-charging power cell.
 /obj/item/cell/mantid
 	name = "mantid microfusion plant"
 	desc = "An impossibly tiny fusion reactor of mantid design."
-	icon = 'mods/ascent/icons/items/ascent.dmi'
+	icon = 'mods/ascent/icons/obj/items/ascent.dmi'
 	icon_state = "plant"
 	maxcharge = 1500
 	w_class = ITEM_SIZE_NORMAL

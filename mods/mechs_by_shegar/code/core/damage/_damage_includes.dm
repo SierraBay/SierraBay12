@@ -1,0 +1,8 @@
+#include "apply_damage.dm"
+#include "bullet_act.dm"
+#include "emp_act.dm"
+#include "explosion.dm"
+#include "flashbang.dm"
+#include "mech_damage_immunity.dm"
+#include "mech_damage.dm"
+#include "get_damage.dm"

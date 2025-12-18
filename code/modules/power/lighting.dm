@@ -177,6 +177,8 @@
 	var/on = TRUE
 	/// Whether or not the light is currently flickering.
 	var/flickering = FALSE
+	/// Whether this light should spawn in a broken state
+	var/spawn_broken = FALSE
 	/// Type path of the light bulb item. Used for initialization and to determine what bulbs fit.
 	var/light_type = /obj/item/light/tube
 	/// Type path for the machine to create when dismantled. Should be `/obj/machinery/light_construct` or a subtype.
@@ -233,7 +235,7 @@
 	else
 		var/light_color = get_color_from_area()
 		lightbulb = new light_type(src, light_color)
-		if(prob(lightbulb.broken_chance))
+		if(prob(lightbulb.broken_chance) || spawn_broken)
 			broken(TRUE)
 
 	on = powered()
@@ -299,7 +301,10 @@
 	if(istype(lightbulb, /obj/item/light))
 		if (on)
 			AddOverlays(emissive_appearance(icon, _state))
-		AddOverlays(overlay_image(icon, _state, lightbulb.color))
+		if (current_mode in lightbulb.lighting_modes)
+			AddOverlays(overlay_image(icon, _state, lightbulb.lighting_modes[current_mode]["l_color"]))
+		else
+			AddOverlays(overlay_image(icon, _state, lightbulb.color))
 
 	if(on)
 
@@ -508,7 +513,7 @@
 				update_icon(FALSE)
 				sleep(rand(5, 15))
 			on = (get_status() == LIGHT_OK)
-			update_icon(0)
+			queue_icon_update(0)
 		flickering = FALSE
 
 // ai attack - make lights flicker, because why not
@@ -642,7 +647,7 @@
 	throwforce = 5
 	w_class = ITEM_SIZE_TINY
 	/// The light bulb's status. One of `LIGHT_*`.
-	var/status = EMPTY_BITFIELD
+	var/status = FLAGS_OFF
 	/// Base `icon_state`.
 	var/base_state
 	/// Number of times the light bulb has been switched on. Used to 'burn out' the bulb if switched too often.

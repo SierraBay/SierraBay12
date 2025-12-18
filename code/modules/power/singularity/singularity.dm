@@ -70,7 +70,7 @@
 /obj/singularity/bullet_act(obj/item/projectile/P)
 	return 0 //Will there be an impact? Who knows. Will we see it? No.
 
-/obj/singularity/Bump(atom/A)
+/obj/singularity/Bump(atom/A, called)
 	consume(A)
 
 /obj/singularity/Bumped(atom/A)
@@ -96,7 +96,7 @@
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 
 	if (!count)
-		message_admins("A singulo has been created without containment fields active ([x], [y], [z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>).")
+		message_admins("A singulo has been created without containment fields active ([x], [y], [z] - <a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>).")
 
 	investigate_log("was created. [count ? "" : SPAN_COLOR("red", "No containment fields were active.")]", I_SINGULO)
 

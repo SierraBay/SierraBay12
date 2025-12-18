@@ -1,4 +1,4 @@
-/datum/species/human
+/singleton/species/human
 	name = SPECIES_HUMAN
 	name_plural = "Humans"
 	primitive_form = "Monkey"
@@ -39,7 +39,19 @@
 			CULTURE_HUMAN_CETII,
 			CULTURE_HUMAN_SPACER,
 			CULTURE_HUMAN_OFFWORLD,
-			CULTURE_HUMAN_CONFEDC,
+			// [SIERRA-EDIT],
+			/*,
+			CULTURE_HUMAN_THEIA,
+			CULTURE_HUMAN_CONFED_TERRA,
+			CULTURE_HUMAN_CONFED_ZEMLYA,
+			CULTURE_HUMAN_CONFED_SESTRIS,
+			CULTURE_HUMAN_CONFED_PUTKARI,
+			CULTURE_HUMAN_CONFED_ALTAIR,
+			CULTURE_HUMAN_CONFED_PENGLAI,
+			CULTURE_HUMAN_CONFED_PROVIDENCE,
+			CULTURE_HUMAN_CONFED_VALY,
+			// [/SIERRA-EDIT],
+			*/
 			CULTURE_HUMAN_CONFEDO,
 			CULTURE_HUMAN_FOSTER,
 			CULTURE_HUMAN_PIRXL,
@@ -49,8 +61,6 @@
 			CULTURE_HUMAN_IOLAUS,
 			CULTURE_HUMAN_BRAHE,
 			CULTURE_HUMAN_EOS,
-			CULTURE_HUMAN_CONFEDC,
-			CULTURE_HUMAN_CONFEDO,
 			CULTURE_HUMAN_GAIAN,
 			CULTURE_HUMAN_OTHER
 		)
@@ -71,10 +81,12 @@
 		/singleton/emote/exertion/synthetic/creak
 	)
 
-/datum/species/human/get_bodytype(mob/living/carbon/human/H)
+	show_age_to_other_species = TRUE
+
+/singleton/species/human/get_bodytype(mob/living/carbon/human/H)
 	return SPECIES_HUMAN
 
-/datum/species/human/get_ssd(mob/living/carbon/human/H)
+/singleton/species/human/get_ssd(mob/living/carbon/human/H)
 	if (H.ai_holder)
 		return
 
@@ -82,7 +94,7 @@
 		return "staring blankly, not reacting to your presence"
 	return ..()
 
-/datum/species/skrell
+/singleton/species/skrell
 	name = SPECIES_SKRELL
 	name_plural = SPECIES_SKRELL
 	icobase = 'icons/mob/human_races/species/skrell/body.dmi'
@@ -224,19 +236,19 @@
 
 	bodyfall_sound = 'sound/effects/bodyfall_skrell.ogg'
 
-/datum/species/skrell/get_sex(mob/living/carbon/human/H)
+/singleton/species/skrell/get_sex(mob/living/carbon/human/H)
 	return istype(H) && (H.descriptors["headtail length"] == 1 ? MALE : FEMALE)
 
-/datum/species/skrell/check_background()
+/singleton/species/skrell/check_background()
 	return TRUE
 
-/datum/species/skrell/can_float(mob/living/carbon/human/H)
+/singleton/species/skrell/can_float(mob/living/carbon/human/H)
 	if(!H.is_physically_disabled())
 		if(H.encumbrance() < 2)
 			return TRUE
 	return FALSE
 
-/datum/species/diona
+/singleton/species/diona
 	name = SPECIES_DIONA
 	name_plural = "Dionaea"
 	icobase = 'icons/mob/human_races/species/diona/body.dmi'
@@ -353,7 +365,7 @@
 		death()
 
 #define DIONA_LIMB_DEATH_COUNT 9
-/datum/species/diona/handle_death_check(mob/living/carbon/human/H)
+/singleton/species/diona/handle_death_check(mob/living/carbon/human/H)
 	var/lost_limb_count = length(has_limbs) - length(H.organs)
 	if(lost_limb_count >= DIONA_LIMB_DEATH_COUNT)
 		return TRUE
@@ -364,19 +376,19 @@
 	return (lost_limb_count >= DIONA_LIMB_DEATH_COUNT)
 #undef DIONA_LIMB_DEATH_COUNT
 
-/datum/species/diona/can_understand(mob/other)
+/singleton/species/diona/can_understand(mob/other)
 	var/mob/living/carbon/alien/diona/D = other
 	if(istype(D))
 		return 1
 	return 0
 
-/datum/species/diona/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/diona/equip_survival_gear(mob/living/carbon/human/H)
 	if(istype(H.get_equipped_item(slot_back), /obj/item/storage/backpack))
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
 
-/datum/species/diona/skills_from_age(age)
+/singleton/species/diona/skills_from_age(age)
 	switch(age)
 		if(101 to 200)	. = 12 // age bracket before this is 46 to 100 . = 8 making this +4
 		if(201 to 300)	. = 16 // + 8
@@ -384,12 +396,12 @@
 
 // Dionaea spawned by hand or by joining will not have any
 // nymphs passed to them. This should take care of that.
-/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 	. = ..()
 	addtimer(new Callback(src, PROC_REF(fill_with_nymphs), H), 0)
 
-/datum/species/diona/proc/fill_with_nymphs(mob/living/carbon/human/H)
+/singleton/species/diona/proc/fill_with_nymphs(mob/living/carbon/human/H)
 
 	if(!H || H.species.name != name) return
 
@@ -402,7 +414,7 @@
 		new /mob/living/carbon/alien/diona/sterile(H)
 		nymph_count++
 
-/datum/species/diona/handle_death(mob/living/carbon/human/H)
+/singleton/species/diona/handle_death(mob/living/carbon/human/H)
 
 	if(H.isSynthetic())
 		var/mob/living/carbon/alien/diona/S = new(get_turf(H))
@@ -414,10 +426,10 @@
 	else
 		split_into_nymphs(H, TRUE)
 
-/datum/species/diona/get_blood_name()
+/singleton/species/diona/get_blood_name()
 	return "sap"
 
-/datum/species/diona/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/diona/handle_environment_special(mob/living/carbon/human/H)
 	if(H.InStasis() || H.stat == DEAD)
 		return
 

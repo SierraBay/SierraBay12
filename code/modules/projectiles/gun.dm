@@ -40,6 +40,7 @@
 
 //Parent gun type. Guns are weapons that can be aimed at mobs and act over a distance
 /obj/item/gun
+	abstract_type = /obj/item/gun
 	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'icons/obj/guns/gui.dmi'
@@ -139,11 +140,6 @@
 	if(scope_zoom)
 		verbs += /obj/item/gun/proc/scope
 
-/obj/item/gun/update_twohanding()
-	if(one_hand_penalty)
-		update_icon() // In case item_state is set somewhere else.
-	..()
-
 /obj/item/gun/on_update_icon()
 	var/mob/living/M = loc
 	ClearOverlays()
@@ -169,7 +165,11 @@
 		return 0
 	if(!user.IsAdvancedToolUser())
 		return 0
-
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_suit,/obj/item/clothing/suit/space/changeling/armored) && !istype(src,/obj/item/gun/projectile/changeling))
+			to_chat(user,SPAN_WARNING("This form is too bulky to make use of the trigger guard!"))
+			return FALSE
 	var/mob/living/M = user
 	if(!safety() && world.time > last_safety_check + 5 MINUTES && !user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
 		if(prob(30))
@@ -234,11 +234,8 @@
 			else
 				Fire(target, user, pointblank = TRUE)
 		return TRUE
-
 	// Point blank shooting
 	if (user.a_intent == I_HURT && !user.isEquipped(target))
-		if (safety()) // Pistol whip instead of unsafety+fire
-			return ..()
 		Fire(target, user, pointblank = TRUE)
 		return TRUE
 
@@ -338,7 +335,7 @@
 		flick(fire_anim, src)
 
 	if (user)
-		var/user_message = SPAN_WARNING("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
+		var/user_message = SPAN_DANGER("You fire \the [src][pointblank ? " point blank":""] at \the [target][reflex ? " by reflex" : ""]!")
 		if (silenced)
 			to_chat(user, user_message)
 		else
@@ -390,16 +387,14 @@
 			var/obj/item/rig/R = H.back
 			for(var/obj/item/rig_module/stealth_field/S in R.installed_modules)
 				S.deactivate()
-
 	if(space_recoil && !user.check_space_footing())
 		var/old_dir = user.dir
 		var/mob/living/carbon/human/H = user
 		var/obj/item/tank/jetpack/jetpack = H.get_jetpack()
-		if(jetpack && !jetpack.stabilization_on)
+		if(!(jetpack && jetpack.on && jetpack.stabilization_on))
 			user.inertia_ignore = projectile
 			step(user,get_dir(target,user))
 			user.set_dir(old_dir)
-
 
 	update_icon()
 
@@ -431,11 +426,7 @@
 	// [SIERRA-REMOVE]
 	/*
 	var/stood_still = last_handled
-	//Not keeping gun active will throw off aim (for non-Masters)
-	if(user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
-		stood_still = min(user.l_move_time, last_handled)
-	else
-		stood_still = max(user.l_move_time, last_handled)
+	stood_still = max(user.l_move_time, last_handled)
 
 	stood_still = max(0,round((world.time - stood_still)/10) - 1)
 	if(stood_still)

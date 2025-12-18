@@ -153,7 +153,7 @@
 	. = ..()
 	if(user.skill_check(SKILL_FORENSICS, SKILL_TRAINED))
 		. += 40
-		if(target.stat == DEAD)
+		if(target.is_dead())
 			. += 40
 
 //////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@
 		/obj/item/swapper/jaws_of_life = 80,
 		/obj/item/crowbar = 75,
 		/obj/item/material/knife = 50,
-		/obj/item/material/kitchen/utensil/fork = 50
+		/obj/item/material/utensil/fork = 50
 	)
 	min_duration = 30
 	max_duration = 40

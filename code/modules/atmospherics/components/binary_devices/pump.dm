@@ -15,7 +15,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/atmos/pump.dmi'
 	icon_state = "map_off"
-	level = ATOM_LEVEL_UNDER_TILE
+	level = ATOM_LEVEL_OVER_TILE
 
 	name = "gas pump"
 	desc = "A pump."
@@ -114,12 +114,6 @@ Thus, the two variables affect pump operation are set in New():
 			network2.update = 1
 
 	return 1
-
-/obj/machinery/atmospherics/binary/pump/return_air()
-	if(air1.return_pressure() > air2.return_pressure())
-		return air1
-	else
-		return air2
 
 /obj/machinery/atmospherics/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	if(inoperable())

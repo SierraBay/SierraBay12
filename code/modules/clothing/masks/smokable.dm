@@ -330,7 +330,7 @@
 
 	return ..()
 
-/obj/item/clothing/mask/smokable/cigarette/use_before(mob/living/carbon/human/H, mob/user)
+/obj/item/clothing/mask/smokable/use_before(mob/living/carbon/human/H, mob/user)
 	if (lit && H == user && istype(H))
 		var/obj/item/blocked = H.check_mouth_coverage()
 		if (blocked)

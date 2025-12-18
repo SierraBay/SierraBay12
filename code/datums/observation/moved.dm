@@ -8,7 +8,7 @@
 //			/atom/old_loc: The loc before the move.
 //			/atom/new_loc: The loc after the move.
 
-GLOBAL_DATUM_INIT(moved_event, /singleton/observ/moved, new)
+GLOBAL_TYPED_NEW(moved_event, /singleton/observ/moved)
 
 /singleton/observ/moved
 	name = "Moved"
@@ -20,6 +20,14 @@ GLOBAL_DATUM_INIT(moved_event, /singleton/observ/moved, new)
 	// Listen to the parent if possible.
 	if(. && istype(mover.loc, expected_type))
 		register(mover.loc, mover, TYPE_PROC_REF(/atom/movable, recursive_move))
+
+/singleton/observ/moved/unregister(atom/movable/mover, datum/listener, proc_call)
+	. = ..()
+
+	// Unregister from the parent if possible.
+	if(. && istype(mover.loc, expected_type))
+		unregister(mover.loc, mover, TYPE_PROC_REF(/atom/movable, recursive_move))
+
 
 /********************
 * Movement Handling *

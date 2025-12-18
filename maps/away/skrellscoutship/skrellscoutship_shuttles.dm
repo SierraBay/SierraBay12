@@ -13,7 +13,6 @@
 	shuttle = "Skrellian Scout"
 	multiz = 1
 	icon_state = "ship"
-	moving_state = "ship_moving"
 	fore_dir = WEST
 	color = "#ff00ff"
 	vessel_mass = 1000
@@ -90,4 +89,4 @@
 	color = COLOR_SOL
 
 /turf/simulated/floor/shuttle_ceiling/skrell/air
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX

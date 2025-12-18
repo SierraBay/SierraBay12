@@ -59,7 +59,7 @@
 		var/brain_activity = "none"
 		var/obj/item/organ/internal/brain/brain = victim.internal_organs_by_name[BP_BRAIN]
 		var/danger = FALSE
-		if (istype(brain) && victim.stat != DEAD && !GET_FLAGS(victim.status_flags, FAKEDEATH))
+		if (istype(brain) && !victim.is_dead())
 			if (user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
 				switch (brain.get_current_damage_threshold())
 					if (0)
@@ -214,7 +214,7 @@
 	if (!victim)
 		return
 	var/obj/item/organ/internal/brain/brain = victim.internal_organs_by_name[BP_BRAIN]
-	if (istype(brain) && victim.stat != DEAD && !(victim.status_flags & FAKEDEATH))
+	if (istype(brain) && !victim.is_dead())
 		switch (brain.get_current_damage_threshold())
 			if (0 to 2)
 				AddOverlays(emissive_appearance(icon, "brain_ok"))

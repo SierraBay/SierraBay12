@@ -119,6 +119,7 @@
 	can_hold = list(
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/cooking_container,
 		/obj/item/seeds,
 		/obj/item/glass_extra,
 		/obj/item/clothing/mask/smokable,
@@ -477,6 +478,6 @@
 		if (!O)
 			window += "<br><b>Depleted Resource</b>"
 		else
-			window += "<br>[O]: [IsHolding(O) ? "<b>Activated</b>" : "<a href='?src=\ref[src];act=\ref[O]'>Activate</a>"]"
+			window += "<br>[O]: [IsHolding(O) ? "<b>Activated</b>" : "<a href='byond://?src=\ref[src];act=\ref[O]'>Activate</a>"]"
 	window = strip_improper("<head><title>Drone modules</title></head><tt>[JOINTEXT(window)]</tt>")
 	show_browser(src, window, "window=robotmod")

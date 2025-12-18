@@ -1,6 +1,6 @@
 /obj/item/device/hailer
 	name = "hailer"
-	desc = "Used by obese officers to save their breath for running."
+	desc = "Used to project your voice, saving your breath to run up and down sets of stairs instead."
 	icon = 'icons/obj/tools/hailer.dmi'
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)

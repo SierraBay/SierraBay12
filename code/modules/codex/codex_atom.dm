@@ -54,35 +54,6 @@
 	return list()
 
 
-// Constants for use to describe special handlers in `get_interactions_info()`. These allow for consistant key names for overriding and stacking purposes.
-// Click handlers
-/atom/var/const/CODEX_INTERACTION_ALT_CLICK = "ALT+CLICK"
-/atom/var/const/CODEX_INTERACTION_ALT_SHIFT_CLICK = "ALT+SHIFT+CLICK"
-/atom/var/const/CODEX_INTERACTION_CTRL_CLICK = "CTRL+CLICK"
-/atom/var/const/CODEX_INTERACTION_CTRL_ALT_CLICK = "CTRL+ALT+CLICK"
-/atom/var/const/CODEX_INTERACTION_CTRL_ALT_SHIFT_CLICK = "CTRL+ALT+SHIFT+CLICK"
-/atom/var/const/CODEX_INTERACTION_CTRL_SHIFT_CLICK = "CTRL+SHIFT+CLICK"
-/atom/var/const/CODEX_INTERACTION_SHIFT_CLICK = "SHIFT+CLICK"
-
-// Use handlers
-/atom/var/const/CODEX_INTERACTION_USE_SELF = "Use On Self"
-/atom/var/const/CODEX_INTERACTION_HAND = "Empty Hand"
-
-// Common Tools/Items
-/atom/var/const/CODEX_INTERACTION_ID_CARD = "ID Card (And Scannable ID Holders)"
-/atom/var/const/CODEX_INTERACTION_SCREWDRIVER = "Screwdriver"
-/atom/var/const/CODEX_INTERACTION_WELDER = "Welding Tool"
-
-// Grabs
-/atom/var/const/CODEX_INTERACTION_GRAB = "Grabbed Mob"
-/atom/var/const/CODEX_INTERACTION_GRAB_PASSIVE = "Grabbed Mob (Passive - Yellow)"
-/atom/var/const/CODEX_INTERACTION_GRAB_AGGRESSIVE = "Grabbed Mob (Aggressive - Blue)"
-/atom/var/const/CODEX_INTERACTION_GRAB_NECK = "Grabbed Mob (Neck - Red)"
-
-// Other cases
-/atom/var/const/CODEX_INTERACTION_EMAG = "Cryptographic Sequencer (EMAG)"
-/atom/var/const/CODEX_INTERACTION_EMP = "EMP"
-
 /**
  * Handler for displaying information on tool interations in the Mechanics section of the atom's codex entry.
  *
@@ -131,4 +102,4 @@
 	var/datum/codex_entry/entry = SScodex.get_codex_entry(get_codex_value())
 	//This odd check v is done in case an item only has antag text but someone isn't an antag, in which case they shouldn't get the notice
 	if(entry && (entry.lore_text || entry.mechanics_text || (entry.antag_text && player_is_antag(user.mind))) && user.can_use_codex())
-		to_chat(user, SPAN_NOTICE("The codex has <b><a href='?src=\ref[SScodex];show_examined_info=\ref[src];show_to=\ref[user]'>relevant information</a></b> available."))
+		to_chat(user, SPAN_NOTICE("The codex has <b><a href='byond://?src=\ref[SScodex];show_examined_info=\ref[src];show_to=\ref[user]'>relevant information</a></b> available."))

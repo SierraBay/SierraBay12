@@ -10,18 +10,18 @@
 	wire_count = 12
 	window_y = 570
 	descriptions = list(
-		new /datum/wire_description(AIRLOCK_WIRE_IDSCAN, "This wire is connected to the ID scanning panel.", SKILL_EXPERIENCED),
-		new /datum/wire_description(AIRLOCK_WIRE_MAIN_POWER1, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AIRLOCK_WIRE_MAIN_POWER2, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AIRLOCK_WIRE_DOOR_BOLTS, "This wire runs down to the very base of the airlock."),
-		new /datum/wire_description(AIRLOCK_WIRE_BACKUP_POWER1, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AIRLOCK_WIRE_BACKUP_POWER2, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AIRLOCK_WIRE_OPEN_DOOR, "This wire connects to the door motors."),
-		new /datum/wire_description(AIRLOCK_WIRE_AI_CONTROL, "This wire connects to automated control systems."),
-		new /datum/wire_description(AIRLOCK_WIRE_ELECTRIFY, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(AIRLOCK_WIRE_SAFETY, "This wire connects to a safety override."),
-		new /datum/wire_description(AIRLOCK_WIRE_SPEED, "This wire appears to connect to the airlock's proximity detector modules."),
-		new /datum/wire_description(AIRLOCK_WIRE_LIGHT, "This wire powers the airlock's built-in lighting.", SKILL_EXPERIENCED)
+		new /datum/wire_description(AIRLOCK_WIRE_IDSCAN, "This wire is connected to the ID scanning panel.", "ID", SKILL_EXPERIENCED),
+		new /datum/wire_description(AIRLOCK_WIRE_MAIN_POWER1, "This wire seems to be carrying a heavy current.", "Power"),
+		new /datum/wire_description(AIRLOCK_WIRE_MAIN_POWER2, "This wire seems to be carrying a heavy current.", "Power"),
+		new /datum/wire_description(AIRLOCK_WIRE_DOOR_BOLTS, "This wire runs down to the very base of the airlock.", "Bolt"),
+		new /datum/wire_description(AIRLOCK_WIRE_BACKUP_POWER1, "This wire seems to be carrying a heavy current.", "Power"),
+		new /datum/wire_description(AIRLOCK_WIRE_BACKUP_POWER2, "This wire seems to be carrying a heavy current.", "Power"),
+		new /datum/wire_description(AIRLOCK_WIRE_OPEN_DOOR, "This wire connects to the door motors.", "Motor"),
+		new /datum/wire_description(AIRLOCK_WIRE_AI_CONTROL, "This wire connects to automated control systems.", "AI"),
+		new /datum/wire_description(AIRLOCK_WIRE_ELECTRIFY, "This wire seems to be carrying a heavy current.", "Power"),
+		new /datum/wire_description(AIRLOCK_WIRE_SAFETY, "This wire connects to a safety override.", "Safety"),
+		new /datum/wire_description(AIRLOCK_WIRE_SPEED, "This wire appears to connect to the airlock's proximity detector modules.", "Timing"),
+		new /datum/wire_description(AIRLOCK_WIRE_LIGHT, "This wire powers the airlock's built-in lighting.", "Light", SKILL_EXPERIENCED)
 	)
 
 var/global/const/AIRLOCK_WIRE_IDSCAN = 1
@@ -50,17 +50,16 @@ var/global/const/AIRLOCK_WIRE_LIGHT = 2048
 /datum/wires/airlock/GetInteractWindow(mob/user)
 	var/obj/machinery/door/airlock/A = holder
 	var/haspower = A.arePowerSystemsOn() //If there's no power, then no lights will be on.
-
 	. += ..()
-	. += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]<br>\n[]",
-	(A.locked ? "The door bolts have fallen!" : "The door bolts look up."),
-	((A.lights && haspower) ? "The door bolt lights are on." : "The door bolt lights are off!"),
-	((haspower) ? "The test light is on." : "The test light is off!"),
-	((A.backup_power_lost_until) ? "The backup power light is off!" : "The backup power light is on."),
-	((!A.ai_control_disabled && !A.emagged && haspower)? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),
-	((!A.safe && haspower)? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."),
-	((!A.normalspeed && haspower)? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."),
-	((!A.aiDisabledIdScanner && haspower)? "The IDScan light is on." : "The IDScan light is off."))
+	. += "<br>\n[A.locked ? "The door bolts have fallen!" : "The door bolts look up."]"
+	. += "<br>\n[(A.lights && haspower) ? "The door bolt lights are on." : "The door bolt lights are off!"]"
+	. += "<br>\n[haspower ? "The test light is on." : "The test light is off!"]"
+	. += "<br>\n[A.backup_power_lost_until ? "The backup power light is off!" : "The backup power light is on."]"
+	. += "<br>\n[(!A.ai_control_disabled && !A.emagged && haspower) ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."]"
+	. += "<br>\n[(!A.safe && haspower) ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
+	. += "<br>\n[(!A.normalspeed && haspower) ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
+	. += "<br>\n[(!A.aiDisabledIdScanner && haspower) ? "The IDScan light is on." : "The IDScan light is off."]"
+
 
 /datum/wires/airlock/UpdateCut(index, mended)
 

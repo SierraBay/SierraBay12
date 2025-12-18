@@ -50,7 +50,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(parent && parent.stat != DEAD)
+	if(parent && !parent.is_dead())
 		if(parent.stance == STANCE_IDLE && (pulledby || length(grabbed_by)))
 			var/enemies = pulledby ? list(pulledby) : grabbed_by
 			parent.ai_holder.attackers += enemies
@@ -71,7 +71,7 @@
 			bound_height = 32
 			bound_width = 64
 
-/mob/living/simple_animal/passive/juvenile_space_whale/Process_Spacemove()
+/mob/living/simple_animal/passive/juvenile_space_whale/Process_Spacemove(allow_movement)
 	return TRUE
 
 /datum/say_list/juvenile_space_whale

@@ -1,7 +1,7 @@
 /obj/item/kharmaan_egg
 	name = "crystalline egg"
 	desc = "A lumpy, gooey egg with a thin crystalline exterior."
-	icon = 'mods/ascent/icons/obj/egg.dmi'
+	icon = 'mods/ascent/icons/obj/items/egg.dmi'
 	icon_state = "egg_single"
 	var/moved = FALSE
 

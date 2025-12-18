@@ -30,7 +30,7 @@
 /datum/fabricator_recipe/drinkingglass/flute
 	path = /obj/item/reagent_containers/food/drinks/glass2/flute
 
-/datum/fabricator_recipe/drinkingglass/coffecup
+/datum/fabricator_recipe/drinkingglass/coffeecup
 	path = /obj/item/reagent_containers/food/drinks/glass2/coffeecup
 
 /datum/fabricator_recipe/drinkingglass/cognac

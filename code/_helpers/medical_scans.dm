@@ -1,4 +1,4 @@
-/mob/living/carbon/human/proc/get_raw_medical_data(tag = FALSE)
+/mob/living/carbon/human/proc/get_raw_medical_data(tag = FALSE, mutations = FALSE)
 	RETURN_TYPE(/list)
 	var/mob/living/carbon/human/H = src
 	var/list/scan = list()
@@ -11,9 +11,9 @@
 	var/brain_result
 	if(H.should_have_organ(BP_BRAIN))
 		var/obj/item/organ/internal/brain/brain = H.internal_organs_by_name[BP_BRAIN]
-		if(!brain || H.stat == DEAD || (H.status_flags & FAKEDEATH))
+		if(!brain || H.is_dead())
 			brain_result = 0
-		else if(H.stat != DEAD)
+		else if(!H.is_dead())
 			brain_result = round(max(0,(1 - brain.damage/brain.max_damage)*100))
 	else
 		brain_result = -1
@@ -51,7 +51,10 @@
 	scan["paralysis"] = H.paralysis
 	scan["immune_system"] = H.virus_immunity()
 	scan["worms"] = H.has_brain_worms()
-
+//SEIRAA-ADD [VIRUSOLOGY]
+	if (LAZYLEN(H.virus2))
+		scan["virus"] = TRUE
+//SEIRAA-ADD
 	scan["reagents"] = list()
 
 	if(H.reagents.total_volume)
@@ -105,6 +108,12 @@
 		scan["blind"] = TRUE
 	if(H.sdisabilities & NEARSIGHTED)
 		scan["nearsight"] = TRUE
+	if(mutations)
+		scan["mutations"] = FALSE
+		for(var/block in 1 to length(assigned_blocks))
+			if(H.dna.GetSEState(block))
+				scan["mutations"] = TRUE
+				break;
 	return scan
 
 /proc/display_medical_data_header(list/scan, skill_level = SKILL_DEFAULT)
@@ -242,6 +251,12 @@
 		if(scan["paralysis"])
 			subdat += "<tr><td><strong>Paralysis Summary:</strong></td><td>approx. [scan["paralysis"]/4] seconds left</td></tr>"
 
+		if(!isnull(scan["mutations"]))
+			if(scan["mutations"])
+				subdat += "<tr><td><strong>[SPAN_BAD("Unknown genetic mutations detected.")]</strong></td></tr>"
+			else
+				subdat += "<tr><td><strong>No genetic mutations present.</strong></td></tr>"
+
 		dat += subdat
 
 		subdat = null
@@ -252,7 +267,13 @@
 			<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>
 		*/
 		dat += "<tr><td colspan = '2'>Antibody levels and immune system perfomance are at [scan["immune_system"]*100]% of baseline.</td></tr>"
-
+//SIERRA ADD [VIRUSOLOGY]
+		if (scan["virus"])
+			if(skill_level >= SKILL_TRAINED)
+				dat += "<tr><td colspan='2'><span class='bad'><center>Viral pathogen detected in blood stream.</center></span></td></tr>"
+			else
+				dat += "<tr><td colspan='2'><center>Viral pathogen detected in blood stream.</center></td></tr>"
+//SIERRA ADD
 		if(scan["worms"])
 			dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>"
 

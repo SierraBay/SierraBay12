@@ -8,7 +8,7 @@
 	)
 	pattern = "^log"
 	req_access = list(list(access_network, access_network_admin))
-	skill_needed = SKILL_EXPERIENCED
+	skill_needed = SKILL_TRAINED
 
 /datum/terminal_command/log/proper_input_entered(text, mob/user, datum/terminal/terminal)
 	var/argument = copytext(text, length(name) + 2, 0)
@@ -23,6 +23,7 @@
 	M.title = "!SENSITIVE! - NTNet System log backup"
 	M.stored_data = jointext(ntnet_global.logs, "<br>")
 	M.source = S.login
+	M.recipient = argument
 	if(!S.send_mail(argument, M))
 		return "[name]: Error; could not send email to '[argument]'."
 	if(!has_access(list(access_network_admin), user.GetAccess()))

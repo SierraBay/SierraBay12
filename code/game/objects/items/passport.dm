@@ -14,12 +14,14 @@
 	if(!istype(H))
 		return
 	var/singleton/cultural_info/culture = H.get_cultural_value(TAG_HOMEWORLD)
-	var/pob = culture ? culture.name : "Unset"
+	var/residence = culture
+	if (!culture.name || culture.name == HOME_SYSTEM_OTHER)
+		residence = "Unset"
 	if(H.dna)
 		fingerprint = md5(H.dna.uni_identity)
 	else
 		fingerprint = "N/A"
-	info = "\icon[src] [src]:\nName: [H.real_name]\nSpecies: [H.get_species()]\nPronouns: [H.pronouns]\nAge: [H.age]\nPlace of Birth: [pob]\nFingerprint: [fingerprint]"
+	info = "\icon[src] [src]:\nName: [H.real_name]\nSpecies: [H.get_species()]\nPronouns: [H.pronouns]\nAge: [H.age]\nResidence: [residence]\nFingerprint: [fingerprint]"
 
 /obj/item/passport/attack_self(mob/user as mob)
 	user.visible_message(
@@ -110,6 +112,11 @@
 	icon_state = "passport_scg2"
 	desc = "A passport from Saffar, within Sol Central Government space."
 
+/obj/item/passport/theia
+	name = "\improper Theia passport"
+	icon_state = "passport_scg2"
+	desc = "A passport from Theia, within Sol Central Government space."
+
 /obj/item/passport/south_gaia
 	name = "\improper Gaian Administrative Area passport"
 	icon_state = "passport_scg2"
@@ -136,9 +143,44 @@
 	desc = "A passport from Terra, within ICCG space."
 
 /obj/item/passport/novayazemlya
-	name = "\improper Novaya Zemlya passport"
+	name = "\improper Zemlya passport"
 	icon_state = "passport_iccg2"
-	desc = "A passport from Novaya Zemlya, within ICCG space."
+	desc = "A passport from Zemlya, within ICCG space."
+
+/obj/item/passport/sestris
+	name = "\improper Sestris passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Sestris, within ICCG space."
+
+/obj/item/passport/bratis
+	name = "\improper Bratis passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Bratis, within ICCG space."
+
+/obj/item/passport/putkari
+	name = "\improper Putkari passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Putkari, within ICCG space."
+
+/obj/item/passport/altair
+	name = "\improper Altair passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Altair, within ICCG space."
+
+/obj/item/passport/penglai
+	name = "\improper Penglai passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Penglai, within ICCG space."
+
+/obj/item/passport/providence
+	name = "\improper Providence passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Providence, within ICCG space."
+
+/obj/item/passport/valy
+	name = "\improper Valy passport"
+	icon_state = "passport_iccg2"
+	desc = "A passport from Valy, within ICCG space."
 
 /obj/item/passport/saveel
 	name = "\improper Saveel passport"

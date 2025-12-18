@@ -19,9 +19,12 @@
 	#include "../away/skrellscoutship/skrellscoutship.dm"
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
-	#include "../away/scavver/scavver_gantry.dm"
+	// #include "../../mods/_maps/insidiae_pack/code/normandite.dm"
+	#include "../../mods/_maps/scavver/scavver_gantry.dm"
+	#include "../../mods/screentips/_screentips_includes.dm" //Без этого юнит тест падает
 	#include "../away/voxship/voxship.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
+	#include "../away/salvage_shuttle/salvage_shuttle.dm"
 
 	#define using_map_DATUM /datum/map/away_sites_testing
 

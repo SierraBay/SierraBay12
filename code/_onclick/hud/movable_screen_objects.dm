@@ -45,78 +45,68 @@
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
 /obj/screen/movable/proc/encode_screen_X(X, mob/viewer)
-	var/view = viewer.client ? viewer.client.view : world.view
-	// [SIERRA-ADD]
-	if(view == "19x15")
-		view = 9
-	else if(view == "17x15")
-		view = 8
-	else if(view == "15x15")
-		view = 7
-	// [/SIERRA-ADD]
-	if(X > view+1)
-		. = "EAST-[view*2 + 1-X]"
-	else if(X < view+1)
+	// [SIERRA-EDIT]
+	var/view = viewer.client ? get_view_size_x(viewer.client.view) : get_view_size_x(world.view)
+	var/x_center = floor(view / 2) + 1 // finding our x center of view
+
+	if(X > x_center)      // we are on the right side of the view
+		. = "EAST-[view - X]"
+	else if(X < x_center) // we are on the left side of the view
 		. = "WEST+[X-1]"
-	else
+	else                  // we are on the center of the view
 		. = "CENTER"
+	// [/SIERRA-EDIT]
 
 /obj/screen/movable/proc/decode_screen_X(X, mob/viewer)
-	var/view = viewer.client ? viewer.client.view : world.view
-	// [SIERRA-ADD]
-	if(view == "19x15")
-		view = 9
-	else if(view == "17x15")
-		view = 8
-	else if(view == "15x15")
-		view = 7
-	// [/SIERRA-ADD]
+	// [SIERRA-EDIT]
+	var/view = viewer.client ? get_view_size_x(viewer.client.view) : get_view_size_x(world.view)
+	var/x_center = floor(view / 2) + 1 // finding our x center of view
 	//Find EAST/WEST implementations
 	if(findtext(X,"EAST-"))
 		var/num = text2num(copytext(X,6)) //Trim EAST-
 		if(!num)
 			num = 0
-		. = view*2 + 1 - num
+		. = view - num
 	else if(findtext(X,"WEST+"))
 		var/num = text2num(copytext(X,6)) //Trim WEST+
 		if(!num)
 			num = 0
 		. = num+1
 	else if(findtext(X,"CENTER"))
-		. = view+1
+		. = x_center
+	// [/SIERRA-EDIT]
 
 /obj/screen/movable/proc/encode_screen_Y(Y, mob/viewer)
-	var/view = viewer.client ? viewer.client.view : world.view
-	// [SIERRA-ADD]
-	if(view == "19x15" || view == "17x15" || view == "15x15")
-		view = 7
-	// [/SIERRA-ADD]
-	if(Y > view+1)
+	// [SIERRA-EDIT]
+	var/view = viewer.client ? get_view_size_y(viewer.client.view) : get_view_size_y(world.view)
+	var/y_center = floor(view / 2) + 1 // finding our y center of view
 
-		. = "NORTH-[view*2 + 1-Y]"
-	else if(Y < view+1)
-		. = "SOUTH+[Y-1]"
-	else
+	if(Y > y_center)      // we are on the right side of the view
+		. = "NORTH-[view - Y]"
+	else if(Y < y_center) // we are on the left side of the view
+		. = "SOUTH+[Y - 1]"
+	else                  // we are on the center of the view
 		. = "CENTER"
+	// [/SIERRA-EDIT]
 
 /obj/screen/movable/proc/decode_screen_Y(Y, mob/viewer)
-	var/view = viewer.client ? get_view_size_y(viewer.client.view) : world.view
-	// [SIERRA-ADD]
-	if(view == "19x15" || view == "17x15" || view == "15x15")
-		view = 7
-	// [/SIERRA-ADD]
+	// [SIERRA-EDIT]
+	var/view = viewer.client ? get_view_size_y(viewer.client.view) : get_view_size_y(world.view)
+	var/y_center = floor(view / 2) + 1 // finding our y center of view
+
 	if(findtext(Y,"NORTH-"))
 		var/num = text2num(copytext(Y,7)) //Trim NORTH-
 		if(!num)
 			num = 0
-		. = view*2 + 1 - num
+		. = view - num
 	else if(findtext(Y,"SOUTH+"))
 		var/num = text2num(copytext(Y,7)) //Time SOUTH+
 		if(!num)
 			num = 0
 		. = num+1
 	else if(findtext(Y,"CENTER"))
-		. = view+1
+		. = y_center
+	// [/SIERRA-EDIT]
 
 //Debug procs
 /client/proc/test_movable_UI()

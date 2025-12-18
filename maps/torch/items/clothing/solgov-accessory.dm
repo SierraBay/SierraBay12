@@ -243,6 +243,28 @@ ribbons
 /obj/item/clothing/accessory/ribbon
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 
+/obj/item/clothing/accessory/ribbon/get_mob_overlay(mob/user_mob, slot)
+	var/image/ret = ..()
+	if (parent)
+		var/order = 0
+		var/total = 0
+		var/found = FALSE
+		for(var/obj/item/clothing/accessory/ribbon/ribbon in parent.accessories)
+			if(ribbon == src)
+				found = TRUE
+			total += 1
+			if(!found)
+				order += 1
+			else if(total > 4)
+				break
+
+		var/per_row = total < 4 ? 1 : 2
+		var/row = floor(order / per_row)
+		var/column = (order - (row * per_row))
+		ret.pixel_x = column - (per_row - 1)
+		ret.pixel_y = (total > 1) - row
+	return ret
+
 /obj/item/clothing/accessory/ribbon/solgov
 	name = "ribbon"
 	desc = "A simple military decoration."
@@ -440,7 +462,7 @@ badges
 	owner_branch = H.char_branch && H.char_branch.name
 	var/singleton/cultural_info/culture = H.get_cultural_value(TAG_RELIGION)
 	var/religion = culture ? culture.name : "Unset"
-	desc = "[initial(desc)]\nName: [H.real_name] ([H.get_species()])[H.char_branch ? "\nBranch: [H.char_branch.name]" : ""]\nReligion: [religion]\nBlood type: [H.b_type]"
+	desc = "[desc]\nName: [H.real_name] ([H.get_species()])[H.char_branch ? "\nBranch: [H.char_branch.name]" : ""]\nReligion: [religion]\nBlood type: [H.b_type]"
 
 /obj/item/clothing/accessory/badge/solgov/representative
 	name = "representative's badge"
@@ -537,7 +559,7 @@ department tags
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 	on_rolled_sleeves = "dept_exped_sleeves"
 	slot = ACCESSORY_SLOT_FLASH
-	accessory_flags = EMPTY_BITFIELD
+	accessory_flags = FLAGS_OFF
 
 /obj/item/clothing/accessory/solgov/department/command
 	name = "command insignia"
@@ -709,10 +731,10 @@ ranks - ec
 	desc = "Insignia denoting the rank of Admiral."
 	icon_state = "ecrank_o8"
 
-/obj/item/clothing/accessory/solgov/rank/ec/officer/o8_alt
-	name = "ranks (O-8 commandant of the expeditionary corps)"
+/obj/item/clothing/accessory/solgov/rank/ec/officer/o10
+	name = "ranks (O-10 commandant of the expeditionary corps)"
 	desc = "Insignia denoting the rank of Commandant of the Expeditonary Corps."
-	icon_state = "ecrank_o8_alt"
+	icon_state = "ecrank_o10"
 
 /************
 ranks - fleet

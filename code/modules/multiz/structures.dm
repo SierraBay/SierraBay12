@@ -57,6 +57,7 @@
 /obj/structure/ladder/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 	climb(user, tool)
+	return TRUE
 
 
 /turf/hitby(atom/movable/AM)
@@ -243,7 +244,6 @@
 	/// Chance of a user being displaced to a random set of stairs while its bluespace affected.
 	var/displacement_chance = 15
 
-
 /obj/structure/stairs/Initialize()
 	for(var/turf/turf in locs)
 		var/turf/simulated/open/above = GetAbove(turf)
@@ -254,10 +254,13 @@
 			above.ChangeTurf(/turf/simulated/open)
 	. = ..()
 
+//[SIERRA-REMOVE] - mods\utility_items\code\stairs.dm
+/*
 /obj/structure/stairs/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(get_dir(loc, target) == dir && upperStep(mover.loc))
 		return FALSE
 	return ..()
+*///[/SIERRA-REMOVE]
 
 /obj/structure/stairs/Bumped(atom/movable/A)
 	var/turf/above = GetAbove(A)

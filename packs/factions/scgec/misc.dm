@@ -28,7 +28,7 @@
 
 /obj/structure/sign/ecplaque/examine(mob/user)
 	. = ..()
-	to_chat(user, "The founding principles of EC are written there: <A href='?src=\ref[src];show_info=1'>Expeditionary Directives</A>")
+	to_chat(user, "The founding principles of EC are written there: <a href='byond://?src=\ref[src];show_info=1'>Expeditionary Directives</A>")
 
 
 /obj/structure/sign/ecplaque/CanUseTopic()

@@ -91,7 +91,7 @@
 
 /obj/rune/proc/get_cultists()
 	. = list()
-	for(var/mob/living/M in range(1))
+	for(var/mob/living/M in range(1, src))
 		if(iscultist(M))
 			. += M
 
@@ -116,7 +116,7 @@
 
 	var/mob/living/carbon/target = null
 	for(var/mob/living/carbon/M in get_turf(src))
-		if(!iscultist(M) && M.stat != DEAD)
+		if(!iscultist(M) && !M.is_dead())
 			target = M
 			break
 
@@ -130,7 +130,7 @@
 	if(!GLOB.cult.can_become_antag(target.mind, 1))
 		to_chat(target, SPAN_DANGER("Are you going insane?"))
 	else
-		to_chat(target, SPAN_OCCULT("Do you want to join the cult of Nar'Sie? You can choose to ignore offer... <a href='?src=\ref[src];join=1'>Join the cult</a>."))
+		to_chat(target, SPAN_OCCULT("Do you want to join the cult of Nar'Sie? You can choose to ignore offer... <a href='byond://?src=\ref[src];join=1'>Join the cult</a>."))
 
 	spamcheck = 1
 	spawn(40)
@@ -226,8 +226,8 @@
 	for(var/obj/rune/teleport/T in GLOB.cult.teleport_runes)
 		if(T == src)
 			continue
-		t += "<a href='?src=\ref[src];target=\ref[T]'>[T.destination]</a>"
-	to_chat(user, "Teleport runes: [english_list(t, nothing_text = "no other runes exist")]... or <a href='?src=\ref[src];leave=1'>return from this rune</a>.")
+		t += "<a href='byond://?src=\ref[src];target=\ref[T]'>[T.destination]</a>"
+	to_chat(user, "Teleport runes: [english_list(t, nothing_text = "no other runes exist")]... or <a href='byond://?src=\ref[src];leave=1'>return from this rune</a>.")
 
 /obj/rune/teleport/proc/leaveRune(mob/living/user)
 	if(user.loc != src)
@@ -339,7 +339,7 @@
 			soul = O
 			break
 	while(user)
-		if(user.stat == DEAD)
+		if(user.is_dead())
 			return
 		if(user.key)
 			return
@@ -442,7 +442,7 @@
 		return fizzle(user)
 	var/turf/T = get_turf(src)
 	for(var/mob/living/M in T)
-		if(M.stat != DEAD && !iscultist(M))
+		if(!M.is_dead() && !iscultist(M))
 			victim = M
 			break
 	if(!victim)
@@ -451,7 +451,7 @@
 	for(var/mob/living/M in cultists)
 		M.say("Barhah hra zar[pick("'","`")]garis!")
 
-	while(victim && victim.loc == T && victim.stat != DEAD)
+	while(victim && victim.loc == T && !victim.is_dead())
 		var/list/mob/living/casters = get_cultists()
 		if(length(casters) < 3)
 			break
@@ -464,7 +464,7 @@
 			if(H.is_asystole())
 				H.adjustBrainLoss(2 + length(casters))
 		sleep(40)
-	if(victim && victim.loc == T && victim.stat == DEAD)
+	if(victim && victim.loc == T && victim.is_dead())
 		GLOB.cult.add_cultiness(CULTINESS_PER_SACRIFICE)
 		var/obj/item/device/soulstone/full/F = new(get_turf(src))
 		for(var/mob/M in cultists | get_cultists())
@@ -720,7 +720,7 @@
 	var/obj/item/device/soulstone/source
 	var/datum/pronouns/pronouns = user.choose_from_pronouns()
 	for(var/mob/living/carbon/human/M in get_turf(src))
-		if(M.stat == DEAD)
+		if(M.is_real_dead())
 			if(iscultist(M))
 				if(M.key)
 					target = M

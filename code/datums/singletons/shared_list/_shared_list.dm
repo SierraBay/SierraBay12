@@ -1,8 +1,7 @@
 /singleton/shared_list
 	abstract_type = /singleton/shared_list
-	var/max_pick = 8
 	VAR_PRIVATE/list/list
-	var/mutable
+	VAR_PRIVATE/mutable
 
 #if DM_VERSION >= 515
 /singleton/shared_list/proc/operator""()
@@ -152,7 +151,7 @@
 
 /// Returns a result, or list of results, randomly selected from the backing list by pick().
 /singleton/shared_list/proc/Pick(count = 1)
-	count = clamp(floor(count), 1, max_pick)
+	count = floor(count)
 	if (count == 1)
 		return pick(list)
 	var/list/result[count]
@@ -163,7 +162,7 @@
 
 /// Returns a result, or list of results, randomly selected from the backing map by pickweight().
 /singleton/shared_list/proc/PickWeight(count = 1)
-	count = clamp(floor(count), 1, max_pick)
+	count = floor(count)
 	if (count == 1)
 		return pickweight(list)
 	var/list/result[count]

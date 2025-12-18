@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(traitors, /datum/antagonist/traitor, new)
+GLOBAL_TYPED_NEW(traitors, /datum/antagonist/traitor)
 
 // Inherits most of its vars from the base datum.
 /datum/antagonist/traitor
@@ -6,11 +6,12 @@ GLOBAL_DATUM_INIT(traitors, /datum/antagonist/traitor, new)
 	antaghud_indicator = "hud_traitor"
 	blacklisted_jobs = list(/datum/job/ai, /datum/job/submap)
 	restricted_jobs = list(/datum/job/captain, /datum/job/lawyer, /datum/job/hos)
+	initial_spawn_target = 1
 	flags = ANTAG_SUSPICIOUS | ANTAG_RANDSPAWN | ANTAG_VOTABLE
 	skill_setter = /datum/antag_skill_setter/station
 
 /datum/antagonist/traitor/get_extra_panel_options(datum/mind/player)
-	return "<a href='?src=\ref[player];common=crystals'>\[set crystals\]</a><a href='?src=\ref[src];spawn_uplink=\ref[player.current]'>\[spawn uplink\]</a>"
+	return "<a href='byond://?src=\ref[player];common=crystals'>\[set crystals\]</a><a href='byond://?src=\ref[src];spawn_uplink=\ref[player.current]'>\[spawn uplink\]</a>"
 
 /datum/antagonist/traitor/Topic(href, href_list)
 	if (..())

@@ -1,6 +1,16 @@
 
 #### Список PRов:
 https://github.com/SierraBay/SierraBay12/pull/2609
+https://github.com/SierraBay/SierraBay12/pull/2635
+https://github.com/SierraBay/SierraBay12/pull/2662
+https://github.com/SierraBay/SierraBay12/pull/2737
+https://github.com/SierraBay/SierraBay12/pull/2853
+https://github.com/SierraBay/SierraBay12/pull/2872
+https://github.com/SierraBay/SierraBay12/pull/2991
+https://github.com/SierraBay/SierraBay12/pull/3033
+https://github.com/SierraBay/SierraBay12/pull/3034
+https://github.com/SierraBay/SierraBay12/pull/3068
+https://github.com/SierraBay/SierraBay12/pull/3151
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание

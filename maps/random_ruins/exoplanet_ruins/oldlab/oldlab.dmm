@@ -2585,7 +2585,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab/station/xenobio)
 "RA" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/red{
 	dir = 1
@@ -2675,7 +2675,7 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/oldlab/station/chem)
 "SL" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/red{
 	dir = 1
@@ -2807,7 +2807,7 @@
 /area/map_template/oldlab/station/hall)
 "UR" = (
 /obj/structure/table/steel,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/red{
 	dir = 1

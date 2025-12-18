@@ -26,7 +26,7 @@
 	icon_state = "hallway"
 
 /area/slavers_base/med
-	name = "\improper Slaves Medical Examination Room"
+	name = "\improper Slaves Sickbay and Biomedical Research Room"
 	icon_state = "med"
 
 /area/slavers_base/demo
@@ -34,10 +34,9 @@
 	icon_state = "demo"
 
 /area/slavers_base/powatm
-	name = "\improper Slavers Base power and atmos room"
+	name = "\improper Slavers Base Robotics and Engineering"
 	icon_state = "powatm"
 
 /area/slavers_base/hangar
 	name = "\improper Slavers Base Hangar"
 	icon_state = "hangar"
-	turfs_airless = TRUE

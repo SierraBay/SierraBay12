@@ -1,9 +1,10 @@
-/datum/species/unathi
+/singleton/species/unathi
 	extended_cultural_info = list(
 		TAG_CULTURE = list(
 			CULTURE_UNATHI_TERSTEN
 		),
 		TAG_HOMEWORLD = list(
+			HOME_SYSTEM_QUIG,
 			HOME_SYSTEM_UNATHI_TERSTEN
 		),
 		TAG_FACTION = list(

@@ -25,6 +25,9 @@
 	/// Boolean (Default `FALSE`) - If set, the tile will not have atmosphere on init.
 	var/map_airless = FALSE
 
+	/// Whether this tile should spawn in a broken state
+	var/spawn_broken = FALSE
+
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	var/lava = 0
@@ -47,10 +50,21 @@
 		floortype = initial_flooring
 	if(floortype)
 		set_flooring(GET_SINGLETON(floortype))
+	if(spawn_broken)
+		break_tile()
 
 /turf/simulated/floor/proc/set_flooring(singleton/flooring/newflooring)
 	make_plating(defer_icon_update = 1)
 	flooring = newflooring
+
+	var/check_z_flags
+	if(flooring)
+		check_z_flags = flooring.z_flags
+
+	if(check_z_flags & ZM_MIMIC_BELOW)
+		enable_zmimic(check_z_flags)
+
+
 	update_icon(1)
 	levelupdate()
 
@@ -62,6 +76,9 @@
 
 	for(var/obj/decal/writing/W in src)
 		qdel(W)
+
+	disable_zmimic()
+	z_flags = initial(z_flags)
 
 	SetName(base_name)
 	desc = base_desc
@@ -106,7 +123,7 @@
 	initial_gas = null
 
 /turf/simulated/floor/shuttle_ceiling/air
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
 
 /turf/simulated/floor/is_floor()
 	return TRUE

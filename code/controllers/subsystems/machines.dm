@@ -45,13 +45,12 @@ SUBSYSTEM_DEF(machines)
 	var/static/cost_powernets = 0
 	var/static/cost_power_objects = 0
 	var/static/list/pipenets = list()
-	var/static/list/machinery = list()
-	var/static/list/machinery_by_type = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
 	var/static/list/queue = list()
-
+	var/static/list/machinery = list()
+	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS

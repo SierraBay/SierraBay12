@@ -14,6 +14,9 @@
 	var/turf/T = get_turf(target)
 	if (!user.TurfAdjacent(T))
 		return
+	if (health_dead())
+		USE_FEEDBACK_FAILURE("\The [src] is too torn to be inflated.")
+		return TRUE
 	if (isspaceturf(T) || isopenspace(T))
 		to_chat(user, SPAN_WARNING("You cannot use \the [src] in open space."))
 		return TRUE
@@ -28,6 +31,9 @@
 		range = 5
 	)
 	if (!do_after(user, 1 SECOND, target, DO_PUBLIC_UNIQUE) || QDELETED(src))
+		return TRUE
+	if (health_dead())
+		USE_FEEDBACK_FAILURE("\The [src] is too torn to be inflated.")
 		return TRUE
 	obstruction = T.get_obstruction()
 	if (obstruction)
@@ -313,6 +319,10 @@
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation. It is too torn to be usable."
 	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "folded_wall_torn"
+
+/obj/item/inflatable/torn/Initialize()
+	. = ..()
+	kill_health()
 
 /obj/item/inflatable/torn/attack_self(mob/user)
 	to_chat(user, SPAN_NOTICE("The inflatable wall is too torn to be inflated!"))

@@ -14,6 +14,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
+	layer = STRUCTURE_LAYER
 
 	machine_name = "gas heating system"
 	machine_desc = "While active, this machine increases the temperature of a connected gas line to the configured amount. Gas pressure increases with heat."

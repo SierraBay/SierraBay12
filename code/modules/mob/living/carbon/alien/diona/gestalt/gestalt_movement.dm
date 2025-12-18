@@ -2,7 +2,7 @@
 	if(nymphs[user]) step(src, direction) // ANARCHY! DEMOCRACY! ANARCHY! DEMOCRACY!
 
 // Naaaa na na na na naa naa https://www.youtube.com/watch?v=iMH49ieL4es
-/obj/structure/diona_gestalt/Bump(atom/movable/AM, yes) // what a useful argname, thanks oldcoders
+/obj/structure/diona_gestalt/Bump(atom/movable/AM, called)
 	. = ..()
 	if(AM && can_roll_up_atom(AM) && AM.Adjacent(src))
 		var/turf/stepping = AM.loc

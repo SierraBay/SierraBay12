@@ -1,8 +1,7 @@
-/atom/movable
-	/// The mimic (if any) that's *directly* copying us.
-	var/atom/movable/openspace/mimic/bound_overlay
-	/// If TRUE, this atom is ignored by Z-Mimic.
-	var/z_flags
+/// The mimic (if any) that's *directly* copying us.
+/atom/movable/var/atom/movable/openspace/mimic/bound_overlay
+/// If TRUE, this atom is ignored by Z-Mimic.
+/atom/movable/var/z_flags
 
 /atom/movable/forceMove(atom/dest)
 	. = ..(dest)
@@ -163,9 +162,9 @@
 
 	return ..()
 
-/atom/movable/openspace/mimic/can_use_item(obj/item/tool, mob/user, click_params)
-	USE_FEEDBACK_FAILURE("\The [src] is too far away.")
-	return FALSE
+/atom/movable/openspace/mimic/use_tool(obj/item/tool, mob/user, list/click_params)
+	SHOULD_CALL_PARENT(FALSE)
+	return tool.resolve_attackby(loc, user, click_params)
 
 /atom/movable/openspace/mimic/attack_hand(mob/user)
 	to_chat(user, SPAN_NOTICE("You cannot reach \the [src] from here."))

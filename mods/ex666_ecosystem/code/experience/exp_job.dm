@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(command_positions, list(
+GLOBAL_LIST_AS(command_positions, list(
 	"Captain",
 	"Head of Personnel",
 	"Research Director",
@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Adjutant"
 ))
 
-GLOBAL_LIST_INIT(engineering_positions, list(
+GLOBAL_LIST_AS(engineering_positions, list(
 	"Chief Engineer",
 	"Senior Engineer",
 	"Engineer",
@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(engineering_positions, list(
 	"Field Engineer"
 ))
 
-GLOBAL_LIST_INIT(medical_positions, list(
+GLOBAL_LIST_AS(medical_positions, list(
 	"Chief Medical Officer",
 	"Surgeon",
 	"Doctor",
@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(medical_positions, list(
 	"Field Medic"
 ))
 
-GLOBAL_LIST_INIT(science_positions, list(
+GLOBAL_LIST_AS(science_positions, list(
 	"Research Director",
 	"Senior Researcher",
 	"Scientist",
@@ -36,14 +36,14 @@ GLOBAL_LIST_INIT(science_positions, list(
 	"Research Assistant"
 ))
 
-GLOBAL_LIST_INIT(supply_positions, list(
+GLOBAL_LIST_AS(supply_positions, list(
 	"Quartermaster",
 	"Prospector",
 	"Cargo Technician",
 	"Cargo Assistant"
 ))
 
-GLOBAL_LIST_INIT(service_positions, list(
+GLOBAL_LIST_AS(service_positions, list(
 	"Head of Personnel",
 	"Chaplain",
 	"Janitor",
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(service_positions, list(
 	"Actor"
 ))
 
-GLOBAL_LIST_INIT(exploration_positions, list(
+GLOBAL_LIST_AS(exploration_positions, list(
 	"Exploration Leader",
 	"Explorer",
 	"Expeditionary Pilot",
@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(exploration_positions, list(
 ))
 
 
-GLOBAL_LIST_INIT(security_positions, list(
+GLOBAL_LIST_AS(security_positions, list(
 	"Head of Security",
 	"Warden",
 	"Criminal Investigator",
@@ -69,23 +69,23 @@ GLOBAL_LIST_INIT(security_positions, list(
 	"Security Cadet"
 ))
 
-GLOBAL_LIST_INIT(silicon_positions, list(
+GLOBAL_LIST_AS(silicon_positions, list(
 	"AI",
 	"pAI",
 	"Robot"
 ))
 
-GLOBAL_LIST_INIT(civilian_positions, list(
+GLOBAL_LIST_AS(civilian_positions, list(
 	"Crewman"
 ))
 
-GLOBAL_LIST_INIT(submap_positions, get_submap_position_titles())
+GLOBAL_LIST_AS(submap_positions, get_submap_position_titles())
 
 
 // We hardcoded this list, because of two reasons:
 // 1. The way it should be saved in Database (list2params)
 // 2. Jobs can't 100% accuratly divided into groups
-GLOBAL_LIST_INIT(job_exp_type_to_job_titles, list(
+GLOBAL_LIST_AS(job_exp_type_to_job_titles, list(
 	EXP_TYPE_LIVING = list(), // all living mobs
 	EXP_TYPE_CREW = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | service_positions | exploration_positions | security_positions | silicon_positions | civilian_positions, // crew positions
 	EXP_TYPE_GHOST = list(), // dead people, observers

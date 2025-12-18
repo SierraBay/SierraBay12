@@ -102,7 +102,7 @@
 	warmup_time = 5
 	current_location = "nav_handpodtwo_start"
 	range = 2
-	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_one)
+	shuttle_area = list(/area/ship/hand/shuttle/pod_hand_two)
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC

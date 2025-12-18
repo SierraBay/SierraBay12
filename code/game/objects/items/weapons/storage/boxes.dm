@@ -171,7 +171,7 @@
 
 
 /obj/item/storage/box/ammo
-	name = "ammo box"
+	name = "magazine box"
 	icon = 'icons/obj/weapons/ammo_boxes.dmi'
 	icon_state = "ammo"
 	desc = "A sturdy metal box with several warning symbols on the front.<br>WARNING: Live ammunition. Misuse may result in serious injury or death."
@@ -728,3 +728,16 @@
 	startswith = list(
 		/obj/item/reagent_containers/food/snacks/canned/berries = 6
 	)
+
+/obj/item/storage/box/large/christianity
+	name = "box of Christian supplies"
+	desc = "A box of Christian religious supplies and accessories."
+	icon_state = "christianity"
+	startswith = list(/obj/item/clothing/suit/nun = 1,
+						/obj/item/clothing/head/nun_hood = 1,
+						/obj/item/clothing/accessory/clergy_collar = 1,
+						/obj/item/reagent_containers/spray/aspergillum = 1,
+						/obj/item/clothing/under/cassock = 1,
+						/obj/item/icon_christ = 1,
+						/obj/item/icon_christ/icon_mary = 1
+					)

@@ -52,7 +52,7 @@
 		return 0
 	. = ..()
 
-/obj/effect/water/Bump(atom/A)
+/obj/effect/water/Bump(atom/A, called)
 	if(reagents)
 		reagents.touch(A)
 	return ..()

@@ -36,6 +36,7 @@
 		/obj/item/clothing/under/captainformal,
 		/obj/item/clothing/under/captain_parade,
 		/obj/item/clothing/under/captain_parade/female,
+		/obj/item/clothing/under/rank/captain/bluefleet,
 		/obj/item/clothing/shoes/laceup,
 		/obj/item/clothing/shoes/dressheels,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/command, /obj/item/storage/backpack/messenger/com, /obj/item/storage/backpack/satchel/com))
@@ -64,7 +65,7 @@
 		/obj/item/device/flash,
 		/obj/item/device/megaphone,
 		/obj/item/material/clipboard,
-		/obj/item/folder/envelope/nuke,
+		/obj/item/folder/envelope/preset/nuke,
 		/obj/item/storage/box/PDAs,
 		/obj/item/storage/box/ids,
 		/obj/item/storage/belt/holster/general,

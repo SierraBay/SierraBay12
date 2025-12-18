@@ -97,7 +97,7 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/archaeological_find/proc/spawn_item()
-	var/obj/item/material/kitchen/utensil/fork/F = new(loc)
+	var/obj/item/material/utensil/fork/F = new(loc)
 	F.icon = 'icons/obj/xenoarchaeology_finds.dmi'
 	F.icon_state = "unknown[rand(1,4)]"
 	return F
@@ -141,11 +141,11 @@
 /obj/item/archaeological_find/cutlery/spawn_item()
 	var/obj/item/new_item
 	if(prob(25))
-		new_item = new /obj/item/material/kitchen/utensil/fork(loc)
+		new_item = new /obj/item/material/utensil/fork(loc)
 	else if(prob(50))
-		new_item = new /obj/item/material/knife/table(loc)
+		new_item = new /obj/item/material/utensil/knife (loc)
 	else
-		new_item = new /obj/item/material/kitchen/utensil/spoon(loc)
+		new_item = new /obj/item/material/utensil/spoon(loc)
 	additional_desc = "[pick("It's like no [item_type] you've ever seen before",\
 	"It's a mystery how anyone is supposed to eat with this",\
 	"You wonder what the creator's mouth was shaped like")]."

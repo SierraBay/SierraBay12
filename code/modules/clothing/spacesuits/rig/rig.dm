@@ -55,12 +55,12 @@
 	var/obj/item/tank/air_type =   /obj/item/tank/oxygen
 
 	//Component/device holders.
-	var/obj/item/tank/air_supply                       // Air tank, if any.
+	var/obj/item/tank/air_supply                              // Air tank, if any.
 	var/obj/item/clothing/shoes/boots = null                  // Deployable boots, if any.
 	var/obj/item/clothing/suit/space/rig/chest                // Deployable chestpiece, if any.
 	var/obj/item/clothing/head/helmet/space/rig/helmet = null // Deployable helmet, if any.
 	var/obj/item/clothing/gloves/rig/gloves = null            // Deployable gauntlets, if any.
-	var/obj/item/cell/cell                             // Power supply, if any.
+	var/obj/item/cell/cell                                    // Power supply, if any.
 	var/obj/item/rig_module/selected_module = null            // Primary system (used with middle-click)
 	var/obj/item/rig_module/vision/visor                      // Kinda shitty to have a var for a module, but saves time.
 	var/obj/item/rig_module/voice/speech                      // As above.
@@ -203,15 +203,18 @@
 		air_supply = new air_type(src)
 	if(glove_type)
 		gloves = new glove_type(src)
+		verbs |= /obj/item/rig/proc/toggle_gauntlets
 	if(helm_type)
 		helmet = new helm_type(src)
 		verbs |= /obj/item/rig/proc/toggle_helmet
 	if(boot_type)
 		boots = new boot_type(src)
+		verbs |= /obj/item/rig/proc/toggle_boots
 	if(chest_type)
 		chest = new chest_type(src)
 		if(allowed)
 			chest.allowed = allowed
+		verbs |= /obj/item/rig/proc/toggle_chest
 
 	for(var/obj/item/piece in list(gloves,helmet,boots,chest))
 		if(!istype(piece))
@@ -319,7 +322,7 @@
 			SPAN_INFO("[wearer]'s suit emits a quiet hum as it begins to adjust its seals."), \
 			SPAN_INFO("With a quiet hum, the suit begins running checks and adjusting components."))
 
-			if(seal_delay && !instant && !do_after(wearer,seal_delay, src))
+			if(seal_delay && !instant && !wearer.do_skilled(seal_delay, SKILL_EVA, src))
 				failed_to_seal = 1
 
 		if(!wearer)
@@ -342,7 +345,7 @@
 
 				if(!failed_to_seal && wearer.back == src && piece == compare_piece)
 
-					if(seal_delay && !instant && !do_after(wearer, seal_delay, src, do_flags = DO_DEFAULT & ~DO_USER_SAME_HAND))
+					if(seal_delay && !instant && !wearer.do_skilled(seal_delay, SKILL_EVA, src, do_flags = DO_DEFAULT & ~DO_USER_SAME_HAND))
 						failed_to_seal = 1
 
 					piece.icon_state = "[initial(icon_state)][!seal_target ? "_sealed" : ""]"
@@ -731,9 +734,6 @@
 		SPAN_ITALIC("You can hear metal clicking and fabric rustling."),
 		range = 5
 	)
-	wearer = user
-	wearer.wearing_rig = src
-	update_icon()
 
 /obj/item/rig/space/equip_delay_after(mob/user, slot, equip_flags)
 	user.visible_message(
@@ -741,6 +741,11 @@
 		SPAN_NOTICE("You finish putting on \the [src]."),
 		range = 5
 	)
+
+/obj/item/rig/post_equip_item(mob/user, slot, equip_flags)
+	wearer = user
+	wearer.wearing_rig = src
+	update_icon()
 
 /obj/item/rig/proc/toggle_piece(piece, mob/initiator, deploy_mode)
 
@@ -783,6 +788,9 @@
 
 			var/mob/living/carbon/human/holder
 
+			if(piece != "helmet" && (!offline || sealing))
+				FEEDBACK_FAILURE(initiator, SPAN_WARNING("The hardsuit needs to be deactivated before you can do that."))
+				return
 			if(use_obj)
 				holder = use_obj.loc
 				if(istype(holder))
@@ -842,6 +850,18 @@
 
 	for(var/piece in list("helmet","gauntlets","chest","boots"))
 		toggle_piece(piece, H, ONLY_DEPLOY)
+
+/obj/item/rig/proc/retract(mob/M)
+
+	var/mob/living/carbon/human/H = M
+
+	if(!H || !istype(H)) return
+
+	if(H.back != src)
+		return
+
+	for(var/piece in list("helmet","gauntlets","chest","boots"))
+		toggle_piece(piece, H, ONLY_RETRACT)
 
 /obj/item/rig/dropped(mob/user)
 	..()

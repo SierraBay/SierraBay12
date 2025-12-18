@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(typing)
 			istyping_input = 0|1,
 			istyping_hotkey = 0|1
 		), ...)
-		See PROC_REF(GetEntry for details.
+		See TYPE_PROC_REF(GetEntry for details.
 	*/
 	var/static/list/status = list()
 
@@ -159,11 +159,11 @@ SUBSYSTEM_DEF(typing)
 		if (!target.typing_indicator)
 			target.typing_indicator = new (null, target)
 		target.typing_indicator.pixel_y = target.icon_height - 32
-		target.vis_contents += target.typing_indicator
+		target.add_vis_contents(target.typing_indicator)
 		target.is_typing = TRUE
 	else
 		if (target.typing_indicator)
-			target.vis_contents -= target.typing_indicator
+			target.remove_vis_contents(target.typing_indicator)
 		target.is_typing = FALSE
 
 
@@ -181,7 +181,7 @@ SUBSYSTEM_DEF(typing)
 
 /atom/movable/typing_indicator/Destroy()
 	if (owner)
-		owner.vis_contents -= src
+		owner.remove_vis_contents(src)
 		owner.typing_indicator = null
 	owner = null
 	return ..()
@@ -210,7 +210,7 @@ SUBSYSTEM_DEF(typing)
 
 /mob/living/Logout()
 	if (typing_indicator)
-		vis_contents -= typing_indicator
+		remove_vis_contents(typing_indicator)
 	is_typing = FALSE
 	..()
 
@@ -233,3 +233,13 @@ SUBSYSTEM_DEF(typing)
 	SStyping.UpdateVerbState(client, FALSE)
 	if (message)
 		me_verb(message)
+
+
+/mob/verb/whisper_wrapper()
+	set name = ".Whisper"
+	set hidden = TRUE
+	SStyping.UpdateVerbState(client, TRUE)
+	var/message = input("","whisper (text)") as null | text
+	SStyping.UpdateVerbState(client, FALSE)
+	if (message)
+		whisper(message)

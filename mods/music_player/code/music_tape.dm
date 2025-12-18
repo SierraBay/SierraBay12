@@ -18,7 +18,7 @@
 	var/ruined = 0
 	var/rewrites_left = 2
 
-	var/jukebox_track/track
+	var/datum/jukebox_track/track
 	var/uploader_ckey
 
 /obj/item/music_tape/Initialize()

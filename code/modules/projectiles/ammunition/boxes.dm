@@ -187,11 +187,18 @@
 	labels = list("rubber")
 	ammo_type = /obj/item/ammo_casing/pistol/rubber
 
+/obj/item/ammo_magazine/pistol/practice
+	labels = list("practice")
+	ammo_type = /obj/item/ammo_casing/pistol/practice
+
 /obj/item/ammo_magazine/pistol/double
 	name = "doublestack pistol magazine"
 	icon_state = "pistol_mag"
 	matter = list(MATERIAL_STEEL = 1050)
 	max_ammo = 15
+
+/obj/item/ammo_magazine/pistol/double/empty
+	initial_ammo = 0
 
 /obj/item/ammo_magazine/pistol/double/rubber
 	labels = list("rubber")

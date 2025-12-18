@@ -107,19 +107,19 @@
 
 	// first
 	if(page == 1)
-		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Front</A></DIV>"
-		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
-		dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
+		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><a href='byond://?src=\ref[src];prev_page=1'>Front</A></DIV>"
+		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><a href='byond://?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
+		dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><a href='byond://?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
 	// last
 	else if(page == length(pages))
-		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
-		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
-		dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'><A href='?src=\ref[src];next_page=1'>Back</A></DIV><BR><HR>"
+		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><a href='byond://?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
+		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><a href='byond://?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
+		dat+= "<DIV STYLE='float;left; text-align:right; with:33.33333%'><a href='byond://?src=\ref[src];next_page=1'>Back</A></DIV><BR><HR>"
 	// middle pages
 	else
-		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
-		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><A href='?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
-		dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
+		dat+= "<DIV STYLE='float:left; text-align:left; width:33.33333%'><a href='byond://?src=\ref[src];prev_page=1'>Previous Page</A></DIV>"
+		dat+= "<DIV STYLE='float:left; text-align:center; width:33.33333%'><a href='byond://?src=\ref[src];remove=1'>Remove [(istype(W, /obj/item/paper)) ? "paper" : "photo"]</A></DIV>"
+		dat+= "<DIV STYLE='float:left; text-align:right; width:33.33333%'><a href='byond://?src=\ref[src];next_page=1'>Next Page</A></DIV><BR><HR>"
 
 	if(istype(pages[page], /obj/item/paper))
 		var/obj/item/paper/P = W
@@ -188,7 +188,7 @@
 
 	var/n_name = sanitizeSafe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
-		SetName("[(n_name ? text("[n_name]") : "paper")]")
+		SetName("[n_name ? "[n_name]" : "paper"]")
 	add_fingerprint(usr)
 	return
 

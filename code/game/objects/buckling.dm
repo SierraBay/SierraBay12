@@ -355,16 +355,16 @@
 	if(M)
 		if(M != user)
 			user.visible_message(
-				SPAN_WARNING("\The [user] unbuckles \the [M] from \the [src]."),
-				SPAN_DANGER("You unbuckle \the [M] from \the [src]"),
+				SPAN_NOTICE("\The [user] unbuckles \the [M] from \the [src]."),
+				SPAN_NOTICE("You unbuckle \the [M] from \the [src]"),
 				SPAN_NOTICE("You hear metal clanking."),
 				exclude_mobs = list(M)
 			)
 			to_chat(M, SPAN_DANGER("\The [user] unbuckles you from \the [src]."))
 		else
 			user.visible_message(\
-				SPAN_WARNING("\The [user] unbuckles themselves from \the [src]."),
-				SPAN_DANGER("You unbuckle yourself from \the [src]."),
+				SPAN_NOTICE("\The [user] unbuckles themselves from \the [src]."),
+				SPAN_NOTICE("You unbuckle yourself from \the [src]."),
 				SPAN_NOTICE("You hear metal clanking.")
 			)
 		add_fingerprint(user)

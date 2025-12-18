@@ -6,7 +6,7 @@
 	item_state = "headphones_off"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 	volume_multiplier = 0.5
-	var/jukebox/jukebox
+	var/datum/jukebox/jukebox
 
 
 /obj/item/clothing/ears/headphones/Initialize()

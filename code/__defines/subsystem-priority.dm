@@ -3,19 +3,20 @@
 // SS_BACKGROUND handles high server load differently than Normal and SS_TICKER do.
 // Higher priority also means a larger share of a given tick before sleep checks.
 
+
+// [SIERRA-ADD] - SSINPUT
+#define SS_PRIORITY_INPUT          1000 // Input MUST ALWAYS BE HIGHEST PRIORITY!!!
+
 #define SS_PRIORITY_DEFAULT 50          // Default priority for all processes levels
 
 // SS_TICKER
 #define SS_PRIORITY_TIMER 30
 #define SS_PRIORITY_OVERLAYS 20
-#define SS_PRIORITY_ICON_UPDATE 10
+
 
 // Normal
 #define SS_PRIORITY_TICKER         100 // Gameticker.
-// [SIERRA-ADD] - SSINPUT
-#define SS_PRIORITY_INPUT          99 // Input things.
-#define SS_PRIORITY_EXPLOSIVES     90 // Explosion processing.
-// [/SIERRA-ADD]
+#define SS_PRIORITY_EXPLOSIVES     90 // Explosion processing. // [/SIERRA-ADD]
 #define SS_PRIORITY_MOB            95  // Mob Life().
 #define SS_PRIORITY_MACHINERY      95  // Machinery + powernet ticks.
 #define SS_PRIORITY_AIR            80  // ZAS processing.
@@ -26,6 +27,7 @@
 #define SS_PRIORITY_CHAT           40  // Chat
 #define SS_PRIORITY_AI             25  // Mob AI
 #define SS_PRIORITY_ALARM          20  // Alarm processing.
+#define SS_PRIORITY_ICON_UPDATE    20  // Queued icon updates. Mostly used by APCs and tables.
 #define SS_PRIORITY_EVENT          20  // Event processing and queue handling.
 #define SS_PRIORITY_SHUTTLE        20  // Shuttle movement.
 #define SS_PRIORITY_CIRCUIT_COMP   20  // Processing circuit component do_work.
@@ -54,6 +56,7 @@
 #define SS_PRIORITY_CHAR_SETUP    25   // Writes player preferences to savefiles.
 #define SS_PRIORITY_GARBAGE       20   // Garbage collection.
 #define SS_PRIORITY_INACTIVITY    10  // Idle kicking.
+#define SS_PRIORITY_WEATHER       10   // Weather processing.
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)

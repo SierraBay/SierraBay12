@@ -41,16 +41,13 @@ var/global/list/mining_floors = list()
 
 /turf/simulated/mineral/Initialize()
 	. = ..()
-	if (!mining_walls["[src.z]"])
-		mining_walls["[src.z]"] = list()
-	mining_walls["[src.z]"] += src
+	LAZYADDASSOCLIST(mining_walls, "[z]", src)
 	MineralSpread()
 	update_icon(1)
 
 /turf/simulated/mineral/Destroy()
-	if (mining_walls["[src.z]"])
-		mining_walls["[src.z]"] -= src
-	GLOB.xeno_artifact_turfs -= src
+	LAZYREMOVEASSOC(mining_walls, "[z]", src)
+	SSxenoarch.xeno_artifact_turfs -= src
 	return ..()
 
 /turf/simulated/mineral/can_build_cable()
@@ -423,15 +420,12 @@ var/global/list/mining_floors = list()
 
 /turf/simulated/floor/asteroid/Initialize()
 	. = ..()
-	if (!mining_floors["[src.z]"])
-		mining_floors["[src.z]"] = list()
-	mining_floors["[src.z]"] += src
+	LAZYADDASSOCLIST(mining_floors, "[z]", src)
 	if(prob(20))
 		overlay_detail = "asteroid[rand(0,9)]"
 
 /turf/simulated/floor/asteroid/Destroy()
-	if (mining_floors["[src.z]"])
-		mining_floors["[src.z]"] -= src
+	LAZYREMOVEASSOC(mining_floors, "[z]", src)
 	return ..()
 
 /turf/simulated/floor/asteroid/ex_act(severity)

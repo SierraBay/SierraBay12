@@ -88,7 +88,7 @@
 
 /datum/gear/eyes/security/resomi
 	display_name = "(Resomi) sun sechud lenses"
-	path = /obj/item/clothing/glasses/sunglasses/sechud/lenses
+	path = /obj/item/clothing/glasses/hud/security/lenses
 	sort_category = "Xenowear"
 	whitelisted = list(SPECIES_RESOMI)
 

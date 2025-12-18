@@ -34,7 +34,7 @@ exactly 2 "/datum text paths" '"/datum'
 exactly 2 "/mob text paths" '"/mob'
 exactly 10 "/obj text paths" '"/obj'
 exactly 8 "/turf text paths" '"/turf'
-exactly 115 "to_world uses" '\sto_world\('
+exactly 118 "to_world uses" '\sto_world\('
 exactly 0 "globals with leading /" '^/var' -P
 exactly 0 "globals without global sugar" '^var/(?!global/)' -P
 exactly 0 "apparent paths with trailing /" '\w/[,\)\n]' -P
@@ -44,11 +44,11 @@ exactly 0 "world.log<< uses" 'world.log<<|world.log[[:space:]]<<'
 exactly 2 "<< uses" '(?<!<)<<(?!<)' -P
 exactly 2 ">> uses" '(?<!>)>>(?!>)' -P
 exactly 0 "incorrect indentations" '^( {4,})' -P
-exactly 25 "text2path uses" 'text2path'
-exactly 4 "update_icon() override" '/update_icon\((.*)\)'  -P
+exactly 27 "text2path uses" 'text2path'
+exactly 5 "update_icon() override" '/update_icon\((.*)\)'  -P
 exactly 4 "goto use" 'goto '
 exactly 1 "NOOP match" 'NOOP'
-exactly 332 "spawn uses" '^\s*spawn\s*\(\s*(-\s*)?\d*\s*\)' -P
+exactly 324 "spawn uses" '^\s*spawn\s*\(\s*(-\s*)?\d*\s*\)' -P
 exactly 0 "tag uses" '\stag = ' -P '**/*.dmm'
 exactly 0 "anchored = 0/1" 'anchored\s*=\s*\d' -P
 exactly 2 "density = 0/1" 'density\s*=\s*\d' -P
@@ -56,11 +56,12 @@ exactly 0 "emagged = 0/1" 'emagged\s*=\s*\d' -P
 exactly 0 "simulated = 0/1" 'simulated\s*=\s*\d' -P
 exactly 2 "var/ in proc arguments" '(^/[^/].+/.+?\(.*?)var/' -P
 exactly 0 "tmp/ vars" 'var.*/tmp/' -P
-exactly 7 "uses of .len" '\.len\b' -P
-exactly 15 "uses of examine()" '[.|\s]examine\(' -P # If this fails it's likely because you used '/atom/proc/examine(mob)' instead of '/proc/examinate(mob, atom)' - Exception: An examine()-proc may call other examine()-procs
+exactly 14 "uses of .len" '\.len\b' -P
+exactly 17 "uses of examine()" '[.|\s]examine\(' -P # If this fails it's likely because you used '/atom/proc/examine(mob)' instead of '/proc/examinate(mob, atom)' - Exception: An examine()-proc may call other examine()-procs
 exactly 13 "direct modifications of overlays list" '\boverlays((\s*[|^=+&-])|(\.(Cut)|(Add)|(Copy)|(Remove)|(Remove)))' -P
 exactly 0 "new/list list instantiations" 'new\s*/list' -P
 exactly 0 "== null tests" '(==\s*null\b)|(\bnull\s*==)' -P #Use isnull() instead
+exactly 1 "uses of deprecated text proc" '\btext\(' -P
 # If you increase any of these numbers you're probably doing it wrong
 
 num=`find ./html/changelogs -not -name "*.yml" | wc -l`

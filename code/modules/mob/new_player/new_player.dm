@@ -54,10 +54,26 @@
 	if (GAME_STATE > RUNLEVEL_LOBBY)
 		output += "<a href='byond://?src=\ref[src];manifest=1'>Manifest</a>"
 	output += "<a href='byond://?src=\ref[src];show_preferences=1'>Options</a>"
+	if(config.maximum_queued_characters > 1)
+		output += "<a href='byond://?src=\ref[src];switch_prefs_list=1;refresh=1'>[client.prefs.use_slot_priority_list ? "Multiple Characters" : "Single Character"]</a>"
 	output += "<hr>"
 	output += "<b>Playing As</b><br>"
-	output += "<a href='byond://?src=\ref[client.prefs];load=1;details=1'>[client.prefs.real_name || "(Random)"]</a><br>"
-	output += client.prefs.job_high ? "[client.prefs.job_high]" : null
+	if(client.prefs.use_slot_priority_list && GAME_STATE <= RUNLEVEL_LOBBY)
+		for(var/i = 1 to length(client.prefs.slot_priority_list))
+			var/datum/preferences_slot/pref = client.prefs.slot_priority_list[i]
+			if(istype(pref))
+				output += "<a href='byond://?src=\ref[src];show_preferences_loaded=[pref.slot]'>[client.prefs.slot_names?[client.prefs.get_slot_key(pref.slot)] || "(Random)"]</a>"
+				if(length(client.prefs.slot_priority_list) != 1)
+					output += "<a href='byond://?src=\ref[client.prefs];removeslot=[i];refresh=1;refreshslots=1'>x</a>"
+				if(i != 1)
+					output += "<a href='byond://?src=\ref[client.prefs];moveslotup=[i];refresh=1;refreshslots=1'>&uarr;</a>"
+				if(i != length(client.prefs.slot_priority_list))
+					output += "<a href='byond://?src=\ref[client.prefs];moveslotdown=[i];refresh=1;refreshslots=1'>&darr;</a>"
+				output += "<br>"
+		output += "<a href='byond://?src=\ref[client.prefs];order_prefs=1'>Reorder</a><br>"
+	else
+		output += "<a href='byond://?src=\ref[client.prefs];load=1;details=1'>[client.prefs.real_name || "(Random)"]</a><br>"
+		output += client.prefs.job_high ? "[client.prefs.job_high]" : null
 	output += "<hr>"
 	output += "<a href='byond://?src=\ref[src];observe=1'>Join As Observer</a>"
 	if (GAME_STATE > RUNLEVEL_LOBBY)
@@ -71,7 +87,6 @@
 	panel.set_window_options("can_close=0")
 	panel.set_content(output.Join())
 	panel.open()
-
 
 /mob/new_player/Stat()
 	. = ..()
@@ -92,28 +107,31 @@
 			totalPlayers = 0
 			totalPlayersReady = 0
 			for(var/mob/new_player/player in GLOB.player_list)
+				var/stealthed = player.is_stealthed()
 				var/highjob
 				if (player.client)
 					var/show_ready = player.client.get_preference_value(/datum/client_preference/show_ready) == GLOB.PREF_SHOW
-					if (player.client.prefs?.job_high)
-						highjob = " as [player.client.prefs.job_high]"
-					if (!player.is_stealthed())
+					var/datum/preferences/prefs = player.client.prefs
+					if(player.client.prefs.use_slot_priority_list && length(player.client.prefs.slot_priority_list))
+						var/datum/preferences_slot/slot = player.client.prefs.slot_priority_list[1]
+						if(slot.job_high)
+							highjob = "as [slot.job_high]"
+					else if (prefs.job_high)
+						highjob = " as [prefs.job_high]"
+					if (!stealthed)
 						var/can_see_hidden = check_rights(R_INVESTIGATE, 0)
-						var/datum/game_mode/mode = SSticker.mode
-						var/antag_role_text = ""
-						if(mode)
-							var/list/readied_antag_roles = list()
-							if (can_see_hidden)
-								for (var/role in player.client.prefs.be_special_role)
-									if (role in mode.antag_tags)
-										readied_antag_roles += role
+						var/datum/game_mode/mode = SSticker.pick_mode(SSticker.master_mode)
+						var/list/readied_antag_roles = list()
+						if (mode && can_see_hidden)
+							for (var/role in prefs.be_special_role)
+								if (role in mode.antag_tags)
+									readied_antag_roles += role
 
-							if(length(readied_antag_roles))
-								antag_role_text = "Readied for ([english_list(readied_antag_roles)])"
-
+						var/antag_role_text = "[length(readied_antag_roles) ? "Readied for ([english_list(readied_antag_roles)])" : ""]"
 						stat("[player.key]", (player.ready && (show_ready || can_see_hidden)?("(Playing[highjob]) [(can_see_hidden && !show_ready) ? "(Hidden)" : ""] [antag_role_text]"):(null)))
-				totalPlayers++
-				if(player.ready)totalPlayersReady++
+						totalPlayers++
+				if (player.ready && !stealthed)
+					totalPlayersReady++
 		else
 			stat("Next Continue Vote:", "[SSroundend.vote_cache] minutes")
 
@@ -122,7 +140,15 @@
 		return TOPIC_NOACTION
 	if (!client)
 		return TOPIC_NOACTION
+	if (href_list["switch_prefs_list"] && config.maximum_queued_characters > 1)
+		client.prefs.use_slot_priority_list = !client.prefs.use_slot_priority_list
+		client.prefs.save_preferences()
+		client.prefs.close_load_dialog()
 	if (href_list["show_preferences"])
+		client.prefs.open_setup_window(src)
+		return 1
+	if (href_list["show_preferences_loaded"])
+		client.prefs.load_character(text2num(href_list["show_preferences_loaded"]))
 		client.prefs.open_setup_window(src)
 		return 1
 	if (href_list["show_wiki"])
@@ -167,6 +193,7 @@
 
 			if(isnull(client.holder) && should_announce)
 				announce_ghost_joinleave(src)
+			log_and_message_admins("has joined the round as an observer.", client)
 
 			var/mob/living/carbon/human/dummy/mannequin = new()
 			client.prefs.dress_preview_mob(mannequin)
@@ -206,7 +233,7 @@
 		if(!SSjobs.check_general_join_blockers(src, job))
 			return FALSE
 
-		var/datum/species/S = all_species[client.prefs.species]
+		var/singleton/species/S = GLOB.species_by_name[client.prefs.species]
 		if(!check_species_allowed(S))
 			return 0
 
@@ -229,6 +256,10 @@
 
 /mob/new_player/proc/AttemptLateSpawn(datum/job/job, spawning_at)
 
+	if(GAME_STATE == RUNLEVEL_GAME)
+		if(job.late_joinable == FALSE)
+			to_chat(usr, SPAN_WARNING("Вы не можете зайти за эту роль во время раунда."))
+			return 0
 	if(src != usr)
 		return 0
 	if(GAME_STATE != RUNLEVEL_GAME)
@@ -483,9 +514,9 @@
 
 	var/mob/living/carbon/human/new_character
 
-	var/datum/species/chosen_species
+	var/singleton/species/chosen_species
 	if(client.prefs.species)
-		chosen_species = all_species[client.prefs.species]
+		chosen_species = GLOB.species_by_name[client.prefs.species]
 
 	if(!spawn_turf)
 		var/datum/job/job = SSjobs.get_by_title(mind.assigned_role)
@@ -552,7 +583,7 @@
 	// panel.close()
 	// [/SIERRA-REMOVE]
 
-/mob/new_player/proc/check_species_allowed(datum/species/S, show_alert=1)
+/mob/new_player/proc/check_species_allowed(singleton/species/S, show_alert=1)
 	if(!S.is_available_for_join() && !has_admin_rights())
 		if(show_alert)
 			to_chat(src, alert("Your current species, [client.prefs.species], is not available for play."))
@@ -564,9 +595,10 @@
 	return 1
 
 /mob/new_player/get_species()
-	var/datum/species/chosen_species
-	if(client.prefs.species)
-		chosen_species = all_species[client.prefs.species]
+	var/singleton/species/chosen_species
+	var/datum/preferences/prefs = client.prefs
+	if(prefs.species)
+		chosen_species = GLOB.species_by_name[prefs.species]
 
 	if(!chosen_species || !check_species_allowed(chosen_species, 0))
 		return SPECIES_HUMAN

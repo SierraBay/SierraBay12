@@ -1,5 +1,5 @@
 /mob/proc/hear_say(message, verb = "says", datum/language/language, alt_name, italics, mob/speaker, sound/speech_sound, sound_vol)
-	if (!client)
+	if (!client && !teleop)
 		return
 
 	var/is_ghost = isghost(src)
@@ -109,6 +109,10 @@
 			if (GLOB.PREF_SHORTHAND)
 				display_verb = "[verb] ([language.shorthand])"
 		display_message = language.format_message(display_message, display_verb)
+
+	if (teleop)
+		teleop.on_hear_say({"[SPAN_CLASS("game say", "[display_controls][SPAN_NOTICE(SPAN_BOLD("NEAR YOU: "))][SPAN_CLASS("name", display_name)][alt_name] [display_message]")]"})
+		return
 
 	on_hear_say({"[SPAN_CLASS("game say", "[display_controls][SPAN_CLASS("name", display_name)][alt_name] [display_message]")]"})
 

@@ -32,10 +32,13 @@
 		)
 	var/shackle = 0
 
-/obj/item/organ/internal/posibrain/New(mob/living/carbon/H)
-	..()
-	if(!brainmob && H)
-		init(H)
+/obj/item/organ/internal/posibrain/Initialize()
+	. = ..()
+	if(!brainmob)
+		if(iscarbon(loc))
+			init(loc)
+		else
+			brainmob = new(src)
 // [SIERRA-REMOVE] - IPC_MODS
 /*
 	unshackle()
@@ -78,6 +81,40 @@
 			to_chat(user, SPAN_WARNING("\The [src] doesn't respond to your pokes and prods."))
 			return
 		start_search(user)
+
+
+/obj/item/organ/internal/posibrain/use_tool(obj/item/item, mob/living/user, list/click_params)
+	if (istype(item, /obj/item/stack/nanopaste))
+		if (!damage)
+			to_chat(user, SPAN_WARNING("\The [src] has no damage to repair."))
+			return TRUE
+
+		if (HAS_FLAGS(status, ORGAN_DEAD))
+			to_chat(user, SPAN_WARNING("\The [src] is damaged beyond repair."))
+			return TRUE
+
+		if (!user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED))
+			to_chat(user, SPAN_WARNING("You don't know how to fix \the [src]."))
+			return TRUE
+
+		var/obj/item/stack/paste = item
+
+		if (!paste.use(1))
+			USE_FEEDBACK_STACK_NOT_ENOUGH(paste, 1, "to repair \the [src]")
+			return TRUE
+
+		to_chat(user, SPAN_NOTICE("You begin to repair \the [src]."))
+		if (!do_after(user, 2 SECOND, src, DO_REPAIR_CONSTRUCT) || !user.use_sanity_check(src, item))
+			return TRUE
+
+		damage -= 10
+		visible_message(
+			SPAN_NOTICE("\The [user] repairs some of \the [src]'s damage with \a [item]."),
+			SPAN_NOTICE("You repair some of \the [src]'s damage with \the [item].")
+		)
+		return TRUE
+	. = ..()
+
 
 /obj/item/organ/internal/posibrain/proc/start_search(mob/user)
 	if (!brainmob)
@@ -130,7 +167,7 @@
 	if (brainmob.mind && brainmob.mind.special_role)
 		return
 	var/datum/ghosttrap/T = get_ghost_trap("positronic brain")
-	if (!T.assess_candidate(user))
+	if (!T.assess_candidate(user, brainmob))
 		return
 	var/possess = alert(user, "Do you wish to become \the [src]?", "Become [src]?", "Yes", "No")
 	if (possess != "Yes")
@@ -252,9 +289,9 @@
 			owner.slurring += 6
 		if (damage > min_broken_damage)
 			if (prob(2))
-				if (prob(15) && owner.sleeping < 1)
+				if (prob(15) && !owner.sleeping)
 					owner.visible_message(SPAN_ITALIC("\The [owner] suddenly halts all activity."))
-					owner.sleeping += 10
+					owner.Sleeping(5)
 				else if (owner.anchored || isspace(get_turf(owner)))
 					owner.visible_message(SPAN_ITALIC("\The [owner] seizes and twitches!"))
 					owner.Stun(2)

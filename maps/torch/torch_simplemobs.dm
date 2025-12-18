@@ -1,15 +1,15 @@
 /obj/landmark/corpse/fleet
 	name = "Fleet Armsman"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile)
 	spawn_flags = CORPSE_SPAWNER_RANDOM_NAMELESS | CORPSE_SPAWNER_ALL_SKIPS
 
 /obj/landmark/corpse/fleet/leader
 	name = "Fleet Team Leader"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/leader)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile/leader)
 
 /obj/landmark/corpse/fleet/space
 	name = "Fleet Assault Armsman"
-	corpse_outfits = list(/singleton/hierarchy/outfit/job/torch/ert/hostile/suit)
+	corpse_outfits = list(/singleton/hierarchy/outfit/fleet/ert/hostile/suit)
 
 /obj/item/clothing/suit/armor/bulletproof/armsman
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
@@ -82,7 +82,7 @@
 	projectiletype = /obj/item/projectile/bullet/pistol
 	natural_weapon = /obj/item/gun/projectile/pistol/m22f
 	weapon1 = /obj/item/gun/projectile/pistol/m22f
-	status_flags = EMPTY_BITFIELD
+	status_flags = FLAGS_OFF
 
 /mob/living/simple_animal/hostile/human/fleet/ranged/neutral
 	say_list_type = /datum/say_list/fleet/friendly
@@ -98,7 +98,7 @@
 	projectiletype = /obj/item/projectile/bullet/rifle
 	natural_weapon = /obj/item/gun/projectile/automatic/bullpup_rifle/light
 	weapon1 = /obj/item/gun/projectile/automatic/bullpup_rifle/light
-	status_flags = EMPTY_BITFIELD
+	status_flags = FLAGS_OFF
 
 /mob/living/simple_animal/hostile/human/fleet/ranged/bullpup/neutral
 	say_list_type = /datum/say_list/fleet/friendly
@@ -117,7 +117,7 @@
 	projectiletype = /obj/item/projectile/bullet/pistol
 	natural_weapon = /obj/item/gun/projectile/automatic/machine_pistol
 	weapon1 = /obj/item/gun/projectile/automatic/machine_pistol
-	status_flags = EMPTY_BITFIELD
+	status_flags = FLAGS_OFF
 
 	corpse = /obj/landmark/corpse/fleet/leader
 
@@ -181,8 +181,8 @@
 	say_list_type = /datum/say_list/fleet/friendly
 	faction = MOB_FACTION_CREW
 
-/mob/living/simple_animal/hostile/human/fleet/space/Process_Spacemove()
-	return 1
+/mob/living/simple_animal/hostile/human/fleet/space/Process_Spacemove(allow_movement)
+	return TRUE
 
 //////////////Rigsuit - Bullpup////////////////
 
@@ -196,7 +196,7 @@
 
 /mob/living/simple_animal/hostile/human/fleet/space/ranged/on_update_icon()
 	..()
-	if(stat != DEAD)
+	if(!is_dead())
 		if(deactivated)
 			AddOverlays(image(icon, "disabled"))
 			return
@@ -285,7 +285,7 @@
 
 /mob/living/simple_animal/hostile/human/fleet/space/ranged/heavy/on_update_icon()
 	..()
-	if(stat != DEAD)
+	if(!is_dead())
 		if(deactivated)
 			AddOverlays(image(icon, "disabled"))
 			return

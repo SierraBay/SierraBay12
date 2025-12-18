@@ -119,6 +119,11 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
+//Add an entry to overlays, assuming it exists
+/mob/living/carbon/human/proc/apply_layer(cache_index)
+	if((. = overlays_standing[cache_index]))
+		overlays.Add(.)
+
 //Human Overlays Indexes/////////
 #define HO_BODY_LAYER       1
 #define HO_MUTATIONS_LAYER  2
@@ -138,16 +143,18 @@ Please contact me on #coderbus IRC. ~Carn x
 #define HO_SUIT_STORE_LAYER 16
 #define HO_BACK_LAYER       17
 #define HO_HAIR_LAYER       18 //TODO: make part of head layer?
-#define HO_GOGGLES_LAYER    19
-#define HO_EARS_LAYER       20
-#define HO_FACEMASK_LAYER   21
-#define HO_HEAD_LAYER       22
-#define HO_COLLAR_LAYER     23
-#define HO_HANDCUFF_LAYER   24
-#define HO_L_HAND_LAYER     25
-#define HO_R_HAND_LAYER     26
-#define HO_FIRE_LAYER       27 //If you're on fire
-#define TOTAL_LAYERS        28
+#define HO_EARS_LAYER       19
+#define HO_ALT_HEAD_LAYER   20
+#define HO_GOGGLES_LAYER    21
+#define HO_FACEMASK_LAYER   22
+#define HO_HEAD_LAYER       23
+#define HO_COLLAR_LAYER     24
+#define HO_HANDCUFF_LAYER   25
+#define HO_L_HAND_LAYER     26
+#define HO_R_HAND_LAYER     27
+#define HO_FIRE_LAYER       28 //If you're on fire
+#define HO_EFFECTS_LAYER    29
+#define TOTAL_LAYERS        30
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -176,11 +183,17 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/entry = visible_overlays[i]
 		if(istype(entry, /image))
 			var/image/overlay = entry
+			//SIERRA-ADD
+			overlay.filters = filters
+			//SIERRA-ADD
 			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 				overlay.transform = get_lying_offset(overlay)
 			overlays_to_apply += overlay
 		else if(istype(entry, /list))
 			for(var/image/overlay in entry)
+				//SIERRA-ADD
+				overlay.filters = filters
+				//SIERRA-ADD
 				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 					overlay.transform = get_lying_offset(overlay)
 				overlays_to_apply += overlay
@@ -188,7 +201,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/obj/item/organ/external/head/head = organs_by_name[BP_HEAD]
 	if(istype(head) && !head.is_stump())
 		var/image/I = head.get_eye_overlay()
-		if(I) overlays_to_apply += I
+		//SIERRA-REMOVE 		if(I) overlays_to_apply += I
+		//SIERRA-ADD
+		if(I)
+			I.filters = filters
+			overlays_to_apply += I
+		//SIERRA-ADD
+
 
 	if(auras)
 		overlays_to_apply += auras
@@ -328,6 +347,7 @@ var/global/list/damage_icon_parts = list()
 	var/list/icon_render_keys = list()
 
 /mob/living/carbon/human/proc/update_body(update_icons=1)
+
 	//Update all limbs and visible organs one by one
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
@@ -569,9 +589,11 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_head(update_icons=1)
 	if(head)
-		overlays_standing[HO_HEAD_LAYER] = head.get_mob_overlay(src,slot_head_str)
+		overlays_standing[head.use_alt_layer ? HO_ALT_HEAD_LAYER : HO_HEAD_LAYER] = head.get_mob_overlay(src,slot_head_str)
+		overlays_standing[head.use_alt_layer ? HO_HEAD_LAYER : HO_ALT_HEAD_LAYER] = null
 	else
-		overlays_standing[HO_HEAD_LAYER]	= null
+		overlays_standing[HO_HEAD_LAYER]     = null
+		overlays_standing[HO_ALT_HEAD_LAYER] = null
 	if(update_icons)
 		queue_icon_update()
 
@@ -671,7 +693,7 @@ var/global/list/damage_icon_parts = list()
 
 	var/species_tail = species.get_tail(src)
 
-	if(species_tail && !(wear_suit && wear_suit.flags_inv & HIDETAIL))
+	if(species_tail && !(wear_suit?.flags_inv & HIDETAIL) && !(w_uniform?.flags_inv & HIDETAIL))
 		var/icon/tail_s = get_tail_icon()
 		overlays_standing[HO_TAIL_LAYER] = image(tail_s, icon_state = "[species_tail]_s")
 		animate_tail_reset(0)
@@ -739,7 +761,7 @@ var/global/list/damage_icon_parts = list()
 		queue_icon_update()
 
 /mob/living/carbon/human/proc/animate_tail_reset(update_icons=1)
-	if(stat != DEAD)
+	if(!is_dead())
 		set_tail_state("[species.get_tail(src)]_idle[rand(0,9)]")
 	else
 		set_tail_state("[species.get_tail(src)]_static")
@@ -765,7 +787,6 @@ var/global/list/damage_icon_parts = list()
 
 	if(update_icons)
 		queue_icon_update()
-
 
 /mob/living/carbon/human/update_fire(update_icons=1)
 	overlays_standing[HO_FIRE_LAYER] = null

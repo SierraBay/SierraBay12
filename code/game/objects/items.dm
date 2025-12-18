@@ -49,7 +49,7 @@
 	*/
 	var/flags_inv = 0
 	///See items_clothing.dm for appropriate bit flags
-	var/body_parts_covered = EMPTY_BITFIELD
+	var/body_parts_covered = FLAGS_OFF
 
 	var/item_flags = 0 //Miscellaneous flags pertaining to equippable objects.
 
@@ -101,14 +101,11 @@
 	var/attack_ignore_harm_check = FALSE
 
 
-/obj/item/New()
-	..()
-	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc)) //hopefully this will prevent us from messing with mapper-set pixel_x/y
-		pixel_x = rand(-randpixel, randpixel)
-		pixel_y = rand(-randpixel, randpixel)
-
 /obj/item/Initialize()
 	. = ..()
+	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc))
+		pixel_x = rand(-randpixel, randpixel)
+		pixel_y = rand(-randpixel, randpixel)
 	if(islist(armor))
 		for(var/type in armor)
 			if(armor[type]) // Don't set it if it gives no armor anyway, which is many items.
@@ -164,6 +161,12 @@
 		if(istype(hand) && hand.is_usable())
 			return TRUE
 	return FALSE
+
+
+/obj/item/update_icon()
+	..()
+	update_twohanding()
+
 
 /obj/item/ex_act(severity)
 	..()
@@ -242,6 +245,15 @@
 		if(!temp)
 			to_chat(user, SPAN_NOTICE("You try to use your hand, but realize it is no longer attached!"))
 			return TRUE
+		var/obj/item/clothing/gloves/gloves = user.get_equipped_item(slot_gloves)
+		if(istype(gloves) && gloves.blood_transfer_amount >= 1)
+			var/taken = rand(1, gloves.blood_transfer_amount)
+			gloves.blood_transfer_amount -= taken
+			add_blood_custom(gloves.blood_color, taken, gloves.blood_DNA)
+		else if(H.bloody_hands >= 1)
+			var/taken = rand(1, H.bloody_hands)
+			H.bloody_hands -= taken
+			add_blood_custom(H.hand_blood_color, taken, H.hands_blood_DNA)
 
 	var/old_loc = loc
 
@@ -465,8 +477,6 @@ var/global/list/slot_flags_enumeration = list(
 					to_chat(H, SPAN_WARNING("You need a suit before you can attach this [name]."))
 				return 0
 			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					to_chat(usr, SPAN_WARNING("You somehow have a suit with no defined allowed items for suit storage, stop that."))
 				return 0
 			if( !(istype(src, /obj/item/modular_computer/pda) || istype(src, /obj/item/pen) || is_type_in_list(src, H.wear_suit.allowed)) )
 				return 0
@@ -555,6 +565,9 @@ var/global/list/slot_flags_enumeration = list(
 	var/parry_chance = get_parry_chance(user, attacker)
 	if(parry_chance)
 		if(default_parry_check(user, attacker, damage_source) && prob(parry_chance))
+			//[SIERRA-ADD]
+			user.dodge_animation(attacker = attacker)
+			//[SIERRA-ADD
 			user.visible_message(SPAN_DANGER("\The [user] parries [attack_text] with \the [src]!"))
 			admin_attack_log(attacker, user, "Attempted to attack with \a [damage_source] but was parried", "Was targeted with \a [damage_source] but parried the attack", "attmpted to use \a [damage_source] to attack but was parried by")
 			playsound(user.loc, 'sound/weapons/punchmiss.ogg', 50, 1)
@@ -666,7 +679,7 @@ var/global/list/slot_flags_enumeration = list(
 		CutOverlays(blood_overlay)
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.blood_transfer_amount = 0
 	trace_DNA = null
 
 /obj/item/reveal_blood()
@@ -676,7 +689,7 @@ var/global/list/slot_flags_enumeration = list(
 		blood_overlay.color = COLOR_LUMINOL
 		update_icon()
 
-/obj/item/add_blood(mob/living/carbon/human/M as mob)
+/obj/item/add_blood_custom(source_blood_color = COLOR_BLOOD_HUMAN, amount = 3, list/source_blood_DNA = list())
 	if (!..())
 		return 0
 
@@ -688,16 +701,20 @@ var/global/list/slot_flags_enumeration = list(
 		generate_blood_overlay()
 
 	//apply the blood-splatter overlay if it isn't already in there
-	if(!length(blood_DNA))
+	if(blood_overlay.color != blood_color)
 		blood_overlay.color = blood_color
 		AddOverlays(blood_overlay)
 
+	blood_transfer_amount = max(amount, blood_transfer_amount)
+
 	//if this blood isn't already in the list, add it
-	if(istype(M))
-		if(blood_DNA[M.dna.unique_enzymes])
-			return 0 //already bloodied with this blood. Cannot add more.
-		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	return 1 //we applied blood to the item
+	var/added_blood = 0
+	for(var/datum/dna/dna in source_blood_DNA)
+		if(blood_DNA[dna.unique_enzymes])
+			continue //already bloodied with this blood. Cannot add more.
+		blood_DNA[dna.unique_enzymes] = dna.b_type
+		added_blood = 1
+	return added_blood
 
 GLOBAL_LIST_EMPTY(blood_overlay_cache)
 #define BLOOD_OVERLAY_CACHE_INDEX "[icon]" + icon_state + blood_color
@@ -784,6 +801,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	user.client.view = viewsize
 	zoom = 1
+	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
@@ -797,6 +815,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /mob/living/proc/unzoom(obj/item/I)
 	if(I)
 		I.unzoom(src)
+		client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 
 /obj/item/proc/unzoom(mob/user)
 	if(!zoom)
@@ -829,6 +848,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(istype(H))
 		H.handle_vision()
 	user.visible_message("[zoomdevicename ? "\The [user] looks up from [src]" : "\The [user] lowers [src]"].")
+	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
+	user.client.reload_fov() //[SIERRA-ADD] - FOV
 
 /obj/item/proc/pwr_drain()
 	return 0 // Process Kill
@@ -895,9 +916,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		. = "[icon2html(src, viewers(get_turf(src)))] \a [src]"
 	var/ID = GetIdCard()
 	if(ID)
-		. += "  <a href='?src=\ref[ID];look_at_id=1'>\[Look at ID\]</a>"
+		. += "  <a href='byond://?src=\ref[ID];look_at_id=1'>\[Look at ID\]</a>"
 	else
-		. += "  <a href='?src=\ref[src];examine=1'>\[?\]</a>"
+		. += "  <a href='byond://?src=\ref[src];examine=1'>\[?\]</a>"
 
 /obj/item/proc/on_active_hand(mob/M)
 
@@ -964,6 +985,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /// Virtual for behavior to do after successful do_after if equip_delay is set
 /obj/item/proc/equip_delay_after(mob/user, slot, equip_flags)
 	return
+
+
+/// Proc called when when the item has been equipped. Unlike `equip_delay_*`, this is always called.
+/obj/item/proc/post_equip_item(mob/user, slot, equip_flags)
+	return
+
 
 /obj/item/OnTopic(href, href_list, datum/topic_state/state)
 	. = ..()

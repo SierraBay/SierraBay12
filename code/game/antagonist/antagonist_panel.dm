@@ -3,13 +3,13 @@
 	var/dat = "<tr><td><b>[role_text]:</b>"
 	var/extra = get_extra_panel_options(player)
 	if(is_antagonist(player))
-		dat += "<a href='?src=\ref[player];remove_antagonist=[id]'>\[-\]</a>"
-		dat += "<a href='?src=\ref[player];equip_antagonist=[id]'>\[equip\]</a>"
+		dat += "<a href='byond://?src=\ref[player];remove_antagonist=[id]'>\[-\]</a>"
+		dat += "<a href='byond://?src=\ref[player];equip_antagonist=[id]'>\[equip\]</a>"
 		if(starting_locations && length(starting_locations))
-			dat += "<a href='?src=\ref[player];move_antag_to_spawn=[id]'>\[move to spawn\]</a>"
+			dat += "<a href='byond://?src=\ref[player];move_antag_to_spawn=[id]'>\[move to spawn\]</a>"
 		if(extra) dat += "[extra]"
 	else
-		dat += "<a href='?src=\ref[player];add_antagonist=[id]'>\[+\]</a>"
+		dat += "<a href='byond://?src=\ref[player];add_antagonist=[id]'>\[+\]</a>"
 	dat += "</td></tr>"
 
 	return dat
@@ -17,7 +17,7 @@
 /datum/antagonist/proc/get_extra_panel_options()
 	return
 
-/datum/antagonist/proc/get_check_antag_output(datum/admins/caller)
+/datum/antagonist/proc/get_check_antag_output(datum/admins/calling_admin)
 
 	if(!current_antagonists || !length(current_antagonists))
 		return ""
@@ -27,20 +27,20 @@
 		var/mob/M = player.current
 		dat += "<tr>"
 		if(M)
-			dat += "<td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/([player.key])</a>"
+			dat += "<td><a href='byond://?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/([player.key])</a>"
 			if(!M.client)      dat += " <i>(logged out)</i>"
-			if(M.stat == DEAD) dat += " <b>[SPAN_COLOR("red", "(DEAD)")]</b>"
+			if(M.is_real_dead()) dat += " <b>[SPAN_COLOR("red", "(DEAD)")]</b>"
 			dat += "</td>"
-			dat += "<td>\[<A href='?src=\ref[caller];priv_msg=\ref[M]'>PM</A>\]\[<A href='?src=\ref[caller];traitor=\ref[M]'>TP</A>\]</td>"
+			dat += "<td>\[<A href='byond://?src=\ref[calling_admin];priv_msg=\ref[M]'>PM</A>\]\[<A href='byond://?src=\ref[calling_admin];traitor=\ref[M]'>TP</A>\]</td>"
 		else
 			dat += "<td><i>Mob not found/([player.key])!</i></td>"
 		dat += "</tr>"
 	dat += "</table>"
 
-	dat += get_additional_check_antag_output(caller)
+	dat += get_additional_check_antag_output(calling_admin)
 	dat += "<hr>"
 	return dat
 
 //Overridden elsewhere.
-/datum/antagonist/proc/get_additional_check_antag_output(datum/admins/caller)
+/datum/antagonist/proc/get_additional_check_antag_output(datum/admins/calling_admin)
 	return ""

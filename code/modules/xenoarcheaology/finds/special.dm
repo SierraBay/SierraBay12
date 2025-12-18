@@ -216,10 +216,10 @@
 			'sound/hallucinations/turn_around1.ogg',\
 			'sound/hallucinations/turn_around2.ogg',\
 			), 50, 1, -3)
-			M.sleeping = max(M.sleeping,rand(5,10))
+			M.Sleeping(rand(5, 10))
 			qdel(src)
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/shadow_wight/Bump(atom/obstacle)
+/obj/shadow_wight/Bump(atom/obstacle, called)
 	to_chat(obstacle, SPAN_WARNING("You feel a chill run down your spine!"))

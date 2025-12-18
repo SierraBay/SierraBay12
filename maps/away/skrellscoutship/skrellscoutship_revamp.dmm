@@ -2340,7 +2340,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
 "ho" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hp" = (
@@ -4355,7 +4355,7 @@
 /area/ship/skrellscoutship/hangar)
 "xF" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "xI" = (
@@ -5810,7 +5810,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/skrellscoutshuttle)
 "TZ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "Uf" = (

@@ -22,6 +22,21 @@
 		var/obj/item/card/union/card = .
 		card.signed_by = H.real_name
 
+/datum/gear/party_card
+	display_name = "party membership"
+	path = /obj/item/card/party
+
+/datum/gear/party_card/New()
+	..()
+	var/party_card_type = list()
+	party_card_type["Citizens for Free Enterprise & Trade"] = /obj/item/card/party/cen/fet
+	party_card_type["Progressive Alliance of Citizens"] = /obj/item/card/party/cen/pac
+	party_card_type["United Green-Left of Sol"] = /obj/item/card/party/lef/ugl
+	party_card_type["Leftists for Direct Democracy & Freedom"] = /obj/item/card/party/lef/ldd
+	party_card_type["Solarians for Freedom & Rights"] = /obj/item/card/party/rig/sfr
+	party_card_type["Order of Solarian Nations"] = /obj/item/card/party/rig/osn
+	gear_tweaks += new/datum/gear_tweak/path(party_card_type)
+
 /datum/gear/dice
 	display_name = "dice pack"
 	path = /obj/item/storage/pill_bottle/dice
@@ -37,6 +52,10 @@
 /datum/gear/tarot
 	display_name = "deck of tarot cards"
 	path = /obj/item/deck/tarot
+
+/datum/gear/hanafuda
+	display_name = "deck of hanafuda cards"
+	path = /obj/item/deck/hanafuda
 
 /datum/gear/holder
 	display_name = "card holder"
@@ -86,6 +105,11 @@
 	knives["lightweight utility knife"] = /obj/item/material/knife/utility/lightweight
 	gear_tweaks += new/datum/gear_tweak/path(knives)
 
+/datum/gear/kirpan
+	display_name = "kirpan"
+	description = "A ceremonial Sikh dagger."
+	path = /obj/item/material/knife/kirpan
+
 /datum/gear/lunchbox
 	display_name = "lunchbox"
 	description = "A little lunchbox."
@@ -94,7 +118,7 @@
 
 /datum/gear/lunchbox/New()
 	..()
-	var/list/types = subtypesof(/obj/item/storage/lunchbox) - /obj/item/storage/lunchbox/caltrops
+	var/list/types = subtypesof(/obj/item/storage/lunchbox) - list(/obj/item/storage/lunchbox/caltrops, /obj/item/storage/lunchbox/ntmisprint)
 	var/list/options = list()
 	for (var/obj/item/storage/lunchbox/lunchbox as anything in types)
 		if (!initial(lunchbox.filled))
@@ -134,6 +158,7 @@
 	plushes["deer plush"] = /obj/item/toy/plushie/deer
 	plushes["blue squid plush"] = /obj/item/toy/plushie/squid_blue
 	plushes["orange squid plush"] = /obj/item/toy/plushie/squid_orange
+	plushes["bee plush"] = /obj/item/toy/plushie/bee
 	gear_tweaks += new /datum/gear_tweak/path(plushes)
 
 /datum/gear/workvisa
@@ -291,3 +316,24 @@
 	crosstype["cross, silver"] = /obj/item/material/cross/silver
 	crosstype["cross, gold"] = /obj/item/material/cross/gold
 	gear_tweaks += new/datum/gear_tweak/path(crosstype)
+
+/datum/gear/allergy_pen
+	display_name = "Allergy Autoinjector"
+	path = /obj/item/reagent_containers/hypospray/autoinjector/pouch_auto/allergy
+	cost = 1
+	allowed_traits = list(/singleton/trait/malus/allergy)
+
+/datum/gear/rosary
+	display_name = "rosary"
+	path = /obj/item/clothing/accessory/prayer_beads/rosary
+
+/datum/gear/prayer_beads
+	display_name = "prayer beads"
+	path = /obj/item/clothing/accessory/prayer_beads
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/icon_christ
+	display_name = "icon of Christ"
+	path = /obj/item/icon_christ
+	cost = 2
+	flags = GEAR_HAS_TYPE_SELECTION

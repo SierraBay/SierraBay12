@@ -86,7 +86,7 @@
 	var/list/newargs = args - args[1]
 	for(var/a in auras)
 		var/obj/aura/aura = a
-		var/result = EMPTY_BITFIELD
+		var/result = FLAGS_OFF
 		switch(type)
 			if(AURA_TYPE_WEAPON)
 				result = aura.aura_check_weapon(arglist(newargs))
@@ -183,6 +183,9 @@
 
 		if(O.can_embed() && (throw_damage > 5*O.w_class)) //Handles embedding for non-humans and simple_animals.
 			embed(O)
+
+	if (AM.IsFlameSource())
+		IgniteMob()
 
 	process_momentum(AM, TT)
 
@@ -335,6 +338,18 @@
 			I.action.name = I.action_button_name
 			I.action.SetTarget(I)
 			I.action.Grant(src)
+
+		//Clothing accessories
+		var/obj/item/clothing/C = I
+		if (istype(C))
+			for(var/obj/item/clothing/accessory/CA in C.accessories)
+				if(CA.action_button_name)
+					if(!CA.action)
+						CA.action = new CA.default_action_type
+					CA.action.name = CA.action_button_name
+					CA.action.SetTarget(CA)
+					CA.action.Grant(src)
+
 	return
 
 /mob/living/update_action_buttons()

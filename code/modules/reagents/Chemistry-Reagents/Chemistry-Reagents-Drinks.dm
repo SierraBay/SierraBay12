@@ -26,7 +26,7 @@
 		M.adjust_hydration(hydration * removed)
 	M.dizziness = max(0, M.dizziness + adj_dizzy)
 	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
-	M.sleeping = max(0, M.sleeping + adj_sleepy)
+	M.AdjustSleeping(adj_sleepy)
 	if(adj_temp > 0 && M.bodytemperature < 310) // 310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT))
 	if(adj_temp < 0 && M.bodytemperature > 310)
@@ -35,6 +35,7 @@
 // Juices
 /datum/reagent/drink/juice
 	sugar_amount = 0.5
+	nutrition = 1
 
 /datum/reagent/drink/juice/affect_ingest(mob/living/carbon/human/M, removed)
 	..()
@@ -139,8 +140,8 @@
 /datum/reagent/drink/juice/potato
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
-	taste_description = "irish sadness and potatoes"
-	nutrition = 2
+	taste_description = "potato"
+	nutrition = 3
 	color = "#302000"
 
 	glass_name = "potato juice"
@@ -149,8 +150,8 @@
 /datum/reagent/drink/juice/garlic
 	name = "Garlic Juice"
 	description = "Who would even drink this?"
-	taste_description = "bad breath"
-	nutrition = 1
+	taste_description = "garlic"
+	nutrition = 2
 	color = "#eeddcc"
 
 	glass_name = "garlic juice"
@@ -159,8 +160,8 @@
 /datum/reagent/drink/juice/onion
 	name = "Onion Juice"
 	description = "Juice from an onion, for when you need to cry."
-	taste_description = "stinging tears"
-	nutrition = 1
+	taste_description = "onion"
+	nutrition = 2
 	color = "#ffeedd"
 
 	glass_name = "onion juice"
@@ -239,13 +240,13 @@
 
 /datum/reagent/drink/thoom
 	name = "Th'oom Juice"
-	description = "A thick off-white fluid expressed from the juice glands of the Skrellian Th'oom."
+	description = "A thick, off-white drink themed around the elusive skrellian Th'oom. Despite the name, no one is really sure what's in this."
 	taste_description = "thick, sweet, and savory ... milk?"
 	color = "#baeece"
 	glass_name = "th'oom juice"
 	glass_desc = "sweet and savory goodness!"
 	sugar_amount = 0.5
-	nutrition = 4
+	nutrition = 5
 	hydration = 3
 
 

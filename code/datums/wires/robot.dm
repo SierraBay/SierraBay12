@@ -3,10 +3,10 @@
 	holder_type = /mob/living/silicon/robot
 	wire_count = 4
 	descriptions = list(
-		new /datum/wire_description(BORG_WIRE_LAWCHECK, "This wire runs to the unit's law module."),
-		new /datum/wire_description(BORG_WIRE_MAIN_POWER, "This wire seems to be carrying a heavy current.", SKILL_EXPERIENCED),
-		new /datum/wire_description(BORG_WIRE_LOCKED_DOWN, "This wire connects to the unit's safety override."),
-		new /datum/wire_description(BORG_WIRE_AI_CONTROL, "This wire connects to automated control systems.")
+		new /datum/wire_description(BORG_WIRE_LAWCHECK, "This wire runs to the unit's law module.", "Laws"),
+		new /datum/wire_description(BORG_WIRE_MAIN_POWER, "This wire seems to be carrying a heavy current.", "Power", SKILL_EXPERIENCED),
+		new /datum/wire_description(BORG_WIRE_LOCKED_DOWN, "This wire connects to the unit's safety override.", "Lockdown"),
+		new /datum/wire_description(BORG_WIRE_AI_CONTROL, "This wire connects to automated control systems.", "AI")
 	)
 
 var/global/const/BORG_WIRE_LAWCHECK = 1
@@ -18,9 +18,9 @@ var/global/const/BORG_WIRE_AI_CONTROL = 8
 
 	. = ..()
 	var/mob/living/silicon/robot/R = holder
-	. += text("<br>\n[(R.lawupdate ? "The LawSync light is on." : "The LawSync light is off.")]")
-	. += text("<br>\n[(R.connected_ai ? "The AI link light is on." : "The AI link light is off.")]")
-	. += text("<br>\n[(R.lockcharge ? "The lockdown light is on." : "The lockdown light is off.")]")
+	. += "<br>\n[R.lawupdate ? "The LawSync light is on." : "The LawSync light is off."]"
+	. += "<br>\n[R.connected_ai ? "The AI link light is on." : "The AI link light is off."]"
+	. += "<br>\n[R.lockcharge ? "The lockdown light is on." : "The lockdown light is off."]"
 	return .
 
 /datum/wires/robot/UpdateCut(index, mended)

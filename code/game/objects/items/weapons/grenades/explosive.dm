@@ -123,9 +123,8 @@
 		/obj/item/material/shard,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/pen,
-		/obj/item/material/knife/table,
-		/obj/item/material/kitchen/utensil
-		)
+		/obj/item/material/utensil
+	)
 
 /obj/item/grenade/frag/makeshift/Initialize()
 	det_time = rand(5,100) // Fuse is randomized.

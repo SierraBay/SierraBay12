@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(rpd_pipe_selection, list(
+GLOBAL_LIST_AS(rpd_pipe_selection, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),
@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(rpd_pipe_selection, list(
 		new /datum/pipe/pipe_dispenser/scrubber/cap()),
 	))
 
-GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
+GLOBAL_LIST_AS(rpd_pipe_selection_skilled, list(
 	new /datum/pipe/pipe_dispenser/simple() = list(
 		new /datum/pipe/pipe_dispenser/simple/straight(),
 		new /datum/pipe/pipe_dispenser/simple/bent(),
@@ -56,10 +56,18 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 		new /datum/pipe/pipe_dispenser/fuel/up(),
 		new /datum/pipe/pipe_dispenser/fuel/down()
 		),
+	/*SIERRA-EDIT старый список девайсов
 	new /datum/pipe/pipe_dispenser/device() = list(
 		new /datum/pipe/pipe_dispenser/device/universaladapter(),
 		new /datum/pipe/pipe_dispenser/device/gaspump(),
 		new /datum/pipe/pipe_dispenser/device/manualvalve()
+		)
+	*/
+	new /datum/pipe/pipe_dispenser/device() = list(
+		new /datum/pipe/pipe_dispenser/device/unaryvent(),
+		new /datum/pipe/pipe_dispenser/device/scrubber(),
+		new /datum/pipe/pipe_dispenser/device/universaladapter(),
+		new /datum/pipe/pipe_dispenser/device/connector()
 		)
 	))
 
@@ -97,12 +105,12 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 	. = list()
 	. += "<table>"
 	if(color_options)
-		. += "<tr><td>Color</td><td><a href='?src=\ref[src];color=\ref[src]'>[SPAN_COLOR(pipe_color, pipe_color)]</a></td></tr>"
+		. += "<tr><td>Color</td><td><a href='byond://?src=\ref[src];color=\ref[src]'>[SPAN_COLOR(pipe_color, pipe_color)]</a></td></tr>"
 	for(var/category in pipe_categories)
 		var/datum/pipe/cat = category
 		. += "<tr><td>[SPAN_COLOR("#517087", "<strong>[initial(cat.category)]</strong>")]</td></tr>"
 		for(var/datum/pipe/pipe in pipe_categories[category])
-			. += "<tr><td>[pipe.name]</td><td>[P.type == pipe.type ? SPAN_CLASS("linkOn", "Select") : "<a href='?src=\ref[src];select=\ref[pipe]'>Select</a>"]</td></tr>"
+			. += "<tr><td>[pipe.name]</td><td>[P.type == pipe.type ? SPAN_CLASS("linkOn", "Select") : "<a href='byond://?src=\ref[src];select=\ref[pipe]'>Select</a>"]</td></tr>"
 	.+= "</table>"
 	. = JOINTEXT(.)
 
@@ -150,10 +158,55 @@ GLOBAL_LIST_INIT(rpd_pipe_selection_skilled, list(
 				return TRUE
 			playsound (get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
-		P.Build(P, T, pipe_colors[pipe_color])
+		var/obj/item/pipe/pipe = P.Build(P, T, pipe_colors[pipe_color])
+		var/num_rotations
+		if (user.skill_check(SKILL_ATMOS, SKILL_EXPERIENCED))
+			num_rotations = get_placement_rotation(user, P.placement_mode, click_parameters)
+		else
+			num_rotations = rand(3)
+		for (var/i = 0, i < num_rotations, i++)
+			pipe.dir = GLOB.cw_dir[pipe.dir]
 		if (prob(20))
 			spark_system.start()
 		return TRUE
+
+/obj/item/rpd/proc/get_placement_rotation(mob/user, placement_mode, click_parameters)
+	var/mouse_x = text2num(click_parameters["icon-x"])
+	var/mouse_y = text2num(click_parameters["icon-y"])
+	switch (placement_mode)
+		if (PIPE_PLACEMENT_SIMPLE)
+			// Zero rotations as we use the default direction of the pipe
+			return 0
+		if (PIPE_PLACEMENT_DIAGONAL)
+			// One case for each of the four quarters of a square
+			//  0 │ 1
+			// ───┼───
+			//  3 │ 2
+			if (mouse_x <= 16)
+				if (mouse_y <= 16)
+					. = 3
+				else
+					. = 0
+			else
+				if (mouse_y <= 16)
+					. = 2
+				else
+					. = 1
+		if (PIPE_PLACEMENT_ORTHOGONAL)
+			// One case for each of the four triangles of a square
+			//  ⟍ 0 ⟋
+			//  3 ⤫ 1
+			//  ⟋ 2 ⟍
+			if (mouse_y > mouse_x)
+				if (mouse_y > 32-mouse_x)
+					. = 0
+				else
+					. = 3
+			else
+				if (mouse_y > 32-mouse_x)
+					. = 1
+				else
+					. = 2
 
 /obj/item/rpd/examine(mob/user, distance)
 	. = ..()

@@ -2,9 +2,9 @@
 	holder_type = /obj/machinery/suit_cycler
 	wire_count = 3
 	descriptions = list(
-		new /datum/wire_description(SUIT_STORAGE_WIRE_ELECTRIFY, "This wire seems to be carrying a heavy current."),
-		new /datum/wire_description(SUIT_STORAGE_WIRE_SAFETY, "This wire seems connected to a safety override", SKILL_EXPERIENCED),
-		new /datum/wire_description(SUIT_STORAGE_WIRE_LOCKED, "This wire is connected to the ID scanning panel.")
+		new /datum/wire_description(SUIT_STORAGE_WIRE_ELECTRIFY, "This wire seems to be carrying a heavy current.", "Shock"),
+		new /datum/wire_description(SUIT_STORAGE_WIRE_SAFETY, "This wire seems connected to a safety override", "Safety", SKILL_EXPERIENCED),
+		new /datum/wire_description(SUIT_STORAGE_WIRE_LOCKED, "This wire is connected to the ID scanning panel.", "Lock")
 	)
 
 var/global/const/SUIT_STORAGE_WIRE_ELECTRIFY	= 1

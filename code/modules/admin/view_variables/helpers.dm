@@ -6,11 +6,11 @@
 
 /atom/get_view_variables_header()
 	return {"
-		<a href='?_src_=vars;datumedit=\ref[src];varnameedit=name'><b>[src]</b></a>
+		<a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=name'><b>[src]</b></a>
 		<br><span style='font-size: 10px'>
-		<a href='?_src_=vars;rotatedatum=\ref[src];rotatedir=left'><=</a>
-		<a href='?_src_=vars;datumedit=\ref[src];varnameedit=dir'>[dir2text(dir)]</a>
-		<a href='?_src_=vars;rotatedatum=\ref[src];rotatedir=right'>=></a>
+		<a href='byond://?_src_=vars;rotatedatum=\ref[src];rotatedir=left'><=</a>
+		<a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=dir'>[dir2text(dir)]</a>
+		<a href='byond://?_src_=vars;rotatedatum=\ref[src];rotatedir=right'>=></a>
 		</span>
 		"}
 
@@ -22,16 +22,16 @@
 
 /mob/living/get_view_variables_header()
 	return {"
-		<a href='?_src_=vars;rename=\ref[src]'><b>[src]</b></a><span style='font-size: 10px'>
-		<br><a href='?_src_=vars;rotatedatum=\ref[src];rotatedir=left'><=</a> <a href='?_src_=vars;datumedit=\ref[src];varnameedit=dir'>[dir2text(dir)]</a> <a href='?_src_=vars;rotatedatum=\ref[src];rotatedir=right'>=></a>
-		<br><a href='?_src_=vars;datumedit=\ref[src];varnameedit=ckey'>[ckey ? ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=\ref[src];varnameedit=real_name'>[real_name ? real_name : "No real name"]</a>
+		<a href='byond://?_src_=vars;rename=\ref[src]'><b>[src]</b></a><span style='font-size: 10px'>
+		<br><a href='byond://?_src_=vars;rotatedatum=\ref[src];rotatedir=left'><=</a> <a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=dir'>[dir2text(dir)]</a> <a href='byond://?_src_=vars;rotatedatum=\ref[src];rotatedir=right'>=></a>
+		<br><a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=ckey'>[ckey ? ckey : "No ckey"]</a> / <a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=real_name'>[real_name ? real_name : "No real name"]</a>
 		<br>
-		BRUTE:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=brute'>[getBruteLoss()]</a>
-		FIRE:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=fire'>[getFireLoss()]</a>
-		TOXIN:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=toxin'>[getToxLoss()]</a>
-		OXY:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=oxygen'>[getOxyLoss()]</a>
-		CLONE:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=clone'>[getCloneLoss()]</a>
-		BRAIN:<a href='?_src_=vars;mobToDamage=\ref[src];adjustDamage=brain'>[getBrainLoss()]</a>
+		BRUTE:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=brute'>[getBruteLoss()]</a>
+		FIRE:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=fire'>[getFireLoss()]</a>
+		TOXIN:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=toxin'>[getToxLoss()]</a>
+		OXY:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=oxygen'>[getOxyLoss()]</a>
+		CLONE:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=clone'>[getCloneLoss()]</a>
+		BRAIN:<a href='byond://?_src_=vars;mobToDamage=\ref[src];adjustDamage=brain'>[getBrainLoss()]</a>
 		</span>
 		"}
 
@@ -44,6 +44,8 @@
 		<option value='?_src_=vars;mob_player_panel=\ref[src]'>Show player panel</option>
 		<option>---</option>
 		<option value='?_src_=vars;give_spell=\ref[src]'>Give Spell</option>
+		<option value='?_src_=vars;give_disease2=\ref[src]'>Give Disease</option>
+		<option value='?_src_=vars;give_disease=\ref[src]'>Give TG-style Disease</option>
 		<option value='?_src_=vars;godmode=\ref[src]'>Toggle Godmode</option>
 		<option value='?_src_=vars;build_mode=\ref[src]'>Toggle Build Mode</option>
 
@@ -74,6 +76,8 @@
 		<option value='?_src_=vars;addaura=\ref[src]'>Add Aura</option>
 		<option value='?_src_=vars;removeaura=\ref[src]'>Remove Aura</option>
 		<option value='?_src_=vars;debug_mob_ai=\ref[src]'>Toggle AI Debug Output</option>
+		<option value='?_src_=vars;settrait=\ref[src]'>Set Trait</option>
+		<option value='?_src_=vars;removetrait=\ref[src]'>Remove Trait</option>
 		"}
 
 /mob/living/carbon/human/get_view_variables_options()
@@ -120,18 +124,18 @@
 
 /datum/proc/make_view_variables_variable_entry(varname, value, hide_watch = 0)
 	return {"
-			(<a href='?_src_=vars;datumedit=\ref[src];varnameedit=[varname]'>E</a>)
-			(<a href='?_src_=vars;datumchange=\ref[src];varnamechange=[varname]'>C</a>)
-			(<a href='?_src_=vars;datummass=\ref[src];varnamemass=[varname]'>M</a>)
-			[hide_watch ? "" : "(<a href='?_src_=vars;datumwatch=\ref[src];varnamewatch=[varname]'>W</a>)"]
+			(<a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=[varname]'>E</a>)
+			(<a href='byond://?_src_=vars;datumchange=\ref[src];varnamechange=[varname]'>C</a>)
+			(<a href='byond://?_src_=vars;datummass=\ref[src];varnamemass=[varname]'>M</a>)
+			[hide_watch ? "" : "(<a href='byond://?_src_=vars;datumwatch=\ref[src];varnamewatch=[varname]'>W</a>)"]
 			"}
 
 // No mass editing of clients
 /client/make_view_variables_variable_entry(varname, value, hide_watch = 0)
 	return {"
-			(<a href='?_src_=vars;datumedit=\ref[src];varnameedit=[varname]'>E</a>)
-			(<a href='?_src_=vars;datumchange=\ref[src];varnamechange=[varname]'>C</a>)
-			[hide_watch ? "" : "(<a href='?_src_=vars;datumwatch=\ref[src];varnamewatch=[varname]'>W</a>)"]
+			(<a href='byond://?_src_=vars;datumedit=\ref[src];varnameedit=[varname]'>E</a>)
+			(<a href='byond://?_src_=vars;datumchange=\ref[src];varnamechange=[varname]'>C</a>)
+			[hide_watch ? "" : "(<a href='byond://?_src_=vars;datumwatch=\ref[src];varnamewatch=[varname]'>W</a>)"]
 			"}
 
 // These methods are all procs and don't use stored lists to avoid VV exploits
@@ -154,7 +158,7 @@
 
 
 /atom/VV_static()
-	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size")
+	return ..() + list("bound_x", "bound_y", "bound_height", "bound_width", "bounds", "step_x", "step_y", "step_size", "underlays", "overlays")
 
 /client/VV_static()
 	return ..() + list("holder", "prefs")
@@ -164,7 +168,7 @@
 
 // The following vars require R_DEBUG to edit
 /datum/proc/VV_locked()
-	return list("vars", "cuffed")
+	return list("vars", "virus", "viruses", "cuffed") //[SIEERA EDIT]
 
 /client/VV_locked()
 	return list("vars", "mob")

@@ -36,9 +36,12 @@
 	var/mag_insert_sound = 'sound/weapons/guns/interaction/pistol_magin.ogg'
 	var/mag_remove_sound = 'sound/weapons/guns/interaction/pistol_magout.ogg'
 	var/can_special_reload = TRUE //Whether or not we can tactical/speed reload
-
+	var/can_reload = TRUE
 	var/is_jammed = 0           //Whether this gun is jammed
 	var/jam_chance = 0          //Chance it jams on fire
+	var/barrel_thread = FALSE // Whether the gun can mount a suppressor
+	var/obj/item/silencer/silencer //the silencer attached to the gun
+	var/silencer_offset = 0 //just in case you need to offset the sprite for the silencer
 	//TODO generalize ammo icon states for guns
 	//var/magazine_states = 0
 	//var/list/icon_keys = list()		//keys
@@ -53,6 +56,11 @@
 		if(ispath(magazine_type) && (load_method & MAGAZINE))
 			ammo_magazine = new magazine_type(src)
 	update_icon()
+
+/obj/item/gun/projectile/on_update_icon()
+	. = ..()
+	if (silencer)
+		AddOverlays(image(icon, "[initial(icon_state)]-silencer", pixel_x = silencer_offset))
 
 /obj/item/gun/projectile/consume_next_projectile()
 	if(!is_jammed && prob(jam_chance))
@@ -81,6 +89,15 @@
 	if (chambered)
 		return chambered.BB
 	return null
+
+/obj/item/gun/projectile/use_before(atom/target, mob/living/user, click_parameters)
+	//Masters can reload one-handed guns one-handed.
+	if (istype(target, /obj/item/ammo_magazine) && (target.loc == user || target.loc.loc == user)) //Get around bags, webbing, etc
+		if (user.skill_check(SKILL_WEAPONS, SKILL_MASTER))
+			if (one_hand_penalty < 3)
+				load_ammo(target, user)
+				return TRUE
+	return ..()
 
 /obj/item/gun/projectile/handle_post_fire()
 	..()
@@ -134,6 +151,8 @@
 //Attempts to load A into src, depending on the type of thing being loaded and the load_method
 //Maybe this should be broken up into separate procs for each load method?
 /obj/item/gun/projectile/proc/load_ammo(obj/item/A, mob/user)
+	if(!can_reload)
+		return
 	if(istype(A, /obj/item/ammo_magazine))
 		. = TRUE
 		var/obj/item/ammo_magazine/AM = A
@@ -255,6 +274,8 @@
 
 //attempts to unload src. If allow_dump is set to 0, the speedloader unloading method will be disabled
 /obj/item/gun/projectile/proc/unload_ammo(mob/user, allow_dump=1)
+	if(!can_reload)
+		return
 	if(is_jammed)
 		user.visible_message("\The [user] begins to unjam [src].", "You clear the jam and unload [src]")
 		if(!do_after(user, 0.4 SECONDS, src, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
@@ -297,6 +318,34 @@
 	// Anything - Attempt to load ammo
 	if (load_ammo(tool, user))
 		return TRUE
+
+	// Silencer - Attach silencer
+	if (istype(tool, /obj/item/silencer) && barrel_thread)
+		if (silenced)
+			if (silencer)
+				USE_FEEDBACK_FAILURE("\The [src] already has \a [silencer] attached.")
+			else
+				USE_FEEDBACK_FAILURE("\The [src] is already silenced.")
+			return TRUE
+		if (!user.unEquip(tool, src))
+			FEEDBACK_FAILURE(user, tool)
+			return TRUE
+		var/obj/item/silencer/new_silencer = tool
+		if (new_silencer.caliber == src.caliber)
+			silenced = TRUE
+			silencer = tool
+			w_class += 1
+			update_icon()
+			user.visible_message(
+				SPAN_NOTICE("\The [user] screws \a [tool] onto \a [src]."),
+				SPAN_NOTICE("You screw \a [tool] onto \a [src]."),
+				range = 2
+			)
+			fire_sound = new_silencer.silenced_sound
+			return TRUE
+		else
+			USE_FEEDBACK_FAILURE("\The [src] and \the [tool] are not in the same caliber.")
+			return TRUE
 
 	return ..()
 
@@ -368,14 +417,31 @@
 			chamberlist += chamber
 		return chamberlist
 
-/* Unneeded -- so far.
-//in case the weapon has firemodes and can't unload using attack_hand()
-/obj/item/gun/projectile/verb/unload_gun()
-	set name = "Unload Ammo"
+/obj/item/gun/projectile/verb/silencer()
 	set category = "Object"
+	set name = "Remove Silencer"
+	set popup_menu = TRUE
 	set src in usr
 
-	if(usr.stat || usr.restrained()) return
+	removeSilencer(usr)
 
-	unload_ammo(usr)
-*/
+
+/obj/item/gun/projectile/proc/removeSilencer(mob/user)
+	if (!user.use_sanity_check(src))
+		return
+	if (!silenced)
+		to_chat(user, SPAN_WARNING("There is no silencer attached to \the [src]!"))
+		return
+	if (!user.IsHolding(src))
+		to_chat(user, SPAN_WARNING("You need to hold \the [src] in your hand to remove its silencer!"))
+		return
+	if (!user.HasFreeHand())
+		to_chat(user, SPAN_WARNING("You need a free hand to remove \the [src]'s silencer!"))
+		return
+	to_chat(user, SPAN_NOTICE("You unscrew \the [silencer] from \the [src]."))
+	user.put_in_hands(silencer)
+	silencer = null
+	w_class -= 1
+	silenced = FALSE
+	fire_sound = initial(fire_sound)
+	update_icon()

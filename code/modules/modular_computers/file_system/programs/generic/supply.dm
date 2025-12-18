@@ -45,6 +45,7 @@
 	var/notifications_enabled = FALSE
 	var/admin_access = list(access_cargo, access_mailsorting)
 
+/* [SIERRA-REMOVE] - Cargo ушло в мод
 /datum/nano_module/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data()
 	var/is_admin = emagged || check_access(user, admin_access)
@@ -117,13 +118,14 @@
 		ui.set_auto_update(1)
 		ui.set_initial_data(data)
 		ui.open()
+*/
 
 // Supply the order ID and where to look. This is just to reduce copypaste code.
 /datum/nano_module/supply/proc/find_order_by_id(order_id, list/find_in)
 	for(var/datum/supply_order/SO in find_in)
 		if(SO.ordernum == order_id)
 			return SO
-
+/* [SIERRA-REMOVE] - Cargo топики конфликтуют, нужно комментить
 /datum/nano_module/supply/Topic(href, href_list)
 	var/mob/user = usr
 	if(..())
@@ -171,6 +173,7 @@
 
 		var/datum/supply_order/O = new /datum/supply_order()
 		O.ordernum = SSsupply.ordernum
+		O.timestamp = stationtime2text()
 		O.object = P
 		O.orderedby = idname
 		O.reason = reason
@@ -230,9 +233,24 @@
 
 		return 1
 
+	if(href_list["order_back_to_pending"])
+		var/id = text2num(href_list["order_back_to_pending"])
+		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.shoppinglist)
+		if(SO)
+			SSsupply.requestlist += SO
+			SSsupply.shoppinglist -= SO
+			SSsupply.points += SO.object.cost
+
+		else
+			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
+
+		return 1
+
 	if(href_list["deny_order"])
 		var/id = text2num(href_list["deny_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
+		if(alert(user, "Are you sure?", "Deny Order", "Yes", "No") != "Yes")
+			return 1
 		if(SO)
 			SSsupply.requestlist -= SO
 		else
@@ -243,6 +261,8 @@
 	if(href_list["cancel_order"])
 		var/id = text2num(href_list["cancel_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.shoppinglist)
+		if(alert(user, "Are you sure?", "Cancel Order", "Yes", "No") != "Yes")
+			return 1
 		if(SO)
 			SSsupply.shoppinglist -= SO
 			SSsupply.points += SO.object.cost
@@ -254,6 +274,8 @@
 	if(href_list["delete_order"])
 		var/id = text2num(href_list["delete_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.donelist)
+		if(alert(user, "Are you sure?", "Delete Order", "Yes", "No") != "Yes")
+			return 1
 		if(SO)
 			SSsupply.donelist -= SO
 		else
@@ -291,7 +313,7 @@
 	if(href_list["toggle_notifications"])
 		notifications_enabled = !notifications_enabled
 		return 1
-
+*/
 /datum/nano_module/supply/proc/generate_categories()
 	category_names.Cut()
 	category_contents.Cut()
@@ -358,6 +380,7 @@
 /datum/nano_module/supply/proc/order_to_nanoui(datum/supply_order/SO, list_id)
 	return list(list(
 		"id" = SO.ordernum,
+		"time" = SO.timestamp,
 		"object" = SO.object.name,
 		"orderer" = SO.orderedby,
 		"cost" = SO.object.cost,
@@ -378,6 +401,7 @@
 	var/t = ""
 	t += "<h3>[GLOB.using_map.station_name] Supply Requisition Reciept</h3><hr>"
 	t += "INDEX: #[O.ordernum]<br>"
+	t += "TIME: [O.timestamp]<br>"
 	t += "REQUESTED BY: [O.orderedby]<br>"
 	t += "RANK: [O.orderedrank]<br>"
 	t += "REASON: [O.reason]<br>"
@@ -390,7 +414,7 @@
 
 /datum/nano_module/supply/proc/print_summary(mob/user)
 	var/t = ""
-	t += "<center><BR><b><large>[GLOB.using_map.station_name]</large></b><BR><i>[station_date]</i><BR><i>Export overview<field></i></center><hr>"
+	t += "<center><BR><b><large>[GLOB.using_map.station_name]</large></b><BR><i>[GLOB.station_date]</i><BR><i>Export overview<field></i></center><hr>"
 	for(var/source in SSsupply.point_source_descriptions)
 		t += "[SSsupply.point_source_descriptions[source]]: [SSsupply.point_sources[source] || 0]<br>"
 	print_text(t, user)

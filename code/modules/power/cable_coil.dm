@@ -1,12 +1,11 @@
 /// Associative list of colors. Default colors that a cable coil or length of cable can be. Used for multitool interactions.
-GLOBAL_LIST_INIT(cable_default_colors, list(
+GLOBAL_LIST_AS(cable_default_colors, list(
 	"Black"  = CABLE_COLOR_BLACK,
 	"Blue"   = CABLE_COLOR_BLUE,
 	"Cyan"   = CABLE_COLOR_CYAN,
 	"Green"  = CABLE_COLOR_GREEN,
-	"Orange" = CABLE_COLOR_ORANGE,
-	"Purple" = CABLE_COLOR_PINK,
 	"Red"    = CABLE_COLOR_RED,
+	"Orange" = CABLE_COLOR_ORANGE,
 	"Yellow" = CABLE_COLOR_YELLOW,
 	"White"  = CABLE_COLOR_WHITE
 ))
@@ -110,6 +109,24 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 		return TRUE
 
 
+/obj/item/stack/cable_coil/attack_self(mob/living/user)
+	var/list/radial = list()
+	for (var/color in GLOB.cable_default_colors)
+		radial[color] = mutable_appearance(icon, icon_state, GLOB.cable_default_colors[color])
+	var/new_color = show_radial_menu(user, user, radial, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
+	if (!new_color || !user.use_sanity_check(src))
+		return TRUE
+	var/new_color_code = GLOB.cable_default_colors[new_color]
+	if (get_color() == new_color_code)
+		return TRUE
+	set_color(new_color_code)
+	user.visible_message(
+		SPAN_NOTICE("\The [user] changes \the [src]'s color."),
+		SPAN_NOTICE("You set \the [src]'s color to '[new_color]'.")
+	)
+	return TRUE
+
+
 /obj/item/stack/cable_coil/transfer_to(obj/item/stack/cable_coil/coil)
 	if (!istype(coil))
 		return FALSE
@@ -203,6 +220,10 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 	if (istype(target, /turf/simulated/open) && !locate(/obj/structure/lattice, target))
 		if (!can_use(2))
 			to_chat(user, SPAN_WARNING("You don't have enough cable to hang a wire down."))
+			return
+		var/turf/below = GetBelow(target)
+		if (!below.is_plating())
+			USE_FEEDBACK_FAILURE("\The [below] below needs to have its tiling removed before you can lay a cable.")
 			return
 		to_dir = DOWN
 	var/from_dir = user.dir
@@ -334,7 +355,7 @@ GLOBAL_LIST_INIT(cable_default_colors, list(
 		CABLE_COLOR_YELLOW,
 		CABLE_COLOR_GREEN,
 		CABLE_COLOR_BLUE,
-		CABLE_COLOR_PINK,
+		CABLE_COLOR_RED,
 		CABLE_COLOR_ORANGE,
 		CABLE_COLOR_CYAN,
 		CABLE_COLOR_WHITE,

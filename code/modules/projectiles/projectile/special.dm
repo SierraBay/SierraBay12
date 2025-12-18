@@ -40,7 +40,7 @@
 	damage_type = DAMAGE_BRUTE
 	nodamage = TRUE
 
-/obj/item/projectile/meteor/Bump(atom/A as mob|obj|turf|area, forced=0)
+/obj/item/projectile/meteor/Bump(atom/A, called)
 	if(A == firer)
 		forceMove(A.loc)
 		return

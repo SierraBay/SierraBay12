@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(modpacks)
 	else
 		to_chat(src, SPAN_WARNING("Этот сервер не использует какие-либо модификации."))
 
-GLOBAL_DATUM_INIT(modlist_state, /datum/topic_state/modlist, new)
+GLOBAL_TYPED_NEW(modlist_state, /datum/topic_state/modlist)
 
 /datum/topic_state/modlist/can_use_topic(src_object, mob/user)
 	return STATUS_INTERACTIVE

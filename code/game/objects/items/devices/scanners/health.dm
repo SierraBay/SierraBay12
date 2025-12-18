@@ -84,7 +84,7 @@
 	var/brain_result = "normal"
 	if(H.should_have_organ(BP_BRAIN))
 		var/obj/item/organ/internal/brain/brain = H.internal_organs_by_name[BP_BRAIN]
-		if(!brain || H.stat == DEAD || (H.status_flags & FAKEDEATH))
+		if(!brain || H.is_dead())
 			brain_result = SPAN_CLASS("scan_danger", "none, patient is braindead")
 		else if(H.stat != DEAD)
 			if(H.has_brain_worms())
@@ -112,7 +112,7 @@
 		brain_result = SPAN_CLASS("scan_danger", "ERROR - Nonstandard biology")
 	dat += "Brain activity: [brain_result]."
 
-	if(H.stat == DEAD || (H.status_flags & FAKEDEATH))
+	if(H.is_dead())
 		dat += SPAN_CLASS("scan_warning", "[b]Time of Death:[endb] [time2text(worldtime2stationtime(H.timeofdeath), "hh:mm")]")
 
 	// Pulse rate.
@@ -287,6 +287,14 @@
 				chemtraces += "[initial(R.name)] ([H.chem_doses[T]])"
 		if(length(chemtraces))
 			. += SPAN_CLASS("scan_notice", "Metabolism products of [english_list(chemtraces)] found in subject's system.")
+//SIERRA-ADD VIRUSOLOGY
+	if(LAZYLEN(H.virus2))
+		for (var/ID in H.virus2)
+			if (ID in virusDB)
+				print_reagent_default_message = FALSE
+				var/datum/computer_file/data/virus_record/V = virusDB[ID]
+				. += "<span class='scan_warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span>"
+//SIERRA-ADD
 
 	if(print_reagent_default_message)
 		. += "No results."
@@ -295,28 +303,24 @@
 	. = jointext(.,"<br>")
 	. = jointext(list(header,.),null)
 
+
 // Calculates severity based on the ratios defined external limbs.
-/proc/get_wound_severity(damage_ratio, can_heal_overkill = 0)
-	var/degree
-
+/proc/get_wound_severity(damage_ratio, can_heal_overkill)
 	switch(damage_ratio)
-		if(0 to 10)
-			degree = "minor"
-		if(10 to 25)
-			degree = "moderate"
-		if(25 to 50)
-			degree = "significant"
-		if(50 to 75)
-			degree = "severe"
-		if(75 to 99)
-			degree = "extreme"
-		else
-			if(can_heal_overkill)
-				degree = "critical"
-			else
-				degree = "irreparable"
+		if (0 to 10)
+			return "minor"
+		if (10 to 25)
+			return "moderate"
+		if (25 to 50)
+			return "significant"
+		if (50 to 75)
+			return "severe"
+		if (75 to 99)
+			return "extreme"
+	if (can_heal_overkill)
+		return "critical"
+	return "irreparable"
 
-	return degree
 
 /obj/item/device/scanner/health/verb/toggle_mode()
 	set name = "Switch Verbosity"

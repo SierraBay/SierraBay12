@@ -11,6 +11,7 @@
 	has_trees = FALSE
 	fauna_types = list(/mob/living/simple_animal/thinbug, /mob/living/simple_animal/tindalos, /mob/living/simple_animal/hostile/voxslug, /mob/living/simple_animal/hostile/retaliate/beast/antlion)
 	megafauna_types = list(/mob/living/simple_animal/hostile/retaliate/beast/antlion/mega)
+	banned_weather_conditions = list(/singleton/state/weather/snow, /singleton/state/weather/rain)
 
 /obj/overmap/visitable/sector/exoplanet/desert/generate_map()
 	if(prob(70))
@@ -19,10 +20,11 @@
 
 /obj/overmap/visitable/sector/exoplanet/desert/generate_atmosphere()
 	..()
-	var/datum/species/H = all_species[SPECIES_HUMAN]
+	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", H.heat_level_1, 2 * H.heat_level_1, NORMAL_RAND)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /obj/overmap/visitable/sector/exoplanet/desert/adapt_seed(datum/seed/S)
 	..()

@@ -1,4 +1,6 @@
 /obj/random/vendor/contraband
+	icon = 'icons/obj/machines/vending.dmi'
+	icon_state = "green-outline"
 
 /obj/random/vendor/contraband/spawn_choices()
 	return list(/obj/machinery/vending/antag/contraband,

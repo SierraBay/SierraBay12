@@ -9,22 +9,22 @@
 		return message
 	return species.handle_autohiss(message, L, get_preference_value(/datum/client_preference/autohiss))
 
-/datum/species/var/list/autohiss_basic_map = null
-/datum/species/var/list/autohiss_extra_map = null
-/datum/species/var/list/autohiss_exempt = null
+/singleton/species/var/list/autohiss_basic_map = null
+/singleton/species/var/list/autohiss_extra_map = null
+/singleton/species/var/list/autohiss_exempt = null
 
-/datum/species/unathi/autohiss_basic_map = list(
+/singleton/species/unathi/autohiss_basic_map = list(
 	"s" = list("ss", "sss", "ssss")
 )
-/datum/species/unathi/autohiss_extra_map = list(
+/singleton/species/unathi/autohiss_extra_map = list(
 	"x" = list("ks", "kss", "ksss")
 )
-/datum/species/unathi/autohiss_exempt = list(
+/singleton/species/unathi/autohiss_exempt = list(
 	LANGUAGE_UNATHI_SINTA,
 	LANGUAGE_UNATHI_YEOSA
 )
 
-/datum/species/proc/handle_autohiss(message, datum/language/lang, mode)
+/singleton/species/proc/handle_autohiss(message, datum/language/lang, mode)
 	if(!autohiss_basic_map)
 		return message
 	if(lang.flags & NO_STUTTER)	// Currently prevents EAL, Sign language, and emotes from autohissing

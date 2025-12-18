@@ -52,8 +52,17 @@
 	var/list/area_usage_test_exempted_root_areas = list(
 		/area/map_template,
 		/area/exoplanet,
-		/area/ship
-	)
+		/area/ship,
+		/area/mine,
+		/area/bluespaceriver,
+		/area/lar_maria,
+		/area/casino,
+		/area/meatstation,
+		/area/lost_supply_base,
+		/area/magshield,
+		/area/shuttle/escape_pod,
+		)
+		// /area/mine, /area/bluespaceriver, /area/lar_maria, /area/casino, /area/meatstation, /area/lost_supply_base, /area/magshield, /area/shuttle/escape_pod //[SIERRA-ADD]
 
 	var/list/area_purity_test_exempt_areas = list()
 

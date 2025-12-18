@@ -9,7 +9,7 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = ATOM_LEVEL_UNDER_TILE
-	layer = EXPOSED_WIRE_TERMINAL_LAYER
+	layer = ABOVE_EXPOSED_WIRE_LAYER
 	var/obj/item/stock_parts/power/terminal/master
 	anchored = TRUE
 

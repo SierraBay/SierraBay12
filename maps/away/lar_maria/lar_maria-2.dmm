@@ -2439,7 +2439,7 @@
 "gR" = (
 /obj/structure/table/standard,
 /obj/item/trash/plate,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled,
 /area/lar_maria/mess_hall)
 "gS" = (
@@ -2555,14 +2555,14 @@
 "hk" = (
 /obj/structure/table/marble,
 /obj/machinery/door/firedoor,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "hl" = (
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "hm" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "hn" = (
@@ -2765,11 +2765,11 @@
 "hI" = (
 /obj/structure/table/marble,
 /obj/machinery/door/firedoor,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "hJ" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "hK" = (
@@ -2881,7 +2881,7 @@
 /turf/simulated/floor/tiled,
 /area/lar_maria/mess_hall)
 "ic" = (
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled,
 /area/lar_maria/mess_hall)
 "id" = (
@@ -2896,7 +2896,7 @@
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "if" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "ig" = (
@@ -3091,7 +3091,7 @@
 /area/lar_maria/mess_hall)
 "iE" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "iF" = (
@@ -3241,14 +3241,14 @@
 /area/lar_maria/mess_hall)
 "iY" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "iZ" = (
 /obj/structure/table/marble,
 /obj/item/trash/plate,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/mess_hall)
 "ja" = (

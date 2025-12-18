@@ -46,6 +46,42 @@
 
 	return ..()
 
+/obj/item/card/party/cen/fet
+	name = "party card"
+	desc = "A card showing membership in the Citizens for Free Enterprise & Trade party."
+	icon_state = "party_cen"
+	slot_flags = SLOT_ID
+
+/obj/item/card/party/cen/pac
+	name = "party card"
+	desc = "A card showing membership in the Progressive Alliance of Citizens."
+	icon_state = "party_cen"
+	slot_flags = SLOT_ID
+
+/obj/item/card/party/lef/ugl
+	name = "party card"
+	desc = "A card showing membership in the United Green-Left of Sol party."
+	icon_state = "party_lef"
+	slot_flags = SLOT_ID
+
+/obj/item/card/party/lef/ldd
+	name = "party card"
+	desc = "A card showing membership in the Leftists for Direct Democracy & Freedom party."
+	icon_state = "party_lef"
+	slot_flags = SLOT_ID
+
+/obj/item/card/party/rig/sfr
+	name = "party card"
+	desc = "A card showing membership in the Solarians for Freedom & Rights party."
+	icon_state = "party_rig"
+	slot_flags = SLOT_ID
+
+/obj/item/card/party/rig/osn
+	name = "party card"
+	desc = "A card showing membership in the Order of Solarian Nations."
+	icon_state = "party_rig"
+	slot_flags = SLOT_ID
+/* [SIERRA-REMOVE] - PSI - (Перенесено в mods\psionics\code\override.dm)
 /obj/item/card/operant_card
 	name = "operant registration card"
 	icon_state = "warrantcard_civ"
@@ -86,8 +122,6 @@
 		Fingerprint: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "N/A"]\n\
 		Assessed Potential: [potential]\
 	"}
-
-
 /obj/item/card/operant_card/attack_self(mob/living/user)
 	user.visible_message(
 		SPAN_ITALIC("\The [user] examines \a [src]."),
@@ -95,6 +129,7 @@
 		3
 	)
 	to_chat(user, info || SPAN_WARNING("\The [src] is completely blank!"))
+*/
 
 /obj/item/card/data
 	name = "data card"
@@ -338,19 +373,19 @@ var/global/const/NO_EMAG_ACT = -50
 
 /obj/item/card/id/proc/dat()
 	var/list/dat = list("<table><tr><td>")
-	dat += text("Name: []</A><BR>", "[formal_name_prefix][registered_name][formal_name_suffix]")
-	dat += text("Pronouns: []</A><BR>\n", sex)
-	dat += text("Age: []</A><BR>\n", age)
+	dat += "Name: [formal_name_prefix][registered_name][formal_name_suffix]</A><BR>"
+	dat += "Pronouns: [sex]</A><BR>\n"
+	dat += "Age: [age]</A><BR>\n"
 
 	if(GLOB.using_map.flags & MAP_HAS_BRANCH)
-		dat += text("Branch: []</A><BR>\n", military_branch ? military_branch.name : "\[UNSET\]")
+		dat += "Branch: [military_branch ? military_branch.name : "\[UNSET\]"]</A><BR>\n"
 	if(GLOB.using_map.flags & MAP_HAS_RANK)
-		dat += text("Rank: []</A><BR>\n", military_rank ? military_rank.name : "\[UNSET\]")
+		dat += "Rank: [military_rank ? military_rank.name : "\[UNSET\]"]</A><BR>\n"
 
-	dat += text("Assignment: []</A><BR>\n", assignment)
-	dat += text("Fingerprint: []</A><BR>\n", fingerprint_hash)
-	dat += text("Blood Type: []<BR>\n", blood_type)
-	dat += text("DNA Hash: []<BR><BR>\n", dna_hash)
+	dat += "Assignment: [assignment]</A><BR>\n"
+	dat += "Fingerprint: [fingerprint_hash]</A><BR>\n"
+	dat += "Blood Type: [blood_type]<BR>\n"
+	dat += "DNA Hash: [dna_hash]<BR><BR>\n"
 	if(front && side)
 		dat +="<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4><img src=side.png height=80 width=80 border=4></td>"
 	dat += "</tr></table>"
@@ -374,7 +409,7 @@ var/global/const/NO_EMAG_ACT = -50
 	set category = "Object"
 	set src in usr
 
-	to_chat(usr, text("[icon2html(src, usr)] []: The current assignment on the card is [].", src.name, src.assignment))
+	to_chat(usr, "[icon2html(src, usr)] [name]: The current assignment on the card is [assignment].")
 	to_chat(usr, "The blood type on the card is [blood_type].")
 	to_chat(usr, "The DNA hash on the card is [dna_hash].")
 	to_chat(usr, "The fingerprint hash on the card is [fingerprint_hash].")
@@ -480,6 +515,14 @@ var/global/const/NO_EMAG_ACT = -50
 	access = GLOB.using_map.synth_access.Copy()
 	..()
 
+/obj/item/card/id/synthetic/ai
+	name = "\improper AI ID"
+	desc = "All-access module for the AI."
+
+/obj/item/card/id/synthetic/ai/New()
+	..()
+	access = get_all_station_access() + access_synth
+
 /obj/item/card/id/centcom
 	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
@@ -490,20 +533,35 @@ var/global/const/NO_EMAG_ACT = -50
 	extra_details = list("goldstripe")
 
 /obj/item/card/id/centcom/New()
-	access = get_all_centcom_access()
 	..()
+	access = list(access_cent_general,access_cent_living,access_cent_creed,access_cent_thunder)
 
-/obj/item/card/id/centcom/station/New()
+/obj/item/card/id/centcom/all/New()
+	..()
+	access = get_all_centcom_access()
+
+/obj/item/card/id/centcom/all/station/New() // All centcom access and all station access
 	..()
 	access |= get_all_station_access()
 
-/obj/item/card/id/centcom/ERT
-	name = "\improper Emergency Response Team ID"
+/obj/item/card/id/centcom/station/New() // Default centcom access + all station access
+	..()
+	access |= get_all_station_access() + access_cent_teleporter
+
+/obj/item/card/id/centcom/station/ert
+	name = "\improper ERT ID"
 	assignment = "Emergency Response Team"
 
-/obj/item/card/id/centcom/ERT/New()
+/obj/item/card/id/centcom/station/ert/New()
 	..()
-	access |= get_all_station_access()
+	access = GLOB.ert.default_access - access_ert_leader
+
+/obj/item/card/id/centcom/station/ert/leader
+	assignment = "Emergency Response Team Leader"
+
+/obj/item/card/id/centcom/station/ert/leader/New()
+	..()
+	access = GLOB.ert.default_access
 
 /obj/item/card/id/foundation_civilian
 	name = "operant registration card"
@@ -683,3 +741,8 @@ var/global/const/NO_EMAG_ACT = -50
 	access = list(access_merchant)
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_BEIGE
+
+/obj/item/card/id/merchant/guest
+	name = "guest card"
+	desc = "A card providing guest access to the facilities of a merchant station."
+	detail_color = COLOR_GREEN_GRAY

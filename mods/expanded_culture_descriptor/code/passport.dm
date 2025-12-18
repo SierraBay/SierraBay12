@@ -7,6 +7,10 @@
 	icon_state = "passport_mir"
 	desc = "A passport from the Federal Republic of Mirania, an independent nation established upon Mirania III after its secession from the SCG."
 
+/obj/item/passport/novayazemlya
+	name = "\improper Novaya Zemlya passport"
+	desc = "A passport from Novaya Zemlya, within ICCG space."
+
 /obj/item/passport/xeno/unathi/independent
 	name = "\improper independent clans registration document"
 	icon_state = "passport"

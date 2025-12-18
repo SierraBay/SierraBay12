@@ -114,6 +114,9 @@ var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 	to_world_log("## UNIT_TEST ##: [text]")
 	log_debug(text)
 
+/proc/log_computer_command(text)
+	if (config.log_computer_commands)
+		game_log("COMPUTER_COMMAND", text)
 
 //This replaces world.log so it displays both in DD and the file
 /proc/log_world(text)
@@ -164,7 +167,7 @@ var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 
 	if(key)
 		if(include_link && C)
-			. += "<a href='?priv_msg=\ref[C];ticket=\ref[ticket]'>"
+			. += "<a href='byond://?priv_msg=\ref[C];ticket=\ref[ticket]'>"
 
 		. += key
 

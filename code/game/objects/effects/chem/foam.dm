@@ -130,6 +130,7 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1 // 1 = aluminium, 2 = iron
+	atmos_canpass = CANPASS_NEVER
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -206,9 +207,3 @@
 		return TRUE
 
 	return ..()
-
-
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	if(air_group)
-		return 0
-	return !density

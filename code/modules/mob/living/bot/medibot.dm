@@ -20,6 +20,7 @@
 	var/treatment_oxy = /datum/reagent/tricordrazine
 	var/treatment_fire = /datum/reagent/tricordrazine
 	var/treatment_tox = /datum/reagent/tricordrazine
+	var/treatment_virus = /datum/reagent/spaceacillin
 	var/treatment_emag = /datum/reagent/toxin
 	var/declare_treatment = 0 //When attempting to treat a patient, should it notify everyone wearing medhuds?
 
@@ -55,7 +56,7 @@
 	if(busy)
 		return
 
-	if(H.stat == DEAD)
+	if(H.is_dead())
 		var/death_message = pick("No! NO!", "Live, damnit! LIVE!", "I... I've never lost a patient before. Not today, I mean.")
 		say(death_message)
 		target = null
@@ -87,7 +88,7 @@
 /mob/living/bot/medbot/update_icons()
 	ClearOverlays()
 	if(skin)
-		AddOverlays(image('icons/mob/bot/medibot_skins.dmi', "medskin_[skin]"))
+		AddOverlays(image('icons/mob/bot/medibot_skins.dmi', "[skin]"))
 	if(busy)
 		icon_state = "medibots"
 	else
@@ -142,34 +143,34 @@
 	. = ..()
 	. += "<br>Beaker: "
 	if(reagent_glass)
-		. += "<A href='?src=\ref[src];command=eject'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
+		. += "<a href='byond://?src=\ref[src];command=eject'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		. += "None loaded"
 
 /mob/living/bot/medbot/GetInteractPanel()
 	. = "Healing threshold: "
-	. += "<a href='?src=\ref[src];command=adj_threshold;amount=-10'>--</a> "
-	. += "<a href='?src=\ref[src];command=adj_threshold;amount=-5'>-</a> "
+	. += "<a href='byond://?src=\ref[src];command=adj_threshold;amount=-10'>--</a> "
+	. += "<a href='byond://?src=\ref[src];command=adj_threshold;amount=-5'>-</a> "
 	. += "[heal_threshold] "
-	. += "<a href='?src=\ref[src];command=adj_threshold;amount=5'>+</a> "
-	. += "<a href='?src=\ref[src];command=adj_threshold;amount=10'>++</a>"
+	. += "<a href='byond://?src=\ref[src];command=adj_threshold;amount=5'>+</a> "
+	. += "<a href='byond://?src=\ref[src];command=adj_threshold;amount=10'>++</a>"
 
 	. += "<br>Injection level: "
-	. += "<a href='?src=\ref[src];command=adj_inject;amount=-5'>-</a> "
+	. += "<a href='byond://?src=\ref[src];command=adj_inject;amount=-5'>-</a> "
 	. += "[injection_amount] "
-	. += "<a href='?src=\ref[src];command=adj_inject;amount=5'>+</a> "
+	. += "<a href='byond://?src=\ref[src];command=adj_inject;amount=5'>+</a> "
 
-	. += "<br>Reagent source: <a href='?src=\ref[src];command=use_beaker'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a>"
-	. += "<br>Treatment report is [declare_treatment ? "on" : "off"]. <a href='?src=\ref[src];command=declaretreatment'>Toggle</a>"
-	. += "<br>The speaker switch is [vocal ? "on" : "off"]. <a href='?src=\ref[src];command=togglevoice'>Toggle</a>"
+	. += "<br>Reagent source: <a href='byond://?src=\ref[src];command=use_beaker'>[use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a>"
+	. += "<br>Treatment report is [declare_treatment ? "on" : "off"]. <a href='byond://?src=\ref[src];command=declaretreatment'>Toggle</a>"
+	. += "<br>The speaker switch is [vocal ? "on" : "off"]. <a href='byond://?src=\ref[src];command=togglevoice'>Toggle</a>"
 
 /mob/living/bot/medbot/GetInteractMaintenance()
 	. = "Injection mode: "
 	switch(emagged)
 		if(0)
-			. += "<a href='?src=\ref[src];command=emag'>Treatment</a>"
+			. += "<a href='byond://?src=\ref[src];command=emag'>Treatment</a>"
 		if(1)
-			. += "<a href='?src=\ref[src];command=emag'>Random (DANGER)</a>"
+			. += "<a href='byond://?src=\ref[src];command=emag'>Random (DANGER)</a>"
 		if(2)
 			. += "ERROROROROROR-----"
 
@@ -248,7 +249,7 @@
 	if(!..())
 		return 0
 
-	if(H.stat == DEAD) // He's dead, Jim
+	if(H.is_dead()) // He's dead, Jim
 		return 0
 
 	if(emagged)

@@ -1,0 +1,14 @@
+#ifndef MODPACK_MAP_INSIDIAE_PACK
+#define MODPACK_MAP_INSIDIAE_PACK
+
+#include "_map_insidiae_pack.dm"
+
+#include "code/fairy_ring.dm"
+#include "code/field_of_suits.dm"
+#include "code/gas_station.dm"
+#include "code/lost_truck.dm"
+#include "code/normandite.dm"
+#include "code/recursive_lake.dm"
+#include "code/statues.dm"
+
+#endif

@@ -47,19 +47,25 @@
 		return
 
 	var/datum/goal/ambition/goal = SSgoals.ambitions[mind]
-	var/new_goal = sanitize(input(src, "Write a short sentence of what your character hopes to accomplish \
+	var/unsanitized_new_goal = input(src, "Write a short sentence of what your character hopes to accomplish \
 	today as an antagonist.  Remember that this is purely optional.  It will be shown at the end of the \
-	round for everybody else.", "Antagonist Goal", (goal ? html_decode(goal.description) : "")) as null|message)
+	round for everybody else.  To clear your ambitions, remove all the text in the field.  Pressing cancel \
+	will only discard your edits.", "Antagonist Goal", (goal ? html_decode(goal.description) : "")) as null|message
+	if(isnull(unsanitized_new_goal))
+		to_chat(src, SPAN_NOTICE("You cancel your edits to your ambitions. They remain unchanged."))
+		return
+	var/new_goal = sanitize(unsanitized_new_goal)
 	if(!isnull(new_goal))
 		if(!goal)
 			goal = new /datum/goal/ambition(mind)
 		goal.description = new_goal
+		log_and_message_admins("has set their ambitions to now be: [new_goal].")
 		to_chat(src, SPAN_NOTICE("You've set your goal to be <b>'[goal.description]'</b>. You can check your goals with the <b>Show Goals</b> verb."))
 	else
-		to_chat(src, SPAN_NOTICE("You leave your ambitions behind."))
 		if(goal)
 			qdel(goal)
-	log_and_message_admins("has set their ambitions to now be: [new_goal].")
+		log_and_message_admins("has cleared their ambitions.")
+		to_chat(src, SPAN_NOTICE("You leave your ambitions behind."))
 
 //some antagonist datums are not actually antagonists, so we might want to avoid
 //sending them the antagonist meet'n'greet messages.

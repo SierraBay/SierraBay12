@@ -284,6 +284,20 @@
 	recalculate_synth_capacities()
 	if(module)
 		notify_ai(ROBOT_NOTIFICATION_NEW_MODULE, module.name)
+		addtimer(new Callback(src, .proc/announce_module_change), 2 SECONDS)
+
+/mob/living/silicon/robot/proc/announce_module_change()
+	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
+
+	if(!src || !(src.z in GLOB.using_map.station_levels))
+		return // don't announce offmap borgs
+
+	var/channel
+	if(length(module.channels) >= 1 && !security_state.current_security_level_is_same_or_higher_than(security_state.high_security_level))
+		channel = module.channels[1]
+	else
+		channel = "Common" // common if code red or no radio channels, replicates behavior that crew have
+	GLOB.global_announcer.autosay("[name] has loaded the [module.name].", "Robotic Module Oversight", channel)
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -344,6 +358,14 @@
 		to_chat(src, "You [locked ? "un" : ""]lock your panel.")
 		locked = !locked
 
+/mob/living/silicon/robot/verb/get_radio_channels()
+	set name = "Show Radio Channels"
+	set category = "Silicon Commands"
+
+	var/obj/item/device/radio/borg/borg_radio = silicon_radio
+	if (istype(borg_radio))
+		to_chat(src, borg_radio.radio_desc)
+
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
 		return null
@@ -359,7 +381,7 @@
 	set category = "Silicon Commands"
 	set name = "Toggle Lights"
 
-	if(stat == DEAD)
+	if(is_dead())
 		return
 
 	lights_on = !lights_on
@@ -433,11 +455,11 @@
 // this function displays the cyborgs current cell charge in the stat panel
 /mob/living/silicon/robot/proc/show_cell_power()
 	if(cell)
-		stat(null, text("Charge Left: [round(cell.percent())]%"))
-		stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
-		stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
+		stat(null, "Charge Left: [round(cell.percent())]%")
+		stat(null, "Cell Rating: [round(cell.maxcharge)]") // Round just in case we somehow get crazy value
+		stat(null, "Power Cell Load: [round(used_power_this_tick)]W")
 	else
-		stat(null, text("No Cell Inserted!"))
+		stat(null, "No Cell Inserted!")
 
 
 // update the status screen display
@@ -446,10 +468,12 @@
 	if (statpanel("Status"))
 		show_cell_power()
 		show_jetpack_pressure()
-		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
+		stat(null, "Lights: [lights_on ? "ON" : "OFF"]")
 		if(module)
 			for(var/datum/matter_synth/ms in module.synths)
 				stat("[ms.name]: [ms.energy]/[ms.max_energy_multiplied]")
+		stat("Local Time:", "[stationtime2text()]")
+		stat("Local Date:", "[stationdate2text()]")
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -643,7 +667,7 @@
 		if (!opened)
 			USE_FEEDBACK_FAILURE("\The [src]'s maintenance panel must be opened before you can access the radio.")
 			return TRUE
-		if (tool.resolve_attackby(src, user, click_params))
+		if (tool.resolve_attackby(silicon_radio, user, click_params))
 			return TRUE
 
 	// ID Card - Toggle panel lock
@@ -925,11 +949,11 @@
 
 	for (var/obj in module.equipment)
 		if (!obj)
-			dat += text("<B>Resource depleted</B><BR>")
+			dat += "<B>Resource depleted</B><BR>"
 		else if (IsHolding(obj))
-			dat += text("[obj]: <B>Activated</B><BR>")
+			dat += "[obj]: <B>Activated</B><BR>"
 		else
-			dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Activate</A><BR>")
+			dat += "[obj]: <A HREF='byond://?src=\ref[src];act=\ref[obj]'>Activate</A><BR>"
 
 	show_browser(src, dat, "window=robotmod")
 

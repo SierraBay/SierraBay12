@@ -818,6 +818,7 @@
 /area/errant_pisces/atmos)
 "cn" = (
 /obj/machinery/fabricator,
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/plating,
 /area/errant_pisces/enginering)
 "co" = (
@@ -3435,7 +3436,7 @@
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "ih" = (
-/obj/item/material/knife/table,
+/obj/item/material/utensil/knife,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "ii" = (
@@ -3557,7 +3558,7 @@
 "iF" = (
 /obj/structure/table/standard,
 /obj/item/trash/plate,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "iG" = (
@@ -3845,13 +3846,13 @@
 /area/errant_pisces/hallway)
 "js" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/utensil/fork/plastic,
+/obj/item/material/utensil/fork/plastic,
 /obj/random/snack,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "jt" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "ju" = (
@@ -3976,7 +3977,7 @@
 /area/errant_pisces/infirmary)
 "jK" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
@@ -3989,7 +3990,7 @@
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "jN" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled,
 /area/errant_pisces/dorms)
 "jO" = (

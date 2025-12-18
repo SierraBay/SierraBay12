@@ -1659,16 +1659,16 @@
 /turf/simulated/floor/tiled/dark,
 /area/bridge/meeting_room)
 "cV" = (
-/obj/machinery/computer/modular/preset/aislot/sysadmin{
-	dir = 1;
-	icon_state = "console"
-	},
 /obj/floor_decal/corner/blue/mono,
 /obj/machinery/power/apc/super/critical{
 	name = "south bump";
 	pixel_y = -24
 	},
 /obj/structure/cable/green,
+/obj/machinery/computer/modular/preset/aislot/sysadmin{
+	dir = 1;
+	icon_state = "console"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "cW" = (
@@ -1758,8 +1758,8 @@
 /obj/structure/table/woodentable_reinforced/walnut,
 /obj/random_multi/single_item/memo_command,
 /obj/random_multi/single_item/memo_supply,
-/obj/item/folder/envelope/dcorder,
-/obj/item/folder/envelope/csorder,
+/obj/item/folder/envelope/preset/dcorder,
+/obj/item/folder/envelope/preset/csorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/xo)
 "de" = (
@@ -2419,11 +2419,17 @@
 /obj/structure/table/glass,
 /obj/item/book/manual/solgov_law,
 /obj/item/book/manual/sol_sop,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "ew" = (
 /obj/structure/table/glass,
 /obj/floor_decal/corner/blue/mono,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
+/obj/item/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "ex" = (
@@ -3403,7 +3409,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/closet/emcloset,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm{
 	dir = 4;
@@ -3412,6 +3417,9 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
+	},
+/obj/machinery/computer/modular/preset/munitions{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/cockpit)
@@ -3475,6 +3483,7 @@
 	},
 /obj/item/device/radio,
 /obj/machinery/recharger,
+/obj/structure/closet/walllocker/emerglocker/north,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/cockpit)
 "gv" = (
@@ -4081,16 +4090,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/structure/cable/cyan{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/shuttle/aquila{
-	dir = 1;
-	name = "north bump";
-	pixel_y = 24
-	},
 /obj/floor_decal/techfloor/corner,
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/aquila/suits)
 "iv" = (
@@ -4124,7 +4128,6 @@
 "iz" = (
 /obj/machinery/door/blast/regular/open{
 	density = 0;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -4134,7 +4137,9 @@
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "iA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
+/obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "iB" = (
@@ -4197,7 +4202,7 @@
 	dir = 6
 	},
 /obj/random_multi/single_item/memo_engineering,
-/obj/item/folder/envelope/ceorder,
+/obj/item/folder/envelope/preset/ceorder,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/office/ce)
 "iU" = (
@@ -4302,6 +4307,15 @@
 /area/crew_quarters/heads/cobed)
 "je" = (
 /obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/power/apc/shuttle/aquila{
+	dir = 1;
+	name = "north bump";
+	pixel_y = 24
+	},
+/obj/structure/cable/cyan{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/aquila/suits)
 "jf" = (
@@ -4315,24 +4329,27 @@
 /obj/structure/handrail{
 	dir = 1
 	},
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/dark,
 /area/aquila/suits)
 "jg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
-	},
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /obj/machinery/light/small,
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
+/obj/structure/cable/cyan{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/tiled/dark,
 /area/aquila/suits)
 "jk" = (
@@ -4353,7 +4370,6 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/aftstarboard)
 "jz" = (
-/obj/machinery/computer/modular/preset/cardslot/command,
 /obj/floor_decal/corner/blue/three_quarters{
 	dir = 1
 	},
@@ -4376,6 +4392,7 @@
 	pixel_x = 24;
 	pixel_y = 34
 	},
+/obj/machinery/computer/modular/preset/cardslot/command_eng,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "jA" = (
@@ -4619,11 +4636,10 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/aquila/crew)
 "ki" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	pixel_x = -21
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "kv" = (
@@ -4824,12 +4840,7 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/xo)
 "kW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 5
-	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "kX" = (
@@ -4899,7 +4910,7 @@
 /obj/random_multi/single_item/memo_command,
 /obj/random_multi/single_item/memo_supply,
 /obj/random_multi/single_item/memo_medical,
-/obj/item/folder/envelope/ndaorder,
+/obj/item/folder/envelope/preset/ndaorder,
 /obj/item/paper/immediateorder,
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
@@ -5190,8 +5201,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/aquila/air)
@@ -5392,7 +5403,7 @@
 /area/hallway/primary/bridge/aft)
 "mT" = (
 /obj/structure/table/woodentable/walnut,
-/obj/item/folder/envelope/cmdorder,
+/obj/item/folder/envelope/preset/cmdorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/cobed)
 "mV" = (
@@ -5587,6 +5598,15 @@
 	dir = 4
 	},
 /obj/structure/handrail,
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
+	},
+/obj/machinery/button/blast_door{
+	id_tag = "aquila_pod_1_access";
+	name = "Missile Pod Access";
+	pixel_y = 25;
+	pixel_x = 6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/aquila/suits)
 "np" = (
@@ -5600,6 +5620,9 @@
 	dir = 1;
 	pixel_y = -26
 	},
+/obj/structure/handrail{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/air)
 "nq" = (
@@ -5607,8 +5630,6 @@
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/table/rack,
-/obj/random/toolbox,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/air)
 "nr" = (
@@ -5746,6 +5767,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/bridge/fore)
+"nP" = (
+/obj/machinery/door/blast/regular{
+	id_tag = "aquila_pod_2_access";
+	name = "Missile Pod Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/aquila/air)
 "nU" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -6088,7 +6117,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -6261,7 +6289,7 @@
 /obj/structure/table/standard{
 	name = "plastic table frame"
 	},
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/storage)
 "py" = (
@@ -6814,7 +6842,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry port";
 	name = "Port Bridge Blast Doors";
 	opacity = 0
@@ -7042,7 +7069,10 @@
 /turf/simulated/floor/plating,
 /area/aquila/power)
 "rx" = (
-/obj/machinery/atmospherics/binary/pump,
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "ry" = (
@@ -7335,6 +7365,13 @@
 	map_airless = 1
 	},
 /area/bridge/storage)
+"sn" = (
+/obj/machinery/door/blast/regular{
+	id_tag = "aquila_pod_2";
+	name = "Missile Pod"
+	},
+/turf/simulated/floor/plating,
+/area/aquila/cockpit)
 "so" = (
 /obj/structure/table/standard,
 /obj/item/reagent_containers/syringe/antiviral,
@@ -7612,12 +7649,11 @@
 	pixel_x = -24
 	},
 /obj/structure/cable/cyan,
-/obj/structure/handrail{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/table/rack,
+/obj/random/toolbox,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/air)
 "tm" = (
@@ -7711,7 +7747,7 @@
 /obj/structure/noticeboard{
 	pixel_x = 32
 	},
-/obj/item/folder/envelope/cmdorder,
+/obj/item/folder/envelope/preset/cmdorder,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/sgr)
 "tC" = (
@@ -7970,7 +8006,7 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 36
 	},
-/obj/item/folder/envelope/rep,
+/obj/item/folder/envelope/preset/rep,
 /obj/item/documents/scgr,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/sgr)
@@ -8928,7 +8964,7 @@
 	},
 /obj/item/stamp/cos,
 /obj/random_multi/single_item/memo_security,
-/obj/item/folder/envelope/cosorder,
+/obj/item/folder/envelope/preset/cosorder,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/crew_quarters/heads/office/cos)
 "wD" = (
@@ -9974,7 +10010,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -10172,7 +10207,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry port";
 	name = "Port Bridge Blast Doors";
 	opacity = 0
@@ -10232,8 +10266,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/crew_quarters/heads/office/ce)
 "Bc" = (
-/obj/item/reagent_containers/glass/bottle/stoxin,
-/obj/item/reagent_containers/glass/bottle/stoxin,
+/obj/item/reagent_containers/glass/bottle/soporific,
+/obj/item/reagent_containers/glass/bottle/soporific,
 /obj/item/reagent_containers/syringe,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/gloves/latex,
@@ -10423,6 +10457,14 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/bridge/fore)
+"BZ" = (
+/obj/machinery/door/blast/regular{
+	id_tag = "aquila_pod_1_access";
+	name = "Missile Pod Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/aquila/suits)
 "Cb" = (
 /obj/shuttle_landmark/torch/deck1/aquila{
 	name = "B-Deck, Fore Starboard"
@@ -10620,7 +10662,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -10952,6 +10993,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/bridge)
+"Ew" = (
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
+/obj/machinery/button/blast_door{
+	id_tag = "aquila_pod_2_access";
+	name = "Missile Pod Access";
+	pixel_x = 25
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/aquila/air)
 "Ey" = (
 /obj/machinery/light,
 /obj/machinery/disposal,
@@ -11116,7 +11169,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/item/folder/envelope/lauletter1,
+/obj/item/folder/envelope/preset/lauletter1,
 /turf/simulated/floor/carpet/blue,
 /area/crew_quarters/heads/office/co)
 "Fn" = (
@@ -11153,10 +11206,11 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/aquila/storage)
 "FE" = (
-/obj/machinery/computer/modular/preset/engineering{
-	dir = 1
-	},
 /obj/floor_decal/corner/blue/mono,
+/obj/machinery/computer/modular/preset/cardslot/command_sec{
+	dir = 1;
+	icon_state = "console"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "FG" = (
@@ -11411,6 +11465,15 @@
 	},
 /turf/simulated/open,
 /area/maintenance/bridge/foreport)
+"GR" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/structure/cable/cyan{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/dark,
+/area/aquila/suits)
 "GU" = (
 /obj/structure/displaycase,
 /obj/item/gun/projectile/revolver/medium/captain{
@@ -11601,7 +11664,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry star";
 	name = "Starboard Bridge Blast Doors";
 	opacity = 0
@@ -11852,7 +11914,6 @@
 "Ib" = (
 /obj/machinery/door/blast/regular/open{
 	density = 0;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -12228,6 +12289,12 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/forestarboard)
+"Jr" = (
+/obj/shuttle_landmark/ert/bridge/secondary{
+	name = "B-Deck, Starboard"
+	},
+/turf/space,
+/area/space)
 "Jt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -12281,13 +12348,18 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/maintenance/bridge/forestarboard)
 "JV" = (
-/obj/machinery/atmospherics/portables_connector,
-/obj/floor_decal/industrial/outline,
-/obj/machinery/portable_atmospherics/canister/air/airlock{
-	start_pressure = 1900
+/obj/floor_decal/industrial/outline/red,
+/obj/machinery/payload_interface{
+	id_tag = "aquila_pod_1";
+	name = "Missile Pod 1";
+	allow_arming = 1
 	},
+/obj/structure/missile/antispace{
+	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/plating,
-/area/aquila/air)
+/area/aquila/cockpit)
 "Ka" = (
 /obj/structure/cable/green,
 /obj/wallframe_spawn/reinforced/polarized{
@@ -12318,6 +12390,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/floor_decal/industrial/outline,
+/obj/machinery/portable_atmospherics/canister/air/airlock{
+	start_pressure = 1900
+	},
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "Ke" = (
@@ -12328,7 +12407,7 @@
 /obj/floor_decal/corner/paleblue/diagonal,
 /obj/structure/table/glass,
 /obj/random_multi/single_item/memo_medical,
-/obj/item/folder/envelope/cmoorder,
+/obj/item/folder/envelope/preset/cmoorder,
 /turf/simulated/floor/tiled/white,
 /area/crew_quarters/heads/office/cmo)
 "Kh" = (
@@ -12634,7 +12713,7 @@
 /obj/floor_decal/corner/research{
 	dir = 5
 	},
-/obj/item/folder/envelope/exploorder,
+/obj/item/folder/envelope/preset/exploorder,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/heads/office/rd)
 "Lw" = (
@@ -12764,7 +12843,7 @@
 /area/aquila/airlock)
 "Mf" = (
 /obj/structure/table/woodentable_reinforced/walnut/maple,
-/obj/item/folder/envelope/captain,
+/obj/item/folder/envelope/preset/captain,
 /obj/random_multi/single_item/runtime,
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/co)
@@ -13289,7 +13368,7 @@
 	pixel_y = -4
 	},
 /obj/item/hand_labeler,
-/obj/item/folder/envelope/clorder,
+/obj/item/folder/envelope/preset/clorder,
 /turf/simulated/floor/carpet/green,
 /area/crew_quarters/heads/office/cl/backroom)
 "Ox" = (
@@ -13503,8 +13582,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/crew_quarters/safe_room/bridge)
 "PC" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/cyan,
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan,
 /turf/simulated/floor/plating,
 /area/aquila/air)
 "PP" = (
@@ -13738,6 +13816,7 @@
 /obj/random_multi/single_item/memo_engineering,
 /obj/random_multi/single_item/memo_research,
 /obj/random_multi/single_item/memo_exploration,
+/obj/item/reagent_containers/glass/bottle/inaprovaline,
 /turf/simulated/floor/tiled/dark,
 /area/bridge)
 "Qz" = (
@@ -13867,7 +13946,7 @@
 /area/maintenance/bridge/forestarboard)
 "Ra" = (
 /obj/floor_decal/corner/blue/mono,
-/obj/machinery/computer/modular/preset/security,
+/obj/machinery/computer/modular/preset/cardslot/command,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/bridge)
 "Rb" = (
@@ -14239,7 +14318,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "aquila_shutters";
 	name = "Protective Shutters";
 	opacity = 0
@@ -14684,7 +14762,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "bridge entry star";
 	name = "Starboard Bridge Blast Doors";
 	opacity = 0
@@ -14753,6 +14830,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/foreport)
+"UJ" = (
+/obj/floor_decal/industrial/outline/red,
+/obj/machinery/payload_interface{
+	id_tag = "aquila_pod_2";
+	name = "Missile Pod 2";
+	allow_arming = 1
+	},
+/obj/structure/missile/antispace{
+	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/simulated/floor/plating,
+/area/aquila/cockpit)
 "UL" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -14770,12 +14860,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/hallway/primary/bridge/fore)
-"UU" = (
-/obj/shuttle_landmark/ert/deck1{
-	name = "B-Deck, Fore"
-	},
-/turf/space,
-/area/space)
 "UW" = (
 /obj/paint/red,
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
@@ -14954,8 +15038,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/bridge/forestarboard)
 "VC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 9
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/aquila/air)
@@ -15356,6 +15440,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/bridge)
+"XU" = (
+/obj/machinery/door/blast/regular{
+	id_tag = "aquila_pod_1";
+	name = "Missile Pod"
+	},
+/turf/simulated/floor/plating,
+/area/aquila/cockpit)
 "XW" = (
 /obj/structure/catwalk,
 /obj/structure/cable/green{
@@ -15579,6 +15670,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/hallway/primary/bridge/aft)
+"YT" = (
+/obj/shuttle_landmark/ert/bridge{
+	name = "B-Deck, Fore Port"
+	},
+/turf/space,
+/area/space)
 "YW" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8;
@@ -19140,7 +19237,7 @@ aa
 aa
 aa
 aa
-UU
+aa
 aa
 aa
 aa
@@ -22843,7 +22940,7 @@ aa
 aa
 aa
 aa
-aa
+YT
 aa
 aa
 aa
@@ -32645,7 +32742,7 @@ aa
 aa
 aa
 aa
-aa
+Jr
 aa
 aa
 aa
@@ -33270,8 +33367,8 @@ ad
 ad
 ad
 ad
-ad
-gY
+fj
+fk
 QF
 QF
 QF
@@ -33471,12 +33568,12 @@ ad
 ad
 ad
 ad
-ad
-ad
-gY
+fj
+fk
+gZ
 QF
 je
-je
+GR
 Zj
 Kc
 Hg
@@ -33673,9 +33770,9 @@ ad
 ad
 ad
 ad
-ad
-fj
-fk
+gY
+ec
+ec
 QF
 no
 jf
@@ -33875,10 +33972,10 @@ ad
 ad
 ad
 fj
-eb
 fk
-gZ
-QF
+XU
+JV
+BZ
 iu
 jg
 QF
@@ -35492,11 +35589,11 @@ ad
 ad
 fp
 eg
-nr
-hc
-MK
-MK
-So
+sn
+UJ
+nP
+Ew
+kW
 ki
 kW
 mb
@@ -35694,11 +35791,11 @@ ad
 ad
 ad
 ad
-fp
-nr
-OX
-iz
-JV
+ec
+ec
+MK
+MK
+So
 rx
 PC
 wr
@@ -35897,9 +35994,9 @@ ad
 ad
 ad
 ad
-gY
-MK
-MK
+hc
+OX
+iz
 So
 iA
 VC

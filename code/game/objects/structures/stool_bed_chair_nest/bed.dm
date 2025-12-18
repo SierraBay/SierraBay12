@@ -11,7 +11,9 @@
 	var/base_icon = "bed"
 	var/material_alteration = MATERIAL_ALTERATION_ALL
 	/// Bitflags. Bed/chair specific flags.
-	var/bed_flags = EMPTY_BITFIELD
+	var/bed_flags = FLAGS_OFF
+	/// How many sheets should be given when dismantled, based on their stack_recipe datum
+	var/dismantle_return = 2
 
 
 /obj/structure/bed/New(newloc, new_material = DEFAULT_FURNITURE_MATERIAL, new_padding_material)
@@ -184,7 +186,7 @@
 	update_icon()
 
 /obj/structure/bed/proc/dismantle()
-	material.place_sheet(get_turf(src))
+	material.place_sheet(get_turf(src), dismantle_return)
 	if(padding_material)
 		padding_material.place_sheet(get_turf(src))
 

@@ -50,6 +50,8 @@
 	on = TRUE
 	power_usage = 0
 
+/obj/item/device/radio/infinite/pai
+	canhear_range = 0
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -61,7 +63,10 @@
 	wires = new(src)
 	if(ispath(cell))
 		cell = new cell(src)
-	internal_channels = GLOB.using_map.default_internal_channels()
+	if (intercept)
+		internal_channels = GLOB.using_map.intercept_internal_channels()
+	else
+		internal_channels = GLOB.using_map.default_internal_channels()
 	GLOB.listening_objects += src
 
 	if(frequency < RADIO_LOW_FREQ || frequency > RADIO_HIGH_FREQ)
@@ -161,6 +166,8 @@
 /obj/item/device/radio/proc/list_internal_channels(mob/user)
 	var/dat[0]
 	for(var/internal_chan in internal_channels)
+		if (!syndie && (text2num(internal_chan) == SYND_FREQ)) //Only traitor shortwaves should be able to see the traitor frequency
+			continue
 		if(has_channel_access(user, internal_chan))
 			dat.Add(list(list("chan" = internal_chan, "display_name" = get_frequency_default_name(text2num(internal_chan)), "chan_span" = frequency_span_class(text2num(internal_chan)))))
 
@@ -192,7 +199,7 @@
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
 			<B>[chan_name]</B><br>
-			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
+			Speaker: <a href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
 
 /obj/item/device/radio/proc/reset_frequency()
@@ -220,6 +227,19 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/radio/proc/get_channels_as_string()
+	if (!length(channels))
+		return "There are no extra channels available."
+	var/radio_text = "The following channels are available:\n"
+	for(var/i = 1 to length(channels))
+		var/channel = channels[i]
+		var/key = get_radio_key_from_channel(channel)
+		radio_text += "[key] - [channel]"
+		if(i != length(channels))
+			radio_text += ", "
+
+	return radio_text
 
 /obj/item/device/radio/CanUseTopic()
 	if(!on && !get_cell()) // We need to still be able to use the topic if we use power
@@ -497,11 +517,9 @@
 
 	  //#### Sending the signal to all subspace receivers ####//
 
-		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-			R.receive_signal(signal)
-
-		// Allinone can act as receivers.
-		for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
+		for(var/obj/machinery/telecomms/R as anything in telecomms_list)
+			if (!istype(R, /obj/machinery/telecomms/receiver) && !istype(R, /obj/machinery/telecomms/allinone))
+				continue
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
@@ -560,7 +578,9 @@
 	var/obj/item/cell/has_cell = get_cell()
 	if(has_cell && has_cell.percent() < 20)
 		signal.data["compression"] = max(0, 80 - has_cell.percent()*3)
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+	for(var/obj/machinery/telecomms/R as anything in telecomms_list)
+		if (!istype(R, /obj/machinery/telecomms/receiver) && !istype(R, /obj/machinery/telecomms/allinone))
+			continue
 		R.receive_signal(signal)
 
 	sleep(rand(10,25)) // wait a little...
@@ -690,6 +710,7 @@
 	var/mob/living/silicon/robot/myborg = null // Cyborg which owns this radio. Used for power checks
 	var/obj/item/device/encryptionkey/keyslot = null//Borg radios can handle a single encryption key
 	var/shut_up = 1
+	var/radio_desc = ""
 	icon = 'icons/obj/robot_component.dmi' // Cyborgs radio icons should look like the component.
 	icon_state = "radio"
 	canhear_range = 0
@@ -800,6 +821,7 @@
 			return
 
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	radio_desc = get_channels_as_string()
 
 /obj/item/device/radio/borg/Topic(href, href_list)
 	if(..())
@@ -930,6 +952,9 @@
 /obj/item/device/radio/announcer/subspace
 	subspace_transmission = 1
 
+/obj/item/device/radio/announcer/subspace/ert
+	channels = list("ERT" = 1, "Special Ops" = 1, "Hailing" = 1)
+
 /obj/item/device/radio/phone
 	broadcasting = 0
 	icon = 'icons/obj/machines/radio.dmi'
@@ -954,9 +979,10 @@
 	name = "bulky radio"
 	desc = "A large radio fitted with several military-grade communication interception circuits."
 	icon_state = "radio"
-	intercept = 1
+	intercept = TRUE
+	syndie = TRUE
 	w_class = ITEM_SIZE_NORMAL
-
+	default_frequency = SYND_FREQ
 
 //The exosuit  radio subtype. It allows pilots to interact and consumes exosuit power
 

@@ -2679,7 +2679,7 @@
 /area/meatstation/hydroponics)
 "fV" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -2836,7 +2836,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/cargo)
 "gr" = (
-/obj/machinery/cooker/fryer,
+/obj/machinery/appliance/cooker/fryer,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -2930,7 +2930,7 @@
 /area/meatstation/hydroponics)
 "gD" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/cereal,
+/obj/machinery/appliance/mixer/cereal,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -3743,7 +3743,7 @@
 /turf/simulated/floor/ceiling,
 /area/meatstation/kitchen)
 "iD" = (
-/obj/item/reagent_containers/food/snacks/slice/meatpizza,
+/obj/item/reagent_containers/food/snacks/slice/pizza/meat,
 /turf/space,
 /area/space)
 "iE" = (
@@ -3771,17 +3771,17 @@
 /turf/simulated/floor/ceiling,
 /area/meatstation/kitchen)
 "iI" = (
-/obj/item/reagent_containers/food/snacks/sliceable/pizza/meatpizza,
+/obj/item/reagent_containers/food/snacks/sliceable/pizza/meat,
 /turf/space,
 /area/space)
 "iJ" = (
-/obj/machinery/cooker/grill,
+/obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/ceiling,
 /area/meatstation/kitchen)
 "iK" = (
 /obj/structure/table/marble,
-/obj/machinery/cooker/candy,
+/obj/machinery/appliance/mixer/candy,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
@@ -3819,7 +3819,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "iP" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/random/single/meatstation/meatworm,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/ceiling,
@@ -3846,7 +3846,7 @@
 /turf/space,
 /area/space)
 "iT" = (
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /turf/space,
 /area/space)
 "iU" = (
@@ -3874,7 +3874,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "iY" = (
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/space,
 /area/space)
 "iZ" = (
@@ -3901,7 +3901,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "jb" = (
@@ -3909,7 +3909,7 @@
 /turf/space,
 /area/meatstation/storage)
 "jc" = (
-/obj/item/material/kitchen/utensil/spork/plastic,
+/obj/item/material/utensil/spork/plastic,
 /turf/simulated/floor/tiled/dark,
 /area/meatstation/kitchen)
 "jd" = (
@@ -4446,7 +4446,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table/marble,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "kr" = (
@@ -4592,7 +4592,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table/marble,
-/obj/item/reagent_containers/food/snacks/sliceable/pizza/meatpizza,
+/obj/item/reagent_containers/food/snacks/sliceable/pizza/meat,
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "kJ" = (
@@ -4619,7 +4619,7 @@
 /area/meatstation/mess)
 "kN" = (
 /obj/structure/table/marble,
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "kO" = (
@@ -8976,7 +8976,7 @@
 /turf/simulated/floor/lino,
 /area/meatstation/mess)
 "vP" = (
-/obj/item/material/kitchen/utensil/spork,
+/obj/item/material/utensil/spork,
 /obj/floor_decal/corner/lightgrey/border{
 	dir = 4
 	},

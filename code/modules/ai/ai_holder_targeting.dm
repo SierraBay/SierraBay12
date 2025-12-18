@@ -26,7 +26,7 @@
 /// Step 1, find out what we can see.
 /datum/ai_holder/proc/list_targets()
 	. = ohearers(vision_range, holder)
-	. -= global.dview_mob // Not the dview mob!
+	. -= GLOB.dview_mob
 
 	for (var/HM in range(vision_range, holder))
 		if (!(istype(HM, /obj/machinery/porta_turret) || \
@@ -126,7 +126,7 @@
 				return FALSE
 
 		if (L.stat)
-			if (L.stat == DEAD && !handle_corpse) // Leave dead things alone
+			if (L.is_dead() && !handle_corpse) // Leave dead things alone
 				return FALSE
 			if (L.stat == UNCONSCIOUS)	// Do we have mauling? Yes? Then maul people who are sleeping but not SSD
 				if (mauling)
@@ -173,7 +173,7 @@
 
 	give_up_movement()
 
-	if ((!old_target || !can_see_target(old_target)) && target_last_seen_turf && intelligence_level >= AI_NORMAL)
+	if ((!old_target || !can_see_target(old_target)) && target_last_seen_turf && (lose_target_timeout > (lose_target_time - world.time)) && intelligence_level >= AI_NORMAL)
 		ai_log("lose_target() : Going into 'engage unseen enemy' mode.", AI_LOG_INFO)
 		engage_unseen_enemy()
 		return TRUE //We're still working on it

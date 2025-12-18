@@ -1,3 +1,6 @@
+/datum/antagonist/mercenary
+	initial_spawn_target = 5
+
 /obj/item/storage/dufflebag/heavy/syndie
 	name = "Heavy gorlex bag"
 	desc = "it looks too bulky and bloody"
@@ -145,6 +148,43 @@ Used for quick dress-up. Also comes with several discount
 	antag_roles = list(MODE_MERCENARY)
 	path = /obj/item/storage/dufflebag/heavy/syndie/netrunner
 
+/datum/uplink_item/item/mercenary/specialist
+	name = "Specialist Kit"
+	desc = "This kit is for specialists. It contains: rocket launcher, 1x tandem missile, 3x frag missiles and 3x heat missiles"
+	item_cost = DEFAULT_TELECRYSTAL_AMOUNT * 2.5
+	antag_roles = list(MODE_MERCENARY)
+	path = /obj/item/storage/dufflebag/heavy/syndie/specialist
+
+// Ammo
+/datum/uplink_item/item/ammo/rpgfrag
+	name = "Frag missile"
+	desc = "A 40mm frag missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 40
+	path = /obj/item/ammo_casing/rpg_rocket/hel/frag
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/ammo/rpgheat
+	name = "HEAT missile"
+	desc = "A 40mm HEAT missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 40
+	path = /obj/item/ammo_casing/rpg_rocket/hel/heat
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/ammo/rpgtandem
+	name = "Tandem missile"
+	desc = "A 40mm Tandem missile for MRL-94 \"Vyun\" missile launcher."
+	item_cost = 70
+	path = /obj/item/ammo_casing/rpg_rocket/hel/tandem
+	antag_roles = list(MODE_MERCENARY)
+
+// Weapon
+/datum/uplink_item/item/visible_weapons/rpg
+	name = "Missile Launcher"
+	desc = "The MRL-94 \"Vyun\" is a fourth-generation reusable rocket launcher developed by HelTek Arms."
+	item_cost = 120
+	path = /obj/item/gun/projectile/rocket/hel
+	antag_roles = list(MODE_MERCENARY)
+
 // What's inside the box
 
 /singleton/closet_appearance/crate/mercenary
@@ -273,6 +313,15 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/clothing/mask/ai,
 		/obj/item/device/multitool/hacktool,
 		/obj/item/card/emag = 2
+		)
+
+/obj/item/storage/dufflebag/heavy/syndie/specialist
+
+	startswith = list(
+		/obj/item/gun/projectile/rocket/hel,
+		/obj/item/ammo_casing/rpg_rocket/hel/tandem,
+		/obj/item/ammo_casing/rpg_rocket/hel/heat = 3,
+		/obj/item/ammo_casing/rpg_rocket/hel/frag = 3,
 		)
 // SIERRA EDIT-END
 
@@ -521,3 +570,113 @@ Used for quick dress-up. Also comes with several discount
 		/obj/item/rig_module/vision,
 		/obj/item/rig_module/cooling_unit
 		)
+
+
+//droppod stuff
+
+/datum/map_template/ruin/antag_spawn/mercenary/New()
+	. = ..()
+	shuttles_to_initialise += list(/datum/shuttle/autodock/overmap/merc_drop_pod)
+
+/obj/overmap/visitable/sector/merc_base/New()
+	. = ..()
+	initial_generic_waypoints += list(
+		"nav_merc_pod_start"
+	)
+
+/datum/shuttle/autodock/overmap/merc_drop_pod
+	name = "Cyclopes Droppod"
+	shuttle_area = list(/area/map_template/merc_shuttle/drop_pod)
+	dock_target = "merc_drop_pod"
+	current_location = "nav_merc_pod_start"
+	landmark_transition = "nav_transit_scavshuttle"
+	range = 1
+	fuel_consumption = 4
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	defer_initialisation = TRUE
+	mothershuttle = "Cyclopes"
+
+/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
+	name = "Pod control console"
+	shuttle_tag = "Cyclopes Droppod"
+
+/obj/overmap/visitable/ship/landable/merc_drop_pod
+	name = "Cyclopes Droppod"
+	shuttle = "Cyclopes Droppod"
+	desc = "A small, unmarked vessel."
+	fore_dir = NORTH
+	vessel_size = SHIP_SIZE_SMALL
+	vessel_mass = 2500
+
+/obj/shuttle_landmark/merc_pod/start
+	landmark_tag = "nav_merc_pod_start"
+	name = "Cyclopes Drop Pod Base"
+	base_area = /area/map_template/merc_shuttle/drop_pod
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/merc_pod/merc_ship
+	landmark_tag = "nav_merc_pod_ship"
+	name = "Cyclopes Drop Pod Ship"
+
+/area/map_template/merc_shuttle/drop_pod
+	name = "\improper Cyclopes Droppod"
+	icon_state = "yellow"
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_syndicate)
+
+/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
+	skill_req = SKILL_BASIC
+
+
+/obj/machinery/button/alternate/pod_doors_explodey
+	name = "Explode pod door"
+
+	var/burst = 4
+	var/notbeenactivated = TRUE
+	var/last_shot = 0
+	var/fire_delay = 0.2 SECONDS
+
+/obj/machinery/button/alternate/pod_doors_explodey/activate(mob/living/user)
+	if(notbeenactivated)
+		notbeenactivated = FALSE
+		door_activate()
+	else
+		to_chat(usr, SPAN_WARNING("The hullbreaker is already been used."))
+
+/obj/machinery/button/alternate/pod_doors_explodey/proc/door_activate()
+	for(burst; burst >= 0; burst -= 1)
+		if((last_shot + fire_delay) <= world.time)
+			last_shot = world.time
+		for(var/i in 1 to burst)
+			var/obj/item/projectile/proj = new /obj/item/projectile/beam/hullbreaker(get_turf(src))
+			proj.launch( get_step(loc, src.dir) )
+			playsound(src.loc, 'sound/weapons/railgun.ogg', 30, 1)
+			if(i < burst)
+				sleep(fire_delay)
+
+
+/obj/item/projectile/beam/hullbreaker
+	name = "hullbreaker"
+	icon_state = "omnilaser"
+	fire_sound = 'sound/weapons/railgun.ogg'
+	damage = 950
+	armor_penetration = 100
+	edge = TRUE
+	damage_type = DAMAGE_EXPLODE
+	life_span = 3
+	pass_flags = PASS_FLAG_TABLE
+	distance_falloff = 3
+
+	muzzle_type = /obj/projectile/pointdefense/muzzle
+	tracer_type = /obj/projectile/pointdefense/tracer
+	impact_type = /obj/projectile/pointdefense/impact
+
+/obj/item/projectile/beam/hullbreaker/on_impact(atom/A)
+	. = ..()
+	if(A.density)
+		A.ex_act(EX_ACT_DEVASTATING)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 80, 1)
+		for(var/mob/H in range(20, src))
+			if(!H.stat && !istype(H, /mob/living/silicon/ai))\
+				shake_camera(H, 5, 2)
+		qdel(src)

@@ -46,6 +46,7 @@
 
 /datum/overmap_contact/proc/update_marker_icon(range = 0)
 	marker.icon_state = effect.icon_state
+	marker.dir = effect.dir
 
 	marker.ClearOverlays()
 
@@ -53,6 +54,9 @@
 		var/image/shield_image = image(icon = 'icons/obj/overmap.dmi', icon_state = "shield")
 		shield_image.pixel_x = 8
 		marker.AddOverlays(shield_image)
+
+	if (effect.is_moving() && !isnull(effect.heading_overlay))
+		marker.AddOverlays(effect.heading_overlay)
 
 	if (range > 0)
 		radar.transform = null
@@ -85,7 +89,7 @@
 	var/obj/overmap/visitable/visitable_effect = effect
 	if (!visitable_effect || !istype(visitable_effect))
 		return FALSE
-	for (var/obj/machinery/power/shield_generator/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/shield_generator))
+	for (var/obj/machinery/power/shield_generator/S as anything in GLOB.shield_generators)
 		if (S.z in visitable_effect.map_z)
 			if (S.running == SHIELD_RUNNING)
 				return TRUE

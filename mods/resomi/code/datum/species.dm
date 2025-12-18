@@ -1,6 +1,6 @@
 
 
-/datum/species/resomi
+/singleton/species/resomi
 	name = SPECIES_RESOMI
 	name_plural = "Resomii"
 	description = "Раса пернатых хищников, которые развивались на холодном мире, почти \
@@ -33,7 +33,7 @@
 
 	slowdown = -0.8 //speed fix?
 
-	darksight_range = 2
+	darksight_range = 4
 	darksight_tint = DARKTINT_GOOD
 	flash_mod = 2
 	total_health = 150
@@ -61,7 +61,7 @@
 	heat_level_1 = 320
 	heat_level_2 = 370
 	heat_level_3 = 600
-	heat_discomfort_level = 292
+	heat_discomfort_level = 295
 	heat_discomfort_strings = list(
 		"Вашу кожу покалывает от жары.",
 		"Вам жарко.",
@@ -136,6 +136,7 @@
 			HOME_SYSTEM_RESOMI_BIRDCAGE,
 			HOME_SYSTEM_RESOMI_EREMUS,
 			HOME_SYSTEM_RESOMI_ASRANDA,
+			HOME_SYSTEM_QUIG,
 			//HOME_SYSTEM_RESOMI_TIAMATH
 			HOME_SYSTEM_LUNA,
 			HOME_SYSTEM_MARS,
@@ -169,6 +170,7 @@
 			//FACTION_VEY_MED,
 			//FACTION_BISHOP,
 			//FACTION_SEPTENERGO,
+			FACTION_KMS,
 			FACTION_OTHER
 		),
 		TAG_RELIGION =  list(
@@ -183,25 +185,26 @@
 		)
 	)
 
-/datum/species/resomi/equip_survival_gear(mob/living/carbon/human/H)
+/singleton/species/resomi/equip_survival_gear(mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/lenses(H), slot_glasses)
 
-/datum/species/resomi/get_surgery_overlay_icon(mob/living/carbon/human/H)
+/singleton/species/resomi/get_surgery_overlay_icon(mob/living/carbon/human/H)
 	return 'packs/infinity/icons/mob/human_races/species/resomi/surgery.dmi'
 
-/datum/species/resomi/skills_from_age(age)
+/singleton/species/resomi/skills_from_age(age)
 	switch(age)
 		if(0 to 17)		. = -4
 		if(18 to 25)	. = 0
 		if(26 to 35)	. = 4
 		else			. = 8
 
-/datum/species/resomi
+/singleton/species/resomi
 	default_emotes = list(
 		/singleton/emote/audible/chuckle/resomi,
 		/singleton/emote/audible/cough/resomi,
 		/singleton/emote/audible/laugh/resomi,
 		/singleton/emote/audible/scream/resomi,
 		/singleton/emote/audible/sneeze/resomi,
+		/singleton/emote/audible/giggle/resomi,
 		)

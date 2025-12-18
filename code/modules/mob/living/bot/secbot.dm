@@ -11,8 +11,8 @@
 	layer = MOB_LAYER
 	maxHealth = 50
 	health = 50
-	req_access = list(list(access_security, access_forensics_lockers))
-	botcard_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
+	req_access = list(list(access_brig, access_forensics_lockers))
+	botcard_access = list(access_brig, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 
 	patrol_speed = 2
 	target_speed = 3
@@ -70,19 +70,19 @@
 	. += "<b>Automatic Security Unit</b>"
 
 /mob/living/bot/secbot/GetInteractPanel()
-	. = "Check for weapon authorization: <a href='?src=\ref[src];command=idcheck'>[idcheck ? "Yes" : "No"]</a>"
-	. += "<br>Check security records: <a href='?src=\ref[src];command=ignorerec'>[check_records ? "Yes" : "No"]</a>"
-	. += "<br>Check arrest status: <a href='?src=\ref[src];command=ignorearr'>[check_arrest ? "Yes" : "No"]</a>"
-	. += "<br>Report arrests: <a href='?src=\ref[src];command=declarearrests'>[declare_arrests ? "Yes" : "No"]</a>"
-	. += "<br>Auto patrol: <a href='?src=\ref[src];command=patrol'>[will_patrol ? "On" : "Off"]</a>"
+	. = "Check for weapon authorization: <a href='byond://?src=\ref[src];command=idcheck'>[idcheck ? "Yes" : "No"]</a>"
+	. += "<br>Check security records: <a href='byond://?src=\ref[src];command=ignorerec'>[check_records ? "Yes" : "No"]</a>"
+	. += "<br>Check arrest status: <a href='byond://?src=\ref[src];command=ignorearr'>[check_arrest ? "Yes" : "No"]</a>"
+	. += "<br>Report arrests: <a href='byond://?src=\ref[src];command=declarearrests'>[declare_arrests ? "Yes" : "No"]</a>"
+	. += "<br>Auto patrol: <a href='byond://?src=\ref[src];command=patrol'>[will_patrol ? "On" : "Off"]</a>"
 
 /mob/living/bot/secbot/GetInteractMaintenance()
 	. = "Threat identifier status: "
 	switch(emagged)
 		if(0)
-			. += "<a href='?src=\ref[src];command=emag'>Normal</a>"
+			. += "<a href='byond://?src=\ref[src];command=emag'>Normal</a>"
 		if(1)
-			. += "<a href='?src=\ref[src];command=emag'>Scrambled (DANGER)</a>"
+			. += "<a href='byond://?src=\ref[src];command=emag'>Scrambled (DANGER)</a>"
 		if(2)
 			. += "ERROROROROROR-----"
 
@@ -196,7 +196,7 @@
 
 /mob/living/bot/secbot/lookForTargets()
 	for(var/mob/living/M in view(src))
-		if(M.stat == DEAD)
+		if(M.is_dead())
 			continue
 		if(confirmTarget(M))
 			var/threat = check_threat(M)
@@ -263,7 +263,7 @@
 	return "unidentified lifeform"
 
 /mob/living/bot/secbot/proc/check_threat(mob/living/M)
-	if(!M || !istype(M) || M.stat == DEAD || src == M)
+	if(!M || !istype(M) || M.is_dead() || src == M)
 		return 0
 
 	if(emagged && !M.incapacitated()) //check incapacitated so emagged secbots don't keep attacking the same target forever

@@ -142,10 +142,17 @@
 				begin_cycle_in()
 
 		if("cycle_ext_door")
-			cycleDoors(TARGET_OUTOPEN)
+			// Close the door if it's open, otherwise cycle
+			if(memory["exterior_status"]["state"] == "open")
+				toggleDoor(memory["exterior_status"], tag_exterior_door, memory["secure"], "toggle")
+			else
+				cycleDoors(TARGET_OUTOPEN)
 
 		if("cycle_int_door")
-			cycleDoors(TARGET_INOPEN)
+			if(memory["interior_status"]["state"] == "open")
+				toggleDoor(memory["interior_status"], tag_interior_door, memory["secure"], "toggle")
+			else
+				cycleDoors(TARGET_INOPEN)
 
 		if("abort")
 			stop_cycling()
@@ -252,6 +259,7 @@
 					cycleDoors(target_state)
 					state = STATE_IDLE
 					target_state = TARGET_NONE
+					playsound(master, 'sound/machines/airlockdone.ogg', 50)
 
 
 		if(STATE_DEPRESSURIZE)
@@ -271,6 +279,7 @@
 						cycleDoors(target_state)
 						state = STATE_IDLE
 						target_state = TARGET_NONE
+						playsound(master, 'sound/machines/airlockdone.ogg', 50)
 
 
 	memory["processing"] = (state != target_state)
@@ -283,20 +292,20 @@
 	state = STATE_IDLE
 	target_state = TARGET_INOPEN
 	memory["purge"] = cycle_to_external_air
-	playsound(master, 'sound/machines/warning-buzzer.ogg', 50)
+	playsound(master, 'sound/machines/airlockin.ogg', 50)
 	shutAlarm()
 
 /datum/computer/file/embedded_program/airlock/proc/begin_dock_cycle()
 	state = STATE_IDLE
 	target_state = TARGET_INOPEN
-	playsound(master, 'sound/machines/warning-buzzer.ogg', 50)
+	playsound(master, 'sound/machines/airlockin.ogg', 50)
 	shutAlarm()
 
 /datum/computer/file/embedded_program/airlock/proc/begin_cycle_out()
 	state = STATE_IDLE
 	target_state = TARGET_OUTOPEN
 	memory["purge"] = cycle_to_external_air
-	playsound(master, 'sound/machines/warning-buzzer.ogg', 50)
+	playsound(master, 'sound/machines/airlockout.ogg', 50)
 	shutAlarm()
 
 /datum/computer/file/embedded_program/airlock/proc/close_doors()

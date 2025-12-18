@@ -1,37 +1,37 @@
-GLOBAL_VAR_CONST(PREF_YES, "Yes")
-GLOBAL_VAR_CONST(PREF_NO, "No")
-GLOBAL_VAR_CONST(PREF_ALL_SPEECH, "All Speech")
-GLOBAL_VAR_CONST(PREF_NEARBY, "Nearby")
-GLOBAL_VAR_CONST(PREF_ALL_EMOTES, "All Emotes")
-GLOBAL_VAR_CONST(PREF_ALL_CHATTER, "All Chatter")
-GLOBAL_VAR_CONST(PREF_SHORT, "Short")
-GLOBAL_VAR_CONST(PREF_LONG, "Long")
-GLOBAL_VAR_CONST(PREF_SHOW, "Show")
-GLOBAL_VAR_CONST(PREF_HIDE, "Hide")
-GLOBAL_VAR_CONST(PREF_PRIMARY, "Primary")
-GLOBAL_VAR_CONST(PREF_ALL, "All")
-GLOBAL_VAR_CONST(PREF_OFF, "Off")
-GLOBAL_VAR_CONST(PREF_BASIC, "Basic")
-GLOBAL_VAR_CONST(PREF_FULL, "Full")
-GLOBAL_VAR_CONST(PREF_MIDDLE_CLICK, "middle click")
-GLOBAL_VAR_CONST(PREF_ALT_CLICK, "alt click")
-GLOBAL_VAR_CONST(PREF_CTRL_CLICK, "ctrl click")
-GLOBAL_VAR_CONST(PREF_CTRL_SHIFT_CLICK, "ctrl shift click")
-GLOBAL_VAR_CONST(PREF_HEAR, "Hear")
-GLOBAL_VAR_CONST(PREF_SILENT, "Silent")
-GLOBAL_VAR_CONST(PREF_SHORTHAND, "Shorthand")
-GLOBAL_VAR_CONST(PREF_NEVER, "Never")
-GLOBAL_VAR_CONST(PREF_NON_ANTAG, "Non-Antag Only")
-GLOBAL_VAR_CONST(PREF_ALWAYS, "Always")
-GLOBAL_VAR_CONST(PREF_SMALL, "Small")
-GLOBAL_VAR_CONST(PREF_MEDIUM, "Medium")
-GLOBAL_VAR_CONST(PREF_LARGE, "Large")
-GLOBAL_VAR_CONST(PREF_LOW, "Low")
-GLOBAL_VAR_CONST(PREF_MED, "Medium")
-GLOBAL_VAR_CONST(PREF_HIGH, "High")
-GLOBAL_VAR_CONST(PREF_CLIENT_VIEW_SMALL, "15x15")
-GLOBAL_VAR_CONST(PREF_CLIENT_VIEW_MEDIUM, "17x15")
-GLOBAL_VAR_CONST(PREF_CLIENT_VIEW_LARGE, "19x15")
+GLOBAL_CONST(PREF_YES, "Yes")
+GLOBAL_CONST(PREF_NO, "No")
+GLOBAL_CONST(PREF_ALL_SPEECH, "All Speech")
+GLOBAL_CONST(PREF_NEARBY, "Nearby")
+GLOBAL_CONST(PREF_ALL_EMOTES, "All Emotes")
+GLOBAL_CONST(PREF_ALL_CHATTER, "All Chatter")
+GLOBAL_CONST(PREF_SHORT, "Short")
+GLOBAL_CONST(PREF_LONG, "Long")
+GLOBAL_CONST(PREF_SHOW, "Show")
+GLOBAL_CONST(PREF_HIDE, "Hide")
+GLOBAL_CONST(PREF_PRIMARY, "Primary")
+GLOBAL_CONST(PREF_ALL, "All")
+GLOBAL_CONST(PREF_OFF, "Off")
+GLOBAL_CONST(PREF_BASIC, "Basic")
+GLOBAL_CONST(PREF_FULL, "Full")
+GLOBAL_CONST(PREF_MIDDLE_CLICK, "middle click")
+GLOBAL_CONST(PREF_ALT_CLICK, "alt click")
+GLOBAL_CONST(PREF_CTRL_CLICK, "ctrl click")
+GLOBAL_CONST(PREF_CTRL_SHIFT_CLICK, "ctrl shift click")
+GLOBAL_CONST(PREF_HEAR, "Hear")
+GLOBAL_CONST(PREF_SILENT, "Silent")
+GLOBAL_CONST(PREF_SHORTHAND, "Shorthand")
+GLOBAL_CONST(PREF_NEVER, "Never")
+GLOBAL_CONST(PREF_NON_ANTAG, "Non-Antag Only")
+GLOBAL_CONST(PREF_ALWAYS, "Always")
+GLOBAL_CONST(PREF_SMALL, "Small")
+GLOBAL_CONST(PREF_MEDIUM, "Medium")
+GLOBAL_CONST(PREF_LARGE, "Large")
+GLOBAL_CONST(PREF_LOW, "Low")
+GLOBAL_CONST(PREF_MED, "Medium")
+GLOBAL_CONST(PREF_HIGH, "High")
+GLOBAL_CONST(PREF_CLIENT_VIEW_SMALL, "15x15")
+GLOBAL_CONST(PREF_CLIENT_VIEW_MEDIUM, "17x15")
+GLOBAL_CONST(PREF_CLIENT_VIEW_LARGE, "19x15")
 
 var/global/list/_client_preferences
 var/global/list/_client_preferences_by_key
@@ -133,6 +133,7 @@ var/global/list/_client_preferences_by_type
 	if(new_value == GLOB.PREF_NO)
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_vents))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_forced))
+		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
 
 /datum/client_preference/play_announcement_sfx
@@ -289,7 +290,7 @@ var/global/list/_client_preferences_by_type
 
 /datum/client_preference/graphics_quality/changed(mob/preference_mob, new_value)
 	if (preference_mob?.client)
-		for (var/atom/movable/renderer/renderer as anything in preference_mob.rdr_to_plane)
+		for (var/atom/movable/renderer/renderer as anything in preference_mob.renderer_plane_map)
 			renderer.GraphicsUpdate()
 
 /datum/client_preference/goonchat
@@ -342,6 +343,13 @@ var/global/list/_client_preferences_by_type
 	key = "FLOATING_CHAT"
 	options = list(GLOB.PREF_SHOW, GLOB.PREF_HIDE)
 	default_value = GLOB.PREF_SHOW
+
+/datum/client_preference/toggle_run
+	description = "Shift toggles run (vs hold to run)"
+	key = "TOGGLE_RUN"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+	default_value = GLOB.PREF_NO
+
 
 /********************
 * General Staff Preferences *

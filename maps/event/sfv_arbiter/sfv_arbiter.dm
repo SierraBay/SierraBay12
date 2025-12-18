@@ -6,6 +6,7 @@
 	description = "A fairly standard armed transport shuttle belonging to the Sol Fleet. It's transponder reads 'SFV Arbiter'."
 	suffixes = list("maps/event/sfv_arbiter/sfv_arbiter.dmm")
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/sfv_arbiter)
+	skip_main_unit_tests = "Ruin has shuttle landmark."
 
 /obj/overmap/visitable/sector/sfv_arbiter_space
 	name = "Sensor Anomaly"
@@ -19,7 +20,6 @@
 	desc = "A standard, armed transport shuttle belonging to the Sol Fleet. It's transponder reads 'SFV Arbiter'."
 	shuttle = "SFV Arbiter"
 	icon_state = "ship"
-	moving_state = "ship_moving"
 	fore_dir = NORTH
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 1000

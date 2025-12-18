@@ -9,7 +9,7 @@
 	flash_protection = FLASH_PROTECTION_MODERATE
 	body_parts_covered = 0
 
-/obj/item/clothing/glasses/sunglasses/sechud/lenses
+/obj/item/clothing/glasses/hud/security/lenses
 	name = "small sechud lenses"
 	desc = "Lenses with a HUD. This one has a sechud."
 	item_icons = list(slot_glasses_str = 'mods/resomi/icons/clothing/onmob_eyes_resomi.dmi')

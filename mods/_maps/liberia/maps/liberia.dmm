@@ -1893,6 +1893,7 @@
 	fab_status_flags = 1;
 	name = "unlocked autolathe"
 	},
+/obj/item/storage/box/autolathe_designs,
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	frequency = 1380;
 	id_tag = "merchant_ship_dock";
@@ -2074,6 +2075,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled/steel_grid,
 /area/liberia/engineeringlobby)
 "dA" = (
@@ -2659,21 +2661,9 @@
 "et" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm/merchant{
 	dir = 4;
@@ -3762,8 +3752,8 @@
 /turf/simulated/floor/tiled,
 /area/liberia/hallway)
 "gn" = (
-/obj/machinery/door/airlock{
-	name = "Toilet"
+/obj/machinery/door/airlock/civilian{
+	name = "Restroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
@@ -3987,11 +3977,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom1)
@@ -4249,22 +4234,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/structure/cable/blue{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom1)
 "hc" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
-	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom1)
@@ -4335,19 +4310,11 @@
 /turf/simulated/floor/wood/walnut,
 /area/liberia/bar)
 "hm" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
-	},
-/obj/structure/cable/blue{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom1)
@@ -4417,7 +4384,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/chef/classic,
-/obj/item/material/kitchen/rollingpin,
+/obj/item/material/rollingpin,
 /obj/item/material/knife/kitchen,
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/bar)
@@ -4433,7 +4400,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/structure/table/reinforced,
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/bar)
@@ -4452,7 +4419,7 @@
 /obj/machinery/vending/cigarette{
 	name = "hacked cigarette machine";
 	prices = list();
-	products = list(/obj/item/storage/fancy/cigarettes=10,/obj/item/storage/box/matches=10,/obj/item/flame/lighter/zippo=4,/obj/item/clothing/mask/smokable/cigarette/cigar/havana=2)
+	products = list(/obj/item/storage/fancy/smokable/luckystars=5,/obj/item/storage/fancy/smokable/professionals=5,/obj/item/flame/lighter/zippo=4,/obj/item/clothing/mask/smokable/cigarette/cigar/havana=2)
 	},
 /turf/simulated/floor/wood/walnut,
 /area/liberia/bar)
@@ -6511,6 +6478,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled/white,
 /area/liberia/medbay)
 "lx" = (
@@ -6955,6 +6923,7 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
+/obj/item/storage/box/microlathe_designs,
 /obj/floor_decal/spline/fancy/wood,
 /turf/simulated/floor/carpet/red,
 /area/liberia/traidingroom)
@@ -7712,9 +7681,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/steel_grid,
 /area/liberia/atmos)
-"BC" = (
-/turf/simulated/wall/r_wall/prepainted,
-/area/liberia/toiletroom2)
 "BE" = (
 /obj/floor_decal/borderfloor{
 	dir = 8
@@ -7840,17 +7806,8 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/power/apc/liberia{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24
-	},
-/obj/structure/cable/blue{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/tiled/freezer,
-/area/liberia/toiletroom2)
+/area/liberia/toiletroom1)
 "ED" = (
 /obj/floor_decal/techfloor{
 	dir = 8
@@ -7864,22 +7821,14 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/dockinghall)
 "EQ" = (
-/obj/machinery/alarm/merchant{
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/cable/blue{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/tiled/freezer,
-/area/liberia/toiletroom2)
+/area/liberia/toiletroom1)
 "EZ" = (
 /obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
@@ -8251,6 +8200,7 @@
 /obj/machinery/fabricator{
 	fab_status_flags = 1
 	},
+/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/liberia/engineeringlobby)
 "Lh" = (
@@ -8288,9 +8238,6 @@
 "Lm" = (
 /turf/simulated/wall/prepainted,
 /area/liberia/bridge)
-"Lz" = (
-/turf/simulated/wall/prepainted,
-/area/liberia/toiletroom2)
 "LJ" = (
 /obj/floor_decal/borderfloor{
 	dir = 6
@@ -8727,6 +8674,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled,
 /area/liberia/personellroom1)
 "TB" = (
@@ -8892,9 +8840,9 @@
 	},
 /area/liberia/solar2)
 "VZ" = (
-/obj/machinery/door/airlock{
-	name = "Toilet";
-	dir = 8
+/obj/machinery/door/airlock/civilian{
+	dir = 4;
+	name = "Restroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8902,14 +8850,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable/blue{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/freezer,
-/area/liberia/toiletroom2)
+/area/liberia/toiletroom1)
 "Wb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -30059,9 +30002,9 @@ fI
 qx
 ip
 ro
-Lz
-Lz
-BC
+OA
+OA
+Se
 aa
 aa
 aa
@@ -30261,9 +30204,9 @@ kO
 fY
 kO
 se
-Lz
+OA
 Ez
-BC
+Se
 aa
 aa
 aa
@@ -30463,9 +30406,9 @@ XE
 ff
 yh
 gD
-Lz
+OA
 EQ
-BC
+Se
 aa
 aa
 aa
@@ -30665,9 +30608,9 @@ ip
 LW
 pD
 OA
-Lz
+OA
 VZ
-BC
+Se
 aa
 aa
 aa

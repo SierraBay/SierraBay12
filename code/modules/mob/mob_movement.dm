@@ -162,7 +162,6 @@
 
 		src.move_speed = world.time - src.l_move_time
 		src.l_move_time = world.time
-		src.m_flag = 1
 		if ((A != src.loc && A && A.z == src.z))
 			src.last_move = get_dir(A, src.loc)
 
@@ -184,14 +183,14 @@
 
 /mob/Process_Spacemove(allow_movement)
 	. = ..()
-	if(.)
+	if (.)
 		return
 
 	var/atom/movable/backup = get_spacemove_backup()
-	if(backup)
-		if(istype(backup) && allow_movement)
+	if (backup)
+		if (istype(backup) && allow_movement)
 			return backup
-		return -1
+		return TRUE
 
 /mob/proc/space_do_move(allow_move, direction)
 	if(ismovable(allow_move))//push off things in space
@@ -360,26 +359,46 @@
 		to_chat(src, "You will now default to [default_run_intent] when moving quickly.")
 
 /client/verb/setmovingslowly()
-	set hidden = 1
-	if(mob)
+	set hidden = TRUE
+	if (!mob)
+		return
+	if (mob.get_preference_value(/datum/client_preference/toggle_run) == GLOB.PREF_NO)
 		mob.set_moving_slowly()
 
+
 /mob/proc/set_moving_slowly()
-	if(!default_walk_intent)
+	if (!default_walk_intent)
 		default_walk_intent = get_movement_datum_by_missing_flag(MOVE_INTENT_QUICK)
-	if(default_walk_intent && move_intent != default_walk_intent)
+	if (default_walk_intent && move_intent != default_walk_intent)
 		set_move_intent(default_walk_intent)
 
+
 /client/verb/setmovingquickly()
-	set hidden = 1
-	if(mob)
+	set hidden = TRUE
+	if (!mob)
+		return
+	if (mob.get_preference_value(/datum/client_preference/toggle_run) == GLOB.PREF_NO)
 		mob.set_moving_quickly()
+	else
+		mob.toggle_moving_quickly()
+
 
 /mob/proc/set_moving_quickly()
-	if(!default_run_intent)
+	if (!default_run_intent)
 		default_run_intent = get_movement_datum_by_flag(MOVE_INTENT_QUICK)
-	if(default_run_intent && move_intent != default_run_intent)
+	if (default_run_intent && move_intent != default_run_intent)
 		set_move_intent(default_run_intent)
+
+
+/mob/proc/toggle_moving_quickly()
+	var/quick = get_movement_datum_by_flag(MOVE_INTENT_QUICK)
+	if (move_intent == quick)
+		var/slow = get_movement_datum_by_missing_flag(MOVE_INTENT_QUICK)
+		if (slow && move_intent != slow)
+			set_move_intent(slow)
+	else if (quick)
+		set_move_intent(quick)
+
 
 /mob/proc/can_sprint()
 	return FALSE

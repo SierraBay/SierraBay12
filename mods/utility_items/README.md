@@ -28,7 +28,7 @@ ID мода: UTILITY_ITEMS
 ### Изменения *кор кода*
 
 - `code/modules/mining/abandonedcrates.dm` `/obj/structure/closet/crate/secure/loot/var/codelen`
-
+- `code/modules/clothing/masks/smokable.dm` `/obj/item/clothing/mask/smokable/proc/smoke`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -39,7 +39,8 @@ ID мода: UTILITY_ITEMS
 
 ### Оверрайды
 
-- Отсутствуют
+- `code/modules/clothing/masks/smokable.dm` `/obj/item/clothing/mask/smokable/proc/smoke` `/obj/item/clothing/mask/smokable/proc/light` 
+- `code/game/objects/items/weapons/cards_ids.dm` `/obj/item/card/id/proc/get_display_name()`
 
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.

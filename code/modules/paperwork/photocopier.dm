@@ -158,7 +158,7 @@
 	if (istype(copy, /obj/item/paper/admin) && !copy_admin) // Edge case for admin faxes so that they don't show the editing form
 		copy_type = /obj/item/paper
 
-	var/obj/item/paper/c = new copy_type(loc, copy.text, copy.name, copy.metadata )
+	var/obj/item/paper/c = new copy_type(loc, copy.text, copy.name, copy.metadata, copy.language)
 
 	c.color = COLOR_WHITE
 

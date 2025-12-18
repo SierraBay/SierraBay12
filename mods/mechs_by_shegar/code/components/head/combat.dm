@@ -1,0 +1,22 @@
+/obj/item/mech_component/sensors/combat
+	name = "combat sensors"
+	gender = PLURAL
+	exosuit_desc_string = "high-resolution thermal sensors"
+	icon_state = "combat_head"
+	vision_flags = SEE_MOBS
+	see_invisible = SEE_INVISIBLE_NOLIGHTING
+	prebuilt_software = list(/obj/item/circuitboard/exosystem/weapons)
+	power_use = 200
+
+	max_hp = 150
+	min_damage = 100
+	max_repair = 60
+	repair_damage = 30
+	front_modificator_damage = 1
+
+	//Тепло
+	max_heat = 200
+	heat_cooling = 8
+	emp_heat_generation = 150
+
+	weight = 100

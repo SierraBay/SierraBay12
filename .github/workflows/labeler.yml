@@ -13,9 +13,9 @@ jobs:
     permissions:
       contents: read # may be required due to overwrite/add ambiguity
       pull-requests: write # required to apply labels to PRs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/labeler@v5
+    - uses: actions/labeler@v6
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         sync-labels: true

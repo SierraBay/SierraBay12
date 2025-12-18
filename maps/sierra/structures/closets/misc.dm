@@ -19,7 +19,7 @@
 		/obj/item/gun/energy/gun/small/secure,
 		/obj/item/storage/secure/briefcase,
 		/obj/item/clothing/shoes/laceup,
-		/obj/item/folder/envelope/rep,
+		/obj/item/folder/envelope/preset/rep,
 		/obj/item/storage/belt/holster/general,
 		/obj/item/clothing/under/rank/internalaffairs,
 		/obj/item/clothing/suit/storage/toggle/suit/black,
@@ -29,6 +29,39 @@
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel)),
 		new /datum/atom_creator/simple(/obj/item/storage/backpack/messenger, 50),
 		/obj/item/storage/fakebook
+	)
+
+/obj/structure/closet/secure_closet/iso
+	name = "\improper Internal Security Operative's locker"
+	req_access = list(access_iaa)
+	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/corporate/iso
+
+/obj/structure/closet/secure_closet/iso/WillContain()
+	return list(
+		/obj/item/storage/belt/holster/security,
+		/obj/item/device/flash,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/grenade/chem_grenade/teargas,
+		/obj/item/melee/telebaton,
+		/obj/item/clothing/glasses/hud/security/prot/aviators,
+		/obj/item/taperoll/police,
+		/obj/item/device/hailer,
+		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/clothing/accessory/armor_plate/sneaky/tactical,
+		/obj/item/handcuffs,
+		/obj/item/gun/energy/gun,
+		/obj/item/clothing/gloves/thick,
+		/obj/item/device/holowarrant,
+		/obj/item/device/flashlight/maglight,
+		/obj/item/crowbar/prybar,
+		/obj/item/device/radio/off,
+		/obj/item/clothing/mask/gas/half,
+		/obj/item/storage/firstaid/security,
+		/obj/item/clothing/head/beret/sec/corporate/operative,
+		/obj/item/clothing/head/beret/sec/corporate/operative/parade,
+		/obj/item/clothing/under/rank/security/operative,
+		/obj/item/clothing/under/rank/internalaffairs/plain/nt,
+		/obj/item/clothing/shoes/laceup
 	)
 
 //equipment closets that everyone on the crew or in research can access, for storing things securely

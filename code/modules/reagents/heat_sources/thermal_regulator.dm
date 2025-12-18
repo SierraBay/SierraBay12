@@ -23,7 +23,11 @@
 	var/image/on_icon
 
 	var/heating =			   TRUE
-	var/list/permitted_types = list(/obj/item/reagent_containers/glass)
+	var/list/permitted_types = list(
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/food/drinks/glass2,
+		/obj/item/reagent_containers/food/drinks/shaker
+		)
 	var/max_temperature =      200 CELSIUS
 	var/min_temperature =      -100  CELSIUS
 	var/heating_power =        10 // K
@@ -147,26 +151,26 @@
 	var/dat = list()
 	dat += "<table>"
 
-	dat += "<tr><td>Temperature Mode:</td><td><a href='?src=\ref[src];switch_mode=heating'>[heating ? "Heat" : "Chill"]</a></td></tr>"
+	dat += "<tr><td>Temperature Mode:</td><td><a href='byond://?src=\ref[src];switch_mode=heating'>[heating ? "Heat" : "Chill"]</a></td></tr>"
 
 	dat += "<tr><td>Target temperature:</td><td>"
 
 	if(target_temperature > min_temperature)
-		dat += "<a href='?src=\ref[src];adjust_temperature=-[heating_power]'>-</a> "
+		dat += "<a href='byond://?src=\ref[src];adjust_temperature=-[heating_power]'>-</a> "
 
 	dat += "[target_temperature - T0C]C"
 
 	if(target_temperature < max_temperature)
-		dat += " <a href='?src=\ref[src];adjust_temperature=[heating_power]'>+</a>"
+		dat += " <a href='byond://?src=\ref[src];adjust_temperature=[heating_power]'>+</a>"
 
 	dat += "</td></tr>"
 
 	dat += "<tr><td>Current temperature:</td><td>[floor(temperature - T0C)]C</td></tr>"
 
 	dat += "<tr><td>Loaded container:</td>"
-	dat += "<td>[container ? "[container.name] ([floor(container.temperature - T0C)]C) <a href='?src=\ref[src];remove_container=1'>Remove</a>" : "None."]</td></tr>"
+	dat += "<td>[container ? "[container.name] ([floor(container.temperature - T0C)]C) <a href='byond://?src=\ref[src];remove_container=1'>Remove</a>" : "None."]</td></tr>"
 
-	dat += "<tr><td>Switched:</td><td><a href='?src=\ref[src];toggle_power=1'>[use_power == POWER_USE_ACTIVE ? "On" : "Off"]</a></td></tr>"
+	dat += "<tr><td>Switched:</td><td><a href='byond://?src=\ref[src];toggle_power=1'>[use_power == POWER_USE_ACTIVE ? "On" : "Off"]</a></td></tr>"
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "\ref[src]-reagent_temperature_window", "[capitalize(name)]")

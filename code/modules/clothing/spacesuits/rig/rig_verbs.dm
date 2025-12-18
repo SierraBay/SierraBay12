@@ -55,10 +55,10 @@
 
 	toggle_piece("helmet",wearer)
 
-/obj/item/rig/verb/deploy_suit()
+/obj/item/rig/proc/toggle_chest()
 
-	set name = "Deploy Hardsuit"
-	set desc = "Deploys helmet, gloves and boots."
+	set name = "Toggle Chestpiece"
+	set desc = "Deploys or retracts your chestpiece."
 	set category = "Hardsuit"
 	set src = usr.contents
 
@@ -69,14 +69,62 @@
 	if(!check_suit_access(usr))
 		return
 
-	if(!check_power_cost(usr))
+	toggle_piece("chest",wearer)
+
+/obj/item/rig/proc/toggle_gauntlets()
+
+	set name = "Toggle Gauntlets"
+	set desc = "Deploys or retracts your gauntlets."
+	set category = "Hardsuit"
+	set src = usr.contents
+
+	if(!istype(wearer) || !wearer.back == src)
+		to_chat(usr, SPAN_WARNING("The hardsuit is not being worn."))
 		return
 
-	deploy(wearer)
+	if(!check_suit_access(usr))
+		return
+
+	toggle_piece("gauntlets",wearer)
+
+/obj/item/rig/proc/toggle_boots()
+
+	set name = "Toggle Boots"
+	set desc = "Deploys or retracts your boots."
+	set category = "Hardsuit"
+	set src = usr.contents
+
+	if(!istype(wearer) || !wearer.back == src)
+		to_chat(usr, SPAN_WARNING("The hardsuit is not being worn."))
+		return
+
+	if(!check_suit_access(usr))
+		return
+
+	toggle_piece("boots",wearer)
+
+/obj/item/rig/verb/toggle_all_pieces()
+
+	set name = "Toggle All Pieces"
+	set desc = "Retracts your hardsuit if it is completely deployed, or activates all currently stowed pieces."
+	set category = "Hardsuit"
+	set src = usr.contents
+
+	if(!istype(wearer) || !wearer.back == src)
+		to_chat(usr, SPAN_WARNING("The hardsuit is not being worn."))
+		return
+
+	if(!check_suit_access(usr))
+		return
+
+	if(!suit_is_deployed())
+		deploy(wearer)
+	else
+		retract(wearer)
 
 /obj/item/rig/verb/toggle_seals_verb()
 
-	set name = "Toggle Hardsuit"
+	set name = "Cycle Hardsuit"
 	set desc = "Activates or deactivates your rig."
 	set category = "Hardsuit"
 	set src = usr.contents

@@ -8,6 +8,30 @@
 	репутация, а граждане здесь имеют дурную славу. Сами люди, однако, обычно просто мечтают о том, чтобы \
 	покинуть это место и переехать в более комфортные места. К сожалению, несмотря на усилия ЦПСС, многие \
 	плутониане, как правило, поддерживают преступные связи, даже за пределами планеты."
+	secondary_langs = list(
+		LANGUAGE_HUMAN_EURO,
+		LANGUAGE_HUMAN_CHINESE,
+		LANGUAGE_HUMAN_ARABIC,
+		LANGUAGE_HUMAN_INDIAN,
+		LANGUAGE_HUMAN_IBERIAN,
+		LANGUAGE_HUMAN_RUSSIAN,
+		LANGUAGE_SPACER,
+		LANGUAGE_GUTTER,
+		LANGUAGE_SIGN
+	)
+
+/singleton/cultural_info/culture/human/confederate
+	name = CULTURE_HUMAN_CONFEDC
+	nickname = "Терранец"
+	description = "Вы с Терры (не с Земли), что находится в системе Гильгамеш. Это столичный мир Гильгамешской \
+	Колониальной Конфедерации. Её жители воплощают в себе все то, что значит быть частью ГКК. К сожалению, годы, \
+	прошедшие после Гайского Конфликта, оказались нелегкими для Терры, и длительный период восстановления \
+	экономики не облегчил жизнь. Люди Терры, как правило, заняты в военном, промышленном, правительственном или \
+	сервисном секторах, при этом особое внимание уделяется военной службе. Терранцы сегодня, как правило, бедные, \
+	озлобленные и несколько разбитые люди, злые и обиженные из-за своих потерь в Гайском Конфликте. Воспитание на \
+	Терре подчеркивает странное сочетание служения государству, либерализма и милитаризма."
+	language = LANGUAGE_HUMAN_RUSSIAN
+	economic_power = 0.9
 
 /singleton/cultural_info/culture/human/lorrimanian
 	name = CULTURE_HUMAN_LORRIMAN
@@ -61,7 +85,6 @@
 		LANGUAGE_HUMAN_IBERIAN,
 		LANGUAGE_HUMAN_RUSSIAN,
 		LANGUAGE_SPACER,
-		LANGUAGE_GUTTER,
 		LANGUAGE_SIGN
 	)
 
@@ -81,7 +104,6 @@
 		LANGUAGE_HUMAN_IBERIAN,
 		LANGUAGE_HUMAN_RUSSIAN,
 		LANGUAGE_SPACER,
-		LANGUAGE_GUTTER,
 		LANGUAGE_SIGN
 	)
 

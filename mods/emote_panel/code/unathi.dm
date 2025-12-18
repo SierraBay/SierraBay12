@@ -1,4 +1,4 @@
-/datum/species/unathi/default_emotes = list(
+/singleton/species/unathi/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -11,10 +11,12 @@
 	/singleton/emote/audible/lizard_scream,
 	/singleton/emote/audible/lizard_roar,
 	/singleton/emote/audible/lizard_rumble,
-	/singleton/emote/audible/lizard_threat
+	/singleton/emote/audible/lizard_threat,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
-/datum/species/unathi/yeosa/default_emotes = list(
+/singleton/species/unathi/yeosa/default_emotes = list(
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -27,7 +29,9 @@
 	/singleton/emote/audible/lizard_scream,
 	/singleton/emote/audible/lizard_roar,
 	/singleton/emote/audible/lizard_rumble,
-	/singleton/emote/audible/lizard_threat
+	/singleton/emote/audible/lizard_threat,
+	/singleton/emote/audible/lizard_thump,
+	/singleton/emote/audible/lizard_hiss
 )
 
 /singleton/emote/audible/lizard_bellow
@@ -76,32 +80,80 @@
 		'mods/emote_panel/sound/unathi/threat2.ogg'
 	)
 
+/singleton/species/unathi/proc/add_unathi_verbs()
+	var/list/unathi_verbs = list(
+		/mob/living/carbon/human/unathi/verb/swish,
+		/mob/living/carbon/human/unathi/verb/wag,
+		/mob/living/carbon/human/unathi/verb/qwag,
+		/mob/living/carbon/human/unathi/verb/swag,
+		/mob/living/carbon/human/unathi/verb/lizard_thump,
+		/mob/living/carbon/human/unathi/verb/lizard_bellow,
+		/mob/living/carbon/human/unathi/verb/lizard_squeal,
+		/mob/living/carbon/human/unathi/verb/lizard_roar,
+		/mob/living/carbon/human/unathi/verb/lizard_rumble,
+		/mob/living/carbon/human/unathi/verb/lizard_threat,
+		/mob/living/carbon/human/unathi/verb/lizard_hiss
+	)
+	LAZYADD(inherent_verbs, unathi_verbs)
+
+/singleton/species/unathi/New()
+	. = ..()
+	add_unathi_verbs()
+
 /mob/living/carbon/human/unathi/verb/lizard_bellow()
-	set name = "Рычать"
+	set name = "X - Рычать"
 	set category = "Emote"
 	emote("bellow")
 
 /mob/living/carbon/human/unathi/verb/lizard_squeal()
-	set name = "Визжать"
+	set name = "X - Визжать"
 	set category = "Emote"
 	emote("squeal")
 
-/mob/living/carbon/human/unathi/verb/lizard_scream()
-	set name = "Кричать"
-	set category = "Emote"
-	emote("scream")
-
 /mob/living/carbon/human/unathi/verb/lizard_roar()
-	set name = "Издать рёв"
+	set name = "X - Издать рёв"
 	set category = "Emote"
 	emote("roar")
 
 /mob/living/carbon/human/unathi/verb/lizard_rumble()
-	set name = "Урчать"
+	set name = "X - Урчать"
 	set category = "Emote"
 	emote("rumble")
 
 /mob/living/carbon/human/unathi/verb/lizard_threat()
-	set name = "Угрожающе рычать"
+	set name = "X - Угрожающе рычать"
 	set category = "Emote"
 	emote("threat")
+
+/mob/living/carbon/human/unathi/verb/lizard_hiss()
+	set name = "X - Шипеть"
+	set category = "Emote"
+	emote("lhiss")
+
+/mob/living/carbon/human/unathi/verb/swish()
+	set name = "X - Взмахнуть хвостом"
+	set category = "Emote"
+	emote("swish")
+
+
+/mob/living/carbon/human/unathi/verb/wag()
+	set name = "X - Вилять хвостом"
+	set category = "Emote"
+	emote("wag")
+
+
+/mob/living/carbon/human/unathi/verb/qwag()
+	set name = "X - Быстро вилять хвостом"
+	set category = "Emote"
+	emote("qwag")
+
+
+/mob/living/carbon/human/unathi/verb/swag()
+	set name = "X - Остановить хвост"
+	set category = "Emote"
+	emote("swag")
+
+/mob/living/carbon/human/unathi/verb/lizard_thump()
+	set name = "X - Ударить хвостом"
+	set category = "Emote"
+	emote("thump")

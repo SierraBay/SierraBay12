@@ -9,37 +9,21 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	var/list/viewers // Weakrefs to mobs in direct-view mode.
 	var/extra_view = 0 // how much the view is increased by when the mob is in overmap mode.
 
-// A late init operation called in SSshuttle, used to attach the thing to the right ship.
-/obj/machinery/computer/ship/proc/attempt_hook_up(obj/overmap/visitable/ship/sector)
-	if(!istype(sector))
-		return
-	if(sector.check_ownership(src))
-		linked = sector
-		LAZYADD(linked.consoles, src)
-		return 1
-
 /obj/machinery/computer/ship/Destroy()
 	if(linked)
 		LAZYREMOVE(linked.consoles, src)
 	. = ..()
 
 /obj/machinery/computer/ship/proc/sync_linked()
-	var/obj/overmap/visitable/ship/sector = map_sectors["[z]"]
-	if(!sector)
-		return
-	return attempt_hook_up_recursive(sector)
-
-/obj/machinery/computer/ship/proc/attempt_hook_up_recursive(obj/overmap/visitable/ship/sector)
-	if(attempt_hook_up(sector))
-		return sector
-	for(var/obj/overmap/visitable/ship/candidate in sector)
-		if((. = .(candidate)))
-			return
+	linked = get_owning_sector_recursive(src)
+	if (linked && istype(linked))
+		LAZYADD(linked.consoles, src)
+	return linked
 
 /obj/machinery/computer/ship/proc/display_reconnect_dialog(mob/user, flavor)
 	if (!reconnect_popup)
 		reconnect_popup = new (user, "[src]", "[src]")
-		reconnect_popup.set_content("<center><strong>[SPAN_COLOR("red", "Error</strong>")]<br>Unable to connect to [flavor].<br><a href='?src=\ref[src];sync=1'>Reconnect</a></center>")
+		reconnect_popup.set_content("<center><strong>[SPAN_COLOR("red", "Error</strong>")]<br>Unable to connect to [flavor].<br><a href='byond://?src=\ref[src];sync=1'>Reconnect</a></center>")
 	reconnect_popup.open()
 
 /obj/machinery/computer/ship/interface_interact(mob/user)
@@ -126,5 +110,5 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		for(var/weakref/W in viewers)
 			var/M = W.resolve()
 			if (M)
-				unlook(M)
+				invoke_async(PROC_REF(unlook), M)
 	. = ..()

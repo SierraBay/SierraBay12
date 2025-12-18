@@ -146,10 +146,10 @@
 /area/map_template/deepmaint)
 "ud" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/reagent_containers/food/snacks/slice/meatpizza,
-/obj/item/reagent_containers/food/snacks/slice/meatpizza,
-/obj/item/reagent_containers/food/snacks/slice/meatpizza,
-/obj/item/reagent_containers/food/snacks/slice/meatpizza,
+/obj/item/reagent_containers/food/snacks/slice/pizza/meat,
+/obj/item/reagent_containers/food/snacks/slice/pizza/meat,
+/obj/item/reagent_containers/food/snacks/slice/pizza/meat,
+/obj/item/reagent_containers/food/snacks/slice/pizza/meat,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/deepmaint)
 "uK" = (
@@ -182,6 +182,7 @@
 "yb" = (
 /obj/structure/table/marble,
 /obj/machinery/fabricator/micro/bartender,
+/obj/item/storage/box/microlathe_designs,
 /obj/item/stack/material/plastic/ten,
 /obj/item/stack/material/glass/ten,
 /obj/item/stack/material/steel/ten,

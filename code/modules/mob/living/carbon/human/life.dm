@@ -328,6 +328,7 @@
 	return !failed_last_breath
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
+	. = ..()
 	if(!environment || (MUTATION_SPACERES in mutations))
 		return
 
@@ -427,6 +428,10 @@
 		for(var/obj/item/organ/external/O in parts)
 			if(QDELETED(O) || !(O.owner == src))
 				continue
+			//[SIERRA-ADD] - IPC_MODS
+			if(BP_IS_ROBOTIC(O))
+				continue
+			//[/SIERRA-ADD] - IPC_MODS
 			if(O.damage + (LOW_PRESSURE_DAMAGE) < O.min_broken_damage) //vacuum does not break bones
 				O.take_external_damage(brute = LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 		if(getOxyLoss() < 55) // 11 OxyLoss per 4 ticks when wearing internals;    unconsciousness in 16 ticks, roughly half a minute
@@ -964,9 +969,17 @@
 
 
 /mob/living/carbon/human/proc/handle_hud_list()
+	var/foundVirus = 0 //SIERRA-ADD
 	if (GET_BIT(hud_updateflag, HEALTH_HUD) && hud_list[HEALTH_HUD])
 		var/image/holder = hud_list[HEALTH_HUD]
-		if(stat == DEAD || status_flags & FAKEDEATH)
+//SIERRA-ADD VIRUSOLOGY
+		for (var/ID in virus2)
+			if (ID in virusDB)
+				foundVirus = 1
+				break
+
+//SIERRA-ADD
+		if(is_dead())
 			holder.icon_state = "0" 	// X_X
 		else if(is_asystole())
 			holder.icon_state = "flatline"
@@ -976,8 +989,12 @@
 
 	if (GET_BIT(hud_updateflag, LIFE_HUD) && hud_list[LIFE_HUD])
 		var/image/holder = hud_list[LIFE_HUD]
-		if(stat == DEAD || status_flags & FAKEDEATH)
+		if(is_dead())
 			holder.icon_state = "huddead"
+//SIERRA-ADD VIRUSOLOGY
+		else if(foundVirus)
+			holder.icon_state = "hudill"
+//SIERRA-ADD
 		else
 			holder.icon_state = "hudhealthy"
 		hud_list[LIFE_HUD] = holder
@@ -997,10 +1014,14 @@
 			holder.icon_state = "hudhealthy"
 
 		var/image/holder2 = hud_list[STATUS_HUD_OOC]
-		if(stat == DEAD)
+		if(is_real_dead())
 			holder2.icon_state = "huddead"
 		else if(has_brain_worms())
 			holder2.icon_state = "hudbrainworm"
+//SIERRA-ADD VIRUSOLOGY
+		else if(foundVirus)
+			holder.icon_state = "hudill"
+//SIERRA-ADD
 		else
 			holder2.icon_state = "hudhealthy"
 
@@ -1120,12 +1141,12 @@
 	..()
 	adjust_stamina(100)
 	UpdateAppearance()
-
+/* Ушло в оверрайд //[SIERRA-REMOVE] fix FOV for consoles
 /mob/living/carbon/human/reset_view(atom/A)
 	..()
 	if(machine_visual && machine_visual != A)
 		machine_visual.remove_visual(src)
-
+*/
 /mob/living/carbon/human/handle_vision()
 	if(client)
 		client.screen.Remove(GLOB.global_hud.nvg, GLOB.global_hud.thermal, GLOB.global_hud.meson, GLOB.global_hud.science)

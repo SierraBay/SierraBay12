@@ -8,12 +8,14 @@
 	var/list/resources
 
 	var/thermite = 0
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 	var/dirt = 0
 
 	var/timer_id
+
+	zone_membership_candidate = TRUE
 
 // This is not great.
 /turf/simulated/proc/wet_floor(wet_val = 1, overwrite = FALSE)
@@ -84,10 +86,10 @@
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(istype(S))
 					S.handle_movement(src, MOVING_QUICKLY(H))
-					if(S.track_blood && S.blood_DNA)
+					if(S.blood_transfer_amount && S.blood_DNA)
 						bloodDNA = S.blood_DNA
 						bloodcolor = S.blood_color
-						S.track_blood--
+						S.blood_transfer_amount--
 			else
 				if(H.track_blood && H.feet_blood_DNA)
 					bloodDNA = H.feet_blood_DNA
@@ -143,6 +145,9 @@
 				B.blood_DNA = list()
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+//SIERRA-ADD VIRUSOLOGY
+				B.virus2 = virus_copylist(M.virus2)
+//SIERRA-ADD
 			return 1 //we bloodied the floor
 		blood_splatter(src,M.get_blood(M.vessel),1)
 		return 1 //we bloodied the floor

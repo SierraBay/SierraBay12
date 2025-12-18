@@ -104,7 +104,7 @@ var/global/list/escape_pods_by_name = list()
 /datum/shuttle/autodock/ferry/escape_pod/can_force()
 // [SIERRA-ADD]
 	if (arming_controller && arming_controller.master.emagged)	// inf
-		return (next_location && next_location.is_valid(src) && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
+		return (next_location && !current_location.cannot_depart(src) && moving_status == SHUTTLE_IDLE && !location && arming_controller && arming_controller.armed)	// inf
 	// [/SIERRA-ADD]
 	if (arming_controller.eject_time && world.time < arming_controller.eject_time + 50)
 		return 0	//dont allow force launching until 5 seconds after the arming controller has reached it's countdown
@@ -342,9 +342,9 @@ var/global/list/escape_pods_by_name = list()
 	signal.data = list(
 		"tag" = tag_pump,
 		"sigtype" = "command",
-		"set_power" = 1,	// [SIERRA-ADD], was	"power" = 1,
-		"set_direction" = "release",	// [SIERRA-ADD], was	"direction" = 1,
 		"status" = TRUE,	// [SIERRA-ADD],
+		"set_power" = 1,
+		"set_direction" = 1,
 		"set_external_pressure" = ONE_ATMOSPHERE
 	)
 	post_signal(signal)

@@ -13,7 +13,12 @@
 
 /obj/item/organ/internal/appendix/Process()
 	..()
-	if(inflamed && owner)
+//[SIERRA-EDIT]
+	if(!owner)
+		return
+	owner.immunity = min(owner.immunity + 0.025, owner.immunity_norm)
+	if(inflamed)
+//[SIERRA-EDIT]
 		inflamed++
 		if(prob(5))
 			if(owner.can_feel_pain())
@@ -42,3 +47,19 @@
 				owner.adjustToxLoss(25)
 				removed()
 				qdel(src)
+
+//[SIERRA-ADD]
+/obj/item/organ/internal/appendix/removed(mob/living/user, drop_organ=1, detach=1)
+	if(owner)
+		owner.immunity_norm -= 10
+	..()
+
+/obj/item/organ/internal/appendix/replaced(mob/living/carbon/human/target, obj/item/organ/external/affected)
+	..()
+	if(owner)
+		owner.immunity_norm += 10
+
+/obj/item/organ/internal/appendix/New(mob/living/carbon/holder)
+	..()
+	if(owner)
+		owner.immunity_norm += 10

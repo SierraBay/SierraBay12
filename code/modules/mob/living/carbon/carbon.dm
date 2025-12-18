@@ -30,6 +30,7 @@
 		R.clear_reagents()
 	set_nutrition(400)
 	set_hydration(400)
+	stop_allergy()
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -170,6 +171,7 @@
 
 
 /mob/living/carbon/swap_hand()
+	. = ..()
 	hand = !hand
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
 		if(hand)	//This being 1 means the left hand is in use
@@ -232,9 +234,9 @@
 			if(show_ssd && ssd_check())
 				M.visible_message(SPAN_NOTICE("[M] shakes [src] trying to wake [P.him] up!"), \
 				SPAN_NOTICE("You shake [src], but they do not respond... Maybe they have S.S.D?"))
-			else if(lying || src.sleeping || player_triggered_sleeping)
-				src.player_triggered_sleeping = 0
-				src.sleeping = max(0,src.sleeping - 5)
+			else if(lying || sleeping || player_triggered_sleeping)
+				player_triggered_sleeping = 0
+				AdjustSleeping(-5)
 				M.visible_message(SPAN_NOTICE("[M] shakes [src] trying to wake [P.him] up!"), \
 									SPAN_NOTICE("You shake [src] trying to wake [P.him] up!"))
 			else
@@ -244,6 +246,7 @@
 				else
 					M.visible_message(SPAN_NOTICE("[M] hugs [src] to make [P.him] feel better!"), \
 								SPAN_NOTICE("You hug [src] to make [P.him] feel better!"))
+
 				if(M.fire_stacks >= (src.fire_stacks + 3))
 					src.fire_stacks += 1
 					M.fire_stacks -= 1
@@ -382,10 +385,14 @@
 	if(alert("Are you sure you want to [player_triggered_sleeping ? "wake up?" : "sleep for a while? Use 'sleep' again to wake up"]", "Sleep", "No", "Yes") == "Yes")
 		player_triggered_sleeping = !player_triggered_sleeping
 
-/mob/living/carbon/Bump(atom/movable/AM, yes)
-	if(now_pushing || !yes)
+/mob/living/carbon/Bump(atom/movable/AM, called)
+	if(now_pushing || !called)
 		return
 	..()
+	//[SIERRA-ADD] VIRUSOLOGY
+	if(istype(AM, /mob/living/carbon) && prob(10))
+		src.spread_disease_to(AM, "Contact")
+	//[/SIERRA-ADD] VIRUSOLOGY
 
 /mob/living/carbon/slip(slipped_on, stun_duration = 8)
 	if(!has_gravity())
@@ -429,13 +436,13 @@
 
 /mob/living/carbon/show_inv(mob/user as mob)
 	var/dat = {"
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<BR><B>Head(Mask):</B> <a href='byond://?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <a href='byond://?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
+	<BR><B>Right Hand:</B> <a href='byond://?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Back:</B> <A href='byond://?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !internal) ? " <A href='byond://?src=\ref[src];item=internal'>Set Internal</A>" : ""]
+	<BR>[internal ? "<A href='byond://?src=\ref[src];item=internal'>Remove Internal</A>" : ""]
+	<BR><a href='byond://?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><a href='byond://?src=\ref[user];refresh=1'>Refresh</A>
 	<BR>"}
 	var/datum/browser/popup = new(user, "mob[name]", name, 325, 500)
 	popup.set_content(dat)

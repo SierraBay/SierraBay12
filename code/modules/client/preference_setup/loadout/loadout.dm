@@ -127,13 +127,15 @@ var/global/list/gear_datums = list()
 		fcolor = "#e67300"
 	. += "<table align = 'center' width = 100%>"
 	. += "<tr><td colspan=3><center>"
-	. += "<a href='?src=\ref[src];prev_slot=1'>\<=</a><b>[SPAN_COLOR(fcolor, "\[[pref.gear_slot]\]")] </b><a href='?src=\ref[src];next_slot=1'>=\></a>"
+	. += "<a href='byond://?src=\ref[src];prev_slot=1'>\<=</a><b>[SPAN_COLOR(fcolor, "\[[pref.gear_slot]\]")] </b><a href='byond://?src=\ref[src];next_slot=1'>=\></a>"
 
 	if(config.max_gear_cost < INFINITY)
 		. += "<b>[SPAN_COLOR(fcolor, "[total_cost]/[config.max_gear_cost]")] loadout points spent.</b>"
 
-	. += "<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
-	. += "<a href='?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a></center></td></tr>"
+	. += "<a href='byond://?src=\ref[src];clear_loadout=1'>Clear Loadout</a>"
+	. += "<a href='byond://?src=\ref[src];toggle_hiding=1'>[hide_unavailable_gear ? "Show all" : "Hide unavailable"]</a>"
+	. += "<a href='byond://?src=\ref[src];copy_loadout=1'>Copy Loadout</a>"
+	. += "</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><b>"
 	var/firstcat = 1
@@ -155,9 +157,9 @@ var/global/list/gear_datums = list()
 			. += " [SPAN_CLASS("linkOn", "[category] - [category_cost]")] "
 		else
 			if(category_cost)
-				. += " <a href='?src=\ref[src];select_category=[category]'>[SPAN_COLOR("#e67300", "[category] - [category_cost]")]</a> "
+				. += " <a href='byond://?src=\ref[src];select_category=[category]'>[SPAN_COLOR("#e67300", "[category] - [category_cost]")]</a> "
 			else
-				. += " <a href='?src=\ref[src];select_category=[category]'>[category] - 0</a> "
+				. += " <a href='byond://?src=\ref[src];select_category=[category]'>[category] - 0</a> "
 
 	. += "</b></center></td></tr>"
 
@@ -191,7 +193,7 @@ var/global/list/gear_datums = list()
 		entry += "<tr style='vertical-align:top;'><td><a style='white-space:normal;' class='[gear_link_class]' href='?src=\ref[src];toggle_gear=\ref[G]'>[G.display_name]</a></td>" //inf, was: entry += "<tr style='vertical-align:top;'><td width=25%><a style='white-space:normal;' [ticked ? "class='linkOn' " : ""]href='?src=\ref[src];toggle_gear=\ref[G]'>[G.display_name]</a></td>"
 		// [/SIERRA-EDIT]
 		entry += "<td width = 10% style='vertical-align:top'>[G.cost]</td>"
-		entry += "<td>[FONT_NORMAL(G.get_description(get_gear_metadata(G,1)))]"
+		entry += "<td>[FONT_NORMAL(G.get_description(get_gear_metadata(G,1), ticked))]"
 		var/allowed = 1
 		if(allowed && G.allowed_roles)
 			var/good_job = 0
@@ -250,6 +252,40 @@ var/global/list/gear_datums = list()
 
 			entry += "[english_list(skill_checks)]</i>"
 
+		if (allowed && G.allowed_traits)
+			var/singleton/species/picked_species = GLOB.species_by_name[pref.species]
+			var/list/species_traits = picked_species.traits
+			var/trait_checks = list()
+			entry += "<br><i>"
+			for (var/trait_type in G.allowed_traits)
+				var/singleton/trait/trait = GET_SINGLETON(trait_type)
+				var/trait_entry = "[trait.name]"
+				if (LAZYISIN(pref.picked_traits, trait_type) || LAZYISIN(species_traits, trait_type))
+					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
+				else
+					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
+					allowed = FALSE
+				trait_checks += trait_entry
+			entry += "[english_list(trait_checks)]</i>"
+
+		// [SIERRA-ADD] - CHARACTER-TRAITS
+		if (allowed && LAZYLEN(G.allowed_mod_traits))
+			var/list/trait_checks_mod = list()
+			entry += "<br><i>"
+			for (var/trait_name in G.allowed_mod_traits)
+				var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
+				if (!T)
+					continue
+				var/trait_entry = "[T.name]"
+				if (LAZYISIN(pref.mod_traits, T.name))
+					trait_entry = SPAN_COLOR("#55cc55", "[trait_entry]")
+				else
+					trait_entry = SPAN_COLOR("#cc5555", "[trait_entry]")
+					allowed = FALSE
+				trait_checks_mod += trait_entry
+			entry += "[english_list(trait_checks_mod)]</i>"
+		// [/SIERRA-ADD]
+
 		// [SIERRA-ADD] - LOADOUT-ITEMS
 		if(allowed && G.allowed_factions)
 			var/good_background = 0
@@ -280,7 +316,7 @@ var/global/list/gear_datums = list()
 			for(var/datum/gear_tweak/tweak in G.gear_tweaks)
 				var/contents = tweak.get_contents(get_tweak_metadata(G, tweak))
 				if(contents)
-					entry += " <a href='?src=\ref[src];gear=\ref[G];tweak=\ref[tweak]'>[contents]</a>"
+					entry += " <a href='byond://?src=\ref[src];gear=\ref[G];tweak=\ref[tweak]'>[contents]</a>"
 			entry += "</td></tr>"
 		if(!hide_unavailable_gear || allowed || ticked)
 			. += entry
@@ -351,6 +387,20 @@ var/global/list/gear_datums = list()
 	if(href_list["toggle_hiding"])
 		hide_unavailable_gear = !hide_unavailable_gear
 		return TOPIC_REFRESH
+
+	if (href_list["copy_loadout"])
+		var/list/options = list()
+		for (var/count = 1 to config.loadout_slots)
+			if (count == pref.gear_slot)
+				continue
+			options += count
+		var/selected = input(user, "Select a loadout slot to copy from", "Copy Loadout") as null | anything in options
+		if (!selected)
+			return TOPIC_NOACTION
+		var/list/selected_list = pref.gear_list[selected]
+		pref.gear_list[pref.gear_slot] = selected_list.Copy()
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+
 	return ..()
 
 /datum/gear
@@ -362,7 +412,12 @@ var/global/list/gear_datums = list()
 	var/list/allowed_roles //Roles that can spawn with this item.
 	var/list/allowed_branches //Service branches that can spawn with it.
 	var/list/allowed_skills //Skills required to spawn with this item.
+	///Traits required to spawn with this item.
+	var/list/allowed_traits
 	var/whitelisted        //Term to check the whitelist for..
+	// [SIERRA-ADD] - CHARACTER-TRAITS
+	var/list/allowed_mod_traits
+	// [/SIERRA-ADD]
 	var/sort_category = "General"
 	var/flags              //Special tweaks in New
 	var/custom_setup_proc  //Special tweak in New
@@ -387,10 +442,10 @@ var/global/list/gear_datums = list()
 	if(custom_setup_proc)
 		gear_tweaks += new/datum/gear_tweak/custom_setup(custom_setup_proc)
 
-/datum/gear/proc/get_description(metadata)
+/datum/gear/proc/get_description(metadata, include_extended_description)
 	. = description
 	for(var/datum/gear_tweak/gt in gear_tweaks)
-		. = gt.tweak_description(., metadata["[gt]"])
+		. = gt.tweak_description(., metadata["[gt]"], include_extended_description && (flags & GEAR_HAS_EXTENDED_DESCRIPTION))
 
 /datum/gear_data
 	var/path
@@ -401,6 +456,25 @@ var/global/list/gear_datums = list()
 	src.location = location
 
 /datum/gear/proc/spawn_item(user, location, metadata)
+	// [SIERRA-ADD] - CHARACTER-TRAITS
+	if(LAZYLEN(allowed_mod_traits))
+		var/mob/M = user
+		var/list/mod_traits = null
+		if(istype(M))
+			var/client/C = M.client
+			if(C && C.prefs)
+				mod_traits = C.prefs.mod_traits
+		var/ok = TRUE
+		for(var/trait_name in allowed_mod_traits)
+			var/datum/mod_trait/T = GLOB.all_mod_traits[trait_name]
+			if(!mod_traits || !LAZYISIN(mod_traits, T.name))
+				ok = FALSE
+				break
+		if(!ok)
+			if(istype(M))
+				to_chat(M, SPAN_WARNING("У вас нет необходимого трейта для [display_name]."))
+			return null
+	// [/SIERRA-ADD]
 	var/datum/gear_data/gd = new(path, location)
 	for(var/datum/gear_tweak/gt in gear_tweaks)
 		gt.tweak_gear_data(metadata && metadata["[gt]"], gd)
@@ -411,7 +485,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/proc/spawn_on_mob(mob/living/carbon/human/H, metadata)
 	var/obj/item/item = spawn_item(H, H, metadata)
-	if(H.equip_to_slot_if_possible(item, slot, TRYEQUIP_REDRAW | TRYEQUIP_DESTROY | TRYEQUIP_FORCE))
+	if(H.equip_to_slot_if_possible(item, slot, TRYEQUIP_REDRAW | TRYEQUIP_DESTROY | TRYEQUIP_FORCE | TRYEQUIP_INSTANT))
 		. = item
 
 

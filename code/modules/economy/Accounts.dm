@@ -4,6 +4,7 @@
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
+	var/opening_balance = 0
 	var/list/transaction_log = list()
 	var/suspended = 0
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
@@ -21,6 +22,9 @@
 
 /datum/money_account/proc/get_balance()
 	return money
+
+/datum/money_account/proc/get_profit()
+	return money - opening_balance
 
 /datum/money_account/proc/log_msg(msg, machine_id)
 	var/datum/transaction/log/T = new(src, msg, machine_id)
@@ -54,7 +58,7 @@
 	var/datum/transaction/singular/T = new(M, (source_db ? source_db.machine_id : "NTGalaxyNet Terminal #[rand(111,1111)]"), starting_funds, "Account creation")
 	if(!source_db)
 		//set a random date, time and location some time over the past few decades
-		T.date = "[num2text(rand(1, 31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [GLOB.using_map.game_year-rand(8, 18)]"
+		T.date = "[num2text(rand(1, 31))] [pick(GLOB.month_names)], [GLOB.using_map.game_year-rand(8, 18)]"
 		T.time = "[rand(0,24)]:[rand(11,59)]"
 
 		M.account_number = random_id("station_account_number", 111111, 999999)
@@ -88,6 +92,7 @@
 
 	//add the account
 	T.perform()
+	M.opening_balance = M.money
 	all_money_accounts.Add(M)
 
 	return M

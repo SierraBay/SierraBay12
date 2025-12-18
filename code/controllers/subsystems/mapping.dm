@@ -25,6 +25,8 @@ SUBSYSTEM_DEF(mapping)
 	space_ruins_templates = SSmapping.space_ruins_templates
 	exoplanet_ruins_templates = SSmapping.exoplanet_ruins_templates
 	away_sites_templates = SSmapping.away_sites_templates
+	submaps = SSmapping.submaps
+	submap_archetypes = SSmapping.submap_archetypes
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)

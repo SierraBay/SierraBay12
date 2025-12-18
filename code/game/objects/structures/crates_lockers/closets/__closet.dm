@@ -21,6 +21,7 @@
 	var/closet_appearance = /singleton/closet_appearance
 	material = MATERIAL_STEEL
 	breakout_time = 120 SECONDS
+	var/vision_restriction = TINT_HEAVY //[SIERRA-ADD] - FOV fix for closets
 
 	// TODO: Turn these into flags. Skipped it for now because it requires updating 100+ locations...
 	var/broken = FALSE
@@ -177,6 +178,7 @@
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
+			M.set_fullscreen(src.vision_restriction , "closet_vision", /obj/screen/fullscreen/impaired, src.vision_restriction)
 		M.forceMove(src)
 
 /obj/structure/closet/proc/store_structures(stored_units)

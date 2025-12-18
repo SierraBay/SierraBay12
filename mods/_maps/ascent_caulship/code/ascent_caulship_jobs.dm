@@ -5,7 +5,7 @@
 	return
 
 /mob/living/carbon/human/proc/gyne_rename_lineage()
-	set name = "Name Nest-Lineage"
+	set name = "Name Nest-Lineage — Caulship"
 	set category = "IC"
 	set desc = "Rename yourself and your alates."
 
@@ -38,14 +38,14 @@
 					continue
 
 
-				var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/datum/species/mantid, 1000, 9999) : random_id(/datum/species/mantid, 10000, 99999)
+				var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/singleton/species/mantid, 1000, 9999) : random_id(/singleton/species/mantid, 10000, 99999)
 				H.fully_replace_character_name("[new_alate_number] [new_name]")
 				to_chat(H, SPAN_NOTICE("<font size = 3>Your gyne, [real_name], has awakened, and you recall your place in the nest-lineage: <b>[H.real_name]</b>.</font>"))
 
 	verbs -= /mob/living/carbon/human/proc/gyne_rename_lineage
 
 /mob/living/carbon/human/proc/serpentid_namepick()
-	set name = "Choose a name"
+	set name = "Choose a name — Caulship"
 	set category = "IC"
 	set desc = "Rename yourself."
 
@@ -108,15 +108,15 @@
 	if(!cutter.gyne_name)
 		cutter.gyne_name = TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_gyne_name)
 
-/*	if(set_species_on_join)
-		H.set_species(set_species_on_join)*/
+	if(set_species_on_join)
+		H.set_species(set_species_on_join)
 
 	switch(H.species.name)
 		if(SPECIES_MANTID_GYNE)
-			H.real_name = "[random_id(/datum/species/mantid, 1, 99)] [cutter.gyne_name]"
+			H.real_name = "[random_id(/singleton/species/mantid, 1, 99)] [cutter.gyne_name]"
 			H.verbs |= /mob/living/carbon/human/proc/gyne_rename_lineage
 		if(SPECIES_MANTID_ALATE)
-			var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/datum/species/mantid, 1000, 9999) : random_id(/datum/species/mantid, 10000, 99999)
+			var/new_alate_number = is_species_whitelisted(H, SPECIES_MANTID_GYNE) ? random_id(/singleton/species/mantid, 1000, 9999) : random_id(/singleton/species/mantid, 10000, 99999)
 			H.real_name = "[new_alate_number] [cutter.gyne_name]"
 		if(SPECIES_MONARCH_WORKER)
 			H.real_name = "[TYPE_PROC_REF(/singleton/cultural_info/culture/ascent, create_worker_name)]"
@@ -128,6 +128,17 @@
 	if(H.mind)
 		H.mind.name = H.real_name
 	return H
+
+/datum/job/submap/ascent/is_position_available()
+	. = ..()
+	if(. && requires_supervisor)
+		for(var/mob/M in GLOB.player_list)
+			if(!M.client || !M.mind || !M.mind.assigned_job || M.mind.assigned_job.title != requires_supervisor)
+				continue
+			var/datum/job/submap/ascent/ascent_job = M.mind.assigned_job
+			if(istype(ascent_job) && ascent_job.owner == owner)
+				return TRUE
+		return FALSE
 
 /datum/job/submap/ascent/alate
 	title = "Ascent Alate"
@@ -159,7 +170,8 @@
 	supervisors = "the Serpentid Queen and the Gyne"
 	total_positions = 2
 	info = "You are a Monarch Serpentid Worker serving as an attendant to your Queen on this vessel. Serve her however she requires."
-	whitelisted_species = list(SPECIES_MONARCH_WORKER)
+	set_species_on_join = SPECIES_MONARCH_WORKER
+	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_ALATE)
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/worker
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
@@ -172,11 +184,12 @@
 
 /datum/job/submap/ascent/queen
 	title = "Serpentid Queen"
-	supervisors = "the Gyne"	
+	supervisors = "the Gyne"
 	total_positions = 1
 	info = "You are a Monarch Serpentid Queen living on an independant Ascent vessel. Assist the Gyne in her duties and tend to your Workers."
 	outfit_type = /singleton/hierarchy/outfit/job/ascent/queen
-	whitelisted_species = list(SPECIES_MONARCH_QUEEN)
+	set_species_on_join = SPECIES_MONARCH_QUEEN
+	whitelisted_species = list(SPECIES_NABBER, SPECIES_MANTID_GYNE)
 	min_skill = list(SKILL_EVA = SKILL_TRAINED,
 					SKILL_HAULING = SKILL_TRAINED,
 					SKILL_COMBAT = SKILL_TRAINED,

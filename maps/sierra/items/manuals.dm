@@ -113,10 +113,10 @@
 
 /obj/item/folder/nt/rd
 
-/obj/item/folder/envelope/blanks
+/obj/item/folder/envelope/preset/blanks
 	desc = "A thick envelope. The NT logo is stamped in the corner, along with \"TOP SECRET - FOR RESEARCH DIRECTOR'S EYES ONLY\"."
 
-/obj/item/folder/envelope/blanks/Initialize()
+/obj/item/folder/envelope/preset/blanks/Initialize()
 	. = ..()
 	new/obj/item/paper/sierra/blanks(src)
 	new/obj/item/paper/sierra/nuke(src)
@@ -142,10 +142,10 @@
 	<i>This paper has been stamped with the stamp of Central Command.</i>
 	"}
 
-/obj/item/folder/envelope/captain
+/obj/item/folder/envelope/preset/captain
 	desc = "A thick envelope. The NT logo is stamped in the corner, along with \"TOP SECRET - FOR CAPTAIN'S EYES ONLY\"."
 
-/obj/item/folder/envelope/captain/Initialize()
+/obj/item/folder/envelope/preset/captain/Initialize()
 	. = ..()
 	var/memo = {"
 	<tt><center><b><font color='red'>СЕКРЕТНО<br>КОДОВОЕ СЛОВО: АЛЬФА</font></b>
@@ -185,10 +185,10 @@
 	new/obj/item/paper/sierra/blanks(src)
 	new/obj/item/paper/sierra/umbra(src)
 
-/obj/item/folder/envelope/rep
+/obj/item/folder/envelope/preset/rep
 	desc = "A thick envelope. The NT logo is stamped in the corner, along with \"TOP SECRET - FOR INTERNAL AFFAIRS PERSONNEL ONLY\"."
 
-/obj/item/folder/envelope/rep/Initialize()
+/obj/item/folder/envelope/preset/rep/Initialize()
 	. = ..()
 	new/obj/item/paper/sierra/nuke(src)
 	new/obj/item/paper/sierra/blanks(src)
@@ -228,14 +228,14 @@
 	startswith = list(
 		/obj/item/disk/nuclear,
 		/obj/item/pinpointer,
-		/obj/item/folder/envelope/nuke,
+		/obj/item/folder/envelope/preset/nuke,
 		/obj/item/modular_computer/laptop/preset/custom_loadout/cheap
 	)
 
-/obj/item/folder/envelope/nuke
+/obj/item/folder/envelope/preset/nuke
 	desc = "A thick envelope. The NT logo is stamped in the corner, along with \"TOP SECRET - DELTA PROTOCOLS\"."
 
-/obj/item/folder/envelope/nuke/Initialize()
+/obj/item/folder/envelope/preset/nuke/Initialize()
 	. = ..()
 	new/obj/item/paper/sierra/nuke(src)
 

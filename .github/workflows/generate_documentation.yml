@@ -10,14 +10,14 @@ on:
   workflow_dispatch: # allows this workflow to be manually triggered
 
 env:
-  SPACEMAN_DMM_VERSION: suite-1.7.3
+  SPACEMAN_DMM_VERSION: suite-1.11
 
 jobs:
   PreFlight:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
       - name: paths-filter
         uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36
         id: filter
@@ -28,7 +28,7 @@ jobs:
   generate_documentation:
     permissions:
       contents: write # required to push the doc commit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: PreFlight
     if: |
       (needs.PreFlight.outputs.dm == 'true') &&
@@ -37,9 +37,9 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
       - name: Setup Cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: ~/spaceman_dmm/${{ env.SPACEMAN_DMM_VERSION }}
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
@@ -49,7 +49,7 @@ jobs:
         run: |
           ~/dmdoc
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@94f3c658273cf92fb48ef99e5fbc02bd2dc642b2
+        uses: JamesIves/github-pages-deploy-action@4ef313c6a410f0883308623d45510e4a11625465
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages

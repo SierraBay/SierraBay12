@@ -36,7 +36,7 @@
 	..()
 	remove_cloaking_source(species)
 
-	if (istype(H.gloves, /obj/item/clothing/gloves/boxing/hologlove))
+	if (istype(H.gloves, /obj/item/clothing/gloves/boxing) && H.a_intent == I_HURT)
 		H.do_attack_animation(src)
 		var/damage = rand(0, 9)
 		var/hit_zone = resolve_hand_attack(damage, H, H.zone_sel.selecting)
@@ -60,6 +60,11 @@
 			var/armor_block = 100 * get_blocked_ratio(affecting, DAMAGE_BRUTE, damage = damage)
 			apply_effect(4, EFFECT_WEAKEN, armor_block)
 		return
+
+//[SIERRA-ADD] VIRUSOLOGY
+	if(istype(M,/mob/living/carbon))
+		M.spread_disease_to(src, "Contact")
+//[/SIERRA-ADD] VIRUSOLOGY
 
 	for (var/obj/item/grab/G in H)
 		if (G.assailant == H && G.affecting == src)
@@ -199,7 +204,7 @@
 				H.species.disarm_attackhand(H, src)
 	return
 
-/mob/living/carbon/human/attack_generic(mob/user, damage, attack_message, environment_smash, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = EMPTY_BITFIELD)
+/mob/living/carbon/human/attack_generic(mob/user, damage, attack_message, environment_smash, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = FLAGS_OFF)
 
 	if(!damage || !istype(user))
 		return

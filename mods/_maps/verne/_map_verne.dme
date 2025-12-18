@@ -1,0 +1,11 @@
+#ifndef MODPACK_MAP_VERNE
+#define MODPACK_MAP_VERNE
+
+#include "_map_verne.dm"
+#include "code/verne.dm"
+#include "code/verne_areas.dm"
+#include "code/verne_jobs.dm"
+#include "code/verne_radio.dm"
+#include "code/verne_shuttles.dm"
+
+#endif

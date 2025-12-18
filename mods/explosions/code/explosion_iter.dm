@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(explosives)
 	var/vibration = 1
 	if(istype(epicenter, /turf/space))
 		vibration = 0
-		for(var/thing in RANGE_TURFS(epicenter, max_range))
+		for(var/thing as anything in RANGE_TURFS(epicenter, max_range))
 			var/turf/T = thing
 			if (!istype(T, /turf/space))
 		//If there is a nonspace tile within the explosion radius
@@ -145,7 +145,7 @@ SUBSYSTEM_DEF(explosives)
 					//If the person is standing in space, they wont hear
 						//But they may still feel the shaking
 						reception = 0
-						for(var/t_thing in RANGE_TURFS(M, 1))
+						for(var/t_thing as anything in RANGE_TURFS(M, 1))
 							var/turf/T = t_thing
 							if(!istype(T, /turf/space))
 							//If theyre touching the hull or on some extruding part of the station
@@ -177,7 +177,7 @@ SUBSYSTEM_DEF(explosives)
 						//Becuse values higher than those just get really silly
 
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_impact_range > 1)
@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(explosives)
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 
-	for(var/thing in RANGE_TURFS(epicenter, max_range))
+	for(var/thing as anything in RANGE_TURFS(epicenter, max_range))
 		var/turf/T = thing
 		if (!T)
 			continue
@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(explosives)
 #define SEARCH_DIR(dir) \
 	search_direction = dir;\
 	search_turf = get_step(current_turf, search_direction);\
-	if (istype(search_turf, /turf/simulated)) {\
+	if (istype(search_turf, /turf)) {\
 		turf_queue += search_turf;\
 		dir_queue += search_direction;\
 		power_queue += current_power;\
@@ -234,7 +234,7 @@ SUBSYSTEM_DEF(explosives)
 	if(!epicenter)
 		return
 
-	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+	message_admins("Explosion with size ([power]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
 	log_game("Explosion with size ([power]) in area [epicenter.loc.name] ")
 
 	log_debug("iexpl: Beginning discovery phase.")
@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(explosives)
 	var/list/dir_queue = list(NORTH, SOUTH, EAST, WEST)
 	var/list/power_queue = list(power, power, power, power)
 
-	var/turf/simulated/current_turf
+	var/turf/current_turf
 	var/turf/search_turf
 	var/origin_direction
 	var/search_direction
@@ -335,7 +335,7 @@ SUBSYSTEM_DEF(explosives)
 		if (T.type == /turf/space)	// Equality is faster than istype.
 			reception = EXPLFX_NONE
 
-			for (var/turf/simulated/THING in RANGE_TURFS(M, 1))
+			for (var/turf/simulated/THING as anything in RANGE_TURFS(M, 1))
 				reception |= EXPLFX_SHAKE
 				break
 
@@ -382,6 +382,11 @@ SUBSYSTEM_DEF(explosives)
 
 		if ((act_turfs[T] % 10) == 0)
 			CHECK_TICK
+
+	if(epicenter)
+		for(var/obj/item/device/beacon/explosion_watcher/W in explosion_watcher_list)
+			if(get_dist(W, epicenter) < 10)
+				W.react_explosion(epicenter, power)
 
 	explosion_in_progress = FALSE
 

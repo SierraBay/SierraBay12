@@ -107,6 +107,18 @@
 			instances++
 	return instances
 
+/// Returns the elements of list that are of type path. If strict, disallows subtypes
+/proc/list_elements_of_type(list/list, path, strict)
+	RETURN_TYPE(/list)
+	var/list/result = list()
+	for (var/datum/element as anything in list)
+		if (!istype(element, path))
+			continue
+		if (strict && element.type != path)
+			continue
+		result += element
+	return result
+
 //Removes any null entries from the list
 /proc/listclearnulls(list/list)
 	if(istype(list))
@@ -237,13 +249,19 @@ Checks if a list has the same entries and values as an element of big.
 		return len
 	return null
 
-//Pick a random element from the list and remove it from the list.
-/proc/pick_n_take(list/listfrom)
-	if (length(listfrom) > 0)
-		var/picked = pick(listfrom)
-		listfrom -= picked
-		return picked
-	return null
+/// Pick a random element from the list and remove it from the list.
+/proc/pick_n_take(list/list_to_pick)
+	RETURN_TYPE(list_to_pick[_].type)
+
+	var/list_length = length(list_to_pick)
+	if(!list_length)
+		return null
+
+	var/picked_index = rand(1, list_length)
+	var/picked = list_to_pick[picked_index]
+	list_to_pick.Cut(picked_index, picked_index + 1)
+
+	return picked
 
 
 /// Remove and return the last element of the list, or null.
@@ -877,3 +895,28 @@ Checks if a list has the same entries and values as an element of big.
 		map["[entry.name] [index]"] = entry
 	else
 		map[entry.name] = entry
+
+
+/**
+  * Returns a list of filtered types, if any subtype of parent_type (may be a list of types, or single type)
+  * contains the text_filter string. If no text_filter present, all types are returned.
+  */
+/proc/typesof_filtered(parent_type, text_filter)
+	// gather all types of a thing
+	var/list/types
+	if (islist(parent_type))
+		types = list()
+		for (var/path in parent_type)
+			types += typesof(path)
+	else
+		types = typesof(parent_type)
+
+	if (!length(text_filter))
+		return types
+
+	var/list/matches = list()
+	for (var/type in types)
+		if (findtext("[type]", text_filter))
+			matches += type
+
+	return matches

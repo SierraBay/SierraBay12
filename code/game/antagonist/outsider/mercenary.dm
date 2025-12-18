@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(mercs, /datum/antagonist/mercenary, new)
+GLOBAL_TYPED_NEW(mercs, /datum/antagonist/mercenary)
 
 /datum/antagonist/mercenary
 	id = MODE_MERCENARY
@@ -14,7 +14,7 @@ GLOBAL_DATUM_INIT(mercs, /datum/antagonist/mercenary, new)
 	hard_cap = 4
 	hard_cap_round = 8
 	initial_spawn_req = 3
-	initial_spawn_target = 5
+	initial_spawn_target = 3
 	min_player_age = 14
 
 	faction = "mercenary"

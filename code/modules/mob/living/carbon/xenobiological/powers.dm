@@ -18,7 +18,7 @@
 /mob/living/carbon/slime/proc/invalidFeedTarget(mob/living/living)
 	if (!istype(living))
 		return "This subject is incompatible..."
-	if (living.stat == DEAD)
+	if (living.is_dead())
 		return "This subject is dead..."
 	if (!Adjacent(living))
 		return "This subject is too far away..."
@@ -137,7 +137,7 @@
 			maxHealth = 200
 			amount_grown = 0
 			regenerate_icons()
-			SetName(text("[colour] [is_adult ? "adult" : "baby"] slime ([number])"))
+			SetName("[colour] [is_adult ? "adult" : "baby"] slime ([number])")
 		else
 			to_chat(src, SPAN_NOTICE("I am not ready to evolve yet..."))
 	else

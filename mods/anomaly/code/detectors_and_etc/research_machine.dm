@@ -4,6 +4,7 @@
 	icon = 'mods/anomaly/icons/urm.dmi'
 	icon_state = "urm"
 	anchored = TRUE
+	density = TRUE
 	idle_power_usage = 5
 	power_channel = EQUIP
 	var/obj/item/cell/charging = null

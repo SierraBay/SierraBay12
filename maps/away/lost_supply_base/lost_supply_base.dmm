@@ -986,7 +986,6 @@
 /turf/simulated/wall,
 /area/lost_supply_base/common)
 "cw" = (
-/obj/machinery/fabricator/replicator,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "cx" = (
@@ -1011,7 +1010,7 @@
 /area/lost_supply_base/common)
 "cz" = (
 /obj/structure/closet/fridge/meat,
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "cA" = (
@@ -1196,12 +1195,12 @@
 /area/lost_supply_base/common)
 "de" = (
 /obj/structure/table/standard,
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "df" = (
 /obj/structure/table/standard,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "dg" = (
@@ -1314,7 +1313,7 @@
 /turf/simulated/wall,
 /area/lost_supply_base)
 "dx" = (
-/obj/item/material/kitchen/utensil/spoon,
+/obj/item/material/utensil/spoon,
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "dy" = (
@@ -1337,7 +1336,7 @@
 /turf/simulated/floor/tiled,
 /area/lost_supply_base/common)
 "dB" = (
-/obj/item/material/kitchen/utensil/fork,
+/obj/item/material/utensil/fork,
 /obj/structure/bed/chair{
 	dir = 8
 	},

@@ -88,3 +88,43 @@
 
 	visible_message("<span class='notice'>\The [src] attaches \the [O] to \his body!</span>",
 			"<span class='notice'>You attach \the [O] to your body!</span>")
+
+
+
+/obj/screen/fullscreen/no_power
+	icon = 'mods/ipc_mods/icons/glitch.dmi'
+	icon_state = "no_power"
+	layer = BLIND_LAYER
+	scale_to_view = TRUE
+
+/obj/screen/fullscreen/glitch_monitor
+	icon = 'mods/ipc_mods/icons/glitch.dmi'
+	icon_state = "glitch_monitor"
+	layer = BLIND_LAYER
+	scale_to_view = TRUE
+	alpha = 60
+
+/obj/screen/fullscreen/glitchs
+	icon = 'mods/ipc_mods/icons/glitch.dmi'
+	icon_state = "glitch_eye"
+	layer = BLIND_LAYER
+	scale_to_view = TRUE
+
+/obj/screen/fullscreen/glitch_bw
+	icon = 'mods/ipc_mods/icons/glitch.dmi'
+	icon_state = "glitch_bw"
+	layer = BLIND_LAYER
+	scale_to_view = TRUE
+	alpha = 60
+
+/obj/screen/fullscreen/glitch_bw/alpha
+	alpha = 160
+
+/mob/living/carbon/human/emp_act(severity)
+	. = ..()
+	if(isSynthetic())
+		overlay_fullscreen("sensoremp", /obj/screen/fullscreen/glitchs)
+		addtimer(new Callback(src, PROC_REF(clear_emp_act)), 1.5 SECONDS)
+
+/mob/living/carbon/human/proc/clear_emp_act()
+	clear_fullscreen("sensoremp")

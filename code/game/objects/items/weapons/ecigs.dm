@@ -311,3 +311,6 @@
 	reagents.add_reagent(/datum/reagent/tobacco/liquid, 5)
 	reagents.add_reagent(/datum/reagent/water, 10)
 	reagents.add_reagent(/datum/reagent/drink/coffee, 5)
+
+/obj/item/clothing/mask/smokable/ecig/smoke(amount)
+	..(amount * 0.1)

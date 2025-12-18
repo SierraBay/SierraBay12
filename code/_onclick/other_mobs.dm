@@ -12,7 +12,7 @@
  *
  * Returns boolean.
  */
-/atom/proc/attack_generic(mob/user, damage, attack_verb = "hits", wallbreaker = FALSE, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = EMPTY_BITFIELD)
+/atom/proc/attack_generic(mob/user, damage, attack_verb = "hits", wallbreaker = FALSE, damtype = DAMAGE_BRUTE, armorcheck = "melee", dam_flags = FLAGS_OFF)
 	if (damage && get_max_health())
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		user.do_attack_animation(src)
@@ -23,7 +23,7 @@
 				SPAN_WARNING("You bonk \the [src] harmlessly!")
 			)
 			return
-		var/damage_flags = EMPTY_BITFIELD
+		var/damage_flags = FLAGS_OFF
 		if (wallbreaker)
 			SET_FLAGS(damage_flags, DAMAGE_FLAG_TURF_BREAKER)
 		playsound(src, damage_hitsound, 75, TRUE)
@@ -45,7 +45,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, use_in_world_flag)
 
 	if(!..())
 		return
@@ -57,7 +57,10 @@
 	if(istype(G) && G.Touch(A,1))
 		return
 
-	A.attack_hand(src)
+	if (use_in_world_flag)
+		A.use_in_world(src)
+	else
+		A.attack_hand(src)
 
 
 /**
@@ -69,6 +72,14 @@
 /atom/proc/attack_hand(mob/user)
 	return
 
+/**
+ * Called when the atom is clicked on by a mob attempting to interact with it in the world.
+ *
+ * **Parameters**:
+ * - `user` - The mob that clicked on the atom.
+ */
+/atom/proc/use_in_world(mob/user)
+	attack_hand(user)
 
 /**
  * Called when a mob attempts to use an empty hand on itself.

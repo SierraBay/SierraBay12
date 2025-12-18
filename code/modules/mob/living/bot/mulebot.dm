@@ -78,19 +78,19 @@
 	. += "<br>Current Load: [load ? load.name : "<i>none</i>"]"
 
 /mob/living/bot/mulebot/GetInteractPanel()
-	. += "<a href='?src=\ref[src];command=stop'>Stop</a>"
-	. += "<br><a href='?src=\ref[src];command=go'>Proceed</a>"
-	. += "<br><a href='?src=\ref[src];command=home'>Return to home</a>"
-	. += "<br><a href='?src=\ref[src];command=destination'>Set destination</a>"
-	. += "<br><a href='?src=\ref[src];command=sethome'>Set home</a>"
-	. += "<br><a href='?src=\ref[src];command=autoret'>Toggle auto return home</a> ([auto_return ? "On" : "Off"])"
-	. += "<br><a href='?src=\ref[src];command=cargotypes'>Toggle non-standard cargo</a> ([crates_only ? "Off" : "On"])"
+	. += "<a href='byond://?src=\ref[src];command=stop'>Stop</a>"
+	. += "<br><a href='byond://?src=\ref[src];command=go'>Proceed</a>"
+	. += "<br><a href='byond://?src=\ref[src];command=home'>Return to home</a>"
+	. += "<br><a href='byond://?src=\ref[src];command=destination'>Set destination</a>"
+	. += "<br><a href='byond://?src=\ref[src];command=sethome'>Set home</a>"
+	. += "<br><a href='byond://?src=\ref[src];command=autoret'>Toggle auto return home</a> ([auto_return ? "On" : "Off"])"
+	. += "<br><a href='byond://?src=\ref[src];command=cargotypes'>Toggle non-standard cargo</a> ([crates_only ? "Off" : "On"])"
 
 	if(load)
-		. += "<br><a href='?src=\ref[src];command=unload'>Unload now</a>"
+		. += "<br><a href='byond://?src=\ref[src];command=unload'>Unload now</a>"
 
 /mob/living/bot/mulebot/GetInteractMaintenance()
-	. = "<a href='?src=\ref[src];command=safety'>Toggle safety</a> ([safety ? "On" : "Off - DANGER"])"
+	. = "<a href='byond://?src=\ref[src];command=safety'>Toggle safety</a> ([safety ? "On" : "Off - DANGER"])"
 
 /mob/living/bot/mulebot/ProcessCommand(mob/user, command, href_list)
 	..()
@@ -203,7 +203,7 @@
 	if(T == src.loc)
 		unload(dir)
 
-/mob/living/bot/mulebot/Bump(mob/living/carbon/human/M)
+/mob/living/bot/mulebot/Bump(mob/living/carbon/human/M, called)
 	if(!safety && istype(M))
 		visible_message(SPAN_WARNING("[src] knocks over [M]!"))
 		M.Stun(8)

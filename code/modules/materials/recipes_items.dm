@@ -47,20 +47,20 @@
 
 /datum/stack_recipe/fork
 	title = "fork"
-	result_type = /obj/item/material/kitchen/utensil/fork/plastic
+	result_type = /obj/item/material/utensil/fork/plastic
 	on_floor = 1
 	send_material_data = 1
 
 /datum/stack_recipe/knife
 	title = "table knife"
-	result_type = /obj/item/material/knife/table
+	result_type = /obj/item/material/utensil/knife
 	on_floor = 1
 	difficulty = 2
 	send_material_data = 1
 
 /datum/stack_recipe/spoon
 	title = "spoon"
-	result_type = /obj/item/material/kitchen/utensil/spoon/plastic
+	result_type = /obj/item/material/utensil/spoon/plastic
 	on_floor = 1
 	send_material_data = 1
 

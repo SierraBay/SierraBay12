@@ -15,7 +15,7 @@
 					to_chat(M, SPAN_SUBTLE("<b>\The [user]</b> looks at \the [A]."))
 	var/distance = INFINITY
 	var/is_adjacent = FALSE
-	if (isghost(user) || user.stat == DEAD)
+	if (isghost(user) || user.is_real_dead())
 		distance = 0
 		is_adjacent = TRUE
 	else

@@ -1,4 +1,4 @@
-/datum/species/nabber
+/singleton/species/nabber
 	name = SPECIES_NABBER
 	name_plural = "giant armoured serpentids"
 	description = "A species of large invertebrates who, after being discovered by a \
@@ -158,7 +158,7 @@
 
 	traits = list(/singleton/trait/general/serpentid_adapted = TRAIT_LEVEL_EXISTS)
 
-/datum/species/nabber/New()
+/singleton/species/nabber/New()
 	equip_adjust = list(
 		slot_head_str =    list("[NORTH]" = list("x" = 0, "y" = 7),  "[EAST]" = list("x" = 0, "y" = 8),  "[SOUTH]" = list("x" = 0, "y" = 8),  "[WEST]" = list("x" = 0, "y" = 8)),
 		slot_back_str =    list("[NORTH]" = list("x" = 0, "y" = 7),  "[EAST]" = list("x" = 0, "y" = 8),  "[SOUTH]" = list("x" = 0, "y" = 8),  "[WEST]" = list("x" = 0, "y" = 8)),
@@ -167,10 +167,10 @@
 	)
 	..()
 
-/datum/species/nabber/get_blood_name()
+/singleton/species/nabber/get_blood_name()
 	return "haemolymph"
 
-/datum/species/nabber/can_overcome_gravity(mob/living/carbon/human/H)
+/singleton/species/nabber/can_overcome_gravity(mob/living/carbon/human/H)
 	var/datum/gas_mixture/mixture = H.loc.return_air()
 
 	if(mixture)
@@ -183,13 +183,13 @@
 
 	return FALSE
 
-/datum/species/nabber/handle_environment_special(mob/living/carbon/human/H)
+/singleton/species/nabber/handle_environment_special(mob/living/carbon/human/H)
 	if(!H.on_fire && H.fire_stacks < 2)
 		H.fire_stacks += 0.2
 	return
 
 // Nabbers will only fall when there isn't enough air pressure for them to keep themselves aloft.
-/datum/species/nabber/can_fall(mob/living/carbon/human/H)
+/singleton/species/nabber/can_fall(mob/living/carbon/human/H)
 	var/datum/gas_mixture/mixture = H.loc.return_air()
 
 	//nabbers should not be trying to break their fall on stairs.
@@ -205,7 +205,7 @@
 	return TRUE
 
 // Even when nabbers do fall, if there's enough air pressure they won't hurt themselves.
-/datum/species/nabber/handle_fall_special(mob/living/carbon/human/H, turf/landing)
+/singleton/species/nabber/handle_fall_special(mob/living/carbon/human/H, turf/landing)
 
 	var/datum/gas_mixture/mixture = H.loc.return_air()
 
@@ -229,13 +229,13 @@
 	return FALSE
 
 
-/datum/species/nabber/can_shred(mob/living/carbon/human/H, ignore_intent, ignore_antag)
+/singleton/species/nabber/can_shred(mob/living/carbon/human/H, ignore_intent, ignore_antag)
 	if(!H.handcuffed || H.buckled)
 		return ..(H, ignore_intent, TRUE)
 	else
 		return 0
 
-/datum/species/nabber/handle_movement_delay_special(mob/living/carbon/human/H)
+/singleton/species/nabber/handle_movement_delay_special(mob/living/carbon/human/H)
 	var/tally = 0
 
 	H.remove_cloaking_source(src)
@@ -258,7 +258,7 @@
 	affecting.visible_message(SPAN_DANGER("[assailant]'s spikes dig in painfully!"))
 	affecting.Stun(10)
 
-/datum/species/nabber/update_skin(mob/living/carbon/human/H)
+/singleton/species/nabber/update_skin(mob/living/carbon/human/H)
 
 	if(H.stat)
 		H.skin_state = SKIN_NORMAL
@@ -293,7 +293,7 @@
 			return(threat_image)
 	return
 
-/datum/species/nabber/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
+/singleton/species/nabber/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
 	if(attacker.pulling_punches || target.lying || attacker == target)
 		return ..(attacker, target)
 	if(world.time < attacker.last_attack + 20)
@@ -310,21 +310,21 @@
 	if(prob(50))
 		target.set_dir(GLOB.reverse_dir[target.dir])
 
-/datum/species/nabber/get_additional_examine_text(mob/living/carbon/human/H)
+/singleton/species/nabber/get_additional_examine_text(mob/living/carbon/human/H)
 	var/datum/pronouns/P = H.choose_from_pronouns()
 	if(H.pulling_punches)
 		return "\n[P.His] manipulation arms are out and [P.he] looks ready to use complex items."
 	else
 		return "\n[SPAN_WARNING("[P.His] deadly upper arms are raised and [P.he] looks ready to attack!")]"
 
-/datum/species/nabber/handle_post_spawn(mob/living/carbon/human/H)
+/singleton/species/nabber/handle_post_spawn(mob/living/carbon/human/H)
 	..()
 	return H.pulling_punches = TRUE
 
-/datum/species/nabber/has_fine_manipulation(mob/living/carbon/human/H)
+/singleton/species/nabber/has_fine_manipulation(mob/living/carbon/human/H)
 	return (..() && (H && H.pulling_punches))
 
-/datum/species/nabber/attempt_grab(mob/living/carbon/human/grabber, mob/living/target)
+/singleton/species/nabber/attempt_grab(mob/living/carbon/human/grabber, mob/living/target)
 	if(grabber.pulling_punches)
 		return ..()
 	if(grabber == target)
@@ -355,7 +355,7 @@
 	else
 		grabber.visible_message(SPAN_DANGER("\The [grabber] suddenly lunges out, almost grabbing \the [target]!"))
 
-/datum/species/nabber/toggle_stance(mob/living/carbon/human/H)
+/singleton/species/nabber/toggle_stance(mob/living/carbon/human/H)
 	if(H.incapacitated())
 		return FALSE
 	var/datum/pronouns/P = H.choose_from_pronouns()
@@ -370,7 +370,7 @@
 		to_chat(H, SPAN_NOTICE("You stop adjusting your arms and don't switch between them."))
 	return TRUE
 
-/datum/species/nabber/proc/arm_swap(mob/living/carbon/human/H, forced)
+/singleton/species/nabber/proc/arm_swap(mob/living/carbon/human/H, forced)
 	for (var/obj/item/item as anything in H.GetAllHeld())
 		H.unEquip(item)
 	var/hidden = H.is_cloaked()
@@ -395,11 +395,11 @@
 			H.visible_message(SPAN_WARNING("[H] tenses as [P.he] brings [P.his] smaller arms in close to [P.his] body. [P.His] two massive spiked arms reach \
 			out. [P.He] looks ready to attack."))
 
-/datum/species/nabber/check_background(datum/job/job, datum/preferences/prefs)
+/singleton/species/nabber/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/culture/nabber/grade = SSculture.get_culture(prefs.cultural_info[TAG_CULTURE])
 	. = istype(grade) ? (job.type in grade.valid_jobs) : ..()
 
-/datum/species/nabber/skills_from_age(age)	//Converts an age into a skill point allocation modifier. Can be used to give skill point bonuses/penalities not depending on job.
+/singleton/species/nabber/skills_from_age(age)	//Converts an age into a skill point allocation modifier. Can be used to give skill point bonuses/penalities not depending on job.
 	switch(age)
 		if(0 to 18) 	. = 8
 		if(19 to 27) 	. = 2

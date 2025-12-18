@@ -127,13 +127,13 @@
 		/obj/item/device/scanner/plant,
 		/obj/item/storage/plants,
 		/obj/item/robot_harvester,
-		/obj/item/material/kitchen/rollingpin,
+		/obj/item/material/rollingpin,
 		/obj/item/material/knife/kitchen,
 		/obj/item/crowbar,
 		/obj/item/rsf,
 		/obj/item/reagent_containers/dropper/industrial,
 		/obj/item/flame/lighter/zippo,
-		/obj/item/tray/robotray,
+		/obj/item/reagent_containers/cooking_container/tray/robotray,
 		/obj/item/reagent_containers/borghypo/service,
 		/obj/item/device/flash
 	)
@@ -291,6 +291,7 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/gripper/chemistry,
 		/obj/item/stack/nanopaste,
+		/obj/item/storage/part_replacer,
 		/obj/item/device/flash
 	)
 

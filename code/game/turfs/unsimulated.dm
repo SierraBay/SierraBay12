@@ -1,6 +1,6 @@
 /turf/unsimulated
 	name = "command"
-	initial_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
+	initial_gas = GAS_STANDARD_AIRMIX
 	turf_flags = TURF_DISALLOW_BLOB
 
 // the new Diona Death Prevention Feature: gives an average amount of lumination

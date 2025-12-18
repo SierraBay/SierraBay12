@@ -144,16 +144,23 @@
 	anchored = TRUE
 
 	if(click_parameters)
+		var/offset_x = 16
+		var/offset_y = 16
+		if (stuck.center_of_mass)
+			var/list/center = cached_key_number_decode(stuck.center_of_mass)
+			offset_x = center["x"]
+			offset_y = center["y"]
 		if(click_parameters["icon-x"])
-			pixel_x = text2num(click_parameters["icon-x"]) - 16
+			pixel_x = text2num(click_parameters["icon-x"]) - offset_x
 			if(dir_offset & EAST)
 				pixel_x += 32
 			else if(dir_offset & WEST)
 				pixel_x -= 32
 		if(click_parameters["icon-y"])
-			pixel_y = text2num(click_parameters["icon-y"]) - 16
+			pixel_y = text2num(click_parameters["icon-y"]) - offset_y
 			if(dir_offset & NORTH)
 				pixel_y += 32
 			else if(dir_offset & SOUTH)
 				pixel_y -= 32
+		pixel_z = 0
 	return TRUE

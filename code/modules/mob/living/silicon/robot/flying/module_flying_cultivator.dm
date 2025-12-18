@@ -2,8 +2,8 @@
 	name = "cultivator drone module"
 	display_name = "Cultivator"
 	channels = list(
-		"Science" = TRUE,
-		"Service" = TRUE
+		"Service" = TRUE,
+		"Science" = TRUE
 	)
 	sprites = list("Drone" = "drone-hydro")
 

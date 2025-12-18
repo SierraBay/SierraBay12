@@ -19,11 +19,11 @@
 "}
 
 
-/obj/item/folder/envelope/ndaorder
+/obj/item/folder/envelope/preset/ndaorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR BRIDGE EYES ONLY.'"
 
 
-/obj/item/folder/envelope/ndaorder/Initialize()
+/obj/item/folder/envelope/preset/ndaorder/Initialize()
 	. = ..()
 	new /obj/item/paper/ndaorder (src)
 
@@ -53,11 +53,11 @@
 "}
 
 
-/obj/item/folder/envelope/cmoorder
+/obj/item/folder/envelope/preset/cmoorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CMO EYES.'"
 
 
-/obj/item/folder/envelope/cmoorder/Initialize()
+/obj/item/folder/envelope/preset/cmoorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cmoorder (src)
 
@@ -87,11 +87,11 @@
 "}
 
 
-/obj/item/folder/envelope/cosorder
+/obj/item/folder/envelope/preset/cosorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR COS EYES.'"
 
 
-/obj/item/folder/envelope/cosorder/Initialize()
+/obj/item/folder/envelope/preset/cosorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cosorder (src)
 
@@ -110,7 +110,7 @@
 <p>3. Ensure to keep a check on your subordinates. The security crew is essential to the operations of the vessel. Fleet quick reaction forces will be on stand-by in case extra equipment is required.</p>
 <p>4. In case of extreme breaches of the SCUJ (Sol Code of Uniform Justice), field court martials are <strong>henceforth encouraged</strong>. Permanant brigging and transfer of uniformed personnel may not be possible at all times.</p>
 <p>5. Infractions caused by positronics (especially owned by the state), if any, must be scrutinised heavily. While damage to positronics is <strong>discouraged</strong>; psychiatric and mechanical evaluations of such units are to be conducted in co-operation with the <strong>Chief Medical Officer</strong> and <strong>Chief Engineer</strong>.
-<p>6. Ensure security personnel attached to away-teams are equipped to handle synthetic threats.</p>
+<p>6. Ensure security personnel attached to away-teams are equipped to handle synthetic threats. <b>Be aware it has been demonstrated EMP and ion weaponry are not effected against legion units.</b></p>
 <p>It is important for you to assume an emergent state of distress if the need arises, until you reach your intended destination. Further guidelines and orders to follow beyond that point.</p>
 <p>Crucially, your senior enlisted will be essential in these trying times. Try to keep them close.</p>
 <hr />
@@ -119,11 +119,11 @@
 "}
 
 
-/obj/item/folder/envelope/ceorder
+/obj/item/folder/envelope/preset/ceorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CE EYES.'"
 
 
-/obj/item/folder/envelope/ceorder/Initialize()
+/obj/item/folder/envelope/preset/ceorder/Initialize()
 	. = ..()
 	new /obj/item/paper/ceorder (src)
 
@@ -151,11 +151,11 @@
 "}
 
 
-/obj/item/folder/envelope/exploorder
+/obj/item/folder/envelope/preset/exploorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CSO/PATHFINDER EYES.'"
 
 
-/obj/item/folder/envelope/exploorder/Initialize()
+/obj/item/folder/envelope/preset/exploorder/Initialize()
 	. = ..()
 	new /obj/item/paper/exploorder (src)
 
@@ -168,7 +168,7 @@
 <p><tt><tt><strong>FROM:</strong> Lieutenant Vasco Espueza, SCGEC Observatory<br /><strong>TO:</strong> Expeditionary Corps Vessel #3, SEV Torch<br /><strong>CC:</strong> Admiral William Henry Lau, Observatory <br /><strong>SUBJECT:</strong> First Contact and Anomalies<br /></tt></tt></p>
 <hr />
 <p>Good day.</p>
-<p>With the emergent need for a stronger solution to synthetic threats. It is <strong>authorised</strong> and <strong>highly encouraged</strong> to retain, study and utilise any anomalies exhibiting ionic properties.</p>
+<p>With the emergent need for a stronger solution to synthetic threats. It is <strong>authorised</strong> and <strong>highly encouraged</strong> to retain, study and utilise any anomalies exhibiting ionic properties. <b>Note that so far, legion units have proven immune to current EMP and ion weaponry.</b></p>
 <p>Fleet cargo vessels will be authorised to carry anomalies from research sites, for studies aboard your vessel. Ensure a communique is sent to EXCOM for relay. Supply and logistics will be handled as needed.</p>
 <p>Ensure that your research and exploration personnel are kept in top mental integrities at all times, as first contact procedures - especially hostile - are strongly draining on the psyche.</p>
 <p>Regular evaluation of personnel is recommended, in co-operation with the <strong>Chief Medical Officer</strong>.
@@ -183,11 +183,11 @@
 "}
 
 
-/obj/item/folder/envelope/dcorder
+/obj/item/folder/envelope/preset/dcorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR DC/XO EYES.'"
 
 
-/obj/item/folder/envelope/dcorder/Initialize()
+/obj/item/folder/envelope/preset/dcorder/Initialize()
 	. = ..()
 	new /obj/item/paper/dcorder (src)
 
@@ -214,11 +214,11 @@
 "}
 
 
-/obj/item/folder/envelope/csorder
+/obj/item/folder/envelope/preset/csorder
 	desc = "A thick envelope. The Expeditionary Corps crest is stamped in the corner, along with 'DISSEMINATE AS NECESSARY. FOR CS/XO EYES.'"
 
 
-/obj/item/folder/envelope/csorder/Initialize()
+/obj/item/folder/envelope/preset/csorder/Initialize()
 	. = ..()
 	new /obj/item/paper/csorder (src)
 
@@ -243,11 +243,12 @@
 "}
 
 
-/obj/item/folder/envelope/clorder
+/obj/item/folder/envelope/preset/clorder
 	desc = "A thick envelope. The Expeditionary Corps Organisation crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR CL EYES ONLY.'"
+	seal_stamp = "\improper Expeditionary Corps Organisation rubber stamp"
 
 
-/obj/item/folder/envelope/clorder/Initialize()
+/obj/item/folder/envelope/preset/clorder/Initialize()
 	. = ..()
 	new /obj/item/paper/clorder (src)
 
@@ -274,11 +275,12 @@
 "}
 
 
-/obj/item/folder/envelope/cmdorder
+/obj/item/folder/envelope/preset/cmdorder
 	desc = "A thick envelope. The Sol Central Government crest is stamped in the corner, along with 'DO NOT DISSEMINATE. FOR SCGR/CO EYES ONLY.'"
+	seal_stamp = "\improper Bureau of Emergency Operations rubber stamp"
 
 
-/obj/item/folder/envelope/cmdorder/Initialize()
+/obj/item/folder/envelope/preset/cmdorder/Initialize()
 	. = ..()
 	new /obj/item/paper/cmdorder (src)
 

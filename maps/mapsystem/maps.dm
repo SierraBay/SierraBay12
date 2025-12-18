@@ -84,6 +84,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/flags = 0
 	var/evac_controller_type = /datum/evacuation_controller
 	var/use_overmap = 0		//If overmap should be used (including overmap space travel override)
+	var/using_sun = FALSE	//If overmap should have a star
 	var/overmap_size = 20		//Dimensions of overmap zlevel if overmap is used.
 	var/overmap_z = 0		//If 0 will generate overmap zlevel on init. Otherwise will populate the zlevel provided.
 	var/overmap_event_areas = 0 //How many event "clouds" will be generated
@@ -180,8 +181,6 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 			CULTURE_HUMAN_CETII,
 			CULTURE_HUMAN_SPACER,
 			CULTURE_HUMAN_OFFWORLD,
-			CULTURE_HUMAN_CONFEDC,
-			CULTURE_HUMAN_CONFEDO,
 			CULTURE_HUMAN_FOSTER,
 			CULTURE_HUMAN_PIRXL,
 			CULTURE_HUMAN_PIRXB,
@@ -190,7 +189,19 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 			CULTURE_HUMAN_IOLAUS,
 			CULTURE_HUMAN_BRAHE,
 			CULTURE_HUMAN_EOS,
-			CULTURE_HUMAN_CONFEDC,
+			// [SIERRA-EDIT],
+			/*,
+			CULTURE_HUMAN_THEIA,
+			CULTURE_HUMAN_CONFED_TERRA,
+			CULTURE_HUMAN_CONFED_ZEMLYA,
+			CULTURE_HUMAN_CONFED_SESTRIS,
+			CULTURE_HUMAN_CONFED_PUTKARI,
+			CULTURE_HUMAN_CONFED_ALTAIR,
+			CULTURE_HUMAN_CONFED_PENGLAI,
+			CULTURE_HUMAN_CONFED_PROVIDENCE,
+			CULTURE_HUMAN_CONFED_VALY,
+			*/
+			// [/SIERRA-EDIT],
 			CULTURE_HUMAN_CONFEDO,
 			CULTURE_HUMAN_GAIAN,
 			CULTURE_HUMAN_OTHER
@@ -223,7 +234,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		TAG_RELIGION =  RELIGION_AGNOSTICISM
 	)
 
-	var/access_modify_region = list(
+	var/access_modify_region = alist(
 		ACCESS_REGION_SECURITY = list(access_hos, access_change_ids),
 		ACCESS_REGION_MEDBAY = list(access_cmo, access_change_ids),
 		ACCESS_REGION_RESEARCH = list(access_rd, access_change_ids),
@@ -423,8 +434,9 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	if(!use_overmap)
 		return
 
+	var/static/list/exoplanet_types = subtypesof(/obj/overmap/visitable/sector/exoplanet)
 	for(var/i = 0, i < num_exoplanets, i++)
-		var/exoplanet_type = pick(subtypesof(/obj/overmap/visitable/sector/exoplanet))
+		var/exoplanet_type = pick(exoplanet_types)
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new exoplanet_type(null, planet_size[1], planet_size[2])
 		new_planet.build_level()
 
@@ -518,12 +530,31 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		num2text(ENG_FREQ)   = list(access_engine_equip, access_atmospherics),
 		num2text(MED_FREQ)   = list(access_medical_equip),
 		num2text(MED_I_FREQ) = list(access_medical_equip),
-		num2text(SEC_FREQ)   = list(access_security),
-		num2text(SEC_I_FREQ) = list(access_security),
+		num2text(SEC_FREQ)   = list(access_brig),
+		num2text(SEC_I_FREQ) = list(access_brig),
 		num2text(SCI_FREQ)   = list(access_tox,access_robotics,access_xenobiology),
 		num2text(SUP_FREQ)   = list(access_cargo),
 		num2text(SRV_FREQ)   = list(access_janitor, access_hydroponics),
 		num2text(HAIL_FREQ)  = list(),
+	)
+
+/datum/map/proc/intercept_internal_channels()
+	return list(
+		num2text(PUB_FREQ)   = list(),
+		num2text(AI_FREQ)    = list(access_synth),
+		num2text(ENT_FREQ)   = list(),
+		num2text(ERT_FREQ)   = list(access_cent_specops),
+		num2text(COMM_FREQ)  = list(access_bridge),
+		num2text(ENG_FREQ)   = list(access_engine_equip, access_atmospherics),
+		num2text(MED_FREQ)   = list(access_medical_equip),
+		num2text(MED_I_FREQ) = list(access_medical_equip),
+		num2text(SEC_FREQ)   = list(access_brig),
+		num2text(SEC_I_FREQ) = list(access_brig),
+		num2text(SCI_FREQ)   = list(access_tox,access_robotics,access_xenobiology),
+		num2text(SUP_FREQ)   = list(access_cargo),
+		num2text(SRV_FREQ)   = list(access_janitor, access_hydroponics),
+		num2text(HAIL_FREQ)  = list(),
+		num2text(SYND_FREQ)  = list()
 	)
 
 /datum/map/proc/show_titlescreen(client/C)

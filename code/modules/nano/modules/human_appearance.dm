@@ -128,7 +128,7 @@
 
 	if (href_list["language"] && (flags & APPEARANCE_LANG))
 		if (href_list["language_mode"] == "add")
-			if ((~flags & APPEARANCE_LANG_ANY_NUMBER) && length(owner.languages) >= MAX_LANGUAGES)
+			if ((~flags & APPEARANCE_LANG_ANY_NUMBER) && length(owner.languages) >= (MAX_LANGUAGES + owner.species.additional_languages)) // SIERRA-EDIT added( + owner.species.additional_languages))
 				return
 			if ((~flags & APPEARANCE_LANG_ANY_ORIGIN) && !(href_list["language"] in langs))
 				return
