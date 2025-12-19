@@ -18,6 +18,7 @@
 		FEEDBACK_UNEQUIP_FAILURE(user, tool)
 		return TRUE
 	choosed_part.installed_armor = tool
+	armor.owner = choosed_part
 	playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 	on_update_icon()
 	to_chat(user, SPAN_GOOD("Бронеэлемент установлен."))

@@ -22,11 +22,11 @@
 	var/list/victims = list()
 	for(var/obj/item/device/radio/radio in GLOB.listening_objects)
 		if(radio.on)
-			for(var/mob/living/victim in range(radio.canhear_range, radio.loc))
+			for(var/mob/living/carbon/victim in range(radio.canhear_range, radio.loc))
 				if(isnull(victims[victim]) && victim.stat == CONSCIOUS && !victim.ear_deaf)
 					victims[victim] = radio
 	for(var/thing in victims)
-		var/mob/living/victim = thing
+		var/mob/living/carbon/victim = thing
 		var/obj/item/device/radio/source = victims[victim]
 		do_spasm(victim, source)
 

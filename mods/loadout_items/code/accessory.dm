@@ -411,3 +411,73 @@ ranks - ec
 
 /obj/item/paper/iccgvisa/on_update_icon()
 	icon_state = "iccgvisa[open]"
+
+/obj/item/clothing/accessory/sweater/simple
+	name = "sweater"
+	desc = "A warm, knit sweater."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "sweater"
+
+/obj/item/clothing/accessory/sweater/tubeneck
+	name = "tubeneck sweater"
+	desc = "A warm, knit tubeneck sweater."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "sweater_tubeneck"
+
+/obj/item/clothing/accessory/sweater/crewneck
+	name = "crewneck sweater"
+	desc = "A sewn crewneck sweater featuring a collarless neckline."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "sweater_crewneck"
+
+/obj/item/clothing/accessory/sweater/v_neck
+	name = "v-neck sweater"
+	desc = "A sewn v-neck sweater featuring a collarless neckline."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "sweater_v_neck"
+
+/obj/item/clothing/accessory/sweater/v_neck_deep
+	name = "deep v-neck sweater"
+	desc = "A sewn v-neck sweater with deep drawn neckline."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "sweater_deep_v_neck"
+
+/obj/item/clothing/accessory/sweater/argyle
+	name = "argyle sweater"
+	desc = "A warm, knit sweater with an argyle pattern."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "argyle_sweater"
+
+/obj/item/clothing/accessory/sweater/argyle_tubeneck
+	name = "argyle tubeneck sweater"
+	desc = "A warm, knit argyle tubeneck sweater."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "argyle_sweater_tubeneck"
+
+/obj/item/clothing/accessory/sweater/argyle_turtleneck
+	name = "argyle turtleneck sweater"
+	desc = "A warm, knit argyle turtleneck sweater."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "argyle_sweater_turtleneck"
+
+/obj/item/clothing/accessory/sweater/argyle_crewneck
+	name = "argyle crewneck sweater"
+	desc = "A sewn crewneck sweater featuring a collarless neckline and an argyle pattern."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "argyle_sweater_crewneck"
+
+/obj/item/clothing/accessory/sweater/argyle_v_neck
+	name = "argyle v-neck sweater"
+	desc = "A sewn v-neck sweater featuring a collarless neckline and an argyle pattern."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "argyle_sweater_v_neck"

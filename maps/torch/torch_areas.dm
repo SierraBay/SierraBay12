@@ -661,6 +661,11 @@
 	icon_state = "disperser"
 	req_access = list(access_bridge)
 
+/area/command/probe_bay
+	name = "\improper Probe Bay"
+	icon_state = "disperser"
+	req_access = list(access_bridge)
+
 /area/crew_quarters/heads
 	icon_state = "heads"
 	req_access = list(access_heads)
@@ -1289,11 +1294,6 @@
 
 /area/engineering/fuelbay
 	name = "\improper Fuel Bay"
-	icon_state = "engineering"
-	req_access = list(access_construction)
-
-/area/engineering/fuelbay/aux
-	name = "\improper Auxiliary Fuel Bay"
 	icon_state = "engineering"
 	req_access = list(access_construction)
 

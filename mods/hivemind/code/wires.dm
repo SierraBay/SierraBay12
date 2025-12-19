@@ -83,10 +83,31 @@
 	restore_health(regen_rate)
 
 /obj/wireweed/proc/expand(turf/T)
-	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB || istype(T, /turf/simulated/open) & !locate(/obj/structure/catwalk) in T) // We're using same logic plus open spaces won't became traps for personnel
+	var/obj/machinery/door/blast/regular/BD = locate(/obj/machinery/door/blast/regular) in T
+
+	if (!istype(T) || T.turf_flags & TURF_DISALLOW_BLOB) // We're using same logic as blob
 		return
 
-	if (!istype(T) || T.density || locate(/obj/structure/wall_frame) in T) // We can go under machines or doors, but not through solid walls plus wallframes
+	if (istype(T, /turf/simulated/open) & !locate(/obj/structure/catwalk) in T) // Checking open space
+		if (GLOB.hive_data_bool["spread_on_lower_z_level"]) // If we can drop on Z below, we do this
+			var/obj/wireweed/child = new(T, min(get_current_health(), 30))
+			var/turf/below = GetBelow(T)
+			if(master_node)
+				master_node.add_wireweed(child)
+			spawn(1)
+				child.dir = get_dir(loc, T) //actually this means nothing for wires, but need for animation
+				flick("spread_anim", child)
+				child.forceMove(below)
+				for(var/obj/wireweed/neighbor in range(1, child))
+					neighbor.update_neighbors()
+					break
+		else
+			return
+
+	if (!istype(T) || T.density || locate(/obj/structure/wall_frame) in T || locate(/obj/structure/stairs) in T) // We can go under machines or doors, but not through solid walls plus wallframes. Plus we don't wanna hide stairs.
+		return
+
+	if (BD && BD.density) // We don't like closed blast doors
 		return
 
 	else
@@ -99,6 +120,7 @@
 			child.forceMove(T)
 			for(var/obj/wireweed/neighbor in range(1, child))
 				neighbor.update_neighbors()
+
 
 /obj/wireweed/proc/pulse(forceLeft, list/dirs)
 	sleep(4)
@@ -228,6 +250,19 @@
 		return 1
 	return 1
 
+// Когда мы проходим через провода, то с нами что-то происходит, если мы соответствуем условиям
+/obj/wireweed/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.lying)
+			L.apply_damage(12, DAMAGE_SHOCK, ran_zone())
+			to_chat(L, SPAN_DANGER("You sence a joint of energy, coming from \the [src]!"))
+		if(istype(L, /mob/living/exosuit))
+			var/mob/living/exosuit/E = L
+			var/obj/item/cell/cell = E.get_cell()
+			if(cell)
+				cell.use(100) // spend_power_for_step()
+
 
 //What a pity that we haven't some kind proc as special library to use it somewhere
 /obj/wireweed/proc/anim_shake(atom/thing)
@@ -288,7 +323,7 @@
 			var/mob/living/L = subject
 			for(var/obj/item/W in L)
 				L.drop_from_inventory(W)
-			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan)
+			var/M = pick(/mob/living/simple_animal/hostile/hivemind/himan, /mob/living/simple_animal/hostile/hivemind/phaser)
 			new M(loc)
 		//robot corpses
 		else if(istype(subject, /mob/living/silicon))
