@@ -1,8 +1,0 @@
-author: Roche Hendson
-changes:
-  - bugfix: Клоны больше не текут кровью
-  - tweak: Изменена абилка Mend у псиоников редакторов
-  - rscadd: Добавлены абилки Retribute и Meditate у редакторов
-  - rscdel: Удалена абилка Mend
-  - imageadd: Добавил небольшие эффекты для медитации
-delete-after: true
