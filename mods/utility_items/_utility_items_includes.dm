@@ -62,4 +62,5 @@
 #include "code/stealthbundlerework.dm"
 #include "code/stairs.dm"
 #include "code/lang_tweak.dm"
+#include "code/captain_sierra_safe.dm"
 #endif
