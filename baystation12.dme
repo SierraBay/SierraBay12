@@ -2207,7 +2207,7 @@
 #include "code\modules\mob\death.dm"
 #include "code\modules\mob\dview.dm"
 #include "code\modules\mob\examinations.dm"
-#include "code\modules\mob\floating_message.dm"
+// #include "code\modules\mob\floating_message.dm" [SIERRA-REMOVE] // Runechat
 #include "code\modules\mob\gender.dm"
 #include "code\modules\mob\hear_say.dm"
 #include "code\modules\mob\holder.dm"

@@ -338,10 +338,14 @@ var/global/list/channel_to_radio_key = new
 			spawn(0)
 				if(O) //It's possible that it could be deleted in the meantime.
 					O.hear_talk(src, stars(message), verb, speaking)
+	// [SIERRA-REMOVE] - Runechat
+	/*
 		if (length(eavesdroping))
 			invoke_async(src, /atom/movable/proc/animate_chat, stars(message), speaking, italics, eavesdroping)
 
 	invoke_async(src, /atom/movable/proc/animate_chat, message, speaking, italics, speech_bubble_recipients)
+	*/
+	//[/SIERRA-REMOVE] - Runechat
 
 	if(mind)
 		mind.last_words = message
