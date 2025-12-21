@@ -9,6 +9,7 @@
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
 	#include "../../packs/factions/scgec/_pack.dm"
+	#include "../../packs/factions/scgf/_pack.dm"
 
 	#include "torch_announcements.dm"
 	#include "torch_antagonism.dm"
@@ -188,6 +189,7 @@
 	#include "../away/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../away/spy_station/spy_station.dm"
+	#include "../away/salvage_shuttle/salvage_shuttle.dm"
 
 	#include "../event/iccgn_ship/icgnv_hound.dm"
 	#include "../event/sfv_arbiter/sfv_arbiter.dm"

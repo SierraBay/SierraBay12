@@ -197,7 +197,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		if(target.stat == DEAD || (target.status_flags & FAKEDEATH))
+		if(target.is_dead())
 			to_chat(user, SPAN_WARNING("\The [target] мертв!"))
 			return TRUE
 		if(!target.mind || !target.key)

@@ -1,6 +1,6 @@
 //SSweather
-PROCESSING_SUBSYSTEM_DEF(weather)
-	name = "Weather"
+PROCESSING_SUBSYSTEM_DEF(weatherold)
+	name = "Weather (old)"
 	priority = SS_PRIORITY_TURF
 	init_order = SS_INIT_DEFAULT
 	flags = SS_BACKGROUND
@@ -17,7 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 	//Сколько турфов будет обработано за 1 процессинг контроллера. Чем больше тем быстрее выполняется очередь, но может сильней влиять на производительность игры.
 	var/changing_tufs_per_time = 1000
 
-/datum/controller/subsystem/processing/weather/UpdateStat(time)
+/datum/controller/subsystem/processing/weatherold/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
 	..({"\
@@ -25,7 +25,7 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 		weather controllers amount: [LAZYLEN(weather_managers_in_world)]
 	"})
 
-/datum/controller/subsystem/processing/weather/fire(resumed)
+/datum/controller/subsystem/processing/weatherold/fire(resumed)
 	if (!resumed)
 		src.current_run = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -46,12 +46,12 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 			return
 
 //ВОДИЧКА
-/datum/controller/subsystem/processing/weather/proc/add_to_water_queue(turf/simulated/floor/exoplanet/titan_water/water, direction)
+/datum/controller/subsystem/processing/weatherold/proc/add_to_water_queue(turf/simulated/floor/exoplanet/titan_water/water, direction)
 	if(!water || !direction)
 		return
 	water_changing_queue[water] = direction
 
-/datum/controller/subsystem/processing/weather/proc/process_water_changes()
+/datum/controller/subsystem/processing/weatherold/proc/process_water_changes()
 	if(LAZYLEN(water_changing_queue))
 		var/will_be_checked_turfs = changing_tufs_per_time
 		while(will_be_checked_turfs != 0)

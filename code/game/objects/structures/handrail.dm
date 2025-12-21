@@ -6,3 +6,6 @@
 	density = FALSE
 	anchored = TRUE
 	can_buckle = TRUE
+	// [SIERRA-ADD]
+	buckle_stance = BUCKLE_FORCE_STAND
+	// [/SIERRA-ADD]

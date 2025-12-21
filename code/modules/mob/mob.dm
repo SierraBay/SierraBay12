@@ -217,7 +217,7 @@
 	. = 0
 	if(isturf(loc))
 		var/turf/turf = loc
-		. += turf.movement_delay
+		. += turf.get_terrain_movement_delay()
 	if (drowsyness > 0)
 		. += 6
 	if(lying) //Crawling, it's slower
@@ -389,6 +389,17 @@
 		else
 			attack_empty_hand(BP_R_HAND)
 
+/mob/verb/activate_world_object()
+	set name = "Activate Object In World"
+	set category = "Object"
+
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	var/atom/hovered = click_handler.hovered_atom
+	if (!hovered)
+		return
+
+	usr.ClickOn(hovered, "", TRUE)
+
 /mob/proc/update_flavor_text(key)
 	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null, extra = 0)
 	if(!CanInteract(usr, GLOB.self_state))
@@ -455,7 +466,7 @@
 /mob/proc/OnSelfTopic(href_list, topic_status)
 	if (topic_status == STATUS_INTERACTIVE)
 		if(href_list["mach_close"])
-			var/t1 = text("window=[href_list["mach_close"]]")
+			var/t1 = "window=[href_list["mach_close"]]"
 			unset_machine()
 			show_browser(src, null, t1)
 			return TOPIC_HANDLED
@@ -589,6 +600,7 @@
 
 	src.pulling = AM
 	AM.pulledby = src
+	AM.add_hiddenprint(src)
 
 	if(pullin)
 		pullin.icon_state = "pull1"
@@ -636,7 +648,14 @@
 /mob/proc/is_active()
 	return (0 >= usr.stat)
 
+/// Checks if a mob should be considered dead. Includes faked deaths and other situational conditions.
 /mob/proc/is_dead()
+	if (GET_FLAGS(status_flags, FAKEDEATH))
+		return TRUE
+	return is_real_dead()
+
+/// Checks if a mob is actually dead. Ignores faked deaths.
+/mob/proc/is_real_dead()
 	return stat == DEAD
 
 /mob/proc/is_mechanical()
@@ -1298,3 +1317,9 @@
 
 /mob/get_mass()
 	return mob_size
+
+/mob/get_overhead_text_x_offset()
+	return offset_overhead_text_x
+
+/mob/get_overhead_text_y_offset()
+	return offset_overhead_text_y

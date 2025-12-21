@@ -51,7 +51,7 @@
 		sleep(3)
 		return NANOMAP_TERMINALERR
 
-	var/icon/Tile = icon(file("nano/mapbase1024.png"))
+	var/icon/Tile = icon(file("nano/mapbase1024_black.png")) //[SIERRA-EDIT] - changed 'mapbase1024.png' to 'mapbase1024_black.png' for UI map generation
 	if (Tile.Width() != NANOMAP_MAX_ICON_DIMENSION || Tile.Height() != NANOMAP_MAX_ICON_DIMENSION)
 		to_world_log("NanoMapGen: <B>ERROR: BASE IMAGE DIMENSIONS ARE NOT [NANOMAP_MAX_ICON_DIMENSION]x[NANOMAP_MAX_ICON_DIMENSION]</B>")
 		sleep(3)
@@ -81,7 +81,8 @@
 
 	to_world_log("NanoMapGen: <B>sending [mapFilename] to client</B>")
 
-	show_browser(usr, Tile, "window=picture;file=[mapFilename];display=0")
+	//show_browser(usr, Tile, "window=picture;file=[mapFilename];display=0") [SIERRA-REMOVE] - creates html file as png
+	to_target(usr, ftp(Tile, mapFilename)) //[SIERRA-ADD] - actually uploads the result as an icon.
 
 	to_world_log("NanoMapGen: <B>Done.</B>")
 

@@ -48,6 +48,7 @@
 /proc/ChangeArea(turf/T, area/A)
 	if(!istype(A))
 		CRASH("Area change attempt failed: invalid area supplied.")
+	var/old_outside = T.is_outside()
 	var/area/old_area = get_area(T)
 	if(old_area == A)
 		return
@@ -62,6 +63,15 @@
 
 	for(var/obj/machinery/M in T)
 		M.area_changed(old_area, A) // They usually get moved events, but this is the one way an area can change without triggering one.
+
+	var/turf/simulated/simT = T
+	if (istype(simT))
+		if(T.is_outside == OUTSIDE_AREA)
+			simT.update_external_atmos_participation() // Refreshes outside status and adds exterior air to turf air if necessary.
+	//Check again if turf is outside -> This isnt solely area based so we cant know based on area alone
+	if(T.is_outside() != old_outside)
+		T.update_weather()
+		AMBIENT_LIGHT_QUEUE_TURF(T)
 
 /// Returns list (`/obj/machinery/camera`). A list of all cameras in the area.
 /area/proc/get_cameras()

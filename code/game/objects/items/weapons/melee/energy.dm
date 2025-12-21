@@ -115,7 +115,7 @@
 		disabletime = 1.5 MINUTES
 
 	visible_message(SPAN_DANGER("\The [src] violently shudders!"))
-	new /obj/overlay/self_deleting/emppulse(get_turf(src))
+	new /obj/overlay/emp_pulse (get_turf(src))
 
 	disabled = world.time + disabletime
 	var/mob/living/carbon/M = loc

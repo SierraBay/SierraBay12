@@ -1,4 +1,3 @@
-/*
 #define EXPLOSION_RATIO_DEVASTATION 1
 #define EXPLOSION_RATIO_HEAVY 2
 #define EXPLOSION_RATIO_LIGHT 4
@@ -79,11 +78,11 @@
 				M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 
 	if(adminlog)
-		log_and_message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
-	var/approximate_intensity = (devastation_range * 3) + (heavy_impact_range * 2) + light_impact_range
+		log_and_message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]).", null, epicenter)
+	//var/approximate_intensity = (devastation_range * 3) + (heavy_impact_range * 2) + light_impact_range
 	// Large enough explosion. For performance reasons, powernets will be rebuilt manually
-	if(!GLOB.defer_powernet_rebuild && (approximate_intensity > 25))
-		GLOB.defer_powernet_rebuild = 1
+	//if(!GLOB.defer_powernet_rebuild && (approximate_intensity > 25))
+	//	GLOB.defer_powernet_rebuild = 1
 
 	if(heavy_impact_range > 1)
 		var/datum/effect/explosion/E = new
@@ -107,4 +106,3 @@
 #undef EXPLOSION_RATIO_DEVASTATION
 #undef EXPLOSION_RATIO_HEAVY
 #undef EXPLOSION_RATIO_LIGHT
-*/

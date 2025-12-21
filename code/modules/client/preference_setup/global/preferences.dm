@@ -134,6 +134,7 @@ var/global/list/_client_preferences_by_type
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_vents))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_forced))
 		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
+		sound_to(preference_mob, sound(null, channel = GLOB.ambience_channel_common))
 
 /datum/client_preference/play_announcement_sfx
 	description = "Play announcement sound effects"
@@ -337,6 +338,15 @@ var/global/list/_client_preferences_by_type
 	options = list(GLOB.PREF_SHORT, GLOB.PREF_LONG)
 	default_value = GLOB.PREF_SHORT
 
+// [SIERRA-REMOVE] - Runechat
+/*
+/datum/client_preference/floating_messages
+	description = "Floating chat messages"
+	key = "FLOATING_CHAT"
+	options = list(GLOB.PREF_SHOW, GLOB.PREF_HIDE)
+	default_value = GLOB.PREF_SHOW
+*/
+//[/SIERRA-REMOVE] - Runechat
 
 /datum/client_preference/toggle_run
 	description = "Shift toggles run (vs hold to run)"

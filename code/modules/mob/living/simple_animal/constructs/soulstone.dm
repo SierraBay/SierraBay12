@@ -117,7 +117,7 @@
 	if (full == SOULSTONE_ESSENCE)
 		to_chat(user, SPAN_NOTICE("\The [src] is already full."))
 		return TRUE
-	if (M.stat != DEAD && !M.is_asystole())
+	if (!M.is_real_dead() && !M.is_asystole())
 		to_chat(user, SPAN_NOTICE("Kill or maim the victim first."))
 		return TRUE
 	for (var/obj/item/W in M)

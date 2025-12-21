@@ -41,7 +41,7 @@
 
 	H.add_language(LANGUAGE_BORER_GLOBAL)
 
-	if(host.stat == DEAD)
+	if(host.is_dead())
 		H.verbs |= /mob/living/carbon/human/proc/jumpstart
 
 	H.verbs |= /mob/living/carbon/human/proc/psychic_whisper

@@ -869,6 +869,7 @@
 	dir = 4;
 	icon_state = "tube_map"
 	},
+/obj/item/crowbar/red,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/living)
 "db" = (
@@ -1466,6 +1467,11 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/main_corridor)

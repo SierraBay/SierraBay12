@@ -206,10 +206,11 @@
 /obj/cleanable/spellbound/attack_hand(mob/user)
 	if(last_called > world.time )
 		return
+	visible_message(SPAN_WARNING("\The [src] pulses with a small burst of light, for a few seconds."))
 	last_called = world.time + 30 SECONDS
 	var/datum/ghosttrap/G = get_ghost_trap("wizard familiar")
 	for(var/mob/observer/ghost/ghost in GLOB.player_list)
-		if(G.assess_candidate(ghost,null,FALSE))
+		if(G.assess_candidate(ghost,null,FALSE,TRUE))
 			to_chat(ghost,"[SPAN_NOTICE("<b>A wizard is requesting a Spell-Bound Servant!</b>")] (<a href='byond://?src=\ref[src];master=\ref[user]'>Join</a>)")
 
 /obj/cleanable/spellbound/CanUseTopic(mob)

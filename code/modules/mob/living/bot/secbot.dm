@@ -11,8 +11,8 @@
 	layer = MOB_LAYER
 	maxHealth = 50
 	health = 50
-	req_access = list(list(access_security, access_forensics_lockers))
-	botcard_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
+	req_access = list(list(access_brig, access_forensics_lockers))
+	botcard_access = list(access_brig, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
 
 	patrol_speed = 2
 	target_speed = 3
@@ -196,7 +196,7 @@
 
 /mob/living/bot/secbot/lookForTargets()
 	for(var/mob/living/M in view(src))
-		if(M.stat == DEAD)
+		if(M.is_dead())
 			continue
 		if(confirmTarget(M))
 			var/threat = check_threat(M)
@@ -263,7 +263,7 @@
 	return "unidentified lifeform"
 
 /mob/living/bot/secbot/proc/check_threat(mob/living/M)
-	if(!M || !istype(M) || M.stat == DEAD || src == M)
+	if(!M || !istype(M) || M.is_dead() || src == M)
 		return 0
 
 	if(emagged && !M.incapacitated()) //check incapacitated so emagged secbots don't keep attacking the same target forever

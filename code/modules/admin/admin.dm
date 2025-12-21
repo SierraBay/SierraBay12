@@ -417,8 +417,7 @@ var/global/floorIsLava = 0
 
 	var/datum/feed_network/torch_network = news_network[1] //temp change until the UI can be updated to support switching networks.
 
-	var/dat
-	dat = text("<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>")
+	var/dat = "<HEAD><TITLE>Admin Newscaster</TITLE></HEAD><H3>Admin Newscaster Unit</H3>"
 
 	switch(admincaster_screen)
 		if(0)
@@ -662,7 +661,7 @@ var/global/floorIsLava = 0
 		var/r = t
 		if( findtext(r,"##") )
 			r = copytext( r, 1, findtext(r,"##") )//removes the description
-		dat += text("<tr><td>[t] (<a href='byond://?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
+		dat += "<tr><td>[t] (<A href='byond://?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>"
 	dat += "</table>"
 	show_browser(usr, dat, "window=ban;size=400x400")
 
@@ -1110,12 +1109,7 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 
 	if(!check_rights(R_SPAWN))	return
 
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
+	var/list/matches = typesof_filtered(/atom, object)
 
 	if(length(matches)==0)
 		return
@@ -1127,7 +1121,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
-
+	var/reason = prevent_spawn_reason(chosen)
+	if (reason)
+		to_chat(usr, SPAN_WARNING("Cannot create a [chosen] - [reason]"))
+		return
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
@@ -1522,16 +1519,12 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		to_chat(owner, SPAN_WARNING("Invalid origin selected."))
 		return
 
-	// Destination
-	var/department = input("Choose a destination fax", "Fax Target") as null|anything in GLOB.alldepartments
-
 	// Generate the fax
 	var/obj/item/paper/admin/P = new /obj/item/paper/admin( null ) //hopefully the null loc won't cause trouble for us
 	faxreply = P
 	P.admindatum = src
 	P.origin = replyorigin
-	P.department = department
-	P.destinations = get_fax_machines_by_department(department)
+	// P.department = department
 	P.adminbrowse()
 
 
@@ -1556,13 +1549,7 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 
 	P.SetName("[customname]")
 
-	var/shouldStamp = 1
-	if(!P.sender) // admin initiated
-		switch(alert("Would you like the fax stamped?",, "Yes", "No"))
-			if("No")
-				shouldStamp = 0
-
-	if(shouldStamp)
+	if(P.should_stamp)
 		P.stamps += "<hr><i>This paper has been stamped by the [P.origin] Quantum Relay.</i>"
 
 		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
@@ -1586,13 +1573,15 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		P.AddOverlays(stampoverlay)
 
 	var/obj/item/rcvdcopy
-	var/obj/machinery/photocopier/faxmachine/destination = P.destinations[1]
-	rcvdcopy = destination.copy(P, FALSE)
+	var/obj/machinery/photocopier/faxmachine/temp_fax = new
+	rcvdcopy = temp_fax.copy(P, FALSE)
 	rcvdcopy.forceMove(null) //hopefully this shouldn't cause trouble
 	GLOB.adminfaxes += rcvdcopy
-	var/success = send_fax_loop(P, P.department, P.origin)
+	qdel(temp_fax)
+	var/success = send_fax_loop(P, P.destinations, P.origin)
 
 	if (success)
+		var/dests_string = P.destinations.Join(", ")
 		to_chat(src.owner, SPAN_NOTICE("Message reply to transmitted successfully."))
 		if(P.sender) // sent as a reply
 			log_admin("[key_name(src.owner)] replied to a fax message from [key_name(P.sender)]")
@@ -1600,10 +1589,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 				if((R_INVESTIGATE) & C.holder.rights)
 					to_chat(C, SPAN_CLASS("log_message", "[SPAN_CLASS("prefix", "FAX LOG:")][key_name_admin(src.owner)] replied to a fax message from [key_name_admin(P.sender)] (<a href='byond://?_src_=holder;AdminFaxView=\ref[rcvdcopy]'>VIEW</a>)"))
 		else
-			log_admin("[key_name(src.owner)] has sent a fax message to [P.department]")
+			log_admin("[key_name(src.owner)] has sent a fax message to [dests_string]")
 			for(var/client/C as anything in GLOB.admins)
 				if((R_INVESTIGATE) & C.holder.rights)
-					to_chat(C, SPAN_CLASS("log_message", "[SPAN_CLASS("prefix", "FAX LOG:")][key_name_admin(src.owner)] has sent a fax message to [P.department] (<a href='byond://?_src_=holder;AdminFaxView=\ref[rcvdcopy]'>VIEW</a>)"))
+					to_chat(C, SPAN_CLASS("log_message", "[SPAN_CLASS("prefix", "FAX LOG:")][key_name_admin(src.owner)] has sent a fax message to [dests_string] (<a href='byond://?_src_=holder;AdminFaxView=\ref[rcvdcopy]'>VIEW</a>)"))
 	else
 		to_chat(src.owner, SPAN_WARNING("Message reply failed."))
 

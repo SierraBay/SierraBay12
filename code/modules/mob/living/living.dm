@@ -5,6 +5,9 @@
 	else
 		add_to_living_mob_list()
 
+	if(weather_sensitive)
+		SSweather_atoms.weather_atoms += src
+
 	selected_image = image(icon('icons/misc/buildmode.dmi'), loc = src, icon_state = "ai_sel")
 
 /mob/living/examine(mob/user, distance, is_adjacent, infix, suffix)
@@ -832,6 +835,9 @@ default behaviour is:
 			remove_aura(a)
 	GLOB.living_players -= src
 	QDEL_NULL(selected_image)
+
+	if(weather_sensitive)
+		SSweather_atoms.weather_atoms -= src
 	return ..()
 
 /mob/living/proc/melee_accuracy_mods()

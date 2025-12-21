@@ -8,6 +8,7 @@
 	cleanable_scent = "industrial lubricant"
 	scent_intensity = /singleton/scent_intensity/normal
 	scent_range = 2
+	weather_sensitive = FALSE
 
 /obj/decal/cleanable/blood/gibs/robot/on_update_icon()
 	color = "#ffffff"

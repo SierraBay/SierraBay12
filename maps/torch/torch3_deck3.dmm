@@ -9126,6 +9126,11 @@
 	},
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/aft)
+"vv" = (
+/obj/structure/table/woodentable/walnut,
+/obj/item/deck/hanafuda,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/crew_quarters/observation)
 "vw" = (
 /obj/structure/bed/chair/padded/green{
 	dir = 8
@@ -15549,8 +15554,8 @@
 /turf/simulated/floor/plating,
 /area/maintenance/thirddeck/foreport)
 "Mb" = (
-/obj/shuttle_landmark/ert/deck4{
-	name = "3rd Deck, Starboard"
+/obj/shuttle_landmark/ert/deck3{
+	name = "Deck 3, Fore"
 	},
 /turf/space,
 /area/space)
@@ -17199,10 +17204,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/security/habcheck)
-"QG" = (
-/obj/structure/table/woodentable/walnut,
-/turf/simulated/floor/tiled/dark/monotile,
-/area/crew_quarters/observation)
 "QH" = (
 /obj/structure/bed/chair/office/dark{
 	dir = 8
@@ -27435,7 +27436,7 @@ aa
 aa
 aa
 aa
-aa
+Mb
 aa
 aa
 aa
@@ -28815,7 +28816,7 @@ aa
 Di
 Di
 BQ
-QG
+vv
 YB
 nw
 Xq
@@ -35844,7 +35845,7 @@ aa
 aa
 aa
 aa
-Mb
+aa
 aa
 aa
 aa

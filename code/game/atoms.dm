@@ -104,7 +104,10 @@
 			T.recalc_atom_opacity()
 
 	if (health_max)
-		health_current = health_max
+		if (initial_health_percent < 100)
+			set_health(health_max * (initial_health_percent/100))
+		else
+			health_current = health_max
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -1082,30 +1085,37 @@
 /atom/proc/create_bullethole(obj/item/projectile/Proj)
 	var/p_x = Proj.p_x + rand(-8, 8)
 	var/p_y = Proj.p_y + rand(-8, 8)
-	var/obj/overlay/bmark/bullet_mark = new(src)
+	var/obj/overlay/bullet_hole/bullet_hole = new(src)
 
-	bullet_mark.pixel_x = p_x
-	bullet_mark.pixel_y = p_y
+	bullet_hole.pixel_x = p_x
+	bullet_hole.pixel_y = p_y
 
 	// offset correction
-	bullet_mark.pixel_x--
-	bullet_mark.pixel_y--
+	bullet_hole.pixel_x--
+	bullet_hole.pixel_y--
 
 	if(Proj.damage >= 50)
-		bullet_mark.icon_state = "scorch"
-		bullet_mark.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
+		bullet_hole.icon_state = "scorch"
+		bullet_hole.set_dir(pick(NORTH,SOUTH,EAST,WEST)) // random scorch design
 	else
-		bullet_mark.icon_state = "light_scorch"
+		bullet_hole.icon_state = "light_scorch"
 
 /atom/proc/clear_bulletholes()
-	for(var/obj/overlay/bmark/bullet_mark in src)
-		qdel(bullet_mark)
+	for(var/obj/overlay/bullet_hole/bullet_hole in src)
+		qdel(bullet_hole)
 
 /atom/proc/get_overhead_text_x_offset()
 	return 0
 
 /atom/proc/get_overhead_text_y_offset()
 	return 0
+
+/atom/proc/get_affecting_weather()
+	return
+
+/atom/proc/is_outside()
+	var/turf/turf = get_turf(src)
+	return istype(turf) ? turf.is_outside() : OUTSIDE_UNCERTAIN
 
 /// Set this atom's color and light to match origin
 /atom/proc/copy_light_and_color(atom/origin)
@@ -1132,7 +1142,7 @@
 			to_chat(user, SPAN_NOTICE("You're too far away from [src] to do that."))
 		return USE_FAIL_NON_ADJACENT
 
-	if(!(use_flags & USE_ALLOW_DEAD) && user.stat == DEAD)
+	if(!(use_flags & USE_ALLOW_DEAD) && user.is_real_dead())
 		if (show_messages)
 			to_chat(user, SPAN_NOTICE("How do you expect to do that when you're dead?"))
 		return USE_FAIL_DEAD

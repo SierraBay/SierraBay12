@@ -71,8 +71,8 @@
 
 			var/image/aura_image = get_aura_image()
 			if(rating >= PSI_RANK_GRANDMASTER) // spooky boosters
-				aura_color = "#aaffaa"
-				aura_image.blend_mode = BLEND_SUBTRACT
+				aura_color = "#000000"
+				aura_image.blend_mode = BLEND_ADD
 			else
 				aura_image.blend_mode = BLEND_ADD
 				switch(highest_faculty)
@@ -135,8 +135,9 @@
 			else if(owner.stat == UNCONSCIOUS)
 				stamina = min(max_stamina, stamina + rand(3,5))
 
-		if(!owner.nervous_system_failure() && owner.stat == CONSCIOUS && stamina && !suppressed && get_rank(PSI_REDACTION) >= PSI_RANK_APPRENTICE)
-			attempt_regeneration()
+		if(!owner.nervous_system_failure() && stamina && !suppressed && get_rank(PSI_REDACTION) >= PSI_RANK_APPRENTICE)
+			if(get_rank(PSI_REDACTION) >= PSI_RANK_GRANDMASTER)
+				attempt_regeneration()
 
 	var/next_aura_size = max(0.1,((stamina/max_stamina)*min(3,rating))/5)
 	var/next_aura_alpha = round(((suppressed ? max(0,rating - 2) : rating)/5)*255)
@@ -172,23 +173,26 @@
 			heal_poison = TRUE
 			heal_internal = TRUE
 			heal_bleeding = TRUE
-			mend_prob = 50
-			heal_rate = 7
+			mend_prob = 100
+			heal_rate = 10
 		if(PSI_RANK_MASTER)
+			heal_general = TRUE
 			heal_poison = TRUE
 			heal_internal = TRUE
 			heal_bleeding = TRUE
-			mend_prob = 20
-			heal_rate = 5
+			mend_prob = 80
+			heal_rate = 7
 		if(PSI_RANK_OPERANT)
+			heal_poison = TRUE
 			heal_internal = TRUE
 			heal_bleeding = TRUE
-			mend_prob = 10
-			heal_rate = 3
+			mend_prob = 60
+			heal_rate = 5
 		if(PSI_RANK_APPRENTICE)
+			heal_internal = TRUE
 			heal_bleeding = TRUE
-			mend_prob = 5
-			heal_rate = 1
+			mend_prob = 40
+			heal_rate = 5
 		else
 			return
 
@@ -279,3 +283,4 @@
 		owner.adjustOxyLoss(-(heal_rate))
 		if(prob(25))
 			to_chat(owner, SPAN_NOTICE("Your skin crawls as your autoredactive faculty heals your body."))
+	owner.update_icon()

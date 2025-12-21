@@ -734,6 +734,10 @@
 				/obj/item/pizzabox/margherita,
 				/obj/item/pizzabox/mushroom,
 				/obj/item/pizzabox/fruit,
+				/obj/item/pizzabox/choco,
+				/obj/item/pizzabox/ham,
+				/obj/item/pizzabox/hawaiian,
+				/obj/item/pizzabox/capricciosa,
 				/obj/item/reagent_containers/food/snacks/plumphelmetbiscuit,
 				/obj/item/reagent_containers/food/snacks/skrellsnacks)
 
@@ -885,7 +889,7 @@
 				/obj/item/clothing/suit/storage/toggle/labcoat = 4,
 				/obj/item/clothing/suit/space/emergency = 1,
 				/obj/item/clothing/suit/armor/vest = 4,
-				/obj/item/clothing/suit/storage/security_chest_rig = 4,
+				/obj/item/clothing/suit/storage/chest_rig/security = 4,
 				/obj/item/clothing/suit/storage/vest/tactical = 1,
 				/obj/item/clothing/suit/storage/vest = 3,
 				/obj/item/clothing/suit/storage/toggle/bomber = 3,
@@ -1027,7 +1031,6 @@ something, make sure it's not in one of the other lists.*/
 				/obj/random/tank = 20,
 				/obj/random/soap = 5,
 				/obj/random/drinkbottle = 5,
-				/obj/random/loot = 1,
 				/obj/random/advdevice = 50,
 				/obj/random/smokes = 30,
 				/obj/random/masks = 10,

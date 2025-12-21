@@ -1,7 +1,10 @@
 //острова
 #include "flying_planet\clouds.dm"
 #include "flying_planet\flying.dm"
+#include "flying_planet\trees.dm"
 //Лёд
+#include "ice\ball_traectory.dm"
+#include "ice\energy_ball.dm"
 #include "ice\ice_turf.dm"
 #include "ice\ice.dm"
 #include "ice\electra_wolf.dm"
@@ -12,4 +15,5 @@
 
 #include "_planet_spawn_core.dm"
 #include "another_planets.dm"
+#include "vulcanic\vulcanic.dm"
 #include "sargas.dm"

@@ -84,6 +84,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    // Allows a ghost to respawn ,
+	/client/proc/allow_respawn,
 	/client/proc/event_manager_panel,
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/empty_ai_core_toggle_latejoin,
@@ -134,7 +135,9 @@ var/global/list/admin_verbs_fun = list(
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
-	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
+	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
+	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
+	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
 	)
 
 var/global/list/admin_verbs_spawn = list(
@@ -218,7 +221,10 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
 	/client/proc/profiler_init_verb,
-	/datum/admins/proc/EnableDevtools
+	/datum/admins/proc/EnableDevtools,
+	/datum/admins/proc/force_initialize_weather,
+	/datum/admins/proc/force_weather_state,
+	/datum/admins/proc/force_kill_weather
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(
@@ -547,11 +553,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
+			explosion(epicenter, 6)
 		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
+			explosion(epicenter, 9)
 		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+			explosion(epicenter, 15)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)

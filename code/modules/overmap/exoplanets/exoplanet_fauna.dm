@@ -8,8 +8,8 @@
 			A.real_name = "alien creature"
 			A.verbs |= /mob/living/simple_animal/proc/name_species
 
-		A.minbodytemp = atmosphere.temperature - 20
-		A.maxbodytemp = atmosphere.temperature + 30
+		A.minbodytemp = exterior_atmosphere.temperature - 20
+		A.maxbodytemp = exterior_atmosphere.temperature + 30
 		A.bodytemperature = (A.maxbodytemp+A.minbodytemp)/2
 		if (A.min_gas)
 			A.min_gas = breathgas.Copy()

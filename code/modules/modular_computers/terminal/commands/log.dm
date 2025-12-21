@@ -23,6 +23,7 @@
 	M.title = "!SENSITIVE! - NTNet System log backup"
 	M.stored_data = jointext(ntnet_global.logs, "<br>")
 	M.source = S.login
+	M.recipient = argument
 	if(!S.send_mail(argument, M))
 		return "[name]: Error; could not send email to '[argument]'."
 	if(!has_access(list(access_network_admin), user.GetAccess()))

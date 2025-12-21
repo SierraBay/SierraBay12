@@ -1,0 +1,11 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"d" = (/obj/landmark/map_load_mark/statues,/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaa
+aaaaaaa
+aaadaaa
+aaaaaaa
+aaaaaaa
+aaaaaaa
+"}

@@ -60,6 +60,7 @@
 	create_record = FALSE
 	announced = FALSE
 	late_joinable = FALSE
+	give_psionic_implant_on_join = FALSE
 	min_goals = 2
 	max_goals = 7
 	access = list(access_maint_tunnels)

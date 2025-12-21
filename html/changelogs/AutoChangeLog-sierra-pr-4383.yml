@@ -1,0 +1,5 @@
+author: Qlonever
+changes:
+  - bugfix: SMES units now correctly cap their input and output wattage when 
+      parts are removed.
+delete-after: true

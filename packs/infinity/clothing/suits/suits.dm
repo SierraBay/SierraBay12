@@ -114,3 +114,23 @@
 	icon_state = "adjutant"
 	item_state = "adjutant"
 	worn_state = "adjutant"
+
+/obj/item/clothing/under/rank/captain/whitefleet
+	name = "white captain's uniform"
+	desc = "It's a white uniform with some gold markings denoting the rank of \"Captain\"."
+	icon = 'packs/infinity/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'packs/infinity/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "wfleetcommander"
+	item_state = "wfleetcommander"
+	worn_state = "wfleetcommander"
+	displays_id = FALSE
+
+/obj/item/clothing/under/rank/captain/bluefleet
+	name = "darkblue captain's uniform"
+	desc = "It's a darkblue uniform with some gold markings denoting the rank of \"Captain\"."
+	icon = 'packs/infinity/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'packs/infinity/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "fleet_com"
+	item_state = "fleet_com"
+	worn_state = "fleet_com"
+	displays_id = FALSE

@@ -58,7 +58,7 @@ var/global/list/empty_playable_ai_cores = list()
 		if (state < STATE_WIRED)
 			USE_FEEDBACK_FAILURE("\The [src] needs to be wired before you can apply \the [tool].")
 			return TRUE
-		if (state > STATE_WIRED)
+		if (state > STATE_BRAIN)
 			USE_FEEDBACK_FAILURE("\The [src]'s panel needs to be removed before you can apply \the [tool].")
 			return TRUE
 		// Special handling for certain law board
@@ -217,7 +217,7 @@ var/global/list/empty_playable_ai_cores = list()
 		if (brain)
 			USE_FEEDBACK_FAILURE("\The [src] already has \a [brain] installed.")
 			return TRUE
-		if (state > STATE_WIRED)
+		if (state > STATE_BRAIN)
 			USE_FEEDBACK_FAILURE("\The [src]'s panel needs to be removed before you can install \the [tool].")
 			return TRUE
 		var/mob/living/carbon/brain/new_brain
@@ -230,7 +230,7 @@ var/global/list/empty_playable_ai_cores = list()
 		if (!new_brain)
 			USE_FEEDBACK_FAILURE("\The [tool] is empty and cannot be installed into \the [src].")
 			return TRUE
-		if (new_brain.stat == DEAD)
+		if (new_brain.is_dead())
 			USE_FEEDBACK_FAILURE("\The [tool] is dead and cannot be installed into \the [src].")
 			return TRUE
 		if (jobban_isbanned(brain, "AI"))
@@ -280,7 +280,7 @@ var/global/list/empty_playable_ai_cores = list()
 		if (state < STATE_WIRED)
 			USE_FEEDBACK_FAILURE("\The [src] needs to be wired before you can install a glass panel.")
 			return TRUE
-		if (state > STATE_WIRED)
+		if (state > STATE_BRAIN)
 			USE_FEEDBACK_FAILURE("\The [src] already has a glass panel.")
 			return TRUE
 		if (!material_stack.use(2))

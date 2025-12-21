@@ -286,7 +286,7 @@
 	if(air_contents.total_moles < 10)
 		return
 	if(occupant)
-		if(occupant.stat == DEAD)
+		if(occupant.is_dead())
 			return
 		occupant.set_stat(UNCONSCIOUS)
 		var/has_cryo_medicine = occupant.reagents.has_any_reagent(list(/datum/reagent/cryoxadone, /datum/reagent/clonexadone, /datum/reagent/nanitefluid)) >= REM
@@ -373,7 +373,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if (!CanMouseDrop(target, user) || !ismob(target))
+	if (!CanMouseDrop(target, user) || !ishuman(target))
 		return
 	if (!user_can_move_target_inside(target, user))
 		return

@@ -60,4 +60,6 @@
 #include "code/cards_ids.dm"
 #include "code/supermatter.dm"
 #include "code/stealthbundlerework.dm"
+#include "code/stairs.dm"
+#include "code/lang_tweak.dm"
 #endif

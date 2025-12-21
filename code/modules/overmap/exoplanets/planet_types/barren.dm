@@ -11,9 +11,10 @@
 	water_color = null
 	habitability_weight = HABITABILITY_LOCKED
 	has_trees = FALSE
+	initial_weather_state = null //Airless rocks dont have weather currently
 
 /obj/overmap/visitable/sector/exoplanet/barren/generate_atmosphere()
-	atmosphere = new
+	exterior_atmosphere = new
 
 /obj/overmap/visitable/sector/exoplanet/barren/generate_flora()
 	return

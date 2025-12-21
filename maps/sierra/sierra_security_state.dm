@@ -137,6 +137,7 @@
 /singleton/security_level/default/sierradept/code_red
 	name = "code red"
 	alarm_level = "on"
+	alarm_sound = 'sound/obj/machinery/rotating_alarm/alert_red.ogg'
 
 	light_range = 4
 	light_power = 2
@@ -171,6 +172,7 @@
 /singleton/security_level/default/sierradept/code_delta
 	name = "code delta"
 	alarm_level = "on"
+	alarm_sound = 'sound/obj/machinery/rotating_alarm/alert_red.ogg'
 
 	light_range = 4
 	light_power = 2

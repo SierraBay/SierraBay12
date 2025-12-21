@@ -135,4 +135,4 @@ var/global/datum/xgm_gas_data/gas_data
 	icon = null
 	icon_state = null
 	b = new()
-	vis_contents += b
+	add_vis_contents(b)
