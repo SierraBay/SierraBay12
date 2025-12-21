@@ -37,8 +37,9 @@
 						// new /obj/temporary(get_turf(target),8, 'icons/effects/effects.dmi', "pink_sparkles") -- Надо чёнить придумать
 						var/list/missing_limbs = target.species.has_limbs - target.organs_by_name
 						missing_limbs -= o_type
+						var/limb_type = target.species.has_limbs[o_type]["path"]
+						var/obj/new_limb = new limb_type(target)
 						E = target.get_organ(o_type)
-						target.visible_message(SPAN_GOOD("Тело [target] отрастило новую [perevod[E.organ_tag]]!"), SPAN_GOOD("Вы снова ощущаете свою [perevod[E.organ_tag]]"))
 						if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
 							if(prob(50))
 								to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому что Вы неправильно сформировали [perevod[E.organ_tag]]!"))
@@ -49,6 +50,7 @@
 								E.mutate()
 						user.apply_damage(20, DAMAGE_BRUTE, o_type)
 						user.psi.spend_power(50)
+						target.visible_message(SPAN_GOOD("Тело [target] отрастило новую [perevod[E.organ_tag]]!"), SPAN_GOOD("Вы снова ощущаете свою [perevod[E.organ_tag]]"))
 						target.regenerate_icons()
 					return TRUE
 				else
