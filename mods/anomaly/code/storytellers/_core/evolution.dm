@@ -4,7 +4,7 @@
 
 /datum/planet_storyteller
 	// Данные о каждом уровне
-	var/list/rage_levels = list(
+	var/list/rage_levels = alist(
 		LEVEL_IMPOTENT = list(
 			name = "impotent",
 			point_regeneration_time = 5 MINUTES,

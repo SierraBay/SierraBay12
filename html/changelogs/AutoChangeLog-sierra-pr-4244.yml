@@ -1,5 +1,0 @@
-author: Sbotkin
-changes:
-  - {bugfix: Fixed projector requiring you to be next to the projector to 
-      properly examine what it is projecting.}
-delete-after: true

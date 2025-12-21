@@ -2661,21 +2661,9 @@
 "et" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm/merchant{
 	dir = 4;

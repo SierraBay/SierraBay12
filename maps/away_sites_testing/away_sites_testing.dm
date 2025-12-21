@@ -24,6 +24,7 @@
 	#include "../../mods/screentips/_screentips_includes.dm" //Без этого юнит тест падает
 	#include "../away/voxship/voxship.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
+	#include "../away/salvage_shuttle/salvage_shuttle.dm"
 
 	#define using_map_DATUM /datum/map/away_sites_testing
 

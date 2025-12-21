@@ -1,5 +1,0 @@
-author: Builder13
-changes:
-  - {bugfix: Призраки больше не могут проставлять локацию на консоли 
-      спасательных подов.}
-delete-after: true

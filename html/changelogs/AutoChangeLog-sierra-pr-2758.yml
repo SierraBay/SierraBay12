@@ -1,0 +1,5 @@
+author: Mucker
+changes:
+  - rscadd: Added floating messages over a character's head when they speak. 
+      Ported from Nebula.
+delete-after: true

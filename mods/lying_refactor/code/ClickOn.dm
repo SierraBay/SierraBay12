@@ -1,5 +1,5 @@
 //КЛИИК
-/mob/ClickOn(atom/A, params)
+/mob/ClickOn(atom/A, params, use_in_world = FALSE)
 
 	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
 		return
@@ -55,6 +55,8 @@
 		throw_mode_off()
 
 	var/obj/item/W = get_active_hand()
+	if (use_in_world)
+		W = null
 
 	if(W == A) // Handle attack_self
 		W.attack_self(src)
@@ -76,7 +78,7 @@
 		else
 			if(ismob(A)) // No instant mob attacking
 				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-			UnarmedAttack(A, 1)
+			UnarmedAttack(A, 1, use_in_world)
 
 		trigger_aiming(TARGET_CAN_CLICK)
 		return
@@ -100,7 +102,7 @@
 			else
 				if(ismob(A)) // No instant mob attacking
 					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-				UnarmedAttack(A, 1)
+				UnarmedAttack(A, 1, use_in_world)
 
 			trigger_aiming(TARGET_CAN_CLICK)
 			return
