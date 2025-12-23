@@ -508,10 +508,11 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER
-	w_class = ITEM_SIZE_NO_CONTAINER
 	health_max = 200
 	icon = 'mods/psionics/icons/psi_fd/freeze.dmi'
 	icon_state = "ice_cube"
+	mouse_opacity = 2
+	cover = 100
 	var/timer = 30
 
 /obj/structure/girder/ice_wall/New()
