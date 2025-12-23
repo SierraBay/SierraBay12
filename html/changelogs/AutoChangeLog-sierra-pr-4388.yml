@@ -1,9 +1,0 @@
-author: KatTheFox
-changes:
-  - rscadd: added a verb to trigger action buttons (the things at the top left 
-      of the screen, like the magboots or welding mask toggles)
-  - rscadd: 'Перевод: в меню макросов теперь можно назначить сочетание клавиш, которое
-      будет вызывать (Activate-Action-Button X) где X это выбранная вами кнопка от
-      1 до 9 на панели активации предметов сверху. Сочетание НЕ должно быть заранее
-      использовано игрой, иначе фокуса не получится'
-delete-after: true
