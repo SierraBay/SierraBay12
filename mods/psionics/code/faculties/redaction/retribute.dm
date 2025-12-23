@@ -38,7 +38,8 @@
 						var/list/missing_limbs = target.species.has_limbs - target.organs_by_name
 						missing_limbs -= o_type
 						var/limb_type = target.species.has_limbs[o_type]["path"]
-						var/obj/new_limb = new limb_type(target)
+						var/obj/item/organ/external/new_limb = new limb_type(target)
+						new_limb.update_icon()
 						E = target.get_organ(o_type)
 						if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
 							if(prob(50))
