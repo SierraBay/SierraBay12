@@ -799,11 +799,11 @@
 /area/ship/phobos/bridge)
 "cg" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/unary/tank/hydrogen{
-	start_pressure = 6000;
-	dir = 1
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 1;
+	start_pressure = 6000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterport)
 "ch" = (
@@ -1465,10 +1465,10 @@
 /turf/simulated/floor/airless,
 /area/ship/phobos/engine/solar/starboard)
 "dK" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen{
+/obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	start_pressure = 6000
 	},
-/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterport)
 "dL" = (
@@ -2145,12 +2145,12 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "gz" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen{
-	start_pressure = 6000;
-	dir = 1
-	},
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/light,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 1;
+	start_pressure = 6000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "gB" = (
@@ -3722,7 +3722,9 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/hydrogen,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide{
+	start_pressure = 7559.63
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "nc" = (
@@ -4218,6 +4220,9 @@
 "pj" = (
 /obj/floor_decal/corner/yellow/border,
 /obj/decal/cleanable/blood/oil,
+/obj/structure/closet/medical_wall/filled{
+	pixel_x = -32
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/phobos/engine)
 "pn" = (
@@ -5924,7 +5929,8 @@
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "Pill Cabinet";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = list("ACCESS_PHOBOS")
 	},
 /obj/item/storage/pill_bottle,
 /obj/item/storage/pill_bottle,
@@ -6505,11 +6511,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/interseptor)
 "yC" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen{
-	start_pressure = 6000;
-	dir = 1
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 1;
+	start_pressure = 6000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "yD" = (
@@ -6605,7 +6611,8 @@
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "IV Equipment Cabinet";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = list("ACCESS_PHOBOS")
 	},
 /obj/structure/iv_stand,
 /obj/floor_decal/corner/paleblue{
@@ -6761,9 +6768,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/phobos/security/lobby)
 "zw" = (
-/obj/machinery/chemical_dispenser/full{
-	spawn_cartridges = list(/obj/item/reagent_containers/chem_disp_cartridge/lithium,/obj/item/reagent_containers/chem_disp_cartridge/ammonia,/obj/item/reagent_containers/chem_disp_cartridge/sodium,/obj/item/reagent_containers/chem_disp_cartridge/aluminium,/obj/item/reagent_containers/chem_disp_cartridge/silicon,/obj/item/reagent_containers/chem_disp_cartridge/phosphorus,/obj/item/reagent_containers/chem_disp_cartridge/mercury,/obj/item/reagent_containers/chem_disp_cartridge/radium,/obj/item/reagent_containers/chem_disp_cartridge/tungsten)
-	},
+/obj/machinery/chemical_dispenser/full,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -7346,11 +7351,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "Ck" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen{
-	start_pressure = 6000;
-	dir = 1
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 1;
+	start_pressure = 6000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterport)
 "Cl" = (
@@ -8255,7 +8260,8 @@
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "Medical Equipment Cabinet";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = list("ACCESS_PHOBOS")
 	},
 /obj/random/medical/lite,
 /obj/random/medical/lite,
@@ -12594,11 +12600,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "Zl" = (
-/obj/machinery/atmospherics/unary/tank/hydrogen{
-	start_pressure = 6000;
-	dir = 4
-	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 4;
+	start_pressure = 6000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/engine/thrusterstarboard)
 "Zn" = (
@@ -12662,13 +12668,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/phobos/security/equipment)
 "Zr" = (
-/obj/structure/closet/medical_wall/filled{
-	pixel_x = 0;
-	pixel_y = -32
+/obj/machinery/portable_atmospherics/canister/hydrogen{
+	start_pressure = 14999
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/steel_dirty,
-/area/ship/phobos/engine)
+/turf/simulated/floor/tiled/techfloor,
+/area/ship/phobos/engine/atmos)
 "Zs" = (
 /obj/machinery/portable_atmospherics/powered/pump,
 /obj/floor_decal/industrial/outline/yellow,
@@ -25457,7 +25461,7 @@ iq
 SF
 xr
 Pr
-Ix
+Zr
 aE
 Hp
 oH
@@ -25609,13 +25613,13 @@ aA
 Bk
 iu
 HH
-Ix
+Zr
 aE
 FU
 oH
 gW
 Ql
-Zr
+ri
 aE
 Hm
 cV
