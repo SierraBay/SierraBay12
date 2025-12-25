@@ -381,15 +381,17 @@
 			to_chat(usr, SPAN_DANGER("You cannot breathe!"))
 
 /obj/screen/movement/Click(location, control, params)
+// [SIERRA-ADD]
 	if(istype(usr))
 		var/list/modifiers = params2list(params)
 		if(modifiers["ctrl"])
 			usr?.face_direction()
 			update_icon()
 			return
-
+// [/SIERRA-ADD]
 		usr.set_next_usable_move_intent()
 
+// [SIERRA-ADD]
 /obj/screen/movement/on_update_icon()
 	. = ..()
 	var/image/chached_fixeye = image('packs/infinity/icons/mob/screen/facedir.dmi', icon_state = "facedir1")
@@ -398,3 +400,4 @@
 		AddOverlays(chached_fixeye)
 	else
 		ClearOverlays()
+// [/SIERRA-ADD]

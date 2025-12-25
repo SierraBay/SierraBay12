@@ -31,7 +31,7 @@
 
 
 /datum/keybinding/movement/move_quickly
-	hotkey_keys = list("Shift")
+	hotkey_keys = list(MOUSE_SHIFT)
 	name = "moving_quickly"
 	full_name = "Move Quickly"
 	description = "Makes you move quickly"

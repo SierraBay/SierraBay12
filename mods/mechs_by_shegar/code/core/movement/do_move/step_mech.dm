@@ -11,7 +11,7 @@
 				var/mob/pilot = thing
 				if(pilot && pilot.client)
 					for(var/key in pilot.client.keys_held)
-						if (key == "Shift")
+						if (key == MOUSE_SHIFT)
 							SetMoveCooldown(current_speed)
 							forceMove(target_loc)
 						else

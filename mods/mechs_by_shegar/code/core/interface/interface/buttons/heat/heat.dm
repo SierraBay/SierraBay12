@@ -2,7 +2,7 @@
 
 /obj/screen/movable/exosuit/advanced_heat/Click(location, control, params)
 	var/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[MOUSE_SHIFT])
 		if(owner && owner.material)
 			to_chat(usr, SPAN_NOTICE("Your suit's safe operating limit ceiling is [owner.material.melting_point - T0C] °C OR [owner.material.melting_point] K" ))
 			return

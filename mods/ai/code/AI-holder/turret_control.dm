@@ -21,7 +21,7 @@ AIHOLDER_INITIALIZE(/obj/machinery/porta_turret)
 /obj/machinery/porta_turret/onAiHolderClickOn(atom/A, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
+	if(modifiers[MOUSE_3])
 		if(raised)
 			popDown()
 		else
