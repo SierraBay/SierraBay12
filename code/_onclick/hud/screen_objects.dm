@@ -157,7 +157,7 @@
 
 	var/list/params = params2list(string_params)
 	// the screen location format is "tileX:pixelX,tileY:pixelY"
-	var/list/clicked_loc = splittext(params[MOUSE_SCREEN_LOC], ",")
+	var/list/clicked_loc = splittext(params["screen-loc"], ",")
 	// so this is "tileX:pixelX"
 	var/list/clicked_loc_X = splittext(clicked_loc[1],":")
 	// and "tileY:pixelY"
@@ -184,7 +184,7 @@
 		var/clicked_loc_tile_X = text2num(clicked_loc_X[1])
 		var/clicked_loc_pixel_X = text2num(clicked_loc_X[2])
 
-		var/clicked_loc_x = clicked_loc_tile_X * WORLD_ICON_SIZE + clicked_loc_pixel_X 
+		var/clicked_loc_x = clicked_loc_tile_X * WORLD_ICON_SIZE + clicked_loc_pixel_X
 
 		for (var/i in 1 to length(containing_ui.space_obj_x_start))
 			var/obj/item/stored = master.contents[i]
