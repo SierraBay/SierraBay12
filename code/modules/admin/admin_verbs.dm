@@ -553,11 +553,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
+			explosion(epicenter, 6)
 		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
+			explosion(epicenter, 9)
 		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+			explosion(epicenter, 15)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)

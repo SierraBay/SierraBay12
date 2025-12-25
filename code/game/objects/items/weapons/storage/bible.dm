@@ -65,11 +65,22 @@
 	renamed = 1
 	icon_changed = 1
 
+/obj/item/storage/bible/grandstratagem
+	name = "\improper Histories of the Kaahnepos"
+	desc = "A blue scaled hide-bound tome detailing the lives of Kaahnepos, told through poems and epics."
+	icon_state = "stratagem_blue"
+	renamed = 1
+	icon_changed = 1
+
+/obj/item/storage/bible/grandstratagem/green
+	desc = "A green scaled hide-bound tome detailing the lives of Kaahnepos, told through poems and epics."
+	icon_state = "stratagem_green"
+
 /obj/item/storage/bible/use_before(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	. = FALSE
 	if (user == M || !ishuman(user) || !ishuman(M))
 		return FALSE
-	if (user.mind && istype(user.mind.assigned_job, /datum/job/chaplain))
+	if (user.mind)
 		user.visible_message(SPAN_NOTICE("\The [user] places \the [src] on \the [M]'s forehead, reciting a prayer..."))
 		if (do_after(user, 5 SECONDS, M, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && user.Adjacent(M))
 			var/datum/pronouns/pronouns = user.choose_from_pronouns()
@@ -81,7 +92,7 @@
 		return TRUE
 
 /obj/item/storage/bible/use_after(atom/A, mob/living/user, click_parameters)
-	if(user.mind && istype(user.mind.assigned_job, /datum/job/chaplain))
+	if(user.mind)
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water))
 			to_chat(user, SPAN_NOTICE("You bless \the [A]."))
 			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
@@ -97,7 +108,7 @@
 /obj/item/storage/bible/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user))
 		return
-	if(user.mind && istype(user.mind.assigned_job, /datum/job/chaplain))
+	if(user.mind)
 		user.visible_message("\The [user] begins to read a passage from \the [src]...", "You begin to read a passage from \the [src]...")
 		if(do_after(user, 5 SECONDS, src, do_flags = DO_PUBLIC_UNIQUE))
 			user.visible_message("\The [user] reads a passage from \the [src].", "You read a passage from \the [src].")
@@ -130,7 +141,7 @@
 
 		for(var/i = 10; i >= 0; i -= 1)
 			if(src && !M.stat && in_range(M,src))
-				var/icon_picked = input(M, "Icon?", "Book Icon", null) in list("don't change", "bible", "koran", "scrapbook", "white", "holylight", "atheist", "kojiki", "torah", "kingyellow", "ithaqua", "necronomicon", "ninestar")
+				var/icon_picked = input(M, "Icon?", "Book Icon", null) in list("don't change", "bible", "koran", "scrapbook", "white", "holylight", "atheist", "kojiki", "torah", "kingyellow", "ithaqua", "necronomicon", "ninestar", "stratagem_blue", "stratagem_green", "guru")
 				if(icon_picked != "don't change" && icon_picked)
 					icon_state = icon_picked
 				if(i != 0)

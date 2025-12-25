@@ -8,8 +8,8 @@
 <table>
 <tr><td align="center" width="2000"><b>
 <a href="https://github.com/baystation12/baystation12">Апстрим</a> • 
-<a href="https://discord.ss220.space">Discord</a> • 
-<a href="https://sierra.ss220.space">Wiki</a>
+<a href="https://discord.com/invite/rxsggTJzY3">Discord</a> • 
+<a href="https://sierra.celadon.pro">Wiki</a>
 </b></td></tr>
 <tr><td align="center" width="2000"><b>
 <a href="#рекомендации-для-контрибьюторов">Коллаборация</a> • 
