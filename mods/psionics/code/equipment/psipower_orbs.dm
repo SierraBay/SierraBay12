@@ -504,7 +504,6 @@
 	color = "#9ee0dd"
 
 /obj/structure/girder/ice_wall
-	icon_state = "ice wall"
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER
@@ -686,12 +685,6 @@
 				animate(IW, pixel_x = 0, pixel_y = 0, time = 3, easing = EASE_OUT)
 
 		..()
-
-	new /obj/structure/girder/ice_wall(get_turf(target))
-	new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "extinguish")
-	target.Stun(3*cryo_rank)
-	user.visible_message(SPAN_DANGER("[user] прикасается к телу [target] побледневшей рукой, обращая его в лёд!"))
-	target.bodytemperature = 500 / cryo_rank
 	..()
 
 /obj/item/psychic_power/psiice/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob, proximity)
@@ -786,12 +779,19 @@
 
 			return TRUE
 
-		new /obj/structure/girder/ice_wall(get_turf(target))
-		new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "extinguish")
-		target.Stun(3*cryo_rank)
-		user.visible_message(SPAN_DANGER("[user] прикасается к телу [target] побледневшей рукой, обращая его в лёд!"))
-		target.bodytemperature = 500 / cryo_rank
-		return TRUE
+		if(cryo_rank >= PSI_RANK_MASTER)
+			new /obj/structure/girder/ice_wall(get_turf(target))
+			new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "extinguish")
+			target.Stun(3*cryo_rank)
+			user.visible_message(SPAN_DANGER("[user] прикасается к телу [target] побледневшей рукой, обращая его в лёд!"))
+			target.bodytemperature = 500 / cryo_rank
+			return TRUE
+
+		else
+			new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "extinguish")
+			user.visible_message(SPAN_DANGER("[user] прикасается к телу [target] побледневшей рукой, заставляя его покрыться коркой льда!"))
+			target.bodytemperature = 400 / cryo_rank
+			return TRUE
 
 //ITEMS
 
