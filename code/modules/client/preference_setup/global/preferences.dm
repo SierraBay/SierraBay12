@@ -91,6 +91,10 @@ var/global/list/_client_preferences_by_type
 /datum/client_preference/proc/changed(mob/preference_mob, new_value)
 	return
 
+/// Called when a client's preferences are first set up
+/datum/client_preference/proc/started(mob/user, value)
+	return
+
 /*********************
 * Player Preferences *
 *********************/
@@ -353,6 +357,21 @@ var/global/list/_client_preferences_by_type
 	key = "TOGGLE_RUN"
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 	default_value = GLOB.PREF_NO
+
+
+/datum/client_preference/atom_outlines
+	description = "Show Atom Outlines"
+	key = "ATOM_OUTLINE"
+
+
+/datum/client_preference/atom_outlines/changed(mob/user, new_value)
+	var/client/client = user.client
+	client?.SetOutlineAtom()
+	client?.outline_enabled = new_value == GLOB.PREF_YES
+
+
+/datum/client_preference/atom_outlines/started(mob/user, value)
+	changed(user, value)
 
 
 /********************
