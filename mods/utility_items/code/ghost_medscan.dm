@@ -3,8 +3,8 @@
 		var/mob/living/carbon/human/H = following
 		var/dat = display_medical_data(H.get_raw_medical_data(), SKILL_MAX)
 
-		dat += text("<BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", usr)
-		show_browser(src, dat, "window=scanconsole;size=430x600")
+		dat += "<A href='byond://?src=\ref[usr];mach_close=scanconsole'>Close</A>"
+		show_browser(usr, dat, "window=scanconsole;size=430x600")
 
 	else if(issilicon(following))
 		var/mob/living/silicon/robot/R = following
