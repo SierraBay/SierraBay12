@@ -221,7 +221,7 @@
 /obj/structure/table/steel,
 /obj/structure/window/reinforced,
 /obj/item/stock_parts/circuitboard/helm,
-/obj/item/stock_parts/circuitboard/sensors,
+/obj/item/stock_parts/circuitboard/modular_computer,/obj/item/stock_parts/computer/hard_drive/super/helm,/obj/item/stock_parts/computer/ship_interface,
 /obj/item/stock_parts/circuitboard/shuttle_console/explore,
 /obj/item/stock_parts/circuitboard/modular_computer,
 /obj/item/stock_parts/computer/hard_drive/super/helm,
@@ -4225,7 +4225,7 @@
 /turf/simulated/floor/plating,
 /area/verne/catfish)
 "Bt" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 4
 	},
 /obj/floor_decal/corner/b_green/mono,
@@ -5337,7 +5337,7 @@
 /obj/structure/bed/chair/shuttle/white{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = -32
 	},
 /obj/floor_decal/corner/b_green/mono,

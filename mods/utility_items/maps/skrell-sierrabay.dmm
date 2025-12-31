@@ -1238,7 +1238,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
 "en" = (
-/obj/machinery/computer/ship/sensors/skrell{
+/obj/machinery/computer/modular/preset/sensors/skrell{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/skrell/red,
@@ -1855,7 +1855,7 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/hangar)
 "ga" = (
-/obj/machinery/computer/ship/sensors/skrell,
+/obj/machinery/computer/modular/preset/sensors/skrell,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "gb" = (
@@ -2233,7 +2233,7 @@
 /area/ship/skrellscoutship/hangar)
 "gX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/computer/ship/sensors/skrell{
+/obj/machinery/computer/modular/preset/sensors/skrell{
 	dir = 4
 	},
 /obj/structure/window/reinforced{

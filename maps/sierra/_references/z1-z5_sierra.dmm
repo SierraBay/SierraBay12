@@ -18474,7 +18474,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/security/sierra/brig)
 "cKF" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /turf/simulated/floor/plating,
 /area/crucian_hangar/start)
 "cKH" = (
@@ -30438,7 +30438,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/firstdeck/forestarboard)
 "etw" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -40241,7 +40241,7 @@
 /area/quartermaster/hangar)
 "fQd" = (
 /obj/machinery/recharger,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -70887,7 +70887,7 @@
 /turf/simulated/floor/reinforced,
 /area/thruster/d1starboard)
 "kvv" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/item/modular_computer/telescreen/preset/generic{
 	pixel_y = 22
 	},
@@ -73467,7 +73467,7 @@
 /turf/simulated/floor/plating,
 /area/crew_quarters/garden_room)
 "kNS" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 1
 	},
 /obj/machinery/power/apc/hyper{

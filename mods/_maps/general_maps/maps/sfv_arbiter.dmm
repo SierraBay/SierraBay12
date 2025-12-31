@@ -146,7 +146,7 @@
 	},
 /obj/floor_decal/corner/grey/mono,
 /obj/item/clothing/head/helmet,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = 32
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -871,7 +871,7 @@
 /turf/simulated/floor/tiled,
 /area/map_template/sfv_arbiter)
 "zZ" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/floor_decal/corner/blue/mono,
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -1139,7 +1139,7 @@
 	pixel_y = 0
 	},
 /obj/item/clothing/head/helmet,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = -32
 	},
 /obj/structure/cable/cyan{

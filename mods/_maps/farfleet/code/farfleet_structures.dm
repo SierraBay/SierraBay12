@@ -209,9 +209,9 @@
 	//MISC//
 	////////
 
-/obj/machinery/computer/ship/sensors/farfleet
+/obj/machinery/computer/modular/preset/sensors/farfleet
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/sensors
+	base_type = /obj/machinery/computer/modular/preset/sensors
 	print_language = LANGUAGE_HUMAN_RUSSIAN
 
 /obj/machinery/door/airlock/terran

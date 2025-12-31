@@ -379,7 +379,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/bridge)
 "bv" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /turf/simulated/floor/wood/walnut,
 /area/playable_yacht/bridge)
 "bw" = (
@@ -1115,7 +1115,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/playable_yacht/right_engine)
 "dW" = (
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	dir = 3;
 	pixel_y = 32
 	},

@@ -793,7 +793,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/disperser)
 "ce" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
@@ -9285,7 +9285,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -11945,7 +11945,7 @@
 /obj/machinery/computer/modular/preset/munitions/sol{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/dark/monotile,

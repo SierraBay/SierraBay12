@@ -1570,7 +1570,7 @@
 	dir = 1;
 	pixel_y = -20
 	},
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 1
 	},
 /turf/simulated/floor/wood/walnut,
@@ -4853,7 +4853,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/engineeringengines)
 "iz" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 8
 	},
 /obj/floor_decal/corner/blue/mono,
