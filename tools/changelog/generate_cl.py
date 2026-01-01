@@ -67,13 +67,8 @@ if not cl or not cl_list:
     print("No CL found!")
     exit(0)
 
-<<<<<<< ours
-if cl.group(2) is not None:
-    write_cl['author'] = cl.group(2).strip() or pr_author
-=======
 if cl.group(2):
     write_cl['author'] = cl.group(2).lstrip()
->>>>>>> theirs
 else:
     write_cl['author'] = pr_author
 
