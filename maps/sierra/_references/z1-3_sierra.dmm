@@ -30590,7 +30590,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe)
 "gDo" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 1
 	},
 /obj/floor_decal/borderfloor,
@@ -48356,7 +48356,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/security/sierra/evidence)
 "kvI" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -59236,7 +59236,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -64723,7 +64723,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/sleeper)
 "nVD" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /obj/structure/sign/warning/secure_area{
 	pixel_y = 30
 	},

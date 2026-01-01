@@ -2521,7 +2521,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance)
 "kt" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /obj/structure/sign/double/iccgflag/right{
 	pixel_y = 32
 	},

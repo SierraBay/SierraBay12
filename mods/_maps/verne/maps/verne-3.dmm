@@ -2977,7 +2977,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/medical)
 "vm" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/structure/cable{

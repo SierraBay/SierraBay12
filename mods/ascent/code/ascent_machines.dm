@@ -162,13 +162,13 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
 	base_type = /obj/machinery/computer/modular/preset/helm
 
-/obj/machinery/computer/ship/navigation/ascent
+/obj/machinery/computer/modular/preset/navigation/ascent
 	icon_state = "ascent"
 	icon_keyboard = "ascent_key"
 	icon_screen = "ascent_screen"
 	req_access = list(access_ascent)
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/navigation
+	base_type = /obj/machinery/computer/modular/preset/navigation
 
 /obj/machinery/computer/modular/preset/sensors/ascent
 	icon_state = "ascent"

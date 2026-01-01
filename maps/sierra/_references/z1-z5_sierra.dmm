@@ -57807,7 +57807,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
@@ -92105,7 +92105,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/virology/lab)
 "nAg" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/floor_decal/industrial/outline/yellow,
@@ -97377,7 +97377,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/heads/office/iaa/cobed)
 "oqk" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -102779,7 +102779,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -144191,7 +144191,7 @@
 /area/shuttle/petrov/ship)
 "vgF" = (
 /obj/floor_decal/corner/mauve/mono,
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -149154,7 +149154,7 @@
 	},
 /area/space)
 "vTd" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/floor_decal/corner/black/full,

@@ -160,7 +160,7 @@
 "uK" = (/obj/structure/closet/crate/freezer/meat/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_caulship)
 "uV" = (/obj/structure/reagent_dispensers/water_cooler/ascent{dir = 8},/turf/simulated/floor/ascent/tiled,/area/ship/ascent_caulship)
 "vq" = (/obj/item/reagent_containers/food/snacks/meat/beef,/obj/structure/window/reinforced,/turf/simulated/floor/ascent,/area/ship/ascent_caulship)
-"vT" = (/obj/machinery/computer/ship/navigation/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_caulship)
+"vT" = (/obj/machinery/computer/modular/preset/navigation/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_caulship)
 "wE" = (/obj/structure/cable/cyan{d1 = 1; d2 = 4; dir = 8; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/visible/supply{dir = 4; icon_state = "intact-supply"},/turf/simulated/floor/ascent,/area/ship/ascent_caulship)
 "Au" = (/obj/machinery/portable_atmospherics/canister/methyl_bromide{start_pressure = 10000},/turf/simulated/floor/ascent/tiled,/area/ship/ascent_caulship)
 "En" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{id_tag = "ascent_caulship_pump_out_internal"},/obj/structure/hygiene/shower/ascent{dir = 8; icon_state = "shower"},/turf/simulated/floor/ascent,/area/ship/ascent_caulship)

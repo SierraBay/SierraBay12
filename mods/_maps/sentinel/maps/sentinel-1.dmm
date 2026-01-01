@@ -8394,7 +8394,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
@@ -9480,7 +9480,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "Vm" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
