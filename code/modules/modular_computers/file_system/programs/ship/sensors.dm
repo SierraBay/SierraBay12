@@ -25,6 +25,12 @@
 	nanomodule_path = /datum/nano_module/program/ship/sensors/spacer
 	available_on_ntnet = FALSE
 
+// [SIERRA-ADD] - PAN-SLAVIC MODULES
+/datum/computer_file/program/ship/sensors/russian
+	nanomodule_path = /datum/nano_module/program/ship/sensors/russian
+	available_on_ntnet = FALSE
+// [/SIERRA-ADD] - PAN-SLAVIC MODULES
+
 /datum/computer_file/program/ship/sensors/process_tick()
 	..()
 	var/datum/nano_module/program/ship/sensors/sensors_program = NM
@@ -34,6 +40,10 @@
 
 /datum/nano_module/program/ship/sensors/spacer
 	print_language = LANGUAGE_SPACER
+
+/datum/nano_module/program/ship/sensors/russian
+	print_language = LANGUAGE_HUMAN_RUSSIAN
+
 
 /datum/nano_module/program/ship/sensors/proc/get_sensors()
 	var/obj/machinery/shipsensors/sensors = sensor_ref?.resolve()

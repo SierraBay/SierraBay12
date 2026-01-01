@@ -229,3 +229,11 @@
 		/datum/computer_file/program/ship/sensors/spacer
 	)
 	autorun_program = /datum/computer_file/program/ship/sensors/spacer
+
+// [SIERRA-ADD] - PAN-SLAVIC MODULES
+/obj/machinery/computer/modular/preset/sensors/russian
+	default_software = list(
+		/datum/computer_file/program/ship/sensors/russian
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors/russian
+// [/SIERRA-ADD] - PAN-SLAVIC MODULES
