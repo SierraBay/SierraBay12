@@ -183,6 +183,7 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 /datum/computer_file/program/ship/sensors/ascent
 	nanomodule_path = /datum/nano_module/program/ship/sensors/ascent
 	available_on_ntnet = FALSE
+	modify_access_req = null
 
 /datum/nano_module/program/ship/sensors/ascent
 	print_language = LANGUAGE_MANTID_VOCAL

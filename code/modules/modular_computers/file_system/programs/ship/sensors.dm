@@ -44,7 +44,7 @@
 
 /datum/nano_module/program/ship/sensors/russian
 	print_language = LANGUAGE_HUMAN_RUSSIAN
-
+	modify_access_req = null
 
 /datum/nano_module/program/ship/sensors/proc/get_sensors()
 	var/obj/machinery/shipsensors/sensors = sensor_ref?.resolve()
