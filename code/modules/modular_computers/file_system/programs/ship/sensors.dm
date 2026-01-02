@@ -40,6 +40,7 @@
 
 /datum/nano_module/program/ship/sensors/spacer
 	print_language = LANGUAGE_SPACER
+	modify_access_req = null
 
 /datum/nano_module/program/ship/sensors/russian
 	print_language = LANGUAGE_HUMAN_RUSSIAN
