@@ -18,8 +18,9 @@
 #define MOUSE_CTRL "ctrl"
 
 /// Truthy when shift was down during the event
-#define MOUSE_SHIFT "shift"
-
+// [SIERRA-EDIT "shift" - "Shift"]
+#define MOUSE_SHIFT "Shift"
+// [SIERRA-EDIT-END]
 /// Truthy when alt was down during the event
 #define MOUSE_ALT "alt"
 
