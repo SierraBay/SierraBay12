@@ -7,7 +7,7 @@
 
 
 /datum/keybinding/living/rest
-	hotkey_keys = list(MOUSE_SHIFT, "B")
+	hotkey_keys = list("ShiftB")
 	name = "rest"
 	full_name = "Rest"
 	description = "You lay down/get up"
