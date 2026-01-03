@@ -161,9 +161,9 @@
 	if(H.species.name == SPECIES_MOTH)
 		return
 	H.adjustToxLoss(40 * removed)
-	if(H.chem_doses[type] < 1 || prob(30))
+	if(H.metabolized.get_reagent_amount(type) < 1 || prob(30))
 		return
-	H.chem_doses[type] = 0
+	H.metabolized.get_reagent_amount(type) = 0
 	var/list/meatchunks = list()
 	for(var/limb_tag in list(BP_R_ARM, BP_L_ARM, BP_R_LEG,BP_L_LEG))
 		var/obj/item/organ/external/E = H.get_organ(limb_tag)
