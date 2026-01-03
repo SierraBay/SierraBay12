@@ -23,7 +23,7 @@
 		return
 
 	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
-	if(!prefs.hotkeys && length(_key) == 1 && _key != MOUSE_ALT && _key != MOUSE_CTRL && _key != MOUSE_SHIFT)
+	if(!prefs.hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
 		var/current_text = winget(src, "input", "text")
 		winset(src, "outputwindow.input", "focus=true;text=[current_text + url_encode(_key)]")
 		return
@@ -43,12 +43,12 @@
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
-	var/AltMod = keys_held[MOUSE_ALT] ? MOUSE_ALT : ""
-	var/CtrlMod = keys_held[MOUSE_CTRL] ? MOUSE_CTRL : ""
-	var/ShiftMod = keys_held[MOUSE_SHIFT] ? MOUSE_SHIFT : ""
+	var/AltMod = keys_held["Alt"] ? "Alt" : ""
+	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl" : ""
+	var/ShiftMod = keys_held["Shift"] ? "Shift" : ""
 	var/full_key
 	switch(_key)
-		if(MOUSE_ALT, MOUSE_CTRL, MOUSE_SHIFT)
+		if("Alt", "Ctrl", "Shift")
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			if(AltMod || CtrlMod || ShiftMod)
