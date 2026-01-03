@@ -180,7 +180,7 @@
 	name = "medical tobacco"
 	desc = "Medicinal tobacco used for relaxation and concentration."
 
-	filling = list(/datum/reagent/tobacco/medical = 1, /datum/reagent/paroxetine = 0.7)
+	filling = list(/datum/reagent/tobacco/medical = 1, /datum/reagent/antidepressant/paroxetine = 0.7)
 
 /obj/item/clothing/mask/chewable/tobacco/strong
 	name = "strong tobacco"

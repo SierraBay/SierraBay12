@@ -155,15 +155,21 @@
 	value = 2
 	should_admin_log = TRUE
 
-/datum/reagent/mothtoxin/affect_blood(mob/living/carbon/human/H, removed)
+/datum/reagent/mothtoxin/affect_blood(mob/living/carbon/human/affected, removed)
+	if(!istype(affected))
+		return
+	if(affected.species.name == SPECIES_MOTH)
+		return
+	affected.adjustToxLoss(40 * removed)
+
+/datum/reagent/mothtoxin/affect_metabolites(mob/living/carbon/human/H, dose)
 	if(!istype(H))
 		return
 	if(H.species.name == SPECIES_MOTH)
 		return
-	H.adjustToxLoss(40 * removed)
-	if(H.metabolized.get_reagent_amount(type) < 1 || prob(30))
+	if (dose < 1 || prob(30))
 		return
-	H.metabolized.get_reagent_amount(type) = 0
+	remove_self(dose)
 	var/list/meatchunks = list()
 	for(var/limb_tag in list(BP_R_ARM, BP_L_ARM, BP_R_LEG,BP_L_LEG))
 		var/obj/item/organ/external/E = H.get_organ(limb_tag)

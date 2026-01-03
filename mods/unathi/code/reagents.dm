@@ -24,7 +24,7 @@
 	var/weakness_modifier = 30
 	scannable = 1
 	metabolism = 0.05
-	ingest_met = 0.02
+	bioavailability = 0.02
 	flags = IGNORE_MOB_SIZE
 	value = 3.1
 	var/pain_power = 80 //magnitide of painkilling effect
