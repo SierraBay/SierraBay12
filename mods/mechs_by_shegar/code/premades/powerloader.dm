@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/powerloader
 	name = "power loader"
 	desc = "An ancient, but well-liked cargo handling mech."
+	external_armor_type = /obj/item/mech_external_armor/civil
 
 /mob/living/exosuit/premade/powerloader/Initialize()
 	if(!head)

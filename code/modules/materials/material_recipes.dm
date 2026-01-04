@@ -60,6 +60,7 @@
 		. += new/datum/stack_recipe/large_blade(src)
 		. += new/datum/stack_recipe/drill_head(src)
 		. += new/datum/stack_recipe/weapon_frame(src)
+		. += new/datum/stack_recipe/roller_rack(src)
 
 /material/steel/generate_recipes(reinforce_material)
 	. = ..()
@@ -124,6 +125,7 @@
 	. += create_recipe_list(/datum/stack_recipe/tile/light)
 	. += new/datum/stack_recipe/hazard_cone(src)
 	. += new/datum/stack_recipe/furniture/flaps(src)
+	. += new/datum/stack_recipe/roller_rack(src)
 
 /material/wood/generate_recipes(reinforce_material)
 	. = ..()
@@ -182,7 +184,15 @@
 	. = ..()
 	if(reinforce_material)	//recipes below don't support composite materials
 		return
+	. += new/datum/stack_recipe_list("office chairs",list(
+		new/datum/stack_recipe/furniture/chair/office/dark(src),
+		new/datum/stack_recipe/furniture/chair/office/light(src)
+		))
 	. += new/datum/stack_recipe/grenade(src)
+	. += new/datum/stack_recipe/missile_frame(src)
+	. += new/datum/stack_recipe_list("comfy office chairs", create_recipe_list(/datum/stack_recipe/furniture/chair/office/comfy))
+	. += new/datum/stack_recipe_list("comfy chairs", create_recipe_list(/datum/stack_recipe/furniture/chair/comfy))
+	. += new/datum/stack_recipe_list("armchairs", create_recipe_list(/datum/stack_recipe/furniture/chair/arm))
 
 /material/leather/generate_recipes(reinforce_material)
 	. = ..()

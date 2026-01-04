@@ -7,6 +7,8 @@ GLOBAL_VAR_AS(ambience_channel_vents, GLOB.sound_channels.RequestChannel("AMBIEN
 GLOBAL_VAR_AS(ambience_channel_forced, GLOB.sound_channels.RequestChannel("AMBIENCE_FORCED"))
 GLOBAL_VAR_AS(ambience_channel_common, GLOB.sound_channels.RequestChannel("AMBIENCE_COMMON"))
 
+GLOBAL_VAR_AS(weather_channel, GLOB.sound_channels.RequestChannel("WEATHER"))
+
 /repository/sound_channels
 	var/datum/stack/available_channels
 	var/list/keys_by_channel           // So we know who to blame if we run out

@@ -69,12 +69,14 @@
 	display_name = "qipao blouse, colour select"
 	path = /obj/item/clothing/accessory/qipao
 	flags = GEAR_HAS_COLOR_SELECTION
-
+//[SIERRA-DELETE]
+/*
 /datum/gear/clothing/sweater
 	display_name = "turtleneck sweater, colour select"
 	path = /obj/item/clothing/accessory/sweater
 	flags = GEAR_HAS_COLOR_SELECTION
-
+*/
+//[SIERRA-DELETE]
 /datum/gear/clothing/tangzhuang
 	display_name = "tangzhuang jacket, colour select"
 	path = /obj/item/clothing/accessory/tangzhuang

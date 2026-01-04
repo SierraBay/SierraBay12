@@ -67,7 +67,7 @@
 		if (prob(50))
 			loot += new /obj/item/material/shard/shrapnel/copper (origin)
 		for (var/obj/item/item as anything in loot)
-			item.throw_at(CircularRandomTurfAround(origin, Frand(2, 6)), 5, 5)
+			item.throw_at(CircularRandomTurfAround(origin, frand(2, 6)), 5, 5)
 	qdel(src)
 
 // Ion version of the defending robots. Watch the friendly fire!
@@ -284,7 +284,7 @@
 
 /obj/aura/mobshield/added_to(mob/living/target)
 	. = ..()
-	target.vis_contents += src
+	target.add_vis_contents(src)
 	flick("shield_raise", src) //Animation on add / spawn
 	set_dir() //the whole dir bit is for rendering, if you dont use this just remove this and the GLOB.dir_set_event stuff
 	GLOB.dir_set_event.register(user, src, TYPE_PROC_REF(/obj/aura/mobshield, update_dir))
@@ -295,7 +295,7 @@
 /obj/aura/mobshield/Destroy()
 	if(user)
 		GLOB.dir_set_event.unregister(user, src, TYPE_PROC_REF(/obj/aura/mechshield, update_dir))
-		user.vis_contents -= src
+		user.remove_vis_contents(src)
 	. = ..()
 
 /obj/aura/mobshield/proc/block_chance(damage, pen, atom/source, mob/attacker)

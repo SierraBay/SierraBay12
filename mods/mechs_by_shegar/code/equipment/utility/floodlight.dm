@@ -1,7 +1,7 @@
 // A lot of this is copied from floodlights.
 /obj/item/mech_equipment/light
 	name = "floodlight"
-	desc = "An exosuit-mounted light."
+	desc = "An mech-mounted light."
 	icon_state = "mech_floodlight"
 	item_state = "mech_floodlight"
 	restricted_hardpoints = list(HARDPOINT_HEAD, HARDPOINT_LEFT_SHOULDER, HARDPOINT_RIGHT_SHOULDER)

@@ -16,7 +16,8 @@
 	alt_titles = list(
 		"Surgical Resident" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/surgicalresident,
 		"Xenosurgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/xenosurgeon,
-		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon
+		"Trauma Surgeon" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/traumasurgeon,
+		"Physician" = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior/physican
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/senior
 	allowed_branches = list(
@@ -25,7 +26,9 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
@@ -39,7 +42,7 @@
 		SKILL_ANATOMY     = SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_virology,
+		access_medical, access_morgue, access_virology, access_medical_records,
 		access_maint_tunnels, access_emergency_storage, access_crematorium,
 		access_surgery, access_eva, access_external_airlocks,
 		access_medical_equip, access_senmed, access_hangar,
@@ -56,30 +59,31 @@
 	вкупе с предоперационным лечением пострадавших, спектр активности хирурга является несколько более широким, начиная от обычного лечения медикаментами в случае необходимости и заканчивая проведением сложных хирургических операций."
 
 /datum/job/doctor
-	title = "Physician"
+	title = "Paramedic"
 	supervisors = "Главному Врачу"
 	department = "Медицинский"
 	department_flag = MED
 	total_positions = 3
 	spawn_positions = 3
 
-	minimum_character_age = list(SPECIES_HUMAN = 24)
+	minimum_character_age = list(SPECIES_HUMAN = 19)
 	ideal_character_age = 26
 	economic_power = 7
 	skill_points = 22
 
 	alt_titles = list(
-		"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/paramedic,
-		"Medical Doctor" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+		"Emergency Medical Technician" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA		=	SKILL_BASIC,
@@ -92,7 +96,7 @@
 		SKILL_VIROLOGY	=	SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_virology,
+		access_medical, access_morgue, access_virology, access_medical_records,
 		access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 		access_eva, access_surgery, access_medical_equip,
 		access_hangar
@@ -103,15 +107,15 @@
 	)
 
 /datum/job/doctor/get_description_blurb()
-	return "В отличии от хирургов, врач, а также парамедик, занимаются лечением обычных ранений и травм. Обычно они не имеют высшего медицинского образования, но они всё равно являются опорой медбея."
+	return "Парамедики и медицинские техники - первые, кто окажется у пациента. Именно они эвакуируют пострадавших в ходе инцидентов, а также оказывают ПМП перед тем, как передать пациента другим специалистам."
 
 /datum/job/doctor_trainee
-	title = "Intern"
+	title = "Trainee Paramedic"
 	supervisors = "Главному Врачу и остальному медицинскому персоналу"
 	department = "Медицинский"
 	department_flag = MED
 
-	minimum_character_age = list(SPECIES_HUMAN = 20)
+	minimum_character_age = list(SPECIES_HUMAN = 18)
 	ideal_character_age = 21
 	economic_power = 3
 	skill_points = 18
@@ -123,14 +127,16 @@
 		"Orderly" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/orderly,
 		"Nurse" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	allowed_branches = list(
 		/datum/mil_branch/employee,
 		/datum/mil_branch/contractor
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA = SKILL_BASIC,
@@ -140,7 +146,7 @@
 		SKILL_MEDICAL = SKILL_MAX
 	)
 	access = list(
-		access_medical, access_morgue, access_surgery,
+		access_medical, access_morgue, access_surgery, access_medical_records,
 		access_medical_equip, access_maint_tunnels, access_emergency_storage,
 		access_external_airlocks, access_hangar
 	)
@@ -150,7 +156,7 @@
 	)
 
 /datum/job/doctor_trainee/get_description_blurb()
-	return "Интерн является самым младшим членом медицинского персонала, который учится искусству лечения у других врачей.\
+	return "Фельдшер-стажер является самым младшим членом медицинского персонала, который учится искусству лечения у других врачей.\
 	Оказывайте помощь другому медперсоналу, будь то химик или даже консультант - Вы здесь самые младшие. Будьте аккуратны и внимательны, и скоро станете настоящим врачом."
 
 /datum/job/chemist
@@ -173,7 +179,7 @@
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/chemist
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_BASIC,
 		SKILL_CHEMISTRY = SKILL_TRAINED
@@ -184,7 +190,7 @@
 	)
 	access = list(
 		access_medical, access_maint_tunnels, access_emergency_storage,
-		access_medical_equip, access_chemistry, access_virology
+		access_medical_equip, access_chemistry, access_virology, access_medical_records
 	)
 
 
@@ -219,7 +225,9 @@
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
-		/datum/mil_rank/civ/civ
+		/datum/mil_rank/civ/civ,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
@@ -230,25 +238,26 @@
 	)
 	access = list(
 		access_medical, access_morgue, access_chapel_office,
-		access_crematorium, access_psychiatrist
+		access_crematorium, access_psychiatrist, access_medical_records
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/suit_sensors,
 		/datum/computer_file/program/camera_monitor
 	)
-	give_psionic_implant_on_join = FALSE
+	give_psionic_implant_on_join = TRUE
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H)
 	if(H.mind.role_alt_title == "Counselor")
-		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_REDACTION]" = PSI_RANK_MASTER)
 	if(H.mind.role_alt_title == "Mentalist")
-		psi_faculties = list("[PSI_COERCION]" = PSI_RANK_OPERANT)
+		psi_faculties = list("[PSI_CONSCIOUSNESS]" = PSI_RANK_MASTER)
+
 	return ..()
 
 /datum/job/psychiatrist/get_description_blurb()
 	return "Вы - друг, наставник, священник... Или обычный психотерапевт. Помимо своих прямых обязанностей в обеспечении \
-	персонала качественной (насколько это возможно) психологической помощью, у вас имеется особенность - вы псионически \
-	одарены. Корпорация хорошо платит вам за то, чтобы вы проводили псионическое обследования членов экипажа на \
+	персонала качественной (насколько это возможно) психологической помощью, у вас имеется пси-монитор. \
+	Корпорация хорошо платит вам за то, чтобы вы проводили псионическое обследования членов экипажа на \
 	предмет обладания особыми силами, естественно, с отчетом об этом. Ваша зарплата превышает таковую у \
 	среднестатистческого менталиста из Фонда, и, вероятно, не просто так.<hr>В то время, как Менталист склонен к \
 	исправлению психологических недугов, поиску псионики и даже чтению мыслей, Советник может проводить медицинскую \

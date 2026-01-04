@@ -13,6 +13,20 @@
 		/datum/job/submap/CTI_Exchange_Student
 	)
 
+	whitelisted_species = list(
+		SPECIES_HUMAN,
+		SPECIES_IPC,
+		SPECIES_UNATHI,
+		SPECIES_YEOSA,
+		SPECIES_SKRELL,
+		SPECIES_TRITONIAN,
+		SPECIES_SPACER,
+		SPECIES_VATGROWN,
+		SPECIES_GRAVWORLDER,
+		SPECIES_TAJARA,
+		SPECIES_RESOMI
+	)
+
 /obj/overmap/visitable/ship/verne
 	name = "SRV Verne"
 	scanner_desc = @{"

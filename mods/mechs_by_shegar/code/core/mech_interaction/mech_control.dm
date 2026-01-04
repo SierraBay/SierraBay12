@@ -81,40 +81,44 @@
 	//FALSE - нужно продолжить обработку кода
 	var/modifiers = params2list(params)
 	//Быстрая смена текущего модуля меха. Смотри swap_hardpoint()
-	if(modifiers["middle"])
+	if(modifiers[MOUSE_3])
 		swap_hardpoint(pilot)
 		return TRUE
 	//Осмотр обьекта/моба/АТОМА
-	else if(modifiers["shift"])
+	else if(modifiers[MOUSE_SHIFT])
 		examinate(pilot, click_target)
 		return TRUE
 	//Контрл клик по модулю
-	else if(modifiers["ctrl"])
+	else if(modifiers[MOUSE_CTRL])
 		if(selected_system)
 			if(selected_system == click_target)
 				selected_system.CtrlClick(pilot)
 				setClickCooldown(3)
 			return TRUE
 	//Альт клик по модулю
-	else if(modifiers["alt"])
+	else if(modifiers[MOUSE_ALT])
 		if(istype(click_target, /obj/item/mech_equipment))
 			for(var/hardpoint in hardpoints)
 				if(click_target == hardpoints[hardpoint])
 					click_target.AltClick(pilot)
 					setClickCooldown(3)
 					return TRUE
-	else if(!show_right_click_menu)
-		if(modifiers["right"])
-			handle_right_and_left_click("right")
-		else if(modifiers["left"])
-			handle_right_and_left_click("left")
+	//Если включён режим правого меню и не самоклик по модулю
+	else if(!show_right_click_menu && !istype(click_target, /obj/item/mech_equipment))
+		if(modifiers[MOUSE_2])
+			handle_right_and_left_click(MOUSE_2)
+		else if(modifiers[MOUSE_1])
+			handle_right_and_left_click(MOUSE_1)
 	return FALSE
 
 //Задача функции сменить хардпоинт на левый или правый в зависимости от текущего состояния
 /mob/living/exosuit/proc/handle_right_and_left_click(mouse_type)
 	var/obj/screen/movable/exosuit/hardpoint = hardpoint_hud_elements[selected_hardpoint]
+	if(!hardpoint) //Никакой модуль не выбран, тобишь мех хочет использовать лапы
+		hardpoint = hardpoint_hud_elements[selected_hardpoint]
+		return
 	var/obj/screen/movable/exosuit/hardpoint/previous_hardpoint = hardpoint
-	if(mouse_type == "left")
+	if(mouse_type == MOUSE_1)
 		if(!selected_hardpoint)
 			set_hardpoint("left hand")
 		if(selected_hardpoint == "right hand")
@@ -122,7 +126,7 @@
 		else if(selected_hardpoint == "right shoulder")
 			if(hardpoints.Find("left shoulder"))
 				set_hardpoint("left shoulder")
-	else if(mouse_type == "right")
+	else if(mouse_type == MOUSE_2)
 		if(!selected_hardpoint)
 			set_hardpoint("right hand")
 		if(selected_hardpoint == "left hand" )
@@ -192,13 +196,10 @@
 
 	var/adj = click_target.Adjacent(src)
 	var/resolved
-	//if(adj)
-	resolved = temp_system.resolve_attackby(click_target, src)
+	if(adj && !ME.have_specific_melee_attack())
+		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
-		var/mob/ruser = src
-		if(!system_moved) //It's more useful to pass along clicker pilot when logic is fully mechside
-			ruser = pilot
-			temp_system.afterattack(click_target,ruser,adj)
+		temp_system.afterattack(click_target, src, adj)
 	if(system_moved) //We are using a proxy system that may not have logging like mech equipment does
 		admin_attack_log(pilot, click_target, "Attacked using \a [temp_system] (MECH)", "Was attacked with \a [temp_system] (MECH)", "used \a [temp_system] (MECH) to attack")
 	//Mech equipment subtypes can add further click delays

@@ -39,10 +39,14 @@
 			E.visible_message(SPAN_DANGER("\The [E] swings \the [src] back, preparing for an attack!"), blind_message = SPAN_DANGER("You hear the loud hissing of hydraulics!"))
 			playsound(E, 'sound/mecha/mech_punch_fast.ogg', 35, 1)
 			if (do_after(E, 1.2 SECONDS, get_turf(user), DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS) && E && MC)
-				for (var/mob/living/M in orange(1, E))
-					M.use_weapon(src, E)
 				E.spin(0.65 SECONDS, 0.125 SECONDS)
 				playsound(E, 'sound/mecha/mechstep01.ogg', 40, 1)
+				var/list/turfs = RANGE_TURFS(E, 1)
+				LAZYREMOVE(turfs, get_turf(E))
+				for(var/turf/T in turfs)
+					do_attack_effect(T, "smash")
+					for(var/mob/living/victim in T)
+						victim.use_weapon(src, E)
 
 /obj/item/mech_equipment/mounted_system/melee/mechete
 	icon_state = "mech_blade"

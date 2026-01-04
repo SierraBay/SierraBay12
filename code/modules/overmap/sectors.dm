@@ -29,10 +29,16 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 	var/blob_count = 0
 
+	// Gas mixture datum returned to exterior return_air. Set to assoc list of material to moles to initialize the gas datum.
+	//This will be returned in case external turfs are associated with this overmap object
+	var/datum/gas_mixture/exterior_atmosphere
+
 /obj/overmap/visitable/Initialize()
 	. = ..()
 	if(. == INITIALIZE_HINT_QDEL)
 		return
+
+	setup_exterior_atmosphere() //Planets do their own thing, but set exterior atmos to a valid value here first. (empty is valid)
 
 	find_z_levels()     // This populates map_z and assigns z levels to the ship.
 	register_z_levels() // This makes external calls to update global z level information.
@@ -47,7 +53,7 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 		if (place_near_main)
 			var/obj/overmap/visitable/main = map_sectors["1"]
 			if (islist(place_near_main))
-				place_near_main = Roundm(Frand(place_near_main[1], place_near_main[2]), 0.1)
+				place_near_main = Roundm(frand(place_near_main[1], place_near_main[2]), 0.1)
 			home = CircularRandomTurfAround(main, abs(place_near_main), map_low, map_low, map_high, map_high)
 			log_debug("place_near_main moving [src] near [main] ([main.x],[main.y]) with radius [place_near_main], got ([home.x],[home.y])")
 		else
@@ -82,7 +88,9 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 /obj/overmap/visitable/proc/populate_sector_objects()
 
 /obj/overmap/visitable/proc/get_areas()
-	return get_filtered_areas(list(GLOBAL_PROC_REF(area_belongs_to_zlevels) = map_z))
+	return get_filtered_areas(list(
+		GLOBAL_PROC_REF(area_belongs_to_zlevels) = map_z
+	))
 
 /obj/overmap/visitable/proc/find_z_levels()
 	map_z = GetConnectedZlevels(z)
@@ -198,5 +206,50 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 
 	GLOB.using_map.sealed_levels |= GLOB.using_map.overmap_z
 
+	if (GLOB.using_map.using_sun)
+		var/centre = ceil(GLOB.using_map.overmap_size / 2)
+		var/turf/sun_turf = locate(centre, centre, GLOB.using_map.overmap_z)
+		var/obj/overmap/visitable/star/star = new (sun_turf)
+		GLOB.map_stars += star
+		GLOB.known_overmap_sectors += star
+		for (var/obj/machinery/computer/ship/helm/helm as anything in GLOB.overmap_helm_computers)
+			helm.add_known_sector(star)
+
 	testing("Overmap build complete.")
 	return 1
+
+/obj/overmap/visitable/proc/setup_exterior_atmosphere()
+	//Skip setup if we've been set to a ref already
+	if(istype(exterior_atmosphere))
+		exterior_atmosphere.update_values() //Might as well update
+		exterior_atmosphere.check_tile_graphic()
+		return
+	var/list/exterior_atmos_composition = exterior_atmosphere
+	exterior_atmosphere = new
+	if(islist(exterior_atmos_composition))
+		for(var/gas in exterior_atmos_composition)
+			exterior_atmosphere.adjust_gas(gas, exterior_atmos_composition[gas], FALSE)
+		//revisit
+		//exterior_atmosphere.temperature = exterior_atmos_temp
+		exterior_atmosphere.update_values()
+		exterior_atmosphere.check_tile_graphic()
+
+/obj/overmap/visitable/proc/get_exterior_atmosphere()
+	if(exterior_atmosphere && !istype(exterior_atmosphere))
+		CRASH("Attempting to retrieve exterior atmosphere before it is set up!")
+	//copy gas over and return, in practice external atmos is an infinite source
+	var/datum/gas_mixture/gas = new
+	gas.copy_from(exterior_atmosphere)
+	return gas
+
+/proc/get_owning_sector_recursive(atom/query_atom, obj/overmap/visitable/parent_sector)
+	var/obj/overmap/visitable/sector = parent_sector
+	if (!sector)
+		sector = map_sectors["[get_z(query_atom)]"]
+	if (!sector)
+		return null
+	if (sector.check_ownership(query_atom))
+		return sector
+	for (var/obj/overmap/visitable/candidate in sector)
+		if ((. = .(query_atom, candidate)))
+			return .

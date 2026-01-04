@@ -15,13 +15,15 @@
 		/mob/living/simple_animal/hostile/retaliate/beast/shantak
 	)
 	megafauna_types = list(/mob/living/simple_animal/hostile/retaliate/giant_crab)
+	banned_weather_conditions = list(/singleton/state/weather/rain)
 
 /obj/overmap/visitable/sector/exoplanet/snow/generate_atmosphere()
 	..()
 	var/singleton/species/H = GLOB.species_by_name[SPECIES_HUMAN]
 	var/generator/new_temp = generator("num", H.cold_level_1 - 50, H.cold_level_3, NORMAL_RAND)
-	atmosphere.temperature = new_temp.Rand()
-	atmosphere.update_values()
+	exterior_atmosphere.temperature = new_temp.Rand()
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 
 /datum/random_map/noise/exoplanet/snow
 	descriptor = "snow exoplanet"

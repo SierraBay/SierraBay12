@@ -105,7 +105,7 @@
 		return // Something else removed us.
 	if(!istype(M))
 		return
-	if(!(flags & AFFECTS_DEAD) && M.stat == DEAD && (world.time - M.timeofdeath > 150))
+	if(!(flags & AFFECTS_DEAD) && M.is_dead() && (world.time - M.timeofdeath > 150))
 		return
 	if(overdose && (location != CHEM_TOUCH))
 		var/overdose_threshold = overdose * (flags & IGNORE_MOB_SIZE? 1 : MOB_MEDIUM/M.mob_size)

@@ -94,7 +94,7 @@
 /turf/simulated/floor/tiled,
 /area/bluespaceriver/ship)
 "ar" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /turf/simulated/floor/tiled,
 /area/bluespaceriver/ship)
 "as" = (
@@ -247,7 +247,7 @@
 /area/bluespaceriver/ship)
 "aS" = (
 /obj/structure/table/steel,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/bluespaceriver/ship)
 "aT" = (

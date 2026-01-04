@@ -1998,12 +1998,10 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dW" = (
-/obj/machinery/smartfridge/secure/medbay{
-	req_access = list(list("ACCESS_CHEMISTRY","ACCESS_MEDICAL_EQUIP"))
-	},
 /obj/floor_decal/corner/blue{
 	dir = 10
 	},
+/obj/machinery/smartfridge/secure/medbay/colony,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "dX" = (
@@ -2452,7 +2450,8 @@
 /area/map_template/colony)
 "eN" = (
 /obj/structure/table/marble,
-/obj/machinery/reagent_temperature,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "eO" = (
@@ -2466,10 +2465,6 @@
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
-"eP" = (
-/obj/item/stool/bar/padded,
-/turf/simulated/floor/lino,
-/area/map_template/colony/messhall)
 "eR" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -2611,9 +2606,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/obj/machinery/robotics_fabricator{
-	req_access = list()
-	},
+/obj/machinery/robotics_fabricator/colony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/science)
 "fe" = (
@@ -2750,12 +2743,13 @@
 /area/map_template/colony/medbay)
 "fo" = (
 /obj/structure/table/marble,
-/obj/random/drinkbottle,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/reagent_temperature,
+/obj/item/reagent_containers/food/drinks/pitcher,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "fp" = (
@@ -3223,8 +3217,7 @@
 /turf/simulated/floor/reinforced/nitrogen,
 /area/map_template/colony/atmospherics)
 "gd" = (
-/obj/structure/table/marble,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/machinery/appliance/cooker/oven,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "ge" = (
@@ -4004,8 +3997,7 @@
 /turf/simulated/floor/wood,
 /area/map_template/colony/messhall)
 "hy" = (
-/obj/structure/table/marble,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "hz" = (
@@ -4106,7 +4098,8 @@
 /area/map_template/colony/messhall)
 "hI" = (
 /obj/structure/table/marble,
-/obj/item/reagent_containers/food/drinks/pitcher,
+/obj/item/reagent_containers/cooking_container/board,
+/obj/item/reagent_containers/cooking_container/board/bowl,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "hJ" = (
@@ -4162,7 +4155,7 @@
 	dir = 8
 	},
 /obj/structure/table/marble,
-/obj/machinery/microwave{
+/obj/machinery/appliance/cooker/microwave{
 	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -6106,7 +6099,7 @@
 /area/map_template/colony)
 "lq" = (
 /obj/structure/table/marble,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/lino,
 /area/map_template/colony/messhall)
 "lr" = (
@@ -8609,6 +8602,7 @@
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
 	},
+/obj/submap_landmark/spawnpoint/colonist_scientist_spawn,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/colony/dorms)
 "yN" = (
@@ -8798,7 +8792,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/drinks/glass2/coffeecup/custom{
+/obj/item/reagent_containers/food/drinks/glass2/coffeecup{
 	pixel_x = 8
 	},
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/dais{
@@ -9469,6 +9463,13 @@
 "Ui" = (
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
+"UQ" = (
+/obj/structure/bed/chair/comfy/brown{
+	dir = 1
+	},
+/obj/submap_landmark/spawnpoint/colonist_medic_spawn,
+/turf/simulated/floor/wood/walnut,
+/area/map_template/colony/dorms)
 "Vk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9517,6 +9518,7 @@
 /obj/structure/bed/chair/comfy/brown{
 	dir = 1
 	},
+/obj/submap_landmark/spawnpoint/colonist_engineer_spawn,
 /turf/simulated/floor/wood/walnut,
 /area/map_template/colony/dorms)
 "Wb" = (
@@ -10577,7 +10579,7 @@ OU
 vf
 Ek
 bl
-Wa
+UQ
 az
 gp
 hv
@@ -10987,9 +10989,9 @@ nR
 aI
 ev
 hK
-eP
-eP
-eP
+jj
+jj
+jj
 jj
 jj
 jj

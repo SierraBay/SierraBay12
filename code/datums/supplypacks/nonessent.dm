@@ -51,7 +51,11 @@
 /singleton/hierarchy/supply_pack/nonessent/instruments
 	name = "Rec - Musical Instruments"
 	contains = list(/obj/item/device/synthesized_instrument/synthesizer,
-					/obj/item/device/synthesized_instrument/guitar/multi,
+					/obj/item/device/synthesized_instrument/guitar/multi_v,
+					/obj/item/device/synthesized_instrument/guitar/multi_strato_black,
+					/obj/item/device/synthesized_instrument/guitar/multi_strato_gradient,
+					/obj/item/device/synthesized_instrument/guitar/multi_strato_red,
+					/obj/item/device/synthesized_instrument/guitar/multi_strato_purple,
 					/obj/item/device/synthesized_instrument/guitar,
 					/obj/item/device/synthesized_instrument/trumpet)
 	cost = 40

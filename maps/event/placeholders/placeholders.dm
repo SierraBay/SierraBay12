@@ -58,8 +58,8 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 /datum/build_mode/placeholders/OnClick(atom/atom, list/parameters)
 	if (!atom)
 		return
-	var/modifier = parameters["ctrl"]
-	if (parameters["left"] && !modifier)
+	var/modifier = parameters[MOUSE_CTRL]
+	if (parameters[MOUSE_1] && !modifier)
 		if (istype(atom, /obj/overmap/visitable/placeholder))
 			selected = atom
 			to_chat(user, "Selected [selected].")
@@ -77,7 +77,7 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 	if (!selected)
 		to_chat(user, "No placeholder selected.")
 		return
-	if (parameters["right"])
+	if (parameters[MOUSE_2])
 		var/dx = atom.x - selected.x
 		var/dy = atom.y - selected.y
 		if (!dx && !dy)
@@ -106,14 +106,14 @@ Middle-Click / Ctrl-Click - Jump a placeholder to a point and deselect it
 		animate(
 			selected,
 			easing = SINE_EASING,
-			time = selected.speed * 5 SECONDS,
+			time = selected.simple_speed * 5 SECONDS,
 			transform = matrix().Update(
 				scale_x = selected.scale,
 				scale_y = selected.scale,
 				rotation = rotation
 			)
 		)
-	else if (parameters["middle"] || modifier)
+	else if (parameters[MOUSE_3] || modifier)
 		new /obj/ftl (get_turf(selected))
 		new /obj/ftl (get_turf(atom))
 		addtimer(new Callback(src, PROC_REF(RevealShip), selected, atom.x, atom.y), 2 SECONDS)

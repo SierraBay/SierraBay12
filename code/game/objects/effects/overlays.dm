@@ -1,18 +1,22 @@
 /obj/overlay
 	name = "overlay"
 	unacidable = TRUE
-	var/i_attached //Added for possible image attachments to objects. For hallucinations and the like.
+	anchored = TRUE
+
+	/// If set, the time in deciseconds before the effect is deleted
+	var/delete_delay
+
+
+/obj/overlay/Initialize()
+	. = ..()
+	if (delete_delay)
+		QDEL_IN(src, delete_delay)
 
 /obj/overlay/beam
-	name="beam"
-	icon='icons/effects/beam.dmi'
-	icon_state= "b_beam"
-	var/atom/BeamSource
-
-/obj/overlay/beam/New()
-	..()
-	spawn(10)
-		qdel(src)
+	name = "beam"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "b_beam"
+	delete_delay = 1 SECOND
 
 /obj/overlay/palmtree_r
 	name = "Palm tree"
@@ -20,7 +24,6 @@
 	icon_state = "palm1"
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER
-	anchored = TRUE
 
 /obj/overlay/palmtree_l
 	name = "Palm tree"
@@ -28,7 +31,6 @@
 	icon_state = "palm2"
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER
-	anchored = TRUE
 
 /obj/overlay/coconut
 	name = "Coconuts"
@@ -45,40 +47,25 @@
 	name = "wallrot"
 	desc = "Ick..."
 	icon = 'icons/effects/wallrot.dmi'
-	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_TILE_LAYER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
 
-/obj/overlay/wallrot/New()
-	..()
+/obj/overlay/wallrot/Initialize()
+	. = ..()
 	pixel_x += rand(-10, 10)
 	pixel_y += rand(-10, 10)
 
-
-/// Effect overlays that should automatically delete themselves after a set time.
-/obj/overlay/self_deleting
-	/// The amount of time in deciseconds before the effect deletes itself. Can be defined in the object's definition or via `New()`.
-	var/delete_time
-
-
-/obj/overlay/self_deleting/emppulse
+/obj/overlay/emp_pulse
 	name = "emp pulse"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "emppulse"
 	anchored = TRUE
-	delete_time = 2 SECONDS
+	delete_delay = 2 SECONDS
 
-
-/obj/overlay/self_deleting/Initialize(mapload, _delete_time)
-	. = ..()
-	if (_delete_time)
-		delete_time = _delete_time
-	if (delete_time <= 0)
-		log_debug(append_admin_tools("A self deleting overlay ([src]) was spawned with a negative or zero delete time ([delete_time]) and was instantly deleted.", location = get_turf(src)))
-		return INITIALIZE_HINT_QDEL
-	addtimer(new Callback(src, PROC_REF(self_delete)), delete_time)
-
-
-/obj/overlay/self_deleting/proc/self_delete()
-	qdel(src)
+/obj/overlay/bullet_hole
+	name = "bullet hole"
+	icon = 'icons/effects/effects.dmi'
+	layer = DECAL_LAYER
+	icon_state = "scorch"
+	mouse_opacity = MOUSE_OPACITY_UNCLICKABLE

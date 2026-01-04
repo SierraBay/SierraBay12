@@ -187,7 +187,7 @@
 	if(!istype(slide))
 		qdel(src)
 		return
-	return slide.examine(user, 0, FALSE)
+	return slide.examine(user, 0, TRUE)
 
 /obj/projection/photo
 	alpha = 170

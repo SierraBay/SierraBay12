@@ -669,7 +669,7 @@
 /turf/simulated/wall/titanium,
 /area/shuttle/petrov/maint)
 "bv" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -1713,7 +1713,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/guppy_hangar/start)
 "dG" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/machinery/button/blast_door{
@@ -7248,6 +7248,7 @@
 /obj/item/pickaxe,
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/item/flatpack/ore_box,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/expedition)
 "qh" = (
@@ -11802,6 +11803,12 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
+/obj/machinery/button/blast_door{
+	id_tag = "PetrovShield";
+	name = "Blast Shutter Control";
+	pixel_x = 5;
+	pixel_y = -3
+	},
 /turf/simulated/wall/titanium,
 /area/shuttle/petrov/rd)
 "DN" = (
@@ -13055,12 +13062,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fifthdeck/aftport)
-"IW" = (
-/obj/shuttle_landmark/ert/hanger{
-	name = "5th Deck, Aft Port"
-	},
-/turf/space,
-/area/space)
 "IY" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/newscaster{
@@ -42619,7 +42620,7 @@ aa
 aa
 aa
 aa
-IW
+aa
 aa
 aa
 aa

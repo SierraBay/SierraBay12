@@ -18,7 +18,7 @@
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/el
 	allowed_branches = list(/datum/mil_branch/employee)
-	allowed_ranks = list(/datum/mil_rank/civ/nt)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/acting, /datum/mil_rank/civ/probation_employee)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
 		SKILL_EVA         = SKILL_TRAINED,
@@ -37,6 +37,7 @@
 		access_explorer,
 		access_eva,
 		access_bridge,
+		access_employment_records,
 		access_heads,
 		access_emergency_storage,
 		access_tech_storage,
@@ -83,7 +84,9 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -139,7 +142,9 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -184,7 +189,7 @@
 	selection_color = "#68099e"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor)
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 
 	minimal_player_age = 8
 
@@ -217,7 +222,8 @@
 		access_expedition_shuttle,
 		access_guppy,
 		access_hangar,
-		access_research
+		access_research,
+		access_medical_records
 	)
 	software_on_spawn = list(/datum/computer_file/program/deck_management)
 
@@ -252,7 +258,9 @@
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
-		/datum/mil_rank/civ/contractor
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
 		SKILL_EVA          = SKILL_BASIC,

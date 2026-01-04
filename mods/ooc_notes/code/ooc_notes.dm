@@ -1,4 +1,4 @@
-/mob/living/proc/Examine_OOC()
+/mob/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
 	set src in view()
@@ -12,14 +12,14 @@
 
 	return
 
-/mob/living
+/mob
 	var/ooc_notes = null
 
 /datum/preferences/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
 	..()
 	character.ooc_notes = metadata
 
-/mob/living/carbon/human/OnTopic(mob/user, href_list)
+/mob/OnTopic(mob/user, href_list)
 	if(href_list["ooc_notes"])
 		src.Examine_OOC()
 		return TOPIC_HANDLED
@@ -31,7 +31,10 @@
 
 /datum/category_item/player_setup_item/physical/flavor/OnTopic(href,list/href_list, mob/user)
 	if(href_list["metadata"])
-		var/new_metadata = sanitize(input(user, "Введите информация о себе, которую смогут увидеть другие игроки в описании персонажа. Например, Вы можете написать пожелания относительно того, хотите ли оказаться жертвой антагониста или ролевые предпочтения.", "Игровые предпочтения" , pref.metadata) as message|null)
+		var/new_metadata = sanitize(input(user, "Введите информация о себе, которую смогут увидеть другие игроки \
+		в описании персонажа. Например, Вы можете написать пожелания относительно того, хотите ли оказаться \
+		жертвой антагониста или ролевые предпочтения.", "Игровые предпочтения" , pref.metadata) as message|null,
+		extra = FALSE)
 		if(new_metadata && CanUseTopic(user))
 			pref.metadata = new_metadata
 		return TOPIC_HANDLED

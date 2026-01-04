@@ -53,3 +53,38 @@
 			next_click = world.time + 2 SECONDS
 			return
 	return ..()
+
+/mob/living/carbon/human/CtrlClickOn(atom/A)
+	if(get_dist(src, A) < 2)
+		return ..()
+	var/eyes_found = FALSE
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		if(!stat)
+			if(mind)
+				if(A != H)
+					for(var/obj/item/organ/internal/augment/active/clicker/bale_eye/eye in H.internal_organs)
+						eyes_found = TRUE
+					if(eyes_found)
+						var/obj/item/organ/internal/augment/active/clicker/bale_eye/matrix = locate() in H.internal_organs
+						var/mob/living/target = A
+						var/obj/item/projectile/pew = new /obj/item/projectile/beam/smalllaser(get_turf(src))
+						var/pew_sound = 'sound/weapons/Taser.ogg'
+						if(matrix.ready_to_fire)
+							if(matrix && matrix.charges <= 0)
+								to_chat(src, SPAN_WARNING("Your weapon is unable to fire due to insufficient charge!"))
+								return
+							if(H.glasses)
+								to_chat(src, SPAN_WARNING("Your weapon is unable to fire because your eyes covered by something!"))
+								return
+							else
+								playsound(pew.loc, pew_sound, 25, 1)
+								pew.original = target
+								pew.current = target
+								pew.starting = get_turf(src)
+								pew.shot_from = src
+								pew.launch(target, src.zone_sel.selecting, (target.x-src.x), (target.y-src.y))
+							matrix.charges -= 1
+							next_click = world.time + 2 SECONDS
+							return
+					return ..()

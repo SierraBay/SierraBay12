@@ -163,7 +163,7 @@
 				loot += new /obj/item/drone_loot_board (origin)
 			var/strength = exploding ? 1 : 0.5
 			for (var/obj/item/item as anything in loot)
-				item.throw_at(CircularRandomTurfAround(origin, Frand(2, 6) * strength), 5, 5 * strength)
+				item.throw_at(CircularRandomTurfAround(origin, frand(2, 6) * strength), 5, 5 * strength)
 	qdel(src)
 
 
@@ -217,7 +217,7 @@
 		return ..()
 	var/list/targets = list()
 	for (var/mob/living/M in oview(D.hostile_range, D))
-		if (M.stat == DEAD)
+		if (M.is_dead())
 			continue
 		if (M.type == D.type)
 			continue

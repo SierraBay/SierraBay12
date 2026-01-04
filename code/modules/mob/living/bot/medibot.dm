@@ -56,7 +56,7 @@
 	if(busy)
 		return
 
-	if(H.stat == DEAD)
+	if(H.is_dead())
 		var/death_message = pick("No! NO!", "Live, damnit! LIVE!", "I... I've never lost a patient before. Not today, I mean.")
 		say(death_message)
 		target = null
@@ -88,7 +88,7 @@
 /mob/living/bot/medbot/update_icons()
 	ClearOverlays()
 	if(skin)
-		AddOverlays(image('icons/mob/bot/medibot_skins.dmi', "medskin_[skin]"))
+		AddOverlays(image('icons/mob/bot/medibot_skins.dmi', "[skin]"))
 	if(busy)
 		icon_state = "medibots"
 	else
@@ -249,7 +249,7 @@
 	if(!..())
 		return 0
 
-	if(H.stat == DEAD) // He's dead, Jim
+	if(H.is_dead()) // He's dead, Jim
 		return 0
 
 	if(emagged)

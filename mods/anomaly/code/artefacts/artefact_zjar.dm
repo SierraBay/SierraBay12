@@ -2,6 +2,7 @@
 	name = "Something"
 	icon_state = "fire_ball"
 	desc = "Тепло растекается по вашим рукам, от одного лишь вида вам становится теплее."
+	admin_name = "Жар"
 	need_to_process = TRUE
 	rect_to_interactions = list(
 		"Lick",

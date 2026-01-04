@@ -273,7 +273,7 @@
 /turf/simulated/floor,
 /area/scavver/gantry/down1)
 "fc" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -987,7 +987,7 @@
 /turf/simulated/floor,
 /area/scavver/yachtdown/thrusters)
 "qe" = (
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/white{
 	map_airless = 1
@@ -1134,7 +1134,7 @@
 /turf/space,
 /area/scavver/yachtdown/thrusters)
 "sN" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/monotile,
 /area/scavver/calypso)

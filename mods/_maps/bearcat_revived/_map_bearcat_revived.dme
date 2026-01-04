@@ -1,0 +1,11 @@
+#ifndef MODPACK_BEARCAT_REVIVED
+#define MODPACK_BEARCAT_REVIVED
+
+#include "_map_bearcat_revived.dm"
+#include "code/bearcat.dm"
+#include "code/bearcat_access.dm"
+#include "code/bearcat_areas.dm"
+#include "code/bearcat_jobs.dm"
+#include "code/bearcat_radio.dm"
+
+#endif

@@ -88,11 +88,11 @@
 	var/adj = A.Adjacent(src) // Why in the fuck isn't Adjacent() commutative.
 
 	var/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[MOUSE_SHIFT])
 		examinate(user, A)
 		return
 
-	if(modifiers["ctrl"])
+	if(modifiers[MOUSE_CTRL])
 		if(selected_system)
 			if(selected_system == A)
 				selected_system.CtrlClick(user)

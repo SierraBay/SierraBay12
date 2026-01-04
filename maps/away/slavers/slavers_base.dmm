@@ -3244,7 +3244,7 @@
 /obj/decal/cleanable/dirt,
 /obj/structure/table/standard,
 /obj/floor_decal/techfloor,
-/obj/machinery/microwave,
+/obj/machinery/appliance/cooker/microwave,
 /turf/simulated/floor/tiled,
 /area/slavers_base/dorms)
 "iB" = (
@@ -6794,7 +6794,7 @@
 /turf/simulated/floor/tiled/white,
 /area/slavers_base/med)
 "TQ" = (
-/obj/machinery/cooker/oven,
+/obj/machinery/appliance/cooker/oven,
 /obj/floor_decal/corner/blue/diagonal,
 /turf/simulated/floor/tiled/white,
 /area/slavers_base/dorms)

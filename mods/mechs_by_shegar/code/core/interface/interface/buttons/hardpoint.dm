@@ -13,8 +13,13 @@
 /obj/screen/movable/exosuit/hardpoint/proc/update_system_info()
 
 	// No point drawing it if we have no item to use or nobody to see it.
-	if(!holding || !owner)
-		return
+	if(!owner)
+		return FALSE
+	if(!holding)
+		maptext = null
+		if(LAZYLEN(overlays))
+			ClearOverlays()
+		return FALSE
 
 	var/has_pilot_with_client = owner.client
 	if(!has_pilot_with_client && LAZYLEN(owner.pilots))
@@ -106,7 +111,7 @@
 		return
 
 	var/modifiers = params2list(params)
-	if(modifiers["ctrl"])
+	if(modifiers[MOUSE_CTRL])
 		if(owner.remove_system(hardpoint_tag))
 			to_chat(usr, SPAN_NOTICE("You disengage and discard the system mounted to your [hardpoint_tag] hardpoint."))
 		else

@@ -30,7 +30,7 @@
 	SSlighting.InitializeTurfs(atoms_to_initialise)	// Hopefully no turfs get placed on new coords by SSatoms.
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	loaded++
-	for(var/obj/weather/detected_weather in SSweather.weather_turf_in_world)
+	for(var/obj/weather/detected_weather in SSweatherold.weather_turf_in_world)
 		detected_weather.update_by_map_templace()
 
 	return TRUE

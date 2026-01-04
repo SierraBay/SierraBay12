@@ -30,6 +30,9 @@
 /datum/design/autolathe/general/suit_cooler
 	build_path = /obj/item/device/suit_cooling_unit
 
+/datum/design/autolathe/general/suit_cooler_mini
+	build_path = /obj/item/device/suit_cooling_unit/miniature
+
 /datum/design/autolathe/general/weldermask
 	build_path = /obj/item/clothing/head/welding
 

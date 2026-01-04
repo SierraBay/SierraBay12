@@ -240,8 +240,7 @@
 	else return 1
 
 /obj/machinery/atmospherics/pipe/proc/burst()
-	ASSERT(parent)
-	parent.temporarily_store_air()
+	parent?.temporarily_store_air()
 	visible_message(SPAN_DANGER("\The [src] bursts!"))
 	playsound(loc, 'sound/effects/bang.ogg', 25, TRUE)
 	var/datum/effect/smoke_spread/smoke = new

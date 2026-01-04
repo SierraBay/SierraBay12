@@ -67,14 +67,12 @@ body {
 }
 
 #uiMap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -512px 0 0 -512px;
+    position: relative;
+	margin: 0 auto;
     width: 256px;
     height: 256px;
     overflow: hidden;
-    zoom: 4;
+    transform: scale(4);
 }
 
 #uiMapImage {

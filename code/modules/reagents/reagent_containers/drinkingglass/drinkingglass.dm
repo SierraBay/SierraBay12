@@ -28,9 +28,6 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	temperature_coefficient = 4
 
-	var/custom_name
-	var/custom_desc
-
 /obj/item/reagent_containers/food/drinks/glass2/examine(mob/M)
 	. = ..()
 
@@ -148,10 +145,18 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 	underlays.Cut()
 	ClearOverlays()
 
+	if (!empty_name)
+		empty_name = name
+		if (empty_name != initial(name))
+			// Use loadout name tweaks over default base names when describing a glass of something.
+			base_name = empty_name
+	if (!empty_desc)
+		empty_desc = desc
+
 	if (length(reagents?.reagent_list))
 		var/datum/reagent/R = reagents.get_master_reagent()
 		SetName("[base_name] of [R.glass_name ? R.glass_name : "something"]")
-		desc = R.glass_desc || custom_desc || initial(desc)
+		desc = R.glass_desc || empty_desc
 
 		var/list/under_liquid = list()
 		var/list/over_liquid = list()
@@ -185,8 +190,8 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 		AddOverlays(over_liquid)
 
 	else
-		SetName(custom_name || initial(name))
-		desc = custom_desc || initial(desc)
+		SetName(empty_name)
+		desc = empty_desc
 
 	var/side = "left"
 	for(var/item in extras)

@@ -385,6 +385,11 @@ GLOBAL_TYPED_NEW(temp_reagents_holder, /obj)
 /datum/reagents/proc/trans_type_to(atom/target, type, amount = 1, multiplier = 1)
 	if (!target || !target.reagents || !target.simulated)
 		return
+	trans_type_to_holder(target.reagents, type, amount, multiplier)
+
+/datum/reagents/proc/trans_type_to_holder(datum/reagents/target, type, amount = 1, multiplier = 1)
+	if (!target || !target.reagent_list)
+		return
 
 	amount = min(amount, get_reagent_amount(type))
 
@@ -396,7 +401,7 @@ GLOBAL_TYPED_NEW(temp_reagents_holder, /obj)
 	F.add_reagent(type, amount, tmpdata)
 	remove_reagent(type, amount)
 
-	. = F.trans_to(target, amount, multiplier) // Let this proc check the atom's type
+	. = F.trans_to_holder(target, amount, multiplier) // Let this proc check the atom's type
 
 	qdel(F)
 

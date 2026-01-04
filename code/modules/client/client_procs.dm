@@ -157,8 +157,13 @@
 		to_chat(src, SPAN_WARNING("You are running an older version of BYOND than the server and may experience issues."))
 		to_chat(src, SPAN_WARNING("It is recommended that you update to at least [DM_VERSION] at http://www.byond.com/download/."))
 	to_chat(src, SPAN_WARNING("If the title screen is black, resources are still downloading. Please be patient until the title screen appears."))
+	if (!src)
+		return
 	GLOB.clients += src
 	GLOB.ckey_directory[ckey] = src
+
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh"))
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
@@ -257,6 +262,10 @@
 		if (T.status == TICKET_OPEN && T.owner.ckey == ckey)
 			message_staff("[key_name_admin(src)] has left the game with an open ticket. Status: [length(T.assigned_admins) ? "Assigned to: [english_list(T.assigned_admin_ckeys())]" : SPAN_DANGER("Unassigned.")]")
 			break
+	if (atom_outline)
+		images -= atom_outline
+		atom_outline = null
+	outline_atom = null
 	if (holder)
 		holder.owner = null
 		GLOB.admins -= src
@@ -415,6 +424,7 @@
 		'html/images/leaguelogo.png',
 		'html/images/ouerelogo.png',
 		'html/images/terstenlogo.png',
+		'html/images/kmslogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png'
 		)

@@ -36,7 +36,7 @@
 
 #define isairlock(A) istype(A, /obj/machinery/door/airlock)
 
-#define isatom(A) (isloc(A) && !isarea(A))
+#define istom(A) (isloc(A) && !isarea(A))
 
 #define isprojectile(A) istype(A, /obj/item/projectile)
 
@@ -108,8 +108,6 @@
 
 #define isopenspace(A) istype(A, /turf/simulated/open)
 
-#define isplunger(A) istype(A, /obj/item/clothing/mask/plunger) || istype(A, /obj/item/device/plunger/robot)
-
 #define isadmin(X) (check_rights(R_ADMIN, 0, (X)) != 0)
 
 #define sequential_id(key) uniqueness_repository.Generate(/datum/uniqueness_generator/id_sequential, key)
@@ -162,6 +160,8 @@
 
 #define QDEL_IN(item, time) addtimer(new Callback(item, TYPE_PROC_REF(/datum, qdel_self)), time, TIMER_STOPPABLE)
 
+#define QDEL_CONTENTS for (var/entry in contents) qdel(entry);
+
 #define DROP_NULL(x) if(x) { x.dropInto(loc); x = null; }
 
 #define DROP_NULL_LIST(x) if(x) { for(var/atom/movable/y in x) { y.dropInto(loc) }}; x.Cut(); x = null;
@@ -170,9 +170,6 @@
 
 // Insert an object A into a sorted list using cmp_proc (/code/_helpers/cmp.dm) for comparison.
 #define ADD_SORTED(list, A, cmp_proc) if(!length(list)) {list.Add(A)} else {list.Insert(FindElementIndex(A, list, cmp_proc), A)}
-
-// Spawns multiple objects of the same type
-#define cast_new(type, num, args...) if((num) == 1) { new type(args) } else { for(var/i=0;i<(num),i++) { new type(args) } }
 
 #define JOINTEXT(X) jointext(X, null)
 
@@ -298,7 +295,7 @@
 
 
 /// Test all bits of MASK are set in FIELD
-#define HAS_FLAGS(FIELD, MASK) (((FIELD) & (MASK)) == (MASK))
+#define HAS_FLAGS(FIELD, MASK) ((~(FIELD) & (MASK)) == 0)
 
 
 /// Set bits of MASK in FIELD

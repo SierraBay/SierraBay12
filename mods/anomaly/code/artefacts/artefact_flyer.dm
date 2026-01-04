@@ -1,6 +1,7 @@
 /obj/item/artefact/flyer
 	name = "Something"
 	desc = "Обьект абсолютно невесом, выглядит как какой-то плотный кусок воздуха."
+	admin_name = "Грави-Летун"
 	icon_state = "flyer"
 	need_to_process = TRUE
 	//В артефакте нет энергии/она неограничена

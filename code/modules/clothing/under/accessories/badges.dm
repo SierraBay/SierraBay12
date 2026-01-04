@@ -79,7 +79,7 @@
 	icon_state = "holobadge"
 	item_state = "holobadge"
 	badge_string = "Security"
-	var/badge_access = access_security
+	var/badge_access = access_brig
 	var/badge_number
 	var/emagged
 

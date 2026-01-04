@@ -9,7 +9,7 @@
 /obj/item/psychic_power/psiblade/master
 	force = 20
 	maintain_cost = 2
-	
+
 /obj/item/psychic_power/psiblade/master/grand
 	force = 30
 	maintain_cost = 3

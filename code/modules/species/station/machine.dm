@@ -117,7 +117,8 @@
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/MachineChangeScreen,
 		/mob/living/carbon/human/proc/MachineDisableScreen,
-		/mob/living/carbon/human/proc/MachineShowText
+		/mob/living/carbon/human/proc/MachineShowText,
+		/mob/living/carbon/human/proc/MachineReleaseCore
 	)
 
 /singleton/species/machine/handle_death(mob/living/carbon/human/H)
@@ -141,3 +142,26 @@
 
 /singleton/species/machine/can_float(mob/living/carbon/human/H)
 	return FALSE
+
+
+/mob/living/carbon/human/proc/MachineReleaseCore()
+	set category = "Abilities"
+	set name = "Release Core"
+	if (!istype(species, /singleton/species/machine))
+		return
+	var/obj/item/organ/internal/posibrain/posibrain = internal_organs_by_name[BP_POSIBRAIN]
+	if (!posibrain || posibrain.status & ORGAN_DEAD)
+		to_chat(src, SPAN_WARNING("Unfortunately, you are too dead to do that."))
+		return
+	var/confirm = alert(src, "This will eject your positronic core.", "Are you sure?", "OK", "Cancel") == "OK"
+	if (!confirm)
+		return
+	visible_message(
+		SPAN_WARNING("\The [src]'s housing opens up and releases its core."),
+		blind_message = SPAN_WARNING("You hear the clatter of a metal object.")
+	)
+	var/obj/item/organ/external/chest = organs_by_name[BP_CHEST]
+	if (chest)
+		playsound(src, 'sound/items/Crowbar.ogg', 15, TRUE)
+		chest.hatch_state = HATCH_OPENED
+	posibrain.removed(src, TRUE)

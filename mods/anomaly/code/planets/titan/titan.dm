@@ -31,12 +31,13 @@
 		/obj/anomaly/vspishka = 3
 		)
 	///Минимальное количество заспавненных артов
-	min_artefacts_ammount = 2
+	min_artefacts_ammount = 1
 	///Максимальное количество заспавненных артов
 	max_artefacts_ammount = 4
 
 	min_anomalies_ammount = 500
 	max_anomalies_ammount = 700
+	initial_weather_state = null //Можно убрать когда будет под новую подсистему
 
 /obj/overmap/visitable/sector/exoplanet/water/New(nloc, max_x, max_y)
 	. = ..()
@@ -72,11 +73,12 @@
 	mineral_turf =  /turf/simulated/floor/exoplanet/titan_water/maximum
 
 /obj/overmap/visitable/sector/exoplanet/water/generate_atmosphere()
-	atmosphere = new
-	atmosphere.temperature = rand(290, 330)
-	atmosphere.update_values()
+	exterior_atmosphere = new
+	exterior_atmosphere.temperature = rand(290, 330)
+	exterior_atmosphere.update_values()
+	exterior_atmosphere.check_tile_graphic()
 	var/good_gas = list(GAS_OXYGEN = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)
-	atmosphere.gas = good_gas
+	exterior_atmosphere.gas = good_gas
 
 
 /area/exoplanet/water

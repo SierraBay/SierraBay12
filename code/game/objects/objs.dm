@@ -42,7 +42,7 @@
 			for (var/atom/thing as anything in get_turf(src))
 				if (thing == src)
 					continue
-				if (ismob(thing) || thing.density)
+				if (isliving(thing) || thing.density)
 					has_blocker = thing
 					break
 			if (has_blocker)
@@ -70,7 +70,7 @@
 			for (var/atom/thing as anything in get_turf(src))
 				if (thing == src)
 					continue
-				if (ismob(thing) || thing.density)
+				if (isliving(thing) || thing.density)
 					has_blocker = thing
 					break
 			if (has_blocker)

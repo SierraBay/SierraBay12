@@ -2,13 +2,18 @@
 	/obj/item/mech_equipment/ballistic_shield, \
 	/obj/item/mech_equipment/camera, \
 	/obj/item/mech_equipment/clamp, \
+	/obj/item/mech_equipment/catapult, \
 	/obj/item/mech_equipment/light, \
-	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher \
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher, \
+	/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security, \
+	/obj/item/mech_equipment/mounted_system/taser, \
+	/obj/item/mech_equipment/flash \
 )
 
 /mob/living/exosuit/premade/security
 	name = "security mech"
 	desc = "An old battle mech that fought in Sierra's past missions. This mech is now useless—its parts are badly worn, and it can't hold much gear. Do one last thing for it: let it die in battle for good, then build a new one."
+	external_armor_type = /obj/item/mech_external_armor/civil
 
 /mob/living/exosuit/premade/security/Initialize()
 	if(!head)
@@ -44,6 +49,9 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
+	armour_can_be_installed = FALSE
 
 /obj/item/mech_component/chassis/combat/security
 	icon_state = "combat_body"
@@ -63,6 +71,8 @@
 	weight = 300
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/manipulators/powerloader/security
 	icon_state = "combat_arm"
@@ -72,6 +82,8 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/propulsion/powerloader/security
 	icon_state = "combat_leg"
@@ -81,12 +93,29 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 
-//Тоже самое что и СБ мех, но с снаряжением
-/mob/living/exosuit/premade/security/equiped/spawn_mech_equipment()
-	..()
-	install_system(new /obj/item/mech_equipment/ballistic_shield(src), HARDPOINT_RIGHT_HAND)
-	install_system(new /obj/item/mech_equipment/mounted_system/taser/ballistic/grenade_launcher(src), HARDPOINT_LEFT_HAND)
-	install_system(new /obj/item/mech_equipment/camera(src), HARDPOINT_LEFT_SHOULDER)
-	install_system(new /obj/item/mech_equipment/light(src), HARDPOINT_RIGHT_SHOULDER)
+//Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты
+/obj/item/camera_package
+	name = "Packaged equipment"
+	desc = "With some reason, this equipment was packaged."
+	icon = 'icons/obj/forensics.dmi'
+	icon_state = "case"
+
+
+/obj/item/camera_package/attack_self(mob/living/user)
+	. = ..()
+	new /obj/item/mech_equipment/camera(get_turf(src))
+	qdel(src)
+
+//Нелетальный ракетомёт
+/obj/item/mech_equipment/mounted_system/taser/ballistic/launcher/security
+	name = "\improper  \"SHAI-TAN\" missle launcher system"
+	desc = "Somewhen, thats was first missle launch system for mechs. Now, thats just a history. Can't support modern combat rockets"
+	holding_type = /obj/item/gun/projectile/automatic/rocket_launcher/security
+
+/obj/item/gun/projectile/automatic/rocket_launcher/security
+	name = "SHAI-TAN"
+	white_list_ammo_types = list(/obj/item/ammo_casing/rocket/mech/flashbang, /obj/item/ammo_casing/rocket/mech/pepper)

@@ -41,6 +41,11 @@
 		STOP_PROCESSING(SSanom, src)
 		SSanom.processing_ammount--
 
+/obj/item/clothing/gloves/anomaly_detector/Destroy()
+	if(is_processing)
+		STOP_PROCESSING(SSanom, src)
+	.=..()
+
 /obj/item/clothing/gloves/anomaly_detector/proc/switch_toggle()
 	if(destroyed)
 		to_chat(usr, SPAN_NOTICE("Устройство не реагирует на нажатие кнопки. Похоже, оно уже не включится."))

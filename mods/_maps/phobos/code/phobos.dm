@@ -2,6 +2,7 @@
 	name = "SCGF Patrol Craft"
 	desc = "SCGF Cobra-class Patrol Craft. Belongs to Third Fleet Battle Group Alpha"
 	color = "#81c6ff"
+	fore_dir = WEST
 	vessel_mass = 5000
 	max_speed = 1/(2 SECONDS)
 	place_near_main = list(5, 5)

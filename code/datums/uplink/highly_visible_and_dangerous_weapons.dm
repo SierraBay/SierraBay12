@@ -194,7 +194,7 @@
 			capable of firing slugs at intense speeds."
 	item_cost = 65
 	antag_roles = list(MODE_MERCENARY)
-	path = /obj/item/gun/magnetic/railgun
+	path = /obj/item/gun/magnetic/railgun/thunderclap
 
 /datum/uplink_item/item/visible_weapons/railguntcc // Only slightly better than the normal railgun; but cooler looking
 	name = "Advanced Railgun"
@@ -202,7 +202,7 @@
 			now with even MORE stopping power."
 	antag_roles = list(MODE_MERCENARY)
 	item_cost = 75
-	path = /obj/item/gun/magnetic/railgun/tcc
+	path = /obj/item/gun/magnetic/railgun/tc
 
 /datum/uplink_item/item/visible_weapons/harpoonbomb
 	name = "Explosive Harpoon"
@@ -228,4 +228,25 @@
 	desc = "An energy based long-range weapon. Not as powerful as a sniper rifle, but it can be recharged."
 	item_cost = 50
 	path = /obj/item/gun/energy/sniperrifle
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/visible_weapons/missile_he
+	name = "DIY High Explosive Missile"
+	desc = "A high explosive missile payload and thrust system. Must be installed onto a missile frame upon delivery."
+	item_cost = 50
+	path = /obj/item/storage/box/syndie_kit/missile_he
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/visible_weapons/missile_emp
+	name = "DIY EMP Missile"
+	desc = "An EMP missile payload and thrust system. Must be installed onto a missile frame upon delivery."
+	item_cost = 25
+	path = /obj/item/storage/box/syndie_kit/missile_emp
+	antag_roles = list(MODE_MERCENARY)
+
+/datum/uplink_item/item/visible_weapons/missile_diffuser
+	name = "DIY Shield-Diffuser Missile"
+	desc = "A shield-diffusing missile payload and thrust system. Must be installed onto a missile frame upon delivery."
+	item_cost = 25
+	path = /obj/item/storage/box/syndie_kit/missile_diffuser
 	antag_roles = list(MODE_MERCENARY)

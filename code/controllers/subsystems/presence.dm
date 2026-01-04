@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(presence)
 	var/cut_until = 1
 	for (var/mob/living/player as anything in GLOB.living_players)
 		++cut_until
-		if (QDELETED(player) || player.stat == DEAD)
+		if (QDELETED(player) || player.is_real_dead())
 			continue
 		++build["[get_z(player)]"]
 		if (no_mc_tick)

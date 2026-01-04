@@ -3,6 +3,7 @@
 	name = "Something"
 	desc = "При подборе этого предмета вы ощущаете словно все мышцы ваших рук напрягаются, словно от лёгкого удара тока. Вы чувствуете, как ваши волосы подымаются дыбом."
 	icon_state = "pruzhina"
+	admin_name = "Пружина-батарейка"
 	rect_to_interactions = list(
 		"Lick",
 		"Shake",
@@ -101,7 +102,11 @@
 			victim.electoanomaly_damage(10, src, victim.get_active_hand())
 
 /obj/item/artefact/pruzhina/react_at_throw(atom/target, range, speed, mob/thrower, spin, datum/callback/callback)
-	create_anomaly_pruzhina(30 SECONDS)
+	set waitfor = FALSE
+	color = COLOR_BLUE
+	src.visible_message("[src] начинает пульсировать!", range = 7)
+	sleep(2.5 SECONDS)
+	create_anomaly_pruzhina(5 MINUTES)
 
 
 /obj/item/artefact/pruzhina/proc/ubercharge_pruzhina(mob/living/user)

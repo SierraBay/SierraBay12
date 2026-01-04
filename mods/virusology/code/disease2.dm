@@ -82,7 +82,10 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 		if((mob.species.name == SPECIES_DIONA) && prob(mob.radiation/25))
 			cure(mob)
 		else if(prob(1))
+			var/old_uniqueID = uniqueID
 			majormutate()
+			mob.virus2["[uniqueID]"] = src
+			mob.virus2.Remove("[old_uniqueID]")
 
 	if(prob(mob.virus_immunity()) && prob(stage)) // Increasing chance of curing as the virus progresses
 		cure(mob,1)

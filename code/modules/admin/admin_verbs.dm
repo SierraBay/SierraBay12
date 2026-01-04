@@ -84,6 +84,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/allow_character_respawn,    // Allows a ghost to respawn ,
+	/client/proc/allow_respawn,
 	/client/proc/event_manager_panel,
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/empty_ai_core_toggle_latejoin,
@@ -134,7 +135,9 @@ var/global/list/admin_verbs_fun = list(
 	/datum/admins/proc/ai_hologram_set,
 	/client/proc/bombard_zlevel,
 	/client/proc/rename_shuttle,
-	/client/proc/give_disease2 // [/SIERRA-ADD] - CLIENT_VERBS
+	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
+	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
+	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
 	)
 
 var/global/list/admin_verbs_spawn = list(
@@ -192,8 +195,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/map_template_load_new_z,
 	//[SIERRA-ADD] - Colony-types,
 	/datum/admins/proc/map_template_colony_spawn_settings,
-	/datum/admins/proc/listen_anomaly_storytellers,
-	///datum/admins/proc/anomaly_control,
+	/datum/admins/proc/anomaly_control,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
@@ -219,7 +221,10 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/toggle_planet_repopulating,
 	/client/proc/spawn_exoplanet,
 	/client/proc/profiler_init_verb,
-	/datum/admins/proc/EnableDevtools
+	/datum/admins/proc/EnableDevtools,
+	/datum/admins/proc/force_initialize_weather,
+	/datum/admins/proc/force_weather_state,
+	/datum/admins/proc/force_kill_weather
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(
@@ -360,7 +365,8 @@ var/global/list/admin_verbs_mod = list(
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
-		debug_verbs
+		debug_verbs,
+		admin_verbs_mod
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -548,11 +554,11 @@ var/global/list/admin_verbs_mod = list(
 		if (null)
 			return
 		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
+			explosion(epicenter, 6)
 		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
+			explosion(epicenter, 9)
 		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+			explosion(epicenter, 15)
 		if("Custom Bomb")
 			var/range = input("Explosion radius (in tiles):") as num|null
 			if (isnull(range) || range <= 0)
@@ -597,8 +603,7 @@ var/global/list/admin_verbs_mod = list(
 
 	if(deadmin_holder)
 		deadmin_holder.reassociate()
-		log_admin("[src] re-admined themself.")
-		message_admins("[src] re-admined themself.", 1)
+		log_and_message_staff("re-admined themself.")
 		to_chat(src, SPAN_CLASS("interface", "You now have the keys to control the planet, or at least [GLOB.using_map.full_name]."))
 		verbs -= /client/proc/readmin_self
 
@@ -608,8 +613,7 @@ var/global/list/admin_verbs_mod = list(
 
 	if(holder)
 		if(alert("Confirm self-deadmin for the round? You can re-admin yourself at any time.",,"Yes","No") == "Yes")
-			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.", 1)
+			log_and_message_staff("deadmined themself.")
 			deadmin()
 			to_chat(src, SPAN_CLASS("interface", "You are now a normal player."))
 			verbs |= /client/proc/readmin_self

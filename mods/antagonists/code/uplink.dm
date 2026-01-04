@@ -24,7 +24,7 @@
 
 /datum/uplink_item/item/visible_weapons/psi_amp
 	name = "Cerebroenergetic Psionic Amplifier"
-	item_cost = 50
+	item_cost = 90
 	path = /obj/item/clothing/head/helmet/space/psi_amp/lesser
 	desc = "A powerful, illegal psi-amp. Boosts latent psi-faculties to extremely high levels."
 
@@ -91,3 +91,11 @@
 	item_cost = 24
 	path = /obj/item/device/blackout
 	desc = "A device which can create power surge in terminal, spread it in power network and temporally creating blackout."
+
+// Medium Silencer
+
+/datum/uplink_item/item/stealthy_weapons/medium_silencer
+	name = "10mm Silencer"
+	desc = "Silencer fittable with barrel-threaded guns with 10mm caliber, such MP6 or MSI-220."
+	item_cost = 8
+	path = /obj/item/silencer/medium

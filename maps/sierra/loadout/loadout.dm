@@ -105,9 +105,14 @@
 	. = ..()
 	var/list/musical_instruments_list = list(
 		"Synthesizer" = /obj/item/device/synthesized_instrument/synthesizer,
-		"Polyguitar" = /obj/item/device/synthesized_instrument/guitar/multi,
+		"Polyguitar flying V" = /obj/item/device/synthesized_instrument/guitar/multi_v,
+		"Polyguitar strato black" = /obj/item/device/synthesized_instrument/guitar/multi_strato_black,
+		"Polyguitar strato gradient" = /obj/item/device/synthesized_instrument/guitar/multi_strato_gradient,
+		"Polyguitar strato red" = /obj/item/device/synthesized_instrument/guitar/multi_strato_red,
+		"Polyguitar strato purple" = /obj/item/device/synthesized_instrument/guitar/multi_strato_purple,
 		"Guitar" = /obj/item/device/synthesized_instrument/guitar,
 		"Trumpet" = /obj/item/device/synthesized_instrument/trumpet,
+		"Violin" = /obj/item/device/synthesized_instrument/violin
 	)
 	gear_tweaks += new /datum/gear_tweak/path(musical_instruments_list)
 

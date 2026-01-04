@@ -49,6 +49,7 @@
 	default_law_type = /datum/ai_laws/solgov
 	use_overmap = 1
 	num_exoplanets = 1
+	using_sun = TRUE
 
 	away_site_budget = 3
 	min_offmap_players = 12
@@ -58,3 +59,11 @@
 	welcome_sound = null
 
 	use_bluespace_interlude = TRUE
+
+	var/list/memorial_entries = list()
+
+/datum/map/torch/setup_config(name, value, filename)
+	if (name == "memorial_entry")
+		memorial_entries = value
+		return
+	..()

@@ -1,4 +1,5 @@
 /obj/item/mech_equipment/mounted_system/flamethrower
+	name = "\improper \"Lynx\" flamethower"
 	icon_state = "mech_flamer"
 	heat_generation = 100
 	holding_type = /obj/item/flamethrower/full/mech

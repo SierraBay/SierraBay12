@@ -384,7 +384,7 @@ GLOBAL_TYPED_NEW(maploader, /dmm_suite)
 			instance = new atype(null)
 			initialized_areas_by_type[atype] = instance
 		if(crds)
-			instance.contents.Add(crds)
+			ChangeArea(crds, instance)
 
 		if(GLOB.use_preloader && instance)
 			GLOB._preloader.load(instance)

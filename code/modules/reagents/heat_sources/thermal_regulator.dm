@@ -23,7 +23,11 @@
 	var/image/on_icon
 
 	var/heating =			   TRUE
-	var/list/permitted_types = list(/obj/item/reagent_containers/glass)
+	var/list/permitted_types = list(
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/food/drinks/glass2,
+		/obj/item/reagent_containers/food/drinks/shaker
+		)
 	var/max_temperature =      200 CELSIUS
 	var/min_temperature =      -100  CELSIUS
 	var/heating_power =        10 // K

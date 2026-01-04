@@ -15,9 +15,9 @@
 	to_chat(user, SPAN_NOTICE("***********************************************************"))
 
 /datum/build_mode/move_into/OnClick(atom/movable/A, list/parameters)
-	if(parameters["left"])
+	if(parameters[MOUSE_1])
 		SetDestination(A)
-	if(parameters["right"])
+	if(parameters[MOUSE_2])
 		if(!destination)
 			to_chat(user, SPAN_WARNING("No target destination."))
 		else if(!ismovable(A))

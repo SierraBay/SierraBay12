@@ -8,7 +8,7 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank/WillContain()
 	return list(
-		/obj/item/gun/magnetic/railgun  = 1,
+		/obj/item/gun/magnetic/railgun/thunderclap = 1,
 		/obj/item/gun/energy/ionrifle/small/stupor = 2,
 		/obj/item/rcd_ammo = 5
 	)
@@ -228,6 +228,29 @@
 /obj/machinery/door/airlock/multi_tile/glass/terran
 	door_color = COLOR_DARK_BLUE_GRAY
 	stripe_color = COLOR_NT_RED
+
+/obj/machinery/vending/away_farfleet_uniform
+	name = "pioneer corps uniform dispenser"
+	desc = "A specialized vending machine with clothing inside. For childrens of Aramant only."
+	icon = 'icons/obj/machines/vending.dmi'
+	icon_state = "sec"
+	icon_deny = "sec-deny"
+	icon_vend = "sec-vend"
+	req_access = list(access_away_iccgn)
+	products = list(/obj/item/clothing/head/iccgn/beret = 5,
+					/obj/item/clothing/head/iccgn/service = 5,
+					/obj/item/clothing/under/iccgn/utility = 5,
+					/obj/item/clothing/under/iccgn/service = 5,
+					/obj/item/clothing/under/iccgn/pt = 5,
+					/obj/item/clothing/suit/iccgn/service_officer = 5,
+					/obj/item/clothing/suit/iccgn/service_enlisted = 5,
+					/obj/item/clothing/suit/iccgn/utility = 5,
+					/obj/item/clothing/gloves/thick/combat = 5,
+					/obj/item/clothing/gloves/iccgn/duty = 5,
+					/obj/item/clothing/shoes/iccgn/service = 5,
+					/obj/item/clothing/shoes/iccgn/utility = 5,
+					/obj/item/clothing/accessory/iccgn_patch/pioneer = 5
+					)
 
 /* Voidsuit Storage Unit
  * ====

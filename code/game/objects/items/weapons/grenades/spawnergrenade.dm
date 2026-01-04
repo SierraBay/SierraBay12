@@ -30,7 +30,7 @@
 			movable = new spawn_type (origin)
 			spawned += movable
 			if (spawn_throw_range)
-				target = CircularRandomTurfAround(origin, Frand(1, spawn_throw_range))
+				target = CircularRandomTurfAround(origin, frand(1, spawn_throw_range))
 				movable.throw_at(target, spawn_throw_range, 3)
 		AfterSpawn(user, spawned)
 	qdel(src)
@@ -48,9 +48,16 @@
 	spawn_amount = 5
 	spawn_throw_range = 3
 
+	/// Whether the spawned viserators should be set to the thrower's faction.
+	var/should_set_faction = TRUE
+
+
+/obj/item/grenade/spawnergrenade/viscerator/uplink
+	should_set_faction = FALSE
+
 
 /obj/item/grenade/spawnergrenade/viscerator/AfterSpawn(mob/living/user, list/spawned)
-	if (!istype(user))
+	if (!istype(user) || !should_set_faction)
 		return
 	for (var/mob/living/simple_animal/hostile/viscerator/viscerator as anything in spawned)
 		viscerator.faction = user.faction

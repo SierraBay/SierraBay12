@@ -19,7 +19,7 @@
 /mob/living/carbon/human/update_inv_head()
 	..()
 	if(client)
-		if(head)
+		if(head && !is_species(SPECIES_DIONA))
 			if(istype(head, /obj/item/clothing/head/helmet))
 				SEND_SIGNAL(head, COMSIG_ITEM_EQUIPPED, src)
 				last_equip_head = head
@@ -50,24 +50,6 @@
 /obj/item/mech_component/sensors/Initialize()
 	.=..()
 	AddComponent(/datum/component/mech_sensor, fov_angle)
-
-
-/mob/living/exosuit/open_hatch()
-	..()
-	if(head)
-		if(pilots)
-			for(var/mob/living/carbon/human/thing in pilots)
-				SEND_SIGNAL(head, COMSIG_CABINE_OPEN, thing)
-				thing.update_inv_head(thing)
-
-/mob/living/exosuit/close_hatch()
-	..()
-	if(head)
-		if(pilots)
-			for(var/mob/living/carbon/human/thing in pilots)
-				SEND_SIGNAL(head, COMSIG_CABINE_CLOSED, thing)
-				thing.update_inv_head(thing)
-
 
 /mob/living/exosuit/Destroy()
 	if(pilots)

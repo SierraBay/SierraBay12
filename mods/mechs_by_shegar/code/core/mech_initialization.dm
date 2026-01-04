@@ -86,3 +86,5 @@
 	for(var/obj/item/mech_component/component  in parts_list)
 		component.update_component_owner()
 	active_arm = L_arm
+	//Выдаём броню меху 
+	set_extension(src, /datum/extension/armor/mech, mech_basic_armour)

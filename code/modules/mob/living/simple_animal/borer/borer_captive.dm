@@ -33,7 +33,7 @@
 		for (var/mob/M in GLOB.player_list)
 			if (istype(M, /mob/new_player))
 				continue
-			else if(M.stat == DEAD && M.get_preference_value(/datum/client_preference/ghost_ears) == GLOB.PREF_ALL_SPEECH)
+			else if(M.is_real_dead() && M.get_preference_value(/datum/client_preference/ghost_ears) == GLOB.PREF_ALL_SPEECH)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
 
 /mob/living/captive_brain/process_resist()
@@ -48,7 +48,7 @@
 		spawn(rand(200,250)+B.host.getBrainLoss())
 			if(!B || !B.controlling) return
 
-			B.host.adjustBrainLoss(Frand(0.1,0.5))
+			B.host.adjustBrainLoss(frand(0.1,0.5))
 			to_chat(H, SPAN_DANGER("With an immense exertion of will, you regain control of your body!"))
 			to_chat(B.host, SPAN_DANGER("You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you."))
 			B.detatch()

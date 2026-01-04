@@ -12,6 +12,7 @@
 #include "cooler.dm"
 #include "sleeper.dm"
 #include "teleporter.dm"
+#include "blocker.dm"
 //Термические
 #include "heater.dm"
 #include "zharka.dm"
