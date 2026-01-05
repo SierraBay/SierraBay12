@@ -832,7 +832,7 @@
 	},
 /obj/machinery/photocopier/faxmachine{
 	department = "phobos - Bridge";
-	tag_radio = "Phobos";
+	tag_radio = "phobos";
 	name = "bridge fax machine"
 	},
 /obj/floor_decal/industrial/outline/yellow,
