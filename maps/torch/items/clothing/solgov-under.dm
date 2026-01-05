@@ -38,6 +38,9 @@
 	icon_state = "blackutility"
 	item_state = "bl_suit"
 	worn_state = "blackutility"
+	// [SIERRA-EDIT]
+	gender_icons = 1
+	// [SIERRA-EDIT-END]
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
 		energy = ARMOR_ENERGY_MINOR
