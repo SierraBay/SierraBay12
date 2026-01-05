@@ -243,18 +243,14 @@
 /obj/item/clothing/accessory/armor_tag/solgov/com,
 /obj/item/clothing/accessory/arm_guards/navy,
 /obj/item/clothing/under/solgov/utility/fleet/combat/command,
-/obj/item/clothing/under/solgov/utility/fleet/polopants/command,
 /obj/item/clothing/accessory/armor_plate/medium,
 /obj/item/clothing/head/helmet/solgov/command,
 /obj/item/clothing/accessory/helmet_cover/navy,
 /obj/item/melee/telebaton,
 /obj/item/clothing/head/beret/solgov/fleet/command,
 /obj/item/clothing/under/solgov/utility/fleet/command,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/under/solgov/service/fleet,
 /obj/item/clothing/head/solgov/dress/fleet/command,
 /obj/item/clothing/accessory/solgov/department/command/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/command,
 /obj/item/clothing/head/beret/solgov/fleet/dress/command,
 /obj/item/clothing/mask/gas/half,
 /obj/item/crowbar/prybar,
@@ -373,15 +369,11 @@
 /obj/item/gun/projectile/pistol/m19,
 /obj/item/clothing/head/beret/solgov/fleet/command,
 /obj/item/clothing/under/solgov/utility/fleet/command/pilot,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/head/beret/solgov/fleet/branch/third,
 /obj/item/clothing/gloves/thick/duty/solgov/fleet,
-/obj/item/clothing/under/solgov/service/fleet,
 /obj/item/clothing/head/solgov/dress/fleet,
 /obj/item/clothing/accessory/solgov/department/exploration/fleet{
 	name = "pilot insignia"
 	},
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/command,
 /obj/item/clothing/head/beret/solgov/fleet/dress,
 /obj/item/clothing/mask/gas/half,
 /obj/item/crowbar/prybar,
@@ -1845,9 +1837,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/submap_landmark/spawnpoint/phobos/senior_doctor,
+/obj/item/device/radio/intercom/map_preset/phobos{
+	dir = 4;
+	pixel_x = -24
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "fw" = (
@@ -2226,7 +2221,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/submap_landmark/spawnpoint/phobos/doctor,
 /turf/simulated/floor/tiled/white,
@@ -2707,12 +2701,12 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "jw" = (
@@ -2788,6 +2782,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "jH" = (
@@ -2977,6 +2972,7 @@
 "kF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/submap_landmark/spawnpoint/phobos/officer,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "kG" = (
@@ -3416,9 +3412,7 @@
 /obj/item/gun/projectile/pistol/m19,
 /obj/item/clothing/head/beret/solgov/fleet/medical,
 /obj/item/clothing/under/solgov/utility/fleet/combat/medical,
-/obj/item/clothing/under/solgov/utility/fleet/polopants/medical,
 /obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/medical,
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/device/flashlight/upgraded,
 /obj/item/ammo_magazine/pistol,
@@ -3432,7 +3426,6 @@
 /obj/item/clothing/accessory/armor_plate/medium,
 /obj/item/clothing/head/helmet/solgov,
 /obj/item/clothing/accessory/helmet_cover/navy,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -3699,9 +3692,6 @@
 /obj/item/clothing/accessory/helmet_cover/navy,
 /obj/item/clothing/accessory/helmet_cover/navy,
 /obj/item/clothing/accessory/helmet_cover/navy,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
@@ -4702,11 +4692,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/intercom/map_preset/phobos{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/submap_landmark/spawnpoint/phobos,
 /turf/simulated/floor/tiled/white,
@@ -4859,6 +4844,7 @@
 "rJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/submap_landmark/spawnpoint/phobos/engineer,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "rK" = (
@@ -5895,19 +5881,16 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/closet/medical_wall/filled{
-	pixel_x = -32
-	},
-/obj/random/medical/lite,
-/obj/random/medical/lite,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/small{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/white,
@@ -6876,7 +6859,6 @@
 /turf/simulated/floor/tiled,
 /area/ship/phobos/hallway)
 "Ae" = (
-/obj/random/trash,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
@@ -6884,6 +6866,9 @@
 	dir = 4
 	},
 /obj/submap_landmark/spawnpoint/phobos/officer,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "Ak" = (
@@ -6917,7 +6902,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/item/taperoll/engineering/applied,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 1;
 	name = "Scrubber to Waste"
@@ -7819,7 +7803,6 @@
 /obj/item/clothing/accessory/armor_plate/medium,
 /obj/item/clothing/head/helmet/solgov,
 /obj/item/clothing/accessory/helmet_cover/navy,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/item/storage/belt/utility/full,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel_grid,
@@ -7939,7 +7922,6 @@
 /obj/item/clothing/accessory/armor_plate/medium,
 /obj/item/clothing/head/helmet/solgov,
 /obj/item/clothing/accessory/helmet_cover/navy,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/item/storage/belt/utility/full,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel_grid,
@@ -8238,6 +8220,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
@@ -8557,11 +8543,7 @@
 /obj/item/device/flashlight/maglight,
 /obj/item/device/radio/headset/map_preset/phobos,
 /obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/head/soft/solgov/fleet,
-/obj/item/clothing/head/solgov/utility/fleet,
 /obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/security,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
@@ -8981,6 +8963,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "Ki" = (
@@ -9191,7 +9176,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/white,
@@ -9444,6 +9428,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/submap_landmark/spawnpoint/phobos/officer,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "LS" = (
@@ -9515,12 +9500,8 @@
 /obj/item/melee/telebaton,
 /obj/item/device/radio/headset/map_preset/phobos,
 /obj/item/clothing/head/beret/solgov/fleet/command,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/head/beret/solgov/fleet/branch/third,
 /obj/item/clothing/gloves/thick/duty/solgov/fleet,
 /obj/item/clothing/accessory/solgov/department/command/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/command,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/gloves/thick/swat{
 	name = "\improper Tactical Gloves"
@@ -9921,7 +9902,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
+	dir = 4;
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -10083,6 +10064,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "OE" = (
@@ -10148,7 +10133,6 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/submap_landmark/spawnpoint/phobos/pilot,
 /obj/machinery/light{
@@ -10882,9 +10866,7 @@
 /obj/item/gun/projectile/pistol/m19,
 /obj/item/clothing/head/beret/solgov/fleet/medical,
 /obj/item/clothing/under/solgov/utility/fleet/combat/medical,
-/obj/item/clothing/under/solgov/utility/fleet/polopants/medical,
 /obj/item/clothing/accessory/solgov/department/medical/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/medical,
 /obj/item/clothing/accessory/storage/holster/thigh,
 /obj/item/device/flashlight/upgraded,
 /obj/item/ammo_magazine/pistol,
@@ -10898,7 +10880,6 @@
 /obj/item/clothing/accessory/armor_plate/medium,
 /obj/item/clothing/head/helmet/solgov,
 /obj/item/clothing/accessory/helmet_cover/navy,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
@@ -11167,13 +11148,14 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/closet/medical_wall/filled{
+	pixel_x = -32
+	},
+/obj/random/medical/lite,
+/obj/random/medical/lite,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "TF" = (
@@ -11891,11 +11873,7 @@
 /turf/space,
 /area/space)
 "Wx" = (
-/obj/random/trash,
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
+/obj/machinery/vending/away_phobos_uniform,
 /turf/simulated/floor/tiled/white,
 /area/ship/phobos/living)
 "WA" = (
@@ -12273,11 +12251,6 @@
 /obj/item/device/flashlight/maglight,
 /obj/item/device/radio/headset/map_preset/phobos,
 /obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/head/soft/solgov/fleet,
-/obj/item/clothing/head/solgov/utility/fleet,
-/obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/security,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
@@ -12670,11 +12643,7 @@
 /obj/item/device/flashlight/maglight,
 /obj/item/device/radio/headset/map_preset/phobos,
 /obj/item/clothing/head/beret/solgov/fleet/security,
-/obj/item/clothing/accessory/solgov/fleet_patch/third,
-/obj/item/clothing/head/soft/solgov/fleet,
-/obj/item/clothing/head/solgov/utility/fleet,
 /obj/item/clothing/accessory/solgov/department/security/fleet,
-/obj/item/clothing/suit/storage/jacket/solgov/fleet/security,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/ammo_magazine/pistol/double,
 /obj/item/clothing/gloves/thick/duty/solgov/sec,
