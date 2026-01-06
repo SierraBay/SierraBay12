@@ -65,7 +65,9 @@
 /datum/nano_module/program/ship/proc/unlook(mob/user)
 	user.reset_view(null, FALSE)
 	if(user.client)
-		user.client.view = world.view
+		//[SIERRA-EDIT - Client View]
+		user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+		//[/SIERRA-EDIT - Client View]
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.hide_contacts(user)

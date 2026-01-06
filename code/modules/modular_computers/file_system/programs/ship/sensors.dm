@@ -20,7 +20,9 @@
 	var/working_sound = 'sound/machines/sensors/sensorloop.ogg'
 	var/datum/sound_token/sound_token
 	var/sound_id
-	var/modify_access_req = access_bridge
+// [SIERRA-EDIT]
+	var/modify_access_req = null
+// [/SIERRA-EDIT]
 
 /datum/computer_file/program/ship/sensors/spacer
 	nanomodule_path = /datum/nano_module/program/ship/sensors/spacer
