@@ -480,7 +480,6 @@
 	minrandom = 5
 	idle_power_usage = 200
 	vend_power_usage = 40000
-	// Product Ads use text from both versions of Chipin' in as reference for cyberpunk part of the setting. It would be really funny if corporate lawyers kick our asses for this very thing.
 	product_ads = {"\
 		Need repair?!;\
 		I'm Chippin' In!;\
