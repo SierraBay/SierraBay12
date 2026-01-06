@@ -12,10 +12,10 @@
 	to_chat(user, SPAN_NOTICE("***********************************************************"))
 
 /datum/build_mode/ladders/OnClick(atom/A, list/parameters)
-	if(parameters["left"])
+	if(parameters[MOUSE_1])
 		ladder_upper = get_turf(A)
 		to_chat(user, SPAN_NOTICE("Defined [ladder_upper] ([ladder_upper.type]) as the upper ladder location."))
-	if(parameters["right"])
+	if(parameters[MOUSE_2])
 		ladder_lower = get_turf(A)
 		to_chat(user, SPAN_NOTICE("Defined [ladder_lower] ([ladder_lower.type]) as the lower ladder location."))
 	if(ladder_upper && ladder_lower)

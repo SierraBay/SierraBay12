@@ -389,6 +389,17 @@
 		else
 			attack_empty_hand(BP_R_HAND)
 
+/mob/verb/activate_world_object()
+	set name = "Activate Object In World"
+	set category = "Object"
+
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	var/atom/hovered = click_handler.hovered_atom
+	if (!hovered)
+		return
+
+	usr.ClickOn(hovered, "", TRUE)
+
 /mob/proc/update_flavor_text(key)
 	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null, extra = 0)
 	if(!CanInteract(usr, GLOB.self_state))
@@ -455,7 +466,7 @@
 /mob/proc/OnSelfTopic(href_list, topic_status)
 	if (topic_status == STATUS_INTERACTIVE)
 		if(href_list["mach_close"])
-			var/t1 = text("window=[href_list["mach_close"]]")
+			var/t1 = "window=[href_list["mach_close"]]"
 			unset_machine()
 			show_browser(src, null, t1)
 			return TOPIC_HANDLED
@@ -1306,3 +1317,9 @@
 
 /mob/get_mass()
 	return mob_size
+
+/mob/get_overhead_text_x_offset()
+	return offset_overhead_text_x
+
+/mob/get_overhead_text_y_offset()
+	return offset_overhead_text_y

@@ -151,7 +151,7 @@
 			return
 
 	if (!message)
-		message = input("Message:", text("Enter the text you wish to appear to your target:")) as null|text
+		message = input("Message:", "Enter the text you wish to appear to your target:") as null|text
 		if (style != "unsafe")
 			message = sanitize(message)
 	if (!message)
@@ -441,7 +441,7 @@ Ccomp's first proc.
 
 /client/proc/allow_respawn()
 	set category = "Special Verbs"
-	set name = "Allow Respawn"
+	set name = "Allow Respawn 2"
 	set desc = "Allows a ghost or lobby player to bypass respawn timers."
 	if(!check_rights(R_ADMIN))
 		return
@@ -684,19 +684,17 @@ Ccomp's first proc.
 			max_power = EX_ACT_HEAVY
 		if ("Light")
 			max_power = EX_ACT_LIGHT
-//[SIERRA-REMOVE] MODPACK_EXPLOSION
-/*
+
 	var/shaped = 0
 	if(alert(src, "Shaped explosion?", "Shape", "Yes", "No") == "Yes")
 		shaped = input("Shaped where to?", "Input")  as anything in list("NORTH","SOUTH","EAST","WEST")
 		shaped = text2dir(shaped)
-*/
-//[/SIERRA-REMOVE]
+
 	if (range > 20)
 		if (alert(src, "Are you sure you want to do this? It may lag.", "Confirmation", "Yes", "No") == "No")
 			return
 
-	explosion(O, range, max_power)// [SIERRA-EDIT] MODPACK_EXPLOSION explosion(O, range, max_power, shaped=shaped)
+	explosion(O, range, max_power, shaped=shaped)
 	log_admin("[key_name(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])")
 	message_admins("[key_name_admin(usr)] created an explosion ([range], [max_power_input]) at ([O.x],[O.y],[O.z])", 1)
 
@@ -706,9 +704,9 @@ Ccomp's first proc.
 
 	if(!check_rights(R_DEBUG|R_FUN))	return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = input("Range of heavy pulse.", "Input")  as num|null
 	if(isnull(heavy)) return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = input("Range of light pulse.", "Input")  as num|null
 	if(isnull(light)) return
 
 	if (heavy || light)

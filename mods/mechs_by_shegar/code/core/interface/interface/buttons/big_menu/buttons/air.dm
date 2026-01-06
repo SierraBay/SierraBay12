@@ -19,11 +19,11 @@
 /obj/screen/exosuit/menu_button/air/Click(location, control, params)
 	press_animation()
 	var/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[MOUSE_SHIFT])
 		if(owner && owner.material)
 			usr.show_message(SPAN_NOTICE("Your mech's safe operating limit ceiling is [("[owner.material.melting_point - T0C] °C")]."), VISIBLE_MESSAGE)
 		return
-	if(modifiers["alt"])
+	if(modifiers[MOUSE_ALT])
 		if(owner && owner.body && owner.body.diagnostics?.is_functional() && owner.loc)
 			usr.show_message(SPAN_NOTICE("The life support panel blinks several times as it updates:"), VISIBLE_MESSAGE)
 			usr.show_message(SPAN_NOTICE("Chassis heat probe reports temperature of [("[owner.bodytemperature - T0C] °C" )]."), VISIBLE_MESSAGE)
@@ -37,7 +37,7 @@
 		else
 			usr.show_message(SPAN_WARNING("The life support panel isn't responding."), VISIBLE_MESSAGE)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[MOUSE_CTRL])
 		owner.body.atmos_clear_protocol(usr)
 		return
 	.=..()

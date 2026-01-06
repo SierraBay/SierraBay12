@@ -55,7 +55,7 @@
 
 /obj/screen/exosuit/guide_teller/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, "alt"))  // Проверяем, нажат ли Alt
+	if(LAZYACCESS(modifiers, MOUSE_ALT))  // Проверяем, нажат ли Alt
 		owner.prev_step(usr)
 	else
 		owner.next_step(usr)

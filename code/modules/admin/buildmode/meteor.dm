@@ -35,7 +35,7 @@ When a meteor is spawned, its type is randomly chosen from the list. The list mu
 			to_chat(user, "Removed [M] from the list of meteor types.")
 
 /datum/build_mode/meteor/OnClick(atom/A, list/parameters)
-	if (parameters["left"])
+	if (parameters[MOUSE_1])
 		if (!length(meteors))
 			to_chat(user, SPAN_NOTICE("You must specify at least one meteor type to spawn first!"))
 			return
@@ -59,7 +59,7 @@ When a meteor is spawned, its type is randomly chosen from the list. The list mu
 			spawn_point = null
 			return
 
-	else if (parameters["right"])
+	else if (parameters[MOUSE_2])
 		entrance = null
 		exit = null
 		to_chat(user, SPAN_NOTICE("Selection cancelled."))

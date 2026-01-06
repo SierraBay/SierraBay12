@@ -413,7 +413,7 @@
 
 	var/dat = display_medical_data(H.get_raw_medical_data(mutations = TRUE), SKILL_MAX)
 
-	dat += text("<BR><a href='byond://?src=\ref[];mach_close=scanconsole'>Close</A>", usr)
+	dat += "<A href='byond://?src=\ref[usr];mach_close=scanconsole'>Close</A>"
 	show_browser(usr, dat, "window=scanconsole;size=430x600")
 
 /client/proc/cmd_analyse_health_context(mob/living/carbon/human/H as mob in GLOB.human_mobs)
@@ -495,7 +495,7 @@
 	var/obj/overmap/visitable/sector/exoplanet/new_planet = new exoplanet_type(null, world.maxx, world.maxy)
 	new_planet.features_budget = budget
 	new_planet.themes = list(new theme)
-	new_planet.sun_brightness_modifier = Frand(0.1, 0.6)
+	new_planet.sun_brightness_modifier = frand(0.1, 0.6)
 
 	log_and_message_admins("is spawning [new_planet] at [new_planet.start_x],[new_planet.start_y], containing Z [english_list(new_planet.map_z)]")
 	new_planet.build_level()

@@ -196,7 +196,7 @@
 
 		if (target != owner && H.get_blocked_ratio(target_zone, DAMAGE_BRUTE, damage_flags=DAMAGE_FLAG_SHARP) > 0.1 && prob(50))
 			for(var/mob/O in viewers(world.view, owner))
-				O.show_message(text(SPAN_DANGER("[owner] tries to bite [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!")), 1)
+				O.show_message(SPAN_DANGER("[owner] tries to bite [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!"), 1)
 
 			admin_attack_log(owner, target, "Attacked using \a [src]", "Was attacked with \a [src]", "used \a [src] to attack")
 			return
@@ -234,7 +234,7 @@
 
 		if (target != owner && H.get_blocked_ratio(target_zone, DAMAGE_BRUTE, damage_flags=DAMAGE_FLAG_SHARP) > 0.1 && prob(50))
 			for(var/mob/O in viewers(world.view, owner))
-				O.show_message(text(SPAN_DANGER("[owner] tries to bite [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!")), 1)
+				O.show_message(SPAN_DANGER("[owner] tries to bite [target] in \the [hit_area] with [src.name], but the attack is deflected by armor!"), 1)
 
 			admin_attack_log(owner, target, "Attacked using \a [src]", "Was attacked with \a [src]", "used \a [src] to attack")
 			return

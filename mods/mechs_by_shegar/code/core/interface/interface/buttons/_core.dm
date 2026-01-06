@@ -69,11 +69,11 @@
 /obj/screen/exosuit/heat/Click(location, control, params)
 	if(..())
 		var/modifiers = params2list(params)
-		if(modifiers["shift"])
+		if(modifiers[MOUSE_SHIFT])
 			if(owner && owner.material)
 				usr.show_message(SPAN_NOTICE("Your suit's safe operating limit ceiling is [(celsius ? "[owner.material.melting_point - T0C] °C" : "[owner.material.melting_point] K" )]."), VISIBLE_MESSAGE)
 			return
-		if(modifiers["ctrl"])
+		if(modifiers[MOUSE_CTRL])
 			celsius = !celsius
 			usr.show_message(SPAN_NOTICE("You switch the chassis probe display to use [celsius ? "celsius" : "kelvin"]."), VISIBLE_MESSAGE)
 			return

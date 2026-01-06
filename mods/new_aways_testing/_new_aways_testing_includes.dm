@@ -1,0 +1,5 @@
+#ifndef MODPACK_NEW_AWAYS_TESTING
+#define MODPACK_NEW_AWAYS_TESTING
+
+
+#endif

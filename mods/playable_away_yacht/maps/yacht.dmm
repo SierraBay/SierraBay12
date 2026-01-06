@@ -1993,7 +1993,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/playable_yacht/right_engine)
 "Jh" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24;

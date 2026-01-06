@@ -17,7 +17,7 @@
 		/obj/item/clustertool,
 		/obj/item/soap,
 		/obj/item/mop/advanced/ascent,
-		/obj/item/device/plunger/robot,
+		/obj/item/clothing/mask/plunger/robot,
 		/obj/item/weldingtool/electric/mantid,
 		/obj/item/extinguisher,
 		/obj/item/device/t_scanner,

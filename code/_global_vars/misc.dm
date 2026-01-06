@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(all_observable_events)
 
 // True if net rebuild will be called manually after an event.
-//GLOBAL_VAR_AS(defer_powernet_rebuild, FALSE) //[SIERRA-REMOVE]
+//GLOBAL_VAR_AS(defer_powernet_rebuild, FALSE) //[SIERRA-REMOVE] Если будешь снимать коммент, сними со всех defer_powernet_rebuild
 
 // Those networks can only be accessed by pre-existing terminals. AIs and new terminals can't use them.
 GLOBAL_LIST_AS(restricted_camera_networks, list(\

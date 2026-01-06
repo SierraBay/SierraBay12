@@ -26,6 +26,7 @@
 	var/appliancetype // Bitfield, uses the same as appliances
 	var/show_food_items = TRUE
 	w_class = ITEM_SIZE_NORMAL
+	var/cook_type // optional string to influence the appliance cook_type
 
 /obj/item/reagent_containers/cooking_container/on_update_icon()
 	..()
@@ -99,7 +100,7 @@
 
 /obj/item/reagent_containers/cooking_container/use_before(atom/target, mob/living/user, click_parameters)
 	var/intent_check = ishuman(user) ? I_GRAB : I_HELP
-	if (user.a_intent != intent_check || istype(target, /obj/item/storage) || istype(target, /obj/screen/storage))
+	if (user.a_intent != intent_check || istype(target, /obj/item/storage) || istype(target, /obj/screen/item_relayed/storage))
 		return ..()
 
 	var/turf/turf = get_turf(target)
@@ -189,7 +190,7 @@
 /obj/item/reagent_containers/cooking_container/MouseEntered(location, control, params)
 	. = ..()
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"] && get_dist(usr, src) <= 2)
+	if(modifiers[MOUSE_SHIFT] && get_dist(usr, src) <= 2)
 		params = replacetext(params, "shift=1;", "") // tooltip doesn't appear unless this is stripped
 		var/description
 		if(length(contents))
@@ -345,6 +346,7 @@
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER // Will still react
 	appliancetype = COOKING_APPLIANCE_SKILLET
 	show_food_items = FALSE
+	cook_type = "pan-fried"
 
 /obj/item/reagent_containers/cooking_container/skillet/Initialize(mapload, new_material)
 	. = ..(mapload)
@@ -366,6 +368,7 @@
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER // Will still react
 	appliancetype = COOKING_APPLIANCE_SAUCEPAN
 	show_food_items = FALSE
+	cook_type = "sauteed"
 
 /obj/item/reagent_containers/cooking_container/saucepan/Initialize(mapload, new_material)
 	. = ..(mapload)
@@ -389,6 +392,7 @@
 	appliancetype = COOKING_APPLIANCE_POT
 	w_class = ITEM_SIZE_LARGE
 	show_food_items = FALSE
+	cook_type = "boiled"
 
 /obj/item/reagent_containers/cooking_container/pot/Initialize(mapload, new_material)
 	. = ..(mapload)

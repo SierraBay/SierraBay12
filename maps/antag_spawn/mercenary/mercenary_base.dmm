@@ -292,7 +292,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
 "cM" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	uncreated_component_parts = list(/obj/item/stock_parts/power/battery/buildable/responsive=1,/obj/item/cell/high=1)
 	},
 /obj/item/device/radio/intercom/hailing{
@@ -1563,7 +1563,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "qw" = (

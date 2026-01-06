@@ -94,7 +94,7 @@
 /datum/hivemind_sdp/champion/execute()
 	. = ..()
 	var/list/places_to_spawn = list()
-	for(var/turf/T in orange(1, master))
+	for(var/turf/T in orange(2, master))
 		if(!T.density)
 			for(var/obj/O in T)
 				if(!O.CanPass(master, T))
@@ -108,7 +108,7 @@
 	var/champion_path
 	var/amount = 1
 
-	var/squad = pick("defiler", "twins", "zeus", "swarm", GLOB.hive_data_bool["allow_tyrant_spawn"] ? "tyrant" : "defiler")
+	var/squad = pick("defiler", "twins", "zeus", "thread", "swarm", GLOB.hive_data_bool["allow_tyrant_spawn"] ? "tyrant" : "defiler")
 	switch(squad)
 		if("defiler")
 			champion_path = /mob/living/simple_animal/hostile/hivemind/mechiver
@@ -121,6 +121,10 @@
 			champ_names = list("Zeus", "Thor")
 			champion_path = /mob/living/simple_animal/hostile/hivemind/hiborg
 			amount = 2
+		if("thread")
+			champ_names = list("Prima", "Secundo", "Tercio", "Quattro")
+			champion_path = /mob/living/simple_animal/hostile/hivemind/treader
+			amount = 4
 		if("swarm")
 			champ_names = list("Swarmer Slicer", "Swarmer Destroyer", "Swarmer Annihilater", "Swarmer Stinger", "Swarmer Cutter", "Swarmer Dicer")
 			amount = 6

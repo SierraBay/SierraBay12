@@ -261,7 +261,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/cargo/maints)
 "bt" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -1652,7 +1652,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_one)
 "ic" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/structure/sign/warning/internals_required{
@@ -3970,7 +3970,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower/fore)
 "tQ" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -5468,7 +5468,7 @@
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/lower/fore)
 "By" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
@@ -8579,7 +8579,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/maintenance/atmos)
 "Rg" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/structure/sign/warning/internals_required{

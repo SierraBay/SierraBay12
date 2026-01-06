@@ -8,7 +8,7 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/antitank/WillContain()
 	return list(
-		/obj/item/gun/magnetic/railgun  = 1,
+		/obj/item/gun/magnetic/railgun/thunderclap = 1,
 		/obj/item/gun/energy/ionrifle/small/stupor = 2,
 		/obj/item/rcd_ammo = 5
 	)

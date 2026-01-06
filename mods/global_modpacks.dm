@@ -12,7 +12,7 @@
 #include "ex666_ecosystem/_ex666_ecosystem_includes.dm"
 #include "escpodinf/_escpodinf_includes.dm"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
-#include "explosions/_explosions_includes.dm"
+//#include "explosions/_explosions_includes.dm"
 #include "gliding/_gliding_includes.dm"
 #include "guns/_guns_includes.dm"
 #include "machinery/_machinery_includes.dm"

@@ -1,0 +1,4 @@
+author: Teteshnik
+changes:
+  - bugfix: Пофиксил кейбинды Rest и бега.
+delete-after: true

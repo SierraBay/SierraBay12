@@ -86,7 +86,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/usedup,
@@ -4592,7 +4592,7 @@
 /obj/floor_decal/corner/yellow{
 	dir = 10
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/usedup,

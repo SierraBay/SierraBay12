@@ -14,7 +14,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/device/paint_sprayer,
 		/obj/item/inducer/borg,
-		/obj/item/device/plunger/robot,
+		/obj/item/clothing/mask/plunger/robot,
 		/obj/item/inflatable_dispenser/robot,
 		/obj/item/reagent_containers/spray/cleaner/drone,
 		/obj/item/borg/sight/hud/jani,

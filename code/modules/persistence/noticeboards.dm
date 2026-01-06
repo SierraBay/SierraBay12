@@ -89,8 +89,8 @@
 /obj/structure/noticeboard/use_tool(obj/item/tool, mob/user, list/click_params)
 	if (istype(tool, /obj/item/material/shard/caltrop/tack))
 		user.unEquip(tool, loc)
-		var/click_x = text2num_or_default(click_params["icon-x"], 16)
-		var/click_y = text2num_or_default(click_params["icon-y"], 16)
+		var/click_x = text2num_or_default(click_params[MOUSE_ICON_X], 16)
+		var/click_y = text2num_or_default(click_params[MOUSE_ICON_Y], 16)
 		tool.pixel_x = pixel_x + click_x - 16
 		tool.pixel_y = pixel_y + click_y - 16
 		user.visible_message(
