@@ -7300,7 +7300,7 @@
 /area/tcommsat/storage)
 "bcs" = (
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
@@ -13578,7 +13578,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,
@@ -18827,7 +18827,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -31320,7 +31320,7 @@
 /turf/simulated/wall/prepainted,
 /area/medical/staging)
 "eAG" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/steel_ridged,
@@ -53987,7 +53987,7 @@
 /obj/floor_decal/corner/yellow/border{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -57591,7 +57591,7 @@
 /turf/simulated/floor/carpet,
 /area/crew_quarters/lounge)
 "ixU" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bridge_windows"
 	},
 /obj/structure/cable/green,
@@ -57996,7 +57996,7 @@
 /turf/simulated/floor/tiled,
 /area/quartermaster/hangar)
 "iAD" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /obj/machinery/door/firedoor,
@@ -60927,7 +60927,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "mental_health_windows"
 	},
 /turf/simulated/floor/plating,
@@ -61041,7 +61041,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /turf/simulated/floor/plating,
@@ -79903,7 +79903,7 @@
 	id_tag = "med_crit2";
 	name = "Infirmary Staging Shutters"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "infimary_staging"
 	},
 /obj/machinery/door/blast/regular/open{
@@ -94526,7 +94526,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/wardhallway)
 "nVe" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "bridge_windows"
 	},
 /obj/structure/cable/green{
@@ -99881,7 +99881,7 @@
 	name = "Biohazard Shutter"
 	},
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "rd_windows"
 	},
 /obj/structure/disposalpipe/segment,
@@ -104760,7 +104760,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/fore)
 "psk" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /obj/machinery/door/firedoor,
@@ -107140,7 +107140,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -110562,7 +110562,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/storage/primary)
 "qlu" = (
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "cmo_windows"
 	},
 /obj/machinery/door/firedoor{
@@ -117343,7 +117343,7 @@
 /area/engineering/engine_monitoring)
 "rle" = (
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /obj/structure/cable/green{
 	d2 = 8;
 	icon_state = "0-8"
@@ -123757,7 +123757,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/xenobiology/xenoflora)
 "sij" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -128457,7 +128457,7 @@
 	pixel_x = 16;
 	pixel_y = 29
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -131687,7 +131687,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/aft)
 "tok" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /turf/simulated/floor/plating,
 /area/crucian_hangar/start)
 "ton" = (
@@ -133009,7 +133009,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/hallway/primary/bridgedeck/center)
 "tzi" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/structure/cable/cyan{
@@ -137045,7 +137045,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -146549,7 +146549,7 @@
 /area/storage/eva)
 "vyb" = (
 /obj/machinery/door/firedoor,
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
@@ -146690,7 +146690,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/ce)
 "vzp" = (
@@ -149519,7 +149519,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "hop_windows"
 	},
 /turf/simulated/floor/plating,
@@ -156068,7 +156068,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full,
+/obj/wallframe_spawn/reinforced/polarized,
 /turf/simulated/floor/plating,
 /area/crew_quarters/heads/office/iaa)
 "wXB" = (
@@ -157481,7 +157481,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	id = "mental_health_windows"
 	},
 /turf/simulated/floor/plating,

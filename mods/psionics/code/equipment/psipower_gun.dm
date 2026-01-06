@@ -20,7 +20,7 @@
 	var/explosion_area = 5
 
 /obj/item/projectile/psi/strong/on_hit(atom/target, blocked = 0)
-	explosion(get_turf(target), light_impact_range = explosion_power, flash_range = explosion_area)
+	explosion(get_turf(target), EX_ACT_LIGHT = explosion_power)
 	..()
 
 /obj/item/projectile/psi/strong_piercing
@@ -45,21 +45,21 @@
 
 	exploded = TRUE
 	if(istype(A,/obj/shield))
-		explosion(get_turf(A), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
+		explosion(get_turf(A), EX_ACT_HEAVY = explosion_power, EX_ACT_LIGHT = explosion_area)
 		qdel(src)
 		return
 
 	sleep(delay)
 
 	if(src && !exploded_inwall)
-		explosion(get_turf(src), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
+		explosion(get_turf(src), EX_ACT_HEAVY = explosion_power, EX_ACT_LIGHT = explosion_area)
 		qdel(src)
 
 /obj/item/projectile/psi/strong_piercing/Destroy()
 	if(src && !exploded_inwall && !istype(loc,/atom/movable))
 		exploded = TRUE
 		exploded_inwall = TRUE
-		explosion(get_turf(src), heavy_impact_range = explosion_power, light_impact_range = explosion_area)
+		explosion(get_turf(src), EX_ACT_HEAVY = explosion_power, EX_ACT_LIGHT = explosion_area)
 	..()
 
 /obj/item/gun/energy/psigun

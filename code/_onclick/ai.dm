@@ -27,42 +27,42 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if (modifiers["ctrl"] && modifiers["alt"] && modifiers["shift"])
+	if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT] && modifiers[MOUSE_SHIFT])
 		if (!control_disabled && A.AICtrlAltShiftClick(src))
 			return TRUE
 		if (CtrlAltShiftClickOn(A))
 			return TRUE
-	else if (modifiers["ctrl"] && modifiers["alt"])
+	else if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT])
 		if (!control_disabled && A.AICtrlAltClick(src))
 			return TRUE
 		if (CtrlAltClickOn(A))
 			return TRUE
-	else if (modifiers["shift"] && modifiers["ctrl"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_CTRL])
 		if (!control_disabled && A.AICtrlShiftClick(src))
 			return TRUE
 		if (CtrlShiftClickOn(A))
 			return TRUE
-	else if (modifiers["shift"] && modifiers["alt"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_ALT])
 		if (!control_disabled && A.AIAltShiftClick(src))
 			return TRUE
 		if (AltShiftClickOn(A))
 			return TRUE
-	else if (modifiers["middle"])
+	else if (modifiers[MOUSE_3])
 		if (!control_disabled && A.AIMiddleClick(src))
 			return TRUE
 		if (MiddleClickOn(A))
 			return TRUE
-	else if (modifiers["shift"])
+	else if (modifiers[MOUSE_SHIFT])
 		if (!control_disabled && A.AIShiftClick(src))
 			return TRUE
 		if (ShiftClickOn(A))
 			return TRUE
-	else if (modifiers["alt"])
+	else if (modifiers[MOUSE_ALT])
 		if (!control_disabled && A.AIAltClick(src))
 			return TRUE
 		if (AltClickOn(A))
 			return TRUE
-	else if (modifiers["ctrl"])
+	else if (modifiers[MOUSE_CTRL])
 		if (!control_disabled && A.AICtrlClick(src))
 			return TRUE
 		if (CtrlClickOn(A))

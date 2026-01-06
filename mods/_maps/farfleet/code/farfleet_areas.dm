@@ -216,7 +216,7 @@
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/ship/farfleet/command/launcher
-	name = "\improper Fore Impulse Cannon"
+	name = "\improper Missile Bay"
 	icon_state = "blue"
 	req_access = list(access_away_iccgn)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND

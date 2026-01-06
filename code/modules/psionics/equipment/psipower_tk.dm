@@ -16,7 +16,7 @@
 
 /obj/item/psychic_power/telekinesis/proc/set_focus(atom/movable/_focus)
 
-	if(!_focus.simulated || !istype(_focus.loc, /turf))
+	if(!_focus.simulated || !istype(_focus.loc, isturf))
 		return FALSE
 
 	var/check_paramount

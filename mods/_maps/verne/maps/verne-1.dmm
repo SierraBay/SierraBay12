@@ -4731,7 +4731,7 @@
 	pixel_x = 6;
 	pixel_y = 25
 	},
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/machinery/button/blast_door{
 	id_tag = "vernechamberaccess";
 	name = "Thruster Chamber Access";

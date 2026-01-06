@@ -515,8 +515,10 @@
 	that is standing up to a meter away from the machine."
 	extended_desc = "The first pin requires a ref to the kind of object that you want the locator to acquire. This means that it will \
 	give refs to nearby objects that are similar. If more than one valid object is found nearby, it will choose one of them at \
-	random."
-	inputs = list("desired type ref" = IC_PINTYPE_REF)
+	random. If this pin is null, the locator will not filter by object type. The second pin controls whether the locator should \
+	filter only movable objects (useful for grabbers, for example) or remain completely unfiltered, other than the type filter \
+	if enabled."
+	inputs = list("desired type ref" = IC_PINTYPE_REF,"filter" = IC_PINTYPE_BOOLEAN)
 	outputs = list("located ref" = IC_PINTYPE_REF)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,
 		"not found" = IC_PINTYPE_PULSE_OUT)
@@ -524,29 +526,41 @@
 	power_draw_per_use = 30
 
 /obj/item/integrated_circuit/input/adjacent_locator/do_work()
-	var/datum/integrated_io/I = inputs[1]
-	var/datum/integrated_io/O = outputs[1]
-	O.data = null
-
-	if(!isweakref(I.data))
-		return
-	var/atom/A = I.data.resolve()
-	if(!A)
-		return
-	var/desired_type = A.type
+	var/datum/integrated_io/input = inputs[1]
+	var/datum/integrated_io/mode = inputs[2]
+	var/datum/integrated_io/output = outputs[1]
+	output.data = null
 
 	var/list/nearby_things = range(1, get_turf(src))
+	var/list/filtered_things = list()
 	var/list/valid_things = list()
-	for(var/atom/thing in nearby_things)
-		if(thing.type != desired_type)
-			continue
-		valid_things.Add(thing)
+
+	if(mode.data)
+		for(var/obj/thing in nearby_things)
+			if(!thing.anchored)
+				filtered_things.Add(thing)
+	else
+		for(var/atom/thing in nearby_things)
+			filtered_things.Add(thing)
+
+	// strict filter check
+	if(isweakref(input.data))
+		var/atom/A = input.data.resolve()
+		if(istype(A))
+			var/desired_type = A.type
+			for(var/atom/thing in filtered_things)
+				if(thing.type == desired_type)
+					valid_things.Add(thing)
+	else
+		for(var/atom/thing in filtered_things)
+			valid_things.Add(thing)
+
 	if(length(valid_things))
-		O.data = weakref(pick(valid_things))
+		output.data = weakref(pick(valid_things))
 		activate_pin(2)
 	else
 		activate_pin(3)
-	O.push_data()
+	output.push_data()
 
 /obj/item/integrated_circuit/input/advanced_locator_list
 	complexity = 6
@@ -869,7 +883,9 @@
 	power_draw_per_use = 5
 
 	var/language_preferred = LANGUAGE_HUMAN_EURO
+	// [SIERRA-EDIT] - Old microphone
 	var/languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_HUMAN_CHINESE, LANGUAGE_HUMAN_ARABIC, LANGUAGE_HUMAN_INDIAN, LANGUAGE_HUMAN_IBERIAN, LANGUAGE_HUMAN_RUSSIAN, LANGUAGE_HUMAN_SELENIAN, LANGUAGE_SPACER,  LANGUAGE_EAL, LANGUAGE_UNATHI_SINTA, LANGUAGE_UNATHI_YEOSA,  LANGUAGE_SKRELLIAN,  LANGUAGE_ROBOT_GLOBAL, LANGUAGE_DRONE_GLOBAL, LANGUAGE_GUTTER, LANGUAGE_ROOTLOCAL, LANGUAGE_PRIMITIVE, LANGUAGE_HUMAN_AVALON, LANGUAGE_HUMAN_LORRIMAN, LANGUAGE_HUMAN_MIRANIAN, LANGUAGE_LEGALESE, LANGUAGE_RESOMI, LANGUAGE_SIIK_MAAS, LANGUAGE_SIIK_TAJR)
+	// [/SIERRA-EDIT] - Old microphone
 	var/invalid_flags = NONVERBAL | SIGNLANG | HIVEMIND | ALT_TRANSMIT
 
 /obj/item/integrated_circuit/input/microphone/Initialize()
@@ -910,6 +926,12 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	extended_desc = "A microphone with a xenolinguistic database to facilitate EXO missions with mixed species. It translates the most common Skrellian and Unathi dialects to ZAC."
 	//Selenian is an in-character undocumented feature demanded by a corp exec
+
+/obj/item/integrated_circuit/input/microphone/cuttingedge
+	name = "anthropological research microphone"
+	languages_understood = list(LANGUAGE_HUMAN_EURO, LANGUAGE_SPACER, LANGUAGE_UNATHI_YEOSA)
+	spawn_flags = IC_SPAWN_RESEARCH
+	extended_desc = "A microphone with a xenolinguistic database tailored to fill the gaps in older models. It translates the most common Yeosa and Spacer dialects to ZAC."
 
 /obj/item/integrated_circuit/input/microphone/fringe
 	name = "gray market microphone"

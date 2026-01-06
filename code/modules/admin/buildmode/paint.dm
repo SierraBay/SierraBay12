@@ -25,11 +25,11 @@
 
 /datum/build_mode/paint/OnClick(atom/A, list/parameters)
 	var/result
-	if (parameters["left"])
-		if (parameters["shift"])
+	if (parameters[MOUSE_1])
+		if (parameters[MOUSE_SHIFT])
 			result = clear_color(A)
 
-		else if (parameters["ctrl"])
+		else if (parameters[MOUSE_CTRL])
 			result = clone_color(A)
 			if (!result)
 				to_chat(user, SPAN_NOTICE("Selected paint mode color is now <span style='color:[selected_color]'>[selected_color]</span>."))
@@ -38,7 +38,7 @@
 		else
 			result = set_color(A)
 
-	else if (parameters["right"])
+	else if (parameters[MOUSE_2])
 		result = clear_color(A)
 
 	if (result)

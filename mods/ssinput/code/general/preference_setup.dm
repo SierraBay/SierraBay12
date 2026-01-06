@@ -168,9 +168,9 @@
 				return TOPIC_REFRESH
 
 			var/new_key = uppertext(href_list["key"])
-			var/AltMod = text2num(href_list["alt"]) ? "Alt" : ""
-			var/CtrlMod = text2num(href_list["ctrl"]) ? "Ctrl" : ""
-			var/ShiftMod = text2num(href_list["shift"]) ? "Shift" : ""
+			var/AltMod = text2num(href_list[MOUSE_ALT]) ? MOUSE_ALT : ""
+			var/CtrlMod = text2num(href_list[MOUSE_CTRL]) ? MOUSE_CTRL : ""
+			var/ShiftMod = text2num(href_list[MOUSE_SHIFT]) ? MOUSE_SHIFT : ""
 			var/numpad = text2num(href_list["numpad"]) ? "Numpad" : ""
 
 			if(!new_key) // Just in case (; - not work although keyCode 186 and nothing should break)
@@ -182,11 +182,11 @@
 
 			var/full_key
 			switch(new_key)
-				if("Alt")
+				if(MOUSE_ALT)
 					full_key = "[new_key][CtrlMod][ShiftMod]"
-				if("Ctrl")
+				if(MOUSE_CTRL)
 					full_key = "[AltMod][new_key][ShiftMod]"
-				if("Shift")
+				if(MOUSE_SHIFT)
 					full_key = "[AltMod][CtrlMod][new_key]"
 				else
 					full_key = "[AltMod][CtrlMod][ShiftMod][numpad][new_key]"

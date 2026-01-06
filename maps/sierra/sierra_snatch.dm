@@ -12,6 +12,5 @@
 
 #include "..\torch\language\human\euro.dm"
 #include "..\torch\language\human\misc\spacer.dm"
-#include "..\torch\structures\signs.dm"
 
 #include "..\torch\torch_simplemobs.dm"

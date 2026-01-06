@@ -7,28 +7,28 @@
 	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
-	if (modifiers["ctrl"] && modifiers["alt"] && modifiers["shift"])
+	if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT] && modifiers[MOUSE_SHIFT])
 		if (CtrlAltShiftClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["ctrl"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_CTRL])
 		if (CtrlShiftClickOn(A))
 			return
-	else if (modifiers["ctrl"] && modifiers["alt"])
+	else if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT])
 		if (CtrlAltClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["alt"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_ALT])
 		if (AltShiftClickOn(A))
 			return
-	else if (modifiers["middle"])
+	else if (modifiers[MOUSE_3])
 		if (MiddleClickOn(A))
 			return
-	else if (modifiers["shift"])
+	else if (modifiers[MOUSE_SHIFT])
 		if (ShiftClickOn(A))
 			return
-	else if (modifiers["alt"])
+	else if (modifiers[MOUSE_ALT])
 		if (AltClickOn(A))
 			return
-	else if (modifiers["ctrl"])
+	else if (modifiers[MOUSE_CTRL])
 		if (CtrlClickOn(A))
 			return
 

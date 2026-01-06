@@ -312,7 +312,7 @@ window "mainwindow"
 		statusbar = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-maximized = true
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\sierra_64.png'
 		macro = "default"
 		menu = "menu"
 		on-size = "onresize"

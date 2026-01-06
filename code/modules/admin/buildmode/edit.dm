@@ -50,9 +50,9 @@
 		return
 	var/old_value = A.vars[var_to_edit]
 	var/new_value
-	if (parameters["left"])
+	if (parameters[MOUSE_1])
 		new_value = value_to_set
-	if (parameters["right"])
+	if (parameters[MOUSE_2])
 		new_value = initial(A.vars[var_to_edit])
 	if (old_value == new_value)
 		return

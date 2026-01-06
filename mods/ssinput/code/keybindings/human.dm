@@ -85,3 +85,27 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.stop_pulling()
 	return TRUE
+
+/datum/keybinding/human/look_up
+	hotkey_keys = list("Ctrl,", "Ctrl=")
+	name = "look_up"
+	full_name = "Look up"
+	description = "You look up"
+
+
+/datum/keybinding/human/look_up/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.lookup()
+	return TRUE
+
+/datum/keybinding/human/look_down
+	hotkey_keys = list("Ctrl.", "Ctrl-")
+	name = "look_down"
+	full_name = "Look down"
+	description = "You look down"
+
+
+/datum/keybinding/human/look_down/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.lookdown()
+	return TRUE

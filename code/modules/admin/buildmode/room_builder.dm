@@ -30,10 +30,10 @@
 			to_chat(user, SPAN_NOTICE("Wall type set to [wall_type]."))
 
 /datum/build_mode/room_builder/OnClick(atom/A, list/parameters)
-	if(parameters["left"])
+	if(parameters[MOUSE_1])
 		coordinate_A = get_turf(A)
 		to_chat(user, SPAN_NOTICE("Defined [coordinate_A] ([coordinate_A.type]) as point A."))
-	if(parameters["right"])
+	if(parameters[MOUSE_2])
 		coordinate_B = get_turf(A)
 		to_chat(user, SPAN_NOTICE("Defined [coordinate_B] ([coordinate_B.type]) as point B."))
 
@@ -41,7 +41,7 @@
 		to_chat(user, SPAN_NOTICE("Room coordinates set. Building room."))
 		Log("Created a room with wall type [wall_type] and floor type [floor_type] from [log_info_line(coordinate_A)] to [log_info_line(coordinate_B)]")
 		var/list/coords = make_rectangle(coordinate_A, coordinate_B)
-		make_room(coords[1], coords[2], coords[3], coords[4], coords[5], wall_type, floor_type, parameters["shift"], parameters["ctrl"])
+		make_room(coords[1], coords[2], coords[3], coords[4], coords[5], wall_type, floor_type, parameters[MOUSE_SHIFT], parameters[MOUSE_CTRL])
 		coordinate_A = null
 		coordinate_B = null
 

@@ -112,13 +112,9 @@
 		list("name" = SUPERMATTER_DATA_EPR,         "min_h" = -1, "min_l" = 1.0, "max_l" = 2.5,  "max_h" = 4.0)
 	)
 
-/obj/machinery/power/supermatter/New()
-	..()
-	uid = gl_uid++
-
 /obj/machinery/power/supermatter/Destroy()
 	GLOB.supermatter_status.raise_event(src, FALSE) //If any alarm was still reporting on this, tell them to stop
-	. = ..()
+	return ..()
 
 /obj/machinery/power/supermatter/proc/handle_admin_warnings()
 	if(disable_adminwarn)
@@ -617,7 +613,7 @@
 
 /obj/machinery/power/supermatter/randomsample/Initialize()
 	. = ..()
-	nitrogen_retardation_factor = Frand(0.01, 1)	//Higher == N2 slows reaction more
+	nitrogen_retardation_factor = frand(0.01, 1)	//Higher == N2 slows reaction more
 	thermal_release_modifier = rand(100, 1000000)		//Higher == more heat released during reaction
 	phoron_release_modifier = rand(0, 100000)		//Higher == less phoron released by reaction
 	oxygen_release_modifier = rand(0, 100000)		//Higher == less oxygen released at high temperature/power

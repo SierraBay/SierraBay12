@@ -298,8 +298,8 @@
 		return user.dir
 	if (istext(click_parameters)) // Borgs pass down click parameters in a string format
 		click_parameters = params2list(click_parameters)
-	var/mouse_x = text2num(click_parameters["icon-x"])
-	var/mouse_y = text2num(click_parameters["icon-y"])
+	var/mouse_x = text2num(click_parameters[MOUSE_ICON_X])
+	var/mouse_y = text2num(click_parameters[MOUSE_ICON_Y])
 	switch (placement_mode)
 		if (PLACEMENT_MODE_QUARTERS)
 			// One case for each of the four quarters of a turf
@@ -496,9 +496,9 @@
 	if (A != paint_sprayer)
 		if(!istype(user.buckled) || user.buckled.buckle_movable)
 			user.face_atom(A)
-		if(modifiers["ctrl"] && paint_sprayer.pick_color(A, user))
+		if(modifiers[MOUSE_CTRL] && paint_sprayer.pick_color(A, user))
 			return
-		if(modifiers["shift"] && paint_sprayer.remove_paint(A, user))
+		if(modifiers[MOUSE_SHIFT] && paint_sprayer.remove_paint(A, user))
 			return
 	user.ClickOn(A, params)
 

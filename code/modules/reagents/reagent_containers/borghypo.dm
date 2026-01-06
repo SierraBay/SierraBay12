@@ -301,9 +301,10 @@
 		if (istype(hypo))
 			to_chat(user, "Its contents are available to \the [hypo].")
 
+
 /obj/item/robot_rack/bottle/use_before(atom/target, mob/living/user, click_parameters)
 	// Can't pick up beakers
-	if (istype(target, object_type) && istype(target, /obj/item/reagent_containers/glass))
+	if (!istype(target, object_type) && istype(target, /obj/item/reagent_containers/glass))
 		USE_FEEDBACK_FAILURE("\The [target] is the wrong shape for \the [src].")
 		return TRUE
 

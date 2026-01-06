@@ -153,10 +153,10 @@
 //sets the click point of the projectile using mouse input params
 /obj/item/projectile/proc/set_clickpoint(params)
 	var/list/mouse_control = params2list(params)
-	if(mouse_control["icon-x"])
-		p_x = text2num(mouse_control["icon-x"])
-	if(mouse_control["icon-y"])
-		p_y = text2num(mouse_control["icon-y"])
+	if(mouse_control[MOUSE_ICON_X])
+		p_x = text2num(mouse_control[MOUSE_ICON_X])
+	if(mouse_control[MOUSE_ICON_Y])
+		p_y = text2num(mouse_control[MOUSE_ICON_Y])
 
 	//randomize clickpoint a bit based on dispersion
 	if(dispersion)

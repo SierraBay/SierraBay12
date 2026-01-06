@@ -529,6 +529,7 @@
 	natural_weapon = /obj/item/natural_weapon/punch/holo
 	a_intent = I_HURT
 	status_flags = CANPUSH
+	blood_color = null
 
 	var/mob/living/carbon/human/owner
 
