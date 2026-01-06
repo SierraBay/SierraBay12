@@ -480,20 +480,21 @@
 	minrandom = 5
 	idle_power_usage = 200
 	vend_power_usage = 40000
+	// Product Ads use text from both versions of Chipin' in as reference for cyberpunk part of the setting. It would be really funny if corporate lawyers kick our asses for this very thing.
 	product_ads = {"\
-		Сломался?!;\
-		Совсем разваливаешься;\
-		Прикупи инструменты, обеспечь себе завтра;\
-		Ржаветь начинаешь;\
-		Лучшие инструменты в галактике.;\
-		Кажется у тебя что то сломалось.;\
+		Need repair?!;\
+		I'm Chippin' In!;\
+		Today's spending is tomorrow's savings;\
+		Feel it, You're real!;\
+		Best chrome in entire galaxy!.;\
+		Need to patch someting up?;\
 	"}
 	antag_slogans = {"\
-		I love Sol!  Ha ha, just kidding.;\
-		Sol woke up and chose violence!;\
-		The worst joe for the average Joe.;\
-		Capitalism tiring you out? The boss tell you to perk up or ship out?;\
-		Tired of working for the man? Try a coffee. It won't help and it won't make you feel better either.\
+		Not backing down. Never backing down!;\
+		Can't kill me, I'm zero and one!;\
+		Blaze your way down the rebel path!;\
+		Total war, I'm chippin' in!;\
+		Won't spare what I'm hunting for!\
 	"}
 	prices = list(
 		/obj/item/integrity_repair_tool = 900,
