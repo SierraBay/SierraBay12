@@ -293,7 +293,7 @@
 /area/map_template/merc_shuttle)
 "cM" = (
 /obj/machinery/computer/modular/preset/helm{
-	uncreated_component_parts = list(/obj/item/stock_parts/power/battery/buildable/responsive=1,/obj/item/cell/high=1)
+	uncreated_component_parts = list(/obj/item/stock_parts/computer/ship_interface=1,/obj/item/stock_parts/power/battery/buildable/responsive=1,/obj/item/cell/high=1)
 	},
 /obj/item/device/radio/intercom/hailing{
 	dir = 4;
