@@ -7,10 +7,10 @@
 	size = 5
 	requires_ntnet = FALSE
 	available_on_ntnet = TRUE
-	nanomodule_path = /datum/nano_module/sudoku/
+	nanomodule_path = /datum/nano_module/program/sudoku/
 	usage_flags = PROGRAM_ALL
 
-/datum/nano_module/sudoku
+/datum/nano_module/program/sudoku
 	var/list/grid = null
 	var/building = 0
 	var/list/solution = list()
@@ -41,7 +41,7 @@
 	var/collapse = 0
 	var/width = 900
 
-/datum/nano_module/sudoku/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
+/datum/nano_module/program/sudoku/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	var/list/data = host.initial_data()
 
 	if (!grid)
@@ -69,7 +69,7 @@
 
 
 
-/datum/nano_module/sudoku/Topic(href, list/href_list)
+/datum/nano_module/program/sudoku/Topic(href, list/href_list)
 	..()
 
 
@@ -111,7 +111,7 @@
 	if (usr)
 		ui_interact(usr)
 
-/datum/nano_module/sudoku/proc/set_width(mob/user)
+/datum/nano_module/program/sudoku/proc/set_width(mob/user)
 	if (collapse)
 		width = 400
 	else
@@ -122,7 +122,7 @@
 		ui.close()
 		ui_interact(user, force_open = 1)
 
-/datum/nano_module/sudoku/proc/save_grid(list/inputdata)
+/datum/nano_module/program/sudoku/proc/save_grid(list/inputdata)
 	var/i = 1
 	for (i = 1, i <= 81, i++)
 		var/list/cell = grid[i]
@@ -130,7 +130,7 @@
 		if (inputdata["[i]"] == "" || (v > 0 && v < 10))
 			cell["value"] = inputdata["[i]"]
 
-/datum/nano_module/sudoku/proc/create_grid()
+/datum/nano_module/program/sudoku/proc/create_grid()
 	if (grid)
 		grid.Cut()
 	grid = list()
@@ -185,7 +185,7 @@
 
 
 
-/datum/nano_module/sudoku/proc/id_num(index)
+/datum/nano_module/program/sudoku/proc/id_num(index)
 	var/row = 1
 	var/column = 1
 
@@ -208,7 +208,7 @@
 //Clears the grid:
 //With an input of 0, clears all user input and restores the grid to just the generated clues
 //With input of 1, clears every cell, grid becomes empty
-/datum/nano_module/sudoku/proc/clear_grid(full = 0)
+/datum/nano_module/program/sudoku/proc/clear_grid(full = 0)
 	for (var/t in grid)
 		var/list/tile = t
 		if (full || !tile["static"])
@@ -226,7 +226,7 @@
 //This proc checks the validity of the current boardstate
 //It will analyse all the tiles in sequence, and halt if it finds an invalid one.
 //Tiles will be checked for conflicts along the row, border and 3x3 box
-/datum/nano_module/sudoku/proc/check_validity()
+/datum/nano_module/program/sudoku/proc/check_validity()
 
 	//This result will be returned at the end
 	. = 0
@@ -292,7 +292,7 @@
 //Attempts to solve the board using simple single-tile logic. This will solvve most easier boards
 //May implement split timelines for solving boards where the answer isnt simple
 //Number of steps indicates how many tiles to solve. Passing 1 can serve as a hint function
-/datum/nano_module/sudoku/proc/solver(steps = 81)
+/datum/nano_module/program/sudoku/proc/solver(steps = 81)
 	if (check_validity() != 0) //Can't build on quicksand. The boardstate must be valid before we attempt to progress
 		return
 
@@ -328,7 +328,7 @@
 
 //Returns all possible values for a tile
 //If this ever returns nothing then the game is in an unwinnable state, a mistake has been made
-/datum/nano_module/sudoku/proc/get_options(index)
+/datum/nano_module/program/sudoku/proc/get_options(index)
 	. = list(1,2,3,4,5,6,7,8,9)
 	. -= get_row(index)
 	. -= get_column(index)
@@ -336,7 +336,7 @@
 
 
 //Returns all tiles in the same row as index, excluding index
-/datum/nano_module/sudoku/proc/get_row(index)
+/datum/nano_module/program/sudoku/proc/get_row(index)
 	var/list/tile = grid[index]
 	//We get the row number from this
 
@@ -352,7 +352,7 @@
 	return get_tile_values(indices)
 
 //Returns all tiles in the same row as index, excluding index
-/datum/nano_module/sudoku/proc/get_column(index)
+/datum/nano_module/program/sudoku/proc/get_column(index)
 	var/list/tile = grid[index]
 	//We get the row number from this
 
@@ -367,7 +367,7 @@
 
 	return get_tile_values(indices)
 
-/datum/nano_module/sudoku/proc/get_box(index)
+/datum/nano_module/program/sudoku/proc/get_box(index)
 	var/list/tile = grid[index]
 	var/list/temp = boxes[tile["box"]]
 	var/list/boxind = temp.Copy()
@@ -376,12 +376,12 @@
 
 
 //Takes a list of indexes, returns the grid tiles with those indexes.
-/datum/nano_module/sudoku/proc/get_tiles(list/indexes)
+/datum/nano_module/program/sudoku/proc/get_tiles(list/indexes)
 	. = list()
 	for (var/i in indexes)
 		. += list(grid[i])
 
-/datum/nano_module/sudoku/proc/get_tile_values(list/indexes)
+/datum/nano_module/program/sudoku/proc/get_tile_values(list/indexes)
 	. = list()
 	for (var/i in indexes)
 		var/list/tile = grid[i]
@@ -393,7 +393,7 @@
 //A not so simple grid builder which uses a backtracking algorithm.
 //Attempts to build the grid linearly with random numbers, backtracking and trying again whenever a
 //collision is found
-/datum/nano_module/sudoku/proc/advanced_populate_grid(clues = 36)
+/datum/nano_module/program/sudoku/proc/advanced_populate_grid(clues = 36)
 	set background = 1
 	if (building)
 		return
@@ -459,7 +459,7 @@
 
 
 //Highlights all indices in the list. Unhighlights every other cell
-/datum/nano_module/sudoku/proc/highlight(list/indices)
+/datum/nano_module/program/sudoku/proc/highlight(list/indices)
 	if (!indices)
 		indices = list()
 	for (var/i = 1, i <= 81, i++)

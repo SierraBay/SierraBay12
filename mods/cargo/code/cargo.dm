@@ -8,7 +8,7 @@
 	var/payer = null
 	var/sum_money = 0 //сумма, списанная с аккаунта
 
-/datum/nano_module/supply
+/datum/nano_module/program/supply
 	var/card_inserted
 	var/card_use = FALSE
 	var/datum/money_account/custom_account
@@ -16,7 +16,7 @@
 	var/datum/extension/interactive/ntos/os
 	var/obj/item/stock_parts/computer/card_slot/card_slot
 
-/datum/nano_module/supply/print_order(datum/supply_order/O, mob/user)
+/datum/nano_module/program/supply/print_order(datum/supply_order/O, mob/user)
 	if(!O)
 		return
 
@@ -36,7 +36,7 @@
 	print_text(t, user)
 
 
-/datum/nano_module/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
+/datum/nano_module/program/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data()
 	var/is_admin = emagged || check_access(user, admin_access)
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
@@ -123,7 +123,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-/datum/nano_module/supply/Topic(href, href_list)
+/datum/nano_module/program/supply/Topic(href, href_list)
 	var/mob/user = usr
 	if(..())
 		return 1
@@ -343,7 +343,7 @@
 		return 1
 
 
-/datum/nano_module/supply/generate_categories()
+/datum/nano_module/program/supply/generate_categories()
 	category_names.Cut()
 	category_contents.Cut()
 	var/singleton/hierarchy/supply_pack/root = GET_SINGLETON(/singleton/hierarchy/supply_pack)
@@ -364,7 +364,7 @@
 
 
 
-/datum/nano_module/supply/order_to_nanoui(datum/supply_order/SO, list_id)
+/datum/nano_module/program/supply/order_to_nanoui(datum/supply_order/SO, list_id)
 	return list(list(
 		"id" = SO.ordernum,
 		"time" = SO.timestamp,

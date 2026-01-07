@@ -34,7 +34,7 @@
 		init_subsystem(subsystem_type)
 
 	//[SIERRA-ADD] - AI_UPDATE
-	if(/datum/nano_module/alarm_monitor/all in silicon_subsystems)
+	if(/datum/nano_module/program/alarm_monitor/all in silicon_subsystems)
 		for(var/datum/alarm_handler/AH as anything in SSalarm.alarm_handlers)
 			AH.register_alarm(src, /mob/living/silicon/proc/receive_alarm)
 			queued_alarms[AH] = list()	// Makes sure alarms remain listed in consistent order
