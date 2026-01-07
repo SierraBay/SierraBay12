@@ -86,7 +86,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -99,7 +99,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/scrap/command/bridge)
 "ao" = (
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
@@ -4504,7 +4504,7 @@
 /obj/floor_decal/corner/yellow{
 	dir = 10
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
@@ -5481,7 +5481,7 @@
 /turf/simulated/wall/r_wall,
 /area/ship/scrap/crew/hallway/port)
 "pP" = (
-/obj/machinery/computer/ship/sensors/spacer,
+/obj/machinery/computer/modular/preset/sensors/spacer,
 /turf/simulated/floor,
 /area/ship/scrap/shuttle/cubkitten)
 "qT" = (
@@ -6095,7 +6095,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/machinery/firealarm{

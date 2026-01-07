@@ -13,6 +13,16 @@
 	return TRUE
 
 
+/datum/keybinding/client/communication/whisper
+	hotkey_keys = list("ShiftT")
+	name = "IC Whisper"
+	full_name = "IC Whisper"
+
+/datum/keybinding/client/communication/whisper/down(client/user)
+	user.mob.whisper_wrapper()
+	return TRUE
+
+
 /datum/keybinding/client/communication/ooc
 	hotkey_keys = list("F2")
 	name = "OOC"

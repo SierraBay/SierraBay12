@@ -86,10 +86,10 @@
 	update_icon()
 
 /obj/item/device/flashlight/MouseDrop(over_object)
-	if(istype(over_object, /obj/screen/inventory))
+	if(istype(over_object, /obj/screen/item_relayed/inventory_slot))
 		if(ismob(usr))
 			var/mob/user = usr
-			var/obj/screen/inventory/hand = over_object
+			var/obj/screen/item_relayed/inventory_slot/hand = over_object
 			if(!user.stat && hand.name && (loc == user) && eject_item_from(cell, user))
 				turn_off()
 				cell = null

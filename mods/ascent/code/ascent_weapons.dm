@@ -18,9 +18,9 @@
 	has_safety = FALSE
 
 	firemodes = list(
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam/particle),
-		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock),
-		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun),
+		list("mode_name" = "kill", "projectile_type" = /obj/item/projectile/beam/particle),
+		list("mode_name" = "shock", "projectile_type" = /obj/item/projectile/beam/stun/shock),
+		list("mode_name" = "stun", "projectile_type" = /obj/item/projectile/beam/stun),
 		)
 
 	var/global/list/species_can_use = list(
@@ -95,9 +95,9 @@
 	projectile_type = /obj/item/projectile/beam/particle/small
 
 	firemodes = list(
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam/particle/small),
-		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock/smalllaser),
-		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun/smalllaser),
+		list("mode_name" = "kill", "projectile_type" = /obj/item/projectile/beam/particle/small),
+		list("mode_name" = "shock", "projectile_type" = /obj/item/projectile/beam/stun/shock/smalllaser),
+		list("mode_name" = "stun", "projectile_type" = /obj/item/projectile/beam/stun/smalllaser),
 		)
 
 /obj/item/projectile/beam/particle/small
@@ -114,5 +114,5 @@
 	one_hand_penalty = 6
 	burst = 1
 	projectile_type = /obj/item/projectile/bullet/magnetic/flechette
-	firemodes = list(list(projectile_type=/obj/item/projectile/bullet/magnetic/flechette))
+	firemodes = list(list("projectile_type" = /obj/item/projectile/bullet/magnetic/flechette))
 	color = COLOR_ASCENT_PURPLE

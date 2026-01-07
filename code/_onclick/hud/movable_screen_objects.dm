@@ -23,11 +23,11 @@
 	var/list/PM = params2list(params)
 
 	//No screen-loc information? abort.
-	if(!PM || !PM["screen-loc"])
+	if(!PM || !PM[MOUSE_SCREEN_LOC])
 		return
 
 	//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
-	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+	var/list/screen_loc_params = splittext(PM[MOUSE_SCREEN_LOC], ",")
 
 	//Split X+Pixel_X up into list(X, Pixel_X)
 	var/list/screen_loc_X = splittext(screen_loc_params[1],":")

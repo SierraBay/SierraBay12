@@ -85,7 +85,7 @@
 	description = "The famous cocktail. Coined by programmers for programmers. Made not from programmers. Where's my merge, Elar?"
 	taste_description = "sweet microchips, steel and Elar's merge"
 	color = "#3d3d3d"
-	strength = 20
+	metabolite_potency = 20
 
 	glass_name = "github cocktail"
 	glass_desc = "The famous cocktail. Coined by programmers for programmers. Made not from programmers. Where's my merge, Elar?"
@@ -95,7 +95,7 @@
 	description = "You did it, Verhniy! Where's the Discord Nitro cocktail, though?"
 	taste_description = "Well Played Good Games and CO-OP"
 	color = "#36393f"
-	strength = 10
+	metabolite_potency = 10
 
 	glass_name = "Discord cocktail"
 	glass_desc = "You did it, Verhniy! Where's the Discord Nitro cocktail, though?"
@@ -215,15 +215,21 @@
 	value = 2
 	should_admin_log = TRUE
 
-/datum/reagent/yeostoxin/affect_blood(mob/living/carbon/human/H, removed)
-	if(!istype(H))
+/datum/reagent/yeostoxin/affect_blood(mob/living/carbon/human/affected, removed)
+	if (!istype(affected))
+		return
+	if(affected.species.name == SPECIES_YEOSA)
+		return
+	affected.adjustToxLoss(40 * removed)
+
+/datum/reagent/yeostoxin/affect_metabolites(mob/living/carbon/human/H, dose)
+	if (!istype(H))
 		return
 	if(H.species.name == SPECIES_YEOSA)
 		return
-	H.adjustToxLoss(40 * removed)
-	if(H.chem_doses[type] < 1 || prob(30))
+	if (dose < 1 || prob(30))
 		return
-	H.chem_doses[type] = 0
+	remove_self(dose)
 	var/list/meatchunks = list()
 	for(var/limb_tag in list(BP_R_ARM, BP_L_ARM, BP_R_LEG,BP_L_LEG))
 		var/obj/item/organ/external/E = H.get_organ(limb_tag)

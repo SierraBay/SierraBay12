@@ -19,19 +19,19 @@
 
 /obj/screen/exosuit/menu_button/Click(location, control, params)
 	var/modifiers = params2list(params)
-	if(modifiers["right"])
+	if(modifiers[MOUSE_2])
 		right_click(usr)
 		return
-	if(modifiers["shift"])
+	if(modifiers[MOUSE_SHIFT])
 		shift_press(usr)
 		return
-	else if(modifiers["alt"])
+	else if(modifiers[MOUSE_ALT])
 		alt_press(usr)
 		return
-	else if(modifiers["ctrl"])
+	else if(modifiers[MOUSE_CTRL])
 		ctrl_press(usr)
 		return
-	else if(modifiers["middle"])
+	else if(modifiers[MOUSE_3])
 		middle_press(usr)
 		return
 	toggle_button()

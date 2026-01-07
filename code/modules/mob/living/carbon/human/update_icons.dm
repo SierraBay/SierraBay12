@@ -183,11 +183,17 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/entry = visible_overlays[i]
 		if(istype(entry, /image))
 			var/image/overlay = entry
+			//SIERRA-ADD
+			overlay.filters = filters
+			//SIERRA-ADD
 			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 				overlay.transform = get_lying_offset(overlay)
 			overlays_to_apply += overlay
 		else if(istype(entry, /list))
 			for(var/image/overlay in entry)
+				//SIERRA-ADD
+				overlay.filters = filters
+				//SIERRA-ADD
 				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 					overlay.transform = get_lying_offset(overlay)
 				overlays_to_apply += overlay
@@ -195,7 +201,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/obj/item/organ/external/head/head = organs_by_name[BP_HEAD]
 	if(istype(head) && !head.is_stump())
 		var/image/I = head.get_eye_overlay()
-		if(I) overlays_to_apply += I
+		//SIERRA-REMOVE 		if(I) overlays_to_apply += I
+		//SIERRA-ADD
+		if(I)
+			I.filters = filters
+			overlays_to_apply += I
+		//SIERRA-ADD
+
 
 	if(auras)
 		overlays_to_apply += auras
@@ -681,7 +693,7 @@ var/global/list/damage_icon_parts = list()
 
 	var/species_tail = species.get_tail(src)
 
-	if(species_tail && !(wear_suit && wear_suit.flags_inv & HIDETAIL))
+	if(species_tail && !(wear_suit?.flags_inv & HIDETAIL) && !(w_uniform?.flags_inv & HIDETAIL))
 		var/icon/tail_s = get_tail_icon()
 		overlays_standing[HO_TAIL_LAYER] = image(tail_s, icon_state = "[species_tail]_s")
 		animate_tail_reset(0)

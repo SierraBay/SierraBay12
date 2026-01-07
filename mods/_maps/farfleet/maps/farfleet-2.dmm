@@ -1020,7 +1020,9 @@
 	},
 /obj/structure/closet/crate,
 /obj/item/stock_parts/circuitboard/helm,
-/obj/item/stock_parts/circuitboard/engine,
+/obj/item/stock_parts/circuitboard/modular_computer,
+/obj/item/stock_parts/computer/hard_drive/super/helm,
+/obj/item/stock_parts/computer/ship_interface,,
 /obj/item/stock_parts/circuitboard/nav,
 /obj/item/stock_parts/circuitboard/nav,
 /obj/floor_decal/industrial/outline/yellow,
@@ -1831,7 +1833,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/farfleet/maintenance/anomaly)
 "rD" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /obj/machinery/light,
@@ -3568,7 +3570,7 @@
 "Hq" = (
 /obj/structure/bed/chair/shuttle/blue,
 /obj/floor_decal/industrial/outline,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 32
 	},
 /obj/structure/cable/green{
@@ -4206,7 +4208,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/crew/hydroponics)
 "Ol" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -5249,7 +5251,7 @@
 	icon_state = "shuttle_chair_preview"
 	},
 /obj/floor_decal/industrial/outline,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = -32
 	},
 /obj/structure/cable/green{

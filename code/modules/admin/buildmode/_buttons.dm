@@ -54,7 +54,7 @@
 	icon_state = host.current_build_mode.icon_state
 
 /obj/bmode/mode/OnClick(list/parameters)
-	if(parameters["left"])
+	if(parameters[MOUSE_1])
 		var/datum/build_mode/build_mode = input("Select build mode", "Select build mode", host.current_build_mode) as null|anything in host.build_modes
 		if(build_mode && host && (build_mode in host.build_modes))
 			host.current_build_mode.Unselected()
@@ -62,7 +62,7 @@
 			host.current_build_mode = build_mode
 			icon_state = build_mode.icon_state
 			to_chat(usr, SPAN_NOTICE("Build mode '[host.current_build_mode]' selected."))
-	else if(parameters["right"])
+	else if(parameters[MOUSE_2])
 		host.current_build_mode.Configurate()
 
 /obj/bmode/quit

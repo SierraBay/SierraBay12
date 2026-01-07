@@ -325,6 +325,12 @@ meteor_act
 	if(isobj(AM))
 		var/obj/O = AM
 
+		if(TT.thrower)
+			var/client/assailant = TT.thrower.client
+			if(assailant)
+				var/active_flame = "[O.IsFlameSource() ? "(on fire)" : ""]"
+				admin_attack_log(TT.thrower, src, "Threw \an [O][active_flame] at their victim.", "Had \an [O][active_flame] thrown at them", "threw \an [O][active_flame] at")
+
 		if(in_throw_mode && !get_active_hand() && TT.speed <= THROWFORCE_SPEED_DIVISOR)	//empty active hand and we're in throw mode
 			if(!incapacitated())
 				if(isturf(O.loc))
@@ -368,11 +374,6 @@ meteor_act
 		src.visible_message(SPAN_WARNING("\The [src] has been hit in the [hit_area] by \the [O]."))
 		created_wound = apply_damage(throw_damage, dtype, zone, O.damage_flags(), O, O.armor_penetration)
 
-		if(TT.thrower)
-			var/client/assailant = TT.thrower.client
-			if(assailant)
-				admin_attack_log(TT.thrower, src, "Threw \an [O] at their victim.", "Had \an [O] thrown at them", "threw \an [O] at")
-
 		//thrown weapon embedded object code.
 		if (dtype == DAMAGE_BRUTE && istype(O,/obj/item))
 			var/obj/item/I = O
@@ -390,6 +391,9 @@ meteor_act
 				if((sharp && prob(damage/(10*I.w_class)*100)) || (damage > embed_threshold && prob(embed_chance)))
 					affecting.embed(I, supplied_wound = created_wound)
 					I.has_embedded()
+
+		if (AM.IsFlameSource())
+			IgniteMob()
 
 		process_momentum(AM, TT)
 

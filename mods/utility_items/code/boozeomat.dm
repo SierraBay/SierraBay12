@@ -143,7 +143,7 @@
 
 	taste_description = "exotic, sweet, hard and gentle at the same time"
 	color = "#ba86e4"
-	strength = 80
+	metabolite_potency = 80
 	adj_temp = 5
 	glass_name = "Djurl'Ma-Tua"
 	glass_desc = "Exotic drink native to Ahdomai. Its taste is similar to wine with a lot of different condiments and spices."

@@ -5,3 +5,4 @@
 #include "flashbang.dm"
 #include "mech_damage_immunity.dm"
 #include "mech_damage.dm"
+#include "get_damage.dm"

@@ -20,6 +20,14 @@
 /obj/item/gun/energy/sniperrifle
 	name = "9E marksman energy rifle"
 	icon = 'mods/guns/icons/obj/laser_sniper.dmi'
+	icon_state = "sniper"
+	item_state = "laser"
+	wielded_item_state = "sniper-wielded"
+	item_icons = list(
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_sniper.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_sniper.dmi'
+		)
+
 
 /obj/item/gun/energy/pulse_rifle
 	wielded_item_state = "pulsecarbine-wielded"
@@ -116,8 +124,8 @@
 	icon = 'mods/guns/icons/obj/stunrevolver_secure.dmi'
 	projectile_type = /obj/item/projectile/beam/stun
 	firemodes = list(
-		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="energyrevolverstun"),
-		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock, modifystate="energyrevolvershock"),
-		list(mode_name="kill", projectile_type=/obj/item/projectile/beam, modifystate="energyrevolverkill")
+		list("mode_name" = "stun", "projectile_type" = /obj/item/projectile/beam/stun, "modifystate" = "energyrevolverstun"),
+		list("mode_name" = "shock", "projectile_type" = /obj/item/projectile/beam/stun/shock, "modifystate" = "energyrevolvershock"),
+		list("mode_name" = "kill", "projectile_type" = /obj/item/projectile/beam, "modifystate" = "energyrevolverkill")
 		)
 	req_access = list(list(access_brig, access_heads))

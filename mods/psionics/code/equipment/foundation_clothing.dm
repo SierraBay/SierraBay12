@@ -127,7 +127,7 @@
 		/obj/item/storage/firstaid/sleekstab = 1,
 		/obj/item/handcuffs = 2,
 		/obj/item/plastique = 1,
-		/obj/item/silencer/smg_sol = 1
+		/obj/item/silencer/medium = 1
 	)
 	flags = OUTFIT_RESET_EQUIPMENT
 

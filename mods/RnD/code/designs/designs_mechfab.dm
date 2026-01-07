@@ -212,6 +212,13 @@
 	req_tech = list(TECH_MAGNET = 3, TECH_COMBAT = 4, TECH_MATERIAL = 4, TECH_BIO = 3)
 	id = "augment_wolverine"
 
+/datum/design/item/mechfab/augment/armblade/xsmall
+	name = "Utility Armblade"
+	build_path = /obj/item/organ/internal/augment/active/item/armblade/xsmall
+	materials = list (MATERIAL_STEEL = 2000, MATERIAL_GLASS = 750) // It's a smaller blade, so it takes less steel.
+	id = "augment_blade_small"
+	req_tech = list() // Since it's not intended for combat, no tech lock either
+
 /datum/design/item/mechfab/augment/armblade/wrist_blade
 	name = "Wrist blade"
 	build_path = /obj/item/organ/internal/augment/active/item/wrist_blade
@@ -296,6 +303,13 @@
 	build_path = /obj/item/organ/internal/augment/active/polytool/engineer
 	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000)
 	id = "augment_toolset_engineering"
+
+/datum/design/item/mechfab/augment/engineering/advanced
+	name = "Advanced engineering toolset"
+	build_path = /obj/item/organ/internal/augment/active/polytool/engineer/advanced
+	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 1000, MATERIAL_PHORON = 1000)
+	req_tech = list(TECH_ENGINEERING = 5, TECH_POWER = 4)
+	id = "augment_toolset_engineering_advanced"
 
 /datum/design/item/mechfab/augment/surgery
 	name = "Surgical toolset"

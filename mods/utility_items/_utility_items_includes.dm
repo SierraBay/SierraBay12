@@ -61,4 +61,6 @@
 #include "code/supermatter.dm"
 #include "code/stealthbundlerework.dm"
 #include "code/stairs.dm"
+#include "code/lang_tweak.dm"
+#include "code/ghost_medscan.dm"
 #endif

@@ -14,10 +14,10 @@
 	to_chat(user, SPAN_NOTICE("***********************************************************"))
 
 /datum/build_mode/relocate_to/OnClick(atom/A, list/parameters)
-	if(parameters["left"])
-		if(istype(A, /atom/movable))
+	if(parameters[MOUSE_1])
+		if(ismovable(A))
 			SetRelocator(A)
-	else if(parameters["right"])
+	else if(parameters[MOUSE_2])
 		if(to_relocate)
 			var/destination_turf = get_turf(A)
 			if(destination_turf)

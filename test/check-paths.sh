@@ -30,7 +30,7 @@ exactly 0 "escapes" '\\\\(red|blue|green|black|b|i[^mc])'
 exactly 4 "Del()s" '\WDel\('
 exactly 2 "/atom text paths" '"/atom'
 exactly 2 "/area text paths" '"/area'
-exactly 2 "/datum text paths" '"/datum'
+exactly 18 "/datum text paths" '"/datum'
 exactly 2 "/mob text paths" '"/mob'
 exactly 10 "/obj text paths" '"/obj'
 exactly 8 "/turf text paths" '"/turf'
@@ -61,6 +61,7 @@ exactly 17 "uses of examine()" '[.|\s]examine\(' -P # If this fails it's likely 
 exactly 13 "direct modifications of overlays list" '\boverlays((\s*[|^=+&-])|(\.(Cut)|(Add)|(Copy)|(Remove)|(Remove)))' -P
 exactly 0 "new/list list instantiations" 'new\s*/list' -P
 exactly 0 "== null tests" '(==\s*null\b)|(\bnull\s*==)' -P #Use isnull() instead
+exactly 1 "uses of deprecated text proc" '\btext\(' -P
 # If you increase any of these numbers you're probably doing it wrong
 
 num=`find ./html/changelogs -not -name "*.yml" | wc -l`

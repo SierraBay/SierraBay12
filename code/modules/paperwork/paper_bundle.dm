@@ -164,7 +164,7 @@
 			to_chat(usr, SPAN_NOTICE("You remove the [W.name] from the bundle."))
 
 			if(length(pages) <= 1)
-				var/obj/item/paper/P = src[1]
+				var/obj/item/paper/P = contents[1]
 				usr.drop_from_inventory(src)
 				usr.put_in_hands(P)
 				qdel(src)
@@ -188,7 +188,7 @@
 
 	var/n_name = sanitizeSafe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
-		SetName("[(n_name ? text("[n_name]") : "paper")]")
+		SetName("[n_name ? "[n_name]" : "paper"]")
 	add_fingerprint(usr)
 	return
 

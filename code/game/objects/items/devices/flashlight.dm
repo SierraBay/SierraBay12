@@ -61,6 +61,9 @@
 	user.update_action_buttons()
 	return 1
 
+/obj/item/device/flashlight/use_in_world(mob/user)
+	attack_self(user)
+
 /obj/item/device/flashlight/proc/set_flashlight()
 	if(light_wedge)
 		set_dir(pick(NORTH, SOUTH, EAST, WEST))
@@ -144,12 +147,11 @@
 		if(H.getBrainLoss() > 15)
 			to_chat(user, SPAN_NOTICE("There's visible lag between left and right pupils' reactions."))
 
-		var/list/pinpoint = list(/datum/reagent/tramadol/oxycodone=1,/datum/reagent/tramadol=5)
+		var/list/pinpoint = list(/datum/reagent/opiate = 1)
 		var/list/dilating = list(/datum/reagent/drugs/hextro=5,/datum/reagent/drugs/mindbreaker=1,/datum/reagent/adrenaline=1)
-		var/datum/reagents/ingested = H.get_ingested_reagents()
-		if(H.reagents.has_any_reagent(pinpoint) || ingested.has_any_reagent(pinpoint))
+		if (H.reagents.has_any_reagent(pinpoint) || H.metabolized.has_any_reagent(pinpoint))
 			to_chat(user, SPAN_NOTICE("\The [H]'s pupils are already pinpoint and cannot narrow any more."))
-		else if(H.shock_stage >= 30 || H.reagents.has_any_reagent(dilating) || ingested.has_any_reagent(dilating))
+		else if (H.shock_stage >= 30 || H.reagents.has_any_reagent(dilating) || H.metabolized.has_any_reagent(dilating))
 			to_chat(user, SPAN_NOTICE("\The [H]'s pupils narrow slightly, but are still very dilated."))
 		else
 			to_chat(user, SPAN_NOTICE("\The [H]'s pupils narrow."))

@@ -40,6 +40,7 @@
 
 //Parent gun type. Guns are weapons that can be aimed at mobs and act over a distance
 /obj/item/gun
+	abstract_type = /obj/item/gun
 	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'icons/obj/guns/gui.dmi'
@@ -138,6 +139,10 @@
 
 	if(scope_zoom)
 		verbs += /obj/item/gun/proc/scope
+
+	if (length(firemodes))
+		var/datum/firemode/mode = firemodes[sel_mode]
+		mode.apply_to(src)
 
 /obj/item/gun/on_update_icon()
 	var/mob/living/M = loc

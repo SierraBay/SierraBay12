@@ -18,7 +18,7 @@
 
 /atom/Click(location, control, params) // This is their reaction to being clicked on (standard proc)
 	var/list/L = params2list(params)
-	var/dragged = L["drag"]
+	var/dragged = L[MOUSE_DRAG]
 	if(dragged && !L[dragged])
 		return
 
@@ -58,36 +58,41 @@
  *
  * Has no return value.
  */
-/mob/proc/ClickOn(atom/A, params)
+/mob/proc/ClickOn(atom/A, params, use_in_world = FALSE)
 
 	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
 		return
 
+	if (istype(A, /obj/screen/item_relayed))
+		var/obj/screen/item_relayed/relay = A
+		if (!isnull(relay.hovered_on))
+			return ClickOn(relay.hovered_on, params, use_in_world)
+
 	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
-	if (modifiers["ctrl"] && modifiers["alt"] && modifiers["shift"])
+	if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT] && modifiers[MOUSE_SHIFT])
 		if (CtrlAltShiftClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["ctrl"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_CTRL])
 		if (CtrlShiftClickOn(A))
 			return
-	else if (modifiers["ctrl"] && modifiers["alt"])
+	else if (modifiers[MOUSE_CTRL] && modifiers[MOUSE_ALT])
 		if (CtrlAltClickOn(A))
 			return
-	else if (modifiers["shift"] && modifiers["alt"])
+	else if (modifiers[MOUSE_SHIFT] && modifiers[MOUSE_ALT])
 		if (AltShiftClickOn(A))
 			return
-	else if (modifiers["middle"])
+	else if (modifiers[MOUSE_3])
 		if (MiddleClickOn(A))
 			return
-	else if (modifiers["shift"])
+	else if (modifiers[MOUSE_SHIFT])
 		if (ShiftClickOn(A))
 			return
-	else if (modifiers["alt"])
+	else if (modifiers[MOUSE_ALT])
 		if (AltClickOn(A))
 			return
-	else if (modifiers["ctrl"])
+	else if (modifiers[MOUSE_CTRL])
 		if (CtrlClickOn(A))
 			return
 
@@ -114,6 +119,8 @@
 		throw_mode_off()
 
 	var/obj/item/W = get_active_hand()
+	if (use_in_world)
+		W = null
 
 	if(W == A) // Handle attack_self
 		W.attack_self(src)
@@ -135,7 +142,7 @@
 		else
 			if(ismob(A)) // No instant mob attacking
 				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-			UnarmedAttack(A, 1)
+			UnarmedAttack(A, 1, use_in_world)
 
 		trigger_aiming(TARGET_CAN_CLICK)
 		return
@@ -156,7 +163,7 @@
 			else
 				if(ismob(A)) // No instant mob attacking
 					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-				UnarmedAttack(A, 1)
+				UnarmedAttack(A, 1, use_in_world)
 
 			trigger_aiming(TARGET_CAN_CLICK)
 			return
@@ -189,13 +196,14 @@
  * **Parameters**:
  * - `A` - The atom that was clicked on/interacted with.
  * - `proximity_flag` - Whether or not the mob was at range from the targeted atom. Generally, this is always `1` unless telekinesis was used, where this will be `0`. This is not currently passed to attack_hand, and is instead used in human click code to allow glove touches only at melee range.
+ * - `use_in_world_flag` - Whether or not the mob is attempting to use an item in the world
  *
  * Returns boolean - Whether or not the mob was able to perform the interaction.
  */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag, use_in_world_flag)
 	return
 
-/mob/living/UnarmedAttack(atom/A, proximity_flag)
+/mob/living/UnarmedAttack(atom/A, proximity_flag, use_in_world_flag)
 
 	if(GAME_STATE < RUNLEVEL_GAME)
 		to_chat(src, "You cannot attack people before the game has started.")
@@ -516,7 +524,7 @@ GLOBAL_LIST_INIT(click_catchers)
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MOUSE_3] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
@@ -527,15 +535,23 @@ GLOBAL_LIST_INIT(click_catchers)
 
 /client/MouseDown(object, location, control, params)
 	var/datum/click_handler/click_handler = usr.GetClickHandler()
-	click_handler.OnMouseDown(object, location, params)
+	click_handler.OnMouseDown(object, location, control, params)
 
 /client/MouseUp(object, location, control, params)
 	var/datum/click_handler/click_handler = usr.GetClickHandler()
-	click_handler.OnMouseUp(object, location, params)
+	click_handler.OnMouseUp(object, location, control, params)
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/datum/click_handler/click_handler = usr.GetClickHandler()
-	click_handler.OnMouseDrag(over_object, params)
+	click_handler.OnMouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+
+/client/MouseEntered(object, location, control, params)
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	click_handler.OnMouseEntered(object, location, control, params)
+
+/client/MouseExited(object, location, control, params)
+	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	click_handler.OnMouseExited(object, location, control, params)
 
 /mob/proc/CanMobAutoclick(object, location, params)
 	return

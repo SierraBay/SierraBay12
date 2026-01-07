@@ -9,6 +9,10 @@
 	damage = 15
 	damage_type = DAMAGE_BURN
 	step_delay = 2
+	//[SIERRA-ADD] Mechs-by-Shegar
+	mech_armor_penetration = 10
+	mech_armor_damage = 35 // Эта штука явно кислота, поэтому по броне будет работать хорошо
+	//[SIERRA-ADD]
 
 
 /obj/item/projectile/goo/on_hit(atom/target, blocked = 0)
