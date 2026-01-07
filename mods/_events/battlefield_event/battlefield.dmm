@@ -824,7 +824,7 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 9
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -6232,7 +6232,7 @@
 /turf/simulated/floor/steel_dirty,
 /area/battlefield/surface)
 "ZZ" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/floor_decal/corner/darkblue/border{
 	dir = 1
 	},

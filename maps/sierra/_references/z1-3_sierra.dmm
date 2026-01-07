@@ -30590,7 +30590,7 @@
 /turf/simulated/floor/wood/walnut,
 /area/crew_quarters/cafe)
 "gDo" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 1
 	},
 /obj/floor_decal/borderfloor,
@@ -44063,7 +44063,7 @@
 /turf/simulated/floor/reinforced,
 /area/thruster/d3starboard)
 "juI" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 4
 	},
 /obj/floor_decal/spline/fancy/black{
@@ -48356,7 +48356,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/security/sierra/evidence)
 "kvI" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -59236,7 +59236,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -62289,7 +62289,7 @@
 /turf/simulated/floor/tiled/white,
 /area/rnd/misc_lab)
 "nur" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/item/modular_computer/telescreen/preset/generic{
 	pixel_y = 22
 	},
@@ -64663,7 +64663,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /turf/simulated/floor/tiled,
 /area/guppy_hangar/start)
 "nVn" = (
@@ -64723,7 +64723,7 @@
 /turf/simulated/floor/tiled/white,
 /area/medical/sleeper)
 "nVD" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /obj/structure/sign/warning/secure_area{
 	pixel_y = 30
 	},
@@ -69567,7 +69567,7 @@
 /area/turret_protected/ai)
 "oVL" = (
 /obj/machinery/recharger,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,

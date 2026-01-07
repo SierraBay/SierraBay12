@@ -22,7 +22,7 @@
 
 
 /datum/keybinding/client/screenshot/down(client/user)
-	winset(user, null, "command=.screenshot [!user.keys_held[MOUSE_SHIFT] ? "auto" : ""]")
+	winset(user, null, "command=.screenshot [!user.keys_held["Shift"] ? "auto" : ""]")
 	return TRUE
 
 

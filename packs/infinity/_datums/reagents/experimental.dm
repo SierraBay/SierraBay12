@@ -1,6 +1,6 @@
 #define RANDOM_REAGENT list(/datum/reagent/bicaridine, /datum/reagent/kelotane, /datum/reagent/dermaline,\
 							/datum/reagent/dylovene, /datum/reagent/dexalin, /datum/reagent/dexalinp,\
-							/datum/reagent/tricordrazine, /datum/reagent/tramadol, /datum/reagent/synaptizine)
+							/datum/reagent/tricordrazine, /datum/reagent/opiate/tramadol, /datum/reagent/synaptizine)
 
 /datum/reagent/experimental //Father of all strange reagents
 	name = "A001"

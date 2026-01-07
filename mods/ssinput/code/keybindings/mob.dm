@@ -130,7 +130,7 @@
 
 
 /datum/keybinding/mob/prevent_movement
-	hotkey_keys = list(MOUSE_CTRL)
+	hotkey_keys = list("Ctrl")
 	name = "block_movement"
 	full_name = "Block movement"
 	description = "Prevents you from moving"

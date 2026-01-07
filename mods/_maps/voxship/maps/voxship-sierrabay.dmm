@@ -1457,7 +1457,7 @@
 	},
 /area/voxship/thrusters)
 "dq" = (
-/obj/machinery/computer/ship/sensors/vox{
+/obj/machinery/computer/modular/preset/sensors/vox{
 	dir = 1
 	},
 /obj/machinery/alarm/vox{
@@ -3000,7 +3000,7 @@
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/shuttle)
 "ha" = (
-/obj/machinery/computer/ship/sensors/vox{
+/obj/machinery/computer/modular/preset/sensors/vox{
 	dir = 1
 	},
 /obj/machinery/light/small,

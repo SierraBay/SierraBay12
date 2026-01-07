@@ -2430,7 +2430,7 @@
 /area/ship/patrol/command/bridge)
 "eQ" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 4
 	},
 /obj/floor_decal/corner/blue{
@@ -3443,7 +3443,7 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "gO" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/machinery/button/blast_door{
 	desc = "A remote control-switch for the observation shutters";
 	dir = 4;
@@ -8394,7 +8394,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
@@ -8573,7 +8573,7 @@
 /turf/simulated/floor/reinforced,
 /area/ship/patrol/engineering/fussion/control)
 "wC" = (
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 26
 	},
 /obj/structure/bed/chair/padded/black,
@@ -9480,7 +9480,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "Vm" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{

@@ -2977,7 +2977,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/medical)
 "vm" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -5429,7 +5429,7 @@
 /turf/simulated/floor/tiled,
 /area/verne/common/hallway)
 "Qp" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/bridge)

@@ -1238,7 +1238,7 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
 "en" = (
-/obj/machinery/computer/ship/sensors/skrell{
+/obj/machinery/computer/modular/preset/sensors/skrell{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/skrell/red,
@@ -1855,7 +1855,7 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/hangar)
 "ga" = (
-/obj/machinery/computer/ship/sensors/skrell,
+/obj/machinery/computer/modular/preset/sensors/skrell,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "gb" = (
@@ -2233,7 +2233,7 @@
 /area/ship/skrellscoutship/hangar)
 "gX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/computer/ship/sensors/skrell{
+/obj/machinery/computer/modular/preset/sensors/skrell{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -2435,7 +2435,7 @@
 /area/ship/skrellscoutship/crew/labs)
 "hv" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "hx" = (
@@ -2767,7 +2767,7 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "ii" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/skrell/red,
@@ -4060,7 +4060,7 @@
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/maintenance/power)
 "pj" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -6036,7 +6036,7 @@
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/wings/starboard)
 "OY" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/skrell,

@@ -26,8 +26,9 @@
 		to_chat(usr, "This spell was not properly given a target. Contact a coder.")
 		return null
 
-	if(istype(target,/list))
-		target = target[1]
+	if(islist(target))
+		var/list/target_list = target
+		target = target_list[1]
 	return target
 
 

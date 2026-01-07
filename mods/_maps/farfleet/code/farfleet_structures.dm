@@ -209,11 +209,6 @@
 	//MISC//
 	////////
 
-/obj/machinery/computer/ship/sensors/farfleet
-	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/sensors
-	print_language = LANGUAGE_HUMAN_RUSSIAN
-
 /obj/machinery/door/airlock/terran
 	door_color = COLOR_DARK_BLUE_GRAY
 

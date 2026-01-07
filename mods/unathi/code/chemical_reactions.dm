@@ -13,7 +13,7 @@
 
 /singleton/reaction/oxycodonealt
 	name = "Oxycodone Alt"
-	result = /datum/reagent/tramadol/oxycodone
+	result = /datum/reagent/opiate/oxycodone
 	required_reagents = list(/datum/reagent/ethanol = 1, /datum/reagent/paashe = 1)
 	catalysts = list(/datum/reagent/toxin/phoron = 5)
 	result_amount = 1
