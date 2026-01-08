@@ -68,16 +68,16 @@
 	. = ..()
 	health_warnings = list(
 		new /datum/rig_warning(90,  "Vital signs are dropping",                                          'mods/hardsuits/sound/shortbeep.ogg'), // health, message, sound
-		new /datum/rig_warning(40,  "Vital signs are dropping. Evacuate area",                           'mods/hardsuits/sound/shortbeep.ogg'),
+		new /datum/rig_warning(40,  "Vital signs are dropping. Evacuate from the area",                  'mods/hardsuits/sound/shortbeep.ogg'),
 		new /datum/rig_warning(0,   "Warning: Vital signs critical. Seek medical attention",             'mods/hardsuits/sound/beep.ogg'),
 		new /datum/rig_warning(-20, "Warning: Vital signs critical. Seek medical attention immediately", 'mods/hardsuits/sound/longbeep.ogg'),
 		new /datum/rig_warning(-50, "Emergency. User death imminent",                                    'mods/hardsuits/sound/longbeep.ogg'),
 		)
 
 	breach_warnings = list(
-		new /datum/rig_warning(3, "Minor breaches detected",                                                     'mods/hardsuits/sound/shortbeep.ogg'),
-		new /datum/rig_warning(6, "Severe breaches detected. Evacuate low preasure area",                        'mods/hardsuits/sound/beep.ogg'),
-		new /datum/rig_warning(8, "Warning: Critical breaches detected. Evacuate low preasure area immediately", 'mods/hardsuits/sound/longbeep.ogg'),
+		new /datum/rig_warning(3, "Minor breaches detected",                                                              'mods/hardsuits/sound/shortbeep.ogg'),
+		new /datum/rig_warning(6, "Severe breaches detected. Evacuate from the low preasure area",                        'mods/hardsuits/sound/beep.ogg'),
+		new /datum/rig_warning(8, "Warning: Critical breaches detected. Evacuate from the low preasure area immediately", 'mods/hardsuits/sound/longbeep.ogg'),
 		)
 
 	energy_warnings = list(
