@@ -102,7 +102,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	color = "#4c535b"
 	},
 /obj/paint/iccgn,
@@ -538,7 +538,7 @@
 /area/map_template/sfv_arbiter)
 "qP" = (
 /obj/floor_decal/corner/grey/mono,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = -32
 	},
 /obj/structure/bed/chair/shuttle/black,
@@ -632,7 +632,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	color = "#4c535b"
 	},
 /obj/paint/iccgn,
@@ -718,7 +718,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	color = "#4c535b"
 	},
 /obj/paint/iccgn,
@@ -825,7 +825,7 @@
 /turf/simulated/floor/tiled,
 /area/map_template/sfv_arbiter)
 "zZ" = (
-/obj/machinery/computer/ship/sensors,
+/obj/machinery/computer/modular/preset/sensors,
 /obj/floor_decal/corner/blue/mono,
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -854,7 +854,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/sfv_arbiter)
 "Bb" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/sfv_arbiter)
@@ -1036,7 +1036,7 @@
 	dir = 1;
 	icon_state = "0-2"
 	},
-/obj/wallframe_spawn/reinforced/polarized/full{
+/obj/wallframe_spawn/reinforced/polarized{
 	color = "#4c535b"
 	},
 /obj/paint/iccgn,
@@ -2290,7 +2290,7 @@
 /area/map_template/sfv_arbiter)
 "Yn" = (
 /obj/floor_decal/corner/grey/mono,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = 32
 	},
 /obj/structure/bed/chair/shuttle/black,
