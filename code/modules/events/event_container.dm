@@ -183,9 +183,6 @@ var/global/list/severity_to_string = alist(EVENT_LEVEL_MUNDANE = "Mundane", EVEN
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Nothing",							/datum/event/nothing,				1320),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Blob",							/datum/event/blob, 					0,	list(ASSIGNMENT_ENGINEER = 40), 1),
-		// [SIERRA-ADD - Hivemind],
-		// new /datum/event_meta(EVENT_LEVEL_MAJOR, "Hivemind",						/datum/event/hivemind, 				0,	list(ASSIGNMENT_ENGINEER = 40,ASSIGNMENT_MEDICAL = 20,ASSIGNMENT_SECURITY = 40), 1),
-		// [/SIERRA-ADD],
 		new /datum/event_meta/no_overmap(EVENT_LEVEL_MAJOR, "Meteor Wave",			/datum/event/meteor_wave,			0,	list(ASSIGNMENT_ENGINEER = 10),	1),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Space Vines",						/datum/event/spacevine, 			0,	list(ASSIGNMENT_ENGINEER = 15), 1),
 		new /datum/event_meta/no_overmap(EVENT_LEVEL_MAJOR, "Electrical Storm",		/datum/event/electrical_storm, 		0,	list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 5)),

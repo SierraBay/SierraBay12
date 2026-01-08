@@ -85,7 +85,6 @@
 	var/obj/machinery/hivemind_machine/master
 	var/special_ability_cooldown = 0		//use ability_cooldown, don't touch this
 	ai_holder = /datum/ai_holder/hivemind
-	// ВЫДАТЬ НАТУРАЛ ВЕАПОН
 
 /mob/living/simple_animal/hostile/hivemind/New()
 		..()
@@ -346,7 +345,7 @@
 /mob/living/simple_animal/hostile/hivemind/bomber/death()
 	..()
 	gibs(loc, null, /obj/gibspawner/robot)
-	explosion(get_turf(src), 0, 1, 2, 0, 0, 0, 0, 0)
+	explosion(get_turf(src), 2, EX_ACT_LIGHT, turf_breaker = FALSE)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/hivemind/bomber/attack_target()
