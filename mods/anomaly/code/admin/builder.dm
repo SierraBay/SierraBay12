@@ -47,7 +47,7 @@ Cntrl + Left Click - Configurate anomaly
 
 /datum/build_mode/anomalies/OnClick(atom/A, list/parameters)
 	//Удаление аномалии
-	if (parameters["right"])
+	if (parameters[MOUSE_2])
 		if(istype(A, /obj/anomaly))
 			var/obj/anomaly/target = A
 			target.Destroy()
@@ -55,17 +55,17 @@ Cntrl + Left Click - Configurate anomaly
 			to_chat(user, SPAN_BAD("This is not anomaly"))
 		return
 	//Тонкая настройка именно этой аномалии
-	else if(parameters["ctrl"])
+	else if(parameters[MOUSE_CTRL])
 		if(istype(A, /obj/anomaly))
 			configurate_clicked_anomaly(A)
 		else
 			configurate_choosed_anomaly()
 		return
 	//Выбираем какую аномалию хотим заспавнить
-	else if(parameters["middle"])
+	else if(parameters[MOUSE_3])
 		Configurate()
 		return
-	else if(parameters["shift"])
+	else if(parameters[MOUSE_SHIFT])
 		to_chat(user, SPAN_NOTICE("[possible_anomalies[anomaly_type]]"))
 		return
 	//Аномалия не выбрана

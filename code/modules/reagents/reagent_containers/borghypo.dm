@@ -21,10 +21,10 @@
 	var/list/reagent_names = list()
 
 /obj/item/reagent_containers/borghypo/surgeon
-	reagent_ids = list(/datum/reagent/inaprovaline, /datum/reagent/bicaridine, /datum/reagent/dexalin, /datum/reagent/tramadol)
+	reagent_ids = list(/datum/reagent/inaprovaline, /datum/reagent/bicaridine, /datum/reagent/dexalin, /datum/reagent/opiate/tramadol)
 
 /obj/item/reagent_containers/borghypo/crisis
-	reagent_ids = list(/datum/reagent/inaprovaline, /datum/reagent/dylovene, /datum/reagent/dexalin, /datum/reagent/tramadol, /datum/reagent/adrenaline)
+	reagent_ids = list(/datum/reagent/inaprovaline, /datum/reagent/dylovene, /datum/reagent/dexalin, /datum/reagent/opiate/tramadol, /datum/reagent/adrenaline)
 
 /obj/item/reagent_containers/borghypo/Initialize()
 	. = ..()
@@ -301,9 +301,10 @@
 		if (istype(hypo))
 			to_chat(user, "Its contents are available to \the [hypo].")
 
+
 /obj/item/robot_rack/bottle/use_before(atom/target, mob/living/user, click_parameters)
 	// Can't pick up beakers
-	if (istype(target, object_type) && istype(target, /obj/item/reagent_containers/glass))
+	if (!istype(target, object_type) && istype(target, /obj/item/reagent_containers/glass))
 		USE_FEEDBACK_FAILURE("\The [target] is the wrong shape for \the [src].")
 		return TRUE
 

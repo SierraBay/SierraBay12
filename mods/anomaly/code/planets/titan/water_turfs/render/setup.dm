@@ -1,5 +1,5 @@
 //УСТАНОВКА ФИЛЬТРОВ ВОДЫ//
-/atom/movable/proc/setup_water_filter(mask_icon_state)
+/atom/proc/setup_water_filter(mask_icon_state)
 	return
 
 /obj/item/setup_water_filter(mask_icon_state)

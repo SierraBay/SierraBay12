@@ -310,7 +310,7 @@
 		data = c_data
 	else
 		data = pick(/datum/reagent/bicaridine, /datum/reagent/kelotane, /datum/reagent/dylovene, /datum/reagent/inaprovaline, /datum/reagent/drugs/psilocybin, /datum/reagent/sugar,
-					/datum/reagent/tramadol, /datum/reagent/dexalin, /datum/reagent/drugs/cryptobiolin, /datum/reagent/impedrezene, /datum/reagent/hyperzine, /datum/reagent/ethylredoxrazine,
+					/datum/reagent/opiate/tramadol, /datum/reagent/dexalin, /datum/reagent/drugs/cryptobiolin, /datum/reagent/impedrezene, /datum/reagent/hyperzine, /datum/reagent/ethylredoxrazine,
 					/datum/reagent/drugs/mindbreaker, /datum/reagent/nutriment/glucose)
 	var/datum/reagent/R = data
 	name = "[initial(name)] ([initial(R.name)])"

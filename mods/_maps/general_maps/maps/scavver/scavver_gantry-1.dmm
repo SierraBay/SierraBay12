@@ -273,7 +273,7 @@
 /turf/simulated/floor,
 /area/scavver/gantry/down1)
 "fc" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -895,7 +895,7 @@
 /area/scavver/gantry/down1)
 "oH" = (
 /obj/floor_decal/corner/blue/mono,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = 32
 	},
 /obj/machinery/firealarm{
@@ -1134,7 +1134,7 @@
 /turf/space,
 /area/scavver/yachtdown/thrusters)
 "sN" = (
-/obj/machinery/computer/ship/engines,
+/obj/machinery/computer/modular/preset/helm,
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/monotile,
 /area/scavver/calypso)
@@ -1213,7 +1213,7 @@
 /turf/simulated/floor/plating,
 /area/scavver/calypso)
 "uB" = (
-/obj/machinery/computer/ship/sensors/spacer,
+/obj/machinery/computer/modular/preset/sensors/spacer,
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/monotile,
 /area/scavver/calypso)

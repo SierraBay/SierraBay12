@@ -1478,7 +1478,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -1570,7 +1570,7 @@
 	dir = 1;
 	pixel_y = -20
 	},
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 1
 	},
 /turf/simulated/floor/wood/walnut,
@@ -1818,7 +1818,7 @@
 /turf/simulated/floor/plating,
 /area/liberia/mule)
 "dh" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -2661,21 +2661,9 @@
 "et" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
-/obj/item/card/id{
-	access = list("ACCESS_MERCHANT");
-	desc = "A visitor's access card, this one is for the Merchant's Station.";
-	name = "Visitor's Card - Merchant's Station"
-	},
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
+/obj/item/card/id/merchant/guest,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm/merchant{
 	dir = 4;
@@ -4865,7 +4853,7 @@
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/engineeringengines)
 "iz" = (
-/obj/machinery/computer/ship/sensors{
+/obj/machinery/computer/modular/preset/sensors{
 	dir = 8
 	},
 /obj/floor_decal/corner/blue/mono,
@@ -5155,7 +5143,7 @@
 /turf/simulated/floor/plating,
 /area/liberia/hallway)
 "iY" = (
-/obj/machinery/computer/ship/engines{
+/obj/machinery/computer/modular/preset/helm{
 	dir = 8
 	},
 /obj/floor_decal/corner/blue/mono,
@@ -5384,7 +5372,7 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/liberia/bridge)
 "jC" = (
-/obj/machinery/computer/ship/navigation{
+/obj/machinery/computer/modular/preset/navigation{
 	dir = 8
 	},
 /obj/structure/window/reinforced,

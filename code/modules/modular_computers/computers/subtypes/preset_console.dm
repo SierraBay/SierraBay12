@@ -91,7 +91,13 @@
 		/datum/computer_file/program/docking,
 		/datum/computer_file/program/wordprocessor,
 		/datum/computer_file/program/digitalwarrant,
-		/datum/computer_file/program/forceauthorization
+		/datum/computer_file/program/forceauthorization,
+		/datum/computer_file/program/munitions
+	)
+
+/obj/machinery/computer/modular/preset/munitions
+	default_software = list(
+		/datum/computer_file/program/munitions
 	)
 
 /obj/machinery/computer/modular/preset/cardslot/command_eng
@@ -193,3 +199,41 @@
 		/datum/computer_file/program/wordprocessor
 	)
 	autorun_program = /datum/computer_file/program/filemanager
+
+/obj/machinery/computer/modular/preset/helm
+	default_software = list(
+		/datum/computer_file/program/ship/engine_control
+	)
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/computer/ship_interface
+	)
+	autorun_program = /datum/computer_file/program/ship/engine_control
+
+/obj/machinery/computer/modular/preset/navigation
+	default_software = list(
+		/datum/computer_file/program/ship/sensors
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors
+
+/obj/machinery/computer/modular/preset/sensors
+	default_software = list(
+		/datum/computer_file/program/ship/sensors
+	)
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/computer/ship_interface
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors
+
+/obj/machinery/computer/modular/preset/sensors/spacer
+	default_software = list(
+		/datum/computer_file/program/ship/sensors/spacer
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors/spacer
+
+// [SIERRA-ADD] - PAN-SLAVIC MODULES
+/obj/machinery/computer/modular/preset/sensors/russian
+	default_software = list(
+		/datum/computer_file/program/ship/sensors/russian
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors/russian
+// [/SIERRA-ADD] - PAN-SLAVIC MODULES

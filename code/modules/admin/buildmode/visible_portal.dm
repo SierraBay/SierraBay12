@@ -75,10 +75,10 @@ Tool doesnt provide validation!
 
 /datum/build_mode/visible_portals/OnClick(atom/A, list/parameters)
 	var/turf/location = get_turf(A)
-	if (parameters["ctrl"])
-		if (parameters["left"])
+	if (parameters[MOUSE_CTRL])
+		if (parameters[MOUSE_1])
 			AddMarker(location, host.dir, FALSE)
-		if (parameters["right"])
+		if (parameters[MOUSE_2])
 			//There is no guaranteed safe way to delete a segment of a placed portal as they become tightly coupled
 			//If people want to do that, VV exists
 			//Delete it and counterpart
@@ -102,9 +102,9 @@ Tool doesnt provide validation!
 				else
 					qdel(existingPortal)
 
-	else if (parameters["left"] )
+	else if (parameters[MOUSE_1] )
 		AddMarker(location, host.dir, TRUE)
-	else if (parameters["right"])
+	else if (parameters[MOUSE_2])
 		var/choice = alert("Delete in progress portal", "Delete All", "Yes", "No")
 		if (choice == "Yes")
 			QDEL_NULL_LIST(entrance)

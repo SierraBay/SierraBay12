@@ -26,7 +26,7 @@
 /obj/screen/exosuit/menu_button/power/Click(location, control, params)
 	press_animation()
 	var/mod_modifiers = params2list(params)
-	if(mod_modifiers["alt"])
+	if(mod_modifiers[MOUSE_ALT])
 		owner.emergency_toggle_power(usr)
 		owner.undeploy_overheat_effect()
 		owner.update_icon()

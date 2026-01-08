@@ -122,14 +122,14 @@
 	if(user.unEquip(src, source_turf))
 		SSpersistence.track_value(src, /datum/persistent/paper/sticky)
 		if(click_parameters)
-			if(click_parameters["icon-x"])
-				pixel_x = text2num(click_parameters["icon-x"]) - 16
+			if(click_parameters[MOUSE_ICON_X])
+				pixel_x = text2num(click_parameters[MOUSE_ICON_X]) - 16
 				if(dir_offset & EAST)
 					pixel_x += 32
 				else if(dir_offset & WEST)
 					pixel_x -= 32
-			if(click_parameters["icon-y"])
-				pixel_y = text2num(click_parameters["icon-y"]) - 16
+			if(click_parameters[MOUSE_ICON_Y])
+				pixel_y = text2num(click_parameters[MOUSE_ICON_Y]) - 16
 				if(dir_offset & NORTH)
 					pixel_y += 32
 				else if(dir_offset & SOUTH)

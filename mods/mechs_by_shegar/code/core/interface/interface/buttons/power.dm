@@ -23,7 +23,7 @@
 
 /obj/screen/movable/exosuit/toggle/power_control/Click(location, control, params)
 	var/mod_modifiers = params2list(params)
-	if(mod_modifiers["alt"])
+	if(mod_modifiers[MOUSE_ALT])
 		//owner.fast_toggle_power(usr)
 		owner.update_icon()
 		return

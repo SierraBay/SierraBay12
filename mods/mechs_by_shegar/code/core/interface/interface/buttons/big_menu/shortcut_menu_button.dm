@@ -64,7 +64,7 @@
 
 /obj/screen/movable/exosuit/shortcut_button/Click(location, control, params)
 	var/modifiers = params2list(params)
-	if(modifiers["middle"])
+	if(modifiers[MOUSE_3])
 		owner.delete_shortcut_button(src)
 		return
 	if(memored_menu_button)

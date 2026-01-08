@@ -150,14 +150,14 @@
 			var/list/center = cached_key_number_decode(stuck.center_of_mass)
 			offset_x = center["x"]
 			offset_y = center["y"]
-		if(click_parameters["icon-x"])
-			pixel_x = text2num(click_parameters["icon-x"]) - offset_x
+		if(click_parameters[MOUSE_ICON_X])
+			pixel_x = text2num(click_parameters[MOUSE_ICON_X]) - offset_x
 			if(dir_offset & EAST)
 				pixel_x += 32
 			else if(dir_offset & WEST)
 				pixel_x -= 32
-		if(click_parameters["icon-y"])
-			pixel_y = text2num(click_parameters["icon-y"]) - offset_y
+		if(click_parameters[MOUSE_ICON_Y])
+			pixel_y = text2num(click_parameters[MOUSE_ICON_Y]) - offset_y
 			if(dir_offset & NORTH)
 				pixel_y += 32
 			else if(dir_offset & SOUTH)

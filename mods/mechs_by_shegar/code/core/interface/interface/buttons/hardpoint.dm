@@ -111,7 +111,7 @@
 		return
 
 	var/modifiers = params2list(params)
-	if(modifiers["ctrl"])
+	if(modifiers[MOUSE_CTRL])
 		if(owner.remove_system(hardpoint_tag))
 			to_chat(usr, SPAN_NOTICE("You disengage and discard the system mounted to your [hardpoint_tag] hardpoint."))
 		else

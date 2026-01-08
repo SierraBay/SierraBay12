@@ -52,7 +52,7 @@
 
 /obj/screen/psi/hub/Click(location, control, click_params)
 	var/list/params = params2list(click_params)
-	if(params["shift"])
+	if(params[MOUSE_SHIFT])
 		owner.show_psi_assay(owner)
 		return
 

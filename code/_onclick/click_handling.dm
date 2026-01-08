@@ -31,6 +31,9 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
 	/// The mob this click handler is attached to.
 	var/mob/user
 
+	/// The atom this click handler is hovering over
+	var/atom/hovered_atom
+
 	/**
 	 * Bitfield (Any of `CLICK_HANDLER_*`). Relevant flags to control the logic flow of this click handler.
 	 *
@@ -113,7 +116,7 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
  *
  * Has no return value.
  */
-/datum/click_handler/proc/OnMouseDown(object, location, params)
+/datum/click_handler/proc/OnMouseDown(object, location, control, params)
 	return
 
 /**
@@ -126,19 +129,45 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
  *
  * Has no return value.
  */
-/datum/click_handler/proc/OnMouseUp(object, location, params)
+/datum/click_handler/proc/OnMouseUp(object, location, control, params)
 	return
+
+/**
+ * Called on MouseEntered by `/client/MouseUp()` when this is the mob's currently active click handler
+ *
+ * See: https://www.byond.com/docs/ref/#/client/proc/MouseEntered
+ */
+/datum/click_handler/proc/OnMouseEntered(atom/object, location, control, params)
+	hovered_atom = object
+
+	object.MouseEntered(location,control,params)
+
+/**
+ * Called on MouseExited by `/client/MouseUp()` when this is the mob's currently active click handler
+ *
+ * See: https://www.byond.com/docs/ref/#/client/proc/MouseExited
+ */
+/datum/click_handler/proc/OnMouseExited(atom/object, location, control, params)
+	if (hovered_atom == object)
+		hovered_atom = null
+
+	object.MouseExited(location,control,params)
 
 /**
  * Called on MouseUp by `/client/MouseDrag()` when this is the mob's currently active click handler.
  *
  * **Parameters**:
+ * - `src_object` - The object being dragged.
  * - `over_object` - The new atom underneath mouse.
+ * - `src_location` - The source location of the drag
+ * - `over_location` - The source location of the dragged-over object
+ * - `src_control` - The source control of the dragged object
+ * - `over_control` - The source control of the dragged-over object
  * - `params` (list of strings) - List of click parameters. See BYOND's `CLick()` documentation.
  *
  * Has no return value.
  */
-/datum/click_handler/proc/OnMouseDrag(atom/over_object, params)
+/datum/click_handler/proc/OnMouseDrag(atom/src_object, atom/over_object, src_location, over_location, src_control, over_control, params)
 	return
 
 /datum/click_handler/proc/CanAutoClick(object, location, params)
@@ -154,7 +183,7 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
 /datum/click_handler/default/OnDblClick(atom/A, params)
 	user.DblClickOn(A, params)
 
-/datum/click_handler/default/OnMouseDown(object, location, params)
+/datum/click_handler/default/OnMouseDown(atom/object, location, control, params)
 	var/delay = CanAutoClick(object, location, params)
 	if(delay)
 		selected_target[1] = object
@@ -162,14 +191,21 @@ var/global/const/CLICK_HANDLER_REMOVE_IF_NOT_TOP    = FLAG_02
 		while(selected_target[1])
 			OnClick(selected_target[1], selected_target[2])
 			sleep(delay)
+	else if (istype(object, /obj/screen))
+		object.MouseDown(location, control, params)
 
-/datum/click_handler/default/OnMouseUp(object, location, params)
+/datum/click_handler/default/OnMouseUp(atom/object, location, control, params)
 	selected_target[1] = null
 
-/datum/click_handler/default/OnMouseDrag(atom/over_object, params)
+	if (istype(object, /obj/screen))
+		object.MouseUp(location, control, params)
+
+/datum/click_handler/default/OnMouseDrag(src_object, atom/over_object, src_location, over_location, src_control, over_control, params)
 	if(selected_target[1] && over_object && over_object.IsAutoclickable()) //Over object could be null, for example if dragging over darkness
 		selected_target[1] = over_object
 		selected_target[2] = params
+	else if (istype(over_object, /obj/screen))
+		over_object.MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
 
 /datum/click_handler/default/CanAutoClick(object, location, params)
 	return user.CanMobAutoclick(object, location, params)

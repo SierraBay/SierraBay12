@@ -14668,7 +14668,7 @@
 	},
 /area/centcom/living)
 "oCN" = (
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_x = 32
 	},
 /turf/unsimulated/floor/techfloor{

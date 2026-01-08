@@ -667,8 +667,6 @@ var/global/list/slot_flags_enumeration = list(
 
 		var/obj/item/organ/external/affecting = H.get_organ(eyes.parent_organ)
 		affecting.take_external_damage(7)
-	else
-		M.take_organ_damage(7, 0)
 
 	M.eye_blurry += rand(3,4)
 	return TRUE
@@ -998,3 +996,19 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if (href_list["examine"])
 		examinate(usr, src)
 		return TOPIC_HANDLED
+
+
+/obj/item/MouseEntered()
+	if (usr.client?.outline_enabled)
+		usr.client.SetOutlineAtom(src)
+
+
+/obj/item/MouseExited()
+	if (usr.client?.outline_atom)
+		usr.client.SetOutlineAtom()
+
+
+/obj/item/MouseDrop()
+	. = ..()
+	if (usr.client?.outline_atom)
+		usr.client.SetOutlineAtom()

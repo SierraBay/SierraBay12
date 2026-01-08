@@ -91,6 +91,10 @@ var/global/list/_client_preferences_by_type
 /datum/client_preference/proc/changed(mob/preference_mob, new_value)
 	return
 
+/// Called when a client's preferences are first set up
+/datum/client_preference/proc/started(mob/user, value)
+	return
+
 /*********************
 * Player Preferences *
 *********************/
@@ -338,12 +342,36 @@ var/global/list/_client_preferences_by_type
 	options = list(GLOB.PREF_SHORT, GLOB.PREF_LONG)
 	default_value = GLOB.PREF_SHORT
 
+// [SIERRA-REMOVE] - Runechat
+/*
+/datum/client_preference/floating_messages
+	description = "Floating chat messages"
+	key = "FLOATING_CHAT"
+	options = list(GLOB.PREF_SHOW, GLOB.PREF_HIDE)
+	default_value = GLOB.PREF_SHOW
+*/
+//[/SIERRA-REMOVE] - Runechat
 
 /datum/client_preference/toggle_run
 	description = "Shift toggles run (vs hold to run)"
 	key = "TOGGLE_RUN"
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 	default_value = GLOB.PREF_NO
+
+
+/datum/client_preference/atom_outlines
+	description = "Show Atom Outlines"
+	key = "ATOM_OUTLINE"
+
+
+/datum/client_preference/atom_outlines/changed(mob/user, new_value)
+	var/client/client = user.client
+	client?.SetOutlineAtom()
+	client?.outline_enabled = new_value == GLOB.PREF_YES
+
+
+/datum/client_preference/atom_outlines/started(mob/user, value)
+	changed(user, value)
 
 
 /********************

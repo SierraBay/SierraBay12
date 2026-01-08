@@ -28,13 +28,13 @@ Shift + Left Click - Информация о зоне
 	to_chat(user, SPAN_NOTICE(help_text))
 
 /datum/build_mode/weather/OnClick(atom/A, list/parameters)
-	if (parameters["right"])
+	if (parameters[MOUSE_2])
 		delete_smthg_on_turf(A)
 		return
-	else if(parameters["middle"] && parameters["ctrl"])
+	else if(parameters[MOUSE_3] && parameters[MOUSE_CTRL])
 		switch_placement_mode()
 		return
-	else if(parameters["middle"])
+	else if(parameters[MOUSE_3])
 		switch_spawning_atom()
 		return
 	else
