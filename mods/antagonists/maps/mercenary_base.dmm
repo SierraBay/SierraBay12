@@ -366,7 +366,10 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "merc_pod"
 	},
-/turf/simulated/floor/airless,
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "dq" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -487,12 +490,15 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_shuttle)
 "eG" = (
-/obj/machinery/payload_interface{
-	name = "Missile Pod";
-	id_tag = "merc_pod";
-	allow_arming = 1
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
 	},
-/turf/simulated/floor/airless,
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "eR" = (
 /obj/machinery/cryopod{
@@ -609,19 +615,26 @@
 /turf/simulated/floor/plating,
 /area/map_template/merc_spawn)
 "gr" = (
-/obj/floor_decal/industrial/warning{
-	dir = 8
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /obj/machinery/door/blast/regular{
 	id_tag = "merc_pod_access";
 	name = "missile pod";
 	density = 0;
 	icon_state = "pdoor0"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
+	},
+/obj/machinery/payload_interface{
+	name = "Missile Pod Loading";
+	id_tag = "merc_pod_load";
+	allow_arming = 1
+	},
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "gC" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -1826,6 +1839,17 @@
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
+"tT" = (
+/obj/machinery/payload_interface{
+	name = "Missile Pod";
+	id_tag = "merc_pod";
+	allow_arming = 1
+	},
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
+/area/map_template/merc_shuttle)
 "tY" = (
 /obj/floor_decal/corner_techfloor_grid,
 /obj/floor_decal/techfloor/corner,
@@ -3499,6 +3523,18 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/merc_spawn)
+"XA" = (
+/obj/structure/plasticflaps/airtight,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
+	},
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
+/area/map_template/merc_shuttle)
 "XJ" = (
 /obj/floor_decal/corner/purple{
 	dir = 1
@@ -6252,9 +6288,9 @@ aa
 aa
 aa
 aa
-aa
-aa
 dn
+tT
+XA
 eG
 gr
 hR
