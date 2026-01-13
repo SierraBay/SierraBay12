@@ -899,7 +899,6 @@
 	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
 	name = "Unlocked Autolathe"
 	},
-/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/atmos_equipment)

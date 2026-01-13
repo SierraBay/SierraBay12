@@ -6923,7 +6923,6 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /obj/floor_decal/spline/fancy/wood,
 /turf/simulated/floor/carpet/red,
 /area/liberia/traidingroom)

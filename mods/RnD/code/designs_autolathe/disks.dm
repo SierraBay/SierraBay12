@@ -197,6 +197,33 @@
 		/datum/design/autolathe/medical/hypospray/autoinjector,
 		)
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/glass
+	name = "General Glass Designs"
+	icon_state = "ironhammer"
+	designs = list(
+		/datum/design/autolathe/drinkingglass,
+		/datum/design/autolathe/drinkingglass/rocks,
+		/datum/design/autolathe/drinkingglass/shake,
+		/datum/design/autolathe/drinkingglass/cocktail,
+		/datum/design/autolathe/drinkingglass/shot,
+		/datum/design/autolathe/drinkingglass/pint,
+		/datum/design/autolathe/drinkingglass/mug,
+		/datum/design/autolathe/drinkingglass/wine,
+		/datum/design/autolathe/drinkingglass/carafe,
+		/datum/design/autolathe/drinkingglass/flute,
+		/datum/design/autolathe/drinkingglass/coffeecup,
+		/datum/design/autolathe/drinkingglass/cognac,
+		/datum/design/autolathe/drinkingglass/goblet,
+		/datum/design/autolathe/drinkingglass/coffeecup/glass,
+		/datum/design/autolathe/medical/beaker,
+		/datum/design/autolathe/medical/beaker_large,
+		/datum/design/autolathe/medical/beaker_insul,
+		/datum/design/autolathe/medical/beaker_insul_large,
+		/datum/design/autolathe/medical/vial,
+		/datum/design/autolathe/medical/syringe,
+		/datum/design/autolathe/medical/pill_bottle,
+		/datum/design/autolathe/medical/hypospray/autoinjector,
+		)
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/tool
 	name = "Tools Designs"
@@ -219,6 +246,20 @@
 		/datum/design/autolathe/tool/welder_industrial,
 		/datum/design/autolathe/tool/designator,
 		)
+
+/obj/item/stock_parts/computer/hard_drive/portable/design/legal
+	name = "Corporate Approved Designs"
+	icon_state = "onestar"
+	desc = "Data disk used to store autolathe designs. This one is fairly heavy."
+
+/obj/item/stock_parts/computer/hard_drive/portable/design/legal/Initialize(mapload)
+	designs.Cut()
+	for(var/subtype in subtypesof(/datum/design/autolathe))
+		var/datum/design/autolathe/D = subtype
+		if(!initial(D.hidden))
+			designs += D
+	. = ..()
+
 
 /obj/item/storage/box/autolathe_designs
 	name = "box of basic autolathe designs"

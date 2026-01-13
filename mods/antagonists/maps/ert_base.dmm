@@ -3293,7 +3293,6 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/rescue_base/start)
 "gV" = (

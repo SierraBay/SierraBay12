@@ -44,6 +44,29 @@ Used In File(s): \code\game\machinery\autolathe.dm
 </div>
 {{/if}}
 
+{{if data.have_disk_two}}
+<div class="fixedWidest" style="width:100%; display: table-row">
+	<div class="block">
+		<div class="item">
+			<div class="itemContentWide">
+			Disk:
+			{{if data.disk_two}}
+				<b>{{:data.disk_two.name ? data.disk_two.name : 'data disk'}}</b>
+
+				{{if data.disk_two.license > 0}}
+					<div class="unimportant">{{:data.disk_two.license}} license points left</div>
+				{{else data.disk_two.license == 0}}
+					<div class="bad">{{:data.disk_two.license}} license points left</div>
+				{{/if}}
+			{{else}}
+				not inserted
+			{{/if}}
+			</div>
+			<div class="itemlabelNarrow">{{:helper.link(data.disk_two ? 'eject' : 'insert', 'eject', {'disk_two' : 1}, null, 'statusValue')}}</div>
+		</div>
+	</div>
+</div>
+{{/if}}
 
 {{if data.uses_stat}}
 <div class="fixedWidest" style="width:100%; display: table-row">

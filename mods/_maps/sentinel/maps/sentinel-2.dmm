@@ -3494,7 +3494,6 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "gB" = (
