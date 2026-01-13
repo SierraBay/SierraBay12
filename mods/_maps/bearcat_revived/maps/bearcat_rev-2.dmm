@@ -100,7 +100,7 @@
 /turf/simulated/floor/tiled/dark/usedup,
 /area/ship/scrap/command/bridge)
 "ao" = (
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark/usedup,

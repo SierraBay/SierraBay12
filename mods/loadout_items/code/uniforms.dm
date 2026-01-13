@@ -730,3 +730,17 @@
 	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
 	icon_state = "fa_cloth"
 	item_state = "fa_cloth"
+
+/obj/item/clothing/under/solgov/utility
+	name = "utility uniform"
+	desc = "A comfortable turtleneck and black utility trousers."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	icon_state = "sblackutility"
+	item_state = "bl_suit"
+	worn_state = "sblackutility"
+	gender_icons = 1
+	armor = list(
+		melee = ARMOR_MELEE_MINOR,
+		energy = ARMOR_ENERGY_MINOR
+		)

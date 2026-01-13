@@ -272,9 +272,12 @@
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
 "cH" = (
-/obj/machinery/door/blast/regular{
-	id_tag = "merc_bsa"
+/obj/wallframe_spawn/reinforced/titanium,
+/obj/machinery/door/blast/regular/open{
+	density = 0;
+	id_tag = "merc_external"
 	},
+/obj/paint/merc,
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
 "cI" = (
@@ -293,7 +296,7 @@
 /area/map_template/merc_shuttle)
 "cM" = (
 /obj/machinery/computer/modular/preset/helm{
-	uncreated_component_parts = list(/obj/item/stock_parts/power/battery/buildable/responsive=1,/obj/item/cell/high=1)
+	uncreated_component_parts = list(/obj/item/stock_parts/computer/ship_interface=1,/obj/item/stock_parts/power/battery/buildable/responsive=1,/obj/item/cell/high=1)
 	},
 /obj/item/device/radio/intercom/hailing{
 	dir = 4;
@@ -309,17 +312,21 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "cO" = (
-/obj/machinery/disperser/front{
-	dir = 1
+/obj/wallframe_spawn/reinforced/titanium,
+/obj/machinery/door/blast/regular/open{
+	density = 0;
+	dir = 4;
+	id_tag = "merc_external"
 	},
+/obj/paint/merc,
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
 "cQ" = (
-/obj/machinery/computer/ship/disperser,
+/obj/machinery/computer/modular/preset/munitions/syndicate,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "cS" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "cT" = (
@@ -356,10 +363,13 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/merc_spawn)
 "dn" = (
-/obj/machinery/disperser/middle{
-	dir = 1
+/obj/machinery/door/blast/regular{
+	id_tag = "merc_pod"
 	},
-/turf/simulated/floor/plating,
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "dq" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -412,15 +422,15 @@
 "em" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/button/blast_door{
-	id_tag = "merc_bsa";
-	name = "OFD Firing Blast Doors";
+	id_tag = "merc_pod_access";
+	name = "Missile Pod Access";
 	pixel_x = -5;
 	pixel_y = 6;
 	req_access = list("ACCESS_SYNDICATE")
 	},
 /obj/machinery/button/blast_door{
 	id_tag = "merc_bsa_shutters";
-	name = "OFD Viewing Shutters";
+	name = "Missile Pod Viewing Shutters";
 	pixel_x = -5;
 	pixel_y = -3;
 	req_access = list("ACCESS_SYNDICATE")
@@ -480,11 +490,15 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_shuttle)
 "eG" = (
-/obj/machinery/disperser/back{
-	dir = 1
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
 	},
-/obj/structure/ship_munition/disperser_charge/emp,
-/turf/simulated/floor/plating,
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "eR" = (
 /obj/machinery/cryopod{
@@ -512,7 +526,6 @@
 /obj/machinery/door/blast/regular/open{
 	density = 0;
 	dir = 4;
-	icon_state = "pdoor0";
 	id_tag = "merc_bsa_shutters"
 	},
 /obj/paint/merc,
@@ -602,18 +615,26 @@
 /turf/simulated/floor/plating,
 /area/map_template/merc_spawn)
 "gr" = (
-/obj/machinery/door/blast/regular/open{
+/obj/machinery/door/blast/regular{
+	id_tag = "merc_pod_access";
+	name = "missile pod";
 	density = 0;
-	icon_state = "pdoor0";
-	id_tag = "merc_bsa"
+	icon_state = "pdoor0"
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 8
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
 	},
-/obj/floor_decal/industrial/warning{
+/obj/machinery/payload_interface{
+	name = "Missile Pod Loading";
+	id_tag = "merc_pod_load";
+	allow_arming = 1
+	},
+/obj/floor_decal/industrial/warning/half{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced,
 /area/map_template/merc_shuttle)
 "gC" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -773,7 +794,7 @@
 /obj/structure/bed/chair/shuttle/blue{
 	dir = 8
 	},
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -1609,11 +1630,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "qY" = (
-/obj/floor_decal/industrial/outline/red,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/railing,
+/obj/structure/missile/probe,
+/obj/floor_decal/industrial/outline{
+	color = "#55007f";
+	name = "purple outline"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_shuttle)
 "qZ" = (
@@ -1747,7 +1772,8 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/blue,
+/obj/floor_decal/industrial/outline/red,
+/obj/structure/missile/he,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_shuttle)
 "sO" = (
@@ -1813,6 +1839,17 @@
 /obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
+"tT" = (
+/obj/machinery/payload_interface{
+	name = "Missile Pod";
+	id_tag = "merc_pod";
+	allow_arming = 1
+	},
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
+/area/map_template/merc_shuttle)
 "tY" = (
 /obj/floor_decal/corner_techfloor_grid,
 /obj/floor_decal/techfloor/corner,
@@ -2669,12 +2706,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/merc_shuttle/drop_pod)
 "EF" = (
-/obj/floor_decal/industrial/outline/blue,
-/obj/structure/ship_munition/disperser_charge/emp,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/railing,
+/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_shuttle)
 "EK" = (
@@ -2743,7 +2779,7 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
@@ -3387,12 +3423,12 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_spawn)
 "VH" = (
-/obj/floor_decal/industrial/outline/red,
-/obj/structure/ship_munition/disperser_charge/explosive,
 /obj/structure/railing,
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/floor_decal/industrial/outline/orange,
+/obj/structure/missile/antispace,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_shuttle)
 "VJ" = (
@@ -3487,6 +3523,18 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/merc_spawn)
+"XA" = (
+/obj/structure/plasticflaps/airtight,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = null;
+	id_tag = "merc_pod_load"
+	},
+/obj/floor_decal/industrial/warning/half{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced,
+/area/map_template/merc_shuttle)
 "XJ" = (
 /obj/floor_decal/corner/purple{
 	dir = 1
@@ -5934,7 +5982,7 @@ aa
 aa
 aa
 aa
-St
+cH
 cN
 cW
 eA
@@ -6036,7 +6084,7 @@ aa
 aa
 aa
 cD
-St
+cH
 cE
 dY
 FR
@@ -6140,7 +6188,7 @@ aa
 AF
 AF
 fa
-fa
+AF
 fa
 AF
 hL
@@ -6240,9 +6288,9 @@ aa
 aa
 aa
 aa
-cH
-cO
 dn
+tT
+XA
 eG
 gr
 hR
@@ -6344,7 +6392,7 @@ aa
 AF
 AF
 fa
-fa
+AF
 fa
 AF
 hU
@@ -6444,7 +6492,7 @@ aa
 aa
 aa
 cD
-St
+cH
 cQ
 Qk
 eA
@@ -6546,7 +6594,7 @@ aa
 aa
 aa
 aa
-St
+cH
 cS
 eh
 nI
@@ -6752,10 +6800,10 @@ aa
 aa
 AF
 AF
-Jc
-Jc
-Jc
-Jc
+cO
+cO
+cO
+cO
 AF
 mi
 nW

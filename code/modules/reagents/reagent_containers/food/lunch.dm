@@ -12,7 +12,11 @@ var/global/list/lunchables_lunches_ = list(
 									/obj/item/reagent_containers/food/snacks/jellysandwich,
 									/obj/item/reagent_containers/food/snacks/tossedsalad,
 									/obj/item/reagent_containers/food/snacks/vegetablesoup,
-									/obj/item/reagent_containers/food/snacks/plainsteak
+									/obj/item/reagent_containers/food/snacks/plainsteak,
+									/obj/item/reagent_containers/food/snacks/boiledrice,
+									/obj/item/reagent_containers/food/snacks/boiledspagetti,
+									/obj/item/reagent_containers/food/snacks/boiledegg,
+									/obj/item/reagent_containers/food/snacks/meatcube
 								  )
 
 var/global/list/lunchables_snacks_ = list(
@@ -101,7 +105,7 @@ var/global/list/lunchables_ethanol_reagents_ = list(
 												/datum/reagent/ethanol/threemileisland,
 												/datum/reagent/ethanol/toxins_special,
 												/datum/reagent/ethanol/qokkloa,
-												/datum/reagent/ethanol/qokkhrona,
+												/datum/reagent/ethanol/qokkloa/qokkhrona,
 												/datum/reagent/ethanol/iridast
 											)
 

@@ -40,23 +40,28 @@
 	var/obj/machinery/M = holder
 	return M.is_powered()
 
-/datum/extension/interactive/ntos/console/extension_act(href, href_list, user)
+/datum/extension/interactive/ntos/console/extension_act(href, href_list, mob/user)
 	. = ..()
 	var/obj/machinery/M = holder
-	if(istype(M) && M.clicksound && CanPhysicallyInteractWith(user, M))
-		playsound(M, M.clicksound, 40)
+	if(istype(M))
+		if (CanPhysicallyInteractWith(user, M))
+			if (M.clicksound)
+				playsound(M, M.clicksound, 40)
+			user.set_machine(M)
+		else
+			user.unset_machine(M)
 
 // Hack to make status bar work
 
-/obj/machinery/initial_data()
+/obj/machinery/initial_data(datum/computer_file/program/program)
 	. = ..()
 	var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)
 	if(os)
-		. += os.get_header_data()
+		. += os.get_header_data(program)
 
-/obj/machinery/check_eye()
+/obj/machinery/check_eye(mob/user)
 	var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)
 	if(os)
-		return os.check_eye()
+		return os.check_eye(user)
 	else
 		return ..()

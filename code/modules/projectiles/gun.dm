@@ -140,6 +140,10 @@
 	if(scope_zoom)
 		verbs += /obj/item/gun/proc/scope
 
+	if (length(firemodes))
+		var/datum/firemode/mode = firemodes[sel_mode]
+		mode.apply_to(src)
+
 /obj/item/gun/on_update_icon()
 	var/mob/living/M = loc
 	ClearOverlays()
@@ -301,7 +305,7 @@
 			pointblank = 0
 
 	//update timing
-	var/delay = max(burst_delay+1, fire_delay)
+	var/delay = max((burst_delay+1)*!can_autofire, fire_delay)
 	user.setClickCooldown(min(delay, DEFAULT_QUICK_COOLDOWN))
 	user.SetMoveCooldown(move_delay)
 	next_fire_time = world.time + delay

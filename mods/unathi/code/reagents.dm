@@ -24,7 +24,7 @@
 	var/weakness_modifier = 30
 	scannable = 1
 	metabolism = 0.05
-	ingest_met = 0.02
+	bioavailability = 0.02
 	flags = IGNORE_MOB_SIZE
 	value = 3.1
 	var/pain_power = 80 //magnitide of painkilling effect
@@ -32,20 +32,20 @@
 
 /datum/reagent/paashe/affect_blood(mob/living/carbon/M, removed)
 	var/effectiveness = 1
-	if(M.chem_doses[type] < effective_dose) //some ease-in ease-out for the effect
-		effectiveness = M.chem_doses[type]/effective_dose
+	if(M.metabolized.get_reagent_amount(type) < effective_dose) //some ease-in ease-out for the effect
+		effectiveness = M.metabolized.get_reagent_amount(type)/effective_dose
 	else if(volume < effective_dose)
 		effectiveness = volume/effective_dose
 	M.add_chemical_effect(CE_PAINKILLER, pain_power * effectiveness)
-	if(M.chem_doses[type] > 0.5 * weakness_modifier)
+	if(M.metabolized.get_reagent_amount(type) > 0.5 * weakness_modifier)
 		M.add_chemical_effect(CE_SLOWDOWN, 1)
 		if(prob(1))
 			M.slurring = max(M.slurring, 10)
-	if(M.chem_doses[type] > 0.75 * weakness_modifier)
+	if(M.metabolized.get_reagent_amount(type) > 0.75 * weakness_modifier)
 		M.add_chemical_effect(CE_SLOWDOWN, 1)
 		if(prob(5))
 			M.slurring = max(M.slurring, 20)
-	if(M.chem_doses[type] > weakness_modifier)
+	if(M.metabolized.get_reagent_amount(type) > weakness_modifier)
 		M.add_chemical_effect(CE_SLOWDOWN, 1)
 		M.slurring = max(M.slurring, 30)
 		if(prob(1))

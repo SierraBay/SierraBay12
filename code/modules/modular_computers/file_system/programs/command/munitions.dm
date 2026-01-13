@@ -13,11 +13,19 @@
 	requires_ntnet_feature = NTNET_SYSTEMCONTROL
 	required_access = access_bridge
 
+/datum/computer_file/program/munitions/syndicate
+	nanomodule_path = /datum/nano_module/program/munitions/syndicate
+	required_access = access_syndicate
+	available_on_ntnet = FALSE
+
 /datum/nano_module/program/munitions
 	name = "Munitions Control Program"
 	var/access_req = list(access_bridge)
 	var/list/monitored_munitions = list()
 	var/obj/overmap/visitable/linked = null
+
+/datum/nano_module/program/munitions/syndicate
+	access_req = list(access_syndicate)
 
 /datum/nano_module/program/munitions/New()
 	..()
@@ -41,7 +49,7 @@
 	return output
 
 /datum/nano_module/program/munitions/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
-	var/list/data = host.initial_data()
+	var/list/data = host.initial_data(program)
 	var/authenticated = check_access(user, access_req)
 
 	data["src"] = "\ref[src]"
@@ -97,14 +105,13 @@
 		return TOPIC_HANDLED
 
 	var/mob/user = usr
-	var/obj/item/card/id/user_id_card = user?.GetIdCard()
 	var/datum/nano_module/program/munitions/module = NM
 
-	if (!user_id_card || !module || !module.check_access(module.access_req))
+	if (!module?.check_access(user, module.access_req))
 		return TOPIC_NOACTION
 
 	var/obj/machinery/payload_interface/interface = locate(href_list["target"])
-	if (!istype(interface) || !module.linked || !module.linked.check_ownership(interface))
+	if (!istype(interface) || !module.linked?.check_ownership(interface))
 		return TOPIC_NOACTION
 
 	switch(href_list["action"])

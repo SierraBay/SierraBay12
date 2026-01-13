@@ -381,18 +381,15 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 
 // sensors
 
-/obj/machinery/computer/ship/sensors/normandite
-	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/sensors
-	print_language = LANGUAGE_HUMAN_RUSSIAN
+/obj/machinery/computer/modular/preset/sensors/russian/normandite
 
-/obj/machinery/computer/ship/sensors/normandite/verb/sector_info()
+/obj/machinery/computer/modular/preset/sensors/russian/normandite/verb/sector_info()
 	set name = "Scan sector"
 	set category = "Object"
 	set src in oview(1)
 	sector_scan()
 
-/obj/machinery/computer/ship/sensors/normandite/proc/sector_scan()
+/obj/machinery/computer/modular/preset/sensors/russian/normandite/proc/sector_scan()
 	var/text = "Сканирование сектора от [stationdate2text()], [stationtime2text()]<br />Обнаруженные объекты:<br />"
 
 	var/list/space_things = list()

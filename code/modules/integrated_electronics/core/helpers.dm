@@ -26,7 +26,7 @@
 	if(islist(new_data))
 		for(var/i in 1 to length(new_data))
 			if (istype(new_data) && !isweakref(new_data))
-				new_data[i] = weakref(new_data[i])
+				UNLINT(new_data[i] = weakref(new_data[i]))
 	if (istype(new_data) && !isweakref(new_data))
 		new_data = weakref(new_data)
 	var/datum/integrated_io/pin = get_pin_ref(pin_type, pin_number)
@@ -63,9 +63,9 @@
 /datum/integrated_io/proc/get_data()
 	if(islist(data))
 		for(var/i in 1 to length(data))
-			if(isweakref(data[i]))
-				var/weakref/dw = data[i]
-				data[i] = dw.resolve()
+			if(UNLINT(isweakref(data[i])))
+				UNLINT(var/weakref/dw = data[i])
+				UNLINT(data[i] = dw.resolve())
 	if(isweakref(data))
 		return data.resolve()
 	return data

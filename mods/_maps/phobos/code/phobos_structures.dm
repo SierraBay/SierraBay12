@@ -100,3 +100,31 @@
 	default_software = list(
 		/datum/computer_file/program/munitions/sol
 	)
+
+// Uniforms
+
+/obj/machinery/vending/away_phobos_uniform
+	name = "Fleet uniform dispenser"
+	desc = "A specialized vending machine with nice and fresh navy-blue clothing inside. For military personnel only."
+	icon = 'mods/_maps/sentinel/icons/obj/fleet_vendomat.dmi'
+	icon_state = "uniform_fleet"
+	icon_deny = "uniform_fleet-deny"
+	icon_vend = "uniform_fleet-vend"
+	req_access = list(access_away_phobos)
+	products = list(/obj/item/clothing/head/beret/solgov/fleet/branch/third = 15,
+					/obj/item/clothing/head/soft/solgov/fleet = 15,
+					/obj/item/clothing/head/ushanka/solgov/fleet = 15,
+					/obj/item/clothing/under/solgov/utility/fleet = 15,
+					/obj/item/clothing/under/solgov/utility/fleet/combat = 15,
+					/obj/item/clothing/under/solgov/service/fleet = 15,
+					/obj/item/clothing/under/solgov/pt/fleet = 15,
+					/obj/item/clothing/suit/storage/hooded/wintercoat/solgov/fleet = 15,
+					/obj/item/clothing/shoes/dutyboots = 15,
+					/obj/item/clothing/shoes/dress = 15,
+					/obj/item/clothing/shoes/black = 15,
+					/obj/item/clothing/gloves/thick = 15,
+					/obj/item/storage/belt/holster/security = 15,
+					/obj/item/storage/backpack/satchel/leather/navy = 15,
+					/obj/item/clothing/accessory/storage/black_drop = 15,
+					/obj/item/clothing/accessory/solgov/fleet_patch/third = 15,
+					)

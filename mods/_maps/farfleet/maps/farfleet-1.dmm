@@ -2521,7 +2521,7 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance)
 "kt" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /obj/structure/sign/double/iccgflag/right{
 	pixel_y = 32
 	},
@@ -4957,7 +4957,7 @@
 /obj/machinery/computer/modular/preset/munitions/iccg{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = -32
 	},
 /obj/structure/railing/mapped{
@@ -6322,7 +6322,7 @@
 /obj/machinery/computer/modular/preset/munitions/iccg{
 	dir = 4
 	},
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 32
 	},
 /obj/structure/railing/mapped,
@@ -6727,7 +6727,7 @@
 /obj/floor_decal/corner/darkblue/border{
 	dir = 8
 	},
-/obj/machinery/computer/ship/sensors/farfleet{
+/obj/machinery/computer/modular/preset/sensors/russian{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,

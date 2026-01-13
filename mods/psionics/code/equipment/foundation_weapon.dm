@@ -202,7 +202,7 @@
 		var/mob/living/carbon/human/H = M
 		if(!H.can_feel_pain())
 			return
-	if(M.chem_doses[type] == metabolism)
+	if(M.metabolized.get_reagent_amount(type) == metabolism)
 		to_chat(M, SPAN_DANGER("You feel like your insides are teared apart!"))
 	else
 		M.apply_damage(2 * removed, DAMAGE_BRUTE, BP_STOMACH)

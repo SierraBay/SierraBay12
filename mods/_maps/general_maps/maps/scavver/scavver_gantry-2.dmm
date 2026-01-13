@@ -2019,7 +2019,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/map_preset/scavver{
@@ -3830,7 +3830,7 @@
 /turf/simulated/floor,
 /area/scavver/yachtup)
 "FK" = (
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 8
 	},
 /obj/structure/cable{

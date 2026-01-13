@@ -16,6 +16,13 @@
 	if(IsGuestKey(user.key))
 		return 0
 
+	// [SIERRA-ADD] - На этом моменте происходил рантайм, так как по каким-то причинам usr был null. В теории это решит проблему.
+	if(!usr || usr == "the new player")
+		log_admin("CharacterSetup: [user] попытался сохранить pAI, но что-то пошло не так.")
+		return 0
+	log_debug("CharacterSetup: [user] сохраняет pAI персонажа. usr = [usr], user = [user], name_drone = [src]")
+	// [/SIERRA-ADD]
+
 	var/savefile/F = new /savefile(src.savefile_path(user))
 
 	to_save(F["name"], src.name)

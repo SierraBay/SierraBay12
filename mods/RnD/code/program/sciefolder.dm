@@ -190,7 +190,7 @@
 	return CPU.processing_power * skill_speed_modifier
 
 /datum/nano_module/program/folding/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	var/list/data = host.initial_data()
+	var/list/data = host.initial_data(program)
 	var/datum/computer_file/program/folding/PRG = program
 	PRG.operator_skill = user.get_skill_value(SKILL_COMPUTER)
 	if(!PRG.computer)

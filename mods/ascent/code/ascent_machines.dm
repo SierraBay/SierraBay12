@@ -162,22 +162,31 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
 	base_type = /obj/machinery/computer/modular/preset/helm
 
-/obj/machinery/computer/ship/navigation/ascent
+/obj/machinery/computer/modular/preset/navigation/ascent
 	icon_state = "ascent"
 	icon_keyboard = "ascent_key"
 	icon_screen = "ascent_screen"
 	req_access = list(access_ascent)
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/navigation
+	base_type = /obj/machinery/computer/modular/preset/navigation
 
-/obj/machinery/computer/ship/sensors/ascent
+/obj/machinery/computer/modular/preset/sensors/ascent
 	icon_state = "ascent"
 	icon_keyboard = "ascent_key"
 	icon_screen = "ascent_screen"
 	req_access = list(access_ascent)
-	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/sensors
+	default_software = list(
+		/datum/computer_file/program/ship/sensors/ascent
+	)
+	autorun_program = /datum/computer_file/program/ship/sensors/ascent
+
+/datum/computer_file/program/ship/sensors/ascent
+	nanomodule_path = /datum/nano_module/program/ship/sensors/ascent
+	available_on_ntnet = FALSE
+
+/datum/nano_module/program/ship/sensors/ascent
 	print_language = LANGUAGE_MANTID_VOCAL
+	modify_access_req = null
 
 /obj/machinery/computer/air_control/ascent
 	icon_state = "ascent"

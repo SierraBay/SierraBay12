@@ -1540,7 +1540,7 @@
 "hx" = (
 /obj/floor_decal/corner/yellow/diagonal,
 /obj/structure/bed/padded,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 21
 	},
 /obj/item/bedsheet/orange,
@@ -1648,7 +1648,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "ia" = (
-/obj/machinery/computer/ship/sensors/spacer,
+/obj/machinery/computer/modular/preset/sensors/spacer,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_one)
 "ic" = (
@@ -3060,7 +3060,7 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/maintenance/atmos/fuel)
 "pE" = (
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -3076,7 +3076,7 @@
 /area/ship/hand/engineering/starboard)
 "pQ" = (
 /obj/floor_decal/corner/yellow/diagonal,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 21
 	},
 /obj/structure/bed/padded,
@@ -3848,7 +3848,7 @@
 /area/ship/hand/shuttle/pod_hand_two)
 "tm" = (
 /obj/floor_decal/corner/b_green/diagonal,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 21
 	},
 /turf/simulated/floor/tiled/steel_grid,
@@ -4362,7 +4362,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/pod_hand_two)
 "vP" = (
-/obj/machinery/computer/ship/sensors/spacer{
+/obj/machinery/computer/modular/preset/sensors/spacer{
 	dir = 8
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -5398,7 +5398,7 @@
 	},
 /area/ship/hand/shuttle/tug_two)
 "AZ" = (
-/obj/machinery/computer/ship/navigation,
+/obj/machinery/computer/modular/preset/navigation,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
@@ -7631,7 +7631,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_two)
 "Mq" = (
-/obj/machinery/computer/ship/sensors/spacer,
+/obj/machinery/computer/modular/preset/sensors/spacer,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/hand/command/bridge)
@@ -8421,7 +8421,7 @@
 /area/ship/hand/crew/miner_two)
 "Qy" = (
 /obj/structure/table/rack,
-/obj/item/stock_parts/circuitboard/sensors,
+/obj/item/stock_parts/circuitboard/modular_computer,/obj/item/stock_parts/computer/hard_drive/super/helm,/obj/item/stock_parts/computer/ship_interface,
 /obj/item/stock_parts/circuitboard/pacman/super,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light/small{
@@ -8938,7 +8938,7 @@
 /area/ship/hand/command/bridge)
 "To" = (
 /obj/floor_decal/corner/yellow/diagonal,
-/obj/machinery/computer/ship/navigation/telescreen{
+/obj/item/modular_computer/telescreen/preset/navigation{
 	pixel_y = 21
 	},
 /turf/simulated/floor/steel_dirty,
@@ -9202,7 +9202,7 @@
 /turf/simulated/floor/plating,
 /area/ship/hand/engineering/port)
 "UF" = (
-/obj/machinery/computer/ship/sensors/spacer,
+/obj/machinery/computer/modular/preset/sensors/spacer,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_two)
 "UG" = (

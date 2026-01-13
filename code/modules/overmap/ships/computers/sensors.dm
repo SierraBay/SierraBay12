@@ -1,6 +1,6 @@
 #define SENSORS_STRENGTH_COEFFICIENT 7
 
-/obj/machinery/computer/ship/sensors
+/obj/machinery/computer/modular/preset/sensors
 	name = "sensors console"
 	icon_keyboard = "teleport_key"
 	icon_screen = "teleport"
@@ -20,31 +20,31 @@
 	var/sound_id
 
 
-/obj/machinery/computer/ship/sensors/proc/get_sensors()
+/obj/machinery/computer/modular/preset/sensors/proc/get_sensors()
 	var/obj/machinery/shipsensors/sensors = sensor_ref?.resolve()
 	if (!istype(sensors) || QDELETED(sensors))
 		sensor_ref = null
 	return sensors
 
 
-/obj/machinery/computer/ship/sensors/spacer
+/obj/machinery/computer/modular/preset/sensors/spacer
 	construct_state = /singleton/machine_construction/default/panel_closed/computer/no_deconstruct
-	base_type = /obj/machinery/computer/ship/sensors
+	base_type = /obj/machinery/computer/modular/preset/sensors
 	print_language = LANGUAGE_SPACER
 
 
-/obj/machinery/computer/ship/sensors/sync_linked()
+/obj/machinery/computer/modular/preset/sensors/sync_linked()
 	if (!(. = ..()))
 		return .
 	find_sensors()
 
 
-/obj/machinery/computer/ship/sensors/Process()
+/obj/machinery/computer/modular/preset/sensors/Process()
 	..()
 	update_sound()
 
 
-/obj/machinery/computer/ship/sensors/proc/update_sound()
+/obj/machinery/computer/modular/preset/sensors/proc/update_sound()
 	if (sound_off)
 		if (sound_token)
 			QDEL_NULL(sound_token)
@@ -52,7 +52,7 @@
 	if (!working_sound)
 		return
 	if (!sound_id)
-		sound_id = "[type]_[sequential_id(/obj/machinery/computer/ship/sensors)]"
+		sound_id = "[type]_[sequential_id(/obj/machinery/computer/modular/preset/sensors)]"
 	var/obj/machinery/shipsensors/sensors = get_sensors()
 	if (sensors && linked && sensors.use_power ** sensors.powered())
 		var/volume = 8
@@ -63,32 +63,32 @@
 		QDEL_NULL(sound_token)
 
 
-/obj/machinery/computer/ship/sensors/proc/state_visible(text)
+/obj/machinery/computer/modular/preset/sensors/proc/state_visible(text)
 	visible_message(SPAN_NOTICE("<b>\The [src]</b> states, \"[text]\""))
 
 
-/obj/machinery/computer/ship/sensors/proc/alert_unknown_contact(contact_id, bearing, bearing_variability)
+/obj/machinery/computer/modular/preset/sensors/proc/alert_unknown_contact(contact_id, bearing, bearing_variability)
 	if (muted)
 		return
 	state_visible("Unknown contact designation '[contact_id]' detected nearby, bearing [bearing], error +/- [bearing_variability]. Beginning trace.")
 	playsound(loc, "sound/machines/sensors/contactgeneric.ogg", 10, 1) //Let players know there's something nearby
 
 
-/obj/machinery/computer/ship/sensors/proc/alert_contact_identified(contact_name, bearing)
+/obj/machinery/computer/modular/preset/sensors/proc/alert_contact_identified(contact_name, bearing)
 	if (muted)
 		return
 	state_visible("New contact identified, designation [contact_name], bearing [bearing].")
 	playsound(loc, "sound/machines/sensors/newcontact.ogg", 30, 1)
 
 
-/obj/machinery/computer/ship/sensors/proc/alert_contact_lost(contact_name)
+/obj/machinery/computer/modular/preset/sensors/proc/alert_contact_lost(contact_name)
 	if (muted)
 		return
 	state_visible("Contact lost with [contact_name].")
 	playsound(loc, "sound/machines/sensors/contact_lost.ogg", 30, 1)
 
 
-/obj/machinery/computer/ship/sensors/proc/find_sensors()
+/obj/machinery/computer/modular/preset/sensors/proc/find_sensors()
 	if (!linked)
 		return
 	for (var/obj/machinery/shipsensors/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/shipsensors))
@@ -99,7 +99,7 @@
 			break
 
 
-/obj/machinery/computer/ship/sensors/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/machinery/computer/modular/preset/sensors/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	if (!linked)
 		display_reconnect_dialog(user, "sensors")
 		return
@@ -181,7 +181,7 @@
 		ui.set_auto_update(1)
 
 
-/obj/machinery/computer/ship/sensors/OnTopic(mob/user, list/href_list, state)
+/obj/machinery/computer/modular/preset/sensors/OnTopic(mob/user, list/href_list, state)
 	if (..())
 		return TOPIC_HANDLED
 

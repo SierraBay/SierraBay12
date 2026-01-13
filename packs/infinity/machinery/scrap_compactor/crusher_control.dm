@@ -18,7 +18,7 @@
 	var/list/status_pistons = list() //Status of the pistons
 
 /datum/nano_module/program/crushercontrol/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
-	var/list/data = host.initial_data()
+	var/list/data = host.initial_data(program)
 
 	status_pistons = list()
 	extending = 0

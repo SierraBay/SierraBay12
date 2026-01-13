@@ -531,7 +531,7 @@ SIERRA_ESCAPE_POD(11)
 	landmark_tag = "nav_transit_crucian"
 
 //Makes the deck management program use hangar access
-/datum/nano_module/deck_management
+/datum/nano_module/program/deck_management
 	default_access = list(access_hangar, access_cargo, access_heads)
 
 // away transit
