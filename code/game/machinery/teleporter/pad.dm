@@ -58,12 +58,6 @@
 		GLOB.using_map.do_interlude_teleport(teleportee, target_turf, rand(30, 120))
 		computer.set_timer()
 		return TRUE
-	//[SIERRA-ADD]
-	if(istype(teleportee, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = teleportee
-		if(!H.reagents.get_reagent(/datum/reagent/inaprovaline))
-			H.set_confused(rand(8, 20))
-	//[/SIERRA-ADD]
 	if (interference && prob(75))
 		do_unstable_teleport_safe(teleportee)
 	else

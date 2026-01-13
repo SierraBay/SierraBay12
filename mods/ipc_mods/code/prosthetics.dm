@@ -207,7 +207,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	expensive = 2
+	expensive = 1
 	speed_modifier = 0.5
 	coolingefficiency = 1
 
