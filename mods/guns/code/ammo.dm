@@ -78,7 +78,7 @@ Dragon's Breath Rounds - Shotgun
 	icon_state = "dbshell"
 	spent_icon = "dbshell-spent"
 	projectile_type = /obj/item/projectile/bullet/pellet/shotgun/dragon
-	matter = list(MATERIAL_STEEL = 360)
+	matter = list(MATERIAL_STEEL = 270, MATERIAL_PHORON = 90)
 
 /obj/item/projectile/bullet/pellet/shotgun/dragon
 	name = "incendiary pellet"
