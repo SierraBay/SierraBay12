@@ -15,8 +15,9 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/ballistics/WillContain()
 	return list(
-		/obj/item/ammo_magazine/rifle = 15,
-		/obj/item/gun/projectile/automatic/assault_rifle/heltek = 3,
+		/obj/item/ammo_magazine/rifle = 12,
+		/obj/item/gun/projectile/automatic/assault_rifle/heltek = 2,
+		/obj/item/gun/projectile/sniper/panther = 1
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/energy/WillContain()
