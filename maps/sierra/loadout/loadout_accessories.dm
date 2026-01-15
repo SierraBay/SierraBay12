@@ -154,29 +154,24 @@
 /datum/gear/accessory/cross_blue
 	display_name = "Cross blue"
 	path = /obj/item/clothing/accessory/cross_blue
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 	cost = 2
 
 /datum/gear/accessory/cross_red
 	display_name = "Cross red"
 	path = /obj/item/clothing/accessory/cross_red
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 	cost = 2
 
 /datum/gear/accessory/flower_gold
 	display_name = "Flower gold"
 	path = /obj/item/clothing/accessory/flower_gold
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 	cost = 2
 
 /datum/gear/accessory/flower_silver
 	display_name = "Flower silver"
 	path = /obj/item/clothing/accessory/flower_silver
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 	cost = 2
 
 /datum/gear/accessory/flower_bronze
 	display_name = "Flower bronze"
 	path = /obj/item/clothing/accessory/flower_bronze
-	flags = GEAR_HAS_NO_CUSTOMIZATION
 	cost = 2
