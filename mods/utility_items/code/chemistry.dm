@@ -85,7 +85,7 @@
 	description = "The famous cocktail. Coined by programmers for programmers. Made not from programmers. Where's my merge, Elar?"
 	taste_description = "sweet microchips, steel and Elar's merge"
 	color = "#3d3d3d"
-	metabolite_potency = 20
+	metabolite_potency = 2
 
 	glass_name = "github cocktail"
 	glass_desc = "The famous cocktail. Coined by programmers for programmers. Made not from programmers. Where's my merge, Elar?"
@@ -95,7 +95,7 @@
 	description = "You did it, Verhniy! Where's the Discord Nitro cocktail, though?"
 	taste_description = "Well Played Good Games and CO-OP"
 	color = "#36393f"
-	metabolite_potency = 10
+	metabolite_potency = 1.5
 
 	glass_name = "Discord cocktail"
 	glass_desc = "You did it, Verhniy! Where's the Discord Nitro cocktail, though?"
