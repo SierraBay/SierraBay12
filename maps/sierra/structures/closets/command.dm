@@ -39,7 +39,6 @@
 		/obj/item/clothing/under/rank/captain/bluefleet,
 		/obj/item/clothing/shoes/laceup,
 		/obj/item/clothing/shoes/dressheels,
-		/obj/item/device/taperecorder,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/command, /obj/item/storage/backpack/messenger/com, /obj/item/storage/backpack/satchel/com))
 	)
 
