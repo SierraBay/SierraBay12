@@ -1,0 +1,4 @@
+author: Klearch
+changes:
+  - bugfix: Протезы Dyson таярских лап теперь корректно отображаются
+delete-after: true

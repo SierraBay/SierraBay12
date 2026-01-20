@@ -42,7 +42,7 @@
 	var/width = 900
 
 /datum/nano_module/program/sudoku/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	var/list/data = host.initial_data()
+	var/list/data = host.initial_data(program)
 
 	if (!grid)
 		create_grid()
