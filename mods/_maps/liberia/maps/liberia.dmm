@@ -8196,10 +8196,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "Kv" = (
-/obj/machinery/fabricator{
-	fab_status_flags = 1
-	},
-/obj/item/storage/box/autolathe_designs,
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/liberia/engineeringlobby)
 "Lh" = (

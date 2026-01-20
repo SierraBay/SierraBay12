@@ -26,7 +26,7 @@
 	var/build_type = PROTOLATHE
 
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
-	var/obj/item/stock_parts/computer/hard_drive/portable/disk_two
+	var/obj/item/stock_parts/computer/hard_drive/portable/disk2
 
 	var/list/stored_material = list()
 	var/obj/item/reagent_containers/glass/container
@@ -48,19 +48,19 @@
 
 	var/datum/computer_file/binary/design/current_file
 	var/list/queue = list()
-	var/queue_max = 16
+	var/queue_max = 24
 
 	var/storage_capacity = 0
 	var/speed = 1
 	var/mat_efficiency = 1
 	var/max_quality = 0
 	var/fab_status_flags = 0
-	var/default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/legal	// The disk that spawns in autolathe by default
-	var/additional_disk	// Secondary disk
+	var/default_disk = null // The disk that spawns in autolathe by default
+	var/additional_disk = null // Secondary disk
 
 	// Various autolathe functions that can be disabled in subtypes
 	var/have_disk = TRUE
-	var/have_disk_two = TRUE
+	var/have_disk2 = TRUE
 	var/have_reagents = TRUE
 	var/have_materials = TRUE
 	var/have_recycling = TRUE
@@ -101,8 +101,8 @@
 	. = ..()
 	if(have_disk && default_disk)
 		disk = new default_disk(src)
-	if(have_disk_two && additional_disk)
-		disk_two = new additional_disk(src)
+	if(have_disk2 && additional_disk)
+		disk2 = new additional_disk(src)
 
 	RefreshParts()
 	update_icon()
@@ -149,7 +149,7 @@
 	var/list/data = list()
 
 	data["have_disk"] = have_disk
-	data["have_disk_two"] = have_disk_two
+	data["have_disk2"] = have_disk2
 	data["have_reagents"] = have_reagents
 	data["have_materials"] = have_materials
 	data["have_design_selector"] = have_design_selector
@@ -167,10 +167,10 @@
 			"read_only" = disk.read_only
 		)
 
-	if(disk_two && have_disk_two)
-		data["disk_two"] = list(
-			"name" = disk_two.get_disk_name(),
-			"read_only" = disk_two.read_only
+	if(disk2 && have_disk2)
+		data["disk2"] = list(
+			"name" = disk2.get_disk_name(),
+			"read_only" = disk2.read_only
 		)
 
 
@@ -276,7 +276,7 @@
 			insert_disk(user, I)
 			return
 		else
-			insert_disk_two(user, I)
+			insert_disk2(user, I)
 			return
 
 	// Some item types are consumed by default
@@ -329,11 +329,11 @@
 			insert_disk(usr)
 		return TRUE
 
-	if(href_list["disk_two"])
-		if(disk_two)
-			eject_disk_two(usr)
+	if(href_list["disk2"])
+		if(disk2)
+			eject_disk2(usr)
 		else
-			insert_disk_two(usr)
+			insert_disk2(usr)
 		return TRUE
 
 	if(href_list["container"])
@@ -454,30 +454,30 @@
 	to_chat(user, SPAN_NOTICE("You insert \the [inserted_disk] into [src]."))
 	SSnano.update_uis(src)
 
-/obj/machinery/fabricator/proc/insert_disk_two(mob/living/user, obj/item/stock_parts/computer/hard_drive/portable/inserted_disk_two)
-	if(!inserted_disk_two && istype(user))
-		inserted_disk_two = user.get_active_hand()
+/obj/machinery/fabricator/proc/insert_disk2(mob/living/user, obj/item/stock_parts/computer/hard_drive/portable/inserted_disk2)
+	if(!inserted_disk2 && istype(user))
+		inserted_disk2 = user.get_active_hand()
 
-	if(!istype(inserted_disk_two))
+	if(!istype(inserted_disk2))
 		return
 
-	if(!Adjacent(user) && !Adjacent(inserted_disk_two))
+	if(!Adjacent(user) && !Adjacent(inserted_disk2))
 		return
 
-	if(!have_disk_two)
+	if(!have_disk2)
 		to_chat(user, SPAN_WARNING("[src] has no slot B for a data disk."))
 		return
 
-	if(disk_two)
-		to_chat(user, SPAN_NOTICE("There's already \a [disk_two] inside slot B of [src]."))
+	if(disk2)
+		to_chat(user, SPAN_NOTICE("There's already \a [disk2] inside slot B of [src]."))
 		return
 
-	if(istype(user) && (inserted_disk_two in user))
-		user.unEquip(inserted_disk_two, src)
+	if(istype(user) && (inserted_disk2 in user))
+		user.unEquip(inserted_disk2, src)
 
-	inserted_disk_two.forceMove(src)
-	disk_two = inserted_disk_two
-	to_chat(user, SPAN_NOTICE("You insert \the [inserted_disk_two] into slot B of [src]."))
+	inserted_disk2.forceMove(src)
+	disk2 = inserted_disk2
+	to_chat(user, SPAN_NOTICE("You insert \the [inserted_disk2] into slot B of [src]."))
 	SSnano.update_uis(src)
 
 /obj/machinery/fabricator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/beaker)
@@ -548,8 +548,8 @@
 	disk = null
 
 //This proc ejects the autolathe disk, but it also does some DRM fuckery to prevent exploits
-/obj/machinery/fabricator/proc/eject_disk_two(mob/living/user)
-	if(!disk_two)
+/obj/machinery/fabricator/proc/eject_disk2(mob/living/user)
+	if(!disk2)
 		return
 
 	var/list/design_list_two = design_list_two()
@@ -567,9 +567,9 @@
 
 	//Digital Rights have been successfully managed. The corporations win again.
 	//Now they will graciously allow you to eject the disk
-	disk_two.forceMove(get_turf(src))
-	to_chat(usr, SPAN_NOTICE("You remove \the [disk_two] from slot B of \the [src]."))
-	disk_two = null
+	disk2.forceMove(get_turf(src))
+	to_chat(usr, SPAN_NOTICE("You remove \the [disk2] from slot B of \the [src]."))
+	disk2 = null
 
 /obj/machinery/fabricator/AltClick(mob/living/user)
 	if(user.incapacitated())
@@ -577,8 +577,8 @@
 		return
 	if(!in_range(src, user))
 		return
-	if(disk_two)
-		src.eject_disk_two(user)
+	if(disk2)
+		src.eject_disk2(user)
 	src.eject_disk(user)
 
 /obj/machinery/fabricator/proc/eat(mob/living/user, obj/item/eating)
@@ -711,10 +711,10 @@
 	return disk.find_files_by_type(/datum/computer_file/binary/design)
 
 /obj/machinery/fabricator/proc/design_list_two()
-	if(!disk_two)
+	if(!disk2)
 		return saved_designs
 
-	return disk_two.find_files_by_type(/datum/computer_file/binary/design)
+	return disk2.find_files_by_type(/datum/computer_file/binary/design)
 
 /obj/machinery/fabricator/proc/icon_off()
 	if(stat & MACHINE_STAT_NOPOWER)
@@ -1050,7 +1050,7 @@
 /obj/machinery/fabricator/micro/bartender
 	name = "Bartender Microlathe"
 	default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/drinking
-	have_disk_two = FALSE
+	have_disk2 = FALSE
 
 #undef ERR_OK
 #undef ERR_NOTFOUND

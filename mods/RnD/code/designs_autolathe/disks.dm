@@ -46,6 +46,20 @@
 		/datum/design/autolathe/arms_ammo/hidden/shotgun_flechette,
 		)
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/exloration
+	name = "Expeditionary Designs"
+	icon_state = "moebius"
+	designs = list(
+		/datum/design/autolathe/arms_ammo,
+		/datum/design/autolathe/arms_ammo/net_shell,
+		/datum/design/autolathe/arms_ammo/shotgun_holder,
+		/datum/design/autolathe/arms_ammo/shotgun_blanks,
+		/datum/design/autolathe/arms_ammo/flaregun,
+		/datum/design/autolathe/arms_ammo/hidden,
+		/datum/design/autolathe/arms_ammo/hidden/shotgun,
+		/datum/design/autolathe/arms_ammo/shotgun_flash,
+		)
+
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/general
 	name = "General Designs"
@@ -246,20 +260,6 @@
 		/datum/design/autolathe/tool/welder_industrial,
 		/datum/design/autolathe/tool/designator,
 		)
-
-/obj/item/stock_parts/computer/hard_drive/portable/design/legal
-	name = "Corporate Approved Designs"
-	icon_state = "onestar"
-	desc = "Data disk used to store autolathe designs. This one is fairly heavy."
-
-/obj/item/stock_parts/computer/hard_drive/portable/design/legal/Initialize(mapload)
-	designs.Cut()
-	for(var/subtype in subtypesof(/datum/design/autolathe))
-		var/datum/design/autolathe/D = subtype
-		if(!initial(D.hidden))
-			designs += D
-	. = ..()
-
 
 /obj/item/storage/box/autolathe_designs
 	name = "box of basic autolathe designs"

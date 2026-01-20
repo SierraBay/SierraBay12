@@ -2348,10 +2348,7 @@
 	},
 /area/centcom/specops)
 "aqf" = (
-/obj/machinery/fabricator{
-	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
-	name = "unlocked autolathe"
-	},
+/obj/machinery/fabricator/hacked,
 /obj/floor_decal/borderfloorblack{
 	dir = 1
 	},
@@ -8987,7 +8984,7 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 1
 	},
-/obj/machinery/fabricator,
+/obj/machinery/fabricator/hacked,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
@@ -10403,7 +10400,7 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/fabricator,
+/obj/machinery/fabricator/hacked,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/flooring/tiles.dmi';
 	icon_state = "white"
