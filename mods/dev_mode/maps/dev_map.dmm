@@ -39,6 +39,10 @@
 /obj/item/gun/magnetic/railgun/tc,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"ieF" = (
+/obj/structure/closet/coffin/wooden,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "jjy" = (
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/titan_water/middle,
@@ -491,7 +495,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ieF
 cpC
 uzJ
 "}

@@ -203,7 +203,7 @@
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()
 
-
+/*
 
 /mob/living/carbon/human/use_tool(obj/item/W, mob/living/user)
 	. = ..()
@@ -239,7 +239,7 @@
 			s.shackles_module.ui_interact()
 			if(prob(20))
 				s.damage += s.min_bruised_damage
-
+*/
 
 #undef SCREEN_CHANGE_BUTTON
 #undef EXONET_ACTION_NAME

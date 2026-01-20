@@ -85,7 +85,7 @@ GLOBAL_LIST_AS(cable_default_colors, list(
 			icon_state = "coil"
 			SetName(initial(name))
 
-
+/* [SIEERA-REMOVE] IPC MODS
 /obj/item/stack/cable_coil/use_after(mob/living/carbon/human/target, mob/living/user)
 	if (!istype(target))
 		return FALSE
@@ -107,7 +107,7 @@ GLOBAL_LIST_AS(cable_default_colors, list(
 	if (organ.robo_repair(3 * use_amount, DAMAGE_BURN, "some damaged wiring", src, user))
 		use(use_amount)
 		return TRUE
-
+*/
 
 /obj/item/stack/cable_coil/attack_self(mob/living/user)
 	var/list/radial = list()

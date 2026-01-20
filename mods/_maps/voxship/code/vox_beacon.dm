@@ -100,7 +100,7 @@
 	return TRUE
 
 /obj/structure/voxuplink/vox_ship/attack_hand(mob/living/carbon/human/user)
-	if(!istype(user, /mob/living/carbon/human/vox))
+	if(!istype(user, SPECIES_VOX))
 		to_chat(user, SPAN_WARNING("You don't know what to do with \the [src.name]."))
 		return
 	if(working)

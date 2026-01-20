@@ -1224,6 +1224,9 @@
 	species = GLOB.species_by_name[new_species]
 	species.handle_pre_spawn(src)
 
+	if (length(species.traits))
+		traits = species.traits.Copy()
+
 	if(species.grab_type)
 		current_grab_type = all_grabobjects[species.grab_type]
 

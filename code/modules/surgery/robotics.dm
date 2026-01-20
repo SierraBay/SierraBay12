@@ -183,6 +183,7 @@
 //////////////////////////////////////////////////////////////////
 //	robotic limb brute damage repair surgery step
 //////////////////////////////////////////////////////////////////
+/* [SIERRA-REMOVE] IPC MODS
 /singleton/surgery_step/robotics/repair_brute
 	name = "Repair damage to prosthetic"
 	allowed_tools = list(
@@ -248,6 +249,7 @@
 	user.visible_message(SPAN_WARNING("[user]'s [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."),
 	SPAN_WARNING("Your [tool.name] slips, damaging the internal structure of [target]'s [affected.name]."))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
+*/
 
 //////////////////////////////////////////////////////////////////
 //	robotic limb brittleness repair surgery step
@@ -294,6 +296,7 @@
 //////////////////////////////////////////////////////////////////
 //	robotic limb burn damage repair surgery step
 //////////////////////////////////////////////////////////////////
+/* [SIERRA-REMOVE] IPC MODS
 /singleton/surgery_step/robotics/repair_burn
 	name = "Repair burns on prosthetic"
 	allowed_tools = list(
@@ -353,7 +356,7 @@
 	user.visible_message(SPAN_WARNING("[user] causes a short circuit in [target]'s [affected.name]!"),
 	SPAN_WARNING("You cause a short circuit in [target]'s [affected.name]!"))
 	target.apply_damage(rand(5,10), DAMAGE_BURN, affected)
-
+*/
 //////////////////////////////////////////////////////////////////
 //	 artificial organ repair surgery step
 //////////////////////////////////////////////////////////////////

@@ -38,7 +38,7 @@
 
 /datum/nano_module/program/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
-	var/is_admin = emagged || check_access(user, admin_access)
+	var/is_admin = emagged || check_access(user, admin_access) || istype(user, /mob/living/silicon/ai)
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
 	if(!LAZYLEN(category_names) || !LAZYLEN(category_contents) || current_security_level != security_state.current_security_level || emagged_memory != emagged )
 		generate_categories()
@@ -54,7 +54,8 @@
 	data["currency"] = GLOB.using_map.local_currency_name
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
 	os = get_extension(nano_host(), /datum/extension/interactive/ntos)
-	card_slot = os.get_component(PART_CARD)
+	if(os)
+		card_slot = os.get_component(PART_CARD)
 	card_inserted = FALSE
 	if(card_slot)
 		if(card_slot.stored_card)
