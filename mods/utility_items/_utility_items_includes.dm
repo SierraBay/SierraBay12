@@ -63,4 +63,5 @@
 #include "code/stairs.dm"
 #include "code/lang_tweak.dm"
 #include "code/ghost_medscan.dm"
+#include "code/taizer.dm"
 #endif
