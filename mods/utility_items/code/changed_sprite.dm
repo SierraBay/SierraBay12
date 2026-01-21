@@ -34,3 +34,6 @@
 
 /datum/category_item/underwear/undershirt/dress_shirt
 	icon = 'mods/utility_items/icons/chebukek.dmi'
+
+/obj/item/clothing/under/formal/chain_with_shirt
+	icon = 'mods/utility_items/icons/uniform.dmi'
