@@ -179,5 +179,5 @@
 	build_path = /obj/item/ammo_casing/battery/medium
 
 /datum/design/autolathe/arms_ammo/hidden/electrode_high
-	name = "ammunition (medium electrode)"
-	build_path = /obj/item/ammo_casing/battery/medium
+	name = "ammunition (high electrode)"
+	build_path = /obj/item/ammo_casing/battery/high
