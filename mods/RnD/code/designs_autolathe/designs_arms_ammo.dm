@@ -169,3 +169,15 @@
 /datum/design/autolathe/arms_ammo/hidden/shotgun_flechette
 	name = "ammunition (flechette shotgun)"
 	build_path = /obj/item/ammo_casing/shotgun/flechette
+
+/datum/design/autolathe/arms_ammo/hidden/electrode_low
+	name = "ammunition (low electrode)"
+	build_path = /obj/item/ammo_casing/battery
+
+/datum/design/autolathe/arms_ammo/hidden/electrode_medium
+	name = "ammunition (medium electrode)"
+	build_path = /obj/item/ammo_casing/battery/medium
+
+/datum/design/autolathe/arms_ammo/hidden/electrode_high
+	name = "ammunition (medium electrode)"
+	build_path = /obj/item/ammo_casing/battery/medium
