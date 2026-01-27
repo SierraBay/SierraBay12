@@ -4280,7 +4280,6 @@
 /obj/machinery/fabricator/hacked{
 	stored_material = list(/material/steel = 25000,/material/aluminium = 25000,/material/glass = 12500,/material/plastic = 12500)
 	},
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/shuttle/armory)
 "Ab" = (
@@ -8026,7 +8025,6 @@
 /obj/machinery/fabricator/hacked{
 	stored_material = list(/material/steel = 25000,/material/aluminium = 25000,/material/glass = 12500,/material/plastic = 12500)
 	},
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
 "Xb" = (

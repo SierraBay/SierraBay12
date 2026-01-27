@@ -260,11 +260,10 @@
 	dir = 8
 	},
 /obj/structure/table/standard,
-/obj/machinery/fabricator/micro/bartender{
+/obj/machinery/fabricator/micro/loaded{
 	pixel_y = 4;
 	pixel_x = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/crew/canteen)
 "cz" = (
@@ -1022,9 +1021,8 @@
 /obj/item/stock_parts/circuitboard/helm,
 /obj/item/stock_parts/circuitboard/modular_computer,
 /obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,,
-/obj/item/stock_parts/circuitboard/nav,
-/obj/item/stock_parts/circuitboard/nav,
+/obj/item/stock_parts/computer/ship_interface,
+,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/farfleet/maintenance/storage)
@@ -1406,7 +1404,6 @@
 	desc = "Your typical Special Forces Autolathe.";
 	name = "Autolathe"
 	},
-/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light,
 /turf/simulated/floor/tiled/dark/monotile,

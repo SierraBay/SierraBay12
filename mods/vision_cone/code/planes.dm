@@ -45,3 +45,6 @@
 
 /image/hud_overlay
 	plane = GAME_PLANE_FOV_HIDDEN
+
+/obj/structure/flora/pottedplant
+	plane = GAME_PLANE_FOV_HIDDEN

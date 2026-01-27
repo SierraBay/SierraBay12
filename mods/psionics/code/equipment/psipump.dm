@@ -57,6 +57,7 @@
 /datum/design/autolathe/arms_ammo/psipump
 	name = "Psi-pump"
 	build_path = /obj/item/clothing/head/helmet/psipump
+	hidden = TRUE
 
 // WITH CRYSTAL
 /obj/item/clothing/head/helmet/psipump/active

@@ -239,21 +239,21 @@
 		residence = "Unset"
 	switch(human.psi?.rating)
 		if(0)
-			use_rating = "Child of Abyss, which means, he not even a psionic or enlightened"
+			use_rating = "Отщепенец. Он даже не знает что у него написано в карте."
 		if(1)
-			use_rating = "Neophyte. Probably, latent user."
+			use_rating = "Неофит, скорее всего он еще не пробужден."
 		if(2)
-			use_rating = "Zealot, beginner user of psionic, probably an apperentice"
+			use_rating = "Ревнитель. Он еще не переступил Первую Ступень, ему уже не нужен наставник."
 		if(3)
-			use_rating = "Practicus, practical user of psionic, probably an operant"
+			use_rating = "Младший Адепт. Это полноценный посвященный Ассамблеи."
 		if(4)
-			use_rating = "Adept. Probably, master of some discipline"
+			use_rating = "Старший Адепт. Скорее всего это известный и уважаемый наставник первых ступеней."
 		if(5)
-			use_rating = "Magician. You feel strong energy inside"
+			use_rating = "Эпопт или Поборник. Великий мастер."
 		if (6 to INFINITY)
-			use_rating = "Accomplished, and is truly ascended"
+			use_rating = "Оракул. Царь над царями, член Оракульства."
 		else
-			use_rating = "Child of Abyss, which means, he not even a psionic or enlightened"
+			use_rating = "Отщепенец. Он даже не знает что у него написано в карте."
 
 	info = {"\
 		Assigned to: [human.real_name]\n\
@@ -277,9 +277,9 @@
 	if(closed)
 		. = ..()
 	else
-		to_chat(user, info || SPAN_WARNING("\The [src] is completely blank!"))
+		to_chat(user, info || SPAN_WARNING("[src] пуста!"))
 		if(user.psi)
-			to_chat(user, SPAN_DANGER("As a psionic, your mind was penetrated by encoded message, that imply, that owner of this card is a [use_rating]"))
+			to_chat(user, SPAN_DANGER("Ты видишь незримое для непробужденного, тебе становится ясно что носитель [use_rating]"))
 
 /obj/item/card/assamblee_card/on_update_icon()
 	if(!closed)

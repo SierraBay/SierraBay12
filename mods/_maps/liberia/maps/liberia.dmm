@@ -6923,7 +6923,6 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /obj/floor_decal/spline/fancy/wood,
 /turf/simulated/floor/carpet/red,
 /area/liberia/traidingroom)
@@ -8197,10 +8196,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "Kv" = (
-/obj/machinery/fabricator{
-	fab_status_flags = 1
-	},
-/obj/item/storage/box/autolathe_designs,
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/liberia/engineeringlobby)
 "Lh" = (

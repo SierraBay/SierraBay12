@@ -143,6 +143,7 @@ GLOBAL_LIST_AS(build_path_to_design_datum_path, populate_design_datum_index())
 
 /datum/design/autolathe/
 	build_type = PROTOLATHE			// From now on autolathe capable printing protolathe designs
+	var/hidden = FALSE 				// If design deemed to be too dangerous
 
 /datum/design/autolathe/New()
 	. = ..()

@@ -147,11 +147,13 @@
 
 	var/mob/living/H = holder.wearer
 
-	H.visible_message(SPAN_DANGER("[H] закидывает голову назад, издавая пронзительный крик!"))
+	H.visible_message(SPAN_DANGER("Из динамиков [H] издаётся неописуемый визг!"))
 	to_chat(H, SPAN_DANGER("Вы издаёте пронзительный крик, оглушая всех вокруг!"))
 	for(var/mob/living/M in range(4))
 		if(M == H)
 			continue
+		if(M.disrupts_psionics())
+			return
 		if(prob(3 * 20) && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(C.can_feel_pain())
@@ -206,6 +208,7 @@
 		return
 
 	var/obj/item/material/armblade/claws/blade = new(M)
+	blade.canremove = FALSE
 	M.put_in_hands(blade)
 
 	if(!..())

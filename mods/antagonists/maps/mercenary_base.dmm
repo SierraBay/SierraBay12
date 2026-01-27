@@ -1293,7 +1293,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/item/stack/material/steel/ten,
 /obj/item/stack/material/steel/ten,
