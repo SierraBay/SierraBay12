@@ -44,6 +44,23 @@
 
 	unlocks_designs = list("rig_meson","rig_medhud","rig_sechud","rig_healthscanner","rig_drill", "rig_orescanner","rig_anomaly_scanner","rig_flash")
 
+
+/datum/technology/robo/advanced_repairs_robo
+	name = "Advanced Repairs"
+	desc = "Advanced Repairs"
+	id = "advanced_repairs"
+	tech_type = RESEARCH_MAGNETS
+
+	x = 0.2
+	y = 0.3
+	icon = "roboscanner"
+
+	required_technologies = list(/datum/technology/robo)
+	required_tech_levels = list()
+	cost = 2500
+
+	unlocks_designs = list("integrity_repair_tool", "integrity_repair_tool_tank", "prosthetic_wiring_layerer")
+
 /datum/technology/robo/loader_mech
 	name = "Basic Mech Designs"
 	desc = "Basic Mech Designs"

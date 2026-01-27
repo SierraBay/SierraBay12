@@ -3,9 +3,10 @@
 	var/siemens_coefficient		//чем больше, тем хуже
 	var/speed_modifier = 0
 	var/coolingefficiency = 0.5 // это база // меньше лучше
-	var/expensive = FALSE
+	var/expensive = 0 ///// 0 - бюджет протезы, 1 - нормальные, 2 - дорогие
 	var/addmax_damage
 	var/addmin_broken_damage
+	var/have_synth_skin = FALSE
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -18,7 +19,9 @@
 
 /obj/item/organ/external
 	var/coolingefficiency
-	var/expensive = FALSE
+	var/expensive = 0
+	var/have_synth_skin = FALSE
+	var/synth_skin_health
 
 /mob/living/carbon/human/get_armors_by_zone(obj/item/organ/external/def_zone, damage_type, damage_flags)
 	if(!def_zone)
@@ -84,6 +87,9 @@
 		max_damage = max_damage +  R.addmax_damage
 		min_broken_damage = min_broken_damage +  R.addmin_broken_damage
 		set_extension(src, /datum/extension/armor, armor)
+		have_synth_skin = R.have_synth_skin
+		if(have_synth_skin)
+			synth_skin_health = max_damage
 
 	for(var/obj/item/organ/external/T in children)
 		T.robotize(company, 1)
@@ -129,7 +135,7 @@
 	)
 	speed_modifier = - 0.3
 	coolingefficiency = 0.3
-	expensive = TRUE
+	expensive = 2
 
 /datum/robolimb/bishop/rook
 	company = "Bishop Rook"
@@ -148,6 +154,7 @@
 	)
 	speed_modifier = - 0.2
 	coolingefficiency = 0.4
+	expensive = 2
 
 /datum/robolimb/bishop/alt
 	company = "Bishop Alt."
@@ -200,7 +207,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
-	expensive = TRUE
+	expensive = 1
 	speed_modifier = 0.5
 	coolingefficiency = 1
 
@@ -230,6 +237,8 @@
 	)
 	coolingefficiency = 0.4
 	siemens_coefficient = 0.8
+	have_synth_skin = TRUE
+	expensive = 2
 
 
 /datum/robolimb/zenghu/spirit
@@ -248,6 +257,7 @@
 	)
 	speed_modifier = - 0.3
 	coolingefficiency = 0.4
+	expensive = 1
 
 /datum/robolimb/xion
 	company = "Xion"
@@ -428,7 +438,7 @@
 	unavailable_at_fab = 1
 	has_eyes = FALSE
 	allowed_bodytypes = list(SPECIES_IPC)
-	has_screen = TRUE
+	has_screen = 2
 
 /datum/robolimb/veymed
 	company = "Vey-Med"
@@ -437,7 +447,8 @@
 	can_eat = 1
 	skintone = 1
 	unavailable_at_fab = 1
-	expensive = TRUE
+	expensive = 2
+	have_synth_skin = TRUE
 	species_cannot_use = list(SPECIES_IPC)
 
 /datum/robolimb/shellguard

@@ -67,7 +67,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	pref.body_markings = R.read("body_markings")
 	pref.body_descriptors = R.read("body_descriptors")
 	pref.picked_traits = R.read("traits")
-	pref.picked_traits = sanitize_trait_prefs(pref.picked_traits, R.get_version())
+	pref.picked_traits = sanitize_trait_prefs(pref.picked_traits, R.get_version(), pref.species)
 
 
 /datum/category_item/player_setup_item/physical/body/save_character(datum/pref_record_writer/W)
@@ -481,6 +481,10 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["marking_style"])
 		var/list/disallowed_markings = list()
+		//[SIERRA-ADD]
+		var/list/robo_limbs = list()
+		var/list/prosthetic_temp = list()
+		//[//SIERRA-ADD]
 		for (var/M in pref.body_markings)
 			var/datum/sprite_accessory/marking/mark_style = GLOB.body_marking_styles_list[M]
 			disallowed_markings |= mark_style.disallows
@@ -489,11 +493,38 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			var/datum/sprite_accessory/S = usable_markings[M]
 			if(is_type_in_list(S, disallowed_markings) || (S.species_allowed && !(mob_species.get_bodytype() in S.species_allowed)) || (S.subspecies_allowed && !(mob_species.name in S.subspecies_allowed)))
 				usable_markings -= M
+		//[SIERRA-ADD/EDIT]
+		for(var/P in pref.organ_data)
+			if(pref.organ_data[P] == "cyborg")
+				robo_limbs += P
 
-		var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
-		if(new_marking && CanUseTopic(user))
-			pref.body_markings[new_marking] = "#000000" //New markings start black
-			return TOPIC_REFRESH_UPDATE_PREVIEW
+		if(LAZYLEN(robo_limbs))
+			var/option = alert("Select which type of bodymarks?", "select", "Flesh", "Robotic")
+			switch(option)
+				if("Flesh")
+					var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
+					if(new_marking && CanUseTopic(user))
+						pref.body_markings[new_marking] = "#000000" //New markings start black
+				if("Robotic")
+					if(LAZYLEN(robo_limbs))
+						var/bodypart = input(user, "Body Part for marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in robo_limbs
+						var/sorted
+						if(bodypart && CanUseTopic(user))
+							for(var/M in GLOB.body_marking_styles_list)
+								var/datum/sprite_accessory/marking/mark_style = GLOB.body_marking_styles_list[M]
+								if(mark_style.robo_paints == TRUE && !(M in prosthetic_temp))
+									if(bodypart in mark_style.body_parts)
+										LAZYADD(sorted, M)
+						var/new_robo_marking = input(user, "Choose marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in sorted
+						if(new_robo_marking && CanUseTopic(user))
+							pref.body_markings[new_robo_marking] = "#000000"
+		else
+			var/new_marking = input(user, "Choose a body marking:", CHARACTER_PREFERENCE_INPUT_TITLE)  as null|anything in usable_markings
+			if(new_marking && CanUseTopic(user))
+				pref.body_markings[new_marking] = "#000000" //New markings start black
+
+		return TOPIC_REFRESH_UPDATE_PREVIEW
+		//[/SIERRA-ADD/EDIT]
 
 	else if(href_list["marking_remove"])
 		var/M = href_list["marking_remove"]
@@ -509,6 +540,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 	else if(href_list["reset_limbs"])
 		reset_limbs()
+		pref.body_markings.Cut() //[SIERRA-ADD
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["limbs"])
@@ -703,10 +735,7 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 		if (!selected || !istype(selected))
 			return
 
-		if (selected.maximum_count && length(pref.picked_traits[selected.type]) >= selected.maximum_count)
-			to_chat(usr, SPAN_WARNING("\The [selected.name] trait can only be selected [selected.maximum_count] times."))
-			return
-
+		var/remaining_budget = mob_species.trait_budget
 		for (var/existing_type as anything in pref.picked_traits)
 			var/singleton/trait/existing_trait = GET_SINGLETON(existing_type)
 			if (!existing_trait || !istype(existing_trait))
@@ -715,7 +744,23 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 				to_chat(usr, SPAN_WARNING("\The [selected.name] trait is incompatible with [existing_trait.name]."))
 				return
 
+			///This snippet handles calculating remaining budget.
+			if (length(existing_trait.metaoptions))
+				var/list/ex_metaoptions = pref.picked_traits[existing_trait.type]
+				for (var/metaoption in ex_metaoptions)
+					remaining_budget -= existing_trait.GetCost(metaoption)
+			else
+				remaining_budget -= existing_trait.GetCost()
+
 		var/list/possible_levels = selected.levels
+		if (selected.type in mob_species.traits)
+			var/minimum_level = mob_species.traits[selected.type]
+			var/cut = possible_levels.Find(minimum_level)
+			if (cut >= length(possible_levels)) //get_selectable_traits() already weeded out traits where Cut(1, cut + 1) returns an out of bound error. This is just for safety.
+				crash_with("Tried to cause an out of bounds error. ")
+				return
+			possible_levels.Cut(1, cut + 1)
+
 		var/selected_level
 		if (length(possible_levels) > 1)
 			var/list/letterized_levels
@@ -727,16 +772,24 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			selected_level = letterized_levels[letterized_input]
 		else
 			selected_level = possible_levels[1]
+			to_chat(usr, SPAN_NOTICE ("The only level available for this trait is [LetterizeSeverity(selected_level)]."))
 
 		var/additional_data
 		if (length(selected.metaoptions))
 			var/list/sanitized_metaoptions
 			for (var/atom/option as anything in selected.metaoptions)
-				var/named_option = initial(option.name)
+				var/cost = isnull(selected.metaoptions[option]) ? selected.budget_cost : selected.metaoptions[option]
+				var/named_option = initial(option.name) + " ([cost])"
 				LAZYSET(sanitized_metaoptions, named_option, option)
 
-			var/additional_input = input(user, "[selected.addprompt]", "Select Option") as null | anything in sanitized_metaoptions
+			var/additional_input = input(user, "[selected.addprompt]", "Select Option") as null | anything in sortAssoc(sanitized_metaoptions)
+			if (!additional_input)
+				return
 			additional_data = sanitized_metaoptions[additional_input]
+
+		if (selected.GetCost(additional_data) && remaining_budget - selected.GetCost(additional_data) < 0)
+			to_chat(usr, SPAN_WARNING("\The [selected.name] trait cannot be selected as it costs [selected.GetCost(additional_data)] and the remaining trait budget is [remaining_budget]."))
+			return
 
 		if (additional_data)
 			var/list/interim = list()
