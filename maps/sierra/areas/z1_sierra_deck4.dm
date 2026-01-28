@@ -108,16 +108,6 @@
 	icon_state = "primarystorage"
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
-/area/storage/auxillary/port
-	name = "Fourth Deck - Supply - Auxillary Warehouse"
-	icon_state = "auxstorage"
-	req_access = list(access_cargo)
-	holomap_color = HOLOMAP_AREACOLOR_CARGO
-/area/storage/airlock_canisters
-	name = "Fourth Deck - Supply - Central Airlock's Canisters"
-	req_access = list(list(access_cargo, access_engine))
-	holomap_color = HOLOMAP_AREACOLOR_CARGO
-
 // Thusters
 /area/thruster/d3port
 	name = "Fourth Deck - Nacelle - Port"
