@@ -132,6 +132,6 @@
 
 /obj/item/gun/energy/plasmastun
 	item_icons = list(
-		slot_l_hand_str = 'mods/guns/icons/lefthand_plasmastun.dmi',
-		slot_r_hand_str = 'mods/guns/icons/righthand_plasmastun.dmi'
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_plasmastun.dmi',
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_plasmastun.dmi'
 		)
