@@ -493,7 +493,7 @@ SIERRA_ESCAPE_POD(11)
 	landmark_transition = "nav_transit_phaethon"
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
-	fuel_consumption = 4
+	fuel_consumption = 5
 	logging_home_tag = "nav_hangar_phaethon"
 	logging_access = access_sec_doors
 	skill_needed = SKILL_UNSKILLED

@@ -83,7 +83,7 @@
 /obj/overmap/visitable/ship/landable/phaethon
 	name = "Phaethon"
 	shuttle = "Phaethon"
-	max_speed = 1/(3 SECONDS)
+	max_speed = 1/(2 SECONDS)
 	burn_delay = 0.4 SECONDS
 	vessel_mass = 350
 	fore_dir = WEST
