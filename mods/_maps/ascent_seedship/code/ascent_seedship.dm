@@ -24,7 +24,7 @@
 	desc = "Wake signature indicates a small to medium sized vessel of unknown design."
 	vessel_mass = 6500
 	fore_dir = WEST
-	max_speed = 0.6/(1 SECOND)
+	max_speed = 1/(1 SECOND)
 	hide_from_reports = TRUE
 	initial_restricted_waypoints = list(
 		"Trichopterax" = list("nav_hangar_ascent_inf_one"),

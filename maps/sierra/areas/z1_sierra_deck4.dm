@@ -1,7 +1,6 @@
 /area/hallway/primary/fourthdeck/fore
 	name = "Fourth Deck - Hallway - Fore"
 	icon_state = "hallF"
-	req_access = list(list(access_engine, access_medical, access_security))
 	holomap_color = HOLOMAP_AREACOLOR_HALLWAYS
 
 /area/hallway/primary/fourthdeck/center
@@ -56,18 +55,37 @@
 	icon_state = "disposal"
 	req_access = list(list(access_cargo, access_engine, access_el))
 
-/area/crew_quarters/visitors
-	name = "Fourth Deck - Visitors"
+/area/crew_quarters/garden
+	name = "Fourth Deck - Garden"
+	lighting_tone = AREA_LIGHTING_COOL
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/area/crew_quarters/commissary
-	name = "Fourth Deck - Commissary"
+/area/crew_quarters/dockinghallfore
+	name = "Fourth Deck - Fore - Docking Hallway"
 	icon_state = "crew_quarters"
-	req_access = list(access_commissary)
+	lighting_tone = AREA_LIGHTING_COOL
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/area/crew_quarters/docking
-	name = "Fourth Deck - Docking Bay"
+/area/crew_quarters/dockinghallstarboard
+	name = "Fourth Deck - Starboard - Docking Hallway"
+	icon_state = "crew_quarters"
+	lighting_tone = AREA_LIGHTING_COOL
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+
+/area/crew_quarters/dockinghallport
+	name = "Fourth Deck - Port - Docking Hallway"
+	icon_state = "crew_quarters"
+	lighting_tone = AREA_LIGHTING_COOL
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+
+/area/crew_quarters/dockingstarboard
+	name = "Fourth Deck - Starboard - Docking Waiting Area"
+	icon_state = "crew_quarters"
+	lighting_tone = AREA_LIGHTING_COOL
+	holomap_color = HOLOMAP_AREACOLOR_CREW
+
+/area/crew_quarters/dockingport
+	name = "Fourth Deck - Port - Docking Waiting Area"
 	icon_state = "crew_quarters"
 	lighting_tone = AREA_LIGHTING_COOL
 	holomap_color = HOLOMAP_AREACOLOR_CREW
@@ -88,16 +106,6 @@
 /area/storage/primary
 	name = "Fourth Deck - Primary Tool Storage"
 	icon_state = "primarystorage"
-	holomap_color = HOLOMAP_AREACOLOR_CARGO
-
-/area/storage/auxillary/port
-	name = "Fourth Deck - Supply - Auxillary Warehouse"
-	icon_state = "auxstorage"
-	req_access = list(access_cargo)
-	holomap_color = HOLOMAP_AREACOLOR_CARGO
-/area/storage/airlock_canisters
-	name = "Fourth Deck - Supply - Central Airlock's Canisters"
-	req_access = list(list(access_cargo, access_engine))
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
 // Thusters
@@ -234,7 +242,22 @@
 /* SECURITY AREAS
  *
  */
-/area/security/sierra/dockcheck
-	name = "Fourth Deck - Security - Fore Docks Checkpoint"
+/area/security/sierra/dockcheckfore
+	name = "Fourth Deck - Security - Fore Dock Checkpoint"
 	icon_state = "checkpoint1"
-	req_access = list(list(access_security, access_forensics_lockers))
+	req_access = list(access_sec_doors)
+
+/area/security/sierra/hangar
+	name = "Fourth Deck - Security - Hangar"
+	icon_state = "checkpoint1"
+	req_access = list(list(access_sec_doors, access_qm))
+
+/area/security/sierra/dockcheckport
+	name = "Fourth Deck - Security - Port Docks Checkpoint"
+	icon_state = "checkpoint1"
+	req_access = list(access_sec_doors)
+
+/area/security/sierra/dockcheckstarboard
+	name = "Fourth Deck - Security - Starboard Docks Checkpoint"
+	icon_state = "checkpoint1"
+	req_access = list(access_sec_doors)

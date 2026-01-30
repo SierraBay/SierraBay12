@@ -484,6 +484,32 @@ SIERRA_ESCAPE_POD(11)
 	name = "In transit"
 	landmark_tag = "nav_transit_guppy"
 
+/datum/shuttle/autodock/overmap/phaethon
+	name = "Phaethon"
+	move_time = 20
+	shuttle_area = /area/phaethon_hangar/start
+	dock_target ="phaethon_shuttle"
+	current_location = "nav_hangar_phaethon"
+	landmark_transition = "nav_transit_phaethon"
+	sound_takeoff = 'sound/effects/rocket.ogg'
+	sound_landing = 'sound/effects/rocket_backwards.ogg'
+	fuel_consumption = 5
+	logging_home_tag = "nav_hangar_phaethon"
+	logging_access = access_sec_doors
+	skill_needed = SKILL_UNSKILLED
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
+	warmup_time = 5
+
+/obj/shuttle_landmark/sierra/hangar/phaethon
+	name = "Phaethon Hangar"
+	landmark_tag = "nav_hangar_phaethon"
+	base_area = /area/security/sierra/hangar
+	base_turf = /turf/simulated/floor/plating
+
+/obj/shuttle_landmark/sierra/transit/phaethon
+	name = "In transit"
+	landmark_tag = "nav_transit_phaethon"
+
 /datum/shuttle/autodock/overmap/crucian
 	name = "Crucian"
 	move_time = 40

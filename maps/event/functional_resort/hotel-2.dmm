@@ -5,24 +5,24 @@
 "ab" = (
 /obj/structure/window/reinforced,
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ag" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ah" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "al" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless,
 /area/space)
@@ -36,22 +36,19 @@
 /obj/machinery/door/unpowered/simple/plastic,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
-"an" = (
-/obj/structure/cable{
+/area/hotel/overlook)
+"ap" = (
+/obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 2;
+	d2 = 4;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"ap" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/space,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
 /area/space)
 "ar" = (
 /obj/floor_decal/corner/red,
@@ -62,49 +59,40 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"av" = (
-/obj/machinery/power/tracker,
+/area/hotel/evac)
+"ax" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/tiled/steel_ridged,
+/area/hotel/overlook)
+"ay" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/hotel/evac)
+"aA" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/magenta,
+/area/hotel/rooms)
+"aC" = (
+/obj/floor_decal/solarpanel,
+/obj/machinery/power/solar,
 /obj/structure/cable/yellow{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless,
 /area/space)
-"ax" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
-"ay" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"aA" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/spider/stickyweb,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"aC" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless,
-/area/space)
 "aQ" = (
 /obj/structure/railing/mapped,
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "aR" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "aY" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -116,100 +104,99 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "be" = (
-/obj/item/stack/material/tritium,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "bf" = (
 /obj/item/stool/bar/padded,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/broken_bottle,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "bh" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bl" = (
-/obj/floor_decal/solarpanel,
-/obj/machinery/power/solar,
 /obj/structure/cable/yellow{
-	d2 = 2;
-	icon_state = "0-2"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless,
 /area/space)
 "bm" = (
 /obj/structure/table/woodentable/walnut,
-/obj/item/paper/abandoned_hotel/note_2,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "bo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bp" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bq" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "bs" = (
-/obj/structure/window/reinforced/full,
-/obj/structure/barricade,
 /obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"bv" = (
-/obj/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider,
-/turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
-"bx" = (
-/obj/decal/cleanable/dirt,
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bA" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bE" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bI" = (
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "bJ" = (
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bM" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -219,14 +206,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "bT" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
 /obj/floor_decal/spline/fancy/black,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "bZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -235,15 +222,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "cb" = (
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/white{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "cd" = (
 /obj/floor_decal/corner/red{
 	dir = 8
@@ -255,13 +241,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"cf" = (
-/obj/floor_decal/solarpanel,
-/obj/machinery/power/solar,
-/obj/structure/cable/yellow,
-/turf/simulated/floor/airless,
-/area/space)
+/area/hotel/evac)
 "cw" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -281,13 +261,12 @@
 /obj/item/storage/mirror{
 	pixel_x = 25
 	},
-/obj/spider/stickyweb,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "cN" = (
 /obj/machinery/door/unpowered/simple/ebony,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "cT" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -297,14 +276,14 @@
 	pixel_y = -25
 	},
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "cU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "cW" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -312,12 +291,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"db" = (
-/obj/item/stool/bar/padded,
-/turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/turf/simulated/floor/wood,
+/area/hotel/rooms)
 "de" = (
 /turf/simulated/floor/reinforced,
 /area/space)
@@ -330,12 +305,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"di" = (
-/obj/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider,
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/overlook)
 "dp" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -347,38 +317,28 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dt" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"dx" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless,
-/area/space)
+/area/hotel/rooms)
 "dz" = (
 /obj/machinery/door/unpowered/simple/ebony,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dC" = (
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "dD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -387,7 +347,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "dF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -397,50 +357,40 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dO" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dR" = (
 /obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "dS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "dW" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dX" = (
 /obj/structure/bed/chair{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "dZ" = (
+/obj/machinery/power/tracker,
 /obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless,
 /area/space)
@@ -448,19 +398,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "en" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless,
 /area/space)
@@ -470,20 +419,20 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ev" = (
 /obj/structure/grille,
 /obj/structure/lattice,
 /turf/simulated/floor/reinforced,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "ew" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "eH" = (
 /obj/item/storage/mirror,
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "eJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -491,7 +440,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "eM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -499,9 +448,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "eQ" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -512,13 +460,13 @@
 	start_pressure = 269.69
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "eS" = (
 /obj/machinery/atmospherics/unary/tank/nitrogen{
 	start_pressure = 744.13
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "eZ" = (
 /obj/structure/hygiene/sink{
 	dir = 8;
@@ -527,54 +475,38 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fa" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
-"fh" = (
-/obj/structure/hygiene/toilet,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
-"fi" = (
-/obj/floor_decal/borderfloorwhite{
-	dir = 1
-	},
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/atmos)
 "fj" = (
 /obj/structure/bed,
 /obj/item/bedsheet/purple,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fk" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"fy" = (
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/rooms)
 "fC" = (
 /obj/machinery/atmospherics/omni/filter,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "fF" = (
 /obj/machinery/smartfridge/foods,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "fG" = (
 /obj/machinery/door/airlock/external/glass/bolted,
 /obj/structure/cable/yellow{
@@ -583,10 +515,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
-"fH" = (
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/solar)
 "fI" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -594,19 +523,19 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "fS" = (
 /obj/structure/flora/pottedplant/drooping,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fT" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 8
 	},
-/obj/structure/window/basic/full,
 /obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced/no_grille,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fU" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -618,7 +547,7 @@
 	},
 /obj/machinery/door/window/northright,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fV" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -627,21 +556,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fW" = (
 /obj/structure/curtain/open/shower,
 /obj/structure/hygiene/shower{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "fX" = (
 /obj/structure/window/basic{
 	dir = 8
 	},
 /obj/structure/table/standard,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ga" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -650,20 +579,19 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gb" = (
-/obj/decal/cleanable/dirt,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "ge" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gh" = (
 /obj/machinery/door/unpowered/simple/ebony,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -674,37 +602,27 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gi" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
-"gl" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
-"gm" = (
-/obj/floor_decal/corner/red,
-/obj/floor_decal/corner/white{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/tank/oxygen_emergency,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/atmos)
 "gs" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gt" = (
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "gv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -721,7 +639,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "gw" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 4
@@ -730,20 +648,19 @@
 	dir = 6
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gy" = (
 /obj/wallframe_spawn/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "gD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/trash/beans,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -752,7 +669,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "gO" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -764,7 +681,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "gV" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -779,7 +696,7 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "gW" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -796,7 +713,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "gX" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/zpipe/down/supply{
@@ -811,35 +728,31 @@
 	icon_state = "32-8"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "gY" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
-/mob/living/simple_animal/hostile/giant_spider,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ha" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "hj" = (
 /obj/item/stool/bar/padded,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "hk" = (
 /obj/machinery/door/airlock/external/glass,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "hu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "hy" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
@@ -849,114 +762,104 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "hB" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "hC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
-"hD" = (
-/obj/decal/cleanable/cobweb,
-/obj/structure/largecrate,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/overlook)
+/area/hotel/atmos)
 "hK" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "hL" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 5
 	},
-/mob/living/simple_animal/passive/mouse/rat,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "hM" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 4
 	},
 /obj/item/tank/oxygen_emergency,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "hN" = (
 /obj/machinery/door/unpowered/simple/ebony,
-/obj/structure/barricade,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"hO" = (
-/obj/item/solar_assembly,
-/turf/space,
-/area/space)
+/turf/simulated/floor/carpet/green,
+/area/hotel/rooms)
 "hU" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"hY" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 1
-	},
-/obj/structure/window/basic/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "if" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ig" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 5;
 	icon_state = "intact"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "ii" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "ij" = (
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ik" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "il" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "io" = (
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "ip" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "it" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "iu" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -965,14 +868,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ix" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "iy" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -984,26 +886,24 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/cleanable/dirt,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "iC" = (
 /obj/machinery/atmospherics/omni/mixer,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "iD" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "iI" = (
 /obj/structure/lattice,
 /turf/space,
@@ -1013,52 +913,47 @@
 	dir = 4
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "jg" = (
-/obj/structure/reagent_dispensers/watertank,
+/mob/living/bot/farmbot,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "jh" = (
-/obj/floor_decal/solarpanel,
-/obj/structure/cable/yellow,
-/obj/structure/lattice,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/airless,
 /area/space)
 "jv" = (
 /obj/structure/table/standard,
 /obj/structure/window/basic,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "jx" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/structure/curtain/open/bed,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "jA" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"jD" = (
-/obj/floor_decal/solarpanel,
-/obj/structure/cable/yellow{
-	d2 = 2;
-	dir = 0;
-	icon_state = "0-2"
-	},
-/obj/structure/lattice,
-/turf/simulated/floor/airless,
-/area/space)
-"jG" = (
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/rooms)
+/turf/simulated/floor/carpet/blue3,
+/area/hotel/rooms)
 "jZ" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -1066,7 +961,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "kw" = (
 /obj/structure/cable{
 	d1 = 5;
@@ -1074,31 +969,13 @@
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
-"kA" = (
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/solar)
 "kM" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"kT" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"kY" = (
-/obj/decal/cleanable/dirt,
-/obj/spider/stickyweb,
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "li" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 8
@@ -1107,9 +984,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ln" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1119,13 +995,13 @@
 	},
 /obj/machinery/alarm,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "lr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ls" = (
 /obj/floor_decal/corner/white{
 	dir = 1
@@ -1135,20 +1011,13 @@
 	},
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"lL" = (
-/obj/structure/bed/chair{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/evac)
 "lW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "lX" = (
 /obj/floor_decal/corner/red{
 	dir = 8
@@ -1156,9 +1025,8 @@
 /obj/floor_decal/corner/white{
 	dir = 1
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "mb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1171,50 +1039,27 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"mh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/evac)
 "mp" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "mr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"mw" = (
-/obj/decal/cleanable/cobweb2{
-	dir = 8
-	},
-/obj/structure/largecrate,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
-"mz" = (
-/obj/random/bomb_supply,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/overlook)
 "mC" = (
-/obj/random/accessory,
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
-"mO" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "mT" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "mX" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 4
@@ -1223,7 +1068,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "no" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/light/small{
@@ -1231,74 +1076,69 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "nH" = (
-/obj/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider,
-/turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
-"nM" = (
-/obj/item/material/shard,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
-"nO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"nM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/green,
+/area/hotel/rooms)
 "nQ" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ob" = (
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "oe" = (
 /obj/structure/bed/chair/comfy/green,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"ok" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/rooms)
 "ol" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "oo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ot" = (
 /obj/floor_decal/solarpanel,
-/obj/structure/cable/yellow,
-/obj/item/solar_assembly,
-/obj/structure/lattice,
+/obj/machinery/power/solar,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/airless,
 /area/space)
 "oy" = (
 /obj/structure/table/woodentable/walnut,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "oB" = (
 /obj/overmap/visitable/sector/abandoned_hotel,
 /turf/space,
@@ -1316,31 +1156,30 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "oM" = (
 /obj/structure/railing/mapped{
 	dir = 4;
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "pq" = (
 /obj/structure/hygiene/shower{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "pr" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 6
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "pF" = (
 /obj/structure/bookcase,
-/obj/spider/stickyweb/dark,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "pK" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1354,12 +1193,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "pM" = (
 /obj/structure/closet/wardrobe,
 /obj/random/accessory,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "pY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1368,7 +1207,7 @@
 	},
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "pZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1377,7 +1216,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qb" = (
 /obj/item/storage/mirror{
 	pixel_x = 25
@@ -1389,18 +1228,18 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "qe" = (
 /obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "qi" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1408,19 +1247,19 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "qq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -1429,30 +1268,32 @@
 	dir = 10
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qt" = (
-/obj/item/frame/apc,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/power/apc{
+	dir = 8;
+	pixel_x = -25
+	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "qu" = (
 /obj/structure/hygiene/toilet,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qv" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qw" = (
 /obj/floor_decal/corner/white{
 	dir = 1
@@ -1460,38 +1301,35 @@
 /obj/floor_decal/corner/red{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "qC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "qI" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/power/apc{
 	dir = 4;
 	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "qJ" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "qR" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "qV" = (
 /obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "qW" = (
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
@@ -1499,7 +1337,7 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "rc" = (
 /obj/machinery/power/solar_control{
 	dir = 8
@@ -1509,7 +1347,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "rr" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -1517,38 +1355,21 @@
 	},
 /obj/random/backpack,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"ry" = (
-/obj/decal/cleanable/dirt,
-/obj/structure/ore_box,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/rooms)
 "rH" = (
 /obj/structure/hygiene/shower{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "rT" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/obj/item/material/shard,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "rW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"si" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"sq" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 4
-	},
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "sv" = (
 /obj/structure/hygiene/sink{
 	dir = 8;
@@ -1560,28 +1381,17 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "sA" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
-"sB" = (
-/obj/spider/stickyweb,
-/turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "sC" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"sH" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 4
-	},
-/obj/item/ammo_casing/pistol/small,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "sN" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/light/small{
@@ -1591,7 +1401,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "sR" = (
 /obj/structure/bed/chair,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1600,12 +1410,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/item/paper/abandoned_hotel/note_4,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"sW" = (
-/turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1613,46 +1419,36 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ti" = (
 /obj/structure/closet/wardrobe,
 /obj/random/backpack,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tm" = (
 /obj/structure/table/standard,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/soap/random,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
-"tt" = (
-/obj/floor_decal/corner/red,
-/obj/floor_decal/corner/white{
-	dir = 4
-	},
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"tu" = (
-/obj/decal/cleanable/dirt,
-/obj/item/trash/liquidfood,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tC" = (
 /obj/structure/bed/chair/comfy/green,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tI" = (
-/obj/decal/cleanable/dirt,
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "tL" = (
-/obj/decal/cleanable/dirt,
-/obj/spider/stickyweb/dark,
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1665,7 +1461,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/floor_decal/spline/fancy/black,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "tY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1675,44 +1471,35 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "tZ" = (
 /obj/structure/table/woodentable/walnut,
-/obj/spider/stickyweb,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"uf" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ug" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "uj" = (
 /obj/structure/railing/mapped{
 	dir = 1;
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "uk" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "uv" = (
 /obj/structure/table/woodentable/walnut,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "uD" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
@@ -1720,7 +1507,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "uF" = (
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/white{
@@ -1728,16 +1515,16 @@
 	},
 /obj/structure/bed/chair,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "uJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "uP" = (
 /turf/space,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "uV" = (
 /obj/machinery/door/airlock{
 	name = "Staff Room"
@@ -1746,7 +1533,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "uY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -1755,7 +1542,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "uZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1771,30 +1558,28 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "vd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/spider/stickyweb,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "vj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "vp" = (
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "vW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "vZ" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -1803,17 +1588,11 @@
 "wt" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"ww" = (
-/obj/item/paper/abandoned_hotel/note_3,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "wI" = (
-/obj/decal/cleanable/dirt,
 /obj/structure/bed,
-/obj/spider/stickyweb/dark,
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "wO" = (
 /obj/floor_decal/corner/white{
 	dir = 1
@@ -1837,7 +1616,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "wQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1847,63 +1626,46 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "wS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "wW" = (
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
-"xi" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/item/material/shard,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/rooms)
 "xy" = (
-/obj/item/stack/material/tritium,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "xL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/turf/simulated/floor/wood,
+/area/hotel/rooms)
 "xZ" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ym" = (
-/obj/decal/cleanable/dirt,
 /obj/item/seeds/potatoseed,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "yu" = (
 /obj/machinery/door/firedoor,
-/obj/item/material/shard,
-/obj/decal/cleanable/dirt,
+/obj/wallframe_spawn/reinforced/no_grille,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "yx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1911,27 +1673,22 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/floor_decal/spline/fancy/black,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "yR" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"yV" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 1
-	},
-/obj/random/cash,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ze" = (
 /obj/structure/closet/crate,
 /obj/item/stack/material/tritium,
 /obj/item/stack/material/tritium,
+/obj/item/stack/material/tritium,
+/obj/item/stack/material/tritium,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "zi" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -1949,16 +1706,11 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "zn" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/item/material/shard,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
-"zF" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "zG" = (
 /obj/floor_decal/corner/red{
 	dir = 8
@@ -1968,32 +1720,19 @@
 	},
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "zL" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/reinforced,
-/area/abandoned_hotel/rooms)
-"zX" = (
-/obj/spider/stickyweb,
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
-"zY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"Ac" = (
-/obj/structure/grille,
-/turf/space,
-/area/space)
+/area/hotel/rooms)
 "Ai" = (
 /obj/machinery/door/unpowered/simple/ebony,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Al" = (
 /obj/machinery/light{
 	dir = 4
@@ -2002,13 +1741,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"Av" = (
-/obj/item/stack/cable_coil,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/rooms)
 "AD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -2017,13 +1751,13 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "AR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "AX" = (
 /obj/landmark/map_data{
 	height = 2
@@ -2031,18 +1765,11 @@
 /turf/space,
 /area/space)
 "AY" = (
-/obj/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
-"Bb" = (
-/obj/item/device/oxycandle{
-	icon_state = "oxycandle_burnt"
-	},
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/overlook)
+/area/hotel/rooms)
 "Bd" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2056,7 +1783,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Bg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2065,12 +1792,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"Bo" = (
-/obj/decal/cleanable/dirt,
-/obj/spider/stickyweb,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Bu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -2078,13 +1800,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/spider/stickyweb,
 /turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Bw" = (
 /obj/structure/bed,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "BL" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 4
@@ -2093,28 +1814,18 @@
 	dir = 5
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "BU" = (
 /obj/shuttle_landmark/abandoned_hotel/one,
 /turf/space,
 /area/space)
 "Ce" = (
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"Cf" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "Ci" = (
 /obj/structure/flora/pottedplant/sticky,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Cm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2122,22 +1833,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /obj/floor_decal/spline/fancy/black{
 	dir = 10
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Cx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"CG" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "CK" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -2151,35 +1857,25 @@
 	dir = 10
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "CZ" = (
 /obj/structure/hygiene/toilet,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
-"Db" = (
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/rooms)
 "Dh" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Dk" = (
 /obj/structure/flora/pottedplant/stoutbush,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Dp" = (
 /obj/structure/table/standard,
 /obj/machinery/alarm,
 /obj/item/storage/mrebag/menu9,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
-"Ds" = (
-/obj/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/rooms)
 "DA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2187,44 +1883,31 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"DJ" = (
-/obj/item/storage/wallet/random,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "DL" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/space,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless,
 /area/space)
 "DR" = (
 /obj/machinery/portable_atmospherics/hydroponics,
 /obj/dead_plant,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"Ee" = (
-/obj/machinery/door/unpowered/simple/ebony,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/barricade,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Ex" = (
 /obj/item/stool/bar/padded,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "EF" = (
 /obj/structure/railing/mapped,
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "EG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2235,18 +1918,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/airlock/external/glass,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "EM" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "EN" = (
 /obj/structure/flora/pottedplant/dead,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Ff" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 4
@@ -2262,24 +1944,23 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Fm" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "Fp" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Fq" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2291,10 +1972,7 @@
 /obj/machinery/door/airlock,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
-"Ft" = (
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "Fw" = (
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/white{
@@ -2305,12 +1983,12 @@
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "FE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "FW" = (
 /obj/machinery/light{
 	dir = 8
@@ -2320,10 +1998,10 @@
 	dir = 5
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Gb" = (
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Gi" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2337,30 +2015,18 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"Go" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/structure/curtain/open/bed,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"Gv" = (
-/obj/decal/cleanable/dirt,
-/obj/item/trash/beans,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/evac)
 "Gx" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/decal/cleanable/dirt,
 /obj/floor_decal/spline/fancy/black{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "GV" = (
 /obj/machinery/power/smes/buildable/preset,
 /obj/structure/cable{
@@ -2368,34 +2034,24 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "Hh" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"Hp" = (
-/obj/spider/stickyweb,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Hr" = (
-/obj/floor_decal/corner/red,
-/obj/floor_decal/corner/white{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/trash/liquidfood,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/turf/simulated/floor/airless,
+/area/space)
 "Hy" = (
 /obj/structure/table/standard,
 /obj/machinery/chemical_dispenser/bar_coffee/full{
 	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "HB" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
@@ -2405,7 +2061,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "HD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2419,14 +2075,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"HE" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 8
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "HN" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2441,13 +2090,13 @@
 	},
 /obj/item/frame/fire_alarm,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "HV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/turf/simulated/floor/carpet/blue3,
+/area/hotel/rooms)
 "HX" = (
 /obj/structure/table/woodentable/walnut,
 /obj/item/reagent_containers/food/drinks/glass2/coffeecup/diona,
@@ -2458,7 +2107,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Ie" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -2467,51 +2116,39 @@
 	dir = 9
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"Ii" = (
-/obj/machinery/door/firedoor,
-/obj/item/material/shard,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
+/area/hotel/rooms)
 "Jw" = (
-/obj/structure/firedoor_assembly,
-/obj/item/material/shard,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
+/obj/machinery/light,
+/turf/simulated/open,
+/area/hotel/rooms)
 "JB" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/structure/table/woodentable/walnut,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "JE" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/storage/box/donut/empty,
+/obj/item/storage/box/donut,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Kk" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Kl" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
-"Kn" = (
-/obj/structure/window/reinforced/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/area/hotel/overlook)
 "KH" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -2522,14 +2159,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "KP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "KX" = (
 /obj/structure/railing/mapped{
 	dir = 1;
@@ -2540,57 +2177,41 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
-"Ld" = (
-/obj/spider/stickyweb/dark,
-/turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Lj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "LE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "LI" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "LT" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/overlook)
-"Md" = (
-/obj/structure/bookcase,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"MA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/turf/simulated/floor/airless,
+/area/space)
 "MD" = (
 /obj/floor_decal/corner/red,
 /obj/floor_decal/corner/white{
 	dir = 4
 	},
 /obj/structure/flora/pottedplant/minitree,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "MJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2601,17 +2222,16 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ML" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/item/paper/abandoned_hotel/note_5,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "MM" = (
 /obj/structure/bookcase,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "MS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2620,18 +2240,18 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "MT" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Nm" = (
 /obj/structure/bed,
 /obj/item/bedsheet/ce,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Np" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -2645,19 +2265,21 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/frame/air_alarm,
+/obj/machinery/alarm{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "NA" = (
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/abandoned_hotel/evac)
+/area/hotel/evac)
 "NE" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "NH" = (
 /obj/structure/railing/mapped{
 	dir = 1;
@@ -2668,14 +2290,14 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "NL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "NM" = (
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
@@ -2683,19 +2305,18 @@
 	icon_state = "railing0-1"
 	},
 /turf/simulated/open,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "NW" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /obj/structure/table/woodentable/walnut,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Od" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Oi" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2710,7 +2331,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Op" = (
 /obj/floor_decal/corner/white{
 	dir = 1
@@ -2725,12 +2346,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"Ov" = (
-/obj/structure/window/basic/full,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/tiled/steel_ridged,
-/area/abandoned_hotel/overlook)
+/area/hotel/evac)
 "OC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2749,13 +2365,13 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "OJ" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/random/accessory,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "OM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2764,7 +2380,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Pf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -2774,18 +2390,18 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "Pw" = (
-/obj/item/ammo_casing/pistol/small,
+/obj/machinery/light,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "PH" = (
 /obj/machinery/power/terminal{
 	dir = 4
 	},
 /obj/structure/cable/yellow,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "Qe" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -2796,30 +2412,15 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
-"Qf" = (
-/obj/structure/ore_box,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/atmos)
 "Qm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"Qr" = (
-/obj/floor_decal/spline/fancy/black{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"Qv" = (
-/turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/overlook)
 "QA" = (
 /obj/structure/flora/pottedplant/largebush,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "QJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2828,17 +2429,17 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "QM" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/bush,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "QQ" = (
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "QZ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2852,21 +2453,17 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"Ri" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Rj" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "RJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "Sf" = (
 /obj/machinery/door/unpowered/simple/ebony,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2877,7 +2474,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Sl" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2895,18 +2492,17 @@
 	},
 /obj/random/bomb_supply,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Sr" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Su" = (
 /obj/structure/bookcase,
-/obj/spider/stickyweb/dark,
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "SL" = (
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -2914,32 +2510,30 @@
 	},
 /obj/machinery/power/port_gen/pacman/mrs,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "SX" = (
 /obj/structure/window/basic{
 	dir = 8
 	},
 /obj/structure/table/standard,
-/obj/decal/cleanable/dirt,
 /obj/item/haircomb/random,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "SZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/hos,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Tl" = (
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/solar)
+/area/hotel/solar)
 "Tr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Ts" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -2947,12 +2541,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/item/storage/firstaid/empty,
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
-"Tv" = (
-/turf/simulated/floor/plating,
-/area/abandoned_hotel/rooms)
+/turf/simulated/floor/wood,
+/area/hotel/rooms)
 "TP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -2960,32 +2550,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"TT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "TY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Uf" = (
 /obj/structure/flora/pottedplant/unusual,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2995,21 +2568,21 @@
 	dir = 6
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Uo" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/airless,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Uq" = (
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "UF" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "UQ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3023,41 +2596,28 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"UZ" = (
-/obj/spider/stickyweb,
-/turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Vh" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Vi" = (
-/obj/decal/cleanable/dirt,
-/mob/living/simple_animal/passive/mouse/rat,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/obj/structure/table/standard,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating,
+/area/hotel/solar)
 "Vp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"Vr" = (
-/obj/structure/hygiene/shower{
-	dir = 8
-	},
-/obj/item/soap/random,
-/turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Vv" = (
 /obj/structure/table/woodentable/walnut,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "VC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -3069,20 +2629,20 @@
 	dir = 6
 	},
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "VH" = (
 /obj/structure/table/woodentable/walnut,
 /obj/item/reagent_containers/food/drinks/bottle/vermouth,
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "VP" = (
-/obj/structure/window/reinforced/full,
 /obj/machinery/door/firedoor,
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "VT" = (
 /turf/simulated/floor/carpet/magenta,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "VZ" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 1
@@ -3090,43 +2650,29 @@
 /obj/floor_decal/spline/fancy/black,
 /obj/structure/flora/pottedplant/dead,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Wj" = (
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "Wn" = (
 /obj/structure/table/woodentable/walnut,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/wood/maple,
-/area/abandoned_hotel/overlook)
-"Wp" = (
-/obj/structure/table/woodentable/walnut,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/item/paper/abandoned_hotel/note_5,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/overlook)
 "Wy" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "WA" = (
-/obj/decal/cleanable/dirt,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
-"WI" = (
-/obj/random/toolbox,
-/turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "WT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3140,54 +2686,33 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
-"WU" = (
-/obj/spider/stickyweb,
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Xa" = (
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Xq" = (
 /obj/structure/closet/crate/large/hydroponics,
 /turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Xr" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass/cut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "XC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
-"XS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
+/area/hotel/rooms)
 "XV" = (
 /obj/structure/bed/chair/comfy/green{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/red,
-/area/abandoned_hotel/rooms)
-"Yf" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/device/oxycandle{
-	icon_state = "oxycandle_burnt"
-	},
-/turf/simulated/floor/wood,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Yo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -3197,13 +2722,7 @@
 	},
 /obj/floor_decal/spline/fancy/black,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
-"Yp" = (
-/turf/simulated/floor/tiled,
-/area/abandoned_hotel/evac)
-"Yu" = (
-/turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "YC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3216,45 +2735,41 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "YE" = (
 /obj/structure/flora/pottedplant/orientaltree,
 /obj/random/contraband,
 /turf/simulated/floor/wood/walnut,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "YS" = (
 /obj/structure/table/woodentable/walnut,
-/obj/spider/stickyweb,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/carpet/blue3,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Ze" = (
 /turf/simulated/floor/plating,
-/area/abandoned_hotel/atmos)
+/area/hotel/atmos)
 "Zg" = (
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "Zk" = (
 /turf/simulated/wall/prepainted,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ZE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/item/cell/high/empty,
 /turf/simulated/floor/tiled/old_cargo,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ZH" = (
 /obj/item/soap/random,
 /turf/simulated/floor/tiled/freezer,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ZN" = (
 /turf/simulated/open,
-/area/abandoned_hotel/overlook)
+/area/hotel/overlook)
 "ZO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3271,7 +2786,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 "ZZ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3281,7 +2796,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/simulated/floor/carpet/green,
-/area/abandoned_hotel/rooms)
+/area/hotel/rooms)
 
 (1,1,1) = {"
 aa
@@ -20338,24 +19853,24 @@ aa
 aa
 Uq
 Uq
-Kn
-Kn
+bs
+bs
 Uq
 Uq
 Uq
-Kn
-Kn
+bs
+bs
 Uq
 Uq
 Uq
-Kn
-Kn
+bs
+bs
 Uq
 Uq
-jG
-jG
-jG
-jG
+bs
+bs
+bs
+bs
 Uq
 aa
 aa
@@ -20748,20 +20263,20 @@ fW
 Uq
 eZ
 wW
-kY
+wW
 fW
 Uq
 eZ
-fH
+wW
 wW
 fW
 Uq
 Bw
 QQ
-mO
+QQ
 ym
 bp
-jG
+bs
 aa
 aa
 aa
@@ -20943,27 +20458,27 @@ aa
 aa
 Uq
 Uq
-fh
+qu
 wW
-fH
+wW
 fX
 Uq
-fh
-fH
-zX
+qu
+wW
+wW
 SX
 Uq
-fh
+qu
 wW
-fH
+wW
 fX
 Uq
 Xq
+QQ
 jg
 QQ
-ww
 DR
-jG
+bs
 aa
 aa
 aa
@@ -21164,8 +20679,8 @@ Xq
 QQ
 ym
 QQ
-Tv
-jG
+bp
+bs
 aa
 aa
 aa
@@ -21353,21 +20868,21 @@ mC
 if
 Uq
 ge
-sB
-Hp
+VT
+QQ
 gY
 Uq
 fj
 QQ
-Yu
+Zg
 pM
 Uq
 wt
-Yu
 Zg
-Yu
-Tv
-jG
+Zg
+Zg
+bp
+bs
 aa
 aa
 aa
@@ -21549,27 +21064,27 @@ aa
 aa
 Uq
 Uq
-kA
 QQ
-zF
-zF
+QQ
+mC
+mC
 Uq
 VT
-sB
-WU
-WU
+VT
+QQ
+QQ
 Uq
 QQ
-mO
-io
+QQ
+Zg
 Zg
 Uq
 Uf
-zY
+hu
 oo
 mX
 DR
-jG
+bs
 aa
 aa
 aa
@@ -21752,22 +21267,22 @@ aa
 Uq
 Uq
 hU
-mO
-zF
+QQ
+mC
 Dk
 Uq
 aA
-nH
-Bo
-Hp
+VT
+QQ
+QQ
 Uq
 no
 rW
 ix
-Yu
+Zg
 Uq
 gO
-Yu
+Zg
 NW
 JB
 Uq
@@ -21966,7 +21481,7 @@ Uq
 ML
 tC
 pZ
-Md
+wt
 Uq
 QJ
 Uq
@@ -22156,7 +21671,7 @@ Zk
 Uq
 Uq
 rr
-Wp
+yR
 bZ
 aR
 Uq
@@ -22363,7 +21878,7 @@ gh
 Uq
 Uq
 Uq
-Ee
+gh
 Uq
 Uq
 Uq
@@ -22380,7 +21895,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 YE
 Uo
 aa
@@ -22553,8 +22068,8 @@ ah
 ZN
 ZN
 ZN
-Ov
-hD
+yu
+ob
 LI
 uD
 qt
@@ -22562,18 +22077,18 @@ Zk
 dt
 DA
 WT
-MA
+DA
 wQ
 DA
 WT
 eJ
-Yu
+Zg
 sC
-Yu
-Yu
+Zg
+Zg
 Bg
-Yu
-Yu
+Zg
+Zg
 OM
 VZ
 uj
@@ -22582,7 +22097,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 mT
 Uo
 aa
@@ -22755,7 +22270,7 @@ ZN
 ZN
 ZN
 ZN
-Ov
+yu
 uY
 Kl
 ZE
@@ -22764,18 +22279,18 @@ Fq
 Oi
 iu
 TP
-zY
+hu
 Lj
-zY
+hu
 TP
 YC
 hu
 Al
-zY
-zY
-kT
-zY
-zY
+hu
+hu
+TP
+hu
+hu
 Ie
 HB
 uj
@@ -22784,7 +22299,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 Vv
 Uo
 aa
@@ -22957,11 +22472,11 @@ ZN
 ZN
 ZN
 ZN
-ax
-xi
+yu
+jZ
 ob
-gl
-Ft
+ob
+ob
 Zk
 dp
 Cm
@@ -22977,8 +22492,8 @@ qC
 qC
 ik
 Wj
-Yu
-Yu
+nM
+Zg
 bT
 uj
 Gb
@@ -22986,7 +22501,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 MT
 Uo
 aa
@@ -23159,16 +22674,16 @@ ZN
 ZN
 ZN
 ZN
-Ii
+yu
 jZ
-Vi
-Bb
-gl
-Ov
+ob
+ob
+ob
+yu
 qi
 Yo
 Gb
-Gb
+Jw
 Wj
 gv
 Pf
@@ -23179,8 +22694,8 @@ hL
 Ze
 il
 Wj
-Yu
-DJ
+Zg
+Zg
 bT
 KX
 oM
@@ -23189,7 +22704,7 @@ oM
 oM
 NM
 kM
-ij
+Pw
 Uq
 Uq
 aa
@@ -23361,12 +22876,12 @@ ZN
 ZN
 ZN
 ZN
-Ov
-ok
-gl
-gl
-Ft
-Ov
+yu
+jZ
+ob
+ob
+ob
+yu
 Bd
 tW
 fU
@@ -23382,15 +22897,15 @@ ig
 UF
 Wj
 Zg
-Yu
-yV
-HE
-HE
+Zg
+kM
 fa
 fa
-HE
 fa
-Pw
+fa
+fa
+fa
+ij
 ij
 zn
 zL
@@ -23563,12 +23078,12 @@ ZN
 ZN
 ZN
 ZN
-Ov
-ok
-gl
-ry
-gl
-Ov
+yu
+jZ
+ob
+ob
+ob
+yu
 ga
 yx
 fV
@@ -23583,16 +23098,16 @@ fd
 ii
 fC
 Wj
-Yu
-Yu
+Zg
+Zg
 kM
-sq
-sq
 EM
-sq
-sH
 EM
-Ri
+EM
+EM
+EM
+EM
+ij
 ij
 rT
 zL
@@ -23765,16 +23280,16 @@ ZN
 ZN
 ZN
 ZN
-Ov
-ok
-LT
-WI
+yu
+jZ
 ob
-Ov
+ob
+ob
+yu
 qi
 Yo
 Gb
-Gb
+Jw
 Wj
 dD
 dS
@@ -23785,8 +23300,8 @@ hM
 hK
 fC
 Wj
-bx
-Yu
+Zg
+Zg
 bT
 NH
 bJ
@@ -23967,12 +23482,12 @@ ZN
 ZN
 ZN
 ZN
-Ov
-ok
-Ft
+yu
+jZ
 ob
-Qf
-Ov
+ob
+ob
+yu
 Gx
 VC
 uk
@@ -23987,7 +23502,7 @@ Wj
 Wj
 Wj
 Wj
-Yu
+nM
 Zg
 bT
 uj
@@ -24169,12 +23684,12 @@ ZN
 ZN
 ZN
 ZN
-Ov
-ok
+yu
+jZ
 WA
 ob
-mw
-Ov
+ob
+yu
 tc
 qq
 ip
@@ -24198,7 +23713,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 Vv
 Uo
 aa
@@ -24390,9 +23905,9 @@ Vh
 Zg
 Zg
 Zg
-Yu
-Yu
-Yu
+Zg
+Zg
+Zg
 VZ
 uj
 Gb
@@ -24573,8 +24088,8 @@ ZN
 ZN
 ZN
 aQ
-fi
-ok
+nQ
+jZ
 ZN
 ZN
 Zk
@@ -24588,7 +24103,7 @@ Uq
 Uq
 Uq
 HN
-Yu
+Zg
 Uq
 fT
 fT
@@ -24602,7 +24117,7 @@ Gb
 Gb
 Gb
 EF
-Qr
+kM
 Ci
 Uo
 aa
@@ -24775,8 +24290,8 @@ ZN
 ZN
 ZN
 aQ
-fi
-Cf
+nQ
+jZ
 Zk
 Zk
 Zk
@@ -24790,12 +24305,12 @@ uv
 ol
 Uq
 pK
-mz
-hY
+Zg
+kM
 EN
 oe
 Hh
-Ri
+ij
 Dh
 Uq
 Gb
@@ -24979,22 +24494,22 @@ ZN
 aQ
 Fm
 vj
-Ov
-db
+yu
+hj
 Wn
 hj
 ew
 Zk
 hU
-mO
+QQ
 XC
 XV
 bo
 Uq
 pK
-Yu
-uf
-Ri
+Zg
+kM
+ij
 lr
 Vp
 ij
@@ -25381,23 +24896,23 @@ ZN
 ZN
 ZN
 aQ
-fi
+nQ
 qp
 ax
 ei
-si
+Ce
 mr
-si
+Ce
 Zk
 mp
-mO
-sW
+QQ
+Xa
 Nm
 Rj
 Uq
 pK
 Zg
-hY
+kM
 Dh
 Dh
 Dh
@@ -25584,12 +25099,12 @@ ZN
 ZN
 aQ
 nQ
-nO
-Ov
+qp
+yu
 bf
 hj
 Ex
-tI
+Ce
 Zk
 Uq
 cN
@@ -25598,7 +25113,7 @@ Uq
 Uq
 Uq
 ZO
-Yu
+Zg
 Uq
 Uq
 Uq
@@ -25609,7 +25124,7 @@ Uq
 aa
 aa
 vZ
-iI
+vZ
 vZ
 vZ
 vZ
@@ -25787,7 +25302,7 @@ ZN
 aQ
 qR
 RJ
-Jw
+yu
 bq
 VH
 bm
@@ -25800,17 +25315,17 @@ jv
 pq
 Uq
 pK
-Yu
+Zg
 Uq
 Dp
 cW
 HX
-lL
+dX
 Uq
 Uq
 aa
-iI
-iI
+vZ
+vZ
 aa
 aa
 aa
@@ -25987,18 +25502,18 @@ ZN
 ZN
 ZN
 aQ
-fi
-nM
-Ii
-si
+nQ
+ob
+yu
 Ce
-si
+Ce
+Ce
 Ce
 Zk
 qu
 wW
 Uq
-fh
+qu
 wW
 Uq
 UQ
@@ -26009,7 +25524,7 @@ sR
 JE
 dX
 it
-Kn
+bs
 aa
 vZ
 aa
@@ -26189,8 +25704,8 @@ ah
 ZN
 ZN
 aQ
-fi
-gl
+nQ
+ob
 yu
 bI
 df
@@ -26201,19 +25716,19 @@ jv
 rH
 Uq
 qb
-fH
+wW
 Uq
 QZ
-zY
+hu
 uV
 xL
 Ts
-Gv
-Tv
+QQ
+QQ
 it
-Kn
+bs
 aa
-DL
+vZ
 aa
 aa
 aa
@@ -26406,14 +25921,14 @@ Uq
 cN
 Uq
 pK
-Yu
+Zg
 Uq
-Yf
-mO
-tu
-CG
+hU
+QQ
+QQ
+QQ
 QM
-Kn
+bs
 aa
 vZ
 aa
@@ -26605,15 +26120,15 @@ oy
 QQ
 MM
 MM
-sW
+Xa
 Uq
-TT
-Yu
+pK
+Zg
 Uq
 jx
 jx
-Go
-Go
+jx
+jx
 Uq
 Uq
 aa
@@ -26792,12 +26307,12 @@ aa
 aa
 aa
 aa
-ap
 aa
 aa
 aa
 aa
-av
+aa
+aa
 de
 de
 de
@@ -26806,8 +26321,8 @@ Uq
 OJ
 li
 LE
-mh
-mh
+LE
+LE
 dz
 dF
 Zg
@@ -26819,7 +26334,7 @@ Uq
 Uq
 Uq
 iI
-DL
+vZ
 aa
 aa
 aa
@@ -26992,36 +26507,36 @@ aa
 aa
 aa
 aa
-aa
-aa
-ap
-hO
-jD
-dx
-jh
+vZ
 aC
-bl
-dx
-cf
+aC
+aC
+aC
+aC
+aC
+aC
+de
+de
+de
 Uq
 Uq
 no
 AR
-sW
-sW
+Xa
+Xa
 Xa
 Uq
 pK
-Yu
+Zg
 Uq
 sA
-UZ
+tL
 tL
 wI
 Uq
 Uq
 aa
-iI
+vZ
 aa
 aa
 aa
@@ -27194,17 +26709,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-ap
-aa
-jD
-dZ
+vZ
+be
 jh
-aC
-bl
-dZ
-cf
+jh
+jh
+jh
+jh
+jh
+tI
+de
+de
 Uq
 Uq
 oy
@@ -27218,7 +26733,7 @@ ip
 hN
 KP
 AY
-Hp
+tL
 tL
 iD
 bs
@@ -27396,17 +26911,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-ap
-aa
-jD
-dZ
-jh
-aC
-bl
-dZ
-cf
+vZ
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+LT
+de
+de
 dC
 dC
 dC
@@ -27420,8 +26935,8 @@ bh
 Uq
 sN
 HV
-bv
-UZ
+tL
+tL
 it
 bs
 aa
@@ -27598,36 +27113,36 @@ aa
 aa
 aa
 aa
-aa
-aa
+vZ
+al
 ap
-aa
-jD
-dZ
-jh
-aC
+ap
+ap
+ap
+ap
+ap
 bl
-dZ
-cf
+de
+de
 dC
 dC
 dC
 ze
-fy
-fy
-Ds
+Tl
+Vi
+Tl
 dC
 pK
-Yu
+Zg
 Uq
 YS
 jA
-Ld
+tL
 pF
 iD
 bs
 aa
-DL
+vZ
 aa
 aa
 aa
@@ -27800,31 +27315,31 @@ aa
 aa
 aa
 aa
-aa
-aa
-ap
-aa
-jD
-dZ
+vZ
 ot
-aC
-bl
-dZ
-cf
+ot
+ot
+ot
+ot
+ot
+ot
+LT
+de
+de
 dC
 dC
 dC
 SL
-Db
-be
-fy
+Tl
+Tl
+Tl
 dC
 pK
-Yu
+Zg
 Uq
 tZ
-Qv
-Ld
+tL
+tL
 Su
 qv
 bs
@@ -28002,31 +27517,31 @@ aa
 aa
 aa
 aa
-aa
-aa
+vZ
+al
 ap
-aa
-jD
-dZ
-jh
-aC
+ap
+ap
+ap
+ap
+ap
 bl
 dZ
-cf
+de
 dC
 dC
 dC
 xy
-fy
+Tl
 Tl
 gb
 pY
 OC
-Yu
+Zg
 Uq
 Uq
 Uq
-zX
+wW
 Uq
 Uq
 Uq
@@ -28204,15 +27719,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-ap
-aa
-aa
-al
-cw
-en
-cw
+vZ
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+io
 en
 cw
 fG
@@ -28220,16 +27735,16 @@ fI
 fG
 iy
 PH
-Av
+Tl
 kw
 dC
 pK
 Zg
 Uq
 tm
-zX
-zX
-zX
+wW
+wW
+wW
 Uq
 Uq
 aa
@@ -28406,15 +27921,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+vZ
+al
 ap
-aa
-aa
-aa
-aa
-de
+ap
+ap
+ap
+ap
+ap
+nH
 de
 de
 dC
@@ -28429,13 +27944,13 @@ pK
 Zg
 Uq
 CZ
-di
+wW
 cL
-Vr
+rH
 Uq
 Uq
 iI
-iI
+vZ
 aa
 aa
 aa
@@ -28608,15 +28123,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-Ac
-ap
-aa
-aa
-aa
-de
+vZ
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+LT
 de
 de
 dC
@@ -28810,16 +28325,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+vZ
+al
+ap
+ap
+ap
+ap
 ap
 ap
 DL
-DL
-eQ
+vZ
 eQ
 ev
 dC
@@ -28830,7 +28345,7 @@ Op
 qw
 gy
 mb
-Yp
+vp
 lX
 cd
 Np
@@ -29012,33 +28527,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vZ
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+Hr
+vZ
 aa
 aa
 aa
 gy
 vp
 CK
-an
+tY
 tY
 EG
 Gi
 wS
 wS
-XS
+wS
 qd
 ay
-Yp
-Yp
+vp
+vp
 gy
 aa
 aa
@@ -29214,16 +28729,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vZ
+vZ
+vZ
+vZ
+vZ
+vZ
+vZ
+vZ
+vZ
+vZ
 aa
 aa
 aa
@@ -29233,13 +28748,13 @@ Fw
 ar
 MD
 gy
-tt
-Hr
 cb
 cb
-tt
-tt
-gm
+cb
+cb
+cb
+cb
+cb
 cb
 gy
 aa
