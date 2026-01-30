@@ -62,7 +62,7 @@
 	warmup_time = 5
 	current_location = "nav_hangar_ascent_inf_one"
 	range = 2
-	dock_target = "ascent_inf_port_shuttle_dock"
+	dock_target = "ascent_inf_port"
 	shuttle_area = /area/ship/ascent_inf/shuttle_port
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
