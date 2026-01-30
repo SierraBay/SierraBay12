@@ -1019,12 +1019,12 @@
 /area/map_template/rescue_base/base)
 "cm" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/hypospray/vial,
+/obj/item/reagent_containers/hypospray/vial,
+/obj/item/reagent_containers/hypospray/vial,
+/obj/item/reagent_containers/hypospray/vial,
+/obj/item/reagent_containers/hypospray/vial,
+/obj/item/reagent_containers/hypospray/vial,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
 /obj/item/reagent_containers/glass/bottle/inaprovaline,
