@@ -73,6 +73,7 @@
 "gm" = (/obj/structure/cable/cyan{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/machinery/door/airlock/external/bolted/ascent{airlock_type = "Internal"; frequency = 1331; id_tag = "ascent_inf_dock_starboard_internal"},/turf/simulated/floor/ascent,/area/ship/ascent_inf/wing_starboard)
 "gn" = (/obj/machinery/ion_engine,/turf/simulated/floor/ascent/airless,/area/ship/ascent_inf/shuttle_port)
 "gw" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{dir = 1; id_tag = "ascent_inf_seedship_fore_pumps"},/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_hallway)
+"gH" = (/obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{dir = 2; id_tag = "ascent_inf_starboard_pump_out_internal"},/obj/machinery/light/ascent{dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_starboard)
 "gJ" = (/obj/structure/table/steel_reinforced/ascent,/obj/item/storage/firstaid/surgery{pixel_y = 3},/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_starboard_jut)
 "gK" = (/obj/structure/cable/cyan{icon_state = "0-8"},/obj/machinery/power/ascent_reactor,/turf/simulated/floor/ascent,/area/ship/ascent_inf/engineering)
 "gL" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 10},/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/fore_port_prow)
@@ -81,7 +82,7 @@
 "hk" = (/obj/structure/table/rack/ascent,/obj/item/storage/bag/trash/purple/ascent,/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_starboard_jut)
 "hn" = (/obj/structure/cable/cyan{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_starboard_prow)
 "hq" = (/obj/structure/bed/chair/padded/purple/ascent,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/habitation)
-"hr" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/machinery/dummy_airlock_controller{dir = 1; id_tag = "ascent_inf_starboard"; pixel_x = -24; pixel_y = -24},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_starboard)
+"hr" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/machinery/dummy_airlock_controller{id_tag = "ascent_inf_starboard"; pixel_x = -24; pixel_y = -24; dir = 1},/turf/simulated/floor/ascent,/area/ship/ascent_inf/shuttle_starboard)
 "ht" = (/obj/machinery/cryopod/ascent_spawn,/obj/submap_landmark/spawnpoint/ascent_seedship_inf/queen,/turf/simulated/floor/ascent/tiled,/area/ship/ascent_inf/habitation)
 "hv" = (/obj/machinery/door/window/brigdoor{color = "PURPLE"; dir = 8},/obj/machinery/door/window/brigdoor{color = "PURPLE"; dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/fore_starboard_jut)
 "hA" = (/obj/structure/window/boron_reinforced{dir = 4},/turf/simulated/floor/ascent,/area/ship/ascent_inf/engineering)
@@ -671,7 +672,7 @@ SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXqNpopoqNrkrkepqNSXSXKsCoXmkkhrHkHGCUBQvTKsSXSXRsQbcycyRsZOZOZORsSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXqNrkrkhvNYGrshqNqNSXdSdSXRdSOgPIrfdSFzdSdSSXRsRscycycyGZzaEjzaRsRsRsSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXqNaMrkpoNYjFOYyQqNqNzddSdSdSFfdasYdSdSdSzdRsRsMVcyigcyCtcyHYcydHRsZwSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
-SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXqNqNrkrkpoNYZFrkIRUiqNSXzdzddSsmsvsmdSzdzdSXRswRwRdHQVLajqGEoNdHRjRsZwSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
+SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXqNqNrkrkpoNYZFrkIRUiqNSXzdzddSsmsvgHdSzdzdSXRswRwRdHQVLajqGEoNdHRjRsZwSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXPSoJoJoJoJoJqNqNrkrkpoNYEFSzrQPeqNSXSXEWtyWVyCUotyELSXSXRssfsfdHcQdHdHdsQBcQdHRsZwSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXPSPSnszQOszwSwPSPSPSPSPSPSPSPSitPSPSPSPSPSPStiuytiemememememememememememcaemememMJMJMJMJMJMJMJMJMJSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
 SXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXndndndndndndndndndndPSuDrOrOrOrOrOrOhCXAHNXANarOrOjPbRzkrOkoLTPSoYfJoYemZTpYhFlFziemJAemJAoxyDhFkgemGmLdZKZWZIaVZIZIMJSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSXSX
