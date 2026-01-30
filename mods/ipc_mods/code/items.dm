@@ -495,6 +495,7 @@
 		Total war, I'm chippin' in!;\
 		Won't spare what I'm hunting for!\
 	"}
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/integrity_repair_tool = 900,
 		/obj/item/integrity_repair_tool_tank = 300,
