@@ -46,6 +46,20 @@
 		/datum/design/autolathe/arms_ammo/hidden/shotgun_flechette,
 		)
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/exloration
+	name = "Expeditionary Designs"
+	icon_state = "moebius"
+	designs = list(
+		/datum/design/autolathe/arms_ammo,
+		/datum/design/autolathe/arms_ammo/net_shell,
+		/datum/design/autolathe/arms_ammo/shotgun_holder,
+		/datum/design/autolathe/arms_ammo/shotgun_blanks,
+		/datum/design/autolathe/arms_ammo/flaregun,
+		/datum/design/autolathe/arms_ammo/hidden,
+		/datum/design/autolathe/arms_ammo/hidden/shotgun,
+		/datum/design/autolathe/arms_ammo/shotgun_flash,
+		)
+
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/general
 	name = "General Designs"
@@ -197,6 +211,33 @@
 		/datum/design/autolathe/medical/hypospray/autoinjector,
 		)
 
+/obj/item/stock_parts/computer/hard_drive/portable/design/glass
+	name = "General Glass Designs"
+	icon_state = "ironhammer"
+	designs = list(
+		/datum/design/autolathe/drinkingglass,
+		/datum/design/autolathe/drinkingglass/rocks,
+		/datum/design/autolathe/drinkingglass/shake,
+		/datum/design/autolathe/drinkingglass/cocktail,
+		/datum/design/autolathe/drinkingglass/shot,
+		/datum/design/autolathe/drinkingglass/pint,
+		/datum/design/autolathe/drinkingglass/mug,
+		/datum/design/autolathe/drinkingglass/wine,
+		/datum/design/autolathe/drinkingglass/carafe,
+		/datum/design/autolathe/drinkingglass/flute,
+		/datum/design/autolathe/drinkingglass/coffeecup,
+		/datum/design/autolathe/drinkingglass/cognac,
+		/datum/design/autolathe/drinkingglass/goblet,
+		/datum/design/autolathe/drinkingglass/coffeecup/glass,
+		/datum/design/autolathe/medical/beaker,
+		/datum/design/autolathe/medical/beaker_large,
+		/datum/design/autolathe/medical/beaker_insul,
+		/datum/design/autolathe/medical/beaker_insul_large,
+		/datum/design/autolathe/medical/vial,
+		/datum/design/autolathe/medical/syringe,
+		/datum/design/autolathe/medical/pill_bottle,
+		/datum/design/autolathe/medical/hypospray/autoinjector,
+		)
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/tool
 	name = "Tools Designs"

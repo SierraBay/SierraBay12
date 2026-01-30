@@ -2462,7 +2462,6 @@
 	},
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "Sp" = (

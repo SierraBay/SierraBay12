@@ -181,7 +181,7 @@
 	var/obj/item/card/id/I = H.GetIdCard()
 	if(!prog.backdoor_access)
 		if(!I)
-			categories = all_cat - list("Arms and Ammunition")
+			categories = all_cat + list("Arms and Ammunition")
 			return categories
 		if(!(access_security in I.access))
 			categories = all_cat - list("Arms and Ammunition")
@@ -206,3 +206,14 @@
 					"materials" =      D.materials,
 				))
 	return designs_list
+
+/datum/computer_file/program/ntnetdesign/hacked
+	filename = "dsgnfreearch"
+	filedesc = "Free Design Archive"
+	program_icon_state = "hostile"
+	program_key_state = "security_key"
+	extended_desc = "This program allows downloads of desings from unofficial and pirate net archives without access check."
+	size = 18
+	available_on_ntnet = FALSE
+	available_on_syndinet = TRUE
+	backdoor_access = TRUE

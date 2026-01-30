@@ -114,6 +114,7 @@
 
 /datum/design/autolathe/general/handcuffs
 	build_path = /obj/item/handcuffs
+	hidden = TRUE
 
 /datum/design/autolathe/general/plunger
 	build_path = /obj/item/clothing/mask/plunger

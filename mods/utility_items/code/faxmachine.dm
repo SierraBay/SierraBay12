@@ -10,6 +10,8 @@
 /obj/machinery/photocopier/faxmachine/recievefax(obj/item/incoming, origin_department = "Unknown")
 	. = ..()
 	if (incoming)
+		if(!tag_radio)
+			return
 		var/fax_message = "На [name] прибыло новое уведомление"
 		GLOB.global_headset.autosay(fax_message, "Automated Fax System", tag_radio)
 		return

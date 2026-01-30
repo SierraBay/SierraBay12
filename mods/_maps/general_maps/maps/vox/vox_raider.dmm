@@ -371,7 +371,6 @@
 /area/map_template/vox_raider)
 "eF" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/item/stack/material/plastic/ten,
 /obj/item/stack/material/aluminium/ten,
 /obj/item/stack/material/steel/ten,

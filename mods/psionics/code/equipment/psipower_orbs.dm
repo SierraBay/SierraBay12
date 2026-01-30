@@ -83,7 +83,7 @@
 	name = "orb of energy"
 	force = 5
 	edge = TRUE
-	maintain_cost = 6
+	maintain_cost = 8
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -213,60 +213,67 @@
 		charging_cell.give(rand(el_rank * 3,el_rank * 6))
 		new /obj/temporary(get_turf(A),3, 'icons/effects/effects.dmi', "electricity_constant")
 		return TRUE
+	..()
 
-//AIRLOCKS
+/obj/item/psychic_power/psielectro/use_before(atom/target, mob/living/user)
+	if(!target)
+		return
 
-	if(istype(A,/obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/D = A
-		var/option = input(user, "Do something!", "What do you want to do?") in list("Open/Close", "Bolt/Unbolt", "Electrify")
-		if (!option)
+	//AIRLOCKS
+	if(istype(target,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/D = target
+		var/option = input(user, "Выбирай!", "Что ты планируешь сделать?") in list("Открыть/Закрыть", "Заболтировать/Разболтировать", "Электризовать")
+		if (!option || !user.psi || user.psi.suppressed)
 			return
 
-		if(A.do_psionics_check(maintain_cost, user))
-			to_chat(user, SPAN_WARNING("Your power skates across \the [A.name], but cannot get a grip..."))
+		if(target.do_psionics_check(maintain_cost, user))
+			to_chat(user, SPAN_WARNING("Your power skates across \the [target.name], but cannot get a grip..."))
 			return FALSE
 
-		if(option == "Open/Close")
-			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) <= PSI_RANK_OPERANT)
-				if(prob(30))
-					to_chat(SPAN_WARNING("Вы несколько раз щёлкаете пальцами у [D.name], но ничего не происходит!"))
-					user.visible_message("<span class='notice'>[user] несколько раз щёлкает пальцами у [D.name] в непонимании.</span>")
-					return
-			if(D && AIRLOCK_OPEN)
-				D.open()
-				user.visible_message("<span class='notice'>[user] щёлкает пальцами и [D.name] открывается.</span>")
-				new /obj/temporary(get_turf(A),3, 'icons/effects/effects.dmi', "electricity_constant")
-				playsound(D.loc, "sparks", 50, 1)
-			if(D && AIRLOCK_CLOSED)
-				D.close()
-				user.visible_message("<span class='notice'>[user] щёлкает пальцами и [D.name] закрывается.</span>")
-				new /obj/temporary(get_turf(A),3, 'icons/effects/effects.dmi', "electricity_constant")
-				playsound(D.loc, "sparks", 50, 1)
+		if(option == "Открыть/Закрыть")
+			to_chat(SPAN_NOTICE("Шлюз становится продолжением тебя, ты посылаешь сигналы, в попытке открыть шлюз"))
+			if(do_after(user, 5 SECONDS, D, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
+				if(user.psi.get_rank(PSI_METAKINESIS) <= PSI_RANK_OPERANT)
+					if(prob(30))
+						to_chat(SPAN_WARNING("Механизм [D.name] сопротивляется"))
+						return
+				if(D && AIRLOCK_OPEN)
+					D.open()
+					user.visible_message(SPAN_NOTICE("[user] щёлкает пальцами и [D.name] открывается."))
+					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
+					playsound(D.loc, "sparks", 50, 1)
+				if(D && AIRLOCK_CLOSED)
+					D.close()
+					user.visible_message(SPAN_NOTICE("[user] щёлкает пальцами и [D.name] закрывается."))
+					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
+					playsound(D.loc, "sparks", 50, 1)
 
-		if(option == "Electrify")
-			D.electrify(50, 0)
-			if(proximity)
-				user.visible_message(SPAN_WARNING("[user] прикладывает руку к панели [D.name], пропуская через неё поток тока."))
-			else
-				user.visible_message(SPAN_WARNING("[user] посылает в [D.name] мощный поток электричества."))
-			new /obj/temporary(get_turf(A),3, 'icons/effects/effects.dmi', "electricity_constant")
-			playsound(D.loc, "sparks", 50, 1)
-
-		if(option == "Bolt/Unbolt")
-			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER)
-				D.toggle_lock()
-				if(proximity)
-					user.visible_message("<span class='notice'>[user] прислоняет обе руки к [D.name], приводя болты в движение.</span>")
+		if(option == "Электризовать")
+			to_chat(SPAN_NOTICE("Ты перенаправляешь свою энергию в оболочку шлюза"))
+			if(do_after(user, 3 SECOND, D, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
+				if(charge > 0)
+					charge -= 1
+					D.electrify(30 SECONDS, 0)
+					user.visible_message(SPAN_WARNING("[user] посылает в [D.name] [SPAN_DANGER("продолжительный")] поток электричества."))
 				else
-					user.visible_message("<span class='notice'>[user] сжимает руку в кулак, приводя болты [D.name] в движение.</span>")
-				new /obj/temporary(get_turf(A),3, 'icons/effects/effects.dmi', "electricity_constant")
+					D.electrify(10 SECONDS, 0)
+					user.visible_message(SPAN_WARNING("[user] посылает в [D.name] поток электричества."))
+				new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
 				playsound(D.loc, "sparks", 50, 1)
+
+		if(option == "Заболтировать/Разболтировать")
+			if(user.psi && !user.psi.suppressed && user.psi.get_rank(PSI_METAKINESIS) >= PSI_RANK_MASTER || !user.skill_check(SKILL_ELECTRICAL, SKILL_EXPERIENCED))
+				to_chat(SPAN_NOTICE("Ты тянешь болты как собственные сухожилия, стараясь изменить их положение"))
+				if(do_after(user, 5 SECONDS, D, DO_DEFAULT | DO_BOTH_UNIQUE_ACT))
+					D.toggle_lock()
+					user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name], приводя болты в движение."))
+					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
+					playsound(D.loc, "sparks", 50, 1)
 			else
-				user.visible_message("<span class='notice'>[user] прислоняет обе руки к [D.name], но ничего не происходит.</span>")
+				user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name], тебе нехватило [SPAN_INFO("знаний")] в этом."))
 				to_chat(SPAN_WARNING("Вы прислоняете свои руки к [D.name], пытаясь пропустить поток через его внутренние механизмы, но ничего не получается!"))
 				return
 
-	..()
 
 ///FIRE ORB///
 
@@ -293,7 +300,7 @@
 	name = "orb of flame"
 	force = 5
 	edge = TRUE
-	maintain_cost = 6
+	maintain_cost = 8
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',
@@ -507,6 +514,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	health_max = 200
 	icon = 'mods/psionics/icons/psi_fd/freeze.dmi'
 	icon_state = "ice_cube"
@@ -523,7 +531,7 @@
 		..()
 		return
 
-	if(istype(W, /obj/item/gun/energy/plasmacutter) || istype(W, /obj/item/psychic_power/psiblade/master/grand/paramount))
+	if(W.IsFlameSource() || istype(W, /obj/item/psychic_power/psiblade/master/grand/paramount))
 		if(istype(W, /obj/item/gun/energy/plasmacutter))
 			var/obj/item/gun/energy/plasmacutter/cutter = W
 			if(!cutter.slice(user))
@@ -532,15 +540,6 @@
 		to_chat(user, "<span class='notice'>Now slicing apart the wall...</span>")
 		if(do_after(user,reinf_material ? 40: 20,src))
 			to_chat(user, "<span class='notice'>You slice apart the wall!</span>")
-			if(reinf_material)
-				reinf_material.place_dismantled_product(get_turf(src))
-			dismantle()
-		return
-
-	if(istype(W, /obj/item/pickaxe/diamonddrill))
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
-		if(do_after(user,reinf_material ? 60 : 40,src))
-			to_chat(user, "<span class='notice'>You drill through the wall!</span>")
 			if(reinf_material)
 				reinf_material.place_dismantled_product(get_turf(src))
 			dismantle()
@@ -566,7 +565,7 @@
 	name = "orb of ice"
 	force = 5
 	edge = TRUE
-	maintain_cost = 6
+	maintain_cost = 8
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',

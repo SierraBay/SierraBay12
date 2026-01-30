@@ -1508,7 +1508,6 @@
 /area/ship/skrellscoutship/dock)
 "fb" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "fe" = (

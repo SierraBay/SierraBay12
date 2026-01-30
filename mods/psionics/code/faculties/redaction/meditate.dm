@@ -23,7 +23,7 @@
 	pixel_y = rand(8 * use_rank,-8 * use_rank)
 
 /singleton/psionic_power/redaction/meditate/proc/meditate_tick(mob/living/user)
-	if(do_after(user, 3 SECONDS, user, DO_SHOW_PROGRESS | DO_USER_INTERRUPT | DO_BOTH_CAN_TURN) && !user.psi.suppressed)
+	if(do_after(user, 3 SECONDS, user, DO_SHOW_PROGRESS | DO_USER_INTERRUPT | DO_BOTH_CAN_TURN | DO_USER_UNIQUE_ACT) && !user.psi.suppressed)
 		user.psi.attempt_regeneration()
 		var/use_rank = user.psi.get_rank(PSI_REDACTION)
 		for(var/i = 0; i <= use_rank; i++)
