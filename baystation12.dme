@@ -3560,6 +3560,7 @@
 #include "mods\_master_files\code\modules\overmap\distress.dm"
 #include "mods\_master_files\code\modules\overmap\panicbutton.dm"
 #include "mods\_master_files\code\modules\persistence\persistence_datum.dm"
+#include "mods\_master_files\code\modules\persistence\persistence_datum_research.dm"
 #include "mods\_master_files\code\modules\power\gravitygenerator.dm"
 #include "mods\_master_files\code\modules\projectiles\projectile\bullets.dm"
 #include "mods\_master_files\code\modules\psionics\events\mini_spasm.dm"
