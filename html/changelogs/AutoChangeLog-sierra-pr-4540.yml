@@ -1,0 +1,5 @@
+author: GarryFlint
+changes:
+  - maptweak: Фикс стыковочных контроллеров Lepidopterax (Ascent Seedship)
+  - maptweak: Микрофикс декалей 4-й палубы
+delete-after: true
