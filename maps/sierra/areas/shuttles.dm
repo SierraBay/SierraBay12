@@ -92,7 +92,7 @@
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
 /area/crucian_hangar/start
-	name = "Shuttle - Сrucian"
+	name = "Shuttle - Crucian"
 	icon_state = "shuttlered"
 	requires_power = 1
 	dynamic_lighting = 1

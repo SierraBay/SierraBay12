@@ -127,3 +127,8 @@
 
 /datum/design/autolathe/general/tape_roll
 	build_path = /obj/item/tape_roll
+
+// Material tweaks
+
+/obj/item/stock_parts/computer/hard_drive/portable
+	matter = list(MATERIAL_GLASS = 800)

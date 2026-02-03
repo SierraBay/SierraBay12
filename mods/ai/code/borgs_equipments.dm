@@ -292,6 +292,7 @@
 		/obj/item/gripper/chemistry,
 		/obj/item/stack/nanopaste,
 		/obj/item/storage/part_replacer,
+		/obj/item/device/science_tool,
 		/obj/item/device/flash
 	)
 

@@ -5,7 +5,11 @@
 	fore_dir = WEST
 	vessel_mass = 63000
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE
-	known_ships = list(/obj/overmap/visitable/ship/landable/exploration_shuttle, /obj/overmap/visitable/ship/landable/guppy)
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/exploration_shuttle,
+		/obj/overmap/visitable/ship/landable/guppy,
+		/obj/overmap/visitable/ship/landable/phaethon
+	)
 
 	icon = 'maps/sierra/icons/obj/overmap.dmi'
 	color = "#a97faa"
