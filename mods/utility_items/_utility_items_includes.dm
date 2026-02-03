@@ -31,7 +31,6 @@
 #include "code/languages.dm"
 #include "code/chemistry.dm"
 #include "code/jobs.dm"
-#include "code/ma21.dm"
 #include "code/modnye_patchi.dm"
 #include "code/bottom.dm"
 #include "code/top.dm"
