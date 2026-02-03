@@ -78,6 +78,7 @@ maps\random_ruins\exoplanet_ruins\playablecolony\playablecolony.dm
 
 Shegar - основной код
 UEDHighCommand - текстовка, помощь с тестами
+Garry Flint - Frontier Alliance: Blockade Runners extention
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

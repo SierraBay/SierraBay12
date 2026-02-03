@@ -7,5 +7,6 @@
 
 #include "code/first_colony.dm"
 #include "code/second_colony.dm"
+#include "code/facolony.dm"
 #include "code/admin_button.dm"
 #endif
