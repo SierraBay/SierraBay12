@@ -4449,6 +4449,16 @@
 /obj/item/clothing/suit/armor/pcarrier/light/nt,
 /obj/item/clothing/suit/armor/pcarrier/light/nt,
 /obj/item/clothing/suit/armor/pcarrier/light/nt,
+/obj/item/clothing/accessory/arm_guards,
+/obj/item/clothing/accessory/arm_guards,
+/obj/item/clothing/accessory/arm_guards,
+/obj/item/clothing/accessory/arm_guards,
+/obj/item/clothing/accessory/arm_guards,
+/obj/item/clothing/accessory/leg_guards,
+/obj/item/clothing/accessory/leg_guards,
+/obj/item/clothing/accessory/leg_guards,
+/obj/item/clothing/accessory/leg_guards,
+/obj/item/clothing/accessory/leg_guards,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/ship/armory)
 "AJ" = (
