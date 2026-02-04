@@ -288,3 +288,25 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/item/device/radio/headset/map_preset/facolony
 	preset_name = "Internal"
 	encryption_key = /obj/item/device/encryptionkey/map_preset/facolony
+
+/obj/machinery/door/airlock/multi_tile/facolony/command
+	name = "Airlock"
+	door_color = COLOR_COMMAND_BLUE
+	stripe_color = "#545c68"
+
+/obj/machinery/door/airlock/multi_tile/facolony/mining
+	name = "Airlock"
+	door_color = COLOR_PALE_ORANGE
+	stripe_color = "#545c68"
+
+/obj/machinery/door/airlock/multi_tile/facolony/general
+	name = "Airlock"
+	stripe_color = "#3E3D3D"
+
+/obj/machinery/door/airlock/facolony/general
+	name = "Airlock"
+	stripe_color = "#3E3D3D"
+
+/obj/machinery/door/airlock/facolony/jail
+	name = "Airlock"
+	stripe_color = "#9d2300"
