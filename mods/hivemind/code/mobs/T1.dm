@@ -345,7 +345,7 @@
 /mob/living/simple_animal/hostile/hivemind/bomber/death()
 	..()
 	gibs(loc, null, /obj/gibspawner/robot)
-	explosion(get_turf(src), 2, EX_ACT_LIGHT, turf_breaker = FALSE)
+	explosion(get_turf(src), 3, EX_ACT_LIGHT, turf_breaker = FALSE)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/hivemind/bomber/attack_target()

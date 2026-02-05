@@ -436,7 +436,10 @@ Used for quick dress-up. Also comes with several discount
 
 	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
 	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi')
-	icon_state = "syndie_helm"
+	icon_state = "syndie_helm_heavy"
+	item_state_slots = list(slot_l_hand_str = "s_helmet",
+							slot_r_hand_str = "s_helmet",
+							slot_head_str = "syndie_helm_heavy")
 	action_button_name = "Toggle Combat Mode"
 
 	armor = list(
@@ -449,7 +452,7 @@ Used for quick dress-up. Also comes with several discount
 		rad = ARMOR_RAD_RESISTANT
 		)
 	siemens_coefficient = 0.3
-	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC)
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TAJARA)
 	camera = /obj/machinery/camera/network/mercenary
 	light_overlay = "yellow_double_light"
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -485,7 +488,7 @@ Used for quick dress-up. Also comes with several discount
 
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/melee/baton,/obj/item/melee/energy/sword,/obj/item/handcuffs)
 	siemens_coefficient = 0.3
-	species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_IPC)
+	species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_IPC, SPECIES_TAJARA)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/mode = 0
 

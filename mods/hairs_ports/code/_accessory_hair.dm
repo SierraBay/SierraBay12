@@ -119,7 +119,9 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_widowmaker_alt
 	name = "Widowmaker Alt"
 	icon_state = "hair_widowmaker_alt"
-
+/datum/sprite_accessory/modpack_hairs_port/inf_ponytail4TG
+	name = "Ponytail 4 (TG)"
+	icon_state = "hair_ponytail4tg"
 
 
 

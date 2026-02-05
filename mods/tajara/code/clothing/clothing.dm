@@ -22,6 +22,14 @@
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/mask.dmi')
 
+/obj/item/clothing/mask/gas/budget/Initialize()
+	. = ..()
+	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/mask.dmi')
+
+/obj/item/clothing/mask/gas/half/Initialize()
+	. = ..()
+	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/mask.dmi')
+
 /obj/item/clothing/mask/surgical/Initialize()
 	. = ..()
 	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/mask.dmi')

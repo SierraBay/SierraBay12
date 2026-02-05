@@ -211,7 +211,7 @@ var/global/floorIsLava = 0
 						body += "[block]"
 					body+="</td>"
 				body += "</tr></table>"
-
+			// [SIERRA-EDIT] - Tajara mod, Resomi mod
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b>[FONT_NORMAL("<br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.")]<br>
 				<a href='byond://?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
@@ -219,6 +219,8 @@ var/global/floorIsLava = 0
 				\[ Crew: <a href='byond://?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
 				<a href='byond://?src=\ref[src];simplemake=human;species=Unathi;mob=\ref[M]'>Unathi</A>
 				<a href='byond://?src=\ref[src];simplemake=human;species=Skrell;mob=\ref[M]'>Skrell</A>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Tajara;mob=\ref[M]'>Tajara</A>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Resomi;mob=\ref[M]'>Resomi</A>
 				<a href='byond://?src=\ref[src];simplemake=human;species=Vox;mob=\ref[M]'>Vox</A> \] | \[
 				<a href='byond://?src=\ref[src];simplemake=nymph;mob=\ref[M]'>Nymph</A>
 				<a href='byond://?src=\ref[src];simplemake=human;species='Diona';mob=\ref[M]'>Diona</A> \] |
@@ -238,6 +240,7 @@ var/global/floorIsLava = 0
 				<a href='byond://?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
+			// [/SIERRA-EDIT] - Tajara mod, Resomi mod
 	body += {"<br><br>
 			<b>Other actions:</b>
 			<br>
