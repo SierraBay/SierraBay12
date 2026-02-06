@@ -7,7 +7,7 @@
 	mech_turn_sound = 'sound/mecha/mechstep03.ogg'
 	mech_step_sound = 'sound/machines/engine.ogg'
 	move_delay = 2 //Скорость на уровне лёгких ног
-	turn_delay = 7
+	turn_delay = 10
 	power_use = 75
 	//ХП
 	max_hp = 180
