@@ -7,6 +7,7 @@
 	spawn_positions = 1
 	minimum_character_age = list(SPECIES_HUMAN = 28)
 	ideal_character_age = 35
+	alt_titles = list("Chief")
 	economic_power = 6
 	minimal_player_age = 7
 	supervisors = "Главе Персонала"
