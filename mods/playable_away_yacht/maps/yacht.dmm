@@ -194,7 +194,6 @@
 	fab_status_flags = 1;
 	pixel_x = 5
 	},
-/obj/item/storage/box/microlathe_designs,
 /obj/structure/table/marble,
 /turf/simulated/floor/wood,
 /area/playable_yacht/relax_zone)
@@ -1802,7 +1801,6 @@
 	dir = 8
 	},
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/item/stack/material/glass/ten,
 /obj/item/stack/material/steel/ten,
 /turf/simulated/floor/tiled/monotile,

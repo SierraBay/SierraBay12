@@ -19,7 +19,7 @@ jobs:
           wget https://raw.githubusercontent.com/SierraBay/SierraBay12/dev-sierra/tools/changelog/sierra_check_changelog.py
           wget https://raw.githubusercontent.com/SierraBay/SierraBay12/dev-sierra/tools/changelog/tags.yml
       - name: Установка Python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: '3.x'
       - name: Установка зависимостей

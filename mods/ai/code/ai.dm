@@ -56,19 +56,19 @@
 	set category = "Silicon Commands"
 	set name = "Show Crew Manifest"
 
-	open_subsystem(/datum/nano_module/crew_manifest)
+	open_subsystem(/datum/nano_module/program/crew_manifest)
 
 /mob/living/silicon/ai/proc/show_crew_monitor()
 	set category = "Silicon Commands"
 	set name = "Show Crew Lifesigns Monitor"
 
-	open_subsystem(/datum/nano_module/crew_monitor)
+	open_subsystem(/datum/nano_module/program/crew_monitor)
 
 /mob/living/silicon/ai/proc/show_crew_records()
 	set category = "Silicon Commands"
 	set name = "Show Crew Records"
 
-	open_subsystem(/datum/nano_module/records)
+	open_subsystem(/datum/nano_module/program/records)
 
 
 

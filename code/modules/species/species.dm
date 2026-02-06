@@ -85,6 +85,9 @@ GLOBAL_LIST_EMPTY(mob_ref_to_species_name)
 	var/min_age = 17
 	var/max_age = 70
 
+	///Budget for traits added during character setup.
+	var/trait_budget = 4
+
 	// Speech vars.
 	var/assisted_langs = list()               // The languages the species can't speak without an assisted organ.
 	var/list/speech_sounds                    // A list of sounds to potentially play when speaking.
@@ -789,14 +792,21 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 	for (var/singleton/trait/allowed_trait in trait_list)
 		if (!allowed_trait.selectable)
 			continue
-		if (LAZYISIN(traits, allowed_trait.type))
-			continue
+		if (LAZYISIN(traits, allowed_trait.type)) //This allows you to select higher levels for selectable traits that species start with.
+			var/list/possible_levels = allowed_trait.levels
+			var/minimum_level = traits[allowed_trait.type]
+			var/cut = possible_levels.Find(minimum_level)
+			if (cut >= length(possible_levels))
+				continue
 		if (LAZYISIN(allowed_trait.forbidden_species, name))
 			continue
+		if (allowed_trait.incompatible_traits)
+			var/list/incompatibles = allowed_trait.incompatible_traits & traits
+			if (length(incompatibles))
+				continue
 		if (!allowed_trait.name)
 			continue
 		LAZYSET(allowed_traits, allowed_trait.name, allowed_trait)
-
 	return allowed_traits
 
 /singleton/species/proc/get_description(header, append, verbose = TRUE, skip_detail, skip_photo)

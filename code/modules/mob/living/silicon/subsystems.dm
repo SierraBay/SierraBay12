@@ -1,10 +1,10 @@
 /mob/living/silicon
 	var/list/silicon_subsystems_by_name = list()
 	var/list/silicon_subsystems = list(
-		/datum/nano_module/alarm_monitor/all,
+		/datum/nano_module/program/alarm_monitor/all,
 		/datum/nano_module/law_manager,
-		/datum/nano_module/email_client,
-		/datum/nano_module/crew_manifest
+		/datum/nano_module/program/email_client,
+		/datum/nano_module/program/crew_manifest
 	)
 
 
@@ -20,7 +20,7 @@
 /mob/living/silicon/robot/syndicate
 	silicon_subsystems = list(
 		/datum/nano_module/law_manager,
-		/datum/nano_module/email_client
+		/datum/nano_module/program/email_client
 	)
 
 /mob/living/silicon/Destroy()
@@ -34,7 +34,7 @@
 		init_subsystem(subsystem_type)
 
 	//[SIERRA-ADD] - AI_UPDATE
-	if(/datum/nano_module/alarm_monitor/all in silicon_subsystems)
+	if(/datum/nano_module/program/alarm_monitor/all in silicon_subsystems)
 		for(var/datum/alarm_handler/AH as anything in SSalarm.alarm_handlers)
 			AH.register_alarm(src, /mob/living/silicon/proc/receive_alarm)
 			queued_alarms[AH] = list()	// Makes sure alarms remain listed in consistent order

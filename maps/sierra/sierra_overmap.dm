@@ -5,7 +5,11 @@
 	fore_dir = WEST
 	vessel_mass = 63000
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE
-	known_ships = list(/obj/overmap/visitable/ship/landable/exploration_shuttle, /obj/overmap/visitable/ship/landable/guppy)
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/exploration_shuttle,
+		/obj/overmap/visitable/ship/landable/guppy,
+		/obj/overmap/visitable/ship/landable/phaethon
+	)
 
 	icon = 'maps/sierra/icons/obj/overmap.dmi'
 	color = "#a97faa"
@@ -13,6 +17,7 @@
 	initial_restricted_waypoints = list(
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
+		"Phaethon" = list("nav_hangar_phaethon"),
 		"Crucian" = list("nav_hangar_crucian"),
 		"Cyclopes" = list("nav_merc_dock"), //maps/antag_spawn/mercenary/mercenary.dm shuttle
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
@@ -79,6 +84,16 @@
 	vessel_size = SHIP_SIZE_TINY
 	skill_needed = SKILL_BASIC //was trained
 
+/obj/overmap/visitable/ship/landable/phaethon
+	name = "Phaethon"
+	shuttle = "Phaethon"
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 0.4 SECONDS
+	vessel_mass = 350
+	fore_dir = WEST
+	vessel_size = SHIP_SIZE_TINY
+	skill_needed = SKILL_BASIC
+
 /obj/overmap/visitable/ship/landable/crucian
 	name = "Crucian"
 	shuttle = "Crucian"
@@ -98,6 +113,11 @@
 	name = "guppy control console"
 	shuttle_tag = "Guppy"
 	req_access = list(access_guppy_helm)
+
+/obj/machinery/computer/shuttle_control/explore/phaethon
+	name = "phaethon control console"
+	shuttle_tag = "Phaethon"
+	req_access = list(access_sec_doors)
 
 /obj/machinery/computer/shuttle_control/explore/crucian
 	name = "crucian control console"

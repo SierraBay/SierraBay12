@@ -95,7 +95,7 @@
 	. = ..()
 	var/list/places_to_spawn = list()
 	for(var/turf/T in orange(2, master))
-		if(!T.density)
+		if(!T.density || !locate(/obj/structure/wall_frame) in T)
 			for(var/obj/O in T)
 				if(!O.CanPass(master, T))
 					continue

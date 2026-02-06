@@ -428,7 +428,7 @@ var/global/list/ai_verbs_default = list(
 			return TOPIC_HANDLED
 
 		if (href_list["showalerts"])
-			open_subsystem(/datum/nano_module/alarm_monitor/all)
+			open_subsystem(/datum/nano_module/program/alarm_monitor/all)
 			return TOPIC_HANDLED
 
 		//Carn: holopad requests

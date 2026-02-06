@@ -91,6 +91,13 @@
 	req_access = list(access_gun)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
+/area/command/probebay
+	name = "First Deck - Probe Bay"
+	icon = 'maps/sierra/icons/turf/areas.dmi'
+	icon_state = "bridge_gun"
+	req_access = list(access_gun)
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+
 /* ENGINEERING AREAS
  * =================
  */
@@ -227,6 +234,10 @@
 
 /area/security/sierra/equipment
 	name = "First Deck - Security - Equipment"
+	req_access = list(access_security)
+
+/area/security/sierra/restroom
+	name = "First Deck - Security - Restroom"
 	req_access = list(access_security)
 
 /area/security/sierra/interrogation

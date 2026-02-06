@@ -81,10 +81,18 @@
 	dynamic_lighting = 1
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_guppy)
+
+/area/phaethon_hangar/start
+	name = "Shuttle - Phaethon"
+	icon_state = "shuttlered"
+	requires_power = 1
+	dynamic_lighting = 1
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_sec_doors)
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
 /area/crucian_hangar/start
-	name = "Shuttle - Сrucian"
+	name = "Shuttle - Crucian"
 	icon_state = "shuttlered"
 	requires_power = 1
 	dynamic_lighting = 1

@@ -42,7 +42,7 @@
 #define DONATION_TIER_ONE_SUM    100
 #define DONATION_TIER_TWO_SUM    300
 #define DONATION_TIER_THREE_SUM  500
-#define DONATION_TIER_FOUR_SUM   1000
+#define DONATION_TIER_FOUR_SUM   700
 
 // Keep this in ascending order
 // (from the lower tier to the higher)

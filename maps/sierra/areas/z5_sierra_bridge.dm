@@ -68,7 +68,7 @@
 
 /area/bridge/nano
 	icon = 'maps/sierra/icons/turf/areas.dmi'
-	name = "Second Deck - Bridge - Entrance"
+	name = "Second Deck - Bridge - Fore"
 	icon_state = "bridge_room"
 
 /area/bridge/meeting_room
@@ -87,7 +87,7 @@
 	req_access = list()
 
 /area/bridge/hallway
-	name = "Second Deck - Bridge - Hallway"
+	name = "Second Deck - Bridge - Entrance"
 /*
 /area/bridge/storage
 	name = "Bridge - Storage"
