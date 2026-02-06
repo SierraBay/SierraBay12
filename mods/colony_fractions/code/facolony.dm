@@ -5,7 +5,7 @@
 	description = "FA Blockade Runners Outpost"
 	mappaths = list('mods/colony_fractions/maps/facolony.dmm')
 	spawn_cost = 2
-	player_cost = 8
+	player_cost = 0
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS | TEMPLATE_FLAG_NO_RADS
 	ruin_tags = RUIN_HUMAN|RUIN_HABITAT
 	ban_ruins = list(
@@ -307,6 +307,6 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "Airlock"
 	stripe_color = "#3E3D3D"
 
-/obj/machinery/door/airlock/facolony/jail
-	name = "Airlock"
+/obj/machinery/door/airlock/glass/facolony/jail
+	name = "Temporary Detention"
 	stripe_color = "#9d2300"
