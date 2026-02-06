@@ -74,9 +74,9 @@
 
 /obj/item/mech_component/attack_hand(mob/user)
 	if(!can_be_pickuped)
-		to_chat(user, SPAN_BAD("Такую тяжесть тащить только с кем-то!"))
-		to_chat(user, SPAN_GOOD("А для этого вам нужно совместно с кем-то перетащить эту часть меха на пол, куда вы потащите часть"))
-		to_chat(user, SPAN_GOOD("Или, воспользоваться тележкой!"))
+		to_chat(user, SPAN_BAD("Этот предмет слишком тяжел, чтобы перемещать его в одиночку"))
+		to_chat(user, SPAN_GOOD("Найдите напарника и вместе с ним перетягивайте этот предмет по полу в нужную вам сторону"))
+		to_chat(user, SPAN_GOOD("Грузовая тележка также позволяет перемещать тяжелые предметы"))
 		return
 	else
 		.=..()
@@ -96,7 +96,7 @@
 		return
 	var/mob/living/carbon/human/human = user
 	if(human.stamina < 60)
-		to_chat(human, SPAN_WARNING("Устал, не могу!"))
+		to_chat(human, SPAN_WARNING("Вы слишком устали, чтобы тянуть это!"))
 		return FALSE
 	human.adjust_stamina(-50)
 	if(haul_turf && haul_turf == new_turf)
@@ -106,7 +106,7 @@
 	else if(haul_turf && haul_turf != new_turf)
 		haul_turf = null
 		human.adjust_stamina(-100)
-		to_chat(human, SPAN_WARNING("Что-то вы тащите совсем в разные стороны!"))
+		to_chat(human, SPAN_WARNING("Вы и ваш напарник тянете в разные стороны! Координируйтесь!"))
 		return FALSE
 	haul_turf = new_turf
 	if(do_after(user, 10 SECONDS, src, DO_PUBLIC_UNIQUE))
