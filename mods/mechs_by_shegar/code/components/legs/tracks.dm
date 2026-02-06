@@ -15,7 +15,7 @@
 	max_repair = 50
 	repair_damage = 20
 
-	materials = list(MATERIAL_STEEL = 75000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
+	matter = list(MATERIAL_STEEL = 75000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
 
 	bump_type = HARD_BUMP
 	bump_safety = FALSE

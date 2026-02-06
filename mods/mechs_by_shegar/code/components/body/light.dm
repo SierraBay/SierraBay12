@@ -10,7 +10,7 @@
 	pilot_coverage = 100
 	climb_time = 15
 
-	materials = list(MATERIAL_STEEL = 100000, MATERIAL_ALUMINIUM = 20000, MATERIAL_PLASTIC = 10000)
+	matter = list(MATERIAL_STEEL = 100000, MATERIAL_ALUMINIUM = 20000, MATERIAL_PLASTIC = 10000)
 
 	max_hp = 75
 	min_damage = 30

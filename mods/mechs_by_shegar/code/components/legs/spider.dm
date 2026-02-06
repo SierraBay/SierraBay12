@@ -15,7 +15,7 @@
 	max_repair = 30
 	repair_damage = 30
 
-	materials = list(MATERIAL_STEEL = 48000, MATERIAL_ALUMINIUM = 5000, MATERIAL_PLASTIC = 5000)
+	matter = list(MATERIAL_STEEL = 48000, MATERIAL_ALUMINIUM = 5000, MATERIAL_PLASTIC = 5000)
 
 	bump_type = MEDIUM_BUMP
 	can_strafe = TRUE

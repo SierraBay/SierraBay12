@@ -13,7 +13,7 @@
 	hide_pilot = TRUE
 	front_modificator_damage = 1
 
-	materials = list(MATERIAL_STEEL = 135000, MATERIAL_PLASTEEL = 10000, MATERIAL_ALUMINIUM = 40000)
+	matter = list(MATERIAL_STEEL = 135000, MATERIAL_PLASTEEL = 10000, MATERIAL_ALUMINIUM = 40000)
 
 	max_heat = 200
 	heat_cooling = 8

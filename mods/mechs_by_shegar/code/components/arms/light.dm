@@ -13,7 +13,7 @@
 	repair_damage = 15
 	front_modificator_damage = 1
 
-	materials = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
+	matter = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
 
 	melee_damage = 30
 	req_material = MATERIAL_ALUMINIUM
