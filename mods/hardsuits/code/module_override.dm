@@ -103,14 +103,6 @@
 		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
 			return TRUE
 
-	for(var/obj/item/rig_module/module in installed_modules)
-		if(module.accepts_item(W,user)) //Item is handled in this proc
-			return TRUE
-
-	// Pass repair items on to the chestpiece.
-	if(chest && (istype(W,/obj/item/stack/material) || isWelder(W)))
-		return chest.use_tool(W,user)
-
 	// Lock or unlock the access panel.
 	if(W.GetIdCard())
 		if(subverted)
@@ -288,4 +280,14 @@
 			else
 				to_chat(user, "You don't see any use for \the [S].")
 			return TRUE
+
+	for(var/obj/item/rig_module/module in installed_modules)
+		if(module.accepts_item(W,user)) //Item is handled in this proc
+			return TRUE
+
+	// Pass repair items on to the chestpiece.
+	if(chest && (istype(W,/obj/item/stack/material) || isWelder(W)))
+		return chest.use_tool(W,user)
+
+
 	return ..()
