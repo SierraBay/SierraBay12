@@ -60,21 +60,22 @@
 
 /datum/shuttle/autodock/overmap/skrellscoutshuttle
 	name = "Skrellian Shuttle"
+	mothershuttle = "Skrellian Scout"
+	dock_target = "xil_shuttle"
 	warmup_time = 5
 	current_location = "nav_skrellscoutsh_dock"
+	logging_home_tag = "nav_skrellscoutsh_dock"
 	range = 2
 	shuttle_area = /area/ship/skrellscoutshuttle
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/skrell
-	mothershuttle = "Skrellian Scout"
 
 /obj/shuttle_landmark/skrellscoutshuttle/start
 	name = "Dock"
 	landmark_tag = "nav_skrellscoutsh_dock"
-	base_area = /area/ship/skrellscoutship/hangar
-	base_turf = /turf/simulated/floor/tiled/skrell
+	docking_controller = "xil_port_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/skrellscout/dock
