@@ -636,12 +636,12 @@
 
 	else
 		var/isdesignnotexist = TRUE
-		var/datum/design/autolathe/D = SSresearch.fabricator_recycle(eating)
+		var/datum/design/D = SSresearch.fabricator_recycle(eating)
 		if(D)
 			isdesignnotexist = FALSE
 			for(var/material in D.materials)
 				if(stored_material[material] < storage_capacity)
-					stored_material[material] += (D.materials[material]/4)
+					stored_material[material] += ((D.materials[material]/4)/mat_efficiency)
 		if(isdesignnotexist)
 			for(var/obj/O in eating.GetAllContents())
 				var/list/_matter = O.matter
@@ -650,7 +650,7 @@
 						if(material in unsuitable_materials)
 							continue
 						if(stored_material[material] < storage_capacity)
-							stored_material[material] += (_matter[material]/4)
+							stored_material[material] += ((_matter[material]/4)/mat_efficiency)
 		qdel(eating)
 		return TRUE
 

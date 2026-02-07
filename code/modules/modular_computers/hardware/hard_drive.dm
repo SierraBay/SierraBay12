@@ -114,7 +114,6 @@
 	EF.stored_data = data
 	EF.metadata = metadata && metadata.Copy()
 	EF.calculate_size()
-	change_disk_name() //[SIERRA ADD]
 	return save_file(EF)
 
 /// Use this proc to add data to a Data file on the drive. Unlike using save_data_file directly, this enforces exact file type match with existing file
