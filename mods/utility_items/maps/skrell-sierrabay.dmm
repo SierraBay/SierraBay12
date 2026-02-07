@@ -607,18 +607,6 @@
 /obj/machinery/hologram/holopad/longrange,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
-"cf" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/skrell/green,
-/area/ship/skrellscoutship/robotics)
 "ck" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/window/basic{
@@ -4695,6 +4683,13 @@
 	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
+"zZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/skrell/green,
+/area/ship/skrellscoutship/command/armory)
 "Ac" = (
 /obj/wallframe_spawn/reinforced_phoron/hull,
 /obj/machinery/door/blast/regular/open{
@@ -6283,13 +6278,6 @@
 /obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
-"Uf" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/skrell/green,
-/area/ship/skrellscoutship/command/armory)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -13728,7 +13716,7 @@ KD
 Va
 Fl
 eW
-cf
+jQ
 fh
 ka
 kj
@@ -13826,7 +13814,7 @@ PK
 eo
 eu
 eB
-Uf
+zZ
 eP
 Fl
 jD
