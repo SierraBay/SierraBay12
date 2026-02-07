@@ -607,6 +607,13 @@
 /obj/machinery/hologram/holopad/longrange,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
+"cf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/skrell/green,
+/area/ship/skrellscoutship/command/armory)
 "ck" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/window/basic{
@@ -687,7 +694,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "cF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
@@ -4102,7 +4109,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "sP" = (
 /turf/simulated/floor/tiled/skrell/blue,
@@ -4119,7 +4126,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 5
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "tl" = (
 /obj/structure/cable{
@@ -4683,13 +4690,6 @@
 	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
-"zZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/skrell/green,
-/area/ship/skrellscoutship/command/armory)
 "Ac" = (
 /obj/wallframe_spawn/reinforced_phoron/hull,
 /obj/machinery/door/blast/regular/open{
@@ -4716,7 +4716,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 9
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "Ak" = (
 /obj/machinery/sleeper,
@@ -4967,7 +4967,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 10
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "Dj" = (
 /obj/wallframe_spawn/reinforced_phoron/hull,
@@ -5517,7 +5517,7 @@
 /area/ship/skrellscoutship/dock)
 "Le" = (
 /obj/paint/black,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "Lj" = (
 /obj/structure/closet/radiation,
@@ -5860,7 +5860,7 @@
 "OP" = (
 /obj/paint/black,
 /obj/machinery/atmospherics/pipe/manifold/hidden/black,
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "OQ" = (
 /obj/machinery/payload_interface{
@@ -6272,7 +6272,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "TZ" = (
 /obj/machinery/appliance/cooker/grill,
@@ -6397,7 +6397,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 6
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_titanium,
 /area/ship/skrellscoutshuttle)
 "Vh" = (
 /obj/machinery/bodyscanner{
@@ -13814,7 +13814,7 @@ PK
 eo
 eu
 eB
-zZ
+cf
 eP
 Fl
 jD
