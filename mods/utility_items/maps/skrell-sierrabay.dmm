@@ -2286,7 +2286,7 @@
 /area/ship/skrellscoutshuttle)
 "hz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
@@ -2294,9 +2294,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hD" = (
@@ -2388,9 +2386,6 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
 "hP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/structure/table/rack,
 /obj/item/device/taperecorder,
 /obj/item/device/camera,
@@ -2398,9 +2393,6 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "hQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/structure/table/rack,
 /obj/item/storage/belt/archaeology,
 /obj/item/storage/belt/archaeology,
@@ -3699,10 +3691,6 @@
 	dir = 1;
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 8;
-	level = 2
-	},
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "ng" = (
@@ -4750,6 +4738,7 @@
 /obj/item/collector,
 /obj/item/collector,
 /obj/item/collector,
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "An" = (
@@ -4874,6 +4863,7 @@
 "BH" = (
 /obj/structure/table/standard,
 /obj/machinery/reagent_temperature,
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/crew/labs)
 "BK" = (
@@ -6295,12 +6285,6 @@
 /obj/machinery/appliance/cooker/grill,
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/rec)
-"Uf" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/simulated/floor/tiled/skrell/red,
-/area/ship/skrellscoutship/crew/labs)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -10762,7 +10746,7 @@ Gw
 Gw
 yV
 kR
-hz
+wi
 nc
 zK
 QR
@@ -11068,7 +11052,7 @@ Gw
 Gw
 yV
 hs
-Uf
+wi
 hS
 zK
 kq
