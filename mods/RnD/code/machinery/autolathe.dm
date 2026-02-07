@@ -69,8 +69,6 @@
 	var/list/unsuitable_materials = list()
 	var/list/suitable_materials //List that limits autolathes to eating mats only in that list.
 
-	var/list/selectively_recycled_types = list()
-
 	var/global/list/error_messages = list(
 		ERR_NOLICENSE = "Not enough license points left.",
 		ERR_NOTFOUND = "Design data not found.",
@@ -597,7 +595,7 @@
 	if(is_robot_module(eating))
 		return FALSE
 
-	if(!have_recycling && !(istype(eating, /obj/item/stack) || can_recycle(eating)))
+	if(!have_recycling)
 		to_chat(user, SPAN_WARNING("[src] does not support material recycling."))
 		return FALSE
 
@@ -661,18 +659,6 @@
 	. = ..()
 	if(istype(new_state))
 		updateUsrDialog()
-
-/obj/machinery/fabricator/proc/can_recycle(obj/O)
-	if(!selectively_recycled_types)
-		return FALSE
-	if(!LAZYLEN(selectively_recycled_types))
-		return FALSE
-
-	for(var/type in selectively_recycled_types)
-		if(istype(O, type))
-			return TRUE
-
-	return FALSE
 
 /obj/machinery/fabricator/proc/queue_design(datum/computer_file/binary/design/design_file, amount=1)
 	if(!design_file || !amount)

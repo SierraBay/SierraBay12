@@ -5,6 +5,13 @@
 
 	return sanitizeSafe(D.stored_data, max_length = MAX_LNAME_LEN)
 
+/obj/item/stock_parts/computer/hard_drive/proc/change_disk_name()
+	var/datum/computer_file/data/text/D = find_file_by_name("DISK_NAME")
+	if(!istype(D))
+		return null
+
+	name = get_disk_name()
+
 
 /obj/item/stock_parts/computer/hard_drive/portable/
 	var/disk_name
