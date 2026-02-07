@@ -15,6 +15,8 @@
 	max_repair = 30
 	repair_damage = 30
 
+	matter = list(MATERIAL_STEEL = 48000, MATERIAL_ALUMINIUM = 5000, MATERIAL_PLASTIC = 5000)
+
 	bump_type = MEDIUM_BUMP
 	can_strafe = TRUE
 	front_modificator_damage = 1
@@ -32,7 +34,7 @@
 	turn_diogonal_slowdown = 0.5
 
 	weight = 150
-	
+
 	should_have_doubled_owner = TRUE
 	doubled_owner_type = /obj/item/mech_component/doubled_legs/spider
 

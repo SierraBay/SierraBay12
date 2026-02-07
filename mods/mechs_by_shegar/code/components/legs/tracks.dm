@@ -7,13 +7,15 @@
 	mech_turn_sound = 'sound/mecha/mechstep03.ogg'
 	mech_step_sound = 'sound/machines/engine.ogg'
 	move_delay = 2 //Скорость на уровне лёгких ног
-	turn_delay = 7
+	turn_delay = 10
 	power_use = 75
 	//ХП
 	max_hp = 180
 	min_damage = 100
 	max_repair = 50
 	repair_damage = 20
+
+	matter = list(MATERIAL_STEEL = 75000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
 
 	bump_type = HARD_BUMP
 	bump_safety = FALSE

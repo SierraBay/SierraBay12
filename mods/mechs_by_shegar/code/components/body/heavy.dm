@@ -14,6 +14,8 @@
 	back_modificator_damage = 3
 	front_modificator_damage = 0.5
 
+	matter = list(MATERIAL_STEEL = 210000, MATERIAL_URANIUM = 10000, MATERIAL_PLASTEEL = 40000, MATERIAL_ALUMINIUM = 40000)
+
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL
 	//Тепло
