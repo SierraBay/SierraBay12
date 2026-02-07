@@ -636,12 +636,12 @@
 
 	else
 		var/isdesignnotexist = TRUE
-		for(var/datum/design/item/D in SSresearch.all_designs)
-			if(D.build_path == eating.type)
-				isdesignnotexist = FALSE
-				for(var/material in D.materials)
-					if(stored_material[material] < storage_capacity)
-						stored_material[material] += (D.materials[material]/4)
+		var/datum/design/autolathe/D = SSresearch.fabricator_recycle(eating)
+		if(D)
+			isdesignnotexist = FALSE
+			for(var/material in D.materials)
+				if(stored_material[material] < storage_capacity)
+					stored_material[material] += (D.materials[material]/4)
 		if(isdesignnotexist)
 			for(var/obj/O in eating.GetAllContents())
 				var/list/_matter = O.matter

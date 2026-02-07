@@ -735,10 +735,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	id = 1
 
 /obj/machinery/computer/rdconsole/attack_ai(mob/user)
-	src.physical_attack_hand(user)
+	return ui_interact(user)
 
-/obj/machinery/fabricator/rnd/attack_ai(mob/user)
-	src.physical_attack_hand(user)
+/obj/machinery/fabricator/attack_ai(mob/user)
+	return ui_interact(user)
 
 #undef SCREEN_MAIN
 #undef SCREEN_PROTO
