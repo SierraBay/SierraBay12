@@ -250,11 +250,15 @@
 /obj/item/gun/projectile/automatic/sol_smg/empty
 	starts_loaded = FALSE
 
+// Old Lathe
 /datum/fabricator_recipe/arms_ammo/hidden/magazine_smg_sol
 	name = "ammunition (SOLMAG submachine gun)"
 	path = /obj/item/ammo_magazine/smg_sol
 
-/obj/item/ammo_magazine/smg_sol
+// Modded MODPACK_RND Lathe
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_sol
+	name = "ammunition (SOLMAG submachine gun)"
+	build_path = /obj/item/ammo_magazine/smg_sol
 
 /obj/item/ammo_magazine/smg_sol
 	name = "SOLMAG magazine"

@@ -8,6 +8,8 @@
 	has_hardpoints = list(HARDPOINT_BACK)
 	power_use = 5
 
+	matter = list(MATERIAL_STEEL = 54000, MATERIAL_ALUMINIUM = 10000, MATERIAL_PLASTIC = 10000)
+
 	max_hp = 100
 	max_repair = 80
 	min_damage = 30

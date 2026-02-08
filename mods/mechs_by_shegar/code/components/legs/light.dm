@@ -17,6 +17,8 @@
 	repair_damage = 15
 	front_modificator_damage = 1
 
+	matter = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
+
 	req_material = MATERIAL_ALUMINIUM
 	//Тепло
 	max_heat = 100
@@ -30,7 +32,7 @@
 	turn_slowdown = 1.5
 	turn_diogonal_slowdown = 1
 	bump_type = MEDIUM_BUMP
-	
+
 	weight = 50
 
 /obj/item/mech_component/propulsion/light/right
