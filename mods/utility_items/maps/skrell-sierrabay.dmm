@@ -685,14 +685,13 @@
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/maintenance/power)
 "cC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/skrell,
-/area/ship/skrellscoutshuttle)
+/turf/simulated/floor/tiled/skrell/green,
+/area/ship/skrellscoutship/command/armory)
 "cE" = (
 /obj/paint/black,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -704,17 +703,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
-/obj/machinery/power/apc/critical{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24;
-	req_access = list("ACCESS_SKRELLSCOUT")
-	},
 /obj/structure/cable/cyan{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc/debug/skrell{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "cM" = (
@@ -1248,7 +1245,8 @@
 	frequency = 1331;
 	master_tag = "xil_port_dock";
 	pixel_x = -24;
-	pixel_y = -6
+	pixel_y = -6;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/door/airlock/external/glass{
 	id_tag = "xil_port_dock_interior_door";
@@ -1499,7 +1497,8 @@
 	tag_exterior_door = "xil_port_dock_exterior_door";
 	tag_interior_door = "xil_port_dock_interior_door";
 	tag_interior_sensor = "xil_port_dock_sensor_chamber";
-	frequency = 1331
+	frequency = 1331;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -2170,7 +2169,8 @@
 	pixel_x = 24;
 	master_tag = "xil_scoutship_fore_dock_controller";
 	frequency = 1331;
-	pixel_y = 6
+	pixel_y = 6;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -3140,10 +3140,10 @@
 /area/ship/skrellscoutship/robotics)
 "ka" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/window/basic{
+/obj/floor_decal/industrial/outline/blue,
+/obj/structure/window/boron_reinforced{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "kc" = (
@@ -3436,7 +3436,8 @@
 	master_tag = "xil_port_dock";
 	pixel_z = 1;
 	pixel_x = 24;
-	pixel_y = 6
+	pixel_y = 6;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/door/airlock/external/glass{
 	id_tag = "xil_port_dock_exterior_door";
@@ -3540,7 +3541,8 @@
 /obj/machinery/access_button/airlock_interior{
 	frequency = 1331;
 	master_tag = "xil_scoutship_fore_dock_controller";
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -3589,11 +3591,11 @@
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/wings/starboard)
 "mn" = (
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/structure/cable/cyan{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/power/smes/buildable/max_cap_in_out,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "mq" = (
@@ -3927,7 +3929,8 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "xil_shuttle_sensor";
-	pixel_x = -23
+	pixel_x = -23;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "xil_shuttle";
@@ -4629,7 +4632,8 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "xil_port_dock";
-	pixel_x = -23
+	pixel_x = -23;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "xil_port_dock_pump";
@@ -5269,13 +5273,14 @@
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
 "IJ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/skrell/green,
-/area/ship/skrellscoutship/command/armory)
+/turf/simulated/floor/tiled/skrell,
+/area/ship/skrellscoutshuttle)
 "IQ" = (
 /obj/machinery/light/skrell,
 /obj/machinery/telecomms/processor/map_preset/skrellscoutship,
@@ -5403,7 +5408,8 @@
 	tag_exterior_sensor = "xil_shuttle_exterior_sensor";
 	tag_interior_door = "xil_shuttle_inner";
 	tag_interior_sensor = "xil_shuttle_sensor";
-	dir = 1
+	dir = 1;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
@@ -5411,7 +5417,8 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1331;
 	id_tag = "xil_scoutship_fore_dock_sensor";
-	pixel_x = -24
+	pixel_x = -24;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	airflow_dest = "xil_scoutship_fore_dock_controller";
@@ -5474,7 +5481,8 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1332;
 	id_tag = "xil_exterior_sensor";
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /turf/simulated/floor/plating,
 /area/ship/skrellscoutshuttle)
@@ -5984,6 +5992,12 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "xil_shuttle_pump_out_internal"
 	},
+/obj/machinery/dummy_airlock_controller{
+	req_access = list("ACCESS_SKRELLSCOUT");
+	id_tag = "xil_shuttle";
+	pixel_y = -24;
+	dir = 1
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "PJ" = (
@@ -6145,7 +6159,8 @@
 "RO" = (
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/vending/security{
-	scan_id = 0
+	scan_id = 0;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutship/dock)
@@ -6440,7 +6455,8 @@
 	frequency = 1331;
 	master_tag = "xil_shuttle";
 	pixel_z = 1;
-	pixel_x = -24
+	pixel_x = -24;
+	req_access = list("ACCESS_SKRELLSCOUT")
 	},
 /obj/machinery/door/airlock/external{
 	frequency = 1331;
@@ -14015,8 +14031,8 @@ aZ
 aZ
 bJ
 kI
-cC
-cC
+IJ
+IJ
 xL
 Ya
 oa
@@ -14127,8 +14143,8 @@ Fl
 Fl
 Fl
 fa
-IJ
-IJ
+cC
+cC
 eS
 Fl
 fb
@@ -14517,7 +14533,7 @@ vI
 vI
 vI
 vI
-LV
+vI
 LV
 LV
 tN
@@ -14531,7 +14547,7 @@ Le
 tN
 LV
 LV
-LV
+Fl
 Fl
 Fl
 Fl
@@ -14722,7 +14738,7 @@ fF
 vI
 vI
 vI
-LV
+vI
 LV
 LV
 tN
@@ -14734,7 +14750,7 @@ Le
 tN
 LV
 LV
-LV
+Fl
 Fl
 Fl
 Fl
