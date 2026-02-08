@@ -212,6 +212,11 @@
 /area/ship/skrellscoutship/crew/rec)
 "aS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc/debug/skrell{
+	dir = 8;
+	pixel_x = -22
+	},
+/obj/structure/cable/cyan,
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "aT" = (
@@ -703,14 +708,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
 	},
-/obj/structure/cable/cyan{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/power/apc/debug/skrell{
-	dir = 8;
-	pixel_x = -22
+/obj/structure/cable/cyan{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
@@ -6201,6 +6203,9 @@
 "SQ" = (
 /obj/structure/table/rack,
 /obj/item/storage/toolbox/electrical,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/skrell,
 /area/ship/skrellscoutshuttle)
 "SS" = (
