@@ -1,0 +1,4 @@
+author: Roche Hendson
+changes:
+  - tweak: Пробуждение от травмы головы более не добивает саму голову.
+delete-after: true
