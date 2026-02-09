@@ -113,19 +113,20 @@
 	info = "<I>Джошуа, <br><br>Я всё-таки оживил этот треклятый мультипорт. Теперь ты снова можешь через него и заправляться, и подключать генератор. Если ты, конечно, опять про него не забудешь. <br><br>— G. </I>"
 
 // Engineering warning tag
-/obj/item/sticky_pad/tag_out
-	var/template_text =  "\
+/obj/item/sticky_pad/tag_out/sierra
+	template_text =  "\
 	\[table\]\[cell\]\[center\]\[table\]\[cell\]<pre>СИСТЕМА / КОМПОНЕНТ / ИДЕНТИФИКАТОР</pre>\[field\]\[cell\]<pre>ДАТА</pre>\[field\]\[row\]\[cell\]<pre>ПОЛОЖЕНИЕ ИЛИ СОСТОЯННИЕ ПОМЕЧЕННОГО ПРИБОРА</pre>\[field\]\[cell\]<pre>ВРЕМЯ</pre>\[field\]\
-	\[/table\]\[row\]\[cell\]\[center\]\[h1\]ОПАСНОСТЬ\[/h1\]\[h2\]НЕ ИСПОЛЬЗОВАТЬ\[/h2\]\[h3\]ИСПОЛЬЗОВАНИЕ ДАННОГО ПРИБОРА ПОДВЕРГАЕТ ОПАСНОСТИ ПЕРСОНАЛ ИЛИ УГРОЖАЕТ ЦЕЛОСТНОСТИ ПРИБОРА. ЭТОТ ПРИБОР НЕ ДОЛЖЕН ИСПОЛЬЗОВАТЬСЯ, ПОКА ЭТО ПРЕДУПРЕЖДЕНИЕ НЕ БУДЕТ УДАЛЕНО УПОЛНОПОЧЕННЫМ СОТРУДНИКОМ.\
+	\[/table\]\[row\]\[cell\]\[center\]\[h1\]ОПАСНО\[/h1\]\[h2\]НЕ ИСПОЛЬЗОВАТЬ\[/h2\]\[h3\]ИСПОЛЬЗОВАНИЕ ДАННОГО ПРИБОРА ПОДВЕРГАЕТ ОПАСНОСТИ ПЕРСОНАЛ ИЛИ УГРОЖАЕТ ЦЕЛОСТНОСТИ ПРИБОРА. ЭТОТ ПРИБОР НЕ ДОЛЖЕН ИСПОЛЬЗОВАТЬСЯ, ПОКА ЭТО ПРЕДУПРЕЖДЕНИЕ НЕ БУДЕТ УДАЛЕНО УПОЛНОПОЧЕННЫМ СОТРУДНИКОМ.\
 	\[/h3\]\[row\]\[cell\]\[center\]\[table\]\[cell\]<pre>ПОДПИСЬ СОТРУДНИКА, ПРИКРЕПИВШЕГО ПРЕДУПРЕЖДЕНИЕ</pre>\[field\]\[cell\]<pre>ПОДПИСИ СОТРУДНИКОВ, ПРОВЕРИВШИХ ПРЕДУПРЕЖДЕНИЕ</pre>\[field\]\[row\]\[cell\]<pre>ПОДПИСЬ УПОЛНОМОЧЕННОГО СОТРУДНИКА</pre>\[field\]\[cell\]\
 	<pre>ПОДПИСЬ ПРЕДСТАВИТЕЛЯ ПОСТАВЩИКА</pre>\[field\]\[/table\]\[/center\]\[/table\]\
 	"
 
-/obj/item/sticky_pad/tag_out/Initialize()
+/obj/item/sticky_pad/tag_out/sierra/Initialize()
 	. = ..()
+	color = COLOR_ORANGE
 	written_text = template_text
 
 
-/obj/item/sticky_pad/tag_out/attack_hand(mob/user)
+/obj/item/sticky_pad/tag_out/sierra/attack_hand(mob/user)
 	. = ..()
 	written_text = template_text
