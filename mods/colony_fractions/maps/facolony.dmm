@@ -1697,6 +1697,7 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/facolony/command,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "gU" = (
@@ -3140,6 +3141,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
 "nW" = (
@@ -3207,9 +3209,11 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/facolony/general,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_north"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/dorms)
 "oi" = (
@@ -3660,6 +3664,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "pU" = (
@@ -3854,7 +3859,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/mining,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo)
 "qT" = (
@@ -3910,7 +3915,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/general,
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/science)
 "rb" = (
@@ -4880,6 +4885,7 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/facolony/general,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_south"
 	},
@@ -5059,7 +5065,7 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/mining,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
 "vP" = (
@@ -5072,6 +5078,7 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/science)
 "vU" = (
@@ -5755,7 +5762,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/mining,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/messhall)
 "yP" = (
@@ -6285,6 +6292,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo)
 "BP" = (
@@ -7433,6 +7441,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "HB" = (
@@ -8653,7 +8662,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/multi_tile/facolony/command,
+/obj/machinery/door/airlock/facolony/command,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Np" = (
@@ -8978,10 +8987,11 @@
 /obj/machinery/atmospherics/pipe/cap/visible/scrubbers,
 /obj/machinery/atmospherics/pipe/cap/visible/supply,
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/general,
+/obj/machinery/door/airlock/facolony/general,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_north"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/dorms)
 "Pe" = (
@@ -9395,7 +9405,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/machinery/door/airlock/multi_tile/facolony/general,
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "QF" = (
@@ -9598,6 +9608,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/messhall)
 "RF" = (
@@ -9689,7 +9700,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/mining,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/messhall)
 "Sa" = (
@@ -10019,7 +10030,7 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/general,
+/obj/machinery/door/airlock/facolony/general,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "TC" = (
@@ -10109,6 +10120,7 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/messhall)
 "TM" = (
@@ -10298,7 +10310,7 @@
 	req_access = list()
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/multi_tile/facolony/general,
+/obj/machinery/door/airlock/facolony/general,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_south"
 	},
@@ -11520,23 +11532,6 @@
 
 (1,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 tD
 Pv
@@ -11579,23 +11574,6 @@ QP
 QP
 "}
 (2,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 hB
 uP
 oi
@@ -11639,23 +11617,6 @@ QP
 QP
 "}
 (3,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 nZ
 dq
 Nt
@@ -11699,23 +11660,6 @@ QP
 QP
 "}
 (4,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 dq
 Uy
@@ -11759,23 +11703,6 @@ QP
 QP
 "}
 (5,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 dq
 eT
@@ -11819,23 +11746,6 @@ QP
 QP
 "}
 (6,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 RQ
 dq
 uq
@@ -11880,23 +11790,6 @@ QP
 "}
 (7,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 dq
 gG
 OO
@@ -11940,23 +11833,6 @@ QP
 "}
 (8,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 dq
 Do
 Do
@@ -11999,23 +11875,6 @@ QP
 QP
 "}
 (9,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 dq
 dq
@@ -12059,23 +11918,6 @@ QP
 QP
 "}
 (10,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 Rf
 uo
@@ -12119,23 +11961,6 @@ uo
 QP
 "}
 (11,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 eJ
 uo
 uo
@@ -12179,23 +12004,6 @@ uo
 uo
 "}
 (12,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 jS
@@ -12239,23 +12047,6 @@ cW
 uo
 "}
 (13,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Hh
 jI
 pk
@@ -12299,23 +12090,6 @@ Lo
 uo
 "}
 (14,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Hh
 pk
 je
@@ -12359,23 +12133,6 @@ Lo
 uo
 "}
 (15,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Gl
 pk
 Xi
@@ -12419,23 +12176,6 @@ pk
 cW
 "}
 (16,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 sJ
 Xx
 Xx
@@ -12479,23 +12219,6 @@ ip
 Lo
 "}
 (17,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Gl
 Xi
 mU
@@ -12539,23 +12262,6 @@ MJ
 DV
 "}
 (18,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Gl
 Xi
 Ch
@@ -12599,23 +12305,6 @@ Is
 HT
 "}
 (19,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Gl
 Xi
 yH
@@ -12659,23 +12348,6 @@ mb
 Mc
 "}
 (20,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Gl
 Xi
 sP
@@ -12719,23 +12391,6 @@ MJ
 RN
 "}
 (21,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 sJ
 Xx
 Xx
@@ -12779,23 +12434,6 @@ ip
 Lo
 "}
 (22,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 zM
 pk
 Xi
@@ -12839,23 +12477,6 @@ pk
 Jd
 "}
 (23,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 Gl
 Xi
@@ -12899,23 +12520,6 @@ Lo
 uo
 "}
 (24,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 zM
 pk
@@ -12959,23 +12563,6 @@ Lo
 uo
 "}
 (25,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 Gl
@@ -13019,23 +12606,6 @@ Lo
 uo
 "}
 (26,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 pk
@@ -13080,23 +12650,6 @@ uo
 "}
 (27,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 pk
 uo
@@ -13140,23 +12693,6 @@ QP
 "}
 (28,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 pk
 QP
@@ -13199,23 +12735,6 @@ pk
 QP
 "}
 (29,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 uo
 pk
@@ -13261,23 +12780,6 @@ fk
 (30,1,1) = {"
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 pk
 pk
@@ -13319,23 +12821,6 @@ Qr
 EN
 "}
 (31,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 nC
@@ -13381,23 +12866,6 @@ EN
 (32,1,1) = {"
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 Sz
@@ -13439,23 +12907,6 @@ rK
 EN
 "}
 (33,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 uo
@@ -13501,23 +12952,6 @@ sG
 (34,1,1) = {"
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 kU
 Sz
@@ -13559,23 +12993,6 @@ gU
 EN
 "}
 (35,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 uo
 uo
@@ -13620,23 +13037,6 @@ EN
 "}
 (36,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 Xb
@@ -13679,23 +13079,6 @@ an
 EN
 "}
 (37,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 uo
 pk
@@ -13740,23 +13123,6 @@ EN
 "}
 (38,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 nZ
@@ -13799,23 +13165,6 @@ bq
 EN
 "}
 (39,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 uo
 uo
@@ -13860,23 +13209,6 @@ EN
 "}
 (40,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 uo
@@ -13920,23 +13252,6 @@ EN
 "}
 (41,1,1) = {"
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 uo
 uo
 uo
@@ -13979,23 +13294,6 @@ bq
 EN
 "}
 (42,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 hQ
 aU
@@ -14041,23 +13339,6 @@ Yg
 (43,1,1) = {"
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 pk
 ys
@@ -14099,23 +13380,6 @@ aU
 pk
 "}
 (44,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14163,23 +13427,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 ys
 uo
 QP
@@ -14219,23 +13466,6 @@ pk
 pk
 "}
 (46,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14283,23 +13513,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 hQ
 QP
 QP
@@ -14339,23 +13552,6 @@ QP
 QP
 "}
 (48,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14410,23 +13606,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Ec
 Ec
 Ec
@@ -14459,23 +13638,6 @@ QP
 QP
 "}
 (50,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14530,23 +13692,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Ec
 Ec
 hL
@@ -14579,23 +13724,6 @@ QP
 QP
 "}
 (52,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14650,23 +13778,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Ec
 Ec
 gJ
@@ -14699,23 +13810,6 @@ QP
 QP
 "}
 (54,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14767,23 +13861,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 pk
 pk
 pk
@@ -14819,23 +13896,6 @@ QP
 QP
 "}
 (56,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
@@ -14890,23 +13950,6 @@ QP
 QP
 QP
 QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 Ec
 Ec
 Ec
@@ -14939,23 +13982,6 @@ QP
 QP
 "}
 (58,1,1) = {"
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
