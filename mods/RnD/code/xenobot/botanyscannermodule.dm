@@ -1,12 +1,13 @@
 
-/datum/design/item/scanner_flora
+/datum/design/item/modularcomponent/accessory/scanner_flora
 	name = "flora scanner module"
+	category = "Computer Parts"
 	desc = "A flora scanner module. It can scan and analyze various flora genes."
 	id = "scan_flora"
 	req_tech = list(TECH_BIO = 3, TECH_MATERIAL = 2)
 	materials = list(MATERIAL_STEEL = 1000, MATERIAL_GLASS = 1000, MATERIAL_SILVER = 1000)
 	build_path = /obj/item/stock_parts/computer/scanner/flora
-	sort_string = "ZAGDS"
+	sort_string = "VBZDB"
 
 
 /obj/item/stock_parts/computer/scanner/flora
