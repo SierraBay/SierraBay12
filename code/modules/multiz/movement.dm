@@ -378,6 +378,7 @@
 			return
 	owner.reset_view(null)
 	owner.z_eye = null
+	owner.client.reload_fov() //SIERRA-ADD
 	qdel(src)
 
 /atom/movable/z_observer/z_down/follow()
@@ -387,6 +388,7 @@
 		return
 	owner.reset_view(null)
 	owner.z_eye = null
+	owner.client.reload_fov() //SIERRA-ADD
 	qdel(src)
 
 /atom/movable/z_observer/Destroy()
