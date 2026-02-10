@@ -225,12 +225,6 @@
 		/obj/item/gun/projectile/pistol/magnum_pistol = 1,
 		/obj/item/ammo_magazine/pistol/double = 3,
 		/obj/item/ammo_magazine/magnum = 1,
-		/obj/item/clothing/suit/armor/pcarrier/tan/tactical = 4,
-		/obj/item/clothing/head/helmet/tactical = 4,
-		/obj/item/clothing/accessory/leg_guards/tactical = 4,
-		/obj/item/clothing/accessory/arm_guards/tactical = 4,
-		/obj/item/clothing/accessory/storage/pouches/tan = 4,
-		/obj/item/clothing/accessory/armor_plate/tactical = 4,
 	)
 
 	////////
