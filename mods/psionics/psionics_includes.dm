@@ -28,7 +28,6 @@
 #include "code/equipment/psipower_cryokinesis.dm"
 #include "code/equipment/psipower_electrokinesis.dm"
 #include "code/equipment/psipower_engineering.dm"
-#include "code/equipment/psipower_gun.dm"
 #include "code/equipment/psipower_medical.dm"
 #include "code/equipment/psipower_orbs.dm"
 #include "code/equipment/psipower_tinker.dm"

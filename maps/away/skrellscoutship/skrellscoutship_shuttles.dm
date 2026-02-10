@@ -68,13 +68,12 @@
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/skrell
+	dock_target = "xil_shuttle"
 	mothershuttle = "Skrellian Scout"
 
 /obj/shuttle_landmark/skrellscoutshuttle/start
 	name = "Dock"
 	landmark_tag = "nav_skrellscoutsh_dock"
-	base_area = /area/ship/skrellscoutship/hangar
-	base_turf = /turf/simulated/floor/tiled/skrell
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/skrellscout/dock
