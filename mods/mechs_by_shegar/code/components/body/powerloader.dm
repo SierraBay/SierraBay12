@@ -12,6 +12,7 @@
 	repair_damage = 10
 	front_modificator_damage = 1
 
+	matter = list(MATERIAL_STEEL = 20000)
 
 	max_heat = 100
 	heat_cooling = 7

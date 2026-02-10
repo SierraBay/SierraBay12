@@ -86,23 +86,57 @@
 	whitelisted = list(SPECIES_RESOMI)
 
 
+/datum/gear/eyes/resomi/visor
+	display_name = "(Resomi) sun visor"
+	path = /obj/item/clothing/glasses/sunglasses/lenses/visor
+	flags = GEAR_HAS_COLOR_SELECTION
+	sort_category = "Xenowear"
+	whitelisted = list(SPECIES_RESOMI)
+
+
 /datum/gear/eyes/security/resomi
-	display_name = "(Resomi) sun sechud lenses"
+	display_name = "(Resomi) sun sechud eyewear"
 	path = /obj/item/clothing/glasses/hud/security/lenses
 	sort_category = "Xenowear"
 	whitelisted = list(SPECIES_RESOMI)
 
 /datum/gear/eyes/security/resomi/New()
-	return
+	var/list/options = list()
+	options["sun sechud lenses"] = /obj/item/clothing/glasses/hud/security/lenses
+	options["sun sechud visor"] = /obj/item/clothing/glasses/hud/security/lenses/visor
+	gear_tweaks += new/datum/gear_tweak/path(options)
 
 
 /datum/gear/eyes/medical/resomi
-	display_name = "(Resomi) sun medhud lenses"
+	display_name = "(Resomi) sun medhud eyewear"
 	path = /obj/item/clothing/glasses/hud/health/lenses
 	sort_category = "Xenowear"
 	whitelisted = list(SPECIES_RESOMI)
 
 /datum/gear/eyes/medical/resomi/New()
+	var/list/options = list()
+	options["sun medhud lenses"] = /obj/item/clothing/glasses/hud/health/lenses
+	options["sun medhud visor"] = /obj/item/clothing/glasses/hud/health/lenses/visor
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
+
+/datum/gear/eyes/meson/resomi/visor
+	display_name = "(Resomi) sun meson visor"
+	path = /obj/item/clothing/glasses/meson/lenses/visor
+	sort_category = "Xenowear"
+	whitelisted = list(SPECIES_RESOMI)
+
+/datum/gear/eyes/meson/resomi/visor/New()
+	return
+
+
+/datum/gear/eyes/science/resomi/visor
+	display_name = "(Resomi) sun science visor"
+	path = /obj/item/clothing/glasses/science/lenses/visor
+	sort_category = "Xenowear"
+	whitelisted = list(SPECIES_RESOMI)
+
+/datum/gear/eyes/science/resomi/visor/New()
 	return
 
 
@@ -180,3 +214,12 @@
 /datum/gear/plush_toy/New()
 	toy_list["resomi plush"] = /obj/item/toy/plushie/resomi
 	..()
+
+/datum/gear/suit/resomi/kms_uniform
+	display_name = "(Resomi) small kms uniform"
+	path = /obj/item/clothing/under/resomi_kms_uniform
+	cost = 1
+	slot = slot_w_uniform
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_KMS)
+	flags = null

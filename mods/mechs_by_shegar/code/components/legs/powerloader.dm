@@ -19,6 +19,8 @@
 	emp_heat_generation = 50
 	heat_generation = 2
 
+	matter = list(MATERIAL_STEEL = 10000)
+
 	bump_type = MEDIUM_BUMP
 	max_speed = 26
 	min_speed = 23

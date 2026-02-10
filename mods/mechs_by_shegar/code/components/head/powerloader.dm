@@ -16,4 +16,6 @@
 	heat_cooling = 7
 	emp_heat_generation = 50
 
+	matter = list(MATERIAL_STEEL = 5000)
+
 	weight = 70
