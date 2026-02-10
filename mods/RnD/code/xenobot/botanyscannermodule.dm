@@ -98,7 +98,7 @@
 	dat += "<td style='padding: 8px; font-weight: bold; color: #64c8ff; width: 40%;'><b>Endurance</b></td>"
 	dat += "<td style='padding: 8px; color: #e0e0e0;'>[grown_seed.get_trait(TRAIT_ENDURANCE)]</td>"
 	if(user_skill_level >= 1)
-		dat += "<td style='padding: 8px; color: #888; font-size: 0.9em; text-align: right;'>[SSplants.gene_tag_masks[GENE_METABOLISM] || "N/A"]</td>"
+		dat += "<td style='padding: 8px; color: #888; font-size: 0.9em; text-align: right;'>[SSplants.gene_tag_masks[GENE_HARDINESS] || "N/A"]</td>"
 	dat += "</tr>"
 	dat += "<tr style='border-bottom: 1px solid rgba(255, 255, 255, 0.1);'>"
 	dat += "<td style='padding: 8px; font-weight: bold; color: #64c8ff;'><b>Yield</b></td>"
