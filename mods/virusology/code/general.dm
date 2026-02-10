@@ -247,3 +247,17 @@
 	if(breath && !internal && LAZYLEN(virus2) > 0 && prob(10))
 		for(var/mob/living/carbon/M in view(1,src))
 			src.spread_disease_to(M)
+
+/mob/living/carbon/human/proc/cure_all_viruses(gain_antibodies = 0)
+	if (LAZYLEN(virus2) > 0)
+		for (var/ID in virus2)
+			var/datum/disease2/disease/V = virus2[ID]
+			V.cure(src, gain_antibodies)
+
+			// making sure that it is removed
+			if(virus2[ID])
+				virus2.Remove("[ID]")
+
+/mob/living/carbon/human/rejuvenate()
+	cure_all_viruses()
+	..()

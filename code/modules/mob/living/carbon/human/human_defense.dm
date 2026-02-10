@@ -55,7 +55,7 @@ meteor_act
 			tally += organ_rel_size[zone]
 		for(var/zone in organ_rel_size)
 			def_zone = zone
-			. += .() * organ_rel_size/tally
+			. += .() * organ_rel_size[zone]/tally
 		return
 	return ..()
 /*[SIERRA-REMOVE] - IPC-MODS убираем потому что оверрайдим а тут наследство стоит, и вызывает другие проки
