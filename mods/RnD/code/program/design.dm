@@ -340,6 +340,9 @@
 /datum/design/item/weapon/large_grenade
 	category = list("Misc")
 
+
+/obj/item/stock_parts/computer/scanner/flora
+
 //////////////////////////////items/////////////////////////////////////////
 
 
