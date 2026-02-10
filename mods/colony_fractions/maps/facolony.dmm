@@ -375,7 +375,6 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/wallframe_spawn/reinforced,
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/machinery/door/blast/shutters{
 	name = "Fore-Port cargo shutters";
 	id_tag = "facolony_foreport_blasts"
@@ -2228,7 +2227,6 @@
 /area/template_noop)
 "jK" = (
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/machinery/door/blast/shutters/open{
 	_signal_procs = colony_rnd;
 	dir = 2;
@@ -3558,6 +3556,19 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/unspecified)
+"pz" = (
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/wallframe_spawn/reinforced,
+/obj/paint/brown,
+/obj/machinery/door/blast/shutters{
+	id_tag = "facolony_forestar_blasts";
+	name = "Fore-Starboard shutters"
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/medbay)
 "pE" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -7031,7 +7042,7 @@
 	},
 /obj/machinery/button/blast_door{
 	pixel_y = 34;
-	pixel_x = 6;
+	pixel_x = -6;
 	id_tag = "facolony_trade_windows";
 	name = "Trade Zone blasts window-control";
 	color = "#67AB93";
@@ -7108,7 +7119,6 @@
 	id_tag = "facolony_shipmed"
 	},
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/wallframe_spawn/reinforced/polarized{
 	id = "colony_surgery1"
 	},
@@ -8095,6 +8105,7 @@
 	pixel_x = -5;
 	name = "Lucky Coin"
 	},
+/obj/item/storage/pill_bottle/three_eye,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Kn" = (
@@ -8481,7 +8492,6 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/wallframe_spawn/reinforced,
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/machinery/door/blast/shutters{
 	name = "Fore-Port cargo shutters";
 	id_tag = "facolony_foreport_blasts"
@@ -10582,7 +10592,6 @@
 /area/map_template/facolony/surgery)
 "Vl" = (
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -11313,7 +11322,6 @@
 "YP" = (
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/paint/brown,
-/obj/paint_stripe/gunmetal,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -12566,7 +12574,7 @@ nf
 Vc
 aL
 Nr
-bR
+pz
 CO
 Pu
 dm
