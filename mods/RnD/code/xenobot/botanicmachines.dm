@@ -103,7 +103,7 @@
 			return TRUE
 
 		if(seed.seed.name == "new line" || isnull(SSplants.seeds[seed.seed.name]))
-			seed.seed.uid = SSplants.seeds.len + 1
+			seed.seed.uid = LAZYLEN(SSplants.seeds) + 1
 			seed.seed.name = "[seed.seed.uid]"
 			SSplants.seeds[seed.seed.name] = seed.seed
 
@@ -248,7 +248,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "mods-botany_editor.tmpl", "Bioballistic Delivery System", 470, 450)
+		ui = new(user, src, ui_key, "mods-botany_editor.tmpl", "Bioballistic Delivery System", 600, 650)
 		ui.set_initial_data(data)
 		ui.open()
 
@@ -263,24 +263,44 @@
 			return TRUE
 
 
-		var/expertise
+		var/expertise = 0
 		if(user)
-			seed.modified += rand(20,60) + user.skill_fail_chance(SKILL_BOTANY, 100, SKILL_TRAINED)
-			expertise = max(0, user.get_skill_value(SKILL_BOTANY) - SKILL_TRAINED)
-			seed.modified = max(0, seed.modified - 10*expertise)
+			expertise = user.get_skill_value(SKILL_BOTANY)
+
+		// Calculate damage based on expertise level
+		// No skill: 50-100 damage | Max skill: 5-20 damage
+		var/damage_min
+		var/damage_max
+
+		if(expertise >= 4)
+			damage_min = 10
+			damage_max = 25
+		else if(expertise == 3)
+			damage_min = 15
+			damage_max = 35
+		else if(expertise == 2)
+			damage_min = 25
+			damage_max = 55
+		else if(expertise == 1)
+			damage_min = 37
+			damage_max = 77
+		else
+			damage_min = 60
+			damage_max = 100
+
+		// Add calculated damage
+		seed.modified += rand(damage_min, damage_max)
+		if(seed.modified >= 100)
+			seed.modified = 100
+			failed_task = TRUE
 
 		if(!isnull(SSplants.seeds[seed.seed.name]))
 			seed.seed = seed.seed.diverge(1)
 			seed.seed_type = seed.seed.name
 			seed.update_seed()
 
-		if(prob(seed.modified * expertise))
-			failed_task = TRUE
-			seed.modified = 100
-
-		seed.seed.apply_gene(loaded_gene)
-		seed.modified += round(rand(10, 15) * expertise)
-		seed.modified = max(seed.modified, 100)
+		if(!failed_task)
+			seed.seed.apply_gene(loaded_gene)
 
 		start_task()
 		return TRUE

@@ -65,13 +65,12 @@ Used In File(s): \code\modules\hydroponics\seed_machines.dm
     }
 
     .isolator-genes {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
-        flex-wrap: wrap;
     }
 
     .isolator-gene-item {
-        flex: 0 1 calc(50% - 6px);
         background: rgba(50, 100, 150, 0.2);
         border: 1px solid rgba(100, 200, 255, 0.4);
         border-radius: 3px;
