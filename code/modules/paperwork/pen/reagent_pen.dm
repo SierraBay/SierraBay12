@@ -57,4 +57,4 @@
 
 /obj/item/pen/reagent/sleepy/New()
 	..()
-	reagents.add_reagent(/datum/reagent/chloralhydrate, 5)
+	reagents.add_reagent(/datum/reagent/vecuronium_bromide, 5)
