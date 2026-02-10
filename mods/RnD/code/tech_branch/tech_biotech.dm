@@ -108,7 +108,7 @@
 	required_tech_levels = list()
 	cost = 1500
 
-	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerconsole", "bodyscannerdisplay","reagent_grinder","chemheater", "reagsubl","noreactsyringe")
+	unlocks_designs = list("cryo_cell", "sleeper", "bodyscanner", "bodyscannerconsole", "bodyscannerdisplay","reagent_grinder","chemheater", "reagsubl","noreactsyringe", "microscope", "dnaforensics")
 
 /datum/technology/bio/add_med_tools
 	name = "Additional Medical Tools"
