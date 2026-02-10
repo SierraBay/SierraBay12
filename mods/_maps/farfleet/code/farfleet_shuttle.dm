@@ -1,6 +1,7 @@
 /datum/shuttle/autodock/overmap/snz
 	name = "SNZ Baydarka"
 	warmup_time = 10
+	move_time = 30
 	dock_target = "snz_shuttle"
 	current_location = "nav_hangar_snz"
 	range = 1

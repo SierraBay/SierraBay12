@@ -15,7 +15,7 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/ballistics/WillContain()
 	return list(
-		/obj/item/ammo_magazine/rifle = 12,
+		/obj/item/storage/box/ammo/heavy = 2,
 		/obj/item/gun/projectile/automatic/assault_rifle/heltek = 2,
 		/obj/item/gun/projectile/sniper/panther = 1
 	)
@@ -77,7 +77,8 @@
 		/obj/item/clothing/head/helmet/tactical,
 		/obj/item/storage/backpack/satchel/leather/black,
 		/obj/item/device/binoculars,
-		/obj/item/material/knife/combat
+		/obj/item/material/knife/combat,
+		/obj/item/clothing/accessory/glassesmod/nvg
 	)
 
 
@@ -105,7 +106,8 @@
 		/obj/item/clothing/head/helmet/tactical,
 		/obj/item/storage/backpack/satchel/leather/black,
 		/obj/item/device/binoculars,
-		/obj/item/material/knife/combat
+		/obj/item/material/knife/combat,
+		/obj/item/clothing/accessory/glassesmod/nvg
 	)
 
 /obj/structure/closet/secure_closet/farfleet/fleet
@@ -162,7 +164,8 @@
 		/obj/item/clothing/head/surgery/black,
 		/obj/item/clothing/suit/storage/hazardvest/white,
 		/obj/item/clothing/under/iccgn/utility,
-		/obj/item/storage/backpack/satchel/leather/navy
+		/obj/item/storage/backpack/satchel/leather/navy,
+		/obj/item/clothing/suit/surgicalapron
 	)
 
 /obj/structure/closet/secure_closet/farfleet/fleet_cpt
@@ -275,8 +278,8 @@
 
 /obj/machinery/suit_storage_unit/pioneer
 	name = "pioneer corps voidsuit storage unit"
-	suit= /obj/item/clothing/suit/space/void/pioneer
-	helmet = /obj/item/clothing/head/helmet/space/void/pioneer
+	suit= /obj/item/clothing/suit/space/void/farfleeticcgn
+	helmet = /obj/item/clothing/head/helmet/space/void/farfleeticcgn
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath

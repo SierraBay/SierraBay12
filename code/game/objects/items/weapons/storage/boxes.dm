@@ -178,6 +178,16 @@
 	use_sound = 'sound/effects/closet_open.ogg'
 
 
+/obj/item/storage/box/ammo/jaguar
+	name = "box of Jaguar Stik"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/machine_pistol = 7)
+
+/obj/item/storage/box/ammo/heavy
+	name = "box of LA-700 Magazine"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/rifle = 7)
+
 /obj/item/storage/box/ammo/blanks
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."
