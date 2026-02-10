@@ -1131,7 +1131,7 @@
 		if(z_eye)
 			reset_view(null)
 			QDEL_NULL(z_eye)
-			reset_view() //SIERRA-ADD FOV
+			client.reload_fov() //SIERRA-ADD FOV
 			return
 		var/turf/above = GetAbove(src)
 		if(TURF_IS_MIMICING(above))
@@ -1186,7 +1186,7 @@
 		if(z_eye)
 			reset_view(null)
 			QDEL_NULL(z_eye)
-			reset_view() //SIERRA-ADD FOV
+			client.reload_fov() //SIERRA-ADD FOV
 			return
 		var/turf/T = get_turf(src)
 		if(TURF_IS_MIMICING(T) && HasBelow(T.z))
