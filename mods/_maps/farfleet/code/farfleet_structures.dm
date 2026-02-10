@@ -65,18 +65,19 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/hud/security/prot/aviators,
+		/obj/item/clothing/glasses/ballistic/security,
 		/obj/item/clothing/glasses/tacgoggles,
-		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/clothing/mask/balaclava,
+		/obj/item/storage/firstaid/light,
 		/obj/item/gun/energy/gun,
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/leather/black
+		/obj/item/storage/backpack/satchel/leather/black,
+		/obj/item/device/binoculars,
+		/obj/item/material/knife/combat
 	)
 
 
@@ -89,23 +90,22 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/hud/security/prot/aviators,
+		/obj/item/clothing/glasses/ballistic/security,
 		/obj/item/clothing/glasses/tacgoggles,
-		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/gloves/thick/combat,
 		/obj/item/device/flashlight/maglight,
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/device/megaphone,
-		/obj/item/clothing/mask/balaclava,
+		/obj/item/storage/firstaid/light,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
 		/obj/item/clothing/mask/gas/swat,
-		/obj/item/clothing/gloves/wristwatch,
 		/obj/item/gun/energy/gun,
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/leather/black
+		/obj/item/storage/backpack/satchel/leather/black,
+		/obj/item/device/binoculars,
+		/obj/item/material/knife/combat
 	)
 
 /obj/structure/closet/secure_closet/farfleet/fleet
@@ -115,7 +115,7 @@
 
 /obj/structure/closet/secure_closet/farfleet/fleet/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas,
 		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/gloves/thick,
@@ -130,11 +130,12 @@
 
 /obj/structure/closet/secure_closet/farfleet/fleet/engi/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
 		/obj/item/clothing/glasses/welding/superior,
+		/obj/item/clothing/glasses/ballistic/engi,
 		/obj/item/clothing/head/hardhat/orange,
 		/obj/item/clothing/suit/storage/hazardvest,
 		/obj/item/clothing/under/iccgn/utility,
@@ -148,12 +149,13 @@
 
 /obj/structure/closet/secure_closet/farfleet/fleet/med/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/belt/medical,
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
-		/obj/item/clothing/glasses/hud/health,
+		/obj/item/clothing/glasses/ballistic/medic,
+		/obj/item/clothing/accessory/storage/white_drop,
 		/obj/item/clothing/suit/storage/toggle/labcoat,
 		/obj/item/clothing/gloves/latex/nitrile,
 		/obj/item/clothing/under/rank/medical/scrubs/black,
@@ -170,14 +172,14 @@
 
 /obj/structure/closet/secure_closet/farfleet/fleet_cpt/WillContain()
 	return list(
+		/obj/item/storage/belt/holster/security,
 		/obj/item/melee/telebaton,
-		/obj/item/storage/firstaid/sleekstab,
+		/obj/item/storage/firstaid/light,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
-		/obj/item/gun/projectile/pistol/magnum_pistol,
 		/obj/item/clothing/gloves/wristwatch/gold,
 		/obj/item/clothing/under/iccgn/service_command,
 		/obj/item/storage/backpack/satchel/leather/navy
@@ -190,8 +192,9 @@
 
 /obj/structure/closet/secure_closet/farfleet/css/WillContain()
 	return list(
+		/obj/item/storage/belt/holster/security,
 		/obj/item/melee/telebaton,
-		/obj/item/storage/firstaid/sleekstab,
+		/obj/item/storage/firstaid/light,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/accessory/storage/holster/armpit,
 		/obj/item/clothing/mask/gas,
@@ -203,7 +206,31 @@
 		/obj/item/ammo_magazine/pistol/nullglass = 2,
 		/obj/item/device/flash/advanced,
 		/obj/item/implanter/psi = 2,
-		/obj/item/storage/backpack/satchel/leather/black
+		/obj/item/storage/backpack/satchel/leather/black,
+		/obj/item/storage/photo_album,
+		/obj/item/device/camera_film,
+		/obj/item/device/camera,
+		/obj/item/device/taperecorder,
+		/obj/item/device/tape/random
+	)
+
+/obj/structure/closet/secure_closet/guncabinet/farfleet/equipment
+	name = "Armory Equipment"
+	req_access = list(access_away_iccgn_captain)
+
+/obj/structure/closet/secure_closet/guncabinet/farfleet/equipment/WillContain()
+	return list(
+		/obj/item/clothing/accessory/storage/holster/thigh = 4,
+		/obj/item/gun/projectile/pistol/optimus = 3,
+		/obj/item/gun/projectile/pistol/magnum_pistol = 1,
+		/obj/item/ammo_magazine/pistol/double = 3,
+		/obj/item/ammo_magazine/magnum = 1,
+		/obj/item/clothing/suit/armor/pcarrier/tan/tactical = 4,
+		/obj/item/clothing/head/helmet/tactical = 4,
+		/obj/item/clothing/accessory/leg_guards/tactical = 4,
+		/obj/item/clothing/accessory/arm_guards/tactical = 4,
+		/obj/item/clothing/accessory/storage/pouches/tan = 4,
+		/obj/item/clothing/accessory/armor_plate/tactical = 4,
 	)
 
 	////////
