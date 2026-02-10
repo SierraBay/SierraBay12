@@ -15,7 +15,7 @@
 
 /obj/structure/closet/secure_closet/guncabinet/farfleet/ballistics/WillContain()
 	return list(
-		/obj/item/storage/box/ammo/heavy = 2,
+		/obj/item/storage/box/ammo/heavy = 3,
 		/obj/item/gun/projectile/automatic/assault_rifle/heltek = 2,
 		/obj/item/gun/projectile/sniper/panther = 1
 	)
@@ -224,10 +224,8 @@
 /obj/structure/closet/secure_closet/guncabinet/farfleet/equipment/WillContain()
 	return list(
 		/obj/item/clothing/accessory/storage/holster/thigh = 4,
-		/obj/item/gun/projectile/pistol/optimus = 3,
-		/obj/item/gun/projectile/pistol/magnum_pistol = 1,
-		/obj/item/ammo_magazine/pistol/double = 3,
-		/obj/item/ammo_magazine/magnum = 1,
+		/obj/item/gun/projectile/pistol/optimus = 4,
+		/obj/item/ammo_magazine/pistol/double = 4
 	)
 
 	////////

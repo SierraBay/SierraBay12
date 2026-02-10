@@ -29,7 +29,7 @@
 
 #define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Magnitogorsk")
 /obj/overmap/visitable/ship/farfleet/New()
-	name = "ICCGN PC [RECON_SHIP_PREFIX], \a [name]"
+	name = "GCNV [RECON_SHIP_PREFIX], \a [name]"
 	for(var/area/ship/farfleet/A)
 		A.name = "\improper [name] - [A.name]"
 		GLOB.using_map.area_purity_test_exempt_areas += A.type

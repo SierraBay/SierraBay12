@@ -75,3 +75,58 @@
 		</div>
 		<p><i>Ченков В.П.</i></p>
 	"}
+
+//Voidsuit
+
+/obj/item/clothing/head/helmet/space/void/farfleeticcgn
+	name = "iccgn pioneer helmet"
+	desc = "The deep orange visor recessed into the helmet provides a surprisingly wide view of the outside world while keeping everything inside safe and sound."
+	icon_state = "iccgn_helm"
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_SMALL,
+		laser = ARMOR_LASER_SMALL,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_SMALL
+		)
+	siemens_coefficient = 0.3
+	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC)
+	light_overlay = "explorer_light"
+
+/obj/item/clothing/suit/space/void/farfleeticcgn
+	name = "iccgn pioneer voidsuit"
+	desc = "Outfitted with a large pauldron intended to face towards danger, this Confederate suit is built to resist small arms fire while on patrol along the frontiers of space."
+	icon_state = "rig_iccgn"
+	armor = list(
+		melee = ARMOR_MELEE_RESISTANT,
+		bullet = ARMOR_BALLISTIC_PISTOL,
+		laser = ARMOR_LASER_HANDGUNS,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_PADDED,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_SMALL
+		)
+	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/melee/baton,/obj/item/melee/energy/sword,/obj/item/handcuffs)
+	siemens_coefficient = 0.3
+	species_restricted = list(SPECIES_HUMAN,SPECIES_IPC)
+
+/obj/item/clothing/suit/space/void/farfleeticcgn/prepared
+	helmet = /obj/item/clothing/head/helmet/space/void/farfleeticcgn
+	boots = /obj/item/clothing/shoes/magboots
+	tank = /obj/item/tank/oxygen
+	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON
+
+
+//Ammo Box
+
+/obj/item/storage/box/ammo/jaguar
+	name = "box of Jaguar Stik"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/machine_pistol = 7)
+
+/obj/item/storage/box/ammo/heavy
+	name = "box of LA-700 Magazine"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/rifle = 7)
