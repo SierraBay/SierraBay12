@@ -28,8 +28,8 @@
 	path = /obj/item/storage/box/syndie_kit/toxin
 
 /datum/uplink_item/item/stealthy_weapons/sleepy
-	name = "Paralytic Pen"
-	desc = "Looks and works like a pen, but prick someone with it, and 30 seconds later, they'll be on the ground mumbling."
+	name = "Sleepy Pen"
+	desc = "Looks and works like a pen, but prick someone with it, and 5 seconds later, they'll be on the ground mumbling, but if there is Diloven in the body, drug may not work."
 	item_cost = 20
 	path = /obj/item/pen/reagent/sleepy
 
