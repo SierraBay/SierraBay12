@@ -33,6 +33,7 @@
 
 /obj/item/stock_parts/computer/scanner/flora/proc/user_level_skillcheck(mob/user)
 	// Scanning flora is a complex task, but this module's advanced algorithms and databases make it more accessible.
+	user_skill_level = 0
 	if(user.skill_check(SKILL_BOTANY, SKILL_TRAINED))
 		user_skill_level = 1 //basic info revealed
 	if(user.skill_check(SKILL_BOTANY, SKILL_EXPERIENCED))
