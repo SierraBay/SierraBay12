@@ -136,7 +136,7 @@ LEGACY_RECORD_STRUCTURE(virus_records, virus_record)
 		var/mob/living/carbon/human/H = mob
 		H.cure_virus(uniqueID)
 		var/immunity_boost = rand(25, 50)
-		H.immunity = min(H.immunity + immunity_boost, H.immunity_norm)
+		H.immunity = min(H.immunity + immunity_boost, H.immunity_norm * 1.5)
 		// On virus cure, give a small boost to immunity to help prevent instant reinfection with another virus
 
 	if (mob_gains_antigens)

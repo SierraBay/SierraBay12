@@ -144,7 +144,7 @@
 	to_chat(owner, SPAN_NOTICE(FONT_GIANT("<B>What happened...?</B>")))
 	alert(owner, "You have taken massive brain damage! You will not be able to remember the events leading up to your injury.", "Brain Damaged")
 	if (owner.psi)
-		owner.psi.check_latency_trigger(20, "physical trauma")
+		owner.psi.check_latency_trigger(20, "physical trauma", TRUE) //[SIERRA-EDIT] PSIONIC
 
 /obj/item/organ/internal/brain/Process()
 	if(owner)

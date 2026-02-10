@@ -1,6 +1,0 @@
-author: ВашНикнейм
-changes:
-  - maptweak: Ангар Skrellship заменен стыковочным доком
-  - maptweak: Фикс доступов APC и Air Alarm Петрова
-  - maptweak: Кнопки КПП доков больше не требуют доступа. И др. общие фиксы
-delete-after: true

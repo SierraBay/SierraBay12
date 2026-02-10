@@ -58,12 +58,3 @@
 	cost = 1
 	slot = slot_shoes
 	flags = GEAR_HAS_COLOR_SELECTION
-
-/* /datum/gear/suit/resomi/kms_uniform
-	display_name = "(Resomi) small kms uniform"
-	path = /obj/item/clothing/under/resomi_kms_uniform
-	cost = 1
-	slot = slot_w_uniform
-	allowed_branches = list(/datum/mil_branch/contractor)
-	allowed_factions = list(FACTION_KMS)
-	flags = null */
