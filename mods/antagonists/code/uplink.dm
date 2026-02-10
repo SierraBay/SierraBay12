@@ -99,3 +99,11 @@
 	desc = "Silencer fittable with barrel-threaded guns with 10mm caliber, such MP6 or MSI-220."
 	item_cost = 8
 	path = /obj/item/silencer/medium
+
+// Sleepy Pen
+
+/datum/uplink_item/item/stealthy_weapons/sleepy
+	name = "Sleepy Pen"
+	desc = "Looks and works like a pen, but prick someone with it, and 5 seconds later, they'll be on the ground mumbling, but if there is Diloven in the body, drug may not work."
+	item_cost = 20
+	path = /obj/item/pen/reagent/sleepy

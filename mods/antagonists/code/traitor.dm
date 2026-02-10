@@ -422,3 +422,9 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 /obj/item/device/spy_bug
 	on_turf_icon = 'mods/antagonists/icons/obj/bug_on_turf.dmi'
+
+//Sleepy Pen
+
+/obj/item/pen/reagent/sleepy/New()
+	..()
+	reagents.add_reagent(/datum/reagent/chloralhydrate, 5)
