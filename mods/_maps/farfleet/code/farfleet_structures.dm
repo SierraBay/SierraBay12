@@ -141,7 +141,8 @@
 		/obj/item/clothing/head/hardhat/orange,
 		/obj/item/clothing/suit/storage/hazardvest,
 		/obj/item/clothing/under/iccgn/utility,
-		/obj/item/storage/backpack/satchel/leather/navy
+		/obj/item/storage/backpack/satchel/leather/navy,
+		/obj/item/clothing/accessory/ubac
 	)
 
 /obj/structure/closet/secure_closet/farfleet/fleet/med
