@@ -1,6 +1,7 @@
 ///Функция заставляет персонажа покинуть пассажирку меха. Источников может быть много
 /mob/living/exosuit/proc/leave_passenger(mob/user)// Пассажир сам покидает меха
 	user.dropInto(get_turf(src))
+	user.reset_view()
 	user.Life()
 	if(passenger_compartment.left_back_passenger == user)
 		passenger_compartment.left_back_passenger = null
