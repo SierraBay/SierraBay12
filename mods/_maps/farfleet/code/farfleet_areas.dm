@@ -62,6 +62,12 @@
 	req_access = list(access_away_iccgn)
 	holomap_color = HOLOMAP_AREACOLOR_SECURITY
 
+/area/ship/farfleet/crew/brig/interrogation
+	name = "\improper Interrogation"
+	icon_state = "red"
+	req_access = list(access_away_iccgn)
+	holomap_color = HOLOMAP_AREACOLOR_SECURITY
+
 /area/ship/farfleet/crew/brig/emergency_armory
 	name = "\improper Emergency Armory"
 	icon_state = "red"
@@ -128,6 +134,12 @@
 	name = "\improper Droptroops Section"
 	icon_state = "locker"
 	req_access = list(access_away_iccgn, access_away_iccgn_droptroops)
+	holomap_color = HOLOMAP_AREACOLOR_EXPLORATION
+
+/area/ship/farfleet/barracks/briefingroom
+	name = "\improper Briefing Room"
+	icon_state = "red"
+	req_access = list(access_away_iccgn)
 	holomap_color = HOLOMAP_AREACOLOR_EXPLORATION
 
 /area/ship/farfleet/barracks/armory
