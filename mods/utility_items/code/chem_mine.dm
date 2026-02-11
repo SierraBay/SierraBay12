@@ -64,20 +64,20 @@
 			if(!user.unequip_item())
 				return
 			user.drop_from_inventory(src)
-			user.visible_message("<span class='danger'>[user.name] finished planting mine. </span>")
+			user.visible_message(SPAN_DANGER("[user.name] finished planting mine."))
 			log_game("[key_name(user)] planted [src.name]")
 
 /obj/item/mine/chem_mine/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W,/obj/item/device/assembly/igniter) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly/igniter/det = W
 		if(!det.secured)
-			to_chat(user, "<span class='warning'>Igniter must be secured with screwdriver.</span>")
+			to_chat(user, SPAN_WARNING("Igniter must be secured with screwdriver."))
 			return
 		if(!user.unEquip(det, src))
 			return
 		path = 1
 		log_and_message_admins("has attached \a [W] to \the [src].")
-		to_chat(user, "<span class='notice'>You add [W] to the metal casing.</span>")
+		to_chat(user, SPAN_WARNING("You add [W] to the metal casing."))
 		playsound(src.loc, 'sound/items/Screwdriver2.ogg', 25, -3)
 		stage = 1
 		detonator = det
@@ -85,21 +85,21 @@
 		if(stage == 1)
 			path = 1
 			if(length(beakers))
-				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
+				to_chat(user, SPAN_NOTICE("You lock the assembly."))
 				SetName("mine")
 			else
-				to_chat(user, "<span class='notice'>You lock the empty assembly.</span>")
+				to_chat(user, SPAN_NOTICE("You lock the empty assembly."))
 				SetName("mine")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			icon_state = initial(icon_state) +"_not_act"
 			stage = 2
 		else if(stage == 2)
 			if(active && user.skill_fail_prob(SKILL_DEVICES, 100, SKILL_MAX+1, 0.2))
-				to_chat(user, "<span class='warning'>You trigger the assembly!</span>")
+				to_chat(user, SPAN_WARNING("You trigger the assembly!"))
 				detonate()
 				return
 			else
-				to_chat(user, "<span class='notice'>You unlock the assembly.</span>")
+				to_chat(user, SPAN_NOTICE("You unlock the assembly."))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
 				SetName("unsecured mine with [length(beakers)] containers")
 				icon_state = initial(icon_state) +"_not_act"
@@ -110,18 +110,18 @@
 	else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
 		if(length(beakers) == 2)
-			to_chat(user, "<span class='warning'>The mine can not hold more containers.</span>")
+			to_chat(user, SPAN_WARNING("The mine can not hold more containers."))
 			return
 		else
 			if(W.reagents.total_volume)
 				if(!user.unEquip(W, src))
 					return
-				to_chat(user, "<span class='notice'>You add \the [W] to the assembly.</span>")
+				to_chat(user, SPAN_NOTICE("You add \the [W] to the assembly."))
 				beakers += W
 				stage = 1
 				SetName("unsecured mine with [length(beakers)] containers[detonator?" and detonator":""]")
 			else
-				to_chat(user, "<span class='warning'>\The [W] is empty.</span>")
+				to_chat(user, SPAN_WARNING("\The [W] is empty."))
 	else if(istype(W, /obj/item/device/paint_sprayer))
 		if(src.anchored)
 			playsound(get_turf(src), 'sound/effects/spray3.ogg', 30, 1, -6)
