@@ -124,8 +124,3 @@
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/darkr
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/femine
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(asarobes)
-
-/datum/gear/suit/sc_labcoat
-	display_name = "robotic bathrobe"
-	path = /obj/item/clothing/suit/sc_labcoat
-	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/roboticist,   )
