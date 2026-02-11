@@ -139,4 +139,4 @@
 	..()
 	if(machine_visual && machine_visual != A)
 		machine_visual.remove_visual(src)
-		src.check_fov()
+	src.check_fov()
