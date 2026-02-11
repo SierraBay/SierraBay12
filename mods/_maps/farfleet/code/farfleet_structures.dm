@@ -78,7 +78,11 @@
 		/obj/item/storage/backpack/satchel/leather/black,
 		/obj/item/device/binoculars,
 		/obj/item/material/knife/combat,
-		/obj/item/clothing/accessory/glassesmod/nvg
+		/obj/item/clothing/accessory/glassesmod/nvg,
+		/obj/item/clothing/suit/armor/pcarrier/tan,
+		/obj/item/clothing/accessory/storage/pouches/tan,
+		/obj/item/clothing/accessory/leg_guards/tactical,
+		/obj/item/clothing/accessory/arm_guards/tactical
 	)
 
 
@@ -107,7 +111,11 @@
 		/obj/item/storage/backpack/satchel/leather/black,
 		/obj/item/device/binoculars,
 		/obj/item/material/knife/combat,
-		/obj/item/clothing/accessory/glassesmod/nvg
+		/obj/item/clothing/accessory/glassesmod/nvg,
+		/obj/item/clothing/suit/armor/pcarrier/tan,
+		/obj/item/clothing/accessory/storage/pouches/tan,
+		/obj/item/clothing/accessory/leg_guards/tactical,
+		/obj/item/clothing/accessory/arm_guards/tactical
 	)
 
 /obj/structure/closet/secure_closet/farfleet/fleet
