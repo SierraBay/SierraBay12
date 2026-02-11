@@ -66,7 +66,7 @@
 
 //ICCGN space gear. Robust and sturdy.
 /obj/item/clothing/head/helmet/space/void/iccgn
-	name = "iccgn helmet"
+	name = "iccgn pioneer helmet"
 	desc = "The deep orange visor recessed into the helmet provides a surprisingly wide view of the outside world while keeping everything inside safe and sound."
 	icon_state = "iccgn_helm"
 	armor = list(
@@ -83,7 +83,7 @@
 	light_overlay = "explorer_light"
 
 /obj/item/clothing/suit/space/void/iccgn
-	name = "iccgn voidsuit"
+	name = "iccgn pioneer voidsuit"
 	desc = "Outfitted with a large pauldron intended to face towards danger, this Confederate suit is built to resist small arms fire while on patrol along the frontiers of space."
 	icon_state = "rig_iccgn"
 	armor = list(
