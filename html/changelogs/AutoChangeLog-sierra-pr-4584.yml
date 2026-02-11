@@ -1,0 +1,4 @@
+author: Builder13
+changes:
+  - bugfix: Фикс возможности ручного запуска спасательного пода
+delete-after: true

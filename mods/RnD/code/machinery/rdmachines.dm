@@ -17,7 +17,7 @@
 	queue_max = 16
 
 	have_disk = FALSE
-	have_recycling = FALSE
+	have_recycling = TRUE
 	have_design_selector = FALSE
 
 	var/obj/machinery/computer/rdconsole/linked_console
