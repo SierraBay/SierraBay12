@@ -3432,7 +3432,6 @@
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/shuttle_landmark/skrellscoutshuttle/start,
 /obj/machinery/access_button/airlock_exterior{
 	frequency = 1331;
 	master_tag = "xil_port_dock";
@@ -4248,6 +4247,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
+"uz" = (
+/obj/floor_decal/industrial/outline/blue,
+/obj/structure/window/boron_reinforced{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor/tiled/skrell/green,
+/area/ship/skrellscoutship/robotics)
 "uB" = (
 /obj/paint/black,
 /obj/wallframe_spawn/reinforced_phoron/hull,
@@ -6474,6 +6481,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/shuttle_landmark/skrellscoutshuttle/start,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/skrellscoutshuttle)
 "Vy" = (
@@ -6594,6 +6602,12 @@
 	pixel_x = -6
 	},
 /obj/item/stack/flag/teal,
+/obj/item/tank/hydrogen,
+/obj/item/tank/hydrogen,
+/obj/item/tank/hydrogen,
+/obj/item/tank/hydrogen,
+/obj/item/tank/hydrogen,
+/obj/item/tank/hydrogen,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "WQ" = (
@@ -13747,7 +13761,7 @@ Fl
 eW
 jQ
 fh
-ka
+uz
 kj
 SN
 PT
@@ -13849,7 +13863,7 @@ Fl
 jD
 fM
 jF
-ka
+uz
 kj
 Pd
 PT

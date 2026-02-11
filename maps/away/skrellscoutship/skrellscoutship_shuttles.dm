@@ -58,10 +58,15 @@
 	name = "Uncharted Space"
 	landmark_tag = "nav_skrellscout_start"
 
+/obj/shuttle_landmark/skrellscout/dock
+	name = "Skrellian Scout Docking Port"
+	landmark_tag = "nav_skrellscout_dock"
+
 /datum/shuttle/autodock/overmap/skrellscoutshuttle
 	name = "Skrellian Shuttle"
 	warmup_time = 5
 	current_location = "nav_skrellscoutsh_dock"
+	dock_target = "xil_shuttle"
 	range = 2
 	shuttle_area = /area/ship/skrellscoutshuttle
 	defer_initialisation = TRUE
@@ -72,13 +77,10 @@
 	mothershuttle = "Skrellian Scout"
 
 /obj/shuttle_landmark/skrellscoutshuttle/start
-	name = "Dock"
+	name = "Docking Port"
 	landmark_tag = "nav_skrellscoutsh_dock"
+	docking_controller = "xil_port_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
-
-/obj/shuttle_landmark/skrellscout/dock
-	name = "Skrellian Scout Docking Port"
-	landmark_tag = "nav_skrellscout_dock"
 
 /obj/shuttle_landmark/skrellscoutshuttle/altdock
 	name = "Docking Port"
