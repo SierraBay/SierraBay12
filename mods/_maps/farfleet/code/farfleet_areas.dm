@@ -144,8 +144,8 @@
 	req_access = list(access_away_iccgn)
 	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
 
-/area/ship/farfleet/medbay/medtechstorage
-	name = "\improper Technical Medical Storage"
+/area/ship/farfleet/medbay/morgue
+	name = "\improper Morgue"
 	icon_state = "medbay"
 	req_access = list(access_away_iccgn)
 
