@@ -356,3 +356,8 @@
 	display_name = "moonlight robe"
 	allowed_roles = SERVICE_ROLES
 	path = /obj/item/clothing/suit/storage/hooded/moonrobe
+
+/datum/gear/suit/sc_labcoat
+	display_name = "robotic bathrobe"
+	path = /obj/item/clothing/suit/sc_labcoat
+	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/roboticist,   )
