@@ -177,6 +177,7 @@
 	desc = "A sturdy metal box with several warning symbols on the front.<br>WARNING: Live ammunition. Misuse may result in serious injury or death."
 	use_sound = 'sound/effects/closet_open.ogg'
 
+
 /obj/item/storage/box/ammo/blanks
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."
