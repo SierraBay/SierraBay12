@@ -1,44 +1,98 @@
 {{if data.gameover}}
-	<center><h2>Game Over!</h2>
-	<h3>{{:data.information}}</h3>
-	{{:helper.link('New Game', null, { "new_game" : 1 })}}</center>
+	<html><head><style>
+		body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);}
+		.container {margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 15px; padding: 20px; border: 2px solid #f72585; box-shadow: 0 0 20px rgba(247, 37, 133, 0.5); }
+		.header { text-align: center; color: #f72585; text-shadow: 0 0 10px rgba(247, 37, 133, 0.8); margin-bottom: 20px; font-size: 16px; }
+		.game-over { background: rgba(247, 37, 133, 0.3); padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px solid #f72585; }
+		.stat-box { background: rgba(76, 201, 240, 0.2); padding: 12px; border-radius: 10px; margin: 8px 0; text-align: center; border: 1px solid #4cc9f0; font-size: 12px; }
+		.stat-value { font-size: 18px; font-weight: bold; color: #4cc9f0; }
+		.stat-label { font-size: 12px; color: #4cc9f0; }
+		.action-btn { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 10px 15px; margin: 8px; border-radius: 25px; cursor: pointer; font-size: 12px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }
+		.action-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(247, 37, 133, 0.8); }
+		.enemy-name { font-size: 20px; color: #f72585; text-shadow: 0 0 8px rgba(247, 37, 133, 0.8); }
+		.message { background: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 10px; margin: 12px 0; text-align: center; font-size: 14px; border: 1px solid #4cc9f0; }
+		.stats-container { display: flex; justify-content: space-between; margin: 20px 0; }
+		.stat-column { width: 45%; min-width: 250px; }
+		.health-bar { height: 15px; background: #333; border-radius: 8px; margin: 8px 0; overflow: hidden; }
+		.health-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #f72585); border-radius: 8px; transition: width 0.5s; }
+		.magic-bar { height: 15px; background: #333; border-radius: 8px; margin: 8px 0; overflow: hidden; }
+		.magic-fill { height: 100%; background: linear-gradient(90deg, #4cc9f0, #4895ef); border-radius: 8px; transition: width 0.5s; }
+		.player-section, .enemy-section { background: rgba(0, 0, 0, 0.5); padding: 12px; border-radius: 10px; margin: 12px 0; border: 1px solid #4cc9f0; min-height: 180px; display: flex; flex-direction: column; }
+	</style></head><body>
+	<div class='container'>
+		<div class='header'><h2>ARCADE BATTLE</h2></div>
+
+		<div class='game-over'>
+			<h3>{{:data.information}}</h3>
+			<a href='byond://?src=\ref[src];new_game=1' class='action-btn'>NEW GAME</a>
+		</div>
+	</div></body></html>
 {{else}}
-	{{if data.information}}
-		<center><i>{{:data.information}}</i></center>
-	{{/if}}
-<center><h3>Player</h3></center>
-	<div class='item'>
-		<div class='itemLabel'>
-			Health:
+	<html><head><style>
+		body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);}
+		.container {margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 15px; padding: 20px; border: 2px solid #4cc9f0; box-shadow: 0 0 20px rgba(76, 201, 240, 0.5); }
+		.header { text-align: center; color: #4cc9f0; text-shadow: 0 0 10px rgba(76, 201, 240, 0.8); margin-bottom: 20px; font-size: 16px; }
+		.enemy-name { font-size: 20px; color: #f72585; text-shadow: 0 0 8px rgba(247, 37, 133, 0.8); }
+		.message { background: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 10px; margin: 12px 0; text-align: center; font-size: 14px; border: 1px solid #4cc9f0; }
+		.stats-container { display: flex; justify-content: space-between; margin: 20px 0; }
+		.stat-column { width: 45%; min-width: 250px; }
+		.stat-box { background: rgba(76, 201, 240, 0.2); padding: 12px; border-radius: 10px; margin: 8px 0; text-align: center; border: 1px solid #4cc9f0; font-size: 12px; }
+		.stat-value { font-size: 18px; font-weight: bold; color: #4cc9f0; }
+		.stat-label { font-size: 12px; color: #4cc9f0; }
+		.action-btn { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 10px 15px; margin: 8px; border-radius: 25px; cursor: pointer; font-size: 12px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }
+		.action-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(247, 37, 133, 0.8); }
+		.health-bar { height: 15px; background: #333; border-radius: 8px; margin: 8px 0; overflow: hidden; }
+		.health-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #f72585); border-radius: 8px; transition: width 0.5s; }
+		.magic-bar { height: 15px; background: #333; border-radius: 8px; margin: 8px 0; overflow: hidden; }
+		.magic-fill { height: 100%; background: linear-gradient(90deg, #4cc9f0, #4895ef); border-radius: 8px; transition: width 0.5s; }
+		.player-section, .enemy-section { background: rgba(0, 0, 0, 0.5); padding: 12px; border-radius: 10px; margin: 12px 0; border: 1px solid #4cc9f0; min-height: 180px; display: flex; flex-direction: column; }
+	</style></head><body>
+	<div class='container'>
+		<div class='header'><h2>ARCADE BATTLE</h2></div>
+
+		{{if data.information}}
+			<div class='message'><i>{{:data.information}}</i></div>
+		{{/if}}
+
+		<div class='stats-container'>
+			<div class='stat-column'>
+				<div class='player-section'>
+					<center><h3>PLAYER</h3></center>
+					<div class='stat-box'>
+						<div class='stat-label'>HEALTH</div>
+						<div class='stat-value'>{{:data.player_health}}</div>
+						<div class='health-bar'><div class='health-fill' style='width: [min(100, data.player_health * 3.33)]%'></div></div>
+					</div>
+					<div class='stat-box'>
+						<div class='stat-label'>MANA</div>
+						<div class='stat-value'>{{:data.player_mana}}</div>
+						<div class='magic-bar'><div class='magic-fill' style='width: [min(100, data.player_mana * 10)]%'></div></div>
+					</div>
+				</div>
+			</div>
+
+			<div class='stat-column'>
+				<div class='enemy-section'>
+					<center><h3 class='enemy-name'>ENEMY: {{:data.enemy_name}}</h3></center>
+					<div class='stat-box'>
+						<div class='stat-label'>HEALTH</div>
+						<div class='stat-value'>{{:data.enemy_health}}</div>
+						<div class='health-bar'><div class='health-fill' style='width: [min(100, data.enemy_health * 2.22)]%'></div></div>
+					</div>
+					<div class='stat-box'>
+						<div class='stat-label'>MANA</div>
+						<div class='stat-value'>{{:data.enemy_mana}}</div>
+						<div class='magic-bar'><div class='magic-fill' style='width: [min(100, data.enemy_mana * 5)]%'></div></div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class='itemContent'>
-			{{:data.player_health}}
+
+		<div style="text-align: center; margin: 20px 0;">
+			{{:helper.link('Attack', null, { "attack" : 1 })}}
+			{{:helper.link('Heal', null, { "heal" : 1 })}}
+			{{:helper.link('Regain Mana', null, { "regain_mana" : 1 })}}
+			{{:helper.link('New Game', null, { "new_game" : 1 })}}
 		</div>
-		<div class='itemLabel'>
-			Mana:
-		</div>
-		<div class='itemContent'>
-			{{:data.player_mana}}
-		</div>
-	</div>
-<center><h3>Enemy: {{:data.enemy_name}}</h3></center>
-	<div class='item'>
-		<div class='itemLabel'>
-			Health:
-		</div>
-		<div class='itemContent'>
-			{{:data.enemy_health}}
-		</div>
-		<div class='itemLabel'>
-			Mana:
-		</div>
-		<div class='itemContent'>
-			{{:data.enemy_mana}}
-		</div>
-	</div>
-<center><h3>Actions</h3></center>
-	{{:helper.link('Attack', null, { "attack" : 1 })}}
-	{{:helper.link('Heal', null, { "heal" : 1 })}}
-	{{:helper.link('Regain Mana', null, { "regain_mana" : 1 })}}
-	{{:helper.link('New Game', null, { "new_game" : 1 })}}
+	</div></body></html>
 {{/if}}

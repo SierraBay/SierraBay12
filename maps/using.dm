@@ -1,5 +1,5 @@
 //Easily change which map to build by uncommenting ONE below.
-#define DEV_MODE 0
+#define DEV_MODE 1
 #if NEW_AWAYS_TESTING == 1
 	#include "../mods/new_aways_testing/code/_new_aways_testing.dm"
 	#warn Включено тестирование новых авеек, не забудь выключить!

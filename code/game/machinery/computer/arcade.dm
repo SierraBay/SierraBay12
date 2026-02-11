@@ -110,23 +110,68 @@
 
 /obj/machinery/computer/arcade/battle/interact(mob/user)
 	user.set_machine(src)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
-	dat += "<center><h4>[src.enemy_name]</h4></center>"
+	var/dat = "<html><head><style>"
+	dat += "body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #e6e6e6; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }"
+	dat += ".container { max-width: 600px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 15px; padding: 20px; border: 2px solid #4cc9f0; box-shadow: 0 0 20px rgba(76, 201, 240, 0.5); }"
+	dat += ".header { text-align: center; color: #4cc9f0; text-shadow: 0 0 10px rgba(76, 201, 240, 0.8); margin-bottom: 20px; }"
+	dat += ".enemy-name { font-size: 24px; color: #f72585; text-shadow: 0 0 8px rgba(247, 37, 133, 0.8); }"
+	dat += ".message { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; font-size: 18px; border: 1px solid #f72585; }"
+	dat += ".stats { display: flex; justify-content: space-around; margin: 20px 0; }"
+	dat += ".stat-box { background: rgba(76, 201, 240, 0.2); padding: 10px; border-radius: 8px; text-align: center; width: 150px; border: 1px solid #4cc9f0; }"
+	dat += ".stat-value { font-size: 20px; font-weight: bold; color: #f72585; }"
+	dat += ".actions { text-align: center; margin: 20px 0; }"
+	dat += ".action-btn { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 12px 20px; margin: 5px; border-radius: 25px; cursor: pointer; font-size: 16px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }"
+	dat += ".action-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(247, 37, 133, 0.8); }"
+	dat += ".action-btn:disabled { background: #666; cursor: not-allowed; transform: none; box-shadow: none; }"
+	dat += ".game-over { background: rgba(247, 37, 133, 0.3); padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px solid #f72585; }"
+	dat += ".health-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".health-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #f72585); border-radius: 10px; transition: width 0.5s; }"
+	dat += ".magic-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".magic-fill { height: 100%; background: linear-gradient(90deg, #4cc9f0, #4895ef); border-radius: 10px; transition: width 0.5s; }"
+	dat += "a { color: #4cc9f0; text-decoration: none; }"
+	dat += "a:hover { text-decoration: underline; }"
+	dat += "</style></head><body>"
+	dat += "<div class='container'>"
 
-	dat += "<br><center><h3>[src.temp]</h3></center>"
-	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
+	dat += "<div class='header'><h2>ARCADE BATTLE</h2></div>"
+	dat += "<div class='enemy-name'><h3>[src.enemy_name]</h3></div>"
 
-	dat += "<center><b>"
+	dat += "<div class='message'><h4>[src.temp]</h4></div>"
+
+	dat += "<div class='stats'>"
+	dat += "<div class='stat-box'>"
+	dat += "<div>PLAYER HP</div>"
+	dat += "<div class='stat-value'>[src.player_hp]</div>"
+	dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, src.player_hp * 3.33)]%'></div></div>"
+	dat += "</div>"
+
+	dat += "<div class='stat-box'>"
+	dat += "<div>MAGIC POWER</div>"
+	dat += "<div class='stat-value'>[src.player_mp]</div>"
+	dat += "<div class='magic-bar'><div class='magic-fill' style='width: [min(100, src.player_mp * 10)]%'></div></div>"
+	dat += "</div>"
+
+	dat += "<div class='stat-box'>"
+	dat += "<div>ENEMY HP</div>"
+	dat += "<div class='stat-value'>[src.enemy_hp]</div>"
+	dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, src.enemy_hp * 2.22)]%'></div></div>"
+	dat += "</div>"
+	dat += "</div>"
+
+	dat += "<div class='actions'>"
 	if (src.gameover)
-		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<a href='byond://?src=\ref[src];newgame=1' class='action-btn'>NEW GAME</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
+		dat += "<a href='byond://?src=\ref[src];attack=1' class='action-btn'>ATTACK</a> | "
+		dat += "<a href='byond://?src=\ref[src];heal=1' class='action-btn'>HEAL</a> | "
+		dat += "<a href='byond://?src=\ref[src];charge=1' class='action-btn'>RECHARGE</a>"
+	dat += "</div>"
 
-	dat += "</b></center>"
+	if (src.gameover)
+		dat += "<div class='game-over'>GAME OVER!</div>"
+	dat += "</div></body></html>"
 
-	show_browser(user, dat, "window=arcade")
+	show_browser(user, dat, "window=arcade;size=600x800")
 	onclose(user, "arcade")
 	return
 
@@ -241,6 +286,7 @@
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
 		src.temp = "You have been crushed! GAME OVER"
+		interface_interact(user)
 		if(emagged)
 			explode()
 		else
