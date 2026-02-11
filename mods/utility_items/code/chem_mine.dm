@@ -161,8 +161,8 @@
 			if( A == src ) continue
 			src.reagents.touch(A)
 	set_invisibility(INVISIBILITY_MAXIMUM)
-	spawn(50)
-		qdel(src)
+	detonator.activate()
+	addtimer(new Callback(GLOBAL_PROC, /.proc/qdel, src), 1 SECONDS)
 
 
 /obj/item/mine/chem_mine/examine(mob/user)
