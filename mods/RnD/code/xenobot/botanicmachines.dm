@@ -163,7 +163,8 @@
 // Allows for a trait to be extracted from a seed packet, destroying that seed.
 /obj/machinery/botany/extractor
 	name = "lysis-isolation centrifuge"
-	icon_state = "traitcopier"
+	icon = 'icons/obj/machines/research/virology.dmi'
+	icon_state = "centrifuge"
 	var/genes_processed = FALSE
 
 /obj/machinery/botany/extractor/ui_data()
@@ -241,7 +242,8 @@
 // Fires an extracted trait into another packet of seeds.
 /obj/machinery/botany/editor
 	name = "bioballistic delivery system"
-	icon_state = "traitgun"
+	icon = 'icons/obj/machines/research/virology.dmi'
+	icon_state = "incubator"
 
 /obj/machinery/botany/editor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = TRUE)
 	var/list/data = ui_data(user)
