@@ -32,7 +32,7 @@
 	var/state = 0
 	var/path = 0
 	var/obj/item/device/assembly/igniter/detonator = null
-	var/list/beakers = new/list()
+	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	var/affected_area = 3
 
@@ -47,12 +47,12 @@
 			detonator=null
 			stage=0
 			icon_state = initial(icon_state)
-		else if(beakers.len)
+		else if(length(beakers))
 			for(var/obj/B in beakers)
 				if(istype(B))
 					beakers -= B
 					user.put_in_hands(B)
-		SetName("unsecured mine with [beakers.len] containers")
+		SetName("unsecured mine with [length(beakers)] containers")
 	if (stage > 1)
 		add_fingerprint(user)
 		to_chat(user, "Planting mine...")
@@ -84,7 +84,7 @@
 	else if(isScrewdriver(W) && path != 2)
 		if(stage == 1)
 			path = 1
-			if(beakers.len)
+			if(length(beakers))
 				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
 				SetName("mine")
 			else
@@ -101,7 +101,7 @@
 			else
 				to_chat(user, "<span class='notice'>You unlock the assembly.</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 25, -3)
-				SetName("unsecured mine with [beakers.len] containers")
+				SetName("unsecured mine with [length(beakers)] containers")
 				icon_state = initial(icon_state) +"_not_act"
 				stage = 1
 				active = 0
@@ -109,7 +109,7 @@
 				src.alpha = 255
 	else if(is_type_in_list(W, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
-		if(beakers.len == 2)
+		if(length(beakers) == 2)
 			to_chat(user, "<span class='warning'>The mine can not hold more containers.</span>")
 			return
 		else
@@ -119,7 +119,7 @@
 				to_chat(user, "<span class='notice'>You add \the [W] to the assembly.</span>")
 				beakers += W
 				stage = 1
-				SetName("unsecured mine with [beakers.len] containers[detonator?" and detonator":""]")
+				SetName("unsecured mine with [length(beakers)] containers[detonator?" and detonator":""]")
 			else
 				to_chat(user, "<span class='warning'>\The [W] is empty.</span>")
 	else if(istype(W, /obj/item/device/paint_sprayer))
