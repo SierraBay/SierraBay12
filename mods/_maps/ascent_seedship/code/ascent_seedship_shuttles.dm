@@ -21,6 +21,11 @@
 	name = "Lepidopterax"
 	shuttle = "Lepidopterax"
 	fore_dir = NORTH
+	initial_restricted_waypoints = list(
+		"Lepidopterax Docked" = list("nav_hangar_ascent_inf_two"),
+		"NSV Sierra Docking Port" = list("nav_hangar_ascent_inf_sierra_two")
+	)
+
 
 /obj/machinery/computer/shuttle_control/explore/ascent_inf
 	name = "shuttle control console"

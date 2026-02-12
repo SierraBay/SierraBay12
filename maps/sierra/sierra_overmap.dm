@@ -32,8 +32,10 @@
 		"SNZ-210 Personnel Carrier" = list("nav_snz_dock"), //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
 		"GM Tug" = list("nav_merchant_out"), //maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
 		"Petrov" = list("nav_petrov_start"),
-		"SRV Venerable Catfish" = list("nav_deck3_catfish") //mods/_maps/verne/verne.dme shuttle
-	)
+		"SRV Venerable Catfish" = list("nav_deck3_catfish"), //mods/_maps/verne/verne.dme shuttle
+		"Lepidopterax" = list("nav_hangar_ascent_inf_sierra_two"),
+		"Trichopterax" = list("nav_hangar_ascent_inf_sierra")
+		)
 
 	initial_generic_waypoints = list(
 		"nav_merc_deck1",
