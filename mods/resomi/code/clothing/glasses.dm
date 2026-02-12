@@ -76,7 +76,6 @@
 	species_restricted = list(SPECIES_RESOMI)
 
 /mob/living/carbon/human/process_glasses(obj/item/clothing/glasses/G)
-	. = ..()
 	equipment_light_protection += G.light_protection
 	if(G?.active)
 		equipment_darkness_modifier += G.darkness_view
