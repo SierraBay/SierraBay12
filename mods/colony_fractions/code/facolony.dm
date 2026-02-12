@@ -34,10 +34,22 @@
 	l_ear = /obj/item/device/radio/headset/map_preset/facolony
 
 /datum/job/submap/facolony/colonist
-	title = "Crewman"
+	title = "Cargo Operator"
 	supervisors = "Ship Captain"
 	info = "You are a colonist living on the rim of explored space. Keep the outpost running and protect its interests."
-	total_positions = 8
+	total_positions = 3
+	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	max_skill = list(
+		SKILL_COMBAT		= SKILL_EXPERIENCED,
+		SKILL_WEAPONS		= SKILL_EXPERIENCED
+	)
+
+/datum/job/submap/facolony/colonist/leader
+	title = "Ship Captain"
+	supervisors = "Jared"
+	info = "You are a Colonist Leader, living on the rim of the explored space. Control your colony and defend its interests."
+	total_positions = 1
+	outfit_type = /singleton/hierarchy/outfit/job/facolony
 	max_skill = list(
 		SKILL_PILOT			= SKILL_MAX,
 		SKILL_CONSTRUCTION	= SKILL_MAX,
@@ -51,14 +63,6 @@
 		SKILL_FORENSICS		= SKILL_MAX,
 		SKILL_WEAPONS		= SKILL_MAX
 	)
-	outfit_type = /singleton/hierarchy/outfit/job/facolony
-
-/datum/job/submap/facolony/colonist/leader
-	title = "Ship Captain"
-	supervisors = "Frontier Alliance Operational Сell Supervisor"
-	info = "Вы - Капитан грузового судна IPV Celeste Hauler. На самом деле - это лишь прикрытие для ваших контрабандистских дел в качестве командира одной из ячеек Блокадных Беглецов Альянса Фронтира. Выживайте, торгуйте, извлекайте прибыль. Не всегда законными методами."
-	total_positions = 1
-	outfit_type = /singleton/hierarchy/outfit/job/facolony
 
 /datum/job/submap/facolony/colonist/scientist
 	title = "Systems Technician"
@@ -66,18 +70,13 @@
 	info = "Support the outpost with research and field analysis."
 	total_positions = 1
 	min_skill = list(
-		SKILL_SCIENCE	= SKILL_TRAINED,
 		SKILL_DEVICES	= SKILL_TRAINED,
 		SKILL_CONSTRUCTION	= SKILL_BASIC,
 		SKILL_ELECTRICAL	= SKILL_BASIC
 	)
 	max_skill = list(
-		SKILL_SCIENCE	= SKILL_MAX,
-		SKILL_DEVICES	= SKILL_MAX,
-		SKILL_CONSTRUCTION	= SKILL_MAX,
-		SKILL_ELECTRICAL	= SKILL_MAX,
-		SKILL_CHEMISTRY	= SKILL_MAX,
-		SKILL_COMPUTER	= SKILL_MAX
+		SKILL_SCIENCE	= SKILL_EXPERIENCED,
+		SKILL_DEVICES	= SKILL_EXPERIENCED
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
 
@@ -92,10 +91,9 @@
 		SKILL_ANATOMY = SKILL_EXPERIENCED
 	)
 	max_skill = list(
-		SKILL_MEDICAL	= SKILL_MAX,
-		SKILL_ANATOMY	= SKILL_MAX,
 		SKILL_CHEMISTRY = SKILL_MAX,
-		SKILL_VIROLOGY	= SKILL_MAX
+		SKILL_MEDICAL	= SKILL_MAX,
+		SKILL_ANATOMY = SKILL_MAX
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
 
@@ -112,13 +110,12 @@
 		SKILL_ATMOS			= SKILL_BASIC,
 		SKILL_ENGINES		= SKILL_BASIC
 	)
-
 	max_skill = list(
 		SKILL_CONSTRUCTION	= SKILL_MAX,
 		SKILL_ELECTRICAL	= SKILL_MAX,
 		SKILL_ATMOS			= SKILL_MAX,
 		SKILL_ENGINES		= SKILL_MAX
-	)
+		)
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
 
 /obj/submap_landmark/spawnpoint/facolony/leader_spawn
