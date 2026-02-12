@@ -5323,7 +5323,7 @@
 /area/map_template/facolony/armory)
 "wQ" = (
 /obj/floor_decal/corner/grey_alt/diagonal,
-/obj/structure/bed/chair/comfy/black{
+/obj/structure/bed/chair/office/comfy/black{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
@@ -10605,11 +10605,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
-"Vy" = (
-/obj/floor_decal/corner/grey_alt/diagonal,
-/obj/structure/bed/chair/comfy/black,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/facolony/unspecified)
 "VD" = (
 /obj/floor_decal/corner/yellow/bordercorner{
 	dir = 4
@@ -13845,7 +13840,7 @@ uo
 Ec
 Ec
 bD
-Vy
+ED
 wQ
 Kc
 mo
