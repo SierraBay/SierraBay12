@@ -112,3 +112,8 @@ SUBSYSTEM_DEF(research)
 		if(D.build_type)
 			if(D.category)
 				design_categories_autolathe |= D.category
+
+/datum/controller/subsystem/research/proc/fabricator_recycle(obj/item/build_path)
+	for(var/datum/design/design in all_designs)
+		if("[design.build_path]" == build_path.type || design.build_path == build_path.type)
+			return design

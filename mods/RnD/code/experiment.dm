@@ -170,7 +170,6 @@ var/global/list/rnd_server_list = list()
 				if(!(l in saved_plants))
 					points += effects[l]
 					saved_plants += l
-		points *= I.potency/40
 
 	for(var/s in I.scanned_spectrometers)
 		if(s in saved_spectrometers)
