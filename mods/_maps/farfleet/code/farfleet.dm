@@ -46,12 +46,7 @@
 	spawn_cost = 0.5
 	player_cost = 7
 	spawn_weight = 1
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz)
-
-	area_usage_test_exempted_areas = list(
-		/area/turbolift/farfleet_first,
-		/area/turbolift/farfleet_second
-	)
+	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz, /datum/shuttle/autodock/ferry/farfleet_lift)
 
 /obj/shuttle_landmark/nav_farfleet/nav1
 	name = "Pioneer Corps Ship Fore"
