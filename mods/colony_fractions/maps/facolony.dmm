@@ -1043,7 +1043,6 @@
 /area/map_template/facolony/tradezone)
 "eh" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/machinery/door/window/brigdoor/westright,
 /obj/machinery/door/window/brigdoor/southright,
 /obj/floor_decal/corner/green/border{
@@ -1837,7 +1836,6 @@
 /area/map_template/facolony/dorms)
 "hL" = (
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/corner/black/half{
 	dir = 1
 	},
@@ -10504,7 +10502,6 @@
 "US" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/fabricator,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "UU" = (
