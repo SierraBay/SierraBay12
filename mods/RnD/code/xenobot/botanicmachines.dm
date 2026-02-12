@@ -45,6 +45,7 @@
 		else if(user.unEquip(W, src))
 			seed = W
 			to_chat(user, "You load [W] into [src].")
+			ui_interact(user)
 		return TRUE
 
 	if(isScrewdriver(W))
@@ -65,6 +66,7 @@
 			disk = W
 			SSnano.update_uis(src)
 			to_chat(user, SPAN_NOTICE("You load [W] into [src]."))
+			ui_interact(user)
 		return
 	..()
 

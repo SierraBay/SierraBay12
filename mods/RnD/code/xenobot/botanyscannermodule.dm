@@ -1,7 +1,6 @@
 
 /datum/design/item/modularcomponent/accessory/scanner_flora
 	name = "flora scanner module"
-	category = "Computer Parts"
 	desc = "A flora scanner module. It can scan and analyze various flora genes."
 	id = "scan_flora"
 	req_tech = list(TECH_BIO = 3, TECH_MATERIAL = 2)
@@ -50,9 +49,10 @@
 
 /obj/item/stock_parts/computer/scanner/flora/proc/flora_scan_results(obj/item/seeds, details = 0)
 	RETURN_TYPE(/list)
-	if(!istype(seeds))
-		return list("No significant flora genes found in [seeds].")
-	return plant_scan_results(seeds)
+	if(istype(seeds, /obj/item/reagent_containers/food/snacks/grown) || (istype(seeds,/obj/machinery/portable_atmospherics/hydroponics)|| istype(seeds,/obj/item/seeds)))
+		return plant_scan_results(seeds)
+	return list("No significant flora genes found in [seeds].")
+
 
 /obj/item/stock_parts/computer/scanner/flora/proc/plant_scan_results(obj/target)
 	var/list/geneMasks = list()
