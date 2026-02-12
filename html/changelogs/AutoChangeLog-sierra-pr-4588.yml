@@ -1,4 +1,0 @@
-author: ArReiA
-changes:
-  - bugfix: Защита от сварки больше не накладывает свой оверлей два раза.
-delete-after: true
