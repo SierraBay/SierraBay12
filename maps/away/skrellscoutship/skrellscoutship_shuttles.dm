@@ -35,7 +35,7 @@
 	vessel_size = SHIP_SIZE_TINY
 	initial_restricted_waypoints = list(
 		"SSV-S Docked" = list("nav_skrellscoutsh_dock"),
-		"NSV Sierra Docking Port" = list("nav_deck4_skrellshuttle")
+		"Dock STBD-3" = list("nav_deck4_skrellshuttle")
 	)
 
 /datum/shuttle/autodock/overmap/skrellscoutship

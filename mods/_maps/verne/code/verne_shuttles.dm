@@ -67,7 +67,7 @@
 	landmark_tag = "nav_verne_mule"
 
 /obj/shuttle_landmark/nav_verne/sierra
-	name = "Port Shuttle Dock"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_deck3_catfish"
 	docking_controller = "rescue_shuttle_dock_airlock"
 
