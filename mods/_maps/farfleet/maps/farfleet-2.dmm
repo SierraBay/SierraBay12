@@ -61,11 +61,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
@@ -119,13 +121,15 @@
 /area/ship/farfleet/crew/toilet)
 "aT" = (
 /obj/paint/dark_gunmetal,
-/obj/machinery/door/firedoor,
 /obj/structure/wall_frame/standard,
 /obj/structure/table/marble,
 /obj/machinery/door/blast/shutters{
 	id_tag = "cafe_farfleet";
 	name = "Cafe Shutters";
 	dir = 8
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/kitchen)
@@ -251,10 +255,12 @@
 /area/ship/farfleet/crew/hallway/upper)
 "bz" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
 /obj/structure/sign/warning/moving_parts{
 	dir = 8;
 	pixel_x = 34
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
@@ -329,8 +335,10 @@
 /obj/machinery/door/airlock{
 	name = "Hydroponics"
 	},
-/obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hydroponics)
 "bQ" = (
@@ -660,7 +668,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
 /obj/floor_decal/spline/fancy/black/corner{
 	dir = 1
 	},
@@ -673,6 +680,9 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig)
@@ -774,7 +784,9 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/anomaly)
 "eB" = (
@@ -903,7 +915,6 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/shutters{
 	id_tag = "cafe_farfleet";
@@ -912,6 +923,9 @@
 	},
 /obj/machinery/smartfridge/foods,
 /obj/structure/wall_frame/standard,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/kitchen)
 "fZ" = (
@@ -1156,11 +1170,13 @@
 /area/ship/farfleet/command/snz_hangar)
 "ht" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks)
@@ -1174,12 +1190,14 @@
 /area/ship/farfleet/maintenance/anomaly)
 "hw" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
 /obj/machinery/computer/shuttle_control/lift/farfleet{
 	pixel_x = -23
 	},
 /obj/machinery/door/airlock/multi_tile/glass/terran{
 	name = "Cargo Lift"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
@@ -1314,7 +1332,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig)
 "il" = (
@@ -1329,7 +1349,9 @@
 	icon_state = "1-2"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/toilet)
 "im" = (
@@ -1547,7 +1569,6 @@
 /area/ship/farfleet/crew/canteen)
 "kh" = (
 /obj/paint/dark_gunmetal,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
 	name = "Emergensy Blast Resistant Shutters";
@@ -1563,15 +1584,20 @@
 	icon_state = "4-8"
 	},
 /obj/wallframe_spawn/reinforced/polarized,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig/css)
 "kl" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig)
@@ -1752,7 +1778,6 @@
 "lm" = (
 /obj/paint/dark_gunmetal,
 /obj/wallframe_spawn/reinforced/polarized,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
 	name = "Emergensy Blast Resistant Shutters";
@@ -1761,6 +1786,9 @@
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig/css)
@@ -2152,11 +2180,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/briefingroom)
@@ -2247,7 +2277,9 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/anomaly)
 "oX" = (
@@ -2415,7 +2447,9 @@
 	id_tag = "snzblast"
 	},
 /obj/paint/black,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "pM" = (
@@ -2549,19 +2583,23 @@
 	dir = 8;
 	autoset_access = 0
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
 	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
 "qs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/cryo)
 "qx" = (
@@ -2656,11 +2694,13 @@
 	name = "Cold Storage"
 	},
 /obj/paint/dark_gunmetal,
-/obj/machinery/door/firedoor,
 /obj/floor_decal/spline/fancy/black/corner{
 	dir = 1
 	},
 /obj/floor_decal/spline/fancy/black/corner,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/freezer)
 "qX" = (
@@ -2716,17 +2756,21 @@
 /area/ship/farfleet/maintenance/storage)
 "rk" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
 "rm" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/multi_tile/terran{
 	name = "Droptroops Armory";
 	dir = 8;
 	autoset_access = 0;
 	req_access = list("ACCESS_ICCGN_DROPTROOPS")
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
@@ -2839,11 +2883,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock{
 	id_tag = "showerpc";
 	name = "Toilet"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/toilet)
@@ -3013,11 +3059,13 @@
 /area/ship/farfleet/crew/hydroponics)
 "tp" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig)
@@ -3560,7 +3608,9 @@
 /obj/machinery/door/airlock/multi_tile/glass/terran{
 	name = "Canteen"
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/cryo)
 "wh" = (
@@ -3768,11 +3818,13 @@
 	dir = 1
 	},
 /obj/floor_decal/spline/fancy/black/corner,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/terran{
 	name = "Consultant's Office";
 	dir = 8;
 	id_tag = "consultant1"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
@@ -3977,13 +4029,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/door/airlock/multi_tile/glass/terran{
 	name = "Canteen";
 	dir = 8
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/canteen)
@@ -4261,7 +4315,9 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/storage)
 "Al" = (
@@ -4572,7 +4628,6 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4629,11 +4684,13 @@
 	icon_state = "0-4"
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/briefingroom)
@@ -4824,7 +4881,9 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
 "Dr" = (
@@ -5415,11 +5474,13 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
@@ -5610,7 +5671,6 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "Ic" = (
@@ -5821,9 +5881,11 @@
 /area/ship/farfleet/crew/kitchen)
 "JG" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/armory)
 "JO" = (
@@ -5893,7 +5955,7 @@
 /obj/floor_decal/industrial/danger{
 	dir = 10
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/red,
 /turf/simulated/floor/steel_dirty,
 /area/turbolift/farfleet_lift)
 "Kz" = (
@@ -5952,6 +6014,21 @@
 	map_airless = 1
 	},
 /area/ship/snz)
+"KG" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/space)
 "KL" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -6324,11 +6401,13 @@
 "MQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock{
 	id_tag = "toiletpc";
 	name = "Shower"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/toilet)
@@ -6381,7 +6460,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig)
 "Ny" = (
@@ -6396,12 +6477,14 @@
 /area/space)
 "NC" = (
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 0
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/armory)
@@ -6422,7 +6505,9 @@
 	icon_state = "2-4"
 	},
 /obj/wallframe_spawn/reinforced/polarized,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig/css)
 "NG" = (
@@ -6770,7 +6855,9 @@
 /area/ship/farfleet/barracks/briefingroom)
 "PW" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/canteen)
 "Qb" = (
@@ -6806,13 +6893,15 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/snz_hangar)
 "Ql" = (
-/obj/machinery/door/firedoor,
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/wallframe_spawn/reinforced,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks)
 "Qs" = (
@@ -7033,7 +7122,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	req_access = list("ACCESS_ICCGN_SERGEANT");
 	name = "Armory";
@@ -7049,6 +7137,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks/armory)
@@ -7068,7 +7159,6 @@
 	dir = 8;
 	id_tag = "consultant2"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7079,6 +7169,9 @@
 	},
 /obj/floor_decal/spline/fancy/black/corner{
 	dir = 8
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
@@ -7243,7 +7336,9 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "Tb" = (
@@ -7414,7 +7509,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7424,6 +7518,9 @@
 /obj/machinery/door/airlock/terran{
 	name = "Interrogation";
 	dir = 8
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/interrogation)
@@ -7447,7 +7544,9 @@
 	dir = 4
 	},
 /obj/paint/dark_gunmetal,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/brig)
 "Ud" = (
@@ -7604,7 +7703,6 @@
 /obj/floor_decal/spline/fancy/black/corner{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
@@ -7623,6 +7721,9 @@
 	door_color = "#3e4855";
 	stripe_color = "#9d2300";
 	name = "Galley"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/kitchen)
@@ -7656,7 +7757,9 @@
 	id_tag = "snzblast"
 	},
 /obj/paint/black,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/snz)
 "Vi" = (
@@ -7754,9 +7857,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
@@ -7804,10 +7909,12 @@
 	dir = 2
 	},
 /obj/wallframe_spawn/reinforced,
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/hangar_canisters)
@@ -7894,7 +8001,6 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
 	name = "Emergensy Blast Resistant Shutters";
@@ -7908,6 +8014,9 @@
 /obj/machinery/door/airlock/glass/security{
 	name = "Briefing Room";
 	autoset_access = 0;
+	req_access = list("ACCESS_ICCGN")
+	},
+/obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -8187,7 +8296,9 @@
 	name = "Emergensy Blast Resistant Shutters";
 	dir = 2
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/storage)
 "Yk" = (
@@ -15245,7 +15356,7 @@ aa
 aa
 aa
 aa
-Ny
+KG
 HA
 SD
 Cm
