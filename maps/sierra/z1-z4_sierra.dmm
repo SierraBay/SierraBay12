@@ -1562,7 +1562,7 @@
 "cTu" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/obj/machinery/hologram/holopad{pixel_y = 16; pixel_x = -16},/obj/structure/cable/green{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/wood/walnut,/area/crew_quarters/cafe/upper)
 "cTw" = (/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/hologram/holopad,/obj/floor_decal/industrial/outline/yellow,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/tiled/steel_grid,/area/hallway/primary/thirddeck/center)
 "cTy" = (/obj/landmark{name = "carpspawn"},/turf/simulated/floor/shuttle_ceiling/sierra,/area/space)
-"cTA" = (/obj/floor_decal/corner/darkblue/mono,/obj/floor_decal/spline/fancy/black,/obj/machinery/papershredder,/obj/floor_decal/industrial/outline/yellow,/obj/machinery/newscaster{pixel_y = -28; dir = 1},/turf/simulated/floor/tiled/dark/monotile,/area/bridge/nano)
+"cTA" = (/obj/floor_decal/corner/darkblue/mono,/obj/floor_decal/spline/fancy/black,/obj/machinery/papershredder,/obj/floor_decal/industrial/outline/yellow,/obj/machinery/newscaster{pixel_y = -24; dir = 1},/turf/simulated/floor/tiled/dark/monotile,/area/bridge/nano)
 "cTK" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/crystal,/area/crew_quarters/adherent)
 "cTY" = (/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor/tiled,/area/maintenance/seconddeck/aftstarboard)
 "cUf" = (/obj/structure/window/reinforced{dir = 1},/turf/simulated/open,/area/medical/sleeper)
