@@ -1248,17 +1248,17 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external/glass/bolted_open{
-	id_tag = "xil_port_dock_interior_door";
-	frequency = 1331;
-	name = "Docking Port Airlock"
-	},
 /obj/machinery/dummy_airlock_controller{
 	pixel_x = 24;
 	id_tag = "xil_port_dock";
 	req_access = list("ACCESS_SKRELLSCOUT")
 	},
-/turf/simulated/floor/tiled/skrell/green,
+/obj/machinery/door/airlock/external/glass{
+	id_tag = "xil_port_dock_interior_door";
+	frequency = 1331;
+	name = "Docking Port Airlock"
+	},
+/turf/simulated/floor/tiled/dark/monotile,
 /area/ship/skrellscoutship/command/armory)
 "ey" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3425,11 +3425,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external/glass/bolted_open{
-	id_tag = "xil_port_dock_exterior_door";
-	frequency = 1331;
-	name = "Docking Port Airlock"
-	},
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	id_tag = "xil_port_dock";
 	tag_airpump = "xil_port_dock_pump";
@@ -3441,7 +3436,12 @@
 	pixel_x = 24;
 	dir = 1
 	},
-/turf/simulated/floor/tiled/skrell/red,
+/obj/machinery/door/airlock/external/glass{
+	id_tag = "xil_port_dock_exterior_door";
+	frequency = 1331;
+	name = "Docking Port Airlock"
+	},
+/turf/simulated/floor/tiled/dark/monotile,
 /area/ship/skrellscoutship/command/armory)
 "kI" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
@@ -4470,10 +4470,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/external/glass/bolted_open{
+/obj/machinery/door/airlock/external{
 	id_tag = "xil_shuttle_inner";
 	frequency = 1331;
-	name = "Interior Access"
+	name = "Exterior Access"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/skrellscoutshuttle)
@@ -4527,14 +4527,6 @@
 	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/rec)
-"yp" = (
-/obj/machinery/door/airlock/external/glass/bolted_open{
-	id_tag = "xil_port_dock_exterior_door";
-	frequency = 1331;
-	name = "Docking Port Airlock"
-	},
-/turf/simulated/floor/tiled/skrell/green,
-/area/ship/skrellscoutship/command/armory)
 "yr" = (
 /obj/machinery/light/skrell{
 	dir = 4;
@@ -6474,7 +6466,7 @@
 	icon_state = "1-2"
 	},
 /obj/shuttle_landmark/skrellscoutshuttle/start,
-/obj/machinery/door/airlock/external/glass/bolted_open{
+/obj/machinery/door/airlock/external{
 	id_tag = "xil_shuttle_outer";
 	frequency = 1331;
 	name = "Exterior Access"
@@ -14260,7 +14252,7 @@ Aj
 LV
 PK
 Gq
-yp
+eu
 eu
 eu
 eT
