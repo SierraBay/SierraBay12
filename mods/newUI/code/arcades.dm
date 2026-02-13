@@ -1,96 +1,4 @@
 
-/obj/machinery/computer/arcade
-	name = "random arcade"
-	desc = "A random arcade machine."
-	icon_state = "arcade"
-	icon_keyboard = null
-	icon_screen = "invaders"
-	machine_desc = "A simple arcade machine used for entertainment."
-	var/random = TRUE
-	var/list/prizes = list(	/obj/item/storage/box/snappops										= 200,
-							/obj/item/toy/blink															= 200,
-							/obj/item/clothing/under/syndicate/tacticool								= 200,
-							/obj/item/toy/sword															= 200,
-							/obj/item/gun/projectile/revolver/capgun								= 200,
-							/obj/item/toy/crossbow														= 200,
-							/obj/item/storage/fancy/crayons										= 200,
-							/obj/item/toy/spinningtoy													= 200,
-							/obj/item/toy/prize/powerloader												= 100,
-							/obj/item/toy/prize/fireripley												= 100,
-							/obj/item/toy/prize/deathripley												= 100,
-							/obj/item/toy/prize/gygax													= 100,
-							/obj/item/toy/prize/durand													= 100,
-							/obj/item/toy/prize/honk													= 100,
-							/obj/item/toy/prize/marauder												= 100,
-							/obj/item/toy/prize/seraph													= 100,
-							/obj/item/toy/prize/mauler													= 100,
-							/obj/item/toy/prize/odysseus												= 100,
-							/obj/item/toy/prize/phazon													= 100,
-							/obj/item/reagent_containers/spray/waterflower						= 100,
-							/obj/random/action_figure													= 100,
-							/obj/random/plushie															= 100,
-							/obj/item/toy/cultsword														= 100,
-							/obj/item/storage/box/large/foam_gun									= 100,
-							/obj/item/storage/box/large/foam_gun/burst							= 50,
-							/obj/item/storage/box/large/foam_gun/revolver						= 25,
-							/obj/item/storage/box/large/foam_gun/revolver/tampered				= 1
-							)
-
-/obj/machinery/computer/arcade/Initialize()
-	. = ..()
-	// If it's a generic arcade machine, pick a random arcade
-	// circuit board for it and make the new machine
-	if(random)
-		var/obj/item/stock_parts/circuitboard/arcade/A = pick(subtypesof(/obj/item/stock_parts/circuitboard/arcade))
-		var/path = initial(A.build_path)
-		new path(loc)
-		return INITIALIZE_HINT_QDEL
-
-/obj/machinery/computer/arcade/interface_interact(user)
-	interact(user)
-	return TRUE
-
-/obj/machinery/computer/arcade/proc/prizevend()
-	var/prizeselect = pickweight(prizes)
-	new prizeselect(get_turf(src))
-
-/obj/machinery/computer/arcade/emp_act(severity)
-	if(inoperable())
-		..(severity)
-		return
-	var/empprize = null
-	var/num_of_prizes = 0
-	switch(severity)
-		if (EMP_ACT_HEAVY)
-			num_of_prizes = rand(1,4)
-		if (EMP_ACT_LIGHT)
-			num_of_prizes = rand(0,2)
-	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
-		empprize = pickweight(prizes)
-		new empprize(src.loc)
-
-	..(severity)
-
-///////////////////
-//  BATTLE HERE  //
-///////////////////
-
-/obj/machinery/computer/arcade/battle
-	name = "arcade machine"
-	desc = "Does not support Pinball."
-	icon_state = "arcade"
-	random = FALSE
-	machine_name = "battle arcade machine"
-	var/enemy_name = "Space Villian"
-	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
-	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
-	var/enemy_mp = 20
-	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
-	var/turtle = 0
-/*
 /obj/machinery/computer/arcade/battle/Initialize()
 	. = ..()
 	SetupGame()
@@ -111,23 +19,68 @@
 
 /obj/machinery/computer/arcade/battle/interact(mob/user)
 	user.set_machine(src)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
-	dat += "<center><h4>[src.enemy_name]</h4></center>"
+	var/dat = "<html><head><style>"
+	dat += "body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #e6e6e6; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }"
+	dat += ".container { max-width: 600px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 15px; padding: 20px; border: 2px solid #4cc9f0; box-shadow: 0 0 20px rgba(76, 201, 240, 0.5); }"
+	dat += ".header { text-align: center; color: #4cc9f0; text-shadow: 0 0 10px rgba(76, 201, 240, 0.8); margin-bottom: 20px; }"
+	dat += ".enemy-name { font-size: 24px; color: #f72585; text-shadow: 0 0 8px rgba(247, 37, 133, 0.8); }"
+	dat += ".message { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; font-size: 18px; border: 1px solid #f72585; }"
+	dat += ".stats { display: flex; justify-content: space-around; margin: 20px 0; }"
+	dat += ".stat-box { background: rgba(76, 201, 240, 0.2); padding: 10px; border-radius: 8px; text-align: center; width: 150px; border: 1px solid #4cc9f0; }"
+	dat += ".stat-value { font-size: 20px; font-weight: bold; color: #f72585; }"
+	dat += ".actions { text-align: center; margin: 20px 0; }"
+	dat += ".action-btn { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 12px 20px; margin: 5px; border-radius: 25px; cursor: pointer; font-size: 16px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }"
+	dat += ".action-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(247, 37, 133, 0.8); }"
+	dat += ".action-btn:disabled { background: #666; cursor: not-allowed; transform: none; box-shadow: none; }"
+	dat += ".game-over { background: rgba(247, 37, 133, 0.3); padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px solid #f72585; }"
+	dat += ".health-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".health-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #f72585); border-radius: 10px; transition: width 0.5s; }"
+	dat += ".magic-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".magic-fill { height: 100%; background: linear-gradient(90deg, #4cc9f0, #4895ef); border-radius: 10px; transition: width 0.5s; }"
+	dat += "a { color: #4cc9f0; text-decoration: none; }"
+	dat += "a:hover { text-decoration: underline; }"
+	dat += "</style></head><body>"
+	dat += "<div class='container'>"
 
-	dat += "<br><center><h3>[src.temp]</h3></center>"
-	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
+	dat += "<div class='header'><h2>ARCADE BATTLE</h2></div>"
+	dat += "<div class='enemy-name'><h3>[src.enemy_name]</h3></div>"
 
-	dat += "<center><b>"
+	dat += "<div class='message'><h4>[src.temp]</h4></div>"
+
+	dat += "<div class='stats'>"
+	dat += "<div class='stat-box'>"
+	dat += "<div>PLAYER HP</div>"
+	dat += "<div class='stat-value'>[src.player_hp]</div>"
+	dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, src.player_hp * 3.33)]%'></div></div>"
+	dat += "</div>"
+
+	dat += "<div class='stat-box'>"
+	dat += "<div>MAGIC POWER</div>"
+	dat += "<div class='stat-value'>[src.player_mp]</div>"
+	dat += "<div class='magic-bar'><div class='magic-fill' style='width: [min(100, src.player_mp * 10)]%'></div></div>"
+	dat += "</div>"
+
+	dat += "<div class='stat-box'>"
+	dat += "<div>ENEMY HP</div>"
+	dat += "<div class='stat-value'>[src.enemy_hp]</div>"
+	dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, src.enemy_hp * 2.22)]%'></div></div>"
+	dat += "</div>"
+	dat += "</div>"
+
+	dat += "<div class='actions'>"
 	if (src.gameover)
-		dat += "<a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
+		dat += "<a href='byond://?src=\ref[src];newgame=1' class='action-btn'>NEW GAME</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=\ref[src];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=\ref[src];charge=1'>Recharge Power</a>"
+		dat += "<a href='byond://?src=\ref[src];attack=1' class='action-btn'>ATTACK</a> | "
+		dat += "<a href='byond://?src=\ref[src];heal=1' class='action-btn'>HEAL</a> | "
+		dat += "<a href='byond://?src=\ref[src];charge=1' class='action-btn'>RECHARGE</a>"
+	dat += "</div>"
 
-	dat += "</b></center>"
+	if (src.gameover)
+		dat += "<div class='game-over'>GAME OVER!</div>"
+	dat += "</div></body></html>"
 
-	show_browser(user, dat, "window=arcade")
+	show_browser(user, dat, "window=arcade;size=600x800")
 	onclose(user, "arcade")
 	return
 
@@ -242,6 +195,7 @@
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
 		src.temp = "You have been crushed! GAME OVER"
+		interface_interact(user)
 		if(emagged)
 			explode()
 		else
@@ -268,4 +222,3 @@
 
 		attack_hand(user)
 		return 1
-*/

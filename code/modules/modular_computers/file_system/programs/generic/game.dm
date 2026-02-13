@@ -64,6 +64,7 @@
 /datum/nano_module/program/arcade_classic/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
 
+	data["src"] = "\ref[src]" //[SIERRA-ADD]
 	data["player_health"] = player_health
 	data["player_mana"] = player_mana
 	data["enemy_health"] = enemy_health
@@ -74,7 +75,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "arcade_classic.tmpl", "Defeat [enemy_name]", 700, 600, state = state)
+		ui = new(user, src, ui_key, "mods-arcade_classic.tmpl", "Defeat [enemy_name]", 700, 600, state = state) //[SIERRA-EDIT]
 		if(host.update_layout())
 			ui.auto_update_layout = 1
 		ui.set_initial_data(data)
