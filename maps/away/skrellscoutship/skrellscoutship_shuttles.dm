@@ -70,13 +70,13 @@
 	name = "Skrellian Shuttle"
 	warmup_time = 5
 	current_location = "nav_skrellscoutsh_dock"
-	dock_target = "xil_shuttle"
 	range = 2
 	shuttle_area = /area/ship/skrellscoutshuttle
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/skrell
+	dock_target = "xil_shuttle"
 	mothershuttle = "Skrellian Scout"
 
 /obj/shuttle_landmark/skrellscoutshuttle/start
