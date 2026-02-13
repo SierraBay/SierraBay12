@@ -247,7 +247,7 @@ GLOBAL_LIST_AS(machine_path_to_circuit_type, cache_circuits_by_build_path())
 	for(var/path in maximum_component_parts)
 		if(istype(component, path) && (number_of_components(path) == maximum_component_parts[path]))
 			to_chat(user, SPAN_WARNING("There are too many parts of this type installed in \the [src] already!"))
-			return -1
+			return 0
 	return 1
 
 /// Called whenever an attached component updates it's status. Override to handle updates to the machine.

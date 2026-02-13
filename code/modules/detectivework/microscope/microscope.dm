@@ -1,5 +1,6 @@
 //microscope code itself
-/obj/machinery/microscope
+//[SIERRA-EDIT] - Complete path refactoring /obj/machinery/microscope originally
+/obj/machinery/computer/microscope
 	name = "high powered electron microscope"
 	desc = "A highly advanced microscope capable of zooming up to 3000x."
 	icon = 'icons/obj/machines/forensics/microscope.dmi'
@@ -10,12 +11,18 @@
 	var/obj/item/sample = null
 	var/report_num = 0
 
-/obj/machinery/microscope/Destroy()
+/obj/machinery/computer/microscope/Destroy()
 	if(sample)
 		sample.dropInto(loc)
 	..()
 
-/obj/machinery/microscope/use_tool(obj/item/W, mob/living/user, list/click_params)
+/obj/machinery/computer/microscope/use_tool(obj/item/W, mob/living/user, list/click_params)
+//[SIERRA-ADD]
+	if(isScrewdriver(W) || isCrowbar(W))
+		var/choice = alert("Do you want to \the [W] on \the [src]?", "Disassemble", "Yes", "No")
+		if(choice == "Yes")
+			return .=..()
+//[SIERRA-ADD]
 	if(sample)
 		if (istype(W, /obj/item/evidencebag))
 			var/obj/item/evidencebag/bag = W
@@ -61,7 +68,7 @@
 	update_icon()
 	return TRUE
 
-/obj/machinery/microscope/physical_attack_hand(mob/user)
+/obj/machinery/computer/microscope/physical_attack_hand(mob/user)
 	. = TRUE
 	if(!sample)
 		to_chat(user, SPAN_WARNING("The microscope has no sample to examine."))
@@ -141,7 +148,7 @@
 			to_chat(user, report.info)
 	return
 
-/obj/machinery/microscope/proc/remove_sample(mob/living/remover)
+/obj/machinery/computer/microscope/proc/remove_sample(mob/living/remover)
 	if(!istype(remover) || remover.incapacitated() || !Adjacent(remover))
 		return
 	if(!sample)
@@ -152,17 +159,17 @@
 	sample = null
 	update_icon()
 
-/obj/machinery/microscope/AltClick()
+/obj/machinery/computer/microscope/AltClick()
 	remove_sample(usr)
 	return TRUE
 
-/obj/machinery/microscope/MouseDrop(atom/other)
+/obj/machinery/computer/microscope/MouseDrop(atom/other)
 	if(usr == other)
 		remove_sample(usr)
 	else
 		return ..()
 
-/obj/machinery/microscope/on_update_icon()
+/obj/machinery/computer/microscope/on_update_icon()
 	ClearOverlays()
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")

@@ -745,6 +745,9 @@
 	name = "headband"
 	icon = 'maps/sierra/icons/obj/clothing/new_loadout_icons.dmi'
 	item_icons = list(slot_head_str = 'maps/sierra/icons/obj/clothing/new_loadout.dmi')
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'maps/sierra/icons/obj/clothing/new_loadout_unati.dmi',
+		)
 	icon_state = "headband"
 	item_state = "headband"
 

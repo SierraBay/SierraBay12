@@ -23,7 +23,7 @@
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
 		"SNZ Speedboat" = list("nav_snz_dock"), //../../mods/maps/farfleet/_map_farfleet.dme shuttle,
-		"SSV-S" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
+		"Skrellian Shuttle" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck4_skrellscout"), //away/skrellscoutship.dm ship,
 		"Alien Interceptor" = list("nav_deck4_vox_raider"), //maps/antag_spawn/vox/voxraider.dm shuttle,
 		"Rescue" = list("nav_ert_dock"), //maps/antag_spawn/ert/ert.dm shuttle,
@@ -32,8 +32,11 @@
 		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout"), //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
 		"GM Tug" = list("nav_merchant_out"), //maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
 		"Petrov" = list("nav_petrov_start"),
-		"SRV Venerable Catfish" = list("nav_deck3_catfish") //mods/_maps/verne/verne.dme shuttle
-	)
+		"SRV Venerable Catfish" = list("nav_deck3_catfish"), //mods/_maps/verne/verne.dme shuttle
+		"Lepidopterax" = list("nav_hangar_ascent_inf_sierra_two"),
+		"Trichopterax" = list("nav_hangar_ascent_inf_sierra"),
+		"Ascent Caulship" = list("nav_ascent_caulship_sierra")
+		)
 
 	initial_generic_waypoints = list(
 		"nav_merc_deck1",
