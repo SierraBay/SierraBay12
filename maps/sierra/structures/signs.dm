@@ -137,7 +137,7 @@
 /obj/structure/sign/memorial/Initialize()
 	. = ..()
 	var/datum/map/sierra/sierra_map = GLOB.using_map
-	//fallen += sierra_map?.memorial_entries
+	fallen += sierra_map?.memorial_entries
 
 /obj/structure/sign/memorial/use_tool(obj/item/tool, mob/user, list/click_params)
 	// Dog Tags - Add dog tag
