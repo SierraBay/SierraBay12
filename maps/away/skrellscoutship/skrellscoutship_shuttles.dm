@@ -82,6 +82,7 @@
 /obj/shuttle_landmark/skrellscoutshuttle/start
 	name = "Docking Port"
 	landmark_tag = "nav_skrellscoutsh_dock"
+	docking_controller = "xil_port_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/skrellscoutshuttle/altdock
