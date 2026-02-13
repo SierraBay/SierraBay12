@@ -47,7 +47,7 @@
 	landmark_tag = "nav_hangar_snzalt"
 
 /obj/shuttle_landmark/snz/dock
-	name = "NSV Sierra Restricted Dock"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_snz_dock"
 	docking_controller = "rescue_shuttle_dock_airlock"
 
