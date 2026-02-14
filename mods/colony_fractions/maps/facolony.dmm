@@ -739,6 +739,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
+"cN" = (
+/obj/structure/catwalk,
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "cO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1273,7 +1282,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "fk" = (
-/obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/dust/corner{
 	dir = 4
 	},
@@ -1682,19 +1690,21 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "gU" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/catwalk,
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 4
+	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/exoplanet/concrete,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
+"gY" = (
+/obj/structure/catwalk,
+/obj/landmark/clear,
+/turf/template_noop,
 /area/map_template/facolony/mineralprocessing)
 "hd" = (
 /obj/floor_decal/industrial/outline/yellow,
@@ -2346,6 +2356,11 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
+"kd" = (
+/obj/landmark/clear,
+/obj/item/stack/material/rods,
+/turf/template_noop,
+/area/map_template/facolony/mineralprocessing)
 "kg" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -3120,6 +3135,17 @@
 /obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
+"nV" = (
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/dust/corner,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "nW" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden,
 /obj/floor_decal/industrial/warning/dust{
@@ -8826,11 +8852,6 @@
 /area/map_template/facolony/engineering)
 "Oq" = (
 /obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -9360,8 +9381,8 @@
 /area/map_template/facolony/airlock)
 "Qy" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "QA" = (
@@ -9584,6 +9605,14 @@
 	},
 /turf/simulated/floor/wood/bamboo,
 /area/map_template/facolony/messhall)
+"Ry" = (
+/obj/floor_decal/industrial/warning/dust{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "Rz" = (
 /obj/floor_decal/corner/b_green/border{
 	dir = 1
@@ -10463,11 +10492,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/structure/cable/green{
 	d1 = 2;
@@ -12775,7 +12799,7 @@ lB
 lB
 Bm
 Dx
-Dx
+nV
 Dx
 Dx
 Dx
@@ -12831,7 +12855,7 @@ ey
 vx
 Sh
 Qr
-EN
+gU
 "}
 (31,1,1) = {"
 QP
@@ -13002,7 +13026,7 @@ es
 es
 es
 es
-gU
+es
 EN
 "}
 (35,1,1) = {"
@@ -13089,7 +13113,7 @@ an
 an
 an
 an
-EN
+cN
 "}
 (37,1,1) = {"
 QP
@@ -13131,8 +13155,8 @@ es
 es
 es
 es
-gU
-EN
+es
+gY
 "}
 (38,1,1) = {"
 QP
@@ -13175,7 +13199,7 @@ bq
 bq
 bq
 bq
-EN
+kd
 "}
 (39,1,1) = {"
 QP
@@ -13218,7 +13242,7 @@ an
 an
 an
 an
-EN
+Ry
 "}
 (40,1,1) = {"
 QP
@@ -13260,7 +13284,7 @@ es
 es
 es
 es
-gU
+es
 EN
 "}
 (41,1,1) = {"
