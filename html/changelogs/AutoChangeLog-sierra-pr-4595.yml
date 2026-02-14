@@ -1,9 +1,0 @@
-author: GarryFlint
-changes:
-  - maptweak: Исправлена стыковка Trichopterax, Lepidopterax, Old SNZ, SSV-S к 
-      Сьерре
-  - maptweak: Стыковка SSV-S с материнским судном теперь в полуавтоматическом 
-      режиме
-  - maptweak: Возвращены защитные blast doors в RUST. И другие общие фиксы
-  - maptweak: Исправлены названия доков Сьерры в консоли стыковки
-delete-after: true
