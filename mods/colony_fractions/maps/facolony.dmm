@@ -340,7 +340,7 @@
 	},
 /obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/engineering)
+/area/map_template/facolony/atmospherics)
 "bD" = (
 /obj/structure/table/rack,
 /obj/floor_decal/corner/black/half{
@@ -12301,7 +12301,7 @@ Wc
 Tk
 CO
 ol
-EI
+Qn
 bA
 pm
 pm
