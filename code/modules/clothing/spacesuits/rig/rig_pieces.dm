@@ -92,7 +92,7 @@
 		return TRUE
 	return ..()
 
-
+/*
 /obj/item/clothing/suit/space/rig/equipped(mob/M)
 	check_limb_support(M)
 	..()
@@ -101,7 +101,7 @@
 /obj/item/clothing/suit/space/rig/dropped(mob/user)
 	check_limb_support(user)
 	..()
-
+*/
 
 // Some space suits are equipped with reactive membranes that support broken limbs
 /obj/item/clothing/suit/space/rig/proc/can_support(mob/living/carbon/human/user)

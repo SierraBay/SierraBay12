@@ -8622,6 +8622,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
+"zn" = (
+/obj/structure/closet/crate/solar,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/colony/engineering)
 "zs" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -10159,7 +10163,7 @@ wZ
 aW
 cl
 aN
-ew
+zn
 rs
 ar
 aF
