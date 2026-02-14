@@ -13,7 +13,8 @@
 		/datum/map_template/ruin/exoplanet/playablecolony2
 	)
 	apc_test_exempt_areas = list(
-		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT
+		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
+		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
 	spawn_weight = 0.6
 
@@ -238,7 +239,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	desc = "Old worn-out access card."
 	access = list(access_facolony)
 	color = COLOR_OFF_WHITE
-	detail_color = "#000000"
+	detail_color = COLOR_GRAY15
 
 /obj/floor_decal/falogo
 	icon = 'mods/colony_fractions/icons/colony.dmi'
@@ -273,7 +274,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /obj/machinery/telecomms/server/map_preset/facolony
 	preset_name = "Internal"
-	preset_color = "#4a869f"
+	preset_color = COLOR_SKY_BLUE
 
 /obj/machinery/telecomms/broadcaster/map_preset/facolony
 	preset_name = "Internal"

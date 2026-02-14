@@ -3731,6 +3731,7 @@
 /obj/item/module/power_control,
 /obj/item/module/power_control,
 /obj/item/module/power_control,
+/obj/item/tracker_electronics,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/warehouse)
 "qo" = (
@@ -6072,14 +6073,10 @@
 /obj/item/storage/mre/random,
 /obj/item/storage/mre/menu9,
 /obj/item/storage/mre/menu9,
-/obj/item/storage/box/snack/noraisin,
-/obj/item/storage/box/snack/noraisin,
-/obj/item/storage/box/snack/jerky,
-/obj/item/storage/box/snack/jerky,
-/obj/item/storage/box/snack/jerky,
 /obj/structure/closet/fridge/meat,
-/obj/item/storage/box/snack/jerky,
 /obj/decal/cleanable/dirt,
+/obj/item/storage/mre/random,
+/obj/item/storage/mre/random,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 "zZ" = (
@@ -6489,7 +6486,6 @@
 	icon_state = "0-2"
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/item/tracker_electronics,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/airlock)
@@ -9569,10 +9565,9 @@
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
-/obj/structure/closet/crate/solar_assembly,
-/obj/item/tracker_electronics,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
+/obj/structure/closet/crate/solar,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/warehouse)
 "Rf" = (
