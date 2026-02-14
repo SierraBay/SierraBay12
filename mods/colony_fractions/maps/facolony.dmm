@@ -9976,6 +9976,21 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
+"ST" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/catwalk,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/exoplanet/concrete,
+/area/map_template/facolony/mineralprocessing)
 "SU" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/floor_decal/industrial/warning/dust{
@@ -13048,7 +13063,7 @@ es
 es
 es
 es
-es
+ST
 EN
 "}
 (35,1,1) = {"
@@ -13177,7 +13192,7 @@ es
 es
 es
 es
-es
+ST
 gU
 "}
 (38,1,1) = {"
@@ -13306,7 +13321,7 @@ es
 es
 es
 es
-es
+ST
 EN
 "}
 (41,1,1) = {"
