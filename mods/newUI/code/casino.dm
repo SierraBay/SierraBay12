@@ -12,8 +12,6 @@
 	var/coins_required = 10
 	var/multiplier = 1
 	var/list/reels = list("👑", "🐍", "🏺")
-	var/last_win = 0
-
 
 /obj/structure/casino/oh_bandit/New()
 	..()
@@ -170,9 +168,11 @@
 				winnings = 15
 			if("♣️")
 				winnings = 10
+		playsound(src, pick('mods/newUI/sound/jackpot.wav'), 50, 1)
 
 	else if(result[1] == result[2] || result[2] == result[3])
 		winnings = 5
+		playsound(src, pick('mods/newUI/sound/e_death.ogg'), 50, 1)
 
 	winnings *= multiplier
 
@@ -201,13 +201,22 @@
 			SSnano.close_uis(src)
 			AddOverlays("[theme]_idle")
 			update_icon()
-		return
+		return TRUE
 
 	if (istype(tool, /obj/item/spacecash))
 		var/obj/item/spacecash/insertedmoney = tool
 		money_loaded += insertedmoney.worth
 		to_chat(user, "You loaded [insertedmoney.name] intro [src].")
 		qdel(tool)
+		return TRUE
+
+	if (isWrench(tool))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if (!do_after(user, (tool.toolspeed * 4) SECONDS, src, DO_REPAIR_CONSTRUCT))
+			return TRUE
+		anchored = !anchored
+		to_chat(user, "You [anchored ? "wrench" : "unwrench"] \the [src].")
+		return TRUE
 
 /obj/structure/casino/oh_bandit/proc/winning_money(amount)
 	spawn_money(amount, src.loc,usr)

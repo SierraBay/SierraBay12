@@ -100,6 +100,7 @@
 		src.blocked = 1
 		var/attackamt = rand(2,6)
 		src.temp = "You attack for [attackamt] damage!"
+		playsound(src, pick('mods/newUI/sound/attack1.ogg', 'mods/newUI/sound/attack2.ogg'), 50, 1)
 		if(turtle > 0)
 			turtle--
 		src.enemy_hp -= attackamt
@@ -113,6 +114,7 @@
 		var/pointamt = rand(1,3)
 		var/healamt = rand(6,8)
 		src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
+		playsound(src, pick('mods/newUI/sound/heal1.ogg', 'mods/newUI/sound/heal2.ogg'), 50, 1)
 		turtle++
 
 		src.player_mp -= pointamt
@@ -127,6 +129,7 @@
 		src.blocked = 1
 		var/chargeamt = rand(4,7)
 		src.temp = "You regain [chargeamt] points"
+		playsound(src, pick('mods/newUI/sound/-mana2.ogg', 'mods/newUI/sound/-mana1.ogg'), 50, 1)
 		src.player_mp += chargeamt
 		if(turtle > 0)
 			turtle--
@@ -152,6 +155,7 @@
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
 		if(!gameover)
 			src.gameover = 1
+			playsound(src, pick('mods/newUI/sound/e_death.ogg'), 50, 1)
 			src.temp = "[src.enemy_name] has fallen! Rejoice!"
 
 			if(emagged)
@@ -166,17 +170,20 @@
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
+		playsound(src, pick('mods/newUI/sound/gethit1.ogg', 'mods/newUI/sound/gethit2.ogg'), 50, 1)
 		src.player_hp -= boomamt
 
 	else if ((src.enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
+		playsound(src, pick('mods/newUI/sound/-mana1.ogg', 'mods/newUI/sound/-mana2.ogg'), 50, 1)
 		src.player_mp -= stealamt
 		interface_interact(user)
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
 			sleep(10)
+			playsound(src, pick('mods/newUI/sound/p_death.ogg'), 50, 1)
 			src.temp = "You have been drained! GAME OVER"
 			if(emagged)
 				explode()
@@ -186,16 +193,18 @@
 		src.temp = "[src.enemy_name] heals for 4 health!"
 		src.enemy_hp += 4
 		src.enemy_mp -= 4
-
+		playsound(src, pick('mods/newUI/sound/heal1.ogg', 'mods/newUI/sound/heal2.ogg'), 50, 1)
 	else
 		var/attackamt = rand(3,6)
 		src.temp = "[src.enemy_name] attacks for [attackamt] damage!"
 		src.player_hp -= attackamt
+		playsound(src, pick('mods/newUI/sound/gethit1.ogg', 'mods/newUI/sound/gethit2.ogg'), 50, 1)
 
 	if ((src.player_mp <= 0) || (src.player_hp <= 0))
 		src.gameover = 1
 		src.temp = "You have been crushed! GAME OVER"
 		interface_interact(user)
+		playsound(src, pick('mods/newUI/sound/p_death.ogg'), 50, 1)
 		if(emagged)
 			explode()
 		else
