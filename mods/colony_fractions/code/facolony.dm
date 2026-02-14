@@ -46,10 +46,15 @@
 
 /datum/job/submap/facolony/colonist/leader
 	title = "Ship Captain"
-	supervisors = "Jared"
 	info = "You are a Colonist Leader, living on the rim of the explored space. Control your colony and defend its interests."
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	min_skill = list(
+		SKILL_COMBAT	= SKILL_BASIC,
+		SKILL_WEAPONS	= SKILL_BASIC,
+		SKILL_PILOT	= SKILL_BASIC,
+		SKILL_PHYSICAL	= SKILL_BASIC
+	)
 	max_skill = list(
 		SKILL_PILOT			= SKILL_MAX,
 		SKILL_CONSTRUCTION	= SKILL_MAX,
@@ -289,21 +294,21 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/machinery/door/airlock/facolony/command
 	name = "Airlock"
 	door_color = COLOR_COMMAND_BLUE
-	stripe_color = "#545c68"
+	stripe_color = COLOR_GUNMETAL
 
 /obj/machinery/door/airlock/facolony/mining
 	name = "Airlock"
 	door_color = COLOR_PALE_ORANGE
-	stripe_color = "#545c68"
+	stripe_color = COLOR_GUNMETAL
 
 /obj/machinery/door/airlock/multi_tile/facolony/general
 	name = "Airlock"
-	stripe_color = "#3E3D3D"
+	stripe_color = COLOR_GRAY20
 
 /obj/machinery/door/airlock/facolony/general
 	name = "Airlock"
-	stripe_color = "#3E3D3D"
+	stripe_color = COLOR_GRAY20
 
 /obj/machinery/door/airlock/glass/facolony/jail
 	name = "Temporary Detention"
-	stripe_color = "#9d2300"
+	stripe_color = COLOR_NT_RED
