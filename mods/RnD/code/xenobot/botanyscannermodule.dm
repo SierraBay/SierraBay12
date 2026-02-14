@@ -44,6 +44,8 @@
 		user_skill_level = 3 //most info revealed
 		if(user.skill_check(SKILL_SCIENCE, SKILL_MASTER))
 			user_skill_level = 5
+		else if(user.skill_check(SKILL_SCIENCE, SKILL_EXPERIENCED))
+			user_skill_level = 4
 
 
 
