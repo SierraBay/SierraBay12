@@ -210,8 +210,8 @@
     <div class="coins-display">Стоимость игры: {{:data.cost}} таллеров</div>
     <div class="coins-display">Осталось: {{:data.coins}} таллеров</div>
     {{if data.spinning}}
-        <button class='spin-button' disabled>Вращается...</button>
+        <button class='spin-button' disabled>Spinning...</button>
     {{else}}
-        <a href='?src={{:data.src}}&spin=1&theme=pharaoh' class='spin-button'>Дергнуть за ручку</a>
+        <a href='?src={{:data.src}}&spin=1&theme=pharaoh' class='spin-button'>Pull the arm</a>
     {{/if}}
 </div>
