@@ -57,7 +57,7 @@
 	AddOverlays("[theme]_spin")
 	update_icon()
 	money_loaded -= actual_cost
-	playsound(src, 'mods/newUI/sound/spin.wav', 40)
+	playsound(src, 'mods/newUI/sound/spin.ogg', 40)
 
 	spinning = TRUE
 	var/list/data = ui_data(user)
@@ -168,7 +168,7 @@
 				winnings = 15
 			if("♣️")
 				winnings = 10
-		playsound(src, pick('mods/newUI/sound/jackpot.wav'), 50, 1)
+		playsound(src, pick('mods/newUI/sound/jackpot.ogg'), 50, 1)
 
 	else if(result[1] == result[2] || result[2] == result[3])
 		winnings = 5
