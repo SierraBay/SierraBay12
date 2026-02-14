@@ -123,7 +123,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	health_min_damage = 5
 	use_weapon_hitsound = FALSE
 	damage_hitsound = 'sound/effects/Glassbr3.ogg'
-	obj_flags = OBJ_FLAG_WALL_MOUNTED
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
 	var/screen = 0
 		// 0 = welcome screen - main menu
