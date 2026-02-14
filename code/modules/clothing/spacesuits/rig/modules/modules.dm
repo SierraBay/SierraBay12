@@ -214,6 +214,7 @@
 	next_use = world.time + module_cooldown
 	return 1
 
+/*[SIERRA-REMOVE] - HARDSUITS
 // Proc for toggling on active abilities.
 /obj/item/rig_module/proc/activate()
 
@@ -247,6 +248,7 @@
 
 	return 1
 
+*///[SIERRA-REMOVE]
 //Proc for selecting module
 /obj/item/rig_module/proc/select()
 

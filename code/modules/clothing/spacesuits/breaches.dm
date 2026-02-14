@@ -46,7 +46,8 @@
 		descriptor = breach_brute_descriptors[class]
 	if(patched)
 		descriptor = "patched [descriptor]"
-
+//[SIERRA-REMOVE] - HARDSUITS
+/*
 //Repair a certain amount of brute or burn damage to the suit.
 /obj/item/clothing/suit/space/proc/repair_breaches(damtype, amount, mob/user)
 
@@ -82,6 +83,7 @@
 		SPAN_NOTICE("You patch some of the damage on \the [src].")
 	)
 	calc_breach_damage()
+*///[SIERRA-REMOVE] - HARDSUITS
 
 /obj/item/clothing/suit/space/proc/create_breaches(damtype, amount)
 
