@@ -6,12 +6,19 @@
 	density = TRUE
 	anchored = TRUE
 
+	var/theme = "pharaoh"
 	var/money_loaded = 100
 	var/spinning = FALSE
 	var/coins_required = 10
 	var/multiplier = 1
-	var/list/reels = list()
+	var/list/reels = list("👑", "🐍", "🏺")
 	var/last_win = 0
+
+
+/obj/structure/casino/oh_bandit/New()
+	..()
+	AddOverlays("[theme]_idle")
+	update_icon()
 
 /obj/structure/casino/oh_bandit/attack_hand(mob/user)
 	return(ui_interact(user))
@@ -19,9 +26,16 @@
 /obj/structure/casino/oh_bandit/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = ui_data(user)
 
+	var/template_name = "mods-slot_interface.tmpl"
+	switch(theme)
+		if("jade")
+			template_name = "mods-slot_interface_jade.tmpl"
+		if("casino")
+			template_name = "mods-slot_interface_casino.tmpl"
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mods-slot_interface.tmpl", capitalize(name), 600, 700)
+		ui = new(user, src, ui_key, template_name, capitalize(name), 600, 700)
 		ui.set_initial_data(data)
 		ui.open()
 
@@ -40,8 +54,9 @@
 	if(money_loaded < actual_cost)
 		to_chat(user, "Please insert money")
 		return
-
+	CutOverlays("[theme]_idle")
 	icon_state = "slot_machine_active"
+	AddOverlays("[theme]_spin")
 	update_icon()
 	money_loaded -= actual_cost
 	playsound(src, 'mods/newUI/sound/spin.wav', 40)
@@ -50,17 +65,14 @@
 	var/list/data = ui_data(user)
 	SSnano.update_uis(src, data)
 
-	// Запускаем анимацию спина через addtimer
 	start_spin_animation(user)
 
 /obj/structure/casino/oh_bandit/proc/start_spin_animation(mob/user)
-	var/list/symbols = list("💰", "♣️", "♦️", "♥️", "♠️", "⚜️")
+	var/list/symbols = get_symbols()
 
-	// Запускаем 20 кадров анимации с разными задержками
 	for(var/spin_frame = 1 to 20)
 		addtimer(new Callback(src, PROC_REF(animate_spin_frame), user, symbols), spin_frame * 0.2 SECONDS)
 
-	// После завершения анимации - финализируем спин (20 * 0.2 = 4 сек)
 	addtimer(new Callback(src, PROC_REF(finish_spin), user), 4 SECONDS)
 
 /obj/structure/casino/oh_bandit/proc/animate_spin_frame(mob/user, list/symbols)
@@ -84,6 +96,8 @@
 
 	spinning = FALSE
 	icon_state = "slot_machine"
+	CutOverlays("[theme]_spin")
+	AddOverlays("[theme]_idle")
 	update_icon()
 
 	var/list/data = ui_data(user)
@@ -104,7 +118,7 @@
 
 
 /obj/structure/casino/oh_bandit/proc/generate_result()
-	var/list/symbols = list("💰", "♣️", "♦️", "♥️", "♠️", "⚜️")
+	var/list/symbols = get_symbols()
 	var/list/result = list()
 
 	for(var/i = 1 to 3)
@@ -117,25 +131,78 @@
 
 	if(result[1] == result[2] && result[2] == result[3])
 		switch(result[1])
-			if("💰")
+			// Pharaoh
+			if("👑")
 				winnings = 100
-			if("⚜️")
+			if("🦂")
+				winnings = 75
+			if("🐍")
 				winnings = 50
-			if("♦️")
+			if("🐫")
 				winnings = 25
-			if("♥️")
+			if("🏺")
 				winnings = 15
-			if("♠️")
+			if("⚱️")
 				winnings = 10
+			// Jade
+			if("🐉")
+				winnings = 100
+			if("🐲")
+				winnings = 75
+			if("🦎")
+				winnings = 50
+			if("✨")
+				winnings = 25
+			if("🍀")
+				winnings = 15
+			if("💎")
+				winnings = 10
+			// Casino
+			if("🎰")
+				winnings = 100
+			if("🎲")
+				winnings = 75
+			if("♦️")
+				winnings = 50
+			if("♥️")
+				winnings = 25
+			if("♠️")
+				winnings = 15
 			if("♣️")
-				winnings = 5
+				winnings = 10
+
+	else if(result[1] == result[2] || result[2] == result[3])
+		winnings = 5
 
 	winnings *= multiplier
 
 	return winnings
 
+
+/obj/structure/casino/oh_bandit/proc/get_symbols()
+	if(theme == "jade")
+		return list("🐉", "🐲", "🦎", "✨", "🍀", "💎")
+	if(theme == "casino")
+		return list("🎰", "🎲", "♦️", "♥️", "♠️", "♣️")
+
+	return list("👑", "🦂", "🐍", "🏺", "🐫", "⚱️")
+
 /obj/structure/casino/oh_bandit/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
+	if (istype(tool, /obj/item/device/multitool))
+		var/choices = list("jade", "casino", "pharaoh")
+		var/choice = input(user, "Choose a theme:", "Theme Selection") in choices
+		if(choice)
+			theme = choice
+			var/list/data = ui_data(user)
+			var/list/symbols = get_symbols()
+			reels = list(pick(symbols), pick(symbols), pick(symbols))
+			SSnano.update_uis(src, data)
+			SSnano.close_uis(src)
+			AddOverlays("[theme]_idle")
+			update_icon()
+		return
+
 	if (istype(tool, /obj/item/spacecash))
 		var/obj/item/spacecash/insertedmoney = tool
 		money_loaded += insertedmoney.worth

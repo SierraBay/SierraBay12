@@ -1,13 +1,13 @@
 <style>
     body
     .slot-machine {
-        border: 3px solid #D4AF37;
+        border: 3px solid #660000;
         padding: 20px;
         margin: 20px auto;
         width: 500px;
-        background: #DAA520;
+        background: linear-gradient(180deg,#240000,#4b0000);
         border-radius: 15px;
-        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 30px rgba(75,0,0,0.45), inset 0 0 10px rgba(0,0,0,0.35);
         position: relative;
         overflow: hidden;
     }
@@ -18,7 +18,7 @@
         left: 0;
         right: 0;
         height: 30px;
-        background: linear-gradient(to bottom, #8B4513, #5D2906);
+        background: linear-gradient(to bottom, #330000, #1a0000);
         border-radius: 15px 15px 0 0;
         z-index: 0;
     }
@@ -29,15 +29,15 @@
         left: 0;
         right: 0;
         height: 30px;
-        background: linear-gradient(to top, #8B4513, #5D2906);
+        background: linear-gradient(to top, #330000, #1a0000);
         border-radius: 0 0 15px 15px;
         z-index: 0;
     }
-    h1 { position: relative; z-index: 1; margin: 10px 0; color: #8B4513; font-size: 24px; }
+    h1 { position: relative; z-index: 1; margin: 10px 0; color: #ffd9d9; font-size: 24px; }
     .cost-display {
         font-size: 16px;
         font-weight: bold;
-        color: #8B4513;
+        color: #ffd9d9;
         margin: 10px 0;
         position: relative;
         z-index: 1;
@@ -49,24 +49,24 @@
         gap: 15px;
         margin: 20px 0;
         padding: 20px;
-        background: #8B4513;
+        background: linear-gradient(180deg,#110000,#220000);
         border-radius: 10px;
         position: relative;
         z-index: 1;
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
     }
     .reel {
         width: 100px;
         height: 110px;
-        border: 4px solid #654321;
+        border: 4px solid #330000;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 44px;
         font-weight: bold;
-        background: linear-gradient(135deg, #FFE55C, #FFD700);
+        background: linear-gradient(135deg,#ffb3b3,#8b0000);
         border-radius: 8px;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0,0,0,0.5);
         position: relative;
         overflow: hidden;
         transition: transform 0.15s ease;
@@ -83,11 +83,11 @@
     }
     .payouts-display {
         font-size: 13px;
-        color: #8B4513;
+        color: #ffd9d9;
         margin: 15px 0;
         padding: 10px 15px;
-        background: #F5DEB3;
-        border: 2px solid #8B4513;
+        background: #220000;
+        border: 2px solid #660000;
         border-radius: 8px;
         line-height: 18px;
         white-space: pre-wrap;
@@ -98,7 +98,7 @@
     .coins-display {
         font-size: 16px;
         font-weight: bold;
-        color: #8B4513;
+        color: #ffd9d9;
         margin: 10px 0;
         position: relative;
         z-index: 1;
@@ -115,16 +115,16 @@
         padding: 10px 15px;
         font-size: 14px;
         font-weight: bold;
-        background: #FFD700;
-        border: 2px solid #8B4513;
+        background: #ff6666;
+        border: 2px solid #330000;
         border-radius: 6px;
         cursor: pointer;
         transition: all 0.3s;
-        color: #8B4513;
+        color: #220000;
         text-decoration: none;
         display: inline-block;
         min-width: 50px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
     }
     .multiplier-btn:hover {
         background: #FFA500;
@@ -148,8 +148,8 @@
     .spin-button {
         padding: 12px 30px;
         font-size: 16px;
-        background: #FFD700;
-        border: 2px solid #8B4513;
+        background: #b30000;
+        border: 2px solid #330000;
         border-radius: 6px;
         cursor: pointer;
         margin: 20px auto;
@@ -157,10 +157,10 @@
         transition: all 0.3s;
         display: inline-block;
         text-decoration: none;
-        color: #8B4513;
+        color: #fff;
         position: relative;
         z-index: 1;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     }
     .spin-button:hover {
         background: #FFA500;
@@ -183,7 +183,7 @@
 
 <div class="slot-machine">
     <div style="text-align: center">
-    <h1> 𓂀 Pharaoh's Treasure 𓁈</h1>
+    <h1> ⁷⁷⁷ Lady Luck ⁷⁷⁷ㅤ</h1>
     </div>
     <div class="multiplier-buttons">
         {{if data.spinning}}
@@ -201,12 +201,12 @@
         <div class="reel {{if data.spinning}}spinning{{/if}}">{{:data.reels[1]}}</div>
         <div class="reel {{if data.spinning}}spinning{{/if}}">{{:data.reels[2]}}</div>
     </div>
-    <div class="payouts-display">👑👑👑=100
-🦂🦂🦂=75
-🐍🐍🐍=50
-🏺🏺🏺=25
-🐫🐫🐫=15
-⚱️⚱️⚱️=10</div>
+    <div class="payouts-display">🎰🎰🎰=100
+🎲🎲🎲=75
+♦️♦️♦️=50
+♥️♥️♥️=25
+♠️♠️♠️=15
+♣️♣️♣️=10</div>
     <div class="coins-display">Стоимость игры: {{:data.cost}} таллеров</div>
     <div class="coins-display">Осталось: {{:data.coins}} таллеров</div>
     {{if data.spinning}}
