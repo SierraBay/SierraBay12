@@ -1,4 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/cargo2)
 "ad" = (
 /obj/machinery/body_scanconsole{
 	dir = 1
@@ -224,6 +234,14 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/map_template/facolony/cargo2)
 "bm" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 4
@@ -1259,6 +1277,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
+"fc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/cargo)
 "fg" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -1425,6 +1453,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
+"fT" = (
+/obj/floor_decal/industrial/warning/dust{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "fU" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -1679,8 +1715,8 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "gU" = (
+/obj/structure/catwalk,
 /obj/landmark/clear,
-/obj/item/stack/material/rods,
 /turf/template_noop,
 /area/map_template/facolony/mineralprocessing)
 "hd" = (
@@ -1953,16 +1989,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
-"iI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/map_template/facolony/cargo)
 "iJ" = (
 /obj/floor_decal/corner/b_green/three_quarters{
 	dir = 4
@@ -2197,13 +2223,12 @@
 /area/template_noop)
 "jK" = (
 /obj/paint/brown,
-/obj/machinery/door/blast/shutters/open{
-	_signal_procs = colony_rnd;
-	dir = 2;
-	id_tag = "facolony_shipmed"
-	},
 /obj/wallframe_spawn/reinforced/polarized{
 	id = "colony_surgery1"
+	},
+/obj/machinery/door/blast/shutters/open{
+	dir = 2;
+	id_tag = "facolony_shipmed"
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/surgery)
@@ -2650,6 +2675,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
+"lN" = (
+/obj/landmark/clear,
+/obj/item/stack/material/rods,
+/turf/template_noop,
+/area/map_template/facolony/mineralprocessing)
 "lP" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -2808,15 +2838,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/atmospherics2)
-"mx" = (
-/obj/structure/catwalk,
-/obj/floor_decal/industrial/warning/dust/corner{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/away,
-/area/map_template/facolony/mineralprocessing)
 "mA" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -3919,6 +3940,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
+"rc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/cargo)
 "rh" = (
 /obj/machinery/washing_machine,
 /obj/item/storage/box/detergent,
@@ -4703,7 +4734,6 @@
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/blast/shutters/open{
-	_signal_procs = colony_rnd;
 	dir = 2;
 	id_tag = "facolony_shipmed"
 	},
@@ -4809,14 +4839,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
-"vb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
-/area/map_template/facolony/cargo2)
 "vd" = (
 /obj/structure/reagent_dispensers/water_cooler{
 	dir = 1
@@ -5165,14 +5187,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
-"wf" = (
-/obj/floor_decal/industrial/warning/dust{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/away,
-/area/map_template/facolony/mineralprocessing)
 "wl" = (
 /obj/structure/catwalk,
 /obj/machinery/light/small{
@@ -5432,7 +5446,6 @@
 	req_access = list()
 	},
 /obj/machinery/door/blast/shutters/open{
-	_signal_procs = colony_rnd;
 	dir = 2;
 	id_tag = "facolony_shipmed"
 	},
@@ -5566,6 +5579,15 @@
 /obj/submap_landmark/spawnpoint/facolony/crewman_spawn,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
+"ya" = (
+/obj/structure/catwalk,
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "yb" = (
 /obj/paint/fleet/sfv_rook,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
@@ -6119,18 +6141,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
-"AH" = (
-/obj/structure/catwalk,
-/obj/floor_decal/industrial/warning/dust/corner{
-	dir = 1
-	},
-/obj/floor_decal/industrial/warning/dust/corner{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/away,
-/area/map_template/facolony/mineralprocessing)
 "AL" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6456,6 +6466,18 @@
 /obj/floor_decal/industrial/hatch/grey,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
+"Cr" = (
+/obj/structure/catwalk,
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "Cs" = (
 /obj/machinery/power/solar_control{
 	dir = 1;
@@ -7118,7 +7140,6 @@
 /area/map_template/facolony/cargohatch)
 "Ft" = (
 /obj/machinery/door/blast/shutters/open{
-	_signal_procs = colony_rnd;
 	dir = 2;
 	id_tag = "facolony_shipmed"
 	},
@@ -8048,16 +8069,6 @@
 	},
 /turf/simulated/floor/wood/maple,
 /area/map_template/facolony/messhall)
-"JY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/map_template/facolony/cargo2)
 "Kc" = (
 /obj/structure/table/rack,
 /obj/floor_decal/corner/black/half,
@@ -8388,12 +8399,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "LG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo2)
@@ -8806,6 +8817,17 @@
 /obj/structure/table/steel,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
+"NM" = (
+/obj/floor_decal/industrial/warning/dust/corner{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/dust/corner,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/turf/simulated/floor/away,
+/area/map_template/facolony/mineralprocessing)
 "NT" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/machinery/atmospherics/binary/pump{
@@ -10105,16 +10127,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
-"TE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/map_template/facolony/cargo)
 "TF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10303,17 +10315,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
-"Uh" = (
-/obj/floor_decal/industrial/warning/dust/corner{
-	dir = 4
-	},
-/obj/floor_decal/industrial/warning/dust/corner,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/structure/catwalk,
-/turf/simulated/floor/away,
-/area/map_template/facolony/mineralprocessing)
 "Uj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10637,11 +10638,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/medbay)
-"Vm" = (
-/obj/structure/catwalk,
-/obj/landmark/clear,
-/turf/template_noop,
-/area/map_template/facolony/mineralprocessing)
 "Vp" = (
 /obj/floor_decal/corner/yellow/border,
 /obj/floor_decal/industrial/hatch/yellow,
@@ -12401,12 +12397,12 @@ WD
 vr
 vr
 WD
-iI
-TE
+fc
+rc
 nQ
-vb
+bj
+ac
 LG
-JY
 Uq
 bS
 pK
@@ -12830,7 +12826,7 @@ lB
 lB
 Bm
 Dx
-Uh
+NM
 Dx
 Dx
 Dx
@@ -12886,7 +12882,7 @@ ey
 vx
 Sh
 Qr
-AH
+Cr
 "}
 (31,1,1) = {"
 QP
@@ -13144,7 +13140,7 @@ an
 an
 an
 an
-mx
+ya
 "}
 (37,1,1) = {"
 QP
@@ -13187,7 +13183,7 @@ es
 es
 es
 es
-Vm
+gU
 "}
 (38,1,1) = {"
 QP
@@ -13230,7 +13226,7 @@ bq
 bq
 bq
 bq
-gU
+lN
 "}
 (39,1,1) = {"
 QP
@@ -13273,7 +13269,7 @@ an
 an
 an
 an
-wf
+fT
 "}
 (40,1,1) = {"
 QP
