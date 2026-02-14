@@ -299,8 +299,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/table/rack,
-/obj/item/storage/box/handcuffs,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig)
 "bH" = (
@@ -409,7 +414,7 @@
 /obj/machinery/vending/cola{
 	prices = null
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "cj" = (
 /obj/floor_decal/spline/fancy/black/corner{
@@ -541,7 +546,7 @@
 /obj/random/contraband,
 /obj/random/accessory,
 /obj/machinery/light/small,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "dt" = (
 /obj/structure/cable/green{
@@ -576,16 +581,6 @@
 /obj/paint/red,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
-"dD" = (
-/obj/step_trigger/thrower{
-	affect_ghosts = 0;
-	direction = 2;
-	icon_state = "sb";
-	name = "thrower_down";
-	tiles = 12
-	},
-/turf/space,
-/area/space)
 "dI" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -641,7 +636,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "ec" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -988,7 +983,7 @@
 	dir = 8;
 	icon_state = "bulb1"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "gs" = (
 /obj/paint/dark_gunmetal,
@@ -1005,7 +1000,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "gz" = (
 /obj/structure/cable{
@@ -1116,7 +1111,7 @@
 /obj/random/advdevice,
 /obj/random/advdevice,
 /obj/random/advdevice,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "hi" = (
 /obj/structure/closet/kitchen,
@@ -1416,7 +1411,7 @@
 /obj/item/reagent_containers/chem_disp_cartridge/ammonia,
 /obj/item/reagent_containers/chem_disp_cartridge/acetone,
 /obj/item/reagent_containers/chem_disp_cartridge/silicon,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "iU" = (
 /obj/structure/cable{
@@ -1538,7 +1533,7 @@
 /obj/item/stock_parts/computer/ship_interface,
 ,
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "jO" = (
 /obj/floor_decal/corner/green/mono,
@@ -1718,7 +1713,7 @@
 /obj/item/barrier,
 /obj/item/barrier,
 /obj/item/barrier,
-/obj/structure/table/rack,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "kL" = (
@@ -1984,7 +1979,9 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/glass/security{
 	id_tag = "prisonentry_2";
-	name = "Cell Two"
+	name = "Cell Two";
+	req_access = list("ACCESS_ICCGN");
+	autoset_access = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2060,7 +2057,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "nc" = (
 /obj/structure/closet/crate/secure/biohazard/alt{
@@ -2199,10 +2196,10 @@
 /area/ship/farfleet/barracks/briefingroom)
 "oq" = (
 /obj/machinery/light/small,
-/obj/structure/table/rack,
 /obj/item/shield/riot/metal,
 /obj/item/shield/riot/metal,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "ot" = (
@@ -2234,7 +2231,7 @@
 	pixel_x = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "oE" = (
 /obj/floor_decal/spline/fancy/black{
@@ -2751,7 +2748,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "rk" = (
 /obj/floor_decal/industrial/hatch/yellow,
@@ -3002,21 +2999,24 @@
 	name = "Lock Cell One";
 	pixel_y = -5;
 	pixel_x = -24;
-	dir = 4
+	dir = 4;
+	req_access = list("ACCESS_ICCGN")
 	},
 /obj/machinery/button/alternate/door/bolts{
 	id_tag = "prisonentry_2";
 	name = "Lock Cell Two";
 	pixel_y = 7;
 	pixel_x = -24;
-	dir = 4
+	dir = 4;
+	req_access = list("ACCESS_ICCGN")
 	},
-/obj/machinery/button/alternate/door/bolts{
-	pixel_x = -33;
-	pixel_y = 1;
+/obj/machinery/button/blast_door{
 	id_tag = "pcshutter";
 	name = "Private Shutter";
-	dir = 4
+	pixel_x = -33;
+	req_access = list("ACCESS_ICCGN");
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/crew/brig)
@@ -3041,7 +3041,7 @@
 /obj/item/storage/box/lights,
 /obj/structure/closet/crate,
 /obj/floor_decal/industrial/outline/yellow,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "td" = (
 /obj/floor_decal/industrial/warning{
@@ -3918,7 +3918,7 @@
 	},
 /area/ship/snz)
 "xD" = (
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "xE" = (
 /obj/machinery/atmospherics/binary/pump/high_power{
@@ -3970,7 +3970,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "xR" = (
 /obj/landmark/map_data{
@@ -4293,7 +4293,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "zW" = (
 /obj/machinery/pointdefense{
@@ -4358,19 +4358,6 @@
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
-"As" = (
-/obj/step_trigger/teleporter/random{
-	affect_ghosts = 0;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 9;
-	teleport_z_offset = 0
-	},
-/turf/space,
-/area/space)
 "Ay" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4412,7 +4399,7 @@
 /area/ship/farfleet/crew/canteen)
 "AE" = (
 /obj/machinery/portable_atmospherics/powered/pump,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "AJ" = (
 /obj/machinery/appliance/cooker/grill,
@@ -4655,7 +4642,9 @@
 	},
 /obj/machinery/door/airlock/multi_tile/terran{
 	name = "Hangar";
-	dir = 8
+	dir = 8;
+	req_access = list("ACCESS_ICCGN");
+	autoset_access = 0
 	},
 /obj/machinery/door/blast/regular/open{
 	id_tag = "pchangar";
@@ -4666,7 +4655,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
-/area/ship/farfleet/command/snz_hangar)
+/area/ship/farfleet/crew/hallway/upper)
 "BP" = (
 /obj/structure/table/standard,
 /obj/floor_decal/industrial/warning{
@@ -4699,7 +4688,9 @@
 "Cb" = (
 /obj/machinery/door/airlock/glass/security{
 	id_tag = "prisonentry_1";
-	name = "Cell One"
+	name = "Cell One";
+	req_access = list("ACCESS_ICCGN");
+	autoset_access = 0
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -4899,18 +4890,6 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/snz)
-"Dj" = (
-/obj/step_trigger/thrower{
-	affect_ghosts = 0;
-	direction = 2;
-	icon_state = "sb";
-	name = "thrower_down";
-	nostop = 0;
-	stopper = 1;
-	tiles = 12
-	},
-/turf/space,
-/area/space)
 "Dk" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/tvalve{
@@ -5286,16 +5265,6 @@
 	map_airless = 1
 	},
 /area/space)
-"EC" = (
-/obj/step_trigger/thrower{
-	affect_ghosts = 0;
-	direction = 4;
-	icon_state = "eb";
-	name = "thrower_right";
-	tiles = 12
-	},
-/turf/space,
-/area/space)
 "EE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5555,7 +5524,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/command/hangar_canisters)
 "Gs" = (
-/obj/structure/table/rack,
 /obj/item/rig/pioneer/sergeant{
 	pixel_y = -5
 	},
@@ -5564,6 +5532,7 @@
 	pixel_y = 6
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "GD" = (
@@ -5741,7 +5710,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
-/area/ship/farfleet/command/snz_hangar)
+/area/ship/farfleet/crew/hallway/upper)
 "Ic" = (
 /obj/floor_decal/borderfloorblack,
 /obj/floor_decal/corner/red/border,
@@ -5767,27 +5736,14 @@
 /turf/simulated/floor/tiled/white,
 /area/ship/farfleet/maintenance/anomaly)
 "In" = (
-/obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/item/ammo_magazine/shotholder/net,
 /obj/item/ammo_magazine/shotholder/net,
 /obj/item/ammo_magazine/shotholder/net,
-/obj/item/gun/projectile/shotgun/pump/exploration{
-	pixel_y = 6
-	},
 /obj/item/gun/projectile/shotgun/pump/exploration,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
-"Ir" = (
-/obj/step_trigger/thrower{
-	direction = 1;
-	icon_state = "nb";
-	name = "thrower_up";
-	nostop = 0;
-	tiles = 12
-	},
-/turf/space,
-/area/space)
 "Iu" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 1;
@@ -5942,7 +5898,7 @@
 /obj/machinery/vending/coffee{
 	prices = null
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "JA" = (
 /obj/machinery/light/led/small,
@@ -6105,9 +6061,14 @@
 	req_access = list("ACCESS_ICCGN")
 	},
 /obj/structure/wall_frame/standard,
-/obj/machinery/door/window/brigdoor/westleft,
+/obj/machinery/door/window/brigdoor/westleft{
+	autoset_access = 0;
+	req_access = list("ACCESS_ICCGN")
+	},
 /obj/machinery/door/window/brigdoor/westright{
-	dir = 4
+	dir = 4;
+	autoset_access = 0;
+	req_access = list("ACCESS_ICCGN")
 	},
 /obj/paint/dark_gunmetal,
 /obj/structure/table/wallf/steel{
@@ -6131,10 +6092,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
-"KQ" = (
-/obj/shuttle_landmark/snz/transit,
-/turf/space,
-/area/space)
 "KU" = (
 /obj/floor_decal/spline/fancy/black{
 	dir = 8
@@ -6373,29 +6330,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/snz)
-"Mw" = (
-/obj/step_trigger/teleporter/random{
-	affect_ghosts = 0;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 9;
-	teleport_z_offset = 0
-	},
-/obj/step_trigger/teleporter/random{
-	affect_ghosts = 0;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 9;
-	teleport_z_offset = 0
-	},
-/turf/space,
-/area/space)
 "MC" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -6495,7 +6429,7 @@
 /area/ship/farfleet/crew/canteen)
 "MY" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "Nd" = (
 /obj/machinery/alarm{
@@ -6513,10 +6447,15 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/css)
 "Nl" = (
-/obj/machinery/door/window/brigdoor/westleft,
+/obj/machinery/door/window/brigdoor/westleft{
+	req_access = list("ACCESS_ICCGN");
+	autoset_access = 0
+	},
 /obj/paint/dark_gunmetal,
 /obj/machinery/door/window/brigdoor/westright{
-	dir = 4
+	dir = 4;
+	req_access = list("ACCESS_ICCGN");
+	autoset_access = 0
 	},
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
@@ -6597,7 +6536,7 @@
 	dir = 4;
 	icon_state = "bulb1"
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "NR" = (
 /obj/floor_decal/industrial/outline/yellow,
@@ -6768,7 +6707,6 @@
 	icon_state = "tube1"
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/table/rack,
 /obj/item/stack/material/steel/fifty,
 /obj/item/stack/material/glass/fifty{
 	pixel_x = 0;
@@ -6788,6 +6726,7 @@
 	icon_state = "0-2";
 	pixel_y = 0
 	},
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "Pe" = (
@@ -6940,10 +6879,10 @@
 /area/ship/farfleet/crew/kitchen)
 "Qd" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/table/rack,
 /obj/item/clothing/mask/gas/half,
 /obj/item/clothing/mask/gas/half,
 /obj/item/clothing/mask/gas/half,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "Qk" = (
@@ -7067,7 +7006,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "Rw" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
@@ -7847,7 +7786,6 @@
 	dir = 8
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/table/rack,
 /obj/item/wrench,
 /obj/item/wrench,
 /obj/item/wrench,
@@ -7855,6 +7793,7 @@
 /obj/item/crowbar/prybar,
 /obj/item/crowbar/prybar,
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
 "Vt" = (
@@ -8181,7 +8120,7 @@
 	dir = 4
 	},
 /obj/item/storage/briefcase/inflatable,
-/obj/structure/table/rack,
+/obj/structure/table/rack/dark,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
 "WW" = (
@@ -8296,7 +8235,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "XD" = (
 /obj/structure/cable{
@@ -8314,9 +8253,6 @@
 /obj/floor_decal/snow,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/farfleet/crew/freezer)
-"XG" = (
-/turf/space/transit/east,
-/area/space)
 "Yc" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8366,7 +8302,7 @@
 /obj/item/storage/box/canned_berries,
 /obj/item/storage/box/canned_spinach,
 /obj/item/storage/box/canned_tomato,
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "Yn" = (
 /obj/machinery/atmospherics/unary/tank/hydrogen{
@@ -8504,7 +8440,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/turf/simulated/floor/tiled/steel_ridged,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/maintenance/storage)
 "Zs" = (
 /obj/structure/sign/iccg{
@@ -8744,22 +8680,22 @@ aa
 aa
 aa
 aa
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-Mw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -8866,22 +8802,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (3,1,1) = {"
 aa
@@ -8988,22 +8924,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (4,1,1) = {"
 aa
@@ -9110,22 +9046,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (5,1,1) = {"
 aa
@@ -9232,22 +9168,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (6,1,1) = {"
 aa
@@ -9354,22 +9290,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (7,1,1) = {"
 aa
@@ -9476,22 +9412,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (8,1,1) = {"
 aa
@@ -9598,22 +9534,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (9,1,1) = {"
 aa
@@ -9720,22 +9656,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-EC
-Ir
-Ir
-Ir
-Dj
-Dj
-Dj
-EC
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (10,1,1) = {"
 aa
@@ -9842,22 +9778,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-EC
 aa
 aa
 aa
 aa
 aa
 aa
-EC
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (11,1,1) = {"
 aa
@@ -9964,22 +9900,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-EC
 aa
 aa
 aa
 aa
 aa
 aa
-EC
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (12,1,1) = {"
 aa
@@ -10086,22 +10022,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-EC
-Ir
 aa
 aa
 aa
 aa
 aa
 aa
-dD
-EC
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (13,1,1) = {"
 aa
@@ -10208,10 +10144,6 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-EC
 aa
 aa
 aa
@@ -10220,10 +10152,14 @@ aa
 aa
 aa
 aa
-EC
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (14,1,1) = {"
 aa
@@ -10330,10 +10266,6 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-EC
 aa
 aa
 aa
@@ -10342,10 +10274,14 @@ aa
 aa
 aa
 aa
-EC
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (15,1,1) = {"
 aa
@@ -10452,10 +10388,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
-Ir
 aa
 aa
 aa
@@ -10464,10 +10396,14 @@ aa
 aa
 aa
 aa
-dD
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (16,1,1) = {"
 aa
@@ -10574,9 +10510,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -10587,9 +10520,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (17,1,1) = {"
 aa
@@ -10696,22 +10632,22 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
-aa
-aa
-aa
-aa
-KQ
 aa
 aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (18,1,1) = {"
 aa
@@ -10818,9 +10754,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -10831,9 +10764,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (19,1,1) = {"
 aa
@@ -10940,9 +10876,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -10953,9 +10886,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (20,1,1) = {"
 aa
@@ -11062,10 +10998,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
-EC
 aa
 aa
 aa
@@ -11074,10 +11006,14 @@ aa
 aa
 aa
 aa
-EC
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (21,1,1) = {"
 aa
@@ -11184,10 +11120,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
-Ir
 aa
 aa
 aa
@@ -11196,10 +11128,14 @@ aa
 aa
 aa
 aa
-dD
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (22,1,1) = {"
 aa
@@ -11306,9 +11242,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11319,9 +11252,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (23,1,1) = {"
 aa
@@ -11428,9 +11364,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11441,9 +11374,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (24,1,1) = {"
 aa
@@ -11550,9 +11486,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11563,9 +11496,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
 aa
@@ -11672,9 +11608,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11685,9 +11618,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
 aa
@@ -11794,9 +11730,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11807,9 +11740,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
 aa
@@ -11916,9 +11852,6 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
 aa
 aa
 aa
@@ -11929,9 +11862,12 @@ aa
 aa
 aa
 aa
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (28,1,1) = {"
 aa
@@ -12038,22 +11974,22 @@ aa
 aa
 aa
 aa
-As
-XG
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-EC
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (29,1,1) = {"
 aa
@@ -12160,22 +12096,22 @@ aa
 aa
 aa
 aa
-As
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-XG
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (30,1,1) = {"
 aa
@@ -12282,22 +12218,22 @@ aa
 aa
 aa
 aa
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
-As
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (31,1,1) = {"
 aa
