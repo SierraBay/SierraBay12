@@ -52,7 +52,7 @@
 	landmark_tag = "nav_ert_start"
 
 /obj/shuttle_landmark/ert/dock
-	name = "Docking Port"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_ert_dock"
 	docking_controller = "rescue_shuttle_dock_airlock"
 
