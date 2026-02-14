@@ -109,21 +109,9 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "ay" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/closet/crate/internals/fuel,
-/obj/item/tank/hydrogen,
-/obj/item/tank/hydrogen,
-/obj/item/tank/hydrogen,
-/obj/item/tank/hydrogen,
-/obj/item/tank/hydrogen,
-/obj/item/tank/hydrogen,
-/turf/simulated/floor/tiled/skrell/orange,
-/area/ship/skrellscoutship/maintenance/atmos)
+/obj/machinery/shield_diffuser,
+/turf/simulated/floor/plating,
+/area/space)
 "az" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1512,7 +1500,7 @@
 /obj/item/paper{
 	name = "Semi-Auto Docking Mode";
 	language = "Skrellian";
-	info = "<h1>Использование полуавтоматического режима стыковки</h1><list><*>Активировать режим Override на контроллере дока;<*>Принудительно открыть внутренний и внешний шлюзы дока;<*>Деактивировать режим Override на контроллере дока;<*>Активировать режим Override на контроллере шаттла;<*>Принудительно открыть внутренний и внешний шлюзы шаттла;<*>Деактивировать режим Override на контроллере шаттла.</list>После выполнения действий все контроллеры перейдут в статус <b>DOCKED</b>.Последующая отстыковка будет выполнена автоматически.";
+	info = "[h3]Использование полуавтоматического режима стыковки[/h3][list][*]Активировать режим Override на контроллере дока;[*]Принудительно открыть внутренний и внешний шлюзы дока;[*]Деактивировать режим Override на контроллере дока;[*]Активировать режим Override на контроллере шаттла;[*]Принудительно открыть внутренний и внешний шлюзы шаттла;[*]Деактивировать режим Override на контроллере шаттла.[/list]После выполнения действий все контроллеры перейдут в статус [b]DOCKED[/b].Последующая отстыковка будет выполнена автоматически.";
 	pixel_x = 7;
 	pixel_y = 32
 	},
@@ -2288,7 +2276,7 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/labs)
 "hv" = (
-/obj/machinery/computer/modular/preset/munitions,
+/obj/machinery/computer/modular/preset/munitions/skrell,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "hx" = (
@@ -2317,6 +2305,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_2"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "hE" = (
@@ -4590,6 +4579,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_4"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "yF" = (
@@ -4751,7 +4741,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/hydrogen,
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/maintenance/atmos)
 "Ac" = (
@@ -5020,6 +5009,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_1"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "CX" = (
@@ -5178,6 +5168,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_6"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "FY" = (
@@ -5255,6 +5246,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_5"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "HG" = (
@@ -6735,6 +6727,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_3"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "Zn" = (
@@ -12518,7 +12511,7 @@ Gw
 Gw
 Gw
 Gw
-Gw
+ay
 FX
 HM
 UG
@@ -12560,7 +12553,7 @@ xQ
 Jm
 lE
 YN
-Gw
+ay
 Gw
 Gw
 Gw
@@ -13754,7 +13747,7 @@ LI
 ad
 iw
 ac
-ay
+Aa
 Fk
 LV
 LV
