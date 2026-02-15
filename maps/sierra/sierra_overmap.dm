@@ -23,7 +23,7 @@
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
 		"SNZ Baydarka" = list("nav_snz_dock"), //../../mods/maps/farfleet/_map_farfleet.dme shuttle,
-		"SSV-S" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
+		"Skrellian Shuttle" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck4_skrellscout"), //away/skrellscoutship.dm ship,
 		"Alien Interceptor" = list("nav_deck4_vox_raider"), //maps/antag_spawn/vox/voxraider.dm shuttle,
 		"Rescue" = list("nav_ert_dock"), //maps/antag_spawn/ert/ert.dm shuttle,
