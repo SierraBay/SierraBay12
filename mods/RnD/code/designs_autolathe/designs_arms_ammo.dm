@@ -204,7 +204,7 @@
 /datum/design/autolathe/arms_ammo/hidden/shotgun_flechette
 	name = "ammunition (flechette shotgun)"
 	build_path = /obj/item/ammo_casing/shotgun/flechette
-  hidden = TRUE
+	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/electrode_low
 	name = "ammunition (low electrode)"
