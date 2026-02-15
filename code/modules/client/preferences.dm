@@ -163,6 +163,11 @@
 		function update_content(data){
 			document.getElementById('content').innerHTML = data;
 		}
+		function setJobLevel(source, title, level)
+		{
+			window.location.href = "byond://?src=" + source + ";set_job=" + title + ";inc_level=" + level;
+			return 1;
+		} // \[SIERRA-ADD]
 	</script>
 	<div id='content'>[get_content(user)]</div>
 	"}
