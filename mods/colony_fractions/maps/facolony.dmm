@@ -946,7 +946,6 @@
 	id_tag = "facolony3_entryairlock";
 	name = "North Entry blast door-control";
 	pixel_x = 6;
-	color = COLOR_BROWN_ORANGE;
 	pixel_y = 24;
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -2521,7 +2520,7 @@
 /turf/template_noop,
 /area/map_template/facolony/surgery)
 "lp" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
@@ -2842,7 +2841,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "mW" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -3122,7 +3121,6 @@
 	name = "South Entry blast door-control";
 	dir = 1;
 	pixel_x = 6;
-	color = COLOR_BROWN_ORANGE;
 	pixel_y = -24;
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -3269,7 +3267,7 @@
 	pixel_x = 6;
 	color = COLOR_CHESTNUT
 	},
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/machinery/airlock_sensor/airlock_interior{
 	frequency = 1380;
 	id_tag = "facolony5_sensor_interior";
@@ -3367,7 +3365,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "oP" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/machinery/light/spot{
 	dir = 8
 	},
@@ -4128,7 +4126,6 @@
 	pixel_x = 6;
 	id_tag = "facolony5_entryairlock";
 	name = "Main Entry blast door-control";
-	color = COLOR_BROWN_ORANGE;
 	dir = 8
 	},
 /obj/machinery/button/blast_door{
@@ -4143,7 +4140,6 @@
 	id_tag = "facolony3_entryairlock";
 	name = "North Entry blast door-control";
 	pixel_x = -4;
-	color = COLOR_BROWN_ORANGE;
 	pixel_y = 6;
 	dir = 8
 	},
@@ -4152,7 +4148,6 @@
 	name = "South Entry blast door-control";
 	dir = 8;
 	pixel_x = -4;
-	color = COLOR_BROWN_ORANGE;
 	pixel_y = -6
 	},
 /turf/simulated/floor/tiled/dark,
@@ -4296,7 +4291,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "te" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/random/hat{
 	pixel_y = 6
 	},
@@ -5109,7 +5104,6 @@
 	id_tag = "facolony4_entryairlock";
 	name = "Landing Site Entry blast door-control";
 	pixel_x = -6;
-	color = COLOR_BROWN_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/airlock_sensor/airlock_interior{
@@ -5395,7 +5389,6 @@
 	pixel_x = 8;
 	id_tag = "facolony5_entryairlock";
 	name = "Main Entry blast door-control";
-	color = COLOR_BROWN_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /turf/simulated/floor/carpet/blue,
@@ -6876,7 +6869,6 @@
 	pixel_x = 6;
 	id_tag = "facolony_trade_entry_way";
 	name = "Entry Way shutters control";
-	color = COLOR_BROWN_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -8505,7 +8497,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/outsidewarehouse)
 "Nw" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/machinery/light/spot{
 	dir = 4
 	},
@@ -9602,7 +9594,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/tcomms)
 "Ss" = (
-/obj/structure/table/mag,
+/obj/structure/table/mag/facolony,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
@@ -10776,7 +10768,6 @@
 	pixel_x = 6;
 	name = "Aft Exit blast door-control";
 	id_tag = "facolony_aft_exit_blasts";
-	color = COLOR_BROWN_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{

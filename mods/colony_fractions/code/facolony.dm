@@ -313,3 +313,6 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/machinery/door/airlock/glass/facolony/jail
 	name = "Temporary Detention"
 	stripe_color = COLOR_NT_RED
+
+/obj/structure/table/mag/facolony
+	req_access = list(access_facolony)
