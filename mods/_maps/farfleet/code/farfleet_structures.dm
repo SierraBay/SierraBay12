@@ -208,7 +208,7 @@
 		/obj/item/melee/telebaton,
 		/obj/item/storage/firstaid/light,
 		/obj/item/device/megaphone,
-		/obj/item/clothing/accessory/storage/holster/armpit,
+		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/mask/gas,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
@@ -276,7 +276,7 @@
 					/obj/item/clothing/gloves/iccgn/duty = 5,
 					/obj/item/clothing/shoes/iccgn/service = 5,
 					/obj/item/clothing/shoes/iccgn/utility = 5,
-					/obj/item/clothing/accessory/iccgn_patch/pioneer = 5
+					/obj/item/clothing/accessory/iccgn_patch/pioneer = 10
 					)
 
 /* Voidsuit Storage Unit
@@ -285,8 +285,8 @@
 
 /obj/machinery/suit_storage_unit/pioneer
 	name = "pioneer corps voidsuit storage unit"
-	suit= /obj/item/clothing/suit/space/void/farfleeticcgn
-	helmet = /obj/item/clothing/head/helmet/space/void/farfleeticcgn
+	suit= /obj/item/clothing/suit/space/void/iccgn
+	helmet = /obj/item/clothing/head/helmet/space/void/iccgn
 	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	mask = /obj/item/clothing/mask/breath

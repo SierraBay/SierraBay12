@@ -1,6 +1,6 @@
 /* PIONEER CORPS VOIDSUITS AND RIGS
  * ======== Used by Farfleet
- */
+ *
 
 /obj/item/clothing/head/helmet/space/void/pioneer
 	name = "pioneer corps voidsuit helmet"
@@ -42,7 +42,7 @@
 /obj/item/clothing/suit/space/void/pioneer/prepared
 	helmet = /obj/item/clothing/head/helmet/space/void/pioneer
 	boots = /obj/item/clothing/shoes/magboots
-	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON
+	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON */
 
 /obj/item/rig/pioneer
 	name = "pioneer corps suit control module"
