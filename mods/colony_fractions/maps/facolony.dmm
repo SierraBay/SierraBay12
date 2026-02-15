@@ -9361,7 +9361,7 @@
 	name = "Mukhtar";
 	voice_name = "Mukhtar";
 	real_name = "Mukhtar";
-	chat_color_name = COLOR_RED;
+	chat_color_name = "COLOR_RED";
 	desc = "Watches over"
 	},
 /obj/machinery/recharger/wallcharger{
