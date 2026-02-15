@@ -15,10 +15,11 @@
 		if(H.should_have_organ(BP_EYES))
 			var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[BP_EYES]
 			if(eyes && BP_IS_ROBOTIC(eyes))
-				H.eye_blind = max(H.eye_blind, 5)
-
-/obj/item/projectile/bullet/electrode/low
-	agony = 20
+				H.eye_blind = max(H.eye_blind, src.agony / 4)
+	else if(isrobot(target))
+		var/mob/living/silicon/robot/R = target
+		if (R.status_flags & CANWEAKEN)
+			R.Weaken(src.agony / 5)
 
 /obj/item/projectile/bullet/electrode/medium
 	agony = 40
@@ -27,29 +28,42 @@
 	agony = 60
 
 /obj/item/ammo_casing/battery
-	name = "low battery electrode"
-	desc = "A taser electrode."
-	icon = 'mods/guns/icons/obj/electrode_by_teteshnik.dmi'
+	name = "low-power NT Mk20 electrode"
+	desc = "A NT Mk20 neutralizer one-use electrode. This one emits low-power electric pulse on hit and short-time effect on synthetic targets."
+	icon = 'mods/guns/icons/obj/ammo.dmi'
 	icon_state = "electrode"
 	spent_icon = "electrode-spent"
-	caliber = CALIBER_PISTOL_FAST
-	projectile_type = /obj/item/projectile/bullet/electrode/low
+	caliber = "electrode"
+	projectile_type = /obj/item/projectile/bullet/electrode
 	matter = list(MATERIAL_STEEL = 160)
 
+/obj/item/ammo_casing/battery/examine(mob/user)
+	. = ..()
+	if(caliber)
+		to_chat(user, "It is an [caliber] for .")
+	if (!BB)
+		to_chat(user, "This one is spent.")
+
 /obj/item/ammo_casing/battery/medium
-	name = "medium battery electrode"
+	name = "medium-power NT Mk20 electrode"
+	desc = "A NT Mk20 neutralizer one-use electrode. This one emits medium-power electric pulse on hit and medium effect on synthetic targets."
+	icon_state = "electrode_m"
+	spent_icon = "electrode_m-spent"
 	projectile_type = /obj/item/projectile/bullet/electrode/medium
 
 /obj/item/ammo_casing/battery/high
-	name = "high battery electrode"
+	name = "high-power NT Mk20 electrode"
+	desc = "A NT Mk20 neutralizer one-use electrode. This one emits high-power electric pulse on hit and prolonged effect on synthetic targets."
+	icon_state = "electrode_h"
+	spent_icon = "electrode_h-spent"
 	projectile_type = /obj/item/projectile/bullet/electrode/high
 
 /obj/item/gun/projectile/taser
-	name = "taser"
-	desc = "The NT Mk20 NL is a small, taser used for non-lethal takedowns. Produced by NT, it's actually a licensed version of a W-T design. It can switch between high and low intensity stun shots."
+	name = "NT Mk20 neutralizer"
+	desc = "The NT Mk20 NL is a compact non-lethal neutralizer that combines the functionality of a classic contact taser and an electronic scrambler. It is used for the non-lethal detention of organic and cybernetic subjects."
 	handle_casings = HOLD_CASINGS
 	load_method = SINGLE_CASING
-	caliber = CALIBER_PISTOL_FAST
+	caliber = "electrode"
 	icon = 'mods/guns/icons/obj/taser_by_teteshnik.dmi'
 	icon_state = "taser"
 	item_state = "taser"
@@ -67,7 +81,11 @@
 /obj/item/gun/projectile/taser/on_update_icon()
 	..()
 	if(length(loaded))
-		icon_state = initial(icon_state)
+		var/obj/item/ammo_casing/AC = loaded[1]
+		if(AC.BB)
+			icon_state = initial(icon_state)
+		else
+			icon_state = "[initial(icon_state)]-spent"
 	else
 		icon_state = "[initial(icon_state)]-empty"
 
