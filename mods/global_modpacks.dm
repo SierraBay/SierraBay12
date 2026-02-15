@@ -68,3 +68,4 @@
 #include "rocket_launchers/_rocket_launchers_includes.dm"
 #include "genreconfig/_genreconfig_includes.dm"
 #include "config/_config_includes.dm"
+#include "contraband_vending/_contraband_vending_includes.dm"

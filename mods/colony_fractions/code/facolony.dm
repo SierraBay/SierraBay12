@@ -1,4 +1,6 @@
 // Frontier Alliance: Blockade Runners Extension (Playable Colony) by GarryFlint
+#include "../../../packs/factions/fa/_pack.dm"
+
 /datum/map_template/ruin/exoplanet/facolony
 	name = "FA Blockade Runners Outpost"
 	id = "facolony"
@@ -16,7 +18,7 @@
 		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
 		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
-	spawn_weight = 0.6
+	spawn_weight = 5
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
@@ -241,9 +243,11 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	color = COLOR_OFF_WHITE
 	detail_color = COLOR_GRAY15
 
-/obj/floor_decal/falogo
-	icon = 'mods/colony_fractions/icons/colony.dmi'
-	icon_state = "falogo"
+/obj/paint/facolony/commandblue
+	color = "#46698c"
+
+/obj/structure/table/mag/facolony
+	req_access = list(access_facolony)
 
 /obj/structure/sign/double/faflag/left
 	name = "Frontier Alliance flag"
@@ -257,6 +261,10 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /obj/structure/sign/double/falogo/
 	name = "Frontier Alliance logo"
+	icon = 'mods/colony_fractions/icons/colony.dmi'
+	icon_state = "falogo"
+
+/obj/floor_decal/falogo
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "falogo"
 
@@ -313,6 +321,3 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/machinery/door/airlock/glass/facolony/jail
 	name = "Temporary Detention"
 	stripe_color = COLOR_NT_RED
-
-/obj/structure/table/mag/facolony
-	req_access = list(access_facolony)

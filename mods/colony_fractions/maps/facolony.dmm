@@ -730,10 +730,8 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "cM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "cO" = (
@@ -1008,11 +1006,11 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/red,
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	name = "Chamber Output"
 	},
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "dX" = (
@@ -1618,12 +1616,12 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/blue,
 /obj/machinery/atmospherics/omni/filter{
 	tag_north = 1;
 	tag_south = 2;
 	tag_east = 3
 	},
+/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "gR" = (
@@ -2022,7 +2020,7 @@
 	id_tag = "facolony_bridge_blasts";
 	name = "Fore blast shield"
 	},
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -3035,7 +3033,6 @@
 /turf/simulated/floor/away,
 /area/map_template/facolony/mineralprocessing)
 "nN" = (
-/obj/floor_decal/industrial/hatch/grey,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -3046,6 +3043,7 @@
 	req_access = list()
 	},
 /obj/machinery/door/airlock/facolony/general,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/dorms)
 "nO" = (
@@ -3372,6 +3370,12 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
+"oS" = (
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/facolony/command)
 "pd" = (
 /obj/floor_decal/corner/b_green/border{
 	dir = 8
@@ -3852,6 +3856,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
+"re" = (
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/facolony/command)
 "rh" = (
 /obj/machinery/washing_machine,
 /obj/item/storage/box/detergent,
@@ -4177,10 +4187,6 @@
 /obj/structure/sign/double/faflag/left{
 	pixel_y = 24
 	},
-/obj/item/barrier,
-/obj/item/barrier,
-/obj/item/barrier,
-/obj/item/barrier,
 /obj/random/toolbox,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
@@ -5213,10 +5219,10 @@
 /turf/template_noop,
 /area/map_template/facolony/armory)
 "wQ" = (
-/obj/floor_decal/corner/grey_alt/diagonal,
 /obj/structure/bed/chair/office/comfy/black{
 	dir = 8
 	},
+/obj/floor_decal/corner/grey/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "wT" = (
@@ -5622,8 +5628,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/floor_decal/industrial/hatch/grey,
 /obj/machinery/door/airlock/facolony/general,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/dorms)
 "yK" = (
@@ -6284,7 +6290,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/grey,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "Cr" = (
@@ -6785,7 +6791,7 @@
 /turf/simulated/floor/away,
 /area/map_template/facolony/cargohatch)
 "ED" = (
-/obj/floor_decal/corner/grey_alt/diagonal,
+/obj/floor_decal/corner/grey/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "EE" = (
@@ -6901,7 +6907,16 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "Fl" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/hologram/holopad/longrange{
+	name = "IPV Celeste Hauler lr-holopad"
+	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Fp" = (
@@ -7943,9 +7958,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Kx" = (
@@ -8010,12 +8022,12 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/red,
 /obj/machinery/atmospherics/omni/filter{
 	tag_north = 1;
 	tag_south = 2;
 	tag_east = 4
 	},
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "KP" = (
@@ -8023,7 +8035,6 @@
 	dir = 4;
 	id_tag = "facolony_jail_shutter"
 	},
-/obj/floor_decal/industrial/hatch/grey,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -8036,6 +8047,7 @@
 /obj/machinery/door/airlock/glass/facolony/jail{
 	id_tag = "facolony_jail_doorbolts"
 	},
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/dorms)
 "KQ" = (
@@ -8129,7 +8141,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "LC" = (
-/obj/floor_decal/industrial/hatch/grey,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -8145,6 +8156,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/facolony/general,
+/obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/bathroom)
 "LE" = (
@@ -8410,7 +8422,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/grey,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "Nb" = (
@@ -8576,7 +8588,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/obj/floor_decal/industrial/hatch/blue,
+/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "Oa" = (
@@ -8920,7 +8932,7 @@
 	id_tag = "facolony_bridge_blasts";
 	name = "Fore blast shield"
 	},
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -9309,7 +9321,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
 "Rq" = (
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/armory)
@@ -9490,7 +9502,7 @@
 /area/map_template/facolony/mineralprocessing)
 "Sc" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -9609,7 +9621,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "Sw" = (
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/surgery)
@@ -10185,6 +10197,11 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
+"UM" = (
+/obj/paint_stripe/gunmetal,
+/obj/paint/facolony/commandblue,
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/armory)
 "UN" = (
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/paint/brown,
@@ -10428,7 +10445,11 @@
 /turf/simulated/floor/away,
 /area/template_noop)
 "VY" = (
-/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/floor_decal/plaque,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Wb" = (
@@ -10526,16 +10547,12 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "WA" = (
-/obj/machinery/hologram/holopad/longrange{
-	name = "IPV Celeste Hauler lr-holopad"
-	},
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
 /obj/floor_decal/corner/b_green/half{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "WD" = (
@@ -10559,10 +10576,10 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/tradezone)
 "WN" = (
-/obj/floor_decal/corner/grey_alt/diagonal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/floor_decal/corner/grey/diagonal,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "WT" = (
@@ -10687,7 +10704,7 @@
 /area/map_template/facolony/medbay)
 "Xi" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -10720,7 +10737,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "Xx" = (
-/obj/paint/hull,
+/obj/paint/facolony/commandblue,
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/command)
@@ -11710,7 +11727,7 @@ wa
 Rq
 Rq
 Rq
-Rq
+UM
 et
 eK
 xl
@@ -11920,7 +11937,7 @@ Gl
 Xi
 mU
 iL
-Bb
+oS
 tr
 Rq
 Rq
@@ -12049,7 +12066,7 @@ Gl
 Xi
 sP
 Mh
-Bb
+re
 JK
 Sw
 Sw
