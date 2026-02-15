@@ -1,6 +1,6 @@
 /obj/item/projectile/bullet/electrode
 	name = "electrode"
-	icon = 'mods/utility_items/icons/projectiles_by_teteshnik.dmi'
+	icon = 'mods/guns/icons/obj/projectiles_by_teteshnik.dmi'
 	damage_type = DAMAGE_BRUTE
 	damage_flags = DAMAGE_FLAG_SHARP
 	damage = 1
@@ -29,7 +29,7 @@
 /obj/item/ammo_casing/battery
 	name = "low battery electrode"
 	desc = "A taser electrode."
-	icon = 'mods/utility_items/icons/electrode_by_teteshnik.dmi'
+	icon = 'mods/guns/icons/obj/electrode_by_teteshnik.dmi'
 	icon_state = "electrode"
 	spent_icon = "electrode-spent"
 	caliber = CALIBER_PISTOL_FAST
@@ -50,19 +50,19 @@
 	handle_casings = HOLD_CASINGS
 	load_method = SINGLE_CASING
 	caliber = CALIBER_PISTOL_FAST
-	icon = 'mods/utility_items/icons/taser_by_teteshnik.dmi'
+	icon = 'mods/guns/icons/obj/taser_by_teteshnik.dmi'
 	icon_state = "taser"
 	item_state = "taser"
 	item_icons = list(
-		slot_r_hand_str = 'mods/utility_items/icons/righthand_taser_teteshnik.dmi',
-		slot_l_hand_str = 'mods/utility_items/icons/lefthand_taser_teteshnik.dmi',
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_taser_teteshnik.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_taser_teteshnik.dmi',
 	)
 	ammo_type = /obj/item/ammo_casing/battery
 	max_shells = 1
 	slot_flags = SLOT_BELT|SLOT_HOLSTER
 	auto_eject = 0
 	w_class = ITEM_SIZE_NORMAL
-	fire_sound = 'mods/utility_items/sound/taser.ogg'
+	fire_sound = 'mods/guns/sounds/taser.ogg'
 
 /obj/item/gun/projectile/taser/on_update_icon()
 	..()
