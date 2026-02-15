@@ -958,7 +958,6 @@
 	dir = 9
 	},
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},

@@ -25,8 +25,9 @@ var/global/datum/hivemind/hive_mind_ai
 											/obj/machinery/status_display,			/obj/machinery/requests_console,
 											/obj/machinery/newscaster,				/obj/machinery/floor_light,
 											/obj/machinery/nuclearbomb,				/obj/machinery/flasher,
-											/obj/machinery/portable_atmospherics/hydroponics/soil, /obj/machinery/power/supermatter,
-											/obj/machinery/cryopod, /obj/machinery/bluespacedrive)
+											/obj/machinery/cryopod,					/obj/machinery/bluespacedrive,
+											/obj/machinery/power/solar, 			/obj/machinery/power/tracker,
+											/obj/machinery/portable_atmospherics/hydroponics/soil, /obj/machinery/power/supermatter)
 
 	//internals
 	var/list/global_abilities_cooldown = list()

@@ -2301,7 +2301,6 @@
 /obj/floor_decal/corner/blue{
 	dir = 5
 	},
-/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/map_template/colony/medbay)
 "ey" = (
@@ -8623,6 +8622,10 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony)
+"zn" = (
+/obj/structure/closet/crate/solar,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/colony/engineering)
 "zs" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -8745,7 +8748,6 @@
 	pixel_x = 32
 	},
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "Dj" = (
@@ -10161,7 +10163,7 @@ wZ
 aW
 cl
 aN
-ew
+zn
 rs
 ar
 aF

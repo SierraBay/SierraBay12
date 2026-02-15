@@ -40,8 +40,11 @@
 			var/list/common_antibodies = V.antigen & src.antibodies
 			if(LAZYLEN(common_antibodies))
 				V.dead = 1
-	if(immunity > 0.2 * immunity_norm && immunity < immunity_norm)
-		immunity = min(immunity + 0.25, immunity_norm)
+	if(immunity > 0.2 * immunity_norm)
+		if(immunity < immunity_norm)
+			immunity = min(immunity + 0.25, immunity_norm)
+		else if(immunity > 132)
+			immunity = max(immunity - 0.15, immunity_norm)
 	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !LAZYLEN(virus2))
 		var/infection_prob = 5 - immunity
 		var/turf/simulated/T = get_turf(src)
@@ -49,9 +52,9 @@
 			return
 		if(istype(T))
 			infection_prob += T.dirt
-		if(T.dirt >= 50)
-			if(prob(infection_prob))
+
+		if(prob(infection_prob))
+			if(T.dirt >= 50)
 				infect_mob_random_greater(src)
-		else
-			if(prob(infection_prob))
+			else
 				infect_mob_random_lesser(src)

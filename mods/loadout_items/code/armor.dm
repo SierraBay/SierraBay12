@@ -16,7 +16,15 @@
 Armor Patches, covers, ect
 */
 
-/obj/item/clothing/accessory/armor/helmcover/scp_cover
+/obj/item/clothing/accessory/helmet_cover/black
+	name = "black cover"
+	desc = "A fabric cover for armored helmets. This one is flat black."
+	icon_override = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon_state = "black_cover"
+	accessory_icons = list(slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_head_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+
+/obj/item/clothing/accessory/helmet_cover/scp_cover
 	name = "SCP cover"
 	desc = "A fabric cover for armored helmets. This one has SCP's colors."
 	icon_override = 'mods/loadout_items/icons/obj_accessory.dmi'

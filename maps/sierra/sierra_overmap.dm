@@ -5,7 +5,11 @@
 	fore_dir = WEST
 	vessel_mass = 63000
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_IN_SPACE|OVERMAP_SECTOR_BASE
-	known_ships = list(/obj/overmap/visitable/ship/landable/exploration_shuttle, /obj/overmap/visitable/ship/landable/guppy)
+	known_ships = list(
+		/obj/overmap/visitable/ship/landable/exploration_shuttle,
+		/obj/overmap/visitable/ship/landable/guppy,
+		/obj/overmap/visitable/ship/landable/phaethon
+	)
 
 	icon = 'maps/sierra/icons/obj/overmap.dmi'
 	color = "#a97faa"
@@ -13,12 +17,13 @@
 	initial_restricted_waypoints = list(
 		"Charon" = list("nav_hangar_calypso"),
 		"Guppy" = list("nav_hangar_guppy"),
+		"Phaethon" = list("nav_hangar_phaethon"),
 		"Crucian" = list("nav_hangar_crucian"),
 		"Cyclopes" = list("nav_merc_dock"), //maps/antag_spawn/mercenary/mercenary.dm shuttle
 		"Mule" = list("nav_merchant_out"), //../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), //../mods/maps/sentinel/_map_sentinel.dme shuttle,
 		"SNZ Speedboat" = list("nav_snz_dock"), //../../mods/maps/farfleet/_map_farfleet.dme shuttle,
-		"SSV-S" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
+		"Skrellian Shuttle" = list("nav_deck4_skrellshuttle"), //away/skrellscoutship.dm shuttle,
 		"Skrellian Scout" = list("nav_deck4_skrellscout"), //away/skrellscoutship.dm ship,
 		"Alien Interceptor" = list("nav_deck4_vox_raider"), //maps/antag_spawn/vox/voxraider.dm shuttle,
 		"Rescue" = list("nav_ert_dock"), //maps/antag_spawn/ert/ert.dm shuttle,
@@ -27,8 +32,11 @@
 		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout"), //maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
 		"GM Tug" = list("nav_merchant_out"), //maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
 		"Petrov" = list("nav_petrov_start"),
-		"SRV Venerable Catfish" = list("nav_deck3_catfish") //mods/_maps/verne/verne.dme shuttle
-	)
+		"SRV Venerable Catfish" = list("nav_deck3_catfish"), //mods/_maps/verne/verne.dme shuttle
+		"Lepidopterax" = list("nav_hangar_ascent_inf_sierra_two"),
+		"Trichopterax" = list("nav_hangar_ascent_inf_sierra"),
+		"Ascent Caulship" = list("nav_ascent_caulship_sierra")
+		)
 
 	initial_generic_waypoints = list(
 		"nav_merc_deck1",
@@ -79,6 +87,16 @@
 	vessel_size = SHIP_SIZE_TINY
 	skill_needed = SKILL_BASIC //was trained
 
+/obj/overmap/visitable/ship/landable/phaethon
+	name = "Phaethon"
+	shuttle = "Phaethon"
+	max_speed = 1/(2 SECONDS)
+	burn_delay = 0.4 SECONDS
+	vessel_mass = 350
+	fore_dir = WEST
+	vessel_size = SHIP_SIZE_TINY
+	skill_needed = SKILL_BASIC
+
 /obj/overmap/visitable/ship/landable/crucian
 	name = "Crucian"
 	shuttle = "Crucian"
@@ -98,6 +116,11 @@
 	name = "guppy control console"
 	shuttle_tag = "Guppy"
 	req_access = list(access_guppy_helm)
+
+/obj/machinery/computer/shuttle_control/explore/phaethon
+	name = "phaethon control console"
+	shuttle_tag = "Phaethon"
+	req_access = list(access_sec_doors)
 
 /obj/machinery/computer/shuttle_control/explore/crucian
 	name = "crucian control console"

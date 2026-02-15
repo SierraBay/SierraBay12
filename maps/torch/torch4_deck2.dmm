@@ -2182,9 +2182,9 @@
 "el" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/item/airlock_electronics/brace,
-/obj/item/airlock_electronics/brace,
-/obj/item/airlock_electronics/brace,
+/obj/item/airlock_brace,
+/obj/item/airlock_brace,
+/obj/item/airlock_brace,
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
@@ -11371,6 +11371,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
 	},
+/obj/item/sticky_pad/tag_out,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_bay)
 "CD" = (
@@ -15655,6 +15656,7 @@
 /obj/floor_decal/techfloor{
 	dir = 6
 	},
+/obj/item/sticky_pad/tag_out,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
 "PM" = (

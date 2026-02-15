@@ -26,6 +26,7 @@
 	var/build_type = PROTOLATHE
 
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
+	var/obj/item/stock_parts/computer/hard_drive/portable/disk2
 
 	var/list/stored_material = list()
 	var/obj/item/reagent_containers/glass/container
@@ -47,17 +48,19 @@
 
 	var/datum/computer_file/binary/design/current_file
 	var/list/queue = list()
-	var/queue_max = 16
+	var/queue_max = 24
 
 	var/storage_capacity = 0
 	var/speed = 1
 	var/mat_efficiency = 1
 	var/max_quality = 0
 	var/fab_status_flags = 0
-	var/default_disk	// The disk that spawns in autolathe by default
+	var/default_disk = null // The disk that spawns in autolathe by default
+	var/additional_disk = null // Secondary disk
 
 	// Various autolathe functions that can be disabled in subtypes
 	var/have_disk = TRUE
+	var/have_disk2 = TRUE
 	var/have_reagents = TRUE
 	var/have_materials = TRUE
 	var/have_recycling = TRUE
@@ -65,8 +68,6 @@
 
 	var/list/unsuitable_materials = list()
 	var/list/suitable_materials //List that limits autolathes to eating mats only in that list.
-
-	var/list/selectively_recycled_types = list()
 
 	var/global/list/error_messages = list(
 		ERR_NOLICENSE = "Not enough license points left.",
@@ -98,6 +99,8 @@
 	. = ..()
 	if(have_disk && default_disk)
 		disk = new default_disk(src)
+	if(have_disk2 && additional_disk)
+		disk2 = new additional_disk(src)
 
 	RefreshParts()
 	update_icon()
@@ -144,6 +147,7 @@
 	var/list/data = list()
 
 	data["have_disk"] = have_disk
+	data["have_disk2"] = have_disk2
 	data["have_reagents"] = have_reagents
 	data["have_materials"] = have_materials
 	data["have_design_selector"] = have_design_selector
@@ -161,6 +165,13 @@
 			"read_only" = disk.read_only
 		)
 
+	if(disk2 && have_disk2)
+		data["disk2"] = list(
+			"name" = disk2.get_disk_name(),
+			"read_only" = disk2.read_only
+		)
+
+
 	if(categories)
 		data["categories"] = categories
 		data["show_category"] = show_category
@@ -174,6 +185,15 @@
 		var/datum/computer_file/binary/design/design_file = d
 		if(!show_category || design_file.design.category == show_category)
 			L.Add(list(design_file.ui_data()))
+
+	var/list/O = list()
+	for(var/f in design_list_two())
+		var/datum/computer_file/binary/design/design_file = f
+		if(!show_category || design_file.design.category == show_category)
+			O.Add(list(design_file.ui_data()))
+
+	L |= O
+
 	data["designs"] = L
 
 
@@ -250,8 +270,12 @@
 		to_chat(user, SPAN_WARNING("\The [src] is not operating."))
 		return TRUE
 	if(istype(I, /obj/item/stock_parts/computer/hard_drive/portable))
-		insert_disk(user, I)
-		return
+		if(!disk)
+			insert_disk(user, I)
+			return
+		else
+			insert_disk2(user, I)
+			return
 
 	// Some item types are consumed by default
 	if(istype(I, /obj/item/stack) || istype(I, /obj/item/trash) || istype(I, /obj/item/material/shard))
@@ -303,6 +327,13 @@
 			insert_disk(usr)
 		return TRUE
 
+	if(href_list["disk2"])
+		if(disk2)
+			eject_disk2(usr)
+		else
+			insert_disk2(usr)
+		return TRUE
+
 	if(href_list["container"])
 		if(container)
 			eject_beaker(usr)
@@ -338,7 +369,12 @@
 		var/recipe_filename = href_list["add_to_queue"]
 		var/datum/computer_file/binary/design/design_file
 
-		for(var/f in design_list())
+		var/list/DL = list()
+
+		DL |= design_list()
+		DL |= design_list_two()
+
+		for(var/f in DL)
 			var/datum/computer_file/temp_file = f
 			if(temp_file.filename == recipe_filename)
 				design_file = temp_file
@@ -349,7 +385,7 @@
 
 			if(href_list["several"])
 				amount = input("How many \"[design_file.design.name]\" you want to print ?", "Print several") as null|num
-				if(!CanUseTopic(usr) || !(design_file in design_list()))
+				if(!CanUseTopic(usr) || !(design_file in DL))
 					return
 
 			queue_design(design_file, amount)
@@ -416,6 +452,31 @@
 	to_chat(user, SPAN_NOTICE("You insert \the [inserted_disk] into [src]."))
 	SSnano.update_uis(src)
 
+/obj/machinery/fabricator/proc/insert_disk2(mob/living/user, obj/item/stock_parts/computer/hard_drive/portable/inserted_disk2)
+	if(!inserted_disk2 && istype(user))
+		inserted_disk2 = user.get_active_hand()
+
+	if(!istype(inserted_disk2))
+		return
+
+	if(!Adjacent(user) && !Adjacent(inserted_disk2))
+		return
+
+	if(!have_disk2)
+		to_chat(user, SPAN_WARNING("[src] has no slot B for a data disk."))
+		return
+
+	if(disk2)
+		to_chat(user, SPAN_NOTICE("There's already \a [disk2] inside slot B of [src]."))
+		return
+
+	if(istype(user) && (inserted_disk2 in user))
+		user.unEquip(inserted_disk2, src)
+
+	inserted_disk2.forceMove(src)
+	disk2 = inserted_disk2
+	to_chat(user, SPAN_NOTICE("You insert \the [inserted_disk2] into slot B of [src]."))
+	SSnano.update_uis(src)
 
 /obj/machinery/fabricator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/beaker)
 	if(!beaker && istype(user))
@@ -481,8 +542,32 @@
 	//Digital Rights have been successfully managed. The corporations win again.
 	//Now they will graciously allow you to eject the disk
 	disk.forceMove(get_turf(src))
-	to_chat(usr, SPAN_NOTICE("You remove \the [disk] from \the [src]."))
+	to_chat(usr, SPAN_NOTICE("You remove \the [disk] from slot A of \the [src]."))
 	disk = null
+
+//This proc ejects the autolathe disk, but it also does some DRM fuckery to prevent exploits
+/obj/machinery/fabricator/proc/eject_disk2(mob/living/user)
+	if(!disk2)
+		return
+
+	var/list/design_list_two = design_list_two()
+
+	// Go through the queue and remove any recipes we find which came from this disk
+	for(var/design in queue)
+		if(design in design_list_two)
+			queue -= design
+
+	//Check the current too
+	if(current_file in design_list_two)
+		//And abort it if it came from this disk
+		abort()
+
+
+	//Digital Rights have been successfully managed. The corporations win again.
+	//Now they will graciously allow you to eject the disk
+	disk2.forceMove(get_turf(src))
+	to_chat(usr, SPAN_NOTICE("You remove \the [disk2] from slot B of \the [src]."))
+	disk2 = null
 
 /obj/machinery/fabricator/AltClick(mob/living/user)
 	if(user.incapacitated())
@@ -490,6 +575,8 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(disk2)
+		src.eject_disk2(user)
 	src.eject_disk(user)
 
 /obj/machinery/fabricator/proc/eat(mob/living/user, obj/item/eating)
@@ -508,7 +595,7 @@
 	if(is_robot_module(eating))
 		return FALSE
 
-	if(!have_recycling && !(istype(eating, /obj/item/stack) || can_recycle(eating)))
+	if(!have_recycling)
 		to_chat(user, SPAN_WARNING("[src] does not support material recycling."))
 		return FALSE
 
@@ -549,12 +636,12 @@
 
 	else
 		var/isdesignnotexist = TRUE
-		for(var/datum/design/item/D in SSresearch.all_designs)
-			if(D.build_path == eating.type)
-				isdesignnotexist = FALSE
-				for(var/material in D.materials)
-					if(stored_material[material] < storage_capacity)
-						stored_material[material] += (D.materials[material]/4)
+		var/datum/design/D = SSresearch.fabricator_recycle(eating)
+		if(D)
+			isdesignnotexist = FALSE
+			for(var/material in D.materials)
+				if(stored_material[material] < storage_capacity)
+					stored_material[material] += ((D.materials[material]/4)/mat_efficiency)
 		if(isdesignnotexist)
 			for(var/obj/O in eating.GetAllContents())
 				var/list/_matter = O.matter
@@ -563,7 +650,7 @@
 						if(material in unsuitable_materials)
 							continue
 						if(stored_material[material] < storage_capacity)
-							stored_material[material] += (_matter[material]/4)
+							stored_material[material] += ((_matter[material]/4)/mat_efficiency)
 		qdel(eating)
 		return TRUE
 
@@ -572,18 +659,6 @@
 	. = ..()
 	if(istype(new_state))
 		updateUsrDialog()
-
-/obj/machinery/fabricator/proc/can_recycle(obj/O)
-	if(!selectively_recycled_types)
-		return FALSE
-	if(!LAZYLEN(selectively_recycled_types))
-		return FALSE
-
-	for(var/type in selectively_recycled_types)
-		if(istype(O, type))
-			return TRUE
-
-	return FALSE
 
 /obj/machinery/fabricator/proc/queue_design(datum/computer_file/binary/design/design_file, amount=1)
 	if(!design_file || !amount)
@@ -620,6 +695,12 @@
 		return saved_designs
 
 	return disk.find_files_by_type(/datum/computer_file/binary/design)
+
+/obj/machinery/fabricator/proc/design_list_two()
+	if(!disk2)
+		return saved_designs
+
+	return disk2.find_files_by_type(/datum/computer_file/binary/design)
 
 /obj/machinery/fabricator/proc/icon_off()
 	if(stat & MACHINE_STAT_NOPOWER)
@@ -932,8 +1013,15 @@
 /obj/machinery/fabricator/hacked
 	fab_status_flags = FAB_HACKED
 
+	var/disk_box = /obj/item/storage/box/autolathe_designs
+
+/obj/machinery/fabricator/hacked/Initialize()
+	. = ..()
+	new disk_box(loc)
 
 /obj/machinery/fabricator/micro/loaded
+	default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/glass
+	additional_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/cuttery
 
 /obj/machinery/fabricator/micro/loaded/Initialize()
 	. = ..()
@@ -946,8 +1034,9 @@
 
 
 /obj/machinery/fabricator/micro/bartender
-	name = "Microlathe"
-
+	name = "Bartender Microlathe"
+	default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/drinking
+	have_disk2 = FALSE
 
 #undef ERR_OK
 #undef ERR_NOTFOUND

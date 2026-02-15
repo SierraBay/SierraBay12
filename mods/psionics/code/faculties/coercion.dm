@@ -40,6 +40,8 @@
 		for(var/mob/living/M in range(user, user.psi.get_rank(PSI_COERCION)))
 			if(M == user)
 				continue
+			if(M.disrupts_psionics())
+				return
 			if(prob(cn_rank * 20) && iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(C.can_feel_pain())
@@ -214,6 +216,7 @@
 			return TRUE
 		to_chat(user, SPAN_DANGER("Ты прорываешься через мозг \the [target], изменяя его под твое желание, оставляя его подчиненным твоей воле!"))
 		to_chat(target, SPAN_DANGER("Ты ослаб и \the [user] поработил тебя."))
+		alert(target, "Ты теперь подчинен воле [user], служи ему слепо и верно, пока он не скажет обратного.", "Ты был порабощен")
 		GLOB.thralls.add_antagonist(target.mind, new_controller = user)
 		return TRUE
 /*

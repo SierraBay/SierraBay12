@@ -15,6 +15,8 @@
 	back_modificator_damage = 3
 	front_modificator_damage = 0.5
 
+	matter = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
+
 	req_material = MATERIAL_PLASTEEL
 	//Тепло
 	max_heat = 400

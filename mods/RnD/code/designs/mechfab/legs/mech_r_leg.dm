@@ -6,7 +6,7 @@
 	id = "right_powerloader_leg"
 	time = 15
 	build_path =  /obj/item/mech_component/propulsion/powerloader/right
-	materials = list(MATERIAL_STEEL = 5000)
+	materials = list(MATERIAL_STEEL = 10000)
 
 /datum/design/item/mechfab/mech_r_leg/light
 	name = "right light mech motivator"

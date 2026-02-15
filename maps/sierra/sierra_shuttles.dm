@@ -171,7 +171,7 @@ SIERRA_ESCAPE_POD(11)
 //Merchant
 
 /obj/shuttle_landmark/merchant/out
-	name = "Docking Bay"
+	name = "Dock STBD-1"
 	landmark_tag = "nav_merchant_out"
 	docking_controller = "merchant_shuttle_station"
 
@@ -194,7 +194,7 @@ SIERRA_ESCAPE_POD(11)
 	base_turf = /turf/simulated/floor/plating
 
 /obj/shuttle_landmark/admin/out
-	name = "Docking Bay"
+	name = "Dock STBD-3"
 	landmark_tag = "nav_admin_out"
 	docking_controller = "admin_shuttle_dock"
 
@@ -216,7 +216,7 @@ SIERRA_ESCAPE_POD(11)
 	docking_controller = "centcom_shuttle_bay"
 
 /obj/shuttle_landmark/ferry/out
-	name = "Docking Bay"
+	name = "Dock PRSD-2"
 	landmark_tag = "nav_ferry_out"
 	docking_controller = "centcom_shuttle_dock"
 
@@ -243,7 +243,7 @@ SIERRA_ESCAPE_POD(11)
 	landmark_tag = "nav_merc_deck5"
 
 /obj/shuttle_landmark/merc/dock
-	name = "Docking Port"
+	name = "Dock FORE-0"
 	landmark_tag = "nav_merc_dock"
 	docking_controller = "nuke_shuttle_dock_airlock"
 
@@ -359,7 +359,7 @@ SIERRA_ESCAPE_POD(11)
 	docking_controller = "specops_shuttle_cent"
 
 /obj/shuttle_landmark/specops/out
-	name = "Docking Bay"
+	name = "Dock STBD-2"
 	landmark_tag = "nav_specops_out"
 	docking_controller = "specops_dock"
 
@@ -484,6 +484,32 @@ SIERRA_ESCAPE_POD(11)
 	name = "In transit"
 	landmark_tag = "nav_transit_guppy"
 
+/datum/shuttle/autodock/overmap/phaethon
+	name = "Phaethon"
+	move_time = 20
+	shuttle_area = /area/phaethon_hangar/start
+	dock_target ="phaethon_shuttle"
+	current_location = "nav_hangar_phaethon"
+	landmark_transition = "nav_transit_phaethon"
+	sound_takeoff = 'sound/effects/rocket.ogg'
+	sound_landing = 'sound/effects/rocket_backwards.ogg'
+	fuel_consumption = 5
+	logging_home_tag = "nav_hangar_phaethon"
+	logging_access = access_sec_doors
+	skill_needed = SKILL_UNSKILLED
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
+	warmup_time = 5
+
+/obj/shuttle_landmark/sierra/hangar/phaethon
+	name = "Phaethon Hangar"
+	landmark_tag = "nav_hangar_phaethon"
+	base_area = /area/security/sierra/hangar
+	base_turf = /turf/simulated/floor/plating
+
+/obj/shuttle_landmark/sierra/transit/phaethon
+	name = "In transit"
+	landmark_tag = "nav_transit_phaethon"
+
 /datum/shuttle/autodock/overmap/crucian
 	name = "Crucian"
 	move_time = 40
@@ -541,21 +567,21 @@ SIERRA_ESCAPE_POD(11)
 	landmark_tag = "nav_transit_blueriver"
 
 /obj/shuttle_landmark/sierra/deck4/vox_raider
-	name = "Fourth Deck Starboard Dock"
+	name = "Dock STBD-3"
 	landmark_tag = "nav_deck4_vox_raider"
 	docking_controller = "admin_shuttle_dock"
 
 /obj/shuttle_landmark/sierra/deck4/skrellshuttle
-	name = "Fourth Deck Starboard Dock"
+	name = "Dock STBD-3"
 	landmark_tag = "nav_deck4_skrellshuttle"
 	docking_controller = "admin_shuttle_dock"
 
 /obj/shuttle_landmark/sierra/deck4/event
-	name = "Fourth Deck Starboard Dock"
+	name = "Dock STBD-3"
 	landmark_tag = "nav_deck4_event_dock"
 	docking_controller = "admin_shuttle_dock"
 
 /obj/shuttle_landmark/sierra/deck4/skrellscout
-	name = "Fourth Deck Auxillary Dock"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_deck4_skrellscout"
 	docking_controller = "rescue_shuttle_dock_airlock"

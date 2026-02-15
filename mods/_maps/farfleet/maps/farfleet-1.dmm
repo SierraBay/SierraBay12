@@ -899,13 +899,13 @@
 	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
 	name = "Unlocked Autolathe"
 	},
-/obj/item/storage/box/autolathe_designs,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled,
 /area/ship/farfleet/engineering/atmos_equipment)
 "cR" = (
 /obj/machinery/conveyor{
-	id_tag = "pc_disposal"
+	dir = 1;
+	id = "pc_disposal"
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -999,7 +999,7 @@
 /obj/structure/plasticflaps/airtight,
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "pc_disposal"
+	id = "pc_disposal"
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
@@ -1303,7 +1303,7 @@
 	dir = 1
 	},
 /obj/machinery/conveyor_switch/oneway{
-	id_tag = "pc_disposal"
+	id = "pc_disposal"
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
@@ -1845,7 +1845,7 @@
 "gI" = (
 /obj/machinery/conveyor{
 	dir = 10;
-	id_tag = "pc_disposal"
+	id = "pc_disposal"
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
@@ -3945,7 +3945,7 @@
 "ry" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "pc_disposal"
+	id = "pc_disposal"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -4898,7 +4898,8 @@
 /area/ship/farfleet/engineering/atmospherics)
 "zj" = (
 /obj/machinery/conveyor{
-	id_tag = "pc_disposal"
+	dir = 1;
+	id = "pc_disposal"
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
@@ -5937,6 +5938,12 @@
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance/engine)
+"HE" = (
+/obj/machinery/shield_diffuser,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/space)
 "HG" = (
 /obj/floor_decal/industrial/warning/corner{
 	icon_state = "warningcorner";
@@ -6342,7 +6349,7 @@
 "Lp" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id_tag = "pc_disposal"
+	id = "pc_disposal"
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
@@ -12150,14 +12157,14 @@ aa
 aa
 aa
 aa
-aU
+HE
 MM
 lv
 mV
 VU
 lv
 Al
-aU
+HE
 aa
 aa
 aa
@@ -12272,14 +12279,14 @@ aa
 aa
 aa
 aa
-aU
+HE
 gX
 rR
 rz
 Tz
 rR
 gX
-aU
+HE
 aa
 aa
 aa
@@ -19712,7 +19719,7 @@ aa
 aa
 aa
 aa
-aa
+jJ
 zh
 aa
 aa
@@ -19723,7 +19730,7 @@ aa
 aa
 aa
 zh
-aa
+jJ
 aa
 aa
 aa

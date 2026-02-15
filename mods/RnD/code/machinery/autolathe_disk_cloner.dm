@@ -252,6 +252,9 @@
 		if(copying)
 			overlays.Add(image(icon, icon_state = "disk_cloner_cloning"))
 
+/obj/machinery/disk_cloner/attack_ai(mob/user)
+	return ui_interact(user)
+
 
 /obj/item/stock_parts/circuitboard/disk_cloner
 	name = "circuit board (disk cloner)"

@@ -54,9 +54,9 @@
 
 	//Assault rifle, burst fire degrades quicker than SMG, worse one-handing penalty, slightly increased move delay
 	firemodes = list(
-		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null),
+		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null, can_autofire=FALSE),
 		list("mode_name" = "2-round bursts", burst=2,    fire_delay=null, one_hand_penalty=9,  burst_accuracy=list(0,-1,-1),       dispersion=list(0.0, 0.6, 1.0)),
-		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
+		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), can_autofire=TRUE)
 		)
 
 /obj/item/gun/projectile/automatic/mr735/on_update_icon()
@@ -92,9 +92,9 @@
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
 
 	firemodes = list(
-		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null),
+		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null, can_autofire=FALSE),
 		list("mode_name" = "2-round bursts", burst=2,    fire_delay=null, one_hand_penalty=9,  burst_accuracy=list(0,-1,-1),       dispersion=list(0.0, 0.6, 1.0)),
-		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
+		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), can_autofire=TRUE)
 		)
 
 /obj/item/gun/projectile/automatic/mbr/on_update_icon()
@@ -250,11 +250,15 @@
 /obj/item/gun/projectile/automatic/sol_smg/empty
 	starts_loaded = FALSE
 
+// Old Lathe
 /datum/fabricator_recipe/arms_ammo/hidden/magazine_smg_sol
 	name = "ammunition (SOLMAG submachine gun)"
 	path = /obj/item/ammo_magazine/smg_sol
 
-/obj/item/ammo_magazine/smg_sol
+// Modded MODPACK_RND Lathe
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_sol
+	name = "ammunition (SOLMAG submachine gun)"
+	build_path = /obj/item/ammo_magazine/smg_sol
 
 /obj/item/ammo_magazine/smg_sol
 	name = "SOLMAG magazine"

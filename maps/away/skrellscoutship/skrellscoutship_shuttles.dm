@@ -33,6 +33,10 @@
 	color = "#880088"
 	vessel_mass = 750
 	vessel_size = SHIP_SIZE_TINY
+	initial_restricted_waypoints = list(
+		"SSV-S Docked" = list("nav_skrellscoutsh_dock"),
+		"Dock STBD-3" = list("nav_deck4_skrellshuttle")
+	)
 
 /datum/shuttle/autodock/overmap/skrellscoutship
 	name = "Skrellian Scout"
@@ -58,6 +62,10 @@
 	name = "Uncharted Space"
 	landmark_tag = "nav_skrellscout_start"
 
+/obj/shuttle_landmark/skrellscout/dock
+	name = "Skrellian Scout Docking Port"
+	landmark_tag = "nav_skrellscout_dock"
+
 /datum/shuttle/autodock/overmap/skrellscoutshuttle
 	name = "Skrellian Shuttle"
 	warmup_time = 5
@@ -68,18 +76,14 @@
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/skrell
+	dock_target = "xil_shuttle"
 	mothershuttle = "Skrellian Scout"
 
 /obj/shuttle_landmark/skrellscoutshuttle/start
-	name = "Dock"
+	name = "Docking Port"
 	landmark_tag = "nav_skrellscoutsh_dock"
-	base_area = /area/ship/skrellscoutship/hangar
-	base_turf = /turf/simulated/floor/tiled/skrell
+	docking_controller = "xil_port_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
-
-/obj/shuttle_landmark/skrellscout/dock
-	name = "Skrellian Scout Docking Port"
-	landmark_tag = "nav_skrellscout_dock"
 
 /obj/shuttle_landmark/skrellscoutshuttle/altdock
 	name = "Docking Port"

@@ -15,6 +15,8 @@
 	max_repair = 60
 	repair_damage = 30
 
+	matter = list(MATERIAL_STEEL = 45000, MATERIAL_PLASTEEL = 5000, MATERIAL_ALUMINIUM = 5000)
+
 	//Тепло
 	max_heat = 200
 	heat_cooling = 8

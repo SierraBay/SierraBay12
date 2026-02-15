@@ -136,7 +136,7 @@
 	dir = 4
 	},
 /obj/structure/table/standard,
-/obj/machinery/microscope{
+/obj/machinery/computer/microscope{
 	pixel_x = -8
 	},
 /turf/simulated/floor/tiled/white,
@@ -8351,7 +8351,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/recandlockers)
 "Sg" = (
-/obj/machinery/dnaforensics,
+/obj/machinery/computer/dnaforensics,
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/oldlab2/lab)
@@ -9415,7 +9415,7 @@
 /obj/floor_decal/industrial/warning{
 	dir = 4
 	},
-/obj/machinery/microscope,
+/obj/machinery/computer/microscope,
 /obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/dark,

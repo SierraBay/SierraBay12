@@ -92,10 +92,11 @@
 					user.throw_mode_on()
 					focus.throw_at(target, user_rank*2, 1, owner)
 				else
-					focus.throw_at(target, user_rank*2, user_rank*3, owner)
+					var/skill = (user.get_skill_value(SKILL_HAULING) - SKILL_MIN)/(SKILL_MAX - SKILL_MIN)
+					focus.throw_at(target, user_rank*2, focus.throw_speed * skill + user_rank, owner)
 				sleep(1)
 				sparkle()
-		owner.drop_from_inventory(src)
+		//owner.drop_from_inventory(src)
 
 /obj/item/psychic_power/telekinesis/proc/sparkle()
 	set waitfor = 0

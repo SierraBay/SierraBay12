@@ -6176,8 +6176,6 @@
 	desc = "Your typical Special Forces Autolathe.";
 	name = "Autolathe"
 	},
-/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
-/obj/item/stock_parts/computer/hard_drive/portable/design/general,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/security/detective)
 "xl" = (
@@ -10527,7 +10525,6 @@
 	pixel_y = 4
 	},
 /obj/item/stack/material/steel/fifty,
-/obj/item/storage/box/autolathe_designs,
 /turf/simulated/floor/steel_dirty,
 /area/ship/phobos/engine)
 "QT" = (
