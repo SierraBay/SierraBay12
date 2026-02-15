@@ -14,13 +14,18 @@
 	vessel_size = SHIP_SIZE_SMALL
 	initial_restricted_waypoints = list(
 		"Trichopterax Docked" = list("nav_hangar_ascent_inf_one"),
-		"NSV Sierra Docking Port" = list("nav_hangar_ascent_inf_sierra")
+		"Dock PRSD-3" = list("nav_hangar_ascent_inf_sierra")
 	)
 
 /obj/overmap/visitable/ship/landable/ascent_inf/two
 	name = "Lepidopterax"
 	shuttle = "Lepidopterax"
 	fore_dir = NORTH
+	initial_restricted_waypoints = list(
+		"Lepidopterax Docked" = list("nav_hangar_ascent_inf_two"),
+		"Dock STBD-1" = list("nav_hangar_ascent_inf_sierra_two")
+	)
+
 
 /obj/machinery/computer/shuttle_control/explore/ascent_inf
 	name = "shuttle control console"
@@ -48,12 +53,12 @@
 	base_area = /area/ship/ascent_inf/wing_starboard
 
 /obj/shuttle_landmark/ascent_seedship_inf/sierra
-	name = "NSV Sierra Docking Port"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_hangar_ascent_inf_sierra"
 	docking_controller = "rescue_shuttle_dock_airlock"
 
 /obj/shuttle_landmark/ascent_seedship_inf/sierra/two
-	name = "NSV Sierra Docking Port"
+	name = "Dock STBD-1"
 	landmark_tag = "nav_hangar_ascent_inf_sierra_two"
 	docking_controller = "merchant_shuttle_station"
 
