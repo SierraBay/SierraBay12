@@ -8,6 +8,15 @@
 	sharp = TRUE
 	agony = 20
 
+/obj/item/projectile/bullet/electrode/on_hit(atom/target, blocked)
+	. = ..()
+	if(istype(target, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = target
+		if(H.should_have_organ(BP_EYES))
+			var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[BP_EYES]
+			if(eyes && BP_IS_ROBOTIC(eyes))
+				H.eye_blind = max(H.eye_blind, 5)
+
 /obj/item/projectile/bullet/electrode/low
 	agony = 20
 
