@@ -452,6 +452,7 @@
 "bR" = (
 /obj/structure/catwalk,
 /obj/machinery/light/small,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/unspecified)
 "bS" = (
@@ -731,7 +732,9 @@
 /area/map_template/facolony/cargo2)
 "cM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "cO" = (
@@ -1428,6 +1431,7 @@
 /area/map_template/facolony/cargohatch)
 "ge" = (
 /obj/machinery/light/small,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/unspecified)
 "gf" = (
@@ -2114,6 +2118,7 @@
 /area/map_template/facolony/airlock)
 "jx" = (
 /obj/machinery/light/small,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/dorms)
 "jy" = (
@@ -2448,6 +2453,7 @@
 "kU" = (
 /obj/machinery/light/small,
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/dorms)
 "kW" = (
@@ -2514,6 +2520,7 @@
 "lo" = (
 /obj/machinery/light/small,
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/surgery)
 "lp" = (
@@ -3261,7 +3268,7 @@
 	id_tag = "facolony_external_warehouse_in";
 	name = "External Warehouse Entry shutters control";
 	pixel_y = 24;
-	pixel_x = 6;
+	pixel_x = 6
 	},
 /obj/structure/table/mag/facolony,
 /obj/machinery/airlock_sensor/airlock_interior{
@@ -3289,6 +3296,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/atmospherics2)
 "oB" = (
@@ -3369,9 +3377,10 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
 "oS" = (
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	dir = 4
+/obj/machinery/hologram/holopad/longrange{
+	name = "IPV Celeste Hauler lr-holopad"
 	},
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "pd" = (
@@ -3795,6 +3804,7 @@
 	dir = 8
 	},
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/dorms)
 "qV" = (
@@ -3855,9 +3865,8 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "re" = (
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
+/obj/floor_decal/plaque,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "rh" = (
@@ -4167,6 +4176,7 @@
 	color = "#aa5f61";
 	dir = 1
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/command)
 "sM" = (
@@ -5063,6 +5073,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/atmospherics)
 "wm" = (
@@ -5123,6 +5134,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/science)
 "wy" = (
@@ -5208,6 +5220,7 @@
 "wM" = (
 /obj/machinery/light/small,
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/armory)
 "wQ" = (
@@ -5266,6 +5279,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/unspecified)
 "xl" = (
@@ -5628,6 +5642,7 @@
 	dir = 1
 	},
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/cargo2)
 "yO" = (
@@ -5833,6 +5848,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/messhall)
 "zL" = (
@@ -5934,6 +5950,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/dorms)
 "Ag" = (
@@ -6895,16 +6912,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "Fl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/hologram/holopad/longrange{
-	name = "IPV Celeste Hauler lr-holopad"
-	},
-/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/atmospherics/unary/vent_scrubber/on,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Fp" = (
@@ -7426,6 +7434,7 @@
 	dir = 1
 	},
 /obj/structure/catwalk,
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/engineering)
 "Ia" = (
@@ -7945,6 +7954,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
@@ -9510,6 +9522,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/dorms)
 "Se" = (
@@ -9799,6 +9812,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
+"TE" = (
+/obj/machinery/light/small,
+/obj/structure/catwalk,
+/obj/landmark/clear,
+/turf/template_noop,
+/area/map_template/facolony/command)
 "TF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10357,6 +10376,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/atmospherics2)
 "VN" = (
@@ -10430,11 +10450,7 @@
 /turf/simulated/floor/away,
 /area/template_noop)
 "VY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/floor_decal/plaque,
-/obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Wb" = (
@@ -10666,6 +10682,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/tcomms)
 "Xh" = (
@@ -10778,6 +10795,7 @@
 	},
 /obj/structure/table/steel_reinforced,
 /obj/machinery/photocopier/faxmachine,
+/obj/item/paper/facolony/faxmessage,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "XB" = (
@@ -11291,7 +11309,7 @@ lJ
 pk
 pk
 pk
-QP
+uo
 QP
 QP
 QP
@@ -11378,7 +11396,7 @@ pk
 pk
 pk
 pk
-QP
+uo
 QP
 QP
 QP
@@ -11698,7 +11716,7 @@ uo
 jS
 jI
 jI
-wa
+TE
 Rq
 Rq
 Rq
@@ -13194,7 +13212,7 @@ uo
 uo
 uo
 uo
-QP
+uo
 QP
 "}
 (47,1,1) = {"
@@ -13250,7 +13268,7 @@ QP
 QP
 QP
 QP
-QP
+uo
 uo
 uo
 OW
@@ -13294,7 +13312,7 @@ QP
 QP
 QP
 QP
-QP
+uo
 Ec
 Ec
 Ec
@@ -13337,7 +13355,7 @@ QP
 QP
 QP
 QP
-QP
+uo
 Ec
 Ec
 sN
