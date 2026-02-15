@@ -2190,7 +2190,6 @@
 	pixel_x = -8;
 	id_tag = "facolony_main_windows";
 	name = "General window-shields";
-	color = COLOR_PALE_BTL_GREEN;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -3204,6 +3203,11 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
+"op" = (
+/obj/paint/facolony/commandblue,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/armory)
 "oq" = (
 /obj/machinery/alarm{
 	locked = 0;
@@ -3263,7 +3267,6 @@
 	name = "External Warehouse Entry shutters control";
 	pixel_y = 24;
 	pixel_x = 6;
-	color = COLOR_CHESTNUT
 	},
 /obj/structure/table/mag/facolony,
 /obj/machinery/airlock_sensor/airlock_interior{
@@ -4143,7 +4146,6 @@
 	pixel_x = 6;
 	id_tag = "facolony_main_windows";
 	name = "General window-shields";
-	color = COLOR_PALE_BTL_GREEN;
 	dir = 8
 	},
 /obj/machinery/button/blast_door{
@@ -4712,7 +4714,6 @@
 /obj/machinery/button/blast_door{
 	id_tag = "facolony_unspecified_north";
 	dir = 8;
-	color = COLOR_RED;
 	name = "blast door-control";
 	pixel_x = 24;
 	req_access = list("ACCESS_FACOLONY");
@@ -4847,7 +4848,6 @@
 	pixel_x = 6;
 	name = "Aft-Starboard Cargo shutters-control";
 	id_tag = "facolony_aftstar_blasts";
-	color = COLOR_PALE_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -4856,7 +4856,6 @@
 	pixel_x = -6;
 	name = "Aft-Port Cargo shutters-control";
 	id_tag = "facolony_aftport_blasts";
-	color = COLOR_PALE_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -4865,7 +4864,6 @@
 	pixel_x = -6;
 	name = "Fore-Port Cargo shutters-control";
 	id_tag = "facolony_foreport_blasts";
-	color = COLOR_PALE_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -4874,7 +4872,6 @@
 	pixel_x = 6;
 	name = "Fore-Starboard Cargo shutters-control";
 	id_tag = "facolony_forestar_blasts";
-	color = COLOR_PALE_ORANGE;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/table/steel_reinforced,
@@ -5238,7 +5235,6 @@
 	pixel_y = -24;
 	id_tag = "facolony_unspecified_west";
 	dir = 1;
-	color = COLOR_RED;
 	name = "blast door-control";
 	req_access = list("ACCESS_FACOLONY");
 	pixel_x = -6
@@ -6116,7 +6112,6 @@
 	name = "Shutters control";
 	pixel_x = 24;
 	pixel_y = -6;
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/airlock_sensor/airlock_exterior{
@@ -6856,7 +6851,6 @@
 	id_tag = "facolony_trade_personnel_entry";
 	name = "Trade Zone Crew Entry blast door";
 	pixel_x = -6;
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/cable/green{
@@ -6882,7 +6876,6 @@
 	pixel_x = -6;
 	id_tag = "facolony_trade_windows";
 	name = "Trade Zone blasts window-control";
-	color = COLOR_PALE_BTL_GREEN;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/catwalk,
@@ -8098,7 +8091,6 @@
 	pixel_x = -6;
 	name = "Aft Segment Cargo shutters-control";
 	id_tag = "facolony_aftsegment_blasts";
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/recharge_station,
@@ -9131,7 +9123,6 @@
 	id_tag = "facolony_shipmed";
 	pixel_y = 24;
 	pixel_x = -8;
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /turf/simulated/floor/tiled/white,
@@ -9321,8 +9312,8 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
 "Rq" = (
-/obj/paint/facolony/commandblue,
 /obj/paint_stripe/gunmetal,
+/obj/paint/facolony/commandblue,
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/armory)
 "Rr" = (
@@ -9896,7 +9887,6 @@
 /obj/machinery/button/blast_door{
 	id_tag = "facolony_unspecified_south";
 	dir = 4;
-	color = COLOR_RED;
 	name = "blast door-control";
 	pixel_x = -24;
 	req_access = list("ACCESS_FACOLONY");
@@ -10197,11 +10187,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
-"UM" = (
-/obj/paint_stripe/gunmetal,
-/obj/paint/facolony/commandblue,
-/turf/simulated/wall/r_titanium,
-/area/map_template/facolony/armory)
 "UN" = (
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/paint/brown,
@@ -10749,7 +10734,6 @@
 	pixel_x = 6;
 	name = "Starboard Cargo Hatch";
 	id_tag = "facolony_right_cargo_blasts";
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -10758,7 +10742,6 @@
 	pixel_x = -6;
 	name = "Port Cargo Hatch";
 	id_tag = "facolony_left_cargo_blasts";
-	color = COLOR_CHESTNUT;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -10767,7 +10750,6 @@
 	pixel_x = -38;
 	name = "Fore window-shields";
 	id_tag = "facolony_bridge_blasts";
-	color = COLOR_LIGHT_CYAN;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -10776,7 +10758,6 @@
 	pixel_x = -26;
 	name = "Deck window-shields";
 	id_tag = "facolony_deck_blasts";
-	color = COLOR_PALE_BTL_GREEN;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
@@ -10793,7 +10774,6 @@
 	pixel_x = -6;
 	name = "Armory Access door-control";
 	id_tag = "facolony_armory_shutter";
-	color = COLOR_RED_GRAY;
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/table/steel_reinforced,
@@ -11724,10 +11704,10 @@ jS
 jI
 jI
 wa
+op
+op
+op
 Rq
-Rq
-Rq
-UM
 et
 eK
 xl
@@ -11767,7 +11747,7 @@ pk
 Sc
 PH
 PH
-Rq
+op
 Ne
 vw
 TT
@@ -11810,7 +11790,7 @@ je
 Sc
 xt
 at
-Rq
+op
 IH
 Mn
 JB
@@ -11853,7 +11833,7 @@ Xi
 yl
 va
 FZ
-Rq
+op
 yW
 kE
 Pe
@@ -11896,7 +11876,7 @@ Xx
 WA
 Bb
 XA
-Rq
+op
 au
 IK
 JC
@@ -11939,10 +11919,10 @@ mU
 iL
 oS
 tr
-Rq
-Rq
+op
+op
 pG
-Rq
+op
 et
 Fx
 uN
