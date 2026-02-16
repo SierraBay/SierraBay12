@@ -8,6 +8,6 @@
 #include "code/modded.dm"
 #include "code/projectile.dm"
 #include "code/xenos.dm"
-#include "code/taizer.dm"
+#include "code/neutralizer.dm"
 
 #endif

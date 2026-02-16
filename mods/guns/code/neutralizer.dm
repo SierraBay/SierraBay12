@@ -1,12 +1,14 @@
+// By Teteshnik
+
 /obj/item/projectile/bullet/electrode
 	name = "electrode"
-	icon = 'mods/guns/icons/obj/projectiles_by_teteshnik.dmi'
+	icon = 'mods/guns/icons/obj/projectiles.dmi'
 	damage_type = DAMAGE_BRUTE
 	damage_flags = DAMAGE_FLAG_SHARP
 	damage = 1
 	armor_penetration = 0
 	sharp = TRUE
-	agony = 20
+	agony = 40
 
 /obj/item/projectile/bullet/electrode/on_hit(atom/target, blocked)
 	. = ..()
@@ -15,14 +17,11 @@
 		if(H.should_have_organ(BP_EYES))
 			var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[BP_EYES]
 			if(eyes && BP_IS_ROBOTIC(eyes))
-				H.eye_blind = max(H.eye_blind, src.agony / 4)
+				H.eye_blind = max(H.eye_blind, src.agony / 5)
 	else if(isrobot(target))
 		var/mob/living/silicon/robot/R = target
 		if (R.status_flags & CANWEAKEN)
 			R.Weaken(src.agony / 5)
-
-/obj/item/projectile/bullet/electrode/medium
-	agony = 40
 
 /obj/item/projectile/bullet/electrode/high
 	agony = 60
@@ -44,13 +43,6 @@
 	if (!BB)
 		to_chat(user, "This one is spent.")
 
-/obj/item/ammo_casing/battery/medium
-	name = "medium-power NT Mk20 electrode"
-	desc = "A NT Mk20 neutralizer one-use electrode. This one emits medium-power electric pulse on hit and medium effect on synthetic targets."
-	icon_state = "electrode_m"
-	spent_icon = "electrode_m-spent"
-	projectile_type = /obj/item/projectile/bullet/electrode/medium
-
 /obj/item/ammo_casing/battery/high
 	name = "high-power NT Mk20 electrode"
 	desc = "A NT Mk20 neutralizer one-use electrode. This one emits high-power electric pulse on hit and prolonged effect on synthetic targets."
@@ -64,12 +56,12 @@
 	handle_casings = HOLD_CASINGS
 	load_method = SINGLE_CASING
 	caliber = "electrode"
-	icon = 'mods/guns/icons/obj/taser_by_teteshnik.dmi'
+	icon = 'mods/guns/icons/obj/neutralizer.dmi'
 	icon_state = "taser"
 	item_state = "taser"
 	item_icons = list(
-		slot_r_hand_str = 'mods/guns/icons/mob/righthand_taser_teteshnik.dmi',
-		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_taser_teteshnik.dmi',
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_neutralizer.dmi',
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_neutralizer.dmi',
 	)
 	ammo_type = /obj/item/ammo_casing/battery
 	max_shells = 1
@@ -97,9 +89,8 @@
 		/obj/item/device/flash = 5,
 		/obj/item/reagent_containers/food/snacks/donut/normal = 12,
 		/obj/item/storage/box/evidence = 6,
-		/obj/item/ammo_casing/battery/high = 8,
-		/obj/item/ammo_casing/battery/medium = 8,
-		/obj/item/ammo_casing/battery = 8
+		/obj/item/ammo_casing/battery/high = 12,
+		/obj/item/ammo_casing/battery = 12
 	)
 
 /obj/item/storage/belt/security
