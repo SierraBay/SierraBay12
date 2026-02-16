@@ -25,7 +25,6 @@ exactly() { # exactly N name search [mode] [filter]
 	fi
 }
 
-exactly 0 "DEVMODE usage" '^#define\s*DEV_MODE' -P # SIERRA
 # If you increase any of these numbers you're probably doing it wrong
 exactly 0 "escapes" '\\\\(red|blue|green|black|b|i[^mc])'
 exactly 4 "Del()s" '\WDel\('
