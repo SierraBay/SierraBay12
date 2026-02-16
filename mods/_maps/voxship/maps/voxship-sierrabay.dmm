@@ -622,9 +622,9 @@
 /area/voxship/fore)
 "bJ" = (
 /obj/structure/table/rack,
-/obj/item/clothing/head/helmet/space/vox/stealth,
+/obj/item/clothing/head/helmet/space/vox/carapace,
 /obj/item/clothing/mask/gas/swat/vox,
-/obj/item/clothing/suit/space/vox/stealth,
+/obj/item/clothing/suit/space/vox/carapace,
 /obj/machinery/alarm/vox{
 	dir = 4;
 	pixel_x = -16
