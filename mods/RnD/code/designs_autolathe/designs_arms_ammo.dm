@@ -207,13 +207,9 @@
 	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/electrode_low
-	name = "ammunition (low electrode)"
+	name = "ammunition (neutralizer electrode)"
 	build_path = /obj/item/ammo_casing/battery
 
-/datum/design/autolathe/arms_ammo/hidden/electrode_medium
-	name = "ammunition (medium electrode)"
-	build_path = /obj/item/ammo_casing/battery/medium
-
 /datum/design/autolathe/arms_ammo/hidden/electrode_high
-	name = "ammunition (high electrode)"
+	name = "ammunition (HP neutralizer electrode)"
 	build_path = /obj/item/ammo_casing/battery/high
