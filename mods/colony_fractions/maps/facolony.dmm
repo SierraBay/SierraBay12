@@ -87,6 +87,7 @@
 /area/map_template/facolony/command)
 "au" = (
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/closet/facolony/wardrobe,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/armory)
 "aw" = (
@@ -364,18 +365,6 @@
 	},
 /obj/item/clothing/glasses/night{
 	pixel_y = 5
-	},
-/obj/item/clothing/accessory/storage/holster/waist{
-	pixel_y = -5
-	},
-/obj/item/clothing/accessory/storage/holster/waist{
-	pixel_y = -5
-	},
-/obj/item/clothing/accessory/storage/holster/waist{
-	pixel_y = -5
-	},
-/obj/item/clothing/accessory/storage/holster/waist{
-	pixel_y = -5
 	},
 /obj/structure/sign/double/faflag/left{
 	pixel_y = 24
@@ -3579,15 +3568,18 @@
 /obj/floor_decal/corner/black/half{
 	dir = 1
 	},
-/obj/random/powercell{
-	pixel_y = 6;
-	pixel_x = 3
+/obj/machinery/cell_charger,
+/obj/random/toolbox{
+	pixel_y = 7
 	},
 /obj/random/powercell{
 	pixel_y = 2;
 	pixel_x = -5
 	},
-/obj/machinery/cell_charger,
+/obj/random/powercell{
+	pixel_y = 6;
+	pixel_x = 3
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "pR" = (
@@ -4187,14 +4179,13 @@
 /turf/simulated/floor/wood/bamboo,
 /area/map_template/facolony/messhall)
 "sN" = (
-/obj/structure/table/rack,
 /obj/floor_decal/corner/black/three_quarters{
 	dir = 8
 	},
 /obj/structure/sign/double/faflag/left{
 	pixel_y = 24
 	},
-/obj/random/toolbox,
+/obj/structure/closet/facolony/wardrobe,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "sP" = (
@@ -7591,16 +7582,11 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_y = 28
 	},
-/obj/item/storage/belt/utility/full,
-/obj/item/device/flashlight/maglight,
-/obj/item/device/flashlight/maglight,
-/obj/item/device/binoculars,
-/obj/item/device/binoculars,
 /obj/structure/table/steel,
 /obj/item/device/gps,
 /obj/item/device/gps,
-/obj/item/handcuffs,
-/obj/item/handcuffs,
+/obj/item/device/binoculars,
+/obj/item/device/binoculars,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/armory)
 "II" = (
@@ -7796,14 +7782,19 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
+/obj/item/clothing/accessory/storage/webbing_large{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/clothing/accessory/storage/webbing_large{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/storage/belt/utility/full,
+/obj/item/device/flashlight/maglight,
+/obj/item/device/flashlight/maglight,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/armory)
 "JC" = (
@@ -7819,10 +7810,6 @@
 /obj/structure/cable{
 	color = "#008000"
 	},
-/obj/item/clothing/accessory/storage/holster/waist,
-/obj/item/clothing/accessory/storage/holster/waist,
-/obj/item/clothing/accessory/storage/holster/waist,
-/obj/item/clothing/accessory/storage/holster/waist,
 /obj/item/gun/energy/ionrifle/small/stupor,
 /obj/random/handgun,
 /obj/machinery/power/apc{
@@ -10653,24 +10640,12 @@
 /turf/simulated/floor/away,
 /area/template_noop)
 "Xd" = (
-/obj/structure/table/rack,
 /obj/floor_decal/corner/black/half{
 	dir = 8
 	},
 /obj/machinery/light/spot{
 	dir = 8
 	},
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_armor,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
-/obj/random/colony_helmet,
-/obj/item/shield/riot,
-/obj/item/shield/riot,
-/obj/item/shield/riot/metal,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Xf" = (
@@ -11088,38 +11063,6 @@
 /obj/item/clothing/accessory/storage/webbing_large{
 	pixel_x = 6;
 	pixel_y = -8
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/item/clothing/mask/balaclava{
-	pixel_y = 5;
-	pixel_x = -5
 	},
 /obj/item/clothing/under/fa/vacsuit,
 /obj/item/clothing/under/fa/vacsuit,

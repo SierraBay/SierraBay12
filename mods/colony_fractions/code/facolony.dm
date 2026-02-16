@@ -145,6 +145,7 @@
 	archetype = /singleton/submap_archetype/facolony
 
 var/global/const/access_facolony = "ACCESS_FACOLONY"
+
 /datum/access/facolony
 	id = access_facolony
 
@@ -247,6 +248,19 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /obj/structure/table/mag/facolony
 	req_access = list(access_facolony)
+
+/obj/structure/closet/facolony/wardrobe
+	name = "Wardrobe Locker"
+	closet_appearance = /singleton/closet_appearance/wardrobe/red
+
+/obj/structure/closet/facolony/wardrobe/WillContain()
+	return list(
+		/obj/item/clothing/suit/armor/pcarrier/troops_colony = 4,
+		/obj/item/clothing/head/helmet = 4,
+		/obj/item/clothing/mask/balaclava = 4,
+		/obj/item/clothing/accessory/storage/holster/hip = 4,
+		/obj/item/shield/riot/metal = 1
+	)
 
 /obj/structure/sign/double/faflag/left
 	name = "Frontier Alliance flag"
