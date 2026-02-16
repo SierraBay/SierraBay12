@@ -10,14 +10,15 @@
 	sharp = TRUE
 	agony = 40
 
-/obj/item/projectile/bullet/electrode/on_hit(atom/target, blocked)
+/obj/item/projectile/bullet/electrode/on_hit(atom/target, blocked, def_zone = null)
 	. = ..()
-	if(istype(target, /mob/living/carbon/human))
+	if(blocked < 100 && istype(target, /mob/living/carbon/human))
+		var/obj/item/organ/external/E = get_organ(def_zone)
 		var/mob/living/carbon/human/H = target
 		if(H.should_have_organ(BP_EYES))
 			var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[BP_EYES]
 			if(eyes && BP_IS_ROBOTIC(eyes))
-				H.eye_blind = max(H.eye_blind, src.agony / 5)
+				H.eye_blind = max(H.eye_blind, src.agony / 10)
 	else if(isrobot(target))
 		var/mob/living/silicon/robot/R = target
 		if (R.status_flags & CANWEAKEN)
@@ -80,6 +81,13 @@
 			icon_state = "[initial(icon_state)]-spent"
 	else
 		icon_state = "[initial(icon_state)]-empty"
+
+/datum/design/item/weapon/neutralizer
+	id = "neutralizer"
+	req_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3, TECH_POWER = 2)
+	materials = list(MATERIAL_STEEL = 5000)
+	build_path = /obj/item/gun/projectile/taser
+	sort_string = "TADAN"
 
 /obj/machinery/vending/security
 	products = list(
