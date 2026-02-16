@@ -9,7 +9,6 @@
 #include "code/mining.dm"
 #include "code/oldlab2.dm"
 #include "code/salvage_shuttle.dm"
-#include "code/scavver_gantry.dm"
 #include "code/sfv_arbiter.dm"
 #include "code/slavers_base.dm"
 #include "code/voxraider.dm"
