@@ -1,12 +1,107 @@
-/* [SIERRA-REMOVE] HARDSUITS
+/obj/item/rig_module
+	var/activate_on_start               // Set to TRUE for the device to automatically activate on suit equip
+	var/mount_type = 0                  // What mounts does this module use
+	var/show_toggle_button              // Set to TRUE for the device to show toggle button
+
+
+/obj/item/rig_module/maneuvering_jets
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/self_destruct
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/datajack
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/power_sink
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/voice
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/electrowarfare_suite
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/vision
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/mounted/arm_blade
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/device/anomaly_scanner
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/teleporter
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/mounted/power_fist
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/stealth_field
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/personal_shield
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/electrowarfare_suite
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/device/flash
+	show_toggle_button = TRUE
+
+/obj/item/rig_module/chem_dispenser/engage(atom/target)
+	if(!isturf(holder.wearer.loc) && target)
+		return FALSE
+
+	if(!..())
+		return FALSE
+
+	if(!charge_selected)
+		to_chat(holder.wearer, SPAN_DANGER("You have not selected a chemical type."))
+		return FALSE
+
+	return use_charge(charge_selected, target)
+
+/obj/item/rig_module/chem_dispenser/proc/use_charge(charge_selected, atom/target, show_warnings = TRUE)
+	var/mob/living/carbon/human/H = holder.wearer
+
+	var/datum/rig_charge/charge = charges[charge_selected]
+
+	if(!charge)
+		return FALSE
+
+	var/chems_to_use = 10
+	if(charge.charges <= 0)
+		if(show_warnings)
+			to_chat(H, SPAN_DANGER("Insufficient chems!"))
+		return FALSE
+	else if(charge.charges < chems_to_use)
+		chems_to_use = charge.charges
+
+	var/mob/living/carbon/target_mob
+	if(target)
+		if(iscarbon(target))
+			target_mob = target
+		else
+			return FALSE
+	else
+		target_mob = H
+
+	if(target_mob != H)
+		to_chat(H, SPAN_DANGER("You inject [target_mob] with [chems_to_use] unit\s of [charge.display_name]."))
+	to_chat(target_mob, SPAN_DANGER("You feel a rushing in your veins as [chems_to_use] unit\s of [charge.display_name] [chems_to_use == 1 ? "is" : "are"] injected."))
+	target_mob.reagents.add_reagent(charge.product_type, chems_to_use)
+
+	charge.charges -= chems_to_use
+	if(charge.charges < 0)
+		charge.charges = 0
+	return TRUE
+
+
 /obj/item/rig/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(electrified != 0)
 		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
 			return TRUE
-
-	// Pass repair items on to the chestpiece.
-	if(chest && (istype(W,/obj/item/stack/material) || isWelder(W)))
-		return chest.use_tool(W,user)
 
 	// Lock or unlock the access panel.
 	if(W.GetIdCard())
@@ -157,7 +252,7 @@
 							continue
 						possible_removals[module.name] = module
 
-					if(!length(possible_removals))
+					if(!LAZYLEN(possible_removals))
 						to_chat(user, SPAN_WARNING("There are no installed modules to remove."))
 						return TRUE
 
@@ -186,25 +281,13 @@
 				to_chat(user, "You don't see any use for \the [S].")
 			return TRUE
 
-	// If we've gotten this far, all we have left to do before we pass off to root procs
-	// is check if any of the loaded modules want to use the item we've been given.
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.accepts_item(W,user)) //Item is handled in this proc
 			return TRUE
+
+	// Pass repair items on to the chestpiece.
+	if(chest && (istype(W,/obj/item/stack/material) || isWelder(W)))
+		return chest.use_tool(W,user)
+
+
 	return ..()
-*/
-
-/obj/item/rig/attack_hand(mob/user)
-
-	if(electrified != 0)
-		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
-			return
-	..()
-
-/obj/item/rig/emag_act(remaining_charges, mob/user)
-	if(!subverted)
-		req_access.Cut()
-		locked = 0
-		subverted = 1
-		to_chat(user, SPAN_DANGER("You short out the access protocol for the suit."))
-		return 1

@@ -1,5 +1,0 @@
-author: ChaplainMaximum
-changes:
-  - bugfix: Автоматический режим огня на ЛайтБуллапе, MVR, MR-735 теперь и 
-      правду автоматический.
-delete-after: true
