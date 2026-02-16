@@ -1,7 +1,4 @@
 // Frontier Alliance: Blockade Runners Extension (Playable Colony) by GarryFlint
-#ifdef UNIT_TESTS
-#include "../../packs/factions/fa/_pack.dm"
-#endif
 
 /datum/map_template/ruin/exoplanet/facolony
 	name = "FA Blockade Runners Outpost"
