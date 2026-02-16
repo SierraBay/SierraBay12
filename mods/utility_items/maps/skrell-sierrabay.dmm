@@ -3194,12 +3194,10 @@
 /obj/floor_decal/industrial/outline/red,
 /obj/item/clothing/head/helmet/skrell,
 /obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell/green,
-/obj/item/clothing/head/helmet/skrell/green,
-/obj/item/clothing/head/helmet/skrell/navy,
-/obj/item/clothing/head/helmet/skrell/navy,
-/obj/item/clothing/head/helmet/skrell/tan,
-/obj/item/clothing/head/helmet/skrell/tan,
+/obj/item/clothing/head/helmet/skrell,
+/obj/item/clothing/head/helmet/skrell,
+/obj/item/clothing/head/helmet/skrell,
+/obj/item/clothing/head/helmet/skrell,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "kj" = (
