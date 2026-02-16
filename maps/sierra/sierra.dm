@@ -215,7 +215,7 @@
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
+	// #include "../../mods/contraband_vending/_contraband_vending_includes.dm" // Перенесено в global_modpacks.dm
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
 
