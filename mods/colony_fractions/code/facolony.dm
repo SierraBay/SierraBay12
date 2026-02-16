@@ -17,7 +17,7 @@
 		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
 		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
-	spawn_weight = 1
+	spawn_weight = 0.7
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
@@ -260,6 +260,26 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 		/obj/item/clothing/mask/balaclava = 4,
 		/obj/item/clothing/accessory/storage/holster/hip = 4,
 		/obj/item/shield/riot/metal = 1
+	)
+
+/obj/item/clothing/under/fa/vacsuit/facolony/guardsman
+	accessories = list(/obj/item/clothing/accessory/fa_badge/guardsman)
+
+/obj/item/clothing/under/fa/vacsuit/facolony/warden
+	accessories = list(/obj/item/clothing/accessory/fa_badge/warden)
+
+/obj/item/clothing/under/fa/vacsuit/facolony/marshal
+	accessories = list(/obj/item/clothing/accessory/fa_badge/marshal)
+
+/obj/structure/closet/facolony/vacsuits
+	name = "plain locker"
+	closet_appearance = /singleton/closet_appearance/wardrobe/black
+
+/obj/structure/closet/facolony/vacsuits/WillContain()
+	return list(
+		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8,
+		/obj/item/clothing/under/fa/vacsuit/facolony/warden = 1,
+		/obj/item/clothing/accessory/storage/webbing_large = 2
 	)
 
 /obj/structure/sign/double/faflag/left
