@@ -5,7 +5,7 @@
 	id = "facolony"
 	description = "FA Blockade Runners Outpost"
 	mappaths = list('mods/colony_fractions/maps/facolony.dmm')
-	spawn_cost = 2
+	spawn_cost = 3
 	player_cost = 0
 	template_flags = TEMPLATE_FLAG_CLEAR_CONTENTS | TEMPLATE_FLAG_NO_RUINS | TEMPLATE_FLAG_NO_RADS
 	ruin_tags = RUIN_HUMAN|RUIN_HABITAT
@@ -17,7 +17,7 @@
 		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
 		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
-	spawn_weight = 5
+	spawn_weight = 1
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
