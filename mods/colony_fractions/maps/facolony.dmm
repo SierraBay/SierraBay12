@@ -11092,6 +11092,7 @@
 /obj/structure/sign/double/faflag/right{
 	pixel_y = 24
 	},
+/obj/structure/closet/facolony/vacsuits,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Zw" = (
