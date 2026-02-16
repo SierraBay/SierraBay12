@@ -149,93 +149,6 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /datum/access/facolony
 	id = access_facolony
 
-/area/map_template/facolony
-	req_access = list(access_facolony)
-
-/area/map_template/facolony/command
-	name = "\improper IPV Celeste Hauler - Bridge"
-	icon_state = "A"
-
-/area/map_template/facolony/airlock
-	name = "\improper Base Primary External Airlock"
-	icon_state = "A"
-
-/area/map_template/facolony/armory
-	name = "\improper Ship Armory"
-	icon_state = "A"
-
-/area/map_template/facolony/bathroom
-	name = "\improper Base Lavatory"
-	icon_state = "A"
-
-/area/map_template/facolony/dorms
-	name = "\improper Base Dormitories"
-	icon_state = "A"
-
-/area/map_template/facolony/engineering
-	name = "\improper Ship Engineering"
-	icon_state = "processing"
-
-/area/map_template/facolony/atmospherics
-	name = "\improper Ship Atmospherics"
-	icon_state = "shipping"
-
-/area/map_template/facolony/atmospherics2
-	name = "\improper Base Atmospherics"
-	icon_state = "shipping"
-
-/area/map_template/facolony/cargo
-	name = "\improper Ship Mid Cargo Area"
-	icon_state = "A"
-
-/area/map_template/facolony/cargo2
-	name = "\improper Ship Aft Cargo Area"
-	icon_state = "A"
-
-/area/map_template/facolony/cargohatch
-	name = "\improper Ship Cargo Hatch"
-	icon_state = "B"
-
-/area/map_template/facolony/unspecified
-	name = "\improper Unspecified Compartment"
-	icon_state = "A"
-
-/area/map_template/facolony/tcomms
-	name = "\improper Base Telecommunications"
-	icon_state = "B2"
-
-/area/map_template/facolony/medbay
-	name = "\improper Ship Infirmary"
-	icon_state = "A"
-
-/area/map_template/facolony/surgery
-	name = "\improper Ship Operating Theatre"
-	icon_state = "A"
-
-/area/map_template/facolony/messhall
-	name = "\improper Ship Mess Hall"
-	icon_state = "B"
-
-/area/map_template/facolony/mineralprocessing
-	name = "\improper Base Mining Site"
-	icon_state = "A"
-
-/area/map_template/facolony/science
-	name = "\improper Base R&D"
-	icon_state = "A"
-
-/area/map_template/facolony/warehouse
-	name = "\improper Base warehouse"
-	icon_state = "shipping"
-
-/area/map_template/facolony/outsidewarehouse
-	name = "\improper Trade Zone warehouse"
-	icon_state = "shipping"
-
-/area/map_template/facolony/tradezone
-	name = "\improper Trade Zone"
-	icon_state = "shipping"
-
 /obj/item/card/id/facolony
 	name = "Crew access card"
 	desc = "Old worn-out access card."
@@ -361,3 +274,92 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	info = {"
 	<tt><font face='Verdana' color='black'><center><img src='falogo.png'><br><b><large>Сообщение от<br>Передовой Базы 'Кельпи'<br>Объединённой Флотилии</large></b></center><hr><font size='1'><b>Форма:</b> СС-UFCO-COMFA<br><b>Объект:</b> <u>ПБ 'Кельпи'</u><br><b>Отправитель:</b> <u>Агент Дальней Связи Смотритель 'Джаред'</u><br><b>Подпись:</b> <u><i>J-R-D</i></u><br><b>Время:</b> <u>\[time\]</u><br><b>Дата:</b> <u>\[date\]</u></font><hr><font size='1'><b>Объект-получатель:</b> <u>IPV 'Celeste Hauler'</u><br><b>Адресат:</b> <u>B.R. \[date\]</u></font><hr><center><b>Сообщение</b></center>Приветствуем вас, Блокадники!<br>Мы рады наблюдать, что операция по изъятию активов завершилась успешно.<br><br>Судя по вашим отчётам, у тягача был внушительный запас ресурсов, включая добытое вами дополнительно, — поэтому развёрнутый торговый пункт держится стабильно. У вас остаётся несколько незаконченных секций базы — нам не терпится узнать, под что вы их оборудуете.<br><br>Однако, как бы хорошо вам сейчас ни жилось, помните, ради чего вы пошли на этот угон.<br>Блокада, поддерживаемая оккупантами из ЦПСС, всё ещё действует, а значит, на ваших плечах лежит задача добывать ресурсы максимально широкого спектра: от материалов и медикаментов — до вооружения и сложных технологий. Место, где вы сейчас находитесь, — важный узел будущей торговли между империалистическими государствами: в частности, оно расположено у границ Скрелльской Империи.<br><br>Корабли Ассамблеи, Конфедерации, Позитронного союза, а также суда частных лиц и компаний будут проходить через вас. Ваша задача — извлечь максимум прибыли: торгуйте найденными предметами, обменивайтесь информацией и прокладывайте маршруты тем, кто ищет свободу от цепей империалистов.<br><br>Важно помнить об осторожности. Не доверяйте каждому встречному — ориентируйтесь на систему медалей и проверенные каналы. Если солдаты ЦПСС установят вашу связь с Альянсом Фронтира, всё закончится мгновенно. Не допускайте их граждан вглубь территории и тем более не раскрывайте секретные помещения. Держитесь легенды независимых предпринимателей и колонистов.<br><br>ГКК не наш прямой противник, но и не союзник; не стоит верить им лишь потому, что они по другую сторону баррикад от Ассамблеи. Если ЦПСС перейдёт к открытому давлению, солдаты ГКК, скорее всего, попытаются усыпить вашу бдительность сладкими речами. Не поддавайтесь и не раскрывайте ничего сверх легенды.<br><br>Блокада никуда не делась. Её прорыв — на плечах Блокадных Беглецов. Сделайте всё, чтобы наш дом не знал голода.<br><br><center><b>Конец сообщения</b></center><hr><center><b>МП</b></center><hr><font size='1'><i>*Данная форма документа обязательно должна подтверждаться подписью или печатью ответственного лица. В случае наличия опечаток и отсутствия подписей или печатей документ считается недействительным;<br>*Получатель(и) данной трансляции сообщения подтверждает(ют), что он(она/они) несут ответственность за любой ущерб, который может возникнуть в результате игнорирования приведённых здесь директив или рекомендаций;<br>*Все отчёты должны храниться конфиденциально их предполагаемым получателем и любой соответствующей стороной. Несанкционированное распространение данного сообщения может привести к дисциплинарным взысканиям.</i></font></font></tt>
 	"}
+
+/// AREAS ///
+
+/area/map_template/facolony
+	req_access = list(access_facolony)
+
+/area/map_template/facolony/command
+	name = "\improper IPV Celeste Hauler - Bridge"
+	icon_state = "A"
+
+/area/map_template/facolony/airlock
+	name = "\improper Base Primary External Airlock"
+	icon_state = "A"
+
+/area/map_template/facolony/armory
+	name = "\improper Ship Armory"
+	icon_state = "A"
+
+/area/map_template/facolony/bathroom
+	name = "\improper Base Lavatory"
+	icon_state = "A"
+
+/area/map_template/facolony/dorms
+	name = "\improper Base Dormitories"
+	icon_state = "A"
+
+/area/map_template/facolony/engineering
+	name = "\improper Ship Engineering"
+	icon_state = "processing"
+
+/area/map_template/facolony/atmospherics
+	name = "\improper Ship Atmospherics"
+	icon_state = "shipping"
+
+/area/map_template/facolony/atmospherics2
+	name = "\improper Base Atmospherics"
+	icon_state = "shipping"
+
+/area/map_template/facolony/cargo
+	name = "\improper Ship Mid Cargo Area"
+	icon_state = "A"
+
+/area/map_template/facolony/cargo2
+	name = "\improper Ship Aft Cargo Area"
+	icon_state = "A"
+
+/area/map_template/facolony/cargohatch
+	name = "\improper Ship Cargo Hatch"
+	icon_state = "B"
+
+/area/map_template/facolony/unspecified
+	name = "\improper Unspecified Compartment"
+	icon_state = "A"
+
+/area/map_template/facolony/tcomms
+	name = "\improper Base Telecommunications"
+	icon_state = "B2"
+
+/area/map_template/facolony/medbay
+	name = "\improper Ship Infirmary"
+	icon_state = "A"
+
+/area/map_template/facolony/surgery
+	name = "\improper Ship Operating Theatre"
+	icon_state = "A"
+
+/area/map_template/facolony/messhall
+	name = "\improper Ship Mess Hall"
+	icon_state = "B"
+
+/area/map_template/facolony/mineralprocessing
+	name = "\improper Base Mining Site"
+	icon_state = "A"
+
+/area/map_template/facolony/science
+	name = "\improper Base R&D"
+	icon_state = "A"
+
+/area/map_template/facolony/warehouse
+	name = "\improper Base warehouse"
+	icon_state = "shipping"
+
+/area/map_template/facolony/outsidewarehouse
+	name = "\improper Trade Zone warehouse"
+	icon_state = "shipping"
+
+/area/map_template/facolony/tradezone
+	name = "\improper Trade Zone"
+	icon_state = "shipping"
