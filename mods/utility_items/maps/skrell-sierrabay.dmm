@@ -1497,6 +1497,13 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/paper{
+	name = "Semi-Auto Docking Mode";
+	language = "Skrellian";
+	info = "<h1>Использование полуавтоматического режима стыковки</h1><list><*>Активировать режим Override на контроллере дока;<*>Принудительно открыть внутренний и внешний шлюзы дока;<*>Деактивировать режим Override на контроллере дока;<*>Активировать режим Override на контроллере шаттла;<*>Принудительно открыть внутренний и внешний шлюзы шаттла;<*>Деактивировать режим Override на контроллере шаттла.</list>После выполнения действий все контроллеры перейдут в статус <b>DOCKED</b>.Последующая отстыковка будет выполнена автоматически.";
+	pixel_x = 7;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/command/armory)
 "fb" = (
@@ -3184,13 +3191,11 @@
 /obj/structure/window/boron_reinforced{
 	dir = 4
 	},
+/obj/item/melee/energy/machete,
+/obj/item/melee/energy/machete,
+/obj/item/melee/energy/machete,
+/obj/item/melee/energy/machete,
 /obj/floor_decal/industrial/outline/red,
-/obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell,
-/obj/item/clothing/head/helmet/skrell,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "kj" = (
@@ -4594,9 +4599,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/melee/energy/machete,
-/obj/item/melee/energy/machete,
-/obj/item/melee/energy/machete,
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/robotics)
 "yN" = (
