@@ -226,7 +226,7 @@
 		/obj/item/device/tape/random
 	)
 
-/obj/structure/closet/secure_closet/guncabinet/farfleet/equipment
+/obj/structure/closet/secure_closet/guncabinet/infarfleet
 	name = "Armory Equipment"
 	req_access = list(access_away_iccgn_captain)
 
@@ -235,6 +235,24 @@
 		/obj/item/clothing/accessory/storage/holster/thigh = 4,
 		/obj/item/gun/projectile/pistol/optimus = 4,
 		/obj/item/ammo_magazine/pistol/double = 4
+	)
+
+/obj/structure/closet/secure_closet/guncabinet/farfleet/laser/WillContain()
+	return list(
+		/obj/item/gun/energy/laser/bonfire = 2,
+		/obj/item/gun/energy/ionrifle/small/stupor = 2
+	)
+
+/obj/structure/closet/secure_closet/guncabinet/farfleet/grenader/WillContain()
+	return list(
+		/obj/item/gun/launcher/grenade = 1,
+		/obj/item/storage/box/fragshells = 2
+	)
+
+/obj/structure/closet/secure_closet/guncabinet/farfleet/jaguar/WillContain()
+	return list(
+		/obj/item/gun/projectile/automatic/jaguar = 4,
+		/obj/item/storage/box/ammo/jaguar = 4
 	)
 
 	////////

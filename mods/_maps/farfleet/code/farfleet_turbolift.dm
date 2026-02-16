@@ -1,5 +1,6 @@
 /datum/shuttle/autodock/ferry/farfleet_lift
 	name = "Gunboat Cargo Lift"
+	defer_initialisation = TRUE
 	shuttle_area = /area/turbolift/farfleet_lift
 	warmup_time = 3
 	waypoint_station = "nav_farfleet_lift_top"
