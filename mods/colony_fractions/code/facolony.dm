@@ -257,7 +257,6 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	return list(
 		/obj/item/clothing/suit/armor/pcarrier/troops_colony = 4,
 		/obj/item/clothing/head/helmet = 4,
-		/obj/item/clothing/mask/balaclava = 4,
 		/obj/item/clothing/accessory/storage/holster/hip = 4,
 		/obj/item/shield/riot/metal = 1
 	)
@@ -279,6 +278,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	return list(
 		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8,
 		/obj/item/clothing/under/fa/vacsuit/facolony/warden = 1,
+		/obj/item/clothing/mask/balaclava = 8,
 		/obj/item/clothing/accessory/storage/webbing_large = 2
 	)
 
