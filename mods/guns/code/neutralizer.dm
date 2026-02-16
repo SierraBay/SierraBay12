@@ -13,7 +13,6 @@
 /obj/item/projectile/bullet/electrode/on_hit(atom/target, blocked, def_zone = null)
 	. = ..()
 	if(blocked < 100 && istype(target, /mob/living/carbon/human))
-		var/obj/item/organ/external/E = get_organ(def_zone)
 		var/mob/living/carbon/human/H = target
 		if(H.should_have_organ(BP_EYES))
 			var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[BP_EYES]
