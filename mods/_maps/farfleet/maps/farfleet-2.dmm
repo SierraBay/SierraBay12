@@ -346,7 +346,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock{
-	name = "Hydroponics"
+	name = "Hydroponics";
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -685,7 +687,9 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock/security{
 	name = "Security Wing";
-	secured_wires = 1
+	secured_wires = 1;
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1427,7 +1431,9 @@
 /area/ship/farfleet/crew/brig)
 "il" = (
 /obj/machinery/door/airlock{
-	name = "Head"
+	name = "Head";
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2127,7 +2133,9 @@
 	id_tag = "prisonentry_2";
 	name = "Cell Two";
 	req_access = list("ACCESS_ICCGN");
-	autoset_access = 0
+	autoset_access = 0;
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2207,10 +2215,6 @@
 	pixel_y = -24
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
 /obj/structure/closet/crate,
 /obj/random/advdevice,
 /obj/random/advdevice,
@@ -3109,7 +3113,9 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock{
 	id_tag = "showerpc";
-	name = "Toilet"
+	name = "Toilet";
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
@@ -3273,6 +3279,7 @@
 /obj/item/storage/box/lights,
 /obj/structure/closet/crate,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light/small,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/storage)
 "td" = (
@@ -3823,10 +3830,6 @@
 /area/ship/farfleet/crew/hydroponics)
 "vR" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
 /obj/item/storage/box/canned_tomato,
 /obj/item/storage/box/canned_spinach,
 /obj/item/storage/box/canned_berries,
@@ -3888,11 +3891,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/multi_tile/glass/terran{
-	name = "Canteen"
-	},
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
+	},
+/obj/machinery/door/airlock/multi_tile/glass/terran{
+	name = "Canteen"
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/cryo)
@@ -5007,7 +5010,9 @@
 	id_tag = "prisonentry_1";
 	name = "Cell One";
 	req_access = list("ACCESS_ICCGN");
-	autoset_access = 0
+	autoset_access = 0;
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -6280,6 +6285,9 @@
 	dir = 8
 	},
 /obj/structure/titan_largecrate/food/mre,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/maintenance/storage)
 "JA" = (
@@ -6821,7 +6829,9 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/airlock{
 	id_tag = "toiletpc";
-	name = "Shower"
+	name = "Shower";
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
@@ -7443,6 +7453,10 @@
 	pixel_x = -24;
 	dir = 4
 	},
+/obj/item/book/manual/chef_recipes{
+	pixel_y = 0;
+	pixel_x = 0
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/farfleet/crew/kitchen)
 "Rv" = (
@@ -7878,11 +7892,19 @@
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "TH" = (
-/obj/item/book/manual/chef_recipes{
-	pixel_y = 0;
-	pixel_x = 0
-	},
 /obj/structure/table/marble,
+/obj/item/reagent_containers/food/condiment/ketchup{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/condiment/mayo{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/condiment/barbecue{
+	pixel_x = 0;
+	pixel_y = 8
+	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/farfleet/crew/kitchen)
 "TL" = (
@@ -8450,7 +8472,9 @@
 /obj/machinery/door/airlock/glass/security{
 	name = "Briefing Room";
 	autoset_access = 0;
-	req_access = list("ACCESS_ICCGN")
+	req_access = list("ACCESS_ICCGN");
+	door_color = "#3e4855";
+	stripe_color = "#9d2300"
 	},
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
@@ -8471,32 +8495,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/crew/brig/interrogation)
-"Wt" = (
-/obj/paint/dark_gunmetal,
-/obj/structure/wall_frame/standard,
-/obj/structure/table/marble,
-/obj/machinery/door/blast/shutters{
-	id_tag = "cafe_farfleet";
-	name = "Cafe Shutters";
-	dir = 8
-	},
-/obj/machinery/door/firedoor{
-	req_access = list("ACCESS_ICCGN")
-	},
-/obj/item/reagent_containers/food/condiment/ketchup{
-	pixel_x = -6;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/food/condiment/mayo{
-	pixel_x = 6;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/food/condiment/barbecue{
-	pixel_x = 0;
-	pixel_y = 8
-	},
-/turf/simulated/floor/plating,
-/area/ship/farfleet/crew/kitchen)
 "Wx" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 8
@@ -14887,7 +14885,7 @@ gR
 jx
 wd
 wd
-Wt
+aT
 aT
 fS
 wd
