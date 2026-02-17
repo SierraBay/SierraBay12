@@ -1,10 +1,12 @@
 /obj/item/mech_component
 	icon = 'mods/mechs_by_shegar/icons/mech_parts_held.dmi'
-	w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_GARGANTUAN
 	gender = PLURAL
 	color = COLOR_GUNMETAL
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
-	anchored = TRUE //Часть меха нешуточно тяжёлые, кто их вообще сможет утащить?
+//	anchored = TRUE //Часть меха нешуточно тяжёлые, кто их вообще сможет утащить?
+
+	throw_range = 1
 
 	var/on_mech_icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	var/exosuit_desc_string
@@ -44,7 +46,7 @@
 	///Обозначает вес компонента в КИЛОГРАММАХ
 	var/weight = 100
 	//Можно ли взять часть в руки
-	var/can_be_pickuped = FALSE
+//	var/can_be_pickuped = FALSE
 	///Модификатор урона по части, когда она принимает урон лицевой стороной
 	var/front_modificator_damage = 1
 	///Модификатор урона по части, когда она принимает урон задней стороной
@@ -72,6 +74,36 @@
 	var/emp_heat_generation = 50
 	var/list/whitelist_equipment_paths = list()
 
+	/// Замедление при переноске
+	var/slowdown_held = 6 // Yes, you can carry it. But this thing is cumbersome.
+
+/obj/item/mech_component/Initialize()
+	slowdown_per_slot[slot_l_hand] =  slowdown_held
+	slowdown_per_slot[slot_r_hand] =  slowdown_held
+
+	. = ..()
+
+/obj/item/mech_component/attack_hand(mob/user)
+	.=..()
+	if(user.mob_size >= MOB_LARGE)
+		to_chat(user, SPAN_NOTICE("You casually lift \the [src] without paying attention to its weight."))
+	if(user.mob_size == MOB_MEDIUM)
+		user.adjust_stamina(-25)
+		to_chat(user, SPAN_WARNING("You bend when you lift heavy \the [src]."))
+	if(user.mob_size <= MOB_SMALL)
+		user.adjust_stamina(-50)
+		to_chat(user, SPAN_WARNING("You can barely stand under the weight of \the [src]."))
+
+
+/obj/item/mech_component/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
+	if(!CanMouseDrop(over_atom, usr))
+		return
+	if(istype(over_atom, /obj/structure/heavy_vehicle_frame))
+		var/obj/structure/heavy_vehicle_frame/input_frame = over_atom
+		input_frame.use_tool(src, usr)
+	.=..()
+
+/*
 /obj/item/mech_component/attack_hand(mob/user)
 	if(!can_be_pickuped)
 		to_chat(user, SPAN_BAD("Этот предмет слишком тяжел, чтобы перемещать его в одиночку"))
@@ -113,6 +145,7 @@
 		haul_turf = null
 	else
 		haul_turf = null
+*/
 
 /obj/item/mech_component/proc/update_component_owner()
 	if(ismech(loc))

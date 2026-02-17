@@ -94,11 +94,10 @@
 /datum/hivemind_sdp/champion/execute()
 	. = ..()
 	var/list/places_to_spawn = list()
-	for(var/turf/T in orange(2, master))
-		if(!T.density || !locate(/obj/structure/wall_frame) in T)
-			for(var/obj/O in T)
-				if(!O.CanPass(master, T))
-					continue
+	for(var/turf/T in orange(1, master))
+		if(istype(T,/turf/space)) continue
+		if(T.density) continue
+		if(locate(/obj/structure/wall_frame) in T) continue
 		places_to_spawn.Add(T)
 	if(!LAZYLEN(places_to_spawn))
 		places_to_spawn.Add(get_turf(master))

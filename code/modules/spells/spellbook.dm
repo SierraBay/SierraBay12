@@ -133,25 +133,27 @@ var/global/list/artefact_feedback = list(/obj/structure/closet/wizard/armor = 		
 					if(Sp_CHARGES)
 						type = "C"
 				info += SPAN_COLOR("#33cc33", type)
-			dat += "<a href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]]'>[name]</a>"
+			dat += "<A href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]]'>[name]</a>"
 			if(length(info))
 				dat += " ([info])"
 			dat += " ([spellbook.spells[spellbook.spells[i]]] spell slot[spellbook.spells[spellbook.spells[i]] > 1 ? "s" : "" ])"
 			if(spellbook.book_flags & CAN_MAKE_CONTRACTS)
-				dat += " <a href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]];contract=1;'>Make Contract</a>"
+				dat += " <A href='byond://?src=\ref[src];path=\ref[spellbook.spells[i]];contract=1;'>Make Contract</a>"
 			dat += "<br><i>[desc]</i><br><br>"
 		dat += "<br>"
-		dat += "<center><a href='byond://?src=\ref[src];reset=1'>Re-memorize your spellbook.</a></center>"
+		dat += "<center><A href='byond://?src=\ref[src];reset=1'>Re-memorize your spellbook.</a></center>"
 		if(spellbook.book_flags & INVESTABLE)
 			if(investing_time)
 				dat += "<center><b>Currently investing in a slot...</b></center>"
 			else
-				dat += "<center><a href='byond://?src=\ref[src];invest=1'>Invest a Spell Slot</a><br><i>Investing a spellpoint will return two spellpoints back in 15 minutes.<br>Some say a sacrifice could even shorten the time...</i></center>"
+				dat += "<center><A href='byond://?src=\ref[src];invest=1'>Invest a Spell Slot</a><br><i>Investing a spellpoint will return two spellpoints back in 15 minutes.<br>Some say a sacrifice could even shorten the time...</i></center>"
 		if(!(spellbook.book_flags & NOREVERT))
-			dat += "<center><a href='byond://?src=\ref[src];book=1'>Choose different spellbook.</a></center>"
+			dat += "<center><A href='byond://?src=\ref[src];book=1'>Choose different spellbook.</a></center>"
 		if(!(spellbook.book_flags & NO_LOCKING))
-			dat += "<center><a href='byond://?src=\ref[src];lock=1'>[spellbook.book_flags & LOCKED ? "Unlock" : "Lock"] the spellbook.</a></center>"
-	show_browser(user, dat,"window=spellbook")
+			dat += "<center><A href='byond://?src=\ref[src];lock=1'>[spellbook.book_flags & LOCKED ? "Unlock" : "Lock"] the spellbook.</a></center>"
+	var/datum/browser/popup = new(user, "spellbook", name, 340, 540)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/spellbook/CanUseTopic(mob/living/carbon/human/H)
 	if(!istype(H))
