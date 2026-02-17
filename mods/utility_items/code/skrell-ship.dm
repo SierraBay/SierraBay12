@@ -65,3 +65,10 @@
 /mob/living/simple_animal/friendly/frog/skrells_frog
 	name = "Kro-krri"
 	desc = "An unusual creature that looks like a frog, it looks sad."
+
+/obj/item/paper/skrell/ssvsdocking
+	name = "SSV-S Semi-Auto Docking Procedure"
+	language = "Skrellian"
+	info = {"
+	<tt><font face='Verdana' color='black'><center><b><span style='font-size:18px'>Использование полуавтоматического режима стыковки</span></b></center><ul><li>Активировать режим Override на контроллере дока;</li><li>Принудительно открыть внутренний и внешний шлюзы дока;</li><li>Деактивировать режим Override на контроллере дока;</li><li>Повторить процедуру с контроллерами шаттла.</li></ul>После выполнения действий все контроллеры перейдут в статус <b>DOCKED</b>.<br>Последующая отстыковка будет выполнена автоматически.</font></tt>
+	"}
