@@ -482,9 +482,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "bW" = (
@@ -942,7 +944,7 @@
 	},
 /obj/machinery/button/blast_door{
 	id_tag = "facolony3_entryairlock";
-	name = "North Entry blast door-control";
+	name = "North Entry Blasts";
 	pixel_x = 6;
 	pixel_y = 24;
 	req_access = list("ACCESS_FACOLONY")
@@ -1296,14 +1298,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
-"fD" = (
-/obj/floor_decal/corner/b_green/border,
-/obj/machinery/suit_storage_unit/engineering/salvage{
-	name = "Suit Storage Unit";
-	req_access = newlist()
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/cargo2)
 "fE" = (
 /obj/random/drinkbottle,
 /obj/random/drinkbottle,
@@ -1901,7 +1895,6 @@
 /area/map_template/facolony/airlock)
 "iw" = (
 /obj/machinery/suit_cycler{
-	name = "Suit Cycler Unit";
 	req_access = list()
 	},
 /turf/simulated/floor/tiled/steel_grid,
@@ -2121,7 +2114,6 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/suit_cycler{
-	name = "Colonial suit cycler";
 	req_access = list()
 	},
 /turf/simulated/floor/tiled/steel_grid,
@@ -2205,7 +2197,7 @@
 	pixel_y = 6;
 	pixel_x = -8;
 	id_tag = "facolony_main_windows";
-	name = "General window-shields";
+	name = "General Window Shields";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -3136,7 +3128,7 @@
 	},
 /obj/machinery/button/blast_door{
 	id_tag = "facolony2_entryairlock";
-	name = "South Entry blast door-control";
+	name = "South Entry Blastsl";
 	dir = 1;
 	pixel_x = 6;
 	pixel_y = -24;
@@ -3255,9 +3247,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "os" = (
@@ -3379,10 +3371,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/structure/catwalk,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "oP" = (
@@ -3823,6 +3817,7 @@
 "qT" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/random/trash,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
 "qU" = (
@@ -4883,7 +4878,7 @@
 	dir = 1;
 	pixel_y = -34;
 	pixel_x = 6;
-	name = "Aft-Starboard Cargo shutters-control";
+	name = "Aft-Starboard Cargo Shutters";
 	id_tag = "facolony_aftstar_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -4891,7 +4886,7 @@
 	dir = 1;
 	pixel_y = -34;
 	pixel_x = -6;
-	name = "Aft-Port Cargo shutters-control";
+	name = "Aft-Port Cargo Shutters";
 	id_tag = "facolony_aftport_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -4899,7 +4894,7 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = -6;
-	name = "Fore-Port Cargo shutters-control";
+	name = "Fore-Port Cargo Shutters";
 	id_tag = "facolony_foreport_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -4907,7 +4902,7 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = 6;
-	name = "Fore-Starboard Cargo shutters-control";
+	name = "Fore-Starboard Cargo Shutters";
 	id_tag = "facolony_forestar_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -4923,7 +4918,8 @@
 /obj/random/contraband,
 /obj/item/card/id/merchant{
 	desc = "this card can be used to access the Colony's telepad to exchange goods.";
-	name = "trade array access card"
+	name = "trade array access card";
+	pixel_x = 16
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
@@ -5143,7 +5139,7 @@
 /obj/machinery/button/blast_door{
 	pixel_y = 24;
 	id_tag = "facolony4_entryairlock";
-	name = "Landing Site Entry blast door-control";
+	name = "Landing Site Entry Blasts";
 	pixel_x = -6;
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -5202,7 +5198,7 @@
 	id_tag = "facolony_shipreactor";
 	pixel_y = -24;
 	pixel_x = -6;
-	name = "Reactor blast door-control";
+	name = "Reactor Shields";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/item/device/scanner/gas,
@@ -5436,7 +5432,7 @@
 	pixel_y = 6;
 	pixel_x = 8;
 	id_tag = "facolony5_entryairlock";
-	name = "Main Entry blast door-control";
+	name = "Main Entry Blasts Lockdown";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /turf/simulated/floor/carpet/blue,
@@ -5761,6 +5757,14 @@
 /obj/item/stack/material/rods,
 /turf/simulated/floor/away,
 /area/template_noop)
+"zh" = (
+/obj/floor_decal/corner/b_green/border,
+/obj/machinery/suit_storage_unit/engineering/salvage{
+	name = "Suit Storage Unit";
+	req_access = newlist()
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/cargo2)
 "zi" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -6707,12 +6711,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/catwalk,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "DS" = (
@@ -6888,7 +6892,7 @@
 /obj/machinery/button/blast_door{
 	pixel_y = 24;
 	id_tag = "facolony_trade_personnel_entry";
-	name = "Trade Zone Crew Entry blast door";
+	name = "Trade Zone Crew Entry Blasts";
 	pixel_x = -6;
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -6907,14 +6911,14 @@
 	pixel_y = 24;
 	pixel_x = 6;
 	id_tag = "facolony_trade_entry_way";
-	name = "Entry Way shutters control";
+	name = "Entry Way Direction Shutters";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/machinery/button/blast_door{
 	pixel_y = 34;
 	pixel_x = -6;
 	id_tag = "facolony_trade_windows";
-	name = "Trade Zone blasts window-control";
+	name = "Trade Zone Window Shields";
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/catwalk,
@@ -8129,7 +8133,7 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = -6;
-	name = "Aft Segment Cargo shutters-control";
+	name = "Aft Cargo Segment Shutters";
 	id_tag = "facolony_aftsegment_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -9170,7 +9174,7 @@
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/button/blast_door{
-	name = "Shutters control";
+	name = "Shutters Control";
 	id_tag = "facolony_shipmed";
 	pixel_y = 24;
 	pixel_x = -8;
@@ -9195,9 +9199,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "Qy" = (
-/obj/structure/catwalk,
-/obj/machinery/atmospherics/pipe/simple/visible/universal,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "QA" = (
@@ -10786,7 +10792,7 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = -6;
-	name = "Fore window-shields";
+	name = "Fore Window Shields";
 	id_tag = "facolony_bridge_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -10794,7 +10800,7 @@
 	dir = 1;
 	pixel_y = -24;
 	pixel_x = 6;
-	name = "Deck window-shields";
+	name = "Deck Window Shields";
 	id_tag = "facolony_deck_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -10802,7 +10808,7 @@
 	dir = 1;
 	pixel_y = -34;
 	pixel_x = 6;
-	name = "Aft Exit blast door-control";
+	name = "Aft Exit Blasts";
 	id_tag = "facolony_aft_exit_blasts";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -10810,7 +10816,7 @@
 	dir = 1;
 	pixel_y = -34;
 	pixel_x = -6;
-	name = "Armory Access door-control";
+	name = "Armory Access";
 	id_tag = "facolony_armory_shutter";
 	req_access = list("ACCESS_FACOLONY")
 	},
@@ -11001,14 +11007,11 @@
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump/on{
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 10
-	},
 /obj/structure/catwalk,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "YM" = (
@@ -12150,7 +12153,7 @@ XX
 tb
 iy
 kn
-fD
+zh
 MJ
 ip
 pk
@@ -12193,7 +12196,7 @@ fY
 rr
 Xt
 Xt
-fD
+zh
 MJ
 ip
 Lo
