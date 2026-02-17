@@ -6,7 +6,6 @@
 	name =  "\improper Salvage Gantry"
 	id = "awaysite_gantry"
 	description = "Salvage Gantry turned Ship"
-	prefix = "mods/_maps/general_maps/maps/"
 	suffixes = list("scavver/scavver_gantry-1.dmm","scavver/scavver_gantry-2.dmm")
 	spawn_cost = 1
 	player_cost = 4
