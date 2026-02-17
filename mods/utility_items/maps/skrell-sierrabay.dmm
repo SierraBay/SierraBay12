@@ -109,9 +109,14 @@
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "ay" = (
-/obj/machinery/shield_diffuser,
-/turf/simulated/floor/plating,
-/area/ship/skrellscoutship/robotics)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/tiled/skrell/orange,
+/area/ship/skrellscoutship/maintenance/atmos)
 "az" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2273,7 +2278,7 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/labs)
 "hv" = (
-/obj/machinery/computer/modular/preset/munitions/skrell,
+/obj/machinery/computer/modular/preset/navigation,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "hx" = (
@@ -2302,7 +2307,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_2"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "hE" = (
@@ -4576,7 +4580,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_4"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "yF" = (
@@ -4731,15 +4734,6 @@
 	},
 /turf/simulated/floor/tiled/skrell/blue,
 /area/ship/skrellscoutship/crew/quarters)
-"Aa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/skrell/orange,
-/area/ship/skrellscoutship/maintenance/atmos)
 "Ac" = (
 /obj/wallframe_spawn/reinforced_phoron/hull,
 /obj/machinery/door/blast/regular/open{
@@ -5006,7 +5000,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_1"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "CX" = (
@@ -5165,7 +5158,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_6"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "FY" = (
@@ -5243,7 +5235,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_5"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "HG" = (
@@ -6649,10 +6640,6 @@
 /obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/skrell/orange,
 /area/ship/skrellscoutship/maintenance/atmos)
-"XN" = (
-/obj/machinery/shield_diffuser,
-/turf/simulated/floor/plating,
-/area/ship/skrellscoutship/dock)
 "XT" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -6728,7 +6715,6 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_3"
 	},
-/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "Zn" = (
@@ -12512,7 +12498,7 @@ Gw
 Gw
 Gw
 Gw
-XN
+Gw
 FX
 HM
 UG
@@ -12554,7 +12540,7 @@ xQ
 Jm
 lE
 YN
-ay
+Gw
 Gw
 Gw
 Gw
@@ -13748,7 +13734,7 @@ LI
 ad
 iw
 ac
-Aa
+ay
 Fk
 LV
 LV
@@ -13850,7 +13836,7 @@ aj
 ak
 ac
 ac
-Aa
+ay
 Fk
 LV
 Le
