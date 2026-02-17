@@ -346,39 +346,13 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "bD" = (
-/obj/structure/table/rack,
 /obj/floor_decal/corner/black/half{
 	dir = 1
-	},
-/obj/item/storage/belt/holster/security/tactical,
-/obj/item/storage/belt/holster/security/tactical,
-/obj/item/storage/belt/holster/security/tactical,
-/obj/item/storage/belt/holster/security/tactical,
-/obj/item/clothing/glasses/night{
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/night{
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/night{
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/night{
-	pixel_y = 5
 	},
 /obj/structure/sign/double/faflag/left{
 	pixel_y = 24
 	},
-/obj/item/handcuffs,
-/obj/item/handcuffs,
-/obj/item/clothing/accessory/storage/webbing_large{
-	pixel_x = 6;
-	pixel_y = -8
-	},
-/obj/item/clothing/accessory/storage/webbing_large{
-	pixel_x = 6;
-	pixel_y = -8
-	},
+/obj/structure/closet/facolony/vacsuits,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "bE" = (
@@ -11107,7 +11081,33 @@
 /obj/structure/sign/double/faflag/right{
 	pixel_y = 24
 	},
-/obj/structure/closet/facolony/vacsuits,
+/obj/structure/table/rack,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/handcuffs,
+/obj/item/handcuffs,
+/obj/item/clothing/glasses/night{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/night{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/night{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/night{
+	pixel_y = 5
+	},
+/obj/item/clothing/accessory/storage/webbing_large{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/clothing/accessory/storage/webbing_large{
+	pixel_x = 6;
+	pixel_y = -8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Zw" = (
