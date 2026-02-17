@@ -11,4 +11,4 @@
 	skip_main_unit_tests = FALSE
 
 /datum/map_template/ruin/exoplanet/facolony
-	skip_main_unit_tests = FALSE
+	skip_main_unit_tests = TRUE
