@@ -1497,6 +1497,10 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/paper/skrell/ssvsdocking{
+	pixel_x = 7;
+	pixel_y = 32
+	},
 /turf/simulated/floor/tiled/skrell/green,
 /area/ship/skrellscoutship/command/armory)
 "fb" = (
