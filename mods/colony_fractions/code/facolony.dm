@@ -17,7 +17,7 @@
 		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
 		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
-	spawn_weight = 0.7
+	spawn_weight = 1
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
