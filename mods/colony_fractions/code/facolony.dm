@@ -29,6 +29,11 @@
 		/datum/job/submap/facolony/colonist/leader
 	)
 
+var/global/const/access_facolony = "ACCESS_FACOLONY"
+
+/datum/access/facolony
+	id = access_facolony
+
 /singleton/hierarchy/outfit/job/facolony
 	name = OUTFIT_JOB_NAME("facolony")
 	id_types = list(/obj/item/card/id/facolony)
@@ -41,6 +46,7 @@
 	info = "You are a colonist living on the rim of explored space. Keep the outpost running and protect its interests."
 	total_positions = 3
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	is_semi_antagonist = TRUE
 	max_skill = list(
 		SKILL_COMBAT		= SKILL_EXPERIENCED,
 		SKILL_WEAPONS		= SKILL_EXPERIENCED
@@ -48,9 +54,10 @@
 
 /datum/job/submap/facolony/colonist/leader
 	title = "Ship Captain"
-	info = "You are a Colonist Leader, living on the rim of the explored space. Control your colony and defend its interests."
+	info = "Вы — Лидер одной из ячеек Блокадных Беглецов Альянса Фронтира. Развивайте торговый пункт, проводите сделки, обменивайтесь информацией и прокладывайте маршруты для тех, кто ищет свободу от империалистических цепей. Придерживайтесь легенды, не раскрывайте истинных мотивов кому попало, особенно оккупантам из ЦПСС. И вы уже придумали, что будете делать с угнанным тягачом?"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	is_semi_antagonist = TRUE
 	min_skill = list(
 		SKILL_COMBAT	= SKILL_BASIC,
 		SKILL_WEAPONS	= SKILL_BASIC,
@@ -74,8 +81,10 @@
 /datum/job/submap/facolony/colonist/scientist
 	title = "Systems Technician"
 	supervisors = "Ship Captain"
-	info = "Support the outpost with research and field analysis."
+	info = "Вы — Системный Техник в команде Блокадных Беглецов Альянса Фронтира. Поддерживайте и модифицируйте системы базы, развивайте торговый пункт, проводите сделки, обменивайтесь информацией и прокладывайте маршруты для тех, кто ищет свободу от империалистических цепей. Придерживайтесь легенды, не раскрывайте истинных мотивов кому попало, особенно оккупантам из ЦПСС. И вы уже придумали, что будете делать с угнанным тягачом?"
 	total_positions = 1
+	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	is_semi_antagonist = TRUE
 	min_skill = list(
 		SKILL_DEVICES	= SKILL_TRAINED,
 		SKILL_CONSTRUCTION	= SKILL_BASIC,
@@ -90,8 +99,10 @@
 /datum/job/submap/facolony/colonist/medic
 	title = "Crew Medic"
 	supervisors = "Ship Captain"
-	info = "Keep the outpost alive. Patch people up and handle emergencies."
+	info = "Вы — Врач в команде Блокадных Беглецов Альянса Фронтира. Вытаскивайте товарищей с того света, развивайте торговый пункт, проводите сделки, обменивайтесь информацией и прокладывайте маршруты для тех, кто ищет свободу от империалистических цепей. Придерживайтесь легенды, не раскрывайте истинных мотивов кому попало, особенно оккупантам из ЦПСС. И вы уже придумали, что будете делать с угнанным тягачом?"
 	total_positions = 1
+	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	is_semi_antagonist = TRUE
 	min_skill = list(
 		SKILL_MEDICAL = SKILL_TRAINED,
 		SKILL_CHEMISTRY = SKILL_BASIC,
@@ -107,8 +118,10 @@
 /datum/job/submap/facolony/colonist/engineer
 	title = "Ship Mechanic"
 	supervisors = "Ship Captain"
-	info = "Maintain power, atmos, and repairs to keep the outpost operational."
+	info = "Вы — Инженер в команде Блокадных Беглецов Альянса Фронтира. Поддерживайте работоспособность систем питания и атмоса, развивайте торговый пункт, проводите сделки, обменивайтесь информацией и прокладывайте маршруты для тех, кто ищет свободу от империалистических цепей. Придерживайтесь легенды, не раскрывайте истинных мотивов кому попало, особенно оккупантам из ЦПСС. И вы уже придумали, что будете делать с угнанным тягачом?"
 	total_positions = 2
+	outfit_type = /singleton/hierarchy/outfit/job/facolony
+	is_semi_antagonist = TRUE
 	min_skill = list(
 		SKILL_COMPUTER		= SKILL_BASIC,
 		SKILL_EVA			= SKILL_BASIC,
@@ -144,11 +157,6 @@
 	name = "FA Blockade Runners Outpost"
 	archetype = /singleton/submap_archetype/facolony
 
-var/global/const/access_facolony = "ACCESS_FACOLONY"
-
-/datum/access/facolony
-	id = access_facolony
-
 /obj/item/card/id/facolony
 	name = "Crew access card"
 	desc = "Old worn-out access card."
@@ -168,7 +176,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /obj/structure/closet/facolony/wardrobe/WillContain()
 	return list(
-		/obj/item/clothing/suit/armor/pcarrier/troops_colony = 4,
+		/obj/item/clothing/suit/armor/pcarrier/troops_colony/heavy = 4,
 		/obj/item/clothing/head/helmet = 4,
 		/obj/item/clothing/accessory/storage/holster/hip = 4,
 		/obj/item/shield/riot/metal = 1
@@ -189,10 +197,10 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 
 /obj/structure/closet/facolony/vacsuits/WillContain()
 	return list(
-		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8,
+		/obj/item/clothing/accessory/storage/webbing_large = 2,
 		/obj/item/clothing/under/fa/vacsuit/facolony/warden = 1,
 		/obj/item/clothing/mask/balaclava = 8,
-		/obj/item/clothing/accessory/storage/webbing_large = 2
+		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8
 	)
 
 /obj/structure/sign/double/faflag/left
