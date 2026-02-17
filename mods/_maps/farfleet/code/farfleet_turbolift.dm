@@ -1,5 +1,4 @@
 /datum/shuttle/autodock/ferry/farfleet_lift
-	defer_initialisation = TRUE
 	name = "Gunboat Cargo Lift"
 	defer_initialisation = TRUE
 	shuttle_area = /area/turbolift/farfleet_lift
@@ -15,6 +14,7 @@
 	name = "Gunboat Cargo Lift"
 	icon_state = "shuttle3"
 	base_turf = /turf/simulated/open
+	req_access = list(access_away_iccgn)
 
 /obj/shuttle_landmark/lift/farfleet_top
 	name = "Deck 1 - Hangar Deck"
