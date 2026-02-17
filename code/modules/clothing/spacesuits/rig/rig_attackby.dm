@@ -1,3 +1,4 @@
+/* [SIERRA-REMOVE] HARDSUITS
 /obj/item/rig/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(electrified != 0)
 		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
@@ -191,7 +192,7 @@
 		if(module.accepts_item(W,user)) //Item is handled in this proc
 			return TRUE
 	return ..()
-
+*/
 
 /obj/item/rig/attack_hand(mob/user)
 
