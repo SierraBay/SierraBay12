@@ -1,4 +1,5 @@
 /datum/shuttle/autodock/ferry/farfleet_lift
+	defer_initialisation = TRUE
 	name = "Gunboat Cargo Lift"
 	shuttle_area = /area/turbolift/farfleet_lift
 	warmup_time = 3
@@ -10,7 +11,7 @@
 	knockdown = 0
 
 /area/turbolift/farfleet_lift
-	name = "Medical - Morgue Lift"
+	name = "Gunboat Cargo Lift"
 	icon_state = "shuttle3"
 	base_turf = /turf/simulated/open
 
