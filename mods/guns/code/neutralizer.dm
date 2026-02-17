@@ -96,6 +96,8 @@
 		/obj/item/device/flash = 5,
 		/obj/item/reagent_containers/food/snacks/donut/normal = 12,
 		/obj/item/storage/box/evidence = 6,
+		/obj/item/clothing/accessory/badge/holo/NT = 4,
+		/obj/item/clothing/accessory/badge/holo/NT/cord = 4,
 		/obj/item/ammo_casing/battery/high = 12,
 		/obj/item/ammo_casing/battery = 12
 	)
