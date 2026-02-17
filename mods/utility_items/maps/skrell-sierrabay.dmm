@@ -2278,7 +2278,7 @@
 /turf/simulated/floor/tiled/skrell/white,
 /area/ship/skrellscoutship/crew/labs)
 "hv" = (
-/obj/machinery/computer/modular/preset/navigation,
+/obj/machinery/computer/modular/preset/munitions/skrell,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
 "hx" = (
@@ -2307,6 +2307,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_2"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "hE" = (
@@ -3756,6 +3757,10 @@
 /obj/machinery/radio_beacon,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/command/bridge)
+"nA" = (
+/obj/machinery/shield_diffuser,
+/turf/simulated/floor/plating,
+/area/ship/skrellscoutship/dock)
 "nD" = (
 /obj/floor_decal/industrial/outline/red,
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -4580,6 +4585,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_4"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "yF" = (
@@ -5000,6 +5006,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_1"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "CX" = (
@@ -5023,6 +5030,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/skrellscoutship/crew/rec)
+"Dm" = (
+/obj/machinery/shield_diffuser,
+/turf/simulated/floor/plating,
+/area/ship/skrellscoutship/robotics)
 "Ds" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/nitrilegloves,
@@ -5158,6 +5169,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_6"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "FY" = (
@@ -5235,6 +5247,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_5"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/dock)
 "HG" = (
@@ -6715,6 +6728,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "skrell_pod_3"
 	},
+/obj/machinery/shield_diffuser,
 /turf/simulated/floor/tiled/skrell/red,
 /area/ship/skrellscoutship/robotics)
 "Zn" = (
@@ -12498,7 +12512,7 @@ Gw
 Gw
 Gw
 Gw
-Gw
+nA
 FX
 HM
 UG
@@ -12540,7 +12554,7 @@ xQ
 Jm
 lE
 YN
-Gw
+Dm
 Gw
 Gw
 Gw
