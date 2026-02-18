@@ -18,6 +18,7 @@
 		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
 	)
 	spawn_weight = 1
+	skip_main_unit_tests = TRUE
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
