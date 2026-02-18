@@ -4195,7 +4195,10 @@
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/recharger,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/item/device/radio/map_preset/facolony,
+/obj/item/device/radio/map_preset/facolony{
+	pixel_y = 4;
+	pixel_x = 8
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "sQ" = (
@@ -4893,7 +4896,8 @@
 /obj/item/card/id/merchant{
 	desc = "this card can be used to access the Colony's telepad to exchange goods.";
 	name = "trade array access card";
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
@@ -7082,8 +7086,8 @@
 	pixel_y = -24
 	},
 /obj/item/flame/lighter/zippo{
-	pixel_x = 14;
-	pixel_y = 2
+	pixel_x = 16;
+	pixel_y = 4
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
