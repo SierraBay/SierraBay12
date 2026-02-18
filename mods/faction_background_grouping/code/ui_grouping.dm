@@ -70,7 +70,7 @@
 				var/current_fact_key = page_keys[p]
 				. += "<tr><td>"
 				if(!LAZYLEN(grouped_cultures[current_fact_key]))
-					. += "<i>В данной категории нет доступных вариантов для выбранной расов.</i>"
+					. += "<i>В данной категории нет доступных вариантов для выбранной расы.</i>"
 				else
 					for (var/V in grouped_cultures[current_fact_key])
 						var/sanitized_value = html_encode(replacetext(V, "+", "PLUS"))
