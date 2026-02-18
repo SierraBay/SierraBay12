@@ -12,3 +12,9 @@
 
 /datum/map_template/ruin/exoplanet/facolony
 	skip_main_unit_tests = TRUE
+
+/datum/map_template/ruin/exoplanet/playablecolony
+	skip_main_unit_tests = TRUE
+
+/datum/map_template/ruin/exoplanet/playablecolony2
+	skip_main_unit_tests = TRUE
