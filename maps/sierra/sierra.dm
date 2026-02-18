@@ -215,7 +215,7 @@
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
+	// #include "../../mods/contraband_vending/_contraband_vending_includes.dm" // Перенесено в global_modpacks.dm
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
 
@@ -235,7 +235,7 @@
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
 	#include "../../packs/factions/scgf/_pack.dm"
-	#include "../../packs/factions/fa/_pack.dm"
+	// #include "../../packs/factions/fa/_pack.dm" // Перенесено в global_modpacks.dm
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"
 

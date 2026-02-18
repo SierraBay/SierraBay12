@@ -1,3 +1,9 @@
+/datum/category_item/player_setup_item/occupation/open_skill_setup(mob/user, datum/job/job)
+	panel = new(user, "skill-selection", "Skill Selection: [job.title]", 960, 850, src)
+	panel.set_content(generate_skill_content(job))
+	panel.open()
+
+
 /singleton/hierarchy/skill
    	// Names for different skill values, in order from 1 up.
 	levels = list( 		"Необученный"			= "Unskilled Description",
