@@ -16,14 +16,13 @@
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/assault/WillContain()
 	return list(
-		/obj/item/gun/projectile/pistol/m22f = 3,
-		/obj/item/ammo_magazine/machine_pistol = 5,
-		/obj/item/gun/projectile/automatic/machine_pistol = 1
+		/obj/item/storage/box/ammo/solmag = 3,
+		/obj/item/gun/projectile/automatic/sol_smg = 3
 	)
 
 /obj/structure/closet/secure_closet/guncabinet/patrol/carabine/WillContain()
 	return list(
-		/obj/item/ammo_magazine/mil_rifle/heavy = 8,
+		/obj/item/storage/box/ammo/milrifleheavy = 2,
 		/obj/item/gun/projectile/automatic/bullpup_rifle = 2,
 		/obj/item/clothing/accessory/storage/bandolier = 1,
 		/obj/item/gun/projectile/shotgun/pump/combat = 1,
@@ -55,21 +54,22 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
-		/obj/item/clothing/glasses/ballistic,
-		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/glasses/ballistic/security,
 		/obj/item/clothing/accessory/glassesmod/nvg,
-		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/gloves/thick/combat,
-		/obj/item/device/flashlight/maglight,
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/clothing/mask/balaclava,
-		/obj/item/gun/energy/gun,
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/leather/black
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/clothing/suit/armor/pcarrier/tan,
+		/obj/item/clothing/accessory/storage/pouches/tan,
+		/obj/item/clothing/accessory/arm_guards/tan,
+		/obj/item/clothing/accessory/leg_guards/tan,
+		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
+		/obj/item/clothing/accessory/armor_tag/solgov,
+		/obj/item/storage/firstaid/security
 	)
 
 
@@ -83,26 +83,26 @@
 	return list(
 		/obj/item/storage/belt/holster/security/tactical,
 		/obj/item/melee/telebaton,
-		/obj/item/clothing/glasses/hud/security/prot/aviators,
 		/obj/item/clothing/glasses/tacgoggles,
-		/obj/item/clothing/glasses/ballistic,
-		/obj/item/clothing/accessory/glassesmod/vision/polarized,
+		/obj/item/clothing/glasses/ballistic/security,
 		/obj/item/clothing/accessory/glassesmod/nvg,
-		/obj/item/clothing/accessory/storage/black_vest,
-		/obj/item/device/flashlight/maglight,
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/device/megaphone,
-		/obj/item/clothing/mask/balaclava,
+		/obj/item/clothing/accessory/storage/black_drop,
 		/obj/item/clothing/accessory/armor_tag/solgov/com,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
-		/obj/item/clothing/mask/gas/swat,
 		/obj/item/clothing/gloves/wristwatch,
-		/obj/item/gun/energy/gun,
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
-		/obj/item/storage/backpack/satchel/leather/black
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/clothing/accessory/helmet_cover/lead,
+		/obj/item/clothing/suit/armor/pcarrier/tan,
+		/obj/item/clothing/accessory/storage/pouches/tan,
+		/obj/item/clothing/accessory/arm_guards/tan,
+		/obj/item/clothing/accessory/leg_guards/tan,
+		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
+		/obj/item/clothing/accessory/armor_tag/solgov,
+		/obj/item/storage/firstaid/security
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet
@@ -112,8 +112,8 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/clothing/mask/gas,
+		/obj/item/storage/firstaid/security,
+		/obj/item/clothing/mask/gas/half,
 		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/head/beret/solgov/fleet/command,
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
@@ -127,8 +127,8 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/engi/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/clothing/mask/gas,
+		/obj/item/storage/firstaid/security,
+		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
 		/obj/item/clothing/glasses/welding/superior,
@@ -149,13 +149,12 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/med/WillContain()
 	return list(
-		/obj/item/storage/firstaid/sleekstab,
-		/obj/item/clothing/mask/gas,
+		/obj/item/storage/firstaid/security,
+		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/medical,
 		/obj/item/clothing/head/beret/solgov/fleet/medical,
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
-		/obj/item/clothing/glasses/hud/health,
 		/obj/item/clothing/glasses/ballistic/medic,
 		/obj/item/clothing/suit/storage/toggle/labcoat,
 		/obj/item/clothing/gloves/latex/nitrile,
@@ -178,7 +177,7 @@
 		/obj/item/gun/projectile/pistol/m22f,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/accessory/armor_tag/solgov/com,
-		/obj/item/clothing/mask/gas,
+		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/chewables/rollable/rollingkit,
 		/obj/item/storage/fancy/smokable/cigar,
 		/obj/item/flame/lighter/zippo/gunmetal,
@@ -187,7 +186,8 @@
 		/obj/item/clothing/gloves/wristwatch/gold,
 		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
-		/obj/item/clothing/suit/storage/solgov/service/fleet/officer
+		/obj/item/clothing/suit/storage/solgov/service/fleet/officer,
+		/obj/item/storage/firstaid/security
 	)
 
 

@@ -138,3 +138,115 @@
 	icon_state = "army_tempest"
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 	slot = ACCESSORY_SLOT_INSIGNIA
+
+
+	// VoidSuit
+
+/obj/item/rig/military/sentinel
+	name = "military hardsuit control module"
+	desc = "An austere hardsuit used by paramilitary groups and real soldiers alike."
+	icon_state = "military_rig"
+	suit_type = "military hardsuit"
+	armor = list(
+		melee = ARMOR_MELEE_VERY_HIGH,
+		bullet = ARMOR_BALLISTIC_AP,
+		laser = ARMOR_LASER_RIFLES,
+		energy = ARMOR_ENERGY_MINOR,
+		bomb = ARMOR_BOMB_RESISTANT,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_MINOR
+		)
+	offline_vision_restriction = TINT_HEAVY
+
+	chest_type = /obj/item/clothing/suit/space/rig/sentinel
+	helm_type = /obj/item/clothing/head/helmet/space/rig/sentinel
+	boot_type = /obj/item/clothing/shoes/magboots/rig/sentinel
+	glove_type = /obj/item/clothing/gloves/rig/sentinel
+
+/obj/item/clothing/head/helmet/space/rig/sentinel
+	light_overlay = "helmet_light_dual_green"
+	species_restricted = list(SPECIES_HUMAN)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_head_unathi.dmi'
+		)
+
+/obj/item/clothing/suit/space/rig/sentinel
+	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_suit_unathi.dmi'
+		)
+	allowed = list(
+		/obj/item/device/flashlight,
+		/obj/item/tank,
+		/obj/item/ammo_magazine,
+		/obj/item/ammo_casing,
+		/obj/item/handcuffs,
+		/obj/item/device/t_scanner,
+		/obj/item/rcd,
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/device/multitool,
+		/obj/item/device/radio,
+		/obj/item/device/scanner/gas,
+		/obj/item/storage/briefcase/inflatable,
+		/obj/item/melee/baton,
+		/obj/item/gun,
+		/obj/item/storage/firstaid,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/roller_bed,
+		/obj/item/device/suit_cooling_unit
+	)
+
+/obj/item/clothing/shoes/magboots/rig/sentinel
+	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_feet_unathi.dmi'
+		)
+
+/obj/item/clothing/gloves/rig/sentinel
+	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_NOCUFFS
+	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_hands_unathi.dmi'
+		)
+
+/obj/item/rig/military/sentinel
+	initial_modules = list(
+		/obj/item/rig_module/vision/multi/cheap,
+		/obj/item/rig_module/grenade_launcher/light,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/chem_dispenser/combat,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets
+		)
+
+/obj/item/rig/military/sentinel/lead
+	initial_modules = list(
+		/obj/item/rig_module/mounted/energy/egun,
+		/obj/item/rig_module/vision/multi,
+		/obj/item/rig_module/grenade_launcher/light,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/chem_dispenser/combat,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/healthscanner,
+		/obj/item/rig_module/device/rcd
+		)
+
+
+// AmmoBox
+
+/obj/item/storage/box/ammo/solmag
+	name = "box of SolMag"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/smg_sol = 7)
+
+/obj/item/storage/box/ammo/milrifleheavy
+	name = "box of Z8"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/mil_rifle/heavy = 7)
