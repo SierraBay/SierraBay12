@@ -133,7 +133,11 @@
 //Ради Модульности, дублируем сюда все что идет в awayshuttle и accessible_areas
 /obj/machinery/computer/shuttle_control/explore/away_scg_patrol/reaper
 /obj/machinery/computer/shuttle_control/explore/vox_lander
+	skill_req = SKILL_MASTER + 10 // Шаттл в шаттле, лендмарка теряется при посадке, отключение
+
 /obj/machinery/computer/shuttle_control/explore/skrellscoutshuttle
+	skill_req = SKILL_MASTER + 10 // Шаттл в шаттле, лендмарка теряется при посадке, отключение
+
 /obj/machinery/computer/shuttle_control/explore/away_farfleet/snz
 /obj/machinery/computer/shuttle_control/explore/mule
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_one
