@@ -108,6 +108,13 @@
 		/obj/item/stack/material/cyborg/plasteel,
 		/obj/item/device/flash
 	)
+	skills = list(
+		SKILL_ATMOS        = SKILL_MASTER,
+		SKILL_ENGINES      = SKILL_MASTER,
+		SKILL_CONSTRUCTION = SKILL_MASTER,
+		SKILL_ELECTRICAL   = SKILL_MASTER,
+		SKILL_COMPUTER     = SKILL_EXPERIENCED
+	)
 
 /obj/item/robot_module/flying
 	equipment = list(
