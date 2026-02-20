@@ -49,11 +49,15 @@
 	dir = 9;
 	icon_state = "warning"
 	},
-/obj/structure/catwalk,
 /obj/item/device/radio/intercom{
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
+	id_tag = "patrol_dock_airlock_pump";
+	dir = 8
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "an" = (
@@ -61,10 +65,11 @@
 	dir = 5;
 	icon_state = "warning"
 	},
-/obj/structure/catwalk,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
-	id_tag = "patrol_dock_airlock_pump"
+	id_tag = "patrol_dock_airlock_pump";
+	dir = 4
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "ao" = (
@@ -73,7 +78,6 @@
 	icon_state = "0-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/wallframe_spawn/reinforced,
 /obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "patrol_inner_airlock_blast";
@@ -81,6 +85,10 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "ap" = (
@@ -131,18 +139,19 @@
 	master_tag = "patrol_dock_airlock";
 	req_access = list("ACCESS_CAVALRY")
 	},
-/obj/structure/catwalk,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
 	id_tag = "patrol_dock_airlock_pump";
-	dir = 4
+	dir = 8
 	},
+/obj/structure/catwalk,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "as" = (
 /obj/floor_decal/industrial/warning{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden{
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
+	id_tag = "patrol_dock_airlock_pump";
 	dir = 4
 	},
 /obj/structure/catwalk,
@@ -155,7 +164,6 @@
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/dirt,
-/obj/wallframe_spawn/reinforced,
 /obj/paint/dark_gunmetal,
 /obj/machinery/door/blast/regular/open{
 	id_tag = "patrol_inner_airlock_blast";
@@ -163,6 +171,10 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 4
+	},
+/obj/wallframe_spawn/reinforced,
 /turf/simulated/floor,
 /area/ship/patrol/dock)
 "au" = (
@@ -385,29 +397,34 @@
 /area/ship/patrol/crew/cargo)
 "aO" = (
 /obj/floor_decal/industrial/warning/half,
-/obj/machinery/door/airlock/external/glass/bolted/cycling{
-	id_tag = "patrol_dock_airlock_inner";
-	name = "Docking Port Airlock"
-	},
 /obj/machinery/door/blast/regular/open{
 	id_tag = "patrol_inner_airlock_blast";
 	name = "Protective Blast Doors"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/obj/machinery/door/airlock/external/glass/bolted/cycling{
+	id_tag = "patrol_dock_airlock_inner";
+	name = "Docking Port Airlock"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/dock)
 "aP" = (
 /obj/floor_decal/industrial/warning/half,
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/door/airlock/external/glass/bolted/cycling{
-	id_tag = "patrol_dock_airlock_inner";
-	name = "Docking Port Airlock"
-	},
 /obj/machinery/door/blast/regular/open{
 	id_tag = "patrol_inner_airlock_blast";
 	name = "Protective Blast Doors"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
+	},
+/obj/machinery/door/airlock/external/glass/bolted/cycling{
+	id_tag = "patrol_dock_airlock_inner";
+	name = "Docking Port Airlock"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/dock)
 "aQ" = (
@@ -596,8 +613,8 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/ship/patrol/dock)
@@ -826,7 +843,7 @@
 "bN" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/atmospherics/portables_connector,
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/portable_atmospherics/canister/air/airlock,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/cargo)
 "bP" = (
@@ -1271,8 +1288,8 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/obj/structure/catwalk,
 /obj/machinery/light,
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/atmos)
 "cH" = (
@@ -2886,6 +2903,7 @@
 "fz" = (
 /obj/wallframe_spawn/reinforced,
 /obj/paint/dark_gunmetal,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/ship/patrol/command/hangar)
 "fA" = (
@@ -3307,6 +3325,7 @@
 "gu" = (
 /obj/wallframe_spawn/reinforced,
 /obj/paint/dark_gunmetal,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/ship/patrol/maintenance/lower/starboard)
 "gv" = (
@@ -4612,27 +4631,29 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
 "iA" = (
-/obj/structure/catwalk,
-/obj/machinery/access_button/airlock_interior{
-	frequency = 1380;
-	req_access = list("ACCESS_CAVALRY");
-	pixel_x = 23;
-	pixel_y = -2
+/obj/paint/dark_gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
 	},
-/turf/simulated/floor/plating,
-/area/ship/reaper)
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/dock)
 "iB" = (
 /obj/structure/handrail,
-/obj/machinery/airlock_sensor{
-	frequency = 1380;
-	id_tag = "anu_shuttle_sensor";
-	pixel_x = -25;
-	pixel_y = 9;
-	req_access = list("ACCESS_CAVALRY")
-	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "anu_shuttle_pump";
 	dir = 8
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "anu_shuttle_sensor";
+	pixel_x = 15;
+	pixel_y = 29;
+	req_access = list("ACCESS_CAVALRY");
+	master_tag = "albatross_shuttle"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	icon_state = "bulb1"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
@@ -4657,6 +4678,7 @@
 	tag_interior_sensor = "anu_shuttle_interior_sensor";
 	req_access = list("ACCESS_CAVALRY")
 	},
+/obj/airlock_helper/atmos/pump_out_internal,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
 "iD" = (
@@ -4898,10 +4920,12 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/airlock_sensor/airlock_interior{
-	pixel_x = 24;
+	pixel_x = 22;
 	pixel_y = 24;
 	id_tag = "anu_shuttle_interior_sensor";
-	req_access = list("ACCESS_CAVALRY")
+	req_access = list("ACCESS_CAVALRY");
+	frequency = 1380;
+	master_tag = "albatross_shuttle"
 	},
 /turf/simulated/floor/plating,
 /area/ship/reaper)
@@ -4916,10 +4940,18 @@
 	dir = 5;
 	icon_state = "intact"
 	},
+/obj/machinery/access_button/airlock_interior{
+	frequency = 1380;
+	req_access = list("ACCESS_CAVALRY");
+	pixel_x = -1;
+	pixel_y = 26;
+	master_tag = "albatross_shuttle"
+	},
 /obj/machinery/door/airlock/external/glass{
 	ai_control_disabled = 1;
 	id_tag = "anu_shuttle_inner";
-	dir = 8
+	dir = 8;
+	frequency = 1380
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/reaper)
@@ -4929,10 +4961,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "anu_shuttle_pump";
 	dir = 8
+	},
+/obj/structure/handrail{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
@@ -4949,6 +4983,7 @@
 /obj/structure/handrail{
 	dir = 1
 	},
+/obj/airlock_helper/atmos/pump_out_internal,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/reaper)
 "jh" = (
@@ -4963,15 +4998,15 @@
 	id_tag = "reaper_rear_hatch_lock";
 	name = "Reaper Rear Hatch"
 	},
-/obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
-	master_tag = "snz_shuttle";
-	pixel_x = 7;
-	pixel_y = 24;
-	req_access = list("ACCESS_CAVALRY")
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
+	},
+/obj/machinery/access_button/airlock_exterior{
+	frequency = 1380;
+	master_tag = "albatross_shuttle";
+	pixel_x = -1;
+	pixel_y = 26;
+	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/machinery/door/airlock/external{
 	id_tag = "anu_shuttle_outer";
@@ -8516,6 +8551,13 @@
 /obj/paint/meatstation/lab,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/command/cannon)
+"qW" = (
+/obj/paint/dark_gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 6
+	},
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/dock)
 "rs" = (
 /obj/machinery/shield_diffuser,
 /obj/floor_decal/industrial/warning,
@@ -8699,6 +8741,14 @@
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
+"vD" = (
+/obj/paint/dark_gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5;
+	icon_state = "intact"
+	},
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/dock)
 "vR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8756,8 +8806,10 @@
 	id_tag = "anu_shuttle_exterior_sensor";
 	pixel_x = 0;
 	pixel_y = -24;
-	req_access = list("ACCESS_CAVALRY")
+	req_access = list("ACCESS_CAVALRY");
+	master_tag = "albatross_shuttle"
 	},
+/obj/airlock_helper/atmos/pump_out_external,
 /turf/simulated/floor/reinforced,
 /area/ship/reaper)
 "xy" = (
@@ -8915,6 +8967,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/lower)
+"Bo" = (
+/obj/paint/dark_gunmetal,
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 8
+	},
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/dock)
 "BI" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -15055,8 +15114,8 @@ aa
 aa
 aa
 aa
-qG
-qG
+al
+al
 qG
 hM
 FP
@@ -15177,8 +15236,8 @@ YJ
 aa
 aa
 al
-qG
-hM
+al
+tn
 hM
 XX
 sN
@@ -15299,8 +15358,8 @@ FI
 sZ
 al
 al
-hM
-hM
+tn
+tn
 hM
 El
 Ve
@@ -15421,8 +15480,8 @@ FI
 al
 al
 tn
-hM
-hM
+tn
+tn
 hM
 Vf
 pM
@@ -15543,8 +15602,8 @@ VI
 IW
 Cp
 Kv
-hM
-hM
+tn
+tn
 hM
 eo
 eI
@@ -17489,9 +17548,9 @@ aa
 aa
 aa
 ag
-wN
-wN
-wN
+qW
+Bo
+vD
 wN
 wN
 cx
@@ -17857,7 +17916,7 @@ aa
 DU
 ao
 at
-wN
+iA
 bm
 bR
 cA
@@ -20189,7 +20248,7 @@ gc
 gB
 gP
 hJ
-iA
+gP
 jd
 jM
 kl
