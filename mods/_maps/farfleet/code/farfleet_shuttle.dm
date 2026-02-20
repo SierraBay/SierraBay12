@@ -20,11 +20,11 @@
 
 /obj/overmap/visitable/ship/landable/snz
 	name = "SNZ Baydarka"
-	desc = "SNZ-350 Baydarka. Multipurpose shuttle, used for personnel and light venchles delivery. This one definetly belongs to ICCG."
+	desc = "SNZ-350 Baydarka. Multipurpose shuttle, used for personnel and light vehicle delivery. This one definetly belongs to ICCG."
 	shuttle = "SNZ Baydarka"
 	fore_dir = WEST
 	color = "#ff7300"
-	vessel_mass = 1000
+	vessel_mass = 1280
 	vessel_size = SHIP_SIZE_TINY
 
 

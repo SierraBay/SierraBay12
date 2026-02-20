@@ -297,6 +297,34 @@
 					/obj/item/clothing/accessory/iccgn_patch/pioneer = 10
 					)
 
+
+/obj/item/taperoll/engineering/farfleet
+	name = "engineering tape"
+	desc = "A roll of engineering tape used to block off working areas from the public."
+	tape_type = /obj/item/tape/engineering
+	color = COLOR_ORANGE
+
+/obj/item/tape/engineering/farfleet
+	name = "engineering tape"
+	desc = "A length of engineering tape. Better not cross it."
+	req_access = list(list(access_away_iccgn))
+	color = COLOR_ORANGE
+
+/obj/item/taperoll/atmos/farfleet
+	name = "atmospherics tape"
+	desc = "A roll of atmospherics tape used to block off working areas from the public."
+	tape_type = /obj/item/tape/atmos
+	color = COLOR_BLUE_LIGHT
+
+/obj/item/tape/atmos/farfleet
+	name = "atmospherics tape"
+	desc = "A length of atmospherics tape. Better not cross it."
+	req_access = list(list(access_away_iccgn))
+	color = COLOR_BLUE_LIGHT
+	icon_base = "stripetape"
+	detail_overlay = "stripes"
+	detail_color = COLOR_YELLOW
+
 /* Voidsuit Storage Unit
  * ====
  */
