@@ -1090,6 +1090,9 @@
 	},
 /obj/structure/railing/mapped,
 /obj/floor_decal/industrial/warning/half,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/maintenance/upper/munition)
 "co" = (
@@ -1362,6 +1365,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cF" = (
@@ -1862,10 +1866,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/industrial/warning{
 	dir = 1
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_y = -16
 	},
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/brig/office)
@@ -2513,6 +2513,10 @@
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
 /obj/item/airlock_brace,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/brig/office)
 "eK" = (
@@ -2536,6 +2540,10 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/table/rack,
 /obj/item/storage/box/handcuffs,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/brig/office)
 "eM" = (
@@ -2616,7 +2624,6 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "eS" = (
-/obj/machinery/light,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -2751,6 +2758,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fi" = (
@@ -2758,9 +2768,6 @@
 	dir = 4
 	},
 /obj/machinery/appliance/cooker/fryer,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fj" = (
@@ -3028,13 +3035,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/aft)
 "fE" = (
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -25;
-	req_access = list("ACCESS_CAVALRY")
-	},
 /obj/floor_decal/industrial/outline/blue,
 /obj/structure/ship_munition/disperser_charge/emp/military,
+/obj/machinery/light,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "fF" = (
@@ -3307,6 +3310,10 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "fY" = (
@@ -3467,6 +3474,10 @@
 /obj/machinery/chemical_dispenser/bar_soft{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "gp" = (
@@ -3584,10 +3595,6 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
 /obj/machinery/appliance/mixer/cereal,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 0;
@@ -3614,7 +3621,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/smartfridge/drying_rack,
+/obj/structure/closet/secure_closet/hydroponics{
+	req_access = list()
+	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
 "gI" = (
@@ -3718,14 +3727,14 @@
 /area/ship/patrol/crew/kitchen)
 "gS" = (
 /obj/structure/table/marble,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
-	},
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
 /obj/item/reagent_containers/spray/cleaner,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "gT" = (
@@ -3762,6 +3771,13 @@
 /obj/item/reagent_containers/food/snacks/canned/tomato,
 /turf/simulated/floor/tiled/freezer,
 /area/ship/patrol/crew/kitchen)
+"gU" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/smartfridge/drying_rack,
+/turf/simulated/floor/plating,
+/area/ship/patrol/maintenance/upper/port)
 "gV" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/alarm{
@@ -3987,6 +4003,7 @@
 	dir = 1;
 	prices = list()
 	},
+/obj/machinery/light/spot,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hr" = (
@@ -4000,7 +4017,6 @@
 	},
 /obj/structure/table/standard,
 /obj/item/storage/box/cups,
-/obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hs" = (
@@ -4026,6 +4042,7 @@
 	name = "Kitchen Showcase";
 	pixel_x = -26
 	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hu" = (
@@ -4040,7 +4057,6 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/light,
 /obj/machinery/power/apc{
 	name = "south bump";
 	pixel_y = -24;
@@ -4268,8 +4284,16 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "lE" = (
-/turf/simulated/floor/tiled/monotile,
-/area/ship/patrol/crew/hallway/upper)
+/obj/floor_decal/industrial/outline/blue,
+/obj/structure/ship_munition/disperser_charge/emp/military,
+/obj/structure/railing/mapped,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24;
+	req_access = list("ACCESS_CAVALRY")
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/patrol/maintenance/upper/munition)
 "ma" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -4474,10 +4498,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
+"qn" = (
+/obj/structure/ship_munition/disperser_charge/explosive/military,
+/obj/floor_decal/industrial/outline/red,
+/obj/machinery/light,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/patrol/maintenance/upper/munition)
 "qG" = (
 /obj/floor_decal/industrial/outline/blue,
 /obj/structure/ship_munition/disperser_charge/emp/military,
 /obj/structure/railing/mapped,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "qJ" = (
@@ -4665,8 +4698,8 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "ul" = (
-/turf/simulated/floor/tiled/freezer,
-/area/ship/patrol/crew/kitchen)
+/turf/simulated/floor/tiled/monotile,
+/area/ship/patrol/crew/hallway/upper)
 "uT" = (
 /obj/structure/table/standard,
 /obj/floor_decal/corner/blue/diagonal{
@@ -4871,9 +4904,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "zX" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/floor_decal/industrial/outline/blue,
 /obj/floor_decal/industrial/outline/blue,
 /obj/structure/ship_munition/disperser_charge/emp/military,
@@ -4969,14 +4999,8 @@
 /turf/simulated/floor/wood,
 /area/ship/patrol/maintenance/upper)
 "Bx" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/hydroponics{
-	req_access = list()
-	},
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/port)
+/turf/simulated/floor/tiled/freezer,
+/area/ship/patrol/crew/kitchen)
 "CA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -11998,7 +12022,7 @@ aO
 aO
 aO
 aO
-gH
+gU
 qe
 PK
 hk
@@ -12364,7 +12388,7 @@ fm
 fJ
 ga
 aO
-Bx
+gH
 qe
 PK
 hk
@@ -12474,8 +12498,8 @@ cP
 bd
 bd
 bd
-lE
-lE
+ul
+ul
 bd
 Yr
 ax
@@ -14925,7 +14949,7 @@ TX
 ss
 fj
 gq
-ul
+Bx
 gF
 hh
 hy
@@ -15058,7 +15082,7 @@ ad
 ab
 ab
 ab
-aa
+ab
 aa
 aa
 aa
@@ -16015,7 +16039,7 @@ bJ
 cm
 GS
 GS
-zP
+qn
 bJ
 CW
 Aq
@@ -16624,7 +16648,7 @@ ad
 bK
 qG
 zX
-qG
+lE
 fE
 bJ
 xT
