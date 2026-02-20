@@ -69,7 +69,7 @@
 		/obj/item/clothing/accessory/leg_guards/tan,
 		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
 		/obj/item/clothing/accessory/armor_tag/solgov,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/light
 	)
 
 
@@ -102,7 +102,7 @@
 		/obj/item/clothing/accessory/leg_guards/tan,
 		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
 		/obj/item/clothing/accessory/armor_tag/solgov,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/light
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet
@@ -112,7 +112,7 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/WillContain()
 	return list(
-		/obj/item/storage/firstaid/security,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/head/beret/solgov/fleet/command,
@@ -127,7 +127,7 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/engi/WillContain()
 	return list(
-		/obj/item/storage/firstaid/security,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
@@ -149,7 +149,7 @@
 
 /obj/structure/closet/secure_closet/patrol/fleet/med/WillContain()
 	return list(
-		/obj/item/storage/firstaid/security,
+		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/medical,
 		/obj/item/clothing/head/beret/solgov/fleet/medical,
@@ -187,7 +187,7 @@
 		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
 		/obj/item/clothing/suit/storage/solgov/service/fleet/officer,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/light
 	)
 
 

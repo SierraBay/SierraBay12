@@ -150,7 +150,7 @@
 /obj/machinery/door/airlock/hatch/maintenance,
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "ar" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -170,7 +170,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "as" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -190,7 +190,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "at" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -210,7 +210,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "av" = (
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
@@ -242,12 +242,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper)
-"ay" = (
-/obj/structure/railing/mapped{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
 "az" = (
 /obj/machinery/power/apc{
 	name = "south bump";
@@ -262,7 +256,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "aA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -277,7 +271,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "aB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -292,7 +286,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "aC" = (
 /turf/simulated/floor,
 /area/ship/patrol/maintenance/upper)
@@ -370,7 +364,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "aM" = (
 /mob/living/exosuit/premade/powerloader/old,
 /obj/floor_decal/industrial/outline/yellow,
@@ -403,7 +397,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/ship/patrol/crew/hallway/upper)
+/area/ship/patrol/maintenance/upper/starboard)
 "aQ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -1664,9 +1658,14 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/brig/office)
 "db" = (
-/obj/paint/dark_gunmetal,
+/obj/paint/meatstation/lab,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/wall/r_wall,
-/area/ship/patrol/crew/brig/office)
+/area/ship/patrol/maintenance/upper/munition)
 "dc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/blast/shutters{
@@ -3027,7 +3026,7 @@
 /obj/machinery/door/airlock/hatch/maintenance,
 /obj/floor_decal/industrial/hatch/yellow,
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/crew/kitchen)
 "fD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch/maintenance,
@@ -4071,10 +4070,11 @@
 /obj/floor_decal/corner/grey/diagonal{
 	dir = 4
 	},
-/obj/machinery/reagentgrinder,
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 5
 	},
+/obj/structure/table/marble,
+/obj/machinery/reagentgrinder/juicer,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/crew/kitchen)
 "hx" = (
@@ -4164,17 +4164,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
-"hH" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hatch/maintenance,
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/tiled/techfloor/grid,
-/area/ship/patrol/maintenance/upper/aft)
 "hI" = (
 /obj/structure/table/rack,
 /obj/structure/railing/mapped{
@@ -4186,7 +4175,7 @@
 /obj/random/maintenance/solgov/clean,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/port)
 "hJ" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -4199,7 +4188,7 @@
 	},
 /obj/random/accessory,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/port)
 "if" = (
 /obj/structure/lattice,
 /turf/space,
@@ -4609,7 +4598,7 @@
 /obj/structure/catwalk,
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/crew/kitchen)
 "st" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -4671,7 +4660,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "ub" = (
 /obj/structure/catwalk,
 /obj/random/trash,
@@ -4734,7 +4723,7 @@
 	},
 /obj/structure/railing/mapped,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/port)
 "vz" = (
 /obj/structure/table/marble,
 /obj/machinery/door/firedoor,
@@ -4870,15 +4859,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
-"zg" = (
-/obj/paint/dark_gunmetal,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/r_wall,
-/area/ship/patrol/maintenance/upper/munition)
 "zz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4961,7 +4941,7 @@
 	},
 /obj/random/junk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "AQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5178,7 +5158,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/waste)
 "Ik" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -5244,7 +5224,7 @@
 	req_access = list("ACCESS_CAVALRY")
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/crew/kitchen)
 "Jj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -5283,20 +5263,9 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/comms)
 "Kr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/obj/paint/meatstation/lab,
+/turf/simulated/wall/r_wall,
+/area/ship/patrol/maintenance/upper/munition)
 "Kz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5455,7 +5424,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/r_wall,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/port)
 "Pb" = (
 /obj/structure/railing/mapped{
 	dir = 4
@@ -5469,7 +5438,7 @@
 	icon_state = "bulb1"
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "PE" = (
 /obj/structure/table/standard,
 /obj/machinery/firealarm{
@@ -5518,7 +5487,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/crew/kitchen)
 "Rp" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5625,7 +5594,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/waste)
 "TS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5636,7 +5605,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/starboard)
 "TX" = (
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
@@ -5719,7 +5688,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/aft)
+/area/ship/patrol/maintenance/upper/port)
 "Wa" = (
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
@@ -12495,7 +12464,7 @@ ac
 zO
 zO
 cP
-bd
+zO
 bd
 bd
 ul
@@ -12617,7 +12586,7 @@ Uq
 Uq
 Zq
 Ae
-bd
+zO
 be
 bw
 bM
@@ -12861,7 +12830,7 @@ af
 ag
 Vd
 ag
-bd
+zO
 bg
 by
 bO
@@ -12992,7 +12961,7 @@ Jp
 Jp
 Jp
 Jp
-fj
+Jp
 fj
 fq
 fO
@@ -13114,7 +13083,7 @@ cT
 do
 dO
 en
-fj
+Jp
 eZ
 fr
 fP
@@ -13236,7 +13205,7 @@ cU
 dp
 dp
 eo
-fj
+Jp
 fa
 fs
 fQ
@@ -13245,7 +13214,7 @@ fP
 gL
 gO
 fj
-fj
+hk
 hD
 hk
 Ua
@@ -13358,7 +13327,7 @@ cV
 dp
 dp
 ep
-fj
+Jp
 fb
 ft
 fR
@@ -13367,7 +13336,7 @@ gw
 gM
 gO
 ho
-fj
+hk
 hC
 hk
 Ua
@@ -13480,7 +13449,7 @@ cW
 dq
 dq
 eq
-fj
+Jp
 fc
 fu
 fS
@@ -13489,7 +13458,7 @@ gx
 gN
 ha
 hp
-fj
+hk
 hC
 hk
 Ua
@@ -13602,7 +13571,7 @@ cX
 dr
 dr
 er
-fj
+Jp
 fd
 ft
 fR
@@ -13611,7 +13580,7 @@ uT
 gM
 gO
 hq
-fj
+hk
 VA
 hk
 Ua
@@ -13724,7 +13693,7 @@ Jp
 ds
 dQ
 es
-fj
+Jp
 fe
 ft
 fR
@@ -13733,7 +13702,7 @@ gy
 gM
 gO
 hr
-fj
+hk
 hE
 hk
 Ua
@@ -13846,7 +13815,7 @@ Wa
 Wa
 Wa
 Wa
-fj
+Wa
 ff
 ft
 fT
@@ -13855,7 +13824,7 @@ gz
 gO
 gO
 hs
-fj
+hk
 hC
 hk
 Ua
@@ -13968,7 +13937,7 @@ Km
 LU
 dR
 Wi
-fj
+Wa
 fj
 fv
 fj
@@ -13977,7 +13946,7 @@ gA
 vz
 vz
 fj
-fj
+hk
 hC
 hk
 Ua
@@ -14090,7 +14059,7 @@ AQ
 Lf
 dS
 et
-fj
+Wa
 fh
 fw
 fU
@@ -14099,7 +14068,7 @@ gm
 gP
 hb
 ht
-fj
+hk
 hC
 hk
 Ua
@@ -14212,7 +14181,7 @@ Wa
 dt
 dT
 eu
-fj
+Wa
 fi
 fx
 fV
@@ -14221,7 +14190,7 @@ gB
 gR
 hc
 hu
-fj
+hk
 Ik
 hk
 Ua
@@ -14334,7 +14303,7 @@ Wa
 Wa
 Wa
 Wa
-fj
+Wa
 fj
 fy
 fW
@@ -14343,7 +14312,7 @@ gC
 fA
 hd
 hv
-fj
+hk
 ub
 hk
 Ua
@@ -14465,7 +14434,7 @@ fA
 fA
 he
 hw
-fj
+hk
 qe
 hk
 Ua
@@ -14587,7 +14556,7 @@ gD
 gS
 he
 hx
-fj
+hk
 hG
 hk
 Ua
@@ -14685,11 +14654,11 @@ aa
 ab
 ab
 ab
-ad
-TX
-TX
+ac
+zO
+zO
 aq
-TX
+zO
 aK
 aK
 aK
@@ -14709,10 +14678,10 @@ fj
 fj
 hf
 fj
-fj
-hH
-TX
-ad
+hk
+gW
+hk
+Ua
 ab
 ab
 ab
@@ -14807,23 +14776,23 @@ aa
 Dx
 RX
 RX
-AF
-OL
-OL
+rG
+Uq
+Uq
 ar
-ay
+Wd
 aK
 bc
 br
 bF
 ce
 cJ
-db
-db
-db
+dd
+dd
+dd
 ey
-db
-TX
+dd
+fj
 QF
 fj
 gp
@@ -14834,7 +14803,7 @@ fj
 vi
 VV
 OL
-AF
+vg
 RX
 RX
 jS
@@ -14929,10 +14898,10 @@ aa
 ab
 ab
 ab
-ad
-TX
-TX
-Kr
+ac
+zO
+zO
+ap
 AI
 aK
 aZ
@@ -14945,7 +14914,7 @@ dx
 dX
 ez
 eM
-TX
+fj
 ss
 fj
 gq
@@ -14953,10 +14922,10 @@ Bx
 gF
 hh
 hy
-rJ
-rJ
-TX
-ad
+mG
+mG
+hk
+Ua
 ab
 ab
 ab
@@ -15051,9 +15020,9 @@ aa
 ab
 ab
 ab
-ad
-TX
-TX
+ac
+zO
+zO
 as
 az
 aK
@@ -15067,7 +15036,7 @@ dy
 dY
 eA
 eN
-TX
+fj
 Jd
 fj
 gr
@@ -15075,10 +15044,10 @@ gG
 gV
 hi
 fj
-rJ
+mG
 hI
-TX
-ad
+hk
+Ua
 ab
 ab
 ab
@@ -15173,9 +15142,9 @@ aa
 ab
 ab
 ab
-ad
-ad
-TX
+ac
+ac
+zO
 at
 aA
 Pb
@@ -15189,7 +15158,7 @@ dz
 dZ
 eB
 eO
-TX
+fj
 fC
 fj
 fj
@@ -15197,10 +15166,10 @@ fj
 fj
 fj
 fj
-rJ
+mG
 hJ
-TX
-ad
+hk
+Ua
 ab
 ab
 ab
@@ -15296,9 +15265,9 @@ ab
 ab
 ab
 ab
-ad
-TX
-TX
+ac
+zO
+zO
 aB
 aL
 TS
@@ -15315,14 +15284,14 @@ TX
 rJ
 rJ
 fD
-rJ
-rJ
-rJ
-rJ
-rJ
-TX
-TX
-ad
+mG
+mG
+mG
+mG
+mG
+hk
+hk
+Ua
 ab
 ab
 ab
@@ -15418,12 +15387,12 @@ ab
 ab
 ab
 ab
-ad
-ad
-TX
-TX
-TX
-TX
+ac
+ac
+zO
+zO
+zO
+zO
 TX
 xY
 cj
@@ -15437,14 +15406,14 @@ TX
 rJ
 Lt
 TX
-TX
-TX
-TX
-TX
-TX
-TX
-ad
-ad
+hk
+hk
+hk
+hk
+hk
+hk
+Ua
+Ua
 ab
 ab
 ab
@@ -15541,11 +15510,11 @@ ab
 ab
 ab
 ab
-ad
-ad
-ad
-TX
-TX
+ac
+ac
+ac
+zO
+zO
 TX
 TX
 ck
@@ -15559,13 +15528,13 @@ TX
 fD
 TX
 TX
-TX
-TX
-ad
-ad
-ad
-ad
-ad
+hk
+hk
+Ua
+Ua
+Ua
+Ua
+Ua
 ab
 ab
 ab
@@ -15665,9 +15634,9 @@ ab
 ab
 ab
 ab
-ad
-ad
-TX
+ac
+ac
+zO
 TX
 bH
 cl
@@ -15681,9 +15650,9 @@ rJ
 rJ
 wx
 TX
-TX
-ad
-ad
+hk
+Ua
+Ua
 ab
 ab
 ab
@@ -15788,8 +15757,8 @@ ab
 ab
 ab
 ab
-ad
-TX
+ac
+zO
 TX
 mn
 dh
@@ -15803,8 +15772,8 @@ rJ
 ka
 RI
 TX
-TX
-ad
+hk
+Ua
 ab
 ab
 ab
@@ -15910,9 +15879,9 @@ ab
 ab
 ab
 ab
-ad
-TX
-TX
+Kr
+bJ
+bJ
 bI
 GH
 cN
@@ -15925,8 +15894,8 @@ YI
 TX
 TX
 TX
-TX
-ad
+hk
+Ua
 ab
 ab
 ab
@@ -16032,9 +16001,9 @@ ab
 ab
 ab
 ab
-ad
-ad
-TX
+Kr
+Kr
+bJ
 bJ
 cm
 GS
@@ -16047,8 +16016,8 @@ rJ
 wx
 TX
 TX
-ad
-ad
+Ua
+Ua
 ab
 ab
 ab
@@ -16155,8 +16124,8 @@ ab
 ab
 ab
 ab
-ad
-TX
+Kr
+bJ
 bJ
 co
 st
@@ -16169,7 +16138,7 @@ rJ
 IW
 TX
 TX
-ad
+Ua
 ab
 ab
 ab
@@ -16277,8 +16246,8 @@ if
 if
 if
 ab
-ad
-TX
+Kr
+bJ
 bJ
 CA
 GS
@@ -16291,7 +16260,7 @@ rJ
 wx
 TX
 TX
-ad
+Ua
 ab
 ab
 if
@@ -16399,8 +16368,8 @@ aa
 aa
 aa
 ab
-ad
-ad
+Kr
+Kr
 bJ
 ms
 GW
@@ -16413,7 +16382,7 @@ rJ
 PF
 TX
 ad
-ad
+Ua
 ab
 ab
 aa
@@ -16522,7 +16491,7 @@ aa
 aa
 Dx
 RX
-AF
+db
 sL
 cp
 cO
@@ -16644,7 +16613,7 @@ aa
 aa
 aa
 ab
-ad
+Kr
 bK
 qG
 zX
@@ -16766,19 +16735,19 @@ aa
 aa
 aa
 ab
-ad
-zg
-bJ
-bJ
-bJ
-bJ
-bJ
+NR
+TQ
+th
+th
+th
+th
+th
 vK
 th
 th
-TX
+th
 TQ
-ad
+NR
 ab
 ab
 aa
@@ -16888,9 +16857,9 @@ aa
 aa
 aa
 ab
-ad
+NR
 TQ
-TX
+th
 th
 nP
 kP
@@ -16898,9 +16867,9 @@ kP
 Kz
 np
 th
-TX
+th
 TQ
-ad
+NR
 ab
 aa
 aa
@@ -17010,9 +16979,9 @@ aa
 aa
 aa
 aa
-ad
+NR
 Hw
-TX
+th
 th
 XY
 ok
@@ -17020,9 +16989,9 @@ Mw
 ij
 uV
 th
-TX
+th
 Hw
-ad
+NR
 aa
 aa
 aa
@@ -17134,7 +17103,7 @@ aa
 aa
 aa
 Hw
-ad
+NR
 th
 xK
 Mj
@@ -17142,7 +17111,7 @@ rC
 NU
 IT
 th
-ad
+NR
 Hw
 aa
 aa
@@ -17256,7 +17225,7 @@ aa
 aa
 aa
 km
-ad
+NR
 th
 jg
 Wu
@@ -17264,7 +17233,7 @@ Jj
 NR
 th
 th
-ad
+NR
 km
 aa
 aa
@@ -17378,15 +17347,15 @@ aa
 aa
 aa
 km
-ad
-ad
-ad
-ad
+NR
+NR
+NR
+NR
 Sj
-ad
-ad
-ad
-ad
+NR
+NR
+NR
+NR
 km
 aa
 aa
