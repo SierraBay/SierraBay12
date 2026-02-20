@@ -1675,15 +1675,6 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
-"hp" = (
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/decal/cleanable/dirt,
-/obj/machinery/door/blast/shutters{
-	name = "Aft Segment Cargo Shutters";
-	id_tag = "facolony_aftsegment_blasts"
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/cargo2)
 "hr" = (
 /obj/machinery/atmospherics/binary/pump,
 /obj/structure/cable/green{
@@ -2770,8 +2761,9 @@
 /area/map_template/facolony/science)
 "mJ" = (
 /obj/structure/catwalk,
-/obj/structure/handrail{
-	dir = 4
+/obj/structure/railing/mapped{
+	dir = 1;
+	icon_state = "railing0-1"
 	},
 /obj/landmark/clear,
 /turf/template_noop,
@@ -3268,21 +3260,6 @@
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics2)
-"oD" = (
-/obj/structure/catwalk,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/light/spot{
-	dir = 8
-	},
-/turf/simulated/floor/exoplanet/concrete,
-/area/map_template/facolony/mineralprocessing)
 "oE" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3364,6 +3341,24 @@
 /obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
+"oT" = (
+/obj/wallframe_spawn/reinforced_phoron,
+/obj/paint/facolony/commandblue,
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_bridge_blasts";
+	name = "Fore Window Shield"
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_bridge_blasts";
+	name = "Fore Window Shield"
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/command)
 "pd" = (
 /obj/floor_decal/corner/b_green/border{
 	dir = 8
@@ -3430,11 +3425,11 @@
 /area/map_template/facolony/airlock)
 "pq" = (
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/shutters{
 	name = "Aft Segment Cargo Shutters";
 	id_tag = "facolony_aftsegment_blasts"
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "pt" = (
@@ -4465,6 +4460,15 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/science)
+"tL" = (
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/blast/shutters{
+	name = "Aft Segment Cargo Shutters";
+	id_tag = "facolony_aftsegment_blasts"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/cargo2)
 "tM" = (
 /obj/paint/fleet/sfv_rook,
 /obj/structure/cable/green{
@@ -5298,19 +5302,6 @@
 /obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/unspecified)
-"xi" = (
-/obj/wallframe_spawn/reinforced_phoron,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "facolony_bridge_blasts";
-	name = "Fore Window Shield"
-	},
-/obj/paint/facolony/commandblue,
-/obj/machinery/door/firedoor{
-	req_access = list()
-	},
-/turf/simulated/floor/plating,
-/area/map_template/facolony/command)
 "xl" = (
 /obj/machinery/reagentgrinder/juicer{
 	pixel_y = 5
@@ -6697,19 +6688,6 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
-"DO" = (
-/obj/wallframe_spawn/reinforced_phoron,
-/obj/paint/green,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "facolony_trade_windows";
-	name = "Trade Zone Window Shields"
-	},
-/obj/machinery/door/firedoor{
-	req_access = list()
-	},
-/turf/simulated/floor/plating,
-/area/map_template/facolony/tradezone)
 "DQ" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -7137,14 +7115,17 @@
 /turf/simulated/floor/wood/maple,
 /area/map_template/facolony/messhall)
 "Gl" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped{
-	dir = 1;
-	icon_state = "railing0-1"
+/obj/machinery/door/firedoor{
+	req_access = list()
 	},
-/obj/landmark/clear,
-/turf/template_noop,
-/area/template_noop)
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/blast/shutters{
+	name = "Aft-Starboard Cargo Shutters";
+	id_tag = "facolony_aftstar_blasts"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/cargo)
 "Gm" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -8966,14 +8947,14 @@
 /area/map_template/facolony/surgery)
 "PH" = (
 /obj/wallframe_spawn/reinforced_phoron,
-/obj/paint/facolony/commandblue,
-/obj/machinery/door/firedoor{
-	req_access = list()
-	},
 /obj/machinery/door/blast/regular{
 	dir = 4;
 	id_tag = "facolony_bridge_blasts";
 	name = "Fore Window Shield"
+	},
+/obj/paint/facolony/commandblue,
+/obj/machinery/door/firedoor{
+	req_access = list()
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/command)
@@ -9487,6 +9468,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
+"RM" = (
+/obj/structure/catwalk,
+/obj/structure/handrail{
+	dir = 4
+	},
+/obj/landmark/clear,
+/turf/template_noop,
+/area/template_noop)
 "RN" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -9529,6 +9518,21 @@
 /obj/machinery/door/airlock/facolony/mining,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/messhall)
+"RX" = (
+/obj/structure/catwalk,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/spot{
+	dir = 8
+	},
+/turf/simulated/floor/exoplanet/concrete,
+/area/map_template/facolony/mineralprocessing)
 "Sa" = (
 /obj/machinery/mineral/stacking_machine{
 	input_turf = 2;
@@ -9549,11 +9553,6 @@
 /obj/paint/facolony/commandblue,
 /obj/machinery/door/firedoor{
 	req_access = list()
-	},
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "facolony_bridge_blasts";
-	name = "Fore Window Shield"
 	},
 /obj/machinery/door/blast/regular{
 	dir = 4;
@@ -9768,11 +9767,13 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 "Tf" = (
-/obj/machinery/power/smes/buildable/max_cap_in_out,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/smes/buildable{
+	RCon_tag = "Solar - Port"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
@@ -10755,17 +10756,18 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/command)
 "Xr" = (
+/obj/wallframe_spawn/reinforced_phoron,
+/obj/paint/green,
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_trade_windows";
+	name = "Trade Zone Window Shields"
+	},
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/decal/cleanable/dirt,
-/obj/machinery/door/blast/shutters{
-	name = "Aft-Starboard Cargo Shutters";
-	id_tag = "facolony_aftstar_blasts"
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/cargo)
+/turf/simulated/floor/plating,
+/area/map_template/facolony/tradezone)
 "Xt" = (
 /obj/structure/largecrate/animal/cow,
 /obj/decal/cleanable/dirt,
@@ -11221,11 +11223,11 @@
 	req_access = list()
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/shutters{
 	name = "Aft-Starboard Cargo Shutters";
 	id_tag = "facolony_aftstar_blasts"
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 
@@ -11544,7 +11546,7 @@ TX
 Dz
 Dz
 TX
-DO
+Xr
 Dz
 Dz
 Dz
@@ -11749,9 +11751,9 @@ uo
 Hh
 jI
 pk
+Sc
+Sc
 PH
-PH
-xi
 Rq
 Ne
 vw
@@ -11792,7 +11794,7 @@ uo
 Hh
 pk
 Xi
-PH
+Sc
 xt
 at
 Rq
@@ -11918,7 +11920,7 @@ ip
 pk
 "}
 (17,1,1) = {"
-Gl
+mJ
 Xi
 mU
 iL
@@ -11961,7 +11963,7 @@ MJ
 DV
 "}
 (18,1,1) = {"
-Gl
+mJ
 Xi
 Ch
 lu
@@ -12004,7 +12006,7 @@ Is
 HT
 "}
 (19,1,1) = {"
-Gl
+mJ
 Xi
 yH
 lu
@@ -12156,14 +12158,14 @@ fs
 cO
 ns
 KI
-ZX
+Gl
 Yp
 GP
 GP
 GP
 fH
 nF
-pq
+tL
 zQ
 XX
 tb
@@ -12177,9 +12179,9 @@ Jd
 "}
 (23,1,1) = {"
 uo
-Gl
+mJ
 Xi
-PH
+Sc
 Rr
 bL
 Sw
@@ -12199,14 +12201,14 @@ Ta
 cO
 Lk
 KI
-Xr
+ZX
 Yp
 jq
 OF
 zX
 GP
 jn
-hp
+pq
 Wx
 fY
 rr
@@ -12222,9 +12224,9 @@ uo
 uo
 zM
 pk
+oT
 Sc
-PH
-PH
+Sc
 Sw
 dc
 zm
@@ -12249,7 +12251,7 @@ rx
 fE
 GP
 GP
-hp
+pq
 tD
 Ww
 YX
@@ -12264,7 +12266,7 @@ uo
 (25,1,1) = {"
 uo
 uo
-Gl
+mJ
 gH
 gH
 wa
@@ -12310,10 +12312,10 @@ uo
 pk
 uo
 uo
-Gl
-gH
-gH
 mJ
+gH
+gH
+RM
 lo
 GV
 DT
@@ -12594,11 +12596,11 @@ ys
 ix
 ix
 PT
-oD
+RX
 ix
 ix
 PT
-oD
+RX
 ix
 ix
 rK
