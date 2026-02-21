@@ -115,6 +115,13 @@
 #define MIN_SUPPLIED_LAW_NUMBER 15
 #define MAX_SUPPLIED_LAW_NUMBER 50
 
+// Human height defines
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"
+
 // NT's alignment towards the character
 #define COMPANY_LOYAL 			"Loyal"
 #define COMPANY_SUPPORTATIVE	"Supportive"

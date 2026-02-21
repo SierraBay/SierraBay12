@@ -189,6 +189,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			//SIERRA-ADD
 			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 				overlay.transform = get_lying_offset(overlay)
+			overlay = update_height(overlay)  // Apply height displacement filter
 			overlays_to_apply += overlay
 		else if(istype(entry, /list))
 			for(var/image/overlay in entry)
@@ -197,6 +198,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				//SIERRA-ADD
 				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 					overlay.transform = get_lying_offset(overlay)
+				overlay = update_height(overlay)  // Apply height displacement filter
 				overlays_to_apply += overlay
 
 	var/obj/item/organ/external/head/head = organs_by_name[BP_HEAD]
@@ -206,6 +208,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		//SIERRA-ADD
 		if(I)
 			I.filters = filters
+			I = update_height(I)  // Apply height displacement filter
 			overlays_to_apply += I
 		//SIERRA-ADD
 
@@ -214,39 +217,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_to_apply += auras
 
 	SetOverlays(overlays_to_apply)
-	var/list/scale = get_scale()
 	animate(
 		src,
 		transform = matrix().Update(
-			scale_x = scale[1],
-			scale_y = scale[2],
 			rotation = lying ? 90 : 0,
-			offset_y = lying ? -6 - default_pixel_z : 16 * (scale[2] - 1)
+			offset_y = lying ? -6 - default_pixel_z : 0
 		),
 		time = ANIM_LYING_TIME
-	)
-
-
-/mob/living/carbon/human/proc/get_scale()
-	var/height_modifier = 0
-	var/height_descriptor = LAZYACCESS(descriptors, "height")
-	if (height_descriptor)
-		var/datum/mob_descriptor/height/H = species.descriptors["height"]
-		if (H)
-			var/list/scale_effect = H.scale_effect[species.name]
-			if (length(scale_effect))
-				height_modifier = 0.01 * scale_effect[height_descriptor]
-	var/build_modifier = 0
-	var/build_descriptor = LAZYACCESS(descriptors, "build")
-	if (build_descriptor)
-		var/datum/mob_descriptor/build/B = species.descriptors["build"]
-		if (B)
-			var/list/scale_effect = B.scale_effect[species.name]
-			if (length(scale_effect))
-				build_modifier = 0.01 * scale_effect[build_descriptor]
-	return list(
-		(1 + build_modifier) * (tf_scale_x || 1),
-		(1 + height_modifier) * (tf_scale_y || 1)
 	)
 
 var/global/list/damage_icon_parts = list()
@@ -425,7 +402,10 @@ var/global/list/damage_icon_parts = list()
 			queue_icon_update()
 		return
 
-	overlays_standing[HO_HAIR_LAYER]	= head_organ.get_hair_icon()
+	var/hair_overlay = head_organ.get_hair_icon()
+	if(hair_overlay)
+		hair_overlay = human_update_offset(hair_overlay, TRUE)
+	overlays_standing[HO_HAIR_LAYER]	= hair_overlay
 
 	if(update_icons)
 		queue_icon_update()
@@ -867,6 +847,56 @@ var/global/list/damage_icon_parts = list()
 #undef HO_SYNTH_SKIN_LAYER //[SIERRA-ADD]
 #undef HO_UNDERWEAR_LAYER
 #undef HO_UNIFORM_LAYER
+//HEIGHT OVERLAY SYSTEM
+/mob/living/carbon/human/proc/human_update_offset(image/I, head = TRUE)
+	if(!I)
+		return I
+
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			I.pixel_y = head ? -4 : -7
+		if(HUMANHEIGHT_SHORT)
+			I.pixel_y = head ? -2 : -3
+		if(HUMANHEIGHT_MEDIUM)
+			I.pixel_y = 0
+		if(HUMANHEIGHT_TALL)
+			I.pixel_y = head ? 0 : 1
+		if(HUMANHEIGHT_TALLEST)
+			I.pixel_y = head ? 1 : 3
+
+	return I
+
+/mob/living/carbon/human/proc/update_height(image/I)
+	if(!I)
+		return I
+
+	// Static masks - Cut1 = torso, Cut2 = legs, Cut3 = lengthen torso, Cut4 = lengthen legs
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi', "Cut4")
+
+	// Remove old filters
+	I.remove_filter(list("Cut_Torso", "Cut_Legs", "Lenghten_Torso", "Lenghten_Legs"))
+
+	// Apply displacement filters based on height
+	switch(height)
+		if(HUMANHEIGHT_SHORTEST)
+			I.add_filter("Cut_Torso", 1, list("type" = "displace", "icon" = cut_torso_mask, "x" = 0, "y" = 0, "size" = 1))
+			I.add_filter("Cut_Legs", 2, list("type" = "displace", "icon" = cut_legs_mask, "x" = 0, "y" = 0, "size" = 1))
+
+		if(HUMANHEIGHT_SHORT)
+			I.add_filter("Cut_Legs", 1, list("type" = "displace", "icon" = cut_legs_mask, "x" = 0, "y" = 0, "size" = 1))
+
+		if(HUMANHEIGHT_TALL)
+			I.add_filter("Lenghten_Legs", 1, list("type" = "displace", "icon" = lenghten_legs_mask, "x" = 0, "y" = 0, "size" = 1))
+
+		if(HUMANHEIGHT_TALLEST)
+			I.add_filter("Lenghten_Torso", 1, list("type" = "displace", "icon" = lenghten_torso_mask, "x" = 0, "y" = 0, "size" = 1))
+			I.add_filter("Lenghten_Legs", 2, list("type" = "displace", "icon" = lenghten_legs_mask, "x" = 0, "y" = 0, "size" = 1))
+
+	return I
+
 #undef HO_DAMAGE_LAYER
 #undef HO_ID_LAYER
 #undef HO_SHOES_LAYER

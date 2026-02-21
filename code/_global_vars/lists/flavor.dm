@@ -72,3 +72,6 @@ GLOBAL_LIST_AS(numbers_as_words, list("One", "Two", "Three", "Four",
 	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
 	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
 	"Eighteen", "Nineteen"))
+
+// Heights list
+GLOBAL_LIST_AS(heights_list, list(HUMANHEIGHT_SHORTEST, HUMANHEIGHT_SHORT, HUMANHEIGHT_MEDIUM, HUMANHEIGHT_TALL, HUMANHEIGHT_TALLEST))

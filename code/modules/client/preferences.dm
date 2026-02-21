@@ -281,6 +281,7 @@
 	character.gender = gender
 	character.pronouns = pronouns
 	character.age = age
+	character.height = height
 	character.b_type = b_type
 
 	character.eye_color = eye_color

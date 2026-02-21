@@ -33,6 +33,7 @@
 	var/makeup_style
 
 	var/age = 30		//Player's age (pure fluff)
+	var/height = HUMANHEIGHT_MEDIUM  //Player's height
 	var/b_type = "A+"	//Player's bloodtype
 
 	/// The amount this mob's age has been changed in the round, if it has
