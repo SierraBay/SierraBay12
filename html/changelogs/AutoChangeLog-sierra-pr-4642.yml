@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - bugfix: Объявление войны наемников больше не учитывает время из лобби, до 
+      старта раунда
+delete-after: true
