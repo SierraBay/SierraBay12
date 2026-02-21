@@ -2218,11 +2218,6 @@
 "eg" = (
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
@@ -4487,10 +4482,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/port)
+"qi" = (
+/obj/structure/railing/mapped,
+/obj/floor_decal/industrial/outline/orange,
+/obj/structure/ship_munition/disperser_charge/fire/military,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/patrol/maintenance/upper/munition)
 "qn" = (
-/obj/structure/ship_munition/disperser_charge/explosive/military,
-/obj/floor_decal/industrial/outline/red,
 /obj/machinery/light,
+/obj/floor_decal/industrial/outline/orange,
+/obj/structure/ship_munition/disperser_charge/fire/military,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "qG" = (
@@ -4818,7 +4819,7 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced,
 /area/ship/patrol/maintenance/upper/waste)
 "xT" = (
 /obj/structure/cable{
@@ -4891,7 +4892,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "Ae" = (
-/obj/structure/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -4902,11 +4902,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "Ao" = (
@@ -5018,8 +5014,8 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/ship_munition/disperser_charge/fire/military,
-/obj/floor_decal/industrial/outline/orange,
+/obj/structure/ship_munition/disperser_charge/explosive/military,
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "Dx" = (
@@ -5134,9 +5130,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "GW" = (
-/obj/structure/ship_munition/disperser_charge/fire/military,
-/obj/floor_decal/industrial/outline/orange,
 /obj/structure/railing/mapped,
+/obj/structure/ship_munition/disperser_charge/explosive/military,
+/obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/maintenance/upper/munition)
 "Hm" = (
@@ -16006,8 +16002,8 @@ Kr
 bJ
 bJ
 cm
-GS
-GS
+qi
+qi
 qn
 bJ
 CW

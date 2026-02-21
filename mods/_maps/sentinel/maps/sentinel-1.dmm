@@ -2533,13 +2533,19 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/command/bridge)
 "eW" = (
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/structure/window/boron_reinforced,
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "eX" = (
 /obj/structure/table/standard,
@@ -3160,16 +3166,23 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
 "gf" = (
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
+	},
+/obj/floor_decal/industrial/warning/corner,
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "gg" = (
 /obj/structure/railing/mapped,
@@ -3529,18 +3542,8 @@
 /obj/machinery/computer/modular/preset/sensors,
 /obj/machinery/button/blast_door{
 	desc = "A remote control-switch for the observation shutters";
-	dir = 4;
 	id_tag = "reaper_window_lock";
 	name = "Window Blast Doors control";
-	pixel_x = -24;
-	pixel_y = 6;
-	req_access = list("ACCESS_CAVALRY")
-	},
-/obj/machinery/button/blast_door{
-	desc = "A remote control-switch for the observation shutters";
-	dir = 4;
-	id_tag = "reaper_rear_hatch_lock";
-	name = "Reaper Rear Hatch Lock";
 	pixel_x = -24;
 	pixel_y = -6;
 	req_access = list("ACCESS_CAVALRY")
@@ -3866,13 +3869,13 @@
 /area/ship/patrol/command/hangar)
 "hD" = (
 /obj/machinery/door/firedoor,
-/obj/paint/black,
 /obj/wallframe_spawn/reinforced/titanium,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "reaper_window_lock";
 	name = "Reaper Window Blast Doors"
 	},
+/obj/paint/black,
 /turf/simulated/floor/plating,
 /area/ship/reaper)
 "hE" = (
@@ -4955,6 +4958,7 @@
 	dir = 8;
 	frequency = 1380
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/reaper)
 "jf" = (
@@ -5464,12 +5468,12 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/floor_decal/corner/red/full,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1"
 	},
-/turf/simulated/floor/tiled/dark,
+/obj/floor_decal/corner/red/mono,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "kd" = (
 /obj/submap_landmark/spawnpoint/away_patrol/captain,
@@ -5760,8 +5764,8 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/floor_decal/corner/green/full,
-/turf/simulated/floor/tiled/dark,
+/obj/floor_decal/corner/green/mono,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "kA" = (
 /obj/floor_decal/industrial/warning{
@@ -6007,9 +6011,9 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/floor_decal/corner/green/full,
 /obj/machinery/light,
-/turf/simulated/floor/tiled/dark,
+/obj/floor_decal/corner/green/mono,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "kZ" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -6152,18 +6156,20 @@
 /area/ship/patrol/command/hangar)
 "lm" = (
 /obj/floor_decal/industrial/warning,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "ln" = (
 /obj/structure/catwalk,
@@ -6615,12 +6621,15 @@
 /turf/simulated/wall/ocp_wall,
 /area/ship/patrol/engineering/fussion/control)
 "mf" = (
+/obj/floor_decal/industrial/warning/full,
+/obj/structure/cable/yellow,
 /obj/machinery/power/fusion_core/mapped{
 	id_tag = null;
 	initial_id_tag = "fusion_core_patrol"
 	},
-/obj/structure/cable/yellow,
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "mg" = (
 /obj/structure/catwalk,
@@ -6646,18 +6655,30 @@
 /area/ship/patrol/maintenance/engine/port)
 "mh" = (
 /obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 1
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "mi" = (
 /obj/floor_decal/industrial/warning,
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "mj" = (
 /obj/paint/dark_gunmetal,
@@ -6850,16 +6871,6 @@
 	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/structure/table/steel_reinforced,
-/obj/item/taperoll/atmos{
-	req_access = list("ACCESS_CAVALRY");
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/taperoll/engineering{
-	req_access = list("ACCESS_CAVALRY");
-	pixel_x = -6;
-	pixel_y = -5
-	},
 /obj/item/weldingtool/largetank{
 	pixel_x = 2;
 	pixel_y = 5
@@ -6887,49 +6898,33 @@
 	dir = 1;
 	icon_state = "tube1"
 	},
-/obj/machinery/power/smes/buildable/preset/patrol/engine_gyrotron,
-/obj/structure/cable/green{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/floor_decal/industrial/warning/fulltile,
-/turf/simulated/floor/plating,
-/area/ship/patrol/engineering/fussion/control)
-"mG" = (
-/obj/floor_decal/industrial/warning/corner,
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
+	d1 = 1;
 	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/floor_decal/industrial/warning/corner,
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 8;
-	pixel_x = 0
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
-"mH" = (
+"mG" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/floor_decal/industrial/warning,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/ship/patrol/engineering/fussion/control)
-"mI" = (
+"mH" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -6941,16 +6936,36 @@
 /obj/item/airlock_brace{
 	req_access = list("ACCESS_CAVALRY")
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/reinforced,
 /area/ship/patrol/engineering/fussion/control)
-"mJ" = (
+"mI" = (
+/obj/floor_decal/industrial/warning{
+	dir = 9
+	},
+/obj/floor_decal/industrial/warning/corner,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/boron_reinforced,
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
+/area/ship/patrol/engineering/fussion/control)
+"mJ" = (
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "mK" = (
 /obj/machinery/door/blast/regular{
@@ -6961,8 +6976,14 @@
 /turf/simulated/floor/reinforced,
 /area/ship/patrol/engineering/fussion/control)
 "mL" = (
-/obj/machinery/door/window/brigdoor/southright,
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "mM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
@@ -7136,11 +7157,12 @@
 /obj/machinery/embedded_controller/radio/airlock/access_controller{
 	id_tag = "prototype_controller_patrol";
 	name = "Fusion Maintenance Access Controller";
-	pixel_x = 26;
+	pixel_x = 23;
 	req_access = list("ACCESS_CAVALRY");
 	tag_exterior_door = "prototype_exterior_pat";
 	tag_interior_door = "prototype_interior_pat";
-	pixel_y = -12
+	pixel_y = 0;
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/hallway)
@@ -7156,51 +7178,64 @@
 /turf/simulated/floor/tiled,
 /area/ship/patrol/engineering/hallway)
 "ne" = (
-/obj/machinery/portable_atmospherics/canister/helium{
-	start_pressure = 14999
-	},
 /obj/structure/railing/mapped{
 	color = "#393f43"
 	},
 /obj/floor_decal/industrial/warning/fulltile,
+/obj/machinery/power/smes/buildable/preset/patrol/engine_gyrotron,
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "nf" = (
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "stripe"
-	},
 /obj/floor_decal/industrial/warning{
 	dir = 8;
 	pixel_x = 0
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/structure/cable/yellow,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "ng" = (
-/obj/machinery/fusion_fuel_injector/mapped{
-	dir = 4;
-	initial_id_tag = "fusion_injector_patrol"
-	},
-/turf/simulated/floor,
-/area/ship/patrol/engineering/fussion/control)
-"nh" = (
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "prototype_chamber_blast_patrol"
 	},
 /obj/wallframe_spawn/reinforced_phoron,
-/turf/simulated/floor,
+/turf/simulated/floor/reinforced,
+/area/ship/patrol/engineering/fussion/control)
+"nh" = (
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 4
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nj" = (
 /obj/floor_decal/industrial/warning{
 	dir = 9
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nk" = (
 /obj/floor_decal/industrial/warning/corner{
@@ -7209,7 +7244,10 @@
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nm" = (
 /obj/floor_decal/industrial/warning/corner{
@@ -7221,14 +7259,23 @@
 /obj/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nn" = (
-/obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 5
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "no" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
@@ -7521,21 +7568,27 @@
 	dir = 1;
 	icon_state = "stripe"
 	},
-/obj/floor_decal/industrial/warning/corner,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "nM" = (
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable/green{
+/obj/floor_decal/industrial/warning/corner{
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/floor_decal/industrial/warning,
-/obj/floor_decal/industrial/warning/corner{
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
@@ -7548,38 +7601,53 @@
 /area/ship/patrol/engineering/fussion/control)
 "nO" = (
 /obj/floor_decal/industrial/warning/corner{
-	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 1
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 4
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nP" = (
 /obj/floor_decal/industrial/warning/corner,
 /obj/floor_decal/industrial/warning{
 	dir = 9
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nR" = (
 /obj/floor_decal/industrial/warning/corner{
 	dir = 8
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 5;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 5
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nS" = (
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "nT" = (
 /obj/structure/cable{
@@ -7810,30 +7878,27 @@
 	req_access = list("ACCESS_CAVALRY")
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/ship/patrol/engineering/fussion/control)
-"on" = (
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/portable_atmospherics/canister/hydrogen/engine_setup,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1";
-	color = "#393f43"
+/turf/simulated/floor/plating,
+/area/ship/patrol/engineering/fussion/control)
+"on" = (
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1";
-	color = "#393f43"
+/obj/floor_decal/industrial/warning{
+	dir = 4
 	},
-/obj/floor_decal/industrial/warning/fulltile,
-/obj/machinery/light/small,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "oo" = (
@@ -7851,40 +7916,60 @@
 /obj/floor_decal/industrial/warning{
 	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner,
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "oq" = (
 /obj/floor_decal/industrial/warning{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 4
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 1
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "os" = (
 /obj/floor_decal/industrial/warning{
-	dir = 8;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 8
 	},
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "ot" = (
 /obj/floor_decal/industrial/warning{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 4
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
+	},
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "ox" = (
 /obj/floor_decal/corner/black{
@@ -8063,48 +8148,60 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "oL" = (
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /obj/floor_decal/industrial/warning/corner{
-	dir = 1;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 1
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 4
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "oM" = (
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 10;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 10
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "oO" = (
 /obj/floor_decal/industrial/warning/corner{
 	dir = 1
 	},
 /obj/floor_decal/industrial/warning{
-	dir = 6;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 6
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "oP" = (
 /obj/floor_decal/industrial/warning/corner,
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "oR" = (
 /obj/structure/cable{
@@ -8176,6 +8273,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "oY" = (
@@ -8258,65 +8356,77 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
-/obj/floor_decal/industrial/warning{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "pg" = (
-/obj/machinery/portable_atmospherics/canister/boron,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1";
-	color = "#393f43"
+/obj/floor_decal/industrial/warning{
+	dir = 4
 	},
-/obj/structure/railing/mapped{
-	dir = 8;
-	icon_state = "railing0-1";
-	color = "#393f43"
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
 	},
-/obj/floor_decal/industrial/warning/fulltile,
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "ph" = (
 /obj/floor_decal/industrial/warning{
-	dir = 10;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 10
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	frequency = 1442;
-	icon_state = "map_injector";
-	id = "patrol_rust";
-	use_power = 1
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "pi" = (
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /obj/floor_decal/industrial/warning/corner,
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "pk" = (
 /obj/floor_decal/industrial/warning/corner,
 /obj/floor_decal/industrial/warning/corner{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "warningcorner";
+	dir = 8
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "pl" = (
 /obj/floor_decal/industrial/warning{
-	dir = 6;
-	icon_state = "warning"
+	icon_state = "warning";
+	dir = 6
 	},
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "pm" = (
 /obj/paint/dark_gunmetal,
@@ -8463,45 +8573,33 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "pB" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 1;
-	icon_state = "stripe"
-	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/ship/patrol/engineering/fussion/control)
-"pC" = (
-/obj/floor_decal/industrial/warning/corner{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
+	},
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 1
+/turf/simulated/floor/plating,
+/area/ship/patrol/engineering/fussion/control)
+"pC" = (
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 4
 	},
-/turf/simulated/floor,
+/obj/floor_decal/industrial/warning{
+	dir = 8
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "pD" = (
 /obj/structure/morgue{
@@ -8764,11 +8862,11 @@
 /turf/simulated/floor/reinforced,
 /area/ship/reaper)
 "vd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
 /obj/paint/dark_gunmetal,
-/turf/simulated/wall/r_wall,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/wall/ocp_wall,
 /area/ship/patrol/engineering/fussion/control)
 "vR" = (
 /obj/structure/cable{
@@ -8865,17 +8963,22 @@
 /area/ship/patrol/command/cannon)
 "xL" = (
 /obj/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warning";
 	dir = 1
 	},
-/turf/simulated/floor,
+/obj/floor_decal/industrial/warning/corner,
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "xR" = (
 /obj/floor_decal/corner/blue{
@@ -8906,20 +9009,19 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/patrol/command/cannon)
 "yJ" = (
-/obj/floor_decal/industrial/warning{
+/obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/industrial/warning{
-	dir = 8;
-	pixel_x = 0
-	},
-/turf/simulated/floor,
+/obj/floor_decal/industrial/outline/yellow,
+/turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
+"zd" = (
+/obj/structure/cable,
+/obj/machinery/pointdefense{
+	initial_id_tag = "patrol_pd"
+	},
+/turf/simulated/floor/reinforced,
+/area/space)
 "zp" = (
 /obj/paint/meatstation/lab,
 /obj/structure/cable{
@@ -8936,13 +9038,22 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "zt" = (
-/obj/paint/dark_gunmetal,
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 10
 	},
-/turf/simulated/wall/r_wall,
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/unary/outlet_injector{
+	frequency = 1442;
+	icon_state = "map_injector";
+	id = "patrol_rust";
+	use_power = 1
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "zJ" = (
 /obj/paint/meatstation/lab,
@@ -9140,28 +9251,24 @@
 /obj/floor_decal/industrial/warning{
 	dir = 4
 	},
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/floor_decal/industrial/warning{
-	dir = 8;
-	pixel_x = 0
-	},
 /turf/simulated/floor,
 /area/ship/patrol/engineering/fussion/control)
 "Fo" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 9
+/obj/floor_decal/industrial/warning{
+	dir = 8
 	},
-/obj/paint/dark_gunmetal,
-/turf/simulated/wall/r_wall,
+/obj/floor_decal/industrial/warning/corner{
+	dir = 4
+	},
+/obj/floor_decal/industrial/warning/corner,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "Fr" = (
 /obj/structure/dispenser/oxygen,
@@ -9257,9 +9364,17 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/patrol/medbay)
 "GS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/paint/dark_gunmetal,
-/turf/simulated/wall/ocp_wall,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 5
+	},
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "Hi" = (
 /obj/machinery/door/airlock/maintenance,
@@ -9434,8 +9549,18 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/patrol/command/cannon)
 "KV" = (
-/obj/structure/window/boron_reinforced,
-/turf/simulated/floor/reinforced,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
+	},
+/obj/floor_decal/industrial/warning/corner,
+/obj/floor_decal/industrial/warning/corner{
+	icon_state = "warningcorner";
+	dir = 8
+	},
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "Lm" = (
 /obj/paint/red,
@@ -9470,10 +9595,15 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
+/obj/machinery/atmospherics/omni/mixer{
+	tag_east = 2;
+	tag_west = 1;
+	tag_west_con = 0.29;
+	tag_north = 1;
+	tag_north_con = 0.71
 	},
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/portable_atmospherics/canister/hydrogen/engine_setup,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "LP" = (
@@ -9506,19 +9636,9 @@
 /turf/simulated/floor/reinforced,
 /area/space)
 "Mn" = (
-/obj/floor_decal/industrial/warning{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/floor_decal/industrial/warning/corner{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/ship/patrol/engineering/fussion/control)
+/obj/paint/dark_gunmetal,
+/turf/simulated/wall/ocp_wall,
+/area/ship/patrol/maintenance/engine/port)
 "MC" = (
 /obj/machinery/pointdefense{
 	initial_id_tag = "patrol_pd"
@@ -9657,8 +9777,8 @@
 /obj/paint/dark_gunmetal,
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/engineering/fussion/control)
@@ -9696,6 +9816,7 @@
 /area/ship/reaper)
 "Qa" = (
 /obj/submap_landmark/joinable_submap/away_scg_patrol,
+/obj/floor_decal/corner/grey_alt,
 /turf/simulated/floor/tiled,
 /area/ship/patrol/crew/hallway/lower)
 "Qe" = (
@@ -9777,12 +9898,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "RD" = (
-/obj/structure/grille,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "prototype_exhaust_patrol"
+/obj/floor_decal/industrial/warning,
+/obj/floor_decal/industrial/warning{
+	icon_state = "warning";
+	dir = 1
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/reinforced{
+	map_airless = 1
+	},
 /area/ship/patrol/engineering/fussion/control)
 "RG" = (
 /obj/floor_decal/industrial/warning/full,
@@ -9815,10 +9938,11 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/barracks/armory)
 "Sy" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/paint/dark_gunmetal,
+/turf/simulated/wall/ocp_wall,
 /area/ship/patrol/engineering/fussion/control)
 "SC" = (
 /obj/paint/dark_gunmetal,
@@ -10222,14 +10346,10 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/command/bridge)
 "ZG" = (
-/obj/machinery/atmospherics/omni/mixer{
-	tag_east = 2;
-	tag_west = 1;
-	tag_west_con = 0.29;
-	tag_north = 1;
-	tag_north_con = 0.71
+/obj/machinery/atmospherics/binary/pump{
+	dir = 4
 	},
-/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/portable_atmospherics/canister/boron,
 /turf/simulated/floor/plating,
 /area/ship/patrol/engineering/fussion/control)
 "ZX" = (
@@ -18863,7 +18983,7 @@ om
 oJ
 pf
 pA
-md
+yJ
 md
 tb
 aa
@@ -18982,7 +19102,7 @@ mF
 nf
 nM
 on
-md
+EJ
 pg
 pB
 LN
@@ -19099,14 +19219,14 @@ fY
 kJ
 lj
 Ne
-zt
+md
 mG
-xL
-Mn
-EJ
-yJ
-yJ
-pC
+nN
+nN
+oo
+nN
+nN
+Dp
 ZG
 md
 tb
@@ -19221,14 +19341,14 @@ fC
 fB
 fc
 Ne
-md
+me
 mH
 ng
-nN
-oo
-nN
-nN
-Dp
+ng
+ng
+ng
+ng
+me
 Sy
 md
 tb
@@ -19346,11 +19466,11 @@ Ne
 me
 mI
 nh
+Fo
 nh
+Fo
 nh
-nh
-nh
-me
+zt
 vd
 md
 tb
@@ -19472,8 +19592,8 @@ nO
 op
 oL
 ph
-GS
-Fo
+RD
+me
 tb
 tb
 aa
@@ -19588,14 +19708,14 @@ fD
 fc
 Ne
 me
-mJ
+xL
 nk
 nP
 oq
 oM
 pi
+mi
 me
-md
 Zn
 aa
 aa
@@ -19838,8 +19958,8 @@ nR
 os
 oO
 pk
+mi
 me
-md
 WX
 aa
 aa
@@ -19960,8 +20080,8 @@ nS
 ot
 oP
 pl
+RD
 me
-md
 tb
 aa
 aa
@@ -20076,14 +20196,14 @@ fE
 fc
 Ne
 me
+GS
+pC
+oq
+pC
+ot
+pC
+pl
 me
-me
-me
-me
-me
-me
-me
-md
 tb
 aa
 aa
@@ -20197,15 +20317,15 @@ kk
 fE
 fc
 Ne
-mj
-mj
-mj
-mj
-mj
-mj
-mj
-mj
-mj
+Mn
+Mn
+Mn
+Mn
+Mn
+Mn
+Mn
+Mn
+Mn
 tR
 aa
 aa
@@ -20574,7 +20694,7 @@ pH
 FA
 SM
 SM
-Mm
+zd
 aa
 aa
 aa
