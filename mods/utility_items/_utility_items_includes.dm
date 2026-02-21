@@ -61,4 +61,5 @@
 #include "code/lang_tweak.dm"
 #include "code/ghost_medscan.dm"
 #include "code/chem_mine.dm"
+#include "code/soy_recipes.dm"
 #endif
