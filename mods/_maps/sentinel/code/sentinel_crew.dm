@@ -75,12 +75,11 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	title = "Army SCGSO Trooper"
 	total_positions = 2
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/army_ops
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/scga/e4_alt,
-		/datum/mil_rank/scga/e5
-		)
+		/datum/mil_rank/fleet/e4,
+		/datum/mil_rank/fleet/e5
+	)
 	supervisors = "Army Leader"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
@@ -103,10 +102,10 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	title = "Army SCGSO Leader"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/captain
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
+		/datum/mil_rank/fleet/e6,
+		/datum/mil_rank/fleet/e7
 	)
 	supervisors = "Lieutenant Commander, Command of the Battle Group Bravo of the 5th fleet, SCGDF"
 	loadout_allowed = TRUE
@@ -217,10 +216,9 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/engineer
 	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/fleet/e4,
-		/datum/mil_rank/fleet/e5,
-		/datum/mil_rank/fleet/e6
-		)
+		/datum/mil_rank/fleet/o1,
+		/datum/mil_rank/fleet/o2
+	)
 	supervisors = "Lieutenant Commander"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -400,19 +398,19 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/patrol/army_ops
 	name = PATROL_OUTFIT_JOB_NAME("Ops")
-	head = /obj/item/clothing/head/scga/utility
+	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
 	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
 	id_types = list(/obj/item/card/id/awaycavalry/ops)
 	gloves = /obj/item/clothing/gloves/scga/duty
-	shoes = /obj/item/clothing/shoes/scga/utility/tan
+	shoes = /obj/item/clothing/shoes/swat
 
 /singleton/hierarchy/outfit/job/patrol/captain
 	name = PATROL_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/scga/beret
+	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
 	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/combat
-	shoes = /obj/item/clothing/shoes/scga/utility/tan
+	shoes = /obj/item/clothing/shoes/swat
 
 /singleton/hierarchy/outfit/job/patrol/engineer
 	name = PATROL_OUTFIT_JOB_NAME("Technician")

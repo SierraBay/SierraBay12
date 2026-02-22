@@ -62,14 +62,18 @@
 		/obj/item/clothing/accessory/storage/holster/thigh,
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
+		/obj/item/clothing/accessory/helmet_cover/navy,
 		/obj/item/gun/projectile/pistol/m22f,
-		/obj/item/clothing/suit/armor/pcarrier/tan,
-		/obj/item/clothing/accessory/storage/pouches/tan,
-		/obj/item/clothing/accessory/arm_guards/tan,
-		/obj/item/clothing/accessory/leg_guards/tan,
+		/obj/item/clothing/suit/armor/pcarrier/navy,
+		/obj/item/clothing/accessory/storage/pouches/navy,
+		/obj/item/clothing/accessory/arm_guards/navy,
+		/obj/item/clothing/accessory/leg_guards/navy,
 		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
 		/obj/item/clothing/accessory/armor_tag/solgov,
-		/obj/item/storage/firstaid/light
+		/obj/item/storage/firstaid/light,
+		/obj/item/clothing/head/soft/solgov/fleet,
+		/obj/item/clothing/under/solgov/utility/fleet,
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
 
@@ -96,13 +100,16 @@
 		/obj/item/clothing/head/helmet/tactical,
 		/obj/item/gun/projectile/pistol/m22f,
 		/obj/item/clothing/accessory/helmet_cover/lead,
-		/obj/item/clothing/suit/armor/pcarrier/tan,
-		/obj/item/clothing/accessory/storage/pouches/tan,
-		/obj/item/clothing/accessory/arm_guards/tan,
-		/obj/item/clothing/accessory/leg_guards/tan,
+		/obj/item/clothing/suit/armor/pcarrier/navy,
+		/obj/item/clothing/accessory/storage/pouches/navy,
+		/obj/item/clothing/accessory/arm_guards/navy,
+		/obj/item/clothing/accessory/leg_guards/navy,
 		/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
-		/obj/item/clothing/accessory/armor_tag/solgov,
-		/obj/item/storage/firstaid/light
+		/obj/item/clothing/accessory/armor_tag/solgov/lead,
+		/obj/item/storage/firstaid/light,
+		/obj/item/clothing/head/soft/solgov/fleet,
+		/obj/item/clothing/under/solgov/utility/fleet,
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet

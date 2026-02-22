@@ -65,7 +65,7 @@
 
 /obj/item/clothing/under/scga/utility/away_solpatrol
 	accessories = list(
-		/obj/item/clothing/accessory/solgov/army/tempest
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
 /obj/item/clothing/under/solgov/utility/fleet/officer/pilot_away_solpatrol

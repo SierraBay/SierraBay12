@@ -6455,6 +6455,7 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 9
 	},
+/obj/item/clothing/accessory/solgov/fleet_patch/fifth,
 /turf/simulated/floor/tiled/white,
 /area/ship/patrol/medbay)
 "lN" = (
@@ -8668,6 +8669,13 @@
 /obj/shuttle_landmark/nav_patrol/nav3,
 /turf/space,
 /area/space)
+"qp" = (
+/obj/floor_decal/corner/pink{
+	dir = 6
+	},
+/obj/item/clothing/accessory/solgov/skillbadge/medical,
+/turf/simulated/floor/tiled/white,
+/area/ship/patrol/medbay)
 "qt" = (
 /obj/paint/meatstation/lab,
 /obj/structure/cable{
@@ -16413,7 +16421,7 @@ jV
 pt
 lt
 kR
-lO
+qp
 lO
 mP
 ns
