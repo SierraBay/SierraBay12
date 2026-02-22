@@ -6340,7 +6340,7 @@
 "lQn" = (/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/floor_decal/borderfloorblack{dir = 1},/obj/floor_decal/corner/paleblue/border{dir = 1},/turf/simulated/floor/tiled/dark,/area/medical/sleeper)
 "lQw" = (/obj/random/ironing_board_structure,/obj/item/ironing_iron,/obj/floor_decal/techfloor,/obj/machinery/light/spot,/turf/simulated/floor/tiled/techfloor,/area/crew_quarters/sleep/bunk)
 "lQB" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 4},/turf/simulated/floor/tiled/white,/area/shuttle/petrov/test_room)
-"lQC" = (/obj/machinery/alarm/warm{dir = 1; pixel_y = -24},/turf/simulated/floor/tiled/freezer,/area/crew_quarters/garden)
+"lQC" = (/obj/machinery/alarm{dir = 1; pixel_y = -24},/turf/simulated/floor/tiled/freezer,/area/crew_quarters/garden)
 "lQD" = (/obj/structure/bed/chair/shuttle/white{dir = 4},/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{dir = 4; id_tag = "escape_pod_2_pump"},/obj/floor_decal/borderfloor{dir = 9},/obj/floor_decal/corner/grey/border{dir = 9},/obj/machinery/light/small/emergency{dir = 1},/obj/structure/extinguisher_cabinet{dir = 4; pixel_x = -24},/turf/simulated/floor/tiled/steel_grid,/area/shuttle/escape_pod/escape_pod2/station)
 "lQF" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/structure/catwalk,/turf/simulated/floor/plating,/area/shield/thirddeck)
 "lQG" = (/obj/floor_decal/chapel{dir = 1},/obj/structure/bed/chair/wood/mahogany{dir = 1},/turf/simulated/floor/tiled/dark/monotile,/area/chapel/main)
