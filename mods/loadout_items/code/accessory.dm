@@ -143,6 +143,11 @@ ranks - ec
 		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi'
 	)
 
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_accessory_unathi.dmi',
+		SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_accessory_resomi.dmi'
+	)
+
 	var/renameable = FALSE
 
 /obj/item/clothing/accessory/necklace/collar/gold
