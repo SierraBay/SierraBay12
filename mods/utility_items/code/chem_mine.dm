@@ -178,3 +178,4 @@
 /material/steel/generate_recipes(reinforce_material)
 	. = ..()
 	. += new/datum/stack_recipe/chem_mine(src)
+	. += new/datum/stack_recipe/mainkraft/laserframe(src)
