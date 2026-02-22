@@ -126,6 +126,15 @@
 /obj/item/gun/projectile/sniper/semistrip,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"scc" = (
+/obj/landmark/no_weather_here{
+	layer = 2
+	},
+/obj/landmark{
+	name = "JoinLateCryo"
+	},
+/turf/unsimulated/floor/grass,
+/area/centcom)
 "sJt" = (
 /obj/structure/table/steel,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -362,7 +371,7 @@ djw
 dSB
 ooX
 ooX
-ooX
+scc
 ooX
 ooX
 cpC
@@ -387,9 +396,9 @@ dSB
 dSB
 dSB
 ooX
-ooX
+scc
 pSk
-ooX
+scc
 ooX
 cpC
 cpC
@@ -414,7 +423,7 @@ cpC
 cpC
 ooX
 ooX
-ooX
+scc
 ooX
 ooX
 cpC
