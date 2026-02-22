@@ -3,6 +3,8 @@
 https://github.com/SierraBay/SierraBay12/pull/2317
 https://github.com/SierraBay/SierraBay12/pull/2456
 https://github.com/SierraBay/SierraBay12/pull/2562
+https://github.com/SierraBay/SierraBay12/pull/4602
+
 <!--
   Ссылки на PRы, связанные с модом:
   - Создание
@@ -78,6 +80,7 @@ maps\random_ruins\exoplanet_ruins\playablecolony\playablecolony.dm
 
 Shegar - основной код
 UEDHighCommand - текстовка, помощь с тестами
+Garry Flint - Frontier Alliance: Blockade Runners extention
 <!--
   Здесь находится твой никнейм
   Если работал совместно - никнеймы тех, кто помогал.

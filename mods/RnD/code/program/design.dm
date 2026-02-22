@@ -340,8 +340,6 @@
 /datum/design/item/weapon/large_grenade
 	category = list("Misc")
 
-
-
 /datum/design/circuit/dnaforensics
 
 	name = "DNA analyzer"
@@ -368,8 +366,6 @@
 	name = "circuit board (microscope)"
 	build_path = /obj/machinery/computer/microscope
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4)
-//////////////////////////////items/////////////////////////////////////////
-
 
 /obj/item/net_shell
 	matter = list(MATERIAL_STEEL = 50, MATERIAL_PLASTIC = 50)
