@@ -1,11 +1,10 @@
-var/list/defective_item_list = list()
-var/defective_item_timer = null
-var/defect_check_interval = 30 // default seconds between scans
+// Per-instance timers are used instead of global lists/timers
 
 /datum/component/defective_item
 	var/quality = 50
 	var/malfunction_chance = 10	// percent per check
 	var/check_interval = 30	// seconds between scans
+	var/defective_timer = null // per-instance timer id
 
 /datum/component/defective_item/Initialize(design_quality = 50)
 	if(!isitem(parent))
@@ -19,23 +18,27 @@ var/defect_check_interval = 30 // default seconds between scans
 	I.name = "[I.name] (defective)"
 	I.desc += "\n<span class='warning'>WARNING: This item may malfunction or even explode!</span>"
 
-	defective_item_list += src
-	if(!defective_item_timer)
-		defective_item_timer = addtimer(new Callback(src, PROC_REF(do_global_scan)), defect_check_interval, TIMER_STOPPABLE)
+	// Start a per-instance recurring timer that calls check_defect
+	if(defective_timer)
+		deltimer(defective_timer)
+	defective_timer = addtimer(new Callback(src, PROC_REF(check_defect)), check_interval, TIMER_STOPPABLE)
 
 	return ..()
 
 /datum/component/defective_item/Destroy()
-	defective_item_list -= src
-	if(!LAZYLEN(defective_item_list) && defective_item_timer)
-		deltimer(defective_item_timer)
-		defective_item_timer = null
+	// Stop per-instance timer if present
+	if(defective_timer)
+		deltimer(defective_timer)
+		defective_timer = null
 	return ..()
 
 
 /datum/component/defective_item/proc/check_defect()
-	if(!parent) // item gone
-		defective_item_list -= src
+	// If the parent item is gone, ensure timer is cleared and abort
+	if(!parent || QDELETED(parent))
+		if(defective_timer)
+			deltimer(defective_timer)
+			defective_timer = null
 		return
 
 	var/explode_chance = 1 + (100 - quality) / 2  // 1% base + more for worse quality
@@ -47,13 +50,14 @@ var/defect_check_interval = 30 // default seconds between scans
 	if(prob(malfunction_chance))
 		cause_malfunction()
 
-/datum/component/defective_item/proc/do_global_scan()
-	for(var/i = 1; i <= LAZYLEN(defective_item_list); i++)
-		var/datum/component/defective_item/comp = defective_item_list[i]
-		if(comp)
-			comp.check_defect()
-	if(LAZYLEN(defective_item_list))
-		defective_item_timer = addtimer(new Callback(src, PROC_REF(do_global_scan)), defect_check_interval, TIMER_STOPPABLE)
+	// Reschedule next check if still valid
+	if(parent && !QDELETED(parent))
+		if(defective_timer)
+			deltimer(defective_timer)
+		defective_timer = addtimer(new Callback(src, PROC_REF(check_defect)), check_interval, TIMER_STOPPABLE)
+
+
+// Removed global scanning in favour of per-instance timers (do_global_scan no longer used)
 
 /datum/component/defective_item/proc/explode_item()
 	var/obj/item/I = parent

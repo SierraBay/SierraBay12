@@ -68,16 +68,17 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_MAGNETS       /datum/tech/magnets
 #define RESEARCH_MATERIALS     /datum/tech/materials
 
-// New technology tree categories
-#define RESEARCH_ROBOTICS      /datum/technology/robotics
-#define RESEARCH_SYNDICATE     /datum/technology/syndicate
-#define RESEARCH_WEAPONS       /datum/technology/weapons
-#define RESEARCH_STOCK_PARTS   /datum/technology/stock_parts
-#define RESEARCH_AI_CIRCUITS   /datum/technology/ai_circuits
-#define RESEARCH_EXOSUITS      /datum/technology/exosuits
-#define RESEARCH_MINING        /datum/technology/mining
-#define RESEARCH_POWER         /datum/technology/power
-#define RESEARCH_CYBERNETICS   /datum/technology/cybernetics
+// New technology tree categories mapped to existing /datum/tech types
+// Map new categories to closest existing tech trees to avoid Unknown tech_type warnings
+#define RESEARCH_ROBOTICS      /datum/tech/magnets
+#define RESEARCH_SYNDICATE     /datum/tech/esoteric
+#define RESEARCH_WEAPONS       /datum/tech/combat
+#define RESEARCH_STOCK_PARTS   /datum/tech/engineering
+#define RESEARCH_AI_CIRCUITS   /datum/tech/programming
+#define RESEARCH_EXOSUITS      /datum/tech/engineering
+#define RESEARCH_MINING        /datum/tech/engineering
+#define RESEARCH_POWER         /datum/tech/powerstorage
+#define RESEARCH_CYBERNETICS   /datum/tech/magnets
 
 var/global/list/explosion_watcher_list = list()
 

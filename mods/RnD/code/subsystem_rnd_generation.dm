@@ -9,6 +9,12 @@ var/list/generation_queue = list()
 	. = ..()
 	generation_queue = list()
 
+	// Ensure mission asteroid areas are exempted from area usage tests at runtime
+	if(GLOB.using_map)
+		if(!istype(GLOB.using_map.area_usage_test_exempted_areas, "list"))
+			GLOB.using_map.area_usage_test_exempted_areas = list()
+		GLOB.using_map.area_usage_test_exempted_areas |= list(/area/rnd_mission_asteroid)
+
 /datum/controller/subsystem/rnd_generation/proc/queue_asteroid_generation(obj/overmap/visitable/sector/rnd_mission_asteroid/sector)
 	if(!sector)
 		return
@@ -20,8 +26,8 @@ var/list/generation_queue = list()
 	var/obj/overmap/visitable/sector/rnd_mission_asteroid/sector = generation_queue[1]
 	if(sector && !sector.generation_in_progress)
 		sector.generation_in_progress = TRUE
-		spawn()
-			sector.build_asteroid()
+		// Schedule asteroid build with a short delay instead of spawn()
+		addtimer(new Callback(sector, TYPE_PROC_REF(/obj/overmap/visitable/sector/rnd_mission_asteroid, build_asteroid)), 1, TIMER_STOPPABLE)
 	generation_queue.Cut(1,2)
 
 
@@ -50,6 +56,7 @@ var/list/generation_queue = list()
 	sensor_visibility = 50
 	var/area/rnd_mission_asteroid/asteroid_area
 	var/asteroid_size = 30
+	var/list/_rnd_build_params
 
 /obj/overmap/visitable/sector/rnd_mission_asteroid/New()
 	if(!GLOB.using_map || !GLOB.using_map.use_overmap)
@@ -93,57 +100,82 @@ var/list/generation_queue = list()
 	var/ax2 = cx + half
 	var/ay2 = cy + half
 
+	// Schedule chunked asteroid generation via timer to avoid blocking
+	// Store params on src so the chunk proc can access them
+	src._rnd_build_params = list(zlevel, padding, asteroid_area, a_size, cx, cy, half, ax1, ay1, ax2, ay2)
+	addtimer(new Callback(src, PROC_REF(build_asteroid_chunk)), 1, TIMER_STOPPABLE)
+
+
+/obj/overmap/visitable/sector/rnd_mission_asteroid/proc/build_asteroid_chunk()
+	var/list/p = src._rnd_build_params
+	if(!p)
+		return
+
+	var/zlevel = p[1]
+	var/padding = p[2]
+	var/asteroid_area = p[3]
+	//var/a_size = p[4]
+	var/cx = p[5]
+	var/cy = p[6]
+	var/half = p[7]
+	var/ax1 = p[8]
+	var/ay1 = p[9]
+	var/ax2 = p[10]
+	var/ay2 = p[11]
+
 	// 1. Fill the z-level with space first (in chunks)
-	spawn()
-		var/step = 50
-		for(var/x = 1, x <= world.maxx, x += step)
-			for(var/y = 1, y <= world.maxy, y += step)
-				for(var/turf/T in block(locate(x, y, zlevel), locate(min(x+step-1, world.maxx), min(y+step-1, world.maxy), zlevel)))
-					T.ChangeTurf(/turf/space)
-			sleep(-1)
+	var/step = 50
+	for(var/x = 1, x <= world.maxx, x += step)
+		for(var/y = 1, y <= world.maxy, y += step)
+			for(var/turf/T in block(locate(x, y, zlevel), locate(min(x+step-1, world.maxx), min(y+step-1, world.maxy), zlevel)))
+				T.ChangeTurf(/turf/space)
+		sleep(-1)
 
-		// 2. Create transition-edge border
-		var/list/edges = list()
-		edges += block(locate(1, 1, zlevel), locate(padding, world.maxy, zlevel))
-		edges |= block(locate(world.maxx - padding, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
-		edges |= block(locate(1, 1, zlevel), locate(world.maxx, padding, zlevel))
-		edges |= block(locate(1, world.maxy - padding, zlevel), locate(world.maxx, world.maxy, zlevel))
+	// 2. Create transition-edge border
+	var/list/edges = list()
+	edges += block(locate(1, 1, zlevel), locate(padding, world.maxy, zlevel))
+	edges |= block(locate(world.maxx - padding, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
+	edges |= block(locate(1, 1, zlevel), locate(world.maxx, padding, zlevel))
+	edges |= block(locate(1, world.maxy - padding, zlevel), locate(world.maxx, world.maxy, zlevel))
 
-		// 3. Fill asteroid area with mask turfs for the cave generator to process (in chunks)
-		for(var/x = ax1, x <= ax2, x += step)
-			for(var/y = ay1, y <= ay2, y += step)
-				for(var/turf/T in block(locate(x, y, zlevel), locate(min(x+step-1, ax2), min(y+step-1, ay2), zlevel)))
-					if(T in edges)
-						continue
+	// 3. Fill asteroid area with mask turfs for the cave generator to process (in chunks)
+	for(var/x = ax1, x <= ax2, x += step)
+		for(var/y = ay1, y <= ay2, y += step)
+			for(var/turf/T in block(locate(x, y, zlevel), locate(min(x+step-1, ax2), min(y+step-1, ay2), zlevel)))
+				if(T in edges)
+					continue
 					var/dx = (T.x - cx) / (half + 0.5)
 					var/dy = (T.y - cy) / (half + 0.5)
 					if(dx*dx + dy*dy <= 1.0)
 						T.ChangeTurf(/turf/unsimulated/mask)
 						ChangeArea(T, asteroid_area)
-				sleep(-1)
+		sleep(-1)
 
-		// 4. Generate caves and ore using the standard cave system (delayed)
-		new /datum/random_map/automata/cave_system(null, ax1, ay1, zlevel, ax2, ay2)
-		new /datum/random_map/noise/ore(null, ax1, ay1, zlevel, ax2, ay2)
-		// 5. Generate shuttle landing zone (final step)
-		generate_landing(1)
-		// 6. Place a random ruin from the specified list (synchronously)
-		var/list/ruin_templates = list(
-			/datum/map_template/ruin/exoplanet/hut,
-			/datum/map_template/ruin/exoplanet/monolith,
-			/datum/map_template/ruin/exoplanet/crashed_probe,
-			/datum/map_template/ruin/exoplanet/droppod,
-			/datum/map_template/ruin/exoplanet/radshrine
-		)
-		var/datum/map_template/ruin/exoplanet/ruin = pick(ruin_templates)
-		// Pick a turf in the asteroid area
-		var/turf/ruin_turf = null
-		for(var/i = 0, i < 20 && !ruin_turf, i++)
-			var/turf/T = locate(rand(ax1+5, ax2-5), rand(ay1+5, ay2-5), zlevel)
-			if(T && istype(get_area(T), /area/rnd_mission_asteroid) && !T.density)
-				ruin_turf = T
-		if(ruin && ruin_turf)
-			load_ruin(ruin_turf, ruin)
+	// 4. Generate caves and ore using the standard cave system (delayed)
+	new /datum/random_map/automata/cave_system(null, ax1, ay1, zlevel, ax2, ay2)
+	new /datum/random_map/noise/ore(null, ax1, ay1, zlevel, ax2, ay2)
+	// 5. Generate shuttle landing zone (final step)
+	generate_landing(1)
+	// 6. Place a random ruin from the specified list (synchronously)
+	var/list/ruin_templates = list(
+		/datum/map_template/ruin/exoplanet/hut,
+		/datum/map_template/ruin/exoplanet/monolith,
+		/datum/map_template/ruin/exoplanet/crashed_probe,
+		/datum/map_template/ruin/exoplanet/droppod,
+		/datum/map_template/ruin/exoplanet/radshrine
+	)
+	var/datum/map_template/ruin/exoplanet/ruin = pick(ruin_templates)
+	// Pick a turf in the asteroid area
+	var/turf/ruin_turf = null
+	for(var/i = 0, i < 20 && !ruin_turf, i++)
+		var/turf/T = locate(rand(ax1+5, ax2-5), rand(ay1+5, ay2-5), zlevel)
+		if(T && istype(get_area(T), /area/rnd_mission_asteroid) && !T.density)
+			ruin_turf = T
+	if(ruin && ruin_turf)
+		load_ruin(ruin_turf, ruin)
+
+	// cleanup stored params
+	del(src._rnd_build_params)
 
 /obj/overmap/visitable/sector/rnd_mission_asteroid/proc/generate_landing(num = 1)
 	if(!LAZYLEN(map_z))

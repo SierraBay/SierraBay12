@@ -320,7 +320,7 @@ var/global/list/rnd_tech_categories = list(
 		return list()
 	for(var/cat_id in categories)
 		var/list/nodes = get_rnd_category_tree_nodes(cat_id, corp_id)
-		if(nodes && nodes.len)
+		if(nodes && LAZYLEN(nodes))
 			return nodes
 	return list()
 
