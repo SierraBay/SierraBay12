@@ -383,7 +383,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 /singleton/hierarchy/outfit/job/patrol
 	hierarchy_type = /singleton/hierarchy/outfit/job/patrol
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/away_solpatrol
-	shoes = /obj/item/clothing/shoes/dutyboots
+	shoes = /obj/item/clothing/shoes/combat
 	l_ear = /obj/item/device/radio/headset/away_scg_patrol
 	l_pocket = /obj/item/device/radio
 	r_pocket = /obj/item/crowbar/prybar
@@ -402,7 +402,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/combat
 	id_types = list(/obj/item/card/id/awaycavalry/ops)
 	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet/combat
-	shoes = /obj/item/clothing/shoes/swat
+	shoes = /obj/item/clothing/shoes/combat/marine
 
 /singleton/hierarchy/outfit/job/patrol/captain
 	name = PATROL_OUTFIT_JOB_NAME("Captain")
@@ -410,13 +410,13 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/combat/command
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
 	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet/combat
-	shoes = /obj/item/clothing/shoes/swat
+	shoes = /obj/item/clothing/shoes/combat/marine
 
 /singleton/hierarchy/outfit/job/patrol/engineer
 	name = PATROL_OUTFIT_JOB_NAME("Technician")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solpatrol
 	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/insulated
+	gloves = /obj/item/clothing/gloves/insulated/black
 
 /singleton/hierarchy/outfit/job/patrol/surgeon
 	name = PATROL_OUTFIT_JOB_NAME("Doctor")
