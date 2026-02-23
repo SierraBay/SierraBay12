@@ -135,6 +135,9 @@
 	for(var/overlay in new_overlays)
 		var/image/I = overlay
 		if(I)
+			// Skip pilot and passenger overlays — they have their own alpha mask filters
+			if((I in pilot_overlays) || (I in back_passengers_overlays) || (I in left_back_passengers_overlays) || (I in right_back_passengers_overlays))
+				continue
 			I.filters = filters
 	SetOverlays(new_overlays)
 
