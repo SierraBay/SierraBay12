@@ -93,8 +93,6 @@
 	for (var/obj/item/stack/material/held as anything in contents)
 		if (stack.amount < 1)
 			break
-		if (held == stack)
-			continue
 		if (held.type != stack.type)
 			continue
 		if (held.amount >= held.max_amount)
@@ -107,8 +105,6 @@
 		else
 			held.amount += free_space
 			stack.amount -= free_space
-	if (stack.amount < 1)
-		qdel(stack)
 	prepare_ui(usr)
 	update_icon()
 	return TRUE
