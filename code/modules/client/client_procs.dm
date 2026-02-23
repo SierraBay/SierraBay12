@@ -425,9 +425,24 @@
 		'html/images/ouerelogo.png',
 		'html/images/terstenlogo.png',
 		'html/images/kmslogo.png',
+		'html/images/wardlogo.png',
+		'html/images/graylogo.png',
+		'html/images/aetherlogo.png',
+		'html/images/xionlogo.png',
+		'html/images/eelogo.png',
+		'html/images/slatelogo.png',
+		'html/images/kappalogo.png',
+		'html/images/daisnlogo.png',
+		'html/images/mklogo.png',
+		'html/images/vmlogo.png',
+		'html/images/sglogo.png',
+		'html/images/mmlogo.png',
+		'html/images/zenhulogo.png',
+		'html/images/focallogo.png',
+		'html/images/bishoplogo.png',
 		// [/SIERRA-ADD]
-		'html/images/zhlogo.png'
-		)
+		'html/images/zhlogo.png',
+	)
 	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
 
 

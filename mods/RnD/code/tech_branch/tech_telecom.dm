@@ -22,7 +22,7 @@
 	y = 0.6
 	icon = "monitoring"
 
-	required_technologies = list(/datum/technology/tcom/tcom_parts)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1250
 
@@ -37,7 +37,7 @@
 	y = 0.7
 	icon = "monitoring"
 
-	required_technologies = list(/datum/technology/tcom/monitoring)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1550
 
@@ -52,7 +52,7 @@
 	y = 0.6
 	icon = "relay"
 
-	required_technologies = list(/datum/technology/tcom/tcom_parts)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -67,7 +67,7 @@
 	y = 0.6
 	icon = "solnet_relay"
 
-	required_technologies = list(/datum/technology/tcom/tcom_parts)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1750
 
@@ -82,7 +82,7 @@
 	y = 0.6
 	icon = "subspace"
 
-	required_technologies = list(/datum/technology/tcom/tcom_parts)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -97,7 +97,7 @@
 	y = 0.6
 	icon = "processor"
 
-	required_technologies = list(/datum/technology/tcom/tcom_parts)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -113,7 +113,7 @@
 	y = 0.5
 	icon = "telecom_part"
 
-	required_technologies = list(/datum/technology/tcom)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 750
 
@@ -128,7 +128,7 @@
 	y = 0.3
 	icon = "bscrystal"
 
-	required_technologies = list(/datum/technology/tcom)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1000
 
@@ -144,7 +144,7 @@
 	y = 0.2
 	icon = "telepad"
 
-	required_technologies = list(/datum/technology/tcom/arti_blue)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 3000
 
@@ -160,7 +160,7 @@
 	y = 0.2
 	icon = "rd"
 
-	required_technologies = list(/datum/technology/tcom/arti_blue)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -176,7 +176,7 @@
 	y = 0.2
 	icon = "teleport"
 
-	required_technologies = list(/datum/technology/tcom/arti_blue)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 3000
 
@@ -192,7 +192,7 @@
 	y = 0.2
 	icon = "bluespace"
 
-	required_technologies = list(/datum/technology/tcom/arti_blue)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1800
 
@@ -207,8 +207,129 @@
 	y = 0.2
 	icon = "shieldgen"
 
-	required_technologies = list(/datum/technology/tcom/arti_blue)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
 	unlocks_designs = list("shield_generator", "shield_diffuser")
+
+/datum/technology/telecommunications
+	name = "NTNET RELAY AND COMMUNICATIONS (DAIS)"
+	desc = "NTNet quantum relay and communications systems from DAIS."
+	id = "ntnet_relay_communications_dais"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.1
+	y = 0.5
+	icon = "solnet_relay"
+
+	required_corp_id = RND_MISSION_CORP_DAIS
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list(
+		"ntnet_relay",
+		"tcom-processor",
+		"tcom-server",
+		"tcom-bus"
+	)
+
+/datum/technology/telecommunications/communication_monitoring_dais
+	name = "COMMUNICATION MONITORING (DAIS)"
+	desc = "Communication monitoring and telecommunications server systems from DAIS."
+	id = "communication_monitoring_dais"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.2
+	y = 0.5
+	icon = "monitoring"
+
+	required_corp_id = RND_MISSION_CORP_DAIS
+	min_reputation = 5
+	required_tech_levels = list()
+	cost = 1500
+
+	unlocks_designs = list(
+		"comm_monitor",
+		"comm_server",
+		"message_monitor"
+	)
+
+/datum/technology/telecommunications/communication_crew_controls_dais
+	name = "COMMUNICATION AND CREW CONTROLS (DAIS)"
+	desc = "Communication and crew control systems from DAIS."
+	id = "communication_crew_controls_dais"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.3
+	y = 0.5
+	icon = "processor"
+
+	required_corp_id = RND_MISSION_CORP_DAIS
+	min_reputation = 10
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list(
+		"accounts",
+		"traffic_server"
+	)
+
+/datum/technology/telecommunications/subspace_broadcasting_kappa
+	name = "SUBSPACE BROADCASTING TECHNOLOGIES (Kappa)"
+	desc = "Subspace broadcasting and receiving systems from Kappa Communications."
+	id = "subspace_broadcasting_kappa"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.1
+	y = 0.5
+	icon = "subspace"
+
+	required_corp_id = RND_MISSION_CORP_KAPPA
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 1200
+
+	unlocks_designs = list(
+		"tcom-broadcaster",
+		"tcom-receiver"
+	)
+
+/datum/technology/telecommunications/subspace_mainframes_kappa
+	name = "SUBSPACE MAINFRAMES (Kappa)"
+	desc = "Subspace mainframe systems from Kappa Communications."
+	id = "subspace_mainframes_kappa"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.2
+	y = 0.5
+	icon = "relay"
+
+	required_corp_id = RND_MISSION_CORP_KAPPA
+	min_reputation = 5
+	required_tech_levels = list()
+	cost = 1600
+
+	unlocks_designs = list(
+		"tcom-bus"
+	)
+
+/datum/technology/telecommunications/bluespace_relay_kappa
+	name = "BLUESPACE RELAY (Kappa)"
+	desc = "Bluespace relay systems from Kappa Communications."
+	id = "bluespace_relay_kappa"
+	tech_type = RESEARCH_ENGINEERING
+
+	x = 0.3
+	y = 0.5
+	icon = "bluespace"
+
+	required_corp_id = RND_MISSION_CORP_KAPPA
+	min_reputation = 10
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list(
+		"bluespacerelay"
+	)

@@ -8,8 +8,7 @@ Variables:
 - all_designs is a list of all /datum/technology that can potentially be researched by the player.
 - researched_tech contains all researched technologies
 - known_designs contains all researched /datum/design.
-- experiments contains data related to earning research points, more info in experiment.dm
-- research_points is an amount of points that can be spend on researching technologies
+- experiments contains data related to research progress, more info in experiment.dm
 - design_categories_protolathe stores all unlocked categories for protolathe designs
 - design_categories_imprinter stores all unlocked categories for circuit imprinter designs
 
@@ -35,6 +34,30 @@ The tech datums are the actual "tech trees" that you improve through researching
 **						Master Types						  **
 **	Includes all the helper procs and basic tech processing.  **
 ***************************************************************/
+// Prevent startup errors about undefined research macros
+// These match values from missions.dm and corporate_tech_trees.dm
+
+#ifndef RND_MISSION_CORP_NANOTRASEN
+#define RND_MISSION_CORP_NANOTRASEN "nanotrasen"
+#define RND_MISSION_CORP_VEYMED "veymed"
+#define RND_MISSION_CORP_MORPHEUS "morpheus"
+#define RND_MISSION_CORP_HEPHAESTUS "hephaestus"
+#define RND_MISSION_CORP_DAIS "dais"
+#define RND_MISSION_CORP_GRAYSON "grayson"
+#define RND_MISSION_CORP_KAPPA "kappa"
+#define RND_MISSION_CORP_AETHER "aether"
+#define RND_MISSION_CORP_WARD_TAKAHASHI "ward_takahashi"
+#define RND_MISSION_CORP_EINSTEIN "einstein"
+#define RND_MISSION_CORP_XION "xion"
+#define RND_MISSION_CORP_SLATE "slate"
+#define RND_MISSION_CORP_MAHIMAKU "mahimaku"
+#define RND_MISSION_CORP_FOCAL "focal"
+#define RND_MISSION_CORP_ZENG_HU "zeng_hu"
+#define RND_MISSION_CORP_BISHOP "bishop"
+#define RND_MISSION_CORP_SHELLGUARD "shellguard"
+#define RND_MISSION_CORP_ALMALIKI "almaliki"
+#endif
+
 #define RESEARCH_ENGINEERING   /datum/tech/engineering
 #define RESEARCH_BIOTECH       /datum/tech/biotech
 #define RESEARCH_COMBAT        /datum/tech/combat
@@ -45,9 +68,17 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_MAGNETS       /datum/tech/magnets
 #define RESEARCH_MATERIALS     /datum/tech/materials
 
-GLOBAL_VAR_AS(research_point_gained, 0)
-GLOBAL_VAR_AS(score_research_point_gained, 0)
-var/global/list/RDcomputer_list = list()
+// New technology tree categories
+#define RESEARCH_ROBOTICS      /datum/technology/robotics
+#define RESEARCH_SYNDICATE     /datum/technology/syndicate
+#define RESEARCH_WEAPONS       /datum/technology/weapons
+#define RESEARCH_STOCK_PARTS   /datum/technology/stock_parts
+#define RESEARCH_AI_CIRCUITS   /datum/technology/ai_circuits
+#define RESEARCH_EXOSUITS      /datum/technology/exosuits
+#define RESEARCH_MINING        /datum/technology/mining
+#define RESEARCH_POWER         /datum/technology/power
+#define RESEARCH_CYBERNETICS   /datum/technology/cybernetics
+
 var/global/list/explosion_watcher_list = list()
 
 
@@ -61,9 +92,13 @@ var/global/list/explosion_watcher_list = list()
 	var/list/researched_nodes = list() // All research nodes
 
 	var/datum/experiment_data/experiments
-	var/research_points = 0
 	var/list/uniquekeys = list()
 	var/known_research_file_ids = list()
+
+	/// Corporation reputation system - tracks reputation with each corporation
+	/// Values range from -50 to +50 for each corporation
+	/// Used to determine access to and cost of corporate tech nodes
+	var/list/corporation_reputation = list()
 
 
 /datum/research/New()
@@ -73,12 +108,25 @@ var/global/list/explosion_watcher_list = list()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
 
+	// Initialize corporation reputation list
+	corporation_reputation[RND_MISSION_CORP_NANOTRASEN] = 0
+	corporation_reputation[RND_MISSION_CORP_VEYMED] = 0
+	corporation_reputation[RND_MISSION_CORP_HEPHAESTUS] = 0
+	corporation_reputation[RND_MISSION_CORP_DAIS] = 0
+	corporation_reputation[RND_MISSION_CORP_GRAYSON] = 0
+	corporation_reputation[RND_MISSION_CORP_KAPPA] = 0
+	corporation_reputation[RND_MISSION_CORP_AETHER] = 0
+	corporation_reputation[RND_MISSION_CORP_WARD_TAKAHASHI] = 0
+	corporation_reputation[RND_MISSION_CORP_EINSTEIN] = 0
+	corporation_reputation[RND_MISSION_CORP_XION] = 0
+	corporation_reputation[RND_MISSION_CORP_SLATE] = 0
+	corporation_reputation[RND_MISSION_CORP_MAHIMAKU] = 0
+	corporation_reputation[RND_MISSION_CORP_FOCAL] = 0
+
 /datum/research/proc/IsResearched(datum/technology/T)
 	return (T in researched_nodes)
 
 /datum/research/proc/CanResearch(datum/technology/T)
-	if(T.cost > research_points)
-		return FALSE
 	var/datum/tech/mytree = locate(T.tech_type) in researched_tech
 	if(!mytree || !mytree.shown) // invalid tech_type or hidden tree, no bypassing safeties!
 		return
@@ -90,9 +138,10 @@ var/global/list/explosion_watcher_list = list()
 		if(tech_tree.level < level)
 			return FALSE
 
-	for(var/tech in T.required_technologies)
-		var/datum/technology/tech_node = locate(tech) in SSresearch.all_tech_nodes
-		if(!IsResearched(tech_node))
+	// Check corporation reputation requirement instead of required_technologies
+	if(T.required_corp_id)
+		var/corp_rep = corporation_reputation[T.required_corp_id]
+		if(corp_rep < T.min_reputation)
 			return FALSE
 
 	return TRUE
@@ -105,13 +154,15 @@ var/global/list/explosion_watcher_list = list()
 	researched_nodes += T
 	var/datum/tech/tree = locate(T.tech_type) in researched_tech
 	researched_tech[tree] += T
-	if(!force)
-		adjust_research_points(-T.cost)
 
 	if(initial) // Initial technologies don't add levels
 		tree.maxlevel -= 1
 	else
 		tree.level += 1
+
+	// Increase reputation with corporation when tech is researched
+	if(T.required_corp_id)
+		ChangeCorporationReputation(T.required_corp_id, 5)
 
 	for(var/id in T.unlocks_designs)
 		AddDesign2Known(SSresearch.get_design(id))
@@ -204,16 +255,6 @@ var/global/list/explosion_watcher_list = list()
 				T.shown = TRUE
 				return
 
-/datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
-	if(D.uniquekey in uniquekeys)
-		return 0
-	uniquekeys += D.uniquekey
-	return (rand(500, 1000) * D.size)
-
-/datum/research/proc/adjust_research_points(value)
-	if(value > 0)
-		GLOB.research_point_gained += value
-	research_points += value
 
 /datum/tech	//Datum of individual technologies.
 	var/name = "name"          //Name of the technology.
@@ -327,8 +368,13 @@ var/global/list/explosion_watcher_list = list()
 
 	var/list/required_technologies = list() // Ids of techologies that are required to be unlocked before this one. Should have same tech_type
 	var/list/required_tech_levels = list()  // list("biotech" = 5, ...) Ids and required levels of tech
-	var/cost = 100                          // How much research points required to unlock this techology
+	var/cost = 100                          // Base cost used for tech node pricing
 	var/list/unlocks_designs = list()       // Ids of designs that this technology unlocks
+
+	/// Corporation ID required for this tech (e.g., RND_MISSION_CORP_NANOTRASEN)
+	var/required_corp_id = null
+	/// Minimum reputation with corporation required to research this tech (-50 to 50)
+	var/min_reputation = 0
 
 /datum/technology/proc/getCost()
 	// Calculates tech disk's supply points sell cost
@@ -337,3 +383,42 @@ var/global/list/explosion_watcher_list = list()
 		return (cost/100)*initial(tree.rare)
 	else
 		return cost/100
+/// Get corporation reputation from research datum
+/datum/research/proc/GetCorporationReputation(corporation_id)
+	if(!corporation_id)
+		return 0
+	var/rep = corporation_reputation[corporation_id]
+	return rep ? rep : 0
+
+/// Set corporation reputation (clamped to -50 to 50)
+/datum/research/proc/SetCorporationReputation(corporation_id, value)
+	if(!corporation_id)
+		return
+	corporation_reputation[corporation_id] = clamp(value, -50, 50)
+
+/// Change corporation reputation by amount (clamped to -50 to 50)
+/datum/research/proc/ChangeCorporationReputation(corporation_id, amount)
+	if(!corporation_id || !amount)
+		return
+	var/current = GetCorporationReputation(corporation_id)
+	SetCorporationReputation(corporation_id, current + amount)
+
+/// Calculate adjusted cost based on corporation reputation
+/proc/get_rnd_tech_cost_with_reputation(datum/technology/tech_node, datum/research/research_datum = null)
+	if(!tech_node)
+		return 0
+
+	var/base_cost = tech_node.cost
+	if(!research_datum || !tech_node.required_corp_id)
+		return base_cost
+
+	var/rep = research_datum.GetCorporationReputation(tech_node.required_corp_id)
+	if(rep == 0)
+		return base_cost
+
+	// Reputation affects price:
+	// Positive reputation = discount (cheaper)
+	// Negative reputation = markup (more expensive)
+	// Each reputation point = 1% cost adjustment
+	var/cost_multiplier = 1 + (rep / 100.0)
+	return round(base_cost * cost_multiplier)

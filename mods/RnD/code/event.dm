@@ -26,7 +26,7 @@
 	zos = get_turf(os.get_physical_host())
 	if(!zos)
 		return
-	for(var/obj/machinery/r_n_d/server/server in rnd_server_list)
+	for(var/obj/machinery/r_n_d/server/server in SSresearch.rnd_server_list)
 		if(server.stat & MACHINE_STAT_NOPOWER)
 			continue
 		if(server.z in GetConnectedZlevels(zos.z))

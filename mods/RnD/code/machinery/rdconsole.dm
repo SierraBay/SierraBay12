@@ -35,7 +35,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 #define SCREEN_LOCKED "locked"
 #define SCREEN_DISK_DESIGNS "disk_management_designs"
 #define SCREEN_DISK_TECH "disk_management_tech"
-#define SCREEN_DISK_DATA "disk_management_data"
 
 /obj/machinery/computer/rdconsole
 	name = "fabrication control console"
@@ -60,6 +59,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/datum/tech/selected_tech_tree
 	var/datum/technology/selected_technology
+	var/selected_corp_id
+	var/selected_node_id
 	var/show_settings = FALSE
 	var/show_link_menu = FALSE
 	var/selected_protolathe_category
@@ -123,26 +124,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/use_tool(obj/item/D, mob/living/user, list/click_params)
 	if(!user.canUnEquip(D))
 		return TRUE
-	if(istype(D, /obj/item/disk/secret_project))
-		var/obj/item/disk/secret_project/disk = D
-		to_chat(user, SPAN_NOTICE("[name] received [disk.stored_points] research points from [disk.name]"))
-		files.research_points += disk.stored_points
-		user.remove_from_mob(disk)
-		qdel(disk)
-		return
 
-	else if(istype(D, /obj/item/disk/tech_disk))
-		var/obj/item/disk/tech_disk/disk = D
-		if(disk.stored)
-			if(disk.stored.id in diskstored)
-				to_chat(user,SPAN_NOTICE("[name] has already have same data as at the [disk]"))
-				return
-			var/science_value = disk.stored.level * 1000
-			files.research_points += science_value
-			to_chat(user, SPAN_NOTICE("[name] received [science_value] research points from [disk]"))
-			diskstored += disk.stored.id
-			user.remove_from_mob(disk)
-			qdel(disk)
+	// Мультитул - сохранить консоль в буфер для привязки к трекеру
+	if(istype(D, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = D
+		M.set_buffer(src)
+		to_chat(user, SPAN_NOTICE("Вы сохранили [src.name] в буфер мультитула."))
+		return TRUE
 
 	//Loading a disk into it.
 	else if(istype(D, /obj/item/stock_parts/computer/hard_drive/portable))
@@ -154,13 +142,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		D.forceMove(src)
 		disk = D
 		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
-	else if(istype(D, /obj/item/device/science_tool)) // Used when you want to upload autopsy/other scanned data to the console
-		var/research_points = files.experiments.read_science_tool(D)
-		if(research_points > 0)
-			to_chat(user, SPAN_NOTICE("[name] received [research_points] research points from uploaded data."))
-			files.adjust_research_points(research_points)
+
+	// Reagent container — submit for synthesis experiment
+	else if(istype(D, /obj/item/reagent_containers))
+		if(files && files.synthesis_experiment_active)
+			submit_synthesis_beaker(user, D)
 		else
-			to_chat(user, SPAN_NOTICE("There was no useful data inside [D.name]'s buffer."))
+			to_chat(user, SPAN_WARNING("Нет активного эксперимента по синтезу."))
+		return TRUE
+
+	// Gas tank — submit for atmospheric experiment
+	else if(istype(D, /obj/item/tank))
+		if(files && files.atmos_experiment_active)
+			submit_atmos_tank(user, D)
+		else
+			to_chat(user, SPAN_WARNING("Нет активного атмосферного эксперимента."))
+		return TRUE
 
 	SSnano.update_uis(src)
 	update_icon()
@@ -179,19 +176,61 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/handle_item_analysis(obj/item/I) // handles deconstructing items.
 	files.check_item_for_tech(I)
-	files.adjust_research_points(files.experiments.get_object_research_value(I))
+	// NOTE: Research points removed - new system uses money and missions instead
+	// Players can now extract designs to disk using "Extract Design" button
 	files.experiments.do_research_object(I)
-	/*var/list/matter = I.get_matter()
-	if(linked_lathe && matter)
-		for(var/t in matter)
-			if(t in linked_lathe.unsuitable_materials)
-				continue
 
-			if(!linked_lathe.stored_material[t])
-				linked_lathe.stored_material[t] = 0
+/obj/machinery/computer/rdconsole/proc/find_nearest_mission_console()
+	for(var/obj/machinery/computer/rd_mission_console/console in range(7, src))
+		return console
+	return null
 
-			linked_lathe.stored_material[t] += matter[t] * linked_destroy.decon_mod
-			linked_lathe.stored_material[t] = min(linked_lathe.stored_material[t], linked_lathe.storage_capacity)*/
+/obj/machinery/computer/rdconsole/proc/get_science_account()
+	var/list/science_department_keys = list("Научный", "Science")
+	for(var/key in science_department_keys)
+		if(department_accounts[key])
+			return department_accounts[key]
+	return null
+
+/obj/machinery/computer/rdconsole/proc/buy_corp_node(mob/living/user, node_id)
+	if(!files)
+		return
+	if(!node_id)
+		return
+
+	var/selected_corp = selected_corp_id
+	var/list/corp_nodes = get_rnd_corp_tree_nodes(selected_corp)
+	var/list/corp_node_set = list()
+	for(var/node_id_entry in corp_nodes)
+		corp_node_set[node_id_entry] = TRUE
+	if(!(node_id in corp_nodes))
+		return
+
+	var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(node_id)
+	if(!tech_node)
+		return
+	if(!get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set))
+		to_chat(user, SPAN_WARNING("Условия узла ещё не выполнены."))
+		return
+
+	var/price = get_rnd_corp_node_price(tech_node)
+	var/datum/money_account/science_account = get_science_account()
+	if(!science_account)
+		to_chat(user, SPAN_WARNING("Не удалось получить доступ к счёту научного отдела."))
+		return
+	if(!science_account.withdraw(price, "Corporate R&D unlock: [tech_node.name]", "R&D Console"))
+		to_chat(user, SPAN_WARNING("Недостаточно средств на счёте научного отдела."))
+		return
+
+	files.UnlockTechology(tech_node, force = TRUE)
+	SSnano.update_uis(src)
+
+/obj/machinery/computer/rdconsole/proc/take_corp_mission(mob/living/user, node_id)
+	var/obj/machinery/computer/rd_mission_console/mission_console = find_nearest_mission_console()
+	if(!mission_console)
+		to_chat(user, SPAN_WARNING("Поблизости не найдена консоль миссий."))
+		return
+	mission_console.take_corp_mission(user, node_id, selected_corp_id)
 
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list) // Oh boy here we go.
@@ -203,6 +242,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		target_device = linked_lathe
 	else if(screen == SCREEN_IMPRINTER && linked_imprinter)
 		target_device = linked_imprinter
+
+	if(href_list["select_corp"]) // User selected a corporation tree.
+		var/new_corp = href_list["select_corp"]
+		if(get_rnd_corp_tree(new_corp))
+			selected_corp_id = new_corp
+			selected_node_id = null
+	if(href_list["select_corp_node"]) // User selected a corporate tech node.
+		selected_node_id = href_list["select_corp_node"]
+	if(href_list["buy_corp_node"]) // User attempts to buy a corporate tech node.
+		buy_corp_node(usr, href_list["buy_corp_node"])
+	if(href_list["take_corp_mission"]) // User attempts to take a corporate mission.
+		take_corp_mission(usr, href_list["take_corp_mission"])
 
 	if(href_list["select_tech_tree"]) // User selected a tech tree.
 		var/datum/tech/tech_tree = locate(href_list["select_tech_tree"]) in files.researched_tech
@@ -245,13 +296,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/datum/design/D = locate(href_list["upload_disk_design"]) in files.known_designs
 			if(D)
 				disk.save_file(D.file.clone())
-	if(href_list["download_disk_data"])
-		if(disk)
-			var/datum/computer_file/binary/sci/file = locate(href_list["download_disk_data"]) in disk.stored_files
-			if(file)
-				var/savedpionts = files.AddSciPoints(file)
-				files.research_points += savedpionts
-				to_chat(usr, SPAN_NOTICE("[savedpionts] new science points downloaded from the [file.filename]."))
 	if(href_list["toggle_settings"]) // User wants to see the settings.
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
@@ -311,6 +355,42 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["eject_item"]) // User is ejecting an item from the linked_destroy.
 		if(linked_destroy)
 			linked_destroy.eject_item()
+	if(href_list["extract_design"]) // User is extracting design from item to disk.
+		extract_design_to_disk(usr)
+
+	// Spectral analysis handlers
+	if(href_list["start_spectral"])
+		start_spectral(usr)
+	if(href_list["spectral_choice"])
+		do_spectral_step(usr, href_list["spectral_choice"])
+	if(href_list["cancel_spectral"])
+		cancel_spectral()
+
+	// Artifact catalogization handlers
+	if(href_list["start_catalog"])
+		start_catalog(usr)
+	if(href_list["catalog_choice"])
+		do_catalog_step(usr, href_list["catalog_choice"])
+	if(href_list["cancel_catalog"])
+		cancel_catalog()
+
+	// Explosion experiment handlers
+	if(href_list["start_explosion"])
+		start_explosion_experiment(usr)
+	if(href_list["cancel_explosion"])
+		cancel_explosion_experiment()
+
+	// Chemical synthesis handlers
+	if(href_list["start_synthesis"])
+		start_synthesis_experiment(usr)
+	if(href_list["cancel_synthesis"])
+		cancel_synthesis_experiment()
+
+	// Atmospheric experiment handlers
+	if(href_list["start_atmos"])
+		start_atmos_experiment(usr)
+	if(href_list["cancel_atmos"])
+		cancel_atmos_experiment()
 
 	if(href_list["build"])
 		var/amount = clamp(text2num(href_list["amount"]), 1, 10)
@@ -369,7 +449,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	reset_screen()
 
 /obj/machinery/computer/rdconsole/proc/sync_tech()
-	for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
+	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
 		var/server_processed = FALSE
 		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
 			break
@@ -480,21 +560,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						"level" =          temp_tech[T],
 					))
 
-				// This calculates how much research points we missed because we already researched items with such orig_tech levels
-				var/denominator = files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
-				var/tech_points_mod
-				if(denominator)
-					tech_points_mod = files.experiments.get_object_research_value(linked_destroy.loaded_item) / denominator
-				else
-					tech_points_mod = 1
-
 				var/list/destroy_list = list(
 					"has_item" =              TRUE,
 					"item_name" =             linked_destroy.loaded_item.name,
-					"item_tech_points" =      files.experiments.get_object_research_value(linked_destroy.loaded_item),
-					"item_tech_mod" =         round(tech_points_mod*100),
 				)
 				destroy_list["tech_data"] = item_data
+
+				// Spectral analysis: can we analyze this item type?
+				var/can_spectral = !(linked_destroy.loaded_item.type in files.spectral_analyzed_types)
+				destroy_list["can_spectral"] = can_spectral
 
 				data["destroy_data"] = destroy_list
 			else
@@ -548,14 +622,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/technology/T = i
 				known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
 			data["known_nodes"] = known_nodes
-	if(screen == SCREEN_DISK_DATA)
-		if(disk)
-			var/list/disk_research_data = list()
-			var/list/disk_data_files = disk.find_files_by_type(/datum/computer_file/binary/sci)
-			for(var/f in disk_data_files)
-				var/datum/computer_file/binary/sci/data_file = f
-				disk_research_data += list(list("name" = "[data_file.filename].[data_file.filetype]", "id" = "\ref[data_file]"))
-			data["disk_research_data"] = disk_research_data
 	if(screen == SCREEN_PROTO || screen == SCREEN_IMPRINTER)
 		var/obj/machinery/fabricator/rnd/target_device
 		var/list/design_categories
@@ -598,124 +664,195 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	// All the info needed for displaying tech trees
 	if(screen == SCREEN_TREES)
-		var/list/line_list = list()
-
-		var/list/tech_tree_list = list()
-		for(var/tree in files.researched_tech)
-			var/datum/tech/tech_tree = tree
-			if(!tech_tree.shown)
+		var/list/corps = get_rnd_corporation_order()
+		var/list/corp_trees = list()
+		for(var/corp_id in corps)
+			var/list/tree = get_rnd_corp_tree(corp_id)
+			if(!tree)
 				continue
-			var/list/tech_tree_data = list(
-				"id" =             "\ref[tech_tree]",
-				"name" =           "[tech_tree.name]",
-				"shortname" =      "[tech_tree.shortname]",
+			corp_trees += list(list(
+				"id" = corp_id,
+				"name" = tree["name"]
+			))
+		data["corp_trees"] = corp_trees
+		data["currency_short"] = GLOB.using_map.local_currency_name_short
+		data["has_mission_console"] = !!find_nearest_mission_console()
+
+		var/selected_corp = selected_corp_id
+		if(!selected_corp || !get_rnd_corp_tree(selected_corp))
+			selected_corp = corps && length(corps) ? corps[1] : null
+			selected_corp_id = selected_corp
+		data["selected_corp"] = selected_corp
+
+		var/list/corp_node_ids = get_rnd_corp_tree_nodes(selected_corp)
+		var/list/corp_node_set = list()
+		for(var/node_id in corp_node_ids)
+			corp_node_set[node_id] = TRUE
+
+		var/list/corp_nodes = list()
+		var/list/corp_lines = list()
+		for(var/node_id in corp_node_ids)
+			var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(node_id)
+			if(!tech_node)
+				continue
+			var/is_researched = files.IsResearched(tech_node)
+			var/can_unlock = get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set)
+			var/list/node_data = list(
+				"id" = node_id,
+				"name" = tech_node.name,
+				"x" = round(tech_node.x * 100),
+				"y" = round(tech_node.y * 100),
+				"icon" = "[tech_node.icon]",
+				"isresearched" = is_researched,
+				"canunlock" = can_unlock
 			)
-			tech_tree_list += list(tech_tree_data)
+			corp_nodes += list(node_data)
 
-		data["tech_trees"] = tech_tree_list
+			for(var/req_tech in tech_node.required_technologies)
+				var/datum/technology/other_tech = locate(req_tech) in SSresearch.all_tech_nodes
+				if(!other_tech || !(other_tech.id in corp_node_set))
+					continue
+				var/line_x = (min(round(other_tech.x * 100), round(tech_node.x * 100)))
+				var/line_y = (min(round(other_tech.y * 100), round(tech_node.y * 100)))
+				var/width = (abs(round(other_tech.x * 100) - round(tech_node.x * 100)))
+				var/height = (abs(round(other_tech.y * 100) - round(tech_node.y * 100)))
 
-		if(!selected_tech_tree)
-			selected_tech_tree = files.researched_tech[1]
+				var/istop = FALSE
+				if(other_tech.y > tech_node.y)
+					istop = TRUE
+				var/isright = FALSE
+				if(other_tech.x < tech_node.x)
+					isright = TRUE
 
-		var/list/tech_list = list()
-		if(selected_tech_tree)
-			data["tech_tree_name"] = selected_tech_tree.name
-			data["tech_tree_desc"] = selected_tech_tree.desc
-			data["tech_tree_level"] = selected_tech_tree.level
-
-			for(var/tech in SSresearch.all_tech_trees[selected_tech_tree.type])
-				var/datum/technology/tech_node = tech
-				var/list/tech_data = list(
-					"id" =             "\ref[tech_node]",
-					"name" =           "[tech_node.name]",
-					"x" =              round(tech_node.x*100),
-					"y" =              round(tech_node.y*100),
-					"icon" =           "[tech_node.icon]",
-					"isresearched" =   "[files.IsResearched(tech_node)]",
-					"canresearch" =    "[files.CanResearch(tech_node)]",
-					"description" =		"[tech_node.desc]"
+				var/list/line_data = list(
+					"line_x" = line_x,
+					"line_y" = line_y,
+					"width" = width,
+					"height" = height,
+					"istop" = istop,
+					"isright" = isright
 				)
-				tech_list += list(tech_data)
+				corp_lines += list(line_data)
 
-				for(var/req_tech in tech_node.required_technologies)
-					var/datum/technology/other_tech = locate(req_tech) in SSresearch.all_tech_nodes
-					if(other_tech && other_tech.tech_type == tech_node.tech_type)
-						var/line_x = (min(round(other_tech.x*100), round(tech_node.x*100)))
-						var/line_y = (min(round(other_tech.y*100), round(tech_node.y*100)))
-						var/width = (abs(round(other_tech.x*100) - round(tech_node.x*100)))
-						var/height = (abs(round(other_tech.y*100) - round(tech_node.y*100)))
+		data["corp_nodes"] = corp_nodes
+		data["corp_lines"] = corp_lines
 
-						var/istop = FALSE
-						if(other_tech.y > tech_node.y)
-							istop = TRUE
-						var/isright = FALSE
-						if(other_tech.x < tech_node.x)
-							isright = TRUE
+		var/selected_node = selected_node_id
+		if(!selected_node || !(selected_node in corp_node_set))
+			selected_node = length(corp_node_ids) ? corp_node_ids[1] : null
+			selected_node_id = selected_node
+		data["selected_node_id"] = selected_node
 
-						var/list/line_data = list(
-							"line_x" =           line_x,
-							"line_y" =           line_y,
-							"width" =            width,
-							"height" =           height,
-							"istop" =            istop,
-							"isright" =          isright,
-						)
-						line_list += list(line_data)
-
-		data["techs"] = tech_list
-		data["lines"] = line_list
-		data["selected_tech_tree"] = "\ref[selected_tech_tree]"
-		data["research_points"] = files.research_points
-
-		data["selected_technology_id"] = ""
-		if(selected_technology)
-			var/datum/technology/tech_node = selected_technology
-			var/list/technology_data = list(
-				"name" =           tech_node.name,
-				"desc" =           tech_node.desc,
-				"id" =             "\ref[tech_node]",
-				"tech_type" =      tech_node.tech_type,
-				"cost" =           tech_node.cost,
-				"isresearched" =   files.IsResearched(tech_node),
-			)
-			data["selected_technology_id"] = "\ref[tech_node]"
-
-			var/list/requirement_list = list()
-			for(var/t in tech_node.required_tech_levels)
-				var/datum/tech/tree = locate(t) in files.researched_tech
-				var/level = tech_node.required_tech_levels[t]
-				var/list/req_data = list(
-					"text" =           "[tree.shortname] level [level]",
-					"isgood" =         (tree.level >= level)
+		if(selected_node)
+			var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(selected_node)
+			if(tech_node)
+				var/is_researched = files.IsResearched(tech_node)
+				var/can_unlock = get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set)
+				var/price = get_rnd_corp_node_price(tech_node)
+				var/list/technology_data = list(
+					"name" = tech_node.name,
+					"desc" = tech_node.desc,
+					"price" = price,
+					"isresearched" = is_researched,
+					"canunlock" = can_unlock,
+					"can_buy" = can_unlock,
+					"can_mission" = can_unlock
 				)
-				requirement_list += list(req_data)
-			for(var/t in tech_node.required_technologies)
-				var/datum/technology/other_tech = locate(t) in SSresearch.all_tech_nodes
-				var/list/req_data = list(
-					"text" =           "[other_tech.name]",
-					"isgood" =         files.IsResearched(other_tech)
-				)
-				requirement_list += list(req_data)
-			technology_data["requirements"] = requirement_list
 
-			var/list/unlock_list = list()
-			for(var/T in tech_node.unlocks_designs)
-				var/datum/design/D = SSresearch.get_design(T)
-				if(D) // remove?
-					var/list/build_types = list()
-					if(D.build_type & IMPRINTER)
-						build_types += "imprinter"
-					if(D.build_type & PROTOLATHE)
-						build_types += "protolathe"
-					if(D.build_type & MECHFAB)
-						build_types += "exosuit fabricator"
-					var/list/unlock_data = list(
-						"text" =           "[D.shortname]",
+				var/list/requirement_list = list()
+				for(var/t in tech_node.required_tech_levels)
+					var/datum/tech/tree = locate(t) in files.researched_tech
+					var/level = tech_node.required_tech_levels[t]
+					var/list/req_data = list(
+						"text" = "[tree.shortname] level [level]",
+						"isgood" = (tree && tree.level >= level)
 					)
-					unlock_list += list(unlock_data)
-			technology_data["unlocks"] = unlock_list
+					requirement_list += list(req_data)
+				for(var/t in tech_node.required_technologies)
+					var/datum/technology/other_tech = locate(t) in SSresearch.all_tech_nodes
+					if(!other_tech)
+						continue
+					var/list/req_data = list(
+						"text" = "[other_tech.name]",
+						"isgood" = files.IsResearched(other_tech)
+					)
+					requirement_list += list(req_data)
+				technology_data["requirements"] = requirement_list
 
-			data["selected_technology"] = technology_data
+				var/list/unlock_list = list()
+				for(var/T in tech_node.unlocks_designs)
+					var/datum/design/D = SSresearch.get_design(T)
+					if(D)
+						unlock_list += list(list("text" = "[D.shortname]"))
+				technology_data["unlocks"] = unlock_list
+
+				data["selected_node"] = technology_data
+
+	// Spectral analysis state
+	data["spectral_active"] = spectral_active
+	data["spectral_phase"] = spectral_phase
+	data["spectral_flash"] = spectral_flash
+	data["spectral_result_text"] = spectral_result_text
+	if(spectral_active && LAZYLEN(spectral_sequence))
+		data["spectral_total"] = LAZYLEN(spectral_sequence)
+		data["spectral_index"] = spectral_index
+
+	// Artifact catalogization state
+	data["catalog_active"] = catalog_active
+	data["catalog_step"] = catalog_step
+	data["catalog_result_text"] = catalog_result_text
+	if(catalog_active && catalog_step >= 1 && catalog_step <= 3)
+		data["catalog_step_name"] = get_catalog_step_name(catalog_step)
+		data["catalog_step_hint"] = get_catalog_step_hint(catalog_step)
+
+	// Check for nearby artifact available for catalogization
+	if(!catalog_active)
+		var/obj/machinery/artifact/nearby_art = find_nearby_artifact()
+		if(nearby_art && can_catalog_artifact(nearby_art))
+			data["can_catalog"] = TRUE
+			data["catalog_artifact_name"] = nearby_art.name
+		else
+			data["can_catalog"] = FALSE
+	else
+		data["can_catalog"] = FALSE
+
+	// Explosion experiment state
+	data["explosion_result_text"] = explosion_result_text
+	if(files)
+		data["explosion_active"] = files.explosion_experiment_active
+		data["explosion_target_min"] = files.explosion_target_min
+		data["explosion_target_max"] = files.explosion_target_max
+		data["explosion_experiments_done"] = files.explosion_experiments_done
+	else
+		data["explosion_active"] = FALSE
+
+	// Chemical synthesis state
+	data["synthesis_result_text"] = synthesis_result_text
+	if(files)
+		data["synthesis_active"] = files.synthesis_experiment_active
+		data["synthesis_target_name"] = files.synthesis_target_name
+		data["synthesis_target_volume"] = files.synthesis_target_volume
+		data["synthesis_target_tier"] = files.synthesis_target_tier
+		data["synthesis_tier_name"] = get_synthesis_tier_name(files.synthesis_target_tier)
+		data["synthesis_experiments_done"] = files.synthesis_experiments_done
+	else
+		data["synthesis_active"] = FALSE
+
+	// Atmospheric experiment state
+	data["atmos_result_text"] = atmos_result_text
+	if(files)
+		data["atmos_active"] = files.atmos_experiment_active
+		data["atmos_target_gas_name"] = files.atmos_target_gas_name
+		data["atmos_target_pressure_min"] = files.atmos_target_pressure_min
+		data["atmos_target_pressure_max"] = files.atmos_target_pressure_max
+		data["atmos_target_temp_min"] = files.atmos_target_temp_min
+		data["atmos_target_temp_max"] = files.atmos_target_temp_max
+		data["atmos_target_tier"] = files.atmos_target_tier
+		data["atmos_tier_name"] = get_atmos_tier_name(files.atmos_target_tier)
+		data["atmos_experiments_done"] = files.atmos_experiments_done
+		data["atmos_has_temp_req"] = (files.atmos_target_temp_min > 0)
+	else
+		data["atmos_active"] = FALSE
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)

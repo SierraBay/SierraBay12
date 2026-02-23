@@ -15,11 +15,15 @@
 #include "code/augments/sonar.dm"
 #include "code/augments/vampire.dm"
 #include "code/machinery/rdconsole.dm"
+#include "code/reverse_engineering.dm"
+#include "code/defective_component.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/robotics_fabricator.dm"
 #include "code/machinery/autolathe_disk_cloner.dm"
 #include "code/experiment.dm"
 #include "code/program/itcommand.dm"
+
+//Tech бранчи
 #include "code/tech_branch/tech_biotech.dm"
 #include "code/tech_branch/tech_combat.dm"
 #include "code/tech_branch/tech_engineering.dm"
@@ -28,16 +32,32 @@
 #include "code/tech_branch/tech_power.dm"
 #include "code/tech_branch/tech_telecom.dm"
 #include "code/tech_branch/tech_robotics.dm"
+#include "code/tech_branch/tech_cybernetics.dm"
+#include "code/tech_branch/tech_weapons.dm"
+
+
 #include "code/program/binary.dm"
 #include "code/program/design.dm"
+#include "code/program/mission_tracker.dm"
 #include "code/program/camera.dm"
 #include "code/program/filetypes.dm"
 #include "code/program/codeprocessor.dm"
 #include "code/SSresearch.dm"
-#include "code/program/sciefolder.dm"
-#include "code/misc.dm"
 #include "code/xenoarch/tesla.dm"
 #include "code/xenoarch/grav.dm"
+#include "code/design_market.dm"
+#include "code/reward_packs.dm"
+#include "code/mission_catalog.dm"
+#include "code/missions.dm"
+#include "code/spectral_analysis.dm"
+#include "code/artifact_catalogization.dm"
+#include "code/explosion_experiment.dm"
+#include "code/chemical_synthesis.dm"
+#include "code/atmospheric_experiment.dm"
+#include "code/machinery/rd_mission_console.dm"
+#include "code/machinery/rd_mission_drone_pad.dm"
+#include "code/misc.dm"
+#include "code/corporate_tech_trees.dm"
 //#include "code/xenoarch/nature.dm"
 #include "code/xenoarch/swap.dm"
 #include "code/xenobiology.dm"
@@ -53,6 +73,7 @@
 #include "code/designs_autolathe/designs_general.dm"
 #include "code/designs_autolathe/designs_tools.dm"
 #include "code/designs_autolathe/disks.dm"
+#include "code/designs/designs_misc.dm"
 //Мех дезайны
 #include "code\designs\mechfab\arms\mech_l_arm.dm"
 #include "code\designs\mechfab\arms\mech_r_arm.dm"
@@ -69,4 +90,8 @@
 #include "code\designs\mechfab\main_mech.dm"
 #include "code\designs\mechfab\sensors.dm"
 #include "code\designs\designs_mechfab.dm"
+
+//Подсистема Генерация
+#include "code/subsystem_rnd_generation.dm"
+
 #endif

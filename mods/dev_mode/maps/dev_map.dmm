@@ -3,6 +3,10 @@
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"bcB" = (
+/obj/machinery/computer/rdconsole/core,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "cpC" = (
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
@@ -43,6 +47,10 @@
 /obj/structure/closet/coffin/wooden,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"jet" = (
+/obj/machinery/fabricator/rnd/protolathe,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "jjy" = (
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/titan_water/middle,
@@ -53,6 +61,10 @@
 /area/centcom)
 "kSl" = (
 /obj/item/gun/projectile/heavysniper/ant,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"kWp" = (
+/obj/item/stack/material/steel/fifty,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "ldi" = (
@@ -79,6 +91,14 @@
 /obj/item/gun/projectile/automatic/mbr,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"nFA" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"nQy" = (
+/obj/item/stack/material/glass/fifty,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "odH" = (
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/liberia/atmos)
@@ -87,6 +107,10 @@
 	layer = 2
 	},
 /turf/unsimulated/floor/grass,
+/area/centcom)
+"pnb" = (
+/obj/item/stack/material/aluminium/fifty,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "pnX" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -126,8 +150,16 @@
 /obj/item/gun/projectile/sniper/semistrip,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"slu" = (
+/obj/machinery/computer/rd_mission_console,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "sJt" = (
 /obj/structure/table/steel,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"sPb" = (
+/obj/item/stack/material/plastic/fifty,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "uzJ" = (
@@ -206,9 +238,9 @@ cpC
 cpC
 cpC
 cpC
-cpC
-cpC
-cpC
+jet
+kWp
+pnb
 cpC
 cpC
 uzJ
@@ -232,9 +264,9 @@ cpC
 cpC
 cpC
 cpC
-cpC
-cpC
-cpC
+bcB
+sPb
+nQy
 cpC
 cpC
 uzJ
@@ -258,7 +290,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+slu
 cpC
 cpC
 cpC
@@ -284,7 +316,7 @@ dSB
 dSB
 cpC
 cpC
-cpC
+nFA
 cpC
 cpC
 cpC

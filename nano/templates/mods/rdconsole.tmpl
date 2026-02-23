@@ -23,9 +23,6 @@
 		<td valign="top">
 			<H2>R&amp;D Console Menu</H2>
 			<div class='item'>
-				{{:helper.link("Research", 'contact', {'go_screen' : 'tech_trees', 'need_access': 1},data.can_research ? null : 'disabled', data.can_research ? 'sciMenuButton' : null)}}
-			</div>
-			<div class='item'>
 				{{:helper.link("Protolathe Construction Menu", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled', data.has_protolathe ? 'sciMenuButton' : null)}}
 			</div>
 			<div class='item'>
@@ -51,14 +48,225 @@
 									</tr>
 								{{/for}}
 								</table>
-								Estimated research value: {{:data.destroy_data.item_tech_points}} points ({{:data.destroy_data.item_tech_mod}}%)<br>
+								{{:helper.link("Extract Design", 'save', {'extract_design' : 1}, data.has_disk ? null : 'disabled')}}
 								{{:helper.link("Deconstruct item", '', {'deconstruct' : 1})}}
+								{{:helper.link("Spectral Analysis", 'signal-diag', {'start_spectral' : 1}, data.destroy_data.can_spectral ? null : 'disabled')}}
 								{{:helper.link("Eject", '', {'eject_item' : 1})}}
 							{{/if}}
 						{{/if}}
 					</div>
 				</div>
 			</div>
+
+			{{if data.spectral_active}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<!-- 4 colour blocks -->
+						<div style='display:inline-block;text-align:center;margin:4px;'>
+							{{if data.spectral_flash == 'red'}}
+								<span style='display:inline-block;width:40px;height:40px;background:#ff4444;border:3px solid white;'></span>
+							{{else}}
+								<span style='display:inline-block;width:40px;height:40px;background:#880000;'></span>
+							{{/if}}<br>
+							{{if data.spectral_phase == 'input'}}
+								{{:helper.link("Красный", '', {'spectral_choice' : 'red'})}}
+							{{/if}}
+						</div>
+						<div style='display:inline-block;text-align:center;margin:4px;'>
+							{{if data.spectral_flash == 'green'}}
+								<span style='display:inline-block;width:40px;height:40px;background:#44ff44;border:3px solid white;'></span>
+							{{else}}
+								<span style='display:inline-block;width:40px;height:40px;background:#008800;'></span>
+							{{/if}}<br>
+							{{if data.spectral_phase == 'input'}}
+								{{:helper.link("Зелёный", '', {'spectral_choice' : 'green'})}}
+							{{/if}}
+						</div>
+						<div style='display:inline-block;text-align:center;margin:4px;'>
+							{{if data.spectral_flash == 'blue'}}
+								<span style='display:inline-block;width:40px;height:40px;background:#4444ff;border:3px solid white;'></span>
+							{{else}}
+								<span style='display:inline-block;width:40px;height:40px;background:#000088;'></span>
+							{{/if}}<br>
+							{{if data.spectral_phase == 'input'}}
+								{{:helper.link("Синий", '', {'spectral_choice' : 'blue'})}}
+							{{/if}}
+						</div>
+						<div style='display:inline-block;text-align:center;margin:4px;'>
+							{{if data.spectral_flash == 'yellow'}}
+								<span style='display:inline-block;width:40px;height:40px;background:#ffff44;border:3px solid white;'></span>
+							{{else}}
+								<span style='display:inline-block;width:40px;height:40px;background:#888800;'></span>
+							{{/if}}<br>
+							{{if data.spectral_phase == 'input'}}
+								{{:helper.link("Жёлтый", '', {'spectral_choice' : 'yellow'})}}
+							{{/if}}
+						</div>
+						<br><br>
+						{{:helper.link("Отмена", 'cancel', {'cancel_spectral' : 1})}}
+						{{if data.spectral_result_text}}
+						<br><hr>
+						{{:data.spectral_result_text}}
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{else}}
+				{{if data.spectral_result_text}}
+				<div class="statusDisplayRecords">
+					<div class="item">
+						<div class="itemContent" style="width: 100%;">
+							<span class="average">Результаты спектрального анализа:</span><br>
+							{{:data.spectral_result_text}}
+						</div>
+					</div>
+				</div>
+				{{/if}}
+			{{/if}}
+
+			{{if data.explosion_active}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Взрывной эксперимент #{{:data.explosion_experiments_done + 1}} — Активен</span><br>
+						Целевая мощность: <b>{{:data.explosion_target_min}} — {{:data.explosion_target_max}}</b><br><br>
+						<i>Разместите Kinetic Energy Scanner вблизи места детонации. Соберите бомбу (transfer valve + 2 баллона) и подорвите. Приложите сканер к консоли для сдачи результатов.</i><br><br>
+						{{:helper.link("Отмена", 'cancel', {'cancel_explosion' : 1})}}
+					</div>
+				</div>
+			</div>
+			{{else}}
+				{{:helper.link("Взрывной эксперимент", 'alert', {'start_explosion' : 1}, null, 'sciMenuButton')}}
+			{{/if}}
+			{{if data.explosion_result_text}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Результаты взрывного эксперимента:</span><br>
+						{{:data.explosion_result_text}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{if data.synthesis_active}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Химический синтез #{{:data.synthesis_experiments_done + 1}} — Активен</span><br>
+						Цель: <b>{{:data.synthesis_target_name}}</b><br>
+						Требуемый объём: <b>{{:data.synthesis_target_volume}} ед.</b><br>
+						Сложность: <b>{{:data.synthesis_tier_name}}</b><br><br>
+						<i>Синтезируйте указанный реагент с помощью химического раздатчика. Приложите ёмкость с результатом к консоли для сдачи.</i><br><br>
+						{{:helper.link("Отмена", 'cancel', {'cancel_synthesis' : 1})}}
+					</div>
+				</div>
+			</div>
+			{{else}}
+				{{:helper.link("Химический синтез", 'beaker', {'start_synthesis' : 1}, null, 'sciMenuButton')}}
+			{{/if}}
+			{{if data.synthesis_result_text}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Результаты химического синтеза:</span><br>
+						{{:data.synthesis_result_text}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{if data.atmos_active}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Атмосферный эксперимент #{{:data.atmos_experiments_done + 1}} — Активен</span><br>
+						Целевой газ: <b>{{:data.atmos_target_gas_name}}</b><br>
+						Давление: <b>{{:data.atmos_target_pressure_min}} — {{:data.atmos_target_pressure_max}} кПа</b><br>
+						{{if data.atmos_has_temp_req}}
+						Температура: <b>{{:Math.round(data.atmos_target_temp_min - 273.15)}} — {{:Math.round(data.atmos_target_temp_max - 273.15)}} °C</b><br>
+						{{/if}}
+						Сложность: <b>{{:data.atmos_tier_name}}</b><br><br>
+						<i>Заполните газовый баллон указанным газом при требуемых параметрах. Приложите баллон к консоли для сдачи.</i><br><br>
+						{{:helper.link("Отмена", 'cancel', {'cancel_atmos' : 1})}}
+					</div>
+				</div>
+			</div>
+			{{else}}
+				{{:helper.link("Атмосферный эксперимент", 'air', {'start_atmos' : 1}, null, 'sciMenuButton')}}
+			{{/if}}
+			{{if data.atmos_result_text}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Результаты атмосферного эксперимента:</span><br>
+						{{:data.atmos_result_text}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{if data.catalog_active}}
+			<div class="statusDisplayRecords">
+				<div class="item">
+					<div class="itemContent" style="width: 100%;">
+						<span class="average">Каталогизация артефакта — Этап {{:data.catalog_step}}/3</span><br>
+						<b>{{:data.catalog_step_name}}</b><br>
+						<i>{{:data.catalog_step_hint}}</i><br><br>
+						{{if data.catalog_step == 1}}
+						Выберите тип излучения:<br>
+						{{:helper.link("Неопознанное", '', {'catalog_choice' : '0'})}}
+						{{:helper.link("Энергетическое", '', {'catalog_choice' : '1'})}}
+						{{:helper.link("Псионическое", '', {'catalog_choice' : '2'})}}
+						{{:helper.link("Электромагнитное", '', {'catalog_choice' : '3'})}}
+						<br>
+						{{:helper.link("Корпускулярное", '', {'catalog_choice' : '4'})}}
+						{{:helper.link("Органическое", '', {'catalog_choice' : '5'})}}
+						{{:helper.link("Блюспейс", '', {'catalog_choice' : '6'})}}
+						{{:helper.link("Синтетическое", '', {'catalog_choice' : '7'})}}
+						{{else data.catalog_step == 2}}
+						Выберите режим активации:<br>
+						{{:helper.link("Тактильный", '', {'catalog_choice' : '0'})}}
+						{{:helper.link("Аура", '', {'catalog_choice' : '1'})}}
+						{{:helper.link("Импульсный", '', {'catalog_choice' : '2'})}}
+						{{else data.catalog_step == 3}}
+						Оцените радиус действия:<br>
+						{{:helper.link("Малый (1-2)", '', {'catalog_choice' : 'short'})}}
+						{{:helper.link("Средний (3-4)", '', {'catalog_choice' : 'medium'})}}
+						{{:helper.link("Большой (5+)", '', {'catalog_choice' : 'long'})}}
+						{{/if}}
+						<br><br>
+						{{:helper.link("Отмена", 'cancel', {'cancel_catalog' : 1})}}
+						{{if data.catalog_result_text}}
+						<br><hr>
+						{{:data.catalog_result_text}}
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{else}}
+				{{if data.catalog_result_text}}
+				<div class="statusDisplayRecords">
+					<div class="item">
+						<div class="itemContent" style="width: 100%;">
+							<span class="average">Результаты каталогизации:</span><br>
+							{{:data.catalog_result_text}}
+						</div>
+					</div>
+				</div>
+				{{/if}}
+				{{if data.can_catalog}}
+				<div class="statusDisplayRecords">
+					<div class="item">
+						<div class="itemContent" style="width: 100%;">
+							<span class="average">Обнаружен артефакт: {{:data.catalog_artifact_name}}</span><br>
+							{{:helper.link("Каталогизировать артефакт", 'search', {'start_catalog' : 1})}}
+						</div>
+					</div>
+				</div>
+				{{/if}}
+			{{/if}}
 
 			<div class='item'>
 				{{:helper.link("Settings", 'wrench', {'toggle_settings' : 1},null,'sciMenuButton')}}
@@ -84,7 +292,6 @@
 				<div class='item' style="width: 80%">
 					Disk capacity: <div style="width: 90%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</div>
 					{{:helper.link("Disk Designs Management", 'save', {'go_screen' : 'disk_management_designs'}, null, 'sciMenuButton')}}
-					{{:helper.link("Disk Research Data Management", 'save', {'go_screen' : 'disk_management_data'}, null, 'sciMenuButton')}}
 					{{:helper.link("Eject", 'eject', {'eject_disk' : 1}, null, 'sciMenuButton')}}
 				</div>
 			{{else}}
@@ -440,29 +647,6 @@
 		</table>
 	{{/if}}
 {{/if}}
-{{if data.screen == "disk_management_data"}}
-	<table style="width: 30%">
-	<div class='item'>
-	<tr><td>{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}</td></tr>
-	<tr><td>Disk capacity:</td><td style="width: 100%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</td>
-	</div>
-	</table>
-	{{if data.has_disk}}
-		<div class="statusDisplayRecords">
-		Detected research data files:
-		{{for data.disk_research_data}}
-			<div class="item">
-				{{:value.name}}
-				{{:helper.link("", 'trash', {'delete_disk_file' : value.id},data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_data' : value.id})}}
-				</div>
-		{{empty}}
-			<div class="item">The disk has no accessible research data files stored on it.</div>
-		{{/for}}
-		</div>
-	{{/if}}
-{{/if}}
-
 <!--
 <div class="section">
 	<div class="section-title">

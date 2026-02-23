@@ -1,0 +1,71 @@
+<div class="section">
+	<div class="section-title">
+		Активные задания
+		{{if data.linked_mission_console}}
+			<span style="color: #0f0;">[Привязано]</span>
+		{{else}}
+			<span style="color: #f00;">[Не привязано]</span>
+		{{/if}}
+	</div>
+	<div class="section-content">
+		{{if !data.linked_mission_console}}
+			<div class="bad">Консоль миссий не привязана. Используйте мультитул для привязки.</div>
+		{{else !data.has_mission_console}}
+			<div class="bad">Привязанная консоль миссий не найдена или удалена.</div>
+		{{else data.active_missions.length == 0}}
+			<div class="notice">Активных контрактов нет.</div>
+		{{else}}
+			{{for data.active_missions}}
+				<div class="labelList" style="margin-bottom: 8px;">
+					<div class="labelList-item">
+						<div class="labelList-item-label">Корпорация</div>
+						<div class="labelList-item-content">{{:value.corp_name}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Контракт</div>
+						<div class="labelList-item-content">{{:value.title}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Статус</div>
+						<div class="labelList-item-content">{{:value.status}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Локация</div>
+						<div class="labelList-item-content">{{:value.location}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Координаты</div>
+						<div class="labelList-item-content">{{:value.coords}}</div>
+					</div>
+				</div>
+			{{/for}}
+		{{/if}}
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">
+		Изученные технологии
+		{{if data.linked_rdconsole}}
+			<span style="color: #0f0;">[Привязано]</span>
+		{{else}}
+			<span style="color: #f00;">[Не привязано]</span>
+		{{/if}}
+	</div>
+	<div class="section-content">
+		{{if !data.linked_rdconsole}}
+			<div class="bad">R&amp;D консоль не привязана. Используйте мультитул для привязки.</div>
+		{{else !data.has_rdconsole}}
+			<div class="bad">Привязанная R&amp;D консоль не найдена или удалена.</div>
+		{{else data.researched_nodes.length == 0}}
+			<div class="notice">Технологии не найдены.</div>
+		{{else}}
+			{{for data.researched_nodes}}
+				<div class="item">
+					<b>{{:value.name}}</b><br />
+					{{:value.desc}}
+				</div>
+			{{/for}}
+		{{/if}}
+	</div>
+</div>

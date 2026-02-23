@@ -23,7 +23,7 @@
 	y = 0.6
 	icon = "seccomputer"
 
-	required_technologies = list(/datum/technology/combat)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 250
 
@@ -38,7 +38,7 @@
 	y = 0.5
 	icon = "stunbaton"
 
-	required_technologies = list(/datum/technology/combat)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 500
 
@@ -53,7 +53,7 @@
 	y = 0.5
 	icon = "adflash"
 
-	required_technologies = list(/datum/technology/combat/add_eq)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 750
 
@@ -68,7 +68,7 @@
 	y = 0.5
 	icon = "riotgun"
 
-	required_technologies = list(/datum/technology/combat/nleth_eq)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1250
 
@@ -83,7 +83,7 @@
 	y = 0.4
 	icon = "decloner"
 
-	required_technologies = list(/datum/technology/combat/shock)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1000
 
@@ -99,7 +99,7 @@
 	y = 0.5
 	icon = "shock"
 
-	required_technologies = list(/datum/technology/combat/riotgun)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -114,7 +114,7 @@
 	y = 0.6
 	icon = "laser"
 
-	required_technologies = list(/datum/technology/combat/shock)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -129,7 +129,7 @@
 	y = 0.7
 	icon = "xray"
 
-	required_technologies = list(/datum/technology/combat/laser)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 3000
 
@@ -144,7 +144,7 @@
 	y = 0.5
 	icon = "wt550"
 
-	required_technologies = list(/datum/technology/combat/shock)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -159,7 +159,7 @@
 	y = 0.6
 	icon = "smg"
 
-	required_technologies = list(/datum/technology/combat/wt550)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 750
 
@@ -176,7 +176,7 @@
 	y = 0.4
 	icon = "bullpup"
 
-	required_technologies = list(/datum/technology/combat/wt550)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -192,7 +192,7 @@
 	y = 0.5
 	icon = "emiammo"
 
-	required_technologies = list(/datum/technology/combat/wt550)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 3500
 

@@ -35,6 +35,7 @@ var/global/photo_count = 0
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 	var/photo_size = 3
+	var/photo_z // [SIERRA-ADD] RND
 
 /obj/item/photo/Initialize()
 	. = ..()
@@ -289,6 +290,7 @@ var/global/photo_count = 0
 	p.icon = ic
 	p.tiny = pc
 	p.img = photoimage
+	p.photo_z = z_c
 	if(black_white)
 		p.img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		p.tiny.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
@@ -316,6 +318,7 @@ var/global/photo_count = 0
 	p.pixel_y = pixel_y
 	p.photo_size = photo_size
 	p.scribble = scribble
+	p.photo_z = photo_z
 
 	if(copy_id)
 		p.id = id

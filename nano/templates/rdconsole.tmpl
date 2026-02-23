@@ -459,13 +459,10 @@
 {{if data.screen == "tech_trees"}}
 	<div class='item'>
 	{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
-
-	<span class="average">Research points:</span> {{:data.research_points}} <span class="average">{{:data.tech_tree_name}} level:</span> {{:data.tech_tree_level}}
 	</div>
 	<div class='item'>
-
-		{{for data.tech_trees}}
-			{{:helper.link(value.shortname, '', {'select_tech_tree' : value.id}, data.selected_tech_tree == value.id ? 'selected' : null)}}
+		{{for data.corp_trees}}
+			{{:helper.link(value.name, '', {'select_corp' : value.id}, data.selected_corp == value.id ? 'selected' : null)}}
 		{{/for}}
 	</div>
 
@@ -473,42 +470,58 @@
 	  <tr>
 		<td valign="top">
 			<div id='sciTechTreeContainer'>
-				{{for data.lines}}
+				{{for data.corp_lines}}
 					<div style="position: absolute;border-{{:value.istop?'top':'bottom'}}: 1px solid white;border-{{:value.isright?'right':'left'}}: 1px solid white;width: {{:value.width}}%;height: {{:value.height}}%;left: {{:value.line_x}}%;bottom: {{:value.line_y}}%"></div>
 				{{/for}}
 
-				{{for data.techs}}
+				{{for data.corp_nodes}}
 					<div style="position: absolute; left: {{:value.x}}%; bottom: {{:value.y}}%;margin-left: -20px;margin-bottom: -20px;">
-						{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_technology' : value.id}, null, "link sciTechTreeIconBox "+" "+((value.canresearch==0 && value.isresearched!=1)?'sciTechCantResearch':'')+" "+((value.isresearched==1)?'sciTechResearched':'')+" "+((value.id == data.selected_technology_id)?'sciTechSelected':'') )}}
+						{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_corp_node' : value.id}, null, "link sciTechTreeIconBox "+" "+((value.canunlock==0 && value.isresearched!=1)?'sciTechCantResearch':'')+" "+((value.isresearched==1)?'sciTechResearched':'')+" "+((value.id == data.selected_node_id)?'sciTechSelected':'') )}}
 					</div>
 				{{/for}}
 			</div>
 		</td>
-			<td style="width: 200px" valign="top">
-				{{if data.selected_technology}}
-					<b>Name</b></br>
-					{{:data.selected_technology.name}}
+			<td style="width: 240px" valign="top">
+				{{if data.selected_node}}
+					<b>Название</b></br>
+					{{:data.selected_node.name}}
 					</br></br>
-					<b>Cost</b></br>
-					{{:data.selected_technology.cost}} Research Points
+					<b>Тир</b></br>
+					{{:data.selected_node.tier}}
 					</br></br>
-					<b>Requirements</b></br>
-					{{for data.selected_technology.requirements}}
+					<b>Стоимость</b></br>
+					{{:data.currency_short}}{{:data.selected_node.price}}
+					</br></br>
+					<b>Требования</b></br>
+					{{for data.selected_node.requirements}}
 						<span style="color: {{:value.isgood?'#00FF00':'#FF0000'}}">{{:value.text}}</span></br>
 					{{/for}}
 					</br>
-					<b>Unlocks</b></br>
-					{{for data.selected_technology.unlocks}}
+					<b>Открывает</b></br>
+					{{for data.selected_node.unlocks}}
 						{{:value.text}}</br>
 					{{/for}}
 					</br>
-					{{if data.selected_technology.isresearched}}
-						<span class="average">Researched</span>
+					{{if data.selected_node.isresearched}}
+						<span class="average">Открыто</span>
 					{{else}}
-						{{:helper.link("Research", '', {'unlock_technology' : data.selected_technology.id})}}
+						<div style="display:flex; gap: 6px; flex-wrap: wrap;">
+							{{if data.selected_node.can_buy}}
+								{{:helper.link("Купить", '', {'buy_corp_node' : data.selected_node_id})}}
+							{{/if}}
+							{{if data.selected_node.can_mission}}
+								{{:helper.link("Взять миссию", '', {'take_corp_mission' : data.selected_node_id}, data.has_mission_console ? null : 'disabled')}}
+							{{/if}}
+							{{if !data.has_mission_console}}
+								<span class="bad">Нет консоли миссий</span>
+							{{/if}}
+							{{if !data.selected_node.canunlock}}
+								<span class="bad">Недоступно</span>
+							{{/if}}
+						</div>
 					{{/if}}
 				{{else}}
-					{{:data.tech_tree_desc}}
+					<span class="average">Выберите узел</span>
 				{{/if}}
 			</td>
 	  </tr>

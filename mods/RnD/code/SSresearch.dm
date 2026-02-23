@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	flags = SS_NO_FIRE
 	init_order = SS_INIT_EARLY
-
-	var/list/all_designs = list()	// All design datums
+	var/list/rnd_server_list = list() // R&D servers registered for syncing
+	var/list/all_designs = list() // All design datums
 	var/list/starting_designs = list() // List of designs starts_unlocked = TRUE
 	var/list/statting_technologies = list() // List of technologies that have no cost and no unlock requirements
 	var/list/list/all_tech_trees = list() // All tech tree typepaths (keys) associated to a list of their tech node instances (list(values))

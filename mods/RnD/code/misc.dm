@@ -127,33 +127,11 @@
 
 
 
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data
-	name = "Research Data"
-	disk_name = "research data"
-	var/min_points = 2000
-	var/max_points = 10000
-
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data/install_default_programs()
-	. = ..()
-	var/datum/computer_file/binary/sci/F = new
-	create_file(F)
-	F.size = rand(min_points / 1000, max_points / 1000)
-
-/obj/item/stock_parts/computer/hard_drive/portable/away/research_data/rare
-	min_points = 15000
-	max_points = 25000
-
 /obj/machinery/computer/modular/Initialize()
 	. = ..()
 	var/obj/item/stock_parts/computer/hard_drive/disk = get_component_of_type(PART_HDD)
 	if(disk.check_away_zone())
-		if(prob(10))
-			if(prob(20))
-				portable_drive = new /obj/item/stock_parts/computer/hard_drive/portable/away/research_data/rare
-			else
-				portable_drive = new /obj/item/stock_parts/computer/hard_drive/portable/away/research_data
-			verbs += /obj/machinery/computer/modular/proc/eject_usb
-		else if(prob(20))
+		if(prob(20))
 			disk.install_away_designs()
 
 
@@ -179,3 +157,49 @@
 	)
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
+
+// ТУДУ Ебануть сюда спрайт с Авроры
+
+/obj/item/device/weather_sensor
+	name = "weather data collection sensor"
+	desc = "A portable atmospheric and environmental data collection device. Deploy it in various locations to record local weather patterns."
+	icon = 'icons/obj/modular_components.dmi'
+	icon_state = "power_cell"
+	w_class = ITEM_SIZE_SMALL
+	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
+	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 50)
+	var/deployed = FALSE
+	var/datum/rnd_mission/linked_mission
+
+/obj/item/device/weather_sensor/attack_self(mob/user)
+	if(deployed)
+		to_chat(user, SPAN_WARNING("\The [src] has already been deployed and locked!"))
+		return
+
+	if(!istype(get_area(src), /area/exoplanet))
+		to_chat(user, SPAN_WARNING("\The [src] must be deployed on a planetary surface!"))
+		return
+
+	to_chat(user, SPAN_NOTICE("You begin deploying \the [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+
+	deployed = TRUE
+	anchored = TRUE
+	to_chat(user, SPAN_NOTICE("You deploy and activate \the [src]. It begins recording environmental data."))
+
+
+	for(var/obj/machinery/computer/rd_mission_console/console in world)
+		for(var/datum/rnd_mission/mission in console.active_missions)
+			if(mission.mission_type == RND_MISSION_TYPE_WEATHER_DATA && mission.state == RND_MISSION_STATE_ACCEPTED)
+				mission.register_weather_sensor(src, user)
+				break
+
+	if(deployed)
+		to_chat(user, SPAN_NOTICE("The sensor is deployed and actively recording data."))
+		var/turf/T = get_turf(src)
+		var/area/A = get_area(src)
+		if(T && A)
+			to_chat(user, SPAN_NOTICE("Location: [A.name] ([T.x], [T.y], [T.z])"))
+	else
+		to_chat(user, SPAN_NOTICE("The sensor can be deployed on a planetary surface."))

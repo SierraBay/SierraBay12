@@ -21,7 +21,7 @@
 
 /obj/machinery/r_n_d/server/Destroy()
 	//[SIERRA-ADD] - MODPACK_RND
-	rnd_server_list -= src
+	SSresearch.rnd_server_list -= src
 	//[/SIERRA-ADD] - MODPACK_RND
 
 	QDEL_NULL(files)
@@ -31,7 +31,7 @@
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
 	//[SIERRA-ADD] - MODPACK_RND
-	rnd_server_list += src
+	SSresearch.rnd_server_list += src
 	//[/SIERRA-ADD] - MODPACK_RND
 
 	if(!files)

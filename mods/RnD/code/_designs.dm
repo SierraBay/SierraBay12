@@ -38,6 +38,8 @@ other types of metals and chemistry for reagents).
 	var/list/ui_data = new 			// Additional data for UI use
 	var/list/autolathe_category = list()	//Categories for the autolathe design download software
 	var/list/access = list()		//List of access groups that can use this design
+	var/quality = 100				// Quality of reverse-engineered design (0-100). 100 = perfect, < 50 = defective
+	var/reverse_engineered = FALSE	// Was this design created via reverse engineering?
 
 
 /datum/design/New()
@@ -67,7 +69,7 @@ other types of metals and chemistry for reagents).
 /datum/design/proc/AssembleDesignDesc()
 	if(desc)
 		return
-	if(!desc)								//Try to make up a nice description if we don't have one
+	if(!desc)
 		desc = "Allows for the construction of \a [item_name]."
 		return
 
@@ -112,8 +114,7 @@ other types of metals and chemistry for reagents).
 /datum/design/ui_data()
 	RETURN_TYPE(/list)
 	return ui_data
-//Returns a new instance of the item for this design
-//This is to allow additional initialization to be performed, including possibly additional contructor arguments.
+
 /datum/design/proc/Fabricate(newloc, mat_efficiency, fabricator)
 
 	var/atom/A = new build_path(newloc)
@@ -124,6 +125,14 @@ other types of metals and chemistry for reagents).
 				for(var/i in O.matter)
 					O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)
 
+	if(reverse_engineered && quality < 100 && isitem(A))
+		var/obj/item/I = A
+		I.AddComponent(/datum/component/defective_item, quality)
+
+		if(quality < 60)
+			var/turf/T = get_turf(I)
+			if(T)
+				T.visible_message(SPAN_WARNING("[I] looks defective and may malfunction!"))
 
 	return A
 

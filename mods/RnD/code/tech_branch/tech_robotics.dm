@@ -23,7 +23,7 @@
 	y = 0.4
 	icon = "cpu_small"
 
-	required_technologies = list(/datum/technology/robo)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 750
 
@@ -38,7 +38,7 @@
 	y = 0.4
 	icon = "circuit"
 
-	required_technologies = list(/datum/technology/robo)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 750
 
@@ -55,7 +55,7 @@
 	y = 0.3
 	icon = "roboscanner"
 
-	required_technologies = list(/datum/technology/robo)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -70,7 +70,7 @@
 	y = 0.4
 	icon = "mechloader"
 
-	required_technologies = list(/datum/technology/robo)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1000
 
@@ -85,7 +85,7 @@
 	y = 0.6
 	icon = "pcpu_small"
 
-	required_technologies = list(/datum/technology/robo/basic_augments)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -100,7 +100,7 @@
 	y = 0.6
 	icon = "hardsuitmodule"
 
-	required_technologies = list(/datum/technology/robo/basic_hardsuitmods)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -115,7 +115,7 @@
 	y = 0.7
 	icon = "mechheavy"
 
-	required_technologies = list(/datum/technology/robo/loader_mech)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2000
 
@@ -130,7 +130,7 @@
 	y = 0.7
 	icon = "mechlight"
 
-	required_technologies = list(/datum/technology/robo/loader_mech)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -145,7 +145,7 @@
 	y = 0.7
 	icon = "mechcombat"
 
-	required_technologies = list(/datum/technology/robo/loader_mech)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 2500
 
@@ -161,7 +161,7 @@
 	y = 0.4
 	icon = "mechclaw"
 
-	required_technologies = list(/datum/technology/robo/loader_mech)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 500
 
@@ -176,7 +176,7 @@
 	y = 0.5
 	icon = "eva"
 
-	required_technologies = list(/datum/technology/robo/mech_equipment)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -191,7 +191,7 @@
 	y = 0.4
 	icon = "mechlaser"
 
-	required_technologies = list(/datum/technology/robo/mech_equipment)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1500
 
@@ -206,7 +206,7 @@
 	y = 0.3
 	icon = "mechsleeper"
 
-	required_technologies = list(/datum/technology/robo/mech_equipment)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 500
 
@@ -221,7 +221,7 @@
 	y = 0.2
 	icon = "aicircuit"
 
-	required_technologies = list(/datum/technology/robo)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1000
 
@@ -236,7 +236,7 @@
 	y = 0.2
 	icon = "posibrain"
 
-	required_technologies = list(/datum/technology/robo/roboupgrade)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 1000
 
@@ -251,7 +251,7 @@
 	y = 0.2
 	icon = "ai"
 
-	required_technologies = list(/datum/technology/robo/robotconstruction)
+	required_technologies = list()
 	required_tech_levels = list()
 	cost = 3500
 
