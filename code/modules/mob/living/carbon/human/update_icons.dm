@@ -854,15 +854,15 @@ var/global/list/damage_icon_parts = list()
 
 	switch(height)
 		if(HUMANHEIGHT_SHORTEST)
-			I.pixel_y = head ? -4 : -7
+			I.pixel_y = head ? -2 : -2
 		if(HUMANHEIGHT_SHORT)
-			I.pixel_y = head ? -2 : -3
+			I.pixel_y = head ? -1 : -1
 		if(HUMANHEIGHT_MEDIUM)
 			I.pixel_y = 0
 		if(HUMANHEIGHT_TALL)
-			I.pixel_y = head ? 0 : 1
+			I.pixel_y = head ? 1 : 1
 		if(HUMANHEIGHT_TALLEST)
-			I.pixel_y = head ? 1 : 3
+			I.pixel_y = head ? 2 : 2
 
 	return I
 
