@@ -6,7 +6,7 @@
 /obj/item/card/id/awaycavalry/ops
 	desc = "An identification card issued to SolGov crewmembers aboard the Sol Patrol Craft."
 	icon_state = "base"
-	color = "#b10309c2"
+	color = "#af6605c2"
 	detail_color = "#000000"
 	access = list(access_away_cavalry, access_away_cavalry_ops)
 
@@ -142,78 +142,43 @@
 
 	// VoidSuit
 
-/obj/item/rig/military/sentinel
-	name = "military hardsuit control module"
-	desc = "An austere hardsuit used by paramilitary groups and real soldiers alike."
-	icon_state = "military_rig"
-	suit_type = "military hardsuit"
-	armor = list(
-		melee = ARMOR_MELEE_VERY_HIGH,
-		bullet = ARMOR_BALLISTIC_AP,
-		laser = ARMOR_LASER_RIFLES,
-		energy = ARMOR_ENERGY_MINOR,
-		bomb = ARMOR_BOMB_RESISTANT,
-		bio = ARMOR_BIO_SHIELDED,
-		rad = ARMOR_RAD_MINOR
-		)
-	offline_vision_restriction = TINT_HEAVY
+/obj/item/rig/ert/fleet/leader/fifthfleet
+	name = "\improper SCGFSO Leader command hardsuit control module"
+	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has blue highlights with SOL CENTRAL GOVERNMENT FLEET printed in gold lettering on the chest and displaying a SCG crest on the back."
+	suit_type = "\improper SCGF-ERT command hardsuit"
+	icon_state = "ert_commander_rig"
 
-	chest_type = /obj/item/clothing/suit/space/rig/sentinel
-	helm_type = /obj/item/clothing/head/helmet/space/rig/sentinel
-	boot_type = /obj/item/clothing/shoes/magboots/rig/sentinel
-	glove_type = /obj/item/clothing/gloves/rig/sentinel
+	req_access = list(access_away_cavalry_captain)
 
-/obj/item/clothing/head/helmet/space/rig/sentinel
-	light_overlay = "helmet_light_dual_green"
-	species_restricted = list(SPECIES_HUMAN)
-	sprite_sheets = list(
-		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_head_unathi.dmi'
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_pressure_protection = FIRESUIT_MAX_PRESSURE
+
+	initial_modules = list(
+		/obj/item/rig_module/mounted/energy/egun,
+		/obj/item/rig_module/vision/multi,
+		/obj/item/rig_module/grenade_launcher,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/chem_dispenser/combat,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/healthscanner,
+		/obj/item/rig_module/device/rcd,
+		/obj/item/rig_module/selfrepair/adv,
+		/obj/item/rig_module/simple_ai/advanced
 		)
 
-/obj/item/clothing/suit/space/rig/sentinel
-	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
-	sprite_sheets = list(
-		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_suit_unathi.dmi'
-		)
-	allowed = list(
-		/obj/item/device/flashlight,
-		/obj/item/tank,
-		/obj/item/ammo_magazine,
-		/obj/item/ammo_casing,
-		/obj/item/handcuffs,
-		/obj/item/device/t_scanner,
-		/obj/item/rcd,
-		/obj/item/crowbar,
-		/obj/item/screwdriver,
-		/obj/item/weldingtool,
-		/obj/item/wirecutters,
-		/obj/item/wrench,
-		/obj/item/device/multitool,
-		/obj/item/device/radio,
-		/obj/item/device/scanner/gas,
-		/obj/item/storage/briefcase/inflatable,
-		/obj/item/melee/baton,
-		/obj/item/gun,
-		/obj/item/storage/firstaid,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/roller_bed,
-		/obj/item/device/suit_cooling_unit
-	)
+/obj/item/rig/ert/fleet/combat/fifthfleet
+	name = "\improper SCGFSO Trooper combat hardsuit control module"
+	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has red highlights with SOL CENTRAL GOVERNMENT FLEET written in silver lettering on the chest and a SCG crest displaying on the back."
+	suit_type = "\improper SCGF emergency response combat hardsuit"
+	icon_state = "ert_security_rig"
 
-/obj/item/clothing/shoes/magboots/rig/sentinel
-	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
-	sprite_sheets = list(
-		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_feet_unathi.dmi'
-		)
+	req_access = list(access_away_cavalry_ops)
 
-/obj/item/clothing/gloves/rig/sentinel
-	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_NOCUFFS
-	species_restricted = list(SPECIES_HUMAN,SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_IPC)
-	sprite_sheets = list(
-		SPECIES_UNATHI = 'icons/mob/species/unathi/onmob_hands_unathi.dmi'
-		)
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_pressure_protection = FIRESUIT_MAX_PRESSURE
 
-/obj/item/rig/military/sentinel
 	initial_modules = list(
 		/obj/item/rig_module/vision/multi/cheap,
 		/obj/item/rig_module/grenade_launcher/light,
@@ -221,23 +186,11 @@
 		/obj/item/rig_module/electrowarfare_suite,
 		/obj/item/rig_module/chem_dispenser/combat,
 		/obj/item/rig_module/cooling_unit,
-		/obj/item/rig_module/maneuvering_jets
-		)
-
-/obj/item/rig/military/sentinel/lead
-	initial_modules = list(
-		/obj/item/rig_module/mounted/energy/egun,
-		/obj/item/rig_module/vision/multi,
-		/obj/item/rig_module/grenade_launcher/light,
-		/obj/item/rig_module/power_sink,
-		/obj/item/rig_module/electrowarfare_suite,
-		/obj/item/rig_module/chem_dispenser/combat,
-		/obj/item/rig_module/cooling_unit,
 		/obj/item/rig_module/maneuvering_jets,
-		/obj/item/rig_module/device/healthscanner,
-		/obj/item/rig_module/device/rcd
+		/obj/item/rig_module/selfrepair,
+		/obj/item/rig_module/simple_ai,
+		/obj/item/rig_module/mounted/energy/taser
 		)
-
 
 // AmmoBox
 
