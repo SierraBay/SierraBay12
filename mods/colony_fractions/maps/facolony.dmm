@@ -1316,6 +1316,7 @@
 	dir = 4
 	},
 /obj/machinery/cryopod,
+/obj/floor_decal/industrial/outline/green,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 "fR" = (
@@ -3316,6 +3317,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/floor_decal/industrial/outline/green,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 "oL" = (
