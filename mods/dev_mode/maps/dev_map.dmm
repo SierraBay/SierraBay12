@@ -3,7 +3,19 @@
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+"byw" = (
+/obj/machinery/computer/arcade/battle,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"bIJ" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "cpC" = (
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"ctR" = (
+/obj/structure/casino/oh_bandit,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "cPZ" = (
@@ -142,6 +154,10 @@
 "uzJ" = (
 /turf/unsimulated/wall,
 /area/centcom)
+"uEi" = (
+/obj/machinery/computer/modular/preset/full,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "uVd" = (
 /obj/item/clothing/suit/space/void/atmos,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -214,7 +230,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+bIJ
 cpC
 cpC
 cpC
@@ -240,10 +256,10 @@ cpC
 cpC
 cpC
 cpC
+byw
 cpC
 cpC
-cpC
-cpC
+uEi
 cpC
 cpC
 uzJ
@@ -266,7 +282,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ctR
 cpC
 cpC
 cpC
