@@ -158,7 +158,7 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 
-// ТУДУ Ебануть сюда спрайт с Авроры
+// ТУДУ Ебануть сюда спрайт с Ауроры
 
 /obj/item/device/weather_sensor
 	name = "weather data collection sensor"
@@ -188,13 +188,13 @@
 	anchored = TRUE
 	to_chat(user, SPAN_NOTICE("You deploy and activate \the [src]. It begins recording environmental data."))
 
-
+/*
 	for(var/obj/machinery/computer/rd_mission_console/console in world)
 		for(var/datum/rnd_mission/mission in console.active_missions)
 			if(mission.mission_type == RND_MISSION_TYPE_WEATHER_DATA && mission.state == RND_MISSION_STATE_ACCEPTED)
 				mission.register_weather_sensor(src, user)
 				break
-
+*/
 	if(deployed)
 		to_chat(user, SPAN_NOTICE("The sensor is deployed and actively recording data."))
 		var/turf/T = get_turf(src)

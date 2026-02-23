@@ -45,8 +45,6 @@
 #include "code/program/codeprocessor.dm"
 #include "code/SSresearch.dm"
 
-#include "code/program/sciefolder.dm"
-#include "code/misc.dm"
 //#include "code/xenobot/botanicdisk.dm"
 #include "code/xenobot/botanyscannermodule.dm"
 #include "code/xenobot/botanicmachines.dm"
