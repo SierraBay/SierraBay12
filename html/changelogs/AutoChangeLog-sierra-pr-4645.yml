@@ -1,0 +1,5 @@
+author: thekekman666
+changes:
+  - bugfix: убрал возникающие дубликаты в емагнутых роботах
+  - bugfix: исправил некорректную работу sheetsnatcher
+delete-after: true

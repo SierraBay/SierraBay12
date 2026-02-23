@@ -1,0 +1,240 @@
+<!--
+Title: Lysis-isolation Centrifuge UI
+Used In File(s): \code\modules\hydroponics\seed_machines.dm
+ -->
+
+<style>
+    .isolator-container {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .isolator-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .isolator-panel {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(100, 200, 255, 0.3);
+        border-radius: 4px;
+        padding: 12px;
+    }
+
+    .isolator-header {
+        background: rgba(100, 150, 200, 0.2);
+        border-bottom: 2px solid rgba(100, 200, 255, 0.5);
+        padding: 8px;
+        margin: -12px -12px 10px -12px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .isolator-header h3 {
+        margin: 0;
+        font-size: 1.1em;
+        color: #64c8ff;
+        text-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
+    }
+
+    .isolator-section {
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .isolator-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .isolator-label {
+        color: #aaa;
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+    }
+
+    .isolator-content {
+        color: #e0e0e0;
+        padding-left: 10px;
+        border-left: 2px solid rgba(100, 200, 255, 0.4);
+    }
+
+    .isolator-genes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .isolator-gene-item {
+        background: rgba(50, 100, 150, 0.2);
+        border: 1px solid rgba(100, 200, 255, 0.4);
+        border-radius: 3px;
+        padding: 10px;
+        transition: all 0.2s;
+    }
+
+    .isolator-gene-item:hover {
+        background: rgba(50, 100, 150, 0.4);
+        border-color: rgba(100, 200, 255, 0.8);
+        box-shadow: 0 0 8px rgba(100, 200, 255, 0.3);
+    }
+
+    .isolator-gene-name {
+        font-weight: bold;
+        color: #64c8ff;
+        margin-bottom: 6px;
+        font-size: 0.95em;
+    }
+
+    .isolator-gene-action {
+        font-size: 0.85em;
+    }
+
+    .isolator-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .isolator-buttons a {
+        flex: 1;
+        min-width: 80px;
+    }
+
+    .processing-notice {
+        background: rgba(255, 100, 0, 0.2);
+        border: 2px solid rgba(255, 150, 0, 0.6);
+        border-radius: 4px;
+        padding: 20px;
+        text-align: center;
+        color: #ffa500;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-shadow: 0 0 5px rgba(255, 150, 0, 0.5);
+    }
+</style>
+
+{{if data.active}}
+    <div class="processing-notice">Processing...</div>
+{{else}}
+    <div class="isolator-container">
+        <!-- LEFT COLUMN -->
+        <div class="isolator-column">
+            {{if data.loaded_gene}}
+            <div class="isolator-panel">
+                <div class="isolator-header">
+                    <h3>Buffered Gene</h3>
+                </div>
+                <div class="isolator-section">
+                    <div class="isolator-label">Source:</div>
+                    <div class="isolator-content">{{:data.loaded_gene.source}}</div>
+                </div>
+                <div class="isolator-section">
+                    <div class="isolator-label">Locus:</div>
+                    <div class="isolator-content">{{:data.loaded_gene.mask}}</div>
+                </div>
+                <div class="isolator-buttons">
+                    {{:helper.link('Clear Buffer', 'closethick', {'clear_gene' : 1}, null)}}
+                    {{if data.disk}}
+                        {{:helper.link('Save to Disk', 'disk', {'save_gene' : 1}, (data.disk.max_capacity - data.disk.used_capacity >= data.loaded_gene.size) ? null : 'disabled')}}
+                    {{/if}}
+                </div>
+            </div>
+            {{/if}}
+
+            {{if data.hasGenetics}}
+            <div class="isolator-panel">
+                <div class="isolator-header">
+                    <h3>Buffered Genome</h3>
+                </div>
+                <div class="isolator-section">
+                    <div class="isolator-label">Source:</div>
+                    <div class="isolator-content">{{:data.sourceName}}</div>
+                </div>
+                <div class="isolator-section">
+                    <div class="isolator-label">Gene Decay:</div>
+                    <div class="isolator-content">{{:data.seed.degradation}}%</div>
+                </div>
+                <div class="isolator-section" style="border-bottom: none; padding-bottom: 0;">
+                    <div class="isolator-label">Genes:</div>
+                    <div class="isolator-genes">
+                        {{for data.geneMasks}}
+                            <div class="isolator-gene-item">
+                                <div class="isolator-gene-name">{{:value.mask}}</div>
+                                <div class="isolator-gene-action">{{:helper.link('Extract', 'circle-arrow-s', {'get_gene' : value.tag}, null)}}</div>
+                            </div>
+                        {{empty}}
+                            <div style="grid-column: 1 / -1; color: #ff6b6b;">Data error. Genetic record corrupt.</div>
+                        {{/for}}
+                    </div>
+                </div>
+                <div class="isolator-buttons">
+                    {{:helper.link('Clear Genome', 'closethick', {'clear_buffer' : 1}, null)}}
+                </div>
+            </div>
+            {{/if}}
+
+            {{if !data.hasGenetics}}
+            <div class="isolator-panel">
+                <div class="isolator-header">
+                    <h3>Loaded Material</h3>
+                </div>
+                {{if data.seed}}
+                    <div class="isolator-section">
+                        <div class="isolator-label">Packet:</div>
+                        <div class="isolator-content">{{:data.seed.name}}</div>
+                    </div>
+                    <div class="isolator-buttons">
+                        {{:helper.link('Process Genome', 'gear', {'scan_genome' : 1}, null)}}
+                        {{:helper.link('Eject Packet', 'eject', {'eject_seed' : 1}, null)}}
+                    </div>
+                {{else}}
+                    <div style="text-align: center; padding: 20px; color: #888;">No seeds loaded</div>
+                {{/if}}
+            </div>
+            {{/if}}
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="isolator-column">
+            <div class="isolator-panel">
+                <div class="isolator-header">
+                    <h3>Loaded Disk</h3>
+                </div>
+                {{if data.disk}}
+                    <div class="isolator-section">
+                        <div class="isolator-label">Disk Space:</div>
+                        <div class="isolator-content">{{:helper.displayBar(data.disk.used_capacity, 0, data.disk.max_capacity, 'good', data.disk.used_capacity + " / " + data.disk.max_capacity + " GQ")}}</div>
+                    </div>
+
+                    {{if data.disk.stored_genes.length}}
+                    <div class="isolator-section">
+                        <div class="isolator-label">Stored Genes:</div>
+                        <div style="margin-top: 8px;">
+                            {{for data.disk.stored_genes}}
+                            <div style="background: rgba(50, 100, 150, 0.15); padding: 8px; border-radius: 3px; margin-bottom: 6px; border-left: 3px solid rgba(100, 200, 255, 0.6);">
+                                <div style="color: #64c8ff; font-weight: bold; margin-bottom: 4px;">{{:value.mask}}</div>
+                                <div style="color: #aaa; font-size: 0.9em; margin-bottom: 5px;">Source: {{:value.source}}</div>
+                                <div>{{:helper.link('Delete', 'trash', {'delete_gene' : value.filename}, null)}}</div>
+                            </div>
+                            {{/for}}
+                        </div>
+                    </div>
+                    {{/if}}
+
+                    <div class="isolator-buttons">
+                        {{:helper.link('Eject Disk', 'eject', {'eject_disk' : 1}, null)}}
+                    </div>
+                {{else}}
+                    <div style="text-align: center; padding: 20px; color: #888;">No disk loaded</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+{{/if}}

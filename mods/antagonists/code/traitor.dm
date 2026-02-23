@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 /obj/item/door_charge
 	name = "door charge"
-	desc = "This is a booby trap, planted on doors. When door opens, it will explode!."
+	desc = "This is a booby trap, planted inside opened airlock mechanism. Next time door opens, it will explode!."
 	gender = PLURAL
 	icon = 'mods/antagonists/icons/obj/door_charge.dmi'
 	icon_state = "door_charge"
@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(custom_items)
 
 /obj/item/door_charge/proc/explode(obj/machinery/door/airlock/airlock)
 	if(!airlock.density)
-		explosion(get_turf(airlock), -1, 1, 2, 3)
+		explosion(get_turf(airlock), 3, EX_ACT_HEAVY)
 		airlock.ex_act(1)
 		qdel(src)
 

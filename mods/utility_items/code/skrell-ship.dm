@@ -65,3 +65,42 @@
 /mob/living/simple_animal/friendly/frog/skrells_frog
 	name = "Kro-krri"
 	desc = "An unusual creature that looks like a frog, it looks sad."
+
+// Munitions
+/obj/machinery/computer/modular/preset/munitions/skrell
+	default_software = list(
+		/datum/computer_file/program/munitions/skrell
+	)
+
+/datum/computer_file/program/munitions/skrell
+	filename = "munitionscontrol"
+	filedesc = "SDF Munitions Control Program"
+	nanomodule_path = /datum/nano_module/program/munitions/skrell
+	program_icon_state = "munitions"
+	program_key_state = "security_key"
+	program_menu_icon = "bullet"
+	extended_desc = "SDF Program for controlling munitions loading and arming systems."
+	requires_ntnet = FALSE
+	size = 8
+	category = PROG_COMMAND
+	usage_flags = PROGRAM_CONSOLE
+	requires_ntnet_feature = NTNET_SYSTEMCONTROL
+	available_on_ntnet = FALSE
+	available_on_syndinet = FALSE
+	required_access = access_skrellscoutship
+
+/datum/nano_module/program/munitions/skrell
+	name = "SDF Munitions Control Program"
+	access_req = list(access_skrellscoutship)
+/obj/item/paper/skrell/ssvsdocking
+	name = "SSV-S Semi-Auto Docking Procedure"
+	language = "Skrellian"
+	info = {"
+	<tt><font face='Verdana' color='black'><center><b><span style='font-size:18px'>Использование полуавтоматического режима стыковки</span></b></center><ul><li>Активировать режим Override на контроллере дока;</li><li>Принудительно открыть внутренний и внешний шлюзы дока;</li><li>Деактивировать режим Override на контроллере дока;</li><li>Повторить процедуру с контроллерами шаттла.</li></ul>После выполнения действий все контроллеры перейдут в статус <b>DOCKED</b>.<br>Последующая отстыковка будет выполнена автоматически.</font></tt>
+	"}
+
+/obj/machinery/power/skrell_reactor
+	name = "\improper Skrellian fusion stack"
+	desc = "A tall, gleaming assemblage of advanced alien machinery. It hums and crackles with restrained power."
+	icon = 'mods/sierra_resprite/icons/r-ust.dmi'
+	icon_state = "core1"

@@ -26,3 +26,8 @@
 	name = "Vox Shuttle"
 	icon_state = "shuttle"
 	req_access = list(access_voxship)
+
+/area/voxship/entrance
+	name = "Vox Entrance"
+	icon_state = "shuttle"
+	req_access = list(access_voxship)

@@ -3,11 +3,24 @@
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/liberia/atmos)
+
 "bcB" = (
 /obj/machinery/computer/rdconsole/core,
+
+"byw" = (
+/obj/machinery/computer/arcade/battle,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"bIJ" = (
+/obj/machinery/computer/arcade/orion_trail,
+
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "cpC" = (
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"ctR" = (
+/obj/structure/casino/oh_bandit,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "cPZ" = (
@@ -150,9 +163,20 @@
 /obj/item/gun/projectile/sniper/semistrip,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+
 "slu" = (
 /obj/machinery/computer/rd_mission_console,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
+
+"scc" = (
+/obj/landmark/no_weather_here{
+	layer = 2
+	},
+/obj/landmark{
+	name = "JoinLateCryo"
+	},
+/turf/unsimulated/floor/grass,
+
 /area/centcom)
 "sJt" = (
 /obj/structure/table/steel,
@@ -164,6 +188,10 @@
 /area/centcom)
 "uzJ" = (
 /turf/unsimulated/wall,
+/area/centcom)
+"uEi" = (
+/obj/machinery/computer/modular/preset/full,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "uVd" = (
 /obj/item/clothing/suit/space/void/atmos,
@@ -237,10 +265,17 @@ cpC
 cpC
 cpC
 cpC
+
 cpC
 jet
 kWp
 pnb
+
+bIJ
+cpC
+cpC
+cpC
+
 cpC
 cpC
 uzJ
@@ -263,10 +298,16 @@ cpC
 cpC
 cpC
 cpC
+byw
 cpC
+
 bcB
 sPb
 nQy
+
+cpC
+uEi
+
 cpC
 cpC
 uzJ
@@ -289,8 +330,13 @@ cpC
 cpC
 cpC
 cpC
+
 cpC
 slu
+
+ctR
+cpC
+
 cpC
 cpC
 cpC
@@ -394,7 +440,7 @@ djw
 dSB
 ooX
 ooX
-ooX
+scc
 ooX
 ooX
 cpC
@@ -419,9 +465,9 @@ dSB
 dSB
 dSB
 ooX
-ooX
+scc
 pSk
-ooX
+scc
 ooX
 cpC
 cpC
@@ -446,7 +492,7 @@ cpC
 cpC
 ooX
 ooX
-ooX
+scc
 ooX
 ooX
 cpC

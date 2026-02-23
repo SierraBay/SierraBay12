@@ -84,6 +84,7 @@
 
 /singleton/species/machine/proc/add_machine_verbs()
 	var/list/machine_verbs = list(
+		/mob/living/carbon/human/machine/verb/beep,
 		/mob/living/carbon/human/machine/verb/ping,
 		/mob/living/carbon/human/machine/verb/buzz,
 		/mob/living/carbon/human/machine/verb/confirm,
@@ -94,6 +95,11 @@
 /singleton/species/machine/New()
 	. = ..()
 	add_machine_verbs()
+
+/mob/living/carbon/human/machine/verb/beep()
+	set name = "X - Бибикнуть"
+	set category = "Emote"
+	emote("beep")
 
 /mob/living/carbon/human/machine/verb/ping()
 	set name = "X - Пинг"
