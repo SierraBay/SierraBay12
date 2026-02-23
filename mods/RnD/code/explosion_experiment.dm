@@ -106,7 +106,7 @@
 	// cooldown check
 	if(world.time < files.explosion_cooldown)
 		var/remaining = files.explosion_cooldown - world.time
-		var/mins = round(remaining / 60, 0.1)
+		var/mins = round(remaining / 60, 0.1) MINUTES
 		to_chat(user, SPAN_WARNING("Эксперимент заблокирован, подождите примерно [mins] минут."))
 		return
 	if(files.explosion_experiment_active)

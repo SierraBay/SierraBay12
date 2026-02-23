@@ -151,7 +151,7 @@
 		return
 	if(world.time < files.synthesis_cooldown)
 		var/remaining = files.synthesis_cooldown - world.time
-		var/mins = round(remaining / 60, 0.1)
+		var/mins = round(remaining / 60, 0.1) MINUTES
 		to_chat(user, SPAN_WARNING("Эксперимент заблокирован, подождите примерно [mins] минут."))
 		return
 	if(files.synthesis_experiment_active)

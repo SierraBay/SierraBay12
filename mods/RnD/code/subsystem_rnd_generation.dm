@@ -3,17 +3,12 @@ SUBSYSTEM_DEF(rnd_generation)
 	flags = SS_BACKGROUND
 	wait = 1
 
-var/list/generation_queue = list()
+
+	var/list/generation_queue = list()
 
 /datum/controller/subsystem/rnd_generation/Initialize()
 	. = ..()
 	generation_queue = list()
-
-	// Ensure mission asteroid areas are exempted from area usage tests at runtime
-	if(GLOB.using_map)
-		if(!istype(GLOB.using_map.area_usage_test_exempted_areas, "list"))
-			GLOB.using_map.area_usage_test_exempted_areas = list()
-		GLOB.using_map.area_usage_test_exempted_areas |= list(/area/rnd_mission_asteroid)
 
 /datum/controller/subsystem/rnd_generation/proc/queue_asteroid_generation(obj/overmap/visitable/sector/rnd_mission_asteroid/sector)
 	if(!sector)
@@ -26,7 +21,7 @@ var/list/generation_queue = list()
 	var/obj/overmap/visitable/sector/rnd_mission_asteroid/sector = generation_queue[1]
 	if(sector && !sector.generation_in_progress)
 		sector.generation_in_progress = TRUE
-		// Schedule asteroid build with a short delay instead of spawn()
+
 		addtimer(new Callback(sector, TYPE_PROC_REF(/obj/overmap/visitable/sector/rnd_mission_asteroid, build_asteroid)), 1, TIMER_STOPPABLE)
 	generation_queue.Cut(1,2)
 
