@@ -209,7 +209,7 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 /obj/machinery/power/ascent_reactor
 	name = "mantid fusion stack"
 	desc = "A tall, gleaming assemblage of advanced alien machinery. It hums and crackles with restrained power."
-	icon = 'icons/obj/machines/power/fusion_core.dmi'
+	icon = 'mods/sierra_resprite/icons/r-ust.dmi'
 	icon_state = "core1"
 	density = TRUE
 	color = COLOR_PURPLE

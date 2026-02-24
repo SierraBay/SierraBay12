@@ -46,6 +46,17 @@
  * ===========
  */
 
+/datum/stack_recipe/mainkraft/laserframe
+	title = "laser frame"
+	result_type = /obj/item/laserframe
+	req_amount = 15
+	time = 45
+	difficulty = 3
+
+/material/steel/generate_recipes(reinforce_material)
+	. = ..()
+	. += new/datum/stack_recipe/mainkraft/laserframe(src)
+
 /obj/item/laserframe
 	name = "laser stock"
 	desc = "It might be a laser, someday. Or emitter... Or projecror... Or flashlight... Or... Or something else."

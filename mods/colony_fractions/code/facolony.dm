@@ -257,7 +257,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	encryption_key = /obj/item/device/encryptionkey/map_preset/facolony
 
 /obj/machinery/door/airlock/facolony/command
-	name = "Airlock"
+	name = "Bridge"
 	door_color = COLOR_COMMAND_BLUE
 	stripe_color = COLOR_GUNMETAL
 
