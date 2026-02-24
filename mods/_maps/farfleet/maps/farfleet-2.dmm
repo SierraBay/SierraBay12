@@ -132,12 +132,14 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/crew/kitchen)
 "aU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/borderfloorblack{
 	dir = 4
 	},
 /obj/floor_decal/corner/grey/border{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hallway/upper)
@@ -262,7 +264,6 @@
 	pixel_x = 34
 	},
 /obj/machinery/door/window/northright{
-	dir = 2;
 	req_access = list("ACCESS_ICCGN");
 	autoset_access = 0
 	},
@@ -374,9 +375,8 @@
 	dir = 1
 	},
 /obj/floor_decal/techfloor,
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 5;
-	icon_state = "intact"
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/snz)
@@ -483,6 +483,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
@@ -617,22 +620,24 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
 "dI" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/space_heater/stationary{
 	pixel_x = 0;
 	pixel_y = -26
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
@@ -1108,10 +1113,6 @@
 	},
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	icon_state = "map_vent_out";
-	dir = 1
-	},
 /obj/machinery/suspension_gen,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/snz)
@@ -1245,8 +1246,7 @@
 	},
 /obj/machinery/door/window/northleft{
 	req_access = list("ACCESS_ICCGN");
-	autoset_access = 0;
-	dir = 2
+	autoset_access = 0
 	},
 /obj/floor_decal/industrial/danger{
 	dir = 1
@@ -1504,10 +1504,8 @@
 /area/ship/farfleet/crew/cryo)
 "iN" = (
 /obj/floor_decal/industrial/warning/corner,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	icon_state = "map_vent_out";
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "iR" = (
@@ -1754,7 +1752,6 @@
 /area/ship/farfleet/crew/canteen)
 "kp" = (
 /obj/structure/ladder,
-/obj/structure/lattice,
 /obj/catwalk_plated/dark,
 /obj/machinery/light/small{
 	dir = 8;
@@ -1894,11 +1891,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/floor_decal/borderfloorblack{
-	dir = 8
-	},
 /obj/floor_decal/corner/grey/border{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hallway/upper)
@@ -2513,7 +2510,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/snz)
 "oZ" = (
@@ -2723,6 +2720,9 @@
 	},
 /obj/floor_decal/corner/grey/bordercorner2{
 	dir = 1
+	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hallway/upper)
@@ -3020,6 +3020,28 @@
 	},
 /turf/simulated/floor/tiled/old_cargo,
 /area/ship/farfleet/maintenance/anomaly)
+"ro" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/command/snz_hangar)
 "rq" = (
 /obj/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/tiled/dark/monotile,
@@ -3122,8 +3144,8 @@
 "rQ" = (
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /obj/machinery/stasis_cage{
 	req_access = list()
@@ -3169,7 +3191,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -3668,21 +3690,14 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks)
 "uW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
 /obj/machinery/power/apc/critical{
 	dir = 8;
 	name = "west bump";
 	pixel_x = -24;
 	req_access = list("ACCESS_ICCGN")
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
@@ -4023,6 +4038,26 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hydroponics)
+"wH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/catwalk_plated/dark,
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "wJ" = (
 /obj/paint/dark_gunmetal,
 /turf/simulated/wall/r_wall,
@@ -4221,6 +4256,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	icon_state = "map_vent_out";
+	dir = 1
+	},
 /obj/structure/closet/toolcloset/excavation/awaysite,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/snz)
@@ -4230,7 +4269,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -4238,6 +4276,7 @@
 	pixel_y = 0
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/valve/shutoff/supply,
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
@@ -4258,18 +4297,30 @@
 /turf/space,
 /area/space)
 "xS" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube_map"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube_map"
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
-/obj/machinery/atmospherics/valve/shutoff/supply,
-/obj/structure/disposalpipe/segment,
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
@@ -5031,6 +5082,14 @@
 /obj/paint_stripe/white,
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/freezer)
+"Cf" = (
+/obj/paint/black,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "Ck" = (
 /obj/paint/dark_gunmetal,
 /obj/structure/cable{
@@ -5062,6 +5121,11 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/crew/cryo)
+"Cq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/catwalk_plated/dark,
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "Cs" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -5405,7 +5469,14 @@
 /obj/floor_decal/industrial/warning/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "DT" = (
@@ -5455,6 +5526,9 @@
 	},
 /obj/floor_decal/corner/grey/bordercorner2{
 	dir = 4
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hallway/upper)
@@ -5865,6 +5939,21 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/barracks)
+"Gy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/catwalk_plated/dark,
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "GB" = (
 /obj/structure/bed/chair/comfy/red{
 	dir = 8
@@ -6266,6 +6355,9 @@
 	},
 /obj/structure/cable,
 /obj/paint/dark_gunmetal,
+/obj/machinery/door/firedoor{
+	req_access = list("ACCESS_ICCGN")
+	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/snz_hangar)
 "Jt" = (
@@ -6321,6 +6413,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/farfleet/barracks/armory)
+"JM" = (
+/obj/floor_decal/industrial/warning{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/ship/farfleet/command/snz_hangar)
 "JO" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
@@ -6345,21 +6449,15 @@
 /turf/simulated/wall/r_titanium,
 /area/ship/snz)
 "Kg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/space_heater/stationary{
 	pixel_x = 0;
 	pixel_y = 30
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
@@ -6370,8 +6468,8 @@
 /area/ship/farfleet/crew/hallway/upper)
 "Ko" = (
 /obj/floor_decal/industrial/outline/grey,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /obj/machinery/anomaly_container{
 	req_access = list()
@@ -6575,6 +6673,27 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/brig/interrogation)
+"Lj" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/space_heater/stationary{
+	pixel_x = 0;
+	pixel_y = -26
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/catwalk_plated/dark,
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "Lk" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -6699,6 +6818,9 @@
 /obj/floor_decal/industrial/outline/grey,
 /obj/machinery/vending/cigarette{
 	prices = null
+	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/upper)
@@ -7154,19 +7276,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/barracks/armory)
 "OQ" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary,
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
+	maxrate = 50000
+	},
+/obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "OT" = (
@@ -7736,8 +7850,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/crew/hallway/upper)
 "Sp" = (
@@ -7868,23 +7986,13 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "Tb" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary{
+	maxrate = 50000
 	},
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/snz_hangar)
 "Tc" = (
@@ -7905,6 +8013,13 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/canteen)
+"Tl" = (
+/obj/paint/black,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
+/turf/simulated/wall/r_titanium,
+/area/ship/snz)
 "Tm" = (
 /obj/paint/silver,
 /obj/structure/cable{
@@ -8484,7 +8599,6 @@
 /area/ship/farfleet/command/snz_hangar)
 "VU" = (
 /obj/structure/ladder,
-/obj/structure/lattice,
 /obj/catwalk_plated/dark,
 /obj/machinery/light/small{
 	dir = 4
@@ -8794,16 +8908,15 @@
 /turf/simulated/floor/tiled/kafel_full,
 /area/ship/farfleet/crew/freezer)
 "Yc" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube_map"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
@@ -8997,6 +9110,26 @@
 	map_airless = 1
 	},
 /area/space)
+"Zb" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/space_heater/stationary{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/catwalk_plated/dark,
+/turf/simulated/floor/plating,
+/area/ship/farfleet/command/snz_hangar)
 "Zh" = (
 /obj/paint/red,
 /turf/simulated/wall/r_titanium,
@@ -17253,7 +17386,7 @@ Wj
 Lf
 an
 OQ
-Bh
+Cq
 Yc
 Bh
 Bh
@@ -17376,12 +17509,12 @@ iv
 an
 Kg
 iN
+JM
 pH
 pH
 pH
 pH
-pH
-pH
+ro
 DN
 dI
 an
@@ -17496,7 +17629,7 @@ ff
 fr
 md
 an
-Kg
+Zb
 UT
 zW
 MC
@@ -17505,7 +17638,7 @@ pL
 MC
 VE
 Ry
-dI
+Lj
 an
 Su
 vQ
@@ -17618,16 +17751,16 @@ cD
 aO
 md
 IO
-iU
-uy
+Gy
+UT
 AY
 AY
 if
 Hv
 AY
-AY
-WJ
-pg
+Cf
+Ry
+wH
 go
 Su
 Su
@@ -19083,7 +19216,7 @@ Jn
 kq
 ns
 AY
-jo
+Tl
 oY
 bT
 Ko

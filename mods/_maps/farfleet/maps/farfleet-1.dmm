@@ -148,17 +148,17 @@
 /turf/simulated/floor/wood/maple,
 /area/ship/farfleet/maintenance)
 "at" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/omni/mixer{
 	tag_north = 2;
 	tag_south = 1;
 	tag_south_con = 0.71;
 	tag_east = 1;
 	tag_east_con = 0.29
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -523,9 +523,8 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/command/launcher)
 "bn" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green,
-/obj/floor_decal/corner/black{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -560,13 +559,13 @@
 /turf/simulated/floor/wood/maple,
 /area/ship/farfleet/maintenance)
 "bx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 10
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 10
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -1568,10 +1567,10 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/farfleet/medbay)
 "dE" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 10
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "dG" = (
@@ -1771,10 +1770,12 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/maintenance/waste)
 "ei" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 9
+/obj/floor_decal/corner/black{
+	dir = 10
 	},
-/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "ej" = (
@@ -1856,8 +1857,7 @@
 	},
 /obj/machinery/door/window/northleft{
 	req_access = list("ACCESS_ICCGN");
-	autoset_access = 0;
-	dir = 2
+	autoset_access = 0
 	},
 /obj/floor_decal/industrial/danger{
 	dir = 1
@@ -1994,7 +1994,7 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/dock)
 "eT" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
 /obj/machinery/atmospherics/binary/pump/high_power/on{
@@ -2032,11 +2032,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/airlock/glass/terran,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor{
 	req_access = list("ACCESS_ICCGN")
 	},
+/obj/machinery/door/airlock/glass/terran,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/engineering/atmos_equipment)
 "fh" = (
@@ -2573,10 +2573,10 @@
 	},
 /area/ship/farfleet/maintenance/waste)
 "gM" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/cyan,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "gO" = (
@@ -3380,10 +3380,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "jW" = (
@@ -3498,8 +3497,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "ku" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/floor_decal/corner/darkblue/half,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "kx" = (
@@ -3535,14 +3536,14 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/engineering/atmos_equipment)
 "kE" = (
-/obj/machinery/portable_atmospherics/canister/empty/nitrogen,
 /obj/floor_decal/industrial/outline/red,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	icon_state = "bulb1"
+	},
+/obj/machinery/atmospherics/unary/tank/nitrogen{
+	start_pressure = 15000;
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/engineering/atmospherics)
@@ -3602,13 +3603,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "kQ" = (
@@ -3730,9 +3731,6 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/dock)
 "lh" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
@@ -3742,6 +3740,9 @@
 /obj/machinery/light_switch{
 	pixel_x = -8;
 	pixel_y = 27
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -4044,7 +4045,6 @@
 	pixel_x = 34
 	},
 /obj/machinery/door/window/northright{
-	dir = 2;
 	autoset_access = 0;
 	req_access = list("ACCESS_ICCGN")
 	},
@@ -4233,11 +4233,10 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "mQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/floor_decal/industrial/outline/blue,
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/empty/oxygen,
-/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/engineering/atmospherics)
 "mT" = (
@@ -4574,7 +4573,6 @@
 /area/ship/farfleet/maintenance)
 "nK" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/power/apc/super/critical{
 	dir = 1;
 	name = "north bump";
@@ -4585,6 +4583,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "nM" = (
@@ -4605,18 +4604,16 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/farfleet/medbay/surgery)
 "nO" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/unary/tank/hydrogen{
+	start_pressure = 15000;
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/grey,
-/obj/machinery/portable_atmospherics/canister/empty/hydrogen,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/engineering/atmospherics)
 "nP" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
-	dir = 8
-	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "nS" = (
@@ -4716,13 +4713,13 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "op" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -6039,7 +6036,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -6047,6 +6043,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -6075,11 +6074,10 @@
 	},
 /area/ship/farfleet/engineering/atmospherics)
 "uG" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/portable_atmospherics/canister/empty/carbon_dioxide,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/engineering/atmospherics)
 "uH" = (
@@ -6487,6 +6485,10 @@
 	pixel_x = 0;
 	pixel_y = 10
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/lower)
 "wu" = (
@@ -6496,9 +6498,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/medbay/storage)
 "wx" = (
-/obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/machinery/meter,
 /obj/floor_decal/corner/darkblue/half,
+/obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "wA" = (
@@ -6631,7 +6633,9 @@
 /turf/simulated/floor/plating,
 /area/ship/farfleet/command/launcher)
 "xs" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "xu" = (
@@ -7115,20 +7119,19 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/eva)
 "zT" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "zZ" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -7372,11 +7375,6 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/command/bridge)
-"Bz" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green,
-/obj/machinery/meter,
-/turf/simulated/floor/tiled/techfloor,
-/area/ship/farfleet/engineering/atmospherics)
 "BD" = (
 /obj/floor_decal/industrial/outline/green,
 /obj/structure/flora/pottedplant/fern{
@@ -7385,6 +7383,10 @@
 	},
 /obj/structure/sign/iccg{
 	pixel_y = -32
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/farfleet/crew/hallway/lower)
@@ -7595,15 +7597,15 @@
 	},
 /area/ship/farfleet/maintenance/waste)
 "CD" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	pixel_y = 24;
 	req_access = list("ACCESS_ICCGN")
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -8175,9 +8177,7 @@
 /obj/floor_decal/corner/blue{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible/yellow{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "FC" = (
@@ -8297,7 +8297,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -8768,15 +8768,10 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/farfleet/command/bridge)
 "IJ" = (
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 6
-	},
 /obj/floor_decal/corner/red{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "IM" = (
@@ -8862,6 +8857,9 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "Jy" = (
@@ -10609,13 +10607,13 @@
 /turf/simulated/floor/wood/maple,
 /area/ship/farfleet/maintenance)
 "Ri" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 9
-	},
 /obj/floor_decal/corner/red{
 	dir = 9
 	},
 /obj/floor_decal/corner/lightgrey,
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "Rj" = (
@@ -11251,11 +11249,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/farfleet/medbay/storage)
 "Vc" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
-	},
 /obj/floor_decal/corner/blue{
 	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
@@ -11294,11 +11292,14 @@
 /turf/simulated/wall/r_wall,
 /area/ship/farfleet/maintenance)
 "VN" = (
-/obj/machinery/atmospherics/binary/pump/high_power,
+/obj/machinery/atmospherics/binary/pump/high_power{
+	max_pressure_setting = 20000;
+	power_rating = 65000
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/farfleet/engineering/atmospherics)
 "VS" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -22397,7 +22398,7 @@ hY
 jS
 uk
 IX
-Bz
+xs
 zT
 ku
 nO
@@ -22520,7 +22521,7 @@ Xm
 zi
 Wz
 pf
-zZ
+kh
 wx
 Sv
 vz
@@ -22642,7 +22643,7 @@ MW
 Xc
 ev
 xs
-ei
+xs
 Jp
 bQ
 nv
@@ -22761,11 +22762,11 @@ Bd
 Bd
 bc
 Uc
-zi
+zZ
 dE
-xs
-xs
 bn
+bS
+SI
 uG
 fG
 PD
@@ -22886,8 +22887,8 @@ Kt
 bx
 pz
 nP
-bS
-SI
+Xm
+ei
 Ld
 fG
 PD
