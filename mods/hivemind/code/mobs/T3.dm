@@ -31,7 +31,7 @@
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/mechiver
 
-	mob_flags = MOB_FLAG_UNPINNABLE
+	status_flags = FLAGS_OFF
 	can_be_buckled = FALSE
 
 	natural_weapon = /obj/item/natural_weapon/juggernaut
@@ -117,7 +117,7 @@
 	if(!Adjacent(target_mob))
 		return
 
-	if(world.time > special_ability_cooldown && !passenger && target_mob != /mob/living/exosuit)
+	if(world.time > special_ability_cooldown && !passenger && !istype(target_mob, /mob/living/exosuit) && !istype(target_mob, /mob/observer/ghost))
 		special_ability(target_mob)
 
 	..()
@@ -226,7 +226,7 @@
 	pixel_x = -16
 	ranged = TRUE
 
-	mob_flags = MOB_FLAG_UNPINNABLE
+	status_flags = FLAGS_OFF
 	can_be_buckled = FALSE
 
 	health = 1850
