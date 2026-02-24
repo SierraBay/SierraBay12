@@ -1,0 +1,217 @@
+<style>
+    body
+    .slot-machine {
+        border: 3px solid #660000;
+        padding: 20px;
+        margin: 20px auto;
+        width: 500px;
+        background: linear-gradient(180deg,#240000,#4b0000);
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(75,0,0,0.45), inset 0 0 10px rgba(0,0,0,0.35);
+        position: relative;
+        overflow: hidden;
+    }
+    .slot-machine::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(to bottom, #330000, #1a0000);
+        border-radius: 15px 15px 0 0;
+        z-index: 0;
+    }
+    .slot-machine::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(to top, #330000, #1a0000);
+        border-radius: 0 0 15px 15px;
+        z-index: 0;
+    }
+    h1 { position: relative; z-index: 1; margin: 10px 0; color: #ffd9d9; font-size: 24px; }
+    .cost-display {
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffd9d9;
+        margin: 10px 0;
+        position: relative;
+        z-index: 1;
+    }
+    .reels-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin: 20px 0;
+        padding: 20px;
+        background: linear-gradient(180deg,#110000,#220000);
+        border-radius: 10px;
+        position: relative;
+        z-index: 1;
+        box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+    }
+    .reel {
+        width: 100px;
+        height: 110px;
+        border: 4px solid #330000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 44px;
+        font-weight: bold;
+        background: linear-gradient(135deg,#ffb3b3,#8b0000);
+        border-radius: 8px;
+        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0,0,0,0.5);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s ease;
+    }
+    .reel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+        pointer-events: none;
+    }
+    .payouts-display {
+        font-size: 13px;
+        color: #ffd9d9;
+        margin: 15px 0;
+        padding: 10px 15px;
+        background: #220000;
+        border: 2px solid #660000;
+        border-radius: 8px;
+        line-height: 18px;
+        white-space: pre-wrap;
+        font-family: monospace;
+        position: relative;
+        z-index: 1;
+    }
+    .coins-display {
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffd9d9;
+        margin: 10px 0;
+        position: relative;
+        z-index: 1;
+    }
+    .multiplier-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 15px 0;
+        position: relative;
+        z-index: 1;
+    }
+    .multiplier-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        background: #ff6666;
+        border: 2px solid #330000;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #220000;
+        text-decoration: none;
+        display: inline-block;
+        min-width: 50px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
+    .multiplier-btn:hover {
+        background: #FFA500;
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .multiplier-btn.active {
+        background: #FF8C00;
+        border-color: #654321;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+    .multiplier-btn:disabled {
+        background: #CCCCCC;
+        border-color: #999999;
+        color: #666666;
+        cursor: not-allowed;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transform: none;
+    }
+    .spin-button {
+        padding: 12px 30px;
+        font-size: 16px;
+        background: #b30000;
+        border: 2px solid #330000;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 20px auto;
+        font-weight: bold;
+        transition: all 0.3s;
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .spin-button:hover {
+        background: #FFA500;
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .spin-button:disabled {
+        background: #CCCCCC;
+        cursor: not-allowed;
+        color: #666666;
+        transform: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes spin { 0% { transform: rotateX(0deg); } 100% { transform: rotateX(360deg); } }
+    .reels-container .reel.spinning { animation: spin 0.1s linear infinite; transform-style: preserve-3d; }
+    .reels-container .reel.spinning:nth-child(1) { animation-delay: 0s }
+    .reels-container .reel.spinning:nth-child(2) { animation-delay: 0.05s }
+    .reels-container .reel.spinning:nth-child(3) { animation-delay: 0.1s }
+</style>
+
+<div class="slot-machine">
+    <div style="text-align: center">
+    <h1> ⁷⁷⁷ Lady Luck ⁷⁷⁷ㅤ</h1>
+    </div>
+    <div class="multiplier-buttons">
+        {{if data.spinning}}
+            <button class='multiplier-btn' disabled>X1</button>
+            <button class='multiplier-btn' disabled>X3</button>
+            <button class='multiplier-btn' disabled>X10</button>
+        {{else}}
+            <a href='?src={{:data.src}}&multiplier=1&theme=pharaoh' class='multiplier-btn {{if data.multiplier == 1}}active{{/if}}'>X1</a>
+            <a href='?src={{:data.src}}&multiplier=3&theme=pharaoh' class='multiplier-btn {{if data.multiplier == 3}}active{{/if}}'>X3</a>
+            <a href='?src={{:data.src}}&multiplier=10&theme=pharaoh' class='multiplier-btn {{if data.multiplier == 10}}active{{/if}}'>X10</a>
+        {{/if}}
+    </div>
+    <div class="reels-container">
+        <div class="reel {{if data.spinning}}spinning{{/if}}">{{:data.reels[0]}}</div>
+        <div class="reel {{if data.spinning}}spinning{{/if}}">{{:data.reels[1]}}</div>
+        <div class="reel {{if data.spinning}}spinning{{/if}}">{{:data.reels[2]}}</div>
+    </div>
+    <div class="payouts-display">🎰🎰🎰=100
+🎲🎲🎲=75
+♦️♦️♦️=50
+♥️♥️♥️=25
+♠️♠️♠️=15
+♣️♣️♣️=10</div>
+    <div class="coins-display">Spin price: {{:data.cost}} thalers</div>
+    <div class="coins-display">Left: {{:data.coins}} thalers</div>
+    {{if data.spinning}}
+        <button class='spin-button' disabled>Spinning...</button>
+    {{else}}
+        <a href='?src={{:data.src}}&spin=1&theme=pharaoh' class='spin-button'>Pull the arm</a>
+    {{/if}}
+</div>

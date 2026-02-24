@@ -10,6 +10,7 @@
 #include "code/program/designownloader.dm"
 #include "code/event.dm"
 #include "code/research.dm"
+
 #include "code/augments/active.dm"
 #include "code/augments/clicker.dm"
 #include "code/augments/sonar.dm"
@@ -36,6 +37,10 @@
 #include "code/SSresearch.dm"
 #include "code/program/sciefolder.dm"
 #include "code/misc.dm"
+//#include "code/xenobot/botanicdisk.dm"
+#include "code/xenobot/botanyscannermodule.dm"
+#include "code/xenobot/botanicmachines.dm"
+#include "code/xenobot/seedfile.dm"
 #include "code/xenoarch/tesla.dm"
 #include "code/xenoarch/grav.dm"
 //#include "code/xenoarch/nature.dm"
