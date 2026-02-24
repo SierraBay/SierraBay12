@@ -70,7 +70,8 @@
 		/obj/item/clothing/accessory/armor_tag/solgov,
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/under/solgov/utility/fleet,
-		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth,
+		/obj/item/clothing/accessory/ubac/blue
 	)
 
 
@@ -102,7 +103,8 @@
 		/obj/item/clothing/accessory/armor_tag/solgov/lead,
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/under/solgov/utility/fleet,
-		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth,
+		/obj/item/clothing/accessory/ubac/blue
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet
