@@ -1,3 +1,4 @@
+
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "A random arcade machine."
@@ -89,7 +90,7 @@
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
 	var/turtle = 0
-
+/*
 /obj/machinery/computer/arcade/battle/Initialize()
 	. = ..()
 	SetupGame()
@@ -267,3 +268,4 @@
 
 		attack_hand(user)
 		return 1
+*/
