@@ -1,4 +1,4 @@
-/*
+
 //////////////////////////
 //   ORION TRAIL HERE   //
 //////////////////////////
@@ -25,50 +25,7 @@
 #define ORION_VIEW_MAIN			0
 #define ORION_VIEW_SUPPLIES		1
 #define ORION_VIEW_CREW			2
-*/
 
-/obj/machinery/computer/arcade/orion_trail
-	name = "orion trail"
-	desc = "Imported straight from Outpost-T71!"
-	icon_state = "arcade"
-	random = FALSE
-	machine_name = "orion trail arcade machine"
-	var/list/supplies = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 0, "6" = 0) //engine,hull,electronics,food,fuel
-	var/list/supply_cost = list("1" = 1000, "2" = 950, "3" = 1100, "4" = 75, "5" = 100)
-	var/list/supply_name = list("1" = "engine parts", "2" = "hull parts", "3" = "electronic parts", "4" = "food", "5" = "fuel", "6" = "thalers")
-	var/list/settlers = list()
-	var/num_traitors = 0
-	var/list/events = list(ORION_TRAIL_RAIDERS		= 3,
-						   ORION_TRAIL_FLUX			= 1,
-						   ORION_TRAIL_ILLNESS		= 3,
-						   ORION_TRAIL_BREAKDOWN	= 2,
-						   ORION_TRAIL_MUTINY		= 3,
-						   ORION_TRAIL_MALFUNCTION	= 2,
-						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_CARP			= 3
-						   )
-	var/list/stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
-	var/list/stopblurbs = list(
-		"Pluto, long since occupied with long-range sensors and scanners, stands ready to, and indeed continues to probe the far reaches of the galaxy.",
-		"At the edge of the Sol system lies a treacherous asteroid belt. Many have been crushed by stray asteroids and misguided judgement.",
-		"The nearest star system to Sol, in ages past it stood as a reminder of the boundaries of sub-light travel, now a low-population sanctuary for adventurers and traders.",
-		"This region of space is particularly devoid of matter. Such low-density pockets are known to exist, but the vastness of it is astounding.",
-		"Rigel Prime, the center of the Rigel system, burns hot, basking its planetary bodies in warmth and radiation.",
-		"Tau Ceti Beta has recently become a waypoint for colonists headed towards Orion. There are many ships and makeshift stations in the vicinity.",
-		"Sensors indicate that a black hole's gravitational field is affecting the region of space we were headed through. We could stay of course, but risk of being overcome by its gravity, or we could change course to go around, which will take longer.",
-		"You have come into range of the first man-made structure in this region of space. It has been constructed not by travellers from Sol, but by colonists from Orion. It stands as a monument to the colonists' success.",
-		"You have made it to Orion! Congratulations! Your crew is one of the few to start a new foothold for mankind!"
-		)
-	var/list/stop_distance = list(10000,7000,25000,9000,5000,30000,25000,10000,0)
-	var/event = null
-	var/event_title = ""
-	var/event_desc = ""
-	var/event_actions = ""
-	var/event_info = ""
-	var/distance = 0
-	var/port = 0
-	var/view = 0
-/*
 /obj/machinery/computer/arcade/orion_trail/proc/newgame(emag = 0)
 	SetName("orion trail[emag ? ": Realism Edition" : ""]")
 	supplies = list("1" = 1, "2" = 1, "3" = 1, "4" = 60, "5" = 20, "6" = 5000)
@@ -86,93 +43,186 @@
 	view = ORION_VIEW_MAIN
 
 /obj/machinery/computer/arcade/orion_trail/interact(mob/user)
-	var/dat = ""
+	var/dat = "<html><head><style>"
+	dat += "body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #e6e6e6; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }"
+	dat += ".container { max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.7); border-radius: 15px; padding: 20px; border: 2px solid #4cc9f0; box-shadow: 0 0 20px rgba(76, 201, 240, 0.5); }"
+	dat += ".header { text-align: center; color: #4cc9f0; text-shadow: 0 0 10px rgba(76, 201, 240, 0.8); margin-bottom: 20px; }"
+	dat += ".event-title { font-size: 28px; color: #f72585; text-shadow: 0 0 8px rgba(247, 37, 133, 0.8); margin: 15px 0; }"
+	dat += ".event-description { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; font-size: 16px; border: 1px solid #4cc9f0; }"
+	dat += ".event-info { background: rgba(247, 37, 133, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; font-size: 16px; border: 1px solid #f72585; }"
+	dat += ".stats { display: flex; justify-content: space-around; margin: 20px 0; flex-wrap: wrap; }"
+	dat += ".stat-box { background: rgba(76, 201, 240, 0.2); padding: 15px; border-radius: 10px; text-align: center; width: 180px; margin: 10px; border: 1px solid #4cc9f0; }"
+	dat += ".stat-title { font-size: 12px; color: #4cc9f0; margin-bottom: 5px; }"
+	dat += ".stat-value { font-size: 16px; font-weight: bold; color: #f72585; }"
+	dat += ".actions { text-align: center; margin: 20px 0; }"
+	dat += ".action-btn { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 12px 20px; margin: 8px; border-radius: 25px; cursor: pointer; font-size: 16px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }"
+	dat += ".action-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(247, 37, 133, 0.8); }"
+	dat += ".action-btn:disabled { background: #666; cursor: not-allowed; transform: none; box-shadow: none; }"
+	dat += ".action-btnsuppl { background: linear-gradient(45deg, #f72585, #b5179e); color: white; border: none; padding: 4px 8px; margin: 8px; border-radius: 10px; cursor: pointer; font-size: 16px; font-family: 'Courier New', monospace; transition: all 0.3s; text-decoration: none; display: inline-block; }"
+	dat += ".action-btnsuppl:hover { transform: scale(1.05); box-shadow: 0 0 8px rgba(247, 37, 133, 0.8); }"
+	dat += ".action-btnsuppl:disabled { background: #666; cursor: not-allowed; transform: none; box-shadow: none; }"
+	dat += ".game-over { background: rgba(247, 37, 133, 0.3); padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 2px solid #f72585; }"
+	dat += ".health-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".health-fill { height: 100%; background: linear-gradient(90deg, #ff6b6b, #f72585); border-radius: 10px; transition: width 0.5s; }"
+	dat += ".magic-bar { height: 20px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }"
+	dat += ".magic-fill { height: 100%; background: linear-gradient(90deg, #4cc9f0, #4895ef); border-radius: 10px; transition: width 0.5s; }"
+	dat += "a { color: #4cc9f0; text-decoration: none; }"
+	dat += "a:hover { text-decoration: underline; }"
+	dat += ".supply-item { background: rgba(76, 201, 240, 0.1); padding: 10px; border-radius: 8px; margin: 5px 0; border: 1px solid #4cc9f0; }"
+	dat += ".supply-title { font-weight: bold; color: #4cc9f0; }"
+	dat += ".crew-member { background: rgba(247, 37, 133, 0.1); padding: 10px; border-radius: 8px; margin: 5px 0; border: 1px solid #f72585; }"
+	dat += ".view-tabs { text-align: right; margin: 20px 0; }"
+	dat += ".tab-btn { background: rgba(76, 201, 240, 0.2); color: #4cc9f0; border: 1px solid #4cc9f0; padding: 8px 15px; margin: 5px; border-radius: 20px; cursor: pointer; font-size: 14px; font-family: 'Courier New', monospace; transition: all 0.3s; }"
+	dat += ".tab-btn:hover { background: rgba(76, 201, 240, 0.4); }"
+	dat += ".tab-btn.active { background: linear-gradient(45deg, #f72585, #b5179e); color: white; }"
+	dat += "</style></head><body>"
+	dat += "<div class='container'>"
+
 	if(isnull(event))
 		newgame()
 	user.set_machine(src)
+
 	switch(view)
 		if(ORION_VIEW_MAIN)
 			if(event == ORION_TRAIL_START) //new game? New game.
-				dat = "<center><h1>Orion Trail[emagged ? ": Realism Edition" : ""]</h1><br>Learn how our ancestors got to Orion, and have fun in the process!</center><br><P ALIGN=Right><a href='byond://?src=\ref[src];continue=1'>Start New Game</a></P>"
-				show_browser(user, dat, "window=arcade")
-				return
+				dat += "<div class='header'><h1>Orion Trail[emagged ? ": Realism Edition" : ""]</h1></div>"
+				dat += "<div class='event-description'>Learn how our ancestors got to Orion, and have fun in the process!</div>"
+				dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1' class='action-btn'>Start New Game</a></div>"
 			else
 				event_title = event
-				event_actions = "<a href='byond://?src=\ref[src];continue=1'>Continue your journey</a><br>"
-			switch(event)
-				if(ORION_TRAIL_GAMEOVER)
-					event_info = ""
-					event_actions = "<a href='byond://?src=\ref[src];continue=1'>Start New Game</a><br>"
-				if(ORION_TRAIL_SPACEPORT)
-					event_title   += ": [stops[port]]"
-					event_desc     = "[stopblurbs[port]]"
-					event_info     = ""
-					if(port == 9)
-						event_actions = "<a href='byond://?src=\ref[src];continue=1'>Return to the title screen!</a><br>"
-					else
-						event_actions  = "<a href='byond://?src=\ref[src];continue=1'>Shove off</a><br>"
-						event_actions += "<a href='byond://?src=\ref[src];attack=1'>Raid Spaceport</a>"
-				if(ORION_TRAIL_SPACEPORT_RAIDED)
-					event_title  += ": [stops[port]]"
-					event_actions = "<a href='byond://?src=\ref[src];continue=1'>Shove off</a>"
-				if(ORION_TRAIL_RAIDERS)
-					event_desc   = "You arm yourselves as you prepare to fight off the vox menace!"
-				if(ORION_TRAIL_DERELICT)
-					event_desc = "You come across an unpowered ship drifting slowly in the vastness of space. Sensors indicate there are no lifeforms aboard."
-				if(ORION_TRAIL_ILLNESS)
-					event_desc = "A disease has spread amoungst your crew!"
-				if(ORION_TRAIL_FLUX)
-					event_desc = "You've entered a turbulent region. Slowing down would be better for your ship but would cost more fuel."
-					event_actions  = "<a href='byond://?src=\ref[src];continue=1;risky=25'>Continue as normal</a><BR>"
-					event_actions += "<a href='byond://?src=\ref[src];continue=1;slow=1;'>Take it slow</a><BR>"
-				if(ORION_TRAIL_MALFUNCTION)
-					event_info = ""
-					event_desc = "The ship's computers are malfunctioning! You can choose to fix it with a part or risk something going awry."
-					event_actions  = "<a href='byond://?src=\ref[src];continue=1;risky=25'>Continue as normal</a><BR>"
-					if(supplies["3"] != 0)
-						event_actions += "<a href='byond://?src=\ref[src];continue=1;fix=3'>Fix using a part.</a><BR>"
-				if(ORION_TRAIL_COLLISION)
-					event_info = ""
-					event_desc = "Something has hit your ship and breached the hull! You can choose to fix it with a part or risk something going awry."
-					event_actions  = "<a href='byond://?src=\ref[src];continue=1;risky=25'>Continue as normal</a><BR>"
-					if(supplies["2"] != 0)
-						event_actions += "<a href='byond://?src=\ref[src];continue=1;fix=2'>Fix using a part.</a><BR>"
-				if(ORION_TRAIL_BREAKDOWN)
-					event_info = ""
-					event_desc = "The ship's engines broke down! You can choose to fix it with a part or risk something going awry."
-					event_actions  = "<a href='byond://?src=\ref[src];continue=1;risky=25'>Continue as normal</a><BR>"
-					if(supplies["1"] != 0)
-						event_actions += "<a href='byond://?src=\ref[src];continue=1;fix=1'>Fix using a part.</a><BR>"
-				if(ORION_TRAIL_STUCK)
-					event_desc    = "You've ran out of fuel. Your only hope to survive is to get refueled by a passing ship, if there are any."
-					if(supplies["5"] == 0)
-						event_actions = "<a href='byond://?src=\ref[src];continue=1;food=1'>Wait</a>"
-				if(ORION_TRAIL_CARP)
-					event_desc = "You've chanced upon a large carp migration! Known both for their delicious meat as well as their bite, you and your crew arm yourselves for a small hunting trip."
-				if(ORION_TRAIL_MUTINY)
-					event_desc = "You've been hearing rumors of dissenting opinions and missing items from the armory..."
-				if(ORION_TRAIL_MUTINY_ATTACK)
-					event_desc = "Oh no, some of your crew are attempting to mutiny!!"
+				dat += "<div class='header'><h1>Orion Trail[emagged ? ": Realism Edition" : ""]</h1></div>"
+				dat += "<div class='event-title'>[event_title]</div>"
 
-			dat = "<center><h1>[event_title]</h1>[event_desc]<br><br>Distance to next port: [distance]<br><b>[event_info]</b><br></center><br>[event_actions]"
+				switch(event)
+					if(ORION_TRAIL_GAMEOVER)
+						dat += "<div class='event-description'>Game Over!</div>"
+						dat += "<div class='event-info'>[event_desc]</div>"
+						dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1' class='action-btn'>Start New Game</a></div>"
+					if(ORION_TRAIL_SPACEPORT)
+						dat += "<div class='event-title'>[stops[port]]</div>"
+						dat += "<div class='event-description'>[stopblurbs[port]]</div>"
+						dat += "<div class='event-info'>Distance to next port: [distance]</div>"
+						if(port == 9)
+							dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1' class='action-btn'>Return to the title screen!</a></div>"
+						else
+							dat += "<div class='actions'>"
+							dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Shove off</a>"
+							dat += "<a href='byond://?src=\ref[src];attack=1' class='action-btn'>Raid Spaceport</a>"
+							dat += "</div>"
+					if(ORION_TRAIL_SPACEPORT_RAIDED)
+						dat += "<div class='event-title'>[stops[port]]</div>"
+						dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1' class='action-btn'>Shove off</a></div>"
+					if(ORION_TRAIL_RAIDERS)
+						dat += "<div class='event-description'>You arm yourselves as you prepare to fight off the vox menace!</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue as normal</a>"
+					if(ORION_TRAIL_DERELICT)
+						dat += "<div class='event-description'>You come across an unpowered ship drifting slowly in the vastness of space. Sensors indicate there are no lifeforms aboard.</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue as normal</a>"
+					if(ORION_TRAIL_ILLNESS)
+						dat += "<div class='event-description'>A disease has spread among your crew!</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue</a>"
+					if(ORION_TRAIL_FLUX)
+						dat += "<div class='event-description'>You've entered a turbulent region. Slowing down would be better for your ship but would cost more fuel.</div>"
+						dat += "<div class='actions'>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;slow=1;' class='action-btn'>Take it slow</a>"
+						dat += "</div>"
+					if(ORION_TRAIL_MALFUNCTION)
+						dat += "<div class='event-description'>The ship's computers are malfunctioning! You can choose to fix it with a part or risk something going awry.</div>"
+						dat += "<div class='actions'>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+						if(supplies["3"] != 0)
+							dat += "<a href='byond://?src=\ref[src];continue=1;fix=3' class='action-btn'>Fix using a part.</a>"
+						dat += "</div>"
+					if(ORION_TRAIL_COLLISION)
+						dat += "<div class='event-description'>Something has hit your ship and breached the hull! You can choose to fix it with a part or risk something going awry.</div>"
+						dat += "<div class='actions'>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+						if(supplies["2"] != 0)
+							dat += "<a href='byond://?src=\ref[src];continue=1;fix=2' class='action-btn'>Fix using a part.</a>"
+						dat += "</div>"
+					if(ORION_TRAIL_BREAKDOWN)
+						dat += "<div class='event-description'>The ship's engines broke down! You can choose to fix it with a part or risk something going awry.</div>"
+						dat += "<div class='actions'>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+						if(supplies["1"] != 0)
+							dat += "<a href='byond://?src=\ref[src];continue=1;fix=1' class='action-btn'>Fix using a part.</a>"
+						dat += "</div>"
+					if(ORION_TRAIL_STUCK)
+						dat += "<div class='event-description'>You've ran out of fuel. Your only hope to survive is to get refueled by a passing ship, if there are any.</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						if(supplies["5"] == 0)
+							dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1;food=1' class='action-btn'>Wait</a></div>"
+					if(ORION_TRAIL_CARP)
+						dat += "<div class='event-description'>You've chanced upon a large carp migration! Known both for their delicious meat as well as their bite, you and your crew arm yourselves for a small hunting trip.</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue as normal</a>"
+					if(ORION_TRAIL_MUTINY)
+						dat += "<div class='event-description'>You've been hearing rumors of dissenting opinions and missing items from the armory...</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+					if(ORION_TRAIL_MUTINY_ATTACK)
+						dat += "<div class='event-description'>Oh no, some of your crew are attempting to mutiny!!</div>"
+						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;risky=25' class='action-btn'>Continue as normal</a>"
+					if(ORION_TRAIL_DISASTER)
+						dat += "<div class='event-description'>[event_desc]</div>"
+						dat += "<a href='byond://?src=\ref[src];continue=1;' class='action-btn'>Continue as normal</a>"
+
+				if(event != ORION_TRAIL_START && event != ORION_TRAIL_GAMEOVER)
+					dat += "<div class='stats'>"
+					dat += "<div class='stat-box'>"
+					dat += "<div class='stat-title'>DISTANCE</div>"
+					dat += "<div class='stat-value'>[distance]</div>"
+					dat += "</div>"
+					dat += "<div class='stat-box'>"
+					dat += "<div class='stat-title'>FUEL</div>"
+					dat += "<div class='stat-value'>[supplies["5"]]</div>"
+					dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, supplies["5"] * 2)]%'></div></div>"
+					dat += "</div>"
+					dat += "<div class='stat-box'>"
+					dat += "<div class='stat-title'>FOOD</div>"
+					dat += "<div class='stat-value'>[supplies["4"]]</div>"
+					dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, supplies["4"] * 2)]%'></div></div>"
+					dat += "</div>"
+					dat += "<div class='stat-box'>"
+					dat += "<div class='stat-title'>CREW</div>"
+					dat += "<div class='stat-value'>[length(settlers)]</div>"
+					dat += "<div class='health-bar'><div class='health-fill' style='width: [min(100, length(settlers) * 10)]%'></div></div>"
+					dat += "</div>"
+					dat += "</div>"
+
 		if(ORION_VIEW_SUPPLIES)
-			dat  = "<center><h1>Supplies</h1>View your supplies or buy more when at a spaceport.</center><BR>"
-			dat += "<center>You have [supplies["6"]] [GLOB.using_map.local_currency_name].</center>"
+			dat += "<div class='header'><h1>Supplies</h1></div>"
+			dat += "<div class='event-info'>You have [supplies["6"]] [GLOB.using_map.local_currency_name].</div>"
+			dat += "<div class='event-description'>View your supplies or buy more when at a spaceport.</div>"
 			for(var/i=1; i<6; i++)
 				var/amm = (i>3?10:1)
-				dat += "[supplies["[i]"]] [supply_name["[i]"]][event==ORION_TRAIL_SPACEPORT ? ", <a href='byond://?src=\ref[src];buy=[i]'>buy [amm] for [supply_cost["[i]"]]T</a>" : ""]<BR>"
+				dat += "<div class='supply-item'>"
+				dat += "[supplies["[i]"]] [supply_name["[i]"]] "
+				if(event == ORION_TRAIL_SPACEPORT)
+					dat += "<a href='byond://?src=\ref[src];buy=[i]' class='.action-btnsuppl'>buy [amm] for [supply_cost["[i]"]]T</a>"
+				dat += "</div>"
 				if(supplies["[i]"] >= amm && event == ORION_TRAIL_SPACEPORT)
-					dat += "<a href='byond://?src=\ref[src];sell=[i]'>sell [amm] for [supply_cost["[i]"]]T</a><br>"
+					dat += "<a href='byond://?src=\ref[src];sell=[i]' class='.action-btnsuppl'>sell [amm] for [supply_cost["[i]"]]T</a><br>"
 		if(ORION_VIEW_CREW)
-			dat = "<center><h1>Crew</h1>View the status of your crew.</center>"
+			dat += "<div class='header'><h1>Crew</h1></div>"
+			dat += "<div class='event-description'>View the status of your crew.</div>"
 			for(var/i=1;i<=length(settlers);i++)
-				dat += "[settlers[i]] <a href='byond://?src=\ref[src];kill=[i]'>Kill</a><br>"
+				dat += "<div class='crew-member'>[settlers[i]] <a href='byond://?src=\ref[src];kill=[i]' class='action-btn'>Kill</a></div>"
 
-	dat += "<br><P ALIGN=Right>View:<BR>"
-	dat += "[view==ORION_VIEW_MAIN ? "" : "<a href='byond://?src=\ref[src];continue=1'>"]Main[view==ORION_VIEW_MAIN ? "" : "</a>"]<BR>"
-	dat += "[view==ORION_VIEW_SUPPLIES ? "" : "<a href='byond://?src=\ref[src];supplies=1'>"]Supplies[view==ORION_VIEW_SUPPLIES ? "" : "</a>"]<BR>"
-	dat += "[view==ORION_VIEW_CREW ? "" : "<a href='byond://?src=\ref[src];crew=1'>"]Crew[view==ORION_VIEW_CREW ? "" : "</a>"]</P>"
-	show_browser(user, dat, "window=arcade")
+	dat += "<div class='view-tabs'>"
+	dat += view == ORION_VIEW_MAIN ? "<span class='tab-btn active'>Main</span>" : "<a href='byond://?src=\ref[src];continue=1' class='tab-btn'>Main</a>"
+	dat += view == ORION_VIEW_SUPPLIES ? "<span class='tab-btn active'>Supplies</span>" : "<a href='byond://?src=\ref[src];supplies=1' class='tab-btn'>Supplies</a>"
+	dat += view == ORION_VIEW_CREW ? "<span class='tab-btn active'>Crew</span>" : "<a href='byond://?src=\ref[src];crew=1' class='tab-btn'>Crew</a>"
+	dat += "</div>"
+
+
+	dat += "</div></body></html>"
+	show_browser(user, dat, "window=arcade;size=600x800")
 
 /obj/machinery/computer/arcade/orion_trail/OnTopic(user, href_list)
 	if(href_list["continue"])
@@ -354,7 +404,7 @@
 			change_resource(4)
 
 		if(ORION_TRAIL_MUTINY)
-			event_info = ""
+			event_info = "Whispers grew more"
 			if(num_traitors < length(settlers) - 1 && prob(55)) //gotta have at LEAST one non-traitor.
 				num_traitors++
 		if(ORION_TRAIL_MUTINY_ATTACK)
@@ -470,40 +520,7 @@
 		prizevend()
 	event = null
 	src.updateUsrDialog()
-*/
-/obj/item/orion_ship
-	name = "model settler ship"
-	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "ship"
-	w_class = ITEM_SIZE_SMALL
-	var/active = 0 //if the ship is on
-/obj/item/orion_ship/examine(mob/user)
-	. = ..()
-	if(!(in_range(user, src)))
-		return
-	if(!active)
-		to_chat(user, SPAN_NOTICE("There's a little switch on the bottom. It's flipped down."))
-	else
-		to_chat(user, SPAN_NOTICE("There's a little switch on the bottom. It's flipped up."))
-/obj/item/orion_ship/attack_self(mob/user)
-	if(active)
-		return
-	log_and_message_admins("primed an explosive Orion ship for detonation.", user)
-	to_chat(user, SPAN_WARNING("You flip the switch on the underside of [src]."))
-	active = 1
-	src.visible_message(SPAN_NOTICE("[src] softly beeps and whirs to life!"))
-	src.audible_message("<b>\The [src]</b> says, 'This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.'")
-	sleep(20)
-	src.visible_message(SPAN_WARNING("[src] begins to vibrate..."))
-	src.audible_message("<b>\The [src]</b> says, 'Uh, Port? Having some issues with our reactor, could you check it out? Over.'")
-	sleep(30)
-	src.audible_message("<b>\The [src]</b> says, 'Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-'")
-	sleep(3.6)
-	src.visible_message(SPAN_DANGER("[src] explodes!"))
-	explosion(src.loc, 7)
-	qdel(src)
-/*
+
 #undef ORION_TRAIL_RAIDERS
 #undef ORION_TRAIL_FLUX
 #undef ORION_TRAIL_ILLNESS
@@ -523,4 +540,3 @@
 #undef ORION_VIEW_MAIN
 #undef ORION_VIEW_SUPPLIES
 #undef ORION_VIEW_CREW
-*/
