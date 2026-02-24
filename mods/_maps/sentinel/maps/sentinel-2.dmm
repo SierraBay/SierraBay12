@@ -209,17 +209,25 @@
 /turf/simulated/wall/r_wall,
 /area/ship/patrol/crew/cryo)
 "aw" = (
-/obj/structure/railing/mapped{
-	dir = 1
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/structure/railing/mapped{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/obj/structure/table/rack,
-/obj/random/maintenance/solgov/clean,
-/obj/random/maintenance/solgov/clean,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/port)
+/area/ship/patrol/maintenance/upper/starboard)
 "ax" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/floor_decal/industrial/hatch/yellow,
@@ -806,10 +814,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/hallway/upper)
 "bM" = (
-/obj/floor_decal/corner/grey_alt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/industrial/hatch/yellow,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/hallway/upper)
 "bN" = (
 /obj/floor_decal/corner/grey_alt,
@@ -1139,7 +1146,7 @@
 	dir = 5
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/turf/simulated/floor/tiled,
+/turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/hallway/upper)
 "cs" = (
 /obj/floor_decal/corner/grey_alt{
@@ -1557,19 +1564,14 @@
 /obj/structure/railing/mapped{
 	dir = 1
 	},
-/obj/structure/lattice,
-/obj/structure/cable{
-	d1 = 32;
-	icon_state = "32-1"
+/obj/structure/railing/mapped{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/zpipe/down/supply{
-	dir = 1
-	},
-/turf/simulated/open,
-/area/ship/patrol/maintenance/upper/starboard)
+/obj/structure/table/rack,
+/obj/random/maintenance/solgov/clean,
+/obj/random/maintenance/solgov/clean,
+/turf/simulated/floor/plating,
+/area/ship/patrol/maintenance/upper/port)
 "cS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1907,11 +1909,17 @@
 /obj/structure/bed/chair/office/dark{
 	dir = 1
 	},
+/obj/floor_decal/industrial/warning{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/floor_decal/industrial/warning/corner{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/crew/brig/emergency_armory)
@@ -4258,26 +4266,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
-"kl" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/ship/patrol/maintenance/upper/starboard)
 "km" = (
 /obj/structure/lattice,
 /obj/structure/cable{
@@ -4828,6 +4816,23 @@
 /obj/random/maintenance/solgov/clean,
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/aft)
+"wy" = (
+/obj/structure/railing/mapped{
+	dir = 1
+	},
+/obj/structure/lattice,
+/obj/structure/cable{
+	d1 = 32;
+	icon_state = "32-1"
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/zpipe/down/supply{
+	dir = 1
+	},
+/turf/simulated/open,
+/area/ship/patrol/maintenance/upper/starboard)
 "wB" = (
 /obj/structure/table/rack,
 /obj/structure/railing/mapped{
@@ -5741,8 +5746,8 @@
 /turf/simulated/floor/plating,
 /area/ship/patrol/maintenance/upper/starboard)
 "Wi" = (
-/obj/machinery/telecomms/allinone/away_scg_patrol,
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/telecomms/allinone/away_scg_patrol,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/comms)
 "Wu" = (
@@ -12254,7 +12259,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 ab
 ab
 ab
@@ -12287,7 +12292,7 @@ ab
 ab
 ab
 ab
-aa
+ab
 aa
 aa
 aa
@@ -12646,7 +12651,7 @@ gb
 be
 hk
 qe
-aw
+cR
 hk
 LZ
 vg
@@ -12769,7 +12774,7 @@ bf
 gJ
 oM
 hm
-aw
+cR
 qM
 hk
 Ua
@@ -14578,8 +14583,8 @@ ab
 ac
 zO
 zO
-kl
-cR
+aw
+wy
 aK
 bc
 bq

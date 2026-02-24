@@ -29,7 +29,7 @@
 /obj/item/card/id/awaycavalry/fleet/commander
 	desc = "An identification card issued to SolGov crewmembers aboard the Sol Patrol Craft."
 	icon_state = "base"
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander) //TODO: беды с доступами
+	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_captain, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander) //TODO: беды с доступами
 	extra_details = list("goldstripe")
 
 /* RADIOHEADS
