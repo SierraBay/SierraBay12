@@ -1,6 +1,3 @@
-// [SIERRA-ADD] - Faction Background Grouping Mod
-// This file handles culture-to-faction mapping and new culture definitions
-
 #define CULTURE_HUMAN_CONFED_NOVOZEM "Novozem"
 #define CULTURE_HUMAN_CONFED_PROVIDENCE_NOMAD "Providence Nomad"
 #define CULTURE_HUMAN_CONFED_PROVIDENCE_COLONIST "Providence Colonist"
@@ -25,7 +22,7 @@
 	else
 		faction = ruling_body
 
-// SCG Residence Overrides
+// Оверрайды для места жительства
 /singleton/cultural_info/location/human
 	faction = FACTION_SOL_CENTRAL
 
@@ -155,7 +152,7 @@
 	ruling_body = "Гильгамешская Колониальная Конфедерация"
 	faction = FACTION_INDIE_CONFED
 
-// SCG Culture Overrides
+// Оверрайды для культур ЦПСС
 /singleton/cultural_info/culture/human/theia
 	nickname = "Тейец"
 	description = "Тея - это обитаемая система на рубежах Центрального Правительства Солнечной Системы, известная в первую очередь как штаб-квартира Третьего флота. Благодаря своему стратегическому расположению у гейтвея, ведущего к ряду ключевых фронтирных систем, Тея еще на раннем этапе освоения прослыла важным узловым пунктом, достойным защиты. Сегодня как военные, так и гражданские специалисты называют систему Тея своим домом, неустанно трудясь над поддержанием её статуса «Крепости ЦПСС»."
@@ -181,7 +178,7 @@
 	nickname = "Никсиец"
 	faction = FACTION_SOL_CENTRAL
 
-// GCC Culture Overrides and Translations
+// Оверрайды для культур ГКК (+ добавлены и переведены культуры с оффбэя)
 /singleton/cultural_info/culture/human/confederate_terra
 	nickname = "Терранец"
 	description = "Вы родом из столицы ГКК - Терры, землеподобной планеты. Жители все еще оправляются после множества потрясений, главным ударом по экономике колонии стал Гайский конфликт, многие небольшие поселения, в которых просто закончились ресурсы, деньги или люди, были заброшены, а те, кто остался, устремились в города. Правительство ГКК старается \"оживить\" планету, выдавая кредиты и гранты отраслям экономики, дабы скорее оправдаться от конфликта. Тем не менее, жизнь идет своим чередом, хоть и не без труда, но народ Терры в целом демонстрирует определенную твердость духа и нежелание терпеть неудачи. Терранцы - это гордые, патриотичные люди, способные пережить любые невзгоды."
@@ -235,7 +232,6 @@
 /singleton/cultural_info/culture/human/confederate_colony
 	faction = FACTION_INDIE_CONFED
 
-// New Providence Variants
 /singleton/cultural_info/culture/human/confederate_providence_nomad
 	name = CULTURE_HUMAN_CONFED_PROVIDENCE_NOMAD
 	nickname = "Провиденец-кочевник"
@@ -290,7 +286,7 @@
 		machine_homes |= human_homes
 	return TRUE
 
-// Original faction assignments for other cultures
+// Указатель культур для всех фракций
 /singleton/cultural_info/culture/human/martian_surfacer/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/martian_tunneller/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/luna_poor/faction = FACTION_SOL_CENTRAL

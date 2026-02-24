@@ -12,7 +12,7 @@
 
 		if (expanded[token])
 			var/list/valid_values
-			// [SIERRA-EDIT] - Internal logic for getting allowed values
+
 			var/singleton/species/S = GLOB.species_by_name[pref.species];
 			if(!S)
 				valid_values = list()
@@ -26,11 +26,10 @@
 			if (!hidden[token])
 				. += "<br>"
 
-			// Should we use pagination for this token? (Only for Culture and Residence)
+			// Использование токенов для распределения "культур" и "мест жительства"
 			if(token == TAG_CULTURE || token == TAG_HOMEWORLD)
 				var/p = current_pages[token] || 1
 
-				// Group by faction
 				var/list/grouped_cultures = list(
 					FACTION_SOL_CENTRAL = list(),
 					FACTION_INDIE_CONFED = list(),
@@ -44,7 +43,6 @@
 						fact = "Others"
 					grouped_cultures[fact] += V
 
-				// Pagination Headers
 				var/list/page_names = list(
 					"Центральное Правительство Солнечной Системы",
 					"Гильгамешская Колониальная Конфедерация",
@@ -55,7 +53,6 @@
 				. += "<table width=100% style='border: 1px solid #555; padding: 5px; background: #222;'>"
 				. += "<tr><td align='center'>"
 
-				// Pagination Links
 				for(var/i=1; i<=3; i++)
 					if(i == p)
 						. += "<b>[page_names[i]]</b> "
@@ -66,7 +63,7 @@
 				. += "</td></tr>"
 				. += "<tr><td><hr></td></tr>"
 
-				// Show current page content
+				// Указатель на текущий выбранный вариант
 				var/current_fact_key = page_keys[p]
 				. += "<tr><td>"
 				if(!LAZYLEN(grouped_cultures[current_fact_key]))
