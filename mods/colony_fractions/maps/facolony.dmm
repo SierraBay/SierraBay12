@@ -7940,9 +7940,9 @@
 	dir = 8;
 	pixel_x = 22
 	},
-/obj/item/stack/telecrystal{
-	pixel_y = 1;
-	pixel_x = 2
+/obj/item/shield_diffuser{
+	pixel_y = 2;
+	pixel_x = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
