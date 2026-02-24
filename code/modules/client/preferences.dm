@@ -281,7 +281,9 @@
 	character.gender = gender
 	character.pronouns = pronouns
 	character.age = age
+	// [SIERRA-ADD] HEIGHT
 	character.height = height
+	// [/SIERRA-ADD]
 	character.b_type = b_type
 
 	character.eye_color = eye_color

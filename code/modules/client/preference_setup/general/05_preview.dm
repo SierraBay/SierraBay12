@@ -101,7 +101,9 @@
 
 
 /datum/preferences/proc/update_preview_icon(resize_only)
-	var/static/icon/last_built_icon
+	var/static/list/height_icon_cache = list()
+	var/cache_key = client_ckey + "_" + (height || HUMANHEIGHT_MEDIUM)
+	var/icon/last_built_icon = height_icon_cache[cache_key]
 	if (!resize_only || !last_built_icon)
 		var/mob/living/carbon/human/dummy/mannequin/mannequin = get_mannequin(client_ckey)
 		mannequin.delete_inventory(TRUE)
@@ -117,6 +119,7 @@
 		// CHECK_TICK
 		mannequin.dir = man_dir
 		last_built_icon.Blend(getFlatIcon(mannequin, man_dir), ICON_OVERLAY, 25, 3) //[SIERRA-EDIT]
+		height_icon_cache[cache_key] = last_built_icon
 	preview_icon = new (last_built_icon)
 	var/scale = client.get_preference_value(/datum/client_preference/preview_scale)
 	switch (scale)

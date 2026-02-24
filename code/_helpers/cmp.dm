@@ -68,9 +68,7 @@
 
 /proc/cmp_fusion_reaction_des(singleton/fusion_reaction/A, singleton/fusion_reaction/B)
 	return B.priority - A.priority
-// Compare filter data priority for sorting
-/proc/cmp_filter_data_priority(list/A, list/B)
-	return A["priority"] - B["priority"]
+
 /proc/cmp_program(datum/computer_file/program/A, datum/computer_file/program/B)
 	return cmp_text_asc(A.filedesc, B.filedesc)
 
