@@ -86,6 +86,9 @@
 /singleton/cultural_info/location/kingston
 	faction = FACTION_SOL_CENTRAL
 
+/singleton/cultural_info/location/kharmaani
+	faction = FACTION_OTHER
+
 /singleton/cultural_info/location/human/terra
 	faction = FACTION_INDIE_CONFED
 
@@ -278,6 +281,15 @@
 		)
 	return TRUE
 
+/hook/startup/proc/restore_machine_cultures()
+	var/singleton/species/human/H = GLOB.species_by_name[SPECIES_HUMAN]
+	var/singleton/species/machine/M = GLOB.species_by_name[SPECIES_IPC]
+	if(H && M)
+		var/list/human_homes = H.available_cultural_info[TAG_HOMEWORLD]
+		var/list/machine_homes = M.available_cultural_info[TAG_HOMEWORLD]
+		machine_homes |= human_homes
+	return TRUE
+
 // Original faction assignments for other cultures
 /singleton/cultural_info/culture/human/martian_surfacer/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/martian_tunneller/faction = FACTION_SOL_CENTRAL
@@ -300,42 +312,45 @@
 /singleton/cultural_info/culture/human/pirx_high/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/pirx_bug/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/pirx_frontier/faction = FACTION_SOL_CENTRAL
-/singleton/cultural_info/culture/human/magnitkan/faction = FACTION_OTHER
+/singleton/cultural_info/culture/human/magnitka/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/spacer/faction = FACTION_OTHER
-/singleton/cultural_info/culture/human/offworlder/faction = FACTION_OTHER
-/singleton/cultural_info/culture/human/gaian/faction = FACTION_OTHER
+/singleton/cultural_info/culture/human/offworld/faction = FACTION_OTHER
+/singleton/cultural_info/culture/human/gaia/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/other/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/vatgrown/faction = FACTION_OTHER
 
 // Skrell
-/singleton/cultural_info/culture/skrell/caste_qerr/faction = FACTION_SKRELL_OTHERSKRELLFAC
+/singleton/cultural_info/culture/skrell/faction = FACTION_SKRELL_OTHERSKRELLFAC
 /singleton/cultural_info/culture/skrell/caste_malish/faction = FACTION_SKRELL_OTHERSKRELLFAC
 /singleton/cultural_info/culture/skrell/caste_kanin/faction = FACTION_SKRELL_OTHERSKRELLFAC
 /singleton/cultural_info/culture/skrell/caste_raskinta/faction = FACTION_SKRELL_OTHERSKRELLFAC
 /singleton/cultural_info/culture/skrell/caste_talum/faction = FACTION_SKRELL_OTHERSKRELLFAC
 
 // Unathi
-/singleton/cultural_info/culture/unathi/yeosa_abyss/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/yeosa_littoral/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/diamond_peaks/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/polar/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/desert/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/savannah/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/salt_swamp/faction = FACTION_UNATHI_INDEPENDENT
-/singleton/cultural_info/culture/unathi/space/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_yeosa_abyss/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_yeosa/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_polar/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_desert/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_savannah/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_salt_swamp/faction = FACTION_UNATHI_INDEPENDENT
+/singleton/cultural_info/culture/unathi_space/faction = FACTION_UNATHI_INDEPENDENT
 
 // IPC
-/singleton/cultural_info/culture/positronics/generation_one/faction = FACTION_OTHER
-/singleton/cultural_info/culture/positronics/generation_two/faction = FACTION_OTHER
-/singleton/cultural_info/culture/positronics/generation_three/faction = FACTION_OTHER
+/singleton/cultural_info/culture/ipc/faction = FACTION_OTHER
+/singleton/cultural_info/culture/ipc/gen2/faction = FACTION_OTHER
+/singleton/cultural_info/culture/ipc/gen3/faction = FACTION_OTHER
 
 // Vox
-/singleton/cultural_info/culture/vox/arkship/faction = FACTION_VOX_CREW
+/singleton/cultural_info/culture/vox/faction = FACTION_VOX_CREW
 /singleton/cultural_info/culture/vox/salvager/faction = FACTION_VOX_CREW
 /singleton/cultural_info/culture/vox/raider/faction = FACTION_VOX_RAIDER
 
 // Serpentid
-/singleton/cultural_info/culture/serpentid/labourer/faction = FACTION_OTHER
+/singleton/cultural_info/culture/nabber/faction = FACTION_OTHER
 
 // Diona
-/singleton/cultural_info/culture/diona/chorus/faction = FACTION_OTHER
+/singleton/cultural_info/culture/diona/faction = FACTION_OTHER
+
+// Ascent
+/singleton/cultural_info/culture/ascent/faction = FACTION_OTHER
