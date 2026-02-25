@@ -1,0 +1,4 @@
+author: Лексанкс
+changes:
+  - bugfix: АПЦ терминал плейн фикс
+delete-after: true

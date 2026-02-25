@@ -1,0 +1,4 @@
+author: KOJIECO
+changes:
+  - bugfix: Подправлены культуры у подрас людей. До этого они не отображались.
+delete-after: true

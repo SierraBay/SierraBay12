@@ -6,7 +6,7 @@
 /obj/item/card/id/awaycavalry/ops
 	desc = "An identification card issued to SolGov crewmembers aboard the Sol Patrol Craft."
 	icon_state = "base"
-	color = "#b10309c2"
+	color = "#af6605c2"
 	detail_color = "#000000"
 	access = list(access_away_cavalry, access_away_cavalry_ops)
 
@@ -29,7 +29,7 @@
 /obj/item/card/id/awaycavalry/fleet/commander
 	desc = "An identification card issued to SolGov crewmembers aboard the Sol Patrol Craft."
 	icon_state = "base"
-	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander) //TODO: беды с доступами
+	access = list(access_away_cavalry, access_away_cavalry_ops, access_away_cavalry_captain, access_away_cavalry_pilot, access_away_cavalry_fleet_armory, access_away_cavalry_commander) //TODO: беды с доступами
 	extra_details = list("goldstripe")
 
 /* RADIOHEADS
@@ -65,7 +65,7 @@
 
 /obj/item/clothing/under/scga/utility/away_solpatrol
 	accessories = list(
-		/obj/item/clothing/accessory/solgov/army/tempest
+		/obj/item/clothing/accessory/solgov/fleet_patch/fifth
 	)
 
 /obj/item/clothing/under/solgov/utility/fleet/officer/pilot_away_solpatrol
@@ -138,3 +138,74 @@
 	icon_state = "army_tempest"
 	on_rolled_down = ACCESSORY_ROLLED_NONE
 	slot = ACCESSORY_SLOT_INSIGNIA
+
+
+	// VoidSuit
+
+/obj/item/rig/ert/fleet/leader/fifthfleet
+	name = "\improper SCGF-SO Leader command hardsuit control module"
+	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has blue highlights with SOL CENTRAL GOVERNMENT FLEET printed in gold lettering on the chest and displaying a SCG crest on the back."
+	suit_type = "\improper SCGF-SO Leader command combat hardsuit"
+	icon_state = "ert_commander_rig"
+
+	req_access = list(access_away_cavalry_captain)
+
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_pressure_protection = FIRESUIT_MAX_PRESSURE
+	emp_protection = 6
+
+	initial_modules = list(
+		/obj/item/rig_module/mounted/energy/egun,
+		/obj/item/rig_module/vision/multi,
+		/obj/item/rig_module/grenade_launcher,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/chem_dispenser/combat/ert,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/device/healthscanner,
+		/obj/item/rig_module/device/rcd,
+		/obj/item/rig_module/selfrepair/adv,
+		/obj/item/rig_module/simple_ai/advanced,
+		/obj/item/rig_module/device/flash/advanced,
+		/obj/item/rig_module/datajack
+		)
+
+/obj/item/rig/ert/fleet/combat/fifthfleet
+	name = "\improper SCGF-SO Trooper combat hardsuit control module"
+	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has red highlights with SOL CENTRAL GOVERNMENT FLEET written in silver lettering on the chest and a SCG crest displaying on the back."
+	suit_type = "\improper SCGF-SO Trooper combat hardsuit"
+	icon_state = "ert_security_rig"
+
+	req_access = list(access_away_cavalry_ops)
+
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_pressure_protection = FIRESUIT_MAX_PRESSURE
+	emp_protection = 6
+
+	initial_modules = list(
+		/obj/item/rig_module/vision/multi/cheap,
+		/obj/item/rig_module/grenade_launcher/light,
+		/obj/item/rig_module/power_sink,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/chem_dispenser/combat/ert,
+		/obj/item/rig_module/cooling_unit,
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/selfrepair,
+		/obj/item/rig_module/simple_ai,
+		/obj/item/rig_module/mounted/energy/taser,
+		/obj/item/rig_module/device/flash,
+		/obj/item/rig_module/datajack
+		)
+
+// AmmoBox
+
+/obj/item/storage/box/ammo/solmag
+	name = "box of SolMag"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/smg_sol = 7)
+
+/obj/item/storage/box/ammo/milrifleheavy
+	name = "box of Z8"
+	desc = "It has a picture of a gun and several warning symbols on the front."
+	startswith = list(/obj/item/ammo_magazine/mil_rifle/heavy = 7)
