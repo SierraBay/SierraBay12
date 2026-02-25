@@ -246,13 +246,11 @@
 	economic_power = 1.0
 	faction = FACTION_INDIE_CONFED
 
-// Hook to inject these cultures into the Human species available list
 /hook/startup/proc/synchronize_human_background_options()
 	var/singleton/species/human/H = GLOB.species_by_name[SPECIES_HUMAN]
 	if(!H)
 		return TRUE
 
-	// 1. Add new GCC cultures and homeworlds to baseline Human
 	var/list/culs = H.available_cultural_info[TAG_CULTURE]
 	culs |= list(
 		CULTURE_HUMAN_CONFED_TERRA,
@@ -278,8 +276,7 @@
 		HOME_SYSTEM_VALY,
 		HOME_SYSTEM_NOVAYA_ZEMLYA
 	)
-
-	// 2. Synchronize these options to all Human subspecies and IPCs
+-
 	var/list/target_species = list(
 		SPECIES_IPC,
 		SPECIES_VATGROWN,
