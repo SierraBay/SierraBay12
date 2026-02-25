@@ -14,5 +14,9 @@
 	. = ..()
 	plane = GAME_PLANE_ABOVE_FOV
 
+
+/obj/machinery/power/terminal
+	plane = 1 // BASE LAYER FOR TILES AND STUFF
+
 /image/hud_overlay
 	plane = GAME_PLANE_FOV_HIDDEN
