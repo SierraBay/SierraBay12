@@ -459,6 +459,24 @@
 	images -= powernet_markers
 	QDEL_NULL_LIST(powernet_markers)
 
+/client/proc/profile_machinery_processing()
+	set category = "Debug"
+	set name = "Profile Machinery Processing"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!SSmachines.profiling_machinery)
+		SSmachines.reset_machinery_profiling()
+		SSmachines.profiling_machinery = TRUE
+		to_chat(src, SPAN_NOTICE("Machinery profiling started. Run this verb again to stop and view results."))
+		log_admin("[key_name(src)] started machinery processing profiling.")
+	else
+		SSmachines.profiling_machinery = FALSE
+		var/report = SSmachines.report_machinery_hotspots()
+		show_browser(src, "<html><head><title>Machinery Profiling</title></head><body>[report]</body></html>", "window=machinery_profiling;size=900x600")
+		log_admin("[key_name(src)] stopped machinery processing profiling ([SSmachines.profiling_machinery_cycles] cycles sampled).")
+
 /client/proc/toggle_planet_repopulating()
 	set category = "Debug"
 	set name = "Toggle Planet Mob Repopulating"

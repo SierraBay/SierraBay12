@@ -44,6 +44,10 @@ SUBSYSTEM_DEF(machines)
 	var/static/cost_machinery = 0
 	var/static/cost_powernets = 0
 	var/static/cost_power_objects = 0
+	var/static/profiling_machinery = FALSE
+	var/static/list/processing_profile_time_by_type = list()
+	var/static/list/processing_profile_count_by_type = list()
+	var/static/profiling_machinery_cycles = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -198,11 +202,14 @@ SUBSYSTEM_DEF(machines)
 
 
 /datum/controller/subsystem/machines/proc/process_pipenets(resumed, no_mc_tick)
+	var/static/pipenets_index = 0
 	if (!resumed)
-		queue = pipenets.Copy()
+		pipenets_index = length(pipenets)
 	var/datum/pipe_network/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	for (var/i = pipenets_index to 1 step -1)
+		if(i > length(pipenets))
+			continue
+		network = pipenets[i]
 		if (QDELETED(network))
 			if (network)
 				network.is_processing = null
@@ -212,21 +219,29 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
+			pipenets_index = i - 1
 			return
+	pipenets_index = 0
 
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
+	var/static/machinery_index = 0
 	if (!resumed)
-		queue = processing.Copy()
+		machinery_index = length(processing)
 	var/obj/machinery/machine
-	for (var/i = length(queue) to 1 step -1)
-		machine = queue[i]
+	var/profile_timer
+	for (var/i = machinery_index to 1 step -1)
+		if(i > length(processing))
+			continue
+		machine = processing[i]
 		if (QDELETED(machine))
 			if (machine)
 				machine.is_processing = null
 			processing -= machine
 			continue
+
+		if(profiling_machinery)
+			profile_timer = world.tick_usage
 
 		if(machine.processing_flags & MACHINERY_PROCESS_COMPONENTS)
 			for(var/obj/item/stock_parts/part as anything in machine.processing_parts)
@@ -236,11 +251,71 @@ SUBSYSTEM_DEF(machines)
 		if((machine.processing_flags & MACHINERY_PROCESS_SELF) && machine.Process(wait) == PROCESS_KILL)
 			STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_SELF)
 
+		if(profiling_machinery)
+			var/profile_cost = max((world.tick_usage - profile_timer) * world.tick_lag, 0)
+			var/mtype = machine.type
+			processing_profile_time_by_type[mtype] = (processing_profile_time_by_type[mtype] || 0) + profile_cost
+			processing_profile_count_by_type[mtype] = (processing_profile_count_by_type[mtype] || 0) + 1
+
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
+			machinery_index = i - 1
 			return
+	if(profiling_machinery)
+		profiling_machinery_cycles++
+	machinery_index = 0
+
+
+/datum/controller/subsystem/machines/proc/reset_machinery_profiling()
+	processing_profile_time_by_type = list()
+	processing_profile_count_by_type = list()
+	profiling_machinery_cycles = 0
+
+
+/datum/controller/subsystem/machines/proc/report_machinery_hotspots(top_n = 25)
+	if(!length(processing_profile_time_by_type))
+		return "No profiling data collected."
+
+	top_n = max(round(top_n), 1)
+	var/total_ms = 0
+	for(var/path in processing_profile_time_by_type)
+		total_ms += processing_profile_time_by_type[path]
+	if(total_ms <= 0)
+		return "No measurable processing time recorded."
+
+	var/list/time_left = processing_profile_time_by_type.Copy()
+	var/list/lines = list()
+	lines += "<h3>Machinery Processing Hotspots</h3>"
+	lines += "<b>Cycles sampled:</b> [profiling_machinery_cycles] | <b>Total measured time:</b> [round(total_ms, 0.01)]ms | <b>Processing list size:</b> [length(processing)]<br>"
+	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
+	lines += "<tr><th>#</th><th>Type</th><th>Total (ms)</th><th>Calls</th><th>Avg (ms)</th><th>Share</th></tr>"
+	var/rank = 0
+	while(rank < top_n && length(time_left))
+		var/best_path = null
+		var/best_ms = -1
+		for(var/path in time_left)
+			var/path_ms = time_left[path]
+			if(path_ms > best_ms)
+				best_ms = path_ms
+				best_path = path
+
+		if(isnull(best_path))
+			break
+
+		time_left.Remove(best_path)
+		if(best_ms <= 0)
+			continue
+
+		rank++
+		var/calls = processing_profile_count_by_type[best_path] || 0
+		var/avg_ms = calls ? round(best_ms / calls, 0.001) : 0
+		var/share = round((best_ms / total_ms) * 100, 0.1)
+		var/avg_per_cycle = profiling_machinery_cycles ? round(calls / profiling_machinery_cycles, 0.1) : calls
+		lines += "<tr><td>[rank]</td><td>[best_path]</td><td>[round(best_ms, 0.01)]</td><td>[calls] ([avg_per_cycle]/cyc)</td><td>[avg_ms]</td><td>[share]%</td></tr>"
+
+	lines += "</table>"
+	return lines.Join("\n")
 
 
 /datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
@@ -263,11 +338,14 @@ SUBSYSTEM_DEF(machines)
 
 
 /datum/controller/subsystem/machines/proc/process_power_objects(resumed, no_mc_tick)
+	var/static/power_objects_index = 0
 	if (!resumed)
-		queue = power_objects.Copy()
+		power_objects_index = length(power_objects)
 	var/obj/item/item
-	for (var/i = length(queue) to 1 step -1)
-		item = queue[i]
+	for (var/i = power_objects_index to 1 step -1)
+		if(i > length(power_objects))
+			continue
+		item = power_objects[i]
 		if (QDELETED(item))
 			if (item)
 				item.is_processing = null
@@ -279,8 +357,9 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
+			power_objects_index = i - 1
 			return
+	power_objects_index = 0
 
 
 #undef SSMACHINES_PIPENETS
