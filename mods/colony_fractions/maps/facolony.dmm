@@ -645,7 +645,9 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/machinery/door/airlock/facolony/general,
+/obj/machinery/door/airlock/facolony/general{
+	locked = 1
+	},
 /obj/machinery/door/blast/regular{
 	dir = 8;
 	id_tag = "facolony_unspecified_west";
@@ -1453,6 +1455,11 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
+"gt" = (
+/obj/paint/facolony/commandblue,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/surgery)
 "gv" = (
 /obj/floor_decal/corner/b_green/border{
 	dir = 4
@@ -2923,6 +2930,11 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
+"nq" = (
+/obj/paint/facolony/commandblue,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/armory)
 "ns" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -3106,7 +3118,9 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/machinery/door/airlock/facolony/general,
+/obj/machinery/door/airlock/facolony/general{
+	locked = 1
+	},
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_north";
 	name = "External Section"
@@ -3764,6 +3778,11 @@
 	},
 /turf/simulated/floor/wood/bamboo,
 /area/map_template/facolony/messhall)
+"qR" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/messhall)
 "qS" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -4248,6 +4267,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
+"sW" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/surgery)
 "sX" = (
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall,
@@ -4811,7 +4835,9 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/machinery/door/airlock/facolony/general,
+/obj/machinery/door/airlock/facolony/general{
+	locked = 1
+	},
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_south";
 	name = "External Section"
@@ -5164,6 +5190,11 @@
 /obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/science)
+"ww" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/engineering)
 "wy" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped{
@@ -5306,6 +5337,11 @@
 	},
 /turf/simulated/floor/away,
 /area/map_template/facolony/mineralprocessing)
+"wX" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/cargo)
 "wZ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -5995,7 +6031,7 @@
 "As" = (
 /obj/machinery/light,
 /obj/floor_decal/corner/b_green/half,
-/obj/submap_landmark/spawnpoint/facolony/crewman_spawn,
+/obj/submap_landmark/spawnpoint/facolony/colonist_spawn,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
 "Az" = (
@@ -7019,7 +7055,7 @@
 "FH" = (
 /obj/machinery/light,
 /obj/floor_decal/corner/b_green/half,
-/obj/submap_landmark/spawnpoint/facolony/crewman_spawn,
+/obj/submap_landmark/spawnpoint/facolony/colonist_spawn,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "FL" = (
@@ -7915,11 +7951,11 @@
 	},
 /obj/item/material/coin/challenge/syndie{
 	pixel_y = -2;
-	pixel_x = 6;
+	pixel_x = 7;
 	name = "Lucky Coin"
 	},
 /obj/item/clothing/mask/smokable/cigarette/rolled/sausage{
-	pixel_y = 6;
+	pixel_y = 8;
 	pixel_x = -2
 	},
 /obj/item/clothing/head/cowboy_hat{
@@ -7933,7 +7969,7 @@
 	},
 /obj/item/material/coin/challenge/syndie{
 	pixel_y = 1;
-	pixel_x = -5;
+	pixel_x = -6;
 	name = "Lucky Coin"
 	},
 /obj/item/device/radio/intercom/map_preset/facolony{
@@ -7941,7 +7977,7 @@
 	pixel_x = 22
 	},
 /obj/item/shield_diffuser{
-	pixel_y = 2;
+	pixel_y = 3;
 	pixel_x = 1
 	},
 /turf/simulated/floor/tiled/dark,
@@ -8382,6 +8418,11 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
+"Mx" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/atmospherics)
 "MB" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/blast/shutters{
@@ -8828,7 +8869,9 @@
 	},
 /obj/machinery/atmospherics/pipe/cap/visible/scrubbers,
 /obj/machinery/atmospherics/pipe/cap/visible/supply,
-/obj/machinery/door/airlock/facolony/general,
+/obj/machinery/door/airlock/facolony/general{
+	locked = 1
+	},
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_north";
 	name = "External Section"
@@ -9022,6 +9065,11 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
+"PQ" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/medbay)
 "PR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -9785,6 +9833,11 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
+"Th" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/turf/simulated/wall/titanium,
+/area/map_template/facolony/cargo2)
 "Tk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10118,7 +10171,9 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/obj/machinery/door/airlock/facolony/general,
+/obj/machinery/door/airlock/facolony/general{
+	locked = 1
+	},
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_unspecified_south";
 	name = "External Section"
@@ -11777,7 +11832,7 @@ Rq
 Ne
 vw
 TT
-et
+qR
 kL
 CQ
 uN
@@ -11820,7 +11875,7 @@ Rq
 IH
 Mn
 JB
-et
+qR
 hZ
 uN
 sM
@@ -11863,7 +11918,7 @@ Rq
 yW
 kE
 Pe
-et
+qR
 Dc
 CQ
 aZ
@@ -11885,7 +11940,7 @@ Oh
 dM
 XT
 iN
-EI
+ww
 EI
 EI
 EI
@@ -11906,29 +11961,29 @@ Rq
 au
 IK
 JC
-et
+qR
 DW
 CQ
 zL
 uk
 LI
-et
+qR
 ig
 EW
 Gn
 ta
 RI
 Ov
-Qn
+Mx
 GL
 nO
 rF
 UF
 eN
 tJ
-EI
-EI
-EI
+ww
+ww
+ww
 iw
 ve
 sw
@@ -11948,28 +12003,28 @@ tr
 Rq
 Rq
 pG
-Rq
-et
+nq
+qR
 Fx
 uN
 jb
 CM
 CQ
-et
+qR
 XB
 Pu
 Wc
 Tk
 ns
 ol
-Qn
+Mx
 bA
 pm
 pm
 pm
 UY
 UY
-EI
+ww
 eH
 CR
 Pz
@@ -12077,28 +12132,28 @@ JK
 Sw
 Sw
 pE
-Sw
-GV
-DT
-DT
+gt
+sW
+PQ
+PQ
 Xh
-DT
-DT
-DT
+PQ
+PQ
+PQ
 QF
 Pu
 TM
 sZ
 CO
 eY
-pt
+wX
 hQ
 cr
 MC
 MC
 RL
 Np
-di
+Th
 sm
 cJ
 GI
@@ -12127,21 +12182,21 @@ HM
 Jx
 ma
 yd
-DT
+PQ
 gf
 EW
 Fs
 fu
 HL
 Br
-pt
+wX
 IX
 bm
 OV
 eS
 nJ
 iO
-di
+Th
 HO
 BY
 GY

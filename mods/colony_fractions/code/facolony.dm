@@ -143,8 +143,8 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/submap_landmark/spawnpoint/facolony/leader_spawn
 	name = "Ship Captain"
 
-/obj/submap_landmark/spawnpoint/facolony/crewman_spawn
-	name = "Crewman"
+/obj/submap_landmark/spawnpoint/facolony/colonist_spawn
+	name = "Cargo Operator"
 
 /obj/submap_landmark/spawnpoint/facolony/scientist_spawn
 	name = "Systems Technician"
