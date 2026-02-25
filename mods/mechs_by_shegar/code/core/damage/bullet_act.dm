@@ -12,9 +12,6 @@
 	var/obj/item/mech_component/target = zoneToComponent(def_zone)
 	var/local_dir = get_dir(src, get_turf(P)) // <- Узнаём направление от меха до снаряда
 
-	//Делаем эффект попадания по меху, ииискрыы
-	deploy_mech_hit_effect()
-
 	if(!istype(P, /obj/item/projectile/bullet/rpg_rocket))
 		//Учитываем модификатор урона исходя из того с какой стороны в меха влетает снаряд.
 		modify_projectile_damage(P, target, local_dir)
@@ -24,6 +21,8 @@
 
 	P.damage_type = DAMAGE_BRUTE //Каким образом можно починить ПРОВОДАМИ прожжёную обшивку?
 	//Проверяем, с какого направления прилетает атака!
+	//Делаем эффект попадания по меху, ииискрыы
+	deploy_mech_hit_effect()
 
 	//В случае если атака приходит в голову/лицо/глаза/пузо - снаряд может напрямую ранить пилота при условии
 	//что кабина меха открыта
