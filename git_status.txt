@@ -1,0 +1,23 @@
+On branch otak_mechov
+Your branch and 'kekmangit/otak_mechov' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+	modified:   build.bat
+	modified:   mods/mechs_by_shegar/code/components/passenger_compartment/remove_passenger.dm
+	modified:   mods/mechs_by_shegar/code/core/mech_icon_rendering/mech_render.dm
+	modified:   mods/mechs_by_shegar/code/etc/mech_uplink.dm
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both modified:   mods/mechs_by_shegar/code/core/damage/mech_damage.dm
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	git_status.txt
+
