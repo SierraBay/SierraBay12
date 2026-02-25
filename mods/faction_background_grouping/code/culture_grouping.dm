@@ -247,43 +247,54 @@
 	faction = FACTION_INDIE_CONFED
 
 // Hook to inject these cultures into the Human species available list
-/hook/startup/proc/restore_human_gcc_cultures()
+/hook/startup/proc/synchronize_human_background_options()
 	var/singleton/species/human/H = GLOB.species_by_name[SPECIES_HUMAN]
-	if(H)
-		var/list/culs = H.available_cultural_info[TAG_CULTURE]
-		culs |= list(
-			CULTURE_HUMAN_CONFED_TERRA,
-			CULTURE_HUMAN_CONFED_NOVOZEM,
-			CULTURE_HUMAN_CONFED_SESTRIS,
-			CULTURE_HUMAN_CONFED_PUTKARI,
-			CULTURE_HUMAN_CONFED_ALTAIR,
-			CULTURE_HUMAN_CONFED_PENGLAI,
-			CULTURE_HUMAN_CONFED_PROVIDENCE_NOMAD,
-			CULTURE_HUMAN_CONFED_PROVIDENCE_COLONIST,
-			CULTURE_HUMAN_CONFED_VALY,
-			CULTURE_HUMAN_CONFEDO,
-			CULTURE_HUMAN_THEIA
-		)
-		var/list/homes = H.available_cultural_info[TAG_HOMEWORLD]
-		homes |= list(
-			HOME_SYSTEM_TERRA,
-			HOME_SYSTEM_AMELIA,
-			HOME_SYSTEM_PUTKARI,
-			HOME_SYSTEM_QABIL,
-			HOME_SYSTEM_PENGLAI,
-			HOME_SYSTEM_PROVIDENCE,
-			HOME_SYSTEM_VALY,
-			HOME_SYSTEM_NOVAYA_ZEMLYA
-		)
-	return TRUE
+	if(!H)
+		return TRUE
 
-/hook/startup/proc/restore_machine_cultures()
-	var/singleton/species/human/H = GLOB.species_by_name[SPECIES_HUMAN]
-	var/singleton/species/machine/M = GLOB.species_by_name[SPECIES_IPC]
-	if(H && M)
-		var/list/human_homes = H.available_cultural_info[TAG_HOMEWORLD]
-		var/list/machine_homes = M.available_cultural_info[TAG_HOMEWORLD]
-		machine_homes |= human_homes
+	// 1. Add new GCC cultures and homeworlds to baseline Human
+	var/list/culs = H.available_cultural_info[TAG_CULTURE]
+	culs |= list(
+		CULTURE_HUMAN_CONFED_TERRA,
+		CULTURE_HUMAN_CONFED_NOVOZEM,
+		CULTURE_HUMAN_CONFED_SESTRIS,
+		CULTURE_HUMAN_CONFED_PUTKARI,
+		CULTURE_HUMAN_CONFED_ALTAIR,
+		CULTURE_HUMAN_CONFED_PENGLAI,
+		CULTURE_HUMAN_CONFED_PROVIDENCE_NOMAD,
+		CULTURE_HUMAN_CONFED_PROVIDENCE_COLONIST,
+		CULTURE_HUMAN_CONFED_VALY,
+		CULTURE_HUMAN_CONFEDO,
+		CULTURE_HUMAN_THEIA
+	)
+	var/list/homes = H.available_cultural_info[TAG_HOMEWORLD]
+	homes |= list(
+		HOME_SYSTEM_TERRA,
+		HOME_SYSTEM_AMELIA,
+		HOME_SYSTEM_PUTKARI,
+		HOME_SYSTEM_QABIL,
+		HOME_SYSTEM_PENGLAI,
+		HOME_SYSTEM_PROVIDENCE,
+		HOME_SYSTEM_VALY,
+		HOME_SYSTEM_NOVAYA_ZEMLYA
+	)
+
+	// 2. Synchronize these options to all Human subspecies and IPCs
+	var/list/target_species = list(
+		SPECIES_IPC,
+		SPECIES_VATGROWN,
+		SPECIES_SPACER,
+		SPECIES_TRITONIAN,
+		SPECIES_GRAVWORLDER,
+		SPECIES_MULE
+	)
+
+	for(var/sp_name in target_species)
+		var/singleton/species/S = GLOB.species_by_name[sp_name]
+		if(S)
+			S.available_cultural_info[TAG_HOMEWORLD] |= homes
+			S.available_cultural_info[TAG_CULTURE] |= culs
+
 	return TRUE
 
 // Указатель культур для всех фракций
