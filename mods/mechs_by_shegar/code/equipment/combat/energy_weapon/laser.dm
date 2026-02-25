@@ -28,7 +28,6 @@
 	///У всех апекс оружий должен быть владелец. Просчитывается при каждом выстреле
 	var/mob/living/owner
 	var/apex_mode = TRUE
-	var/atom/current_shoot_target
 
 /obj/item/gun/energy/apex/Initialize()
 	. = ..()
@@ -65,7 +64,6 @@
 /obj/item/projectile/beam/incendiary_laser/mech
 	damage = 25
 	armor_penetration = 0
-	mech_armor_damage = 40
 	agony = 0
 
 ///Слабый и промежуточный лазер
@@ -80,14 +78,12 @@
 	silenced = TRUE
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_LASER_MEAT)
 	damage = 2.6
-	mech_armor_damage = 2 //30 армор урона от одного заряда апекса
 
 
 //Сильный конечный снаряд
 /obj/item/projectile/beam/midlaser/heavy_apex
 	fire_sound = null
 	icon_state = "beam_heavy"
-	mech_armor_damage = 30 //И ещё 30 урона. И того, 5 полных попаданий апекса.
 	muzzle_type = /obj/projectile/laser/heavy/muzzle
 	tracer_type = /obj/projectile/laser/heavy/tracer/apex
 	impact_type = /obj/projectile/laser/heavy/impact
@@ -126,7 +122,6 @@
 	playsound(get_turf(src), long_sound, 100, 0)
 	projectile_type = second_projectile_type
 	laser_pointer.Move(get_turf(target))
-	current_shoot_target = target
 	update_owner()
 	setup_mouse_mover()
 	///Промежуточный огонь ничего не тратит
@@ -138,7 +133,7 @@
 	if(!currently_fire)
 		return
 	var/obj/item/projectile/beam = new second_projectile_type(get_turf(src))
-	beam.launch(current_shoot_target)
+	beam.launch(get_turf(laser_pointer))
 	//В сумме, выполнится 15 выстрелов имитирующие постоянный луч. 2.6 * 15 примерно равно 40 урона.
 	addtimer(new Callback(src, PROC_REF(process_shot)), 0.1 SECONDS)
 
@@ -151,7 +146,7 @@
 	projectile_type = initial(projectile_type)
 	desetup_mouse_mover()
 	playsound(get_turf(src), short_sound, 150, 0)
-	Fire(current_shoot_target, owner, called_by_apex = TRUE)
+	Fire(get_turf(laser_pointer), owner, called_by_apex = TRUE)
 	laser_pointer.forceMove(src)
 
 
@@ -159,8 +154,7 @@
 ///Отслеживание мыши
 /obj/item/gun/energy/apex/update_current_mouse_position(atom/input_mouse_postion)
 	var/turf/new_turf = get_turf(input_mouse_postion)
-	current_shoot_target = input_mouse_postion
-	if(!new_turf || !current_shoot_target)
+	if(!new_turf)
 		return
 	laser_pointer.Move(new_turf)
 

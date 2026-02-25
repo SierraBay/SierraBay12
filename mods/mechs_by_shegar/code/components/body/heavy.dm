@@ -6,31 +6,27 @@
 	icon_state = "heavy_body"
 	power_use = 50
 	has_hardpoints = list(HARDPOINT_BACK)
-
-	max_hp = 150
-	min_damage = 100
-	max_repair = 40
-	repair_damage = 10
-	back_modificator_damage = 3
-	front_modificator_damage = 0.5
-
 	matter = list(MATERIAL_STEEL = 210000, MATERIAL_URANIUM = 10000, MATERIAL_PLASTEEL = 40000, MATERIAL_ALUMINIUM = 40000)
 
+	max_hp = 500
+	mech_health = 500
+	max_repair = 150
+	min_damage = 300
+	repair_damage = 30
 	hide_pilot = TRUE
 	req_material = MATERIAL_PLASTEEL
-	//Тепло
-	max_heat = 400
+	back_modificator_damage = 3
+	front_modificator_damage = 0.5
+	max_heat = 300
 	heat_cooling = 4
-	emp_heat_generation = 150
+	emp_heat_generation = 100
+	weight = 800
 
-	weight = 400
-
-
-/obj/item/mech_component/chassis/heavy/Initialize()
+/obj/item/mech_component/chassis/heavy/prebuild()
 	pilot_positions = list(
 		list(
 			"[NORTH]" = list("x" = 8,  "y" = 8),
-			"[SOUTH]" = list("x" = 8,  "y" = 8),
+			"[SOUTH]" = list("x" = 9,  "y" = 2),
 			"[EAST]"  = list("x" = 4,  "y" = 8),
 			"[WEST]"  = list("x" = 12, "y" = 8)
 		)
@@ -54,3 +50,7 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
+
+/obj/item/mech_component/chassis/heavy/prebuild()
+	. = ..()
+	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/combat(src)

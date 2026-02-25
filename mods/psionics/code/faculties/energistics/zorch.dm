@@ -216,8 +216,7 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 20
-	mech_armor_damage = 30
+
 
 	muzzle_type = /obj/projectile/psi/red/muzzle
 	tracer_type = /obj/projectile/psi/red/tracer
@@ -235,8 +234,7 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 25
-	mech_armor_damage = 35
+
 
 	muzzle_type = /obj/projectile/psi/red/heavy/muzzle
 	tracer_type = /obj/projectile/psi/red/heavy/tracer
@@ -254,5 +252,3 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 25
-	mech_armor_damage = 35

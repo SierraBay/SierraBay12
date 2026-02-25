@@ -19,11 +19,6 @@
 	var/power_use = 0
 	matter = list(MATERIAL_STEEL = 15000, MATERIAL_PLASTIC = 1000, MATERIAL_OSMIUM = 500)
 	dir = SOUTH
-	var/obj/item/mech_external_armor/installed_armor
-	var/can_have_external_armour = TRUE
-	var/armour_can_be_removed = TRUE
-	var/armour_can_be_installed = TRUE
-
 	///Отвечает за минимальное возможное ХП части меха, ОБЯЗАТЕЛЬНО прописывайте этот пункт. При ремонте повреждений
 	///листом материала максимальное ХП части меха уменьшается, min_damage является минимальным пределом до куда будет
 	///снижаться макс ХП меха.
@@ -64,15 +59,6 @@
 	var/mob/living/exosuit/owner
 	//Кто-то прям сейчас пытается тащить нашу часть!
 	var/turf/haul_turf
-	///Максимальное тепло, которое может хранить в себе часть меха.
-	var/max_heat = 100
-	///Количество тепла, которое сбрасывает данная часть
-	var/heat_cooling = 5
-	///Количество тепла, которое вырабатывает данная часть при использовании
-	var/heat_generation = 5
-	///Количество тепла, выделяемое при ЭМИ ударе
-	var/emp_heat_generation = 50
-	var/list/whitelist_equipment_paths = list()
 
 	/// Замедление при переноске
 	var/slowdown_held = 6 // Yes, you can carry it. But this thing is cumbersome.
@@ -253,12 +239,11 @@
 	if (isWelder(thing))
 		welder_interacion(thing, user)
 		return TRUE
-	if (isWrench(thing))
-		wrench_interacion(thing, user)
-		return TRUE
+
 	if (isCoil(thing))
 		repair_burn_generic(thing, user)
 		return TRUE
+
 	if (istype(thing, /obj/item/device/robotanalyzer))
 		to_chat(user, SPAN_NOTICE("Diagnostic Report for \the [src]:"))
 		return_diagnostics(user)
