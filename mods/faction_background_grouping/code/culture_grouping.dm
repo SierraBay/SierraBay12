@@ -276,7 +276,7 @@
 		HOME_SYSTEM_VALY,
 		HOME_SYSTEM_NOVAYA_ZEMLYA
 	)
--
+
 	var/list/target_species = list(
 		SPECIES_IPC,
 		SPECIES_VATGROWN,
