@@ -1933,11 +1933,11 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "iN" = (
-/obj/machinery/power/smes/buildable/preset/colony,
 /obj/structure/cable{
 	color = "#008000"
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/power/smes/buildable/preset/facolony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/engineering)
 "iO" = (
@@ -6524,11 +6524,6 @@
 /turf/simulated/floor/away,
 /area/map_template/facolony/mineralprocessing)
 "Cs" = (
-/obj/machinery/power/solar_control{
-	dir = 1;
-	id = "auxsolarport";
-	name = "Port Solar Control"
-	},
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
@@ -6545,6 +6540,9 @@
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
+/obj/machinery/power/solar_control/autostart{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/mineralprocessing)
 "Cv" = (
@@ -10191,9 +10189,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/smes/buildable{
-	RCon_tag = "Solar - Port"
-	},
 /obj/floor_decal/industrial/warning/dust,
 /obj/floor_decal/industrial/warning/dust{
 	dir = 5
@@ -10201,6 +10196,7 @@
 /obj/decal/cleanable/dirt,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
+/obj/machinery/power/smes/buildable/preset,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
 "Th" = (
@@ -11331,7 +11327,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
 "XT" = (
-/obj/machinery/power/smes/buildable/preset/colony,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -11344,6 +11339,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/power/smes/buildable/preset/facolony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/engineering)
 "XX" = (
