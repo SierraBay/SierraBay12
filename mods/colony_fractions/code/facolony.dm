@@ -417,7 +417,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "A"
 
 /area/map_template/facolony/mineralprocessing
-	name = "\improper Unknown Base - Mining Site"
+	name = "\improper Unknown Base - Outdoor Solar Massive"
 	icon_state = "A"
 
 /area/map_template/facolony/science
