@@ -3813,13 +3813,12 @@
 "qT" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/power/apc/facolony{
-	pixel_x = 6;
 	name = "external area power controller"
 	},
 /obj/machinery/light_switch{
 	dir = 1;
-	pixel_x = -7;
-	pixel_y = 2;
+	pixel_x = -10;
+	pixel_y = 10;
 	name = "external light switch"
 	},
 /obj/floor_decal/industrial/warning/dust,
@@ -4320,14 +4319,16 @@
 	},
 /obj/machinery/door/window/brigdoor/westleft,
 /obj/structure/curtain/black,
-/obj/item/paper/sticky/facolony{
-	pixel_y = -24;
-	pixel_x = -6;
-	color = "#c97b1c"
-	},
 /obj/structure/sign/warning/internals_required{
 	pixel_y = 24;
 	pixel_x = 6
+	},
+/obj/item/paper/sticky{
+	language = "Spacer";
+	info = "ВНИМАНИЕ! Эти ворота ведут прямо на улицу. Открывать, только в крайнем случае. Они выглядят как вход, поэтому недруги будут думать о них, а не о скрытых проходах. Я в этом уверен.";
+	pixel_y = -24;
+	pixel_x = -6;
+	color = "#c97b1c"
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/unspecified)
