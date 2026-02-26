@@ -16,4 +16,12 @@
 #include "code/machines.dm"
 #include "code/robolimbs.dm"
 #include "code/vendors.dm"
+#include "code/circuitboard.dm"
+#include "code/airlock_electronics.dm"
+#include "code/apc.dm"
+#include "code/software.dm"
+#include "code/airalarm.dm"
+#include "code/intercom.dm"
+#include "code/firealarm.dm"
+#include "code/robot_upgrades.dm"
 #endif
