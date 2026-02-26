@@ -2714,7 +2714,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
-/turf/simulated/floor/tiled/techfloor/grid,
+/turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics2)
 "mA" = (
 /obj/floor_decal/industrial/warning/dust,
@@ -3813,13 +3813,13 @@
 "qT" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/power/apc/facolony{
-	pixel_x = 4;
+	pixel_x = 6;
 	name = "external area power controller"
 	},
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_x = -7;
-	pixel_y = 3;
+	pixel_y = 2;
 	name = "external light switch"
 	},
 /obj/floor_decal/industrial/warning/dust,
@@ -13750,7 +13750,7 @@ NK
 rm
 QB
 mI
-vP
+rj
 uo
 uo
 aU
