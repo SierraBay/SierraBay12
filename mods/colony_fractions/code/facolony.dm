@@ -409,7 +409,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "A"
 
 /area/map_template/facolony/room_four
-	name = "\improper Unknown Base -Room Four"
+	name = "\improper Unknown Base - Room Four"
 	icon_state = "A"
 
 /area/map_template/facolony/detention

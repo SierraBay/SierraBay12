@@ -970,7 +970,7 @@
 	name = "Chamber Output"
 	},
 /obj/floor_decal/industrial/outline/red,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "dX" = (
 /obj/machinery/light/spot,
@@ -1579,7 +1579,7 @@
 	tag_east = 3
 	},
 /obj/floor_decal/industrial/outline/blue,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "gR" = (
 /obj/machinery/door/firedoor{
@@ -2395,7 +2395,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "kG" = (
 /obj/structure/catwalk,
@@ -2706,7 +2706,6 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/facolony/tcomms)
 "mq" = (
-/obj/wallframe_spawn/reinforced_phoron,
 /obj/paint/fleet/sfv_rook,
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
 	dir = 4
@@ -2714,6 +2713,7 @@
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/wallframe_spawn/reinforced_phoron,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics2)
 "mA" = (
@@ -6514,7 +6514,7 @@
 	icon_state = "warning"
 	},
 /obj/floor_decal/industrial/outline/grey,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "Cr" = (
 /obj/structure/catwalk,
@@ -8346,7 +8346,7 @@
 	tag_east = 4
 	},
 /obj/floor_decal/industrial/outline/red,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "KP" = (
 /obj/machinery/door/blast/shutters/open{
@@ -8543,7 +8543,7 @@
 /obj/machinery/light/spot{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "LS" = (
 /obj/floor_decal/corner/b_green/border{
@@ -8798,7 +8798,7 @@
 	icon_state = "warning"
 	},
 /obj/floor_decal/industrial/outline/grey,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "Nb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8992,7 +8992,7 @@
 	icon_state = "warning"
 	},
 /obj/floor_decal/industrial/outline/blue,
-/turf/simulated/floor/tiled/dark,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "Oa" = (
 /obj/floor_decal/corner/yellow/bordercorner{
