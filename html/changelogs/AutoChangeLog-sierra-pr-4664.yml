@@ -1,0 +1,8 @@
+author: GarryFlint
+changes:
+  - maptweak: Все факсы теперь имеют связь с админскими FTU Agency, FAFB Kelpi
+  - maptweak: 'Sierra: Фикс атмоса бункера первой палубы.'
+  - maptweak: 'FAcolony: 1TC заменен на Shield Diffuser. Исправлены метки спавна,
+      пресеты, зоны. Добавлен аварийный выход в секретку. Добавлены выключатели света.
+      Внутренние стены тягача заменены на обычный титан.'
+delete-after: true

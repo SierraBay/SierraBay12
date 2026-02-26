@@ -1,0 +1,5 @@
+author: nanit257
+changes:
+  - tweak: Подправлен код ящиков экипажа пятого флота.
+  - maptweak: Что-то убрал, что-то добавил.
+delete-after: true

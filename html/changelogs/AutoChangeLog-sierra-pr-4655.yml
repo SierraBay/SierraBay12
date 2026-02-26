@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - balance: База мерков теперь не пробивается сенсорами
+delete-after: true

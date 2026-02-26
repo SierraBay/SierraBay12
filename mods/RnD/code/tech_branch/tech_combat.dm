@@ -57,7 +57,7 @@
 	required_tech_levels = list()
 	cost = 750
 
-	unlocks_designs = list("advancedflash", "stunrevolver")
+	unlocks_designs = list("advancedflash", "stunrevolver", "neutralizer")
 
 /datum/technology/combat/riotgun
 	name = "Riot Gun"
