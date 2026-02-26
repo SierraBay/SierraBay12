@@ -32,6 +32,12 @@
 
 var/global/const/access_facolony = "ACCESS_FACOLONY"
 
+/decl/submap_archetype/facolony/New()
+	. = ..()
+	GLOB.using_map.map_admin_faxes.Add("FAFB Kelpi")
+	for(var/obj/machinery/photocopier/faxmachine/fax as anything in SSmachines.get_machinery_of_type(/obj/machinery/photocopier/faxmachine))
+		GLOB.admin_departments += "FAFB Kelpi"
+
 /datum/access/facolony
 	id = access_facolony
 
@@ -173,7 +179,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	req_access = list(access_facolony)
 
 /obj/structure/closet/facolony/wardrobe
-	name = "Wardrobe Locker"
+	name = "wardrobe locker"
 	closet_appearance = /singleton/closet_appearance/wardrobe/red
 
 /obj/structure/closet/facolony/wardrobe/WillContain()
@@ -205,6 +211,43 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8
 	)
 
+/obj/structure/closet/facolony/cabinet
+	name = "plain cabinet"
+	desc = "An old, plain cabinet."
+	closet_appearance = /singleton/closet_appearance/cabinet
+
+/obj/structure/closet/facolony/cabinet/WillContain()
+	return list(
+		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/crowbar/prybar = 1,
+		/obj/item/gun/energy/gun/small = 1,
+		/obj/item/device/radio/headset/map_preset/facolony = 1,
+		/obj/item/device/flashlight/upgraded = 1,
+		/obj/item/storage/backpack = 1,
+		/obj/random/cash = 1,
+		/obj/item/clothing/under/captain_fly = 1,
+		/obj/item/clothing/under/color/blackjumpshorts = 1,
+		/obj/item/clothing/under/frontier = 1,
+		/obj/item/clothing/under/hazard = 1,
+		/obj/item/clothing/under/skirt = 1,
+		/obj/item/clothing/under/suit_jacket/female = 1,
+		/obj/item/clothing/under/suit_jacket/navy = 1,
+		/obj/item/clothing/under/syndicate = 1,
+		/obj/item/clothing/under/sterile = 1,
+		/obj/item/clothing/under/det/grey = 1,
+		/obj/item/clothing/under/casual_pants/baggy = 1,
+		/obj/item/clothing/under/casual_pants/camo = 1,
+		/obj/item/clothing/under/casual_pants/track = 1,
+		/obj/item/clothing/under/casual_pants/youngfolksjeans = 1,
+		/obj/item/clothing/suit/storage/hooded/wintercoat/miner = 1,
+		/obj/item/clothing/suit/storage/hooded/wintercoat = 1,
+		/obj/item/clothing/suit/storage/toggle/bomber = 1,
+		/obj/item/clothing/suit/storage/toggle/brown_jacket = 1,
+		/obj/item/clothing/suit/storage/toggle/hoodie/nt = 1,
+		/obj/item/clothing/suit/storage/toggle/hoodie/smw = 1,
+		/obj/item/clothing/suit/storage/toggle/track/gcc = 1,
+	)
+
 /obj/structure/sign/double/faflag/left
 	name = "Frontier Alliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
@@ -223,6 +266,12 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/floor_decal/falogo
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "falogo"
+
+/obj/machinery/power/apc/facolony
+	req_access = list(access_facolony)
+
+/obj/machinery/alarm/facolony
+	req_access = list(access_facolony)
 
 /obj/machinery/telecomms/hub/map_preset/facolony
 	preset_name = "Internal"
@@ -310,6 +359,26 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "\improper Base Dormitories"
 	icon_state = "A"
 
+/area/map_template/facolony/room_one
+	name = "\improper Room One"
+	icon_state = "A"
+
+/area/map_template/facolony/room_two
+	name = "\improper Room Two"
+	icon_state = "A"
+
+/area/map_template/facolony/room_three
+	name = "\improper Room Three"
+	icon_state = "A"
+
+/area/map_template/facolony/room_four
+	name = "\improper Room Four"
+	icon_state = "A"
+
+/area/map_template/facolony/detention
+	name = "\improper Temporary Detention"
+	icon_state = "A"
+
 /area/map_template/facolony/engineering
 	name = "\improper Ship Engineering"
 	icon_state = "processing"
@@ -363,11 +432,11 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "A"
 
 /area/map_template/facolony/warehouse
-	name = "\improper Base warehouse"
+	name = "\improper Base Warehouse"
 	icon_state = "shipping"
 
 /area/map_template/facolony/outsidewarehouse
-	name = "\improper Trade Zone warehouse"
+	name = "\improper Trade Zone Warehouse-Airlock"
 	icon_state = "shipping"
 
 /area/map_template/facolony/tradezone
