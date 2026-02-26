@@ -100,6 +100,7 @@
 	name = "Utyug Dock"
 	landmark_tag = "nav_utyug_start"
 	base_area = /area/space
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 // jobs
 
