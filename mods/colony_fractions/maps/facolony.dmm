@@ -323,7 +323,7 @@
 	name = "General Window Shields"
 	},
 /turf/simulated/floor/plating,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "bv" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -411,6 +411,12 @@
 /obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
+"bO" = (
+/obj/machinery/light,
+/obj/floor_decal/corner/b_green/half,
+/obj/submap_landmark/spawnpoint/facolony/colonist_spawn,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_four)
 "bP" = (
 /obj/floor_decal/corner/black/half,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -510,6 +516,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
+"ci" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/detention)
 "cj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 8
@@ -595,7 +605,7 @@
 	},
 /obj/structure/closet/facolony/cabinet,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "cz" = (
 /obj/machinery/computer/air_control{
 	input_tag = "co2n";
@@ -851,10 +861,7 @@
 	pixel_y = 5;
 	pixel_x = 7
 	},
-/obj/machinery/alarm/facolony{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/light,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "dt" = (
@@ -1089,6 +1096,10 @@
 /obj/machinery/appliance/cooker/fryer,
 /turf/simulated/floor/wood/maple,
 /area/map_template/facolony/messhall)
+"eL" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/room_one)
 "eN" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
 	dir = 1
@@ -1374,11 +1385,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
-"ge" = (
-/obj/machinery/light/small,
-/obj/landmark/clear,
-/turf/template_noop,
-/area/map_template/facolony/unspecified)
 "gf" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -1430,14 +1436,14 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "gq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/paint/fleet/sfv_rook,
+/obj/machinery/door/blast/regular{
+	id_tag = "facolony_base_emg_exit";
+	name = "External Section";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/turf/simulated/floor/reinforced,
+/area/map_template/facolony/unspecified)
 "gt" = (
 /obj/paint/facolony/commandblue,
 /obj/paint_stripe/gunmetal,
@@ -1599,7 +1605,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "hd" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/window/reinforced{
@@ -1703,6 +1709,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
+"hA" = (
+/obj/structure/bed/padded,
+/obj/item/bedsheet,
+/obj/floor_decal/corner/b_green/mono,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_one)
 "hB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1770,7 +1782,7 @@
 /obj/floor_decal/corner/b_green/mono,
 /obj/item/device/radio/map_preset/facolony,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "hQ" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 4
@@ -1822,20 +1834,6 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
-"ik" = (
-/obj/machinery/light/small,
-/obj/machinery/shipsensors/upgraded,
-/obj/structure/window/boron_reinforced{
-	dir = 1
-	},
-/obj/structure/window/boron_reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/unary/vent_pump/siphon/on{
-	dir = 1
-	},
-/turf/simulated/floor/airless,
-/area/map_template/facolony/command)
 "ip" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/paint/black,
@@ -2017,7 +2015,7 @@
 /obj/floor_decal/corner/b_green/mono,
 /obj/item/device/radio/map_preset/facolony,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "ji" = (
 /obj/floor_decal/carpet/purple{
 	dir = 1
@@ -2033,6 +2031,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
@@ -2088,7 +2091,7 @@
 /obj/machinery/light/small,
 /obj/landmark/clear,
 /turf/template_noop,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "jy" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -2114,7 +2117,7 @@
 /obj/random/donkpocket_box,
 /obj/floor_decal/corner/red/mono,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "jI" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped{
@@ -2146,7 +2149,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/catwalk,
+/obj/machinery/constructable_frame/machine_frame/deconstruct,
 /turf/simulated/floor/airless,
 /area/map_template/facolony/cargo)
 "jN" = (
@@ -2297,13 +2300,23 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "km" = (
-/obj/structure/catwalk,
-/obj/structure/railing/mapped,
-/obj/machinery/atmospherics/unary/vent_pump/on{
-	pressure_checks = 0
+/obj/floor_decal/corner/b_green/border{
+	dir = 8
 	},
-/turf/simulated/floor/airless,
-/area/map_template/facolony/command)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 6
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/dorms)
 "kn" = (
 /obj/structure/largecrate/animal/chick,
 /obj/decal/cleanable/dirt,
@@ -2388,35 +2401,6 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/away,
 /area/map_template/facolony/atmospherics2)
-"kI" = (
-/obj/floor_decal/corner/b_green/border{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/button/alternate/door/bolts{
-	pixel_y = 6;
-	pixel_x = -24;
-	dir = 4;
-	id_tag = "facolony_jail_doorbolts";
-	name = "Detention Bolts Control";
-	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/machinery/button/blast_door{
-	name = "Detention Shutter Control";
-	id_tag = "facolony_jail_shutter";
-	dir = 4;
-	pixel_y = -6;
-	pixel_x = -24;
-	req_access = list("ACCESS_FACOLONY")
-	},
-/turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
 "kL" = (
 /obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/wood/bamboo,
@@ -2436,7 +2420,7 @@
 /obj/structure/catwalk,
 /obj/landmark/clear,
 /turf/template_noop,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "kW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/structure/catwalk,
@@ -2481,7 +2465,7 @@
 /obj/item/bedsheet,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "li" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2547,8 +2531,9 @@
 "ly" = (
 /obj/floor_decal/corner/yellow/mono,
 /obj/machinery/telecomms/processor/map_preset/facolony,
-/obj/item/device/radio/intercom/map_preset/facolony{
-	pixel_y = 24
+/obj/item/device/radio/intercom{
+	dir = 8;
+	pixel_x = 22
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/tcomms)
@@ -2948,6 +2933,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
+"nw" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall,
+/area/map_template/facolony/room_one)
 "nx" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -3033,8 +3022,13 @@
 	},
 /obj/machinery/door/airlock/facolony/general,
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "nO" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 8
@@ -3080,7 +3074,7 @@
 /obj/floor_decal/corner/b_green/mono,
 /obj/item/device/radio/map_preset/facolony,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "nZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -3192,6 +3186,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
+"om" = (
+/obj/structure/bed/padded,
+/obj/item/bedsheet,
+/obj/floor_decal/corner/b_green/mono,
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/facolony/room_four)
 "on" = (
 /obj/machinery/recharge_station,
 /obj/structure/window/reinforced{
@@ -3209,7 +3209,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "or" = (
 /obj/structure/cable/green{
 	d1 = 2;
@@ -3720,6 +3720,11 @@
 	dir = 4
 	},
 /obj/structure/bed/chair/office/comfy/black,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
 "qs" = (
@@ -3762,6 +3767,10 @@
 	can_open = 1
 	},
 /area/map_template/facolony/warehouse)
+"qK" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/room_two)
 "qL" = (
 /obj/floor_decal/corner/yellow/bordercorner{
 	dir = 8
@@ -3804,21 +3813,22 @@
 "qT" = (
 /obj/structure/table/steel_reinforced,
 /obj/machinery/power/apc/facolony{
-	pixel_x = 2;
+	pixel_x = 4;
 	name = "external area power controller"
 	},
 /obj/machinery/light_switch{
 	dir = 1;
-	pixel_x = -8;
-	pixel_y = 4;
+	pixel_x = -7;
+	pixel_y = 3;
 	name = "external light switch"
 	},
 /obj/floor_decal/industrial/warning/dust,
 /obj/floor_decal/industrial/warning/dust{
 	dir = 9
 	},
-/obj/floor_decal/industrial/outline/red,
+/obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
+/obj/structure/cable/green,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
 "qU" = (
@@ -3828,7 +3838,7 @@
 /obj/structure/catwalk,
 /obj/landmark/clear,
 /turf/template_noop,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "qV" = (
 /obj/structure/hygiene/toilet{
 	dir = 8
@@ -3930,7 +3940,7 @@
 /area/map_template/facolony/science)
 "ro" = (
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "rp" = (
 /obj/floor_decal/corner/yellow/border,
 /obj/decal/cleanable/dirt,
@@ -4050,6 +4060,10 @@
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/facolony/mineralprocessing)
+"rN" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall,
+/area/map_template/facolony/detention)
 "rQ" = (
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/atmospherics/unary/vent_pump/on,
@@ -4059,8 +4073,16 @@
 	pixel_x = 22;
 	pixel_y = -6
 	},
+/obj/machinery/power/apc/facolony{
+	pixel_y = 24;
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "rT" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -4074,6 +4096,19 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
+"rW" = (
+/obj/paint/fleet/sfv_rook,
+/obj/wallframe_spawn/reinforced_phoron,
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_main_windows";
+	name = "General Window Shields"
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/room_two)
 "sc" = (
 /obj/machinery/portable_atmospherics/canister/air/airlock,
 /obj/machinery/door/window/brigdoor/westright,
@@ -4088,7 +4123,7 @@
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/away,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "sh" = (
 /obj/structure/closet/crate/med_crate/burn,
 /turf/simulated/floor/tiled/steel_grid,
@@ -4228,8 +4263,9 @@
 	pixel_y = 24
 	},
 /obj/structure/closet/facolony/wardrobe,
-/obj/machinery/light/spot{
-	dir = 8
+/obj/machinery/light{
+	dir = 8;
+	on = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
@@ -4256,8 +4292,11 @@
 	pixel_x = 9
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
+/obj/machinery/alarm/facolony{
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "sR" = (
 /obj/floor_decal/corner/yellow/border{
 	dir = 4
@@ -4271,22 +4310,28 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "sS" = (
-/obj/floor_decal/industrial/warning/dust{
-	dir = 1
+/obj/machinery/button/blast_door{
+	name = "EXTERNAL EMERGENCY EXIT";
+	id_tag = "facolony_base_emg_exit";
+	dir = 1;
+	pixel_y = -24;
+	req_access = list("ACCESS_FACOLONY");
+	pixel_x = 6
 	},
-/obj/floor_decal/industrial/warning/dust,
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	id_tag = "facolony2_pump_out_external";
-	dir = 1
+/obj/machinery/door/window/brigdoor/westleft,
+/obj/structure/curtain/black,
+/obj/structure/sign/warning/internals_required{
+	pixel_y = -32;
+	dir = 1;
+	pixel_x = -8
 	},
-/obj/structure/catwalk,
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/item/paper/sticky/facolony{
+	pixel_y = 24;
+	pixel_x = 6;
+	color = "#c97b1c"
 	},
-/turf/simulated/floor/away,
-/area/map_template/facolony/airlock)
+/turf/simulated/floor/reinforced,
+/area/map_template/facolony/unspecified)
 "sU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4535,7 +4580,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "tJ" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -4554,15 +4599,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/science)
-"tL" = (
-/obj/structure/catwalk,
-/obj/landmark/clear,
-/obj/structure/railing/mapped{
-	dir = 4;
-	icon_state = "railing0-1"
-	},
-/turf/template_noop,
-/area/template_noop)
 "tM" = (
 /obj/paint/fleet/sfv_rook,
 /obj/structure/cable/green{
@@ -4577,7 +4613,21 @@
 	name = "General Window Shields"
 	},
 /turf/simulated/floor/plating,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
+"tT" = (
+/obj/floor_decal/corner/b_green/mono,
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/closet/facolony/cabinet,
+/obj/machinery/power/apc/facolony{
+	pixel_y = 24;
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_three)
 "uj" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/airlock_sensor{
@@ -4656,13 +4706,16 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/light,
 /obj/floor_decal/corner/red/mono,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/power/apc/facolony{
+	pixel_y = -24
+	},
+/obj/structure/cable/green,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "uz" = (
 /obj/structure/hygiene/sink{
 	pixel_y = -12
@@ -4849,6 +4902,11 @@
 	},
 /obj/floor_decal/corner/b_green/border{
 	dir = 5
+	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 22;
+	pixel_y = -6
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
@@ -5577,7 +5635,7 @@
 /area/map_template/facolony/dorms)
 "xZ" = (
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "ya" = (
 /obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/dust/corner{
@@ -5711,6 +5769,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "yF" = (
@@ -5764,8 +5832,13 @@
 	},
 /obj/machinery/door/airlock/facolony/general,
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "yK" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -5826,6 +5899,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/map_template/facolony/engineering)
+"yU" = (
+/obj/structure/table/steel,
+/obj/floor_decal/corner/b_green/mono,
+/obj/item/device/radio/map_preset/facolony,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_three)
 "yW" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/recharger{
@@ -5918,6 +5997,25 @@
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/medbay)
+"zA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/airlock/facolony/general,
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/facolony/room_one)
 "zD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -6079,7 +6177,7 @@
 /obj/landmark/clear,
 /obj/structure/catwalk,
 /turf/template_noop,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "Ag" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -6093,7 +6191,7 @@
 /obj/floor_decal/corner/b_green/half,
 /obj/submap_landmark/spawnpoint/facolony/colonist_spawn,
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "Az" = (
 /obj/machinery/organ_printer/robot/mapped,
 /obj/floor_decal/corner/b_green/three_quarters{
@@ -6324,6 +6422,22 @@
 /obj/floor_decal/corner/b_green/border{
 	dir = 8
 	},
+/obj/machinery/button/blast_door{
+	name = "Detention Shutter Control";
+	id_tag = "facolony_jail_shutter";
+	dir = 4;
+	pixel_y = -6;
+	pixel_x = -24;
+	req_access = list("ACCESS_FACOLONY")
+	},
+/obj/machinery/button/alternate/door/bolts{
+	pixel_y = 6;
+	pixel_x = -24;
+	dir = 4;
+	id_tag = "facolony_jail_doorbolts";
+	name = "Detention Bolts Control";
+	req_access = list("ACCESS_FACOLONY")
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
 "BY" = (
@@ -6364,7 +6478,7 @@
 "Ch" = (
 /obj/floor_decal/corner/b_green/mono,
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/computer/modular/preset/sensors,
+/obj/machinery/computer/modular/preset/cardslot/command,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "Ci" = (
@@ -6429,7 +6543,7 @@
 	},
 /obj/floor_decal/industrial/warning/dust,
 /obj/decal/cleanable/dirt,
-/obj/floor_decal/industrial/outline/red,
+/obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/mineralprocessing)
@@ -6620,8 +6734,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "Dc" = (
 /obj/machinery/appliance/cooker/oven,
 /obj/machinery/light/spot{
@@ -6910,6 +7029,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/away,
 /area/map_template/facolony/cargohatch)
+"Es" = (
+/obj/structure/catwalk,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/landmark/clear,
+/turf/template_noop,
+/area/map_template/facolony/room_one)
 "ED" = (
 /obj/floor_decal/corner/grey/diagonal,
 /turf/simulated/floor/tiled/dark,
@@ -7095,12 +7222,20 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
+"FD" = (
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_one)
 "FF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
@@ -7109,7 +7244,7 @@
 /obj/floor_decal/corner/b_green/half,
 /obj/submap_landmark/spawnpoint/facolony/colonist_spawn,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "FL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7167,6 +7302,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "FW" = (
@@ -7179,6 +7319,10 @@
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/medbay)
+"FX" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall,
+/area/map_template/facolony/room_four)
 "FZ" = (
 /obj/floor_decal/corner/b_green/three_quarters,
 /obj/structure/table/steel_reinforced,
@@ -7286,7 +7430,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_one)
 "Gy" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -7384,6 +7528,9 @@
 /obj/item/stack/material/rods,
 /turf/template_noop,
 /area/template_noop)
+"Hp" = (
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/facolony/room_three)
 "Hr" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -7437,6 +7584,16 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
 "HF" = (
@@ -7511,6 +7668,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
@@ -7854,6 +8016,20 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
+"Jp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_four)
 "Js" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
@@ -8036,6 +8212,25 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
+"Km" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/airlock/facolony/general,
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/map_template/facolony/room_three)
 "Kn" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -8173,8 +8368,13 @@
 	id_tag = "facolony_jail_doorbolts"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "KQ" = (
 /obj/machinery/air_sensor{
 	id_tag = "c1"
@@ -8321,8 +8521,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "LN" = (
 /obj/machinery/computer/air_control{
 	input_tag = "cco2n";
@@ -8410,6 +8615,10 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/tradezone)
+"Me" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/room_four)
 "Mf" = (
 /obj/paint/fleet/sfv_rook,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
@@ -8437,6 +8646,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/messhall)
+"Ml" = (
+/obj/floor_decal/corner/b_green/mono,
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/closet/facolony/cabinet,
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 22;
+	pixel_y = -6
+	},
+/obj/machinery/power/apc/facolony{
+	pixel_y = 24;
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_two)
 "Mm" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -8483,13 +8711,13 @@
 /obj/item/bedsheet,
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "Mr" = (
 /obj/floor_decal/corner/red/half{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "Mx" = (
 /obj/paint/brown,
 /obj/paint_stripe/gunmetal,
@@ -8525,10 +8753,6 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
-	},
-/obj/machinery/light_switch{
-	dir = 1;
-	name = "light remote control"
 	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
@@ -8689,8 +8913,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/structure/cable/green{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "NE" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -8826,8 +9055,12 @@
 	pixel_y = -22;
 	pixel_x = 6
 	},
+/obj/machinery/light{
+	dir = 8;
+	on = 1
+	},
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/detention)
 "Ov" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/machinery/atmospherics/unary/vent_pump/on{
@@ -8890,16 +9123,30 @@
 /area/map_template/facolony/cargo)
 "OJ" = (
 /obj/floor_decal/corner/black/three_quarters,
-/obj/machinery/light/spot{
-	dir = 8
-	},
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_y = -22;
 	pixel_x = 6
 	},
+/obj/machinery/light{
+	dir = 8;
+	on = 1
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
+"OM" = (
+/obj/paint/fleet/sfv_rook,
+/obj/wallframe_spawn/reinforced_phoron,
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_main_windows";
+	name = "General Window Shields"
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/room_four)
 "OO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -9011,9 +9258,6 @@
 /obj/item/rig_module/vision/nvg,
 /obj/item/rig_module/voice,
 /obj/item/rig_module/cooling_unit,
-/obj/machinery/light/spot{
-	dir = 4
-	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Pg" = (
@@ -9120,6 +9364,19 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/surgery)
+"PE" = (
+/obj/paint/fleet/sfv_rook,
+/obj/wallframe_spawn/reinforced_phoron,
+/obj/machinery/door/firedoor{
+	req_access = list()
+	},
+/obj/machinery/door/blast/regular{
+	dir = 4;
+	id_tag = "facolony_main_windows";
+	name = "General Window Shields"
+	},
+/turf/simulated/floor/plating,
+/area/map_template/facolony/room_three)
 "PH" = (
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/blast/regular{
@@ -9149,6 +9406,10 @@
 "PM" = (
 /obj/floor_decal/corner/yellow/mono,
 /obj/machinery/telecomms/receiver/map_preset/facolony,
+/obj/item/device/radio/intercom/map_preset/facolony{
+	dir = 8;
+	pixel_x = 22
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/tcomms)
 "PN" = (
@@ -9475,6 +9736,19 @@
 /obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/outsidewarehouse)
+"Ri" = (
+/obj/floor_decal/corner/b_green/mono,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/structure/closet/facolony/cabinet,
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = 6
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_three)
 "Rj" = (
 /obj/floor_decal/corner/b_green/border,
 /obj/machinery/light,
@@ -9682,7 +9956,7 @@
 	},
 /obj/landmark/clear,
 /turf/template_noop,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "Se" = (
 /obj/structure/cable/green{
 	d1 = 4;
@@ -9795,10 +10069,18 @@
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/surgery)
+"Sy" = (
+/obj/floor_decal/corner/b_green/mono,
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/structure/closet/facolony/cabinet,
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_one)
 "Sz" = (
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall/r_wall,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_three)
 "SC" = (
 /obj/floor_decal/corner/yellow/border,
 /obj/floor_decal/industrial/outline/yellow,
@@ -9852,6 +10134,11 @@
 	dir = 1
 	},
 /obj/structure/bed/chair/office/comfy/black,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/map_template/facolony/dorms)
 "SU" = (
@@ -9912,7 +10199,7 @@
 	dir = 5
 	},
 /obj/decal/cleanable/dirt,
-/obj/floor_decal/industrial/outline/red,
+/obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
@@ -9921,6 +10208,10 @@
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/titanium,
 /area/map_template/facolony/cargo2)
+"Tj" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall,
+/area/map_template/facolony/room_three)
 "Tk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10118,6 +10409,10 @@
 	pixel_y = -12
 	},
 /obj/item/gun/projectile/sniper/garand,
+/obj/item/device/radio/intercom{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/armory)
 "TV" = (
@@ -10610,6 +10905,20 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/warehouse)
+"VT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/tiled/monotile,
+/area/map_template/facolony/room_one)
 "VV" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 1
@@ -10654,7 +10963,7 @@
 /obj/floor_decal/corner/b_green/half,
 /obj/submap_landmark/spawnpoint/facolony/scientist_spawn,
 /turf/simulated/floor/tiled/monotile,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_two)
 "Wc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10758,7 +11067,6 @@
 /obj/floor_decal/corner/b_green/half{
 	dir = 1
 	},
-/obj/machinery/ntnet_relay,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
 "WD" = (
@@ -10769,6 +11077,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
+"WJ" = (
+/obj/floor_decal/corner/b_green/half{
+	dir = 1
+	},
+/obj/submap_landmark/spawnpoint/facolony/engineer_spawn,
+/obj/machinery/alarm/facolony{
+	pixel_y = 24
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/room_three)
 "WL" = (
 /obj/floor_decal/corner/green/border{
 	dir = 4
@@ -10792,8 +11110,16 @@
 /obj/floor_decal/corner/b_green/mono,
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/closet/facolony/cabinet,
+/obj/machinery/power/apc/facolony{
+	pixel_y = 24;
+	dir = 1
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/tiled/steel_grid,
-/area/map_template/facolony/dorms)
+/area/map_template/facolony/room_four)
 "WU" = (
 /obj/floor_decal/corner/yellow/border{
 	dir = 8
@@ -10833,8 +11159,16 @@
 /obj/floor_decal/corner/black/half{
 	dir = 8
 	},
+/obj/machinery/alarm/facolony{
+	pixel_x = -24;
+	dir = 4
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
+"Xe" = (
+/obj/paint/fleet/sfv_rook,
+/turf/simulated/wall,
+/area/map_template/facolony/room_two)
 "Xf" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/paint/black,
@@ -11256,7 +11590,7 @@
 	pixel_x = 6;
 	pixel_y = -8
 	},
-/obj/machinery/light/spot{
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -11804,8 +12138,8 @@ eJ
 uo
 uo
 uo
-dI
-tL
+uo
+pk
 jI
 dB
 Yq
@@ -11846,9 +12180,9 @@ uo
 uo
 uo
 jS
-pk
-km
-ik
+dB
+dI
+TE
 Rq
 Rq
 Rq
@@ -12626,7 +12960,7 @@ Sd
 pk
 pk
 pk
-Sd
+Es
 pk
 pk
 pk
@@ -12664,15 +12998,15 @@ QP
 QP
 nC
 aU
-Sz
-Sz
+qK
+qK
+rW
+qK
+eL
+eL
 bu
-Sz
-Sz
-Sz
-bu
-Sz
-Sz
+eL
+eL
 sf
 Dr
 wc
@@ -12685,7 +13019,7 @@ UX
 Dy
 up
 tu
-sS
+CD
 Qr
 Sh
 tn
@@ -12707,19 +13041,19 @@ QP
 QP
 uo
 uo
-Sz
+qK
 lh
 nY
 lh
-sX
-lh
+nw
+hA
 jh
-lh
-Sz
-Sz
+hA
+ci
+ci
 tM
-Sz
-Sz
+ci
+ci
 lB
 lB
 du
@@ -12750,19 +13084,19 @@ QP
 QP
 uo
 pk
-Sz
+qK
 gZ
 ro
 Wb
-sX
+nw
 Gv
-ro
+FD
 FH
-sX
+rN
 jz
 Mr
 Or
-sX
+rN
 qa
 lB
 FL
@@ -12793,19 +13127,19 @@ QP
 QP
 uo
 kU
-Sz
-rQ
+qK
+Ml
 Db
 cw
-sX
+nw
 rQ
-Db
-cw
-sX
+VT
+Sy
+rN
 sQ
 ND
 uu
-sX
+rN
 Eh
 be
 ai
@@ -12836,19 +13170,19 @@ QP
 uo
 uo
 XG
-Sz
-sX
+qK
+Xe
 nN
-sX
-sX
-sX
-nN
-sX
-sX
-sX
+Xe
+nw
+nw
+zA
+nw
+rN
+rN
 KP
-sX
-sX
+rN
+rN
 cn
 Sv
 CE
@@ -12886,9 +13220,9 @@ NS
 AD
 vX
 yC
-dh
+km
 Jh
-kI
+dh
 FU
 BX
 QC
@@ -12924,7 +13258,7 @@ pk
 lJ
 of
 uZ
-gq
+Qk
 mG
 gv
 Lj
@@ -12966,10 +13300,10 @@ uo
 uo
 lJ
 Sz
-sX
-nN
-sX
-sX
+Tj
+Km
+Tj
+Tj
 Zw
 SG
 MD
@@ -13009,10 +13343,10 @@ uo
 uo
 jx
 Sz
-WT
+tT
 LL
-tH
-sX
+Ri
+Tj
 Du
 qq
 lw
@@ -13052,10 +13386,10 @@ uo
 uo
 uo
 Sz
-oq
-xZ
+WJ
+Hp
 As
-sX
+Tj
 Rz
 ji
 RK
@@ -13096,9 +13430,9 @@ uo
 uo
 Sz
 Mq
-hM
+yU
 Mq
-sX
+Tj
 vd
 FF
 aX
@@ -13139,13 +13473,13 @@ aU
 aU
 Sz
 Sz
-bu
+PE
 Sz
-Sz
-sX
+Me
+FX
 yJ
-sX
-sX
+FX
+FX
 lI
 xY
 Jm
@@ -13184,11 +13518,11 @@ nC
 qU
 jQ
 pk
-Sz
+Me
 WT
-LL
+Jp
 tH
-sX
+FX
 rh
 iB
 mG
@@ -13227,14 +13561,14 @@ nC
 pk
 QP
 QP
-Sz
+Me
 oq
 xZ
-As
-OR
-OR
+bO
+OW
+OW
 LC
-OR
+OW
 OW
 Yv
 gy
@@ -13270,11 +13604,11 @@ nC
 uo
 QP
 QP
-Sz
-Mq
+Me
+om
 hM
-Mq
-OR
+om
+OW
 tC
 hX
 oG
@@ -13313,10 +13647,10 @@ zb
 QP
 QP
 QP
-Sz
-Sz
-bu
-Sz
+Me
+Me
+OM
+Me
 OW
 qw
 Fw
@@ -13359,7 +13693,7 @@ QP
 dI
 Af
 dI
-dI
+OW
 OW
 tj
 OR
@@ -13401,8 +13735,8 @@ QP
 QP
 QP
 QP
-uo
 dI
+OW
 OW
 qV
 OR
@@ -13530,7 +13864,7 @@ QP
 QP
 QP
 QP
-ge
+uo
 Ec
 Ec
 hL
@@ -13751,7 +14085,7 @@ Ec
 Ec
 Ec
 Ec
-Ec
+sS
 mo
 mo
 mo
@@ -13794,7 +14128,7 @@ Ec
 Ec
 Ec
 Ec
-Ec
+gq
 mo
 mo
 mo
