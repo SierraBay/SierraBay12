@@ -18,11 +18,11 @@
 	call_webhook = WEBHOOK_SUBMAP_LOADED_SOL
 
 /obj/submap_landmark/spawnpoint/away_patrol
-	name = "Army SCGSO Trooper"
+	name = "SCGFSO Trooper"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/submap_landmark/spawnpoint/away_patrol/captain
-	name = "Army SCGSO Leader"
+	name = "SCGFSO Leader"
 
 /obj/submap_landmark/spawnpoint/away_patrol/commander
 	name = "Fleet Commander"
@@ -72,20 +72,19 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
  */
 
 /datum/job/submap/patrol
-	title = "Army SCGSO Trooper"
+	title = "SCGFSO Trooper"
 	total_positions = 2
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/army_ops
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/e4,
-		/datum/mil_rank/scga/e4_alt,
-		/datum/mil_rank/scga/e5
-		)
-	supervisors = "Army Leader"
+		/datum/mil_rank/fleet/e4,
+		/datum/mil_rank/fleet/e5
+	)
+	supervisors = "SCGFSO Leader"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, вы - член группы 'Буря', разведовательных войск СОЦПСС. \
+	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, вы - член группы 'Буря', сил специальных операций Флота ЦПСС. \
 	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
@@ -100,19 +99,19 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	access = list(access_away_cavalry, access_away_cavalry_ops)
 
 /datum/job/submap/patrol/captain
-	title = "Army SCGSO Leader"
+	title = "SCGFSO Leader"
 	total_positions = 1
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/captain
-	allowed_branches = list(/datum/mil_branch/scga)
+	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/scga/o2,
-		/datum/mil_rank/scga/o3
+		/datum/mil_rank/fleet/e6,
+		/datum/mil_rank/fleet/e7
 	)
-	supervisors = "Lieutenant Commander, Command of the Battle Group Bravo of the 5th fleet, SCGDF"
+	supervisors = "Lieutenant Commander, Command of the Battle Group Bravo of the 5th fleet, SCGFSO"
 	loadout_allowed = TRUE
 	is_semi_antagonist = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов соединения, входящего в экипаж патрульного корабля 5-го флота ЦПСС, ваша задача состоит в руководстве группой 'Буря', разведовательных войск СОЦПСС. \
+	Являясь одним из членов соединения, входящего в экипаж патрульного корабля 5-го флота ЦПСС, ваша задача состоит в руководстве группой 'Буря', сил специальных операций Флота ЦПСС. \
 	По данным бортового компьютера, поступал сигнал о неизвестных нападениях в этом регионе.\
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками без разрешения от командования группировкой. \
@@ -137,7 +136,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 		/datum/mil_rank/fleet/o3,
 		/datum/mil_rank/fleet/o4
 	)
-	supervisors = "Command of the Battle Group Bravo of the 5th fleet, SCGDF"
+	supervisors = "Command of the Battle Group Bravo of the 5th fleet, SCGFSO"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
 	Являясь одним из членов экипажа патрульного корабля 5-го флота ЦПСС, ваша задача состоит в патруле и разведке данного сектора. \
@@ -217,10 +216,9 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/engineer
 	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/fleet/e4,
-		/datum/mil_rank/fleet/e5,
-		/datum/mil_rank/fleet/e6
-		)
+		/datum/mil_rank/fleet/o1,
+		/datum/mil_rank/fleet/o2
+	)
 	supervisors = "Lieutenant Commander"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
@@ -385,7 +383,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 /singleton/hierarchy/outfit/job/patrol
 	hierarchy_type = /singleton/hierarchy/outfit/job/patrol
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/away_solpatrol
-	shoes = /obj/item/clothing/shoes/dutyboots
+	shoes = /obj/item/clothing/shoes/combat
 	l_ear = /obj/item/device/radio/headset/away_scg_patrol
 	l_pocket = /obj/item/device/radio
 	r_pocket = /obj/item/crowbar/prybar
@@ -400,25 +398,25 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/patrol/army_ops
 	name = PATROL_OUTFIT_JOB_NAME("Ops")
-	head = /obj/item/clothing/head/scga/utility
-	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
+	head = /obj/item/clothing/head/solgov/utility/fleet
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/combat
 	id_types = list(/obj/item/card/id/awaycavalry/ops)
-	gloves = /obj/item/clothing/gloves/scga/duty
-	shoes = /obj/item/clothing/shoes/scga/utility/tan
+	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet/combat
+	shoes = /obj/item/clothing/shoes/combat/marine
 
 /singleton/hierarchy/outfit/job/patrol/captain
 	name = PATROL_OUTFIT_JOB_NAME("Captain")
-	head = /obj/item/clothing/head/scga/beret
-	uniform = /obj/item/clothing/under/scga/utility/away_solpatrol
+	head = /obj/item/clothing/head/soft/solgov/fleet
+	uniform = /obj/item/clothing/under/solgov/utility/fleet/combat/command
 	id_types = list(/obj/item/card/id/awaycavalry/ops/captain)
-	gloves = /obj/item/clothing/gloves/thick/combat
-	shoes = /obj/item/clothing/shoes/scga/utility/tan
+	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet/combat
+	shoes = /obj/item/clothing/shoes/combat/marine
 
 /singleton/hierarchy/outfit/job/patrol/engineer
 	name = PATROL_OUTFIT_JOB_NAME("Technician")
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solpatrol
 	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/insulated
+	gloves = /obj/item/clothing/gloves/insulated/black
 
 /singleton/hierarchy/outfit/job/patrol/surgeon
 	name = PATROL_OUTFIT_JOB_NAME("Doctor")
