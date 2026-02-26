@@ -4320,15 +4320,14 @@
 	},
 /obj/machinery/door/window/brigdoor/westleft,
 /obj/structure/curtain/black,
-/obj/structure/sign/warning/internals_required{
-	pixel_y = -32;
-	dir = 1;
-	pixel_x = -8
-	},
 /obj/item/paper/sticky/facolony{
-	pixel_y = 24;
-	pixel_x = 6;
+	pixel_y = -24;
+	pixel_x = -6;
 	color = "#c97b1c"
+	},
+/obj/structure/sign/warning/internals_required{
+	pixel_y = 24;
+	pixel_x = 6
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/unspecified)
