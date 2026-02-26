@@ -2016,7 +2016,9 @@
 /obj/machinery/alarm/merchant{
 	pixel_y = 24
 	},
-/obj/structure/closet/secure_closet/engineering_electrical/bearcat,
+/obj/structure/closet/secure_closet/engineering_electrical/bearcat{
+	req_access = list("ACCESS_MERCHANT")
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/engineeringreactor)
 "dx" = (
