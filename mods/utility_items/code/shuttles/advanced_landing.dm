@@ -149,6 +149,7 @@
 /obj/machinery/computer/shuttle_control/explore/data_capsule
 /obj/machinery/computer/shuttle_control/explore/old_snz
 /obj/machinery/computer/shuttle_control/explore/interseptor
+/datum/shuttle/autodock/overmap/utyug
 
 /area/mine
 	name = "Mine"
@@ -178,7 +179,8 @@
 	/obj/machinery/computer/shuttle_control/explore/graysontug,
 	/obj/machinery/computer/shuttle_control/explore/data_capsule,
 	/obj/machinery/computer/shuttle_control/explore/old_snz,
-	/obj/machinery/computer/shuttle_control/explore/interseptor
+	/obj/machinery/computer/shuttle_control/explore/interseptor,
+	/datum/shuttle/autodock/overmap/utyug
 	)
 
 	//Списки куда разрешена посадка
