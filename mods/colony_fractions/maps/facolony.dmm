@@ -1439,7 +1439,7 @@
 /obj/paint/fleet/sfv_rook,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_base_emg_exit";
-	name = "External Section";
+	name = "Ventilation";
 	dir = 4
 	},
 /turf/simulated/floor/reinforced,
@@ -2398,9 +2398,12 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/facolony/atmospherics2)
 "kG" = (
-/obj/structure/catwalk,
-/turf/simulated/floor/away,
-/area/map_template/facolony/atmospherics2)
+/obj/floor_decal/corner/grey/diagonal,
+/obj/structure/bed/chair/office/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/tiled/dark,
+/area/map_template/facolony/unspecified)
 "kL" = (
 /obj/machinery/appliance/cooker/stove,
 /turf/simulated/floor/wood/bamboo,
@@ -4309,26 +4312,15 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "sS" = (
-/obj/machinery/button/blast_door{
-	name = "EXTERNAL EMERGENCY EXIT";
+/obj/paint/fleet/sfv_rook,
+/obj/machinery/door/blast/regular{
 	id_tag = "facolony_base_emg_exit";
-	dir = 1;
-	pixel_y = -24;
-	req_access = list("ACCESS_FACOLONY");
-	pixel_x = 6
+	name = "External Section";
+	dir = 4
 	},
-/obj/machinery/door/window/brigdoor/westleft,
-/obj/structure/curtain/black,
 /obj/structure/sign/warning/internals_required{
-	pixel_y = 24;
-	pixel_x = 6
-	},
-/obj/item/paper/sticky{
-	language = "Spacer";
-	info = "ВНИМАНИЕ! Эти ворота ведут прямо на улицу. Открывать, только в крайнем случае. Они выглядят как вход, поэтому недруги будут думать о них, а не о скрытых проходах. Я в этом уверен.";
-	pixel_y = -24;
-	pixel_x = -6;
-	color = "#c97b1c"
+	pixel_y = -32;
+	dir = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/unspecified)
@@ -5405,13 +5397,6 @@
 /obj/landmark/clear,
 /turf/template_noop,
 /area/map_template/facolony/armory)
-"wQ" = (
-/obj/structure/bed/chair/office/comfy/black{
-	dir = 8
-	},
-/obj/floor_decal/corner/grey/diagonal,
-/turf/simulated/floor/tiled/dark,
-/area/map_template/facolony/unspecified)
 "wT" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
@@ -8145,6 +8130,10 @@
 /obj/floor_decal/corner/black/half,
 /obj/item/gun/energy/gun,
 /obj/item/gun/projectile/automatic/assault_rifle,
+/obj/machinery/door/window/brigdoor/northleft,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Kh" = (
@@ -9256,6 +9245,22 @@
 /obj/item/rig_module/vision/nvg,
 /obj/item/rig_module/voice,
 /obj/item/rig_module/cooling_unit,
+/obj/machinery/button/blast_door{
+	name = "EXTERNAL EMERGENCY EXIT";
+	id_tag = "facolony_base_emg_exit";
+	dir = 1;
+	pixel_y = -24;
+	req_access = list("ACCESS_FACOLONY");
+	pixel_x = 6
+	},
+/obj/item/paper/sticky{
+	language = "Spacer";
+	info = "ВНИМАНИЕ! Этот экстренный выход ведет прямо на улицу. Открывать, только в КРАЙНЕМ случае. А еще он похож на вход, поэтому вряд ли посторонние додумаются о проходах в стенах. Да?";
+	pixel_y = -24;
+	pixel_x = -6;
+	color = "#c97b1c"
+	},
+/obj/machinery/door/window/brigdoor/northright,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Pg" = (
@@ -13838,7 +13843,7 @@ bW
 ko
 Mo
 xF
-kG
+lJ
 lJ
 KA
 pk
@@ -13881,7 +13886,7 @@ Nc
 JA
 cz
 js
-kG
+lJ
 lJ
 VX
 pk
@@ -13993,8 +13998,8 @@ uo
 Ec
 Ec
 bD
+kG
 ED
-wQ
 Kc
 mo
 gB
