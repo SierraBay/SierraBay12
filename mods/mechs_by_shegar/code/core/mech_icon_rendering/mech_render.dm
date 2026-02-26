@@ -14,7 +14,7 @@
 				var/template_key = "template-[cache_key]"
 				if(!GLOB.mech_icon_cache[template_key])
 					GLOB.mech_icon_cache[template_key] = icon(cache_icon, "[cache_key]_mask")
-				var/icon/decal_icon = icon('icons/mecha/mech_decals.dmi',decal)
+				var/icon/decal_icon = icon('mods/mechs_by_shegar/icons/mech_decals.dmi',decal)
 				decal_icon.AddAlphaMask(GLOB.mech_icon_cache[template_key])
 				GLOB.mech_icon_cache[decal_key] = decal_icon
 			var/image/decal_image = get_mech_image(null, decal_key, GLOB.mech_icon_cache[decal_key])
