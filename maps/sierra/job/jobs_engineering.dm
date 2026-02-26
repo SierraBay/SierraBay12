@@ -142,7 +142,7 @@
 
 	access = list(		access_engine, access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 			            access_eva, access_janitor, access_construction,
-			            access_hangar)
+			            access_hangar, access_engine_equip)
 
 
 	software_on_spawn = list(/datum/computer_file/program/power_monitor,
