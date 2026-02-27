@@ -71,8 +71,9 @@
 /obj/machinery/computer/telecomms/monitor/Topic(href, href_list)
 	if(..())
 		return
+	var/mob/user = usr
 
-	usr.set_machine(src)
+	user.set_machine(src)
 
 	if(href_list["viewmachine"])
 		screen = 1
@@ -110,8 +111,8 @@
 
 	if(href_list["network"])
 
-		var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		var/newnet = input(user, "Which network do you want to view?", "Comm Monitor", network) as null|text
+		if(newnet && ((user in range(1, src) || issilicon(user))))
 			if(length(newnet) > 15)
 				temp = SPAN_COLOR("#d70b00", "- FAILED: NETWORK TAG STRING TOO LENGHTLY -")
 
