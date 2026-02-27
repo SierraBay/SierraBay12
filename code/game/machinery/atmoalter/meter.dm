@@ -21,6 +21,7 @@
 	frame_type = /obj/item/machine_chassis/pipe_meter
 	construct_state = /singleton/machine_construction/default/item_chassis
 	base_type = /obj/machinery/meter
+	init_flags = 0 // Registered to processing_lazy in Initialize(), not the 2s fast list
 
 /obj/machinery/meter/Initialize()
 	. = ..()
@@ -28,6 +29,7 @@
 		set_target(locate(/obj/machinery/atmospherics/pipe) in loc)
 	if(!target)
 		set_target(loc)
+	START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/meter/proc/set_target(atom/new_target)
 	clear_target()

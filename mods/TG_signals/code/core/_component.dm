@@ -280,8 +280,12 @@
 		return null
 	var/datum/component/C = dc[c_type]
 	if(C)
-		if(length(C))
-			C = C[1]
+		if(islist(C))
+			var/list/L = C
+			if(length(L))
+				C = L[1]
+			else
+				return null
 		if(C.type == c_type)
 			return C
 	return null

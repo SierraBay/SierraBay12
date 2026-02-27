@@ -19,19 +19,31 @@
 	var/alarm = 0
 	var/enabled = 1
 
+/obj/machinery/shield_diffuser/Initialize()
+	. = ..()
+	update_processing()
+
 /obj/machinery/shield_diffuser/Process()
 	if(alarm)
 		alarm--
 		if(!alarm)
 			update_icon()
+			if(!enabled)
+				return PROCESS_KILL
 		return
 
 	if(!enabled)
-		return
+		return PROCESS_KILL
 	for(var/direction in GLOB.cardinal)
 		var/turf/simulated/shielded_tile = get_step(get_turf(src), direction)
 		for(var/obj/shield/S in shielded_tile)
 			S.diffuse(5)
+
+/obj/machinery/shield_diffuser/proc/update_processing()
+	if(enabled || alarm)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/shield_diffuser/on_update_icon()
 	if(alarm)
@@ -48,10 +60,12 @@
 	if(alarm)
 		to_chat(user, "You press an override button on \the [src], re-enabling it.")
 		alarm = 0
+		update_processing()
 		update_icon()
 		return TRUE
 	enabled = !enabled
 	update_use_power(enabled + 1)
+	update_processing()
 	update_icon()
 	to_chat(user, "You turn \the [src] [enabled ? "on" : "off"].")
 	return TRUE
@@ -60,6 +74,7 @@
 	if(!duration)
 		return
 	alarm = round(max(alarm, duration))
+	update_processing()
 	update_icon()
 
 /obj/machinery/shield_diffuser/examine(mob/user)

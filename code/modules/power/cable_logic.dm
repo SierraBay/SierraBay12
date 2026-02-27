@@ -74,7 +74,7 @@
 	if(!pn_output)
 		return
 
-	pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)
+	pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)
 
 
 
@@ -128,7 +128,7 @@
 		return
 
 	if( !(pn_input.avail >= LOGIC_HIGH))
-		pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
+		pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
 	else
 		pn_output.draw_power(LOGIC_HIGH)		//Otherwise increase the load to 5
 
@@ -200,7 +200,7 @@
 		return
 
 	if( (pn_input1.avail >= LOGIC_HIGH) && (pn_input2.avail >= LOGIC_HIGH) )
-		pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
+		pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
 	else
 		pn_output.draw_power(LOGIC_HIGH)		//Otherwise increase the load to 5
 
@@ -220,7 +220,7 @@
 		return
 
 	if( (pn_input1.avail >= LOGIC_HIGH) || (pn_input2.avail >= LOGIC_HIGH) )
-		pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
+		pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
 	else
 		pn_output.draw_power(LOGIC_HIGH)		//Otherwise increase the load to 5
 
@@ -240,7 +240,7 @@
 		return
 
 	if( (pn_input1.avail >= LOGIC_HIGH) != (pn_input2.avail >= LOGIC_HIGH) )
-		pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
+		pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
 	else
 		pn_output.draw_power(LOGIC_HIGH)		//Otherwise increase the load to 5
 
@@ -260,7 +260,7 @@
 		return
 
 	if( (pn_input1.avail >= LOGIC_HIGH) == (pn_input2.avail >= LOGIC_HIGH) )
-		pn_output.newavail = max(pn_output.avail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
+		pn_output.newavail = max(pn_output.newavail, LOGIC_HIGH)	//Set the output avilable power to 5 or whatever it was before.
 	else
 		pn_output.draw_power(LOGIC_HIGH)		//Otherwise increase the load to 5
 

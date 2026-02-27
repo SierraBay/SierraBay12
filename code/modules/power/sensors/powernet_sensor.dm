@@ -121,10 +121,32 @@
 	out += "<br><b>TOTAL AVAILABLE: [reading_to_text(powernet.avail)]</b>"
 	out += "<br><b>APC LOAD: [reading_to_text(total_apc_load)]</b>"
 	out += "<br><b>OTHER LOAD: [reading_to_text(max(powernet.load - total_apc_load, 0))]</b>"
-	out += "<br><b>TOTAL GRID LOAD: [reading_to_text(powernet.viewload)] ([round((powernet.load / powernet.avail) * 100)]%)</b>"
+	var/load_percentage = powernet.avail ? round((powernet.load / powernet.avail) * 100) : 100
+	out += "<br><b>TOTAL GRID LOAD: [reading_to_text(powernet.viewload)] ([load_percentage]%)</b>"
+	if(powernet.shadow_solver_enabled)
+		var/list/shadow_stats = powernet.get_shadow_solver_stats_data()
+		out += "<br><b>SHADOW BACKEND: [powernet.get_shadow_solver_backend_name()]</b>"
+		out += "<br><b>WRITE MODE: [powernet.get_shadow_solver_write_mode_name()]</b>"
+		out += "<br><b>GUARD: [powernet.get_shadow_solver_guard_state_name()] (TH [powernet.get_shadow_solver_guard_threshold()]W, CONSEC [powernet.shadow_solver_guard_consecutive_mismatch]/[powernet.shadow_solver_guard_trip_threshold], COOLDOWN [powernet.get_shadow_solver_guard_ticks_left()] ticks)</b>"
+		out += "<br><b>SHADOW LOAD: [reading_to_text(powernet.shadow_solver_last_load)] (Δ [reading_to_text(powernet.shadow_solver_load_delta)])</b>"
+		out += "<br><b>SHADOW AVAIL: [reading_to_text(powernet.shadow_solver_last_avail)] (Δ [reading_to_text(powernet.shadow_solver_avail_delta)])</b>"
+		out += "<br><b>SHADOW UNSERVED: [reading_to_text(powernet.shadow_solver_last_unserved)]</b>"
+		if(powernet.shadow_solver_last_smes_input_percentage >= 0)
+			out += "<br><b>SMES INPUT CTRL: [uppertext(powernet.shadow_solver_last_smes_input_source)] ([round(powernet.shadow_solver_last_smes_input_percentage, 0.1)]%)</b>"
+		else
+			out += "<br><b>SMES INPUT CTRL: NONE</b>"
+		out += "<br><b>APC ADVISORY: SCALE [round(powernet.shadow_solver_last_apc_advisory_scale * 100, 0.1)]%, PER-APC [reading_to_text(powernet.shadow_solver_last_apc_advisory_perapc)]</b>"
+		if(powernet.should_enforce_apc_cap())
+			out += "<br><b>APC ENFORCED CAP: [reading_to_text(powernet.shadow_solver_last_apc_enforced_budget)] (FLOOR [reading_to_text(powernet.shadow_solver_last_apc_enforced_floor)])</b>"
+		out += "<br><b>GUARD ROLLBACKS: [powernet.shadow_solver_guard_rollback_events], LAST: [powernet.shadow_solver_guard_last_reason]</b>"
+		out += "<br><b>ACCEPTANCE: [powernet.get_shadow_solver_acceptance_state_name()] ([powernet.shadow_solver_acceptance_last_reason])</b>"
+		out += "<br><b>SHADOW SAMPLES: [shadow_stats["samples"]], MISMATCH RATE: [shadow_stats["mismatch_rate"]]%</b>"
+		out += "<br><b>SHADOW AVG ΔLOAD: [reading_to_text(shadow_stats["avg_abs_load_delta"])], AVG ΔAVAIL: [reading_to_text(shadow_stats["avg_abs_avail_delta"])]</b>"
 
 	if(powernet.problem)
 		out += "<br><b>WARNING: Abnormal grid activity detected!</b>"
+	if(powernet.shadow_solver_mismatch)
+		out += "<br><b>WARNING: Shadow solver mismatch detected!</b>"
 	return out
 
 // Proc: return_reading_data()
@@ -176,5 +198,38 @@
 		data["load_percentage"] = round((powernet.viewload / powernet.avail) * 100)
 	else
 		data["load_percentage"] = 100
+	data["shadow_enabled"] = powernet.shadow_solver_enabled ? 1 : 0
+	data["shadow_backend"] = powernet.get_shadow_solver_backend_name()
+	data["shadow_write_mode"] = powernet.get_shadow_solver_write_mode_name()
+	data["shadow_guard_state"] = powernet.get_shadow_solver_guard_state_name()
+	data["shadow_guard_threshold"] = powernet.get_shadow_solver_guard_threshold()
+	data["shadow_guard_consecutive_mismatch"] = powernet.shadow_solver_guard_consecutive_mismatch
+	data["shadow_guard_trip_threshold"] = powernet.shadow_solver_guard_trip_threshold
+	data["shadow_guard_cooldown_left"] = powernet.get_shadow_solver_guard_ticks_left()
+	data["shadow_guard_rollbacks"] = powernet.shadow_solver_guard_rollback_events
+	data["shadow_guard_last_reason"] = powernet.shadow_solver_guard_last_reason
+	data["shadow_acceptance_state"] = powernet.get_shadow_solver_acceptance_state_name()
+	data["shadow_acceptance_reason"] = powernet.shadow_solver_acceptance_last_reason
+	data["shadow_load"] = reading_to_text(max(powernet.shadow_solver_last_load, 0))
+	data["shadow_avail"] = reading_to_text(max(powernet.shadow_solver_last_avail, 0))
+	data["shadow_unserved"] = reading_to_text(max(powernet.shadow_solver_last_unserved, 0))
+	data["shadow_load_delta"] = reading_to_text(abs(powernet.shadow_solver_load_delta))
+	data["shadow_avail_delta"] = reading_to_text(abs(powernet.shadow_solver_avail_delta))
+	data["shadow_mismatch"] = powernet.shadow_solver_mismatch ? 1 : 0
+	data["shadow_smes_input_source"] = powernet.shadow_solver_last_smes_input_source
+	data["shadow_smes_input_percentage"] = powernet.shadow_solver_last_smes_input_percentage
+	data["shadow_apc_advisory_scale"] = round(powernet.shadow_solver_last_apc_advisory_scale * 100, 0.1)
+	data["shadow_apc_advisory_perapc"] = reading_to_text(max(powernet.shadow_solver_last_apc_advisory_perapc, 0))
+	data["shadow_apc_advisory_primary_demand"] = reading_to_text(max(powernet.shadow_solver_last_apc_advisory_primary_demand, 0))
+	data["shadow_apc_advisory_served_primary"] = reading_to_text(max(powernet.shadow_solver_last_apc_advisory_served_primary, 0))
+	data["shadow_apc_cap_active"] = powernet.should_enforce_apc_cap() ? 1 : 0
+	data["shadow_apc_cap_budget"] = reading_to_text(max(powernet.shadow_solver_last_apc_enforced_budget, 0))
+	data["shadow_apc_cap_floor"] = reading_to_text(max(powernet.shadow_solver_last_apc_enforced_floor, 0))
+	var/list/shadow_stats = powernet.get_shadow_solver_stats_data()
+	data["shadow_samples"] = shadow_stats["samples"]
+	data["shadow_mismatch_rate"] = shadow_stats["mismatch_rate"]
+	data["shadow_avg_load_delta"] = reading_to_text(shadow_stats["avg_abs_load_delta"])
+	data["shadow_avg_avail_delta"] = reading_to_text(shadow_stats["avg_abs_avail_delta"])
+	data["shadow_avg_unserved"] = reading_to_text(shadow_stats["avg_unserved"])
 	data["alarm"] = powernet.problem ? 1 : 0
 	return data

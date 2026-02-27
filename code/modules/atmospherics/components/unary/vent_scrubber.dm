@@ -171,9 +171,9 @@
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power_oneoff(power_draw)
-
-	if(network)
-		network.update = 1
+		// Only wake the network when we actually changed gas state.
+		if(network)
+			network.update = 1
 
 	return 1
 

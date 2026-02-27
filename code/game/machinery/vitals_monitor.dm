@@ -38,6 +38,7 @@
 		if (connected_optable)
 			connected_optable.connected_monitor = src
 			break
+	update_processing()
 
 /obj/machinery/vitals_monitor/Destroy()
 	victim = null
@@ -121,8 +122,16 @@
 	if (connected_optable && !Adjacent(connected_optable))
 		update_victim()
 		update_optable()
+	if (!victim && !connected_optable)
+		return PROCESS_KILL
 	if (victim)
 		update_icon()
+
+/obj/machinery/vitals_monitor/proc/update_processing()
+	if (victim || connected_optable)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/vitals_monitor/proc/update_victim(new_victim = null)
 	var/old_victim = victim
@@ -133,6 +142,7 @@
 		if (old_victim != new_victim) // Protects against qdel edge case. In all other cases we want a message printed.
 			visible_message(SPAN_NOTICE("\The [src] is no longer showing data from [isnull(old_victim)? "any patient" : "\the [old_victim]"]."))
 	update_use_power(isnull(victim)? POWER_USE_IDLE : POWER_USE_ACTIVE)
+	update_processing()
 	update_icon()
 
 /obj/machinery/vitals_monitor/proc/update_optable(obj/machinery/optable/new_optable = null)
@@ -148,6 +158,7 @@
 		update_victim(connected_optable.victim)
 	else
 		visible_message(SPAN_NOTICE("\The [src] is no longer relaying data from a connected operating table."))
+	update_processing()
 
 /obj/machinery/vitals_monitor/MouseDrop(over_object, src_location, over_location)
 	if (!CanMouseDrop(over_object))

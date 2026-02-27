@@ -24,6 +24,13 @@
 	if(istype(machine))
 		return machine
 
+/obj/machinery/power/terminal/power_solver_shadow_profile()
+	var/obj/machinery/machine = master_machine()
+	if(!istype(machine, /obj/machinery/power))
+		return null
+	var/obj/machinery/power/power_machine = machine
+	return power_machine.power_solver_shadow_profile()
+
 /obj/machinery/power/terminal/hide(do_hide)
 	if(do_hide && level == ATOM_LEVEL_UNDER_TILE)
 		layer = WIRE_TERMINAL_LAYER
