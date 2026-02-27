@@ -10,10 +10,10 @@
 
 
 /obj/machinery/computer/shuttle/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if(inoperable() || evacuation_controller.has_evacuated())
+	var/datum/evacuation_controller/shuttle/evac_control = evacuation_controller
+	if(inoperable() || evac_control?.has_evacuated())
 		return ..()
 
-	var/datum/evacuation_controller/shuttle/evac_control = evacuation_controller
 	if(!istype(evac_control))
 		to_chat(user, SPAN_DANGER("This console should not in use on this map. Please report this to a developer."))
 		return TRUE
@@ -35,7 +35,7 @@
 			return TRUE
 
 		var/choice = alert(user, "Would you like to (un)authorize a shortened launch time? [auth_need - length(authorized)] authorization\s are still needed. Use abort to cancel all authorizations.", "Shuttle Launch", "Authorize", "Repeal", "Abort")
-		if(evacuation_controller.is_prepared() && user.get_active_hand() != W)
+		if(evac_control.is_prepared() && user.get_active_hand() != W)
 			return TRUE
 		switch(choice)
 			if("Authorize")
@@ -49,7 +49,7 @@
 					message_admins("[key_name_admin(user)] has launched the shuttle")
 					log_game("[user.ckey] has launched the shuttle early")
 					to_world(SPAN_NOTICE("<b>Alert: Shuttle launch time shortened to 10 seconds!</b>"))
-					evacuation_controller.set_launch_time(world.time+100)
+					evac_control.set_launch_time(world.time+100)
 					//src.authorized = null
 					qdel(authorized)
 					authorized = list(  )
@@ -67,11 +67,11 @@
 	if (istype(W, /obj/item/card/emag) && !emagged)
 		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
 
-		if(!emagged && !evacuation_controller.is_prepared() && user.get_active_hand() == W)
+		if(!emagged && !evac_control.is_prepared() && user.get_active_hand() == W)
 			switch(choice)
 				if("Launch")
 					to_world(SPAN_NOTICE("<b>Alert: Shuttle launch time shortened to 10 seconds!</b>"))
-					evacuation_controller.set_launch_time(world.time+100)
+					evac_control.set_launch_time(world.time+100)
 					emagged = TRUE
 				if("Cancel")
 					return TRUE

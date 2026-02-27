@@ -355,11 +355,12 @@
 	var/list/header = list("<html><body><center>")
 	header += "<b>Welcome, [name].<br></b>"
 	header += "Round Duration: [roundduration2text()]<br>"
+	var/datum/evacuation_controller/controller = evacuation_controller
 
-	if(evacuation_controller.has_evacuated())
+	if(controller?.has_evacuated())
 		header += "[SPAN_COLOR("red", "<b>\The [station_name()] has been evacuated.</b>")]<br>"
-	else if(evacuation_controller.is_evacuating())
-		if(evacuation_controller.emergency_evacuation) // Emergency shuttle is past the point of no recall
+	else if(controller?.is_evacuating())
+		if(controller.emergency_evacuation) // Emergency shuttle is past the point of no recall
 			header += "[SPAN_COLOR("red", "\The [station_name()] is currently undergoing evacuation procedures.")]<br>"
 		else                                           // Crew transfer initiated
 			header += "[SPAN_COLOR("red", "\The [station_name()] is currently undergoing crew transfer procedures.")]<br>"

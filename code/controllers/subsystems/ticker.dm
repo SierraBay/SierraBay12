@@ -459,10 +459,11 @@ Helpers
 
 	if(mode.explosion_in_progress)
 		return 0
+	var/datum/evacuation_controller/controller = evacuation_controller
 	if(config.continous_rounds)
-		return evacuation_controller.round_over() || mode.station_was_nuked
+		return (controller && controller.round_over()) || mode.station_was_nuked
 	else
-		return mode.check_finished() || (evacuation_controller.round_over() && evacuation_controller.emergency_evacuation) || game_over
+		return mode.check_finished() || (controller && controller.round_over() && controller.emergency_evacuation) || game_over
 
 /datum/controller/subsystem/ticker/proc/mode_finished()
 	if (forced_end)

@@ -149,17 +149,18 @@
 		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)				//emergency shuttle timer
 			line1 = ""
 			line2 = ""
-			if(evacuation_controller.is_prepared())
+			var/datum/evacuation_controller/controller = evacuation_controller
+			if(controller?.is_prepared())
 				line1 = "-ETD-"
-				if (evacuation_controller.waiting_to_leave())
+				if(controller.waiting_to_leave())
 					line2 = "Launch"
 				else
-					line2 = get_shuttle_timer()
+					line2 = get_shuttle_timer(controller)
 					if(length(line2) > CHARS_PER_LINE)
 						line2 = "Error"
-			else if(evacuation_controller.has_eta())
+			else if(controller?.has_eta())
 				line1 = "-ETA-"
-				line2 = get_shuttle_timer()
+				line2 = get_shuttle_timer(controller)
 				if(length(line2) > CHARS_PER_LINE)
 					line2 = "Error"
 			render_signature = "transfer|[line1]|[line2]|[border_signature]"
@@ -213,13 +214,13 @@
 			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_TIME)
-			message1 = "TIME"
-			message2 = stationtime2text()
-			render_signature = "time|[message1]|[message2]|[border_signature]"
+			line1 = "TIME"
+			line2 = stationtime2text()
+			render_signature = "time|[line1]|[line2]|[border_signature]"
 			if(render_signature == last_render_signature)
 				return 1
 			remove_display()
-			update_display(message1, message2)
+			update_display(line1, line2)
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
 			last_render_signature = render_signature
@@ -295,11 +296,13 @@
 		maptext = new_text
 	set_light(2, 0.5, COLOR_WHITE)
 
-/obj/machinery/status_display/proc/get_shuttle_timer()
-	var/timeleft = evacuation_controller.get_eta()
-	if(timeleft < 0)
+/obj/machinery/status_display/proc/get_shuttle_timer(datum/evacuation_controller/controller = null)
+	if(!controller)
+		controller = evacuation_controller
+	var/timeleft = controller?.get_eta()
+	if(isnull(timeleft) || timeleft < 0)
 		return ""
-	return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
+	return "[pad_left(num2text(round(timeleft / 60)), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
 
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
 	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
@@ -310,7 +313,7 @@
 		var/timeleft = round((shuttle.arrive_time - world.time) / 10,1)
 		if(timeleft < 0)
 			return "Late"
-		return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
+		return "[pad_left(num2text(round(timeleft / 60)), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
 	return ""
 
 /obj/machinery/status_display/proc/remove_display()

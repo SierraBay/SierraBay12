@@ -90,6 +90,40 @@ if(Datum.is_processing) {\
 	}\
 }
 
+/// Register a datum to be processed with a named list on a subsystem.
+#define START_PROCESSING_SUBSYSTEM_LIST(Subsystem, Datum, List, Label) \
+if (Datum.is_processing) {\
+	if(Datum.is_processing != Label)\
+	{\
+		crash_with("Failed to start processing. [log_info_line(Datum)] is already being processed by [Datum.is_processing] but queue attempt occured on [Label]."); \
+	}\
+} else {\
+	Datum.is_processing = Label;\
+	Subsystem.List += Datum;\
+}
+
+/// Unregister a datum from a named list on a subsystem.
+#define STOP_PROCESSING_SUBSYSTEM_LIST(Subsystem, Datum, List, Label) \
+if(Datum.is_processing) {\
+	if(Subsystem.List.Remove(Datum)) {\
+		Datum.is_processing = null;\
+	} else {\
+		crash_with("Failed to stop processing. [log_info_line(Datum)] is being processed by [Datum.is_processing] and not found in [Label]"); \
+	}\
+}
+
+/// START/STOP specific to atmospheric pipe networks.
+#define START_PROCESSING_PIPENET(Datum) START_PROCESSING_SUBSYSTEM_LIST(SSpipenets, Datum, pipenets, "SSpipenets.pipenets")
+#define STOP_PROCESSING_PIPENET(Datum) STOP_PROCESSING_SUBSYSTEM_LIST(SSpipenets, Datum, pipenets, "SSpipenets.pipenets")
+
+/// START/STOP specific to power networks.
+#define START_PROCESSING_POWERNET(Datum) START_PROCESSING_SUBSYSTEM_LIST(SSpowernets, Datum, powernets, "SSpowernets.powernets")
+#define STOP_PROCESSING_POWERNET(Datum) STOP_PROCESSING_SUBSYSTEM_LIST(SSpowernets, Datum, powernets, "SSpowernets.powernets")
+
+/// START/STOP specific to power-draining objects.
+#define START_PROCESSING_POWER_OBJECT(Datum) START_PROCESSING_SUBSYSTEM_LIST(SSpowernets, Datum, power_objects, "SSpowernets.power_objects")
+#define STOP_PROCESSING_POWER_OBJECT(Datum) STOP_PROCESSING_SUBSYSTEM_LIST(SSpowernets, Datum, power_objects, "SSpowernets.power_objects")
+
 /// START specific to SSmachines
 #define START_PROCESSING_MACHINE(machine, flag)\
 	if(!istype(machine, /obj/machinery)) CRASH("A non-machine [log_info_line(machine)] was queued to process on the machinery subsystem.");\

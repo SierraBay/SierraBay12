@@ -46,7 +46,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	for (var/datum/powernet/PN in SSmachines.powernets)
+	for (var/datum/powernet/PN in SSpowernets.powernets)
 		if (!PN.nodes || !length(PN.nodes))
 			if(PN.cables && (length(PN.cables) > 1))
 				var/obj/structure/cable/C = PN.cables[1]
