@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - bugfix: госты больше не взрывают мины
+delete-after: true

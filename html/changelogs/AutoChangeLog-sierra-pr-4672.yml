@@ -1,0 +1,4 @@
+author: ConstableGlist
+changes:
+  - bugfix: Исправлена некорректная обработка параметров в телеком-консолях.
+delete-after: true
