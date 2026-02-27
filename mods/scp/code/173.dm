@@ -8,7 +8,7 @@
 	status_flags = GODMODE
 	can_bleed = FALSE
 	see_in_dark = 8
-	ai_holder = /datum/ai_holder/simple_animal/passive
+	ai_holder = null
 	var/last_charge = 0
 	var/next_shit = 0
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
