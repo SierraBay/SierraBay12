@@ -467,15 +467,81 @@
 		return
 
 	if(!SSmachines.profiling_machinery)
+		if(SSmachines.machinery_profile_auto_stopped)
+			var/auto_report = SSmachines.report_machinery_hotspots()
+			show_browser(src, "<html><head><title>Machinery Profiling (Auto-Stopped)</title></head><body><b>Auto-stopped at [SSmachines.profiling_machinery_cycles] cycles (limit: [SSmachines.profiling_machinery_cycle_limit]).</b><br><br>[auto_report]</body></html>", "window=machinery_profiling;size=900x600")
+			SSmachines.machinery_profile_auto_stopped = FALSE
+			to_chat(src, SPAN_NOTICE("Показан отчёт автоостановленного machinery profiling. Запусти верб ещё раз для нового прогона."))
+			return
+		var/new_limit = input(src, "Автостоп после N циклов (0 = выключено):", "Machinery profiling auto-stop", SSmachines.profiling_machinery_cycle_limit) as num|null
+		if(isnull(new_limit))
+			return
+		SSmachines.profiling_machinery_cycle_limit = max(round(new_limit), 0)
 		SSmachines.reset_machinery_profiling()
 		SSmachines.profiling_machinery = TRUE
-		to_chat(src, SPAN_NOTICE("Machinery profiling started. Run this verb again to stop and view results."))
-		log_admin("[key_name(src)] started machinery processing profiling.")
+		to_chat(src, SPAN_NOTICE("Machinery profiling started. Current limit: [SSmachines.profiling_machinery_cycle_limit ? SSmachines.profiling_machinery_cycle_limit : "OFF"]. Run this verb again to stop and view results."))
+		log_admin("[key_name(src)] started machinery processing profiling (cycle limit: [SSmachines.profiling_machinery_cycle_limit]).")
 	else
 		SSmachines.profiling_machinery = FALSE
 		var/report = SSmachines.report_machinery_hotspots()
 		show_browser(src, "<html><head><title>Machinery Profiling</title></head><body>[report]</body></html>", "window=machinery_profiling;size=900x600")
-		log_admin("[key_name(src)] stopped machinery processing profiling ([SSmachines.profiling_machinery_cycles] cycles sampled).")
+		log_admin("[key_name(src)] stopped machinery processing profiling ([SSmachines.profiling_machinery_cycles] cycles sampled, limit: [SSmachines.profiling_machinery_cycle_limit]).")
+
+/client/proc/profile_air_alarm_processing()
+	set category = "Debug"
+	set name = "Profile Air Alarm Process"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!SSmachines.profiling_air_alarm_process)
+		if(SSmachines.air_alarm_profile_auto_stopped)
+			var/auto_report = SSmachines.report_air_alarm_process_profiling()
+			show_browser(src, "<html><head><title>Air Alarm Profiling (Auto-Stopped)</title></head><body><b>Auto-stopped at [SSmachines.alarm_process_profile_cycles] cycles (limit: [SSmachines.profiling_air_alarm_cycle_limit]).</b><br><br>[auto_report]</body></html>", "window=air_alarm_profiling;size=900x600")
+			SSmachines.air_alarm_profile_auto_stopped = FALSE
+			to_chat(src, SPAN_NOTICE("Показан отчёт автоостановленного air alarm profiling. Запусти верб ещё раз для нового прогона."))
+			return
+		var/new_limit = input(src, "Автостоп после N циклов (0 = выключено):", "Air alarm profiling auto-stop", SSmachines.profiling_air_alarm_cycle_limit) as num|null
+		if(isnull(new_limit))
+			return
+		SSmachines.profiling_air_alarm_cycle_limit = max(round(new_limit), 0)
+		SSmachines.reset_air_alarm_process_profiling()
+		SSmachines.profiling_air_alarm_process = TRUE
+		to_chat(src, SPAN_NOTICE("Air alarm micro-profiling started. Current limit: [SSmachines.profiling_air_alarm_cycle_limit ? SSmachines.profiling_air_alarm_cycle_limit : "OFF"]. Run this verb again to stop and view results."))
+		log_admin("[key_name(src)] started air alarm Process() micro-profiling (cycle limit: [SSmachines.profiling_air_alarm_cycle_limit]).")
+	else
+		SSmachines.profiling_air_alarm_process = FALSE
+		var/report = SSmachines.report_air_alarm_process_profiling()
+		show_browser(src, "<html><head><title>Air Alarm Profiling</title></head><body>[report]</body></html>", "window=air_alarm_profiling;size=900x600")
+		log_admin("[key_name(src)] stopped air alarm Process() micro-profiling ([SSmachines.alarm_process_profile_cycles] cycles sampled, limit: [SSmachines.profiling_air_alarm_cycle_limit]).")
+
+/client/proc/show_processing_profile_counters()
+	set category = "Debug"
+	set name = "Show Processing Profile Counters"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	to_chat(src, SPAN_NOTICE("Machinery profiling: [SSmachines.profiling_machinery ? "ON" : "OFF"], cycles=[SSmachines.profiling_machinery_cycles], limit=[SSmachines.profiling_machinery_cycle_limit ? SSmachines.profiling_machinery_cycle_limit : "OFF"], auto_stopped=[SSmachines.machinery_profile_auto_stopped ? "YES" : "NO"]"))
+	to_chat(src, SPAN_NOTICE("Air alarm profiling: [SSmachines.profiling_air_alarm_process ? "ON" : "OFF"], cycles=[SSmachines.alarm_process_profile_cycles], limit=[SSmachines.profiling_air_alarm_cycle_limit ? SSmachines.profiling_air_alarm_cycle_limit : "OFF"], auto_stopped=[SSmachines.air_alarm_profile_auto_stopped ? "YES" : "NO"]"))
+
+/client/proc/toggle_embedded_docking_event_optimization()
+	set category = "Debug"
+	set name = "Toggle Docking Event Optimization"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	SSmachines.optimize_embedded_docking_event = !SSmachines.optimize_embedded_docking_event
+	var/state = SSmachines.optimize_embedded_docking_event ? "ON" : "OFF"
+	var/refreshed = 0
+	for(var/obj/machinery/embedded_controller/controller as anything in SSmachines.get_machinery_of_type(/obj/machinery/embedded_controller))
+		if(!controller.optimize_event_processing)
+			continue
+		controller.refresh_processing_registration()
+		refreshed++
+	to_chat(src, SPAN_NOTICE("Docking embedded event optimization is now [state]."))
+	log_admin("[key_name(src)] set docking embedded event optimization to [state] ([refreshed] controllers refreshed).")
 
 /client/proc/show_machinery_distribution()
 	set category = "Debug"

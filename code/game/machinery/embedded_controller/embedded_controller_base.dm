@@ -6,12 +6,15 @@
 	var/on = 1
 	/// If TRUE, icon updates are emitted only when a compact state signature changes.
 	var/optimize_icon_tick = FALSE
+	/// If TRUE, controller can stop processing while idle and wake up on events.
+	var/optimize_event_processing = FALSE
 	var/tmp/last_icon_state_signature
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
 		program = new program(src)
-	return ..()
+	. = ..()
+	refresh_processing_registration()
 
 /obj/machinery/embedded_controller/Destroy()
 	if(istype(program))
@@ -26,6 +29,10 @@
 
 	if(program)
 		program.receive_signal(signal, receive_method, receive_param)
+		if(event_processing_optimization_enabled())
+			// Wake on explicit commands or when a signal moved us into an active state.
+			if(signal.data["command"] || controller_requires_active_processing())
+				START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 			//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
@@ -34,7 +41,10 @@
 	if(usr)
 		usr.set_machine(src)
 	if(program)
-		return program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		var/command_result = program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		if(event_processing_optimization_enabled() && command_result)
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return command_result
 
 /obj/machinery/embedded_controller/Process()
 	if(program)
@@ -47,6 +57,56 @@
 			update_icon()
 	else
 		update_icon()
+
+	if(event_processing_optimization_enabled() && !controller_requires_active_processing())
+		return PROCESS_KILL
+
+/obj/machinery/embedded_controller/proc/event_processing_optimization_enabled()
+	if(!optimize_event_processing)
+		return FALSE
+	var/datum/computer/file/embedded_program/docking/docking_program = program
+	if(istype(docking_program))
+		return SSmachines.optimize_embedded_docking_event
+	var/datum/computer/file/embedded_program/airlock/multi_docking/multi_docking_program = program
+	if(istype(multi_docking_program))
+		return SSmachines.optimize_embedded_docking_event
+	return TRUE
+
+/obj/machinery/embedded_controller/proc/controller_requires_active_processing()
+	if(!event_processing_optimization_enabled())
+		return TRUE
+	if(!on || !istype(program))
+		return FALSE
+
+	var/datum/computer/file/embedded_program/airlock/airlock_program = program
+	if(istype(airlock_program))
+		var/datum/computer/file/embedded_program/airlock/multi_docking/multi_docking_program = airlock_program
+		if(istype(multi_docking_program) && multi_docking_program.docking_enabled && !multi_docking_program.response_sent)
+			return TRUE
+		return !!airlock_program.memory["processing"]
+
+	var/datum/computer/file/embedded_program/docking/docking_program = program
+	if(istype(docking_program))
+		var/docking_status = docking_program.get_docking_status()
+		if(docking_status == "docking" || docking_status == "undocking")
+			return TRUE
+		var/datum/computer/file/embedded_program/docking/airlock/airlock_docking_program = docking_program
+		if(istype(airlock_docking_program))
+			airlock_program = airlock_docking_program.airlock_program
+			if(istype(airlock_program))
+				return !!airlock_program.memory["processing"]
+		return FALSE
+
+	return TRUE
+
+/obj/machinery/embedded_controller/proc/refresh_processing_registration()
+	if(!event_processing_optimization_enabled())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	if(controller_requires_active_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/embedded_controller/proc/get_icon_state_signature()
 	var/signature = 0

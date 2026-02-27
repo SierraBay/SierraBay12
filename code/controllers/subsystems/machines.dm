@@ -48,6 +48,23 @@ SUBSYSTEM_DEF(machines)
 	var/static/list/processing_profile_time_by_type = list()
 	var/static/list/processing_profile_count_by_type = list()
 	var/static/profiling_machinery_cycles = 0
+	/// Auto-stop machinery profiling when cycles sampled reaches this value. 0 disables auto-stop.
+	var/static/profiling_machinery_cycle_limit = 0
+	/// Set to TRUE when machinery profiling was auto-stopped at the cycle limit.
+	var/static/machinery_profile_auto_stopped = FALSE
+	var/static/profiling_air_alarm_process = FALSE
+	var/static/alarm_process_profile_cycles = 0
+	var/static/alarm_process_profile_total_calls = 0
+	var/static/alarm_process_profile_measured_calls = 0
+	var/static/alarm_process_profile_skipped_calls = 0
+	var/static/alarm_process_profile_bucket_env_math_ms = 0
+	var/static/alarm_process_profile_bucket_state_output_ms = 0
+	/// Auto-stop air alarm micro-profiling when cycles sampled reaches this value. 0 disables auto-stop.
+	var/static/profiling_air_alarm_cycle_limit = 0
+	/// Set to TRUE when air alarm profiling was auto-stopped at the cycle limit.
+	var/static/air_alarm_profile_auto_stopped = FALSE
+	/// Runtime fallback switch for event-driven processing of docking embedded controllers.
+	var/static/optimize_embedded_docking_event = TRUE
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -270,6 +287,14 @@ SUBSYSTEM_DEF(machines)
 			return
 	if(profiling_machinery)
 		profiling_machinery_cycles++
+		if(profiling_machinery_cycle_limit > 0 && profiling_machinery_cycles >= profiling_machinery_cycle_limit)
+			profiling_machinery = FALSE
+			machinery_profile_auto_stopped = TRUE
+	if(profiling_air_alarm_process)
+		alarm_process_profile_cycles++
+		if(profiling_air_alarm_cycle_limit > 0 && alarm_process_profile_cycles >= profiling_air_alarm_cycle_limit)
+			profiling_air_alarm_process = FALSE
+			air_alarm_profile_auto_stopped = TRUE
 	machinery_index = 0
 
 	// Lazy processing: process 1/processing_lazy_slice_n of processing_lazy per fire cycle.
@@ -309,6 +334,17 @@ SUBSYSTEM_DEF(machines)
 	processing_profile_time_by_type = list()
 	processing_profile_count_by_type = list()
 	profiling_machinery_cycles = 0
+	machinery_profile_auto_stopped = FALSE
+
+
+/datum/controller/subsystem/machines/proc/reset_air_alarm_process_profiling()
+	alarm_process_profile_cycles = 0
+	alarm_process_profile_total_calls = 0
+	alarm_process_profile_measured_calls = 0
+	alarm_process_profile_skipped_calls = 0
+	alarm_process_profile_bucket_env_math_ms = 0
+	alarm_process_profile_bucket_state_output_ms = 0
+	air_alarm_profile_auto_stopped = FALSE
 
 
 /datum/controller/subsystem/machines/proc/report_machinery_hotspots(top_n = 25)
@@ -353,6 +389,37 @@ SUBSYSTEM_DEF(machines)
 		lines += "<tr><td>[rank]</td><td>[best_path]</td><td>[round(best_ms, 0.01)]</td><td>[calls] ([avg_per_cycle]/cyc)</td><td>[avg_ms]</td><td>[share]%</td></tr>"
 
 	lines += "</table>"
+	return lines.Join("\n")
+
+
+/datum/controller/subsystem/machines/proc/report_air_alarm_process_profiling()
+	var/total_calls = alarm_process_profile_total_calls
+	if(!total_calls)
+		return "No air alarm profiling data collected."
+
+	var/measured_calls = alarm_process_profile_measured_calls
+	var/skipped_calls = alarm_process_profile_skipped_calls
+	var/bucket_a_ms = alarm_process_profile_bucket_env_math_ms
+	var/bucket_b_ms = alarm_process_profile_bucket_state_output_ms
+	var/total_measured_ms = bucket_a_ms + bucket_b_ms
+	var/avg_bucket_a_ms = measured_calls ? round(bucket_a_ms / measured_calls, 0.001) : 0
+	var/avg_bucket_b_ms = measured_calls ? round(bucket_b_ms / measured_calls, 0.001) : 0
+	var/avg_total_ms = measured_calls ? round(total_measured_ms / measured_calls, 0.001) : 0
+	var/share_bucket_a = total_measured_ms ? round((bucket_a_ms / total_measured_ms) * 100, 0.1) : 0
+	var/share_bucket_b = total_measured_ms ? round((bucket_b_ms / total_measured_ms) * 100, 0.1) : 0
+	var/calls_per_cycle = alarm_process_profile_cycles ? round(total_calls / alarm_process_profile_cycles, 0.1) : total_calls
+	var/measured_per_cycle = alarm_process_profile_cycles ? round(measured_calls / alarm_process_profile_cycles, 0.1) : measured_calls
+
+	var/list/lines = list()
+	lines += "<h3>Air Alarm Process Micro-Profiling</h3>"
+	lines += "<b>Cycles sampled:</b> [alarm_process_profile_cycles] | <b>Total calls:</b> [total_calls] ([calls_per_cycle]/cyc) | <b>Measured calls:</b> [measured_calls] ([measured_per_cycle]/cyc) | <b>Skipped calls:</b> [skipped_calls]<br>"
+	lines += "<b>Total measured time:</b> [round(total_measured_ms, 0.01)]ms | <b>Average measured per call:</b> [avg_total_ms]ms<br>"
+	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
+	lines += "<tr><th>Bucket</th><th>Description</th><th>Total (ms)</th><th>Avg (ms/call)</th><th>Share</th></tr>"
+	lines += "<tr><td>A</td><td>Environment read + gas math</td><td>[round(bucket_a_ms, 0.01)]</td><td>[avg_bucket_a_ms]</td><td>[share_bucket_a]%</td></tr>"
+	lines += "<tr><td>B</td><td>State eval + output/actions</td><td>[round(bucket_b_ms, 0.01)]</td><td>[avg_bucket_b_ms]</td><td>[share_bucket_b]%</td></tr>"
+	lines += "</table>"
+	lines += "<small>Skipped calls are early exits before a simulated turf/environment was available.</small>"
 	return lines.Join("\n")
 
 

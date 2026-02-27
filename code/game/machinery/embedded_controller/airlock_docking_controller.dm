@@ -3,6 +3,7 @@
 	name = "docking port controller"
 	program = /datum/computer/file/embedded_program/docking/airlock
 	optimize_icon_tick = TRUE
+	optimize_event_processing = TRUE
 	var/display_name			//how would it show up on docking monitoring program, area name + coordinates if unset
 	tag_secure = 1
 

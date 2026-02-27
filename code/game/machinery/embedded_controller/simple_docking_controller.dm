@@ -2,6 +2,7 @@
 /obj/machinery/embedded_controller/radio/simple_docking_controller
 	name = "docking hatch controller"
 	program = /datum/computer/file/embedded_program/docking/simple
+	optimize_event_processing = TRUE
 	var/tag_door
 
 /obj/machinery/embedded_controller/radio/simple_docking_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
