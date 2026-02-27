@@ -54,6 +54,7 @@
 		M.Animalize()
 
 
+
 /client/proc/makepAI(turf/T in SSmobs.mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
@@ -436,6 +437,7 @@
 /client/var/power_shadow_dashboard_live_interval_ds = 20
 /client/var/power_shadow_dashboard_view_mode = "All networks"
 /client/var/power_shadow_dashboard_top_n = 120
+/client/var/power_shadow_advanced_verbs_enabled = FALSE
 /client/proc/visualpower()
 	set category = "Debug"
 	set name = "Visualize Powernets"
@@ -583,8 +585,24 @@
 	to_chat(src, SPAN_NOTICE("Power shadow solver [new_state ? "enabled" : "disabled"] for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""]."))
 	log_and_message_admins("[key_name(src)] [new_state ? "enabled" : "disabled"] power shadow solver for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""].")
 
+/client/proc/toggle_power_shadow_advanced_verbs()
+	set category = "Power Shadow"
+	set name = "Toggle Advanced Verbs"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	power_shadow_advanced_verbs_enabled = !power_shadow_advanced_verbs_enabled
+	if(power_shadow_advanced_verbs_enabled)
+		verbs += admin_verbs_power_shadow_advanced
+	else
+		verbs -= admin_verbs_power_shadow_advanced
+
+	to_chat(src, SPAN_NOTICE("Power Shadow advanced tab [power_shadow_advanced_verbs_enabled ? "enabled" : "disabled"]."))
+	log_admin("[key_name(src)] [power_shadow_advanced_verbs_enabled ? "enabled" : "disabled"] Power Shadow advanced verbs tab.")
+
 /client/proc/power_shadow_solver_threshold()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Set Power Shadow Threshold"
 
 	if(!check_rights(R_DEBUG))
@@ -604,7 +622,7 @@
 	log_and_message_admins("[key_name(src)] set power shadow solver mismatch threshold to [threshold]W for [updated] powernets.")
 
 /client/proc/power_shadow_solver_backend()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Set Power Shadow Backend"
 
 	if(!check_rights(R_DEBUG))
@@ -623,83 +641,175 @@
 	to_chat(src, SPAN_NOTICE("Set power shadow backend to [choice] for [updated] powernets."))
 	log_and_message_admins("[key_name(src)] set power shadow backend to [choice] for [updated] powernets.")
 
-/client/proc/power_shadow_solver_reset_stats()
-	set category = "Debug"
-	set name = "Reset Power Shadow Stats"
+/client/proc/power_shadow_solver_native_toggle()
+	set category = "Power Shadow Advanced"
+	set name = "Toggle Power Shadow Native"
 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
-		PN.reset_shadow_solver_stats()
-		updated++
-
-	to_chat(src, SPAN_NOTICE("Reset power shadow statistics for [updated] powernets."))
-	log_and_message_admins("[key_name(src)] reset power shadow statistics for [updated] powernets.")
-
-/client/proc/power_shadow_solver_write_toggle()
-	set category = "Debug"
-	set name = "Toggle Power Shadow Write"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	var/enable = alert(src, "Enable solver write-path pilot for all current powernets?", "Power Shadow Solver", "Enable", "Disable", "Cancel")
-	if(enable == "Cancel")
+	var/enable = alert(src, "Enable native rust-g shadow solver path on all current powernets?", "Power Shadow Solver", "Enable", "Disable", "Cancel")
+	if(!enable || enable == "Cancel")
 		return
 
 	var/new_state = (enable == "Enable")
 	var/updated = 0
-	var/locked = 0
 	for(var/datum/powernet/PN in SSmachines.powernets)
-		if(PN.shadow_solver_force_fea_only && !new_state)
-			locked++
-			continue
-		PN.shadow_solver_write_enabled = new_state
-		if(!new_state)
-			PN.set_shadow_solver_write_mode("legacy")
+		PN.shadow_solver_native_enabled = new_state
 		updated++
 
-	to_chat(src, SPAN_NOTICE("Power shadow write-path [new_state ? "enabled" : "disabled"] for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""]."))
-	log_and_message_admins("[key_name(src)] [new_state ? "enabled" : "disabled"] power shadow write-path for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""].")
+	to_chat(src, SPAN_NOTICE("Power shadow native path [new_state ? "enabled" : "disabled"] for [updated] powernets."))
+	log_and_message_admins("[key_name(src)] [new_state ? "enabled" : "disabled"] power shadow native path for [updated] powernets.")
 
-/client/proc/power_shadow_solver_write_mode()
-	set category = "Debug"
-	set name = "Set Power Shadow Write Mode"
+/client/proc/power_shadow_solver_benchmark()
+	set category = "Power Shadow"
+	set name = "Benchmark Power Shadow Solver"
 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/choice = input(src, "Select write-path mode for all current powernets.", "Power Shadow Solver") in list("FEA Only", "Legacy", "Pilot SMES Input", "Pilot APC Advisory", "Pilot APC Enforced")
-	if(!choice)
+	var/iterations = input(src, "Iterations per powernet for each mode.", "Power Shadow Benchmark", 100) as num|null
+	if(isnull(iterations))
+		return
+	iterations = max(round(iterations), 1)
+
+	var/list/targets = list()
+	for(var/datum/powernet/PN in SSmachines.powernets)
+		if(!PN.shadow_solver_enabled)
+			continue
+		targets += PN
+
+	if(!length(targets))
+		to_chat(src, SPAN_WARNING("No enabled powernets found for benchmark."))
 		return
 
-	var/mode = "legacy"
-	if(choice == "FEA Only")
-		mode = "fea_only"
-	else if(choice == "Pilot SMES Input")
-		mode = "pilot_smes_input"
-	else if(choice == "Pilot APC Advisory")
-		mode = "pilot_apc_advisory"
-	else if(choice == "Pilot APC Enforced")
-		mode = "pilot_apc_enforced"
-	var/updated = 0
-	var/locked = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
-		if(PN.shadow_solver_force_fea_only && mode != "fea_only")
-			locked++
+	var/list/original_native_flags = list()
+	var/list/solvers = list()
+	var/list/prebuilt_native_payload_json = list()
+	var/original_autogate_enabled = SSmachines.power_shadow_native_autogate_enabled
+	SSmachines.power_shadow_native_autogate_enabled = FALSE
+	for(var/datum/powernet/PN in targets)
+		original_native_flags[PN] = PN.shadow_solver_native_enabled
+		var/datum/power_solver/solver = PN.ensure_shadow_solver()
+		if(!istype(solver))
 			continue
-		PN.set_shadow_solver_write_mode(mode)
-		if(mode != "legacy")
-			PN.shadow_solver_write_enabled = TRUE
-		updated++
+		solvers[PN] = solver
+		var/list/native_payload = PN.shadow_solver_native_compact_supported ? PN.build_shadow_solver_native_payload_compact(solver) : PN.build_shadow_solver_native_payload(solver)
+		if(!islist(native_payload))
+			continue
+		var/payload_json = json_encode(native_payload)
+		if(istext(payload_json) && length(payload_json))
+			prebuilt_native_payload_json[PN] = payload_json
 
-	to_chat(src, SPAN_NOTICE("Set power shadow write mode to [choice] for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""]."))
-	log_and_message_admins("[key_name(src)] set power shadow write mode to [choice] for [updated] powernets[locked ? " ([locked] locked in FEA-only)" : ""].")
+	var/core_dm_samples = 0
+	var/core_native_samples = 0
+	var/e2e_dm_samples = 0
+	var/e2e_native_samples = 0
+	var/e2e_native_batch_samples = 0
+
+	var/timer_dm_core = "power_shadow_bench_dm_core_[ckey]_[(world.timeofday % 864000)]"
+	rustg_time_reset(timer_dm_core)
+	for(var/datum/powernet/PN in targets)
+		var/datum/power_solver/solver = solvers[PN]
+		if(!istype(solver))
+			continue
+		for(var/i = 1 to iterations)
+			var/list/snapshot
+			if(istype(solver, /datum/power_solver/shadow_fea))
+				var/datum/power_solver/shadow_fea/shadow_solver = solver
+				snapshot = shadow_solver.solve_shadow_fea(PN)
+			else if(istype(solver, /datum/power_solver/strict_capacity_flow))
+				var/datum/power_solver/strict_capacity_flow/strict_solver = solver
+				snapshot = strict_solver.solve_strict_capacity_flow(PN)
+			if(islist(snapshot))
+				core_dm_samples++
+	var/core_dm_total_us = max(rustg_time_microseconds(timer_dm_core), 0)
+
+	var/timer_native_core = "power_shadow_bench_native_core_[ckey]_[(world.timeofday % 864000)]"
+	rustg_time_reset(timer_native_core)
+	for(var/datum/powernet/PN in targets)
+		var/payload_json = prebuilt_native_payload_json[PN]
+		if(!istext(payload_json) || !length(payload_json))
+			continue
+		for(var/i = 1 to iterations)
+			var/raw = rustg_power_shadow_solve(payload_json)
+			if(istext(raw) && length(raw))
+				core_native_samples++
+	var/core_native_total_us = max(rustg_time_microseconds(timer_native_core), 0)
+
+	var/timer_dm_e2e = "power_shadow_bench_dm_e2e_[ckey]_[(world.timeofday % 864000)]"
+	rustg_time_reset(timer_dm_e2e)
+	for(var/datum/powernet/PN in targets)
+		var/datum/power_solver/solver = solvers[PN]
+		if(!istype(solver))
+			continue
+		PN.shadow_solver_native_enabled = FALSE
+		for(var/i = 1 to iterations)
+			var/list/snapshot = PN.get_shadow_solver_snapshot(solver)
+			if(islist(snapshot))
+				e2e_dm_samples++
+	var/e2e_dm_total_us = max(rustg_time_microseconds(timer_dm_e2e), 0)
+
+	var/timer_native_e2e = "power_shadow_bench_native_e2e_[ckey]_[(world.timeofday % 864000)]"
+	for(var/datum/powernet/PN in targets)
+		PN.reset_shadow_solver_native_perf()
+	rustg_time_reset(timer_native_e2e)
+	for(var/datum/powernet/PN in targets)
+		var/datum/power_solver/solver = solvers[PN]
+		if(!istype(solver))
+			continue
+		PN.shadow_solver_native_enabled = TRUE
+		for(var/i = 1 to iterations)
+			var/list/snapshot = PN.get_shadow_solver_snapshot(solver, TRUE)
+			if(islist(snapshot))
+				e2e_native_samples++
+	var/e2e_native_total_us = max(rustg_time_microseconds(timer_native_e2e), 0)
+
+	var/timer_native_e2e_batch = "power_shadow_bench_native_e2e_batch_[ckey]_[(world.timeofday % 864000)]"
+	for(var/datum/powernet/PN in targets)
+		PN.shadow_solver_native_enabled = TRUE
+	rustg_time_reset(timer_native_e2e_batch)
+	for(var/i = 1 to iterations)
+		var/list/batch_snapshots = SSmachines.power_shadow_native_solve_batch(targets)
+		if(islist(batch_snapshots))
+			e2e_native_batch_samples += length(batch_snapshots)
+	var/e2e_native_batch_total_us = max(rustg_time_microseconds(timer_native_e2e_batch), 0)
+
+	for(var/datum/powernet/PN in targets)
+		PN.shadow_solver_native_enabled = original_native_flags[PN]
+	SSmachines.power_shadow_native_autogate_enabled = original_autogate_enabled
+
+	var/core_dm_avg_us = core_dm_samples ? round(core_dm_total_us / core_dm_samples, 0.001) : 0
+	var/core_native_avg_us = core_native_samples ? round(core_native_total_us / core_native_samples, 0.001) : 0
+	var/e2e_dm_avg_us = e2e_dm_samples ? round(e2e_dm_total_us / e2e_dm_samples, 0.001) : 0
+	var/e2e_native_avg_us = e2e_native_samples ? round(e2e_native_total_us / e2e_native_samples, 0.001) : 0
+	var/e2e_native_batch_avg_us = e2e_native_batch_samples ? round(e2e_native_batch_total_us / e2e_native_batch_samples, 0.001) : 0
+	var/core_speedup = (core_native_avg_us > 0) ? round(core_dm_avg_us / core_native_avg_us, 0.01) : 0
+	var/e2e_speedup = (e2e_native_avg_us > 0) ? round(e2e_dm_avg_us / e2e_native_avg_us, 0.01) : 0
+	var/e2e_batch_speedup = (e2e_native_batch_avg_us > 0) ? round(e2e_dm_avg_us / e2e_native_batch_avg_us, 0.01) : 0
+
+	var/native_phase_samples = 0
+	var/native_build_us_sum = 0
+	var/native_encode_us_sum = 0
+	var/native_call_us_sum = 0
+	var/native_decode_us_sum = 0
+	for(var/datum/powernet/PN in targets)
+		native_phase_samples += max(PN.shadow_solver_native_perf_samples, 0)
+		native_build_us_sum += max(PN.shadow_solver_native_perf_build_us_sum, 0)
+		native_encode_us_sum += max(PN.shadow_solver_native_perf_encode_us_sum, 0)
+		native_call_us_sum += max(PN.shadow_solver_native_perf_call_us_sum, 0)
+		native_decode_us_sum += max(PN.shadow_solver_native_perf_decode_us_sum, 0)
+
+	var/native_build_avg_us = native_phase_samples ? round(native_build_us_sum / native_phase_samples, 0.001) : 0
+	var/native_encode_avg_us = native_phase_samples ? round(native_encode_us_sum / native_phase_samples, 0.001) : 0
+	var/native_call_avg_us = native_phase_samples ? round(native_call_us_sum / native_phase_samples, 0.001) : 0
+	var/native_decode_avg_us = native_phase_samples ? round(native_decode_us_sum / native_phase_samples, 0.001) : 0
+
+	to_chat(src, SPAN_NOTICE("Power shadow benchmark complete: Core DM=[core_dm_total_us] us total, avg [core_dm_avg_us] us, samples=[core_dm_samples]; Core Native=[core_native_total_us] us total, avg [core_native_avg_us] us, samples=[core_native_samples][core_speedup ? ", speedup x[core_speedup]" : ""]; E2E DM=[e2e_dm_total_us] us total, avg [e2e_dm_avg_us] us, samples=[e2e_dm_samples]; E2E Native(single)=[e2e_native_total_us] us total, avg [e2e_native_avg_us] us, samples=[e2e_native_samples][e2e_speedup ? ", speedup x[e2e_speedup]" : ""]; E2E Native(batch)=[e2e_native_batch_total_us] us total, avg [e2e_native_batch_avg_us] us, samples=[e2e_native_batch_samples][e2e_batch_speedup ? ", speedup x[e2e_batch_speedup]" : ""]; Native phases avg(us): build=[native_build_avg_us], encode=[native_encode_avg_us], call=[native_call_avg_us], decode=[native_decode_avg_us], profiled_samples=[native_phase_samples]."))
+	log_and_message_admins("[key_name(src)] ran power shadow benchmark: iterations=[iterations], networks=[length(targets)], autogate_disabled_during_benchmark=TRUE, core_dm_total_us=[core_dm_total_us], core_dm_avg_us=[core_dm_avg_us], core_dm_samples=[core_dm_samples], core_native_total_us=[core_native_total_us], core_native_avg_us=[core_native_avg_us], core_native_samples=[core_native_samples], core_speedup=[core_speedup], e2e_dm_total_us=[e2e_dm_total_us], e2e_dm_avg_us=[e2e_dm_avg_us], e2e_dm_samples=[e2e_dm_samples], e2e_native_total_us=[e2e_native_total_us], e2e_native_avg_us=[e2e_native_avg_us], e2e_native_samples=[e2e_native_samples], e2e_speedup=[e2e_speedup], e2e_native_batch_total_us=[e2e_native_batch_total_us], e2e_native_batch_avg_us=[e2e_native_batch_avg_us], e2e_native_batch_samples=[e2e_native_batch_samples], e2e_batch_speedup=[e2e_batch_speedup], native_phase_samples=[native_phase_samples], native_build_avg_us=[native_build_avg_us], native_encode_avg_us=[native_encode_avg_us], native_call_avg_us=[native_call_avg_us], native_decode_avg_us=[native_decode_avg_us].")
 
 /client/proc/power_shadow_solver_guard_settings()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Set Power Shadow Guard"
 
 	if(!check_rights(R_DEBUG))
@@ -725,7 +835,7 @@
 	log_and_message_admins("[key_name(src)] set shadow guard threshold=[threshold], cooldown=[cooldown] for [updated] powernets.")
 
 /client/proc/power_shadow_solver_guard_threshold_override()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Set Power Guard Threshold"
 
 	if(!check_rights(R_DEBUG))
@@ -745,7 +855,7 @@
 	log_and_message_admins("[key_name(src)] set guard mismatch threshold override to [override_threshold]W for [updated] powernets.")
 
 /client/proc/power_shadow_solver_acceptance_settings()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Set Power Acceptance"
 
 	if(!check_rights(R_DEBUG))
@@ -785,23 +895,8 @@
 	to_chat(src, SPAN_NOTICE("Updated acceptance criteria for [updated] powernets."))
 	log_and_message_admins("[key_name(src)] updated shadow acceptance criteria for [updated] powernets.")
 
-/client/proc/power_shadow_solver_guard_reset()
-	set category = "Debug"
-	set name = "Reset Power Shadow Guard"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
-		PN.reset_shadow_solver_guard_state()
-		updated++
-
-	to_chat(src, SPAN_NOTICE("Reset shadow guard state for [updated] powernets."))
-	log_and_message_admins("[key_name(src)] reset shadow guard state for [updated] powernets.")
-
 /client/proc/power_shadow_solver_export_report()
-	set category = "Debug"
+	set category = "Power Shadow"
 	set name = "Export Power Shadow Report"
 
 	if(!check_rights(R_DEBUG))
@@ -846,7 +941,7 @@
 	log_and_message_admins("[key_name(src)] exported power shadow report (networks=[networks], mismatch=[report_mismatch]%, pass=[pass_rate]%, rollbacks=[rollbacks]).")
 
 /client/proc/power_shadow_solver_auto_repair()
-	set category = "Debug"
+	set category = "Power Shadow"
 	set name = "Auto Repair Powernets"
 
 	if(!check_rights(R_DEBUG))
@@ -884,38 +979,63 @@
 	to_chat(src, SPAN_NOTICE("Auto Repair complete. Retuned [retuned] networks, backend fallback on [backend_switched], rebuilt [rebuilt]. Suspected refs (first 10): [english_list(problem_refs)]."))
 	log_and_message_admins("[key_name(src)] ran auto powernet repair: anomalies=[problem_count]/[networks], retuned=[retuned], backend_switched=[backend_switched], rebuilt=[rebuilt], thresholds delta=[delta_threshold]W unserved=[unserved_threshold]W.")
 
-/client/proc/power_shadow_dashboard_bar(value, max_value)
-	var/safe_max = max(max_value, 1)
-	var/ratio = clamp(value / safe_max, 0, 1)
-	var/width_px = max(round(ratio * 120), 1)
-	var/bar_color = "#4caf50"
-	if(ratio >= 0.8)
-		bar_color = "#f44336"
-	else if(ratio >= 0.5)
-		bar_color = "#ff9800"
-	return "<div style='width:120px;height:8px;background:#2a2a2a;border:1px solid #3a3a3a;'><div style='height:8px;width:[width_px]px;background:[bar_color];'></div></div>"
-
-
 /client/proc/power_shadow_solver_dashboard_live_loop()
 	set waitfor = FALSE
 
 	while(power_shadow_dashboard_live_enabled)
-		power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, TRUE)
+		// Update the already opened dashboard UI in place; do not force-open a new window each tick.
+		power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, TRUE, FALSE)
 		sleep(max(power_shadow_dashboard_live_interval_ds, 5))
 
-/client/proc/power_shadow_solver_dashboard_stop_live()
-	set category = "Debug"
-	set name = "Stop Power Shadow Live"
-
+/client/proc/power_shadow_solver_dashboard_topic(list/href_list)
+	if(!islist(href_list))
+		return FALSE
+	var/action = href_list["power_shadow_dash_action"]
+	if(!action)
+		return FALSE
 	if(!check_rights(R_DEBUG))
-		return
+		return TRUE
 
-	power_shadow_dashboard_live_enabled = FALSE
-	power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, FALSE)
-	to_chat(src, SPAN_NOTICE("Power Shadow live dashboard disabled."))
+	switch(action)
+		if("refresh")
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("toggle_live")
+			var/need_spawn = !power_shadow_dashboard_live_enabled
+			power_shadow_dashboard_live_enabled = !power_shadow_dashboard_live_enabled
+			if(power_shadow_dashboard_live_enabled && need_spawn)
+				power_shadow_solver_dashboard_live_loop()
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("view_all")
+			power_shadow_dashboard_view_mode = "All networks"
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("view_problematic")
+			power_shadow_dashboard_view_mode = "Problematic only"
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("top_dec")
+			power_shadow_dashboard_top_n = max(power_shadow_dashboard_top_n - 20, 20)
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("top_inc")
+			power_shadow_dashboard_top_n = min(power_shadow_dashboard_top_n + 20, 500)
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("interval_dec")
+			power_shadow_dashboard_live_interval_ds = max(power_shadow_dashboard_live_interval_ds - 10, 10)
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("interval_inc")
+			power_shadow_dashboard_live_interval_ds = min(power_shadow_dashboard_live_interval_ds + 10, 300)
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+
+	return TRUE
 
 /client/proc/power_shadow_solver_dashboard()
-	set category = "Debug"
+	set category = "Power Shadow"
 	set name = "Power Shadow Dashboard"
 
 	if(!check_rights(R_DEBUG))
@@ -949,9 +1069,9 @@
 	else
 		power_shadow_dashboard_live_enabled = FALSE
 
-	power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled)
+	power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, TRUE)
 
-/client/proc/power_shadow_solver_dashboard_render(view_mode = "All networks", top_n = 120, live_mode = FALSE)
+/client/proc/power_shadow_solver_dashboard_render(view_mode = "All networks", top_n = 120, live_mode = FALSE, force_open = TRUE)
 	var/problem_only = (view_mode == "Problematic only")
 
 	var/networks = 0
@@ -1177,14 +1297,14 @@
 	if(!user)
 		return
 
-	var/datum/nanoui/ui = SSnano.try_update_ui(user, src, "power_shadow_dashboard", null, data, 1)
-	if(!ui)
+	var/datum/nanoui/ui = SSnano.try_update_ui(user, src, "power_shadow_dashboard", null, data, force_open)
+	if(!ui && force_open)
 		ui = new(user, src, "power_shadow_dashboard", "power_shadow_dashboard.tmpl", "Power Shadow Dashboard", 1500, 760)
 		ui.set_initial_data(data)
 		ui.open()
 
 /client/proc/power_shadow_solver_visualize()
-	set category = "Debug"
+	set category = "Power Shadow"
 	set name = "Visualize Powernets (Shadow Delta)"
 
 	if(!check_rights(R_DEBUG))

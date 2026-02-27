@@ -104,11 +104,13 @@ _Updated: 2026-02-23 (handoff refresh)_
 
 ## Quick operator notes
 
+- Admin runbook:
+  - `docs/power_shadow_admin_guide.md`
 - If new debug verbs are not visible:
   - verify admin has `R_DEBUG`,
   - refresh admin verbs / relog to reload verb table.
 - For dashboard live mode issues:
-  - use `Stop Power Shadow Live` to terminate refresh loop before reopening with new interval.
+  - use in-window `Live ON/OFF` and interval controls in the dashboard header.
 - Current expected baseline for stability:
   - dashboard opens without runtime errors,
   - sorting by Delta works,

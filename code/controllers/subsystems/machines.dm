@@ -70,6 +70,19 @@ SUBSYSTEM_DEF(machines)
 	var/static/powernet_last_skipped_null = 0
 	var/static/powernet_last_removed_qdeleted = 0
 	var/static/powernet_next_anomaly_log_time = 0
+	var/static/power_shadow_native_autogate_enabled = TRUE
+	var/static/power_shadow_native_autogate_probe_interval = 100
+	var/static/power_shadow_native_autogate_loss_streak = 0
+	var/static/power_shadow_native_autogate_trip_threshold = 5
+	var/static/power_shadow_native_autogate_cooldown_ticks = 1200
+	var/static/power_shadow_native_autogate_suspended_until = 0
+	var/static/power_shadow_native_autogate_next_probe_tick = 0
+	var/static/power_shadow_native_autogate_last_probe_dm_us = 0
+	var/static/power_shadow_native_autogate_last_probe_batch_us = 0
+	var/static/profiling_machinery = FALSE
+	var/static/list/processing_profile_time_by_type = list()
+	var/static/list/processing_profile_count_by_type = list()
+	var/static/profiling_machinery_cycles = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -182,6 +195,12 @@ SUBSYSTEM_DEF(machines)
 	for(var/datum/powernet/powernet as anything in powernets)
 		qdel(powernet)
 	powernets.Cut()
+	power_shadow_native_autogate_loss_streak = 0
+	power_shadow_native_autogate_suspended_until = 0
+	power_shadow_native_autogate_next_probe_tick = world.time + max(power_shadow_native_autogate_probe_interval, 1)
+	power_shadow_native_autogate_last_probe_dm_us = 0
+	power_shadow_native_autogate_last_probe_batch_us = 0
+	rustg_power_shadow_stateful_reset()
 	setup_powernets_for_cables(GLOB.cable_list)
 
 
@@ -212,6 +231,12 @@ SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
+	var/autogate_state = "off"
+	if(power_shadow_native_autogate_enabled)
+		if(world.time < power_shadow_native_autogate_suspended_until)
+			autogate_state = "cooldown [power_shadow_native_autogate_suspended_until - world.time]"
+		else
+			autogate_state = "armed"
 	..({"\
 		Queues: \
 		Pipes [length(pipenets)] \
@@ -229,6 +254,10 @@ SUBSYSTEM_DEF(machines)
 		Done [powernet_last_processed] \
 		Null [powernet_last_skipped_null] \
 		QDel [powernet_last_removed_qdeleted]\n\
+		NativeGate [autogate_state] \
+		Loss [power_shadow_native_autogate_loss_streak] \
+		ProbeDM [round(power_shadow_native_autogate_last_probe_dm_us, 0.1)] \
+		ProbeBatch [round(power_shadow_native_autogate_last_probe_batch_us, 0.1)]\n\
 		Overall [Roundm(cost ? length(processing) / cost : 0, 0.1)]
 	"})
 
@@ -487,19 +516,298 @@ SUBSYSTEM_DEF(machines)
 	return lines.Join("\n")
 
 
+/datum/controller/subsystem/machines/proc/reset_machinery_profiling()
+	processing_profile_time_by_type = list()
+	processing_profile_count_by_type = list()
+	profiling_machinery_cycles = 0
+
+
+/datum/controller/subsystem/machines/proc/report_machinery_hotspots(top_n = 25)
+	if(!length(processing_profile_time_by_type))
+		return "No profiling data collected."
+
+	top_n = max(round(top_n), 1)
+	var/total_ms = 0
+	for(var/path in processing_profile_time_by_type)
+		total_ms += processing_profile_time_by_type[path]
+	if(total_ms <= 0)
+		return "No measurable processing time recorded."
+
+	var/list/time_left = processing_profile_time_by_type.Copy()
+	var/list/lines = list()
+	lines += "<h3>Machinery Processing Hotspots</h3>"
+	lines += "<b>Cycles sampled:</b> [profiling_machinery_cycles] | <b>Total measured time:</b> [round(total_ms, 0.01)]ms | <b>Processing list size:</b> [length(processing)]<br>"
+	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
+	lines += "<tr><th>#</th><th>Type</th><th>Total (ms)</th><th>Calls</th><th>Avg (ms)</th><th>Share</th></tr>"
+	var/rank = 0
+	while(rank < top_n && length(time_left))
+		var/best_path = null
+		var/best_ms = -1
+		for(var/path in time_left)
+			var/path_ms = time_left[path]
+			if(path_ms > best_ms)
+				best_ms = path_ms
+				best_path = path
+
+		if(isnull(best_path))
+			break
+
+		time_left.Remove(best_path)
+		if(best_ms <= 0)
+			continue
+
+		rank++
+		var/calls = processing_profile_count_by_type[best_path] || 0
+		var/avg_ms = calls ? round(best_ms / calls, 0.001) : 0
+		var/share = round((best_ms / total_ms) * 100, 0.1)
+		var/avg_per_cycle = profiling_machinery_cycles ? round(calls / profiling_machinery_cycles, 0.1) : calls
+		lines += "<tr><td>[rank]</td><td>[best_path]</td><td>[round(best_ms, 0.01)]</td><td>[calls] ([avg_per_cycle]/cyc)</td><td>[avg_ms]</td><td>[share]%</td></tr>"
+
+	lines += "</table>"
+	return lines.Join("\n")
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_native_autogate_is_suspended()
+	if(!power_shadow_native_autogate_enabled)
+		return FALSE
+	return world.time < power_shadow_native_autogate_suspended_until
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch_stateful(list/batch_targets, list/batch_dynamic_payload)
+	var/static/native_stateful_supported = TRUE
+	var/static/native_stateful_failure_streak = 0
+	if(!native_stateful_supported || !islist(batch_targets) || !length(batch_targets))
+		return null
+	if(!islist(batch_dynamic_payload) || length(batch_dynamic_payload) != length(batch_targets))
+		return null
+
+	var/list/register_payload = list()
+	var/index = 1
+	for(var/datum/powernet/PN in batch_targets)
+		var/datum/power_solver/solver = PN.ensure_shadow_solver()
+		if(!istype(solver))
+			index++
+			continue
+		if(PN.shadow_solver_native_stateful_registered_revision != PN.shadow_solver_native_topology_revision)
+			var/list/register_item = PN.build_shadow_solver_native_stateful_register_payload(solver)
+			if(islist(register_item))
+				register_payload += list(register_item)
+		index++
+
+	var/list/stateful_payload = list(
+		"register" = register_payload,
+		"solve" = batch_dynamic_payload
+	)
+	var/payload_json = json_encode(stateful_payload)
+	if(!istext(payload_json) || !length(payload_json))
+		return null
+
+	var/raw = rustg_power_shadow_stateful_apply(payload_json)
+	if(!istext(raw) || !length(raw))
+		native_stateful_failure_streak++
+		if(native_stateful_failure_streak >= 5)
+			native_stateful_supported = FALSE
+			log_debug("Power shadow native stateful batch disabled after repeated failures.")
+		return null
+
+	var/list/decoded = json_decode(raw)
+	if(islist(decoded) && islist(decoded["results"]))
+		decoded = decoded["results"]
+	if(!islist(decoded))
+		native_stateful_failure_streak++
+		if(findtext(raw, "power_shadow_stateful_apply") || findtext(raw, "not found"))
+			native_stateful_supported = FALSE
+			log_debug("Power shadow native stateful batch disabled: rust-g power_shadow_stateful_apply is unavailable.")
+		else if(native_stateful_failure_streak >= 5)
+			native_stateful_supported = FALSE
+			log_debug("Power shadow native stateful batch disabled after repeated decode failures.")
+		return null
+
+	native_stateful_failure_streak = 0
+	var/list/snapshot_by_network = list()
+	index = 1
+	for(var/datum/powernet/PN in batch_targets)
+		if(index > length(decoded))
+			break
+		var/list/snapshot = PN.decode_shadow_solver_native_snapshot(decoded[index])
+		if(islist(snapshot))
+			snapshot_by_network[PN] = snapshot
+			PN.shadow_solver_native_stateful_registered_revision = PN.shadow_solver_native_topology_revision
+		index++
+
+	return snapshot_by_network
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch(list/powernets_snapshot)
+	var/static/native_many_supported = TRUE
+	var/static/native_many_failure_streak = 0
+	if(!islist(powernets_snapshot) || !length(powernets_snapshot))
+		return null
+
+	var/list/batch_targets = list()
+	var/list/batch_payload = list()
+	var/list/batch_dynamic_payload = list()
+	for(var/datum/powernet/PN in powernets_snapshot)
+		if(!PN || QDELETED(PN))
+			continue
+		if(!PN.shadow_solver_enabled || !PN.shadow_solver_native_enabled)
+			continue
+		var/datum/power_solver/solver = PN.ensure_shadow_solver()
+		if(!istype(solver))
+			continue
+		var/list/dynamic_payload = PN.build_shadow_solver_native_stateful_dynamic_payload(solver)
+		var/list/fallback_payload = PN.build_shadow_solver_native_payload_compact(solver)
+		if(!islist(dynamic_payload) || !islist(fallback_payload))
+			continue
+		batch_targets += PN
+		batch_dynamic_payload += list(dynamic_payload)
+		batch_payload += list(fallback_payload)
+
+	if(!length(batch_targets))
+		return null
+
+	var/list/stateful_snapshots = power_shadow_native_solve_batch_stateful(batch_targets, batch_dynamic_payload)
+	if(islist(stateful_snapshots))
+		return stateful_snapshots
+
+	if(!native_many_supported)
+		return null
+
+	var/payload_json = json_encode(batch_payload)
+	if(!istext(payload_json) || !length(payload_json))
+		return null
+
+	var/raw = rustg_power_shadow_solve_many(payload_json)
+	if(!istext(raw) || !length(raw))
+		native_many_failure_streak++
+		if(native_many_failure_streak >= 5)
+			native_many_supported = FALSE
+			log_debug("Power shadow native batch disabled after repeated failures.")
+		return null
+
+	var/list/decoded = json_decode(raw)
+	if(islist(decoded) && islist(decoded["results"]))
+		decoded = decoded["results"]
+	if(!islist(decoded))
+		native_many_failure_streak++
+		if(findtext(raw, "power_shadow_solve_many") || findtext(raw, "not found"))
+			native_many_supported = FALSE
+			log_debug("Power shadow native batch disabled: rust-g power_shadow_solve_many is unavailable.")
+		else if(native_many_failure_streak >= 5)
+			native_many_supported = FALSE
+			log_debug("Power shadow native batch disabled after repeated decode failures.")
+		return null
+
+	native_many_failure_streak = 0
+	var/list/snapshot_by_network = list()
+	var/index = 1
+	for(var/datum/powernet/PN in batch_targets)
+		if(index > length(decoded))
+			break
+		var/list/snapshot = PN.decode_shadow_solver_native_snapshot(decoded[index])
+		if(islist(snapshot))
+			snapshot_by_network[PN] = snapshot
+		index++
+
+	return snapshot_by_network
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_native_autogate_probe(list/powernets_snapshot)
+	if(!power_shadow_native_autogate_enabled)
+		return
+	if(!islist(powernets_snapshot) || !length(powernets_snapshot))
+		return
+	if(power_shadow_native_autogate_is_suspended())
+		return
+	if(world.time < power_shadow_native_autogate_next_probe_tick)
+		return
+
+	power_shadow_native_autogate_next_probe_tick = world.time + max(power_shadow_native_autogate_probe_interval, 1)
+	var/list/sample_targets = list()
+	for(var/datum/powernet/PN in powernets_snapshot)
+		if(!PN || QDELETED(PN))
+			continue
+		if(!PN.shadow_solver_enabled || !PN.shadow_solver_native_enabled)
+			continue
+		sample_targets += PN
+		if(length(sample_targets) >= 16)
+			break
+	if(!length(sample_targets))
+		return
+
+	var/timer_dm = "power_shadow_autogate_dm_[world.time]"
+	rustg_time_reset(timer_dm)
+	var/dm_samples = 0
+	for(var/datum/powernet/PN in sample_targets)
+		var/datum/power_solver/solver = PN.ensure_shadow_solver()
+		if(!istype(solver))
+			continue
+		var/list/dm_snapshot = PN.get_shadow_solver_snapshot(solver, FALSE, FALSE)
+		if(islist(dm_snapshot))
+			dm_samples++
+	var/dm_total_us = max(rustg_time_microseconds(timer_dm), 0)
+	if(!dm_samples || dm_total_us <= 0)
+		return
+	var/dm_us = dm_total_us / dm_samples
+
+	var/timer_batch = "power_shadow_autogate_batch_[world.time]"
+	rustg_time_reset(timer_batch)
+	var/list/batch_snapshot = power_shadow_native_solve_batch(sample_targets)
+	var/batch_total_us = max(rustg_time_microseconds(timer_batch), 0)
+	var/batch_samples = islist(batch_snapshot) ? length(batch_snapshot) : 0
+	if(!batch_samples || batch_total_us <= 0)
+		return
+	var/batch_us = batch_total_us / batch_samples
+
+	power_shadow_native_autogate_last_probe_dm_us = dm_us
+	power_shadow_native_autogate_last_probe_batch_us = batch_us
+	if(batch_us > dm_us)
+		power_shadow_native_autogate_loss_streak++
+	else
+		power_shadow_native_autogate_loss_streak = 0
+
+	if(power_shadow_native_autogate_loss_streak < max(power_shadow_native_autogate_trip_threshold, 1))
+		return
+
+	power_shadow_native_autogate_loss_streak = 0
+	power_shadow_native_autogate_suspended_until = world.time + max(power_shadow_native_autogate_cooldown_ticks, 1)
+	log_debug("Power shadow native autogate tripped: suspended native batch for [power_shadow_native_autogate_cooldown_ticks] ticks (probe dm_avg=[round(dm_us, 0.1)]us/sample, batch_avg=[round(batch_us, 0.1)]us/sample, sample_count=[dm_samples]).")
+
+
 /datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
 	var/static/powernets_index = 0
 	var/static/list/powernets_snapshot = list()
+	var/static/list/power_shadow_batch_snapshots
+	var/static/power_shadow_force_dm_fallback = FALSE
 	if (!resumed)
 		powernets_snapshot.Cut()
+		power_shadow_batch_snapshots = null
+		power_shadow_force_dm_fallback = FALSE
 		powernet_last_snapshot_size = 0
 		powernet_last_processed = 0
 		powernet_last_skipped_null = 0
 		powernet_last_removed_qdeleted = 0
+		var/native_targets = 0
 		for(var/datum/powernet/network as anything in powernets)
-			if(network)
-				powernets_snapshot += network
+			if(!network)
+				continue
+			if(network.shadow_solver_enabled && network.shadow_solver_native_enabled)
+				native_targets++
+			powernets_snapshot += network
 		powernet_last_snapshot_size = length(powernets_snapshot)
+		if(native_targets)
+			if(power_shadow_native_autogate_is_suspended())
+				power_shadow_force_dm_fallback = TRUE
+			else
+				power_shadow_native_autogate_probe(powernets_snapshot)
+				power_shadow_batch_snapshots = power_shadow_native_solve_batch(powernets_snapshot)
+				if(!islist(power_shadow_batch_snapshots) || length(power_shadow_batch_snapshots) < native_targets)
+					power_shadow_force_dm_fallback = TRUE
+		else
+			power_shadow_batch_snapshots = null
+		if(world.time >= power_shadow_native_autogate_suspended_until && power_shadow_native_autogate_suspended_until)
+			power_shadow_native_autogate_suspended_until = 0
+			log_debug("Power shadow native autogate re-armed.")
 		powernets_index = length(powernets_snapshot)
 	var/datum/powernet/network
 	for (var/i = powernets_index to 1 step -1)
@@ -515,7 +823,10 @@ SUBSYSTEM_DEF(machines)
 			powernets -= network
 			powernet_last_removed_qdeleted++
 			continue
-		network.reset(wait)
+		var/list/precomputed_shadow_snapshot
+		if(!power_shadow_force_dm_fallback && islist(power_shadow_batch_snapshots))
+			precomputed_shadow_snapshot = power_shadow_batch_snapshots[network]
+		network.reset(wait, precomputed_shadow_snapshot, !power_shadow_force_dm_fallback)
 		powernet_last_processed++
 		if (no_mc_tick)
 			CHECK_TICK
@@ -524,6 +835,10 @@ SUBSYSTEM_DEF(machines)
 			return
 	powernets_index = 0
 	powernets_snapshot.Cut()
+	if(islist(power_shadow_batch_snapshots))
+		power_shadow_batch_snapshots.Cut()
+	power_shadow_batch_snapshots = null
+	power_shadow_force_dm_fallback = FALSE
 	if((powernet_last_skipped_null || powernet_last_removed_qdeleted) && world.time >= powernet_next_anomaly_log_time)
 		log_debug("SSmachines powernet loop anomalies: snapshot=[powernet_last_snapshot_size], processed=[powernet_last_processed], null_skips=[powernet_last_skipped_null], qdeleted_removed=[powernet_last_removed_qdeleted]")
 		powernet_next_anomaly_log_time = world.time + 600

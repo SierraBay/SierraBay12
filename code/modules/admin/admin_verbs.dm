@@ -244,6 +244,24 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/force_kill_weather
 	)
 
+var/global/list/admin_verbs_power_shadow_basic = list(
+	/client/proc/power_shadow_solver_dashboard,
+	/client/proc/power_shadow_solver_benchmark,
+	/client/proc/power_shadow_solver_export_report,
+	/client/proc/power_shadow_solver_auto_repair,
+	/client/proc/power_shadow_solver_visualize,
+	/client/proc/toggle_power_shadow_advanced_verbs
+	)
+
+var/global/list/admin_verbs_power_shadow_advanced = list(
+	/client/proc/power_shadow_solver_threshold,
+	/client/proc/power_shadow_solver_backend,
+	/client/proc/power_shadow_solver_native_toggle,
+	/client/proc/power_shadow_solver_guard_settings,
+	/client/proc/power_shadow_solver_guard_threshold_override,
+	/client/proc/power_shadow_solver_acceptance_settings
+	)
+
 var/global/list/admin_verbs_paranoid_debug = list(
 	/client/proc/callproc,
 	/client/proc/callproc_target,
@@ -357,6 +375,9 @@ var/global/list/admin_verbs_mod = list(
 		if(holder.rights & R_SERVER)		verbs += admin_verbs_server
 		if(holder.rights & R_DEBUG)
 			verbs += admin_verbs_debug
+			verbs += admin_verbs_power_shadow_basic
+			if(power_shadow_advanced_verbs_enabled)
+				verbs += admin_verbs_power_shadow_advanced
 			if(config.debugparanoid && !(holder.rights & R_ADMIN))
 				verbs.Remove(admin_verbs_paranoid_debug)			//Right now it's just callproc but we can easily add others later on.
 		if(holder.rights & R_POSSESS)		verbs += admin_verbs_possess
@@ -373,11 +394,13 @@ var/global/list/admin_verbs_mod = list(
 		/client/proc/togglebuildmodeself,
 		admin_verbs_admin,
 		admin_verbs_ban,
-		admin_verbs_fun,
-		admin_verbs_server,
-		admin_verbs_debug,
-		admin_verbs_possess,
-		admin_verbs_permissions,
+			admin_verbs_fun,
+			admin_verbs_server,
+			admin_verbs_debug,
+			admin_verbs_power_shadow_basic,
+			admin_verbs_power_shadow_advanced,
+			admin_verbs_possess,
+			admin_verbs_permissions,
 		/client/proc/stealth,
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
