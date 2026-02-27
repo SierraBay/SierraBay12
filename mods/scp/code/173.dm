@@ -69,7 +69,7 @@
 			if(!AStar(loc, L.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))
 				continue // We can't reach this person anyways
 			possible_targets += L
-		if(possible_targets.len)
+		if(length(possible_targets))
 			target = pick(possible_targets)
 
 		if (target)	// NECK SNAP TIME
@@ -121,11 +121,11 @@
 				dir = get_dir(src, entry_vent)
 				visible_message("<span class='danger'>\The [src] starts trying to slide itself into the vent!</span>")
 				sleep(50) //Let's stop SCP-173 for five seconds to do his parking job
-				if(entry_vent.network && entry_vent.network.normal_members.len)
+				if(entry_vent.network && length(entry_vent.network.normal_members))
 					var/list/vents = list()
 					for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.network.normal_members)
 						vents.Add(temp_vent)
-					if(!vents.len)
+					if(!length(vents))
 						entry_vent = null
 						return
 					if(IsBeingWatched()) //Someone started looking at us
@@ -163,7 +163,7 @@
 				if(!AStar(loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))	//the proc uses for checking the way from our loc to potential new loc, so if we can't jump - it doesn't happen
 					continue
 				turfs += T
-			if(!turfs.len || IsBeingWatched()) // no turfs to jump :(
+			if(!length(turfs) || IsBeingWatched()) // no turfs to jump :(
 				return
 			var/turf/chosen_turf = pick(turfs)
 			dir = get_dir(src, chosen_turf)
