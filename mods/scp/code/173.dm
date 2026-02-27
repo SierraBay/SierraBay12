@@ -15,23 +15,32 @@
 	var/snap_sound = list('mods/scp/sounds/firstpersonsnap.ogg','mods/scp/sounds/firstpersonsnap2.ogg','mods/scp/sounds/firstpersonsnap3.ogg')
 	var/scare_sound = list('mods/scp/sounds/scare1.ogg','mods/scp/sounds/scare2.ogg','mods/scp/sounds/scare3.ogg','mods/scp/sounds/scare4.ogg')
 
-/mob/living/simple_animal/hostile/statue/proc/IsBeingWatched()
-	// Am I being watched?
-	for(var/mob/living/carbon/human/H in view(7, src))
-		if(is_blind(H) || H.eye_blind > 0)
+/mob/living/simple_animal/hostile/statue/proc/IsBeingWatched(list/checking)
+	if(!checking)
+		checking = view(7, src)
+
+	for(var/mob/living/L in checking)
+		if(L.stat != CONSCIOUS)
 			continue
-		if(H.stat != CONSCIOUS)
-			continue
-		if(H.in_fov_strict(src) && isInSight(H, src))
-			return TRUE
-	for(var/mob/living/silicon/robot/R in view(7, src))
-		if(!R.is_component_functioning("camera"))
-			continue
-		if(isInSight(R, src)) // роботы все видят
-			return TRUE
-	for(var/mob/living/exosuit/E in view(7, src))
-		if(E.in_fov_strict(src) && isInSight(E, src))
-			return TRUE
+
+		if(istype(L, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = L
+			if(is_blind(H) || H.eye_blind > 0)
+				continue
+			if(H.in_fov_strict(src) && isInSight(H, src))
+				return TRUE
+
+		else if(istype(L, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = L
+			if(!R.is_component_functioning("camera"))
+				continue
+			if(isInSight(R, src))
+				return TRUE
+
+		else if(istype(L, /mob/living/exosuit))
+			var/mob/living/exosuit/E = L
+			if(E.in_fov_strict(src) && isInSight(E, src))
+				return TRUE
 	return FALSE
 
 /mob/living/simple_animal/hostile/statue/handle_atmos()
@@ -44,7 +53,9 @@
 	if (isobj(loc))
 		return
 
-	if(IsBeingWatched())
+	var/list/our_view = view(7, src)
+
+	if(IsBeingWatched(our_view))
 		return
 
 	if(buckled)
@@ -58,11 +69,10 @@
 		return
 
 	if(world.time >= last_charge+50)
-		var/list/our_view = view(src, 7)
 		var/mob/living/target
 		var/list/mob/living/possible_targets = list()
 		for(var/mob/living/L in our_view)
-			if(L.stat == DEAD)
+			if(L.stat != CONSCIOUS)
 				continue
 			if(!istype(L, /mob/living/carbon/human) && !istype(L, /mob/living/exosuit))
 				continue
@@ -90,7 +100,7 @@
 				return
 			forceMove(spot)
 			dir = get_dir(src, target)
-			if(!IsBeingWatched())
+			if(!IsBeingWatched(our_view))
 				visible_message("<span class='danger'>[src] snaps [target]'s neck!</span>")
 				playsound(get_turf(src), pick(snap_sound), 50, 1)
 				if(ismech(target))
@@ -128,7 +138,7 @@
 					if(!length(vents))
 						entry_vent = null
 						return
-					if(IsBeingWatched()) //Someone started looking at us
+					if(IsBeingWatched(our_view)) //Someone started looking at us
 						return
 					var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
 					visible_message("<span class='danger'>\The [src] suddenly disappears into the vent!</span>")
@@ -138,7 +148,7 @@
 						forceMove(get_turf(entry_vent))
 						entry_vent = null
 						dir = pick(GLOB.cardinal)
-						try_to_scare(100, 0)
+						try_to_scare(100, 0, our_view)
 						visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
 						last_charge = world.time + 50
 						return
@@ -146,7 +156,7 @@
 					forceMove(get_turf(exit_vent))
 					entry_vent = null
 					dir = pick(GLOB.cardinal)
-					try_to_scare(100, 0)
+					try_to_scare(100, 0, our_view)
 					visible_message("<span class='danger'>\The [src] suddenly appears from the vent!</span>")
 					last_charge = world.time + 50
 					return
@@ -155,15 +165,23 @@
 
 		if(!target)
 			var/list/turfs = list()
-			for(var/turf/T in our_view)		//finding a nice position to jump.
-				if(is_space_turf(T))	// we don't want to jump into space, m'kay?
+			var/list/possible_turfs = list()
+			for(var/turf/T in our_view)
+				if(is_space_turf(T) || turf_contains_dense_objects(T))
 					continue
-				if(turf_contains_dense_objects(T))		//we don't want to jump into dense objects like lockers
-					continue
-				if(!AStar(loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))	//the proc uses for checking the way from our loc to potential new loc, so if we can't jump - it doesn't happen
-					continue
-				turfs += T
-			if(!length(turfs) || IsBeingWatched()) // no turfs to jump :(
+				possible_turfs += T
+
+			if(length(possible_turfs))
+				var/attempts = 15 // Limit AStar attempts for performance
+				while(attempts > 0 && length(possible_turfs))
+					attempts--
+					var/turf/T = pick(possible_turfs)
+					possible_turfs -= T
+					if(AStar(loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))
+						turfs += T
+						if(length(turfs) >= 5) break // We found some good spots, that's enough
+
+			if(!length(turfs) || IsBeingWatched(our_view)) // no turfs to jump :(
 				return
 			var/turf/chosen_turf = pick(turfs)
 			dir = get_dir(src, chosen_turf)
@@ -174,7 +192,7 @@
 					dir = get_dir(src, AL)
 					AL.bumpopen(src)
 					break
-			try_to_scare(25)
+			try_to_scare(25, 1, our_view)
 
 /mob/living/simple_animal/hostile/statue/proc/find_and_destroy_object()
 	var/list/close_view = shuffle(view(src, 1))
@@ -223,9 +241,10 @@
 		T.Destroy()
 		return T
 
-/mob/living/simple_animal/hostile/statue/proc/try_to_scare(chance = 25, should_see = 1)
+/mob/living/simple_animal/hostile/statue/proc/try_to_scare(chance = 25, should_see = 1, list/checking = null)
 	var/scared
-	for(var/mob/living/carbon/human/spooked in view(src, 7))
+	var/list/checking_list = checking || view(7, src)
+	for(var/mob/living/carbon/human/spooked in checking_list)
 		if(spooked.stat != CONSCIOUS)
 			continue
 		if(!(spooked.in_fov_strict(src) && isInSight(spooked, src)) && should_see)
