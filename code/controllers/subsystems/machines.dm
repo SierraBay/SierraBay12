@@ -79,6 +79,12 @@ SUBSYSTEM_DEF(machines)
 	var/static/power_shadow_native_autogate_next_probe_tick = 0
 	var/static/power_shadow_native_autogate_last_probe_dm_us = 0
 	var/static/power_shadow_native_autogate_last_probe_batch_us = 0
+	var/static/power_shadow_native_last_batch_expected = 0
+	var/static/power_shadow_native_batch_perf_samples = 0
+	var/static/power_shadow_native_batch_perf_build_us_sum = 0
+	var/static/power_shadow_native_batch_perf_encode_us_sum = 0
+	var/static/power_shadow_native_batch_perf_call_us_sum = 0
+	var/static/power_shadow_native_batch_perf_decode_us_sum = 0
 	var/static/profiling_machinery = FALSE
 	var/static/list/processing_profile_time_by_type = list()
 	var/static/list/processing_profile_count_by_type = list()
@@ -200,6 +206,8 @@ SUBSYSTEM_DEF(machines)
 	power_shadow_native_autogate_next_probe_tick = world.time + max(power_shadow_native_autogate_probe_interval, 1)
 	power_shadow_native_autogate_last_probe_dm_us = 0
 	power_shadow_native_autogate_last_probe_batch_us = 0
+	power_shadow_native_last_batch_expected = 0
+	reset_power_shadow_native_batch_perf()
 	rustg_power_shadow_stateful_reset()
 	setup_powernets_for_cables(GLOB.cable_list)
 
@@ -567,42 +575,90 @@ SUBSYSTEM_DEF(machines)
 	return lines.Join("\n")
 
 
+/datum/controller/subsystem/machines/proc/reset_power_shadow_native_batch_perf()
+	power_shadow_native_batch_perf_samples = 0
+	power_shadow_native_batch_perf_build_us_sum = 0
+	power_shadow_native_batch_perf_encode_us_sum = 0
+	power_shadow_native_batch_perf_call_us_sum = 0
+	power_shadow_native_batch_perf_decode_us_sum = 0
+
+
+/datum/controller/subsystem/machines/proc/record_power_shadow_native_batch_perf(build_us, encode_us, call_us, decode_us, samples = 1)
+	samples = max(round(samples), 0)
+	if(!samples)
+		return
+
+	power_shadow_native_batch_perf_samples += samples
+	power_shadow_native_batch_perf_build_us_sum += max(build_us, 0)
+	power_shadow_native_batch_perf_encode_us_sum += max(encode_us, 0)
+	power_shadow_native_batch_perf_call_us_sum += max(call_us, 0)
+	power_shadow_native_batch_perf_decode_us_sum += max(decode_us, 0)
+
+
+/datum/controller/subsystem/machines/proc/get_power_shadow_native_batch_perf_data()
+	var/samples = max(power_shadow_native_batch_perf_samples, 0)
+	return list(
+		"samples" = samples,
+		"avg_build_us" = samples ? power_shadow_native_batch_perf_build_us_sum / samples : 0,
+		"avg_encode_us" = samples ? power_shadow_native_batch_perf_encode_us_sum / samples : 0,
+		"avg_call_us" = samples ? power_shadow_native_batch_perf_call_us_sum / samples : 0,
+		"avg_decode_us" = samples ? power_shadow_native_batch_perf_decode_us_sum / samples : 0
+	)
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_native_should_skip_batch_target(datum/powernet/PN)
+	if(!istype(PN))
+		return TRUE
+	var/numapc = PN.get_apc_terminal_count()
+	return PN.should_use_cached_shadow_solver_snapshot(numapc)
+
+
 /datum/controller/subsystem/machines/proc/power_shadow_native_autogate_is_suspended()
 	if(!power_shadow_native_autogate_enabled)
 		return FALSE
 	return world.time < power_shadow_native_autogate_suspended_until
 
 
-/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch_stateful(list/batch_targets, list/batch_dynamic_payload)
+/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch_stateful(list/batch_targets, list/batch_dynamic_payload, list/phase_accumulator = null, use_compact_payload = TRUE, use_legacy_id = FALSE)
 	var/static/native_stateful_supported = TRUE
 	var/static/native_stateful_failure_streak = 0
+	var/static/timer_id = "power_shadow_native_batch_phase_stateful"
 	if(!native_stateful_supported || !islist(batch_targets) || !length(batch_targets))
 		return null
 	if(!islist(batch_dynamic_payload) || length(batch_dynamic_payload) != length(batch_targets))
 		return null
 
 	var/list/register_payload = list()
-	var/index = 1
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	for(var/datum/powernet/PN in batch_targets)
 		var/datum/power_solver/solver = PN.ensure_shadow_solver()
 		if(!istype(solver))
-			index++
 			continue
 		if(PN.shadow_solver_native_stateful_registered_revision != PN.shadow_solver_native_topology_revision)
-			var/list/register_item = PN.build_shadow_solver_native_stateful_register_payload(solver)
+			var/list/register_item = PN.build_shadow_solver_native_stateful_register_payload(solver, use_compact_payload, use_legacy_id)
 			if(islist(register_item))
 				register_payload += list(register_item)
-		index++
+	if(islist(phase_accumulator))
+		phase_accumulator["build_us"] += max(rustg_time_microseconds(timer_id), 0)
 
 	var/list/stateful_payload = list(
 		"register" = register_payload,
 		"solve" = batch_dynamic_payload
 	)
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/payload_json = json_encode(stateful_payload)
+	if(islist(phase_accumulator))
+		phase_accumulator["encode_us"] += max(rustg_time_microseconds(timer_id), 0)
 	if(!istext(payload_json) || !length(payload_json))
 		return null
 
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/raw = rustg_power_shadow_stateful_apply(payload_json)
+	if(islist(phase_accumulator))
+		phase_accumulator["call_us"] += max(rustg_time_microseconds(timer_id), 0)
 	if(!istext(raw) || !length(raw))
 		native_stateful_failure_streak++
 		if(native_stateful_failure_streak >= 5)
@@ -610,10 +666,14 @@ SUBSYSTEM_DEF(machines)
 			log_debug("Power shadow native stateful batch disabled after repeated failures.")
 		return null
 
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/list/decoded = json_decode(raw)
 	if(islist(decoded) && islist(decoded["results"]))
 		decoded = decoded["results"]
 	if(!islist(decoded))
+		if(islist(phase_accumulator))
+			phase_accumulator["decode_us"] += max(rustg_time_microseconds(timer_id), 0)
 		native_stateful_failure_streak++
 		if(findtext(raw, "power_shadow_stateful_apply") || findtext(raw, "not found"))
 			native_stateful_supported = FALSE
@@ -625,7 +685,7 @@ SUBSYSTEM_DEF(machines)
 
 	native_stateful_failure_streak = 0
 	var/list/snapshot_by_network = list()
-	index = 1
+	var/index = 1
 	for(var/datum/powernet/PN in batch_targets)
 		if(index > length(decoded))
 			break
@@ -634,50 +694,100 @@ SUBSYSTEM_DEF(machines)
 			snapshot_by_network[PN] = snapshot
 			PN.shadow_solver_native_stateful_registered_revision = PN.shadow_solver_native_topology_revision
 		index++
+	if(islist(phase_accumulator))
+		phase_accumulator["decode_us"] += max(rustg_time_microseconds(timer_id), 0)
 
 	return snapshot_by_network
 
 
-/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch(list/powernets_snapshot)
+/datum/controller/subsystem/machines/proc/power_shadow_native_solve_batch(list/powernets_snapshot, collect_phase_perf = TRUE)
 	var/static/native_many_supported = TRUE
 	var/static/native_many_failure_streak = 0
+	var/static/native_stateful_compact_supported = TRUE
+	var/static/timer_id = "power_shadow_native_batch_phase_main"
+	power_shadow_native_last_batch_expected = 0
 	if(!islist(powernets_snapshot) || !length(powernets_snapshot))
 		return null
+
+	var/list/phase_accumulator
+	if(collect_phase_perf)
+		phase_accumulator = list(
+			"build_us" = 0,
+			"encode_us" = 0,
+			"call_us" = 0,
+			"decode_us" = 0
+		)
 
 	var/list/batch_targets = list()
 	var/list/batch_payload = list()
 	var/list/batch_dynamic_payload = list()
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	for(var/datum/powernet/PN in powernets_snapshot)
 		if(!PN || QDELETED(PN))
 			continue
 		if(!PN.shadow_solver_enabled || !PN.shadow_solver_native_enabled)
 			continue
+		if(power_shadow_native_should_skip_batch_target(PN))
+			continue
 		var/datum/power_solver/solver = PN.ensure_shadow_solver()
 		if(!istype(solver))
 			continue
-		var/list/dynamic_payload = PN.build_shadow_solver_native_stateful_dynamic_payload(solver)
+		var/list/dynamic_payload = PN.build_shadow_solver_native_stateful_dynamic_payload(native_stateful_compact_supported, !native_stateful_compact_supported)
 		var/list/fallback_payload = PN.build_shadow_solver_native_payload_compact(solver)
 		if(!islist(dynamic_payload) || !islist(fallback_payload))
 			continue
 		batch_targets += PN
 		batch_dynamic_payload += list(dynamic_payload)
 		batch_payload += list(fallback_payload)
+	if(islist(phase_accumulator))
+		phase_accumulator["build_us"] += max(rustg_time_microseconds(timer_id), 0)
 
-	if(!length(batch_targets))
-		return null
+	power_shadow_native_last_batch_expected = length(batch_targets)
+	if(!power_shadow_native_last_batch_expected)
+		return list()
 
-	var/list/stateful_snapshots = power_shadow_native_solve_batch_stateful(batch_targets, batch_dynamic_payload)
+	var/list/stateful_snapshots = power_shadow_native_solve_batch_stateful(batch_targets, batch_dynamic_payload, phase_accumulator, native_stateful_compact_supported, !native_stateful_compact_supported)
+	if(!islist(stateful_snapshots) && native_stateful_compact_supported)
+		var/list/legacy_dynamic_payload = list()
+		if(islist(phase_accumulator))
+			rustg_time_reset(timer_id)
+		for(var/datum/powernet/PN in batch_targets)
+			var/list/dynamic_payload = PN.build_shadow_solver_native_stateful_dynamic_payload(FALSE, TRUE)
+			if(!islist(dynamic_payload))
+				legacy_dynamic_payload = null
+				break
+			legacy_dynamic_payload += list(dynamic_payload)
+		if(islist(phase_accumulator))
+			phase_accumulator["build_us"] += max(rustg_time_microseconds(timer_id), 0)
+		if(islist(legacy_dynamic_payload) && length(legacy_dynamic_payload) == length(batch_targets))
+			stateful_snapshots = power_shadow_native_solve_batch_stateful(batch_targets, legacy_dynamic_payload, phase_accumulator, FALSE, TRUE)
+			if(islist(stateful_snapshots))
+				native_stateful_compact_supported = FALSE
+				log_debug("Power shadow native stateful compact payload disabled: legacy compatibility fallback engaged.")
+
 	if(islist(stateful_snapshots))
+		var/stateful_solved = length(stateful_snapshots)
+		if(islist(phase_accumulator) && stateful_solved)
+			record_power_shadow_native_batch_perf(phase_accumulator["build_us"], phase_accumulator["encode_us"], phase_accumulator["call_us"], phase_accumulator["decode_us"], stateful_solved)
 		return stateful_snapshots
 
 	if(!native_many_supported)
 		return null
 
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/payload_json = json_encode(batch_payload)
+	if(islist(phase_accumulator))
+		phase_accumulator["encode_us"] += max(rustg_time_microseconds(timer_id), 0)
 	if(!istext(payload_json) || !length(payload_json))
 		return null
 
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/raw = rustg_power_shadow_solve_many(payload_json)
+	if(islist(phase_accumulator))
+		phase_accumulator["call_us"] += max(rustg_time_microseconds(timer_id), 0)
 	if(!istext(raw) || !length(raw))
 		native_many_failure_streak++
 		if(native_many_failure_streak >= 5)
@@ -685,10 +795,14 @@ SUBSYSTEM_DEF(machines)
 			log_debug("Power shadow native batch disabled after repeated failures.")
 		return null
 
+	if(islist(phase_accumulator))
+		rustg_time_reset(timer_id)
 	var/list/decoded = json_decode(raw)
 	if(islist(decoded) && islist(decoded["results"]))
 		decoded = decoded["results"]
 	if(!islist(decoded))
+		if(islist(phase_accumulator))
+			phase_accumulator["decode_us"] += max(rustg_time_microseconds(timer_id), 0)
 		native_many_failure_streak++
 		if(findtext(raw, "power_shadow_solve_many") || findtext(raw, "not found"))
 			native_many_supported = FALSE
@@ -708,7 +822,12 @@ SUBSYSTEM_DEF(machines)
 		if(islist(snapshot))
 			snapshot_by_network[PN] = snapshot
 		index++
+	if(islist(phase_accumulator))
+		phase_accumulator["decode_us"] += max(rustg_time_microseconds(timer_id), 0)
 
+	var/fallback_solved = length(snapshot_by_network)
+	if(islist(phase_accumulator) && fallback_solved)
+		record_power_shadow_native_batch_perf(phase_accumulator["build_us"], phase_accumulator["encode_us"], phase_accumulator["call_us"], phase_accumulator["decode_us"], fallback_solved)
 	return snapshot_by_network
 
 
@@ -752,7 +871,7 @@ SUBSYSTEM_DEF(machines)
 
 	var/timer_batch = "power_shadow_autogate_batch_[world.time]"
 	rustg_time_reset(timer_batch)
-	var/list/batch_snapshot = power_shadow_native_solve_batch(sample_targets)
+	var/list/batch_snapshot = power_shadow_native_solve_batch(sample_targets, FALSE)
 	var/batch_total_us = max(rustg_time_microseconds(timer_batch), 0)
 	var/batch_samples = islist(batch_snapshot) ? length(batch_snapshot) : 0
 	if(!batch_samples || batch_total_us <= 0)
@@ -787,21 +906,23 @@ SUBSYSTEM_DEF(machines)
 		powernet_last_processed = 0
 		powernet_last_skipped_null = 0
 		powernet_last_removed_qdeleted = 0
-		var/native_targets = 0
+		power_shadow_native_last_batch_expected = 0
+		var/native_capable = 0
 		for(var/datum/powernet/network as anything in powernets)
 			if(!network)
 				continue
 			if(network.shadow_solver_enabled && network.shadow_solver_native_enabled)
-				native_targets++
+				native_capable++
 			powernets_snapshot += network
 		powernet_last_snapshot_size = length(powernets_snapshot)
-		if(native_targets)
+		if(native_capable)
 			if(power_shadow_native_autogate_is_suspended())
 				power_shadow_force_dm_fallback = TRUE
 			else
 				power_shadow_native_autogate_probe(powernets_snapshot)
 				power_shadow_batch_snapshots = power_shadow_native_solve_batch(powernets_snapshot)
-				if(!islist(power_shadow_batch_snapshots) || length(power_shadow_batch_snapshots) < native_targets)
+				var/stale_targets = max(power_shadow_native_last_batch_expected, 0)
+				if(stale_targets && (!islist(power_shadow_batch_snapshots) || length(power_shadow_batch_snapshots) < stale_targets))
 					power_shadow_force_dm_fallback = TRUE
 		else
 			power_shadow_batch_snapshots = null

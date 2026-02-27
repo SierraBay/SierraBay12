@@ -20,6 +20,7 @@ Read these first:
 - `avg |dLoad|` / `avg |dAvail|`
 - `avg unserved P/D/T`
 - `rollbacks`
+- `Native batch phases avg (us): build/encode/call/decode`
 - top rows by `Delta`
 
 ## Recommended Operating Modes
@@ -46,6 +47,10 @@ Use `Benchmark Power Shadow Solver` only:
 Interpretation:
 - `E2E Native(batch) > E2E DM` means native is worth using.
 - `E2E Native(single) < E2E DM` is acceptable; single-call path is fallback only.
+- Batch phase detail helps pinpoint bottleneck:
+  - high `build`: too much DM-side payload prep,
+  - high `encode/decode`: JSON overhead,
+  - high `call`: rust-g/native-side compute or bridge cost.
 
 ### 3) Auto Repair
 Use `Auto Repair Powernets` when:

@@ -753,6 +753,7 @@
 	var/timer_native_e2e = "power_shadow_bench_native_e2e_[ckey]_[(world.timeofday % 864000)]"
 	for(var/datum/powernet/PN in targets)
 		PN.reset_shadow_solver_native_perf()
+	SSmachines.reset_power_shadow_native_batch_perf()
 	rustg_time_reset(timer_native_e2e)
 	for(var/datum/powernet/PN in targets)
 		var/datum/power_solver/solver = solvers[PN]
@@ -770,7 +771,7 @@
 		PN.shadow_solver_native_enabled = TRUE
 	rustg_time_reset(timer_native_e2e_batch)
 	for(var/i = 1 to iterations)
-		var/list/batch_snapshots = SSmachines.power_shadow_native_solve_batch(targets)
+		var/list/batch_snapshots = SSmachines.power_shadow_native_solve_batch(targets, TRUE)
 		if(islist(batch_snapshots))
 			e2e_native_batch_samples += length(batch_snapshots)
 	var/e2e_native_batch_total_us = max(rustg_time_microseconds(timer_native_e2e_batch), 0)
@@ -804,9 +805,15 @@
 	var/native_encode_avg_us = native_phase_samples ? round(native_encode_us_sum / native_phase_samples, 0.001) : 0
 	var/native_call_avg_us = native_phase_samples ? round(native_call_us_sum / native_phase_samples, 0.001) : 0
 	var/native_decode_avg_us = native_phase_samples ? round(native_decode_us_sum / native_phase_samples, 0.001) : 0
+	var/list/batch_perf = SSmachines.get_power_shadow_native_batch_perf_data()
+	var/batch_phase_samples = max(batch_perf["samples"], 0)
+	var/batch_build_avg_us = batch_phase_samples ? round(batch_perf["avg_build_us"], 0.001) : 0
+	var/batch_encode_avg_us = batch_phase_samples ? round(batch_perf["avg_encode_us"], 0.001) : 0
+	var/batch_call_avg_us = batch_phase_samples ? round(batch_perf["avg_call_us"], 0.001) : 0
+	var/batch_decode_avg_us = batch_phase_samples ? round(batch_perf["avg_decode_us"], 0.001) : 0
 
-	to_chat(src, SPAN_NOTICE("Power shadow benchmark complete: Core DM=[core_dm_total_us] us total, avg [core_dm_avg_us] us, samples=[core_dm_samples]; Core Native=[core_native_total_us] us total, avg [core_native_avg_us] us, samples=[core_native_samples][core_speedup ? ", speedup x[core_speedup]" : ""]; E2E DM=[e2e_dm_total_us] us total, avg [e2e_dm_avg_us] us, samples=[e2e_dm_samples]; E2E Native(single)=[e2e_native_total_us] us total, avg [e2e_native_avg_us] us, samples=[e2e_native_samples][e2e_speedup ? ", speedup x[e2e_speedup]" : ""]; E2E Native(batch)=[e2e_native_batch_total_us] us total, avg [e2e_native_batch_avg_us] us, samples=[e2e_native_batch_samples][e2e_batch_speedup ? ", speedup x[e2e_batch_speedup]" : ""]; Native phases avg(us): build=[native_build_avg_us], encode=[native_encode_avg_us], call=[native_call_avg_us], decode=[native_decode_avg_us], profiled_samples=[native_phase_samples]."))
-	log_and_message_admins("[key_name(src)] ran power shadow benchmark: iterations=[iterations], networks=[length(targets)], autogate_disabled_during_benchmark=TRUE, core_dm_total_us=[core_dm_total_us], core_dm_avg_us=[core_dm_avg_us], core_dm_samples=[core_dm_samples], core_native_total_us=[core_native_total_us], core_native_avg_us=[core_native_avg_us], core_native_samples=[core_native_samples], core_speedup=[core_speedup], e2e_dm_total_us=[e2e_dm_total_us], e2e_dm_avg_us=[e2e_dm_avg_us], e2e_dm_samples=[e2e_dm_samples], e2e_native_total_us=[e2e_native_total_us], e2e_native_avg_us=[e2e_native_avg_us], e2e_native_samples=[e2e_native_samples], e2e_speedup=[e2e_speedup], e2e_native_batch_total_us=[e2e_native_batch_total_us], e2e_native_batch_avg_us=[e2e_native_batch_avg_us], e2e_native_batch_samples=[e2e_native_batch_samples], e2e_batch_speedup=[e2e_batch_speedup], native_phase_samples=[native_phase_samples], native_build_avg_us=[native_build_avg_us], native_encode_avg_us=[native_encode_avg_us], native_call_avg_us=[native_call_avg_us], native_decode_avg_us=[native_decode_avg_us].")
+	to_chat(src, SPAN_NOTICE("Power shadow benchmark complete: Core DM=[core_dm_total_us] us total, avg [core_dm_avg_us] us, samples=[core_dm_samples]; Core Native=[core_native_total_us] us total, avg [core_native_avg_us] us, samples=[core_native_samples][core_speedup ? ", speedup x[core_speedup]" : ""]; E2E DM=[e2e_dm_total_us] us total, avg [e2e_dm_avg_us] us, samples=[e2e_dm_samples]; E2E Native(single)=[e2e_native_total_us] us total, avg [e2e_native_avg_us] us, samples=[e2e_native_samples][e2e_speedup ? ", speedup x[e2e_speedup]" : ""]; E2E Native(batch)=[e2e_native_batch_total_us] us total, avg [e2e_native_batch_avg_us] us, samples=[e2e_native_batch_samples][e2e_batch_speedup ? ", speedup x[e2e_batch_speedup]" : ""]; Native phases avg(us): build=[native_build_avg_us], encode=[native_encode_avg_us], call=[native_call_avg_us], decode=[native_decode_avg_us], profiled_samples=[native_phase_samples]; Batch phases avg(us): build=[batch_build_avg_us], encode=[batch_encode_avg_us], call=[batch_call_avg_us], decode=[batch_decode_avg_us], profiled_samples=[batch_phase_samples]."))
+	log_and_message_admins("[key_name(src)] ran power shadow benchmark: iterations=[iterations], networks=[length(targets)], autogate_disabled_during_benchmark=TRUE, core_dm_total_us=[core_dm_total_us], core_dm_avg_us=[core_dm_avg_us], core_dm_samples=[core_dm_samples], core_native_total_us=[core_native_total_us], core_native_avg_us=[core_native_avg_us], core_native_samples=[core_native_samples], core_speedup=[core_speedup], e2e_dm_total_us=[e2e_dm_total_us], e2e_dm_avg_us=[e2e_dm_avg_us], e2e_dm_samples=[e2e_dm_samples], e2e_native_total_us=[e2e_native_total_us], e2e_native_avg_us=[e2e_native_avg_us], e2e_native_samples=[e2e_native_samples], e2e_speedup=[e2e_speedup], e2e_native_batch_total_us=[e2e_native_batch_total_us], e2e_native_batch_avg_us=[e2e_native_batch_avg_us], e2e_native_batch_samples=[e2e_native_batch_samples], e2e_batch_speedup=[e2e_batch_speedup], native_phase_samples=[native_phase_samples], native_build_avg_us=[native_build_avg_us], native_encode_avg_us=[native_encode_avg_us], native_call_avg_us=[native_call_avg_us], native_decode_avg_us=[native_decode_avg_us], batch_phase_samples=[batch_phase_samples], batch_build_avg_us=[batch_build_avg_us], batch_encode_avg_us=[batch_encode_avg_us], batch_call_avg_us=[batch_call_avg_us], batch_decode_avg_us=[batch_decode_avg_us].")
 
 /client/proc/power_shadow_solver_guard_settings()
 	set category = "Power Shadow Advanced"
@@ -1180,6 +1187,12 @@
 	var/total_cost = max(SSmachines.cost_pipenets + SSmachines.cost_machinery + SSmachines.cost_powernets + SSmachines.cost_power_objects, 0.01)
 	var/powernet_cost_share = round((SSmachines.cost_powernets / total_cost) * 100, 0.1)
 	var/cost_per_network = networks ? round(powernet_cost / networks, 0.0001) : 0
+	var/list/batch_perf = SSmachines.get_power_shadow_native_batch_perf_data()
+	var/batch_perf_samples = max(batch_perf["samples"], 0)
+	var/batch_perf_build_avg_us = batch_perf_samples ? round(batch_perf["avg_build_us"], 0.001) : 0
+	var/batch_perf_encode_avg_us = batch_perf_samples ? round(batch_perf["avg_encode_us"], 0.001) : 0
+	var/batch_perf_call_avg_us = batch_perf_samples ? round(batch_perf["avg_call_us"], 0.001) : 0
+	var/batch_perf_decode_avg_us = batch_perf_samples ? round(batch_perf["avg_decode_us"], 0.001) : 0
 
 	var/list/dashboard_rows = list()
 
@@ -1274,6 +1287,11 @@
 		"powernet_cost" = powernet_cost,
 		"powernet_cost_share" = powernet_cost_share,
 		"cost_per_network" = cost_per_network,
+		"batch_perf_samples" = batch_perf_samples,
+		"batch_perf_build_avg_us" = batch_perf_build_avg_us,
+		"batch_perf_encode_avg_us" = batch_perf_encode_avg_us,
+		"batch_perf_call_avg_us" = batch_perf_call_avg_us,
+		"batch_perf_decode_avg_us" = batch_perf_decode_avg_us,
 		"networks" = networks,
 		"enabled" = enabled,
 		"locked" = locked,

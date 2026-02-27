@@ -151,6 +151,8 @@
 	var/shadow_solver_native_enabled = FALSE
 	var/shadow_solver_native_topology_revision = 1
 	var/shadow_solver_native_stateful_registered_revision = -1
+	var/shadow_solver_native_stateful_id = 0
+	var/static/shadow_solver_native_stateful_next_id = 1
 	var/datum/power_solver/shadow_solver
 	var/shadow_solver_write_enabled = TRUE
 	var/shadow_solver_write_mode = "fea_only"
@@ -233,6 +235,8 @@
 /datum/powernet/New()
 	START_PROCESSING_POWERNET(src)
 	enforce_fea_only_mode()
+	if(!shadow_solver_native_stateful_id)
+		shadow_solver_native_stateful_id = shadow_solver_native_stateful_next_id++
 	..()
 
 /datum/powernet/Destroy()
@@ -783,22 +787,41 @@
 		build_shadow_solver_native_nodes_payload(TRUE)
 	)
 
-/datum/powernet/proc/build_shadow_solver_native_stateful_register_payload(datum/power_solver/active_solver)
+/datum/powernet/proc/get_shadow_solver_native_stateful_identifier(use_legacy_id = FALSE)
+	if(use_legacy_id)
+		return "\ref[src]"
+	if(shadow_solver_native_stateful_id <= 0)
+		shadow_solver_native_stateful_id = shadow_solver_native_stateful_next_id++
+	return shadow_solver_native_stateful_id
+
+/datum/powernet/proc/build_shadow_solver_native_stateful_register_payload(datum/power_solver/active_solver, use_compact_format = TRUE, use_legacy_id = FALSE)
 	if(!istype(active_solver))
 		return null
+	var/id_value = get_shadow_solver_native_stateful_identifier(use_legacy_id)
+	if(use_compact_format)
+		return list(
+			id_value,
+			max(shadow_solver_native_topology_revision, 0),
+			active_solver.backend_id,
+			build_shadow_solver_native_nodes_payload(TRUE)
+		)
 	return list(
-		"id" = "\ref[src]",
+		"id" = id_value,
 		"revision" = max(shadow_solver_native_topology_revision, 0),
 		"backend" = active_solver.backend_id,
 		"nodes" = build_shadow_solver_native_nodes_payload(TRUE)
 	)
 
-/datum/powernet/proc/build_shadow_solver_native_stateful_dynamic_payload(datum/power_solver/active_solver)
-	if(!istype(active_solver))
-		return null
+/datum/powernet/proc/build_shadow_solver_native_stateful_dynamic_payload(use_compact_format = TRUE, use_legacy_id = FALSE)
+	var/id_value = get_shadow_solver_native_stateful_identifier(use_legacy_id)
+	if(use_compact_format)
+		return list(
+			id_value,
+			max(avail, 0),
+			max(smes_avail, 0)
+		)
 	return list(
-		"id" = "\ref[src]",
-		"backend" = active_solver.backend_id,
+		"id" = id_value,
 		"avail" = max(avail, 0),
 		"smes_avail" = max(smes_avail, 0)
 	)

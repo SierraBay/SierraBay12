@@ -1,6 +1,6 @@
 # Power FEA Migration Status
 
-_Updated: 2026-02-23 (handoff refresh)_
+_Updated: 2026-02-25 (power-shadow split + batch optimization pass)_
 
 ## Executive state
 
@@ -18,6 +18,13 @@ _Updated: 2026-02-23 (handoff refresh)_
 
 ## Implemented in this branch (actual)
 
+### 0) Branch split and rust-g pin
+- Power Shadow change-set is isolated in dedicated branch:
+  - `feature/power-shadow-native-split`
+- Rust-g fork branch/commit for this integration:
+  - `feature/power-shadow-native`
+  - `a047a1fd82b134bdb8bbc8d88107c429f435a037`
+
 ### 1) Legacy power stabilization
 - Fixed known legacy issues that were destabilizing power behavior (APC ENVIRON behavior, sensor divide-by-zero path, cable accumulation handling, terminal direction checks, SMES demand double counting).
 
@@ -30,6 +37,7 @@ _Updated: 2026-02-23 (handoff refresh)_
   - unserved power,
   - mismatch status and thresholds,
   - rolling statistics and acceptance evaluation inputs.
+- Native stateful path now supports compact payload with legacy compatibility fallback.
 
 ### 3) Write-path and safety model
 - Write modes implemented:
@@ -54,6 +62,8 @@ _Updated: 2026-02-23 (handoff refresh)_
   - report export, threshold/mode/backend/guard controls
 - Dashboard stability fixes completed:
   - fixed runtime `type mismatch` by explicit numeric coercion in row sorting/rendering paths.
+- Dashboard summary now also exposes native batch phase averages:
+  - `build / encode / call / decode` (us), with profiled sample count.
 - Admin verb discoverability fix completed:
   - new `power_shadow_*` verbs are registered in debug verb list and should be visible for admins with `R_DEBUG` after admin verbs refresh/relogin.
 
@@ -66,7 +76,13 @@ _Updated: 2026-02-23 (handoff refresh)_
   - backend fallback,
   - optional rebuild branch.
 
-### 6) Test coverage added
+### 6) Native batch performance improvements
+- `SSmachines` batch solver precheck skips powernets that will take a valid cache-hit in `powernet.reset()`.
+- Stateful dynamic payload is reduced (no runtime `backend` in dynamic solve payload).
+- Stateful id is compact (numeric token) with automatic compatibility fallback to legacy id/payload format.
+- Batch fallback to DM remains strict on partial/incomplete native result sets.
+
+### 7) Test coverage added
 - Unit tests added for:
   - FEA lock enforcement,
   - cache reuse behavior,
