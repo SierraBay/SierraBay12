@@ -85,10 +85,6 @@ SUBSYSTEM_DEF(machines)
 	var/static/power_shadow_native_batch_perf_encode_us_sum = 0
 	var/static/power_shadow_native_batch_perf_call_us_sum = 0
 	var/static/power_shadow_native_batch_perf_decode_us_sum = 0
-	var/static/profiling_machinery = FALSE
-	var/static/list/processing_profile_time_by_type = list()
-	var/static/list/processing_profile_count_by_type = list()
-	var/static/profiling_machinery_cycles = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -520,57 +516,6 @@ SUBSYSTEM_DEF(machines)
 		var/lc = lazy_counts[t] || 0
 		var/pct = total_fast ? round((fc / total_fast) * 100, 0.1) : 0
 		lines += "<tr><td>[rank]</td><td>[t]</td><td>[fc]</td><td>[pct]%</td><td>[lc]</td></tr>"
-	lines += "</table>"
-	return lines.Join("\n")
-
-
-/datum/controller/subsystem/machines/proc/reset_machinery_profiling()
-	processing_profile_time_by_type = list()
-	processing_profile_count_by_type = list()
-	profiling_machinery_cycles = 0
-
-
-/datum/controller/subsystem/machines/proc/report_machinery_hotspots(top_n = 25)
-	if(!length(processing_profile_time_by_type))
-		return "No profiling data collected."
-
-	top_n = max(round(top_n), 1)
-	var/total_ms = 0
-	for(var/path in processing_profile_time_by_type)
-		total_ms += processing_profile_time_by_type[path]
-	if(total_ms <= 0)
-		return "No measurable processing time recorded."
-
-	var/list/time_left = processing_profile_time_by_type.Copy()
-	var/list/lines = list()
-	lines += "<h3>Machinery Processing Hotspots</h3>"
-	lines += "<b>Cycles sampled:</b> [profiling_machinery_cycles] | <b>Total measured time:</b> [round(total_ms, 0.01)]ms | <b>Processing list size:</b> [length(processing)]<br>"
-	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
-	lines += "<tr><th>#</th><th>Type</th><th>Total (ms)</th><th>Calls</th><th>Avg (ms)</th><th>Share</th></tr>"
-	var/rank = 0
-	while(rank < top_n && length(time_left))
-		var/best_path = null
-		var/best_ms = -1
-		for(var/path in time_left)
-			var/path_ms = time_left[path]
-			if(path_ms > best_ms)
-				best_ms = path_ms
-				best_path = path
-
-		if(isnull(best_path))
-			break
-
-		time_left.Remove(best_path)
-		if(best_ms <= 0)
-			continue
-
-		rank++
-		var/calls = processing_profile_count_by_type[best_path] || 0
-		var/avg_ms = calls ? round(best_ms / calls, 0.001) : 0
-		var/share = round((best_ms / total_ms) * 100, 0.1)
-		var/avg_per_cycle = profiling_machinery_cycles ? round(calls / profiling_machinery_cycles, 0.1) : calls
-		lines += "<tr><td>[rank]</td><td>[best_path]</td><td>[round(best_ms, 0.01)]</td><td>[calls] ([avg_per_cycle]/cyc)</td><td>[avg_ms]</td><td>[share]%</td></tr>"
-
 	lines += "</table>"
 	return lines.Join("\n")
 
