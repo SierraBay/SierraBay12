@@ -122,17 +122,17 @@
 
 
 //returns list of mobs in range or hearers (include in vehicles)
-/obj/machinery/hivemind_machine/proc/targets_in_range(range = world.view, in_hear_range = FALSE)
-	var/list/range_list = list()
+/obj/machinery/hivemind_machine/proc/targets_in_range(scan_range = world.view, in_hear_range = FALSE)
 	var/list/target_list = list()
-	if(in_hear_range)
-		range_list = hearers(range, src)
-	else
-		range_list = range(range, src)
-	for(var/atom/movable/M in range_list)
-		var/mob/target = M.get_mob()
+	var/list/source = in_hear_range ? hearers(scan_range, src) : range(scan_range, src)
+	for(var/atom/movable/seen in source)
+		if(ismob(seen))
+			target_list |= seen
+			continue
+
+		var/mob/target = seen.get_mob()
 		if(target)
-			target_list += target
+			target_list |= target
 	return target_list
 
 /////////////////////////]             [//////////////////////////
@@ -568,7 +568,7 @@
 		return
 
 	var/success = FALSE
-	for(var/mob/living/carbon/human/victim in targets_in_range(12))
+	for(var/mob/living/carbon/human/victim in range(12, src))
 		if(victim.stat == CONSCIOUS && victim.hallucination_duration < 300)
 			use_ability(victim)
 			success = TRUE
