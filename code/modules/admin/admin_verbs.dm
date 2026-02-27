@@ -217,6 +217,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
 	/client/proc/profile_machinery_processing,
+	/client/proc/show_machinery_distribution,
 	/client/proc/ping_webhook,
 	/client/proc/reload_webhooks,
 	/client/proc/toggle_planet_repopulating,

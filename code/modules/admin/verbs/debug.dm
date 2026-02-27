@@ -477,6 +477,17 @@
 		show_browser(src, "<html><head><title>Machinery Profiling</title></head><body>[report]</body></html>", "window=machinery_profiling;size=900x600")
 		log_admin("[key_name(src)] stopped machinery processing profiling ([SSmachines.profiling_machinery_cycles] cycles sampled).")
 
+/client/proc/show_machinery_distribution()
+	set category = "Debug"
+	set name = "Show Machinery Distribution"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	var/report = SSmachines.report_machinery_distribution()
+	show_browser(src, "<html><head><title>Machinery Distribution</title></head><body>[report]</body></html>", "window=machinery_distribution;size=900x600")
+	log_admin("[key_name(src)] viewed machinery processing distribution.")
+
 /client/proc/toggle_planet_repopulating()
 	set category = "Debug"
 	set name = "Toggle Planet Mob Repopulating"

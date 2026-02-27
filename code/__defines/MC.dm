@@ -96,10 +96,34 @@ if(Datum.is_processing) {\
 	machine.processing_flags |= flag;\
 	START_PROCESSING(SSmachines, machine)
 
-/// STOP specific to SSmachines
+/// STOP specific to SSmachines. Also handles machines registered via START_LAZY_PROCESSING_MACHINE.
 #define STOP_PROCESSING_MACHINE(machine, flag)\
 	machine.processing_flags &= ~flag;\
-	if(machine.processing_flags == 0) STOP_PROCESSING(SSmachines, machine)
+	if(machine.processing_flags == 0) {\
+		if(machine.is_processing == "SSmachines_lazy") {\
+			SSmachines.processing_lazy -= machine;\
+			machine.is_processing = null;\
+		} else {\
+			STOP_PROCESSING(SSmachines, machine)\
+		}\
+	}
+
+/// Queue machine for lazy (slow, ~N*2s) processing on SSmachines. Effective rate is processing_lazy_slice_n fires (~8s at default wait=2s).
+/// Use for machines that don't need 2s granularity (cameras, status displays, passive dispensers, etc).
+/// Cannot be combined with START_PROCESSING_MACHINE on the same machine without stopping lazy first.
+#define START_LAZY_PROCESSING_MACHINE(machine)\
+	if(!istype(machine, /obj/machinery)) CRASH("A non-machine [log_info_line(machine)] was queued for lazy processing on the machinery subsystem.");\
+	if(!machine.is_processing) {\
+		machine.is_processing = "SSmachines_lazy";\
+		SSmachines.processing_lazy += machine;\
+	}
+
+/// Remove machine from lazy processing on SSmachines. Safe to call even if machine is not lazy-registered.
+#define STOP_LAZY_PROCESSING_MACHINE(machine)\
+	if(machine.is_processing == "SSmachines_lazy") {\
+		SSmachines.processing_lazy -= machine;\
+		machine.is_processing = null;\
+	}
 
 
 /****

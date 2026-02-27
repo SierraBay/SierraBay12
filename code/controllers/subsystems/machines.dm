@@ -52,12 +52,16 @@ SUBSYSTEM_DEF(machines)
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
+	var/static/list/processing_lazy = list()
+	var/static/processing_lazy_slice_n = 4
+	var/static/processing_lazy_cursor = 0
 	var/static/list/queue = list()
 	var/static/list/machinery = list()
 	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
+	processing_lazy_cursor = 0
 	queue.Cut()
 
 
@@ -190,6 +194,7 @@ SUBSYSTEM_DEF(machines)
 		Queues: \
 		Pipes [length(pipenets)] \
 		Machines [length(processing)] \
+		Lazy [length(processing_lazy)] \
 		Networks [length(powernets)] \
 		Objects [length(power_objects)]\n\
 		Costs: \
@@ -226,6 +231,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
 	var/static/machinery_index = 0
+	var/static/processing_lazy_index = 0
 	if (!resumed)
 		machinery_index = length(processing)
 	var/obj/machinery/machine
@@ -265,6 +271,38 @@ SUBSYSTEM_DEF(machines)
 	if(profiling_machinery)
 		profiling_machinery_cycles++
 	machinery_index = 0
+
+	// Lazy processing: process 1/processing_lazy_slice_n of processing_lazy per fire cycle.
+	// Uses a rotating cursor so each machine is visited every processing_lazy_slice_n fires (~8s at default wait=2s).
+	if (length(processing_lazy))
+		if (processing_lazy_index == 0)
+			if (processing_lazy_cursor >= length(processing_lazy))
+				processing_lazy_cursor = 0
+			var/slice_size = max(1, round(length(processing_lazy) / processing_lazy_slice_n))
+			processing_lazy_index = min(processing_lazy_cursor + slice_size, length(processing_lazy))
+		var/obj/machinery/lmachine
+		for (var/i = processing_lazy_index to processing_lazy_cursor + 1 step -1)
+			if (i > length(processing_lazy))
+				continue
+			lmachine = processing_lazy[i]
+			if (QDELETED(lmachine))
+				if (lmachine)
+					lmachine.is_processing = null
+				processing_lazy -= lmachine
+				continue
+			if (lmachine.Process(wait) == PROCESS_KILL)
+				lmachine.is_processing = null
+				processing_lazy -= lmachine
+				continue
+			if (no_mc_tick)
+				CHECK_TICK
+			else if (MC_TICK_CHECK)
+				processing_lazy_index = i - 1
+				return
+		processing_lazy_cursor = min(processing_lazy_index, length(processing_lazy))
+		if (processing_lazy_cursor >= length(processing_lazy))
+			processing_lazy_cursor = 0
+	processing_lazy_index = 0
 
 
 /datum/controller/subsystem/machines/proc/reset_machinery_profiling()
@@ -314,6 +352,60 @@ SUBSYSTEM_DEF(machines)
 		var/avg_per_cycle = profiling_machinery_cycles ? round(calls / profiling_machinery_cycles, 0.1) : calls
 		lines += "<tr><td>[rank]</td><td>[best_path]</td><td>[round(best_ms, 0.01)]</td><td>[calls] ([avg_per_cycle]/cyc)</td><td>[avg_ms]</td><td>[share]%</td></tr>"
 
+	lines += "</table>"
+	return lines.Join("\n")
+
+
+/// Returns an HTML table showing the count of each machinery type currently in the processing and processing_lazy lists.
+/// Useful for identifying candidates to migrate to lazy processing. No profiling run required.
+/datum/controller/subsystem/machines/proc/report_machinery_distribution()
+	var/total_fast = length(processing)
+	var/total_lazy = length(processing_lazy)
+
+	var/list/fast_counts = list()
+	for(var/obj/machinery/m as anything in processing)
+		var/t = m.type
+		fast_counts[t] = (fast_counts[t] || 0) + 1
+
+	var/list/lazy_counts = list()
+	for(var/obj/machinery/m as anything in processing_lazy)
+		var/t = m.type
+		lazy_counts[t] = (lazy_counts[t] || 0) + 1
+
+	// Collect all types seen in either list
+	var/list/all_types = fast_counts.Copy()
+	for(var/t in lazy_counts)
+		if(!(t in all_types))
+			all_types[t] = 0
+
+	// Sort by fast_count descending (selection sort)
+	var/list/sorted_types = list()
+	var/list/remaining = all_types.Copy()
+	while(length(remaining))
+		var/best = null
+		var/best_n = -1
+		for(var/t in remaining)
+			var/n = fast_counts[t] || 0
+			if(n > best_n)
+				best_n = n
+				best = t
+		if(isnull(best))
+			break
+		sorted_types += best
+		remaining.Remove(best)
+
+	var/list/lines = list()
+	lines += "<h3>Machinery Processing Distribution</h3>"
+	lines += "<b>Fast list (2s):</b> [total_fast] | <b>Lazy list (~8s):</b> [total_lazy] | <b>Total registered:</b> [length(machinery)]<br>"
+	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
+	lines += "<tr><th>#</th><th>Type</th><th>Fast (2s)</th><th>Fast %</th><th>Lazy (~8s)</th></tr>"
+	var/rank = 0
+	for(var/t in sorted_types)
+		rank++
+		var/fc = fast_counts[t] || 0
+		var/lc = lazy_counts[t] || 0
+		var/pct = total_fast ? round((fc / total_fast) * 100, 0.1) : 0
+		lines += "<tr><td>[rank]</td><td>[t]</td><td>[fc]</td><td>[pct]%</td><td>[lc]</td></tr>"
 	lines += "</table>"
 	return lines.Join("\n")
 
