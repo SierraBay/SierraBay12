@@ -190,12 +190,20 @@
 	queue_event_processing(MACHINERY_WAKE_ATMOS)
 	update_icon()
 
+/obj/machinery/alarm/Move(NewLoc, Dir, step_x, step_y)
+	. = ..()
+	if(.)
+		bind_environment_signal()
+		queue_event_processing(MACHINERY_WAKE_ATMOS)
+
 /obj/machinery/alarm/get_req_access()
 	if(!locked)
 		return list()
 	return ..()
 
 /obj/machinery/alarm/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
+	if(QDELETED(src))
+		return
 	event_pending_wake |= wake_reason
 	if(world.time == last_event_wake_tick)
 		return
