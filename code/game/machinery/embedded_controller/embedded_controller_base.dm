@@ -49,13 +49,16 @@
 		update_icon()
 
 /obj/machinery/embedded_controller/proc/get_icon_state_signature()
-	if(!on || !istype(program))
-		return "[on]|0"
-
+	var/signature = 0
+	if(on)
+		signature |= 1
+	if(!istype(program))
+		return signature
+	signature |= (1 << 1)
 	var/processing = !!program.memory["processing"]
 	var/override_enabled = FALSE
 	var/airlock_processing = FALSE
-	var/pump_status = "none"
+	var/pump_is_siphon = FALSE
 
 	var/datum/computer/file/embedded_program/docking/airlock/docking_program = program
 	if(istype(docking_program))
@@ -64,17 +67,23 @@
 		if(istype(airlock_program))
 			airlock_processing = !!airlock_program.memory["processing"]
 			if(airlock_processing)
-				var/current_pump_status = airlock_program.memory["pump_status"]
-				pump_status = "[current_pump_status]"
+				pump_is_siphon = (airlock_program.memory["pump_status"] == "siphon")
 	else
 		var/datum/computer/file/embedded_program/airlock/airlock_program = program
 		if(istype(airlock_program))
 			airlock_processing = !!airlock_program.memory["processing"]
 			if(airlock_processing)
-				var/current_pump_status = airlock_program.memory["pump_status"]
-				pump_status = "[current_pump_status]"
+				pump_is_siphon = (airlock_program.memory["pump_status"] == "siphon")
 
-	return "[on]|1|[processing]|[override_enabled]|[airlock_processing]|[pump_status]"
+	if(processing)
+		signature |= (1 << 2)
+	if(override_enabled)
+		signature |= (1 << 3)
+	if(airlock_processing)
+		signature |= (1 << 4)
+	if(pump_is_siphon)
+		signature |= (1 << 5)
+	return signature
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
 	ui_interact(user)
@@ -86,6 +95,7 @@
 	power_channel = ENVIRON
 	density = FALSE
 	unacidable = TRUE
+	optimize_icon_tick = TRUE
 	var/frequency = 1379
 	var/radio_filter = null
 	var/datum/radio_frequency/radio_connection

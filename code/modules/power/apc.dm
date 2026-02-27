@@ -139,8 +139,8 @@
 	var/failure_timer = 0               // Cooldown thing for apc outage event
 	var/force_update = 0
 	var/emp_hardened = 0
-	/// Opt-in: cache battery/cell lookup during Process() to reduce repeated component traversals.
-	var/optimize_process_cell_cache = FALSE
+	/// Cache battery/cell lookup during Process() to reduce repeated component traversals.
+	var/optimize_process_cell_cache = TRUE
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
