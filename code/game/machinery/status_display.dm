@@ -50,6 +50,7 @@
 	var/const/STATUS_DISPLAY_CUSTOM = 99
 
 	var/status_display_show_alert_border = FALSE
+	var/tmp/last_render_signature
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)
@@ -98,7 +99,8 @@
 	if (MACHINE_IS_BROKEN(src))
 		return PROCESS_KILL
 	if(!is_powered())
-		remove_display()
+		if(last_render_signature || maptext || length(overlays))
+			remove_display()
 		return
 	update()
 
@@ -106,47 +108,73 @@
 	if(inoperable())
 		..(severity)
 		return
+	last_render_signature = null
 	set_picture("ai_bsod")
 	..(severity)
 
 // set what is displayed
 /obj/machinery/status_display/proc/update()
-	remove_display()
 	if (MACHINE_IS_BROKEN(src))
 		return
+	var/singleton/security_state/security_state
+	var/singleton/security_level/sl
+	if(status_display_show_alert_border || mode == STATUS_DISPLAY_ALERT)
+		security_state = GET_SINGLETON(GLOB.using_map.security_state)
+		sl = security_state.current_security_level
+	var/border_signature = (status_display_show_alert_border && sl) ? "[sl.icon]|[sl.alert_border]" : ""
+	var/render_signature
+	var/line1
+	var/line2
+	var/alert_signature
 	if(friendc && !ignore_friendc)
+		render_signature = "friend|[border_signature]"
+		if(render_signature == last_render_signature)
+			return 1
 		set_picture("ai_friend")
 		if(status_display_show_alert_border)
 			add_alert_border_to_display()
+		last_render_signature = render_signature
 		return 1
 
 	switch(mode)
 		if(STATUS_DISPLAY_BLANK)	//blank
+			render_signature = "blank|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
+			remove_display()
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)				//emergency shuttle timer
+			line1 = ""
+			line2 = ""
 			if(evacuation_controller.is_prepared())
-				message1 = "-ETD-"
+				line1 = "-ETD-"
 				if (evacuation_controller.waiting_to_leave())
-					message2 = "Launch"
+					line2 = "Launch"
 				else
-					message2 = get_shuttle_timer()
-					if(length(message2) > CHARS_PER_LINE)
-						message2 = "Error"
-				update_display(message1, message2)
+					line2 = get_shuttle_timer()
+					if(length(line2) > CHARS_PER_LINE)
+						line2 = "Error"
 			else if(evacuation_controller.has_eta())
-				message1 = "-ETA-"
-				message2 = get_shuttle_timer()
-				if(length(message2) > CHARS_PER_LINE)
-					message2 = "Error"
-				update_display(message1, message2)
+				line1 = "-ETA-"
+				line2 = get_shuttle_timer()
+				if(length(line2) > CHARS_PER_LINE)
+					line2 = "Error"
+			render_signature = "transfer|[line1]|[line2]|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
+			remove_display()
+			if(line1 || line2)
+				update_display(line1, line2)
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_MESSAGE)	//custom messages
-			var/line1
-			var/line2
+			line1 = ""
+			line2 = ""
 
 			if(!index1)
 				line1 = message1
@@ -165,25 +193,47 @@
 				index2 += SCROLL_SPEED
 				if(index2 > message2_len)
 					index2 -= message2_len
+			render_signature = "message|[line1]|[line2]|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
+			remove_display()
 			update_display(line1, line2)
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_ALERT)
+			alert_signature = sl ? "[sl.icon]|[sl.overlay_status_display]|[sl.light_range]|[sl.light_power]|[sl.light_color_alarm]" : "none"
+			render_signature = "alert|[alert_signature]|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
 			display_alert()
+			if(status_display_show_alert_border)
+				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_TIME)
 			message1 = "TIME"
 			message2 = stationtime2text()
+			render_signature = "time|[message1]|[message2]|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
+			remove_display()
 			update_display(message1, message2)
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
 		if(STATUS_DISPLAY_IMAGE)
+			render_signature = "image|[picture_state]|[border_signature]"
+			if(render_signature == last_render_signature)
+				return 1
 			set_picture(picture_state)
 			if(status_display_show_alert_border)
 				add_alert_border_to_display()
+			last_render_signature = render_signature
 			return 1
+	remove_display()
 	return 0
 
 /obj/machinery/status_display/examine(mob/user)
@@ -269,6 +319,7 @@
 	if(maptext)
 		maptext = ""
 	set_light(0)
+	last_render_signature = null
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
