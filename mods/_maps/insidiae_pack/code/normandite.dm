@@ -94,8 +94,8 @@
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	fuel_consumption = 5
-	dock_target = "utyug_shuttle"
+	fuel_consumption = 1 // вернуть на 5
+	dock_target = "utyug_starboard"
 
 /obj/machinery/computer/shuttle_control/explore/utyug
 	name = "shuttle control console"
@@ -104,8 +104,8 @@
 /obj/shuttle_landmark/utyug/start
 	name = "Utyug Dock"
 	landmark_tag = "nav_utyug_start"
-	docking_controller = "utyug_port_dock"
-	base_area = /area/space
+	docking_controller = "utyug_starboard_dock"
+	base_area = /area/normandite/dock
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 // jobs
