@@ -89,6 +89,9 @@
 		if("openLink")
 			send_link(src, href_list["link"])
 
+	if(power_shadow_solver_dashboard_topic(href_list))
+		return
+
 	if(codex_topic(href, href_list))
 		return
 

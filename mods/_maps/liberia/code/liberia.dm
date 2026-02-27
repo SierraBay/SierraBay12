@@ -64,6 +64,7 @@
 
 /obj/machinery/power/apc/liberia
 	req_access = list(access_merchant)
+	optimize_process_cell_cache = TRUE
 
 /obj/machinery/power/smes/buildable/preset/liberia
 	_input_maxed = TRUE

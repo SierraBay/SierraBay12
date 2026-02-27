@@ -59,6 +59,8 @@
 
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
+	var/datum/proximity_trigger/square/prox_trigger	//proximity monitor for dormant state
+
 	req_access = list(list(access_brig, access_bridge))
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
@@ -97,9 +99,12 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	prox_trigger = new /datum/proximity_trigger/square(src, TYPE_PROC_REF(/obj/machinery/porta_turret, prox_alert), TYPE_PROC_REF(/obj/machinery/porta_turret, prox_turfs_changed), world.view)
+
 	setup()
 
 /obj/machinery/porta_turret/Destroy()
+	QDEL_NULL(prox_trigger)
 	qdel(spark_system)
 	spark_system = null
 	. = ..()
@@ -251,6 +256,10 @@ var/global/list/turret_icons
 		var/value = text2num(href_list["value"])
 		if(href_list["command"] == "enable")
 			enabled = value
+			if(value)
+				START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+				if(prox_trigger?.is_active())
+					prox_trigger.unregister_turfs()
 		else if(href_list["command"] == "lethal")
 			lethal = value
 		else if(href_list["command"] == "check_synth")
@@ -278,6 +287,9 @@ var/global/list/turret_icons
 	if(powered())
 		set_stat(MACHINE_STAT_NOPOWER, FALSE)
 		queue_icon_update()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(prox_trigger?.is_active())
+			prox_trigger.unregister_turfs()
 	else
 		spawn(rand(0, 15))
 			set_stat(MACHINE_STAT_NOPOWER, TRUE)
@@ -351,6 +363,9 @@ var/global/list/turret_icons
 			addtimer(new Callback(src, PROC_REF(timer_attacked)), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		if (prob(45))
 			spark_system.start()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(prox_trigger?.is_active())
+			prox_trigger.unregister_turfs()
 
 /obj/machinery/porta_turret/proc/timer_attacked()
 	attacked = FALSE
@@ -388,6 +403,20 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/enable()
 	if(disabled)
 		disabled = 0
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(prox_trigger?.is_active())
+			prox_trigger.unregister_turfs()
+
+/obj/machinery/porta_turret/proc/prox_alert(atom/enterer)
+	if(!enabled || inoperable())
+		return
+	if(isliving(enterer))
+		if(prox_trigger.is_active())
+			prox_trigger.unregister_turfs()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/porta_turret/proc/prox_turfs_changed(list/old_turfs, list/new_turfs)
+	return
 
 /obj/machinery/porta_turret/on_death()
 	spark_system.start()	//creates some sparks because they look cool
@@ -417,6 +446,10 @@ var/global/list/turret_icons
 			if(!hold_deployed && !AiHolder.client)
 			//[SIERRA-ADD]
 				popDown() // no valid targets, close the cover
+			// No valid targets - enter dormant mode with proximity monitoring
+			if(!(auto_repair && health_damaged()) && prox_trigger)
+				prox_trigger.register_turfs()
+				return PROCESS_KILL
 
 	if(auto_repair && health_damaged())
 		use_power_oneoff(20000)

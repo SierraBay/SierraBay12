@@ -52,6 +52,7 @@
 	var/list/dir_alerts[4] // 4 dirs, bitflags
 
 	turf_hand_priority = 2 //Lower priority than normal doors to prevent interference
+	init_flags = 0 // Registered to processing_lazy in Initialize(), not the 2s fast list
 
 	// MUST be in same order as FIREDOOR_ALERT_*
 	var/list/ALERT_STATES=list(
@@ -81,6 +82,8 @@
 		if(istype(A) && !(A in areas_added))
 			LAZYADD(A.all_doors, src)
 			areas_added += A
+
+	START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/door/firedoor/Destroy()
 	for(var/area/A in areas_added)
