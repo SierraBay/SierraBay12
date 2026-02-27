@@ -17,8 +17,9 @@
 		T.hotspot_expose(700,125)
 
 /obj/item/mine/Crossed(AM as mob|obj)
-	if(active)
-		detonate()
+	if(!isobserver(AM))
+		if(active)
+			detonate()
 
 /obj/item/mine/chem_mine
 	name = "mine casing"
