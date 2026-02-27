@@ -17,7 +17,10 @@
 	vessel_mass = 23000
 	known_ships = list(/obj/overmap/visitable/ship/landable/utyug)
 	vessel_size = SHIP_SIZE_SMALL
-	initial_restricted_waypoints = list("Mule" = list("nav_normandite_merchant"), "Utyug" = list("nav_utyug_start"))
+	initial_restricted_waypoints = list(
+		"Mule" = list("nav_normandite_merchant"),
+		"Utyug" = list("nav_utyug_start")
+		)
 	contact_class = /decl/ship_contact_class/normandite
 
 	initial_generic_waypoints = list(
@@ -67,11 +70,11 @@
 /obj/overmap/visitable/ship/landable/utyug
 	shuttle = "Utyug"
 	name = "GTSS Utyug"
-	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B><br>
-<I>Registration</I>: GTSS Utyug<br>
-<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
-<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
+	scanner_desc = @{"
+		<B>Property of Grayson Manufactories:</B><br>
+		<I>Registration</I>: GTSS Utyug<br>
+		<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
+		<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 3 SECONDS
 	vessel_mass = 5000
@@ -84,21 +87,24 @@
 	name = "Utyug"
 	warmup_time = 10
 	current_location = "nav_utyug_start"
-	range = 1
+	logging_home_tag = "nav_utyug_start"
+	range = 2
 	shuttle_area = list(/area/normandite/utyug)
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 	fuel_consumption = 5
+	dock_target = "utyug_shuttle"
 
 /obj/machinery/computer/shuttle_control/explore/utyug
 	name = "shuttle control console"
 	shuttle_tag = "Utyug"
 
-/obj/shuttle_landmark/utyug
+/obj/shuttle_landmark/utyug/start
 	name = "Utyug Dock"
 	landmark_tag = "nav_utyug_start"
+	docking_controller = "utyug_port_dock"
 	base_area = /area/space
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
@@ -414,7 +420,13 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 
 	new/obj/item/paper(loc, text, "Sensor Readings", null, LANGUAGE_HUMAN_RUSSIAN)
 
-// nanomed
+// obj
 
 /obj/machinery/vending/medical/normandite
-	req_access = list()
+	req_access = list("ACCESS_NORMANDITE")
+
+/obj/machinery/power/apc/normandite
+	req_access = list("ACCESS_NORMANDITE")
+
+/obj/machinery/alarm/normandite
+	req_access = list("ACCESS_NORMANDITE")
