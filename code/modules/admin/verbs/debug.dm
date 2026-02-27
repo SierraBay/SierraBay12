@@ -446,7 +446,7 @@
 	visualpower_remove()
 	powernet_markers = list()
 
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		var/netcolor = rgb(rand(100,255),rand(100,255),rand(100,255))
 		for(var/obj/structure/cable/C in PN.cables)
 			var/image/I = image('icons/effects/lighting_overlay.dmi', get_turf(C), "transparent")
@@ -574,7 +574,7 @@
 	var/new_state = (enable == "Enable")
 	var/updated = 0
 	var/locked = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		if(PN.shadow_solver_force_fea_only && !new_state)
 			locked++
 			continue
@@ -614,7 +614,7 @@
 
 	threshold = max(round(threshold), 0)
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.shadow_solver_mismatch_threshold = threshold
 		updated++
 
@@ -634,7 +634,7 @@
 
 	var/backend = (choice == "Strict Capacity Flow") ? "strict_capacity_flow" : "shadow_fea"
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.set_shadow_solver_backend(backend)
 		updated++
 
@@ -654,7 +654,7 @@
 
 	var/new_state = (enable == "Enable")
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.shadow_solver_native_enabled = new_state
 		updated++
 
@@ -674,7 +674,7 @@
 	iterations = max(round(iterations), 1)
 
 	var/list/targets = list()
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		if(!PN.shadow_solver_enabled)
 			continue
 		targets += PN
@@ -686,8 +686,8 @@
 	var/list/original_native_flags = list()
 	var/list/solvers = list()
 	var/list/prebuilt_native_payload_json = list()
-	var/original_autogate_enabled = SSmachines.power_shadow_native_autogate_enabled
-	SSmachines.power_shadow_native_autogate_enabled = FALSE
+	var/original_autogate_enabled = SSpowernets.power_shadow_native_autogate_enabled
+	SSpowernets.power_shadow_native_autogate_enabled = FALSE
 	for(var/datum/powernet/PN in targets)
 		original_native_flags[PN] = PN.shadow_solver_native_enabled
 		var/datum/power_solver/solver = PN.ensure_shadow_solver()
@@ -753,7 +753,7 @@
 	var/timer_native_e2e = "power_shadow_bench_native_e2e_[ckey]_[(world.timeofday % 864000)]"
 	for(var/datum/powernet/PN in targets)
 		PN.reset_shadow_solver_native_perf()
-	SSmachines.reset_power_shadow_native_batch_perf()
+	SSpowernets.reset_power_shadow_native_batch_perf()
 	rustg_time_reset(timer_native_e2e)
 	for(var/datum/powernet/PN in targets)
 		var/datum/power_solver/solver = solvers[PN]
@@ -771,14 +771,14 @@
 		PN.shadow_solver_native_enabled = TRUE
 	rustg_time_reset(timer_native_e2e_batch)
 	for(var/i = 1 to iterations)
-		var/list/batch_snapshots = SSmachines.power_shadow_native_solve_batch(targets, TRUE)
+		var/list/batch_snapshots = SSpowernets.power_shadow_native_solve_batch(targets, TRUE)
 		if(islist(batch_snapshots))
 			e2e_native_batch_samples += length(batch_snapshots)
 	var/e2e_native_batch_total_us = max(rustg_time_microseconds(timer_native_e2e_batch), 0)
 
 	for(var/datum/powernet/PN in targets)
 		PN.shadow_solver_native_enabled = original_native_flags[PN]
-	SSmachines.power_shadow_native_autogate_enabled = original_autogate_enabled
+	SSpowernets.power_shadow_native_autogate_enabled = original_autogate_enabled
 
 	var/core_dm_avg_us = core_dm_samples ? round(core_dm_total_us / core_dm_samples, 0.001) : 0
 	var/core_native_avg_us = core_native_samples ? round(core_native_total_us / core_native_samples, 0.001) : 0
@@ -805,7 +805,7 @@
 	var/native_encode_avg_us = native_phase_samples ? round(native_encode_us_sum / native_phase_samples, 0.001) : 0
 	var/native_call_avg_us = native_phase_samples ? round(native_call_us_sum / native_phase_samples, 0.001) : 0
 	var/native_decode_avg_us = native_phase_samples ? round(native_decode_us_sum / native_phase_samples, 0.001) : 0
-	var/list/batch_perf = SSmachines.get_power_shadow_native_batch_perf_data()
+	var/list/batch_perf = SSpowernets.get_power_shadow_native_batch_perf_data()
 	var/batch_phase_samples = max(batch_perf["samples"], 0)
 	var/batch_build_avg_us = batch_phase_samples ? round(batch_perf["avg_build_us"], 0.001) : 0
 	var/batch_encode_avg_us = batch_phase_samples ? round(batch_perf["avg_encode_us"], 0.001) : 0
@@ -833,7 +833,7 @@
 	cooldown = max(round(cooldown), 0)
 
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.shadow_solver_guard_trip_threshold = threshold
 		PN.shadow_solver_guard_cooldown_ticks = cooldown
 		updated++
@@ -854,7 +854,7 @@
 
 	override_threshold = max(round(override_threshold), 0)
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.shadow_solver_guard_mismatch_threshold_override = override_threshold
 		updated++
 
@@ -891,7 +891,7 @@
 	max_avg_unserved = max(round(max_avg_unserved), 0)
 
 	var/updated = 0
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		PN.shadow_solver_acceptance_min_samples = min_samples
 		PN.shadow_solver_acceptance_max_mismatch_rate = max_mismatch_rate
 		PN.shadow_solver_acceptance_max_avg_load_delta = max_avg_load_delta
@@ -920,7 +920,7 @@
 	var/pass_count = 0
 	var/guard_threshold_sum = 0
 
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		networks++
 		if(PN.shadow_solver_enabled)
 			enabled++
@@ -964,7 +964,7 @@
 	delta_threshold = max(round(delta_threshold), 0)
 	unserved_threshold = max(round(unserved_threshold), 0)
 
-	var/list/collected = SSmachines.power_shadow_collect_anomalies(delta_threshold, unserved_threshold)
+	var/list/collected = SSpowernets.power_shadow_collect_anomalies(delta_threshold, unserved_threshold)
 	var/problem_count = collected["problem_count"]
 	var/networks = collected["networks"]
 	var/list/problem_refs = collected["problem_refs"]
@@ -978,7 +978,7 @@
 		return
 
 	var/do_rebuild = (action == "Retune + Rebuild")
-	var/list/result = SSmachines.power_shadow_apply_auto_repair(delta_threshold, unserved_threshold, do_rebuild)
+	var/list/result = SSpowernets.power_shadow_apply_auto_repair(delta_threshold, unserved_threshold, do_rebuild)
 	var/retuned = result["retuned"]
 	var/backend_switched = result["backend_switched"]
 	var/rebuilt = result["rebuilt"]
@@ -1100,7 +1100,7 @@
 	var/list/rows_by_ref = list()
 	var/list/sorted_refs = list()
 
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		networks++
 		if(PN.shadow_solver_enabled)
 			enabled++
@@ -1183,11 +1183,11 @@
 	var/report_unserved_total = networks ? round(sum_unserved_total / networks, 0.1) : 0
 	var/pass_rate = networks ? round((pass_count / networks) * 100, 0.1) : 0
 	var/avg_guard_threshold = networks ? round(guard_threshold_sum / networks, 0.1) : 0
-	var/powernet_cost = round(SSmachines.cost_powernets, 0.01)
-	var/total_cost = max(SSmachines.cost_pipenets + SSmachines.cost_machinery + SSmachines.cost_powernets + SSmachines.cost_power_objects, 0.01)
-	var/powernet_cost_share = round((SSmachines.cost_powernets / total_cost) * 100, 0.1)
+	var/powernet_cost = round(SSpowernets.cost_powernets, 0.01)
+	var/total_cost = max(SSpipenets.cost_pipenets + SSmachines.cost_machinery + SSpowernets.cost_powernets + SSpowernets.cost_power_objects, 0.01)
+	var/powernet_cost_share = round((SSpowernets.cost_powernets / total_cost) * 100, 0.1)
 	var/cost_per_network = networks ? round(powernet_cost / networks, 0.0001) : 0
-	var/list/batch_perf = SSmachines.get_power_shadow_native_batch_perf_data()
+	var/list/batch_perf = SSpowernets.get_power_shadow_native_batch_perf_data()
 	var/batch_perf_samples = max(batch_perf["samples"], 0)
 	var/batch_perf_build_avg_us = batch_perf_samples ? round(batch_perf["avg_build_us"], 0.001) : 0
 	var/batch_perf_encode_avg_us = batch_perf_samples ? round(batch_perf["avg_encode_us"], 0.001) : 0
@@ -1331,7 +1331,7 @@
 	visualpower_remove()
 	powernet_markers = list()
 
-	for(var/datum/powernet/PN in SSmachines.powernets)
+	for(var/datum/powernet/PN in SSpowernets.powernets)
 		var/abs_delta = abs(PN.shadow_solver_avail_delta) + abs(PN.shadow_solver_load_delta)
 		var/netcolor = "#35d07f"
 		if(abs_delta > PN.shadow_solver_mismatch_threshold * 2)
