@@ -20,8 +20,8 @@
 	frame_type = /obj/item/machine_chassis/air_sensor
 	construct_state = /singleton/machine_construction/default/item_chassis
 	base_type = /obj/machinery/air_sensor
-	var/tmp/last_air_tick = -1
-	var/tmp/datum/gas_mixture/cached_air_sample
+	var/last_air_tick = -1
+	var/datum/gas_mixture/cached_air_sample
 
 /obj/machinery/air_sensor/proc/get_air_sample_cached()
 	if(last_air_tick != world.time)

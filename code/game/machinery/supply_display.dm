@@ -1,8 +1,8 @@
 /obj/machinery/status_display/supply_display
 	ignore_friendc = 1
-	var/tmp/last_rendered_mode
-	var/tmp/last_rendered_message1
-	var/tmp/last_rendered_message2
+	var/last_rendered_mode
+	var/last_rendered_message1
+	var/last_rendered_message2
 
 /obj/machinery/status_display/supply_display/update()
 	if(mode == STATUS_DISPLAY_CUSTOM)

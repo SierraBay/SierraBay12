@@ -50,7 +50,7 @@
 	var/const/STATUS_DISPLAY_CUSTOM = 99
 
 	var/status_display_show_alert_border = FALSE
-	var/tmp/last_render_signature
+	var/last_render_signature
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)

@@ -8,7 +8,7 @@
 	var/optimize_icon_tick = FALSE
 	/// If TRUE, controller can stop processing while idle and wake up on events.
 	var/optimize_event_processing = FALSE
-	var/tmp/last_icon_state_signature
+	var/last_icon_state_signature
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
@@ -114,7 +114,7 @@
 		signature |= 1
 	if(!istype(program))
 		return signature
-	signature |= (1 << 1)
+	signature |= SHIFTL(1, 1)
 	var/processing = !!program.memory["processing"]
 	var/override_enabled = FALSE
 	var/airlock_processing = FALSE
@@ -136,13 +136,13 @@
 				pump_is_siphon = (airlock_program.memory["pump_status"] == "siphon")
 
 	if(processing)
-		signature |= (1 << 2)
+		signature |= SHIFTL(1, 2)
 	if(override_enabled)
-		signature |= (1 << 3)
+		signature |= SHIFTL(1, 3)
 	if(airlock_processing)
-		signature |= (1 << 4)
+		signature |= SHIFTL(1, 4)
 	if(pump_is_siphon)
-		signature |= (1 << 5)
+		signature |= SHIFTL(1, 5)
 	return signature
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
