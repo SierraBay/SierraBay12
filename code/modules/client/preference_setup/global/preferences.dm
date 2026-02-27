@@ -122,6 +122,8 @@ var/global/list/_client_preferences_by_type
 	key = "SOUND_LOBBY"
 
 /datum/client_preference/play_lobby_music/changed(mob/preference_mob, new_value)
+	if(!preference_mob)
+		return
 	if(new_value == GLOB.PREF_YES)
 		if(isnewplayer(preference_mob))
 			sound_to(preference_mob, GLOB.using_map.lobby_track.get_sound())
@@ -365,6 +367,8 @@ var/global/list/_client_preferences_by_type
 
 
 /datum/client_preference/atom_outlines/changed(mob/user, new_value)
+	if(!user)
+		return
 	var/client/client = user.client
 	client?.SetOutlineAtom()
 	client?.outline_enabled = new_value == GLOB.PREF_YES
