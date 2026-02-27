@@ -57,6 +57,7 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller
 	name = "airlock controller"
 	tag_secure = 1
+	optimize_event_processing = TRUE
 
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
 	var/data[0]
@@ -80,6 +81,7 @@
 	icon = 'icons/obj/doors/airlock_machines.dmi'
 	name = "access controller"
 	tag_secure = 1
+	optimize_event_processing = TRUE
 
 /obj/machinery/embedded_controller/radio/airlock/access_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
 	var/data[0]

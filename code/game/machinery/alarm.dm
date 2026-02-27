@@ -188,13 +188,16 @@
 	if(!istype(location))	return//returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
+	var/environment_pressure = environment.return_pressure()
 
 	//Handle temperature adjustment here.
-	if(environment.return_pressure() > ONE_ATMOSPHERE*0.05)
+	if(environment_pressure > ONE_ATMOSPHERE*0.05)
 		handle_heating_cooling(environment)
+		if (regulating_temperature)
+			environment_pressure = environment.return_pressure()
 
 	var/old_level = danger_level
-	danger_level = overall_danger_level(environment)
+	danger_level = overall_danger_level(environment, environment_pressure)
 
 	if (old_level != danger_level)
 		if(danger_level == 2)
@@ -202,11 +205,11 @@
 		apply_danger_level(danger_level)
 
 	if (pressure_dangerlevel != 0)
-		if (breach_detected())
+		if (breach_detected(environment_pressure))
 			mode = AALARM_MODE_OFF
 			apply_mode()
 
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
+	if (mode==AALARM_MODE_CYCLE && environment_pressure < ONE_ATMOSPHERE*0.05)
 		breach_start_cooldown()
 		mode=AALARM_MODE_FILL
 		apply_mode()
@@ -270,9 +273,10 @@
 
 			environment.merge(gas)
 
-/obj/machinery/alarm/proc/overall_danger_level(datum/gas_mixture/environment)
+/obj/machinery/alarm/proc/overall_danger_level(datum/gas_mixture/environment, environment_pressure = null)
 	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
-	var/environment_pressure = environment.return_pressure()
+	if (isnull(environment_pressure))
+		environment_pressure = environment.return_pressure()
 
 	var/other_moles = 0
 	for(var/g in trace_gas)
@@ -293,20 +297,19 @@
 		)
 
 // Returns whether this air alarm thinks there is a breach, given the sensors that are available to it.
-/obj/machinery/alarm/proc/breach_detected()
-	var/turf/simulated/location = loc
-
-	if(!istype(location))
-		return FALSE
-
+/obj/machinery/alarm/proc/breach_detected(environment_pressure = null)
 	if(breach_cooldown)
 		return FALSE
 
 	if(breach_pressure < 0)
 		return FALSE
 
-	var/datum/gas_mixture/environment = location.return_air()
-	var/environment_pressure = environment.return_pressure()
+	if (isnull(environment_pressure))
+		var/turf/simulated/location = loc
+		if(!istype(location))
+			return FALSE
+		var/datum/gas_mixture/environment = location.return_air()
+		environment_pressure = environment.return_pressure()
 
 	if (environment_pressure <= breach_pressure)
 		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
@@ -1082,7 +1085,8 @@ FIRE ALARM
 		src.updateDialog()
 	last_process = world.timeofday
 
-	if(locate(/obj/hotspot) in loc)
+	var/turf/T = loc
+	if(istype(T) && T.hotspot)
 		alarm()
 
 /obj/machinery/firealarm/interface_interact(mob/user)

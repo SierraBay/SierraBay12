@@ -159,6 +159,12 @@
 #define rustg_log_write_no_format(log, text) rustg_log_write(log, text, "false")
 
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
+// Native power shadow solver hook (implemented in rust-g fork).
+#define rustg_power_shadow_solve(payload_json) RUSTG_CALL(RUST_G, "power_shadow_solve")(payload_json)
+#define rustg_power_shadow_solve_many(payload_json) RUSTG_CALL(RUST_G, "power_shadow_solve_many")(payload_json)
+#define rustg_power_shadow_stateful_apply(payload_json) RUSTG_CALL(RUST_G, "power_shadow_stateful_apply")(payload_json)
+/proc/rustg_power_shadow_stateful_reset()
+	return RUSTG_CALL(RUST_G, "power_shadow_stateful_reset")()
 
 #define rustg_sql_connect_pool(options) RUSTG_CALL(RUST_G, "sql_connect_pool")(options)
 #define rustg_sql_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_async")(handle, query, params)

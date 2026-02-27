@@ -20,11 +20,29 @@
 	var/l_power = 2.5 //brightness of light when on, can be negative
 	var/l_range = 8 //outer range of light when on, can be negative
 
+/obj/machinery/floodlight/Initialize()
+	. = ..()
+	configure_battery_optimization()
+
+/obj/machinery/floodlight/proc/configure_battery_optimization()
+	var/obj/item/stock_parts/power/battery/battery = get_component_of_type(/obj/item/stock_parts/power/battery)
+	if(!battery)
+		return
+	battery.optimize_idle_suspend = TRUE
+	battery.refresh_processing(src)
+
+/obj/machinery/floodlight/proc/refresh_battery_processing()
+	var/obj/item/stock_parts/power/battery/battery = get_component_of_type(/obj/item/stock_parts/power/battery)
+	if(!battery || !battery.optimize_idle_suspend)
+		return
+	battery.refresh_processing(src)
+
 /obj/machinery/floodlight/on_update_icon()
 	icon_state = "flood[panel_open ? "o" : ""][panel_open && get_cell() ? "b" : ""]0[use_power == POWER_USE_ACTIVE]"
 
 /obj/machinery/floodlight/power_change()
 	. = ..()
+	refresh_battery_processing()
 	if(!. || !use_power) return
 
 	if(!is_powered())
@@ -46,6 +64,7 @@
 	set_light(l_range, l_power / 2, angle = LIGHT_VERY_WIDE)
 	update_use_power(POWER_USE_ACTIVE)
 	use_power_oneoff(active_power_usage)//so we drain cell if they keep trying to use it
+	refresh_battery_processing()
 	update_icon()
 	if(loud)
 		visible_message("\The [src] turns on.")
@@ -55,6 +74,7 @@
 /obj/machinery/floodlight/proc/turn_off(loud = 0)
 	set_light(0, 0)
 	update_use_power(POWER_USE_OFF)
+	refresh_battery_processing()
 	update_icon()
 	if(loud)
 		visible_message("\The [src] shuts down.")
@@ -75,6 +95,7 @@
 
 /obj/machinery/floodlight/RefreshParts()//if they're insane enough to modify a floodlight, let them
 	..()
+	configure_battery_optimization()
 	var/light_mod = clamp(total_component_rating_of_type(/obj/item/stock_parts/capacitor), 0, 10)
 	l_power = light_mod? light_mod*0.01 + initial(l_power) : initial(l_power)/2 //gives us between 0.8-0.9 with capacitor, or 0.4 without one
 	l_range = light_mod*1.5 + initial(l_range)
