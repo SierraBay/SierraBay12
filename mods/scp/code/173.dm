@@ -223,7 +223,7 @@
 		T.Destroy()
 		return T
 
-/mob/living/simple_animal/hostile/statue/proc/try_to_scare(var/chance = 25, var/should_see = 1)
+/mob/living/simple_animal/hostile/statue/proc/try_to_scare(chance = 25, should_see = 1)
 	var/scared
 	for(var/mob/living/carbon/human/spooked in view(src, 7))
 		if(spooked.stat != CONSCIOUS)
