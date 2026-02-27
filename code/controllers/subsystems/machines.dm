@@ -65,6 +65,11 @@ SUBSYSTEM_DEF(machines)
 	var/static/air_alarm_profile_auto_stopped = FALSE
 	/// Runtime fallback switch for event-driven processing of docking embedded controllers.
 	var/static/optimize_embedded_docking_event = TRUE
+	var/static/powernet_last_snapshot_size = 0
+	var/static/powernet_last_processed = 0
+	var/static/powernet_last_skipped_null = 0
+	var/static/powernet_last_removed_qdeleted = 0
+	var/static/powernet_next_anomaly_log_time = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -219,6 +224,11 @@ SUBSYSTEM_DEF(machines)
 		Machines [Round(cost_machinery)] \
 		Networks [Round(cost_powernets)] \
 		Objects [Round(cost_power_objects)]\n\
+		PowerLoop: \
+		Snap [powernet_last_snapshot_size] \
+		Done [powernet_last_processed] \
+		Null [powernet_last_skipped_null] \
+		QDel [powernet_last_removed_qdeleted]\n\
 		Overall [Roundm(cost ? length(processing) / cost : 0, 0.1)]
 	"})
 
@@ -478,22 +488,45 @@ SUBSYSTEM_DEF(machines)
 
 
 /datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
+	var/static/powernets_index = 0
+	var/static/list/powernets_snapshot = list()
 	if (!resumed)
-		queue = powernets.Copy()
+		powernets_snapshot.Cut()
+		powernet_last_snapshot_size = 0
+		powernet_last_processed = 0
+		powernet_last_skipped_null = 0
+		powernet_last_removed_qdeleted = 0
+		for(var/datum/powernet/network as anything in powernets)
+			if(network)
+				powernets_snapshot += network
+		powernet_last_snapshot_size = length(powernets_snapshot)
+		powernets_index = length(powernets_snapshot)
 	var/datum/powernet/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	for (var/i = powernets_index to 1 step -1)
+		if(i > length(powernets_snapshot))
+			continue
+		network = powernets_snapshot[i]
+		if(!network)
+			powernet_last_skipped_null++
+			continue
 		if (QDELETED(network))
 			if (network)
 				network.is_processing = null
 			powernets -= network
+			powernet_last_removed_qdeleted++
 			continue
 		network.reset(wait)
+		powernet_last_processed++
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
+			powernets_index = i - 1
 			return
+	powernets_index = 0
+	powernets_snapshot.Cut()
+	if((powernet_last_skipped_null || powernet_last_removed_qdeleted) && world.time >= powernet_next_anomaly_log_time)
+		log_debug("SSmachines powernet loop anomalies: snapshot=[powernet_last_snapshot_size], processed=[powernet_last_processed], null_skips=[powernet_last_skipped_null], qdeleted_removed=[powernet_last_removed_qdeleted]")
+		powernet_next_anomaly_log_time = world.time + 600
 
 
 /datum/controller/subsystem/machines/proc/process_power_objects(resumed, no_mc_tick)
@@ -519,6 +552,93 @@ SUBSYSTEM_DEF(machines)
 			power_objects_index = i - 1
 			return
 	power_objects_index = 0
+/datum/controller/subsystem/machines/proc/power_shadow_collect_anomalies(delta_threshold, unserved_threshold, list/target_powernets = null)
+	var/list/powernets_to_check = islist(target_powernets) ? target_powernets : powernets
+	var/list/problem_refs = list()
+	var/list/problem_nets = list()
+	var/problem_count = 0
+	var/networks = 0
+
+	for(var/datum/powernet/PN in powernets_to_check)
+		networks++
+		var/abs_delta = abs(PN.shadow_solver_avail_delta) + abs(PN.shadow_solver_load_delta)
+		var/is_problem = FALSE
+		if(PN.shadow_solver_mismatch)
+			is_problem = TRUE
+		if(abs_delta >= delta_threshold)
+			is_problem = TRUE
+		if(PN.is_shadow_solver_unserved_persistent(unserved_threshold))
+			is_problem = TRUE
+		if(!PN.evaluate_shadow_solver_acceptance() && PN.shadow_solver_acceptance_last_reason != "insufficient_samples")
+			is_problem = TRUE
+
+		if(!is_problem)
+			continue
+
+		problem_count++
+		problem_nets += PN
+		if(length(problem_refs) < 10)
+			problem_refs += "\ref[PN]"
+
+	return list(
+		"networks" = networks,
+		"problem_count" = problem_count,
+		"problem_refs" = problem_refs,
+		"problem_nets" = problem_nets
+	)
+
+
+/datum/controller/subsystem/machines/proc/power_shadow_apply_auto_repair(delta_threshold, unserved_threshold, do_rebuild = FALSE, list/target_powernets = null)
+	var/list/collected = power_shadow_collect_anomalies(delta_threshold, unserved_threshold, target_powernets)
+	var/list/problem_nets = collected["problem_nets"]
+	var/list/problem_refs = collected["problem_refs"]
+	var/problem_count = collected["problem_count"]
+	var/networks = collected["networks"]
+
+	var/retuned = 0
+	var/backend_switched = 0
+	for(var/datum/powernet/PN in problem_nets)
+		var/abs_delta = abs(PN.shadow_solver_avail_delta) + abs(PN.shadow_solver_load_delta)
+		var/scale_base = max(max(PN.avail, PN.shadow_solver_last_avail), max(PN.load, PN.shadow_solver_last_load))
+		scale_base = max(scale_base, 10000)
+		var/adaptive_threshold = max(PN.shadow_solver_mismatch_threshold, round(scale_base * 0.2), 5000)
+
+		PN.shadow_solver_mismatch_threshold = adaptive_threshold
+		PN.shadow_solver_guard_mismatch_threshold_override = adaptive_threshold
+		PN.shadow_solver_acceptance_max_avg_load_delta = max(PN.shadow_solver_acceptance_max_avg_load_delta, round(adaptive_threshold * 1.5))
+		PN.shadow_solver_acceptance_max_avg_avail_delta = max(PN.shadow_solver_acceptance_max_avg_avail_delta, round(adaptive_threshold * 1.5))
+		PN.shadow_solver_acceptance_max_avg_unserved = max(PN.shadow_solver_acceptance_max_avg_unserved, round(adaptive_threshold * 0.8))
+
+		if(PN.shadow_solver_backend == "shadow_fea" && abs_delta > adaptive_threshold * 2 && PN.shadow_solver_last_unserved > unserved_threshold)
+			PN.set_shadow_solver_backend("strict_capacity_flow")
+			backend_switched++
+
+		PN.reset_shadow_solver_guard_state()
+		PN.reset_shadow_solver_stats()
+		if(hascall(PN, "mark_shadow_solver_topology_dirty"))
+			call(PN, "mark_shadow_solver_topology_dirty")()
+		retuned++
+
+	var/rebuilt = 0
+	var/rebuild_applied = FALSE
+	if(do_rebuild && !islist(target_powernets))
+		makepowernets()
+		rebuild_applied = TRUE
+		for(var/datum/powernet/NewPN in powernets)
+			NewPN.reset_shadow_solver_stats()
+			if(hascall(NewPN, "mark_shadow_solver_topology_dirty"))
+				call(NewPN, "mark_shadow_solver_topology_dirty")()
+			rebuilt++
+
+	return list(
+		"networks" = networks,
+		"problem_count" = problem_count,
+		"problem_refs" = problem_refs,
+		"retuned" = retuned,
+		"backend_switched" = backend_switched,
+		"rebuilt" = rebuilt,
+		"rebuild_applied" = rebuild_applied
+	)
 
 
 #undef SSMACHINES_PIPENETS
