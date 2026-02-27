@@ -150,7 +150,7 @@
 /obj/machinery/computer/shuttle_control/explore/old_snz
 /obj/machinery/computer/shuttle_control/explore/interseptor
 
-/datum/shuttle/autodock/overmap/utyug
+/obj/machinery/computer/shuttle_control/explore/utyug
 	skill_req = SKILL_MASTER + 10 // Лэндмарк не имеет базовой зоны ангара, как следствие подтягивает половину зоны за собой, отключение
 
 /area/mine
