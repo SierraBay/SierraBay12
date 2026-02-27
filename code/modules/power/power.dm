@@ -65,6 +65,19 @@
 	else
 		return 0
 
+// Shadow solver adapter contract.
+// Implementors should return list with numeric fields:
+// "primary_demand", "deferred_demand", "supply".
+/obj/machinery/power/proc/power_solver_shadow_profile()
+	var/usage = get_power_usage()
+	if(usage > 0)
+		return list(
+			"primary_demand" = usage,
+			"deferred_demand" = 0,
+			"supply" = 0
+		)
+	return null
+
 /obj/machinery/power/post_anchor_change()
 	if(anchored && !MACHINE_IS_BROKEN(src)) // Powernet connection stuff.
 		connect_to_network()

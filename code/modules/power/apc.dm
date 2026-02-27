@@ -141,6 +141,7 @@
 	var/emp_hardened = 0
 	/// Cache battery/cell lookup during Process() to reduce repeated component traversals.
 	var/optimize_process_cell_cache = TRUE
+	var/obj/item/stock_parts/power/terminal/cached_terminal_component = null
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -276,6 +277,7 @@
 
 /obj/machinery/power/apc/Destroy()
 	src.update()
+	cached_terminal_component = null
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -306,12 +308,20 @@
 	bat.add_cell(src, new cell_type(bat))
 	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
 	term.make_terminal(src)
+	cached_terminal_component = term
 
 	queue_icon_update()
 
 /obj/machinery/power/apc/proc/terminal()
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = get_terminal_component()
 	return term && term.terminal
+
+/obj/machinery/power/apc/proc/get_terminal_component()
+	if(cached_terminal_component && !QDELETED(cached_terminal_component) && cached_terminal_component.loc == src)
+		return cached_terminal_component
+
+	cached_terminal_component = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	return cached_terminal_component
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -985,7 +995,27 @@
 	if(autoset(equipment, 2) >= POWERCHAN_ON)
 		. += area.usage(EQUIP)
 	if(autoset(environ, 1) >= POWERCHAN_ON)
-		. += area.usage(EQUIP)
+		. += area.usage(ENVIRON)
+
+	if(. <= 0)
+		return
+
+	var/obj/machinery/power/terminal/term = terminal()
+	var/datum/powernet/net = term && term.powernet
+	if(!net || !net.should_enforce_apc_cap())
+		return
+
+	. = min(., net.get_apc_enforced_budget())
+
+/obj/machinery/power/apc/power_solver_shadow_profile()
+	var/usage = max(lastused_total, 0)
+	if(!usage)
+		usage = max(get_power_usage(), 0)
+	return list(
+		"primary_demand" = usage,
+		"deferred_demand" = 0,
+		"supply" = 0
+	)
 
 /obj/machinery/power/apc/Process()
 	if(!area.requires_power)
