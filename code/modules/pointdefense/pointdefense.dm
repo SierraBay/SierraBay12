@@ -161,12 +161,7 @@
 
 /obj/machinery/pointdefense/proc/finish_shot(weakref/target)
 	//Cleanup from list
-	var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
-	var/datum/local_network/lan = pointdefense.get_local_network()
-	var/obj/machinery/pointdefense_control/PC = null
-	if(lan)
-		var/list/pointdefense_controllers = lan.get_devices(/obj/machinery/pointdefense_control)
-		PC = pointdefense_controllers[1]
+	var/obj/machinery/pointdefense_control/PC = get_controller()
 	if(istype(PC))
 		PC.targets -= target
 
@@ -184,6 +179,14 @@
 	M.make_debris()
 	qdel(M)
 
+/obj/machinery/pointdefense/proc/get_controller()
+	var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
+	var/datum/local_network/lan = pointdefense.get_local_network()
+	if(!lan)
+		return null
+	var/list/pointdefense_controllers = lan.get_devices(/obj/machinery/pointdefense_control)
+	return LAZYACCESS(pointdefense_controllers, 1)
+
 /obj/machinery/pointdefense/Process()
 	..()
 	if(inoperable())
@@ -198,30 +201,28 @@
 
 	if(length(GLOB.meteor_list) == 0)
 		return
-	var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
-	var/datum/local_network/lan = pointdefense.get_local_network()
-	var/obj/machinery/pointdefense_control/PC = null
-	if(lan)
-		var/list/pointdefense_controllers = lan.get_devices(/obj/machinery/pointdefense_control)
-		if(pointdefense_controllers)
-			PC = LAZYACCESS(pointdefense_controllers, 1)
+	if(emagged)
+		return
+
+	var/obj/machinery/pointdefense_control/PC = get_controller()
 	if(!istype(PC))
 		return
 
-	for(var/obj/meteor/M in GLOB.meteor_list)
-		var/already_targeted = FALSE
-		for(var/weakref/WR in PC.targets)
-			var/obj/meteor/m = WR.resolve()
-			if(m == M)
-				already_targeted = TRUE
-				break
-			if(!istype(m))
-				PC.targets -= WR
+	var/list/already_targeted = list()
+	for(var/i = length(PC.targets) to 1 step -1)
+		var/weakref/WR = PC.targets[i]
+		var/obj/meteor/current_target = WR.resolve()
+		if(!istype(current_target))
+			PC.targets.Cut(i, i + 1)
+			continue
+		already_targeted[current_target] = TRUE
 
-		if(already_targeted)
+	var/list/connected_zlevels = GetConnectedZlevels(z)
+	for(var/obj/meteor/M in GLOB.meteor_list)
+		if(already_targeted[M])
 			continue
 
-		if(!(M.z in GetConnectedZlevels(z)))
+		if(!(M.z in connected_zlevels))
 			continue
 		if(get_dist(M, src) > kill_range)
 			continue
@@ -229,9 +230,9 @@
 		if (!can_see(src, M, kill_range))
 			continue
 
-		if(!emagged && space_los(M))
+		if(space_los(M))
 			var/weakref/target = weakref(M)
-			PC.targets +=target
+			PC.targets += target
 			Shoot(target)
 			return
 

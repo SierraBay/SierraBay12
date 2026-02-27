@@ -38,6 +38,7 @@
 	var/material/implicit_material
 	autoset_access = FALSE // Uses different system with buttons.
 	pry_mod = 1.35
+	init_flags = 0 // Registered to processing_lazy in Initialize(), not the 2s fast list
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/radio/receiver,
@@ -61,6 +62,7 @@
 		layer = open_layer
 
 	implicit_material = SSmaterials.get_material_by_name(MATERIAL_PLASTEEL)
+	START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/door/blast/examine(mob/user)
 	. = ..()

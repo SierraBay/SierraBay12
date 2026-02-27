@@ -22,6 +22,11 @@
 	build_icon_state = "connector"
 
 	pipe_class = PIPE_CLASS_UNARY
+	init_flags = 0 // Registered to processing_lazy in Initialize(), not the 2s fast list
+
+/obj/machinery/atmospherics/portables_connector/Initialize()
+	. = ..()
+	START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/atmospherics/portables_connector/on_update_icon()
 	icon_state = "connector"

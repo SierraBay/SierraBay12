@@ -59,10 +59,15 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	var/allow_ai = TRUE
 
 	var/list/linked_pdas
+	init_flags = 0 // Registered to processing_lazy in Initialize(), not the 2s fast list
 
 /obj/machinery/hologram/holopad/New()
 	..()
 	desc = "It's a floor-mounted device for projecting holographic images. Its ID is '[loc.loc]'"
+
+/obj/machinery/hologram/holopad/Initialize()
+	. = ..()
+	START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/hologram/holopad/examine(mob/user)
 	. = ..()

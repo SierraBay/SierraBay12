@@ -111,7 +111,7 @@
 	. = FALSE
 	var/check_dir = terminal_dir ? GLOB.reverse_dir[terminal_dir] : machine.dir
 	for(var/obj/machinery/power/terminal/term in T)
-		if(T.dir == check_dir)
+		if(term.dir == check_dir)
 			to_chat(user, SPAN_NOTICE("There is already a terminal here."))
 			return TRUE
 

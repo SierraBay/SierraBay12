@@ -1,0 +1,69 @@
+<h3>Power Shadow Dashboard</h3>
+<div>
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=refresh'>Refresh now</a>
+	| <a href='byond://?src=\ref[src];power_shadow_dash_action=toggle_live'>{{if data.live_mode}}Live OFF{{else}}Live ON{{/if}}</a>
+	| View:
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=view_all'>All</a> /
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=view_problematic'>Problematic</a>
+	| Rows:
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=top_dec'>-20</a> /
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=top_inc'>+20</a>
+	| Interval:
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=interval_dec'>-1s</a> /
+	<a href='byond://?src=\ref[src];power_shadow_dash_action=interval_inc'>+1s</a>
+</div>
+<div><b>View:</b> {{:data.view_mode}}, top {{:data.top_n}} rows, sorted by Delta desc.</div>
+<div><b>Live refresh:</b> {{if data.live_mode}}ON ({{:data.live_interval}}s){{else}}OFF{{/if}}</div>
+<div><b>Runtime cost:</b> powernets {{:data.powernet_cost}} ms/tick ({{:data.powernet_cost_share}}%), avg {{:data.cost_per_network}} ms/tick per network.</div>
+<div><b>Native batch phases avg (us):</b> build {{:data.batch_perf_build_avg_us}}, encode {{:data.batch_perf_encode_avg_us}}, call {{:data.batch_perf_call_avg_us}}, decode {{:data.batch_perf_decode_avg_us}}, samples {{:data.batch_perf_samples}}.</div>
+<div><b>Networks:</b> {{:data.networks}} total, {{:data.enabled}} solver-enabled, {{:data.locked}} FEA-only locked.</div>
+<div><b>Problem networks:</b> {{:data.problem_networks}} / {{:data.networks}}</div>
+<div><b>Quality:</b> mismatch {{:data.report_mismatch}}%, avg |dLoad| {{:data.report_load_delta}}W, avg |dAvail| {{:data.report_avail_delta}}W, avg unserved P/D/T {{:data.report_unserved_primary}}/{{:data.report_unserved_deferred}}/{{:data.report_unserved_total}}W.</div>
+<div><b>Reliability:</b> acceptance pass {{:data.pass_count}}/{{:data.networks}} ({{:data.pass_rate}}%), total rollbacks {{:data.rollbacks}}, avg guard threshold {{:data.avg_guard_threshold}}W.</div>
+<hr>
+<table class='table' style='width:100%;font-size:12px;border-collapse:collapse;'>
+	<tr>
+		<th>Net</th>
+		<th>Nodes</th>
+		<th>Cables</th>
+		<th>Backend</th>
+		<th>Mode</th>
+		<th>Load/Avail</th>
+		<th>Unserved P/D/T</th>
+		<th>dAvail</th>
+		<th>dLoad</th>
+		<th>Delta</th>
+		<th>Load Bar</th>
+		<th>Delta Bar</th>
+		<th>Unserved Bar</th>
+		<th>Mismatch</th>
+		<th>Guard</th>
+		<th>Acceptance</th>
+		<th>Samples</th>
+		<th>Rollbacks</th>
+	</tr>
+	{{for data.rows}}
+	<tr style='{{:value.is_problem ? "background:#261f1f;" : (value.acceptance == "Pass" ? "background:#1f2620;" : "")}}'>
+		<td>{{:value.net_ref}}</td>
+		<td>{{:value.nodes}}</td>
+		<td>{{:value.cables}}</td>
+		<td>{{:value.backend}}</td>
+		<td>{{:value.mode}}</td>
+		<td>{{:value.load}} / {{:value.avail}} W</td>
+		<td>{{:value.unserved_primary}} / {{:value.unserved_deferred}} / {{:value.unserved_total}} W</td>
+		<td>{{:value.delta_avail}} W</td>
+		<td>{{:value.delta_load}} W</td>
+		<td>{{:value.delta_total}} W</td>
+		<td>{{:helper.displayBar(value.load_ratio, 0, 100, value.load_bar_style)}}</td>
+		<td>{{:helper.displayBar(value.delta_ratio, 0, 100, value.delta_bar_style)}}</td>
+		<td>{{:helper.displayBar(value.unserved_ratio, 0, 100, value.unserved_bar_style)}}</td>
+		<td>{{:value.mismatch}}</td>
+		<td>{{:value.guard}}</td>
+		<td>{{:value.acceptance}}</td>
+		<td>{{:value.samples}}</td>
+		<td>{{:value.rollbacks}}</td>
+	</tr>
+	{{/for}}
+</table>
+<div><b>Rendered rows:</b> {{:data.rendered_rows}}</div>
+<div><b>Updated:</b> {{:data.updated_at}}</div>

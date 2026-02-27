@@ -9,6 +9,8 @@
 	var/charge_wait_counter = 10  // How many ticks we wait until we start charging after charging becomes an option.
 	var/last_cell_charge  = 0     // Used for UI stuff.
 	var/seek_alternatives = 5     // How many ticks we wait before seeking other power sources, if we can provide the machine with power. Set to 0 to never do this.
+	/// If TRUE, component processing is suspended while machine/cell are in a stable idle state.
+	var/optimize_idle_suspend = FALSE
 
 /obj/item/stock_parts/power/battery/Destroy()
 	qdel(cell)
@@ -16,7 +18,10 @@
 
 /obj/item/stock_parts/power/battery/on_install(obj/machinery/machine)
 	..()
-	start_processing(machine)
+	if(optimize_idle_suspend)
+		refresh_processing(machine)
+	else
+		start_processing(machine)
 
 /obj/item/stock_parts/power/battery/on_uninstall(obj/machinery/machine)
 	if(status & PART_STAT_ACTIVE)
@@ -38,6 +43,7 @@
 	if(istype(machine))
 		machine.power_change()
 		machine.queue_icon_update()
+		refresh_processing(machine)
 	set_status(machine, PART_STAT_CONNECTED)
 	update_icon()
 	return cell
@@ -51,8 +57,36 @@
 		if(istype(machine))
 			machine.power_change()
 			machine.queue_icon_update()
+			refresh_processing(machine)
 		update_icon()
 		unset_status(machine, PART_STAT_CONNECTED)
+
+/obj/item/stock_parts/power/battery/proc/should_keep_processing(obj/machinery/machine)
+	if(!optimize_idle_suspend || !istype(machine))
+		return TRUE
+	if(status & PART_STAT_ACTIVE)
+		return TRUE
+	if(machine.use_power == POWER_USE_ACTIVE)
+		return TRUE
+	if(!cell)
+		return FALSE
+	if(can_charge && !cell.fully_charged())
+		var/area/A = get_area(machine)
+		if(A && A.powered(charge_channel))
+			return TRUE
+	return FALSE
+
+/obj/item/stock_parts/power/battery/proc/refresh_processing(obj/machinery/machine)
+	if(!optimize_idle_suspend)
+		return
+	if(!istype(machine))
+		machine = loc
+	if(!istype(machine))
+		return
+	if(should_keep_processing(machine))
+		start_processing(machine)
+	else
+		stop_processing(machine)
 
 /obj/item/stock_parts/power/battery/proc/extract_cell(mob/user)
 	if(!cell)
@@ -69,11 +103,15 @@
 
 /obj/item/stock_parts/power/battery/machine_process(obj/machinery/machine)
 	last_cell_charge = cell && cell.charge
+	if(optimize_idle_suspend && !should_keep_processing(machine))
+		return PROCESS_KILL
 
 	if(status & PART_STAT_ACTIVE)
 		if(!(cell && cell.checked_use(CELLRATE * machine.get_power_usage())))
 			machine.update_power_channel(cached_channel)
 			machine.power_change() // Out of power
+			if(optimize_idle_suspend && !should_keep_processing(machine))
+				return PROCESS_KILL
 			return
 		if(seek_alternatives > 0)
 			seek_alternatives--
@@ -81,22 +119,30 @@
 				seek_alternatives = initial(seek_alternatives)
 				machine.update_power_channel(cached_channel)
 				machine.power_change()
+		if(optimize_idle_suspend && !should_keep_processing(machine))
+			return PROCESS_KILL
 		return // We don't recharge if discharging
 
 	if((!machine.is_powered()) && cell && cell.fully_charged())
 		machine.power_change()
+		if(optimize_idle_suspend && !should_keep_processing(machine))
+			return PROCESS_KILL
 		return // This suggests that we should be powering the machine instead, so let's try that
 
 	// try and recharge
 	var/area/A = get_area(machine)
 	if(!can_charge || !cell || cell.fully_charged() || !A.powered(charge_channel))
 		charge_wait_counter = initial(charge_wait_counter)
+		if(optimize_idle_suspend && !should_keep_processing(machine))
+			return PROCESS_KILL
 		return
 	if(charge_wait_counter > 0)
 		charge_wait_counter--
 		return
 	var/give = cell.give(charge_rate) / CELLRATE
 	A.use_power_oneoff(give, charge_channel)
+	if(optimize_idle_suspend && !should_keep_processing(machine))
+		return PROCESS_KILL
 
 /obj/item/stock_parts/power/battery/can_provide_power(obj/machinery/machine)
 	if(cell && cell.check_charge(CELLRATE * machine.get_power_usage()))
@@ -131,6 +177,7 @@
 			cell.forceMove(src)
 	charge_rate = initial(charge_rate)
 	charge_rate *= 1 + 0.5 * machine.total_component_rating_of_type(/obj/item/stock_parts/capacitor)
+	refresh_processing(machine)
 
 /obj/item/stock_parts/power/battery/on_update_icon()
 	icon_state = "battery[!!cell]"

@@ -59,6 +59,8 @@
 	var/name_tag = null
 	var/num_terminals = 0    // internal bookkeeping for number of connected terminals
 	var/should_be_mapped = 0 // If this is set to 0 it will send out warning on New()
+	var/list/cached_input_powernets = list()
+	var/list/cached_input_powernets_seen = list()
 
 /obj/machinery/power/smes/drain_power(drain_check, surge, amount = 0)
 
@@ -135,6 +137,21 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
+/obj/machinery/power/smes/power_solver_shadow_profile()
+	var/supply = 0
+	if(output_attempt && !output_pulsed && !output_cut && charge > 0)
+		supply = max(min(charge / CELLRATE, output_level), 0)
+
+	var/deferred_demand = 0
+	if(input_attempt && !input_pulsed && !input_cut)
+		deferred_demand = max(min((capacity - charge) / CELLRATE, input_level), 0)
+
+	return list(
+		"primary_demand" = 0,
+		"deferred_demand" = deferred_demand,
+		"supply" = supply
+	)
+
 /obj/machinery/power/smes/proc/input_power(percentage)
 	var/to_input = target_load * (percentage/100)
 	to_input = clamp(to_input, 0, target_load)
@@ -165,6 +182,22 @@
 			num_terminals++
 		set_broken(!num_terminals)
 
+/obj/machinery/power/smes/proc/rebuild_input_powernet_cache()
+	cached_input_powernets.Cut()
+	cached_input_powernets_seen.Cut()
+
+	for(var/obj/item/stock_parts/power/terminal/term in power_components)
+		if(!term.terminal || !term.terminal.powernet)
+			continue
+		var/datum/powernet/terminal_powernet = term.terminal.powernet
+		var/ref_id = "\ref[terminal_powernet]"
+		if(cached_input_powernets_seen[ref_id])
+			continue
+		cached_input_powernets_seen[ref_id] = TRUE
+		cached_input_powernets += terminal_powernet
+
+	return length(cached_input_powernets) > 0
+
 /obj/machinery/power/smes/Process()
 	if(MACHINE_IS_BROKEN(src))	return
 	if(failure_timer)	// Disabled by gridcheck.
@@ -184,13 +217,10 @@
 	//inputting
 	if(input_attempt && (!input_pulsed && !input_cut))
 		target_load = min((capacity-charge)/CELLRATE, input_level)	// Amount we will request from the powernet.
-		var/is_input_available = FALSE
-		for(var/obj/item/stock_parts/power/terminal/term in power_components)
-			if(!term.terminal || !term.terminal.powernet)
-				continue
-			is_input_available = TRUE
-			term.terminal.powernet.smes_demand += target_load
-			term.terminal.powernet.inputting.Add(src)
+		var/is_input_available = rebuild_input_powernet_cache()
+		for(var/datum/powernet/terminal_powernet in cached_input_powernets)
+			terminal_powernet.smes_demand += target_load
+			terminal_powernet.inputting.Add(src)
 		if(!is_input_available)
 			target_load = 0 // We won't input any power without powernet connection.
 		inputting = 0

@@ -3,6 +3,7 @@
 /obj/machinery/embedded_controller/radio/docking_port_multi
 	name = "docking port controller"
 	program = /datum/computer/file/embedded_program/docking/multi
+	optimize_event_processing = TRUE
 	var/child_tags_txt
 	var/child_names_txt
 	var/list/child_names = list()
@@ -46,6 +47,7 @@
 /obj/machinery/embedded_controller/radio/airlock/docking_port_multi
 	name = "docking port controller"
 	program = /datum/computer/file/embedded_program/airlock/multi_docking
+	optimize_event_processing = TRUE
 	var/master_tag	//for mapping
 	tag_secure = 1
 

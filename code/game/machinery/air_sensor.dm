@@ -20,6 +20,14 @@
 	frame_type = /obj/item/machine_chassis/air_sensor
 	construct_state = /singleton/machine_construction/default/item_chassis
 	base_type = /obj/machinery/air_sensor
+	var/last_air_tick = -1
+	var/datum/gas_mixture/cached_air_sample
+
+/obj/machinery/air_sensor/proc/get_air_sample_cached()
+	if(last_air_tick != world.time)
+		cached_air_sample = return_air()
+		last_air_tick = world.time
+	return cached_air_sample
 
 /obj/machinery/air_sensor/on_update_icon()
 	if(!powered())
@@ -36,7 +44,12 @@
 	var_type = IC_FORMAT_LIST
 
 /singleton/public_access/public_variable/gas/access_var(obj/machinery/sensor)
-	var/datum/gas_mixture/air_sample = sensor.return_air()
+	var/datum/gas_mixture/air_sample
+	if(istype(sensor, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/air_sensor = sensor
+		air_sample = air_sensor.get_air_sample_cached()
+	else
+		air_sample = sensor.return_air()
 	if(!air_sample)
 		return
 	var/total_moles = air_sample.total_moles
@@ -58,7 +71,12 @@
 	var_type = IC_FORMAT_STRING
 
 /singleton/public_access/public_variable/pressure/access_var(obj/machinery/sensor)
-	var/datum/gas_mixture/air_sample = sensor.return_air()
+	var/datum/gas_mixture/air_sample
+	if(istype(sensor, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/air_sensor = sensor
+		air_sample = air_sensor.get_air_sample_cached()
+	else
+		air_sample = sensor.return_air()
 	return air_sample && num2text(round(air_sample.return_pressure(),0.1))
 
 /singleton/public_access/public_variable/temperature
@@ -70,7 +88,12 @@
 	var_type = IC_FORMAT_NUMBER
 
 /singleton/public_access/public_variable/temperature/access_var(obj/machinery/sensor)
-	var/datum/gas_mixture/air_sample = sensor.return_air()
+	var/datum/gas_mixture/air_sample
+	if(istype(sensor, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/air_sensor = sensor
+		air_sample = air_sensor.get_air_sample_cached()
+	else
+		air_sample = sensor.return_air()
 	return air_sample && round(air_sample.temperature,0.1)
 
 /singleton/stock_part_preset/radio/basic_transmitter/air_sensor
