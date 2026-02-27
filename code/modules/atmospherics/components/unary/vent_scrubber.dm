@@ -14,6 +14,12 @@
 	level = ATOM_LEVEL_UNDER_TILE
 
 	var/hibernate = 0 //Do we even process?
+	var/event_pending_wake = 0
+	var/last_event_wake_tick = -1
+	var/next_signal_wake = 0
+	var/event_signal_debounce = 3 SECONDS
+	var/event_heartbeat_interval = 1 SECONDS
+	var/datum/gas_mixture/event_environment_ref
 	var/scrubbing = SCRUBBER_EXCHANGE
 	var/list/scrubbing_gas
 
@@ -56,11 +62,6 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on
 	use_power = POWER_USE_IDLE
 	icon_state = "map_scrubber_on"
-
-/obj/machinery/atmospherics/unary/vent_scrubber/Initialize()
-	. = ..()
-	air_contents.volume = ATMOS_DEFAULT_VOLUME_FILTER
-	icon = null
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on_update_icon(safety = 0)
 	if(!check_icon_cache())
@@ -110,6 +111,10 @@
 		A.air_scrub_names[id_tag] = new_name
 		SetName(new_name)
 	. = ..()
+	bind_environment_signal()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
+	air_contents.volume = ATMOS_DEFAULT_VOLUME_FILTER
+	icon = null
 
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/reset_scrubbing()
@@ -134,19 +139,70 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/RefreshParts()
 	. = ..()
 	toggle_input_toggle()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
+	return ..()
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
+	event_pending_wake |= wake_reason
+	if(world.time == last_event_wake_tick)
+		return
+	last_event_wake_tick = world.time
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/schedule_event_heartbeat()
+	if(!SSmachines.optimize_machinery_event || !event_heartbeat_interval)
+		return
+	addtimer(new Callback(src, PROC_REF(queue_event_processing), MACHINERY_WAKE_ATMOS), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/bind_environment_signal()
+	var/datum/gas_mixture/new_environment = loc.return_air()
+	if(new_environment == event_environment_ref)
+		return
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
+	event_environment_ref = new_environment
+	if(event_environment_ref)
+		RegisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED, PROC_REF(on_environment_gasmix_updated))
+
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/on_environment_gasmix_updated(datum/gas_mixture/source, reason_flags)
+	SIGNAL_HANDLER
+	if(source != event_environment_ref)
+		return
+	if(world.time < next_signal_wake)
+		return
+	next_signal_wake = world.time + event_signal_debounce
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Process()
 	..()
 
+	if(SSmachines.optimize_machinery_event)
+		var/has_wake = event_pending_wake
+		event_pending_wake = 0
+		if(!has_wake)
+			return PROCESS_KILL
+
 	if (hibernate > world.time)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return 1
+
+	bind_environment_signal()
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
 	//broadcast_status()
 	if(!use_power || (inoperable()))
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return 0
 	if(welded)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -174,6 +230,9 @@
 		// Only wake the network when we actually changed gas state.
 		if(network)
 			network.update = 1
+
+	if(SSmachines.optimize_machinery_event)
+		return PROCESS_KILL
 
 	return 1
 
@@ -244,6 +303,7 @@
 	..()
 	hibernate = FALSE
 	toggle_input_toggle()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on/sauna/reset_scrubbing()
 	..()

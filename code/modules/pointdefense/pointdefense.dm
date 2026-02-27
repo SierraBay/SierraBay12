@@ -120,6 +120,9 @@
 	var/rotation_speed = 0.25 SECONDS  //How quickly we turn to face threats
 	var/engaging = FALSE
 	var/initial_id_tag
+	var/list/pending_targets = list()
+	var/last_event_wake_tick = -1
+	var/event_heartbeat_interval = 1 SECONDS
 
 /obj/machinery/pointdefense/Initialize()
 	. = ..()
@@ -127,6 +130,15 @@
 	if(initial_id_tag)
 		var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
 		pointdefense.set_tag(null, initial_id_tag)
+	RegisterSignal(GLOB, COMSIG_METEOR_SPAWNED, PROC_REF(on_meteor_spawned))
+	RegisterSignal(GLOB, COMSIG_METEOR_DESPAWNED, PROC_REF(on_meteor_despawned))
+	if(length(GLOB.meteor_list))
+		pending_targets |= GLOB.meteor_list
+	queue_event_processing()
+
+/obj/machinery/pointdefense/Destroy()
+	UnregisterSignal(GLOB, list(COMSIG_METEOR_SPAWNED, COMSIG_METEOR_DESPAWNED))
+	return ..()
 
 /obj/machinery/pointdefense/use_tool(obj/item/thing, mob/living/user, list/click_params)
 	if(isMultitool(thing))
@@ -187,25 +199,59 @@
 	var/list/pointdefense_controllers = lan.get_devices(/obj/machinery/pointdefense_control)
 	return LAZYACCESS(pointdefense_controllers, 1)
 
+/obj/machinery/pointdefense/proc/queue_event_processing()
+	if(world.time == last_event_wake_tick)
+		return
+	last_event_wake_tick = world.time
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/pointdefense/proc/schedule_event_heartbeat()
+	if(!SSmachines.optimize_machinery_event || !event_heartbeat_interval)
+		return
+	addtimer(new Callback(src, PROC_REF(queue_event_processing)), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/pointdefense/proc/on_meteor_spawned(datum/globals/source, obj/meteor/meteor_ref)
+	SIGNAL_HANDLER
+	if(source != GLOB || !istype(meteor_ref))
+		return
+	if(!(meteor_ref in pending_targets))
+		pending_targets += meteor_ref
+	queue_event_processing()
+
+/obj/machinery/pointdefense/proc/on_meteor_despawned(datum/globals/source, obj/meteor/meteor_ref)
+	SIGNAL_HANDLER
+	if(source != GLOB || !istype(meteor_ref))
+		return
+	pending_targets -= meteor_ref
+
 /obj/machinery/pointdefense/Process()
 	..()
 	if(inoperable())
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return
 	if(!active)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return
 	var/desiredir = transform.get_angle() > 0 ? NORTH : SOUTH
 	if(dir != desiredir)
 		set_dir(desiredir)
 	if(engaging || ((world.time - last_shot) < charge_cooldown))
+		if(SSmachines.optimize_machinery_event)
+			schedule_event_heartbeat()
+			return PROCESS_KILL
 		return
 
-	if(length(GLOB.meteor_list) == 0)
-		return
 	if(emagged)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return
 
 	var/obj/machinery/pointdefense_control/PC = get_controller()
 	if(!istype(PC))
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return
 
 	var/list/already_targeted = list()
@@ -218,8 +264,14 @@
 		already_targeted[current_target] = TRUE
 
 	var/list/connected_zlevels = GetConnectedZlevels(z)
-	for(var/obj/meteor/M in GLOB.meteor_list)
+	var/list/candidates = SSmachines.optimize_machinery_event ? pending_targets.Copy() : GLOB.meteor_list
+
+	for(var/obj/meteor/M in candidates)
+		if(!istype(M))
+			pending_targets -= M
+			continue
 		if(already_targeted[M])
+			pending_targets -= M
 			continue
 
 		if(!(M.z in connected_zlevels))
@@ -233,8 +285,14 @@
 		if(space_los(M))
 			var/weakref/target = weakref(M)
 			PC.targets += target
+			pending_targets -= M
 			Shoot(target)
 			return
+
+	if(SSmachines.optimize_machinery_event)
+		if(length(pending_targets))
+			schedule_event_heartbeat()
+		return PROCESS_KILL
 
 /obj/machinery/pointdefense/RefreshParts()
 	. = ..()
@@ -257,6 +315,7 @@
 		return FALSE
 
 	active = TRUE
+	queue_event_processing()
 	return TRUE
 
 /obj/machinery/pointdefense/proc/Deactivate()
@@ -264,4 +323,5 @@
 		return FALSE
 	playsound(src, 'sound/machines/apc_nopower.ogg', 50, 0)
 	active = FALSE
+	queue_event_processing()
 	return TRUE

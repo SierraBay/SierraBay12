@@ -61,7 +61,8 @@
 	..(severity)
 
 /obj/machinery/portable_atmospherics/powered/pump/Process()
-	..()
+	if(..() == PROCESS_KILL)
+		return PROCESS_KILL
 	var/power_draw = -1
 
 	if((use_power == POWER_USE_ACTIVE) && is_powered())
@@ -138,18 +139,22 @@
 /obj/machinery/portable_atmospherics/powered/pump/OnTopic(user, href_list)
 	if(href_list["power"])
 		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		queue_event_processing(MACHINERY_WAKE_POWER)
 		. = TOPIC_REFRESH
 	if(href_list["direction"])
 		direction_out = !direction_out
+		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 	if (href_list["remove_tank"])
 		if(holding)
 			holding.dropInto(loc)
 			holding = null
+		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
 		target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
+		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 
 	if(.)

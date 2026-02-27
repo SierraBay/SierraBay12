@@ -103,6 +103,17 @@
 	var/other_dangerlevel = 0
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
+	/// Last known turf gas mix the alarm is subscribed to.
+	var/datum/gas_mixture/event_environment_ref
+	/// Wake reasons for event-driven mode.
+	var/event_pending_wake = 0
+	/// Guard against repeated signal wakeups in the same world tick.
+	var/last_event_wake_tick = -1
+	/// Debounce noisy atmos updates for event wakeups.
+	var/next_signal_wake = 0
+	var/event_signal_debounce = 2 SECONDS
+	/// Minimum periodic safety cadence for event-driven mode.
+	var/event_heartbeat_interval = 1 SECONDS
 
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
@@ -135,6 +146,8 @@
 	target_temperature = T0C+10
 
 /obj/machinery/alarm/Destroy()
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
 	unregister_radio(src, frequency)
 	return ..()
 
@@ -173,6 +186,8 @@
 			trace_gas += g
 
 	set_frequency(frequency)
+	bind_environment_signal()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 	update_icon()
 
 /obj/machinery/alarm/get_req_access()
@@ -180,12 +195,53 @@
 		return list()
 	return ..()
 
+/obj/machinery/alarm/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
+	event_pending_wake |= wake_reason
+	if(world.time == last_event_wake_tick)
+		return
+	last_event_wake_tick = world.time
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/alarm/proc/schedule_event_heartbeat()
+	if(!SSmachines.optimize_machinery_event || !event_heartbeat_interval)
+		return
+	addtimer(new Callback(src, PROC_REF(queue_event_processing), MACHINERY_WAKE_ATMOS), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/alarm/proc/bind_environment_signal()
+	var/turf/simulated/location = loc
+	var/datum/gas_mixture/new_environment = istype(location) ? location.return_air() : null
+	if(event_environment_ref == new_environment)
+		return
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
+	event_environment_ref = new_environment
+	if(event_environment_ref)
+		RegisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED, PROC_REF(on_environment_gasmix_updated))
+
+/obj/machinery/alarm/proc/on_environment_gasmix_updated(datum/gas_mixture/source, reason_flags)
+	SIGNAL_HANDLER
+	if(source != event_environment_ref)
+		return
+	if(world.time < next_signal_wake)
+		return
+	next_signal_wake = world.time + event_signal_debounce
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
+
 /obj/machinery/alarm/Process()
+	if(SSmachines.optimize_machinery_event)
+		var/has_wake = event_pending_wake
+		event_pending_wake = 0
+		if(!has_wake)
+			return PROCESS_KILL
+
 	if(inoperable() || shorted || buildstage != 2)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return
 
 	var/turf/simulated/location = loc
 	if(!istype(location))	return//returns if loc is not simulated
+	bind_environment_signal()
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -225,6 +281,9 @@
 				remote_control = 0
 		if(RCON_YES)
 			remote_control = 1
+
+	if(SSmachines.optimize_machinery_event)
+		return PROCESS_KILL
 
 	return
 
@@ -439,6 +498,7 @@
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
 	for (var/obj/machinery/alarm/AA in alarm_area)
 		AA.mode = mode
+		AA.queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 	breach_start_cooldown()
 
@@ -934,7 +994,11 @@ FIRE ALARM
 
 /obj/machinery/firealarm/Initialize()
 	. = ..()
-	queue_icon_update()
+	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	if(z in GLOB.using_map.contact_levels)
+		update_icon()
+	else
+		queue_icon_update()
 
 /obj/machinery/firealarm/proc/get_cached_overlay(state)
 	if(!LAZYACCESS(overlays_cache, state))
@@ -1072,7 +1136,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/Process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(inoperable())
-		return
+		return PROCESS_KILL
 
 	if(src.timing)
 		if(src.time > 0)
@@ -1088,6 +1152,10 @@ FIRE ALARM
 	var/turf/T = loc
 	if(istype(T) && T.hotspot)
 		alarm()
+		return PROCESS_KILL
+
+	if(!src.timing)
+		return PROCESS_KILL
 
 /obj/machinery/firealarm/interface_interact(mob/user)
 	interact(user)
@@ -1191,11 +1259,6 @@ FIRE ALARM
 		pixel_y = (dir & 3)? (dir ==1 ? -21 : 21) : 0
 		update_icon()
 		frame.transfer_fingerprints_to(src)
-
-/obj/machinery/firealarm/Initialize()
-	. = ..()
-	if(z in GLOB.using_map.contact_levels)
-		update_icon()
 
 /*
 FIRE ALARM CIRCUIT

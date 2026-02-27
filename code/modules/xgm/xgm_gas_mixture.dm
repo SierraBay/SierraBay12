@@ -41,7 +41,7 @@
 		gas[gasid] += moles
 
 	if(update)
-		update_values()
+		update_values(GASMIX_UPDATE_ADJUST)
 
 
 //Same as adjust_gas(), but takes a temperature which is mixed in with the gas.
@@ -62,7 +62,7 @@
 		gas[gasid] += moles
 
 	if(update)
-		update_values()
+		update_values(GASMIX_UPDATE_ADJUST)
 
 
 //Variadic version of adjust_gas().  Takes any number of gas and mole pairs and applies them.
@@ -72,7 +72,7 @@
 	for(var/i = 1; i < length(args); i += 2)
 		adjust_gas(args[i], args[i+1], update = 0)
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 
 
 //Variadic version of adjust_gas_temp().  Takes any number of gas, mole and temperature associations and applies them.
@@ -82,7 +82,7 @@
 	for(var/i = 1; i < length(args); i += 3)
 		adjust_gas_temp(args[i], args[i + 1], args[i + 2], update = 0)
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 
 
 //Merges all the gas from another mixture into this one.  Respects group_multipliers and adjusts temperature correctly.
@@ -105,7 +105,9 @@
 		for(var/g in giver.gas)
 			gas[g] += giver.gas[g]
 
-	update_values()
+	update_values(GASMIX_UPDATE_MERGE)
+	if(HasSignalListeners(COMSIG_GASMIX_MERGED))
+		SEND_SIGNAL(src, COMSIG_GASMIX_MERGED, giver)
 
 // Used to equalize the mixture between two zones before sleeping an edge.
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/sharer)
@@ -127,8 +129,8 @@
 		temperature = ((temperature * our_heatcap) + (sharer.temperature * share_heatcap)) / (our_heatcap + share_heatcap)
 	sharer.temperature = temperature
 
-	update_values()
-	sharer.update_values()
+	update_values(GASMIX_UPDATE_EQUALIZE)
+	sharer.update_values(GASMIX_UPDATE_EQUALIZE)
 
 	return 1
 
@@ -203,13 +205,15 @@
 
 
 //Updates the total_moles count and trims any empty gases.
-/datum/gas_mixture/proc/update_values()
+/datum/gas_mixture/proc/update_values(update_reason = GASMIX_UPDATE_ADJUST)
 	total_moles = 0
 	for(var/g in gas)
 		if(gas[g] <= 0)
 			gas -= g
 		else
 			total_moles += gas[g]
+	if(update_reason && HasSignalListeners(COMSIG_GASMIX_UPDATED))
+		SEND_SIGNAL(src, COMSIG_GASMIX_UPDATED, update_reason)
 
 
 //Returns the pressure of the gas mix.  Only accurate if there have been no gas modifications since update_values() has been called.
@@ -232,8 +236,10 @@
 		gas[g] -= removed.gas[g] / group_multiplier
 
 	removed.temperature = temperature
-	update_values()
-	removed.update_values()
+	update_values(GASMIX_UPDATE_REMOVE)
+	removed.update_values(0)
+	if(HasSignalListeners(COMSIG_GASMIX_REMOVED))
+		SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED, removed, amount)
 
 	return removed
 
@@ -255,8 +261,11 @@
 
 	removed.temperature = temperature
 	removed.volume = volume * group_multiplier / out_group_multiplier
-	update_values()
-	removed.update_values()
+	var/removed_amount = ratio * total_moles * group_multiplier
+	update_values(GASMIX_UPDATE_REMOVE)
+	removed.update_values(0)
+	if(HasSignalListeners(COMSIG_GASMIX_REMOVED))
+		SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED, removed, removed_amount)
 
 	return removed
 
@@ -284,8 +293,10 @@
 			gas[g] -= removed.gas[g] / group_multiplier
 
 	removed.temperature = temperature
-	update_values()
-	removed.update_values()
+	update_values(GASMIX_UPDATE_REMOVE)
+	removed.update_values(0)
+	if(HasSignalListeners(COMSIG_GASMIX_REMOVED))
+		SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED, removed, amount)
 
 	return removed
 
@@ -301,7 +312,7 @@
 	gas = sample.gas.Copy()
 	temperature = sample.temperature
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 
 	return 1
 
@@ -416,7 +427,7 @@
 	for(var/g in right_side.gas)
 		gas[g] += right_side.gas[g]
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 	return 1
 
 
@@ -425,7 +436,7 @@
 	for(var/g in right_side.gas)
 		gas[g] -= right_side.gas[g]
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 	return 1
 
 
@@ -434,7 +445,7 @@
 	for(var/g in gas)
 		gas[g] *= factor
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 	return 1
 
 
@@ -443,7 +454,7 @@
 	for(var/g in gas)
 		gas[g] /= factor
 
-	update_values()
+	update_values(GASMIX_UPDATE_ADJUST)
 	return 1
 
 
@@ -486,8 +497,8 @@
 	if(!one_way)
 		other.temperature = max(0, (other.temperature - temp_avg) * (1-ratio) + temp_avg)
 
-	update_values()
-	other.update_values()
+	update_values(GASMIX_UPDATE_EQUALIZE)
+	other.update_values(GASMIX_UPDATE_EQUALIZE)
 
 	return compare(other)
 
@@ -519,7 +530,7 @@
 		//Calculate temperature
 		if(total_heat_capacity > 0)
 			combined.temperature = total_thermal_energy / total_heat_capacity
-		combined.update_values()
+		combined.update_values(0)
 
 		//Allow for reactions
 		combined.react()

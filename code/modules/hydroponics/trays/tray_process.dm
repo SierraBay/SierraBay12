@@ -1,12 +1,14 @@
 /obj/machinery/portable_atmospherics/hydroponics/Process()
 
 	// Handle nearby smoke if any.
-	for(var/obj/effect/smoke/chem/smoke in view(1, src))
-		if(smoke.reagents.total_volume)
-			smoke.reagents.trans_to_obj(src, 5, copy = 1)
+	if(active_chem_smoke_clouds)
+		for(var/obj/effect/smoke/chem/smoke in view(1, src))
+			if(smoke.reagents.total_volume)
+				smoke.reagents.trans_to_obj(src, 5, copy = 1)
 
 	//Do this even if we're not ready for a plant cycle.
-	process_reagents()
+	if(reagents && reagents.total_volume > 0)
+		process_reagents()
 	var/needs_icon_update = 0
 
 	// Update values every cycle rather than every process() tick.
