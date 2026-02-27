@@ -25,7 +25,7 @@
 		if(H.in_fov_strict(src) && isInSight(H, src))
 			return TRUE
 	for(var/mob/living/silicon/robot/R in view(7, src))
-		if(!R.components["camera"] || !R.components["camera"].toggled || !R.components["camera"].powered || !R.components["camera"].installed)
+		if(!R.is_component_functioning("camera"))
 			continue
 		if(isInSight(R, src)) // роботы все видят
 			return TRUE
