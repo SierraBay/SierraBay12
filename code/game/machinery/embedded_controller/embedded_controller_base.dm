@@ -4,6 +4,9 @@
 	idle_power_usage = 10
 	var/datum/computer/file/embedded_program/program	//the currently executing program
 	var/on = 1
+	/// If TRUE, icon updates are emitted only when a compact state signature changes.
+	var/optimize_icon_tick = FALSE
+	var/tmp/last_icon_state_signature
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
@@ -37,7 +40,41 @@
 	if(program)
 		program.process()
 
-	update_icon()
+	if(optimize_icon_tick)
+		var/icon_state_signature = get_icon_state_signature()
+		if(icon_state_signature != last_icon_state_signature)
+			last_icon_state_signature = icon_state_signature
+			update_icon()
+	else
+		update_icon()
+
+/obj/machinery/embedded_controller/proc/get_icon_state_signature()
+	if(!on || !istype(program))
+		return "[on]|0"
+
+	var/processing = !!program.memory["processing"]
+	var/override_enabled = FALSE
+	var/airlock_processing = FALSE
+	var/pump_status = "none"
+
+	var/datum/computer/file/embedded_program/docking/airlock/docking_program = program
+	if(istype(docking_program))
+		override_enabled = !!docking_program.override_enabled
+		var/datum/computer/file/embedded_program/airlock/airlock_program = docking_program.airlock_program
+		if(istype(airlock_program))
+			airlock_processing = !!airlock_program.memory["processing"]
+			if(airlock_processing)
+				var/current_pump_status = airlock_program.memory["pump_status"]
+				pump_status = "[current_pump_status]"
+	else
+		var/datum/computer/file/embedded_program/airlock/airlock_program = program
+		if(istype(airlock_program))
+			airlock_processing = !!airlock_program.memory["processing"]
+			if(airlock_processing)
+				var/current_pump_status = airlock_program.memory["pump_status"]
+				pump_status = "[current_pump_status]"
+
+	return "[on]|1|[processing]|[override_enabled]|[airlock_processing]|[pump_status]"
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
 	ui_interact(user)
