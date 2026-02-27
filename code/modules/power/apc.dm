@@ -51,9 +51,11 @@
 
 /obj/machinery/power/apc/critical
 	is_critical = 1
+	optimize_process_cell_cache = TRUE
 
 /obj/machinery/power/apc/high
 	cell_type = /obj/item/cell/high
+	optimize_process_cell_cache = TRUE
 
 /obj/machinery/power/apc/high/inactive
 	cell_type = /obj/item/cell/high
@@ -137,6 +139,8 @@
 	var/failure_timer = 0               // Cooldown thing for apc outage event
 	var/force_update = 0
 	var/emp_hardened = 0
+	/// Opt-in: cache battery/cell lookup during Process() to reduce repeated component traversals.
+	var/optimize_process_cell_cache = FALSE
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -1021,7 +1025,13 @@
 	else
 		main_status = 2
 
-	var/obj/item/cell/cell = get_cell()
+	var/obj/item/stock_parts/power/battery/power = null
+	var/obj/item/cell/cell = null
+	if(optimize_process_cell_cache)
+		power = get_component_of_type(/obj/item/stock_parts/power/battery)
+		cell = power && power.cell
+	else
+		cell = get_cell()
 	if(!cell || shorted) // We aren't going to be doing any power processing in this case.
 		charging = 0
 	else
@@ -1031,7 +1041,8 @@
 			log_debug("Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]")
 
 		//update state
-		var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
+		if(!optimize_process_cell_cache)
+			power = get_component_of_type(/obj/item/stock_parts/power/battery)
 		lastused_charging = max(power && power.cell && (power.cell.charge - power.last_cell_charge) * CELLRATE, 0)
 		charging = lastused_charging ? 1 : 0
 		if(cell.fully_charged())
@@ -1041,7 +1052,10 @@
 			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
 
 	// Set channels depending on how much charge we have left
-	update_channels()
+	if(optimize_process_cell_cache)
+		update_channels(cell = cell, skip_cell_lookup = TRUE)
+	else
+		update_channels()
 
 	// update icon & area power if anything changed
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
@@ -1051,13 +1065,14 @@
 	else if (last_ch != charging)
 		queue_icon_update()
 
-/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE)
+/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE, obj/item/cell/cell = null, skip_cell_lookup = FALSE)
 	// Allow the APC to operate as normal if the cell can charge
 	if(charging && longtermpower < 10)
 		longtermpower += 1
 	else if(longtermpower > -10)
 		longtermpower -= 2
-	var/obj/item/cell/cell = get_cell()
+	if(!skip_cell_lookup)
+		cell = get_cell()
 	var/percent = cell && cell.percent()
 
 	if(!cell || shorted || (!is_powered()) || !operating)
