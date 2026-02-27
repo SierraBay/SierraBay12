@@ -14,6 +14,7 @@ env:
   RUST_G_REPO: "ImJustKisik/rust-g-tg"
   RUST_G_BRANCH: "feature/power-shadow-native"
   RUST_G_VERSION: "branch-feature-power-shadow-native"
+  RUST_G_TARGET: "i686-unknown-linux-gnu"
 
 jobs:
   PreFlight:
@@ -103,7 +104,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests
@@ -141,7 +142,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests
@@ -179,7 +180,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests
