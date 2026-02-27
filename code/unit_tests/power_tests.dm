@@ -231,9 +231,16 @@
 	var/datum/powernet/PN = new
 	PN.shadow_solver_write_enabled = TRUE
 	PN.shadow_solver_write_mode = "fea_only"
-	PN.smes_demand = 100
+	PN.smes_demand = 50
 
-	var/list/snapshot = list("avail" = 75, "load" = 25)
+	// In FEA mode the predicted load already includes deferred demand served to SMESes.
+	// The controller must therefore use served_primary, not load, to recover the SMES charging budget.
+	var/list/snapshot = list(
+		"avail" = 100,
+		"load" = 100,
+		"comparison_load" = 60,
+		"served_primary" = 60
+	)
 	var/solver_percent = PN.get_solver_smes_input_percentage(snapshot)
 
 	if(isnull(solver_percent))
@@ -241,8 +248,8 @@
 		qdel(PN)
 		return 1
 
-	if(abs(solver_percent - 50) > 0.1)
-		fail("Expected solver SMES input percentage ~50, got [solver_percent].")
+	if(abs(solver_percent - 80) > 0.1)
+		fail("Expected solver SMES input percentage ~80, got [solver_percent].")
 		qdel(PN)
 		return 1
 

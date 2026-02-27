@@ -955,7 +955,16 @@
 	if(!islist(snapshot) || !smes_demand)
 		return null
 
-	var/solver_excess = max(snapshot["avail"] - snapshot["load"], 0)
+	// FEA snapshots fold deferred demand into load, so avail-load becomes "leftover after SMES charging"
+	// rather than "budget available to deferred demand". Use served_primary to recover the actual budget
+	// that can be allocated to SMES charging.
+	var/served_primary = snapshot["served_primary"]
+	if(isnull(served_primary))
+		served_primary = snapshot["comparison_load"]
+	if(isnull(served_primary))
+		served_primary = snapshot["load"]
+
+	var/solver_excess = max(snapshot["avail"] - max(served_primary, 0), 0)
 	return clamp((solver_excess / smes_demand) * 100, 0, 100)
 
 /datum/powernet/proc/update_apc_advisory(list/snapshot, numapc)
