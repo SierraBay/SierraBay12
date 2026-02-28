@@ -32,7 +32,7 @@
 		"Mule" = list("nav_normandite_merchant"),
 		"Utyug" = list("nav_utyug_start")
 		)
-//	contact_class = /decl/ship_contact_class/normandite
+	contact_class = /decl/ship_contact_class/normandite //
 	initial_generic_waypoints = list(
 		"nav_normandite_north",
 		"nav_normandite_east",
@@ -44,7 +44,10 @@
 	name = "GTMS Normandite"
 	archetype = /singleton/submap_archetype/normandite
 
-// /decl/ship_contact_class/normandite
+/decl/ship_contact_class/normandite
+	class_short = "DLC"
+	class_long = "Dolomite-class small deep-space ore extraction facility"
+	max_ship_mass = 26000
 
 /singleton/submap_archetype/normandite
 	descriptor = "Grayson Terra Mining station"
@@ -53,9 +56,6 @@
 		/datum/job/submap/normandite,
 		/datum/job/submap/normandite/leader
 	)
-//	class_short = "DLC"
-//	class_long = "Dolomite-class small deep-space ore extraction facility"
-//	max_ship_mass = 26000
 
 /obj/overmap/visitable/ship/normandite/New()
 	name = "GTMS Normandite-[rand(3,19)]"
@@ -82,7 +82,7 @@
 	fore_dir = NORTH
 	skill_needed = SKILL_BASIC
 	vessel_size = SHIP_SIZE_SMALL
-//	contact_class = /decl/ship_contact_class/shuttle
+	contact_class = /decl/ship_contact_class/shuttle
 
 /obj/machinery/computer/shuttle_control/explore/utyug
 	name = "shuttle control console"
@@ -92,15 +92,12 @@
 	name = "Utyug Dock"
 	landmark_tag = "nav_utyug_start"
 	docking_controller = "utyug_starboard_dock"
-//	base_area = /area/space
-//	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /datum/shuttle/autodock/overmap/utyug
 	name = "Utyug"
 	warmup_time = 10
 	shuttle_area = list(/area/normandite/utyug)
 	current_location = "nav_utyug_start"
-//	logging_home_tag = "nav_utyug_start"
 	range = 2
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
