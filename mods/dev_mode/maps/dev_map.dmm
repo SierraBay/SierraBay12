@@ -157,10 +157,6 @@
 /obj/item/gun/energy/lasercannon,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
-"ybm" = (
-/obj/landmark/titan_crate,
-/turf/simulated/floor/exoplanet/concrete/reinforced/road,
-/area/centcom)
 
 (1,1,1) = {"
 uzJ
@@ -231,10 +227,10 @@ cpC
 cpC
 cpC
 cpC
-ybm
-ybm
-ybm
-ybm
+cpC
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
@@ -257,10 +253,10 @@ cpC
 cpC
 cpC
 cpC
-ybm
-ybm
-ybm
-ybm
+cpC
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
@@ -283,10 +279,10 @@ dSB
 dSB
 dSB
 dSB
-ybm
-ybm
-ybm
-ybm
+cpC
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
