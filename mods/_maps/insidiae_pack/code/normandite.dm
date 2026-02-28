@@ -1,14 +1,25 @@
-/obj/submap_landmark/joinable_submap/normandite
-	name = "GTMS Normandite"
-	archetype = /singleton/submap_archetype/away_normandite
-
-/singleton/submap_archetype/away_normandite
-	descriptor = "Grayson Terra Mining station"
-	map = "Normandite"
-	crew_jobs = list(
-		/datum/job/submap/normandite,
-		/datum/job/submap/normandite/leader
+/datum/map_template/ruin/away_site/normandite
+	name = "Normandite"
+	id = "awaysite_normandite"
+	description = ""
+	prefix = "mods/_maps/insidiae_pack/maps/"
+	suffixes = list("normandite.dmm")
+	spawn_cost = 1
+	player_cost = 4
+	spawn_weight = 0.4
+	shuttles_to_initialise = list(
+		/datum/shuttle/autodock/overmap/utyug
 	)
+	apc_test_exempt_areas = list(
+		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
+	)
+	area_usage_test_exempted_root_areas = list(/area/normandite)
+	ban_ruins = list(
+		/datum/map_template/ruin/away_site/salvage_ship,
+		/datum/map_template/ruin/away_site/scavver_gantry
+	)
+
+	skip_main_unit_tests = TRUE
 
 /obj/overmap/visitable/ship/normandite
 	name = "mining station"
@@ -21,8 +32,7 @@
 		"Mule" = list("nav_normandite_merchant"),
 		"Utyug" = list("nav_utyug_start")
 		)
-	contact_class = /decl/ship_contact_class/normandite
-
+//	contact_class = /decl/ship_contact_class/normandite
 	initial_generic_waypoints = list(
 		"nav_normandite_north",
 		"nav_normandite_east",
@@ -30,10 +40,22 @@
 		"nav_normandite_west"
 	)
 
-/decl/ship_contact_class/normandite
-	class_short = "DLC"
-	class_long = "Dolomite-class small deep-space ore extraction facility"
-	max_ship_mass = 26000
+/obj/submap_landmark/joinable_submap/normandite
+	name = "GTMS Normandite"
+	archetype = /singleton/submap_archetype/normandite
+
+// /decl/ship_contact_class/normandite
+
+/singleton/submap_archetype/normandite
+	descriptor = "Grayson Terra Mining station"
+	map = "Normandite"
+	crew_jobs = list(
+		/datum/job/submap/normandite,
+		/datum/job/submap/normandite/leader
+	)
+//	class_short = "DLC"
+//	class_long = "Dolomite-class small deep-space ore extraction facility"
+//	max_ship_mass = 26000
 
 /obj/overmap/visitable/ship/normandite/New()
 	name = "GTMS Normandite-[rand(3,19)]"
@@ -43,27 +65,6 @@
 <I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
 <B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
 	..()
-
-/datum/map_template/ruin/away_site/normandite
-	name = "Normandite"
-	id = "awaysite_normandite"
-	description = ""
-	prefix = "mods/_maps/insidiae_pack/maps/"
-	suffixes = list("normandite.dmm")
-	spawn_cost = 1
-	player_cost = 4
-	spawn_weight = 0.4
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/utyug)
-	apc_test_exempt_areas = list(
-		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
-	)
-	area_usage_test_exempted_root_areas = list(/area/normandite)
-	ban_ruins = list(
-		/datum/map_template/ruin/away_site/salvage_ship,
-		/datum/map_template/ruin/away_site/scavver_gantry
-	)
-
-	skip_main_unit_tests = TRUE
 
 // utyug
 
@@ -81,21 +82,7 @@
 	fore_dir = NORTH
 	skill_needed = SKILL_BASIC
 	vessel_size = SHIP_SIZE_SMALL
-	contact_class = /decl/ship_contact_class/shuttle
-
-/datum/shuttle/autodock/overmap/utyug
-	name = "Utyug"
-	warmup_time = 10
-	current_location = "nav_utyug_start"
-	logging_home_tag = "nav_utyug_start"
-	range = 2
-	shuttle_area = list(/area/normandite/utyug)
-	defer_initialisation = TRUE
-	flags = SHUTTLE_FLAGS_PROCESS
-	skill_needed = SKILL_BASIC
-	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	fuel_consumption = 1 // вернуть на 5
-	dock_target = "utyug_starboard"
+//	contact_class = /decl/ship_contact_class/shuttle
 
 /obj/machinery/computer/shuttle_control/explore/utyug
 	name = "shuttle control console"
@@ -105,8 +92,22 @@
 	name = "Utyug Dock"
 	landmark_tag = "nav_utyug_start"
 	docking_controller = "utyug_starboard_dock"
-	base_area = /area/normandite/dock
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+//	base_area = /area/space
+//	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/datum/shuttle/autodock/overmap/utyug
+	name = "Utyug"
+	warmup_time = 10
+	shuttle_area = list(/area/normandite/utyug)
+	current_location = "nav_utyug_start"
+//	logging_home_tag = "nav_utyug_start"
+	range = 2
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_BASIC
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	fuel_consumption = 1 // вернуть на 5
+	dock_target = "utyug_starboard"
 
 // jobs
 
@@ -375,7 +376,7 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 /area/normandite/utyug
 	name = "Utyug"
 	icon_state = "shuttle"
-	area_flags = AREA_FLAG_RAD_SHIELDED
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
 // paint
 
