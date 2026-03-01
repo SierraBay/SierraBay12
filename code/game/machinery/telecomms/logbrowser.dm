@@ -152,8 +152,8 @@
 
 	if(href_list["delete"])
 
-		if(!src.allowed(usr) && !emagged)
-			to_chat(usr, SPAN_WARNING("ACCESS DENIED."))
+		if(!src.allowed(user) && !emagged)
+			to_chat(user, SPAN_WARNING("ACCESS DENIED."))
 			return
 
 		if(SelectedServer)
@@ -174,9 +174,9 @@
 
 	if(href_list["network"])
 
-		var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
+		var/newnet = input(user, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((user in range(1, src) || issilicon(user))))
 			if(length(newnet) > 15)
 				temp = SPAN_COLOR("#d70b00", "- FAILED: NETWORK TAG STRING TOO LENGHTLY -")
 

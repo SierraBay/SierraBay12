@@ -64,3 +64,11 @@
 			for(var/obj/machinery/door/airlock/vault/bolted/V in A.contents)
 				if(V.locked)
 					V.unlock()
+
+
+/datum/map/sierra/ship_jump()
+	for(var/obj/overmap/visitable/ship/sierra/sierra)
+		new /obj/ftl (get_turf(sierra))
+		qdel(sierra)
+		animate(sierra, time = 0.5 SECONDS)
+		animate(alpha = 0, time = 0.5 SECONDS)

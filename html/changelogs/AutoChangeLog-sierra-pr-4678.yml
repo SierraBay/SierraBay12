@@ -1,0 +1,5 @@
+author: ChaplainMaximum
+changes:
+  - tweak: Теперь Сиерра и правду перемещается в Блюспейс, а не делает красивый 
+      вид
+delete-after: true

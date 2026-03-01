@@ -3,6 +3,8 @@
 	prefix = "mods/utility_items/maps/"
 	suffixes = list("skrell-sierrabay.dmm")
 
+/obj/overmap/visitable/ship/landable/skrellscoutship
+	can_throw_off = FALSE
 
 //А здесь мы заменим спрайты войдов
 /obj/item/clothing/head/helmet/space/void/skrell/black
@@ -98,3 +100,9 @@
 	info = {"
 	<tt><font face='Verdana' color='black'><center><b><span style='font-size:18px'>Использование полуавтоматического режима стыковки</span></b></center><ul><li>Активировать режим Override на контроллере дока;</li><li>Принудительно открыть внутренний и внешний шлюзы дока;</li><li>Деактивировать режим Override на контроллере дока;</li><li>Повторить процедуру с контроллерами шаттла.</li></ul>После выполнения действий все контроллеры перейдут в статус <b>DOCKED</b>.<br>Последующая отстыковка будет выполнена автоматически.</font></tt>
 	"}
+
+/obj/machinery/power/skrell_reactor
+	name = "\improper Skrellian fusion stack"
+	desc = "A tall, gleaming assemblage of advanced alien machinery. It hums and crackles with restrained power."
+	icon = 'mods/sierra_resprite/icons/r-ust.dmi'
+	icon_state = "core1"

@@ -30,7 +30,11 @@
 	company_name  = "NanoTrasen"
 	company_short = "NT"
 
-	map_admin_faxes = list("Kshar'va SDF Headquarters")
+	map_admin_faxes = list(
+		"Kshar'va SDF Headquarters",
+		"FTU Agency",
+		"FAFB Kelpi"
+		)
 
 	evac_controller_type = /datum/evacuation_controller/starship/fast //[SIERRA-EDIT] evac_controller_type = /datum/evacuation_controller/starship/
 

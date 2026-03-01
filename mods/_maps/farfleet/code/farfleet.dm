@@ -8,7 +8,7 @@
 	desc = "ICGNV Garibaldi-class Gunboat. This craft bears markings of Pioneer Corps"
 	color = "#fc7a00"
 	fore_dir = WEST
-	vessel_mass = 1000
+	vessel_mass = 22470
 	known_ships = list(/obj/overmap/visitable/ship/landable/snz)
 	vessel_size = SHIP_SIZE_SMALL
 	hide_from_reports = TRUE
@@ -29,7 +29,7 @@
 
 #define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Magnitogorsk")
 /obj/overmap/visitable/ship/farfleet/New()
-	name = "ICCGN PC [RECON_SHIP_PREFIX], \a [name]"
+	name = "GCNV [RECON_SHIP_PREFIX], \a [name]"
 	for(var/area/ship/farfleet/A)
 		A.name = "\improper [name] - [A.name]"
 		GLOB.using_map.area_purity_test_exempt_areas += A.type
@@ -42,16 +42,13 @@
 	description = "Garibaldi-class Gunboat, ICCG Pioneer Corps Reconnaissance Craft."
 	prefix = "mods/_maps/farfleet/maps/"
 	suffixes = list("farfleet-1.dmm", "farfleet-2.dmm")
-	ban_ruins = list(/datum/map_template/ruin/away_site/patrol)
+	ban_ruins = list(/datum/map_template/ruin/away_site/patrol, /datum/map_template/ruin/away_site/phobos)
 	spawn_cost = 0.5
 	player_cost = 7
 	spawn_weight = 1
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz)
+	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/snz, /datum/shuttle/autodock/ferry/farfleet_lift)
 
-	area_usage_test_exempted_areas = list(
-		/area/turbolift/farfleet_first,
-		/area/turbolift/farfleet_second
-	)
+	area_usage_test_exempted_areas = list(/area/turbolift/farfleet_lift)
 
 /obj/shuttle_landmark/nav_farfleet/nav1
 	name = "Pioneer Corps Ship Fore"

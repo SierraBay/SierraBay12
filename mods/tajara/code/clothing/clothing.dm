@@ -12,7 +12,7 @@
 //MASKS
 /obj/item/clothing/mask/balaclava/Initialize()
 	. = ..()
-	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/helmet.dmi')
+	LAZYSET(sprite_sheets, SPECIES_TAJARA, 'mods/tajara/icons/sprite_sheets/mask.dmi')
 
 /obj/item/clothing/mask/breath/Initialize()
 	. = ..()
