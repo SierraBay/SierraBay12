@@ -13,6 +13,7 @@
 // Interactions (including overriding)
 #include "interactions\glup_down.dm"
 #include "interactions\face_wash.dm"
+#include "interactions\armorplates_craft.dm"
 
 // Clothing
 #include "clothing\head\berets.dm"
@@ -36,6 +37,7 @@
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
 #include "items\grown.dm"
+#include "items\makeshift_armorplates.dm"
 
 // Guns
 #include "items\projectile\ammunition\boxes.dm"
