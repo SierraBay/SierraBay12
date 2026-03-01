@@ -162,7 +162,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	// [SIERRA-ADD] HEIGHT
 	var/height = GLOB.heights_list.Find(character.height)
-	SetUIValueRange(DNA_UI_HEIGHT, height, GLOB.heights_list.len, 1)
+	SetUIValueRange(DNA_UI_HEIGHT, height, LAZYLEN(GLOB.heights_list), 1)
 	// [/SIERRA-ADD]
 
 	body_markings.Cut()
