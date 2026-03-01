@@ -979,9 +979,6 @@
 	shadow_solver_last_apc_advisory_perapc = (served_primary / max(numapc, 1))
 	get_apc_enforced_budget()
 
-	if(shadow_solver_write_enabled && shadow_solver_write_mode == "pilot_apc_advisory")
-		perapc = shadow_solver_last_apc_advisory_perapc
-
 /datum/powernet/proc/apply_smes_input_percentage(smes_input_percentage)
 	if(isnull(smes_input_percentage))
 		return
@@ -1061,17 +1058,24 @@
 		write_snapshot = get_or_build_shadow_solver_snapshot(numapc, precomputed_shadow_snapshot, allow_native_shadow_solver)
 		run_shadow_solver_comparison(write_snapshot)
 	update_apc_advisory(write_snapshot, numapc)
+	var/use_shadow_apc_advisory = shadow_solver_write_enabled && shadow_solver_write_mode == "pilot_apc_advisory" && islist(write_snapshot)
 
 	if(numapc)
-		//very simple load balancing. If there was a net excess this tick then it must have been that some APCs used less than perapc, since perapc*numapc = avail
-		//Therefore we can raise the amount of power rationed out to APCs on the assumption that those APCs that used less than perapc will continue to do so.
-		//If that assumption fails, then some APCs will miss out on power next tick, however it will be rebalanced for the tick after.
-		if (netexcess >= 0)
-			perapc_excess += min(netexcess/numapc, (avail - perapc) - perapc_excess)
-		else
+		if(use_shadow_apc_advisory)
+			// Advisory mode writes solver-guided APC budget directly.
 			perapc_excess = 0
+			perapc = max(shadow_solver_last_apc_advisory_perapc, 0)
+		else
+			// Legacy load balancing path.
+			// If there was a net excess this tick then it must have been that some APCs used less than perapc, since perapc*numapc = avail.
+			// Therefore we can raise the amount of power rationed out to APCs on the assumption that those APCs that used less than perapc will continue to do so.
+			// If that assumption fails, then some APCs will miss out on power next tick, however it will be rebalanced for the tick after.
+			if (netexcess >= 0)
+				perapc_excess += min(netexcess/numapc, (avail - perapc) - perapc_excess)
+			else
+				perapc_excess = 0
 
-		perapc = avail/numapc + perapc_excess
+			perapc = avail/numapc + perapc_excess
 
 	// At this point, all other machines have finished using power. Anything left over may be used up to charge SMESs.
 	if(length(inputting) && smes_demand)
