@@ -6,4 +6,6 @@
 #include "code\adherent_armor.dm"
 #include "code\adherent_reset_ident.dm"
 #include "code\adherent_cant_eat.dm"
+#include "code\adherent_organt.dm"
+#include "code\cell_ad.dm"
 #endif
