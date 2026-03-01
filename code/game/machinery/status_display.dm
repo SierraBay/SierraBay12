@@ -66,7 +66,7 @@
 
 /obj/machinery/status_display/on_revive()
 	..()
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	update_processing_registration()
 
 /obj/machinery/status_display/on_update_icon()
 	if (MACHINE_IS_BROKEN(src))
@@ -93,6 +93,7 @@
 	. = ..()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency)
+	update_processing_registration()
 
 // timed process
 /obj/machinery/status_display/Process()
@@ -103,6 +104,21 @@
 			remove_display()
 		return
 	update()
+	if(!requires_continuous_processing())
+		return PROCESS_KILL
+
+/obj/machinery/status_display/proc/requires_continuous_processing()
+	if(mode == STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME || mode == STATUS_DISPLAY_TIME || mode == STATUS_DISPLAY_CUSTOM)
+		return TRUE
+	if(mode == STATUS_DISPLAY_MESSAGE)
+		return (index1 || index2)
+	return FALSE
+
+/obj/machinery/status_display/proc/update_processing_registration()
+	if(requires_continuous_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/status_display/emp_act(severity)
 	if(inoperable())
@@ -259,9 +275,11 @@
 	else
 		message2 = ""
 		index2 = 0
+	update_processing_registration()
 
 /obj/machinery/status_display/proc/toggle_alert_border()
 	status_display_show_alert_border = !status_display_show_alert_border
+	update_processing_registration()
 
 /obj/machinery/status_display/proc/add_alert_border_to_display()
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
@@ -325,6 +343,10 @@
 	last_render_signature = null
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption)
+		return
+	if(!signal.data || !signal.data["command"])
+		return
 	switch(signal.data["command"])
 		if("blank")
 			mode = STATUS_DISPLAY_BLANK
@@ -345,8 +367,10 @@
 		if("image")
 			mode = STATUS_DISPLAY_IMAGE
 			set_picture(signal.data["picture_state"])
+
 		if("toggle_alert_border")
 			toggle_alert_border()
+	update_processing_registration()
 	update()
 
 #undef FONT_SIZE
