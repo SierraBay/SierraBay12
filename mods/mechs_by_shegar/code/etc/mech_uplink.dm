@@ -9,7 +9,7 @@ GLOBAL_VAR_AS(war_declared, FALSE)
 	antag_roles = list(MODE_MERCENARY)
 
 /datum/uplink_item/item/services/assault_declaration/get_goods(obj/item/device/uplink/U, loc)
-	if(world.time > 15 MINUTES)
+	if(round_duration_in_ticks > 15 MINUTES)
 		to_chat(usr, SPAN_BAD("Дополнительные средства не могут быть выделены, прошло слишком много времени."))
 		return
 	if(GLOB.war_declared)

@@ -9,6 +9,7 @@
 /obj/item/clothing/accessory/armorplate/mainkraft/light
 	name = "light metal plate"
 	desc = "Thin homemade metal plate. Unlikely to protect from something strong, but it's better than nothing."
+	icon = 'icons/obj/clothing/obj_suit_modular_armor.dmi'
 	icon_state = "armor_light"
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
@@ -22,6 +23,7 @@
 /obj/item/clothing/accessory/armorplate/mainkraft/medium
 	name = "medium metal plate"
 	desc = "Metal plate of medium thickness. Feels heavy. I hope it will be able to help."
+	icon = 'icons/obj/clothing/obj_suit_modular_armor.dmi'
 	icon_state = "armor_medium"
 	armor = list(
 		melee = ARMOR_MELEE_RESISTANT,
@@ -35,6 +37,7 @@
 /obj/item/clothing/accessory/armorplate/mainkraft/heavy
 	name = "heavy metal plate"
 	desc = "A thick sheet of armor that can stop a bullet, it is a pity that as the plate is thick, so heavy."
+	icon = 'icons/obj/clothing/obj_suit_modular_armor.dmi'
 	icon_state = "armor_merc"
 	armor = list(
 		melee = ARMOR_MELEE_RESISTANT,

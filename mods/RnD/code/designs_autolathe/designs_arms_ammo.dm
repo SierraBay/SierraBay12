@@ -205,3 +205,11 @@
 	name = "ammunition (flechette shotgun)"
 	build_path = /obj/item/ammo_casing/shotgun/flechette
 	hidden = TRUE
+
+/datum/design/autolathe/arms_ammo/hidden/electrode_low
+	name = "ammunition (neutralizer electrode)"
+	build_path = /obj/item/ammo_casing/battery
+
+/datum/design/autolathe/arms_ammo/hidden/electrode_high
+	name = "ammunition (HP neutralizer electrode)"
+	build_path = /obj/item/ammo_casing/battery/high

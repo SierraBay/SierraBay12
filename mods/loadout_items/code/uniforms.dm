@@ -744,3 +744,12 @@
 		melee = ARMOR_MELEE_MINOR,
 		energy = ARMOR_ENERGY_MINOR
 		)
+
+// Children override
+/obj/item/clothing/under/solgov/utility/fleet
+	icon = 'maps/torch/icons/obj/obj_under_solgov.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/torch/icons/mob/onmob_under_solgov.dmi')
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'maps/torch/icons/mob/unathi/onmob_under_solgov_unathi.dmi'
+		)
+// Override end

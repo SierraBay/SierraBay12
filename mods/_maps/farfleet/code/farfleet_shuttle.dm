@@ -1,10 +1,12 @@
 /datum/shuttle/autodock/overmap/snz
-	name = "SNZ Speedboat"
+	name = "SNZ Baydarka"
 	warmup_time = 10
+	move_time = 30
 	dock_target = "snz_shuttle"
 	current_location = "nav_hangar_snz"
 	range = 1
 	shuttle_area = /area/ship/snz
+	landmark_transition = "nav_transit_snz"
 	fuel_consumption = 4
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
@@ -14,15 +16,15 @@
 /obj/machinery/computer/shuttle_control/explore/away_farfleet/snz
 	name = "SNZ Shuttle control console"
 	req_access = list(access_away_iccgn)
-	shuttle_tag = "SNZ Speedboat"
+	shuttle_tag = "SNZ Baydarka"
 
 /obj/overmap/visitable/ship/landable/snz
-	name = "SNZ Speedboat"
-	desc = "SNZ-350 Speedboat. Multipurpose shuttle, used for personnel and light venchles delivery. This one definetly belongs to ICCG."
-	shuttle = "SNZ Speedboat"
+	name = "SNZ Baydarka"
+	desc = "SNZ-350 Baydarka. Multipurpose shuttle, used for personnel and light vehicle delivery. This one definetly belongs to ICCG."
+	shuttle = "SNZ Baydarka"
 	fore_dir = WEST
 	color = "#ff7300"
-	vessel_mass = 1000
+	vessel_mass = 1280
 	vessel_size = SHIP_SIZE_TINY
 
 
@@ -45,6 +47,10 @@
 	landmark_tag = "nav_hangar_snzalt"
 
 /obj/shuttle_landmark/snz/dock
-	name = "NSV Sierra Restricted Dock"
+	name = "Dock PRSD-3"
 	landmark_tag = "nav_snz_dock"
 	docking_controller = "rescue_shuttle_dock_airlock"
+
+/obj/shuttle_landmark/snz/transit
+	name = "In transit"
+	landmark_tag = "nav_transit_snz"

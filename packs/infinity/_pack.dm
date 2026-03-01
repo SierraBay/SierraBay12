@@ -13,6 +13,7 @@
 // Interactions (including overriding)
 #include "interactions\glup_down.dm"
 #include "interactions\face_wash.dm"
+#include "interactions\armorplates_craft.dm"
 
 // Clothing
 #include "clothing\head\berets.dm"
