@@ -68,14 +68,13 @@
 /datum/preferences/proc/get_preview_bgcolor()
 	switch(bgstate)
 		if("000")
-			return "#000000"
+			return COLOR_BLACK
 		if("FFF")
-			return "#FFFFFF"
+			return COLOR_WHITE
 		if("white")
-			return "#FFFFFF"
+			return COLOR_WHITE
 		else
-			return "#808080"
-
+			return COLOR_GRAY
 /proc/flatten_appearance_planes(mutable_appearance/M)
 	switch(M.plane)
 		if(FLOAT_PLANE)
