@@ -37,7 +37,6 @@
 #include "items\chairs.dm"
 #include "items\chemistry.dm"
 #include "items\grown.dm"
-#include "items\makeshift_armorplates.dm"
 
 // Guns
 #include "items\projectile\ammunition\boxes.dm"
