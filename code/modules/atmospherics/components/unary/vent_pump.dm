@@ -22,6 +22,12 @@
 	identifier = "AVP"
 
 	var/hibernate = 0 //Do we even process?
+	var/event_pending_wake = 0
+	var/last_event_wake_tick = -1
+	var/next_signal_wake = 0
+	var/event_signal_debounce = 3 SECONDS
+	var/event_heartbeat_interval = 1 SECONDS
+	var/datum/gas_mixture/event_environment_ref
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = EXTERNAL_PRESSURE_BOUND
@@ -95,15 +101,9 @@
 	pressure_checks = 2
 	pressure_checks_default = 2
 
-/obj/machinery/atmospherics/unary/vent_pump/Initialize()
-	. = ..()
-	var/area/area = get_area(src)
-	if (area)
-		LAZYADD(area.vent_pumps, src)
-	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP
-	icon = null
-
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
 	var/area/area = get_area(src)
 	if(area)
 		area.air_vent_info -= id_tag
@@ -165,6 +165,12 @@
 	update_icon()
 	update_underlays()
 
+/obj/machinery/atmospherics/unary/vent_pump/Move(NewLoc, Dir, step_x, step_y)
+	. = ..()
+	if(.)
+		bind_environment_signal()
+		queue_event_processing(MACHINERY_WAKE_ATMOS)
+
 /obj/machinery/atmospherics/unary/vent_pump/proc/can_pump()
 	if(inoperable())
 		return 0
@@ -174,15 +180,60 @@
 		return 0
 	return 1
 
+/obj/machinery/atmospherics/unary/vent_pump/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
+	if(QDELETED(src))
+		return
+	event_pending_wake |= wake_reason
+	if(world.time == last_event_wake_tick)
+		return
+	last_event_wake_tick = world.time
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/schedule_event_heartbeat()
+	if(!SSmachines.optimize_machinery_event || !event_heartbeat_interval)
+		return
+	addtimer(new Callback(src, PROC_REF(queue_event_processing), MACHINERY_WAKE_ATMOS), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/bind_environment_signal()
+	var/datum/gas_mixture/new_environment = return_air()
+	if(new_environment == event_environment_ref)
+		return
+	if(event_environment_ref)
+		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
+	event_environment_ref = new_environment
+	if(event_environment_ref)
+		RegisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED, PROC_REF(on_environment_gasmix_updated))
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/on_environment_gasmix_updated(datum/gas_mixture/source, reason_flags)
+	SIGNAL_HANDLER
+	if(source != event_environment_ref)
+		return
+	if(world.time < next_signal_wake)
+		return
+	next_signal_wake = world.time + event_signal_debounce
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
+
 /obj/machinery/atmospherics/unary/vent_pump/Process()
 	..()
 
+	if(SSmachines.optimize_machinery_event)
+		var/has_wake = event_pending_wake
+		event_pending_wake = 0
+		if(!has_wake)
+			return PROCESS_KILL
+
 	if (hibernate > world.time)
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return 1
+
+	bind_environment_signal()
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
 	if(!can_pump())
+		if(SSmachines.optimize_machinery_event)
+			return PROCESS_KILL
 		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
@@ -216,6 +267,9 @@
 		if(network)
 			network.update = 1
 
+	if(SSmachines.optimize_machinery_event)
+		return PROCESS_KILL
+
 	return 1
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
@@ -248,6 +302,13 @@
 			A.air_vent_names[id_tag] = new_name
 			SetName(new_name)
 	. = ..()
+	var/area/area = get_area(src)
+	if(area)
+		LAZYADD(area.vent_pumps, src)
+	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP
+	icon = null
+	bind_environment_signal()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/purge()
 	pressure_checks &= ~PRESSURE_CHECK_EXTERNAL
@@ -257,10 +318,12 @@
 	..()
 	hibernate = FALSE
 	toggle_input_toggle()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/atmospherics/unary/vent_pump/RefreshParts()
 	. = ..()
 	toggle_input_toggle()
+	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/atmospherics/unary/vent_pump/examine(mob/user, distance)
 	. = ..()
