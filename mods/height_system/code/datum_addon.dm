@@ -62,3 +62,113 @@
     var/atom/A = src // Works with both atoms and images
     filter_data = null
     A.filters = null
+
+
+
+/datum/preferences/proc/get_preview_bgcolor()
+	switch(bgstate)
+		if("000")
+			return "#000000"
+		if("FFF")
+			return "#FFFFFF"
+		if("white")
+			return "#FFFFFF"
+		else
+			return "#808080"
+
+/proc/flatten_appearance_planes(mutable_appearance/M)
+	switch(M.plane)
+		if(FLOAT_PLANE)
+			EMPTY_BLOCK_GUARD // already float-plane, keep as-is
+		if(DEFAULT_PLANE, EFFECTS_ABOVE_LIGHTING_PLANE, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_ABOVE_FOV)
+			M.plane = FLOAT_PLANE
+		else
+			return FALSE // EMISSIVE_PLANE, LIGHTING_PLANE, BLACKNESS_PLANE, etc.
+	if(length(M.overlays))
+		var/list/new_overlays = list()
+		for(var/overlay in M.overlays)
+			var/mutable_appearance/child = new(overlay)
+			if(flatten_appearance_planes(child))
+				new_overlays += child
+		M.overlays = new_overlays
+	if(length(M.underlays))
+		var/list/new_underlays = list()
+		for(var/underlay in M.underlays)
+			var/mutable_appearance/child = new(underlay)
+			if(flatten_appearance_planes(child))
+				new_underlays += child
+		M.underlays = new_underlays
+	return TRUE
+
+#define PREVIEW_PLANE 50
+/client/proc/show_character_previews(mutable_appearance/MA, is_tall = FALSE)
+	var/map_id = is_tall ? "tall" : "compact"
+	var/map_name = is_tall ? "character_preview_map" : "character_preview_map_compact"
+
+	// If switching between maps, clear everything and rebuild
+	if(preview_active_map != map_id)
+		clear_character_previews()
+		preview_active_map = map_id
+		// Toggle MAP visibility
+		if(is_tall)
+			winshow(src, "character_preview_map", TRUE)
+			winshow(src, "character_preview_map_compact", FALSE)
+		else
+			winshow(src, "character_preview_map", FALSE)
+			winshow(src, "character_preview_map_compact", TRUE)
+
+
+	if(!LAZYACCESS(char_render_holders, "pm"))
+		var/obj/screen/PM = new /obj/screen()
+		PM.name = "Preview PM"
+		PM.appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+		PM.plane = PREVIEW_PLANE
+		PM.blend_mode = BLEND_OVERLAY
+		PM.mouse_opacity = MOUSE_OPACITY_UNCLICKABLE
+		PM.screen_loc = "[map_name]:CENTER"
+		LAZYSET(char_render_holders, "pm", PM)
+		screen += PM
+
+
+	var/pos = 0
+	for(var/D in GLOB.cardinal)
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new /obj/screen()
+			LAZYSET(char_render_holders, "[D]", O)
+			screen |= O
+		O.appearance = MA
+		O.plane = PREVIEW_PLANE
+		O.transform = null
+		var/list/fixed_overlays = list()
+		for(var/overlay in O.overlays)
+			var/mutable_appearance/M = new(overlay)
+			if(flatten_appearance_planes(M))
+				fixed_overlays += M
+		O.overlays = fixed_overlays
+		var/list/fixed_underlays = list()
+		for(var/underlay in O.underlays)
+			var/mutable_appearance/M = new(underlay)
+			if(flatten_appearance_planes(M))
+				fixed_underlays += M
+		O.underlays = fixed_underlays
+		O.set_dir(D)
+		var/mutable_appearance/floor = new /mutable_appearance()
+		floor.icon = 'icons/turf/floors.dmi'
+		floor.icon_state = "steel"
+		floor.plane = FLOAT_PLANE
+		O.underlays += floor
+		var/tile_y
+		if(is_tall)
+			tile_y = 1 + pos * 2 // y = 1, 3, 5, 7
+		else
+			tile_y = 1 + pos     // y = 1, 2, 3, 4
+		O.screen_loc = "[map_name]:1,[tile_y]"
+		pos++
+
+/client/proc/clear_character_previews()
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		screen -= S
+		qdel(S)
+	char_render_holders = null

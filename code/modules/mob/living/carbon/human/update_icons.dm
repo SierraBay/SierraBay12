@@ -180,6 +180,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon_state = null
 		visible_overlays = overlays_standing
 
+	// [SIERRA-ADD] HEIGHT — head-level layers get larger pixel_y offset; body-level get smaller
+	var/static/list/head_level_layers = list(
+		HO_ID_LAYER, HO_GLASSES_LAYER, HO_GOGGLES_LAYER, HO_EARS_LAYER,
+		HO_HAIR_LAYER, HO_HEAD_LAYER, HO_ALT_HEAD_LAYER, HO_FACEMASK_LAYER,
+		HO_COLLAR_LAYER, HO_SUIT_STORE_LAYER, HO_TAIL_LAYER
+	)
+	// [/SIERRA-ADD]
+
 	for(var/i = 1 to LAZYLEN(visible_overlays))
 		var/entry = visible_overlays[i]
 		if(istype(entry, /image))
@@ -189,8 +197,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 				overlay.transform = get_lying_offset(overlay)
 			// [SIERRA-ADD] HEIGHT
-			overlay = update_height(overlay) // Apply height displacement filter
-			//overlay = human_update_offset(overlay) // Apply pixel_y offset for height (captured by getFlatIcon preview)
+			var/is_head_level = (i in head_level_layers)
+			if(!is_head_level) // Displacement maps are for body (torso/legs); applying to head-level overlays causes 1px shift
+				overlay = update_height(overlay)
+			overlay = human_update_offset(overlay, is_head_level)
 			// [/SIERRA-ADD]
 			overlays_to_apply += overlay
 		else if(istype(entry, /list))
@@ -200,8 +210,10 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 					overlay.transform = get_lying_offset(overlay)
 				// [SIERRA-ADD] HEIGHT
-				overlay = update_height(overlay) // Apply height displacement filter
-				//overlay = human_update_offset(overlay) // Apply pixel_y offset for height (captured by getFlatIcon preview)
+				var/is_head_level = (i in head_level_layers)
+				if(!is_head_level)
+					overlay = update_height(overlay)
+				overlay = human_update_offset(overlay, is_head_level)
 				// [/SIERRA-ADD]
 				overlays_to_apply += overlay
 
@@ -213,9 +225,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		//SIERRA-ADD
 		if(I)
 			I.filters = filters
-			// [SIERRA-ADD] HEIGHT
-			I = update_height(I) // Apply height displacement filter
-			I = human_update_offset(I, TRUE) // Apply pixel_y offset for height (eyes are head-level)
+			// [SIERRA-ADD] HEIGHT — eyes are head-level: only pixel_y offset, no body displacement
+			I = human_update_offset(I, TRUE)
 			// [/SIERRA-ADD]
 			overlays_to_apply += I
 		//SIERRA-ADD
@@ -427,7 +438,7 @@ var/global/list/damage_icon_parts = list()
 	// [SIERRA-ADD] HEIGHT
 	var/hair_overlay = head_organ.get_hair_icon()
 	if(hair_overlay)
-		hair_overlay = human_update_offset(hair_overlay, TRUE)
+		// pixel_y offset is applied later in update_icons() loop for all head-level overlays
 		overlays_standing[HO_HAIR_LAYER] = hair_overlay
 	// [/SIERRA-ADD]
 

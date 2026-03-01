@@ -254,6 +254,9 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 		pref_mob.client.prefs.open_setup_window(usr)
 	else if (. & TOPIC_REFRESH)
 		pref_mob.client.prefs.update_setup_window(usr)
+	// [SIERRA-ADD] HEIGHT — eagerly update MAP preview from any tab (after window refresh to avoid blocking UI)
+	if ((. & TOPIC_UPDATE_PREVIEW) && pref_mob.client?.prefs && !pref_mob.client.prefs.preview_icon)
+		pref_mob.client.prefs.update_preview_icon()
 
 /datum/category_item/player_setup_item/CanUseTopic(mob/user)
 	return 1
