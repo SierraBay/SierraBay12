@@ -289,7 +289,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	name = OUTFIT_JOB_NAME("Emergency Medical Technician - Sierra")
-	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	uniform = /obj/item/clothing/under/new_uniform/ems
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse
 	name = OUTFIT_JOB_NAME("Nurse - Sierra")
