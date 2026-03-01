@@ -126,7 +126,7 @@
 	alt_titles = list(
 		"Orderly" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/orderly,
 		"Nurse" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse,
-		"Trainee EMT" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
+		"Trainee EMT" = /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/emt
 	)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	allowed_branches = list(
