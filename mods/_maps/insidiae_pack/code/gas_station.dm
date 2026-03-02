@@ -17,7 +17,7 @@
 		// "" = list("nav_gas_station_starboard_d"),
 		"ITV Vulcan" = list("nav_gas_station_starboard_e"),
 		"ITV Spiritus" = list("nav_gas_station_starboard_f"),
-		"SNZ Speedboat" = list("nav_gas_station_starboard_j")
+		"SNZ Baydarka" = list("nav_gas_station_starboard_j")
 		)
 
 	initial_generic_waypoints = list(
