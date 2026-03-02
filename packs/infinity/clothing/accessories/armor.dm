@@ -18,6 +18,7 @@
 		energy = ARMOR_ENERGY_MINOR,
 		bomb = ARMOR_BOMB_MINOR
 		)
+	slot = ACCESSORY_SLOT_ARMOR_CHEST
 	slowdown = 0.25
 
 /obj/item/clothing/accessory/armorplate/mainkraft/medium
@@ -32,6 +33,7 @@
 		energy = ARMOR_ENERGY_SMALL,
 		bomb = ARMOR_BOMB_PADDED
 		)
+	slot = ACCESSORY_SLOT_ARMOR_CHEST
 	slowdown = 0.5
 
 /obj/item/clothing/accessory/armorplate/mainkraft/heavy
@@ -46,4 +48,5 @@
 		energy = ARMOR_ENERGY_RESISTANT,
 		bomb = ARMOR_BOMB_PADDED
 		)
+	slot = ACCESSORY_SLOT_ARMOR_CHEST
 	slowdown = 0.75
