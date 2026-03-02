@@ -14,8 +14,8 @@
 	spawn_cost = 2000 // Отключено до лучших времен. Было 2 ~Laxesh
 	spawn_weight = 50 //HABITABLE SHIPS SPAWN
 	shuttles_to_initialise = list(
-		/datum/shuttle/autodock/overmap/ascent_inf,
-		/datum/shuttle/autodock/overmap/ascent_inf/two
+		/datum/shuttle/autodock/overmap/ascent_tricho,
+		/datum/shuttle/autodock/overmap/ascent_lepido
 	)
 
 // Overmap objects.
@@ -27,8 +27,8 @@
 	max_speed = 1/(1 SECOND)
 	hide_from_reports = TRUE
 	initial_restricted_waypoints = list(
-		"Trichopterax" = list("nav_hangar_ascent_inf_one"),
-		"Lepidopterax" = list("nav_hangar_ascent_inf_two")
+		"Trichopterax" = list("nav_ascent_tricho_start"),
+		"Lepidopterax" = list("nav_ascent_lepido_start")
 	)
 
 /obj/submap_landmark/joinable_submap/ascent_seedship_inf

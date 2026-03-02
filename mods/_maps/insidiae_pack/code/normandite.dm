@@ -32,7 +32,7 @@
 		"Mule" = list("nav_normandite_merchant"),
 		"Utyug" = list("nav_utyug_start")
 		)
-	contact_class = /decl/ship_contact_class/normandite //
+	contact_class = /decl/ship_contact_class/normandite
 	initial_generic_waypoints = list(
 		"nav_normandite_north",
 		"nav_normandite_east",
@@ -71,7 +71,7 @@
 /obj/overmap/visitable/ship/landable/utyug
 	shuttle = "Utyug"
 	name = "GTSS Utyug"
-	scanner_desc = @{"
+	scanner_desc = {"
 		<B>Property of Grayson Manufactories:</B><br>
 		<I>Registration</I>: GTSS Utyug<br>
 		<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
@@ -99,12 +99,12 @@
 	shuttle_area = list(/area/normandite/utyug)
 	current_location = "nav_utyug_start"
 	range = 2
+	dock_target = "utyug_starboard"
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	fuel_consumption = 1 // вернуть на 5
-	dock_target = "utyug_starboard"
+	fuel_consumption = 5
 
 // jobs
 
