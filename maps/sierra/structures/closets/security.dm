@@ -135,7 +135,7 @@
 		/obj/item/device/hailer,
 		/obj/item/clothing/accessory/storage/black_vest,
 		/obj/item/gun/energy/gun/secure,
-		/obj/item/gun/energy/taser,
+		/obj/item/gun/projectile/taser,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/gloves/thick,
 		/obj/item/device/holowarrant,

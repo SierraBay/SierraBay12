@@ -256,7 +256,7 @@
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
 "cE" = (
-/obj/machinery/computer/ship/helm,
+/obj/machinery/computer/ship/helm/mercenary,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/merc_shuttle)
 "cG" = (

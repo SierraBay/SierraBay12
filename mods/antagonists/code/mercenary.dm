@@ -581,11 +581,38 @@ Used for quick dress-up. Also comes with several discount
 	. = ..()
 	shuttles_to_initialise += list(/datum/shuttle/autodock/overmap/merc_drop_pod)
 
+/obj/overmap/visitable/sector/merc_base
+	name = "Tiny Asteroid"
+	desc = "Sensor array detects an small, insignificant asteroid. The core appears to be reflecting scans."
+	place_near_main = list(2, 4)
+	icon_state = "meteor4"
+	hide_from_reports = TRUE
+	sensor_visibility = 10
+	initial_generic_waypoints = list(
+		"nav_merc_start",
+		"nav_merc_1",
+		"nav_merc_2",
+		"nav_merc_3",
+		"nav_merc_4"
+	)
+	scannable = FALSE
+	sector_flags = OVERMAP_SECTOR_UNTARGETABLE | OVERMAP_SECTOR_IN_SPACE
+
 /obj/overmap/visitable/sector/merc_base/New()
 	. = ..()
 	initial_generic_waypoints += list(
 		"nav_merc_pod_start"
 	)
+
+/obj/machinery/computer/ship/helm/mercenary
+	construct_state = /singleton/machine_construction/default/panel_closed/computer
+	base_type = /obj/machinery/computer/ship/helm
+	name = "Mercenary helm control console"
+
+/obj/overmap/visitable/sector/merc_base/Initialize()
+	. = ..()
+	for(var/obj/machinery/computer/ship/helm/mercenary/H in world)
+		H.add_known_sector(src)
 
 /datum/shuttle/autodock/overmap/merc_drop_pod
 	name = "Cyclopes Droppod"

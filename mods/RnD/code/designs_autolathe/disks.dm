@@ -44,6 +44,8 @@
 		/datum/design/autolathe/arms_ammo/hidden/beandrum,
 		/datum/design/autolathe/arms_ammo/hidden/nt10mag,
 		/datum/design/autolathe/arms_ammo/hidden/shotgun_flechette,
+		/datum/design/autolathe/arms_ammo/hidden/electrode_low,
+		/datum/design/autolathe/arms_ammo/hidden/electrode_high,
 		)
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/arms/sec
@@ -78,6 +80,8 @@
 		/datum/design/autolathe/arms_ammo/hidden/beandrum,
 		/datum/design/autolathe/arms_ammo/hidden/nt10mag,
 		/datum/design/autolathe/arms_ammo/hidden/shotgun_flechette,
+		/datum/design/autolathe/arms_ammo/hidden/electrode_low,
+		/datum/design/autolathe/arms_ammo/hidden/electrode_high,
 		)
 
 /obj/item/stock_parts/computer/hard_drive/portable/design/exloration

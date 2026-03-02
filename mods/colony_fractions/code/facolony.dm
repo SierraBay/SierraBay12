@@ -143,8 +143,8 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/submap_landmark/spawnpoint/facolony/leader_spawn
 	name = "Ship Captain"
 
-/obj/submap_landmark/spawnpoint/facolony/crewman_spawn
-	name = "Crewman"
+/obj/submap_landmark/spawnpoint/facolony/colonist_spawn
+	name = "Cargo Operator"
 
 /obj/submap_landmark/spawnpoint/facolony/scientist_spawn
 	name = "Systems Technician"
@@ -173,7 +173,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	req_access = list(access_facolony)
 
 /obj/structure/closet/facolony/wardrobe
-	name = "Wardrobe Locker"
+	name = "wardrobe locker"
 	closet_appearance = /singleton/closet_appearance/wardrobe/red
 
 /obj/structure/closet/facolony/wardrobe/WillContain()
@@ -205,6 +205,43 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 		/obj/item/clothing/under/fa/vacsuit/facolony/guardsman = 8
 	)
 
+/obj/structure/closet/facolony/cabinet
+	name = "plain cabinet"
+	desc = "An old, plain cabinet."
+	closet_appearance = /singleton/closet_appearance/cabinet
+
+/obj/structure/closet/facolony/cabinet/WillContain()
+	return list(
+		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/crowbar/prybar = 1,
+		/obj/item/gun/energy/gun/small = 1,
+		/obj/item/device/radio/headset/map_preset/facolony = 1,
+		/obj/item/device/flashlight/upgraded = 1,
+		/obj/item/storage/backpack = 1,
+		/obj/random/cash = 1,
+		/obj/item/clothing/under/captain_fly = 1,
+		/obj/item/clothing/under/color/blackjumpshorts = 1,
+		/obj/item/clothing/under/frontier = 1,
+		/obj/item/clothing/under/hazard = 1,
+		/obj/item/clothing/under/skirt = 1,
+		/obj/item/clothing/under/suit_jacket/female = 1,
+		/obj/item/clothing/under/suit_jacket/navy = 1,
+		/obj/item/clothing/under/syndicate = 1,
+		/obj/item/clothing/under/sterile = 1,
+		/obj/item/clothing/under/det/grey = 1,
+		/obj/item/clothing/under/casual_pants/baggy = 1,
+		/obj/item/clothing/under/casual_pants/camo = 1,
+		/obj/item/clothing/under/casual_pants/track = 1,
+		/obj/item/clothing/under/casual_pants/youngfolksjeans = 1,
+		/obj/item/clothing/suit/storage/hooded/wintercoat/miner = 1,
+		/obj/item/clothing/suit/storage/hooded/wintercoat = 1,
+		/obj/item/clothing/suit/storage/toggle/bomber = 1,
+		/obj/item/clothing/suit/storage/toggle/brown_jacket = 1,
+		/obj/item/clothing/suit/storage/toggle/hoodie/nt = 1,
+		/obj/item/clothing/suit/storage/toggle/hoodie/smw = 1,
+		/obj/item/clothing/suit/storage/toggle/track/gcc = 1,
+	)
+
 /obj/structure/sign/double/faflag/left
 	name = "Frontier Alliance flag"
 	icon = 'mods/colony_fractions/icons/colony.dmi'
@@ -223,6 +260,23 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/floor_decal/falogo
 	icon = 'mods/colony_fractions/icons/colony.dmi'
 	icon_state = "falogo"
+
+/obj/machinery/power/apc/facolony
+	req_access = list(access_facolony)
+
+/obj/machinery/alarm/facolony
+	req_access = list(access_facolony)
+
+/obj/machinery/power/smes/buildable/preset/facolony
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/smes_coil/super_capacity = 1,
+		/obj/item/stock_parts/smes_coil/super_io = 1
+		)
+	_input_maxed = TRUE
+	_output_maxed = TRUE
+	_input_on = TRUE
+	_output_on = TRUE
+	_fully_charged = TRUE
 
 /obj/machinery/telecomms/hub/map_preset/facolony
 	preset_name = "Internal"
@@ -294,82 +348,102 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "\improper IPV Celeste Hauler - Bridge"
 	icon_state = "A"
 
-/area/map_template/facolony/airlock
-	name = "\improper Base Primary External Airlock"
-	icon_state = "A"
-
 /area/map_template/facolony/armory
-	name = "\improper Ship Armory"
-	icon_state = "A"
-
-/area/map_template/facolony/bathroom
-	name = "\improper Base Lavatory"
-	icon_state = "A"
-
-/area/map_template/facolony/dorms
-	name = "\improper Base Dormitories"
+	name = "\improper IPV Celeste Hauler - Armory"
 	icon_state = "A"
 
 /area/map_template/facolony/engineering
-	name = "\improper Ship Engineering"
+	name = "\improper IPV Celeste Hauler - Engineering"
 	icon_state = "processing"
 
 /area/map_template/facolony/atmospherics
-	name = "\improper Ship Atmospherics"
-	icon_state = "shipping"
-
-/area/map_template/facolony/atmospherics2
-	name = "\improper Base Atmospherics"
+	name = "\improper IPV Celeste Hauler - Atmospherics"
 	icon_state = "shipping"
 
 /area/map_template/facolony/cargo
-	name = "\improper Ship Mid Cargo Area"
+	name = "\improper IPV Celeste Hauler - Mid Cargo"
 	icon_state = "A"
 
 /area/map_template/facolony/cargo2
-	name = "\improper Ship Aft Cargo Area"
+	name = "\improper IPV Celeste Hauler - Aft Cargo"
 	icon_state = "A"
 
 /area/map_template/facolony/cargohatch
-	name = "\improper Ship Cargo Hatch"
+	name = "\improper IPV Celeste Hauler - Cargo Hatch"
 	icon_state = "B"
 
-/area/map_template/facolony/unspecified
-	name = "\improper Unspecified Compartment"
-	icon_state = "A"
-
-/area/map_template/facolony/tcomms
-	name = "\improper Base Telecommunications"
-	icon_state = "B2"
-
 /area/map_template/facolony/medbay
-	name = "\improper Ship Infirmary"
+	name = "\improper IPV Celeste Hauler - Infirmary"
 	icon_state = "A"
 
 /area/map_template/facolony/surgery
-	name = "\improper Ship Operating Theatre"
+	name = "\improper IPV Celeste Hauler - Operating Theatre"
 	icon_state = "A"
 
 /area/map_template/facolony/messhall
-	name = "\improper Ship Mess Hall"
+	name = "\improper IPV Celeste Hauler - Mess Hall"
 	icon_state = "B"
 
+/area/map_template/facolony/airlock
+	name = "\improper Unknown Base - Primary External Airlock"
+	icon_state = "A"
+
+/area/map_template/facolony/bathroom
+	name = "\improper Unknown Base - Lavatory"
+	icon_state = "A"
+
+/area/map_template/facolony/dorms
+	name = "\improper Unknown Base - Dormitories"
+	icon_state = "A"
+
+/area/map_template/facolony/room_one
+	name = "\improper Unknown Base - Room One"
+	icon_state = "A"
+
+/area/map_template/facolony/room_two
+	name = "\improper Unknown Base - Room Two"
+	icon_state = "A"
+
+/area/map_template/facolony/room_three
+	name = "\improper Unknown Base - Room Three"
+	icon_state = "A"
+
+/area/map_template/facolony/room_four
+	name = "\improper Unknown Base - Room Four"
+	icon_state = "A"
+
+/area/map_template/facolony/detention
+	name = "\improper Unknown Base - Temporary Detention"
+	icon_state = "A"
+
 /area/map_template/facolony/mineralprocessing
-	name = "\improper Base Mining Site"
+	name = "\improper Unknown Base - Outdoor Solar Massive"
 	icon_state = "A"
 
 /area/map_template/facolony/science
-	name = "\improper Base R&D"
+	name = "\improper Unknown Base - R&D"
 	icon_state = "A"
 
-/area/map_template/facolony/warehouse
-	name = "\improper Base warehouse"
+/area/map_template/facolony/atmospherics2
+	name = "\improper Unknown Base - Atmospherics"
 	icon_state = "shipping"
 
+/area/map_template/facolony/warehouse
+	name = "\improper Unknown Base - Warehouse"
+	icon_state = "shipping"
+
+/area/map_template/facolony/unspecified
+	name = "\improper Unknown Base - Unspecified Compartment"
+	icon_state = "A"
+
+/area/map_template/facolony/tcomms
+	name = "\improper Unknown Base - Telecommunications"
+	icon_state = "B2"
+
 /area/map_template/facolony/outsidewarehouse
-	name = "\improper Trade Zone warehouse"
+	name = "\improper Unknown Base - Trade Zone Warehouse-Airlock"
 	icon_state = "shipping"
 
 /area/map_template/facolony/tradezone
-	name = "\improper Trade Zone"
+	name = "\improper Unknown Base - Trade Zone"
 	icon_state = "shipping"
