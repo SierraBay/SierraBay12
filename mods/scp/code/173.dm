@@ -106,7 +106,7 @@
 				if(ismech(target))
 					target.apply_damage(150, DAMAGE_BRUTE)
 				else
-					target.apply_damage(75, DAMAGE_BRUTE, (ishuman(target) && is_species(SPECIES_IPC)) ? BP_CHEST :BP_HEAD)
+					target.apply_damage(75, DAMAGE_BRUTE, (ishuman(target) && target.is_species(SPECIES_IPC)) ? BP_CHEST : BP_HEAD)
 				if(prob(25))
 					playsound(get_turf(src), pick(scare_sound), 25, 1)
 			else
