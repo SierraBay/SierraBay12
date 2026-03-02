@@ -1,20 +1,9 @@
-// ================================
-// Roulette — Casino Roulette System
-// ================================
-// Two objects: roulette_table (betting UI) + roulette_wheel (spin UI)
-// They communicate via locate() in range(5).
-// Bets are resolved on the table when the wheel finishes spinning.
-// ================================
-
-// Returns total spacecash worth the mob is holding in both hands
 /proc/roulette_count_hand_money(mob/living/user)
 	var/total = 0
 	for(var/obj/item/spacecash/C in list(user.get_active_hand(), user.get_inactive_hand()))
 		total += C.worth
 	return total
 
-// Deducts `amount` thalers from spacecash items in the mob's hands.
-// Returns TRUE on success, FALSE if there is not enough money.
 /proc/roulette_deduct_hand_money(mob/living/user, amount)
 	var/total = roulette_count_hand_money(user)
 	if(total < amount)
@@ -32,10 +21,6 @@
 			C.update_icon()
 	return TRUE
 
-// ---------------------------------------------------------------
-// 	Helper proc — shared by both objects
-// ---------------------------------------------------------------
-
 /proc/roulette_number_color(num)
 	if(num == 0)
 		return "green"
@@ -44,13 +29,10 @@
 		return "red"
 	return "black"
 
-// European roulette wheel number sequence (clockwise, starting from 0 at top)
 /proc/roulette_wheel_sequence()
 	return list(0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26)
 
-// ---------------------------------------------------------------
-// 	Roulette Table
-// ---------------------------------------------------------------
+--------------------------------------------------------------
 
 /obj/structure/casino/roulette_table
 	name = "roulette table"
@@ -60,17 +42,11 @@
 	density = TRUE
 	anchored = TRUE
 
-	/// All active bets. Each entry is an assoc-list: bettor / type / amount
 	var/list/bets
-	/// Currently selected chip denomination for this table
 	var/selected_amount = 10
-	/// Locked while the wheel is spinning — no new bets allowed
 	var/locked = FALSE
-	/// Last landed number (-1 = never spun)
 	var/last_result = -1
-	/// Ring-buffer of recent results (newest first, max 12)
 	var/list/result_history
-	/// Casino bank balance — limits payouts; losses and bets accumulate here
 	var/bank_balance = 50000
 
 /obj/structure/casino/roulette_table/New()
@@ -175,20 +151,17 @@
 
 	return ..()
 
-// Validate bet type string
 /obj/structure/casino/roulette_table/proc/roulette_valid_bet(bet_type)
 	var/list/simple = list("red","black","odd","even","low","high",
 	                       "dozen1","dozen2","dozen3","col1","col2","col3")
 	if(bet_type in simple)
 		return TRUE
-	// "straight_N" where N is 0..36
 	if(length(bet_type) > 9 && copytext(bet_type, 1, 10) == "straight_")
 		var/num = text2num(copytext(bet_type, 10))
 		if(isnum(num) && num >= 0 && num <= 36)
 			return TRUE
 	return FALSE
 
-// Calculate payout multiplier for a bet given the result
 /obj/structure/casino/roulette_table/proc/roulette_get_payout(bet_type, result)
 	var/color   = roulette_number_color(result)
 	var/is_odd  = (result > 0) && (result % 2 == 1)
@@ -219,7 +192,6 @@
 
 	return 0
 
-// Called by the wheel after it finishes spinning
 /obj/structure/casino/roulette_table/proc/resolve_bets(result, mob/last_user)
 	last_result = result
 	result_history.Insert(1, result)
@@ -269,13 +241,9 @@
 	anchored = TRUE
 
 	var/spinning = FALSE
-	/// Last landed number (-1 = not yet spun)
 	var/last_result = -1
-	/// Pre-calculated result for the current spin (set in perform_spin, consumed in finish_spin)
 	var/pending_result = -1
-	/// Ring-buffer of recent results (newest first, max 12)
 	var/list/result_history
-	/// Final rotation degree passed to CSS animation — aligned to the winning segment
 	var/spin_deg = 1440
 
 /obj/structure/casino/roulette_wheel/New()
@@ -344,7 +312,6 @@
 	T.locked = TRUE
 	spinning = TRUE
 
-	// Pick the result now so the wheel visually aligns to the correct segment
 	pending_result = rand(0, 36)
 	var/list/seq = roulette_wheel_sequence()
 	var/wheel_pos = seq.Find(pending_result) - 1   // 0-indexed position on the physical wheel
@@ -379,14 +346,12 @@
 	for(var/mob/M in viewers(7, src))
 		to_chat(M, SPAN_NOTICE("Roulette: [color_icon] The ball lands on [last_result]! ([color])"))
 
-	// Resolve bets on the nearest table
 	var/obj/structure/casino/roulette_table/T = locate(/obj/structure/casino/roulette_table) in range(1, src)
 	if(T)
 		T.resolve_bets(last_result, user)
 
 	SSnano.update_uis(src, ui_data(user))
 
-// Anchoring / linking with wrench
 /obj/structure/casino/roulette_wheel/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 	if(isWrench(tool))
