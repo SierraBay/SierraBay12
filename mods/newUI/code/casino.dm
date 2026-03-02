@@ -192,11 +192,11 @@
 			if("♣️")
 				winnings = 10
 		playsound(src, pick('mods/newUI/sound/jackpot.ogg'), 50, 1)
-
+/* Пока что отрубим бонусы за 2 совпадения. Посмотрим как будет играться система с псевдорандомом.
 	else if(result[1] == result[2] || result[2] == result[3])
 		winnings = 5
 		playsound(src, pick('mods/newUI/sound/e_death.ogg'), 50, 1)
-
+*/
 	winnings *= multiplier
 
 	return winnings

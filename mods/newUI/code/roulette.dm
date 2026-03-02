@@ -104,7 +104,8 @@
 		entry["type"]    = B["type"]
 		entry["amount"]  = B["amount"]
 		entry["is_mine"] = (B["bettor"] == user) ? 1 : 0
-		entry["bettor_name"] = istype(B["bettor"], /mob) ? B["bettor"].name : "Unknown"
+		var/mob/M_bettor_name = B["bettor"]
+		entry["bettor_name"] = istype(B["bettor"], /mob) ? M_bettor_name.name : "Unknown"
 		bet_list         += list(entry)
 		total            += B["amount"]
 	data["bets"]       = bet_list
