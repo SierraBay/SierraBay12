@@ -105,7 +105,7 @@
 	if(client)
 		// Determine if this is a tall/large species
 		var/is_tall = (mannequin.icon_height > 32) || (mannequin.mob_size == MOB_LARGE)
-		client.show_character_previews(new /mutable_appearance(mannequin), is_tall)
+		client.show_character_previews(new /mutable_appearance(mannequin), is_tall, get_preview_floor_state())
 		// Update MAP background color on the active map
 		var/bg_color = get_preview_bgcolor()
 		var/active_map = is_tall ? "character_preview_map" : "character_preview_map_compact"
@@ -160,9 +160,11 @@
 		else
 			pref.bgstate = pref.background_states[index + 1]
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+/*[SIERRA-REMOVE] - HEIGHT
 	else if (query["resize"])
 		pref.client?.cycle_preference(/datum/client_preference/preview_scale)
 		return TOPIC_REFRESH_UPDATE_PREVIEW
+*/
 	else if (query["previewjob"])
 		pref.preview_job = !pref.preview_job
 		pref.preview_icon = null
@@ -175,12 +177,12 @@
 
 
 /datum/category_item/player_setup_item/physical/preview/content(mob/user)
-	// [SIERRA-EDIT] — HIGHT PREVIEW
-	if(!pref.preview_icon)
-		pref.update_preview_icon()
+	// [SIERRA-EDIT] — HEIGHT PREVIEW
+	//if(!pref.preview_icon)
+	//	pref.update_preview_icon()
 	. = "<b>Preview:</b> (shown on the right panel)"
 	. += "<br />[BTN("cyclebg", "Cycle Background")]"
 	. += " - [BTN("previewgear", "[pref.preview_gear ? "Hide" : "Show"] Loadout")]"
 	. += " - [BTN("previewjob", "[pref.preview_job ? "Hide" : "Show"] Uniform")]"
-	. += " - [BTN("resize", "Resize")]"
+	//. += " - [BTN("resize", "Resize")]"
 	// [/SIERRA-EDIT]

@@ -193,9 +193,9 @@
 	winshow(user, "preferences_window", TRUE)
 	show_browser(user, content, "window=preferences_browser")
 	onclose(user, "preferences_window", src)
-	// [SIERRA-ADD] HEIGHT
 	refresh_preview_map_visibility()
-	// [/SIERRA-ADD]
+	refresh_preview_map_contents()
+
 	// [/SIERRA-EDIT]
 
 /datum/preferences/proc/update_setup_window(mob/user)

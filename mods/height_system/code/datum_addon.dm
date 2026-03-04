@@ -75,6 +75,16 @@
 			return COLOR_WHITE
 		else
 			return COLOR_GRAY
+
+/datum/preferences/proc/get_preview_floor_state()
+	switch(bgstate)
+		if("000")
+			return "dark"
+		if("FFF", "white")
+			return "white"
+		else
+			return "steel"
+
 /proc/flatten_appearance_planes(mutable_appearance/M)
 	switch(M.plane)
 		if(FLOAT_PLANE)
@@ -100,7 +110,7 @@
 	return TRUE
 
 #define PREVIEW_PLANE 50
-/client/proc/show_character_previews(mutable_appearance/MA, is_tall = FALSE)
+/client/proc/show_character_previews(mutable_appearance/MA, is_tall = FALSE, floor_state = "steel")
 	var/map_id = is_tall ? "tall" : "compact"
 	var/map_name = is_tall ? "character_preview_map" : "character_preview_map_compact"
 
@@ -154,7 +164,7 @@
 		O.set_dir(D)
 		var/mutable_appearance/floor = new /mutable_appearance()
 		floor.icon = 'icons/turf/floors.dmi'
-		floor.icon_state = "steel"
+		floor.icon_state = floor_state
 		floor.plane = FLOAT_PLANE
 		O.underlays += floor
 		var/tile_y
@@ -183,3 +193,10 @@
 		if("compact")
 			winshow(client, "character_preview_map", FALSE)
 			winshow(client, "character_preview_map_compact", TRUE)
+
+/datum/preferences/proc/refresh_preview_map_contents()
+	// Always call update_preview_icon() here — this runs AFTER the window is shown,
+	// so screen objects are properly bound to the MAP element.
+	if(!client)
+		return
+	update_preview_icon()
