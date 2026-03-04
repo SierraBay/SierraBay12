@@ -47,6 +47,8 @@
 	if(sponge)
 		var/brain_health = sponge.max_damage - sponge.damage
 
+		to_chat(H, SPAN_WARNING("Current brain status: [round(max(0,(1 - sponge.damage/sponge.max_damage)*100))]%"))
+
 		if(brain_health < 60 || brain_health <= dmg + 1)
 			if(brain_health <= dmg + 1)
 				dmg = max(0, brain_health - 1)
