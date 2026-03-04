@@ -48,3 +48,11 @@
 			I.add_filter("Lenghten_Legs", 2, list("type" = "displace", "icon" = lenghten_legs_mask, "x" = 0, "y" = 0, "size" = 1))
 
 	return I
+
+/obj/item/clothing/accessory/get_mob_overlay(mob/user_mob, slot)
+	var/image/ret = ..()
+	if(istype(ret, /image) && ishuman(user_mob) && istype(loc, /obj/item/clothing))
+		var/mob/living/carbon/human/H = user_mob
+		H.update_height(ret)
+		H.human_update_offset(ret, FALSE) // body-level: pixel_y = 0, no head shift
+	return ret

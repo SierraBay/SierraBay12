@@ -171,3 +171,15 @@
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+
+/datum/preferences/proc/refresh_preview_map_visibility()
+	if(!client)
+		return
+	switch(client.preview_active_map)
+		if("tall")
+			winshow(client, "character_preview_map", TRUE)
+			winshow(client, "character_preview_map_compact", FALSE)
+		if("compact")
+			winshow(client, "character_preview_map", FALSE)
+			winshow(client, "character_preview_map_compact", TRUE)

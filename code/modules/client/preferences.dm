@@ -193,6 +193,9 @@
 	winshow(user, "preferences_window", TRUE)
 	show_browser(user, content, "window=preferences_browser")
 	onclose(user, "preferences_window", src)
+	// [SIERRA-ADD] HEIGHT
+	refresh_preview_map_visibility()
+	// [/SIERRA-ADD]
 	// [/SIERRA-EDIT]
 
 /datum/preferences/proc/update_setup_window(mob/user)
@@ -220,6 +223,9 @@
 		// [SIERRA-ADD] HEIGHT — Clean up character preview screen objects on window close
 		if(client)
 			client.clear_character_previews()
+			client.preview_active_map = ""
+		// Null preview_icon so it's rebuilt when the window is reopened
+		preview_icon = null
 		// Hide the preferences window
 		if(client?.mob)
 			winshow(client.mob, "preferences_window", FALSE)
