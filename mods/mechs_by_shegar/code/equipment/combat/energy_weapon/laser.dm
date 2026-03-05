@@ -65,7 +65,6 @@
 /obj/item/projectile/beam/incendiary_laser/mech
 	damage = 25
 	armor_penetration = 0
-	mech_armor_damage = 40
 	agony = 0
 
 ///Слабый и промежуточный лазер
@@ -80,14 +79,12 @@
 	silenced = TRUE
 	impact_sounds = list(BULLET_IMPACT_MEAT = SOUNDS_LASER_MEAT)
 	damage = 2.6
-	mech_armor_damage = 2 //30 армор урона от одного заряда апекса
 
 
 //Сильный конечный снаряд
 /obj/item/projectile/beam/midlaser/heavy_apex
 	fire_sound = null
 	icon_state = "beam_heavy"
-	mech_armor_damage = 30 //И ещё 30 урона. И того, 5 полных попаданий апекса.
 	muzzle_type = /obj/projectile/laser/heavy/muzzle
 	tracer_type = /obj/projectile/laser/heavy/tracer/apex
 	impact_type = /obj/projectile/laser/heavy/impact

@@ -1041,9 +1041,6 @@
 /area/map_template/facolony/science)
 "ey" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "facolonymine";
 	pixel_y = 7
@@ -1470,7 +1467,10 @@
 	id = "facolonymine";
 	dir = 1
 	},
-/obj/machinery/light/spot{
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/steel_grid,
@@ -1864,14 +1864,15 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "ix" = (
-/obj/structure/catwalk,
+/obj/machinery/conveyor{
+	id = "facolonymine";
+	dir = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/facolony/mineralprocessing)
@@ -2636,9 +2637,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "lZ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/ore_box,
 /obj/structure/catwalk,
 /turf/simulated/floor/exoplanet/concrete,
@@ -3197,9 +3195,6 @@
 /area/map_template/facolony/room_four)
 "on" = (
 /obj/machinery/recharge_station,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
@@ -3300,9 +3295,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics2)
 "oE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/catwalk,
 /obj/structure/ore_box,
 /turf/simulated/floor/exoplanet/concrete,
@@ -4455,6 +4447,12 @@
 	id = "facolonymine";
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/exoplanet/concrete,
 /area/map_template/facolony/mineralprocessing)
 "to" = (
@@ -4474,9 +4472,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/tradezone)
 "tp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/closet/crate,
 /obj/structure/railing/mapped{
 	dir = 1;
@@ -4515,11 +4510,6 @@
 	frequency = 1380;
 	id_tag = "facolony2_exterior_door";
 	locked = 1
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -4664,11 +4654,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	id_tag = "facolony2_pump_out_internal";
 	power_rating = 25000
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -5192,10 +5177,19 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/dorms)
 "wa" = (
-/obj/machinery/light/small,
-/obj/structure/catwalk,
-/turf/template_noop,
-/area/map_template/facolony/command)
+/obj/machinery/conveyor{
+	id = "facolonymine";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/plasticflaps,
+/turf/simulated/floor/exoplanet/concrete,
+/area/map_template/facolony/mineralprocessing)
 "wb" = (
 /obj/machinery/oxygen_pump{
 	pixel_x = -30
@@ -5927,9 +5921,6 @@
 /area/map_template/facolony/cargo2)
 "zi" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/recharger,
 /obj/item/device/scanner/mining,
@@ -6836,11 +6827,6 @@
 	pixel_x = 24;
 	pixel_y = -24;
 	req_access = list("ACCESS_FACOLONY")
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -7939,11 +7925,6 @@
 	req_access = list("ACCESS_FACOLONY")
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -9276,11 +9257,6 @@
 	dir = 10
 	},
 /obj/structure/catwalk,
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -9461,9 +9437,6 @@
 /area/map_template/facolony/messhall)
 "PT" = (
 /obj/structure/catwalk,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -9934,8 +9907,11 @@
 	id = "facolonymine";
 	dir = 1
 	},
-/obj/machinery/light/spot{
+/obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
@@ -10032,11 +10008,11 @@
 /area/map_template/facolony/command)
 "Sq" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/computer/mining,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light/spot{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
 "Sr" = (
@@ -10665,9 +10641,6 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/airlock)
 "UE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/table/reinforced,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/cell_charger,
@@ -10731,11 +10704,6 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1380;
 	id_tag = "facolony2_interior_door"
-	},
-/obj/structure/cable/green{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -10880,9 +10848,6 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/airlock)
 "VP" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/closet/crate,
 /obj/structure/closet/crate,
 /obj/structure/railing/mapped{
@@ -10979,6 +10944,11 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/plasticflaps,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
 "Wp" = (
@@ -11203,9 +11173,6 @@
 /area/map_template/facolony/medbay)
 "Xi" = (
 /obj/structure/catwalk,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -12742,7 +12709,7 @@ uo
 Gl
 gH
 gH
-wa
+TE
 Sw
 Sw
 Sw
@@ -13023,9 +12990,9 @@ tu
 CD
 Qr
 Sh
+wa
 tn
-tn
-tn
+ix
 Sa
 tn
 tn
@@ -13066,16 +13033,16 @@ lB
 mk
 do
 ys
-ix
-ix
+ys
+ys
 PT
 Xi
-ix
-ix
+ys
+ys
 PT
 Xi
-ix
-ix
+ys
+ys
 rK
 Qr
 EN
@@ -14170,10 +14137,10 @@ QP
 QP
 QP
 wZ
-QP
-QP
-QP
-QP
+uo
+vW
+uo
+uo
 QP
 QP
 QP

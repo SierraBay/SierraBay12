@@ -16,7 +16,7 @@
 	caliber = CALIBER_PISTOL_SMALL
 	one_hand_penalty= 0
 	load_method = SINGLE_CASING|SPEEDLOADER
-	max_shells = 250
+	max_shells = 100
 	ammo_type = /obj/item/ammo_casing/pistol/small/mech
 	magazine_type = /obj/item/ammo_magazine/proto_smg/mech
 	allowed_magazines = /obj/item/ammo_magazine/proto_smg/mech
@@ -41,11 +41,14 @@
 	caliber = CALIBER_PISTOL_SMALL
 
 /obj/item/projectile/bullet/pistol/holdout/mech
-	damage = 25
-	penetrating = 0
+	damage = 30
 	fire_sound = 'mods/mechs_by_shegar/sounds/mech_smg.ogg'
-	mech_armor_damage = 30 //10 попаданий по любой
-	hitscan = TRUE
+	//Раскоментировать когда будет хитскан
+	// penetrating = 0
+	// damage = 25
+	// hitscan = TRUE
+
+/*
 
 /obj/temporary/bullet_traccer
 	invisibility = 100
@@ -59,3 +62,5 @@
 	.=..()
 	var/obj/traccer = new /obj/temporary/bullet_traccer (targloc, 0.2 SECONDS)
 	startloc.Beam(BeamTarget = traccer, icon_state = "main",icon='mods/mechs_by_shegar/icons/traccer.dmi',time = 0.2 SECONDS)
+
+*/

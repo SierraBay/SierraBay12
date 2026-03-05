@@ -1,46 +1,3 @@
-/obj/submap_landmark/joinable_submap/normandite
-	name = "GTMS Normandite"
-	archetype = /singleton/submap_archetype/away_normandite
-
-/singleton/submap_archetype/away_normandite
-	descriptor = "Grayson Terra Mining station"
-	map = "Normandite"
-	crew_jobs = list(
-		/datum/job/submap/normandite,
-		/datum/job/submap/normandite/leader
-	)
-
-/obj/overmap/visitable/ship/normandite
-	name = "mining station"
-	desc = "A stationary space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters."
-	color = COLOR_BROWN_ORANGE
-	vessel_mass = 23000
-	known_ships = list(/obj/overmap/visitable/ship/landable/utyug)
-	vessel_size = SHIP_SIZE_SMALL
-	initial_restricted_waypoints = list("Mule" = list("nav_normandite_merchant"), "Utyug" = list("nav_utyug_start"))
-	contact_class = /decl/ship_contact_class/normandite
-
-	initial_generic_waypoints = list(
-		"nav_normandite_north",
-		"nav_normandite_east",
-		"nav_normandite_south",
-		"nav_normandite_west"
-	)
-
-/decl/ship_contact_class/normandite
-	class_short = "DLC"
-	class_long = "Dolomite-class small deep-space ore extraction facility"
-	max_ship_mass = 26000
-
-/obj/overmap/visitable/ship/normandite/New()
-	name = "GTMS Normandite-[rand(3,19)]"
-	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B><br>
-<I>Registration</I>: [name]<br>
-<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
-<B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
-	..()
-
 /datum/map_template/ruin/away_site/normandite
 	name = "Normandite"
 	id = "awaysite_normandite"
@@ -50,7 +7,9 @@
 	spawn_cost = 1
 	player_cost = 4
 	spawn_weight = 0.4
-	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/utyug)
+	shuttles_to_initialise = list(
+		/datum/shuttle/autodock/overmap/utyug
+	)
 	apc_test_exempt_areas = list(
 		/area/normandite/exterior = NO_SCRUBBER|NO_VENT
 	)
@@ -62,16 +21,61 @@
 
 	skip_main_unit_tests = TRUE
 
+/obj/overmap/visitable/ship/normandite
+	name = "mining station"
+	desc = "A stationary space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters."
+	color = COLOR_BROWN_ORANGE
+	vessel_mass = 23000
+	known_ships = list(/obj/overmap/visitable/ship/landable/utyug)
+	vessel_size = SHIP_SIZE_SMALL
+	initial_restricted_waypoints = list(
+		"Mule" = list("nav_normandite_merchant"),
+		"Utyug" = list("nav_utyug_start")
+		)
+	contact_class = /decl/ship_contact_class/normandite
+	initial_generic_waypoints = list(
+		"nav_normandite_north",
+		"nav_normandite_east",
+		"nav_normandite_south",
+		"nav_normandite_west"
+	)
+
+/obj/submap_landmark/joinable_submap/normandite
+	name = "GTMS Normandite"
+	archetype = /singleton/submap_archetype/normandite
+
+/decl/ship_contact_class/normandite
+	class_short = "DLC"
+	class_long = "Dolomite-class small deep-space ore extraction facility"
+	max_ship_mass = 26000
+
+/singleton/submap_archetype/normandite
+	descriptor = "Grayson Terra Mining station"
+	map = "Normandite"
+	crew_jobs = list(
+		/datum/job/submap/normandite,
+		/datum/job/submap/normandite/leader
+	)
+
+/obj/overmap/visitable/ship/normandite/New()
+	name = "GTMS Normandite-[rand(3,19)]"
+	scanner_desc = {"
+<B>Property of Grayson Manufactories:</B><br>
+<I>Registration</I>: [name]<br>
+<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
+<B>Notice</B>: A space object with wide of 79.5 meters, length of 72 meters and high near 12.7 meters. A Self Indentification Signal classifices the target as Grayson Terra Mining Station, a property of Grayson Manufactories."}
+	..()
+
 // utyug
 
 /obj/overmap/visitable/ship/landable/utyug
 	shuttle = "Utyug"
 	name = "GTSS Utyug"
 	scanner_desc = {"
-<B>Property of Grayson Manufactories:</B><br>
-<I>Registration</I>: GTSS Utyug<br>
-<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
-<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
+		<B>Property of Grayson Manufactories:</B><br>
+		<I>Registration</I>: GTSS Utyug<br>
+		<I>Transponder</I>: Transmitting (IND), Grayson Terra<br>
+		<B>Notice</B>: A Self Indentification Signal classifices the target as Grayson Terra Small Shuttle"}
 	max_speed = 1/(2 SECONDS)
 	burn_delay = 3 SECONDS
 	vessel_mass = 5000
@@ -80,27 +84,27 @@
 	vessel_size = SHIP_SIZE_SMALL
 	contact_class = /decl/ship_contact_class/shuttle
 
+/obj/machinery/computer/shuttle_control/explore/utyug
+	name = "shuttle control console"
+	shuttle_tag = "Utyug"
+
+/obj/shuttle_landmark/utyug/start
+	name = "Utyug Dock"
+	landmark_tag = "nav_utyug_start"
+	docking_controller = "utyug_starboard_dock"
+
 /datum/shuttle/autodock/overmap/utyug
 	name = "Utyug"
 	warmup_time = 10
-	current_location = "nav_utyug_start"
-	range = 1
 	shuttle_area = list(/area/normandite/utyug)
+	current_location = "nav_utyug_start"
+	range = 2
+	dock_target = "utyug_starboard"
 	defer_initialisation = TRUE
 	flags = SHUTTLE_FLAGS_PROCESS
 	skill_needed = SKILL_BASIC
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 	fuel_consumption = 5
-
-/obj/machinery/computer/shuttle_control/explore/utyug
-	name = "shuttle control console"
-	shuttle_tag = "Utyug"
-
-/obj/shuttle_landmark/utyug
-	name = "Utyug Dock"
-	landmark_tag = "nav_utyug_start"
-	base_area = /area/space
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 // jobs
 
@@ -369,7 +373,7 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 /area/normandite/utyug
 	name = "Utyug"
 	icon_state = "shuttle"
-	area_flags = AREA_FLAG_RAD_SHIELDED
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
 // paint
 
@@ -414,7 +418,13 @@ var/global/const/access_normandite = "ACCESS_NORMANDITE"
 
 	new/obj/item/paper(loc, text, "Sensor Readings", null, LANGUAGE_HUMAN_RUSSIAN)
 
-// nanomed
+// obj
 
 /obj/machinery/vending/medical/normandite
-	req_access = list()
+	req_access = list("ACCESS_NORMANDITE")
+
+/obj/machinery/power/apc/normandite
+	req_access = list("ACCESS_NORMANDITE")
+
+/obj/machinery/alarm/normandite
+	req_access = list("ACCESS_NORMANDITE")

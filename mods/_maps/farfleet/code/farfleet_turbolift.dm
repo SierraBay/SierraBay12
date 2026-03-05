@@ -1,25 +1,39 @@
-/obj/turbolift_map_holder/farfleet
-	name = "Farfleet turbolift map placeholder"
-	icon = 'icons/obj/structures/turbolift_preview_2x2.dmi'
-	depth = 2
-	lift_size_x = 3
-	lift_size_y = 3
+/datum/shuttle/autodock/ferry/farfleet_lift
+	name = "Gunboat Cargo Lift"
+	defer_initialisation = TRUE
+	shuttle_area = /area/turbolift/farfleet_lift
+	warmup_time = 3
+	waypoint_station = "nav_farfleet_lift_top"
+	waypoint_offsite = "nav_farfleet_lift_bottom"
+	sound_takeoff = 'sound/effects/lift_heavy_start.ogg'
+	sound_landing = 'sound/effects/lift_heavy_stop.ogg'
+	ceiling_type = null
+	knockdown = 0
 
-	areas_to_use = list(
-		/area/turbolift/farfleet_first,
-		/area/turbolift/farfleet_second
-	)
+/area/turbolift/farfleet_lift
+	name = "Gunboat Cargo Lift"
+	icon_state = "shuttle3"
+	base_turf = /turf/simulated/open
+	req_access = list(access_away_iccgn)
 
-/area/turbolift/farfleet_second
-	name = "lift (upper deck)"
-	lift_floor_label = "Deck 1"
-	lift_floor_name = "Hangar Deck"
-	lift_announce_str = "Arriving at Hangar Deck: Секция гаупвахты. Секция экипажа. Ангар шаттла. Оружейная десанта. Хранилище аномальных материалов."
-	base_turf = /turf/simulated/floor
+/obj/shuttle_landmark/lift/farfleet_top
+	name = "Deck 1 - Hangar Deck"
+	landmark_tag = "nav_farfleet_lift_top"
+	base_area = /area/ship/farfleet/crew/hallway/upper
+	base_turf = /turf/simulated/open
 
-/area/turbolift/farfleet_first
-	name = "lift (lower deck)"
-	lift_floor_label = "Deck 2"
-	lift_floor_name = "Operating Deck"
-	lift_announce_str = "Arriving at Operating Deck: Мостик. Инженерный отсек. Атмосферный отсек. "
-	base_turf = /turf/simulated/floor
+/obj/shuttle_landmark/lift/farfleet_bottom
+	name = "Deck 2 - Operating Deck"
+	landmark_tag = "nav_farfleet_lift_bottom"
+	flags = SLANDMARK_FLAG_AUTOSET
+	base_area = /area/ship/farfleet/crew/hallway/lower
+	base_turf = /turf/simulated/floor/plating
+
+/obj/machinery/computer/shuttle_control/lift/farfleet
+	name = "farfleet lift controls"
+	shuttle_tag = "Gunboat Cargo Lift"
+	ui_template = "shuttle_control_console_lift.tmpl"
+	icon_state = "tiny"
+	icon_keyboard = "tiny_keyboard"
+	icon_screen = "lift"
+	density = FALSE

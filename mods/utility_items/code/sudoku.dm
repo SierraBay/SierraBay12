@@ -41,6 +41,8 @@
 	var/collapse = 0
 	var/width = 900
 
+	available_to_ai = TRUE
+
 /datum/nano_module/program/sudoku/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
 	var/list/data = host.initial_data(program)
 

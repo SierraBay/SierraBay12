@@ -15,10 +15,10 @@
 		var/answer = alert(user, "Если вы хотите перенести урон с органов и конечностей ОТ СЕБЯ к ЦЕЛИ - жмите \"ОТ ЦЕЛИ КО МНЕ\", если хотите от цели к себе то жмите \"ОТ МЕНЯ К ЦЕЛИ\"", "Перенос повреждений", "От меня к цели", "От цели ко мне")
 		//answer может длится сколько угодно, потому нужно перепроверить условия после ответа
 		if(get_dist(get_turf(user), get_turf(target)) > 1.5)
-			to_chat(user, "Вы слишком далеко ушли от цели!")
+			to_chat(user, "Я слишком далеко.")
 			return
 		if(target.grabbed_by && target.grabbed_by == user)
-			to_chat(user, "Цель нужно продолжать держать в захвате!")
+			to_chat(user, "Я должен держать цель!")
 			return
 		target.organs_psi_invisibility(user)
 		if(!do_after(user, 5 SECONDS, target, DO_DEFAULT | DO_USER_UNIQUE_ACT | DO_PUBLIC_PROGRESS))
@@ -26,7 +26,7 @@
 			return
 
 		if(target.grabbed_by && target.grabbed_by == user)
-			to_chat(user, "Цель нужно продолжать держать в захвате!")
+			to_chat(user, "Мне нужно продолжать держать цель в захвате!")
 			return
 
 		var/red_rank = user.psi.get_rank(PSI_REDACTION) - 1

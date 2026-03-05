@@ -93,10 +93,7 @@ Dragon's Breath Rounds - Shotgun
 	spread_step = 40
 	armor_penetration = 0
 	penetration_modifier = 0
-	//[SIERRA-ADD] - Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 5 //Дробь малоэффективна
-	//[SIERRA-ADD]
+
 
 /obj/item/projectile/bullet/pellet/shotgun/dragon/on_hit(atom/target, blocked = 0)
 	..()
