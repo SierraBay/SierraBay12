@@ -32,7 +32,7 @@
 /proc/roulette_wheel_sequence()
 	return list(0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26)
 
-/obj/structure/casino/roulette_table
+/obj/structure/casino/roulette_chart
 	name = "roulette table"
 	desc = "A classic green-felt roulette betting table. Place your bets before the wheel spins."
 	icon = 'maps/away/casino/casino_sprites.dmi'
@@ -47,15 +47,15 @@
 	var/list/result_history
 	var/bank_balance = 50000
 
-/obj/structure/casino/roulette_table/New()
+/obj/structure/casino/roulette_chart/New()
 	..()
 	bets           = list()
 	result_history = list()
 
-/obj/structure/casino/roulette_table/attack_hand(mob/user)
+/obj/structure/casino/roulette_chart/attack_hand(mob/user)
 	return ui_interact(user)
 
-/obj/structure/casino/roulette_table/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/structure/casino/roulette_chart/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = ui_data(user)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
@@ -63,7 +63,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-/obj/structure/casino/roulette_table/ui_data(mob/user)
+/obj/structure/casino/roulette_chart/ui_data(mob/user)
 	var/list/data = list()
 	data["src"]             = ref(src)
 	data["locked"]          = locked ? 1 : 0
@@ -89,7 +89,7 @@
 	data["bank_balance"] = bank_balance
 	return data
 
-/obj/structure/casino/roulette_table/OnTopic(user, href_list)
+/obj/structure/casino/roulette_chart/OnTopic(user, href_list)
 	// --- Change chip denomination ---
 	if(href_list["set_amount"])
 		var/amt = text2num(href_list["set_amount"])
@@ -149,7 +149,7 @@
 
 	return ..()
 
-/obj/structure/casino/roulette_table/proc/roulette_valid_bet(bet_type)
+/obj/structure/casino/roulette_chart/proc/roulette_valid_bet(bet_type)
 	var/list/simple = list("red","black","odd","even","low","high",
 	                       "dozen1","dozen2","dozen3","col1","col2","col3")
 	if(bet_type in simple)
@@ -160,7 +160,7 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/casino/roulette_table/proc/roulette_get_payout(bet_type, result)
+/obj/structure/casino/roulette_chart/proc/roulette_get_payout(bet_type, result)
 	var/color   = roulette_number_color(result)
 	var/is_odd  = (result > 0) && (result % 2 == 1)
 	var/is_low  = (result >= 1 && result <= 18)
@@ -190,7 +190,7 @@
 
 	return 0
 
-/obj/structure/casino/roulette_table/proc/resolve_bets(result, mob/last_user)
+/obj/structure/casino/roulette_chart/proc/resolve_bets(result, mob/last_user)
 	last_result = result
 	result_history.Insert(1, result)
 	if(length(result_history) > 12)
@@ -230,7 +230,7 @@
 // 	Roulette Wheel
 // ---------------------------------------------------------------
 
-/obj/structure/casino/roulette_wheel
+/obj/structure/casino/roulette
 	name = "roulette wheel"
 	desc = "A large mahogany-framed roulette wheel. Spin it to decide the fates of the gamblers."
 	icon = 'maps/away/casino/casino_sprites.dmi'
@@ -244,14 +244,14 @@
 	var/list/result_history
 	var/spin_deg = 1440
 
-/obj/structure/casino/roulette_wheel/New()
+/obj/structure/casino/roulette/New()
 	..()
 	result_history = list()
 
-/obj/structure/casino/roulette_wheel/attack_hand(mob/user)
+/obj/structure/casino/roulette/attack_hand(mob/user)
 	return ui_interact(user)
 
-/obj/structure/casino/roulette_wheel/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/obj/structure/casino/roulette/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = ui_data(user)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
@@ -259,7 +259,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-/obj/structure/casino/roulette_wheel/ui_data(mob/user)
+/obj/structure/casino/roulette/ui_data(mob/user)
 	var/list/data          = list()
 	data["src"]            = ref(src)
 	data["spinning"]       = spinning ? 1 : 0
@@ -269,7 +269,7 @@
 	data["spin_deg"]       = spin_deg
 	data["is_ghost"]       = istype(user, /mob/observer) ? 1 : 0
 
-	var/obj/structure/casino/roulette_table/T = locate(/obj/structure/casino/roulette_table) in range(1, src)
+	var/obj/structure/casino/roulette_chart/T = locate(/obj/structure/casino/roulette_chart) in range(1, src)
 	data["has_table"]    = T ? 1 : 0
 	data["table_locked"] = (T && T.locked) ? 1 : 0
 	data["total_bets"]   = T ? length(T.bets)  : 0
@@ -279,11 +279,11 @@
 			data["table_total"] += B["amount"]
 	return data
 
-/obj/structure/casino/roulette_wheel/OnTopic(user, href_list)
+/obj/structure/casino/roulette/OnTopic(user, href_list)
 	if(href_list["lock_bets"])
 		if(!istype(user, /mob/living))
 			return TOPIC_HANDLED
-		var/obj/structure/casino/roulette_table/T = locate(/obj/structure/casino/roulette_table) in range(1, src)
+		var/obj/structure/casino/roulette_chart/T = locate(/obj/structure/casino/roulette_chart) in range(1, src)
 		if(T && !T.locked && !spinning)
 			T.locked = TRUE
 			for(var/mob/M in viewers(7, src))
@@ -297,12 +297,12 @@
 		return TOPIC_HANDLED
 	return ..()
 
-/obj/structure/casino/roulette_wheel/proc/perform_spin(mob/user)
+/obj/structure/casino/roulette/proc/perform_spin(mob/user)
 	if(!istype(user, /mob/living))
 		to_chat(user, SPAN_WARNING("Ghosts cannot spin the wheel!"))
 		return
 
-	var/obj/structure/casino/roulette_table/T = locate(/obj/structure/casino/roulette_table) in range(1, src)
+	var/obj/structure/casino/roulette_chart/T = locate(/obj/structure/casino/roulette_chart) in range(1, src)
 	if(!T)
 		to_chat(user, SPAN_WARNING("There is no roulette table nearby!"))
 		return
@@ -327,7 +327,7 @@
 
 	addtimer(new Callback(src, PROC_REF(finish_spin), user), 5 SECONDS)
 
-/obj/structure/casino/roulette_wheel/proc/finish_spin(mob/user)
+/obj/structure/casino/roulette/proc/finish_spin(mob/user)
 	last_result = pending_result
 
 	result_history.Insert(1, last_result)
@@ -344,13 +344,13 @@
 	for(var/mob/M in viewers(7, src))
 		to_chat(M, SPAN_NOTICE("Roulette: [color_icon] The ball lands on [last_result]! ([color])"))
 
-	var/obj/structure/casino/roulette_table/T = locate(/obj/structure/casino/roulette_table) in range(1, src)
+	var/obj/structure/casino/roulette_chart/T = locate(/obj/structure/casino/roulette_chart) in range(1, src)
 	if(T)
 		T.resolve_bets(last_result, user)
 
 	SSnano.update_uis(src, ui_data(user))
 
-/obj/structure/casino/roulette_wheel/use_tool(obj/item/tool, mob/user, list/click_params)
+/obj/structure/casino/roulette/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 	if(isWrench(tool))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -361,7 +361,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/casino/roulette_table/use_tool(obj/item/tool, mob/user, list/click_params)
+/obj/structure/casino/roulette_chart/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
 	if(isWrench(tool))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
