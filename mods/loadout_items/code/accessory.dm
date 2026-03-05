@@ -504,11 +504,18 @@ ranks - ec
 		slot_goggles_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
 		slot_head_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
 		slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
-		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi'
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
 	)
 	item_icons = list(
-		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi'
+		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_l_hand_str = 'mods/loadout_items/icons/inhand_l.dmi',
+		slot_r_hand_str = 'mods/loadout_items/icons/inhand_r.dmi',
 	)
+
+	item_state_slots = list(
+		slot_l_hand_str = "shemagh",
+		slot_r_hand_str = "shemagh",
+		)
 
 	var/lowered_icon_state = "shemagh_scarf"
 	var/rised_icon_state = "shemagh_mask"
