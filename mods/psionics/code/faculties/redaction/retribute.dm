@@ -43,11 +43,11 @@
 						E = target.get_organ(o_type)
 						if(!user.skill_check(SKILL_ANATOMY, SKILL_TRAINED) || !user.skill_check(SKILL_MEDICAL, SKILL_BASIC))
 							if(prob(50))
-								to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому что Вы неправильно сформировали [perevod[E.organ_tag]]!"))
+								to_chat(user, SPAN_WARNING("Я не знаю как правильно сформировать, [perevod[E.organ_tag]] мутировала!"))
 								E.mutate()
 						else
 							if(prob(25))
-								to_chat(user, SPAN_WARNING("Ваша некомпетентность привела к тому что Вы неправильно сформировали [perevod[E.organ_tag]]!"))
+								to_chat(user, SPAN_WARNING("Случилось невозможное, [perevod[E.organ_tag]] мутировала!"))
 								E.mutate()
 						user.apply_damage(20, DAMAGE_BRUTE, o_type)
 						user.psi.spend_power(50)

@@ -1590,6 +1590,9 @@
 	dir = 9
 	},
 /obj/item/device/flashlight/lamp/green,
+/obj/floor_decal/carpet/blue/corners{
+	dir = 6
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cU" = (
@@ -1597,6 +1600,7 @@
 	dir = 1
 	},
 /obj/structure/table/woodentable,
+/obj/floor_decal/carpet/blue,
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cV" = (
@@ -1608,12 +1612,14 @@
 	pixel_x = -8;
 	pixel_y = 15
 	},
+/obj/floor_decal/carpet/blue,
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cW" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
+/obj/floor_decal/carpet/blue,
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cX" = (
@@ -1624,7 +1630,9 @@
 	pixel_x = 24;
 	dir = 8
 	},
-/obj/structure/closet/crate/trashcart,
+/obj/floor_decal/carpet/blue/corners{
+	dir = 10
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "cY" = (
@@ -1695,6 +1703,9 @@
 	name = "Armory Shutters"
 	},
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/window/northleft{
+	dir = 2
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "dd" = (
@@ -1779,9 +1790,6 @@
 /turf/simulated/floor/wood,
 /area/ship/patrol/maintenance/upper)
 "dm" = (
-/obj/floor_decal/corner/black{
-	dir = 5
-	},
 /obj/structure/ladder{
 	pixel_y = 6
 	},
@@ -1812,17 +1820,17 @@
 /obj/machinery/media/music_writer{
 	pixel_x = -31
 	},
+/obj/floor_decal/carpet/blue{
+	dir = 4
+	},
 /turf/simulated/floor/wood/walnut,
-/area/ship/patrol/crew/hallway/upper/starboard)
-"dp" = (
-/turf/simulated/floor/carpet/black,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "dq" = (
-/turf/simulated/floor/wood/walnut,
+/turf/simulated/floor/carpet/blue,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "dr" = (
-/obj/floor_decal/spline/fancy/wood{
-	dir = 4
+/obj/floor_decal/carpet/blue{
+	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
@@ -1832,7 +1840,10 @@
 	name = "Better Hot Drinks machine";
 	prices = list()
 	},
-/turf/simulated/floor/carpet/blue,
+/obj/floor_decal/spline/fancy/wood{
+	dir = 5
+	},
+/turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "dt" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
@@ -2038,6 +2049,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/floor_decal/carpet/blue{
+	dir = 4
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "dQ" = (
@@ -2046,7 +2060,10 @@
 	name = "Better Cigarette machine";
 	prices = list()
 	},
-/turf/simulated/floor/carpet/blue,
+/obj/floor_decal/spline/fancy/wood{
+	dir = 4
+	},
+/turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "dR" = (
 /obj/machinery/light{
@@ -2163,10 +2180,10 @@
 "ea" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/clothing/accessory/storage/holster/thigh,
-/obj/item/clothing/accessory/storage/holster/thigh,
-/obj/item/clothing/accessory/storage/holster/thigh,
-/obj/item/clothing/accessory/storage/holster/thigh,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
+/obj/item/storage/belt/holster/security/tactical,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "eb" = (
@@ -2192,10 +2209,6 @@
 /obj/item/clothing/accessory/arm_guards/navy,
 /obj/item/clothing/accessory/arm_guards/navy,
 /obj/item/clothing/accessory/arm_guards/navy,
-/obj/item/clothing/head/helmet/solgov,
-/obj/item/clothing/head/helmet/solgov,
-/obj/item/clothing/head/helmet/solgov,
-/obj/item/clothing/head/helmet/solgov,
 /obj/item/clothing/accessory/ubac/blue,
 /obj/item/clothing/accessory/ubac/blue,
 /obj/item/clothing/accessory/ubac/blue,
@@ -2208,6 +2221,10 @@
 /obj/item/clothing/accessory/armor_plate/tactical,
 /obj/item/clothing/accessory/armor_plate/tactical,
 /obj/item/clothing/accessory/armor_plate/tactical,
+/obj/item/clothing/head/helmet/tactical,
+/obj/item/clothing/head/helmet/tactical,
+/obj/item/clothing/head/helmet/tactical,
+/obj/item/clothing/head/helmet/tactical,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/crew/brig/emergency_armory)
 "ec" = (
@@ -2325,6 +2342,9 @@
 /obj/floor_decal/spline/fancy/wood{
 	dir = 10
 	},
+/obj/floor_decal/carpet/blue/corners{
+	dir = 5
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "eo" = (
@@ -2332,6 +2352,9 @@
 	dir = 1
 	},
 /obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/carpet/blue{
+	dir = 1
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "ep" = (
@@ -2340,19 +2363,26 @@
 	},
 /obj/machinery/light,
 /obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/carpet/blue{
+	dir = 1
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "eq" = (
 /obj/structure/flora/pottedplant/fern,
 /obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/carpet/blue{
+	dir = 1
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "er" = (
 /obj/structure/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/floor_decal/spline/fancy/wood{
-	dir = 6
+/obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/carpet/blue/corners{
+	dir = 9
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
@@ -2360,7 +2390,10 @@
 /obj/machinery/computer/modular/preset/civilian{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/blue,
+/obj/floor_decal/spline/fancy/wood{
+	dir = 6
+	},
+/turf/simulated/floor/wood/walnut,
 /area/ship/patrol/crew/hallway/upper/starboard)
 "et" = (
 /obj/machinery/alarm{
@@ -2506,9 +2539,6 @@
 /turf/simulated/floor/tiled/freezer,
 /area/ship/patrol/crew/toilet)
 "eG" = (
-/obj/floor_decal/corner/black{
-	dir = 5
-	},
 /obj/structure/ladder{
 	pixel_y = 6
 	},
@@ -4720,13 +4750,14 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/crew/hallway/upper)
 "uT" = (
-/obj/structure/table/standard,
-/obj/floor_decal/corner/blue/diagonal{
-	dir = 4
+/obj/floor_decal/spline/fancy/wood/corner{
+	dir = 1
 	},
-/obj/item/material/knife/folding/swiss,
-/turf/simulated/floor/tiled/white,
-/area/ship/patrol/crew/kitchen)
+/obj/floor_decal/carpet/blue{
+	dir = 8
+	},
+/turf/simulated/floor/wood/walnut,
+/area/ship/patrol/crew/hallway/upper/starboard)
 "uV" = (
 /obj/machinery/power/apc{
 	name = "south bump";
@@ -13250,8 +13281,8 @@ Jp
 bR
 cw
 cU
-dp
-dp
+dq
+dq
 eo
 Jp
 fa
@@ -13372,8 +13403,8 @@ Jp
 bS
 cx
 cV
-dp
-dp
+dq
+dq
 ep
 Jp
 fb
@@ -13616,7 +13647,7 @@ bA
 bU
 cz
 cX
-dr
+uT
 dr
 er
 Jp
@@ -13624,7 +13655,7 @@ fd
 ft
 fR
 gh
-uT
+gh
 gM
 gO
 hq
@@ -13745,7 +13776,7 @@ Jp
 fe
 ft
 fR
-uT
+gh
 gy
 gM
 gO

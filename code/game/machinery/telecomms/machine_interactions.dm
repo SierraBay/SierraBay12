@@ -187,11 +187,12 @@
 	return dat
 
 /obj/machinery/telecomms/bus/Options_Topic(href, href_list)
+	var/mob/user = usr
 
 	if(href_list["change_freq"])
 
-		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
-		if(canAccess(usr))
+		var/newfreq = input(user, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
+		if(canAccess(user))
 			if(newfreq)
 				if(findtext(num2text(newfreq), "."))
 					newfreq *= 10 // shift the decimal one place
@@ -206,14 +207,15 @@
 /obj/machinery/telecomms/Topic(href, href_list)
 	if(..())
 		return 1
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
+	var/mob/user = usr
+	if(!issilicon(user))
+		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
 			return
 
 	if(inoperable())
 		return
 
-	var/obj/item/device/multitool/P = get_multitool(usr)
+	var/obj/item/device/multitool/P = get_multitool(user)
 
 	if(href_list["input"])
 		switch(href_list["input"])
@@ -235,14 +237,14 @@
 			*/
 
 			if("id")
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
-				if(newid && canAccess(usr))
+				var/newid = copytext(reject_bad_text(input(user, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				if(newid && canAccess(user))
 					id = newid
 					temp = SPAN_COLOR("#666633", "-% New ID assigned: \"[id]\" %-")
 
 			if("network")
-				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
-				if(newnet && canAccess(usr))
+				var/newnet = input(user, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
+				if(newnet && canAccess(user))
 
 					if(length(newnet) > 15)
 						temp = SPAN_COLOR("#666633", "-% Too many characters in new network tag %-")
@@ -257,8 +259,8 @@
 
 
 			if("freq")
-				var/newfreq = input(usr, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src, network) as null|num
-				if(newfreq && canAccess(usr))
+				var/newfreq = input(user, "Specify a new frequency to filter (GHz). Decimals assigned automatically.", src, network) as null|num
+				if(newfreq && canAccess(user))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
 					if(!(newfreq in freq_listening) && newfreq < 10000)
@@ -266,8 +268,8 @@
 						temp = SPAN_COLOR("#666633", "-% New frequency filter assigned: \"[newfreq] GHz\" %-")
 
 			if("tagrule")
-				var/freq = input(usr, "Specify frequency to tag (GHz). Decimals assigned automatically.", src, network) as null|num
-				if(freq && canAccess(usr))
+				var/freq = input(user, "Specify frequency to tag (GHz). Decimals assigned automatically.", src, network) as null|num
+				if(freq && canAccess(user))
 					if(findtext(num2text(freq), "."))
 						freq *= 10
 
@@ -282,8 +284,8 @@
 							updateUsrDialog()
 							return
 
-					var/tag = input(usr, "Specify tag.", src, "") as null|text
-					var/color = input(usr, "Select color.", src, "") as null|anything in (channel_color_presets + "Custom color")
+					var/tag = input(user, "Specify tag.", src, "") as null|text
+					var/color = input(user, "Select color.", src, "") as null|anything in (channel_color_presets + "Custom color")
 
 					if(color == "Custom color")
 						color = input("Select color.", src, rgb(0, 128, 0)) as null|color
@@ -354,7 +356,7 @@
 
 	src.Options_Topic(href, href_list)
 
-	usr.set_machine(src)
+	user.set_machine(src)
 
 	updateUsrDialog()
 

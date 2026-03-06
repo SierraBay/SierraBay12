@@ -63,6 +63,7 @@
 		/obj/item/clothing/head/helmet/tactical,
 		/obj/item/clothing/accessory/helmet_cover/navy,
 		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double,
 		/obj/item/clothing/suit/armor/pcarrier/navy,
 		/obj/item/clothing/accessory/storage/pouches/navy,
 		/obj/item/clothing/accessory/arm_guards/navy,
@@ -71,7 +72,6 @@
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/under/solgov/utility/fleet,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth,
-		/obj/item/clothing/accessory/ubac/blue
 	)
 
 
@@ -94,6 +94,7 @@
 		/obj/item/clothing/accessory/armor_plate/merc,
 		/obj/item/clothing/head/helmet/tactical,
 		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double,
 		/obj/item/clothing/accessory/helmet_cover/lead,
 		/obj/item/clothing/accessory/helmet_cover/navy,
 		/obj/item/clothing/suit/armor/pcarrier/navy,
@@ -104,7 +105,6 @@
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/under/solgov/utility/fleet,
 		/obj/item/clothing/accessory/solgov/fleet_patch/fifth,
-		/obj/item/clothing/accessory/ubac/blue
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet
@@ -116,10 +116,11 @@
 	return list(
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/clothing/head/solgov/dress/fleet,
-		/obj/item/clothing/head/beret/solgov/fleet/command,
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
-		/obj/item/clothing/suit/storage/solgov/service/fleet/officer
+		/obj/item/clothing/suit/storage/solgov/service/fleet/officer,
+		/obj/item/clothing/accessory/storage/holster/thigh,
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet/engi
@@ -133,15 +134,16 @@
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/utility/full,
 		/obj/item/device/multitool,
+		/obj/item/clothing/head/hardhat/blue,
 		/obj/item/clothing/glasses/welding/superior,
 		/obj/item/clothing/glasses/ballistic/engi,
-		/obj/item/clothing/head/hardhat/orange,
-		/obj/item/clothing/suit/storage/hazardvest,
-		/obj/item/clothing/head/beret/solgov/fleet/engineering,
-		/obj/item/clothing/head/solgov/dress/fleet/garrison,
-		/obj/item/clothing/under/solgov/utility/fleet/polopants,
+		/obj/item/clothing/suit/storage/hazardvest/blue,
 		/obj/item/clothing/accessory/solgov/department/engineering/fleet,
-		/obj/item/clothing/suit/storage/solgov/service/fleet
+		/obj/item/clothing/suit/storage/solgov/service/fleet,
+		/obj/item/clothing/gloves/insulated/black,
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double,
+		/obj/item/clothing/accessory/storage/holster/thigh
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet/med
@@ -154,7 +156,6 @@
 		/obj/item/storage/firstaid/light,
 		/obj/item/clothing/mask/gas/half,
 		/obj/item/storage/belt/medical,
-		/obj/item/clothing/head/beret/solgov/fleet/medical,
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/ballistic/medic,
@@ -162,10 +163,13 @@
 		/obj/item/clothing/gloves/latex/nitrile,
 		/obj/item/clothing/under/rank/medical/scrubs/black,
 		/obj/item/clothing/head/surgery/black,
+		/obj/item/clothing/suit/surgicalapron,
 		/obj/item/clothing/suit/storage/hazardvest/white,
-		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/accessory/solgov/department/medical/fleet,
-		/obj/item/clothing/suit/storage/solgov/service/fleet/officer
+		/obj/item/clothing/suit/storage/solgov/service/fleet/officer,
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double,
+		/obj/item/clothing/accessory/storage/holster/thigh
 	)
 
 /obj/structure/closet/secure_closet/patrol/fleet_com
@@ -176,20 +180,16 @@
 /obj/structure/closet/secure_closet/patrol/fleet_com/WillContain()
 	return list(
 		/obj/item/melee/telebaton,
-		/obj/item/gun/projectile/pistol/m22f,
-		/obj/item/device/megaphone,
 		/obj/item/clothing/accessory/armor_tag/solgov/com,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/chewables/rollable/rollingkit,
-		/obj/item/storage/fancy/smokable/cigar,
-		/obj/item/flame/lighter/zippo/gunmetal,
-		/obj/item/clothing/head/beret/solgov/fleet/command,
-		/obj/item/gun/projectile/revolver/medium,
 		/obj/item/clothing/gloves/wristwatch/gold,
-		/obj/item/clothing/head/solgov/dress/fleet,
 		/obj/item/clothing/accessory/solgov/department/command/fleet,
 		/obj/item/clothing/suit/storage/solgov/service/fleet/officer,
-		/obj/item/storage/firstaid/light
+		/obj/item/storage/firstaid/light,
+		/obj/item/gun/projectile/pistol/m22f,
+		/obj/item/ammo_magazine/pistol/double,
+		/obj/item/clothing/accessory/storage/holster/thigh,
+		/obj/item/clothing/head/solgov/dress/fleet/command
 	)
 
 
@@ -263,15 +263,12 @@
 					/obj/item/clothing/under/solgov/service/fleet = 5,
 					/obj/item/clothing/under/solgov/pt/fleet = 5,
 					/obj/item/clothing/suit/storage/hooded/wintercoat/solgov/fleet = 5,
-					/obj/item/clothing/shoes/dutyboots = 5,
-					/obj/item/clothing/shoes/dress = 5,
-					/obj/item/clothing/shoes/black = 5,
-					/obj/item/clothing/gloves/thick = 5,
-					/obj/item/storage/belt/holster/security = 5,
-					/obj/item/storage/backpack/satchel/leather/navy = 5,
+					/obj/item/clothing/gloves/thick/duty/solgov/fleet = 5,
+					/obj/item/clothing/gloves/thick/duty/solgov/fleet/combat = 5,
 					/obj/item/clothing/accessory/storage/black_drop = 5,
-					/obj/item/clothing/accessory/solgov/fleet_patch/fifth = 5,
+					/obj/item/clothing/accessory/solgov/fleet_patch/fifth = 10,
 					)
+
 /* Voidsuit Storage Unit
  * ====
  */
@@ -279,7 +276,6 @@
 /obj/machinery/suit_storage_unit/away_cavalry_med
 	name = "Corpsman Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/medical/alt/sol/prepared
-	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_cavalry)
 	islocked = 1
@@ -287,7 +283,6 @@
 /obj/machinery/suit_storage_unit/away_cavalry_eng
 	name = "Technician Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/engineering/alt/sol/prepared
-	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_cavalry)
 	islocked = 1
@@ -295,15 +290,13 @@
 /obj/machinery/suit_storage_unit/away_cavalry_com
 	name = "Officer Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/command/prepared
-	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
-	req_access = list(access_away_cavalry, access_away_cavalry_commander)
+	req_access = list(access_away_cavalry)
 	islocked = 1
 
 /obj/machinery/suit_storage_unit/away_cavalry_fly
 	name = "Pilot Voidsuit Storage Unit"
 	suit= /obj/item/clothing/suit/space/void/pilot/sol/prepared
-	boots = /obj/item/clothing/shoes/magboots
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_cavalry)
 	islocked = 1

@@ -24,3 +24,4 @@
 		"hin", "får", "sellä", "tyvät", "kästi", "läh", "et", "ex", "ihmissu", "quo", "talkis", "ad",
 		"ek", "aur", "kvalifik", "läggan", "ke", "de", "är", "ne", "åt", "aar", "ain", "ki", "me", "dei", "hiihtämin"
 	)
+	has_written_form = TRUE

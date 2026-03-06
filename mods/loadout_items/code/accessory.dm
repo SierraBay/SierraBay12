@@ -486,3 +486,48 @@ ranks - ec
 	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
 	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
 	icon_state = "argyle_sweater_v_neck"
+
+/obj/item/clothing/accessory/helmet_decor/shemagh_scarf
+	name = "shemagh scarf"
+	desc = "A versatile, heavy cotton scarf wrapped around the head or neck for protection from space-sand and space-dust. You can wrap it around your helmet, even when you are wearing other masks."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon_state = "shemagh_scarf"
+	overlay_state = "shemagh_scarf"
+	slot_flags = SLOT_MASK | SLOT_TIE | SLOT_BELT
+	slot = ACCESSORY_SLOT_HELMET_DECOR
+	body_location = HEAD | UPPER_TORSO
+	w_class = ITEM_SIZE_SMALL
+	gender = NEUTER
+
+	accessory_icons = list(
+		slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_goggles_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_head_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+	)
+	item_icons = list(
+		slot_wear_mask_str = 'mods/loadout_items/icons/onmob_accessory.dmi',
+		slot_l_hand_str = 'mods/loadout_items/icons/inhand_l.dmi',
+		slot_r_hand_str = 'mods/loadout_items/icons/inhand_r.dmi',
+	)
+
+	item_state_slots = list(
+		slot_l_hand_str = "shemagh",
+		slot_r_hand_str = "shemagh",
+		)
+
+	var/lowered_icon_state = "shemagh_scarf"
+	var/rised_icon_state = "shemagh_mask"
+
+/obj/item/clothing/accessory/helmet_decor/shemagh_scarf/attack_self(mob/user)
+	if(body_parts_covered >= FACE)
+		body_parts_covered &= ~FACE
+		icon_state = lowered_icon_state
+		overlay_state = lowered_icon_state
+		to_chat(user, SPAN_NOTICE("You lowered your scarf."))
+	else
+		body_parts_covered |= FACE
+		icon_state = rised_icon_state
+		overlay_state = rised_icon_state
+		to_chat(user, SPAN_NOTICE("You rised your scarf. Feeling tacticool!"))

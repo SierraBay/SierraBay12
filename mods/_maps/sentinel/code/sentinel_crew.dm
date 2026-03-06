@@ -216,8 +216,9 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	outfit_type = /singleton/hierarchy/outfit/job/patrol/engineer
 	allowed_branches = list(/datum/mil_branch/fleet)
 	allowed_ranks = list(
-		/datum/mil_rank/fleet/o1,
-		/datum/mil_rank/fleet/o2
+		/datum/mil_rank/fleet/e3,
+		/datum/mil_rank/fleet/e4,
+		/datum/mil_rank/fleet/e5
 	)
 	supervisors = "Lieutenant Commander"
 	loadout_allowed = TRUE
@@ -414,29 +415,31 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 
 /singleton/hierarchy/outfit/job/patrol/engineer
 	name = PATROL_OUTFIT_JOB_NAME("Technician")
+	head = /obj/item/clothing/head/beret/solgov/fleet/engineering
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/engineering/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/insulated/black
+	belt = /obj/item/storage/belt/holster/general
+	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet
 
 /singleton/hierarchy/outfit/job/patrol/surgeon
 	name = PATROL_OUTFIT_JOB_NAME("Doctor")
+	head = /obj/item/clothing/head/beret/solgov/fleet/medical
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/medical/away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
-	gloves = /obj/item/clothing/gloves/latex/nitrile
+	belt = /obj/item/storage/belt/holster/general
+	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet
 
 /singleton/hierarchy/outfit/job/patrol/commander
 	name = PATROL_OUTFIT_JOB_NAME("Lieutenant Commander")
-	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
+	head = /obj/item/clothing/head/beret/solgov/fleet/command
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/officer/command_away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+	belt = /obj/item/storage/belt/holster/general
 	id_types = list(/obj/item/card/id/awaycavalry/fleet/commander)
 	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet
 
 /singleton/hierarchy/outfit/job/patrol/pilot
 	name = PATROL_OUTFIT_JOB_NAME("Sub-Lieutenant")
-	head = /obj/item/clothing/head/beret/solgov/fleet/branch/fifth
+	head = /obj/item/clothing/head/beret/solgov/fleet/command
 	uniform = /obj/item/clothing/under/solgov/utility/fleet/officer/pilot_away_solpatrol
-	belt = /obj/item/storage/belt/holster/security/tactical/away_solpatrol
+	belt = /obj/item/storage/belt/holster/general
 	gloves = /obj/item/clothing/gloves/thick/duty/solgov/fleet
 
 /singleton/hierarchy/outfit/job/patrol/centcom
@@ -445,7 +448,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	r_ear = /obj/item/device/radio/headset/away_scg_patrol
 	l_ear = /obj/item/device/radio/headset/headset_com/alt
 	uniform = /obj/item/clothing/under/solgov/service/fleet
-	belt = /obj/item/storage/belt/holster/general/away_solpatrol
+	belt = /obj/item/storage/belt/holster/general
 	shoes = /obj/item/clothing/shoes/dress
 	suit = /obj/item/clothing/suit/storage/solgov/service/fleet/officer/away_solpatrol
 	r_pocket = /obj/item/card/id/syndicate
@@ -459,7 +462,7 @@ var/global/const/access_away_cavalry_commander = "ACCESS_CAVALRY_COMMANDER"
 	r_ear = /obj/item/device/radio/headset/away_scg_patrol
 	l_ear = /obj/item/device/radio/headset/headset_com/alt
 	uniform = /obj/item/clothing/under/solgov/service/fleet
-	belt = /obj/item/storage/belt/holster/general/away_solpatrol
+	belt = /obj/item/storage/belt/holster/general
 	shoes = /obj/item/clothing/shoes/dress
 	suit = /obj/item/clothing/suit/storage/solgov/service/fleet/command/away_solpatrol
 	r_pocket = /obj/item/card/id/syndicate

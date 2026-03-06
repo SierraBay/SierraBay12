@@ -24,3 +24,4 @@
 		"hiora", "oment", "auxi", "forlæten", "vueillent", "purront", "et", "ex", "allas", "quo", "undo", "dothe",
 		"ek", "onlutan", "kitrowe", "ki", "ke", "cause", "ki", "ne", "ek", "mode", "ain", "ki", "me", "dei", "dekh"
 	)
+	has_written_form = TRUE

@@ -111,6 +111,7 @@
 		/obj/item/clothing/accessory/solgov/specialty/officer
 	)
 
+/*
 /obj/item/storage/belt/holster/security/tactical/away_solpatrol/New()
 	..()
 	new /obj/item/gun/projectile/pistol/m22f(src)
@@ -121,6 +122,7 @@
 	..()
 	new /obj/item/modular_computer/tablet/preset/custom_loadout/advanced(src)
 	new /obj/item/gun/projectile/revolver/medium(src)
+*/
 
 /obj/item/clothing/accessory/armband/bluegold/away_solpatrol
 	name = "SCG armband"

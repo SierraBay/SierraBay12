@@ -3,6 +3,8 @@
 	prefix = "mods/utility_items/maps/"
 	suffixes = list("skrell-sierrabay.dmm")
 
+/obj/overmap/visitable/ship/landable/skrellscoutship
+	can_throw_off = FALSE
 
 //А здесь мы заменим спрайты войдов
 /obj/item/clothing/head/helmet/space/void/skrell/black
