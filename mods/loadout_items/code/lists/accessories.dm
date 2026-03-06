@@ -146,3 +146,12 @@
 	display_name = "shemagh scarf"
 	path = /obj/item/clothing/accessory/helmet_decor/shemagh_scarf
 	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/storage/webbing
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/storage/webbing_large
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/tactical/kneepads
+	flags = GEAR_HAS_COLOR_SELECTION
