@@ -1,12 +1,4 @@
-// Singleton trait for the stutter speech effect
-/singleton/trait/speech
-	abstract_type = /singleton/trait/speech
-
-/singleton/trait/speech/New()
-	..()
-	name = "Speech - " + name
-
-/singleton/trait/speech/stutter
+/singleton/trait/general/stutter
 	name = "Stutter"
 	description = "A character stutters: each word has a 25% chance of the first sound being repeated."
 	levels = list(TRAIT_LEVEL_EXISTS)
@@ -14,7 +6,7 @@
 // Speech filter
 /mob/living/carbon/human/handle_speech_problems(list/message_data)
 	. = ..()
-	if(!. && HAS_TRAIT(src, /singleton/trait/speech/stutter))
+	if(!. && HAS_TRAIT(src, /singleton/trait/general/stutter))
 		message_data[1] = stutter_trait_filter(message_data[1])
 		return TRUE
 
@@ -40,4 +32,4 @@
 	description = "Персонаж заикается: с 25% вероятностью первый звук каждого слова повторяется при речи."
 
 /datum/mod_trait/all/stutter/apply_trait(mob/living/carbon/human/H)
-	H.SetTrait(/singleton/trait/speech/stutter, TRAIT_LEVEL_EXISTS)
+	H.SetTrait(/singleton/trait/general/stutter, TRAIT_LEVEL_EXISTS)
