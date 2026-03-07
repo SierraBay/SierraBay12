@@ -27,18 +27,18 @@
 /datum/uplink_item/item/augment/aug_sandevistan
 	name = "Sandevistan (chest, active)"
 	desc = "A highly dangerous spinal reflex booster. Activating it provides extreme speed and evasion, but deals scaling brain damage based on other cybernetics in the body. This augment is incompatible with synthetic biologies."
-	item_cost = 60
+	item_cost = 40
 	path = /obj/item/device/augment_implanter/sandevistan
 
 /obj/item/organ/internal/augment/active/sandevistan/proc/get_brain_damage_cost(mob/living/carbon/human/H)
-	var/dmg = 5
+	var/dmg = 3
 	for(var/O in H.organs)
 		var/obj/item/organ/external/limb = O
 		if(length(limb.implants))
-			dmg += length(limb.implants)
+			dmg += length(limb.implants) * 0.5
 	for(var/I in H.internal_organs)
 		if(istype(I, /obj/item/organ/internal/augment))
-			dmg += 2
+			dmg += 1
 	return dmg
 
 /obj/item/organ/internal/augment/active/sandevistan/proc/take_brain_damage(mob/living/carbon/human/H)
