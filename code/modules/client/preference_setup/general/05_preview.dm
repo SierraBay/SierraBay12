@@ -87,8 +87,26 @@
 					update_icon = TRUE
 		// [SIERRA-ADD] — Equip accessories after other gear so they can attach to uniforms/suits
 		for(var/datum/gear/G in accessories)
-			if(G.spawn_on_mob(mannequin, gear_list[gear_slot][G.display_name]))
+			// [SIERRA-EDIT] — spawn_on_mob uses TRYEQUIP_DESTROY which deletes items that fail
+			// mob_can_equip (e.g. cloaks with slot_flags=SLOT_OCLOTHING). Use spawn_item +
+			// TRYEQUIP_FORCE instead, with an attach_accessory fallback for SLOT_OCLOTHING items.
+			var/obj/item/item = G.spawn_item(mannequin, mannequin, gear_list[gear_slot][G.display_name])
+			if(!item)
+				continue
+			if(mannequin.equip_to_slot_if_possible(item, slot_tie, TRYEQUIP_INSTANT | TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE))
 				update_icon = TRUE
+				continue
+			// Fallback for SLOT_OCLOTHING accessories (cloaks): slot_flags mismatch blocks
+			// equip even with TRYEQUIP_FORCE, so attach directly to worn clothing.
+			if(istype(item, /obj/item/clothing/accessory))
+				var/obj/item/clothing/accessory/A = item
+				var/obj/item/clothing/C = mannequin.wear_suit || mannequin.w_uniform
+				if(C)
+					C.attach_accessory(mannequin, A)
+					update_icon = TRUE
+					continue
+			qdel(item)
+			// [/SIERRA-EDIT]
 		// [/SIERRA-ADD]
 	if(update_icon)
 		mannequin.update_icons()
