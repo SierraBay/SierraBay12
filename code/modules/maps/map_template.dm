@@ -80,10 +80,12 @@
 
 	SSpowernets.setup_powernets_for_cables(cables)
 	SSpipenets.setup_atmos_machinery(atmos_machines)
-	if(wake_powernets)
-		SSpowernets.wake()
 	if(wake_pipenets)
 		SSpipenets.wake()
+		SSpipenets.fire(FALSE, TRUE)
+	if(wake_powernets)
+		SSpowernets.wake()
+		SSpowernets.fire(FALSE, TRUE)
 	if(wake_machines)
 		SSmachines.wake()
 
