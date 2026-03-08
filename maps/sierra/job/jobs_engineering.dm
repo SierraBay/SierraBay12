@@ -66,6 +66,7 @@
 	economic_power = 6
 
 	alt_titles = list(
+		"Engineer Trainee" = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/trainee,
 		"Maintenance Technician" = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/maints,
 		"Structural Integrity Specialist" = /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/maints,
 		"Electrician",

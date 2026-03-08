@@ -38,7 +38,8 @@
 		/area/voxship/engineering,
 		/area/voxship/thrusters,
 		/area/voxship/fore,
-		/area/voxship/scavship
+		/area/voxship/scavship,
+		/area/voxship/entrance
 	)
 	dock_target = "vox_ship"
 	current_location = "nav_hangar_voxship"
