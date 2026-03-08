@@ -75,8 +75,8 @@
 	var/datum/pipe_network/network = new
 	connector.network = network
 
-	if(connector.is_processing != "SSmachines_lazy")
-		fail("Idle connector should start in lazy processing, got [connector.is_processing].")
+	if(connector.processing_flags & MACHINERY_PROCESS_SELF)
+		fail("Idle connector should not be registered for self-processing.")
 		qdel(network)
 		qdel(portable)
 		qdel(connector)
@@ -89,8 +89,8 @@
 		qdel(connector)
 		return 1
 
-	if(connector.is_processing != "SSmachines")
-		fail("Connected connector should move to fast processing, got [connector.is_processing].")
+	if(!(connector.processing_flags & MACHINERY_PROCESS_SELF))
+		fail("Connected connector should enable self-processing.")
 		qdel(network)
 		qdel(portable)
 		qdel(connector)
@@ -115,8 +115,8 @@
 		return 1
 
 	portable.disconnect()
-	if(connector.is_processing != "SSmachines_lazy")
-		fail("Idle connector should return to lazy processing after disconnect, got [connector.is_processing].")
+	if(connector.processing_flags & MACHINERY_PROCESS_SELF)
+		fail("Idle connector should stop self-processing after disconnect.")
 		qdel(network)
 		qdel(portable)
 		qdel(connector)
@@ -162,10 +162,10 @@
 		qdel(display)
 		return 1
 
-	var/base_overlay_count = length(display.overlays)
+	var/initial_border_signature = display.last_rendered_border_signature
 	display.status_display_show_alert_border = TRUE
 	display.update()
-	if(length(display.overlays) <= base_overlay_count)
+	if(display.last_rendered_border_signature == initial_border_signature || !length(display.last_rendered_border_signature))
 		fail("Supply display did not refresh alert border when only the border signature changed.")
 		SSsupply.shuttle = original_shuttle
 		qdel(display)
@@ -183,7 +183,17 @@
 /datum/unit_test/portable_turret_dormant_rescan/start_test()
 	var/turf/T = get_safe_turf()
 	var/obj/machinery/porta_turret/turret = new(T)
-	var/mob/living/carbon/human/target = get_named_instance(/mob/living/carbon/human, T, SPECIES_HUMAN)
+	var/turf/target_turf = null
+	for(var/direction in GLOB.cardinal)
+		var/turf/candidate = get_step(T, direction)
+		if(istype(candidate) && !candidate.density)
+			target_turf = candidate
+			break
+	if(!target_turf)
+		fail("Could not find an adjacent turf for turret threat testing.")
+		qdel(turret)
+		return 1
+	var/mob/living/carbon/human/target = get_named_instance(/mob/living/carbon/human, target_turf, SPECIES_HUMAN)
 
 	turret.check_access = FALSE
 	turret.check_records = FALSE
@@ -191,6 +201,12 @@
 	turret.check_weapons = TRUE
 	turret.use_power = POWER_USE_OFF
 	turret.set_stat(MACHINE_STAT_NOPOWER, FALSE)
+
+	if(turret.assess_living(target) > 0)
+		fail("Stationary unarmed target should not be considered threatening before state change.")
+		qdel(target)
+		qdel(turret)
+		return 1
 
 	var/process_result = turret.Process()
 	if(process_result != PROCESS_KILL)
@@ -213,7 +229,7 @@
 		return 1
 	turret.dormant_rescan_wake()
 
-	if(turret.is_processing != "SSmachines")
+	if(!(turret.processing_flags & MACHINERY_PROCESS_SELF))
 		fail("Dormant rescan did not wake turret back into fast processing.")
 		qdel(target)
 		qdel(turret)
@@ -229,6 +245,63 @@
 	qdel(target)
 	qdel(turret)
 	pass("Dormant turret performs a delayed rescan and wakes for non-movement threat changes.")
+	return 1
+
+
+/datum/unit_test/pointdefense_same_z_only
+	name = "MACHINE: Point defense ignores meteors on other connected z-levels"
+
+/datum/unit_test/pointdefense_same_z_only/start_test()
+	var/turf/T = get_safe_turf()
+	var/other_z = null
+	for(var/connected_z in GetConnectedZlevels(T.z))
+		if(connected_z == T.z)
+			continue
+		other_z = connected_z
+		break
+
+	if(!other_z)
+		skip("Map has no additional connected z-level for point defense coverage.")
+		return 1
+
+	var/turf/other_turf = locate(T.x, T.y, other_z)
+	if(!istype(other_turf))
+		skip("Could not locate a turf on a secondary connected z-level for point defense coverage.")
+		return 1
+
+	var/obj/machinery/pointdefense_control/controller = new(T)
+	var/obj/machinery/pointdefense/turret = new(T)
+	var/obj/meteor/medium/meteor = new(other_turf)
+	var/datum/extension/local_network_member/controller_network = get_extension(controller, /datum/extension/local_network_member)
+	var/datum/extension/local_network_member/turret_network = get_extension(turret, /datum/extension/local_network_member)
+	var/tag = "unit_test_pointdefense_[world.time]"
+
+	if(!controller_network?.set_tag(null, tag) || !turret_network?.set_tag(null, tag))
+		fail("Point defense test fixtures could not join the same controller network.")
+		qdel(meteor)
+		qdel(turret)
+		qdel(controller)
+		return 1
+
+	turret.use_power = POWER_USE_OFF
+	turret.set_stat(MACHINE_STAT_NOPOWER, FALSE)
+	turret.charge_cooldown = 0
+	turret.rotation_speed = 1 SECOND
+	turret.kill_range = max(world.maxx, world.maxy)
+
+	turret.Process()
+
+	if(turret.engaging || length(controller.targets))
+		fail("Point defense attempted to engage a meteor on connected z-level [other_z] instead of ignoring it.")
+		qdel(meteor)
+		qdel(turret)
+		qdel(controller)
+		return 1
+
+	qdel(meteor)
+	qdel(turret)
+	qdel(controller)
+	pass("Point defense only engages meteors on its own z-level, even with a multilevel controller network.")
 	return 1
 
 

@@ -217,12 +217,12 @@
 			continue
 		already_targeted[current_target] = TRUE
 
-	var/list/connected_zlevels = GetConnectedZlevels(z)
 	for(var/obj/meteor/M in GLOB.meteor_list)
 		if(already_targeted[M])
 			continue
 
-		if(!(M.z in connected_zlevels))
+		// Keep the shared controller multilevel, but only engage threats on this battery's own map level.
+		if(M.z != z)
 			continue
 		if(get_dist(M, src) > kill_range)
 			continue
