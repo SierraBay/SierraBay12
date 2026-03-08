@@ -69,6 +69,7 @@
 	connected_port = new_port
 	connected_port.connected_device = src
 	connected_port.on = 1 //Activate port updates
+	connected_port.refresh_processing_registration()
 
 	anchored = TRUE //Prevent movement
 
@@ -84,13 +85,16 @@
 	if(!connected_port)
 		return 0
 
-	var/datum/pipe_network/network = connected_port.return_network(src)
+	var/obj/machinery/atmospherics/portables_connector/old_port = connected_port
+	var/datum/pipe_network/network = old_port.return_network(src)
 	if(network)
 		network.gases -= air_contents
 
 	anchored = FALSE
 
-	connected_port.connected_device = null
+	old_port.connected_device = null
+	old_port.on = 0
+	old_port.refresh_processing_registration()
 	connected_port = null
 
 	return 1

@@ -26,7 +26,21 @@
 
 /obj/machinery/atmospherics/portables_connector/Initialize()
 	. = ..()
-	START_LAZY_PROCESSING_MACHINE(src)
+	refresh_processing_registration()
+
+/obj/machinery/atmospherics/portables_connector/proc/requires_fast_processing()
+	return on && connected_device
+
+/obj/machinery/atmospherics/portables_connector/proc/refresh_processing_registration()
+	if(requires_fast_processing())
+		if(is_processing == "SSmachines_lazy")
+			STOP_LAZY_PROCESSING_MACHINE(src)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	if(processing_flags & MACHINERY_PROCESS_SELF)
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	if(!is_processing)
+		START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/atmospherics/portables_connector/on_update_icon()
 	icon_state = "connector"
@@ -44,11 +58,10 @@
 
 /obj/machinery/atmospherics/portables_connector/Process()
 	..()
-	if(!on)
-		return
-	if(!connected_device)
-		on = 0
-		return
+	if(!requires_fast_processing())
+		on = FALSE
+		refresh_processing_registration()
+		return 1
 	if(network)
 		network.update = 1
 	return 1

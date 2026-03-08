@@ -60,6 +60,8 @@
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
 	var/datum/proximity_trigger/square/prox_trigger	//proximity monitor for dormant state
+	var/dormant_rescan_pending = FALSE
+	var/dormant_rescan_interval = 5 SECONDS
 
 	req_access = list(list(access_brig, access_bridge))
 	obj_flags = OBJ_FLAG_ANCHORABLE
@@ -403,6 +405,7 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/enable()
 	if(disabled)
 		disabled = 0
+		dormant_rescan_pending = FALSE
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		if(prox_trigger?.is_active())
 			prox_trigger.unregister_turfs()
@@ -411,9 +414,24 @@ var/global/list/turret_icons
 	if(!enabled || inoperable())
 		return
 	if(isliving(enterer))
+		dormant_rescan_pending = FALSE
 		if(prox_trigger.is_active())
 			prox_trigger.unregister_turfs()
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/porta_turret/proc/schedule_dormant_rescan()
+	if(dormant_rescan_pending)
+		return
+	dormant_rescan_pending = TRUE
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/porta_turret, dormant_rescan_wake)), dormant_rescan_interval)
+
+/obj/machinery/porta_turret/proc/dormant_rescan_wake()
+	dormant_rescan_pending = FALSE
+	if(!enabled || inoperable())
+		return
+	if(prox_trigger?.is_active())
+		prox_trigger.unregister_turfs()
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/porta_turret/proc/prox_turfs_changed(list/old_turfs, list/new_turfs)
 	return
@@ -449,6 +467,7 @@ var/global/list/turret_icons
 			// No valid targets - enter dormant mode with proximity monitoring
 			if(!(auto_repair && health_damaged()) && prox_trigger)
 				prox_trigger.register_turfs()
+				schedule_dormant_rescan()
 				return PROCESS_KILL
 
 	if(auto_repair && health_damaged())
