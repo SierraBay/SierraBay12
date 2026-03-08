@@ -210,7 +210,7 @@
 	var/shadow_solver_native_perf_decode_us_sum = 0
 	var/list/shadow_solver_native_nodes_payload_named_cache
 	var/list/shadow_solver_native_nodes_payload_compact_cache
-	var/shadow_solver_native_nodes_payload_cache_tick = -1
+	var/shadow_solver_native_nodes_payload_cache_revision = -1
 	var/shadow_solver_native_nodes_payload_cache_valid = FALSE
 	var/shadow_solver_cache_enabled = TRUE
 	var/shadow_solver_cache_valid = FALSE
@@ -386,7 +386,7 @@
 /datum/powernet/proc/invalidate_shadow_solver_native_payload_cache()
 	shadow_solver_native_nodes_payload_named_cache = null
 	shadow_solver_native_nodes_payload_compact_cache = null
-	shadow_solver_native_nodes_payload_cache_tick = -1
+	shadow_solver_native_nodes_payload_cache_revision = -1
 	shadow_solver_native_nodes_payload_cache_valid = FALSE
 
 /datum/powernet/proc/invalidate_shadow_solver_cache()
@@ -440,16 +440,36 @@
 	shadow_solver_cache_last_numapc = max(numapc, 0)
 	shadow_solver_cache_topology_dirty = FALSE
 
+/datum/powernet/proc/get_shadow_solver_cache_drift_threshold()
+	var/scale = max(max(max(avail, shadow_solver_cache_last_avail), max(load, shadow_solver_cache_last_load)), 50000)
+	return max(max(shadow_solver_cache_stability_threshold, 0), round(scale * 0.02))
+
+/datum/powernet/proc/get_shadow_solver_cache_extrapolation_threshold()
+	var/scale = max(max(max(avail, shadow_solver_cache_last_avail), max(load, shadow_solver_cache_last_load)), 50000)
+	return max(3000, round(scale * 0.05))
+
+/datum/powernet/proc/get_shadow_solver_cache_effective_max_age_ticks(numapc)
+	var/effective_max_age_ticks = max(shadow_solver_cache_max_age_ticks, 1)
+	if(max(numapc, 0) == 0 && !shadow_solver_cache_topology_dirty)
+		effective_max_age_ticks = max(effective_max_age_ticks, min(90, effective_max_age_ticks * 3))
+	return effective_max_age_ticks
+
+/datum/powernet/proc/get_shadow_solver_cache_effective_min_stable_ticks(numapc)
+	if(max(numapc, 0) == 0 && !shadow_solver_cache_topology_dirty)
+		return 0
+	return max(shadow_solver_cache_min_stable_ticks, 0)
+
 /datum/powernet/proc/is_shadow_solver_zone_stable(numapc)
+	var/drift_threshold = get_shadow_solver_cache_drift_threshold()
 	if(shadow_solver_cache_topology_dirty)
 		return FALSE
 	if(shadow_solver_cache_tick_dirty)
 		return FALSE
-	if(abs(avail - shadow_solver_cache_last_avail) > shadow_solver_cache_stability_threshold)
+	if(abs(avail - shadow_solver_cache_last_avail) > drift_threshold)
 		return FALSE
-	if(abs(load - shadow_solver_cache_last_load) > shadow_solver_cache_stability_threshold)
+	if(abs(load - shadow_solver_cache_last_load) > drift_threshold)
 		return FALSE
-	if(abs(smes_demand - shadow_solver_cache_last_smes_demand) > shadow_solver_cache_stability_threshold)
+	if(abs(smes_demand - shadow_solver_cache_last_smes_demand) > drift_threshold)
 		return FALSE
 	if(length(inputting) != shadow_solver_cache_last_inputting_count)
 		return FALSE
@@ -460,13 +480,86 @@
 /datum/powernet/proc/should_use_cached_shadow_solver_snapshot(numapc)
 	if(!shadow_solver_cache_enabled || !shadow_solver_cache_valid)
 		return FALSE
-	if(world.time - shadow_solver_cache_timestamp > max(shadow_solver_cache_max_age_ticks, 1))
+	if(world.time - shadow_solver_cache_timestamp > get_shadow_solver_cache_effective_max_age_ticks(numapc))
 		return FALSE
-	if(shadow_solver_cache_stable_ticks < max(shadow_solver_cache_min_stable_ticks, 0))
+	if(shadow_solver_cache_stable_ticks < get_shadow_solver_cache_effective_min_stable_ticks(numapc))
 		return FALSE
 	if(!is_shadow_solver_zone_stable(numapc))
 		return FALSE
 	return TRUE
+
+/datum/powernet/proc/can_extrapolate_cached_shadow_solver_snapshot(numapc)
+	if(!shadow_solver_cache_enabled || !shadow_solver_cache_valid || !islist(shadow_solver_cache_snapshot))
+		return FALSE
+	if(max(numapc, 0) != 0)
+		return FALSE
+	if(shadow_solver_cache_topology_dirty)
+		return FALSE
+	if(world.time - shadow_solver_cache_timestamp > 5)
+		return FALSE
+	if(max(shadow_solver_cache_snapshot["unserved"], 0) > 0)
+		return FALSE
+	if(length(inputting) != shadow_solver_cache_last_inputting_count)
+		return FALSE
+
+	var/drift_threshold = get_shadow_solver_cache_extrapolation_threshold()
+	if(abs(avail - shadow_solver_cache_last_avail) > drift_threshold)
+		return FALSE
+	if(abs(load - shadow_solver_cache_last_load) > drift_threshold)
+		return FALSE
+	if(abs(smes_demand - shadow_solver_cache_last_smes_demand) > drift_threshold)
+		return FALSE
+	return TRUE
+
+/datum/powernet/proc/build_extrapolated_shadow_solver_snapshot()
+	if(!shadow_solver_cache_valid || !islist(shadow_solver_cache_snapshot))
+		return null
+
+	var/list/snapshot = shadow_solver_cache_snapshot.Copy()
+	var/delta_avail = avail - shadow_solver_cache_last_avail
+	var/delta_load = load - shadow_solver_cache_last_load
+	var/primary_unserved = max(snapshot["unserved"], 0)
+	var/deferred_unserved = max(snapshot["deferred_unserved"], 0)
+
+	snapshot["avail"] = max(shadow_solver_cache_snapshot["avail"] + delta_avail, 0)
+	snapshot["load"] = max(shadow_solver_cache_snapshot["load"] + delta_load, 0)
+	snapshot["comparison_avail"] = max(avail, 0)
+	snapshot["comparison_load"] = max(load, 0)
+	snapshot["total_unserved"] = max(primary_unserved + deferred_unserved, 0)
+	return snapshot
+
+/datum/powernet/proc/try_get_reusable_shadow_solver_snapshot(numapc)
+	if(should_use_cached_shadow_solver_snapshot(numapc))
+		var/list/cached_snapshot = shadow_solver_cache_snapshot
+		if(islist(cached_snapshot))
+			return list(
+				"snapshot" = cached_snapshot,
+				"reuse_mode" = "cache"
+			)
+
+	if(can_extrapolate_cached_shadow_solver_snapshot(numapc))
+		var/list/extrapolated_snapshot = build_extrapolated_shadow_solver_snapshot()
+		if(islist(extrapolated_snapshot))
+			return list(
+				"snapshot" = extrapolated_snapshot,
+				"reuse_mode" = "extrapolated"
+			)
+
+	return null
+
+/datum/powernet/proc/finalize_reusable_shadow_solver_snapshot(numapc, list/snapshot, reuse_mode)
+	if(!islist(snapshot))
+		return null
+
+	shadow_solver_cache_hits++
+	shadow_solver_cache_stable_ticks++
+	if(reuse_mode == "extrapolated")
+		shadow_solver_cache_snapshot = snapshot
+		shadow_solver_cache_valid = TRUE
+		shadow_solver_cache_timestamp = world.time
+		shadow_solver_cache_tick_dirty = FALSE
+	update_shadow_solver_stability_baseline(numapc)
+	return snapshot.Copy()
 
 /datum/powernet/proc/is_shadow_solver_snapshot_significant(list/snapshot)
 	if(!islist(snapshot))
@@ -480,15 +573,17 @@
 	var/threshold = max(shadow_solver_cache_significant_threshold, 1)
 	return delta_avail > threshold || delta_load > threshold || delta_unserved > threshold
 
-/datum/powernet/proc/get_or_build_shadow_solver_snapshot(numapc, list/precomputed_snapshot = null, allow_native = TRUE)
+/datum/powernet/proc/get_or_build_shadow_solver_snapshot(numapc, list/precomputed_snapshot = null, allow_native = TRUE, precomputed_reuse_mode = null)
 	if(!shadow_solver_enabled)
 		return null
 
-	if(should_use_cached_shadow_solver_snapshot(numapc))
-		shadow_solver_cache_hits++
-		shadow_solver_cache_stable_ticks++
-		update_shadow_solver_stability_baseline(numapc)
-		return shadow_solver_cache_snapshot?.Copy()
+	if(islist(precomputed_snapshot) && precomputed_reuse_mode)
+		return finalize_reusable_shadow_solver_snapshot(numapc, precomputed_snapshot, precomputed_reuse_mode)
+
+	if(!islist(precomputed_snapshot))
+		var/list/reusable_snapshot_entry = try_get_reusable_shadow_solver_snapshot(numapc)
+		if(islist(reusable_snapshot_entry))
+			return finalize_reusable_shadow_solver_snapshot(numapc, reusable_snapshot_entry["snapshot"], reusable_snapshot_entry["reuse_mode"])
 
 	shadow_solver_cache_misses++
 	var/list/snapshot = precomputed_snapshot
@@ -749,8 +844,16 @@
 	return null
 
 /datum/powernet/proc/rebuild_shadow_solver_native_nodes_payload_cache()
-	var/list/named_payload_nodes = list()
-	var/list/compact_payload_nodes = list()
+	var/list/named_payload_nodes = shadow_solver_native_nodes_payload_named_cache
+	var/list/compact_payload_nodes = shadow_solver_native_nodes_payload_compact_cache
+	if(!islist(named_payload_nodes))
+		named_payload_nodes = list()
+	else
+		named_payload_nodes.Cut()
+	if(!islist(compact_payload_nodes))
+		compact_payload_nodes = list()
+	else
+		compact_payload_nodes.Cut()
 	if(nodes && length(nodes))
 		for(var/obj/machinery/power/node in nodes)
 			var/list/profile = node.power_solver_shadow_profile()
@@ -772,11 +875,35 @@
 
 	shadow_solver_native_nodes_payload_named_cache = named_payload_nodes
 	shadow_solver_native_nodes_payload_compact_cache = compact_payload_nodes
-	shadow_solver_native_nodes_payload_cache_tick = world.time
+	shadow_solver_native_nodes_payload_cache_revision = shadow_solver_native_topology_revision
 	shadow_solver_native_nodes_payload_cache_valid = TRUE
 
+/datum/powernet/proc/build_shadow_solver_native_nodes_payload_live(compact_format = FALSE)
+	var/list/payload_nodes = list()
+	if(nodes && length(nodes))
+		for(var/obj/machinery/power/node in nodes)
+			var/list/profile = node.power_solver_shadow_profile()
+			if(!islist(profile))
+				continue
+			var/node_supply = max(profile["supply"], 0)
+			var/node_primary_demand = max(profile["primary_demand"], 0)
+			var/node_deferred_demand = max(profile["deferred_demand"], 0)
+			if(compact_format)
+				payload_nodes += list(list(
+					node_supply,
+					node_primary_demand,
+					node_deferred_demand
+				))
+			else
+				payload_nodes += list(list(
+					"supply" = node_supply,
+					"primary_demand" = node_primary_demand,
+					"deferred_demand" = node_deferred_demand
+				))
+	return payload_nodes
+
 /datum/powernet/proc/build_shadow_solver_native_nodes_payload(compact_format = FALSE)
-	if(!shadow_solver_native_nodes_payload_cache_valid || shadow_solver_native_nodes_payload_cache_tick != world.time)
+	if(!shadow_solver_native_nodes_payload_cache_valid || shadow_solver_native_nodes_payload_cache_revision != shadow_solver_native_topology_revision)
 		rebuild_shadow_solver_native_nodes_payload_cache()
 
 	if(compact_format)
@@ -788,7 +915,7 @@
 		"backend" = active_solver.backend_id,
 		"avail" = max(avail, 0),
 		"smes_avail" = max(smes_avail, 0),
-		"nodes" = build_shadow_solver_native_nodes_payload(FALSE)
+		"nodes" = build_shadow_solver_native_nodes_payload_live(FALSE)
 	)
 
 /datum/powernet/proc/build_shadow_solver_native_payload_compact(datum/power_solver/active_solver)
@@ -796,12 +923,10 @@
 		active_solver.backend_id,
 		max(avail, 0),
 		max(smes_avail, 0),
-		build_shadow_solver_native_nodes_payload(TRUE)
+		build_shadow_solver_native_nodes_payload_live(TRUE)
 	)
 
 /datum/powernet/proc/get_shadow_solver_native_stateful_identifier(use_legacy_id = FALSE)
-	if(use_legacy_id)
-		return "\ref[src]"
 	if(shadow_solver_native_stateful_id <= 0)
 		shadow_solver_native_stateful_id = shadow_solver_native_stateful_next_id++
 	return shadow_solver_native_stateful_id
@@ -809,7 +934,7 @@
 /datum/powernet/proc/build_shadow_solver_native_stateful_register_payload(datum/power_solver/active_solver, use_compact_format = TRUE, use_legacy_id = FALSE)
 	if(!istype(active_solver))
 		return null
-	var/id_value = get_shadow_solver_native_stateful_identifier(use_legacy_id)
+	var/id_value = get_shadow_solver_native_stateful_identifier()
 	if(use_compact_format)
 		return list(
 			id_value,
@@ -825,7 +950,7 @@
 	)
 
 /datum/powernet/proc/build_shadow_solver_native_stateful_dynamic_payload(use_compact_format = TRUE, use_legacy_id = FALSE)
-	var/id_value = get_shadow_solver_native_stateful_identifier(use_legacy_id)
+	var/id_value = get_shadow_solver_native_stateful_identifier()
 	if(use_compact_format)
 		return list(
 			id_value,
@@ -838,41 +963,67 @@
 		"smes_avail" = max(smes_avail, 0)
 	)
 
-/datum/powernet/proc/decode_shadow_solver_native_snapshot(list/decoded)
+/datum/powernet/proc/build_shadow_solver_native_stateful_dynamic_payload_json()
+	var/id_value = get_shadow_solver_native_stateful_identifier()
+	if(id_value <= 0)
+		return null
+	return "\[[num2text(id_value)],[num2text(max(avail, 0))],[num2text(max(smes_avail, 0))]\]"
+
+/datum/powernet/proc/should_decode_shadow_solver_native_write_fields(numapc = -1)
+	if(numapc < 0)
+		numapc = get_apc_terminal_count()
+	if(max(numapc, 0) > 0)
+		return TRUE
+	if(!length(inputting) || !smes_demand)
+		return FALSE
+	if(!shadow_solver_write_enabled)
+		return FALSE
+	return shadow_solver_write_mode == "pilot_smes_input" || shadow_solver_write_mode == "fea_only"
+
+/datum/powernet/proc/decode_shadow_solver_native_snapshot(list/decoded, use_minimal_decode = FALSE, decode_write_fields = TRUE)
 	if(!islist(decoded))
 		return null
 
 	var/result_avail = decoded["avail"]
 	var/result_load = decoded["load"]
-	var/result_comparison_avail = decoded["comparison_avail"]
-	var/result_comparison_load = decoded["comparison_load"]
 	var/result_unserved = decoded["unserved"]
-	var/result_deferred_unserved = decoded["deferred_unserved"]
-	var/result_total_unserved = decoded["total_unserved"]
-	var/result_primary_demand = decoded["primary_demand"]
-	var/result_served_primary = decoded["served_primary"]
+	var/result_comparison_avail
+	var/result_comparison_load
+	var/result_deferred_unserved = 0
+	var/result_total_unserved
+	var/result_primary_demand = 0
+	var/result_served_primary = 0
 
-	if(isnull(result_avail) || isnull(result_load) || isnull(result_unserved))
-		if(length(decoded) < POWER_SHADOW_NATIVE_RESULT_UNSERVED)
-			return null
+	if(isnull(result_avail) && length(decoded) >= POWER_SHADOW_NATIVE_RESULT_UNSERVED)
 		result_avail = decoded[POWER_SHADOW_NATIVE_RESULT_AVAIL]
 		result_load = decoded[POWER_SHADOW_NATIVE_RESULT_LOAD]
-		result_comparison_avail = decoded[POWER_SHADOW_NATIVE_RESULT_COMPARISON_AVAIL]
-		result_comparison_load = decoded[POWER_SHADOW_NATIVE_RESULT_COMPARISON_LOAD]
 		result_unserved = decoded[POWER_SHADOW_NATIVE_RESULT_UNSERVED]
-		result_deferred_unserved = decoded[POWER_SHADOW_NATIVE_RESULT_DEFERRED_UNSERVED]
-		result_total_unserved = decoded[POWER_SHADOW_NATIVE_RESULT_TOTAL_UNSERVED]
-		result_primary_demand = decoded[POWER_SHADOW_NATIVE_RESULT_PRIMARY_DEMAND]
-		result_served_primary = decoded[POWER_SHADOW_NATIVE_RESULT_SERVED_PRIMARY]
+		if(!use_minimal_decode)
+			result_comparison_avail = decoded[POWER_SHADOW_NATIVE_RESULT_COMPARISON_AVAIL]
+			result_comparison_load = decoded[POWER_SHADOW_NATIVE_RESULT_COMPARISON_LOAD]
+			result_deferred_unserved = decoded[POWER_SHADOW_NATIVE_RESULT_DEFERRED_UNSERVED]
+			result_total_unserved = decoded[POWER_SHADOW_NATIVE_RESULT_TOTAL_UNSERVED]
+		if(decode_write_fields)
+			result_primary_demand = decoded[POWER_SHADOW_NATIVE_RESULT_PRIMARY_DEMAND]
+			result_served_primary = decoded[POWER_SHADOW_NATIVE_RESULT_SERVED_PRIMARY]
+	else
+		if(!use_minimal_decode)
+			result_comparison_avail = decoded["comparison_avail"]
+			result_comparison_load = decoded["comparison_load"]
+			result_deferred_unserved = decoded["deferred_unserved"]
+			result_total_unserved = decoded["total_unserved"]
+		if(decode_write_fields)
+			result_primary_demand = decoded["primary_demand"]
+			result_served_primary = decoded["served_primary"]
 
 	if(isnull(result_avail) || isnull(result_load) || isnull(result_unserved))
 		return null
 
 	result_deferred_unserved = max(result_deferred_unserved, 0)
 	result_total_unserved = max(result_total_unserved, max(result_unserved, 0) + result_deferred_unserved)
-	if(isnull(result_primary_demand))
+	if(!decode_write_fields || isnull(result_primary_demand))
 		result_primary_demand = 0
-	if(isnull(result_served_primary))
+	if(!decode_write_fields || isnull(result_served_primary))
 		result_served_primary = max(result_primary_demand - max(result_unserved, 0), 0)
 	if(isnull(result_comparison_avail))
 		result_comparison_avail = result_avail
@@ -906,8 +1057,7 @@
 		timer_id = get_shadow_solver_native_timer_id("single")
 		rustg_time_reset(timer_id)
 
-	var/use_compact_payload = (!force_legacy_payload && shadow_solver_native_compact_supported)
-	var/list/payload = use_compact_payload ? build_shadow_solver_native_payload_compact(active_solver) : build_shadow_solver_native_payload(active_solver)
+	var/list/payload = shadow_solver_native_compact_supported ? build_shadow_solver_native_payload_compact(active_solver) : build_shadow_solver_native_payload(active_solver)
 	if(!islist(payload))
 		return null
 	if(collect_perf)
@@ -916,11 +1066,6 @@
 
 	var/payload_json = json_encode(payload)
 	if(!istext(payload_json) || !length(payload_json))
-		if(use_compact_payload)
-			var/list/legacy_snapshot = try_get_shadow_solver_native_snapshot(active_solver, collect_perf, TRUE)
-			if(islist(legacy_snapshot))
-				shadow_solver_native_compact_supported = FALSE
-				return legacy_snapshot
 		return null
 	if(collect_perf)
 		encode_us = max(rustg_time_microseconds(timer_id), 0)
@@ -928,11 +1073,6 @@
 
 	var/raw = rustg_power_shadow_solve(payload_json)
 	if(!istext(raw) || !length(raw))
-		if(use_compact_payload)
-			var/list/legacy_snapshot = try_get_shadow_solver_native_snapshot(active_solver, collect_perf, TRUE)
-			if(islist(legacy_snapshot))
-				shadow_solver_native_compact_supported = FALSE
-				return legacy_snapshot
 		return null
 	if(collect_perf)
 		call_us = max(rustg_time_microseconds(timer_id), 0)
@@ -942,16 +1082,12 @@
 	if(collect_perf)
 		decode_us = max(rustg_time_microseconds(timer_id), 0)
 
-	var/list/snapshot = decode_shadow_solver_native_snapshot(decoded)
+	var/numapc = get_apc_terminal_count()
+	var/use_minimal_decode = (shadow_solver_write_mode == "fea_only")
+	var/decode_write_fields = should_decode_shadow_solver_native_write_fields(numapc)
+	var/list/snapshot = decode_shadow_solver_native_snapshot(decoded, use_minimal_decode, decode_write_fields)
 	if(!islist(snapshot))
-		if(use_compact_payload)
-			var/list/legacy_snapshot = try_get_shadow_solver_native_snapshot(active_solver, collect_perf, TRUE)
-			if(islist(legacy_snapshot))
-				shadow_solver_native_compact_supported = FALSE
-				return legacy_snapshot
 		return null
-	if(use_compact_payload)
-		shadow_solver_native_compact_supported = TRUE
 	if(collect_perf)
 		record_shadow_solver_native_perf(build_us, encode_us, call_us, decode_us)
 	return snapshot
@@ -1055,17 +1191,18 @@
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
-/datum/powernet/proc/reset(wait, list/precomputed_shadow_snapshot = null, allow_native_shadow_solver = TRUE)
+/datum/powernet/proc/reset(wait, list/precomputed_shadow_snapshot = null, allow_native_shadow_solver = TRUE, precomputed_shadow_snapshot_reuse_mode = null)
 	var/numapc = get_apc_terminal_count()
+	var/drift_threshold = get_shadow_solver_cache_drift_threshold()
 
 	if(problem > 0)
 		problem = max(problem - 1, 0)
 
-	if(abs(avail - shadow_solver_cache_last_avail) > shadow_solver_cache_stability_threshold)
+	if(abs(avail - shadow_solver_cache_last_avail) > drift_threshold)
 		mark_shadow_solver_tick_dirty()
-	if(abs(load - shadow_solver_cache_last_load) > shadow_solver_cache_stability_threshold)
+	if(abs(load - shadow_solver_cache_last_load) > drift_threshold)
 		mark_shadow_solver_tick_dirty()
-	if(abs(smes_demand - shadow_solver_cache_last_smes_demand) > shadow_solver_cache_stability_threshold)
+	if(abs(smes_demand - shadow_solver_cache_last_smes_demand) > drift_threshold)
 		mark_shadow_solver_tick_dirty()
 	if(length(inputting) != shadow_solver_cache_last_inputting_count)
 		mark_shadow_solver_tick_dirty()
@@ -1075,7 +1212,7 @@
 	netexcess = avail - load
 	var/list/write_snapshot
 	if(shadow_solver_enabled)
-		write_snapshot = get_or_build_shadow_solver_snapshot(numapc, precomputed_shadow_snapshot, allow_native_shadow_solver)
+		write_snapshot = get_or_build_shadow_solver_snapshot(numapc, precomputed_shadow_snapshot, allow_native_shadow_solver, precomputed_shadow_snapshot_reuse_mode)
 		run_shadow_solver_comparison(write_snapshot)
 	update_apc_advisory(write_snapshot, numapc)
 

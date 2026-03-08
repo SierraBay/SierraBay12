@@ -72,6 +72,8 @@
 	if(..())
 		return
 
+	FindDevices()
+
 	if(href_list["smes_in_toggle"])
 		var/obj/machinery/power/smes/buildable/SMES = GetSMESByTag(href_list["smes_in_toggle"])
 		if(SMES)

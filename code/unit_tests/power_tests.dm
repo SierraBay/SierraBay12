@@ -92,6 +92,53 @@
 	return 1
 
 
+/datum/unit_test/rcon_device_scan_excludes_deleted_smes
+	name = "POWER: RCON scan excludes deleted SMES units"
+
+/datum/unit_test/rcon_device_scan_excludes_deleted_smes/start_test()
+	var/turf/T = get_safe_turf()
+	var/obj/host = new(T)
+	var/datum/nano_module/program/rcon/rcon = new(host)
+	var/obj/machinery/power/smes/buildable/smes = new(T)
+	smes.RCon_tag = "unit_test_rcon_[world.time]"
+
+	rcon.FindDevices()
+	if(!(smes in rcon.known_SMESs))
+		fail("RCON scan did not include a live tagged SMES.")
+		qdel(smes)
+		qdel(rcon)
+		qdel(host)
+		return 1
+
+	qdel(smes)
+	rcon.FindDevices()
+	if(smes in rcon.known_SMESs)
+		fail("RCON scan still included a deleted SMES after rescanning.")
+		qdel(rcon)
+		qdel(host)
+		return 1
+
+	qdel(rcon)
+	qdel(host)
+	pass("RCON rescans use live machinery state and drop deleted SMES units.")
+	return 1
+
+
+/obj/machinery/power/native_payload_cache_probe
+	var/profile_calls = 0
+	var/profile_primary_demand = 2500
+	var/profile_deferred_demand = 500
+	var/profile_supply = 1000
+
+/obj/machinery/power/native_payload_cache_probe/power_solver_shadow_profile()
+	profile_calls++
+	return list(
+		"primary_demand" = profile_primary_demand,
+		"deferred_demand" = profile_deferred_demand,
+		"supply" = profile_supply
+	)
+
+
 /datum/unit_test/power_shadow_fea_lock_enforced
 	name = "POWER SHADOW: FEA lock enforces non-legacy mode"
 
@@ -149,6 +196,253 @@
 
 	qdel(PN)
 	pass("Stable powernet reused cached snapshot.")
+	return 1
+
+
+/datum/unit_test/power_shadow_native_payload_cache_reuse
+	name = "POWER SHADOW: Native node payload cache only rebuilds on topology changes"
+
+/datum/unit_test/power_shadow_native_payload_cache_reuse/start_test()
+	var/turf/T = get_safe_turf()
+	if(!istype(T))
+		fail("Failed to find a safe turf for native payload cache testing.")
+		return 1
+
+	var/datum/powernet/PN = new
+	var/obj/machinery/power/native_payload_cache_probe/node = new(T)
+	PN.nodes[node] = node
+	PN.mark_shadow_solver_topology_dirty()
+
+	var/list/first = PN.build_shadow_solver_native_nodes_payload(TRUE)
+	var/list/second = PN.build_shadow_solver_native_nodes_payload(TRUE)
+	if(!islist(first) || !islist(second))
+		fail("Expected native payload cache builds to return compact node payload lists.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	if(node.profile_calls != 1)
+		fail("Expected profile proc to run once before topology changes, got [node.profile_calls] calls.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	PN.mark_shadow_solver_topology_dirty()
+	var/list/third = PN.build_shadow_solver_native_nodes_payload(TRUE)
+	if(!islist(third))
+		fail("Expected native payload cache rebuild after topology invalidation.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	if(node.profile_calls != 2)
+		fail("Expected profile proc to run exactly once more after topology dirty, got [node.profile_calls] calls.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	qdel(node)
+	qdel(PN)
+	pass("Native node payload cache now reuses topology-stable payloads and rebuilds only after topology invalidation.")
+	return 1
+
+
+/datum/unit_test/power_shadow_native_legacy_payload_stays_live
+	name = "POWER SHADOW: Legacy native payload rebuilds dynamic node profiles"
+
+/datum/unit_test/power_shadow_native_legacy_payload_stays_live/start_test()
+	var/turf/T = get_safe_turf()
+	if(!istype(T))
+		fail("Failed to find a safe turf for legacy native payload live-profile testing.")
+		return 1
+
+	var/datum/powernet/PN = new
+	var/obj/machinery/power/native_payload_cache_probe/node = new(T)
+	PN.nodes[node] = node
+	PN.mark_shadow_solver_topology_dirty()
+
+	var/datum/power_solver/solver = PN.ensure_shadow_solver()
+	if(!istype(solver))
+		fail("Failed to create a shadow solver for legacy native payload live-profile testing.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	var/list/first_payload = PN.build_shadow_solver_native_payload_compact(solver)
+	if(!islist(first_payload) || length(first_payload) < 4)
+		fail("Expected compact legacy payload to include nodes.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	node.profile_primary_demand = 9000
+	node.profile_deferred_demand = 1200
+	node.profile_supply = 300
+
+	var/list/second_payload = PN.build_shadow_solver_native_payload_compact(solver)
+	var/list/second_nodes = second_payload[4]
+	if(!islist(second_nodes) || !length(second_nodes))
+		fail("Expected compact legacy payload rebuild to return node rows.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	var/list/node_row = second_nodes[1]
+	if(!islist(node_row))
+		fail("Expected compact legacy payload node row to be a list.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	if(node_row[1] != 300 || node_row[2] != 9000 || node_row[3] != 1200)
+		fail("Legacy compact payload reused stale node profile data instead of rebuilding dynamic values.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	qdel(node)
+	qdel(PN)
+	pass("Legacy native payload rebuilds node profiles every solve while stateful register payload stays topology-cached.")
+	return 1
+
+
+/datum/unit_test/power_shadow_adaptive_cache_threshold
+	name = "POWER SHADOW: Adaptive cache drift threshold scales with network size"
+
+/datum/unit_test/power_shadow_adaptive_cache_threshold/start_test()
+	var/datum/powernet/large = new
+	large.avail = 1000000
+	large.load = 250000
+	large.smes_demand = 0
+	large.shadow_solver_cache_valid = TRUE
+	large.shadow_solver_cache_snapshot = list("avail" = 1000000, "load" = 250000, "unserved" = 0)
+	large.shadow_solver_cache_timestamp = world.time
+	large.shadow_solver_cache_stable_ticks = 5
+	large.update_shadow_solver_stability_baseline(0)
+	large.shadow_solver_cache_tick_dirty = FALSE
+	large.avail = 1010000
+
+	if(!large.is_shadow_solver_zone_stable(0))
+		fail("Expected a 10kW drift to remain stable on a 1MW network.")
+		qdel(large)
+		return 1
+
+	var/datum/powernet/small = new
+	small.avail = 20000
+	small.load = 8000
+	small.smes_demand = 0
+	small.shadow_solver_cache_valid = TRUE
+	small.shadow_solver_cache_snapshot = list("avail" = 20000, "load" = 8000, "unserved" = 0)
+	small.shadow_solver_cache_timestamp = world.time
+	small.shadow_solver_cache_stable_ticks = 5
+	small.update_shadow_solver_stability_baseline(0)
+	small.shadow_solver_cache_tick_dirty = FALSE
+	small.avail = 30000
+
+	if(small.is_shadow_solver_zone_stable(0))
+		fail("Expected the same 10kW drift to invalidate cache stability on a small network.")
+		qdel(large)
+		qdel(small)
+		return 1
+
+	qdel(large)
+	qdel(small)
+	pass("Adaptive cache drift thresholds stay lenient on large nets and strict on small nets.")
+	return 1
+
+
+/datum/unit_test/power_shadow_cache_extrapolation_no_apc
+	name = "POWER SHADOW: No-APC networks extrapolate cached snapshots before solving"
+
+/datum/unit_test/power_shadow_cache_extrapolation_no_apc/start_test()
+	var/datum/powernet/PN = new
+	PN.shadow_solver_enabled = TRUE
+	PN.shadow_solver_cache_enabled = TRUE
+	PN.shadow_solver_cache_valid = TRUE
+	PN.shadow_solver_cache_timestamp = world.time
+	PN.shadow_solver_cache_stable_ticks = 0
+	PN.avail = 100000
+	PN.load = 20000
+	PN.smes_demand = 0
+	PN.inputting.Cut()
+	PN.shadow_solver_cache_snapshot = list(
+		"avail" = 100000,
+		"load" = 20000,
+		"comparison_avail" = 100000,
+		"comparison_load" = 20000,
+		"unserved" = 0,
+		"deferred_unserved" = 0,
+		"total_unserved" = 0,
+		"primary_demand" = 0,
+		"served_primary" = 0
+	)
+	PN.update_shadow_solver_stability_baseline(0)
+	PN.mark_shadow_solver_tick_dirty()
+	PN.avail = 102000
+
+	var/list/extrapolated = PN.get_or_build_shadow_solver_snapshot(0)
+	if(!islist(extrapolated))
+		fail("Expected no-APC powernet to return an extrapolated cached snapshot.")
+		qdel(PN)
+		return 1
+
+	if(extrapolated["comparison_avail"] != 102000)
+		fail("Expected extrapolated snapshot to expose live comparison_avail 102000, got [extrapolated["comparison_avail"]].")
+		qdel(PN)
+		return 1
+
+	if(extrapolated["avail"] != 102000)
+		fail("Expected extrapolated snapshot avail to track live avail drift, got [extrapolated["avail"]].")
+		qdel(PN)
+		return 1
+
+	if(PN.shadow_solver_cache_hits < 1 || PN.shadow_solver_cache_misses != 0)
+		fail("Expected extrapolated snapshot reuse to count as a cache hit without a cache miss (hits=[PN.shadow_solver_cache_hits], misses=[PN.shadow_solver_cache_misses]).")
+		qdel(PN)
+		return 1
+
+	qdel(PN)
+	pass("No-APC powernets extrapolate fresh cached snapshots instead of invoking a full solve for minor drift.")
+	return 1
+
+
+/datum/unit_test/power_shadow_partial_batch_routing
+	name = "POWER SHADOW: Partial batch snapshot maps preserve reusable snapshots"
+
+/datum/unit_test/power_shadow_partial_batch_routing/start_test()
+	if(!SSpowernets)
+		fail("Powernets subsystem was not available for partial batch routing test.")
+		return 1
+
+	var/datum/powernet/hit = new
+	var/datum/powernet/miss = new
+	var/list/batch_snapshots = list()
+	batch_snapshots[hit] = SSpowernets.power_shadow_native_make_snapshot_entry(list("avail" = 100, "load" = 20, "unserved" = 0), "cache")
+
+	var/list/hit_entry = SSpowernets.power_shadow_native_get_runtime_batch_entry(hit, batch_snapshots, FALSE)
+	if(!islist(hit_entry["snapshot"]) || hit_entry["reuse_mode"] != "cache")
+		fail("Expected cached batch entry to remain available when batch coverage is partial.")
+		qdel(hit)
+		qdel(miss)
+		return 1
+
+	var/list/miss_entry = SSpowernets.power_shadow_native_get_runtime_batch_entry(miss, batch_snapshots, FALSE)
+	if(islist(miss_entry["snapshot"]))
+		fail("Missing network should not inherit another network's precomputed batch snapshot.")
+		qdel(hit)
+		qdel(miss)
+		return 1
+
+	var/list/forced_entry = SSpowernets.power_shadow_native_get_runtime_batch_entry(hit, batch_snapshots, TRUE)
+	if(islist(forced_entry["snapshot"]))
+		fail("Global DM fallback should suppress even valid batch snapshots.")
+		qdel(hit)
+		qdel(miss)
+		return 1
+
+	qdel(hit)
+	qdel(miss)
+	pass("Partial batch snapshot maps keep valid reusable snapshots without forcing unrelated networks off the fast path.")
 	return 1
 
 
@@ -657,4 +951,58 @@
 	qdel(SMES)
 	qdel(input_net)
 	pass("SMES input path does not overdraw a single input powernet when duplicate terminals share that net.")
+	return 1
+
+
+/datum/unit_test/power_smes_display_state_latches_between_power_phases
+	name = "POWER: SMES display keeps charging state between machine and powernet phases"
+
+/datum/unit_test/power_smes_display_state_latches_between_power_phases/start_test()
+	var/turf/T = get_safe_turf()
+	if(!istype(T))
+		fail("Failed to find a safe turf for SMES display state testing.")
+		return 1
+
+	var/obj/machinery/power/smes/buildable/SMES = new(T)
+	SMES.set_broken(FALSE)
+	SMES.inputting(TRUE)
+	SMES.inputting = 2
+	SMES.input_available = 50000
+
+	SMES.Process()
+
+	if(SMES.get_display_inputting() != 2)
+		fail("SMES display state dropped charging status between machine and powernet phases; expected 2, got [SMES.get_display_inputting()].")
+		qdel(SMES)
+		return 1
+
+	if(SMES.get_display_input_available() != 50000)
+		fail("SMES display state dropped input draw between machine and powernet phases; expected 50000W, got [SMES.get_display_input_available()]W.")
+		qdel(SMES)
+		return 1
+
+	SMES.Process()
+
+	if(SMES.get_display_inputting() != 0)
+		fail("SMES display state did not clear after a full tick without charging; expected 0, got [SMES.get_display_inputting()].")
+		qdel(SMES)
+		return 1
+
+	if(SMES.get_display_input_available() != 0)
+		fail("SMES display input draw did not clear after a full tick without charging; expected 0W, got [SMES.get_display_input_available()]W.")
+		qdel(SMES)
+		return 1
+
+	SMES.inputting(TRUE)
+	SMES.inputting = 2
+	SMES.input_available = 50000
+	SMES.inputting(FALSE)
+
+	if(SMES.get_display_inputting() != 0 || SMES.get_display_input_available() != 0)
+		fail("SMES display state did not clear immediately when charging mode was toggled off.")
+		qdel(SMES)
+		return 1
+
+	qdel(SMES)
+	pass("SMES display keeps the most recent completed charging state until the next power phase, and clears immediately when charging is disabled.")
 	return 1

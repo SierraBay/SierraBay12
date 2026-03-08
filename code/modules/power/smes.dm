@@ -30,6 +30,8 @@
 	var/input_level = 50000 		// amount of power the SMES attempts to charge by
 	var/input_level_max = 200000 	// cap on input_level
 	var/input_available = 0 		// amount of charge available from input last tick
+	var/last_inputting = 0 			// last completed input state, used to keep UI/icon state stable between machine and powernet phases
+	var/last_input_available = 0 	// last completed input draw, used to keep UI state stable between machine and powernet phases
 
 	var/output_attempt = 0 			// 1 = attempting to output, 0 = not attempting to output
 	var/outputting = 0 				// 1 = actually outputting, 0 = not outputting
@@ -102,13 +104,15 @@
 	ClearOverlays()
 	if(MACHINE_IS_BROKEN(src))	return
 
+	var/display_inputting = get_display_inputting()
+
 	AddOverlays(emissive_appearance(icon, "smes-op[outputting]"))
 	AddOverlays(image(overlay_icon, "smes-op[outputting]"))
 
-	if(inputting == 2)
+	if(display_inputting == 2)
 		AddOverlays(emissive_appearance(icon, "smes-oc2"))
 		AddOverlays(image(overlay_icon, "smes-oc2"))
-	else if (inputting == 1)
+	else if (display_inputting == 1)
 		AddOverlays(emissive_appearance(icon, "smes-oc1"))
 		AddOverlays(image(overlay_icon, "smes-oc1"))
 	else if (input_attempt)
@@ -136,6 +140,20 @@
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/(capacity ? capacity : 5e6))
+
+/obj/machinery/power/smes/proc/get_display_inputting()
+	if(!input_attempt)
+		return 0
+	if(inputting || input_available)
+		return inputting
+	return last_inputting
+
+/obj/machinery/power/smes/proc/get_display_input_available()
+	if(!input_attempt)
+		return 0
+	if(inputting || input_available)
+		return input_available
+	return last_input_available
 
 /obj/machinery/power/smes/proc/get_shadow_solver_output_supply()
 	if(output_attempt && !output_pulsed && !output_cut && powernet && charge > 0)
@@ -246,13 +264,17 @@
 		failure_timer--
 		return
 
+	last_inputting = inputting
+	last_input_available = input_available
+
 	// only update icon if state changed
-	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
+	var/display_inputting = get_display_inputting()
+	if(last_disp != chargedisplay() || last_chrg != display_inputting || last_onln != outputting)
 		update_icon()
 
 	//store machine state to see if we need to update the icon overlays
 	last_disp = chargedisplay()
-	last_chrg = inputting
+	last_chrg = display_inputting
 	last_onln = outputting
 
 	input_available = 0
@@ -340,11 +362,11 @@
 	data["storedCapacity"] = Percentage()
 	data["storedCapacityAbs"] = round(charge/1000, 0.1)
 	data["storedCapacityMax"] = round(capacity/1000, 0.1)
-	data["charging"] = inputting
+	data["charging"] = get_display_inputting()
 	data["chargeMode"] = input_attempt
 	data["chargeLevel"] = round(input_level/1000, 0.1)
 	data["chargeMax"] = round(input_level_max/1000)
-	data["chargeLoad"] = round(input_available/1000, 0.1)
+	data["chargeLoad"] = round(get_display_input_available()/1000, 0.1)
 	data["outputOnline"] = output_attempt
 	data["outputLevel"] = round(output_level/1000, 0.1)
 	data["outputMax"] = round(output_level_max/1000)
@@ -416,6 +438,9 @@
 	input_attempt = do_input
 	if(!input_attempt)
 		inputting = 0
+		input_available = 0
+		last_inputting = 0
+		last_input_available = 0
 
 /obj/machinery/power/smes/proc/outputting(do_output)
 	output_attempt = do_output

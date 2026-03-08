@@ -17,11 +17,6 @@
 	var/RCon_tag = "NO_TAG"
 	var/update_locked = 0
 
-/obj/machinery/power/breakerbox/Destroy()
-	..()
-	for(var/datum/nano_module/program/rcon/R in world)
-		R.FindDevices()
-
 /obj/machinery/power/breakerbox/activated
 
 	// Enabled on server startup. Used in substations to keep them in bypass mode.
