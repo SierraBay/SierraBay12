@@ -137,35 +137,77 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
-/obj/machinery/power/smes/power_solver_shadow_profile()
-	var/supply = 0
-	if(output_attempt && !output_pulsed && !output_cut && charge > 0)
-		supply = max(min(charge / CELLRATE, output_level), 0)
+/obj/machinery/power/smes/proc/get_shadow_solver_output_supply()
+	if(output_attempt && !output_pulsed && !output_cut && powernet && charge > 0)
+		return max(min(charge / CELLRATE, output_level), 0)
+	return 0
 
-	var/deferred_demand = 0
+/obj/machinery/power/smes/proc/get_shadow_solver_deferred_demand()
 	if(input_attempt && !input_pulsed && !input_cut)
-		deferred_demand = max(min((capacity - charge) / CELLRATE, input_level), 0)
+		return max(min((capacity - charge) / CELLRATE, input_level), 0)
+	return 0
+
+/obj/machinery/power/smes/proc/is_shadow_solver_primary_input_terminal(obj/machinery/power/terminal/term)
+	if(!istype(term) || !term.powernet)
+		return FALSE
+
+	for(var/obj/item/stock_parts/power/terminal/part in power_components)
+		if(part.terminal?.powernet == term.powernet)
+			return part.terminal == term
+
+	return FALSE
+
+/obj/machinery/power/smes/proc/power_solver_shadow_terminal_profile(obj/machinery/power/terminal/term)
+	if(!is_shadow_solver_primary_input_terminal(term))
+		return null
+
+	var/deferred_demand = get_shadow_solver_deferred_demand()
+	if(!deferred_demand)
+		return null
 
 	return list(
 		"primary_demand" = 0,
 		"deferred_demand" = deferred_demand,
+		"supply" = 0
+	)
+
+/obj/machinery/power/smes/power_solver_shadow_profile()
+	var/supply = get_shadow_solver_output_supply()
+	if(!supply)
+		return null
+
+	return list(
+		"primary_demand" = 0,
+		"deferred_demand" = 0,
 		"supply" = supply
 	)
 
-/obj/machinery/power/smes/proc/input_power(percentage)
+/obj/machinery/power/smes/proc/input_power(percentage, datum/powernet/source_net = null)
 	var/to_input = target_load * (percentage/100)
 	to_input = clamp(to_input, 0, target_load)
-	input_available = 0
+	if(!source_net)
+		input_available = 0
 	if(percentage == 100)
 		inputting = 2
 	else if(percentage)
 		inputting = 1
 	// else inputting = 0, as set in process()
 
+	var/inputted_total = 0
 	for(var/obj/item/stock_parts/power/terminal/term in power_components)
-		var/inputted = term.use_power_oneoff(src, to_input, power_channel)
+		if(source_net && term.terminal?.powernet != source_net)
+			continue
+
+		var/remaining = max(to_input - inputted_total, 0)
+		if(!remaining)
+			break
+
+		var/inputted = term.use_power_oneoff(src, remaining, power_channel)
+		if(inputted <= 0)
+			continue
 		add_charge(inputted)
 		input_available += inputted
+		inputted_total += inputted
 
 // Mostly in place due to child types that may store power in other way (PSUs)
 /obj/machinery/power/smes/proc/add_charge(amount)

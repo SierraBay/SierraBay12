@@ -71,7 +71,7 @@
 /datum/unit_test/portable_connector_active_processing/start_test()
 	var/turf/T = get_safe_turf()
 	var/obj/machinery/atmospherics/portables_connector/connector = new(T)
-	var/obj/machinery/portable_atmospherics/portable = new(T)
+	var/obj/machinery/portable_atmospherics/portable = null
 	var/datum/pipe_network/network = new
 	connector.network = network
 
@@ -82,6 +82,28 @@
 		qdel(connector)
 		return 1
 
+	var/turf/portable_spawn = null
+	for(var/direction in GLOB.cardinal)
+		var/turf/candidate = get_step(T, direction)
+		if(!istype(candidate) || candidate.density)
+			continue
+		portable_spawn = candidate
+		break
+	if(!portable_spawn)
+		fail("Could not find an adjacent turf to stage portable atmos device.")
+		qdel(network)
+		qdel(connector)
+		return 1
+
+	portable = new(portable_spawn)
+	if(portable.connected_port)
+		fail("Portable atmos device unexpectedly connected during test setup.")
+		qdel(network)
+		qdel(portable)
+		qdel(connector)
+		return 1
+
+	portable.forceMove(T)
 	if(!portable.connect(connector))
 		fail("Portable atmos device failed to connect to test connector.")
 		qdel(network)
@@ -193,14 +215,21 @@
 		fail("Could not find an adjacent turf for turret threat testing.")
 		qdel(turret)
 		return 1
-	var/mob/living/carbon/human/target = get_named_instance(/mob/living/carbon/human, target_turf, SPECIES_HUMAN)
+	var/mob/living/carbon/human/dummy/target = get_named_instance(/mob/living/carbon/human/dummy, target_turf, SPECIES_HUMAN)
 
 	turret.check_access = FALSE
 	turret.check_records = FALSE
 	turret.check_arrest = FALSE
 	turret.check_weapons = TRUE
+	turret.hold_deployed = TRUE
+	turret.req_access = list(-1)
 	turret.use_power = POWER_USE_OFF
 	turret.set_stat(MACHINE_STAT_NOPOWER, FALSE)
+	if(turret.allowed(target))
+		fail("Test target unexpectedly has turret access; weapon authorization path cannot be exercised.")
+		qdel(target)
+		qdel(turret)
+		return 1
 
 	if(turret.assess_living(target) > 0)
 		fail("Stationary unarmed target should not be considered threatening before state change.")
@@ -221,7 +250,7 @@
 		qdel(turret)
 		return 1
 
-	var/obj/item/melee/baton/weapon = new(T)
+	var/obj/item/melee/baton/weapon = new(target_turf)
 	if(!target.put_in_hands(weapon))
 		fail("Test target could not equip a weapon for threat escalation.")
 		qdel(target)

@@ -1003,7 +1003,7 @@
 	if(isnull(smes_input_percentage))
 		return
 	for(var/obj/machinery/power/smes/S in inputting)
-		S.input_power(smes_input_percentage)
+		S.input_power(smes_input_percentage, src)
 
 /datum/powernet/proc/apply_shadow_solver_write_path(list/snapshot)
 	var/legacy_percentage = get_legacy_smes_input_percentage()

@@ -493,3 +493,168 @@
 	test_area.oneoff_environ = old_oneoff_environ
 	pass("APC enforced caps are skipped while topology is dirty and resume only after fresh advisory data exists.")
 	return 1
+
+
+/datum/unit_test/power_shadow_smes_terminal_profiles
+	name = "POWER SHADOW: SMES terminal profiles stay scoped to the correct powernet"
+
+/datum/unit_test/power_shadow_smes_terminal_profiles/start_test()
+	var/turf/T = get_space_turf()
+	if(!istype(T))
+		fail("Failed to find an isolated turf for SMES terminal profile testing.")
+		return 1
+
+	var/turf/input_turf_a = get_step(T, NORTH)
+	var/turf/input_turf_b = get_step(T, EAST)
+	if(!istype(input_turf_a) || !istype(input_turf_b))
+		fail("Failed to find adjacent turfs for SMES terminal profile testing.")
+		return 1
+
+	var/obj/machinery/power/smes/buildable/SMES = new(T)
+	var/list/terminal_parts = list()
+	for(var/obj/item/stock_parts/power/terminal/part in SMES.component_parts)
+		terminal_parts += part
+
+	if(length(terminal_parts) < 2)
+		fail("Test SMES did not have enough terminal parts to exercise input powernets.")
+		qdel(SMES)
+		return 1
+
+	var/obj/machinery/power/terminal/input_term_a = new(input_turf_a)
+	var/obj/machinery/power/terminal/input_term_b = new(input_turf_b)
+	var/obj/item/stock_parts/power/terminal/part_a = terminal_parts[1]
+	var/obj/item/stock_parts/power/terminal/part_b = terminal_parts[2]
+	part_a.set_terminal(SMES, input_term_a)
+	part_b.set_terminal(SMES, input_term_b)
+
+	var/datum/powernet/output_net = new
+	var/datum/powernet/input_net = new
+	SMES.powernet = output_net
+	input_term_a.powernet = input_net
+	input_term_b.powernet = input_net
+
+	SMES.charge = round(SMES.capacity / 2)
+	SMES.input_attempt = TRUE
+	SMES.output_attempt = TRUE
+	SMES.input_cut = FALSE
+	SMES.input_pulsed = FALSE
+	SMES.output_cut = FALSE
+	SMES.output_pulsed = FALSE
+	SMES.input_level = min(50000, SMES.input_level_max)
+	SMES.output_level = min(75000, SMES.output_level_max)
+
+	var/expected_supply = SMES.get_shadow_solver_output_supply()
+	var/expected_deferred_demand = SMES.get_shadow_solver_deferred_demand()
+
+	var/list/output_profile = SMES.power_solver_shadow_profile()
+	if(!islist(output_profile))
+		fail("Output-side SMES profile should expose supply on its output powernet.")
+		qdel(SMES)
+		qdel(output_net)
+		qdel(input_net)
+		return 1
+
+	if(output_profile["supply"] != expected_supply || output_profile["deferred_demand"] != 0)
+		fail("Output-side SMES profile leaked wrong values; expected supply [expected_supply] and deferred demand 0, got supply [output_profile["supply"]] and deferred demand [output_profile["deferred_demand"]].")
+		qdel(SMES)
+		qdel(output_net)
+		qdel(input_net)
+		return 1
+
+	var/list/input_profile_a = input_term_a.power_solver_shadow_profile()
+	var/list/input_profile_b = input_term_b.power_solver_shadow_profile()
+	if(!islist(input_profile_a))
+		fail("Primary input-side SMES terminal should report deferred demand.")
+		qdel(SMES)
+		qdel(output_net)
+		qdel(input_net)
+		return 1
+
+	if(input_profile_a["supply"] != 0 || input_profile_a["deferred_demand"] != expected_deferred_demand)
+		fail("Input-side SMES terminal leaked supply or wrong deferred demand; expected supply 0 and deferred demand [expected_deferred_demand], got supply [input_profile_a["supply"]] and deferred demand [input_profile_a["deferred_demand"]].")
+		qdel(SMES)
+		qdel(output_net)
+		qdel(input_net)
+		return 1
+
+	if(input_profile_b)
+		fail("Duplicate SMES terminals on the same input powernet should not report deferred demand twice.")
+		qdel(SMES)
+		qdel(output_net)
+		qdel(input_net)
+		return 1
+
+	qdel(SMES)
+	qdel(output_net)
+	qdel(input_net)
+	pass("SMES solver profiles keep output supply on the output net and report input demand only once per input powernet.")
+	return 1
+
+
+/datum/unit_test/power_shadow_smes_input_power_target_cap
+	name = "POWER SHADOW: SMES input path respects target load per input powernet"
+
+/datum/unit_test/power_shadow_smes_input_power_target_cap/start_test()
+	var/turf/T = get_space_turf()
+	if(!istype(T))
+		fail("Failed to find an isolated turf for SMES input power cap testing.")
+		return 1
+
+	var/turf/input_turf_a = get_step(T, SOUTH)
+	var/turf/input_turf_b = get_step(T, WEST)
+	if(!istype(input_turf_a) || !istype(input_turf_b))
+		fail("Failed to find adjacent turfs for SMES input power cap testing.")
+		return 1
+
+	var/obj/machinery/power/smes/buildable/SMES = new(T)
+	var/list/terminal_parts = list()
+	for(var/obj/item/stock_parts/power/terminal/part in SMES.component_parts)
+		terminal_parts += part
+
+	if(length(terminal_parts) < 2)
+		fail("Test SMES did not have enough terminal parts to exercise duplicate input terminals.")
+		qdel(SMES)
+		return 1
+
+	var/obj/machinery/power/terminal/input_term_a = new(input_turf_a)
+	var/obj/machinery/power/terminal/input_term_b = new(input_turf_b)
+	var/obj/item/stock_parts/power/terminal/part_a = terminal_parts[1]
+	var/obj/item/stock_parts/power/terminal/part_b = terminal_parts[2]
+	part_a.set_terminal(SMES, input_term_a)
+	part_b.set_terminal(SMES, input_term_b)
+
+	var/datum/powernet/input_net = new
+	input_net.avail = 200000
+	input_net.load = 0
+	input_term_a.powernet = input_net
+	input_term_b.powernet = input_net
+
+	SMES.charge = 0
+	SMES.target_load = 50000
+	SMES.input_available = 0
+	SMES.inputting = 0
+
+	SMES.input_power(100, input_net)
+
+	if(SMES.input_available != 50000)
+		fail("SMES drew [SMES.input_available]W from a single input powernet with duplicate terminals; expected exactly 50000W.")
+		qdel(SMES)
+		qdel(input_net)
+		return 1
+
+	if(input_net.load != 50000)
+		fail("Input powernet load increased by [input_net.load]W; expected exactly 50000W from capped SMES input.")
+		qdel(SMES)
+		qdel(input_net)
+		return 1
+
+	if(SMES.charge != 50000 * CELLRATE)
+		fail("SMES charge increased by [SMES.charge]J; expected [50000 * CELLRATE]J after capped input.")
+		qdel(SMES)
+		qdel(input_net)
+		return 1
+
+	qdel(SMES)
+	qdel(input_net)
+	pass("SMES input path does not overdraw a single input powernet when duplicate terminals share that net.")
+	return 1

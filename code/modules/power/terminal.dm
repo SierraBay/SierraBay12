@@ -28,6 +28,9 @@
 	var/obj/machinery/machine = master_machine()
 	if(!istype(machine, /obj/machinery/power))
 		return null
+	if(istype(machine, /obj/machinery/power/smes))
+		var/obj/machinery/power/smes/smes = machine
+		return smes.power_solver_shadow_terminal_profile(src)
 	var/obj/machinery/power/power_machine = machine
 	return power_machine.power_solver_shadow_profile()
 
