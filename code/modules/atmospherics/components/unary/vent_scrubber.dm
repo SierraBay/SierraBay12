@@ -146,15 +146,7 @@
 		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
 	return ..()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Move(NewLoc, Dir, step_x, step_y)
-	. = ..()
-	if(.)
-		bind_environment_signal()
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
-
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
-	if(QDELETED(src))
-		return
 	event_pending_wake |= wake_reason
 	if(world.time == last_event_wake_tick)
 		return
@@ -167,7 +159,7 @@
 	addtimer(new Callback(src, PROC_REF(queue_event_processing), MACHINERY_WAKE_ATMOS), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/bind_environment_signal()
-	var/datum/gas_mixture/new_environment = return_air()
+	var/datum/gas_mixture/new_environment = loc.return_air()
 	if(new_environment == event_environment_ref)
 		return
 	if(event_environment_ref)

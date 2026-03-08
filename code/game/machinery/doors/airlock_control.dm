@@ -213,15 +213,7 @@
 	if(SSmachines.optimize_machinery_event)
 		return PROCESS_KILL
 
-/obj/machinery/airlock_sensor/Move(NewLoc, Dir, step_x, step_y)
-	. = ..()
-	if(.)
-		bind_environment_signal()
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
-
 /obj/machinery/airlock_sensor/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
-	if(QDELETED(src))
-		return
 	event_pending_wake |= wake_reason
 	if(world.time == last_event_wake_tick)
 		return
