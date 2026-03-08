@@ -200,7 +200,7 @@
 
 
 /datum/unit_test/portable_turret_dormant_rescan
-	name = "MACHINE: Dormant turret wakes on delayed non-movement threat rescan"
+	name = "MACHINE: Dormant turret wakes on event-driven non-movement threat changes"
 
 /datum/unit_test/portable_turret_dormant_rescan/start_test()
 	var/turf/T = get_safe_turf()
@@ -244,8 +244,8 @@
 		qdel(turret)
 		return 1
 
-	if(!turret.dormant_rescan_pending || !turret.prox_trigger?.is_active())
-		fail("Dormant turret did not arm delayed rescan and proximity monitoring.")
+	if(!length(turret.dormant_watchers) || !turret.prox_trigger?.is_active())
+		fail("Dormant turret did not arm event watchers and proximity monitoring.")
 		qdel(target)
 		qdel(turret)
 		return 1
@@ -256,10 +256,9 @@
 		qdel(target)
 		qdel(turret)
 		return 1
-	turret.dormant_rescan_wake()
 
 	if(!(turret.processing_flags & MACHINERY_PROCESS_SELF))
-		fail("Dormant rescan did not wake turret back into fast processing.")
+		fail("Dormant watcher did not wake turret back into fast processing.")
 		qdel(target)
 		qdel(turret)
 		return 1
@@ -273,7 +272,7 @@
 
 	qdel(target)
 	qdel(turret)
-	pass("Dormant turret performs a delayed rescan and wakes for non-movement threat changes.")
+	pass("Dormant turret wakes on nearby threat state changes without periodic rescans.")
 	return 1
 
 

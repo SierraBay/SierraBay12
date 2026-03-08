@@ -59,9 +59,8 @@
 
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
-	var/datum/proximity_trigger/square/prox_trigger	//proximity monitor for dormant state
-	var/dormant_rescan_pending = FALSE
-	var/dormant_rescan_interval = 5 SECONDS
+	var/datum/proximity_trigger/square/prox_trigger	//movement monitor for dormant state
+	var/list/dormant_watchers	//nearby mobs that can wake the turret without movement
 
 	req_access = list(list(access_brig, access_bridge))
 	obj_flags = OBJ_FLAG_ANCHORABLE
@@ -106,6 +105,7 @@
 	setup()
 
 /obj/machinery/porta_turret/Destroy()
+	clear_dormant_watchers()
 	QDEL_NULL(prox_trigger)
 	qdel(spark_system)
 	spark_system = null
@@ -260,8 +260,7 @@ var/global/list/turret_icons
 			enabled = value
 			if(value)
 				START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-				if(prox_trigger?.is_active())
-					prox_trigger.unregister_turfs()
+			stop_dormant_monitoring()
 		else if(href_list["command"] == "lethal")
 			lethal = value
 		else if(href_list["command"] == "check_synth")
@@ -290,12 +289,12 @@ var/global/list/turret_icons
 		set_stat(MACHINE_STAT_NOPOWER, FALSE)
 		queue_icon_update()
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-		if(prox_trigger?.is_active())
-			prox_trigger.unregister_turfs()
+		stop_dormant_monitoring()
 	else
 		spawn(rand(0, 15))
 			set_stat(MACHINE_STAT_NOPOWER, TRUE)
 			queue_icon_update()
+			stop_dormant_monitoring()
 
 
 /obj/machinery/porta_turret/use_tool(obj/item/I, mob/living/user, list/click_params)
@@ -366,8 +365,7 @@ var/global/list/turret_icons
 		if (prob(45))
 			spark_system.start()
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-		if(prox_trigger?.is_active())
-			prox_trigger.unregister_turfs()
+		stop_dormant_monitoring()
 
 /obj/machinery/porta_turret/proc/timer_attacked()
 	attacked = FALSE
@@ -405,33 +403,74 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/enable()
 	if(disabled)
 		disabled = 0
-		dormant_rescan_pending = FALSE
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-		if(prox_trigger?.is_active())
-			prox_trigger.unregister_turfs()
+		stop_dormant_monitoring()
 
 /obj/machinery/porta_turret/proc/prox_alert(atom/enterer)
 	if(!enabled || inoperable())
 		return
 	if(isliving(enterer))
-		dormant_rescan_pending = FALSE
-		if(prox_trigger.is_active())
-			prox_trigger.unregister_turfs()
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-
-/obj/machinery/porta_turret/proc/schedule_dormant_rescan()
-	if(dormant_rescan_pending)
-		return
-	dormant_rescan_pending = TRUE
-	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/porta_turret, dormant_rescan_wake)), dormant_rescan_interval)
+		wake_from_dormancy()
 
 /obj/machinery/porta_turret/proc/dormant_rescan_wake()
-	dormant_rescan_pending = FALSE
 	if(!enabled || inoperable())
 		return
+	wake_from_dormancy()
+
+/obj/machinery/porta_turret/proc/stop_dormant_monitoring()
+	clear_dormant_watchers()
 	if(prox_trigger?.is_active())
 		prox_trigger.unregister_turfs()
+
+/obj/machinery/porta_turret/proc/wake_from_dormancy()
+	stop_dormant_monitoring()
 	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/porta_turret/proc/register_dormant_watcher(mob/living/watcher)
+	if(!istype(watcher))
+		return
+	GLOB.mob_equipped_event.register(watcher, src, PROC_REF(dormant_watcher_changed))
+	GLOB.mob_unequipped_event.register(watcher, src, PROC_REF(dormant_watcher_changed))
+	GLOB.stat_set_event.register(watcher, src, PROC_REF(dormant_watcher_changed))
+
+/obj/machinery/porta_turret/proc/unregister_dormant_watcher(mob/living/watcher)
+	if(!istype(watcher))
+		return
+	GLOB.mob_equipped_event.unregister(watcher, src, PROC_REF(dormant_watcher_changed))
+	GLOB.mob_unequipped_event.unregister(watcher, src, PROC_REF(dormant_watcher_changed))
+	GLOB.stat_set_event.unregister(watcher, src, PROC_REF(dormant_watcher_changed))
+
+/obj/machinery/porta_turret/proc/update_dormant_watchers(list/current_watchers = null)
+	if(!dormant_watchers)
+		dormant_watchers = list()
+
+	if(!islist(current_watchers))
+		current_watchers = list()
+		for(var/mob/living/watcher in mobs_in_view(world.view, src))
+			current_watchers |= watcher
+
+	for(var/mob/living/watcher in (dormant_watchers - current_watchers))
+		unregister_dormant_watcher(watcher)
+	for(var/mob/living/watcher in (current_watchers - dormant_watchers))
+		register_dormant_watcher(watcher)
+
+	dormant_watchers = current_watchers
+
+/obj/machinery/porta_turret/proc/clear_dormant_watchers()
+	if(!length(dormant_watchers))
+		return
+	for(var/mob/living/watcher in dormant_watchers)
+		unregister_dormant_watcher(watcher)
+	dormant_watchers.Cut()
+
+/obj/machinery/porta_turret/proc/dormant_watcher_changed(mob/living/watcher)
+	if(!istype(watcher) || !enabled || inoperable())
+		return
+	if(!(watcher in mobs_in_view(world.view, src)))
+		unregister_dormant_watcher(watcher)
+		dormant_watchers -= watcher
+		return
+	wake_from_dormancy()
 
 /obj/machinery/porta_turret/proc/prox_turfs_changed(list/old_turfs, list/new_turfs)
 	return
@@ -444,18 +483,22 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/Process()
 	if(inoperable())
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
+		stop_dormant_monitoring()
 		popDown()
 		return
 
 	if(!enabled)
 		//if the turret is off, make it pop down
+		stop_dormant_monitoring()
 		popDown()
 		return
 
 	var/list/targets = list()			//list of primary targets
 	var/list/secondarytargets = list()	//targets that are least important
+	var/list/nearby_watchers = list()
 
-	for(var/mob/M in mobs_in_view(world.view, src))
+	for(var/mob/living/M in mobs_in_view(world.view, src))
+		nearby_watchers |= M
 		assess_and_assign(M, targets, secondarytargets)
 
 	if(!tryToShootAt(targets))
@@ -464,10 +507,10 @@ var/global/list/turret_icons
 			if(!hold_deployed && !AiHolder.client)
 			//[SIERRA-ADD]
 				popDown() // no valid targets, close the cover
-			// No valid targets - enter dormant mode with proximity monitoring
+			// No valid targets - enter dormant mode and wait for movement or nearby threat state changes.
 			if(!(auto_repair && health_damaged()) && prox_trigger)
 				prox_trigger.register_turfs()
-				schedule_dormant_rescan()
+				update_dormant_watchers(nearby_watchers)
 				return PROCESS_KILL
 
 	if(auto_repair && health_damaged())

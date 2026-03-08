@@ -124,6 +124,40 @@
 	return 1
 
 
+/datum/unit_test/cable_scan_uses_pending_power_supply
+	name = "POWER: Cable scan display uses pending generator output"
+
+/datum/unit_test/cable_scan_uses_pending_power_supply/start_test()
+	var/turf/T = get_safe_turf()
+	if(!istype(T))
+		fail("Failed to find a safe turf for cable scan testing.")
+		return 1
+
+	var/datum/powernet/PN = new
+	var/obj/structure/cable/C = new(T)
+	PN.add_cable(C)
+
+	PN.avail = 0
+	PN.newavail = 31500000
+
+	if(C.get_displayed_power() != PN.newavail)
+		fail("Cable display power did not prefer pending network output when current avail was zero.")
+		qdel(C)
+		qdel(PN)
+		return 1
+
+	if(C.get_wattage() != "31500 kW")
+		fail("Cable display wattage was '[C.get_wattage()]' instead of '31500 kW' for pending output.")
+		qdel(C)
+		qdel(PN)
+		return 1
+
+	qdel(C)
+	qdel(PN)
+	pass("Cable scan display includes pending generator output from the current tick.")
+	return 1
+
+
 /obj/machinery/power/native_payload_cache_probe
 	var/profile_calls = 0
 	var/profile_primary_demand = 2500

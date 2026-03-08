@@ -98,8 +98,9 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attack_ghost(mob/user)
 	if(user.client && user.client.inquisitive_ghost)
 		examinate(user, src)
-		if(powernet && (powernet.avail > 0))
-			to_chat(user, SPAN_WARNING("[get_wattage()] in power network."))
+		var/displayed_power = get_displayed_power()
+		if(displayed_power > 0)
+			to_chat(user, SPAN_WARNING("[format_wattage(displayed_power)] in power network."))
 		else
 			to_chat(user, SPAN_WARNING("The cable is not powered."))
 	return
@@ -108,12 +109,21 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
+/obj/structure/cable/proc/get_displayed_power()
+	if(!powernet)
+		return 0
+	// Power producers accumulate into newavail during the current object-processing phase.
+	return max(powernet.avail, powernet.newavail)
+
+/obj/structure/cable/proc/format_wattage(wattage)
+	if(wattage >= 1000000000)
+		return "[round(wattage/1000000, 0.01)] MW"
+	if(wattage >= 1000000)
+		return "[round(wattage/1000, 0.01)] kW"
+	return "[round(wattage)] W"
+
 /obj/structure/cable/proc/get_wattage()
-	if(powernet.avail >= 1000000000)
-		return "[round(powernet.avail/1000000, 0.01)] MW"
-	if(powernet.avail >= 1000000)
-		return "[round(powernet.avail/1000, 0.01)] kW"
-	return "[round(powernet.avail)] W"
+	return format_wattage(get_displayed_power())
 
 //If underfloor, hide the cable
 /obj/structure/cable/hide(i)
@@ -150,10 +160,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			SPAN_NOTICE("You scan \the [src] with \the [tool].")
 		)
 		shock(user, 5, 0.2)
-		if (!powernet?.avail)
+		var/displayed_power = get_displayed_power()
+		if (displayed_power <= 0)
 			to_chat(user, SPAN_WARNING("\The [src] is not powered."))
 		else
-			to_chat(user, SPAN_INFO("\The [src] has [get_wattage()] flowing through it."))
+			to_chat(user, SPAN_INFO("\The [src] has [format_wattage(displayed_power)] flowing through it."))
 		return TRUE
 
 	// Wirecutter - Cut wire
