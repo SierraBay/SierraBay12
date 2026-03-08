@@ -58,8 +58,8 @@
 	supervisors = "Главному и Старшему инженеру"
 	selection_color = "#5b4d20"
 
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 6
+	spawn_positions = 6
 	minimal_player_age = 7
 	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 24
