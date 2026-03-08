@@ -1336,7 +1336,7 @@
 
 	var/datum/nanoui/ui = SSnano.try_update_ui(user, src, "power_shadow_dashboard", null, data, force_open)
 	if(!ui && force_open)
-		ui = new(user, src, "power_shadow_dashboard", "power_shadow_dashboard.tmpl", "Power Shadow Dashboard", 1500, 760)
+		ui = new(user, src, "power_shadow_dashboard", "power_shadow_dashboard.tmpl", "Power Shadow Dashboard", 1500, 760, null, null, GLOB.debug_admin_state)
 		ui.set_initial_data(data)
 		ui.open()
 
