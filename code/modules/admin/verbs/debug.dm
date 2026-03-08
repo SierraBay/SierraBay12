@@ -437,6 +437,7 @@
 /client/var/power_shadow_dashboard_live_interval_ds = 20
 /client/var/power_shadow_dashboard_view_mode = "All networks"
 /client/var/power_shadow_dashboard_top_n = 120
+/client/var/power_shadow_dashboard_show_advanced = FALSE
 /client/var/power_shadow_advanced_verbs_enabled = FALSE
 /client/proc/visualpower()
 	set category = "Debug"
@@ -561,7 +562,7 @@
 	log_admin("[key_name(src)] viewed machinery processing distribution.")
 
 /client/proc/power_shadow_solver_toggle()
-	set category = "Debug"
+	set category = "Power Shadow Advanced"
 	set name = "Toggle Power Shadow Solver"
 
 	if(!check_rights(R_DEBUG))
@@ -587,7 +588,7 @@
 
 /client/proc/toggle_power_shadow_advanced_verbs()
 	set category = "Power Shadow"
-	set name = "Toggle Advanced Verbs"
+	set name = "Toggle Advanced Tools"
 
 	if(!check_rights(R_DEBUG))
 		return
@@ -662,7 +663,7 @@
 	log_and_message_admins("[key_name(src)] [new_state ? "enabled" : "disabled"] power shadow native path for [updated] powernets.")
 
 /client/proc/power_shadow_solver_benchmark()
-	set category = "Power Shadow"
+	set category = "Power Shadow Advanced"
 	set name = "Benchmark Power Shadow Solver"
 
 	if(!check_rights(R_DEBUG))
@@ -903,9 +904,15 @@
 	log_and_message_admins("[key_name(src)] updated shadow acceptance criteria for [updated] powernets.")
 
 /client/proc/power_shadow_solver_export_report()
-	set category = "Power Shadow"
+	set category = "Power Shadow Advanced"
 	set name = "Export Power Shadow Report"
 
+	if(!check_rights(R_DEBUG))
+		return
+
+	power_shadow_solver_emit_report()
+
+/client/proc/power_shadow_solver_emit_report()
 	if(!check_rights(R_DEBUG))
 		return
 
@@ -954,12 +961,19 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/delta_threshold = input(src, "Absolute Delta threshold (W) for anomaly detection.", "Power Shadow Auto Repair", 300000) as num|null
-	if(isnull(delta_threshold))
+	power_shadow_solver_run_auto_repair()
+
+/client/proc/power_shadow_solver_run_auto_repair(delta_threshold = 300000, unserved_threshold = 100000, prompt_for_thresholds = TRUE)
+	if(!check_rights(R_DEBUG))
 		return
-	var/unserved_threshold = input(src, "Unserved threshold (W) for anomaly detection.", "Power Shadow Auto Repair", 100000) as num|null
-	if(isnull(unserved_threshold))
-		return
+
+	if(prompt_for_thresholds)
+		delta_threshold = input(src, "Absolute Delta threshold (W) for anomaly detection.", "Power Shadow Auto Repair", delta_threshold) as num|null
+		if(isnull(delta_threshold))
+			return
+		unserved_threshold = input(src, "Unserved threshold (W) for anomaly detection.", "Power Shadow Auto Repair", unserved_threshold) as num|null
+		if(isnull(unserved_threshold))
+			return
 
 	delta_threshold = max(round(delta_threshold), 0)
 	unserved_threshold = max(round(unserved_threshold), 0)
@@ -1014,6 +1028,10 @@
 				power_shadow_solver_dashboard_live_loop()
 			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
 			return TRUE
+		if("toggle_advanced")
+			power_shadow_dashboard_show_advanced = !power_shadow_dashboard_show_advanced
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
 		if("view_all")
 			power_shadow_dashboard_view_mode = "All networks"
 			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
@@ -1038,6 +1056,14 @@
 			power_shadow_dashboard_live_interval_ds = min(power_shadow_dashboard_live_interval_ds + 10, 300)
 			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
 			return TRUE
+		if("export")
+			power_shadow_solver_emit_report()
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
+		if("auto_repair")
+			power_shadow_solver_run_auto_repair(300000, 100000, FALSE)
+			power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, FALSE)
+			return TRUE
 
 	return TRUE
 
@@ -1047,34 +1073,6 @@
 
 	if(!check_rights(R_DEBUG))
 		return
-
-	var/view_mode = input(src, "Dashboard view mode", "Power Shadow Dashboard") in list("All networks", "Problematic only")
-	if(!view_mode)
-		return
-	var/top_n = input(src, "Maximum rows to display (sorted by Delta desc).", "Power Shadow Dashboard", 120) as num|null
-	if(isnull(top_n))
-		return
-	top_n = max(round(top_n), 1)
-
-	var/live_choice = alert(src, "Enable live auto-refresh?", "Power Shadow Dashboard", "Live", "Static", "Cancel")
-	if(live_choice == "Cancel")
-		return
-
-	power_shadow_dashboard_view_mode = view_mode
-	power_shadow_dashboard_top_n = top_n
-
-	if(live_choice == "Live")
-		var/interval_seconds = input(src, "Refresh interval in seconds (min 1).", "Power Shadow Dashboard", round(power_shadow_dashboard_live_interval_ds / 10, 0.1)) as num|null
-		if(isnull(interval_seconds))
-			return
-		interval_seconds = max(interval_seconds, 1)
-		power_shadow_dashboard_live_interval_ds = round(interval_seconds * 10)
-		var/need_spawn = !power_shadow_dashboard_live_enabled
-		power_shadow_dashboard_live_enabled = TRUE
-		if(need_spawn)
-			power_shadow_solver_dashboard_live_loop()
-	else
-		power_shadow_dashboard_live_enabled = FALSE
 
 	power_shadow_solver_dashboard_render(power_shadow_dashboard_view_mode, power_shadow_dashboard_top_n, power_shadow_dashboard_live_enabled, TRUE)
 
@@ -1182,6 +1180,7 @@
 	var/report_unserved_deferred = networks ? round(sum_unserved_deferred / networks, 0.1) : 0
 	var/report_unserved_total = networks ? round(sum_unserved_total / networks, 0.1) : 0
 	var/pass_rate = networks ? round((pass_count / networks) * 100, 0.1) : 0
+	var/problem_rate = networks ? round((problem_networks / networks) * 100, 0.1) : 0
 	var/avg_guard_threshold = networks ? round(guard_threshold_sum / networks, 0.1) : 0
 	var/powernet_cost = round(SSpowernets.cost_powernets, 0.01)
 	var/total_cost = max(SSpipenets.cost_pipenets + SSmachines.cost_machinery + SSpowernets.cost_powernets + SSpowernets.cost_power_objects, 0.01)
@@ -1193,6 +1192,20 @@
 	var/batch_perf_encode_avg_us = batch_perf_samples ? round(batch_perf["avg_encode_us"], 0.001) : 0
 	var/batch_perf_call_avg_us = batch_perf_samples ? round(batch_perf["avg_call_us"], 0.001) : 0
 	var/batch_perf_decode_avg_us = batch_perf_samples ? round(batch_perf["avg_decode_us"], 0.001) : 0
+	var/health_class = "good"
+	if(problem_networks)
+		health_class = (problem_rate >= 20 || pass_rate < 70) ? "bad" : "average"
+	var/quality_class = "good"
+	if(report_mismatch >= 8 || report_unserved_total >= 5000)
+		quality_class = "bad"
+	else if(report_mismatch >= 3 || report_unserved_total > 0)
+		quality_class = "average"
+	var/runtime_class = "good"
+	if(powernet_cost_share >= 20)
+		runtime_class = "bad"
+	else if(powernet_cost_share >= 10)
+		runtime_class = "average"
+	var/batch_class = batch_perf_samples ? "good" : "average"
 
 	var/list/dashboard_rows = list()
 
@@ -1284,6 +1297,7 @@
 		"top_n" = top_n,
 		"live_mode" = live_mode,
 		"live_interval" = round(power_shadow_dashboard_live_interval_ds / 10, 0.1),
+		"show_advanced" = power_shadow_dashboard_show_advanced,
 		"powernet_cost" = powernet_cost,
 		"powernet_cost_share" = powernet_cost_share,
 		"cost_per_network" = cost_per_network,
@@ -1296,6 +1310,7 @@
 		"enabled" = enabled,
 		"locked" = locked,
 		"problem_networks" = problem_networks,
+		"problem_rate" = problem_rate,
 		"report_mismatch" = report_mismatch,
 		"report_load_delta" = round(report_load_delta),
 		"report_avail_delta" = round(report_avail_delta),
@@ -1306,6 +1321,10 @@
 		"pass_rate" = pass_rate,
 		"rollbacks" = rollbacks,
 		"avg_guard_threshold" = avg_guard_threshold,
+		"health_class" = health_class,
+		"quality_class" = quality_class,
+		"runtime_class" = runtime_class,
+		"batch_class" = batch_class,
 		"rendered_rows" = rendered_rows,
 		"updated_at" = time2text(world.realtime, "hh:mm:ss"),
 		"rows" = dashboard_rows
@@ -1322,7 +1341,7 @@
 		ui.open()
 
 /client/proc/power_shadow_solver_visualize()
-	set category = "Power Shadow"
+	set category = "Power Shadow Advanced"
 	set name = "Visualize Powernets (Shadow Delta)"
 
 	if(!check_rights(R_DEBUG))

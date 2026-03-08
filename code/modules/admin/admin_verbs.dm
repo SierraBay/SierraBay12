@@ -218,16 +218,6 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/visualpower_remove,
 	/client/proc/profile_machinery_processing,
 	/client/proc/show_machinery_distribution,
-	/client/proc/power_shadow_solver_toggle,
-	/client/proc/power_shadow_solver_threshold,
-	/client/proc/power_shadow_solver_backend,
-	/client/proc/power_shadow_solver_guard_settings,
-	/client/proc/power_shadow_solver_guard_threshold_override,
-	/client/proc/power_shadow_solver_acceptance_settings,
-	/client/proc/power_shadow_solver_export_report,
-	/client/proc/power_shadow_solver_auto_repair,
-	/client/proc/power_shadow_solver_dashboard,
-	/client/proc/power_shadow_solver_visualize,
 	/client/proc/ping_webhook,
 	/client/proc/reload_webhooks,
 	/client/proc/toggle_planet_repopulating,
@@ -241,20 +231,21 @@ var/global/list/admin_verbs_debug = list(
 
 var/global/list/admin_verbs_power_shadow_basic = list(
 	/client/proc/power_shadow_solver_dashboard,
-	/client/proc/power_shadow_solver_benchmark,
-	/client/proc/power_shadow_solver_export_report,
 	/client/proc/power_shadow_solver_auto_repair,
-	/client/proc/power_shadow_solver_visualize,
 	/client/proc/toggle_power_shadow_advanced_verbs
 	)
 
 var/global/list/admin_verbs_power_shadow_advanced = list(
+	/client/proc/power_shadow_solver_toggle,
 	/client/proc/power_shadow_solver_threshold,
 	/client/proc/power_shadow_solver_backend,
 	/client/proc/power_shadow_solver_native_toggle,
 	/client/proc/power_shadow_solver_guard_settings,
 	/client/proc/power_shadow_solver_guard_threshold_override,
-	/client/proc/power_shadow_solver_acceptance_settings
+	/client/proc/power_shadow_solver_acceptance_settings,
+	/client/proc/power_shadow_solver_benchmark,
+	/client/proc/power_shadow_solver_export_report,
+	/client/proc/power_shadow_solver_visualize
 	)
 
 var/global/list/admin_verbs_paranoid_debug = list(

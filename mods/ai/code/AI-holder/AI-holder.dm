@@ -26,12 +26,15 @@
 
 /mob/AiHolder/Destroy()
 	ExitHolder()
-	GLOB.moved_event.unregister(holder, src)
-	GLOB.moved_event.unregister(src, holder)
-	GLOB.destroyed_event.unregister(holder, src)
+	GLOB.moved_event.unregister(holder, src, /atom/movable/proc/move_to_turf)
+	GLOB.moved_event.unregister(src, src, TYPE_PROC_REF(/mob/AiHolder, Move2Holder))
+	GLOB.destroyed_event.unregister(holder, src, /proc/qdel)
+	holder = null
 	. = ..()
 
 /mob/AiHolder/proc/Move2Holder()
+	if(!holder?.loc)
+		return
 	loc = holder.loc
 
 /mob/AiHolder/verb/ExitHolder()
