@@ -162,10 +162,9 @@
 
 /obj/machinery/portable_atmospherics/canister/Process()
 	if (destroyed)
-		return PROCESS_KILL
+		return
 
-	if(..() == PROCESS_KILL)
-		return PROCESS_KILL
+	..()
 
 	if(valve_open)
 		var/datum/gas_mixture/environment
@@ -257,7 +256,6 @@
 			if(!holding)
 				log_open()
 		valve_open = !valve_open
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 
 	else if (href_list["remove_tank"])
@@ -270,7 +268,6 @@
 		holding.dropInto(loc)
 		holding = null
 		update_icon()
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 
 	else if (href_list["pressure_adj"])
@@ -279,7 +276,6 @@
 			release_pressure = min(10*ONE_ATMOSPHERE, release_pressure+diff)
 		else
 			release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 
 	else if (href_list["relabel"])

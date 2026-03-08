@@ -152,6 +152,10 @@ var/global/list/meteors_cataclysm = list(\
 	..()
 	z_original = z
 
+/obj/meteor/Initialize()
+	. = ..()
+	GLOB.meteor_list += src
+
 /obj/meteor/Move()
 	. = ..() //process movement...
 	move_count++
@@ -164,14 +168,11 @@ var/global/list/meteors_cataclysm = list(\
 
 /obj/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc
-	SEND_SIGNAL(GLOB, COMSIG_METEOR_DESPAWNED, src)
 	GLOB.meteor_list -= src
 	return ..()
 
 /obj/meteor/Initialize()
 	. = ..()
-	GLOB.meteor_list |= src
-	SEND_SIGNAL(GLOB, COMSIG_METEOR_SPAWNED, src)
 	if (!ismissile)
 		SpinAnimation()
 

@@ -272,9 +272,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
 		temperature = (starting_energy + vsc.fire_fuel_energy_release * (used_gas_fuel)) / heat_capacity()
-		update_values(GASMIX_UPDATE_REACT)
-		if(HasSignalListeners(COMSIG_GASMIX_REACTED))
-			SEND_SIGNAL(src, COMSIG_GASMIX_REACTED, zone, firelevel)
+		update_values()
 
 		#ifdef FIREDBG
 		log_debug("used_gas_fuel = [used_gas_fuel];")

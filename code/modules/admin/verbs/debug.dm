@@ -521,34 +521,6 @@
 		show_browser(src, "<html><head><title>Air Alarm Profiling</title></head><body>[report]</body></html>", "window=air_alarm_profiling;size=900x600")
 		log_admin("[key_name(src)] stopped air alarm Process() micro-profiling ([SSmachines.alarm_process_profile_cycles] cycles sampled, limit: [SSmachines.profiling_air_alarm_cycle_limit]).")
 
-/client/proc/profile_apc_processing()
-	set category = "Debug"
-	set name = "Profile APC Process"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	if(!SSmachines.profiling_apc_process)
-		if(SSmachines.apc_profile_auto_stopped)
-			var/auto_report = SSmachines.report_apc_process_profiling()
-			show_browser(src, "<html><head><title>APC Profiling (Auto-Stopped)</title></head><body><b>Auto-stopped at [SSmachines.apc_process_profile_cycles] cycles (limit: [SSmachines.profiling_apc_cycle_limit]).</b><br><br>[auto_report]</body></html>", "window=apc_profiling;size=900x600")
-			SSmachines.apc_profile_auto_stopped = FALSE
-			to_chat(src, SPAN_NOTICE("Показан отчёт автоостановленного APC profiling. Запусти верб ещё раз для нового прогона."))
-			return
-		var/new_limit = input(src, "Автостоп после N циклов (0 = выключено):", "APC profiling auto-stop", SSmachines.profiling_apc_cycle_limit) as num|null
-		if(isnull(new_limit))
-			return
-		SSmachines.profiling_apc_cycle_limit = max(round(new_limit), 0)
-		SSmachines.reset_apc_process_profiling()
-		SSmachines.profiling_apc_process = TRUE
-		to_chat(src, SPAN_NOTICE("APC micro-profiling started. Current limit: [SSmachines.profiling_apc_cycle_limit ? SSmachines.profiling_apc_cycle_limit : "OFF"]. Run this verb again to stop and view results."))
-		log_admin("[key_name(src)] started APC Process() micro-profiling (cycle limit: [SSmachines.profiling_apc_cycle_limit]).")
-	else
-		SSmachines.profiling_apc_process = FALSE
-		var/report = SSmachines.report_apc_process_profiling()
-		show_browser(src, "<html><head><title>APC Profiling</title></head><body>[report]</body></html>", "window=apc_profiling;size=900x600")
-		log_admin("[key_name(src)] stopped APC Process() micro-profiling ([SSmachines.apc_process_profile_cycles] cycles sampled, limit: [SSmachines.profiling_apc_cycle_limit]).")
-
 /client/proc/show_processing_profile_counters()
 	set category = "Debug"
 	set name = "Show Processing Profile Counters"
@@ -558,7 +530,6 @@
 
 	to_chat(src, SPAN_NOTICE("Machinery profiling: [SSmachines.profiling_machinery ? "ON" : "OFF"], cycles=[SSmachines.profiling_machinery_cycles], limit=[SSmachines.profiling_machinery_cycle_limit ? SSmachines.profiling_machinery_cycle_limit : "OFF"], auto_stopped=[SSmachines.machinery_profile_auto_stopped ? "YES" : "NO"]"))
 	to_chat(src, SPAN_NOTICE("Air alarm profiling: [SSmachines.profiling_air_alarm_process ? "ON" : "OFF"], cycles=[SSmachines.alarm_process_profile_cycles], limit=[SSmachines.profiling_air_alarm_cycle_limit ? SSmachines.profiling_air_alarm_cycle_limit : "OFF"], auto_stopped=[SSmachines.air_alarm_profile_auto_stopped ? "YES" : "NO"]"))
-	to_chat(src, SPAN_NOTICE("APC profiling: [SSmachines.profiling_apc_process ? "ON" : "OFF"], cycles=[SSmachines.apc_process_profile_cycles], limit=[SSmachines.profiling_apc_cycle_limit ? SSmachines.profiling_apc_cycle_limit : "OFF"], auto_stopped=[SSmachines.apc_profile_auto_stopped ? "YES" : "NO"]"))
 
 /client/proc/toggle_embedded_docking_event_optimization()
 	set category = "Debug"
@@ -577,24 +548,6 @@
 		refreshed++
 	to_chat(src, SPAN_NOTICE("Docking embedded event optimization is now [state]."))
 	log_admin("[key_name(src)] set docking embedded event optimization to [state] ([refreshed] controllers refreshed).")
-
-/client/proc/toggle_machinery_event_optimization()
-	set category = "Debug"
-	set name = "Toggle Machinery Event Optimization"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	SSmachines.optimize_machinery_event = !SSmachines.optimize_machinery_event
-	var/state = SSmachines.optimize_machinery_event ? "ON" : "OFF"
-	var/refreshed = 0
-	for(var/obj/machinery/M as anything in SSmachines.get_all_machinery())
-		var/is_event_machine = (istype(M, /obj/machinery/power/apc) || istype(M, /obj/machinery/alarm) || istype(M, /obj/machinery/atmospherics/unary/vent_pump) || istype(M, /obj/machinery/atmospherics/unary/vent_scrubber) || istype(M, /obj/machinery/portable_atmospherics) || istype(M, /obj/machinery/pointdefense) || istype(M, /obj/machinery/airlock_sensor))
-		if(is_event_machine)
-			START_PROCESSING_MACHINE(M, MACHINERY_PROCESS_SELF)
-			refreshed++
-	to_chat(src, SPAN_NOTICE("Machinery event optimization is now [state]. [refreshed] machines refreshed."))
-	log_admin("[key_name(src)] set machinery event optimization to [state] ([refreshed] machines refreshed).")
 
 /client/proc/show_machinery_distribution()
 	set category = "Debug"

@@ -55,8 +55,7 @@
 		AddOverlays("scrubber-connector")
 
 /obj/machinery/portable_atmospherics/powered/scrubber/Process()
-	if(..() == PROCESS_KILL)
-		return PROCESS_KILL
+	..()
 	process_scrubber()
 
 //Placeholder; will change once batteries are made generic.
@@ -123,18 +122,15 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/OnTopic(user, href_list)
 	if(href_list["power"])
 		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
-		queue_event_processing(MACHINERY_WAKE_POWER)
 		. = TOPIC_REFRESH
 	if (href_list["remove_tank"])
 		if(holding)
 			holding.dropInto(loc)
 			holding = null
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 	if (href_list["volume_adj"])
 		var/diff = text2num(href_list["volume_adj"])
 		volume_rate = clamp(volume_rate+diff, minrate, maxrate)
-		queue_event_processing(MACHINERY_WAKE_ATMOS)
 		. = TOPIC_REFRESH
 
 	if(.)

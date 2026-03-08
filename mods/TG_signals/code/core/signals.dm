@@ -57,10 +57,6 @@
 	for (var/signal_type in signal_types)
 		RegisterSignal(target, signal_type, proctype, override)
 
-/// Lightweight listener presence check for a specific signal key.
-/datum/proc/HasSignalListeners(signal_type)
-	return !!(_listen_lookup?[signal_type])
-
 /**
  * Stop listening to a given signal from target
  *

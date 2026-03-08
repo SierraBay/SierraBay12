@@ -23,23 +23,8 @@ SUBSYSTEM_DEF(machines)
 	var/static/profiling_air_alarm_cycle_limit = 0
 	/// Set to TRUE when air alarm profiling was auto-stopped at the cycle limit.
 	var/static/air_alarm_profile_auto_stopped = FALSE
-	var/static/profiling_apc_process = FALSE
-	var/static/apc_process_profile_cycles = 0
-	var/static/apc_process_profile_total_calls = 0
-	var/static/apc_process_profile_measured_calls = 0
-	var/static/apc_process_profile_skipped_calls = 0
-	var/static/apc_process_profile_bucket_usage_ms = 0
-	var/static/apc_process_profile_bucket_power_state_ms = 0
-	var/static/apc_process_profile_bucket_channels_logic_ms = 0
-	var/static/apc_process_profile_bucket_output_ms = 0
-	/// Auto-stop APC micro-profiling when cycles sampled reaches this value. 0 disables auto-stop.
-	var/static/profiling_apc_cycle_limit = 0
-	/// Set to TRUE when APC profiling was auto-stopped at the cycle limit.
-	var/static/apc_profile_auto_stopped = FALSE
 	/// Runtime fallback switch for event-driven processing of docking embedded controllers.
 	var/static/optimize_embedded_docking_event = TRUE
-	/// Runtime fallback switch for event-driven machinery changes in this branch.
-	var/static/optimize_machinery_event = TRUE
 	var/static/list/processing = list()
 	var/static/list/processing_lazy = list()
 	var/static/processing_lazy_slice_n = 4
@@ -173,7 +158,7 @@ SUBSYSTEM_DEF(machines)
 	var/static/processing_lazy_index = 0
 	var/processing_len = length(processing)
 	var/processing_lazy_len = length(processing_lazy)
-	if(!resumed && !processing_len && !processing_lazy_len && !profiling_machinery && !profiling_air_alarm_process && !profiling_apc_process)
+	if(!resumed && !processing_len && !processing_lazy_len && !profiling_machinery && !profiling_air_alarm_process)
 		machinery_index = 0
 		processing_lazy_index = 0
 		return
@@ -228,11 +213,6 @@ SUBSYSTEM_DEF(machines)
 		if(profiling_air_alarm_cycle_limit > 0 && alarm_process_profile_cycles >= profiling_air_alarm_cycle_limit)
 			profiling_air_alarm_process = FALSE
 			air_alarm_profile_auto_stopped = TRUE
-	if(profiling_apc_process)
-		apc_process_profile_cycles++
-		if(profiling_apc_cycle_limit > 0 && apc_process_profile_cycles >= profiling_apc_cycle_limit)
-			profiling_apc_process = FALSE
-			apc_profile_auto_stopped = TRUE
 	machinery_index = 0
 
 	// Lazy processing: process 1/processing_lazy_slice_n of processing_lazy per fire cycle.
@@ -289,18 +269,6 @@ SUBSYSTEM_DEF(machines)
 	alarm_process_profile_bucket_env_math_ms = 0
 	alarm_process_profile_bucket_state_output_ms = 0
 	air_alarm_profile_auto_stopped = FALSE
-
-
-/datum/controller/subsystem/machines/proc/reset_apc_process_profiling()
-	apc_process_profile_cycles = 0
-	apc_process_profile_total_calls = 0
-	apc_process_profile_measured_calls = 0
-	apc_process_profile_skipped_calls = 0
-	apc_process_profile_bucket_usage_ms = 0
-	apc_process_profile_bucket_power_state_ms = 0
-	apc_process_profile_bucket_channels_logic_ms = 0
-	apc_process_profile_bucket_output_ms = 0
-	apc_profile_auto_stopped = FALSE
 
 
 /datum/controller/subsystem/machines/proc/report_machinery_hotspots(top_n = 25)
@@ -376,45 +344,6 @@ SUBSYSTEM_DEF(machines)
 	lines += "<tr><td>B</td><td>State eval + output/actions</td><td>[round(bucket_b_ms, 0.01)]</td><td>[avg_bucket_b_ms]</td><td>[share_bucket_b]%</td></tr>"
 	lines += "</table>"
 	lines += "<small>Skipped calls are early exits before a simulated turf/environment was available.</small>"
-	return lines.Join("\n")
-
-
-/datum/controller/subsystem/machines/proc/report_apc_process_profiling()
-	var/total_calls = apc_process_profile_total_calls
-	if(!total_calls)
-		return "No APC profiling data collected."
-
-	var/measured_calls = apc_process_profile_measured_calls
-	var/skipped_calls = apc_process_profile_skipped_calls
-	var/bucket_a_ms = apc_process_profile_bucket_usage_ms
-	var/bucket_b_ms = apc_process_profile_bucket_power_state_ms
-	var/bucket_c_ms = apc_process_profile_bucket_channels_logic_ms
-	var/bucket_d_ms = apc_process_profile_bucket_output_ms
-	var/total_measured_ms = bucket_a_ms + bucket_b_ms + bucket_c_ms + bucket_d_ms
-	var/avg_bucket_a_ms = measured_calls ? round(bucket_a_ms / measured_calls, 0.001) : 0
-	var/avg_bucket_b_ms = measured_calls ? round(bucket_b_ms / measured_calls, 0.001) : 0
-	var/avg_bucket_c_ms = measured_calls ? round(bucket_c_ms / measured_calls, 0.001) : 0
-	var/avg_bucket_d_ms = measured_calls ? round(bucket_d_ms / measured_calls, 0.001) : 0
-	var/avg_total_ms = measured_calls ? round(total_measured_ms / measured_calls, 0.001) : 0
-	var/share_bucket_a = total_measured_ms ? round((bucket_a_ms / total_measured_ms) * 100, 0.1) : 0
-	var/share_bucket_b = total_measured_ms ? round((bucket_b_ms / total_measured_ms) * 100, 0.1) : 0
-	var/share_bucket_c = total_measured_ms ? round((bucket_c_ms / total_measured_ms) * 100, 0.1) : 0
-	var/share_bucket_d = total_measured_ms ? round((bucket_d_ms / total_measured_ms) * 100, 0.1) : 0
-	var/calls_per_cycle = apc_process_profile_cycles ? round(total_calls / apc_process_profile_cycles, 0.1) : total_calls
-	var/measured_per_cycle = apc_process_profile_cycles ? round(measured_calls / apc_process_profile_cycles, 0.1) : measured_calls
-
-	var/list/lines = list()
-	lines += "<h3>APC Process Micro-Profiling</h3>"
-	lines += "<b>Cycles sampled:</b> [apc_process_profile_cycles] | <b>Total calls:</b> [total_calls] ([calls_per_cycle]/cyc) | <b>Measured calls:</b> [measured_calls] ([measured_per_cycle]/cyc) | <b>Skipped calls:</b> [skipped_calls]<br>"
-	lines += "<b>Total measured time:</b> [round(total_measured_ms, 0.01)]ms | <b>Average measured per call:</b> [avg_total_ms]ms<br>"
-	lines += "<table border='1' cellpadding='3' cellspacing='0'>"
-	lines += "<tr><th>Bucket</th><th>Description</th><th>Total (ms)</th><th>Avg (ms/call)</th><th>Share</th></tr>"
-	lines += "<tr><td>A</td><td>Area usage snapshot + clear usage</td><td>[round(bucket_a_ms, 0.01)]</td><td>[avg_bucket_a_ms]</td><td>[share_bucket_a]%</td></tr>"
-	lines += "<tr><td>B</td><td>Powernet/cell state + charge logic</td><td>[round(bucket_b_ms, 0.01)]</td><td>[avg_bucket_b_ms]</td><td>[share_bucket_b]%</td></tr>"
-	lines += "<tr><td>C</td><td>update_channels() logic</td><td>[round(bucket_c_ms, 0.01)]</td><td>[avg_bucket_c_ms]</td><td>[share_bucket_c]%</td></tr>"
-	lines += "<tr><td>D</td><td>Area/icon/output updates</td><td>[round(bucket_d_ms, 0.01)]</td><td>[avg_bucket_d_ms]</td><td>[share_bucket_d]%</td></tr>"
-	lines += "</table>"
-	lines += "<small>Skipped calls are early exits before main APC state processing.</small>"
 	return lines.Join("\n")
 
 

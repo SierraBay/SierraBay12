@@ -158,11 +158,6 @@
 	var/on = 1
 	var/alert = 0
 	var/previousPressure
-	var/datum/gas_mixture/event_environment_ref
-	var/event_pending_wake = 0
-	var/last_event_wake_tick = -1
-	var/next_signal_wake = 0
-	var/event_signal_debounce = 2 SECONDS
 
 /obj/machinery/airlock_sensor/on_update_icon()
 	if(on)
@@ -186,12 +181,6 @@
 	return TRUE
 
 /obj/machinery/airlock_sensor/Process()
-	if(SSmachines.optimize_machinery_event)
-		var/has_wake = event_pending_wake
-		event_pending_wake = 0
-		if(!has_wake)
-			return PROCESS_KILL
-
 	if(on)
 		var/datum/gas_mixture/air_sample = return_air()
 		var/pressure = round(air_sample.return_pressure(),0.1)
@@ -210,48 +199,15 @@
 			alert = (pressure < ONE_ATMOSPHERE*0.8)
 
 			update_icon()
-	if(SSmachines.optimize_machinery_event)
-		return PROCESS_KILL
-
-/obj/machinery/airlock_sensor/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_ATMOS)
-	event_pending_wake |= wake_reason
-	if(world.time == last_event_wake_tick)
-		return
-	last_event_wake_tick = world.time
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-
-/obj/machinery/airlock_sensor/proc/bind_environment_signal()
-	var/datum/gas_mixture/new_environment = return_air()
-	if(new_environment == event_environment_ref)
-		return
-	if(event_environment_ref)
-		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
-	event_environment_ref = new_environment
-	if(event_environment_ref)
-		RegisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED, PROC_REF(on_environment_gasmix_updated))
-
-/obj/machinery/airlock_sensor/proc/on_environment_gasmix_updated(datum/gas_mixture/source, reason_flags)
-	SIGNAL_HANDLER
-	if(source != event_environment_ref)
-		return
-	if(world.time < next_signal_wake)
-		return
-	next_signal_wake = world.time + event_signal_debounce
-	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
-	if(!radio_controller)
-		return
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 /obj/machinery/airlock_sensor/Initialize()
+	set_frequency(frequency)
 	. = ..()
-	if(radio_controller)
-		set_frequency(frequency)
-	bind_environment_signal()
-	queue_event_processing(MACHINERY_WAKE_ATMOS)
 
 /obj/machinery/airlock_sensor/New()
 	..()
@@ -259,8 +215,6 @@
 		set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
-	if(event_environment_ref)
-		UnregisterSignal(event_environment_ref, COMSIG_GASMIX_UPDATED)
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()

@@ -42,8 +42,6 @@ var/global/solar_gen_rate = 1500
 	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
 		return 0
 	control = SC
-	if(control)
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 	return 1
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
@@ -51,7 +49,6 @@ var/global/solar_gen_rate = 1500
 	if(control)
 		control.connected_panels.Remove(src)
 	control = null
-	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/power/solar/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
@@ -113,7 +110,7 @@ var/global/solar_gen_rate = 1500
 	if(MACHINE_IS_BROKEN(src))
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
-		return PROCESS_KILL
+		return
 
 	if(powernet)
 		if(powernet == control.powernet)//check if the panel is still connected to the computer

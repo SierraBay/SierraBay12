@@ -4,7 +4,7 @@ set -euo pipefail
 RUST_G_TARGET="${RUST_G_TARGET:-i686-unknown-linux-gnu}"
 RUST_G_LIB="${HOME}/.byond/bin/librust_g.so"
 RUST_G_STAMP="${HOME}/.byond/bin/librust_g.cache-key"
-RUST_G_CACHE_KEY="${RUST_G_REPO:-}|${RUST_G_BRANCH:-}|${RUST_G_COMMIT:-}|${RUST_G_VERSION:-}|${RUST_G_TARGET}"
+RUST_G_CACHE_KEY="${RUST_G_REPO:-}|${RUST_G_BRANCH:-}|${RUST_G_VERSION:-}|${RUST_G_TARGET}"
 RUST_G_REQUIRED_SYMBOLS="${RUST_G_REQUIRED_SYMBOLS:-power_shadow_solve power_shadow_solve_many power_shadow_stateful_apply power_shadow_stateful_reset}"
 
 mkdir -p ~/.byond/bin
@@ -49,15 +49,8 @@ elif [ -n "${RUST_G_BRANCH:-}" ]; then
 	fi
 	echo "Building rust_g from ${RUST_G_REPO} branch ${RUST_G_BRANCH} for target ${RUST_G_TARGET}..."
 	tmpdir="$(mktemp -d)"
-	if [ -n "${RUST_G_COMMIT:-}" ]; then
-		git clone "https://github.com/${RUST_G_REPO}.git" "${tmpdir}/rust-g"
-	else
-		git clone --depth 1 --branch "${RUST_G_BRANCH}" "https://github.com/${RUST_G_REPO}.git" "${tmpdir}/rust-g"
-	fi
+	git clone --depth 1 --branch "${RUST_G_BRANCH}" "https://github.com/${RUST_G_REPO}.git" "${tmpdir}/rust-g"
 	pushd "${tmpdir}/rust-g" >/dev/null
-	if [ -n "${RUST_G_COMMIT:-}" ]; then
-		git checkout "${RUST_G_COMMIT}"
-	fi
 	if command -v rustup >/dev/null 2>&1; then
 		rustup target add "${RUST_G_TARGET}"
 	fi

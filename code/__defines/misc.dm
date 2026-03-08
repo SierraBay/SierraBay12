@@ -535,11 +535,11 @@
 #define COMSIG_MERGER_REFRESH_COMPLETE "comsig_merger_refresh_complete"
 
 // Gas mixture signals
-/// From /datum/gas_mixture/proc/merge: (datum/gas_mixture/giver_gasmix)
+/// From /datum/gas_mixture/proc/merge: ()
 #define COMSIG_GASMIX_MERGED "comsig_gasmix_merged"
-/// From /datum/gas_mixture/proc/remove*: (datum/gas_mixture/removed_gasmix, removed_amount)
+/// From /datum/gas_mixture/proc/remove: ()
 #define COMSIG_GASMIX_REMOVED "comsig_gasmix_removed"
-/// From /datum/gas_mixture/proc/react: (zone/zone_ref, reaction_result)
+/// From /datum/gas_mixture/proc/react: ()
 #define COMSIG_GASMIX_REACTED "comsig_gasmix_reacted"
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.

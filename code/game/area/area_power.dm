@@ -45,12 +45,9 @@
 
 /// Sets all `oneoff_*` vars to `0`. Helper for APCs. Called every machinery process tick.
 /area/proc/clear_usage()
-	var/had_oneoff = (oneoff_equip || oneoff_light || oneoff_environ)
 	oneoff_equip = 0
 	oneoff_light = 0
 	oneoff_environ = 0
-	if(had_oneoff)
-		SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, TOTAL, usage(TOTAL), 0)
 
 /**
  * Adds the given amount of power to the `used_*` var for the given power channel, effectively increasing continuous power usage.
@@ -69,7 +66,6 @@
 			used_light += amount
 		if(ENVIRON)
 			used_environ += amount
-	SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, usage(chan), oneoff_for_channel(chan))
 
 /**
  * Updates the area's continuous power use (See the `used_*` vars) for the given channel.
@@ -101,17 +97,6 @@
 			oneoff_light += amount
 		if(ENVIRON)
 			oneoff_environ += amount
-	SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, usage(chan), oneoff_for_channel(chan))
-
-/area/proc/oneoff_for_channel(chan)
-	switch(chan)
-		if(EQUIP)
-			return oneoff_equip
-		if(LIGHT)
-			return oneoff_light
-		if(ENVIRON)
-			return oneoff_environ
-	return 0
 
 /// Recomputes the continued power usage; can be used for testing or error recovery, but is not called under normal conditions.
 /area/proc/retally_power()

@@ -13,7 +13,6 @@ env:
   SPACEMAN_DMM_VERSION: suite-1.11
   RUST_G_REPO: "ImJustKisik/rust-g-tg"
   RUST_G_BRANCH: "feature/power-shadow-native"
-  RUST_G_COMMIT: "a7933b5ba8f025c94e2fb1bc4468df87ba4652c2"
   RUST_G_VERSION: "branch-feature-power-shadow-native"
   RUST_G_TARGET: "i686-unknown-linux-gnu"
 
@@ -105,7 +104,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_COMMIT }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests
@@ -143,7 +142,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_COMMIT }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests
@@ -181,7 +180,7 @@ jobs:
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
         with:
           path: ~/.byond/bin/librust_g.so
-          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_COMMIT }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
+          key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_BRANCH }}-${{ env.RUST_G_VERSION }}-${{ env.RUST_G_TARGET }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
       - name: Run Tests

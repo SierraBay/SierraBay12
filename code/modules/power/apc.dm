@@ -141,15 +141,6 @@
 	var/emp_hardened = 0
 	/// Cache battery/cell lookup during Process() to reduce repeated component traversals.
 	var/optimize_process_cell_cache = TRUE
-	/// Pending wake reasons collected from signal handlers.
-	var/event_pending_wake = 0
-	/// Guard against repeated signal wakeups in the same world tick.
-	var/last_event_wake_tick = -1
-	/// Debounce noisy area usage updates.
-	var/next_power_signal_wake = 0
-	var/event_signal_debounce = 1 SECOND
-	/// Heartbeat cadence used by event-driven APC mode.
-	var/event_heartbeat_interval = 1 SECONDS
 	var/obj/item/stock_parts/power/terminal/cached_terminal_component = null
 
 	/**
@@ -282,21 +273,16 @@
 
 	if(operating)
 		force_update_channels()
-	if(area)
-		RegisterSignal(area, COMSIG_AREA_POWER_USAGE_CHANGED, PROC_REF(on_area_power_usage_changed))
-	queue_event_processing(MACHINERY_WAKE_POWER)
 	power_change()
 
 /obj/machinery/power/apc/Destroy()
 	src.update()
 	cached_terminal_component = null
-	if(area)
-		UnregisterSignal(area, COMSIG_AREA_POWER_USAGE_CHANGED)
-		area.apc = null
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
-		area.power_change()
+	area.apc = null
+	area.power_light = 0
+	area.power_equip = 0
+	area.power_environ = 0
+	area.power_change()
 
 	// Malf AI, removes the APC from AI's hacked APCs list.
 	if((hacker) && (hacker.hacked_apcs) && (src in hacker.hacked_apcs))
@@ -313,7 +299,6 @@
 	if(emp_hardened)
 		return
 	failure_timer = max(failure_timer, round(duration))
-	queue_event_processing(MACHINERY_WAKE_POWER)
 	playsound(src, 'sound/machines/apc_nopower.ogg', 75, 0)
 
 /obj/machinery/power/apc/proc/init_round_start()
@@ -914,34 +899,6 @@
 /obj/machinery/power/apc/proc/isWireCut(wireIndex)
 	return wires.IsIndexCut(wireIndex)
 
-/obj/machinery/power/apc/power_change()
-	. = ..()
-	queue_event_processing(MACHINERY_WAKE_POWER)
-
-/obj/machinery/power/apc/proc/queue_event_processing(wake_reason = MACHINERY_WAKE_POWER)
-	event_pending_wake |= wake_reason
-	if(world.time == last_event_wake_tick)
-		return
-	last_event_wake_tick = world.time
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-
-/obj/machinery/power/apc/proc/schedule_event_heartbeat()
-	if(!SSmachines.optimize_machinery_event || !event_heartbeat_interval)
-		return
-	addtimer(new Callback(src, PROC_REF(queue_event_processing), MACHINERY_WAKE_POWER), event_heartbeat_interval, TIMER_UNIQUE | TIMER_OVERRIDE)
-
-/obj/machinery/power/apc/proc/on_area_power_usage_changed(area/source, chan, used_value, oneoff_value)
-	SIGNAL_HANDLER
-	if(source != area)
-		return
-	// Ignore aggregate clear-usage broadcasts to avoid self-wake churn.
-	if(chan == TOTAL)
-		return
-	if(world.time < next_power_signal_wake)
-		return
-	next_power_signal_wake = world.time + event_signal_debounce
-	queue_event_processing(MACHINERY_WAKE_POWER)
-
 
 /obj/machinery/power/apc/CanUseTopic(mob/user, datum/topic_state/state)
 	if(user.lying)
@@ -1017,7 +974,6 @@
 				locked = !locked
 				update_icon()
 
-	queue_event_processing(MACHINERY_WAKE_UI)
 	return STATUS_UPDATE
 
 /obj/machinery/power/apc/proc/force_update_channels()
@@ -1025,7 +981,6 @@
 	update_channels(TRUE)
 	update()
 	queue_icon_update()
-	queue_event_processing(MACHINERY_WAKE_POWER)
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
@@ -1063,31 +1018,10 @@
 	)
 
 /obj/machinery/power/apc/Process()
-	var/profile_active = SSmachines.profiling_apc_process
-	var/profile_bucket_start = 0
-	if(profile_active)
-		SSmachines.apc_process_profile_total_calls++
-
 	if(!area.requires_power)
-		if(profile_active)
-			SSmachines.apc_process_profile_skipped_calls++
 		return PROCESS_KILL
 
-	if(SSmachines.optimize_machinery_event)
-		var/has_wake = event_pending_wake
-		event_pending_wake = 0
-		if(!has_wake)
-			if(profile_active)
-				SSmachines.apc_process_profile_skipped_calls++
-			return PROCESS_KILL
-
 	if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
-		if(SSmachines.optimize_machinery_event)
-			if(profile_active)
-				SSmachines.apc_process_profile_skipped_calls++
-			return PROCESS_KILL
-		if(profile_active)
-			SSmachines.apc_process_profile_skipped_calls++
 		return
 
 	if(failure_timer)
@@ -1095,24 +1029,12 @@
 		queue_icon_update()
 		failure_timer--
 		force_update = 1
-		if(SSmachines.optimize_machinery_event)
-			if(profile_active)
-				SSmachines.apc_process_profile_skipped_calls++
-			return
-		if(profile_active)
-			SSmachines.apc_process_profile_skipped_calls++
 		return
 
-	if(profile_active)
-		SSmachines.apc_process_profile_measured_calls++
-	if(profile_active)
-		profile_bucket_start = world.tick_usage
 	lastused_light = (lighting >= POWERCHAN_ON) ? area.usage(LIGHT) : 0
 	lastused_equip = (equipment >= POWERCHAN_ON) ? area.usage(EQUIP) : 0
 	lastused_environ = (environ >= POWERCHAN_ON) ? area.usage(ENVIRON) : 0
 	area.clear_usage()
-	if(profile_active)
-		SSmachines.apc_process_profile_bucket_usage_ms += max((world.tick_usage - profile_bucket_start) * world.tick_lag, 0)
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
@@ -1133,8 +1055,6 @@
 	else
 		main_status = 2
 
-	if(profile_active)
-		profile_bucket_start = world.tick_usage
 	var/obj/item/stock_parts/power/battery/power = null
 	var/obj/item/cell/cell = null
 	if(optimize_process_cell_cache)
@@ -1160,34 +1080,20 @@
 
 		if(!is_powered())
 			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
-	if(profile_active)
-		SSmachines.apc_process_profile_bucket_power_state_ms += max((world.tick_usage - profile_bucket_start) * world.tick_lag, 0)
 
 	// Set channels depending on how much charge we have left
-	if(profile_active)
-		profile_bucket_start = world.tick_usage
 	if(optimize_process_cell_cache)
 		update_channels(cell = cell, skip_cell_lookup = TRUE)
 	else
 		update_channels()
-	if(profile_active)
-		SSmachines.apc_process_profile_bucket_channels_logic_ms += max((world.tick_usage - profile_bucket_start) * world.tick_lag, 0)
 
 	// update icon & area power if anything changed
-	if(profile_active)
-		profile_bucket_start = world.tick_usage
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
 		force_update = 0
 		queue_icon_update()
 		update()
 	else if (last_ch != charging)
 		queue_icon_update()
-	if(profile_active)
-		SSmachines.apc_process_profile_bucket_output_ms += max((world.tick_usage - profile_bucket_start) * world.tick_lag, 0)
-	if(SSmachines.optimize_machinery_event)
-		if(event_pending_wake)
-			return
-		return PROCESS_KILL
 
 /obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE, obj/item/cell/cell = null, skip_cell_lookup = FALSE)
 	// Allow the APC to operate as normal if the cell can charge

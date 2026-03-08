@@ -53,19 +53,12 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Initialize()
 	. = ..()
 	connected_zlevels = GetConnectedZlevels(z)
-	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/proc/should_be_active()
-	if(z in GLOB.using_map.station_levels)
-		return TRUE
-	if(!LAZYLEN(connected_zlevels))
-		return FALSE
-	if(SSpresence)
-		for(var/connected_level in connected_zlevels)
-			if(SSpresence.population(connected_level))
-				return TRUE
-		return FALSE
-	return living_observers_present(connected_zlevels)
+/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Process()
+	if(z in GLOB.using_map.station_levels) //plants on station always tick
+		return ..()
+	if(living_observers_present(connected_zlevels))
+		return ..()
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/remove_dead(mob/user, silent)
 	..()
@@ -79,19 +72,11 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/die()
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Process(process_wait)
+/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Process()
 	if(!seed)
 		qdel(src)
-		return PROCESS_KILL
-
-	// SSplants drives actual updates for invisible soil; keep machinery-side loop asleep.
-	if(!isnull(process_wait))
-		return PROCESS_KILL
-
-	if(!should_be_active())
 		return
-
-	return ..()
+	..()
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Destroy()
 	// Check if we're masking a decal that needs to be visible again.

@@ -19,27 +19,20 @@
 	//better laser, increased brightness & power consumption
 	var/l_power = 2.5 //brightness of light when on, can be negative
 	var/l_range = 8 //outer range of light when on, can be negative
-	var/obj/item/stock_parts/power/battery/cached_battery_component
 
 /obj/machinery/floodlight/Initialize()
 	. = ..()
 	configure_battery_optimization()
 
-/obj/machinery/floodlight/proc/get_battery_component()
-	if(cached_battery_component && !QDELETED(cached_battery_component) && cached_battery_component.loc == src)
-		return cached_battery_component
-	cached_battery_component = get_component_of_type(/obj/item/stock_parts/power/battery)
-	return cached_battery_component
-
 /obj/machinery/floodlight/proc/configure_battery_optimization()
-	var/obj/item/stock_parts/power/battery/battery = get_battery_component()
+	var/obj/item/stock_parts/power/battery/battery = get_component_of_type(/obj/item/stock_parts/power/battery)
 	if(!battery)
 		return
 	battery.optimize_idle_suspend = TRUE
 	battery.refresh_processing(src)
 
 /obj/machinery/floodlight/proc/refresh_battery_processing()
-	var/obj/item/stock_parts/power/battery/battery = get_battery_component()
+	var/obj/item/stock_parts/power/battery/battery = get_component_of_type(/obj/item/stock_parts/power/battery)
 	if(!battery || !battery.optimize_idle_suspend)
 		return
 	battery.refresh_processing(src)
@@ -96,6 +89,8 @@
 		if(!turn_on(1))
 			to_chat(user, "You try to turn on \the [src] but it does not work.")
 			playsound(src.loc, 'sound/effects/flashlight.ogg', 50, 0)
+
+	update_icon()
 	return TRUE
 
 /obj/machinery/floodlight/RefreshParts()//if they're insane enough to modify a floodlight, let them

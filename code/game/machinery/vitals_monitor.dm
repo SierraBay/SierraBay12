@@ -41,7 +41,6 @@
 	update_processing()
 
 /obj/machinery/vitals_monitor/Destroy()
-	unregister_victim_signals()
 	victim = null
 	update_optable()
 	. = ..()
@@ -116,6 +115,10 @@
 		to_chat(user, SPAN_NOTICE("Connected to \the [connected_optable]."))
 
 /obj/machinery/vitals_monitor/Process()
+	if (QDELETED(victim))
+		update_victim()
+	if (victim && !Adjacent(victim))
+		update_victim()
 	if (connected_optable && !Adjacent(connected_optable))
 		update_victim()
 		update_optable()
@@ -123,29 +126,6 @@
 		return PROCESS_KILL
 	if (victim)
 		update_icon()
-
-/obj/machinery/vitals_monitor/proc/register_victim_signals(mob/living/carbon/human/new_victim)
-	if(!new_victim)
-		return
-	RegisterSignal(new_victim, COMSIG_MOVABLE_MOVED, PROC_REF(on_victim_moved))
-	RegisterSignal(new_victim, COMSIG_QDELETING, PROC_REF(on_victim_qdeleting))
-
-/obj/machinery/vitals_monitor/proc/unregister_victim_signals()
-	if(!victim)
-		return
-	UnregisterSignal(victim, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-
-/obj/machinery/vitals_monitor/proc/on_victim_moved(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	if(source != victim)
-		return
-	if(!Adjacent(source))
-		update_victim()
-
-/obj/machinery/vitals_monitor/proc/on_victim_qdeleting(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	if(source == victim)
-		update_victim()
 
 /obj/machinery/vitals_monitor/proc/update_processing()
 	if (victim || connected_optable)
@@ -155,11 +135,7 @@
 
 /obj/machinery/vitals_monitor/proc/update_victim(new_victim = null)
 	var/old_victim = victim
-	if(old_victim && old_victim != new_victim)
-		unregister_victim_signals()
 	victim = new_victim
-	if(victim && victim != old_victim)
-		register_victim_signals(victim)
 	if (victim)
 		visible_message(SPAN_NOTICE("\The [src] is now showing data for \the [victim]."))
 	else

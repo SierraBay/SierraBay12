@@ -1,8 +1,6 @@
 /////////////////////////////////////////////
 // Chem smoke
 /////////////////////////////////////////////
-var/global/active_chem_smoke_clouds = 0
-
 /obj/effect/smoke/chem
 	icon = 'icons/effects/chemsmoke.dmi'
 	layer = ABOVE_PROJECTILE_LAYER
@@ -27,14 +25,6 @@ var/global/active_chem_smoke_clouds = 0
 	destination = dest_turf
 	if(destination)
 		walk_to(src, destination)
-
-/obj/effect/smoke/chem/Initialize()
-	. = ..()
-	active_chem_smoke_clouds++
-
-/obj/effect/smoke/chem/Destroy()
-	active_chem_smoke_clouds = max(active_chem_smoke_clouds - 1, 0)
-	return ..()
 
 /obj/effect/smoke/chem/Move()
 	var/list/oldlocs = view(1, src)

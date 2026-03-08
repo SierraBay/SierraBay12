@@ -4,12 +4,6 @@
 	var/last_rendered_message1
 	var/last_rendered_message2
 
-/obj/machinery/status_display/supply_display/remove_display()
-	..()
-	last_rendered_mode = null
-	last_rendered_message1 = null
-	last_rendered_message2 = null
-
 /obj/machinery/status_display/supply_display/update()
 	if(mode == STATUS_DISPLAY_CUSTOM)
 		var/new_message1 = "CARGO"
