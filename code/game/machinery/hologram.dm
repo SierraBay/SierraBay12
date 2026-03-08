@@ -67,7 +67,21 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 
 /obj/machinery/hologram/holopad/Initialize()
 	. = ..()
-	START_LAZY_PROCESSING_MACHINE(src)
+	refresh_processing_registration()
+
+/obj/machinery/hologram/holopad/proc/requires_fast_processing()
+	return length(masters) || incoming_connection || (caller_id && sourcepad)
+
+/obj/machinery/hologram/holopad/proc/refresh_processing_registration()
+	if(requires_fast_processing())
+		if(is_processing == "SSmachines_lazy")
+			STOP_LAZY_PROCESSING_MACHINE(src)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	if(processing_flags & MACHINERY_PROCESS_SELF)
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	if(!is_processing)
+		START_LAZY_PROCESSING_MACHINE(src)
 
 /obj/machinery/hologram/holopad/examine(mob/user)
 	. = ..()
@@ -165,6 +179,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	targetpad.sourcepad = src //This marks the holopad you are making the call from
 	targetpad.caller_id = user //This marks you as the caller
 	targetpad.incoming_connection = 1
+	targetpad.refresh_processing_registration()
 	playsound(targetpad.loc, 'sound/machines/chime.ogg', 25, 5)
 	targetpad.icon_state = "[targetpad.base_icon]1"
 	targetpad.audible_message("<b>\The [src]</b> announces, \"Incoming communications request from [targetpad.sourcepad.loc.loc].\"")
@@ -184,6 +199,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	caller_id.reset_view(src)
 	if(!masters[caller_id])//If there is no hologram, possibly make one.
 		activate_holocall(caller_id)
+	refresh_processing_registration()
 	log_admin("[key_name(caller_id)] just established a holopad connection from [sourcepad.loc.loc] to [src.loc.loc]")
 
 /obj/machinery/hologram/holopad/proc/end_call(mob/user)
@@ -193,6 +209,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	caller_id.reset_view() //Send the caller back to his body
 	clear_holo(0, caller_id) // destroy the hologram
 	caller_id = null
+	refresh_processing_registration()
 
 /obj/machinery/hologram/holopad/proc/addrecentcall(id)
 	recent_calls += id
@@ -227,6 +244,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 			return
 		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 		create_holo(user)//Create one.
+		refresh_processing_registration()
 	else
 		to_chat(user, "[SPAN_DANGER("ERROR:")] Unable to project hologram.")
 	return
@@ -235,6 +253,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	if(caller_id)
 		src.visible_message("A holographic image of [caller_id] flicks to life right before your eyes!")
 		create_holo(0,caller_id)//Create one.
+		refresh_processing_registration()
 	else
 		to_chat(caller_id, "[SPAN_DANGER("ERROR:")] Unable to project hologram.")
 	return
@@ -382,6 +401,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			sourcepad.targetpad = null
 			sourcepad = null
 			caller_id = null
+	refresh_processing_registration()
 	return 1
 
 

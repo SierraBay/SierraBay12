@@ -164,6 +164,7 @@
 	var/shadow_solver_last_apc_advisory_primary_demand = 0
 	var/shadow_solver_last_apc_advisory_served_primary = 0
 	var/shadow_solver_last_apc_count = 0
+	var/shadow_solver_apc_advisory_valid = FALSE
 	var/shadow_solver_apc_cap_floor_ratio = 0.35
 	var/shadow_solver_last_apc_enforced_floor = 0
 	var/shadow_solver_last_apc_enforced_budget = 0
@@ -394,10 +395,21 @@
 	shadow_solver_cache_timestamp = 0
 	shadow_solver_cache_stable_ticks = 0
 
+/datum/powernet/proc/invalidate_apc_advisory()
+	shadow_solver_apc_advisory_valid = FALSE
+	shadow_solver_last_apc_advisory_scale = 1
+	shadow_solver_last_apc_advisory_perapc = 0
+	shadow_solver_last_apc_advisory_primary_demand = 0
+	shadow_solver_last_apc_advisory_served_primary = 0
+	shadow_solver_last_apc_count = 0
+	shadow_solver_last_apc_enforced_floor = 0
+	shadow_solver_last_apc_enforced_budget = 0
+
 /datum/powernet/proc/mark_shadow_solver_topology_dirty()
 	shadow_solver_cache_topology_dirty = TRUE
 	shadow_solver_cache_tick_dirty = TRUE
 	apc_terminal_count_dirty = TRUE
+	invalidate_apc_advisory()
 	shadow_solver_native_topology_revision++
 	shadow_solver_native_stateful_registered_revision = -1
 	invalidate_shadow_solver_native_payload_cache()
@@ -683,11 +695,11 @@
 	log_debug("Powernet shadow guard rollback: switched write mode to pilot_apc_advisory due to consecutive mismatch.")
 
 /datum/powernet/proc/should_enforce_apc_cap()
-	return shadow_solver_write_enabled && (shadow_solver_write_mode == "pilot_apc_enforced" || shadow_solver_write_mode == "fea_only")
+	return shadow_solver_apc_advisory_valid && shadow_solver_write_enabled && (shadow_solver_write_mode == "pilot_apc_enforced" || shadow_solver_write_mode == "fea_only")
 
 /datum/powernet/proc/get_apc_enforced_budget()
-	if(shadow_solver_last_apc_count <= 0)
-		return 0
+	if(!shadow_solver_apc_advisory_valid || shadow_solver_last_apc_count <= 0)
+		return null
 	var/legacy_perapc = max(avail / shadow_solver_last_apc_count, 0)
 	var/floor_budget = legacy_perapc * clamp(shadow_solver_apc_cap_floor_ratio, 0, 1)
 	shadow_solver_last_apc_enforced_floor = floor_budget
@@ -968,16 +980,11 @@
 	return clamp((solver_excess / smes_demand) * 100, 0, 100)
 
 /datum/powernet/proc/update_apc_advisory(list/snapshot, numapc)
-	shadow_solver_last_apc_count = max(numapc, 0)
 	if(!islist(snapshot) || numapc <= 0)
-		shadow_solver_last_apc_advisory_scale = 1
-		shadow_solver_last_apc_advisory_perapc = 0
-		shadow_solver_last_apc_advisory_primary_demand = 0
-		shadow_solver_last_apc_advisory_served_primary = 0
-		shadow_solver_last_apc_enforced_floor = 0
-		shadow_solver_last_apc_enforced_budget = 0
+		invalidate_apc_advisory()
 		return
 
+	shadow_solver_last_apc_count = max(numapc, 0)
 	var/primary_demand = max(snapshot["primary_demand"], 0)
 	var/served_primary = max(snapshot["served_primary"], 0)
 	var/scale = primary_demand > 0 ? clamp(served_primary / primary_demand, 0, 1) : 1
@@ -986,6 +993,7 @@
 	shadow_solver_last_apc_advisory_served_primary = served_primary
 	shadow_solver_last_apc_advisory_scale = scale
 	shadow_solver_last_apc_advisory_perapc = (served_primary / max(numapc, 1))
+	shadow_solver_apc_advisory_valid = TRUE
 	get_apc_enforced_budget()
 
 	if(shadow_solver_write_enabled && shadow_solver_write_mode == "pilot_apc_advisory")

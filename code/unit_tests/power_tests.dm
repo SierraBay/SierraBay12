@@ -378,3 +378,118 @@
 	qdel(PN)
 	pass("Unserved persistence filter behaves as expected.")
 	return 1
+
+
+/datum/unit_test/power_shadow_apc_cap_topology_invalidation
+	name = "POWER SHADOW: APC cap invalidates immediately on topology change"
+
+/datum/unit_test/power_shadow_apc_cap_topology_invalidation/start_test()
+	var/turf/T = get_space_turf()
+	if(!istype(T))
+		fail("Failed to find a test turf for APC cap invalidation.")
+		return 1
+
+	var/area/test_area = get_area(T)
+	if(!istype(test_area))
+		fail("Failed to resolve a test area for APC cap invalidation.")
+		return 1
+
+	var/obj/machinery/power/apc/previous_apc = test_area.apc
+	var/old_used_equip = test_area.used_equip
+	var/old_used_light = test_area.used_light
+	var/old_used_environ = test_area.used_environ
+	var/old_oneoff_equip = test_area.oneoff_equip
+	var/old_oneoff_light = test_area.oneoff_light
+	var/old_oneoff_environ = test_area.oneoff_environ
+
+	var/obj/machinery/power/apc/APC = new(T)
+	var/datum/powernet/PN = new
+	var/obj/machinery/power/terminal/terminal = APC.terminal()
+
+	if(!terminal)
+		fail("Test APC did not create a terminal.")
+		qdel(PN)
+		qdel(APC)
+		test_area.apc = previous_apc
+		test_area.used_equip = old_used_equip
+		test_area.used_light = old_used_light
+		test_area.used_environ = old_used_environ
+		test_area.oneoff_equip = old_oneoff_equip
+		test_area.oneoff_light = old_oneoff_light
+		test_area.oneoff_environ = old_oneoff_environ
+		return 1
+
+	terminal.powernet = PN
+	APC.autoflag = FALSE
+	APC.equipment = POWERCHAN_ON
+	APC.lighting = POWERCHAN_OFF
+	APC.environ = POWERCHAN_OFF
+
+	test_area.used_equip = 1200
+	test_area.used_light = 0
+	test_area.used_environ = 0
+	test_area.oneoff_equip = 0
+	test_area.oneoff_light = 0
+	test_area.oneoff_environ = 0
+
+	PN.shadow_solver_force_fea_only = FALSE
+	PN.shadow_solver_write_enabled = TRUE
+	PN.set_shadow_solver_write_mode("pilot_apc_enforced")
+	PN.shadow_solver_apc_cap_floor_ratio = 0
+	PN.update_apc_advisory(list("primary_demand" = 2400, "served_primary" = 600), 2)
+
+	var/capped_usage = APC.get_power_usage()
+	if(capped_usage != 300)
+		fail("Expected enforced APC budget 300 before topology change, got [capped_usage].")
+		qdel(PN)
+		qdel(APC)
+		test_area.apc = previous_apc
+		test_area.used_equip = old_used_equip
+		test_area.used_light = old_used_light
+		test_area.used_environ = old_used_environ
+		test_area.oneoff_equip = old_oneoff_equip
+		test_area.oneoff_light = old_oneoff_light
+		test_area.oneoff_environ = old_oneoff_environ
+		return 1
+
+	PN.mark_shadow_solver_topology_dirty()
+	var/post_dirty_usage = APC.get_power_usage()
+	if(post_dirty_usage != 1200)
+		fail("Topology-dirty powernet should stop enforcing APC cap immediately; expected 1200, got [post_dirty_usage].")
+		qdel(PN)
+		qdel(APC)
+		test_area.apc = previous_apc
+		test_area.used_equip = old_used_equip
+		test_area.used_light = old_used_light
+		test_area.used_environ = old_used_environ
+		test_area.oneoff_equip = old_oneoff_equip
+		test_area.oneoff_light = old_oneoff_light
+		test_area.oneoff_environ = old_oneoff_environ
+		return 1
+
+	PN.update_apc_advisory(list("primary_demand" = 2400, "served_primary" = 1000), 2)
+	var/recapped_usage = APC.get_power_usage()
+	if(recapped_usage != 500)
+		fail("Expected refreshed APC budget 500 after advisory rebuild, got [recapped_usage].")
+		qdel(PN)
+		qdel(APC)
+		test_area.apc = previous_apc
+		test_area.used_equip = old_used_equip
+		test_area.used_light = old_used_light
+		test_area.used_environ = old_used_environ
+		test_area.oneoff_equip = old_oneoff_equip
+		test_area.oneoff_light = old_oneoff_light
+		test_area.oneoff_environ = old_oneoff_environ
+		return 1
+
+	qdel(PN)
+	qdel(APC)
+	test_area.apc = previous_apc
+	test_area.used_equip = old_used_equip
+	test_area.used_light = old_used_light
+	test_area.used_environ = old_used_environ
+	test_area.oneoff_equip = old_oneoff_equip
+	test_area.oneoff_light = old_oneoff_light
+	test_area.oneoff_environ = old_oneoff_environ
+	pass("APC enforced caps are skipped while topology is dirty and resume only after fresh advisory data exists.")
+	return 1
