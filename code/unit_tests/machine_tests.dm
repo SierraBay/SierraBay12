@@ -219,7 +219,8 @@
 		qdel(turret)
 		return 1
 
-	if(turret.assess_living(target) == TURRET_NOT_TARGET)
+	var/threat_state = turret.assess_living(target)
+	if(threat_state <= 0)
 		fail("Turret still does not consider the stationary armed target a valid threat after wake-up.")
 		qdel(target)
 		qdel(turret)
@@ -238,19 +239,19 @@
 	var/turf/T = get_safe_turf()
 	var/obj/machinery/hologram/holopad/source = new(T)
 	var/obj/machinery/hologram/holopad/target = new(T)
-	var/mob/living/carbon/human/caller = get_named_instance(/mob/living/carbon/human, T, SPECIES_HUMAN)
+	var/mob/living/carbon/human/test_caller = get_named_instance(/mob/living/carbon/human, T, SPECIES_HUMAN)
 
 	if(source.is_processing != "SSmachines_lazy" || target.is_processing != "SSmachines_lazy")
 		fail("Idle holopads should initialize in lazy processing. Source=[source.is_processing] Target=[target.is_processing]")
-		qdel(caller)
+		qdel(test_caller)
 		qdel(target)
 		qdel(source)
 		return 1
 
-	source.make_call(target, caller)
+	source.make_call(target, test_caller)
 	if(target.is_processing != "SSmachines")
 		fail("Incoming holopad call did not move target pad to fast processing.")
-		qdel(caller)
+		qdel(test_caller)
 		qdel(target)
 		qdel(source)
 		return 1
@@ -259,7 +260,7 @@
 	target.refresh_processing_registration()
 	if(target.is_processing != "SSmachines")
 		fail("Accepted/active holopad session should remain on fast processing.")
-		qdel(caller)
+		qdel(test_caller)
 		qdel(target)
 		qdel(source)
 		return 1
@@ -269,12 +270,12 @@
 	target.refresh_processing_registration()
 	if(target.is_processing != "SSmachines_lazy")
 		fail("Idle holopad should return to lazy processing after session cleanup, got [target.is_processing].")
-		qdel(caller)
+		qdel(test_caller)
 		qdel(target)
 		qdel(source)
 		return 1
 
-	qdel(caller)
+	qdel(test_caller)
 	qdel(target)
 	qdel(source)
 	pass("Holopads switch to fast processing for incoming/active sessions and fall back to lazy when idle.")
