@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+RUST_G_REPO="${RUST_G_REPO:-ImJustKisik/rust-g-tg}"
+RUST_G_BRANCH="${RUST_G_BRANCH:-feature/power-shadow-native}"
+RUST_G_VERSION="${RUST_G_VERSION:-branch-feature-power-shadow-native}"
 RUST_G_TARGET="${RUST_G_TARGET:-i686-unknown-linux-gnu}"
 RUST_G_LIB="${HOME}/.byond/bin/librust_g.so"
 RUST_G_STAMP="${HOME}/.byond/bin/librust_g.cache-key"
