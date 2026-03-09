@@ -530,6 +530,7 @@
 	PN.shadow_solver_guard_trip_threshold = 2
 	PN.shadow_solver_guard_cooldown_ticks = 50
 	PN.shadow_solver_mismatch_threshold = 100
+	PN.shadow_solver_guard_mismatch_threshold_override = 100
 
 	PN.shadow_solver_avail_delta = 1000
 	PN.shadow_solver_load_delta = 0
