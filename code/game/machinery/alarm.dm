@@ -104,6 +104,11 @@
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
 
+	// Process() delta-check cache: skip expensive recalculation when atmosphere is stable
+	var/cached_process_pressure = 0
+	var/cached_process_temperature = 0
+	var/cached_process_total_moles = 0
+
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
 
@@ -189,6 +194,16 @@
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/environment_pressure = environment.return_pressure()
+
+	// Delta-check: skip expensive danger level recalculation when atmosphere is stable
+	var/cur_temperature = environment.temperature
+	var/cur_total_moles = environment.total_moles
+	if(danger_level == 0 && !regulating_temperature && mode == AALARM_MODE_SCRUBBING)
+		if(abs(environment_pressure - cached_process_pressure) < 1 && abs(cur_temperature - cached_process_temperature) < 0.5 && abs(cur_total_moles - cached_process_total_moles) < 0.01)
+			return
+	cached_process_pressure = environment_pressure
+	cached_process_temperature = cur_temperature
+	cached_process_total_moles = cur_total_moles
 
 	//Handle temperature adjustment here.
 	if(environment_pressure > ONE_ATMOSPHERE*0.05)

@@ -20,6 +20,7 @@ var/global/solar_gen_rate = 1500
 	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
+	var/cached_sun_efficiency = 0 // sunfrac * efficiency, updated by occlusion/update_solar_exposure
 
 /obj/machinery/power/solar/improved
 	name = "improved solar panel"
@@ -88,10 +89,11 @@ var/global/solar_gen_rate = 1500
 		src.set_dir(angle2dir(adir))
 	return
 
-//calculates the fraction of the sunlight that the panel receives
+//calculates the fraction of the sunlight that the panel receives and caches sun efficiency
 /obj/machinery/power/solar/proc/update_solar_exposure()
 	if(obscured)
 		sunfrac = 0
+		cached_sun_efficiency = 0
 		return
 
 	var/sun_angle = get_solar_angle(z)
@@ -101,25 +103,25 @@ var/global/solar_gen_rate = 1500
 
 	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
 		sunfrac = 0
+		cached_sun_efficiency = 0
 		return
 
 	sunfrac = (cos(p_angle) ** 2) - get_solar_distance_penalty(z)
-	//isn't the power received from the incoming light proportional to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
+	cached_sun_efficiency = sunfrac * efficiency
 
 /obj/machinery/power/solar/Process()
 	if(MACHINE_IS_BROKEN(src))
 		return
-	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
+	if(!control)
 		return
-
+	if(!cached_sun_efficiency)
+		return
 	if(powernet)
-		if(powernet == control.powernet)//check if the panel is still connected to the computer
-			if(obscured) //get no light from the sun, so don't generate power
-				return
-			var/sgen = solar_gen_rate * sunfrac * efficiency
+		if(powernet == control.powernet)
+			var/sgen = solar_gen_rate * cached_sun_efficiency
 			add_avail(sgen)
 			control.gen += sgen
-		else //if we're no longer on the same powernet, remove from control computer
+		else
 			unset_control()
 
 /obj/machinery/power/solar/set_broken(new_state)
@@ -190,6 +192,7 @@ var/global/solar_gen_rate = 1500
 
 		if(T.opacity)			// if we hit a solid turf, panel is obscured
 			obscured = 1
+			cached_sun_efficiency = 0
 			return
 
 	obscured = 0		// if hit the edge or stepped max times, not obscured

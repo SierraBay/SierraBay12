@@ -142,6 +142,7 @@
 	/// Cache battery/cell lookup during Process() to reduce repeated component traversals.
 	var/optimize_process_cell_cache = TRUE
 	var/obj/item/stock_parts/power/terminal/cached_terminal_component = null
+	var/obj/item/stock_parts/power/battery/cached_battery_component = null
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -304,9 +305,9 @@
 /obj/machinery/power/apc/proc/init_round_start()
 	has_electronics = 2 //installed and secured
 
-	var/obj/item/stock_parts/power/battery/bat = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/bat = get_battery_component()
 	bat.add_cell(src, new cell_type(bat))
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = get_terminal_component()
 	term.make_terminal(src)
 	cached_terminal_component = term
 
@@ -322,6 +323,18 @@
 
 	cached_terminal_component = get_component_of_type(/obj/item/stock_parts/power/terminal)
 	return cached_terminal_component
+
+/obj/machinery/power/apc/proc/get_battery_component()
+	if(cached_battery_component && !QDELETED(cached_battery_component) && cached_battery_component.loc == src)
+		return cached_battery_component
+
+	cached_battery_component = get_component_of_type(/obj/item/stock_parts/power/battery)
+	return cached_battery_component
+
+/obj/machinery/power/apc/get_cell()
+	var/obj/item/stock_parts/power/battery/battery = get_battery_component()
+	if(battery)
+		return battery.get_cell()
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -991,11 +1004,11 @@
 		return lastused_total // If not, we need to do something more sophisticated: compute how much power we would need in order to come back online.
 	. = 0
 	if(autoset(lighting, 2) >= POWERCHAN_ON)
-		. += area.usage(LIGHT)
+		. += area.used_light + area.oneoff_light
 	if(autoset(equipment, 2) >= POWERCHAN_ON)
-		. += area.usage(EQUIP)
+		. += area.used_equip + area.oneoff_equip
 	if(autoset(environ, 1) >= POWERCHAN_ON)
-		. += area.usage(ENVIRON)
+		. += area.used_environ + area.oneoff_environ
 
 	if(. <= 0)
 		return
@@ -1005,7 +1018,7 @@
 	if(!net || !net.should_enforce_apc_cap())
 		return
 
-	. = min(., net.get_apc_enforced_budget())
+	. = min(., net.get_apc_enforced_budget(.))
 
 /obj/machinery/power/apc/power_solver_shadow_profile()
 	var/usage = max(lastused_total, 0)
@@ -1031,10 +1044,12 @@
 		force_update = 1
 		return
 
-	lastused_light = (lighting >= POWERCHAN_ON) ? area.usage(LIGHT) : 0
-	lastused_equip = (equipment >= POWERCHAN_ON) ? area.usage(EQUIP) : 0
-	lastused_environ = (environ >= POWERCHAN_ON) ? area.usage(ENVIRON) : 0
-	area.clear_usage()
+	lastused_light = (lighting >= POWERCHAN_ON) ? (area.used_light + area.oneoff_light) : 0
+	lastused_equip = (equipment >= POWERCHAN_ON) ? (area.used_equip + area.oneoff_equip) : 0
+	lastused_environ = (environ >= POWERCHAN_ON) ? (area.used_environ + area.oneoff_environ) : 0
+	area.oneoff_light = 0
+	area.oneoff_equip = 0
+	area.oneoff_environ = 0
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
@@ -1045,8 +1060,9 @@
 	var/last_ch = charging
 
 	var/obj/machinery/power/terminal/terminal = terminal()
-	var/avail = (terminal && terminal.avail()) || 0
-	var/excess = (terminal && terminal.surplus()) || 0
+	var/datum/powernet/pn = terminal && terminal.powernet
+	var/avail = pn ? pn.avail : 0
+	var/excess = pn ? (pn.avail - pn.load) : 0
 
 	if(!avail)
 		main_status = 0
@@ -1058,7 +1074,7 @@
 	var/obj/item/stock_parts/power/battery/power = null
 	var/obj/item/cell/cell = null
 	if(optimize_process_cell_cache)
-		power = get_component_of_type(/obj/item/stock_parts/power/battery)
+		power = get_battery_component()
 		cell = power && power.cell
 	else
 		cell = get_cell()
@@ -1072,7 +1088,7 @@
 
 		//update state
 		if(!optimize_process_cell_cache)
-			power = get_component_of_type(/obj/item/stock_parts/power/battery)
+			power = get_battery_component()
 		lastused_charging = max(power && power.cell && (power.cell.charge - power.last_cell_charge) * CELLRATE, 0)
 		charging = lastused_charging ? 1 : 0
 		if(cell.fully_charged())
@@ -1216,7 +1232,7 @@
 
 /obj/machinery/power/apc/proc/set_chargemode(new_mode)
 	chargemode = new_mode
-	var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/power = get_battery_component()
 	if(power)
 		power.can_charge = chargemode
 		power.charge_wait_counter = initial(power.charge_wait_counter)

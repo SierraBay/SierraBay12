@@ -622,25 +622,35 @@
 	to_chat(src, SPAN_NOTICE("Set power shadow mismatch threshold to [threshold]W for [updated] powernets."))
 	log_and_message_admins("[key_name(src)] set power shadow solver mismatch threshold to [threshold]W for [updated] powernets.")
 
-/client/proc/power_shadow_solver_backend()
+/client/proc/power_shadow_solver_tier_override()
 	set category = "Power Shadow Advanced"
-	set name = "Set Power Shadow Backend"
+	set name = "Override Tier Selection"
 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/choice = input(src, "Select shadow solver backend for all current powernets.", "Power Shadow Solver") in list("Shadow FEA", "Strict Capacity Flow")
-	if(!choice)
+	var/action = input(src, "Tier override action:", "Power Shadow Tier") in list("Lock all to Coarse", "Lock all to Normal", "Lock all to Refined", "Unlock all (auto)", "Cancel")
+	if(!action || action == "Cancel")
 		return
 
-	var/backend = (choice == "Strict Capacity Flow") ? "strict_capacity_flow" : "shadow_fea"
 	var/updated = 0
 	for(var/datum/powernet/PN in SSpowernets.powernets)
-		PN.set_shadow_solver_backend(backend)
+		switch(action)
+			if("Lock all to Coarse")
+				PN.shadow_solver_tier = "coarse"
+				PN.shadow_solver_tier_locked = TRUE
+			if("Lock all to Normal")
+				PN.shadow_solver_tier = "normal"
+				PN.shadow_solver_tier_locked = TRUE
+			if("Lock all to Refined")
+				PN.shadow_solver_tier = "refined"
+				PN.shadow_solver_tier_locked = TRUE
+			if("Unlock all (auto)")
+				PN.shadow_solver_tier_locked = FALSE
 		updated++
 
-	to_chat(src, SPAN_NOTICE("Set power shadow backend to [choice] for [updated] powernets."))
-	log_and_message_admins("[key_name(src)] set power shadow backend to [choice] for [updated] powernets.")
+	to_chat(src, SPAN_NOTICE("[action] applied to [updated] powernets."))
+	log_and_message_admins("[key_name(src)] applied tier override '[action]' to [updated] powernets.")
 
 /client/proc/power_shadow_solver_native_toggle()
 	set category = "Power Shadow Advanced"
@@ -716,12 +726,9 @@
 			continue
 		for(var/i = 1 to iterations)
 			var/list/snapshot
-			if(istype(solver, /datum/power_solver/shadow_fea))
-				var/datum/power_solver/shadow_fea/shadow_solver = solver
-				snapshot = shadow_solver.solve_shadow_fea(PN)
-			else if(istype(solver, /datum/power_solver/strict_capacity_flow))
-				var/datum/power_solver/strict_capacity_flow/strict_solver = solver
-				snapshot = strict_solver.solve_strict_capacity_flow(PN)
+			var/datum/power_solver/adaptive_shadow/adaptive_solver = solver
+			if(istype(adaptive_solver))
+				snapshot = adaptive_solver.solve(PN)
 			if(islist(snapshot))
 				core_dm_samples++
 	var/core_dm_total_us = max(rustg_time_microseconds(timer_dm_core), 0)
@@ -1085,6 +1092,9 @@
 	var/rollbacks = 0
 	var/problem_networks = 0
 	var/pass_count = 0
+	var/tier_coarse = 0
+	var/tier_normal = 0
+	var/tier_refined = 0
 	var/weighted_samples = 0
 	var/weighted_mismatch = 0
 	var/weighted_load_delta = 0
@@ -1095,6 +1105,7 @@
 	var/guard_threshold_sum = 0
 	var/max_abs_delta = 1
 	var/max_unserved = 1
+	var/sum_avail = 0
 	var/list/rows_by_ref = list()
 	var/list/sorted_refs = list()
 
@@ -1104,6 +1115,10 @@
 			enabled++
 		if(PN.shadow_solver_force_fea_only)
 			locked++
+		switch(PN.shadow_solver_tier)
+			if("coarse") tier_coarse++
+			if("refined") tier_refined++
+			else tier_normal++
 		if(PN.evaluate_shadow_solver_acceptance())
 			pass_count++
 		rollbacks += PN.shadow_solver_guard_rollback_events
@@ -1118,10 +1133,11 @@
 		weighted_unserved_primary += st["avg_unserved"] * samples
 		sum_unserved_deferred += PN.shadow_solver_last_deferred_unserved
 		sum_unserved_total += PN.shadow_solver_last_total_unserved
+		sum_avail += PN.avail
 
 		var/abs_delta = abs(PN.shadow_solver_avail_delta) + abs(PN.shadow_solver_load_delta)
 		var/acceptance_problem = !PN.shadow_solver_acceptance_last_pass && PN.shadow_solver_acceptance_last_reason != "insufficient_samples"
-		var/is_problem = PN.shadow_solver_mismatch || acceptance_problem || PN.is_shadow_solver_unserved_persistent() || abs_delta >= PN.shadow_solver_mismatch_threshold
+		var/is_problem = PN.shadow_solver_mismatch || acceptance_problem || PN.is_shadow_solver_unserved_persistent() || abs_delta >= PN.get_effective_mismatch_threshold()
 		if(is_problem)
 			problem_networks++
 		if(problem_only && !is_problem)
@@ -1134,7 +1150,7 @@
 			net_ref,
 			length(PN.nodes),
 			length(PN.cables),
-			PN.get_shadow_solver_backend_name(),
+			PN.shadow_solver_tier + (PN.shadow_solver_tier_locked ? " [locked]" : ""),
 			PN.get_shadow_solver_write_mode_name(),
 			round(PN.avail),
 			round(PN.load),
@@ -1196,7 +1212,9 @@
 	if(problem_networks)
 		health_class = (problem_rate >= 20 || pass_rate < 70) ? "bad" : "average"
 	var/quality_class = "good"
-	if(report_mismatch >= 8 || report_unserved_total >= 5000)
+	var/avg_avail = networks ? (sum_avail / networks) : 50000
+	var/quality_unserved_threshold = max(5000, round(avg_avail * 0.02))
+	if(report_mismatch >= 8 || report_unserved_total >= quality_unserved_threshold)
 		quality_class = "bad"
 	else if(report_mismatch >= 3 || report_unserved_total > 0)
 		quality_class = "average"
@@ -1221,7 +1239,7 @@
 		net_ref = r[1]
 		var/nodes_count = r[2]
 		var/cables_count = r[3]
-		var/backend_raw = r[4]
+		var/tier_raw = r[4]
 		var/mode_raw = r[5]
 		var/avail_value = text2num("[r[6]]")
 		var/load_value = text2num("[r[7]]")
@@ -1243,7 +1261,7 @@
 		var/delta_ratio = round(clamp((delta_total / max(max_abs_delta, 1)) * 100, 0, 100), 0.1)
 		var/unserved_ratio = round(clamp((unserved_primary / max(max_unserved, 1)) * 100, 0, 100), 0.1)
 		var/mismatch_text = mismatch_flag ? "YES" : "no"
-		var/backend_name = "[backend_raw]"
+		var/tier_name = "[tier_raw]"
 		var/mode_name = "[mode_raw]"
 		var/guard_state = "[guard_raw]"
 		var/acceptance_state = "[acceptance_raw]"
@@ -1267,7 +1285,7 @@
 			"net_ref" = net_ref,
 			"nodes" = nodes_count,
 			"cables" = cables_count,
-			"backend" = backend_name,
+			"backend" = tier_name,
 			"mode" = mode_name,
 			"load" = load_value,
 			"avail" = avail_value,
@@ -1309,6 +1327,9 @@
 		"networks" = networks,
 		"enabled" = enabled,
 		"locked" = locked,
+		"tier_coarse" = tier_coarse,
+		"tier_normal" = tier_normal,
+		"tier_refined" = tier_refined,
 		"problem_networks" = problem_networks,
 		"problem_rate" = problem_rate,
 		"report_mismatch" = report_mismatch,

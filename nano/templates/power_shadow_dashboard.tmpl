@@ -118,6 +118,7 @@
 			<div class='metric'><span class='{{:data.health_class}}'>{{:data.problem_networks}}</span> / {{:data.networks}}</div>
 			<div class='summary-row'>problematic networks <span class='muted'>({{:data.problem_rate}}%)</span></div>
 			<div class='summary-row'>acceptance pass <span class='{{:data.health_class}}'>{{:data.pass_rate}}%</span></div>
+			<div class='summary-row'>tiers C/N/R <span class='muted'>{{:data.tier_coarse}} / {{:data.tier_normal}} / {{:data.tier_refined}}</span></div>
 		</div>
 		<div class='summary-card'>
 			<div class='eyebrow'>Solver Quality</div>
@@ -163,7 +164,7 @@
 			<tr>
 				<th>Powernet</th>
 				<th>Shape</th>
-				<th>Backend</th>
+				<th>Tier</th>
 				<th>Load / Avail</th>
 				<th>Unserved</th>
 				<th>Delta</th>

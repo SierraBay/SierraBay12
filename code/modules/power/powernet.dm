@@ -2,17 +2,20 @@
 	var/backend_id = "base"
 	var/backend_name = "Base Solver"
 
-/datum/power_solver/shadow_fea
-	backend_id = "shadow_fea"
-	backend_name = "Shadow FEA"
+/datum/power_solver/adaptive_shadow
+	backend_id = "adaptive_shadow"
+	backend_name = "Adaptive Shadow"
 	var/last_total_supply = 0
 	var/last_primary_demand = 0
 	var/last_deferred_demand = 0
 	var/last_served_primary = 0
 	var/last_served_deferred = 0
 	var/last_unserved = 0
+	/// When TRUE, deferred demand is NOT served (old strict_capacity_flow behavior).
+	/// Set by auto-repair as a last resort.
+	var/conservative_mode = FALSE
 
-/datum/power_solver/shadow_fea/proc/solve_shadow_fea(datum/powernet/net)
+/datum/power_solver/adaptive_shadow/proc/solve(datum/powernet/net)
 	if(!istype(net))
 		return list("avail" = 0, "load" = 0, "comparison_avail" = 0, "comparison_load" = 0, "unserved" = 0, "deferred_unserved" = 0, "total_unserved" = 0, "primary_demand" = 0, "served_primary" = 0)
 
@@ -33,13 +36,13 @@
 
 	var/total_supply = max(base_supply + smes_supply, 0)
 	var/served_primary = min(total_supply, primary_demand)
-	var/remaining_supply = max(total_supply - served_primary, 0)
+	var/remaining_supply = conservative_mode ? 0 : max(total_supply - served_primary, 0)
 	var/served_deferred = min(remaining_supply, deferred_demand)
-	var/predicted_load = max(served_primary + served_deferred, 0)
+	var/predicted_load = conservative_mode ? max(served_primary, 0) : max(served_primary + served_deferred, 0)
 	var/comparison_avail = max(net.avail, 0)
 	var/comparison_load = max(served_primary, 0)
 	var/unserved = max(primary_demand - served_primary, 0)
-	var/deferred_unserved = max(deferred_demand - served_deferred, 0)
+	var/deferred_unserved = conservative_mode ? deferred_demand : max(deferred_demand - served_deferred, 0)
 	var/total_unserved = unserved + deferred_unserved
 
 	last_total_supply = total_supply
@@ -48,50 +51,6 @@
 	last_served_primary = served_primary
 	last_served_deferred = served_deferred
 	last_unserved = unserved
-
-	return list(
-		"avail" = total_supply,
-		"load" = predicted_load,
-		"comparison_avail" = comparison_avail,
-		"comparison_load" = comparison_load,
-		"unserved" = unserved,
-		"deferred_unserved" = deferred_unserved,
-		"total_unserved" = total_unserved,
-		"primary_demand" = primary_demand,
-		"served_primary" = served_primary
-	)
-
-/datum/power_solver/strict_capacity_flow
-	backend_id = "strict_capacity_flow"
-	backend_name = "Strict Capacity Flow"
-
-/datum/power_solver/strict_capacity_flow/proc/solve_strict_capacity_flow(datum/powernet/net)
-	if(!istype(net))
-		return list("avail" = 0, "load" = 0, "comparison_avail" = 0, "comparison_load" = 0, "unserved" = 0, "deferred_unserved" = 0, "total_unserved" = 0, "primary_demand" = 0, "served_primary" = 0)
-
-	var/smes_supply = 0
-	var/primary_demand = 0
-	var/deferred_demand = 0
-
-	if(net.nodes && length(net.nodes))
-		for(var/obj/machinery/power/node in net.nodes)
-			var/list/profile = node.power_solver_shadow_profile()
-			if(!islist(profile))
-				continue
-			primary_demand += max(profile["primary_demand"], 0)
-			deferred_demand += max(profile["deferred_demand"], 0)
-			smes_supply += max(profile["supply"], 0)
-
-	var/base_supply = max(net.avail - max(net.smes_avail, smes_supply), 0)
-
-	var/total_supply = max(base_supply + smes_supply, 0)
-	var/served_primary = min(total_supply, primary_demand)
-	var/predicted_load = max(served_primary, 0)
-	var/comparison_avail = max(net.avail, 0)
-	var/comparison_load = predicted_load
-	var/unserved = max(primary_demand - served_primary, 0)
-	var/deferred_unserved = deferred_demand
-	var/total_unserved = unserved + deferred_unserved
 
 	return list(
 		"avail" = total_supply,
@@ -147,7 +106,7 @@
 	var/problem = 0				// If this is not 0 there is some sort of issue in the powernet. Monitors will display warnings.
 
 	var/shadow_solver_enabled = TRUE
-	var/shadow_solver_backend = "shadow_fea"
+	var/shadow_solver_backend = "adaptive_shadow"
 	var/shadow_solver_native_enabled = FALSE
 	var/shadow_solver_native_topology_revision = 1
 	var/shadow_solver_native_stateful_registered_revision = -1
@@ -232,6 +191,10 @@
 	var/shadow_solver_cache_tick_dirty = TRUE
 	var/apc_terminal_count = 0
 	var/apc_terminal_count_dirty = TRUE
+	/// Current adaptive tier: "coarse", "normal", or "refined"
+	var/shadow_solver_tier = "normal"
+	/// When TRUE, admin has locked the tier -- select_shadow_solver_tier() is bypassed
+	var/shadow_solver_tier_locked = FALSE
 
 /datum/powernet/New()
 	START_PROCESSING_POWERNET(src)
@@ -330,9 +293,10 @@
 		shadow_solver_unserved_consecutive_ticks = 0
 	shadow_solver_avail_delta = shadow_solver_last_avail - avail
 	shadow_solver_load_delta = shadow_solver_last_load - load
-	shadow_solver_mismatch = abs(shadow_solver_avail_delta) > shadow_solver_mismatch_threshold \
-		|| abs(shadow_solver_load_delta) > shadow_solver_mismatch_threshold \
-		|| shadow_solver_last_unserved > shadow_solver_mismatch_threshold
+	var/effective_threshold = get_effective_mismatch_threshold()
+	shadow_solver_mismatch = abs(shadow_solver_avail_delta) > effective_threshold \
+		|| abs(shadow_solver_load_delta) > effective_threshold \
+		|| shadow_solver_last_unserved > effective_threshold
 	update_shadow_solver_stats()
 
 /datum/powernet/proc/is_shadow_solver_unserved_persistent(unserved_threshold = 0)
@@ -428,6 +392,14 @@
 	apc_terminal_count = count
 	apc_terminal_count_dirty = FALSE
 	return apc_terminal_count
+
+/// Effective mismatch threshold, scaled to network size.
+/// For small networks this equals shadow_solver_mismatch_threshold (5kW default).
+/// For large networks, allows up to 3% of scale so that normal rounding/timing
+/// differences between legacy and shadow don't constantly trigger mismatch.
+/datum/powernet/proc/get_effective_mismatch_threshold()
+	var/scale = max(max(avail, load), 50000)
+	return max(shadow_solver_mismatch_threshold, round(scale * 0.03))
 
 /datum/powernet/proc/mark_shadow_solver_tick_dirty()
 	shadow_solver_cache_tick_dirty = TRUE
@@ -570,7 +542,8 @@
 	var/delta_avail = abs(snapshot["avail"] - shadow_solver_cache_snapshot["avail"])
 	var/delta_load = abs(snapshot["load"] - shadow_solver_cache_snapshot["load"])
 	var/delta_unserved = abs(snapshot["unserved"] - shadow_solver_cache_snapshot["unserved"])
-	var/threshold = max(shadow_solver_cache_significant_threshold, 1)
+	var/scale = max(max(avail, load), 50000)
+	var/threshold = max(shadow_solver_cache_significant_threshold, round(scale * 0.01), 1)
 	return delta_avail > threshold || delta_load > threshold || delta_unserved > threshold
 
 /datum/powernet/proc/get_or_build_shadow_solver_snapshot(numapc, list/precomputed_snapshot = null, allow_native = TRUE, precomputed_reuse_mode = null)
@@ -645,13 +618,10 @@
 	)
 
 /datum/powernet/proc/get_shadow_solver_backend_name()
-	if(istype(shadow_solver))
-		return shadow_solver.backend_name
-	switch(shadow_solver_backend)
-		if("strict_capacity_flow")
-			return "Strict Capacity Flow"
-		else
-			return "Shadow FEA"
+	var/datum/power_solver/adaptive_shadow/solver = shadow_solver
+	if(istype(solver) && solver.conservative_mode)
+		return "Adaptive (Conservative)"
+	return "Adaptive Shadow"
 
 /datum/powernet/proc/get_shadow_solver_write_mode_name()
 	if(shadow_solver_force_fea_only || shadow_solver_write_mode == "fea_only")
@@ -703,7 +673,7 @@
 /datum/powernet/proc/get_shadow_solver_guard_threshold()
 	if(shadow_solver_guard_mismatch_threshold_override > 0)
 		return shadow_solver_guard_mismatch_threshold_override
-	return shadow_solver_mismatch_threshold
+	return get_effective_mismatch_threshold()
 
 /datum/powernet/proc/get_shadow_solver_guard_mismatch()
 	var/threshold = get_shadow_solver_guard_threshold()
@@ -724,6 +694,18 @@
 	shadow_solver_acceptance_last_pass = FALSE
 	shadow_solver_acceptance_last_reason = "insufficient_samples"
 
+/// Acceptance delta threshold scaled to network size.
+/// Uses the configured var as floor, scales at 3% of network scale.
+/datum/powernet/proc/get_effective_acceptance_delta_threshold(configured_threshold)
+	var/scale = max(max(avail, load), 50000)
+	return max(configured_threshold, round(scale * 0.03))
+
+/// Acceptance unserved threshold scaled to network size.
+/// Uses the configured var as floor, scales at 2% of network scale.
+/datum/powernet/proc/get_effective_acceptance_unserved_threshold()
+	var/scale = max(max(avail, load), 50000)
+	return max(shadow_solver_acceptance_max_avg_unserved, round(scale * 0.02))
+
 /datum/powernet/proc/evaluate_shadow_solver_acceptance()
 	var/list/st = get_shadow_solver_stats_data()
 	var/samples = st["samples"]
@@ -737,17 +719,17 @@
 		shadow_solver_acceptance_last_reason = "mismatch_rate"
 		return FALSE
 
-	if(st["avg_abs_load_delta"] > shadow_solver_acceptance_max_avg_load_delta)
+	if(st["avg_abs_load_delta"] > get_effective_acceptance_delta_threshold(shadow_solver_acceptance_max_avg_load_delta))
 		shadow_solver_acceptance_last_pass = FALSE
 		shadow_solver_acceptance_last_reason = "avg_load_delta"
 		return FALSE
 
-	if(st["avg_abs_avail_delta"] > shadow_solver_acceptance_max_avg_avail_delta)
+	if(st["avg_abs_avail_delta"] > get_effective_acceptance_delta_threshold(shadow_solver_acceptance_max_avg_avail_delta))
 		shadow_solver_acceptance_last_pass = FALSE
 		shadow_solver_acceptance_last_reason = "avg_avail_delta"
 		return FALSE
 
-	if(st["avg_unserved"] > shadow_solver_acceptance_max_avg_unserved)
+	if(st["avg_unserved"] > get_effective_acceptance_unserved_threshold())
 		shadow_solver_acceptance_last_pass = FALSE
 		shadow_solver_acceptance_last_reason = "avg_unserved"
 		return FALSE
@@ -792,33 +774,43 @@
 /datum/powernet/proc/should_enforce_apc_cap()
 	return shadow_solver_apc_advisory_valid && shadow_solver_write_enabled && (shadow_solver_write_mode == "pilot_apc_enforced" || shadow_solver_write_mode == "fea_only")
 
-/datum/powernet/proc/get_apc_enforced_budget()
+/datum/powernet/proc/get_apc_enforced_budget(apc_demand = 0)
 	if(!shadow_solver_apc_advisory_valid || shadow_solver_last_apc_count <= 0)
 		return null
+	// Refined tier: proportional budget based on APC's own demand
+	if(shadow_solver_tier == "refined" && apc_demand > 0)
+		return get_apc_proportional_budget(apc_demand)
+	// Normal tier: equal split
 	var/legacy_perapc = max(avail / shadow_solver_last_apc_count, 0)
 	var/floor_budget = legacy_perapc * clamp(shadow_solver_apc_cap_floor_ratio, 0, 1)
 	shadow_solver_last_apc_enforced_floor = floor_budget
 	shadow_solver_last_apc_enforced_budget = max(shadow_solver_last_apc_advisory_perapc, floor_budget)
 	return shadow_solver_last_apc_enforced_budget
 
+/// Proportional APC budget for refined tier. Each APC's share of served power
+/// is proportional to its demand, not equal split.
+/datum/powernet/proc/get_apc_proportional_budget(apc_demand)
+	if(!shadow_solver_apc_advisory_valid || shadow_solver_last_apc_count <= 0)
+		return null
+	if(shadow_solver_last_apc_advisory_primary_demand <= 0)
+		return get_apc_enforced_budget()
+	var/proportion = apc_demand / shadow_solver_last_apc_advisory_primary_demand
+	var/proportional_budget = proportion * shadow_solver_last_apc_advisory_served_primary
+	var/legacy_perapc = max(avail / max(shadow_solver_last_apc_count, 1), 0)
+	var/floor = legacy_perapc * clamp(shadow_solver_apc_cap_floor_ratio, 0, 1)
+	return max(proportional_budget, floor)
+
 /datum/powernet/proc/set_shadow_solver_backend(new_backend)
-	if(new_backend != "strict_capacity_flow" && new_backend != "shadow_fea")
-		new_backend = "shadow_fea"
-	shadow_solver_backend = new_backend
+	// Legacy compat: accept old values without error, always use adaptive_shadow
+	shadow_solver_backend = "adaptive_shadow"
 	shadow_solver = null
 	reset_shadow_solver_stats()
 	mark_shadow_solver_topology_dirty()
 
 /datum/powernet/proc/ensure_shadow_solver()
-	if(istype(shadow_solver))
-		if(shadow_solver_backend == shadow_solver.backend_id)
-			return shadow_solver
-
-	switch(shadow_solver_backend)
-		if("strict_capacity_flow")
-			shadow_solver = new /datum/power_solver/strict_capacity_flow
-		else
-			shadow_solver = new /datum/power_solver/shadow_fea
+	if(istype(shadow_solver, /datum/power_solver/adaptive_shadow))
+		return shadow_solver
+	shadow_solver = new /datum/power_solver/adaptive_shadow
 	return shadow_solver
 
 /datum/powernet/proc/get_shadow_solver_native_timer_id(tag)
@@ -833,13 +825,9 @@
 		if(islist(native_snapshot))
 			return native_snapshot
 
-	if(istype(active_solver, /datum/power_solver/shadow_fea))
-		var/datum/power_solver/shadow_fea/shadow_solver = active_solver
-		return shadow_solver.solve_shadow_fea(src)
-
-	if(istype(active_solver, /datum/power_solver/strict_capacity_flow))
-		var/datum/power_solver/strict_capacity_flow/strict_solver = active_solver
-		return strict_solver.solve_strict_capacity_flow(src)
+	var/datum/power_solver/adaptive_shadow/solver = active_solver
+	if(istype(solver))
+		return solver.solve(src)
 
 	return null
 
@@ -918,9 +906,20 @@
 		"nodes" = build_shadow_solver_native_nodes_payload_live(FALSE)
 	)
 
+/// Maps adaptive_shadow backend_id to legacy native-compatible IDs.
+/datum/powernet/proc/get_native_backend_id(datum/power_solver/active_solver)
+	if(active_solver.backend_id == "adaptive_shadow")
+		var/datum/power_solver/adaptive_shadow/adaptive = active_solver
+		if(istype(adaptive) && adaptive.conservative_mode)
+			return "strict_capacity_flow"
+		return "shadow_fea"
+	return active_solver.backend_id
+
 /datum/powernet/proc/build_shadow_solver_native_payload_compact(datum/power_solver/active_solver)
+	// Map adaptive_shadow to legacy backend_id for native compatibility
+	var/native_backend_id = get_native_backend_id(active_solver)
 	return list(
-		active_solver.backend_id,
+		native_backend_id,
 		max(avail, 0),
 		max(smes_avail, 0),
 		build_shadow_solver_native_nodes_payload_live(TRUE)
@@ -935,17 +934,19 @@
 	if(!istype(active_solver))
 		return null
 	var/id_value = get_shadow_solver_native_stateful_identifier()
+	// Map adaptive_shadow to legacy backend_id for native compatibility
+	var/native_backend_id = get_native_backend_id(active_solver)
 	if(use_compact_format)
 		return list(
 			id_value,
 			max(shadow_solver_native_topology_revision, 0),
-			active_solver.backend_id,
+			native_backend_id,
 			build_shadow_solver_native_nodes_payload(TRUE)
 		)
 	return list(
 		"id" = id_value,
 		"revision" = max(shadow_solver_native_topology_revision, 0),
-		"backend" = active_solver.backend_id,
+		"backend" = native_backend_id,
 		"nodes" = build_shadow_solver_native_nodes_payload(TRUE)
 	)
 
@@ -1160,6 +1161,58 @@
 	shadow_solver_last_smes_input_source = "none"
 	shadow_solver_last_smes_input_percentage = -1
 
+/// Priority-banded SMES charging for refined tier.
+/// Higher-priority SMES units are served first; remaining excess flows to lower bands.
+/datum/powernet/proc/apply_shadow_solver_write_path_refined(list/snapshot)
+	var/solver_percentage = get_solver_smes_input_percentage(snapshot)
+	if(isnull(solver_percentage))
+		var/legacy_percentage = get_legacy_smes_input_percentage()
+		if(!isnull(legacy_percentage))
+			shadow_solver_last_smes_input_source = "legacy"
+			shadow_solver_last_smes_input_percentage = legacy_percentage
+			apply_smes_input_percentage(legacy_percentage)
+		else
+			shadow_solver_last_smes_input_source = "none"
+			shadow_solver_last_smes_input_percentage = -1
+		return
+
+	shadow_solver_last_smes_input_source = "solver_refined"
+	shadow_solver_last_smes_input_percentage = solver_percentage
+
+	// Compute total excess available for SMES charging
+	var/served_primary = snapshot ? max(snapshot["served_primary"], 0) : 0
+	var/total_excess = max((snapshot ? snapshot["avail"] : avail) - served_primary, 0)
+	var/remaining_excess = total_excess
+
+	// Collect SMES units by priority band (3 -> 2 -> 1)
+	var/list/band_3 = list()
+	var/list/band_2 = list()
+	var/list/band_1 = list()
+	for(var/obj/machinery/power/smes/S in inputting)
+		switch(S.shadow_solver_charge_priority)
+			if(3) band_3 += S
+			if(2) band_2 += S
+			else  band_1 += S
+
+	// Serve each band: compute band demand, allocate percentage, deduct
+	var/list/bands = list(band_3, band_2, band_1)
+	for(var/list/band in bands)
+		if(!length(band))
+			continue
+		if(remaining_excess <= 0)
+			for(var/obj/machinery/power/smes/S in band)
+				S.input_power(0, src)
+			continue
+		var/band_demand = 0
+		for(var/obj/machinery/power/smes/S in band)
+			band_demand += S.get_shadow_solver_deferred_demand()
+		if(band_demand <= 0)
+			continue
+		var/band_pct = clamp((remaining_excess / band_demand) * 100, 0, 100)
+		for(var/obj/machinery/power/smes/S in band)
+			S.input_power(band_pct, src)
+		remaining_excess = max(remaining_excess - band_demand * min(band_pct, 100) / 100, 0)
+
 /datum/powernet/proc/run_shadow_solver_comparison(list/snapshot)
 	if(!shadow_solver_enabled)
 		return
@@ -1189,11 +1242,44 @@
 	log_debug("Powernet shadow mismatch ([active_solver.backend_id]): avail=[avail], load=[load], shadow_avail=[shadow_solver_last_avail], shadow_load=[shadow_solver_last_load], shadow_unserved_primary=[shadow_solver_last_unserved], shadow_unserved_deferred=[shadow_solver_last_deferred_unserved], d_avail=[shadow_solver_avail_delta], d_load=[shadow_solver_load_delta]")
 
 
+/// Deterministic tier selection. Pure function of current-tick state.
+/// Called once per powernet per tick, before the solve.
+/datum/powernet/proc/select_shadow_solver_tier()
+	if(shadow_solver_tier_locked)
+		return shadow_solver_tier
+
+	var/numapc = get_apc_terminal_count()
+
+	// Coarse: small network with no APCs, no SMES charging, low scale.
+	// Generator-output nets, sensor nets, etc. Skip native call overhead.
+	if(numapc == 0 && !length(inputting) && max(avail, load) < 50000)
+		shadow_solver_tier = "coarse"
+		return shadow_solver_tier
+
+	// Refined: multiple APCs with contention detected or imminent.
+	// Activates proportional APC budgets and SMES priority bands.
+	if(numapc >= 2)
+		// Previous tick had unserved primary demand (direct evidence of contention)
+		if(shadow_solver_last_unserved > 0)
+			shadow_solver_tier = "refined"
+			return shadow_solver_tier
+		// Load at or above 85% of supply (contention imminent)
+		if(avail > 0 && (load / avail) >= 0.85)
+			shadow_solver_tier = "refined"
+			return shadow_solver_tier
+
+	// Normal: standard native batch solve with equal perapc.
+	shadow_solver_tier = "normal"
+	return shadow_solver_tier
+
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset(wait, list/precomputed_shadow_snapshot = null, allow_native_shadow_solver = TRUE, precomputed_shadow_snapshot_reuse_mode = null)
 	var/numapc = get_apc_terminal_count()
 	var/drift_threshold = get_shadow_solver_cache_drift_threshold()
+
+	// Select tier before solve
+	select_shadow_solver_tier()
 
 	if(problem > 0)
 		problem = max(problem - 1, 0)
@@ -1212,7 +1298,9 @@
 	netexcess = avail - load
 	var/list/write_snapshot
 	if(shadow_solver_enabled)
-		write_snapshot = get_or_build_shadow_solver_snapshot(numapc, precomputed_shadow_snapshot, allow_native_shadow_solver, precomputed_shadow_snapshot_reuse_mode)
+		// Coarse tier: force DM-only (no native), unless a precomputed batch snapshot was provided
+		var/tier_allow_native = (shadow_solver_tier != "coarse") && allow_native_shadow_solver
+		write_snapshot = get_or_build_shadow_solver_snapshot(numapc, precomputed_shadow_snapshot, tier_allow_native, precomputed_shadow_snapshot_reuse_mode)
 		run_shadow_solver_comparison(write_snapshot)
 	update_apc_advisory(write_snapshot, numapc)
 
@@ -1229,7 +1317,10 @@
 
 	// At this point, all other machines have finished using power. Anything left over may be used up to charge SMESs.
 	if(length(inputting) && smes_demand)
-		apply_shadow_solver_write_path(write_snapshot)
+		if(shadow_solver_tier == "refined")
+			apply_shadow_solver_write_path_refined(write_snapshot)
+		else
+			apply_shadow_solver_write_path(write_snapshot)
 	else
 		shadow_solver_last_smes_input_source = "none"
 		shadow_solver_last_smes_input_percentage = -1

@@ -446,7 +446,7 @@ var/global/list/turret_icons
 
 	if(!islist(current_watchers))
 		current_watchers = list()
-		for(var/mob/living/watcher in mobs_in_view(world.view, src))
+		for(var/mob/living/watcher in range(world.view, src))
 			current_watchers |= watcher
 
 	for(var/mob/living/watcher in (dormant_watchers - current_watchers))
@@ -466,7 +466,7 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/dormant_watcher_changed(mob/living/watcher)
 	if(!istype(watcher) || !enabled || inoperable())
 		return
-	if(!(watcher in mobs_in_view(world.view, src)))
+	if(get_dist(src, watcher) > world.view)
 		unregister_dormant_watcher(watcher)
 		dormant_watchers -= watcher
 		return
@@ -495,10 +495,8 @@ var/global/list/turret_icons
 
 	var/list/targets = list()			//list of primary targets
 	var/list/secondarytargets = list()	//targets that are least important
-	var/list/nearby_watchers = list()
 
 	for(var/mob/living/M in mobs_in_view(world.view, src))
-		nearby_watchers |= M
 		assess_and_assign(M, targets, secondarytargets)
 
 	if(!tryToShootAt(targets))
@@ -510,7 +508,7 @@ var/global/list/turret_icons
 			// No valid targets - enter dormant mode and wait for movement or nearby threat state changes.
 			if(!(auto_repair && health_damaged()) && prox_trigger)
 				prox_trigger.register_turfs()
-				update_dormant_watchers(nearby_watchers)
+				update_dormant_watchers()
 				return PROCESS_KILL
 
 	if(auto_repair && health_damaged())

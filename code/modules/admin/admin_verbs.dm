@@ -238,7 +238,7 @@ var/global/list/admin_verbs_power_shadow_basic = list(
 var/global/list/admin_verbs_power_shadow_advanced = list(
 	/client/proc/power_shadow_solver_toggle,
 	/client/proc/power_shadow_solver_threshold,
-	/client/proc/power_shadow_solver_backend,
+	/client/proc/power_shadow_solver_tier_override,
 	/client/proc/power_shadow_solver_native_toggle,
 	/client/proc/power_shadow_solver_guard_settings,
 	/client/proc/power_shadow_solver_guard_threshold_override,

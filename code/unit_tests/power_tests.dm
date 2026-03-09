@@ -630,11 +630,11 @@
 
 
 /datum/unit_test/power_shadow_auto_repair_retunes
-	name = "POWER SHADOW: Auto-repair retunes and backend-switches"
+	name = "POWER SHADOW: Auto-repair retunes and activates conservative mode"
 
 /datum/unit_test/power_shadow_auto_repair_retunes/start_test()
 	var/datum/powernet/problem = new
-	problem.shadow_solver_backend = "shadow_fea"
+	problem.shadow_solver_backend = "adaptive_shadow"
 	problem.shadow_solver_mismatch = TRUE
 	problem.shadow_solver_avail_delta = 400000
 	problem.shadow_solver_load_delta = 300000
@@ -656,8 +656,9 @@
 		qdel(problem)
 		return 1
 
-	if(problem.shadow_solver_backend != "strict_capacity_flow")
-		fail("Expected backend fallback to strict_capacity_flow on severe mismatch.")
+	var/datum/power_solver/adaptive_shadow/solver = problem.ensure_shadow_solver()
+	if(!istype(solver) || !solver.conservative_mode)
+		fail("Expected conservative mode activation on severe mismatch.")
 		qdel(problem)
 		return 1
 
@@ -667,7 +668,7 @@
 		return 1
 
 	qdel(problem)
-	pass("Auto-repair retune and backend fallback behaved correctly.")
+	pass("Auto-repair retune and conservative mode activation behaved correctly.")
 	return 1
 
 
@@ -1039,4 +1040,174 @@
 
 	qdel(SMES)
 	pass("SMES display keeps the most recent completed charging state until the next power phase, and clears immediately when charging is disabled.")
+	return 1
+
+
+/datum/unit_test/power_shadow_tier_selection_coarse
+	name = "POWER SHADOW: Coarse tier selected for small no-APC networks"
+
+/datum/unit_test/power_shadow_tier_selection_coarse/start_test()
+	var/datum/powernet/PN = new
+	PN.shadow_solver_enabled = TRUE
+	PN.avail = 30000
+	PN.load = 10000
+	PN.smes_demand = 0
+	PN.apc_terminal_count = 0
+	PN.apc_terminal_count_dirty = FALSE
+
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier != "coarse")
+		fail("Expected coarse tier for small no-APC network, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	// Above 50kW threshold should not be coarse
+	PN.avail = 60000
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier == "coarse")
+		fail("Expected non-coarse tier for network above 50kW, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	qdel(PN)
+	pass("Coarse tier correctly selected for small no-APC networks.")
+	return 1
+
+
+/datum/unit_test/power_shadow_tier_selection_refined
+	name = "POWER SHADOW: Refined tier selected when contention exists"
+
+/datum/unit_test/power_shadow_tier_selection_refined/start_test()
+	var/datum/powernet/PN = new
+	PN.shadow_solver_enabled = TRUE
+	PN.avail = 100000
+	PN.load = 90000
+	PN.apc_terminal_count = 3
+	PN.apc_terminal_count_dirty = FALSE
+	PN.shadow_solver_last_unserved = 0
+
+	// 90% load with 3 APCs -> refined
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier != "refined")
+		fail("Expected refined tier at 90% capacity with 3 APCs, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	// 50% load, no contention -> normal
+	PN.load = 50000
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier != "normal")
+		fail("Expected normal tier at 50% capacity, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	// Nonzero unserved from last tick -> refined
+	PN.shadow_solver_last_unserved = 5000
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier != "refined")
+		fail("Expected refined tier with nonzero unserved, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	// Tier lock overrides auto-selection
+	PN.shadow_solver_tier_locked = TRUE
+	PN.shadow_solver_tier = "normal"
+	PN.select_shadow_solver_tier()
+	if(PN.shadow_solver_tier != "normal")
+		fail("Expected locked tier to be preserved, got [PN.shadow_solver_tier].")
+		qdel(PN)
+		return 1
+
+	qdel(PN)
+	pass("Tier selection correctly responds to capacity, unserved state, and tier lock.")
+	return 1
+
+
+/datum/unit_test/power_shadow_proportional_budget
+	name = "POWER SHADOW: Refined tier gives proportional APC budgets"
+
+/datum/unit_test/power_shadow_proportional_budget/start_test()
+	var/datum/powernet/PN = new
+	PN.shadow_solver_tier = "refined"
+	PN.shadow_solver_apc_advisory_valid = TRUE
+	PN.shadow_solver_last_apc_count = 2
+	PN.shadow_solver_last_apc_advisory_primary_demand = 10000
+	PN.shadow_solver_last_apc_advisory_served_primary = 8000
+	PN.shadow_solver_apc_cap_floor_ratio = 0.1
+	PN.avail = 10000
+
+	// APC with 7000W demand should get 70% of 8000 = 5600
+	var/budget_large = PN.get_apc_enforced_budget(7000)
+	if(isnull(budget_large) || abs(budget_large - 5600) > 1)
+		fail("Expected proportional budget ~5600 for 7000W APC, got [budget_large].")
+		qdel(PN)
+		return 1
+
+	// APC with 3000W demand should get 30% of 8000 = 2400
+	var/budget_small = PN.get_apc_enforced_budget(3000)
+	if(isnull(budget_small) || abs(budget_small - 2400) > 1)
+		fail("Expected proportional budget ~2400 for 3000W APC, got [budget_small].")
+		qdel(PN)
+		return 1
+
+	// Normal tier: equal budget regardless of demand
+	PN.shadow_solver_tier = "normal"
+	var/budget_a = PN.get_apc_enforced_budget(7000)
+	var/budget_b = PN.get_apc_enforced_budget(3000)
+	if(isnull(budget_a) || isnull(budget_b) || budget_a != budget_b)
+		fail("Normal tier should give equal budget regardless of demand.")
+		qdel(PN)
+		return 1
+
+	qdel(PN)
+	pass("Proportional APC budgets work correctly in refined tier.")
+	return 1
+
+
+/datum/unit_test/power_shadow_conservative_mode
+	name = "POWER SHADOW: Conservative mode blocks deferred demand"
+
+/datum/unit_test/power_shadow_conservative_mode/start_test()
+	var/datum/powernet/PN = new
+	PN.avail = 100000
+	PN.smes_avail = 0
+	PN.shadow_solver_enabled = TRUE
+
+	var/turf/T = get_safe_turf()
+	var/obj/machinery/power/native_payload_cache_probe/node = new(T)
+	node.profile_primary_demand = 50000
+	node.profile_deferred_demand = 30000
+	node.profile_supply = 0
+	PN.nodes[node] = node
+
+	var/datum/power_solver/adaptive_shadow/solver = new
+	solver.conservative_mode = FALSE
+	var/list/normal_result = solver.solve(PN)
+
+	solver.conservative_mode = TRUE
+	var/list/conservative_result = solver.solve(PN)
+
+	// Normal: load should include deferred
+	if(normal_result["load"] <= normal_result["served_primary"])
+		fail("Normal mode should include deferred in load.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	// Conservative: load should equal served_primary (no deferred)
+	if(conservative_result["load"] != conservative_result["served_primary"])
+		fail("Conservative mode load should equal served_primary (no deferred).")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	if(conservative_result["deferred_unserved"] != 30000)
+		fail("Conservative mode should leave all deferred demand unserved.")
+		qdel(node)
+		qdel(PN)
+		return 1
+
+	qdel(node)
+	qdel(PN)
+	pass("Conservative mode correctly blocks deferred demand serving.")
 	return 1

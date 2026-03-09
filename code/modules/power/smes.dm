@@ -33,6 +33,9 @@
 	var/last_inputting = 0 			// last completed input state, used to keep UI/icon state stable between machine and powernet phases
 	var/last_input_available = 0 	// last completed input draw, used to keep UI state stable between machine and powernet phases
 
+	/// Charging priority for refined solver tier. Higher = served first. (1=standard, 2=elevated, 3=critical)
+	var/shadow_solver_charge_priority = 1
+
 	var/output_attempt = 0 			// 1 = attempting to output, 0 = not attempting to output
 	var/outputting = 0 				// 1 = actually outputting, 0 = not outputting
 	var/output_level = 50000		// amount of power the SMES attempts to output

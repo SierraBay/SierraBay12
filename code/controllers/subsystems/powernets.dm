@@ -530,9 +530,14 @@ SUBSYSTEM_DEF(powernets)
 		for(var/datum/powernet/network as anything in powernets)
 			if(!network)
 				continue
-			if(network.shadow_solver_enabled && network.shadow_solver_native_enabled)
-				native_capable++
 			powernets_snapshot += network
+			if(!network.shadow_solver_enabled || !network.shadow_solver_native_enabled)
+				continue
+			// Pre-classify tier; coarse networks are excluded from native batch
+			network.select_shadow_solver_tier()
+			if(network.shadow_solver_tier == "coarse")
+				continue
+			native_capable++
 		powernet_last_snapshot_size = length(powernets_snapshot)
 		if(native_capable)
 			if(power_shadow_native_autogate_is_suspended())
@@ -676,9 +681,12 @@ SUBSYSTEM_DEF(powernets)
 		PN.shadow_solver_acceptance_max_avg_avail_delta = max(PN.shadow_solver_acceptance_max_avg_avail_delta, round(adaptive_threshold * 1.5))
 		PN.shadow_solver_acceptance_max_avg_unserved = max(PN.shadow_solver_acceptance_max_avg_unserved, round(adaptive_threshold * 0.8))
 
-		if(PN.shadow_solver_backend == "shadow_fea" && abs_delta > adaptive_threshold * 2 && PN.shadow_solver_last_unserved > unserved_threshold)
-			PN.set_shadow_solver_backend("strict_capacity_flow")
-			backend_switched++
+		if(abs_delta > adaptive_threshold * 2 && PN.shadow_solver_last_unserved > unserved_threshold)
+			var/datum/power_solver/adaptive_shadow/solver = PN.ensure_shadow_solver()
+			if(istype(solver) && !solver.conservative_mode)
+				solver.conservative_mode = TRUE
+				backend_switched++
+		PN.shadow_solver_tier_locked = FALSE
 
 		PN.reset_shadow_solver_guard_state()
 		PN.reset_shadow_solver_stats()
