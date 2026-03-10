@@ -1996,6 +1996,12 @@
 	icon = 'icons/turf/flooring/grass.dmi'
 	},
 /area/centcom)
+"ant" = (
+/obj/landmark/carp_race_start{
+	slot = 2
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "any" = (
 /obj/floor_decal/techfloor,
 /obj/machinery/vending/engivend{
@@ -4713,6 +4719,13 @@
 	icon_state = "dark"
 	},
 /area/tdome)
+"aBi" = (
+/obj/structure/railing/mapped/no_density,
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 10;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "aBu" = (
 /turf/unsimulated/wall,
 /area/tdome/tdomeadmin)
@@ -8206,6 +8219,12 @@
 	icon = 'icons/turf/flooring/grass.dmi'
 	},
 /area/centcom)
+"ctm" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 4;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "ctI" = (
 /obj/machinery/smartfridge{
 	opacity = 1
@@ -8725,6 +8744,16 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
+"dho" = (
+/obj/structure/railing/mapped/no_density,
+/obj/item/bikehorn/rubberducky,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
+"did" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "desert1"
+	},
+/area/carp_racing)
 "djE" = (
 /obj/forcefield{
 	desc = "You can't get in. Heh.";
@@ -8851,6 +8880,13 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/specops)
+"dyg" = (
+/obj/structure/railing/mapped/no_density,
+/obj/structure/curtain{
+	color = "#68ccab"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "dAo" = (
 /obj/floor_decal/borderfloorblack,
 /obj/structure/disposalpipe/segment,
@@ -9014,6 +9050,12 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"dQW" = (
+/obj/landmark/carp_race_start{
+	slot = 6
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "dRL" = (
 /obj/machinery/recharger/wallcharger{
 	pixel_y = -25;
@@ -9392,6 +9434,13 @@
 	color = "#78523b"
 	},
 /area/centcom/living)
+"ewm" = (
+/obj/landmark/carp_race_finish,
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 1;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "ewt" = (
 /obj/floor_decal/scglogo{
 	icon_state = "top-left"
@@ -9613,6 +9662,10 @@
 	icon = 'icons/turf/flooring/grass.dmi'
 	},
 /area/centcom)
+"eRt" = (
+/obj/structure/curtain,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "eSk" = (
 /obj/floor_decal/spline/fancy/wood/corner{
 	dir = 8
@@ -9623,6 +9676,13 @@
 	color = "#78523b"
 	},
 /area/centcom/living)
+"eWb" = (
+/obj/structure/railing/mapped/no_density,
+/obj/floor_decal/corner/blue{
+	dir = 9
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "eWc" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 5
@@ -9846,6 +9906,12 @@
 	icon = 'icons/turf/flooring/grass.dmi'
 	},
 /area/centcom)
+"foU" = (
+/obj/structure/curtain{
+	color = "#cd6889"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "fqd" = (
 /obj/structure/railing/mapped,
 /turf/unsimulated/floor/techfloor{
@@ -9946,6 +10012,12 @@
 	name = "carpet"
 	},
 /area/centcom/holding)
+"fBs" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 1;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "fBx" = (
 /obj/machinery/camera/network/thunder{
 	c_tag = "Thunderdome Red Team";
@@ -10072,6 +10144,12 @@
 	icon_state = "steel"
 	},
 /area/centcom)
+"fQj" = (
+/obj/structure/curtain{
+	color = "#68ccab"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "fRh" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 6
@@ -10888,6 +10966,12 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom/control)
+"htm" = (
+/obj/floor_decal/corner/blue{
+	dir = 9
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "hvm" = (
 /obj/structure/bed/chair{
 	dir = 4
@@ -11490,6 +11574,14 @@
 	icon_state = "techfloor_grid"
 	},
 /area/centcom/iccgn)
+"iBq" = (
+/obj/structure/curtain{
+	color = "#cd6889"
+	},
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "iCL" = (
 /obj/machinery/camera/network/thunder{
 	c_tag = "Thunderdome Arena Left";
@@ -11713,6 +11805,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall/prepainted,
 /area/centcom/scgf)
+"iZU" = (
+/obj/structure/railing/mapped/no_density,
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "jaZ" = (
 /obj/structure/table/woodentable_reinforced/walnut,
 /obj/floor_decal/spline/fancy/wood,
@@ -11782,6 +11880,12 @@
 	name = "carpet"
 	},
 /area/centcom/living)
+"jfU" = (
+/obj/landmark/carp_race_start{
+	slot = 5
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "jhz" = (
 /obj/floor_decal/borderfloor{
 	dir = 1
@@ -11936,6 +12040,11 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
+"jtf" = (
+/obj/structure/railing/mapped/no_density,
+/obj/machinery/camera/network/carp_race,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "jtB" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 4
@@ -12244,6 +12353,11 @@
 	icon_state = "white"
 	},
 /area/centcom)
+"jLE" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "jLW" = (
 /turf/unsimulated/floor/techfloor{
 	icon_state = "monotiledark";
@@ -12402,6 +12516,12 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/holding)
+"khB" = (
+/obj/landmark/carp_race_start{
+	slot = 4
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "kiC" = (
 /obj/wallframe_spawn/reinforced,
 /turf/unsimulated/floor{
@@ -12419,6 +12539,13 @@
 /obj/structure/sign/warning/airlock,
 /turf/simulated/wall/r_wall/prepainted,
 /area/centcom)
+"knk" = (
+/obj/structure/railing/mapped/no_density,
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 6;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "kpp" = (
 /obj/floor_decal/borderfloor/corner{
 	dir = 4
@@ -12839,6 +12966,13 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"kNS" = (
+/obj/structure/curtain,
+/obj/structure/curtain{
+	color = "#cd6889"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "kOJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/floor_decal/borderfloorblack{
@@ -13690,6 +13824,15 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"mIi" = (
+/obj/structure/curtain{
+	color = "#68ccab"
+	},
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 1;
+	icon_state = "beach"
+	},
+/area/carp_racing)
 "mIS" = (
 /obj/structure/disposalpipe/segment,
 /obj/decal/cleanable/filth,
@@ -13745,6 +13888,12 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom)
+"mNH" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	dir = 1;
+	icon_state = "beachcorner"
+	},
+/area/carp_racing)
 "mOH" = (
 /obj/random/trash,
 /obj/floor_decal/techfloor{
@@ -13756,6 +13905,13 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
+"mOY" = (
+/obj/overlay/palmtree_r,
+/obj/overlay/coconut,
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "desert1"
+	},
+/area/carp_racing)
 "mQl" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
@@ -14286,6 +14442,9 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/holding)
+"nTr" = (
+/turf/simulated/wall/voxshuttle,
+/area/carp_racing)
 "nUd" = (
 /obj/floor_decal/spline/fancy/wood,
 /obj/structure/bed/chair/wood/wings/walnut{
@@ -14723,6 +14882,14 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/scgf)
+"oGV" = (
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
+"oIJ" = (
+/obj/structure/railing/mapped/no_density,
+/obj/structure/curtain,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "oKl" = (
 /obj/structure/table/rack/dark,
 /obj/floor_decal/techfloor,
@@ -14949,6 +15116,12 @@
 	icon_state = "steel"
 	},
 /area/centcom/living)
+"oZt" = (
+/obj/landmark/carp_race_start{
+	slot = 1
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "oZu" = (
 /obj/floor_decal/carpet{
 	dir = 4
@@ -15230,6 +15403,12 @@
 	icon_state = "white"
 	},
 /area/centcom)
+"pAS" = (
+/obj/floor_decal/corner/red{
+	dir = 6
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "pBe" = (
 /obj/machinery/acting/changer,
 /turf/unsimulated/floor{
@@ -15277,6 +15456,12 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/scgf)
+"pEG" = (
+/obj/landmark/carp_race_start{
+	slot = 3
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "pGu" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -15819,6 +16004,11 @@
 /obj/item/stack/tile/carpetblue3/fifty,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
+"qwe" = (
+/turf/simulated/floor/holofloor/beach/sand{
+	icon_state = "beachcorner"
+	},
+/area/carp_racing)
 "qws" = (
 /obj/structure/table/marble,
 /obj/item/material/rollingpin,
@@ -16033,6 +16223,10 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom/control)
+"qQy" = (
+/obj/structure/curtain,
+/turf/simulated/floor/holofloor/beach/sand,
+/area/carp_racing)
 "qRg" = (
 /obj/machinery/seed_storage/garden{
 	dir = 8
@@ -16088,6 +16282,16 @@
 /obj/floor_decal/corner/purple/bordercorner2,
 /turf/unsimulated/floor/techfloor,
 /area/centcom)
+"qYg" = (
+/obj/structure/railing/mapped/no_density,
+/obj/floor_decal/corner/blue{
+	dir = 9
+	},
+/obj/floor_decal/corner/blue{
+	dir = 9
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "qYE" = (
 /obj/floor_decal/borderfloorblack{
 	dir = 4
@@ -16166,6 +16370,10 @@
 	icon = 'icons/turf/flooring/tiles.dmi'
 	},
 /area/centcom/specops)
+"reT" = (
+/obj/item/beach_ball,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "rfc" = (
 /obj/structure/flora/pottedplant/minitree,
 /obj/floor_decal/corner/black/mono,
@@ -16774,6 +16982,10 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"scI" = (
+/obj/structure/railing/mapped/no_density,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "sgj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17717,6 +17929,13 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
 /area/tdome/testing/engineering)
+"tFi" = (
+/obj/structure/railing/mapped/no_density,
+/obj/floor_decal/corner/red{
+	dir = 6
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "tGl" = (
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
@@ -18371,6 +18590,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom)
+"uFO" = (
+/obj/machinery/race_controller,
+/turf/simulated/wall/voxshuttle,
+/area/carp_racing)
 "uGe" = (
 /obj/machinery/computer/modular/preset/engineering{
 	dir = 1
@@ -19183,6 +19406,10 @@
 	color = "#78523b"
 	},
 /area/centcom/holding)
+"wBZ" = (
+/obj/item/inflatable_duck,
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "wCN" = (
 /obj/floor_decal/carpet{
 	dir = 1
@@ -19354,6 +19581,14 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"wLC" = (
+/obj/structure/railing/mapped/no_density,
+/obj/structure/curtain,
+/obj/structure/curtain{
+	color = "#68ccab"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "wMc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -19913,6 +20148,13 @@
 	},
 /turf/unsimulated/floor/techfloor,
 /area/centcom/holding)
+"ybi" = (
+/obj/structure/railing/mapped/no_density,
+/obj/structure/curtain{
+	color = "#cd6889"
+	},
+/turf/simulated/floor/holofloor/beach/water,
+/area/carp_racing)
 "ybr" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/disposalpipe/segment{
@@ -20176,25 +20418,25 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
 awu
 awu
 awu
@@ -20378,25 +20620,25 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+qwe
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+ctm
+did
+qQy
+nTr
 awu
 awF
 axb
@@ -20580,25 +20822,25 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oZt
+scI
+ant
+scI
+pEG
+scI
+khB
+scI
+jfU
+scI
+dQW
+scI
+oGV
+fBs
+nTr
+nTr
 awu
 awF
 axb
@@ -20782,24 +21024,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+eWb
+htm
+eWb
+htm
+qYg
+htm
+eWb
+htm
+eWb
+htm
+eWb
+htm
+eWb
+htm
+fBs
+nTr
 aab
 awu
 awG
@@ -20984,24 +21226,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awG
@@ -21186,24 +21428,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awF
@@ -21388,24 +21630,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+reT
+fBs
+nTr
 aab
 awu
 awu
@@ -21590,24 +21832,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awI
@@ -21792,24 +22034,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awJ
@@ -21994,24 +22236,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awJ
@@ -22196,24 +22438,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awJ
@@ -22398,24 +22640,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+jtf
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awK
@@ -22600,24 +22842,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awL
@@ -22802,24 +23044,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awM
@@ -23004,24 +23246,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awN
@@ -23206,24 +23448,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awM
@@ -23408,24 +23650,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awO
@@ -23610,24 +23852,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awI
@@ -23812,24 +24054,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+dho
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awP
@@ -24014,24 +24256,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awI
@@ -24216,24 +24458,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awO
@@ -24418,24 +24660,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awM
@@ -24620,24 +24862,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awM
@@ -24822,24 +25064,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awO
@@ -25024,24 +25266,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awQ
@@ -25226,24 +25468,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+wBZ
+fBs
+nTr
 aab
 awu
 awR
@@ -25428,24 +25670,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awI
@@ -25630,24 +25872,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awO
@@ -25832,24 +26074,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+mNH
+aBi
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awM
@@ -26034,24 +26276,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+mOY
+iZU
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awS
@@ -26236,24 +26478,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+qwe
+knk
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awS
@@ -26438,24 +26680,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awK
@@ -26640,24 +26882,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awL
@@ -26842,24 +27084,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awR
@@ -27044,24 +27286,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awQ
@@ -27246,24 +27488,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awQ
@@ -27448,24 +27690,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awT
@@ -27650,24 +27892,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 awu
 awu
@@ -27852,24 +28094,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -28054,24 +28296,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -28256,24 +28498,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -28458,24 +28700,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -28660,24 +28902,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+tFi
+pAS
+tFi
+pAS
+tFi
+pAS
+tFi
+pAS
+tFi
+pAS
+tFi
+pAS
+tFi
+pAS
+fBs
+nTr
 aab
 aab
 aab
@@ -28862,24 +29104,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+ewm
+nTr
 aab
 aab
 aab
@@ -29064,24 +29306,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+iBq
+ybi
+foU
+ybi
+kNS
+oIJ
+eRt
+oIJ
+eRt
+oIJ
+eRt
+wLC
+fQj
+dyg
+fQj
+mIi
+nTr
 aab
 aab
 aab
@@ -29266,24 +29508,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -29468,24 +29710,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -29670,24 +29912,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -29872,24 +30114,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -30074,24 +30316,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+jLE
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+scI
+oGV
+fBs
+nTr
 aab
 aab
 aab
@@ -30276,24 +30518,24 @@ aab
 aab
 aab
 aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
-aab
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+nTr
+uFO
 aab
 aab
 aab
