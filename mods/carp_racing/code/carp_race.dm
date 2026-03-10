@@ -105,8 +105,6 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 /datum/carp_race/proc/radio_announce(message)
 	if(GLOB.carp_race_announcer)
 		GLOB.carp_race_announcer.autosay("[message]", "Carp Races", "Entertainment")
-	else
-		to_world_log("[time2text(world.time)] [src]: carp_race_announcer is null! [message]")
 
 
 // ---- State transitions ----

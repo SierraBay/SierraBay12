@@ -66,4 +66,4 @@
 		if(4) return RACE_HTML_COLOR_4
 		if(5) return RACE_HTML_COLOR_5
 		if(6) return RACE_HTML_COLOR_6
-	return "#FFFFFF"
+	return COLOR_WHITE
