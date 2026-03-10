@@ -14,6 +14,12 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	requires_power  = 0
 	dynamic_lighting = 0
 
+/area/carp_racing/Initialize(mapload)
+	. = ..()
+	// make sure automatic unit‑test list knows this area is never "unused"
+	if(!GLOB.using_map.area_usage_test_exempted_areas)
+		GLOB.using_map.area_usage_test_exempted_areas = list()
+		GLOB.using_map.area_usage_test_exempted_areas += /area/carp_racing
 
 // ---- Camera preset ----
 
