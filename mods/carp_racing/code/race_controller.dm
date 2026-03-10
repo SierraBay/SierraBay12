@@ -123,13 +123,12 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 			finish_turf = get_turf(L)
 			break
 
-	if(!length(start_turfs))
+	// ensure list exists before populating
+	if(!LAZYLEN(start_turfs))
 		start_turfs = list()
-		for(var/obj/landmark/carp_race_start/L in landmarks_list)
-			if(L.slot >= 1 && L.slot <= RACE_CARP_COUNT)
-				if(LAZYLEN(start_turfs) < L.slot)
-					LAZYLEN(start_turfs) = L.slot
-				start_turfs[L.slot] = get_turf(L)
+	for(var/obj/landmark/carp_race_start/L in landmarks_list)
+		if(L.slot >= 1 && L.slot <= RACE_CARP_COUNT)
+			LAZYSET(start_turfs, L.slot, get_turf(L))
 
 /// Called once after startup to find landmarks then begin the first race
 /obj/machinery/race_controller/proc/find_landmarks_and_begin()

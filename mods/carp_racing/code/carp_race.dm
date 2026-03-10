@@ -106,7 +106,7 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 	if(GLOB.carp_race_announcer)
 		GLOB.carp_race_announcer.autosay("[message]", "Carp Races", "Entertainment")
 	else
-		world.log << "[time2text(world.time)] [src]: carp_race_announcer is null! [message]"
+		to_world_log("[time2text(world.time)] [src]: carp_race_announcer is null! [message]")
 
 
 // ---- State transitions ----
@@ -193,7 +193,7 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 		winner         = C
 		state          = RACE_STATE_FINISHED
 		phase_end_time = world.time + RACE_RESET_DELAY
-		spawn(0) announce_and_payout()
+		announce_and_payout()
 
 /// Announce the winner and distribute winnings to bettors
 /datum/carp_race/proc/announce_and_payout()
