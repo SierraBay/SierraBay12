@@ -1,5 +1,5 @@
-#define TURRET_WATCH_MOBS (1<<0)
-#define TURRET_WATCH_METEORS (1<<1)
+#define TURRET_WATCH_MOBS (1)
+#define TURRET_WATCH_METEORS (2)
 
 /obj/machinery
 	var/list/watched_turfs
@@ -16,7 +16,7 @@ var/global/list/turf_watched_by_meteors = list()
 /proc/register_turret_view(obj/machinery/turret, target_mask, list/view_turfs)
 	unregister_turret_view(turret)
 
-	if(!view_turfs || !view_turfs.len)
+	if(!view_turfs || !length(view_turfs))
 		return
 
 	var/woken = FALSE
@@ -56,13 +56,13 @@ var/global/list/turf_watched_by_meteors = list()
 		var/list/watchers = turf_watched_by_mobs[T]
 		if(watchers)
 			watchers -= turret
-			if(!watchers.len)
+			if(!length(watchers))
 				turf_watched_by_mobs -= T
 
 		watchers = turf_watched_by_meteors[T]
 		if(watchers)
 			watchers -= turret
-			if(!watchers.len)
+			if(!length(watchers))
 				turf_watched_by_meteors -= T
 
 	turret.watched_turfs = null
