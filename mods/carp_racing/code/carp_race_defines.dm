@@ -10,9 +10,9 @@
 #define RACE_STATE_FINISHED  4  // Done, showing results
 
 // Timing (BYOND: 1 SECOND = 10 ticks of 0.1s each)
-#define RACE_BETTING_DURATION    (60 SECONDS)   // How long bets are open
-#define RACE_COUNTDOWN_DURATION  (15 SECONDS)   // Countdown before start
-#define RACE_RESET_DELAY         (30 SECONDS)   // Results display time after finish
+#define RACE_BETTING_DURATION    (15 MINUTES)   // How long bets are open
+#define RACE_COUNTDOWN_DURATION  (5 MINUTES)   // Countdown before start
+#define RACE_RESET_DELAY         (5 MINUTES)   // Results display time after finish
 #define RACE_MAX_DURATION        (5 MINUTES)    // Safety timeout for stuck races
 
 // Race parameters
@@ -31,20 +31,20 @@
 #define RACE_START_TAG_6   "carp_race_start_6"
 
 // Carp color display names (matching icon_sets in space_carp.dm)
-#define RACE_COLOR_NAME_1   "Пурпурный"
-#define RACE_COLOR_NAME_2   "Синий"
-#define RACE_COLOR_NAME_3   "Жёлтый"
-#define RACE_COLOR_NAME_4   "Лиловый"
-#define RACE_COLOR_NAME_5   "Ржавый"
-#define RACE_COLOR_NAME_6   "Бирюзовый"
+#define RACE_COLOR_NAME_1   "Purple Pivo"
+#define RACE_COLOR_NAME_2   "Blue Peter"
+#define RACE_COLOR_NAME_3   "Yellow Sholle"
+#define RACE_COLOR_NAME_4   "Lilac Charon"
+#define RACE_COLOR_NAME_5   "Rusty GarShe"
+#define RACE_COLOR_NAME_6   "Turquoise Captain"
 
 // HTML hex colors for betting terminal UI
-#define RACE_HTML_COLOR_1   "#9B59B6"
-#define RACE_HTML_COLOR_2   "#3498DB"
-#define RACE_HTML_COLOR_3   "#F1C40F"
-#define RACE_HTML_COLOR_4   "#8E44AD"
-#define RACE_HTML_COLOR_5   "#E67E22"
-#define RACE_HTML_COLOR_6   "#1ABC9C"
+#define RACE_HTML_COLOR_1   COLOR_VIOLET
+#define RACE_HTML_COLOR_2   COLOR_BLUE
+#define RACE_HTML_COLOR_3   COLOR_YELLOW
+#define RACE_HTML_COLOR_4   COLOR_PURPLE
+#define RACE_HTML_COLOR_5   COLOR_ORANGE
+#define RACE_HTML_COLOR_6   COLOR_CYAN
 
 /// Get display name for carp by slot number (1-6)
 /proc/get_carp_color_name(num)

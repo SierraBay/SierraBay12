@@ -88,9 +88,9 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	/// Finish-line turf
 	var/turf/finish_turf = null
 	/// Countdown announcement flags (reset each betting phase)
-	var/announced_30s = FALSE
-	var/announced_10s = FALSE
-	var/announced_5s  = FALSE
+	var/announced_3 = FALSE
+	var/announced_2 = FALSE
+	var/announced_1  = FALSE
 	/// Set TRUE once the mid-race (50%) announcement fires
 	var/announced_halfpoint = FALSE
 	/// Tracking camera that follows the lead carp during the race
@@ -127,8 +127,8 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		start_turfs = list()
 		for(var/obj/landmark/carp_race_start/L in landmarks_list)
 			if(L.slot >= 1 && L.slot <= RACE_CARP_COUNT)
-				if(start_turfs.len < L.slot)
-					start_turfs.len = L.slot
+				if(LAZYLEN(start_turfs) < L.slot)
+					LAZYLEN(start_turfs) = L.slot
 				start_turfs[L.slot] = get_turf(L)
 
 /// Called once after startup to find landmarks then begin the first race
@@ -145,7 +145,7 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		var/sum_y = 0
 		var/count_y = 0
 		var/turf/fallback = get_turf(src)
-		for(var/i = 1 to start_turfs.len)
+		for(var/i = 1 to LAZYLEN(start_turfs))
 			var/turf/T = start_turfs[i]
 			if(T)
 				sum_y += T.y
@@ -168,9 +168,9 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	find_landmarks()  // Re-check in case landmarks were placed late
 	if(!finish_turf || !length(start_turfs))
 		return
-	announced_30s = FALSE
-	announced_10s = FALSE
-	announced_5s  = FALSE
+	announced_3 = FALSE
+	announced_2 = FALSE
+	announced_1  = FALSE
 	announced_halfpoint = FALSE
 	race.start_betting(start_turfs, finish_turf)
 
@@ -214,15 +214,15 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		if(RACE_STATE_BETTING)
 			var/time_left = race.phase_end_time - world.time
 
-			if(!announced_30s && time_left <= (30 SECONDS))
-				announced_30s = TRUE
-				race.radio_announce("30 seconds until betting closes!", "Carp Races")
-			if(!announced_10s && time_left <= (10 SECONDS))
-				announced_10s = TRUE
-				race.radio_announce("10 seconds until betting closes!", "Carp Races")
-			if(!announced_5s && time_left <= (5 SECONDS))
-				announced_5s = TRUE
-				race.radio_announce("Bets close in 5 seconds!", "Carp Races")
+			if(!announced_3 && time_left <= (10 MINUTES))
+				announced_3 = TRUE
+				race.radio_announce("10 minutes until betting closes!", "Carp Races")
+			if(!announced_2 && time_left <= (5 MINUTES))
+				announced_2 = TRUE
+				race.radio_announce("5 minutes until betting closes!", "Carp Races")
+			if(!announced_1 && time_left <= (30 SECONDS))
+				announced_1 = TRUE
+				race.radio_announce("Bets close in 30 seconds!", "Carp Races")
 			if(world.time >= race.phase_end_time)
 				start_countdown_phase()
 
