@@ -37,14 +37,13 @@
 
 	for(var/datum/mind/antag in all_antagonists)
 		if(prob(50) && antag?.current)
-			var/datum/objective/renegade/obj = new(player)
+			var/datum/objective/renegade/obj = new(antag)
 			obj.owner = player
 			LAZYADD(player.objectives, obj)
 		else if(prob(50))
 			var/datum/objective/renegade/obj = new
 			obj.owner = player
 			if(obj.find_target())
-				obj.set_target(obj.target)
 				LAZYADD(player.objectives, obj)
 			else
 				qdel(obj)
@@ -60,7 +59,6 @@
 			var/datum/objective/renegade/obj = new
 			obj.owner = player
 			if(obj.find_target())
-				obj.set_target(obj.target)
 				LAZYADD(player.objectives, obj)
 			else
 				qdel(obj)
