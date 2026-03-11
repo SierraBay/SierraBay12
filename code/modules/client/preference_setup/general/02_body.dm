@@ -346,10 +346,6 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 					var/idx = pref.body_descriptors["height"]
 					if(idx && idx <= length(GLOB.heights_list))
 						pref.height = GLOB.heights_list[idx]
-						if(istype(user, /mob/living/carbon/human))
-							var/mob/living/carbon/human/H = user
-							H.height = pref.height
-							H.regenerate_icons()
 				return TOPIC_REFRESH_UPDATE_PREVIEW
 	//[/SIERRA-EDIT] HEIGHT
 

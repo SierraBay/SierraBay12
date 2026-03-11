@@ -54,6 +54,7 @@
 		// Equip custom gear loadout, replacing any job items
 		var/list/loadout_taken_slots = list()
 		var/list/accessories = list() // [SIERRA-ADD] — Collect slot_tie items (cloaks, armbands, etc.) to equip after suits/uniforms
+		var/list/ear_items = list() // [SIERRA-ADD] — Collect null-slot clothing/ears items (earrings) to equip to ear slots
 		// [SIERRA-EDIT] - DON_LOADOUT - Trying gears
 		for(var/thing in Gear()) // SIERRA-EDIT - ORIGINAL
 		// var/list/orig_gears = Gear()
@@ -82,31 +83,70 @@
 					accessories += G
 					continue
 				// [/SIERRA-ADD]
+				// [SIERRA-ADD] — Collect null-slot clothing/ears (earrings) for deferred ear-slot equip
+				if(!G.slot && ispath(G.path, /obj/item/clothing/ears))
+					ear_items += G
+					continue
+				// [/SIERRA-ADD]
 				if(G.slot && !(G.slot in loadout_taken_slots) && G.spawn_on_mob(mannequin, gear_list[gear_slot][G.display_name]))
 					loadout_taken_slots.Add(G.slot)
 					update_icon = TRUE
 		// [SIERRA-ADD] — Equip accessories after other gear so they can attach to uniforms/suits
+		// [SIERRA-EDIT] — Tries all worn clothing pieces and unpacks medalboxes
 		for(var/datum/gear/G in accessories)
-			// [SIERRA-EDIT] — spawn_on_mob uses TRYEQUIP_DESTROY which deletes items that fail
-			// mob_can_equip (e.g. cloaks with slot_flags=SLOT_OCLOTHING). Use spawn_item +
-			// TRYEQUIP_FORCE instead, with an attach_accessory fallback for SLOT_OCLOTHING items.
 			var/obj/item/item = G.spawn_item(mannequin, mannequin, gear_list[gear_slot][G.display_name])
 			if(!item)
 				continue
+			// 1. Try direct slot_tie equip (ties, standalone armbands, etc.)
 			if(mannequin.equip_to_slot_if_possible(item, slot_tie, TRYEQUIP_INSTANT | TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE))
 				update_icon = TRUE
 				continue
-			// Fallback for SLOT_OCLOTHING accessories (cloaks): slot_flags mismatch blocks
-			// equip even with TRYEQUIP_FORCE, so attach directly to worn clothing.
+			// 2. Clothing accessory: attach to any worn clothing that accepts this slot
+			//    (uniform, suit, helmet, glasses). on_attached() auto-moves A into the clothing.
 			if(istype(item, /obj/item/clothing/accessory))
 				var/obj/item/clothing/accessory/A = item
-				var/obj/item/clothing/C = mannequin.wear_suit || mannequin.w_uniform
-				if(C)
-					C.attach_accessory(mannequin, A)
-					update_icon = TRUE
-					continue
+				for(var/obj/item/clothing/C in list(mannequin.w_uniform, mannequin.wear_suit, mannequin.head, mannequin.glasses))
+					if(C.can_attach_accessory(A, null))
+						C.attach_accessory(null, A)
+						update_icon = TRUE
+						break
+				// Fallback for SLOT_OCLOTHING accessories (cloaks): slot_flags mismatch blocks
+				// can_attach_accessory, so force-attach to suit/uniform directly.
+				if(!A.parent)
+					var/obj/item/clothing/C = mannequin.wear_suit || mannequin.w_uniform
+					if(C)
+						C.attach_accessory(null, A)
+						update_icon = TRUE
+					else
+						qdel(A)
+				continue
+			// 3. Storage box (medalbox etc.): iterate contents, attach each accessory, discard box
+			if(istype(item, /obj/item/storage))
+				for(var/obj/item/clothing/accessory/A in item.contents.Copy())
+					for(var/obj/item/clothing/C in list(mannequin.w_uniform, mannequin.wear_suit, mannequin.head, mannequin.glasses))
+						if(C.can_attach_accessory(A, null))
+							C.attach_accessory(null, A)
+							update_icon = TRUE
+							break
+					if(!A.parent)
+						qdel(A)
+				qdel(item)
+				continue
 			qdel(item)
-			// [/SIERRA-EDIT]
+		// [/SIERRA-EDIT]
+		// [/SIERRA-ADD]
+		// [SIERRA-ADD] — Try to equip earrings/null-slot clothing/ears items to free ear slots
+		for(var/datum/gear/G in ear_items)
+			var/obj/item/item = G.spawn_item(mannequin, mannequin, gear_list[gear_slot][G.display_name])
+			if(!item)
+				continue
+			// Try left ear first, then right — without TRYEQUIP_DESTROY so headset is not removed
+			if(mannequin.equip_to_slot_if_possible(item, slot_l_ear, TRYEQUIP_INSTANT | TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE))
+				update_icon = TRUE
+			else if(mannequin.equip_to_slot_if_possible(item, slot_r_ear, TRYEQUIP_INSTANT | TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE))
+				update_icon = TRUE
+			else
+				qdel(item)
 		// [/SIERRA-ADD]
 	if(update_icon)
 		mannequin.update_icons()
@@ -114,6 +154,22 @@
 
 
 /datum/preferences/proc/update_preview_icon(resize_only)
+	// [SIERRA-ADD] HEIGHT — When only rescaling the loadout-tab thumbnail, skip re-dressing
+	// the mannequin and the MAP preview (both are scale-independent).
+	if(resize_only && preview_icon)
+		var/scale = client?.get_preference_value(/datum/client_preference/preview_scale)
+		switch(scale)
+			if(GLOB.PREF_LARGE)
+				scale = 4
+			if(GLOB.PREF_MEDIUM)
+				scale = 3
+			else
+				scale = 2
+		preview_icon = new(preview_icon)
+		preview_icon.Scale(preview_icon.Width() * scale, preview_icon.Height() * scale)
+		return
+	// [/SIERRA-ADD]
+
 	var/mob/living/carbon/human/dummy/mannequin/mannequin = get_mannequin(client_ckey)
 	mannequin.delete_inventory(TRUE)
 	dress_preview_mob(mannequin)
@@ -121,31 +177,29 @@
 
 	// [SIERRA-ADD] HEIGHT — Update the MAP-based preview (TauCeti style)
 	if(client)
-		// Determine if this is a tall/large species
 		var/is_tall = (mannequin.icon_height > 32) || (mannequin.mob_size == MOB_LARGE)
 		client.show_character_previews(new /mutable_appearance(mannequin), is_tall, get_preview_floor_state())
-		// Update MAP background color on the active map
 		var/bg_color = get_preview_bgcolor()
 		var/active_map = is_tall ? "character_preview_map" : "character_preview_map_compact"
 		winset(client, active_map, "background-color=[bg_color]")
 	// [/SIERRA-ADD]
 
-	if (!resize_only || !preview_icon)
-		var/icon/last_built_icon = icon('icons/effects/128x48.dmi', bgstate)
-		last_built_icon.Scale(48+32, 16+32)
-		mannequin.dir = SOUTH
-		var/icon/character_icon = getFlatIcon(mannequin, SOUTH)
-		last_built_icon.Blend(character_icon, ICON_OVERLAY, 25, 3)
-		preview_icon = last_built_icon
+	var/icon/last_built_icon = icon('icons/effects/128x48.dmi', bgstate)
+	last_built_icon.Scale(48+32, 16+32)
+	mannequin.dir = SOUTH
+	var/icon/character_icon = getFlatIcon(mannequin, SOUTH)
+	last_built_icon.Blend(character_icon, ICON_OVERLAY, 25, 3)
+	preview_icon = last_built_icon
+
 	var/scale = client?.get_preference_value(/datum/client_preference/preview_scale)
-	switch (scale)
-		if (GLOB.PREF_LARGE)
+	switch(scale)
+		if(GLOB.PREF_LARGE)
 			scale = 4
-		if (GLOB.PREF_MEDIUM)
+		if(GLOB.PREF_MEDIUM)
 			scale = 3
 		else
 			scale = 2
-	preview_icon = new (preview_icon) //[SIERRA-ADD]
+	preview_icon = new(preview_icon)
 	preview_icon.Scale(preview_icon.Width() * scale, preview_icon.Height() * scale)
 
 
