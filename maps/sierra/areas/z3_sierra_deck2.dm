@@ -78,9 +78,6 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/entry/lower
-	name = "Second Deck - RND - Aux Lobby"
-	icon_state = "decontamination"
 
 /area/rnd/misc_lab
 	name = "First Deck - RND - Miscellaneous Lab"
