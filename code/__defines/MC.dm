@@ -112,13 +112,13 @@ if(Datum.is_processing) {\
 /// The subsystem's fire() will not be called. This is preferable to can_fire = FALSE because it will not be added to the MC's list of active systems.
 #define SS_NO_FIRE FLAG_02
 
-/// The subsystem runs on spare CPU time, after all non-background subsystems have run that tick. Priority is considered against other SS_BACKGROUND subsystems.
+/// The subsystem runs on spare CPU time, after all non-background subsystems have run that tick. Priority is considered against other SS_BACKGROUND subsystems. Overrides SS_TICKER's priority bump.
 #define SS_BACKGROUND FLAG_03
 
 /// The subsystem does not tick check and should not run unless enough time can be guaranteed or it must to stay current.
 #define SS_NO_TICK_CHECK FLAG_04
 
-/// Treat the value of the subsystem's wait as ticks, not time. Forces it to run in the first tick. Implicitly has all runlevels. Ignores SS_BACKGROUND if set. Intended for systems that act like a mini-MC, like timers.
+/// Treat the value of the subsystem's wait as ticks, not time. Forces it to run in the first tick. Implicitly has all runlevels. Ignores SS_BACKGROUND if set (unless SS_BACKGROUND also set). Intended for systems that act like a mini-MC, like timers.
 #define SS_TICKER FLAG_05
 
 /// Attempt to keep the subsystem's timing real-world regular by adjusting fire timing to be earlier the later it previously ran.
