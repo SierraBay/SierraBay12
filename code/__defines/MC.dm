@@ -1,8 +1,23 @@
-#define TICK_CHECK ( world.tick_usage > Master.current_ticklimit )
+/// Dynamic tick limit based on world.map_cpu. Reserves TICK_BYOND_RESERVE for BYOND overhead.
+#define MAPTICK_MC_MIN_RESERVE 70
+#define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
+#define TICK_BYOND_RESERVE 2
+#define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
+
+/// Static tick limit thresholds
+#define TICK_LIMIT_TO_RUN 78
+#define TICK_LIMIT_MC 70
+#define TICK_LIMIT_INIT 98
+
+/// Wrappers for world.tick_usage
+#define TICK_USAGE world.tick_usage
+#define TICK_USAGE_REAL world.tick_usage
+
+#define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit )
 
 #define CHECK_TICK if TICK_CHECK stoplag()
 
-#define MC_TICK_CHECK ( ( world.tick_usage > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
+#define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
 
 
 #define GAME_STATE 2 ** (Master.current_runlevel - 1)
@@ -13,7 +28,7 @@
 
 #define MC_SPLIT_TICK \
 	if(split_tick_phases > 1){\
-		Master.current_ticklimit = ((original_tick_limit - world.tick_usage) / split_tick_phases) + world.tick_usage;\
+		Master.current_ticklimit = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
 		--split_tick_phases;\
 	} else {\
 		Master.current_ticklimit = original_tick_limit;\

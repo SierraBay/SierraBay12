@@ -56,14 +56,14 @@ var/global/datum/controller/master/Master = new
 	var/static/restart_timeout = 0
 	var/static/restart_count = 0
 
-	var/const/tick_limit_default = 80
-	var/const/tick_limit_init = 98
-	var/const/tick_limit_to_run = 78
-	var/const/tick_limit_mc = 70
+	var/const/tick_limit_default = 80 //[SIERRA-DEPREC] use TICK_LIMIT_RUNNING
+	var/const/tick_limit_init = 98   //[SIERRA-DEPREC] use TICK_LIMIT_INIT
+	var/const/tick_limit_to_run = 78 //[SIERRA-DEPREC] use TICK_LIMIT_TO_RUN
+	var/const/tick_limit_mc = 70     //[SIERRA-DEPREC] use TICK_LIMIT_MC
 
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
-	var/static/current_ticklimit = tick_limit_default
+	var/static/current_ticklimit = TICK_LIMIT_RUNNING
 
 
 /datum/controller/master/New()
@@ -191,13 +191,13 @@ var/global/datum/controller/master/Master = new
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
 
-	current_ticklimit = tick_limit_init
+	current_ticklimit = TICK_LIMIT_INIT
 	for (var/datum/controller/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
 		SS.DoInitialize(uptime())
 		CHECK_TICK
-	current_ticklimit = tick_limit_default
+	current_ticklimit = TICK_LIMIT_RUNNING
 	var/msg = "Initializations complete within [(uptime() - start_uptime) / 10] second\s!"
 	report_progress(msg)
 	log_world(msg)
@@ -314,18 +314,18 @@ var/global/datum/controller/master/Master = new
 
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((uptime() - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
-		var/starting_tick_usage = world.tick_usage
+		var/starting_tick_usage = TICK_USAGE
 		if (processing <= 0)
-			current_ticklimit = tick_limit_default
+			current_ticklimit = TICK_LIMIT_RUNNING
 			sleep(10)
 			continue
 
 		//Anti-tick-contention heuristics:
 		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
 		//	(because sleeps are processed in the order received, longer sleeps are more likely to run first)
-		if (starting_tick_usage > tick_limit_mc) //if there isn't enough time to bother doing anything this tick, sleep a bit.
+		if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
 			sleep_delta *= 2
-			current_ticklimit = tick_limit_default * 0.5
+			current_ticklimit = TICK_LIMIT_RUNNING * 0.5
 			sleep(world.tick_lag * (processing * sleep_delta))
 			continue
 
@@ -335,7 +335,7 @@ var/global/datum/controller/master/Master = new
 
 		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 1) //decay sleep_delta
 
-		if (starting_tick_usage > tick_limit_mc * 0.75) //we ran 3/4 of the way into the tick
+		if (starting_tick_usage > TICK_LIMIT_MC * 0.75) //we ran 3/4 of the way into the tick
 			sleep_delta += 1
 
 		//debug
@@ -375,7 +375,7 @@ var/global/datum/controller/master/Master = new
 				iteration++
 			else
 				cached_runlevel = null //3 strikes, Lets reset the runlevel lists
-			current_ticklimit = tick_limit_default
+			current_ticklimit = TICK_LIMIT_RUNNING
 			sleep((1 SECONDS) * error_level)
 			error_level++
 			continue
@@ -392,7 +392,7 @@ var/global/datum/controller/master/Master = new
 					iteration++
 				else
 					cached_runlevel = null //3 strikes, Lets also reset the runlevel lists
-				current_ticklimit = tick_limit_default
+				current_ticklimit = TICK_LIMIT_RUNNING
 				sleep((1 SECONDS) * error_level)
 				error_level++
 				continue
@@ -406,9 +406,9 @@ var/global/datum/controller/master/Master = new
 		iteration++
 		last_run = world.time
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
-		current_ticklimit = tick_limit_default
+		current_ticklimit = TICK_LIMIT_RUNNING
 		if (processing * sleep_delta <= world.tick_lag)
-			current_ticklimit -= (tick_limit_default * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
+			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
@@ -470,13 +470,13 @@ var/global/datum/controller/master/Master = new
 
 	//keep running while we have stuff to run and we haven't gone over a tick
 	//	this is so subsystems paused eariler can use tick time that later subsystems never used
-	while (ran && queue_head && world.tick_usage < tick_limit_mc)
+	while (ran && queue_head && TICK_USAGE < TICK_LIMIT_MC)
 		ran = FALSE
 		bg_calc = FALSE
 		current_tick_budget = queue_priority_count
 		queue_node = queue_head
 		while (queue_node)
-			if (ran && world.tick_usage > tick_limit_default)
+			if (ran && TICK_USAGE > TICK_LIMIT_RUNNING)
 				break
 
 			queue_node_flags = queue_node.flags
@@ -488,7 +488,7 @@ var/global/datum/controller/master/Master = new
 			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
 			//	in those cases, so we just let them run)
 			if (queue_node_flags & SS_NO_TICK_CHECK)
-				if (!(queue_node_flags & SS_BACKGROUND) && queue_node.tick_usage > tick_limit_default - world.tick_usage && ran_non_ticker)
+				if (!(queue_node_flags & SS_BACKGROUND) && queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
 					queue_node.queued_priority += queue_priority_count * 0.1
 					queue_priority_count -= queue_node_priority
 					queue_priority_count += queue_node.queued_priority
@@ -500,7 +500,7 @@ var/global/datum/controller/master/Master = new
 				current_tick_budget = queue_priority_count_bg
 				bg_calc = TRUE
 
-			tick_remaining = tick_limit_default - world.tick_usage
+			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
 			if (current_tick_budget > 0 && queue_node_priority > 0)
 				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
@@ -509,7 +509,7 @@ var/global/datum/controller/master/Master = new
 
 			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
 
-			current_ticklimit = round(world.tick_usage + tick_precentage)
+			current_ticklimit = round(TICK_USAGE + tick_precentage)
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE
