@@ -59,12 +59,9 @@
 	maxbodytemp = INFINITY
 
 	// Не оставляет трупа и мяса — растворяется при смерти.
-	meat_type = null
-	meat_amount = 0
-	bone_material = null
-	bone_amount =   0
-	skin_material = null
-	meat_amount = 0
+	meat_amount = 1 // Пофиг, труп серавно удаляется при смерти.
+	bone_amount = 0
+	skin_amount = 0
 
 /obj/item/natural_weapon/bite/spider/psi
 	name = "псионические жвалы"
