@@ -6,13 +6,14 @@ GLOBAL_LIST_AS(psi_level2cost, list(
 ))
 
 GLOBAL_LIST_AS(psi_faculty2color, list(
-	"Coercion"      = COLOR_RED,
-	"Consciousness" = COLOR_SURGERY_BLUE,
+	"Coercion"        = COLOR_RED,
+	"Consciousness"   = COLOR_SURGERY_BLUE,
 	"Energistics"     = COLOR_MEDICAL_UNKNOWN_IMPLANT,
-	"Manifestation"      = COLOR_LIGHT_CYAN,
+	"Manifestation"   = COLOR_LIGHT_CYAN,
 	"Metakinesis"     = COLOR_SEDONA,
-	"Psychokinesis"     = COLOR_YELLOW,
-	"Redaction"   = MANIFEST_COLOR_SERVICE
+	"Psychokinesis"   = COLOR_YELLOW,
+	"Redaction"       = MANIFEST_COLOR_SERVICE,
+	"Shaymanism"      = COLOR_CRYSTAL
 ))
 
 GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
@@ -109,27 +110,32 @@ GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
 
 		. += "<table style='width: 100%' style='font-size: 15px; text-align: center' class='table'>"
 
-		for(var/faculty in list("Coercion", "Consciousness", "Energistics", "Manifestation", "Metakinesis", "Psychokinesis", "Redaction"))
-			. += "<tr class='candystripe'>"
-			. += "<th><div class='average' style='color: [GLOB.psi_faculty2color[faculty]]'>[faculty]:</div></th>"
+		if(pref.species == SPECIES_TAJARA)
+			. += available_disciples(PSI_TAJARAN_DISCIPLES)
+		if(pref.species in HUMAN_SPECIES)
+			. += available_disciples(PSI_HUMAN_DISCIPLES)
 
-			for(var/level_index in 1 to LAZYLEN(GLOB.psi_level2cost))
-				var/level_name = GLOB.psi_level2cost[level_index]
-
-				if(pref.psi_abilities[faculty] == level_index)
-					. += "<td class='Current'><div class='center'>[level_name]</div></td>"
-				else if(can_select_level(faculty, level_index))
-					. += "<td class style='background: #40628a;'><div class='center'><a class='Selectable' href='?src=\ref[src];select=[level_index];faculty=[faculty]'>[level_name]</a></div></td>"
-				else
-					. += "<td class='Unavailable'><div class='center'>[level_name]</div></td>"
-
-			. += "</tr>"
+		. += "</tr>"
 
 		. += "</table>"
 
 		. += "</center></tt>"
 
 	. = jointext(., null)
+
+/datum/category_item/player_setup_item/psionics/abilities/proc/available_disciples(disciples)
+	for(var/faculty in disciples)
+		. += "<tr class='candystripe'>"
+		. += "<th><div class='average' style='color: [GLOB.psi_faculty2color[faculty]]'>[faculty]:</div></th>"
+		for(var/level_index in 1 to LAZYLEN(GLOB.psi_level2cost))
+			var/level_name = GLOB.psi_level2cost[level_index]
+			if(pref.psi_abilities[faculty] == level_index)
+				. += "<td class='Current'><div class='center'>[level_name]</div></td>"
+			else if(can_select_level(faculty, level_index))
+				. += "<td class style='background: #40628a;'><div class='center'><a class='Selectable' href='?src=\ref[src];select=[level_index];faculty=[faculty]'>[level_name]</a></div></td>"
+			else
+				. += "<td class='Unavailable'><div class='center'>[level_name]</div></td>"
+	return .
 
 /datum/category_item/player_setup_item/psionics/abilities/OnTopic(href, list/href_list, mob/user)
 	if(..())

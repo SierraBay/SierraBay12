@@ -30,7 +30,7 @@
 			if(PSI_RANK_MASTER)
 				if(user.a_intent == I_HELP)
 					if(meta_rank >= PSI_RANK_OPERANT)
-						pew = new /obj/item/projectile/beam/psi/yellow/shock(get_turf(user))
+						pew = new /obj/item/projectile/beam/psi/yellow/shock/heavy(get_turf(user))
 					else
 						pew = new /obj/item/projectile/beam/psi/stun(get_turf(user))
 				if(user.a_intent == I_HURT)
@@ -41,7 +41,10 @@
 				if(user.a_intent == I_HURT)
 					pew = new /obj/item/projectile/beam/psi/red/midlaser(get_turf(user))
 			if(PSI_RANK_APPRENTICE)
-				pew = new /obj/item/projectile/beam/psi/stun/smalllaser(get_turf(user))
+				if(user.a_intent == I_HELP)
+					pew = new /obj/item/projectile/beam/psi/stun/smalllaser(get_turf(user))
+				if(user.a_intent == I_HURT)
+					pew = new /obj/item/projectile/beam/psi/yellow/shock(get_turf(user))
 
 		if(istype(pew))
 			pew.original = target
@@ -216,8 +219,7 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 20
-	mech_armor_damage = 30
+
 
 	muzzle_type = /obj/projectile/psi/red/muzzle
 	tracer_type = /obj/projectile/psi/red/tracer
@@ -235,8 +237,7 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 25
-	mech_armor_damage = 35
+
 
 	muzzle_type = /obj/projectile/psi/red/heavy/muzzle
 	tracer_type = /obj/projectile/psi/red/heavy/tracer
@@ -254,5 +255,3 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	mech_armor_penetration = 25
-	mech_armor_damage = 35

@@ -17,4 +17,6 @@
 #include "code/uplink.dm"
 #include "code/maint_ninja.dm"
 #include "code/raider.dm"
+#include "code/registry.dm"
+#include "code/objective.dm"
 #endif

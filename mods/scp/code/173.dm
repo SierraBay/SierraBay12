@@ -27,19 +27,19 @@
 			var/mob/living/carbon/human/H = L
 			if(is_blind(H) || H.eye_blind > 0)
 				continue
-			if(H.in_fov_strict(src) && isInSight(H, src))
+			if(H.in_fov_strict(src) && isInSightLighting(H, src))
 				return TRUE
 
 		else if(istype(L, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = L
 			if(!R.is_component_functioning("camera"))
 				continue
-			if(isInSight(R, src))
+			if(isInSightLighting(R, src))
 				return TRUE
 
 		else if(istype(L, /mob/living/exosuit))
 			var/mob/living/exosuit/E = L
-			if(E.in_fov_strict(src) && isInSight(E, src))
+			if(E.in_fov_strict(src) && isInSightLighting(E, src))
 				return TRUE
 	return FALSE
 
@@ -106,8 +106,7 @@
 				if(ismech(target))
 					target.apply_damage(150, DAMAGE_BRUTE)
 				else
-					target.apply_damage(75, DAMAGE_BRUTE, BP_HEAD)
-					target.death()
+					target.apply_damage(75, DAMAGE_BRUTE, (ishuman(target) && target.is_species(SPECIES_IPC)) ? BP_CHEST : BP_HEAD)
 				if(prob(25))
 					playsound(get_turf(src), pick(scare_sound), 25, 1)
 			else
@@ -196,6 +195,22 @@
 
 /mob/living/simple_animal/hostile/statue/proc/find_and_destroy_object()
 	var/list/close_view = shuffle(view(src, 1))
+
+	for(var/obj/machinery/light/L in close_view)
+		if(L.on)
+			L.broken()
+			return L
+
+	for(var/obj/machinery/floodlight/FL in close_view)
+		if(FL.use_power)
+			qdel(FL)
+			return FL
+
+	for(var/obj/item/device/flashlight/F in close_view)
+		if(F.on)
+			qdel(F)
+			return F
+
 	for(var/obj/structure/window/W in close_view)
 		var/safe = 1
 		for(var/dir in GLOB.cardinal)
@@ -227,10 +242,6 @@
 		if(safe)
 			WF.dismantle()
 			return WF
-	for(var/obj/machinery/light/L in close_view)
-		if(L && L.on)
-			L.broken()
-			return L
 	for(var/obj/machinery/door/window/WD in close_view)
 		WD.shatter(0)
 		return WD
@@ -247,7 +258,7 @@
 	for(var/mob/living/carbon/human/spooked in checking_list)
 		if(spooked.stat != CONSCIOUS)
 			continue
-		if(!(spooked.in_fov_strict(src) && isInSight(spooked, src)) && should_see)
+		if(!(spooked.in_fov_strict(src) && isInSightLighting(spooked, src)) && should_see)
 			continue
 		if(!prob(chance))
 			continue
@@ -331,6 +342,11 @@
 	if(!my_turf || !observed_atom)
 		return FALSE
 
+	// Lighting check
+	var/turf/T = get_turf(observed_atom)
+	if(T && T.get_lumcount() <= 0.1 && !(sight & SEE_TURFS))
+		return FALSE
+
 	var/rel_x = observed_atom.x - my_turf.x
 	var/rel_y = observed_atom.y - my_turf.y
 
@@ -377,3 +393,29 @@
 		return (angle < vision_angle)
 
 	return TRUE
+
+/proc/isInSightLighting(atom/A, atom/B)
+	var/turf/Aturf = get_turf(A)
+	var/turf/Bturf = get_turf(B)
+
+	if(!Aturf || !Bturf)
+		return FALSE
+
+	// Check for physical obstructions first
+	if(!inLineOfSight(Aturf.x, Aturf.y, Bturf.x, Bturf.y, Aturf.z))
+		return FALSE
+
+	// Lighting check
+	// If the target tile is lit, it's visible.
+	if(Bturf.get_lumcount() > 0.1)
+		return TRUE
+
+	// If the observer is a mob, check if they have night vision or special sight.
+	if(ismob(A))
+		var/mob/M = A
+		// Normal humans have see_in_dark = 2. Night vision is > 2 or SEE_TURFS flag.
+		if(M.sight & SEE_TURFS)
+			return TRUE
+
+	// If neither, then it's too dark for A to see B.
+	return FALSE

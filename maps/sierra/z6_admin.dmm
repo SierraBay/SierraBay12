@@ -155,18 +155,18 @@
 /area/centcom/specops)
 "aaY" = (
 /obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/heavy,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/mob/living/exosuit/premade/light,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "aaZ" = (
 /obj/machinery/mech_recharger,
+/mob/living/exosuit/premade/powerloader,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
-/mob/living/exosuit/premade/heavy,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "abg" = (
@@ -186,7 +186,6 @@
 /obj/floor_decal/techfloor{
 	dir = 5
 	},
-/mob/living/exosuit/premade/powerloader,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "abi" = (
@@ -391,12 +390,11 @@
 /area/centcom/specops)
 "aca" = (
 /obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/death_combat,
+/mob/living/exosuit/premade/heavy,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "acd" = (
 /obj/machinery/mech_recharger,
-/mob/living/exosuit/premade/death_heavy,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "acg" = (
@@ -404,7 +402,6 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/mob/living/exosuit/premade/death_light,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "ach" = (
@@ -562,13 +559,10 @@
 /area/centcom/specops)
 "adm" = (
 /obj/structure/table/reinforced,
+/obj/item/robot_parts/robot_component/armour/exosuit/combat,
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
-/obj/item/mech_external_armor/admin,
-/obj/item/mech_external_armor/admin,
-/obj/item/mech_external_armor/admin,
-/obj/item/mech_external_armor/admin,
 /turf/unsimulated/floor/techfloor,
 /area/centcom/specops)
 "adB" = (

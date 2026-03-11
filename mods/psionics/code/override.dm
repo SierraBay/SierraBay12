@@ -1,13 +1,17 @@
 /datum/job/proc/give_psi(mob/living/carbon/human/H)
 
-	if(!(H.species.name == SPECIES_HUMAN || H.species.name == SPECIES_VATGROWN || H.species.name == SPECIES_SPACER || H.species.name == SPECIES_GRAVWORLDER || H.species.name == SPECIES_MULE))
+	if(!(H.species.name in HUMAN_SPECIES) && H.species.name != SPECIES_TAJARA)
 		return
 	/*
 	if(H.client.prefs.organ_data[BP_CHEST] == "cyborg")
 		return // No psionics for cyborgs.
 	*/
+
 	if(psi_latency_chance && prob(psi_latency_chance))
-		H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
+		if(H.species.name in HUMAN_SPECIES)
+			H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
+		if(H.species.name == SPECIES_TAJARA)
+			H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
 
 	if(!whitelist_lookup(SPECIES_PSI, H.client.ckey))
 		return
@@ -18,10 +22,10 @@
 		return
 
 	LAZYINITLIST(psi_faculties)
-	for(var/faculty_name in list("Coercion", "Consciousness", "Energistics", "Manifestation", "Metakinesis", "Psychokinesis", "Redaction"))
-		var/singleton/psionic_faculty/faculty = SSpsi.faculties_by_name[faculty_name]
-		var/faculty_id = faculty.id
-		psi_faculties |= list("[faculty_id]" = psi_abilities_by_name[faculty_name] - 1)
+	if(H.species.name in HUMAN_SPECIES)
+		create_psi_list(PSI_HUMAN_DISCIPLES, psi_abilities_by_name)
+	if(H.species.name == SPECIES_TAJARA)
+		create_psi_list(PSI_TAJARAN_DISCIPLES, psi_abilities_by_name)
 
 	for(var/psi in psi_faculties)
 		if(psi_faculties[psi] > 0)
@@ -49,6 +53,13 @@
 					return
 				imp.psi_mode = "Issue Reprimand"
 	to_chat(H, SPAN_DANGER("As a registered psionic, you are fitted with a psi-dampening control implant. Using psi-power while the implant is active will result in neural shocks and your violation being reported."))
+
+/datum/job/proc/create_psi_list(disciples, psi_abilities_by_name)
+	for(var/faculty_name in disciples)
+		var/singleton/psionic_faculty/faculty = SSpsi.faculties_by_name[faculty_name]
+		var/faculty_id = faculty.id
+		psi_faculties |= list("[faculty_id]" = psi_abilities_by_name[faculty_name] - 1)
+	return psi_faculties
 
 /datum/job/equip(mob/living/carbon/human/H, alt_title, datum/mil_branch/branch, datum/mil_rank/grade)
 

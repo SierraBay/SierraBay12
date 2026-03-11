@@ -47,6 +47,7 @@
 		return pilot.hitby(AM, TT)
 	. = ..()
 
+
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)
 		MC.take_burn_damage(amount)
