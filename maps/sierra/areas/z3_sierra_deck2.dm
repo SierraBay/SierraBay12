@@ -87,10 +87,6 @@
 	icon_state = "misclab"
 	req_access = list(access_research)
 
-/area/rnd/misc_lab/stairs
-	name = "Second Deck - RND - Miscellaneous Access"
-	icon_state = "research"
-
 /area/rnd/xenobiology/entry
 	name = "Xenobiology Access"
 	icon_state = "xeno_lab"
@@ -122,14 +118,16 @@
 	icon_state = "decontamination"
 
 /area/rnd/toxins
-	name = "Second Deck - RND - Toxins Lab"
+	name = "Second Deck - RND - Canister Storage"
 	icon_state = "toxstorage"
 	req_access = list(access_tox_storage)
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
+/*
 /area/rnd/toxins/storage
 	name = "Second Deck - RND - Canister Storage"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+*/
 
 /* VACANT AREAS
  * ============
@@ -238,11 +236,11 @@
 	sound_env = SMALL_SOFTFLOOR
 	req_access = list(access_actor)
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-/*
+
 /area/crew_quarters/actor/stage
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 /area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
 	holomap_color = HOLOMAP_AREACOLOR_CREW

@@ -23,11 +23,11 @@
 	icon_state = "maintcentral"
 
 /area/maintenance/thirddeck/aftstarboard
-	name = "Second Deck - Maintenance - Aft-Starboard "
+	name = "Third Deck - Maintenance - Aft-Starboard "
 	icon_state = "asmaint"
 
 /area/maintenance/thirddeck/aftport
-	name = "Second Deck - Maintenance - Aft-Port"
+	name = "Third Deck - Maintenance - Aft-Port"
 	icon_state = "apmaint"
 
 /area/maintenance/thirddeck/foreport
