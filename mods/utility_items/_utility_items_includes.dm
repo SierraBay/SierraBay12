@@ -60,4 +60,5 @@
 #include "code/ghost_medscan.dm"
 #include "code/chem_mine.dm"
 #include "code/sheetsnatcher.dm"
+#include "code/cell_rack.dm"
 #endif

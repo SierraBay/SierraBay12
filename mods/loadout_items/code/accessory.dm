@@ -531,3 +531,13 @@ ranks - ec
 		icon_state = rised_icon_state
 		overlay_state = rised_icon_state
 		to_chat(user, SPAN_NOTICE("You rised your scarf. Feeling tacticool!"))
+
+/obj/item/clothing/accessory/storage/webbing
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "webbing_white"
+
+/obj/item/clothing/accessory/storage/webbing_large
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "webbing_large_white"
