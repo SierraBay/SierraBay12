@@ -8,7 +8,7 @@
 	minimum_character_age = list(SPECIES_HUMAN = 28)
 	ideal_character_age = 35
 	alt_titles = list("Chief")
-	economic_power = 6
+	economic_power = 8
 	minimal_player_age = 7
 	supervisors = "Главе Персонала"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/service/chief_steward

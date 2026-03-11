@@ -60,7 +60,7 @@
 	total_positions = 6
 	spawn_positions = 6
 	supervisors = "Директору Исследований и Старшему Исследователю"
-	economic_power = 10
+	economic_power = 9
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
 	alt_titles = list(
@@ -119,7 +119,7 @@
 	spawn_positions = 2
 	supervisors = "Директору Исследований и Старшему Исследователю"
 	selection_color = "#633d63"
-	economic_power = 6
+	economic_power = 7
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
 	alt_titles = list(
