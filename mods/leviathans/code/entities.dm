@@ -1,0 +1,92 @@
+/obj/overmap/event/leviathan/medusa
+	name = "Pulsar Medusa"
+	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	health = 1000
+	leviathan_speed = 1 / (60 SECONDS)
+	weaknesses = OVERMAP_WEAKNESS_EMP
+	damage_cooldown = 30 SECONDS
+	events = list(/datum/event/electrical_storm)
+	color = "#a936d3"
+
+/obj/overmap/event/leviathan/medusa/get_damage_multiplier(damage_source)
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
+		return 2
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp))
+		return 1
+	return 0
+
+/obj/overmap/event/leviathan/medusa/deal_ship_damage(obj/overmap/visitable/ship/S)
+	if(LAZYLEN(S.map_z))
+		var/z_target = pick(S.map_z)
+		spawn_meteor(list(/obj/meteor/supermatter/medusa = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
+
+/obj/overmap/event/leviathan/medusa/death_gasp()
+	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Pulsar Medusa has collapsed into a black hole, leaving dark matter influx.")
+	new /obj/overmap/event/gravity(loc)
+
+/obj/overmap/event/leviathan/medusa/find_healing_target()
+	return ..(/obj/overmap/event/electric)
+
+/obj/overmap/event/leviathan/medusa/perform_healing()
+	if(locate(/obj/overmap/event/electric) in loc)
+		..()
+
+/obj/overmap/event/leviathan/dragon
+	name = "Space Dragon"
+	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	health = 1500
+	damage_cooldown = 40 SECONDS
+	leviathan_speed = 1 / (40 SECONDS)
+	weaknesses = OVERMAP_WEAKNESS_EXPLOSIVE
+	color = "#e84b23"
+
+/obj/overmap/event/leviathan/dragon/get_damage_multiplier(damage_source)
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive))
+		return 2
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive))
+		return 1
+	return 0
+
+/obj/overmap/event/leviathan/dragon/deal_ship_damage(obj/overmap/visitable/ship/S)
+	if(LAZYLEN(S.map_z))
+		var/z_target = pick(S.map_z)
+		spawn_meteor(list(/obj/meteor/leviathan_fireball = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
+
+/obj/overmap/event/leviathan/dragon/death_gasp()
+	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Space Dragon's remains have shattered into a thousand burning fragments, triggering a meteor shower.")
+	new /obj/overmap/event/meteor(loc)
+
+/obj/overmap/event/leviathan/dragon/find_healing_target()
+	return ..(/obj/overmap/event/meteor)
+
+/obj/overmap/event/leviathan/dragon/perform_healing()
+	if(locate(/obj/overmap/event/meteor) in loc)
+		..()
+
+/obj/overmap/event/leviathan/swarm
+	name = "Autonomous Drone Swarm"
+	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	health = 600
+	damage_cooldown = 1 MINUTE
+	leviathan_speed = 1 / (30 SECONDS)
+	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE
+	color = "#4d4d4d"
+
+/obj/overmap/event/leviathan/swarm/get_damage_multiplier(damage_source)
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
+		return 1.5
+	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp))
+		return 0.5
+	return 0
+
+/obj/overmap/event/leviathan/swarm/deal_ship_damage(obj/overmap/visitable/ship/S)
+	if(LAZYLEN(S.map_z))
+		var/z_target = pick(S.map_z)
+		spawn_meteors(rand(2, 4), list(/obj/meteor/drone_pod = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
+
+/obj/overmap/event/leviathan/swarm/death_gasp()
+	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Drone Swarm's central core has overloaded and detonated, leaving a lingering electrical storm.")
+	new /obj/overmap/event/electric(loc)
+
+/obj/overmap/event/leviathan/swarm/needs_healing_location()
+	return FALSE

@@ -1,0 +1,220 @@
+/obj/overmap/event/leviathan
+	name = "Space Leviathan"
+	icon = 'icons/obj/overmap.dmi'
+	icon_state = "carp1" // TODO ПЛЕСХОЛДЕР!!!
+	requires_contact = TRUE
+	opacity = 0
+	instant_contact = TRUE
+	color = "#FF0000"
+
+	var/health = 1000
+	var/max_health = 1000
+	var/damage = 10
+
+	var/weakref/target_ship = null // Целевое судно, будет следовать за ним через всю овермапу
+
+	var/damage_cooldown = 10 SECONDS // КД следующего выстрела снарядом
+	var/next_damage_time = 0
+
+	var/movement_update_rate = 2 SECONDS // Как часто двигаться
+	var/next_movement_update = 0
+
+	var/leviathan_speed = 1 / (1 MINUTES) // Скорость левиафана на овермапе
+
+	// Процессинг левиафанов
+	var/processing = FALSE
+
+	// Хил значения
+	var/is_healing = FALSE // Флаг хила
+	var/healing_threshold = 0.35 // Порог ХП в 35%, при котором левиафан летит лечиться
+	var/weakref/healing_target_ref = null // Зона, где хилится левиафан
+	var/last_heal_time = 0
+	var/base_speed = 0 // Временный буфер скорости
+
+/obj/overmap/event/leviathan/Initialize(seed)
+	. = ..(seed)
+	max_health = health
+	base_speed = leviathan_speed
+	make_movable()
+	START_PROCESSING(SSobj, src)
+	processing = TRUE
+	find_target()
+
+/obj/overmap/event/leviathan/Destroy()
+	if(processing)
+		STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/overmap/event/leviathan/proc/find_target()
+	// Ищем самый тяжелый/большой корабль на овермапе (обычно Сьерра)
+	// и делаем его своей целью
+	var/obj/overmap/visitable/ship/best_target = null
+	var/best_mass = 0
+	for(var/obj/overmap/visitable/ship/S in SSshuttle.ships)
+		if(S.vessel_mass > best_mass)
+			best_mass = S.vessel_mass
+			best_target = S
+
+	if(best_target)
+		target_ship = weakref(best_target)
+
+/obj/overmap/event/leviathan/Process()
+	if(health <= 0)
+		die()
+		return
+
+	handle_healing()
+
+	if(world.time >= next_movement_update)
+		update_movement()
+		next_movement_update = world.time + movement_update_rate
+
+	// Если хилимся, то приоритет на хил, атаковать не будем (кроме Роя)
+	if((!is_healing || !needs_healing_location()) && world.time >= next_damage_time)
+		deal_damage_to_sector()
+
+	..()
+
+/obj/overmap/event/leviathan/proc/handle_healing()
+	if(!is_healing && health <= max_health * healing_threshold)
+		is_healing = TRUE
+		healing_target_ref = null
+		// Если мало ХП, уносим ноги/щупальца/лапы
+		if(needs_healing_location())
+			leviathan_speed = base_speed * 4
+
+	if(is_healing)
+		if(health >= max_health)
+			health = max_health
+			is_healing = FALSE
+			healing_target_ref = null
+			leviathan_speed = base_speed
+			return
+
+		perform_healing()
+
+/obj/overmap/event/leviathan/proc/perform_healing()
+	if(world.time < last_heal_time + 10 SECONDS)
+		return
+
+	var/heal_amount = rand(5, 8) // ~30-50 HP в минуту
+	health = min(health + heal_amount, max_health)
+	last_heal_time = world.time
+
+/obj/overmap/event/leviathan/proc/needs_healing_location()
+	return TRUE
+
+// Поиск ближайшего сектора для лечения
+/obj/overmap/event/leviathan/proc/find_healing_target(event_type)
+	var/obj/overmap/event/best_event = null
+	var/best_dist = 1000
+	for(var/turf/T in overmap_event_handler.hazard_by_turf)
+		for(var/obj/overmap/event/E in overmap_event_handler.hazard_by_turf[T])
+			if(istype(E, event_type))
+				var/dist = get_dist(src, E)
+				if(dist < best_dist)
+					best_dist = dist
+					best_event = E
+	return best_event
+
+/obj/overmap/event/leviathan/proc/update_movement()
+	var/atom/movable/current_target = null
+
+	if(is_healing && needs_healing_location())
+		var/obj/overmap/H = healing_target_ref?.resolve()
+		if(!H || QDELETED(H))
+			H = find_healing_target()
+			if(H)
+				healing_target_ref = weakref(H)
+
+		if(H)
+			current_target = H
+			// Если долетели до точки лечения, останавливаемся
+			if(loc == H.loc)
+				adjust_speed(-speed[1], -speed[2])
+				update_icon()
+				return
+	else
+		current_target = target_ship?.resolve()
+		if(!current_target)
+			find_target()
+			current_target = target_ship?.resolve()
+
+	if(!current_target)
+		adjust_speed(-speed[1], -speed[2])
+		update_icon()
+		return
+
+	// Проверка на края карты
+	if(istype(get_turf(src), /turf/unsimulated/map/edge))
+		handle_wraparound(x, y)
+		return
+
+	if(!is_healing && loc == current_target.loc)
+		// Останавливаемся, если мы в том же секторе
+		adjust_speed(-speed[1], -speed[2])
+		update_icon()
+		return
+
+	var/target_dir = get_dir(src, current_target)
+	if(!target_dir)
+		adjust_speed(-speed[1], -speed[2])
+		update_icon()
+		return
+
+	var/dir_x = SIGN((target_dir & EAST) * 1 + (target_dir & WEST) * -1)
+	var/dir_y = SIGN((target_dir & NORTH) * 1 + (target_dir & SOUTH) * -1)
+
+	if(dir_x == 0 && dir_y == 0)
+		adjust_speed(-speed[1], -speed[2])
+		update_icon()
+		return
+
+	// Сбрасываем скорость перед тем, как сменить вектор направления
+	adjust_speed(-speed[1], -speed[2])
+
+	dir = target_dir
+	adjust_speed(dir_x * leviathan_speed, dir_y * leviathan_speed)
+
+/obj/overmap/event/leviathan/proc/deal_damage_to_sector()
+	var/damaged_something = FALSE
+
+	for(var/obj/overmap/visitable/ship/S in range(1, src))
+		deal_ship_damage(S)
+		damaged_something = TRUE
+
+	if(damaged_something)
+		next_damage_time = world.time + damage_cooldown
+
+/obj/overmap/event/leviathan/proc/deal_ship_damage(obj/overmap/visitable/ship/S)
+
+	return
+
+/obj/overmap/event/leviathan/proc/get_damage_multiplier(damage_source)
+	return 0 // Игнорирование урона
+
+/obj/overmap/event/leviathan/proc/take_damage(amount, damage_source)
+	var/modifier = get_damage_multiplier(damage_source)
+
+	if(modifier <= 0)
+		return
+
+	health -= (amount * modifier)
+	if(health <= 0)
+		death_gasp()
+		die()
+
+// Предсмертный хрип левиафана
+/obj/overmap/event/leviathan/proc/death_gasp()
+	return
+
+/obj/overmap/event/leviathan/proc/die()
+	qdel(src)
+
+// Бродкаст по соседним секторам от текущего
+/proc/get_overmap_broadcast_zlevels(obj/overmap/origin, range = 1)
+	var/list/z_levels = list(origin.z)
+	for(var/obj/overmap/visitable/ship/S in range(range, origin))
+		if(LAZYLEN(S.map_z))
+			z_levels |= S.map_z
+	return z_levels
