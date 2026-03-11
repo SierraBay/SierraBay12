@@ -474,6 +474,15 @@
 	/// If the runechat is enabled on the server
 	var/static/runechat_enabled = TRUE
 
+	/// MC tick rate multiplier (1 = every tick, 2 = every 2 ticks). 0 prevents MC from ticking.
+	var/static/base_mc_tick_rate = 1
+	/// MC tick rate when high pop mode is engaged
+	var/static/high_pop_mc_tick_rate = 1.1
+	/// Engage high pop mode if player count rises above this
+	var/static/high_pop_mc_mode_amount = 65
+	/// Disengage high pop mode if player count drops below this
+	var/static/disable_high_pop_mc_mode_amount = 60
+
 	// [SIERRA-ADD]
 	var/static/shutdown_on_reboot = FALSE
 	var/static/use_spreading_explosions = TRUE //Defines whether the server uses iterative or circular explosions.
@@ -946,6 +955,14 @@
 			if ("use_spreading_explosions")
 				use_spreading_explosions = TRUE
 			// [/SIERRA-ADD]
+			if ("base_mc_tick_rate")
+				base_mc_tick_rate = text2num(value)
+			if ("high_pop_mc_tick_rate")
+				high_pop_mc_tick_rate = text2num(value)
+			if ("high_pop_mc_mode_amount")
+				high_pop_mc_mode_amount = text2num(value)
+			if ("disable_high_pop_mc_mode_amount")
+				disable_high_pop_mc_mode_amount = text2num(value)
 			// [SIERRA-ADD] - EX666_ECOSYSTEM
 			if ("overflow_server_url")
 				overflow_server_url = value

@@ -616,6 +616,15 @@ var/global/datum/controller/master/Master = new
 	. = 1
 
 
+/datum/controller/master/proc/UpdateTickRate()
+	if (!processing)
+		return
+	var/client_count = length(GLOB.clients)
+	if (client_count < config.disable_high_pop_mc_mode_amount)
+		processing = config.base_mc_tick_rate
+	else if (client_count > config.high_pop_mc_mode_amount)
+		processing = config.high_pop_mc_tick_rate
+
 /datum/controller/master/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
