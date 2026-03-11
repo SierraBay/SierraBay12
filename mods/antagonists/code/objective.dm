@@ -216,3 +216,10 @@ GLOBAL_LIST_EMPTY(custom_items)
 	else
 		explanation_text = "[target] seems to be a threat."
 	return TRUE
+
+/datum/objective/renegade/find_target()
+	. = ..()
+	if(target)
+		set_target()
+		return TRUE
+	return FALSE

@@ -189,7 +189,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/trainee
 	name = OUTFIT_JOB_NAME("Engineer Trainee - Sierra")
-	id_types = list(/obj/item/card/id/sierra/crew/engineering/trainee)
+	id_types = list(/obj/item/card/id/sierra/crew/engineering)
 
 	////////////
 	//SECURITY//
