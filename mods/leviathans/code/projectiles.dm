@@ -36,9 +36,7 @@
 	log_and_message_admins("Drone pod from swarm placed", null, src)
 	var/obj/meteor/drone_pod/secondary/M = new(src.loc)
 	M.dest = dest
-	spawn(0)
-		if(M)
-			walk_towards(M, dest, 3)
+	addtimer(new Callback(M, /obj/meteor/proc/move_to_dest, dest, 3), 0)
 
 /obj/meteor/drone_pod/secondary
 	name = "autonomous drone pod"

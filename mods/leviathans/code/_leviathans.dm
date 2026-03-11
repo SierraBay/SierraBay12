@@ -1,3 +1,6 @@
+/obj/meteor/proc/move_to_dest(target_dest, speed)
+	walk_towards(src, target_dest, speed)
+
 /obj/overmap/event/leviathan
 	name = "Space Leviathan"
 	icon = 'icons/obj/overmap.dmi'
