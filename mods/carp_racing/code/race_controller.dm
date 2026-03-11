@@ -123,7 +123,9 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 
 	// Pre-size to RACE_CARP_COUNT so positional LAZYSET writes (L.slot = 1–6) are always in-bounds
 	if(!LAZYLEN(start_turfs))
-		start_turfs = new /list(RACE_CARP_COUNT)
+		start_turfs = list()
+		for(var/i = 1 to RACE_CARP_COUNT)
+			start_turfs += null
 	for(var/obj/landmark/carp_race_start/L in landmarks_list)
 		if(L.slot >= 1 && L.slot <= RACE_CARP_COUNT)
 			LAZYSET(start_turfs, L.slot, get_turf(L))
