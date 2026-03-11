@@ -75,10 +75,10 @@
 	icon_dead   = "[carp_color]_dead"
 
 	// Each carp gets a persistent speed personality: negative = faster, positive = slower.
-	// Range: ±4 ticks per step → fastest ~5.1s/tile, slowest ~1.3s/tile on avg vs base 9
-	speed_bias = rand(-4, 4)
+	// Range: ±3 ticks per step → fastest ~5.1s/tile, slowest ~1.3s/tile on avg vs base 9
+	speed_bias = rand(-3, 3)
 	// Stagger start times so carps don't all take their first step simultaneously.
-	next_step_time = world.time + rand(0, 20)  // 0–2 second random head-start spread
+	next_step_time = world.time + rand(0, 10)  // 0–1 second random head-start spread
 
 	update_icon()
 

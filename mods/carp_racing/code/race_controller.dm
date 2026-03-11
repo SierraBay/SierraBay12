@@ -13,14 +13,6 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	icon_state  = "yellow"
 	requires_power  = 0
 	dynamic_lighting = 0
-
-/area/carp_racing/Initialize(mapload)
-	. = ..()
-	// make sure automatic unit‑test list knows this area is never "unused"
-	if(!GLOB.using_map.area_usage_test_exempted_areas)
-		GLOB.using_map.area_usage_test_exempted_areas = list()
-		GLOB.using_map.area_usage_test_exempted_areas += /area/carp_racing
-
 // ---- Camera preset ----
 
 /// Static camera placed by mappers to cover a specific spot in the arena.
@@ -129,9 +121,9 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 			finish_turf = get_turf(L)
 			break
 
-	// ensure list exists before populating
+	// Pre-size to RACE_CARP_COUNT so positional LAZYSET writes (L.slot = 1–6) are always in-bounds
 	if(!LAZYLEN(start_turfs))
-		start_turfs = list()
+		start_turfs = new /list(RACE_CARP_COUNT)
 	for(var/obj/landmark/carp_race_start/L in landmarks_list)
 		if(L.slot >= 1 && L.slot <= RACE_CARP_COUNT)
 			LAZYSET(start_turfs, L.slot, get_turf(L))
@@ -150,8 +142,7 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		var/sum_y = 0
 		var/count_y = 0
 		var/turf/fallback = get_turf(src)
-		for(var/i = 1 to LAZYLEN(start_turfs))
-			var/turf/T = start_turfs[i]
+		for(var/turf/T in start_turfs)
 			if(T)
 				sum_y += T.y
 				count_y++
@@ -161,7 +152,12 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 			cam_center_y = fallback.y
 	// Spawn the tracking camera at the start line midpoint
 	if(!tracking_cam || QDELETED(tracking_cam))
-		var/turf/spawn_turf = start_turfs[1] ? start_turfs[1] : get_turf(src)
+		// Walk the list instead of hardcoding [1] to avoid OOB if slot 1 is absent
+		var/turf/spawn_turf = get_turf(src)
+		for(var/turf/T in start_turfs)
+			if(T)
+				spawn_turf = T
+				break
 		tracking_cam = new /obj/machinery/camera/network/carp_race/tracking(spawn_turf)
 	begin_betting_phase()
 
