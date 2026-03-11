@@ -5,7 +5,7 @@
 	requires_contact = TRUE
 	opacity = 0
 	instant_contact = TRUE
-	color = "#FF0000"
+	color = COLOR_RED
 
 	var/health = 1000
 	var/max_health = 1000
