@@ -10,8 +10,8 @@
 /obj/machinery/computer/ship/disperser/fire_at_event(obj/overmap/event/finaltarget, chargetype)
 	if(istype(finaltarget, /obj/overmap/event/leviathan))
 		var/obj/overmap/event/leviathan/L = finaltarget
-		
-		L.take_damage(500, last_charge_type_path) // Use cached type path since charge is deleted
+
+		L.take_damage(rand(400, 600), last_charge_type_path) // Use cached type path since charge is deleted
 		return
 	return ..()
 
@@ -22,7 +22,7 @@
 		if(actual_missile && actual_missile.armed)
 			var/obj/item/missile_equipment/payload/payload = actual_missile.equipment[MISSILE_PART_PAYLOAD]
 			if(payload && payload.is_dangerous)
-				L.take_damage(500, payload) // Pass the payload object for type-checking
+				L.take_damage(rand(400, 600), payload) // Pass the payload object for type-checking
 
 				// Optional visual effect
 				var/datum/effect/explosion/E = new /datum/effect/explosion()
