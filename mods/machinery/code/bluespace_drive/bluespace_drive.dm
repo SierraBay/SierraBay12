@@ -1,6 +1,6 @@
 /// How much each mole of a given gas contributes to jump power.
 /// Multiplied by the logarithm of the gas temperature, incentivizing heating gases.
-/var/global/list/bluespace_gas_power_factor = list(
+var/global/list/bluespace_gas_power_factor = list(
 	GAS_PHORON     = 1,
 	GAS_CO2        = 0.24,
 	GAS_NITROGEN   = 0.3,
