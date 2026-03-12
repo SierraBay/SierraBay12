@@ -190,6 +190,19 @@
 
 
 /datum/computer/file/embedded_program/airlock/process()
+	// Fast path: skip all processing when fully idle
+	if(!state && !target_state)
+		if(memory["pump_status"] == "off")
+			memory["processing"] = FALSE
+			return 1
+		else
+			signalPump(tag_airpump, 0)
+			if(cycle_to_external_air)
+				signalPump(tag_pump_out_internal, 0)
+				signalPump(tag_pump_out_external, 0)
+			memory["processing"] = FALSE
+			return 1
+
 	if(!state) //Idle
 		if(target_state)
 			switch(target_state)

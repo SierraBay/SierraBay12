@@ -4,6 +4,8 @@
 	idle_power_usage = 10
 	var/datum/computer/file/embedded_program/program	//the currently executing program
 	var/on = 1
+	var/last_icon_processing // cached for icon update optimization
+	var/last_icon_pump_status // cached for icon update optimization
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
@@ -36,8 +38,13 @@
 /obj/machinery/embedded_controller/Process()
 	if(program)
 		program.process()
-
-	update_icon()
+		// Only update icon when displayed state actually changes
+		var/current_processing = program.memory["processing"]
+		var/current_pump = program.memory["pump_status"]
+		if(current_processing != last_icon_processing || current_pump != last_icon_pump_status)
+			last_icon_processing = current_processing
+			last_icon_pump_status = current_pump
+			queue_icon_update()
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
 	ui_interact(user)

@@ -20,18 +20,24 @@
 	qdel(terminal)
 	. = ..()
 
+/obj/item/stock_parts/power/terminal/proc/notify_apc_state(obj/machinery/machine, avail, excess)
+	var/obj/machinery/power/apc/apc = machine
+	if(istype(apc))
+		apc.observe_terminal_component(avail, excess)
+
 /obj/item/stock_parts/power/terminal/machine_process(obj/machinery/machine)
 
 	if(!terminal) //Terminal is gone, give up
+		notify_apc_state(machine, 0, -1)
 		if(status & PART_STAT_ACTIVE)
 			machine.update_power_channel(cached_channel)
 			machine.power_change()
 		return
 
-
-
+	var/avail = terminal.avail()
 	var/surplus = terminal.surplus()
 	var/usage = machine.get_power_usage()
+	notify_apc_state(machine, avail, surplus)
 
 	if(!machine.is_powered() && surplus > usage)
 		machine.power_change()

@@ -67,11 +67,18 @@
 	if(machine)
 		machine.update_icon()
 
+/obj/item/stock_parts/power/battery/proc/notify_apc_state(obj/machinery/machine, previous_charge)
+	var/obj/machinery/power/apc/apc = machine
+	if(istype(apc))
+		apc.observe_battery_component(previous_charge)
+
 /obj/item/stock_parts/power/battery/machine_process(obj/machinery/machine)
-	last_cell_charge = cell && cell.charge
+	var/previous_charge = cell && cell.charge
+	last_cell_charge = previous_charge
 
 	if(status & PART_STAT_ACTIVE)
 		if(!(cell && cell.checked_use(CELLRATE * machine.get_power_usage())))
+			notify_apc_state(machine, previous_charge)
 			machine.update_power_channel(cached_channel)
 			machine.power_change() // Out of power
 			return
@@ -81,22 +88,31 @@
 				seek_alternatives = initial(seek_alternatives)
 				machine.update_power_channel(cached_channel)
 				machine.power_change()
+		notify_apc_state(machine, previous_charge)
 		return // We don't recharge if discharging
 
 	if((!machine.is_powered()) && cell && cell.fully_charged())
+		notify_apc_state(machine, previous_charge)
 		machine.power_change()
 		return // This suggests that we should be powering the machine instead, so let's try that
 
-	// try and recharge
-	var/area/A = get_area(machine)
-	if(!can_charge || !cell || cell.fully_charged() || !A.powered(charge_channel))
+	// try and recharge - check cheap conditions before get_area
+	if(!can_charge || !cell || cell.fully_charged())
 		charge_wait_counter = initial(charge_wait_counter)
+		notify_apc_state(machine, previous_charge)
+		return
+	var/area/A = get_area(machine)
+	if(!A.powered(charge_channel))
+		charge_wait_counter = initial(charge_wait_counter)
+		notify_apc_state(machine, previous_charge)
 		return
 	if(charge_wait_counter > 0)
 		charge_wait_counter--
+		notify_apc_state(machine, previous_charge)
 		return
 	var/give = cell.give(charge_rate) / CELLRATE
 	A.use_power_oneoff(give, charge_channel)
+	notify_apc_state(machine, previous_charge)
 
 /obj/item/stock_parts/power/battery/can_provide_power(obj/machinery/machine)
 	if(cell && cell.check_charge(CELLRATE * machine.get_power_usage()))

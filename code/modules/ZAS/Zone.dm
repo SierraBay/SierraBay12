@@ -65,10 +65,12 @@ Class Procs:
 	ASSERT(!SSair.has_valid_zone(turf_to_add))
 #endif
 
-	var/datum/gas_mixture/turf_air = turf_to_add.return_air()
+	var/datum/gas_mixture/old_air = turf_to_add.return_air()
+	var/datum/gas_mixture/turf_air = old_air
 	add_tile_air(turf_air)
 	turf_to_add.zone = src
 	contents += turf_to_add
+	SEND_SIGNAL(turf_to_add, COMSIG_TURF_RETURN_AIR_CHANGED, old_air, air)
 
 	if(turf_to_add.hotspot)
 		fire_tiles += turf_to_add
@@ -83,9 +85,11 @@ Class Procs:
 	ASSERT(turf_to_remove.zone == src)
 	soft_assert(turf_to_remove in contents, "Lists are weird broseph")
 #endif
+	var/datum/gas_mixture/old_air = air
 	contents -= turf_to_remove
 	fire_tiles -= turf_to_remove
 	turf_to_remove.zone = null
+	SEND_SIGNAL(turf_to_remove, COMSIG_TURF_RETURN_AIR_CHANGED, old_air, turf_to_remove.return_air())
 	turf_to_remove.update_graphic(graphic_remove = air.graphic)
 	if(length(contents))
 		air.group_multiplier = length(contents)

@@ -210,6 +210,7 @@
 			gas -= g
 		else
 			total_moles += gas[g]
+	SEND_SIGNAL(src, COMSIG_GASMIX_UPDATED)
 
 
 //Returns the pressure of the gas mix.  Only accurate if there have been no gas modifications since update_values() has been called.

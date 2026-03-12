@@ -100,7 +100,10 @@
 	damage_hitsound = 'sound/weapons/smash.ogg'
 	var/needs_powerdown_sound
 	var/area/area
+	var/area/registered_area_usage
 	var/areastring = null
+	var/obj/item/stock_parts/power/terminal/cached_terminal_part
+	var/obj/item/stock_parts/power/battery/cached_battery_part
 	var/cell_type = /obj/item/cell/standard
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
@@ -127,6 +130,12 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/longtermpower = 10  // Counter to smooth out power state changes; do not modify.
+	var/usage_dirty = TRUE
+	var/channel_dirty = TRUE
+	var/status_dirty = TRUE
+	var/cell_charge_bucket = -1
+	var/longtermpower_bucket = -1
+	var/suppress_self_power_change_dirty = FALSE
 	wires = /datum/wires/apc
 	var/update_state = -1
 	var/update_overlay = -1
@@ -257,6 +266,7 @@
 	area.apc = src
 
 	. = ..()
+	bind_area_usage_signal(area)
 
 	if (building==0)
 		init_round_start()
@@ -272,6 +282,7 @@
 
 /obj/machinery/power/apc/Destroy()
 	src.update()
+	bind_area_usage_signal(null)
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -284,6 +295,37 @@
 
 	return ..()
 
+/obj/machinery/power/apc/RefreshParts()
+	. = ..()
+	cached_terminal_part = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	cached_battery_part = get_component_of_type(/obj/item/stock_parts/power/battery)
+
+/obj/machinery/power/apc/component_destroyed(obj/item/component)
+	if(component == cached_terminal_part)
+		cached_terminal_part = null
+	if(component == cached_battery_part)
+		cached_battery_part = null
+	queue_apc_recheck(FALSE, TRUE, TRUE)
+	return ..()
+
+/obj/machinery/power/apc/power_change()
+	. = ..()
+	if(suppress_self_power_change_dirty)
+		return
+	queue_apc_recheck(FALSE, TRUE, TRUE)
+
+/obj/machinery/power/apc/area_changed(area/old_area, area/new_area)
+	..()
+	if(old_area == new_area)
+		return
+	if(old_area?.apc == src)
+		old_area.apc = null
+	area = new_area
+	if(area)
+		area.apc = src
+	bind_area_usage_signal(area)
+	queue_apc_recheck(TRUE, TRUE, TRUE)
+
 /obj/machinery/power/apc/get_req_access()
 	if(!locked)
 		return list()
@@ -294,20 +336,188 @@
 		return
 	failure_timer = max(failure_timer, round(duration))
 	playsound(src, 'sound/machines/apc_nopower.ogg', 75, 0)
+	queue_apc_recheck(FALSE, TRUE, TRUE)
 
 /obj/machinery/power/apc/proc/init_round_start()
 	has_electronics = 2 //installed and secured
 
-	var/obj/item/stock_parts/power/battery/bat = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/bat = cached_battery_part
 	bat.add_cell(src, new cell_type(bat))
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = cached_terminal_part
 	term.make_terminal(src)
 
 	queue_icon_update()
 
 /obj/machinery/power/apc/proc/terminal()
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
-	return term && term.terminal
+	return cached_terminal_part?.terminal
+
+/obj/machinery/power/apc/get_cell()
+	return cached_battery_part?.get_cell()
+
+/obj/machinery/power/apc/proc/bind_area_usage_signal(area/new_area)
+	if(registered_area_usage == new_area)
+		return
+	if(registered_area_usage)
+		UnregisterSignal(registered_area_usage, COMSIG_AREA_POWER_USAGE_CHANGED)
+	registered_area_usage = new_area
+	if(registered_area_usage)
+		RegisterSignal(registered_area_usage, COMSIG_AREA_POWER_USAGE_CHANGED, PROC_REF(on_area_power_usage_changed))
+
+/obj/machinery/power/apc/proc/queue_apc_recheck(recheck_usage = FALSE, recheck_channels = FALSE, recheck_status = FALSE)
+	if(recheck_usage)
+		usage_dirty = TRUE
+	if(recheck_channels)
+		channel_dirty = TRUE
+	if(recheck_status)
+		status_dirty = TRUE
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/power/apc/proc/on_area_power_usage_changed(area/source, chan, is_oneoff)
+	SIGNAL_HANDLER
+	queue_apc_recheck(TRUE, FALSE, FALSE)
+
+/obj/machinery/power/apc/proc/has_auto_channels()
+	return equipment == POWERCHAN_OFF_AUTO || equipment == POWERCHAN_ON_AUTO || \
+		lighting == POWERCHAN_OFF_AUTO || lighting == POWERCHAN_ON_AUTO || \
+		environ == POWERCHAN_OFF_AUTO || environ == POWERCHAN_ON_AUTO
+
+/obj/machinery/power/apc/proc/get_cell_charge_bucket(obj/item/cell/cell)
+	if(!cell)
+		return 0
+	var/percent = cell.percent()
+	if(percent <= AUTO_THRESHOLD_EQUIPMENT)
+		return 1
+	if(percent <= AUTO_THRESHOLD_LIGHTING)
+		return 2
+	return 3
+
+/obj/machinery/power/apc/proc/get_longtermpower_bucket()
+	return longtermpower >= 0
+
+/obj/machinery/power/apc/proc/get_external_power_bucket(avail, excess)
+	if(!avail)
+		return 0
+	if(excess < 0)
+		return 1
+	return 2
+
+/obj/machinery/power/apc/proc/should_keep_processing()
+	if(!area?.requires_power)
+		return FALSE
+	if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
+		return FALSE
+	return failure_timer || usage_dirty || channel_dirty || status_dirty
+
+/obj/machinery/power/apc/proc/update_processing_state()
+	if(should_keep_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/power/apc/proc/refresh_usage_snapshot()
+	if(!area)
+		return
+	lastused_light = (lighting >= POWERCHAN_ON) ? area.usage(LIGHT) : 0
+	lastused_equip = (equipment >= POWERCHAN_ON) ? area.usage(EQUIP) : 0
+	lastused_environ = (environ >= POWERCHAN_ON) ? area.usage(ENVIRON) : 0
+	lastused_total = lastused_light + lastused_equip + lastused_environ
+	area.clear_usage()
+	usage_dirty = FALSE
+
+/obj/machinery/power/apc/proc/refresh_power_status()
+	var/obj/machinery/power/terminal/terminal = terminal()
+	var/avail = (terminal && terminal.avail()) || 0
+	var/excess = (terminal && terminal.surplus()) || 0
+	main_status = get_external_power_bucket(avail, excess)
+	status_dirty = FALSE
+
+/obj/machinery/power/apc/proc/service_charge_state(previous_charge = null, allow_hysteresis = FALSE)
+	var/previous_charging = charging
+	var/previous_cell_bucket = cell_charge_bucket
+	var/previous_longterm_bucket = longtermpower_bucket
+	var/obj/item/cell/cell = get_cell()
+	var/obj/item/stock_parts/power/battery/power = cached_battery_part
+	var/auto_channels = has_auto_channels()
+
+	if(isnull(previous_charge))
+		previous_charge = power?.last_cell_charge
+	lastused_charging = max(power && power.cell && !isnull(previous_charge) && (power.cell.charge - previous_charge) * CELLRATE, 0)
+	charging = lastused_charging ? 1 : 0
+	if(cell?.fully_charged())
+		charging = 2
+
+	if(allow_hysteresis && auto_channels)
+		if(charging && longtermpower < 10)
+			longtermpower += 1
+		else if(longtermpower > -10)
+			longtermpower -= 2
+
+	cell_charge_bucket = get_cell_charge_bucket(cell)
+	longtermpower_bucket = get_longtermpower_bucket()
+	if(previous_charging != charging)
+		queue_icon_update()
+	if(auto_channels && (previous_charging != charging || previous_cell_bucket != cell_charge_bucket || previous_longterm_bucket != longtermpower_bucket))
+		channel_dirty = TRUE
+		return TRUE
+	return FALSE
+
+/obj/machinery/power/apc/proc/observe_terminal_component(avail, excess)
+	main_status = get_external_power_bucket(avail, excess)
+	status_dirty = FALSE
+
+/obj/machinery/power/apc/proc/observe_battery_component(previous_charge)
+	if(service_charge_state(previous_charge, TRUE))
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/power/apc/proc/evaluate_auto_channels(suppress_alarms = FALSE)
+	var/obj/item/cell/cell = get_cell()
+	var/percent = cell && cell.percent()
+
+	if(!cell || shorted || (!is_powered()) || !operating)
+		if(autoflag != 0)
+			equipment = autoset(equipment, 0)
+			lighting = autoset(lighting, 0)
+			environ = autoset(environ, 0)
+			if(!suppress_alarms)
+				GLOB.power_alarm.triggerAlarm(loc, src)
+			autoflag = 0
+	else if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
+		if(autoflag != 3)
+			equipment = autoset(equipment, 1)
+			lighting = autoset(lighting, 1)
+			environ = autoset(environ, 1)
+			autoflag = 3
+			GLOB.power_alarm.clearAlarm(loc, src)
+	else if((percent <= AUTO_THRESHOLD_LIGHTING) && (percent > AUTO_THRESHOLD_EQUIPMENT) && longtermpower < 0)                       // <50%, turn off lighting
+		if(autoflag != 2)
+			equipment = autoset(equipment, 1)
+			lighting = autoset(lighting, 2)
+			environ = autoset(environ, 1)
+			if(!suppress_alarms)
+				GLOB.power_alarm.triggerAlarm(loc, src)
+			autoflag = 2
+	else if(percent <= AUTO_THRESHOLD_EQUIPMENT)        // <25%, turn off lighting & equipment
+		if(autoflag != 1)
+			equipment = autoset(equipment, 2)
+			lighting = autoset(lighting, 2)
+			environ = autoset(environ, 1)
+			if(!suppress_alarms)
+				GLOB.power_alarm.triggerAlarm(loc, src)
+			autoflag = 1
+
+/obj/machinery/power/apc/proc/sync_apc_state(force_channel_recalc = FALSE, suppress_alarms = FALSE)
+	if(usage_dirty)
+		refresh_usage_snapshot()
+	refresh_power_status()
+	service_charge_state()
+	if(force_channel_recalc)
+		autoflag = -1
+	if(force_channel_recalc || channel_dirty)
+		evaluate_auto_channels(suppress_alarms)
+		channel_dirty = FALSE
+	update()
+	queue_icon_update()
+	update_processing_state()
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -568,13 +778,17 @@
 					set_stat(MACHINE_STAT_MAINT, FALSE)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					to_chat(user, "You screw the circuit electronics into place.")
-					update_icon()
+					force_update_channels()
 				if(2)
 					has_electronics = 1
 					set_stat(MACHINE_STAT_MAINT, TRUE)
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					to_chat(user, "You unfasten the electronics.")
-					update_icon()
+					status_dirty = TRUE
+					channel_dirty = TRUE
+					update()
+					queue_icon_update()
+					update_processing_state()
 				if(0)
 					to_chat(user, SPAN_WARNING("There is no power control board to secure!"))
 			return TRUE
@@ -857,7 +1071,7 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
-	if(operating && !shorted && !failure_timer)
+	if(operating && !shorted && !failure_timer && !MACHINE_IS_BROKEN(src) && !GET_FLAGS(stat, MACHINE_STAT_MAINT))
 
 		//prevent unnecessary updates to emergency lighting
 		var/new_power_light = (lighting >= POWERCHAN_ON)
@@ -872,7 +1086,9 @@
 		area.power_equip = 0
 		area.power_environ = 0
 
+	suppress_self_power_change_dirty = TRUE
 	area.power_change()
+	suppress_self_power_change_dirty = FALSE
 
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)
@@ -921,8 +1137,7 @@
 
 	else if( href_list["reboot"] )
 		failure_timer = 0
-		update_icon()
-		update()
+		force_update_channels()
 
 	else if (href_list["breaker"])
 		toggle_breaker()
@@ -963,16 +1178,15 @@
 	return STATUS_UPDATE
 
 /obj/machinery/power/apc/proc/force_update_channels()
-	autoflag = -1 // This clears state, forcing a full recalculation
-	update_channels(TRUE)
-	update()
-	queue_icon_update()
+	sync_apc_state(TRUE, TRUE)
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
 	force_update_channels()
 
 /obj/machinery/power/apc/get_power_usage()
+	if(!area)
+		return 0
 	if(autoflag)
 		return lastused_total // If not, we need to do something more sophisticated: compute how much power we would need in order to come back online.
 	. = 0
@@ -981,116 +1195,53 @@
 	if(autoset(equipment, 2) >= POWERCHAN_ON)
 		. += area.usage(EQUIP)
 	if(autoset(environ, 1) >= POWERCHAN_ON)
-		. += area.usage(EQUIP)
+		. += area.usage(ENVIRON)
 
 /obj/machinery/power/apc/Process()
-	if(!area.requires_power)
+	if(!area?.requires_power)
 		return PROCESS_KILL
 
 	if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
-		return
+		return PROCESS_KILL
 
 	if(failure_timer)
 		update()
 		queue_icon_update()
 		failure_timer--
-		force_update = 1
+		if(!failure_timer)
+			force_update = 1
+			status_dirty = TRUE
+			channel_dirty = TRUE
 		return
-
-	lastused_light = (lighting >= POWERCHAN_ON) ? area.usage(LIGHT) : 0
-	lastused_equip = (equipment >= POWERCHAN_ON) ? area.usage(EQUIP) : 0
-	lastused_environ = (environ >= POWERCHAN_ON) ? area.usage(ENVIRON) : 0
-	area.clear_usage()
-
-	lastused_total = lastused_light + lastused_equip + lastused_environ
 
 	//store states to update icon if any change
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
-	var/last_ch = charging
 
-	var/obj/machinery/power/terminal/terminal = terminal()
-	var/avail = (terminal && terminal.avail()) || 0
-	var/excess = (terminal && terminal.surplus()) || 0
+	if(usage_dirty)
+		refresh_usage_snapshot()
 
-	if(!avail)
-		main_status = 0
-	else if(excess < 0)
-		main_status = 1
-	else
-		main_status = 2
+	if(status_dirty)
+		refresh_power_status()
+	if(channel_dirty)
+		evaluate_auto_channels()
+		channel_dirty = FALSE
 
-	var/obj/item/cell/cell = get_cell()
-	if(!cell || shorted) // We aren't going to be doing any power processing in this case.
-		charging = 0
-	else
-		..() // Actual processing happens in here.
-
-		if(debug)
-			log_debug("Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]")
-
-		//update state
-		var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
-		lastused_charging = max(power && power.cell && (power.cell.charge - power.last_cell_charge) * CELLRATE, 0)
-		charging = lastused_charging ? 1 : 0
-		if(cell.fully_charged())
-			charging = 2
-
-		if(!is_powered())
-			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
-
-	// Set channels depending on how much charge we have left
-	update_channels()
+	if(debug)
+		log_debug("Status: [main_status] - Last Equip: [lastused_equip] - Last Light: [lastused_light] - Longterm: [longtermpower]")
 
 	// update icon & area power if anything changed
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || force_update)
 		force_update = 0
 		queue_icon_update()
 		update()
-	else if (last_ch != charging)
-		queue_icon_update()
+
+	if(!should_keep_processing())
+		return PROCESS_KILL
 
 /obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE)
-	// Allow the APC to operate as normal if the cell can charge
-	if(charging && longtermpower < 10)
-		longtermpower += 1
-	else if(longtermpower > -10)
-		longtermpower -= 2
-	var/obj/item/cell/cell = get_cell()
-	var/percent = cell && cell.percent()
-
-	if(!cell || shorted || (!is_powered()) || !operating)
-		if(autoflag != 0)
-			equipment = autoset(equipment, 0)
-			lighting = autoset(lighting, 0)
-			environ = autoset(environ, 0)
-			if(!suppress_alarms)
-				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 0
-	else if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
-		if(autoflag != 3)
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
-			autoflag = 3
-			GLOB.power_alarm.clearAlarm(loc, src)
-	else if((percent <= AUTO_THRESHOLD_LIGHTING) && (percent > AUTO_THRESHOLD_EQUIPMENT) && longtermpower < 0)                       // <50%, turn off lighting
-		if(autoflag != 2)
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if(!suppress_alarms)
-				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 2
-	else if(percent <= AUTO_THRESHOLD_EQUIPMENT)        // <25%, turn off lighting & equipment
-		if(autoflag != 1)
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
-			if(!suppress_alarms)
-				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 1
+	evaluate_auto_channels(suppress_alarms)
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
@@ -1171,10 +1322,15 @@
 
 /obj/machinery/power/apc/proc/set_chargemode(new_mode)
 	chargemode = new_mode
-	var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/power = cached_battery_part
 	if(power)
 		power.can_charge = chargemode
 		power.charge_wait_counter = initial(power.charge_wait_counter)
+	if(!chargemode)
+		lastused_charging = 0
+		charging = 0
+		queue_icon_update()
+	update_processing_state()
 
 // overload the lights in this APC area
 /obj/machinery/power/apc/proc/overload_lighting(chance = 100)

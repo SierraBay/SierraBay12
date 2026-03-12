@@ -103,6 +103,8 @@
 	var/other_dangerlevel = 0
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
+	var/datum/gas_mixture/tracked_environment
+	var/atmos_dirty = TRUE
 
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
@@ -135,6 +137,11 @@
 	target_temperature = T0C+10
 
 /obj/machinery/alarm/Destroy()
+	if(tracked_environment)
+		UnregisterSignal(tracked_environment, COMSIG_GASMIX_UPDATED)
+	var/turf/simulated/location = loc
+	if(istype(location))
+		UnregisterSignal(location, COMSIG_TURF_RETURN_AIR_CHANGED)
 	unregister_radio(src, frequency)
 	return ..()
 
@@ -173,7 +180,16 @@
 			trace_gas += g
 
 	set_frequency(frequency)
+	var/turf/simulated/location = loc
+	if(istype(location))
+		RegisterSignal(location, COMSIG_TURF_RETURN_AIR_CHANGED, PROC_REF(on_return_air_changed))
+	refresh_environment_binding()
 	update_icon()
+
+/obj/machinery/alarm/power_change()
+	. = ..()
+	if(.)
+		queue_atmos_recheck()
 
 /obj/machinery/alarm/get_req_access()
 	if(!locked)
@@ -182,48 +198,96 @@
 
 /obj/machinery/alarm/Process()
 	if(inoperable() || shorted || buildstage != 2)
-		return
+		return PROCESS_KILL
 
 	var/turf/simulated/location = loc
-	if(!istype(location))	return//returns if loc is not simulated
+	if(!istype(location))
+		return PROCESS_KILL //returns if loc is not simulated
 
-	var/datum/gas_mixture/environment = location.return_air()
+	var/datum/gas_mixture/environment = refresh_environment_binding()
+	if(!environment)
+		return PROCESS_KILL
+
+	var/should_recheck = atmos_dirty
+	atmos_dirty = FALSE
 
 	//Handle temperature adjustment here.
-	if(environment.return_pressure() > ONE_ATMOSPHERE*0.05)
+	if(regulating_temperature && environment.return_pressure() <= ONE_ATMOSPHERE*0.05)
+		update_use_power(POWER_USE_IDLE)
+		regulating_temperature = FALSE
+	else if(regulating_temperature || should_recheck)
 		handle_heating_cooling(environment)
 
-	var/old_level = danger_level
-	danger_level = overall_danger_level(environment)
+	if(should_recheck)
+		var/old_level = danger_level
+		danger_level = overall_danger_level(environment)
 
-	if (old_level != danger_level)
-		if(danger_level == 2)
-			playsound(src.loc, 'sound/machines/airalarm.ogg', 25, 0, 4)
-		apply_danger_level(danger_level)
+		if (old_level != danger_level)
+			if(danger_level == 2)
+				playsound(src.loc, 'sound/machines/airalarm.ogg', 25, 0, 4)
+			apply_danger_level(danger_level)
 
-	if (pressure_dangerlevel != 0)
-		if (breach_detected())
-			mode = AALARM_MODE_OFF
+		if (pressure_dangerlevel != 0)
+			if (breach_detected())
+				mode = AALARM_MODE_OFF
+				apply_mode()
+
+		if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
+			breach_start_cooldown()
+			mode=AALARM_MODE_FILL
 			apply_mode()
 
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
-		breach_start_cooldown()
-		mode=AALARM_MODE_FILL
-		apply_mode()
-
-	//atmos computer remote controll stuff
-	switch(rcon_setting)
-		if(RCON_NO)
-			remote_control = 0
-		if(RCON_AUTO)
-			if(danger_level == 2)
-				remote_control = 1
-			else
+		//atmos computer remote controll stuff
+		switch(rcon_setting)
+			if(RCON_NO)
 				remote_control = 0
-		if(RCON_YES)
-			remote_control = 1
+			if(RCON_AUTO)
+				if(danger_level == 2)
+					remote_control = 1
+				else
+					remote_control = 0
+			if(RCON_YES)
+				remote_control = 1
 
-	return
+	if(atmos_dirty || regulating_temperature)
+		return
+
+	return PROCESS_KILL
+
+/obj/machinery/alarm/proc/refresh_environment_binding()
+	var/turf/simulated/location = loc
+	if(!istype(location))
+		if(tracked_environment)
+			UnregisterSignal(tracked_environment, COMSIG_GASMIX_UPDATED)
+			tracked_environment = null
+		return null
+
+	var/datum/gas_mixture/environment = location.return_air()
+	if(environment == tracked_environment)
+		return environment
+
+	if(tracked_environment)
+		UnregisterSignal(tracked_environment, COMSIG_GASMIX_UPDATED)
+
+	tracked_environment = environment
+	if(tracked_environment)
+		RegisterSignal(tracked_environment, COMSIG_GASMIX_UPDATED, PROC_REF(on_environment_updated))
+
+	return tracked_environment
+
+/obj/machinery/alarm/proc/queue_atmos_recheck(rebind_environment = FALSE)
+	if(rebind_environment)
+		refresh_environment_binding()
+	atmos_dirty = TRUE
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/alarm/proc/on_environment_updated(datum/gas_mixture/source)
+	SIGNAL_HANDLER
+	queue_atmos_recheck()
+
+/obj/machinery/alarm/proc/on_return_air_changed(turf/simulated/source, datum/gas_mixture/old_air, datum/gas_mixture/new_air)
+	SIGNAL_HANDLER
+	queue_atmos_recheck(TRUE)
 
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	if (!regulating_temperature)
@@ -316,6 +380,7 @@
 
 /obj/machinery/alarm/proc/breach_end_cooldown()
 	breach_cooldown = FALSE
+	queue_atmos_recheck()
 	return
 
 //disables breach detection temporarily
@@ -469,6 +534,7 @@
 				send_signal(device_id, list("set_power"= 0) )
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("set_power"= 0) )
+	queue_atmos_recheck()
 
 /obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
 	if (report_danger_level && alarm_area.atmosalert(new_danger_level, src))
@@ -673,6 +739,7 @@
 				rcon_setting = RCON_AUTO
 			if(RCON_YES)
 				rcon_setting = RCON_YES
+		queue_atmos_recheck()
 		return TOPIC_REFRESH
 
 	if(href_list["temperature"])
@@ -685,6 +752,7 @@
 				to_chat(user, "Temperature must be between [min_temperature]C and [max_temperature]C")
 			else
 				target_temperature = input_temperature + T0C
+				queue_atmos_recheck()
 		return TOPIC_REFRESH
 
 	// hrefs that need the AA unlocked -walter0o
@@ -730,6 +798,7 @@
 						breach_pressure = 50*ONE_ATMOSPHERE
 					else
 						breach_pressure = round(newval,0.01)
+					queue_atmos_recheck()
 
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -845,6 +914,7 @@
 				if (C.use(5))
 					to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 					buildstage = 2
+					queue_atmos_recheck(TRUE)
 					update_icon()
 					return TRUE
 				else

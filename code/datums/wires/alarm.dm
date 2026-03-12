@@ -44,6 +44,7 @@ var/global/const/AALARM_WIRE_AALARM = 16
 		if(AALARM_WIRE_POWER)
 			A.shock(usr, 50)
 			A.shorted = !mended
+			A.queue_atmos_recheck()
 			A.update_icon()
 //			log_debug("Power wire cut")
 
@@ -79,11 +80,13 @@ var/global/const/AALARM_WIRE_AALARM = 16
 
 			if(A.shorted == 0)
 				A.shorted = 1
+				A.queue_atmos_recheck()
 				A.update_icon()
 
 			spawn(12000)
 				if(A.shorted == 1)
 					A.shorted = 0
+					A.queue_atmos_recheck()
 					A.update_icon()
 
 

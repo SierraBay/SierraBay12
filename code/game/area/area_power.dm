@@ -80,6 +80,8 @@
  */
 /area/proc/power_use_change(old_amount, new_amount, chan)
 	use_power(new_amount - old_amount, chan)
+	if(old_amount != new_amount)
+		SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, FALSE)
 
 /**
  * Adds the given amount of power to the `oneoff_*` var for the given power channel. This results in a single spike in power usage that is reset on the next power tick.
@@ -97,6 +99,8 @@
 			oneoff_light += amount
 		if(ENVIRON)
 			oneoff_environ += amount
+	if(amount)
+		SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, TRUE)
 
 /// Recomputes the continued power usage; can be used for testing or error recovery, but is not called under normal conditions.
 /area/proc/retally_power()

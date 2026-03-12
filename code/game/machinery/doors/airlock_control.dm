@@ -8,7 +8,7 @@
 	var/cur_command = null	//the command the door is currently attempting to complete
 
 /obj/machinery/door/airlock/Process()
-	if (arePowerSystemsOn())
+	if (cur_command && arePowerSystemsOn())
 		execute_current_command()
 	return ..()
 

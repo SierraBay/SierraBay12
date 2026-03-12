@@ -112,21 +112,42 @@
 	data["automation"] = automation
 
 /obj/machinery/computer/air_control/Process()
-	..()
+	return PROCESS_KILL
+
+/obj/machinery/computer/air_control/proc/has_tracked_tags()
+	return sensor_tag || input_tag || output_tag
+
+/obj/machinery/computer/air_control/proc/consume_tracked_signal(id_tag, list/signal_data)
+	if(sensor_tag == id_tag)
+		sensor_info = signal_data
+		return TRUE
+	if(input_tag == id_tag)
+		input_info = signal_data
+		return TRUE
+	if(output_tag == id_tag)
+		output_info = signal_data
+		return TRUE
+	return FALSE
+
+/obj/machinery/computer/air_control/proc/on_tracked_signal(id_tag)
+	return
 
 /obj/machinery/computer/air_control/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)
 		return
+	if(!has_tracked_tags())
+		return
 
-	var/id_tag = signal.data["tag"]
-	if(sensor_tag == id_tag)
-		sensor_info = signal.data
-	else if(input_tag == id_tag)
-		input_info = signal.data
-	else if(output_tag == id_tag)
-		output_info = signal.data
-	else
-		..(signal)
+	var/list/signal_data = signal.data
+	if(!islist(signal_data))
+		return
+
+	var/id_tag = signal_data["tag"]
+	if(!id_tag)
+		return
+
+	if(consume_tracked_signal(id_tag, signal_data))
+		on_tracked_signal(id_tag)
 
 /obj/machinery/computer/air_control/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -272,16 +293,20 @@
 
 	var/cutoff_temperature = 2000
 	var/on_temperature = 1200
+	var/last_automation_state = null
 
-/obj/machinery/computer/air_control/fuel_injection/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+/obj/machinery/computer/air_control/fuel_injection/has_tracked_tags()
+	return device_tag || ..()
 
-	var/id_tag = signal.data["tag"]
-
+/obj/machinery/computer/air_control/fuel_injection/consume_tracked_signal(id_tag, list/signal_data)
 	if(device_tag == id_tag)
-		device_info = signal.data
-	else
-		..(signal)
+		device_info = signal_data
+		return TRUE
+	return ..()
+
+/obj/machinery/computer/air_control/fuel_injection/on_tracked_signal(id_tag)
+	if(automation && sensor_tag == id_tag)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/computer/air_control/fuel_injection/Topic(href, href_list)
 	if((. = ..()))
@@ -289,43 +314,53 @@
 
 	if(href_list["toggle_automation"])
 		automation = !automation
+		last_automation_state = null
+		if(automation)
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		else
+			STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
-		signal.data = list(
-			"tag" = device_tag,
-			"power_toggle" = 1,
-			"sigtype" = "command"
-		)
-		..()
+		if(radio_connection)
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.source = src
+			signal.data = list(
+				"tag" = device_tag,
+				"power_toggle" = 1,
+				"sigtype" = "command"
+			)
+			radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
+
+		return TOPIC_REFRESH
 
 /obj/machinery/computer/air_control/fuel_injection/Process()
-	if(automation)
-		if(!radio_connection)
-			return 0
+	if(!automation || !radio_connection)
+		return PROCESS_KILL
 
-		var/injecting = 0
-		if(sensor_info)
-			if(sensor_info["temperature"])
-				if(sensor_info["temperature"] >= cutoff_temperature)
-					injecting = 0
-				else if(sensor_info["temperature"] <= on_temperature)
-					injecting = 1
+	var/injecting = 0
+	var/temperature = sensor_info && sensor_info["temperature"]
+	if(!isnull(temperature))
+		if(temperature >= cutoff_temperature)
+			injecting = 0
+		else if(temperature <= on_temperature)
+			injecting = 1
 
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+	if(last_automation_state == injecting)
+		return PROCESS_KILL
 
-		signal.data = list(
-			"tag" = device_tag,
-			"set_power" = injecting,
-			"sigtype" = "command"
-		)
+	last_automation_state = injecting
 
-		radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
+	var/datum/signal/signal = new
+	signal.transmission_method = 1 //radio signal
+	signal.source = src
+	signal.data = list(
+		"tag" = device_tag,
+		"set_power" = injecting,
+		"sigtype" = "command"
+	)
 
-	..()
+	radio_connection.post_signal(src, signal, radio_filter = RADIO_ATMOSIA)
+	return PROCESS_KILL
 
 /obj/machinery/computer/air_control/supermatter_core
 	icon = 'icons/obj/machines/computer.dmi'

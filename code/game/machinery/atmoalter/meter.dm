@@ -50,33 +50,32 @@
 
 /obj/machinery/meter/Process()
 	..()
+	var/new_state
 	if(!target)
-		icon_state = "meterX"
-		return 0
-
-	if(inoperable())
-		icon_state = "meter0"
-		return 0
-
-	var/datum/gas_mixture/environment = return_air()
-	if(!environment)
-		icon_state = "meterX"
-		return 0
-
-	var/env_pressure = environment.return_pressure()
-	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
-		icon_state = "meter0"
-	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
-		icon_state = "meter1_[val]"
-	else if(env_pressure <= 30*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
-		icon_state = "meter2_[val]"
-	else if(env_pressure <= 59*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
-		icon_state = "meter3_[val]"
+		new_state = "meterX"
+	else if(inoperable())
+		new_state = "meter0"
 	else
-		icon_state = "meter4"
+		var/datum/gas_mixture/environment = return_air()
+		if(!environment)
+			new_state = "meterX"
+		else
+			var/env_pressure = environment.return_pressure()
+			if(env_pressure <= 0.15*ONE_ATMOSPHERE)
+				new_state = "meter0"
+			else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
+				var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
+				new_state = "meter1_[val]"
+			else if(env_pressure <= 30*ONE_ATMOSPHERE)
+				var/val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
+				new_state = "meter2_[val]"
+			else if(env_pressure <= 59*ONE_ATMOSPHERE)
+				var/val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
+				new_state = "meter3_[val]"
+			else
+				new_state = "meter4"
+	if(new_state != icon_state)
+		icon_state = new_state
 
 
 /obj/machinery/meter/examine(mob/user, distance)

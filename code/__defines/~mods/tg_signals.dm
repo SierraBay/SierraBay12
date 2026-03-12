@@ -13,3 +13,10 @@
 
 #define COMSIG_CABINE_OPEN "cabine_open"
 #define COMSIG_CABINE_CLOSED "cabine_closed"
+
+// ATMOS
+#define COMSIG_GASMIX_UPDATED "gasmix_updated" // Газовая смесь была изменена и пересчитала значения.
+#define COMSIG_TURF_RETURN_AIR_CHANGED "turf_return_air_changed" // Точка, которую turf возвращает через return_air(), могла измениться.
+
+// POWER
+#define COMSIG_AREA_POWER_USAGE_CHANGED "area_power_usage_changed" // В area изменилось непрерывное или oneoff-потребление энергии.
