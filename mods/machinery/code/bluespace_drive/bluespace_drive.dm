@@ -15,6 +15,18 @@ var/global/list/bluespace_gas_power_factor = list(
 	GAS_TRITIUM    = 4
 )
 
+
+
+//Just for test
+/area/bluespace_interlude/platform
+	name = "Bluespace Interlude - Platform"
+
+
+/turf/simulated/floor/bluespace/interlude
+	name = "\improper bluespace"
+
+
+
 /obj/machinery/bluespace_drive
 	name = "Bluespace Drive"
 	desc = "A complex piece of machinery designed to fold space using Bluespace physics, powered by Phoron. \
@@ -920,7 +932,7 @@ var/global/list/bluespace_gas_power_factor = list(
 			continue
 		if(!AreConnectedZLevels(L.z, z))
 			continue
-		if(istype(get_area(L), /area/bluespace_interlude))
+		if(istype(get_area(L), /area/bluespace_interlude/platform))
 			continue
 		if(prob(50))
 			pull_player_into_rift(L)
@@ -940,7 +952,7 @@ var/global/list/bluespace_gas_power_factor = list(
 			continue
 		if(!AreConnectedZLevels(L.z, z))
 			continue
-		if(istype(get_area(L), /area/bluespace_interlude))
+		if(istype(get_area(L), /area/bluespace_interlude/platform))
 			continue
 		if(prob(50))
 			pull_player_into_rift(L)
@@ -1054,7 +1066,7 @@ var/global/list/bluespace_gas_power_factor = list(
  * - 15% → 2 figments
  */
 /obj/machinery/bluespace_drive/proc/spawn_rift_figments()
-	var/roll = rand(100, 100)
+	var/roll = rand(1, 100)
 	var/count = 0
 	if(roll <= 15)
 		count = 2
