@@ -48,13 +48,20 @@ SUBSYSTEM_DEF(machines)
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
-	var/static/list/queue = list()
+	var/static/list/type_lookup_cache = list()
+	var/static/pipe_index = 0
+	var/static/machine_index = 0
+	var/static/powernet_index = 0
+	var/static/power_obj_index = 0
 	var/static/list/machinery = list()
 	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
-	queue.Cut()
+	pipe_index = 0
+	machine_index = 0
+	powernet_index = 0
+	power_obj_index = 0
 
 
 /datum/controller/subsystem/machines/Initialize(start_uptime)
@@ -105,6 +112,7 @@ SUBSYSTEM_DEF(machines)
 
 	machinery += machine
 	LAZYADDASSOCLIST(machinery_by_type, machine.type, machine)
+	type_lookup_cache.Cut()
 	var/area/A = get_area(machine)
 	if(A)
 		LAZYADD(A.machinery_list, machine)
@@ -118,6 +126,7 @@ SUBSYSTEM_DEF(machines)
 	machinery_of_type -= machine
 	if(!length(machinery_of_type))
 		machinery_by_type -= machine.type
+	type_lookup_cache.Cut()
 
 	var/area/A = get_area(machine)
 	if(A)
@@ -133,16 +142,21 @@ SUBSYSTEM_DEF(machines)
 	if(!ispath(machinery_type, /obj/machinery))
 		CRASH("Non-machinery type passed in `/datum/controller/subsystem/machines/proc/get_machinery_of_type`")
 
-	if(machinery_type == /obj/machinery)
-		return get_all_machinery()
+	var/list/cached = type_lookup_cache[machinery_type]
+	if(cached)
+		return cached.Copy()
 
 	var/list/machinery = list()
-	for(var/type in typesof(machinery_type))
-		var/list/machinery_of_type = machinery_by_type[type]
-		if(machinery_of_type)
-			machinery += machinery_of_type
+	if(machinery_type == /obj/machinery)
+		machinery = get_all_machinery()
+	else
+		for(var/type in typesof(machinery_type))
+			var/list/machinery_of_type = machinery_by_type[type]
+			if(machinery_of_type)
+				machinery += machinery_of_type
 
-	return machinery
+	type_lookup_cache[machinery_type] = machinery
+	return machinery.Copy()
 
 /datum/controller/subsystem/machines/proc/get_all_machinery()
 	return machinery.Copy()
@@ -199,10 +213,14 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/process_pipenets(resumed, no_mc_tick)
 	if (!resumed)
-		queue = pipenets.Copy()
+		pipe_index = length(pipenets)
 	var/datum/pipe_network/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	while(pipe_index > 0)
+		if(pipe_index > length(pipenets))
+			pipe_index = length(pipenets)
+			continue
+		network = pipenets[pipe_index]
+		pipe_index--
 		if (QDELETED(network))
 			if (network)
 				network.is_processing = null
@@ -212,16 +230,19 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
 
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
 	if (!resumed)
-		queue = processing.Copy()
+		machine_index = length(processing)
 	var/obj/machinery/machine
-	for (var/i = length(queue) to 1 step -1)
-		machine = queue[i]
+	while(machine_index > 0)
+		if(machine_index > length(processing))
+			machine_index = length(processing)
+			continue
+		machine = processing[machine_index]
+		machine_index--
 		if (QDELETED(machine))
 			if (machine)
 				machine.is_processing = null
@@ -239,16 +260,19 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
 
 
 /datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
 	if (!resumed)
-		queue = powernets.Copy()
+		powernet_index = length(powernets)
 	var/datum/powernet/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	while(powernet_index > 0)
+		if(powernet_index > length(powernets))
+			powernet_index = length(powernets)
+			continue
+		network = powernets[powernet_index]
+		powernet_index--
 		if (QDELETED(network))
 			if (network)
 				network.is_processing = null
@@ -258,16 +282,19 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
 
 
 /datum/controller/subsystem/machines/proc/process_power_objects(resumed, no_mc_tick)
 	if (!resumed)
-		queue = power_objects.Copy()
+		power_obj_index = length(power_objects)
 	var/obj/item/item
-	for (var/i = length(queue) to 1 step -1)
-		item = queue[i]
+	while(power_obj_index > 0)
+		if(power_obj_index > length(power_objects))
+			power_obj_index = length(power_objects)
+			continue
+		item = power_objects[power_obj_index]
+		power_obj_index--
 		if (QDELETED(item))
 			if (item)
 				item.is_processing = null
@@ -279,7 +306,6 @@ SUBSYSTEM_DEF(machines)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
 
 

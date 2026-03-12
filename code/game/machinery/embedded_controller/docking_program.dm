@@ -245,10 +245,18 @@
 	return 1
 
 /datum/computer/file/embedded_program/docking/proc/enable_override()
+	if(override_enabled)
+		return
 	override_enabled = 1
+	var/obj/machinery/embedded_controller/controller = master
+	controller?.queue_icon_update()
 
 /datum/computer/file/embedded_program/docking/proc/disable_override()
+	if(!override_enabled)
+		return
 	override_enabled = 0
+	var/obj/machinery/embedded_controller/controller = master
+	controller?.queue_icon_update()
 
 /datum/computer/file/embedded_program/docking/proc/reset()
 	dock_state = STATE_UNDOCKED

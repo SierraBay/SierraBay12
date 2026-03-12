@@ -16,6 +16,7 @@
 
 	var/perapc = 0			// per-apc avilability
 	var/perapc_excess = 0
+	var/apc_count = 0
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)
 
 	var/problem = 0				// If this is not 0 there is some sort of issue in the powernet. Monitors will display warnings.
@@ -72,6 +73,10 @@
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
 	nodes -=M
+	if(istype(M, /obj/machinery/power/terminal))
+		var/obj/machinery/power/terminal/T = M
+		if(istype(T.master_machine(), /obj/machinery/power/apc))
+			apc_count = max(0, apc_count - 1)
 	M.powernet = null
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it - qdel
@@ -87,6 +92,10 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
+	if(istype(M, /obj/machinery/power/terminal))
+		var/obj/machinery/power/terminal/T = M
+		if(istype(T.master_machine(), /obj/machinery/power/apc))
+			apc_count++
 
 // Triggers warning for certain amount of ticks
 /datum/powernet/proc/trigger_warning(duration_ticks = 20)
@@ -96,15 +105,10 @@
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-	var/numapc = 0
+	var/numapc = apc_count
 
 	if(problem > 0)
 		problem = max(problem - 1, 0)
-
-	if(nodes && length(nodes)) // Added to fix a bad list bug -- TLE
-		for(var/obj/machinery/power/terminal/term in nodes)
-			if( istype( term.master_machine(), /obj/machinery/power/apc ) )
-				numapc++
 
 	netexcess = avail - load
 

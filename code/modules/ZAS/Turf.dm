@@ -109,8 +109,11 @@
 /turf/simulated/update_air_properties()
 
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
+		var/datum/gas_mixture/old_air = zone.air
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
+		if(old_air != air)
+			SEND_SIGNAL(src, COMSIG_TURF_RETURN_AIR_CHANGED, old_air, air)
 
 	var/s_block
 	ATMOS_CANPASS_TURF(s_block, src, src)
@@ -316,8 +319,12 @@ var/global/list/STANDARD_AIRMIX = list(
 	if (!.)
 		. = air || make_air()
 		if (zone)
+			var/datum/gas_mixture/old_air = zone.air
 			c_copy_air()
 			zone = null
+			if(old_air != air)
+				SEND_SIGNAL(src, COMSIG_TURF_RETURN_AIR_CHANGED, old_air, air)
+			. = air
 
 // Returns the external air if this turf is outside, modified by weather and heat sources. Outside checks do not occur in this proc!
 /turf/proc/get_external_air(include_heat_sources = TRUE)

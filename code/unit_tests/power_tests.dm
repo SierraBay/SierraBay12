@@ -230,3 +230,45 @@
 	pass("Battery-driven threshold transitions still force APC auto channel recalculation without a self-tick heartbeat.")
 	qdel(apc)
 	return 1
+
+/datum/unit_test/apc_phase_two/manual_hysteresis_stays_current_before_returning_to_auto
+	name = "POWER: APC hysteresis stays current while channels are manual"
+
+/datum/unit_test/apc_phase_two/manual_hysteresis_stays_current_before_returning_to_auto/start_test()
+	var/obj/machinery/power/apc/apc = create_test_apc()
+	if(!apc)
+		return 1
+	var/obj/machinery/power/terminal/unit_test/mock_terminal = install_mock_terminal(apc, 0, 0)
+	if(!mock_terminal)
+		qdel(apc)
+		return 1
+	var/obj/item/stock_parts/power/battery/battery = apc.cached_battery_part
+	var/obj/item/cell/cell = apc.get_cell()
+
+	cell.charge = 255
+	apc.longtermpower = 1
+	apc.equipment = POWERCHAN_ON
+	apc.lighting = POWERCHAN_ON
+	apc.environ = POWERCHAN_ON
+	apc.power_change()
+
+	battery.machine_process(apc)
+
+	if(apc.longtermpower >= 0)
+		fail("Expected manual APC hysteresis to continue tracking discharge while channels are set manually.")
+		qdel(apc)
+		return 1
+
+	apc.equipment = POWERCHAN_ON_AUTO
+	apc.lighting = POWERCHAN_ON_AUTO
+	apc.environ = POWERCHAN_ON_AUTO
+	apc.force_update_channels()
+
+	if(apc.lighting != POWERCHAN_OFF_AUTO)
+		fail("Expected APC lighting to drop immediately when returning to auto with a stale-negative hysteresis state.")
+		qdel(apc)
+		return 1
+
+	pass("Manual APCs keep hysteresis current, so returning to auto uses fresh discharge state.")
+	qdel(apc)
+	return 1

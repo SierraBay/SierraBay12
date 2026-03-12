@@ -446,7 +446,7 @@
 	if(cell?.fully_charged())
 		charging = 2
 
-	if(allow_hysteresis && auto_channels)
+	if(allow_hysteresis)
 		if(charging && longtermpower < 10)
 			longtermpower += 1
 		else if(longtermpower > -10)
