@@ -36,4 +36,4 @@
 	icon = 'mods/utility_items/icons/chebukek.dmi'
 
 /obj/item/clothing/under/formal/chain_with_shirt
-	icon = 'mods/utility_items/icons/uniform.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/utility_items/icons/uniform.dmi')
