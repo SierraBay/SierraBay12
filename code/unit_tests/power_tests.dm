@@ -181,8 +181,18 @@
 		fail("Expected manual APC to record a positive charging load after the battery component processed.")
 		qdel(apc)
 		return 1
-	if(apc.Process() != PROCESS_KILL)
-		fail("Manual APC should not require a persistent self-tick after battery charge state sync.")
+	var/process_result = apc.Process()
+	SSmachines.finalize_machine_schedule(apc, process_result, TRUE)
+	if(apc in SSmachines.processing_high)
+		fail("Manual APC should not remain in the active machinery queue after battery charge state sync.")
+		qdel(apc)
+		return 1
+	if(process_result != PROCESS_KILL)
+		fail("Manual APC should kill self-processing once its dirty work is complete.")
+		qdel(apc)
+		return 1
+	if(SSmachines.dormant_machines[apc])
+		fail("Manual APC should not enter dormant scheduling when it has no more work.")
 		qdel(apc)
 		return 1
 
@@ -271,4 +281,91 @@
 
 	pass("Manual APCs keep hysteresis current, so returning to auto uses fresh discharge state.")
 	qdel(apc)
+	return 1
+
+/datum/unit_test/apc_phase_two/power_state_signal_wakes_power_components
+	name = "POWER: Machine power-state signals wake battery and terminal components"
+
+/datum/unit_test/apc_phase_two/power_state_signal_wakes_power_components/start_test()
+	var/obj/machinery/power/apc/apc = create_test_apc()
+	if(!apc)
+		return 1
+
+	var/obj/item/stock_parts/power/battery/battery = apc.cached_battery_part
+	var/obj/item/stock_parts/power/terminal/terminal_part = apc.cached_terminal_part
+	if(!battery || !terminal_part)
+		fail("APC is missing its power stock parts for wakeup testing.")
+		qdel(apc)
+		return 1
+
+	battery.stop_processing(apc)
+	terminal_part.stop_processing(apc)
+	if((battery.status & PART_STAT_PROCESSING) || (terminal_part.status & PART_STAT_PROCESSING))
+		fail("Power components should be fully stopped before signal wakeup is tested.")
+		qdel(apc)
+		return 1
+
+	apc.update_power_channel(LIGHT)
+
+	if(!(battery.status & PART_STAT_PROCESSING))
+		fail("Battery component should wake when the host machine emits COMSIG_MACHINE_POWER_STATE_CHANGED.")
+		qdel(apc)
+		return 1
+	if(!(terminal_part.status & PART_STAT_PROCESSING))
+		fail("Terminal component should wake when the host machine emits COMSIG_MACHINE_POWER_STATE_CHANGED.")
+		qdel(apc)
+		return 1
+
+	pass("Machine power-state changes wake both battery and terminal components without polling.")
+	qdel(apc)
+	return 1
+
+/datum/unit_test/solar_generation_moves_to_controller
+	name = "POWER: Solar generation is controller-batched without idle panel processing"
+
+/datum/unit_test/solar_generation_moves_to_controller/start_test()
+	var/turf/T = get_safe_turf()
+	if(!T)
+		fail("Could not find a safe turf for the solar benchmark test.")
+		return 1
+
+	var/obj/machinery/power/solar/panel = new(T)
+	var/obj/machinery/power/solar_control/control = new(T)
+	if(!panel || !control)
+		fail("Failed to create solar machinery for the batching test.")
+		qdel(panel)
+		qdel(control)
+		return 1
+
+	var/datum/powernet/net = new
+	net.add_machine(panel)
+	net.add_machine(control)
+	panel.control = control
+	control.connected_panels |= panel
+	panel.obscured = FALSE
+	panel.sunfrac = 1
+
+	if((panel in SSmachines.processing_high) || (panel in SSmachines.processing_normal) || (panel in SSmachines.processing_low))
+		fail("Solar panels should not stay in SSmachines processing once generation is controller-batched.")
+		qdel(panel)
+		qdel(control)
+		return 1
+
+	control.Process()
+
+	if(control.gen != solar_gen_rate * panel.efficiency)
+		fail("Expected solar controller to batch-generate [solar_gen_rate * panel.efficiency] W, got [control.gen].")
+		qdel(panel)
+		qdel(control)
+		return 1
+
+	if(net.newavail != control.gen)
+		fail("Expected controller-batched solar output to be added directly to the shared powernet.")
+		qdel(panel)
+		qdel(control)
+		return 1
+
+	pass("Solar panels no longer idle-process individually and still contribute power through their controller.")
+	qdel(panel)
+	qdel(control)
 	return 1
