@@ -5,12 +5,16 @@
 	Compiled by Aygar
 */
 
+#define MACHINERY_PRIORITY_HIGH 1
+#define MACHINERY_PRIORITY_NORMAL 2
+#define MACHINERY_PRIORITY_LOW 3
+
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/machines/wooden_tv.dmi'
 	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = STRUCTURE_LAYER // Layer under items
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = 0
 	throw_speed = 1
 	throw_range = 5
 
@@ -33,6 +37,8 @@
 	var/power_channel = EQUIP
 	/// Helps with bookkeeping when initializing atoms. Don't modify.
 	var/power_init_complete = FALSE
+	/// Internal guard for batching machine power-state signals during power recomputation.
+	var/power_state_signal_suppressed = FALSE
 	/// List of component instances. Expected type: `/obj/item/stock_parts.`
 	var/list/component_parts
 	/// LAZYLIST of component paths which have delayed init. Indeces = number of components.
@@ -65,6 +71,20 @@
 	var/list/processing_parts
 	/// Bitflag. What is being processed. One of `MACHINERY_PROCESS_*`.
 	var/processing_flags
+	/// Controls which SSmachines queue handles this machine. One of `MACHINERY_PRIORITY_*`.
+	var/process_priority = MACHINERY_PRIORITY_NORMAL
+	/// Controls how SSmachines should schedule this machine when Process() completes.
+	var/process_schedule_mode = MACHINERY_SCHEDULE_POLL
+	/// Default timer delay for `MACHINERY_SCHEDULE_TIMER`.
+	var/default_process_delay_ds = 0
+	/// Optional spread width for timer-based scheduling.
+	var/default_process_jitter_ds = 0
+	/// Earliest requested wake time for the current processing pass.
+	var/tmp/next_requested_process_at = null
+	/// Whether the current processing pass requested dormant scheduling.
+	var/tmp/requested_dormant_processing = FALSE
+	/// Stable per-instance offset used to spread timer wakes.
+	var/tmp/process_phase_offset_ds = null
 	/// One of the `STATUS_*` flags. If set, will force the given status flag if a silicon tries to access the machine.
 	var/silicon_restriction = null
 
@@ -118,6 +138,25 @@
 
 /obj/machinery/Process()
 	return PROCESS_KILL // Only process if you need to.
+
+/obj/machinery/proc/request_process_in(delay_ds, jitter_ds = null)
+	var/request_delay = max(1, round(delay_ds))
+	if(!isnull(jitter_ds))
+		request_delay += rand(0, max(0, round(jitter_ds)))
+
+	var/request_time = world.time + request_delay
+	if(isnull(next_requested_process_at) || request_time < next_requested_process_at)
+		next_requested_process_at = request_time
+	return next_requested_process_at
+
+/obj/machinery/proc/request_process_dormant()
+	requested_dormant_processing = TRUE
+	return TRUE
+
+/obj/machinery/proc/clear_process_request()
+	next_requested_process_at = null
+	requested_dormant_processing = FALSE
+	return TRUE
 
 /obj/machinery/emp_act(severity)
 	if(use_power && operable())

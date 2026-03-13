@@ -94,12 +94,12 @@ if(Datum.is_processing) {\
 #define START_PROCESSING_MACHINE(machine, flag)\
 	if(!istype(machine, /obj/machinery)) CRASH("A non-machine [log_info_line(machine)] was queued to process on the machinery subsystem.");\
 	machine.processing_flags |= flag;\
-	START_PROCESSING(SSmachines, machine)
+	SSmachines.start_processing_machine(machine)
 
 /// STOP specific to SSmachines
 #define STOP_PROCESSING_MACHINE(machine, flag)\
 	machine.processing_flags &= ~flag;\
-	if(machine.processing_flags == 0) STOP_PROCESSING(SSmachines, machine)
+	if(machine.processing_flags == 0) SSmachines.stop_processing_machine(machine)
 
 
 /****

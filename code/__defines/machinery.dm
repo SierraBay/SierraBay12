@@ -34,6 +34,10 @@
 
 #define MACHINE_IS_BROKEN(MACHINE) (!!MACHINE.reason_broken)
 
+#define MACHINERY_SCHEDULE_POLL  1
+#define MACHINERY_SCHEDULE_TIMER 2
+#define MACHINERY_SCHEDULE_EVENT 3
+
 // Used by firelocks
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2

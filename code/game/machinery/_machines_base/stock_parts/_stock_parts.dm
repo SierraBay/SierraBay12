@@ -45,11 +45,20 @@
 // Use to process on the machine it's installed on.
 
 /obj/item/stock_parts/proc/start_processing(obj/machinery/machine)
+	if(!machine)
+		machine = loc
+	if(!istype(machine))
+		return
 	LAZYDISTINCTADD(machine.processing_parts, src)
 	START_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_COMPONENTS)
 	set_status(machine, PART_STAT_PROCESSING)
 
 /obj/item/stock_parts/proc/stop_processing(obj/machinery/machine)
+	if(!machine)
+		machine = loc
+	if(!istype(machine))
+		unset_status(null, PART_STAT_PROCESSING)
+		return
 	LAZYREMOVE(machine.processing_parts, src)
 	if(!LAZYLEN(machine.processing_parts))
 		STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_COMPONENTS)
