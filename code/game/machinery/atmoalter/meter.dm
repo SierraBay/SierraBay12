@@ -33,11 +33,15 @@
 	clear_target()
 	target = new_target
 	GLOB.destroyed_event.register(target, src, PROC_REF(clear_target))
+	if(!QDELETED(src))
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/meter/proc/clear_target()
 	if(target)
 		GLOB.destroyed_event.unregister(target, src)
 		target = null
+		if(!QDELETED(src))
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/meter/return_air()
 	if(target)
@@ -47,6 +51,11 @@
 /obj/machinery/meter/Destroy()
 	clear_target()
 	. = ..()
+
+/obj/machinery/meter
+	init_flags = INIT_MACHINERY_START_PROCESSING
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 10
 
 /obj/machinery/meter/Process()
 	..()
@@ -76,6 +85,7 @@
 				new_state = "meter4"
 	if(new_state != icon_state)
 		icon_state = new_state
+	return 1
 
 
 /obj/machinery/meter/examine(mob/user, distance)

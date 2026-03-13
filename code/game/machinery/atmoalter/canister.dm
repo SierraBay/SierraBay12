@@ -149,6 +149,15 @@
 /obj/machinery/portable_atmospherics/canister/get_material_melting_point()
 	return temperature_resistance
 
+/obj/machinery/portable_atmospherics/canister/proc/get_pressure_overlay_level(tank_pressure = return_pressure())
+	if(tank_pressure <= CANISTER_PRESSURE_EMPTY)
+		return 0
+	if(tank_pressure <= CANISTER_PRESSURE_LOW)
+		return 1
+	if(tank_pressure <= CANISTER_PRESSURE_MID)
+		return 2
+	return 3
+
 /obj/machinery/portable_atmospherics/canister/on_death()
 	var/atom/location = loc
 	location.assume_air(air_contents)
@@ -164,6 +173,7 @@
 	if (destroyed)
 		return
 
+	var/old_pressure_overlay_level = get_pressure_overlay_level()
 	..()
 
 	if(valve_open)
@@ -182,7 +192,6 @@
 
 			var/returnval = pump_gas_passive(src, air_contents, environment, transfer_moles)
 			if(returnval >= 0)
-				src.update_icon()
 				if(holding)
 					holding.queue_icon_update()
 
@@ -192,6 +201,8 @@
 		can_label = 0
 
 	air_contents.react() //cooking up air cans - add phoron and oxygen, then heat above PHORON_MINIMUM_BURN_TEMPERATURE
+	if(get_pressure_overlay_level() != old_pressure_overlay_level)
+		update_icon()
 
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
 	var/datum/gas_mixture/GM = src.return_air()
