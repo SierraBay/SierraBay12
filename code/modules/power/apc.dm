@@ -444,8 +444,10 @@
 	if(isnull(previous_charge))
 		previous_charge = power?.last_cell_charge
 	lastused_charging = max(power && power.cell && !isnull(previous_charge) && (power.cell.charge - previous_charge) * CELLRATE, 0)
-	charging = lastused_charging ? 1 : 0
-	if(cell?.fully_charged())
+	charging = 0
+	if(lastused_charging)
+		charging = 1
+	else if(cell?.fully_charged())
 		charging = 2
 
 	if(allow_hysteresis)
@@ -474,6 +476,7 @@
 /obj/machinery/power/apc/proc/evaluate_auto_channels(suppress_alarms = FALSE)
 	var/obj/item/cell/cell = get_cell()
 	var/percent = cell && cell.percent()
+	var/lighting_threshold = AUTO_THRESHOLD_LIGHTING + (longtermpower < 0 ? 1 : 0)
 
 	if(!cell || shorted || (!is_powered()) || !operating)
 		if(autoflag != 0)
@@ -483,14 +486,14 @@
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
 			autoflag = 0
-	else if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
+	else if((percent > lighting_threshold) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
 		if(autoflag != 3)
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
 			autoflag = 3
 			GLOB.power_alarm.clearAlarm(loc, src)
-	else if((percent <= AUTO_THRESHOLD_LIGHTING) && (percent > AUTO_THRESHOLD_EQUIPMENT) && longtermpower < 0)                       // <50%, turn off lighting
+	else if((percent <= lighting_threshold) && (percent > AUTO_THRESHOLD_EQUIPMENT) && longtermpower < 0)                       // <50%, turn off lighting
 		if(autoflag != 2)
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 2)

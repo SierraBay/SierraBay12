@@ -117,7 +117,7 @@
 /datum/unit_test/apc_phase_two/proc/get_apc_test_turf()
 	for(var/turf/T in world)
 		var/area/A = get_area(T)
-		if(A?.requires_power && !A.dynamic_lighting && findtext("[A.type]", "/area/test_area/"))
+		if(A?.requires_power && !A.dynamic_lighting && ispath(A.type, /area/test_area))
 			return T
 
 /datum/unit_test/apc_phase_two/proc/create_test_apc()

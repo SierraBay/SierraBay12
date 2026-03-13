@@ -80,11 +80,11 @@
 	/// Optional spread width for timer-based scheduling.
 	var/default_process_jitter_ds = 0
 	/// Earliest requested wake time for the current processing pass.
-	var/tmp/next_requested_process_at = null
+	var/next_requested_process_at = null
 	/// Whether the current processing pass requested dormant scheduling.
-	var/tmp/requested_dormant_processing = FALSE
+	var/requested_dormant_processing = FALSE
 	/// Stable per-instance offset used to spread timer wakes.
-	var/tmp/process_phase_offset_ds = null
+	var/process_phase_offset_ds = null
 	/// One of the `STATUS_*` flags. If set, will force the given status flag if a silicon tries to access the machine.
 	var/silicon_restriction = null
 

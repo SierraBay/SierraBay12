@@ -11,14 +11,16 @@
 
 /obj/machinery/door/airlock/Process()
 	var/keep_processing = FALSE
-	if (cur_command && arePowerSystemsOn())
-		execute_current_command()
+	if(cur_command)
+		if(arePowerSystemsOn())
+			execute_current_command()
+		else
+			request_process_dormant()
 		keep_processing = !!cur_command
 	return keep_processing ? TRUE : ..()
 
 /obj/machinery/door/airlock/proc/wake_command_processing()
-	if(!(processing_flags & MACHINERY_PROCESS_SELF))
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -29,10 +31,10 @@
 
 /obj/machinery/door/airlock/proc/command(new_command)
 	cur_command = new_command
+	wake_command_processing()
 
 	//if there's no power, recieve the signal but just don't do anything. This allows airlocks to continue to work normally once power is restored
 	if(arePowerSystemsOn())
-		wake_command_processing()
 		spawn()
 			execute_current_command()
 

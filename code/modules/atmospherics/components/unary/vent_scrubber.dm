@@ -186,8 +186,8 @@
 	update_underlays()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/toggle_panic()
-	var/singleton/public_access/public_variable/panic/panic = GET_SINGLETON(/singleton/public_access/public_variable/panic)
-	panic.write_var(src, !panic)
+	var/singleton/public_access/public_variable/panic/panic_control = GET_SINGLETON(/singleton/public_access/public_variable/panic)
+	panic_control.write_var(src, !src.panic)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/set_scrub_gas(list/gases)
 	var/changed = FALSE

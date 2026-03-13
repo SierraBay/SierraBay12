@@ -44,7 +44,7 @@ if(Datum.is_processing) {\
 
 /datum/machine_sleep_bucket/New(new_wake_time)
 	..()
-	wake_time = round(new_wake_time)
+	wake_time = new_wake_time
 	lookup_key = "[wake_time]"
 
 
@@ -235,7 +235,6 @@ SUBSYSTEM_DEF(machines)
 	return bucket.wake_time
 
 /datum/controller/subsystem/machines/proc/get_or_create_sleep_bucket(wake_time)
-	wake_time = round(wake_time)
 	var/lookup_key = "[wake_time]"
 	var/datum/machine_sleep_bucket/bucket = sleep_buckets[lookup_key]
 	if(bucket)
@@ -270,7 +269,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/heap_sift_up(index)
 	while(index > 1)
-		var/parent_index = index >> 1
+		var/parent_index = floor(index / 2)
 		var/datum/machine_sleep_bucket/parent_bucket = sleep_wake_heap[parent_index]
 		var/datum/machine_sleep_bucket/current_bucket = sleep_wake_heap[index]
 		if(parent_bucket.wake_time <= current_bucket.wake_time)
@@ -355,7 +354,6 @@ SUBSYSTEM_DEF(machines)
 		if(!isnum(wake_time))
 			continue
 
-		wake_time = round(wake_time)
 		var/datum/machine_sleep_bucket/bucket = get_or_create_sleep_bucket(wake_time)
 		bucket.machines += machine
 		rebuilt_sleeping_machines[machine] = bucket
@@ -448,7 +446,7 @@ SUBSYSTEM_DEF(machines)
 	if(!machine || QDELETED(machine) || !machine.processing_flags)
 		return
 
-	wake_time = max(world.time + 1, round(wake_time))
+	wake_time = max(world.time + 1, wake_time)
 	var/datum/machine_sleep_bucket/existing_bucket = sleeping_machines[machine]
 	if(istype(existing_bucket, /datum/machine_sleep_bucket))
 		if(existing_bucket.wake_time <= wake_time)

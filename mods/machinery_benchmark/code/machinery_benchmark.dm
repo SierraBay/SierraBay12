@@ -278,5 +278,5 @@
 		to_chat(src, SPAN_WARNING("Machinery benchmark failed: could not find a safe turf."))
 		return
 
-	src << browse("<html><body><pre>[html_encode(report)]</pre></body></html>", "window=machinery_benchmark;size=960x720")
+	show_browser(src, "<html><body><pre>[html_encode(report)]</pre></body></html>", "window=machinery_benchmark;size=960x720")
 	to_chat(src, SPAN_NOTICE("Machinery benchmark finished. Report opened in a browser window."))
