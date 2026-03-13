@@ -33,6 +33,8 @@
 #define AALARM_SCREEN_SENSORS	5
 
 #define AALARM_REPORT_TIMEOUT 100
+#define AALARM_STATUS_REQUEST_RETRIES 5
+#define AALARM_STATUS_REQUEST_DELAY (1 SECOND)
 
 #define RCON_NO		1
 #define RCON_AUTO	2
@@ -286,14 +288,24 @@
 	atmos_dirty = TRUE
 	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
-/obj/machinery/alarm/proc/request_registered_device_status()
+/obj/machinery/alarm/proc/request_registered_device_status(attempt = 1)
 	if(QDELETED(src) || !radio_connection || !alarm_area)
 		return
 
+	var/needs_retry = FALSE
 	for(var/device_id in alarm_area.air_vent_names)
+		if(alarm_area.air_vent_info[device_id])
+			continue
 		send_signal(device_id, list())
+		needs_retry = TRUE
 	for(var/device_id in alarm_area.air_scrub_names)
+		if(alarm_area.air_scrub_info[device_id])
+			continue
 		send_signal(device_id, list())
+		needs_retry = TRUE
+
+	if(needs_retry && attempt < AALARM_STATUS_REQUEST_RETRIES)
+		addtimer(new Callback(src, PROC_REF(request_registered_device_status), attempt + 1), AALARM_STATUS_REQUEST_DELAY)
 
 /obj/machinery/alarm/proc/on_environment_updated(datum/gas_mixture/source)
 	SIGNAL_HANDLER
