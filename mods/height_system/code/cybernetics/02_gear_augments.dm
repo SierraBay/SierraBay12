@@ -150,7 +150,7 @@
 	. += "<div style=\"margin-bottom:6px;\">"
 	. += "<b>Loadout slot:</b> "
 	. += "<a href=\"?src=\ref[src];aug_slot_prev=1\">&#60;</a> "
-	. += "<b style=\"color:[COLOR_GRAY80];\">[pref.gear_slot]</b> "
+	. += "<span style=\"font-weight:bold;color:[COLOR_GRAY80];\">[pref.gear_slot]</span> "
 	. += "<a href=\"?src=\ref[src];aug_slot_next=1\">&#62;</a>"
 	if(config.max_gear_cost < INFINITY)
 		. += "&nbsp;&nbsp;<span style=\"color:[cost_color];font-size:11px;\">[total_cost] / [config.max_gear_cost] pts</span>"
