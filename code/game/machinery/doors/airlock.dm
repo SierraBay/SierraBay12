@@ -29,6 +29,10 @@
 	var/main_power_lost_until = 0
 	/// Integer. World time when backup power is restored. -1 if not using backup power or disabled.
 	var/backup_power_lost_until = -1
+	/// Timers that wake the airlock when its power/electrification deadlines expire.
+	var/main_power_timer_id = null
+	var/backup_power_timer_id = null
+	var/electrify_timer_id = null
 	/// Integer. World time when we may next beep due to doors being blocked by mobs. Spam prevention.
 	var/next_beep_at = 0
 	/// Boolean. Whether or not the door is welded shut.
@@ -119,6 +123,8 @@
 		/singleton/public_access/public_method/airlock_toggle_bolts
 	)
 	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/airlock = 1)
+
+	init_flags = 0
 
 /obj/machinery/door/airlock/get_material()
 	return SSmaterials.get_material_by_name(mineral ? mineral : MATERIAL_STEEL)
@@ -403,16 +409,46 @@
 	locked = 1
 
 /obj/machinery/door/airlock/Process()
+	return ..()
+
+/obj/machinery/door/airlock/proc/update_runtime_timers()
+	if(main_power_timer_id)
+		deltimer(main_power_timer_id)
+		main_power_timer_id = null
+	if(backup_power_timer_id)
+		deltimer(backup_power_timer_id)
+		backup_power_timer_id = null
+	if(electrify_timer_id)
+		deltimer(electrify_timer_id)
+		electrify_timer_id = null
+
+	if(main_power_lost_until > 0)
+		main_power_timer_id = addtimer(new Callback(src, PROC_REF(handle_main_power_timer)), max(1, main_power_lost_until - world.time), TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(backup_power_lost_until > 0)
+		backup_power_timer_id = addtimer(new Callback(src, PROC_REF(handle_backup_power_timer)), max(1, backup_power_lost_until - world.time), TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(electrified_until > 0)
+		electrify_timer_id = addtimer(new Callback(src, PROC_REF(handle_electrify_timer)), max(1, electrified_until - world.time), TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/door/airlock/proc/handle_main_power_timer()
+	main_power_timer_id = null
 	if(main_power_lost_until > 0 && world.time >= main_power_lost_until)
 		regainMainPower()
+	else
+		update_runtime_timers()
 
+/obj/machinery/door/airlock/proc/handle_backup_power_timer()
+	backup_power_timer_id = null
 	if(backup_power_lost_until > 0 && world.time >= backup_power_lost_until)
 		regainBackupPower()
+	else
+		update_runtime_timers()
 
-	else if(electrified_until > 0 && world.time >= electrified_until)
+/obj/machinery/door/airlock/proc/handle_electrify_timer()
+	electrify_timer_id = null
+	if(electrified_until > 0 && world.time >= electrified_until)
 		electrify(0)
-
-	..()
+	else
+		update_runtime_timers()
 
 /obj/machinery/door/airlock/uranium/Process()
 	if(world.time > last_event+20)
@@ -521,6 +557,7 @@ About the new airlock wires panel:
 	if(electrified_until && isAllPowerLoss())
 		electrify(0)
 
+	update_runtime_timers()
 	update_icon()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
@@ -530,6 +567,7 @@ About the new airlock wires panel:
 	if(electrified_until && isAllPowerLoss())
 		electrify(0)
 
+	update_runtime_timers()
 	update_icon()
 
 /obj/machinery/door/airlock/proc/regainMainPower()
@@ -539,6 +577,9 @@ About the new airlock wires panel:
 		if(!backup_power_lost_until)
 			backup_power_lost_until = -1
 
+	update_runtime_timers()
+	if(cur_command && arePowerSystemsOn())
+		wake_command_processing()
 	update_icon()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
@@ -546,6 +587,9 @@ About the new airlock wires panel:
 		// Restore backup power only if main power is offline, otherwise permanently disable
 		backup_power_lost_until = main_power_lost_until == 0 ? -1 : 0
 
+	update_runtime_timers()
+	if(cur_command && arePowerSystemsOn())
+		wake_command_processing()
 	update_icon()
 
 /obj/machinery/door/airlock/proc/electrify(duration, feedback = 0)
@@ -574,6 +618,7 @@ About the new airlock wires panel:
 		to_chat(usr, message)
 	if(.)
 		playsound(src, 'sound/effects/sparks3.ogg', 30, 0, -6)
+	update_runtime_timers()
 
 /obj/machinery/door/airlock/proc/set_idscan(activate, feedback = 0)
 	var/message = ""
@@ -1242,7 +1287,7 @@ About the new airlock wires panel:
 		for(var/turf/turf in locs)
 			for(var/atom/movable/AM in turf)
 				if(AM.blocks_airlock())
-					close_door_at = world.time + 6
+					set_close_door_at(world.time + 6)
 					return
 
 	var/crushed = FALSE
@@ -1381,6 +1426,9 @@ About the new airlock wires panel:
 	if(!is_powered())
 		// If we lost power, disable electrification
 		electrified_until = 0
+	update_runtime_timers()
+	if(is_powered() && cur_command && arePowerSystemsOn())
+		wake_command_processing()
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if (!arePowerSystemsOn())

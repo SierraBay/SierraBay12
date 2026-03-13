@@ -41,6 +41,8 @@
 	var/block_air_zones = TRUE
 	/// Integer. The world.time to automatically close the door, if possible. TODO: Replace with timers.
 	var/close_door_at = 0
+	/// Timer that wakes the door when its next autoclose deadline expires.
+	var/autoclose_timer_id = null
 	/// List. Directions the door has wall connections in.
 	var/list/connections = list("0", "0", "0", "0")
 	/// List. Objects to blend sprite connections with.
@@ -60,6 +62,8 @@
 	var/atom/movable/fake_overlay/c_animation = null
 
 	atmos_canpass = CANPASS_PROC
+
+	init_flags = 0
 
 /obj/machinery/door/New()
 	. = ..()
@@ -95,17 +99,35 @@
 		inherit_access_from_area()
 
 /obj/machinery/door/Destroy()
+	if(autoclose_timer_id)
+		deltimer(autoclose_timer_id)
 	set_density(0)
 	update_nearby_tiles()
 	. = ..()
 
 /obj/machinery/door/Process()
-	if(close_door_at && world.time >= close_door_at)
-		if(autoclose)
-			close_door_at = next_close_time()
-			close()
-		else
-			close_door_at = 0
+	return PROCESS_KILL
+
+/obj/machinery/door/proc/set_close_door_at(new_time)
+	close_door_at = new_time
+	if(autoclose_timer_id)
+		deltimer(autoclose_timer_id)
+		autoclose_timer_id = null
+	if(close_door_at && autoclose)
+		autoclose_timer_id = addtimer(new Callback(src, PROC_REF(handle_autoclose_timer)), max(1, close_door_at - world.time), TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/door/proc/handle_autoclose_timer()
+	autoclose_timer_id = null
+	if(!autoclose || !close_door_at)
+		close_door_at = 0
+		return
+	if(world.time < close_door_at)
+		set_close_door_at(close_door_at)
+		return
+	close_door_at = next_close_time()
+	close()
+	if(close_door_at)
+		set_close_door_at(close_door_at)
 
 /obj/machinery/door/proc/can_open()
 	if(!density || operating)
@@ -352,7 +374,7 @@
 	operating = DOOR_OPERATING_NO
 
 	if(autoclose)
-		close_door_at = next_close_time()
+		set_close_door_at(next_close_time())
 
 	return 1
 
@@ -368,7 +390,7 @@
 		return
 	operating = DOOR_OPERATING_YES
 
-	close_door_at = 0
+	set_close_door_at(0)
 	do_animate("closing")
 	src.set_density(1)
 	if(width > 1)

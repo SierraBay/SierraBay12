@@ -1,5 +1,5 @@
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
-#define FIREDOOR_MAX_TEMP 50 // °C
+#define FIREDOOR_MAX_TEMP 50 // В°C
 #define FIREDOOR_MIN_TEMP 0
 
 // Bitflags
@@ -42,6 +42,7 @@
 	var/list/areas_added
 	var/list/users_to_open = new
 	var/next_process_time = 0
+	var/environment_scan_timer_id = null
 	var/open_sound = 'sound/machines/blastdoor_open.ogg'
 	var/close_sound = 'sound/machines/blastdoor_close.ogg'
 
@@ -60,6 +61,8 @@
 	)
 
 	blend_objects = list(/obj/machinery/door/firedoor, /obj/structure/wall_frame, /turf/unsimulated/wall, /obj/structure/window) // Objects which to blend with
+
+	init_flags = 0
 
 /obj/machinery/door/firedoor/autoset
 	autoset_access = TRUE	//subtype just to make mapping away sites with custom access usage
@@ -81,8 +84,12 @@
 		if(istype(A) && !(A in areas_added))
 			LAZYADD(A.all_doors, src)
 			areas_added += A
+	if(density)
+		schedule_environment_scan()
 
 /obj/machinery/door/firedoor/Destroy()
+	if(environment_scan_timer_id)
+		deltimer(environment_scan_timer_id)
 	for(var/area/A in areas_added)
 		LAZYREMOVE(A.all_doors, src)
 	. = ..()
@@ -326,47 +333,60 @@
 
 // CHECK PRESSURE
 /obj/machinery/door/firedoor/Process()
-	if(density && next_process_time <= world.time)
-		next_process_time = world.time + 100		// 10 second delays between process updates
-		var/changed = 0
-		lockdown = FALSE
-		// Pressure alerts
+	if(density)
+		run_environment_scan()
+	return PROCESS_KILL
 
-		pdiff = getOPressureDifferential(loc)
-		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-			lockdown = TRUE
-			if(!pdiff_alert)
-				pdiff_alert = TRUE
-				changed = TRUE
-		else
-			if(pdiff_alert)
-				pdiff_alert = FALSE
-				changed = TRUE
+/obj/machinery/door/firedoor/proc/schedule_environment_scan()
+	if(environment_scan_timer_id)
+		deltimer(environment_scan_timer_id)
+	environment_scan_timer_id = addtimer(new Callback(src, PROC_REF(handle_environment_scan_timer)), 100, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
 
-		tile_info = getCardinalAirInfo(loc,list("temperature", "pressure"))
-		var/old_alerts = dir_alerts
-		for(var/index = 1; index <= 4; index++)
-			var/list/tileinfo = tile_info[index]
-			if(isnull(tileinfo))
-				continue // Bad data.
-			var/celsius = convert_k2c(tileinfo[1])
+/obj/machinery/door/firedoor/proc/handle_environment_scan_timer()
+	environment_scan_timer_id = null
+	if(!density)
+		return
+	run_environment_scan()
+	if(density)
+		schedule_environment_scan()
 
-			var/alerts = 0
+/obj/machinery/door/firedoor/proc/run_environment_scan()
+	var/changed = 0
+	lockdown = FALSE
 
-			// Temperatures
-			if(celsius >= FIREDOOR_MAX_TEMP)
-				alerts |= FIREDOOR_ALERT_HOT
-				lockdown = TRUE
-			else if(celsius <= FIREDOOR_MIN_TEMP)
-				alerts |= FIREDOOR_ALERT_COLD
-				lockdown = TRUE
-
-			dir_alerts[index]=alerts
-
-		if(dir_alerts != old_alerts)
+	pdiff = getOPressureDifferential(loc)
+	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
+		lockdown = TRUE
+		if(!pdiff_alert)
+			pdiff_alert = TRUE
 			changed = TRUE
-		if(changed)
-			update_icon()
+	else if(pdiff_alert)
+		pdiff_alert = FALSE
+		changed = TRUE
+
+	tile_info = getCardinalAirInfo(loc,list("temperature", "pressure"))
+	var/old_alerts = dir_alerts
+	for(var/index = 1; index <= 4; index++)
+		var/list/tileinfo = tile_info[index]
+		if(isnull(tileinfo))
+			continue // Bad data.
+		var/celsius = convert_k2c(tileinfo[1])
+
+		var/alerts = 0
+
+		if(celsius >= FIREDOOR_MAX_TEMP)
+			alerts |= FIREDOOR_ALERT_HOT
+			lockdown = TRUE
+		else if(celsius <= FIREDOOR_MIN_TEMP)
+			alerts |= FIREDOOR_ALERT_COLD
+			lockdown = TRUE
+
+		dir_alerts[index] = alerts
+
+	if(dir_alerts != old_alerts)
+		changed = TRUE
+	if(changed)
+		update_icon()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || !nextstate)
@@ -384,7 +404,7 @@
 	if(closing || locked)
 		return
 
-	//SIERRA-ADD - Мехи мешают закрыться пожарным шлюзам
+	//SIERRA-ADD - РњРµС…Рё РјРµС€Р°СЋС‚ Р·Р°РєСЂС‹С‚СЊСЃСЏ РїРѕР¶Р°СЂРЅС‹Рј С€Р»СЋР·Р°Рј
 	for(var/mob/living/detected_mob in get_turf(src))
 		if(ismech(detected_mob))
 			return FALSE
@@ -438,7 +458,10 @@
 					M.Move(get_step(src, direction))
 	playsound(loc, close_sound, 25, TRUE)
 	closing = FALSE
-	return ..()
+	. = ..()
+	if(.)
+		schedule_environment_scan()
+	return .
 
 /obj/machinery/door/firedoor/open(forced = FALSE)
 	if(hatch_open)
@@ -455,7 +478,11 @@
 		log_and_message_admins("has forced open an emergency shutter.")
 	latetoggle()
 	playsound(loc, open_sound, 25, TRUE)
-	return ..()
+	. = ..()
+	if(. && environment_scan_timer_id)
+		deltimer(environment_scan_timer_id)
+	environment_scan_timer_id = null
+	return .
 
 // Called ten seconds after a firedoor is opened manually during an active alert, to prevent it staying open for long.
 /obj/machinery/door/firedoor/proc/attempt_autoclose()

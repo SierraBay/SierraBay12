@@ -7,10 +7,18 @@
 	var/datum/radio_frequency/radio_connection
 	var/cur_command = null	//the command the door is currently attempting to complete
 
+	init_flags = 0
+
 /obj/machinery/door/airlock/Process()
+	var/keep_processing = FALSE
 	if (cur_command && arePowerSystemsOn())
 		execute_current_command()
-	return ..()
+		keep_processing = !!cur_command
+	return keep_processing ? TRUE : ..()
+
+/obj/machinery/door/airlock/proc/wake_command_processing()
+	if(!(processing_flags & MACHINERY_PROCESS_SELF))
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -24,6 +32,7 @@
 
 	//if there's no power, recieve the signal but just don't do anything. This allows airlocks to continue to work normally once power is restored
 	if(arePowerSystemsOn())
+		wake_command_processing()
 		spawn()
 			execute_current_command()
 
@@ -128,6 +137,7 @@
 	if(frequency)
 		set_frequency(frequency)
 
+	update_runtime_timers()
 	update_icon()
 
 /obj/machinery/door/airlock/New()
@@ -137,6 +147,12 @@
 		set_frequency(frequency)
 
 /obj/machinery/door/airlock/Destroy()
+	if(main_power_timer_id)
+		deltimer(main_power_timer_id)
+	if(backup_power_timer_id)
+		deltimer(backup_power_timer_id)
+	if(electrify_timer_id)
+		deltimer(electrify_timer_id)
 	if(frequency && radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
@@ -158,6 +174,8 @@
 	var/on = 1
 	var/alert = 0
 	var/previousPressure
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/airlock_sensor/on_update_icon()
 	if(on)
