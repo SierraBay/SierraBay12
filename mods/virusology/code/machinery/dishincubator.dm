@@ -25,6 +25,7 @@
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		SSnano.update_uis(src)
+		update_processing_state(TRUE)
 
 		src.attack_hand(user)
 		return
@@ -40,6 +41,7 @@
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		SSnano.update_uis(src)
+		update_processing_state(beaker || (dish && on))
 
 		src.attack_hand(user)
 
@@ -146,6 +148,9 @@
 					toxins = 100
 					break
 			SSnano.update_uis(src)
+	update_processing_state(beaker || (dish && on))
+	if(!(beaker || (dish && on)))
+		return PROCESS_KILL
 
 /obj/machinery/disease2/incubator/OnTopic(mob/user, href_list)
 	operator_skill = user.get_skill_value(core_skill)
@@ -157,18 +162,22 @@
 		if(beaker)
 			beaker.dropInto(loc)
 			beaker = null
+		update_processing_state(beaker || (dish && on))
 		return TOPIC_REFRESH
 
 	if (href_list["power"])
 		if (dish)
 			on = !on
 			icon_state = on ? "incubator_on" : "incubator"
+			update_processing_state(beaker || (dish && on))
 		return TOPIC_REFRESH
 
 	if (href_list["ejectdish"])
 		if(dish)
 			dish.dropInto(loc)
 			dish = null
+			on = 0
+		update_processing_state(beaker || (dish && on))
 		return TOPIC_REFRESH
 
 	if (href_list["rad"])

@@ -84,7 +84,9 @@
 
 /obj/machinery/computer/diseasesplicer/Process()
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
-		return
+		if(scanning || splicing || burning)
+			return
+		return PROCESS_KILL
 
 	if(scanning)
 		scanning -= 1
@@ -121,6 +123,15 @@
 
 	if((scanning || splicing || burning) && dish && dish.virus2)
 		infect_nearby(dish.virus2, 80)
+	update_processing_state()
+	if(!(scanning || splicing || burning))
+		return PROCESS_KILL
+
+/obj/machinery/computer/diseasesplicer/proc/update_processing_state()
+	if(scanning || splicing || burning)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/computer/diseasesplicer/OnTopic(mob/user, href_list)
 	operator_skill = user.get_skill_value(core_skill)
@@ -135,6 +146,7 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
+			update_processing_state()
 		return TOPIC_REFRESH
 
 	if (href_list["affected_species"])
@@ -144,6 +156,7 @@
 			analysed = dish.analysed
 			dish = null
 			scanning = 10
+			update_processing_state()
 		return TOPIC_REFRESH
 
 	if(href_list["eject"])
@@ -181,8 +194,10 @@
 
 			splicing = 10
 			dish.virus2.uniqueID = rand(0,10000)
+			update_processing_state()
 		return TOPIC_REFRESH
 
 	if(href_list["disk"])
 		burning = 10
+		update_processing_state()
 		return TOPIC_REFRESH

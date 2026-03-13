@@ -20,12 +20,15 @@
 		return
 	dish = O
 	operator_skill = user.get_skill_value(core_skill)
+	update_processing_state(TRUE)
 
 	user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 
 /obj/machinery/disease2/diseaseanalyser/Process()
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
-		return
+		if(scanning || (dish && !pause))
+			return
+		return PROCESS_KILL
 
 	if(scanning)
 		scanning -= 1
@@ -64,12 +67,17 @@
 			pause = 1
 			addtimer(new Callback(src, PROC_REF(dishmove)), 25)
 
+	update_processing_state(scanning || (dish && !pause))
+	if(!(scanning || (dish && !pause)))
+		return PROCESS_KILL
+
 /obj/machinery/disease2/diseaseanalyser/proc/dishmove()
 	dish.forceMove(loc)
 	dish = null
 
 	src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
 	pause = 0
+	update_processing_state(FALSE)
 
 /obj/machinery/disease2/diseaseanalyser/proc/get_fake_effects()
 	. = list()

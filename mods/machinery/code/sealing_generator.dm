@@ -31,6 +31,7 @@
 
 /obj/machinery/sealgen/Initialize()
 	. = ..()
+	update_processing_state()
 	update_icon()
 
 /obj/machinery/sealgen/on_update_icon()
@@ -42,13 +43,14 @@
 		AddOverlays("[icon_state]-hatch")
 
 /obj/machinery/sealgen/Process()
+	if(!current_field)
+		return PROCESS_KILL
 	if(stat & MACHINE_STAT_NOPOWER)
 		off()
-	update_icon()
-	change_power_consumption(field_density ? initial(active_power_usage)*3 : initial(active_power_usage), use_power_mode = POWER_USE_ACTIVE)
-	update_use_power(current_field ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 	if(current_field)
 		current_field.density = field_density
+	else
+		return PROCESS_KILL
 
 /obj/machinery/sealgen/Destroy()
 	off()
@@ -72,12 +74,25 @@
 	current_field.generator = src
 	colorize(field_color)
 	GLOB.moved_event.register(src, src, TYPE_PROC_REF(/obj/machinery/sealgen, off))
+	update_use_power(POWER_USE_ACTIVE)
+	change_power_consumption(field_density ? initial(active_power_usage)*3 : initial(active_power_usage), use_power_mode = POWER_USE_ACTIVE)
+	update_processing_state()
+	update_icon()
 
 
 /obj/machinery/sealgen/proc/off()
 	qdel(current_field)
 	current_field = null
 	GLOB.moved_event.unregister(src, src, TYPE_PROC_REF(/obj/machinery/sealgen, off))
+	update_use_power(POWER_USE_IDLE)
+	update_processing_state()
+	update_icon()
+
+/obj/machinery/sealgen/proc/update_processing_state()
+	if(current_field)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/sealgen/proc/colorize()
 	if(!current_field) return
@@ -194,6 +209,9 @@
 			S.locked = !mended
 		if(SEALGEN_WIRE_DENSITY)
 			S.field_density = !mended
+			if(S.current_field)
+				S.current_field.density = S.field_density
+				S.change_power_consumption(S.field_density ? initial(S.active_power_usage) * 3 : initial(S.active_power_usage), use_power_mode = POWER_USE_ACTIVE)
 		if(SEALGEN_WIRE_POWER)
 			if(!S.current_field) return
 			S.off()

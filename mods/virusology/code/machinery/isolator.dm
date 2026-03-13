@@ -118,6 +118,9 @@
 
 			SSnano.update_uis(src)
 			update_icon()
+	update_processing_state(isolating > 0)
+	if(!isolating)
+		return PROCESS_KILL
 
 /obj/machinery/disease2/isolator/OnTopic(mob/user, href_list)
 	if (href_list["close"])
@@ -152,6 +155,7 @@
 			virus2 = V
 			isolating = 20
 			update_icon()
+			update_processing_state(TRUE)
 		return TOPIC_REFRESH
 
 	if (href_list["eject"])

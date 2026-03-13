@@ -71,6 +71,7 @@
 			active = !active
 
 	update_icon()
+	update_processing_state()
 	updateDialog()
 
 /obj/machinery/external_cooling_device/emp_act(severity)
@@ -162,6 +163,8 @@
 
 /obj/machinery/external_cooling_device/Process()
 
+	if(!attached)
+		return PROCESS_KILL
 	if(!cell)
 		return
 
@@ -176,6 +179,12 @@
 			attached.bodytemperature -= 20
 			queue_icon_update()
 			cell.use(5)
+
+/obj/machinery/external_cooling_device/proc/update_processing_state()
+	if(attached)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/external_cooling_device/verb/cooling_detach()
 	set category = "Object"
@@ -195,6 +204,7 @@
 		visible_message(SPAN_NOTICE("\The [attached] is taken off \the [src]."))
 		attached = null
 	update_icon()
+	update_processing_state()
 
 
 /obj/machinery/external_cooling_device/proc/rip_out()
@@ -202,11 +212,13 @@
 	attached.apply_damage(1, DAMAGE_BRUTE, pick(BP_GROIN, BP_CHEST), damage_flags=DAMAGE_FLAG_SHARP)
 	attached = null
 	update_icon()
+	update_processing_state()
 
 /obj/machinery/external_cooling_device/proc/hook_up(mob/living/carbon/human/target, mob/user)
 	if(do_ECD_hookup(target, user, src))
 		attached = target
 		update_icon()
+		update_processing_state()
 
 /obj/machinery/external_cooling_device/proc/do_ECD_hookup(mob/living/carbon/human/target, mob/user, obj/ECD)
 	to_chat(user, SPAN_NOTICE("You start to hook up \the [target] to \the [ECD]."))

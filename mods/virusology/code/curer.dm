@@ -66,18 +66,30 @@
 
 /obj/machinery/computer/curer/Process()
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
-		return
+		if(curing)
+			return
+		return PROCESS_KILL
 
 	if(curing)
 		curing -= 1
 		if(curing == 0)
 			if(container)
 				createcure(container)
+	update_processing_state()
+	if(!curing)
+		return PROCESS_KILL
 	return
+
+/obj/machinery/computer/curer/proc/update_processing_state()
+	if(curing)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/computer/curer/OnTopic(user, href_list)
 	if (href_list["antibody"])
 		curing = 10
+		update_processing_state()
 		. = TOPIC_REFRESH
 	else if(href_list["eject"])
 		container.dropInto(loc)

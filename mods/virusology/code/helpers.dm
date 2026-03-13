@@ -1,6 +1,12 @@
 /obj/machinery/disease2
 	core_skill = SKILL_VIROLOGY
 
+/obj/machinery/disease2/proc/update_processing_state(active)
+	if(active)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/proc/infect_nearby(datum/disease2/disease/disease, base_chance = 20, dist = 2)
 	if(istype(disease) && operator_skill <= HAS_PERK)
 		for(var/mob/living/carbon/victim in range(dist, src))

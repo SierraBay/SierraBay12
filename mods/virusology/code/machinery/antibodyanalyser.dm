@@ -23,12 +23,15 @@
 		if(!container && user.unEquip(I))
 			container = I
 			I.forceMove(src)
+			update_processing_state(TRUE)
 			user.visible_message("[user] adds a sample to \the [src]!", "You add a sample to \the [src]!")
 		return
 
 /obj/machinery/disease2/antibodyanalyser/Process()
 	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
-		return
+		if(scanning || container)
+			return
+		return PROCESS_KILL
 
 	if(scanning)
 		scanning -= 1
@@ -65,6 +68,9 @@
 			container = null
 
 			src.state("\The [src] buzzes, \"Failed to identify a pure sample of antibodies in the solution.\"")
+	update_processing_state(scanning || container)
+	if(!(scanning || container))
+		return PROCESS_KILL
 	return
 
 /obj/machinery/disease2/antibodyanalyser/Destroy()

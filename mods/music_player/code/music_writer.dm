@@ -23,6 +23,9 @@
 			set_off()
 	if(cooldown)
 		cooldown -= 1 SECOND
+	update_processing_state()
+	if(!writing && cooldown <= 0)
+		return PROCESS_KILL
 
 /obj/machinery/media/music_writer/on_update_icon()
 	if(writing)
@@ -40,12 +43,20 @@
 		customer = null
 	writing = FALSE
 	update_icon()
+	update_processing_state()
 
 /obj/machinery/media/music_writer/proc/set_on(mob/M)
 	if(M)
 		customer = M
 		writing = TRUE
 		update_icon()
+		update_processing_state()
+
+/obj/machinery/media/music_writer/proc/update_processing_state()
+	if(writing || cooldown > 0)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/media/music_writer/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(istype(tool, /obj/item/music_tape))
@@ -100,6 +111,7 @@
 				if(write_disk(usr))
 					message_admins("[customer.real_name]([customer.ckey]) uploaded new sound <a href='byond://?_src_=holder;listensound=\ref[disk.track.source]'>(preview)</A> in <a href='byond://?_src_=holder;adminplayerobservefollow=\ref[src]'>the cassette</a> named as \"[disk.track.title]\". <a href='byond://?_src_=holder;wipedata=\ref[disk]'>Wipe</A> data.")
 					cooldown += 3 MINUTES
+					update_processing_state()
 					sleep(4 SECONDS)
 
 					playsound(src, 'packs/infinity/sound/machines/console/console_success.ogg', 40, 1)

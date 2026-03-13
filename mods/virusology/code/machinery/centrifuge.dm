@@ -85,7 +85,10 @@
 		ui.open()
 
 /obj/machinery/computer/centrifuge/Process()
-	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src))) return
+	if(stat & (MACHINE_STAT_NOPOWER|MACHINE_IS_BROKEN(src)))
+		if(curing || isolating || virus2)
+			return
+		return PROCESS_KILL
 
 	if (curing)
 		curing -= 1
@@ -99,6 +102,15 @@
 
 	if(virus2)
 		infect_nearby(virus2)
+	update_processing_state()
+	if(!(curing || isolating || virus2))
+		return PROCESS_KILL
+
+/obj/machinery/computer/centrifuge/proc/update_processing_state()
+	if(curing || isolating || virus2)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/computer/centrifuge/OnTopic(mob/user, href_list)
 	if (href_list["close"])
@@ -117,6 +129,7 @@
 			isolating = 40
 			on_update_icon()
 			operator_skill = user.get_skill_value(core_skill)
+			update_processing_state()
 		return TOPIC_REFRESH
 
 	switch(href_list["action"])
@@ -145,6 +158,7 @@
 			curing = round(delay)
 			playsound(src.loc, 'sound/machines/juicer_old.ogg', 50, 1)
 			on_update_icon()
+			update_processing_state()
 			return TOPIC_REFRESH
 
 		if("sample")
@@ -178,6 +192,7 @@
 	SSnano.update_uis(src)
 	on_update_icon()
 	ping("\The [src] pings, \"Pathogen isolated.\"")
+	update_processing_state()
 
 /obj/machinery/computer/centrifuge/proc/print(mob/user)
 	var/obj/item/paper/P = new /obj/item/paper(loc)
