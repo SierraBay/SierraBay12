@@ -20,7 +20,7 @@
 	if(status & PART_STAT_ACTIVE)
 		machine.update_power_channel(cached_channel)
 		unset_status(machine, PART_STAT_ACTIVE)
-	unset_terminal(loc, terminal)
+	unset_terminal(terminal, machine)
 	..()
 
 /obj/item/stock_parts/power/terminal/Destroy()
@@ -58,6 +58,9 @@
 		return PROCESS_KILL
 
 	if(status & PART_STAT_ACTIVE)
+		if(usage <= 0)
+			schedule_processing_wake(machine, idle_recheck_delay)
+			return PROCESS_KILL
 		terminal.draw_power(usage)
 		if(surplus >= usage)
 			return TRUE // had enough power and good to go.
@@ -95,14 +98,16 @@
 
 /obj/item/stock_parts/power/terminal/proc/set_terminal(obj/machinery/machine, obj/machinery/power/new_terminal)
 	if(terminal)
-		unset_terminal(machine, terminal)
+		unset_terminal(terminal, machine)
 	terminal = new_terminal
 	terminal.master = src
 	GLOB.destroyed_event.register(terminal, src, PROC_REF(unset_terminal))
 
 	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, PROC_REF(machine_moved), get_area(src))
 	set_status(machine, PART_STAT_CONNECTED)
-	start_processing(machine)
+	machine.power_change()
+	if(machine_process(machine) != PROCESS_KILL)
+		start_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/machine_moved(obj/machinery/machine, turf/old_loc, turf/new_loc)
 	if(!terminal)

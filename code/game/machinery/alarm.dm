@@ -184,6 +184,8 @@
 	if(istype(location))
 		RegisterSignal(location, COMSIG_TURF_RETURN_AIR_CHANGED, PROC_REF(on_return_air_changed))
 	refresh_environment_binding()
+	queue_atmos_recheck()
+	addtimer(new Callback(src, PROC_REF(request_registered_device_status)), 1 SECOND)
 	update_icon()
 
 /obj/machinery/alarm/power_change()
@@ -279,9 +281,19 @@
 	if(rebind_environment)
 		refresh_environment_binding()
 	if(atmos_dirty)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		return
 	atmos_dirty = TRUE
 	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/alarm/proc/request_registered_device_status()
+	if(QDELETED(src) || !radio_connection || !alarm_area)
+		return
+
+	for(var/device_id in alarm_area.air_vent_names)
+		send_signal(device_id, list())
+	for(var/device_id in alarm_area.air_scrub_names)
+		send_signal(device_id, list())
 
 /obj/machinery/alarm/proc/on_environment_updated(datum/gas_mixture/source)
 	SIGNAL_HANDLER

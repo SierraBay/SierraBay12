@@ -236,6 +236,40 @@
 	qdel(capture)
 	return 1
 
+/datum/unit_test/atmo_control/air_alarm_initial_atmos_recheck_starts_processing
+	name = "ATMOS: Air alarms queue an initial atmos recheck instead of idling dirty"
+
+/datum/unit_test/atmo_control/air_alarm_initial_atmos_recheck_starts_processing/start_test()
+	var/turf/simulated/T = get_safe_turf()
+	if(!istype(T))
+		fail("Could not find a simulated turf for air alarm wakeup test.")
+		return 1
+
+	var/obj/machinery/alarm/alarm = new(T)
+	if(!alarm)
+		fail("Failed to create an air alarm for wakeup testing.")
+		return 1
+	if(!(alarm.processing_flags & MACHINERY_PROCESS_SELF))
+		fail("Fresh air alarms should queue self-processing for their initial atmos recheck.")
+		qdel(alarm)
+		return 1
+	if(!(alarm in SSmachines.processing_normal))
+		fail("Fresh air alarms should enter SSmachines so their initial atmos recheck actually runs.")
+		qdel(alarm)
+		return 1
+
+	var/process_result = alarm.Process()
+	SSmachines.finalize_machine_schedule(alarm, process_result, TRUE)
+
+	if(alarm.atmos_dirty)
+		fail("Initial air alarm processing should clear the pending atmos_dirty flag.")
+		qdel(alarm)
+		return 1
+
+	pass("Air alarms now wake for their first atmos evaluation instead of idling dirty forever.")
+	qdel(alarm)
+	return 1
+
 /datum/unit_test/atmo_control/docking_override_queues_icon_update
 	name = "ATMOS: Docking override changes queue embedded controller icon refresh"
 

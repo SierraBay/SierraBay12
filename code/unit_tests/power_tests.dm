@@ -353,6 +353,11 @@
 		qdel(panel)
 		qdel(control)
 		return 1
+	if(!(control in SSmachines.processing_normal))
+		fail("Solar control should stay in SSmachines processing so controller-batched generation actually runs.")
+		qdel(panel)
+		qdel(control)
+		return 1
 
 	control.Process()
 

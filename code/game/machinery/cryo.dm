@@ -94,7 +94,7 @@
 		queue_icon_update()
 
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		network.update = 1
+		network.needs_update()
 
 	return 1
 

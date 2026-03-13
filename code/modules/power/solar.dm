@@ -304,6 +304,8 @@ var/global/solar_gen_rate = 1500
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/solar_control/drain_power()
 	return -1
 

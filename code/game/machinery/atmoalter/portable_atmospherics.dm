@@ -76,7 +76,7 @@
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network && !network.gases.Find(air_contents))
 		network.gases += air_contents
-		network.update = 1
+		network.needs_update()
 
 	return 1
 
@@ -87,6 +87,7 @@
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network)
 		network.gases -= air_contents
+		network.needs_update()
 
 	anchored = FALSE
 
@@ -101,7 +102,7 @@
 
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if (network)
-		network.update = 1
+		network.needs_update()
 
 /obj/machinery/portable_atmospherics/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if ((istype(W, /obj/item/tank) && !destroyed))
