@@ -20,3 +20,4 @@
 
 // POWER
 #define COMSIG_AREA_POWER_USAGE_CHANGED "area_power_usage_changed" // В area изменилось непрерывное или oneoff-потребление энергии.
+#define COMSIG_MACHINE_POWER_STATE_CHANGED "machine_power_state_changed" // У машины изменилось эффективное powered-состояние или активный power channel.

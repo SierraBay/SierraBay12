@@ -9,6 +9,8 @@
 	icon_state = "teslalink"
 	var/priority = 0            // Higher priority is used first
 	var/cached_channel
+	var/processing_wake_timer
+	var/processing_wake_due = 0
 
 /obj/item/stock_parts/power/on_install(obj/machinery/machine)
 	..()
@@ -18,8 +20,13 @@
 
 /obj/item/stock_parts/power/on_uninstall(obj/machinery/machine)
 	machine.power_components -= src
+	cancel_processing_wake()
 	..()
 	machine.power_change()
+
+/obj/item/stock_parts/power/Destroy()
+	cancel_processing_wake()
+	. = ..()
 
 // By returning true here, the part promises that it will provide the machine with power until it calls power_change on the machine.
 /obj/item/stock_parts/power/proc/can_provide_power(obj/machinery/machine)
@@ -35,3 +42,33 @@
 
 // This alerts the part that it does not need to provide power anymore.
 /obj/item/stock_parts/power/proc/not_needed(obj/machinery/machine)
+
+/obj/item/stock_parts/power/proc/cancel_processing_wake()
+	if(processing_wake_timer)
+		deltimer(processing_wake_timer)
+		processing_wake_timer = null
+	processing_wake_due = 0
+
+/obj/item/stock_parts/power/proc/wake_processing(obj/machinery/machine)
+	cancel_processing_wake()
+	if(!istype(machine) || loc != machine)
+		return
+	if(status & PART_STAT_PROCESSING)
+		return
+	start_processing(machine)
+
+/obj/item/stock_parts/power/proc/schedule_processing_wake(obj/machinery/machine, delay)
+	if(delay <= 0)
+		wake_processing(machine)
+		return
+	if(!istype(machine) || loc != machine)
+		return
+	var/desired_wake_due = world.time + delay
+	if(!(status & PART_STAT_PROCESSING) && processing_wake_timer && processing_wake_due && processing_wake_due <= desired_wake_due)
+		return
+	cancel_processing_wake()
+	if(!istype(machine) || loc != machine)
+		return
+	stop_processing(machine)
+	processing_wake_due = desired_wake_due
+	processing_wake_timer = addtimer(new Callback(src, PROC_REF(wake_processing), machine), delay, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)

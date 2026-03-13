@@ -16,9 +16,11 @@
 
 /obj/item/stock_parts/power/battery/on_install(obj/machinery/machine)
 	..()
+	RegisterSignal(machine, COMSIG_MACHINE_POWER_STATE_CHANGED, PROC_REF(on_machine_power_state_changed))
 	start_processing(machine)
 
 /obj/item/stock_parts/power/battery/on_uninstall(obj/machinery/machine)
+	UnregisterSignal(machine, COMSIG_MACHINE_POWER_STATE_CHANGED)
 	if(status & PART_STAT_ACTIVE)
 		machine.update_power_channel(cached_channel)
 		unset_status(machine, PART_STAT_ACTIVE)
@@ -38,6 +40,7 @@
 	if(istype(machine))
 		machine.power_change()
 		machine.queue_icon_update()
+		wake_processing(machine)
 	set_status(machine, PART_STAT_CONNECTED)
 	update_icon()
 	return cell
@@ -51,8 +54,13 @@
 		if(istype(machine))
 			machine.power_change()
 			machine.queue_icon_update()
+			wake_processing(machine)
 		update_icon()
 		unset_status(machine, PART_STAT_CONNECTED)
+
+/obj/item/stock_parts/power/battery/proc/on_machine_power_state_changed(obj/machinery/machine, old_powered, new_powered, old_channel, new_channel)
+	SIGNAL_HANDLER
+	wake_processing(machine)
 
 /obj/item/stock_parts/power/battery/proc/extract_cell(mob/user)
 	if(!cell)
@@ -89,30 +97,33 @@
 				machine.update_power_channel(cached_channel)
 				machine.power_change()
 		notify_apc_state(machine, previous_charge)
-		return // We don't recharge if discharging
+		return TRUE // We don't recharge if discharging
 
 	if((!machine.is_powered()) && cell && cell.fully_charged())
 		notify_apc_state(machine, previous_charge)
 		machine.power_change()
-		return // This suggests that we should be powering the machine instead, so let's try that
+		return PROCESS_KILL // This suggests that we should be powering the machine instead, so let's try that
 
 	// try and recharge - check cheap conditions before get_area
 	if(!can_charge || !cell || cell.fully_charged())
 		charge_wait_counter = initial(charge_wait_counter)
 		notify_apc_state(machine, previous_charge)
-		return
+		return PROCESS_KILL
 	var/area/A = get_area(machine)
 	if(!A.powered(charge_channel))
 		charge_wait_counter = initial(charge_wait_counter)
 		notify_apc_state(machine, previous_charge)
-		return
+		schedule_processing_wake(machine, initial(charge_wait_counter))
+		return PROCESS_KILL
 	if(charge_wait_counter > 0)
-		charge_wait_counter--
 		notify_apc_state(machine, previous_charge)
-		return
+		schedule_processing_wake(machine, charge_wait_counter)
+		charge_wait_counter = 0
+		return PROCESS_KILL
 	var/give = cell.give(charge_rate) / CELLRATE
 	A.use_power_oneoff(give, charge_channel)
 	notify_apc_state(machine, previous_charge)
+	return !cell.fully_charged()
 
 /obj/item/stock_parts/power/battery/can_provide_power(obj/machinery/machine)
 	if(cell && cell.check_charge(CELLRATE * machine.get_power_usage()))
@@ -131,11 +142,13 @@
 	if(cell && channel == LOCAL)
 		. = cell.use(amount * CELLRATE) / CELLRATE
 		charge_wait_counter = initial(charge_wait_counter) // If we are providing power, we wait to start charging.
+		wake_processing(machine)
 
 /obj/item/stock_parts/power/battery/not_needed(obj/machinery/machine)
 	if(status & PART_STAT_ACTIVE)
 		unset_status(machine, PART_STAT_ACTIVE)
 		charge_wait_counter = initial(charge_wait_counter)
+		wake_processing(machine)
 
 // Find a cell from the machine building materials if possible.
 /obj/item/stock_parts/power/battery/on_refresh(obj/machinery/machine)

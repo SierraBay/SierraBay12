@@ -36,6 +36,9 @@ This is /obj/machinery level code to properly manage power usage from the area.
 /obj/machinery/proc/power_change()
 	if(stat_immune & MACHINE_STAT_NOPOWER)
 		return FALSE
+	var/old_powered = is_powered()
+	var/old_channel = power_channel
+	power_state_signal_suppressed = TRUE
 	var/oldstat = stat
 	set_stat(MACHINE_STAT_NOPOWER, TRUE)
 	for(var/thing in power_components)
@@ -44,10 +47,21 @@ This is /obj/machinery level code to properly manage power usage from the area.
 			set_stat(MACHINE_STAT_NOPOWER, FALSE)
 		else
 			power.not_needed(src)
+	power_state_signal_suppressed = FALSE
 
 	. = (stat != oldstat)
 	if(.)
 		queue_icon_update()
+	emit_power_state_changed(old_powered, old_channel)
+
+/obj/machinery/proc/emit_power_state_changed(old_powered, old_channel)
+	if(power_state_signal_suppressed || !power_init_complete)
+		return
+	var/new_powered = is_powered()
+	var/new_channel = power_channel
+	if(old_powered == new_powered && old_channel == new_channel)
+		return
+	SEND_SIGNAL(src, COMSIG_MACHINE_POWER_STATE_CHANGED, old_powered, new_powered, old_channel, new_channel)
 
 /// Returns the current power usage draw, based on the state of `use_power`.
 /obj/machinery/proc/get_power_usage()
@@ -134,6 +148,8 @@ This is /obj/machinery level code to properly manage power usage from the area.
 /obj/machinery/proc/update_power_channel(new_channel)
 	if(power_channel == new_channel)
 		return
+	var/old_powered = is_powered()
+	var/old_channel = power_channel
 	if(!power_init_complete)
 		power_channel = new_channel
 		return
@@ -141,6 +157,7 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	REPORT_POWER_CONSUMPTION_CHANGE(power, 0)
 	power_channel = new_channel
 	REPORT_POWER_CONSUMPTION_CHANGE(0, power)
+	emit_power_state_changed(old_powered, old_channel)
 
 /// Updates the machine's `*_power_usage` to the new value and updates the machine's current power consumption state if applicable.
 /obj/machinery/proc/change_power_consumption(new_power_consumption, use_power_mode = POWER_USE_IDLE)

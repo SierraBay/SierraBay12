@@ -8,8 +8,15 @@
 	priority = 2
 	var/obj/machinery/power/terminal/terminal
 	var/terminal_dir = 0
+	var/idle_recheck_delay = 50
+	var/recovery_recheck_delay = 10
+
+/obj/item/stock_parts/power/terminal/on_install(obj/machinery/machine)
+	..()
+	RegisterSignal(machine, COMSIG_MACHINE_POWER_STATE_CHANGED, PROC_REF(on_machine_power_state_changed))
 
 /obj/item/stock_parts/power/terminal/on_uninstall(obj/machinery/machine)
+	UnregisterSignal(machine, COMSIG_MACHINE_POWER_STATE_CHANGED)
 	if(status & PART_STAT_ACTIVE)
 		machine.update_power_channel(cached_channel)
 		unset_status(machine, PART_STAT_ACTIVE)
@@ -25,6 +32,10 @@
 	if(istype(apc))
 		apc.observe_terminal_component(avail, excess)
 
+/obj/item/stock_parts/power/terminal/proc/on_machine_power_state_changed(obj/machinery/machine, old_powered, new_powered, old_channel, new_channel)
+	SIGNAL_HANDLER
+	wake_processing(machine)
+
 /obj/item/stock_parts/power/terminal/machine_process(obj/machinery/machine)
 
 	if(!terminal) //Terminal is gone, give up
@@ -32,7 +43,7 @@
 		if(status & PART_STAT_ACTIVE)
 			machine.update_power_channel(cached_channel)
 			machine.power_change()
-		return
+		return PROCESS_KILL
 
 	var/avail = terminal.avail()
 	var/surplus = terminal.surplus()
@@ -41,18 +52,24 @@
 
 	if(!machine.is_powered() && surplus > usage)
 		machine.power_change()
-		return // This suggests that we should be powering the machine instead, so let's try that
+		return TRUE // This suggests that we should be powering the machine instead, so let's try that
+	if(!machine.is_powered())
+		schedule_processing_wake(machine, recovery_recheck_delay)
+		return PROCESS_KILL
 
 	if(status & PART_STAT_ACTIVE)
 		terminal.draw_power(usage)
 		if(surplus >= usage)
-			return // had enough power and good to go.
+			return TRUE // had enough power and good to go.
 		else
 			// Try and use other (local) sources of power to make up for the deficit.
 			var/deficit = machine.use_power_oneoff(usage - surplus)
 			if(deficit > 0)
 				machine.update_power_channel(cached_channel)
 				machine.power_change()
+			return TRUE
+	schedule_processing_wake(machine, idle_recheck_delay)
+	return PROCESS_KILL
 
 //Is willing to provide power if the wired contribution is nonnegligible and there is enough total local power to run the machine.
 /obj/item/stock_parts/power/terminal/can_provide_power(obj/machinery/machine)
@@ -74,6 +91,7 @@
 
 /obj/item/stock_parts/power/terminal/not_needed(obj/machinery/machine)
 	unset_status(machine, PART_STAT_ACTIVE)
+	wake_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/set_terminal(obj/machinery/machine, obj/machinery/power/new_terminal)
 	if(terminal)
