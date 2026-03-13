@@ -1,4 +1,5 @@
-#include "code/_leviathans.dm"
+#include "_leviathans.dm"
+#include "code/leviathans.dm"
 #include "code/events.dm"
 #include "code/projectiles.dm"
 #include "code/entities.dm"
