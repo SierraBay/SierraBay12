@@ -11,6 +11,8 @@
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/operating/New()
 	..()
 	for(var/D in list(NORTH,EAST,SOUTH,WEST))

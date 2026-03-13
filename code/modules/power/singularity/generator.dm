@@ -10,6 +10,8 @@
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	var/energy = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/the_singularitygen/Process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)

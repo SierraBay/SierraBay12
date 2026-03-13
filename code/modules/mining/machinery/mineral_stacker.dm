@@ -9,6 +9,8 @@
 	var/stack_amt = 50
 	var/list/stacks = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/mineral/stacking_machine/Process()
 	if(input_turf)
 		for(var/obj/item/I in input_turf)

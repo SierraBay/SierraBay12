@@ -30,6 +30,8 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 	var/obj/item/cell/cell = null
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/stasis_cage/Initialize()
 	. = ..()
 	airtank = new()

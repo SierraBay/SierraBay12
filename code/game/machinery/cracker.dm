@@ -18,6 +18,8 @@
 	var/deuterium_generation_chance = 10
 	var/deuterium_generation_amount = 1
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/portable_atmospherics/cracker/on_update_icon()
 	ClearOverlays()
 	if(panel_open)

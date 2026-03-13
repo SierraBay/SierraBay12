@@ -9,6 +9,7 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/obj/machines/power/smes.dmi'
 	icon_state = "smes"
+	process_priority = MACHINERY_PRIORITY_HIGH
 	density = TRUE
 	anchored = TRUE
 	clicksound = "switch"
@@ -59,6 +60,8 @@
 	var/name_tag = null
 	var/num_terminals = 0    // internal bookkeeping for number of connected terminals
 	var/should_be_mapped = 0 // If this is set to 0 it will send out warning on New()
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/power/smes/drain_power(drain_check, surge, amount = 0)
 

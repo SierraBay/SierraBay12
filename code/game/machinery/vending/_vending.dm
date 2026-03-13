@@ -4,6 +4,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
+	process_priority = MACHINERY_PRIORITY_LOW
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
@@ -94,6 +95,8 @@
 	var/light_max_bright_on = 0.2
 	var/light_outer_range_on = 2
 
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/vending/Destroy()
 	vendor_wires = null

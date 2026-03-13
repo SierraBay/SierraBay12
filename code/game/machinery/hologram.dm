@@ -60,6 +60,8 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 
 	var/list/linked_pdas
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/hologram/holopad/New()
 	..()
 	desc = "It's a floor-mounted device for projecting holographic images. Its ID is '[loc.loc]'"

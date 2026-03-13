@@ -35,6 +35,8 @@
 	var/target_temperature
 	var/obj/item/container
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/reagent_temperature/Initialize()
 	target_temperature = 50 CELSIUS
 	. = ..()

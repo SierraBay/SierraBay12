@@ -18,6 +18,8 @@
 	desc = "A weak forcefield which seems to be projected by the emergency atmosphere containment field."
 	health_max = 100 // Half health, it's not suposed to resist much.
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/shield/malfai/Process()
 	damage_health(1) // Slowly lose integrity over time
 
@@ -68,6 +70,8 @@
 	use_power = POWER_USE_OFF
 	idle_power_usage = 0
 	obj_flags = OBJ_FLAG_ANCHORABLE
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/shieldgen/Destroy()
 	collapse_shields()

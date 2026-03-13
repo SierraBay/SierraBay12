@@ -15,6 +15,8 @@
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/portable_atmospherics/New()
 	..()
 
@@ -37,9 +39,6 @@
 	if(port)
 		connect(port)
 		update_icon()
-
-/obj/machinery/portable_atmospherics
-	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/portable_atmospherics/Process()
 	if(!connected_port) //only react when pipe_network will ont it do it for you

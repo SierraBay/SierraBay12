@@ -17,6 +17,8 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/prisoner/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 

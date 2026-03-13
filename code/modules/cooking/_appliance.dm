@@ -61,6 +61,8 @@
 	//If true, this appliance will do combination cooking before checking recipes
 	var/combine_first = FALSE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/appliance/Initialize()
 	. = ..()
 	if(length(output_options))

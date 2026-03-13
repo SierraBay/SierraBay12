@@ -21,6 +21,8 @@
 	///Extra descriptor added to artifact analyzer results.
 	var/damage_desc = "The physical structure appears indestructable."
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/artifact/New()
 	..()
 

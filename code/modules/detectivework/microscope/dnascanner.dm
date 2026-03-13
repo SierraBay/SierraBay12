@@ -16,6 +16,8 @@
 	var/last_process_worldtime = 0
 	var/report_num = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/dnaforensics/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!istype(W, /obj/item/forensics/swab))
 		return .. ()

@@ -16,6 +16,8 @@
 	var/list/contact_datums = list()
 	var/list/trackers = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/shipsensors/Destroy()
 	objects_in_view.Cut()
 	memorized_objects.Cut()

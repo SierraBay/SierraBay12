@@ -15,6 +15,8 @@
 	var/frames = 0
 	var/maxFrames = 5
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/beehive/Initialize()
 	. = ..()
 	update_icon()

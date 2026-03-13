@@ -3,6 +3,7 @@
 /obj/machinery/atmospherics/pipe
 
 	health_max = 200
+	init_flags = 0
 
 	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent

@@ -40,6 +40,8 @@ Pipelines + Other Objects -> Pipe network
 	var/pipe_class = PIPE_CLASS_OTHER //If somehow something isn't set properly, handle it as something with zero connections. This will prevent runtimes.
 	var/rotate_class = PIPE_ROTATE_STANDARD
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/atmospherics/Initialize()
 	if(!icon_manager)
 		icon_manager = new()

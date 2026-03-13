@@ -22,6 +22,8 @@
 	active_power_usage = 300
 	var/datum/nano_module/program/power_monitor/power_monitor
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 // Checks the sensors for alerts. If change (alerts cleared or detected) occurs, calls for icon update.
 /obj/machinery/computer/power_monitor/Process()
 	var/alert = check_warnings()

@@ -22,6 +22,8 @@
 	var/mat_efficiency = 1
 	var/speed = 1
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/r_n_d/protolathe/New()
 	materials = default_material_composition.Copy()
 	..()

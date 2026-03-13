@@ -38,6 +38,8 @@ field_generator power level display
 	var/field_power_draw = 2000	//power needed per field object
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/field_generator/on_update_icon()
 	ClearOverlays()
 	if(!active)

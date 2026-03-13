@@ -54,6 +54,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/spamfilter_limit = 10
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/message_server/Destroy()
 	message_servers -= src
 	return ..()

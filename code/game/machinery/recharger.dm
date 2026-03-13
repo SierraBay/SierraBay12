@@ -18,6 +18,8 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/recharger/Initialize()
 	. = ..()
 	RefreshParts()

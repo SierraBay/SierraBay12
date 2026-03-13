@@ -118,12 +118,12 @@ GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 		use_power_oneoff(power_draw)
 
 		if(input.network)
-			input.network.update = 1
+			input.network.needs_update()
 		if(output.network)
-			output.network.update = 1
+			output.network.needs_update()
 		for(var/datum/omni_port/P in gas_filters)
 			if(P.network)
-				P.network.update = 1
+				P.network.needs_update()
 
 	return 1
 

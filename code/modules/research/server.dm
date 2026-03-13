@@ -19,6 +19,8 @@
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/r_n_d/server/Destroy()
 	//[SIERRA-ADD] - MODPACK_RND
 	rnd_server_list -= src
@@ -125,6 +127,8 @@
 /obj/machinery/r_n_d/server/centcom
 	name = "central R&D database"
 	server_id = -1
+
+	init_flags = 0
 
 /obj/machinery/r_n_d/server/centcom/proc/update_connections()
 	var/list/no_id_servers = list()

@@ -22,7 +22,6 @@
 	var/diffuse_duration_ds = 5
 	var/list/diffuse_turfs
 
-/obj/machinery/shield_diffuser
 	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/shield_diffuser/Initialize()

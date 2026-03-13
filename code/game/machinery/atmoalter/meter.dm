@@ -22,6 +22,10 @@
 	construct_state = /singleton/machine_construction/default/item_chassis
 	base_type = /obj/machinery/meter
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 10
+
 /obj/machinery/meter/Initialize()
 	. = ..()
 	if(!target)
@@ -51,11 +55,6 @@
 /obj/machinery/meter/Destroy()
 	clear_target()
 	. = ..()
-
-/obj/machinery/meter
-	init_flags = INIT_MACHINERY_START_PROCESSING
-	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
-	default_process_delay_ds = 10
 
 /obj/machinery/meter/Process()
 	..()

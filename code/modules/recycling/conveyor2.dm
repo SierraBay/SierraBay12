@@ -29,6 +29,8 @@
 	)
 	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/conveyor = 1)
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
 
@@ -227,6 +229,8 @@
 	anchored = TRUE
 
 
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/conveyor_switch/New(loc, newid)
 	..(loc)

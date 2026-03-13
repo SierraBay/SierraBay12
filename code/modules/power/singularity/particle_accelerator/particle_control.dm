@@ -20,6 +20,8 @@
 	var/parts = null
 	wires = /datum/wires/particle_acc/control_box
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/particle_accelerator/control_box/Initialize()
 	. = ..()
 	connected_parts = list()

@@ -14,6 +14,9 @@
 	var/obj/scanned_object
 	var/report_num = 0
 	var/list/data = list("screen" = 1)
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/artifact_analyser/Initialize()
 	. = ..()
 	sync_with_pad()

@@ -29,6 +29,8 @@
 	///Does it give info on fractures and arterial?
 	var/detailed = FALSE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/vitals_monitor/Initialize()
 	. = ..()
 	alerts = new(3)

@@ -43,6 +43,8 @@
 	var/build_time_multiplier = 1
 	var/static/list/stored_substances_to_names = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/fabricator/Destroy()
 	QDEL_NULL(currently_building)
 	QDEL_NULL_LIST(queued_orders)

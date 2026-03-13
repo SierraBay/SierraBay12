@@ -20,6 +20,8 @@
 	var/sound_id
 	var/working_sound
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/port_gen/proc/IsBroken()
 	return (MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_EMPED))
 

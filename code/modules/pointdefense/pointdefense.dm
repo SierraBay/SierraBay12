@@ -121,6 +121,8 @@
 	var/engaging = FALSE
 	var/initial_id_tag
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/pointdefense/Initialize()
 	. = ..()
 	set_extension(src, /datum/extension/local_network_member/multilevel)

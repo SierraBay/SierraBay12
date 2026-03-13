@@ -187,6 +187,8 @@
 		/obj/item/storage/internal
 	)
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/cryopod/robot
 	name = "robotic storage unit"
 	desc = "A storage unit for robots."
@@ -247,7 +249,6 @@
 	playsound(loc,'sound/effects/rocket.ogg',100)
 	forceMove(nloc)
 
-//Don't use these for in-round leaving
 /obj/machinery/cryopod/lifepod/Process()
 	if(evacuation_controller && evacuation_controller.state >= EVAC_LAUNCHING)
 		if(occupant && !launched)

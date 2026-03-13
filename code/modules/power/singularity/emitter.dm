@@ -40,6 +40,8 @@
 	)
 	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/emitter = 1)
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/emitter/anchored
 	anchored = TRUE
 	state = EMITTER_WELDED

@@ -26,6 +26,8 @@
 	var/list/supported_programs = list()
 	var/list/restricted_programs = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/HolodeckControl/New()
 	..()
 	linkedholodeck = locate(linkedholodeck_area)

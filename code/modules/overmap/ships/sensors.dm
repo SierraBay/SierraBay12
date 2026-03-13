@@ -20,6 +20,8 @@
 	maximum_component_parts = list(/obj/item/stock_parts = 10) // Circuit, 5 manipulators, 3 subspace shit and 1 tesla coil
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/shipsensors/upgraded
 	uncreated_component_parts = list(/obj/item/stock_parts/manipulator/nano = 2)
 

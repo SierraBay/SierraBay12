@@ -54,6 +54,8 @@
 
 	wires = /datum/wires/suit_storage_unit
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/suit_cycler/Initialize()
 	. = ..()
 	if(!length(available_modifications) || !length(species))

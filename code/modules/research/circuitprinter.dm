@@ -27,6 +27,8 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	machine_name = "circuit imprinter"
 	machine_desc = "Creates circuit boards by etching raw sheets of material with sulphuric acid. Part of an R&D network."
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/r_n_d/circuit_imprinter/New()
 	materials = default_material_composition.Copy()
 

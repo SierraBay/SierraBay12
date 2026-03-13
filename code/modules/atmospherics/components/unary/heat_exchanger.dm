@@ -60,11 +60,11 @@
 
 	if(network)
 		if(abs(old_temperature-air_contents.temperature) > 1)
-			network.update = 1
+			network.needs_update()
 
 	if(partner.network)
 		if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-			partner.network.update = 1
+			partner.network.needs_update()
 	return 1
 
 

@@ -83,6 +83,7 @@
 			signalDoor(tag_exterior_door, "unlock")
 		else if(!safe_to_open && memory["exterior_status"]["lock"] == "unlocked")
 			signalDoor(tag_exterior_door, "secure_close") // close and lock
+	return PROCESS_KILL
 
 /datum/computer/file/embedded_program/airlock/tin_can/proc/safe_to_open()
 	. = TRUE

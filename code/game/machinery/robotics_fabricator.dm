@@ -31,6 +31,8 @@
 	var/manufacturer = null
 	var/sync_message = ""
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/robotics_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.

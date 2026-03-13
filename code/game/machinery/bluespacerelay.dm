@@ -12,6 +12,8 @@
 	machine_desc = "Used to instantly send messages across vast distances. An emergency relay is required to directly contact Expeditionary Command through crisis channels."
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/bluespacerelay/Initialize()
 	. = ..()
 	update_icon()

@@ -21,6 +21,8 @@
 	var/repair_power_usage = 10 KILOWATTS		// Per 1 HP of health.
 	var/repair = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/mech_recharger/Crossed(mob/living/exosuit/M)
 	. = ..()
 	if(istype(M) && charging != M)

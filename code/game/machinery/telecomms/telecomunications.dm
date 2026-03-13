@@ -41,6 +41,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/datum/sound_token/sound_token
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 

@@ -47,6 +47,8 @@
 	var/list/reagent_whitelist //if this is set, the subliminator will only work with the listed reagents
 	var/output_temperature = T20C
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/portable_atmospherics/reagent_sublimator/New()
 	. = ..()
 	if(holding)

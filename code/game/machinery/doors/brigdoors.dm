@@ -31,6 +31,8 @@
 	maptext_height = 26
 	maptext_width = 32
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/door_timer/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD

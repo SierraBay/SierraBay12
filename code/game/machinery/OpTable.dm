@@ -21,6 +21,8 @@
 	var/obj/machinery/computer/operating/computer = null
 	var/obj/machinery/vitals_monitor/connected_monitor = null
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/optable/Initialize()
 	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))

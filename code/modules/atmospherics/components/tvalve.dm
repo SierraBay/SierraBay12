@@ -123,9 +123,9 @@
 		network_node2 = network_node1
 
 	if(network_node1)
-		network_node1.update = 1
+		network_node1.needs_update()
 	else if(network_node2)
-		network_node2.update = 1
+		network_node2.needs_update()
 
 	return 1
 
@@ -148,9 +148,9 @@
 		network_node3 = network_node1
 
 	if(network_node1)
-		network_node1.update = 1
+		network_node1.needs_update()
 	else if(network_node3)
-		network_node3.update = 1
+		network_node3.needs_update()
 
 	return 1
 

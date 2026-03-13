@@ -18,6 +18,8 @@
 
 	var/fail_message
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/replicator/New()
 	..()
 

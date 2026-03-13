@@ -30,6 +30,8 @@
 	var/icon_update = 0									// Timer in ticks for icon update.
 	var/ui_tick = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/smes/batteryrack/RefreshParts()
 	var/capacitor_efficiency = clamp(total_component_rating_of_type(/obj/item/stock_parts/capacitor), 0, 10)
 	var/maxcells = 3 * total_component_rating_of_type(/obj/item/stock_parts/matter_bin)

@@ -31,6 +31,8 @@
 		/obj/item/shellfish
 	)
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/smartfridge/secure
 	is_secure = 1
 

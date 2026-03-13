@@ -20,6 +20,8 @@
 	stat_immune = 0
 	base_type = /obj/machinery/power/emitter/gyrotron
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/emitter/gyrotron/anchored
 	anchored = TRUE
 	state = EMITTER_WELDED

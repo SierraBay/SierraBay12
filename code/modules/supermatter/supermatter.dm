@@ -90,6 +90,9 @@
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/config_bullet_energy = 2
 	//How much of the power is left after processing is finished?
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 //        var/config_power_reduction_per_tick = 0.5
 	//How much hallucination should it produce per unit of power?
 	var/config_hallucination_power = 0.1

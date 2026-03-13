@@ -14,6 +14,9 @@
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
 	var/last_process = 0
 	var/list/data = list("screen" = 1)
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/artifact_harvester/New()
 	..()
 	sync_with_pad()

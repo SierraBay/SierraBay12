@@ -20,6 +20,8 @@
 	var/sound_id
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/modular/preset/sensors/proc/get_sensors()
 	var/obj/machinery/shipsensors/sensors = sensor_ref?.resolve()
 	if (!istype(sensors) || QDELETED(sensors))
@@ -260,6 +262,8 @@
 	base_type = /obj/machinery/shipsensors
 	maximum_component_parts = list(/obj/item/stock_parts = 10) // Circuit, 5 manipulators, 3 subspace shit and 1 tesla coil
 
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/shipsensors/upgraded
 	uncreated_component_parts = list(/obj/item/stock_parts/manipulator/nano = 2)

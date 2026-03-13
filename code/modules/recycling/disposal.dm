@@ -36,6 +36,8 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 	var/turn = DISPOSAL_FLIP_NONE
 	throwpass = TRUE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 // create a new disposal
 // find the attached trunk (if present) and init gas resvr.
 // initializes the reagents datum for storing vomit reagents

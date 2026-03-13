@@ -21,6 +21,8 @@ GLOBAL_LIST_EMPTY(overmap_helm_computers)
 	var/mob/current_operator
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/ship/helm/Initialize()
 	. = ..()
 	LAZYADD(GLOB.overmap_helm_computers, src)

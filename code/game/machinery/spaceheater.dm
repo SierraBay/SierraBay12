@@ -17,6 +17,8 @@
 	light_power = 0.5
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/space_heater/New()
 	..()
 	cell = new/obj/item/cell/high(src)

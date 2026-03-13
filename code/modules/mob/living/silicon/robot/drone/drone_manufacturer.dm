@@ -26,6 +26,8 @@
 	icon = 'icons/obj/machines/fabricators/drone_fab.dmi'
 	icon_state = "drone_fab_idle"
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/drone_fabricator/derelict
 	name = "construction drone fabricator"
 	fabricator_tag = "Derelict"

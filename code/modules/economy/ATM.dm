@@ -25,6 +25,8 @@
 	var/datum/effect/spark_spread/spark_system
 	var/account_security_level = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/atm/New()
 	..()
 	machine_id = "[station_name()] ATM #[num_financial_terminals++]"

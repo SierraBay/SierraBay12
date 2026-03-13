@@ -13,6 +13,8 @@
 	active_power_usage = 2000
 	idle_power_usage = 1000
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/auto_cloner/New()
 	..()
 

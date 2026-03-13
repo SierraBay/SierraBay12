@@ -18,6 +18,8 @@
 	var/obj/item/fuel_assembly/cur_assembly
 	var/injection_rate = 1
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/fusion_fuel_injector/Initialize()
 	set_extension(src, /datum/extension/local_network_member)
 	if(initial_id_tag)

@@ -30,6 +30,8 @@ var/global/bomb_set
 	wires = /datum/wires/nuclearbomb
 	var/singleton/security_level/original_level
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/nuclearbomb/New()
 	..()
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.

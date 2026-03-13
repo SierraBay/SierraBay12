@@ -80,7 +80,7 @@
 		use_power_oneoff(power_rating)
 
 		heating = 1
-		network.update = 1
+		network.needs_update()
 	else
 		heating = 0
 

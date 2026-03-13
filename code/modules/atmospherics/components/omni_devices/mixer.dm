@@ -123,10 +123,10 @@
 
 		for(var/datum/omni_port/P in inputs)
 			if(P.concentration && P.network)
-				P.network.update = 1
+				P.network.needs_update()
 
 		if(output.network)
-			output.network.update = 1
+			output.network.needs_update()
 
 	return 1
 

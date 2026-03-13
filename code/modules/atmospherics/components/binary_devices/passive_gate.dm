@@ -90,10 +90,10 @@
 
 	if (returnval >= 0)
 		if(network1)
-			network1.update = 1
+			network1.needs_update()
 
 		if(network2)
-			network2.update = 1
+			network2.needs_update()
 
 	if (last_flow_rate)
 		flowing = 1

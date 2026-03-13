@@ -141,7 +141,7 @@
 
 		use_power_oneoff(power_rating)
 
-		network.update = 1
+		network.needs_update()
 	else
 		cooling = 0
 

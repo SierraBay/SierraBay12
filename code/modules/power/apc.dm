@@ -6,9 +6,6 @@
 // Requires a wire connection to a power network through a terminal
 // Generates a terminal based on the direction of the APC on spawn
 
-/obj/machinery/power/apc
-	process_priority = MACHINERY_PRIORITY_HIGH
-
 // There are three different power channels, lighting, equipment, and enviroment
 // Each may have one of the following states
 
@@ -44,43 +41,10 @@
 #define APC_UPOVERLAY_LOCKED 8
 #define APC_UPOVERLAY_OPERATING 16
 
-// Various APC types
-/obj/machinery/power/apc/inactive
-	lighting = 0
-	equipment = 0
-	environ = 0
-	locked = 0
-	coverlocked = 0
-
-/obj/machinery/power/apc/critical
-	is_critical = 1
-
-/obj/machinery/power/apc/high
-	cell_type = /obj/item/cell/high
-
-/obj/machinery/power/apc/high/inactive
-	cell_type = /obj/item/cell/high
-	lighting = 0
-	equipment = 0
-	environ = 0
-	locked = 0
-	coverlocked = 0
-
-/obj/machinery/power/apc/super
-	cell_type = /obj/item/cell/super
-
-/obj/machinery/power/apc/super/critical
-	is_critical = 1
-
-/obj/machinery/power/apc/hyper
-	cell_type = /obj/item/cell/hyper
-
-// APC that barely has any juice
-/obj/machinery/power/apc/near_empty
-	cell_type = /obj/item/cell/crap/discharged
-
 // Main APC code
 /obj/machinery/power/apc
+	process_priority = MACHINERY_PRIORITY_HIGH
+
 	name = "area power controller"
 	desc = "A control terminal for the area electrical systems."
 
@@ -225,6 +189,41 @@
 	 */
 	var/static/list/status_overlays_environ
 	var/autoname = 1
+
+// Various APC types
+/obj/machinery/power/apc/inactive
+	lighting = 0
+	equipment = 0
+	environ = 0
+	locked = 0
+	coverlocked = 0
+
+/obj/machinery/power/apc/critical
+	is_critical = 1
+
+/obj/machinery/power/apc/high
+	cell_type = /obj/item/cell/high
+
+/obj/machinery/power/apc/high/inactive
+	cell_type = /obj/item/cell/high
+	lighting = 0
+	equipment = 0
+	environ = 0
+	locked = 0
+	coverlocked = 0
+
+/obj/machinery/power/apc/super
+	cell_type = /obj/item/cell/super
+
+/obj/machinery/power/apc/super/critical
+	is_critical = 1
+
+/obj/machinery/power/apc/hyper
+	cell_type = /obj/item/cell/hyper
+
+// APC that barely has any juice
+/obj/machinery/power/apc/near_empty
+	cell_type = /obj/item/cell/crap/discharged
 
 /obj/machinery/power/apc/updateDialog()
 	if (MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))

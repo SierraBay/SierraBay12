@@ -93,9 +93,9 @@
 		network_node2 = network_node1
 
 	if(network_node1)
-		network_node1.update = 1
+		network_node1.needs_update()
 	else if(network_node2)
-		network_node2.update = 1
+		network_node2.needs_update()
 
 	if (usr)
 		visible_message(SPAN_WARNING("\The [usr] opens \the [src]."), range = 5)

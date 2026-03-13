@@ -13,6 +13,8 @@
 	var/obj/suspension_field/suspension_field
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/suspension_gen/Process()
 	if(suspension_field)
 		updateDialog()

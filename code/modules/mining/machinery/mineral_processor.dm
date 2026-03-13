@@ -20,6 +20,8 @@
 	var/report_all_ores
 	var/active = FALSE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/mineral/processing_unit/Initialize()
 	ores_processing = list()
 	ores_stored = list()

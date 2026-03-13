@@ -119,6 +119,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	desc = "A standard newsfeed handler. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/machines/terminals.dmi'
 	icon_state = "newscaster_normal"
+	process_priority = 3
 	health_max = 80
 	health_min_damage = 5
 	use_weapon_hitsound = FALSE

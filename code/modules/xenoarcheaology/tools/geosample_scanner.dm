@@ -43,6 +43,8 @@
 	var/t_left_radspike = 0
 	var/rad_shield = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/radiocarbon_spectrometer/New()
 	..()
 	create_reagents(500)

@@ -146,7 +146,7 @@
 		use_power_oneoff(power_draw)
 
 		if(network)
-			network.update = 1
+			network.needs_update()
 
 	return 1
 

@@ -16,6 +16,8 @@
 	cooking_power = 0
 	var/starts_with = list()
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/appliance/cooker/examine(mob/user, distance)
 	. = ..()
 	if (distance <= 1)

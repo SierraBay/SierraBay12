@@ -6,6 +6,8 @@
 	machine_name = "unloading machine"
 	machine_desc = "Unloads raw ore stored within an ore box and places it onto an adjacent tile. By default, it draws from a box to the west and places ore to the east."
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/mineral/unloading_machine/Process()
 	if(input_turf && output_turf)
 		if(length(output_turf.contents) < 15)

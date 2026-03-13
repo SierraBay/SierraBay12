@@ -13,6 +13,7 @@
 	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
+	process_priority = 3
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = FALSE

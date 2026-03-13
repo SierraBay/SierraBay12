@@ -55,7 +55,7 @@
 				last_temperature = removed.temperature
 
 				//Update the gas networks.
-				network1.update = 1
+				network1.needs_update()
 
 				last_worldtime_transfer = world.time
 		else

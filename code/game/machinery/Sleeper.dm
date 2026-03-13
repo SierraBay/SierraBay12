@@ -31,6 +31,8 @@
 	idle_power_usage = 15
 	active_power_usage = 1 KILOWATTS //builtin health analyzer, dialysis machine, injectors.
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/sleeper/Initialize(mapload, d = 0, populate_parts = TRUE)
 	. = ..()
 	if(populate_parts)

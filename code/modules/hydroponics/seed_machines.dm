@@ -24,6 +24,9 @@
 	startswith = list(/obj/item/disk/botany = 14)
 
 /obj/machinery/botany
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /*
 	icon = 'icons/obj/machines/hydroponics_machines.dmi'
 	icon_state = "hydrotray3"

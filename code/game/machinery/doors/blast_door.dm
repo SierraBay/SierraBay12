@@ -274,6 +274,8 @@
 /obj/machinery/door/blast/regular/escape_pod
 	name = "escape pod release door"
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/door/blast/regular/escape_pod/Process()
 	if(evacuation_controller.emergency_evacuation && evacuation_controller.state >= EVAC_LAUNCHING && src.icon_state == icon_state_closed)
 		src.force_open()

@@ -15,6 +15,7 @@
 	var/rpmtarget = 0
 	var/capacity = 1e6
 	var/comp_id = 0
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
@@ -26,6 +27,8 @@
 	var/obj/machinery/compressor/compressor
 	var/turf/simulated/outturf
 	var/lastgen
+
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"

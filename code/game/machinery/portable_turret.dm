@@ -62,6 +62,8 @@
 	req_access = list(list(access_brig, access_bridge))
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/porta_turret/crescent
 	enabled = 0
 	ailock = 1

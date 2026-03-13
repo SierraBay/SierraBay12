@@ -25,6 +25,8 @@
 	var/effective_gen = 0
 	var/lastgenlev = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/generator/New()
 	..()
 	desc = initial(desc) + " Rated for [round(max_power/1000)] kW."

@@ -14,6 +14,8 @@
 	uncreated_component_parts = null
 	stat_immune = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/kinetic_harvester/Initialize()
 	set_extension(src, /datum/extension/local_network_member)
 	if(initial_id_tag)

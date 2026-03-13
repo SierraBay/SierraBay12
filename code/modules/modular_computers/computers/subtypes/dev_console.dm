@@ -6,6 +6,8 @@
 	var/list/interact_sounds = list("keyboard", "keystroke")
 	var/obj/item/stock_parts/computer/hard_drive/portable/portable_drive
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/computer/modular/Initialize()
 	set_extension(src, /datum/extension/interactive/ntos/console)
 	var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)

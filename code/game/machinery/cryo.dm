@@ -35,6 +35,8 @@
 	var/slow_stasis_mult = 1.25
 	var/current_stasis_mult = 1
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/atmospherics/unary/cryo_cell/Initialize()
 	. = ..()
 	icon = 'icons/obj/machines/medical/cryogenics_split.dmi'

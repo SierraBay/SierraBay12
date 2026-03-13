@@ -36,6 +36,8 @@
 	var/relay_id
 
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/ntnet_relay/Destroy()
 	if (ntnet_global)
 		ntnet_global.relays -= src

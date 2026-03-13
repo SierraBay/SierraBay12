@@ -42,6 +42,8 @@
 	var/spinup_delay      = 20
 	var/spinup_counter    = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/shield_generator/on_update_icon()
 	if(running)
 		icon_state = "generator1"

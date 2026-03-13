@@ -22,6 +22,8 @@
 	var/field_strength = 1//0.01
 	var/initial_id_tag
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/fusion_core/mapped
 	anchored = TRUE
 

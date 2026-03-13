@@ -108,10 +108,10 @@ Thus, the two variables affect pump operation are set in New():
 		use_power_oneoff(power_draw)
 
 		if(network1)
-			network1.update = 1
+			network1.needs_update()
 
 		if(network2)
-			network2.update = 1
+			network2.needs_update()
 
 	return 1
 

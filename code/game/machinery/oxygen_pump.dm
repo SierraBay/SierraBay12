@@ -22,6 +22,8 @@
 	idle_power_usage = 10
 	active_power_usage = 120 // No idea what the realistic amount would be.
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/oxygen_pump/New()
 	..()
 	tank = new spawn_type (src)

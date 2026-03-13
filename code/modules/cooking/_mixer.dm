@@ -7,6 +7,8 @@
 	idle_power_usage = 50
 	appliancetype = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/appliance/mixer/examine(mob/user, distance)
 	. = ..()
 	if(distance <= 1)

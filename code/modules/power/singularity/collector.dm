@@ -29,6 +29,8 @@ var/global/list/rad_collectors = list()
 	var/end_time = 0
 	var/alert_delay = 10 SECONDS
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/rad_collector/New()
 	..()
 	rad_collectors += src

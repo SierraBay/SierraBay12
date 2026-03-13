@@ -81,6 +81,8 @@
 	maximum_component_parts = list(/obj/item/stock_parts/smes_coil = 6, /obj/item/stock_parts = 15)
 	interact_offline = TRUE
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/power/smes/buildable/malf_upgrade(mob/living/silicon/ai/user)
 	..()
 	malf_upgraded = 1

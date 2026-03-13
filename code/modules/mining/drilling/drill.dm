@@ -46,6 +46,8 @@
 	var/need_update_field = 0
 	var/need_player_check = 0
 
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
 /obj/machinery/mining/drill/Process()
 	if(need_player_check)
 		return
