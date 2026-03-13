@@ -38,7 +38,7 @@
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
 	return level != ATOM_LEVEL_OVER_TILE
 
-/obj/machinery/atmospherics/pipe/fire_act()
+/obj/machinery/atmospherics/pipe/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return FALSE
 
 /obj/machinery/atmospherics/pipe/on_death()
@@ -212,6 +212,9 @@
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 		..()
 	else if(leaking)
+		if(!parent.air?.volume)
+			update_sound(FALSE)
+			return
 		parent.mingle_with_turf(loc, volume)
 		var/air = parent.air && parent.air.return_pressure()
 		if(!sound_token && air)
@@ -1158,6 +1161,8 @@
 		..()
 		return
 	else
+		if(!parent.air?.volume)
+			return
 		parent.mingle_with_turf(loc, volume)
 
 /obj/machinery/atmospherics/pipe/vent/Destroy()

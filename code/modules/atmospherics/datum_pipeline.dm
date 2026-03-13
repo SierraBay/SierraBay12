@@ -19,9 +19,9 @@
 
 	if(air && air.volume)
 		temporarily_store_air()
-		QDEL_NULL(air)
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
+	QDEL_NULL(air)
 	leaks.Cut()
 	members.Cut()
 	edges.Cut()
@@ -29,6 +29,8 @@
 
 /datum/pipeline/Process()//This use to be called called from the pipe networks
 	//Check to see if pressure is within acceptable limits
+	if(!air)
+		return
 	var/pressure = air.return_pressure()
 	if(pressure > maximum_pressure)
 		for(var/obj/machinery/atmospherics/pipe/member in members)
@@ -38,6 +40,8 @@
 
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
+	if(!air?.volume)
+		return
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
@@ -126,6 +130,8 @@
 	return network
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
+	if(!air?.volume || !mingle_volume || !istype(target))
+		return
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
 	air_sample.volume = mingle_volume
 
@@ -154,6 +160,8 @@
 		network.needs_update()
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
+	if(!air?.volume)
+		return 1
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
 
@@ -215,6 +223,8 @@
 
 //surface must be the surface area in m^2
 /datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
+	if(!air?.volume)
+		return
 	var/gas_density = air.total_moles/air.volume
 	thermal_conductivity *= min(gas_density / ( RADIATOR_OPTIMUM_PRESSURE/(R_IDEAL_GAS_EQUATION*GAS_CRITICAL_TEMPERATURE) ), 1) //mult by density ratio
 
