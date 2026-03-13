@@ -25,10 +25,15 @@
 	if(update)
 		update = 0
 		reconcile_air() //equalize_gases(gases)
+	STOP_PROCESSING_PIPENET(src)
 
 	//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes don't radiate heat - Mport
 	//for(var/datum/pipeline/line_member in line_members)
 	//	line_member.process()
+
+/datum/pipe_network/proc/needs_update()
+	update = 1
+	START_PROCESSING_PIPENET(src)
 
 /datum/pipe_network/proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
 	//Purpose: Generate membership roster
@@ -42,7 +47,7 @@
 	update_network_gases()
 
 	if((length(normal_members)>0)||(length(line_members)>0))
-		START_PROCESSING_PIPENET(src)
+		needs_update()
 		return 1
 	qdel(src)
 

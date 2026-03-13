@@ -45,7 +45,7 @@
 		on = 0
 		return
 	if(network)
-		network.update = 1
+		network.needs_update()
 	return 1
 
 // Housekeeping and pipe network stuff below

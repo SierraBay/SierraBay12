@@ -151,7 +151,7 @@
 		//turf_air already modified by equalize_gases()
 
 	if(network)
-		network.update = 1
+		network.needs_update()
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
@@ -211,7 +211,7 @@
 
 			air.temperature -= heat/total_heat_capacity
 	if(network)
-		network.update = 1
+		network.needs_update()
 
 //surface must be the surface area in m^2
 /datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
@@ -222,7 +222,7 @@
 
 	air.add_thermal_energy(heat_gain)
 	if(network)
-		network.update = 1
+		network.needs_update()
 
 //Returns the amount of heat gained while in space due to thermal radiation (usually a negative value)
 //surface - the surface area in m^2
