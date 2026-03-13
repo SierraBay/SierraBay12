@@ -124,7 +124,7 @@
 	)
 	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/airlock = 1)
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/door/airlock/get_material()
 	return SSmaterials.get_material_by_name(mineral ? mineral : MATERIAL_STEEL)

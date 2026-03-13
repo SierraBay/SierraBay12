@@ -128,7 +128,7 @@
 	name = "central R&D database"
 	server_id = -1
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/r_n_d/server/centcom/proc/update_connections()
 	var/list/no_id_servers = list()

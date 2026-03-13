@@ -7,7 +7,7 @@
 	var/datum/radio_frequency/radio_connection
 	var/cur_command = null	//the command the door is currently attempting to complete
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/door/airlock/Process()
 	var/keep_processing = FALSE

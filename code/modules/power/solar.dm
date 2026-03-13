@@ -21,7 +21,7 @@ var/global/solar_gen_rate = 1500
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/power/solar/improved
 	name = "improved solar panel"
@@ -163,7 +163,7 @@ var/global/solar_gen_rate = 1500
 	..(loc, S, 0)
 
 /obj/machinery/power/solar/fake
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/power/solar/fake/Process()
 	return PROCESS_KILL

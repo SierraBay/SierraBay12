@@ -293,6 +293,7 @@
 
 //-- Masks for /atom/var/init_flags --
 //- machinery
+#define INIT_MACHINERY_NONE NONE
 #define INIT_MACHINERY_START_PROCESSING FLAG_01
 //--
 

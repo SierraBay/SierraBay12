@@ -63,7 +63,7 @@
 
 	atmos_canpass = CANPASS_PROC
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/door/New()
 	. = ..()

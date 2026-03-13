@@ -8,7 +8,7 @@
 	var/last_icon_pump_status // cached for icon update optimization
 	var/list/outbound_signal_cooldowns = list()
 
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)

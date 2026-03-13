@@ -14,7 +14,7 @@
 	icon = 'icons/obj/machines/wooden_tv.dmi'
 	w_class = ITEM_SIZE_NO_CONTAINER
 	layer = STRUCTURE_LAYER // Layer under items
-	init_flags = 0
+	init_flags = INIT_MACHINERY_NONE
 	throw_speed = 1
 	throw_range = 5
 
