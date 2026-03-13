@@ -21,6 +21,8 @@ var/global/solar_gen_rate = 1500
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
+	init_flags = 0
+
 /obj/machinery/power/solar/improved
 	name = "improved solar panel"
 	efficiency = 2
@@ -106,21 +108,20 @@ var/global/solar_gen_rate = 1500
 	sunfrac = (cos(p_angle) ** 2) - get_solar_distance_penalty(z)
 	//isn't the power received from the incoming light proportional to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
-/obj/machinery/power/solar/Process()
+/obj/machinery/power/solar/proc/get_generated_power(obj/machinery/power/solar_control/SC)
+	if(!SC || control != SC)
+		return 0
 	if(MACHINE_IS_BROKEN(src))
-		return
-	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
-		return
+		return 0
+	if(!powernet || powernet != SC.powernet)
+		unset_control()
+		return 0
+	if(obscured || sunfrac <= 0)
+		return 0
+	return solar_gen_rate * sunfrac * efficiency
 
-	if(powernet)
-		if(powernet == control.powernet)//check if the panel is still connected to the computer
-			if(obscured) //get no light from the sun, so don't generate power
-				return
-			var/sgen = solar_gen_rate * sunfrac * efficiency
-			add_avail(sgen)
-			control.gen += sgen
-		else //if we're no longer on the same powernet, remove from control computer
-			unset_control()
+/obj/machinery/power/solar/Process()
+	return PROCESS_KILL
 
 /obj/machinery/power/solar/set_broken(new_state)
 	. = ..()
@@ -161,8 +162,14 @@ var/global/solar_gen_rate = 1500
 /obj/machinery/power/solar/fake/New(turf/loc, obj/item/solar_assembly/S)
 	..(loc, S, 0)
 
+/obj/machinery/power/solar/fake
+	init_flags = 0
+
 /obj/machinery/power/solar/fake/Process()
 	return PROCESS_KILL
+
+/obj/machinery/power/solar/fake/get_generated_power(obj/machinery/power/solar_control/SC)
+	return 0
 
 //trace towards sun to see if we're in shadow
 /obj/machinery/power/solar/proc/occlusion()
@@ -293,7 +300,7 @@ var/global/solar_gen_rate = 1500
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
-	var/nexttime = 0		// time for a panel to rotate of 1° in manual tracking
+	var/nexttime = 0		// time for a panel to rotate of 1В° in manual tracking
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
@@ -403,7 +410,7 @@ var/global/solar_gen_rate = 1500
 
 /obj/machinery/power/solar_control/Process()
 	lastgen = gen
-	gen = 0
+	gen = process_connected_panels()
 
 	if(inoperable())
 		return
@@ -413,11 +420,34 @@ var/global/solar_gen_rate = 1500
 			connected_tracker.unset_control()
 
 	if(track==1 && trackrate) //manual tracking and set a rotation speed
-		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
+		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1В°...
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
-			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
+			nexttime += 36000/abs(trackrate) //reset the counter for the next 1В°
 
 	updateDialog()
+
+/obj/machinery/power/solar_control/proc/process_connected_panels()
+	if(!length(connected_panels))
+		return 0
+
+	var/generated = 0
+	for(var/i = length(connected_panels) to 1 step -1)
+		var/obj/machinery/power/solar/S = connected_panels[i]
+		if(QDELETED(S))
+			connected_panels -= S
+			continue
+		if(S.control != src)
+			connected_panels -= S
+			continue
+
+		var/sgen = S.get_generated_power(src)
+		if(sgen > 0)
+			generated += sgen
+
+	if(generated > 0)
+		add_avail(generated)
+
+	return generated
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
 	if(..())
