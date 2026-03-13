@@ -33,6 +33,7 @@
 	icon_state = "blank"
 	machine_desc = null
 	var/list/connected_zlevels //cached for checking if we someone is obseving us so we should process
+	var/observer_recheck_delay = 5 SECONDS
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/is_burnable()
 	return ..() && seed.get_trait(TRAIT_HEAT_TOLERANCE) < 1000
@@ -54,12 +55,6 @@
 	. = ..()
 	connected_zlevels = GetConnectedZlevels(z)
 
-/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Process()
-	if(z in GLOB.using_map.station_levels) //plants on station always tick
-		return ..()
-	if(living_observers_present(connected_zlevels))
-		return ..()
-
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/remove_dead(mob/user, silent)
 	..()
 	qdel(src)
@@ -75,8 +70,11 @@
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Process()
 	if(!seed)
 		qdel(src)
-		return
-	..()
+		return PROCESS_KILL
+	if(living_observers_present(connected_zlevels))
+		return ..()
+	request_process_in(observer_recheck_delay)
+	return
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/invisible/Destroy()
 	// Check if we're masking a decal that needs to be visible again.

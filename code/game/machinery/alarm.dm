@@ -278,6 +278,8 @@
 /obj/machinery/alarm/proc/queue_atmos_recheck(rebind_environment = FALSE)
 	if(rebind_environment)
 		refresh_environment_binding()
+	if(atmos_dirty)
+		return
 	atmos_dirty = TRUE
 	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 

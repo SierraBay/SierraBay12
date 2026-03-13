@@ -1,3 +1,7 @@
+/obj/machinery/portable_atmospherics/hydroponics
+	init_flags = INIT_MACHINERY_START_PROCESSING
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+
 /obj/machinery/portable_atmospherics/hydroponics/Process()
 
 	// Handle nearby smoke if any.
@@ -13,6 +17,7 @@
 	if(force_update)
 		force_update = 0
 	else if(world.time < (lastcycle + cycledelay))
+		request_process_in((lastcycle + cycledelay) - world.time)
 		return
 	lastcycle = world.time
 

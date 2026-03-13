@@ -13,6 +13,7 @@
 
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it."
+	process_priority = MACHINERY_PRIORITY_HIGH
 	use_power = POWER_USE_OFF
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
@@ -21,7 +22,6 @@
 	level = ATOM_LEVEL_UNDER_TILE
 	identifier = "AVP"
 
-	var/hibernate = 0 //Do we even process?
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = EXTERNAL_PRESSURE_BOUND
@@ -174,11 +174,15 @@
 		return 0
 	return 1
 
+/obj/machinery/atmospherics/unary/vent_pump/proc/wake_for_configuration_change()
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_pump/update_use_power(new_use_power)
+	. = ..()
+	wake_for_configuration_change()
+
 /obj/machinery/atmospherics/unary/vent_pump/Process()
 	..()
-
-	if (hibernate > world.time)
-		return 1
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
@@ -207,14 +211,14 @@
 		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
 		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
 		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL) //99% of all vents
-			hibernate = world.time + (rand(100,200))
+			request_process_in(rand(100,200))
 
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power_oneoff(power_draw)
 		if(network)
-			network.update = 1
+			network.needs_update()
 
 	return 1
 
@@ -252,10 +256,11 @@
 /obj/machinery/atmospherics/unary/vent_pump/proc/purge()
 	pressure_checks &= ~PRESSURE_CHECK_EXTERNAL
 	pump_direction = 0
+	wake_for_configuration_change()
 
 /obj/machinery/atmospherics/unary/vent_pump/refresh()
 	..()
-	hibernate = FALSE
+	wake_for_configuration_change()
 	toggle_input_toggle()
 
 /obj/machinery/atmospherics/unary/vent_pump/RefreshParts()
@@ -319,6 +324,7 @@
 			return TRUE
 
 		welded = !welded
+		wake_for_configuration_change()
 		update_icon()
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 		user.visible_message(
@@ -341,6 +347,7 @@
 		return
 	if(href_list["switchMode"])
 		pump_direction = !pump_direction
+		wake_for_configuration_change()
 		to_chat(user, SPAN_NOTICE("The multitool emits a short beep confirming the change."))
 		queue_icon_update() //force the icon to refresh after changing directional mode.
 		return TOPIC_REFRESH
@@ -360,8 +367,9 @@
 	if(!(new_value in list("release", "siphon")))
 		return FALSE
 	. = ..()
-	if(.)
+	if(. && machine.pump_direction != (new_value == "release"))
 		machine.pump_direction = (new_value == "release")
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_variable/pump_checks
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -381,8 +389,9 @@
 	if(new_value != sanitized)
 		return FALSE
 	. = ..()
-	if(.)
+	if(. && machine.pressure_checks != new_value)
 		machine.pressure_checks = new_value
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_variable/pressure_bound
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -400,8 +409,9 @@
 		new_value = machine.internal_pressure_bound_default
 	new_value = clamp(text2num(new_value), 0, MAX_PUMP_PRESSURE)
 	. = ..()
-	if(.)
+	if(. && machine.internal_pressure_bound != new_value)
 		machine.internal_pressure_bound = new_value
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_variable/pressure_bound/external
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -416,8 +426,9 @@
 		new_value = machine.external_pressure_bound_default
 	new_value = clamp(text2num(new_value), 0, MAX_PUMP_PRESSURE)
 	. = ..()
-	if(.)
+	if(. && machine.external_pressure_bound != new_value)
 		machine.external_pressure_bound = new_value
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_method/purge_pump
 	name = "activate purge mode"

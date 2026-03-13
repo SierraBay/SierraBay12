@@ -4,6 +4,7 @@
 
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it."
+	process_priority = MACHINERY_PRIORITY_HIGH
 	use_power = POWER_USE_OFF
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
@@ -13,7 +14,6 @@
 
 	level = ATOM_LEVEL_UNDER_TILE
 
-	var/hibernate = 0 //Do we even process?
 	var/scrubbing = SCRUBBER_EXCHANGE
 	var/list/scrubbing_gas
 
@@ -135,11 +135,15 @@
 	. = ..()
 	toggle_input_toggle()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/proc/wake_for_configuration_change()
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/update_use_power(new_use_power)
+	. = ..()
+	wake_for_configuration_change()
+
 /obj/machinery/atmospherics/unary/vent_scrubber/Process()
 	..()
-
-	if (hibernate > world.time)
-		return 1
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
@@ -163,7 +167,7 @@
 
 	if(scrubbing != SCRUBBER_SIPHON && power_draw <= 0)	//99% of all scrubbers
 		//Fucking hibernate because you ain't doing shit.
-		hibernate = world.time + (rand(100,200))
+		request_process_in(rand(100,200))
 	else if(scrubbing == SCRUBBER_EXCHANGE) // after sleep check so it only does an exchange if there are bad gasses that have been scrubbed
 		transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SCRUBBER_FLOWRATE/environment.volume)
 		power_draw += pump_gas(src, environment, air_contents, transfer_moles / 4, power_rating)
@@ -173,7 +177,7 @@
 		use_power_oneoff(power_draw)
 
 	if(network)
-		network.update = 1
+		network.needs_update()
 
 	return 1
 
@@ -186,9 +190,13 @@
 	panic.write_var(src, !panic)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/set_scrub_gas(list/gases)
+	var/changed = FALSE
 	for(var/gas_id in gases)
 		if((gas_id in scrubbing_gas) ^ gases[gas_id])
 			scrubbing_gas ^= gas_id
+			changed = TRUE
+	if(changed)
+		wake_for_configuration_change()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/cannot_transition_to(state_path, mob/user)
 	if(state_path == /singleton/machine_construction/default/deconstructed)
@@ -221,6 +229,7 @@
 			return TRUE
 
 		welded = !welded
+		wake_for_configuration_change()
 		update_icon()
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 		user.visible_message(
@@ -242,7 +251,7 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/refresh()
 	..()
-	hibernate = FALSE
+	wake_for_configuration_change()
 	toggle_input_toggle()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on/sauna/reset_scrubbing()
@@ -264,10 +273,11 @@
 	if(!(new_value in list(SCRUBBER_EXCHANGE, SCRUBBER_SCRUB, SCRUBBER_SIPHON)))
 		return FALSE
 	. = ..()
-	if(.)
+	if(. && machine.scrubbing != new_value)
 		machine.scrubbing = new_value
 		if(new_value != SCRUBBER_SIPHON)
 			machine.panic = FALSE
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_variable/panic
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber
@@ -284,13 +294,14 @@
 	if(!(new_value in list(TRUE, FALSE)))
 		return FALSE
 	. = ..()
-	if(.)
+	if(. && machine.panic != new_value)
 		machine.panic = new_value
 		if(machine.panic)
 			machine.update_use_power(POWER_USE_IDLE)
 			machine.scrubbing = SCRUBBER_SIPHON
 		else
 			machine.scrubbing = SCRUBBER_EXCHANGE
+		machine.wake_for_configuration_change()
 
 /singleton/public_access/public_variable/scrubbing_gas
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber

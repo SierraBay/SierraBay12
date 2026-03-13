@@ -18,20 +18,54 @@
 
 	var/alarm = 0
 	var/enabled = 1
+	var/process_delay_ds = 2
+	var/diffuse_duration_ds = 5
+	var/list/diffuse_turfs
+
+/obj/machinery/shield_diffuser
+	init_flags = INIT_MACHINERY_START_PROCESSING
+
+/obj/machinery/shield_diffuser/Initialize()
+	. = ..()
+	rebuild_diffuse_turfs()
+
+/obj/machinery/shield_diffuser/Destroy()
+	diffuse_turfs = null
+	. = ..()
+
+/obj/machinery/shield_diffuser/proc/rebuild_diffuse_turfs()
+	diffuse_turfs = list()
+	var/turf/source_turf = get_turf(src)
+	if(!source_turf)
+		return
+
+	for(var/direction in GLOB.cardinal)
+		var/turf/shielded_tile = get_step(source_turf, direction)
+		if(shielded_tile)
+			diffuse_turfs += shielded_tile
 
 /obj/machinery/shield_diffuser/Process()
 	if(alarm)
-		alarm--
+		alarm = max(0, alarm - process_delay_ds)
 		if(!alarm)
 			update_icon()
+		request_process_in(process_delay_ds)
 		return
 
-	if(!enabled)
-		return
-	for(var/direction in GLOB.cardinal)
-		var/turf/simulated/shielded_tile = get_step(get_turf(src), direction)
-		for(var/obj/shield/S in shielded_tile)
-			S.diffuse(5)
+	if(!enabled && !alarm)
+		return PROCESS_KILL
+
+	if(enabled)
+		if(!length(diffuse_turfs))
+			rebuild_diffuse_turfs()
+		for(var/turf/shielded_tile as anything in diffuse_turfs)
+			if(!shielded_tile)
+				continue
+			for(var/obj/shield/S in shielded_tile)
+				S.diffuse(diffuse_duration_ds)
+
+	request_process_in(process_delay_ds)
+	return
 
 /obj/machinery/shield_diffuser/on_update_icon()
 	if(alarm)
@@ -49,10 +83,18 @@
 		to_chat(user, "You press an override button on \the [src], re-enabling it.")
 		alarm = 0
 		update_icon()
+		if(enabled)
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		else
+			STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		return TRUE
 	enabled = !enabled
 	update_use_power(enabled + 1)
 	update_icon()
+	if(enabled)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 	to_chat(user, "You turn \the [src] [enabled ? "on" : "off"].")
 	return TRUE
 
@@ -61,6 +103,7 @@
 		return
 	alarm = round(max(alarm, duration))
 	update_icon()
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/shield_diffuser/examine(mob/user)
 	. = ..()

@@ -6,6 +6,9 @@
 // Requires a wire connection to a power network through a terminal
 // Generates a terminal based on the direction of the APC on spawn
 
+/obj/machinery/power/apc
+	process_priority = MACHINERY_PRIORITY_HIGH
+
 // There are three different power channels, lighting, equipment, and enviroment
 // Each may have one of the following states
 

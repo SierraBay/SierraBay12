@@ -157,6 +157,7 @@
 	if(!mechanical)
 		construct_state = null
 	. = ..()
+	default_process_delay_ds = cycledelay
 	temp_chem_holder = new()
 	temp_chem_holder.create_reagents(10)
 	temp_chem_holder.atom_flags |= ATOM_FLAG_OPEN_CONTAINER
@@ -170,6 +171,10 @@
 /obj/machinery/portable_atmospherics/hydroponics/Destroy()
 	SSplants.active_plants -= src
 	return ..()
+
+/obj/machinery/portable_atmospherics/hydroponics/on_reagent_change()
+	..()
+	wake_for_growth_change()
 
 /obj/machinery/portable_atmospherics/hydroponics/LateInitialize(mapload)
 	..()
@@ -218,6 +223,12 @@
 	harvest = 0
 	weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
 	pestlevel = 0
+	wake_for_growth_change()
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/wake_for_growth_change(force_cycle = FALSE)
+	if(force_cycle)
+		force_update = 1
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 //Process reagents being input into the tray.
 /obj/machinery/portable_atmospherics/hydroponics/proc/process_reagents()
@@ -269,6 +280,7 @@
 
 	temp_chem_holder.reagents.clear_reagents()
 	check_health()
+	wake_for_growth_change()
 
 //Harvests the product of a plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/harvest(mob/user)
@@ -298,6 +310,7 @@
 		mutation_mod = 0
 
 	check_health()
+	wake_for_growth_change()
 
 //Clears out a dead plant.
 /obj/machinery/portable_atmospherics/hydroponics/proc/remove_dead(mob/user, silent)
@@ -320,6 +333,7 @@
 		to_chat(user, "You remove the dead plant.")
 	lastproduce = 0
 	check_health()
+	wake_for_growth_change()
 	return TRUE
 
 // If a weed growth is sufficient, this proc is called.
@@ -340,6 +354,7 @@
 	sampled = 0
 	update_icon()
 	visible_message(SPAN_NOTICE("[src] has been overtaken by [seed.display_name]."))
+	wake_for_growth_change()
 
 	return
 
@@ -360,6 +375,7 @@
 	if(!isnull(SSplants.seeds[seed.name]))
 		seed = seed.diverge()
 	seed.mutate(severity,get_turf(src))
+	wake_for_growth_change()
 
 	return
 
@@ -411,6 +427,7 @@
 
 	update_icon()
 	visible_message(SPAN_DANGER("The [previous_plant] has suddenly mutated into \a [seed.display_name]!"))
+	wake_for_growth_change()
 
 	return
 
@@ -444,8 +461,7 @@
 
 		// Bookkeeping.
 		check_health()
-		force_update = 1
-		Process()
+		wake_for_growth_change(TRUE)
 
 		return TRUE
 
@@ -505,6 +521,7 @@
 		playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 		qdel(O)
 		check_health()
+		wake_for_growth_change()
 		return TRUE
 
 	if (mechanical && isWrench(O))
@@ -562,6 +579,7 @@
 
 	qdel(S)
 	check_health()
+	wake_for_growth_change()
 
 /obj/machinery/portable_atmospherics/hydroponics/attack_robot(mob/user)
 	return FALSE // no hands
@@ -633,6 +651,7 @@
 	closed_system = !closed_system
 	to_chat(user, "You [closed_system ? "close" : "open"] the tray's lid.")
 	update_icon()
+	wake_for_growth_change()
 
 //proc for trays to spawn pre-planted
 /obj/machinery/portable_atmospherics/hydroponics/proc/plant()
@@ -645,6 +664,7 @@
 	lastcycle = world.time
 	qdel(S)
 	check_health()
+	wake_for_growth_change()
 
 /obj/machinery/portable_atmospherics/hydroponics/do_simple_ranged_interaction(mob/user)
 	if(dead)
