@@ -79,6 +79,10 @@
 		else
 			light = new /datum/light_source(src, .)
 
+	// [SIERRA-ADD] - AI VISION
+	// Notify cameranets so AI chunks recalculate visibility after a light state change.
+	updateVisibility(src, FALSE)
+	// [/SIERRA-ADD]
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).

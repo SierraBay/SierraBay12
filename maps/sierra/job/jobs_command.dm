@@ -50,7 +50,7 @@
 
 	minimal_player_age = 14
 	ideal_character_age = 45
-	economic_power = 14
+	economic_power = 12
 	skill_points = 30
 
 	minimum_character_age = list(SPECIES_HUMAN = 28)
@@ -127,7 +127,7 @@
 
 	minimum_character_age = list(SPECIES_HUMAN = 37)
 	ideal_character_age = 42
-	economic_power = 20
+	economic_power = 17
 	skill_points = 36
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/rd
@@ -191,7 +191,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 14
 
 	minimal_player_age = 21
 
@@ -259,7 +259,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 14
 
 	minimal_player_age = 21
 
@@ -339,7 +339,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 12
 
 	minimal_player_age = 21
 
@@ -403,7 +403,7 @@
 	spawn_positions = 1
 	supervisors = "Центральному Командованию"
 	selection_color = "#2f2f7f"
-	economic_power = 15
+	economic_power = 14
 
 	minimal_player_age = 10
 

@@ -1,0 +1,383 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1208; font-family: 'Georgia', serif; color: #f0e6c8; }
+
+  .wheel-wrap {
+    padding: 14px;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  /* ---------- Header ---------- */
+  .wh-header { margin-bottom: 12px; }
+  .wh-header h1 {
+    font-size: 20px;
+    color: #f5d57a;
+    text-shadow: 0 0 12px rgba(245,213,122,0.4);
+    letter-spacing: 3px;
+  }
+  .wh-header .subtitle {
+    font-size: 11px; color: #8a7050; letter-spacing: 2px; margin-top: 2px;
+  }
+
+  /* ---------- Wheel container ---------- */
+  .wheel-stage {
+    position: relative;
+    width: 280px; height: 280px;
+    margin: 0 auto 14px;
+  }
+
+  /* Outer wooden rim */
+  .wheel-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 30%, #c8a055, #6b3c10 60%, #3a1c05);
+    box-shadow: 0 0 0 4px #2a1005, 0 0 30px rgba(0,0,0,0.7), inset 0 0 20px rgba(0,0,0,0.4);
+  }
+
+  /* Spinning number segments */
+  .wheel-segments {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #0a7a30   0.00deg   9.73deg,
+      #a81a1a   9.73deg  19.46deg,
+      #141414  19.46deg  29.19deg,
+      #a81a1a  29.19deg  38.92deg,
+      #141414  38.92deg  48.65deg,
+      #a81a1a  48.65deg  58.38deg,
+      #141414  58.38deg  68.11deg,
+      #a81a1a  68.11deg  77.84deg,
+      #141414  77.84deg  87.57deg,
+      #a81a1a  87.57deg  97.30deg,
+      #141414  97.30deg 107.03deg,
+      #a81a1a 107.03deg 116.76deg,
+      #141414 116.76deg 126.49deg,
+      #a81a1a 126.49deg 136.22deg,
+      #141414 136.22deg 145.95deg,
+      #a81a1a 145.95deg 155.68deg,
+      #141414 155.68deg 165.41deg,
+      #a81a1a 165.41deg 175.14deg,
+      #141414 175.14deg 184.86deg,
+      #a81a1a 184.86deg 194.59deg,
+      #141414 194.59deg 204.32deg,
+      #a81a1a 204.32deg 214.05deg,
+      #141414 214.05deg 223.78deg,
+      #a81a1a 223.78deg 233.51deg,
+      #141414 233.51deg 243.24deg,
+      #a81a1a 243.24deg 252.97deg,
+      #141414 252.97deg 262.70deg,
+      #a81a1a 262.70deg 272.43deg,
+      #141414 272.43deg 282.16deg,
+      #a81a1a 282.16deg 291.89deg,
+      #141414 291.89deg 301.62deg,
+      #a81a1a 301.62deg 311.35deg,
+      #141414 311.35deg 321.08deg,
+      #a81a1a 321.08deg 330.81deg,
+      #141414 330.81deg 340.54deg,
+      #a81a1a 340.54deg 350.27deg,
+      #141414 350.27deg 360.00deg
+    );
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  }
+
+  /* Dividers (thin gold lines between segments) */
+  .wheel-segments::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: repeating-conic-gradient(
+      rgba(205,175,80,0.25) 0deg 0.5deg,
+      transparent 0.5deg 9.73deg
+    );
+    pointer-events: none;
+  }
+
+  /* Inner hub */
+  .wheel-hub {
+    position: absolute;
+    inset: 35%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4a855, #7a4a10 55%, #3a1c05);
+    box-shadow: 0 0 0 3px rgba(205,175,80,0.4), inset 0 0 8px rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+
+  /* Ball indicator (always points up = top center) */
+  .wheel-ball {
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #fff, #c8c8c8);
+    box-shadow: 0 0 6px rgba(255,255,255,0.8);
+    z-index: 3;
+  }
+
+  /* Spinning animation — end angle injected dynamically below */
+  .spinning .wheel-segments {
+    animation: spinWheel 5s cubic-bezier(0.25, 0.1, 0.1, 1) forwards;
+  }
+
+  /* ---------- Result display ---------- */
+  .result-box {
+    margin: 0 auto 12px;
+    width: 200px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .result-box.result-red   { background: #4a0808; border: 2px solid #cc3333; }
+  .result-box.result-black { background: #111;    border: 2px solid #555; }
+  .result-box.result-green { background: #0a3a12; border: 2px solid #2a8a30; }
+  .result-box.result-none  { background: #1e1408; border: 2px solid #4a3818; }
+
+  .result-number {
+    font-size: 44px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .result-red   .result-number { color: #ff6666; }
+  .result-black .result-number { color: #cccccc; }
+  .result-green .result-number { color: #44ff88; }
+  .result-none  .result-number { color: #6a5830; font-size: 24px; }
+
+  .result-label { font-size: 11px; letter-spacing: 1px; }
+  .result-red   .result-label  { color: #ff9999; }
+  .result-black .result-label  { color: #999; }
+  .result-green .result-label  { color: #88ffaa; }
+  .result-none  .result-label  { color: #6a5830; }
+
+  /* ---------- Info row ---------- */
+  .info-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .info-pill {
+    background: #1e1408; border: 1px solid #5a3d10;
+    border-radius: 6px; padding: 5px 12px;
+    color: #c8a855;
+  }
+  .info-pill.warn { border-color: #cc3333; color: #ff9999; }
+
+  /* ---------- Spin button ---------- */
+  .spin-btn {
+    display: inline-block;
+    padding: 12px 40px;
+    min-width: 220px;
+    width: 220px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #8b4500, #c06000);
+    border: 2px solid #f5d57a;
+    border-radius: 8px;
+    color: #fff8e8;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 20px rgba(205,160,40,0.2);
+    margin-bottom: 14px;
+  }
+  .spin-btn:hover {
+    background: linear-gradient(135deg, #a05500, #e07000);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 0 28px rgba(205,160,40,0.4);
+  }
+  .spin-btn.disabled {
+    background: #2a2010; border-color: #4a3818;
+    color: #5a4820; cursor: default;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  /* ---------- Lock bets button ---------- */
+  .lock-btn {
+    display: inline-block;
+    padding: 9px 28px;
+    min-width: 220px;
+    width: 220px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #1a3a1a, #2a5a2a);
+    border: 2px solid #4aaa4a;
+    border-radius: 8px;
+    color: #a8e8a8;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    margin-bottom: 8px;
+  }
+  .lock-btn:hover {
+    background: linear-gradient(135deg, #2a5a2a, #3a7a3a);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .lock-btn.locked {
+    background: #3a1a00; border-color: #cc7700;
+    color: #ffbb44; cursor: default;
+    pointer-events: none;
+    box-shadow: none;
+  }
+  .lock-btn.disabled {
+    background: #1a1a1a; border-color: #333;
+    color: #444; cursor: default;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  /* ---------- History ---------- */
+  .history-section { margin-bottom: 10px; }
+  .history-section h3 {
+    font-size: 11px; color: #8a7050; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .history-row {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 5px;
+  }
+  .hist-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: bold;
+  }
+  .hist-red   { background: #a81a1a; color: #fff; }
+  .hist-black { background: #141414; color: #ccc; border: 1px solid #333; }
+  .hist-green { background: #0a7a30; color: #fff; }
+
+  /* ---------- Table status ---------- */
+  .table-status {
+    margin: 0 auto 10px;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+  }
+  .table-status.found   { background: #0a2a0a; border: 1px solid #2a5a2a; color: #88cc88; }
+  .table-status.missing { background: #2a1010; border: 1px solid #6a2020; color: #cc8888; }
+</style>
+
+<style>
+  @keyframes spinWheel {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate({{:data.spin_deg}}deg); }
+  }
+</style>
+
+<div class="wheel-wrap">
+  <div class="wh-header">
+    <h1>🎡 ROULETTE WHEEL</h1>
+    <div class="subtitle">SPIN TO DECIDE</div>
+  </div>
+
+  <!-- Wheel graphic -->
+  <div class="wheel-stage {{if data.spinning}}spinning{{/if}}">
+    <div class="wheel-outer"></div>
+    <div class="wheel-segments" style="transform: rotate({{:data.spin_deg}}deg)"></div>
+    <div class="wheel-hub"></div>
+    <div class="wheel-ball"></div>
+  </div>
+
+  <!-- Table status -->
+  {{if data.has_table}}
+    <div class="table-status found">
+      ✓ Roulette table linked — {{:data.total_bets}} bet(s) · {{:data.table_total}} thalers wagered
+    </div>
+  {{else}}
+    <div class="table-status missing">
+      ✗ No roulette table within range
+    </div>
+  {{/if}}
+
+  <!-- Result display -->
+  {{if data.spinning}}
+    <div class="result-box result-none">
+      <div class="result-number">···</div>
+      <div class="result-label">SPINNING</div>
+    </div>
+  {{else}}
+    {{if data.last_result >= 0}}
+      {{if data.result_color == "green"}}
+        <div class="result-box result-green">
+          <div class="result-number">{{:data.last_result}}</div>
+          <div class="result-label">GREEN — ZERO</div>
+        </div>
+      {{else}}
+        {{if data.result_color == "red"}}
+          <div class="result-box result-red">
+            <div class="result-number">{{:data.last_result}}</div>
+            <div class="result-label">RED</div>
+          </div>
+        {{else}}
+          <div class="result-box result-black">
+            <div class="result-number">{{:data.last_result}}</div>
+            <div class="result-label">BLACK</div>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      <div class="result-box result-none">
+        <div class="result-number">–</div>
+        <div class="result-label">AWAITING FIRST SPIN</div>
+      </div>
+    {{/if}}
+  {{/if}}
+
+  <!-- Lock bets button -->
+  {{if data.spinning}}
+    <span class="lock-btn disabled">Lock Bets</span>
+  {{else data.is_ghost}}
+    <span class="lock-btn disabled">Lock Bets</span>
+  {{else}}
+    {{if !data.has_table}}
+      <span class="lock-btn disabled">Lock Bets</span>
+    {{else data.table_locked}}
+      <span class="lock-btn locked">Bets Locked</span>
+    {{else}}
+      <a href='?src={{:data.src}}&lock_bets=1' class='lock-btn'>Lock Bets</a>
+    {{/if}}
+  {{/if}}
+
+  <!-- Spin button -->
+  {{if data.spinning}}
+    <span class="spin-btn disabled">Spinning…</span>
+  {{else data.is_ghost}}
+    <span class="spin-btn disabled">Ghosts cannot spin</span>
+  {{else}}
+    {{if !data.has_table}}
+      <span class="spin-btn disabled">No Table Nearby</span>
+    {{else !data.table_locked}}
+      <span class="spin-btn disabled">Lock Bets First</span>
+    {{else}}
+      <a href='?src={{:data.src}}&spin=1' class='spin-btn'>SPIN THE WHEEL</a>
+    {{/if}}
+  {{/if}}
+
+  <!-- History -->
+  {{if data.result_history.length}}
+  <div class="history-section">
+    <h3>Recent Results</h3>
+    <div class="history-row">
+      {{for data.result_history}}
+        {{if value == 0}}
+          <div class="hist-num hist-green" title="0">0</div>
+        {{else}}
+          {{if value == 1 || value == 3 || value == 5 || value == 7 || value == 9 || value == 12 || value == 14 || value == 16 || value == 18 || value == 19 || value == 21 || value == 23 || value == 25 || value == 27 || value == 30 || value == 32 || value == 34 || value == 36}}
+            <div class="hist-num hist-red"   title="{{:value}}">{{:value}}</div>
+          {{else}}
+            <div class="hist-num hist-black" title="{{:value}}">{{:value}}</div>
+          {{/if}}
+        {{/if}}
+      {{/for}}
+    </div>
+  </div>
+  {{/if}}
+
+</div>
