@@ -114,10 +114,13 @@
 	name = "template - APC phase two"
 	template = /datum/unit_test/apc_phase_two
 
+/datum/unit_test/apc_phase_two/proc/is_apc_test_area(area/A)
+	return A?.requires_power && !A.dynamic_lighting && A.name == "\improper Test Area - Requires Power - Non-Dynamic Lighting"
+
 /datum/unit_test/apc_phase_two/proc/get_apc_test_turf()
 	for(var/turf/T in world)
 		var/area/A = get_area(T)
-		if(A?.requires_power && !A.dynamic_lighting && ispath(A.type, /area/test_area))
+		if(is_apc_test_area(A))
 			return T
 
 /datum/unit_test/apc_phase_two/proc/create_test_apc()

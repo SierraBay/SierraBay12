@@ -26,6 +26,8 @@
 	return list(/obj/unit_test_light, /obj/unit_test_heavy, /obj/unit_test_medium)
 
 
+/area/test_area
+
 /area/test_area/powered_non_dynamic_lighting
 	name = "\improper Test Area - Powered - Non-Dynamic Lighting"
 	icon_state = "green"
