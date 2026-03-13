@@ -16,6 +16,7 @@
 #include "gliding/_gliding_includes.dm"
 #include "guns/_guns_includes.dm"
 #include "machinery/_machinery_includes.dm"
+#include "machinery_benchmark/_machinery_benchmark_includes.dm"
 #include "hairs_ports/_hairs_ports_includes.dm"
 #include "hardsuits/_hardsuits_includes.dm"
 #include "sprite_accessories/_sprite_accessories_includes.dm"
