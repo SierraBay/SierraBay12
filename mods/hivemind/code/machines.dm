@@ -9,6 +9,7 @@
 	name = "strange machine"
 	icon = 'mods/hivemind/icons/hivemind_machines.dmi'
 	icon_state = "infected_machine"
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	density = TRUE
 	anchored = TRUE
 	use_power = FALSE

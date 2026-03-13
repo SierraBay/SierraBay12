@@ -27,6 +27,7 @@
 /obj/machinery/gravity_generator/main
 	name = "gravitational generator panel"
 	icon_state = "0_8"
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	idle_power_usage = 0
 	active_power_usage = 100000
 	power_channel = ENVIRON

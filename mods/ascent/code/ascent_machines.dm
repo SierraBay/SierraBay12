@@ -211,6 +211,7 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 	desc = "A tall, gleaming assemblage of advanced alien machinery. It hums and crackles with restrained power."
 	icon = 'mods/sierra_resprite/icons/r-ust.dmi'
 	icon_state = "core1"
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	density = TRUE
 	color = COLOR_PURPLE
 	var/on = TRUE

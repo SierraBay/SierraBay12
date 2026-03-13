@@ -630,6 +630,8 @@ Used for quick dress-up. Also comes with several discount
 	name = "Pod control console"
 	shuttle_tag = "Cyclopes Droppod"
 
+	skill_req = SKILL_BASIC
+
 /obj/overmap/visitable/ship/landable/merc_drop_pod
 	name = "Cyclopes Droppod"
 	shuttle = "Cyclopes Droppod"
@@ -653,10 +655,6 @@ Used for quick dress-up. Also comes with several discount
 	icon_state = "yellow"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_syndicate)
-
-/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
-	skill_req = SKILL_BASIC
-
 
 /obj/machinery/button/alternate/pod_doors_explodey
 	name = "Explode pod door"
