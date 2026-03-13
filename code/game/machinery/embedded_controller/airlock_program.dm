@@ -186,6 +186,8 @@
 		if(cycle_to_external_air)
 			signalPump(tag_pump_out_internal, 0)
 			signalPump(tag_pump_out_external, 0)
+	if(.)
+		wake_master_processing()
 
 
 
@@ -194,14 +196,14 @@
 	if(!state && !target_state)
 		if(memory["pump_status"] == "off")
 			memory["processing"] = FALSE
-			return 1
+			return PROCESS_KILL
 		else
 			signalPump(tag_airpump, 0)
 			if(cycle_to_external_air)
 				signalPump(tag_pump_out_internal, 0)
 				signalPump(tag_pump_out_external, 0)
 			memory["processing"] = FALSE
-			return 1
+			return TRUE
 
 	if(!state) //Idle
 		if(target_state)
@@ -297,7 +299,7 @@
 
 	memory["processing"] = (state != target_state)
 
-	return 1
+	return (memory["processing"] || memory["pump_status"] != "off") ? TRUE : PROCESS_KILL
 
 //these are here so that other types don't have to make so many assuptions about our implementation
 
@@ -307,12 +309,14 @@
 	memory["purge"] = cycle_to_external_air
 	playsound(master, 'sound/machines/airlockin.ogg', 50)
 	shutAlarm()
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/airlock/proc/begin_dock_cycle()
 	state = STATE_IDLE
 	target_state = TARGET_INOPEN
 	playsound(master, 'sound/machines/airlockin.ogg', 50)
 	shutAlarm()
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/airlock/proc/begin_cycle_out()
 	state = STATE_IDLE
@@ -320,6 +324,7 @@
 	memory["purge"] = cycle_to_external_air
 	playsound(master, 'sound/machines/airlockout.ogg', 50)
 	shutAlarm()
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/airlock/proc/close_doors()
 	toggleDoor(memory["interior_status"], tag_interior_door, 1, "close")
@@ -328,6 +333,7 @@
 /datum/computer/file/embedded_program/airlock/proc/stop_cycling()
 	state = STATE_IDLE
 	target_state = TARGET_NONE
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/airlock/proc/done_cycling()
 	return (state == STATE_IDLE && target_state == TARGET_NONE)

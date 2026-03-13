@@ -273,3 +273,80 @@
 	pass("Docking override changes queue controller icon refreshes immediately.")
 	qdel(controller)
 	return 1
+
+/datum/unit_test/atmo_control/embedded_controller_sleeps_idle_and_wakes_on_signal
+	name = "MACHINE: Embedded controllers sleep idle and wake on signal-driven cycles"
+
+/datum/unit_test/atmo_control/embedded_controller_sleeps_idle_and_wakes_on_signal/start_test()
+	var/turf/T = get_safe_turf()
+	if(!T)
+		fail("Could not find a safe turf for embedded controller wake test.")
+		return 1
+
+	var/obj/machinery/embedded_controller/radio/airlock/airlock_controller/controller = new(T)
+	if(!controller)
+		fail("Failed to create an embedded airlock controller.")
+		return 1
+	if(controller.processing_flags & MACHINERY_PROCESS_SELF)
+		fail("Fresh embedded controller should not self-process while idle.")
+		qdel(controller)
+		return 1
+
+	controller.id_tag = "unit_airlock_controller"
+	var/datum/computer/file/embedded_program/airlock/program = controller.program
+	program.id_tag = controller.id_tag
+
+	var/datum/signal/signal = new
+	signal.data = list("tag" = controller.id_tag, "command" = "cycle_exterior")
+	controller.receive_signal(signal)
+
+	if(!(controller.processing_flags & MACHINERY_PROCESS_SELF))
+		fail("Embedded controller should wake self-processing when it receives a matching radio command.")
+		qdel(controller)
+		return 1
+	if(controller.Process() == PROCESS_KILL)
+		fail("Active airlock cycles should keep the controller processing until the cycle completes.")
+		qdel(controller)
+		return 1
+
+	pass("Idle embedded controllers sleep until an incoming signal wakes an active cycle.")
+	qdel(controller)
+	return 1
+
+/datum/unit_test/atmo_control/embedded_controller_deduplicates_identical_radio_commands
+	name = "MACHINE: Embedded controller radio output deduplicates identical commands"
+
+/datum/unit_test/atmo_control/embedded_controller_deduplicates_identical_radio_commands/start_test()
+	var/turf/T = get_safe_turf()
+	if(!T)
+		fail("Could not find a safe turf for embedded controller radio dedupe test.")
+		return 1
+
+	var/obj/machinery/embedded_controller/radio/airlock/airlock_controller/controller = new(T)
+	if(!controller)
+		fail("Failed to create an embedded airlock controller for radio dedupe test.")
+		return 1
+
+	var/datum/radio_frequency/unit_test_capture/radio = new
+	controller.radio_connection = radio
+
+	var/datum/computer/file/embedded_program/airlock/program = controller.program
+	program.signalDoor("unit_test_outer", "open")
+	program.signalDoor("unit_test_outer", "open")
+	if(radio.post_count != 1)
+		fail("Identical embedded controller commands should be deduplicated before reaching the radio bus.")
+		qdel(controller)
+		qdel(radio)
+		return 1
+
+	program.signalDoor("unit_test_outer", "close")
+	if(radio.post_count != 2)
+		fail("A changed command payload should bypass embedded controller radio deduplication.")
+		qdel(controller)
+		qdel(radio)
+		return 1
+
+	pass("Embedded controllers suppress duplicate outbound radio commands while still sending state transitions.")
+	qdel(controller)
+	qdel(radio)
+	return 1

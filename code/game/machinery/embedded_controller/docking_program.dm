@@ -197,6 +197,7 @@
 		reset()
 	if (control_mode == MODE_SERVER && dock_state == STATE_UNDOCKED)
 		control_mode = MODE_NONE
+	return (dock_state == STATE_DOCKING || dock_state == STATE_UNDOCKING || response_sent || resend_counter > 0) ? TRUE : PROCESS_KILL
 
 
 /datum/computer/file/embedded_program/docking/proc/initiate_docking(target)
@@ -207,6 +208,7 @@
 	control_mode = MODE_CLIENT
 
 	send_docking_command(tag_target, "request_dock")
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/docking/proc/initiate_undocking()
 	if (dock_state != STATE_DOCKED || control_mode != MODE_CLIENT)		//must be docked and must be client to start undocking
@@ -219,6 +221,7 @@
 		prepare_for_undocking()
 
 	send_docking_command(tag_target, "request_undock")
+	wake_master_processing()
 
 //tell the docking port to start getting ready for docking - e.g. pressurize
 /datum/computer/file/embedded_program/docking/proc/prepare_for_docking()
@@ -250,6 +253,7 @@
 	override_enabled = 1
 	var/obj/machinery/embedded_controller/controller = master
 	controller?.queue_icon_update()
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/docking/proc/disable_override()
 	if(!override_enabled)
@@ -257,6 +261,7 @@
 	override_enabled = 0
 	var/obj/machinery/embedded_controller/controller = master
 	controller?.queue_icon_update()
+	wake_master_processing()
 
 /datum/computer/file/embedded_program/docking/proc/reset()
 	dock_state = STATE_UNDOCKED

@@ -6,6 +6,9 @@
 	var/on = 1
 	var/last_icon_processing // cached for icon update optimization
 	var/last_icon_pump_status // cached for icon update optimization
+	var/list/outbound_signal_cooldowns = list()
+
+	init_flags = 0
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
@@ -17,14 +20,29 @@
 		qdel(program) // the program will clear the ref in its Destroy
 	return ..()
 
-/obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
+/obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line, allow_repeat = FALSE)
 	return 0
+
+/obj/machinery/embedded_controller/proc/wake_processing()
+	if(!(processing_flags & MACHINERY_PROCESS_SELF))
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/embedded_controller/proc/should_send_outbound_signal(datum/signal/signal, comm_line, allow_repeat = FALSE)
+	if(allow_repeat || !signal)
+		return TRUE
+	var/key = "[comm_line]|[json_encode(signal.data)]"
+	var/last_sent = outbound_signal_cooldowns[key]
+	if(last_sent && world.time < last_sent + SecondsToTicks(MESSAGE_RESEND_TIME))
+		return FALSE
+	outbound_signal_cooldowns[key] = world.time
+	return TRUE
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
 	if(!signal || signal.encryption) return
 
 	if(program)
 		program.receive_signal(signal, receive_method, receive_param)
+		wake_processing()
 			//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
@@ -33,11 +51,15 @@
 	if(usr)
 		usr.set_machine(src)
 	if(program)
-		return program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		. = program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		if(.)
+			wake_processing()
+		return .
 
 /obj/machinery/embedded_controller/Process()
+	var/result = PROCESS_KILL
 	if(program)
-		program.process()
+		result = program.process()
 		// Only update icon when displayed state actually changes
 		var/current_processing = program.memory["processing"]
 		var/current_pump = program.memory["pump_status"]
@@ -45,6 +67,7 @@
 			last_icon_processing = current_processing
 			last_icon_pump_status = current_pump
 			queue_icon_update()
+	return result
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
 	ui_interact(user)
@@ -91,8 +114,11 @@
 		else
 			AddOverlays(image(icon, "screen_fill"))
 
-/obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal, radio_filter = null)
+/obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal, radio_filter = null, allow_repeat = FALSE)
 	signal.transmission_method = TRANSMISSION_RADIO
+	if(!should_send_outbound_signal(signal, radio_filter, allow_repeat))
+		qdel(signal)
+		return FALSE
 	if(radio_connection)
 		return radio_connection.post_signal(src, signal, radio_filter, AIRLOCK_CONTROL_RANGE)
 	else

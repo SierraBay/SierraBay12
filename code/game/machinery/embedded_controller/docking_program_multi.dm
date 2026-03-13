@@ -179,7 +179,7 @@
 			docking_enabled = 0
 
 /datum/computer/file/embedded_program/airlock/multi_docking/process()
-	..()
+	var/airlock_result = ..()
 
 	if (docking_enabled && !response_sent)
 
@@ -192,6 +192,7 @@
 				if (ready_for_undocking())
 					send_signal_to_master("ready_for_undocking")
 					response_sent = 1
+	return (airlock_result == PROCESS_KILL && !(docking_enabled && !response_sent)) ? PROCESS_KILL : TRUE
 
 //checks if we are ready for docking
 /datum/computer/file/embedded_program/airlock/multi_docking/proc/ready_for_docking()

@@ -24,10 +24,13 @@
 	return
 
 /datum/computer/file/embedded_program/proc/process()
-	return
+	return PROCESS_KILL
 
-/datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)
+/datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line, allow_repeat = FALSE)
 	if(master)
-		master.post_signal(signal, comm_line)
+		master.post_signal(signal, comm_line, allow_repeat)
 	else
 		qdel(signal)
+
+/datum/computer/file/embedded_program/proc/wake_master_processing()
+	master?.wake_processing()
