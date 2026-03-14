@@ -26,15 +26,24 @@
 	var/weld_power_use = 2300	// power used per point of brute damage repaired. 2.3 kW ~ about the same power usage of a handheld arc welder
 	var/wire_power_use = 500	// power used per point of burn damage repaired.
 
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = INIT_MACHINERY_NONE
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = MACHINERY_TICKRATE SECONDS
 
 /obj/machinery/recharge_station/Initialize()
 	. = ..()
 	update_icon()
+	refresh_processing_state()
+
+/obj/machinery/recharge_station/proc/refresh_processing_state()
+	if(occupant)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/recharge_station/Process()
 	if(inoperable())
-		return
+		return TRUE
 
 	//First, recharge/repair/etc the occupant
 	if(occupant)
@@ -42,6 +51,9 @@
 
 	if(overlay_state() != last_overlay_state)
 		update_icon()
+	if(!occupant)
+		refresh_processing_state()
+		return PROCESS_KILL
 
 //Processes the occupant, drawing from the internal power cell if needed.
 /obj/machinery/recharge_station/proc/process_occupant()
@@ -187,6 +199,7 @@
 	M.forceMove(src)
 	occupant = M
 	update_icon()
+	refresh_processing_state()
 	return 1
 
 /obj/machinery/recharge_station/proc/hascell(mob/M)
@@ -211,6 +224,11 @@
 	occupant.reset_view()
 	occupant = null
 	update_icon()
+	refresh_processing_state()
+
+/obj/machinery/recharge_station/power_change()
+	. = ..()
+	refresh_processing_state()
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set category = "Object"

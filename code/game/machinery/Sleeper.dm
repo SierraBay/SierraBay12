@@ -31,13 +31,25 @@
 	idle_power_usage = 15
 	active_power_usage = 1 KILOWATTS //builtin health analyzer, dialysis machine, injectors.
 
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = INIT_MACHINERY_NONE
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = MACHINERY_TICKRATE SECONDS
 
 /obj/machinery/sleeper/Initialize(mapload, d = 0, populate_parts = TRUE)
 	. = ..()
 	if(populate_parts)
 		beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
 	update_icon()
+	refresh_processing_state()
+
+/obj/machinery/sleeper/proc/should_keep_processing()
+	return occupant && (filtering || pump || stasis > 1)
+
+/obj/machinery/sleeper/proc/refresh_processing_state()
+	if(should_keep_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/sleeper/examine(mob/user, distance)
 	. = ..()
@@ -52,7 +64,7 @@
 
 /obj/machinery/sleeper/Process()
 	if(inoperable())
-		return
+		return TRUE
 
 	if(filtering > 0)
 		if(beaker)
@@ -79,6 +91,9 @@
 		occupant.SetStasis(stasis)
 		if (occupant.stat == UNCONSCIOUS && prob(2))
 			to_chat(occupant, SPAN_NOTICE(SPAN_BOLD("... [pick("comfy", "feels slow", "warm")] ...")))
+	if(!should_keep_processing())
+		refresh_processing_state()
+		return PROCESS_KILL
 
 /obj/machinery/sleeper/on_update_icon()
 	ClearOverlays()
@@ -167,6 +182,7 @@
 		if(stasis != nstasis && (nstasis in stasis_settings))
 			stasis = text2num(href_list["stasis"])
 			change_power_consumption(initial(active_power_usage) + stasis_power * (stasis-1), POWER_USE_ACTIVE)
+			refresh_processing_state()
 			return TOPIC_REFRESH
 
 /obj/machinery/sleeper/state_transition(singleton/machine_construction/default/new_state)
@@ -224,16 +240,20 @@
 /obj/machinery/sleeper/proc/toggle_filter()
 	if(!occupant || !beaker)
 		filtering = 0
+		refresh_processing_state()
 		return
 	to_chat(occupant, SPAN_WARNING("You feel like your blood is being sucked away."))
 	filtering = !filtering
+	refresh_processing_state()
 
 /obj/machinery/sleeper/proc/toggle_pump()
 	if(!occupant || !beaker)
 		pump = 0
+		refresh_processing_state()
 		return
 	to_chat(occupant, SPAN_WARNING("You feel a tube jammed down your throat."))
 	pump = !pump
+	refresh_processing_state()
 
 /obj/machinery/sleeper/proc/go_in(mob/target, mob/user)
 	if (!target)
@@ -278,6 +298,7 @@
 	if(!occupant)
 		SetName(initial(name))
 		update_use_power(POWER_USE_IDLE)
+		refresh_processing_state()
 		return
 	occupant.forceMove(src)
 	occupant.stop_pulling()
@@ -286,6 +307,7 @@
 		occupant.client.eye = src
 	SetName("[name] ([occupant])")
 	update_use_power(POWER_USE_ACTIVE)
+	refresh_processing_state()
 
 /obj/machinery/sleeper/proc/remove_beaker()
 	if(beaker)
@@ -293,6 +315,7 @@
 		beaker = null
 		toggle_filter()
 		toggle_pump()
+	refresh_processing_state()
 
 /obj/machinery/sleeper/proc/inject_chemical(mob/living/user, chemical_name, amount)
 	if(inoperable())

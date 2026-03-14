@@ -323,6 +323,85 @@
 	qdel(apc)
 	return 1
 
+/datum/unit_test/apc_phase_two/battery_stays_processing_when_switching_to_local_power
+	name = "POWER: Battery stays processing when it becomes the active local source"
+
+/datum/unit_test/apc_phase_two/battery_stays_processing_when_switching_to_local_power/start_test()
+	var/obj/machinery/power/apc/apc = create_test_apc()
+	if(!apc)
+		return 1
+	var/obj/machinery/power/terminal/unit_test/mock_terminal = install_mock_terminal(apc, 0, 0)
+	if(!mock_terminal)
+		qdel(apc)
+		return 1
+	var/obj/item/stock_parts/power/battery/battery = apc.cached_battery_part
+	if(!battery)
+		fail("APC is missing its battery component for local-power takeover testing.")
+		qdel(apc)
+		return 1
+
+	battery.stop_processing(apc)
+	var/process_result = battery.machine_process(apc)
+
+	if(process_result == PROCESS_KILL)
+		fail("Battery should keep processing after it takes over as the APC's active local source.")
+		qdel(apc)
+		return 1
+	if(!(battery.status & PART_STAT_ACTIVE))
+		fail("Battery should mark itself active after taking over APC power delivery.")
+		qdel(apc)
+		return 1
+	if(!(battery.status & PART_STAT_PROCESSING))
+		fail("Battery should remain in processing while it is actively discharging into the APC.")
+		qdel(apc)
+		return 1
+	if(apc.power_channel != LOCAL)
+		fail("APC should switch to the LOCAL power channel after the battery takes over.")
+		qdel(apc)
+		return 1
+
+	pass("Battery-backed APCs keep processing after switching over to local power.")
+	qdel(apc)
+	return 1
+
+/datum/unit_test/apc_phase_two/battery_charge_wait_uses_machinery_ticks
+	name = "POWER: Battery charge wait is converted from machinery ticks to deciseconds"
+
+/datum/unit_test/apc_phase_two/battery_charge_wait_uses_machinery_ticks/start_test()
+	var/obj/machinery/power/apc/apc = create_test_apc()
+	if(!apc)
+		return 1
+	var/obj/machinery/power/terminal/unit_test/mock_terminal = install_mock_terminal(apc, 100000, 100000)
+	if(!mock_terminal)
+		qdel(apc)
+		return 1
+	var/obj/item/stock_parts/power/battery/battery = apc.cached_battery_part
+	var/obj/item/cell/cell = apc.get_cell()
+	if(!battery || !cell)
+		fail("APC is missing its battery or cell for charge-wait testing.")
+		qdel(apc)
+		return 1
+
+	cell.charge = max(0, cell.maxcharge - battery.charge_rate)
+	battery.not_needed(apc)
+	battery.charge_wait_counter = initial(battery.charge_wait_counter)
+	var/expected_due = world.time + initial(battery.charge_wait_counter) * (MACHINERY_TICKRATE SECONDS)
+
+	var/process_result = battery.machine_process(apc)
+
+	if(process_result != PROCESS_KILL)
+		fail("Battery should sleep instead of busy-processing during its charge wait countdown.")
+		qdel(apc)
+		return 1
+	if(battery.processing_wake_due != expected_due)
+		fail("Battery charge wait should respect machinery tick length. Expected wake at [expected_due], got [battery.processing_wake_due].")
+		qdel(apc)
+		return 1
+
+	pass("Battery charge waits now preserve the original machinery-tick delay.")
+	qdel(apc)
+	return 1
+
 /datum/unit_test/solar_generation_moves_to_controller
 	name = "POWER: Solar generation is controller-batched without idle panel processing"
 

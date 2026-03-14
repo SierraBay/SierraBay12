@@ -409,7 +409,7 @@
 	SSmachines.Recover()
 
 	if(SSmachines.next_machine_wake != SSmachines.get_machine_sleep_wake_time(fast))
-		fail("Recover should rebuild the earliest wake deadline from timed sleepers.")
+		fail("Recover should rebuild the earliest wake deadline from timed sleepers. Expected: [SSmachines.get_machine_sleep_wake_time(fast)], Got: [SSmachines.next_machine_wake]. World time: [world.time]")
 		qdel(slow)
 		qdel(fast)
 		return 1

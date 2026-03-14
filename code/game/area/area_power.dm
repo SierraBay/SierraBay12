@@ -80,7 +80,7 @@
  */
 /area/proc/power_use_change(old_amount, new_amount, chan)
 	use_power(new_amount - old_amount, chan)
-	if(old_amount != new_amount)
+	if(old_amount != new_amount && !apc?.usage_dirty)
 		SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, FALSE)
 
 /**
@@ -99,7 +99,7 @@
 			oneoff_light += amount
 		if(ENVIRON)
 			oneoff_environ += amount
-	if(amount)
+	if(amount && !apc?.usage_dirty)
 		SEND_SIGNAL(src, COMSIG_AREA_POWER_USAGE_CHANGED, chan, TRUE)
 
 /// Recomputes the continued power usage; can be used for testing or error recovery, but is not called under normal conditions.

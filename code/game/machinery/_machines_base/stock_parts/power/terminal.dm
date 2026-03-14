@@ -105,9 +105,7 @@
 
 	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, PROC_REF(machine_moved), get_area(src))
 	set_status(machine, PART_STAT_CONNECTED)
-	machine.power_change()
-	if(machine_process(machine) != PROCESS_KILL)
-		start_processing(machine)
+	start_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/machine_moved(obj/machinery/machine, turf/old_loc, turf/new_loc)
 	if(!terminal)
@@ -123,8 +121,8 @@
 		return
 	var/obj/machinery/power/terminal/new_terminal = new (get_step(machine, terminal_dir))
 	new_terminal.set_dir(terminal_dir ? GLOB.reverse_dir[terminal_dir] : machine.dir)
-	new_terminal.connect_to_network()
 	set_terminal(machine, new_terminal)
+	new_terminal.connect_to_network()
 
 /obj/item/stock_parts/power/terminal/proc/unset_terminal(obj/machinery/power/old_terminal, obj/machinery/machine)
 	remove_extension(src, /datum/extension/event_registration/shuttle_stationary)

@@ -187,7 +187,7 @@
 		/obj/item/storage/internal
 	)
 
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = INIT_MACHINERY_NONE
 
 /obj/machinery/cryopod/robot
 	name = "robotic storage unit"
@@ -213,6 +213,7 @@
 	occupied_icon_state = "redpod1"
 	var/launched = 0
 	var/datum/gas_mixture/airtank
+	init_flags = INIT_MACHINERY_START_PROCESSING
 
 /obj/machinery/cryopod/lifepod/Initialize()
 	. = ..()
@@ -267,6 +268,13 @@
 /obj/machinery/cryopod/Initialize()
 	. = ..()
 	find_control_computer()
+	refresh_processing_state()
+
+/obj/machinery/cryopod/proc/refresh_processing_state()
+	if(occupant)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent=0)
 	// Workaround for http://www.byond.com/forum/?post=2007448
@@ -304,15 +312,25 @@
 
 //Lifted from Unity stasis.dm and refactored.
 /obj/machinery/cryopod/Process()
+	if(!occupant)
+		refresh_processing_state()
+		return PROCESS_KILL
+
 	if(occupant)
-		if(applies_stasis && iscarbon(occupant) && (world.time > time_entered + 20 SECONDS))
+		var/stasis_time = time_entered + 20 SECONDS
+		if(applies_stasis && iscarbon(occupant) && (world.time > stasis_time))
 			var/mob/living/carbon/C = occupant
 			C.SetStasis(2)
+		else if(applies_stasis && iscarbon(occupant) && world.time <= stasis_time)
+			request_process_in(stasis_time - world.time)
+			return TRUE
 
 		//Allow a ten minute gap between entering the pod and actually despawning.
 		// Only provide the gap if the occupant hasn't ghosted
 		if ((world.time - time_entered < time_till_despawn) && (occupant.ckey))
-			return
+			if(!(applies_stasis && iscarbon(occupant) && (world.time > stasis_time)))
+				request_process_in(time_till_despawn - (world.time - time_entered))
+			return TRUE
 
 		if(!occupant.client && occupant.stat<2) //Occupant is living and has no client.
 			if(!control_computer)
@@ -560,6 +578,7 @@
 	src.occupant = occupant
 	if(!occupant)
 		SetName(initial(name))
+		refresh_processing_state()
 		return
 
 	occupant.stop_pulling()
@@ -574,6 +593,7 @@
 
 	SetName("[name] ([occupant])")
 	icon_state = occupied_icon_state
+	refresh_processing_state()
 
 /obj/machinery/cryopod/relaymove(mob/user)
 	go_out()

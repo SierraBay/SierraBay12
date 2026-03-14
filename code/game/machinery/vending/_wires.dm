@@ -61,6 +61,7 @@
 				vendor.scan_id = !initial(vendor.scan_id)
 			else
 				vendor.scan_id = !vendor.scan_id
+	vendor.refresh_processing_state()
 
 
 /datum/wires/vending/UpdateCut(index, mended)
@@ -76,6 +77,7 @@
 			vendor.scan_id = initial(vendor.scan_id)
 			if (!mended)
 				vendor.scan_id = !vendor.scan_id
+	vendor.refresh_processing_state()
 
 
 /// Returns truthy when the throw products wire is cut.

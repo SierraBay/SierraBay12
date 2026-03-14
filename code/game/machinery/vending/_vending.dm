@@ -96,7 +96,9 @@
 	var/light_outer_range_on = 2
 
 
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = INIT_MACHINERY_NONE
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = MACHINERY_TICKRATE SECONDS
 
 /obj/machinery/vending/Destroy()
 	vendor_wires = null
@@ -118,6 +120,22 @@
 		minrandom = maxrandom
 	build_inventory(populate_parts)
 	update_icon()
+	refresh_processing_state()
+
+/obj/machinery/vending/proc/should_keep_processing()
+	if(seconds_electrified > 0)
+		return TRUE
+	if(shoot_inventory)
+		return TRUE
+	if(!shut_up && length(slogan_list))
+		return TRUE
+	return FALSE
+
+/obj/machinery/vending/proc/refresh_processing_state()
+	if(should_keep_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/vending/examine(mob/user)
 	. = ..()
@@ -127,9 +145,11 @@
 
 /obj/machinery/vending/Process()
 	if (inoperable())
-		return
+		refresh_processing_state()
+		return PROCESS_KILL
 	if (!active)
-		return
+		refresh_processing_state()
+		return PROCESS_KILL
 	if (seconds_electrified > 0)
 		seconds_electrified--
 	if (!shut_up && prob(5) && length(slogan_list) && last_slogan + slogan_delay <= world.time)
@@ -138,6 +158,9 @@
 		last_slogan = world.time
 	if (shoot_inventory && prob(shooting_chance))
 		throw_item()
+	refresh_processing_state()
+	if(!should_keep_processing())
+		return PROCESS_KILL
 
 /obj/machinery/vending/post_health_change(health_mod, prior_health, damage_type)
 	. = ..()
@@ -151,6 +174,7 @@
 			vendor_wires.RandomCut()
 		else if (damage_percentage >= 75 && initial_damage_percentage < 75 && prob(10))
 			malfunction()
+	refresh_processing_state()
 
 /obj/machinery/vending/powered()
 	return anchored && ..()
@@ -199,6 +223,7 @@
 	UpdateShowContraband(TRUE)
 	SSnano.update_uis(src)
 	to_chat(user, "You short out the product lock on \the [src].")
+	refresh_processing_state()
 	return 1
 
 
@@ -280,14 +305,17 @@
 		if (prob(10))
 			user.put_in_hands(item)
 			to_chat(user, SPAN_NOTICE("You successfully pull \the [item] out before \the [src] could swallow it."))
+			refresh_processing_state()
 			return TRUE
 		else
 			to_chat(user, SPAN_NOTICE("You weren't able to pull \the [item] out fast enough, \the [src] ate it, string and all."))
 			qdel(item)
+			refresh_processing_state()
 			return TRUE
 	else
 		to_chat(user, SPAN_NOTICE("You hear a loud clink as \the [item] is swallowed by \the [src]"))
 		qdel(item)
+		refresh_processing_state()
 		return TRUE
 
 
@@ -391,6 +419,7 @@
 		return TOPIC_REFRESH
 	if (href_list["togglevoice"] && panel_open)
 		shut_up = !shut_up
+		refresh_processing_state()
 		return TOPIC_HANDLED
 
 

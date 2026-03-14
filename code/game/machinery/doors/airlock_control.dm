@@ -178,6 +178,8 @@
 	var/previousPressure
 
 	init_flags = INIT_MACHINERY_START_PROCESSING
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 40
 
 /obj/machinery/airlock_sensor/on_update_icon()
 	if(on)

@@ -102,8 +102,7 @@
 	if((!machine.is_powered()) && cell && cell.fully_charged())
 		notify_apc_state(machine, previous_charge)
 		machine.power_change()
-		stop_processing(machine)
-		return PROCESS_KILL // This suggests that we should be powering the machine instead, so let's try that
+		return TRUE // This suggests that we should be powering the machine instead, so let's try that
 
 	// try and recharge - check cheap conditions before get_area
 	if(!can_charge || !cell || cell.fully_charged())
@@ -112,14 +111,14 @@
 		stop_processing(machine)
 		return PROCESS_KILL
 	var/area/A = get_area(machine)
-	if(!A.powered(charge_channel))
+	if(!A || !A.powered(charge_channel))
 		charge_wait_counter = initial(charge_wait_counter)
 		notify_apc_state(machine, previous_charge)
-		schedule_processing_wake(machine, initial(charge_wait_counter))
+		schedule_processing_wake(machine, initial(charge_wait_counter) * (MACHINERY_TICKRATE SECONDS))
 		return PROCESS_KILL
 	if(charge_wait_counter > 0)
 		notify_apc_state(machine, previous_charge)
-		schedule_processing_wake(machine, charge_wait_counter)
+		schedule_processing_wake(machine, charge_wait_counter * (MACHINERY_TICKRATE SECONDS))
 		charge_wait_counter = 0
 		return PROCESS_KILL
 	var/give = cell.give(charge_rate) / CELLRATE

@@ -384,8 +384,12 @@
 
 /// Sets the light's `on` state, if there's a functional light bulb installed.
 /obj/machinery/light/proc/seton(state)
-	on = (state && get_status() == LIGHT_OK)
+	var/new_on = (state && get_status() == LIGHT_OK)
+	if(on == new_on)
+		return FALSE
+	on = new_on
 	queue_icon_update()
+	return TRUE
 
 /obj/machinery/light/examine(mob/user)
 	. = ..()

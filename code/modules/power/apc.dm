@@ -366,16 +366,23 @@
 		RegisterSignal(registered_area_usage, COMSIG_AREA_POWER_USAGE_CHANGED, PROC_REF(on_area_power_usage_changed))
 
 /obj/machinery/power/apc/proc/queue_apc_recheck(recheck_usage = FALSE, recheck_channels = FALSE, recheck_status = FALSE)
-	if(recheck_usage)
+	var/should_wake = !(processing_flags & MACHINERY_PROCESS_SELF)
+	if(recheck_usage && !usage_dirty)
 		usage_dirty = TRUE
-	if(recheck_channels)
+		should_wake = TRUE
+	if(recheck_channels && !channel_dirty)
 		channel_dirty = TRUE
-	if(recheck_status)
+		should_wake = TRUE
+	if(recheck_status && !status_dirty)
 		status_dirty = TRUE
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		should_wake = TRUE
+	if(should_wake)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/power/apc/proc/on_area_power_usage_changed(area/source, chan, is_oneoff)
 	SIGNAL_HANDLER
+	if(usage_dirty)
+		return
 	queue_apc_recheck(TRUE, FALSE, FALSE)
 
 /obj/machinery/power/apc/proc/has_auto_channels()
@@ -466,7 +473,10 @@
 	return FALSE
 
 /obj/machinery/power/apc/proc/observe_terminal_component(avail, excess)
-	main_status = get_external_power_bucket(avail, excess)
+	var/new_status = get_external_power_bucket(avail, excess)
+	if(main_status == new_status && !status_dirty)
+		return
+	main_status = new_status
 	status_dirty = FALSE
 
 /obj/machinery/power/apc/proc/observe_battery_component(previous_charge)
@@ -1076,24 +1086,40 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
+	var/power_changed = FALSE
 	if(operating && !shorted && !failure_timer && !MACHINE_IS_BROKEN(src) && !GET_FLAGS(stat, MACHINE_STAT_MAINT))
 
 		//prevent unnecessary updates to emergency lighting
 		var/new_power_light = (lighting >= POWERCHAN_ON)
 		if(area.power_light != new_power_light)
 			area.power_light = new_power_light
+			power_changed = TRUE
 			area.set_emergency_lighting(lighting == POWERCHAN_OFF_AUTO) //if lights go auto-off, emergency lights go on
 
-		area.power_equip = (equipment >= POWERCHAN_ON)
-		area.power_environ = (environ >= POWERCHAN_ON)
-	else
-		area.power_light = 0
-		area.power_equip = 0
-		area.power_environ = 0
+		var/new_power_equip = (equipment >= POWERCHAN_ON)
+		if(area.power_equip != new_power_equip)
+			area.power_equip = new_power_equip
+			power_changed = TRUE
 
-	suppress_self_power_change_dirty = TRUE
-	area.power_change()
-	suppress_self_power_change_dirty = FALSE
+		var/new_power_environ = (environ >= POWERCHAN_ON)
+		if(area.power_environ != new_power_environ)
+			area.power_environ = new_power_environ
+			power_changed = TRUE
+	else
+		if(area.power_light)
+			area.power_light = 0
+			power_changed = TRUE
+		if(area.power_equip)
+			area.power_equip = 0
+			power_changed = TRUE
+		if(area.power_environ)
+			area.power_environ = 0
+			power_changed = TRUE
+
+	if(power_changed)
+		suppress_self_power_change_dirty = TRUE
+		area.power_change()
+		suppress_self_power_change_dirty = FALSE
 
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)

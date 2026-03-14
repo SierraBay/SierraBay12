@@ -18,11 +18,20 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-	init_flags = INIT_MACHINERY_START_PROCESSING
+	init_flags = INIT_MACHINERY_NONE
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = MACHINERY_TICKRATE SECONDS
 
 /obj/machinery/recharger/Initialize()
 	. = ..()
 	RefreshParts()
+	refresh_processing_state()
+
+/obj/machinery/recharger/proc/refresh_processing_state()
+	if(charging)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/SP in component_parts)
@@ -55,6 +64,7 @@
 			G.forceMove(src)
 			charging = G
 			update_icon()
+			refresh_processing_state()
 			return TRUE
 
 	if (portable && isWrench(G))
@@ -74,17 +84,20 @@
 		user.put_in_hands(charging)
 		charging = null
 		update_icon()
+		refresh_processing_state()
 		return TRUE
 
 /obj/machinery/recharger/Process()
 	if(inoperable() || !anchored)
 		update_use_power(POWER_USE_OFF)
 		icon_state = icon_state_idle
-		return
+		return TRUE
 
 	if(!charging)
 		update_use_power(POWER_USE_IDLE)
 		icon_state = icon_state_idle
+		refresh_processing_state()
+		return PROCESS_KILL
 	else
 		var/obj/item/cell/C = charging.get_cell()
 		if(istype(C))
@@ -95,6 +108,13 @@
 			else
 				icon_state = icon_state_charged
 				update_use_power(POWER_USE_IDLE)
+		else
+			icon_state = icon_state_idle
+			update_use_power(POWER_USE_IDLE)
+
+/obj/machinery/recharger/power_change()
+	. = ..()
+	refresh_processing_state()
 
 /obj/machinery/recharger/emp_act(severity)
 	if(inoperable() || !anchored)

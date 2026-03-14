@@ -63,6 +63,8 @@
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
 	init_flags = INIT_MACHINERY_START_PROCESSING
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 40
 
 /obj/machinery/porta_turret/crescent
 	enabled = 0
