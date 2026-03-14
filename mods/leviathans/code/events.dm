@@ -11,14 +11,14 @@
 		/obj/overmap/event/leviathan/swarm
 	)
 	var/spawn_radius = 5 // Минимум в 5 квадратах от Сьерры
-	announceWhen = 200
+	announceWhen = 150
 
 /datum/event/leviathan_spawn/setup()
 	return
 
 
 /datum/event/leviathan_spawn/announce()
-	command_announcement.Announce("Бортовые сенсоры зафиксировали неопознанную сигнатуру. Командному персоналу рекомендуется идентифицировать сигнатуру и определить враждебность объекта, отозвать все исследовательские миссии во избежание потери корпоративной собственности и минимизировать убытки.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
+	command_announcement.Announce("Бортовые сенсоры зафиксировали неопознанную сигнатурув этом секторе. Командному персоналу рекомендуется идентифицировать сигнатуру и определить враждебность объекта, отозвать все исследовательские миссии во избежание потери корпоративной собственности и минимизировать убытки.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
 
 /datum/event/leviathan_spawn/start()
 	if(!length(leviathan_types))

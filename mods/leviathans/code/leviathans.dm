@@ -33,6 +33,8 @@
 	var/weakref/healing_target_ref = null // Зона, где хилится левиафан
 	var/last_heal_time = 0
 	var/base_speed = 0 // Временный буфер скорости
+	var/heal_min = 5 // 30 в минуту
+	var/heal_max = 8 // 50 в минуту
 
 /obj/overmap/event/leviathan/Initialize(seed)
 	. = ..(seed)
@@ -79,7 +81,7 @@
 	..()
 
 /obj/overmap/event/leviathan/proc/handle_healing()
-	if(!is_healing && health <= max_health * healing_threshold)
+	if(!is_healing && (health <= max_health * healing_threshold || !needs_healing_location()))
 		is_healing = TRUE
 		healing_target_ref = null
 		// Если мало ХП, уносим ноги/щупальца/лапы
@@ -100,7 +102,7 @@
 	if(world.time < last_heal_time + 10 SECONDS)
 		return
 
-	var/heal_amount = rand(5, 8) // ~30-50 HP в минуту
+	var/heal_amount = rand(heal_min, heal_max)
 	health = min(health + heal_amount, max_health)
 	last_heal_time = world.time
 

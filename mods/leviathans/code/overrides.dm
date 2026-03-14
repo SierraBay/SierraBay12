@@ -1,6 +1,10 @@
 /obj/machinery/computer/ship/disperser
 	var/last_charge_type_path
 
+/obj/meteor/drone_pod/Initialize()
+	. = ..()
+	GLOB.meteor_list -= src
+
 // Overrides the OFD's default event destruction behavior
 /obj/machinery/computer/ship/disperser/fire(mob/user)
 	var/obj/structure/ship_munition/disperser_charge/C = get_charge()

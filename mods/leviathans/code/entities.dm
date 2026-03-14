@@ -2,11 +2,13 @@
 	name = "Pulsar Medusa"
 	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
 	health = 1000
-	leviathan_speed = 1 / (60 SECONDS)
+	leviathan_speed = 1 / (30 SECONDS)
 	weaknesses = OVERMAP_WEAKNESS_EMP
 	damage_cooldown = 30 SECONDS
 	events = list(/datum/event/electrical_storm)
 	color = COLOR_PINK
+	heal_min = 5
+	heal_max = 10
 
 /obj/overmap/event/leviathan/medusa/get_damage_multiplier(damage_source)
 	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
@@ -36,9 +38,11 @@
 	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
 	health = 1500
 	damage_cooldown = 40 SECONDS
-	leviathan_speed = 1 / (40 SECONDS)
+	leviathan_speed = 1 / (20 SECONDS)
 	weaknesses = OVERMAP_WEAKNESS_EXPLOSIVE
 	color = COLOR_SEDONA
+	heal_min = 10
+	heal_max = 15
 
 /obj/overmap/event/leviathan/dragon/get_damage_multiplier(damage_source)
 	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive))
@@ -68,9 +72,11 @@
 	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
 	health = 600
 	damage_cooldown = 1 MINUTE
-	leviathan_speed = 1 / (30 SECONDS)
+	leviathan_speed = 1 / (15 SECONDS)
 	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE
 	color = COLOR_DARK_BLUE_GRAY
+	heal_min = 5
+	heal_max = 15
 
 /obj/overmap/event/leviathan/swarm/get_damage_multiplier(damage_source)
 	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
