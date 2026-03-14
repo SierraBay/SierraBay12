@@ -147,6 +147,20 @@
 	name = "Third Deck - AI Upload"
 	icon_state = "ai_upload"
 
+/area/turret_protected/ai_cyborg_station
+	name = "First Deck - Cyborg Station"
+	icon_state = "ai_cyborg"
+	sound_env = SMALL_ENCLOSED
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
+
+/area/turret_protected/ai_cyborg_upload
+	name = "First Deck - Cyborg Upload"
+	icon_state = "ai_cyborg"
+	sound_env = SMALL_ENCLOSED
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	holomap_color = HOLOMAP_AREACOLOR_COMMAND
+
 // Heads Quarters
 /*
 /area/crew_quarters/safe_room/bridge

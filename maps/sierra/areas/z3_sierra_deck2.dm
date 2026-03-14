@@ -78,18 +78,11 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/entry/lower
-	name = "Second Deck - RND - Aux Lobby"
-	icon_state = "decontamination"
 
 /area/rnd/misc_lab
 	name = "First Deck - RND - Miscellaneous Lab"
 	icon_state = "misclab"
 	req_access = list(access_research)
-
-/area/rnd/misc_lab/stairs
-	name = "Second Deck - RND - Miscellaneous Access"
-	icon_state = "research"
 
 /area/rnd/xenobiology/entry
 	name = "Xenobiology Access"
@@ -122,14 +115,16 @@
 	icon_state = "decontamination"
 
 /area/rnd/toxins
-	name = "Second Deck - RND - Toxins Lab"
+	name = "Second Deck - RND - Canister Storage"
 	icon_state = "toxstorage"
 	req_access = list(access_tox_storage)
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
+/*
 /area/rnd/toxins/storage
 	name = "Second Deck - RND - Canister Storage"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+*/
 
 /* VACANT AREAS
  * ============
@@ -238,11 +233,11 @@
 	sound_env = SMALL_SOFTFLOOR
 	req_access = list(access_actor)
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-/*
+
 /area/crew_quarters/actor/stage
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 /area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
@@ -308,10 +303,12 @@
 	icon_state = "patients"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 
+/*
 /area/medical/wardhallway
 	name = "Second Deck - Patient Ward - Hallway"
 	icon_state = "medbay2"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+*/
 
 /area/medical/maintenance_equipstorage
 	name = "Second Deck - Infirmary - Lower Storage"
@@ -327,6 +324,18 @@
 		'sound/music/main.ogg'
 	)
 	req_access = list(access_morgue)
+
+/area/medical/mentalhealth
+	name = "Second Deck - Infirmary - Mental Health"
+	icon_state = "medbay3"
+	ambience = list('sound/ambience/signal.ogg')
+	req_access = list(access_psychiatrist)
+
+/area/medical/mentalhealth/therapyroom
+	name = "Second Deck - Infirmary - Therapy Room"
+	icon_state = "medbay3"
+	ambience = list('sound/ambience/signal.ogg')
+	req_access = list(access_psychiatrist)
 
 // Virology
 
