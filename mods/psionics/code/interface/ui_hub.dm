@@ -80,6 +80,8 @@
 
 	owner.psi.suppressed = !owner.psi.suppressed
 	to_chat(owner, SPAN_NOTICE("Ты <b>[owner.psi.suppressed ? "теперь подавляешь" : "больше не подавляешь"]</b> свои способности."))
+	// Немедленно обновляем видимость псионического плана.
+	owner.update_sight()
 	if(owner.psi.suppressed)
 		var/mob/living/carbon/human/A = owner
 		if(A.levitation)
@@ -90,6 +92,9 @@
 			A.stop_floating()
 		owner.psi.cancel()
 		owner.psi.hide_auras()
+		for(var/atom/O in range(5, owner))
+			if(O.invisibility == INVISIBILITY_PSI_PLANE)
+				O.glow_for_client(owner.client)
 	else
 		sound_to(owner, sound('sound/effects/psi/power_unlock.ogg'))
 		owner.psi.show_auras()

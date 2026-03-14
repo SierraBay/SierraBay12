@@ -515,7 +515,11 @@ ranks - ec
 	item_state_slots = list(
 		slot_l_hand_str = "shemagh",
 		slot_r_hand_str = "shemagh",
-		)
+	)
+
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_accessory_unathi.dmi'
+	)
 
 	var/lowered_icon_state = "shemagh_scarf"
 	var/rised_icon_state = "shemagh_mask"

@@ -1,0 +1,5 @@
+author: Builder13
+changes:
+  - experiment: Бюджет игроков от генерации авеек теперь учитывает онлайн 
+      предыдущего раунда
+delete-after: true
