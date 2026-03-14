@@ -111,6 +111,13 @@
 		SetName(new_name)
 	. = ..()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+	var/area/area = get_area(src)
+	if(area)
+		area.air_scrub_info -= id_tag
+		area.air_scrub_names -= id_tag
+	return ..()
+
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/reset_scrubbing()
 	if (initial(scrubbing_gas))
