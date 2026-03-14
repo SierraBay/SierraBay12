@@ -1,40 +1,6 @@
-#define SSMACHINES_PIPENETS 1
-#define SSMACHINES_MACHINERY 2
-#define SSMACHINES_POWERNETS 3
-#define SSMACHINES_POWER_OBJECTS 4
 #define SSMACHINES_QUEUE_HIGH 1
 #define SSMACHINES_QUEUE_NORMAL 2
 #define SSMACHINES_QUEUE_LOW 3
-
-
-#define START_PROCESSING_IN_LIST(Datum, List) \
-if (Datum.is_processing) {\
-	if(Datum.is_processing != "SSmachines.[#List]")\
-	{\
-		crash_with("Failed to start processing. [log_info_line(Datum)] is already being processed by [Datum.is_processing] but queue attempt occured on SSmachines.[#List]."); \
-	}\
-} else {\
-	Datum.is_processing = "SSmachines.[#List]";\
-	SSmachines.List += Datum;\
-}
-
-#define STOP_PROCESSING_IN_LIST(Datum, List) \
-if(Datum.is_processing) {\
-	if(SSmachines.List.Remove(Datum)) {\
-		Datum.is_processing = null;\
-	} else {\
-		crash_with("Failed to stop processing. [log_info_line(Datum)] is being processed by [is_processing] and not found in SSmachines.[#List]"); \
-	}\
-}
-
-#define START_PROCESSING_PIPENET(Datum) START_PROCESSING_IN_LIST(Datum, pipenets)
-#define STOP_PROCESSING_PIPENET(Datum) STOP_PROCESSING_IN_LIST(Datum, pipenets)
-
-#define START_PROCESSING_POWERNET(Datum) START_PROCESSING_IN_LIST(Datum, powernets)
-#define STOP_PROCESSING_POWERNET(Datum) STOP_PROCESSING_IN_LIST(Datum, powernets)
-
-#define START_PROCESSING_POWER_OBJECT(Datum) START_PROCESSING_IN_LIST(Datum, power_objects)
-#define STOP_PROCESSING_POWER_OBJECT(Datum) STOP_PROCESSING_IN_LIST(Datum, power_objects)
 
 /datum/machine_sleep_bucket
 	var/wake_time = 0
@@ -53,11 +19,7 @@ SUBSYSTEM_DEF(machines)
 	init_order = SS_INIT_MACHINES
 	priority = SS_PRIORITY_MACHINERY
 	flags = SS_KEEP_TIMING
-	var/static/current_step = SSMACHINES_PIPENETS
-	var/static/cost_pipenets = 0
 	var/static/cost_machinery = 0
-	var/static/cost_powernets = 0
-	var/static/cost_power_objects = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
@@ -69,7 +31,6 @@ SUBSYSTEM_DEF(machines)
 	var/static/list/sleep_wake_heap = list()
 	var/static/list/dormant_machines = list()
 	var/static/list/type_lookup_cache = list()
-	var/static/pipe_index = 0
 	var/static/machine_priority_step = 1
 	var/static/machine_high_index = 0
 	var/static/machine_normal_index = 0
@@ -77,64 +38,31 @@ SUBSYSTEM_DEF(machines)
 	var/static/next_machine_wake = 0
 	var/static/datum/machine_sleep_bucket/next_machine_wake_bucket = null
 	var/static/next_phase_assignment = 0
-	var/static/powernet_index = 0
-	var/static/power_obj_index = 0
 	var/static/list/machinery = list()
 	var/static/list/machinery_by_type = list()
 
 /datum/controller/subsystem/machines/Recover()
-	current_step = SSMACHINES_PIPENETS
-	pipe_index = 0
 	machine_priority_step = 1
 	machine_high_index = 0
 	machine_normal_index = 0
 	machine_low_index = 0
 	recalculate_next_machine_wake()
-	powernet_index = 0
-	power_obj_index = 0
-
+	sync_legacy_processing_lists()
 
 /datum/controller/subsystem/machines/Initialize(start_uptime)
-	makepowernets()
-	setup_atmos_machinery(machinery)
-	fire(FALSE, TRUE)
-
+	sync_legacy_processing_lists()
 
 /datum/controller/subsystem/machines/fire(resumed, no_mc_tick)
-	var/timer
-	if (!resumed)
-		current_step = SSMACHINES_PIPENETS
-	if (current_step == SSMACHINES_PIPENETS)
-		timer = world.tick_usage
-		process_pipenets(resumed, no_mc_tick)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, (world.tick_usage - timer) * world.tick_lag)
-		if (state != SS_RUNNING)
-			return
-		current_step = SSMACHINES_MACHINERY
-		resumed = FALSE
-	if (current_step == SSMACHINES_MACHINERY)
-		timer = world.tick_usage
-		process_machinery(resumed, no_mc_tick)
-		cost_machinery = MC_AVERAGE(cost_machinery, (world.tick_usage - timer) * world.tick_lag)
-		if(state != SS_RUNNING)
-			return
-		current_step = SSMACHINES_POWERNETS
-		resumed = FALSE
-	if (current_step == SSMACHINES_POWERNETS)
-		timer = world.tick_usage
-		process_powernets(resumed, no_mc_tick)
-		cost_powernets = MC_AVERAGE(cost_powernets, (world.tick_usage - timer) * world.tick_lag)
-		if(state != SS_RUNNING)
-			return
-		current_step = SSMACHINES_POWER_OBJECTS
-		resumed = FALSE
-	if (current_step == SSMACHINES_POWER_OBJECTS)
-		timer = world.tick_usage
-		process_power_objects(resumed, no_mc_tick)
-		cost_power_objects = MC_AVERAGE(cost_power_objects, (world.tick_usage - timer) * world.tick_lag)
-		if (state != SS_RUNNING)
-			return
-		current_step = SSMACHINES_PIPENETS
+	var/timer = world.tick_usage
+	process_machinery(resumed, no_mc_tick)
+	cost_machinery = MC_AVERAGE(cost_machinery, (world.tick_usage - timer) * world.tick_lag)
+
+/datum/controller/subsystem/machines/proc/sync_legacy_processing_lists()
+	if(SSpipes)
+		pipenets = SSpipes.pipenets
+	if(SSpowernets)
+		powernets = SSpowernets.powernets
+		power_objects = SSpowernets.power_objects
 
 /datum/controller/subsystem/machines/proc/register_machinery(obj/machinery/machine)
 	if(!machine)
@@ -245,7 +173,7 @@ SUBSYSTEM_DEF(machines)
 	heap_push_wake_time(bucket)
 	return bucket
 
-/datum/controller/subsystem/machines/proc/deactivate_sleep_bucket(datum/machine_sleep_bucket/bucket)
+/datum/controller/subsystem/machines/proc/deactivate_sleep_bucket(datum/machine_sleep_bucket/bucket, refresh_next_wake = TRUE)
 	if(!bucket || !bucket.active)
 		return
 
@@ -253,7 +181,7 @@ SUBSYSTEM_DEF(machines)
 	if(bucket.lookup_key && sleep_buckets[bucket.lookup_key] == bucket)
 		sleep_buckets -= bucket.lookup_key
 
-	if(bucket == next_machine_wake_bucket)
+	if(refresh_next_wake && bucket == next_machine_wake_bucket)
 		refresh_next_machine_wake()
 
 /datum/controller/subsystem/machines/proc/get_machine_processing_list_by_id(queue_id)
@@ -384,26 +312,80 @@ SUBSYSTEM_DEF(machines)
 		return TRUE
 	return FALSE
 
+/datum/controller/subsystem/machines/proc/clear_machine_active_queue_state(obj/machinery/machine)
+	if(!machine)
+		return
+
+	machine.is_processing = null
+	machine.processing_queue_index = 0
+
+/datum/controller/subsystem/machines/proc/remove_machine_at_active_index(list/processing_list, remove_index, queue_id)
+	if(!processing_list || remove_index <= 0 || remove_index > length(processing_list))
+		return FALSE
+
+	var/last_index = length(processing_list)
+	var/obj/machinery/removed_machine = processing_list[remove_index]
+	if(remove_index != last_index)
+		var/obj/machinery/swapped_machine = processing_list[last_index]
+		if(swapped_machine)
+			if(swapped_machine.is_processing != queue_id)
+				crash_with("Failed to update processing queue index. [log_info_line(swapped_machine)] occupied [get_machine_processing_label(queue_id)] index [remove_index] while marked as [swapped_machine.is_processing].")
+				return FALSE
+		processing_list[remove_index] = swapped_machine
+		if(swapped_machine)
+			swapped_machine.processing_queue_index = remove_index
+
+	processing_list.Cut(last_index, last_index + 1)
+	clear_machine_active_queue_state(removed_machine)
+	return TRUE
+
+/datum/controller/subsystem/machines/proc/remove_machine_at_active_index_stable(list/processing_list, remove_index)
+	if(!processing_list || remove_index <= 0 || remove_index > length(processing_list))
+		return FALSE
+
+	var/obj/machinery/removed_machine = processing_list[remove_index]
+	processing_list.Cut(remove_index, remove_index + 1)
+	for(var/index in remove_index to length(processing_list))
+		var/obj/machinery/shifted_machine = processing_list[index]
+		if(shifted_machine)
+			shifted_machine.processing_queue_index = index
+
+	clear_machine_active_queue_state(removed_machine)
+	return TRUE
+
 /datum/controller/subsystem/machines/proc/remove_machine_from_active_queue(obj/machinery/machine, list/current_processing_list = null, current_processing_index = 0, current_processing_queue_id = 0)
 	if(!machine?.is_processing)
 		return FALSE
 
-	if(current_processing_list && current_processing_queue_id && machine.is_processing == current_processing_queue_id)
-		if(current_processing_index > 0 && current_processing_index <= length(current_processing_list) && current_processing_list[current_processing_index] == machine)
-			current_processing_list.Cut(current_processing_index, current_processing_index + 1)
-			machine.is_processing = null
-			return TRUE
-
-	var/list/processing_list = get_machine_processing_list_by_id(machine.is_processing)
+	var/queue_id = machine.is_processing
+	var/list/processing_list = current_processing_list
+	if(!processing_list || !current_processing_queue_id || queue_id != current_processing_queue_id)
+		processing_list = get_machine_processing_list_by_id(queue_id)
 	if(!processing_list)
-		crash_with("Failed to remove processing. [log_info_line(machine)] is being processed by [machine.is_processing] but no matching SSmachines queue exists.")
+		crash_with("Failed to remove processing. [log_info_line(machine)] is being processed by [queue_id] but no matching SSmachines queue exists.")
 		return FALSE
 
-	if(processing_list.Remove(machine))
-		machine.is_processing = null
-		return TRUE
+	var/remove_index = 0
+	if(current_processing_list == processing_list && current_processing_queue_id && queue_id == current_processing_queue_id)
+		if(current_processing_index > 0 && current_processing_index <= length(current_processing_list) && current_processing_list[current_processing_index] == machine)
+			remove_index = current_processing_index
 
-	crash_with("Failed to remove processing. [log_info_line(machine)] is being processed by [get_machine_processing_label(machine.is_processing)] and not found in [get_machine_processing_label(machine.is_processing)].")
+	if(!remove_index)
+		var/stored_index = machine.processing_queue_index
+		if(stored_index > 0 && stored_index <= length(processing_list) && processing_list[stored_index] == machine)
+			remove_index = stored_index
+
+	if(!remove_index)
+		remove_index = processing_list.Find(machine)
+
+	if(remove_index)
+		if(current_processing_list == processing_list && current_processing_queue_id && queue_id == current_processing_queue_id && current_processing_index > 0 && remove_index < current_processing_index)
+			if(remove_machine_at_active_index_stable(processing_list, remove_index))
+				return TRUE
+		else if(remove_machine_at_active_index(processing_list, remove_index, queue_id))
+			return TRUE
+
+	crash_with("Failed to remove processing. [log_info_line(machine)] is being processed by [get_machine_processing_label(queue_id)] and not found in [get_machine_processing_label(queue_id)].")
 	return FALSE
 
 /datum/controller/subsystem/machines/proc/assign_machine_phase(obj/machinery/machine, spread)
@@ -438,8 +420,9 @@ SUBSYSTEM_DEF(machines)
 
 	var/queue_id = get_machine_processing_queue_id(machine.process_priority)
 	var/list/target_list = get_machine_processing_list(queue_id)
-	machine.is_processing = queue_id
 	target_list += machine
+	machine.is_processing = queue_id
+	machine.processing_queue_index = length(target_list)
 
 /datum/controller/subsystem/machines/proc/sleep_machine_until(obj/machinery/machine, wake_time, list/current_processing_list = null, current_processing_index = 0, current_processing_queue_id = 0)
 	if(!machine || QDELETED(machine) || !machine.processing_flags)
@@ -553,7 +536,7 @@ SUBSYSTEM_DEF(machines)
 			continue
 
 		var/list/machines_to_wake = bucket.machines
-		deactivate_sleep_bucket(bucket)
+		deactivate_sleep_bucket(bucket, FALSE)
 		bucket.machines = null
 		for(var/obj/machinery/machine as anything in machines_to_wake)
 			if(sleeping_machines[machine] != bucket)
@@ -598,40 +581,29 @@ SUBSYSTEM_DEF(machines)
 			dormant_machines -= machine
 		return
 
-/// Rebuilds power networks from scratch. Called by world initialization and elevators.
+/// Deprecated compatibility wrapper for legacy call sites.
 /datum/controller/subsystem/machines/proc/makepowernets()
-	for(var/datum/powernet/powernet as anything in powernets)
-		qdel(powernet)
-	powernets.Cut()
-	setup_powernets_for_cables(GLOB.cable_list)
+	if(!SSpowernets)
+		CRASH("SSpowernets is unavailable during powernet rebuild.")
+	SSpowernets.makepowernets()
+	sync_legacy_processing_lists()
 
-
+/// Deprecated compatibility wrapper for legacy call sites.
 /datum/controller/subsystem/machines/proc/setup_powernets_for_cables(list/cables)
-	for (var/obj/structure/cable/cable as anything in cables)
-		if (cable.powernet)
-			continue
-		var/datum/powernet/network = new
-		network.add_cable(cable)
-		propagate_network(cable, cable.powernet)
+	if(!SSpowernets)
+		CRASH("SSpowernets is unavailable during powernet setup.")
+	SSpowernets.setup_powernets_for_cables(cables)
+	sync_legacy_processing_lists()
 
-
+/// Deprecated compatibility wrapper for legacy call sites.
 /datum/controller/subsystem/machines/proc/setup_atmos_machinery(list/machines)
-	set background = TRUE
-	var/list/atmos_machines = list()
-	for (var/obj/machinery/atmospherics/machine in machines)
-		atmos_machines += machine
-	report_progress("Initializing atmos machinery")
-	for (var/obj/machinery/atmospherics/machine as anything in atmos_machines)
-		machine.atmos_init()
-		CHECK_TICK
-	report_progress("Initializing pipe networks")
-	for (var/obj/machinery/atmospherics/machine as anything in atmos_machines)
-		machine.build_network()
-		CHECK_TICK
-
+	if(!SSpipes)
+		CRASH("SSpipes is unavailable during atmos setup.")
+	SSpipes.setup_atmos_machinery(machines)
+	sync_legacy_processing_lists()
 
 /datum/controller/subsystem/machines/UpdateStat(time)
-	if (PreventUpdateStat(time))
+	if(PreventUpdateStat(time))
 		return ..()
 	var/machine_total = length(processing_high) + length(processing_normal) + length(processing_low)
 	var/datum/machine_sleep_bucket/next_bucket = next_machine_wake_bucket
@@ -639,46 +611,11 @@ SUBSYSTEM_DEF(machines)
 	var/due_backlog = 0
 	if(next_bucket && next_bucket.active && world.time >= next_bucket.wake_time)
 		due_backlog = length(next_bucket.machines)
-	..({"\
-		Queues: \
-		Pipes [length(pipenets)] \
-		Machines [machine_total] (H:[length(processing_high)] N:[length(processing_normal)] L:[length(processing_low)] S:[length(sleeping_machines)] D:[length(dormant_machines)] Next:[next_wake_display] Due:[due_backlog]) \
-		Networks [length(powernets)] \
-		Objects [length(power_objects)]\n\
-		Costs: \
-		Pipes [Round(cost_pipenets)] \
-		Machines [Round(cost_machinery)] \
-		Networks [Round(cost_powernets)] \
-		Objects [Round(cost_power_objects)]\n\
-		Overall [Roundm(cost ? machine_total / cost : 0, 0.1)]
-	"})
-
-
-/datum/controller/subsystem/machines/proc/process_pipenets(resumed, no_mc_tick)
-	if (!resumed)
-		pipe_index = length(pipenets)
-	var/datum/pipe_network/network
-	while(pipe_index > 0)
-		if(pipe_index > length(pipenets))
-			pipe_index = length(pipenets)
-			continue
-		network = pipenets[pipe_index]
-		pipe_index--
-		if (QDELETED(network))
-			if (network)
-				network.is_processing = null
-			pipenets -= network
-			continue
-		network.Process(wait)
-		if (no_mc_tick)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
-			return
-
+	..("Queues: Machines [machine_total] (H:[length(processing_high)] N:[length(processing_normal)] L:[length(processing_low)] S:[length(sleeping_machines)] D:[length(dormant_machines)] Next:[next_wake_display] Due:[due_backlog]) | Cost: [Round(cost_machinery)] | Overall [Roundm(cost ? machine_total / cost : 0, 0.1)]")
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
 	wake_due_machines()
-	if (!resumed)
+	if(!resumed)
 		machine_priority_step = 1
 		machine_high_index = length(processing_high)
 		machine_normal_index = length(processing_normal)
@@ -695,10 +632,8 @@ SUBSYSTEM_DEF(machines)
 			current_processing_index = machine_high_index
 			machine = processing_high[current_processing_index]
 			machine_high_index--
-			if (QDELETED(machine))
-				if (machine)
-					machine.is_processing = null
-				processing_high -= machine
+			if(QDELETED(machine))
+				remove_machine_at_active_index(processing_high, current_processing_index, SSMACHINES_QUEUE_HIGH)
 				continue
 
 			processing_flags = machine.processing_flags
@@ -718,9 +653,9 @@ SUBSYSTEM_DEF(machines)
 				else if((processing_flags & MACHINERY_PROCESS_COMPONENTS) || machine.process_schedule_mode != MACHINERY_SCHEDULE_POLL || !isnull(machine.next_requested_process_at) || machine.requested_dormant_processing)
 					finalize_machine_schedule(machine, process_result, TRUE, processing_high, current_processing_index, SSMACHINES_QUEUE_HIGH)
 
-			if (no_mc_tick)
+			if(no_mc_tick)
 				CHECK_TICK
-			else if (MC_TICK_CHECK)
+			else if(MC_TICK_CHECK)
 				return
 		machine_priority_step = 2
 	if(machine_priority_step == 2)
@@ -731,10 +666,8 @@ SUBSYSTEM_DEF(machines)
 			current_processing_index = machine_normal_index
 			machine = processing_normal[current_processing_index]
 			machine_normal_index--
-			if (QDELETED(machine))
-				if (machine)
-					machine.is_processing = null
-				processing_normal -= machine
+			if(QDELETED(machine))
+				remove_machine_at_active_index(processing_normal, current_processing_index, SSMACHINES_QUEUE_NORMAL)
 				continue
 
 			processing_flags = machine.processing_flags
@@ -754,9 +687,9 @@ SUBSYSTEM_DEF(machines)
 				else if((processing_flags & MACHINERY_PROCESS_COMPONENTS) || machine.process_schedule_mode != MACHINERY_SCHEDULE_POLL || !isnull(machine.next_requested_process_at) || machine.requested_dormant_processing)
 					finalize_machine_schedule(machine, process_result, TRUE, processing_normal, current_processing_index, SSMACHINES_QUEUE_NORMAL)
 
-			if (no_mc_tick)
+			if(no_mc_tick)
 				CHECK_TICK
-			else if (MC_TICK_CHECK)
+			else if(MC_TICK_CHECK)
 				return
 		machine_priority_step = 3
 	while(machine_low_index > 0)
@@ -766,10 +699,8 @@ SUBSYSTEM_DEF(machines)
 		current_processing_index = machine_low_index
 		machine = processing_low[current_processing_index]
 		machine_low_index--
-		if (QDELETED(machine))
-			if (machine)
-				machine.is_processing = null
-			processing_low -= machine
+		if(QDELETED(machine))
+			remove_machine_at_active_index(processing_low, current_processing_index, SSMACHINES_QUEUE_LOW)
 			continue
 
 		processing_flags = machine.processing_flags
@@ -789,60 +720,8 @@ SUBSYSTEM_DEF(machines)
 			else if((processing_flags & MACHINERY_PROCESS_COMPONENTS) || machine.process_schedule_mode != MACHINERY_SCHEDULE_POLL || !isnull(machine.next_requested_process_at) || machine.requested_dormant_processing)
 				finalize_machine_schedule(machine, process_result, TRUE, processing_low, current_processing_index, SSMACHINES_QUEUE_LOW)
 
-		if (no_mc_tick)
+		if(no_mc_tick)
 			CHECK_TICK
-		else if (MC_TICK_CHECK)
+		else if(MC_TICK_CHECK)
 			return
 	machine_priority_step = 1
-
-
-/datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
-	if (!resumed)
-		powernet_index = length(powernets)
-	var/datum/powernet/network
-	while(powernet_index > 0)
-		if(powernet_index > length(powernets))
-			powernet_index = length(powernets)
-			continue
-		network = powernets[powernet_index]
-		powernet_index--
-		if (QDELETED(network))
-			if (network)
-				network.is_processing = null
-			powernets -= network
-			continue
-		network.reset(wait)
-		if (no_mc_tick)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
-			return
-
-
-/datum/controller/subsystem/machines/proc/process_power_objects(resumed, no_mc_tick)
-	if (!resumed)
-		power_obj_index = length(power_objects)
-	var/obj/item/item
-	while(power_obj_index > 0)
-		if(power_obj_index > length(power_objects))
-			power_obj_index = length(power_objects)
-			continue
-		item = power_objects[power_obj_index]
-		power_obj_index--
-		if (QDELETED(item))
-			if (item)
-				item.is_processing = null
-			power_objects -= item
-			continue
-		if (!item.pwr_drain(wait))
-			item.is_processing = null
-			power_objects -= item
-		if (no_mc_tick)
-			CHECK_TICK
-		else if (MC_TICK_CHECK)
-			return
-
-
-#undef SSMACHINES_PIPENETS
-#undef SSMACHINES_MACHINERY
-#undef SSMACHINES_POWERNETS
-#undef SSMACHINES_POWER_OBJECTS

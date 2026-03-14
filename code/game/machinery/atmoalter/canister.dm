@@ -24,6 +24,22 @@
 	var/const/CANISTER_PRESSURE_LOW = 50 * ONE_ATMOSPHERE
 	var/const/CANISTER_PRESSURE_MID = 100 * ONE_ATMOSPHERE
 	var/const/CANISTER_PRESSURE_HIGH = 150 * ONE_ATMOSPHERE
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 10
+	default_process_jitter_ds = 5
+
+/obj/machinery/portable_atmospherics/canister/proc/should_keep_processing()
+	if(destroyed || connected_port || valve_open)
+		return TRUE
+	if(air_contents.temperature > PHORON_MINIMUM_BURN_TEMPERATURE && air_contents.check_combustability())
+		return TRUE
+	return FALSE
+
+/obj/machinery/portable_atmospherics/canister/proc/refresh_processing_schedule()
+	if(should_keep_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	request_process_dormant()
 
 /obj/machinery/portable_atmospherics/canister/drain_power()
 	return -1
@@ -170,7 +186,8 @@
 	..()
 
 /obj/machinery/portable_atmospherics/canister/Process()
-	if (destroyed)
+	if(destroyed)
+		request_process_dormant()
 		return
 
 	var/old_pressure_overlay_level = get_pressure_overlay_level()
@@ -204,6 +221,8 @@
 	if(get_pressure_overlay_level() != old_pressure_overlay_level)
 		update_icon()
 
+	refresh_processing_schedule()
+
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
 	var/datum/gas_mixture/GM = src.return_air()
 	if(GM && GM.volume>0)
@@ -228,11 +247,13 @@
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 			thejetpack.merge(removed)
 			to_chat(user, "You pulse-pressurize your jetpack from the tank.")
+		refresh_processing_schedule()
 		return TRUE
 
 	. = ..()
-
-	SSnano.update_uis(src) // Update all NanoUIs attached to src
+	if(.)
+		refresh_processing_schedule()
+		SSnano.update_uis(src) // Update all NanoUIs attached to src
 
 /obj/machinery/portable_atmospherics/canister/interface_interact(mob/user)
 	ui_interact(user)
@@ -267,6 +288,7 @@
 			if(!holding)
 				log_open()
 		valve_open = !valve_open
+		refresh_processing_schedule()
 		. = TOPIC_REFRESH
 
 	else if (href_list["remove_tank"])
@@ -279,6 +301,7 @@
 		holding.dropInto(loc)
 		holding = null
 		update_icon()
+		refresh_processing_schedule()
 		. = TOPIC_REFRESH
 
 	else if (href_list["pressure_adj"])
@@ -287,6 +310,7 @@
 			release_pressure = min(10*ONE_ATMOSPHERE, release_pressure+diff)
 		else
 			release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
+		refresh_processing_schedule()
 		. = TOPIC_REFRESH
 
 	else if (href_list["relabel"])
@@ -314,6 +338,16 @@
 	if(destroyed)
 		return STATUS_CLOSE
 	return ..()
+
+/obj/machinery/portable_atmospherics/canister/connect(obj/machinery/atmospherics/portables_connector/new_port)
+	. = ..()
+	if(.)
+		refresh_processing_schedule()
+
+/obj/machinery/portable_atmospherics/canister/disconnect()
+	. = ..()
+	if(.)
+		refresh_processing_schedule()
 
 /obj/machinery/portable_atmospherics/canister/phoron/New()
 	..()

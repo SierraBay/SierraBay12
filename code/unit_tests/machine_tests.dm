@@ -102,6 +102,30 @@
 		request_process_dormant()
 	return 1
 
+/obj/machinery/unit_test_queue_index_machine
+	name = "queue index test machine"
+	process_priority = MACHINERY_PRIORITY_HIGH
+	init_flags = INIT_MACHINERY_START_PROCESSING
+	uncreated_component_parts = list()
+
+/obj/machinery/unit_test_queue_index_machine/Process()
+	return 1
+
+/obj/machinery/unit_test_remove_other_machine
+	name = "remove other machine test"
+	process_priority = MACHINERY_PRIORITY_HIGH
+	init_flags = INIT_MACHINERY_START_PROCESSING
+	uncreated_component_parts = list()
+	var/obj/machinery/target_machine
+	var/process_count = 0
+	var/remove_on_process = FALSE
+
+/obj/machinery/unit_test_remove_other_machine/Process()
+	process_count++
+	if(remove_on_process && target_machine)
+		STOP_PROCESSING_MACHINE(target_machine, MACHINERY_PROCESS_SELF)
+	return PROCESS_KILL
+
 /obj/machinery/unit_test_timer_machine
 	name = "timer test machine"
 	process_priority = MACHINERY_PRIORITY_HIGH
@@ -309,6 +333,128 @@
 
 	pass("Earlier timed reschedules now leave stale heap entries harmless until they are discarded.")
 	qdel(machine)
+	return 1
+
+/datum/unit_test/machinery_active_queue_indices_follow_swap_remove
+	name = "MACHINE: Active queue indices stay correct after swap-removing machinery"
+
+/datum/unit_test/machinery_active_queue_indices_follow_swap_remove/start_test()
+	var/turf/T = get_safe_turf()
+	if(!T)
+		fail("Could not find a safe turf for active-queue index test.")
+		return 1
+
+	var/obj/machinery/unit_test_queue_index_machine/first = new(T)
+	var/obj/machinery/unit_test_queue_index_machine/second = new(T)
+	var/obj/machinery/unit_test_queue_index_machine/third = new(T)
+	if(!first || !second || !third)
+		fail("Failed to create test machines for the active-queue index test.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+
+	var/second_index = second.processing_queue_index
+	var/third_index = third.processing_queue_index
+	if(second_index <= 0 || third_index <= 0)
+		fail("Freshly queued test machines should record active queue indices.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+	if(third_index <= second_index)
+		fail("Sequentially queued test machines should occupy increasing active queue indices.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+
+	SSmachines.sleep_machine(second, 5)
+
+	if(second in SSmachines.processing_high)
+		fail("Sleeping a queued machine should remove it from the active queue.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+	if(second.processing_queue_index)
+		fail("Sleeping a queued machine should clear its cached active queue index.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+	if(!(third in SSmachines.processing_high))
+		fail("Swap-remove should keep the tail machine in the active queue.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+	if(third.processing_queue_index != second_index)
+		fail("Swap-remove should update the moved machine's cached queue index. Expected [second_index], got [third.processing_queue_index].")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+	if(SSmachines.processing_high[second_index] != third)
+		fail("Swap-remove should move the tail machine into the removed queue slot.")
+		qdel(first)
+		qdel(second)
+		qdel(third)
+		return 1
+
+	pass("Swap-removing active machinery keeps cached queue indices aligned with the processing list.")
+	qdel(first)
+	qdel(second)
+	qdel(third)
+	return 1
+
+/datum/unit_test/machinery_removing_future_machine_does_not_double_process_tail
+	name = "MACHINE: Removing a future queued machine does not reprocess the already-processed tail"
+
+/datum/unit_test/machinery_removing_future_machine_does_not_double_process_tail/start_test()
+	var/turf/T = get_safe_turf()
+	if(!T)
+		fail("Could not find a safe turf for future-removal queue test.")
+		return 1
+
+	var/obj/machinery/unit_test_remove_other_machine/victim = new(T)
+	var/obj/machinery/unit_test_remove_other_machine/bystander = new(T)
+	var/obj/machinery/unit_test_remove_other_machine/remover = new(T)
+	if(!victim || !bystander || !remover)
+		fail("Failed to create test machines for the future-removal queue test.")
+		qdel(victim)
+		qdel(bystander)
+		qdel(remover)
+		return 1
+
+	remover.remove_on_process = TRUE
+	remover.target_machine = victim
+
+	SSmachines.process_machinery(FALSE, TRUE)
+
+	if(remover.process_count != 1)
+		fail("The removing machine should process exactly once per pass. Got [remover.process_count].")
+		qdel(victim)
+		qdel(bystander)
+		qdel(remover)
+		return 1
+	if(bystander.process_count != 1)
+		fail("Removing a future machine should not cause the already-processed tail machine to run twice. Got [bystander.process_count].")
+		qdel(victim)
+		qdel(bystander)
+		qdel(remover)
+		return 1
+	if(victim.process_count)
+		fail("A machine removed before its turn should not process in the same pass. Got [victim.process_count].")
+		qdel(victim)
+		qdel(bystander)
+		qdel(remover)
+		return 1
+
+	pass("Removing a future queued machine now preserves single-processing semantics for the rest of the queue.")
+	qdel(victim)
+	qdel(bystander)
+	qdel(remover)
 	return 1
 
 /datum/unit_test/machinery_explicit_wake_discards_stale_heap_entries

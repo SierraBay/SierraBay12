@@ -101,6 +101,24 @@ if(Datum.is_processing) {\
 	machine.processing_flags &= ~flag;\
 	if(machine.processing_flags == 0) SSmachines.stop_processing_machine(machine)
 
+/// START specific to SSpipes
+#define START_PROCESSING_PIPENET(network) SSpipes.start_processing_pipenet(network)
+
+/// STOP specific to SSpipes
+#define STOP_PROCESSING_PIPENET(network) SSpipes.stop_processing_pipenet(network)
+
+/// START specific to SSpowernets
+#define START_PROCESSING_POWERNET(network) SSpowernets.start_processing_powernet(network)
+
+/// STOP specific to SSpowernets
+#define STOP_PROCESSING_POWERNET(network) SSpowernets.stop_processing_powernet(network)
+
+/// START specific to SSpowernets
+#define START_PROCESSING_POWER_OBJECT(power_object) SSpowernets.start_processing_power_object(power_object)
+
+/// STOP specific to SSpowernets
+#define STOP_PROCESSING_POWER_OBJECT(power_object) SSpowernets.stop_processing_power_object(power_object)
+
 
 /****
 * Subsystem Flags

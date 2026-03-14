@@ -69,6 +69,7 @@
 	cancel_processing_wake()
 	if(!istype(machine) || loc != machine)
 		return
-	stop_processing(machine)
+	if(status & PART_STAT_PROCESSING)
+		stop_processing(machine)
 	processing_wake_due = desired_wake_due
 	processing_wake_timer = addtimer(new Callback(src, PROC_REF(wake_processing), machine), delay, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)

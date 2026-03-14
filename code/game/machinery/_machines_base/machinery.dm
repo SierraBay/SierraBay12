@@ -71,6 +71,8 @@
 	var/list/processing_parts
 	/// Bitflag. What is being processed. One of `MACHINERY_PROCESS_*`.
 	var/processing_flags
+	/// Cached 1-based index inside the current SSmachines active queue. Zero when inactive.
+	var/processing_queue_index = 0
 	/// Controls which SSmachines queue handles this machine. One of `MACHINERY_PRIORITY_*`.
 	var/process_priority = MACHINERY_PRIORITY_NORMAL
 	/// Controls how SSmachines should schedule this machine when Process() completes.

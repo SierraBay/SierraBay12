@@ -14,6 +14,9 @@
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it."
 	process_priority = MACHINERY_PRIORITY_HIGH
+	process_schedule_mode = MACHINERY_SCHEDULE_TIMER
+	default_process_delay_ds = 10
+	default_process_jitter_ds = 5
 	use_power = POWER_USE_OFF
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP

@@ -63,16 +63,28 @@
 		if(istype(A,/obj/landmark/map_load_mark))
 			LAZYADD(subtemplates_to_spawn, A)
 
-	var/notsuspended
+	var/wake_machinery = FALSE
+	var/wake_pipes = FALSE
+	var/wake_powernets = FALSE
 	if(!SSmachines.suspended)
 		SSmachines.suspend()
-		notsuspended = TRUE
+		wake_machinery = TRUE
+	if(!SSpipes.suspended)
+		SSpipes.suspend()
+		wake_pipes = TRUE
+	if(!SSpowernets.suspended)
+		SSpowernets.suspend()
+		wake_powernets = TRUE
 
 	SSatoms.InitializeAtoms() // The atoms should have been getting queued there. This flushes the queue.
 
 	SSmachines.setup_powernets_for_cables(cables)
 	SSmachines.setup_atmos_machinery(atmos_machines)
-	if(notsuspended)
+	if(wake_powernets)
+		SSpowernets.wake()
+	if(wake_pipes)
+		SSpipes.wake()
+	if(wake_machinery)
 		SSmachines.wake()
 
 	for (var/i in machines)

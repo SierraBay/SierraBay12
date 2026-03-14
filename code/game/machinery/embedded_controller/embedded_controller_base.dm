@@ -2,6 +2,7 @@
 	name = "Embedded Controller"
 	anchored = TRUE
 	idle_power_usage = 10
+	process_schedule_mode = MACHINERY_SCHEDULE_EVENT
 	var/datum/computer/file/embedded_program/program	//the currently executing program
 	var/on = 1
 	var/last_icon_processing // cached for icon update optimization

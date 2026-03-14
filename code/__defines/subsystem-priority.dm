@@ -18,7 +18,9 @@
 #define SS_PRIORITY_TICKER         100 // Gameticker.
 #define SS_PRIORITY_EXPLOSIVES     90 // Explosion processing. // [/SIERRA-ADD]
 #define SS_PRIORITY_MOB            95  // Mob Life().
-#define SS_PRIORITY_MACHINERY      95  // Machinery + powernet ticks.
+#define SS_PRIORITY_PIPES          97  // Pipe network processing.
+#define SS_PRIORITY_MACHINERY      95  // Machinery ticks.
+#define SS_PRIORITY_POWERNETS      93  // Powernet and power object ticks.
 #define SS_PRIORITY_AIR            80  // ZAS processing.
 #define SS_PRIORITY_THROWING       75  // Throwing calculation and constant checks
 #define SS_PRIORITY_CHEMISTRY      60  // Multi-tick chemical reactions.
