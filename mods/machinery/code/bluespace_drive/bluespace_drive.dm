@@ -100,7 +100,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	var/cooldown_end_time = 0
 
 	/// Duration of post-jump cooldown in ticks
-	var/jump_cooldown_duration = 2 MINUTES
+	var/jump_cooldown_duration = 20 MINUTES
 
 	/// Power level (in power_from_gas units) above which a jump is considered overcharged.
 	/// Default: 150000 = 150 BSU (Bluespace Units) displayed in the UI.
@@ -138,6 +138,12 @@ var/global/list/bluespace_gas_power_factor = list(
 	var/const/STATE_UNSTABLE = FLAG_02
 	var/state = FLAGS_OFF
 
+	/// Looping idle sound token, active while energized
+	var/datum/sound_token/drive_sound
+
+	/// TRUE while the drive is passively draining stored gas after de-energizing
+	var/draining = FALSE
+
 	pixel_x = -80
 	pixel_y = -80
 
@@ -170,6 +176,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(cooldown_timer_id)
 		deltimer(cooldown_timer_id)
 		cooldown_timer_id = null
+	QDEL_NULL(drive_sound)
 	if(energized)
 		energized = FALSE
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
@@ -199,6 +206,10 @@ var/global/list/bluespace_gas_power_factor = list(
 	consume_internal_gasses()
 
 	use_power_oneoff(active_power_usage)
+
+	// Passive radiation source while the rift is open
+	if(rift_open)
+		SSradiation.flat_radiate(src, 15, 5)
 
 /obj/machinery/bluespace_drive/on_update_icon()
 	ClearOverlays()
@@ -332,20 +343,52 @@ var/global/list/bluespace_gas_power_factor = list(
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		visible_message(SPAN_NOTICE("\The [src] hums to life, bluespace field coils energizing."))
 		playsound(src, 'sound/machines/engine.ogg', 50, TRUE)
+		drive_sound = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/machines/BSD_idle.ogg', 50, 10)
 	else
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		QDEL_NULL(drive_sound)
 		visible_message(SPAN_NOTICE("\The [src] powers down, the hum fading away."))
 		set_light(0)
 
-		// If we're holding a charge, purge it
-		if(internal_gas.total_moles || fuel_gas.total_moles)
-			purge_charge()
-
-		// If we're jumping, abort
+		// If we're jumping, abort first (instant purge on abort is intentional)
 		if(jump_timer_id)
 			abort_jump()
+		// Otherwise, passively drain stored gas over time
+		else if(internal_gas.total_moles || fuel_gas.total_moles || power_from_gas > 0)
+			if(!draining)
+				invoke_async(src, PROC_REF(start_gradual_drain))
 
 	update_icon()
+
+/**
+ * Passively drains stored gas and accumulated power at 2% per 2 seconds after de-energizing.
+ * Stops if the drive is re-energized or deleted.
+ */
+/obj/machinery/bluespace_drive/proc/start_gradual_drain()
+	draining = TRUE
+	while(!energized && !QDELETED(src))
+		if(fuel_gas.total_moles <= 0 && internal_gas.total_moles <= 0 && power_from_gas <= 0)
+			break
+		sleep(2 SECONDS)
+		if(QDELETED(src))
+			break
+		if(energized)
+			// Re-energized — stop draining without clearing gas
+			break
+		fuel_gas.remove_ratio(0.01)
+		internal_gas.remove_ratio(0.01)
+		power_from_gas = max(0, power_from_gas * 0.98)
+		update_icon()
+	// If still de-energized after drain loop, finalize cleanup
+	if(!energized && !QDELETED(src))
+		gas_consumed_totals = null
+		fuel_gas = new /datum/gas_mixture
+		fuel_gas.volume = 200
+		internal_gas = new /datum/gas_mixture
+		internal_gas.volume = 200
+		power_from_gas = 0
+		update_icon()
+	draining = FALSE
 
 /**
  * Purges all stored gas and power from the drive.
@@ -545,10 +588,8 @@ var/global/list/bluespace_gas_power_factor = list(
 			to_chat(L, SPAN_DANGER("Space completely warps around you, turning your body into something that a mind can barely comprehend..."))
 			L.death()
 
-	// Irradiate anyone within 5 tiles of the drive during the jump
-	SSradiation.flat_radiate(src, 30, 5)
-
 	// Open the bluespace rift — pull nearby crew and spawn figments
+	// (passive radiation is handled by Process() while rift_open is TRUE)
 	open_rift()
 
 	// Perform the jump
@@ -862,7 +903,7 @@ var/global/list/bluespace_gas_power_factor = list(
  * Returns a cooldown reduction in ticks (for tritium effect).
  *
  * Effects:
- * - Tritium  : reduces post-jump cooldown by 10s per 100 moles, up to 60s total.
+ * - Tritium  : reduces post-jump cooldown by 30s per 100 moles, up to 5 min total.
  * - N2O      : crew experiences N2O euphoria — confusion and mild disorientation.
  * - Chlorine : crew near the drive receives a brief toxic flash (minor damage).
  * - Hydrogen : flavor announcement — faster field dissipation.
@@ -873,10 +914,10 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	var/cooldown_reduction = 0
 
-	// Tritium — reduces cooldown
+	// Tritium — reduces cooldown by 30s per 100 moles, capped at 5 minutes
 	var/tritium_moles = gas_consumed_totals[GAS_TRITIUM] || 0
 	if(tritium_moles >= 50)
-		cooldown_reduction = min(60 SECONDS, round(tritium_moles / 100) * 10 SECONDS)
+		cooldown_reduction = min(5 MINUTES, round(tritium_moles / 100) * 30 SECONDS)
 		command_announcement.Announce("Tritium moderator stabilization successful — bluespace field dissipated ahead of schedule. Jump cooldown reduced.", \
 			"Bluespace Drive Diagnostics")
 
@@ -995,6 +1036,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	clone.appearance = L.appearance
 	clone.name = L.name
 	rift_doppelgangers += clone
+	playsound(victim_turf, 'sound/machines/BSD_interact.ogg', 80, TRUE)
 	visible_message(SPAN_DANGER("[L] is torn into the bluespace rift! Something steps out in their place..."))
 
 	// Async: play pull animation then teleport
@@ -1057,13 +1099,13 @@ var/global/list/bluespace_gas_power_factor = list(
 	rift_doppelgangers -= doppelganger
 
 /**
- * Spawns 0-2 bluespace figments near the drive when the rift opens.
- * Figments disappear automatically after 20-60 seconds.
+ * Spawns 1-3 bluespace figments near the drive when the rift opens.
+ * Figments disappear automatically after 30 seconds.
  *
- * Chances (no generator check — field generators act as physical barriers):
- * - 50% → no figments
- * - 35% → 1 figment
- * - 15% → 2 figments
+ * Chances:
+ * - 30% → 3 figments
+ * - 40% → 2 figments
+ * - 30% → 1 figment
  */
 /obj/machinery/bluespace_drive/proc/spawn_rift_figments()
 	var/roll = rand(1, 100)
@@ -1072,13 +1114,12 @@ var/global/list/bluespace_gas_power_factor = list(
 		count = 2
 	else if(roll <= 50)
 		count = 1
-	// else count = 0
 
 	if(!count)
 		return
 
 	var/list/nearby = list()
-	for(var/turf/T in range(1, src))
+	for(var/turf/T in range(3, src))
 		if(!T.density && AreConnectedZLevels(T.z, z))
 			nearby += T
 
@@ -1090,8 +1131,9 @@ var/global/list/bluespace_gas_power_factor = list(
 		rift_mobs += figment
 		visible_message(SPAN_DANGER("A bluespace figment tears through the rift!"))
 		playsound(spawn_turf, 'sound/magic/ethereal_enter.ogg', 70, TRUE)
-		// Individual despawn timer
-		addtimer(new Callback(src, PROC_REF(despawn_rift_mob), figment), rand(30 SECONDS, 60 SECONDS), TIMER_STOPPABLE)
+		playsound(src, 'sound/machines/BSD_interact.ogg', 80, TRUE)
+		// Individual despawn timer — 30 seconds
+		addtimer(new Callback(src, PROC_REF(despawn_rift_mob), figment), 30 SECONDS, TIMER_STOPPABLE)
 
 /**
  * Despawns a single rift mob (figment) after its timer expires.

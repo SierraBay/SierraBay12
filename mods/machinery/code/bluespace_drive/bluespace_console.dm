@@ -36,6 +36,9 @@
 	linked_drive = null
 	. = ..()
 
+/obj/machinery/computer/bluespace_drive_console/attack_ghost(mob/user)
+	ui_interact(user)
+
 /obj/machinery/computer/bluespace_drive_console/attack_hand(mob/user)
 	if(..())
 		return TRUE
@@ -101,6 +104,9 @@
 
 /obj/machinery/computer/bluespace_drive_console/OnTopic(mob/user, list/href_list, state)
 	if(..())
+		return TOPIC_HANDLED
+
+	if(isghost(user))
 		return TOPIC_HANDLED
 
 	if(!linked_drive)
