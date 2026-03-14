@@ -94,6 +94,18 @@
         </div>
     {{/for}}
 
+    <!-- Race results: populated as each carp crosses the line, visible during/after the race -->
+    {{if data.finish_order && data.finish_order.length > 0}}
+        <div class="cr-section">Race Results</div>
+        {{for data.finish_order}}
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 4px;border-bottom:1px solid #1c1c1c;">
+                <span style="width:30px;font-size:12px;color:#f1c40f;font-weight:bold;">{{:value.place}}</span>
+                <span class="cr-dot" style="background:{{:value.html_color}}"></span>
+                <span style="font-size:12px;color:{{:value.html_color}}">Carp #{{:value.num}} ({{:value.color_name}})</span>
+            </div>
+        {{/for}}
+    {{/if}}
+
     <!-- Hint when bets are open but no account -->
     {{if data.betting_open && !data.has_account}}
         <div class="notice average" style="margin-top:8px; font-size:12px;">

@@ -135,6 +135,22 @@
 			)))
 		data["racers"] = racers
 
+		// Build the finish standings list — shown in the UI as carps cross the line
+		var/list/place_strs  = list("1st", "2nd", "3rd", "4th", "5th", "6th")
+		var/list/finish_data = list()
+		for(var/i = 1 to race.finish_order.len)
+			var/mob/living/simple_animal/hostile/carp/racing/FC = race.finish_order[i]
+			if(QDELETED(FC))
+				continue
+			var/fnum = FC.race_number
+			finish_data.Add(list(list(
+				"place"      = (i >= 1 && i <= place_strs.len) ? place_strs[i] : "[i]th",
+				"num"        = fnum,
+				"color_name" = get_carp_color_name(fnum),
+				"html_color" = get_carp_html_color(fnum)
+			)))
+		data["finish_order"] = finish_data
+
 		// Account section
 		if(authenticated_account)
 			data["has_account"]     = TRUE

@@ -12,9 +12,7 @@
 /datum/ai_holder/simple_animal/melee/racing_carp/find_target(list/possible_targets, has_targets_list)
 	return null  // Racing carps never attack
 
-// handle_special_strategical intentionally left empty.
-// Carp movement is driven by race_controller/Process() which runs on SSobj
-// (not subject to the run_empty_levels z-level player check that SSai uses).
+// handle_special_strategical intentionally left empty — movement is addtimer-driven.
 /datum/ai_holder/simple_animal/melee/racing_carp/handle_special_strategical()
 	return
 
@@ -47,12 +45,15 @@
 	var/turf/finish_turf = null
 	/// TRUE once this carp has crossed the finish line
 	var/finished = FALSE
-	/// world.time when this carp is allowed to take its next step (randomised in Initialize)
-	var/next_step_time = 0
-	/// Persistent speed bias for this carp (-3 = fast, +3 = slow). Set at spawn, stays fixed all race.
+	/// Speed bias for this carp (-3 = fast, +3 = slow). Re-rolled every 8 tiles to keep the race dynamic.
 	var/speed_bias = 0
 	/// Steps taken so far — used to trigger random events every ~5 tiles
 	var/step_counter = 0
+	/// Remaining steps with a speed bonus after a confusion retreat.
+	/// Set by resume_east() to help the carp recover lost ground.
+	var/recovery_boost = 0
+	/// Cached callback for do_race_step — created once, reused every step to avoid per-step datum allocation.
+	var/datum/callback/step_cb = null
 
 
 /mob/living/simple_animal/hostile/carp/racing/Initialize(mapload, num, datum/carp_race/R, turf/finish)
@@ -75,10 +76,8 @@
 	icon_dead   = "[carp_color]_dead"
 
 	// Each carp gets a persistent speed personality: negative = faster, positive = slower.
-	// Range: ±3 ticks per step → fastest ~5.1s/tile, slowest ~1.3s/tile on avg vs base 9
 	speed_bias = rand(-3, 3)
-	// Stagger start times so carps don't all take their first step simultaneously.
-	next_step_time = world.time + rand(0, 10)  // 0–1 second random head-start spread
+	step_cb    = new Callback(src, PROC_REF(do_race_step))
 
 	update_icon()
 
@@ -98,3 +97,81 @@
 // Racing carps don't fight back
 /mob/living/simple_animal/hostile/carp/racing/attack_animal(mob/living/M)
 	return
+
+// ===========================
+//   SELF-SCHEDULED MOVEMENT
+// ===========================
+
+/**
+ * Kick off the movement timer for this carp at race start.
+ * Called once per carp by datum/carp_race.start_race().
+ * The optional start_offset staggers each carp's first step so
+ * they don't all lurch forward simultaneously.
+ */
+/mob/living/simple_animal/hostile/carp/racing/proc/begin_racing(start_offset)
+	if(QDELETED(src) || finished)
+		return
+	addtimer(step_cb, start_offset || 1)
+
+/**
+ * One movement tick.  Schedules itself for the next tick via addtimer.
+ * Base step_delay matches glide duration so the carp always appears to swim.
+ */
+/mob/living/simple_animal/hostile/carp/racing/proc/do_race_step()
+	if(QDELETED(src) || finished || !race || race.state != RACE_STATE_RACING)
+		return
+
+	// step_delay (ticks) = glide duration → no standing gap between steps
+	// clamp to [2, 6]: 2 = ~0.2 s/tile (max speed), 6 = ~0.6 s/tile (slowest)
+	var/step_delay = clamp(4 + speed_bias + rand(-1, 1), 2, 6)
+
+	// Post-confusion recovery: move slightly faster for recovery_boost steps
+	if(recovery_boost > 0)
+		step_delay = max(2, step_delay - 1)
+		recovery_boost--
+
+	step_counter++
+
+	// Every 8 tiles, re-roll the carp's speed bias to shuffle race positions
+	if(step_counter % 8 == 0)
+		speed_bias = rand(-3, 3)
+
+	// Random event every 5 forward steps (10% confusion, 30% burst)
+	if(step_counter % 5 == 0)
+		var/roll = rand(1, 10)
+		if(roll == 1)   // 10% chance — was roll <= 2 (20%)
+			// Confusion: back up one tile, then return to east after a pause
+			var/turf/back = get_step(src, WEST)
+			if(back)
+				dir = WEST
+				set_glide_size(DELAY2GLIDESIZE(step_delay))
+				Move(back)
+			// Pause (glide back + tiny rest), then resume east
+			addtimer(new Callback(src, PROC_REF(resume_east)), step_delay)
+			return
+		else if(roll <= 5)
+			// Burst: shorter delay this step → faster glide
+			step_delay = max(2, step_delay - 2)
+
+	// Normal eastward step
+	var/turf/next = get_step(src, EAST)
+	if(next)
+		dir = EAST
+		set_glide_size(DELAY2GLIDESIZE(step_delay))
+		Move(next)
+
+	// Schedule next step so it fires exactly when glide finishes
+	addtimer(step_cb, step_delay)
+
+/**
+ * After a confusion retreat, point the carp east and resume the normal cycle.
+ * Grants a speed boost for the next few steps to help recover lost ground.
+ * step_delay is passed so the return glide uses the same speed as the retreat.
+ */
+/mob/living/simple_animal/hostile/carp/racing/proc/resume_east()
+	if(QDELETED(src) || finished || !race || race.state != RACE_STATE_RACING)
+		return
+	dir = EAST
+	// Speed boost for the next 4 steps so the carp can catch up
+	recovery_boost = 4
+	addtimer(step_cb, 1)

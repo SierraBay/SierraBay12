@@ -10,9 +10,9 @@
 #define RACE_STATE_FINISHED  4  // Done, showing results
 
 // Timing (BYOND: 1 SECOND = 10 ticks of 0.1s each)
-#define RACE_BETTING_DURATION    (15 MINUTES)   // How long bets are open
-#define RACE_COUNTDOWN_DURATION  (5 MINUTES)   // Countdown before start
-#define RACE_RESET_DELAY         (5 MINUTES)   // Results display time after finish
+#define RACE_BETTING_DURATION    (1 MINUTES)   // How long bets are open
+#define RACE_COUNTDOWN_DURATION  (1 MINUTES)   // Countdown before start
+#define RACE_RESET_DELAY         (1 MINUTES)   // Results display time after finish
 #define RACE_MAX_DURATION        (5 MINUTES)    // Safety timeout for stuck races
 
 // Race parameters
@@ -31,12 +31,12 @@
 #define RACE_START_TAG_6   "carp_race_start_6"
 
 // Carp color display names (matching icon_sets in space_carp.dm)
-#define RACE_COLOR_NAME_1   "Purple Pivo"
-#define RACE_COLOR_NAME_2   "Blue Peter"
-#define RACE_COLOR_NAME_3   "Yellow Sholle"
-#define RACE_COLOR_NAME_4   "Lilac Charon"
-#define RACE_COLOR_NAME_5   "Rusty GarShe"
-#define RACE_COLOR_NAME_6   "Turquoise Captain"
+#define RACE_COLOR_NAME_1   "Pinkie Flash"
+#define RACE_COLOR_NAME_2   "Big Boss"
+#define RACE_COLOR_NAME_3   "Kolobok"
+#define RACE_COLOR_NAME_4   "Star Fire"
+#define RACE_COLOR_NAME_5   "Big Mac"
+#define RACE_COLOR_NAME_6   "Squid Ward"
 
 // HTML hex colors for betting terminal UI
 #define RACE_HTML_COLOR_1   COLOR_VIOLET

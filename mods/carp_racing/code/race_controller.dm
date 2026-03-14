@@ -160,7 +160,8 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 			if(T)
 				spawn_turf = T
 				break
-		tracking_cam = new /obj/machinery/camera/network/carp_race/tracking(spawn_turf)
+		var/turf/cam_spawn = locate(spawn_turf.x, cam_center_y, spawn_turf.z) || spawn_turf
+		tracking_cam = new /obj/machinery/camera/network/carp_race/tracking(cam_spawn)
 	begin_betting_phase()
 
 
@@ -175,30 +176,61 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	announced_2 = FALSE
 	announced_1  = FALSE
 	announced_halfpoint = FALSE
+	// Return tracking camera to start line center so viewers see carps lining up
+	if(tracking_cam && !QDELETED(tracking_cam) && cam_center_y)
+		for(var/turf/T in start_turfs)
+			if(T)
+				var/turf/start_view = locate(T.x, cam_center_y, T.z)
+				if(start_view)
+					tracking_cam.forceMove(start_view)
+				break
 	race.start_betting(start_turfs, finish_turf)
 
 /// Transition from betting to countdown
 /obj/machinery/race_controller/proc/start_countdown_phase()
 	race.start_countdown()
 
-/// Force-end a race that has run beyond RACE_MAX_DURATION
+/**
+ * Force-end a race that has run beyond RACE_MAX_DURATION.
+ * Unfinished carps are ranked by current X position (further east = better placement)
+ * and appended to finish_order before the result announcement fires.
+ */
 /obj/machinery/race_controller/proc/force_end_race()
 	if(race.state != RACE_STATE_RACING)
 		return
-	// Find the leading carp (highest x) as the winner
-	var/mob/living/simple_animal/hostile/carp/racing/leader = null
+
+	// Gather all carps that haven't crossed the line yet
+	var/list/remaining = list()
 	for(var/mob/living/simple_animal/hostile/carp/racing/C in race.racers)
-		if(QDELETED(C) || C.finished)
-			continue
-		if(!leader || C.x > leader.x)
-			leader = C
-	if(leader)
-		race.carp_finished(leader)
-	else
+		if(!QDELETED(C) && !C.finished)
+			remaining += C
+
+	if(!remaining.len)
+		// All carps already finished; push the race to FINISHED if somehow stuck
 		race.state          = RACE_STATE_FINISHED
 		race.phase_end_time = world.time + RACE_RESET_DELAY
-		race.radio_announce("Race ended due to timeout. Bets refunded.", "Carp Races")
-		race.refund_all()
+		race.announce_and_payout()
+		return
+
+	// Sort remaining carps by X descending (bubble sort; at most RACE_CARP_COUNT entries)
+	for(var/i = 1 to remaining.len)
+		for(var/j = 1 to remaining.len - i)
+			var/mob/living/simple_animal/hostile/carp/racing/A = remaining[j]
+			var/mob/living/simple_animal/hostile/carp/racing/B = remaining[j + 1]
+			if(A.x < B.x)
+				remaining.Swap(j, j + 1)
+
+	// Append them to finish_order in positional rank (leading carp = best placement)
+	for(var/mob/living/simple_animal/hostile/carp/racing/C in remaining)
+		C.finished        = TRUE
+		race.finish_order += C
+		if(!race.winner)
+			race.winner = C  // First in sorted list is the de-facto winner
+
+	race.state          = RACE_STATE_FINISHED
+	race.phase_end_time = world.time + RACE_RESET_DELAY
+	race.radio_announce("Race time limit reached! Standings determined by final position.")
+	race.announce_and_payout()
 
 /// Reset race datum and schedule next betting phase
 /obj/machinery/race_controller/proc/reset_race()
@@ -234,40 +266,11 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 				race.start_race()
 
 		if(RACE_STATE_RACING)
-			// Drive carp movement here instead of AI hooks,
-			// because SSai skips processing on z-levels with no players.
+			// Carp movement is now driven by per-carp addtimers (see racing_carp.dm).
+			// Process() only handles camera tracking and announcements.
 			var/mob/living/simple_animal/hostile/carp/racing/leader = null
 			for(var/mob/living/simple_animal/hostile/carp/racing/C in race.racers)
-				if(QDELETED(C) || C.finished || world.time < C.next_step_time)
-					continue
-				var/step_delay = max(4, 9 + C.speed_bias + rand(-2, 2))
-				var/turf/next = get_step(C, EAST)
-				if(next)
-					C.dir = EAST // Turn carp toward movement direction
-					C.set_glide_size(DELAY2GLIDESIZE(step_delay))
-					C.Move(next)
-					C.step_counter++
-				// Each carp moves at its own speed: base 9 + personal bias + some noise
-				C.next_step_time = world.time + step_delay
-				// Burst: 20% chance carp takes an immediate extra step
-				if(prob(20) && !C.finished)
-					var/turf/burst_next = get_step(C, EAST)
-					if(burst_next)
-						C.set_glide_size(DELAY2GLIDESIZE(step_delay))
-						C.Move(burst_next)
-						C.step_counter++
-				// Random event every ~5 steps
-				if(!C.finished && C.step_counter % 5 == 0 && C.step_counter > 0)
-					var/event_roll = rand(1, 10)
-					if(event_roll <= 3)
-						// Confusion: skip about 1.5 seconds
-						C.next_step_time += rand(8, 15)
-					else if(event_roll <= 6)
-						// Haste: next step is faster
-						C.next_step_time = max(world.time, C.next_step_time - rand(5, 10))
-					// 7-10: nothing happens
-				// Track leader by X
-				if(!leader || C.x > leader.x)
+				if(!QDELETED(C) && (!leader || C.x > leader.x))
 					leader = C
 			// Move the tracking camera to the lead carp (X = leader, Y = fixed track center)
 			if(leader && tracking_cam && !QDELETED(tracking_cam))

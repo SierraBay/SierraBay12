@@ -44,6 +44,9 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 	var/list/ghost_bets = list()
 	/// Sum of all ghost bets (display only)
 	var/ghost_pool = 0
+	/// Carps in the order they crossed the finish line (1st element = 1st place).
+	/// Populated incrementally by carp_finished(); used for standings display and announce.
+	var/list/finish_order = list()
 
 
 /datum/carp_race/New(obj/machinery/race_controller/C)
@@ -60,6 +63,7 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 	bets.Cut()
 	bet_accounts.Cut()
 	racers.Cut()
+	finish_order.Cut()
 	. = ..()
 
 
@@ -174,46 +178,77 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 	state          = RACE_STATE_RACING
 	phase_end_time = world.time + RACE_MAX_DURATION  // Safety timeout
 	radio_announce("START! Carps surge toward the finish line!")
+	// All carps start simultaneously — one-tick delay so timers fire after initialization.
+	for(var/mob/living/simple_animal/hostile/carp/racing/C in racers)
+		if(!QDELETED(C))
+			C.begin_racing(1)
 
 /**
  * Called by a racing carp when it crosses the finish line.
- * Only the first caller triggers the win.
+ * Records placement in finish_order and announces position on radio.
+ * Transitions to RACE_STATE_FINISHED only once every non-deleted carp has finished,
+ * so the race stays alive long enough for all carps to cross.
  */
 /datum/carp_race/proc/carp_finished(mob/living/simple_animal/hostile/carp/racing/C)
 	if(state != RACE_STATE_RACING)
 		return
 	if(C.finished)
 		return
-	C.finished = TRUE
+	C.finished    = TRUE
+	finish_order += C
 
+	// The first carp to finish is the payout winner
 	if(!winner)
-		// First carp to finish wins
-		winner         = C
-		state          = RACE_STATE_FINISHED
-		phase_end_time = world.time + RACE_RESET_DELAY
-		announce_and_payout()
+		winner = C
 
-/// Announce the winner and distribute winnings to bettors
+	// Announce this carp's placement
+	var/place     = finish_order.len
+	var/list/ord  = list("1st", "2nd", "3rd", "4th", "5th", "6th")
+	var/place_str = (place >= 1 && place <= ord.len) ? ord[place] : "[place]th"
+	radio_announce("[place_str] to cross the finish line: Carp #[C.race_number] ([get_carp_color_name(C.race_number)])!")
+
+	// Keep the race alive until every non-deleted carp has also finished
+	for(var/mob/living/simple_animal/hostile/carp/racing/R in racers)
+		if(!QDELETED(R) && !R.finished)
+			return  // still waiting for other carps
+
+	// All done — declare the race finished and pay out
+	state          = RACE_STATE_FINISHED
+	phase_end_time = world.time + RACE_RESET_DELAY
+	announce_and_payout()
+
+/// Announce the full race standings and distribute winnings to the winner's bettors.
+/// Called after every carp finishes naturally or by force_end_race on timeout.
 /datum/carp_race/proc/announce_and_payout()
 	if(!winner)
 		radio_announce("Race ended with no winner. Bets refunded.")
 		refund_all()
 		return
 
-	var/wnum   = winner.race_number
-	var/wname  = get_carp_color_name(wnum)
-	var/payout_info = ""
+	// Build a standings string: "1st: Carp #N (Name) | 2nd: ..."
+	var/list/ord  = list("1st", "2nd", "3rd", "4th", "5th", "6th")
+	var/standings = ""
+	for(var/i = 1 to finish_order.len)
+		var/mob/living/simple_animal/hostile/carp/racing/FC = finish_order[i]
+		if(QDELETED(FC))
+			continue
+		var/ps = (i >= 1 && i <= ord.len) ? ord[i] : "[i]th"
+		standings += "[ps]: Carp #[FC.race_number] ([get_carp_color_name(FC.race_number)])"
+		if(i < finish_order.len)
+			standings += " | "
 
-	// Coefficient = full pool (incl. ghost) / real winner bets only — same formula as payout()
+	// Compute announcer-facing payout coefficient
+	var/wnum = winner.race_number
+	var/payout_info = ""
 	var/list/wb = bets["[wnum]"]
 	var/real_winner_bets = 0
 	for(var/a in wb)
 		real_winner_bets += wb[a]
 	if(total_pool > 0 && real_winner_bets > 0)
 		var/ratio = round((total_pool * (1 - RACE_HOUSE_CUT)) / real_winner_bets, 0.01)
-		payout_info = " Odds: x[ratio]."
+		payout_info = " Odds x[ratio]."
 
-	radio_announce("FINISH! Winner: Carp #[wnum] ([wname])![payout_info] Payouts underway.")
+	radio_announce("RACE RESULTS — [standings][payout_info] Payouts underway.")
 	payout()
 
 /// Distribute winnings using parimutuel logic (90% pool to winners, 10% house)
@@ -296,6 +331,7 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 /// Reset to IDLE — called by the controller to prepare a new race
 /datum/carp_race/proc/reset_to_idle()
 	despawn_racers()
+	finish_order.Cut()  // Clear standings from the previous race
 	state          = RACE_STATE_IDLE
 	winner         = null
 	total_pool     = 0
