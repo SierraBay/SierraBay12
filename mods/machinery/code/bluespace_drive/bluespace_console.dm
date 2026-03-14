@@ -3,6 +3,14 @@
 	build_path = /obj/machinery/computer/bluespace_drive_console
 	origin_tech = list(TECH_DATA = 6, TECH_BLUESPACE = 9)
 
+/datum/design/circuit/bluespace_drive_console
+	name = "bluespace drive control console"
+	id = "bluespace drive control console"
+	req_tech = list(TECH_DATA = 6, TECH_BLUESPACE = 6)
+	build_path = /obj/item/stock_parts/circuitboard/bluespace_drive_console
+	sort_string = "BASAD"
+
+
 /**
  * # Bluespace Drive Control Console
  *
