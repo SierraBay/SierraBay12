@@ -1,3 +1,8 @@
+/obj/item/stock_parts/circuitboard/bluespace_drive_console
+	name = "circuit board (bluespace drive control console)"
+	build_path = /obj/machinery/computer/bluespace_drive_console
+	origin_tech = list(TECH_DATA = 6, TECH_BLUESPACE = 9)
+
 /**
  * # Bluespace Drive Control Console
  *
