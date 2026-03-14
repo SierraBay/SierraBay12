@@ -202,6 +202,13 @@
 	req_access = list(access_atmospherics)
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
+/area/engineering/atmos/burnout
+	name = "Third Deck - Engineering - Gas Heating"
+	icon_state = "atmos_storage"
+	sound_env = SMALL_ENCLOSED
+	req_access = list(access_atmospherics)
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
+
 /area/shield/thirddeck
 	name = "Third Deck - Shield Generator"
 
