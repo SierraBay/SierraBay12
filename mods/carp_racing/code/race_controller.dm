@@ -205,7 +205,7 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		if(!QDELETED(C) && !C.finished)
 			remaining += C
 
-	if(!remaining.len)
+	if(!length(remaining))
 		// All carps already finished; push the race to FINISHED if somehow stuck
 		race.state          = RACE_STATE_FINISHED
 		race.phase_end_time = world.time + RACE_RESET_DELAY
@@ -213,8 +213,8 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 		return
 
 	// Sort remaining carps by X descending (bubble sort; at most RACE_CARP_COUNT entries)
-	for(var/i = 1 to remaining.len)
-		for(var/j = 1 to remaining.len - i)
+	for(var/i = 1 to length(remaining))
+		for(var/j = 1 to length(remaining) - i)
 			var/mob/living/simple_animal/hostile/carp/racing/A = remaining[j]
 			var/mob/living/simple_animal/hostile/carp/racing/B = remaining[j + 1]
 			if(A.x < B.x)

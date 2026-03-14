@@ -202,9 +202,9 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 		winner = C
 
 	// Announce this carp's placement
-	var/place     = finish_order.len
+	var/place     = LAZYLEN(finish_order)
 	var/list/ord  = list("1st", "2nd", "3rd", "4th", "5th", "6th")
-	var/place_str = (place >= 1 && place <= ord.len) ? ord[place] : "[place]th"
+	var/place_str = (place >= 1 && place <= length(ord)) ? ord[place] : "[place]th"
 	radio_announce("[place_str] to cross the finish line: Carp #[C.race_number] ([get_carp_color_name(C.race_number)])!")
 
 	// Keep the race alive until every non-deleted carp has also finished
@@ -228,13 +228,13 @@ GLOBAL_TYPED_NEW(carp_race_announcer, /obj/item/device/radio/announcer/carp_raci
 	// Build a standings string: "1st: Carp #N (Name) | 2nd: ..."
 	var/list/ord  = list("1st", "2nd", "3rd", "4th", "5th", "6th")
 	var/standings = ""
-	for(var/i = 1 to finish_order.len)
+	for(var/i = 1 to LAZYLEN(finish_order))
 		var/mob/living/simple_animal/hostile/carp/racing/FC = finish_order[i]
 		if(QDELETED(FC))
 			continue
-		var/ps = (i >= 1 && i <= ord.len) ? ord[i] : "[i]th"
+		var/ps = (i >= 1 && i <= length(ord)) ? ord[i] : "[i]th"
 		standings += "[ps]: Carp #[FC.race_number] ([get_carp_color_name(FC.race_number)])"
-		if(i < finish_order.len)
+		if(i < LAZYLEN(finish_order))
 			standings += " | "
 
 	// Compute announcer-facing payout coefficient
