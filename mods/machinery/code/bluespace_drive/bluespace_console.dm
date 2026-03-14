@@ -106,9 +106,6 @@
 	if(..())
 		return TOPIC_HANDLED
 
-	if(isghost(user))
-		return TOPIC_HANDLED
-
 	if(!linked_drive)
 		return TOPIC_HANDLED
 
