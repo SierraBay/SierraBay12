@@ -10,9 +10,9 @@
 #define RACE_STATE_FINISHED  4  // Done, showing results
 
 // Timing (BYOND: 1 SECOND = 10 ticks of 0.1s each)
-#define RACE_BETTING_DURATION    (1 MINUTES)   // How long bets are open
-#define RACE_COUNTDOWN_DURATION  (1 MINUTES)   // Countdown before start
-#define RACE_RESET_DELAY         (1 MINUTES)   // Results display time after finish
+#define RACE_BETTING_DURATION    (15 MINUTES)   // How long bets are open
+#define RACE_COUNTDOWN_DURATION  (5 MINUTES)   // Countdown before start
+#define RACE_RESET_DELAY         (5 MINUTES)   // Results display time after finish
 #define RACE_MAX_DURATION        (5 MINUTES)    // Safety timeout for stuck races
 
 // Race parameters
