@@ -109,6 +109,14 @@
 	var/environment_sample_phase_offset = 0
 	var/idle_sample_interval = 2 SECONDS
 	var/active_sample_interval = 0
+	var/list/tlv_pressure_cache
+	var/list/tlv_temperature_cache
+	var/list/tlv_oxygen_cache
+	var/list/tlv_co2_cache
+	var/list/tlv_other_cache
+	var/passive_sampling_allowed = FALSE
+	var/alarm_active_cached = FALSE
+	var/environment_sample_running = FALSE
 	var/idle_sample_alignment_timer
 	var/idle_sample_loop_timer
 
@@ -128,6 +136,7 @@
 	. = ..()
 	TLV["temperature"] = list(T0C-26, T0C, T0C+75, T0C+85) // K
 	TLV["pressure"] = list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.30,ONE_ATMOSPHERE*1.50) /* kpa */
+	rebuild_threshold_cache()
 
 /obj/machinery/alarm/nobreach
 	breach_pressure = -1
@@ -141,6 +150,11 @@
 	req_access = list(access_rd, access_atmospherics, access_engine_equip)
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+30, T0C+40) // K
 	target_temperature = T0C+10
+
+/obj/machinery/alarm/server/Initialize()
+	. = ..()
+	TLV["temperature"] = list(T0C-26, T0C, T0C+30, T0C+40) // K
+	rebuild_threshold_cache()
 
 /obj/machinery/alarm/Destroy()
 	stop_idle_sample_timers()
@@ -181,6 +195,7 @@
 		if(!env_info.important_gasses[g])
 			trace_gas += g
 
+	rebuild_threshold_cache()
 	set_frequency(frequency)
 	update_icon()
 	environment_sample_phase_offset = rand(0, max(0, idle_sample_interval - 1))
@@ -189,32 +204,68 @@
 
 /obj/machinery/alarm/power_change()
 	. = ..()
-	sync_processing_state()
+	request_immediate_environment_resample()
 
 /obj/machinery/alarm/on_death()
 	. = ..()
-	sync_processing_state()
+	request_immediate_environment_resample()
 
 /obj/machinery/alarm/on_revive()
 	. = ..()
-	sync_processing_state()
+	request_immediate_environment_resample()
+
+/obj/machinery/alarm/proc/rebuild_threshold_cache()
+	tlv_oxygen_cache = TLV[GAS_OXYGEN]
+	tlv_co2_cache = TLV[GAS_CO2]
+	tlv_other_cache = TLV["other"]
+	tlv_pressure_cache = TLV["pressure"]
+	tlv_temperature_cache = TLV["temperature"]
+
+/obj/machinery/alarm/proc/recompute_passive_sampling_allowed()
+	passive_sampling_allowed = !inoperable() && !shorted && buildstage == 2 && istype(loc, /turf/simulated)
+	return passive_sampling_allowed
+
+/obj/machinery/alarm/proc/recompute_alarm_active_cached()
+	alarm_active_cached = regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL
+	return alarm_active_cached
 
 /obj/machinery/alarm/proc/can_idle_sample()
-	return !inoperable() && !shorted && buildstage == 2 && istype(loc, /turf/simulated)
+	return passive_sampling_allowed
 
 /obj/machinery/alarm/proc/needs_processing()
-	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL || world.time >= next_environment_sample_at
+	return passive_sampling_allowed && alarm_active_cached
 
 /obj/machinery/alarm/proc/sync_processing_state()
-	if(is_alarm_active_state() || (can_idle_sample() && world.time >= next_environment_sample_at))
+	recompute_passive_sampling_allowed()
+	recompute_alarm_active_cached()
+	if(!passive_sampling_allowed)
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	if(alarm_active_cached)
 		stop_idle_sample_timers()
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-	else
+		return
+	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	schedule_idle_sample()
+
+/obj/machinery/alarm/proc/request_immediate_environment_resample()
+	next_environment_sample_at = world.time
+	recompute_passive_sampling_allowed()
+	recompute_alarm_active_cached()
+	if(environment_sample_running || (processing_flags & MACHINERY_PROCESS_SELF))
+		stop_idle_sample_timers()
+		return
+	if(!passive_sampling_allowed)
+		stop_idle_sample_timers()
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-		if(can_idle_sample())
-			schedule_idle_sample()
-		else
-			stop_idle_sample_timers()
+		return
+	if(alarm_active_cached)
+		stop_idle_sample_timers()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	stop_idle_sample_timers()
+	passive_sample_tick()
 
 /obj/machinery/alarm/proc/stop_idle_sample_timers()
 	if(idle_sample_alignment_timer)
@@ -232,20 +283,51 @@
 
 /obj/machinery/alarm/proc/begin_idle_sample_loop()
 	idle_sample_alignment_timer = null
-	if(QDELETED(src) || !can_idle_sample())
+	recompute_passive_sampling_allowed()
+	if(QDELETED(src) || !passive_sampling_allowed)
 		return
 	if(!idle_sample_loop_timer)
-		idle_sample_loop_timer = addtimer(new Callback(src, PROC_REF(idle_sample_tick)), idle_sample_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
-	idle_sample_tick()
+		idle_sample_loop_timer = addtimer(new Callback(src, PROC_REF(passive_sample_tick)), idle_sample_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+	passive_sample_tick()
 
 /obj/machinery/alarm/proc/idle_sample_tick()
+	passive_sample_tick()
+
+/obj/machinery/alarm/proc/passive_sample_tick()
 	if(QDELETED(src))
 		return
-	if(is_alarm_active_state() || !can_idle_sample())
-		sync_processing_state()
+	recompute_passive_sampling_allowed()
+	if(!passive_sampling_allowed)
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		return
+	recompute_alarm_active_cached()
+	if(alarm_active_cached)
+		stop_idle_sample_timers()
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+
+	var/turf/simulated/location = loc
+	if(!istype(location))
+		passive_sampling_allowed = FALSE
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+
+	var/datum/gas_mixture/environment = location.return_air()
 	next_environment_sample_at = world.time
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	environment_sample_running = TRUE
+	var/should_stay_active = run_environment_sample(location, environment)
+	environment_sample_running = FALSE
+
+	if(should_stay_active)
+		stop_idle_sample_timers()
+		next_environment_sample_at = world.time + active_sample_interval
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+
+	set_next_idle_sample_time()
+	schedule_idle_sample()
 
 /obj/machinery/alarm/proc/set_next_idle_sample_time()
 	var/delay = idle_sample_interval - ((world.time - environment_sample_phase_offset) % idle_sample_interval)
@@ -259,37 +341,66 @@
 	return ..()
 
 /obj/machinery/alarm/Process()
-	if(!needs_processing())
-		sync_processing_state()
+	if(!alarm_active_cached)
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(passive_sampling_allowed)
+			schedule_idle_sample()
+		else
+			stop_idle_sample_timers()
 		return PROCESS_KILL
 
-	if(inoperable() || shorted || buildstage != 2)
-		sync_processing_state()
+	recompute_passive_sampling_allowed()
+	if(!passive_sampling_allowed)
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		return PROCESS_KILL
 
 	var/turf/simulated/location = loc
 	if(!istype(location))
-		sync_processing_state()
-		return PROCESS_KILL //returns if loc is not simulated
+		passive_sampling_allowed = FALSE
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return PROCESS_KILL
 
 	var/datum/gas_mixture/environment = location.return_air()
+	environment_sample_running = TRUE
+	var/should_stay_active = run_environment_sample(location, environment)
+	environment_sample_running = FALSE
 
-	//Handle temperature adjustment here.
-	if(environment.return_pressure() > ONE_ATMOSPHERE*0.05)
+	if(should_stay_active)
+		next_environment_sample_at = world.time + active_sample_interval
+		return 0
+
+	set_next_idle_sample_time()
+	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	schedule_idle_sample()
+	return PROCESS_KILL
+
+/obj/machinery/alarm/proc/is_alarm_active_state()
+	return alarm_active_cached
+
+/obj/machinery/alarm/proc/run_environment_sample(turf/simulated/location, datum/gas_mixture/environment)
+	if(!tlv_pressure_cache || !tlv_temperature_cache || !tlv_oxygen_cache || !tlv_co2_cache || !tlv_other_cache)
+		rebuild_threshold_cache()
+
+	var/environment_pressure = environment.return_pressure()
+
+	// Handle temperature adjustment before evaluating the new local atmosphere.
+	if(environment_pressure > ONE_ATMOSPHERE*0.05)
 		handle_heating_cooling(environment)
+		environment_pressure = environment.return_pressure()
 
 	var/old_level = danger_level
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	var/environment_pressure = environment.return_pressure()
 	var/other_moles = 0
 	for(var/g in trace_gas)
 		other_moles += environment.gas[g]
 
-	pressure_dangerlevel = GET_DANGER_LEVEL(environment_pressure, TLV["pressure"])
-	oxygen_dangerlevel = GET_DANGER_LEVEL(environment.gas[GAS_OXYGEN] * partial_pressure, TLV[GAS_OXYGEN])
-	co2_dangerlevel = GET_DANGER_LEVEL(environment.gas[GAS_CO2] * partial_pressure, TLV[GAS_CO2])
-	temperature_dangerlevel = GET_DANGER_LEVEL(environment.temperature, TLV["temperature"])
-	other_dangerlevel = GET_DANGER_LEVEL(other_moles * partial_pressure, TLV["other"])
+	pressure_dangerlevel = GET_DANGER_LEVEL(environment_pressure, tlv_pressure_cache)
+	oxygen_dangerlevel = GET_DANGER_LEVEL(environment.gas[GAS_OXYGEN] * partial_pressure, tlv_oxygen_cache)
+	co2_dangerlevel = GET_DANGER_LEVEL(environment.gas[GAS_CO2] * partial_pressure, tlv_co2_cache)
+	temperature_dangerlevel = GET_DANGER_LEVEL(environment.temperature, tlv_temperature_cache)
+	other_dangerlevel = GET_DANGER_LEVEL(other_moles * partial_pressure, tlv_other_cache)
 	danger_level = max(
 		pressure_dangerlevel,
 		oxygen_dangerlevel,
@@ -298,47 +409,33 @@
 		temperature_dangerlevel
 	)
 
-	if (old_level != danger_level)
+	if(old_level != danger_level)
 		if(danger_level == 2)
 			playsound(src.loc, 'sound/machines/airalarm.ogg', 25, 0, 4)
 		apply_danger_level(danger_level)
 
-	if (pressure_dangerlevel != 0)
-		if (breach_detected())
-			mode = AALARM_MODE_OFF
-			apply_mode()
-
-	if (mode==AALARM_MODE_CYCLE && environment.return_pressure()<ONE_ATMOSPHERE*0.05)
-		breach_start_cooldown()
-		mode=AALARM_MODE_FILL
+	if(pressure_dangerlevel != 0 && breach_detected_from_pressure(environment_pressure))
+		mode = AALARM_MODE_OFF
 		apply_mode()
 
-	//atmos computer remote controll stuff
+	if(mode == AALARM_MODE_CYCLE && environment_pressure < ONE_ATMOSPHERE*0.05)
+		breach_start_cooldown()
+		mode = AALARM_MODE_FILL
+		apply_mode()
+
 	switch(rcon_setting)
 		if(RCON_NO)
 			remote_control = 0
 		if(RCON_AUTO)
-			if(danger_level == 2)
-				remote_control = 1
-			else
-				remote_control = 0
+			remote_control = (danger_level == 2)
 		if(RCON_YES)
 			remote_control = 1
 
-	if(is_alarm_active_state())
-		next_environment_sample_at = world.time + active_sample_interval
-	else
-		set_next_idle_sample_time()
-		sync_processing_state()
-		return PROCESS_KILL
-
-	return 0
-
-/obj/machinery/alarm/proc/is_alarm_active_state()
-	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL
+	recompute_alarm_active_cached()
+	return alarm_active_cached
 
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
-	var/target_temperature_dangerlevel = GET_DANGER_LEVEL(target_temperature, TLV["temperature"])
+	var/target_temperature_dangerlevel = GET_DANGER_LEVEL(target_temperature, tlv_temperature_cache)
 	if (!regulating_temperature)
 		//check for when we should start adjusting temperature
 		if(!target_temperature_dangerlevel && abs(environment.temperature - target_temperature) > 2.0)
@@ -397,17 +494,17 @@
 		return FALSE
 
 	var/datum/gas_mixture/environment = location.return_air()
-	var/environment_pressure = environment.return_pressure()
+	return breach_detected_from_pressure(environment.return_pressure())
 
-	if (environment_pressure <= breach_pressure)
-		if (!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
+/obj/machinery/alarm/proc/breach_detected_from_pressure(environment_pressure)
+	if(environment_pressure <= breach_pressure)
+		if(!(mode == AALARM_MODE_PANIC || mode == AALARM_MODE_CYCLE))
 			return TRUE
-
 	return FALSE
 
 /obj/machinery/alarm/proc/breach_end_cooldown()
 	breach_cooldown = FALSE
-	sync_processing_state()
+	request_immediate_environment_resample()
 	return
 
 //disables breach detection temporarily
@@ -523,7 +620,6 @@
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
 	for (var/obj/machinery/alarm/AA in alarm_area)
 		AA.mode = mode
-		AA.next_environment_sample_at = world.time
 
 	breach_start_cooldown()
 
@@ -559,7 +655,7 @@
 				send_signal(device_id, list("set_power"= 0) )
 
 	for(var/obj/machinery/alarm/AA in alarm_area)
-		AA.sync_processing_state()
+		AA.request_immediate_environment_resample()
 
 /obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
 	if (report_danger_level && alarm_area.atmosalert(new_danger_level, src))
@@ -764,7 +860,7 @@
 				rcon_setting = RCON_AUTO
 			if(RCON_YES)
 				rcon_setting = RCON_YES
-		sync_processing_state()
+		request_immediate_environment_resample()
 		return TOPIC_REFRESH
 
 	if(href_list["temperature"])
@@ -777,8 +873,7 @@
 				to_chat(user, "Temperature must be between [min_temperature]C and [max_temperature]C")
 			else
 				target_temperature = input_temperature + T0C
-				next_environment_sample_at = world.time
-				sync_processing_state()
+				request_immediate_environment_resample()
 		return TOPIC_REFRESH
 
 	// hrefs that need the AA unlocked -walter0o
@@ -824,8 +919,7 @@
 						breach_pressure = 50*ONE_ATMOSPHERE
 					else
 						breach_pressure = round(newval,0.01)
-					next_environment_sample_at = world.time
-					sync_processing_state()
+					request_immediate_environment_resample()
 
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -875,7 +969,6 @@
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
 
-					next_environment_sample_at = world.time
 					apply_mode()
 					return TOPIC_REFRESH
 
@@ -923,7 +1016,7 @@
 				new/obj/item/stack/cable_coil(get_turf(src), 5)
 				buildstage = 1
 				update_icon()
-				sync_processing_state()
+				request_immediate_environment_resample()
 				return TRUE
 
 			if (isid(W) || istype(W, /obj/item/modular_computer))
@@ -943,9 +1036,8 @@
 				if (C.use(5))
 					to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 					buildstage = 2
-					next_environment_sample_at = world.time
 					update_icon()
-					sync_processing_state()
+					request_immediate_environment_resample()
 					return TRUE
 				else
 					to_chat(user, SPAN_WARNING("You need 5 pieces of cable to do wire \the [src]."))
@@ -962,7 +1054,7 @@
 				circuit.dropInto(user.loc)
 				buildstage = 0
 				update_icon()
-				sync_processing_state()
+				request_immediate_environment_resample()
 				return TRUE
 
 		if(0)
@@ -971,7 +1063,7 @@
 				qdel(W)
 				buildstage = 1
 				update_icon()
-				sync_processing_state()
+				request_immediate_environment_resample()
 				return TRUE
 
 			if (isWrench(W))

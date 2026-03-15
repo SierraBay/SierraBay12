@@ -44,9 +44,8 @@ var/global/const/AALARM_WIRE_AALARM = 16
 		if(AALARM_WIRE_POWER)
 			A.shock(usr, 50)
 			A.shorted = !mended
-			A.next_environment_sample_at = world.time
 			A.update_icon()
-			A.sync_processing_state()
+			A.request_immediate_environment_resample()
 //			log_debug("Power wire cut")
 
 
@@ -81,16 +80,14 @@ var/global/const/AALARM_WIRE_AALARM = 16
 
 			if(A.shorted == 0)
 				A.shorted = 1
-				A.next_environment_sample_at = world.time
 				A.update_icon()
-				A.sync_processing_state()
+				A.request_immediate_environment_resample()
 
 			spawn(12000)
 				if(A.shorted == 1)
 					A.shorted = 0
-					A.next_environment_sample_at = world.time
 					A.update_icon()
-					A.sync_processing_state()
+					A.request_immediate_environment_resample()
 
 
 		if (AALARM_WIRE_AI_CONTROL)
