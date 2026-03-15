@@ -23,11 +23,11 @@
 	icon_state = "maintcentral"
 
 /area/maintenance/thirddeck/aftstarboard
-	name = "Second Deck - Maintenance - Aft-Starboard "
+	name = "Third Deck - Maintenance - Aft-Starboard "
 	icon_state = "asmaint"
 
 /area/maintenance/thirddeck/aftport
-	name = "Second Deck - Maintenance - Aft-Port"
+	name = "Third Deck - Maintenance - Aft-Port"
 	icon_state = "apmaint"
 
 /area/maintenance/thirddeck/foreport
@@ -201,20 +201,6 @@
 	sound_env = SMALL_ENCLOSED
 	req_access = list(access_atmospherics)
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
-/area/turret_protected/ai_cyborg_station
-	name = "Third Deck - Cyborg Station"
-	icon_state = "ai_cyborg"
-	sound_env = SMALL_ENCLOSED
-	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
-	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
-/area/turret_protected/ai_cyborg_upload
-	name = "Third Deck - Cyborg Upload"
-	icon_state = "ai_cyborg"
-	sound_env = SMALL_ENCLOSED
-	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/shield/thirddeck
 	name = "Third Deck - Shield Generator"

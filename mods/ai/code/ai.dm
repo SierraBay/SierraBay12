@@ -10,6 +10,7 @@
 	add_language(LANGUAGE_SIIK_MAAS, TRUE)
 	add_language(LANGUAGE_LEGALESE, TRUE)
 	add_language(LANGUAGE_RESOMI, TRUE)
+	set_extension(src, /datum/extension/interactive/ntos/ai)
 
 
 // New verbs

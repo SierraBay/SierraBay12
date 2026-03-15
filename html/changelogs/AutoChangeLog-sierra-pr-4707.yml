@@ -1,4 +1,0 @@
-author: dorou.
-changes:
-  - bugfix: Пофиксил баг с не вставляемыми батарейками в cell rack
-delete-after: true
