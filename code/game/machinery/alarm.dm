@@ -224,7 +224,7 @@
 	return tlv_threshold_cache_valid(tlv_oxygen_cache) && tlv_threshold_cache_valid(tlv_co2_cache) && tlv_threshold_cache_valid(tlv_other_cache) && tlv_threshold_cache_valid(tlv_pressure_cache) && tlv_threshold_cache_valid(tlv_temperature_cache)
 
 /obj/machinery/alarm/proc/tlv_threshold_cache_valid(list/thresholds)
-	return islist(thresholds) && thresholds.len >= 4
+	return islist(thresholds) && length(thresholds) >= 4
 
 /obj/machinery/alarm/proc/ensure_threshold_cache_ready()
 	if(tlv_threshold_cache_valid(tlv_oxygen_cache) && tlv_threshold_cache_valid(tlv_co2_cache) && tlv_threshold_cache_valid(tlv_other_cache) && tlv_threshold_cache_valid(tlv_pressure_cache) && tlv_threshold_cache_valid(tlv_temperature_cache))

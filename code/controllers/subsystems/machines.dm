@@ -322,7 +322,7 @@ SUBSYSTEM_DEF(machines)
 
 	var/report = jointext(report_lines, "\n")
 	if(usr)
-		usr << browse("<pre>[report]</pre>", "window=ssmachines_type_debug;size=900x700")
+		to_target(usr, browse("<pre>[report]</pre>", "window=ssmachines_type_debug;size=900x700"))
 	return report
 
 
