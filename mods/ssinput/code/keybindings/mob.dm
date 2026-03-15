@@ -194,3 +194,14 @@
 		return
 
 	M.ClickOn(hovered, "", TRUE)
+
+/datum/keybinding/mob/stop_pulling
+	hotkey_keys = list("C", "Delete")
+	name = "stop_pulling"
+	full_name = "Stop Pulling"
+	description = "Let go of the object and stop pulling"
+
+/datum/keybinding/mob/stop_pulling/down(client/user)
+	var/mob/M = user.mob
+	M.stop_pulling()
+	return TRUE
