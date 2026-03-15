@@ -1,0 +1,5 @@
+author: thekekman666
+changes:
+  - tweak: Сделал Лиррис читаемым
+  - tweak: Добавил роботам диалекты
+delete-after: true
