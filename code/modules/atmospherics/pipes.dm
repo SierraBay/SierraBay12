@@ -181,6 +181,7 @@
 	var/pipe_icon = "" //what kind of pipe it is and from which dmi is the icon manager getting its icons, "" for simple pipes, "hepipe" for HE pipes, "hejunction" for HE junctions
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
+	init_flags = 0
 
 	volume = ATMOS_DEFAULT_VOLUME_PIPE
 
@@ -208,9 +209,11 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/Process()
-	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
-		..()
-	else if(leaking)
+	if(!parent)
+		build_network()
+	if(!parent && !QDELETED(src))
+		return 0
+	if(leaking)
 		parent.mingle_with_turf(loc, volume)
 		var/air = parent.air && parent.air.return_pressure()
 		if(!sound_token && air)
@@ -446,6 +449,7 @@
 	icon_state = ""
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
+	init_flags = 0
 	volume = ATMOS_DEFAULT_VOLUME_PIPE * 1.5
 
 	dir = SOUTH
@@ -473,9 +477,10 @@
 
 /obj/machinery/atmospherics/pipe/manifold/Process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		build_network()
+	if(!parent && !QDELETED(src))
+		return 0
+	return PROCESS_KILL
 
 /obj/machinery/atmospherics/pipe/manifold/Destroy()
 	if(node1)
@@ -714,6 +719,7 @@
 	icon_state = ""
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes."
+	init_flags = 0
 	volume = ATMOS_DEFAULT_VOLUME_PIPE * 2
 
 	dir = SOUTH
@@ -738,9 +744,10 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/Process()
 	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
+		build_network()
+	if(!parent && !QDELETED(src))
+		return 0
+	return PROCESS_KILL
 
 /obj/machinery/atmospherics/pipe/manifold4w/Destroy()
 	if(node1)
