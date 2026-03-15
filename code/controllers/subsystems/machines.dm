@@ -1,7 +1,8 @@
 #define SSMACHINES_PIPENETS 1
 #define SSMACHINES_MACHINERY 2
-#define SSMACHINES_POWERNETS 3
-#define SSMACHINES_POWER_OBJECTS 4
+#define SSMACHINES_APCS 3
+#define SSMACHINES_POWERNETS 4
+#define SSMACHINES_POWER_OBJECTS 5
 
 
 #define START_PROCESSING_IN_LIST(Datum, List) \
@@ -33,6 +34,9 @@ if(Datum.is_processing) {\
 #define START_PROCESSING_POWER_OBJECT(Datum) START_PROCESSING_IN_LIST(Datum, power_objects)
 #define STOP_PROCESSING_POWER_OBJECT(Datum) STOP_PROCESSING_IN_LIST(Datum, power_objects)
 
+#define START_PROCESSING_APC(Datum) START_PROCESSING_IN_LIST(Datum, processing_apcs)
+#define STOP_PROCESSING_APC(Datum) STOP_PROCESSING_IN_LIST(Datum, processing_apcs)
+
 
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
@@ -42,15 +46,22 @@ SUBSYSTEM_DEF(machines)
 	var/static/current_step = SSMACHINES_PIPENETS
 	var/static/cost_pipenets = 0
 	var/static/cost_machinery = 0
+	var/static/cost_apcs = 0
 	var/static/cost_powernets = 0
 	var/static/cost_power_objects = 0
 	var/static/list/pipenets = list()
 	var/static/list/powernets = list()
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
+	var/static/list/processing_apcs = list()
 	var/static/list/queue = list()
 	var/static/list/machinery = list()
 	var/static/list/machinery_by_type = list()
+	var/debug_type_breakdown = FALSE
+	var/list/debug_machine_process_counts = list()
+	var/list/debug_machine_process_costs = list()
+	var/list/debug_part_process_counts = list()
+	var/list/debug_part_process_costs = list()
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
@@ -79,6 +90,14 @@ SUBSYSTEM_DEF(machines)
 		timer = world.tick_usage
 		process_machinery(resumed, no_mc_tick)
 		cost_machinery = MC_AVERAGE(cost_machinery, (world.tick_usage - timer) * world.tick_lag)
+		if(state != SS_RUNNING)
+			return
+		current_step = SSMACHINES_APCS
+		resumed = FALSE
+	if (current_step == SSMACHINES_APCS)
+		timer = world.tick_usage
+		process_apcs(resumed, no_mc_tick)
+		cost_apcs = MC_AVERAGE(cost_apcs, (world.tick_usage - timer) * world.tick_lag)
 		if(state != SS_RUNNING)
 			return
 		current_step = SSMACHINES_POWERNETS
@@ -122,6 +141,18 @@ SUBSYSTEM_DEF(machines)
 	var/area/A = get_area(machine)
 	if(A)
 		LAZYREMOVE(A.machinery_list, machine)
+
+/datum/controller/subsystem/machines/proc/register_processing_apc(obj/machinery/power/apc/apc)
+	if(!apc)
+		CRASH("Null APC was tried to be registered for processing")
+
+	START_PROCESSING_APC(apc)
+
+/datum/controller/subsystem/machines/proc/unregister_processing_apc(obj/machinery/power/apc/apc)
+	if(!apc)
+		CRASH("Null APC was tried to be unregistered from processing")
+
+	STOP_PROCESSING_APC(apc)
 
 /datum/controller/subsystem/machines/proc/get_machinery_of_type(obj/machinery/machinery_type)
 	if(!machinery_type)
@@ -182,19 +213,117 @@ SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines/UpdateStat(time)
 	if (PreventUpdateStat(time))
 		return ..()
+	var/total_processing = length(processing) + length(processing_apcs)
 	..({"\
 		Queues: \
 		Pipes [length(pipenets)] \
 		Machines [length(processing)] \
+		APCs [length(processing_apcs)] \
 		Networks [length(powernets)] \
 		Objects [length(power_objects)]\n\
 		Costs: \
 		Pipes [Round(cost_pipenets)] \
 		Machines [Round(cost_machinery)] \
+		APCs [Round(cost_apcs)] \
 		Networks [Round(cost_powernets)] \
-		Objects [Round(cost_power_objects)]\n\
-		Overall [Roundm(cost ? length(processing) / cost : 0, 0.1)]
+		Objects [Round(cost_power_objects)]\
+		[debug_type_breakdown ? " Debug ON" : ""]\n\
+		Overall [Roundm(cost ? total_processing / cost : 0, 0.1)]
 	"})
+
+/datum/controller/subsystem/machines/VV_static()
+	return ..() + list(
+		"debug_type_breakdown",
+		"debug_machine_process_counts",
+		"debug_machine_process_costs",
+		"debug_part_process_counts",
+		"debug_part_process_costs"
+	)
+
+/datum/controller/subsystem/machines/proc/reset_type_debug(notify = TRUE)
+	debug_machine_process_counts.Cut()
+	debug_machine_process_costs.Cut()
+	debug_part_process_counts.Cut()
+	debug_part_process_costs.Cut()
+	if(notify && usr)
+		to_chat(usr, SPAN_NOTICE("SSmachines type breakdown counters reset."))
+
+/datum/controller/subsystem/machines/proc/toggle_type_debug()
+	if(usr && !check_rights(R_DEBUG))
+		return
+
+	debug_type_breakdown = !debug_type_breakdown
+	if(debug_type_breakdown)
+		reset_type_debug(FALSE)
+
+	if(usr)
+		to_chat(usr, SPAN_NOTICE("SSmachines type breakdown debug [debug_type_breakdown ? "enabled" : "disabled"]."))
+
+/datum/controller/subsystem/machines/proc/debug_record_cost(list/counts, list/costs, key, start_tick_usage, start_time)
+	if(isnull(key))
+		return
+
+	counts[key] = (counts[key] || 0) + 1
+	var/tick_cost = world.tick_usage - start_tick_usage + ((world.time - start_time) / world.tick_lag * 100)
+	costs[key] = (costs[key] || 0) + max(tick_cost * world.tick_lag, 0)
+
+/datum/controller/subsystem/machines/proc/get_processing_type_breakdown()
+	var/list/breakdown = list()
+	for(var/obj/machinery/machine as anything in processing)
+		breakdown[machine.type] = (breakdown[machine.type] || 0) + 1
+	sortTim(breakdown, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
+	return breakdown
+
+/datum/controller/subsystem/machines/proc/format_type_debug_section(title, list/counts, list/costs, limit = 15)
+	var/list/lines = list("[title]:")
+	if(!length(costs))
+		lines += "  none"
+		return jointext(lines, "\n")
+
+	var/list/ranked = costs.Copy()
+	sortTim(ranked, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
+
+	var/i = 0
+	for(var/key in ranked)
+		i++
+		if(i > limit)
+			break
+		lines += "  [i]. [key] | cost [Round(costs[key], 0.001)] | calls [counts[key] || 0]"
+
+	return jointext(lines, "\n")
+
+/datum/controller/subsystem/machines/proc/dump_type_debug(limit = 15)
+	if(usr && !check_rights(R_DEBUG))
+		return
+
+	var/list/report_lines = list()
+	report_lines += "SSmachines type breakdown"
+	report_lines += "Debug enabled: [debug_type_breakdown ? "yes" : "no"]"
+	report_lines += "Current machinery queue: [length(processing)]"
+	report_lines += "Current APC queue: [length(processing_apcs)]"
+
+	var/list/current_breakdown = get_processing_type_breakdown()
+	report_lines += ""
+	report_lines += "Current active machinery types:"
+	if(length(current_breakdown))
+		var/i = 0
+		for(var/key in current_breakdown)
+			i++
+			if(i > limit)
+				break
+			report_lines += "  [i]. [key] | active [current_breakdown[key]]"
+	else
+		report_lines += "  none"
+
+	report_lines += ""
+	report_lines += format_type_debug_section("Machine Process totals", debug_machine_process_counts, debug_machine_process_costs, limit)
+	report_lines += ""
+	report_lines += format_type_debug_section("Component machine_process totals", debug_part_process_counts, debug_part_process_costs, limit)
+
+	var/report = jointext(report_lines, "\n")
+	if(usr)
+		usr << browse("<pre>[report]</pre>", "window=ssmachines_type_debug;size=900x700")
+	return report
 
 
 /datum/controller/subsystem/machines/proc/process_pipenets(resumed, no_mc_tick)
@@ -230,11 +359,53 @@ SUBSYSTEM_DEF(machines)
 
 		if(machine.processing_flags & MACHINERY_PROCESS_COMPONENTS)
 			for(var/obj/item/stock_parts/part as anything in machine.processing_parts)
-				if(part.machine_process(machine) == PROCESS_KILL)
+				var/part_result
+				if(debug_type_breakdown)
+					var/part_start_tick_usage = world.tick_usage
+					var/part_start_time = world.time
+					part_result = part.machine_process(machine)
+					debug_record_cost(debug_part_process_counts, debug_part_process_costs, part.type, part_start_tick_usage, part_start_time)
+				else
+					part_result = part.machine_process(machine)
+				if(part_result == PROCESS_KILL)
 					part.stop_processing()
 
-		if((machine.processing_flags & MACHINERY_PROCESS_SELF) && machine.Process(wait) == PROCESS_KILL)
-			STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_SELF)
+		if(machine.processing_flags & MACHINERY_PROCESS_SELF)
+			var/process_result
+			if(debug_type_breakdown)
+				var/machine_start_tick_usage = world.tick_usage
+				var/machine_start_time = world.time
+				process_result = machine.Process(wait)
+				debug_record_cost(debug_machine_process_counts, debug_machine_process_costs, machine.type, machine_start_tick_usage, machine_start_time)
+			else
+				process_result = machine.Process(wait)
+			if(process_result == PROCESS_KILL)
+				STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_SELF)
+
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			queue.Cut(i)
+			return
+
+/datum/controller/subsystem/machines/proc/process_apcs(resumed, no_mc_tick)
+	if (!resumed)
+		queue = processing_apcs.Copy()
+	var/obj/machinery/power/apc/apc
+	for (var/i = length(queue) to 1 step -1)
+		apc = queue[i]
+		if (QDELETED(apc))
+			if (apc)
+				apc.is_processing = null
+			processing_apcs -= apc
+			continue
+
+		if(apc.processing_flags & MACHINERY_PROCESS_COMPONENTS)
+			for(var/obj/item/stock_parts/part as anything in apc.processing_parts)
+				if(part.machine_process(apc) == PROCESS_KILL)
+					part.stop_processing(apc)
+
+		apc.process_apc_tick(wait)
 
 		if (no_mc_tick)
 			CHECK_TICK
@@ -285,5 +456,6 @@ SUBSYSTEM_DEF(machines)
 
 #undef SSMACHINES_PIPENETS
 #undef SSMACHINES_MACHINERY
+#undef SSMACHINES_APCS
 #undef SSMACHINES_POWERNETS
 #undef SSMACHINES_POWER_OBJECTS
