@@ -76,6 +76,7 @@
 	. = ..()
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.30,ONE_ATMOSPHERE*1.40) /* kpa */
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+80, T0C+90) // K
+	rebuild_threshold_cache()
 
 /obj/machinery/alarm/skrell/server
 	target_temperature = T0C+10
@@ -83,3 +84,4 @@
 /obj/machinery/alarm/skrell/server/Initialize()
 	. = ..()
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+30, T0C+40) // K
+	rebuild_threshold_cache()

@@ -215,11 +215,23 @@
 	request_immediate_environment_resample()
 
 /obj/machinery/alarm/proc/rebuild_threshold_cache()
+	// If a subtype replaces any TLV list object, it must call rebuild_threshold_cache() afterward.
 	tlv_oxygen_cache = TLV[GAS_OXYGEN]
 	tlv_co2_cache = TLV[GAS_CO2]
 	tlv_other_cache = TLV["other"]
 	tlv_pressure_cache = TLV["pressure"]
 	tlv_temperature_cache = TLV["temperature"]
+	return tlv_threshold_cache_valid(tlv_oxygen_cache) && tlv_threshold_cache_valid(tlv_co2_cache) && tlv_threshold_cache_valid(tlv_other_cache) && tlv_threshold_cache_valid(tlv_pressure_cache) && tlv_threshold_cache_valid(tlv_temperature_cache)
+
+/obj/machinery/alarm/proc/tlv_threshold_cache_valid(list/thresholds)
+	return islist(thresholds) && thresholds.len >= 4
+
+/obj/machinery/alarm/proc/ensure_threshold_cache_ready()
+	if(tlv_threshold_cache_valid(tlv_oxygen_cache) && tlv_threshold_cache_valid(tlv_co2_cache) && tlv_threshold_cache_valid(tlv_other_cache) && tlv_threshold_cache_valid(tlv_pressure_cache) && tlv_threshold_cache_valid(tlv_temperature_cache))
+		return TRUE
+	if(!rebuild_threshold_cache())
+		return FALSE
+	return tlv_threshold_cache_valid(tlv_oxygen_cache) && tlv_threshold_cache_valid(tlv_co2_cache) && tlv_threshold_cache_valid(tlv_other_cache) && tlv_threshold_cache_valid(tlv_pressure_cache) && tlv_threshold_cache_valid(tlv_temperature_cache)
 
 /obj/machinery/alarm/proc/recompute_passive_sampling_allowed()
 	passive_sampling_allowed = !inoperable() && !shorted && buildstage == 2 && istype(loc, /turf/simulated)
@@ -257,6 +269,10 @@
 		stop_idle_sample_timers()
 		return
 	if(!passive_sampling_allowed)
+		stop_idle_sample_timers()
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		return
+	if(!ensure_threshold_cache_ready())
 		stop_idle_sample_timers()
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		return
@@ -380,8 +396,9 @@
 	return alarm_active_cached
 
 /obj/machinery/alarm/proc/run_environment_sample(turf/simulated/location, datum/gas_mixture/environment)
-	if(!tlv_pressure_cache || !tlv_temperature_cache || !tlv_oxygen_cache || !tlv_co2_cache || !tlv_other_cache)
-		rebuild_threshold_cache()
+	if(!ensure_threshold_cache_ready())
+		recompute_alarm_active_cached()
+		return alarm_active_cached
 
 	var/environment_pressure = environment.return_pressure()
 
@@ -435,6 +452,8 @@
 	return alarm_active_cached
 
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
+	if(!ensure_threshold_cache_ready())
+		return
 	var/target_temperature_dangerlevel = GET_DANGER_LEVEL(target_temperature, tlv_temperature_cache)
 	if (!regulating_temperature)
 		//check for when we should start adjusting temperature
