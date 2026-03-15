@@ -288,7 +288,7 @@ SUBSYSTEM_DEF(machines)
 		i++
 		if(i > limit)
 			break
-		lines += "  [i]. [key] | cost [Round(costs[key], 0.001)] | calls [counts[key] || 0]"
+		lines += "  [i]. [key] | cost [Roundm(costs[key], 0.001)] | calls [counts[key] || 0]"
 
 	return jointext(lines, "\n")
 
