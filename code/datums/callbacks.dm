@@ -29,10 +29,7 @@ invoke(myLivingMob, TYPE_PROC_REF(/mob/living, handle_vision)
 Timers accept callbacks as their first argument. For full timer documentation, see the timedevent
 datum. For example:
 addTimer(CALLBACK(myMob, TYPE_PROC_REF(drop_l_hand())), 10 SECONDS)
- */
-
-#define MAKE_SPAWN_ACT_LIKE_WAITFOR -1
-#define ASYNC spawn(MAKE_SPAWN_ACT_LIKE_WAITFOR)
+*/
 
 var/global/const/GLOBAL_PROC = FALSE
 
@@ -91,29 +88,21 @@ var/global/const/Callback = /datum/callback
 
 
 /proc/invoke_async(datum/callback/target, callable, ...)
-	// TEST: mimic tgstation #73264 fire-and-forget semantics instead of carrying faux return values.
+	set waitfor = FALSE
 	if (target == GLOBAL_PROC)
 		var/list/params
 		if (length(args) > 2)
 			params = args.Copy(3)
-		ASYNC
-			call(callable)(arglist(params))
-		return
+		return call(callable)(arglist(params))
 	else if (QDELETED(target))
 		return
 	else if (istype(target))
-		var/list/params = list(target.target, target.callable)
-		if (LAZYLEN(target.params))
-			params += target.params
+		var/list/params = list(target.target, target.callable) + target.params
 		if (length(args) > 1)
 			params += args.Copy(2)
-		ASYNC
-			invoke(arglist(params))
-		return
+		return invoke(arglist(params))
 	else
 		var/list/params
 		if (length(args) > 2)
 			params = args.Copy(3)
-		ASYNC
-			call(target, callable)(arglist(params))
-		return
+		return call(target, callable)(arglist(params))
