@@ -147,10 +147,15 @@
 	var/power_losses
 	var/last_power_draw = 0
 
+/obj/machinery/portable_atmospherics/powered/proc/has_powered_operation()
+	return use_power == POWER_USE_ACTIVE && is_powered()
+
 /obj/machinery/portable_atmospherics/powered/power_change()
 	. = ..()
 	if(. && (!is_powered()))
 		update_use_power(POWER_USE_IDLE)
+	if(.)
+		update_icon()
 
 /obj/machinery/portable_atmospherics/powered/components_are_accessible(path)
 	return panel_open

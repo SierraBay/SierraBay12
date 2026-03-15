@@ -43,7 +43,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/on_update_icon()
 	ClearOverlays()
 
-	if((use_power == POWER_USE_ACTIVE) && operable())
+	if(has_powered_operation())
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
@@ -62,7 +62,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/proc/process_scrubber()
 	var/power_draw = -1
 
-	if((use_power == POWER_USE_ACTIVE) && is_powered())
+	if(has_powered_operation())
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents

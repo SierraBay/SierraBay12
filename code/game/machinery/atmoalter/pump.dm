@@ -33,7 +33,7 @@
 /obj/machinery/portable_atmospherics/powered/pump/on_update_icon()
 	ClearOverlays()
 
-	if((use_power == POWER_USE_ACTIVE) && is_powered())
+	if(has_powered_operation())
 		icon_state = "psiphon:1"
 	else
 		icon_state = "psiphon:0"
@@ -64,7 +64,7 @@
 	..()
 	var/power_draw = -1
 
-	if((use_power == POWER_USE_ACTIVE) && is_powered())
+	if(has_powered_operation())
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents
