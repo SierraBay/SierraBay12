@@ -973,6 +973,7 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/machines/firealarm.dmi'
 	icon_state = "casing"
+	init_flags = 0
 	var/detecting = 1.0
 	var/working = 1.0
 	var/time = 10.0
@@ -987,6 +988,9 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 	var/seclevel
 	var/static/list/overlays_cache
+	var/next_process_at = 0
+	var/passive_detection_interval = 1 SECOND
+	var/passive_detection_phase_offset = 0
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -996,7 +1000,46 @@ FIRE ALARM
 
 /obj/machinery/firealarm/Initialize()
 	. = ..()
+	passive_detection_phase_offset = rand(0, max(0, passive_detection_interval - 1))
+	next_process_at = world.time + passive_detection_phase_offset
 	queue_icon_update()
+	sync_processing_state()
+
+/obj/machinery/firealarm/power_change()
+	. = ..()
+	if(timing || should_passively_detect())
+		last_process = world.timeofday
+		next_process_at = world.time
+	sync_processing_state()
+
+/obj/machinery/firealarm/on_death()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/firealarm/on_revive()
+	. = ..()
+	if(timing || should_passively_detect())
+		next_process_at = world.time
+	sync_processing_state()
+
+/obj/machinery/firealarm/proc/should_passively_detect()
+	return detecting && working && buildstage == 2 && !wiresexposed && !MACHINE_IS_BROKEN(src) && is_powered()
+
+/obj/machinery/firealarm/proc/needs_processing()
+	return world.time >= next_process_at && (timing || should_passively_detect())
+
+/obj/machinery/firealarm/proc/sync_processing_state()
+	sync_powered_processing_state(needs_processing())
+
+/obj/machinery/firealarm/proc/set_next_passive_detection_time()
+	var/delay = passive_detection_interval - ((world.time - passive_detection_phase_offset) % passive_detection_interval)
+	if(delay <= 0)
+		delay = passive_detection_interval
+	next_process_at = world.time + delay
+
+/obj/machinery/firealarm/proc/schedule_next_process()
+	var/delay = max(1, next_process_at - world.time)
+	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/firealarm/proc/get_cached_overlay(state)
 	if(!LAZYACCESS(overlays_cache, state))
@@ -1066,6 +1109,7 @@ FIRE ALARM
 	if(isScrewdriver(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
+		sync_processing_state()
 		return TRUE
 
 	if(wiresexposed)
@@ -1077,6 +1121,8 @@ FIRE ALARM
 						SPAN_NOTICE("\The [user] has [detecting? "re" : "dis"]connected \the [src]'s detecting unit!"),
 						SPAN_NOTICE("You have [detecting? "re" : "dis"]connected \the [src]'s detecting unit.")
 					)
+					update_icon()
+					sync_processing_state()
 					return TRUE
 
 				if (isWirecutter(W))
@@ -1088,6 +1134,7 @@ FIRE ALARM
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					buildstage = 1
 					update_icon()
+					sync_processing_state()
 					return TRUE
 
 			if(1)
@@ -1097,6 +1144,7 @@ FIRE ALARM
 						to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 						buildstage = 2
 						update_icon()
+						sync_processing_state()
 						return TRUE
 					else
 						to_chat(user, SPAN_WARNING("You need 5 pieces of cable to wire \the [src]."))
@@ -1112,6 +1160,7 @@ FIRE ALARM
 					circuit.dropInto(user.loc)
 					buildstage = 0
 					update_icon()
+					sync_processing_state()
 					return TRUE
 			if(0)
 				if(istype(W, /obj/item/firealarm_electronics))
@@ -1119,6 +1168,7 @@ FIRE ALARM
 					qdel(W)
 					buildstage = 1
 					update_icon()
+					sync_processing_state()
 					return TRUE
 
 				if (isWrench(W))
@@ -1133,22 +1183,30 @@ FIRE ALARM
 	return TRUE
 
 /obj/machinery/firealarm/Process()//Note: this processing was mostly phased out due to other code, and only runs when needed
-	if(inoperable())
-		return
+	if(!needs_processing() || inoperable())
+		return PROCESS_KILL
 
-	if(src.timing)
-		if(src.time > 0)
-			src.time = src.time - ((world.timeofday - last_process)/10)
+	if(timing)
+		if(time > 0)
+			time = time - ((world.timeofday - last_process) / 10)
 		else
-			src.alarm()
-			src.time = 0
-			src.timing = 0
-			STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-		src.updateDialog()
-	last_process = world.timeofday
+			alarm()
+			time = 0
+			timing = 0
+		last_process = world.timeofday
+		updateDialog()
+		if(timing)
+			next_process_at = world.time + 1 SECOND
+			schedule_next_process()
+			return PROCESS_KILL
 
-	if(locate(/obj/hotspot) in loc)
-		alarm()
+	if(should_passively_detect())
+		if(locate(/obj/hotspot) in loc)
+			alarm()
+		set_next_passive_detection_time()
+		schedule_next_process()
+
+	return PROCESS_KILL
 
 /obj/machinery/firealarm/interface_interact(mob/user)
 	interact(user)
@@ -1207,12 +1265,18 @@ FIRE ALARM
 	else if (href_list["time"])
 		src.timing = text2num(href_list["time"])
 		last_process = world.timeofday
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(src.timing)
+			next_process_at = world.time
+		sync_processing_state()
 		. = TOPIC_REFRESH
 	else if (href_list["tp"])
 		var/tp = text2num(href_list["tp"])
 		src.time += tp
 		src.time = min(max(round(src.time), 0), 120)
+		if(src.timing)
+			last_process = world.timeofday
+			next_process_at = world.time
+			sync_processing_state()
 		. = TOPIC_REFRESH
 
 	if(. == TOPIC_REFRESH)
@@ -1252,11 +1316,6 @@ FIRE ALARM
 		pixel_y = (dir & 3)? (dir ==1 ? -21 : 21) : 0
 		update_icon()
 		frame.transfer_fingerprints_to(src)
-
-/obj/machinery/firealarm/Initialize()
-	. = ..()
-	if(z in GLOB.using_map.contact_levels)
-		update_icon()
 
 /*
 FIRE ALARM CIRCUIT
