@@ -337,11 +337,9 @@
 		var/cam_active = get_pin_data(IC_INPUT, 2)
 		var/cam_network = get_pin_data(IC_INPUT, 3)
 		if(!isnull(cam_name))
-			camera.c_tag = cam_name
-			invalidateCameraCache()
+			camera.set_c_tag(cam_name)
 		if(!isnull(cam_network))
 			camera.replace_networks(list(cam_network))
-			invalidateCameraCache()
 		set_camera_status(cam_active)
 
 /obj/item/integrated_circuit/output/video_camera/power_fail()

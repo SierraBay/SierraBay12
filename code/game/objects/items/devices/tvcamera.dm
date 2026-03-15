@@ -21,8 +21,8 @@
 
 /obj/item/device/camera/tvcamera/Initialize()
 	camera = new(src)
-	camera.c_tag = channel
-	camera.status = FALSE
+	camera.set_c_tag(channel)
+	camera.set_status(FALSE)
 	radio = new(src)
 	radio.listening = FALSE
 	radio.set_frequency(ENT_FREQ)
@@ -59,7 +59,7 @@
 		var/nc = sanitize(input(usr, "Channel name", "Select new channel name", channel) as text|null)
 		if(nc)
 			channel = nc
-			camera.c_tag = channel
+			camera.set_c_tag(channel)
 			to_chat(usr, SPAN_NOTICE("New channel name: '[channel]' has been set."))
 	if(href_list["video"])
 		camera.set_status(!camera.status)

@@ -4,7 +4,6 @@
 
 /obj/machinery/camera/deactivate(user as mob, choice = 1)
 	..(user, choice)
-	invalidateCameraCache()
 	if(!can_use())
 		set_light(0)
 	cameranet.update_visibility(src)
@@ -21,7 +20,7 @@
 		cameranet.remove_source(src)
 	. = ..()
 
-/obj/machinery/camera/proc/update_coverage(network_change = 0)
+/obj/machinery/camera/proc/update_coverage(network_change = 0, list/old_networks = null)
 	if(network_change)
 		var/list/open_networks = difflist(network, GLOB.restricted_camera_networks)
 		// Add or remove camera from the camera net as necessary
@@ -34,7 +33,9 @@
 	else
 		cameranet.update_visibility(src)
 
-	invalidateCameraCache()
+	var/list/networks_to_invalidate = old_networks ? old_networks.Copy() : list()
+	networks_to_invalidate |= network
+	camera_repository.invalidate_networks(networks_to_invalidate)
 
 // Mobs
 /mob/living/silicon/ai/Initialize(mapload)

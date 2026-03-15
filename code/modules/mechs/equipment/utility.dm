@@ -870,7 +870,7 @@
 /obj/item/mech_equipment/camera/Initialize()
 	. = ..()
 	camera = new(src)
-	camera.c_tag = "null"
+	camera.set_c_tag("null")
 	camera.set_status(FALSE)
 	camera.is_helmet_cam = TRUE //Can transmit locally regardless of network
 	camera.set_stat_immunity(MACHINE_STAT_NOPOWER) //Camera power comes from the mech, not the camera itself.
@@ -878,13 +878,11 @@
 /obj/item/mech_equipment/camera/installed(mob/living/exosuit/_owner)
 	. = ..()
 	if(owner)
-		camera.c_tag = "[owner.name] camera feed"
-		invalidateCameraCache()
+		camera.set_c_tag("[owner.name] camera feed")
 
 /obj/item/mech_equipment/camera/uninstalled()
 	. = ..()
-	camera.c_tag = "null"
-	invalidateCameraCache()
+	camera.set_c_tag("null")
 
 /obj/item/mech_equipment/camera/examine(mob/user)
 	. = ..()
@@ -915,8 +913,7 @@
 			return TRUE
 		var/delay = 2 SECONDS * user.skill_delay_mult(SKILL_DEVICES)
 		if(do_after(user, delay, src, DO_DEFAULT | DO_BOTH_UNIQUE_ACT) && network)
-			camera.network = list(network)
-			camera.update_coverage(TRUE)
+			camera.replace_networks(list(network))
 			to_chat(user, SPAN_NOTICE("You configure the camera for \the [network] network."))
 		return TRUE
 

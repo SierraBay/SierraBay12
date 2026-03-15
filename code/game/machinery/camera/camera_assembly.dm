@@ -99,7 +99,7 @@
 
 				C.replace_networks(uniquelist(tempnetwork))
 
-				C.c_tag = input
+				C.set_c_tag(input)
 
 				for(var/i = 5; i >= 0; i -= 1)
 					var/direct = input(user, "Direction?", "Assembling Camera", null) in list("LEAVE IT", "NORTH", "EAST", "SOUTH", "WEST" )

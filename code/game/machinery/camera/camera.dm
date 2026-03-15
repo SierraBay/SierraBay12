@@ -106,7 +106,7 @@
 				if(C.number)
 					number = max(number, C.number+1)
 			c_tag = "[A.name][number == 1 ? "" : " #[number]"]"
-		invalidateCameraCache()
+	camera_repository.invalidate_networks(network)
 	GLOB.moved_event.register(src, src, PROC_REF(camera_moved))
 
 
@@ -284,6 +284,12 @@
 		status = newstatus
 		update_coverage()
 
+/obj/machinery/camera/proc/set_c_tag(new_c_tag)
+	if(c_tag == new_c_tag)
+		return
+	c_tag = new_c_tag
+	camera_repository.invalidate_networks(network)
+
 /obj/machinery/camera/check_eye(mob/user)
 	if(!can_use()) return -1
 	if(isXRay()) return SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -402,6 +408,7 @@
 	remove_networks(list(network_name))
 
 /obj/machinery/camera/proc/add_networks(list/networks)
+	var/list/old_networks = network.Copy()
 	var/network_added
 	network_added = 0
 	for(var/network_name in networks)
@@ -410,9 +417,10 @@
 			network_added = 1
 
 	if(network_added)
-		update_coverage(1)
+		update_coverage(TRUE, old_networks)
 
 /obj/machinery/camera/proc/remove_networks(list/networks)
+	var/list/old_networks = network.Copy()
 	var/network_removed
 	network_removed = 0
 	for(var/network_name in networks)
@@ -421,24 +429,26 @@
 			network_removed = 1
 
 	if(network_removed)
-		update_coverage(1)
+		update_coverage(TRUE, old_networks)
 
 /obj/machinery/camera/proc/replace_networks(list/networks)
+	var/list/old_networks = network.Copy()
 	if(length(networks) != length(network))
 		network = networks
-		update_coverage(1)
+		update_coverage(TRUE, old_networks)
 		return
 
 	for(var/new_network in networks)
 		if(!(new_network in network))
 			network = networks
-			update_coverage(1)
+			update_coverage(TRUE, old_networks)
 			return
 
 /obj/machinery/camera/proc/clear_all_networks()
 	if(length(network))
+		var/list/old_networks = network.Copy()
 		network.Cut()
-		update_coverage(1)
+		update_coverage(TRUE, old_networks)
 
 /obj/machinery/camera/proc/nano_structure()
 	var/cam[0]
