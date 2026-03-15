@@ -103,6 +103,9 @@
 	var/other_dangerlevel = 0
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
+	var/next_environment_sample_at = 0
+	var/idle_sample_interval = 2 SECONDS
+	var/active_sample_interval = 0
 
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
@@ -174,6 +177,7 @@
 
 	set_frequency(frequency)
 	update_icon()
+	next_environment_sample_at = world.time
 
 /obj/machinery/alarm/get_req_access()
 	if(!locked)
@@ -181,11 +185,17 @@
 	return ..()
 
 /obj/machinery/alarm/Process()
+	if(world.time < next_environment_sample_at)
+		return
+
 	if(inoperable() || shorted || buildstage != 2)
+		next_environment_sample_at = world.time + idle_sample_interval
 		return
 
 	var/turf/simulated/location = loc
-	if(!istype(location))	return//returns if loc is not simulated
+	if(!istype(location))
+		next_environment_sample_at = world.time + idle_sample_interval
+		return//returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
 
@@ -223,7 +233,15 @@
 		if(RCON_YES)
 			remote_control = 1
 
+	if(is_alarm_active_state())
+		next_environment_sample_at = world.time + active_sample_interval
+	else
+		next_environment_sample_at = world.time + idle_sample_interval
+
 	return
+
+/obj/machinery/alarm/proc/is_alarm_active_state()
+	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL
 
 /obj/machinery/alarm/proc/handle_heating_cooling(datum/gas_mixture/environment)
 	if (!regulating_temperature)

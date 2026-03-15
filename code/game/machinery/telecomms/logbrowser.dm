@@ -140,9 +140,7 @@
 					temp = SPAN_COLOR("#d70b00", "- FAILED: CANNOT PROBE WHEN BUFFER FULL -")
 
 				else
-					for(var/obj/machinery/telecomms/server/T in range(25, src))
-						if(T.network == network)
-							servers.Add(T)
+					servers = find_nearby_network_entities(/obj/machinery/telecomms/server, network)
 
 					if(!length(servers))
 						temp = SPAN_COLOR("#d70b00", "- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -")

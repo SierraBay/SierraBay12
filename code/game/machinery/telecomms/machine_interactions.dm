@@ -223,12 +223,14 @@
 			if("resetoverload")
 				overloaded_for = 0
 				temp = SPAN_COLOR("#666633", "-% Manual override accepted. \The [src] has been reset.")
+				sync_processing_state()
 
 			if("toggle")
 
 				src.toggled = !src.toggled
 				temp = SPAN_COLOR("#666633", "-% [src] has been [src.toggled ? "activated" : "deactivated"].")
 				update_power()
+				sync_processing_state()
 
 			/*
 			if("hide")

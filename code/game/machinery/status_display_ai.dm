@@ -41,19 +41,14 @@ var/global/list/ai_status_emotions = list(
 /proc/set_ai_status_displays(mob/user as mob)
 	var/list/ai_emotions = get_ai_emotions(user.ckey)
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M as anything in SSmachines.get_all_machinery()) //change status
-		if(istype(M, /obj/machinery/ai_status_display))
-			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-			AISD.update_icon()
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
+	for(var/obj/machinery/ai_status_display/AISD as anything in SSmachines.get_machinery_of_type(/obj/machinery/ai_status_display))
+		AISD.emotion = emote
+		AISD.update_icon()
 
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	for(var/obj/machinery/status_display/SD as anything in SSmachines.get_machinery_of_type(/obj/machinery/status_display))
+		SD.friendc = (emote == "Friend Computer")
+		SD.update()
+		SD.sync_processing_state()
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/machines/status_display.dmi'

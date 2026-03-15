@@ -63,6 +63,20 @@
 		radio_controller.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/status_display/proc/needs_processing()
+	if(MACHINE_IS_BROKEN(src))
+		return FALSE
+	if(friendc && !ignore_friendc)
+		return FALSE
+
+	return mode == STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME || mode == STATUS_DISPLAY_TIME || mode == STATUS_DISPLAY_CUSTOM
+
+/obj/machinery/status_display/proc/sync_processing_state()
+	if(needs_processing() && is_powered())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/status_display/on_death()
 	..()
 	playsound(src, "shatter", 70, 1)
@@ -72,7 +86,16 @@
 
 /obj/machinery/status_display/on_revive()
 	..()
-	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	update()
+	sync_processing_state()
+
+/obj/machinery/status_display/power_change()
+	..()
+	if(MACHINE_IS_BROKEN(src) || !is_powered())
+		remove_display()
+	else
+		update()
+	sync_processing_state()
 
 /obj/machinery/status_display/on_update_icon()
 	if (MACHINE_IS_BROKEN(src))
@@ -99,6 +122,8 @@
 	. = ..()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency)
+	update()
+	sync_processing_state()
 
 // timed process
 /obj/machinery/status_display/Process()
@@ -107,9 +132,11 @@
 	if (!is_powered())
 		remove_display()
 		set_light(0)
-		return
-	if (mode == STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME || mode == STATUS_DISPLAY_TIME || mode == STATUS_DISPLAY_CUSTOM)
-		update()
+		return PROCESS_KILL
+	if (!needs_processing())
+		return PROCESS_KILL
+	update()
+	return 0
 
 /obj/machinery/status_display/emp_act(severity)
 	if(inoperable())
@@ -117,6 +144,7 @@
 		return
 	set_picture("ai_bsod")
 	..(severity)
+	sync_processing_state()
 
 // set what is displayed
 /obj/machinery/status_display/proc/update()
@@ -132,6 +160,9 @@
 			remove_messages()
 			return 1
 		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)				//emergency shuttle timer
+			if(!evacuation_controller)
+				remove_messages()
+				return 1
 			if(evacuation_controller.is_prepared())
 				message1 = "-ETD-"
 				if (evacuation_controller.waiting_to_leave())
@@ -261,6 +292,8 @@
 	set_light(2, 0.5, COLOR_WHITE)
 
 /obj/machinery/status_display/proc/get_shuttle_timer()
+	if(!evacuation_controller)
+		return ""
 	var/timeleft = evacuation_controller.get_eta()
 	if(timeleft < 0)
 		return ""
@@ -307,10 +340,12 @@
 		if("image")
 			mode = STATUS_DISPLAY_IMAGE
 			set_picture(signal.data["picture_state"])
+			sync_processing_state()
 			return
 		if("toggle_alert_border")
 			toggle_alert_border()
 	update()
+	sync_processing_state()
 
 /**
  * Nice overlay to make text smoothly scroll with no client updates after setup.

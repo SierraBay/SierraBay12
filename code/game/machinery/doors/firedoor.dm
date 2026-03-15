@@ -10,6 +10,7 @@
 	name = "emergency shutter"
 	desc = "An emergency air-tight shutter, capable of sealing off breached areas."
 	icon = 'icons/obj/doors/hazard/door.dmi'
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	var/panel_file = 'icons/obj/doors/hazard/panel.dmi'
 	var/welded_file = 'icons/obj/doors/hazard/welded.dmi'
 	icon_state = "open"

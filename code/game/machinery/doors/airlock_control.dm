@@ -8,9 +8,13 @@
 	var/cur_command = null	//the command the door is currently attempting to complete
 
 /obj/machinery/door/airlock/Process()
+	if(!airlock_needs_processing())
+		return PROCESS_KILL
 	if (arePowerSystemsOn())
 		execute_current_command()
-	return ..()
+	. = ..()
+	if(!airlock_needs_processing())
+		return PROCESS_KILL
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -21,6 +25,7 @@
 
 /obj/machinery/door/airlock/proc/command(new_command)
 	cur_command = new_command
+	sync_processing_state()
 
 	//if there's no power, recieve the signal but just don't do anything. This allows airlocks to continue to work normally once power is restored
 	if(arePowerSystemsOn())
@@ -37,6 +42,7 @@
 	do_command(cur_command)
 	if (command_completed(cur_command))
 		cur_command = null
+		sync_processing_state()
 
 /obj/machinery/door/airlock/proc/do_command(command)
 	switch(command)
@@ -129,6 +135,7 @@
 		set_frequency(frequency)
 
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/door/airlock/New()
 	..()

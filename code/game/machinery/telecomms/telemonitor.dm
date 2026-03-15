@@ -21,6 +21,15 @@
 
 	var/temp = ""				// temporary feedback messages
 
+/obj/machinery/computer/telecomms/proc/find_nearby_network_entities(machinery_type = /obj/machinery/telecomms, target_network, max_distance = 25)
+	. = list()
+	for(var/obj/machinery/telecomms/machine as anything in SSmachines.get_machinery_of_type(machinery_type))
+		if(machine.z != z || get_dist(src, machine) > max_distance)
+			continue
+		if(!isnull(target_network) && machine.network != target_network)
+			continue
+		. += machine
+
 /obj/machinery/computer/telecomms/monitor/attack_hand(mob/user as mob)
 	if(inoperable())
 		return
@@ -97,9 +106,7 @@
 					temp = SPAN_COLOR("#d70b00", "- FAILED: CANNOT PROBE WHEN BUFFER FULL -")
 
 				else
-					for(var/obj/machinery/telecomms/T in range(25, src))
-						if(T.network == network)
-							machinelist.Add(T)
+					machinelist = find_nearby_network_entities(/obj/machinery/telecomms, network)
 
 					if(!length(machinelist))
 						temp = SPAN_COLOR("#d70b00", "- FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\] -")

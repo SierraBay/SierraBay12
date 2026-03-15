@@ -3,6 +3,7 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/structures/igniter.dmi'
 	icon_state = "igniter1"
+	init_flags = 0
 	var/on = 0
 	anchored = TRUE
 	idle_power_usage = 20
@@ -22,7 +23,18 @@
 
 /obj/machinery/igniter/Initialize()
 	. = ..()
+	sync_processing_state()
 	update_icon()
+
+/obj/machinery/igniter/power_change()
+	..()
+	sync_processing_state()
+
+/obj/machinery/igniter/proc/sync_processing_state()
+	if(on && is_powered())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/igniter/on_update_icon()
 	..()
@@ -36,6 +48,8 @@
 	return TRUE
 
 /obj/machinery/igniter/Process()
+	if(!on || !is_powered())
+		return PROCESS_KILL
 	if(is_powered())
 		var/turf/location = src.loc
 		if (isturf(location))
@@ -45,10 +59,7 @@
 /obj/machinery/igniter/proc/ignite()
 	use_power_oneoff(2000)
 	on = !on
-	if(on)
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-	else
-		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	sync_processing_state()
 	update_icon()
 
 /singleton/public_access/public_variable/igniter_on

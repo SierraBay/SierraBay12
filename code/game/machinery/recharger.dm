@@ -6,6 +6,7 @@
 	icon = 'icons/obj/machines/rechargers.dmi'
 	icon_state = "recharger0"
 	anchored = TRUE
+	init_flags = 0
 	idle_power_usage = 4
 	active_power_usage = 30 KILOWATTS
 	obj_flags = OBJ_FLAG_CAN_TABLE
@@ -21,6 +22,20 @@
 /obj/machinery/recharger/Initialize()
 	. = ..()
 	RefreshParts()
+	sync_processing_state()
+
+/obj/machinery/recharger/proc/needs_processing()
+	if(!anchored || inoperable() || !charging)
+		return FALSE
+
+	var/obj/item/cell/C = charging.get_cell()
+	return istype(C) && !C.fully_charged()
+
+/obj/machinery/recharger/proc/sync_processing_state()
+	if(needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/SP in component_parts)
@@ -53,6 +68,7 @@
 			G.forceMove(src)
 			charging = G
 			update_icon()
+			sync_processing_state()
 			return TRUE
 
 	if (portable && isWrench(G))
@@ -62,6 +78,7 @@
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		sync_processing_state()
 		return TRUE
 
 	return ..()
@@ -72,17 +89,34 @@
 		user.put_in_hands(charging)
 		charging = null
 		update_icon()
+		sync_processing_state()
 		return TRUE
 
 /obj/machinery/recharger/Process()
+	if(!needs_processing())
+		var/obj/item/cell/C = charging ? charging.get_cell() : null
+		if(inoperable() || !anchored)
+			update_use_power(POWER_USE_OFF)
+			icon_state = icon_state_idle
+		else if(istype(C) && C.fully_charged())
+			update_use_power(POWER_USE_IDLE)
+			icon_state = icon_state_charged
+		else
+			update_use_power(POWER_USE_IDLE)
+			icon_state = icon_state_idle
+		sync_processing_state()
+		return PROCESS_KILL
+
 	if(inoperable() || !anchored)
 		update_use_power(POWER_USE_OFF)
 		icon_state = icon_state_idle
-		return
+		return PROCESS_KILL
 
 	if(!charging)
 		update_use_power(POWER_USE_IDLE)
 		icon_state = icon_state_idle
+		sync_processing_state()
+		return PROCESS_KILL
 	else
 		var/obj/item/cell/C = charging.get_cell()
 		if(istype(C))
@@ -93,6 +127,8 @@
 			else
 				icon_state = icon_state_charged
 				update_use_power(POWER_USE_IDLE)
+				sync_processing_state()
+				return PROCESS_KILL
 
 /obj/machinery/recharger/emp_act(severity)
 	if(inoperable() || !anchored)
@@ -102,6 +138,7 @@
 		var/obj/item/cell/C = charging.get_cell()
 		if(istype(C))
 			C.emp_act(severity)
+	sync_processing_state()
 	..(severity)
 
 /obj/machinery/recharger/on_update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

@@ -3,6 +3,7 @@
 	desc = "A much more powerful version of the standard recharger that is specially designed for charging power cells."
 	icon = 'icons/obj/machines/power/cell_charger.dmi'
 	icon_state = "ccharger0"
+	init_flags = 0
 	anchored = TRUE
 	obj_flags = OBJ_FLAG_CAN_TABLE | OBJ_FLAG_ANCHORABLE
 	idle_power_usage = 5
@@ -16,6 +17,8 @@
 /obj/machinery/cell_charger/Initialize()
 	. = ..()
 	RefreshParts()
+	set_power()
+	sync_processing_state()
 
 /obj/machinery/cell_charger/RefreshParts()
 	for(var/obj/item/stock_parts/SP in component_parts)
@@ -44,6 +47,12 @@
 /obj/machinery/cell_charger/post_anchor_change()
 	..()
 	set_power()
+	sync_processing_state()
+
+/obj/machinery/cell_charger/power_change()
+	..()
+	set_power()
+	sync_processing_state()
 
 /obj/machinery/cell_charger/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(MACHINE_IS_BROKEN(src))
@@ -62,7 +71,7 @@
 			return TRUE
 		charging = W
 		set_power()
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		sync_processing_state()
 		user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 		chargelevel = -1
 		queue_icon_update()
@@ -86,7 +95,7 @@
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
 		set_power()
-		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		sync_processing_state()
 		return TRUE
 
 /obj/machinery/cell_charger/emp_act(severity)
@@ -106,10 +115,20 @@
 	else
 		update_use_power(POWER_USE_IDLE)
 
+/obj/machinery/cell_charger/proc/sync_processing_state()
+	if(charging && !charging.fully_charged() && !inoperable() && anchored)
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/cell_charger/Process()
-	. = ..()
-	if(!charging)
-		return
-	. = 0
+	if(!charging || charging.fully_charged() || inoperable() || !anchored)
+		set_power()
+		sync_processing_state()
+		return PROCESS_KILL
 	charging.give(active_power_usage*CELLRATE)
 	set_power()
+	sync_processing_state()
+	if(!charging || charging.fully_charged())
+		return PROCESS_KILL
+	return 0

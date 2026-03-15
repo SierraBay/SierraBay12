@@ -7,6 +7,7 @@
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
 	anchored = TRUE
+	init_flags = 0
 	opacity = TRUE
 	density = TRUE
 	layer = CLOSED_DOOR_LAYER
@@ -82,6 +83,7 @@
 	update_icon()
 
 	update_nearby_tiles(need_rebuild=1)
+	sync_processing_state()
 
 	if(autoset_access)
 #ifdef UNIT_TEST
@@ -99,13 +101,28 @@
 	update_nearby_tiles()
 	. = ..()
 
+/obj/machinery/door/proc/door_needs_processing()
+	return !!close_door_at
+
+/obj/machinery/door/proc/sync_processing_state()
+	if(door_needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/door/Process()
+	if(!door_needs_processing())
+		return PROCESS_KILL
+
 	if(close_door_at && world.time >= close_door_at)
 		if(autoclose)
 			close_door_at = next_close_time()
 			close()
 		else
 			close_door_at = 0
+		sync_processing_state()
+		if(!door_needs_processing())
+			return PROCESS_KILL
 
 /obj/machinery/door/proc/can_open()
 	if(!density || operating)
@@ -353,6 +370,7 @@
 
 	if(autoclose)
 		close_door_at = next_close_time()
+	sync_processing_state()
 
 	return 1
 
@@ -383,6 +401,7 @@
 		if(width > 1)
 			set_fillers_opacity(1)
 	operating = DOOR_OPERATING_NO
+	sync_processing_state()
 
 	//I shall not add a check every x ticks if a door has closed over some fire.
 	var/obj/hotspot/fire = locate() in loc

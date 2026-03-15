@@ -21,3 +21,4 @@
 		if(T.z in affecting_z)
 			if(prob(T.outage_probability))
 				T.overloaded_for = max(severity * rand(90, 120), T.overloaded_for)
+				T.sync_processing_state()

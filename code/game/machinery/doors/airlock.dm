@@ -120,6 +120,15 @@
 	)
 	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/airlock = 1)
 
+/obj/machinery/door/airlock/proc/airlock_needs_processing()
+	return door_needs_processing() || cur_command || (main_power_lost_until > 0) || (backup_power_lost_until > 0) || (electrified_until > 0)
+
+/obj/machinery/door/airlock/sync_processing_state()
+	if(airlock_needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/door/airlock/get_material()
 	return SSmaterials.get_material_by_name(mineral ? mineral : MATERIAL_STEEL)
 
@@ -329,6 +338,7 @@
 /obj/machinery/door/airlock/uranium
 	name = "Uranium Airlock"
 	desc = "And they said I was crazy."
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	door_color = COLOR_PAKISTAN_GREEN
 	mineral = MATERIAL_URANIUM
 	var/last_event = 0
@@ -403,6 +413,12 @@
 	locked = 1
 
 /obj/machinery/door/airlock/Process()
+	if(!airlock_needs_processing())
+		return PROCESS_KILL
+
+	if(arePowerSystemsOn() && cur_command)
+		execute_current_command()
+
 	if(main_power_lost_until > 0 && world.time >= main_power_lost_until)
 		regainMainPower()
 
@@ -413,6 +429,8 @@
 		electrify(0)
 
 	..()
+	if(!airlock_needs_processing())
+		return PROCESS_KILL
 
 /obj/machinery/door/airlock/uranium/Process()
 	if(world.time > last_event+20)
@@ -522,6 +540,7 @@ About the new airlock wires panel:
 		electrify(0)
 
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
 	backup_power_lost_until = backupPowerCablesCut() ? -1 : world.time + SecondsToTicks(60)
@@ -531,6 +550,7 @@ About the new airlock wires panel:
 		electrify(0)
 
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(!mainPowerCablesCut())
@@ -540,6 +560,7 @@ About the new airlock wires panel:
 			backup_power_lost_until = -1
 
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	if(!backupPowerCablesCut())
@@ -547,6 +568,7 @@ About the new airlock wires panel:
 		backup_power_lost_until = main_power_lost_until == 0 ? -1 : 0
 
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/door/airlock/proc/electrify(duration, feedback = 0)
 	var/message = ""
@@ -574,6 +596,7 @@ About the new airlock wires panel:
 		to_chat(usr, message)
 	if(.)
 		playsound(src, 'sound/effects/sparks3.ogg', 30, 0, -6)
+	sync_processing_state()
 
 /obj/machinery/door/airlock/proc/set_idscan(activate, feedback = 0)
 	var/message = ""
@@ -1243,6 +1266,7 @@ About the new airlock wires panel:
 			for(var/atom/movable/AM in turf)
 				if(AM.blocks_airlock())
 					close_door_at = world.time + 6
+					sync_processing_state()
 					return
 
 	var/crushed = FALSE

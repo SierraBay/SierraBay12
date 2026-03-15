@@ -39,6 +39,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/overloaded_for = 0
 	var/outage_probability = 75			// Probability of failing during a ionospheric storm
 	var/datum/sound_token/sound_token
+	var/next_idle_maintenance_at = 0
+	init_flags = 0
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -87,6 +89,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		send_count++
 		if(machine.is_freq_listening(signal))
 			machine.traffic++
+			machine.sync_processing_state()
 
 		if(copysig && copy)
 			machine.receive_information(copy, src)
@@ -96,6 +99,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 	if(send_count > 0 && is_freq_listening(signal))
 		traffic++
+		sync_processing_state()
 
 	return send_count
 
@@ -122,6 +126,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/Initialize()
 	..()
+	next_idle_maintenance_at = world.time
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/LateInitialize(mapload)
@@ -141,6 +146,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				add_link(T)
 	update_power()
 	update_icon()
+	sync_processing_state()
 
 /obj/machinery/telecomms/Destroy()
 	telecomms_list -= src
@@ -174,16 +180,39 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	. = ..()
 	listening_levels = GetConnectedZlevels(z)
 	update_power()
+	sync_processing_state()
 
 /obj/machinery/telecomms/forceMove(newloc)
 	. = ..(newloc)
 	listening_levels = GetConnectedZlevels(z)
 	update_power()
+	sync_processing_state()
 
 /obj/machinery/telecomms/power_change()
 	. = ..()
+	update_power()
 	if (!sound_token && !GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
 		sound_token = GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", "sound/ambience/ambiservers.ogg", 4, 5, 1)
+	if(sound_token && GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
+		QDEL_NULL(sound_token)
+	sync_processing_state()
+
+/obj/machinery/telecomms/proc/needs_processing()
+	if(traffic > 0 || overloaded_for > 0)
+		return TRUE
+	if(on && delay < initial(delay))
+		return TRUE
+	return world.time >= next_idle_maintenance_at
+
+/obj/machinery/telecomms/proc/schedule_idle_maintenance()
+	var/delay_until_check = max(1, next_idle_maintenance_at - world.time)
+	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/telecomms, sync_processing_state)), delay_until_check, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/telecomms/proc/sync_processing_state()
+	if(needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/telecomms/proc/update_power()
 	if(toggled)
@@ -196,6 +225,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	update_use_power(on)
 
 /obj/machinery/telecomms/Process()
+	var/was_on = on
+	var/was_overloaded = overloaded_for > 0
+
 	update_power()
 
 	if(overloaded_for)
@@ -204,18 +236,24 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	// Check heat and generate some
 	checkheat()
 
-	// Update the icon
-	update_icon()
-
 	if(traffic > 0)
-		traffic -= netspeed
+		traffic = max(0, traffic - netspeed)
 
 	if(sound_token && GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
 		QDEL_NULL(sound_token)
 
+	if(was_on != on || was_overloaded != (overloaded_for > 0))
+		update_icon()
+
+	if(!needs_processing())
+		next_idle_maintenance_at = world.time + 5 SECONDS
+		schedule_idle_maintenance()
+		return PROCESS_KILL
+
 /obj/machinery/telecomms/emp_act(severity)
 	if(prob(100/severity))
 		overloaded_for = max(round(150 / severity), overloaded_for)
+		sync_processing_state()
 	..()
 
 /obj/machinery/telecomms/proc/checkheat()

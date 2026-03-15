@@ -30,3 +30,6 @@
 		mode = STATUS_DISPLAY_CUSTOM
 	else
 		..(signal)
+		return
+	update()
+	sync_processing_state()

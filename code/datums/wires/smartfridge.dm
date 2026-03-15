@@ -41,6 +41,7 @@ var/global/const/SMARTFRIDGE_WIRE_IDSCAN		= 4
 			S.seconds_electrified = 30
 		if(SMARTFRIDGE_WIRE_IDSCAN)
 			S.scan_id = !S.scan_id
+	S.sync_processing_state()
 
 /datum/wires/smartfridge/UpdateCut(index, mended)
 	var/obj/machinery/smartfridge/S = holder
@@ -54,3 +55,4 @@ var/global/const/SMARTFRIDGE_WIRE_IDSCAN		= 4
 				S.seconds_electrified = -1
 		if(SMARTFRIDGE_WIRE_IDSCAN)
 			S.scan_id = 1
+	S.sync_processing_state()

@@ -8,6 +8,7 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	anchored = TRUE
+	init_flags = 0
 	idle_power_usage = 5
 	active_power_usage = 100
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_REACT
@@ -45,6 +46,16 @@
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
 	fill_with(startswith)
+	sync_processing_state()
+
+/obj/machinery/smartfridge/proc/needs_processing()
+	return (seconds_electrified != 0) || !!shoot_inventory
+
+/obj/machinery/smartfridge/proc/sync_processing_state()
+	if(needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /**
 * Fills the smartfridge with objects from a list.
@@ -185,12 +196,19 @@
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/Process()
-	..()
+	if(!needs_processing())
+		return PROCESS_KILL
 	if(inoperable())
 		return
 	if(length(contents))
 		dry()
 		update_icon()
+	if(!needs_processing())
+		sync_processing_state()
+		return PROCESS_KILL
+
+/obj/machinery/smartfridge/drying_rack/needs_processing()
+	return ..() || (length(contents) && !inoperable())
 
 /obj/machinery/smartfridge/drying_rack/on_update_icon()
 	ClearOverlays()
@@ -245,12 +263,17 @@
 
 
 /obj/machinery/smartfridge/Process()
+	if(!needs_processing())
+		return PROCESS_KILL
 	if(inoperable())
 		return
 	if(src.seconds_electrified > 0)
 		src.seconds_electrified--
 	if(src.shoot_inventory && prob(2))
 		src.throw_item()
+	if(!needs_processing())
+		sync_processing_state()
+		return PROCESS_KILL
 
 /obj/machinery/smartfridge/on_update_icon()
 	ClearOverlays()
@@ -317,6 +340,7 @@
 		stock_item(O)
 		user.visible_message(SPAN_NOTICE("\The [user] has added \the [O] to \the [src]."), SPAN_NOTICE("You add \the [O] to \the [src]."))
 		update_icon()
+		sync_processing_state()
 		return TRUE
 
 	else if(istype(O, /obj/item/storage))
@@ -332,6 +356,7 @@
 			user.visible_message(SPAN_NOTICE("\The [user] loads \the [src] with the contents of \the [P]."), SPAN_NOTICE("You load \the [src] with the contents of \the [P]."))
 			if(length(P.contents) > 0)
 				to_chat(user, SPAN_NOTICE("Some items were refused."))
+			sync_processing_state()
 		return TRUE
 	return ..()
 
@@ -348,11 +373,13 @@
 		if(!istype(O, I.item_path) || O.name != I.item_name)
 			continue
 		if(stock(I, O))
+			sync_processing_state()
 			return TRUE
 
 	var/datum/stored_items/I = new/datum/stored_items(src, O.type, O.name)
 	dd_insertObjectList(item_records, I)
 	if(stock(I, O))
+		sync_processing_state()
 		return TRUE
 
 /obj/machinery/smartfridge/proc/stock(datum/stored_items/I, obj/item/O)
@@ -419,6 +446,7 @@
 			for(var/i = 1 to amount)
 				I.get_product(get_turf(src))
 				update_icon()
+		sync_processing_state()
 
 		return 1
 	return 0
@@ -441,6 +469,7 @@
 		throw_item.throw_at(target,16,3)
 	src.visible_message(SPAN_WARNING("[src] launches [throw_item.name] at [target.name]!"))
 	update_icon()
+	sync_processing_state()
 	return 1
 
 /************************

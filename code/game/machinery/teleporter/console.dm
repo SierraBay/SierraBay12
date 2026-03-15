@@ -180,7 +180,7 @@
 /obj/machinery/computer/teleporter/proc/get_targets()
 	var/list/ids = list()
 	var/list/result = list()
-	for (var/obj/machinery/tele_beacon/B)
+	for (var/obj/machinery/tele_beacon/B as anything in SSmachines.get_machinery_of_type(/obj/machinery/tele_beacon))
 		if (QDELETED(B) || !B.functioning() || !isPlayerLevel(B.z))
 			continue
 		var/area/A = get_area(B)
