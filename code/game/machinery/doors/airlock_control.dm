@@ -154,6 +154,7 @@
 	name = "airlock sensor"
 
 	anchored = TRUE
+	init_flags = 0
 	power_channel = ENVIRON
 
 	var/master_tag
@@ -165,9 +166,11 @@
 	var/on = 1
 	var/alert = 0
 	var/previousPressure
+	var/next_pressure_sample_at = 0
+	var/pressure_sample_interval = 2 SECONDS
 
 /obj/machinery/airlock_sensor/on_update_icon()
-	if(on)
+	if(on && is_powered() && !inoperable())
 		if(alert)
 			icon_state = "airlock_sensor_alert"
 		else
@@ -178,6 +181,8 @@
 /obj/machinery/airlock_sensor/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))
 		return FALSE
+	if(!radio_connection)
+		return FALSE
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
@@ -187,25 +192,46 @@
 	flick("airlock_sensor_cycle", src)
 	return TRUE
 
-/obj/machinery/airlock_sensor/Process()
-	if(on)
-		var/datum/gas_mixture/air_sample = return_air()
-		var/pressure = round(air_sample.return_pressure(),0.1)
+/obj/machinery/airlock_sensor/proc/needs_processing()
+	return on && !inoperable() && is_powered() && world.time >= next_pressure_sample_at
 
-		if(abs(pressure - previousPressure) > 0.001 || isnull(previousPressure))
+/obj/machinery/airlock_sensor/proc/sync_processing_state()
+	sync_powered_processing_state(needs_processing())
+
+/obj/machinery/airlock_sensor/proc/schedule_next_pressure_sample()
+	var/delay = max(1, next_pressure_sample_at - world.time)
+	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/airlock_sensor/Process()
+	if(!needs_processing())
+		return PROCESS_KILL
+
+	var/datum/gas_mixture/air_sample = return_air()
+	if(!air_sample)
+		next_pressure_sample_at = world.time + pressure_sample_interval
+		schedule_next_pressure_sample()
+		return PROCESS_KILL
+
+	var/pressure = round(air_sample.return_pressure(),0.1)
+	if(isnull(previousPressure) || abs(pressure - previousPressure) > 0.001)
+		if(radio_connection)
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
 			signal.data["timestamp"] = world.time
 			signal.data["pressure"] = num2text(pressure)
-
 			radio_connection.post_signal(src, signal, RADIO_AIRLOCK, AIRLOCK_CONTROL_RANGE)
 
-			previousPressure = pressure
+		previousPressure = pressure
 
-			alert = (pressure < ONE_ATMOSPHERE*0.8)
+	var/new_alert = (pressure < ONE_ATMOSPHERE*0.8)
+	if(new_alert != alert)
+		alert = new_alert
+		update_icon()
 
-			update_icon()
+	next_pressure_sample_at = world.time + pressure_sample_interval
+	schedule_next_pressure_sample()
+	return PROCESS_KILL
 
 /obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -215,6 +241,16 @@
 /obj/machinery/airlock_sensor/Initialize()
 	set_frequency(frequency)
 	. = ..()
+	next_pressure_sample_at = world.time
+	sync_processing_state()
+
+/obj/machinery/airlock_sensor/power_change()
+	. = ..()
+	if(is_powered() && !inoperable())
+		next_pressure_sample_at = world.time
+		previousPressure = null
+	update_icon()
+	sync_processing_state()
 
 /obj/machinery/airlock_sensor/New()
 	..()
