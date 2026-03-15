@@ -106,6 +106,7 @@
 	var/environment_type = /singleton/environment_data
 	var/report_danger_level = 1
 	var/next_environment_sample_at = 0
+	var/environment_sample_phase_offset = 0
 	var/idle_sample_interval = 2 SECONDS
 	var/active_sample_interval = 0
 
@@ -179,7 +180,8 @@
 
 	set_frequency(frequency)
 	update_icon()
-	next_environment_sample_at = world.time
+	environment_sample_phase_offset = rand(0, max(0, idle_sample_interval - 1))
+	next_environment_sample_at = world.time + environment_sample_phase_offset
 	sync_processing_state()
 
 /obj/machinery/alarm/power_change()
@@ -207,6 +209,12 @@
 	var/delay = max(1, next_environment_sample_at - world.time)
 	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
 
+/obj/machinery/alarm/proc/set_next_idle_sample_time()
+	var/delay = idle_sample_interval - ((world.time - environment_sample_phase_offset) % idle_sample_interval)
+	if(delay <= 0)
+		delay = idle_sample_interval
+	next_environment_sample_at = world.time + delay
+
 /obj/machinery/alarm/get_req_access()
 	if(!locked)
 		return list()
@@ -217,13 +225,13 @@
 		return PROCESS_KILL
 
 	if(inoperable() || shorted || buildstage != 2)
-		next_environment_sample_at = world.time + idle_sample_interval
+		set_next_idle_sample_time()
 		schedule_idle_sample()
 		return PROCESS_KILL
 
 	var/turf/simulated/location = loc
 	if(!istype(location))
-		next_environment_sample_at = world.time + idle_sample_interval
+		set_next_idle_sample_time()
 		schedule_idle_sample()
 		return PROCESS_KILL //returns if loc is not simulated
 
@@ -283,7 +291,7 @@
 	if(is_alarm_active_state())
 		next_environment_sample_at = world.time + active_sample_interval
 	else
-		next_environment_sample_at = world.time + idle_sample_interval
+		set_next_idle_sample_time()
 		schedule_idle_sample()
 		return PROCESS_KILL
 
