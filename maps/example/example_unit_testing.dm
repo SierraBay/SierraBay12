@@ -37,5 +37,6 @@
 		/area/rnd/xenobiology/cell_1,
 		/area/rnd/xenobiology/cell_2,
 		/area/rnd/xenobiology/cell_3,
-		/area/rnd/xenobiology/cell_4
+		/area/rnd/xenobiology/cell_4,
+		/area/carp_racing
 	)
