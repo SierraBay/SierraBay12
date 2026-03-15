@@ -616,20 +616,143 @@
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_TO_AIRALARM)
 
+/obj/machinery/alarm/proc/filter_scrubber_signal_command(target, list/command)
+	var/list/info = alarm_area.air_scrub_info[target]
+	if(!islist(info))
+		return command
+
+	var/list/filtered = command.Copy()
+
+	if(("set_power" in filtered) && info["power"] == filtered["set_power"])
+		filtered -= "set_power"
+
+	if(("panic_siphon" in filtered) && info["panic"] == filtered["panic_siphon"])
+		filtered -= "panic_siphon"
+
+	if(("set_scrubbing" in filtered) && info["scrubbing"] == filtered["set_scrubbing"])
+		filtered -= "set_scrubbing"
+
+	if("set_scrub_gas" in filtered)
+		var/list/requested_gases = filtered["set_scrub_gas"]
+		var/list/current_gases = info["scrubbing_gas"]
+		var/list/changed_gases
+		if(islist(requested_gases))
+			for(var/gas_id in requested_gases)
+				var/desired_enabled = !!requested_gases[gas_id]
+				var/current_enabled = islist(current_gases) && (gas_id in current_gases)
+				if(current_enabled == desired_enabled)
+					continue
+				LAZYINITLIST(changed_gases)
+				changed_gases[gas_id] = desired_enabled
+		if(length(changed_gases))
+			filtered["set_scrub_gas"] = changed_gases
+		else
+			filtered -= "set_scrub_gas"
+
+	return length(filtered) ? filtered : null
+
+/obj/machinery/alarm/proc/filter_vent_signal_command(target, list/command)
+	var/list/info = alarm_area.air_vent_info[target]
+	if(!islist(info))
+		return command
+
+	var/list/filtered = command.Copy()
+
+	if(("set_power" in filtered) && info["power"] == filtered["set_power"])
+		filtered -= "set_power"
+
+	if(("set_checks" in filtered) && filtered["set_checks"] != "default" && info["checks"] == filtered["set_checks"])
+		filtered -= "set_checks"
+
+	if(("set_internal_pressure" in filtered) && filtered["set_internal_pressure"] != "default" && info["internal"] == filtered["set_internal_pressure"])
+		filtered -= "set_internal_pressure"
+
+	if(("set_external_pressure" in filtered) && filtered["set_external_pressure"] != "default" && info["external"] == filtered["set_external_pressure"])
+		filtered -= "set_external_pressure"
+
+	return length(filtered) ? filtered : null
+
+/obj/machinery/alarm/proc/filter_signal_command(target, list/command)
+	if(!length(command) || ("init" in command) || ("status" in command))
+		return command
+
+	if(target in alarm_area.air_scrub_names)
+		return filter_scrubber_signal_command(target, command)
+
+	if(target in alarm_area.air_vent_names)
+		return filter_vent_signal_command(target, command)
+
+	return command
+
+/obj/machinery/alarm/proc/update_cached_device_state_after_command(target, list/command)
+	if(target in alarm_area.air_scrub_names)
+		var/list/info = alarm_area.air_scrub_info[target]
+		if(!islist(info))
+			return
+
+		if("set_power" in command)
+			info["power"] = command["set_power"]
+
+		if("panic_siphon" in command)
+			info["panic"] = command["panic_siphon"]
+			if(command["panic_siphon"])
+				info["scrubbing"] = SCRUBBER_SIPHON
+			else
+				info["scrubbing"] = SCRUBBER_EXCHANGE
+
+		if("set_scrubbing" in command)
+			info["scrubbing"] = command["set_scrubbing"]
+			if(command["set_scrubbing"] != SCRUBBER_SIPHON)
+				info["panic"] = FALSE
+
+		if("set_scrub_gas" in command)
+			var/list/current_gases = info["scrubbing_gas"]
+			if(!islist(current_gases))
+				current_gases = list()
+				info["scrubbing_gas"] = current_gases
+			for(var/gas_id in command["set_scrub_gas"])
+				if(command["set_scrub_gas"][gas_id])
+					current_gases[gas_id] = TRUE
+				else
+					current_gases -= gas_id
+		return
+
+	if(target in alarm_area.air_vent_names)
+		var/list/info = alarm_area.air_vent_info[target]
+		if(!islist(info))
+			return
+
+		if("set_power" in command)
+			info["power"] = command["set_power"]
+
+		if(("set_checks" in command) && command["set_checks"] != "default")
+			info["checks"] = command["set_checks"]
+
+		if(("set_internal_pressure" in command) && command["set_internal_pressure"] != "default")
+			info["internal"] = command["set_internal_pressure"]
+
+		if(("set_external_pressure" in command) && command["set_external_pressure"] != "default")
+			info["external"] = command["set_external_pressure"]
+
 /obj/machinery/alarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
+
+	var/list/filtered_command = filter_signal_command(target, command)
+	if(!length(filtered_command))
+		return 1
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 
-	signal.data = command
+	signal.data = filtered_command.Copy()
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
 	signal.data["status"] = TRUE
 
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
+	update_cached_device_state_after_command(target, filtered_command)
 //			log_debug("Signal [] Broadcasted to []", command, target)
 
 	return 1
@@ -637,8 +760,14 @@
 /obj/machinery/alarm/proc/apply_mode()
 	//propagate mode to other air alarms in the area
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
+	var/list/alarms_to_resample = list(src)
 	for (var/obj/machinery/alarm/AA in alarm_area)
+		if(AA == src)
+			continue
+		if(AA.mode == mode)
+			continue
 		AA.mode = mode
+		alarms_to_resample += AA
 
 	breach_start_cooldown()
 
@@ -673,7 +802,7 @@
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("set_power"= 0) )
 
-	for(var/obj/machinery/alarm/AA in alarm_area)
+	for(var/obj/machinery/alarm/AA in alarms_to_resample)
 		AA.request_immediate_environment_resample()
 
 /obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
