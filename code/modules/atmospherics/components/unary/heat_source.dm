@@ -6,6 +6,7 @@
 	desc = "Heats gas when connected to a pipe network."
 	icon = 'icons/obj/atmospherics/temperature_machines.dmi'
 	icon_state = "heater"
+	init_flags = 0
 	density = TRUE
 	anchored = TRUE
 	use_power = POWER_USE_OFF
@@ -27,6 +28,7 @@
 
 	var/set_temperature = T20C	//thermostat
 	var/heating = 0		//mainly for icon updates
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/unary/heater/atmos_init()
 	..()
@@ -68,12 +70,15 @@
 
 
 /obj/machinery/atmospherics/unary/heater/Process()
+	return process_atmos()
+
+/obj/machinery/atmospherics/unary/heater/process_atmos(wait, times_fired, datum/controller/subsystem/processing/subsystem)
 	..()
 
 	if(inoperable() || !use_power)
 		heating = 0
 		update_icon()
-		return
+		return 1
 
 	if(network && air_contents.total_moles && air_contents.temperature < set_temperature)
 		air_contents.add_thermal_energy(power_rating * HEATER_PERF_MULT)
@@ -85,6 +90,7 @@
 		heating = 0
 
 	update_icon()
+	return 1
 
 /obj/machinery/atmospherics/unary/heater/interface_interact(mob/user)
 	ui_interact(user)

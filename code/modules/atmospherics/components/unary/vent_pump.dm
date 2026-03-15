@@ -10,6 +10,7 @@
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/atmos/vent_pump.dmi'
 	icon_state = "map_vent"
+	init_flags = 0
 
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it."
@@ -41,6 +42,7 @@
 
 	var/controlled = TRUE  //if we should register with an air alarm on spawn
 	build_icon_state = "uvent"
+	uses_atmos_processing_subsystem = TRUE
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/power/apc,
@@ -174,7 +176,7 @@
 		return 0
 	return 1
 
-/obj/machinery/atmospherics/unary/vent_pump/Process()
+/obj/machinery/atmospherics/unary/vent_pump/process_atmos()
 	..()
 
 	if (hibernate > world.time)

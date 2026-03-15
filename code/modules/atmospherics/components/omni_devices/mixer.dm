@@ -4,6 +4,7 @@
 /obj/machinery/atmospherics/omni/mixer
 	name = "omni gas mixer"
 	icon_state = "map_mixer"
+	init_flags = 0
 
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 15000			// 15000 W ~ 20 HP
@@ -23,6 +24,7 @@
 
 	var/list/mixing_inputs = list()
 	build_icon_state = "omni_mixer"
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/omni/mixer/Initialize()
 	. = ..()
@@ -98,7 +100,7 @@
 
 	return 0
 
-/obj/machinery/atmospherics/omni/mixer/Process()
+/obj/machinery/atmospherics/omni/mixer/process_atmos()
 	if(!..())
 		return 0
 

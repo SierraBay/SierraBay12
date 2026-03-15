@@ -65,6 +65,19 @@
 	return
 
 /obj/machinery/atmospherics/omni/Process()
+	if(uses_atmos_processing_subsystem)
+		return process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
+
+	if(error_check())
+		update_use_power(POWER_USE_OFF)
+
+	if((inoperable()) || !use_power)
+		return 0
+	return 1
+
+/obj/machinery/atmospherics/omni/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 

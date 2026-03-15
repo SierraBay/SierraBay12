@@ -3,6 +3,7 @@
 	desc = "A machine for breaking bonds in carbon dioxide and releasing pure oxygen."
 	icon = 'icons/atmos/oxyregenerator.dmi'
 	icon_state = "off"
+	init_flags = 0
 	level = ATOM_LEVEL_UNDER_TILE
 	density = TRUE
 	use_power = POWER_USE_OFF
@@ -29,6 +30,7 @@
 	var/phase = "filling"//"filling", "processing", "releasing"
 	var/datum/gas_mixture/inner_tank = new
 	var/tank_volume = 400//Litres
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/binary/oxyregenerator/RefreshParts()
 	carbon_efficiency = initial(carbon_efficiency)
@@ -108,7 +110,7 @@
 
 	src.set_dir(turn(src.dir, 90))
 
-/obj/machinery/atmospherics/binary/oxyregenerator/Process(delay)
+/obj/machinery/atmospherics/binary/oxyregenerator/process_atmos(delay)
 	..()
 	if((inoperable()) || !use_power)
 		return

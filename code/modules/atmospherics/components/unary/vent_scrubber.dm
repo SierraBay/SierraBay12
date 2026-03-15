@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber
 	icon = 'icons/atmos/vent_scrubber.dmi'
 	icon_state = "map_scrubber_off"
+	init_flags = 0
 
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it."
@@ -22,6 +23,7 @@
 	var/welded = 0
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER
 	build_icon_state = "scrubber"
+	uses_atmos_processing_subsystem = TRUE
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/power/apc,
@@ -135,7 +137,7 @@
 	. = ..()
 	toggle_input_toggle()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Process()
+/obj/machinery/atmospherics/unary/vent_scrubber/process_atmos()
 	..()
 
 	if (hibernate > world.time)

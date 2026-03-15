@@ -15,6 +15,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/atmos/pump.dmi'
 	icon_state = "map_off"
+	init_flags = 0
 	level = ATOM_LEVEL_OVER_TILE
 
 	name = "gas pump"
@@ -55,6 +56,7 @@ Thus, the two variables affect pump operation are set in New():
 	frame_type = /obj/item/pipe
 	construct_state = /singleton/machine_construction/default/item_chassis
 	base_type = /obj/machinery/atmospherics/binary/pump
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/binary/pump/Initialize()
 	. = ..()
@@ -88,7 +90,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/binary/pump/Process()
+/obj/machinery/atmospherics/binary/pump/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 

@@ -5,6 +5,7 @@
 /obj/machinery/atmospherics/binary/passive_gate
 	icon = 'icons/atmos/passive_gate.dmi'
 	icon_state = "map_off"
+	init_flags = 0
 	level = ATOM_LEVEL_OVER_TILE
 
 	name = "pressure regulator"
@@ -27,6 +28,7 @@
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_FUEL
 	build_icon_state = "passivegate"
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/binary/passive_gate/on
 	unlocked = 1
@@ -52,7 +54,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/binary/passive_gate/Process()
+/obj/machinery/atmospherics/binary/passive_gate/process_atmos()
 	..()
 
 	last_flow_rate = 0

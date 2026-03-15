@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/atmos/injector.dmi'
 	icon_state = "map_injector"
+	init_flags = 0
 
 	name = "injector"
 	desc = "Passively injects air into its surroundings. Has a valve attached to it that can control flow rate."
@@ -24,6 +25,7 @@
 
 	build_icon = 'icons/atmos/injector.dmi'
 	build_icon_state = "map_injector"
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/Initialize()
 	. = ..()
@@ -115,7 +117,7 @@
 	ui_interact(user)
 	return TRUE
 
-/obj/machinery/atmospherics/unary/outlet_injector/Process()
+/obj/machinery/atmospherics/unary/outlet_injector/process_atmos()
 	..()
 
 	last_power_draw = 0

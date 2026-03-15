@@ -2,6 +2,7 @@
 
 	icon = 'icons/obj/atmospherics/heat_exchanger.dmi'
 	icon_state = "intact"
+	init_flags = 0
 	density = TRUE
 
 	name = "Heat Exchanger"
@@ -12,6 +13,7 @@
 
 	connect_types = CONNECT_TYPE_REGULAR
 	build_icon_state = "heunary"
+	uses_atmos_processing_subsystem = TRUE
 
 
 /obj/machinery/atmospherics/unary/heat_exchanger/on_update_icon()
@@ -34,15 +36,18 @@
 
 
 /obj/machinery/atmospherics/unary/heat_exchanger/Process()
+	return process_atmos()
+
+/obj/machinery/atmospherics/unary/heat_exchanger/process_atmos(wait, times_fired, datum/controller/subsystem/processing/subsystem)
 	..()
 	if(!partner)
 		return 0
 
-	if(SSair.times_fired <= update_cycle)
+	if(times_fired <= update_cycle)
 		return 0
 
-	update_cycle = SSair.times_fired
-	partner.update_cycle = SSair.times_fired
+	update_cycle = times_fired
+	partner.update_cycle = times_fired
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/other_air_heat_capacity = partner.air_contents.heat_capacity()

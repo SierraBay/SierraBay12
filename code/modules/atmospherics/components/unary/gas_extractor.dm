@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/unary/gas_extractor
 	icon = 'icons/atmos/gas_extractor.dmi'
 	icon_state = "map_extractor"
+	init_flags = 0
 
 	name = "gas extractor"
 	desc = "Transfers gas from its surroundings into pipes."
@@ -21,6 +22,7 @@
 
 	build_icon = 'icons/atmos/gas_extractor.dmi'
 	build_icon_state = "map_extractor"
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/unary/gas_extractor/Initialize()
 	. = ..()
@@ -119,13 +121,16 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/gas_extractor/Process()
+	return process_atmos()
+
+/obj/machinery/atmospherics/unary/gas_extractor/process_atmos(wait, times_fired, datum/controller/subsystem/processing/subsystem)
 	..()
 
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	if((inoperable()) || !use_power)
-		return
+		return 1
 
 	var/power_draw = -1
 	var/datum/gas_mixture/environment = loc.return_air()

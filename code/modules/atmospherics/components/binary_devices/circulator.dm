@@ -6,6 +6,7 @@
 	desc = "A gas circulator turbine and heat exchanger."
 	icon = 'icons/obj/machines/power/teg.dmi'
 	icon_state = "circ-unassembled"
+	init_flags = 0
 	anchored = FALSE
 
 	layer = STRUCTURE_LAYER
@@ -25,6 +26,7 @@
 	var/temperature_overlay
 
 	density = TRUE
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/binary/circulator/Initialize()
 	. = ..()
@@ -69,7 +71,7 @@
 	stored_energy = 0
 	return last_stored_energy_transferred
 
-/obj/machinery/atmospherics/binary/circulator/Process()
+/obj/machinery/atmospherics/binary/circulator/process_atmos()
 	..()
 
 	if(last_worldtime_transfer < world.time - 50)

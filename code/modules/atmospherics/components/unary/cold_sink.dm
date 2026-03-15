@@ -6,6 +6,7 @@
 	desc = "Cools gas when connected to a pipe network."
 	icon = 'icons/obj/atmospherics/temperature_machines.dmi'
 	icon_state = "freezer"
+	init_flags = 0
 	density = TRUE
 	anchored = TRUE
 	use_power = POWER_USE_OFF
@@ -27,6 +28,7 @@
 
 	var/set_temperature = T20C		// Thermostat
 	var/cooling = 0
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/unary/freezer/atmos_init()
 	..()
@@ -118,12 +120,15 @@
 	add_fingerprint(usr)
 
 /obj/machinery/atmospherics/unary/freezer/Process()
+	return process_atmos()
+
+/obj/machinery/atmospherics/unary/freezer/process_atmos(wait, times_fired, datum/controller/subsystem/processing/subsystem)
 	..()
 
 	if(inoperable() || !use_power)
 		cooling = 0
 		update_icon()
-		return
+		return 1
 
 	if(network && air_contents.temperature > set_temperature)
 		cooling = 1
@@ -146,6 +151,7 @@
 		cooling = 0
 
 	update_icon()
+	return 1
 
 //upgrading parts
 /obj/machinery/atmospherics/unary/freezer/RefreshParts()

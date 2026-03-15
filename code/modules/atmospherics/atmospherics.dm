@@ -14,6 +14,7 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
+	var/uses_atmos_processing_subsystem = FALSE
 
 	var/nodealert = 0
 	var/power_rating //the maximum amount of power the machine can use to do work, affects how powerful the machine is, in Watts
@@ -52,6 +53,13 @@ Pipelines + Other Objects -> Pipe network
 		pipe_color = null
 
 	set_dir(dir) // Does full dir init.
+	. = ..()
+	if(uses_atmos_processing_subsystem)
+		START_PROCESSING(SSatmos_machines, src)
+
+/obj/machinery/atmospherics/Destroy()
+	if(uses_atmos_processing_subsystem && is_processing == "SSatmos_machines")
+		STOP_PROCESSING(SSatmos_machines, src)
 	. = ..()
 
 /obj/machinery/atmospherics/proc/atmos_init()
@@ -101,10 +109,18 @@ Pipelines + Other Objects -> Pipe network
 	return node.pipe_color
 
 /obj/machinery/atmospherics/Process()
+	if(uses_atmos_processing_subsystem)
+		return process_atmos()
 	last_flow_rate = 0
 	last_power_draw = 0
 
 	build_network()
+
+/obj/machinery/atmospherics/proc/process_atmos(wait, times_fired, datum/controller/subsystem/processing/subsystem)
+	last_flow_rate = 0
+	last_power_draw = 0
+	build_network()
+	return 1
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.

@@ -39,6 +39,7 @@ GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 /obj/machinery/atmospherics/omni/filter
 	name = "omni gas filter"
 	icon_state = "map_filter"
+	init_flags = 0
 
 	var/list/gas_filters = new()
 	var/datum/omni_port/input
@@ -53,6 +54,7 @@ GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 
 	var/list/filtering_outputs = list()	//maps gasids to gas_mixtures
 	build_icon_state = "omni_filter"
+	uses_atmos_processing_subsystem = TRUE
 
 /obj/machinery/atmospherics/omni/filter/Initialize()
 	. = ..()
@@ -93,7 +95,7 @@ GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 
 	return 0
 
-/obj/machinery/atmospherics/omni/filter/Process()
+/obj/machinery/atmospherics/omni/filter/process_atmos()
 	if(!..())
 		return 0
 
