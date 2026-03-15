@@ -1,0 +1,5 @@
+author: Lexanx
+changes:
+  - rscadd: Добавил Гонки Карпов, и приложение тотализатор для них. Так же в 
+      канал Entertaiment идут оповещения о гонках
+delete-after: true

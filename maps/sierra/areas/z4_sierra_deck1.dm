@@ -302,18 +302,6 @@
 	icon_state = "locker"
 	req_access = list(access_medical_equip)
 
-/area/medical/mentalhealth
-	name = "First Deck - Infirmary - Mental Health"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
-/area/medical/mentalhealth/therapyroom
-	name = "First Deck - Infirmary - Therapy Room"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
 /area/medical/chemistry
 	name = "First Deck - Infirmary - Chemistry"
 	icon_state = "chem"
