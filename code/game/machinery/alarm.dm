@@ -109,6 +109,8 @@
 	var/environment_sample_phase_offset = 0
 	var/idle_sample_interval = 2 SECONDS
 	var/active_sample_interval = 0
+	var/idle_sample_alignment_timer
+	var/idle_sample_loop_timer
 
 /obj/machinery/alarm/cold
 	target_temperature = T0C+4
@@ -141,6 +143,7 @@
 	target_temperature = T0C+10
 
 /obj/machinery/alarm/Destroy()
+	stop_idle_sample_timers()
 	unregister_radio(src, frequency)
 	return ..()
 
@@ -196,18 +199,53 @@
 	. = ..()
 	sync_processing_state()
 
+/obj/machinery/alarm/proc/can_idle_sample()
+	return !inoperable() && !shorted && buildstage == 2 && istype(loc, /turf/simulated)
+
 /obj/machinery/alarm/proc/needs_processing()
 	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL || world.time >= next_environment_sample_at
 
 /obj/machinery/alarm/proc/sync_processing_state()
-	if(needs_processing())
+	if(is_alarm_active_state() || (can_idle_sample() && world.time >= next_environment_sample_at))
+		stop_idle_sample_timers()
 		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 	else
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+		if(can_idle_sample())
+			schedule_idle_sample()
+		else
+			stop_idle_sample_timers()
+
+/obj/machinery/alarm/proc/stop_idle_sample_timers()
+	if(idle_sample_alignment_timer)
+		deltimer(idle_sample_alignment_timer)
+		idle_sample_alignment_timer = null
+	if(idle_sample_loop_timer)
+		deltimer(idle_sample_loop_timer)
+		idle_sample_loop_timer = null
 
 /obj/machinery/alarm/proc/schedule_idle_sample()
+	if(idle_sample_loop_timer || idle_sample_alignment_timer || idle_sample_interval <= 0)
+		return
 	var/delay = max(1, next_environment_sample_at - world.time)
-	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+	idle_sample_alignment_timer = addtimer(new Callback(src, PROC_REF(begin_idle_sample_loop)), delay, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/alarm/proc/begin_idle_sample_loop()
+	idle_sample_alignment_timer = null
+	if(QDELETED(src) || !can_idle_sample())
+		return
+	if(!idle_sample_loop_timer)
+		idle_sample_loop_timer = addtimer(new Callback(src, PROC_REF(idle_sample_tick)), idle_sample_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+	idle_sample_tick()
+
+/obj/machinery/alarm/proc/idle_sample_tick()
+	if(QDELETED(src))
+		return
+	if(is_alarm_active_state() || !can_idle_sample())
+		sync_processing_state()
+		return
+	next_environment_sample_at = world.time
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/alarm/proc/set_next_idle_sample_time()
 	var/delay = idle_sample_interval - ((world.time - environment_sample_phase_offset) % idle_sample_interval)
@@ -222,17 +260,16 @@
 
 /obj/machinery/alarm/Process()
 	if(!needs_processing())
+		sync_processing_state()
 		return PROCESS_KILL
 
 	if(inoperable() || shorted || buildstage != 2)
-		set_next_idle_sample_time()
-		schedule_idle_sample()
+		sync_processing_state()
 		return PROCESS_KILL
 
 	var/turf/simulated/location = loc
 	if(!istype(location))
-		set_next_idle_sample_time()
-		schedule_idle_sample()
+		sync_processing_state()
 		return PROCESS_KILL //returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
@@ -292,7 +329,7 @@
 		next_environment_sample_at = world.time + active_sample_interval
 	else
 		set_next_idle_sample_time()
-		schedule_idle_sample()
+		sync_processing_state()
 		return PROCESS_KILL
 
 	return 0
@@ -991,6 +1028,8 @@ FIRE ALARM
 	var/next_process_at = 0
 	var/passive_detection_interval = 1 SECOND
 	var/passive_detection_phase_offset = 0
+	var/process_alignment_timer
+	var/process_loop_timer
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -1010,7 +1049,7 @@ FIRE ALARM
 	if(timing || should_passively_detect())
 		last_process = world.timeofday
 		next_process_at = world.time
-	sync_processing_state()
+	sync_processing_state(TRUE)
 
 /obj/machinery/firealarm/on_death()
 	. = ..()
@@ -1020,16 +1059,42 @@ FIRE ALARM
 	. = ..()
 	if(timing || should_passively_detect())
 		next_process_at = world.time
-	sync_processing_state()
+	sync_processing_state(TRUE)
 
 /obj/machinery/firealarm/proc/should_passively_detect()
 	return detecting && working && buildstage == 2 && !wiresexposed && !MACHINE_IS_BROKEN(src) && is_powered()
 
-/obj/machinery/firealarm/proc/needs_processing()
-	return world.time >= next_process_at && (timing || should_passively_detect())
+/obj/machinery/firealarm/proc/can_process_tick()
+	return !inoperable() && (timing || should_passively_detect())
 
-/obj/machinery/firealarm/proc/sync_processing_state()
-	sync_powered_processing_state(needs_processing())
+/obj/machinery/firealarm/proc/needs_processing()
+	return can_process_tick() && world.time >= next_process_at
+
+/obj/machinery/firealarm/proc/sync_processing_state(immediate = FALSE)
+	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	if(!can_process_tick())
+		stop_process_timers()
+		return
+	if(timing || immediate || world.time >= next_process_at)
+		if(process_alignment_timer)
+			deltimer(process_alignment_timer)
+			process_alignment_timer = null
+		if(!process_loop_timer)
+			process_loop_timer = addtimer(new Callback(src, PROC_REF(process_tick)), passive_detection_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+		if(immediate || world.time >= next_process_at)
+			process_tick()
+		return
+	if(process_loop_timer || process_alignment_timer)
+		return
+	schedule_next_process()
+
+/obj/machinery/firealarm/proc/stop_process_timers()
+	if(process_alignment_timer)
+		deltimer(process_alignment_timer)
+		process_alignment_timer = null
+	if(process_loop_timer)
+		deltimer(process_loop_timer)
+		process_loop_timer = null
 
 /obj/machinery/firealarm/proc/set_next_passive_detection_time()
 	var/delay = passive_detection_interval - ((world.time - passive_detection_phase_offset) % passive_detection_interval)
@@ -1038,8 +1103,44 @@ FIRE ALARM
 	next_process_at = world.time + delay
 
 /obj/machinery/firealarm/proc/schedule_next_process()
+	if(process_alignment_timer || process_loop_timer || passive_detection_interval <= 0)
+		return
 	var/delay = max(1, next_process_at - world.time)
-	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+	process_alignment_timer = addtimer(new Callback(src, PROC_REF(begin_process_loop)), delay, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/firealarm/proc/begin_process_loop()
+	process_alignment_timer = null
+	if(QDELETED(src) || !can_process_tick())
+		return
+	if(!process_loop_timer)
+		process_loop_timer = addtimer(new Callback(src, PROC_REF(process_tick)), passive_detection_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+	process_tick()
+
+/obj/machinery/firealarm/proc/process_tick()
+	if(QDELETED(src) || !can_process_tick())
+		stop_process_timers()
+		return
+
+	if(timing)
+		if(time > 0)
+			time = time - ((world.timeofday - last_process) / 10)
+		else
+			alarm()
+			time = 0
+			timing = 0
+		last_process = world.timeofday
+		updateDialog()
+		if(timing)
+			next_process_at = world.time + 1 SECOND
+	else if(should_passively_detect())
+		if(locate(/obj/hotspot) in loc)
+			alarm()
+		set_next_passive_detection_time()
+
+	if(!can_process_tick())
+		stop_process_timers()
+	else if(!process_loop_timer)
+		process_loop_timer = addtimer(new Callback(src, PROC_REF(process_tick)), passive_detection_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
 
 /obj/machinery/firealarm/proc/get_cached_overlay(state)
 	if(!LAZYACCESS(overlays_cache, state))
@@ -1183,29 +1284,7 @@ FIRE ALARM
 	return TRUE
 
 /obj/machinery/firealarm/Process()//Note: this processing was mostly phased out due to other code, and only runs when needed
-	if(!needs_processing() || inoperable())
-		return PROCESS_KILL
-
-	if(timing)
-		if(time > 0)
-			time = time - ((world.timeofday - last_process) / 10)
-		else
-			alarm()
-			time = 0
-			timing = 0
-		last_process = world.timeofday
-		updateDialog()
-		if(timing)
-			next_process_at = world.time + 1 SECOND
-			schedule_next_process()
-			return PROCESS_KILL
-
-	if(should_passively_detect())
-		if(locate(/obj/hotspot) in loc)
-			alarm()
-		set_next_passive_detection_time()
-		schedule_next_process()
-
+	process_tick()
 	return PROCESS_KILL
 
 /obj/machinery/firealarm/interface_interact(mob/user)
@@ -1267,7 +1346,7 @@ FIRE ALARM
 		last_process = world.timeofday
 		if(src.timing)
 			next_process_at = world.time
-		sync_processing_state()
+		sync_processing_state(src.timing)
 		. = TOPIC_REFRESH
 	else if (href_list["tp"])
 		var/tp = text2num(href_list["tp"])
@@ -1276,7 +1355,7 @@ FIRE ALARM
 		if(src.timing)
 			last_process = world.timeofday
 			next_process_at = world.time
-			sync_processing_state()
+			sync_processing_state(TRUE)
 		. = TOPIC_REFRESH
 
 	if(. == TOPIC_REFRESH)
@@ -1300,6 +1379,10 @@ FIRE ALARM
 	update_icon()
 	playsound(src, 'sound/machines/fire_alarm.ogg', 75, 0)
 	return
+
+/obj/machinery/firealarm/Destroy()
+	stop_process_timers()
+	return ..()
 
 
 
