@@ -21,7 +21,7 @@
 		temporarily_store_air()
 		QDEL_NULL(air)
 	for(var/obj/machinery/atmospherics/pipe/P in members)
-		P.parent = null
+		P.mark_for_rebuild()
 	leaks.Cut()
 	members.Cut()
 	edges.Cut()

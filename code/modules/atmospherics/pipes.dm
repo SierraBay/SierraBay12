@@ -60,6 +60,12 @@
 			if(parent.network)
 				parent.network.leaks -= src
 
+/obj/machinery/atmospherics/pipe/proc/mark_for_rebuild()
+	if(QDELING(src))
+		return
+	parent = null
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 /obj/machinery/atmospherics/pipe/proc/update_sound(playing)
 	if(playing && !sound_token)
 		sound_token = GLOB.sound_player.PlayLoopingSound(src, SOUND_ID, 'sound/machines/pipeleak.ogg', volume = 8, range = 3, falloff = 1, prefer_mute = TRUE)
