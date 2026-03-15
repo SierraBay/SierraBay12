@@ -32,6 +32,9 @@
 	multitool_extension = /datum/extension/interactive/multitool/radio/transmitter
 	var/list/transmit_on_change
 	var/list/transmit_on_tick
+	var/transmit_interval = 2 SECONDS
+	var/list/last_transmitted_data
+	var/telemetry_timer_scheduled = FALSE
 
 /obj/item/stock_parts/radio/transmitter/basic/proc/var_changed(singleton/public_access/public_variable/variable, obj/machinery/machine, old_value, new_value)
 	var/list/L = list()
@@ -40,23 +43,67 @@
 			L[thing] = new_value
 	queue_transmit(L)
 
+/obj/item/stock_parts/radio/transmitter/basic/proc/can_periodically_transmit(obj/machinery/machine)
+	return istype(machine) && loc == machine && (status & PART_STAT_INSTALLED) && LAZYLEN(transmit_on_tick)
+
+/obj/item/stock_parts/radio/transmitter/basic/proc/start_periodic_transmit(obj/machinery/machine)
+	last_transmitted_data = null
+	schedule_next_periodic_transmit(machine, 0)
+
+/obj/item/stock_parts/radio/transmitter/basic/proc/stop_periodic_transmit(obj/machinery/machine)
+	telemetry_timer_scheduled = FALSE
+	last_transmitted_data = null
+
+/obj/item/stock_parts/radio/transmitter/basic/proc/schedule_next_periodic_transmit(obj/machinery/machine, delay = transmit_interval)
+	if(!can_periodically_transmit(machine))
+		return
+	telemetry_timer_scheduled = TRUE
+	addtimer(new Callback(src, PROC_REF(periodic_transmit), machine), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/item/stock_parts/radio/transmitter/basic/proc/build_tick_payload(obj/machinery/machine)
+	var/list/L = list()
+	for(var/thing in transmit_on_tick)
+		var/singleton/public_access/public_variable/variable = transmit_on_tick[thing]
+		L[thing] = variable.access_var(machine)
+	return L
+
+/obj/item/stock_parts/radio/transmitter/basic/proc/periodic_transmit(obj/machinery/machine)
+	telemetry_timer_scheduled = FALSE
+	if(!can_periodically_transmit(machine))
+		return
+
+	var/list/payload = build_tick_payload(machine)
+	if(LAZYLEN(payload))
+		var/payload_signature = json_encode(payload)
+		var/last_payload_signature = LAZYLEN(last_transmitted_data) ? json_encode(last_transmitted_data) : null
+		if(payload_signature != last_payload_signature)
+			queue_transmit(payload)
+			last_transmitted_data = payload.Copy()
+	else
+		last_transmitted_data = null
+
+	if(can_periodically_transmit(machine))
+		schedule_next_periodic_transmit(machine)
+
 /obj/item/stock_parts/radio/transmitter/basic/on_install(obj/machinery/machine)
 	..()
 	sanitize_events(machine, transmit_on_change)
 	sanitize_events(machine, transmit_on_tick)
 	if(LAZYLEN(transmit_on_tick))
-		start_processing(machine)
+		start_periodic_transmit(machine)
 	for(var/thing in transmit_on_change)
 		var/singleton/public_access/public_variable/variable = transmit_on_change[thing]
 		variable.register_listener(src, machine, PROC_REF(var_changed))
 
 /obj/item/stock_parts/radio/transmitter/basic/on_uninstall(obj/machinery/machine)
+	stop_periodic_transmit(machine)
 	for(var/thing in transmit_on_change)
 		var/singleton/public_access/public_variable/variable = transmit_on_change[thing]
 		variable.unregister_listener(src, machine)
 	..()
 
 /obj/item/stock_parts/radio/transmitter/basic/Destroy()
+	stop_periodic_transmit(loc)
 	if(istype(loc, /obj/machinery))
 		for(var/thing in transmit_on_change)
 			var/singleton/public_access/public_variable/variable = transmit_on_change[thing]
@@ -64,11 +111,7 @@
 	. = ..()
 
 /obj/item/stock_parts/radio/transmitter/basic/machine_process(obj/machinery/machine)
-	var/list/L = list()
-	for(var/thing in transmit_on_tick)
-		var/singleton/public_access/public_variable/variable = transmit_on_tick[thing]
-		L[thing] = variable.access_var(machine)
-	queue_transmit(L)
+	return PROCESS_KILL
 
 // This is a variant that waits for an event (a public var set), and then transmits everything in the list.
 
