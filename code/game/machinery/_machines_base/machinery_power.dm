@@ -49,6 +49,13 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	if(.)
 		queue_icon_update()
 
+/// Starts or stops machinery processing based on machine-specific need plus current power/broken state.
+/obj/machinery/proc/sync_powered_processing_state(should_process, processing_flag = MACHINERY_PROCESS_SELF)
+	if(should_process && !MACHINE_IS_BROKEN(src) && is_powered())
+		START_PROCESSING_MACHINE(src, processing_flag)
+	else
+		STOP_PROCESSING_MACHINE(src, processing_flag)
+
 /// Returns the current power usage draw, based on the state of `use_power`.
 /obj/machinery/proc/get_power_usage()
 	switch(use_power)

@@ -19,6 +19,7 @@
 	name = "status display"
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
+	init_flags = 0
 	density = FALSE
 	idle_power_usage = 10
 	health_max = 10
@@ -72,17 +73,14 @@
 	return mode == STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME || mode == STATUS_DISPLAY_TIME || mode == STATUS_DISPLAY_CUSTOM
 
 /obj/machinery/status_display/proc/sync_processing_state()
-	if(needs_processing() && is_powered())
-		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
-	else
-		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	sync_powered_processing_state(needs_processing())
 
 /obj/machinery/status_display/on_death()
 	..()
 	playsound(src, "shatter", 70, 1)
 	visible_message(SPAN_DANGER("\The [src] is smashed into many pieces!"))
 	remove_display()
-	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	sync_processing_state()
 
 /obj/machinery/status_display/on_revive()
 	..()
