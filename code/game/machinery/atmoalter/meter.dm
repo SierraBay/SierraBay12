@@ -12,6 +12,8 @@
 	var/display_sample_phase_offset = 0
 	var/display_sample_interval = 2 SECONDS
 	var/last_meter_icon_state
+	var/display_sample_alignment_timer
+	var/display_sample_loop_timer
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/power/apc
@@ -30,19 +32,21 @@
 /obj/machinery/meter/Initialize()
 	. = ..()
 	if(!target)
-		set_target(locate(/obj/machinery/atmospherics/pipe) in loc)
+		set_target(locate(/obj/machinery/atmospherics/pipe) in loc, FALSE)
 	if(!target)
-		set_target(loc)
+		set_target(loc, FALSE)
 	display_sample_phase_offset = rand(0, max(0, display_sample_interval - 1))
 	next_display_sample_at = world.time + display_sample_phase_offset
+	last_meter_icon_state = icon_state
 	sync_processing_state()
 
-/obj/machinery/meter/proc/set_target(atom/new_target)
-	clear_target()
+/obj/machinery/meter/proc/set_target(atom/new_target, sync = TRUE)
+	clear_target(FALSE)
 	target = new_target
 	GLOB.destroyed_event.register(target, src, PROC_REF(clear_target))
-	next_display_sample_at = world.time
-	sync_processing_state()
+	if(sync)
+		next_display_sample_at = world.time
+		sync_processing_state(TRUE)
 
 /obj/machinery/meter/proc/clear_target(sync = TRUE)
 	if(target)
@@ -50,23 +54,66 @@
 		target = null
 	if(sync)
 		next_display_sample_at = world.time
-		sync_processing_state()
+		sync_processing_state(TRUE)
+
+/obj/machinery/meter/proc/can_sample_display()
+	return is_powered() && !inoperable()
 
 /obj/machinery/meter/proc/needs_processing()
-	return is_powered() && !inoperable() && world.time >= next_display_sample_at
+	return FALSE
 
-/obj/machinery/meter/proc/sync_processing_state()
-	sync_powered_processing_state(needs_processing())
+/obj/machinery/meter/proc/sync_processing_state(immediate = FALSE)
+	STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	if(!can_sample_display())
+		stop_display_sample_timers()
+		return
+	if(immediate)
+		if(display_sample_alignment_timer)
+			deltimer(display_sample_alignment_timer)
+			display_sample_alignment_timer = null
+		if(!display_sample_loop_timer)
+			display_sample_loop_timer = addtimer(new Callback(src, PROC_REF(display_sample_tick)), display_sample_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+		display_sample_tick()
+		return
+	if(display_sample_loop_timer || display_sample_alignment_timer || display_sample_interval <= 0)
+		return
+	var/delay = max(1, next_display_sample_at - world.time)
+	display_sample_alignment_timer = addtimer(new Callback(src, PROC_REF(begin_display_sample_loop)), delay, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/meter/proc/stop_display_sample_timers()
+	if(display_sample_alignment_timer)
+		deltimer(display_sample_alignment_timer)
+		display_sample_alignment_timer = null
+	if(display_sample_loop_timer)
+		deltimer(display_sample_loop_timer)
+		display_sample_loop_timer = null
 
 /obj/machinery/meter/proc/schedule_next_display_sample()
-	var/delay = max(1, next_display_sample_at - world.time)
-	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+	sync_processing_state()
+
+/obj/machinery/meter/proc/begin_display_sample_loop()
+	display_sample_alignment_timer = null
+	if(QDELETED(src) || !can_sample_display())
+		return
+	if(!display_sample_loop_timer)
+		display_sample_loop_timer = addtimer(new Callback(src, PROC_REF(display_sample_tick)), display_sample_interval, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_LOOP)
+	display_sample_tick()
 
 /obj/machinery/meter/proc/set_next_display_sample_time()
 	var/delay = display_sample_interval - ((world.time - display_sample_phase_offset) % display_sample_interval)
 	if(delay <= 0)
 		delay = display_sample_interval
 	next_display_sample_at = world.time + delay
+
+/obj/machinery/meter/proc/display_sample_tick()
+	if(QDELETED(src) || !can_sample_display())
+		stop_display_sample_timers()
+		return
+
+	var/new_icon_state = get_meter_icon_state()
+	if(new_icon_state != last_meter_icon_state)
+		icon_state = new_icon_state
+		last_meter_icon_state = new_icon_state
 
 /obj/machinery/meter/proc/get_meter_icon_state()
 	if(!target)
@@ -99,6 +146,7 @@
 
 /obj/machinery/meter/Destroy()
 	clear_target(FALSE)
+	stop_display_sample_timers()
 	. = ..()
 
 /obj/machinery/meter/power_change()
@@ -108,19 +156,9 @@
 	else
 		next_display_sample_at = world.time
 	last_meter_icon_state = icon_state
-	sync_processing_state()
+	sync_processing_state(!inoperable())
 
 /obj/machinery/meter/Process()
-	if(!needs_processing())
-		return PROCESS_KILL
-
-	var/new_icon_state = get_meter_icon_state()
-	if(new_icon_state != last_meter_icon_state)
-		icon_state = new_icon_state
-		last_meter_icon_state = new_icon_state
-
-	set_next_display_sample_time()
-	schedule_next_display_sample()
 	return PROCESS_KILL
 
 
