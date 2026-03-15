@@ -3,6 +3,7 @@
 	var/list/memory = list()
 	var/obj/machinery/embedded_controller/master
 	var/id_tag
+	var/excited = FALSE
 
 /datum/computer/file/embedded_program/New(obj/machinery/embedded_controller/M)
 	master = M
@@ -31,3 +32,17 @@
 		master.post_signal(signal, comm_line)
 	else
 		qdel(signal)
+
+/datum/computer/file/embedded_program/proc/should_process()
+	return FALSE
+
+/datum/computer/file/embedded_program/proc/needs_processing()
+	return excited || should_process()
+
+/datum/computer/file/embedded_program/proc/wake()
+	excited = TRUE
+	if(master)
+		master.sync_processing_state()
+
+/datum/computer/file/embedded_program/proc/before_process()
+	excited = FALSE

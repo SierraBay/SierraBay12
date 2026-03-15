@@ -77,6 +77,9 @@
 	airlock_program.process()
 	..()
 
+/datum/computer/file/embedded_program/docking/airlock/should_process()
+	return ..() || (airlock_program && airlock_program.needs_processing())
+
 /datum/computer/file/embedded_program/docking/airlock/receive_signal(datum/signal/signal, receive_method, receive_param)
 	airlock_program.receive_signal(signal, receive_method, receive_param)	//pass along to subprograms
 	..(signal, receive_method, receive_param)

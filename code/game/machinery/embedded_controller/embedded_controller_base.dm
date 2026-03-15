@@ -2,13 +2,28 @@
 	name = "Embedded Controller"
 	anchored = TRUE
 	idle_power_usage = 10
+	init_flags = 0
 	var/datum/computer/file/embedded_program/program	//the currently executing program
 	var/on = 1
 
 /obj/machinery/embedded_controller/Initialize()
 	if(program)
 		program = new program(src)
-	return ..()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/embedded_controller/power_change()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/embedded_controller/proc/needs_processing()
+	return on && !inoperable() && is_powered() && program && program.needs_processing()
+
+/obj/machinery/embedded_controller/proc/sync_processing_state()
+	if(needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/embedded_controller/Destroy()
 	if(istype(program))
@@ -23,6 +38,7 @@
 
 	if(program)
 		program.receive_signal(signal, receive_method, receive_param)
+		program.wake()
 			//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
@@ -31,13 +47,22 @@
 	if(usr)
 		usr.set_machine(src)
 	if(program)
-		return program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		. = program.receive_user_command(href_list["command"]) // Any further sanitization should be done in here.
+		if(.)
+			program.wake()
+		return .
 
 /obj/machinery/embedded_controller/Process()
+	if(!needs_processing())
+		return PROCESS_KILL
+
 	if(program)
+		program.before_process()
 		program.process()
 
 	update_icon()
+	if(!needs_processing())
+		return PROCESS_KILL
 
 /obj/machinery/embedded_controller/interface_interact(mob/user)
 	ui_interact(user)

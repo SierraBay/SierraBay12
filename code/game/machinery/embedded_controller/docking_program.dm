@@ -198,6 +198,9 @@
 	if (control_mode == MODE_SERVER && dock_state == STATE_UNDOCKED)
 		control_mode = MODE_NONE
 
+/datum/computer/file/embedded_program/docking/should_process()
+	return dock_state == STATE_DOCKING || dock_state == STATE_UNDOCKING || response_sent || resend_counter > 0
+
 
 /datum/computer/file/embedded_program/docking/proc/initiate_docking(target)
 	if (dock_state != STATE_UNDOCKED || control_mode == MODE_SERVER)	//must be undocked and not serving another request to begin a new docking handshake

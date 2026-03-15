@@ -286,6 +286,9 @@
 
 	return 1
 
+/datum/computer/file/embedded_program/airlock/should_process()
+	return state != target_state || !!memory["processing"]
+
 //these are here so that other types don't have to make so many assuptions about our implementation
 
 /datum/computer/file/embedded_program/airlock/proc/begin_cycle_in()
