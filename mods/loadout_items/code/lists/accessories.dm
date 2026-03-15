@@ -56,6 +56,7 @@
 	path = /obj/item/clothing/accessory/choker
 	sort_category = "Clothing Pieces"
 	flags = GEAR_HAS_COLOR_SELECTION
+	slot = slot_tie // [SIERRA-ADD] — Allow attaching to worn clothing in preview
 
 /datum/gear/accessory/collar
 	display_name = "collar selection"
@@ -155,3 +156,4 @@
 
 /datum/gear/tactical/kneepads
 	flags = GEAR_HAS_COLOR_SELECTION
+
