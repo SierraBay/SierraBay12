@@ -544,8 +544,11 @@
 		set_light(0)
 		return
 
+	if(!alarm_area)
+		alarm_area = get_area(src)
+
 	var/icon_level = danger_level
-	if (alarm_area.atmosalm)
+	if (alarm_area?.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 
 	var/new_color = null
