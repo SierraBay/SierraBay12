@@ -56,6 +56,7 @@
 	icon = 'icons/obj/machines/airalarm.dmi'
 	icon_state = "alarmp"
 	anchored = TRUE
+	init_flags = 0
 	idle_power_usage = 80
 	active_power_usage = 1000 //For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = ENVIRON
@@ -178,6 +179,32 @@
 	set_frequency(frequency)
 	update_icon()
 	next_environment_sample_at = world.time
+	sync_processing_state()
+
+/obj/machinery/alarm/power_change()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/alarm/on_death()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/alarm/on_revive()
+	. = ..()
+	sync_processing_state()
+
+/obj/machinery/alarm/proc/needs_processing()
+	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL || world.time >= next_environment_sample_at
+
+/obj/machinery/alarm/proc/sync_processing_state()
+	if(needs_processing())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	else
+		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/alarm/proc/schedule_idle_sample()
+	var/delay = max(1, next_environment_sample_at - world.time)
+	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/alarm/get_req_access()
 	if(!locked)
@@ -185,17 +212,19 @@
 	return ..()
 
 /obj/machinery/alarm/Process()
-	if(world.time < next_environment_sample_at)
-		return
+	if(!needs_processing())
+		return PROCESS_KILL
 
 	if(inoperable() || shorted || buildstage != 2)
 		next_environment_sample_at = world.time + idle_sample_interval
-		return
+		schedule_idle_sample()
+		return PROCESS_KILL
 
 	var/turf/simulated/location = loc
 	if(!istype(location))
 		next_environment_sample_at = world.time + idle_sample_interval
-		return//returns if loc is not simulated
+		schedule_idle_sample()
+		return PROCESS_KILL //returns if loc is not simulated
 
 	var/datum/gas_mixture/environment = location.return_air()
 
@@ -237,8 +266,10 @@
 		next_environment_sample_at = world.time + active_sample_interval
 	else
 		next_environment_sample_at = world.time + idle_sample_interval
+		schedule_idle_sample()
+		return PROCESS_KILL
 
-	return
+	return 0
 
 /obj/machinery/alarm/proc/is_alarm_active_state()
 	return regulating_temperature || danger_level != 0 || pressure_dangerlevel != 0 || mode == AALARM_MODE_CYCLE || mode == AALARM_MODE_FILL
@@ -334,6 +365,7 @@
 
 /obj/machinery/alarm/proc/breach_end_cooldown()
 	breach_cooldown = FALSE
+	sync_processing_state()
 	return
 
 //disables breach detection temporarily
@@ -454,6 +486,7 @@
 	//TODO: make it so that players can choose between applying the new mode to the room they are in (related area) vs the entire alarm area
 	for (var/obj/machinery/alarm/AA in alarm_area)
 		AA.mode = mode
+		AA.next_environment_sample_at = world.time
 
 	breach_start_cooldown()
 
@@ -487,6 +520,9 @@
 				send_signal(device_id, list("set_power"= 0) )
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list("set_power"= 0) )
+
+	for(var/obj/machinery/alarm/AA in alarm_area)
+		AA.sync_processing_state()
 
 /obj/machinery/alarm/proc/apply_danger_level(new_danger_level)
 	if (report_danger_level && alarm_area.atmosalert(new_danger_level, src))
@@ -691,6 +727,7 @@
 				rcon_setting = RCON_AUTO
 			if(RCON_YES)
 				rcon_setting = RCON_YES
+		sync_processing_state()
 		return TOPIC_REFRESH
 
 	if(href_list["temperature"])
@@ -703,6 +740,8 @@
 				to_chat(user, "Temperature must be between [min_temperature]C and [max_temperature]C")
 			else
 				target_temperature = input_temperature + T0C
+				next_environment_sample_at = world.time
+				sync_processing_state()
 		return TOPIC_REFRESH
 
 	// hrefs that need the AA unlocked -walter0o
@@ -748,6 +787,8 @@
 						breach_pressure = 50*ONE_ATMOSPHERE
 					else
 						breach_pressure = round(newval,0.01)
+					next_environment_sample_at = world.time
+					sync_processing_state()
 
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -797,6 +838,7 @@
 						if(selected[3] > selected[4])
 							selected[3] = selected[4]
 
+					next_environment_sample_at = world.time
 					apply_mode()
 					return TOPIC_REFRESH
 
@@ -844,6 +886,7 @@
 				new/obj/item/stack/cable_coil(get_turf(src), 5)
 				buildstage = 1
 				update_icon()
+				sync_processing_state()
 				return TRUE
 
 			if (isid(W) || istype(W, /obj/item/modular_computer))
@@ -863,7 +906,9 @@
 				if (C.use(5))
 					to_chat(user, SPAN_NOTICE("You wire \the [src]."))
 					buildstage = 2
+					next_environment_sample_at = world.time
 					update_icon()
+					sync_processing_state()
 					return TRUE
 				else
 					to_chat(user, SPAN_WARNING("You need 5 pieces of cable to do wire \the [src]."))
@@ -880,6 +925,7 @@
 				circuit.dropInto(user.loc)
 				buildstage = 0
 				update_icon()
+				sync_processing_state()
 				return TRUE
 
 		if(0)
@@ -888,6 +934,7 @@
 				qdel(W)
 				buildstage = 1
 				update_icon()
+				sync_processing_state()
 				return TRUE
 
 			if (isWrench(W))
