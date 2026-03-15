@@ -9,6 +9,7 @@
 	power_channel = ENVIRON
 	idle_power_usage = 15
 	var/next_display_sample_at = 0
+	var/display_sample_phase_offset = 0
 	var/display_sample_interval = 2 SECONDS
 	var/last_meter_icon_state
 
@@ -32,7 +33,8 @@
 		set_target(locate(/obj/machinery/atmospherics/pipe) in loc)
 	if(!target)
 		set_target(loc)
-	next_display_sample_at = world.time
+	display_sample_phase_offset = rand(0, max(0, display_sample_interval - 1))
+	next_display_sample_at = world.time + display_sample_phase_offset
 	sync_processing_state()
 
 /obj/machinery/meter/proc/set_target(atom/new_target)
@@ -59,6 +61,12 @@
 /obj/machinery/meter/proc/schedule_next_display_sample()
 	var/delay = max(1, next_display_sample_at - world.time)
 	addtimer(new Callback(src, PROC_REF(sync_processing_state)), delay, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/obj/machinery/meter/proc/set_next_display_sample_time()
+	var/delay = display_sample_interval - ((world.time - display_sample_phase_offset) % display_sample_interval)
+	if(delay <= 0)
+		delay = display_sample_interval
+	next_display_sample_at = world.time + delay
 
 /obj/machinery/meter/proc/get_meter_icon_state()
 	if(!target)
@@ -111,7 +119,7 @@
 		icon_state = new_icon_state
 		last_meter_icon_state = new_icon_state
 
-	next_display_sample_at = world.time + display_sample_interval
+	set_next_display_sample_time()
 	schedule_next_display_sample()
 	return PROCESS_KILL
 
