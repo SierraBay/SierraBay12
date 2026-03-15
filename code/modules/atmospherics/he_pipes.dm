@@ -2,6 +2,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	icon = 'icons/atmos/heat.dmi'
 	icon_state = "intact"
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	pipe_icon = "hepipe"
 	color = "#404040"
 	level = ATOM_LEVEL_OVER_TILE
@@ -110,6 +111,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
 	icon = 'icons/atmos/junction.dmi'
 	icon_state = "intact"
+	init_flags = INIT_MACHINERY_START_PROCESSING
 	pipe_icon = "hejunction"
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_HE|CONNECT_TYPE_FUEL
 	build_icon_state = "junction"
