@@ -35,6 +35,8 @@
 	var/base_speed = 0 // Временный буфер скорости
 	var/heal_min = 5 // 30 в минуту
 	var/heal_max = 8 // 50 в минуту
+	
+	var/boredom_factor = 0 // На сколько увеличивается КД за каждый выстрел по стоячему судну
 
 /obj/overmap/event/leviathan/Initialize(seed)
 	. = ..(seed)
@@ -83,6 +85,10 @@
 	// Если хилимся, то приоритет на хил, атаковать не будем (кроме Роя)
 	if((!is_healing || !needs_healing_location()) && world.time >= next_damage_time)
 		deal_damage_to_sector()
+
+	var/obj/overmap/O = target_ship?.resolve()
+	if(istype(O) && O.is_moving())
+		boredom_factor = 0
 
 	..()
 
@@ -223,12 +229,19 @@
 /obj/overmap/event/leviathan/proc/deal_damage_to_sector()
 	var/damaged_something = FALSE
 
+	var/obj/overmap/O = target_ship?.resolve()
+	var/stationary = istype(O) && !O.is_moving()
+
 	for(var/obj/overmap/visitable/ship/S in range(1, src))
 		deal_ship_damage(S)
 		damaged_something = TRUE
 
 	if(damaged_something)
-		next_damage_time = world.time + damage_cooldown
+		if(stationary)
+			boredom_factor += 0.1
+		else
+			boredom_factor = 0
+		next_damage_time = world.time + (damage_cooldown * (1 + boredom_factor))
 
 /obj/overmap/event/leviathan/proc/deal_ship_damage(obj/overmap/visitable/ship/S)
 
