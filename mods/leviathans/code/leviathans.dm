@@ -3,8 +3,8 @@
 
 /obj/overmap/event/leviathan
 	name = "Space Leviathan"
-	icon = 'icons/obj/overmap.dmi'
-	icon_state = "carp1" // TODO ПЛЕСХОЛДЕР!!!
+	icon = 'mods/leviathans/icons/leviathan.dmi'
+	icon_state = "dragon" // TODO ПЛЕСХОЛДЕР!!!
 	requires_contact = TRUE
 	opacity = 0
 	instant_contact = TRUE
@@ -40,11 +40,17 @@
 	. = ..(seed)
 	max_health = health
 	base_speed = leviathan_speed
+
 	make_movable()
 	START_PROCESSING(SSobj, src)
 	processing = TRUE
 	find_target()
 
+	var/image/I = image(icon, icon_state = "warning")
+	I.color = COLOR_ORANGE
+	I.appearance_flags = RESET_COLOR
+	AddOverlays(I, ATOM_ICON_CACHE_PROTECTED)
+	
 /obj/overmap/event/leviathan/Destroy()
 	if(processing)
 		STOP_PROCESSING(SSobj, src)
@@ -86,7 +92,7 @@
 		healing_target_ref = null
 		// Если мало ХП, уносим ноги/щупальца/лапы
 		if(needs_healing_location())
-			leviathan_speed = base_speed * 4
+			leviathan_speed = base_speed * 2
 
 	if(is_healing)
 		if(health >= max_health)
@@ -223,3 +229,14 @@
 		if(LAZYLEN(S.map_z))
 			z_levels |= S.map_z
 	return z_levels
+
+/proc/overmap_narrate(list/z_levels, message)
+	if(!islist(z_levels))
+		z_levels = list(z_levels)
+
+	if(!length(z_levels))
+		return
+
+	for(var/mob/M in GLOB.player_list)
+		if(get_z(M) in z_levels)
+			to_chat(M, SPAN_BOLD(SPAN_ITALIC(message)))

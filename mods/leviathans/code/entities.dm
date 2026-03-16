@@ -1,12 +1,13 @@
+//-------MEDUSA-------
 /obj/overmap/event/leviathan/medusa
 	name = "Pulsar Medusa"
-	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	icon_state = "medusa"
 	health = 1000
 	leviathan_speed = 1 / (30 SECONDS)
 	weaknesses = OVERMAP_WEAKNESS_EMP
 	damage_cooldown = 30 SECONDS
 	events = list(/datum/event/electrical_storm)
-	color = COLOR_PINK
+	color = COLOR_SKY_BLUE
 	heal_min = 5
 	heal_max = 10
 
@@ -23,7 +24,7 @@
 		spawn_meteor(list(/obj/meteor/supermatter/medusa = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
 
 /obj/overmap/event/leviathan/medusa/death_gasp()
-	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Pulsar Medusa has collapsed into a black hole, leaving dark matter influx.")
+	overmap_narrate(get_overmap_broadcast_zlevels(src, 1), "The Pulsar Medusa has collapsed into a black hole, leaving dark matter influx.")
 	new /obj/overmap/event/gravity(loc)
 
 /obj/overmap/event/leviathan/medusa/find_healing_target()
@@ -33,9 +34,10 @@
 	if(locate(/obj/overmap/event/electric) in loc)
 		..()
 
+// -------DRAGON-------
 /obj/overmap/event/leviathan/dragon
 	name = "Space Dragon"
-	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	icon_state = "dragon"
 	health = 1500
 	damage_cooldown = 40 SECONDS
 	leviathan_speed = 1 / (20 SECONDS)
@@ -57,7 +59,7 @@
 		spawn_meteor(list(/obj/meteor/leviathan_fireball = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
 
 /obj/overmap/event/leviathan/dragon/death_gasp()
-	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Space Dragon's remains have shattered into a thousand burning fragments, triggering a meteor shower.")
+	overmap_narrate(get_overmap_broadcast_zlevels(src, 1), "The Space Dragon's remains have shattered into a thousand burning fragments, triggering a meteor shower.")
 	new /obj/overmap/event/meteor(loc)
 
 /obj/overmap/event/leviathan/dragon/find_healing_target()
@@ -67,9 +69,10 @@
 	if(locate(/obj/overmap/event/meteor) in loc)
 		..()
 
+// -------SWARM-------
 /obj/overmap/event/leviathan/swarm
 	name = "Autonomous Drone Swarm"
-	icon_state = "ship" //TODO ПЛЕСХОЛДЕР!!!
+	icon_state = "swarm"
 	health = 600
 	damage_cooldown = 1 MINUTE
 	leviathan_speed = 1 / (15 SECONDS)
@@ -91,7 +94,7 @@
 		spawn_meteors(rand(2, 4), list(/obj/meteor/drone_pod = 1), pick(NORTH, SOUTH, EAST, WEST), z_target)
 
 /obj/overmap/event/leviathan/swarm/death_gasp()
-	show_legion_broadcast(get_overmap_broadcast_zlevels(src, 1), "The Drone Swarm's central core has overloaded and detonated, leaving a lingering electrical storm.")
+	overmap_narrate(get_overmap_broadcast_zlevels(src, 1), "The Drone Swarm's central core has overloaded and detonated, leaving a lingering electrical storm.")
 	new /obj/overmap/event/electric(loc)
 
 /obj/overmap/event/leviathan/swarm/needs_healing_location()

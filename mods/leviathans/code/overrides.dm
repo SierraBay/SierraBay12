@@ -28,12 +28,6 @@
 			if(payload && payload.is_dangerous)
 				L.take_damage(rand(400, 600), payload) // Pass the payload object for type-checking
 
-				// Optional visual effect
-				var/datum/effect/explosion/E = new /datum/effect/explosion()
-				E.set_up(overmap_turf)
-				E.start()
-				playsound(overmap_turf, 'sound/effects/explosionfar.ogg', 50, 1)
-
 				qdel(actual_missile) // Cleanup the actual structure, which deletes the overmap projectile
 				return TRUE // We intercepted it, no need to process zs enter
 
