@@ -21,7 +21,7 @@ if(Datum.is_processing) {\
 	if(SSmachines.List.Remove(Datum)) {\
 		Datum.is_processing = null;\
 	} else {\
-		crash_with("Failed to stop processing. [log_info_line(Datum)] is being processed by [is_processing] and not found in SSmachines.[#List]"); \
+		crash_with("Failed to stop processing. [log_info_line(Datum)] is being processed by [Datum.is_processing] and not found in SSmachines.[#List]"); \
 	}\
 }
 
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(machines)
 	var/static/list/power_objects = list()
 	var/static/list/processing = list()
 	var/static/list/processing_apcs = list()
-	var/static/list/queue = list()
+	var/static/queue_index = 0
 	var/static/list/machinery = list()
 	var/static/list/machinery_by_type = list()
 	var/debug_type_breakdown = FALSE
@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/Recover()
 	current_step = SSMACHINES_PIPENETS
-	queue.Cut()
+	queue_index = 0
 
 
 /datum/controller/subsystem/machines/Initialize(start_uptime)
@@ -267,6 +267,17 @@ SUBSYSTEM_DEF(machines)
 	var/tick_cost = world.tick_usage - start_tick_usage + ((world.time - start_time) / world.tick_lag * 100)
 	costs[key] = (costs[key] || 0) + max(tick_cost * world.tick_lag, 0)
 
+/datum/controller/subsystem/machines/proc/initialize_queue_iteration(resumed, list/source)
+	if(!resumed)
+		queue_index = length(source)
+	else if(queue_index > length(source))
+		queue_index = length(source)
+
+/datum/controller/subsystem/machines/proc/advance_queue_iteration(list/source, current_index, current_item)
+	queue_index = min(current_index - 1, length(source))
+	while(queue_index > 0 && source[queue_index] == current_item)
+		queue_index--
+
 /datum/controller/subsystem/machines/proc/get_processing_type_breakdown()
 	var/list/breakdown = list()
 	for(var/obj/machinery/machine as anything in processing)
@@ -327,32 +338,41 @@ SUBSYSTEM_DEF(machines)
 
 
 /datum/controller/subsystem/machines/proc/process_pipenets(resumed, no_mc_tick)
-	if (!resumed)
-		queue = pipenets.Copy()
+	initialize_queue_iteration(resumed, pipenets)
 	var/datum/pipe_network/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	while(queue_index > 0)
+		var/current_index = queue_index
+		network = pipenets[current_index]
+		if(!network)
+			queue_index = min(current_index - 1, length(pipenets))
+			continue
 		if (QDELETED(network))
 			network.is_processing = null
 			pipenets -= network
+			advance_queue_iteration(pipenets, current_index, network)
 			continue
 		network.Process(wait)
+		advance_queue_iteration(pipenets, current_index, network)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
+	queue_index = 0
 
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
-	if (!resumed)
-		queue = processing.Copy()
+	initialize_queue_iteration(resumed, processing)
 	var/obj/machinery/machine
-	for (var/i = length(queue) to 1 step -1)
-		machine = queue[i]
+	while(queue_index > 0)
+		var/current_index = queue_index
+		machine = processing[current_index]
+		if(!machine)
+			queue_index = min(current_index - 1, length(processing))
+			continue
 		if (QDELETED(machine))
 			machine.is_processing = null
 			processing -= machine
+			advance_queue_iteration(processing, current_index, machine)
 			continue
 
 		if(machine.processing_flags & MACHINERY_PROCESS_COMPONENTS)
@@ -380,21 +400,26 @@ SUBSYSTEM_DEF(machines)
 			if(process_result == PROCESS_KILL)
 				STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_SELF)
 
+		advance_queue_iteration(processing, current_index, machine)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
+	queue_index = 0
 
 /datum/controller/subsystem/machines/proc/process_apcs(resumed, no_mc_tick)
-	if (!resumed)
-		queue = processing_apcs.Copy()
+	initialize_queue_iteration(resumed, processing_apcs)
 	var/obj/machinery/power/apc/apc
-	for (var/i = length(queue) to 1 step -1)
-		apc = queue[i]
+	while(queue_index > 0)
+		var/current_index = queue_index
+		apc = processing_apcs[current_index]
+		if(!apc)
+			queue_index = min(current_index - 1, length(processing_apcs))
+			continue
 		if (QDELETED(apc))
 			apc.is_processing = null
 			processing_apcs -= apc
+			advance_queue_iteration(processing_apcs, current_index, apc)
 			continue
 
 		if(apc.processing_flags & MACHINERY_PROCESS_COMPONENTS)
@@ -404,49 +429,60 @@ SUBSYSTEM_DEF(machines)
 
 		apc.process_apc_tick(wait)
 
+		advance_queue_iteration(processing_apcs, current_index, apc)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
+	queue_index = 0
 
 
 /datum/controller/subsystem/machines/proc/process_powernets(resumed, no_mc_tick)
-	if (!resumed)
-		queue = powernets.Copy()
+	initialize_queue_iteration(resumed, powernets)
 	var/datum/powernet/network
-	for (var/i = length(queue) to 1 step -1)
-		network = queue[i]
+	while(queue_index > 0)
+		var/current_index = queue_index
+		network = powernets[current_index]
+		if(!network)
+			queue_index = min(current_index - 1, length(powernets))
+			continue
 		if (QDELETED(network))
 			network.is_processing = null
 			powernets -= network
+			advance_queue_iteration(powernets, current_index, network)
 			continue
 		network.reset(wait)
+		advance_queue_iteration(powernets, current_index, network)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
+	queue_index = 0
 
 
 /datum/controller/subsystem/machines/proc/process_power_objects(resumed, no_mc_tick)
-	if (!resumed)
-		queue = power_objects.Copy()
+	initialize_queue_iteration(resumed, power_objects)
 	var/obj/item/item
-	for (var/i = length(queue) to 1 step -1)
-		item = queue[i]
+	while(queue_index > 0)
+		var/current_index = queue_index
+		item = power_objects[current_index]
+		if(!item)
+			queue_index = min(current_index - 1, length(power_objects))
+			continue
 		if (QDELETED(item))
 			item.is_processing = null
 			power_objects -= item
+			advance_queue_iteration(power_objects, current_index, item)
 			continue
 		if (!item.pwr_drain(wait))
 			item.is_processing = null
 			power_objects -= item
+		advance_queue_iteration(power_objects, current_index, item)
 		if (no_mc_tick)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
-			queue.Cut(i)
 			return
+	queue_index = 0
 
 
 #undef SSMACHINES_PIPENETS

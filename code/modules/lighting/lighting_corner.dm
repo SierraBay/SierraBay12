@@ -385,6 +385,10 @@ var/global/list/REVERSE_LIGHTING_CORNER_DIAGONAL = list(0, 0, 0, 0, 3, 4, 0, 0, 
 	var/lr = apparent_r
 	var/lg = apparent_g
 	var/lb = apparent_b
+	var/old_cache_r = cache_r
+	var/old_cache_g = cache_g
+	var/old_cache_b = cache_b
+	var/old_cache_mx = cache_mx
 
 	// Cache these values a head of time so 4 individual lighting overlays don't all calculate them individually.
 	var/mx = max(lr, lg, lb) // Scale it so 1 is the strongest lum, if it is above 1.
@@ -397,6 +401,9 @@ var/global/list/REVERSE_LIGHTING_CORNER_DIAGONAL = list(0, 0, 0, 0, 3, 4, 0, 0, 
 	cache_b = round(lb * ., LIGHTING_ROUND_VALUE)
 
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
+
+	if (cache_r == old_cache_r && cache_g == old_cache_g && cache_b == old_cache_b && cache_mx == old_cache_mx)
+		return
 
 	var/turf/T
 	for (var/i in 1 to 4)

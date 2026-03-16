@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(lighting)
 /// Initialize a set of turfs (for example as part of loading a map template) It's safe to pass a list of non-turfs to this list - it'll only check turfs.
 /datum/controller/subsystem/lighting/proc/InitializeTurfs(list/targets)
 	for (var/turf/T in (targets || world))
-		if (TURF_IS_DYNAMICALLY_LIT_UNSAFE(T))
+		if (TURF_IS_DYNAMICALLY_LIT_UNSAFE(T) && !T.lighting_overlay)
 			T.lighting_build_overlay()
 
 		// If this isn't here, BYOND will set-background us.

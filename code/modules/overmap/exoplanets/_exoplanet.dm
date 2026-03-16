@@ -25,6 +25,8 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	var/sun_position = 0
 	/// This a multiplier used to apply to the brightness of ambient lighting.  0.3 means 30% of the brightness of the sun.
 	var/sun_brightness_modifier = 0.5
+	var/last_applied_sun_brightness
+	var/last_applied_sun_color
 
 	/// Sun control
 	var/ambient_group_index
@@ -255,10 +257,22 @@ GLOBAL_VAR(planet_repopulation_disabled)
 	//var/interpolate_weight = (abs(min - sun_position)) * 4 Cit interpolation, not sure
 	var/interpolate_weight = (sun_position - min) / (max - min)
 
-	var/new_brightness = (Interpolate(low_brightness, high_brightness, interpolate_weight) ) * sun_brightness_modifier
+	var/new_brightness = round((Interpolate(low_brightness, high_brightness, interpolate_weight)) * sun_brightness_modifier, 0.02)
 
 	//We do a gradient instead of linear interpolation because linear interpolations of colours are unintuitive
 	var/new_color = UNLINT(gradient(low_color, high_color, space = COLORSPACE_HSV, index=interpolate_weight))
+	var/list/new_color_parts = rgb2num(new_color)
+	new_color = rgb(
+		clamp(round(new_color_parts[1], 8), 0, 255),
+		clamp(round(new_color_parts[2], 8), 0, 255),
+		clamp(round(new_color_parts[3], 8), 0, 255)
+	)
+
+	if (new_brightness == last_applied_sun_brightness && new_color == last_applied_sun_color)
+		return
+
+	last_applied_sun_brightness = new_brightness
+	last_applied_sun_color = new_color
 
 	if (!ambient_group_index)
 		ambient_group_index = SSambient_lighting.create_group(new_color, new_brightness)

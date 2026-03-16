@@ -100,7 +100,19 @@
 	ambient_light_old_g += lg
 	ambient_light_old_b += lb
 
-	if (!corners || !lighting_corners_initialised)
+	// Unlit turfs only need corners if they border a dynamically lit turf.
+	if (!corners)
+		var/force_build_corners = FALSE
+		for (var/turf/T as anything in RANGE_TURFS(src, 1))
+			if (TURF_IS_DYNAMICALLY_LIT_UNSAFE(T))
+				force_build_corners = TRUE
+				break
+
+		if (force_build_corners || TURF_IS_DYNAMICALLY_LIT_UNSAFE(src) || light_source_solo || light_source_multi || (z_flags & ZM_ALLOW_LIGHTING) || ambient_light || ambient_has_indirect)
+			generate_missing_corners()
+		else
+			return
+	else if (!lighting_corners_initialised)
 		generate_missing_corners()
 
 	// This list can contain nulls on things like space turfs -- they only have their neighbors' corners.

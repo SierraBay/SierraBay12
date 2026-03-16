@@ -12,7 +12,7 @@
 /turf/proc/regenerate_ao()
 	for (var/thing as anything in RANGE_TURFS(src, 1))
 		var/turf/T = thing
-		if (T.permit_ao)
+		if (T.permit_ao && ((T.z_flags & ZM_MIMIC_BELOW) || AO_SELF_CHECK(T)))
 			T.queue_ao(TRUE)
 
 /turf/proc/calculate_ao_neighbors()

@@ -24,7 +24,7 @@
 	set_cleanable_scent()
 
 	if(weather_sensitive)
-		SSweather_atoms.weather_atoms += src
+		SSweather_atoms.register_weather_cleanable(src)
 
 /obj/decal/cleanable/Initialize(ml, _age)
 	if(!isnull(_age))
@@ -37,7 +37,7 @@
 /obj/decal/cleanable/Destroy()
 	SSpersistence.forget_value(src, /datum/persistent/filth)
 	if(weather_sensitive)
-		SSweather_atoms.weather_atoms -= src
+		SSweather_atoms.unregister_weather_atom(src)
 	. = ..()
 
 /obj/decal/cleanable/water_act(depth)

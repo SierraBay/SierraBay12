@@ -6,7 +6,7 @@
 		add_to_living_mob_list()
 
 	if(weather_sensitive)
-		SSweather_atoms.weather_atoms += src
+		SSweather_atoms.register_weather_mob(src)
 
 	selected_image = image(icon('icons/misc/buildmode.dmi'), loc = src, icon_state = "ai_sel")
 
@@ -741,10 +741,15 @@ default behaviour is:
 	return 1
 
 //Organs should not be removed via inventory procs.
-/mob/living/carbon/drop_from_inventory(obj/item/W, atom/Target = null)
-	if(W in internal_organs)
+/mob/living/drop_from_inventory(obj/item/item, atom/target = null, update_icons = TRUE, force = FALSE)
+	. = ..()
+	if(item?.GetID())
+		SET_BIT(hud_updateflag, ID_HUD) // If we drop our ID, update the ID HUD.
+
+/mob/living/carbon/drop_from_inventory(obj/item/W, atom/Target = null, update_icons = TRUE, force = FALSE)
+	if(!force && (W in internal_organs))
 		return
-	if(W in organs)
+	if(!force && (W in organs))
 		return
 	. = ..()
 
@@ -837,7 +842,7 @@ default behaviour is:
 	QDEL_NULL(selected_image)
 
 	if(weather_sensitive)
-		SSweather_atoms.weather_atoms -= src
+		SSweather_atoms.unregister_weather_atom(src)
 	return ..()
 
 /mob/living/proc/melee_accuracy_mods()

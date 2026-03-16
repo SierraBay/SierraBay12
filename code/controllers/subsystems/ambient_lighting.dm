@@ -64,11 +64,14 @@ SUBSYSTEM_DEF(ambient_lighting)
 						needs_ambience = TRUE
 						break
 			if (needs_ambience)
+				var/datum/ambient_group/group
 				var/obj/overmap/visitable/sector/exoplanet/exoplanet = map_sectors["[turf.z]"]
 				if (!istype(exoplanet))
-					space_group?.add_turf(turf)
+					group = space_group
 				else if (exoplanet.ambient_group_index)
-					groups[exoplanet.ambient_group_index]?.add_turf(turf)
+					group = groups[exoplanet.ambient_group_index]
+				if (group && !GET_FLAGS(turf.ambient_group_flags, group.group_flag))
+					group.add_turf(turf)
 		else if (turf.ambient_active && turf.ambient_group_flags)
 			for (var/group_index in 1 to MAX_AMBIENT_GROUP_INDEX)
 				groups[group_index]?.remove_turf(turf)
@@ -191,12 +194,12 @@ SUBSYSTEM_DEF(ambient_lighting)
 /// Adds turf to this group if not a member, setting flags and light
 /datum/ambient_group/proc/add_turf(turf/turf)
 	set waitfor = FALSE
+	if (GET_FLAGS(turf.ambient_group_flags, group_flag))
+		return //Already a member
 	while (busy)
 		stoplag()
 	if (QDELETED(src))
 		return
-	if (GET_FLAGS(turf.ambient_group_flags, group_flag))
-		return //Already a member
 	var/turf_z = turf.z
 	if (turf_z > length(member_turfs_by_z))
 		LIST_RESIZE(member_turfs_by_z, turf_z)
@@ -212,11 +215,11 @@ SUBSYSTEM_DEF(ambient_lighting)
 /// Removes turf from this group if a member, removing flags and light
 /datum/ambient_group/proc/remove_turf(turf/turf)
 	set waitfor = FALSE
+	if (!GET_FLAGS(turf.ambient_group_flags, group_flag))
+		return
 	while (busy)
 		stoplag()
 	if (QDELETED(src))
-		return
-	if (!GET_FLAGS(turf.ambient_group_flags, group_flag))
 		return
 	if (turf.z > length(member_turfs_by_z))
 		CRASH("Attempt to remove member turf with Z greater than local max -- this turf is not a member")
