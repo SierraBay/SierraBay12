@@ -338,7 +338,10 @@
 	middle.atmos_init()
 	right.atmos_init()
 
-	if(!left.node2 || !middle.node1 || !middle.node2 || !right.node1)
+	if((left.node1 != middle && left.node2 != middle) \
+	|| (middle.node1 != left && middle.node2 != left) \
+	|| (middle.node1 != right && middle.node2 != right) \
+	|| (right.node1 != middle && right.node2 != middle))
 		fail("Failed to create a simple three-pipe test line for the meter rebuild regression test.")
 		qdel(meter)
 		qdel(left)
