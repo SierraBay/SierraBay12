@@ -333,8 +333,7 @@ SUBSYSTEM_DEF(machines)
 	for (var/i = length(queue) to 1 step -1)
 		network = queue[i]
 		if (QDELETED(network))
-			if (network)
-				network.is_processing = null
+			network.is_processing = null
 			pipenets -= network
 			continue
 		network.Process(wait)
@@ -352,8 +351,7 @@ SUBSYSTEM_DEF(machines)
 	for (var/i = length(queue) to 1 step -1)
 		machine = queue[i]
 		if (QDELETED(machine))
-			if (machine)
-				machine.is_processing = null
+			machine.is_processing = null
 			processing -= machine
 			continue
 
@@ -420,8 +418,7 @@ SUBSYSTEM_DEF(machines)
 	for (var/i = length(queue) to 1 step -1)
 		network = queue[i]
 		if (QDELETED(network))
-			if (network)
-				network.is_processing = null
+			network.is_processing = null
 			powernets -= network
 			continue
 		network.reset(wait)
@@ -439,8 +436,7 @@ SUBSYSTEM_DEF(machines)
 	for (var/i = length(queue) to 1 step -1)
 		item = queue[i]
 		if (QDELETED(item))
-			if (item)
-				item.is_processing = null
+			item.is_processing = null
 			power_objects -= item
 			continue
 		if (!item.pwr_drain(wait))
