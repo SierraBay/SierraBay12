@@ -15,6 +15,7 @@
 #include "code/augments/clicker.dm"
 #include "code/augments/sonar.dm"
 #include "code/augments/vampire.dm"
+#include "code/augments/sandevistan.dm"
 #include "code/machinery/rdconsole.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/robotics_fabricator.dm"

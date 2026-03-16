@@ -188,10 +188,19 @@
 		if((0 < beard) && (beard <= length(GLOB.facial_hair_styles_list)))
 			H.facial_hair_style = GLOB.facial_hair_styles_list[beard]
 
+		// [SIERRA-ADD] HEIGHT
+		var/height = dna.GetUIValueRange(DNA_UI_HEIGHT, length(GLOB.heights_list))
+		if((0 < height) && (height <= length(GLOB.heights_list)))
+			H.height = GLOB.heights_list[height]
+		// [/SIERRA-ADD]
+
 		H.force_update_limbs()
 		H.update_body()
 		H.update_eyes()
 		H.update_hair()
+		// [SIERRA-ADD] HEIGHT
+		H.regenerate_icons()
+		// [/SIERRA-ADD]
 
 		return 1
 	else

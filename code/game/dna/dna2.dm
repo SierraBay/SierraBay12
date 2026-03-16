@@ -33,7 +33,8 @@
 #define DNA_UI_GENDER      14
 #define DNA_UI_BEARD_STYLE 15
 #define DNA_UI_HAIR_STYLE  16
-#define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
+#define DNA_UI_HEIGHT 17
+#define DNA_UI_LENGTH      17 // Update this when you add something, or you WILL break shit.
 
 #define DNA_SE_LENGTH 27
 // For later:
@@ -158,6 +159,11 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  length(GLOB.hair_styles_list),       1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, length(GLOB.facial_hair_styles_list),1)
+
+	// [SIERRA-ADD] HEIGHT
+	var/height = GLOB.heights_list.Find(character.height)
+	SetUIValueRange(DNA_UI_HEIGHT, height, LAZYLEN(GLOB.heights_list), 1)
+	// [/SIERRA-ADD]
 
 	body_markings.Cut()
 	base_skin = character.base_skin

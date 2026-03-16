@@ -180,23 +180,41 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon_state = null
 		visible_overlays = overlays_standing
 
+	// [SIERRA-ADD] HEIGHT — head-level layers get larger pixel_y offset; body-level get smaller
+	var/static/list/head_level_layers = list(
+		HO_ID_LAYER, HO_GLASSES_LAYER, HO_GOGGLES_LAYER, HO_EARS_LAYER,
+		HO_HAIR_LAYER, HO_HEAD_LAYER, HO_ALT_HEAD_LAYER, HO_FACEMASK_LAYER,
+		HO_COLLAR_LAYER, HO_SUIT_STORE_LAYER, HO_TAIL_LAYER
+	)
+	// [/SIERRA-ADD]
+
 	for(var/i = 1 to LAZYLEN(visible_overlays))
 		var/entry = visible_overlays[i]
 		if(istype(entry, /image))
 			var/image/overlay = entry
 			//SIERRA-ADD
 			overlay.filters = filters
-			//SIERRA-ADD
 			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 				overlay.transform = get_lying_offset(overlay)
+			// [SIERRA-ADD] HEIGHT
+			var/is_head_level = (i in head_level_layers)
+			if(!is_head_level) // Displacement maps are for body (torso/legs); applying to head-level overlays causes 1px shift
+				overlay = update_height(overlay)
+			overlay = human_update_offset(overlay, is_head_level)
+			// [/SIERRA-ADD]
 			overlays_to_apply += overlay
 		else if(istype(entry, /list))
 			for(var/image/overlay in entry)
 				//SIERRA-ADD
 				overlay.filters = filters
-				//SIERRA-ADD
 				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
 					overlay.transform = get_lying_offset(overlay)
+				// [SIERRA-ADD] HEIGHT
+				var/is_head_level = (i in head_level_layers)
+				if(!is_head_level)
+					overlay = update_height(overlay)
+				overlay = human_update_offset(overlay, is_head_level)
+				// [/SIERRA-ADD]
 				overlays_to_apply += overlay
 
 	var/obj/item/organ/external/head/head = organs_by_name[BP_HEAD]
@@ -204,9 +222,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/I = head.get_eye_overlay()
 		//SIERRA-REMOVE 		if(I) overlays_to_apply += I
 		//SIERRA-ADD
+		//SIERRA-ADD
 		if(I)
 			I.filters = filters
+			// [SIERRA-ADD] HEIGHT — eyes are head-level: only pixel_y offset, no body displacement
+			I = human_update_offset(I, TRUE)
+			// [/SIERRA-ADD]
 			overlays_to_apply += I
+		//SIERRA-ADD
 		//SIERRA-ADD
 
 
@@ -214,40 +237,27 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_to_apply += auras
 
 	SetOverlays(overlays_to_apply)
-	var/list/scale = get_scale()
+	// [SIERRA-ADD] HEIGHT
+	// Disable legacy matrix-scaling based height adjustments. Use pixel displacement filters instead.
 	animate(
 		src,
 		transform = matrix().Update(
-			scale_x = scale[1],
-			scale_y = scale[2],
+			scale_x = 1,
+			scale_y = 1,
 			rotation = lying ? 90 : 0,
-			offset_y = lying ? -6 - default_pixel_z : 16 * (scale[2] - 1)
+			offset_y = lying ? -6 - default_pixel_z : 0
 		),
 		time = ANIM_LYING_TIME
 	)
+	// [/SIERRA-ADD]
+
 
 
 /mob/living/carbon/human/proc/get_scale()
-	var/height_modifier = 0
-	var/height_descriptor = LAZYACCESS(descriptors, "height")
-	if (height_descriptor)
-		var/datum/mob_descriptor/height/H = species.descriptors["height"]
-		if (H)
-			var/list/scale_effect = H.scale_effect[species.name]
-			if (length(scale_effect))
-				height_modifier = 0.01 * scale_effect[height_descriptor]
-	var/build_modifier = 0
-	var/build_descriptor = LAZYACCESS(descriptors, "build")
-	if (build_descriptor)
-		var/datum/mob_descriptor/build/B = species.descriptors["build"]
-		if (B)
-			var/list/scale_effect = B.scale_effect[species.name]
-			if (length(scale_effect))
-				build_modifier = 0.01 * scale_effect[build_descriptor]
-	return list(
-		(1 + build_modifier) * (tf_scale_x || 1),
-		(1 + height_modifier) * (tf_scale_y || 1)
-	)
+	// [SIERRA-ADD] HEIGHT
+	// Legacy scale calculation disabled — return neutral scale.
+	return list(1,1)
+	// [/SIERRA-ADD]
 
 var/global/list/damage_icon_parts = list()
 
@@ -425,7 +435,12 @@ var/global/list/damage_icon_parts = list()
 			queue_icon_update()
 		return
 
-	overlays_standing[HO_HAIR_LAYER]	= head_organ.get_hair_icon()
+	// [SIERRA-ADD] HEIGHT
+	var/hair_overlay = head_organ.get_hair_icon()
+	if(hair_overlay)
+		// pixel_y offset is applied later in update_icons() loop for all head-level overlays
+		overlays_standing[HO_HAIR_LAYER] = hair_overlay
+	// [/SIERRA-ADD]
 
 	if(update_icons)
 		queue_icon_update()

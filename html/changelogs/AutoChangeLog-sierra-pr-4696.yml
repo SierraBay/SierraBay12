@@ -1,5 +1,0 @@
-author: thekekman666
-changes:
-  - bugfix: Пофиксил камеранет ИИшки при выключении света
-  - bugfix: Пофиксил неработающие подсистемы
-delete-after: true
