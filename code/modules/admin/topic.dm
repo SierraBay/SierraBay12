@@ -48,7 +48,16 @@
 					qdel(active_hallucination)
 				log_and_message_admins("cleared hallucinations from [key_name_admin(target)].")
 			if("cast", "cast_prime")
-				var/type_path = text2path(href_list["hall_type"])
+				var/datum/hallucination_context/context = target.build_hallucination_context()
+				var/list/candidates = target.get_hallucination_candidates(TRUE, context)
+				var/type_key = href_list["hall_type"]
+				var/type_path
+				for(var/datum/hallucination_candidate/candidate in candidates)
+					if("[candidate.type_path]" != type_key)
+						continue
+					type_path = candidate.type_path
+					break
+
 				if(!ispath(type_path, /datum/hallucination))
 					to_chat(usr, SPAN_WARNING("That hallucination type is invalid."))
 					return

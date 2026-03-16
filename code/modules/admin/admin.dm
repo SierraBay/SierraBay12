@@ -1449,6 +1449,7 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		var/datum/hallucination_candidate/candidate = candidate_lookup[type_name]
 		if(!candidate)
 			continue
+		var/type_key = "[candidate.type_path]"
 		var/highlight = candidate.type_path == dry_pick_type ? " style='background-color:#eef7ff;font-weight:bold;'" : ""
 		body += "<tr[highlight]>"
 		body += "<td>[html_encode(type_name)]</td>"
@@ -1457,8 +1458,8 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 		body += "<td>[html_encode(candidate.category)]</td>"
 		body += "<td>[html_encode(candidate.theme_text)]</td>"
 		body += "<td>[html_encode(candidate.reason)]</td>"
-		body += "<td><a href='byond://?src=\ref[src];hallucination_panel=cast;target=\ref[M];hall_type=[type_name]'>Cast</a></td>"
-		body += "<td><a href='byond://?src=\ref[src];hallucination_panel=cast_prime;target=\ref[M];hall_type=[type_name];power=80;duration=200'>Prime + Cast</a></td>"
+		body += "<td><a href='byond://?src=\ref[src];hallucination_panel=cast;target=\ref[M];hall_type=[type_key]'>Cast</a></td>"
+		body += "<td><a href='byond://?src=\ref[src];hallucination_panel=cast_prime;target=\ref[M];hall_type=[type_key];power=80;duration=200'>Prime + Cast</a></td>"
 		body += "</tr>"
 
 	body += "</table></body></html>"
