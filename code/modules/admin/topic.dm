@@ -67,10 +67,10 @@
 					var/duration = text2num(href_list["duration"])
 					target.hallucination(duration, power)
 
-				var/success = target.cause_hallucination(type_path, "admin panel by [key_name(usr)]")
+				var/success = target.cause_hallucination(type_path, "admin panel by [key_name(usr)]", TRUE)
 				log_and_message_admins("[success ? "forced" : "attempted to force"] hallucination [type_path] on [key_name_admin(target)] via panel.")
 				if(!success)
-					to_chat(usr, SPAN_WARNING("The hallucination failed its can_affect/start checks."))
+					to_chat(usr, SPAN_WARNING("The hallucination failed to start."))
 
 		show_hallucination_panel(target)
 		return

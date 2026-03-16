@@ -360,12 +360,12 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 
 	maybe_emit_hallucination_tell(hallucination)
 
-/mob/living/carbon/proc/cause_hallucination(hallucination_type, hallucination_source = "hallucination tick")
+/mob/living/carbon/proc/cause_hallucination(hallucination_type, hallucination_source = "hallucination tick", bypass_requirements = FALSE)
 	if(!ispath(hallucination_type, /datum/hallucination))
 		return FALSE
 
 	var/datum/hallucination/new_hallucination = new hallucination_type
-	if(new_hallucination.get_blocking_reason(src))
+	if(!bypass_requirements && new_hallucination.get_blocking_reason(src))
 		qdel(new_hallucination)
 		return FALSE
 
