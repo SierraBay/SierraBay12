@@ -395,8 +395,7 @@ SUBSYSTEM_DEF(machines)
 	for (var/i = length(queue) to 1 step -1)
 		apc = queue[i]
 		if (QDELETED(apc))
-			if (apc)
-				apc.is_processing = null
+			apc.is_processing = null
 			processing_apcs -= apc
 			continue
 
