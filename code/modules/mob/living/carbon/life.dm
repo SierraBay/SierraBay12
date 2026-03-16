@@ -29,3 +29,8 @@
 		handle_viruses()
 
 		. = 1
+
+/mob/living/carbon/handle_statuses()
+	. = ..()
+	if(hallucinating())
+		handle_hallucinations()

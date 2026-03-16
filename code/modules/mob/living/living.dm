@@ -296,6 +296,12 @@ default behaviour is:
 /mob/living/proc/setHalLoss(amount)
 	adjustBruteLoss((amount * 0.5)-getBruteLoss())
 
+/mob/proc/hallucinating()
+	return FALSE
+
+/mob/living/proc/can_hear()
+	return !(sdisabilities & DEAFENED) && ear_deaf <= 0
+
 /mob/living/proc/getBrainLoss()
 	return 0
 

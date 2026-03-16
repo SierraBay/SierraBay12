@@ -19,6 +19,7 @@ atupdate
 # ignore config, but not subdirs
 !config/*/
 config/*
+config/hallucination/
 sql/test_db
 
 # VisualStudioCode

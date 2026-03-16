@@ -15,6 +15,7 @@
 	bloodstr = null // We don't qdel(bloodstr) because it's the same as qdel(reagents)
 	QDEL_NULL_LIST(internal_organs)
 	QDEL_NULL_LIST(hallucinations)
+	QDEL_NULL_LIST(hallucination_actors)
 	if(loc)
 		for(var/mob/M in contents)
 			M.dropInto(loc)
