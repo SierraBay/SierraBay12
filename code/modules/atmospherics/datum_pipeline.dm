@@ -73,8 +73,13 @@
 				for(var/obj/machinery/atmospherics/pipe/item in result)
 					if(item.in_stasis)
 						continue
+					// Rebuilds can be kicked off by passive readers like meters while a previous
+					// pipeline is still being qdel'd. Those stale parents must not block reattachment.
 					if(item.parent && item.parent != src)
-						continue
+						if(QDELING(item.parent))
+							item.parent = null
+						else
+							continue
 					if(!members.Find(item))
 						members += item
 						possible_expansions += item

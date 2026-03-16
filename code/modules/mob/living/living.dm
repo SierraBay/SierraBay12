@@ -743,7 +743,7 @@ default behaviour is:
 //Organs should not be removed via inventory procs.
 /mob/living/drop_from_inventory(obj/item/item, atom/target = null, update_icons = TRUE, force = FALSE)
 	. = ..()
-	if(item?.GetID())
+	if(item?.GetIdCard())
 		SET_BIT(hud_updateflag, ID_HUD) // If we drop our ID, update the ID HUD.
 
 /mob/living/carbon/drop_from_inventory(obj/item/W, atom/Target = null, update_icons = TRUE, force = FALSE)

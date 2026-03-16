@@ -314,4 +314,62 @@
 		pass("All pipes were mapped properly.")
 	return 1
 
+/datum/unit_test/meter_sampling_shall_not_split_rebuilding_pipelines
+	name = "ATMOS MACHINERY: meters shall not split pipelines during rebuild"
+
+/datum/unit_test/meter_sampling_shall_not_split_rebuilding_pipelines/start_test()
+	var/turf/center = get_space_turf()
+	var/turf/west = get_step(center, WEST)
+	var/turf/east = get_step(center, EAST)
+	if(!center || !west || !east)
+		fail("Unable to find three adjacent turfs for the meter rebuild regression test.")
+		return 1
+
+	var/obj/machinery/atmospherics/pipe/simple/left = new(west)
+	var/obj/machinery/atmospherics/pipe/simple/middle = new(center)
+	var/obj/machinery/atmospherics/pipe/simple/right = new(east)
+	var/obj/machinery/meter/meter = new(center)
+
+	left.set_dir(EAST)
+	middle.set_dir(EAST)
+	right.set_dir(EAST)
+
+	left.atmos_init()
+	middle.atmos_init()
+	right.atmos_init()
+
+	if(!left.node2 || !middle.node1 || !middle.node2 || !right.node1)
+		fail("Failed to create a simple three-pipe test line for the meter rebuild regression test.")
+		qdel(meter)
+		qdel(left)
+		qdel(middle)
+		qdel(right)
+		return 1
+
+	var/datum/pipeline/stale_parent = new
+	stale_parent.members = list()
+	stale_parent.edges = list()
+	stale_parent.leaks = list()
+	qdel(stale_parent)
+	middle.parent = stale_parent
+	right.parent = stale_parent
+
+	meter.set_target(left, FALSE)
+	meter.get_meter_icon_state()
+
+	if(left.parent == stale_parent || middle.parent == stale_parent || right.parent == stale_parent)
+		fail("Meter sampling left stale qdel'ing pipeline references attached to rebuilt pipes.")
+	else if(left.parent != middle.parent || middle.parent != right.parent)
+		fail("Meter sampling rebuilt only part of a pipeline while neighbors still had stale parents.")
+	else if(length(left.parent.members) != 3)
+		fail("Meter sampling rebuilt [length(left.parent.members)] pipe(s) instead of the full 3-pipe line.")
+	else
+		pass("Meter sampling absorbed pipes with qdel'ing parents into the rebuilt pipeline.")
+
+	qdel(meter)
+	qdel(left)
+	qdel(middle)
+	qdel(right)
+	return 1
+
 #undef ALL_GASIDS
