@@ -505,12 +505,85 @@
 	category = "ambient"
 	base_weight = 9
 	category_cooldown = 8 SECONDS
+	theme_tags = list("psychedelic", "cosmic")
 	min_power = 15
 
 /datum/hallucination/intrusive_thought/start()
 	var/message = holder.random_hallucinated_thought()
 	to_chat(holder, SPAN_NOTICE("<i>[message]</i>"))
 	feedback_details = " Thought: [message]"
+	return TRUE
+
+// A vivid memory of something that never happened.
+/datum/hallucination/alien_memory
+	category = "ambient"
+	base_weight = 7
+	category_cooldown = 10 SECONDS
+	theme_tags = list("social", "aftermath", "cosmic")
+	min_power = 25
+	max_power = 85
+
+/datum/hallucination/alien_memory/start()
+	var/name = holder.random_crewmember_name(4)
+	if(!name)
+		name = pick("someone", "a crewmember", "a stranger")
+	var/area_name = holder.random_station_area_name()
+	var/list/memories = list(
+		"You remember [name] pulling you aside in [area_name] and urgently warning you not to come back.",
+		"A memory that is not yours flashes by: [name] sprinting through [area_name], looking over their shoulder.",
+		"You vividly remember [name] dying in [area_name]. The image vanishes before you can place when it happened.",
+		"For a split second, you remember blood smeared across [area_name] while [name] begged you for help.",
+		"You remember hiding with [name] in [area_name], listening to something heavy move past the door.",
+		"A borrowed memory surfaces: [name] quietly handing you something in [area_name], then walking away into the dark.",
+		"You suddenly remember a tense conversation with [name] in [area_name]. You are certain it never happened."
+	)
+	var/message = pick(memories)
+	to_chat(holder, SPAN_NOTICE("<i>[message]</i>"))
+	feedback_details = " Alien memory: [message]"
+	return TRUE
+
+// Senses blur together under a chemical haze.
+/datum/hallucination/synesthesia
+	category = "ambient"
+	base_weight = 8
+	category_cooldown = 10 SECONDS
+	theme_tags = list("psychedelic")
+	min_power = 20
+	max_power = 75
+
+/datum/hallucination/synesthesia/start()
+	var/list/messages = list(
+		"The lights suddenly taste sweet and metallic.",
+		"You can hear the color of the floor humming under your feet.",
+		"Every sound leaves a bright smear across your vision.",
+		"The air feels loud enough to touch.",
+		"For a moment, shadows smell like hot wires and citrus."
+	)
+	var/message = pick(messages)
+	to_chat(holder, SPAN_NOTICE("<i>[message]</i>"))
+	feedback_details = " Synesthesia: [message]"
+	return TRUE
+
+// Brief impossible insight associated with heavier narcotics.
+/datum/hallucination/cosmic_revelation
+	category = "ambient"
+	base_weight = 6
+	category_cooldown = 12 SECONDS
+	theme_tags = list("cosmic", "body")
+	min_power = 35
+	max_power = 100
+
+/datum/hallucination/cosmic_revelation/start()
+	var/list/messages = list(
+		"You suddenly understand that something vast is looking back through your eyes.",
+		"For a second, your heartbeat seems synchronized with something impossibly distant.",
+		"You glimpse a pattern behind the world, and instinctively know you were never meant to see it.",
+		"It feels as if another mind briefly mistakes your body for its own.",
+		"You become certain that the dark space behind your ribs is occupied."
+	)
+	var/message = pick(messages)
+	to_chat(holder, SPAN_WARNING("<i>[message]</i>"))
+	feedback_details = " Cosmic revelation: [message]"
 	return TRUE
 
 // Seeing other people do impossible or unsettling things

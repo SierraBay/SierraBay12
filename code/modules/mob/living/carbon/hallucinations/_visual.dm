@@ -257,6 +257,310 @@
 	I.color = COLOR_BLOOD_HUMAN
 	return I
 
+/datum/hallucination/mirage/psychedelic
+	category = "ambient"
+	base_weight = 8
+	category_cooldown = 10 SECONDS
+	theme_tags = list("psychedelic")
+	min_power = 20
+	max_power = 80
+	number = 6
+
+/datum/hallucination/mirage/psychedelic/generate_mirage()
+	if(prob(60))
+		var/image/I = image('icons/effects/blood.dmi', pick("floor1", "floor2", "floor3", "mfloor1", "mfloor2", "mfloor3"), layer = BELOW_TABLE_LAYER)
+		I.color = pick("#ff4fd8", "#4ffff2", "#d6ff4f", "#ff9b4f", "#8f6dff")
+		I.alpha = 190
+		return I
+	var/icon/T = new('icons/obj/trash.dmi')
+	var/image/I = image(T, pick(T.IconStates()), layer = BELOW_TABLE_LAYER)
+	I.color = pick("#ff66cc", "#66ffcc", "#ffd966", "#9f87ff")
+	I.alpha = 210
+	return I
+
+// The corridor ahead briefly mirrors the one behind you.
+/datum/hallucination/time_loop
+	category = "ambient"
+	base_weight = 6
+	category_cooldown = 16 SECONDS
+	theme_tags = list("machinery", "psychedelic", "cosmic")
+	min_power = 35
+	max_power = 90
+	allow_duplicates = FALSE
+	duration = 5 SECONDS
+	var/list/fake_images = list()
+
+/datum/hallucination/time_loop/Destroy()
+	end()
+	. = ..()
+
+/datum/hallucination/time_loop/proc/add_copied_image(atom/source, atom/location, layer_override = null)
+	if(!holder?.client || !source || !location)
+		return
+	var/image/fake = image(source, location)
+	if(!isnull(layer_override))
+		fake.layer = layer_override
+	fake_images += fake
+
+/datum/hallucination/time_loop/proc/get_offset_turf(turf/start, direction, distance)
+	var/turf/current = start
+	for(var/i = 1 to distance)
+		current = get_step(current, direction)
+		if(!istype(current))
+			return null
+	return current
+
+/datum/hallucination/time_loop/proc/copy_source_tile(turf/source, turf/target)
+	if(!istype(source) || !istype(target))
+		return
+	add_copied_image(source, target, TURF_LAYER)
+	for(var/obj/O in source)
+		if(istype(O, /obj/effect))
+			add_copied_image(O, target)
+			continue
+		if(istype(O, /obj/machinery) || istype(O, /obj/structure) || istype(O, /obj/item))
+			add_copied_image(O, target)
+			break
+
+/datum/hallucination/time_loop/proc/is_viable_loop_direction(turf/origin, direction)
+	if(!(direction in GLOB.cardinal))
+		return FALSE
+	var/turf/ahead_one = get_offset_turf(origin, direction, 1)
+	var/turf/ahead_two = get_offset_turf(origin, direction, 2)
+	var/turf/behind_one = get_offset_turf(origin, reverse_direction(direction), 1)
+	var/turf/behind_two = get_offset_turf(origin, reverse_direction(direction), 2)
+	return istype(ahead_one, /turf/simulated/floor) && istype(ahead_two, /turf/simulated/floor) && istype(behind_one, /turf/simulated/floor) && istype(behind_two, /turf/simulated/floor)
+
+/datum/hallucination/time_loop/proc/find_loop_direction(mob/living/carbon/C)
+	var/turf/origin = get_turf(C)
+	if(!istype(origin))
+		return null
+
+	var/list/directions = list()
+	if(C.dir & NORTH)
+		directions += NORTH
+	if(C.dir & SOUTH)
+		directions += SOUTH
+	if(C.dir & EAST)
+		directions += EAST
+	if(C.dir & WEST)
+		directions += WEST
+	for(var/direction in GLOB.cardinal)
+		if(!(direction in directions))
+			directions += direction
+
+	for(var/direction in directions)
+		if(is_viable_loop_direction(origin, direction))
+			return direction
+	return null
+
+/datum/hallucination/time_loop/extra_blocking_reason(mob/living/carbon/C, datum/hallucination_context/context = null)
+	return find_loop_direction(C) ? null : "no loopable corridor nearby"
+
+/datum/hallucination/time_loop/start()
+	if(!holder?.client)
+		return FALSE
+
+	var/turf/origin = get_turf(holder)
+	if(!istype(origin))
+		return FALSE
+
+	var/loop_direction = find_loop_direction(holder)
+	if(!loop_direction)
+		return FALSE
+
+	var/reverse_dir = reverse_direction(loop_direction)
+	var/left_dir = turn(loop_direction, 90)
+	var/right_dir = turn(loop_direction, -90)
+	var/copied_segments = 0
+
+	for(var/i = 1 to 3)
+		var/turf/source = get_offset_turf(origin, reverse_dir, i)
+		var/turf/target = get_offset_turf(origin, loop_direction, i)
+		if(!istype(source, /turf/simulated/floor) || !istype(target, /turf/simulated/floor))
+			break
+
+		copy_source_tile(source, target)
+		copy_source_tile(get_step(source, left_dir), get_step(target, left_dir))
+		copy_source_tile(get_step(source, right_dir), get_step(target, right_dir))
+		copied_segments++
+
+	if(copied_segments < 2 || !length(fake_images))
+		fake_images.Cut()
+		return FALSE
+
+	holder.client.images += fake_images
+	if(holder.can_hear())
+		holder.playsound_local(origin, 'sound/machines/twobeep.ogg', 25)
+		spawn(0.8 SECONDS)
+			if(holder)
+				holder.playsound_local(origin, 'sound/machines/twobeep.ogg', 20)
+
+	to_chat(holder, SPAN_WARNING("The corridor ahead looks exactly like the stretch you just walked through."))
+	feedback_details = " Time loop toward [dir2text(loop_direction)] from [origin.x],[origin.y],[origin.z]"
+	return TRUE
+
+/datum/hallucination/time_loop/end()
+	holder?.client?.images -= fake_images
+	fake_images.Cut()
+
+// Screen-space distortions rather than world mirages.
+/datum/hallucination/screen_effect
+	abstract_hallucination = TRUE
+	category = "ambient"
+	base_weight = 8
+	category_cooldown = 10 SECONDS
+	min_power = 20
+	max_power = 85
+	allow_duplicates = FALSE
+	duration = 4 SECONDS
+	var/list/fullscreen_categories = list()
+	var/list/client_color_types = list()
+	var/datum/effect/trail/afterimage/motion_trail
+
+/datum/hallucination/screen_effect/Destroy()
+	end()
+	. = ..()
+
+/datum/hallucination/screen_effect/proc/add_fullscreen(category, screen_type)
+	if(!holder?.client || !category || !ispath(screen_type, /obj/screen/fullscreen))
+		return
+	holder.overlay_fullscreen(category, screen_type, "")
+	fullscreen_categories += category
+
+/datum/hallucination/screen_effect/proc/add_color_shift(color_type)
+	if(!holder?.client || !ispath(color_type, /datum/client_color))
+		return
+	holder.add_client_color(color_type)
+	client_color_types += color_type
+
+/datum/hallucination/screen_effect/end()
+	if(holder?.client)
+		for(var/category in fullscreen_categories)
+			holder.clear_fullscreen(category)
+	for(var/color_type in client_color_types)
+		holder?.remove_client_color(color_type)
+	if(motion_trail)
+		motion_trail.stop()
+		qdel(motion_trail)
+		motion_trail = null
+	fullscreen_categories.Cut()
+	client_color_types.Cut()
+
+/datum/hallucination/screen_effect/vignette
+	base_weight = 7
+	theme_tags = list("predator", "body")
+	duration = 5 SECONDS
+
+/datum/hallucination/screen_effect/vignette/start()
+	add_fullscreen("hall_vignette", /obj/screen/fullscreen/impaired)
+	feedback_details = " Screen effect: vignette"
+	return TRUE
+
+/datum/hallucination/screen_effect/color_shift
+	base_weight = 7
+	theme_tags = list("psychedelic", "cosmic")
+	duration = 5 SECONDS
+
+/datum/hallucination/screen_effect/color_shift/start()
+	add_color_shift(pick(/datum/client_color/hallucination_shift_warm, /datum/client_color/hallucination_shift_cold))
+	feedback_details = " Screen effect: color shift"
+	return TRUE
+
+/datum/hallucination/screen_effect/blur
+	base_weight = 8
+	theme_tags = list("psychedelic", "body")
+	duration = 4 SECONDS
+
+/datum/hallucination/screen_effect/blur/start()
+	add_fullscreen("hall_blur", /obj/screen/fullscreen/blurry)
+	feedback_details = " Screen effect: blur"
+	return TRUE
+
+/datum/hallucination/screen_effect/shake
+	base_weight = 6
+	theme_tags = list("body", "cosmic")
+	duration = 1 SECOND
+
+/datum/hallucination/screen_effect/shake/start()
+	shake_camera(holder, rand(4, 7), rand(1, 2))
+	feedback_details = " Screen effect: shake"
+	return TRUE
+
+/datum/hallucination/screen_effect/glitch
+	base_weight = 6
+	theme_tags = list("machinery", "cosmic", "psychedelic")
+	duration = 3 SECONDS
+
+/datum/hallucination/screen_effect/glitch/start()
+	add_fullscreen("hall_noise", /obj/screen/fullscreen/noise)
+	add_fullscreen("hall_scanline", /obj/screen/fullscreen/scanline)
+	if(prob(60))
+		add_color_shift(/datum/client_color/hallucination_shift_cold)
+	if(prob(35))
+		shake_camera(holder, 3, 1)
+	feedback_details = " Screen effect: glitch"
+	return TRUE
+
+/datum/hallucination/screen_effect/motion_trails
+	base_weight = 6
+	theme_tags = list("psychedelic")
+	duration = 5 SECONDS
+
+/datum/hallucination/screen_effect/motion_trails/start()
+	motion_trail = new /datum/effect/trail/afterimage
+	motion_trail.set_up(holder)
+	motion_trail.start()
+	feedback_details = " Screen effect: motion trails"
+	return TRUE
+
+// Quick movement at the edge of your vision.
+/datum/hallucination/peripheral_motion
+	category = "threat"
+	base_weight = 6
+	category_cooldown = 14 SECONDS
+	theme_tags = list("predator", "psychedelic")
+	min_power = 25
+	max_power = 85
+	allow_duplicates = FALSE
+	duration = 3 SECONDS
+	var/list/things = list()
+
+/datum/hallucination/peripheral_motion/Destroy()
+	end()
+	. = ..()
+
+/datum/hallucination/peripheral_motion/start()
+	if(!holder?.client)
+		return FALSE
+
+	var/base_dir = holder.dir || NORTH
+	var/list/preferred_dirs = list(turn(base_dir, 90), turn(base_dir, -90), turn(base_dir, 135), turn(base_dir, -135))
+	var/list/candidates = list()
+	for(var/turf/simulated/floor/T in view(holder, 5))
+		if(get_dist(holder, T) < 2)
+			continue
+		if(!(get_dir(holder, T) in preferred_dirs))
+			continue
+		candidates += T
+	if(!length(candidates))
+		return FALSE
+
+	for(var/i = 1 to min(2, length(candidates)))
+		var/turf/target = pick(candidates)
+		candidates -= target
+		var/image/shade = image('icons/mob/mob.dmi', target, "shade", FLOAT_LAYER)
+		shade.alpha = 210
+		things += shade
+
+	holder.client.images += things
+	feedback_details = " Peripheral motion"
+	return TRUE
+
+/datum/hallucination/peripheral_motion/end()
+	holder?.client?.images -= things
+	things.Cut()
+
 // Repeating silhouette instead of a single pop-in
 /datum/hallucination/stalker/recurring
 	duration = 6 SECONDS
@@ -299,3 +603,21 @@
 	for(var/datum/hallucination_actor/actor in stalker_actors)
 		qdel(actor)
 	stalker_actors.Cut()
+
+/datum/client_color/hallucination_shift_warm
+	client_color = list(
+		1.15, 0.08, 0.02,
+		0.04, 0.95, 0.08,
+		0.02, 0.06, 0.82
+	)
+	order = 240
+	ignore_blood = TRUE
+
+/datum/client_color/hallucination_shift_cold
+	client_color = list(
+		0.82, 0.05, 0.12,
+		0.06, 0.92, 0.12,
+		0.12, 0.14, 1.12
+	)
+	order = 240
+	ignore_blood = TRUE

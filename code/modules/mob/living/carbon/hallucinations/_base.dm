@@ -55,6 +55,7 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 /mob/living/carbon/var/hallucination_active_theme
 /mob/living/carbon/var/hallucination_theme_expires = 0
 /mob/living/carbon/var/hallucination_theme_hits = 0
+/mob/living/carbon/var/list/hallucination_forced_themes = list()
 
 /datum/hallucination_context
 	var/power = 0
@@ -124,6 +125,26 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 	hallucination_theme_expires = 0
 	hallucination_theme_hits = 0
 
+/mob/living/carbon/proc/set_forced_hallucination_theme(theme, duration)
+	if(!theme || duration <= 0)
+		return
+	if(!islist(hallucination_forced_themes))
+		hallucination_forced_themes = list()
+	hallucination_forced_themes[theme] = max(hallucination_forced_themes[theme] || 0, world.time + duration)
+
+/mob/living/carbon/proc/get_forced_hallucination_theme()
+	if(!islist(hallucination_forced_themes) || !length(hallucination_forced_themes))
+		return null
+
+	var/selected_theme
+	var/selected_expiry = 0
+	for(var/theme in hallucination_forced_themes)
+		var/expiry = hallucination_forced_themes[theme]
+		if(expiry > selected_expiry)
+			selected_theme = theme
+			selected_expiry = expiry
+	return selected_theme
+
 /mob/living/carbon/proc/prune_hallucination_runtime_state()
 	if(!islist(hallucination_recent_types))
 		hallucination_recent_types = list()
@@ -133,6 +154,8 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 		hallucination_type_cooldowns = list()
 	if(!islist(hallucination_category_cooldowns))
 		hallucination_category_cooldowns = list()
+	if(!islist(hallucination_forced_themes))
+		hallucination_forced_themes = list()
 
 	while(length(hallucination_recent_types) > 5)
 		hallucination_recent_types.Cut(1, 2)
@@ -145,6 +168,9 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 	for(var/key in hallucination_category_cooldowns.Copy())
 		if(hallucination_category_cooldowns[key] <= world.time)
 			hallucination_category_cooldowns -= key
+	for(var/key in hallucination_forced_themes.Copy())
+		if(hallucination_forced_themes[key] <= world.time)
+			hallucination_forced_themes -= key
 
 	if(hallucination_active_theme && (hallucination_theme_expires <= world.time || hallucination_theme_hits >= 3))
 		clear_hallucination_theme()
@@ -154,6 +180,7 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 	hallucination_recent_categories = list()
 	hallucination_type_cooldowns = list()
 	hallucination_category_cooldowns = list()
+	hallucination_forced_themes = list()
 	next_hallucination = 0
 	if(islist(hallucination_actors))
 		for(var/datum/hallucination_actor/actor in hallucination_actors.Copy())
@@ -210,8 +237,11 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		context.shock = H.get_shock()
-	context.active_theme = hallucination_active_theme
-	context.theme_time_left = max(hallucination_theme_expires - world.time, 0)
+	context.active_theme = get_forced_hallucination_theme() || hallucination_active_theme
+	if(context.active_theme && islist(hallucination_forced_themes) && hallucination_forced_themes[context.active_theme])
+		context.theme_time_left = max(hallucination_forced_themes[context.active_theme] - world.time, 0)
+	else
+		context.theme_time_left = max(hallucination_theme_expires - world.time, 0)
 
 	var/turf/my_turf = get_turf(src)
 	if(isturf(my_turf))
