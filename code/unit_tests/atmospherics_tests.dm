@@ -318,7 +318,7 @@
 	name = "ATMOS MACHINERY: meters shall not split pipelines during rebuild"
 
 /datum/unit_test/meter_sampling_shall_not_split_rebuilding_pipelines/start_test()
-	var/turf/center = get_space_turf()
+	var/turf/center = get_safe_turf()
 	var/turf/west = get_step(center, WEST)
 	var/turf/east = get_step(center, EAST)
 	if(!center || !west || !east)
@@ -358,7 +358,11 @@
 	right.parent = stale_parent
 
 	meter.set_target(left, FALSE)
-	meter.get_meter_icon_state()
+	if(meter.can_sample_display())
+		meter.get_meter_icon_state()
+	else
+		// The regression is in the meter's passive read path; unit tests should not depend on local APC state.
+		meter.return_air()
 
 	if(left.parent == stale_parent || middle.parent == stale_parent || right.parent == stale_parent)
 		fail("Meter sampling left stale qdel'ing pipeline references attached to rebuilt pipes.")
