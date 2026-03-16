@@ -115,6 +115,39 @@
 /obj/overmap/event/leviathan/proc/needs_healing_location()
 	return TRUE
 
+/obj/overmap/event/leviathan/proc/get_wrapped_dist(atom/A, atom/B)
+	var/dx = abs(A.x - B.x)
+	var/dy = abs(A.y - B.y)
+	
+	if(dx > GLOB.using_map.overmap_size / 2)
+		dx = GLOB.using_map.overmap_size - dx
+	if(dy > GLOB.using_map.overmap_size / 2)
+		dy = GLOB.using_map.overmap_size - dy
+	
+	return sqrt(dx**2 + dy**2)
+
+/obj/overmap/event/leviathan/proc/get_wrapped_dir(atom/A, atom/B)
+	var/dx = B.x - A.x
+	var/dy = B.y - A.y
+	
+	if(abs(dx) > GLOB.using_map.overmap_size / 2)
+		dx = -SIGN(dx) * (GLOB.using_map.overmap_size - abs(dx))
+	if(abs(dy) > GLOB.using_map.overmap_size / 2)
+		dy = -SIGN(dy) * (GLOB.using_map.overmap_size - abs(dy))
+	
+	var/res = 0
+	if(dx > 0)
+		res |= EAST
+	else if(dx < 0)
+		res |= WEST
+		
+	if(dy > 0)
+		res |= NORTH
+	else if(dy < 0)
+		res |= SOUTH
+		
+	return res
+
 // Поиск ближайшего сектора для лечения
 /obj/overmap/event/leviathan/proc/find_healing_target(event_type)
 	var/obj/overmap/event/best_event = null
@@ -122,7 +155,7 @@
 	for(var/turf/T in overmap_event_handler.hazard_by_turf)
 		for(var/obj/overmap/event/E in overmap_event_handler.hazard_by_turf[T])
 			if(istype(E, event_type))
-				var/dist = get_dist(src, E)
+				var/dist = get_wrapped_dist(src, E)
 				if(dist < best_dist)
 					best_dist = dist
 					best_event = E
@@ -167,7 +200,7 @@
 		update_icon()
 		return
 
-	var/target_dir = get_dir(src, current_target)
+	var/target_dir = get_wrapped_dir(src, current_target)
 	if(!target_dir)
 		adjust_speed(-speed[1], -speed[2])
 		update_icon()
