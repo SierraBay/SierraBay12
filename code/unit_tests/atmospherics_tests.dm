@@ -379,4 +379,74 @@
 	qdel(right)
 	return 1
 
+/datum/unit_test/meter_sampling_shall_heal_live_pipeline_splits
+	name = "ATMOS MACHINERY: meters shall heal live pipeline splits on sampled pipes"
+
+/datum/unit_test/meter_sampling_shall_heal_live_pipeline_splits/start_test()
+	var/turf/center = get_safe_turf()
+	var/turf/west = get_step(center, WEST)
+	var/turf/east = get_step(center, EAST)
+	if(!center || !west || !east)
+		fail("Unable to find three adjacent turfs for the live meter split regression test.")
+		return 1
+
+	var/obj/machinery/atmospherics/pipe/simple/left = new(west)
+	var/obj/machinery/atmospherics/pipe/simple/middle = new(center)
+	var/obj/machinery/atmospherics/pipe/simple/right = new(east)
+	var/obj/machinery/meter/meter = new(center)
+
+	left.set_dir(EAST)
+	middle.set_dir(EAST)
+	right.set_dir(EAST)
+
+	left.atmos_init()
+	middle.atmos_init()
+	right.atmos_init()
+
+	if((left.node1 != middle && left.node2 != middle) \
+	|| (middle.node1 != left && middle.node2 != left) \
+	|| (middle.node1 != right && middle.node2 != right) \
+	|| (right.node1 != middle && right.node2 != middle))
+		fail("Failed to create a simple three-pipe test line for the live meter split regression test.")
+		qdel(meter)
+		qdel(left)
+		qdel(middle)
+		qdel(right)
+		return 1
+
+	var/datum/pipeline/left_parent = new
+	left_parent.members = list(left)
+	left_parent.edges = list()
+	left_parent.leaks = list()
+	left_parent.air = new(left.volume)
+	left.parent = left_parent
+
+	var/datum/pipeline/split_parent = new
+	split_parent.members = list(middle, right)
+	split_parent.edges = list()
+	split_parent.leaks = list()
+	split_parent.air = new(middle.volume + right.volume)
+	middle.parent = split_parent
+	right.parent = split_parent
+
+	meter.set_target(middle, FALSE)
+	meter.return_air()
+
+	if(left.parent != middle.parent || middle.parent != right.parent)
+		fail("Meter sampling failed to heal a live split between directly connected pipes.")
+	else if(length(middle.parent.members) != 3)
+		fail("Meter sampling rebuilt [length(middle.parent.members)] pipe(s) instead of the full 3-pipe line from a live split.")
+	else if(middle.parent.air.volume != (left.volume + middle.volume + right.volume))
+		fail("Meter sampling rebuilt the live split with the wrong final air volume.")
+	else
+		pass("Meter sampling healed a live split between directly connected pipes.")
+
+	qdel(left_parent)
+	qdel(split_parent)
+	qdel(meter)
+	qdel(left)
+	qdel(middle)
+	qdel(right)
+	return 1
+
 #undef ALL_GASIDS

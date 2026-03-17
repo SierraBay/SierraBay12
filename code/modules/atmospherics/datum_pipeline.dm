@@ -45,6 +45,28 @@
 		member.air_temporary.volume = member.volume
 		member.air_temporary.multiply(member.volume / air.volume)
 
+/datum/pipeline/proc/release_members_for_rebuild()
+	if(network)
+		qdel(network)
+		network = null
+
+	if(air)
+		if(air.volume)
+			temporarily_store_air()
+		QDEL_NULL(air)
+
+	var/list/released_members = members ? members.Copy() : list()
+	for(var/obj/machinery/atmospherics/pipe/member in released_members)
+		member.mark_for_rebuild()
+
+	if(leaks)
+		leaks.Cut()
+	if(members)
+		members.Cut()
+	if(edges)
+		edges.Cut()
+	return released_members
+
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 	var/list/possible_expansions = list(base)
 	members = list(base)
@@ -74,12 +96,13 @@
 					if(item.in_stasis)
 						continue
 					// Rebuilds can be kicked off by passive readers like meters while a previous
-					// pipeline is still being qdel'd. Those stale parents must not block reattachment.
+					// pipeline is still being qdel'd or a connected pipe may still carry a stale
+					// live parent from a previous split. Either case must not block reattachment.
 					if(item.parent && item.parent != src)
 						if(QDELING(item.parent))
 							item.parent = null
 						else
-							continue
+							item.parent.release_members_for_rebuild()
 					if(!members.Find(item))
 						members += item
 						possible_expansions += item

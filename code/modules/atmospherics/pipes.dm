@@ -75,6 +75,35 @@
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
 	return null
 
+/obj/machinery/atmospherics/pipe/proc/parent_needs_rebuild()
+	if(!parent || QDELING(parent))
+		return TRUE
+
+	if(!islist(parent.members) || !parent.members.Find(src))
+		return TRUE
+
+	for(var/obj/machinery/atmospherics/pipe/neighbor in pipeline_expansion())
+		if(!neighbor || neighbor.in_stasis)
+			continue
+		if(neighbor.parent != parent)
+			return TRUE
+
+	return FALSE
+
+/obj/machinery/atmospherics/pipe/proc/ensure_intact_pipeline()
+	if(QDELING(src) || !parent_needs_rebuild())
+		return
+
+	var/datum/pipeline/previous_parent = parent
+	if(previous_parent && !QDELING(previous_parent))
+		previous_parent.release_members_for_rebuild()
+	else
+		parent = null
+
+	if(!parent && !QDELING(src))
+		parent = new /datum/pipeline()
+		parent.build_pipeline(src)
+
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
 	//Return 1 if parent should continue checking other pipes
 	//Return null if parent should stop checking other pipes. Recall: qdel(src) will by default return null
@@ -82,27 +111,19 @@
 	return 1
 
 /obj/machinery/atmospherics/pipe/return_air()
-	if(!parent && !QDELING(src))
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
+	ensure_intact_pipeline()
 	return parent?.air
 
 /obj/machinery/atmospherics/pipe/build_network()
-	if(!parent && !QDELING(src))
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
+	ensure_intact_pipeline()
 	return parent?.return_network()
 
 /obj/machinery/atmospherics/pipe/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(!parent && !QDELING(src))
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
+	ensure_intact_pipeline()
 	return parent?.network_expand(new_network, reference)
 
 /obj/machinery/atmospherics/pipe/return_network(obj/machinery/atmospherics/reference)
-	if(!parent && !QDELING(src))
-		parent = new /datum/pipeline()
-		parent.build_pipeline(src)
+	ensure_intact_pipeline()
 	return parent?.return_network(reference)
 
 /obj/machinery/atmospherics/pipe/Destroy()
