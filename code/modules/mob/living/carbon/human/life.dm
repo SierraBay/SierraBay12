@@ -591,6 +591,9 @@
 			silent = 0
 			return 1
 
+		if(hallucination_power)
+			handle_hallucinations()
+
 		if(get_shock() >= species.total_health)
 			if(stat || status_flags & FAKEDEATH)
 				return

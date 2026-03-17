@@ -78,7 +78,6 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
 	/datum/admins/proc/show_skills, //Right click skill menu,
-	/datum/admins/proc/hallucination_panel, // Admin hallucination control panel,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb,

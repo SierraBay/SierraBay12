@@ -26,12 +26,12 @@
 	to_chat(F, "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>")
 
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci","hallucinations") )
+/client/proc/investigate_show( subject in list("hrefs","notes","singulo","telesci") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)	return
 	switch(subject)
-		if("singulo", "telesci", "hallucinations")			//general one-round-only stuff
+		if("singulo", "telesci")			//general one-round-only stuff
 			var/F = investigate_subject2file(subject)
 			if(!F)
 				to_chat(src, SPAN_WARNING("Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed."))

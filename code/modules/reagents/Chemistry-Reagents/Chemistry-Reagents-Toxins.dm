@@ -816,8 +816,6 @@
 	if (IS_METABOLICALLY_INERT(M))
 		return
 
-	M.set_forced_hallucination_theme("psychedelic", 25 SECONDS)
-
 	if(prob(5) && prob_proc == TRUE)
 		M.apply_effect(3, EFFECT_STUTTER)
 		M.emote("giggle")
@@ -844,7 +842,6 @@
 /datum/reagent/drugs/serotrotium/affect_blood(mob/living/carbon/M, removed)
 	if (IS_METABOLICALLY_INERT(M))
 		return FALSE
-	M.set_forced_hallucination_theme("social", 15 SECONDS)
 	if(prob(7))
 		M.emote(pick("giggle", "laugh", "smile"))
 	return ..()
@@ -870,7 +867,6 @@
 		return FALSE
 	var/drug_strength = 4 - (0.8 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
 
-	M.set_forced_hallucination_theme(prob(60) ? "psychedelic" : "machinery", 20 SECONDS)
 	M.make_dizzy(drug_strength)
 	M.set_confused(drug_strength * 5)
 	..()
@@ -899,7 +895,6 @@
 	if (IS_METABOLICALLY_INERT(M))
 		return
 	M.add_chemical_effect(CE_MIND, -2)
-	M.set_forced_hallucination_theme(pick("predator", "aftermath", "body"), 35 SECONDS)
 
 	var/hallucination_duration = 50 - (25 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
 	var/hallucination_power = 200 - (20 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
@@ -928,7 +923,6 @@
 		return
 
 	var/threshold = 1 + (0.2 * GET_TRAIT_LEVEL(M, /singleton/trait/boon/clear_mind))
-	M.set_forced_hallucination_theme("psychedelic", 30 SECONDS)
 	M.druggy = max(M.druggy, 30)
 
 	if(dose < 1 * threshold)
@@ -1000,8 +994,6 @@
 	M.add_client_color(/datum/client_color/thirdeye)
 	M.add_chemical_effect(CE_THIRDEYE, 1)
 	M.add_chemical_effect(CE_MIND, -2)
-	M.set_forced_hallucination_theme("cosmic", 40 SECONDS)
-	M.set_forced_hallucination_theme("body", 20 SECONDS)
 	M.hallucination(50, 50)
 	M.make_jittery(3)
 	M.make_dizzy(3)

@@ -73,4 +73,5 @@
 #include "contraband_vending/_contraband_vending_includes.dm"
 #include "scp/_scp_includes.dm"
 #include "carp_racing/_carp_racing_includes.dm"
+#include "hallucination_overhaul/_hallucination_overhaul_includes.dm"
 #include "../packs/factions/fa/_pack.dm"
