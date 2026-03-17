@@ -78,6 +78,9 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
 	/datum/admins/proc/show_skills, //Right click skill menu,
+	// [SIERRA-ADD] - HALLUCINATION_OVERHAUL - (Admin hallucination control panel verb)
+	/datum/admins/proc/hallucination_panel, // Admin hallucination control panel,
+	// [/SIERRA-ADD] - HALLUCINATION_OVERHAUL
 	/client/proc/man_up,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb,

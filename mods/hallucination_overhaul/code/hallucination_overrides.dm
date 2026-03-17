@@ -13,33 +13,6 @@
 	if(hallucinating())
 		handle_hallucinations()
 
-/client/proc/add_admin_verbs()
-	..()
-	if(holder?.rights & R_ADMIN)
-		verbs += /datum/admins/proc/hallucination_panel
-
-/client/proc/remove_admin_verbs()
-	..()
-	verbs.Remove(/datum/admins/proc/hallucination_panel)
-
-/client/proc/investigate_show(subject in list("hrefs", "notes", "singulo", "telesci", "hallucinations"))
-	set name = "Investigate"
-	set category = "Admin"
-
-	if(subject == "hallucinations")
-		if(!holder)
-			return
-
-		var/F = investigate_subject2file(subject)
-		if(!F)
-			to_chat(src, SPAN_WARNING("Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed."))
-			return
-
-		show_browser(src, F, "window=investigate[subject];size=800x300")
-		return
-
-	return ..()
-
 /datum/admins/Topic(href, href_list)
 	..()
 
