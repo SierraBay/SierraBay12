@@ -256,7 +256,6 @@
 
 /datum/reagent/paracetamol/process_overdose(mob/living/carbon/M)
 	M.add_chemical_effect(CE_TOXIN, 1)
-	M.set_forced_hallucination_theme("body", 10 SECONDS)
 	M.druggy = max(M.druggy, 2)
 	M.add_chemical_effect(CE_PAINKILLER, 10)
 
@@ -302,15 +301,12 @@
 		hallucination_chance *= 1.5
 
 	hallucination_chance = min(hallucination_chance, 100)
-	if(hallucination_chance >= 10)
-		affected.set_forced_hallucination_theme(pick("body", "aftermath"), 20 SECONDS)
 	if (prob(hallucination_chance))
 		affected.hallucination(60, 30)
 
 /datum/reagent/opiate/process_overdose(mob/living/carbon/M)
 	if (!istype(M))
 		return
-	M.set_forced_hallucination_theme("body", 25 SECONDS)
 	M.druggy = max(M.druggy, 10)
 	M.add_chemical_effect(CE_BREATHLOSS, 0.6) //Have trouble breathing, need more air
 	if(M.chem_effects[CE_ALCOHOL])
@@ -358,7 +354,6 @@
 
 /datum/reagent/deletrathol/process_overdose(mob/living/carbon/M)
 	..()
-	M.set_forced_hallucination_theme("body", 15 SECONDS)
 	M.druggy = max(M.druggy, 2)
 	M.add_chemical_effect(CE_PAINKILLER, 10)
 
@@ -712,7 +707,6 @@
 		to_chat(affected, SPAN_NOTICE("Your mind feels focused and undivided."))
 		affected.add_chemical_effect(CE_MIND, -1) //Amphetamines make you more prone to ill-effects of hallucinogens.
 	if (dose >= overdose && prob(dose))
-		affected.set_forced_hallucination_theme("machinery", 20 SECONDS)
 		affected.hallucination(60,120)
 
 /datum/reagent/methylphenidate/process_overdose(mob/living/carbon/affected)
@@ -929,7 +923,6 @@
 
 /datum/reagent/antidexafen/process_overdose(mob/living/carbon/M)
 	M.add_chemical_effect(CE_TOXIN, 1)
-	M.set_forced_hallucination_theme(pick("body", "psychedelic"), 15 SECONDS)
 	M.hallucination(60, 30)
 	M.druggy = max(M.druggy, 2)
 

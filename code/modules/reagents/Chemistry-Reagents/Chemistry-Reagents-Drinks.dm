@@ -677,7 +677,6 @@
 	..()
 	M.add_chemical_effect(CE_SPEEDBOOST, 1)
 	M.make_jittery(20)
-	M.set_forced_hallucination_theme("machinery", 20 SECONDS)
 	M.druggy = max(M.druggy, 30)
 	M.dizziness += 5
 	M.drowsyness = 0

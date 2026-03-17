@@ -56,6 +56,7 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 /mob/living/carbon/var/hallucination_theme_expires = 0
 /mob/living/carbon/var/hallucination_theme_hits = 0
 /mob/living/carbon/var/list/hallucination_forced_themes = list()
+/mob/living/carbon/var/hallucination_last_process_tick = 0
 
 /datum/hallucination_context
 	var/power = 0
@@ -481,6 +482,10 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 		to_chat(M, SPAN_NOTICE("[src] [message]"))
 
 /mob/living/carbon/proc/handle_hallucinations()
+	if(hallucination_last_process_tick == world.time)
+		return
+	hallucination_last_process_tick = world.time
+
 	hallucination_duration = max(0, hallucination_duration - 1)
 	if(chem_effects[CE_MIND] > 0)
 		hallucination_duration = max(0, hallucination_duration - 1)
