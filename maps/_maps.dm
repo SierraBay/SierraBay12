@@ -1,3 +1,4 @@
+#include "using.dm" // [SIERRA-EDIT] - DEVMODE NO AWAYS
 #include "mapsystem\map_preferences.dm"
 #include "mapsystem\map_ranks.dm"
 #include "mapsystem\maps.dm"
@@ -9,7 +10,6 @@
 
 #include "example\example_define.dm" // Always included because tests. May be fixable later.
 
-#include "using.dm"
 
 GLOBAL_TYPED_AS(using_map, /datum/map, new using_map_DATUM)
 
