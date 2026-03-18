@@ -65,39 +65,13 @@ html, body {
 	padding: 6px 10px;
 }
 
-/* -- Slot bar (JS-added id="cmd-bar" on first <center>) -- */
+/* -- Slot/tab bar (JS assigns id="cmd-bar" to the first <center>) -- */
 #cmd-bar {
 	background: var(--bg-panel);
 	border: 1px solid var(--border);
 	border-radius: 2px;
 	padding: 4px 10px;
 	margin-bottom: 5px;
-	font-family: 'Consolas', 'Courier New', monospace;
-	font-size: 11px;
-	color: var(--fg-dim);
-	letter-spacing: 0.5px;
-}
-
-#cmd-bar::before {
-	content: "// ";
-	color: var(--fg-dim);
-	opacity: 0.5;
-}
-
-#cmd-bar a, #cmd-bar a:link, #cmd-bar a:visited, #cmd-bar a:active {
-	background: transparent;
-	border: 1px solid #111d2d;
-	color: var(--fg-dim);
-	padding: 1px 7px;
-	margin: 0 2px;
-	border-radius: 1px;
-	font-family: inherit;
-}
-
-#cmd-bar a:hover {
-	border-color: var(--accent-dim);
-	color: var(--accent);
-	background: var(--bg-btn);
 }
 
 /* -- Buttons and links -- */
@@ -105,18 +79,18 @@ a, a:link, a:visited, a:active,
 .linkOn, .linkOff, input {
 	background: var(--bg-btn);
 	border: 1px solid var(--border);
-	color: #7a98b8;
+	color: #8aaec8;
 	border-radius: 2px;
 	padding: 2px 8px;
 	text-decoration: none;
 	transition: background 0.08s, border-color 0.08s, color 0.08s;
 	display: inline-block;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 a:hover {
 	background: var(--bg-hover);
-	color: #a8c4e0;
+	color: #c0d8f0;
 	border-color: var(--accent);
 }
 

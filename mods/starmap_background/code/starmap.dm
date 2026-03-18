@@ -3,10 +3,12 @@
 // Clicking a system sets TAG_HOMEWORLD, TAG_FACTION and TAG_CULTURE on the character.
 // Requires faction_background_grouping (for the .faction var on location singletons).
 
-// Fix compile error: browser.dm calls get_setup_styles() from /datum/browser/get_header().
-// The proc must exist on the browser datum; this stub satisfies that requirement.
+// Inject prefs_dark.css into every datum/browser panel (Character Slots, etc.)
+// get_setup_styles() is called inside get_header() and embedded in <head>.
 /datum/browser/proc/get_setup_styles(mob/user)
-	return ""
+	if(user)
+		send_rsc(user, 'mods/starmap_background/html/prefs_dark.css', "prefs_dark.css")
+	return "<link rel='stylesheet' type='text/css' href='prefs_dark.css'>"
 
 // Inject dark theme CSS + DOM enhancements into the character setup browser window.
 // This branch builds the HTML directly in open_setup_window, so we override that proc.
@@ -35,7 +37,12 @@ if(t){t.innerHTML=t.innerHTML+'<span class=\"cursor\"> _</span>';}
 			<div class='uiContent'>
 	<script type='text/javascript'>
 		function update_content(data){
+			var sy=document.documentElement.scrollTop||document.body.scrollTop;
 			document.getElementById('content').innerHTML = data;
+			var c=document.getElementById('content');
+			if(c){var cn=c.querySelector('center');if(cn){cn.id='cmd-bar';}}
+			document.documentElement.scrollTop=sy;
+			document.body.scrollTop=sy;
 		}
 		// \[SIERRA-ADD]
 		function setJobLevel(source, title, level)
@@ -274,29 +281,34 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	var/is_desc_shown = !sm_hidden[token]
 
 	// Button styles
-	var/bs_desc = "display:inline-block;background:#081828;border:1px solid #1e4d70;color:#5ba8dd;padding:1px 8px;border-radius:2px;font-size:10px;text-decoration:none;margin-left:4px"
-	var/bs_edit = "display:inline-block;background:#1a1200;border:1px solid #5c430e;color:#c09030;padding:1px 8px;border-radius:2px;font-size:10px;text-decoration:none;margin-left:4px"
+	// Header row: [LABEL]  Value      [описание] [изменить]
+	var/nick_html    = cur_nick ? cur_nick : "<span style='color:#3a4a5a;font-style:italic'>—</span>"
+	var/desc_label   = is_desc_shown ? "▲ скрыть" : "▼ описание"
+	var/expand_label = is_open       ? "✕ свернуть" : "✎ изменить"
 
-	// Header row: [LABEL]  Value  [описание] [изменить]
-	html += "<div style='display:table;width:100%;margin:4px 0 2px;border-spacing:0'>"
-	html += "<div style='display:table-row'>"
-	html += "<div style='display:table-cell;vertical-align:middle'>"
-	html += "<span style='color:#677a8a;font-size:10px;text-transform:uppercase;letter-spacing:0.5px'>[label]</span>"
-	html += " <b style='color:#d8eeff'>[cur_nick ? cur_nick : "<i style='color:#3a4a5a'>—</i>"]</b>"
+	var/bs_desc = "display:inline-block;background:#0d2540;border:1px solid #3a7ab8;color:#80c4ff;padding:2px 10px;border-radius:2px;font-size:11px;font-weight:bold;text-decoration:none;margin-left:4px;white-space:nowrap"
+	var/bs_edit = "display:inline-block;background:#251800;border:1px solid #a07020;color:#f0c050;padding:2px 10px;border-radius:2px;font-size:11px;font-weight:bold;text-decoration:none;margin-left:4px;white-space:nowrap"
+
+	html += "<div style='background:#0d1624;border:1px solid #1e2e44;border-radius:3px;padding:5px 8px;margin:4px 0 2px'>"
+	html += "<div style='display:flex;justify-content:space-between;align-items:center'>"
+	html += "<div>"
+	html += "<span style='color:#557090;font-size:10px;text-transform:uppercase;letter-spacing:0.8px'>[label]</span> "
+	html += "<b style='color:#cce8ff;font-size:12px'>[nick_html]</b>"
 	html += "</div>"
-	html += "<div style='display:table-cell;text-align:right;vertical-align:middle;white-space:nowrap'>"
+	html += "<div style='white-space:nowrap'>"
 	if(cur_c)
-		html += "<a href='byond://?src=\ref[src];sm_toggle_[token]=1' style='[bs_desc]'>[is_desc_shown ? "скрыть" : "описание"]</a>"
-	html += "<a href='byond://?src=\ref[src];sm_expand_[token]=1' style='[bs_edit]'>[is_open ? "свернуть" : "изменить"]</a>"
+		html += "<a href='byond://?src=\ref[src];sm_toggle_[token]=1' style='[bs_desc]'>[desc_label]</a>"
+	html += "<a href='byond://?src=\ref[src];sm_expand_[token]=1' style='[bs_edit]'>[expand_label]</a>"
 	html += "</div>"
-	html += "</div></div>"
+	html += "</div>"
+	html += "</div>"
 
 	// Description block — only shown after player clicks [описание]
 	if(cur_c && is_desc_shown)
 		var/list/details = cur_c.get_text_details()
-		html += "<div style='background:#060e1a;border:1px solid #122030;border-radius:2px;padding:5px 8px;margin:0 0 4px;font-size:11px;line-height:1.5;color:#8aabbb'>"
+		html += "<div style='background:#070f1e;border:1px solid #1a3050;border-top:none;border-radius:0 0 3px 3px;padding:6px 9px;font-size:11px;line-height:1.6;color:#90b8cc'>"
 		if(LAZYLEN(details))
-			html += "<div style='color:#4d7a94;font-size:10px;margin-bottom:3px'>[jointext(details, " &bull; ")]</div>"
+			html += "<div style='color:#4a8aaa;font-size:10px;margin-bottom:5px;border-bottom:1px solid #0f2030;padding-bottom:4px'>[jointext(details, " &bull; ")]</div>"
 		if(cur_c.description)
 			html += cur_c.description
 		html += "</div>"
@@ -304,7 +316,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	// Selector list (when expanded)
 	if(is_open)
 		var/list/valid = sm_get_valid_values(token)
-		html += "<div style='background:#080f1c;border:1px solid #1a2840;padding:4px 6px;margin:2px 0 4px;border-radius:2px;font-size:11px'>"
+		html += "<div style='background:#080f1c;border:1px solid #1e3050;padding:5px 8px;margin:2px 0 4px;border-radius:3px;font-size:11px'>"
 
 		if(token == TAG_CULTURE || token == TAG_HOMEWORLD)
 			// Faction-grouped view with pagination (ЦПСС / ГКК / Остальные)
@@ -321,10 +333,11 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 			// Tabs
 			html += "<div style='font-size:10px;margin-bottom:4px;color:#667'>"
 			for(var/i=1; i<=3; i++)
+				var/tab_name = pnames[i]
 				if(i == p)
-					html += "<b style='color:#6aadff'>[pnames[i]]</b>"
+					html += "<b style='color:#6aadff'>[tab_name]</b>"
 				else
-					html += "<a href='byond://?src=\ref[src];sm_page_[token]=[i]'>[pnames[i]]</a>"
+					html += "<a href='byond://?src=\ref[src];sm_page_[token]=[i]'>[tab_name]</a>"
 				if(i < 3) html += " | "
 			html += "</div>"
 			// Values
@@ -366,43 +379,42 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	var/fc = "#888"
 	var/fb = "#222"
 	if(cur_faction == FACTION_SOL_CENTRAL)
-		fc = "#4A90D9"; fb = "#0f2044"
+		fc = "#4a90d9"; fb = "#0f2044"
 	else if(cur_faction == FACTION_INDIE_CONFED)
-		fc = "#D94A4A"; fb = "#3a0f0f"
+		fc = "#d94a4a"; fb = "#3a0f0f"
 
 	var/home_html    = cur_home    ? "<b>[cur_home]</b>"    : "<span style='color:#555;font-style:italic'>none</span>"
 	var/faction_html = cur_faction ? "<b>[cur_faction]</b>" : "<span style='color:#555;font-style:italic'>none</span>"
 	var/culture_html = cur_culture ? "<b>[cur_culture]</b>" : "<span style='color:#555;font-style:italic'>none</span>"
 
+	var/s_card   = "background:#101020;border:1px solid #2a2a40;padding:5px 7px;margin:1px 0"
+	var/s_label  = "color:#7a9ab0;font-size:10px;text-transform:uppercase;background:none;border:none;padding:0;margin:0"
+	var/s_badge  = "padding:1px 6px;border-radius:2px;border:1px solid;color:#cce0ff;background:none"
+	var/s_btn    = "display:inline-block;background:#0f2044;border:1px solid #4A90D9;color:#6aadff;padding:2px 10px;border-radius:2px;text-decoration:none"
+
 	. = list(
-		"<style>",
-		".smcard{background:#101020;border:1px solid #2a2a40;padding:5px 7px;margin:1px 0;}",
-		".smlabel{color:#556;font-size:10px;text-transform:uppercase;}",
-		".smbadge{padding:1px 6px;border-radius:2px;border:1px solid;}",
-		".smbtn{background:#0f2044;border:1px solid #4A90D9;color:#6aadff;padding:2px 10px;border-radius:2px;}",
-		"</style>",
-		"<div class='smcard'>",
+		"<div style='[s_card]'>",
 		"<span style='color:#8ab;font-size:12px'><b>&#9733; STAR MAP</b></span>",
 		"<hr style='border:none;border-top:1px solid #222;margin:3px 0'>",
 		"<table width='100%' cellpadding='3' cellspacing='0'><tr>",
-		"<td width='33%' valign='top'><div class='smlabel'>Homeworld</div>",
-		"<span class='smbadge' style='border-color:[fc];background:[fb]'>[home_html]</span></td>",
-		"<td width='33%' valign='top'><div class='smlabel'>Faction</div>",
-		"<span class='smbadge' style='border-color:[fc];background:[fb]'>[faction_html]</span></td>",
-		"<td width='33%' valign='top'><div class='smlabel'>Culture</div>",
-		"<span class='smbadge' style='border-color:#334;background:#161622'>[culture_html]</span></td>",
+		"<td width='33%' valign='top'><div style='[s_label]'>Homeworld</div>",
+		"<span style='[s_badge];border-color:[fc];background:[fb]'>[home_html]</span></td>",
+		"<td width='33%' valign='top'><div style='[s_label]'>Faction</div>",
+		"<span style='[s_badge];border-color:[fc];background:[fb]'>[faction_html]</span></td>",
+		"<td width='33%' valign='top'><div style='[s_label]'>Culture</div>",
+		"<span style='[s_badge];border-color:#334;background:#161622'>[culture_html]</span></td>",
 		"</tr></table>",
 		"<div style='margin-top:5px'>",
-		"<a href='byond://?src=\ref[src];open_map=1'><span class='smbtn'>&#127760; Open Star Map</span></a>",
+		"<a href='byond://?src=\ref[src];open_map=1' style='[s_btn]'>&#127760; Open Star Map</a>",
 		"</div>",
 		"<hr style='border:none;border-top:1px solid #1a2840;margin:6px 0 3px'>",
 	)
 	// Inline selectors for all cultural tokens (replaces standalone Culture panel)
-	for(var/i = 1; i <= sm_tokens.len; i++)
+	for(var/i = 1; i <= length(sm_tokens); i++)
 		var/token = sm_tokens[i]
 		. += sm_render_token(token, sm_tokens[token])
-		if(i < sm_tokens.len)
-			. += "<hr style='border:none;border-top:1px solid #121c2a;margin:3px 0'>"
+		if(i < length(sm_tokens))
+			. += "<div style='margin:6px 0;display:flex;align-items:center;gap:6px'><div style='flex:1;height:1px;background:linear-gradient(to right,#1a2e44,#0a1420)'></div><span style='color:#22354a;font-size:9px;letter-spacing:1px'>&#9632;</span><div style='flex:1;height:1px;background:linear-gradient(to left,#1a2e44,#0a1420)'></div></div>"
 	. += "</div>"  // close smcard
 	. = jointext(., null)
 
@@ -410,11 +422,11 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 
 	if(href_list["open_map"])
 		open_starmap_window(user)
-		return TOPIC_REFRESH
+		return TOPIC_HARD_REFRESH
 
 	if(href_list["close_map"])
-		user.client << browse(null, "window=starmap")
-		return TOPIC_REFRESH
+		close_browser(user, "window=starmap")
+		return TOPIC_HARD_REFRESH
 
 	// select_system is now handled entirely in JS via popup — JS sends set_homeworld directly.
 
@@ -422,20 +434,19 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 		var/home_name = html_decode(replacetext(href_list["set_homeworld"], "PLUS", "+"))
 		apply_homeworld(user, home_name)
 		open_starmap_window(user)   // refresh map in-place (shows gold ring on new selection)
-		refresh_prefs(user)
-		return TOPIC_REFRESH
+		return TOPIC_HARD_REFRESH
 
 	// Inline culture/homeworld/faction/religion selectors
 	for(var/token in sm_tokens)
 		if(href_list["sm_toggle_[token]"])
 			sm_hidden[token] = !sm_hidden[token]
-			return TOPIC_REFRESH
+			return TOPIC_HARD_REFRESH
 		if(href_list["sm_expand_[token]"])
 			sm_expanded[token] = !sm_expanded[token]
-			return TOPIC_REFRESH
+			return TOPIC_HARD_REFRESH
 		if(href_list["sm_page_[token]"])
 			sm_pages[token] = text2num(href_list["sm_page_[token]"])
-			return TOPIC_REFRESH
+			return TOPIC_HARD_REFRESH
 		var/new_val = href_list["sm_set_[token]"]
 		if(!isnull(new_val))
 			var/decoded = html_decode(replacetext(new_val, "PLUS", "+"))
@@ -443,7 +454,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 			// Homeworld change: also auto-set faction and culture if possible
 			if(token == TAG_HOMEWORLD)
 				apply_homeworld(user, decoded)
-			return TOPIC_REFRESH
+			return TOPIC_HARD_REFRESH
 
 	return ..()
 
@@ -662,7 +673,8 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	// Top bar
 	html += "<div id='topbar'>"
 	html += "<b style='color:#8ab8d8'>&#9733; STAR MAP</b> &ensp;|&ensp; "
-	html += "World: <b style='color:#00D5FF'>[cur_home ? cur_home : "—"]</b>"
+	var/world_label = cur_home ? cur_home : "—"
+	html += "World: <b style='color:#00D5FF'>[world_label]</b>"
 	html += " &ensp;<a href='byond://?src=[ref_str];close_map=1' style='color:#556;font-size:11px'>\[Close\]</a>"
 	html += "</div>"
 
@@ -724,7 +736,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	// State
 	html += "var wrap=document.getElementById('map_wrap');"
 	html += "var dragging=false,moved=false,ox=0,oy=0,sl=0,st=0;"
-	html += "var scale=1.0,BASE=1000,svg=null;"
+	html += "var scale=1.0,BASE=1000,svg=null,minScale=0.25;"
 	html += "var popup=null;"
 	html += "var siEl=document.getElementById('sysinfo');"
 	html += "var siBody=document.getElementById('sysinfo-body');"
@@ -824,7 +836,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	html += "wrap.addEventListener('wheel',function(e){"
 	html += "e.preventDefault();if(!svg)return;"
 	html += "var f=e.deltaY<0?1.12:0.893;"
-	html += "var ns=Math.max(0.25,Math.min(8,scale*f));"
+	html += "var ns=Math.max(minScale,Math.min(8,scale*f));"
 	html += "var r=wrap.getBoundingClientRect();"
 	html += "var mx=e.clientX-r.left+wrap.scrollLeft,my=e.clientY-r.top+wrap.scrollTop;"
 	html += "var cx=mx/scale,cy=my/scale;"
@@ -837,7 +849,9 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	// Init: SVG size + filters + handlers
 	html += "window.onload=function(){"
 	html += "svg=wrap.querySelector('svg');"
-	html += "if(svg){svg.setAttribute('width',BASE);svg.setAttribute('height',BASE);}"
+	html += "minScale=Math.min(wrap.clientWidth/BASE,wrap.clientHeight/BASE);"
+	html += "if(scale<minScale)scale=minScale;"
+	html += "if(svg){var isz=Math.round(BASE*scale);svg.setAttribute('width',isz);svg.setAttribute('height',isz);}"
 	html += "Object.keys(SM).forEach(function(rid){"
 	html += "var sk=SM\[rid\];"
 	html += "var el=document.getElementById(rid);"
@@ -896,9 +910,30 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 
 	html += "</script></body></html>"
 
-	user.client << browse(jointext(html, null), "window=starmap;size=1280x900;border=0")
+	show_browser(user, jointext(html, null), "window=starmap;size=1280x900;border=0")
 
 // The standalone Culture panel is now embedded inside the Star Map card.
 // Suppress its content so it doesn't render as a separate duplicate block.
 /datum/category_item/player_setup_item/background/culture/content()
 	return ""
+
+// Override Character Slots dialog to:
+//   1. Apply prefs_dark.css for consistent dark styling
+//   2. Open without onclose handler so closing the dialog doesn't close the whole setup
+/datum/preferences/open_load_dialog(mob/user, details)
+	var/list/dat = list()
+	dat += "<tt><center>"
+	dat += "<b>Select a character slot to load</b><hr>"
+	for(var/i = 1 to config.character_slots)
+		var/name = slot_names?[get_slot_key(i)]
+		if(!name)
+			name = "Character [i]"
+		if(i == default_slot)
+			name = "<b>[name]</b>"
+		dat += "<a href='byond://?src=\ref[src];changeslot=[i];[details ? "details=1" : ""];refresh=1'>[name]</a><br>"
+	dat += "<hr>"
+	dat += "</center></tt>"
+	panel = new /datum/browser(user, "Character Slots", "Character Slots", 300, 390, src)
+	panel.add_stylesheet("prefs_dark", 'mods/starmap_background/html/prefs_dark.css')
+	panel.set_content(jointext(dat, null))
+	panel.open(use_onclose = FALSE)
