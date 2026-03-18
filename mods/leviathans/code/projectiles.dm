@@ -4,6 +4,7 @@
 	desc = "A massive ball of stellar plasma."
 	icon = 'mods/leviathans/icons/projectiles.dmi'
 	icon_state = "dragonball"
+	health = 5
 	hits = 10
 	ismissile = TRUE
 	hitpwr = EX_ACT_DEVASTATING
@@ -23,6 +24,7 @@
 	icon_state = "medusaball"
 	desc = "Shiny lightning ball"
 	meteordrop = /obj/item/ore/uranium
+	health = 3
 	dropamt = 5
 	ismissile = TRUE
 
@@ -38,6 +40,7 @@
 	icon_state = "small"
 	meteordrop = null
 	ismissile = TRUE
+	health = 10
 	hitpwr = EX_ACT_DEVASTATING
 	hits = 10
 

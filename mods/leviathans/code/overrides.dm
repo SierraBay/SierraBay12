@@ -1,9 +1,40 @@
+/obj/meteor
+	// ХП метеора для турелей
+	var/health = 1
+
+/obj/meteor/proc/take_damage(amount)
+	health -= amount
+	if(health <= 0)
+		make_debris()
+		meteor_effect()
+		qdel(src)
+
+// Переопределяем выстрелы турели по метеорам, которые имеют хп
+/obj/machinery/pointdefense/finish_shot(weakref/target)
+	var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
+	var/datum/local_network/lan = pointdefense.get_local_network()
+	var/obj/machinery/pointdefense_control/PC = null
+	if(lan)
+		var/list/pointdefense_controllers = lan.get_devices(/obj/machinery/pointdefense_control)
+		PC = LAZYACCESS(pointdefense_controllers, 1)
+	if(istype(PC))
+		PC.targets -= target
+
+	engaging = FALSE
+	last_shot = world.time
+	var/obj/meteor/M = target.resolve()
+	if(!istype(M))
+		return
+
+	var/obj/item/projectile/beam/pointdefense/beam = new (get_turf(src))
+	playsound(src, 'sound/effects/heavy_cannon_blast.ogg', 75, 1)
+	use_power_oneoff(idle_power_usage * 10)
+	beam.launch(M.loc)
+
+	M.take_damage(1)
+
 /obj/machinery/computer/ship/disperser
 	var/last_charge_type_path
-
-/obj/meteor/drone_pod/Initialize()
-	. = ..()
-	GLOB.meteor_list -= src
 
 // Overrides the OFD's default event destruction behavior
 /obj/machinery/computer/ship/disperser/fire(mob/user)
