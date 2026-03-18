@@ -293,7 +293,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	html += "<div style='display:flex;justify-content:space-between;align-items:center'>"
 	html += "<div>"
 	html += "<span style='color:#557090;font-size:10px;text-transform:uppercase;letter-spacing:0.8px'>[label]</span> "
-	html += "<b style='color:#cce8ff;font-size:12px'>[nick_html]</b>"
+	html += "<span style='font-weight:bold;color:#cce8ff;font-size:12px'>[nick_html]</span>"
 	html += "</div>"
 	html += "<div style='white-space:nowrap'>"
 	if(cur_c)
@@ -335,7 +335,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 			for(var/i=1; i<=3; i++)
 				var/tab_name = pnames[i]
 				if(i == p)
-					html += "<b style='color:#6aadff'>[tab_name]</b>"
+					html += "<span style='font-weight:bold;color:#6aadff'>[tab_name]</span>"
 				else
 					html += "<a href='byond://?src=\ref[src];sm_page_[token]=[i]'>[tab_name]</a>"
 				if(i < 3) html += " | "
@@ -672,9 +672,9 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 
 	// Top bar
 	html += "<div id='topbar'>"
-	html += "<b style='color:#8ab8d8'>&#9733; STAR MAP</b> &ensp;|&ensp; "
+	html += "<span style='font-weight:bold;color:#8ab8d8'>&#9733; STAR MAP</span> &ensp;|&ensp; "
 	var/world_label = cur_home ? cur_home : "—"
-	html += "World: <b style='color:#00D5FF'>[world_label]</b>"
+	html += "World: <span style='font-weight:bold;color:#00D5FF'>[world_label]</span>"
 	html += " &ensp;<a href='byond://?src=[ref_str];close_map=1' style='color:#556;font-size:11px'>\[Close\]</a>"
 	html += "</div>"
 
@@ -688,8 +688,8 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	html += "</div></div>"
 
 	// Legend SVG (fixed, bottom-right, slide-toggle)
-	html += {"<svg id='legend-svg' width='195' height='370' style='position:fixed;right:0;bottom:10px;z-index:9999;pointer-events:none;overflow:visible' xmlns='http://www.w3.org/2000/svg'>
-<g id='legend-slide'>
+	html += {"<svg id='legend-svg' width='195' height='370' style='position:fixed;left:0;bottom:10px;z-index:9999;pointer-events:none;overflow:visible' xmlns='http://www.w3.org/2000/svg'>
+<g id='legend-slide' style='transition:transform 0.3s ease'>
 <g font-family='monospace' font-size='13' fill='#ddd' pointer-events='all'>
 <rect x='0' y='0' width='195' height='370' fill='#060d18' fill-opacity='0.92' stroke='#00d5ff' stroke-width='1' rx='2'/>
 <text x='14' y='22' fill='#00d5ff' font-size='10' letter-spacing='2'>─── ЛЕГЕНДА ───</text>
@@ -713,10 +713,8 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 <rect x='14' y='345' width='13' height='9' fill='rgba(136,204,255,0.25)' stroke='#88ccff' stroke-width='1'/><text x='34' y='354' font-size='11'>Наведение</text>
 </g>
 <g id='legend-toggle' cursor='pointer' pointer-events='all'>
-<rect x='195' y='14' width='11' height='48' rx='2' fill='#060d18' fill-opacity='0.9' stroke='#00d5ff' stroke-width='1'/>
-<circle cx='200' cy='25' r='2' fill='#00d5ff'/>
-<circle cx='200' cy='35' r='2' fill='#00d5ff'/>
-<circle cx='200' cy='45' r='2' fill='#00d5ff'/>
+<rect x='195' y='150' width='14' height='50' rx='2' fill='#060d18' fill-opacity='0.92' stroke='#00d5ff' stroke-width='1'/>
+<text id='legend-arrow' x='202' y='179' text-anchor='middle' font-size='10' fill='#00d5ff' pointer-events='none'>&#9664;</text>
 </g>
 </g>
 </svg>"}
@@ -804,10 +802,12 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 
 	// Legend toggle
 	html += "var legendSlide=document.getElementById('legend-slide');"
+	html += "var legendArrow=document.getElementById('legend-arrow');"
 	html += "var legendOpen=true;"
 	html += "document.getElementById('legend-toggle').addEventListener('click',function(){"
 	html += "legendOpen=!legendOpen;"
 	html += "legendSlide.setAttribute('transform',legendOpen?'translate(0,0)':'translate(-196,0)');"
+	html += "legendArrow.innerHTML=legendOpen?'&#9664;':'&#9658;';"
 	html += "});"
 
 	// Dismiss popup on outside click or Escape
@@ -849,7 +849,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 	// Init: SVG size + filters + handlers
 	html += "window.onload=function(){"
 	html += "svg=wrap.querySelector('svg');"
-	html += "minScale=Math.min(wrap.clientWidth/BASE,wrap.clientHeight/BASE);"
+	html += "minScale=wrap.clientWidth/BASE;"
 	html += "if(scale<minScale)scale=minScale;"
 	html += "if(svg){var isz=Math.round(BASE*scale);svg.setAttribute('width',isz);svg.setAttribute('height',isz);}"
 	html += "Object.keys(SM).forEach(function(rid){"

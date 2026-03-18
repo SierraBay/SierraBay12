@@ -62,7 +62,7 @@ html, body {
 }
 
 .uiContent {
-	padding: 6px 10px;
+	padding: 6px 6px 6px 8px;
 }
 
 /* -- Slot/tab bar (JS assigns id="cmd-bar" to the first <center>) -- */
@@ -81,7 +81,7 @@ a, a:link, a:visited, a:active,
 	border: 1px solid var(--border);
 	color: #8aaec8;
 	border-radius: 2px;
-	padding: 2px 8px;
+	padding: 1px 4px;
 	text-decoration: none;
 	transition: background 0.08s, border-color 0.08s, color 0.08s;
 	display: inline-block;
@@ -107,9 +107,9 @@ a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover {
 .linkOff,
 a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover {
 	background: #0a0c11;
-	border-color: #151820;
-	color: #2e3848;
-	opacity: 0.6;
+	border-color: #1a2030;
+	color: #607888;
+	opacity: 0.75;
 	cursor: default;
 	box-shadow: none;
 }
