@@ -3,7 +3,7 @@
 	name = "Pulsar Medusa"
 	icon_state = "medusa"
 	health = 1000
-	leviathan_speed = 1 / (30 SECONDS)
+	leviathan_speed = 1 / (25 SECONDS)
 	weaknesses = OVERMAP_WEAKNESS_EMP
 	damage_cooldown = 30 SECONDS
 	events = list(/datum/event/electrical_storm)

@@ -52,7 +52,7 @@
 	I.color = COLOR_ORANGE
 	I.appearance_flags = RESET_COLOR
 	AddOverlays(I, ATOM_ICON_CACHE_PROTECTED)
-	
+
 /obj/overmap/event/leviathan/Destroy()
 	if(processing)
 		STOP_PROCESSING(SSobj, src)
@@ -124,34 +124,34 @@
 /obj/overmap/event/leviathan/proc/get_wrapped_dist(atom/A, atom/B)
 	var/dx = abs(A.x - B.x)
 	var/dy = abs(A.y - B.y)
-	
+
 	if(dx > GLOB.using_map.overmap_size / 2)
 		dx = GLOB.using_map.overmap_size - dx
 	if(dy > GLOB.using_map.overmap_size / 2)
 		dy = GLOB.using_map.overmap_size - dy
-	
+
 	return sqrt(dx**2 + dy**2)
 
 /obj/overmap/event/leviathan/proc/get_wrapped_dir(atom/A, atom/B)
 	var/dx = B.x - A.x
 	var/dy = B.y - A.y
-	
+
 	if(abs(dx) > GLOB.using_map.overmap_size / 2)
 		dx = -SIGN(dx) * (GLOB.using_map.overmap_size - abs(dx))
 	if(abs(dy) > GLOB.using_map.overmap_size / 2)
 		dy = -SIGN(dy) * (GLOB.using_map.overmap_size - abs(dy))
-	
+
 	var/res = 0
 	if(dx > 0)
 		res |= EAST
 	else if(dx < 0)
 		res |= WEST
-		
+
 	if(dy > 0)
 		res |= NORTH
 	else if(dy < 0)
 		res |= SOUTH
-		
+
 	return res
 
 // Поиск ближайшего сектора для лечения
@@ -285,4 +285,4 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(get_z(M) in z_levels)
-			to_chat(M, SPAN_BOLD(SPAN_ITALIC(message)))
+			to_chat(M, FONT_LARGE(SPAN_WARNING(message)))
