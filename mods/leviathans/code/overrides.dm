@@ -51,14 +51,22 @@
 	return ..()
 
 // Overrides the overmap projectile entering z-level to intercept and damage leviathans in the same tile
+/obj/overmap/projectile
+	var/list/encountered_leviathans
+
 /obj/overmap/projectile/check_enter()
 	var/turf/overmap_turf = get_turf(src)
 	for(var/obj/overmap/event/leviathan/L in overmap_turf)
+		if(L in encountered_leviathans)
+			continue
 		if(actual_missile && actual_missile.armed)
 			var/obj/item/missile_equipment/payload/payload = actual_missile.equipment[MISSILE_PART_PAYLOAD]
 			if(payload && payload.is_dangerous)
-				L.take_damage(rand(400, 600), payload) // Pass the payload object for type-checking
+				if(prob(33)) // Miss chance
+					LAZYADD(encountered_leviathans, L)
+					continue
 
+				L.take_damage(rand(400, 600), payload) // Pass the payload object for type-checking
 				qdel(actual_missile) // Cleanup the actual structure, which deletes the overmap projectile
 				return TRUE // We intercepted it, no need to process zs enter
 
