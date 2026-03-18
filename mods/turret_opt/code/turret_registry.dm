@@ -74,7 +74,7 @@ var/global/list/turf_watched_by_meteors = list()
 	for(var/obj/machinery/porta_turret/PT in range(world.view, T))
 		PT.update_watch_area()
 
-	for(var/obj/machinery/pointdefense/PD in range(40, T))
+	for(var/obj/machinery/pointdefense/PD in range(80, T))
 		PD.update_watch_area()
 
 /datum/turret_opt_init/New()
