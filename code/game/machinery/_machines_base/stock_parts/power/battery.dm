@@ -1,3 +1,9 @@
+#define BATTERY_MODE_UNAVAILABLE 0
+#define BATTERY_MODE_IDLE 1
+#define BATTERY_MODE_DISCHARGING 2
+#define BATTERY_MODE_CHARGING 3
+#define BATTERY_MODE_READY 4
+
 /obj/item/stock_parts/power/battery
 	name = "battery backup"
 	desc = "A self-contained battery backup system, using replaceable cells to provide backup power."
@@ -9,6 +15,12 @@
 	var/charge_wait_counter = 10  // How many ticks we wait until we start charging after charging becomes an option.
 	var/last_cell_charge  = 0     // Used for UI stuff.
 	var/seek_alternatives = 5     // How many ticks we wait before seeking other power sources, if we can provide the machine with power. Set to 0 to never do this.
+	var/last_machine_draw = -1
+	var/last_battery_mode = BATTERY_MODE_UNAVAILABLE
+
+/obj/item/stock_parts/power/battery/proc/set_battery_mode(new_mode, machine_draw)
+	last_battery_mode = new_mode
+	last_machine_draw = machine_draw
 
 /obj/item/stock_parts/power/battery/Destroy()
 	qdel(cell)
@@ -32,6 +44,7 @@
 	if(cell)
 		return
 	cell = new_cell
+	set_battery_mode(BATTERY_MODE_IDLE, 0)
 	GLOB.destroyed_event.register(cell, src, PROC_REF(remove_cell))
 	if(!machine)
 		machine = loc
@@ -47,6 +60,7 @@
 		GLOB.destroyed_event.unregister(cell, src)
 		. = cell
 		cell = null
+		set_battery_mode(BATTERY_MODE_UNAVAILABLE, 0)
 		var/obj/machinery/machine = loc
 		if(istype(machine))
 			machine.power_change()
@@ -69,40 +83,68 @@
 
 /obj/item/stock_parts/power/battery/machine_process(obj/machinery/machine)
 	last_cell_charge = cell && cell.charge
+	var/machine_draw = machine.get_power_usage()
+	var/is_discharging = status & PART_STAT_ACTIVE
+	var/cell_full = cell && cell.fully_charged()
 
-	if(status & PART_STAT_ACTIVE)
-		if(!(cell && cell.checked_use(CELLRATE * machine.get_power_usage())))
+	if(is_discharging)
+		if(!(cell && cell.checked_use(CELLRATE * machine_draw)))
+			set_battery_mode(BATTERY_MODE_UNAVAILABLE, machine_draw)
 			machine.update_power_channel(cached_channel)
 			machine.power_change() // Out of power
 			return
+		set_battery_mode(BATTERY_MODE_DISCHARGING, machine_draw)
 		if(seek_alternatives > 0)
 			seek_alternatives--
 			if(!seek_alternatives)
 				seek_alternatives = initial(seek_alternatives)
+				set_battery_mode(BATTERY_MODE_IDLE, machine_draw)
 				machine.update_power_channel(cached_channel)
 				machine.power_change()
 		return // We don't recharge if discharging
 
-	if((!machine.is_powered()) && cell && cell.fully_charged())
-		machine.power_change()
+	if(!cell)
+		charge_wait_counter = initial(charge_wait_counter)
+		set_battery_mode(BATTERY_MODE_UNAVAILABLE, machine_draw)
+		return
+
+	if(machine_draw <= 0 && !can_charge)
+		charge_wait_counter = initial(charge_wait_counter)
+		set_battery_mode(BATTERY_MODE_IDLE, machine_draw)
+		return
+
+	if((!machine.is_powered()) && cell_full)
+		if(last_battery_mode != BATTERY_MODE_READY || last_machine_draw != machine_draw)
+			set_battery_mode(BATTERY_MODE_READY, machine_draw)
+			machine.power_change()
 		return // This suggests that we should be powering the machine instead, so let's try that
+	if(machine_draw <= 0 && cell_full)
+		charge_wait_counter = initial(charge_wait_counter)
+		set_battery_mode(BATTERY_MODE_IDLE, machine_draw)
+		return
 
 	// try and recharge
 	var/area/A = get_area(machine)
-	if(!can_charge || !cell || cell.fully_charged() || !A.powered(charge_channel))
+	if(!can_charge || cell_full || !A.powered(charge_channel))
 		charge_wait_counter = initial(charge_wait_counter)
+		set_battery_mode(BATTERY_MODE_IDLE, machine_draw)
 		return
 	if(charge_wait_counter > 0)
 		charge_wait_counter--
+		set_battery_mode(BATTERY_MODE_IDLE, machine_draw)
 		return
 	var/give = cell.give(charge_rate) / CELLRATE
+	set_battery_mode(BATTERY_MODE_CHARGING, machine_draw)
 	A.use_power_oneoff(give, charge_channel)
 
 /obj/item/stock_parts/power/battery/can_provide_power(obj/machinery/machine)
-	if(cell && cell.check_charge(CELLRATE * machine.get_power_usage()))
+	var/machine_draw = machine.get_power_usage()
+	if(cell && cell.check_charge(CELLRATE * machine_draw))
+		set_battery_mode(BATTERY_MODE_DISCHARGING, machine_draw)
 		machine.update_power_channel(LOCAL)
 		set_status(machine, PART_STAT_ACTIVE)
 		return TRUE
+	set_battery_mode(BATTERY_MODE_UNAVAILABLE, machine_draw)
 	return FALSE
 
 /obj/item/stock_parts/power/battery/can_use_power_oneoff(obj/machinery/machine, amount, channel)
@@ -120,6 +162,7 @@
 	if(status & PART_STAT_ACTIVE)
 		unset_status(machine, PART_STAT_ACTIVE)
 		charge_wait_counter = initial(charge_wait_counter)
+	set_battery_mode(cell ? BATTERY_MODE_IDLE : BATTERY_MODE_UNAVAILABLE, machine && machine.get_power_usage())
 
 // Find a cell from the machine building materials if possible.
 /obj/item/stock_parts/power/battery/on_refresh(obj/machinery/machine)
@@ -182,6 +225,12 @@
 
 /obj/item/stock_parts/power/battery/get_cell()
 	return cell
+
+#undef BATTERY_MODE_READY
+#undef BATTERY_MODE_CHARGING
+#undef BATTERY_MODE_DISCHARGING
+#undef BATTERY_MODE_IDLE
+#undef BATTERY_MODE_UNAVAILABLE
 
 /obj/item/stock_parts/power/battery/buildable
 	part_flags = PART_FLAG_HAND_REMOVE
