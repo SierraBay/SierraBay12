@@ -129,3 +129,36 @@
 	else
 		pass("All areas initialized and synced their local powernets.")
 	return 1
+
+/datum/unit_test/local_powernet_usage_revision
+	name = "POWER: local powernet usage revision updates on usage changes."
+
+/datum/unit_test/local_powernet_usage_revision/start_test()
+	var/datum/local_powernet/local_net = new
+	var/initial_revision = local_net.usage_revision
+
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 5)
+	if(local_net.usage_revision != initial_revision + 1)
+		fail("Static power changes did not increment usage_revision.")
+		return 1
+
+	var/after_static = local_net.usage_revision
+	local_net.use_active_power(PW_CHANNEL_EQUIPMENT, 3)
+	if(local_net.usage_revision != after_static + 1)
+		fail("One-off power changes did not increment usage_revision.")
+		return 1
+
+	var/after_active = local_net.usage_revision
+	local_net.clear_usage()
+	if(local_net.usage_revision != after_active + 1)
+		fail("Clearing active power use did not increment usage_revision.")
+		return 1
+
+	var/after_clear = local_net.usage_revision
+	local_net.set_power_channel(PW_CHANNEL_EQUIPMENT, FALSE)
+	if(local_net.usage_revision != after_clear + 1)
+		fail("Channel state changes did not increment usage_revision.")
+		return 1
+
+	pass("local powernet usage_revision updates when cached usage inputs change.")
+	return 1

@@ -41,6 +41,17 @@
 #define APC_UPOVERLAY_LOCKED 8
 #define APC_UPOVERLAY_OPERATING 16
 
+#define APC_CACHE_LOAD_DIRTY (1<<0)
+#define APC_CACHE_EXTERNAL_DIRTY (1<<1)
+#define APC_CACHE_AUTOMATION_DIRTY (1<<2)
+#define APC_CACHE_UI_DIRTY (1<<3)
+#define APC_CACHE_ALL_DIRTY (APC_CACHE_LOAD_DIRTY | APC_CACHE_EXTERNAL_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
+
+#define APC_POWER_REGIME_NONE 0
+#define APC_POWER_REGIME_ENVIRONMENT_ONLY 1
+#define APC_POWER_REGIME_EQUIPMENT_ONLY 2
+#define APC_POWER_REGIME_ALL_ON 3
+
 // Various APC types
 /obj/machinery/power/apc/inactive
 	lighting_channel = 0
@@ -137,6 +148,17 @@
 	var/failure_timer = 0               // Cooldown thing for apc outage event
 	var/force_update = 0
 	var/emp_hardened = 0
+	var/cache_flags = APC_CACHE_ALL_DIRTY
+	var/cached_total_load = 0
+	var/cached_equipment_load = 0
+	var/cached_lighting_load = 0
+	var/cached_environment_load = 0
+	var/cached_external_avail = 0
+	var/cached_external_surplus = 0
+	var/cached_power_regime = -1
+	var/last_seen_usage_revision = -1
+	var/cached_external_process_time = -1
+	var/obj/machinery/power/terminal/cached_external_terminal
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -299,6 +321,7 @@
 	if(emp_hardened)
 		return
 	failure_timer = max(failure_timer, round(duration))
+	mark_cache_dirty()
 	playsound(src, 'sound/machines/apc_nopower.ogg', 75, 0)
 
 /obj/machinery/power/apc/proc/init_round_start()
@@ -315,26 +338,86 @@
 	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
 	return term && term.terminal
 
+/obj/machinery/power/apc/proc/mark_cache_dirty(flags = APC_CACHE_ALL_DIRTY)
+	cache_flags |= flags
+
+/obj/machinery/power/apc/proc/refresh_external_cache(force = FALSE)
+	var/obj/machinery/power/terminal/external_terminal = terminal()
+	if(force || (cache_flags & APC_CACHE_EXTERNAL_DIRTY) || cached_external_process_time != world.time || cached_external_terminal != external_terminal)
+		cached_external_terminal = external_terminal
+		cached_external_avail = (external_terminal && external_terminal.avail()) || 0
+		cached_external_surplus = (external_terminal && external_terminal.surplus()) || 0
+		cached_external_process_time = world.time
+		cache_flags &= ~APC_CACHE_EXTERNAL_DIRTY
+	return external_terminal
+
+/obj/machinery/power/apc/proc/get_cached_power_regime(percent)
+	if(failure_timer || !operating || shorted || !is_powered() || isnull(percent))
+		return APC_POWER_REGIME_NONE
+	if(percent > AUTO_THRESHOLD_LIGHTING || longtermpower >= 0)
+		return APC_POWER_REGIME_ALL_ON
+	if(percent > AUTO_THRESHOLD_EQUIPMENT)
+		return APC_POWER_REGIME_EQUIPMENT_ONLY
+	return APC_POWER_REGIME_ENVIRONMENT_ONLY
+
 /obj/machinery/power/apc/proc/update_last_used()
 	if(!apc_area)
 		last_used_lighting = 0
 		last_used_equipment = 0
 		last_used_environment = 0
 		last_used_total = 0
+		cached_lighting_load = 0
+		cached_equipment_load = 0
+		cached_environment_load = 0
+		cached_total_load = 0
+		last_seen_usage_revision = -1
+		cache_flags &= ~APC_CACHE_LOAD_DIRTY
 		return
-	last_used_lighting = (lighting_channel >= POWERCHAN_ON) ? apc_area.usage(LIGHT) : 0
-	last_used_equipment = (equipment_channel >= POWERCHAN_ON) ? apc_area.usage(EQUIP) : 0
-	last_used_environment = (environment_channel >= POWERCHAN_ON) ? apc_area.usage(ENVIRON) : 0
-	last_used_total = last_used_lighting + last_used_equipment + last_used_environment
+	var/datum/local_powernet/local_net = machine_powernet || apc_area.powernet || apc_area.create_powernet()
+	if(!local_net)
+		last_used_lighting = 0
+		last_used_equipment = 0
+		last_used_environment = 0
+		last_used_total = 0
+		cached_lighting_load = 0
+		cached_equipment_load = 0
+		cached_environment_load = 0
+		cached_total_load = 0
+		last_seen_usage_revision = -1
+		cache_flags &= ~APC_CACHE_LOAD_DIRTY
+		return
+	if((cache_flags & APC_CACHE_LOAD_DIRTY) || last_seen_usage_revision != local_net.usage_revision)
+		cached_lighting_load = (lighting_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_LIGHTING) : 0
+		cached_equipment_load = (equipment_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) : 0
+		cached_environment_load = (environment_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_ENVIRONMENT) : 0
+		cached_total_load = cached_lighting_load + cached_equipment_load + cached_environment_load
+		last_seen_usage_revision = local_net.usage_revision
+		cache_flags &= ~APC_CACHE_LOAD_DIRTY
+	last_used_lighting = cached_lighting_load
+	last_used_equipment = cached_equipment_load
+	last_used_environment = cached_environment_load
+	last_used_total = cached_total_load
 
 /obj/machinery/power/apc/proc/set_channel_state(channel, new_state)
+	var/changed = FALSE
 	switch(channel)
 		if(EQUIP)
+			if(equipment_channel == new_state)
+				return
 			equipment_channel = new_state
+			changed = TRUE
 		if(LIGHT)
+			if(lighting_channel == new_state)
+				return
 			lighting_channel = new_state
+			changed = TRUE
 		if(ENVIRON)
+			if(environment_channel == new_state)
+				return
 			environment_channel = new_state
+			changed = TRUE
+	if(changed)
+		mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_UI_DIRTY)
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -485,6 +568,7 @@
 		local_net.power_change()
 	else
 		apc_area.power_change()
+	mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_EXTERNAL_DIRTY | APC_CACHE_UI_DIRTY)
 
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)
@@ -576,12 +660,14 @@
 
 /obj/machinery/power/apc/proc/force_update_channels()
 	autoflag = -1 // This clears state, forcing a full recalculation
+	mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
 	update_channels(TRUE)
 	update()
 	queue_icon_update()
 
 /obj/machinery/power/apc/proc/toggle_breaker()
 	operating = !operating
+	mark_cache_dirty()
 	force_update_channels()
 
 /obj/machinery/power/apc/get_power_usage()
@@ -609,6 +695,7 @@
 		queue_icon_update()
 		failure_timer--
 		force_update = 1
+		mark_cache_dirty()
 		return
 
 	update_last_used()
@@ -620,16 +707,19 @@
 	var/last_en = environment_channel
 	var/last_ch = charging
 
-	var/obj/machinery/power/terminal/terminal = terminal()
-	var/avail = (terminal && terminal.avail()) || 0
-	var/excess = (terminal && terminal.surplus()) || 0
+	var/obj/machinery/power/terminal/terminal = refresh_external_cache()
+	var/avail = cached_external_avail
+	var/excess = cached_external_surplus
 
+	var/old_main_status = main_status
 	if(!avail)
 		main_status = 0
 	else if(excess < 0)
 		main_status = 1
 	else
 		main_status = 2
+	if(old_main_status != main_status)
+		mark_cache_dirty(APC_CACHE_UI_DIRTY)
 
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || shorted) // We aren't going to be doing any power processing in this case.
@@ -651,15 +741,16 @@
 			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
 
 	// Set channels depending on how much charge we have left
-	update_channels()
+	var/channels_changed = update_channels()
 
 	// update icon & area power if anything changed
-	if(last_lt != lighting_channel || last_eq != equipment_channel || last_en != environment_channel || force_update)
+	if(channels_changed || last_lt != lighting_channel || last_eq != equipment_channel || last_en != environment_channel || force_update)
 		force_update = 0
 		queue_icon_update()
 		update()
-	else if (last_ch != charging)
+	else if(last_ch != charging || (cache_flags & APC_CACHE_UI_DIRTY))
 		queue_icon_update()
+	cache_flags &= ~APC_CACHE_UI_DIRTY
 
 /obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE)
 	return handle_autoflag(suppress_alarms)
@@ -672,38 +763,48 @@
 		longtermpower -= 2
 	var/obj/item/cell/cell = get_cell()
 	var/percent = cell && cell.percent()
+	var/new_regime = get_cached_power_regime(percent)
+	if(!(cache_flags & APC_CACHE_AUTOMATION_DIRTY) && cached_power_regime == new_regime)
+		autoflag = new_regime
+		return FALSE
 
-	if(!cell || shorted || (!is_powered()) || !operating)
-		if(autoflag != 0)
+	var/old_eq = equipment_channel
+	var/old_lt = lighting_channel
+	var/old_en = environment_channel
+
+	switch(new_regime)
+		if(APC_POWER_REGIME_NONE)
 			equipment_channel = autoset(equipment_channel, 0)
 			lighting_channel = autoset(lighting_channel, 0)
 			environment_channel = autoset(environment_channel, 0)
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 0
-	else if((percent > AUTO_THRESHOLD_LIGHTING) || longtermpower >= 0)              // Put most likely at the top so we don't check it last, effeciency 101
-		if(autoflag != 3)
+		if(APC_POWER_REGIME_ALL_ON)
 			equipment_channel = autoset(equipment_channel, 1)
 			lighting_channel = autoset(lighting_channel, 1)
 			environment_channel = autoset(environment_channel, 1)
-			autoflag = 3
 			GLOB.power_alarm.clearAlarm(loc, src)
-	else if((percent <= AUTO_THRESHOLD_LIGHTING) && (percent > AUTO_THRESHOLD_EQUIPMENT) && longtermpower < 0)                       // <50%, turn off lighting
-		if(autoflag != 2)
+		if(APC_POWER_REGIME_EQUIPMENT_ONLY)
 			equipment_channel = autoset(equipment_channel, 1)
 			lighting_channel = autoset(lighting_channel, 2)
 			environment_channel = autoset(environment_channel, 1)
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 2
-	else if(percent <= AUTO_THRESHOLD_EQUIPMENT)        // <25%, turn off lighting & equipment
-		if(autoflag != 1)
+		if(APC_POWER_REGIME_ENVIRONMENT_ONLY)
 			equipment_channel = autoset(equipment_channel, 2)
 			lighting_channel = autoset(lighting_channel, 2)
 			environment_channel = autoset(environment_channel, 1)
 			if(!suppress_alarms)
 				GLOB.power_alarm.triggerAlarm(loc, src)
-			autoflag = 1
+
+	autoflag = new_regime
+	cached_power_regime = new_regime
+	cache_flags &= ~APC_CACHE_AUTOMATION_DIRTY
+
+	if(old_eq != equipment_channel || old_lt != lighting_channel || old_en != environment_channel)
+		mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_UI_DIRTY)
+		return TRUE
+	return FALSE
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
@@ -779,11 +880,13 @@
 	lighting_channel = POWERCHAN_ON_AUTO
 	equipment_channel = POWERCHAN_ON_AUTO
 	environment_channel = POWERCHAN_ON_AUTO
+	mark_cache_dirty()
 
 	force_update_channels()
 
 /obj/machinery/power/apc/proc/set_chargemode(new_mode)
 	chargemode = new_mode
+	mark_cache_dirty(APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
 	var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
 	if(power)
 		power.can_charge = chargemode
@@ -818,6 +921,16 @@
 			return POWERCHAN_OFF_TEMP
 		else
 			return POWERCHAN_OFF
+
+#undef APC_POWER_REGIME_ALL_ON
+#undef APC_POWER_REGIME_EQUIPMENT_ONLY
+#undef APC_POWER_REGIME_ENVIRONMENT_ONLY
+#undef APC_POWER_REGIME_NONE
+#undef APC_CACHE_ALL_DIRTY
+#undef APC_CACHE_UI_DIRTY
+#undef APC_CACHE_AUTOMATION_DIRTY
+#undef APC_CACHE_EXTERNAL_DIRTY
+#undef APC_CACHE_LOAD_DIRTY
 
 /obj/item/module/power_control
 	name = "power control module"

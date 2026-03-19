@@ -28,8 +28,14 @@
 	var/lighting_consumption = 0
 	var/environment_consumption = 0
 
+	/// Monotonically increasing revision for usage/channel state changes.
+	var/usage_revision = 0
+
 	/// Registered machinery in the owning area.
 	var/list/registered_machines = list()
+
+/datum/local_powernet/proc/bump_usage_revision()
+	usage_revision++
 
 /datum/local_powernet/proc/register_machine(obj/machinery/machine)
 	if(!machine)
@@ -70,6 +76,7 @@
 			environment_powered = new_state
 		else
 			return
+	bump_usage_revision()
 	power_change()
 
 /datum/local_powernet/proc/has_power(channel)
@@ -95,6 +102,8 @@
 /datum/local_powernet/proc/use_active_power(channel, amount)
 	if(!has_power(channel))
 		return FALSE
+	if(!amount)
+		return TRUE
 	switch(channel)
 		if(PW_CHANNEL_EQUIPMENT)
 			equipment_consumption += amount
@@ -104,9 +113,12 @@
 			environment_consumption += amount
 		else
 			return FALSE
+	bump_usage_revision()
 	return TRUE
 
 /datum/local_powernet/proc/adjust_static_power(channel, amount)
+	if(!amount)
+		return TRUE
 	switch(channel)
 		if(PW_CHANNEL_EQUIPMENT)
 			passive_equipment_consumption += amount
@@ -116,6 +128,7 @@
 			passive_environment_consumption += amount
 		else
 			return FALSE
+	bump_usage_revision()
 	return TRUE
 
 /datum/local_powernet/proc/power_use_change(old_amount, new_amount, channel)
@@ -138,11 +151,17 @@
 	return 0
 
 /datum/local_powernet/proc/clear_usage()
+	if(!equipment_consumption && !lighting_consumption && !environment_consumption)
+		return
 	equipment_consumption = 0
 	lighting_consumption = 0
 	environment_consumption = 0
+	bump_usage_revision()
 
 /datum/local_powernet/proc/retally_passive_usage()
+	var/old_equipment = passive_equipment_consumption
+	var/old_lighting = passive_lighting_consumption
+	var/old_environment = passive_environment_consumption
 	passive_equipment_consumption = 0
 	passive_lighting_consumption = 0
 	passive_environment_consumption = 0
@@ -154,6 +173,8 @@
 				passive_lighting_consumption += M.get_power_usage()
 			if(ENVIRON)
 				passive_environment_consumption += M.get_power_usage()
+	if(old_equipment != passive_equipment_consumption || old_lighting != passive_lighting_consumption || old_environment != passive_environment_consumption)
+		bump_usage_revision()
 
 /datum/local_powernet/proc/handle_flicker()
 	if(prob(MACHINE_FLICKER_CHANCE))
