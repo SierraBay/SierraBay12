@@ -8,11 +8,22 @@
 	priority = 2
 	var/obj/machinery/power/terminal/terminal
 	var/terminal_dir = 0
+	var/last_surplus = 0
+	var/last_usage = -1
+	var/last_terminal_available = FALSE
+	var/obj/machinery/power/terminal/last_terminal
+
+/obj/item/stock_parts/power/terminal/proc/cache_terminal_state(obj/machinery/power/terminal/terminal_ref, usage, surplus, available)
+	last_terminal = terminal_ref
+	last_usage = usage
+	last_surplus = surplus
+	last_terminal_available = available
 
 /obj/item/stock_parts/power/terminal/on_uninstall(obj/machinery/machine)
 	if(status & PART_STAT_ACTIVE)
 		machine.update_power_channel(cached_channel)
 		unset_status(machine, PART_STAT_ACTIVE)
+	cache_terminal_state(null, 0, 0, FALSE)
 	unset_terminal(loc, terminal)
 	..()
 
@@ -23,34 +34,46 @@
 /obj/item/stock_parts/power/terminal/machine_process(obj/machinery/machine)
 
 	if(!terminal) //Terminal is gone, give up
+		cache_terminal_state(null, 0, 0, FALSE)
 		if(status & PART_STAT_ACTIVE)
 			machine.update_power_channel(cached_channel)
 			machine.power_change()
 		return
 
+	var/usage = machine.get_power_usage()
+	var/is_active = status & PART_STAT_ACTIVE
 
+	if(!is_active && usage <= 0)
+		cache_terminal_state(terminal, usage, 0, TRUE)
+		return
+
+	if(is_active)
+		var/drawn = terminal.draw_power(usage)
+		cache_terminal_state(terminal, usage, 0, drawn > 0)
+		if(drawn >= usage)
+			return // had enough power and good to go.
+		// Try and use other (local) sources of power to make up for the deficit.
+		var/deficit = machine.use_power_oneoff(usage - drawn)
+		if(deficit > 0)
+			machine.update_power_channel(cached_channel)
+			machine.power_change()
+		return
 
 	var/surplus = terminal.surplus()
-	var/usage = machine.get_power_usage()
+	var/had_cached_surplus = last_terminal == terminal && last_usage == usage && last_terminal_available && last_surplus > usage
+	cache_terminal_state(terminal, usage, surplus, surplus > 0)
 
 	if(!machine.is_powered() && surplus > usage)
-		machine.power_change()
+		if(!had_cached_surplus)
+			machine.power_change()
 		return // This suggests that we should be powering the machine instead, so let's try that
-
-	if(status & PART_STAT_ACTIVE)
-		terminal.draw_power(usage)
-		if(surplus >= usage)
-			return // had enough power and good to go.
-		else
-			// Try and use other (local) sources of power to make up for the deficit.
-			var/deficit = machine.use_power_oneoff(usage - surplus)
-			if(deficit > 0)
-				machine.update_power_channel(cached_channel)
-				machine.power_change()
 
 //Is willing to provide power if the wired contribution is nonnegligible and there is enough total local power to run the machine.
 /obj/item/stock_parts/power/terminal/can_provide_power(obj/machinery/machine)
-	if(terminal && terminal.surplus() && machine.can_use_power_oneoff(machine.get_power_usage(), LOCAL) <= 0)
+	var/usage = machine.get_power_usage()
+	var/surplus = terminal && terminal.surplus()
+	cache_terminal_state(terminal, usage, surplus, surplus > 0)
+	if(terminal && surplus && machine.can_use_power_oneoff(usage, LOCAL) <= 0)
 		set_status(machine, PART_STAT_ACTIVE)
 		machine.update_power_channel(LOCAL)
 		return TRUE
@@ -68,12 +91,14 @@
 
 /obj/item/stock_parts/power/terminal/not_needed(obj/machinery/machine)
 	unset_status(machine, PART_STAT_ACTIVE)
+	cache_terminal_state(terminal, machine ? machine.get_power_usage() : 0, last_surplus, !!terminal)
 
 /obj/item/stock_parts/power/terminal/proc/set_terminal(obj/machinery/machine, obj/machinery/power/new_terminal)
 	if(terminal)
 		unset_terminal(machine, terminal)
 	terminal = new_terminal
 	terminal.master = src
+	cache_terminal_state(terminal, 0, 0, FALSE)
 	GLOB.destroyed_event.register(terminal, src, PROC_REF(unset_terminal))
 
 	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, PROC_REF(machine_moved), get_area(src))
@@ -105,6 +130,7 @@
 	if(machine)
 		unset_status(machine, PART_STAT_CONNECTED)
 	terminal = null
+	cache_terminal_state(null, 0, 0, FALSE)
 	stop_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/blocking_terminal_at_loc(obj/machinery/machine, turf/T, mob/user)
