@@ -138,6 +138,13 @@ a.gold:hover {
 	border-color: var(--amber);
 }
 
+a.gold.linkOn, a.gold.linkOn:link, a.gold.linkOn:visited, a.gold.linkOn:active, a.gold.linkOn:hover {
+	color: var(--amber);
+	background: #261900;
+	border-color: var(--amber);
+	box-shadow: inset 0 0 4px rgba(255, 166, 0, 0.2);
+}
+
 a.gray, a.gray:link, a.gray:visited, a.gray:active {
 	color: #405060;
 	border-color: #111c28;
