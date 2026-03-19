@@ -5,7 +5,7 @@
 	icon_vend = "sovietsoda-vend"
 	icon_deny = "sovietsoda-deny"
 	base_type = /obj/machinery/vending/sovietsoda
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	product_ads = {"\
 		For Tsar and Country.;\
 		Have you fulfilled your nutrition quota today?;\

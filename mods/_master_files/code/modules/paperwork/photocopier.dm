@@ -62,7 +62,7 @@
 				to_chat(user, SPAN_WARNING("\The [copyitem] can't be copied by \the [src]."))
 				break
 
-			use_power_oneoff(active_power_usage)
+			use_power_oneoff(active_power_consumption)
 		return TOPIC_REFRESH
 
 	if(href_list["eject_item"])

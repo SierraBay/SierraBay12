@@ -1,7 +1,7 @@
 /obj/machinery/embedded_controller
 	name = "Embedded Controller"
 	anchored = TRUE
-	idle_power_usage = 10
+	idle_power_consumption = 10
 	var/datum/computer/file/embedded_program/program	//the currently executing program
 	var/on = 1
 

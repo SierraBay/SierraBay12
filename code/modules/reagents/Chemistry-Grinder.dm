@@ -6,8 +6,8 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 5
-	active_power_usage = 100
+	idle_power_consumption = 5
+	active_power_consumption = 100
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	construct_state = /singleton/machine_construction/default/panel_closed
 	machine_name = "reagent grinder"

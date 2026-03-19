@@ -118,6 +118,7 @@
 
 /obj/machinery/floodlight/do_simple_ranged_interaction(mob/user)
 	if(use_power)
+	if(power_state)
 		turn_off(1)
 	else
 		if(!turn_on(1))

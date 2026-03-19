@@ -16,7 +16,7 @@
 		handle_regular_hud_updates()
 		update_items()
 	if (src.stat != DEAD) //still using power
-		use_power()
+		power_state()
 	UpdateLyingBuckledAndVerbStatus()
 
 /mob/living/silicon/robot/proc/clamp_values()
@@ -30,7 +30,7 @@
 	adjustOxyLoss(0)
 	adjustFireLoss(0)
 
-/mob/living/silicon/robot/proc/use_power()
+/mob/living/silicon/robot/proc/power_state()
 	used_power_this_tick = 0
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]

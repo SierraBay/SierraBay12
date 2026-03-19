@@ -5606,7 +5606,7 @@
 	dir = 4;
 	icon_state = "freezer";
 	set_temperature = 80;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/dirt,

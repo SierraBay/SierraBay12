@@ -5944,7 +5944,7 @@
 	frequency = 1560;
 	icon_state = "map_injector";
 	id = "test_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/oldlab2/test2)
@@ -9190,7 +9190,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/oldlab2/test2)

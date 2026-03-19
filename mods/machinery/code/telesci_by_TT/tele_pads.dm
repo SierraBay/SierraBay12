@@ -5,9 +5,9 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = TRUE
-	use_power = 1
-	idle_power_usage = 200
-	active_power_usage = 5000
+	power_state = 1
+	idle_power_consumption = 200
+	active_power_consumption = 5000
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0

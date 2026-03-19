@@ -7,7 +7,7 @@
 	icon_state = "emitter"
 	anchored = FALSE
 	density = TRUE
-	active_power_usage = 100 KILOWATTS
+	active_power_consumption = 100 KILOWATTS
 	obj_flags = OBJ_FLAG_ROTATABLE | OBJ_FLAG_ANCHORABLE
 
 	/// Access required to lock or unlock the emitter. Separate variable to prevent `req_access` from blocking use of the emitter while unlocked.
@@ -74,7 +74,7 @@
 
 /obj/machinery/power/emitter/on_update_icon()
 	ClearOverlays()
-	if(active && powernet && avail(active_power_usage))
+	if(active && powernet && avail(active_power_consumption))
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
 		AddOverlays("[icon_state]_lights")
 
@@ -146,14 +146,14 @@
 /obj/machinery/power/emitter/Process()
 	if (MACHINE_IS_BROKEN(src))
 		return
-	if (state != EMITTER_WELDED || (!powernet && active_power_usage))
+	if (state != EMITTER_WELDED || (!powernet && active_power_consumption))
 		active = FALSE
 		update_icon()
 		return
 	if (((last_shot + fire_delay) <= world.time) && active)
 
-		var/actual_load = draw_power(active_power_usage)
-		if (actual_load >= active_power_usage) // does the laser have enough power to shoot?
+		var/actual_load = draw_power(active_power_consumption)
+		if (actual_load >= active_power_consumption) // does the laser have enough power to shoot?
 			if (!powered)
 				powered = TRUE
 				update_icon()
@@ -292,7 +292,7 @@
 /obj/machinery/power/emitter/proc/get_emitter_damage()
 	//need to calculate the power per shot as the emitter doesn't fire continuously.
 	var/burst_time = (min_burst_delay + max_burst_delay) / 2 + 2 * (burst_shots - 1)
-	var/power_per_shot = (active_power_usage * efficiency) * (burst_time / 10) / burst_shots
+	var/power_per_shot = (active_power_consumption * efficiency) * (burst_time / 10) / burst_shots
 	return round(power_per_shot / EMITTER_DAMAGE_POWER_TRANSFER)
 
 

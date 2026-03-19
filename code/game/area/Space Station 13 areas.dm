@@ -39,25 +39,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/requires_power = 1
 	/// Boolean. Whether or not the area is always considered to be unpowered, bypassing all other area checks if `TRUE`.
 	var/always_unpowered = 0
-
-	/// Boolean. Whether or not the `EQUIP` power channel is enabled for the area. Updated and used by APCs.
-	var/power_equip = 1
-	/// Boolean. Whether or not the `LIGHT` power channel is enabled for the area. Updated and used by APCs.
-	var/power_light = 1
-	/// Boolean. Whether or not the `ENVIRON` power channel is enabled for the area. Updated and used by APCs.
-	var/power_environ = 1
-	/// Integer. Amount of constant use power drain from the `EQUIP` power channel. Do not modify; Use `./power_use_change()` instead.
-	var/used_equip = 0
-	/// Integer. Amount of constant use power drain from the `LIGHT` power channel. Do not modify; Use `./power_use_change()` instead.
-	var/used_light = 0
-	/// Integer. Amount of constant use power drain from the `ENVIRON` power channel. Do not modify; Use `./power_use_change()` instead.
-	var/used_environ = 0
-	/// Integer. Amount of power to drain from the `EQUIP` channel on the next power tick. Do not modify directly; Use `./use_power_oneoff()` instead. This is reset to `0` every power tick after processing power use.
-	var/oneoff_equip   = 0
-	/// Integer. Amount of power to drain from the `LIGHT` channel on the next power tick. Do not modify directly; Use `./use_power_oneoff()` instead. This is reset to `0` every power tick after processing power use.
-	var/oneoff_light   = 0
-	/// Integer. Amount of power to drain from the `ENVIRON` channel on the next power tick. Do not modify directly; Use `./use_power_oneoff()` instead. This is reset to `0` every power tick after processing power use.
-	var/oneoff_environ = 0
+	/// Boolean. Whether or not an area's local powernet should start with all APC channels disabled.
+	var/apc_starts_off = FALSE
+	/// Local APC-backed power controller for this area.
+	var/datum/local_powernet/powernet = null
 
 	/// Boolean. Whether or not the area has gravity. Do not set directly; Use `./gravitychange()` instead.
 	var/has_gravity = 1
@@ -94,9 +79,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = 1
 	always_unpowered = 1
 	dynamic_lighting = 1
-	power_light = 0
-	power_equip = 0
-	power_environ = 0
 	has_gravity = 0
 	area_flags = AREA_FLAG_EXTERNAL | AREA_FLAG_IS_NOT_PERSISTENT
 	ambience = list('sound/ambience/ambispace1.ogg','sound/ambience/ambispace2.ogg','sound/ambience/ambispace3.ogg','sound/ambience/ambispace4.ogg','sound/ambience/ambispace5.ogg')

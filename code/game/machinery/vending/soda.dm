@@ -5,7 +5,7 @@
 	icon_vend = "Soda_Machine-vend"
 	icon_deny = "Soda_Machine-deny"
 	base_type = /obj/machinery/vending/soda
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	prices = list(
 		/obj/item/reagent_containers/food/drinks/cans/cola_diet = 1,
 		/obj/item/reagent_containers/food/drinks/cans/rootbeer = 1,

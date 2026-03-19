@@ -106,9 +106,6 @@
 		return
 	var/area/A = new
 	A.SetName(str)
-	A.power_equip = 0
-	A.power_light = 0
-	A.power_environ = 0
 	A.always_unpowered = 0
 	for(var/T in turfs)
 		ChangeArea(T, A)

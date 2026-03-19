@@ -1,5 +1,5 @@
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
-#define FIREDOOR_MAX_TEMP 50 // °C
+#define FIREDOOR_MAX_TEMP 50 // В°C
 #define FIREDOOR_MIN_TEMP 0
 
 // Bitflags
@@ -46,7 +46,7 @@
 	var/close_sound = 'sound/machines/blastdoor_close.ogg'
 
 	power_channel = ENVIRON
-	idle_power_usage = 5
+	idle_power_consumption = 5
 
 	var/list/tile_info[4]
 	var/list/dir_alerts[4] // 4 dirs, bitflags
@@ -384,7 +384,7 @@
 	if(closing || locked)
 		return
 
-	//SIERRA-ADD - Мехи мешают закрыться пожарным шлюзам
+	//SIERRA-ADD - РњРµС…Рё РјРµС€Р°СЋС‚ Р·Р°РєСЂС‹С‚СЊСЃСЏ РїРѕР¶Р°СЂРЅС‹Рј С€Р»СЋР·Р°Рј
 	for(var/mob/living/detected_mob in get_turf(src))
 		if(ismech(detected_mob))
 			return FALSE

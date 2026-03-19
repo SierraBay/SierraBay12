@@ -462,7 +462,7 @@
 	dir = 1;
 	frequency = 1441;
 	id = "toxin_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/machinery/sparker{
 	pixel_x = 21;
@@ -2800,7 +2800,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/engineering/atmos)
@@ -6085,7 +6085,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/atmos)
@@ -19949,7 +19949,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -20524,7 +20524,7 @@
 	dir = 4;
 	frequency = 1443;
 	id = "containment_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/containment)
@@ -22318,7 +22318,7 @@
 /obj/machinery/air_sensor/nacelle/second,
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/reinforced{
@@ -26423,7 +26423,7 @@
 	dir = 1;
 	id = "CO21p_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/thruster/d3starboard)
@@ -26998,7 +26998,7 @@
 /area/thruster/d3port)
 "dUF" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
+	active_power_consumption = 7500;
 	tag_north = 1;
 	tag_north_con = 0.5;
 	tag_south = 2;
@@ -27856,7 +27856,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/reinforced{
@@ -30099,7 +30099,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	id = "fuel2p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d3port)
@@ -31548,7 +31548,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -34859,7 +34859,7 @@
 	frequency = 1441;
 	id = "rust_injector";
 	injecting = 1;
-	use_power = 1;
+	power_state = 1;
 	dir = 4
 	},
 /turf/simulated/floor/reinforced{
@@ -35955,7 +35955,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	frequency = 1441;
 	id = "waste_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/cable/green{
 	d1 = 4;
@@ -40548,7 +40548,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -42311,7 +42311,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d3port)
@@ -42962,7 +42962,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1;
+	power_state = 1;
 	name = "Toxin Air Vent";
 	id_tag = "toxin_out"
 	},
@@ -48147,7 +48147,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1port)
@@ -48553,7 +48553,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d1starboard)
@@ -49751,7 +49751,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 6
@@ -50237,7 +50237,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -52928,7 +52928,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	id = "o24p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1port)
@@ -54395,7 +54395,7 @@
 	id_tag = "cooling_out";
 	initialize_directions = 1;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/reinforced{
@@ -56137,7 +56137,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
@@ -62699,7 +62699,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/reinforced{
@@ -66159,7 +66159,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d3starboard)
@@ -73001,7 +73001,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -75986,7 +75986,7 @@
 	dir = 8;
 	frequency = 1443;
 	id = "air_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/machinery/sparker{
 	id_tag = "Incinerator";
@@ -78989,7 +78989,7 @@
 	frequency = 1441;
 	id = "n2o_in";
 	pixel_y = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/n20,
 /area/engineering/atmos)
@@ -80171,7 +80171,7 @@
 	dir = 1;
 	id = "CO23p_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/thruster/d1starboard)
@@ -83956,7 +83956,7 @@
 	frequency = 1441;
 	id = "h2_in";
 	pixel_y = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/engineering/atmos)
@@ -84214,7 +84214,7 @@
 /obj/machinery/air_sensor/nacelle/fourth,
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/reinforced{
@@ -90222,7 +90222,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/engineering/atmos)
@@ -90768,7 +90768,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -91427,7 +91427,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1;
+	power_state = 1;
 	id_tag = "containment_out";
 	external_pressure_bound = 0;
 	external_pressure_bound_default = 0
@@ -92513,7 +92513,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/window/boron_reinforced{
 	dir = 4
@@ -92980,7 +92980,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "CO24p_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/thruster/d1port)
@@ -94162,7 +94162,7 @@
 	external_pressure_bound = 105;
 	icon_state = "map_vent_in";
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning,
 /turf/simulated/floor/tiled/dark,
@@ -94406,7 +94406,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/reinforced{
@@ -94552,7 +94552,7 @@
 /area/hallway/primary/fourthdeck/central_stairwell)
 "nVr" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
+	active_power_consumption = 7500;
 	tag_north_con = 0.21;
 	tag_south = 1;
 	tag_south_con = 0.79;
@@ -100388,7 +100388,7 @@
 	dir = 8;
 	frequency = 1441;
 	id = "o2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/engineering/atmos)
@@ -103737,7 +103737,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3port)
@@ -105368,7 +105368,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -105751,7 +105751,7 @@
 	frequency = 1441;
 	id = "co2_in";
 	pixel_y = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/atmos)
@@ -110984,7 +110984,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "o21p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3starboard)
@@ -111900,7 +111900,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "fuel1p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d3starboard)
@@ -114537,7 +114537,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/window/boron_reinforced{
 	dir = 4
@@ -114549,7 +114549,7 @@
 	dir = 8;
 	frequency = 1441;
 	id = "waste_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/reinforced{
@@ -115803,7 +115803,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/reinforced{
@@ -116981,7 +116981,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	id = "fuel4p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d1port)
@@ -120415,7 +120415,7 @@
 	dir = 8;
 	frequency = 1441;
 	id = "n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/engineering/atmos)
@@ -123499,7 +123499,7 @@
 	id = "compactor"
 	},
 /obj/machinery/pile_ripper{
-	active_power_usage = 300
+	active_power_consumption = 300
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/maintenance/compactor)
@@ -126210,7 +126210,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 6
@@ -126718,7 +126718,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/engineering/atmos)
@@ -128062,7 +128062,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1starboard)
@@ -131987,7 +131987,7 @@
 	frequency = 1441;
 	id = "fuel_in";
 	pixel_y = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/fuelbay)
@@ -133949,7 +133949,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "fuel_sensor"
@@ -134522,7 +134522,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "fuel3p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d1starboard)
@@ -136530,7 +136530,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3starboard)
@@ -137670,7 +137670,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	id = "o22p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3port)
@@ -138398,7 +138398,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/reinforced{
@@ -141993,7 +141993,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "o23p_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1starboard)
@@ -142590,7 +142590,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/industrial/warning{
@@ -146533,7 +146533,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/airless,
@@ -147828,7 +147828,7 @@
 	dir = 8;
 	frequency = 1441;
 	id = "test_xenoflora_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/xenobiology/xenoflora)
@@ -148691,7 +148691,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen/fuel,
 /area/thruster/d1port)
@@ -149655,7 +149655,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "CO22p_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/thruster/d3port)
@@ -156275,7 +156275,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/n20,
 /area/engineering/atmos)
@@ -161010,7 +161010,7 @@
 	name = "Coolant Injector";
 	pixel_y = 1;
 	power_rating = 30000;
-	use_power = 1;
+	power_state = 1;
 	volume_rate = 700
 	},
 /obj/floor_decal/industrial/warning/corner{

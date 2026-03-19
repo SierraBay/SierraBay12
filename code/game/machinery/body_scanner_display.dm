@@ -6,8 +6,8 @@
 	var/icon_state_unpowered = "telescreen"
 	anchored = TRUE
 	density = FALSE
-	idle_power_usage = 75
-	active_power_usage = 300
+	idle_power_consumption = 75
+	active_power_consumption = 300
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0

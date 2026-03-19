@@ -20,7 +20,7 @@ field_generator power level display
 	icon_state = "Field_Gen"
 	anchored = FALSE
 	density = TRUE
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/Varedit_start = 0

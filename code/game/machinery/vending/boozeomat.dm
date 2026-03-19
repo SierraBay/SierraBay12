@@ -5,7 +5,7 @@
 	icon_deny = "fridge_dark-deny"
 	base_type = /obj/machinery/vending/boozeomat
 	req_access = list(access_kitchen)
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	product_slogans = {"\
 		I hope nobody asks me for a bloody cup o' tea...;\
 		Alcohol is humanity's friend. Would you abandon a friend?;\

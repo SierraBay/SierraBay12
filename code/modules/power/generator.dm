@@ -7,8 +7,8 @@
 	anchored = FALSE
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
 	var/max_power = 500000
 	var/thermal_efficiency = 0.65

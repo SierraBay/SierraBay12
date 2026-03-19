@@ -80,7 +80,7 @@
 		disp_image.color = HSVtoRGB(hue)
 		temp_options["[newtemp - T0C]"] = disp_image
 	temp_options["OFF"] = image('icons/misc/mark.dmi', "x3")
-	loss = (active_power_usage / resistance)*0.5
+	loss = (active_power_consumption / resistance)*0.5
 	cooking_objs = list()
 	if(mapload)
 		for(var/starting_container_type in starts_with)
@@ -108,26 +108,26 @@
 
 	if(desired_temp == "OFF")
 		operating = FALSE
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 	else
 		operating = TRUE
 		set_temp = text2num(desired_temp) + T0C
 		to_chat(user, SPAN_NOTICE("You set [src] to [round(set_temp-T0C)]C."))
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 	if(wasoff != operating)
 		activation_message(user)
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
-	cooking = use_power
+	cooking = power_state
 	update_icon()
 
 /obj/machinery/appliance/cooker/proc/activation_message(mob/user)
-	user.visible_message("<b>[user]</b> turns [use_power ? "on" : "off"] [src].", "You turn [use_power ? "on" : "off"] [src].")
+	user.visible_message("<b>[user]</b> turns [power_state ? "on" : "off"] [src].", "You turn [power_state ? "on" : "off"] [src].")
 
 /obj/machinery/appliance/cooker/Process()
 	if (!loc)
 		return FALSE
 	var/datum/gas_mixture/loc_air = loc.return_air()
-	if (!operating || (use_power != POWER_USE_ACTIVE)) // if we're not actively heating
+	if (!operating || (power_state != POWER_USE_ACTIVE)) // if we're not actively heating
 		temperature -= min(loss, temperature - loc_air.temperature)
 	if (operating)
 		heat_up()
@@ -156,14 +156,14 @@
 
 /obj/machinery/appliance/cooker/proc/heat_up()
 	if (temperature < set_temp)
-		if (use_power == POWER_USE_IDLE && ((set_temp - temperature) > 5))
-			update_use_power(POWER_USE_ACTIVE)
+		if (power_state == POWER_USE_IDLE && ((set_temp - temperature) > 5))
+			change_power_mode(POWER_USE_ACTIVE)
 			update_icon()
 		temperature += heating_power / resistance
 		update_cooking_power()
 		return TRUE
-	if (use_power == POWER_USE_ACTIVE)
-		update_use_power(POWER_USE_IDLE)
+	if (power_state == POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_IDLE)
 		update_icon()
 
 //Cookers do differently, they use containers

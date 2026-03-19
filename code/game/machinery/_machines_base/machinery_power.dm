@@ -13,13 +13,15 @@ This is /obj/machinery level code to properly manage power usage from the area.
  * May also optionally specify an area, otherwise defaults to `loc.loc`.
  */
 /obj/machinery/proc/powered(chan = POWER_CHAN, area/check_area = null)
+	if(!requires_power)
+		return TRUE
 
 	if(!loc)
 		return FALSE
 
-	//Don't do this. It allows machines that set use_power to 0 when off (many machines) to
+	//Don't do this. It allows machines that set power_state to 0 when off (many machines) to
 	//be turned on again and used after a power failure because they never gain the MACHINE_STAT_NOPOWER flag.
-	//if(!use_power)
+	//if(!power_state)
 	//	return 1
 
 	if(!check_area)
@@ -32,7 +34,7 @@ This is /obj/machinery level code to properly manage power usage from the area.
 
 // called whenever the power settings of the containing area change
 // by default, check equipment channel & set flag can override if needed
-// This is NOT for when the machine's own status changes; update_use_power for that.
+// This is NOT for when the machine's own status changes; use change_power_mode for that.
 /obj/machinery/proc/power_change()
 	if(stat_immune & MACHINE_STAT_NOPOWER)
 		return FALSE
@@ -49,13 +51,13 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	if(.)
 		queue_icon_update()
 
-/// Returns the current power usage draw, based on the state of `use_power`.
+/// Returns the current power usage draw, based on the state of `power_state`.
 /obj/machinery/proc/get_power_usage()
-	switch(use_power)
+	switch(power_state)
 		if(POWER_USE_IDLE)
-			return idle_power_usage
+			return idle_power_consumption
 		if(POWER_USE_ACTIVE)
-			return active_power_usage
+			return active_power_consumption
 		else
 			return 0
 
@@ -92,10 +94,15 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	GLOB.moved_event.register(src, src, PROC_REF(update_power_on_move))
 	power_init_complete = TRUE
 	. = ..()
+	var/area/A = get_area(src)
+	if(A)
+		var/datum/local_powernet/local_net = A.create_powernet()
+		local_net.register_machine(src)
 
 // Or in Destroy at all, but especially after the ..().
 /obj/machinery/Destroy()
 	GLOB.moved_event.unregister(src, src, PROC_REF(update_power_on_move))
+	machine_powernet?.unregister_machine(src)
 	REPORT_POWER_CONSUMPTION_CHANGE(get_power_usage(), 0)
 	. = ..()
 
@@ -109,24 +116,33 @@ This is /obj/machinery level code to properly manage power usage from the area.
 		return
 	var/power = get_power_usage()
 	if(!power)
+		if(old_area?.powernet)
+			old_area.powernet.unregister_machine(src)
+		if(new_area)
+			var/datum/local_powernet/new_local_net = new_area.create_powernet()
+			new_local_net.register_machine(src)
+		power_change()
 		return // This is the most likely case anyway.
 
 	if(old_area)
 		old_area.power_use_change(power, 0, power_channel)
+		old_area.powernet?.unregister_machine(src)
 	if(new_area)
+		var/datum/local_powernet/new_local_net = new_area.create_powernet()
+		new_local_net.register_machine(src)
 		new_area.power_use_change(0, power, power_channel)
 	power_change() // Force check in case the old area was powered and the new one isn't or vice versa.
 
 // The three procs below are the only allowed ways of modifying the corresponding variables.
-/// Updates the `use_power` variable to the new value and updates the machine's area's power grid.
-/obj/machinery/proc/update_use_power(new_use_power)
+/// Updates the machine's `power_state` and the area's power grid.
+/obj/machinery/proc/change_power_mode(new_power_state = POWER_USE_IDLE)
 	if(!power_init_complete)
-		use_power = new_use_power
+		power_state = new_power_state
 		return // We'll be retallying anyway.
-	if(use_power == new_use_power)
+	if(power_state == new_power_state)
 		return
 	var/old_power = get_power_usage()
-	use_power = new_use_power
+	power_state = new_power_state
 	var/new_power = get_power_usage()
 	REPORT_POWER_CONSUMPTION_CHANGE(old_power, new_power)
 
@@ -142,19 +158,38 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	power_channel = new_channel
 	REPORT_POWER_CONSUMPTION_CHANGE(0, power)
 
-/// Updates the machine's `*_power_usage` to the new value and updates the machine's current power consumption state if applicable.
-/obj/machinery/proc/change_power_consumption(new_power_consumption, use_power_mode = POWER_USE_IDLE)
+/// Updates the machine's power draw for the given state and updates the area's power grid if it is active.
+/obj/machinery/proc/set_power_consumption(new_power_consumption, power_mode = POWER_USE_IDLE)
 	var/old_power
-	switch(use_power_mode)
+	switch(power_mode)
 		if(POWER_USE_IDLE)
-			old_power = idle_power_usage
-			idle_power_usage = new_power_consumption
+			old_power = idle_power_consumption
+			idle_power_consumption = new_power_consumption
 		if(POWER_USE_ACTIVE)
-			old_power = active_power_usage
-			active_power_usage = new_power_consumption
+			old_power = active_power_consumption
+			active_power_consumption = new_power_consumption
 		else
 			return
-	if(power_init_complete && (use_power_mode == use_power))
+	if(power_init_complete && (power_mode == power_state))
 		REPORT_POWER_CONSUMPTION_CHANGE(old_power, new_power_consumption)
+
+/obj/machinery/proc/has_power(channel = POWER_CHAN)
+	return powered(channel)
+
+/obj/machinery/proc/use_power(channel, amount)
+	if(isnull(amount))
+		amount = channel
+		channel = POWER_CHAN
+	return use_power_oneoff(amount, channel) <= 0
+
+/obj/machinery/proc/add_static_power(channel, amount)
+	var/area/A = get_area(src)
+	if(!A)
+		return FALSE
+	var/datum/local_powernet/local_net = A.create_powernet()
+	return local_net.adjust_static_power(channel, amount)
+
+/obj/machinery/proc/remove_static_power(channel, amount)
+	return add_static_power(channel, -amount)
 
 #undef REPORT_POWER_CONSUMPTION_CHANGE

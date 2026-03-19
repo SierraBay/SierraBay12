@@ -37,7 +37,7 @@
 	icon = 'icons/obj/machines/subliminator.dmi'
 	icon_state = "sublimator-off-unloaded-notank"
 	density = TRUE
-	use_power = POWER_USE_IDLE
+	power_state = POWER_USE_IDLE
 	machine_name = "reagent sublimator"
 	machine_desc = "Sublimators draw reagents from a provided container and converts them into gases."
 
@@ -90,15 +90,15 @@
 		user.visible_message(SPAN_NOTICE("\The [user] removes \the [container] from \the [src]."))
 		container = null
 		verbs -= /obj/machinery/portable_atmospherics/reagent_sublimator/proc/remove_container
-		if(use_power >= POWER_USE_ACTIVE)
-			update_use_power(POWER_USE_IDLE)
+		if(power_state >= POWER_USE_ACTIVE)
+			change_power_mode(POWER_USE_IDLE)
 		update_icon()
 	else
 		to_chat(user, SPAN_WARNING("\The [src] has no reagent container loaded."))
 
 /obj/machinery/portable_atmospherics/reagent_sublimator/physical_attack_hand(mob/user)
-	update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
-	user.visible_message(SPAN_NOTICE("\The [user] switches \the [src] [use_power == POWER_USE_ACTIVE ? "on" : "off"]."))
+	change_power_mode(power_state == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+	user.visible_message(SPAN_NOTICE("\The [user] switches \the [src] [power_state == POWER_USE_ACTIVE ? "on" : "off"]."))
 	update_icon()
 	return TRUE
 
@@ -127,17 +127,17 @@
 		return
 
 	if(inoperable())
-		if(use_power)
-			update_use_power(POWER_USE_OFF)
+		if(power_state)
+			change_power_mode(POWER_USE_OFF)
 			update_icon()
 		return
 
-	if(use_power >= POWER_USE_ACTIVE && container && container.reagents)
+	if(power_state >= POWER_USE_ACTIVE && container && container.reagents)
 		if(reagent_whitelist && length(reagent_whitelist))
 			for(var/datum/reagent/R in container.reagents.reagent_list)
 				if(!is_type_in_list(R, reagent_whitelist))
 					audible_message(SPAN_NOTICE("\The [src] pings rapidly and powers down, refusing to process the contents of \the [container]."))
-					update_use_power(POWER_USE_OFF)
+					change_power_mode(POWER_USE_OFF)
 					update_icon()
 					return
 
@@ -158,11 +158,11 @@
 			air_contents.merge(produced)
 		else
 			visible_message(SPAN_NOTICE("\The [src] pings as it finishes processing the contents of \the [container]."))
-			update_use_power(POWER_USE_IDLE)
+			change_power_mode(POWER_USE_IDLE)
 			update_icon()
 
 /obj/machinery/portable_atmospherics/reagent_sublimator/on_update_icon()
-	icon_state = "[icon_set]-[use_power == POWER_USE_ACTIVE ? "on" : "off"]-[container ? "loaded" : "unloaded"]-[holding ? "tank" : "notank"]"
+	icon_state = "[icon_set]-[power_state == POWER_USE_ACTIVE ? "on" : "off"]-[container ? "loaded" : "unloaded"]-[holding ? "tank" : "notank"]"
 
 /obj/machinery/portable_atmospherics/reagent_sublimator/examine(mob/user)
 	. = ..()

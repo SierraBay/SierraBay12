@@ -44,7 +44,7 @@
 	drop_type = "supermatter"
 
 /obj/machinery/power/supply_beacon/use_tool(obj/item/W, mob/living/user, list/click_params)
-	if(!use_power && isWrench(W))
+	if(!power_state && isWrench(W))
 		if(!anchored && !connect_to_network())
 			to_chat(user, SPAN_WARNING("This device must be placed over an exposed cable."))
 			return TRUE
@@ -56,12 +56,12 @@
 
 /obj/machinery/power/supply_beacon/physical_attack_hand(mob/user)
 	if(expended)
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 		to_chat(user, SPAN_WARNING("\The [src] has used up its charge."))
 		return TRUE
 
 	if(anchored)
-		if(use_power)
+		if(power_state)
 			deactivate(user)
 		else
 			activate(user)
@@ -78,7 +78,7 @@
 		return
 	set_light(3, 3, "#00ccaa")
 	icon_state = "beacon_active"
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 	admin_attacker_log(user, "has activated \a [src] at [get_area(src)]")
 	if(user) to_chat(user, SPAN_NOTICE("You activate the beacon. The supply drop will be dispatched soon."))
 
@@ -89,19 +89,19 @@
 	else
 		icon_state = "beacon"
 	set_light(0)
-	update_use_power(POWER_USE_OFF)
+	change_power_mode(POWER_USE_OFF)
 	target_drop_time = null
 	if(user) to_chat(user, SPAN_NOTICE("You deactivate the beacon."))
 
 /obj/machinery/power/supply_beacon/Destroy()
-	if(use_power)
+	if(power_state)
 		deactivate()
 	..()
 
 /obj/machinery/power/supply_beacon/Process()
 	if(expended)
 		return PROCESS_KILL
-	if(!use_power)
+	if(!power_state)
 		return
 	if(draw_power(500) < 500)
 		deactivate()

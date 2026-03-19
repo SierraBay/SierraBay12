@@ -8,9 +8,9 @@
 	icon_state = "core0"
 	layer = ABOVE_HUMAN_LAYER
 	density = TRUE
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 50
-	active_power_usage = 500 //multiplied by field strength
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 50
+	active_power_consumption = 500 //multiplied by field strength
 	anchored = FALSE
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
@@ -43,7 +43,7 @@
 	if(href_list["str"])
 		var/dif = text2num(href_list["str"])
 		field_strength = min(max(field_strength + dif, MIN_FIELD_STR), MAX_FIELD_STR)
-		change_power_consumption(500 * field_strength, POWER_USE_ACTIVE)
+		set_power_consumption(500 * field_strength, POWER_USE_ACTIVE)
 		if(owned_field)
 			owned_field.ChangeFieldStrength(field_strength)
 
@@ -53,7 +53,7 @@
 	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	icon_state = "core1"
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 	. = 1
 
 /obj/machinery/power/fusion_core/proc/Shutdown(force_rupture)
@@ -65,7 +65,7 @@
 			owned_field.RadiateAll()
 		qdel(owned_field)
 		owned_field = null
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/power/fusion_core/proc/AddReactants(name, quantity = 1)
 	if(owned_field)
@@ -79,7 +79,7 @@
 /obj/machinery/power/fusion_core/proc/set_strength(value)
 	value = clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
 	field_strength = value
-	change_power_consumption(5 * value, POWER_USE_ACTIVE)
+	set_power_consumption(5 * value, POWER_USE_ACTIVE)
 	if(owned_field)
 		owned_field.ChangeFieldStrength(value)
 
@@ -112,6 +112,6 @@
 /obj/machinery/power/fusion_core/proc/check_core_status()
 	if(MACHINE_IS_BROKEN(src))
 		return FALSE
-	if(idle_power_usage > avail())
+	if(idle_power_consumption > avail())
 		return FALSE
 	. = TRUE

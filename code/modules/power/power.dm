@@ -11,9 +11,9 @@
 	icon = 'icons/obj/machines/power/supermatter.dmi'
 	anchored = TRUE
 	var/datum/powernet/powernet = null
-	use_power = POWER_USE_OFF
-	idle_power_usage = 0
-	active_power_usage = 0
+	power_state = POWER_USE_OFF
+	idle_power_consumption = 0
+	active_power_consumption = 0
 
 /obj/machinery/power/Initialize()
 	. = ..()
@@ -29,7 +29,7 @@
 
 
 /obj/machinery/power/powered()
-	if(use_power)
+	if(power_state)
 		return ..()
 	return 1 //doesn't require an external power source
 

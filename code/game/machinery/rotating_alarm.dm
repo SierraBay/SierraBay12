@@ -37,8 +37,8 @@
 	desc = "An industrial rotating alarm light."
 	icon = 'icons/obj/structures/rotating_alarm.dmi'
 	icon_state = "alarm"
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_consumption = 0
+	active_power_consumption = 0
 	anchored = TRUE
 
 	var/on = FALSE

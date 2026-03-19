@@ -1,6 +1,6 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 	construct_state = /singleton/machine_construction/default/panel_closed
 
 	var/datum/gas_mixture/air_contents = new
@@ -142,7 +142,7 @@
 /obj/machinery/portable_atmospherics/powered
 	uncreated_component_parts = null
 	stat_immune = 0
-	use_power = POWER_USE_IDLE
+	power_state = POWER_USE_IDLE
 	var/power_rating
 	var/power_losses
 	var/last_power_draw = 0
@@ -150,7 +150,7 @@
 /obj/machinery/portable_atmospherics/powered/power_change()
 	. = ..()
 	if(. && (!is_powered()))
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/portable_atmospherics/powered/components_are_accessible(path)
 	return panel_open

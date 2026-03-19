@@ -5,8 +5,8 @@
 	icon_state = "ccharger0"
 	anchored = TRUE
 	obj_flags = OBJ_FLAG_CAN_TABLE | OBJ_FLAG_ANCHORABLE
-	idle_power_usage = 5
-	active_power_usage = 60 KILOWATTS	//This is the power drawn when charging
+	idle_power_consumption = 5
+	active_power_consumption = 60 KILOWATTS	//This is the power drawn when charging
 	power_channel = EQUIP
 	var/obj/item/cell/charging = null
 	var/chargelevel = -1
@@ -20,7 +20,7 @@
 /obj/machinery/cell_charger/RefreshParts()
 	for(var/obj/item/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/stock_parts/capacitor))
-			active_power_usage *= SP.rating
+			active_power_consumption *= SP.rating
 // [/SIERRA-ADD]
 /obj/machinery/cell_charger/on_update_icon()
 	icon_state = "ccharger[charging ? 1 : 0]"
@@ -55,7 +55,8 @@
 			return TRUE
 
 		var/area/a = get_area(loc)
-		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+		var/datum/local_powernet/local_net = a?.create_powernet()
+		if(!local_net || !local_net.has_power(PW_CHANNEL_EQUIPMENT)) // There's no APC-backed equipment power in this area, don't try to cheat power!
 			to_chat(user, SPAN_WARNING("The [name] blinks red as you try to insert the cell!"))
 			return TRUE
 		if(!user.unEquip(W, src))
@@ -99,17 +100,17 @@
 /obj/machinery/cell_charger/proc/set_power()
 	queue_icon_update()
 	if(inoperable() || !anchored)
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 		return
 	if (charging && !charging.fully_charged())
-		update_use_power(POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_ACTIVE)
 	else
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/cell_charger/Process()
 	. = ..()
 	if(!charging)
 		return
 	. = 0
-	charging.give(active_power_usage*CELLRATE)
+	charging.give(active_power_consumption*CELLRATE)
 	set_power()

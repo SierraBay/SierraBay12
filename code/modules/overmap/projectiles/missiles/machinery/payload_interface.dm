@@ -6,8 +6,8 @@
 	icon_state = "payload_interface"
 
 	anchored = TRUE
-	use_power = 1
-	idle_power_usage = 10
+	power_state = 1
+	idle_power_consumption = 10
 	layer = BELOW_OBJ_LAYER
 
 	var/allow_arming = FALSE

@@ -87,7 +87,7 @@
 				connectedscrubbers -= scrubber
 				updateUsrDialog()
 			return
-		scrubber.update_use_power(text2num(href_list["toggle"]) ? POWER_USE_ACTIVE : POWER_USE_IDLE)
+		scrubber.change_power_mode(text2num(href_list["toggle"]) ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 		scrubber.update_icon()
 
 

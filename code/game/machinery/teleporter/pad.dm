@@ -5,8 +5,8 @@
 	icon_state = "pad"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 10
-	active_power_usage = 2000
+	idle_power_consumption = 10
+	active_power_consumption = 2000
 	light_color = "#02d1c7"
 
 	var/obj/machinery/computer/teleporter/computer
@@ -95,7 +95,7 @@
 /obj/machinery/tele_pad/on_update_icon()
 	ClearOverlays()
 	if (computer?.active)
-		update_use_power(POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_ACTIVE)
 		var/image/I = image(icon, src, "[initial(icon_state)]_active_overlay")
 		I.plane = EFFECTS_ABOVE_LIGHTING_PLANE
 		I.layer = ABOVE_LIGHTING_LAYER
@@ -107,7 +107,7 @@
 			sparks(3, 1, loc)
 	else
 		set_light(0)
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		if (operable())
 			var/image/I = image(icon, src, "[initial(icon_state)]_idle_overlay")
 			I.plane = EFFECTS_ABOVE_LIGHTING_PLANE

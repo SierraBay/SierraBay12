@@ -1,4 +1,4 @@
-// ПРОКИ spawn() из коркода ЗАМЕНЕНЫ НА sleep() БУДЬ ВНИМАТЕЛЕН [SIERRA-REMOVE] - MODPACK_RND
+// РџР РћРљР spawn() РёР· РєРѕСЂРєРѕРґР° Р—РђРњР•РќР•РќР« РќРђ sleep() Р‘РЈР”Р¬ Р’РќРРњРђРўР•Р›Р•Рќ [SIERRA-REMOVE] - MODPACK_RND
 
 /*
 #define CHECK_LATHE \
@@ -520,7 +520,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				qdel(I)
 				linked_destroy.icon_state = "d_analyzer"
 
-	use_power_oneoff(linked_destroy.active_power_usage)
+	use_power_oneoff(linked_destroy.active_power_consumption)
 	if (!quick_deconstruct)
 		screen = 1.0
 	if(CanInteract(user, DefaultTopicState()))

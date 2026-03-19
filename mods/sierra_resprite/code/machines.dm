@@ -48,7 +48,7 @@
 	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	UpdateVisuals()
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 	. = 1
 
 /obj/machinery/power/fusion_core/Shutdown(force_rupture)
@@ -61,7 +61,7 @@
 			owned_field.RadiateAll()
 		qdel(owned_field)
 		owned_field = null
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/power/fusion_core/proc/UpdateVisuals()
 	ClearOverlays()

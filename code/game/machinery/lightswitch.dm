@@ -7,7 +7,7 @@
 	icon = 'icons/obj/structures/buttons.dmi'
 	icon_state = "light0"
 	anchored = TRUE
-	idle_power_usage = 20
+	idle_power_consumption = 20
 	power_channel = LIGHT
 	var/on = 0
 	var/area/connected_area = null

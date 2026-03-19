@@ -28,8 +28,8 @@
 	var/pump_speed
 	var/stasis_power = 5 KILOWATTS
 
-	idle_power_usage = 15
-	active_power_usage = 1 KILOWATTS //builtin health analyzer, dialysis machine, injectors.
+	idle_power_consumption = 15
+	active_power_consumption = 1 KILOWATTS //builtin health analyzer, dialysis machine, injectors.
 
 /obj/machinery/sleeper/Initialize(mapload, d = 0, populate_parts = TRUE)
 	. = ..()
@@ -164,7 +164,7 @@
 		var/nstasis = text2num(href_list["stasis"])
 		if(stasis != nstasis && (nstasis in stasis_settings))
 			stasis = text2num(href_list["stasis"])
-			change_power_consumption(initial(active_power_usage) + stasis_power * (stasis-1), POWER_USE_ACTIVE)
+			set_power_consumption(initial(active_power_consumption) + stasis_power * (stasis-1), POWER_USE_ACTIVE)
 			return TOPIC_REFRESH
 
 /obj/machinery/sleeper/state_transition(singleton/machine_construction/default/new_state)
@@ -275,7 +275,7 @@
 	update_icon()
 	if(!occupant)
 		SetName(initial(name))
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		return
 	occupant.forceMove(src)
 	occupant.stop_pulling()
@@ -283,7 +283,7 @@
 		occupant.client.perspective = EYE_PERSPECTIVE
 		occupant.client.eye = src
 	SetName("[name] ([occupant])")
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 
 /obj/machinery/sleeper/proc/remove_beaker()
 	if(beaker)

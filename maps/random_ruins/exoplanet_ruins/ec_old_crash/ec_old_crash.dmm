@@ -1897,7 +1897,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	dir = 8;
 	target_pressure = 2500;
-	use_power = 1
+	power_state = 1
 	},
 /obj/landmark/clear,
 /turf/template_noop,
@@ -1917,7 +1917,7 @@
 	external_pressure_bound = 4000;
 	external_pressure_bound_default = 4000;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -1934,7 +1934,7 @@
 	external_pressure_bound = 4000;
 	external_pressure_bound_default = 4000;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/map_template/ecship/engine)
@@ -1958,7 +1958,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	dir = 4;
 	target_pressure = 2500;
-	use_power = 1
+	power_state = 1
 	},
 /obj/landmark/clear,
 /turf/template_noop,
@@ -1988,7 +1988,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	dir = 8;
 	target_pressure = 2500;
-	use_power = 1
+	power_state = 1
 	},
 /obj/landmark/clear,
 /turf/template_noop,

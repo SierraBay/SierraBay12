@@ -7,8 +7,8 @@
 	icon_state = "body_scanner"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 60
-	active_power_usage = 10000	//10 kW. It's a big all-body scanner.
+	idle_power_consumption = 60
+	active_power_consumption = 10000	//10 kW. It's a big all-body scanner.
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
@@ -81,7 +81,7 @@
 		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant.dropInto(loc)
 	occupant = null
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 	update_icon()
 	SetName(initial(name))
 
@@ -95,7 +95,7 @@
 	target.forceMove(src)
 	occupant = target
 
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 	update_icon()
 	drop_contents()
 	SetName("[name] ([occupant])")

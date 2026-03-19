@@ -117,16 +117,16 @@
 					. += "APC cover <font color = '#ff0000'>OPEN</font>"
 				//light control
 				if("-light-up")
-					REMOTE.lighting = 3
-					REMOTE.update_overlay_chan["Lighting"] = 3
+					REMOTE.set_channel_state(LIGHT, 3)
+					REMOTE.update_overlay_chan["Lighting"] = REMOTE.lighting_channel
 					. += "Light up"
 				if("-light-down")
-					REMOTE.lighting  = 0
-					REMOTE.update_overlay_chan["Lighting"] = 0
+					REMOTE.set_channel_state(LIGHT, 0)
+					REMOTE.update_overlay_chan["Lighting"] = REMOTE.lighting_channel
 					. += "Light down"
 				if("-light-auto")
-					REMOTE.lighting = 4
-					REMOTE.update_overlay_chan["Lighting"] = 4
+					REMOTE.set_channel_state(LIGHT, 4)
+					REMOTE.update_overlay_chan["Lighting"] = REMOTE.lighting_channel
 					. += "Light automated"
 
 

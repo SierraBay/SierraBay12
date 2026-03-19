@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/research/anomaly_cage.dmi'
 	icon_state = "anomaly_container"
 	density = TRUE
-	idle_power_usage = 0
-	active_power_usage = 1 KILOWATTS
+	idle_power_consumption = 0
+	active_power_consumption = 1 KILOWATTS
 	construct_state = /singleton/machine_construction/default/panel_closed
 	health_max = 200
 	health_min_damage = 10
@@ -104,7 +104,7 @@
 	contained = artifact
 	artifact.forceMove(src)
 	underlays += image(artifact)
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 
 /obj/machinery/anomaly_container/proc/release()
 	if(!contained)
@@ -112,7 +112,7 @@
 	contained.dropInto(src)
 	contained = null
 	underlays.Cut()
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/artifact/MouseDrop(obj/machinery/anomaly_container/over_object, mob/user)
 	if(istype(over_object) && CanMouseDrop(over_object, usr))

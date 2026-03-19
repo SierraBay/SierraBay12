@@ -2534,7 +2534,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airmix,
 /area/constructionsite/atmospherics)
@@ -2576,7 +2576,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d_air_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airmix,
 /area/constructionsite/atmospherics)
@@ -2640,7 +2640,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/constructionsite/atmospherics)
@@ -2672,7 +2672,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d_o2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/constructionsite/atmospherics)
@@ -2739,7 +2739,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/constructionsite/atmospherics)
@@ -2819,7 +2819,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d_n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/constructionsite/atmospherics)

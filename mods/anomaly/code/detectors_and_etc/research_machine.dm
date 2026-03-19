@@ -5,7 +5,7 @@
 	icon_state = "urm"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 5
+	idle_power_consumption = 5
 	power_channel = EQUIP
 	var/obj/item/cell/charging = null
 	var/chargelevel = -1

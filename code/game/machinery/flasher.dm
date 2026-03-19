@@ -11,7 +11,7 @@
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = TRUE
-	idle_power_usage = 2
+	idle_power_consumption = 2
 	movable_flags = MOVABLE_FLAG_PROXMOVE
 
 	uncreated_component_parts = list(

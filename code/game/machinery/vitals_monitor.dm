@@ -9,8 +9,8 @@
 	icon_state = "base"
 	anchored = FALSE
 	power_channel = EQUIP
-	idle_power_usage = 10
-	active_power_usage = 100
+	idle_power_consumption = 10
+	active_power_consumption = 100
 	stat_immune = MACHINE_STAT_NOINPUT
 	uncreated_component_parts = null
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -132,7 +132,7 @@
 	else
 		if (old_victim != new_victim) // Protects against qdel edge case. In all other cases we want a message printed.
 			visible_message(SPAN_NOTICE("\The [src] is no longer showing data from [isnull(old_victim)? "any patient" : "\the [old_victim]"]."))
-	update_use_power(isnull(victim)? POWER_USE_IDLE : POWER_USE_ACTIVE)
+	change_power_mode(isnull(victim)? POWER_USE_IDLE : POWER_USE_ACTIVE)
 	update_icon()
 
 /obj/machinery/vitals_monitor/proc/update_optable(obj/machinery/optable/new_optable = null)

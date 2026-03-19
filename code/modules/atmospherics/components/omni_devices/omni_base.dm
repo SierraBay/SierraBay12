@@ -55,7 +55,7 @@
 	else if(error_check())
 		SetOverlays(overlays_error)
 	else
-		SetOverlays(use_power ? (overlays_on) : (overlays_off))
+		SetOverlays(power_state ? (overlays_on) : (overlays_off))
 
 	underlays = underlays_current
 
@@ -69,9 +69,9 @@
 	last_flow_rate = 0
 
 	if(error_check())
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 
-	if((inoperable()) || !use_power)
+	if((inoperable()) || !power_state)
 		return 0
 	return 1
 

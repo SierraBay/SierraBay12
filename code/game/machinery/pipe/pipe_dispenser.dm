@@ -10,9 +10,9 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-	idle_power_usage = 500
+	idle_power_consumption = 500
 	power_channel = EQUIP
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 
 	machine_name = "pipe dispenser"
 	machine_desc = "A semi-portable dispenser that uses compressed matter to create atmospherics pipes. Vital for repair or construction efforts."
@@ -22,7 +22,7 @@
 /obj/machinery/pipedispenser/Initialize()//for mapping purposes. Anchor them by map var edit if needed.
 	. = ..()
 	if(anchored)
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/pipedispenser/proc/get_console_data(list/pipe_categories, color_options = FALSE)
 	. = list()

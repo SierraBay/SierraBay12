@@ -14,7 +14,7 @@
 	var/id_with_download_string = ""
 	var/server_id = 0
 	var/produces_heat = 1
-	idle_power_usage = 800
+	idle_power_consumption = 800
 	var/delay = 10
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
@@ -75,7 +75,7 @@
 	var/tot_rating = 0
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
-	change_power_consumption(initial(idle_power_usage)/max(1, tot_rating), POWER_USE_IDLE)
+	set_power_consumption(initial(idle_power_consumption)/max(1, tot_rating), POWER_USE_IDLE)
 
 
 /obj/machinery/r_n_d/server/Process()
@@ -103,7 +103,7 @@
 	if(!produces_heat)
 		return
 
-	if(!use_power)
+	if(!power_state)
 		return
 
 	if(operable()) //Blatently stolen from telecoms
@@ -116,7 +116,7 @@
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
 			if(removed)
-				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
+				var/heat_produced = idle_power_consumption	//obviously can't produce more heat than the machine draws from it's power source
 
 				removed.add_thermal_energy(heat_produced)
 

@@ -11,7 +11,7 @@
 	icon_state = "biogen"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 40
+	idle_power_consumption = 40
 	base_type = /obj/machinery/biogenerator
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null

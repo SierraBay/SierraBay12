@@ -28,9 +28,9 @@
 	opacity = FALSE
 	density = FALSE
 	power_channel = ENVIRON	//so they shut off last
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 10
-	active_power_usage = 2500
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 10
+	active_power_consumption = 2500
 	var/ispowered = TRUE
 	var/isactive = FALSE
 	var/wasactive = FALSE		//controls automatic reboot after power-loss
@@ -47,17 +47,17 @@
 
 /obj/machinery/atmospheric_field_generator/impassable
 	desc = "An older model of ARF-G that generates an impassable retention field. Works just as well as the modern variety, but is slightly more energy-efficient.<br><br>Note: prolonged immersion in active atmospheric retention fields may have negative long-term health consequences."
-	active_power_usage = 2000
+	active_power_consumption = 2000
 	field_type = /obj/structure/atmospheric_retention_field/impassable
 
 /obj/machinery/atmospheric_field_generator/perma
 	name = "static atmospheric retention field generator"
 	desc = "A floor-mounted piece of equipment that generates an atmosphere-retaining energy field when powered and activated. This model is designed to always be active, though the field will still drop from loss of power or electromagnetic interference.<br><br>Note: prolonged immersion in active atmospheric retention fields may have negative long-term health consequences."
 	alwaysactive = TRUE
-	active_power_usage = 2000
+	active_power_consumption = 2000
 
 /obj/machinery/atmospheric_field_generator/perma/impassable
-	active_power_usage = 1500
+	active_power_consumption = 1500
 	field_type = /obj/structure/atmospheric_retention_field/impassable
 
 
@@ -164,7 +164,7 @@
 		icon_state = "arfg_on"
 		new field_type (src.loc)
 		src.visible_message("<span class='warning'>The ARF-G crackles to life!</span>","<span class='warning'>You hear an ARF-G coming online!</span>")
-		update_use_power(POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_ACTIVE)
 	return
 
 /obj/machinery/atmospheric_field_generator/proc/disable_field()
@@ -173,7 +173,7 @@
 		for(var/obj/structure/atmospheric_retention_field/F in loc)
 			qdel(F)
 		src.visible_message("The ARF-G shuts down with a low hum.","You hear an ARF-G powering down.")
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		isactive = 0
 	return
 

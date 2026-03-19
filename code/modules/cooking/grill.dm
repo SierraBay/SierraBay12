@@ -17,8 +17,8 @@
 	max_contents = 1
 	resistance = 500 // assuming it's a fired grill, it shouldn't take very long to heat
 
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_consumption = 0
+	active_power_consumption = 0
 
 	cooking_coeff = 0.3 // cook it nice and slow
 
@@ -70,7 +70,7 @@
 	update_grilling_audio()
 
 /obj/machinery/appliance/cooker/grill/proc/update_grilling_audio()
-	if(operating && use_power != POWER_USE_OFF && length(cooking_objs))
+	if(operating && power_state != POWER_USE_OFF && length(cooking_objs))
 		var/datum/cooking_item/cooking_item = cooking_objs[1]
 		var/obj/item/reagent_containers/cooking_container/grill_grate/grate = cooking_item.container
 		if (LAZYLEN(grate.contents))

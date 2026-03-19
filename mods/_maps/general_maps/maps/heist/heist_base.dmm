@@ -781,7 +781,7 @@
 	tag_south = null;
 	tag_west = 1;
 	tag_west_con = 0.5;
-	use_power = 0
+	power_state = 0
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating";

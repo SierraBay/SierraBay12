@@ -512,7 +512,7 @@
 "utV" = (/obj/structure/table/steel_reinforced,/obj/machinery/chemical_dispenser/bar_coffee/full{pixel_y = 8},/obj/machinery/light{dir = 1},/turf/simulated/floor/tiled/dark/monotile,/area/gas_station/cashier)
 "uvI" = (/obj/machinery/atmospherics/pipe/manifold4w/hidden,/obj/floor_decal/borderfloorblack{dir = 4},/obj/machinery/embedded_controller/radio/airlock/docking_port{dir = 8; pixel_x = 24; id_tag = "gas_station_port_b"},/turf/simulated/floor/tiled/dark,/area/gas_station/port)
 "uwZ" = (/obj/machinery/atmospherics/pipe/simple/hidden/fuel,/obj/floor_decal/borderfloorblack{dir = 4},/turf/simulated/floor/tiled/dark,/area/gas_station/starboard)
-"uxm" = (/obj/floor_decal/industrial/outline/yellow,/obj/machinery/atmospherics/omni/mixer{active_power_usage = 7500; tag_south = 1; tag_south_con = 0.21; tag_north = 1; tag_east = 2; tag_north_con = 0.79},/turf/simulated/floor/tiled/techfloor/grid,/area/gas_station/engineering)
+"uxm" = (/obj/floor_decal/industrial/outline/yellow,/obj/machinery/atmospherics/omni/mixer{active_power_consumption = 7500; tag_south = 1; tag_south_con = 0.21; tag_north = 1; tag_east = 2; tag_north_con = 0.79},/turf/simulated/floor/tiled/techfloor/grid,/area/gas_station/engineering)
 "uzJ" = (/obj/structure/catwalk,/obj/structure/cable/blue{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless,/area/space)
 "uAy" = (/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled,/area/gas_station/staff)
 "uFg" = (/obj/structure/bed/chair{dir = 4},/turf/simulated/floor/tiled/dark/monotile,/area/gas_station/hall)

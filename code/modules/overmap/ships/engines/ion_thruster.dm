@@ -40,7 +40,7 @@
 	icon = 'icons/obj/machines/ship_engine.dmi'
 	icon_state = "nozzle"
 	power_channel = ENVIRON
-	idle_power_usage = 100
+	idle_power_consumption = 100
 	anchored = TRUE
 	construct_state = /singleton/machine_construction/default/panel_closed
 	var/datum/ship_engine/ion/controller

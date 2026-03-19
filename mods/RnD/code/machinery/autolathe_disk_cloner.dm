@@ -5,9 +5,9 @@
 	icon_state = "disk_cloner"
 	density = TRUE
 	anchored = TRUE
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 5
-	active_power_usage = 500
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 5
+	active_power_consumption = 500
 
 	var/copying_delay = 0
 	var/hack_fail_chance = 0
@@ -173,7 +173,7 @@
 
 /obj/machinery/disk_cloner/proc/copy()
 	copying = TRUE
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 	SSnano.update_uis(src)
 	update_icon()
 	if(original && copy && !copy.used_capacity)
@@ -222,7 +222,7 @@
 			sleep(copying_delay)
 
 	copying = FALSE
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 	SSnano.update_uis(src)
 	update_icon()
 

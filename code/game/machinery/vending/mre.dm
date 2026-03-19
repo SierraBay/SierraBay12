@@ -5,7 +5,7 @@
 	icon_deny = "mrevend-deny"
 	icon_vend = "mrevend-vend"
 	base_type = /obj/machinery/vending/mredispenser
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	product_slogans = {"\
 		STARFIGHTER TESTED! STARFIGHTER RECOMMENDED! STARFIGHTER APPROVED!;\
 		YOU ARE NOT ALLOWED A JELLY DOUGHNUT!;\

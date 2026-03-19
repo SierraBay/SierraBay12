@@ -4517,7 +4517,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /mob/living/simple_animal/hostile/carp,
 /turf/simulated/floor/reinforced/airless,
@@ -4537,7 +4537,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/scrap/maintenance/atmos)
@@ -4805,7 +4805,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/corner/white/diagonal,
 /obj/floor_decal/corner/white/diagonal{
@@ -4815,7 +4815,7 @@
 /area/ship/scrap/maintenance/atmos)
 "ir" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
+	active_power_consumption = 7500;
 	tag_east_con = 0;
 	tag_north = 1;
 	tag_north_con = 0.21;
@@ -5044,7 +5044,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/scrap/maintenance/atmos)
@@ -5124,7 +5124,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	icon_state = "map_injector";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/scrap/maintenance/engine/aft)
@@ -5301,7 +5301,7 @@
 	external_pressure_bound = 4000;
 	external_pressure_bound_default = 4000;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/airless,
 /area/ship/scrap/maintenance/engine/aft)
@@ -5328,7 +5328,7 @@
 	tag_north = 6;
 	tag_south = 5;
 	tag_west = 1;
-	use_power = 0
+	power_state = 0
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/airless,
@@ -5429,7 +5429,7 @@
 	external_pressure_bound = 140;
 	external_pressure_bound_default = 140;
 	icon_state = "map_vent_out";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/airless,
 /area/ship/scrap/maintenance/engine/aft)
@@ -5810,7 +5810,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	icon_state = "map_injector";
-	use_power = 1
+	power_state = 1
 	},
 /obj/paint/brown,
 /turf/simulated/floor/airless,
@@ -5970,7 +5970,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/airless,
 /area/ship/scrap/maintenance/atmos)

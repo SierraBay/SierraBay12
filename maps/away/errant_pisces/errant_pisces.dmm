@@ -1382,7 +1382,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1

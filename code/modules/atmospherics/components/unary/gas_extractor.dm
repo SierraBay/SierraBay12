@@ -5,8 +5,8 @@
 	name = "gas extractor"
 	desc = "Transfers gas from its surroundings into pipes."
 
-	use_power = POWER_USE_OFF
-	idle_power_usage = 150		//internal circuitry, friction losses and stuff
+	power_state = POWER_USE_OFF
+	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
 	power_rating = 45000	//45000 W ~ 60 HP
 
 	var/target_pressure = MAX_PUMP_PRESSURE
@@ -36,13 +36,13 @@
 
 /obj/machinery/atmospherics/unary/gas_extractor/on_update_icon()
 	if (!node)
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 
 	if(!is_powered())
 		icon_state = "off"
 
 	else
-		icon_state = "[use_power ? "on" : "off"]"
+		icon_state = "[power_state ? "on" : "off"]"
 
 /obj/machinery/atmospherics/unary/gas_extractor/update_underlays()
 	if(..())
@@ -65,7 +65,7 @@
 	var/data[0]
 
 	data = list(
-		"on" = use_power,
+		"on" = power_state,
 		"id" = id,
 		"target_pressure" = round(target_pressure*100),
 		"pressure_check" = external_mode,
@@ -84,7 +84,7 @@
 	if((. = ..())) return
 
 	if(href_list["power"])
-		update_use_power(!use_power)
+		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 		
 	if(href_list["settag"])
@@ -94,7 +94,7 @@
 		
 	if(href_list["toggle_mode"])
 		external_mode = !external_mode
-		update_use_power(POWER_USE_OFF)  // Stop when switching modes without new pressure data
+		change_power_mode(POWER_USE_OFF)  // Stop when switching modes without new pressure data
 		. = 1
 		
 	if(href_list["setfreq"])
@@ -124,7 +124,7 @@
 	last_power_draw = 0
 	last_flow_rate = 0
 
-	if((inoperable()) || !use_power)
+	if((inoperable()) || !power_state)
 		return
 
 	var/power_draw = -1
@@ -163,7 +163,7 @@
 		return 0
 
 	if(signal.data["power_toggle"] || signal.data["command"] == "valve_toggle")
-		update_use_power(!use_power)
+		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
 		queue_icon_update()
 
 	if(signal.data[2] == "set_internal_pressure")
@@ -198,7 +198,7 @@
 
 	signal.data = list(
 		"tag" = id,
-		"power" = use_power,
+		"power" = power_state,
 		"external" = target_pressure,
 		"sigtype" = "status"
 

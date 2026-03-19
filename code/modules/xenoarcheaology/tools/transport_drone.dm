@@ -95,7 +95,7 @@
 	base_type = /obj/machinery/drone_pad
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
-	active_power_usage = 0 KILOWATTS
+	active_power_consumption = 0 KILOWATTS
 	machine_name = "transport drone landing pad"
 	machine_desc = "A small pad for transport drones to deposit their payloads."
 	var/initial_id_tag = null

@@ -23,14 +23,18 @@
 	var/malf_upgraded = FALSE
 	/// Wire datum, if any. If you place a type path, it will be autoinitialized.
 	var/datum/wires/wires
-	/// One of `POWER_USE_*`. The power usage state of the machine. Use `update_use_power()` to modify this during runtime.
-	var/use_power = POWER_USE_IDLE
-	/// Power usage for idle machinery. Used if `use_power` is set to `POWER_USE_IDLE`. Use `change_power_consumption()` to modify this during runtime.
-	var/idle_power_usage = 0
-	/// Power usage for active machinery. Used if `use_power` is set to `POWER_USE_ACTIVE`. Use `change_power_consumption()` to modify this during runtime.
-	var/active_power_usage = 0
+	/// One of `POWER_USE_*`. The power usage state of the machine. Use `change_power_mode()` to modify this during runtime.
+	var/power_state = POWER_USE_IDLE
+	/// Whether this machine participates in local powernet checks.
+	var/requires_power = TRUE
+	/// Power usage for idle machinery. Used if `power_state` is set to `POWER_USE_IDLE`.
+	var/idle_power_consumption = 0
+	/// Power usage for active machinery. Used if `power_state` is set to `POWER_USE_ACTIVE`.
+	var/active_power_consumption = 0
 	/// Power channel the machine draws from in APCs. `EQUIP`, `ENVIRON`, or `LIGHT`. Use `update_power_channel()` to modify this during runtime.
 	var/power_channel = EQUIP
+	/// Area-local APC power controller this machine is currently registered to.
+	var/datum/local_powernet/machine_powernet
 	/// Helps with bookkeeping when initializing atoms. Don't modify.
 	var/power_init_complete = FALSE
 	/// List of component instances. Expected type: `/obj/item/stock_parts.`
@@ -120,7 +124,7 @@
 	return PROCESS_KILL // Only process if you need to.
 
 /obj/machinery/emp_act(severity)
-	if(use_power && operable())
+	if(power_state && operable())
 		use_power_oneoff(7500/severity)
 
 		var/obj/overlay/pulse2 = new /obj/overlay(loc)
@@ -267,7 +271,7 @@
 
 
 /obj/machinery/post_anchor_change()
-	update_use_power(anchored)
+	change_power_mode(anchored)
 	power_change()
 	..()
 
@@ -482,12 +486,12 @@
 			power_channel_name = "Local"
 	. += "<p>By default, it draws power from the [power_channel_name] channel.</p>"
 
-	if (idle_power_usage && active_power_usage)
-		. += "<p>It draws [idle_power_usage] watts while idle, and [active_power_usage] watts while active."
-	else if (idle_power_usage)
-		. += "<p>It draws [idle_power_usage] watts while idle.</p>"
-	else if (active_power_usage)
-		. += "<p>It draws [active_power_usage] watts while active.</p>"
+	if (idle_power_consumption && active_power_consumption)
+		. += "<p>It draws [idle_power_consumption] watts while idle, and [active_power_consumption] watts while active."
+	else if (idle_power_consumption)
+		. += "<p>It draws [idle_power_consumption] watts while idle.</p>"
+	else if (active_power_consumption)
+		. += "<p>It draws [active_power_consumption] watts while active.</p>"
 
 	if (core_skill)
 		var/singleton/hierarchy/skill/core_skill_singleton = core_skill

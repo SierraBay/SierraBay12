@@ -7,7 +7,7 @@
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_FUEL
 	build_icon = 'icons/atmos/pipe-sparker.dmi'
 	build_icon_state = "pipe-igniter"
-	idle_power_usage = 20
+	idle_power_consumption = 20
 
 	maximum_pressure = 420*ONE_ATMOSPHERE
 	fatigue_pressure = 350*ONE_ATMOSPHERE

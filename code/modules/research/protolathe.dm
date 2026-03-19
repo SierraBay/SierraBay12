@@ -6,8 +6,8 @@
 	icon = 'icons/obj/machines/research/protolathe.dmi'
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_OPEN_CONTAINER
 
-	idle_power_usage = 30
-	active_power_usage = 5000
+	idle_power_consumption = 30
+	active_power_consumption = 5000
 	base_type = /obj/machinery/r_n_d/protolathe
 	construct_state = /singleton/machine_construction/default/panel_closed
 
@@ -162,10 +162,10 @@
 	return 1
 
 /obj/machinery/r_n_d/protolathe/proc/build(datum/design/D)
-	var/power = active_power_usage
+	var/power = active_power_consumption
 	for(var/M in D.materials)
 		power += round(D.materials[M] / 5)
-	power = max(active_power_usage, power)
+	power = max(active_power_consumption, power)
 	use_power_oneoff(power)
 	for(var/M in D.materials)
 		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)

@@ -202,7 +202,7 @@
 			return L
 
 	for(var/obj/machinery/floodlight/FL in close_view)
-		if(FL.use_power)
+		if(FL.power_state)
 			qdel(FL)
 			return FL
 

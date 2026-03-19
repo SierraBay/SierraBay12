@@ -21,8 +21,8 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	var/mat_efficiency = 1
 	var/speed = 1
 
-	idle_power_usage = 30
-	active_power_usage = 2500
+	idle_power_consumption = 30
+	active_power_consumption = 2500
 
 	machine_name = "circuit imprinter"
 	machine_desc = "Creates circuit boards by etching raw sheets of material with sulphuric acid. Part of an R&D network."
@@ -162,10 +162,10 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	return 1
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/build(datum/design/D)
-	var/power = active_power_usage
+	var/power = active_power_consumption
 	for(var/M in D.materials)
 		power += round(D.materials[M] / 5)
-	power = max(active_power_usage, power)
+	power = max(active_power_consumption, power)
 	use_power_oneoff(power)
 	for(var/M in D.materials)
 		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)

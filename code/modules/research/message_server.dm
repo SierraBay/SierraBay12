@@ -39,8 +39,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	name = "messaging server"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 10
-	active_power_usage = 100
+	idle_power_consumption = 10
+	active_power_consumption = 100
 
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = 1

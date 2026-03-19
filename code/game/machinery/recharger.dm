@@ -6,8 +6,8 @@
 	icon = 'icons/obj/machines/rechargers.dmi'
 	icon_state = "recharger0"
 	anchored = TRUE
-	idle_power_usage = 4
-	active_power_usage = 30 KILOWATTS
+	idle_power_consumption = 4
+	active_power_consumption = 30 KILOWATTS
 	obj_flags = OBJ_FLAG_CAN_TABLE
 	var/obj/item/charging = null
 	var/list/allowed_devices = list(/obj/item/gun/energy, /obj/item/gun/magnetic/railgun, /obj/item/melee/baton, /obj/item/cell, /obj/item/modular_computer, /obj/item/device/suit_sensor_jammer, /obj/item/stock_parts/computer/battery_module, /obj/item/shield_diffuser, /obj/item/clothing/mask/smokable/ecig, /obj/item/device/radio)
@@ -25,7 +25,7 @@
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/stock_parts/capacitor))
-			active_power_usage *= SP.rating
+			active_power_consumption *= SP.rating
 
 /obj/machinery/recharger/use_tool(obj/item/G, mob/living/user, list/click_params)
 	var/allowed = 0
@@ -76,23 +76,23 @@
 
 /obj/machinery/recharger/Process()
 	if(inoperable() || !anchored)
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 		icon_state = icon_state_idle
 		return
 
 	if(!charging)
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		icon_state = icon_state_idle
 	else
 		var/obj/item/cell/C = charging.get_cell()
 		if(istype(C))
 			if(!C.fully_charged())
 				icon_state = icon_state_charging
-				C.give(active_power_usage*CELLRATE)
-				update_use_power(POWER_USE_ACTIVE)
+				C.give(active_power_consumption*CELLRATE)
+				change_power_mode(POWER_USE_ACTIVE)
 			else
 				icon_state = icon_state_charged
-				update_use_power(POWER_USE_IDLE)
+				change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/recharger/emp_act(severity)
 	if(inoperable() || !anchored)
@@ -124,7 +124,7 @@
 	desc = "A heavy duty wall recharger specialized for energy weaponry."
 	icon = 'icons/obj/machines/rechargers.dmi'
 	icon_state = "wrecharger0"
-	active_power_usage = 50 KILOWATTS	//It's more specialized than the standalone recharger (guns and batons only) so make it more powerful
+	active_power_consumption = 50 KILOWATTS	//It's more specialized than the standalone recharger (guns and batons only) so make it more powerful
 	allowed_devices = list(/obj/item/gun/magnetic/railgun, /obj/item/gun/energy, /obj/item/melee/baton, /obj/item/device/radio)
 	icon_state_charged = "wrecharger2"
 	icon_state_charging = "wrecharger1"

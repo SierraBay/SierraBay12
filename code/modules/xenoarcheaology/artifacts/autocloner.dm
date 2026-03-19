@@ -10,8 +10,8 @@
 	density = TRUE
 	var/previous_power_state = 0
 
-	active_power_usage = 2000
-	idle_power_usage = 1000
+	active_power_consumption = 2000
+	idle_power_consumption = 1000
 
 /obj/machinery/auto_cloner/New()
 	..()
@@ -53,7 +53,7 @@
 		//if we've finished growing...
 		if(time_spent_spawning >= time_per_spawn)
 			time_spent_spawning = 0
-			update_use_power(POWER_USE_IDLE)
+			change_power_mode(POWER_USE_IDLE)
 			src.visible_message(SPAN_NOTICE("[icon2html(src, viewers(get_turf(src)))] [src] pings!"))
 			icon_state = "cellold1"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
@@ -62,11 +62,11 @@
 
 		//if we're getting close to finished, kick into overdrive power usage
 		if(time_spent_spawning / time_per_spawn > 0.75)
-			update_use_power(POWER_USE_ACTIVE)
+			change_power_mode(POWER_USE_ACTIVE)
 			icon_state = "cellold2"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow. A dark shape appears to be forming inside..."
 		else
-			update_use_power(POWER_USE_IDLE)
+			change_power_mode(POWER_USE_IDLE)
 			icon_state = "cellold1"
 			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
 

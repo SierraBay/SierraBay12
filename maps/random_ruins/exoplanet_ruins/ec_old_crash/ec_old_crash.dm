@@ -41,7 +41,7 @@
 
 //Low pressure setup
 /obj/machinery/atmospherics/unary/vent_pump/low
-	use_power = 1
+	power_state = POWER_USE_IDLE
 	icon_state = "map_vent_out"
 	external_pressure_bound = 0.25 * ONE_ATMOSPHERE
 

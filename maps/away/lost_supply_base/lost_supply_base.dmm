@@ -456,7 +456,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor,
 /area/lost_supply_base)
@@ -943,7 +943,7 @@
 	tag_south = 1;
 	tag_south_con = 0.5;
 	tag_west = 2;
-	use_power = 0
+	power_state = 0
 	},
 /turf/simulated/floor,
 /area/lost_supply_base)
@@ -2050,7 +2050,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/tiled,
 /area/lost_supply_base)

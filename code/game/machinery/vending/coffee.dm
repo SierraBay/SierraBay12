@@ -6,7 +6,7 @@
 	icon_deny = "coffee-deny"
 	base_type = /obj/machinery/vending/coffee
 	maxrandom = 20
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	vend_power_usage = 40000
 	product_ads = {"\
 		Have a drink!;\

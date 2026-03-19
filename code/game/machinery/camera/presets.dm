@@ -97,4 +97,4 @@
 		mult++
 	if (isMotion())
 		mult++
-	change_power_consumption(mult*initial(active_power_usage), POWER_USE_ACTIVE)
+	set_power_consumption(mult*initial(active_power_consumption), POWER_USE_ACTIVE)

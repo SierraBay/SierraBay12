@@ -30,8 +30,8 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 		/obj/structure/closet,
 		/obj/structure/bigDelivery
 	)
-	active_power_usage = 2200	//the pneumatic pump power. 3 HP ~ 2200W
-	idle_power_usage = 100
+	active_power_consumption = 2200	//the pneumatic pump power. 3 HP ~ 2200W
+	idle_power_consumption = 100
 	atom_flags = ATOM_FLAG_CLIMBABLE
 	var/turn = DISPOSAL_FLIP_NONE
 	throwpass = TRUE
@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 // charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/Process()
 	if(!air_contents || MACHINE_IS_BROKEN(src))			// nothing can happen if broken
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 		return
 
 	flush_count++
@@ -398,7 +398,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 		flush()
 
 	if(mode != 1) //if off or ready, no need to charge
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 	else if(air_contents.return_pressure() >= SEND_PRESSURE)
 		mode = 2 //if full enough, switch to ready mode
 		update_icon()
@@ -407,7 +407,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 
 /obj/machinery/disposal/proc/pressurize()
 	if(!is_powered())			// won't charge if no power
-		update_use_power(POWER_USE_OFF)
+		change_power_mode(POWER_USE_OFF)
 		return
 
 	var/atom/L = loc						// recharging from loc turf
@@ -416,7 +416,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 	var/power_draw = -1
 	if(env && env.temperature > 0)
 		var/transfer_moles = (PUMP_MAX_FLOW_RATE/env.volume)*env.total_moles	//group_multiplier is divided out here
-		power_draw = pump_gas(src, env, air_contents, transfer_moles, active_power_usage)
+		power_draw = pump_gas(src, env, air_contents, transfer_moles, active_power_consumption)
 
 	if (power_draw > 0)
 		use_power_oneoff(power_draw)

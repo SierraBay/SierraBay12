@@ -1,7 +1,7 @@
 /obj/machinery/mining
 	icon = 'icons/obj/machines/mining/mining_drill.dmi'
 	anchored = FALSE
-	use_power = POWER_USE_OFF //The drill takes power directly from a cell.
+	power_state = POWER_USE_OFF //The drill takes power directly from a cell.
 	density = TRUE
 	layer = ABOVE_HUMAN_LAYER //So it draws over mobs in the tile north of it.
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -13,7 +13,7 @@
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
 	power_channel = LOCAL
-	active_power_usage = 10 KILOWATTS
+	active_power_consumption = 10 KILOWATTS
 	base_type = /obj/machinery/mining/drill
 	machine_name = "mining drill"
 	machine_desc = "A cell-powered industrial drill, used to crack through dirt and rock to harvest minerals beneath the surface. Requires two adjacent braces to operate."
@@ -145,7 +145,7 @@
 /obj/machinery/mining/drill/proc/set_active(new_active)
 	if(active != new_active)
 		active = new_active
-		update_use_power(active ? POWER_USE_ACTIVE : POWER_USE_OFF)
+		change_power_mode(active ? POWER_USE_ACTIVE : POWER_USE_OFF)
 
 /obj/machinery/mining/drill/cannot_transition_to(state_path)
 	if(active)
@@ -207,7 +207,7 @@
 	harvest_speed = clamp(total_component_rating_of_type(/obj/item/stock_parts/micro_laser), 0, 10)
 	capacity = 200 * clamp(total_component_rating_of_type(/obj/item/stock_parts/matter_bin), 0, 10)
 	var/charge_multiplier = clamp(total_component_rating_of_type(/obj/item/stock_parts/capacitor), 0.1, 10)
-	change_power_consumption(initial(active_power_usage) / charge_multiplier, POWER_USE_ACTIVE)
+	set_power_consumption(initial(active_power_consumption) / charge_multiplier, POWER_USE_ACTIVE)
 
 /obj/machinery/mining/drill/proc/check_supports()
 

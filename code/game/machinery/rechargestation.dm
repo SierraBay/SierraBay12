@@ -5,7 +5,7 @@
 	icon_state = "borgcharger"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 50
+	idle_power_consumption = 50
 	base_type = /obj/machinery/recharge_station
 	uncreated_component_parts = null
 	stat_immune = 0

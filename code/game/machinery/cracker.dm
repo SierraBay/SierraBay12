@@ -7,9 +7,9 @@
 	density = TRUE
 	anchored = TRUE
 	volume = 5000
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 100
-	active_power_usage = 10000
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 100
+	active_power_consumption = 10000
 
 	var/list/reagent_buffer = list()
 	var/fluid_consumption_per_tick = 100
@@ -22,16 +22,16 @@
 	ClearOverlays()
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")
-	if(use_power == POWER_USE_ACTIVE)
+	if(power_state == POWER_USE_ACTIVE)
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
 		AddOverlays("[icon_state]_lights")
 
 /obj/machinery/portable_atmospherics/cracker/interface_interact(mob/user)
-	if(use_power == POWER_USE_IDLE)
-		update_use_power(POWER_USE_ACTIVE)
+	if(power_state == POWER_USE_IDLE)
+		change_power_mode(POWER_USE_ACTIVE)
 	else
-		update_use_power(POWER_USE_IDLE)
-	user.visible_message(SPAN_NOTICE("\The [user] [use_power == POWER_USE_ACTIVE ? "engages" : "disengages"] \the [src]."))
+		change_power_mode(POWER_USE_IDLE)
+	user.visible_message(SPAN_NOTICE("\The [user] [power_state == POWER_USE_ACTIVE ? "engages" : "disengages"] \the [src]."))
 	update_icon()
 	return TRUE
 
@@ -53,18 +53,18 @@
 /obj/machinery/portable_atmospherics/cracker/power_change()
 	. = ..()
 	if(. && !is_powered())
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		update_icon()
 
 /obj/machinery/portable_atmospherics/cracker/set_broken(new_state)
 	. = ..()
 	if(. && MACHINE_IS_BROKEN(src))
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 		update_icon()
 
 /obj/machinery/portable_atmospherics/cracker/Process()
 	..()
-	if(use_power == POWER_USE_IDLE)
+	if(power_state == POWER_USE_IDLE)
 		return
 
 	// Produce materials.

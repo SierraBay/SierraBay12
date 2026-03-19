@@ -636,7 +636,7 @@
 "bW" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/exoplanet/snow{
 	temperature = 240

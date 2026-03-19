@@ -89,7 +89,7 @@
 
 	// Update our 'sensor range' (ie. overmap lighting)
 	var/sensor_range = 0
-	if (use_power)
+	if (power_state)
 		sensor_range = round(range, 1)
 
 	// Update our own marker icon regardless of power or sensor connections.
@@ -97,7 +97,7 @@
 	self_record.update_marker_icon(sensor_range)
 	self_record.show()
 
-	if (!use_power || HAS_FLAGS(stat, MACHINE_STAT_NOPOWER) || MACHINE_IS_BROKEN(src))
+	if (!power_state || HAS_FLAGS(stat, MACHINE_STAT_NOPOWER) || MACHINE_IS_BROKEN(src))
 		// Turning off sensors is harmful
 		if (length(contact_datums) > 1 || length(objects_in_view))
 			for (var/key in memorized_objects)

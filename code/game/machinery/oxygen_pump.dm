@@ -19,8 +19,8 @@
 	var/icon_state_closed = "emerg"
 
 	power_channel = ENVIRON
-	idle_power_usage = 10
-	active_power_usage = 120 // No idea what the realistic amount would be.
+	idle_power_consumption = 10
+	active_power_consumption = 120 // No idea what the realistic amount would be.
 
 /obj/machinery/oxygen_pump/New()
 	..()
@@ -94,7 +94,7 @@
 	if(C && istype(C))
 		if(!C.internal && tank)
 			breather.set_internals(tank)
-		update_use_power(POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_ACTIVE)
 
 /obj/machinery/oxygen_pump/proc/detach_mask(mob/user)
 	if(tank)
@@ -108,7 +108,7 @@
 		breather.internals.icon_state = "internal0"
 	GLOB.destroyed_event.unregister(breather, src, PROC_REF(detach_mask))
 	breather = null
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 /obj/machinery/oxygen_pump/proc/can_apply_to_target(mob/living/carbon/human/target, mob/user as mob)
 	if(!user)

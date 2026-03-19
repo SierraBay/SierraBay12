@@ -6,8 +6,8 @@
 	icon_state = "autolathe"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 10
-	active_power_usage = 2000
+	idle_power_consumption = 10
+	active_power_consumption = 2000
 	clicksound = "keyboard"
 	clickvol = 30
 	uncreated_component_parts = null
@@ -91,11 +91,11 @@
 	return ..()
 
 /obj/machinery/fabricator/proc/is_functioning()
-	. = use_power != POWER_USE_OFF && is_powered() && !MACHINE_IS_BROKEN(src) && !(fab_status_flags & FAB_DISABLED)
+	. = power_state != POWER_USE_OFF && is_powered() && !MACHINE_IS_BROKEN(src) && !(fab_status_flags & FAB_DISABLED)
 
 /obj/machinery/fabricator/Process(wait)
 	..()
-	if(use_power == POWER_USE_ACTIVE && (fab_status_flags & FAB_BUSY))
+	if(power_state == POWER_USE_ACTIVE && (fab_status_flags & FAB_BUSY))
 		update_current_build(wait)
 
 /obj/machinery/fabricator/on_update_icon()

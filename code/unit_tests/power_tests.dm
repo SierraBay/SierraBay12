@@ -77,9 +77,21 @@
 	var/failed = FALSE
 	var/list/channel_names = list("equip", "light", "environ")
 	for(var/area/A in world)
-		var/list/old_values = list(A.used_equip, A.used_light, A.used_environ)
+		if(!A.powernet)
+			failed = TRUE
+			log_bad("The area [A.name] was missing its local powernet.")
+			continue
+		var/list/old_values = list(
+			A.powernet.passive_equipment_consumption,
+			A.powernet.passive_lighting_consumption,
+			A.powernet.passive_environment_consumption
+		)
 		A.retally_power()
-		var/list/new_values = list(A.used_equip, A.used_light, A.used_environ)
+		var/list/new_values = list(
+			A.powernet.passive_equipment_consumption,
+			A.powernet.passive_lighting_consumption,
+			A.powernet.passive_environment_consumption
+		)
 		for(var/i in 1 to length(old_values))
 			if(abs(old_values[i] - new_values[i]) > 1) // Round because there can in fact be roundoff error here apparently.
 				failed = TRUE
@@ -89,4 +101,31 @@
 		fail("At least one area had improper power use values")
 	else
 		pass("All areas had accurate power use values.")
+	return 1
+
+/datum/unit_test/area_local_powernet_initialization
+	name = "POWER: Areas must initialize their local powernets."
+
+/datum/unit_test/area_local_powernet_initialization/start_test()
+	var/failed = FALSE
+	for(var/area/A in world)
+		if(!A.powernet)
+			failed = TRUE
+			log_bad("The area [A.name] did not have a local powernet.")
+			continue
+		if(A.powernet.powernet_area != A)
+			failed = TRUE
+			log_bad("The area [A.name] had a local powernet owned by [A.powernet.powernet_area].")
+
+		if(A.always_unpowered && !(A.powernet.power_flags & PW_ALWAYS_UNPOWERED))
+			failed = TRUE
+			log_bad("The always-unpowered area [A.name] did not propagate PW_ALWAYS_UNPOWERED to its local powernet.")
+		if(!A.requires_power && !(A.powernet.power_flags & PW_ALWAYS_POWERED))
+			failed = TRUE
+			log_bad("The area [A.name] does not require power but its local powernet was not flagged PW_ALWAYS_POWERED.")
+
+	if(failed)
+		fail("At least one area had an invalid local powernet state.")
+	else
+		pass("All areas initialized and synced their local powernets.")
 	return 1

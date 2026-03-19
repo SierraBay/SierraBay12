@@ -5,7 +5,7 @@
 	icon_deny = "nutri-deny"
 	icon_vend = "nutri-vend"
 	base_type = /obj/machinery/vending/hydronutrients
-	idle_power_usage = 200
+	idle_power_consumption = 200
 	product_slogans = {"\
 		Aren't you glad you don't have to fertilize the natural way?;\
 		Now with 50% less stink!;\
@@ -22,7 +22,7 @@
 		How about a nice kudzu plant for your significant Solar other?;\
 		Nothing good ever grows out of Solarian soil!;\
 		Remember O Solarian that you are dust, and to dust you shall return.;\
-		Congratulations, you’re finally touching grass!\
+		Congratulations, youвЂ™re finally touching grass!\
 	"}
 	products = list(
 		/obj/item/reagent_containers/glass/bottle/eznutrient = 6,

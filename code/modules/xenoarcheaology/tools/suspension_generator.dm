@@ -7,7 +7,7 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
-	active_power_usage = 5 KILOWATTS
+	active_power_consumption = 5 KILOWATTS
 	machine_name = "suspension generator"
 	machine_desc = "Projects a pacifying energy field, used to hold xenofauna (among other things) for safe study."
 	var/obj/suspension_field/suspension_field
@@ -28,7 +28,7 @@
 			if(prob(5))
 				to_chat(M, SPAN_WARNING("[pick("You feel tingly","You feel like floating","It is hard to speak","You can barely move")]."))
 		if(victims)
-			use_power_oneoff(active_power_usage * victims)
+			use_power_oneoff(active_power_consumption * victims)
 
 		for(var/obj/item/I in T)
 			if(!length(suspension_field.contents))
@@ -135,7 +135,7 @@
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 
 /obj/machinery/suspension_gen/proc/deactivate()
 	set waitfor = FALSE
@@ -151,7 +151,7 @@
 	suspension_field = null
 	icon_state = "suspension_wrenched"
 	playsound(loc, 'sound/machines/quiet_beep.ogg', 40)
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 	update_icon()
 
 /obj/machinery/suspension_gen/Destroy()

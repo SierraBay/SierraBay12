@@ -16,15 +16,15 @@
 	//There have to be at least two posts, so these are effectively doubled
 	var/power_draw = 30 KILOWATTS //30 kW. How much power is drawn from powernet. Increase this to allow the generator to sustain longer shields, at the cost of more power draw.
 	var/max_stored_power = 50 KILOWATTS //50 kW
-	use_power = POWER_USE_OFF	//Draws directly from power net. Does not use APC power.
-	active_power_usage = 1200
+	power_state = POWER_USE_OFF	//Draws directly from power net. Does not use APC power.
+	active_power_consumption = 1200
 
 /obj/machinery/shieldwallgen/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
 	var/list/data = list()
 	data["draw"] = round(power_draw)
 	data["power"] = round(storedpower)
 	data["maxpower"] = round(max_stored_power)
-	data["current_draw"] = clamp(max_stored_power - storedpower, 500, power_draw) + power ? active_power_usage : 0
+	data["current_draw"] = clamp(max_stored_power - storedpower, 500, power_draw) + power ? active_power_consumption : 0
 	data["online"] = active == 2 ? 1 : 0
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -122,7 +122,7 @@
 	if(!MACHINE_IS_BROKEN(src))
 		power()
 	if(power)
-		storedpower -= active_power_usage //the generator post itself uses some power
+		storedpower -= active_power_consumption //the generator post itself uses some power
 
 	if(storedpower >= max_stored_power)
 		storedpower = max_stored_power

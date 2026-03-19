@@ -3,9 +3,9 @@
 	desc = "A very complex router and transmitter capable of connecting electronic devices together. Looks fragile."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "relay"
-	use_power = POWER_USE_ACTIVE
-	active_power_usage = 20000 //20kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational.
-	idle_power_usage = 100
+	power_state = POWER_USE_ACTIVE
+	active_power_consumption = 20000 //20kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational.
+	idle_power_consumption = 100
 	icon_state = "relay"
 	anchored = TRUE
 	density = TRUE
@@ -88,9 +88,9 @@
 		dos_failure = TRUE
 		ntnet_global.add_log("Quantum relay ([relay_id]) switched from normal operation mode to overload recovery mode.")
 	if (operable())
-		update_use_power(POWER_USE_ACTIVE)
+		change_power_mode(POWER_USE_ACTIVE)
 	else
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 	update_icon()
 
 

@@ -6,7 +6,7 @@ var/global/bomb_set
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "idle"
 	density = TRUE
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 	uncreated_component_parts = null
 	unacidable = TRUE
 	interact_offline = TRUE

@@ -5,8 +5,8 @@
 	var/insert_anim = "photocopier_animation"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 30
-	active_power_usage = 200
+	idle_power_consumption = 30
+	active_power_consumption = 200
 	power_channel = EQUIP
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
 	obj_flags = OBJ_FLAG_ANCHORABLE
@@ -62,7 +62,7 @@
 				to_chat(user, SPAN_WARNING("\The [copyitem] can't be copied by \the [src]."))
 				break
 
-			use_power_oneoff(active_power_usage)
+			use_power_oneoff(active_power_consumption)
 		return TOPIC_REFRESH
 
 	if(href_list["remove"])

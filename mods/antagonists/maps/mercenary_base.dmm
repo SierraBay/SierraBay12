@@ -266,7 +266,7 @@
 	icon_state = "map_vent_in";
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -2964,7 +2964,7 @@
 "Lv" = (
 /obj/paint/merc,
 /obj/machinery/vending/medical{
-	idle_power_usage = 100;
+	idle_power_consumption = 100;
 	req_access = list("ACCESS_SYNDICATE")
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,

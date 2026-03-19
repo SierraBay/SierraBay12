@@ -719,7 +719,7 @@
 "br" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
+	active_power_consumption = 7500;
 	tag_east_con = null;
 	tag_north = 2;
 	tag_south = 1;
@@ -9351,7 +9351,7 @@
 	frequency = 1442;
 	icon_state = "map_injector";
 	id = "patrol_rust";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -9572,7 +9572,7 @@
 	controlled = 0;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1;
+	power_state = 1;
 	dir = 8
 	},
 /obj/floor_decal/industrial/warning/fulltile,

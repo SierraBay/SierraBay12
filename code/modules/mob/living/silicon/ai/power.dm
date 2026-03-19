@@ -102,7 +102,7 @@
 		return
 
 	A.operating = 1
-	A.equipment = 3
+	A.set_channel_state(EQUIP, 3)
 	A.failure_timer = 0
 	A.update()
 
@@ -133,7 +133,7 @@
 	var/newusage = calculate_power_usage()
 	newusage *= AI_POWERUSAGE_OXYLOSS_TO_WATTS_MULTIPLIER
 	if(psupply)
-		psupply.change_power_consumption(newusage, POWER_USE_ACTIVE)
+		psupply.set_power_consumption(newusage, POWER_USE_ACTIVE)
 		psupply.update_power_state()
 
 /mob/living/silicon/ai/proc/handle_power_oxyloss()
@@ -191,8 +191,8 @@
 */
 /obj/machinery/ai_powersupply
 	name="Power Supply"
-	active_power_usage = AI_POWERUSAGE_NORMAL * AI_POWERUSAGE_OXYLOSS_TO_WATTS_MULTIPLIER
-	use_power = POWER_USE_ACTIVE
+	active_power_consumption = AI_POWERUSAGE_NORMAL * AI_POWERUSAGE_OXYLOSS_TO_WATTS_MULTIPLIER
+	power_state = POWER_USE_ACTIVE
 	power_channel = EQUIP
 	var/mob/living/silicon/ai/powered_ai = null
 	invisibility = 100
@@ -207,7 +207,7 @@
 	powered_ai = null
 
 /obj/machinery/ai_powersupply/proc/update_power_state()
-	update_use_power(get_power_state())
+	change_power_mode(get_power_state())
 
 /obj/machinery/ai_powersupply/proc/get_power_state()
 	// Dead, powered by APU, admin power, or inside an item (inteliCard/IIS). No power usage.

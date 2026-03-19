@@ -193,7 +193,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			on = 1
 	else
 		on = 0
-	update_use_power(on)
+	change_power_mode(on)
 
 /obj/machinery/telecomms/Process()
 	update_power()
@@ -247,7 +247,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if (!produces_heat)
 		return
 
-	if (!use_power)
+	if (!power_state)
 		return
 
 	if(operable())
@@ -261,7 +261,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 			if(removed)
 
-				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
+				var/heat_produced = idle_power_consumption	//obviously can't produce more heat than the machine draws from it's power source
 				if (traffic <= 0)
 					heat_produced *= 0.30	//if idle, produce less heat.
 
@@ -283,7 +283,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 600
+	idle_power_consumption = 600
 	machinetype = 1
 	produces_heat = 0
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/receiver
@@ -336,7 +336,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 1600
+	idle_power_consumption = 1600
 	machinetype = 7
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/hub
 	base_type = /obj/machinery/telecomms/hub
@@ -371,7 +371,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 1000
+	idle_power_consumption = 1000
 	machinetype = 2
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/bus
 	base_type = /obj/machinery/telecomms/bus
@@ -425,7 +425,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	desc = "This machine is used to process large quantities of information."
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 600
+	idle_power_consumption = 600
 	machinetype = 3
 	delay = 5
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/processor
@@ -465,7 +465,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	desc = "A machine used to store data and network statistics."
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 300
+	idle_power_consumption = 300
 	machinetype = 4
 	circuitboard = /obj/item/stock_parts/circuitboard/telecomms/server
 	base_type = /obj/machinery/telecomms/server
@@ -488,7 +488,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 	server_radio = new()
 
-// [SIERRA-REMOVE] MODPACK-TELECOMMS (Гитхаю жалуется)
+// [SIERRA-REMOVE] MODPACK-TELECOMMS (Р“РёС‚С…Р°СЋ Р¶Р°Р»СѓРµС‚СЃСЏ)
 /*
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 

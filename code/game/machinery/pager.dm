@@ -4,7 +4,7 @@
 	icon_state = "doorbell"
 	desc = "A button used to request the presence of anyone in the department."
 	anchored = TRUE
-	idle_power_usage = 2
+	idle_power_consumption = 2
 	var/acknowledged = 0
 	var/last_paged
 	var/department = COM

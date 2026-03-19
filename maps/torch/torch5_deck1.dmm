@@ -1212,7 +1212,7 @@
 	dir = 4;
 	max_pressure_setting = 30000;
 	target_pressure = 30000;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -1269,7 +1269,7 @@
 	frequency = 1447;
 	id = "fuelmode";
 	injecting = 1;
-	use_power = 1;
+	power_state = 1;
 	volume_rate = 4000
 	},
 /obj/floor_decal/industrial/outline/red,
@@ -1283,7 +1283,7 @@
 	frequency = 1447;
 	id = "fuelmode";
 	injecting = 1;
-	use_power = 1;
+	power_state = 1;
 	volume_rate = 4000
 	},
 /obj/floor_decal/industrial/outline/red,
@@ -3715,7 +3715,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	id_tag = "fuelmode";
 	target_pressure = 2000;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -5026,7 +5026,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -11299,7 +11299,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	id = "rust_injector";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -12075,7 +12075,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	dir = 1;
 	target_pressure = 2000;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -13253,7 +13253,7 @@
 	dir = 4;
 	max_pressure_setting = 30000;
 	target_pressure = 30000;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light/small,
@@ -15395,7 +15395,7 @@
 /obj/machinery/atmospherics/unary/freezer{
 	dir = 4;
 	set_temperature = 80;
-	use_power = 1
+	power_state = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
@@ -15649,7 +15649,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -16814,7 +16814,7 @@
 	dir = 1;
 	frequency = 1441;
 	id = "d1sh_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d1starboard)
@@ -17223,7 +17223,7 @@
 	frequency = 1441;
 	id = "d1so2_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1starboard)
@@ -19702,7 +19702,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1port)
@@ -20404,7 +20404,7 @@
 	frequency = 1441;
 	id = "d1po2_in";
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1port)
@@ -25360,7 +25360,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	frequency = 1441;
 	id = "xenobot_in";
-	use_power = 1
+	power_state = 1
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -26624,7 +26624,7 @@
 	dir = 1;
 	frequency = 1441;
 	id = "test_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/rnd/misc_lab)
@@ -26716,7 +26716,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -26777,7 +26777,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d1starboard)
@@ -27019,7 +27019,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d1port)
@@ -28722,7 +28722,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	frequency = 1441;
 	id = "d1ph_in";
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d1port)
@@ -29591,7 +29591,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d1starboard)

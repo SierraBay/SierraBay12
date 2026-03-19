@@ -36,14 +36,14 @@
 		return
 
 	if(prob(50/severity))
-		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		change_power_mode(power_state == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
 
 	..(severity)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/on_update_icon()
 	ClearOverlays()
 
-	if((use_power == POWER_USE_ACTIVE) && operable())
+	if((power_state == POWER_USE_ACTIVE) && operable())
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
@@ -62,7 +62,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/proc/process_scrubber()
 	var/power_draw = -1
 
-	if((use_power == POWER_USE_ACTIVE) && is_powered())
+	if((power_state == POWER_USE_ACTIVE) && is_powered())
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents
@@ -79,7 +79,7 @@
 	else
 		power_draw = max(power_draw, power_losses)
 		if(abs(power_draw - last_power_draw) > 0.1 * last_power_draw)
-			change_power_consumption(power_draw, POWER_USE_ACTIVE)
+			set_power_consumption(power_draw, POWER_USE_ACTIVE)
 			last_power_draw = power_draw
 
 		update_connected_network()
@@ -105,7 +105,7 @@
 	data["powerDraw"] = round(last_power_draw)
 	data["cellCharge"] = cell ? cell.charge : 0
 	data["cellMaxCharge"] = cell ? cell.maxcharge : 1
-	data["on"] = (use_power == POWER_USE_ACTIVE) ? 1 : 0
+	data["on"] = (power_state == POWER_USE_ACTIVE) ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
@@ -121,7 +121,7 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/OnTopic(user, href_list)
 	if(href_list["power"])
-		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		change_power_mode(power_state == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
 		. = TOPIC_REFRESH
 	if (href_list["remove_tank"])
 		if(holding)
@@ -160,7 +160,7 @@
 
 	uncreated_component_parts = list(/obj/item/stock_parts/power/apc)
 	maximum_component_parts = list(/obj/item/stock_parts = 15)
-	idle_power_usage = 500		//internal circuitry, friction losses and stuff
+	idle_power_consumption = 500		//internal circuitry, friction losses and stuff
 	power_rating = 100000 //100 kW ~ 135 HP
 
 	machine_name = "large portable scrubber"
@@ -186,7 +186,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/on_update_icon()
 	ClearOverlays()
 
-	if((use_power == POWER_USE_ACTIVE) && operable())
+	if((power_state == POWER_USE_ACTIVE) && operable())
 		icon_state = "scrubber:1"
 	else
 		icon_state = "scrubber:0"

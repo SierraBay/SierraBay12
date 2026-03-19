@@ -8,7 +8,7 @@
 	var/lock_access = list(access_bridge)
 	var/islocked = 0
 
-	active_power_usage = 8000 //8kW for the scenery + 500W per holoitem
+	active_power_consumption = 8000 //8kW for the scenery + 500W per holoitem
 
 	var/item_power_usage = 500
 
@@ -202,7 +202,7 @@
 			damaged = 1
 			loadProgram(GLOB.using_map.holodeck_programs["turnoff"], 0)
 			active = 0
-			update_use_power(POWER_USE_IDLE)
+			change_power_mode(POWER_USE_IDLE)
 			for(var/mob/M in range(10,src))
 				M.show_message("The holodeck overloads!")
 
@@ -244,7 +244,7 @@
 			linkedholodeck.gravitychange(1)
 
 		active = 0
-		update_use_power(POWER_USE_IDLE)
+		change_power_mode(POWER_USE_IDLE)
 
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(datum/holodeck_program/HP, check_delay = 1)
@@ -265,7 +265,7 @@
 
 	last_change = world.time
 	active = 1
-	update_use_power(POWER_USE_ACTIVE)
+	change_power_mode(POWER_USE_ACTIVE)
 
 	for(var/item in holographic_objs)
 		derez(item)
@@ -326,7 +326,7 @@
 
 	last_gravity_change = world.time
 	active = 1
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 	if(A.has_gravity)
 		A.gravitychange(0,A)
@@ -341,7 +341,7 @@
 		linkedholodeck.gravitychange(1,linkedholodeck)
 
 	active = 0
-	update_use_power(POWER_USE_IDLE)
+	change_power_mode(POWER_USE_IDLE)
 
 // Locking system
 

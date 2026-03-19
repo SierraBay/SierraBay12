@@ -2,8 +2,8 @@
 	icon_keyboard = "power_key"
 	icon_screen = "rust_screen"
 	light_color = COLOR_ORANGE
-	idle_power_usage = 250
-	active_power_usage = 500
+	idle_power_consumption = 250
+	active_power_consumption = 500
 	var/ui_template
 	var/initial_id_tag
 

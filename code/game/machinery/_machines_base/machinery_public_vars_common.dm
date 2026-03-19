@@ -64,23 +64,23 @@ Public vars at /obj/machinery level. Just because they are here does not mean th
 	if(.)
 		machine.identifier = new_value
 
-/singleton/public_access/public_variable/use_power
+/singleton/public_access/public_variable/power_state
 	expected_type = /obj/machinery
-	name = "power use code"
-	desc = "Whether the machine is off (0) or on (positive). Some machines have multiple power states. Writing to this variable may turn the machine off or on."
+	name = "power state"
+	desc = "The machine's current power state."
 	can_write = TRUE
 	has_updates = FALSE
 	var_type = IC_FORMAT_NUMBER
 
-/singleton/public_access/public_variable/use_power/access_var(obj/machinery/machine)
-	return machine.use_power
+/singleton/public_access/public_variable/power_state/access_var(obj/machinery/machine)
+	return machine.power_state
 
-/singleton/public_access/public_variable/use_power/write_var(obj/machinery/machine, new_value)
+/singleton/public_access/public_variable/power_state/write_var(obj/machinery/machine, new_value)
 	if(!(new_value in list(POWER_USE_OFF, POWER_USE_IDLE, POWER_USE_ACTIVE)))
 		return FALSE
 	. = ..()
 	if(.)
-		machine.update_use_power(new_value)
+		machine.change_power_mode(new_value)
 
 /singleton/public_access/public_variable/name
 	expected_type = /obj/machinery
@@ -105,7 +105,7 @@ Public vars at /obj/machinery level. Just because they are here does not mean th
 
 /// Toggles the machine's power state. Used by the `toggle_power` public method.
 /obj/machinery/proc/toggle_power()
-	update_use_power(!use_power)
+	change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
 
 /singleton/public_access/public_method/refresh
 	name = "refresh machine"

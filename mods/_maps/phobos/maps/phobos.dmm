@@ -4440,7 +4440,7 @@
 /area/ship/phobos/disperser)
 "qc" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
+	active_power_consumption = 7500;
 	tag_east = 2;
 	tag_east_con = null;
 	tag_north = 1;
@@ -4449,7 +4449,7 @@
 	tag_south_con = 0.21;
 	tag_west = 0;
 	tag_west_con = null;
-	use_power = 1
+	power_state = 1
 	},
 /obj/structure/railing/mapped,
 /obj/structure/railing/mapped{
@@ -5658,7 +5658,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	injecting = 1;
-	use_power = 1
+	power_state = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1

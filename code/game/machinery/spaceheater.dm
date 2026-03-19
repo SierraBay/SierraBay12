@@ -1,5 +1,5 @@
 /obj/machinery/space_heater
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 	anchored = FALSE
 	density = TRUE
 	icon = 'icons/obj/atmospherics/atmos.dmi'

@@ -3,9 +3,9 @@
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/structures/cameras.dmi'
 	icon_state = "camera"
-	use_power = POWER_USE_ACTIVE
-	idle_power_usage = 5
-	active_power_usage = 10
+	power_state = POWER_USE_ACTIVE
+	idle_power_consumption = 5
+	active_power_consumption = 10
 	layer = CAMERA_LAYER
 
 	health_max = 40

@@ -6,8 +6,8 @@
 	icon = 'icons/obj/structures/massdriver.dmi'
 	icon_state = "mass_driver"
 	anchored = TRUE
-	idle_power_usage = 2
-	active_power_usage = 50
+	idle_power_consumption = 2
+	active_power_consumption = 50
 
 	var/power = 1.0
 	var/code = 1.0

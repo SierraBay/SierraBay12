@@ -24,7 +24,7 @@
 	icon_state = "seeds"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 100
+	idle_power_consumption = 100
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
 	var/list/datum/seed_pile/piles = list()

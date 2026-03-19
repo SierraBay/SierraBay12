@@ -9,8 +9,8 @@ var/global/solar_gen_rate = 1500
 	icon_state = "sp_base"
 	anchored = TRUE
 	density = TRUE
-	idle_power_usage = 0
-	active_power_usage = 0
+	idle_power_consumption = 0
+	active_power_consumption = 0
 	health_max = 10
 	var/id = 0
 	var/obscured = 0
@@ -279,8 +279,8 @@ var/global/solar_gen_rate = 1500
 	icon_state = "computer"
 	anchored = TRUE
 	density = TRUE
-	use_power = POWER_USE_IDLE
-	idle_power_usage = 250
+	power_state = POWER_USE_IDLE
+	idle_power_consumption = 250
 	construct_state = /singleton/machine_construction/default/panel_closed/computer
 	base_type = /obj/machinery/power/solar_control
 	frame_type = /obj/machinery/constructable_frame/computerframe
@@ -293,7 +293,7 @@ var/global/solar_gen_rate = 1500
 	var/lastgen = 0
 	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
-	var/nexttime = 0		// time for a panel to rotate of 1° in manual tracking
+	var/nexttime = 0		// time for a panel to rotate of 1В° in manual tracking
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
 
@@ -413,9 +413,9 @@ var/global/solar_gen_rate = 1500
 			connected_tracker.unset_control()
 
 	if(track==1 && trackrate) //manual tracking and set a rotation speed
-		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
+		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1В°...
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
-			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
+			nexttime += 36000/abs(trackrate) //reset the counter for the next 1В°
 
 	updateDialog()
 

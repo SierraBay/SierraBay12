@@ -4,7 +4,7 @@
 	icon = 'icons/obj/structures/syndicate_beacon.dmi'
 	icon_state = "syndbeacon"
 
-	use_power = POWER_USE_OFF
+	power_state = POWER_USE_OFF
 	uncreated_component_parts = null
 	interact_offline = TRUE
 	anchored = TRUE

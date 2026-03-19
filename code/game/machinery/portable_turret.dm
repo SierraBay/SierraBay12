@@ -14,8 +14,8 @@
 	anchored = TRUE
 
 	density = FALSE
-	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
-	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
+	idle_power_consumption = 50		//when inactive, this turret takes up constant 50 Equipment power
+	active_power_consumption = 300	//when active, this turret takes up constant 300 Equipment power
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	health_max = 80
@@ -86,7 +86,7 @@
 	set_max_health(round(initial(health_max) * 1.5), FALSE)
 	shot_delay = round(initial(shot_delay) / 2)
 	auto_repair = 1
-	change_power_consumption(round(initial(active_power_usage) * 5), POWER_USE_ACTIVE)
+	set_power_consumption(round(initial(active_power_consumption) * 5), POWER_USE_ACTIVE)
 	return 1
 
 /obj/machinery/porta_turret/New()
@@ -413,7 +413,7 @@ var/global/list/turret_icons
 
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
-			//[SIERRA-ADD] - AI_UPDATE - Туррели будут стоять развёрнутыми
+			//[SIERRA-ADD] - AI_UPDATE - РўСѓСЂСЂРµР»Рё Р±СѓРґСѓС‚ СЃС‚РѕСЏС‚СЊ СЂР°Р·РІС‘СЂРЅСѓС‚С‹РјРё
 			if(!hold_deployed && !AiHolder.client)
 			//[SIERRA-ADD]
 				popDown() // no valid targets, close the cover

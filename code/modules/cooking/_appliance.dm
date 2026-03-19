@@ -13,8 +13,8 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 5
-	active_power_usage = 100
+	idle_power_consumption = 5
+	active_power_consumption = 100
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_REACT | ATOM_FLAG_OPEN_CONTAINER
 	obj_flags = OBJ_FLAG_CAN_TABLE | OBJ_FLAG_ANCHORABLE
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -26,14 +26,14 @@
 
 	var/appliancetype = 0
 
-	use_power = POWER_USE_OFF
-	idle_power_usage = 5			// Power used when turned on, but not processing anything
-	active_power_usage = 1000		// Power used when turned on and actively cooking something
+	power_state = POWER_USE_OFF
+	idle_power_consumption = 5			// Power used when turned on, but not processing anything
+	active_power_consumption = 1000		// Power used when turned on and actively cooking something
 
 	var/operating = FALSE 							// Is it on?
 	var/cooking_power = 0							// Effectiveness/speed at cooking
 	var/cooking_coeff = 0							// Part-based cooking power multiplier
-	var/heating_power = 1000						// Effectiveness at heating up; not used for mixers, should be equal to active_power_usage
+	var/heating_power = 1000						// Effectiveness at heating up; not used for mixers, should be equal to active_power_consumption
 	var/max_contents = 1							// Maximum number of things this appliance can simultaneously cook
 	var/on_icon										// Icon state used when cooking.
 	var/off_icon									// Icon state used when not cooking.
@@ -135,7 +135,7 @@
 	if(missing || !anchored)
 		return
 	operating = !operating
-	update_use_power(operating ? POWER_USE_ACTIVE : POWER_USE_OFF)
+	change_power_mode(operating ? POWER_USE_ACTIVE : POWER_USE_OFF)
 	if(user)
 		user.visible_message("[user] turns [src] [operating ? "on" : "off"].", "You turn [operating ? "on" : "off"] [src].")
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
@@ -350,7 +350,7 @@
 	..()
 	if (inoperable() && operating)
 		operating = FALSE
-		update_use_power(operating ? POWER_USE_ACTIVE : POWER_USE_OFF)
+		change_power_mode(operating ? POWER_USE_ACTIVE : POWER_USE_OFF)
 		update_icon()
 	if (cooking_power > 0 && cooking)
 		for (var/i in cooking_objs)
@@ -631,6 +631,6 @@
 	var/scan_rating = total_component_rating_of_type(/obj/item/stock_parts/scanning_module)
 	var/cap_rating = total_component_rating_of_type(/obj/item/stock_parts/capacitor)
 
-	change_power_consumption(initial(active_power_usage) - scan_rating * 25, POWER_USE_ACTIVE)
+	set_power_consumption(initial(active_power_consumption) - scan_rating * 25, POWER_USE_ACTIVE)
 	heating_power = initial(heating_power) + cap_rating * 50 // + 50W per tier
 	cooking_coeff = (1 + (scan_rating + cap_rating) / 20) // +20% per tier
