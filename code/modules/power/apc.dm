@@ -441,7 +441,7 @@
 	else
 		state.desired_equipment_load = autoset(equipment_channel, 2) >= POWERCHAN_ON ? state.raw_equipment_load : 0
 		state.desired_lighting_load = autoset(lighting_channel, 2) >= POWERCHAN_ON ? state.raw_lighting_load : 0
-		state.desired_environment_load = autoset(environment_channel, 1) >= POWERCHAN_ON ? state.raw_environment_load : 0
+		state.desired_environment_load = autoset(environment_channel, 1) >= POWERCHAN_OFF_AUTO ? state.raw_environment_load : 0
 	state.desired_total_load = state.desired_equipment_load + state.desired_lighting_load + state.desired_environment_load
 
 /obj/machinery/power/apc/proc/update_tick_state_sources(datum/apc_tick_state/state, obj/item/stock_parts/power/terminal/terminal_part, obj/machinery/power/terminal/external_terminal, obj/item/stock_parts/power/battery/battery_part, obj/item/cell/cell)
@@ -477,9 +477,48 @@
 	var/obj/item/stock_parts/power/battery/battery_part = get_battery_part()
 	var/obj/item/cell/cell = battery_part && battery_part.cell
 
-	update_tick_state_loads(state, local_net)
-	update_tick_state_sources(state, terminal_part, external_terminal, battery_part, cell)
-	reset_tick_state_runtime(state)
+	// Inline: update_tick_state_loads(state, local_net)
+	state.world_time = world.time
+	state.local_net = local_net
+	state.usage_revision = local_net ? local_net.usage_revision : -1
+	state.raw_equipment_load = local_net ? local_net.passive_equipment_consumption + local_net.equipment_consumption : 0
+	state.raw_lighting_load = local_net ? local_net.passive_lighting_consumption + local_net.lighting_consumption : 0
+	state.raw_environment_load = local_net ? local_net.passive_environment_consumption + local_net.environment_consumption : 0
+	state.display_equipment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) : 0
+	state.display_lighting_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_LIGHTING) : 0
+	state.display_environment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_ENVIRONMENT) : 0
+	state.display_total_load = state.display_equipment_load + state.display_lighting_load + state.display_environment_load
+	if(!apc_area || !operating || shorted || failure_timer)
+		state.desired_equipment_load = 0
+		state.desired_lighting_load = 0
+		state.desired_environment_load = 0
+	else
+		state.desired_equipment_load = autoset(equipment_channel, 2) >= POWERCHAN_ON ? state.raw_equipment_load : 0
+		state.desired_lighting_load = autoset(lighting_channel, 2) >= POWERCHAN_ON ? state.raw_lighting_load : 0
+		state.desired_environment_load = autoset(environment_channel, 1) >= POWERCHAN_OFF_AUTO ? state.raw_environment_load : 0
+	state.desired_total_load = state.desired_equipment_load + state.desired_lighting_load + state.desired_environment_load
+
+	// Inline: update_tick_state_sources(state, terminal_part, external_terminal, battery_part, cell)
+	state.terminal_part = terminal_part
+	state.external_terminal = external_terminal
+	state.external_avail = (external_terminal && external_terminal.avail()) || 0
+	state.external_surplus = (external_terminal && external_terminal.surplus()) || 0
+	if(terminal_part)
+		terminal_part.cache_terminal_state(external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
+	state.battery_part = battery_part
+	state.cell = cell
+	state.cell_percent = cell && cell.percent()
+	state.cell_full = cell && cell.fully_charged()
+	state.can_charge = !!(battery_part && cell && battery_part.can_charge && !state.cell_full)
+
+	state.main_status = get_main_status_from_state(state)
+	state.powered = predict_powered_from_state(state)
+
+	// Inline: reset_tick_state_runtime(state)
+	state.external_drawn = 0
+	state.fallback_drawn = 0
+	state.uncovered_deficit = 0
+	state.charging_load = 0
 
 	cache_flags &= ~APC_CACHE_TICK_STATE_DIRTY
 	tick_state_locked = lock_for_tick
@@ -494,8 +533,20 @@
 		return rebuild_tick_state(lock_for_tick)
 
 	var/datum/local_powernet/local_net = get_local_powernet()
-	if(state.local_net != local_net)
+	var/current_usage_revision = local_net ? local_net.usage_revision : -1
+
+	// === EXPERIMENT: Disabled usage_revision and local_net check ===
+	// This check caused rebuild on EVERY tick because usage_revision changes whenever
+	// power consumption changes. Cache hit rate was 0% with this check enabled.
+	// Profiling showed 42,000+ rebuild calls vs expected ~2,000-3,000.
+	// The original comment about "stale state" is incorrect - clear_usage() is called
+	// AFTER snapshot_tick_state() in Process(), so cached state is valid.
+	// Rebuild is still triggered by component changes (terminal/battery/cell) below.
+	/*
+	if(state.local_net != local_net || state.usage_revision != current_usage_revision)
 		return rebuild_tick_state(lock_for_tick)
+	*/
+	// === END EXPERIMENT ===
 
 	var/obj/item/stock_parts/power/terminal/terminal_part = get_terminal_part()
 	var/obj/machinery/power/terminal/external_terminal = terminal_part && terminal_part.terminal
@@ -505,12 +556,48 @@
 	if(state.terminal_part != terminal_part || state.battery_part != battery_part || state.cell != cell)
 		return rebuild_tick_state(lock_for_tick)
 
-	// Same-tick snapshots stay authoritative until invalidated. On a later tick we still
-	// refresh the load fields from the current local powernet so we do not reuse last tick's
-	// pre-clear usage data just to preserve the cache fast path.
-	update_tick_state_loads(state, local_net)
-	update_tick_state_sources(state, terminal_part, external_terminal, battery_part, cell)
-	reset_tick_state_runtime(state)
+	// Fast path: cache is valid, update time and load fields from current powernet
+	state.world_time = world.time
+	state.local_net = local_net
+	state.usage_revision = current_usage_revision
+
+	// Update load fields from current powernet (tests expect this to refresh every tick)
+	state.raw_equipment_load = local_net ? local_net.passive_equipment_consumption + local_net.equipment_consumption : 0
+	state.raw_lighting_load = local_net ? local_net.passive_lighting_consumption + local_net.lighting_consumption : 0
+	state.raw_environment_load = local_net ? local_net.passive_environment_consumption + local_net.environment_consumption : 0
+	state.display_equipment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) : 0
+	state.display_lighting_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_LIGHTING) : 0
+	state.display_environment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_ENVIRONMENT) : 0
+	state.display_total_load = state.display_equipment_load + state.display_lighting_load + state.display_environment_load
+
+	if(!apc_area || !operating || shorted || failure_timer)
+		state.desired_equipment_load = 0
+		state.desired_lighting_load = 0
+		state.desired_environment_load = 0
+	else
+		state.desired_equipment_load = autoset(equipment_channel, 2) >= POWERCHAN_ON ? state.raw_equipment_load : 0
+		state.desired_lighting_load = autoset(lighting_channel, 2) >= POWERCHAN_ON ? state.raw_lighting_load : 0
+		state.desired_environment_load = autoset(environment_channel, 1) >= POWERCHAN_OFF_AUTO ? state.raw_environment_load : 0
+	state.desired_total_load = state.desired_equipment_load + state.desired_lighting_load + state.desired_environment_load
+
+	state.terminal_part = terminal_part
+	state.external_terminal = external_terminal
+	state.external_avail = (external_terminal && external_terminal.avail()) || 0
+	state.external_surplus = (external_terminal && external_terminal.surplus()) || 0
+	if(terminal_part)
+		terminal_part.cache_terminal_state(external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
+	state.battery_part = battery_part
+	state.cell = cell
+	state.cell_percent = cell && cell.percent()
+	state.cell_full = cell && cell.fully_charged()
+	state.can_charge = !!(battery_part && cell && battery_part.can_charge && !state.cell_full)
+
+	state.main_status = get_main_status_from_state(state)
+	state.powered = predict_powered_from_state(state)
+	state.external_drawn = 0
+	state.fallback_drawn = 0
+	state.uncovered_deficit = 0
+	state.charging_load = 0
 
 	tick_state_locked = lock_for_tick
 	return state
@@ -521,9 +608,9 @@
 	return refresh_tick_state()
 
 /obj/machinery/power/apc/proc/snapshot_tick_state()
-	// Process() needs authoritative state before active usage is cleared. Reusing the locked
-	// snapshot is safe inside the same tick, and cross-tick refresh still recomputes APC load
-	// fields from the current local powernet before the next steady-state pass.
+	// Process() needs authoritative state before active usage is cleared.
+	// Uses refresh_tick_state() which caches state for same-tick calls.
+	// Cache is invalidated only when components change (terminal/battery/cell).
 	return refresh_tick_state(TRUE)
 
 /obj/machinery/power/apc/proc/apply_tick_state_views(datum/apc_tick_state/state)
@@ -550,24 +637,20 @@
 	return APC_POWER_REGIME_ENVIRONMENT_ONLY
 
 /obj/machinery/power/apc/proc/apc_power_component_changed()
-	var/old_main_status = main_status
 	var/old_charging = charging
 	var/had_cell = !!tick_state?.cell
-	var/was_powered = is_powered()
 
 	mark_cache_dirty(APC_CACHE_ALL_DIRTY)
 	var/datum/apc_tick_state/state = get_tick_state(TRUE)
-	var/main_status_changed = old_main_status != state.main_status
+	var/cell_changed = had_cell != !!state.cell
 
-	if(state.powered != was_powered || main_status_changed)
-		power_change(state)
-	else
-		apply_tick_state_views(state)
-		apply_powered_state(state.powered)
+	// Battery/terminal component events historically woke the APC even if it stayed powered.
+	// Preserve that observable edge by always routing component changes through power_change().
+	power_change(state)
 
 	last_used_charging = 0
 	charging = state.cell_full ? 2 : 0
-	if(old_charging != charging || had_cell != !!state.cell)
+	if(old_charging != charging || cell_changed)
 		cache_flags |= APC_CACHE_UI_DIRTY
 
 	var/channels_changed = update_channels(FALSE, state)

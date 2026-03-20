@@ -253,6 +253,48 @@
 	power_change_usage_samples += (state_override ? state_override.desired_total_load : get_power_usage())
 	return ..()
 
+/obj/machinery/power/apc/unit_test_apc/profiled
+	var/rebuild_tick_state_calls = 0
+	var/refresh_tick_state_calls = 0
+	var/get_tick_state_calls = 0
+	var/update_calls = 0
+
+/obj/machinery/power/apc/unit_test_apc/profiled/rebuild_tick_state(lock_for_tick = FALSE)
+	rebuild_tick_state_calls++
+	return ..()
+
+/obj/machinery/power/apc/unit_test_apc/profiled/refresh_tick_state(lock_for_tick = FALSE, ignore_lock = FALSE)
+	refresh_tick_state_calls++
+	return ..()
+
+/obj/machinery/power/apc/unit_test_apc/profiled/get_tick_state(force = FALSE)
+	get_tick_state_calls++
+	return ..()
+
+/obj/machinery/power/apc/unit_test_apc/profiled/update(notify_self = TRUE)
+	update_calls++
+	return ..()
+
+/obj/machinery/power/apc/unit_test_apc/profiled/proc/reset_profile_counts()
+	rebuild_tick_state_calls = 0
+	refresh_tick_state_calls = 0
+	get_tick_state_calls = 0
+	update_calls = 0
+
+/obj/machinery/unit_test_local_power_sink
+	name = "local power sink"
+	requires_power = TRUE
+	idle_power_consumption = 5
+	active_power_consumption = 5
+	var/power_change_calls = 0
+
+/obj/machinery/unit_test_local_power_sink/power_change()
+	power_change_calls++
+	return ..()
+
+/obj/machinery/unit_test_local_power_sink/proc/reset_power_change_calls()
+	power_change_calls = 0
+
 /obj/machinery/power/terminal/unit_test_apc
 	var/available_power = 0
 	var/surplus_power = 0
@@ -271,10 +313,9 @@
 	if(!connected)
 		return 0
 	draw_calls++
-	var/drawn = min(amount, surplus_power)
-	surplus_power -= drawn
-	available_power = max(available_power - drawn, 0)
-	return drawn
+	// Model a steady-state external feed for APC tests rather than a draining battery.
+	// APC logic already accounts for the post-draw surplus within the sampled tick state.
+	return min(amount, surplus_power)
 
 /obj/machinery/power/terminal/unit_test_apc/proc/reset_counts()
 	draw_calls = 0
@@ -336,9 +377,51 @@
 /datum/unit_test/apc_behavior_template
 	name = "template - APC behavior"
 	template = /datum/unit_test/apc_behavior_template
+	var/static/turf/cached_apc_test_center
+
+/datum/unit_test/apc_behavior_template/proc/is_clear_apc_test_tile(turf/T)
+	if(!istype(T, /turf/simulated/floor) || T.density)
+		return FALSE
+	for(var/obj/O in T)
+		if(istype(O, /obj/landmark))
+			continue
+		if(istype(O, /obj/floor_decal))
+			continue
+		return FALSE
+	return TRUE
+
+/datum/unit_test/apc_behavior_template/proc/is_clear_apc_test_cross(turf/center)
+	if(!is_clear_apc_test_tile(center))
+		return FALSE
+	for(var/dir in GLOB.cardinal)
+		var/turf/T = get_step(center, dir)
+		if(!istype(T) || !is_clear_apc_test_tile(T))
+			return FALSE
+	return TRUE
+
+/datum/unit_test/apc_behavior_template/proc/find_apc_test_center()
+	if(istype(cached_apc_test_center) && is_clear_apc_test_cross(cached_apc_test_center))
+		return cached_apc_test_center
+
+	var/turf/origin = get_safe_turf()
+	var/area/origin_area = get_area(origin)
+	if(origin_area)
+		for(var/turf/simulated/floor/T in origin_area)
+			if(is_clear_apc_test_cross(T))
+				cached_apc_test_center = T
+				return T
+
+	for(var/turf/simulated/floor/T in world)
+		if(T.z != origin.z)
+			continue
+		if(is_clear_apc_test_cross(T))
+			cached_apc_test_center = T
+			return T
+
+	return origin
 
 /datum/unit_test/apc_behavior_template/proc/claim_apc_test_area()
-	var/turf/center = get_safe_turf()
+	var/turf/center = find_apc_test_center()
 	var/list/turfs = list(center)
 	for(var/dir in GLOB.cardinal)
 		var/turf/T = get_step(center, dir)
@@ -386,13 +469,21 @@
 	if(apc)
 		apc.power_change_calls = 0
 		apc.power_change_usage_samples.Cut()
+		if(istype(apc, /obj/machinery/power/apc/unit_test_apc/profiled))
+			var/obj/machinery/power/apc/unit_test_apc/profiled/profiled_apc = apc
+			profiled_apc.reset_profile_counts()
 	terminal?.reset_counts()
 	cell?.reset_counts()
 
-/datum/unit_test/apc_behavior_template/proc/setup_apc_fixture(with_cell = TRUE, terminal_power = 0, cell_charge = null)
+/datum/unit_test/apc_behavior_template/proc/configure_apc_channels(obj/machinery/power/apc/apc, equipment_state, lighting_state, environment_state)
+	apc.set_channel_state(EQUIP, equipment_state)
+	apc.set_channel_state(LIGHT, lighting_state)
+	apc.set_channel_state(ENVIRON, environment_state)
+
+/datum/unit_test/apc_behavior_template/proc/setup_apc_fixture(with_cell = TRUE, terminal_power = 0, cell_charge = null, apc_type = /obj/machinery/power/apc/unit_test_apc)
 	var/list/fixture = claim_apc_test_area()
 	var/turf/center = fixture["center"]
-	var/obj/machinery/power/apc/unit_test_apc/apc = new(center)
+	var/obj/machinery/power/apc/unit_test_apc/apc = new apc_type(center)
 	fixture["apc"] = apc
 	fixture["local_net"] = apc.get_local_powernet()
 
@@ -449,15 +540,11 @@
 	local_net.adjust_static_power(PW_CHANNEL_LIGHTING, 20)
 	local_net.adjust_static_power(PW_CHANNEL_ENVIRONMENT, 10)
 
-	apc.equipment_channel = POWERCHAN_OFF_TEMP
-	apc.lighting_channel = POWERCHAN_OFF_AUTO
-	apc.environment_channel = POWERCHAN_OFF_AUTO
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_OFF_TEMP, POWERCHAN_OFF_AUTO, POWERCHAN_OFF_AUTO)
 	if(apc.get_power_usage() != 40)
 		return fail_fixture(fixture, "APC desired draw should include OFF_TEMP and environment OFF_AUTO raw load, but exclude lighting OFF_AUTO.")
 
-	apc.lighting_channel = POWERCHAN_ON
-	apc.mark_cache_dirty()
+	apc.set_channel_state(LIGHT, POWERCHAN_ON)
 	if(apc.get_power_usage() != 60)
 		return fail_fixture(fixture, "APC desired draw should include POWERCHAN_ON raw load.")
 
@@ -513,10 +600,7 @@
 	var/datum/local_powernet/local_net = fixture["local_net"]
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 
-	apc.equipment_channel = POWERCHAN_ON
-	apc.lighting_channel = POWERCHAN_OFF
-	apc.environment_channel = POWERCHAN_OFF
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.Process() // establish the powered baseline
 	reset_apc_fixture_counters(fixture)
@@ -553,10 +637,7 @@
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
 
-	apc.equipment_channel = POWERCHAN_ON
-	apc.lighting_channel = POWERCHAN_OFF
-	apc.environment_channel = POWERCHAN_OFF
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.Process() // establish the powered baseline
 	reset_apc_fixture_counters(fixture)
@@ -586,10 +667,7 @@
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
 
-	apc.equipment_channel = POWERCHAN_ON
-	apc.lighting_channel = POWERCHAN_OFF
-	apc.environment_channel = POWERCHAN_OFF
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	reset_apc_fixture_counters(fixture)
 	apc.Process()
@@ -630,10 +708,7 @@
 	var/obj/item/stock_parts/power/terminal/terminal_part = fixture["terminal_part"]
 	var/turf/center = fixture["center"]
 
-	apc.equipment_channel = POWERCHAN_ON
-	apc.lighting_channel = POWERCHAN_OFF
-	apc.environment_channel = POWERCHAN_OFF
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.power_change() // establish the powered baseline from the connected terminal
 	reset_apc_fixture_counters(fixture)
@@ -673,12 +748,9 @@
 	var/datum/local_powernet/local_net = fixture["local_net"]
 	var/obj/item/stock_parts/power/battery/battery = fixture["battery"]
 
-	apc.equipment_channel = POWERCHAN_ON
-	apc.lighting_channel = POWERCHAN_OFF
-	apc.environment_channel = POWERCHAN_OFF
-	apc.mark_cache_dirty()
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
-	apc.power_change() // establish the battery-backed powered baseline
+	apc.Process() // establish the battery-backed powered baseline through the APC-owned runtime path
 	reset_apc_fixture_counters(fixture)
 
 	var/obj/item/cell/removed = battery.remove_cell()
@@ -702,3 +774,122 @@
 		return fail_fixture(fixture, "Cell insertion did not refresh APC powered state.")
 
 	return pass_fixture(fixture, "Cell insert/remove events wake APC and refresh APC power state immediately.")
+
+// Temporary APC performance-guard tests.
+// These are intended to expose structural hotspots while APC runtime and local power fanout are being cleaned up.
+// Once the hotspot work is finished and the implementation settles, these can be removed or folded into stricter contract tests.
+
+/datum/unit_test/apc_behavior_template/apc_noop_get_power_usage_cache_budget
+	name = "POWER: APC repeated get_power_usage avoids tick-state rebuild churn."
+
+/datum/unit_test/apc_behavior_template/apc_noop_get_power_usage_cache_budget/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 100, 1000, /obj/machinery/power/apc/unit_test_apc/profiled)
+	var/obj/machinery/power/apc/unit_test_apc/profiled/apc = fixture["apc"]
+	var/datum/local_powernet/local_net = fixture["local_net"]
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
+	if(apc.get_power_usage() != 50)
+		return fail_fixture(fixture, "Baseline APC desired draw was not established before cache-budget test.")
+
+	reset_apc_fixture_counters(fixture)
+	for(var/i in 1 to 25)
+		if(apc.get_power_usage() != 50)
+			return fail_fixture(fixture, "Repeated APC desired draw reads became unstable during cache-budget test.")
+
+	if(apc.rebuild_tick_state_calls != 0)
+		return fail_fixture(fixture, "Repeated get_power_usage() rebuilt APC tick state [apc.rebuild_tick_state_calls] times in a no-op scenario.")
+	if(apc.get_tick_state_calls != 25)
+		return fail_fixture(fixture, "Expected one get_tick_state() call per desired-draw read, saw [apc.get_tick_state_calls].")
+
+	return pass_fixture(fixture, "Repeated APC desired-draw reads reuse tick-state without rebuild churn.")
+
+/datum/unit_test/apc_behavior_template/apc_steady_state_process_call_budget
+	name = "POWER: APC steady-state Process avoids repeated edge and fanout work."
+
+/datum/unit_test/apc_behavior_template/apc_steady_state_process_call_budget/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 100, 1000, /obj/machinery/power/apc/unit_test_apc/profiled)
+	var/obj/machinery/power/apc/unit_test_apc/profiled/apc = fixture["apc"]
+	var/datum/local_powernet/local_net = fixture["local_net"]
+	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
+	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
+	apc.Process() // establish baseline
+	reset_apc_fixture_counters(fixture)
+
+	for(var/i in 1 to 6)
+		apc.Process()
+
+	if(apc.power_change_calls != 0)
+		return fail_fixture(fixture, "Steady-state APC Process retriggered power_change() [apc.power_change_calls] times without a real edge.")
+	if(apc.update_calls != 0)
+		return fail_fixture(fixture, "Steady-state APC Process called update() [apc.update_calls] times without a channel or force-update change.")
+	if(terminal.draw_calls != 6)
+		return fail_fixture(fixture, "Steady-state APC Process should perform one terminal draw per tick, saw [terminal.draw_calls] draws across 6 ticks.")
+	if(cell.discharge_calls != 0)
+		return fail_fixture(fixture, "Steady-state APC Process unexpectedly touched battery fallback [cell.discharge_calls] times with enough external power.")
+
+	return pass_fixture(fixture, "Steady-state APC Process avoids extra edge/fanout work while still drawing external power once per tick.")
+
+/datum/unit_test/apc_behavior_template/apc_component_event_budget
+	name = "POWER: APC component wake path rebuilds once per event."
+
+/datum/unit_test/apc_behavior_template/apc_component_event_budget/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 50, 1000, /obj/machinery/power/apc/unit_test_apc/profiled)
+	var/obj/machinery/power/apc/unit_test_apc/profiled/apc = fixture["apc"]
+	var/obj/item/stock_parts/power/battery/battery = fixture["battery"]
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
+	reset_apc_fixture_counters(fixture)
+
+	var/obj/item/cell/removed = battery.remove_cell()
+	if(apc.rebuild_tick_state_calls != 1)
+		qdel(removed)
+		return fail_fixture(fixture, "Cell removal rebuilt APC tick state [apc.rebuild_tick_state_calls] times instead of once.")
+	if(apc.power_change_calls != 1)
+		qdel(removed)
+		return fail_fixture(fixture, "Cell removal woke APC power_change() [apc.power_change_calls] times instead of once.")
+	qdel(removed)
+
+	reset_apc_fixture_counters(fixture)
+	var/obj/item/cell/unit_test_apc/new_cell = new(battery)
+	new_cell.charge = new_cell.maxcharge
+	new_cell.update_icon()
+	battery.add_cell(apc, new_cell)
+	new_cell.forceMove(battery)
+
+	if(apc.rebuild_tick_state_calls != 1)
+		return fail_fixture(fixture, "Cell insertion rebuilt APC tick state [apc.rebuild_tick_state_calls] times instead of once.")
+	if(apc.power_change_calls != 1)
+		return fail_fixture(fixture, "Cell insertion woke APC power_change() [apc.power_change_calls] times instead of once.")
+
+	return pass_fixture(fixture, "Component wake path performs one APC rebuild and one APC wake per cell event.")
+
+/datum/unit_test/apc_behavior_template/apc_noop_update_does_not_fanout
+	name = "POWER: APC no-op update does not fan out to local machinery."
+
+/datum/unit_test/apc_behavior_template/apc_noop_update_does_not_fanout/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 100, 1000, /obj/machinery/power/apc/unit_test_apc/profiled)
+	var/obj/machinery/power/apc/unit_test_apc/profiled/apc = fixture["apc"]
+	var/turf/center = fixture["center"]
+	var/obj/machinery/unit_test_local_power_sink/sink = new(center)
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
+	apc.update() // establish baseline APC publication into the local powernet
+	sink.reset_power_change_calls()
+	reset_apc_fixture_counters(fixture)
+
+	for(var/i in 1 to 5)
+		apc.update()
+
+	if(sink.power_change_calls != 0)
+		qdel(sink)
+		return fail_fixture(fixture, "No-op APC update fanned out [sink.power_change_calls] unnecessary local machinery power_change() calls.")
+	if(apc.power_change_calls != 0)
+		qdel(sink)
+		return fail_fixture(fixture, "No-op APC update retriggered APC power_change() [apc.power_change_calls] times.")
+
+	qdel(sink)
+	return pass_fixture(fixture, "No-op APC update stays local and does not fan out to registered machinery.")

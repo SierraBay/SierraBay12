@@ -34,7 +34,7 @@
 	/// Registered machinery in the owning area.
 	var/list/registered_machines = list()
 	/// APC self-fanout suppression for APC-owned local powernet updates.
-	var/tmp/suppress_apc_notify = FALSE
+	var/suppress_apc_notify = FALSE
 
 /datum/local_powernet/proc/bump_usage_revision()
 	usage_revision++
