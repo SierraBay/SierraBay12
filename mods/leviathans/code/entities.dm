@@ -45,6 +45,15 @@
 	color = COLOR_SEDONA
 	heal_min = 10
 	heal_max = 15
+	events = list(/datum/event/dragon)
+
+/datum/event/dragon
+	has_skybox_image = TRUE
+
+/datum/event/dragon/get_skybox_image()
+	var/image/res = overlay_image('mods/leviathans/icons/background.dmi', "dragon", RESET_COLOR)
+	res.blend_mode = BLEND_OVERLAY
+	return res
 
 /obj/overmap/event/leviathan/dragon/get_damage_multiplier(damage_source)
 	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive))
