@@ -53,7 +53,7 @@
 	},
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
 	id_tag = "handpodone_port_shuttle_dock_interior_door";
-	frequency = 1380
+	frequency = 1431
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -65,7 +65,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/access_button/airlock_interior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodone_port_shuttle_dock";
 	pixel_y = -24;
 	pixel_x = 7
@@ -708,7 +708,7 @@
 "ed" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/vulcan{
-	id_tag = "carpod4_pump_out_internal"
+	id_tag = "handpodtwo_pump_out_internal"
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/shuttle/pod_hand_two)
@@ -1810,7 +1810,7 @@
 /area/ship/hand/maintenance/engine/port)
 "jb" = (
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone_interior_sensor";
 	pixel_x = 23;
 	pixel_y = 10
@@ -1974,7 +1974,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone_port_shuttle_dock_sensor_internal";
 	pixel_x = -23
 	},
@@ -2527,10 +2527,10 @@
 	},
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
 	id_tag = "handpodtwo_outer";
-	frequency = 1380
+	frequency = 1431
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_exterior_sensor";
 	pixel_x = -8;
 	pixel_y = -22
@@ -2542,7 +2542,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodtwo";
 	pixel_y = 23;
 	pixel_z = 1
@@ -2771,10 +2771,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
-	id_tag = "handpodone_outer"
+	id_tag = "handpodone_outer";
+	frequency = 1431
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone_exterior_sensor";
 	pixel_x = 8;
 	pixel_y = -22
@@ -2786,7 +2787,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodone";
 	pixel_y = 23;
 	pixel_z = 1
@@ -2858,7 +2859,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/tin_can{
 	dir = 8;
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone";
 	pixel_x = 17;
 	pixel_y = 25
@@ -2884,7 +2885,9 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_three)
 "oE" = (
-/obj/machinery/atmospherics/pipe/vent/high_volume{
+/obj/machinery/atmospherics/unary/outlet_injector{
+	injecting = 1;
+	use_power = 1;
 	dir = 4
 	},
 /turf/simulated/floor/reinforced{
@@ -4025,12 +4028,12 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_port_shuttle_dock_exterior_door";
 	locked = 1
 	},
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodtwo_port_shuttle_dock";
 	pixel_y = -23;
 	pixel_z = 1
@@ -4623,7 +4626,7 @@
 	},
 /obj/machinery/embedded_controller/radio/airlock/tin_can{
 	dir = 4;
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo";
 	pixel_x = -17;
 	pixel_y = 25
@@ -4807,13 +4810,13 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/access_button/airlock_interior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodtwo_port_shuttle_dock";
 	pixel_x = 32;
 	pixel_y = 8
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_port_shuttle_dock_sensor_internal";
 	pixel_x = 34
 	},
@@ -4825,7 +4828,7 @@
 	dir = 10
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_port_shuttle_dock";
 	pixel_y = 26;
 	tag_airpump = "handpodtwo_port_shuttle_dock_pump";
@@ -4848,7 +4851,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_port_shuttle_dock_interior_door"
 	},
 /obj/machinery/door/firedoor{
@@ -5329,10 +5332,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	dir = 1;
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/vulcan{
 	id_tag = "handpodone_port_shuttle_dock_pump";
-	power_rating = 25000
+	dir = 1
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/miner_one)
@@ -6110,7 +6112,7 @@
 /area/ship/hand/shuttle/pod_hand_one)
 "EO" = (
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_interior_sensor";
 	pixel_x = -23;
 	pixel_y = 10
@@ -6593,7 +6595,7 @@
 	dir = 6
 	},
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone_port_shuttle_dock";
 	pixel_y = 26;
 	tag_airpump = "handpodone_port_shuttle_dock_pump";
@@ -7592,14 +7594,14 @@
 	},
 /obj/structure/catwalk,
 /obj/machinery/access_button/airlock_exterior{
-	frequency = 1380;
+	frequency = 1431;
 	master_tag = "handpodone_port_shuttle_dock";
 	pixel_y = -23;
 	pixel_z = 1
 	},
 /obj/machinery/door/airlock/external/glass/bolted/cycling{
 	id_tag = "handpodone_port_shuttle_dock_exterior_door";
-	frequency = 1380
+	frequency = 1431
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8077,13 +8079,12 @@
 /obj/machinery/atmospherics/valve/shutoff/fuel{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
-	dir = 1;
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/vulcan{
 	id_tag = "handpodone_port_shuttle_dock_pump";
-	power_rating = 25000
+	dir = 1
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodone_port_shuttle_dock_sensor_chamber";
 	pixel_x = -23
 	},
@@ -8192,10 +8193,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/vulcan{
 	dir = 1;
-	id_tag = "handpodtwo_port_shuttle_dock_pump";
-	power_rating = 25000
+	id_tag = "handpodtwo_port_shuttle_dock_pump"
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/miner_two)
@@ -8403,14 +8403,13 @@
 	dir = 8
 	},
 /obj/machinery/airlock_sensor{
-	frequency = 1380;
+	frequency = 1431;
 	id_tag = "handpodtwo_port_shuttle_dock_sensor_chamber";
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/vulcan{
 	dir = 1;
-	id_tag = "handpodtwo_port_shuttle_dock_pump";
-	power_rating = 25000
+	id_tag = "handpodtwo_port_shuttle_dock_pump"
 	},
 /obj/machinery/light/small,
 /obj/floor_decal/industrial/shutoff{
@@ -8420,7 +8419,9 @@
 /area/ship/hand/crew/miner_two)
 "Qy" = (
 /obj/structure/table/rack,
-/obj/item/stock_parts/circuitboard/modular_computer,/obj/item/stock_parts/computer/hard_drive/super/helm,/obj/item/stock_parts/computer/ship_interface,
+/obj/item/stock_parts/circuitboard/modular_computer,
+/obj/item/stock_parts/computer/hard_drive/super/helm,
+/obj/item/stock_parts/computer/ship_interface,
 /obj/item/stock_parts/circuitboard/pacman/super,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light/small{
