@@ -409,6 +409,14 @@
 	id = "null _suit"
 	time = 120
 
+/datum/design/item/mechfab/rig/breacher
+	category = "Hardsuits"
+	name = "Experemental NT Breacher control module"
+	build_path = /obj/item/rig/unathi/fancy
+	materials = list(MATERIAL_PLASTEEL = 30000, MATERIAL_DIAMOND = 3000, MATERIAL_SILVER = 1000)
+	id = "unathi_hard"
+	time = 10
+
 /datum/design/item/mechfab/rig/meson
 	category = "Hardsuits"
 	name = "Meson Scanner"

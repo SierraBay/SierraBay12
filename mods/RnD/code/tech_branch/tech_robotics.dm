@@ -104,8 +104,21 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("null _suit","rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_powersink","rig_ai_container","rig_taser","rig_egun","rig_cooler","rig_kinetic", "self_repair", "ai_advanced")
+	unlocks_designs = list("null _suit","rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_powersink","rig_ai_container","rig_taser","rig_egun","rig_cooler","rig_kinetic", "self_repair", "ai_advanced",)
 
+/datum/technology/robo/combat_hardsuits
+	name = "Combat Hardsuits"
+	desc = "combat Hardsuits"
+	id = "cmb_hardsuits"
+
+	x = 0.4
+	y = 0.8
+	icon = "laser"
+	required_technologies = list(/datum/technology/robo/adv_hardsuits, /datum/technology/robo/basic_hardsuitmods)
+	required_tech_levels = list()
+	cost = 3200
+
+	unlocks_designs = list("unathi_hard")
 /datum/technology/robo/heavy_mech
 	name = "Heavy Mech Design"
 	desc = "Heavy Mech Design"
