@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(active_leviathans)
+
 /obj/meteor/proc/move_to_dest(target_dest, speed)
 	walk_towards(src, target_dest, speed)
 
@@ -15,6 +17,8 @@
 	var/damage = 10
 
 	var/weakref/target_ship = null // Целевое судно, будет следовать за ним через всю овермапу
+	var/manual_ai = FALSE // Если TRUE, левиафан не ищет цели сам
+	var/weakref/forced_target = null // Принудительно установленная цель
 
 	var/damage_cooldown = 10 SECONDS // КД следующего выстрела снарядом
 	var/next_damage_time = 0
@@ -40,6 +44,7 @@
 
 /obj/overmap/event/leviathan/Initialize(seed)
 	. = ..(seed)
+	GLOB.active_leviathans += src
 	max_health = health
 	base_speed = leviathan_speed
 
@@ -54,11 +59,14 @@
 	AddOverlays(I, ATOM_ICON_CACHE_PROTECTED)
 
 /obj/overmap/event/leviathan/Destroy()
+	GLOB.active_leviathans -= src
 	if(processing)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/overmap/event/leviathan/proc/find_target()
+	if(manual_ai)
+		return
 	// Ищем самый тяжелый/большой корабль на овермапе (обычно Сьерра)
 	// и делаем его своей целью
 	var/obj/overmap/visitable/ship/best_target = null
@@ -170,7 +178,9 @@
 /obj/overmap/event/leviathan/proc/update_movement()
 	var/atom/movable/current_target = null
 
-	if(is_healing && needs_healing_location())
+	if(manual_ai)
+		current_target = forced_target?.resolve()
+	else if(is_healing && needs_healing_location())
 		var/obj/overmap/H = healing_target_ref?.resolve()
 		if(!H || QDELETED(H))
 			H = find_healing_target()
@@ -229,7 +239,7 @@
 /obj/overmap/event/leviathan/proc/deal_damage_to_sector()
 	var/damaged_something = FALSE
 
-	var/obj/overmap/O = target_ship?.resolve()
+	var/obj/overmap/O = (manual_ai ? forced_target?.resolve() : target_ship?.resolve())
 	var/stationary = istype(O) && !O.is_moving()
 
 	for(var/obj/overmap/visitable/ship/S in range(1, src))
