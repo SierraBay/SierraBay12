@@ -314,3 +314,8 @@
 			return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_CLOSE
 	. = ..()
+
+
+//IPS sensors are no longer damaged in the phoron atmosphere:
+/obj/item/organ/internal/eyes/robot
+	phoron_guard = TRUE
