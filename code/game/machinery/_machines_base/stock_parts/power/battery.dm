@@ -28,7 +28,8 @@
 
 /obj/item/stock_parts/power/battery/on_install(obj/machinery/machine)
 	..()
-	start_processing(machine)
+	if(!istype(machine, /obj/machinery/power/apc))
+		start_processing(machine)
 
 /obj/item/stock_parts/power/battery/on_uninstall(obj/machinery/machine)
 	if(status & PART_STAT_ACTIVE)
@@ -49,8 +50,12 @@
 	if(!machine)
 		machine = loc
 	if(istype(machine))
-		machine.power_change()
-		machine.queue_icon_update()
+		if(istype(machine, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = machine
+			apc.apc_power_component_changed()
+		else
+			machine.power_change()
+			machine.queue_icon_update()
 	set_status(machine, PART_STAT_CONNECTED)
 	update_icon()
 	return cell
@@ -63,8 +68,12 @@
 		set_battery_mode(BATTERY_MODE_UNAVAILABLE, 0)
 		var/obj/machinery/machine = loc
 		if(istype(machine))
-			machine.power_change()
-			machine.queue_icon_update()
+			if(istype(machine, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/apc = machine
+				apc.apc_power_component_changed()
+			else
+				machine.power_change()
+				machine.queue_icon_update()
 		update_icon()
 		unset_status(machine, PART_STAT_CONNECTED)
 
@@ -82,6 +91,8 @@
 		machine.update_icon()
 
 /obj/item/stock_parts/power/battery/machine_process(obj/machinery/machine)
+	if(istype(machine, /obj/machinery/power/apc))
+		return PROCESS_KILL
 	last_cell_charge = cell && cell.charge
 	var/machine_draw = machine.get_power_usage()
 	var/is_discharging = status & PART_STAT_ACTIVE

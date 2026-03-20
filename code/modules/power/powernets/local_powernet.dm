@@ -79,6 +79,26 @@
 	bump_usage_revision()
 	power_change()
 
+/datum/local_powernet/proc/apply_apc_power_state(obj/machinery/power/apc/new_apc, equipment_state, lighting_state, environment_state)
+	var/changed = FALSE
+	if(powernet_apc != new_apc)
+		powernet_apc = new_apc
+		changed = TRUE
+	if(equipment_powered != equipment_state)
+		equipment_powered = equipment_state
+		changed = TRUE
+	if(lighting_powered != lighting_state)
+		lighting_powered = lighting_state
+		changed = TRUE
+	if(environment_powered != environment_state)
+		environment_powered = environment_state
+		changed = TRUE
+	if(!changed)
+		return FALSE
+	bump_usage_revision()
+	power_change()
+	return TRUE
+
 /datum/local_powernet/proc/has_power(channel)
 	if(channel == LOCAL || channel == TOTAL)
 		return FALSE

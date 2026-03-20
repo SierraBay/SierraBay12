@@ -1,6 +1,7 @@
 /datum/powernet
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
+	var/list/apcs = list()		// connected APCs represented on this powernet
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -31,6 +32,7 @@
 	for(var/obj/machinery/power/M in nodes)
 		nodes -= M
 		M.powernet = null
+	apcs.Cut()
 	STOP_PROCESSING_POWERNET(src)
 	return ..()
 
@@ -43,6 +45,25 @@
 	var/draw = clamp(amount, 0, avail - load)
 	load += draw
 	return draw
+
+/datum/powernet/proc/get_apc(obj/machinery/power/M)
+	if(istype(M, /obj/machinery/power/apc))
+		return M
+	if(istype(M, /obj/machinery/power/terminal))
+		var/obj/machinery/power/terminal/terminal = M
+		var/obj/machinery/power/apc/apc = terminal.master_machine()
+		if(istype(apc))
+			return apc
+
+/datum/powernet/proc/add_apc_machine(obj/machinery/power/M)
+	var/obj/machinery/power/apc/apc = get_apc(M)
+	if(apc)
+		apcs[apc] = apc
+
+/datum/powernet/proc/remove_apc_machine(obj/machinery/power/M)
+	var/obj/machinery/power/apc/apc = get_apc(M)
+	if(apc)
+		apcs -= apc
 
 /datum/powernet/proc/is_empty()
 	return !length(cables) && !length(nodes)
@@ -71,6 +92,7 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
+	remove_apc_machine(M)
 	nodes -=M
 	M.powernet = null
 	if(is_empty())//the powernet is now empty...
@@ -87,6 +109,7 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
+	add_apc_machine(M)
 
 // Triggers warning for certain amount of ticks
 /datum/powernet/proc/trigger_warning(duration_ticks = 20)
@@ -96,15 +119,10 @@
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-	var/numapc = 0
+	var/numapc = length(apcs)
 
 	if(problem > 0)
 		problem = max(problem - 1, 0)
-
-	if(nodes && length(nodes)) // Added to fix a bad list bug -- TLE
-		for(var/obj/machinery/power/terminal/term in nodes)
-			if( istype( term.master_machine(), /obj/machinery/power/apc ) )
-				numapc++
 
 	netexcess = avail - load
 
@@ -166,15 +184,13 @@
 // Parameters: 3 (failure_chance - chance to actually break the APC, overload_chance - Chance of breaking lights, reboot_chance - Chance of temporarily disabling the APC)
 // Description: Damages output powernet by power surge. Destroys few APCs and lights, depending on parameters.
 /datum/powernet/proc/apcs_overload(failure_chance, overload_chance, reboot_chance)
-	for(var/obj/machinery/power/terminal/T in nodes)
-		var/obj/machinery/power/apc/A = T.master_machine()
-		if(istype(A))
-			if (prob(failure_chance))
-				A.set_broken(TRUE)
-			if (prob(overload_chance))
-				A.overload_lighting()
-			if(prob(reboot_chance))
-				A.energy_fail(rand(30,60))
+	for(var/obj/machinery/power/apc/A in apcs)
+		if (prob(failure_chance))
+			A.set_broken(TRUE)
+		if (prob(overload_chance))
+			A.overload_lighting()
+		if(prob(reboot_chance))
+			A.energy_fail(rand(30,60))
 
 ////////////////////////////////////////////////
 // Misc.

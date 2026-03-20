@@ -41,16 +41,53 @@
 #define APC_UPOVERLAY_LOCKED 8
 #define APC_UPOVERLAY_OPERATING 16
 
-#define APC_CACHE_LOAD_DIRTY (1<<0)
-#define APC_CACHE_EXTERNAL_DIRTY (1<<1)
-#define APC_CACHE_AUTOMATION_DIRTY (1<<2)
-#define APC_CACHE_UI_DIRTY (1<<3)
-#define APC_CACHE_ALL_DIRTY (APC_CACHE_LOAD_DIRTY | APC_CACHE_EXTERNAL_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
+#define APC_CACHE_TICK_STATE_DIRTY (1<<0)
+#define APC_CACHE_AUTOMATION_DIRTY (1<<1)
+#define APC_CACHE_UI_DIRTY (1<<2)
+#define APC_CACHE_ALL_DIRTY (APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
 
 #define APC_POWER_REGIME_NONE 0
 #define APC_POWER_REGIME_ENVIRONMENT_ONLY 1
 #define APC_POWER_REGIME_EQUIPMENT_ONLY 2
 #define APC_POWER_REGIME_ALL_ON 3
+
+// APC-side mirrors of the battery file-local mode constants.
+#define APC_BATTERY_MODE_UNAVAILABLE 0
+#define APC_BATTERY_MODE_IDLE 1
+#define APC_BATTERY_MODE_DISCHARGING 2
+#define APC_BATTERY_MODE_CHARGING 3
+#define APC_BATTERY_MODE_READY 4
+
+/datum/apc_tick_state
+	var/world_time = -1
+	var/usage_revision = -1
+	var/datum/local_powernet/local_net
+	var/raw_equipment_load = 0
+	var/raw_lighting_load = 0
+	var/raw_environment_load = 0
+	var/display_equipment_load = 0
+	var/display_lighting_load = 0
+	var/display_environment_load = 0
+	var/display_total_load = 0
+	var/desired_equipment_load = 0
+	var/desired_lighting_load = 0
+	var/desired_environment_load = 0
+	var/desired_total_load = 0
+	var/obj/item/stock_parts/power/terminal/terminal_part
+	var/obj/machinery/power/terminal/external_terminal
+	var/external_avail = 0
+	var/external_surplus = 0
+	var/obj/item/stock_parts/power/battery/battery_part
+	var/obj/item/cell/cell
+	var/cell_percent = null
+	var/cell_full = FALSE
+	var/can_charge = FALSE
+	var/main_status = 0
+	var/powered = TRUE
+	var/external_drawn = 0
+	var/fallback_drawn = 0
+	var/uncovered_deficit = 0
+	var/charging_load = 0
 
 // Various APC types
 /obj/machinery/power/apc/inactive
@@ -149,16 +186,11 @@
 	var/force_update = 0
 	var/emp_hardened = 0
 	var/cache_flags = APC_CACHE_ALL_DIRTY
-	var/cached_total_load = 0
-	var/cached_equipment_load = 0
-	var/cached_lighting_load = 0
-	var/cached_environment_load = 0
-	var/cached_external_avail = 0
-	var/cached_external_surplus = 0
 	var/cached_power_regime = -1
-	var/last_seen_usage_revision = -1
-	var/cached_external_process_time = -1
-	var/obj/machinery/power/terminal/cached_external_terminal
+	var/obj/item/stock_parts/power/terminal/cached_terminal_part
+	var/obj/item/stock_parts/power/battery/cached_battery_part
+	var/tick_state_locked = FALSE
+	var/datum/apc_tick_state/tick_state
 
 	/**
 	 * List of images. Cached icon overlays for the lock indicator.
@@ -299,17 +331,21 @@
 		apc_area.apc = null
 	var/datum/local_powernet/local_net = machine_powernet || apc_area?.powernet
 	if(local_net)
-		if(local_net.powernet_apc == src)
-			local_net.powernet_apc = null
-		local_net.lighting_powered = FALSE
-		local_net.equipment_powered = FALSE
-		local_net.environment_powered = FALSE
-		local_net.power_change()
+		local_net.apply_apc_power_state(null, FALSE, FALSE, FALSE)
 
 	// Malf AI, removes the APC from AI's hacked APCs list.
 	if((hacker) && (hacker.hacked_apcs) && (src in hacker.hacked_apcs))
 		hacker.hacked_apcs -= src
 
+	return ..()
+
+/obj/machinery/power/apc/RefreshParts()
+	invalidate_power_part_refs()
+	return ..()
+
+/obj/machinery/power/apc/component_destroyed(obj/item/component)
+	if(component == cached_terminal_part || component == cached_battery_part)
+		invalidate_power_part_refs()
 	return ..()
 
 /obj/machinery/power/apc/get_req_access()
@@ -327,32 +363,201 @@
 /obj/machinery/power/apc/proc/init_round_start()
 	has_electronics = 2 //installed and secured
 
-	var/obj/item/stock_parts/power/battery/bat = get_component_of_type(/obj/item/stock_parts/power/battery)
+	var/obj/item/stock_parts/power/battery/bat = get_battery_part()
 	bat.add_cell(src, new cell_type(bat))
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = get_terminal_part()
 	term.make_terminal(src)
 
 	queue_icon_update()
 
+/obj/machinery/power/apc/proc/invalidate_power_part_refs()
+	cached_terminal_part = null
+	cached_battery_part = null
+
+/obj/machinery/power/apc/proc/get_terminal_part()
+	if(cached_terminal_part && !QDELETED(cached_terminal_part) && cached_terminal_part.loc == src && component_parts && (cached_terminal_part in component_parts))
+		return cached_terminal_part
+	cached_terminal_part = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	return cached_terminal_part
+
+/obj/machinery/power/apc/proc/get_battery_part()
+	if(cached_battery_part && !QDELETED(cached_battery_part) && cached_battery_part.loc == src && component_parts && (cached_battery_part in component_parts))
+		return cached_battery_part
+	cached_battery_part = get_component_of_type(/obj/item/stock_parts/power/battery)
+	return cached_battery_part
+
 /obj/machinery/power/apc/proc/terminal()
-	var/obj/item/stock_parts/power/terminal/term = get_component_of_type(/obj/item/stock_parts/power/terminal)
+	var/obj/item/stock_parts/power/terminal/term = get_terminal_part()
 	return term && term.terminal
+
+/obj/machinery/power/apc/get_cell()
+	var/obj/item/stock_parts/power/battery/battery = get_battery_part()
+	return battery && battery.cell
 
 /obj/machinery/power/apc/proc/mark_cache_dirty(flags = APC_CACHE_ALL_DIRTY)
 	cache_flags |= flags
+	if(flags & APC_CACHE_TICK_STATE_DIRTY)
+		tick_state_locked = FALSE
 
-/obj/machinery/power/apc/proc/refresh_external_cache(force = FALSE)
-	var/obj/machinery/power/terminal/external_terminal = terminal()
-	if(force || (cache_flags & APC_CACHE_EXTERNAL_DIRTY) || cached_external_process_time != world.time || cached_external_terminal != external_terminal)
-		cached_external_terminal = external_terminal
-		cached_external_avail = (external_terminal && external_terminal.avail()) || 0
-		cached_external_surplus = (external_terminal && external_terminal.surplus()) || 0
-		cached_external_process_time = world.time
-		cache_flags &= ~APC_CACHE_EXTERNAL_DIRTY
-	return external_terminal
+/obj/machinery/power/apc/proc/get_local_powernet()
+	if(machine_powernet)
+		return machine_powernet
+	if(apc_area?.powernet)
+		machine_powernet = apc_area.powernet
+		return machine_powernet
+	machine_powernet = apc_area?.create_powernet()
+	return machine_powernet
 
-/obj/machinery/power/apc/proc/get_cached_power_regime(percent)
-	if(failure_timer || !operating || shorted || !is_powered() || isnull(percent))
+/obj/machinery/power/apc/proc/get_main_status_from_state(datum/apc_tick_state/state)
+	if(!state.external_avail)
+		return 0
+	if(state.external_surplus < 0)
+		return 1
+	return 2
+
+/obj/machinery/power/apc/proc/predict_powered_from_state(datum/apc_tick_state/state)
+	if(!state || !state.desired_total_load)
+		return TRUE
+	var/available = min(max(state.external_surplus, 0), state.desired_total_load)
+	if(state.cell && !shorted)
+		available += min(state.cell.charge / CELLRATE, state.desired_total_load - available)
+	return available >= state.desired_total_load
+
+/obj/machinery/power/apc/proc/rebuild_tick_state(lock_for_tick = FALSE)
+	var/datum/apc_tick_state/state = tick_state
+	if(!state)
+		state = new
+		tick_state = state
+
+	var/datum/local_powernet/local_net = get_local_powernet()
+	var/obj/item/stock_parts/power/terminal/terminal_part = get_terminal_part()
+	var/obj/machinery/power/terminal/external_terminal = terminal_part && terminal_part.terminal
+	var/obj/item/stock_parts/power/battery/battery_part = get_battery_part()
+	var/obj/item/cell/cell = battery_part && battery_part.cell
+
+	state.world_time = world.time
+	state.local_net = local_net
+	state.usage_revision = local_net ? local_net.usage_revision : -1
+	state.raw_equipment_load = local_net ? local_net.passive_equipment_consumption + local_net.equipment_consumption : 0
+	state.raw_lighting_load = local_net ? local_net.passive_lighting_consumption + local_net.lighting_consumption : 0
+	state.raw_environment_load = local_net ? local_net.passive_environment_consumption + local_net.environment_consumption : 0
+	state.display_equipment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) : 0
+	state.display_lighting_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_LIGHTING) : 0
+	state.display_environment_load = local_net ? local_net.get_channel_usage(PW_CHANNEL_ENVIRONMENT) : 0
+	state.display_total_load = state.display_equipment_load + state.display_lighting_load + state.display_environment_load
+	if(!apc_area || !operating || shorted || failure_timer)
+		state.desired_equipment_load = 0
+		state.desired_lighting_load = 0
+		state.desired_environment_load = 0
+	else
+		state.desired_equipment_load = autoset(equipment_channel, 2) >= POWERCHAN_ON ? state.raw_equipment_load : 0
+		state.desired_lighting_load = autoset(lighting_channel, 2) >= POWERCHAN_ON ? state.raw_lighting_load : 0
+		state.desired_environment_load = autoset(environment_channel, 1) >= POWERCHAN_ON ? state.raw_environment_load : 0
+	state.desired_total_load = state.desired_equipment_load + state.desired_lighting_load + state.desired_environment_load
+	state.terminal_part = terminal_part
+	state.external_terminal = external_terminal
+	state.external_avail = (external_terminal && external_terminal.avail()) || 0
+	state.external_surplus = (external_terminal && external_terminal.surplus()) || 0
+	if(terminal_part)
+		terminal_part.cache_terminal_state(external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
+	state.battery_part = battery_part
+	state.cell = cell
+	state.cell_percent = cell && cell.percent()
+	state.cell_full = cell && cell.fully_charged()
+	state.can_charge = !!(battery_part && cell && battery_part.can_charge && !state.cell_full)
+	state.main_status = get_main_status_from_state(state)
+	state.powered = predict_powered_from_state(state)
+	state.external_drawn = 0
+	state.fallback_drawn = 0
+	state.uncovered_deficit = 0
+	state.charging_load = 0
+
+	cache_flags &= ~APC_CACHE_TICK_STATE_DIRTY
+	tick_state_locked = lock_for_tick
+	return state
+
+/obj/machinery/power/apc/proc/refresh_tick_state(lock_for_tick = FALSE, ignore_lock = FALSE)
+	if(!ignore_lock && tick_state_locked && tick_state?.world_time == world.time && !(cache_flags & APC_CACHE_TICK_STATE_DIRTY))
+		return tick_state
+
+	var/datum/apc_tick_state/state = tick_state
+	if(!state || (cache_flags & APC_CACHE_TICK_STATE_DIRTY))
+		return rebuild_tick_state(lock_for_tick)
+
+	var/datum/local_powernet/local_net = get_local_powernet()
+	var/current_usage_revision = local_net ? local_net.usage_revision : -1
+
+	// === EXPERIMENT: Disabled usage_revision check ===
+	// This check caused rebuild on EVERY tick because usage_revision changes whenever
+	// power consumption changes. Cache hit rate was 0% with this check enabled.
+	// Profiling showed 42,000+ rebuild calls vs expected ~2,000-3,000.
+	// The original comment about "stale state" is incorrect - clear_usage() is called
+	// AFTER snapshot_tick_state() in Process(), so cached state is valid.
+	// Rebuild is still triggered by component changes (terminal/battery/cell) below.
+	/*
+	if(state.local_net != local_net || state.usage_revision != current_usage_revision)
+		return rebuild_tick_state(lock_for_tick)
+	*/
+	// === END EXPERIMENT ===
+
+	var/obj/item/stock_parts/power/terminal/terminal_part = get_terminal_part()
+	var/obj/machinery/power/terminal/external_terminal = terminal_part && terminal_part.terminal
+	var/obj/item/stock_parts/power/battery/battery_part = get_battery_part()
+	var/obj/item/cell/cell = battery_part && battery_part.cell
+
+	if(state.terminal_part != terminal_part || state.battery_part != battery_part || state.cell != cell)
+		return rebuild_tick_state(lock_for_tick)
+
+	state.world_time = world.time
+	state.local_net = local_net
+	state.usage_revision = current_usage_revision
+	state.terminal_part = terminal_part
+	state.external_terminal = external_terminal
+	state.external_avail = (external_terminal && external_terminal.avail()) || 0
+	state.external_surplus = (external_terminal && external_terminal.surplus()) || 0
+	if(terminal_part)
+		terminal_part.cache_terminal_state(external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
+	state.battery_part = battery_part
+	state.cell = cell
+	state.cell_percent = cell && cell.percent()
+	state.cell_full = cell && cell.fully_charged()
+	state.can_charge = !!(battery_part && cell && battery_part.can_charge && !state.cell_full)
+	state.main_status = get_main_status_from_state(state)
+	state.powered = predict_powered_from_state(state)
+	state.external_drawn = 0
+	state.fallback_drawn = 0
+	state.uncovered_deficit = 0
+	state.charging_load = 0
+
+	tick_state_locked = lock_for_tick
+	return state
+
+/obj/machinery/power/apc/proc/get_tick_state(force = FALSE)
+	if(force)
+		return rebuild_tick_state()
+	return refresh_tick_state()
+
+/obj/machinery/power/apc/proc/snapshot_tick_state()
+	// Process() needs authoritative state before active usage is cleared, but the cached
+	// snapshot is still valid when the local powernet revision and APC topology are unchanged.
+	return refresh_tick_state(TRUE)
+
+/obj/machinery/power/apc/proc/apply_tick_state_views(datum/apc_tick_state/state)
+	if(!state)
+		return
+	last_used_lighting = state.display_lighting_load
+	last_used_equipment = state.display_equipment_load
+	last_used_environment = state.display_environment_load
+	last_used_total = state.display_total_load
+	main_status = state.main_status
+
+/obj/machinery/power/apc/proc/apply_powered_state(powered_state)
+	var/oldstat = stat
+	set_stat(MACHINE_STAT_NOPOWER, !powered_state)
+	return stat != oldstat
+
+/obj/machinery/power/apc/proc/get_power_regime(percent, powered_state)
+	if(failure_timer || !operating || shorted || !powered_state || isnull(percent))
 		return APC_POWER_REGIME_NONE
 	if(percent > AUTO_THRESHOLD_LIGHTING || longtermpower >= 0)
 		return APC_POWER_REGIME_ALL_ON
@@ -360,43 +565,9 @@
 		return APC_POWER_REGIME_EQUIPMENT_ONLY
 	return APC_POWER_REGIME_ENVIRONMENT_ONLY
 
-/obj/machinery/power/apc/proc/update_last_used()
-	if(!apc_area)
-		last_used_lighting = 0
-		last_used_equipment = 0
-		last_used_environment = 0
-		last_used_total = 0
-		cached_lighting_load = 0
-		cached_equipment_load = 0
-		cached_environment_load = 0
-		cached_total_load = 0
-		last_seen_usage_revision = -1
-		cache_flags &= ~APC_CACHE_LOAD_DIRTY
-		return
-	var/datum/local_powernet/local_net = machine_powernet || apc_area.powernet || apc_area.create_powernet()
-	if(!local_net)
-		last_used_lighting = 0
-		last_used_equipment = 0
-		last_used_environment = 0
-		last_used_total = 0
-		cached_lighting_load = 0
-		cached_equipment_load = 0
-		cached_environment_load = 0
-		cached_total_load = 0
-		last_seen_usage_revision = -1
-		cache_flags &= ~APC_CACHE_LOAD_DIRTY
-		return
-	if((cache_flags & APC_CACHE_LOAD_DIRTY) || last_seen_usage_revision != local_net.usage_revision)
-		cached_lighting_load = (lighting_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_LIGHTING) : 0
-		cached_equipment_load = (equipment_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) : 0
-		cached_environment_load = (environment_channel >= POWERCHAN_ON) ? local_net.get_channel_usage(PW_CHANNEL_ENVIRONMENT) : 0
-		cached_total_load = cached_lighting_load + cached_equipment_load + cached_environment_load
-		last_seen_usage_revision = local_net.usage_revision
-		cache_flags &= ~APC_CACHE_LOAD_DIRTY
-	last_used_lighting = cached_lighting_load
-	last_used_equipment = cached_equipment_load
-	last_used_environment = cached_environment_load
-	last_used_total = cached_total_load
+/obj/machinery/power/apc/proc/apc_power_component_changed()
+	mark_cache_dirty()
+	power_change()
 
 /obj/machinery/power/apc/proc/set_channel_state(channel, new_state)
 	var/changed = FALSE
@@ -417,7 +588,7 @@
 			environment_channel = new_state
 			changed = TRUE
 	if(changed)
-		mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_UI_DIRTY)
+		mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_UI_DIRTY)
 
 /obj/machinery/power/apc/examine(mob/user, distance)
 	. = ..()
@@ -546,29 +717,42 @@
 	var/obj/item/cell/cell = get_cell()
 	return "[apc_area.name] : [equipment_channel]/[lighting_channel]/[environment_channel] ([last_used_equipment+last_used_lighting+last_used_environment]) : [cell? cell.percent() : "N/C"] ([charging])"
 
-/obj/machinery/power/apc/proc/update()
-	var/datum/local_powernet/local_net = machine_powernet || apc_area?.powernet || apc_area?.create_powernet()
-	var/old_lighting_power = local_net?.has_power(PW_CHANNEL_LIGHTING)
-	if(local_net)
-		local_net.powernet_apc = src
-	if(operating && !shorted && !failure_timer)
-		if(local_net)
-			local_net.lighting_powered = (lighting_channel >= POWERCHAN_ON)
-			local_net.equipment_powered = (equipment_channel >= POWERCHAN_ON)
-			local_net.environment_powered = (environment_channel >= POWERCHAN_ON)
+/obj/machinery/power/apc/power_change(datum/apc_tick_state/state_override = null)
+	if(stat_immune & MACHINE_STAT_NOPOWER)
+		return FALSE
+
+	var/datum/apc_tick_state/state = state_override
+	if(!state)
+		mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY)
+		state = get_tick_state(TRUE)
 	else
-		if(local_net)
-			local_net.lighting_powered = FALSE
-			local_net.equipment_powered = FALSE
-			local_net.environment_powered = FALSE
+		tick_state = state
+		tick_state_locked = TRUE
+		cache_flags &= ~APC_CACHE_TICK_STATE_DIRTY
+
+	var/old_main_status = main_status
+	apply_tick_state_views(state)
+	if(old_main_status != main_status)
+		cache_flags |= APC_CACHE_UI_DIRTY
+	. = apply_powered_state(state.powered)
+	if(. || (cache_flags & APC_CACHE_UI_DIRTY))
+		queue_icon_update()
+	cache_flags &= ~APC_CACHE_UI_DIRTY
+
+/obj/machinery/power/apc/proc/update()
+	var/datum/local_powernet/local_net = get_local_powernet()
+	var/old_lighting_power = local_net?.has_power(PW_CHANNEL_LIGHTING)
+	var/equipment_powered = operating && !shorted && !failure_timer && equipment_channel >= POWERCHAN_ON
+	var/lighting_powered = operating && !shorted && !failure_timer && lighting_channel >= POWERCHAN_ON
+	var/environment_powered = operating && !shorted && !failure_timer && environment_channel >= POWERCHAN_ON
+	mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_UI_DIRTY)
 
 	if(local_net)
+		local_net.apply_apc_power_state(src, equipment_powered, lighting_powered, environment_powered)
 		if(apc_area && old_lighting_power != local_net.has_power(PW_CHANNEL_LIGHTING))
 			apc_area.set_emergency_lighting(lighting_channel == POWERCHAN_OFF_AUTO) //if lights go auto-off, emergency lights go on
-		local_net.power_change()
 	else
 		apc_area.power_change()
-	mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_EXTERNAL_DIRTY | APC_CACHE_UI_DIRTY)
 
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)
@@ -660,8 +844,8 @@
 
 /obj/machinery/power/apc/proc/force_update_channels()
 	autoflag = -1 // This clears state, forcing a full recalculation
-	mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
-	update_channels(TRUE)
+	mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
+	update_channels(TRUE, get_tick_state())
 	update()
 	queue_icon_update()
 
@@ -671,17 +855,8 @@
 	force_update_channels()
 
 /obj/machinery/power/apc/get_power_usage()
-	if(!operating || shorted || failure_timer || !apc_area)
-		return 0
-	if(autoflag)
-		return last_used_total // If not, we need to do something more sophisticated: compute how much power we would need in order to come back online.
-	. = 0
-	if(autoset(lighting_channel, 2) >= POWERCHAN_ON)
-		. += apc_area.usage(LIGHT)
-	if(autoset(equipment_channel, 2) >= POWERCHAN_ON)
-		. += apc_area.usage(EQUIP)
-	if(autoset(environment_channel, 1) >= POWERCHAN_ON)
-		. += apc_area.usage(ENVIRON)
+	var/datum/apc_tick_state/state = get_tick_state()
+	return state ? state.desired_total_load : 0
 
 /obj/machinery/power/apc/Process()
 	if(!apc_area.requires_power)
@@ -698,50 +873,88 @@
 		mark_cache_dirty()
 		return
 
-	update_last_used()
-	apc_area.clear_usage()
+	var/old_main_status = main_status
+	var/datum/apc_tick_state/state = snapshot_tick_state()
+	apply_tick_state_views(state)
+	state.local_net?.clear_usage()
 
 	//store states to update icon if any change
 	var/last_lt = lighting_channel
 	var/last_eq = equipment_channel
 	var/last_en = environment_channel
 	var/last_ch = charging
+	var/was_powered = is_powered()
 
-	var/obj/machinery/power/terminal/terminal = refresh_external_cache()
-	var/avail = cached_external_avail
-	var/excess = cached_external_surplus
+	var/obj/item/stock_parts/power/battery/power = state.battery_part
+	var/obj/item/cell/cell = state.cell
+	var/cell_charge_before = cell ? cell.charge : 0
+	if(power)
+		power.last_cell_charge = cell_charge_before
 
-	var/old_main_status = main_status
-	if(!avail)
-		main_status = 0
-	else if(excess < 0)
-		main_status = 1
-	else
-		main_status = 2
+	if(state.external_terminal && state.desired_total_load > 0)
+		state.external_drawn = state.external_terminal.draw_power(state.desired_total_load)
+	var/remaining_deficit = max(state.desired_total_load - state.external_drawn, 0)
+
+	if(cell && !shorted && remaining_deficit > 0)
+		state.fallback_drawn = cell.use(remaining_deficit * CELLRATE) / CELLRATE
+		remaining_deficit = max(remaining_deficit - state.fallback_drawn, 0)
+
+	state.uncovered_deficit = remaining_deficit
+	state.powered = !state.uncovered_deficit
+
+	if(power)
+		if(state.fallback_drawn > 0)
+			power.set_status(src, PART_STAT_ACTIVE)
+			power.charge_wait_counter = initial(power.charge_wait_counter)
+			power.set_battery_mode(APC_BATTERY_MODE_DISCHARGING, state.desired_total_load)
+		else
+			power.unset_status(src, PART_STAT_ACTIVE)
+			if(!cell)
+				power.charge_wait_counter = initial(power.charge_wait_counter)
+				power.set_battery_mode(APC_BATTERY_MODE_UNAVAILABLE, state.desired_total_load)
+			else if(shorted)
+				power.charge_wait_counter = initial(power.charge_wait_counter)
+				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
+			else if(state.desired_total_load > 0 && !state.powered && cell.fully_charged())
+				power.set_battery_mode(APC_BATTERY_MODE_READY, state.desired_total_load)
+			else if(!power.can_charge || cell.fully_charged() || !apc_area.powered(power.charge_channel))
+				power.charge_wait_counter = initial(power.charge_wait_counter)
+				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
+			else if(power.charge_wait_counter > 0)
+				power.charge_wait_counter--
+				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
+			else
+				var/give = cell.give(power.charge_rate) / CELLRATE
+				if(give > 0)
+					apc_area.use_power_oneoff(give, power.charge_channel)
+				power.set_battery_mode(give > 0 ? APC_BATTERY_MODE_CHARGING : APC_BATTERY_MODE_IDLE, state.desired_total_load)
+
+	if(state.terminal_part)
+		state.external_surplus = max(state.external_surplus - state.external_drawn, 0)
+		state.terminal_part.cache_terminal_state(state.external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
+
+	if(debug)
+		log_debug("Status: [state.main_status] - Excess: [state.external_surplus] - Desired Equip: [state.desired_equipment_load] - Desired Light: [state.desired_lighting_load] - Longterm: [longtermpower]")
+
+	last_used_charging = max((cell && (cell.charge - cell_charge_before) * CELLRATE) || 0, 0)
+	charging = last_used_charging ? 1 : 0
+	if(cell?.fully_charged())
+		charging = 2
+
+	state.cell_percent = cell && cell.percent()
+	state.cell_full = cell && cell.fully_charged()
+	state.can_charge = !!(power && cell && power.can_charge && !state.cell_full)
+	state.charging_load = last_used_charging
 	if(old_main_status != main_status)
-		mark_cache_dirty(APC_CACHE_UI_DIRTY)
+		cache_flags |= APC_CACHE_UI_DIRTY
 
-	var/obj/item/cell/cell = get_cell()
-	if(!cell || shorted) // We aren't going to be doing any power processing in this case.
-		charging = 0
+	if(state.powered != was_powered)
+		power_change(state)
 	else
-		..() // Actual processing happens in here.
-
-		if(debug)
-			log_debug("Status: [main_status] - Excess: [excess] - Last Equip: [last_used_equipment] - Last Light: [last_used_lighting] - Longterm: [longtermpower]")
-
-		//update state
-		var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
-		last_used_charging = max(power && power.cell && (power.cell.charge - power.last_cell_charge) * CELLRATE, 0)
-		charging = last_used_charging ? 1 : 0
-		if(cell.fully_charged())
-			charging = 2
-
-		if(!is_powered())
-			power_change() // We are the ones responsible for triggering listeners once power returns, so we run this to detect possible changes.
+		apply_powered_state(state.powered)
 
 	// Set channels depending on how much charge we have left
-	var/channels_changed = update_channels()
+	var/channels_changed = update_channels(FALSE, state)
 
 	// update icon & area power if anything changed
 	if(channels_changed || last_lt != lighting_channel || last_eq != equipment_channel || last_en != environment_channel || force_update)
@@ -752,18 +965,16 @@
 		queue_icon_update()
 	cache_flags &= ~APC_CACHE_UI_DIRTY
 
-/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE)
-	return handle_autoflag(suppress_alarms)
+/obj/machinery/power/apc/proc/update_channels(suppress_alarms = FALSE, datum/apc_tick_state/state = null)
+	return handle_autoflag(suppress_alarms, state || get_tick_state())
 
-/obj/machinery/power/apc/proc/handle_autoflag(suppress_alarms = FALSE)
+/obj/machinery/power/apc/proc/handle_autoflag(suppress_alarms = FALSE, datum/apc_tick_state/state)
 	// Allow the APC to operate as normal if the cell can charge
 	if(charging && longtermpower < 10)
 		longtermpower += 1
 	else if(longtermpower > -10)
 		longtermpower -= 2
-	var/obj/item/cell/cell = get_cell()
-	var/percent = cell && cell.percent()
-	var/new_regime = get_cached_power_regime(percent)
+	var/new_regime = get_power_regime(state.cell_percent, state.powered)
 	if(!(cache_flags & APC_CACHE_AUTOMATION_DIRTY) && cached_power_regime == new_regime)
 		autoflag = new_regime
 		return FALSE
@@ -802,7 +1013,7 @@
 	cache_flags &= ~APC_CACHE_AUTOMATION_DIRTY
 
 	if(old_eq != equipment_channel || old_lt != lighting_channel || old_en != environment_channel)
-		mark_cache_dirty(APC_CACHE_LOAD_DIRTY | APC_CACHE_UI_DIRTY)
+		mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_UI_DIRTY)
 		return TRUE
 	return FALSE
 
@@ -886,8 +1097,8 @@
 
 /obj/machinery/power/apc/proc/set_chargemode(new_mode)
 	chargemode = new_mode
-	mark_cache_dirty(APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
-	var/obj/item/stock_parts/power/battery/power = get_component_of_type(/obj/item/stock_parts/power/battery)
+	mark_cache_dirty(APC_CACHE_TICK_STATE_DIRTY | APC_CACHE_AUTOMATION_DIRTY | APC_CACHE_UI_DIRTY)
+	var/obj/item/stock_parts/power/battery/power = get_battery_part()
 	if(power)
 		power.can_charge = chargemode
 		power.charge_wait_counter = initial(power.charge_wait_counter)
@@ -929,8 +1140,12 @@
 #undef APC_CACHE_ALL_DIRTY
 #undef APC_CACHE_UI_DIRTY
 #undef APC_CACHE_AUTOMATION_DIRTY
-#undef APC_CACHE_EXTERNAL_DIRTY
-#undef APC_CACHE_LOAD_DIRTY
+#undef APC_CACHE_TICK_STATE_DIRTY
+#undef APC_BATTERY_MODE_READY
+#undef APC_BATTERY_MODE_CHARGING
+#undef APC_BATTERY_MODE_DISCHARGING
+#undef APC_BATTERY_MODE_IDLE
+#undef APC_BATTERY_MODE_UNAVAILABLE
 
 /obj/item/module/power_control
 	name = "power control module"
@@ -941,4 +1156,3 @@
 	matter = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 	w_class = ITEM_SIZE_SMALL
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
-

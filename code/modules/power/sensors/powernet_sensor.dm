@@ -69,14 +69,7 @@
 /obj/machinery/power/sensor/proc/find_apcs()
 	if(!powernet)
 		return
-
-	var/list/L = list()
-	for(var/obj/machinery/power/terminal/term in powernet.nodes)
-		var/obj/machinery/power/apc/A = term.master_machine()
-		if(istype(A))
-			L += A
-
-	return L
+	return powernet.apcs
 
 
 // Proc: return_reading_text()

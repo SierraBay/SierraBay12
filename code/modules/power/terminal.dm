@@ -34,10 +34,18 @@
 	. = ..()
 	var/obj/machinery/machine = master_machine()
 	if(machine)
-		machine.power_change()
+		if(istype(machine, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = machine
+			apc.apc_power_component_changed()
+		else
+			machine.power_change()
 
 /obj/machinery/power/terminal/disconnect_from_network()
 	. = ..()
 	var/obj/machinery/machine = master_machine()
 	if(machine)
-		machine.power_change()
+		if(istype(machine, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = machine
+			apc.apc_power_component_changed()
+		else
+			machine.power_change()

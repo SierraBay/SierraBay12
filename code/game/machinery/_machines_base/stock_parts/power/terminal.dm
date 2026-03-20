@@ -32,6 +32,8 @@
 	. = ..()
 
 /obj/item/stock_parts/power/terminal/machine_process(obj/machinery/machine)
+	if(istype(machine, /obj/machinery/power/apc))
+		return PROCESS_KILL
 
 	if(!terminal) //Terminal is gone, give up
 		cache_terminal_state(null, 0, 0, FALSE)
@@ -103,7 +105,11 @@
 
 	set_extension(src, /datum/extension/event_registration/shuttle_stationary, GLOB.moved_event, machine, PROC_REF(machine_moved), get_area(src))
 	set_status(machine, PART_STAT_CONNECTED)
-	start_processing(machine)
+	if(istype(machine, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = machine
+		apc.apc_power_component_changed()
+	else
+		start_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/machine_moved(obj/machinery/machine, turf/old_loc, turf/new_loc)
 	if(!terminal)
@@ -131,7 +137,11 @@
 		unset_status(machine, PART_STAT_CONNECTED)
 	terminal = null
 	cache_terminal_state(null, 0, 0, FALSE)
-	stop_processing(machine)
+	if(istype(machine, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = machine
+		apc.apc_power_component_changed()
+	else
+		stop_processing(machine)
 
 /obj/item/stock_parts/power/terminal/proc/blocking_terminal_at_loc(obj/machinery/machine, turf/T, mob/user)
 	. = FALSE
