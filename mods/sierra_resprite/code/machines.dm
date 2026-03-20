@@ -31,6 +31,9 @@
 	icon = 'mods/sierra_resprite/icons/cryopod.dmi'
 	icon_state = "cellconsole"
 
+/obj/machinery/r_n_d/server
+	icon = 'mods/sierra_resprite/icons/server.dmi'
+
 /obj/machinery/fusion_fuel_compressor
 	name = "fuel compressor"
 	icon = 'mods/sierra_resprite/icons/fusion_fuel_compressor.dmi'
