@@ -54,6 +54,7 @@
 		/area/map_template,
 		/area/exoplanet,
 		/area/ship,
+		/area/unit_test,
 		/area/mine,
 		/area/bluespaceriver,
 		/area/lar_maria,

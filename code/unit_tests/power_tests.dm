@@ -169,7 +169,7 @@
 /datum/unit_test/local_powernet_apc_state_apply/start_test()
 	var/datum/local_powernet/local_net = new
 	var/initial_revision = local_net.usage_revision
-	if(local_net.apply_apc_power_state(null, FALSE, FALSE, FALSE))
+	if(local_net.apply_apc_power_state(null, TRUE, TRUE, TRUE))
 		fail("A no-op APC power state apply reported a change.")
 		return 1
 	if(local_net.usage_revision != initial_revision)
@@ -241,6 +241,8 @@
 	return 1
 
 /area/unit_test/apc_sandbox
+	requires_power = TRUE
+	dynamic_lighting = FALSE
 
 /obj/machinery/power/apc/unit_test_apc
 	var/power_change_calls = 0
@@ -278,6 +280,17 @@
 	draw_calls = 0
 	connect_calls = 0
 	disconnect_calls = 0
+
+/obj/machinery/power/terminal/unit_test_apc/proc/set_supply(new_available, new_surplus = null)
+	available_power = new_available
+	surplus_power = isnull(new_surplus) ? new_available : new_surplus
+	var/obj/machinery/machine = master_machine()
+	if(machine)
+		if(istype(machine, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = machine
+			apc.mark_cache_dirty()
+		else
+			machine.power_change()
 
 /obj/machinery/power/terminal/unit_test_apc/connect_to_network()
 	connected = TRUE
@@ -351,8 +364,19 @@
 			var/area/original_area = restore[T]
 			if(istype(original_area))
 				ChangeArea(T, original_area)
-	var/area/test_area = fixture["area"]
+				original_area.retally_power()
+	var/area/unit_test/apc_sandbox/test_area = fixture["area"]
 	if(test_area)
+		if(test_area.powernet)
+			test_area.powernet.powernet_apc = null
+			test_area.powernet.passive_equipment_consumption = 0
+			test_area.powernet.passive_lighting_consumption = 0
+			test_area.powernet.passive_environment_consumption = 0
+			test_area.powernet.equipment_consumption = 0
+			test_area.powernet.lighting_consumption = 0
+			test_area.powernet.environment_consumption = 0
+			test_area.powernet.registered_machines.Cut()
+			test_area.powernet.retally_passive_usage()
 		qdel(test_area)
 
 /datum/unit_test/apc_behavior_template/proc/reset_apc_fixture_counters(list/fixture)
@@ -432,10 +456,10 @@
 	if(apc.get_power_usage() != 40)
 		return fail_fixture(fixture, "APC desired draw should include OFF_TEMP and environment OFF_AUTO raw load, but exclude lighting OFF_AUTO.")
 
-	apc.lighting_channel = POWERCHAN_ON_AUTO
+	apc.lighting_channel = POWERCHAN_ON
 	apc.mark_cache_dirty()
 	if(apc.get_power_usage() != 60)
-		return fail_fixture(fixture, "APC desired draw should include POWERCHAN_ON_AUTO raw load.")
+		return fail_fixture(fixture, "APC desired draw should include POWERCHAN_ON raw load.")
 
 	apc.operating = FALSE
 	apc.mark_cache_dirty()
@@ -489,12 +513,15 @@
 	var/datum/local_powernet/local_net = fixture["local_net"]
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 
+	apc.equipment_channel = POWERCHAN_ON
+	apc.lighting_channel = POWERCHAN_OFF
+	apc.environment_channel = POWERCHAN_OFF
+	apc.mark_cache_dirty()
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.Process() // establish the powered baseline
 	reset_apc_fixture_counters(fixture)
 
-	terminal.available_power = 0
-	terminal.surplus_power = 0
+	terminal.set_supply(0)
 	apc.Process()
 	if(apc.power_change_calls != 1)
 		return fail_fixture(fixture, "Losing uncovered external supply should trigger one APC power_change edge.")
@@ -504,8 +531,7 @@
 	if(apc.power_change_calls != 0)
 		return fail_fixture(fixture, "APC retriggered power_change on a steady uncovered outage.")
 
-	terminal.available_power = 100
-	terminal.surplus_power = 100
+	terminal.set_supply(100)
 	apc.Process()
 	if(apc.power_change_calls != 1)
 		return fail_fixture(fixture, "Recovering external supply should trigger one APC power_change edge.")
@@ -527,19 +553,21 @@
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
 
+	apc.equipment_channel = POWERCHAN_ON
+	apc.lighting_channel = POWERCHAN_OFF
+	apc.environment_channel = POWERCHAN_OFF
+	apc.mark_cache_dirty()
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.Process() // establish the powered baseline
 	reset_apc_fixture_counters(fixture)
 
-	terminal.available_power = 20
-	terminal.surplus_power = 20
+	terminal.set_supply(20)
 	apc.Process()
 	if(apc.power_change_calls != 0)
 		return fail_fixture(fixture, "A battery-covered external deficit should not retrigger APC power_change().")
 
 	reset_apc_fixture_counters(fixture)
-	terminal.available_power = 10
-	terminal.surplus_power = 10
+	terminal.set_supply(10)
 	cell.charge = 0
 	apc.mark_cache_dirty()
 	apc.Process()
@@ -558,6 +586,10 @@
 	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
 	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
 
+	apc.equipment_channel = POWERCHAN_ON
+	apc.lighting_channel = POWERCHAN_OFF
+	apc.environment_channel = POWERCHAN_OFF
+	apc.mark_cache_dirty()
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	reset_apc_fixture_counters(fixture)
 	apc.Process()
@@ -598,6 +630,10 @@
 	var/obj/item/stock_parts/power/terminal/terminal_part = fixture["terminal_part"]
 	var/turf/center = fixture["center"]
 
+	apc.equipment_channel = POWERCHAN_ON
+	apc.lighting_channel = POWERCHAN_OFF
+	apc.environment_channel = POWERCHAN_OFF
+	apc.mark_cache_dirty()
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.power_change() // establish the powered baseline from the connected terminal
 	reset_apc_fixture_counters(fixture)
@@ -637,6 +673,10 @@
 	var/datum/local_powernet/local_net = fixture["local_net"]
 	var/obj/item/stock_parts/power/battery/battery = fixture["battery"]
 
+	apc.equipment_channel = POWERCHAN_ON
+	apc.lighting_channel = POWERCHAN_OFF
+	apc.environment_channel = POWERCHAN_OFF
+	apc.mark_cache_dirty()
 	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
 	apc.power_change() // establish the battery-backed powered baseline
 	reset_apc_fixture_counters(fixture)

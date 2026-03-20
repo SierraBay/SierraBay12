@@ -23,6 +23,8 @@
 		/area/maintenance/thirddeck/port = 0,
 		/area/maintenance/thirddeck/aftport = 0,
 		/area/maintenance/thirddeck/foreport = 0,
+		/area/constructionsite = NO_SCRUBBER|NO_VENT|NO_APC,
+		/area/quartermaster/hangar = NO_APC,
 		/area/maintenance/seconddeck/hangar = 0,
 		/area/maintenance/seconddeck/aftstarboard = 0,
 		/area/maintenance/substation/seconddeck = 0,

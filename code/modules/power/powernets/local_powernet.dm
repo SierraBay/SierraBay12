@@ -33,6 +33,8 @@
 
 	/// Registered machinery in the owning area.
 	var/list/registered_machines = list()
+	/// APC self-fanout suppression for APC-owned local powernet updates.
+	var/tmp/suppress_apc_notify = FALSE
 
 /datum/local_powernet/proc/bump_usage_revision()
 	usage_revision++
@@ -57,6 +59,8 @@
 
 /datum/local_powernet/proc/power_change()
 	for(var/obj/machinery/M as anything in registered_machines)
+		if(suppress_apc_notify && M == powernet_apc)
+			continue
 		M.power_change()
 	SEND_SIGNAL(src, COMSIG_POWERNET_POWER_CHANGE)
 
@@ -96,7 +100,9 @@
 	if(!changed)
 		return FALSE
 	bump_usage_revision()
+	suppress_apc_notify = !!new_apc
 	power_change()
+	suppress_apc_notify = FALSE
 	return TRUE
 
 /datum/local_powernet/proc/has_power(channel)
