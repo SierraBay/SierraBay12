@@ -409,10 +409,10 @@
 	id = "null _suit"
 	time = 120
 
-/datum/design/item/mechfab/rig/hazzard
+/datum/design/item/mechfab/rig/hazard
 	category = "Hardsuits"
 	name = "hazard hardsuit"
-	build_path = /obj/item/rig/hazard/guard
+	build_path = /obj/item/rig/hazard
 	materials = list(MATERIAL_TITANIUM = 7000, MATERIAL_STEEL = 10000, MATERIAL_GOLD = 2000, MATERIAL_GLASS = 3000)
 	id = "hazzard_suit"
 	time = 190
