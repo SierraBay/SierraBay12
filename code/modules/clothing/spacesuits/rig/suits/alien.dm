@@ -23,7 +23,6 @@
 	glove_type = /obj/item/clothing/gloves/rig/unathi
 
 /obj/item/rig/unathi/fancy
-	name = "breacher chassis control module"
 	desc = "An (outwardly) authentic Unathi breacher chassis. Huge, bulky and absurdly heavy. It must be like wearing a tank."
 	suit_type = "breacher chassis"
 	icon_state = "breacher_rig"
@@ -37,10 +36,15 @@
 		rad = ARMOR_RAD_SMALL)
 	online_slowdown = 2
 
+	helm_type = /obj/item/clothing/head/helmet/space/rig/unathi/fancy // SIERRA ADD
+
 /obj/item/clothing/head/helmet/space/rig/unathi
 	species_restricted = list(SPECIES_UNATHI)
 	force = 5
 	sharp = TRUE
+
+/obj/item/clothing/head/helmet/space/rig/unathi/fancy //SIERRA ADD
+	..()
 
 /obj/item/clothing/suit/space/rig/unathi
 	species_restricted = list(SPECIES_UNATHI)

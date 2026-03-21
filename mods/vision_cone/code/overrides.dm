@@ -140,3 +140,8 @@
 	if(machine_visual && machine_visual != A)
 		machine_visual.remove_visual(src)
 	src.check_fov()
+
+//unathi breacher
+/obj/item/clothing/head/helmet/space/rig/unathi/fancy/Initialize()
+	. = ..()
+	fov_angle =FOV_270_DEGREES
