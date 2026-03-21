@@ -88,7 +88,7 @@
 	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE
 	color = COLOR_DARK_BLUE_GRAY
 	heal_min = 5
-	heal_max = 15
+	heal_max = 10
 
 /obj/overmap/event/leviathan/swarm/get_damage_multiplier(damage_source)
 	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive) || istype(damage_source, /obj/item/missile_equipment/payload/emp))

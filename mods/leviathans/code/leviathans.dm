@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 	var/base_speed = 0 // Временный буфер скорости
 	var/heal_min = 5 // 30 в минуту
 	var/heal_max = 8 // 50 в минуту
-	
+
 	var/boredom_factor = 0 // На сколько увеличивается КД за каждый выстрел по стоячему судну
 
 /obj/overmap/event/leviathan/Initialize(seed)
@@ -109,11 +109,12 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 			leviathan_speed = base_speed * 2
 
 	if(is_healing)
-		if(health >= max_health)
+		if(health >= max_health && needs_healing_location())
 			health = max_health
 			is_healing = FALSE
 			healing_target_ref = null
-			leviathan_speed = base_speed
+			if(needs_healing_location())
+				leviathan_speed = base_speed
 			return
 
 		perform_healing()
