@@ -30,6 +30,8 @@
 
 	/// Monotonically increasing revision for usage/channel state changes.
 	var/usage_revision = 0
+	/// APC-facing revision for sampled load/state changes that should invalidate APC tick-state loads.
+	var/apc_load_revision = 0
 
 	/// Registered machinery in the owning area.
 	var/list/registered_machines = list()
@@ -38,6 +40,9 @@
 
 /datum/local_powernet/proc/bump_usage_revision()
 	usage_revision++
+
+/datum/local_powernet/proc/bump_apc_load_revision()
+	apc_load_revision++
 
 /datum/local_powernet/proc/register_machine(obj/machinery/machine)
 	if(!machine)
@@ -81,6 +86,7 @@
 		else
 			return
 	bump_usage_revision()
+	bump_apc_load_revision()
 	power_change()
 
 /datum/local_powernet/proc/apply_apc_power_state(obj/machinery/power/apc/new_apc, equipment_state, lighting_state, environment_state)
@@ -100,6 +106,7 @@
 	if(!changed)
 		return FALSE
 	bump_usage_revision()
+	bump_apc_load_revision()
 	suppress_apc_notify = !!new_apc
 	power_change()
 	suppress_apc_notify = FALSE
@@ -155,6 +162,7 @@
 		else
 			return FALSE
 	bump_usage_revision()
+	bump_apc_load_revision()
 	return TRUE
 
 /datum/local_powernet/proc/power_use_change(old_amount, new_amount, channel)
@@ -201,6 +209,7 @@
 				passive_environment_consumption += M.get_power_usage()
 	if(old_equipment != passive_equipment_consumption || old_lighting != passive_lighting_consumption || old_environment != passive_environment_consumption)
 		bump_usage_revision()
+		bump_apc_load_revision()
 
 /datum/local_powernet/proc/handle_flicker()
 	if(prob(MACHINE_FLICKER_CHANCE))

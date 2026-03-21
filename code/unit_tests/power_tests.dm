@@ -163,6 +163,51 @@
 	pass("local powernet usage_revision updates when cached usage inputs change.")
 	return 1
 
+/datum/unit_test/local_powernet_apc_load_revision
+	name = "POWER: local powernet APC load revision ignores per-tick active churn."
+
+/datum/unit_test/local_powernet_apc_load_revision/start_test()
+	var/datum/local_powernet/local_net = new
+	var/initial_revision = local_net.apc_load_revision
+
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 5)
+	if(local_net.apc_load_revision != initial_revision + 1)
+		fail("Static power changes did not increment apc_load_revision.")
+		return 1
+
+	var/after_static = local_net.apc_load_revision
+	local_net.use_active_power(PW_CHANNEL_EQUIPMENT, 3)
+	if(local_net.apc_load_revision != after_static)
+		fail("One-off power changes should not increment apc_load_revision.")
+		return 1
+
+	local_net.clear_usage()
+	if(local_net.apc_load_revision != after_static)
+		fail("Clearing active power use should not increment apc_load_revision.")
+		return 1
+
+	local_net.set_power_channel(PW_CHANNEL_EQUIPMENT, FALSE)
+	if(local_net.apc_load_revision != after_static + 1)
+		fail("Channel state changes did not increment apc_load_revision.")
+		return 1
+
+	var/after_channel = local_net.apc_load_revision
+	local_net.apply_apc_power_state(null, FALSE, FALSE, TRUE)
+	if(local_net.apc_load_revision != after_channel + 1)
+		fail("Batched APC power state changes did not increment apc_load_revision.")
+		return 1
+
+	var/after_apply = local_net.apc_load_revision
+	if(local_net.apply_apc_power_state(null, FALSE, FALSE, TRUE))
+		fail("Repeating the same APC power state should be a no-op.")
+		return 1
+	if(local_net.apc_load_revision != after_apply)
+		fail("Repeating the same APC power state changed apc_load_revision.")
+		return 1
+
+	pass("local powernet APC load revision tracks sampled APC load inputs without per-tick active churn.")
+	return 1
+
 /datum/unit_test/local_powernet_apc_state_apply
 	name = "POWER: local powernet APC state apply batches and no-ops."
 
@@ -257,6 +302,7 @@
 	var/rebuild_tick_state_calls = 0
 	var/refresh_tick_state_calls = 0
 	var/get_tick_state_calls = 0
+	var/update_tick_state_loads_calls = 0
 	var/update_calls = 0
 
 /obj/machinery/power/apc/unit_test_apc/profiled/rebuild_tick_state(lock_for_tick = FALSE)
@@ -271,6 +317,10 @@
 	get_tick_state_calls++
 	return ..()
 
+/obj/machinery/power/apc/unit_test_apc/profiled/update_tick_state_loads(datum/apc_tick_state/state, datum/local_powernet/local_net)
+	update_tick_state_loads_calls++
+	return ..()
+
 /obj/machinery/power/apc/unit_test_apc/profiled/update(notify_self = TRUE)
 	update_calls++
 	return ..()
@@ -279,6 +329,7 @@
 	rebuild_tick_state_calls = 0
 	refresh_tick_state_calls = 0
 	get_tick_state_calls = 0
+	update_tick_state_loads_calls = 0
 	update_calls = 0
 
 /obj/machinery/unit_test_local_power_sink
@@ -801,6 +852,8 @@
 		return fail_fixture(fixture, "Repeated get_power_usage() rebuilt APC tick state [apc.rebuild_tick_state_calls] times in a no-op scenario.")
 	if(apc.get_tick_state_calls != 25)
 		return fail_fixture(fixture, "Expected one get_tick_state() call per desired-draw read, saw [apc.get_tick_state_calls].")
+	if(apc.update_tick_state_loads_calls != 0)
+		return fail_fixture(fixture, "Repeated get_power_usage() refreshed APC load sampling [apc.update_tick_state_loads_calls] times in a no-op scenario.")
 
 	return pass_fixture(fixture, "Repeated APC desired-draw reads reuse tick-state without rebuild churn.")
 
@@ -830,8 +883,38 @@
 		return fail_fixture(fixture, "Steady-state APC Process should perform one terminal draw per tick, saw [terminal.draw_calls] draws across 6 ticks.")
 	if(cell.discharge_calls != 0)
 		return fail_fixture(fixture, "Steady-state APC Process unexpectedly touched battery fallback [cell.discharge_calls] times with enough external power.")
+	if(apc.update_tick_state_loads_calls != 0)
+		return fail_fixture(fixture, "Steady-state APC Process resampled APC load state [apc.update_tick_state_loads_calls] times in a no-op scenario.")
 
 	return pass_fixture(fixture, "Steady-state APC Process avoids extra edge/fanout work while still drawing external power once per tick.")
+
+/datum/unit_test/apc_behavior_template/apc_process_usage_revision_resample_budget
+	name = "POWER: APC Process resamples active usage once without rebuild churn."
+
+/datum/unit_test/apc_behavior_template/apc_process_usage_revision_resample_budget/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 100, 1000, /obj/machinery/power/apc/unit_test_apc/profiled)
+	var/obj/machinery/power/apc/unit_test_apc/profiled/apc = fixture["apc"]
+	var/datum/local_powernet/local_net = fixture["local_net"]
+	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_OFF, POWERCHAN_OFF)
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 50)
+	apc.Process() // establish baseline
+	reset_apc_fixture_counters(fixture)
+
+	if(!local_net.use_active_power(PW_CHANNEL_EQUIPMENT, 10))
+		return fail_fixture(fixture, "Test fixture failed to add active equipment usage before APC Process resample check.")
+
+	apc.Process()
+
+	if(apc.rebuild_tick_state_calls != 0)
+		return fail_fixture(fixture, "APC Process rebuilt tick state [apc.rebuild_tick_state_calls] times for active-usage churn that should be a resample.")
+	if(apc.update_tick_state_loads_calls != 1)
+		return fail_fixture(fixture, "APC Process resampled APC load state [apc.update_tick_state_loads_calls] times instead of once after active usage changed.")
+	if(terminal.draw_calls != 1)
+		return fail_fixture(fixture, "APC Process should still perform one terminal draw while resampling active usage, saw [terminal.draw_calls].")
+
+	return pass_fixture(fixture, "APC Process resamples active usage once without rebuilding the APC tick snapshot.")
 
 /datum/unit_test/apc_behavior_template/apc_component_event_budget
 	name = "POWER: APC component wake path rebuilds once per event."
