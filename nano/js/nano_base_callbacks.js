@@ -39,6 +39,9 @@ NanoBaseCallbacks = function () {
               window.location.href = href
             }
         })
+      if (updateData['config'].hasOwnProperty('uiScale')) {
+        document.body.style.zoom = updateData['config']['uiScale']
+      }
       return updateData
     },
 

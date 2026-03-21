@@ -7,6 +7,7 @@
 	var/outline_reachable = "#00ff00"
 	var/outline_unreachable = "#ff0000"
 	var/outline_alpha = 255
+	var/ui_scale = "100%"
 
 	var/tooltip_style = "Midnight" //Style for popup tooltips
 
@@ -25,6 +26,7 @@
 	pref.outline_reachable = R.read("outline_reachable")
 	pref.outline_unreachable = R.read("outline_unreachable")
 	pref.outline_alpha = R.read("outline_alpha")
+	pref.ui_scale = R.read("ui_scale")
 
 
 /datum/category_item/player_setup_item/player_global/ui/save_preferences(datum/pref_record_writer/W)
@@ -36,6 +38,7 @@
 	W.write("outline_reachable", pref.outline_reachable)
 	W.write("outline_unreachable", pref.outline_unreachable)
 	W.write("outline_alpha", pref.outline_alpha)
+	W.write("ui_scale", pref.ui_scale)
 
 
 /datum/category_item/player_setup_item/player_global/ui/sanitize_preferences()
@@ -46,6 +49,12 @@
 	pref.outline_reachable = sanitize_hexcolor(pref.outline_reachable, initial(pref.outline_reachable))
 	pref.outline_unreachable = sanitize_hexcolor(pref.outline_unreachable, initial(pref.outline_unreachable))
 	pref.outline_alpha = sanitize_integer(pref.outline_alpha, 50, 255, initial(pref.outline_alpha))
+	pref.ui_scale = sanitize_text(pref.ui_scale, initial(pref.ui_scale))
+	var/scale_num = text2num(pref.ui_scale)
+	if (scale_num)
+		pref.ui_scale = "[clamp(scale_num, 50, 300)]%"
+	else
+		pref.ui_scale = initial(pref.ui_scale)
 	sanitize_client_fps()
 
 
@@ -69,6 +78,7 @@
 		else
 			. += "<a href='byond://?src=\ref[src];select_ooc_color=1'><b>[pref.ooccolor]</b></a> <table style='display:inline;' bgcolor='[pref.ooccolor]'><tr><td>__</td></tr></table> <a href='byond://?src=\ref[src];reset=ooc'>reset</a><br>"
 	. += "<b>Client FPS:</b> <a href='byond://?src=\ref[src];select_fps=1'><b>[pref.clientfps]</b></a><br>"
+	. += "<b>UI Scale:</b> <a href='byond://?src=\ref[src];select_ui_scale=1'><b>[pref.ui_scale]</b></a><br>"
 
 
 /datum/category_item/player_setup_item/player_global/ui/OnTopic(href,list/href_list, mob/user)
@@ -138,6 +148,13 @@
 			if (target_mob?.client)
 				target_mob.client.fps = pref.clientfps
 			return TOPIC_REFRESH
+	else if(href_list["select_ui_scale"])
+		var/new_scale = input(user, "Enter UI Scale (50-300):", "Global Preference", text2num(pref.ui_scale)) as num|null
+		if(isnull(new_scale) || !CanUseTopic(user)) return TOPIC_NOACTION
+		new_scale = clamp(new_scale, 50, 300)
+		pref.ui_scale = "[new_scale]%"
+		SSnano.update_user_uis(user)
+		return TOPIC_REFRESH
 
 	else if(href_list["select_tooltip_style"])
 		var/tooltip_style_new = input(user, "Choose tooltip style.", "Global Preference", pref.tooltip_style) as null|anything in all_tooltip_styles
