@@ -26,13 +26,14 @@
  * - Non-hostile: won't attack players.
  * - Moves EAST when the race is active.
  * - Each carp has a random speed offset via movement_cooldown.
- * - Colored by slot number (1=purple, 2=blue, 3=yellow, 4=grape, 5=rust, 6=teal).
+ * - Colored by slot number (1=pink, 2=blue, 3=yellow, 4=grape, 5=rust, 6=teal).
  * - Detects finish line crossing via Move() override.
  */
 /mob/living/simple_animal/hostile/carp/racing
 	name        = "Carp #?"
 	desc        = "A specially trained cosmic racing carp. It knows biting spectators is bad form."
 	ai_holder   = /datum/ai_holder/simple_animal/melee/racing_carp
+	icon = 'mods/carp_racing/icons/space_carp.dmi'
 	faction     = "racing_carp"   // Never matches players or crew
 	harm_intent_damage    = 0
 	break_stuff_probability = 0
@@ -66,11 +67,11 @@
 	real_name = name
 
 	// Assign color by slot number (matches space_carp.dm icon_sets order)
-	var/list/colors = list("carp", "blue", "yellow", "grape", "rust", "teal")
+	var/list/colors = list("pink", "blue", "yellow", "grape", "rust", "teal")
 	if(race_number >= 1 && race_number <= RACE_CARP_COUNT)
 		carp_color = colors[race_number]
 	else
-		carp_color = "carp"
+		carp_color = "black"
 	icon_state  = "[carp_color]"
 	icon_living = "[carp_color]"
 	icon_dead   = "[carp_color]_dead"
