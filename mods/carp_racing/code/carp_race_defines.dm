@@ -39,7 +39,7 @@
 #define RACE_COLOR_NAME_6   "Squid Ward"
 
 // HTML hex colors for betting terminal UI
-#define RACE_HTML_COLOR_1   COLOR_VIOLET
+#define RACE_HTML_COLOR_1   COLOR_PINK
 #define RACE_HTML_COLOR_2   COLOR_BLUE
 #define RACE_HTML_COLOR_3   COLOR_YELLOW
 #define RACE_HTML_COLOR_4   COLOR_PURPLE
