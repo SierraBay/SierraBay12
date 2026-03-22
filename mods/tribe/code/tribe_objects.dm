@@ -9,6 +9,17 @@
 
 	setup_destructibility()
 
+/obj/machinery/artifact/mod_tribe/attack_hand(mob/living/user)
+	//spam clicks are meaningless here, since it follows effect timeouts
+	//basically a 5% chance at 5-20 seconds interval
+	if(prob(5) && my_effect.activated == FALSE && user && user.stat != DEAD && get_current_health() > 0)
+		user.rejuvenate()
+		new/obj/effect/smoke/illumination(src.loc, 5, range=30, power=1, color="#ffffff")
+		playsound(get_turf(src),'sound/magic/staff_healing.ogg',50,1)
+		to_chat(user, SPAN_NOTICE("Upon contact with \the [src], a brilliant light radiates from it, and you are filled with an overwhelming sense of vitality."))
+		visible_message(SPAN_NOTICE("\The [src] brightens up momentarily."))
+	..()
+
 /obj/machinery/crystal/mod_tribe
 	var/default_light_power = 0.8
 	var/default_light_range = 5

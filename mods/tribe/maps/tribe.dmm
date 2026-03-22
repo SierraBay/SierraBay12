@@ -8,6 +8,7 @@
 "cr" = (/obj/machinery/crystal/mod_tribe,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
 "ed" = (/obj/structure/table/steel,/obj/item/shovel,/obj/item/shovel,/obj/item/shovel,/obj/item/material/scythe,/obj/item/material/scythe,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/reagent_containers/glass/bucket,/obj/item/reagent_containers/glass/bucket,/obj/item/soap,/obj/item/soap,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
 "he" = (/obj/machinery/door/unpowered/simple/iron,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"ho" = (/obj/structure/kitchenspike/improvised,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
 "if" = (/obj/structure/table/steel,/obj/item/stack/material/wood/fifty,/obj/item/stack/material/wood/fifty,/obj/item/stack/material/rods/fifty,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/material/rods/fifty,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
 "jB" = (/obj/structure/table/steel,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
 "jG" = (/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
@@ -89,7 +90,7 @@ aAaAaAaAaAaAaAaAaASaSaZXjBjBjBTHbjzspbZXSaSaaAaAaAaAaAaAaAaAaA
 aAaAaAaAaAaAaAaAaASaSaZXZXZXZXZXZXZXZXZXSaSaaAaAaAaAaAaAaAaAaA
 aAaAaAaAaAaAaAaAaASaSaSaSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaAaAaA
 aAaAaAaAaAaAaAaAaAaASaSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaAaAaAaA
-aAaAaAaAaAaAaAaAaAaAcrSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaAaAcrSaSaSaSaSaSaSaSaSahoaAaAaAaAaAaAaAaAaAaA
 bJaAaAaAaAaAaAaAaAaAaAaAaAaAaAoyaAaAaAaAaAaAaAaAaAaAaAaAaAaAbJ
 bJbJaAaAaAaAaAaAaAaAaAaAaAaAaAoyaAaAaAaAaAaAaAaAaAaAaAaAaAbJbJ
 "}
