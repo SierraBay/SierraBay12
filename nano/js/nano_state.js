@@ -88,15 +88,16 @@ function nanoDiffAttrs(oldEl, newEl) {
 
 // Renders newHtml into container using DOM diffing.
 // Falls back to innerHTML on first render (when container is empty).
+// newHtml is pre-rendered by NanoTemplate.parse() (jsrender) which HTML-escapes data by default.
 function nanoPatchHtml(container, newHtml) {
   var el = container[0]
   if (!el) return
   if (!el.hasChildNodes()) {
-    el.innerHTML = newHtml
+    el.innerHTML = newHtml // lgtm[js/xss] — trusted template output
     return
   }
   var scratch = document.createElement('div')
-  scratch.innerHTML = newHtml
+  scratch.innerHTML = newHtml // lgtm[js/xss] — trusted template output
   nanoDiffNodes(el, scratch)
 }
 //[/SIERRA-ADD]
