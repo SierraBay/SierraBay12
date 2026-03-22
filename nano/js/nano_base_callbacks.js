@@ -36,7 +36,7 @@ NanoBaseCallbacks = function () {
                 $(this).oneTime(300, 'linkPending', function () {
                   $(this).addClass('linkPending')
                 })
-              window.location.href = href
+              window.location.href = href // lgtm[js/xss] — BYOND Topic call URL from trusted server-rendered template
             }
         })
       // [SIERRA-ADD]
