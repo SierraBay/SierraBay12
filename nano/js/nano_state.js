@@ -93,11 +93,11 @@ function nanoPatchHtml(container, newHtml) {
   var el = container[0]
   if (!el) return
   if (!el.hasChildNodes()) {
-    el.innerHTML = newHtml // lgtm[js/xss] — trusted template output
+    el.innerHTML = newHtml
     return
   }
   var scratch = document.createElement('div')
-  scratch.innerHTML = newHtml // lgtm[js/xss] — trusted template output
+  scratch.innerHTML = newHtml
   nanoDiffNodes(el, scratch)
 }
 //[/SIERRA-ADD]

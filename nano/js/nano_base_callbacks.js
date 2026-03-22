@@ -25,7 +25,7 @@ NanoBaseCallbacks = function () {
         .off('click')
         .on('click', function (event) {
           event.preventDefault()
-            var href = $(this).data('href')
+            var href = $(this).attr('data-href')
             if (href != null && _canClick) {
               _canClick = false
               $('body').oneTime(300, 'enableClick', function () {
@@ -36,7 +36,7 @@ NanoBaseCallbacks = function () {
                 $(this).oneTime(300, 'linkPending', function () {
                   $(this).addClass('linkPending')
                 })
-              window.location.href = href // lgtm[js/xss] — BYOND Topic call URL from trusted server-rendered template
+              window.location.href = href
             }
         })
       // [SIERRA-ADD]
