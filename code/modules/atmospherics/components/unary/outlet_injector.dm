@@ -5,8 +5,8 @@
 	name = "injector"
 	desc = "Passively injects air into its surroundings. Has a valve attached to it that can control flow rate."
 
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
+	use_power = POWER_USE_OFF
+	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 45000	//45000 W ~ 60 HP
 
 	var/injecting = 0
@@ -40,12 +40,12 @@
 
 /obj/machinery/atmospherics/unary/outlet_injector/on_update_icon()
 	if (!node)
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 
 	if(!is_powered())
 		icon_state = "off"
 	else
-		icon_state = "[power_state ? "on" : "off"]"
+		icon_state = "[use_power ? "on" : "off"]"
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_underlays()
 	if(..())
@@ -68,7 +68,7 @@
 	var/data[0]
 
 	data = list(
-		"on" = power_state,
+		"on" = use_power,
 		"id" = id,
 		"frequency" = frequency,
 		"flow_rate" = volume_rate,
@@ -86,7 +86,7 @@
 	if((. = ..())) return
 
 	if(href_list["power"])
-		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 
 	if(href_list["settag"])
@@ -121,7 +121,7 @@
 	last_power_draw = 0
 	last_flow_rate = 0
 
-	if((inoperable()) || !power_state)
+	if((inoperable()) || !use_power)
 		return
 
 	var/power_draw = -1
@@ -179,7 +179,7 @@
 	signal.data = list(
 		"tag" = id,
 		"device" = "AO",
-		"power" = power_state,
+		"power" = use_power,
 		"volume_rate" = volume_rate,
 		"sigtype" = "status"
 	 )
@@ -193,11 +193,11 @@
 		return 0
 
 	if(signal.data["power"])
-		change_power_mode(sanitize_integer(text2num(signal.data["power"]), POWER_USE_OFF, POWER_USE_ACTIVE, power_state))
+		update_use_power(sanitize_integer(text2num(signal.data["power"]), POWER_USE_OFF, POWER_USE_ACTIVE, use_power))
 		queue_icon_update()
 
 	if(signal.data["power_toggle"] || signal.data["command"] == "valve_toggle") // some atmos buttons use "valve_toggle" as a command
-		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		queue_icon_update()
 
 	if(signal.data["inject"])

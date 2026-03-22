@@ -23,8 +23,8 @@
 	icon_state = "close"
 	anchored = TRUE
 	density = TRUE
-	idle_power_consumption = 50
-	active_power_consumption = 200
+	idle_power_usage = 50
+	active_power_usage = 200
 	interact_offline = 1
 	req_access = list()
 
@@ -339,7 +339,7 @@
 		islocked = TRUE
 	to_chat(user, SPAN_NOTICE("You start the Unit's cauterisation cycle."))
 	isUV = TRUE
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
 	SSnano.update_uis(src)
 
@@ -392,7 +392,7 @@
 			tank.clean_blood()
 		if(mask)
 			mask.clean_blood()
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	update_icon()
 	SSnano.update_uis(src)
 

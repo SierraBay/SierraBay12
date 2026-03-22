@@ -720,7 +720,7 @@
 "jY" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor,
 /area/spy_station/engin)

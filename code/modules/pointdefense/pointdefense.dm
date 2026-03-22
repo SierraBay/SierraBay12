@@ -104,7 +104,7 @@
 	density = TRUE
 	anchored = TRUE
 	atom_flags =  ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CLIMBABLE
-	idle_power_consumption = 0.1 KILOWATTS
+	idle_power_usage = 0.1 KILOWATTS
 	construct_state = /singleton/machine_construction/default/panel_closed
 	maximum_component_parts = list(/obj/item/stock_parts = 10)         //null - no max. list(type part = number max).
 	base_type = /obj/machinery/pointdefense
@@ -179,7 +179,7 @@
 	//We throw a laser but it doesnt have to hit for meteor to explode
 	var/obj/item/projectile/beam/pointdefense/beam = new (get_turf(src))
 	playsound(src, 'sound/effects/heavy_cannon_blast.ogg', 75, 1)
-	use_power_oneoff(idle_power_consumption * 10)
+	use_power_oneoff(idle_power_usage * 10)
 	beam.launch(M.loc)
 	M.make_debris()
 	qdel(M)

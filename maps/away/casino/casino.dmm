@@ -1080,7 +1080,7 @@
 	external_pressure_bound = 140;
 	external_pressure_bound_default = 140;
 	icon_state = "map_vent_out";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/tiled,
 /area/casino/casino_hangar)
@@ -3369,7 +3369,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	icon_state = "map_injector";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1

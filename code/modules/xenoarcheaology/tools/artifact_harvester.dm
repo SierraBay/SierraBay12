@@ -5,8 +5,8 @@
 
 	anchored = TRUE
 	density = TRUE
-	idle_power_consumption = 50
-	active_power_consumption = 750
+	idle_power_usage = 50
+	active_power_usage = 750
 	var/harvesting = 0
 	var/obj/item/disk/tech_disk/inserted_disk
 	var/obj/item/anobattery/inserted_battery
@@ -106,7 +106,7 @@
 
 		//check if we've finished
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
-			change_power_mode(POWER_USE_IDLE)
+			update_use_power(POWER_USE_IDLE)
 			harvesting = 0
 			cur_artifact.anchored = FALSE
 			cur_artifact.being_used = 0
@@ -131,7 +131,7 @@
 
 		//if there's no charge left, finish
 		if(inserted_battery.stored_charge <= 0)
-			change_power_mode(POWER_USE_IDLE)
+			update_use_power(POWER_USE_IDLE)
 			inserted_battery.stored_charge = 0
 			harvesting = 0
 			if(inserted_battery.battery_effect && inserted_battery.battery_effect.activated)
@@ -216,7 +216,7 @@
 
 						if(source_effect)
 							harvesting = 1
-							change_power_mode(POWER_USE_ACTIVE)
+							update_use_power(POWER_USE_ACTIVE)
 							cur_artifact.anchored = TRUE
 							cur_artifact.being_used = 1
 							icon_state = "incubator_on"
@@ -263,7 +263,7 @@
 						inserted_battery.battery_effect.ToggleActivate(1)
 					last_process = world.time
 					harvesting = -1
-					change_power_mode(POWER_USE_ACTIVE)
+					update_use_power(POWER_USE_ACTIVE)
 					icon_state = "incubator_on"
 					var/message = "<b>[src]</b> states, \"Warning, battery charge dump commencing.\""
 					src.visible_message(message)

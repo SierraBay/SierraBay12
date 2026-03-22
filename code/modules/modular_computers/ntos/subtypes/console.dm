@@ -29,12 +29,12 @@
 /datum/extension/interactive/ntos/console/system_boot()
 	..()
 	var/obj/machinery/M = holder
-	M.change_power_mode(POWER_USE_ACTIVE)
+	M.update_use_power(POWER_USE_ACTIVE)
 
 /datum/extension/interactive/ntos/console/system_shutdown()
 	..()
 	var/obj/machinery/M = holder
-	M.change_power_mode(POWER_USE_IDLE)
+	M.update_use_power(POWER_USE_IDLE)
 
 /datum/extension/interactive/ntos/console/host_status()
 	var/obj/machinery/M = holder

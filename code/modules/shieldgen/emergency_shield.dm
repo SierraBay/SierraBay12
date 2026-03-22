@@ -65,8 +65,8 @@
 	var/is_open = 0 //Whether or not the wires are exposed
 	var/locked = 0
 	var/check_delay = 60	//periodically recheck if we need to rebuild a shield
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 0
+	use_power = POWER_USE_OFF
+	idle_power_usage = 0
 	obj_flags = OBJ_FLAG_ANCHORABLE
 
 /obj/machinery/shieldgen/Destroy()
@@ -84,8 +84,8 @@
 	var/new_idle_power_usage = 0
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
 		new_idle_power_usage += shield_tile.shield_idle_power
-	set_power_consumption(new_idle_power_usage, POWER_USE_IDLE)
-	change_power_mode(POWER_USE_IDLE)
+	change_power_consumption(new_idle_power_usage, POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 
 /obj/machinery/shieldgen/proc/shields_down()
 	if(!active) return 0 //If it's already off, how did this get called?
@@ -95,7 +95,7 @@
 
 	collapse_shields()
 
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 
 /obj/machinery/shieldgen/proc/create_shields()
 	for(var/turf/target_tile in range(8, src))
@@ -140,8 +140,8 @@
 			for(var/obj/machinery/shield/shield_tile in deployed_shields)
 				new_power_usage += shield_tile.shield_idle_power
 
-			if (new_power_usage != idle_power_consumption)
-				set_power_consumption(new_power_usage, POWER_USE_IDLE)
+			if (new_power_usage != idle_power_usage)
+				change_power_consumption(new_power_usage, POWER_USE_IDLE)
 
 			check_delay = 60
 		else

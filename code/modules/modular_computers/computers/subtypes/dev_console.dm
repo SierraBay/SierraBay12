@@ -124,7 +124,7 @@
 	for(var/obj/item/stock_parts/computer/part in component_parts)
 		if(part.enabled)
 			extra_power += part.power_usage
-	set_power_consumption(initial(active_power_consumption) + extra_power, POWER_USE_ACTIVE)
+	change_power_consumption(initial(active_power_usage) + extra_power, POWER_USE_ACTIVE)
 
 /obj/machinery/computer/modular/CtrlAltClick(mob/user)
 	if(!CanPhysicallyInteract(user))

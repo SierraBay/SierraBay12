@@ -5951,7 +5951,7 @@
 	frequency = 1560;
 	id = "test_in";
 	airflow_process_delay = 2;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/oldlab2/test2)
@@ -9204,7 +9204,7 @@
 	external_pressure_bound_default = 0;
 	internal_pressure_bound_default = 4000;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/oldlab2/test2)

@@ -4,8 +4,8 @@
 
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it."
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
+	use_power = POWER_USE_OFF
+	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER //connects to regular and scrubber pipes
@@ -32,7 +32,7 @@
 		/singleton/public_access/public_variable/input_toggle,
 		/singleton/public_access/public_variable/area_uid,
 		/singleton/public_access/public_variable/identifier,
-		/singleton/public_access/public_variable/power_state,
+		/singleton/public_access/public_variable/use_power,
 		/singleton/public_access/public_variable/name,
 		/singleton/public_access/public_variable/scrubbing,
 		/singleton/public_access/public_variable/panic,
@@ -54,7 +54,7 @@
 	base_type = /obj/machinery/atmospherics/unary/vent_scrubber
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	icon_state = "map_scrubber_on"
 
 /obj/machinery/atmospherics/unary/vent_scrubber/Initialize()
@@ -76,7 +76,7 @@
 	var/scrubber_icon = "scrubber"
 	if(welded)
 		scrubber_icon += "weld"
-	else if (!powered() || !power_state)
+	else if (!powered() || !use_power)
 		scrubber_icon += "off"
 	else if(scrubbing == SCRUBBER_SIPHON)
 		scrubber_icon += "in"
@@ -142,9 +142,9 @@
 		return 1
 
 	if (!node)
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 	//broadcast_status()
-	if(!power_state || (inoperable()))
+	if(!use_power || (inoperable()))
 		return 0
 	if(welded)
 		return 0
@@ -192,7 +192,7 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/cannot_transition_to(state_path, mob/user)
 	if(state_path == /singleton/machine_construction/default/deconstructed)
-		if (is_powered() && power_state)
+		if (is_powered() && use_power)
 			return SPAN_WARNING("You cannot take this [src] apart, turn it off first.")
 		var/turf/T = get_turf(src)
 		if (node && node.level==ATOM_LEVEL_UNDER_TILE && isturf(T) && !T.is_plating())
@@ -287,7 +287,7 @@
 	if(.)
 		machine.panic = new_value
 		if(machine.panic)
-			machine.change_power_mode(POWER_USE_IDLE)
+			machine.update_use_power(POWER_USE_IDLE)
 			machine.scrubbing = SCRUBBER_SIPHON
 		else
 			machine.scrubbing = SCRUBBER_EXCHANGE
@@ -321,7 +321,7 @@
 	transmit_on_event = list(
 		"area" = /singleton/public_access/public_variable/area_uid,
 		"device" = /singleton/public_access/public_variable/identifier,
-		"power" = /singleton/public_access/public_variable/power_state,
+		"power" = /singleton/public_access/public_variable/use_power,
 		"panic" = /singleton/public_access/public_variable/panic,
 		"scrubbing" = /singleton/public_access/public_variable/scrubbing,
 		"scrubbing_gas" = /singleton/public_access/public_variable/scrubbing_gas
@@ -337,7 +337,7 @@
 		"status" = /singleton/public_access/public_method/refresh
 	)
 	receive_and_write = list(
-		"set_power" = /singleton/public_access/public_variable/power_state,
+		"set_power" = /singleton/public_access/public_variable/use_power,
 		"panic_siphon" = /singleton/public_access/public_variable/panic,
 		"set_scrubbing" = /singleton/public_access/public_variable/scrubbing,
 		"init" = /singleton/public_access/public_variable/name

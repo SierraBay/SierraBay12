@@ -285,7 +285,7 @@
 /area/map_template/vox_raider)
 "cU" = (
 /obj/machinery/vending/medical{
-	idle_power_consumption = 100;
+	idle_power_usage = 100;
 	req_access = list("ACCESS_SYNDICATE")
 	},
 /obj/machinery/light/small{

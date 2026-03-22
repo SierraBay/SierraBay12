@@ -5,8 +5,8 @@
 	icon_state = "igniter1"
 	var/on = 0
 	anchored = TRUE
-	idle_power_consumption = 20
-	active_power_consumption = 1000
+	idle_power_usage = 20
+	active_power_usage = 1000
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/radio/receiver,
@@ -81,8 +81,8 @@
 	var/last_spark = 0
 	var/base_state = "migniter"
 	anchored = TRUE
-	idle_power_consumption = 20
-	active_power_consumption = 1000
+	idle_power_usage = 20
+	active_power_usage = 1000
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/radio/receiver,

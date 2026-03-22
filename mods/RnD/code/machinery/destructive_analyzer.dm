@@ -13,8 +13,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/decon_mod = 0
 	var/busy = FALSE
 
-	idle_power_consumption = 30
-	active_power_consumption = 2500
+	idle_power_usage = 30
+	active_power_usage = 2500
 	construct_state = /singleton/machine_construction/default/panel_closed
 
 	machine_name = "destructive analyzer"
@@ -111,7 +111,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		qdel(loaded_item)
 		loaded_item = null
 
-	use_power_oneoff(active_power_consumption)
+	use_power_oneoff(active_power_usage)
 	on_update_icon()
 	if(linked_console)
 		linked_console.reset_screen()

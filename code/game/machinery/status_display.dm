@@ -20,7 +20,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = FALSE
-	idle_power_consumption = 10
+	idle_power_usage = 10
 	health_max = 10
 	damage_hitsound = 'sound/effects/Glasshit.ogg'
 	var/mode = 1	// 0 = Blank

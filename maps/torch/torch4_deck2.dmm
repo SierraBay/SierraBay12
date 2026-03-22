@@ -8409,7 +8409,7 @@
 	dir = 8;
 	name = "CO2 to Hangar";
 	target_pressure = 2500;
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -8435,7 +8435,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "co2_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/atmos)
@@ -8665,7 +8665,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "co2_sensor"
@@ -9635,7 +9635,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/engineering/atmos)
@@ -9894,7 +9894,7 @@
 /area/engineering/atmos)
 "yA" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_east = 2;
 	tag_north = 1;
 	tag_north_con = 0.79;
@@ -9979,7 +9979,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "n2o_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/n20,
 /area/engineering/atmos)
@@ -10221,7 +10221,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "n2o_sensor"
@@ -10253,7 +10253,7 @@
 /area/maintenance/incinerator)
 "zE" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_north = 1;
 	tag_north_con = 0.5;
 	tag_south = 2;
@@ -11474,7 +11474,7 @@
 	frequency = 1443;
 	icon_state = "map_injector";
 	id = "air_in";
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/sparker{
 	id_tag = "Incinerator";
@@ -11501,7 +11501,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
@@ -12393,7 +12393,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "o2_sensor"
@@ -12576,7 +12576,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/engineering/atmos)
@@ -14434,7 +14434,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "o2_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/engineering/atmos)
@@ -14731,7 +14731,7 @@
 	frequency = 1441;
 	id = "rust_injector";
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -14911,7 +14911,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "waste_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -15217,7 +15217,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "h2_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/engineering/atmos)
@@ -15544,7 +15544,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "tox_sensor"
@@ -15835,7 +15835,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/air_sensor{
 	id_tag = "fuel_sensor"
@@ -16051,7 +16051,7 @@
 	id = "cooling_in";
 	name = "Coolant Injector";
 	power_rating = 30000;
-	power_state = 1;
+	use_power = 1;
 	volume_rate = 700
 	},
 /obj/floor_decal/industrial/warning/corner{
@@ -16167,7 +16167,7 @@
 	icon_state = "map_injector";
 	id = "fuel_in";
 	pixel_y = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/engineering/fuelbay)
@@ -18396,7 +18396,7 @@
 	id_tag = "cooling_out";
 	initialize_directions = 1;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning/corner,
 /turf/simulated/floor/reinforced{

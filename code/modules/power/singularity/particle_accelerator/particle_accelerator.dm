@@ -250,9 +250,9 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	icon_state = "none"
 	anchored = FALSE
 	density = TRUE
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 0
-	active_power_consumption = 0
+	use_power = POWER_USE_OFF
+	idle_power_usage = 0
+	active_power_usage = 0
 	var/construction_state = 0
 	var/active = 0
 	var/reference = null
@@ -354,10 +354,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	else
 		if(src.construction_state < 3)//Was taken apart, update state
 			update_state()
-			if(power_state)
-				change_power_mode(POWER_USE_OFF)
+			if(use_power)
+				update_use_power(POWER_USE_OFF)
 		src.construction_state = temp_state
 		if(src.construction_state >= 3)
-			change_power_mode(POWER_USE_IDLE)
+			update_use_power(POWER_USE_IDLE)
 		update_icon()
 		return 1

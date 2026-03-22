@@ -3402,7 +3402,7 @@
 	internal_pressure_bound_default = 2000;
 	pressure_checks_default = 2;
 	initialize_directions = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d3port)
@@ -9037,7 +9037,7 @@
 	internal_pressure_bound_default = 4000;
 	pressure_checks_default = 2;
 	initialize_directions = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3port)
@@ -11027,7 +11027,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d3sh_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d3starboard)
@@ -12755,7 +12755,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks_default = 2;
 	controlled = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -14335,7 +14335,7 @@
 	dir = 4;
 	target_pressure = 30000;
 	max_pressure_setting = 30000;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light/small,
@@ -14923,7 +14923,7 @@
 	dir = 4;
 	target_pressure = 30000;
 	max_pressure_setting = 30000;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -15372,7 +15372,7 @@
 	internal_pressure_bound_default = 4000;
 	pressure_checks_default = 2;
 	initialize_directions = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3starboard)
@@ -15693,7 +15693,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -15880,7 +15880,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	dir = 1;
 	target_pressure = 2000;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -16200,7 +16200,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks_default = 2;
 	controlled = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -16274,7 +16274,7 @@
 	id = "fuelmode";
 	volume_rate = 4000;
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/reinforced,
@@ -17859,7 +17859,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d3ph_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d3port)
@@ -18254,7 +18254,7 @@
 	frequency = 1441;
 	id = "d3so2_in";
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3starboard)
@@ -18400,7 +18400,7 @@
 "Uf" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -19554,7 +19554,7 @@
 	internal_pressure_bound_default = 2000;
 	pressure_checks_default = 2;
 	initialize_directions = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/hydrogen,
 /area/thruster/d3starboard)
@@ -20216,7 +20216,7 @@
 "YT" = (
 /obj/machinery/atmospherics/binary/passive_gate/on{
 	target_pressure = 2000;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 8
@@ -20591,7 +20591,7 @@
 	frequency = 1441;
 	id = "d3po2_in";
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/oxygen,
 /area/thruster/d3port)
@@ -20609,7 +20609,7 @@
 	id = "fuelmode";
 	volume_rate = 4000;
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/red,
 /turf/simulated/floor/reinforced,

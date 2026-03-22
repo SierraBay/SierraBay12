@@ -12,8 +12,8 @@ GLOBAL_LIST_EMPTY(admin_departments)
 	obj_flags = OBJ_FLAG_ANCHORABLE | OBJ_FLAG_CAN_TABLE
 	var/send_access = list()
 
-	idle_power_consumption = 30
-	active_power_consumption = 200
+	idle_power_usage = 30
+	active_power_usage = 200
 
 	var/obj/item/card/id/scan = null // identification
 	var/authenticated = 0
@@ -267,7 +267,7 @@ GLOBAL_LIST_EMPTY(admin_departments)
 	else
 		return
 
-	use_power_oneoff(active_power_consumption)
+	use_power_oneoff(active_power_usage)
 	return
 
 

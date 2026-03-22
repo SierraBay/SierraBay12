@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/fabricators/microlathe.dmi'
 	icon_state = "minilathe"
 	base_icon_state = "minilathe"
-	idle_power_consumption = 5
-	active_power_consumption = 1000
+	idle_power_usage = 5
+	active_power_usage = 1000
 	base_type = /obj/machinery/fabricator/micro
 	fabricator_class = FABRICATOR_CLASS_MICRO
 	base_storage_capacity = list(

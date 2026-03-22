@@ -39,7 +39,7 @@ var/global/const/HOLOPAD_MODE = RANGE_BASED
 	layer = ABOVE_TILE_LAYER
 
 	var/power_per_hologram = 500 //per usage per hologram
-	idle_power_consumption = 5
+	idle_power_usage = 5
 
 	var/list/mob/living/silicon/ai/masters = new() //List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
@@ -439,8 +439,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram
 	anchored = TRUE
-	idle_power_consumption = 5
-	active_power_consumption = 100
+	idle_power_usage = 5
+	active_power_usage = 100
 
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity)

@@ -478,7 +478,7 @@
 	base_type = /obj/machinery/vending/roborepair
 	maxrandom = 15
 	minrandom = 5
-	idle_power_consumption = 200
+	idle_power_usage = 200
 	vend_power_usage = 40000
 	product_ads = {"\
 		Need repair?!;\

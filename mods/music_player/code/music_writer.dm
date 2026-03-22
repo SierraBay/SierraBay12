@@ -5,9 +5,9 @@
 	icon_state = "writer_off"
 	density = FALSE
 	power_channel = EQUIP
-	power_state = 1
-	idle_power_consumption = 10
-	active_power_consumption = 100
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
 	anchored = TRUE
 
 	var/mob/customer //current user

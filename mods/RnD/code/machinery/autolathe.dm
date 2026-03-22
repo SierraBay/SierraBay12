@@ -19,9 +19,9 @@
 	density = TRUE
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
-	power_state = POWER_USE_IDLE
-	idle_power_consumption = 20
-	active_power_consumption = 2000
+	use_power = POWER_USE_IDLE
+	idle_power_usage = 20
+	active_power_usage = 2000
 	var/base_icon_state
 	var/build_type = PROTOLATHE
 
@@ -820,7 +820,7 @@
 		working = FALSE
 		next_file()
 
-	change_power_mode(working ? POWER_USE_ACTIVE : POWER_USE_IDLE)
+	update_use_power(working ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 
 	special_process()
 	update_icon()
@@ -964,8 +964,8 @@
 	icon_state = "minilathe"
 	base_icon_state = "minilathe"
 
-	idle_power_consumption = 10
-	active_power_consumption = 1000
+	idle_power_usage = 10
+	active_power_usage = 1000
 	machine_name = "microlathe"
 	machine_desc = "A smaller-sized autolathe, typically used for cutlery, dinnerware, and drinking glasses."
 

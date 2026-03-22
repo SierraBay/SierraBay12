@@ -6,7 +6,7 @@
 	icon_state = "TheSingGen"
 	anchored = FALSE
 	density = TRUE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	var/energy = 0
 

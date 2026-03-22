@@ -969,7 +969,7 @@
 	frequency = 1442;
 	icon_state = "map_injector";
 	id = "patrol_rust";
-	power_state = 1;
+	use_power = 1;
 	dir = 1;
 	injecting = 1
 	},
@@ -4839,7 +4839,7 @@
 	dir = 8;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/reinforced{
@@ -5588,7 +5588,7 @@
 /obj/floor_decal/industrial/warning,
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -6969,7 +6969,7 @@
 	external_pressure_bound = 105;
 	icon_state = "map_vent_in";
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -8047,11 +8047,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_east_con = null;
 	tag_south = 1;
 	tag_south_con = 0.79;
-	power_state = 1;
+	use_power = 1;
 	tag_east = 2;
 	tag_north = 1;
 	tag_north_con = 0.21
@@ -11832,7 +11832,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/sign/warning/hot_exhaust{
 	dir = 4;

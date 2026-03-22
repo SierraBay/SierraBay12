@@ -19,9 +19,9 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	if(!loc)
 		return FALSE
 
-	//Don't do this. It allows machines that set power_state to 0 when off (many machines) to
+	//Don't do this. It allows machines that set use_power to 0 when off (many machines) to
 	//be turned on again and used after a power failure because they never gain the MACHINE_STAT_NOPOWER flag.
-	//if(!power_state)
+	//if(!use_power)
 	//	return 1
 
 	if(!check_area)
@@ -34,7 +34,7 @@ This is /obj/machinery level code to properly manage power usage from the area.
 
 // called whenever the power settings of the containing area change
 // by default, check equipment channel & set flag can override if needed
-// This is NOT for when the machine's own status changes; use change_power_mode for that.
+// This is NOT for when the machine's own status changes; use update_use_power for that.
 /obj/machinery/proc/power_change()
 	if(stat_immune & MACHINE_STAT_NOPOWER)
 		return FALSE
@@ -51,13 +51,13 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	if(.)
 		queue_icon_update()
 
-/// Returns the current power usage draw, based on the state of `power_state`.
+/// Returns the current power usage draw, based on the state of `use_power`.
 /obj/machinery/proc/get_power_usage()
-	switch(power_state)
+	switch(use_power)
 		if(POWER_USE_IDLE)
-			return idle_power_consumption
+			return idle_power_usage
 		if(POWER_USE_ACTIVE)
-			return active_power_consumption
+			return active_power_usage
 		else
 			return 0
 
@@ -134,15 +134,15 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	power_change() // Force check in case the old area was powered and the new one isn't or vice versa.
 
 // The three procs below are the only allowed ways of modifying the corresponding variables.
-/// Updates the machine's `power_state` and the area's power grid.
-/obj/machinery/proc/change_power_mode(new_power_state = POWER_USE_IDLE)
+/// Updates the machine's `use_power` and the area's power grid.
+/obj/machinery/proc/update_use_power(new_use_power = POWER_USE_IDLE)
 	if(!power_init_complete)
-		power_state = new_power_state
+		use_power = new_use_power
 		return // We'll be retallying anyway.
-	if(power_state == new_power_state)
+	if(use_power == new_use_power)
 		return
 	var/old_power = get_power_usage()
-	power_state = new_power_state
+	use_power = new_use_power
 	var/new_power = get_power_usage()
 	REPORT_POWER_CONSUMPTION_CHANGE(old_power, new_power)
 
@@ -158,19 +158,19 @@ This is /obj/machinery level code to properly manage power usage from the area.
 	power_channel = new_channel
 	REPORT_POWER_CONSUMPTION_CHANGE(0, power)
 
-/// Updates the machine's power draw for the given state and updates the area's power grid if it is active.
-/obj/machinery/proc/set_power_consumption(new_power_consumption, power_mode = POWER_USE_IDLE)
+/// Updates the machine's `*_power_usage` to the new value and updates the machine's current power consumption state if applicable.
+/obj/machinery/proc/change_power_consumption(new_power_consumption, use_power_mode = POWER_USE_IDLE)
 	var/old_power
-	switch(power_mode)
+	switch(use_power_mode)
 		if(POWER_USE_IDLE)
-			old_power = idle_power_consumption
-			idle_power_consumption = new_power_consumption
+			old_power = idle_power_usage
+			idle_power_usage = new_power_consumption
 		if(POWER_USE_ACTIVE)
-			old_power = active_power_consumption
-			active_power_consumption = new_power_consumption
+			old_power = active_power_usage
+			active_power_usage = new_power_consumption
 		else
 			return
-	if(power_init_complete && (power_mode == power_state))
+	if(power_init_complete && (use_power_mode == use_power))
 		REPORT_POWER_CONSUMPTION_CHANGE(old_power, new_power_consumption)
 
 /obj/machinery/proc/has_power(channel = POWER_CHAN)

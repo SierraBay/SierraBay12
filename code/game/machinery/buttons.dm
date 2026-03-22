@@ -5,7 +5,7 @@
 	desc = "A remote control switch for something."
 	anchored = TRUE
 	power_channel = ENVIRON
-	idle_power_consumption = 10
+	idle_power_usage = 10
 	public_variables = list(
 		/singleton/public_access/public_variable/button_active,
 		/singleton/public_access/public_variable/input_toggle

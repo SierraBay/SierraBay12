@@ -5,9 +5,9 @@
 	icon_state = "station_map"
 	anchored = TRUE
 	density = FALSE
-	power_state = POWER_USE_IDLE
-	idle_power_consumption = 10
-	active_power_consumption = 500
+	use_power = POWER_USE_IDLE
+	idle_power_usage = 10
+	active_power_usage = 500
 
 	light_color = "#64c864"
 
@@ -114,7 +114,7 @@
 			watching_mob = user
 			GLOB.moved_event.register(watching_mob, src, TYPE_PROC_REF(/obj/machinery/ship_map, checkPosition))
 			GLOB.destroyed_event.register(watching_mob, src, TYPE_PROC_REF(/obj/machinery/ship_map, stopWatching))
-			change_power_mode(POWER_USE_ACTIVE)
+			update_use_power(POWER_USE_ACTIVE)
 
 			if(bogus)
 				to_chat(user, SPAN_WARNING("The holomap failed to initialize. This area of space cannot be mapped."))
@@ -141,7 +141,7 @@
 		GLOB.moved_event.unregister(watching_mob, src)
 		GLOB.destroyed_event.unregister(watching_mob, src)
 	watching_mob = null
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	if(holomap_datum)
 		holomap_datum.legend_deselect()
 
@@ -308,16 +308,16 @@
 		if(LAZYLEN(legend))
 			QDEL_NULL_LIST(legend)
 		LAZYINITLIST(legend)
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_COMMAND, "в–  Command"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_SECURITY, "в–  Security"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_MEDICAL, "в–  Medical"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_SCIENCE, "в–  Research"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_EXPLORATION, "в–  Exploration"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_ENGINEERING, "в–  Engineering"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_CARGO, "в–  Supply"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_AIRLOCK, "в–  Airlock"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_ESCAPE, "в–  Escape"))
-		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_CREW, "в–  Crew"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_COMMAND, "- Command"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_SECURITY, "- Security"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_MEDICAL, "- Medical"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_SCIENCE, "- Research"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_EXPLORATION, "- Exploration"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_ENGINEERING, "- Engineering"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_CARGO, "- Supply"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_AIRLOCK, "- Airlock"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_ESCAPE, "- Escape"))
+		LAZYADD(legend, new /obj/screen/legend(null ,HOLOMAP_AREACOLOR_CREW, "- Crew"))
 		LAZYADD(legend, new /obj/screen/legend/cursor(null ,HOLOMAP_AREACOLOR_BASE, "You are here"))
 	if(reinit)
 		QDEL_NULL_LIST(maptexts)

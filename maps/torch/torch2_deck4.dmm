@@ -16018,7 +16018,7 @@
 	external_pressure_bound = 105;
 	icon_state = "map_vent_in";
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/table/standard{
 	name = "plastic table frame"

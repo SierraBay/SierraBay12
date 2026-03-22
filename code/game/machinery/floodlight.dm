@@ -9,9 +9,9 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-	active_power_consumption = 200
+	active_power_usage = 200
 	power_channel = LIGHT
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 
 	machine_name = "emergency floodlight"
 	machine_desc = "A portable, battery-powered LED flood lamp used to illuminate large areas."
@@ -21,11 +21,11 @@
 	var/l_range = 8 //outer range of light when on, can be negative
 
 /obj/machinery/floodlight/on_update_icon()
-	icon_state = "flood[panel_open ? "o" : ""][panel_open && get_cell() ? "b" : ""]0[power_state == POWER_USE_ACTIVE]"
+	icon_state = "flood[panel_open ? "o" : ""][panel_open && get_cell() ? "b" : ""]0[use_power == POWER_USE_ACTIVE]"
 
 /obj/machinery/floodlight/power_change()
 	. = ..()
-	if(!. || !power_state) return
+	if(!. || !use_power) return
 
 	if(!is_powered())
 		turn_off(1)
@@ -35,7 +35,7 @@
 	if(prob(30))
 		set_light(l_range, l_power / 2, angle = LIGHT_VERY_WIDE)
 		spawn(20)
-			if(power_state)
+			if(use_power)
 				set_light(l_range, l_power, angle = LIGHT_VERY_WIDE)
 
 // Returns 0 on failure and 1 on success
@@ -44,8 +44,8 @@
 		return 0
 
 	set_light(l_range, l_power / 2, angle = LIGHT_VERY_WIDE)
-	change_power_mode(POWER_USE_ACTIVE)
-	use_power_oneoff(active_power_consumption)//so we drain cell if they keep trying to use it
+	update_use_power(POWER_USE_ACTIVE)
+	use_power_oneoff(active_power_usage)//so we drain cell if they keep trying to use it
 	update_icon()
 	if(loud)
 		visible_message("\The [src] turns on.")
@@ -54,7 +54,7 @@
 
 /obj/machinery/floodlight/proc/turn_off(loud = 0)
 	set_light(0, 0)
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 	update_icon()
 	if(loud)
 		visible_message("\The [src] shuts down.")
@@ -63,7 +63,7 @@
 /obj/machinery/floodlight/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))
 		return FALSE
-	if(power_state)
+	if(use_power)
 		turn_off(1)
 	else
 		if(!turn_on(1))
@@ -78,6 +78,6 @@
 	var/light_mod = clamp(total_component_rating_of_type(/obj/item/stock_parts/capacitor), 0, 10)
 	l_power = light_mod? light_mod*0.01 + initial(l_power) : initial(l_power)/2 //gives us between 0.8-0.9 with capacitor, or 0.4 without one
 	l_range = light_mod*1.5 + initial(l_range)
-	set_power_consumption(initial(active_power_consumption) * light_mod , POWER_USE_ACTIVE)
-	if(power_state)
+	change_power_consumption(initial(active_power_usage) * light_mod , POWER_USE_ACTIVE)
+	if(use_power)
 		set_light(l_range, l_power, angle = LIGHT_VERY_WIDE)

@@ -10,10 +10,10 @@
 	can_burn_food = TRUE
 	appliancetype = COOKING_APPLIANCE_FRYER
 	obj_flags = OBJ_FLAG_ANCHORABLE
-	active_power_consumption = 12 KILOWATTS
+	active_power_usage = 12 KILOWATTS
 	heating_power = 12000
 	optimal_power = 1.35
-	idle_power_consumption = 3.6 KILOWATTS
+	idle_power_usage = 3.6 KILOWATTS
 	//Power used to maintain temperature once it's heated.
 	//Going with 25% of the active power. This is a somewhat arbitrary value
 	resistance = 10000	// Approx. 4 minutes.

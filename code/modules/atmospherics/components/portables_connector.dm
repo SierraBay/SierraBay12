@@ -15,7 +15,7 @@
 	var/datum/pipe_network/network
 
 	var/on = 0
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	uncreated_component_parts = null
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_FUEL

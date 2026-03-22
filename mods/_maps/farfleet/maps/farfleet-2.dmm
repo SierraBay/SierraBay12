@@ -2699,7 +2699,7 @@
 	dir = 8;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/pointdefense{
 	initial_id_tag = "snz_pd"

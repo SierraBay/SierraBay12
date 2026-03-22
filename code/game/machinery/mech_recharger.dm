@@ -6,8 +6,8 @@
 	density = FALSE
 	layer = ABOVE_TILE_LAYER
 	anchored = TRUE
-	idle_power_consumption = 200	// Some electronics, passive drain.
-	active_power_consumption = 60 KILOWATTS // When charging
+	idle_power_usage = 200	// Some electronics, passive drain.
+	active_power_usage = 60 KILOWATTS // When charging
 	base_type = /obj/machinery/mech_recharger
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
@@ -45,13 +45,13 @@
 	repair += total_component_rating_of_type(/obj/item/stock_parts/scanning_module)
 
 	if(chargerate_multiplier)
-		set_power_consumption(base_charge_rate * (chargerate_multiplier / chargerate_divisor), POWER_USE_ACTIVE)
+		change_power_consumption(base_charge_rate * (chargerate_multiplier / chargerate_divisor), POWER_USE_ACTIVE)
 	else
-		set_power_consumption(base_charge_rate, POWER_USE_ACTIVE)
+		change_power_consumption(base_charge_rate, POWER_USE_ACTIVE)
 
 /obj/machinery/mech_recharger/Process()
 	if(!charging)
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 		return
 	if(charging.loc != loc)
 		stop_charging()
@@ -67,7 +67,7 @@
 		stop_charging()
 		return
 
-	var/remaining_energy = active_power_consumption
+	var/remaining_energy = active_power_usage
 
 	if(repair && !fully_repaired())
 		for(var/obj/item/mech_component/MC in charging)
@@ -101,8 +101,8 @@
 	if(M.get_cell(TRUE))
 		M.show_message(SPAN_NOTICE("Now charging..."))
 		charging = M
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 
 /obj/machinery/mech_recharger/proc/stop_charging()
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	charging = null

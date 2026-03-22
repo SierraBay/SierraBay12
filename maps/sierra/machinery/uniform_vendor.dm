@@ -8,8 +8,8 @@
 	density = TRUE
 
 	// Power
-	power_state = POWER_USE_IDLE
-	idle_power_consumption = 10
+	use_power = POWER_USE_IDLE
+	idle_power_usage = 10
 	var/vend_power_usage = 150 //actuators and stuff
 
 	var/obj/item/card/id/ID

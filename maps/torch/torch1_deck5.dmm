@@ -15233,7 +15233,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "phoron_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/shuttle/petrov/phoron)

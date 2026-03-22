@@ -8,7 +8,7 @@
 	damage_hitsound = 'sound/effects/Glasshit.ogg'
 	health_max = 150 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = FALSE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	stat_immune = MACHINE_STAT_NOSCREEN | MACHINE_STAT_NOINPUT | MACHINE_STAT_NOPOWER
 	uncreated_component_parts = null
 	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_CHECKS_BORDER

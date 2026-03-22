@@ -70,7 +70,7 @@
 "ap" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor,
 /area/space)

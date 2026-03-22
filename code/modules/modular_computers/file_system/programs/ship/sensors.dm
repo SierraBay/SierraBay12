@@ -100,7 +100,7 @@
 	if (!sound_id)
 		sound_id = "[type]_[sequential_id(/datum/nano_module/program/ship/sensors)]"
 	var/obj/machinery/shipsensors/sensors = get_sensors()
-	if (sensors && linked && sensors.power_state ** sensors.powered() && program.computer.get_component(/obj/item/stock_parts/computer/ship_interface))
+	if (sensors && linked && sensors.use_power ** sensors.powered() && program.computer.get_component(/obj/item/stock_parts/computer/ship_interface))
 		var/volume = 8
 		if (!sound_token)
 			sound_token = GLOB.sound_player.PlayLoopingSound(nano_host(), sound_id, working_sound, volume = volume, range = 10)
@@ -153,7 +153,7 @@
 	var/mob/living/silicon/silicon = user
 	data["viewing_silicon"] = ismachinerestricted(silicon)
 	if (sensors)
-		data["on"] = sensors.power_state
+		data["on"] = sensors.use_power
 		data["range"] = sensors.range
 		data["health"] = sensors.get_current_health()
 		data["max_health"] = sensors.get_max_health()
@@ -172,7 +172,7 @@
 
 		var/list/potential_contacts = list()
 
-		if (sensors?.power_state)
+		if (sensors?.use_power)
 			for (var/obj/overmap/nearby in view(round(sensors.range,1), linked))
 				if (nearby.requires_contact) // Some ships require.
 					continue

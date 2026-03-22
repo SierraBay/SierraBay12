@@ -970,7 +970,7 @@
 "cK" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor{
 	map_airless = 1
@@ -1138,7 +1138,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/yacht/engine)
@@ -1154,7 +1154,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced/carbon_dioxide,
 /area/yacht/engine)

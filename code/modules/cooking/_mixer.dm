@@ -1,10 +1,10 @@
 /obj/machinery/appliance/mixer
 	max_contents = 1
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	cooking_coeff = 0.75
 	cooking = FALSE
-	active_power_consumption = 3000
-	idle_power_consumption = 50
+	active_power_usage = 3000
+	idle_power_usage = 50
 	appliancetype = 0
 
 /obj/machinery/appliance/mixer/examine(mob/user, distance)
@@ -78,7 +78,7 @@
 
 /obj/machinery/appliance/mixer/attempt_toggle_power(mob/user)
 	. = ..(user)
-	if(!power_state)
+	if(!use_power)
 		return
 	var/list/missing = missing_parts()
 	if(missing)
@@ -97,7 +97,7 @@
 /obj/machinery/appliance/mixer/finish_cooking(datum/cooking_item/CI)
 	..()
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 	CI.reset()
 	update_icon()
 

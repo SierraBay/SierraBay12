@@ -3059,7 +3059,7 @@
 	icon_state = "map_vent_in";
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,

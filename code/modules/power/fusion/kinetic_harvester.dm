@@ -3,7 +3,7 @@
 	desc = "A complicated mechanism for harvesting rapidly moving particles from a fusion toroid and condensing them into a usable form."
 	density = TRUE
 	anchored = TRUE
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	icon = 'icons/obj/machines/kinetic_harvester.dmi'
 	icon_state = "harvester"
 	var/initial_id_tag
@@ -58,7 +58,7 @@
 	var/list/data = list()
 
 	data["id"] = plant ? plant.id_tag : "unset"
-	data["status"] = (power_state >= POWER_USE_ACTIVE)
+	data["status"] = (use_power >= POWER_USE_ACTIVE)
 	data["materials"] = list()
 	for(var/mat in stored)
 		var/material/material = SSmaterials.get_material_by_name(mat)
@@ -77,7 +77,7 @@
 	if(harvest_from && get_dist(src, harvest_from) > 10)
 		harvest_from = null
 
-	if(power_state >= POWER_USE_ACTIVE)
+	if(use_power >= POWER_USE_ACTIVE)
 		if(harvest_from && harvest_from.owned_field)
 			for(var/mat in harvest_from.owned_field.reactants)
 				if(SSmaterials.materials_by_name[mat] && !stored[mat])
@@ -101,7 +101,7 @@
 	if(is_powered())
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
 		AddOverlays("[icon_state]_lights")
-	if(power_state == POWER_USE_ACTIVE)
+	if(use_power == POWER_USE_ACTIVE)
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights_working"))
 		AddOverlays("[icon_state]_lights_working")
 
@@ -120,7 +120,7 @@
 				return TOPIC_REFRESH
 
 	if(href_list["toggle_power"])
-		power_state = (power_state >= POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		use_power = (use_power >= POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
 		queue_icon_update()
 		return TOPIC_REFRESH
 

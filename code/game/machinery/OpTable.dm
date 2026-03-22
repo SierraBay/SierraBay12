@@ -6,8 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 	throwpass = 1
-	idle_power_consumption = 1
-	active_power_consumption = 5
+	idle_power_usage = 1
+	active_power_usage = 5
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0

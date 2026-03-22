@@ -33,7 +33,7 @@
 /obj/machinery/portable_atmospherics/powered/pump/on_update_icon()
 	ClearOverlays()
 
-	if((power_state == POWER_USE_ACTIVE) && is_powered())
+	if((use_power == POWER_USE_ACTIVE) && is_powered())
 		icon_state = "psiphon:1"
 	else
 		icon_state = "psiphon:0"
@@ -50,7 +50,7 @@
 		return
 
 	if(prob(50/severity))
-		change_power_mode(power_state == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
 
 	if(prob(100/severity))
 		direction_out = !direction_out
@@ -64,7 +64,7 @@
 	..()
 	var/power_draw = -1
 
-	if((power_state == POWER_USE_ACTIVE) && is_powered())
+	if((use_power == POWER_USE_ACTIVE) && is_powered())
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents
@@ -99,7 +99,7 @@
 	else
 		power_draw = max(power_draw, power_losses)
 		if(abs(power_draw - last_power_draw) > 0.1 * last_power_draw)
-			set_power_consumption(power_draw, POWER_USE_ACTIVE)
+			change_power_consumption(power_draw, POWER_USE_ACTIVE)
 			last_power_draw = power_draw
 
 		update_connected_network()
@@ -122,7 +122,7 @@
 	data["powerDraw"] = round(last_power_draw)
 	data["cellCharge"] = cell ? cell.charge : 0
 	data["cellMaxCharge"] = cell ? cell.maxcharge : 1
-	data["on"] = (power_state == POWER_USE_ACTIVE) ? 1 : 0
+	data["on"] = (use_power == POWER_USE_ACTIVE) ? 1 : 0
 
 	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
@@ -137,7 +137,7 @@
 
 /obj/machinery/portable_atmospherics/powered/pump/OnTopic(user, href_list)
 	if(href_list["power"])
-		change_power_mode(power_state == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
+		update_use_power(use_power == POWER_USE_ACTIVE ? POWER_USE_IDLE : POWER_USE_ACTIVE)
 		. = TOPIC_REFRESH
 	if(href_list["direction"])
 		direction_out = !direction_out

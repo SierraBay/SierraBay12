@@ -56,8 +56,8 @@
 	icon = 'icons/obj/machines/airalarm.dmi'
 	icon_state = "alarmp"
 	anchored = TRUE
-	idle_power_consumption = 80
-	active_power_consumption = 1000 //For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
+	idle_power_usage = 80
+	active_power_usage = 1000 //For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = ENVIRON
 	req_access = list(list(access_atmospherics, access_engine_equip))
 	clicksound = "button"
@@ -229,14 +229,14 @@
 	if (!regulating_temperature)
 		//check for when we should start adjusting temperature
 		if(!get_danger_level(target_temperature, TLV["temperature"]) && abs(environment.temperature - target_temperature) > 2.0)
-			change_power_mode(POWER_USE_ACTIVE)
+			update_use_power(POWER_USE_ACTIVE)
 			regulating_temperature = 1
 			visible_message("\The [src] clicks as it starts [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 			"You hear a click and a faint electronic hum.")
 	else
 		//check for when we should stop adjusting temperature
 		if (get_danger_level(target_temperature, TLV["temperature"]) || abs(environment.temperature - target_temperature) <= 0.5)
-			change_power_mode(POWER_USE_IDLE)
+			update_use_power(POWER_USE_IDLE)
 			regulating_temperature = 0
 			visible_message("\The [src] clicks quietly as it stops [environment.temperature > target_temperature ? "cooling" : "heating"] the room.",\
 			"You hear a click as a faint electronic humming stops.")
@@ -253,18 +253,18 @@
 		if(gas)
 
 			if (gas.temperature <= target_temperature)	//gas heating
-				var/energy_used = min( gas.get_thermal_energy_change(target_temperature) , active_power_consumption)
+				var/energy_used = min( gas.get_thermal_energy_change(target_temperature) , active_power_usage)
 
 				gas.add_thermal_energy(energy_used)
 			else	//gas cooling
-				var/heat_transfer = min(abs(gas.get_thermal_energy_change(target_temperature)), active_power_consumption)
+				var/heat_transfer = min(abs(gas.get_thermal_energy_change(target_temperature)), active_power_usage)
 
 				//Assume the heat is being pumped into the hull which is fixed at 20 C
 				//none of this is really proper thermodynamics but whatever
 
 				var/cop = gas.temperature/T20C	//coefficient of performance -> power used = heat_transfer/cop
 
-				heat_transfer = min(heat_transfer, cop * active_power_consumption)	//this ensures that we don't use more than active_power_consumption amount of power
+				heat_transfer = min(heat_transfer, cop * active_power_usage)	//this ensures that we don't use more than active_power_usage amount of power
 
 				heat_transfer = -gas.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
 
@@ -914,8 +914,8 @@ FIRE ALARM
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = TRUE
-	idle_power_consumption = 2
-	active_power_consumption = 6
+	idle_power_usage = 2
+	active_power_usage = 6
 	power_channel = ENVIRON
 	var/last_process = 0
 	var/wiresexposed = FALSE
@@ -1216,8 +1216,8 @@ Just a object used in constructing fire alarms
 	var/timing = 0.0
 	var/lockdownbyai = 0
 	anchored = TRUE
-	idle_power_consumption = 2
-	active_power_consumption = 6
+	idle_power_usage = 2
+	active_power_usage = 6
 
 /obj/machinery/partyalarm/interface_interact(mob/user)
 	interact(user)

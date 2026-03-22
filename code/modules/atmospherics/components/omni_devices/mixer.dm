@@ -5,7 +5,7 @@
 	name = "omni gas mixer"
 	icon_state = "map_mixer"
 
-	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
+	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 15000			// 15000 W ~ 20 HP
 
 	var/list/inputs = new()
@@ -148,7 +148,7 @@
 /obj/machinery/atmospherics/omni/mixer/proc/build_uidata()
 	var/list/data = new()
 
-	data["power"] = power_state
+	data["power"] = use_power
 	data["config"] = configuring
 
 	var/portData[0]
@@ -184,16 +184,16 @@
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)
-				change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+				update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 			else
-				change_power_mode(POWER_USE_OFF)
+				update_use_power(POWER_USE_OFF)
 		if("configure")
 			configuring = !configuring
 			if(configuring)
-				change_power_mode(POWER_USE_OFF)
+				update_use_power(POWER_USE_OFF)
 
 	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
-	if(configuring && !power_state)
+	if(configuring && !use_power)
 		switch(href_list["command"])
 			if("set_flow_rate")
 				var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control",set_flow_rate) as num

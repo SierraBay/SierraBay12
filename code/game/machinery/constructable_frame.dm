@@ -8,7 +8,7 @@
 	icon_state = "box_0"
 	density = TRUE
 	anchored = FALSE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	uncreated_component_parts = null
 	construct_state = /singleton/machine_construction/frame/unwrenched
 	var/obj/item/stock_parts/circuitboard/circuit = null

@@ -16,7 +16,7 @@
 	var/accept_drinking = 0
 	var/amount = 30
 
-	idle_power_consumption = 100
+	idle_power_usage = 100
 	density = TRUE
 	anchored = TRUE
 	obj_flags = OBJ_FLAG_ANCHORABLE | OBJ_FLAG_ROTATABLE | OBJ_FLAG_CAN_TABLE

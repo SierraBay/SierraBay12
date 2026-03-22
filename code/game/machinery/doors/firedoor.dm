@@ -46,7 +46,7 @@
 	var/close_sound = 'sound/machines/blastdoor_close.ogg'
 
 	power_channel = ENVIRON
-	idle_power_consumption = 5
+	idle_power_usage = 5
 
 	var/list/tile_info[4]
 	var/list/dir_alerts[4] // 4 dirs, bitflags

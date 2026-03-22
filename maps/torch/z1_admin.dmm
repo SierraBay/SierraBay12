@@ -10423,7 +10423,7 @@
 	external_pressure_bound = 140;
 	external_pressure_bound_default = 140;
 	icon_state = "map_vent_out";
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning/full,
 /turf/simulated/floor{
@@ -10613,7 +10613,7 @@
 /area/merchant_station)
 "aWH" = (
 /obj/machinery/atmospherics/omni/filter{
-	active_power_consumption = 2500;
+	active_power_usage = 2500;
 	tag_east = 1;
 	tag_south = 4;
 	tag_west = 2
@@ -10695,7 +10695,7 @@
 /area/merchant_station)
 "aXa" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 2500;
+	active_power_usage = 2500;
 	tag_east = 1;
 	tag_east_con = 0.21;
 	tag_south = 2;

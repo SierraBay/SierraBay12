@@ -54,7 +54,7 @@
 	if (!sound_id)
 		sound_id = "[type]_[sequential_id(/obj/machinery/computer/modular/preset/sensors)]"
 	var/obj/machinery/shipsensors/sensors = get_sensors()
-	if (sensors && linked && sensors.power_state ** sensors.powered())
+	if (sensors && linked && sensors.use_power ** sensors.powered())
 		var/volume = 8
 		if (!sound_token)
 			sound_token = GLOB.sound_player.PlayLoopingSound(src, sound_id, working_sound, volume = volume, range = 10)
@@ -113,7 +113,7 @@
 	var/mob/living/silicon/silicon = user
 	data["viewing_silicon"] = ismachinerestricted(silicon)
 	if (sensors)
-		data["on"] = sensors.power_state
+		data["on"] = sensors.use_power
 		data["range"] = sensors.range
 		data["health"] = sensors.get_current_health()
 		data["max_health"] = sensors.get_max_health()
@@ -132,7 +132,7 @@
 
 		var/list/potential_contacts = list()
 
-		if (sensors?.power_state)
+		if (sensors?.use_power)
 			for (var/obj/overmap/nearby in view(round(sensors.range,1), linked))
 				if (nearby.requires_contact) // Some ships require.
 					continue
@@ -256,7 +256,7 @@
 	var/sensor_strength //used for detecting ships via contacts
 	var/heat = 0
 	var/range = 1
-	idle_power_consumption = 5000
+	idle_power_usage = 5000
 	base_type = /obj/machinery/shipsensors
 	maximum_component_parts = list(/obj/item/stock_parts = 10) // Circuit, 5 manipulators, 3 subspace shit and 1 tesla coil
 
@@ -282,7 +282,7 @@
 	ClearOverlays()
 	if (panel_open)
 		AddOverlays("[icon_state]_panel")
-	if (power_state)
+	if (use_power)
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights_working"))
 		AddOverlays("[icon_state]_lights_working")
 	if (health_dead())
@@ -291,18 +291,18 @@
 
 
 /obj/machinery/shipsensors/proc/toggle()
-	if (!power_state && (health_dead() || !in_vacuum()))
+	if (!use_power && (health_dead() || !in_vacuum()))
 		return // No turning on if broken or misplaced.
-	if (!power_state) //need some juice to kickstart
-		use_power_oneoff(idle_power_consumption*5)
-	change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+	if (!use_power) //need some juice to kickstart
+		use_power_oneoff(idle_power_usage*5)
+	update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 	power_change()
 	queue_icon_update()
 
 
 /obj/machinery/shipsensors/Process()
 	..()
-	if (power_state) //can't run in non-vacuum
+	if (use_power) //can't run in non-vacuum
 		if (!in_vacuum())
 			toggle()
 		if (heat > critical_heat)
@@ -313,7 +313,7 @@
 
 			damage_health(rand(10, 50), DAMAGE_BURN)
 			toggle()
-		heat += idle_power_consumption/15000
+		heat += idle_power_usage/15000
 
 	if (heat > 0)
 		heat = max(0, heat - heat_reduction)
@@ -321,23 +321,23 @@
 
 /obj/machinery/shipsensors/power_change()
 	. = ..()
-	if (power_state && !powered())
+	if (use_power && !powered())
 		toggle()
 
 
 /obj/machinery/shipsensors/proc/set_range(nrange)
 	range = nrange
-	set_power_consumption(1500 * (range**2), POWER_USE_IDLE) //Exponential increase, also affects speed of overheating
+	change_power_consumption(1500 * (range**2), POWER_USE_IDLE) //Exponential increase, also affects speed of overheating
 
 
 /obj/machinery/shipsensors/emp_act(severity)
-	if (power_state)
+	if (use_power)
 		toggle()
 	..()
 
 
 /obj/machinery/shipsensors/on_death()
-	if (power_state)
+	if (use_power)
 		toggle()
 	..()
 

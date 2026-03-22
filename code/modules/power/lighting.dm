@@ -168,9 +168,9 @@
 	desc = "A lighting fixture."
 	anchored = TRUE
 	layer = ABOVE_HUMAN_LAYER
-	power_state = POWER_USE_ACTIVE
-	idle_power_consumption = 2
-	active_power_consumption = 20
+	use_power = POWER_USE_ACTIVE
+	idle_power_usage = 2
+	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they don't need to be in the machine list
 
 	/// Whether or not the light is turned on.
@@ -308,7 +308,7 @@
 
 	if(on)
 
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 
 		var/changed = FALSE
 		if(current_mode && (current_mode in lightbulb.lighting_modes))
@@ -319,9 +319,9 @@
 		if(trigger && changed && get_status() == LIGHT_OK)
 			switch_check()
 	else
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 		set_light(0)
-	set_power_consumption((light_range * light_power) * LIGHTING_POWER_FACTOR, POWER_USE_ACTIVE)
+	change_power_consumption((light_range * light_power) * LIGHTING_POWER_FACTOR, POWER_USE_ACTIVE)
 
 /// Returns `lightbulb.status`.
 /obj/machinery/light/proc/get_status()

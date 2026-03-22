@@ -4,8 +4,8 @@
 	icon_state = "computer"
 	density = TRUE
 	anchored = TRUE
-	idle_power_consumption = 300
-	active_power_consumption = 300
+	idle_power_usage = 300
+	active_power_usage = 300
 	construct_state = /singleton/machine_construction/default/panel_closed/computer
 	uncreated_component_parts = null
 	stat_immune = 0

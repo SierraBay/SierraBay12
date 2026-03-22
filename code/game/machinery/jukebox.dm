@@ -6,8 +6,8 @@
 	anchored = TRUE
 	density = TRUE
 	power_channel = EQUIP
-	idle_power_consumption = 10
-	active_power_consumption = 100
+	idle_power_usage = 10
+	active_power_usage = 100
 	clicksound = 'sound/machines/buttonbeep.ogg'
 	pixel_x = -8
 	obj_flags = OBJ_FLAG_ANCHORABLE

@@ -11,7 +11,7 @@
 	icon_state = "infected_machine"
 	density = TRUE
 	anchored = TRUE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	var/illumination_color = 	COLOR_LIGHTING_CYAN_MACHINERY
 	var/health = 				60
 	var/max_health = 			60

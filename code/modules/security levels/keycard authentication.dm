@@ -15,8 +15,8 @@
 	//1 = select event
 	//2 = authenticate
 	anchored = TRUE
-	idle_power_consumption = 2
-	active_power_consumption = 6
+	idle_power_usage = 2
+	active_power_usage = 6
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user as mob)

@@ -14,8 +14,8 @@
 	stat_immune = 0
 
 	var/on = 0
-	idle_power_consumption = 20
-	active_power_consumption = 200
+	idle_power_usage = 20
+	active_power_usage = 200
 	clicksound = 'sound/machines/buttonbeep.ogg'
 	clickvol = 30
 
@@ -321,7 +321,7 @@
 		occupant.bodytemperature = 261
 	occupant = null
 	current_heat_capacity = initial(current_heat_capacity)
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	update_icon()
 	SetName(initial(name))
 	return
@@ -355,7 +355,7 @@
 		to_chat(target, SPAN_NOTICE("<b>You feel a cold liquid surround you. Your skin starts to freeze up.</b>"))
 	occupant = target
 	current_heat_capacity = HEAT_CAPACITY_HUMAN
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	if (user != target)
 		add_fingerprint(target) //Add fingerprints of the person stuffed in.
 	update_icon()

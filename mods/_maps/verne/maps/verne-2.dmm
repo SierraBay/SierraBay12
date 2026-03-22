@@ -3,7 +3,7 @@
 /obj/machinery/atmospherics/unary/freezer{
 	dir = 8;
 	icon_state = "freezer";
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/warning{
 	dir = 6

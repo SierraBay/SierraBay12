@@ -133,7 +133,7 @@
 	icon_state = "apc0"
 	icon = 'icons/obj/machines/apc.dmi'
 	anchored = TRUE
-	power_state = POWER_USE_IDLE // Has custom handling here.
+	use_power = POWER_USE_IDLE // Has custom handling here.
 	power_channel = LOCAL      // Do not manipulate this; you don't want to power the APC off itself.
 	interact_offline = TRUE    // Can use UI even if unpowered
 	uncreated_component_parts = list(

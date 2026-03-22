@@ -110,10 +110,10 @@
 /area/map_template/facolony/engineering)
 "aB" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_east_con = 0.79;
 	tag_south = 1;
-	power_state = 1;
+	use_power = 1;
 	tag_east = 1;
 	tag_west = 2;
 	tag_south_con = 0.21
@@ -8418,7 +8418,7 @@
 /area/template_noop)
 "Lu" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_south = 1;
 	tag_east = 1;
 	tag_north = 2;

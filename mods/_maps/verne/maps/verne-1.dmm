@@ -114,7 +114,7 @@
 	},
 /obj/machinery/atmospherics/unary/outlet_injector{
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/reinforced{
@@ -763,7 +763,7 @@
 	id = "cooling_in_verne_bottom";
 	name = "Coolant Injector";
 	power_rating = 30000;
-	power_state = 1;
+	use_power = 1;
 	volume_rate = 700
 	},
 /turf/simulated/floor/reinforced{
@@ -863,7 +863,7 @@
 	injecting = 1;
 	volume_rate = 4000;
 	id = "vernechamber_in";
-	power_state = 1;
+	use_power = 1;
 	frequency = 1441
 	},
 /turf/simulated/floor/reinforced{
@@ -1724,7 +1724,7 @@
 	},
 /obj/floor_decal/industrial/outline/blue,
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_north = 1;
 	tag_north_con = 0.79;
 	tag_south = 1;
@@ -2068,7 +2068,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/reinforced{
@@ -2962,7 +2962,7 @@
 	id_tag = "cooling_out_verne_bottom";
 	initialize_directions = 1;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -5863,7 +5863,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 4;
 	injecting = 1;
-	power_state = 1
+	use_power = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/sign/warning/docking_area{

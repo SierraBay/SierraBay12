@@ -8,11 +8,11 @@
 	obj_flags = OBJ_FLAG_ANCHORABLE
 	food_color = "#a34719"
 	can_burn_food = TRUE
-	active_power_consumption = 6 KILOWATTS
+	active_power_usage = 6 KILOWATTS
 	heating_power = 6000
 	//Based on a double deck electric convection oven
 	resistance = 10000 // Approx. 4 minutes.
-	idle_power_consumption = 2 KILOWATTS
+	idle_power_usage = 2 KILOWATTS
 	//uses ~30% power to stay warm
 	optimal_power = 1.2
 	light_x = 2
@@ -89,7 +89,7 @@
 	update_baking_audio()
 
 /obj/machinery/appliance/cooker/oven/proc/update_baking_audio()
-	if(!open && power_state != POWER_USE_OFF && operating)
+	if(!open && use_power != POWER_USE_OFF && operating)
 		if(!oven_loop)
 			oven_loop = GLOB.sound_player.PlayLoopingSound(
 				src,

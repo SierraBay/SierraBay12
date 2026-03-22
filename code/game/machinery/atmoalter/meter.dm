@@ -6,7 +6,7 @@
 	var/atom/target = null //A pipe for the base type
 	anchored = TRUE
 	power_channel = ENVIRON
-	idle_power_consumption = 15
+	idle_power_usage = 15
 
 	uncreated_component_parts = list(
 		/obj/item/stock_parts/power/apc

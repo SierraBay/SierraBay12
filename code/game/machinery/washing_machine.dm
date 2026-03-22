@@ -25,8 +25,8 @@
 	clickvol = 40
 
 	// Power
-	idle_power_consumption = 10
-	active_power_consumption = 150
+	idle_power_usage = 10
+	active_power_usage = 150
 
 	machine_name = "washing machine"
 	machine_desc = "Uses detergent and water to get your clothes minty fresh. Good for those pesky bloodstains! Also decontaminates clothing that has been exposed to toxic elements, as long as detergent is used in the washing process."
@@ -66,7 +66,7 @@
 	if(locate(/mob/living) in src)
 		state |= WASHER_STATE_BLOODY
 
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
 	addtimer(new Callback(src, TYPE_PROC_REF(/obj/machinery/washing_machine, wash)), 20 SECONDS)
 
@@ -95,7 +95,7 @@
 		WL.amount = HH.amount
 		qdel(HH)
 
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	if(locate(/mob/living) in src)
 		gibs_ready = 1
 	state &= ~WASHER_STATE_RUNNING

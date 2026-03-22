@@ -335,8 +335,8 @@
 /obj/machinery/unit_test_local_power_sink
 	name = "local power sink"
 	requires_power = TRUE
-	idle_power_consumption = 5
-	active_power_consumption = 5
+	idle_power_usage = 5
+	active_power_usage = 5
 	var/power_change_calls = 0
 
 /obj/machinery/unit_test_local_power_sink/power_change()

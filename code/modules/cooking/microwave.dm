@@ -11,8 +11,8 @@
 
 	food_color = COLOR_GRAY
 
-	active_power_consumption = 2 KILOWATTS
-	idle_power_consumption = 0
+	active_power_usage = 2 KILOWATTS
+	idle_power_usage = 0
 	heating_power = 6000
 
 	finish_verb = null
@@ -147,7 +147,7 @@
 	if (operating)
 		operating = FALSE
 		temperature = T20C
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 	else
 		var/desired_time = show_radial_menu(user, src, temp_options, require_near = TRUE, tooltips = TRUE, no_repeat_close = TRUE)
 		if(!desired_time)
@@ -155,13 +155,13 @@
 		set_temp = optimal_temp
 		temperature = optimal_temp
 		operating = TRUE
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 		var/datum/callback/turn_off_callback = new Callback(src, PROC_REF(turn_off))
 		active_timer_hash = addtimer(turn_off_callback, text2num(desired_time) SECONDS, TIMER_STOPPABLE)
 
 	activation_message(user)
 	playsound(src, 'sound/machines/click.ogg', 40, 1)
-	cooking = power_state
+	cooking = use_power
 	update_icon()
 
 /obj/machinery/appliance/cooker/microwave/can_remove_items(mob/user)
@@ -173,7 +173,7 @@
 		active_timer_hash = null
 	operating = FALSE
 	temperature = T20C
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 	audible_message(SPAN_NOTICE("<b>[src]</b> pings!"))
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	update_icon()

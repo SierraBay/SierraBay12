@@ -10,8 +10,8 @@
 	atom_flags = ATOM_FLAG_CLIMBABLE
 	obj_flags = OBJ_FLAG_CAN_TABLE | OBJ_FLAG_ANCHORABLE
 	anchored = TRUE
-	idle_power_consumption = 0
-	active_power_consumption = 1.2 KILOWATTS
+	idle_power_usage = 0
+	active_power_usage = 1.2 KILOWATTS
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
@@ -50,15 +50,15 @@
 
 	var/comp = 0.25 KILOWATTS * total_component_rating_of_type(/obj/item/stock_parts/micro_laser)
 	if(comp)
-		set_power_consumption(max(0.5 KILOWATTS, initial(active_power_consumption) - comp), POWER_USE_ACTIVE)
+		change_power_consumption(max(0.5 KILOWATTS, initial(active_power_usage) - comp), POWER_USE_ACTIVE)
 	..()
 
 /obj/machinery/reagent_temperature/Process()
 	..()
 	if(temperature != last_temperature)
 		queue_icon_update()
-	if(((inoperable()) || !anchored) && power_state >= POWER_USE_ACTIVE)
-		change_power_mode(POWER_USE_IDLE)
+	if(((inoperable()) || !anchored) && use_power >= POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_IDLE)
 		queue_icon_update()
 
 /obj/machinery/reagent_temperature/proc/eject_beaker(mob/user)
@@ -80,7 +80,7 @@
 	return TRUE
 
 /obj/machinery/reagent_temperature/ProcessAtomTemperature()
-	if(power_state >= POWER_USE_ACTIVE)
+	if(use_power >= POWER_USE_ACTIVE)
 		var/last_temperature = temperature
 		if(heating && temperature < target_temperature)
 			temperature = min(target_temperature, temperature + heating_power)
@@ -94,7 +94,7 @@
 	. = ..()
 
 /obj/machinery/reagent_temperature/use_tool(obj/item/thing, mob/living/user, list/click_params)
-	if(isWrench(thing) && power_state == POWER_USE_ACTIVE)
+	if(isWrench(thing) && use_power == POWER_USE_ACTIVE)
 		to_chat(user, SPAN_WARNING("Turn \the [src] off first!"))
 		return TRUE
 
@@ -119,7 +119,7 @@
 
 	var/list/adding_overlays
 
-	if(power_state >= POWER_USE_ACTIVE)
+	if(use_power >= POWER_USE_ACTIVE)
 		if(!on_icon)
 			on_icon = image(icon, "[icon_state]_lights")
 			AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
@@ -170,7 +170,7 @@
 	dat += "<tr><td>Loaded container:</td>"
 	dat += "<td>[container ? "[container.name] ([floor(container.temperature - T0C)]C) <a href='byond://?src=\ref[src];remove_container=1'>Remove</a>" : "None."]</td></tr>"
 
-	dat += "<tr><td>Switched:</td><td><a href='byond://?src=\ref[src];toggle_power=1'>[power_state == POWER_USE_ACTIVE ? "On" : "Off"]</a></td></tr>"
+	dat += "<tr><td>Switched:</td><td><a href='byond://?src=\ref[src];toggle_power=1'>[use_power == POWER_USE_ACTIVE ? "On" : "Off"]</a></td></tr>"
 	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "\ref[src]-reagent_temperature_window", "[capitalize(name)]")
@@ -190,7 +190,7 @@
 	if(inoperable())
 		return TOPIC_HANDLED
 
-	change_power_mode(power_state <= POWER_USE_IDLE ? POWER_USE_ACTIVE : POWER_USE_IDLE)
+	update_use_power(use_power <= POWER_USE_IDLE ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 	QUEUE_TEMPERATURE_ATOMS(src)
 	update_icon()
 

@@ -510,7 +510,7 @@
 /area/scavver/gantry/up2)
 "ef" = (
 /obj/machinery/shipsensors{
-	power_state = 0
+	use_power = 0
 	},
 /turf/simulated/floor,
 /area/scavver/escapepod)
@@ -616,7 +616,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "scavver_teg_in_fuel";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/reinforced,
 /area/scavver/yachtup)
@@ -2259,7 +2259,7 @@
 /area/scavver/hab)
 "sp" = (
 /obj/machinery/shipsensors{
-	power_state = 0
+	use_power = 0
 	},
 /obj/structure/handrail{
 	dir = 1
@@ -4469,7 +4469,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "scavver_teg_in";
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/sparker{
 	id_tag = "scavver_teg";

@@ -5,8 +5,8 @@
 	icon_state = "borgcharger0(old)"
 	density = TRUE
 
-	idle_power_consumption = 100
-	active_power_consumption = 1000
+	idle_power_usage = 100
+	active_power_usage = 1000
 
 	var/spawn_progress_time = 0
 	var/max_spawn_time = 50
@@ -103,7 +103,7 @@
 			max_spawn_time = rand(30,100)
 
 			if(!length(spawning_types) || !length(stored_materials))
-				change_power_mode(POWER_USE_IDLE)
+				update_use_power(POWER_USE_IDLE)
 				icon_state = "borgcharger0(old)"
 
 		else if(prob(5))
@@ -145,7 +145,7 @@
 
 				spawning_types.Add(construction[construction[index]])
 				spawn_progress_time = 0
-				change_power_mode(POWER_USE_ACTIVE)
+				update_use_power(POWER_USE_ACTIVE)
 				icon_state = "borgcharger1(old)"
 			else
 				src.visible_message(fail_message)

@@ -5,7 +5,7 @@
 	icon_state = "bspacerelay"
 	anchored = TRUE
 	density = TRUE
-	idle_power_consumption = 15000
+	idle_power_usage = 15000
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	machine_name = "emergency bluespace relay"

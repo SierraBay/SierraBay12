@@ -14,8 +14,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/loaded_item = null
 	var/decon_mod = 0
 
-	idle_power_consumption = 30
-	active_power_consumption = 2500
+	idle_power_usage = 30
+	active_power_usage = 2500
 	construct_state = /singleton/machine_construction/default/panel_closed
 
 	machine_name = "destructive analyzer"

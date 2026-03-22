@@ -695,7 +695,7 @@
 	external_pressure_bound = 140;
 	external_pressure_bound_default = 140;
 	icon_state = "map_vent_out";
-	power_state = 1
+	use_power = 1
 	},
 /obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/full,
@@ -4617,7 +4617,7 @@
 /area/liberia/engineeringreactor)
 "hW" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 2500;
+	active_power_usage = 2500;
 	tag_east = 1;
 	tag_east_con = 0.21;
 	tag_south = 2;
@@ -6332,7 +6332,7 @@
 /area/liberia/atmos)
 "lm" = (
 /obj/machinery/atmospherics/omni/filter{
-	active_power_consumption = 2500;
+	active_power_usage = 2500;
 	tag_east = 1;
 	tag_south = 4;
 	tag_west = 2

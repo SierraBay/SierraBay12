@@ -5,8 +5,8 @@
 	icon = 'icons/obj/machines/holosign.dmi'
 	icon_state = "sign_off"
 	layer = ABOVE_DOOR_LAYER
-	idle_power_consumption = 2
-	active_power_consumption = 70
+	idle_power_usage = 2
+	active_power_usage = 70
 	anchored = TRUE
 	var/lit = 0
 	var/on_icon = "sign_on"
@@ -27,7 +27,7 @@
 	if (inoperable())
 		return
 	lit = !lit
-	change_power_mode(lit ? POWER_USE_ACTIVE : POWER_USE_IDLE)
+	update_use_power(lit ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 	update_icon()
 
 /obj/machinery/holosign/on_update_icon()

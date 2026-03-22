@@ -20,8 +20,8 @@
 	var/gib_time = 40        // Time from starting until meat appears
 	var/gib_throw_dir = WEST // Direction to spit meat and gibs in.
 
-	idle_power_consumption = 2
-	active_power_consumption = 500
+	idle_power_usage = 2
+	active_power_usage = 500
 
 /obj/machinery/gibber/Initialize()
 	. = ..()

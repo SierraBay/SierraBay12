@@ -117,7 +117,7 @@
 	return TRUE
 
 /obj/machinery/floodlight/do_simple_ranged_interaction(mob/user)
-	if(power_state)
+	if(use_power)
 		turn_off(1)
 	else
 		if(!turn_on(1))

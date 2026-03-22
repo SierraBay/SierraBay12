@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_keyboard = "med_key"
 	icon_screen = "dna"
-	idle_power_consumption = 500
+	idle_power_usage = 500
 	var/curing
 	var/virusing
 

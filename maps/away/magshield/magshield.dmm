@@ -310,7 +310,7 @@
 	pressure_checks = 2;
 	pressure_checks_default = 2;
 	pump_direction = 0;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor,
 /area/magshield/smes_storage)
@@ -1030,7 +1030,7 @@
 	icon_state = "map_injector";
 	id = "n2o_in";
 	pixel_y = 1;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor,
 /area/magshield/smes_storage)
@@ -2304,7 +2304,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "d_n2_in";
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor,
 /area/magshield/east)

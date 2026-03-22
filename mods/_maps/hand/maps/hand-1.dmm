@@ -771,7 +771,7 @@
 	icon_state = "map_vent_in";
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/tiled/techfloor{
 	map_airless = 1
@@ -6795,7 +6795,7 @@
 	icon_state = "map_vent_in";
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/tiled/techfloor{
 	map_airless = 1
@@ -7382,10 +7382,10 @@
 /area/ship/hand/crew/miner_two)
 "KU" = (
 /obj/machinery/atmospherics/omni/mixer{
-	active_power_consumption = 7500;
+	active_power_usage = 7500;
 	tag_east_con = 0.21;
 	tag_south = 2;
-	power_state = 1;
+	use_power = 1;
 	tag_east = 1;
 	tag_west = 1;
 	tag_west_con = 0.79

@@ -8,8 +8,8 @@
 	icon_state = "freezer"
 	density = TRUE
 	anchored = TRUE
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 5			// 5 Watts for thermostat related circuitry
+	use_power = POWER_USE_OFF
+	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	base_type = /obj/machinery/atmospherics/unary/freezer
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
@@ -57,7 +57,7 @@
 		AddOverlays(emissive_appearance(icon, "[icon_state]_lights"))
 		AddOverlays("[icon_state]_lights")
 		if(node)
-			if(power_state && cooling)
+			if(use_power && cooling)
 				AddOverlays(emissive_appearance(icon, "[icon_state]_lights_working"))
 				AddOverlays("[icon_state]_lights_working")
 			else
@@ -71,7 +71,7 @@
 /obj/machinery/atmospherics/unary/freezer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	// this is the data which will be sent to the ui
 	var/data[0]
-	data["on"] = power_state ? 1 : 0
+	data["on"] = use_power ? 1 : 0
 	data["gasPressure"] = round(air_contents.return_pressure())
 	data["gasTemperature"] = round(air_contents.temperature)
 	data["minGasTemperature"] = 0
@@ -103,7 +103,7 @@
 	if(..())
 		return 1
 	if(href_list["toggleStatus"])
-		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
@@ -120,7 +120,7 @@
 /obj/machinery/atmospherics/unary/freezer/Process()
 	..()
 
-	if(inoperable() || !power_state)
+	if(inoperable() || !use_power)
 		cooling = 0
 		update_icon()
 		return

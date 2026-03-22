@@ -3,7 +3,7 @@
 	desc = "A mound of earth. You could plant some seeds here."
 	icon_state = "soil"
 	density = FALSE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	stat_immune = MACHINE_STAT_NOINPUT | MACHINE_STAT_NOSCREEN | MACHINE_STAT_NOPOWER
 	mechanical = 0
 	tray_light = 0

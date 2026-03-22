@@ -10,9 +10,9 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
 	req_access = list(access_research)
-	idle_power_consumption = 0
-	active_power_consumption = 5 KILOWATTS
-	power_state = POWER_USE_IDLE
+	idle_power_usage = 0
+	active_power_usage = 5 KILOWATTS
+	use_power = POWER_USE_IDLE
 	health_max = 200
 	health_min_damage = 10
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -94,7 +94,7 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 		contained = null
 		playsound(loc, 'sound/machines/airlock_heavy.ogg', 40)
 		update_icon()
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 
 
 /obj/machinery/stasis_cage/proc/contain(mob/user, mob/thing)
@@ -111,7 +111,7 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 		"You have stuffed \the [thing] into \the [src]."
 	)
 	set_contained(thing)
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 
 
 /obj/machinery/stasis_cage/proc/set_contained(mob/contained)
@@ -247,7 +247,7 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 /obj/machinery/stasis_cage/RefreshParts()
 	..()
 	var/charge_multiplier = clamp(total_component_rating_of_type(/obj/item/stock_parts/capacitor), 0.1, 10)
-	set_power_consumption(initial(active_power_consumption) / charge_multiplier, POWER_USE_ACTIVE)
+	change_power_consumption(initial(active_power_usage) / charge_multiplier, POWER_USE_ACTIVE)
 
 
 /obj/machinery/stasis_cage/Destroy()

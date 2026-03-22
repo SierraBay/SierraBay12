@@ -1,5 +1,5 @@
 /obj/machinery/gravity_generator
-	power_state = 0
+	use_power = 0
 	unacidable = TRUE
 	light_color = "#7de1e1"
 

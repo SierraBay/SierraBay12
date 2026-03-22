@@ -51,8 +51,8 @@
 	name = "mounted sleeper"
 	density = FALSE
 	anchored = FALSE
-	idle_power_consumption = 0
-	active_power_consumption = 0 //It'd be hard to handle, so for now all power is consumed by mech sleeper object
+	idle_power_usage = 0
+	active_power_usage = 0 //It'd be hard to handle, so for now all power is consumed by mech sleeper object
 	synth_modifier = 0
 	stasis_power = 0
 	interact_offline = TRUE

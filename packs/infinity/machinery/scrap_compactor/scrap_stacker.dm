@@ -4,7 +4,7 @@
 	icon_state = "stacker"
 	density = TRUE
 	anchored = TRUE
-	power_state = POWER_USE_OFF
+	use_power = POWER_USE_OFF
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]

@@ -5,9 +5,9 @@
 	icon_state = "beacon"
 	density = TRUE
 	anchored = TRUE
-	idle_power_consumption = 0
+	idle_power_usage = 0
 	health_max = 100
-	active_power_consumption = 1 KILOWATTS
+	active_power_usage = 1 KILOWATTS
 	construct_state = /singleton/machine_construction/default/panel_closed
 	var/obj/overmap/radio/signal
 	var/obj/overmap/radio/distress/emergency_signal
@@ -106,7 +106,7 @@
 	signal.message = message
 	signal.set_origin(O)
 
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
 
 /obj/machinery/radio_beacon/proc/activate_distress()
@@ -128,7 +128,7 @@
 	if (!gps?.tracking)
 		gps.toggle_tracking(silent=TRUE)
 
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	update_icon()
 
 /obj/machinery/radio_beacon/proc/deactivate()
@@ -145,12 +145,12 @@
 	if (gps?.tracking)
 		gps.toggle_tracking(silent=TRUE)
 
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 	update_icon()
 
 /obj/machinery/radio_beacon/power_change()
 	. = ..()
-	if(!. || !power_state) return
+	if(!. || !use_power) return
 
 	if(!is_powered())
 		deactivate()

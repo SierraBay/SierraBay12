@@ -5,8 +5,8 @@
 	icon_state = "off"
 	level = ATOM_LEVEL_UNDER_TILE
 	density = TRUE
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 200		//internal circuitry, friction losses and stuff
+	use_power = POWER_USE_OFF
+	idle_power_usage = 200		//internal circuitry, friction losses and stuff
 	power_rating = 10000
 	base_type = /obj/machinery/atmospherics/binary/oxyregenerator
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -110,7 +110,7 @@
 
 /obj/machinery/atmospherics/binary/oxyregenerator/Process(delay)
 	..()
-	if((inoperable()) || !power_state)
+	if((inoperable()) || !use_power)
 		return
 
 	var/power_draw = -1
@@ -169,7 +169,7 @@
 	if(!is_powered())
 		icon_state = "off"
 	else
-		icon_state = "[power_state ? "on" : "off"]"
+		icon_state = "[use_power ? "on" : "off"]"
 
 /obj/machinery/atmospherics/binary/oxyregenerator/interface_interact(user)
 	ui_interact(user)
@@ -177,7 +177,7 @@
 
 /obj/machinery/atmospherics/binary/oxyregenerator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/data[0]
-	data["on"] = power_state ? 1 : 0
+	data["on"] = use_power ? 1 : 0
 	data["powerSetting"] = power_setting
 	data["gasProcessed"] = last_flow_rate
 	data["air1Pressure"] = round(air1.return_pressure())
@@ -203,7 +203,7 @@
 	if(..())
 		return 1
 	if(href_list["toggleStatus"])
-		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		update_icon()
 		return 1
 	if(href_list["setPower"]) //setting power to 0 is redundant anyways

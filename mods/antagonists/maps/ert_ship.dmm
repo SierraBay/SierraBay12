@@ -5457,7 +5457,7 @@
 /obj/machinery/atmospherics/unary/freezer{
 	icon_state = "freezer";
 	set_temperature = 80;
-	power_state = 1;
+	use_power = 1;
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -7156,7 +7156,7 @@
 	internal_pressure_bound_default = 35000;
 	pressure_checks = 2;
 	pressure_checks_default = 2;
-	power_state = 1
+	use_power = 1
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/ert/shuttle/engines)

@@ -4,9 +4,9 @@
 	density = TRUE
 	anchored = TRUE
 
-	power_state = POWER_USE_IDLE
-	idle_power_consumption = 10
-	active_power_consumption = 2000
+	use_power = POWER_USE_IDLE
+	idle_power_usage = 10
+	active_power_usage = 2000
 
 	var/obj/item/seeds/seed // Currently loaded seed packet
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk //Currently loaded data disk
@@ -21,12 +21,12 @@
 
 /obj/machinery/botany/proc/start_task()
 	// UI is updated by "return TRUE" in Topic()
-	power_state = POWER_USE_ACTIVE
+	use_power = POWER_USE_ACTIVE
 
 	addtimer(new Callback(src, .proc/finish_task), action_time)
 
 /obj/machinery/botany/proc/finish_task()
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	SSnano.update_uis(src)
 	if(failed_task)
 		failed_task = FALSE
@@ -72,7 +72,7 @@
 
 /obj/machinery/botany/ui_data()
 	var/list/data = list()
-	data["active"] = (power_state == POWER_USE_ACTIVE)
+	data["active"] = (use_power == POWER_USE_ACTIVE)
 
 	data["loaded_gene"] = loaded_gene?.ui_data()
 

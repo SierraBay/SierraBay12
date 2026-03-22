@@ -13,8 +13,8 @@
 
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it."
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
+	use_power = POWER_USE_OFF
+	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_FUEL //connects to regular, supply pipes, and fuel pipes
@@ -51,7 +51,7 @@
 		/singleton/public_access/public_variable/input_toggle,
 		/singleton/public_access/public_variable/area_uid,
 		/singleton/public_access/public_variable/identifier,
-		/singleton/public_access/public_variable/power_state,
+		/singleton/public_access/public_variable/use_power,
 		/singleton/public_access/public_variable/pump_dir,
 		/singleton/public_access/public_variable/pump_checks,
 		/singleton/public_access/public_variable/pressure_bound,
@@ -75,18 +75,18 @@
 	base_type = /obj/machinery/atmospherics/unary/vent_pump
 
 /obj/machinery/atmospherics/unary/vent_pump/on
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	icon_state = "map_vent_out"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon
 	pump_direction = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	icon_state = "map_vent_in"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on/atmos
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 	icon_state = "map_vent_in"
 	external_pressure_bound = 0
 	external_pressure_bound_default = 0
@@ -143,7 +143,7 @@
 	else if(!powered())
 		vent_icon += "off"
 	else
-		vent_icon += "[power_state ? "[pump_direction ? "out" : "in"]" : "off"]"
+		vent_icon += "[use_power ? "[pump_direction ? "out" : "in"]" : "off"]"
 
 	AddOverlays(icon_manager.get_atmos_icon("device", , , vent_icon))
 
@@ -168,7 +168,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/proc/can_pump()
 	if(inoperable())
 		return 0
-	if(!power_state)
+	if(!use_power)
 		return 0
 	if(welded)
 		return 0
@@ -181,7 +181,7 @@
 		return 1
 
 	if (!node)
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 	if(!can_pump())
 		return 0
 
@@ -273,7 +273,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(isWrench(W))
-		if (is_powered() && power_state)
+		if (is_powered() && use_power)
 			to_chat(user, SPAN_WARNING("You cannot unwrench \the [src], turn it off first."))
 			return TRUE
 		var/turf/T = src.loc
@@ -431,7 +431,7 @@
 	transmit_on_event = list(
 		"area" = /singleton/public_access/public_variable/area_uid,
 		"device" = /singleton/public_access/public_variable/identifier,
-		"power" = /singleton/public_access/public_variable/power_state,
+		"power" = /singleton/public_access/public_variable/use_power,
 		"direction" = /singleton/public_access/public_variable/pump_dir,
 		"checks" = /singleton/public_access/public_variable/pump_checks,
 		"internal" = /singleton/public_access/public_variable/pressure_bound,
@@ -449,7 +449,7 @@
 		"status" = /singleton/public_access/public_method/refresh
 	)
 	receive_and_write = list(
-		"set_power" = /singleton/public_access/public_variable/power_state,
+		"set_power" = /singleton/public_access/public_variable/use_power,
 		"set_direction" = /singleton/public_access/public_variable/pump_dir,
 		"set_checks" = /singleton/public_access/public_variable/pump_checks,
 		"set_internal_pressure" = /singleton/public_access/public_variable/pressure_bound,

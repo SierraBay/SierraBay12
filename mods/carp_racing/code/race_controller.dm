@@ -77,7 +77,7 @@ var/global/obj/machinery/race_controller/carp_race_controller = null
 	icon        = 'icons/obj/machines/terminals.dmi'
 	icon_state  = "mechcomp_frame"
 	anchored    = TRUE
-	idle_power_consumption = 10
+	idle_power_usage = 10
 
 	/// Active race datum
 	var/datum/carp_race/race = null

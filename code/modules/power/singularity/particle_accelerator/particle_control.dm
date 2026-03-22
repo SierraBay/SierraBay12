@@ -8,8 +8,8 @@
 	reference = "control_box"
 	anchored = FALSE
 	density = TRUE
-	idle_power_consumption = 500
-	active_power_consumption = 70000 //70 kW per unit of strength
+	idle_power_usage = 500
+	active_power_usage = 70000 //70 kW per unit of strength
 	construction_state = 0
 	active = 0
 	dir = 1
@@ -23,7 +23,7 @@
 /obj/machinery/particle_accelerator/control_box/Initialize()
 	. = ..()
 	connected_parts = list()
-	set_power_consumption(initial(active_power_consumption) * (strength + 1), POWER_USE_ACTIVE)
+	change_power_consumption(initial(active_power_usage) * (strength + 1), POWER_USE_ACTIVE)
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
@@ -37,7 +37,7 @@
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 		assembled = 0
 		active = 0
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -47,7 +47,7 @@
 		connected_parts = list()
 		return
 	if(!part_scan())
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 		active = 0
 		connected_parts = list()
 
@@ -57,7 +57,7 @@
 	if(active)
 		icon_state = "[reference]p1"
 	else
-		if(power_state)
+		if(use_power)
 			if(assembled)
 				icon_state = "[reference]p"
 			else
@@ -136,9 +136,9 @@
 	. = ..()
 	if(!is_powered())
 		active = 0
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 	else if(!stat && construction_state == 3)
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 
 /obj/machinery/particle_accelerator/control_box/Process()
 	if(src.active)
@@ -209,13 +209,13 @@
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [key_name(usr, usr.client)](<a href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - <a href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr.ckey]([usr]) in ([x],[y],[z])")
 	if(src.active)
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = src.strength
 			part.powered = 1
 			part.update_icon()
 	else
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = null
 			part.powered = 0

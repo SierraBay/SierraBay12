@@ -21,13 +21,13 @@
 /obj/machinery/fabricator/proc/start_building()
 	if(!(fab_status_flags & FAB_BUSY) && is_functioning())
 		fab_status_flags |= FAB_BUSY
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 		update_icon()
 
 /obj/machinery/fabricator/proc/stop_building()
 	if(fab_status_flags & FAB_BUSY)
 		fab_status_flags &= ~FAB_BUSY
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 		update_icon()
 
 /obj/machinery/fabricator/proc/get_next_build()

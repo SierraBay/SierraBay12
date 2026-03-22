@@ -5,8 +5,8 @@
 	density = TRUE
 	anchored = FALSE
 	req_access = list(access_engine)
-	idle_power_consumption = 10
-	active_power_consumption = 500
+	idle_power_usage = 10
+	active_power_usage = 500
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
@@ -107,13 +107,13 @@
 	if(!injecting && cur_assembly)
 		injecting = 1
 		update_icon()
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 
 /obj/machinery/fusion_fuel_injector/proc/StopInjecting()
 	if(injecting)
 		injecting = 0
 		update_icon()
-		change_power_mode(POWER_USE_OFF)
+		update_use_power(POWER_USE_OFF)
 
 /obj/machinery/fusion_fuel_injector/proc/Inject()
 	if(!injecting)

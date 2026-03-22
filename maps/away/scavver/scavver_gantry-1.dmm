@@ -2382,7 +2382,7 @@
 	frequency = 1441;
 	icon_state = "map_injector";
 	id = "scavver_burn_in";
-	power_state = 1
+	use_power = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction{
 	dir = 8
@@ -2883,7 +2883,7 @@
 /area/scavver/calypso)
 "XQ" = (
 /obj/machinery/shipsensors{
-	power_state = 0
+	use_power = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/blue{
 	dir = 10

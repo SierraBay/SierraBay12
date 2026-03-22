@@ -5,7 +5,7 @@
 	icon_vend = "Cola_Machine-vend"
 	icon_deny = "Cola_Machine-deny"
 	base_type = /obj/machinery/vending/cola
-	idle_power_consumption = 200
+	idle_power_usage = 200
 	product_slogans = {"\
 		Robust Softdrinks: More robust than a toolbox to the head!\
 	"}

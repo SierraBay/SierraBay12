@@ -5,8 +5,8 @@
 	icon_state = "fab"
 	density = TRUE
 	anchored = TRUE
-	idle_power_consumption = 20
-	active_power_consumption = 5000
+	idle_power_usage = 20
+	active_power_usage = 5000
 	req_access = list(access_robotics)
 	base_type = /obj/machinery/robotics_fabricator
 	construct_state = /singleton/machine_construction/default/panel_closed
@@ -42,11 +42,11 @@
 	if(stat)
 		return
 	if(busy)
-		change_power_mode(POWER_USE_ACTIVE)
+		update_use_power(POWER_USE_ACTIVE)
 		progress += speed
 		check_build()
 	else
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 	update_icon()
 
 /obj/machinery/robotics_fabricator/on_update_icon()

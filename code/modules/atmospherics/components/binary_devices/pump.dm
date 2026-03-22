@@ -24,8 +24,8 @@ Thus, the two variables affect pump operation are set in New():
 
 	//var/max_volume_transfer = 10000
 
-	power_state = POWER_USE_OFF
-	idle_power_consumption = 150		//internal circuitry, friction losses and stuff
+	use_power = POWER_USE_OFF
+	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
 	identifier = "AGP"
 
@@ -40,7 +40,7 @@ Thus, the two variables affect pump operation are set in New():
 	public_variables = list(
 		/singleton/public_access/public_variable/input_toggle,
 		/singleton/public_access/public_variable/identifier,
-		/singleton/public_access/public_variable/power_state,
+		/singleton/public_access/public_variable/use_power,
 		/singleton/public_access/public_variable/pump_target_output
 	)
 	public_methods = list(
@@ -67,14 +67,14 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump/on
 	icon_state = "map_on"
-	power_state = POWER_USE_IDLE
+	use_power = POWER_USE_IDLE
 
 
 /obj/machinery/atmospherics/binary/pump/on_update_icon()
 	if(!powered())
 		icon_state = "off"
 	else
-		icon_state = "[power_state ? "on" : "off"]"
+		icon_state = "[use_power ? "on" : "off"]"
 
 /obj/machinery/atmospherics/binary/pump/update_underlays()
 	if(..())
@@ -92,7 +92,7 @@ Thus, the two variables affect pump operation are set in New():
 	last_power_draw = 0
 	last_flow_rate = 0
 
-	if((inoperable()) || !power_state)
+	if((inoperable()) || !use_power)
 		return
 
 	var/power_draw = -1
@@ -123,7 +123,7 @@ Thus, the two variables affect pump operation are set in New():
 	var/data[0]
 
 	data = list(
-		"on" = power_state,
+		"on" = use_power,
 		"pressure_set" = round(target_pressure*100),	//Nano UI can't handle rounded non-integers, apparently.
 		"max_pressure" = max_pressure_setting,
 		"last_flow_rate" = round(last_flow_rate*10),
@@ -149,7 +149,7 @@ Thus, the two variables affect pump operation are set in New():
 	if((. = ..())) return
 
 	if(href_list["power"])
-		change_power_mode(power_state ? POWER_USE_OFF : POWER_USE_IDLE)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 
 	switch(href_list["set_press"])
@@ -169,7 +169,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump/cannot_transition_to(state_path, mob/user)
 	if(state_path == /singleton/machine_construction/default/deconstructed)
-		if (is_powered() && power_state)
+		if (is_powered() && use_power)
 			return SPAN_WARNING("You cannot take this [src] apart, turn it off first.")
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = loc.return_air()
@@ -200,7 +200,7 @@ Thus, the two variables affect pump operation are set in New():
 	event = /singleton/public_access/public_variable/input_toggle
 	transmit_on_event = list(
 		"device" = /singleton/public_access/public_variable/identifier,
-		"power" = /singleton/public_access/public_variable/power_state,
+		"power" = /singleton/public_access/public_variable/use_power,
 		"target_output" = /singleton/public_access/public_variable/pump_target_output
 	)
 
@@ -212,6 +212,6 @@ Thus, the two variables affect pump operation are set in New():
 		"status" = /singleton/public_access/public_method/refresh
 	)
 	receive_and_write = list(
-		"set_power" = /singleton/public_access/public_variable/power_state,
+		"set_power" = /singleton/public_access/public_variable/use_power,
 		"set_output_pressure" = /singleton/public_access/public_variable/pump_target_output
 	)

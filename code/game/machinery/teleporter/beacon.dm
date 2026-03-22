@@ -9,8 +9,8 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	desc = "A beacon used by a teleporter."
 	icon = 'icons/obj/machines/teleporter.dmi'
 	icon_state = "beacon"
-	idle_power_consumption = 10
-	active_power_consumption = 50
+	idle_power_usage = 10
+	active_power_usage = 50
 	anchored = TRUE
 	level = ATOM_LEVEL_UNDER_TILE
 	layer = ABOVE_EXPOSED_WIRE_LAYER
@@ -38,7 +38,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	generate_name()
 	var/turf/T = get_turf(src)
 	hide(hides_under_flooring() && !T.is_plating())
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 
 
 /obj/machinery/tele_beacon/Destroy()
@@ -87,7 +87,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 /obj/machinery/tele_beacon/emp_act(severity)
 	..()
 
-	if (power_state && !stat)
+	if (use_power && !stat)
 		set_stat(MACHINE_STAT_EMPED, TRUE)
 		disconnect_computers()
 		var/emp_time = rand(15 SECONDS, 30 SECONDS) / severity
@@ -173,7 +173,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	LAZYDISTINCTADD(connected_computers, computer)
 	notify_connection()
 	update_icon()
-	change_power_mode(POWER_USE_ACTIVE)
+	update_use_power(POWER_USE_ACTIVE)
 	return TRUE
 
 
@@ -195,7 +195,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 		computer.lost_target()
 	update_icon()
 	if (!LAZYLEN(connected_computers))
-		change_power_mode(POWER_USE_IDLE)
+		update_use_power(POWER_USE_IDLE)
 
 
 /// Disconnects all hubs from the beacon.
@@ -209,7 +209,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 
 	LAZYCLEARLIST(connected_computers)
 	update_icon()
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 
 
 /// Whether or not the beacon is functional and valid for the purposes of teleporter targeting.
@@ -245,7 +245,7 @@ var/global/const/TELEBEACON_WIRE_SIGNALLER = 4
 	power_cut = new_power_cut
 	if (power_cut)
 		disconnect_computers()
-	change_power_mode(POWER_USE_OFF)
+	update_use_power(POWER_USE_OFF)
 
 
 /datum/wires/tele_beacon

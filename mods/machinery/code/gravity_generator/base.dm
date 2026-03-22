@@ -27,11 +27,11 @@
 /obj/machinery/gravity_generator/main
 	name = "gravitational generator panel"
 	icon_state = "0_8"
-	idle_power_consumption = 0
-	active_power_consumption = 100000
+	idle_power_usage = 0
+	active_power_usage = 100000
 	power_channel = ENVIRON
 	sprite_number = 8
-	power_state = POWER_USE_ACTIVE
+	use_power = POWER_USE_ACTIVE
 
 	var/enabled = TRUE               // for switching gravity status in areas
 	var/breaker = TRUE               // if true - charges the GG if it has power
@@ -327,7 +327,7 @@
 /obj/machinery/gravity_generator/main/OnTopic(mob/user, href_list, datum/topic_state/state)
 	if(href_list["gentoggle"])
 		if(!can_toggle_breaker || !power_supply || stat & MACHINE_STAT_NOPOWER)
-			to_chat(user, SPAN_WARNING("You pressed a button, but it doesnвЂ™t seem to respond."))
+			to_chat(user, SPAN_WARNING("You pressed a button, but it doesn't seem to respond."))
 			return
 		set_state(breaker ? FALSE : TRUE)
 
@@ -356,7 +356,7 @@
 	enabled = FALSE
 	breaker = FALSE
 	charging_state = POWER_IDLE
-	change_power_mode(POWER_USE_IDLE)
+	update_use_power(POWER_USE_IDLE)
 	visible_message(SPAN_DANGER("\The [src] makes a large whirring noise!"))
 
 	for(var/i = 0, i <= 3, i++)
@@ -449,7 +449,7 @@
 	if(breaker && power_supply && !(stat & (MACHINE_STAT_NOPOWER|MACHINE_BROKEN_GENERIC)))
 		good_state = TRUE
 
-	change_power_mode(good_state ? POWER_USE_ACTIVE : POWER_USE_IDLE)
+	update_use_power(good_state ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 	if(good_state && charge_count < 100)
 		charging_state = POWER_UP
 	else if(!good_state && charge_count > 0)

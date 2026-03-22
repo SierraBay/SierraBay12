@@ -5,7 +5,7 @@
 	icon_deny = "nutri-deny"
 	icon_vend = "nutri-vend"
 	base_type = /obj/machinery/vending/hydronutrients
-	idle_power_consumption = 200
+	idle_power_usage = 200
 	product_slogans = {"\
 		Aren't you glad you don't have to fertilize the natural way?;\
 		Now with 50% less stink!;\
