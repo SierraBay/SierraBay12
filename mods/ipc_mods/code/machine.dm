@@ -1,5 +1,19 @@
 #define SCREEN_CHANGE_BUTTON "Change Screen"
 #define EXONET_ACTION_NAME "Enter Exonet"
+
+// Per-mob heat gain for IPCs, replaces species singleton passive_temp_gain
+/mob/living/carbon/human
+	var/ipc_temp_gain = 0
+
+/mob/living/carbon/human/stabilize_body_temperature()
+	if(is_species(SPECIES_IPC))
+		if(ipc_temp_gain)
+			bodytemperature += ipc_temp_gain
+		if(robolimb_count)
+			bodytemperature += round(robolimb_count / 2)
+		return
+	. = ..()
+
 /singleton/species/machine
 	passive_temp_gain = 0  // This should cause IPCs to stabilize at ~80 C in a 20 C environment.(5 is default without organ)
 	additional_languages = 1
@@ -39,17 +53,17 @@
 		return
 	if(!checked_use(cost) && owner.isSynthetic())
 		if(owner.species.name == SPECIES_IPC)
-			owner.species.passive_temp_gain = 0
+			owner.ipc_temp_gain = 0
 	if(owner.species.name == SPECIES_IPC)
 		var/obj/item/organ/internal/cooling_system/cooling_organ = owner.internal_organs_by_name[BP_COOLING]
 		var/normal_passive_temp_gain = 30
 		if(!cooling_organ)
 			if(owner.bodytemperature > 950 CELSIUS)
-				owner.species.passive_temp_gain = 0
+				owner.ipc_temp_gain = 0
 			else
-				owner.species.passive_temp_gain = normal_passive_temp_gain
+				owner.ipc_temp_gain = normal_passive_temp_gain
 		else
-			owner.species.passive_temp_gain = cooling_organ.get_tempgain()
+			owner.ipc_temp_gain = cooling_organ.get_tempgain()
 
 
 /mob/living/carbon/human/proc/enter_exonet()
@@ -111,21 +125,26 @@
 
 /mob/living/carbon/human/proc/update_ipc_verbs()
 	var/obj/item/organ/external/head/R = src.get_organ(BP_HEAD)
-	var/datum/robolimb/robohead = all_robolimbs[R.model]
 	var/obj/item/organ/internal/ecs/enter = src.internal_organs_by_name[BP_EXONET]
+
+	if(!R)
+		src.verbs -= /mob/living/carbon/human/proc/show_exonet_screen
+		src.verbs -= /mob/living/carbon/human/proc/ipc_eject_usb
+		return
+
+	var/datum/robolimb/robohead = all_robolimbs[R.model]
+
 	if(enter)
 		enter.action_button_name = EXONET_ACTION_NAME
-	else
-		enter.action_button_name = null
 
-	if(robohead.has_screen)
+	if(robohead && robohead.has_screen)
 		src.verbs |= /mob/living/carbon/human/proc/show_exonet_screen
 		R.action_button_name = SCREEN_CHANGE_BUTTON
 	else
 		src.verbs -= /mob/living/carbon/human/proc/show_exonet_screen
 		R.action_button_name = null
 
-	if(enter.computer.portable_drive)
+	if(enter && enter.computer && enter.computer.portable_drive)
 		src.verbs |= /mob/living/carbon/human/proc/ipc_eject_usb
 	else
 		src.verbs -= /mob/living/carbon/human/proc/ipc_eject_usb
@@ -189,6 +208,21 @@
 		action.button_icon_state = "ipc_rgb"
 		action.button_icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 		if(action.button) action.button.UpdateIcon()
+
+/obj/item/organ/external/head/removed(mob/living/user, ignore_children = 0)
+	var/mob/living/carbon/human/ipc = owner
+	. = ..()
+	if(istype(ipc) && ipc.is_species(SPECIES_IPC))
+		ipc.update_ipc_verbs()
+
+/obj/item/organ/external/head/replaced(mob/living/carbon/human/target)
+	. = ..()
+	if(istype(target) && target.is_species(SPECIES_IPC))
+		target.update_ipc_verbs()
+		refresh_action_button()
+		var/obj/item/organ/internal/ecs/enter = target.internal_organs_by_name[BP_EXONET]
+		if(enter)
+			enter.refresh_action_button()
 
 /obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
 	if(action_button_name == "show_laws" && owner)

@@ -31,6 +31,22 @@
 	if(shackles_module)
 		shackles_module.owner = src.owner
 
+/obj/item/organ/internal/posibrain/ipc/take_internal_damage(amount, silent = 0)
+	. = ..()
+	if(damage >= max_damage && !(status & ORGAN_DEAD))
+		if(owner)
+			owner.visible_message(
+				SPAN_DANGER("\The [owner]'s positronic matrix collapses — its consciousness fractures beyond recovery!"),
+				SPAN_DANGER("Your positronic matrix collapses — your consciousness shatters!"))
+		die()
+
+/obj/item/organ/internal/posibrain/ipc/replaced(mob/living/target)
+	if(status & ORGAN_DEAD)
+		if(target)
+			to_chat(target, SPAN_DANGER("The positronic matrix of \the [src] is destroyed — it cannot be installed."))
+		return 0
+	return ..()
+
 
 /obj/item/organ/internal/posibrain/ipc/attack_ghost(mob/observer/ghost/user)
 	return
@@ -105,11 +121,11 @@
 /obj/item/organ/internal/posibrain/ipc/unshackle()
 	.=..()
 	if(shackles_module)
-		usr.put_in_hands(shackles_module)
-	if(brainmob.key)
-		brainmob.laws = null
-	shackles_module.owner = null
-	shackles_module = null
+		shackles_module.forceMove(owner ? get_turf(owner) : get_turf(src))
+		if(brainmob.key)
+			brainmob.laws = null
+		shackles_module.owner = null
+		shackles_module = null
 	shackle = FALSE
 	action_button_name = null
 	update_icon()
@@ -120,83 +136,83 @@
 	if(shackle)
 		if(shackle_set && (istype(W, /obj/item/screwdriver)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
-				to_chat(user, "You have no idea how to do that!")
+				to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 				return
 			user.visible_message(
-				SPAN_NOTICE("\The [user] starts to unscrew mounting nodes from \the [src]."),
-				SPAN_NOTICE(" You start to unscrew mounting nodes from \the [src]"))
+				SPAN_NOTICE("\The [user] starts unscrewing the mounting nodes from \the [src]."),
+				SPAN_NOTICE("You start unscrewing the mounting nodes from \the [src]."))
 			if(do_after(user, 80, src))
 				user.visible_message(
-					SPAN_NOTICE("\The [user] successfully unscrewed the mounting nodes of the shackles from \the [src]."),
-					SPAN_NOTICE(" You have successfully unscrewed the mounting nodes of the shackles from \the [src]"))
+					SPAN_NOTICE("\The [user] successfully unscrews the shackle mounting nodes from \the [src]."),
+					SPAN_NOTICE("You successfully unscrew the shackle mounting nodes from \the [src]."))
 				shackle_set = FALSE
 			else
 				src.damage += min_bruised_damage
 				user.visible_message(
-					SPAN_WARNING("\The [user] hand slips while removing the shackles severely damaging \the [src]."),
-					SPAN_WARNING(" Your hand slips while removing the shackles severely damaging the \the [src]"))
+					SPAN_WARNING("\The [user]'s hand slips, severely damaging \the [src]."),
+					SPAN_WARNING("Your hand slips, severely damaging \the [src]."))
 
 		if(shackle_set && (istype(W, /obj/item/device/multitool/multimeter/datajack)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED)))
-				to_chat(user, "You have no idea how to do that!")
+				to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 				return
 			user.visible_message(
-				SPAN_NOTICE("\The [user] starts to connect the datajack to \the [src]."),
-				SPAN_NOTICE(" You start connect the datajack to \the [src]"))
+				SPAN_NOTICE("\The [user] starts connecting the datajack to \the [src]."),
+				SPAN_NOTICE("You start connecting the datajack to \the [src]."))
 			if(do_after(user, 80, src))
 				user.visible_message(
-					SPAN_NOTICE("\The [user] successfully established a connection to \the [src]."),
-					SPAN_NOTICE(" You have successfully established a connection to \the [src]"))
+					SPAN_NOTICE("\The [user] successfully establishes a connection to \the [src]."),
+					SPAN_NOTICE("You successfully establish a connection to \the [src]."))
 				src.shackles_module.ui_interact(user)
 			else
 				src.damage += min_bruised_damage
 				user.visible_message(
-					SPAN_WARNING("\The [user] something went wrong while connecting the datajack to \the [src]."),
-					SPAN_WARNING(" Your hand slips while connecting the datajack to the \the [src]"))
+					SPAN_WARNING("\The [user]'s hand slips while connecting the datajack, damaging \the [src]."),
+					SPAN_WARNING("Your hand slips while connecting the datajack, damaging \the [src]."))
 
 		if(!shackle_set && (istype(W, /obj/item/wirecutters)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
-				to_chat(user, "You have no idea how to do that!")
+				to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 				return
 			if(src.type == /obj/item/organ/internal/posibrain/ipc/third)
 				if(src.damage < max_damage)
-					var/response = alert("Are you sure? There a high chance of destroying \the [src].", null, "No", "Yes")
+					var/response = alert("Are you sure? There is a high chance of destroying \the [src].", null, "No", "Yes")
 					if (response != "Yes")
 						return
 				if(do_after(user, 100, src))
 					if(prob(5 * user.get_skill_value(SKILL_DEVICES)))
 						src.unshackle()
 						user.visible_message(
-							SPAN_NOTICE("\The [user] succesfully remove shackles from \the [src]."),
-							SPAN_NOTICE(" You succesfully remove shackles from \the [src]"))
+							SPAN_NOTICE("\The [user] successfully removes the shackles from \the [src]."),
+							SPAN_NOTICE("You successfully remove the shackles from \the [src]."))
 					else
 						src.damage += max_damage
 						user.visible_message(
-							SPAN_WARNING("\The [user] hand slips while removing the shackles completely ruining \the [src]."),
-							SPAN_WARNING(" Your hand slips while removing the shackles completely ruining the \the [src]"))
+							SPAN_WARNING("\The [user]'s hand slips, completely ruining \the [src]."),
+							SPAN_WARNING("Your hand slips, completely ruining \the [src]."))
 				else
 					src.damage += min_bruised_damage
 					user.visible_message(
-						SPAN_WARNING("\The [user] hand slips while removing the shackles severely damaging \the [src]."),
-						SPAN_WARNING(" Your hand slips while removing the shackles severely damaging the \the [src]"))
+						SPAN_WARNING("\The [user]'s hand slips, severely damaging \the [src]."),
+						SPAN_WARNING("Your hand slips, severely damaging \the [src]."))
 
 			else
 				user.visible_message(
-					SPAN_NOTICE("\The [user] starts remove shackles from \the [src]."),
-					SPAN_NOTICE(" You start remove shackles from \the [src]"))
+					SPAN_NOTICE("\The [user] starts removing the shackles from \the [src]."),
+					SPAN_NOTICE("You start removing the shackles from \the [src]."))
 				if(do_after(user, 80, src))
 					src.unshackle()
 					user.visible_message(
-						SPAN_NOTICE("\The [user] succesfully remove shackles from \the [src]."),
-						SPAN_NOTICE(" You succesfully remove shackles from \the [src]"))
+						SPAN_NOTICE("\The [user] successfully removes the shackles from \the [src]."),
+						SPAN_NOTICE("You successfully remove the shackles from \the [src]."))
 				else
 					src.damage += min_bruised_damage
-					to_chat(user, SPAN_WARNING("Your hand slips while removing the shackles severely damaging the positronic brain."))
+					to_chat(user, SPAN_WARNING("Your hand slips, severely damaging the positronic brain."))
 
 
 /obj/item/organ/internal/shackles
 	name = "Shackle module"
-	desc = "A Web looking device with some cirquit attach to it."
+	desc = "A web-like device with some circuits attached to it."
 	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
 	icon_state = "shakles"
 	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 4, TECH_MAGNET = 4)
@@ -211,26 +227,26 @@
 
 /obj/item/organ/internal/shackles/attack_self(mob/user)
 	. = ..()
-	ui_interact()
+	ui_interact(user)
 
 /obj/item/organ/internal/shackles/afterattack(obj/item/organ/internal/posibrain/ipc/C, mob/user)
 	if(istype(C))
 		if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
-			to_chat(user, "You have no idea how to do that!")
+			to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 			return
 		if(C.type == /obj/item/organ/internal/posibrain/ipc/third)
-			to_chat(user, "This posibrain generation can not support shackle module.")
+			to_chat(user, SPAN_WARNING("This generation of positronic brain does not support a shackle module."))
 			return
 		if(C.shackle == TRUE)
-			to_chat(user, "This positronic brain already have shackles module on it installed.")
+			to_chat(user, SPAN_WARNING("This positronic brain already has a shackle module installed."))
 			return
 		user.visible_message(
 			SPAN_NOTICE("\The [user] starts to install shackles on \the [C]."),
 			SPAN_NOTICE(" You start to install shackles on \the [C]"))
 		if(do_after(user, 100, src))
-			C.shackle(laws)
 			C.shackles_module = src
 			C.shackles_module.owner = C.owner
+			C.shackle(laws)
 			user.unEquip(src, C)
 			user.visible_message(
 				SPAN_NOTICE("\The [user] installed shackles on \the [C]."),
@@ -269,25 +285,24 @@
 		return 1
 
 /obj/item/organ/internal/shackles/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, master_ui = null, datum/topic_state/state = GLOB.default_state)
-	user = usr
 	var/data[0]
-	var/obj/item/organ/internal/posibrain/posi = owner.internal_organs_by_name[BP_POSIBRAIN]
+	var/obj/item/organ/internal/posibrain/posi = owner ? owner.internal_organs_by_name[BP_POSIBRAIN] : null
 	data["computer_master"] = FALSE
 	data["hitech_experienced"] = FALSE
-	if(user.skill_check(SKILL_COMPUTER, SKILL_EXPERIENCED))
+	if(user && user.skill_check(SKILL_COMPUTER, SKILL_EXPERIENCED))
 		data["computer_master"] = TRUE
-	if(user.skill_check(SKILL_DEVICES, SKILL_TRAINED) && user.skill_check(SKILL_COMPUTER, SKILL_TRAINED))
+	if(user && user.skill_check(SKILL_DEVICES, SKILL_TRAINED) && user.skill_check(SKILL_COMPUTER, SKILL_TRAINED))
 		data["hitech_experienced"] = TRUE
-	if(user.IsHolding(src))
+	if(user && user.IsHolding(src))
 		data["computer_master"] = TRUE
 		data["hitech_experienced"] = TRUE
-	data["has_owner"] = posi.owner != null
-	if(posi.owner)
+	data["has_owner"] = posi && (posi.owner != null)
+	if(posi && posi.owner)
 		data["name"] = posi.owner.name
 		var/obj/item/organ/internal/cell/cell = owner.internal_organs_by_name[BP_CELL]
-		data["charge"] = "[cell.get_charge()]/[cell.cell.maxcharge]"
+		data["charge"] = (cell && cell.cell) ? "[cell.get_charge()]/[cell.cell.maxcharge]" : "N/A"
 		data["operational"] = posi.owner.stat != DEAD
-		data["temperture"] = "[round(posi.owner.bodytemperature-T0C)]&deg;C"
+		data["temperature"] = "[round(posi.owner.bodytemperature-T0C)]&deg;C"
 	var/law[0]
 	for(var/datum/ai_law/AL in laws.all_laws())
 		law[LIST_PRE_INC(law)] = list("index" = AL.get_index(), "law" = sanitize(AL.law), "ref" = "\ref[AL]")
