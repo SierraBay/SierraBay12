@@ -25,7 +25,7 @@ NanoBaseCallbacks = function () {
         .off('click')
         .on('click', function (event) {
           event.preventDefault()
-            var href = $(this).attr('data-href')
+            var href = $(this).data('href')
             if (href != null && _canClick) {
               _canClick = false
               $('body').oneTime(300, 'enableClick', function () {
