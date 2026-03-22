@@ -75,3 +75,4 @@
 #include "turret_opt/_turret_opt_includes.dm"
 #include "carp_racing/_carp_racing_includes.dm"
 #include "../packs/factions/fa/_pack.dm"
+#include "tribe/_tribe_includes.dm"

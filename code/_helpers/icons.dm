@@ -698,6 +698,17 @@ lighting determines lighting capturing (optional), suppress_errors suppreses err
 	var/icon/cap = icon('icons/effects/96x96.dmi', "")
 	cap.Scale(range*32, range*32)
 	cap.Blend("#000", ICON_OVERLAY)
+
+	var/list/height_restore = list()
+	for(var/atom/A in atoms)
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			if(H.height != HUMANHEIGHT_MEDIUM)
+				height_restore[H] = H.height
+				H.height = HUMANHEIGHT_MEDIUM
+				H.update_icons()
+				H.ImmediateOverlayUpdate()
+
 	for(var/atom/A in atoms)
 		if(A)
 			var/icon/img = getFlatIcon(A)
@@ -707,6 +718,12 @@ lighting determines lighting capturing (optional), suppress_errors suppreses err
 				var/xoff = (A.x - tx) * 32
 				var/yoff = (A.y - ty) * 32
 				cap.Blend(img, blendMode2iconMode(A.blend_mode),  A.pixel_x + xoff, A.pixel_y + yoff)
+
+
+	for(var/mob/living/carbon/human/H in height_restore)
+		H.height = height_restore[H]
+		H.update_icons()
+		H.ImmediateOverlayUpdate()
 
 	if(lighting)
 		for(var/atom/movable/lighting_overlay/lighting_overlay as anything in render_lighting)

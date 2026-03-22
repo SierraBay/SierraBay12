@@ -17,5 +17,8 @@
 #include "code/bs_silk_by_TT/accessory.dm"
 #include "code/bs_silk_by_TT/control.dm"
 #include "code/rechargestation.dm"
+#include "code/bluespace_drive/bluespace_drive.dm"
+#include "code/bluespace_drive/bluespace_console.dm"
+#include "code/bluespace_drive/bluespace_overlay.dm"
 
 #endif

@@ -1,0 +1,6 @@
+author: ImJustKisik
+changes:
+  - tweak: 'Порт улучшений Master Controller с /tg/station: багфиксы, детекция переполнения
+      стека, динамический тик-лимит на основе world.map_cpu, режим пониженной обработки
+      при высоком онлайне.'
+delete-after: true

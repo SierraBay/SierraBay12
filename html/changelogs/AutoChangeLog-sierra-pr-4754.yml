@@ -1,0 +1,4 @@
+author: ВашНикнейм
+changes:
+  - bugfix: Пофиксил баг некоторых не жмакающихся кнопок
+delete-after: true
