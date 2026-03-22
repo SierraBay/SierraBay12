@@ -50,7 +50,7 @@
 			{{/if}}
 		</div>
 		<div style="float:right">
-			{{:helper.link(data.show_desc_menu ? "Hide desc" : "Show desc", data.show_desc_menu ? 'triangle-1-n' : 'triangle-1-s', {'show_desc_menu':1})}}
+			{{if !data.search_query}}{{:helper.link("Download All", 'arrowthickstop-1-s', {'PRG_downloadcategory':data.selected_category})}}&nbsp;&nbsp;{{/if}}{{:helper.link(data.show_desc_menu ? "Hide desc" : "Show desc", data.show_desc_menu ? 'triangle-1-n' : 'triangle-1-s', {'show_desc_menu':1})}}
 		</div>
 	</div>
 

@@ -126,6 +126,21 @@
 	if(href_list["PRG_clearsearch"])
 		search_query = ""
 		return TOPIC_HANDLED
+	if(href_list["PRG_downloadcategory"])
+		var/cat = href_list["PRG_downloadcategory"]
+		var/skill = usr.get_skill_value(SKILL_COMPUTER)
+		for(var/datum/design/autolathe/D in SSresearch.all_designs)
+			if(!D.build_type)
+				continue
+			var/dcat = D.category || "Unspecified"
+			if(!(cat in dcat))
+				continue
+			var/bp = D.build_path
+			if(!downloaded_file)
+				begin_file_download(bp, skill)
+			else if(!downloads_queue.Find(bp) && downloaded_file.filename != bp)
+				downloads_queue[bp] = skill
+		return TOPIC_HANDLED
 	return TOPIC_NOACTION
 
 /datum/nano_module/program/computer_ntnetdesign
