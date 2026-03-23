@@ -3,12 +3,15 @@
 	var/list/custom_regeneration = list()
 	var/list/ignore_gases = list()
 	var/phoron_guard = FALSE
+	var/mind_message = ""
 
 /singleton/species/alium/tribe/proc/adapt_to_exoplanet(obj/overmap/visitable/sector/exoplanet/E)
 	name = SPECIES_ALIEN
 	blood_color = RANDOM_RGB
 	flesh_color = RANDOM_RGB
 	base_color  = RANDOM_RGB
+
+	mind_message = ""
 
 	species_flags = null
 	total_health = 200
@@ -58,6 +61,9 @@
 		hazard_high_pressure = initial_hazard_high_pressure
 
 	var/gas_pressure = atmosphere.return_pressure()
+
+	breath_pressure = floor(0.22*(atmosphere.gas[breath_type]/atmosphere.total_moles)*gas_pressure)
+	breath_pressure = min(25, breath_pressure)
 
 	// random
 	total_health = round(total_health * frand(0.8, 1.2), 0.1)
@@ -232,6 +238,7 @@
 
 	// Natural regeneration
 	if(prob(20))
+		var/list/dmg_types = list()
 		base_auras = list(/obj/aura/regenerating/human/mod_tribe)
 		custom_regeneration["nutrition_damage_mult"] = rand(0, 2)
 		custom_regeneration["brute_mult"] = rand(0, 2)
@@ -242,11 +249,41 @@
 
 		custom_regeneration["can_toggle"] = rand(0, 1)
 
+		if(custom_regeneration["brute_mult"])
+			dmg_types.Add("физические повреждения")
+		if(custom_regeneration["fire_mult"])
+			dmg_types.Add("ожоги")
+		if(custom_regeneration["tox_mult"])
+			dmg_types.Add("токсины")
+		if(custom_regeneration["organ_mult"])
+			dmg_types.Add("органы")
+		if(custom_regeneration["organ_mult"])
+			dmg_types.Add("конечности")
+
+		if(LAZYLEN(dmg_types))
+			mind_message += "[SPAN_BOLD("Вы способны регенерировать: ")] [dmg_types.Join(", ")]<br><br>"
+
 	if(body_temperature <= 150 || body_temperature >= 450 && prob(20))
 		body_temperature = null
 
+	if(LAZYLEN(E.small_flora_types))
+		for(var/datum/seed/S in E.small_flora_types)
+			if(S.chems)
+				var/list/greagents = list()
+
+				mind_message += "Состав [SPAN_BOLD(S.seed_name)]:<br>"
+
+				for(var/chem_path in S.chems)
+					var/datum/reagent/R = chem_path
+					greagents.Add(initial(R.name))
+				mind_message += "[greagents.Join(", ")]<br><br>"
+
 /singleton/species/alium/tribe/handle_post_spawn(mob/living/carbon/human/H)
 	..()
+	if(mind_message)
+		H.StoreMemory(mind_message, /singleton/memory_options/system)
+		to_chat(H, mind_message)
+
 	H.bodytemperature = body_temperature
 
 	if(phoron_guard == TRUE)
@@ -258,9 +295,7 @@
 
 /singleton/species/alium/tribe/add_base_auras(mob/living/carbon/human/H)
 	..()
-	var/mind_message = ""
 	if(H.auras && LAZYLEN(custom_regeneration))
-		var/list/dmg_types = list()
 		for(var/obj/aura/regenerating/human/mod_tribe/regeneration in H.auras)
 			regeneration.nutrition_damage_mult = custom_regeneration["nutrition_damage_mult"]
 			regeneration.brute_mult = custom_regeneration["brute_mult"]
@@ -271,25 +306,8 @@
 
 			regeneration.can_toggle = custom_regeneration["can_toggle"]
 
-			if(custom_regeneration["brute_mult"])
-				dmg_types.Add("физические повреждения")
-			if(custom_regeneration["fire_mult"])
-				dmg_types.Add("ожоги")
-			if(custom_regeneration["tox_mult"])
-				dmg_types.Add("токсины")
-			if(custom_regeneration["organ_mult"])
-				dmg_types.Add("органы")
-			if(custom_regeneration["organ_mult"])
-				dmg_types.Add("конечности")
 			if(custom_regeneration["can_toggle"])
 				H.verbs.Add(/mob/living/carbon/human/proc/diona_heal_toggle)
-
-		if(LAZYLEN(dmg_types))
-			mind_message += "[SPAN_BOLD("Вы способны регенерировать: ")] [dmg_types.Join(", ")]"
-
-	if(mind_message)
-		H.StoreMemory(mind_message, /singleton/memory_options/system)
-		to_chat(H, mind_message)
 
 /singleton/species/alium/tribe/equip_survival_gear(mob/living/carbon/human/H, extendedtank = 1)
 	return
