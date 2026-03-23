@@ -30,3 +30,7 @@
 /obj/item/rig/medical/equipped/empty
 	..()
 	initial_modules = list()
+
+/obj/item/rig/industrial/equipped/empty
+	..()
+	initial_modules = list()

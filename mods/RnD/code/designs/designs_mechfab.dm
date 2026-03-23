@@ -409,6 +409,12 @@
 	id = "null _suit"
 	time = 120
 
+/datum/design/item/mechfab/rig/mining
+	category = "Hardsuits"
+	name = "mining hardsuit"
+	build_path = /obj/item/rig/industrial/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 5000, MATERIAL_PHORON = 2000, MATERIAL_GOLD = 5000, MATERIAL_TITANIUM = 1500)
+	id = "mining_hardsuit"
 /datum/design/item/mechfab/rig/hazard
 	category = "Hardsuits"
 	name = "hazard hardsuit"

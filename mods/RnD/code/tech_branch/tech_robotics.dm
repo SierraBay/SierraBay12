@@ -104,7 +104,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("engi_eva_rig", "medical_hardsuit", "null _suit", "rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_ai_container","rig_cooler","rig_kinetic", "self_repair", "ai_advanced",)
+	unlocks_designs = list("engi_eva_rig", "mining_hardsuit", "medical_hardsuit", "null _suit", "rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_ai_container","rig_cooler","rig_kinetic", "self_repair", "ai_advanced",)
 
 /datum/technology/robo/combat_hardsuits
 	name = "Combat Hardsuits"
