@@ -1,7 +1,7 @@
 //сюда можно срать минорными правками в иксы, без засерательства коркода.
 
 /////////////новый бричер
-/obj/item/rig/unathi/fancy
+/obj/item/rig/unathi/fancy/nt
 
 	chest_type = /obj/item/clothing/suit/space/rig/unathi/fancy
 	helm_type = /obj/item/clothing/head/helmet/space/rig/unathi/fancy
