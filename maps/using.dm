@@ -1,5 +1,5 @@
 //Easily change which map to build by uncommenting ONE below.
-// #define DEV_MODE
+ #define DEV_MODE
  //#define DEV_MODE_NO_AWAYS
 #if NEW_AWAYS_TESTING == 1
 	#include "../mods/new_aways_testing/code/_new_aways_testing.dm"
@@ -12,8 +12,8 @@
 		#include "sierra/map.dm"
 		#warn Режим Sierra без авеек активен, не забудь выключить!
 	#else
-		#include "example\map.dm"
+		//#include "example\map.dm"
 		//#include "torch\map.dm"
-		//#include "sierra\map.dm"
+		#include "sierra\map.dm"
 	#endif
 #endif
