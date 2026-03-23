@@ -157,6 +157,23 @@
 		victim.use_weapon(weapon, H)
 
 // ---------------------------------------------------------------------------
+// EMP Effect
+// ---------------------------------------------------------------------------
+
+/obj/item/organ/internal/augment/active/sandevistan/emp_act(severity)
+	if(active && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		to_chat(H, SPAN_DANGER("Your Sandevistan forcefully shuts down from the electromagnetic pulse!"))
+		deactivate_sandevistan(H)
+
+	var/emp_cooldown = (severity == EMP_ACT_HEAVY) ? 120 SECONDS : 60 SECONDS
+	cooldown_until = max(cooldown_until, world.time + emp_cooldown)
+	if(ishuman(owner))
+		to_chat(owner, SPAN_WARNING("Sandevistan system reports an EMP overload. Forced cooldown applied."))
+
+	..()
+
+// ---------------------------------------------------------------------------
 // Bullet dodge
 // ---------------------------------------------------------------------------
 
