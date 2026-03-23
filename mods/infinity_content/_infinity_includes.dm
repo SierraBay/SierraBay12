@@ -11,7 +11,6 @@
 #include "code\machines\machinery.dm"
 #include "code\machines\recharger.dm"
 #include "code\structures\cargo.dm"
-#include "code\structures\extinguisher_cabinet.dm"
 #include "code\structures\shotgun_rack.dm"
 #include "code\structures\utility_closets.dm"
 #include "code\structures\wall_frame.dm"

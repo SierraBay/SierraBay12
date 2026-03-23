@@ -23,12 +23,68 @@
 
 /datum/antagonist/renegade/create_objectives(datum/mind/player)
 
-	if(!..())
+	if(!/datum/antagonist::create_objectives(player))
 		return
 
 	var/datum/objective/survive/survive = new
 	survive.owner = player
-	player.objectives |= survive
+	LAZYADD(player.objectives, survive)
+
+	var/list/all_antagonists = get_all_antagonists()
+
+	all_antagonists -= player
+	shuffle(all_antagonists, TRUE)
+
+	for(var/datum/mind/antag in all_antagonists)
+		if(prob(50) && antag?.current)
+			var/datum/objective/renegade/obj = new(antag)
+			obj.owner = player
+			LAZYADD(player.objectives, obj)
+		else if(prob(50))
+			var/datum/objective/renegade/obj = new
+			obj.owner = player
+			if(obj.find_target())
+				LAZYADD(player.objectives, obj)
+			else
+				qdel(obj)
+
+	var/renegade_objectives_count = 0
+	for(var/datum/objective/obj in player.objectives)
+		if(istype(obj, /datum/objective/renegade))
+			renegade_objectives_count++
+
+	if(renegade_objectives_count == 0)
+		var/objectives_to_generate = rand(1, 3)
+		for(var/i = 0; i < objectives_to_generate; i++)
+			var/datum/objective/renegade/obj = new
+			obj.owner = player
+			if(obj.find_target())
+				LAZYADD(player.objectives, obj)
+			else
+				qdel(obj)
+
+/datum/antagonist/renegade/add_antagonist_mind(datum/mind/player, ignore_role, nonstandard_role_type, nonstandard_role_msg, bypass = FALSE)
+	if (..())
+		register_antagonist(MODE_RENEGADE, player)
+		var/datum/antagonist_registry/registry = get_antagonist_registry()
+		if(registry.antagonist_spawning_complete)
+			create_objectives(player)
+		else
+			addtimer(new Callback(src, PROC_REF(delayed_create_objectives), player), 30 SECONDS)
+		return TRUE
+	else
+		return FALSE
+
+/datum/antagonist/renegade/proc/delayed_create_objectives(datum/mind/player)
+	var/datum/antagonist_registry/registry = get_antagonist_registry()
+	if(!registry.antagonist_spawning_complete)
+		addtimer(new Callback(src, PROC_REF(delayed_create_objectives), player), 10 SECONDS)
+		return
+	create_objectives(player)
+
+/datum/antagonist/renegade/remove_antagonist(datum/mind/player, show_message, implanted)
+	unregister_antagonist(MODE_RENEGADE, player)
+	return ..()
 
 /datum/antagonist/renegade/spawn_guns = list(/obj/item/selection/renegade) // Yep. This counts as gun.
 

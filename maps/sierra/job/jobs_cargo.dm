@@ -52,6 +52,7 @@
 	supervisors = "Квартирмейстеру и Главе Персонала"
 	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 24
+	economic_power = 3
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
 	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)

@@ -65,11 +65,16 @@
 	if(owner.client)
 		for(var/thing in SSpsi.all_aura_images)
 			owner.client.images -= thing
+	// Гасим анимацию
+	var/image/I = _aura_image
+	if(I)
+		animate(I, alpha = 0, time = 10)
 
 /datum/psi_complexus/proc/show_auras()
 	if(owner.client)
 		for(var/image/I in SSpsi.all_aura_images)
 			owner.client.images |= I
+	start_aura_pulse()
 
 /datum/psi_complexus/proc/backblast(value)
 

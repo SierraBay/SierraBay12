@@ -161,6 +161,7 @@
 		return
 	GLOB.clients += src
 	GLOB.ckey_directory[ckey] = src
+	Master.UpdateTickRate() // [SIERRA-ADD] - MC
 
 	if(byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh"))
@@ -275,6 +276,7 @@
 	GLOB.ckey_directory -= ckey
 	ticket_panels -= src
 	GLOB.clients -= src
+	Master.UpdateTickRate() // [SIERRA-ADD] - MC
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 

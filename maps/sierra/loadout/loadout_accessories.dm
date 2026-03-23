@@ -102,7 +102,7 @@
 /datum/gear/accessory/solgov/engineering
 	display_name = "Solgov engineering insignia"
 	path = /obj/item/clothing/accessory/solgov/department/engineering
-	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer)
+	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/explorer_engineer)
 	allowed_branches = list(/datum/mil_branch/contractor)
 	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
 	flags = GEAR_HAS_NO_CUSTOMIZATION

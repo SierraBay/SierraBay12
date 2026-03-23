@@ -40,7 +40,11 @@
 
 	default_law_type = /datum/ai_laws/nanotrasen
 	use_overmap = 1
+#ifdef DEV_MODE_NO_AWAYS
+	num_exoplanets = 0
+#else
 	num_exoplanets = 1
+#endif
 	using_sun = TRUE
 	planet_size = list(129,129)
 
@@ -48,7 +52,11 @@
 
 //	minimum_players = 0 its already 0
 
+#ifdef DEV_MODE_NO_AWAYS
+	away_site_budget = 0
+#else
 	away_site_budget = 5.5 // Было 5, увеличили на 10% вместе с уменьешением цены для одноуровневых авеек ~bear1ake
+#endif
 	min_offmap_players = 10
 
 	id_hud_icons = 'maps/sierra/icons/assignment_hud.dmi'

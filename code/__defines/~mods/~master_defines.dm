@@ -144,6 +144,7 @@
 #define PSI_METAKINESIS        "metakinesis"
 #define PSI_ENERGISTICS        "energistics"
 #define PSI_REDACTION          "redaction"
+#define PSI_SHAYMANISM         "shaymanism"
 
 #define PSI_RANK_BLUNT         0
 #define PSI_RANK_LATENT        1
@@ -151,6 +152,9 @@
 #define PSI_RANK_OPERANT       3
 #define PSI_RANK_MASTER        4
 #define PSI_RANK_GRANDMASTER   5
+
+#define PSI_HUMAN_DISCIPLES   list("Coercion", "Redaction", "Consciousness", "Psychokinesis", "Manifestation", "Metakinesis", "Energistics")
+#define PSI_TAJARAN_DISCIPLES list("Coercion", "Metakinesis", "Shaymanism")
 // PSIONICS - End
 
 //NTSH

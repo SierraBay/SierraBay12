@@ -13,6 +13,13 @@
 	var/multiplier = 1
 	var/list/reels = list("👑", "🐍", "🏺")
 
+	/// PRD: consecutive non-jackpot spins since the last win
+	var/prd_streak = 0
+	/// PRD: base jackpot probability (%) before any streak bonus
+	var/prd_base_chance = 5
+	/// PRD: bonus added to jackpot chance per losing spin
+	var/prd_step = 2
+
 /obj/structure/casino/oh_bandit/New()
 	..()
 	AddOverlays("[theme]_idle")
@@ -45,6 +52,8 @@
 	data["coins"] = money_loaded
 	data["cost"] = coins_required * multiplier
 	data["multiplier"] = multiplier
+	data["prd_streak"] = prd_streak
+	data["prd_chance"] = min(30, prd_base_chance + prd_streak * prd_step)
 	return data
 
 /obj/structure/casino/oh_bandit/proc/perform_spin(mob/user)
@@ -119,8 +128,22 @@
 	var/list/symbols = get_symbols()
 	var/list/result = list()
 
-	for(var/i = 1 to 3)
-		result += pick(symbols)
+	// PRD: win chance grows each spin without a jackpot, capped at 95%
+	var/win_chance = min(95, prd_base_chance + prd_streak * prd_step)
+
+	if(prob(win_chance))
+		// Jackpot — all three reels match; reset streak
+		prd_streak = 0
+		var/sym = pick(symbols)
+		result = list(sym, sym, sym)
+	else
+		// No jackpot — increment streak and guarantee a non-matching result
+		prd_streak++
+		var/attempts = 0
+		do
+			result = list(pick(symbols), pick(symbols), pick(symbols))
+			attempts++
+		while(result[1] == result[2] && result[2] == result[3] && attempts < 20)
 
 	return result
 
@@ -169,11 +192,11 @@
 			if("♣️")
 				winnings = 10
 		playsound(src, pick('mods/newUI/sound/jackpot.ogg'), 50, 1)
-
+/* Пока что отрубим бонусы за 2 совпадения. Посмотрим как будет играться система с псевдорандомом.
 	else if(result[1] == result[2] || result[2] == result[3])
 		winnings = 5
 		playsound(src, pick('mods/newUI/sound/e_death.ogg'), 50, 1)
-
+*/
 	winnings *= multiplier
 
 	return winnings

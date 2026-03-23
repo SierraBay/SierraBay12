@@ -72,7 +72,7 @@
 	description = "A lightweight augmentation for the engineer on-the-go. This one comes with a series of common tools."
 	path = /obj/item/organ/internal/augment/active/polytool/engineer
 	cost = 6
-	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer, /datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist)
+	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/explorer_engineer, /datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist)
 
 /datum/gear/augment/toolset_engineer/New()
 	..()

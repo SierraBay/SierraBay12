@@ -56,6 +56,7 @@
 	path = /obj/item/clothing/accessory/choker
 	sort_category = "Clothing Pieces"
 	flags = GEAR_HAS_COLOR_SELECTION
+	slot = slot_tie // [SIERRA-ADD] — Allow attaching to worn clothing in preview
 
 /datum/gear/accessory/collar
 	display_name = "collar selection"
@@ -141,3 +142,18 @@
 	sweaters["argyle crewneck sweater"] = /obj/item/clothing/accessory/sweater/argyle_crewneck
 	sweaters["argyle v-neck sweater"] = /obj/item/clothing/accessory/sweater/argyle_v_neck
 	gear_tweaks += new/datum/gear_tweak/path(sweaters)
+
+/datum/gear/accessory/shemagh
+	display_name = "shemagh scarf"
+	path = /obj/item/clothing/accessory/helmet_decor/shemagh_scarf
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/storage/webbing
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/storage/webbing_large
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/tactical/kneepads
+	flags = GEAR_HAS_COLOR_SELECTION
+

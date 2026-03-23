@@ -218,6 +218,9 @@ nanoui is used to open and update nano browser uis
 			"mapZLevels" = GLOB.using_map.map_levels,
 			"user" = list("name" = user.name),
 			"currency" = GLOB.using_map.local_currency_name,
+			// [SIERRA-ADD]
+			"uiScale" = user.client?.prefs?.ui_scale || "100%",
+			// [/SIERRA-ADD]
 		)
 	return config_data
 
@@ -443,7 +446,10 @@ nanoui is used to open and update nano browser uis
 
 	var/window_size = ""
 	if (width && height)
-		window_size = "size=[width]x[height];"
+		// [SIERRA-ADD]
+		var/multiplier = (text2num(user.client?.prefs?.window_size) || 100) / 100
+		window_size = "size=[round(width * multiplier)]x[round(height * multiplier)];"
+		// [/SIERRA-ADD]
 	if(update_status(0))
 		return // Will be closed by update_status().
 

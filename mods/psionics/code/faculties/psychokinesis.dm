@@ -35,7 +35,7 @@
 
 		var/distance = get_dist(user, target)
 		if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
-			to_chat(user, SPAN_WARNING("Ваших сил недостаточно, чтобы достать до этого объекта."))
+			to_chat(user, SPAN_WARNING("Моих сил недостаточно, чтобы достать до этого объекта."))
 			return FALSE
 
 		if(istype(target, /obj/machinery))
@@ -67,7 +67,7 @@
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("[user] размахивает руками, крича!"))
-		to_chat(user, SPAN_DANGER("Вы выпускаете мощную волну, разметая всё вокруг!"))
+		to_chat(user, SPAN_DANGER("Я выпускаю мощную волну, разметая всё вокруг!"))
 		var/pk_rank = user.psi.get_rank(PSI_PSYCHOKINESIS)
 		new /obj/temporary(get_turf(user),9, 'icons/effects/effects.dmi', "summoning")
 		var/list/mobs = GLOB.alive_mobs + GLOB.dead_mobs
