@@ -25,6 +25,8 @@
 	var/base_duration_per_level = 3 SECONDS
 	/// Bonus duration per augment per Athletics level, in deciseconds (default 5 = 0.5s)
 	var/aug_duration_per_level = 0.5 SECONDS
+	/// Multiplier for cooldown time (default 5 = 5x)
+	var/aug_cooldown_multiplier = 5
 	/// If TRUE, deactivation applies zero cooldown
 	var/no_cooldown = FALSE
 
@@ -130,11 +132,11 @@
 		H.playsound_local(get_turf(H), 'mods/RnD/sounds/sandy_exit.ogg', 100, 1)
 		to_chat(H, SPAN_NOTICE("Sandevistan deactivated. No cooldown."))
 	else
-		cooldown_until = world.time + used * 5
+		cooldown_until = world.time + used * aug_cooldown_multiplier
 		if(trail)
 			trail.stop()
 		H.playsound_local(get_turf(H), 'mods/RnD/sounds/sandy_exit.ogg', 100, 1)
-		to_chat(H, SPAN_NOTICE("Sandevistan deactivated. Cooldown: [round((used * 5) / 10, 0.1)]s."))
+		to_chat(H, SPAN_NOTICE("Sandevistan deactivated. Cooldown: [round((used * aug_cooldown_multiplier) / 10, 0.1)]s."))
 
 // ---------------------------------------------------------------------------
 // Phasewalk melee strike
