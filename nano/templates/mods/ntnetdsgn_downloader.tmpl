@@ -1,106 +1,85 @@
-<i>Welcome to the design download utility. Please select which design you wish to download.</i><hr>
 {{if data.error}}
-	<h2>Download Error</h2>
-	<div class="itemLabel">
-		Information:
+<div class="block" style="margin:4px; padding:6px 8px; border-color:#ee0000">
+	<div class="item">
+		<div class="itemLabelWide" style="color:#ee0000"><b>Download Error</b></div>
+		<div class="itemContentNarrow" style="text-align:right">{{:helper.link("Dismiss", "refresh", {'PRG_reseterror':1})}}</div>
 	</div>
-	<div class="itemContent">
-		{{:data.error}}
+	<div class="item">
+		<div class="itemLabelWidest" style="font-size:10px">{{:data.error}}</div>
 	</div>
-	<div class="itemLabel">
-		Reset Program:
-	</div>
-	<div class="itemContent">
-		{{:helper.link("RESET", null, {'PRG_reseterror' : 1})}}
-	</div>
-	<hr>
+</div>
 {{/if}}
 
-	<h2>{{:data.downloadname ? 'Download Running' : 'No Downloads In Progress'}}</h2>
-	<i>{{:data.downloadname ? 'Please wait...' : 'Standing by...'}}</i>
+<div class="block" style="margin:4px; padding:6px 8px">
 	<div class="item">
-		<div class="itemLabel">
-			File name:
-		</div>
+		<div class="itemLabel" style="line-height:18px">Storage:</div>
 		<div class="itemContent">
-			{{:data.downloadname ? data.downloadname : 'N/A'}}
-		</div>
-		<div class="itemLabel">
-			File size:
-		</div>
-		<div class="itemContent">
-			{{:data.downloadname ? (data.downloadcompletion + 'GQ / ' + data.downloadsize + 'GQ') : 'N/A'}}
-		</div>
-		<div class="itemLabel">
-			Transfer Rate:
-		</div>
-		<div class="itemContent">
-			{{:data.downloadname ? data.downloadspeed : '0'}} GQ/s
-		</div>
-		<div class="itemLabel">
-			Download progress:
-		</div>
-		<div class="itemContent">
-			{{:helper.displayBar(data.downloadcompletion, 0, data.downloadname ? data.downloadsize : 0, 'good')}}
+			{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good')}}
+			<span style="font-size:10px; margin-left:4px">{{:data.disk_used}} / {{:data.disk_size}} GQ</span>
 		</div>
 	</div>
-
-	<br><hr>
-
-	<h2>Downloads Queue</h2>
+	{{if data.downloadname}}
 	<div class="item">
-	{{for data.downloads_queue}}
-		<div class="itemLabel">
-			{{:index + 1}}:
-		</div>
+		<div class="itemLabel" style="line-height:18px">Downloading:</div>
 		<div class="itemContent">
-			{{:value}}
-			{{:helper.link('', 'close', {'PRG_removequeued' : value})}}
+			{{:helper.displayBar(data.downloadcompletion, 0, data.downloadsize, 'good')}}
+			<span style="font-size:10px; margin-left:4px">{{:data.downloadname}} &mdash; {{:data.downloadcompletion}}/{{:data.downloadsize}} GQ &nbsp;@&nbsp;{{:data.downloadspeed}} GQ/s</span>
 		</div>
-	{{empty}}
-		<i>The queue is currently empty.</i>
-	{{/for}}
 	</div>
-	<br><hr>
-
-	<h2>Primary designs repository</h2>
-	<div class="itemLabel">
-		Hard drive:
-	</div>
-	<div class="itemContent">
-		{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good')}}
-		{{:data.disk_used}}GQ / {{:data.disk_size}}GQ
-	</div>
-
-	<br><hr>
-
-
-	<table>
-	<div style="display: flex;">
-	<br><tr>{{for data.all_categories}}
-		{{:helper.link(value, '', {'select_category' : value}, data.selected_category == value ? 'selected' : null)}}
-	{{/for}}
-	</div>
-	</table>
-	<table>
-	<div>
-	<tr>
-	<td><td>{{:helper.link("Toggle Description", '', {'show_desc_menu' : 1})}}</td></td></div>
-	<br>{{for data.possible_designs}}
-		<table>
-		<br><div style="border-bottom: 1px solid rgba(99, 99, 99, 8); margin-top: 8px;">
-			<div style="display: flex; justify-content: space-between;">
-				<tr><td>{{:helper.link( value.name, '', {'PRG_downloadfile' : value.build_path })}}
-					{{if data.show_desc_menu}}
-						<div class='item'>
-							<tr><td>{{:value.desc}}</td>
-						</div>
-					{{/if}}
-					<div align='right'>
-					<tr><td> File size <span class='white'>{{:value.size}} GQ </td>
-					</div>
+	{{/if}}
+	{{if data.downloads_queue}}
+	<div class="item">
+		<div class="itemLabel" style="line-height:18px">Queue:</div>
+		<div class="itemContent">
+			{{for data.downloads_queue}}
+			<div style="font-size:10px; line-height:180%">
+				{{:index + 1}}. {{:value.name}}&nbsp;{{:helper.link("×", "close", {'PRG_removequeued':value.path})}}
 			</div>
+			{{/for}}
 		</div>
-		</table>
-	{{/for}}
+	</div>
+	{{/if}}
+</div>
+
+<div class="block" style="margin:4px; padding:6px 8px">
+	<div class="item" style="margin-bottom:4px">
+		<div style="float:left">
+			{{:helper.link("Search", "search", {'PRG_searchdesign':1})}}
+			{{if data.search_query}}
+				<b style="color:#4f7529; margin:0 4px">{{:data.search_query}}</b>{{:helper.link("×", "close", {'PRG_clearsearch':1})}}
+			{{/if}}
+		</div>
+		<div style="float:right">
+			{{if !data.search_query}}{{:helper.link("Download All", 'arrowthickstop-1-s', {'PRG_downloadcategory':data.selected_category})}}&nbsp;&nbsp;{{/if}}{{:helper.link(data.show_desc_menu ? "Hide desc" : "Show desc", data.show_desc_menu ? 'triangle-1-n' : 'triangle-1-s', {'show_desc_menu':1})}}
+		</div>
+	</div>
+
+	{{if !data.search_query}}
+	<div class="item" style="margin-bottom:4px; padding-bottom:4px; border-bottom:1px solid #40628a">
+		{{for data.all_categories}}
+			{{:helper.link(value, null, {'select_category':value}, data.selected_category == value ? 'selected' : null)}}
+		{{/for}}
+	</div>
+	{{/if}}
+
+	{{if data.possible_designs}}
+	<table style="width:100%; border-collapse:collapse; margin-top:2px">
+		{{for data.possible_designs}}
+		<tr class="candystripe" style="line-height:140%">
+			<td style="padding:2px 6px 2px 4px">
+				<b>{{:value.name}}</b>
+				{{if data.show_desc_menu && value.desc}}
+				<div style="color:#808080; font-size:10px; font-style:italic; font-weight:normal; margin-top:1px">{{:value.desc}}</div>
+				{{/if}}
+			</td>
+			<td style="padding:2px 20px 2px 6px; text-align:right; white-space:nowrap; font-size:10px; color:#808080; width:1%">{{:value.size}}&nbsp;GQ</td>
+			<td style="padding:2px 20px 2px 4px; text-align:right; white-space:nowrap; width:1%">{{:helper.link("&nbsp;&nbsp;", "arrowthickstop-1-s", {'PRG_downloadfile':value.build_path})}}</td>
+		</tr>
+		{{/for}}
 	</table>
+	{{else}}
+	<div style="text-align:center; color:#666; font-style:italic; padding:16px 0">
+		{{:data.search_query ? "No designs match your search." : "No designs in this category."}}
+	</div>
+	{{/if}}
+</div>
