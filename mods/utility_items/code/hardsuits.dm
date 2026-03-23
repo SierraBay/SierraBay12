@@ -21,3 +21,12 @@
 	..()
 
 /////////////новый бричер
+
+/////////////empty hardsuits (without modules):
+/obj/item/rig/eva/equipped/empty
+	..()
+	initial_modules = list()
+
+/obj/item/rig/medical/equipped/empty
+	..()
+	initial_modules = list()

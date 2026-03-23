@@ -117,8 +117,8 @@
 	required_technologies = list(/datum/technology/robo/adv_hardsuits, /datum/technology/robo/basic_hardsuitmods)
 	required_tech_levels = list()
 	cost = 3200
-
-	unlocks_designs = list("unathi_hard", "rig_taser", "rig_egun", "hazzard_suit", "rig_powersink", )
+//TODO: add at this list "unathi_hard", when its will be ready
+	unlocks_designs = list("rig_taser", "rig_egun", "hazzard_suit", "rig_powersink")
 /datum/technology/robo/heavy_mech
 	name = "Heavy Mech Design"
 	desc = "Heavy Mech Design"

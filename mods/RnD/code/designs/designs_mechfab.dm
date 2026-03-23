@@ -420,26 +420,27 @@
 /datum/design/item/mechfab/rig/eva
 	category = "Hardsuits"
 	name = "Engineering hardsuit"
-	build_path = /obj/item/rig/eva/equipped
-	materials = list(MATERIAL_STEEL = 25000, MATERIAL_BORON_GLASS = 2000, MATERIAL_GOLD = 5000)
+	build_path = /obj/item/rig/eva/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 5000, MATERIAL_PHORON = 2000, MATERIAL_GLASS = 5000)
 	id = "engi_eva_rig"
 	time = 190
 
 /datum/design/item/mechfab/rig/medical
 	category = "Hardsuits"
 	name = "medical hardsuit"
-	build_path = /obj/item/rig/medical/equipped
-	materials = list(MATERIAL_STEEL = 15000, MATERIAL_SILVER = 5000, MATERIAL_URANIUM = 500, MATERIAL_GOLD = 1500)
+	build_path = /obj/item/rig/medical/equipped/empty
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 500, MATERIAL_GOLD = 1500)
 	id = "medical_hardsuit"
 
-/datum/design/item/mechfab/rig/breacher
-	category = "Hardsuits"
-	name = "NT heavy Breacher"
-	build_path = /obj/item/rig/unathi/fancy
-	materials = list(MATERIAL_PLASTEEL = 30000, MATERIAL_DIAMOND = 15000, MATERIAL_SILVER = 10000, MATERIAL_GOLD = 5000, MATERIAL_GLASS = 2000)
-	req_tech = list(TECH_COMBAT = 5, TECH_MAGNET = 3, TECH_POWER = 6)
-	id = "unathi_hard"
-	time = 190
+//TODO: дождаться нового спрайта на хардсьют, привязать его - и можно завозить.
+//datum/design/item/mechfab/rig/breacher
+//	category = "Hardsuits"
+//	name = "NT heavy Breacher"
+//	build_path = /obj/item/rig/unathi/fancy
+//	materials = list(MATERIAL_PLASTEEL = 30000, MATERIAL_DIAMOND = 15000, MATERIAL_SILVER = 10000, MATERIAL_GOLD = 5000, MATERIAL_GLASS = 2000)
+//	req_tech = list(TECH_COMBAT = 5, TECH_MAGNET = 3, TECH_POWER = 6)
+//	id = "unathi_hard"
+//time = 190
 
 /datum/design/item/mechfab/rig/meson
 	category = "Hardsuits"
