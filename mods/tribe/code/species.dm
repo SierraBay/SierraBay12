@@ -293,3 +293,10 @@
 
 /singleton/species/alium/tribe/equip_survival_gear(mob/living/carbon/human/H, extendedtank = 1)
 	return
+
+// Fix for skin colors after rejuvenate
+/singleton/species/alium/handle_post_spawn(mob/living/carbon/human/H)
+	..()
+
+	if(H && H.dna)
+		H.dna.ResetUIFrom(H)

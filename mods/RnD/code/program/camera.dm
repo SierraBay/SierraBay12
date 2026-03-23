@@ -6,14 +6,12 @@
 	var/obj/item/device/camera/computer/camera = new /obj/item/device/camera/computer
 	var/in_camera_mode = 0
 
-
 /obj/item/modular_computer/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-	. = ..()
+	..()
 	if(in_camera_mode)
 		hard_drive.create_file(camera.captureimagecomputer(target, usr))
 		to_chat(usr, SPAN_NOTICE("You took a photo of \the [target]."))
 		in_camera_mode = 0
-
 
 /obj/item/device/camera/computer/proc/captureimagecomputer(atom/target, mob/living/user, flag)
 	set_light(3, 3, light_color)
@@ -40,6 +38,7 @@
 		c.in_camera_mode = 0
 	else
 		c.in_camera_mode = 1
+		to_chat(usr, SPAN_NOTICE("Camera mode activated. Click on a target to take a photo."))
 
 /obj/item/photo/use_tool(obj/item/P, mob/living/user)
 	. = ..()

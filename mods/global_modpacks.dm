@@ -72,6 +72,7 @@
 #include "faction_background_grouping/_faction_background_grouping_includes.dm"
 #include "contraband_vending/_contraband_vending_includes.dm"
 #include "scp/_scp_includes.dm"
+#include "leviathans/_leviathans_includes.dm"
 #include "turret_opt/_turret_opt_includes.dm"
 #include "carp_racing/_carp_racing_includes.dm"
 #include "../packs/factions/fa/_pack.dm"

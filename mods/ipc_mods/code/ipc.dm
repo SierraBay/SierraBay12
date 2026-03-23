@@ -314,3 +314,10 @@
 			return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_CLOSE
 	. = ..()
+
+
+// robotize sensors are no longer damaged in the phoron atmosphere:
+
+/obj/item/organ/internal/eyes/robotize()
+	..()
+	phoron_guard = TRUE

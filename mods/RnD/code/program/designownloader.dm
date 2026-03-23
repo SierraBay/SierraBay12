@@ -23,6 +23,8 @@
 	var/server
 	var/selected_autolathe_category
 	var/show_desc_menu = FALSE
+	/// Current search query for filtering designs by name.
+	var/search_query = ""
 	usage_flags = PROGRAM_ALL
 	size = 6
 	available_on_ntnet = TRUE
@@ -36,6 +38,7 @@
 	download_netspeed = 0
 	downloaderror = ""
 	ui_header = "downloader_finished.gif"
+	search_query = ""
 
 /datum/computer_file/program/ntnetdesign/proc/begin_file_download(build_path, skill)
 	if(downloaded_file)
@@ -115,6 +118,29 @@
 	if(href_list["show_desc_menu"])
 		show_desc_menu = !show_desc_menu
 		return TOPIC_HANDLED
+	if(href_list["PRG_searchdesign"])
+		var/query = input(usr, "Enter design name:", "Search", search_query) as text|null
+		if(query != null)
+			search_query = lowertext(query)
+		return TOPIC_HANDLED
+	if(href_list["PRG_clearsearch"])
+		search_query = ""
+		return TOPIC_HANDLED
+	if(href_list["PRG_downloadcategory"])
+		var/cat = href_list["PRG_downloadcategory"]
+		var/skill = usr.get_skill_value(SKILL_COMPUTER)
+		for(var/datum/design/autolathe/D in SSresearch.all_designs)
+			if(!D.build_type)
+				continue
+			var/dcat = D.category || "Unspecified"
+			if(!(cat in dcat))
+				continue
+			var/bp = D.build_path
+			if(!downloaded_file)
+				begin_file_download(bp, skill)
+			else if(!downloads_queue.Find(bp) && downloaded_file.filename != bp)
+				downloads_queue[bp] = skill
+		return TOPIC_HANDLED
 	return TOPIC_NOACTION
 
 /datum/nano_module/program/computer_ntnetdesign
@@ -144,11 +170,14 @@
 	data["disk_used"] = program.computer.used_disk_capacity()
 	data["all_categories"] = get_category()
 	data["show_desc_menu"] = prog.show_desc_menu
+	data["search_query"] = prog.search_query
 
 	if((!prog.selected_autolathe_category || !(prog.selected_autolathe_category in data["all_categories"])) && LAZYLEN(SSresearch.design_categories_autolathe))
 		prog.selected_autolathe_category = SSresearch.design_categories_autolathe[2]
 
-	if(prog.selected_autolathe_category)
+	if(prog.search_query)
+		data["possible_designs"] = get_autolathe_designs_data(null, prog.search_query)
+	else if(prog.selected_autolathe_category)
 		data["selected_category"] = prog.selected_autolathe_category
 		data["possible_designs"] = get_autolathe_designs_data(prog.selected_autolathe_category)
 
@@ -156,15 +185,18 @@
 	data["downloadable_programs"] = all_entries
 
 	if(length(prog.downloads_queue) > 0)
-		var/list/queue = list() // Nanoui can't iterate through assotiative lists, so we have to do this
-		for(var/item in prog.downloads_queue)
-			queue += item
+		var/list/queue = list()
+		for(var/build_path in prog.downloads_queue)
+			var/datum/design/autolathe/D = SSresearch.get_autolathe_design_by_build_path(build_path)
+			queue += list(list(
+				"path" = build_path,
+				"name" = D ? D.shortname : build_path,
+			))
 		data["downloads_queue"] = queue
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "mods-ntnetdsgn_downloader.tmpl", "NTNet Download Design", 600, 700, state = state)
-		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -190,21 +222,26 @@
 
 
 
-/datum/nano_module/program/computer_ntnetdesign/proc/get_autolathe_designs_data(category)
+/datum/nano_module/program/computer_ntnetdesign/proc/get_autolathe_designs_data(category, search_query)
 	var/list/designs_list = list()
 	for(var/datum/design/autolathe/D in SSresearch.all_designs)
-		if(D.build_type)
-			var/cat = "Unspecified"
-			if(D.category)
-				cat = D.category
-			if(category in cat)
-				designs_list += list(list(
-					"build_path" =     D.build_path,
-					"name" =           D.shortname,
-					"desc" =           D.desc,
-					"size" =           D.file.size,
-					"materials" =      D.materials,
-				))
+		if(!D.build_type)
+			continue
+		if(search_query)
+			var/dname = D.shortname || D.name || ""
+			if(!findtext(dname, search_query))
+				continue
+		else if(category)
+			var/cat = D.category || "Unspecified"
+			if(!(category in cat))
+				continue
+		designs_list += list(list(
+			"build_path" =     D.build_path,
+			"name" =           D.shortname,
+			"desc" =           D.desc,
+			"size" =           D.file.size,
+			"materials" =      D.materials,
+		))
 	return designs_list
 
 /datum/computer_file/program/ntnetdesign/hacked
