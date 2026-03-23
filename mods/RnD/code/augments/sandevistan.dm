@@ -142,6 +142,7 @@
 
 /// Strike victim with each non-gun melee weapon held in hand.
 /obj/item/organ/internal/augment/active/sandevistan/proc/do_sandevistan_strike(mob/living/carbon/human/H, mob/living/victim)
+	set waitfor = FALSE
 	if(!H || !victim)
 		return
 	for(var/obj/item/weapon in list(H.l_hand, H.r_hand))
