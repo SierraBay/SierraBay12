@@ -5,3 +5,7 @@
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\"."
 	w_class = ITEM_SIZE_SMALL
 	matter = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
+
+/obj/machinery/firealarm
+	name = "fire alarm"
+	icon = 'mods/sierra_resprite/icons/firealarm.dmi'

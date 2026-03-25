@@ -1,0 +1,5 @@
+author: LordNest, Remission
+changes:
+  - imageadd: Новые спрайты для машинерии
+  - maptweak: Правки камеры сгорания у Гиены
+delete-after: true

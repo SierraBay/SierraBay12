@@ -11,8 +11,8 @@
 
 /obj/machinery/artifact/mod_tribe/attack_hand(mob/living/user)
 	//spam clicks are meaningless here, since it follows effect timeouts
-	//basically a 5% chance at 5-20 seconds interval
-	if(prob(5) && my_effect.activated == FALSE && user && user.stat != DEAD && get_current_health() > 0)
+	//basically a 10% chance at 5-20 seconds interval
+	if(prob(10) && my_effect.activated == FALSE && user && user.stat != DEAD && get_current_health() > 0)
 		user.rejuvenate()
 		new/obj/effect/smoke/illumination(src.loc, 5, range=30, power=1, color="#ffffff")
 		playsound(get_turf(src),'sound/magic/staff_healing.ogg',50,1)
