@@ -6,25 +6,30 @@
 	layer = ABOVE_HUMAN_LAYER
 	density = TRUE
 	anchored = TRUE
+	var/charged = TRUE
+
+	var/list/psi_mobs = (
+		/mob/living/simple_animal/hostile/giant_spider/psi,
+		/mob/living/simple_animal/hostile/vagrant/psi
+		)
 
 	invisibility = INVISIBILITY_PSI_PLANE
 
 
 /obj/structure/psinomaly/Initialize()
 	. = ..()
-	icon_state = "jaggy[rand(1,4)]"
-	var/material/A = SSmaterials.get_material_by_name(MATERIAL_ALIENALLOY)
-	if(A)
-		color = A.icon_colour
-	if(GLOB.using_map.use_overmap)
-		var/obj/overmap/visitable/sector/exoplanet/E = map_sectors["[z]"]
-		if(istype(E))
-			desc += "\nThere are images on it: [E.get_engravings()]"
+
+	var/turf/T = get_turf(src)
+
+	var/drone_count = rand(1, 3)
+	for(var/i = 1 to drone_count)
+		new /mob/living/simple_animal/hostile/retaliate/malf_drone(T)
+
 	update_icon()
 
 /obj/structure/psinomaly/on_update_icon()
 	ClearOverlays()
-	if(active)
+	if(charged)
 		var/image/I = image(icon, "plane_glow")
 		I.appearance_flags = DEFAULT_APPEARANCE_FLAGS | RESET_COLOR
 		I.color = get_random_colour(0, 150, 255)
@@ -48,7 +53,7 @@
 			var/mob/living/carbon/human/H = user
 			if(!H.isSynthetic())
 				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
-				active = 1
+				charged = FALSE
 				update_icon()
 				if(prob(70))
 					to_chat(H, SPAN_NOTICE("As you touch \the [src], you suddenly get a vivid image - [E.get_engravings()]"))
