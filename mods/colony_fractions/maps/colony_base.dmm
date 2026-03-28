@@ -332,10 +332,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	level = 2
 	},
-/obj/item/device/science_tool{
-	pixel_y = 12;
-	pixel_x = 6
-	},
 /obj/item/device/scanner/xenobio{
 	pixel_x = -6;
 	pixel_y = 12

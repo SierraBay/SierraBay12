@@ -35,6 +35,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 #define SCREEN_LOCKED "locked"
 #define SCREEN_DISK_DESIGNS "disk_management_designs"
 #define SCREEN_DISK_TECH "disk_management_tech"
+#define SCREEN_MISSIONS "missions"
+#define SCREEN_CORPS "corps"
 
 /obj/machinery/computer/rdconsole
 	name = "fabrication control console"
@@ -61,6 +63,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/technology/selected_technology
 	var/selected_corp_id
 	var/selected_node_id
+	var/selected_category_id
+	var/selected_dialogue_corp_id
+	var/selected_disk_category
 	var/show_settings = FALSE
 	var/show_link_menu = FALSE
 	var/selected_protolathe_category
@@ -159,6 +164,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			to_chat(user, SPAN_WARNING("Нет активного атмосферного эксперимента."))
 		return TRUE
 
+	// Physical photo — submit for photograph_object mission objective
+	else if(istype(D, /obj/item/photo))
+		submit_physical_photo(user, D)
+		return TRUE
+
+	// Artifact analysis report — submit for study_artifact mission objective
+	else if(istype(D, /obj/item/paper/anomaly_scan/mission))
+		submit_artifact_report(user, D)
+		return TRUE
+
 	SSnano.update_uis(src)
 	update_icon()
 	return ..()
@@ -180,11 +195,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	// Players can now extract designs to disk using "Extract Design" button
 	files.experiments.do_research_object(I)
 
-/obj/machinery/computer/rdconsole/proc/find_nearest_mission_console()
-	for(var/obj/machinery/computer/rd_mission_console/console in range(7, src))
-		return console
-	return null
-
 /obj/machinery/computer/rdconsole/proc/get_science_account()
 	var/list/science_department_keys = list("Научный", "Science")
 	for(var/key in science_department_keys)
@@ -198,22 +208,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!node_id)
 		return
 
-	var/selected_corp = selected_corp_id
-	var/list/corp_nodes = get_rnd_corp_tree_nodes(selected_corp)
+	var/list/corp_nodes = get_rnd_category_tree_nodes(selected_category_id, selected_corp_id)
 	var/list/corp_node_set = list()
 	for(var/node_id_entry in corp_nodes)
 		corp_node_set[node_id_entry] = TRUE
 	if(!(node_id in corp_nodes))
 		return
 
-	var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(node_id)
+	var/datum/technology/tech_node = SSresearch.get_tech_node(node_id)
 	if(!tech_node)
 		return
 	if(!get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set))
 		to_chat(user, SPAN_WARNING("Условия узла ещё не выполнены."))
 		return
 
-	var/price = get_rnd_corp_node_price(tech_node)
+	var/price = get_rnd_corp_node_price(tech_node, files)
 	var/datum/money_account/science_account = get_science_account()
 	if(!science_account)
 		to_chat(user, SPAN_WARNING("Не удалось получить доступ к счёту научного отдела."))
@@ -224,14 +233,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	files.UnlockTechology(tech_node, force = TRUE)
 	SSnano.update_uis(src)
-
-/obj/machinery/computer/rdconsole/proc/take_corp_mission(mob/living/user, node_id)
-	var/obj/machinery/computer/rd_mission_console/mission_console = find_nearest_mission_console()
-	if(!mission_console)
-		to_chat(user, SPAN_WARNING("Поблизости не найдена консоль миссий."))
-		return
-	mission_console.take_corp_mission(user, node_id, selected_corp_id)
-
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list) // Oh boy here we go.
 	if(..())
@@ -252,9 +253,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		selected_node_id = href_list["select_corp_node"]
 	if(href_list["buy_corp_node"]) // User attempts to buy a corporate tech node.
 		buy_corp_node(usr, href_list["buy_corp_node"])
-	if(href_list["take_corp_mission"]) // User attempts to take a corporate mission.
-		take_corp_mission(usr, href_list["take_corp_mission"])
-
 	if(href_list["select_tech_tree"]) // User selected a tech tree.
 		var/datum/tech/tech_tree = locate(href_list["select_tech_tree"]) in files.researched_tech
 		if(tech_tree && tech_tree.shown)
@@ -277,6 +275,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = where
 		if(screen == SCREEN_PROTO || screen == SCREEN_IMPRINTER || screen == SCREEN_DISK_DESIGNS)
 			search_text = ""
+		if(screen == SCREEN_DISK_DESIGNS)
+			selected_disk_category = null
 	if(href_list["eject_disk"]) // User is ejecting the disk.
 		if(disk)
 			disk.forceMove(get_turf(src))
@@ -320,6 +320,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			selected_protolathe_category = what_cat
 		if(screen == SCREEN_IMPRINTER)
 			selected_imprinter_category = what_cat
+	if(href_list["select_tech_category"]) // User is selecting a tech tree category
+		selected_category_id = href_list["select_tech_category"]
+		selected_corp_id = null
+		selected_node_id = null
+	if(href_list["select_corp_dialogue"]) // User is selecting a corporation for dialogue
+		selected_dialogue_corp_id = href_list["select_corp_dialogue"]
+	if(href_list["select_disk_category"]) // User is selecting a disk design category
+		selected_disk_category = href_list["select_disk_category"]
+		if(selected_disk_category == "__all__")
+			selected_disk_category = null
 	if(href_list["search"]) // User is searching for a specific design.
 		var/input = sanitizeSafe(input(usr, "Enter text to search", "Searching") as null|text, MAX_LNAME_LEN)
 		search_text = input
@@ -396,7 +406,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/amount = clamp(text2num(href_list["amount"]), 1, 10)
 		var/datum/design/being_built = locate(href_list["build"]) in files.known_designs
 		if(being_built && target_device)
-			target_device.queue_design(being_built.file, amount)
+			if((being_built.id in files.banned_designs) || is_design_banned_on_server(being_built.id))
+				to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
+			else
+				target_device.queue_design(being_built.file, amount)
 	if(href_list["clear_queue"]) // Clearing a queue
 		if(target_device)
 			target_device.clear_queue()
@@ -442,7 +455,28 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 
+	// Submit RDF scan file from disk for scan_object mission objective
+	if(href_list["submit_rdf"])
+		submit_rdf_file(usr, href_list["submit_rdf"], href_list["submit_rdf_mission"])
+
+	// Submit digital photo from disk for photograph_object mission objective
+	if(href_list["submit_photo"])
+		submit_digital_photo(usr, href_list["submit_photo"], href_list["submit_photo_mission"])
+
 	return TRUE
+
+/// Check if design is banned on any connected server
+/obj/machinery/computer/rdconsole/proc/is_design_banned_on_server(design_id)
+	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
+		if(istype(S, /obj/machinery/r_n_d/server/centcom))
+			continue
+		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
+			continue
+		if(!(id in S.id_with_download))
+			continue
+		if(design_id in S.files.banned_designs)
+			return TRUE
+	return FALSE
 
 /obj/machinery/computer/rdconsole/proc/find_devices()
 	SyncRDevices()
@@ -462,6 +496,108 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 			S.produce_heat(400)
 	reset_screen()
+
+// --- Mission data submission procs ---
+
+/obj/machinery/computer/rdconsole/proc/submit_physical_photo(mob/user, obj/item/photo/P)
+	if(!LAZYLEN(P.captured_object_types))
+		to_chat(user, SPAN_WARNING("Фотография не содержит распознаваемых объектов."))
+		return
+	for(var/datum/derelict_mission/M in derelict_missions_list)
+		if(M.state != RND_MISSION_STATE_AVAILABLE)
+			continue
+		for(var/datum/derelict_mission_objective/O in M.objectives)
+			if(O.objective_type != "photograph_object" || O.completed)
+				continue
+			if(M.away_z && P.photo_z != M.away_z)
+				continue
+			for(var/captured_type in P.captured_object_types)
+				if(ispath(captured_type, O.target_type))
+					O.advance()
+					to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": фотография принята. ([O.get_status_text()])"))
+					user.drop_from_inventory(P)
+					qdel(P)
+					SSnano.update_uis(src)
+					return
+	to_chat(user, SPAN_WARNING("Фотография не соответствует ни одному активному контракту."))
+
+/obj/machinery/computer/rdconsole/proc/submit_artifact_report(mob/user, obj/item/paper/anomaly_scan/mission/report)
+	for(var/datum/derelict_mission/M in derelict_missions_list)
+		if(M.state != RND_MISSION_STATE_AVAILABLE)
+			continue
+		if(!M.target_artifact_report_type)
+			continue
+		for(var/datum/derelict_mission_objective/O in M.objectives)
+			if(O.objective_type != "study_artifact" || O.completed)
+				continue
+			if(istype(report, M.target_artifact_report_type))
+				O.advance()
+				to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": отчёт об артефакте принят. ([O.get_status_text()])"))
+				user.drop_from_inventory(report)
+				qdel(report)
+				SSnano.update_uis(src)
+				return
+	to_chat(user, SPAN_WARNING("Отчёт не соответствует ни одному активному контракту."))
+
+/obj/machinery/computer/rdconsole/proc/submit_rdf_file(mob/user, rdf_ref, mission_ref)
+	if(!disk)
+		return
+	var/datum/computer_file/data/rdf/rdf_file = locate(rdf_ref) in disk.stored_files
+	if(!istype(rdf_file))
+		return
+	var/target_type_str = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
+	var/scan_z = text2num(rdf_file.metadata ? rdf_file.metadata["scan_z"] : "0")
+	if(!target_type_str)
+		to_chat(user, SPAN_WARNING("Файл RDF повреждён: нет данных о цели сканирования."))
+		return
+	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
+	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
+		to_chat(user, SPAN_WARNING("Контракт недоступен."))
+		return
+	var/target_path = text2path(target_type_str)
+	if(!target_path)
+		to_chat(user, SPAN_WARNING("Файл RDF повреждён: неверный тип объекта."))
+		return
+	for(var/datum/derelict_mission_objective/O in M.objectives)
+		if(O.objective_type != "scan_object" || O.completed)
+			continue
+		if(M.away_z && scan_z != M.away_z)
+			continue
+		if(ispath(target_path, O.target_type))
+			O.advance()
+			to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": данные сканирования приняты. ([O.get_status_text()])"))
+			disk.remove_file(rdf_file)
+			SSnano.update_uis(src)
+			return
+	to_chat(user, SPAN_WARNING("Данные сканирования не соответствуют целям выбранного контракта."))
+
+/obj/machinery/computer/rdconsole/proc/submit_digital_photo(mob/user, photo_ref, mission_ref)
+	if(!disk)
+		return
+	var/datum/computer_file/binary/photo/photo_file = locate(photo_ref) in disk.stored_files
+	if(!istype(photo_file) || !photo_file.photo)
+		return
+	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
+	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
+		to_chat(user, SPAN_WARNING("Контракт недоступен."))
+		return
+	var/obj/item/photo/p = photo_file.photo
+	if(!LAZYLEN(p.captured_object_types))
+		to_chat(user, SPAN_WARNING("Фотография не содержит распознаваемых объектов."))
+		return
+	for(var/datum/derelict_mission_objective/O in M.objectives)
+		if(O.objective_type != "photograph_object" || O.completed)
+			continue
+		if(M.away_z && p.photo_z != M.away_z)
+			continue
+		for(var/captured_type in p.captured_object_types)
+			if(ispath(captured_type, O.target_type))
+				O.advance()
+				to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": фотография принята. ([O.get_status_text()])"))
+				disk.remove_file(photo_file)
+				SSnano.update_uis(src)
+				return
+	to_chat(user, SPAN_WARNING("Фотография не соответствует целям выбранного контракта."))
 
 
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
@@ -489,12 +625,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						missing_chemicals += chemical
 					can_build = min(can_build, can_build_temp)
 
+				var/is_banned = (D.id in files.banned_designs) || is_design_banned_on_server(D.id)
 				designs_list += list(list(
 					"data" = D.ui_data(),
 					"id" = "\ref[D]",
-					"can_create" = can_build,
+					"can_create" = is_banned ? 0 : can_build,
 					"missing_materials" = missing_materials,
-					"missing_chemicals" = missing_chemicals
+					"missing_chemicals" = missing_chemicals,
+					"banned" = is_banned
 				))
 	return designs_list
 
@@ -512,6 +650,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	data["screen"] = screen
 	data["sync"] = sync
 	data["has_disk"] = !!disk
+
+	// Science balance (shown on nav bar)
+	var/datum/money_account/sci_acc = get_science_account()
+	data["science_balance"] = sci_acc ? sci_acc.money : 0
+	data["has_science_account"] = !!sci_acc
+	data["currency_short"] = GLOB.using_map.local_currency_name_short
 	if(disk)
 		data["disk_size"] = disk.max_capacity
 		data["disk_used"] = disk.used_capacity
@@ -579,35 +723,44 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	if(screen == SCREEN_DISK_DESIGNS)
 		if(disk)
-			var/list/disk_designs = list()
 			var/list/disk_design_files = disk.find_files_by_type(/datum/computer_file/binary/design)
-			var/list/known_designs = list()
 			data["search_text"] = search_text
-			if(search_text)
-				for(var/f in disk_design_files)
-					var/datum/computer_file/binary/design/d_file = f
-					if(findtext(d_file.design.name, search_text))
-						disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
-				data["disk_designs"] = disk_designs
-				known_designs = list()
-				for(var/i in files.known_designs)
-					var/datum/design/D = i
-					if(findtext(D.name, search_text))
-						known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
-				data["known_designs"] = known_designs
-			else
-				for(var/f in disk_design_files)
-					var/datum/computer_file/binary/design/d_file = f
-					disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
 
-				data["disk_designs"] = disk_designs
-				known_designs = list()
-				for(var/i in files.known_designs)
-					var/datum/design/D = i
-					if(!(D.starts_unlocked))
-						// doesn't make much sense to copy starting designs around, unless you can use them in lathes
-						known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
-				data["known_designs"] = known_designs
+			// Collect all unique categories from local designs
+			var/list/all_disk_categories = list()
+			for(var/i in files.known_designs)
+				var/datum/design/cat_D = i
+				if(cat_D.starts_unlocked)
+					continue
+				if(LAZYLEN(cat_D.category))
+					for(var/cat in cat_D.category)
+						all_disk_categories |= cat
+			data["disk_design_categories"] = all_disk_categories
+			data["selected_disk_category"] = selected_disk_category
+
+			// Build disk designs list
+			var/list/disk_designs = list()
+			for(var/f in disk_design_files)
+				var/datum/computer_file/binary/design/d_file = f
+				if(search_text && !findtext(d_file.design.name, search_text))
+					continue
+				if(selected_disk_category && LAZYLEN(d_file.design.category) && !(selected_disk_category in d_file.design.category))
+					continue
+				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
+			data["disk_designs"] = disk_designs
+
+			// Build local known designs list
+			var/list/known_designs = list()
+			for(var/i in files.known_designs)
+				var/datum/design/D = i
+				if(D.starts_unlocked)
+					continue
+				if(search_text && !findtext(D.name, search_text))
+					continue
+				if(selected_disk_category && LAZYLEN(D.category) && !(selected_disk_category in D.category))
+					continue
+				known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+			data["known_designs"] = known_designs
 
 	if(screen == SCREEN_DISK_TECH)
 		if(disk)
@@ -662,29 +815,42 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				queue_list += file.design.name
 			data["queue"] = queue_list
 
-	// All the info needed for displaying tech trees
+	// All the info needed for displaying tech trees (category-based)
 	if(screen == SCREEN_TREES)
-		var/list/corps = get_rnd_corporation_order()
+		// Tech categories
+		var/list/all_categories = get_rnd_tech_categories()
+		var/list/categories_list = list()
+		for(var/cat_id in all_categories)
+			var/list/category = all_categories[cat_id]
+			if(!category)
+				continue
+			categories_list += list(list("id" = cat_id, "name" = category["name"]))
+		data["categories"] = categories_list
+
+		var/sel_category = selected_category_id
+		if(!sel_category || !get_rnd_category(sel_category))
+			sel_category = all_categories && length(all_categories) ? all_categories[1] : null
+			selected_category_id = sel_category
+		data["selected_category"] = sel_category
+
+		// Corporation trees within selected category
+		var/list/corp_trees_in_cat = get_rnd_category_trees(sel_category)
 		var/list/corp_trees = list()
-		for(var/corp_id in corps)
-			var/list/tree = get_rnd_corp_tree(corp_id)
+		for(var/corp_id in corp_trees_in_cat)
+			var/list/tree = corp_trees_in_cat[corp_id]
 			if(!tree)
 				continue
-			corp_trees += list(list(
-				"id" = corp_id,
-				"name" = tree["name"]
-			))
+			corp_trees += list(list("id" = corp_id, "name" = tree["name"]))
 		data["corp_trees"] = corp_trees
-		data["currency_short"] = GLOB.using_map.local_currency_name_short
-		data["has_mission_console"] = !!find_nearest_mission_console()
 
 		var/selected_corp = selected_corp_id
-		if(!selected_corp || !get_rnd_corp_tree(selected_corp))
-			selected_corp = corps && length(corps) ? corps[1] : null
+		if(!selected_corp || !(selected_corp in corp_trees_in_cat))
+			selected_corp = (corp_trees_in_cat && length(corp_trees_in_cat)) ? corp_trees_in_cat[1] : null
 			selected_corp_id = selected_corp
 		data["selected_corp"] = selected_corp
+		data["selected_corp_logo"] = get_rnd_corp_logo(selected_corp)
 
-		var/list/corp_node_ids = get_rnd_corp_tree_nodes(selected_corp)
+		var/list/corp_node_ids = get_rnd_category_tree_nodes(sel_category, selected_corp)
 		var/list/corp_node_set = list()
 		for(var/node_id in corp_node_ids)
 			corp_node_set[node_id] = TRUE
@@ -692,7 +858,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/list/corp_nodes = list()
 		var/list/corp_lines = list()
 		for(var/node_id in corp_node_ids)
-			var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(node_id)
+			var/datum/technology/tech_node = SSresearch.get_tech_node(node_id)
 			if(!tech_node)
 				continue
 			var/is_researched = files.IsResearched(tech_node)
@@ -744,20 +910,27 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["selected_node_id"] = selected_node
 
 		if(selected_node)
-			var/datum/technology/tech_node = get_rnd_reward_tech_node_by_id(selected_node)
+			var/datum/technology/tech_node = SSresearch.get_tech_node(selected_node)
 			if(tech_node)
 				var/is_researched = files.IsResearched(tech_node)
 				var/can_unlock = get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set)
-				var/price = get_rnd_corp_node_price(tech_node)
+				var/price = get_rnd_corp_node_price(tech_node, files)
 				var/list/technology_data = list(
 					"name" = tech_node.name,
 					"desc" = tech_node.desc,
 					"price" = price,
 					"isresearched" = is_researched,
 					"canunlock" = can_unlock,
-					"can_buy" = can_unlock,
-					"can_mission" = can_unlock
+					"can_buy" = can_unlock
 				)
+
+				if(tech_node.required_corp_id)
+					var/current_rep = files.GetCorporationReputation(tech_node.required_corp_id)
+					var/required_rep = tech_node.min_reputation
+					technology_data["current_reputation"] = current_rep
+					technology_data["required_reputation"] = required_rep
+					technology_data["reputation_met"] = (current_rep >= required_rep)
+					technology_data["corp_id"] = get_rnd_mission_corporation_name(tech_node.required_corp_id)
 
 				var/list/requirement_list = list()
 				for(var/t in tech_node.required_tech_levels)
@@ -787,6 +960,75 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				technology_data["unlocks"] = unlock_list
 
 				data["selected_node"] = technology_data
+
+	// Derelict missions screen
+	if(screen == SCREEN_MISSIONS)
+		var/list/mission_list = list()
+		for(var/datum/derelict_mission/M in derelict_missions_list)
+			var/list/obj_list = list()
+			for(var/datum/derelict_mission_objective/O in M.objectives)
+				obj_list += list(list(
+					"description" = O.description,
+					"status" = O.get_status_text(),
+					"completed" = O.completed
+				))
+			mission_list += list(list(
+				"id" = M.id,
+				"ref" = "\ref[M]",
+				"title" = M.title,
+				"description" = M.description,
+				"corp_name" = get_rnd_mission_corporation_name(M.corporation_id),
+				"site_name" = M.away_site_name,
+				"mission_type" = M.mission_type,
+				"state" = M.state,
+				"objectives" = obj_list
+			))
+		data["missions"] = mission_list
+
+		// Disk file data for submission UI
+		data["has_disk"] = !!disk
+		if(disk)
+			var/list/rdf_files = list()
+			for(var/datum/computer_file/data/rdf/F in disk.stored_files)
+				rdf_files += list(list(
+					"id" = "\ref[F]",
+					"filename" = "[F.filename].[F.filetype]",
+					"scan_area" = (F.metadata ? F.metadata["scan_area"] : "???")
+				))
+			data["rdf_files"] = rdf_files
+			var/list/photo_files = list()
+			for(var/datum/computer_file/binary/photo/F in disk.stored_files)
+				photo_files += list(list(
+					"id" = "\ref[F]",
+					"filename" = "[F.filename].[F.filetype]"
+				))
+			data["photo_files"] = photo_files
+
+	// Corporation reputation screen
+	if(screen == SCREEN_CORPS)
+		var/list/corporations = get_rnd_mission_corporations()
+		var/list/corps_data = list()
+		for(var/corp_id in corporations)
+			var/corp_name = get_rnd_mission_corporation_name(corp_id)
+			var/current_rep = files ? files.GetCorporationReputation(corp_id) : 0
+			corps_data += list(list(
+				"id" = corp_id,
+				"name" = corp_name,
+				"reputation" = current_rep
+			))
+		data["corporations"] = corps_data
+		data["selected_dialogue_corp_id"] = selected_dialogue_corp_id
+
+		if(selected_dialogue_corp_id)
+			var/corp_name = get_rnd_mission_corporation_name(selected_dialogue_corp_id)
+			var/current_rep = files ? files.GetCorporationReputation(selected_dialogue_corp_id) : 0
+			var/corp_info_text = get_rdconsole_corp_info(selected_dialogue_corp_id)
+			data["selected_corp_dialogue"] = list(
+				"name" = corp_name,
+				"reputation" = current_rep,
+				"reputation_color" = (current_rep >= 0 ? "#00FF00" : "#FF0000"),
+				"info" = corp_info_text
+			)
 
 	// Spectral analysis state
 	data["spectral_active"] = spectral_active
@@ -877,9 +1119,55 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/fabricator/attack_ai(mob/user)
 	return ui_interact(user)
 
+/obj/machinery/computer/rdconsole/proc/get_rdconsole_corp_info(corp_id)
+	switch(corp_id)
+		if(RND_MISSION_CORP_NANOTRASEN)
+			return "NanoTrasen — крупнейший работодатель и главный спонсор космических станций. Специализируется на передовых исследованиях и разработках."
+		if(RND_MISSION_CORP_WARD_TAKAHASHI)
+			return "Ward-Takahashi GMB — известна продвинутой электроникой, компьютерными системами и передовыми технологиями."
+		if(RND_MISSION_CORP_GRAYSON)
+			return "Grayson Manufactories Ltd. — производитель промышленного оборудования, горнодобывающих инструментов и систем переработки."
+		if(RND_MISSION_CORP_AETHER)
+			return "Aether Atmospherics — специализируется на атмосферных технологиях, газовых системах и средствах жизнеобеспечения."
+		if(RND_MISSION_CORP_EINSTEIN)
+			return "Einstein Engines — производитель высокопроизводительных двигателей, энергетических систем и силовых установок."
+		if(RND_MISSION_CORP_XION)
+			return "Xion Industrial — революционные методы производства, интегральные схемы и логистические системы."
+		if(RND_MISSION_CORP_SLATE)
+			return "Slate Sisters Engineering — лидер в области корабельного оборудования, навигации и щитовых систем."
+		if(RND_MISSION_CORP_FOCAL)
+			return "Focal Point Dynamics — разработка энергосистем нового поколения, солнечных панелей и накопителей энергии."
+		if(RND_MISSION_CORP_DAIS)
+			return "DAIS — специализируется на телекоммуникационных системах, сетевых технологиях и автоматизации."
+		if(RND_MISSION_CORP_KAPPA)
+			return "Kappa Communications — инновационные решения в области субкосмической связи и блюспейс-ретрансляторов."
+		if(RND_MISSION_CORP_VEYMED)
+			return "Vey-Med — разработчик передовых медицинских технологий, оборудования и хирургических инструментов."
+		if(RND_MISSION_CORP_HEPHAESTUS)
+			return "Hephaestus Industries — специализируется на оружейных системах, боевых платформах и оборонных технологиях."
+		if(RND_MISSION_CORP_MORPHEUS)
+			return "Morpheus Cybernetics — разработка позитронных мозгов, синтетических тел и систем искусственного интеллекта."
+		if(RND_MISSION_CORP_SHELLGUARD)
+			return "Shellguard — военная корпорация, специализирующаяся на тактическом оборудовании и боевых экзоскелетах."
+		if(RND_MISSION_CORP_ZENG_HU)
+			return "Zeng Hu Pharmaceuticals — один из крупнейших производителей лекарств, реагентов и медицинского оборудования."
+		if(RND_MISSION_CORP_ALMALIKI)
+			return "Al-Maliki & Mosley — производитель вооружений, систем безопасности и защитной экипировки."
+		if(RND_MISSION_CORP_BISHOP)
+			return "Bishop Cybernetics — лидер в области кибернетических имплантов, аугментаций и протезирования."
+		if(RND_MISSION_CORP_HELTEK)
+			return "HelTek Arms — производитель высокоточного стрелкового оружия, штурмовых винтовок и рельсотронных систем."
+		if(RND_MISSION_CORP_FTU)
+			return "Free Trade Union — торговый союз, поставляющий разнообразное вооружение от независимых производителей со всей галактики."
+	return "Информация о корпорации недоступна."
+
 #undef SCREEN_MAIN
 #undef SCREEN_PROTO
 #undef SCREEN_IMPRINTER
 #undef SCREEN_WORKING
 #undef SCREEN_TREES
 #undef SCREEN_LOCKED
+#undef SCREEN_DISK_DESIGNS
+#undef SCREEN_DISK_TECH
+#undef SCREEN_MISSIONS
+#undef SCREEN_CORPS

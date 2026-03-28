@@ -11232,7 +11232,7 @@
 	},
 /obj/item/stack/material/steel/ten,
 /obj/item/stack/material/steel/ten,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white,
 /area/rnd/misc_lab)
 "bGP" = (
@@ -37857,7 +37857,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/test_room)
 "fzr" = (
@@ -80793,7 +80793,7 @@
 "lQj" = (
 /obj/structure/table/standard,
 /obj/item/folder/nt,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /obj/item/device/scanner/health,
 /obj/item/device/geiger,
 /turf/simulated/floor/tiled/white,
@@ -111612,7 +111612,7 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled,
 /area/rnd/locker)
 "quf" = (
@@ -139543,7 +139543,7 @@
 	c_tag = "Research - Devlab";
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "uyK" = (
@@ -144873,7 +144873,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/office)
 "vlt" = (
@@ -157900,7 +157900,7 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/xenoflora)
 "xkH" = (

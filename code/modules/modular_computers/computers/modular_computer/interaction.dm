@@ -118,19 +118,6 @@
 		turn_on(user)
 
 /obj/item/modular_computer/use_tool(obj/item/W, mob/living/user, list/click_params)
-	//[SIERRA-ADD] RND
-	// Мультитул - для привязки трекера РнД миссий к консолям
-	if(istype(W, /obj/item/device/multitool))
-		var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)
-		if(os)
-			for(var/datum/computer_file/program/P in os.running_programs)
-				if(istype(P, /datum/computer_file/program/rnd_mission_tracker))
-					var/datum/computer_file/program/rnd_mission_tracker/tracker = P
-					if(tracker.link_console(W, user))
-						return TRUE
-		to_chat(user, SPAN_WARNING("На устройстве нет запущенного трекера миссий РнД."))
-		return TRUE
-	//[/SIERRA-ADD]
 	if(istype(W, /obj/item/card/id)) // ID Card, try to insert it.
 		var/obj/item/card/id/I = W
 		if(!card_slot)

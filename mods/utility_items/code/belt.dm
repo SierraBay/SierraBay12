@@ -168,5 +168,4 @@
 		/obj/item/toy/bosunwhistle,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/device/tape,
-		/obj/item/device/science_tool)
+		/obj/item/device/tape)

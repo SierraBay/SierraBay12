@@ -7840,7 +7840,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white/monotile,
 /area/space)
 "jdY" = (
@@ -10097,7 +10097,7 @@
 "lIs" = (
 /obj/structure/table/standard,
 /obj/item/folder/nt,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /obj/item/device/scanner/health,
 /obj/item/device/geiger,
 /turf/simulated/floor/tiled/white,
@@ -15158,7 +15158,7 @@
 "qWb" = (
 /obj/structure/table/standard,
 /obj/item/folder/nt,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white,
 /area/space)
 "qWj" = (

@@ -1,4 +1,4 @@
-/// Tech tree category system - organized by technology type rather than corporations
+/// Tech tree category system - organized by technology type with corporation branches
 var/global/list/rnd_tech_categories = list(
 	"engineering" = list(
 		"name" = "Engineering",
@@ -10,7 +10,6 @@ var/global/list/rnd_tech_categories = list(
 					"research_tech_nt",
 					"xenoarch_nt",
 					"excavation_drill_nt",
-					"diamond_excavation_drill_nt",
 					"doppler_array_nt"
 				)
 			),
@@ -19,8 +18,6 @@ var/global/list/rnd_tech_categories = list(
 				"nodes" = list(
 					"basic_engineering_wt",
 					"advanced_tools_wt",
-					"optical_sensors_wt",
-					"hydroponics_and_kitchen_wt",
 					"modular_computer_frames_wt"
 				)
 			),
@@ -79,18 +76,11 @@ var/global/list/rnd_tech_categories = list(
 					"hyper_power_induction_focal",
 					"advanced_storage_focal"
 				)
-			),
-			RND_MISSION_CORP_MAHIMAKU = list(
-				"name" = "Mahimaku",
-				"nodes" = list(
-					"tracking_devices_mahimaku",
-					"telecom_parts_mahimaku"
-				)
 			)
 		)
 	),
 	"telecommunications" = list(
-		"name" = "Telecommunications",
+		"name" = "Bluespace & Telecom",
 		"trees" = list(
 			RND_MISSION_CORP_DAIS = list(
 				"name" = "DAIS",
@@ -105,7 +95,17 @@ var/global/list/rnd_tech_categories = list(
 				"nodes" = list(
 					"subspace_broadcasting_kappa",
 					"subspace_mainframes_kappa",
-					"bluespace_relay_kappa"
+					"bluespace_relay_kappa",
+					"tracking_devices_kappa",
+					"telecom_parts_kappa"
+				)
+			),
+			RND_MISSION_CORP_NANOTRASEN = list(
+				"name" = "NanoTrasen",
+				"nodes" = list(
+					"bluespace_tech_nt",
+					"teleporter_tech_nt",
+					"bluespace_snare_nt"
 				)
 			)
 		)
@@ -130,6 +130,14 @@ var/global/list/rnd_tech_categories = list(
 					"adv_biotech_veymed",
 					"adv_medical_tools_veymed"
 				)
+			),
+			RND_MISSION_CORP_WARD_TAKAHASHI = list(
+				"name" = "Ward-Takahashi GMB",
+				"nodes" = list(
+					"hydroponics_wt_bio",
+					"food_processing_wt_bio",
+					"advanced_hydroponics_wt_bio"
+				)
 			)
 		)
 	),
@@ -137,7 +145,7 @@ var/global/list/rnd_tech_categories = list(
 		"name" = "Cybernetics",
 		"trees" = list(
 			RND_MISSION_CORP_GRAYSON = list(
-				"name" = "Grayson Manufacturories Ltd.",
+				"name" = "Grayson Manufactories Ltd.",
 				"nodes" = list(
 					"hardsuit_mining_grayson",
 					"advanced_hardsuit_mining_grayson",
@@ -157,6 +165,7 @@ var/global/list/rnd_tech_categories = list(
 				"name" = "Xion Industrial",
 				"nodes" = list(
 					"exosuit_fabrication_xion",
+					"mech_machinery_xion",
 					"advanced_mech_modules_xion",
 					"basic_engineering_augments_xion",
 					"advanced_engineering_augments_xion"
@@ -166,7 +175,8 @@ var/global/list/rnd_tech_categories = list(
 				"name" = "Bishop Cybernetics",
 				"nodes" = list(
 					"utility_implants_bishop",
-					"cyber_sonar_bishop"
+					"cyber_sonar_bishop",
+					"prosthetic_repairs_bishop"
 				)
 			),
 			RND_MISSION_CORP_VEYMED = list(
@@ -190,6 +200,14 @@ var/global/list/rnd_tech_categories = list(
 					"hi_koloss_design_shellguard"
 				)
 			),
+			RND_MISSION_CORP_HEPHAESTUS = list(
+				"name" = "Hephaestus Industries",
+				"nodes" = list(
+					"combat_mech_design_heph",
+					"mech_heavy_weapons_heph",
+					"military_augments_heph"
+				)
+			),
 			RND_MISSION_CORP_DAIS = list(
 				"name" = "DAIS",
 				"nodes" = list(
@@ -203,39 +221,56 @@ var/global/list/rnd_tech_categories = list(
 			)
 		)
 	),
-	"weapons" = list(
-		"name" = "Weapons",
+	"combat" = list(
+		"name" = "Combat",
 		"trees" = list(
 			RND_MISSION_CORP_NANOTRASEN = list(
 				"name" = "NanoTrasen",
 				"nodes" = list(
-					"basic_weapons_nt",
-					"advanced_weapons_nt",
-					"energy_weapons_nt"
+					"security_equipment_nt",
+					"nonlethal_weapons_nt",
+					"nt_combat_weapons",
+					"experimental_weapons_nt"
 				)
 			),
 			RND_MISSION_CORP_ALMALIKI = list(
 				"name" = "Al-Maliki & Mosley",
 				"nodes" = list(
-					"basic_ballistic_am",
-					"advanced_ballistic_am",
-					"specialized_weapons_am"
+					"frontier_revolvers_am",
+					"frontier_ordnance_am",
+					"specialized_am_weapons"
 				)
 			),
 			RND_MISSION_CORP_HEPHAESTUS = list(
 				"name" = "Hephaestus Industries",
 				"nodes" = list(
-					"basic_heavy_weapons_heph",
-					"advanced_heavy_weapons_heph",
-					"tactical_weapons_heph"
+					"basic_military_heph",
+					"advanced_military_heph",
+					"heavy_weapons_heph",
+					"strategic_systems_heph"
 				)
 			),
 			RND_MISSION_CORP_WARD_TAKAHASHI = list(
 				"name" = "Ward-Takahashi GMB",
 				"nodes" = list(
-					"basic_defensive_weapons_wt",
-					"advanced_defensive_weapons_wt",
-					"tactical_defense_systems_wt"
+					"mass_produced_wt",
+					"ordnance_wt"
+				)
+			),
+			RND_MISSION_CORP_HELTEK = list(
+				"name" = "HelTek Arms",
+				"nodes" = list(
+					"heltek_sidearms",
+					"heltek_assault",
+					"heltek_heavy"
+				)
+			),
+			RND_MISSION_CORP_FTU = list(
+				"name" = "Free Trade Union",
+				"nodes" = list(
+					"ftu_sidearms",
+					"ftu_longarms",
+					"ftu_military"
 				)
 			)
 		)
@@ -280,6 +315,15 @@ var/global/list/rnd_tech_categories = list(
 /proc/get_rnd_category_corporations(category_id)
 	var/list/trees = get_rnd_category_trees(category_id)
 	return trees ? trees.Copy() : list()
+
+/// Get all node IDs for a given corporation across all categories
+/proc/get_all_corp_nodes(corp_id)
+	var/list/result = list()
+	for(var/cat_id in rnd_tech_categories)
+		var/list/nodes = get_rnd_category_tree_nodes(cat_id, corp_id)
+		if(LAZYLEN(nodes))
+			result += nodes
+	return result
 
 /// DEPRECATED - Legacy function for backward compatibility
 /proc/get_rnd_corporation_order()

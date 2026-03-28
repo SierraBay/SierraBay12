@@ -1,16 +1,16 @@
-// Cybernetics technology branch
+// Cybernetics technology branch — corporate nodes only
+
+// ========== Grayson ==========
 
 /datum/technology/cybernetics
-	tech_type = RESEARCH_CYBERNETICS
-
-/datum/technology/cybernetics/hardsuit_mining_grayson
-	name = "HARDSUIT MINING EQUIPMENT (Grayson)"
-	desc = "Hardsuit-mounted mining equipment and scanners from Grayson Manufactories. Advanced sensory systems for geological analysis and ore extraction."
+	name = "Hardsuit Mining Equipment (Grayson)"
+	desc = "Hardsuit-mounted mining equipment and scanners."
 	id = "hardsuit_mining_grayson"
+	tech_type = RESEARCH_CYBERNETICS
 
 	x = 0.1
 	y = 0.5
-	icon = "hardsuit"
+	icon = "meson"
 
 	required_corp_id = RND_MISSION_CORP_GRAYSON
 	min_reputation = 0
@@ -19,18 +19,18 @@
 
 	unlocks_designs = list(
 		"rig_meson",
-		"drill",
-		"rig_orescanner"
+		"rig_orescanner",
+		"rig_drill"
 	)
 
 /datum/technology/cybernetics/advanced_hardsuit_mining_grayson
-	name = "ADVANCED HARDSUIT MINING EQUIPMENT (Grayson)"
-	desc = "Advanced hardsuit-mounted mining tools from Grayson Manufactories. High-energy plasma cutters and matter decompilation systems for demanding geological operations."
+	name = "Advanced Hardsuit Mining (Grayson)"
+	desc = "Advanced hardsuit-mounted mining tools."
 	id = "advanced_hardsuit_mining_grayson"
 
 	x = 0.2
 	y = 0.5
-	icon = "hardsuit"
+	icon = "circuit"
 
 	required_corp_id = RND_MISSION_CORP_GRAYSON
 	min_reputation = 5
@@ -38,13 +38,14 @@
 	cost = 2000
 
 	unlocks_designs = list(
-		"plasmacutter",
-		"rig_decompiler"
+		"rig_decompiler",
+		"rig_anomaly_scanner",
+		"rig_plasmacutter"
 	)
 
 /datum/technology/cybernetics/heavy_duty_mining_grayson
-	name = "HEAVY-DUTY MINING EQUIPMENT (Grayson)"
-	desc = "Heavy-duty mining and excavation equipment from Grayson Manufactories. Industrial-grade tools for large-scale mining operations and ambitious geological surveys."
+	name = "Heavy-Duty Mining (Grayson)"
+	desc = "Heavy-duty mining and excavation equipment."
 	id = "heavy_duty_mining_grayson"
 
 	x = 0.3
@@ -62,14 +63,16 @@
 		"plasmacutter"
 	)
 
+// ========== Morpheus ==========
+
 /datum/technology/cybernetics/basic_robotech_morpheus
-	name = "BASIC ROBOTECH (Morpheus Cybernetics)"
-	desc = "Fundamental robotics and automation systems from Morpheus Cybernetics. Basic construction kits for autonomous machines and cyborg maintenance infrastructure."
+	name = "Basic Robotech (Morpheus)"
+	desc = "Fundamental robotics and automation systems."
 	id = "basic_robotech_morpheus"
 
 	x = 0.1
 	y = 0.5
-	icon = "robot"
+	icon = "wrench"
 
 	required_corp_id = RND_MISSION_CORP_MORPHEUS
 	min_reputation = 0
@@ -83,17 +86,30 @@
 		"scan_robotic",
 		"sflash",
 		"robot_exoskeleton",
-		"robot_exoskeleton_hover"
+		"robot_exoskeleton_hover",
+		"robot_torso",
+		"robot_head",
+		"robot_l_arm",
+		"robot_r_arm",
+		"robot_l_leg",
+		"robot_r_leg",
+		"binary_communication_device",
+		"radio",
+		"actuator",
+		"diagnosis_unit",
+		"camera",
+		"armour",
+		"light_armour"
 	)
 
 /datum/technology/cybernetics/robots_upgrade_morpheus
-	name = "ROBOTS UPGRADE (Morpheus Cybernetics)"
-	desc = "Advanced upgrade modules and enhancement systems for robots and cyborgs from Morpheus Cybernetics. Performance enhancements, maintenance tools, and protective systems."
+	name = "Robots Upgrade (Morpheus)"
+	desc = "Advanced upgrade modules for robots and cyborgs."
 	id = "robots_upgrade_morpheus"
 
 	x = 0.2
 	y = 0.5
-	icon = "robot"
+	icon = "circuit"
 
 	required_corp_id = RND_MISSION_CORP_MORPHEUS
 	min_reputation = 5
@@ -106,17 +122,18 @@
 		"borg_floodlight_module",
 		"borg_restart_module",
 		"borg_vtec_module",
-		"borg_flash_protection_module"
+		"borg_flash_protection_module",
+		"roboprinter"
 	)
 
 /datum/technology/cybernetics/advanced_synth_morpheus
-	name = "ADVANCED SYNTH TECHNOLOGY (Morpheus Cybernetics)"
-	desc = "Advanced synthetic organism systems and cutting-edge automation technology from Morpheus Cybernetics. Includes high-tier combat modules, mobility enhancements, and positronic consciousness substrates."
+	name = "Advanced Synth Technology (Morpheus)"
+	desc = "Advanced synthetic organism systems and positronic consciousness."
 	id = "advanced_synth_morpheus"
 
 	x = 0.3
 	y = 0.5
-	icon = "robot"
+	icon = "jetpack"
 
 	required_corp_id = RND_MISSION_CORP_MORPHEUS
 	min_reputation = 10
@@ -132,8 +149,8 @@
 	)
 
 /datum/technology/cybernetics/ai_construction_morpheus
-	name = "AI CONSTRUCTION (Morpheus Cybernetics)"
-	desc = "Artificial intelligence core construction and deployment systems from Morpheus Cybernetics. Cutting-edge technology for creating and housing advanced synthetic intelligences."
+	name = "AI Construction (Morpheus)"
+	desc = "Artificial intelligence core construction and deployment."
 	id = "ai_construction_morpheus"
 
 	x = 0.4
@@ -150,14 +167,16 @@
 		"rig_ai_container"
 	)
 
+// ========== Xion ==========
+
 /datum/technology/cybernetics/exosuit_fabrication_xion
-	name = "EXOSUIT FABRICATION (Xion Industrial)"
-	desc = "Exosuit and mecha construction technology from Xion Industrial. Advanced systems for building and customizing powered exoskeletons and mechanized combat platforms."
+	name = "Exosuit Fabrication (Xion)"
+	desc = "Exosuit and mecha construction technology."
 	id = "exosuit_fabrication_xion"
 
 	x = 0.1
 	y = 0.5
-	icon = "mechloader"
+	icon = "mechlight"
 
 	required_corp_id = RND_MISSION_CORP_XION
 	min_reputation = 0
@@ -174,17 +193,24 @@
 		"powerloader_head",
 		"powerloader_body",
 		"powerloader_arms",
-		"powerloader_legs"
+		"powerloader_legs",
+		"light_head",
+		"light_body",
+		"right_light_arm",
+		"left_light_arm",
+		"right_light_leg",
+		"left_light_leg",
+		"sphere_body"
 	)
 
 /datum/technology/cybernetics/mech_machinery_xion
-	name = "MECH MACHINERY AND EQUIPMENT (Xion Industrial)"
-	desc = "Essential machinery and equipment systems for mechas from Xion Industrial. Recharging stations, utility tools, and specialized propulsion systems for diverse operational needs."
+	name = "Mech Machinery & Equipment (Xion)"
+	desc = "Essential machinery and equipment for mechas."
 	id = "mech_machinery_xion"
 
 	x = 0.2
 	y = 0.5
-	icon = "mechlight"
+	icon = "circuit"
 
 	required_corp_id = RND_MISSION_CORP_XION
 	min_reputation = 5
@@ -196,38 +222,49 @@
 		"hydraulic_clamp",
 		"mech_camera",
 		"mech_extinguisher",
-		"quad_legs"
+		"quad_legs",
+		"mech_drill",
+		"mech_machete",
+		"mech_floodlight",
+		"mech_flash",
+		"mech_circuit"
 	)
 
 /datum/technology/cybernetics/advanced_mech_modules_xion
-	name = "ADVANCED MECH MODULES (Xion Industrial)"
-	desc = "Advanced modular systems and enhancements for mechas and exosuits from Xion Industrial. High-performance movement systems, specialized tools, and environmental adaptation modules."
+	name = "Advanced Mech Modules (Xion)"
+	desc = "High-performance movement and specialized tools."
 	id = "advanced_mech_modules_xion"
 
 	x = 0.3
 	y = 0.5
-	icon = "mechcombat"
+	icon = "jetpack"
 
 	required_corp_id = RND_MISSION_CORP_XION
-	min_reputation = 5
+	min_reputation = 10
 	required_tech_levels = list()
-	cost = 2200
+	cost = 2500
 
 	unlocks_designs = list(
 		"mech_ionjets",
 		"mech_rcd",
-		"mech_extinguisher",
-		"gravity_catapult"
+		"gravity_catapult",
+		"mech_atmoshields",
+		"mech_plasma",
+		"mech_plasma_auto",
+		"rig_rcd",
+		"rig_jets",
+		"self_repair",
+		"rig_powersink"
 	)
 
 /datum/technology/cybernetics/basic_engineering_augments_xion
-	name = "BASIC ENGINEERING AUGMENTS (Xion Industrial)"
-	desc = "Fundamental cybernetic augmentations for engineering personnel from Xion Industrial. Basic toolsets and visual enhancements for industrial work."
+	name = "Basic Engineering Augments (Xion)"
+	desc = "Fundamental cybernetic augmentations for engineering."
 	id = "basic_engineering_augments_xion"
 
-	x = 0.4
+	x = 0.5
 	y = 0.5
-	icon = "wrench"
+	icon = "engaugment"
 
 	required_corp_id = RND_MISSION_CORP_XION
 	min_reputation = 0
@@ -240,13 +277,13 @@
 	)
 
 /datum/technology/cybernetics/advanced_engineering_augments_xion
-	name = "ADVANCED ENGINEERING AUGMENTS (Xion Industrial)"
-	desc = "Advanced cybernetic augmentations for engineering specialists from Xion Industrial. Enhanced toolsets and integrated circuitry for complex technical operations."
+	name = "Advanced Engineering Augments (Xion)"
+	desc = "Advanced cybernetic augmentations for engineering."
 	id = "advanced_engineering_augments_xion"
 
-	x = 0.5
+	x = 0.6
 	y = 0.5
-	icon = "wrench"
+	icon = "augment"
 
 	required_corp_id = RND_MISSION_CORP_XION
 	min_reputation = 5
@@ -258,9 +295,11 @@
 		"augment_toolset_engineering_advanced"
 	)
 
+// ========== Bishop ==========
+
 /datum/technology/cybernetics/utility_implants_bishop
-	name = "UTILITY IMPLANTS (Bishop Cybernetics)"
-	desc = "Basic utility cybernetic implants from Bishop Cybernetics. Practical augmentations for maintenance and utility personnel."
+	name = "Utility Implants (Bishop)"
+	desc = "Utility cybernetic implants."
 	id = "utility_implants_bishop"
 
 	x = 0.1
@@ -274,17 +313,40 @@
 
 	unlocks_designs = list(
 		"augment_blade_small",
-		"augment_jani_hud"
+		"augment_jani_hud",
+		"augment_adaptive_binoculars",
+		"augment_nanounit"
 	)
 
-/datum/technology/cybernetics/cyber_sonar_bishop
-	name = "CYBER-SONAR (Bishop Cybernetics)"
-	desc = "Advanced echolocation cybernetic implants from Bishop Cybernetics. Sophisticated sensory augmentation for spatial awareness and navigation in low-visibility environments."
-	id = "cyber_sonar_bishop"
+/datum/technology/cybernetics/prosthetic_repairs_bishop
+	name = "Prosthetic Repairs (Bishop)"
+	desc = "Advanced prosthetic repair and maintenance tools."
+	id = "prosthetic_repairs_bishop"
 
 	x = 0.2
 	y = 0.5
-	icon = "eye"
+	icon = "advprostheticrepairs"
+
+	required_corp_id = RND_MISSION_CORP_BISHOP
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 2500
+
+	unlocks_designs = list(
+		"integrity_repair_tool",
+		"integrity_repair_tool_tank",
+		"prosthetic_wiring_layerer"
+	)
+
+
+/datum/technology/cybernetics/cyber_sonar_bishop
+	name = "Cyber-Sonar (Bishop)"
+	desc = "Advanced echolocation cybernetic implants."
+	id = "cyber_sonar_bishop"
+
+	x = 0.3
+	y = 0.5
+	icon = "ecybersonare"
 
 	required_corp_id = RND_MISSION_CORP_BISHOP
 	min_reputation = 5
@@ -292,17 +354,20 @@
 	cost = 1800
 
 	unlocks_designs = list(
-		"augment_sonar"
+		"augment_sonar",
+		"augment_corrective_lenses"
 	)
 
+// ========== VeyMed ==========
+
 /datum/technology/cybernetics/medical_augmentations_veymed
-	name = "MEDICAL AUGMENTATIONS (Veymed Medical Corporation)"
-	desc = "Advanced medical cybernetic augmentations from Veymed Medical Corporation. Comprehensive suite of health monitoring, surgical assistance, and physiological enhancement systems."
+	name = "Medical Augmentations (VeyMed)"
+	desc = "Medical cybernetic augmentations."
 	id = "medical_augmentations_veymed"
 
 	x = 0.1
 	y = 0.5
-	icon = "heart"
+	icon = "augment"
 
 	required_corp_id = RND_MISSION_CORP_VEYMED
 	min_reputation = 0
@@ -320,13 +385,13 @@
 	)
 
 /datum/technology/cybernetics/medical_hardsuit_systems_veymed
-	name = "MEDICAL HARDSUIT SYSTEMS (Veymed Medical Corporation)"
-	desc = "Medical hardsuit module systems from Veymed Medical Corporation. Advanced diagnostic and monitoring equipment for hardsuit integration."
+	name = "Medical Hardsuit Systems (VeyMed)"
+	desc = "Medical hardsuit module systems."
 	id = "medical_hardsuit_systems_veymed"
 
 	x = 0.2
 	y = 0.5
-	icon = "hardsuit"
+	icon = "medhud"
 
 	required_corp_id = RND_MISSION_CORP_VEYMED
 	min_reputation = 5
@@ -339,8 +404,8 @@
 	)
 
 /datum/technology/cybernetics/medical_exosuit_systems_veymed
-	name = "MEDICAL EXOSUIT SYSTEMS (Veymed Medical Corporation)"
-	desc = "Medical exosuit equipment and control systems from Veymed Medical Corporation. Advanced medical treatment platforms and specialized software for combat medic mechas."
+	name = "Medical Exosuit Systems (VeyMed)"
+	desc = "Medical exosuit equipment and control."
 	id = "medical_exosuit_systems_veymed"
 
 	x = 0.3
@@ -357,9 +422,11 @@
 		"mech_software_medical"
 	)
 
+// ========== Shellguard ==========
+
 /datum/technology/cybernetics/exosuit_weapon_control_shellguard
-	name = "EXOSUIT WEAPON CONTROL SYSTEMS (SHELLGUARD)"
-	desc = "Combat exosuit weapon control systems from SHELLGUARD. Basic targeting and firing control software for armed mechanized platforms."
+	name = "Exosuit Weapon Control (Shellguard)"
+	desc = "Combat exosuit weapon control systems."
 	id = "exosuit_weapon_control_shellguard"
 
 	x = 0.1
@@ -376,13 +443,13 @@
 	)
 
 /datum/technology/cybernetics/heavy_energy_weapons_shellguard
-	name = "HEAVY-DUTY ENERGY WEAPONS (SHELLGUARD)"
-	desc = "Heavy-duty energy weapon systems for combat exosuits from SHELLGUARD. Advanced directed-energy weaponry including ion rifles, laser guns, and electrolaser systems."
+	name = "Heavy Energy Weapons (Shellguard)"
+	desc = "Heavy-duty energy weapon systems for exosuits."
 	id = "heavy_energy_weapons_shellguard"
 
 	x = 0.2
 	y = 0.5
-	icon = "gun"
+	icon = "empmech"
 
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 5
@@ -396,13 +463,13 @@
 	)
 
 /datum/technology/cybernetics/heavy_ballistic_weapons_shellguard
-	name = "HEAVY-DUTY BALLISTIC WEAPONS (SHELLGUARD)"
-	desc = "Heavy-duty ballistic weapon systems for combat exosuits from SHELLGUARD. Advanced submachine gun platforms and ammunition supply systems for sustained firefights."
+	name = "Heavy Ballistic Weapons (Shellguard)"
+	desc = "Heavy-duty ballistic weapon systems for exosuits."
 	id = "heavy_ballistic_weapons_shellguard"
 
 	x = 0.3
 	y = 0.5
-	icon = "gun"
+	icon = "smgmech"
 
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 10
@@ -415,13 +482,13 @@
 	)
 
 /datum/technology/cybernetics/defence_systems_shellguard
-	name = "DEFENCE SYSTEMS (SHELLGUARD)"
-	desc = "Advanced defensive systems for combat exosuits from SHELLGUARD. Heavy plasteel shielding for protection against ballistic threats."
+	name = "Defence Systems (Shellguard)"
+	desc = "Advanced defensive systems for combat exosuits."
 	id = "defence_systems_shellguard"
 
 	x = 0.4
 	y = 0.5
-	icon = "shield"
+	icon = "shieldmech"
 
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 15
@@ -434,13 +501,13 @@
 	)
 
 /datum/technology/cybernetics/security_augments_shellguard
-	name = "SECURITY AUGMENTS (SHELLGUARD)"
-	desc = "Security-focused cybernetic augmentations from SHELLGUARD. Advanced HUD systems and subdermal protection for security and combat personnel."
+	name = "Security Augments (Shellguard)"
+	desc = "Security-focused cybernetic augmentations."
 	id = "security_augments_shellguard"
 
 	x = 0.5
 	y = 0.5
-	icon = "shield"
+	icon = "augment"
 
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 0
@@ -449,17 +516,20 @@
 
 	unlocks_designs = list(
 		"augment_sec_hud",
-		"augment_armor"
+		"augment_armor",
+		"rig_sechud",
+		"rig_flash",
+		"rig_nvg"
 	)
 
 /datum/technology/cybernetics/augment_weaponry_shellguard
-	name = "AUGMENT WEAPONRY (SHELLGUARD)"
-	desc = "Combat-focused cybernetic weapon augmentations from SHELLGUARD. Advanced integrated melee weapons including cyberclaws, armblades, powerfists, and knuckles."
+	name = "Augment Weaponry (Shellguard)"
+	desc = "Combat-focused cybernetic weapon augmentations."
 	id = "augment_weaponry_shellguard"
 
 	x = 0.6
 	y = 0.5
-	icon = "sword"
+	icon = "clawsaugment"
 
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 5
@@ -470,12 +540,16 @@
 		"augment_wolverine",
 		"augment_blade",
 		"augment_powerfist",
-		"augment_knuckles"
+		"augment_knuckles",
+		"rig_taser",
+		"rig_egun",
+		"rig_kinetic",
+		"rig_cooler"
 	)
 
 /datum/technology/cybernetics/exosuit_armoured_tracks_shellguard
-	name = "EXOSUIT ARMOURED TRACKS (SHELLGUARD)"
-	desc = "Heavy-duty armoured track propulsion systems from SHELLGUARD. Reinforced treads for combat exosuits operating in hostile terrain."
+	name = "Exosuit Armoured Tracks (Shellguard)"
+	desc = "Heavy-duty armoured track propulsion."
 	id = "exosuit_armoured_tracks_shellguard"
 
 	x = 0.7
@@ -492,8 +566,8 @@
 	)
 
 /datum/technology/cybernetics/hi_koloss_design_shellguard
-	name = "HI-KOLOSS DESIGN (SHELLGUARD)"
-	desc = "Complete heavy combat exosuit construction blueprints from SHELLGUARD. All components for assembling the formidable Hi-Koloss heavy mech platform."
+	name = "Hi-Koloss Design (Shellguard)"
+	desc = "Heavy combat exosuit construction blueprints."
 	id = "hi_koloss_design_shellguard"
 
 	x = 0.8
@@ -509,17 +583,94 @@
 		"heavy_head",
 		"heavy_body",
 		"heavy_arms",
-		"heavy_legs"
+		"heavy_legs",
+		"right_heavy_arm",
+		"left_heavy_arm",
+		"right_heavy_leg",
+		"left_heavy_leg"
 	)
 
+// ========== Hephaestus (Combat Mech) ==========
+
+/datum/technology/cybernetics/combat_mech_design_heph
+	name = "Combat Mech Design (Hephaestus)"
+	desc = "Combat exosuit construction and armour systems."
+	id = "combat_mech_design_heph"
+
+	x = 0.1
+	y = 0.5
+	icon = "mechcombat"
+
+	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 2200
+
+	unlocks_designs = list(
+		"combat_head",
+		"combat_body",
+		"right_combat_arm",
+		"left_combat_arm",
+		"right_combat_leg",
+		"left_combat_leg",
+		"mech_armour_combat",
+		"mech_armour_buletproof",
+		"mech_armour_laserproof"
+	)
+
+/datum/technology/cybernetics/mech_heavy_weapons_heph
+	name = "Mech Heavy Weapons (Hephaestus)"
+	desc = "Heavy weapon systems for combat exosuits."
+	id = "mech_heavy_weapons_heph"
+
+	x = 0.2
+	y = 0.5
+	icon = "mechlaser"
+
+	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
+	min_reputation = 5
+	required_tech_levels = list()
+	cost = 2500
+
+	unlocks_designs = list(
+		"mech_flamer",
+		"mech_GRAD",
+		"mech_GRAD_peper",
+		"mech_GRAD_flashbang",
+		"mech_GRAD_fire"
+	)
+
+/datum/technology/cybernetics/military_augments_heph
+	name = "Military Augments (Hephaestus)"
+	desc = "Military-grade cybernetic combat augmentations."
+	id = "military_augments_heph"
+
+	x = 0.3
+	y = 0.5
+	icon = "augment"
+
+	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
+	min_reputation = 10
+	required_tech_levels = list()
+	cost = 2800
+
+	unlocks_designs = list(
+		"augment_booster_reflex",
+		"augment_booster_gunnery",
+		"augment_sci_hud",
+		"augment_it_hud"
+	)
+
+// ========== DAIS (Electronics) ==========
+
 /datum/technology/cybernetics/personal_ai_dais
-	name = "PERSONAL AI (DAIS)"
-	desc = "Personal AI device technology from DAIS. Compact artificial intelligence units for personal use and integration into portable computer systems."
+	name = "Personal AI (DAIS)"
+	desc = "Personal AI device technology."
 	id = "personal_ai_dais"
 
 	x = 0.1
 	y = 0.5
-	icon = "ai"
+	icon = "cpu_small"
 
 	required_corp_id = RND_MISSION_CORP_DAIS
 	min_reputation = 0
@@ -527,12 +678,16 @@
 	cost = 1500
 
 	unlocks_designs = list(
-		"paicard"
+		"paicard",
+		"pai_memstd",
+		"pai_holo",
+		"pai_holoskin_woman",
+		"pai_memadv"
 	)
 
 /datum/technology/cybernetics/ai_maintenance_dais
-	name = "AI MAINTENANCE (DAIS)"
-	desc = "AI maintenance and integration systems from DAIS. InteliCard storage devices and specialized slots for AI unit management and deployment."
+	name = "AI Maintenance (DAIS)"
+	desc = "AI maintenance and integration systems."
 	id = "ai_maintenance_dais"
 
 	x = 0.2
@@ -546,17 +701,23 @@
 
 	unlocks_designs = list(
 		"intelicard",
-		"aislot"
+		"aislot",
+		"cardslot",
+		"cardbroadcaster",
+		"pai_memlambda",
+		"pai_camo",
+		"pai_hackstd",
+		"pai_hackadv"
 	)
 
 /datum/technology/cybernetics/basic_modular_computers_dais
-	name = "BASIC MODULAR COMPUTERS (DAIS)"
-	desc = "Fundamental modular computer components from DAIS. Basic hardware for constructing custom computer systems including drives, network cards, batteries, and processing units."
+	name = "Basic Modular Computers (DAIS)"
+	desc = "Fundamental modular computer components."
 	id = "basic_modular_computers_dais"
 
 	x = 0.3
 	y = 0.5
-	icon = "console"
+	icon = "nanoprinter"
 
 	required_corp_id = RND_MISSION_CORP_DAIS
 	min_reputation = 0
@@ -570,17 +731,20 @@
 		"portadrive_basic",
 		"cpu_normal",
 		"pc_motherboard",
-		"netcard_wired"
+		"netcard_wired",
+		"ship_interface",
+		"nanoprinter",
+		"scan_paper"
 	)
 
 /datum/technology/cybernetics/power_effective_electronics_dais
-	name = "POWER EFFECTIVE ELECTRONICS (DAIS)"
-	desc = "Power-efficient miniaturized computer components from DAIS. Compact drives, low-power batteries, and microprocessors for portable and embedded systems."
+	name = "Power Effective Electronics (DAIS)"
+	desc = "Power-efficient miniaturized computer components."
 	id = "power_effective_electronics_dais"
 
 	x = 0.4
 	y = 0.5
-	icon = "battery"
+	icon = "cpu_small"
 
 	required_corp_id = RND_MISSION_CORP_DAIS
 	min_reputation = 5
@@ -596,13 +760,13 @@
 	)
 
 /datum/technology/cybernetics/advanced_electronics_dais
-	name = "ADVANCED ELECTRONICS (DAIS)"
-	desc = "Advanced computer components and high-performance electronics from DAIS. Enhanced network cards, drives, data storage, and cutting-edge photonic processors."
+	name = "Advanced Electronics (DAIS)"
+	desc = "Advanced computer components and networking."
 	id = "advanced_electronics_dais"
 
 	x = 0.5
 	y = 0.5
-	icon = "console"
+	icon = "pcpu_small"
 
 	required_corp_id = RND_MISSION_CORP_DAIS
 	min_reputation = 10
@@ -614,17 +778,18 @@
 		"hdd_advanced",
 		"portadrive_advanced",
 		"bat_advanced",
-		"pcpu_small"
+		"pcpu_small",
+		"scan_atmos"
 	)
 
 /datum/technology/cybernetics/hiend_electronics_dais
-	name = "HI-END ELECTRONICS (DAIS)"
-	desc = "Premium high-end computer components and AI integration systems from DAIS. Super hard drives, advanced data storage, super batteries for sustained operation, photonic processors, Tesla power links, and inteliCard systems for AI deployment."
+	name = "Hi-End Electronics (DAIS)"
+	desc = "Premium high-end computer components and AI integration."
 	id = "hiend_electronics_dais"
 
 	x = 0.6
 	y = 0.5
-	icon = "processor"
+	icon = "modular_bat_ultra"
 
 	required_corp_id = RND_MISSION_CORP_DAIS
 	min_reputation = 15
@@ -636,5 +801,8 @@
 		"portadrive_super",
 		"bat_super",
 		"pcpu_normal",
-		"tesla_link"
+		"tesla_link",
+		"hdd_cluster",
+		"data_disk",
+		"bat_ultra"
 	)

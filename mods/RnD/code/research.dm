@@ -34,29 +34,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 **						Master Types						  **
 **	Includes all the helper procs and basic tech processing.  **
 ***************************************************************/
-// Prevent startup errors about undefined research macros
-// These match values from missions.dm and corporate_tech_trees.dm
-
-#ifndef RND_MISSION_CORP_NANOTRASEN
-#define RND_MISSION_CORP_NANOTRASEN "nanotrasen"
-#define RND_MISSION_CORP_VEYMED "veymed"
-#define RND_MISSION_CORP_MORPHEUS "morpheus"
-#define RND_MISSION_CORP_HEPHAESTUS "hephaestus"
-#define RND_MISSION_CORP_DAIS "dais"
-#define RND_MISSION_CORP_GRAYSON "grayson"
-#define RND_MISSION_CORP_KAPPA "kappa"
-#define RND_MISSION_CORP_AETHER "aether"
-#define RND_MISSION_CORP_WARD_TAKAHASHI "ward_takahashi"
-#define RND_MISSION_CORP_EINSTEIN "einstein"
-#define RND_MISSION_CORP_XION "xion"
-#define RND_MISSION_CORP_SLATE "slate"
-#define RND_MISSION_CORP_MAHIMAKU "mahimaku"
-#define RND_MISSION_CORP_FOCAL "focal"
-#define RND_MISSION_CORP_ZENG_HU "zeng_hu"
-#define RND_MISSION_CORP_BISHOP "bishop"
-#define RND_MISSION_CORP_SHELLGUARD "shellguard"
-#define RND_MISSION_CORP_ALMALIKI "almaliki"
-#endif
+// Corporation ID defines are in corporations.dm
 
 #define RESEARCH_ENGINEERING   /datum/tech/engineering
 #define RESEARCH_BIOTECH       /datum/tech/biotech
@@ -101,6 +79,10 @@ var/global/list/explosion_watcher_list = list()
 	/// Used to determine access to and cost of corporate tech nodes
 	var/list/corporation_reputation = list()
 
+	/// List of design IDs banned from printing on fabricators
+	/// Designs in this list are hidden from protolathe/imprinter but visible in server controller
+	var/list/banned_designs = list()
+
 
 /datum/research/New()
 	..()
@@ -121,8 +103,9 @@ var/global/list/explosion_watcher_list = list()
 	corporation_reputation[RND_MISSION_CORP_EINSTEIN] = 0
 	corporation_reputation[RND_MISSION_CORP_XION] = 0
 	corporation_reputation[RND_MISSION_CORP_SLATE] = 0
-	corporation_reputation[RND_MISSION_CORP_MAHIMAKU] = 0
 	corporation_reputation[RND_MISSION_CORP_FOCAL] = 0
+	corporation_reputation[RND_MISSION_CORP_HELTEK] = 0
+	corporation_reputation[RND_MISSION_CORP_FTU] = 0
 
 /datum/research/proc/IsResearched(datum/technology/T)
 	return (T in researched_nodes)
@@ -186,6 +169,13 @@ var/global/list/explosion_watcher_list = list()
 				. = TRUE // we actually updated something
 	known_research_file_ids |= O.known_research_file_ids
 	experiments.merge_with(O.experiments)
+	// Sync banned designs list from source
+	if(LAZYLEN(O.banned_designs))
+		banned_designs |= O.banned_designs
+	// Remove bans that were lifted on source
+	for(var/ban_id in banned_designs)
+		if(!(ban_id in O.banned_designs))
+			banned_designs -= ban_id
 
 /datum/research/proc/forget_techology(datum/technology/T)
 	if(!IsResearched(T))

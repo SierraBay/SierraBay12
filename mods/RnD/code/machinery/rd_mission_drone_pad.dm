@@ -1,7 +1,3 @@
-#ifndef RND_MISSION_TYPE_LIVE_CAPTURE
-#define RND_MISSION_TYPE_LIVE_CAPTURE 4
-#endif
-
 /obj/machinery/drone_pad/rd_mission
 	name = "R&D mission drone pad"
 	desc = "A specialized landing pad for research drones. Used to submit mission samples and data to corporate receivers. Items must be packaged before submission using a drone designator."
@@ -22,9 +18,7 @@
 	if(current_flight)
 		to_chat(user, SPAN_WARNING("Дрон пад занят входящей доставкой."))
 		return TRUE
-	if(try_send_live_capture(user))
-		return TRUE
-	return transmit_mission_data(user)
+	return TRUE
 
 /obj/machinery/drone_pad/rd_mission/use_tool(obj/item/I, mob/living/user, list/click_params)
 	// Мультитул для настройки сети
@@ -62,7 +56,6 @@
 	// Проверяем, это ли обернутый предмет
 	var/obj/item/smallDelivery/package = target
 	if(!istype(package))
-		// Миссионный дрон пад принимает только упакованные предметы
 		to_chat(user, SPAN_WARNING("Для отправки миссионных предметов их нужно сначала упаковать в cargo wrap."))
 		return FALSE
 
@@ -74,145 +67,97 @@
 	// Извлекаем предмет из упаковки
 	var/obj/item/wrapped_item = package.wrapped
 
-	// Пробуем найти подходящую миссию для этого предмета
-	var/datum/rnd_mission/mission = null
-	var/list/missions = get_active_missions()
-	for(var/datum/rnd_mission/M in missions)
-		// Временно извлекаем предмет для проверки
-		wrapped_item.forceMove(src.loc)
-		if(M.try_submit_item(src, wrapped_item, user))
-			mission = M
-			break
-		// Возвращаем обратно в упаковку если не подошло
-		wrapped_item.forceMove(package)
-
+	// Ищем подходящую дереликтовую миссию
+	var/datum/derelict_mission/mission = find_derelict_mission_for_item(wrapped_item)
 	if(!mission)
-		// Предмет не подходит ни для одной миссии
-		// Возвращаем его в упаковку
-		wrapped_item.forceMove(package)
-		to_chat(user, SPAN_WARNING("Данный предмет не соответствует ни одной активной миссии."))
+		to_chat(user, SPAN_WARNING("Данный предмет не соответствует ни одному активному контракту."))
+		return FALSE
+
+	// Проверяем сдачу предмета (проверит пререквизиты)
+	if(!mission.try_submit_item(wrapped_item))
+		to_chat(user, SPAN_WARNING("Контракт \"[mission.title]\" ещё не готов к сдаче. Выполните все предварительные задачи."))
 		return FALSE
 
 	// Успешно! Анимация отправки дрона
 	pickup_animation(package)
 
 	// Удаляем упаковку и предмет (отправлено корпорации)
-	qdel(package)
 	qdel(wrapped_item)
+	qdel(package)
 
 	// Проверяем завершение миссии
-	if(mission.is_complete())
-		// Небольшая задержка перед финализацией для реалистичности
+	if(mission.check_all_objectives_complete())
 		addtimer(new Callback(src, PROC_REF(finalize_mission), mission, user), 5 SECONDS)
-		to_chat(user, SPAN_NOTICE("Миссионный предмет отправлен. Миссия готова к завершению."))
+		to_chat(user, SPAN_NOTICE("Образец отправлен. Контракт \"[mission.title]\" выполнен! Обработка награды..."))
 	else
-		to_chat(user, SPAN_NOTICE("Миссионный предмет отправлен."))
+		to_chat(user, SPAN_NOTICE("Образец отправлен по контракту \"[mission.title]\"."))
 
-	update_mission_uis(mission)
+	update_rdconsole_uis()
 	return TRUE
 
-/obj/machinery/drone_pad/rd_mission/proc/get_active_missions()
-	var/list/missions = list()
-	for(var/obj/machinery/computer/rd_mission_console/console in world)
-		if(!LAZYLEN(console.active_missions))
-			continue
-		for(var/datum/rnd_mission/mission in console.active_missions)
-			missions += mission
-	return missions
+/obj/machinery/drone_pad/rd_mission/proc/find_nearest_rdconsole()
+	var/obj/machinery/computer/rdconsole/nearest = null
+	var/best_dist = INFINITY
+	for(var/obj/machinery/computer/rdconsole/console in range(7, src))
+		var/d = get_dist(src, console)
+		if(d < best_dist)
+			best_dist = d
+			nearest = console
+	if(!nearest)
+		nearest = locate(/obj/machinery/computer/rdconsole) in world
+	return nearest
 
-/obj/machinery/drone_pad/rd_mission/proc/find_console_for_mission(datum/rnd_mission/mission)
-	if(mission && mission.assigned_console)
-		return mission.assigned_console
-	for(var/obj/machinery/computer/rd_mission_console/console in world)
-		if(mission in console.active_missions)
-			return console
-	return locate(/obj/machinery/computer/rd_mission_console) in world
-
-/obj/machinery/drone_pad/rd_mission/proc/update_mission_uis(datum/rnd_mission/mission)
-	for(var/obj/machinery/computer/rd_mission_console/console in world)
-		if(mission in console.active_missions)
-			SSnano.update_uis(console)
-
-/obj/machinery/drone_pad/rd_mission/proc/remove_mission_from_consoles(datum/rnd_mission/mission)
-	for(var/obj/machinery/computer/rd_mission_console/console in world)
-		if(mission in console.active_missions)
-			console.remove_active_mission(mission)
-			SSnano.update_uis(console)
-
-/obj/machinery/drone_pad/rd_mission/proc/finalize_mission(datum/rnd_mission/mission, mob/living/user)
+/obj/machinery/drone_pad/rd_mission/proc/finalize_mission(datum/derelict_mission/mission, mob/living/user)
 	if(!mission)
 		return FALSE
-	if(!mission.is_complete())
-		to_chat(user, SPAN_WARNING("Условия задания ещё не выполнены."))
+	if(!mission.check_all_objectives_complete())
+		if(user)
+			to_chat(user, SPAN_WARNING("Условия контракта ещё не выполнены."))
 		return FALSE
-	var/obj/machinery/computer/rd_mission_console/console = find_console_for_mission(mission)
-	if(!console)
-		to_chat(user, SPAN_WARNING("Не найдена консоль миссий для выдачи награды."))
+
+	var/obj/machinery/computer/rdconsole/console = find_nearest_rdconsole()
+	if(!console || !console.files)
+		if(user)
+			to_chat(user, SPAN_WARNING("Не найдена РнД консоль для обработки награды."))
 		return FALSE
-	mission.complete_mission(console, user)
-	remove_mission_from_consoles(mission)
+
+	if(!mission.finalize(console.files))
+		if(user)
+			to_chat(user, SPAN_WARNING("Не удалось обработать награду контракта."))
+		return FALSE
+
+	var/corp_name = get_rnd_mission_corporation_name(mission.corporation_id)
+	if(user)
+		to_chat(user, SPAN_NOTICE("Контракт \"[mission.title]\" завершён! Корпорация [corp_name] разблокировала технологии."))
+	visible_message(SPAN_NOTICE("[src] издаёт подтверждающий сигнал. Контракт с [corp_name] успешно закрыт."))
+	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
+	update_rdconsole_uis()
 	return TRUE
 
-/obj/machinery/drone_pad/rd_mission/proc/try_send_live_capture(mob/living/user)
-	var/turf/pad_turf = get_turf(src)
-	if(!pad_turf)
-		return FALSE
-	var/obj/machinery/stasis_cage/cage = locate(/obj/machinery/stasis_cage) in pad_turf
-	if(!cage || !cage.contained)
-		return FALSE
-	if(cage.contained.is_dead())
-		to_chat(user, SPAN_WARNING("Образец мертв. Контракт не может быть выполнен."))
-		return TRUE
+/obj/machinery/drone_pad/rd_mission/proc/update_rdconsole_uis()
+	for(var/obj/machinery/computer/rdconsole/console in range(7, src))
+		SSnano.update_uis(console)
 
-	var/datum/rnd_mission/matched_mission = null
-	for(var/datum/rnd_mission/mission in get_active_missions())
-		if(mission.mission_type != RND_MISSION_TYPE_LIVE_CAPTURE)
-			continue
-		if(mission.target_mob == cage.contained)
-			matched_mission = mission
-			break
+/obj/machinery/drone_pad/rd_mission/proc/show_mission_status(mob/living/user)
+	if(!LAZYLEN(derelict_missions_list))
+		to_chat(user, SPAN_NOTICE("Нет активных корпоративных контрактов."))
+		return
 
-	if(!matched_mission)
-		return FALSE
+	var/has_active = FALSE
+	for(var/datum/derelict_mission/M in derelict_missions_list)
+		if(M.state == RND_MISSION_STATE_AVAILABLE)
+			var/corp_name = get_rnd_mission_corporation_name(M.corporation_id)
+			var/obj_status = ""
+			for(var/datum/derelict_mission_objective/O in M.objectives)
+				obj_status += "\n  - [O.description]: [O.get_status_text()]"
+			to_chat(user, SPAN_NOTICE("<b>[M.title]</b> ([corp_name]) — [M.away_site_name][obj_status]"))
+			has_active = TRUE
+		else if(M.state == RND_MISSION_STATE_REWARDED)
+			var/corp_name = get_rnd_mission_corporation_name(M.corporation_id)
+			to_chat(user, SPAN_NOTICE("<b>[M.title]</b> ([corp_name]) — <span style='color: #44ff44;'>Выполнен</span>"))
 
-	var/choice = alert(user, "Отправить живой образец через миссионный дрон пад?", "Mission Drone Pad", "Отправить", "Отмена")
-	if(choice != "Отправить")
-		return TRUE
-
-	matched_mission.live_capture_delivered = TRUE
-	matched_mission.target_mob = null
-	qdel(cage.contained)
-	cage.contained = null
-	cage.update_icon()
-	cage.update_use_power(POWER_USE_IDLE)
-	finalize_mission(matched_mission, user)
-	return TRUE
-
-/obj/machinery/drone_pad/rd_mission/proc/transmit_mission_data(mob/living/user)
-	var/list/missions = get_active_missions()
-	if(!length(missions))
-		to_chat(user, SPAN_NOTICE("Активных заданий нет."))
-		return TRUE
-
-	var/list/choices = list()
-	var/index = 1
-	for(var/datum/rnd_mission/mission in missions)
-		var/status = mission.is_complete() ? "готово" : "в процессе"
-		choices["[mission.get_brief()] ([status]) #[index]"] = mission
-		index += 1
-
-	var/picked = input(user, "Выберите контракт для отправки", "Mission Drone Pad") as null|anything in choices
-	if(!picked || !Adjacent(user))
-		return TRUE
-
-	var/datum/rnd_mission/mission = choices[picked]
-	if(!mission)
-		return TRUE
-	if(!mission.is_complete())
-		to_chat(user, SPAN_WARNING("Условия задания ещё не выполнены."))
-		return TRUE
-	finalize_mission(mission, user)
-	return TRUE
+	if(!has_active)
+		to_chat(user, SPAN_NOTICE("Все контракты выполнены."))
 
 /obj/item/stock_parts/circuitboard/rd_mission_drone_pad
 	name = "circuit board (R&D mission drone pad)"

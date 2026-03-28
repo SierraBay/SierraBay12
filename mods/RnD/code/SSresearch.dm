@@ -54,6 +54,29 @@ SUBSYSTEM_DEF(research)
 		else
 			WARNING("Unknown tech_type '[tech.tech_type]' in technology '[tech.name]'")
 
+	// Validate that all node IDs in rnd_tech_categories have corresponding technology datums
+	var/list/tech_node_ids = list()
+	for(var/datum/technology/node in all_tech_nodes)
+		tech_node_ids[node.id] = TRUE
+
+	for(var/cat_id in rnd_tech_categories)
+		var/list/category = rnd_tech_categories[cat_id]
+		if(!category)
+			continue
+		var/list/trees = category["trees"]
+		if(!trees)
+			continue
+		for(var/corp_id in trees)
+			var/list/tree = trees[corp_id]
+			if(!tree)
+				continue
+			var/list/nodes = tree["nodes"]
+			if(!nodes)
+				continue
+			for(var/node_id in nodes)
+				if(!tech_node_ids[node_id])
+					WARNING("Tech tree node '[node_id]' in category '[cat_id]' / corp '[corp_id]' has no matching /datum/technology definition!")
+
 	research_initialized = TRUE
 	for(var/i in research_files_to_init)
 		initialize_research_datum(i)
@@ -112,6 +135,12 @@ SUBSYSTEM_DEF(research)
 		if(D.build_type)
 			if(D.category)
 				design_categories_autolathe |= D.category
+
+/datum/controller/subsystem/research/proc/get_tech_node(id)
+	for(var/datum/technology/T in all_tech_nodes)
+		if(T.id == id)
+			return T
+	return null
 
 /datum/controller/subsystem/research/proc/fabricator_recycle(obj/item/build_path)
 	for(var/datum/design/design in all_designs)

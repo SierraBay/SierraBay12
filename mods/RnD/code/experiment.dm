@@ -77,31 +77,40 @@
 
 /obj/item/paper/xenofauna_report
 
-/obj/item/device/science_tool
-	name = "science tool"
-	icon = 'mods/RnD/icons/device.dmi'
-	icon_state = "science"
-	item_state = "sciencetool"
-	item_icons = list(
-		slot_r_hand_str = 'mods/RnD/icons/mob/righthand.dmi',
-		slot_l_hand_str = 'mods/RnD/icons/mob/lefthand.dmi',
-		)
-	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
-	slot_flags = SLOT_BELT
-	throwforce = 3
+// Weather data collection sensor — deployable on exoplanets
+
+/obj/item/device/weather_sensor
+	name = "weather data collection sensor"
+	desc = "A portable atmospheric and environmental data collection device. Deploy it in various locations to record local weather patterns."
+	icon = 'icons/obj/modular_components.dmi'
+	icon_state = "power_cell"
 	w_class = ITEM_SIZE_SMALL
-	throw_speed = 5
-	throw_range = 10
-	origin_tech = list(TECH_ENGINEERING = 1, TECH_DATA = 1)
+	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
+	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 50)
+	var/deployed = FALSE
 
-/obj/item/device/science_tool/afterattack(obj/O, mob/living/user)
-	return ..()
+/obj/item/device/weather_sensor/attack_self(mob/user)
+	if(deployed)
+		to_chat(user, SPAN_WARNING("\The [src] has already been deployed and locked!"))
+		return
 
-/datum/design/science_tool
-	shortname = "Science Tool"
-	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
-	id = "science_tool"
-	build_type = PROTOLATHE
-	materials = list(MATERIAL_STEEL = 1000)
-	build_path = /obj/item/device/science_tool
-	category = list("Misc")
+	if(!istype(get_area(src), /area/exoplanet))
+		to_chat(user, SPAN_WARNING("\The [src] must be deployed on a planetary surface!"))
+		return
+
+	to_chat(user, SPAN_NOTICE("You begin deploying \the [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+
+	deployed = TRUE
+	anchored = TRUE
+	to_chat(user, SPAN_NOTICE("You deploy and activate \the [src]. It begins recording environmental data."))
+
+	if(deployed)
+		to_chat(user, SPAN_NOTICE("The sensor is deployed and actively recording data."))
+		var/turf/T = get_turf(src)
+		var/area/A = get_area(src)
+		if(T && A)
+			to_chat(user, SPAN_NOTICE("Location: [A.name] ([T.x], [T.y], [T.z])"))
+	else
+		to_chat(user, SPAN_NOTICE("The sensor can be deployed on a planetary surface."))

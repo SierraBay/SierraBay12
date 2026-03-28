@@ -442,6 +442,8 @@
 		'html/images/zenhulogo.png',
 		'html/images/focallogo.png',
 		'html/images/bishoplogo.png',
+		'html/images/amlogo.png',
+		'html/images/hilogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)

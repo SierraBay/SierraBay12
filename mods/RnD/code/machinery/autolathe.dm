@@ -184,13 +184,17 @@
 	for(var/d in design_list())
 		var/datum/computer_file/binary/design/design_file = d
 		if(!show_category || design_file.design.category == show_category)
-			L.Add(list(design_file.ui_data()))
+			var/list/ddata = design_file.ui_data()
+			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
+			L.Add(list(ddata))
 
 	var/list/O = list()
 	for(var/f in design_list_two())
 		var/datum/computer_file/binary/design/design_file = f
 		if(!show_category || design_file.design.category == show_category)
-			O.Add(list(design_file.ui_data()))
+			var/list/ddata = design_file.ui_data()
+			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
+			O.Add(list(ddata))
 
 	L |= O
 
@@ -240,7 +244,7 @@
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "mods-autolathe.tmpl", capitalize(name), 600, 700)
+		ui = new(user, src, ui_key, "mods-autolathe.tmpl", capitalize(name), 660, 720)
 
 		// template keys starting with _ are not appended to the UI automatically and have to be called manually
 		ui.add_template("_materials", "mods-autolathe_materials.tmpl")

@@ -197,6 +197,7 @@ var/global/list/admin_verbs_debug = list(
 	//[SIERRA-ADD] - Colony-types,
 	/datum/admins/proc/map_template_colony_spawn_settings,
 	/datum/admins/proc/anomaly_control,
+	/client/proc/rnd_mission_debug,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,

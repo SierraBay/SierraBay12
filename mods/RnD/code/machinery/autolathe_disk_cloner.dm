@@ -10,7 +10,6 @@
 	active_power_usage = 500
 
 	var/copying_delay = 0
-	var/hack_fail_chance = 0
 
 	var/obj/item/stock_parts/computer/hard_drive/portable/original = null
 	var/obj/item/stock_parts/computer/hard_drive/portable/copy = null
@@ -41,13 +40,11 @@
 		laser_rating += ML.rating
 
 	if(scanner_rating+laser_rating >= 9)
-		copying_delay = 15
+		copying_delay = 5
 	else if(scanner_rating+laser_rating >= 6)
-		copying_delay = 30
+		copying_delay = 10
 	else
-		copying_delay = 80
-
-	hack_fail_chance = ((scanner_rating+laser_rating) >= 9) ? 20 : 40
+		copying_delay = 25
 
 /obj/machinery/disk_cloner/use_tool(obj/item/I, mob/user)
 	if ((. = ..()))
@@ -184,36 +181,9 @@
 				break
 
 			var/datum/computer_file/original_file = f
-			var/datum/computer_file/copying_file
+			var/datum/computer_file/copying_file = original_file.clone()
 
-			// Design files with copy protection require special treatment
-			if(istype(original_file, /datum/computer_file))
-				var/datum/computer_file/file = original_file
-				var/datum/computer_file/copy
-
-				if(prob(hack_fail_chance))
-					// Make a corrupted design with same filename as the original
-					if(istype(original_file, /datum/computer_file/binary/design))
-						var/datum/computer_file/binary/design/design_copy
-						design_copy = new
-
-						design_copy.set_design_type(/datum/computer_file/binary/design/corrupted)
-						design_copy.filetype = "CCD"
-						design_copy.filename = original_file.filename
-				else
-					// Copy the original design, remove DRM
-					copy = new
-					copy = file.clone()
-
-					copying_file = copy
-			else
-				break
-
-			// Any other files can be simply cloned
-			if(!copying_file)
-				copying_file = original_file.clone()
-
-			// Store the copied file. If the disc is corrupted, faulty, out of space - stop the copying process.
+			// Store the copied file. If the disc is faulty or out of space - stop the copying process.
 			if(!copy.create_file(copying_file))
 				break
 

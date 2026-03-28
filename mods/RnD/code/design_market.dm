@@ -1,5 +1,4 @@
 var/global/list/rnd_design_market = list(
-	"science_tool" = list("price" = 1500),
 	"health_scanner" = list("price" = 1200),
 	"plant_scanner" = list("price" = 1200),
 	"gps" = list("price" = 1300),

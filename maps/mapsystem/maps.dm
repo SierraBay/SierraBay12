@@ -425,6 +425,10 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 	report_progress("Finished selecting away sites ([english_list(selected)]) for [away_site_budget - points] cost of [away_site_budget] budget.")
 
+	// Record loaded away site IDs for derelict mission generation
+	for(var/datum/map_template/ruin/away_site/site in selected)
+		loaded_away_site_ids += site.id
+
 	for (var/datum/map_template/template in selected)
 		if (template.load_new_z())
 			report_progress("Loaded away site [template]!")

@@ -1,3 +1,5 @@
+// Design disk management and away-site design spawning
+
 /obj/item/stock_parts/computer/hard_drive/proc/get_disk_name()
 	var/datum/computer_file/data/text/D = find_file_by_name("DISK_NAME")
 	if(!istype(D))
@@ -100,21 +102,6 @@
 	// Stops people from screwing around with unprotected disks too.
 	return TRUE
 
-/area/lar_maria
-	name = "Lar Maria"
-
-/area/casino
-	name = "Casino"
-
-/area/meatstation
-	name = "Meat Station"
-
-/area/lost_supply_base
-	name = "Abandoned Supply Station"
-
-/area/magshield
-	name = "Magshield"
-
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
 	var/area/area = get_area(src)
 	if(area)
@@ -133,73 +120,3 @@
 	if(disk.check_away_zone())
 		if(prob(20))
 			disk.install_away_designs()
-
-
-// Xenobiology stuff
-
-/obj/item/storage/xenobio
-	name = "xenobiology satchel"
-	desc = "This insulated bag can be used to store slime extracts and other potentially contaminated materials."
-	icon = 'mods/RnD/icons/biobag.dmi'
-	icon_state = "biobag"
-	slot_flags = SLOT_BELT
-	max_storage_space = 100
-	max_w_class = ITEM_SIZE_NORMAL
-	w_class = ITEM_SIZE_NORMAL
-	contents_allowed = list(
-		/obj/item/slime_extract,
-		/obj/item/slimesteroid,
-		/obj/item/slimesteroid2,
-		/obj/item/slimepotion,
-		/obj/item/slimepotion2,
-		/obj/item/slimepotion3,
-		/obj/item/reagent_containers/food/snacks/monkeycube
-	)
-	allow_quick_gather = TRUE
-	allow_quick_empty = TRUE
-
-// ТУДУ Ебануть сюда спрайт с Ауроры
-
-/obj/item/device/weather_sensor
-	name = "weather data collection sensor"
-	desc = "A portable atmospheric and environmental data collection device. Deploy it in various locations to record local weather patterns."
-	icon = 'icons/obj/modular_components.dmi'
-	icon_state = "power_cell"
-	w_class = ITEM_SIZE_SMALL
-	origin_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
-	matter = list(MATERIAL_STEEL = 100, MATERIAL_PLASTIC = 50)
-	var/deployed = FALSE
-	var/datum/rnd_mission/linked_mission
-
-/obj/item/device/weather_sensor/attack_self(mob/user)
-	if(deployed)
-		to_chat(user, SPAN_WARNING("\The [src] has already been deployed and locked!"))
-		return
-
-	if(!istype(get_area(src), /area/exoplanet))
-		to_chat(user, SPAN_WARNING("\The [src] must be deployed on a planetary surface!"))
-		return
-
-	to_chat(user, SPAN_NOTICE("You begin deploying \the [src]..."))
-	if(!do_after(user, 3 SECONDS, src))
-		return
-
-	deployed = TRUE
-	anchored = TRUE
-	to_chat(user, SPAN_NOTICE("You deploy and activate \the [src]. It begins recording environmental data."))
-
-/*
-	for(var/obj/machinery/computer/rd_mission_console/console in world)
-		for(var/datum/rnd_mission/mission in console.active_missions)
-			if(mission.mission_type == RND_MISSION_TYPE_WEATHER_DATA && mission.state == RND_MISSION_STATE_ACCEPTED)
-				mission.register_weather_sensor(src, user)
-				break
-*/
-	if(deployed)
-		to_chat(user, SPAN_NOTICE("The sensor is deployed and actively recording data."))
-		var/turf/T = get_turf(src)
-		var/area/A = get_area(src)
-		if(T && A)
-			to_chat(user, SPAN_NOTICE("Location: [A.name] ([T.x], [T.y], [T.z])"))
-	else
-		to_chat(user, SPAN_NOTICE("The sensor can be deployed on a planetary surface."))
