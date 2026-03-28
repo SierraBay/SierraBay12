@@ -200,7 +200,7 @@
 /*
 	Animals
 */
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, use_in_world_flag, params) // SIERRA ADD: было "/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)"
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, use_in_world_flag, params) // SIERRA ADD: было  /mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
 	if (!..())
 		return
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
