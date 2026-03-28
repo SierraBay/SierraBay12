@@ -362,13 +362,78 @@
 	secondary_effect = new /datum/artifact_effect/pushback(src)
 
 // ============================================================
+// TACTICAL TERMINAL WIRES (standard /datum/wires integration)
+// ============================================================
+
+var/global/const/TACTICAL_WIRE_DATA = 1
+var/global/const/TACTICAL_WIRE_POWER = 2
+var/global/const/TACTICAL_WIRE_SECURITY = 4
+var/global/const/TACTICAL_WIRE_GROUND = 8
+var/global/const/TACTICAL_WIRE_ANTENNA = 16
+var/global/const/TACTICAL_WIRE_AUX = 32
+
+/datum/wires/tactical_terminal
+	holder_type = /obj/item/tactical_terminal
+	random = 1
+	wire_count = 6
+	descriptions = list(
+		new /datum/wire_description(TACTICAL_WIRE_DATA, "A narrow-gauge wire with consistent high-frequency digital oscillations.", "Data Port", SKILL_EXPERIENCED),
+		new /datum/wire_description(TACTICAL_WIRE_POWER, "A thick wire carrying heavy electrical current.", "Power Feed", SKILL_TRAINED),
+		new /datum/wire_description(TACTICAL_WIRE_SECURITY, "A wire leading to the security alarm module.", "Security", SKILL_TRAINED),
+		new /datum/wire_description(TACTICAL_WIRE_GROUND, "A thick grounding cable.", "Ground"),
+		new /datum/wire_description(TACTICAL_WIRE_ANTENNA, "A shielded antenna transceiver wire.", "Antenna"),
+		new /datum/wire_description(TACTICAL_WIRE_AUX, "A power routing wire with minor interference artifacts.", "Auxiliary")
+	)
+
+/datum/wires/tactical_terminal/CanUse(mob/living/L)
+	var/obj/item/tactical_terminal/T = holder
+	if(T.hack_phase != 1)
+		return FALSE
+	return TRUE
+
+/datum/wires/tactical_terminal/GetInteractWindow(mob/user)
+	. = ..()
+	if(.)
+		. += "<br><i>Locate the data port by pulsing the correct wire.</i>"
+
+/datum/wires/tactical_terminal/UpdatePulsed(index)
+	var/obj/item/tactical_terminal/T = holder
+	if(T.hack_phase != 1)
+		return
+	switch(index)
+		if(TACTICAL_WIRE_DATA)
+			to_chat(usr, SPAN_NOTICE("HIGH-FREQUENCY DIGITAL SIGNAL DETECTED. Data port established!"))
+			T.visible_message(SPAN_NOTICE("[usr] successfully locates the data port on [T]."))
+			T.hack_phase = 2
+			close_browser(usr, "window=wires")
+		if(TACTICAL_WIRE_POWER)
+			to_chat(usr, SPAN_DANGER("POWER FEED — you take a sharp shock!"))
+			if(isliving(usr))
+				var/mob/living/L = usr
+				L.apply_damage(5, DAMAGE_BURN, "chest")
+		if(TACTICAL_WIRE_SECURITY)
+			to_chat(usr, SPAN_WARNING("Security circuit triggered!"))
+			playsound(get_turf(T), 'sound/machines/buzz-two.ogg', 80, FALSE)
+			T.visible_message(SPAN_WARNING("[T] emits a piercing alarm tone!"))
+			T.trigger_security_alarm()
+		else
+			to_chat(usr, SPAN_NOTICE("No digital signal detected. Incorrect circuit."))
+
+/datum/wires/tactical_terminal/UpdateCut(index, mended)
+	switch(index)
+		if(TACTICAL_WIRE_DATA)
+			if(!mended)
+				to_chat(usr, SPAN_WARNING("The data port wire goes dead. You can mend it to restore it."))
+		if(TACTICAL_WIRE_SECURITY)
+			if(!mended)
+				to_chat(usr, SPAN_NOTICE("The security alarm circuit is disabled."))
+
+// ============================================================
 // TACTICAL TERMINAL (slavers / Shellguard)
-// Two-phase hack: ping wires with datajack → enter access code
+// Hack: use datajack on terminal → wire panel → find data wire → enter access code
 // Access code found on a physical log spawned nearby (see slavers_base.dm)
 // ============================================================
 
-
-// --- Tactical terminal (portable item) ---
 /obj/item/tactical_terminal
 	name = "tactical operations terminal"
 	icon = 'mods/RnD/icons/derelict_mission.dmi'
@@ -377,38 +442,19 @@
 	w_class = ITEM_SIZE_NO_CONTAINER
 
 	var/hack_phase = 0          // 0=locked, 1=wires_exposed, 2=awaiting_code, 3=complete
-	var/correct_wire = 0        // 1-6, randomized per round
 	var/access_code = ""        // 4-char hex, printed on companion document
-	var/list/wire_descs = list()// Per-position descriptions (correct wire gets data hint)
+	var/datum/wires/tactical_terminal/wires
 
 /obj/item/tactical_terminal/New()
 	..()
 	derelict_mission_objects += src
 	var/a = rand(0, 0xFFFF)
 	access_code = uppertext(pad_left(num2hex(a), 4, "0"))
-	correct_wire = rand(1, 6)
-
-	// Build wire descriptions: correct wire always gets the data-signature hint
-	var/list/wrong_descs = list(
-		"A thick wire carrying heavy electrical current.",
-		"A secondary power distribution cable.",
-		"A shielded antenna transceiver wire.",
-		"A wire leading to the security alarm module.",
-		"A thick grounding cable.",
-		"A power routing wire with minor interference artifacts."
-	)
-	shuffle(wrong_descs)
-	wire_descs = list("", "", "", "", "", "")
-	var/wrong_idx = 1
-	for(var/i = 1 to 6)
-		if(i == correct_wire)
-			wire_descs[i] = "A narrow-gauge wire with consistent high-frequency digital oscillations."
-		else
-			wire_descs[i] = wrong_descs[wrong_idx]
-			wrong_idx++
+	wires = new(src)
 
 /obj/item/tactical_terminal/Destroy()
 	derelict_mission_objects -= src
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/item/tactical_terminal/examine(mob/user)
@@ -417,27 +463,47 @@
 		if(0)
 			to_chat(user, SPAN_WARNING("The terminal is locked. A datajack interface port is visible on the side."))
 		if(1)
-			to_chat(user, SPAN_NOTICE("The wire panel is exposed. Six wires are accessible."))
+			to_chat(user, SPAN_NOTICE("The wire panel is exposed. Use a datajack to interact with the wires."))
 		if(2)
-			to_chat(user, SPAN_NOTICE("Data port established. The terminal is awaiting an access code."))
+			to_chat(user, SPAN_NOTICE("Data port established. Use a datajack on the terminal to enter the access code."))
 		if(3)
 			to_chat(user, SPAN_NOTICE("Terminal decrypted. Tactical data has been extracted."))
+
+/obj/item/tactical_terminal/use_tool(obj/item/W, mob/living/user, list/click_params)
+	if(istype(W, /obj/item/device/multitool/multimeter/datajack))
+		terminal_interact(user)
+		return TRUE
+	if(isWirecutter(W) && hack_phase == 1)
+		wires.Interact(user)
+		return TRUE
+	. = ..()
 
 /obj/item/tactical_terminal/attack_self(mob/living/user)
 	if(hack_phase == 3)
 		to_chat(user, SPAN_NOTICE("The terminal is already decrypted."))
 		return
-	if(!istype(user, /mob/living/carbon/human))
+	if(hack_phase == 2)
+		// Code entry works from hand — just need datajack somewhere
+		if(!istype(user, /mob/living/carbon/human))
+			return
+		var/mob/living/carbon/human/H = user
+		if(terminal_user_has_datajack(H))
+			terminal_prompt_code(user)
+		else
+			to_chat(user, SPAN_WARNING("You need a datajack to enter the access code."))
 		return
-	var/mob/living/carbon/human/H = user
-	if(!terminal_user_has_datajack(H))
-		to_chat(user, SPAN_WARNING("You need a datajack to interface with this terminal."))
+	// Phases 0-1: wire panel needs datajack in active hand clicking ON the terminal
+	to_chat(user, SPAN_NOTICE("Place the terminal on a surface and use your datajack on it to access the wire panel."))
+
+/obj/item/tactical_terminal/proc/terminal_interact(mob/living/user)
+	if(hack_phase == 3)
+		to_chat(user, SPAN_NOTICE("The terminal is already decrypted."))
 		return
 	if(hack_phase == 0)
 		to_chat(user, SPAN_NOTICE("You connect your datajack to the terminal's maintenance port. The wire panel clicks open."))
 		hack_phase = 1
 	if(hack_phase == 1)
-		terminal_open_wire_panel(user)
+		wires.Interact(user)
 	else if(hack_phase == 2)
 		terminal_prompt_code(user)
 
@@ -452,47 +518,7 @@
 					return TRUE
 	return FALSE
 
-/obj/item/tactical_terminal/proc/terminal_open_wire_panel(mob/living/user)
-	var/list/options = list()
-	for(var/i = 1 to 6)
-		options += "Wire [i]: [wire_descs[i]]"
-	options += "Close panel"
-
-	var/choice = input(user, "Six wires are exposed inside the terminal panel.\nPing a wire to locate the data port.", "Terminal Wire Panel") as null|anything in options
-	if(!choice || choice == "Close panel")
-		return
-
-	var/wire_num = text2num(copytext(choice, 6, 7))
-	if(!wire_num)
-		return
-	terminal_ping_wire(user, wire_num)
-
-/obj/item/tactical_terminal/proc/terminal_ping_wire(mob/living/user, wire_num)
-	if(hack_phase != 1)
-		return
-	to_chat(user, SPAN_NOTICE("You send a test signal through Wire [wire_num]..."))
-	if(!do_after(user, 2 SECONDS, src))
-		return
-	if(wire_num == correct_wire)
-		to_chat(user, SPAN_NOTICE("Wire [wire_num]: HIGH-FREQUENCY DIGITAL SIGNAL DETECTED. Data port established!"))
-		visible_message(SPAN_NOTICE("[user] successfully locates the data port on [src]."))
-		hack_phase = 2
-		terminal_prompt_code(user)
-	else
-		var/desc_lower = lowertext(wire_descs[wire_num])
-		if(findtext(desc_lower, "current") || findtext(desc_lower, "power"))
-			to_chat(user, SPAN_DANGER("Wire [wire_num]: POWER FEED — you take a sharp shock!"))
-			user.apply_damage(5, DAMAGE_BURN, "chest")
-		else if(findtext(desc_lower, "security") || findtext(desc_lower, "alarm"))
-			to_chat(user, SPAN_WARNING("Wire [wire_num]: Security circuit triggered!"))
-			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 80, FALSE)
-			visible_message(SPAN_WARNING("[src] emits a piercing alarm tone!"))
-			trigger_security_alarm()
-		else
-			to_chat(user, SPAN_NOTICE("Wire [wire_num]: No digital signal. Incorrect circuit."))
-
 /obj/item/tactical_terminal/proc/trigger_security_alarm()
-	// Lock nearby airlocks (7 tile radius)
 	for(var/obj/machinery/door/airlock/A in range(7, src))
 		if(!A.locked)
 			A.lock(forced = 1)

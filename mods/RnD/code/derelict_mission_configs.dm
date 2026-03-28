@@ -87,7 +87,7 @@
 	target_item_type = /obj/item/derelict_mission_sample/shellguard_data
 	objective_templates = list(
 		list("type" = "photograph_object", "description" = "Сфотографировать баррикады/укрепления на базе. Подать фото в R&D консоль — физическое или цифровое с флешки", "target_type" = /obj/structure/barricade, "count" = 2),
-		list("type" = "study_artifact", "description" = "Взломать тактический терминал: подобрать его, подключить датаджек, найти нужный провод, ввести код доступа (ищите документ рядом)", "target_type" = /obj/item/tactical_terminal, "count" = 1),
+		list("type" = "study_artifact", "description" = "Взломать тактический терминал: кликнуть датаджеком на терминал, найти нужный провод через панель проводов, ввести код доступа (ищите документ рядом)", "target_type" = /obj/item/tactical_terminal, "count" = 1),
 		list("type" = "retrieve_item", "description" = "Упаковать диск с тактическими данными Shellguard и сдать через дронпад", "target_type" = /obj/item/derelict_mission_sample/shellguard_data, "count" = 1)
 	)
 

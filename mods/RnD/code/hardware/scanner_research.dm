@@ -135,7 +135,7 @@
 	if(driver && driver.using_scanner)
 		driver.scan_file_type = /datum/computer_file/data/rdf
 		driver.metadata_buffer.Cut()
-		driver.metadata_buffer["target_type"] = "[target.type]"
+		driver.metadata_buffer["target_type"] = target.type
 		var/turf/scan_turf = get_turf(target)
 		if(scan_turf)
 			driver.metadata_buffer["scan_z"] = "[scan_turf.z]"

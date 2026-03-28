@@ -545,18 +545,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/computer_file/data/rdf/rdf_file = locate(rdf_ref) in disk.stored_files
 	if(!istype(rdf_file))
 		return
-	var/target_type_str = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
+	var/target_path = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
 	var/scan_z = text2num(rdf_file.metadata ? rdf_file.metadata["scan_z"] : "0")
-	if(!target_type_str)
+	if(!ispath(target_path))
 		to_chat(user, SPAN_WARNING("Файл RDF повреждён: нет данных о цели сканирования."))
 		return
 	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
 	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
 		to_chat(user, SPAN_WARNING("Контракт недоступен."))
-		return
-	var/target_path = text2path(target_type_str)
-	if(!target_path)
-		to_chat(user, SPAN_WARNING("Файл RDF повреждён: неверный тип объекта."))
 		return
 	for(var/datum/derelict_mission_objective/O in M.objectives)
 		if(O.objective_type != "scan_object" || O.completed)
@@ -1026,7 +1022,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			data["selected_corp_dialogue"] = list(
 				"name" = corp_name,
 				"reputation" = current_rep,
-				"reputation_color" = (current_rep >= 0 ? "#00FF00" : "#FF0000"),
+				"reputation_color" = (current_rep >= 0 ? "#00ff00" : "#ff0000"),
 				"info" = corp_info_text
 			)
 

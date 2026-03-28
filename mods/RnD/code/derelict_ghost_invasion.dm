@@ -44,8 +44,7 @@ var/global/list/derelict_z_to_mission = list()     // "[z]" -> /datum/derelict_m
 	for(var/other_z_key in derelict_z_to_mission)
 		if(derelict_z_to_mission[other_z_key] == M)
 			derelict_z_visited[other_z_key] = TRUE
-	spawn(50) // 5 second delay to let the player settle in
-		trigger_derelict_ghost_invasion(M)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/trigger_derelict_ghost_invasion, M), 5 SECONDS)
 
 // ============================================================
 // Ghost Invasion Trigger

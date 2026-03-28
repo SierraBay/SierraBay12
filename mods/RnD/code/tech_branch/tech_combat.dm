@@ -52,7 +52,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "smg"
+	icon = "c20"
 
 	required_corp_id = RND_MISSION_CORP_NANOTRASEN
 	min_reputation = 10
@@ -96,7 +96,7 @@
 
 	x = 0.1
 	y = 0.5
-	icon = "smg"
+	icon = "revolver"
 
 	required_corp_id = RND_MISSION_CORP_ALMALIKI
 	min_reputation = 0
@@ -117,7 +117,7 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "smg"
+	icon = "shock"
 
 	required_corp_id = RND_MISSION_CORP_ALMALIKI
 	min_reputation = 5
@@ -138,7 +138,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "smg"
+	icon = "shayatin"
 
 	required_corp_id = RND_MISSION_CORP_ALMALIKI
 	min_reputation = 10
@@ -160,7 +160,7 @@
 
 	x = 0.1
 	y = 0.5
-	icon = "smg"
+	icon = "g40"
 
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 0
@@ -180,7 +180,7 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "smg"
+	icon = "lasercanon"
 
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 5
@@ -201,7 +201,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "smg"
+	icon = "xray"
 
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 10
@@ -226,7 +226,7 @@
 
 	x = 0.4
 	y = 0.5
-	icon = "smg"
+	icon = "empcharge"
 
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 15
@@ -272,7 +272,7 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "smg"
+	icon = "riotgun"
 
 	required_corp_id = RND_MISSION_CORP_WARD_TAKAHASHI
 	min_reputation = 5
@@ -293,7 +293,7 @@
 
 	x = 0.1
 	y = 0.5
-	icon = "smg"
+	icon = "heltek_optimus"
 
 	required_corp_id = RND_MISSION_CORP_HELTEK
 	min_reputation = 0
@@ -313,7 +313,7 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "smg"
+	icon = "la700"
 
 	required_corp_id = RND_MISSION_CORP_HELTEK
 	min_reputation = 5
@@ -334,7 +334,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "smg"
+	icon = "railgun"
 
 	required_corp_id = RND_MISSION_CORP_HELTEK
 	min_reputation = 10
@@ -354,7 +354,7 @@
 
 	x = 0.1
 	y = 0.5
-	icon = "smg"
+	icon = "smallegun"
 
 	required_corp_id = RND_MISSION_CORP_FTU
 	min_reputation = 0
@@ -374,7 +374,7 @@
 
 	x = 0.2
 	y = 0.5
-	icon = "smg"
+	icon = "egun"
 
 	required_corp_id = RND_MISSION_CORP_FTU
 	min_reputation = 5
@@ -395,7 +395,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "smg"
+	icon = "c20r"
 
 	required_corp_id = RND_MISSION_CORP_FTU
 	min_reputation = 10
