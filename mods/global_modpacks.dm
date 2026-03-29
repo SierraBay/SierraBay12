@@ -70,6 +70,7 @@
 #include "genreconfig/_genreconfig_includes.dm"
 #include "config/_config_includes.dm"
 #include "faction_background_grouping/_faction_background_grouping_includes.dm"
+#include "starmap_background/_starmap_background_includes.dm"
 #include "contraband_vending/_contraband_vending_includes.dm"
 #include "scp/_scp_includes.dm"
 #include "leviathans/_leviathans_includes.dm"
