@@ -157,7 +157,7 @@
 		var/display_class = ""
 		var/allowed_to_see = gear_allowed_to_see(G)
 		if(ticked)
-			display_class = "linkOn"
+			display_class = G.donation_tier ? "gold linkOn" : "linkOn"
 		else if(!gear_allowed_to_equip(G, user) && G.donation_tier)
 			display_class = "gold"
 		else if(!allowed_to_see)

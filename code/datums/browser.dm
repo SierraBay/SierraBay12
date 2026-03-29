@@ -87,7 +87,8 @@
 	<meta charset="UTF-8">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		[head_content]
+		<link rel='stylesheet' type='text/css' href='common.css'>
+		[get_setup_styles(user)]
 	</head>
 	<body scroll=auto>
 		<div class='uiWrapper'>
@@ -199,3 +200,9 @@
 
 		src.mob.unset_machine()
 	return
+
+
+// Hook for mods to inject extra <link>/<style> tags into the character setup <head>.
+// Call send_rsc() for any external files, then return the HTML tags as a string.
+/datum/preferences/proc/get_setup_styles(mob/user)
+	return ""
