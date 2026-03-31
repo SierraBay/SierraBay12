@@ -8,9 +8,9 @@
 	anchored = TRUE
 	var/charged = TRUE
 
-	var/list/psi_mobs = (
-		/mob/living/simple_animal/hostile/giant_spider/psi,
-		/mob/living/simple_animal/hostile/vagrant/psi
+	var/list/psi_mobs = list(
+			/mob/living/simple_animal/hostile/giant_spider/psi,
+			/mob/living/simple_animal/hostile/vagrant/psi
 		)
 
 	invisibility = INVISIBILITY_PSI_PLANE
