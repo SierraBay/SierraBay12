@@ -242,4 +242,31 @@
 #define COLOR_WATER "#99f5ff"
 #define COLOR_ICE   "#eef5ff"
 
+//[SIERRA-ADD] - HEIGHT (Cybernetics setup UI colors (player_setup/cybernetics tab))
+#define COLOR_CYBERUI_RED          "#cc4444"  // danger / amputated
+#define COLOR_CYBERUI_BLUE         "#4488cc"  // prosthetic / info
+#define COLOR_CYBERUI_YELLOW       "#bbaa33"  // assisted
+#define COLOR_CYBERUI_GREEN        "#44aa66"  // synthetic / good / positive
+#define COLOR_CYBERUI_GREEN_BRIGHT "#88ffbb"  // selected region accent
+#define COLOR_CYBERUI_GREEN_MED    "#88cc66"  // cooling: good
+#define COLOR_CYBERUI_GREEN_SEL    "#55cc77"  // selected augment name
+#define COLOR_CYBERUI_ORANGE       "#cc7733"  // cooling: poor
+#define COLOR_CYBERUI_ORANGE_COST  "#e67300"  // loadout point cost
+#define COLOR_CYBERUI_BTN_GREEN    "#557755"  // toggle button (unselected)
+#define COLOR_CYBERUI_TEXT_SOFT    "#88bbff"  // manufacturer card header
+#define COLOR_CYBERUI_TEXT_MID     "#888888"  // normal-state / general muted
+#define COLOR_CYBERUI_TEXT_DIM     "#777777"  // descriptions
+#define COLOR_CYBERUI_TEXT_MUTED   "#556677"  // very muted labels
+#define COLOR_CYBERUI_TEXT_HINT    "#446655"  // hint text
+#define COLOR_CYBERUI_TEXT_LIGHT   "#dddddd"  // light foreground text
+#define COLOR_CYBERUI_GRAY_DIM     "#555555"  // dimmed text / labels
+#define COLOR_CYBERUI_GRAY_DARK    "#444444"  // disabled / none
+#define COLOR_CYBERUI_BG_CARD      "#1a1a1a"  // traits card background
+#define COLOR_CYBERUI_BG_SEL       "#1a3a28"  // selected region background
+#define COLOR_CYBERUI_BG_GREEN     "#1e2e22"  // section header background
+#define COLOR_CYBERUI_BG_AUG       "#2e7d4f"  // region with augment background
+#define COLOR_CYBERUI_BORDER       "#2a2a2a"  // card border
+#define COLOR_CYBERUI_SEPARATOR    "#252525"  // table row separator
+//[/SIERRA-ADD]
+
 #define COLORED_SQUARE(COLOR) "<span style='font-face: fixedsys; font-size: 14px; background-color: [COLOR]; color: [COLOR]'>___</span>"

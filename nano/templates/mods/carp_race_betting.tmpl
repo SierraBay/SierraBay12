@@ -1,0 +1,132 @@
+<style>
+    .cr-wrap { padding: 6px 8px; font-size: 13px; }
+
+    /* Status banner */
+    .cr-status { text-align: center; padding: 7px 12px; border-radius: 4px; font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+    .cr-status.good    { background: rgba(46,204,113,0.18); border: 1px solid #27ae60; color: #2ecc71; }
+    .cr-status.average { background: rgba(241,196,15,0.15);  border: 1px solid #d4ac0d; color: #f1c40f; }
+    .cr-status.bad     { background: rgba(231,76,60,0.15);   border: 1px solid #c0392b; color: #e74c3c; }
+
+    /* Account bar */
+    .cr-account { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; margin-bottom: 8px; border-bottom: 1px solid #2a2a2a; font-size: 12px; color: #aaa; }
+    .cr-account b { color: #eee; }
+
+    /* Section headers */
+    .cr-section { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #555; margin: 10px 0 5px 0; }
+
+    /* My bet box */
+    .cr-mybet { border: 1px solid #27ae60; background: rgba(39,174,96,0.1); border-radius: 4px; padding: 7px 10px; margin-bottom: 10px; }
+
+    /* Result message */
+    .cr-result { margin-bottom: 8px; }
+
+    /* Racers */
+    .cr-racer { display: flex; align-items: center; padding: 7px 4px; border-bottom: 1px solid #1c1c1c; gap: 6px; }
+    .cr-racer.mine { background: rgba(46,204,113,0.07); border-radius: 3px; }
+    .cr-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .cr-name  { width: 110px; font-size: 12px; white-space: nowrap; overflow: hidden; }
+    .cr-pool  { width: 52px; font-size: 12px; color: #bbb; text-align: right; flex-shrink: 0; }
+    .cr-bar-wrap { flex: 1; min-width: 40px; }
+    .cr-bar-bg { background: #1a1a1a; border-radius: 3px; height: 7px; }
+    .cr-bar    { border-radius: 3px; height: 7px; min-width: 2px; transition: width 0.3s; }
+    .cr-pct    { width: 34px; font-size: 11px; color: #666; text-align: right; flex-shrink: 0; }
+    .cr-btns   { display: flex; gap: 3px; flex-wrap: nowrap; flex-shrink: 0; }
+    .cr-star   { color: #2ecc71; margin-left: 3px; }
+    .cr-done   { color: #888; margin-left: 3px; font-size: 11px; }
+</style>
+
+<div class="cr-wrap">
+
+{{if !data.race_available}}
+    <div class="notice bad">Races are currently unavailable. Please try again later.</div>
+{{else}}
+
+    <!-- Race status -->
+    <div class="cr-status {{:data.status_class}}">{{:data.status_text}}</div>
+
+    <!-- Account bar -->
+    {{if data.has_account}}
+        <div class="cr-account">
+            <span>👤 {{:data.account_name}}</span>
+            <span>💰 Balance: <b>{{:data.account_balance}}T</b></span>
+        </div>
+    {{else}}
+        <div class="notice average">{{:data.auth_message}}</div>
+    {{/if}}
+
+    <!-- Bet result feedback -->
+    {{if data.last_bet_result}}
+        <div class="cr-result">{{:data.last_bet_result}}</div>
+    {{/if}}
+
+    <!-- Player's current bet -->
+    {{if data.has_account && data.my_carp}}
+        <div class="cr-mybet">
+            ★ Your bet: <b>{{:data.my_amount}}T</b> — <span style="color:{{:data.my_carp_color}}"><b>Carp #{{:data.my_carp}} ({{:data.my_carp_name}})</b></span>
+        </div>
+    {{/if}}
+
+    <!-- Racers table -->
+    <div class="cr-section">Carps & Bets</div>
+
+    {{for data.racers}}
+        <div class="cr-racer{{if value.is_my_bet}} mine{{/if}}">
+            <span class="cr-dot" style="background:{{:value.html_color}}"></span>
+            <span class="cr-name" style="color:{{:value.html_color}}">
+                №{{:value.num}} {{:value.color_name}}{{if value.done}}<span class="cr-done"> ✓</span>{{/if}}{{if value.is_my_bet}}<span class="cr-star"> ★</span>{{/if}}
+            </span>
+            <span class="cr-pool">{{:value.bet_total}}T</span>
+            <span class="cr-bar-wrap">
+                <div class="cr-bar-bg">
+                    <div class="cr-bar" style="width:{{:value.pct}}%;background:{{:value.html_color}}"></div>
+                </div>
+            </span>
+            <span class="cr-pct">{{:value.pct}}%</span>
+            {{if data.betting_open && data.has_account && !data.my_carp}}
+                <span class="cr-btns">
+                    {{:helper.link('50',   null, {'action': 'place_bet', 'carp_num': value.num, 'bet_amount': 50})}}
+                    {{:helper.link('100',  null, {'action': 'place_bet', 'carp_num': value.num, 'bet_amount': 100})}}
+                    {{:helper.link('250',  null, {'action': 'place_bet', 'carp_num': value.num, 'bet_amount': 250})}}
+                    {{:helper.link('500',  null, {'action': 'place_bet', 'carp_num': value.num, 'bet_amount': 500})}}
+                    {{:helper.link('1000', null, {'action': 'place_bet', 'carp_num': value.num, 'bet_amount': 1000})}}
+                </span>
+            {{/if}}
+        </div>
+    {{/for}}
+
+    <!-- Race results: populated as each carp crosses the line, visible during/after the race -->
+    {{if data.finish_order && data.finish_order.length > 0}}
+        <div class="cr-section">Race Results</div>
+        {{for data.finish_order}}
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 4px;border-bottom:1px solid #1c1c1c;">
+                <span style="width:30px;font-size:12px;color:#f1c40f;font-weight:bold;">{{:value.place}}</span>
+                <span class="cr-dot" style="background:{{:value.html_color}}"></span>
+                <span style="font-size:12px;color:{{:value.html_color}}">Carp #{{:value.num}} ({{:value.color_name}})</span>
+            </div>
+        {{/for}}
+    {{/if}}
+
+    <!-- Hint when bets are open but no account -->
+    {{if data.betting_open && !data.has_account}}
+        <div class="notice average" style="margin-top:8px; font-size:12px;">
+            To place bets, insert an ID card linked to a bank account.
+        </div>
+    {{/if}}
+
+    <!-- Hint after placing a bet -->
+    {{if data.betting_open && data.has_account && data.my_carp}}
+        <div class="notice" style="margin-top:8px; font-size:12px; color:#888;">
+            Bet accepted. Good luck! Watch the race via cameras (network: Thunderdome).
+        </div>
+    {{/if}}
+
+    <!-- Hint when bets are closed -->
+    {{if data.bets_closed}}
+        <div class="notice" style="margin-top:8px; font-size:12px; color:#888;">
+            Bets are closed. Watch the race via cameras (network: Thunderdome).
+        </div>
+    {{/if}}
+
+{{/if}}
+
+</div>

@@ -43,7 +43,10 @@
 		/area/rnd/xenobiology/cell_1,
 		/area/rnd/xenobiology/cell_2,
 		/area/rnd/xenobiology/cell_3,
-		/area/rnd/xenobiology/cell_4
+		/area/rnd/xenobiology/cell_4,
+		/area/bluespace_interlude,
+		/area/bluespace_interlude/platform,
+		/area/carp_racing
 	)
 
 /datum/map/away_sites_testing/build_away_sites()

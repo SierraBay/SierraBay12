@@ -157,8 +157,18 @@
 /datum/preferences/proc/open_setup_window(mob/user)
 	if (!SScharacter_setup.initialized)
 		return
-	popup = new (user, "preferences_browser", "Character Setup", 1200, 800, src)
-	var/content = {"
+	// [SIERRA-EDIT] HEIGHT — Use skin.dmf
+	var/content = {"<!DOCTYPE html>
+<html>
+	<meta charset="UTF-8">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<link rel='stylesheet' type='text/css' href='common.css'>
+	</head>
+	<body scroll=auto>
+		<div class='uiWrapper'>
+			<div class='uiTitleWrapper'><div class='uiTitle'><tt>Character Setup</tt></div></div>
+			<div class='uiContent'>
 	<script type='text/javascript'>
 		function update_content(data){
 			document.getElementById('content').innerHTML = data;
@@ -172,12 +182,24 @@
 		// \[/SIERRA-ADD]
 	</script>
 	<div id='content'>[get_content(user)]</div>
+			</div>
+		</div>
+	</body>
+</html>
 	"}
-	popup.set_content(content)
-	popup.open()
+	// Send the common CSS resource
+	send_rsc(user, 'html/browser/common.css', "common.css")
+	// Show the pre-defined window and send HTML to its browser child
+	winshow(user, "preferences_window", TRUE)
+	show_browser(user, content, "window=preferences_browser")
+	onclose(user, "preferences_window", src)
+	refresh_preview_map_visibility()
+	refresh_preview_map_contents()
+
+	// [/SIERRA-EDIT]
 
 /datum/preferences/proc/update_setup_window(mob/user)
-	send_output(user, url_encode(get_content(user)), "preferences_browser.browser:update_content")
+	send_output(user, url_encode(get_content(user)), "preferences_window.preferences_browser:update_content")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 
@@ -198,6 +220,16 @@
 		return 1
 
 	if (href_list["close"])
+		// [SIERRA-ADD] HEIGHT — Clean up character preview screen objects on window close
+		if(client)
+			client.clear_character_previews()
+			client.preview_active_map = ""
+		// Null preview_icon so it's rebuilt when the window is reopened
+		preview_icon = null
+		// Hide the preferences window
+		if(client?.mob)
+			winshow(client.mob, "preferences_window", FALSE)
+		// [/SIERRA-ADD]
 		popup = null
 
 	. = 1
@@ -224,7 +256,7 @@
 		sanitize_preferences()
 		close_load_dialog(usr)
 
-		if (winget(usr, "preferences_browser", "is-visible") == "true")
+		if (winget(usr, "preferences_window", "is-visible") == "true")
 			open_setup_window(usr)
 
 	else if(href_list["resetslot"])
@@ -281,6 +313,9 @@
 	character.gender = gender
 	character.pronouns = pronouns
 	character.age = age
+	// [SIERRA-ADD] HEIGHT
+	character.height = height
+	// [/SIERRA-ADD]
 	character.b_type = b_type
 
 	character.eye_color = eye_color
