@@ -103,26 +103,14 @@
 	return TRUE
 
 /obj/item/stock_parts/computer/hard_drive/proc/check_away_zone()
-	var/area/A = get_area(src)
-	if(!A)
-		return FALSE
-	// String-based check to avoid compile errors when away-site area types are not included
-	var/area_path = "[A.type]"
-	var/list/away_zone_prefixes = list(
-		"/area/lar_maria",
-		"/area/casino",
-		"/area/meatstation",
-		"/area/mine",
-		"/area/bluespaceriver",
-		"/area/constructionsite",
-		"/area/lost_supply_base",
-		"/area/magshield",
-		"/area/map_template/oldlab2",
-		"/area/map_template/marooned"
-	)
-	for(var/prefix in away_zone_prefixes)
-		if(findtext(area_path, prefix, 1, length(prefix) + 1))
-			return TRUE
+	var/area/area = get_area(src)
+	if(area)
+		var/list/reserchpointareas = list(/area/lar_maria, /area/casino, /area/meatstation, /area/mine, /area/bluespaceriver,
+		/area/constructionsite, /area/lost_supply_base, /area/magshield, /area/map_template/oldlab2, /area/map_template/marooned)
+		// Тут можно добавлять новые зоны где могут спавнится флешки и дизайны в компах
+		for(var/a in reserchpointareas)
+			if(area.type in subtypesof(a))
+				return TRUE
 
 
 

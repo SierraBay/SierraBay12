@@ -6,6 +6,10 @@
 #define CURER_PHASE_COMPLETE     4
 #define CURER_PHASE_FAILED       5
 
+// Sub-phases within CURER_PHASE_GAME
+#define CURER_SUBPHASE_REVEAL    0
+#define CURER_SUBPHASE_PICK      1
+
 #define CURER_MAX_INTEGRITY  3
 #define CURER_GRID_SIZE      12
 #define CURER_SYNTH_TICKS    5
@@ -28,6 +32,20 @@
 	var/integrity = CURER_MAX_INTEGRITY
 	var/hint_text = ""
 	var/synthesis_ticks = 0
+
+	// Round system
+	var/current_round = 1
+	var/max_rounds = 1
+
+	// Reveal/pick sub-phases
+	var/game_subphase = CURER_SUBPHASE_REVEAL
+	var/reveal_timer = 0
+	var/reveal_duration = 6    // ticks to show codes before hiding
+
+	// Grid mutation
+	var/mutation_timer = 0
+	var/mutation_interval = 4  // ticks between mutations during pick phase
+	var/mutation_flash = FALSE // TRUE for one tick when mutation happens
 
 /obj/machinery/computer/curer/Destroy()
 	if(loaded_dish)
@@ -87,14 +105,22 @@
 		data["virus_name"] = loaded_dish.virus2.name()
 
 	if(game_phase == CURER_PHASE_GAME)
+		data["subphase"] = game_subphase
 		data["hint"] = hint_text
 		data["targets_total"] = LAZYLEN(target_antigens)
 		data["targets_found"] = LAZYLEN(found_antigens)
+		data["current_round"] = current_round
+		data["max_rounds"] = max_rounds
+		data["mutation_flash"] = mutation_flash
 		var/list/grid_data = list()
 		for(var/i = 1 to LAZYLEN(grid_cells))
 			var/list/cell = grid_cells[i]
+			var/display_code = cell["code"]
+			// During pick phase, hide unrevealed cells
+			if(game_subphase == CURER_SUBPHASE_PICK && cell["state"] == 0)
+				display_code = "??"
 			grid_data += list(list(
-				"code" = cell["code"],
+				"code" = display_code,
 				"index" = cell["index"],
 				"state" = cell["state"]
 			))
@@ -106,7 +132,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mods-vaccine_synthesizer.tmpl", "Vaccine Synthesizer", 460, 500)
+		ui = new(user, src, ui_key, "mods-vaccine_synthesizer.tmpl", "Vaccine Synthesizer", 460, 520)
 		ui.set_initial_data(data)
 		ui.open()
 
@@ -120,6 +146,26 @@
 			complete_synthesis()
 		SSnano.update_uis(src)
 
+	if(game_phase == CURER_PHASE_GAME)
+		// Clear mutation flash after one tick
+		if(mutation_flash)
+			mutation_flash = FALSE
+
+		if(game_subphase == CURER_SUBPHASE_REVEAL)
+			reveal_timer--
+			if(reveal_timer <= 0)
+				game_subphase = CURER_SUBPHASE_PICK
+				mutation_timer = mutation_interval
+			SSnano.update_uis(src)
+
+		else if(game_subphase == CURER_SUBPHASE_PICK)
+			// Grid mutation timer
+			mutation_timer--
+			if(mutation_timer <= 0)
+				mutate_grid()
+				mutation_timer = mutation_interval
+				SSnano.update_uis(src)
+
 /obj/machinery/computer/curer/OnTopic(mob/user, href_list)
 	if(href_list["close"])
 		SSnano.close_user_uis(user, src, "main")
@@ -131,7 +177,7 @@
 		return TOPIC_REFRESH
 
 	if(href_list["pick"])
-		if(game_phase != CURER_PHASE_GAME)
+		if(game_phase != CURER_PHASE_GAME || game_subphase != CURER_SUBPHASE_PICK)
 			return TOPIC_REFRESH
 		var/idx = text2num(href_list["pick"])
 		if(!idx || idx < 1 || idx > LAZYLEN(grid_cells))
@@ -158,14 +204,57 @@
 
 // --- Game logic ---
 
+/// Calculate difficulty based on virus properties.
+/// Returns rounds count (1-3) and reveal duration.
+/obj/machinery/computer/curer/proc/calculate_difficulty()
+	if(!loaded_dish || !loaded_dish.virus2)
+		max_rounds = 1
+		reveal_duration = 6
+		mutation_interval = 5
+		return
+
+	var/datum/disease2/disease/V = loaded_dish.virus2
+	var/antigen_count = LAZYLEN(V.antigen)
+	var/effect_count = LAZYLEN(V.effects)
+
+	// Difficulty score: more antigens and effects = harder virus
+	var/difficulty = antigen_count + round(effect_count / 2)
+
+	if(difficulty <= 2)
+		// Easy: 1 round, long reveal, slow mutations
+		max_rounds = 1
+		reveal_duration = 6
+		mutation_interval = 5
+	else if(difficulty <= 3)
+		// Medium: 2 rounds, medium reveal, medium mutations
+		max_rounds = 2
+		reveal_duration = 5
+		mutation_interval = 4
+	else
+		// Hard: 3 rounds, short reveal, fast mutations
+		max_rounds = 3
+		reveal_duration = 4
+		mutation_interval = 3
+
 /obj/machinery/computer/curer/proc/start_game()
 	game_phase = CURER_PHASE_GAME
 	integrity = CURER_MAX_INTEGRITY
+	current_round = 1
 	found_antigens = list()
+
+	calculate_difficulty()
+
 	var/list/virus_antigens = loaded_dish.virus2.antigen
 	target_antigens = virus_antigens.Copy()
-	generate_grid()
+	start_round()
 	state("\The [src] whirs as pathogen analysis begins.")
+
+/obj/machinery/computer/curer/proc/start_round()
+	game_subphase = CURER_SUBPHASE_REVEAL
+	reveal_timer = reveal_duration
+	mutation_flash = FALSE
+	found_antigens = list()
+	generate_grid()
 
 /obj/machinery/computer/curer/proc/generate_grid()
 	grid_cells = list()
@@ -206,6 +295,31 @@
 			if(letter != letter2)
 				hint_text += " and group '[letter2]'"
 
+/// Swap two random unrevealed cells in the grid (mutation).
+/obj/machinery/computer/curer/proc/mutate_grid()
+	var/list/mutable = list()
+	for(var/i = 1 to LAZYLEN(grid_cells))
+		var/list/cell = grid_cells[i]
+		if(cell["state"] == 0)  // Only unrevealed cells
+			mutable += i
+
+	if(LAZYLEN(mutable) < 2)
+		return
+
+	var/idx_a = pick(mutable)
+	mutable -= idx_a
+	var/idx_b = pick(mutable)
+
+	// Swap codes between cells
+	var/list/cell_a = grid_cells[idx_a]
+	var/list/cell_b = grid_cells[idx_b]
+	var/temp_code = cell_a["code"]
+	cell_a["code"] = cell_b["code"]
+	cell_b["code"] = temp_code
+
+	mutation_flash = TRUE
+	playsound(src.loc, 'sound/effects/pop.ogg', 15, TRUE)
+
 /obj/machinery/computer/curer/proc/handle_pick(index, mob/user)
 	if(index < 1 || index > LAZYLEN(grid_cells))
 		return
@@ -221,7 +335,7 @@
 		found_antigens += code
 		playsound(src.loc, 'sound/machines/ping.ogg', 30, TRUE)
 		if(LAZYLEN(found_antigens) >= LAZYLEN(target_antigens))
-			begin_synthesis()
+			advance_round()
 	else
 		// Wrong pick
 		cell["state"] = 2
@@ -230,6 +344,15 @@
 		if(integrity <= 0)
 			game_phase = CURER_PHASE_FAILED
 			state("\The [src] buzzes. Calibration failed - sample integrity lost.")
+
+/obj/machinery/computer/curer/proc/advance_round()
+	if(current_round >= max_rounds)
+		begin_synthesis()
+		return
+
+	current_round++
+	state("\The [src] chirps. Round [current_round] of [max_rounds] - recalibrating grid...")
+	start_round()
 
 /obj/machinery/computer/curer/proc/begin_synthesis()
 	game_phase = CURER_PHASE_SYNTHESIZING
@@ -267,12 +390,18 @@
 
 /obj/machinery/computer/curer/proc/reset_state()
 	game_phase = CURER_PHASE_IDLE
+	game_subphase = CURER_SUBPHASE_REVEAL
 	grid_cells = list()
 	target_antigens = list()
 	found_antigens = list()
 	integrity = CURER_MAX_INTEGRITY
 	hint_text = ""
 	synthesis_ticks = 0
+	current_round = 1
+	max_rounds = 1
+	reveal_timer = 0
+	mutation_timer = 0
+	mutation_flash = FALSE
 
 #undef CURER_PHASE_IDLE
 #undef CURER_PHASE_READY
@@ -280,6 +409,8 @@
 #undef CURER_PHASE_SYNTHESIZING
 #undef CURER_PHASE_COMPLETE
 #undef CURER_PHASE_FAILED
+#undef CURER_SUBPHASE_REVEAL
+#undef CURER_SUBPHASE_PICK
 #undef CURER_MAX_INTEGRITY
 #undef CURER_GRID_SIZE
 #undef CURER_SYNTH_TICKS

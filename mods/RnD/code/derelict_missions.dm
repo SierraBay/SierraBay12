@@ -279,11 +279,17 @@ var/global/list/derelict_mission_objects = list()        // Registry of all miss
 // Photo mission objectives are now validated via R&D console submission (rdconsole.dm)
 
 // --- Helper: spawn item/structure on random floor tile in z-level ---
-/proc/spawn_derelict_mission_object(type_path, z_level)
+// area_type: optional area type filter to restrict spawning to specific areas (e.g. /area/slavers_base)
+/proc/spawn_derelict_mission_object(type_path, z_level, area_type = null)
 	var/list/valid_turfs = list()
 	for(var/turf/simulated/floor/T in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
-		if(!T.density && !(locate(/obj/structure) in T))
-			valid_turfs += T
+		if(T.density || (locate(/obj/structure) in T))
+			continue
+		if(area_type)
+			var/area/A = get_area(T)
+			if(!istype(A, area_type))
+				continue
+		valid_turfs += T
 	if(LAZYLEN(valid_turfs))
 		var/atom/A = new type_path(pick(valid_turfs))
 		return A

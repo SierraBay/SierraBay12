@@ -68,6 +68,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/selected_disk_category
 	var/show_settings = FALSE
 	var/show_link_menu = FALSE
+	var/report_collapsed = FALSE
 	var/selected_protolathe_category
 	var/selected_imprinter_category
 	var/searched_disk_design_text
@@ -148,22 +149,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		disk = D
 		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
 
-	// Reagent container — submit for synthesis experiment
-	else if(istype(D, /obj/item/reagent_containers))
-		if(files && files.synthesis_experiment_active)
-			submit_synthesis_beaker(user, D)
-		else
-			to_chat(user, SPAN_WARNING("Нет активного эксперимента по синтезу."))
-		return TRUE
-
-	// Gas tank — submit for atmospheric experiment
-	else if(istype(D, /obj/item/tank))
-		if(files && files.atmos_experiment_active)
-			submit_atmos_tank(user, D)
-		else
-			to_chat(user, SPAN_WARNING("Нет активного атмосферного эксперимента."))
-		return TRUE
-
 	// Physical photo — submit for photograph_object mission objective
 	else if(istype(D, /obj/item/photo))
 		submit_physical_photo(user, D)
@@ -201,6 +186,91 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(department_accounts[key])
 			return department_accounts[key]
 	return null
+
+/// Print an R&D sales invoice linking to the science department account
+/obj/machinery/computer/rdconsole/proc/print_rnd_invoice(mob/living/user)
+	var/datum/money_account/science_account = get_science_account()
+	if(!science_account)
+		to_chat(user, SPAN_WARNING("Не удалось получить доступ к счёту научного отдела."))
+		return
+
+	var/obj/item/paper/manifest/rnd_invoice/invoice = new(get_turf(src))
+	invoice.target_account_number = science_account.account_number
+	invoice.target_account_name = science_account.account_name
+	invoice.is_copy = FALSE
+	if(!invoice.stamped)
+		invoice.stamped = list()
+	invoice.stamped += /obj/machinery/computer/rdconsole
+	invoice.info = {"<h3>R&D Sales Invoice</h3>
+<hr>
+<b>Department:</b> Research & Development<br>
+<b>Account:</b> [science_account.account_name]<br>
+<b>Account #:</b> [science_account.account_number]<br>
+<hr>
+<i>Place this invoice in a cargo crate. All proceeds from the crate's sale will be credited to the account above.</i>"}
+
+	to_chat(user, SPAN_NOTICE("Накладная напечатана. Счёт: [science_account.account_name] (#[science_account.account_number])."))
+
+/// Find /datum/tech by its string ID (e.g. "materials", "engineering")
+/obj/machinery/computer/rdconsole/proc/find_tech_by_id(tech_id)
+	if(!files)
+		return null
+	for(var/datum/tech/T in files.researched_tech)
+		if(T.id == tech_id)
+			return T
+	return null
+
+/// Compile deconstructed tech levels into a sellable research report disk
+/obj/machinery/computer/rdconsole/proc/compile_research_report(mob/living/user)
+	if(!files || !files.experiments)
+		return
+
+	var/list/saved = files.experiments.saved_tech_levels
+	if(!LAZYLEN(saved))
+		to_chat(user, SPAN_WARNING("Нет данных деконструкции. Поместите предметы в деструктивный анализатор."))
+		return
+
+	var/list/tech_data = list()
+	var/delta = 0
+	var/cargo_value = 0
+
+	for(var/tech_id in saved)
+		var/list/levels = saved[tech_id]
+		if(!LAZYLEN(levels))
+			continue
+		var/max_level = 0
+		for(var/lvl in levels)
+			if(lvl > max_level)
+				max_level = lvl
+		var/compiled = files.compiled_tech_levels[tech_id]
+		if(!compiled)
+			compiled = 0
+		if(max_level > compiled)
+			var/new_levels = max_level - compiled
+			delta += new_levels
+			var/datum/tech/T = find_tech_by_id(tech_id)
+			var/rare = T ? T.rare : 1
+			// Progressive pricing: each level costs level × rare
+			for(var/i = compiled + 1 to max_level)
+				cargo_value += i * rare
+			tech_data[tech_id] = max_level
+
+	if(delta <= 0)
+		to_chat(user, SPAN_WARNING("Нет новых данных для компиляции. Деконструируйте предметы с более высокими тех-уровнями."))
+		return
+
+	// Create the report disk
+	var/obj/item/disk/research_report/report = new(get_turf(src))
+	report.tech_data = tech_data.Copy()
+	report.delta_levels = delta
+	report.cargo_value = max(1, cargo_value * 15)
+
+	// Update compiled levels
+	for(var/tech_id in tech_data)
+		files.compiled_tech_levels[tech_id] = tech_data[tech_id]
+
+	to_chat(user, SPAN_NOTICE("Отчёт скомпилирован: [delta] новых уровней. Оценочная стоимость: [report.cargo_value *15] таллеров."))
+	SSnano.update_uis(src)
 
 /obj/machinery/computer/rdconsole/proc/buy_corp_node(mob/living/user, node_id)
 	if(!files)
@@ -375,32 +445,29 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		do_spectral_step(usr, href_list["spectral_choice"])
 	if(href_list["cancel_spectral"])
 		cancel_spectral()
+	if(href_list["clear_spectral"])
+		spectral_result_text = ""
+		SSnano.update_uis(src)
 
 	// Artifact catalogization handlers
 	if(href_list["start_catalog"])
-		start_catalog(usr)
+		start_catalog(usr, href_list["start_catalog"])
 	if(href_list["catalog_choice"])
 		do_catalog_step(usr, href_list["catalog_choice"])
 	if(href_list["cancel_catalog"])
 		cancel_catalog()
+	if(href_list["clear_catalog"])
+		catalog_result_text = ""
+		SSnano.update_uis(src)
 
-	// Explosion experiment handlers
-	if(href_list["start_explosion"])
-		start_explosion_experiment(usr)
-	if(href_list["cancel_explosion"])
-		cancel_explosion_experiment()
-
-	// Chemical synthesis handlers
-	if(href_list["start_synthesis"])
-		start_synthesis_experiment(usr)
-	if(href_list["cancel_synthesis"])
-		cancel_synthesis_experiment()
-
-	// Atmospheric experiment handlers
-	if(href_list["start_atmos"])
-		start_atmos_experiment(usr)
-	if(href_list["cancel_atmos"])
-		cancel_atmos_experiment()
+	// Research report compilation
+	if(href_list["compile_report"])
+		compile_research_report(usr)
+	if(href_list["toggle_report_collapse"])
+		report_collapsed = !report_collapsed
+		SSnano.update_uis(src)
+	if(href_list["print_invoice"])
+		print_rnd_invoice(usr)
 
 	if(href_list["build"])
 		var/amount = clamp(text2num(href_list["amount"]), 1, 10)
@@ -545,14 +612,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/computer_file/data/rdf/rdf_file = locate(rdf_ref) in disk.stored_files
 	if(!istype(rdf_file))
 		return
-	var/target_path = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
+	var/target_type_str = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
 	var/scan_z = text2num(rdf_file.metadata ? rdf_file.metadata["scan_z"] : "0")
-	if(!ispath(target_path))
+	if(!target_type_str)
 		to_chat(user, SPAN_WARNING("Файл RDF повреждён: нет данных о цели сканирования."))
 		return
 	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
 	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
 		to_chat(user, SPAN_WARNING("Контракт недоступен."))
+		return
+	var/target_path = text2path(target_type_str)
+	if(!target_path)
+		to_chat(user, SPAN_WARNING("Файл RDF повреждён: неверный тип объекта."))
 		return
 	for(var/datum/derelict_mission_objective/O in M.objectives)
 		if(O.objective_type != "scan_object" || O.completed)
@@ -1043,54 +1114,52 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["catalog_step_name"] = get_catalog_step_name(catalog_step)
 		data["catalog_step_hint"] = get_catalog_step_hint(catalog_step)
 
-	// Check for nearby artifact available for catalogization
+	// Check for artifact RDF files on disk available for catalogization
 	if(!catalog_active)
-		var/obj/machinery/artifact/nearby_art = find_nearby_artifact()
-		if(nearby_art && can_catalog_artifact(nearby_art))
+		var/list/artifact_files = find_artifact_rdf_files()
+		if(LAZYLEN(artifact_files))
+			var/list/file_list = list()
+			for(var/datum/computer_file/data/rdf/F in artifact_files)
+				file_list += list(list("name" = F.filename, "ref" = "\ref[F]", "artifact_id" = F.metadata["artifact_id"]))
+			data["catalog_files"] = file_list
 			data["can_catalog"] = TRUE
-			data["catalog_artifact_name"] = nearby_art.name
 		else
 			data["can_catalog"] = FALSE
 	else
 		data["can_catalog"] = FALSE
 
-	// Explosion experiment state
-	data["explosion_result_text"] = explosion_result_text
-	if(files)
-		data["explosion_active"] = files.explosion_experiment_active
-		data["explosion_target_min"] = files.explosion_target_min
-		data["explosion_target_max"] = files.explosion_target_max
-		data["explosion_experiments_done"] = files.explosion_experiments_done
-	else
-		data["explosion_active"] = FALSE
-
-	// Chemical synthesis state
-	data["synthesis_result_text"] = synthesis_result_text
-	if(files)
-		data["synthesis_active"] = files.synthesis_experiment_active
-		data["synthesis_target_name"] = files.synthesis_target_name
-		data["synthesis_target_volume"] = files.synthesis_target_volume
-		data["synthesis_target_tier"] = files.synthesis_target_tier
-		data["synthesis_tier_name"] = get_synthesis_tier_name(files.synthesis_target_tier)
-		data["synthesis_experiments_done"] = files.synthesis_experiments_done
-	else
-		data["synthesis_active"] = FALSE
-
-	// Atmospheric experiment state
-	data["atmos_result_text"] = atmos_result_text
-	if(files)
-		data["atmos_active"] = files.atmos_experiment_active
-		data["atmos_target_gas_name"] = files.atmos_target_gas_name
-		data["atmos_target_pressure_min"] = files.atmos_target_pressure_min
-		data["atmos_target_pressure_max"] = files.atmos_target_pressure_max
-		data["atmos_target_temp_min"] = files.atmos_target_temp_min
-		data["atmos_target_temp_max"] = files.atmos_target_temp_max
-		data["atmos_target_tier"] = files.atmos_target_tier
-		data["atmos_tier_name"] = get_atmos_tier_name(files.atmos_target_tier)
-		data["atmos_experiments_done"] = files.atmos_experiments_done
-		data["atmos_has_temp_req"] = (files.atmos_target_temp_min > 0)
-	else
-		data["atmos_active"] = FALSE
+	// Research report compilation state — based on deconstructed item tech levels
+	if(files && files.experiments)
+		var/list/report_tech_data = list()
+		var/report_delta = 0
+		var/report_value = 0
+		var/list/saved = files.experiments.saved_tech_levels
+		for(var/tech_id in saved)
+			var/list/levels = saved[tech_id]
+			if(!LAZYLEN(levels))
+				continue
+			var/max_level = 0
+			for(var/lvl in levels)
+				if(lvl > max_level)
+					max_level = lvl
+			var/compiled = files.compiled_tech_levels[tech_id]
+			if(!compiled)
+				compiled = 0
+			var/new_levels = max(0, max_level - compiled)
+			var/datum/tech/T = find_tech_by_id(tech_id)
+			var/tech_name = T ? T.shortname : tech_id
+			var/rare = T ? T.rare : 1
+			var/tech_value = 0
+			for(var/i = compiled + 1 to max_level)
+				tech_value += i * rare
+			report_tech_data += list(list("name" = tech_name, "level" = max_level, "compiled" = compiled, "new_levels" = new_levels, "value" = tech_value))
+			report_delta += new_levels
+			report_value += tech_value
+		data["report_tech_data"] = report_tech_data
+		data["report_delta"] = report_delta
+		data["report_value"] = report_value
+		data["can_compile"] = (report_delta > 0)
+		data["report_collapsed"] = report_collapsed
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)

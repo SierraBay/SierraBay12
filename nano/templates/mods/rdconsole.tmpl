@@ -2,7 +2,7 @@
 Title: R&D Console (Unified)
 Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 -->
-
+{{:helper.ntscieMode()}}
 {{if data.screen == "working"}}
 <div class="rndConsole">
 	<div class="rndCenterScreen">
@@ -39,6 +39,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		</div>
 		<div class="rndNavStatus">
 			{{if data.has_science_account}}
+				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}
 				<span class="rndBalanceLabel">БАЛАНС</span>
 				<span class="rndBalanceValue">{{:data.currency_short}}{{:data.science_balance}}</span>
 			{{else}}
@@ -124,86 +125,63 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 			{{else}}
 				{{if data.spectral_result_text}}
 				<div class="rndSection">
-					<div class="rndSectionTitle">Результаты спектрального анализа</div>
+					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Результаты спектрального анализа</span>
+						{{:helper.link("✕", 'cancel', {'clear_spectral' : 1})}}
+					</div>
 					<div class="rndSectionContent">{{:data.spectral_result_text}}</div>
 				</div>
 				{{/if}}
 			{{/if}}
 
-			<!-- Experiments Section -->
+			<!-- Research Report Compilation -->
 			<div class="rndSection">
-				<div class="rndSectionTitle">Эксперименты</div>
-				<div class="rndSectionContent">
-
-					<!-- Explosion Experiment -->
-					{{if data.explosion_active}}
-					<div class="rndExpCard">
-						<div class="rndExpHeader">
-							<span class="rndExpTitle">Взрывной эксперимент #{{:data.explosion_experiments_done + 1}}</span>
-							<span class="rndExpBadge rndExpBadge--active">АКТИВЕН</span>
-						</div>
-						<div class="rndExpBody">
-							Целевая мощность: <b>{{:data.explosion_target_min}} — {{:data.explosion_target_max}}</b><br>
-							<span class="rndMuted"><i>Разместите Kinetic Energy Scanner вблизи детонации. Соберите бомбу и подорвите. Приложите сканер к консоли.</i></span>
-						</div>
-						{{:helper.link("Отмена", 'cancel', {'cancel_explosion' : 1})}}
-					</div>
-					{{else}}
-						<div class="rndBtnRow">{{:helper.link("Взрывной эксперимент", 'alert', {'start_explosion' : 1}, null, 'rndExpBtn')}}</div>
-					{{/if}}
-					{{if data.explosion_result_text}}
-					<div class="rndExpResult">
-						<span class="rndLabel">Результат взрыва:</span> {{:data.explosion_result_text}}
-					</div>
-					{{/if}}
-
-					<!-- Chemical Synthesis -->
-					{{if data.synthesis_active}}
-					<div class="rndExpCard">
-						<div class="rndExpHeader">
-							<span class="rndExpTitle">Химический синтез #{{:data.synthesis_experiments_done + 1}}</span>
-							<span class="rndExpBadge rndExpBadge--active">АКТИВЕН</span>
-						</div>
-						<div class="rndExpBody">
-							Цель: <b>{{:data.synthesis_target_name}}</b> | Объём: <b>{{:data.synthesis_target_volume}} ед.</b> | Сложность: <b>{{:data.synthesis_tier_name}}</b><br>
-							<span class="rndMuted"><i>Синтезируйте реагент. Приложите ёмкость к консоли.</i></span>
-						</div>
-						{{:helper.link("Отмена", 'cancel', {'cancel_synthesis' : 1})}}
-					</div>
-					{{else}}
-						<div class="rndBtnRow">{{:helper.link("Химический синтез", 'beaker', {'start_synthesis' : 1}, null, 'rndExpBtn')}}</div>
-					{{/if}}
-					{{if data.synthesis_result_text}}
-					<div class="rndExpResult">
-						<span class="rndLabel">Результат синтеза:</span> {{:data.synthesis_result_text}}
-					</div>
-					{{/if}}
-
-					<!-- Atmospheric Experiment -->
-					{{if data.atmos_active}}
-					<div class="rndExpCard">
-						<div class="rndExpHeader">
-							<span class="rndExpTitle">Атмосферный эксперимент #{{:data.atmos_experiments_done + 1}}</span>
-							<span class="rndExpBadge rndExpBadge--active">АКТИВЕН</span>
-						</div>
-						<div class="rndExpBody">
-							Газ: <b>{{:data.atmos_target_gas_name}}</b> | Давление: <b>{{:data.atmos_target_pressure_min}}—{{:data.atmos_target_pressure_max}} кПа</b>
-							{{if data.atmos_has_temp_req}} | Температура: <b>{{:Math.round(data.atmos_target_temp_min - 273.15)}}—{{:Math.round(data.atmos_target_temp_max - 273.15)}} °C</b>{{/if}}
-							 | Сложность: <b>{{:data.atmos_tier_name}}</b><br>
-							<span class="rndMuted"><i>Заполните баллон. Приложите к консоли.</i></span>
-						</div>
-						{{:helper.link("Отмена", 'cancel', {'cancel_atmos' : 1})}}
-					</div>
-					{{else}}
-						<div class="rndBtnRow">{{:helper.link("Атмосферный эксперимент", 'air', {'start_atmos' : 1}, null, 'rndExpBtn')}}</div>
-					{{/if}}
-					{{if data.atmos_result_text}}
-					<div class="rndExpResult">
-						<span class="rndLabel">Результат атмосферного:</span> {{:data.atmos_result_text}}
-					</div>
-					{{/if}}
-
+				<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+					<span>Компиляция научного отчёта</span>
+					{{:helper.link(data.report_collapsed ? "▶" : "▼", '', {'toggle_report_collapse' : 1})}}
 				</div>
+				{{if !data.report_collapsed}}
+				<div class="rndSectionContent">
+					{{if data.report_tech_data && data.report_tech_data.length}}
+					<table style="width: 100%; border-collapse: collapse;">
+						<tr>
+							<th style="text-align: left; padding: 2px 6px;">Технология</th>
+							<th style="text-align: center; padding: 2px 6px;">Уровень</th>
+							<th style="text-align: center; padding: 2px 6px;">Скомп.</th>
+							<th style="text-align: center; padding: 2px 6px;">Новое</th>
+							<th style="text-align: center; padding: 2px 6px;">Стоимость</th>
+						</tr>
+						{{for data.report_tech_data}}
+						<tr>
+							<td style="padding: 2px 6px;">{{:value.name}}</td>
+							<td style="text-align: center; padding: 2px 6px;">{{:value.level}}</td>
+							<td style="text-align: center; padding: 2px 6px; color: #888;">{{:value.compiled}}</td>
+							<td style="text-align: center; padding: 2px 6px;">
+								{{if value.new_levels > 0}}
+									<span style="color: #00ff00;">+{{:value.new_levels}}</span>
+								{{else}}
+									<span style="color: #666;">—</span>
+								{{/if}}
+							</td>
+							<td style="text-align: center; padding: 2px 6px;">
+								{{if value.value > 0}}
+									<span style="color: #ffcc00;">{{:value.value * 15}} Т</span>
+								{{else}}
+									<span style="color: #666;">—</span>
+								{{/if}}
+							</td>
+						</tr>
+						{{/for}}
+					</table>
+					{{else}}
+						<span class="rndMuted">Нет данных деконструкции. Поместите предметы в деструктивный анализатор.</span>
+					{{/if}}
+					<div class="rndBtnRow" style="margin-top: 8px;">
+						{{:helper.link("Скомпилировать отчёт (" + data.report_value + " Т)", 'save', {'compile_report' : 1}, data.can_compile ? null : 'disabled', 'rndExpBtn')}}
+					</div>
+					<span class="rndMuted"><i>Скомпилированный отчёт можно продать через карго шаттл.</i></span>
+				</div>
+				{{/if}}
 			</div>
 
 			<!-- Artifact Catalogization -->
@@ -250,21 +228,35 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 			{{else}}
 				{{if data.catalog_result_text}}
 				<div class="rndSection">
-					<div class="rndSectionTitle">Результаты каталогизации</div>
+					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Результаты каталогизации</span>
+						{{:helper.link("✕", 'cancel', {'clear_catalog' : 1})}}
+					</div>
 					<div class="rndSectionContent">{{:data.catalog_result_text}}</div>
 				</div>
 				{{/if}}
-				{{if data.can_catalog}}
 				<div class="rndSection">
-					<div class="rndSectionTitle">Обнаружен артефакт</div>
+					<div class="rndSectionTitle">Каталогизация артефактов</div>
 					<div class="rndSectionContent">
-						<span class="rndLabel">{{:data.catalog_artifact_name}}</span>
-						<div class="rndBtnRow" style="margin-top: 6px;">
-							{{:helper.link("Каталогизировать", 'search', {'start_catalog' : 1})}}
-						</div>
+						{{if data.can_catalog && data.catalog_files}}
+							<span class="rndMuted"><i>Отсканируйте артефакт полевым сканером, сохраните файл на диск и вставьте в консоль.</i></span>
+							<table style="width: 100%; border-collapse: collapse; margin-top: 4px;">
+								{{for data.catalog_files}}
+								<tr>
+									<td style="padding: 2px 6px;">{{:value.name}}.RDF</td>
+									<td style="padding: 2px 6px; color: #888;">ID: {{:value.artifact_id}}</td>
+									<td style="padding: 2px 6px; text-align: right;">
+										{{:helper.link("Каталогизировать", 'search', {'start_catalog' : value.ref})}}
+									</td>
+								</tr>
+								{{/for}}
+							</table>
+						{{else}}
+							<span class="rndMuted">Нет доступных файлов сканирования артефактов на диске.</span><br>
+							<span class="rndMuted"><i>Отсканируйте артефакт полевым исследовательским сканером, сохраните RDF файл на диск и вставьте его в консоль.</i></span>
+						{{/if}}
 					</div>
 				</div>
-				{{/if}}
 			{{/if}}
 		</div>
 

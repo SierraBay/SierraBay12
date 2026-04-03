@@ -16,24 +16,16 @@
 	var/produces_heat = 1
 	idle_power_usage = 800
 	var/delay = 10
-	req_access = list(access_heads) //Only the R&D can change server settings.
+	req_access = list(access_rd) //Only the R&D can change server settings.
 
 
 /obj/machinery/r_n_d/server/Destroy()
-	//[SIERRA-ADD] - MODPACK_RND
-	SSresearch.rnd_server_list -= src
-	//[/SIERRA-ADD] - MODPACK_RND
-
 	QDEL_NULL(files)
 	return ..()
 
 
 /obj/machinery/r_n_d/server/Initialize()
 	. = ..()
-	//[SIERRA-ADD] - MODPACK_RND
-	SSresearch.rnd_server_list += src
-	//[/SIERRA-ADD] - MODPACK_RND
-
 	if(!files)
 		files = new /datum/research(src)
 	var/list/temp_list
@@ -89,9 +81,11 @@
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
-	//[SIERRA-EDIT] - MODPACK_RND
-		files.forget_random_technology()
-	//[/SIERRA-EDIT] - MODPACK_RND
+		files.known_designs = list()
+		for(var/datum/tech/T in files.known_tech)
+			if(prob(1))
+				T.level--
+		files.RefreshResearch()
 	if(delay)
 		delay--
 	else
@@ -129,7 +123,7 @@
 /obj/machinery/r_n_d/server/centcom/proc/update_connections()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+	for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -158,16 +152,11 @@
 	light_color = "#a97faa"
 	machine_name = "\improper R&D server control console"
 	machine_desc = "If an R&D server is the heart of a research setup, this is the brain. Any kind of data manipulation on the server happens from this console."
-	req_access = list(access_heads)
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	var/obj/item/disk/design_disk/loaded_disk = null
-	var/selected_data_category = null // For filtering technologies by category
-	var/design_search_text = null // For searching designs on screen 4
-	var/selected_design_category = null // For filtering designs by category on screen 4
 
 /obj/machinery/computer/rdservercontrol/CanUseTopic(user)
 	if(!allowed(user) && !emagged)
@@ -175,50 +164,32 @@
 		return STATUS_CLOSE
 	return ..()
 
-/obj/machinery/computer/rdservercontrol/use_tool(obj/item/I, mob/living/user, list/click_params)
-	if(istype(I, /obj/item/disk/design_disk))
-		if(loaded_disk)
-			to_chat(user, SPAN_WARNING("A disk is already inserted."))
-			return
-		if(!user.unEquip(I))
-			return
-		I.forceMove(src)
-		loaded_disk = I
-		to_chat(user, SPAN_NOTICE("You insert \the [I] into \the [src]."))
-		SSnano.update_uis(src)
-		return
-
-	return 	. = ..()
-
 /obj/machinery/computer/rdservercontrol/OnTopic(user, href_list, state)
-	if(href_list["go_screen"])
-		screen = text2num(href_list["go_screen"])
-		selected_data_category = null
-		selected_design_category = null
-		design_search_text = null
+	if(href_list["main"])
+		screen = 0
 		. = TOPIC_REFRESH
 
-	else if(href_list["select_server"])
-		var/target_id = text2num(href_list["select_server"])
+	else if(href_list["access"] || href_list["data"] || href_list["transfer"])
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
-			if(S.server_id == target_id)
+		for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
-		if(temp_server)
-			var/target_screen = text2num(href_list["target_screen"])
-			screen = target_screen
-			selected_data_category = null
-			if(target_screen == 1)
-				for(var/obj/machinery/computer/rdconsole/C as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/rdconsole))
-					if(C.sync)
-						consoles += C
-			else if(target_screen == 3)
-				for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
-					if(S != temp_server)
-						servers += S
+		if(href_list["access"])
+			screen = 1
+			for(var/obj/machinery/computer/rdconsole/C in SSmachines.machinery)
+				if(C.sync)
+					consoles += C
+		else if(href_list["data"])
+			screen = 2
+		else if(href_list["transfer"])
+			screen = 3
+			for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
+				if(S == src)
+					continue
+				servers += S
 		. = TOPIC_REFRESH
 
 	else if(href_list["upload_toggle"])
@@ -237,260 +208,89 @@
 			temp_server.id_with_download += num
 		. = TOPIC_REFRESH
 
-//[SIERRA-EDIT] - MODPACK_RND
 	else if(href_list["reset_tech"])
-		var/choice = alert("Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Technology Data Reset", "Continue", "Cancel")
-		if(choice == "Continue")
-			temp_server.files.forget_all(href_list["reset_tech"])
+		var/choice = alert(user, "Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue" && CanUseTopic(user, state))
+			for(var/datum/tech/T in temp_server.files.known_tech)
+				if(T.level > 0 && T.id == href_list["reset_tech"])
+					T.level = 1
+					break
+		temp_server.files.RefreshResearch()
 		. = TOPIC_REFRESH
 
-	else if(href_list["reset_technology"])
-		var/choice = alert("Are you sure you want to delete this design? Data lost cannot be recovered.", "Techology Deletion", "Continue", "Cancel")
-		var/techology = temp_server.files.researched_tech[href_list["reset_technology"]]
-		if(choice == "Continue" && techology)
-			temp_server.files.forget_techology(techology)
-		. = TOPIC_REFRESH
-
-	else if(href_list["select_data_category"])
-		selected_data_category = href_list["select_data_category"]
-		if(selected_data_category == "__all__")
-			selected_data_category = null
-		. = TOPIC_REFRESH
-
-	else if(href_list["toggle_ban_design"])
-		if(temp_server)
-			var/design_id = href_list["toggle_ban_design"]
-			if(design_id in temp_server.files.banned_designs)
-				temp_server.files.banned_designs -= design_id
-			else
-				temp_server.files.banned_designs += design_id
-		. = TOPIC_REFRESH
-
-	else if(href_list["download_design_to_disk"])
-		if(!temp_server)
-			return
-		if(!loaded_disk)
-			to_chat(user, SPAN_WARNING("Вставьте диск дизайнов."))
-			. = TOPIC_REFRESH
-			return
-		if(loaded_disk.blueprint)
-			to_chat(user, SPAN_WARNING("На диске уже есть дизайн. Извлеките диск или очистите его."))
-			. = TOPIC_REFRESH
-			return
-		var/datum/design/D = locate(href_list["download_design_to_disk"]) in temp_server.files.known_designs
-		if(D)
-			loaded_disk.blueprint = D
-			to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" записан на диск."))
-		. = TOPIC_REFRESH
-
-	else if(href_list["eject_disk"])
-		if(loaded_disk)
-			loaded_disk.forceMove(get_turf(src))
-			to_chat(user, SPAN_NOTICE("Диск извлечён."))
-			loaded_disk = null
-		. = TOPIC_REFRESH
-
-	else if(href_list["clear_disk"])
-		if(loaded_disk && loaded_disk.blueprint)
-			loaded_disk.blueprint = null
-			to_chat(user, SPAN_NOTICE("Данные на диске очищены."))
-		. = TOPIC_REFRESH
-
-	else if(href_list["design_search"])
-		var/input = sanitizeSafe(input(user, "Введите текст для поиска", "Поиск дизайна") as null|text, MAX_LNAME_LEN)
-		design_search_text = input
-		. = TOPIC_REFRESH
-
-	else if(href_list["clear_design_search"])
-		design_search_text = null
-		. = TOPIC_REFRESH
-
-	else if(href_list["select_design_category"])
-		selected_design_category = href_list["select_design_category"]
-		if(selected_design_category == "__all__")
-			selected_design_category = null
-		. = TOPIC_REFRESH
-//[/SIERRA-EDIT] - MODPACK_RND
-
-	else if(href_list["send_to"])
-		var/target_id = text2num(href_list["send_to"])
-		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
-			if(S.server_id == target_id && temp_server)
-				S.files.download_from(temp_server.files)
-				break
+	else if(href_list["reset_design"])
+		var/choice = alert(user, "Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue" && CanUseTopic(user, state))
+			for(var/datum/design/D in temp_server.files.known_designs)
+				if(D.id == href_list["reset_design"])
+					temp_server.files.known_designs -= D
+					break
+		temp_server.files.RefreshResearch()
 		. = TOPIC_REFRESH
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
-	ui_interact(user)
+	interact(user)
 	return TRUE
 
-/obj/machinery/computer/rdservercontrol/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	var/list/data = list()
-	data["screen"] = screen
-	data["badmin"] = badmin
-	data["has_disk"] = !!loaded_disk
-	if(loaded_disk)
-		data["disk_has_blueprint"] = !!loaded_disk.blueprint
-		data["disk_blueprint_name"] = loaded_disk.blueprint ? loaded_disk.blueprint.name : null
+/obj/machinery/computer/rdservercontrol/interact(mob/user)
+	user.set_machine(src)
+	var/dat = ""
 
 	switch(screen)
-		if(0) // Main Menu
-			var/list/server_list = list()
+		if(0) //Main Menu
+			dat += "Connected Servers:<BR><BR>"
 			var/turf/T = get_turf(src)
-			for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+			for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
 				var/turf/ST = get_turf(S)
 				if((istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin) || (ST && !AreConnectedZLevels(ST.z, T.z)))
 					continue
-				server_list += list(list(
-					"name" = S.name,
-					"id" = S.server_id,
-					"operable" = S.operable()
-				))
-			data["servers"] = server_list
+				dat += "[S.name] || "
+				dat += "<A href='byond://?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
+				dat += "<A href='byond://?src=\ref[src];data=[S.server_id]'>Data Management</A>"
+				if(badmin) dat += " | <A href='byond://?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
+				dat += "<BR>"
 
-		if(1) // Access Rights
-			if(temp_server)
-				data["server_name"] = temp_server.name
-				var/list/console_list = list()
-				for(var/obj/machinery/computer/rdconsole/C in consoles)
-					var/turf/console_turf = get_turf(C)
-					console_list += list(list(
-						"name" = "[console_turf.loc]",
-						"id" = C.id,
-						"has_upload" = (C.id in temp_server.id_with_upload),
-						"has_download" = (C.id in temp_server.id_with_download)
-					))
-				data["consoles"] = console_list
+		if(1) //Access rights menu
+			dat += "[temp_server.name] Access Rights<BR><BR>"
+			dat += "Consoles with Upload Access<BR>"
+			for(var/obj/machinery/computer/rdconsole/C in consoles)
+				var/turf/console_turf = get_turf(C)
+				dat += "* <A href='byond://?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
+				if(C.id in temp_server.id_with_upload)
+					dat += " (Remove)</A><BR>"
+				else
+					dat += " (Add)</A><BR>"
+			dat += "Consoles with Download Access<BR>"
+			for(var/obj/machinery/computer/rdconsole/C in consoles)
+				var/turf/console_turf = get_turf(C)
+				dat += "* <A href='byond://?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
+				if(C.id in temp_server.id_with_download)
+					dat += " (Remove)</A><BR>"
+				else
+					dat += " (Add)</A><BR>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
 
-		if(2) // Data Management
-			if(temp_server)
-				data["server_name"] = temp_server.name
-				data["selected_data_category"] = selected_data_category
+		if(2) //Data Management menu
+			dat += "[temp_server.name] Data ManagementP<BR><BR>"
+			dat += "Known Technologies<BR>"
+			for(var/datum/tech/T in temp_server.files.known_tech)
+				dat += "* [T.name] "
+				dat += "<A href='byond://?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
+			dat += "Known Designs<BR>"
+			for(var/datum/design/D in temp_server.files.known_designs)
+				dat += "* [D.name] "
+				dat += "<A href='byond://?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
 
-				var/list/tech_list = list()
-				for(var/datum/tech/T in temp_server.files.researched_tech)
-					tech_list += list(list(
-						"name" = T.name,
-						"level" = T.level,
-						"ref" = "\ref[T]"
-					))
-				data["tech_trees"] = tech_list
-
-				// Pre-build node_id -> category_id map
-				var/list/node_category_map = list()
-				for(var/cat_id in rnd_tech_categories)
-					var/list/cat_data = rnd_tech_categories[cat_id]
-					var/list/trees = cat_data["trees"]
-					if(trees)
-						for(var/corp_id in trees)
-							var/list/tree = trees[corp_id]
-							if(tree && tree["nodes"])
-								for(var/node_id in tree["nodes"])
-									node_category_map[node_id] = cat_id
-
-				// Build category list and grouped technologies
-				var/list/categories_list = list()
-				for(var/cat_id in rnd_tech_categories)
-					var/list/cat_data = rnd_tech_categories[cat_id]
-					categories_list += list(list("id" = cat_id, "name" = cat_data["name"]))
-
-				var/list/categorized_techs = list()
-				// Group by category using the pre-built map
-				var/list/cat_buckets = list()
-				for(var/t in temp_server.files.researched_nodes)
-					var/datum/technology/T = t
-					var/cat_id = node_category_map[T.id]
-					if(!cat_id)
-						cat_id = "__other__"
-					if(selected_data_category && selected_data_category != cat_id)
-						continue
-					if(!cat_buckets[cat_id])
-						cat_buckets[cat_id] = list()
-					var/list/bucket = cat_buckets[cat_id]
-					bucket += list(list(
-						"name" = T.name,
-						"id" = T.id,
-						"ref" = "\ref[T]"
-					))
-
-				for(var/cat_id in rnd_tech_categories)
-					if(!cat_buckets[cat_id] || !LAZYLEN(cat_buckets[cat_id]))
-						continue
-					var/list/cat_data = rnd_tech_categories[cat_id]
-					categorized_techs += list(list(
-						"category_id" = cat_id,
-						"category_name" = cat_data["name"],
-						"nodes" = cat_buckets[cat_id]
-					))
-
-				data["categories"] = categories_list
-				data["categorized_technologies"] = categorized_techs
-
-		if(3) // Server Transfer
-			if(temp_server)
-				data["server_name"] = temp_server.name
-				var/list/transfer_list = list()
-				for(var/obj/machinery/r_n_d/server/S in servers)
-					transfer_list += list(list(
-						"name" = S.name,
-						"id" = S.server_id
-					))
-				data["transfer_servers"] = transfer_list
-
-		if(4) // Design Management
-			if(temp_server)
-				data["server_name"] = temp_server.name
-				data["design_search"] = design_search_text
-				data["selected_design_category"] = selected_design_category
-
-				// Collect all categories and group designs
-				var/list/all_categories = list()
-				var/list/categorized_designs = list() // cat_name = list(designs)
-
-				for(var/datum/design/D in temp_server.files.known_designs)
-					if(D.starts_unlocked)
-						continue
-					if(design_search_text && !findtext(D.name, design_search_text))
-						continue
-
-					var/cat_name = "Unspecified"
-					if(LAZYLEN(D.category))
-						cat_name = D.category[1]
-					all_categories |= cat_name
-
-					if(selected_design_category && selected_design_category != cat_name)
-						continue
-
-					if(!categorized_designs[cat_name])
-						categorized_designs[cat_name] = list()
-					var/list/cat_list = categorized_designs[cat_name]
-					cat_list += list(list(
-						"name" = D.name,
-						"id" = D.id,
-						"ref" = "\ref[D]",
-						"banned" = (D.id in temp_server.files.banned_designs)
-					))
-
-				// Build category filter list
-				var/list/cat_filter = list()
-				for(var/cat in all_categories)
-					cat_filter += list(list("id" = cat, "name" = cat))
-				data["design_categories"] = cat_filter
-
-				// Build grouped output
-				var/list/grouped = list()
-				for(var/cat_name in categorized_designs)
-					grouped += list(list(
-						"category_name" = cat_name,
-						"designs" = categorized_designs[cat_name]
-					))
-				data["design_groups"] = grouped
-
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "rdservercontrol.tmpl", "R&D Server Control", 600, 560)
-		ui.set_initial_data(data)
-		ui.open()
+		if(3) //Server Data Transfer
+			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
+			dat += "Send Data to what server?<BR>"
+			for(var/obj/machinery/r_n_d/server/S in servers)
+				dat += "[S.name] <A href='byond://?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
+			dat += "<HR><A href='byond://?src=\ref[src];main=1'>Main Menu</A>"
+	show_browser(user, "<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
+	onclose(user, "server_control")
+	return
 
 /obj/machinery/computer/rdservercontrol/emag_act(remaining_charges, mob/user)
 	if(!emagged)

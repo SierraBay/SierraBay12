@@ -28,7 +28,7 @@
 
 /datum/map_template/ruin/away_site/smugglers/after_load(z)
 	..()
-	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/contraband_weapons, z)
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/contraband_weapons, z, /area/smugglers)
 
 /obj/shuttle_landmark/nav_asteroid_base/nav1
 	name = "Abandoned Asteroid Base Navpoint #1"

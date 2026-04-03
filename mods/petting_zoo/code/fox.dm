@@ -36,6 +36,11 @@
 	ai_holder = /datum/ai_holder/simple_animal/passive/fox
 	say_list_type = /datum/say_list/fox
 
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.5
+
 /datum/ai_holder/simple_animal/passive/fox // Как кошка, только лиса ~bear1ake
 	can_flee = TRUE
 	speak_chance = 1

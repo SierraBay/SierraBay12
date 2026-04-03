@@ -1,10 +1,18 @@
 /obj/machinery/drone_pad/rd_mission
 	name = "R&D mission drone pad"
-	desc = "A specialized landing pad for research drones. Used to submit mission samples and data to corporate receivers. Items must be packaged before submission using a drone designator."
+	desc = "A specialized landing pad for research drones. Used to submit mission samples and data to corporate receivers. Items must be packaged before submission using a drone designator. Use a multitool to link it to an R&D console."
 	icon = 'icons/obj/machines/landing_pad.dmi'
 	icon_state = "pad_base"
 	req_access = list(access_research)
 	initial_id_tag = "rd_missions"
+	var/obj/machinery/computer/rdconsole/linked_console
+
+/obj/machinery/drone_pad/rd_mission/examine(mob/user)
+	. = ..()
+	if(linked_console && !QDELETED(linked_console))
+		to_chat(user, SPAN_NOTICE("Привязан к: [linked_console.name]."))
+	else
+		to_chat(user, SPAN_WARNING("Не привязан к R&D консоли. Используйте мультитул для привязки."))
 
 /obj/machinery/drone_pad/rd_mission/attack_hand(mob/user)
 	if(!user || !Adjacent(user))
@@ -21,14 +29,21 @@
 	return TRUE
 
 /obj/machinery/drone_pad/rd_mission/use_tool(obj/item/I, mob/living/user, list/click_params)
-	// Мультитул для настройки сети
-	var/datum/extension/local_network_member/transport = get_extension(src, /datum/extension/local_network_member)
-	if (isMultitool(I))
-		transport.get_new_tag(user)
-		update_icon()
+	// Мультитул — привязка к R&D консоли из буфера
+	if(isMultitool(I))
+		var/obj/item/device/multitool/M = I
+		var/obj/machinery/computer/rdconsole/buffered = M.get_buffer(/obj/machinery/computer/rdconsole)
+		if(buffered)
+			linked_console = buffered
+			to_chat(user, SPAN_NOTICE("Дрон пад привязан к [buffered.name]."))
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1, -3)
+		else
+			to_chat(user, SPAN_WARNING("В буфере мультитула нет R&D консоли. Сначала кликните мультитулом по консоли."))
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1, -3)
 		return TRUE
 
-	// Designator для синхронизации сети (не для отправки предметов)
+	// Designator для синхронизации сети
+	var/datum/extension/local_network_member/transport = get_extension(src, /datum/extension/local_network_member)
 	var/obj/item/device/drone_designator/designator = I
 	if (istype(designator))
 		if (!transport.id_tag)
@@ -96,16 +111,10 @@
 	return TRUE
 
 /obj/machinery/drone_pad/rd_mission/proc/find_nearest_rdconsole()
-	var/obj/machinery/computer/rdconsole/nearest = null
-	var/best_dist = INFINITY
-	for(var/obj/machinery/computer/rdconsole/console in range(7, src))
-		var/d = get_dist(src, console)
-		if(d < best_dist)
-			best_dist = d
-			nearest = console
-	if(!nearest)
-		nearest = locate(/obj/machinery/computer/rdconsole) in world
-	return nearest
+	// Use linked console if available and not destroyed
+	if(linked_console && !QDELETED(linked_console))
+		return linked_console
+	return null
 
 /obj/machinery/drone_pad/rd_mission/proc/finalize_mission(datum/derelict_mission/mission, mob/living/user)
 	if(!mission)
@@ -118,7 +127,7 @@
 	var/obj/machinery/computer/rdconsole/console = find_nearest_rdconsole()
 	if(!console || !console.files)
 		if(user)
-			to_chat(user, SPAN_WARNING("Не найдена РнД консоль для обработки награды."))
+			to_chat(user, SPAN_WARNING("Дрон пад не привязан к R&D консоли. Используйте мультитул для привязки."))
 		return FALSE
 
 	if(!mission.finalize(console.files))

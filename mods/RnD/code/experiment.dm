@@ -25,38 +25,6 @@
 		saved_tech_levels[tech] |= O.saved_tech_levels[tech]
 
 
-// Tracks nearby explosions for informational purposes
-/obj/item/device/beacon/explosion_watcher
-	name = "Kinetic Energy Scanner"
-	desc = "Scans the level of kinetic energy from explosions"
-	var/last_power = 0
-	icon = 'icons/obj/beacon.dmi'
-	icon_state = "beacon"
-	item_state = "signaler"
-
-/obj/item/device/beacon/explosion_watcher/ex_act(severity)
-	return
-
-/obj/item/device/beacon/explosion_watcher/afterattack(obj/machinery/computer/rdconsole/target, mob/living/user, proximity_flag, click_parameters)
-	. = ..()
-	if(istype(target, /obj/machinery/computer/rdconsole))
-		if(last_power > 0)
-			to_chat(user, "<span class='notice'>[src.name] last recorded power level: [last_power]</span>")
-		else
-			to_chat(user, "<span class='notice'>[src.name] has no recorded data</span>")
-
-/obj/item/device/beacon/explosion_watcher/Initialize()
-	. = ..()
-	explosion_watcher_list += src
-
-/obj/item/device/beacon/explosion_watcher/Destroy()
-	explosion_watcher_list -= src
-	return ..()
-
-/obj/item/device/beacon/explosion_watcher/proc/react_explosion(turf/epicenter, power)
-	last_power = round(power)
-
-
 // Universal tool to collect science data from reports and samples
 
 /obj/item/paper/anomaly_scan

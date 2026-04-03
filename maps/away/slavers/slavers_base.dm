@@ -32,10 +32,10 @@
 /datum/map_template/ruin/away_site/slavers/after_load(z)
 	..()
 	var/obj/item/tactical_terminal/terminal = \
-		spawn_derelict_mission_object(/obj/item/tactical_terminal, z)
+		spawn_derelict_mission_object(/obj/item/tactical_terminal, z, /area/slavers_base)
 	// Spawn the access log containing the terminal's code
 	if(terminal)
-		var/obj/item/paper/log = spawn_derelict_mission_object(/obj/item/paper, z)
+		var/obj/item/paper/log = spawn_derelict_mission_object(/obj/item/paper, z, /area/slavers_base)
 		if(log)
 			log.name = "Shellguard tactical operations log"
 			log.info = "<b>Shellguard PRIVATE MILITARY — OPERATIONS TERMINAL</b><hr>" + \

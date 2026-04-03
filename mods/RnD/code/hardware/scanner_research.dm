@@ -131,16 +131,31 @@
 			tech_lines += "[tech_display_name(key)]: Lv.[tech[key]]"
 		dat += "<b>Technology profile:</b>\[br\][jointext(tech_lines, "\[br\]")]"
 
+	// --- Artifact-specific data ---
+	if(istype(target, /obj/machinery/artifact))
+		var/obj/machinery/artifact/art = target
+		if(art.my_effect)
+			dat += "<b>Artifact ID:</b> [art.my_effect.artifact_id]"
+			dat += "<b>Effect type:</b> [art.my_effect.name]"
+
 	// --- Store metadata for RDF file and push to driver ---
 	if(driver && driver.using_scanner)
 		driver.scan_file_type = /datum/computer_file/data/rdf
 		driver.metadata_buffer.Cut()
-		driver.metadata_buffer["target_type"] = target.type
+		driver.metadata_buffer["target_type"] = "[target.type]"
 		var/turf/scan_turf = get_turf(target)
 		if(scan_turf)
 			driver.metadata_buffer["scan_z"] = "[scan_turf.z]"
 		if(scan_area)
 			driver.metadata_buffer["scan_area"] = scan_area.name
+		// Store artifact effect data for catalogization
+		if(istype(target, /obj/machinery/artifact))
+			var/obj/machinery/artifact/art = target
+			if(art.my_effect)
+				driver.metadata_buffer["artifact_id"] = art.my_effect.artifact_id
+				driver.metadata_buffer["artifact_effect_type"] = "[art.my_effect.effect_type]"
+				driver.metadata_buffer["artifact_effect_mode"] = "[art.my_effect.effect]"
+				driver.metadata_buffer["artifact_effectrange"] = "[art.my_effect.effectrange]"
 		driver.data_buffer = jointext(dat, "\[br\]\[br\]")
 		playsound(src, 'sound/effects/fastbeep.ogg', 20)
 		SSnano.update_uis(driver.NM)

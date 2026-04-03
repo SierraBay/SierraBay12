@@ -58,9 +58,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_POWER         /datum/tech/powerstorage
 #define RESEARCH_CYBERNETICS   /datum/tech/magnets
 
-var/global/list/explosion_watcher_list = list()
-
-
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 	//Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
@@ -78,6 +75,9 @@ var/global/list/explosion_watcher_list = list()
 	/// Values range from -50 to +50 for each corporation
 	/// Used to determine access to and cost of corporate tech nodes
 	var/list/corporation_reputation = list()
+
+	/// Tracks last compiled tech level per tech string ID (e.g. "materials", "engineering") for research report system
+	var/list/compiled_tech_levels = list()
 
 	/// List of design IDs banned from printing on fabricators
 	/// Designs in this list are hidden from protolathe/imprinter but visible in server controller
@@ -169,6 +169,14 @@ var/global/list/explosion_watcher_list = list()
 				. = TRUE // we actually updated something
 	known_research_file_ids |= O.known_research_file_ids
 	experiments.merge_with(O.experiments)
+	// Sync compiled tech levels (take higher values to prevent re-compilation exploits)
+	for(var/tech_type in O.compiled_tech_levels)
+		if(!(tech_type in compiled_tech_levels) || O.compiled_tech_levels[tech_type] > compiled_tech_levels[tech_type])
+			compiled_tech_levels[tech_type] = O.compiled_tech_levels[tech_type]
+	// Sync corporation reputation (take the higher value)
+	for(var/corp_id in O.corporation_reputation)
+		if(!(corp_id in corporation_reputation) || O.corporation_reputation[corp_id] > corporation_reputation[corp_id])
+			corporation_reputation[corp_id] = O.corporation_reputation[corp_id]
 	// Sync banned designs list from source
 	if(LAZYLEN(O.banned_designs))
 		banned_designs |= O.banned_designs
@@ -281,42 +289,57 @@ var/global/list/explosion_watcher_list = list()
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
 
+/datum/tech/materials
+	shortname = "Materials"
+	rare = 97       // 3500 thalers at level 8
+
 /datum/tech/engineering
 	name = "Engineering Research"
 	shortname = "Engineering"
 	desc = "Development of new and improved engineering parts."
 	id = RESEARCH_ENGINEERING
+	rare = 111      // 4000 thalers at level 8
+
+/datum/tech/phorontech
+	shortname = "Phoron"
+	rare = 167      // 6000 thalers at level 8
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	shortname = "Power Manipulation"
 	desc = "The various technologies behind the storage and generation of electicity."
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/bluespace
 	name = "'Blue-space' Technology"
 	shortname = "Blue-space"
 	desc = "Devices that utilize the sub-reality known as 'blue-space'"
+	rare = 222      // 8000 thalers at level 8
 
 /datum/tech/biotech
 	name = "Biological Technology"
 	shortname = "Biotech"
 	desc = "Deeper mysteries of life and organic substances."
 	id = RESEARCH_BIOTECH
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/magnets
 	name = "Robotics"
 	shortname = "Robotics"
 	desc = "The use of magnetic fields to make electrical devices."
+	rare = 167      // 6000 thalers at level 8
 
 /datum/tech/combat
 	name = "Combat Systems"
 	shortname = "Combat"
 	desc = "Offensive and defensive systems."
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/programming
 	name = "Data Theory"
 	shortname = "Data Theory"
 	desc = "Computer and artificial intelligence and data storage systems."
+	rare = 111      // 4000 thalers at level 8
 
 /datum/tech/esoteric
 	name = "Esoteric Technology"
@@ -325,6 +348,7 @@ var/global/list/explosion_watcher_list = list()
 	id = RESEARCH_ESOTERIC
 	shown = FALSE
 	item_tech_req = TECH_ESOTERIC
+	rare = 181      // 6500 thalers at level 8
 
 /obj/item/disk/tech_disk
 	name = "fabricator data disk"

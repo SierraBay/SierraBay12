@@ -1,10 +1,9 @@
-
-/*///////////////Circuit Imprinter (By Darem)//////////////////////// [SIERRA-REMOVE] - MODPACK_RND
+/*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
 using metal and glass, it uses glass and reagents (usually sulphuric acid).
 */
-/*
+
 /obj/machinery/r_n_d/circuit_imprinter
 	name = "circuit imprinter"
 	desc = "Accessed by a connected core fabricator console, it produces circuits from various materials and sulphuric acid."
@@ -178,4 +177,3 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 			if(new_item.matter && length(new_item.matter) > 0)
 				for(var/i in new_item.matter)
 					new_item.matter[i] = new_item.matter[i] * mat_efficiency
-*/

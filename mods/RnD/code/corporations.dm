@@ -128,7 +128,7 @@
 		if(RND_MISSION_CORP_HELTEK)
 			return "heltek_logo.png"
 		if(RND_MISSION_CORP_FTU)
-			return "ftu_logo.png"
+			return "ftulogo.png"
 	return null
 
 

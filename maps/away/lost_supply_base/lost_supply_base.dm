@@ -28,8 +28,8 @@
 
 /datum/map_template/ruin/away_site/lost_supply_base/after_load(z)
 	..()
-	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/supply_manifest, z)
-	spawn_derelict_mission_object(/obj/item/device/mission_sensor, z)
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/supply_manifest, z, /area/lost_supply_base)
+	spawn_derelict_mission_object(/obj/item/device/mission_sensor, z, /area/lost_supply_base)
 
 /obj/shuttle_landmark/nav_lost_supply_base/nav1
 	name = "Abandoned Supply Base Navpoint #1"

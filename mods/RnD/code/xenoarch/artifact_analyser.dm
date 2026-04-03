@@ -18,7 +18,7 @@
 /obj/machinery/artifact_analyser
 	name = "Anomaly Analyser"
 	desc = "A remote console that controls a linked radiocarbon spectrometer to study anomalous materials."
-	icon = 'icons/obj/machines/research/xenoarcheology_scanner.dmi'
+	icon = 'mods/RnD/icons/xenoarcheology_scanner.dmi'
 	icon_state = "xenoarch_console"
 	anchored = TRUE
 	density = TRUE

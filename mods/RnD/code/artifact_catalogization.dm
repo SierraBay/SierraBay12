@@ -133,6 +133,7 @@
 
 // =====================================================
 // R&D Console — artifact catalogization integration
+// Uses RDF scan files from research scanner instead of nearby artifacts
 // =====================================================
 
 /obj/machinery/computer/rdconsole
@@ -146,51 +147,63 @@
 	var/catalog_result_text = ""
 	/// Corporation for reward
 	var/catalog_reward_corp = null
-	/// Reference to the artifact being catalogized
-	var/obj/machinery/artifact/catalog_artifact = null
+	/// Artifact data from RDF scan file (stored as list of metadata values)
+	var/catalog_artifact_id = null
+	var/catalog_effect_type = 0
+	var/catalog_effect_mode = 0
+	var/catalog_effectrange = 0
 
-/// Find a nearby artifact suitable for catalogization
-/obj/machinery/computer/rdconsole/proc/find_nearby_artifact()
-	for(var/obj/machinery/artifact/A in range(3, src))
-		if(!A.my_effect)
+/// Check if an RDF file on the loaded disk contains artifact scan data
+/obj/machinery/computer/rdconsole/proc/find_artifact_rdf_files()
+	if(!disk)
+		return list()
+	var/list/result = list()
+	for(var/datum/computer_file/data/rdf/F in disk.stored_files)
+		if(!F.metadata)
 			continue
-		return A
-	return null
+		var/art_id = F.metadata["artifact_id"]
+		if(!art_id)
+			continue
+		if(files && (art_id in files.catalogized_artifact_ids))
+			continue
+		result += F
+	return result
 
-/// Check if a specific artifact can be catalogized (not already done)
-/obj/machinery/computer/rdconsole/proc/can_catalog_artifact(obj/machinery/artifact/A)
-	if(!A || !A.my_effect)
-		return FALSE
-	if(!files)
-		return FALSE
-	var/art_id = A.my_effect.artifact_id
-	if(art_id in files.catalogized_artifact_ids)
-		return FALSE
-	return TRUE
-
-/// Start artifact catalogization from console
-/obj/machinery/computer/rdconsole/proc/start_catalog(mob/living/user)
+/// Start artifact catalogization from an RDF file on disk
+/obj/machinery/computer/rdconsole/proc/start_catalog(mob/living/user, rdf_ref)
 	if(catalog_active)
 		to_chat(user, SPAN_WARNING("Каталогизация уже запущена."))
 		return
-
-	var/obj/machinery/artifact/A = find_nearby_artifact()
-	if(!A)
-		to_chat(user, SPAN_WARNING("Поблизости не обнаружено артефактов."))
+	if(!disk)
+		to_chat(user, SPAN_WARNING("Вставьте диск с данными сканирования артефакта."))
 		return
 
-	if(!can_catalog_artifact(A))
+	var/datum/computer_file/data/rdf/rdf_file = locate(rdf_ref) in disk.stored_files
+	if(!istype(rdf_file) || !rdf_file.metadata)
+		to_chat(user, SPAN_WARNING("Файл повреждён или не найден."))
+		return
+
+	var/art_id = rdf_file.metadata["artifact_id"]
+	if(!art_id)
+		to_chat(user, SPAN_WARNING("Файл не содержит данных сканирования артефакта."))
+		return
+
+	if(!files)
+		return
+	if(art_id in files.catalogized_artifact_ids)
 		to_chat(user, SPAN_WARNING("Этот артефакт уже каталогизирован."))
 		return
 
-	catalog_artifact = A
+	catalog_artifact_id = art_id
+	catalog_effect_type = text2num(rdf_file.metadata["artifact_effect_type"])
+	catalog_effect_mode = text2num(rdf_file.metadata["artifact_effect_mode"])
+	catalog_effectrange = text2num(rdf_file.metadata["artifact_effectrange"])
+
 	catalog_active = TRUE
 	catalog_step = 1
 	catalog_correct = 0
 	catalog_result_text = ""
-
-	// Determine reward corporation from the artifact's effect type
-	catalog_reward_corp = get_catalog_effect_corporation(A.my_effect.effect_type)
+	catalog_reward_corp = get_catalog_effect_corporation(catalog_effect_type)
 
 	to_chat(user, SPAN_NOTICE("Каталогизация артефакта начата. Следуйте инструкциям на консоли."))
 	SSnano.update_uis(src)
@@ -199,20 +212,19 @@
 /obj/machinery/computer/rdconsole/proc/do_catalog_step(mob/living/user, chosen_value)
 	if(!catalog_active || catalog_step < 1 || catalog_step > 3)
 		return
-	if(!catalog_artifact || QDELETED(catalog_artifact) || !catalog_artifact.my_effect)
+	if(!catalog_artifact_id)
 		cancel_catalog()
 		return
 
-	var/datum/artifact_effect/eff = catalog_artifact.my_effect
 	var/step_name = get_catalog_step_name(catalog_step)
 	var/is_correct = FALSE
 
 	switch(catalog_step)
 		if(1) // Effect type classification
 			var/chosen_type = text2num(chosen_value)
-			is_correct = (chosen_type == eff.effect_type)
+			is_correct = (chosen_type == catalog_effect_type)
 			var/chosen_name = get_catalog_effect_type_name(chosen_type)
-			var/correct_name = get_catalog_effect_type_name(eff.effect_type)
+			var/correct_name = get_catalog_effect_type_name(catalog_effect_type)
 			if(is_correct)
 				catalog_correct++
 				catalog_result_text += "<span class='good'>[step_name]: [chosen_name] — Верно!</span><br>"
@@ -221,9 +233,9 @@
 
 		if(2) // Activation mode
 			var/chosen_mode = text2num(chosen_value)
-			is_correct = (chosen_mode == eff.effect)
+			is_correct = (chosen_mode == catalog_effect_mode)
 			var/chosen_name = get_catalog_effect_mode_name(chosen_mode)
-			var/correct_name = get_catalog_effect_mode_name(eff.effect)
+			var/correct_name = get_catalog_effect_mode_name(catalog_effect_mode)
 			if(is_correct)
 				catalog_correct++
 				catalog_result_text += "<span class='good'>[step_name]: [chosen_name] — Верно!</span><br>"
@@ -231,7 +243,7 @@
 				catalog_result_text += "<span class='bad'>[step_name]: [chosen_name] — Неверно (правильно: [correct_name])</span><br>"
 
 		if(3) // Range assessment
-			var/correct_range = get_catalog_range_category(eff.effectrange)
+			var/correct_range = get_catalog_range_category(catalog_effectrange)
 			is_correct = (chosen_value == correct_range)
 			var/chosen_name = get_catalog_range_name(chosen_value)
 			var/correct_range_name = get_catalog_range_name(correct_range)
@@ -266,12 +278,12 @@
 			to_chat(user, SPAN_NOTICE("Каталогизация завершена, но классификация слишком неточна."))
 
 	// Mark this artifact as catalogized
-	if(catalog_artifact && catalog_artifact.my_effect && files)
-		files.catalogized_artifact_ids += catalog_artifact.my_effect.artifact_id
+	if(catalog_artifact_id && files)
+		files.catalogized_artifact_ids += catalog_artifact_id
 
 	catalog_active = FALSE
 	catalog_step = 0
-	catalog_artifact = null
+	catalog_artifact_id = null
 	SSnano.update_uis(src)
 
 /// Cancel artifact catalogization
@@ -281,5 +293,5 @@
 	catalog_correct = 0
 	catalog_result_text = ""
 	catalog_reward_corp = null
-	catalog_artifact = null
+	catalog_artifact_id = null
 	SSnano.update_uis(src)
