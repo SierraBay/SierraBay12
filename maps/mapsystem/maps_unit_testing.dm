@@ -69,3 +69,9 @@
 	var/list/area_purity_test_exempt_areas = list()
 
 /area/ship
+// Base stubs for away mission areas — full definitions live in maps/away/* (dev_mode only)
+/area/lar_maria
+/area/casino
+/area/meatstation
+/area/lost_supply_base
+/area/magshield

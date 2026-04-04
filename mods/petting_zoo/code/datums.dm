@@ -331,41 +331,45 @@
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
 	visible_message(SPAN_NOTICE("\The [src] бежит за [fetch_target]!"))
-	spawn(0)
-		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(fetch_target))
-			if(get_dist(src, fetch_target) <= 1 && src.z == fetch_target.z)
-				break
-			step_to(src, fetch_target)
-			sleep(5)
+	addtimer(new Callback(src, PROC_REF(cmd_fetch_loop), fetch_target, fetch_master), 0)
+	return TRUE
 
-		if(QDELETED(src) || stance != COMMANDED_MISC || QDELETED(fetch_target))
-			if(!QDELETED(src))
-				stance = COMMANDED_STOP
-				set_AI_busy(FALSE)
-			return
+/mob/living/simple_animal/hostile/commanded/proc/cmd_fetch_loop(obj/item/fetch_target, mob/fetch_master)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(fetch_target))
+		if(get_dist(src, fetch_target) <= 1 && src.z == fetch_target.z)
+			break
+		step_to(src, fetch_target)
+		sleep(5)
 
-		fetch_target.forceMove(src)
-		visible_message(SPAN_NOTICE("\The [src] подбирает [fetch_target]."))
-
-		if(!QDELETED(fetch_master))
-			while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(fetch_master))
-				if(get_dist(src, fetch_master) <= 1 && src.z == fetch_master.z)
-					break
-				step_to(src, fetch_master)
-				sleep(5)
-
-		if(!QDELETED(src) && !QDELETED(fetch_target))
-			var/turf/drop_loc = get_turf(!QDELETED(fetch_master) ? fetch_master : src)
-			fetch_target.forceMove(drop_loc)
-			if(!QDELETED(fetch_master))
-				visible_message(SPAN_NOTICE("\The [src] кладёт [fetch_target] у ног [fetch_master]."))
-			else
-				visible_message(SPAN_NOTICE("\The [src] роняет [fetch_target]."))
-
+	if(QDELETED(src) || stance != COMMANDED_MISC || QDELETED(fetch_target))
 		if(!QDELETED(src))
 			stance = COMMANDED_STOP
 			set_AI_busy(FALSE)
-	return TRUE
+		return
+
+	fetch_target.forceMove(src)
+	visible_message(SPAN_NOTICE("\The [src] подбирает [fetch_target]."))
+
+	if(!QDELETED(fetch_master))
+		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(fetch_master))
+			if(get_dist(src, fetch_master) <= 1 && src.z == fetch_master.z)
+				break
+			step_to(src, fetch_master)
+			sleep(5)
+
+	if(!QDELETED(src) && !QDELETED(fetch_target))
+		var/turf/drop_loc = get_turf(!QDELETED(fetch_master) ? fetch_master : src)
+		fetch_target.forceMove(drop_loc)
+		if(!QDELETED(fetch_master))
+			visible_message(SPAN_NOTICE("\The [src] кладёт [fetch_target] у ног [fetch_master]."))
+		else
+			visible_message(SPAN_NOTICE("\The [src] роняет [fetch_target]."))
+
+	if(!QDELETED(src))
+		stance = COMMANDED_STOP
+		set_AI_busy(FALSE)
 
 /// "бей" - животное атакует объект или структуру на которую указал мастер (middle-click)
 /mob/living/simple_animal/hostile/commanded/proc/hit_command(mob/speaker, text)
@@ -385,20 +389,24 @@
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
 	visible_message(SPAN_NOTICE("\The [src] бросается на [hit_target]!"))
-	spawn(0)
-		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(hit_target))
-			if(get_dist(src, hit_target) <= 1 && src.z == hit_target.z)
-				attack_target(hit_target)
-			else
-				step_to(src, hit_target)
-			sleep(5)
-
-		if(!QDELETED(src))
-			stance = COMMANDED_STOP
-			set_AI_busy(FALSE)
-			if(QDELETED(hit_target))
-				visible_message(SPAN_NOTICE("\The [src] расправляется с [target_name]."))
+	addtimer(new Callback(src, PROC_REF(cmd_hit_loop), hit_target, target_name), 0)
 	return TRUE
+
+/mob/living/simple_animal/hostile/commanded/proc/cmd_hit_loop(atom/hit_target, target_name)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(hit_target))
+		if(get_dist(src, hit_target) <= 1 && src.z == hit_target.z)
+			attack_target(hit_target)
+		else
+			step_to(src, hit_target)
+		sleep(5)
+
+	if(!QDELETED(src))
+		stance = COMMANDED_STOP
+		set_AI_busy(FALSE)
+		if(QDELETED(hit_target))
+			visible_message(SPAN_NOTICE("\The [src] расправляется с [target_name]."))
 
 /// "фас" - атаковать живого моба на которого указал мастер (middle-click)
 /mob/living/simple_animal/hostile/commanded/proc/fas_command(mob/speaker, text)
@@ -421,18 +429,22 @@
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
 	visible_message(SPAN_WARNING("\The [src] бросается на [T]!"))
-	spawn(0)
-		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(T) && T.stat != DEAD)
-			if(get_dist(src, T) <= 1 && src.z == T.z)
-				attack_target(T)
-			else
-				step_to(src, T)
-			sleep(5)
-
-		if(!QDELETED(src))
-			stance = COMMANDED_STOP
-			set_AI_busy(FALSE)
+	addtimer(new Callback(src, PROC_REF(cmd_fas_loop), T), 0)
 	return TRUE
+
+/mob/living/simple_animal/hostile/commanded/proc/cmd_fas_loop(mob/living/T)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(T) && T.stat != DEAD)
+		if(get_dist(src, T) <= 1 && src.z == T.z)
+			attack_target(T)
+		else
+			step_to(src, T)
+		sleep(5)
+
+	if(!QDELETED(src))
+		stance = COMMANDED_STOP
+		set_AI_busy(FALSE)
 
 /// "тащи" - существо тащит указанного (middle-click) моба к мастеру
 /mob/living/simple_animal/hostile/commanded/proc/drag_command(mob/speaker, text)
@@ -456,37 +468,41 @@
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
 	visible_message(SPAN_NOTICE("\The [src] бежит к [T] чтобы тащить его!"))
-	spawn(0)
-		// Фаза 1: добраться до цели
-		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(T))
-			if(get_dist(src, T) <= 1 && src.z == T.z)
-				break
-			step_to(src, T)
-			sleep(5)
+	addtimer(new Callback(src, PROC_REF(cmd_drag_loop), T, dest), 0)
+	return TRUE
 
-		if(QDELETED(src) || stance != COMMANDED_MISC || QDELETED(T))
-			if(!QDELETED(src))
-				stance = COMMANDED_STOP
-				set_AI_busy(FALSE)
-			return
+/mob/living/simple_animal/hostile/commanded/proc/cmd_drag_loop(mob/living/T, mob/dest)
+	set background = TRUE
+	if(QDELETED(src)) return
+	// Фаза 1: добраться до цели
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(T))
+		if(get_dist(src, T) <= 1 && src.z == T.z)
+			break
+		step_to(src, T)
+		sleep(5)
 
-		visible_message(SPAN_NOTICE("\The [src] хватает [T] и тащит к [dest]."))
-
-		// Фаза 2: тащить к мастеру — каждый шаг вручную тянем цель на предыдущую позицию
-		while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(dest) && !QDELETED(T))
-			if(get_dist(src, dest) <= 1 && src.z == dest.z)
-				break
-			var/turf/old_pos = get_turf(src)
-			step_to(src, dest)
-			if(!QDELETED(T) && get_turf(src) != old_pos)
-				T.forceMove(old_pos)
-			sleep(5)
-
+	if(QDELETED(src) || stance != COMMANDED_MISC || QDELETED(T))
 		if(!QDELETED(src))
-			visible_message(SPAN_NOTICE("\The [src] приводит [QDELETED(T) ? "добычу" : "[T]"] к [QDELETED(dest) ? "месту" : "[dest]"]."))
 			stance = COMMANDED_STOP
 			set_AI_busy(FALSE)
-	return TRUE
+		return
+
+	visible_message(SPAN_NOTICE("\The [src] хватает [T] и тащит к [dest]."))
+
+	// Фаза 2: тащить к мастеру — каждый шаг вручную тянем цель на предыдущую позицию
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(dest) && !QDELETED(T))
+		if(get_dist(src, dest) <= 1 && src.z == dest.z)
+			break
+		var/turf/old_pos = get_turf(src)
+		step_to(src, dest)
+		if(!QDELETED(T) && get_turf(src) != old_pos)
+			T.forceMove(old_pos)
+		sleep(5)
+
+	if(!QDELETED(src))
+		visible_message(SPAN_NOTICE("\The [src] приводит [QDELETED(T) ? "добычу" : "[T]"] к [QDELETED(dest) ? "месту" : "[dest]"]."))
+		stance = COMMANDED_STOP
+		set_AI_busy(FALSE)
 
 /// "туда" - существо бежит к указанной точке и остаётся там
 /mob/living/simple_animal/hostile/commanded/proc/goto_command(mob/speaker, text)
@@ -507,20 +523,24 @@
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
 	visible_message(SPAN_NOTICE("\The [src] бежит туда!"))
-	spawn(0)
-		while(!QDELETED(src) && stance == COMMANDED_MISC)
-			if(get_turf(src) == target_turf)
-				break
-			step_to(src, target_turf)
-			sleep(5)
-
-		if(!QDELETED(src))
-			if(stance == COMMANDED_MISC)
-				stance = COMMANDED_STOP
-			ai_holder.lose_follow()
-			ai_holder.remove_target()
-			visible_message(SPAN_NOTICE("\The [src] останавливается на месте."))
+	addtimer(new Callback(src, PROC_REF(cmd_goto_loop), target_turf), 0)
 	return TRUE
+
+/mob/living/simple_animal/hostile/commanded/proc/cmd_goto_loop(turf/target_turf)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && stance == COMMANDED_MISC)
+		if(get_turf(src) == target_turf)
+			break
+		step_to(src, target_turf)
+		sleep(5)
+
+	if(!QDELETED(src))
+		if(stance == COMMANDED_MISC)
+			stance = COMMANDED_STOP
+		ai_holder.lose_follow()
+		ai_holder.remove_target()
+		visible_message(SPAN_NOTICE("\The [src] останавливается на месте."))
 
 /// "способность" - использовать спецатаку существа
 /mob/living/simple_animal/hostile/commanded/proc/ability_command(mob/speaker, text)

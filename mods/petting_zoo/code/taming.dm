@@ -179,8 +179,7 @@
 	if(owner.ai_holder)
 		original_ai_holder_type = owner.ai_holder.type
 		original_can_flee = owner.ai_holder.can_flee
-	spawn(10 * 10)
-		decay_loop()
+	addtimer(new Callback(src, PROC_REF(decay_loop)), 10 * 10)
 
 /datum/taming/Destroy()
 	owner = null
@@ -310,14 +309,16 @@
 
 	if(!named_already)
 		named_already = TRUE
-		var/datum/taming/T = src
-		var/mob/living/simple_animal/O = owner
-		spawn(0)
-			if(QDELETED(T) || QDELETED(O) || QDELETED(tamer))
-				return
-			var/new_name = input(tamer, "Как назвать питомца? (оставьте пустым для имени по умолчанию)", "Имя питомца", O.name) as text|null
-			if(new_name && length(sanitize(new_name)) && !QDELETED(O))
-				O.name = sanitize(new_name)
+		addtimer(new Callback(src, PROC_REF(prompt_pet_name), tamer), 0)
+
+/datum/taming/proc/prompt_pet_name(mob/tamer)
+	set background = TRUE
+	if(QDELETED(src) || !owner || QDELETED(owner) || QDELETED(tamer))
+		return
+	var/mob/living/simple_animal/O = owner
+	var/new_name = input(tamer, "Как назвать питомца? (оставьте пустым для имени по умолчанию)", "Имя питомца", O.name) as text|null
+	if(new_name && length(sanitize(new_name)) && !QDELETED(O))
+		O.name = sanitize(new_name)
 
 // ============================================================
 // FEEDING
@@ -675,39 +676,37 @@
 	begin_manual_command()
 	visible_message(SPAN_NOTICE("\The [src] бежит к [target] чтобы тащить его сюда!"))
 
-	var/mob/living/simple_animal/A = src
-	var/mob/living/T = target
-	var/mob/dest = speaker
+	addtimer(new Callback(src, PROC_REF(do_drag_loop), target, speaker), 0)
 
-	spawn(0)
-		// Фаза 1: идти к цели
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(T))
-			if(get_dist(A, T) <= 1 && A.z == T.z)
-				break
-			step_to(A, T)
-			sleep(5)
+/mob/living/simple_animal/proc/do_drag_loop(mob/living/T, mob/dest)
+	set background = TRUE
+	if(QDELETED(src)) return
+	// Фаза 1: идти к цели
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(T))
+		if(get_dist(src, T) <= 1 && z == T.z)
+			break
+		step_to(src, T)
+		sleep(5)
 
-		if(QDELETED(A) || !A.fetch_in_progress || QDELETED(T))
-			if(!QDELETED(A)) A.end_manual_command()
-			return
+	if(QDELETED(src) || !fetch_in_progress || QDELETED(T))
+		if(!QDELETED(src)) end_manual_command()
+		return
 
-		A.visible_message(SPAN_NOTICE("\The [A] хватает [T] и тащит к [dest]."))
+	visible_message(SPAN_NOTICE("\The [src] хватает [T] и тащит к [dest]."))
 
-		// Фаза 2: тащить к мастеру — каждый шаг вручную тянем цель на предыдущую позицию животного
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(dest) && !QDELETED(T))
-			if(get_dist(A, dest) <= 1 && A.z == dest.z)
-				break
-			var/turf/old_pos = get_turf(A)
-			step_to(A, dest)
-			// Переместить жертву туда где стояло животное
-			if(!QDELETED(T) && get_turf(A) != old_pos)
-				T.forceMove(old_pos)
-			sleep(5)
+	// Фаза 2: тащить к мастеру — каждый шаг вручную тянем цель на предыдущую позицию животного
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(dest) && !QDELETED(T))
+		if(get_dist(src, dest) <= 1 && z == dest.z)
+			break
+		var/turf/old_pos = get_turf(src)
+		step_to(src, dest)
+		if(!QDELETED(T) && get_turf(src) != old_pos)
+			T.forceMove(old_pos)
+		sleep(5)
 
-		// Отпустить у ног мастера
-		if(!QDELETED(A))
-			A.visible_message(SPAN_NOTICE("\The [A] приводит [QDELETED(T) ? "добычу" : "[T]"] к [QDELETED(dest) ? "месту" : "[dest]"]."))
-			A.end_manual_command()
+	if(!QDELETED(src))
+		visible_message(SPAN_NOTICE("\The [src] приводит [QDELETED(T) ? "добычу" : "[T]"] к [QDELETED(dest) ? "месту" : "[dest]"]."))
+		end_manual_command()
 
 /// Бей — бежит к объекту на который указал мастер (middle-click) и атакует до уничтожения или отмены
 /mob/living/simple_animal/proc/do_hit_command(mob/speaker)
@@ -725,29 +724,31 @@
 	begin_manual_command()
 	visible_message(SPAN_NOTICE("\The [src] бросается на [hit_target]!"))
 
-	var/mob/living/simple_animal/A = src
+	addtimer(new Callback(src, PROC_REF(do_hit_loop), hit_target, target_name), 0)
 
-	spawn(0)
-		// Фаза 1: добраться до цели
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(hit_target))
-			if(get_dist(A, hit_target) <= 1 && A.z == hit_target.z)
-				break
-			step_to(A, hit_target)
-			sleep(5)
+/mob/living/simple_animal/proc/do_hit_loop(atom/hit_target, target_name)
+	set background = TRUE
+	if(QDELETED(src)) return
+	// Фаза 1: добраться до цели
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(hit_target))
+		if(get_dist(src, hit_target) <= 1 && z == hit_target.z)
+			break
+		step_to(src, hit_target)
+		sleep(5)
 
-		if(QDELETED(A) || !A.fetch_in_progress || QDELETED(hit_target))
-			if(!QDELETED(A)) A.end_manual_command()
-			return
+	if(QDELETED(src) || !fetch_in_progress || QDELETED(hit_target))
+		if(!QDELETED(src)) end_manual_command()
+		return
 
-		// Фаза 2: атаковать до уничтожения или отмены
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(hit_target))
-			A.attack_target(hit_target)
-			sleep(10)
+	// Фаза 2: атаковать до уничтожения или отмены
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(hit_target))
+		attack_target(hit_target)
+		sleep(10)
 
-		if(!QDELETED(A))
-			if(QDELETED(hit_target))
-				A.visible_message(SPAN_NOTICE("\The [A] расправляется с [target_name]."))
-			A.end_manual_command()
+	if(!QDELETED(src))
+		if(QDELETED(hit_target))
+			visible_message(SPAN_NOTICE("\The [src] расправляется с [target_name]."))
+		end_manual_command()
 
 /// Общий проц атаки моба — ручной цикл без AI
 /mob/living/simple_animal/proc/do_attack_mob_command(mob/living/attack_target)
@@ -757,19 +758,20 @@
 	begin_manual_command()
 	visible_message(SPAN_WARNING("\The [src] бросается на [attack_target]!"))
 
-	var/mob/living/simple_animal/A = src
-	var/mob/living/T = attack_target
+	addtimer(new Callback(src, PROC_REF(do_attack_loop), attack_target), 0)
 
-	spawn(0)
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(T) && T.stat != DEAD)
-			if(get_dist(A, T) <= 1 && A.z == T.z)
-				A.attack_target(T)
-			else
-				step_to(A, T)
-			sleep(5)
+/mob/living/simple_animal/proc/do_attack_loop(mob/living/T)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(T) && T.stat != DEAD)
+		if(get_dist(src, T) <= 1 && z == T.z)
+			attack_target(T)
+		else
+			step_to(src, T)
+		sleep(5)
 
-		if(!QDELETED(A))
-			A.end_manual_command()
+	if(!QDELETED(src))
+		end_manual_command()
 
 /// Фас — атаковать живого моба на которого указал мастер (middle-click)
 /mob/living/simple_animal/proc/do_fas_command(mob/speaker)
@@ -805,22 +807,24 @@
 	begin_manual_command()
 	visible_message(SPAN_NOTICE("\The [src] бежит туда!"))
 
-	var/mob/living/simple_animal/A = src
+	addtimer(new Callback(src, PROC_REF(do_goto_loop), target_turf), 0)
 
-	spawn(0)
-		while(!QDELETED(A) && A.fetch_in_progress)
-			if(get_turf(A) == target_turf)
-				break
-			step_to(A, target_turf)
-			sleep(5)
+/mob/living/simple_animal/proc/do_goto_loop(turf/target_turf)
+	set background = TRUE
+	if(QDELETED(src)) return
+	while(!QDELETED(src) && fetch_in_progress)
+		if(get_turf(src) == target_turf)
+			break
+		step_to(src, target_turf)
+		sleep(5)
 
-		if(!QDELETED(A))
-			// Остаться на месте — AI заморожен
-			if(A.ai_holder)
-				A.ai_holder.lose_follow()
-				A.ai_holder.remove_target()
-			A.fetch_in_progress = FALSE
-			A.visible_message(SPAN_NOTICE("\The [A] останавливается на месте."))
+	if(!QDELETED(src))
+		// Остаться на месте — AI заморожен
+		if(ai_holder)
+			ai_holder.lose_follow()
+			ai_holder.remove_target()
+		fetch_in_progress = FALSE
+		visible_message(SPAN_NOTICE("\The [src] останавливается на месте."))
 
 /// Способность — использовать спецатаку если она есть у этого существа
 /mob/living/simple_animal/proc/do_ability_command(mob/speaker)
@@ -854,43 +858,44 @@
 	begin_manual_command()
 	visible_message(SPAN_NOTICE("\The [src] бежит за [F]!"))
 
-	var/mob/living/simple_animal/A = src
-	var/mob/fetch_owner = speaker
+	addtimer(new Callback(src, PROC_REF(do_fetch_loop), F, speaker), 0)
 
-	spawn(0)
-		// Фаза 1: дойти до предмета
-		while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(F))
-			if(get_dist(A, F) <= 1 && A.z == F.z)
+/mob/living/simple_animal/proc/do_fetch_loop(obj/item/F, mob/fetch_owner)
+	set background = TRUE
+	if(QDELETED(src)) return
+	// Фаза 1: дойти до предмета
+	while(!QDELETED(src) && fetch_in_progress && !QDELETED(F))
+		if(get_dist(src, F) <= 1 && z == F.z)
+			break
+		step_to(src, F)
+		sleep(5)
+
+	if(QDELETED(src) || !fetch_in_progress || QDELETED(F))
+		if(!QDELETED(src)) end_manual_command()
+		return
+
+	// Подбирает
+	F.forceMove(src)
+	visible_message(SPAN_NOTICE("\The [src] подбирает [F]."))
+
+	// Фаза 2: нести к мастеру
+	if(!QDELETED(fetch_owner))
+		while(!QDELETED(src) && fetch_in_progress && !QDELETED(fetch_owner))
+			if(get_dist(src, fetch_owner) <= 1 && z == fetch_owner.z)
 				break
-			step_to(A, F)
+			step_to(src, fetch_owner)
 			sleep(5)
 
-		if(QDELETED(A) || !A.fetch_in_progress || QDELETED(F))
-			if(!QDELETED(A)) A.end_manual_command()
-			return
-
-		// Подбирает
-		F.forceMove(A)
-		A.visible_message(SPAN_NOTICE("\The [A] подбирает [F]."))
-
-		// Фаза 2: нести к мастеру
+	// Кладёт у ног
+	if(!QDELETED(src) && !QDELETED(F))
+		var/turf/drop_loc = get_turf(!QDELETED(fetch_owner) ? fetch_owner : src)
+		F.forceMove(drop_loc)
 		if(!QDELETED(fetch_owner))
-			while(!QDELETED(A) && A.fetch_in_progress && !QDELETED(fetch_owner))
-				if(get_dist(A, fetch_owner) <= 1 && A.z == fetch_owner.z)
-					break
-				step_to(A, fetch_owner)
-				sleep(5)
+			visible_message(SPAN_NOTICE("\The [src] кладёт [F] у ног [fetch_owner]."))
+		else
+			visible_message(SPAN_NOTICE("\The [src] роняет [F]."))
 
-		// Кладёт у ног
-		if(!QDELETED(A) && !QDELETED(F))
-			var/turf/drop_loc = get_turf(!QDELETED(fetch_owner) ? fetch_owner : A)
-			F.forceMove(drop_loc)
-			if(!QDELETED(fetch_owner))
-				A.visible_message(SPAN_NOTICE("\The [A] кладёт [F] у ног [fetch_owner]."))
-			else
-				A.visible_message(SPAN_NOTICE("\The [A] роняет [F]."))
-
-		if(!QDELETED(A)) A.end_manual_command()
+	if(!QDELETED(src)) end_manual_command()
 
 /// Intercept food use for taming
 /mob/living/simple_animal/can_use_item(obj/item/O, mob/user)

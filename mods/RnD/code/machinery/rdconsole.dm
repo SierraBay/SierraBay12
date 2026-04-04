@@ -621,16 +621,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
 		to_chat(user, SPAN_WARNING("Контракт недоступен."))
 		return
-	var/target_path = text2path(target_type_str)
-	if(!target_path)
-		to_chat(user, SPAN_WARNING("Файл RDF повреждён: неверный тип объекта."))
-		return
 	for(var/datum/derelict_mission_objective/O in M.objectives)
 		if(O.objective_type != "scan_object" || O.completed)
 			continue
 		if(M.away_z && scan_z != M.away_z)
 			continue
-		if(ispath(target_path, O.target_type))
+		var/type_str = "[O.target_type]"
+		if(target_type_str != type_str && !dd_hasprefix(target_type_str, "[type_str]/"))
+			continue
 			O.advance()
 			to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": данные сканирования приняты. ([O.get_status_text()])"))
 			disk.remove_file(rdf_file)
