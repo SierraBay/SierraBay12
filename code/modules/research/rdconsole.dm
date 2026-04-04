@@ -179,7 +179,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 1
 			return
 		screen = 0.0
-		spawn(50)
+		//spawn(50) ЕСЛИ БУДЕТЕ ВОЗВРАЩАТЬ, ОТКОМЕННЬТЕ ВСЕ СПАВН В ЭТОМ КОДЕ
 			if(!t_disk)
 				screen = 1
 				return
@@ -217,7 +217,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 1
 			return
 		screen = 0.0
-		spawn(50)
+		//spawn(50)
 			if(!d_disk)
 				screen = 1
 				return
@@ -286,7 +286,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			to_chat(usr, SPAN_NOTICE("You must connect to the network first."))
 		else
 			. = TOPIC_HANDLED
-			spawn(30)
+			//spawn(30)
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in SSmachines.machinery)
 						var/server_processed = 0
@@ -386,7 +386,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = 0.0
 		. = TOPIC_HANDLED
-		spawn(10)
+		//spawn(10)
 			SyncRDevices()
 			screen = 1.7
 			interact(user)
@@ -414,14 +414,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			screen = 0.0
 			qdel(files)
 			files = new
-			spawn(20)
+			//spawn(20)
 				screen = 1.6
 				interact(user)
 
 	else if (href_list["print"]) //Print research information
 		screen = 0.5
 		. = TOPIC_HANDLED
-		spawn(20)
+		//spawn(20)
 			var/obj/item/paper/PR = new/obj/item/paper
 			PR.name = "fabricator report"
 			PR.info = "<center><b>[station_name()] Fabricator Laboratory</b>"
@@ -434,7 +434,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			PR.info_links = PR.info
 			PR.icon_state = "paper_words"
 			PR.dropInto(loc)
-			spawn(10)
+			//spawn(10)
 				screen = ((text2num(href_list["print"]) == 2) ? 5.0 : 1.1)
 				interact(user)
 	else if (href_list["protolathe_search"])
