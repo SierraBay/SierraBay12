@@ -1,0 +1,4 @@
+author: Kartowkar (Fluffffy)
+changes:
+  - rscadd: Джаггернаут теперь может открывать шлюзы, через ctrl+shift клик
+delete-after: true
