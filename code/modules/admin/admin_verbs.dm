@@ -215,6 +215,7 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/view_runtimes,
 	/client/proc/cmd_analyse_health_context,
 	/client/proc/cmd_analyse_health_panel,
+	/client/proc/cmd_mod_say,
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
 	/client/proc/ping_webhook,

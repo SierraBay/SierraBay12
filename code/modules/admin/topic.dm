@@ -1330,7 +1330,7 @@
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_MOD|R_ADMIN))	return
+		if(!check_rights(R_MOD|R_ADMIN|R_DEBUG))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 		var/client/C = usr.client
@@ -1343,7 +1343,7 @@
 		C.jumptomob(M)
 
 	else if(href_list["adminplayerobservefollow"])
-		if(!check_rights(R_MOD|R_ADMIN))
+		if(!check_rights(R_MOD|R_ADMIN|R_DEBUG))
 			return
 
 		var/mob/M = locate(href_list["adminplayerobservefollow"])
