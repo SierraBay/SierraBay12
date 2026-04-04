@@ -3,6 +3,7 @@
 	name = "Away Sites Testing"
 	full_name = "Away Sites Testing Land"
 	path = "away_sites_testing"
+	dynamic_lighting = 0 // SSao runs out of memory across 68+ Z-levels in 32-bit BYOND
 
 	station_levels = list()
 	contact_levels = list()

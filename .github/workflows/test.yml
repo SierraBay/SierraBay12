@@ -181,14 +181,6 @@ jobs:
           key: "rust_g-${{ env.RUST_G_REPO }}-${{ env.RUST_G_VERSION }}"
       - name: Install rust_g
         run: ./scripts/install-rust_g.sh
-      - name: Increase swap
-        run: |
-          sudo swapoff /swapfile || true
-          sudo fallocate -l 4G /swapfile
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
-          free -h
       - name: Run Tests
         env:
           TEST: MAP
