@@ -48,14 +48,17 @@
 		/area/carp_racing
 	)
 
+// SSao exhausts BYOND's 32-bit heap across 68+ Z-levels loaded by this test.
+// Override fire() to be a no-op so AO is never processed for this build.
+/datum/controller/subsystem/ao/fire(resume, no_mc_tick)
+	queue.Cut()
+
 /datum/map/away_sites_testing/build_away_sites()
 	var/list/unsorted_sites = list_values(SSmapping.away_sites_templates)
 	var/list/sorted_sites = sortTim(unsorted_sites, GLOBAL_PROC_REF(cmp_sort_templates_tallest_to_shortest))
 	for (var/datum/map_template/ruin/away_site/A in sorted_sites)
 		A.load_new_z()
 		testing("Spawning [A] in [english_list(GetConnectedZlevels(world.maxz))]")
-	// SSao exhausts BYOND's 32-bit heap across 68+ Z-levels; skip AO processing in this test
-	SSao.queue.Cut()
 
 /proc/cmp_sort_templates_tallest_to_shortest(datum/map_template/a, datum/map_template/b)
 	return b.tallness - a.tallness
