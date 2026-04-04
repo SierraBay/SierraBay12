@@ -48,14 +48,6 @@
 		/area/carp_racing
 	)
 
-// SSao and SSlighting exhaust BYOND's 32-bit heap across 68+ Z-levels loaded by this test.
-// Override fire() to be a no-op so neither subsystem processes anything for this build.
-/datum/controller/subsystem/ao/fire(resume, no_mc_tick)
-	return
-
-/datum/controller/subsystem/lighting/fire(resumed, no_mc_tick)
-	return
-
 /datum/map/away_sites_testing/build_away_sites()
 	var/list/unsorted_sites = list_values(SSmapping.away_sites_templates)
 	var/list/sorted_sites = sortTim(unsorted_sites, GLOBAL_PROC_REF(cmp_sort_templates_tallest_to_shortest))
