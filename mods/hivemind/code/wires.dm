@@ -49,8 +49,7 @@
 
 /obj/wireweed/New()
 	..()
-	spawn(2)
-		update_neighbors()
+	addtimer(new Callback(src, PROC_REF(update_neighbors)), 2)
 
 	var/area/A = get_area(src)
 	if(!A)
@@ -94,13 +93,7 @@
 			var/turf/below = GetBelow(T)
 			if(master_node)
 				master_node.add_wireweed(child)
-			spawn(1)
-				child.dir = get_dir(loc, T) //actually this means nothing for wires, but need for animation
-				flick("spread_anim", child)
-				child.forceMove(below)
-				for(var/obj/wireweed/neighbor in range(1, child))
-					neighbor.update_neighbors()
-					break
+			addtimer(new Callback(src, PROC_REF(do_spread_anim), child, below, T, TRUE), 1)
 		else
 			return
 
@@ -114,12 +107,16 @@
 		var/obj/wireweed/child = new(T, min(get_current_health(), 30))
 		if(master_node)
 			master_node.add_wireweed(child)
-		spawn(1)
-			child.dir = get_dir(loc, T) //actually this means nothing for wires, but need for animation
-			flick("spread_anim", child)
-			child.forceMove(T)
-			for(var/obj/wireweed/neighbor in range(1, child))
-				neighbor.update_neighbors()
+		addtimer(new Callback(src, PROC_REF(do_spread_anim), child, T, T), 1)
+
+/obj/wireweed/proc/do_spread_anim(obj/wireweed/child, turf/dest, turf/dir_target, first_only = FALSE)
+	child.dir = get_dir(loc, dir_target) //actually this means nothing for wires, but need for animation
+	flick("spread_anim", child)
+	child.forceMove(dest)
+	for(var/obj/wireweed/neighbor in range(1, child))
+		neighbor.update_neighbors()
+		if(first_only)
+			break
 
 
 /obj/wireweed/proc/pulse(forceLeft, list/dirs)

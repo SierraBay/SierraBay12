@@ -186,86 +186,88 @@
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
 
 
-		spawn(round(proj_data.time) * 10) // in seconds
-			if(!telepad)
-				return
-			if(telepad.stat & src.is_powered())
-				return
-			teleporting = 0
-			teleport_cooldown = world.time + (power * 2)
-			teles_left -= 1
+		addtimer(new Callback(src, PROC_REF(do_teleport_delayed), user, target, trueX, trueY, A), round(proj_data.time) * 10)
 
-			// use a lot of power
-			use_power_oneoff(power * 10)
+/obj/machinery/computer/telescience/proc/do_teleport_delayed(mob/user, turf/target, trueX, trueY, area/A)
+	if(!telepad)
+		return
+	if(telepad.stat & src.is_powered())
+		return
+	teleporting = 0
+	teleport_cooldown = world.time + (power * 2)
+	teles_left -= 1
 
-			temp_msg = "Teleport successful.<BR>"
-			if(teles_left < 10)
-				temp_msg += "<BR>Calibration required soon."
-			else
-				temp_msg += "Data printed below."
+	// use a lot of power
+	use_power_oneoff(power * 10)
 
-			var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread()
-			sparks.set_up(5, 0, telepad)
-			sparks.start()
+	temp_msg = "Teleport successful.<BR>"
+	if(teles_left < 10)
+		temp_msg += "<BR>Calibration required soon."
+	else
+		temp_msg += "Data printed below."
 
-			var/turf/source = target
-			var/turf/dest = get_turf(telepad)
-			var/log_msg = ""
-			log_msg += ": [key_name(user)] has teleported "
+	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread()
+	sparks.set_up(5, 0, telepad)
+	sparks.start()
 
-			if(sending)
-				source = dest
-				dest = target
+	var/turf/source = target
+	var/turf/dest = get_turf(telepad)
+	var/log_msg = ""
+	log_msg += ": [key_name(user)] has teleported "
 
-			flick("pad-beam", telepad)
-			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
-			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
+	if(sending)
+		source = dest
+		dest = target
 
-							log_msg += "[key_name(L)] (on a chair), "
-						else
-							continue
-					else if(!isobserver(ROI))
+	flick("pad-beam", telepad)
+	playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+	for(var/atom/movable/ROI in source)
+		// if is anchored, don't let through
+		if(ROI.anchored)
+			if(isliving(ROI))
+				var/mob/living/L = ROI
+				if(L.buckled)
+					// TP people on office chairs
+					if(L.buckled.anchored)
 						continue
-				if(ismob(ROI))
-					var/mob/T = ROI
-					log_msg += "[key_name(T)], "
-				else
-					log_msg += "[ROI.name]"
-					if (istype(ROI, /obj/structure/closet))
-						var/obj/structure/closet/C = ROI
-						log_msg += " ("
-						for(var/atom/movable/Q as mob|obj in C)
-							if(ismob(Q))
-								log_msg += "[key_name(Q)], "
-							else
-								log_msg += "[Q.name], "
-						if (dd_hassuffix(log_msg, "("))
-							log_msg += "empty)"
-						else
-							//log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-							log_msg += ")"
-					log_msg += ", "
-				// ELAR's animation of human's telepoartation
-				if(ishuman(ROI))
-					animated_teleportation(ROI, dest)
-				else
-					do_teleport(ROI, dest)
 
-			if (dd_hassuffix(log_msg, ", "))
-				//log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-			else
-				log_msg += "nothing"
-			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
-			investigate_log(log_msg, "telesci")
-			updateDialog()
+					log_msg += "[key_name(L)] (on a chair), "
+				else
+					continue
+			else if(!isobserver(ROI))
+				continue
+		if(ismob(ROI))
+			var/mob/T = ROI
+			log_msg += "[key_name(T)], "
+		else
+			log_msg += "[ROI.name]"
+			if (istype(ROI, /obj/structure/closet))
+				var/obj/structure/closet/C = ROI
+				log_msg += " ("
+				for(var/atom/movable/Q as mob|obj in C)
+					if(ismob(Q))
+						log_msg += "[key_name(Q)], "
+					else
+						log_msg += "[Q.name], "
+				if (dd_hassuffix(log_msg, "("))
+					log_msg += "empty)"
+				else
+					//log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+					log_msg += ")"
+			log_msg += ", "
+		// ELAR's animation of human's telepoartation
+		if(ishuman(ROI))
+			animated_teleportation(ROI, dest)
+		else
+			do_teleport(ROI, dest)
+
+	if (dd_hassuffix(log_msg, ", "))
+		//log_msg = dd_limittext(log_msg, length(log_msg) - 2)
+	else
+		log_msg += "nothing"
+	log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
+	investigate_log(log_msg, "telesci")
+	updateDialog()
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(!(rotation || angle || z_co))
