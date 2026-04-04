@@ -61,4 +61,5 @@
 #include "code/chem_mine.dm"
 #include "code/sheetsnatcher.dm"
 #include "code/cell_rack.dm"
+#include "code/force_open_to_constructs.dm"
 #endif

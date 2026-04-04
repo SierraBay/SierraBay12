@@ -200,7 +200,7 @@
 /*
 	Animals
 */
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, use_in_world_flag, params) // SIERRA ADD: было  /mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
 	if (!..())
 		return
 	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
@@ -214,7 +214,7 @@
 		A.attack_animal(src)
 	else if (get_natural_weapon())
 		var/obj/item/weapon = get_natural_weapon()
-		weapon.resolve_attackby(A, src)
+		weapon.resolve_attackby(A, src, params) //SIERRA ADD: было "weapon.resolve_attackby(A, src)"
 
 
 /**
