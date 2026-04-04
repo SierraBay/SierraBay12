@@ -3,8 +3,6 @@
 	name = "Away Sites Testing"
 	full_name = "Away Sites Testing Land"
 	path = "away_sites_testing"
-	dynamic_lighting = 0 // SSao runs out of memory across 68+ Z-levels in 32-bit BYOND
-
 	station_levels = list()
 	contact_levels = list()
 	player_levels = list()
@@ -56,6 +54,8 @@
 	for (var/datum/map_template/ruin/away_site/A in sorted_sites)
 		A.load_new_z()
 		testing("Spawning [A] in [english_list(GetConnectedZlevels(world.maxz))]")
+	// SSao exhausts BYOND's 32-bit heap across 68+ Z-levels; skip AO processing in this test
+	SSao.queue.Cut()
 
 /proc/cmp_sort_templates_tallest_to_shortest(datum/map_template/a, datum/map_template/b)
 	return b.tallness - a.tallness
