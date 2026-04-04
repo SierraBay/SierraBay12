@@ -51,15 +51,10 @@
 // SSao and SSlighting exhaust BYOND's 32-bit heap across 68+ Z-levels loaded by this test.
 // Override fire() to be a no-op so neither subsystem processes anything for this build.
 /datum/controller/subsystem/ao/fire(resume, no_mc_tick)
-	queue.Cut()
+	return
 
 /datum/controller/subsystem/lighting/fire(resumed, no_mc_tick)
-	light_queue.Cut()
-	corner_queue.Cut()
-	overlay_queue.Cut()
-	lq_idex = 1
-	cq_idex = 1
-	oq_idex = 1
+	return
 
 /datum/map/away_sites_testing/build_away_sites()
 	var/list/unsorted_sites = list_values(SSmapping.away_sites_templates)
