@@ -558,7 +558,7 @@
 		do_goto_command(speaker)
 		return
 
-	if(findtext(text, "охраняй") && istype(ai_holder, /datum/ai_holder/tamed))
+	if(findtext(text, "охраняй") || findtext(text, "защищай"))
 		fetch_in_progress = FALSE
 		ai_holder.hostile = TRUE
 		ai_holder.leader = speaker

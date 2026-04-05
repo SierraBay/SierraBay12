@@ -106,6 +106,10 @@
 /mob/living/simple_animal/hostile/commanded/proc/commanded_stop() //basically a proc that runs whenever we are asked to stay put. Probably going to remain unused.
 	return
 
+/// Sends command acknowledgement to all mobs in visual range of the pet.
+/mob/living/simple_animal/hostile/commanded/proc/cmd_feedback(mob/speaker, msg)
+	visible_message(SPAN_NOTICE("\The [src] [msg]"))
+
 /mob/living/simple_animal/hostile/commanded/proc/listen(mob/speaker, text)
 	// Прямые keyword-проверки вместо цикла по known_commands — надёжнее для multi-word команд
 	if(findtext(text, "забудь хозяина"))
@@ -130,9 +134,7 @@
 		sit_command(speaker, text)
 	else if(findtext(text, "апорт"))
 		fetch_command(speaker, text)
-	else if(findtext(text, "бей"))
-		hit_command(speaker, text)
-	else if(findtext(text, "фас"))
+	else if(findtext(text, "бей") || findtext(text, "фас"))
 		fas_command(speaker, text)
 	else if(findtext(text, "тащи"))
 		drag_command(speaker, text)
@@ -181,6 +183,7 @@
 	stance = STANCE_ATTACK
 	if(findtext(text,"всех") || findtext(text,"всё") || findtext(text,"всё живое"))
 		allowed_targets = list("everyone")
+		cmd_feedback(speaker, "готов атаковать всех.")
 		return TRUE
 
 	var/list/targets = get_targets_by_name(text)
@@ -188,6 +191,8 @@
 	for(var/target in targets)
 		allowed_targets |= target
 
+	if(length(targets))
+		cmd_feedback(speaker, "готов атаковать.")
 	return length(targets) != 0
 
 /mob/living/simple_animal/hostile/commanded/proc/stay_command(mob/speaker, text)
@@ -196,6 +201,7 @@
 	set_AI_busy(TRUE)
 	walk_to(src,0)
 	ai_holder.lose_follow()
+	cmd_feedback(speaker, "останавливается на месте.")
 	return TRUE
 
 /mob/living/simple_animal/hostile/commanded/proc/stop_command(mob/speaker, text)
@@ -207,6 +213,7 @@
 	target_mob = null //gotta stop SOMETHIN
 	stance = STANCE_IDLE
 	set_AI_busy(FALSE)
+	cmd_feedback(speaker, "прекращает свои действия.")
 	return TRUE
 
 /mob/living/simple_animal/hostile/commanded/proc/follow_command(mob/speaker, text)
@@ -225,6 +232,7 @@
 	friends |= weakref(follow_who)
 	set_AI_busy(FALSE)
 	ai_holder.set_follow(follow_who)
+	cmd_feedback(speaker, "начинает следовать за [follow_who].")
 	return TRUE
 
 /mob/living/simple_animal/hostile/commanded/proc/guard_command(mob/living/carbon/speaker, text)
@@ -236,6 +244,7 @@
 		friends |= weakref(target_mob)
 		set_AI_busy(FALSE)
 		ai_holder.set_follow(speaker)
+		cmd_feedback(speaker, "встаёт на охрану [speaker].")
 		return TRUE
 
 	var/list/targets = get_targets_by_name(text)
@@ -252,12 +261,14 @@
 	target_mob = pick(targets)
 	set_AI_busy(FALSE)
 	ai_holder.set_follow(target_mob)
+	cmd_feedback(speaker, "встаёт на охрану.")
 	return TRUE
 
 /mob/living/simple_animal/hostile/commanded/proc/forget_target_command(mob/speaker, text)
 	allowed_targets = list()
 	ai_holder.target  = null
 	target_mob = null //gotta stop SOMETHIN
+	cmd_feedback(speaker, "забывает цель.")
 	return TRUE
 
 /mob/living/simple_animal/hostile/commanded/proc/forget_master_command(mob/speaker, text)
@@ -265,6 +276,7 @@
 		return FALSE
 	friends -= weakref(master)
 
+	cmd_feedback(speaker, "смотрит потерянно...")
 	master = null // I`m alone, again, maybe my name is Hachiko?
 	owner_mob = null
 	ai_holder.leader = null
@@ -285,6 +297,7 @@
 		return FALSE
 	master = targets[1]
 	friends |= weakref(master)
+	cmd_feedback(speaker, "начинает слушаться [master].")
 	return TRUE
 
 /// "голос" - animal makes its characteristic sound
@@ -371,107 +384,87 @@
 		stance = COMMANDED_STOP
 		set_AI_busy(FALSE)
 
-/// "бей" - животное атакует объект или структуру на которую указал мастер (middle-click)
-/mob/living/simple_animal/hostile/commanded/proc/hit_command(mob/speaker, text)
-	var/mob/living/L = speaker
-	var/atom/hit_target = null
-	if(L.pointed_atom && !QDELETED(L.pointed_atom) && !isliving(L.pointed_atom))
-		hit_target = L.pointed_atom
-	L.pointed_atom = null
-
-	if(!hit_target)
-		visible_message(SPAN_NOTICE("\The [src] ждёт команды — укажите на объект (средняя кнопка мыши)."))
-		return TRUE
-
-	var/target_name = "[hit_target]"
-	stance = COMMANDED_MISC
-	walk_to(src, 0)
-	ai_holder.lose_follow()
-	set_AI_busy(TRUE)
-	visible_message(SPAN_NOTICE("\The [src] бросается на [hit_target]!"))
-	addtimer(new Callback(src, PROC_REF(cmd_hit_loop), hit_target, target_name), 0)
-	return TRUE
-
-/mob/living/simple_animal/hostile/commanded/proc/cmd_hit_loop(atom/hit_target, target_name)
-	set background = TRUE
-	if(QDELETED(src)) return
-	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(hit_target))
-		if(get_dist(src, hit_target) <= 1 && src.z == hit_target.z)
-			attack_target(hit_target)
-		else
-			step_to(src, hit_target)
-		sleep(5)
-
-	if(!QDELETED(src))
-		stance = COMMANDED_STOP
-		set_AI_busy(FALSE)
-		if(QDELETED(hit_target))
-			visible_message(SPAN_NOTICE("\The [src] расправляется с [target_name]."))
-
-/// "фас" - атаковать живого моба на которого указал мастер (middle-click)
+/// "бей" / "фас" - атаковать указанную цель (middle-click): моба или объект
 /mob/living/simple_animal/hostile/commanded/proc/fas_command(mob/speaker, text)
 	var/mob/living/L = speaker
-	var/mob/living/target = null
-	if(L.pointed_atom && isliving(L.pointed_atom) && !QDELETED(L.pointed_atom))
+	var/atom/target = null
+	if(L.pointed_atom && !QDELETED(L.pointed_atom) && L.pointed_atom != src)
 		target = L.pointed_atom
 	L.pointed_atom = null
 
 	if(!target)
-		visible_message(SPAN_NOTICE("\The [src] ждёт команды — укажите на существо (средняя кнопка мыши)."))
+		visible_message(SPAN_NOTICE("\The [src] ждёт команды — укажите на цель (средняя кнопка мыши)."))
 		return TRUE
-	if((weakref(target) in friends) || (target in friends))
+	if(isliving(target) && ((weakref(target) in friends) || (target in friends)))
 		visible_message(SPAN_NOTICE("\The [src] отказывается нападать на друга."))
 		return TRUE
 
-	var/mob/living/T = target
 	stance = COMMANDED_MISC
 	walk_to(src, 0)
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
-	visible_message(SPAN_WARNING("\The [src] бросается на [T]!"))
-	addtimer(new Callback(src, PROC_REF(cmd_fas_loop), T), 0)
+	visible_message(SPAN_WARNING("\The [src] бросается на [target]!"))
+	addtimer(new Callback(src, PROC_REF(cmd_fas_loop), target), 0)
 	return TRUE
 
-/mob/living/simple_animal/hostile/commanded/proc/cmd_fas_loop(mob/living/T)
+/mob/living/simple_animal/hostile/commanded/proc/cmd_fas_loop(atom/target)
 	set background = TRUE
 	if(QDELETED(src)) return
-	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(T) && T.stat != DEAD)
-		if(get_dist(src, T) <= 1 && src.z == T.z)
-			attack_target(T)
+	var/target_name = "[target]"
+	while(!QDELETED(src) && stance == COMMANDED_MISC && !QDELETED(target))
+		if(isliving(target) && (target:stat == DEAD))
+			break
+		if(get_dist(src, target) <= 1 && src.z == target.z)
+			attack_target(target)
 		else
-			step_to(src, T)
+			step_to(src, target)
 		sleep(5)
 
 	if(!QDELETED(src))
 		stance = COMMANDED_STOP
 		set_AI_busy(FALSE)
+		if(QDELETED(target))
+			visible_message(SPAN_NOTICE("\The [src] расправляется с [target_name]."))
 
-/// "тащи" - существо тащит указанного (middle-click) моба к мастеру
+/// "тащи" - существо тащит указанного (middle-click) моба или предмет к мастеру
 /mob/living/simple_animal/hostile/commanded/proc/drag_command(mob/speaker, text)
 	var/mob/living/L = speaker
-	var/mob/living/target = null
-	if(L.pointed_atom && isliving(L.pointed_atom) && !QDELETED(L.pointed_atom))
-		target = L.pointed_atom
+	var/atom/movable/target = null
+	if(L.pointed_atom && !QDELETED(L.pointed_atom))
+		var/atom/pointed = L.pointed_atom
+		if(isliving(pointed) && pointed != speaker && pointed != src)
+			target = pointed
+		else if(isitem(pointed))
+			var/obj/item/I = pointed
+			if(!I.anchored)
+				target = I
 	L.pointed_atom = null
 
-	if(!target || target == src || target == speaker)
-		visible_message(SPAN_NOTICE("\The [src] ждёт команды — укажите на существо (средняя кнопка мыши)."))
-		return TRUE
-	if(target.mob_size > mob_size)
-		visible_message(SPAN_NOTICE("\The [src] смотрит на [target] — слишком тяжёлый, не осилит."))
+	if(!target)
+		visible_message(SPAN_NOTICE("\The [src] ждёт команды — укажите на существо или предмет (средняя кнопка мыши)."))
 		return TRUE
 
-	var/mob/living/T = target
+	if(isliving(target))
+		var/mob/living/T = target
+		if(T.mob_size > mob_size)
+			visible_message(SPAN_NOTICE("\The [src] смотрит на [target] — слишком тяжёлый, не осилит."))
+			return TRUE
+	else
+		var/obj/item/I = target
+		if(I.w_class > mob_size)
+			visible_message(SPAN_NOTICE("\The [src] смотрит на [target] — слишком тяжёлый, не осилит."))
+			return TRUE
+
 	var/mob/dest = master ? master : speaker
 	stance = COMMANDED_MISC
 	walk_to(src, 0)
 	ai_holder.lose_follow()
 	set_AI_busy(TRUE)
-	visible_message(SPAN_NOTICE("\The [src] бежит к [T] чтобы тащить его!"))
-	addtimer(new Callback(src, PROC_REF(cmd_drag_loop), T, dest), 0)
+	visible_message(SPAN_NOTICE("\The [src] бежит к [target] чтобы тащить его!"))
+	addtimer(new Callback(src, PROC_REF(cmd_drag_loop), target, dest), 0)
 	return TRUE
 
-/mob/living/simple_animal/hostile/commanded/proc/cmd_drag_loop(mob/living/T, mob/dest)
+/mob/living/simple_animal/hostile/commanded/proc/cmd_drag_loop(atom/movable/T, mob/dest)
 	set background = TRUE
 	if(QDELETED(src)) return
 	// Фаза 1: добраться до цели
