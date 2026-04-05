@@ -3,7 +3,7 @@
 	set desc = "Fetch logfiles from data/logs"
 	set category = "Admin"
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
 	var/path = browse_files("data/logs/")
