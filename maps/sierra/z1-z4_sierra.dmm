@@ -5096,7 +5096,7 @@
 "jCR" = (/obj/structure/catwalk,/obj/decal/cleanable/dirt,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/random/trash,/turf/simulated/floor/plating,/area/maintenance/seconddeck/hangar)
 "jCU" = (/turf/simulated/wall/prepainted,/area/crew_quarters/actor/stage)
 "jCW" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/steel_ridged,/area/engineering/atmos/burnout)
-"jDc" = (/obj/machinery/r_n_d/server/core,/obj/machinery/atmospherics/unary/vent_scrubber/on,/obj/machinery/camera/network/research{c_tag = "Research - Servers"},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/bluegrid,/area/rnd/servers)
+"jDc" = (/obj/machinery/r_n_d/server/core/sierra,/obj/machinery/atmospherics/unary/vent_scrubber/on,/obj/machinery/camera/network/research{c_tag = "Research - Servers"},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/bluegrid,/area/rnd/servers)
 "jDd" = (/obj/landmark/start{name = "Security Cadet"},/obj/item/stool/padded/red,/obj/machinery/atmospherics/unary/vent_scrubber/on{dir = 8},/turf/simulated/floor/tiled/steel_grid,/area/security/sierra/equipment)
 "jDi" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden{dir = 4},/obj/floor_decal/borderfloorblack/corner{dir = 8},/obj/floor_decal/corner/lightgrey/bordercorner{dir = 8},/turf/simulated/floor/tiled/dark,/area/crew_quarters/dockingstarboard)
 "jDk" = (/obj/structure/ladder,/obj/structure/lattice,/turf/simulated/open,/area/maintenance/seconddeck/aftport)

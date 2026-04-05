@@ -61,7 +61,6 @@
 		data["scanner_rpm"] = round(spec.scanner_rpm)
 		data["scanner_temperature"] = round(spec.scanner_temperature)
 		data["coolant_usage_rate"] = "[spec.coolant_usage_rate]"
-		spec.update_coolant()
 		data["unused_coolant_abs"] = round(spec.fresh_coolant)
 		data["unused_coolant_per"] = round(spec.fresh_coolant / spec.reagents.maximum_volume * 100)
 		data["coolant_purity"] = "[spec.coolant_purity * 100]"

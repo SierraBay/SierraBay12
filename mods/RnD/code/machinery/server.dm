@@ -512,3 +512,14 @@
 	id_with_upload_string = "1;3"
 	id_with_download_string = "1;3"
 	server_id = 1
+
+// Sierra variant: starts with all Nanotrasen technologies pre-researched.
+// Used on the NanoTrasen vessel SSV Sierra.
+/obj/machinery/r_n_d/server/core/sierra
+
+/obj/machinery/r_n_d/server/core/sierra/Initialize()
+	. = ..()
+	files.SetCorporationReputation(RND_MISSION_CORP_NANOTRASEN, 50)
+	for(var/datum/technology/T in SSresearch.all_tech_nodes)
+		if(T.required_corp_id == RND_MISSION_CORP_NANOTRASEN)
+			files.UnlockTechology(T, force = TRUE)

@@ -185,7 +185,7 @@
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 5
 	required_tech_levels = list()
-	cost = 2000
+	cost = 3000
 
 	unlocks_designs = list(
 		"bullpup",
@@ -231,7 +231,7 @@
 	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
 	min_reputation = 15
 	required_tech_levels = list()
-	cost = 3000
+	cost = 10000
 
 	unlocks_designs = list(
 		"EMP",
@@ -318,7 +318,7 @@
 	required_corp_id = RND_MISSION_CORP_HELTEK
 	min_reputation = 5
 	required_tech_levels = list()
-	cost = 2000
+	cost = 4000
 
 	unlocks_designs = list(
 		"heltek_la700",
@@ -339,7 +339,7 @@
 	required_corp_id = RND_MISSION_CORP_HELTEK
 	min_reputation = 10
 	required_tech_levels = list()
-	cost = 2500
+	cost = 3500
 
 	unlocks_designs = list(
 		"heltek_thunderclap"

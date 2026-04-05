@@ -186,110 +186,115 @@
 
 // ============================================================
 // BIO CELL (meatstation / Vey-Med)
-// Connect cable → bio-cell multiplies power on nearby cable → player measures wire
-// → calculates bio-conversion ratio → inputs via multitool on cell → correct = success, wrong = EMP
+// Place on cable node → secure with wrench → cell generates power into the network.
+// Measure power on the wire with a multitool to deduce the bio-conversion coefficient.
+// Use a PDA with research scanner installed on the cell to input the coefficient.
+// Correct input (±0.05) → calibration report spawns. Wrong → EMP.
+// Wrench again to disconnect.
 // ============================================================
 
 /obj/structure/derelict_mission_artifact/bio_cell
 	name = "biological power cell prototype"
 	icon_state = "biocell"
-	desc = "Экспериментальная ксенофлоральная биоэнергетическая ячейка. Органические филаменты внутри пульсируют слабым биолюминесцентным свечением. Подключите кабель, измерьте мощность на проводе мультитулом и введите коэффициент биоконверсии."
+	desc = "Экспериментальная ксенофлоральная биоэнергетическая ячейка. Органические филаменты внутри пульсируют слабым биолюминесцентным свечением. Установите на кабельный узел, закрепите гаечным ключом, измерьте коэффициент биоконверсии мультитулом и подтвердите данные сканнером КПК."
 	density = TRUE
 	anchored = FALSE
 
-	var/connected = FALSE
-	var/measured = FALSE
-	var/power_multiplier = 0         // 1.20 - 2.00, randomized
-	var/reference_power = 0          // Power snapshot at connection time
-	var/obj/structure/cable/connected_cable
+	var/power_gen = 30000             // Base power output in watts
+	var/power_multiplier = 0          // 1.20 - 2.00, randomized at spawn
+	var/calibrated = FALSE            // TRUE after correct coefficient input
+	var/obj/structure/cable/connected_cable = null
 
 /obj/structure/derelict_mission_artifact/bio_cell/New()
 	..()
 	power_multiplier = 1.2 + (rand(0, 80) / 100.0)
 
 /obj/structure/derelict_mission_artifact/bio_cell/Destroy()
-	if(connected && connected_cable)
+	if(anchored && connected_cable)
 		STOP_PROCESSING(SSobj, src)
 		connected_cable = null
 	return ..()
 
 /obj/structure/derelict_mission_artifact/bio_cell/Process()
-	if(connected && connected_cable && connected_cable.powernet)
-		connected_cable.powernet.avail += reference_power * (power_multiplier - 1)
-	else if(connected)
+	if(!connected_cable || !connected_cable.powernet)
+		connected_cable = null
+		anchored = FALSE
 		STOP_PROCESSING(SSobj, src)
+		return
+	connected_cable.powernet.avail += power_gen * power_multiplier
 
 /obj/structure/derelict_mission_artifact/bio_cell/examine(mob/user)
 	. = ..()
-	if(!connected)
-		to_chat(user, SPAN_NOTICE("Ячейка неактивна. Подключите кабель для активации."))
-	else if(!measured)
-		to_chat(user, SPAN_NOTICE("Кабель подключён — энергия поступает в сеть. Измерьте мощность на проводе мультитулом, вычислите коэффициент биоконверсии и введите его."))
+	if(!anchored)
+		to_chat(user, SPAN_NOTICE("Ячейка отключена. Установите её на кабельный узел и закрепите гаечным ключом."))
+	else if(!calibrated)
+		to_chat(user, SPAN_NOTICE("Ячейка активна. Мощность в сеть: [round(power_gen * power_multiplier / 1000, 0.1)] кВт. Требуется калибровка — измерьте коэффициент мультитулом и введите его через КПК со сканером."))
 	else
-		to_chat(user, SPAN_NOTICE("Коэффициент биоконверсии подтверждён. Данные записаны."))
+		to_chat(user, SPAN_NOTICE("Ячейка активна и откалибрована. Мощность в сеть: [round(power_gen * power_multiplier / 1000, 0.1)] кВт."))
 
 /obj/structure/derelict_mission_artifact/bio_cell/use_tool(obj/item/tool, mob/living/user, list/click_params)
-	// Step 1: cable_coil → connect to nearest cable and start pumping power
-	if(istype(tool, /obj/item/stack/cable_coil))
-		if(connected)
-			to_chat(user, SPAN_WARNING("Кабель уже подключён."))
-			return TRUE
-		var/obj/item/stack/cable_coil/coil = tool
-		if(coil.amount < 1)
-			to_chat(user, SPAN_WARNING("Катушка кабеля пуста."))
-			return TRUE
-		// Find a cable on our turf
-		var/obj/structure/cable/C = locate(/obj/structure/cable) in get_turf(src)
-		if(!C)
-			to_chat(user, SPAN_WARNING("Под ячейкой нет силового кабеля. Проложите провод под ячейкой."))
-			return TRUE
-		to_chat(user, SPAN_NOTICE("Вы начинаете подключать кабель к [src]..."))
-		if(!do_after(user, 3 SECONDS, src))
-			return TRUE
-		coil.use(1)
-		connected = TRUE
-		connected_cable = C
-		if(C.powernet)
-			reference_power = C.powernet.avail
+	// Wrench — connect to cable node or disconnect
+	if(istype(tool, /obj/item/wrench))
+		if(anchored)
+			to_chat(user, SPAN_NOTICE("Вы откручиваете [src] от кабельного узла..."))
+			if(!do_after(user, 2 SECONDS, src))
+				return TRUE
+			anchored = FALSE
+			connected_cable = null
+			STOP_PROCESSING(SSobj, src)
+			icon_state = "biocell"
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			to_chat(user, SPAN_NOTICE("Ячейка отключена от сети."))
+			visible_message(SPAN_NOTICE("[src] тускнеет, когда [user] откручивает её."))
 		else
-			reference_power = 0
-		START_PROCESSING(SSobj, src)
-		to_chat(user, SPAN_NOTICE("Кабель подключён. Ячейка начала модифицировать энергопоток. Измерьте мощность на проводе мультитулом."))
-		visible_message(SPAN_NOTICE("[src] ярко пульсирует когда [user] подключает кабель."))
+			var/turf/T = get_turf(src)
+			var/obj/structure/cable/C = T.get_cable_node()
+			if(!C)
+				to_chat(user, SPAN_WARNING("Нет кабельного узла. Проложите кабель с точкой соединения (узлом) под ячейкой."))
+				return TRUE
+			if(!C.powernet)
+				to_chat(user, SPAN_WARNING("Кабельный узел не подключён к сети. Подсоедините провод к источнику питания."))
+				return TRUE
+			to_chat(user, SPAN_NOTICE("Вы закручиваете [src] на кабельный узел..."))
+			if(!do_after(user, 2 SECONDS, src))
+				return TRUE
+			anchored = TRUE
+			connected_cable = C
+			icon_state = "biocell_active"
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			to_chat(user, SPAN_NOTICE("Ячейка закреплена. Мощность в сеть: [round(power_gen * power_multiplier / 1000, 0.1)] кВт. Введите коэффициент биоконверсии через КПК со сканером."))
+			visible_message(SPAN_NOTICE("[src] ярко пульсирует, когда [user] закрепляет её на кабеле."))
+			START_PROCESSING(SSobj, src)
 		return TRUE
 
-	// Step 2: multitool → input bio-conversion ratio
-	if(istype(tool, /obj/item/device/multitool))
-		if(!connected)
-			to_chat(user, SPAN_WARNING("Ячейка не подключена. Сначала подключите кабель."))
+	// PDA with research scanner — calibration input
+	if(istype(tool, /obj/item/modular_computer))
+		var/obj/item/modular_computer/pda = tool
+		if(!istype(pda.scanner, /obj/item/stock_parts/computer/scanner/research))
+			to_chat(user, SPAN_WARNING("Для калибровки требуется КПК с установленным модулем полевого сканера."))
 			return TRUE
-		if(measured)
-			to_chat(user, SPAN_NOTICE("Коэффициент биоконверсии уже подтверждён: [round(power_multiplier, 0.01)]x."))
+		if(!anchored)
+			to_chat(user, SPAN_WARNING("Ячейка не подключена к сети. Сначала закрепите её на кабельном узле."))
 			return TRUE
-		var/input_value = input(user, "Введите измеренный коэффициент биоконверсии:", "Биоячейка") as null|num
+		if(calibrated)
+			to_chat(user, SPAN_NOTICE("Ячейка уже откалибрована. Коэффициент биоконверсии: [round(power_multiplier, 0.01)]x."))
+			return TRUE
+		var/input_value = input(user, "Введите измеренный коэффициент биоконверсии:", "Биоячейка — Калибровка") as null|num
 		if(!input_value || !user.Adjacent(src))
 			return TRUE
 		if(abs(input_value - power_multiplier) <= 0.05)
-			// Correct!
-			measured = TRUE
-			to_chat(user, SPAN_NOTICE("Калибровка подтверждена:"))
-			to_chat(user, SPAN_NOTICE("  Коэффициент биоконверсии: [round(power_multiplier, 0.01)]x"))
-			to_chat(user, SPAN_NOTICE("  Источник: ксенофлоральная биоконверсия"))
-			to_chat(user, SPAN_NOTICE("  Статус: СТАБИЛЬНЫЙ"))
-			to_chat(user, SPAN_NOTICE("Данные записаны. Vey-Med ожидает отчёт."))
-			visible_message(SPAN_NOTICE("[user] подтверждает калибровку [src]."))
+			calibrated = TRUE
 			research_progress = 100
+			to_chat(user, SPAN_NOTICE("Калибровка подтверждена. Коэффициент биоконверсии: [round(power_multiplier, 0.01)]x. Источник: ксенофлоральная биоконверсия."))
+			visible_message(SPAN_NOTICE("[user] завершает калибровку [src]."))
+			// Spawn the deliverable sample required by the mission (target_item_type = biocell_sample)
+			new /obj/item/derelict_mission_sample/biocell_sample(get_turf(src))
 		else
-			// Wrong — EMP!
 			to_chat(user, SPAN_DANGER("ОШИБКА КАЛИБРОВКИ! Неверный коэффициент — электромагнитный выброс!"))
 			visible_message(SPAN_DANGER("[src] испускает электромагнитный импульс!"))
 			empulse(src, 1, 3)
 		return TRUE
 
-	// Block modular computer (research scanner)
-	if(istype(tool, /obj/item/modular_computer))
-		to_chat(user, SPAN_WARNING("Подключите кабель, измерьте мощность на проводе мультитулом и введите коэффициент биоконверсии."))
-		return TRUE
 	return ..()
 
 // ============================================================

@@ -194,6 +194,9 @@
 	..()
 	name = "Missile payload prototype ([item_name])"
 
+/datum/design/item/weapon/missile_payload
+	build_type = MECHFAB
+
 /datum/design/item/weapon/missile_payload/antimissile
 	id = "anti-missile"
 	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)

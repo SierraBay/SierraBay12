@@ -1,9 +1,12 @@
 /obj/item/stock_parts/computer/scanner/robotic
 	name = "robotic scanner module"
 	desc = "A robotic scanner module. It is used to analyse the integrity of synthetic components."
+	scan_beam_color = "#ce7a4d" //[SIERRA-ADD] RND
 
 /obj/item/stock_parts/computer/scanner/robotic/do_on_afterattack(mob/user, atom/target, proximity)
 	if(!can_use_scanner(user, target, proximity))
+		return
+	if(!do_scan_animation(user, target)) //[SIERRA-ADD] RND
 		return
 
 	var/scan_type = roboscan(target, user)
