@@ -1,0 +1,320 @@
+/* ============================================================
+   CHARACTER SETUP — SHIP TERMINAL 2314
+   starmap_background mod — overrides common.css
+   ============================================================ */
+
+/* -- CSS custom properties -- */
+:root {
+	--bg:          #0d1017;
+	--bg-panel:    #111520;
+	--bg-btn:      #171c28;
+	--bg-hover:    #1e2535;
+	--bg-active:   #253045;
+	--fg:          #b8c2d0;
+	--fg-dim:      #556070;
+	--accent:      #6a90b8;
+	--accent-dim:  rgba(106,144,184,0.35);
+	--accent-glow: rgba(106,144,184,0.10);
+	--amber:       #c89030;
+	--green:       #50a868;
+	--red:         #c04848;
+	--border:      #1e2838;
+	--border-glow: rgba(106,144,184,0.15);
+}
+
+/* -- Base -- */
+html, body {
+	background: var(--bg);
+	color: var(--fg);
+	font-family: 'Segoe UI', 'Liberation Sans', Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.55;
+	margin: 0;
+}
+
+
+/* -- Title bar -- */
+.uiTitleWrapper {
+	background: #0a0d14;
+	border-bottom: 1px solid var(--border);
+}
+
+.uiTitle {
+	color: #8aaac8;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	padding: 7px 10px;
+}
+
+.uiTitle::before {
+	content: ">_ ";
+	color: var(--accent);
+	opacity: 0.5;
+	font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* -- Main wrapper -- */
+.uiWrapper {
+	background: var(--bg);
+}
+
+.uiContent {
+	padding: 6px 6px 6px 8px;
+}
+
+/* -- Slot/tab bar (JS assigns id="cmd-bar" to the first <center>) -- */
+#cmd-bar {
+	background: var(--bg-panel);
+	border: 1px solid var(--border);
+	border-radius: 2px;
+	padding: 4px 10px;
+	margin-bottom: 5px;
+}
+
+/* -- Buttons and links -- */
+a, a:link, a:visited, a:active,
+.linkOn, .linkOff, input {
+	background: var(--bg-btn);
+	border: 1px solid var(--border);
+	color: #8aaec8;
+	border-radius: 2px;
+	padding: 1px 4px;
+	text-decoration: none;
+	transition: background 0.08s, border-color 0.08s, color 0.08s;
+	display: inline-block;
+	font-size: 12px;
+}
+
+a:hover {
+	background: var(--bg-hover);
+	color: #c0d8f0;
+	border-color: var(--accent);
+}
+
+/* Active / selected */
+.linkOn,
+a.linkOn:link, a.linkOn:visited, a.linkOn:active, a.linkOn:hover {
+	background: var(--bg-active);
+	border-color: var(--accent);
+	color: #a8c8e8;
+	box-shadow: inset 0 0 4px rgba(106,144,184,0.15);
+}
+
+/* Disabled */
+.linkOff,
+a.linkOff:link, a.linkOff:visited, a.linkOff:active, a.linkOff:hover {
+	background: #0a0c11;
+	border-color: #1a2030;
+	color: #607888;
+	opacity: 0.75;
+	cursor: default;
+	box-shadow: none;
+}
+
+/* White variant */
+a.white, a.white:link, a.white:visited, a.white:active {
+	background: var(--bg-btn);
+	color: #6a9abb;
+	border-color: var(--border);
+}
+a.white:hover {
+	background: var(--bg-hover);
+	color: var(--accent);
+	border-color: var(--accent-dim);
+}
+
+/* Gold / grey variants */
+a.gold, a.gold:link, a.gold:visited, a.gold:active {
+	color: var(--amber);
+	border-color: #302000;
+	background: #0d0800;
+}
+a.gold:hover {
+	background: #1a1000;
+	color: #ffcc44;
+	border-color: var(--amber);
+}
+
+a.gold.linkOn, a.gold.linkOn:link, a.gold.linkOn:visited, a.gold.linkOn:active, a.gold.linkOn:hover {
+	color: var(--amber);
+	background: #261900;
+	border-color: var(--amber);
+	box-shadow: inset 0 0 4px rgba(255, 166, 0, 0.2);
+}
+
+a.gray, a.gray:link, a.gray:visited, a.gray:active {
+	color: #405060;
+	border-color: #111c28;
+}
+a.gray:hover {
+	color: #7090a8;
+	border-color: #2a4060;
+}
+
+/* -- Status / info panels -- */
+.notice {
+	background: #060f08;
+	color: #5a9a58;
+	border-left: 2px solid #1a5a18;
+	padding: 3px 8px;
+	margin: 2px 0;
+}
+
+.warning {
+	background: #100a02;
+	color: #b88828;
+	border-left: 2px solid var(--amber);
+	padding: 3px 8px;
+}
+
+.danger {
+	background: #100406;
+	color: #b83838;
+	border-left: 2px solid var(--red);
+	padding: 3px 8px;
+}
+
+.good    { color: var(--green); }
+.bad     { color: var(--red); }
+.mild    { color: var(--amber); }
+.average { color: #8888aa; }
+.highlight { color: var(--accent); }
+
+/* -- Section dividers -- */
+hr {
+	border: none;
+	height: 1px;
+	background: var(--border);
+	margin: 5px 0;
+}
+
+/* -- Headings -- */
+h1, h2, h3, h4, h5, h6 {
+	color: #8aaac8;
+	font-size: 12px;
+	font-weight: bold;
+	border-bottom: 1px solid var(--border);
+	padding-bottom: 2px;
+	margin: 8px 0 4px 0;
+}
+
+/* -- Tables -- */
+table {
+	border-collapse: collapse;
+}
+
+th {
+	background: #0c1018;
+	color: #7a98b8;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 3px 7px;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+}
+
+td {
+	padding: 2px 6px;
+	border-bottom: 1px solid #0a1020;
+}
+
+tr:nth-child(even) td {
+	background: rgba(0, 20, 40, 0.4);
+}
+
+tr.hover:hover td, tr:hover td.hover {
+	background: var(--bg-hover);
+}
+
+tr.stripe td {
+	background: #070c18;
+}
+
+.disabled td, td.disabled {
+	opacity: 0.35;
+	color: var(--fg-dim);
+}
+
+.data {
+	border: 1px solid var(--border);
+}
+
+.data th, .data td {
+	border: 1px solid #0c1822;
+}
+
+/* -- Status display box -- */
+.statusDisplay {
+	background: #030510;
+	border: 1px solid #1a3558;
+	color: #3a78aa;
+	padding: 4px 8px;
+}
+
+/* -- Block element -- */
+.block {
+	display: block;
+	border: 1px solid var(--border);
+	padding: 4px 8px;
+	margin: 2px 0;
+	background: var(--bg-panel);
+}
+
+/* -- Progress bars -- */
+.progressBar {
+	background: #080d18;
+	border: 1px solid var(--border);
+}
+
+.progressFill {
+	background: linear-gradient(to right, #004488, var(--accent));
+}
+
+/* -- Scrollbars (Chromium) -- */
+::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: #03050c;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #1a2a40;
+	border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--accent-dim);
+}
+
+/* -- Colored text dt_* classes -- */
+.dt_1 { color: #3a88df; }
+.dt_2 { color: #2ab8a0; }
+.dt_3 { color: #d8a840; }
+.dt_4 { color: #d84088; }
+.dt_a { color: var(--red); }
+
+/* -- Blinking cursor (added by JS to .uiTitle) -- */
+.cursor {
+	display: inline-block;
+	animation: terminal-blink 1.2s step-start infinite;
+	color: #6a90b8;
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-weight: normal;
+	opacity: 0.7;
+}
+
+@keyframes terminal-blink {
+	0%, 100% { opacity: 1; }
+	50%       { opacity: 0; }
+}
+
+/* -- Selected state variants from common.css -- */
+.linkOn.selected  { box-shadow: 0 0 8px var(--accent-dim); }
+.linkOff.selected { box-shadow: none; }

@@ -1,0 +1,4 @@
+author: GarryFlint
+changes:
+  - bugfix: Исправлена ошибка загрузки интерфейсов NanoUI
+delete-after: true
