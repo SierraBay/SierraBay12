@@ -200,7 +200,8 @@
 		"left_light_arm",
 		"right_light_leg",
 		"left_light_leg",
-		"sphere_body"
+		"sphere_body",
+		"treads"
 	)
 
 /datum/technology/cybernetics/mech_machinery_xion
@@ -436,7 +437,7 @@
 	required_corp_id = RND_MISSION_CORP_SHELLGUARD
 	min_reputation = 0
 	required_tech_levels = list()
-	cost = 1800
+	cost = 800
 
 	unlocks_designs = list(
 		"mech_software_weapons"
@@ -547,30 +548,13 @@
 		"rig_cooler"
 	)
 
-/datum/technology/cybernetics/exosuit_armoured_tracks_shellguard
-	name = "Exosuit Armoured Tracks (Shellguard)"
-	desc = "Heavy-duty armoured track propulsion."
-	id = "exosuit_armoured_tracks_shellguard"
-
-	x = 0.7
-	y = 0.5
-	icon = "mechloader"
-
-	required_corp_id = RND_MISSION_CORP_SHELLGUARD
-	min_reputation = 0
-	required_tech_levels = list()
-	cost = 1800
-
-	unlocks_designs = list(
-		"treads"
-	)
 
 /datum/technology/cybernetics/hi_koloss_design_shellguard
 	name = "Hi-Koloss Design (Shellguard)"
 	desc = "Heavy combat exosuit construction blueprints."
 	id = "hi_koloss_design_shellguard"
 
-	x = 0.8
+	x = 0.7
 	y = 0.5
 	icon = "mechheavy"
 

@@ -13,6 +13,7 @@
 	. = tokens
 
 /datum/persistent/research/ProcessAndApplyTokens(list/tokens)
+/*[SIERRA-REMOVE]
 	for (var/list/entry in tokens)
 		if (prob(10)) //small chance to keep all progress from previous round
 			break
@@ -47,7 +48,7 @@
 						current_techs.Cut(first_index + 1, 0)
 
 						entry["tree"] = current_techs
-
+*///[/SIERRA-REMOVE] RND
 
 	for (var/list/entry in tokens)
 		var/_z = entry["z"]
