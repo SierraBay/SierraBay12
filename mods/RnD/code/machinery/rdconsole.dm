@@ -1150,12 +1150,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/tech_value = 0
 			for(var/i = compiled + 1 to max_level)
 				tech_value += i * rare
+			tech_value *= 15
 			report_tech_data += list(list("name" = tech_name, "level" = max_level, "compiled" = compiled, "new_levels" = new_levels, "value" = tech_value))
 			report_delta += new_levels
 			report_value += tech_value
 		data["report_tech_data"] = report_tech_data
 		data["report_delta"] = report_delta
-		data["report_value"] = report_value
+		data["report_value"] = (report_value * 15)
 		data["can_compile"] = (report_delta > 0)
 		data["report_collapsed"] = report_collapsed
 

@@ -103,12 +103,10 @@ SUBSYSTEM_DEF(supply)
 
 				// [SIERRA-ADD] RnD Invoice — check for a valid R&D invoice before selling contents
 				var/obj/item/paper/manifest/rnd_invoice/rnd_slip = null
-				for(var/atom in CR)
-					if(istype(atom, /obj/item/paper/manifest/rnd_invoice))
-						var/obj/item/paper/manifest/rnd_invoice/S = atom
-						if(!S.is_copy && LAZYLEN(S.stamped) && S.target_account_number)
-							rnd_slip = S
-							break
+				for(var/obj/item/paper/manifest/rnd_invoice/S in CR)
+					if(!S.is_copy && LAZYLEN(S.stamped) && S.target_account_number)
+						rnd_slip = S
+						break
 				var/crate_earnings = 0  // accumulated points for R&D invoice redirect
 				// [/SIERRA-ADD]
 

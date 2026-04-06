@@ -196,7 +196,6 @@ var/global/list/rnd_tech_categories = list(
 					"defence_systems_shellguard",
 					"security_augments_shellguard",
 					"augment_weaponry_shellguard",
-					"exosuit_armoured_tracks_shellguard",
 					"hi_koloss_design_shellguard"
 				)
 			),
