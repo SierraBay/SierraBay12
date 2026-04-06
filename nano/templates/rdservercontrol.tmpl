@@ -221,26 +221,28 @@ Used In File(s): \code\modules\research\server.dm
 		<div class="srvSectionContent srvDataList srvDataList--designs">
 			{{if data.require_filter}}
 				<div class="srvEmpty">Выберите категорию или воспользуйтесь поиском для просмотра дизайнов</div>
-			{{else if data.design_groups && data.design_groups.length}}
-				{{for data.design_groups}}
-				<div class="srvCategoryGroup">
-					<div class="srvCategoryLabel">{{:value.category_name}}</div>
-					{{for value.designs}}
-					<div class="srvDataRow {{:value.banned ? 'srvDataRow--banned' : ''}}">
-						<span class="srvDataName">
-							{{if value.banned}}<span class="srvBannedIcon">&#9888;</span>{{/if}}
-							{{:value.name}}
-						</span>
-						<div class="srvDataActions">
-							{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.id}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
-							{{:helper.link("На диск", 'disk', {'download_design_to_disk' : value.ref}, data.has_disk && !data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
+			{{else}}
+				{{if data.design_groups && data.design_groups.length}}
+					{{for data.design_groups}}
+					<div class="srvCategoryGroup">
+						<div class="srvCategoryLabel">{{:value.category_name}}</div>
+						{{for value.designs}}
+						<div class="srvDataRow {{:value.banned ? 'srvDataRow--banned' : ''}}">
+							<span class="srvDataName">
+								{{if value.banned}}<span class="srvBannedIcon">&#9888;</span>{{/if}}
+								{{:value.name}}
+							</span>
+							<div class="srvDataActions">
+								{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.id}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
+								{{:helper.link("На диск", 'disk', {'download_design_to_disk' : value.ref}, data.has_disk && !data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
+							</div>
 						</div>
+						{{/for}}
 					</div>
 					{{/for}}
-				</div>
-				{{/for}}
-			{{else}}
-				<div class="srvEmpty">Ничего не найдено</div>
+				{{else}}
+					<div class="srvEmpty">Ничего не найдено</div>
+				{{/if}}
 			{{/if}}
 		</div>
 	</div>
