@@ -147,7 +147,7 @@
 	description = "Пассажирский лайнер с казино дрейфует в секторе. Просканируйте игровые автоматы и доставьте ядро развлекательного ИИ для Ward-Takahashi."
 	target_item_type = /obj/item/derelict_mission_sample/entertainment_ai
 	objective_templates = list(
-		list("type" = "scan_object", "description" = "Просканировать игровые автоматы (машины/механизмы). Загрузить RDF-файлы в R&D консоль с флешки", "target_type" = /obj/machinery, "count" = 2),
+		list("type" = "scan_object", "description" = "Просканировать игровые автоматы (рулетка, однорукий бандит и др.). Загрузить RDF-файлы в R&D консоль с флешки", "target_type" = /obj/structure/casino, "count" = 2),
 		list("type" = "retrieve_item", "description" = "Упаковать ядро развлекательного ИИ и сдать через дронпад", "target_type" = /obj/item/derelict_mission_sample/entertainment_ai, "count" = 1)
 	)
 

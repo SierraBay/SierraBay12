@@ -63,6 +63,11 @@
 	return ..()
 
 /obj/machinery/drone_pad/rd_mission/attempt_to_transport(obj/target, mob/user, obj/item/device/drone_designator/designator)
+	// Проверяем привязку к R&D консоли до любых других действий
+	if(!linked_console || QDELETED(linked_console))
+		to_chat(user, SPAN_WARNING("Дрон пад не привязан к R&D консоли. Используйте мультитул для привязки перед отправкой."))
+		return FALSE
+
 	// Проверяем доступ
 	if(!allowed(user))
 		to_chat(user, SPAN_WARNING("Недостаточно доступа для использования миссионного дрон пада."))

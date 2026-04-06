@@ -443,48 +443,54 @@
 				data["design_search"] = design_search_text
 				data["selected_design_category"] = selected_design_category
 
-				// Collect all categories and group designs
+				// Always collect category list (lightweight pass, no ref building)
 				var/list/all_categories = list()
-				var/list/categorized_designs = list() // cat_name = list(designs)
-
 				for(var/datum/design/D in temp_server.files.known_designs)
 					if(D.starts_unlocked)
 						continue
-					if(design_search_text && !findtext(D.name, design_search_text))
-						continue
-
 					var/cat_name = "Unspecified"
 					if(LAZYLEN(D.category))
 						cat_name = D.category[1]
 					all_categories |= cat_name
 
-					if(selected_design_category && selected_design_category != cat_name)
-						continue
-
-					if(!categorized_designs[cat_name])
-						categorized_designs[cat_name] = list()
-					var/list/cat_list = categorized_designs[cat_name]
-					cat_list += list(list(
-						"name" = D.name,
-						"id" = D.id,
-						"ref" = "\ref[D]",
-						"banned" = (D.id in temp_server.files.banned_designs)
-					))
-
-				// Build category filter list
 				var/list/cat_filter = list()
 				for(var/cat in all_categories)
 					cat_filter += list(list("id" = cat, "name" = cat))
 				data["design_categories"] = cat_filter
 
-				// Build grouped output
-				var/list/grouped = list()
-				for(var/cat_name in categorized_designs)
-					grouped += list(list(
-						"category_name" = cat_name,
-						"designs" = categorized_designs[cat_name]
-					))
-				data["design_groups"] = grouped
+				// Only build design list when a category or search filter is active
+				// (sending all designs at once causes "Invalid string length" in NanoUI)
+				if(selected_design_category || design_search_text)
+					var/list/categorized_designs = list()
+					for(var/datum/design/D in temp_server.files.known_designs)
+						if(D.starts_unlocked)
+							continue
+						if(design_search_text && !findtext(D.name, design_search_text))
+							continue
+						var/cat_name = "Unspecified"
+						if(LAZYLEN(D.category))
+							cat_name = D.category[1]
+						if(selected_design_category && selected_design_category != cat_name)
+							continue
+						if(!categorized_designs[cat_name])
+							categorized_designs[cat_name] = list()
+						var/list/cat_list = categorized_designs[cat_name]
+						cat_list += list(list(
+							"name" = D.name,
+							"id" = D.id,
+							"ref" = "\ref[D]",
+							"banned" = (D.id in temp_server.files.banned_designs)
+						))
+					var/list/grouped = list()
+					for(var/cat_name in categorized_designs)
+						grouped += list(list(
+							"category_name" = cat_name,
+							"designs" = categorized_designs[cat_name]
+						))
+					data["design_groups"] = grouped
+				else
+					data["design_groups"] = list()
+					data["require_filter"] = 1
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)

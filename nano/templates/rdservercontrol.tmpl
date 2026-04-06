@@ -219,7 +219,9 @@ Used In File(s): \code\modules\research\server.dm
 
 	<div class="srvSection">
 		<div class="srvSectionContent srvDataList srvDataList--designs">
-			{{if data.design_groups && data.design_groups.length}}
+			{{if data.require_filter}}
+				<div class="srvEmpty">Выберите категорию или воспользуйтесь поиском для просмотра дизайнов</div>
+			{{else if data.design_groups && data.design_groups.length}}
 				{{for data.design_groups}}
 				<div class="srvCategoryGroup">
 					<div class="srvCategoryLabel">{{:value.category_name}}</div>
@@ -238,7 +240,7 @@ Used In File(s): \code\modules\research\server.dm
 				</div>
 				{{/for}}
 			{{else}}
-				<div class="srvEmpty">{{:data.design_search ? 'Ничего не найдено' : 'Нет известных дизайнов'}}</div>
+				<div class="srvEmpty">Ничего не найдено</div>
 			{{/if}}
 		</div>
 	</div>

@@ -629,11 +629,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/type_str = "[O.target_type]"
 		if(target_type_str != type_str && !dd_hasprefix(target_type_str, "[type_str]/"))
 			continue
-			O.advance()
-			to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": данные сканирования приняты. ([O.get_status_text()])"))
-			disk.remove_file(rdf_file)
-			SSnano.update_uis(src)
-			return
+		O.advance()
+		to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": данные сканирования приняты. ([O.get_status_text()])"))
+		disk.remove_file(rdf_file)
+		SSnano.update_uis(src)
+		return
 	to_chat(user, SPAN_WARNING("Данные сканирования не соответствуют целям выбранного контракта."))
 
 /obj/machinery/computer/rdconsole/proc/submit_digital_photo(mob/user, photo_ref, mission_ref)

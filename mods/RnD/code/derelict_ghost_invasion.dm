@@ -24,6 +24,18 @@ var/global/list/derelict_z_to_mission = list()     // "[z]" -> /datum/derelict_m
 	to_chat(target, SPAN_BOLD(FONT_LARGE("You have been assigned to defend this location.")))
 	to_chat(target, SPAN_BOLD("Attack any intruders on sight. You do not remember your past life."))
 
+// Sends a ghost role offer to ONE specific ghost for ONE specific mob.
+// Used instead of request_player() to avoid broadcasting all mobs to all observers.
+/datum/ghosttrap/derelict_crew/proc/notify_single_ghost(mob/observer/ghost/O, mob/living/target, request_string, request_timeout)
+	if(!O?.client || !target)
+		return
+	// Register timeout once per target (may be called before any timeout is set)
+	if(request_timeout && !request_timeouts[target])
+		request_timeouts[target] = world.time + request_timeout
+		GLOB.destroyed_event.register(target, src, TYPE_PROC_REF(/datum/ghosttrap, unregister_target))
+	to_chat(O, SPAN_BOLD(FONT_LARGE("[request_string] <a href='byond://?src=\ref[src];candidate=\ref[O];target=\ref[target]'>(Occupy)</a> ([ghost_follow_link(target, O)])")))
+	sound_to(O, 'sound/effects/ding2.ogg')
+
 // ============================================================
 // First-Visit Detection
 // ============================================================
@@ -79,13 +91,33 @@ var/global/list/derelict_z_to_mission = list()     // "[z]" -> /datum/derelict_m
 	var/max_count = cfg?.ghost_mob_count || 0
 	var/count = max_count > 0 ? min(max_count, length(eligible)) : length(eligible)
 
-	var/datum/ghosttrap/trap = get_ghost_trap("derelict crew")
+	var/datum/ghosttrap/derelict_crew/trap = get_ghost_trap("derelict crew")
 	if(!trap)
 		return
 
+	// Collect eligible ghost observers in one pass (avoids per-mob nested loop)
+	var/list/eligible_ghosts = list()
+	for(var/mob/observer/ghost/O in GLOB.player_list)
+		if(!O.client)
+			continue
+		if(O.client.get_preference_value(/datum/client_preference/notify_ghost_trap) == GLOB.PREF_NO)
+			continue
+		if(!trap.assess_candidate(O, null, FALSE, TRUE)) // no_target=TRUE: only check bans
+			continue
+		eligible_ghosts += O
+
+	eligible_ghosts = shuffle(eligible_ghosts)
+
+	if(!length(eligible_ghosts))
+		return
+
+	// Round-robin: distribute mobs among ghosts.
+	// If mobs > ghosts, some ghosts get more than one offer.
+	// Each mob still goes to exactly one ghost, preventing double-occupation races.
 	for(var/i = 1 to count)
 		var/mob/living/target = eligible[i]
-		trap.request_player(target, \
+		var/mob/observer/ghost/O = eligible_ghosts[((i - 1) % length(eligible_ghosts)) + 1]
+		trap.notify_single_ghost(O, target, \
 			"Derelict crew on [mission.away_site_name] needs a mind! ([target.name])", \
 			60 SECONDS)
 
