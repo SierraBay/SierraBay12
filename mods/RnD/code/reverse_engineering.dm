@@ -62,19 +62,38 @@
 	new_design.build_type = PROTOLATHE
 	new_design.category = list("Reverse Engineered")
 
-	// Determine quality based on user's science skill
-	var/skill_value = 0
-	if(ishuman(user))
-		skill_value = user.get_skill_value(SKILL_SCIENCE)
+	// Calculate item difficulty:
+	// = max tech level among all origin_tech entries
+	// + 1 for each additional tech beyond the first (multi-tech penalty)
+	var/max_tech_level = 0
+	var/tech_count = 0
+	if(I.origin_tech && length(I.origin_tech))
+		for(var/tech in I.origin_tech)
+			var/lvl = max(1, round(I.origin_tech[tech]))
+			if(lvl > max_tech_level)
+				max_tech_level = lvl
+			tech_count++
+	if(!max_tech_level)
+		max_tech_level = 1
+	var/difficulty = max_tech_level + max(0, tech_count - 1)
 
-	// Calculate quality
-	// SKILL_BASIC (1) = 30-50 quality (defective)
-	// SKILL_TRAINED (2) = 50-70 quality (poor-average)
-	// SKILL_EXPERIENCED (3) = 70-90 quality (average-good)
-	// SKILL_PROFESSIONAL (4) = 90-100 quality (good-perfect)
-	var/base_quality = 20 + (skill_value * 20)
-	var/randomness = rand(-10, 10)
-	new_design.quality = clamp(base_quality + randomness, RND_QUALITY_DEFECTIVE, RND_QUALITY_PERFECT)
+	// Skill sum: science + devices
+	var/skill_sum = 0
+	if(ishuman(user))
+		skill_sum = user.get_skill_value(SKILL_SCIENCE) + user.get_skill_value(SKILL_DEVICES)
+
+	// Quality formula:
+	// base = 65 when skill_sum == difficulty
+	// each point above difficulty: +12 quality (toward 100)
+	// each point below difficulty: -5 quality
+	var/surplus = skill_sum - difficulty
+	var/quality
+	if(surplus >= 0)
+		quality = 65 + (surplus * 12)
+	else
+		quality = 65 + (surplus * 5)
+	quality += rand(-5, 5)
+	new_design.quality = clamp(quality, RND_QUALITY_DEFECTIVE, RND_QUALITY_PERFECT)
 
 	// Set shortname
 	new_design.shortname = capitalize(new_design.name)
@@ -147,7 +166,8 @@
 		else
 			quality_message = SPAN_WARNING("Качество: ДЕФЕКТНОЕ ([new_design.quality]%). Изделия могут быть опасны!")
 
-		to_chat(user, SPAN_GOOD("Дизайн [new_design.name] успешно извлечен и сохранен на диске. [quality_message]"))
+		var/skill_sum_info = ishuman(user) ? (user.get_skill_value(SKILL_SCIENCE) + user.get_skill_value(SKILL_DEVICES)) : 0
+		to_chat(user, SPAN_GOOD("Дизайн [new_design.name] успешно извлечен и сохранен на диске. [quality_message] (Суммарный навык: [skill_sum_info])"))
 		log_and_message_admins("extracted design [new_design.name] (quality: [new_design.quality]%) from [I.name].", user)
 
 		linked_destroy.deconstruct_item()

@@ -129,7 +129,7 @@ other types of metals and chemistry for reagents).
 		var/obj/item/I = A
 		I.AddComponent(/datum/component/defective_item, quality)
 
-		if(quality < 60)
+		if(quality < 40)
 			var/turf/T = get_turf(I)
 			if(T)
 				T.visible_message(SPAN_WARNING("[I] looks defective and may malfunction!"))
