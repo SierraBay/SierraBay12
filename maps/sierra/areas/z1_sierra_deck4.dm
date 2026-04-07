@@ -146,7 +146,7 @@
  * =========
  */
 
-/area/rnd/canister
+/area/rnd/sierra/canister
 	name = "Fourth Deck - Hangar - Canister Storage"
 	icon_state = "toxstorage"
 	sound_env = SMALL_ENCLOSED

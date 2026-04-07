@@ -52,11 +52,10 @@
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/vacant/prototype = 0,
 		/area/vacant/storage = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/atmos  = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/cell_1 = NO_APC,
-		/area/rnd/xenobiology/cell_2 = NO_APC,
-		/area/rnd/xenobiology/cell_3 = NO_APC,
-		/area/rnd/xenobiology/cell_4 = NO_APC
+		/area/rnd/sierra/xenobiology/cell_1 = NO_APC,
+		/area/rnd/sierra/xenobiology/cell_2 = NO_APC,
+		/area/rnd/sierra/xenobiology/cell_3 = NO_APC,
+		/area/rnd/sierra/xenobiology/cell_4 = NO_APC
 	)
 
 	area_coherency_test_exempt_areas = list(
@@ -88,10 +87,10 @@
 		/area/bluespace_interlude,
 		/area/bluespace_interlude/platform,
 		/area/bluespace_interlude/surroundings,
-		/area/rnd/xenobiology/cell_1,
-		/area/rnd/xenobiology/cell_2,
-		/area/rnd/xenobiology/cell_3,
-		/area/rnd/xenobiology/cell_4,
+		/area/rnd/sierra/xenobiology/cell_1,
+		/area/rnd/sierra/xenobiology/cell_2,
+		/area/rnd/sierra/xenobiology/cell_3,
+		/area/rnd/sierra/xenobiology/cell_4,
 		/area/carp_racing
 	)
 
