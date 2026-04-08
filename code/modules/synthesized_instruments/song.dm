@@ -56,6 +56,12 @@
 	#undef Q
 
 	src.play(pair.sample, duration, freq, note_num, where, which_one)
+	// [SIERRA-ADD] - VISUALIZER
+	if (src.player && src.player.actual_instrument)
+		var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
+		if (S.real_instrument)
+			S.real_instrument.on_note_played(note_num, duration)
+	// [/SIERRA-ADD] - VISUALIZER
 
 
 /datum/synthesized_song/proc/play(what, duration, frequency, which, where, which_one)

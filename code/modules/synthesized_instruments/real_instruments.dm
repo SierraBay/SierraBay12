@@ -10,6 +10,7 @@
 	var/obj/owner
 	var/datum/nano_module/env_editor/env_editor
 	var/datum/nano_module/echo_editor/echo_editor
+	var/datum/nano_module/visualizer/visualizer // [SIERRA-ADD] - VISUALIZER
 
 /datum/real_instrument/New(obj/who, datum/sound_player/how, datum/instrument/what)
 	player = how
@@ -144,14 +145,30 @@
 		if ("select_env")
 			if (value in -1 to 26)
 				src.player.virtual_environment_selected = round(value)
+		// [SIERRA-ADD] - VISUALIZER
+		if ("show_visualizer")
+			if (!src.visualizer)
+				src.visualizer = new (src)
+			src.visualizer.ui_interact(user)
+		// [/SIERRA-ADD]
 		else
 			return 0
 
 	return 1
 
-
+// [SIERRA-ADD] - VISUALIZER
+/datum/real_instrument/proc/on_note_played(note_num, duration)
+	if (visualizer)
+		visualizer.note_on(note_num, duration)
+// [/SIERRA-ADD]
 
 /datum/real_instrument/proc/ui_call(mob/user, ui_key, datum/nanoui/ui = null, force_open = 0)
+	// [SIERRA-ADD] - VISUALIZER
+	if(ui_key == "visualizer")
+		if(visualizer)
+			visualizer.ui_interact(user, ui_key, ui, force_open)
+		return
+	// [/SIERRA-ADD]
 	var/list/data
 	data = list(
 		"playback" = list(
