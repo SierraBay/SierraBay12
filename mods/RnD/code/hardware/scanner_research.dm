@@ -131,12 +131,18 @@
 			tech_lines += "[tech_display_name(key)]: Lv.[tech[key]]"
 		dat += "<b>Technology profile:</b>\[br\][jointext(tech_lines, "\[br\]")]"
 
-	// --- Artifact-specific data ---
+	// --- Artifact field data ---
 	if(istype(target, /obj/machinery/artifact))
 		var/obj/machinery/artifact/art = target
 		if(art.my_effect)
-			dat += "<b>Artifact ID:</b> [art.my_effect.artifact_id]"
-			dat += "<b>Effect type:</b> [art.my_effect.name]"
+			dat += "<b>Идентификатор сигнатуры:</b> [art.my_effect.artifact_id]"
+		if(art.desc && art.desc != "")
+			dat += "<i>[art.desc]</i>"
+		// Lore-flavoured field readings
+		dat += "<b>Оценка возраста:</b> ~[rand(10, 900)] тыс. лет (погрешность ±[rand(5,40)]%)"
+		dat += "<b>Плотность материала:</b> [pick("аномально высокая", "нестандартная", "нехарактерная для известных сплавов")] ([round(rand(180, 340) * 0.1, 0.1)] г/см³)"
+		dat += "<b>Фоновое излучение:</b> [rand(12, 280)] мкЗв/ч — [pick("слабое", "умеренное", "повышенное")] превышение нормы"
+		dat += "<b>Магнитный отклик:</b> [pick("неустойчивый", "периодический", "стационарный", "отсутствует")]"
 
 	// --- Store metadata for RDF file and push to driver ---
 	if(driver && driver.using_scanner)

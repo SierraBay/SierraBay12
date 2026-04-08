@@ -262,9 +262,9 @@
 
 /// Finish catalogization and grant rewards
 /obj/machinery/computer/rdconsole/proc/finish_catalog(mob/living/user)
-	var/total_rep = catalog_correct * 2  // +2 per correct answer
+	var/total_rep = catalog_correct * 5  // +5 per correct answer
 	if(catalog_correct >= 3)
-		total_rep += 4  // +4 bonus for perfect classification
+		total_rep += 10  // +10 bonus for perfect classification
 
 	if(total_rep > 0 && catalog_reward_corp && files)
 		files.ChangeCorporationReputation(catalog_reward_corp, total_rep)

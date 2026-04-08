@@ -280,9 +280,11 @@
 		var/out = "Anomalous alien device - composed of an unknown alloy.<br><br>"
 		if(A.my_effect)
 			out += A.my_effect.getDescription()
+			out += "<br>Estimated effect radius: [A.my_effect.effectrange] tile\s."
 		if(A.secondary_effect)
 			out += "<br><br>Internal scans indicate ongoing secondary activity operating independently from primary systems.<br><br>"
 			out += A.secondary_effect.getDescription()
+			out += "<br>Estimated effect radius: [A.secondary_effect.effectrange] tile\s."
 		if(A.damage_desc)
 			out += "<br><br>[A.damage_desc]"
 		return out
