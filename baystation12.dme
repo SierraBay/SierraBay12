@@ -356,6 +356,7 @@
 #include "code\datums\graph\graph.dm"
 #include "code\datums\graph\node.dm"
 #include "code\datums\helper_datums\dist_check.dm"
+#include "code\datums\helper_datums\stack_end_detector.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
 #include "code\datums\helper_datums\teleport.dm"

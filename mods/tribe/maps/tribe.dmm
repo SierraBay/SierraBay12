@@ -1,0 +1,96 @@
+"aA" = (/turf/simulated/mineral,/area/template_noop)
+"bb" = (/obj/structure/flora/bush,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"be" = (/obj/structure/table/steel,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/obj/item/stack/medical/splint/ghetto,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"bj" = (/obj/structure/table/rack,/obj/item/stack/material/generic/bone/mod_tribe,/obj/item/stack/material/generic/skin/mod_tribe,/obj/item/stack/material/leather{amount = 50},/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"bJ" = (/turf/template_noop,/area/template_noop)
+"bU" = (/obj/structure/flora/ausbushes/reedbush,/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
+"bV" = (/obj/structure/table/steel,/obj/item/material/sword,/obj/item/material/sword,/obj/item/material/sword,/obj/item/material/sword,/obj/item/melee/whip,/obj/item/melee/whip,/obj/item/material/sword/makeshift,/obj/item/material/sword/makeshift,/obj/item/material/twohanded/baseballbat,/obj/item/material/twohanded/baseballbat,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"cr" = (/obj/machinery/crystal/mod_tribe,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"ed" = (/obj/structure/table/steel,/obj/item/shovel,/obj/item/shovel,/obj/item/shovel,/obj/item/material/scythe,/obj/item/material/scythe,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/reagent_containers/glass/bucket,/obj/item/reagent_containers/glass/bucket,/obj/item/soap,/obj/item/soap,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"he" = (/obj/machinery/door/unpowered/simple/iron,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"ho" = (/obj/structure/kitchenspike/improvised,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"if" = (/obj/structure/table/steel,/obj/item/stack/material/wood/fifty,/obj/item/stack/material/wood/fifty,/obj/item/stack/material/rods/fifty,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/material/rods/fifty,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"jB" = (/obj/structure/table/steel,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"jG" = (/turf/simulated/floor/exoplanet/water/shallow,/area/template_noop)
+"jZ" = (/obj/structure/flora/grass/brown,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"kl" = (/obj/structure/table/steel,/obj/item/material/harpoon,/obj/item/material/harpoon,/obj/item/material/harpoon,/obj/item/material/harpoon,/obj/item/material/harpoon,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"kx" = (/obj/structure/curtain/black,/turf/template_noop,/area/map_template/tribe_caverns)
+"kI" = (/obj/structure/table/steel,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/head/helmet/gladiator,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/obj/item/clothing/mask/spirit,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"mp" = (/obj/item/material/knife/ritual,/obj/structure/table/rack{name = "wooden altar"; desc = "A simple wooden altar covered in cloth."; icon = 'icons/obj/cult.dmi'; icon_state = "churchaltar"},/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"mG" = (/obj/structure/table/rack,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/head/cloak_hood,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/obj/item/clothing/accessory/cloak/hooded,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"nv" = (/obj/machinery/crystal/mod_tribe,/turf/simulated/floor/asteroid,/area/template_noop)
+"nx" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"oy" = (/turf/simulated/floor/asteroid,/area/template_noop)
+"pb" = (/obj/structure/kitchenspike,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"qs" = (/obj/structure/table/steel,/obj/item/clothing/under/gladiator,/obj/item/clothing/under/gladiator,/obj/item/clothing/under/gladiator,/obj/item/clothing/under/gladiator,/obj/item/clothing/under/gladiator,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"rX" = (/obj/structure/bed,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"sm" = (/obj/machinery/replicator/mod_tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"us" = (/obj/structure/table/steel,/obj/item/cane/staff,/obj/item/cane/staff,/obj/item/cane/staff,/obj/item/cane/staff,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"uL" = (/obj/structure/table/rack,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/obj/item/reagent_containers/food/snacks/meat,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"wh" = (/obj/machinery/crystal/mod_tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"wD" = (/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"xr" = (/obj/structure/table/steel,/obj/item/material/knife/folding/wood,/obj/item/material/knife/folding/wood,/obj/item/material/knife/folding/wood,/obj/item/material/knife/folding/wood,/obj/item/material/knife/folding/wood,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"xA" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/asteroid,/area/template_noop)
+"yd" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/turf/simulated/floor/asteroid,/area/template_noop)
+"zs" = (/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"DU" = (/obj/item/stool/wood,/turf/simulated/floor/asteroid,/area/template_noop)
+"Fc" = (/obj/submap_landmark/joinable_submap/tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"Hg" = (/obj/structure/bed,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"IO" = (/obj/item/reagent_containers/glass/bucket,/turf/simulated/floor/asteroid,/area/template_noop)
+"Jh" = (/obj/submap_landmark/spawnpoint/tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"JG" = (/obj/structure/table/steel,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/obj/item/pickaxe/hand,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"JI" = (/obj/item/material/minihoe,/obj/item/wirecutters/clippers,/obj/item/material/hatchet,/obj/item/shovel/spade,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"JX" = (/obj/structure/table/steel,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/obj/item/material/twohanded/spear/mod_tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"Lq" = (/obj/structure/table/steel,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"Lz" = (/obj/structure/flora/grass/both,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"No" = (/obj/structure/table/steel,/obj/item/stack/material/glass/fifty,/obj/item/stack/material/glass/fifty,/obj/item/stack/material/steel/fifty,/obj/item/stack/material/steel/fifty,/obj/item/stack/material/steel/fifty,/obj/item/stack/material/glass/fifty,/obj/item/stack/material/iron{amount = 50},/obj/item/stack/material/iron{amount = 50},/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"PY" = (/obj/structure/table/rack,/obj/item/reagent_containers/glass/bottle/mod_tribe,/obj/item/reagent_containers/glass/bottle/mod_tribe,/obj/item/reagent_containers/glass/bottle/mod_tribe,/obj/item/reagent_containers/glass/bottle/mod_tribe,/obj/item/reagent_containers/glass/bottle/mod_tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"RS" = (/obj/structure/flora/ausbushes,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"Sa" = (/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"Sl" = (/obj/structure/flora/ausbushes/palebush,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"SJ" = (/obj/machinery/acting/changer/mod_tribe,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"TH" = (/obj/item/stool/wood,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"Uq" = (/obj/structure/table/steel,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/obj/item/clothing/suit/armor/makeshift,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"UP" = (/obj/item/stool/wood,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"Vo" = (/obj/structure/table/rack,/obj/item/clothing/under/savage_hunter/female,/obj/item/clothing/under/savage_hunter/female,/obj/item/clothing/under/savage_hunter/female,/obj/item/clothing/under/savage_hunter/female,/obj/item/clothing/under/savage_hunter/female,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"VZ" = (/obj/structure/table/rack,/obj/item/clothing/under/savage_hunter,/obj/item/clothing/under/savage_hunter,/obj/item/clothing/under/savage_hunter,/obj/item/clothing/under/savage_hunter,/obj/item/clothing/under/savage_hunter,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"Xn" = (/obj/machinery/artifact/mod_tribe,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"XN" = (/obj/structure/table/steel,/turf/simulated/floor/asteroid,/area/map_template/tribe_caverns)
+"XP" = (/obj/structure/table/rack,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/jackboots/medievalboots,/obj/item/clothing/shoes/jackboots/medievalboots,/obj/item/clothing/shoes/jackboots/medievalboots,/obj/item/clothing/shoes/jackboots/medievalboots,/obj/item/clothing/shoes/jackboots/medievalboots,/turf/simulated/floor/stone,/area/map_template/tribe_caverns)
+"Zr" = (/obj/structure/flora/grass/green,/turf/simulated/floor/exoplanet/grass,/area/template_noop)
+"ZL" = (/obj/structure/flora/bush,/turf/simulated/floor/asteroid,/area/template_noop)
+"ZX" = (/turf/simulated/wall/iron,/area/map_template/tribe_caverns)
+
+(1,1,1) = {"
+bJbJaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAbJbJ
+bJaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAbJ
+aAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaASaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaA
+aAaAaAaAcrSaSaSaZXZXZXZXZXZXZXZXZXZXZXZXZXZXZXSaSaSaSaaAaAaAaA
+aAaAaAaASaSaSaZXZXHgJhHgzssmzsSJzswhzsHgJhHgZXZXSaSaSaaAaAaAaA
+aAaAaAaASaSaSaZXHgzszszszszszszszszszszszszsHgZXSaSaSaaAaAaAaA
+aAaAaAaASaSaSaZXJhzszszszszszsFczszszszszszsJhZXSaSaSaaAaAaAaA
+aAaAaAaASaSaSaZXHgzszszszszszszszszszszszszsHgZXSaSaSaaAaAaAaA
+aAaAaAaASaSaSaZXZXHgJhHgJhHgZXzsZXHgJhHgJhHgZXZXSaSaSaaAaAaAaA
+aAaAaAaASaSaSaSaZXZXZXZXZXZXZXheZXZXZXZXZXZXZXcrSaSaSaaAaAaAaA
+aAaAaASaSaSaSaSaSaSaSaSaSacrSaSaSaSaSaSaSaSaSaSaSaSaSaSaaAaAaA
+aAaAaASaZXZXZXZXZXZXSaSaSaSaSaSaSaSaSaSaSacrZXZXZXZXZXSaaAaAaA
+aAaAaASaZXrXmpmprXZXSaSaSaoyoyoyoyoySaSaSaZXZXJGedxrZXSaaAaAaA
+aAaAaASaZXSaUPUPSakxSaZLIOxAZrDUZroyoyoySahezszszsUqZXSaaAaAaA
+aAaAaASaZXSaSaSaSaZXSaIOLzZrjGZrbUZrnvoySaZXVZzszsklZXSaaAaAaA
+aAaAaASaZXXnSaSacrZXnxLzjGjGjGjGjGjGLzbbSaZXVozszsJXZXSaaAaAaA
+aAaAaASaZXSaSaSaSaZXSaIOZrjGjGjGjGjGbUwDSaZXmGzszsbVZXSaaAaAaA
+aAaAaASaZXSaSaSaSakxSaIOwDSljGjZjZbbwDRSSaZXXPzszsqsZXSaaAaAaA
+aAaAaASaZXLqbeusXNZXSaoyoynvwDJIydydydydSaZXZXNoifkIZXSaaAaAaA
+aAaAaASaZXZXZXZXZXZXSaSaSaoyoyoyoyoySaSaSacrZXZXZXZXZXSaaAaAaA
+aAaAaASaSaSaSaSaSaSaSaZXheZXZXZXZXZXZXZXSaSaSaSaSaSaSaSaaAaAaA
+aAaAaAaAaAaAaAaAaASaSaZXzszszszsPYzspbZXSaSaaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaASaSaZXTHTHTHzszszsuLZXSaSaaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaASaSaZXjBjBjBTHbjzspbZXSaSaaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaASaSaZXZXZXZXZXZXZXZXZXSaSaaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaASaSaSaSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaAaASaSaSaSaSaSaSaSaSaSaSaaAaAaAaAaAaAaAaAaAaA
+aAaAaAaAaAaAaAaAaAaAcrSaSaSaSaSaSaSaSaSahoaAaAaAaAaAaAaAaAaAaA
+bJaAaAaAaAaAaAaAaAaAaAaAaAaAaAoyaAaAaAaAaAaAaAaAaAaAaAaAaAaAbJ
+bJbJaAaAaAaAaAaAaAaAaAaAaAaAaAoyaAaAaAaAaAaAaAaAaAaAaAaAaAbJbJ
+"}

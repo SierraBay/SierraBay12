@@ -31,5 +31,5 @@
 		sleep(world.tick_lag * delta)
 		total += ceil(delta)
 		delay *= 2
-	while (world.tick_usage > min(Master.tick_limit_to_run, Master.current_ticklimit))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit)) // [SIERRA-EDIT] - MC
 	return total
