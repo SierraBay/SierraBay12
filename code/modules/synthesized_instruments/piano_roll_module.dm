@@ -18,7 +18,7 @@
 		display_bpm = round(600 / song.tempo)
 	
 	// When loading into editor, check for BPM header
-	if (song.lines.len && findtext(song.lines[1], "BPM: "))
+	if (length(song.lines) && findtext(song.lines[1], "BPM: "))
 		var/found_bpm = text2num(copytext(song.lines[1], 6))
 		if(found_bpm) 
 			display_bpm = found_bpm
