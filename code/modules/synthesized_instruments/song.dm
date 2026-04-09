@@ -118,11 +118,12 @@
 #define IS_DIGIT(L) (L >= "0" && L <= "9" ? 1 : 0)
 
 #define STOP_PLAY_LINES \
-	autorepeat = 0; \
-	playing = 0; \
-	current_line = 0; \
-	player.event_manager.deactivate(); \
-	if(player && player.actual_instrument) SSnano.update_uis(player.actual_instrument); \ // [SIERRA-EDIT] - PIANO EDITOR
+	autorepeat = 0 ;\
+	playing = 0 ;\
+	current_line = 0 ;\
+	player.event_manager.deactivate() ;\
+	if(player && player.actual_instrument) SSnano.update_uis(player.actual_instrument) ;\
+
 	return
 
 /datum/synthesized_song/proc/play_lines(mob/user, list/allowed_suff, list/note_off_delta, list/lines)
@@ -140,7 +141,7 @@
 			if(S && S.real_instrument && S.real_instrument.piano_editor)
 				SSnano.update_uis(S)
 			last_sync_time = world.time
-			
+
 		var/cur_note = 1
 		if (src.player && src.player.actual_instrument)
 			var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
