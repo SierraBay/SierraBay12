@@ -99,9 +99,11 @@
 		var/total = text2num(href_list["total"])
 		var/chunk = href_list["data"]
 		if (idx == 0)
-			save_buffer = new/list(total)
+			save_buffer = list()
+			for(var/i = 1; i <= total; i++)
+				save_buffer += ""
 			expected_chunks = total
-		if (save_buffer.len >= total)
+		if (length(save_buffer) >= total)
 			save_buffer[idx + 1] = chunk
 		return 1
 
@@ -127,7 +129,7 @@
 		// ADVANCED SYNC: Directly parse the song text format
 		song.lines = splittext(full_text, "\n")
 		
-		if(song.lines.len && findtext(song.lines[1], "BPM: "))
+		if(length(song.lines) && findtext(song.lines[1], "BPM: "))
 			var/bpm = text2num(copytext(song.lines[1], 6))
 			if(bpm)
 				song.tempo = 600 / bpm
