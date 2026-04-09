@@ -89,13 +89,13 @@
         var sidebar = document.getElementById('sidebar-content');
         if (!sidebar) return;
         var noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-        sidebar.innerHTML = '';
+        while (sidebar.firstChild) sidebar.removeChild(sidebar.firstChild);
         for (var i = this.maxNote; i >= this.minNote; i--) {
             var div = document.createElement('div');
             var noteInOctave = i % 12;
             var isBlack = [1, 3, 6, 8, 10].indexOf(noteInOctave) !== -1;
             div.className = 'key ' + (isBlack ? 'black' : 'white');
-            div.innerHTML = noteNames[noteInOctave] + Math.floor(i / 12);
+            div.textContent = noteNames[noteInOctave] + Math.floor(i / 12);
             div.style.height = this.cellHeight + 'px';
             sidebar.appendChild(div);
         }
@@ -448,11 +448,11 @@
         for (var i = 0; i < fullText.length; i += chunkSize) { chunks.push(fullText.substring(i, i + chunkSize)); }
         var sendChunk = function(idx) {
             if (idx >= chunks.length) {
-                progress.innerHTML = "COMMITTING...";
+                progress.textContent = "COMMITTING...";
                 setTimeout(function() { window.location.href = "?src=" + ref + "&save_commit=1&tempo=" + tempoValue; }, 1000); 
                 return;
             }
-            progress.innerHTML = Math.round((idx / chunks.length) * 100) + "%";
+            progress.textContent = Math.round((idx / chunks.length) * 100) + "%";
             window.location.href = "?src=" + ref + "&save_chunk=1&idx=" + idx + "&total=" + chunks.length + "&data=" + encodeURIComponent(chunks[idx]);
             setTimeout(function() { sendChunk(idx + 1); }, 400); 
         };
