@@ -145,7 +145,8 @@
 	{{/if}}
 	{{:helper.link('Open echo editor', null, {'target': 'show_echo_editor'})}}
 	{{:helper.link('Open visualizer', null, {'target': 'show_visualizer'})}}
-	{{:helper.link('Open song editor', null, {'target': 'show_song_editor'})}}
+	{{:helper.link('Open visual editor', null, {'target': 'show_piano_editor'})}}
+	{{:helper.link('Open legacy editor', null, {'target': 'show_song_editor'})}}
 	{{:helper.link(data.advanced_options.apply_echo ? 'Do not apply echo' : 'Apply echo', null, {'target': 'echo', 'value': data.advanced_options.apply_echo ? 0 : 1})}}
 </div>
 {{if data.show.env_settings}}

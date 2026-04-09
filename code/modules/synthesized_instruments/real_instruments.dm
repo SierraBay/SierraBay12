@@ -11,6 +11,7 @@
 	var/datum/nano_module/env_editor/env_editor
 	var/datum/nano_module/echo_editor/echo_editor
 	var/datum/nano_module/visualizer/visualizer // [SIERRA-ADD] - VISUALIZER
+	var/datum/nano_module/piano_editor/piano_editor // [SIERRA-ADD] - PIANO EDITOR
 
 /datum/real_instrument/New(obj/who, datum/sound_player/how, datum/instrument/what)
 	player = how
@@ -29,9 +30,15 @@
 
 	switch (target)
 		if ("tempo") src.player.song.tempo = src.player.song.sanitize_tempo(src.player.song.tempo + value*world.tick_lag)
-		if ("play")
+		if("play")
 			src.player.song.playing = value
-			if (src.player.song.playing)
+			// [SIERRA-ADD] - PIANO EDITOR: Reset playback time on new play
+			if(value)
+				src.player.song.current_playback_time = 0
+			// [SIERRA-ADD] - PIANO EDITOR: Notify UI immediately on play/stop
+			if(player.actual_instrument)
+				SSnano.update_uis(player.actual_instrument)
+			if(src.player.song.playing)
 				GLOB.instrument_synchronizer.raise_event(player.actual_instrument)
 				src.player.song.play_song(user)
 		if ("wait")
@@ -139,7 +146,7 @@
 
 		if ("show_echo_editor")
 			if (!src.echo_editor)
-				src.echo_editor = new (src.player)
+				src.echo_editor = new /datum/nano_module/echo_editor(src.player)
 			src.echo_editor.ui_interact(user)
 
 		if ("select_env")
@@ -148,11 +155,15 @@
 		// [SIERRA-ADD] - VISUALIZER
 		if ("show_visualizer")
 			if (!src.visualizer)
-				src.visualizer = new (src)
+				src.visualizer = new /datum/nano_module/visualizer(src)
 			src.visualizer.ui_interact(user)
 		// [/SIERRA-ADD]
-		else
-			return 0
+		// [SIERRA-ADD] - PIANO EDITOR
+		if ("show_piano_editor")
+			if (!src.piano_editor)
+				src.piano_editor = new /datum/nano_module/piano_editor(src, src.player.song) // [SIERRA-ADD] Pass instrument reference
+			src.piano_editor.ui_interact(user)
+		// [/SIERRA-ADD]
 
 	return 1
 
@@ -167,6 +178,12 @@
 	if(ui_key == "visualizer")
 		if(visualizer)
 			visualizer.ui_interact(user, ui_key, ui, force_open)
+		return
+	// [/SIERRA-ADD]
+	// [SIERRA-ADD] - PIANO EDITOR
+	if(ui_key == "piano_editor")
+		if(piano_editor)
+			piano_editor.ui_interact(user, ui_key, ui, force_open)
 		return
 	// [/SIERRA-ADD]
 	var/list/data

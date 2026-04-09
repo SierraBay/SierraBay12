@@ -5,6 +5,7 @@
 	var/playing = 0
 	var/autorepeat = 0
 	var/current_line = 0
+	var/current_playback_time = 0 // [SIERRA-ADD] - PIANO EDITOR
 
 	var/datum/sound_player/player // Not a physical thing
 	var/datum/instrument/instrument_data
@@ -117,10 +118,11 @@
 #define IS_DIGIT(L) (L >= "0" && L <= "9" ? 1 : 0)
 
 #define STOP_PLAY_LINES \
-	autorepeat = 0 ;\
-	playing = 0 ;\
-	current_line = 0 ;\
-	player.event_manager.deactivate() ;\
+	autorepeat = 0; \
+	playing = 0; \
+	current_line = 0; \
+	player.event_manager.deactivate(); \
+	if(player && player.actual_instrument) SSnano.update_uis(player.actual_instrument); \ // [SIERRA-EDIT] - PIANO EDITOR
 	return
 
 /datum/synthesized_song/proc/play_lines(mob/user, list/allowed_suff, list/note_off_delta, list/lines)
@@ -129,7 +131,16 @@
 	var/list/cur_accidentals = list("n", "n", "n", "n", "n", "n", "n")
 	var/list/cur_octaves = list(3, 3, 3, 3, 3, 3, 3)
 	src.current_line = 1
-	for (var/line in lines)
+	src.current_playback_time = 0 // [SIERRA-ADD] - PIANO EDITOR
+	var/last_sync_time = world.time // [SIERRA-ADD] - PIANO EDITOR
+	for(var/line in lines)
+		// [SIERRA-ADD] - PIANO EDITOR: Send periodic sync ping to piano editor UI
+		if(world.time - last_sync_time >= 10)
+			var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
+			if(S && S.real_instrument && S.real_instrument.piano_editor)
+				SSnano.update_uis(S)
+			last_sync_time = world.time
+			
 		var/cur_note = 1
 		if (src.player && src.player.actual_instrument)
 			var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
@@ -137,10 +148,13 @@
 			if (R.song_editor)
 				SSnano.update_uis(R.song_editor)
 		for (var/notes in splittext(lowertext(line), ","))
+			if(findtext(notes, "bpm: ")) continue
 			var/list/components = splittext(notes, "/")
 			var/duration = sanitize_tempo(src.tempo)
+			var/beat_dur = 1 // [SIERRA-ADD] - PIANO EDITOR
 			if (length(components))
 				var/delta = length(components)==2 && text2num(components[2]) ? text2num(components[2]) : 1
+				beat_dur = 1 / delta // [SIERRA-ADD] - PIANO EDITOR
 				var/note_str = splittext(components[1], "-")
 
 				duration = sanitize_tempo(src.tempo / delta)
@@ -179,9 +193,10 @@
 						STOP_PLAY_LINES
 			cur_note++
 			src.player.event_manager.suspended = 0
-			if (!src.playing || src.player.shouldStopPlaying(user))
+			if(!src.playing || src.player.shouldStopPlaying(user))
 				STOP_PLAY_LINES
 			sleep(duration)
+			src.current_playback_time += beat_dur // [SIERRA-ADD] - PIANO EDITOR
 		src.current_line++
 	if (src.autorepeat)
 		.()
