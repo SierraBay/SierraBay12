@@ -120,7 +120,7 @@
 
 
 /area/rnd/sierra/xenobiology/compartment
-	name = "Second Deck - Xenobiology - Isolation Compartment"
+	name = "Second Deck - Xenobiology - Isolation Cell"
 	icon_state = "decontamination"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 

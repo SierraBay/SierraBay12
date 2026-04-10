@@ -164,15 +164,18 @@
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/rnd/sierra/xenobiology/xenoflora
-	name = "Xenoflora Lab"
+	name = "First Deck - RND - Xenoflora Lab"
 	icon_state = "xeno_f_lab"
-	req_access = list(access_research)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/rnd/sierra/xenobiology/xenoflora_airlock
+	name = "First Deck - RND - Xenoflora Airlock"
+	icon_state = "xeno_f_store"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/rnd/sierra/xenobiology/xenoflora_storage
-	name = "Xenoflora Storage"
+	name = "First Deck - RND - Xenoflora Storage"
 	icon_state = "xeno_f_store"
-	req_access = list(access_research)
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/rnd/sierra/assembly
