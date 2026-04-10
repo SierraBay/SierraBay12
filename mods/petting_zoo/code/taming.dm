@@ -903,54 +903,6 @@
 		return tame_datum.try_feed(user, O)
 	return ..()
 
-// ============================================================
-// DEBUG VERBS (admin only)
-// ============================================================
-
-/mob/living/simple_animal/verb/debug_taming_status()
-	set name = "Taming: Status"
-	set category = "Debug"
-	set src in oview(usr, 5)
-	if(!isadmin(usr))
-		return
-	if(!tame_datum)
-		to_chat(usr, "\The [src] — не приручаемо (нет tame_datum).")
-		return
-	var/diet_name = "нет"
-	switch(diet_type)
-		if(DIET_CARNIVORE) diet_name = "мясоед"
-		if(DIET_HERBIVORE) diet_name = "травоядное"
-		if(DIET_OMNIVORE)  diet_name = "всеядное"
-	var/tamer_name = tame_datum.current_tamer ? "[tame_datum.current_tamer.resolve()]" : "нет"
-	var/owner_name = owner_mob ? "[owner_mob]" : "нет"
-	var/ai_type = ai_holder ? "[ai_holder.type]" : "нет"
-	to_chat(usr, "[src] — отладка приручения:")
-	to_chat(usr, "  Стадия: [tame_datum.stage_name()] ([tame_datum.get_tier()]/3)")
-	to_chat(usr, "  Доверие: [tame_datum.trust]/100")
-	to_chat(usr, "  Сложность: [tame_difficulty]")
-	to_chat(usr, "  Диета: [diet_name]")
-	to_chat(usr, "  Тамер: [tamer_name]")
-	to_chat(usr, "  Владелец: [owner_name]")
-	to_chat(usr, "  ИИ: [ai_type]")
-	to_chat(usr, "  Неугасаемо: [tame_datum.decay_exempt ? "да" : "нет"]")
-
-/mob/living/simple_animal/verb/debug_taming_set_trust()
-	set name = "Taming: Set Trust"
-	set category = "Debug"
-	set src in oview(usr, 5)
-	if(!isadmin(usr))
-		return
-	if(!tame_datum)
-		to_chat(usr, "\The [src] — не приручаемо.")
-		return
-	var/new_trust = input(usr, "Установить уровень доверия (0–100)", "Доверие", tame_datum.trust) as num|null
-	if(isnull(new_trust))
-		return
-	new_trust = clamp(round(new_trust), 0, 100)
-	tame_datum.current_tamer = weakref(usr)
-	tame_datum.add_trust(new_trust - tame_datum.trust, usr)
-	to_chat(usr, "Доверие [src] установлено на [tame_datum.trust] ([tame_datum.stage_name()]).")
-
 #undef TAME_WILD
 #undef TAME_CAUTIOUS
 #undef TAME_CURIOUS
