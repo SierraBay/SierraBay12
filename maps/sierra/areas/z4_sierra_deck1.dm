@@ -173,11 +173,6 @@
 	icon_state = "xeno_f_store"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/sierra/xenobiology/xenoflora_storage
-	name = "First Deck - RND - Xenoflora Storage"
-	icon_state = "xeno_f_store"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-
 /area/rnd/sierra/assembly
 	req_access = list(access_robotics)
 

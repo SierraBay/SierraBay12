@@ -29,7 +29,7 @@
 		/area/rnd/sierra/xenobiology/compartment,
 		/area/maintenance/seconddeck/xenobio
 	)
-	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora, /area/rnd/sierra/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event/prison_break/warehouse
 	eventDept = "Supply"
@@ -63,7 +63,7 @@
 		/area/storage/tech,
 		/area/storage/tech/high_risk
 	)
-	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora, /area/rnd/sierra/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event_container/moderate/sierra
 	available_events = list(
