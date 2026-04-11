@@ -112,4 +112,4 @@
 
 /datum/unit_test/zas_area_test/xenobio
 	name = "ZAS: Xenobiology"
-	area_path = /area/rnd/xenobiology
+	area_path = /area/rnd/sierra/xenobiology
