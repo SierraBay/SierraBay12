@@ -34,10 +34,6 @@
 		/area/supply,
 		/area/syndicate_elite_squad,
 		/area/template_noop,
-		/area/rnd/sierra/xenobiology/cell_1,
-		/area/rnd/sierra/xenobiology/cell_2,
-		/area/rnd/sierra/xenobiology/cell_3,
-		/area/rnd/sierra/xenobiology/cell_4,
 		/area/bluespace_interlude,
 		/area/bluespace_interlude/platform,
 		/area/carp_racing
