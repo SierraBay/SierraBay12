@@ -72,12 +72,18 @@ var/global/list/derelict_z_to_mission = list()     // "[z]" -> /datum/derelict_m
 	if(!length(mission_z_levels))
 		return
 
-	// Find all eligible mobs on those z-levels
+	// Find all eligible mobs on those z-levels.
+	// Only mob types that were present at map-load time are allowed —
+	// this prevents player-controlled mobs arriving on the derelict from
+	// appearing as invasion candidates.
+	var/list/allowed_types = mission.initial_mob_types
 	var/list/eligible = list()
 	for(var/mob/living/M in world)
 		if(!(M.z in mission_z_levels))
 			continue
 		if(M.stat == DEAD || M.key || M.client)
+			continue
+		if(length(allowed_types) && !(M.type in allowed_types))
 			continue
 		eligible += M
 
@@ -137,8 +143,22 @@ var/global/list/derelict_z_to_mission = list()     // "[z]" -> /datum/derelict_m
 			if(T.id == M.away_site_id)
 				z_count = length(T.suffixes)
 				break
+		var/list/z_levels = list()
 		for(var/z_offset = 0 to z_count - 1)
-			derelict_z_to_mission["[M.away_z + z_offset]"] = M
+			var/z = M.away_z + z_offset
+			derelict_z_to_mission["[z]"] = M
+			z_levels += z
+
+		// Snapshot all living mob types on the derelict at load time.
+		// This whitelist prevents player-controlled mobs that arrive later
+		// from appearing as ghost invasion candidates.
+		M.initial_mob_types = list()
+		for(var/mob/living/mob in world)
+			if(!(mob.z in z_levels))
+				continue
+			if(mob.stat == DEAD)
+				continue
+			M.initial_mob_types[mob.type] = TRUE
 
 // ============================================================
 // Human Ranged Attack Interfaces (for AI-controlled humans with guns)

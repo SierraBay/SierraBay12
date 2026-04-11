@@ -47,6 +47,10 @@ var/global/list/derelict_mission_objects = list()        // Registry of all miss
 	var/target_artifact_report_type     // For complex missions: type of /obj/item/paper/anomaly_scan/mission report to submit to R&D console
 	var/require_antibodies = FALSE      // If TRUE, submitted reagent container must contain antibodies
 	var/away_z = 0                      // Z-level of the derelict (0 = unknown, skip z-check)
+	/// Set of mob types that were present on the derelict at map-load time.
+	/// Only these types are eligible for ghost invasion offers.
+	/// Populated by build_derelict_z_mapping() after the map loads.
+	var/list/initial_mob_types = list()
 
 /datum/derelict_mission/proc/check_all_objectives_complete()
 	for(var/datum/derelict_mission_objective/O in objectives)

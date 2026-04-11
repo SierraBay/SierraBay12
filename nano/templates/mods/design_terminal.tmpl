@@ -1,0 +1,251 @@
+<!--
+Title: Design Terminal
+Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
+-->
+{{:helper.ntscieMode()}}
+<div style="padding:6px; background:#111827; color:#e0e0e0; min-height:100%; box-sizing:border-box; font-size:12px;">
+
+	<!-- ── Top bar ──────────────────────────────────────────────── -->
+	<div style="display:flex; justify-content:space-between; align-items:center; padding:5px 8px; background:#1e293b; border:1px solid #334155; margin-bottom:8px; gap:8px;">
+		<span style="font-weight:bold; color:#7dd3fc; letter-spacing:1px;">ТЕРМИНАЛ ДИЗАЙНОВ</span>
+		<div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+			{{if data.has_account}}
+				<span style="color:#86efac;">{{:data.account_name}}: {{:data.currency_short}}{{:data.balance}}</span>
+			{{else data.can_switch_account}}
+				<span style="color:#f87171;">СЧЁТ НЕ ПРИВЯЗАН</span>
+			{{/if}}
+			{{:helper.link("Синхронизировать", 'transferthick-e-w', {'sync':1}, null, 'rndTab')}}
+			{{if data.has_disk}}
+				<span style="color:#94a3b8;">Диск: {{:data.disk_used}}/{{:data.disk_size}} GQ</span>
+				{{:helper.link("Извлечь", 'eject', {'eject_disk':1}, null, 'rndTab')}}
+			{{else}}
+				<span style="color:#475569;">Диск не вставлен</span>
+			{{/if}}
+		</div>
+	</div>
+
+	<!-- ── Navigation tabs ──────────────────────────────────────── -->
+	<div style="display:flex; gap:4px; margin-bottom:8px;">
+		{{:helper.link("Дизайны", '', {'go_screen':'designs'}, data.dt_screen == 'designs' ? 'selected' : null)}}
+		{{:helper.link("Корпорации", '', {'go_screen':'corps'}, data.dt_screen == 'corps' ? 'selected' : null)}}
+	</div>
+
+	<!-- ══════════════════════════════════════════════════════════ -->
+	<!-- ── DESIGNS SCREEN ──────────────────────────────────────── -->
+	<!-- ══════════════════════════════════════════════════════════ -->
+	{{if data.dt_screen == 'designs'}}
+
+	<!-- Category filter + search -->
+	<div style="display:flex; gap:6px; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+		<form action="." method="get" style="display:flex; gap:4px; align-items:center;">
+			<input type="text" name="search_text" value="{{:data.search_text}}" placeholder="Поиск..." style="width:140px; background:#0f172a; color:#e0e0e0; border:1px solid #334155; padding:2px 6px;">
+			<input type="submit" name="search" value="Найти" style="background:#1e3a5f; color:#e0e0e0; border:1px solid #334155; padding:2px 8px; cursor:pointer;">
+			{{if data.search_text}}
+				{{:helper.link("✕", '', {'search':1, 'search_text':''})}}
+			{{/if}}
+		</form>
+		{{if data.categories.length}}
+			{{:helper.link("Все", '', {'set_category':1,'category':'all'}, !data.selected_category ? 'selected' : null)}}
+			{{for data.categories}}
+				{{:helper.link(value, '', {'set_category':1,'category':value}, data.selected_category == value ? 'selected' : null)}}
+			{{/for}}
+		{{/if}}
+	</div>
+
+	<!-- Main two-column area -->
+	<div style="display:flex; gap:8px;">
+
+		<!-- Left: terminal designs -->
+		<div style="flex:1; background:#1e293b; border:1px solid #334155; padding:6px; min-width:0;">
+			<div style="color:#7dd3fc; font-size:11px; border-bottom:1px solid #334155; padding-bottom:4px; margin-bottom:6px;">
+				ДИЗАЙНЫ В ТЕРМИНАЛЕ ({{:data.terminal_designs.length}})
+			</div>
+			{{if data.terminal_designs.length}}
+				<div style="max-height:340px; overflow-y:auto;">
+					{{for data.terminal_designs}}
+					<div style="display:flex; justify-content:space-between; align-items:center; padding:3px 4px; border-bottom:1px solid #1e293b;">
+						<span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; margin-right:6px;">{{:value.name}}</span>
+						{{if value.on_disk}}
+							<span style="color:#86efac; font-size:10px; white-space:nowrap;">✓ На диске</span>
+						{{else data.has_disk}}
+							{{:helper.link("↓ Диск", '', {'save_to_disk':value.id})}}
+						{{/if}}
+					</div>
+					{{/for}}
+				</div>
+			{{else}}
+				<div style="color:#475569; text-align:center; padding:24px 8px;">
+					Нет дизайнов.<br>Нажмите «Синхронизировать» для загрузки.
+				</div>
+			{{/if}}
+		</div>
+
+		<!-- Right: disk designs (only if disk inserted) -->
+		{{if data.has_disk}}
+		<div style="flex:1; background:#1e293b; border:1px solid #334155; padding:6px; min-width:0;">
+			<div style="color:#7dd3fc; font-size:11px; border-bottom:1px solid #334155; padding-bottom:4px; margin-bottom:6px;">
+				ДИЗАЙНЫ НА ДИСКЕ ({{:data.disk_designs.length}})
+			</div>
+			{{if data.disk_designs.length}}
+				<div style="max-height:340px; overflow-y:auto;">
+					{{for data.disk_designs}}
+					<div style="display:flex; justify-content:space-between; align-items:center; padding:3px 4px; border-bottom:1px solid #1e293b;">
+						<span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; margin-right:6px;">{{:value.name}}</span>
+						{{:helper.link("↑ Терминал", '', {'load_from_disk':value.id})}}
+					</div>
+					{{/for}}
+				</div>
+			{{else}}
+				<div style="color:#475569; text-align:center; padding:24px 8px;">
+					Диск пуст.
+				</div>
+			{{/if}}
+		</div>
+		{{/if}}
+
+	</div>
+
+	{{/if}}
+
+	<!-- ══════════════════════════════════════════════════════════ -->
+	<!-- ── CORPS SCREEN ────────────────────────────────────────── -->
+	<!-- ══════════════════════════════════════════════════════════ -->
+	{{if data.dt_screen == 'corps'}}
+
+	{{if data.has_account}}
+	<div class="rndTwoCol">
+
+		<!-- Left: tree visualization -->
+		<div class="rndCol" style="width: 68%;">
+
+			<div class="rndSection">
+				<div class="rndSectionTitle">Категории технологий</div>
+				<div class="rndSectionContent">
+					<div class="rndBtnRow" style="margin-bottom: 8px;">
+						{{for data.corp_categories}}
+							{{:helper.link(value.name, '', {'select_tech_category':value.id}, data.selected_category_id == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+					<div class="rndBtnRow rndCorpSubTabs">
+						{{for data.corp_trees}}
+							{{:helper.link(value.name, '', {'select_corp':value.id}, data.selected_corp == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+			<div class="rndSection">
+				<div class="rndSectionContent" style="padding: 0;">
+					<div id='sciTechTreeContainer'>
+						{{if data.selected_corp_logo}}
+							<div class="rndTreeWatermark" style="background-image: url({{:data.selected_corp_logo}});"></div>
+						{{/if}}
+						{{for data.corp_lines}}
+							<div style="position:absolute;border-{{:value.istop?'top':'bottom'}}:1px solid rgba(100,180,255,0.35);border-{{:value.isright?'right':'left'}}:1px solid rgba(100,180,255,0.35);width:{{:value.width}}%;height:{{:value.height}}%;left:{{:value.line_x}}%;bottom:{{:value.line_y}}%"></div>
+						{{/for}}
+						{{for data.corp_nodes}}
+							<div style="position:absolute;left:{{:value.x}}%;bottom:{{:value.y}}%;margin-left:-20px;margin-bottom:-20px;">
+								{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_corp_node':value.id}, null, "link sciTechTreeIconBox "+((value.isresearched==1)?'sciTechResearched':((value.canunlock==1)?'sciTechAvailable':'sciTechCantResearch'))+" "+((value.id==data.selected_node_id)?'sciTechSelected':''))}}
+							</div>
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Right: selected node detail -->
+		<div class="rndCol" style="width: 32%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Узел технологии</div>
+				<div class="rndSectionContent">
+					{{if data.selected_node}}
+						<div class="rndNodeName">{{:data.selected_node.name}}</div>
+						{{if data.selected_corp_logo}}
+							<img src="{{:data.selected_corp_logo}}" class="rndNodeLogo" />
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Стоимость</div>
+							<div class="rndNodeValue rndPriceValue">{{:data.currency_short}}{{:data.selected_node.price}}</div>
+						</div>
+
+						{{if data.selected_node.current_reputation !== null && data.selected_node.current_reputation !== undefined}}
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Репутация</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.corp_id}}{{:data.selected_node.corp_id}}: {{/if}}<span style="color:{{:data.selected_node.current_reputation >= 0?'#00FF00':'#FF0000'}}">
+									{{:data.selected_node.current_reputation >= 0 ? '+' : ''}}{{:data.selected_node.current_reputation}}
+								</span> / {{:data.selected_node.required_reputation}}
+								{{if !data.selected_node.reputation_met}}<br/>
+									<span style="color:#FF6644;font-size:11px;">Требуется ещё {{:data.selected_node.required_reputation - data.selected_node.current_reputation}} репутации</span>
+								{{/if}}
+							</div>
+						</div>
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Требования</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.requirements && data.selected_node.requirements.length > 0}}
+									{{for data.selected_node.requirements}}
+										<span style="color:{{:value.isgood?'#44ff44':'#ff4444'}}">{{:value.text}}</span><br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">Нет требований</span>
+								{{/if}}
+							</div>
+						</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Открывает</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.unlocks && data.selected_node.unlocks.length > 0}}
+									{{for data.selected_node.unlocks}}
+										{{:value.text}}<br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">—</span>
+								{{/if}}
+							</div>
+						</div>
+
+						{{if data.selected_node.isresearched}}
+							<div class="rndNodeStatus rndNodeStatus--good">Открыто</div>
+						{{else}}
+							{{if data.selected_node.can_buy}}
+								{{:helper.link("Приобрести", '', {'buy_corp_node':data.selected_node_id}, null, 'rndBuyBtn')}}
+							{{else}}
+								<div class="rndNodeStatus rndNodeStatus--locked">Недоступно</div>
+							{{/if}}
+						{{/if}}
+					{{else}}
+						<div class="rndMuted" style="text-align:center;padding:20px 0;">Выберите узел на карте технологий</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	{{else}}
+		<div style="color:#f87171; text-align:center; padding:40px 8px; font-size:13px;">
+			Для покупки корпоративных лицензий необходимо привязать счёт отдела.
+		</div>
+	{{/if}}
+
+	{{/if}}
+
+	<!-- ── Account footer (only when can_switch_account) ─────────── -->
+	{{if data.can_switch_account}}
+	<div style="margin-top:8px; padding:5px 8px; background:#1e293b; border:1px solid #334155; display:flex; gap:8px; align-items:center;">
+		<span style="color:#64748b;">Счёт:</span>
+		<span style="color:#93c5fd;">{{:data.has_account ? data.account_name : "Не привязан"}}</span>
+		{{:helper.link("Привязать", 'key', {'link_account':1})}}
+		{{if data.has_account}}
+			{{:helper.link("Отвязать", 'cancel', {'unlink_account':1})}}
+		{{/if}}
+	</div>
+	{{/if}}
+
+</div>

@@ -5,6 +5,8 @@
 // When cargo sells the crate, all earnings are redirected to the account specified in this invoice
 /obj/item/paper/manifest/rnd_invoice
 	name = "R&D sales invoice"
+	icon_state = "paper_words"
+	item_state = "paper_words"
 	desc = "An R&D department sales invoice. Place it in a cargo crate to have all sale proceeds credited to the specified account."
 	var/target_account_number = null
 	var/target_account_name = ""

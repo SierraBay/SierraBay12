@@ -35,8 +35,11 @@
 // Машины
 #include "code/machinery/autolathe.dm"
 #include "code/machinery/destructive_analyzer.dm"
+#include "code/machinery/food_replicator.dm"
+#include "code/machinery/recipe_analyzer.dm"
 
 #include "code/machinery/rdconsole.dm"
+#include "code/machinery/design_terminal.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/server.dm"
 #include "code/machinery/robotics_fabricator.dm"
@@ -103,6 +106,7 @@
 #include "code/designs_autolathe/disks.dm"
 #include "code/designs/designs_misc.dm"
 #include "code/designs/designs_combat.dm"
+#include "code/designs/designs_food.dm"
 
 // Дизайны мехфаба
 #include "code\designs\mechfab\arms\mech_l_arm.dm"

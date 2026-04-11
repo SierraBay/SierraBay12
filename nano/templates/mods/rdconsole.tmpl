@@ -40,10 +40,10 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		<div class="rndNavStatus">
 			{{if data.has_science_account}}
 				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}
-				<span class="rndBalanceLabel">БАЛАНС</span>
+				<span class="rndBalanceLabel">{{:data.science_account_name}}</span>
 				<span class="rndBalanceValue">{{:data.currency_short}}{{:data.science_balance}}</span>
-			{{else}}
-				<span class="rndBalanceError">СЧЁТ НЕ НАЙДЕН</span>
+			{{else data.can_switch_account}}
+				<span class="rndBalanceError">СЧЁТ НЕ ПРИВЯЗАН</span>
 			{{/if}}
 		</div>
 	</div>
@@ -319,6 +319,18 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 							{{:helper.link("Заблокировать", 'locked', {'lock' : 1})}}
 							{{:helper.link("Сбросить базу данных", 'trash', {'reset' : 1})}}
 						</div>
+						{{if data.can_switch_account}}
+						<div class="rndBtnRow" style="margin-top:6px;">
+							<span class="rndMuted" style="margin-right:6px;">Счёт списания:</span>
+							<span style="color:#aaddff;">{{:data.has_science_account ? data.science_account_name : "Не привязан"}}</span>
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Привязать счёт", 'key', {'link_account' : 1})}}
+							{{if data.has_science_account}}
+								{{:helper.link("Отвязать", 'cancel', {'unlink_account' : 1})}}
+							{{/if}}
+						</div>
+						{{/if}}
 					</div>
 					{{/if}}
 

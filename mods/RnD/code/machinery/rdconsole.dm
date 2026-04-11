@@ -57,6 +57,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync   = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/can_research = TRUE   //Is this console capable of researching
 
+	/// Ключ счёта отдела для предзаданных подтипов (map-spawn). null = не задан.
+	var/department_account_key = null
+	/// Номер счёта, привязанного игроком через учётные данные. 0 = не привязан.
+	var/linked_account_number = 0
+	/// Если TRUE — в настройках доступна кнопка привязки счёта.
+	var/can_switch_account = FALSE
+
 	req_access = list(access_research) //Data and setting manipulation requires scientist access.
 
 	var/datum/tech/selected_tech_tree
@@ -181,10 +188,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	files.experiments.do_research_object(I)
 
 /obj/machinery/computer/rdconsole/proc/get_science_account()
-	var/list/science_department_keys = list("Научный", "Science")
-	for(var/key in science_department_keys)
-		if(department_accounts[key])
-			return department_accounts[key]
+	if(linked_account_number)
+		return get_account(linked_account_number)
+	if(department_account_key)
+		return department_accounts[department_account_key]
 	return null
 
 /// Print an R&D sales invoice linking to the science department account
@@ -371,6 +378,33 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			show_settings = !show_settings
 		else
 			to_chat(usr, SPAN_WARNING("Unauthorized access."))
+	if(href_list["link_account"]) // User wants to link a billing account by credentials.
+		if(!can_switch_account)
+			return
+		var/input_num = input(usr, "Введите номер счёта:", "Привязка счёта") as num|null
+		if(!input_num)
+			return
+		var/datum/money_account/found = get_account(input_num)
+		if(!found)
+			to_chat(usr, SPAN_WARNING("Счёт не найден."))
+			return
+		if(found.security_level)
+			var/input_pin = input(usr, "Введите PIN:", "Привязка счёта") as num|null
+			if(isnull(input_pin))
+				return
+			found = attempt_account_access(input_num, input_pin, 1)
+		if(!found)
+			to_chat(usr, SPAN_WARNING("Неверный PIN."))
+			return
+		linked_account_number = found.account_number
+		department_account_key = null
+		to_chat(usr, SPAN_NOTICE("Счёт привязан: [found.account_name]."))
+	if(href_list["unlink_account"]) // User wants to unlink the billing account.
+		if(!can_switch_account)
+			return
+		linked_account_number = 0
+		department_account_key = null
+		to_chat(usr, SPAN_NOTICE("Счёт отвязан."))
 	if(href_list["toggle_link_menu"]) // User wants to see the device linkage menu.
 		if(allowed(usr) || emagged)
 			show_link_menu = !show_link_menu
@@ -720,7 +754,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/money_account/sci_acc = get_science_account()
 	data["science_balance"] = sci_acc ? sci_acc.money : 0
 	data["has_science_account"] = !!sci_acc
+	data["science_account_name"] = sci_acc ? sci_acc.account_name : ""
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
+	data["can_switch_account"] = can_switch_account
+	data["linked_account_number"] = linked_account_number
 	if(disk)
 		data["disk_size"] = disk.max_capacity
 		data["disk_used"] = disk.used_capacity
@@ -1173,14 +1210,37 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	id = 2
 	req_access = list(access_robotics)
 
+/// Универсальная консоль без привязанного счёта (дереликты, авейки, колонии).
+/// Игроки могут привязать любой счёт через учётные данные.
 /obj/machinery/computer/rdconsole/core
 	name = "Core R&D Console"
+	id = 0
+	can_switch_account = TRUE
+
+/// Основная РнД-консоль НИО на станции. Привязана к счёту научного отдела.
+/obj/machinery/computer/rdconsole/core/sierra
+	name = "R&D Control Console"
 	id = 1
+	department_account_key = "Научный"
+	can_switch_account = TRUE
+
+/// Инженерная РнД-консоль. Списывает средства со счёта инженерного отдела.
+/obj/machinery/computer/rdconsole/core/sierra/engineer
+	name = "Engineering R&D Console"
+	department_account_key = "Инженерный"
+	can_switch_account = FALSE
+	req_access = list(access_engine)
 
 /obj/machinery/computer/rdconsole/attack_ai(mob/user)
 	return ui_interact(user)
 
+/obj/machinery/computer/rdconsole/attack_ghost(mob/user)
+	return ui_interact(user)
+
 /obj/machinery/fabricator/attack_ai(mob/user)
+	return ui_interact(user)
+
+/obj/machinery/fabricator/attack_ghost(mob/user)
 	return ui_interact(user)
 
 /obj/machinery/computer/rdconsole/proc/get_rdconsole_corp_info(corp_id)

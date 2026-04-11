@@ -2003,15 +2003,15 @@
 #include "code\modules\events\mob_spawning\whale.dm"
 #include "code\modules\ext_scripts\irc.dm"
 #include "code\modules\fabrication\__fabricator_defines.dm"
-#include "code\modules\fabrication\_fabricator.dm"
+//#include "code\modules\fabrication\_fabricator.dm"			//[SIERRA-REMOVE] RND
 #include "code\modules\fabrication\_fabricator_build_order.dm"
-#include "code\modules\fabrication\fabricator_build.dm"
-#include "code\modules\fabrication\fabricator_food.dm"
-#include "code\modules\fabrication\fabricator_hacked.dm"
-#include "code\modules\fabrication\fabricator_intake.dm"
-#include "code\modules\fabrication\fabricator_microlathe.dm"
-#include "code\modules\fabrication\fabricator_topic.dm"
-#include "code\modules\fabrication\fabricator_ui.dm"
+//#include "code\modules\fabrication\fabricator_build.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_food.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_hacked.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_intake.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_microlathe.dm"	//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_topic.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_ui.dm"			//[SIERRA-REMOVE] RND
 #include "code\modules\fabrication\designs\_design.dm"
 #include "code\modules\fabrication\designs\general\designs_arms_ammo.dm"
 #include "code\modules\fabrication\designs\general\designs_devices_components.dm"

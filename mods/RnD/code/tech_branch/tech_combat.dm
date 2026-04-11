@@ -45,19 +45,40 @@
 		"electrolaser_carbine"
 	)
 
+/datum/technology/combat/experimental_weapons_nt
+	name = "Experimental Weapons (NanoTrasen)"
+	desc = "Experimental scientific defense systems."
+	id = "experimental_weapons_nt"
+
+	x = 0.3
+	y = 0.5
+	icon = "decloner"
+
+	required_corp_id = RND_MISSION_CORP_NANOTRASEN
+	min_reputation = 10
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list(
+		"flora_gun",
+		"ppistol",
+		"anti_photon",
+		"decloner"
+	)
+
 /datum/technology/combat/nt_combat_weapons
 	name = "NT Combat Weapons (NanoTrasen)"
 	desc = "NanoTrasen-manufactured combat weapons and ion systems."
 	id = "nt_combat_weapons"
 
-	x = 0.3
+	x = 0.4
 	y = 0.5
 	icon = "c20"
 
 	required_corp_id = RND_MISSION_CORP_NANOTRASEN
-	min_reputation = 10
+	min_reputation = 15
 	required_tech_levels = list()
-	cost = 2500
+	cost = 3000
 
 	unlocks_designs = list(
 		"nt41_smg",
@@ -66,26 +87,6 @@
 		"ion_rifle"
 	)
 
-/datum/technology/combat/experimental_weapons_nt
-	name = "Experimental Weapons (NanoTrasen)"
-	desc = "Experimental scientific defense systems."
-	id = "experimental_weapons_nt"
-
-	x = 0.4
-	y = 0.5
-	icon = "decloner"
-
-	required_corp_id = RND_MISSION_CORP_NANOTRASEN
-	min_reputation = 15
-	required_tech_levels = list()
-	cost = 3000
-
-	unlocks_designs = list(
-		"flora_gun",
-		"ppistol",
-		"anti_photon",
-		"decloner"
-	)
 
 // ========== Al-Maliki & Mosley ==========
 
@@ -138,7 +139,7 @@
 
 	x = 0.3
 	y = 0.5
-	icon = "shayatin"
+	icon = "emiammo"
 
 	required_corp_id = RND_MISSION_CORP_ALMALIKI
 	min_reputation = 10
@@ -146,7 +147,6 @@
 	cost = 2500
 
 	unlocks_designs = list(
-		"incendiary_laser",
 		"ammo_emp_slug",
 		"ammo_flechette"
 	)

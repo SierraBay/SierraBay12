@@ -7,10 +7,30 @@
 #define RND_QUALITY_POOR 25
 #define RND_QUALITY_DEFECTIVE 0
 
+/**
+ * Returns TRUE if this item type can be reverse-engineered into a fabricatable design.
+ * Add istype() checks here to permanently block specific item categories.
+ */
+/proc/can_be_reverse_engineered(obj/item/I)
+	// Raw materials (sheets, rods, ingots) — unlimited printing of materials is not allowed
+	if(istype(I, /obj/item/stack))
+		return FALSE
+	// Slime extracts — obtained via xenobiology only
+	if(istype(I, /obj/item/slime_extract))
+		return FALSE
+	// First aid kits — would print filled with medical supplies
+	if(istype(I, /obj/item/storage/firstaid))
+		return FALSE
+	return TRUE
+
 // Generates a design from an analyzed item
 // Returns the created design datum or null on failure
 /datum/research/proc/generate_design_from_item(obj/item/I, mob/living/carbon/human/user)
 	if(!istype(I))
+		return null
+
+	// Check reverse engineering blacklist
+	if(!can_be_reverse_engineered(I))
 		return null
 
 	// Check if design already exists for this item type
