@@ -2266,6 +2266,11 @@
 /obj/floor_decal/industrial/danger{
 	dir = 4
 	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "biG" = (
@@ -3220,11 +3225,12 @@
 /obj/item/storage/toolbox/electrical,
 /obj/random/tech_supply,
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
 /obj/floor_decal/borderfloor,
 /obj/floor_decal/corner/yellow/border,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -20
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "bIa" = (
@@ -5276,6 +5282,24 @@
 	color = "#b19664"
 	},
 /turf/simulated/open,
+/area/space)
+"cIW" = (
+/obj/floor_decal/borderfloor{
+	dir = 1
+	},
+/obj/floor_decal/corner/yellow/border{
+	dir = 1
+	},
+/obj/floor_decal/borderfloor/corner2{
+	dir = 4
+	},
+/obj/floor_decal/corner/yellow/bordercorner2{
+	dir = 4
+	},
+/obj/structure/sign/double/barsign{
+	pixel_y = 32
+	},
+/turf/simulated/floor/tiled,
 /area/space)
 "cIY" = (
 /obj/structure/table/steel,
@@ -9496,15 +9520,15 @@
 	dir = 5
 	},
 /obj/structure/table/woodentable_reinforced/mahogany,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/item/device/flashlight/lamp/lava/purple{
 	pixel_y = 14;
 	pixel_x = -4
 	},
 /obj/item/paper/sierra,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/carpet/green,
 /area/space)
 "eJa" = (
@@ -15314,7 +15338,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/alarm{
+/obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
@@ -25153,7 +25177,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/alarm{
+/obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
@@ -27363,21 +27387,21 @@
 /obj/random/powercell,
 /obj/random/tech_supply,
 /obj/machinery/recharger,
-/obj/structure/cable/green{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "north bump";
-	pixel_y = 24
-	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/floor_decal/borderfloor{
 	dir = 8
 	},
 /obj/floor_decal/corner/yellow/border{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "west bump";
+	pixel_x = -24
+	},
+/obj/structure/cable/green{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -28291,6 +28315,11 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "nGB" = (
@@ -30108,6 +30137,24 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/turf/simulated/floor/tiled,
+/area/space)
+"oyE" = (
+/obj/floor_decal/borderfloor{
+	dir = 1
+	},
+/obj/floor_decal/corner/yellow/border{
+	dir = 1
+	},
+/obj/floor_decal/borderfloor/corner2{
+	dir = 1
+	},
+/obj/floor_decal/corner/yellow/bordercorner2{
+	dir = 1
+	},
+/obj/machinery/status_display{
+	pixel_y = 32
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -40360,15 +40407,15 @@
 	dir = 9
 	},
 /obj/structure/table/woodentable_reinforced/mahogany,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/item/material/ashtray/bronze{
 	pixel_y = 11;
 	pixel_x = -6
 	},
 /obj/item/paper/sierra,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor/carpet/magenta,
 /area/space)
 "tga" = (
@@ -42874,6 +42921,11 @@
 "uqD" = (
 /obj/floor_decal/borderfloor/corner,
 /obj/floor_decal/industrial/danger/corner,
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "uqF" = (
@@ -49694,14 +49746,10 @@
 /turf/simulated/floor/lino,
 /area/space)
 "xHb" = (
-/obj/floor_decal/borderfloor{
-	dir = 1
-	},
-/obj/floor_decal/corner/yellow/border{
-	dir = 1
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
+/obj/structure/cable/green{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -63818,7 +63866,7 @@ wuj
 wuj
 eXi
 wuj
-cKy
+oyE
 gMz
 qCL
 wuj
@@ -64424,7 +64472,7 @@ wuj
 wuj
 eJZ
 wuj
-agO
+cIW
 tGL
 hSF
 sxs
@@ -64626,7 +64674,7 @@ wuj
 jQu
 hrK
 wuj
-xHb
+iAT
 tGL
 qCL
 sxs
@@ -65878,7 +65926,7 @@ mUh
 sxs
 hDn
 bFm
-bFm
+xHb
 bFm
 bHS
 sxs
@@ -66280,7 +66328,7 @@ iDR
 wCN
 mwt
 jds
-bFm
+fgN
 uqD
 biu
 pWg
