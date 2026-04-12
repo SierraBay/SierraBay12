@@ -269,14 +269,14 @@
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
 	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
 	if (!shuttle)
-		return "Error"
+		return "NET"
 
 	if(shuttle.has_arrive_time())
 		var/timeleft = round((shuttle.arrive_time - world.time) / 10,1)
 		if(timeleft < 0)
 			return "Late"
 		return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
-	return ""
+	return "NET"
 
 /obj/machinery/status_display/proc/remove_display()
 	if (length(overlays))
