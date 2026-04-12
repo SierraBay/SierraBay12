@@ -22,6 +22,7 @@
 	welcome_text += "Результаты сканирования показали следующие потенциальные объекты для исследования:<br />"
 
 	var/list/space_things = list()
+	var/list/trade_stations = SSsupply.GetVisibleTradeStationsReportData()
 	var/obj/overmap/sierra = map_sectors["1"]
 	for(var/zlevel in map_sectors)
 		var/obj/overmap/visitable/O = map_sectors[zlevel]
@@ -40,6 +41,15 @@
 			var/bearing = get_bearing(sierra, O) //fucking triangles how do they work
 			location_desc = ", по азимуту [bearing]."
 		welcome_text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
+
+	if(length(trade_stations))
+		welcome_text += "<br><b>Доступные торговые станции:</b><br />"
+		for(var/list/station_entry in trade_stations)
+			var/station_name = station_entry["name"]
+			var/station_desc = station_entry["desc"]
+			var/station_x = station_entry["x"]
+			var/station_y = station_entry["y"]
+			welcome_text += "<li><b>[station_name]</b> ([station_x]:[station_y]) - [station_desc]</li>"
 
 	if(LAZYLEN(distress_calls))
 		welcome_text += "<br><b>Обнаружены сигналы бедствия:</b><br>[jointext(distress_calls, "<br>")]<br>"
