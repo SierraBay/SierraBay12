@@ -384,7 +384,7 @@
 	if(closing || locked)
 		return
 
-	//SIERRA-ADD - РњРµС…Рё РјРµС€Р°СЋС‚ Р·Р°РєСЂС‹С‚СЊСЃСЏ РїРѕР¶Р°СЂРЅС‹Рј С€Р»СЋР·Р°Рј
+	//SIERRA-ADD - Мехи мешают закрыться пожарным шлюзам
 	for(var/mob/living/detected_mob in get_turf(src))
 		if(ismech(detected_mob))
 			return FALSE

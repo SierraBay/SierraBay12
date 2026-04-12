@@ -488,7 +488,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 	server_radio = new()
 
-// [SIERRA-REMOVE] MODPACK-TELECOMMS (Р“РёС‚С…Р°СЋ Р¶Р°Р»СѓРµС‚СЃСЏ)
+// [SIERRA-REMOVE] MODPACK-TELECOMMS (Гитхаю жалуется)
 /*
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
