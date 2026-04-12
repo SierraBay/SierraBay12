@@ -379,9 +379,11 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 
 /datum/map/proc/build_away_sites()
-#ifdef UNIT_TEST
-	report_progress("Unit testing, so not loading away sites")
-	return // don't build away sites during unit testing
+// [SIERRA-EDIT] - DEVMODE NO AWARS
+#if defined(UNIT_TEST) || defined(DEV_MODE_NO_AWAYS)
+	report_progress("Unit testing or dev mode (no aways), so not loading away sites")
+	return // don't build away sites during unit testing or dev mode
+// [/SIERRA-EDIT]
 #else
 	report_progress("Loading away sites...")
 
@@ -431,6 +433,12 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 #endif
 
 /datum/map/proc/build_exoplanets()
+// [SIERRA-EDIT] - DEVMODE NO AWAYS
+#ifdef DEV_MODE_NO_AWAYS
+	report_progress("Dev mode (no aways), so not loading exoplanets")
+	return
+#endif
+// [/SIERRA-EDIT]
 	if(!use_overmap)
 		return
 

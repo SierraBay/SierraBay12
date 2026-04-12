@@ -14,7 +14,7 @@
 	.=..()
 	var/started_in = world.time
 	var/list/turfs_for_spawn = list()
-	for(var/obj/machinery/bluespacedrive/picked_drive in drives)
+	for(var/obj/machinery/bluespace_drive/picked_drive in drives)
 		for(var/turf/picked_turf as anything in RANGE_TURFS(picked_drive.loc, 25))
 			if(!TurfBlocked(picked_turf, space_allowed = FALSE) || TurfBlockedByAnomaly(picked_turf))
 				LAZYADD(turfs_for_spawn, picked_turf)

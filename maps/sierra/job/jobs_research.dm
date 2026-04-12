@@ -162,7 +162,8 @@
 			access_research,
 			access_tech_storage,
 			access_research_storage,
-			access_medical_records
+			access_medical_records,
+			access_medical
 		)
 
 

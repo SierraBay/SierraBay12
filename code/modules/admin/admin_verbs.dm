@@ -77,8 +77,9 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/datum/admins/proc/show_skills, //Right click skill menu,
-	/client/proc/man_up,
+	/datum/admins/proc/show_skills, //Right click skill menu. [SIERRA-ADD] - HALLUCINATION_OVERHAUL,
+	/datum/admins/proc/hallucination_panel, // Admin hallucination control panel,
+	/client/proc/man_up, // [/SIERRA-ADD] - HALLUCINATION_OVERHAUL,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb,
 	/client/proc/toggle_antagHUD_use,
@@ -137,7 +138,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/rename_shuttle,
 	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
 	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
-	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
+	/client/proc/hivemind_panel, // [/SIERRA-ADD] - HIVEMIND,
+	/client/proc/leviathan_panel // [/SIERRA-ADD] - LEVIATHANS
 	)
 
 var/global/list/admin_verbs_spawn = list(

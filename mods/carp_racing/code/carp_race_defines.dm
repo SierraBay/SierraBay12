@@ -11,7 +11,7 @@
 
 // Timing (BYOND: 1 SECOND = 10 ticks of 0.1s each)
 #define RACE_BETTING_DURATION    (15 MINUTES)   // How long bets are open
-#define RACE_COUNTDOWN_DURATION  (5 MINUTES)   // Countdown before start
+#define RACE_COUNTDOWN_DURATION  (1 MINUTES)   // Countdown before start
 #define RACE_RESET_DELAY         (5 MINUTES)   // Results display time after finish
 #define RACE_MAX_DURATION        (5 MINUTES)    // Safety timeout for stuck races
 
@@ -39,7 +39,7 @@
 #define RACE_COLOR_NAME_6   "Squid Ward"
 
 // HTML hex colors for betting terminal UI
-#define RACE_HTML_COLOR_1   COLOR_VIOLET
+#define RACE_HTML_COLOR_1   COLOR_PINK
 #define RACE_HTML_COLOR_2   COLOR_BLUE
 #define RACE_HTML_COLOR_3   COLOR_YELLOW
 #define RACE_HTML_COLOR_4   COLOR_PURPLE
