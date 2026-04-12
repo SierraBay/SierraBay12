@@ -1,0 +1,1555 @@
+<style>
+	.tn-wrap {
+		padding: 8px;
+	}
+
+	.tn-stack > * + * {
+		margin-top: 8px;
+	}
+
+	.tn-nav,
+	.tn-actions,
+	.tn-tabs {
+		overflow: hidden;
+	}
+
+	.tn-inlineLink,
+	.tn-inlineLink.link,
+	.tn-inlineLink.linkActive {
+		float: none;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.tn-toolbar {
+		padding: 10px 12px;
+	}
+
+	.tn-toolbar-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 18px;
+		align-items: flex-end;
+	}
+
+	.tn-workflow-group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		align-items: center;
+	}
+
+	.tn-workflow-label {
+		min-width: 70px;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #7e90a7;
+	}
+
+	.tn-summary-grid,
+	.tn-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.tn-summary-card,
+	.tn-col {
+		flex: 1 1 320px;
+		min-width: 320px;
+	}
+
+	.tn-summary-card {
+		padding: 10px 12px;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-summary-label,
+	.tn-panel-label,
+	.tn-subtle,
+	.tn-muted {
+		color: #7e90a7;
+	}
+
+	.tn-summary-label,
+	.tn-panel-label {
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.tn-summary-value,
+	.tn-panel-title {
+		margin-top: 4px;
+		font-size: 15px;
+		font-weight: bold;
+		color: #eef4ff;
+	}
+
+	.tn-summary-meta {
+		margin-top: 4px;
+		font-size: 12px;
+	}
+
+	.tn-empty {
+		color: #aaa;
+		font-style: italic;
+	}
+
+	.tn-empty-panel {
+		padding: 18px;
+		border: 1px dashed rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-panel {
+		padding: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-panel + .tn-panel,
+	.tn-panel + .section,
+	.section + .tn-panel {
+		margin-top: 8px;
+	}
+
+	.tn-panel-header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 8px;
+		align-items: flex-start;
+		margin-bottom: 10px;
+	}
+
+	.tn-panel-copy {
+		flex: 1 1 220px;
+		min-width: 220px;
+	}
+
+	.tn-panel-title {
+		margin: 0;
+	}
+
+	.tn-panel-subtitle {
+		margin-top: 4px;
+	}
+
+	.tn-panel-side {
+		text-align: right;
+	}
+
+	.tn-header-count {
+		font-size: 22px;
+		font-weight: bold;
+		line-height: 1;
+	}
+
+	.tn-kv-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 8px;
+	}
+
+	.tn-kv {
+		padding: 8px 10px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(0, 0, 0, 0.14);
+	}
+
+	.tn-kv-value {
+		margin-top: 3px;
+		word-break: break-word;
+	}
+
+	.tn-pillnav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		margin-bottom: 10px;
+	}
+
+	.tn-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		align-items: center;
+	}
+
+	.tn-actions-primary {
+		gap: 6px;
+	}
+
+	.tn-actions-primary .tn-inlineLink,
+	.tn-actions-primary .tn-inlineLink.link,
+	.tn-actions-primary .tn-inlineLink.linkActive {
+		padding: 2px 6px;
+	}
+
+	.tn-actions-split {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 8px;
+		align-items: center;
+	}
+
+	.tn-station-list > * + * {
+		margin-top: 6px;
+	}
+
+	.tn-station {
+		padding: 8px 10px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-station-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.tn-station-main {
+		min-width: 0;
+	}
+
+	.tn-station-name {
+		display: block;
+		font-weight: bold;
+		word-break: break-word;
+	}
+
+	.tn-station-meta {
+		margin-top: 5px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 8px;
+		align-items: center;
+	}
+
+	.tn-station-faction {
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	.tn-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.tn-table th,
+	.tn-table td {
+		padding: 6px 8px;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.tn-table th {
+		color: #7e90a7;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.tn-table td {
+		word-break: break-word;
+	}
+
+	.tn-table-actions {
+		white-space: nowrap;
+	}
+
+	.tn-table-muted {
+		display: block;
+		margin-top: 3px;
+	}
+
+	.tn-contract-block {
+		color: #ffb0b0;
+	}
+
+	.tn-contract-hint {
+		color: #aebdd2;
+	}
+
+	.tn-order-row,
+	.tn-log-row,
+	.tn-saved-row {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.tn-row-selected {
+		background: rgba(73, 114, 161, 0.18);
+	}
+
+	.tn-badge {
+		display: inline-block;
+		padding: 2px 8px;
+		border-radius: 999px;
+		font-size: 11px;
+		font-weight: bold;
+		line-height: 1.4;
+		white-space: nowrap;
+	}
+
+	.tn-badge-good {
+		background: rgba(56, 142, 60, 0.28);
+		color: #a9e6a6;
+	}
+
+	.tn-badge-average {
+		background: rgba(177, 134, 44, 0.28);
+		color: #f0d48a;
+	}
+
+	.tn-badge-bad {
+		background: rgba(160, 58, 58, 0.28);
+		color: #ffb0b0;
+	}
+
+	.tn-flow-list > * + * {
+		margin-top: 8px;
+	}
+
+	.tn-list-block {
+		padding: 10px 12px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-list-block-title {
+		font-size: 14px;
+		font-weight: bold;
+	}
+
+	.tn-list-block-subtitle {
+		margin-top: 4px;
+	}
+
+	.tn-list-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 10px;
+		padding: 6px 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.tn-list-row:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.tn-list-row-main {
+		min-width: 0;
+	}
+
+	.tn-list-row-side {
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	.tn-form-shell {
+		padding: 10px 12px;
+		border: 1px solid rgba(73, 114, 161, 0.28);
+		background: rgba(73, 114, 161, 0.12);
+	}
+
+	.tn-form {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		align-items: center;
+	}
+
+	.tn-form textarea,
+	.tn-form input[type='text'],
+	.tn-form input[type='number'] {
+		background: #111;
+		color: #fff;
+		border: 1px solid #444;
+		padding: 4px 6px;
+		box-sizing: border-box;
+	}
+
+	.tn-form input[type='number'] {
+		width: 90px;
+	}
+
+	.tn-form input[type='text'] {
+		min-width: 220px;
+	}
+
+	.tn-form textarea {
+		width: 100%;
+		min-height: 76px;
+		resize: vertical;
+	}
+
+	.tn-form input[type='submit'] {
+		background: #4972a1;
+		color: #fff;
+		border: none;
+		border-radius: 0.16em;
+		padding: 4px 10px;
+		cursor: pointer;
+	}
+
+	.tn-form-label-wide {
+		width: 100%;
+	}
+
+	.tn-section-divider {
+		margin: 12px 0;
+		border: 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.tn-note {
+		padding: 8px 10px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+		color: #cfd8e7;
+	}
+
+	.tn-w-10 {
+		width: 10%;
+	}
+
+	.tn-w-12 {
+		width: 12%;
+	}
+
+	.tn-w-14 {
+		width: 14%;
+	}
+
+	.tn-w-15 {
+		width: 15%;
+	}
+
+	.tn-w-16 {
+		width: 16%;
+	}
+
+	.tn-w-18 {
+		width: 18%;
+	}
+
+	.tn-w-20 {
+		width: 20%;
+	}
+
+	.tn-w-25 {
+		width: 25%;
+	}
+
+	.tn-w-26 {
+		width: 26%;
+	}
+
+	.tn-w-28 {
+		width: 28%;
+	}
+
+	.tn-w-30 {
+		width: 30%;
+	}
+
+	.tn-w-34 {
+		width: 34%;
+	}
+
+	.tn-w-36 {
+		width: 36%;
+	}
+
+	.tn-w-45 {
+		width: 45%;
+	}
+
+	.tn-w-75 {
+		width: 75%;
+	}
+</style>
+
+<div class="tn-wrap">
+	<div class="tn-stack">
+		<div class="section">
+			<div class="section-content tn-toolbar">
+				<div class="tn-toolbar-row">
+					<div class="tn-workflow-group">
+						<div class="tn-workflow-label">Setup</div>
+						{{:helper.link('Settings', null, {'PRG_trade_screen' : 'settings'}, data.screen == 'settings' ? 'selected' : null, 'tn-inlineLink')}}
+					</div>
+					<div class="tn-workflow-group">
+						<div class="tn-workflow-label">Trade</div>
+						{{:helper.link('Traders', null, {'PRG_trade_screen' : 'goods'}, data.screen == 'goods' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Cart', null, {'PRG_trade_screen' : 'cart'}, data.screen == 'cart' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Saved', null, {'PRG_trade_screen' : 'saved'}, data.screen == 'saved' ? 'selected' : null, 'tn-inlineLink')}}
+					</div>
+					<div class="tn-workflow-group">
+						<div class="tn-workflow-label">Operations</div>
+						{{:helper.link('Export', null, {'PRG_trade_screen' : 'export'}, data.screen == 'export' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Orders', null, {'PRG_trade_screen' : 'orders'}, data.screen == 'orders' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Contracts', null, {'PRG_trade_screen' : 'contracts'}, data.screen == 'contracts' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Logs', null, {'PRG_trade_screen' : 'logs'}, data.screen == 'logs' ? 'selected' : null, 'tn-inlineLink')}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tn-summary-grid">
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Trade Identity</div>
+				<div class="tn-summary-value">{{:data.faction}}</div>
+				<div class="tn-summary-meta">
+					{{if data.has_account}}
+						{{:data.account_owner_name}} #{{:data.account_number}} ({{:data.account_money}} {{:data.currency_short}})
+					{{else}}
+						<span class="tn-empty">No linked account.</span>
+					{{/if}}
+				</div>
+			</div>
+
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Beacons</div>
+				<div class="tn-summary-value">
+					{{if data.has_receiving}}
+						{{:data.receiving}}
+					{{else}}
+						<span class="tn-empty">Receiving not selected.</span>
+					{{/if}}
+				</div>
+				<div class="tn-summary-meta">
+					Sending:
+					{{if data.has_sending}}
+						{{:data.sending}}
+					{{else}}
+						<span class="tn-empty">Not selected.</span>
+					{{/if}}
+				</div>
+			</div>
+
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Cart</div>
+				<div class="tn-summary-value">{{:data.cart_count}} items</div>
+				<div class="tn-summary-meta">{{:data.cart_total}} {{:data.currency_short}} total</div>
+			</div>
+
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Operations Queue</div>
+				<div class="tn-summary-value">{{:data.order_count}} pending orders</div>
+				<div class="tn-summary-meta">{{:data.active_contract_count}} active contracts</div>
+			</div>
+		</div>
+
+		<!-- Settings -->
+		{{if data.screen == 'settings'}}
+			<div class="tn-grid">
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Trade Identity</div>
+						<div class="section-content">
+							<div class="tn-kv-grid">
+								<div class="tn-kv">
+									<div class="tn-panel-label">Faction</div>
+									<div class="tn-kv-value">{{:data.faction}}</div>
+								</div>
+								<div class="tn-kv">
+									<div class="tn-panel-label">Linked Account</div>
+									<div class="tn-kv-value">
+										{{if data.has_account}}
+											{{:data.account_owner_name}} #{{:data.account_number}}
+										{{else}}
+											<span class="tn-empty">No linked account.</span>
+										{{/if}}
+									</div>
+								</div>
+								{{if data.has_account}}
+									<div class="tn-kv">
+										<div class="tn-panel-label">Account Balance</div>
+										<div class="tn-kv-value">{{:data.account_money}} {{:data.currency_short}}</div>
+									</div>
+								{{/if}}
+								{{if data.has_master_budget}}
+									<div class="tn-kv">
+										<div class="tn-panel-label">Supply Budget</div>
+										<div class="tn-kv-value">{{:data.master_budget}} {{:data.currency_short}}</div>
+									</div>
+								{{/if}}
+								{{if !data.has_account && data.has_inserted_id}}
+									<div class="tn-kv">
+										<div class="tn-panel-label">Inserted ID Account</div>
+										<div class="tn-kv-value">
+											{{if data.inserted_id_account_number}}
+												#{{:data.inserted_id_account_number}}
+											{{else}}
+												<span class="tn-empty">No bank account is linked to this ID.</span>
+											{{/if}}
+										</div>
+									</div>
+								{{/if}}
+							</div>
+
+							<hr class="tn-section-divider">
+
+							<div class="tn-actions">
+								{{if data.faction != 'Independent'}}
+									{{:helper.link('Reset faction', null, {'PRG_faction_unlink' : 1}, null, 'tn-inlineLink')}}
+								{{else}}
+									{{:helper.link('Link faction', null, {'PRG_faction' : 1}, null, 'tn-inlineLink')}}
+								{{/if}}
+
+								{{if data.has_account}}
+									{{:helper.link('Unlink account', null, {'PRG_account_unlink' : 1}, null, 'tn-inlineLink')}}
+								{{else}}
+									{{if data.can_link_id_account}}
+										{{:helper.link('Link ID account', null, {'PRG_account_id' : 1}, null, 'tn-inlineLink')}}
+									{{/if}}
+									{{:helper.link('Link account', null, {'PRG_account' : 1}, null, 'tn-inlineLink')}}
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Trade Beacons</div>
+						<div class="section-content">
+							<div class="tn-flow-list">
+								<div class="tn-list-block">
+									<div class="tn-list-block-title">Receiving Beacon</div>
+									<div class="tn-list-block-subtitle">
+										{{if data.has_receiving}}
+											{{:data.receiving}}
+										{{else}}
+											<span class="tn-empty">Not selected.</span>
+										{{/if}}
+									</div>
+									<div class="tn-actions">
+										{{:helper.link('Set receiving beacon', null, {'PRG_receiving' : 1}, null, 'tn-inlineLink')}}
+									</div>
+								</div>
+
+								<div class="tn-list-block">
+									<div class="tn-list-block-title">Sending Beacon</div>
+									<div class="tn-list-block-subtitle">
+										{{if data.has_sending}}
+											{{:data.sending}}
+										{{else}}
+											<span class="tn-empty">Not selected.</span>
+										{{/if}}
+									</div>
+									<div class="tn-actions">
+										{{:helper.link('Set sending beacon', null, {'PRG_sending' : 1}, null, 'tn-inlineLink')}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Traders -->
+		{{else data.screen == 'goods'}}
+			<div class="tn-grid">
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Visible Traders</div>
+						<div class="section-content">
+							{{if !data.has_visible_stations}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">No visible traders</div>
+									<div class="tn-panel-subtitle tn-muted">No trade stations are currently visible.</div>
+								</div>
+							{{else}}
+								<div class="tn-panel">
+									<div class="tn-panel-header">
+										<div class="tn-panel-copy">
+											<div class="tn-panel-label">Network Status</div>
+											<div class="tn-panel-title">{{:data.stations.length}} traders in range</div>
+											<div class="tn-panel-subtitle tn-muted">Choose a trader to browse categories and queue items for delivery.</div>
+										</div>
+									</div>
+									<div class="tn-station-list">
+										{{for data.stations:station_entry:station_index}}
+											<div class="tn-station">
+												<div class="tn-station-header">
+													<div class="tn-station-main">
+														{{:helper.link(station_entry.name, null, {'PRG_station' : station_entry.uid}, station_entry.selected ? 'selected' : null, 'tn-inlineLink tn-station-name')}}
+														<div class="tn-station-meta">
+															<span class="tn-badge tn-badge-{{:station_entry.status_tone}}">{{:station_entry.status_label}}</span>
+															<span class="tn-badge tn-badge-{{:station_entry.market_tone}}">{{:station_entry.market_label}}</span>
+															<span class="tn-station-faction" style="color:{{:station_entry.faction_color}}">{{:station_entry.faction}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										{{/for}}
+									</div>
+								</div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+
+				<div class="tn-col">
+					{{if data.has_selected_station}}
+						<div class="section">
+							<div class="section-title">Trader Detail</div>
+							<div class="section-content">
+								<div class="tn-panel">
+									<div class="tn-panel-header">
+										<div class="tn-panel-copy">
+											<div class="tn-panel-label">Selected Trader</div>
+											<div class="tn-panel-title">{{:data.selected_station.name}}</div>
+											<div class="tn-panel-subtitle">
+												<span class="tn-station-faction" style="color:{{:data.selected_station.faction_color}}">{{:data.selected_station.faction}}</span>
+											</div>
+										</div>
+										<div class="tn-panel-side">
+											<span class="tn-badge tn-badge-{{:data.selected_station.status_tone}}">{{:data.selected_station.status_label}}</span>
+											<span class="tn-badge tn-badge-{{:data.selected_station.market_tone}}">{{:data.selected_station.market_label}}</span>
+										</div>
+									</div>
+
+									<div class="tn-panel-subtitle tn-muted">{{:data.selected_station.desc}}</div>
+									<div class="tn-panel-subtitle tn-muted">{{:data.selected_station.market_desc}}</div>
+
+									<div class="tn-kv-grid">
+										<div class="tn-kv">
+											<div class="tn-panel-label">Favor</div>
+											<div class="tn-kv-value">{{:data.selected_station.favor}} / {{:data.selected_station.unlock_favor}}</div>
+										</div>
+										<div class="tn-kv">
+											<div class="tn-panel-label">Restock In</div>
+											<div class="tn-kv-value">{{:data.selected_station.restock_in}}</div>
+										</div>
+										<div class="tn-kv">
+											<div class="tn-panel-label">Cart</div>
+											<div class="tn-kv-value">{{:data.cart_count}} items queued</div>
+										</div>
+									</div>
+
+									<hr class="tn-section-divider">
+
+									<div class="tn-actions-split">
+										<div class="tn-actions">
+											{{:helper.link('Open cart', null, {'PRG_trade_screen' : 'cart'}, null, 'tn-inlineLink')}}
+											{{:helper.link('Save current cart', null, {'PRG_cart_form' : 'save'}, data.can_save_cart ? null : 'disabled', 'tn-inlineLink')}}
+										</div>
+										<div class="tn-muted">{{:data.cart_total}} {{:data.currency_short}} total</div>
+									</div>
+								</div>
+
+								{{if data.selected_station.block_reason}}
+									<div class="notice bad">{{:data.selected_station.block_reason}}</div>
+								{{else}}
+									<div class="tn-panel">
+										<div class="tn-panel-header">
+											<div class="tn-panel-copy">
+												<div class="tn-panel-label">Goods</div>
+												<div class="tn-panel-title">Browse Available Categories</div>
+											</div>
+										</div>
+
+										<div class="tn-pillnav">
+											{{for data.categories:category_entry:category_index}}
+												{{:helper.link(category_entry.name, null, {'PRG_goods_category' : category_entry.name}, category_entry.selected ? 'selected' : null, 'tn-inlineLink')}}
+											{{/for}}
+										</div>
+
+										{{if data.goods && data.goods.length}}
+											<table class="tn-table">
+												<thead>
+													<tr>
+														<th class="tn-w-45">Item</th>
+														<th class="tn-w-20">Cost</th>
+														<th class="tn-w-20">Buyback</th>
+														<th class="tn-w-15">Stock</th>
+														<th class="tn-w-20">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													{{for data.goods:good_entry:good_index}}
+														<tr class="candystripe">
+															<td>{{:good_entry.name}}</td>
+															<td>{{:good_entry.price}} {{:data.currency_short}}{{:good_entry.markup_text}}</td>
+															<td>{{:good_entry.sell_price}} {{:data.currency_short}}</td>
+															<td>{{:good_entry.stock}}</td>
+															<td class="tn-table-actions">
+																{{:helper.link('Add 1', null, {'PRG_cart_add_good' : good_entry.id}, good_entry.can_add ? null : 'disabled', 'tn-inlineLink')}}
+																{{:helper.link('Add...', null, {'PRG_goods_quantity_target' : good_entry.id}, good_entry.can_add ? null : 'disabled', 'tn-inlineLink')}}
+															</td>
+														</tr>
+														{{if good_entry.quantity_form_open}}
+															<tr class="candystripe">
+																<td colspan="5">
+																	<div class="tn-form-shell">
+																		<form class="tn-form" method="get" action="?src={{:data.src}}">
+																			<input type="hidden" name="src" value="{{:data.src}}">
+																			<input type="hidden" name="PRG_cart_add_form" value="{{:good_entry.id}}">
+																			<label>Quantity:</label>
+																			<input type="number" name="PRG_cart_add_amount" min="1" max="{{:good_entry.stock}}" value="1">
+																			<input type="submit" value="Add to cart">
+																			{{:helper.link('Cancel', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-inlineLink')}}
+																		</form>
+																	</div>
+																</td>
+															</tr>
+														{{/if}}
+													{{/for}}
+												</tbody>
+											</table>
+										{{else}}
+											<div class="tn-empty-panel">
+												<div class="tn-panel-title">No goods in this category</div>
+												<div class="tn-panel-subtitle tn-muted">This trader currently has nothing available here.</div>
+											</div>
+										{{/if}}
+									</div>
+
+									{{if data.market_intel && data.market_intel.length}}
+										<div class="tn-panel">
+											<div class="tn-panel-header">
+												<div class="tn-panel-copy">
+													<div class="tn-panel-label">Market Intel</div>
+													<div class="tn-panel-title">{{:data.market_intel.length}} known market snapshots</div>
+													<div class="tn-panel-subtitle tn-muted">Remote quotes are saved when you inspect a trader. Age is shown as minutes:seconds since capture.</div>
+												</div>
+											</div>
+											<div class="tn-flow-list">
+												{{for data.market_intel:intel_entry:intel_index}}
+													<div class="tn-list-block">
+														<div class="tn-list-block-title">{{:intel_entry.station_name}}</div>
+														<div class="tn-list-block-subtitle tn-muted">{{:intel_entry.age}} old • {{:intel_entry.status_label}}</div>
+														{{for intel_entry.quotes:quote_entry:quote_index}}
+															<div class="tn-list-row">
+																<div class="tn-list-row-main">{{:quote_entry.name}} ({{:quote_entry.category}})</div>
+																<div class="tn-list-row-side">Buy {{:quote_entry.buy_price}} / Sell {{:quote_entry.sell_price}} {{:data.currency_short}}</div>
+															</div>
+														{{/for}}
+													</div>
+												{{/for}}
+											</div>
+										</div>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+					{{else}}
+						<div class="section">
+							<div class="section-title">Trader Detail</div>
+							<div class="section-content">
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Select a trader</div>
+									<div class="tn-panel-subtitle tn-muted">Choose a visible trade station on the left to inspect availability, categories, and pricing.</div>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- Export -->
+		{{else data.screen == 'export'}}
+			<div class="section">
+				<div class="section-title">Export</div>
+				<div class="section-content">
+					<div class="tn-grid">
+						<div class="tn-col">
+							<div class="tn-panel">
+								<div class="tn-panel-header">
+									<div class="tn-panel-copy">
+										<div class="tn-panel-label">Prerequisites</div>
+										<div class="tn-panel-title">Prepare a sending route</div>
+									</div>
+									<div class="tn-panel-side">
+										<div class="tn-header-count">{{:data.export_total}}</div>
+										<div class="tn-muted">{{:data.currency_short}} estimated</div>
+									</div>
+								</div>
+								<div class="tn-kv-grid">
+									<div class="tn-kv">
+										<div class="tn-panel-label">Linked Account</div>
+										<div class="tn-kv-value">
+											{{if data.has_account}}
+												Ready
+											{{else}}
+												<span class="tn-empty">Required</span>
+											{{/if}}
+										</div>
+									</div>
+									<div class="tn-kv">
+										<div class="tn-panel-label">Sending Beacon</div>
+										<div class="tn-kv-value">
+											{{if data.has_sending}}
+												{{:data.sending}}
+											{{else}}
+												<span class="tn-empty">Not selected.</span>
+											{{/if}}
+										</div>
+									</div>
+								</div>
+
+								<hr class="tn-section-divider">
+
+								<div class="tn-actions tn-actions-primary">
+									{{:helper.link('Set sending beacon', null, {'PRG_sending' : 1}, null, 'tn-inlineLink')}}
+									{{:helper.link('Export now', null, {'PRG_export' : 1}, data.can_export ? null : 'disabled', 'tn-inlineLink')}}
+								</div>
+							</div>
+						</div>
+
+						<div class="tn-col">
+							{{if data.export_block_reason}}
+								<div class="notice bad">{{:data.export_block_reason}}</div>
+							{{else}}
+								<div class="tn-panel">
+									<div class="tn-panel-label">Estimated Total</div>
+									<div class="tn-panel-title">{{:data.export_total}} {{:data.currency_short}}</div>
+									<div class="tn-panel-subtitle tn-muted">Objects inside the current sending beacon range.</div>
+									{{if data.has_export_target_station}}
+										<div class="tn-panel-subtitle tn-muted">Selling into {{:data.export_target_station}} using its current market buyback prices.</div>
+									{{/if}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+
+					{{if data.export_block_reason}}
+					{{else data.export_items && data.export_items.length}}
+						<div class="tn-panel">
+							<div class="tn-panel-header">
+								<div class="tn-panel-copy">
+									<div class="tn-panel-label">Eligible Cargo</div>
+									<div class="tn-panel-title">Objects in beacon range</div>
+								</div>
+							</div>
+							<table class="tn-table">
+								<thead>
+									<tr>
+										<th class="tn-w-75">Object</th>
+										<th class="tn-w-25">Value</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{for data.export_items}}
+										<tr class="candystripe">
+											<td>{{:value.name}}</td>
+											<td>{{:value.value}} {{:data.currency_short}}</td>
+										</tr>
+									{{/for}}
+								</tbody>
+							</table>
+						</div>
+					{{else}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">Nothing to export</div>
+							<div class="tn-panel-subtitle tn-muted">No exportable objects are inside the sending beacon range.</div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- Cart -->
+		{{else data.screen == 'cart'}}
+			<div class="section">
+				<div class="section-title">Cart</div>
+				<div class="section-content">
+					<div class="tn-grid">
+						<div class="tn-col">
+							<div class="tn-panel">
+								<div class="tn-panel-header">
+									<div class="tn-panel-copy">
+										<div class="tn-panel-label">Checkout</div>
+										<div class="tn-panel-title">{{:data.cart_count}} items queued</div>
+										<div class="tn-panel-subtitle tn-muted">Purchase directly, build an order request, or save the current selection.</div>
+									</div>
+									<div class="tn-panel-side">
+										<div class="tn-header-count">{{:data.cart_total}}</div>
+										<div class="tn-muted">{{:data.currency_short}} total</div>
+									</div>
+								</div>
+
+								<div class="tn-actions tn-actions-primary">
+									{{:helper.link('Purchase cart', null, {'PRG_receive' : 1}, data.can_purchase_cart ? null : 'disabled', 'tn-inlineLink')}}
+									{{:helper.link('Build order request', null, {'PRG_cart_form' : 'order'}, data.can_build_order ? null : 'disabled', 'tn-inlineLink')}}
+									{{:helper.link('Save cart', null, {'PRG_cart_form' : 'save'}, data.can_save_cart ? null : 'disabled', 'tn-inlineLink')}}
+								</div>
+
+								<hr class="tn-section-divider">
+
+								<div class="tn-actions">
+									{{:helper.link('Load cart', null, {'PRG_cart_load' : 1}, null, 'tn-inlineLink')}}
+									{{:helper.link('Clear cart', null, {'PRG_cart_reset' : 1}, data.cart_count ? null : 'disabled', 'tn-inlineLink')}}
+									{{:helper.link('Browse traders', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-inlineLink')}}
+								</div>
+							</div>
+						</div>
+
+						<div class="tn-col">
+							<div class="tn-panel">
+								<div class="tn-panel-label">Purchase Readiness</div>
+								<div class="tn-kv-grid">
+									<div class="tn-kv">
+										<div class="tn-panel-label">Account</div>
+										<div class="tn-kv-value">
+											{{if data.has_account}}
+												Linked
+											{{else}}
+												<span class="tn-empty">Link an account first.</span>
+											{{/if}}
+										</div>
+									</div>
+									<div class="tn-kv">
+										<div class="tn-panel-label">Receiving Beacon</div>
+										<div class="tn-kv-value">
+											{{if data.has_receiving}}
+												{{:data.receiving}}
+											{{else}}
+												<span class="tn-empty">Required for direct purchase.</span>
+											{{/if}}
+										</div>
+									</div>
+									<div class="tn-kv">
+										<div class="tn-panel-label">Order Cooldown</div>
+										<div class="tn-kv-value">
+											{{if data.orders_locked}}
+												<span class="tn-empty">Active</span>
+											{{else}}
+												Ready
+											{{/if}}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{{if data.cart_trade_block_reason}}
+								<div class="notice bad">{{:data.cart_trade_block_reason}}</div>
+							{{/if}}
+
+							{{if data.orders_locked}}
+								<div class="notice average">Wait a few seconds before submitting another order.</div>
+							{{/if}}
+						</div>
+					</div>
+
+					{{if data.cart_form_mode == 'save'}}
+						<div class="tn-form-shell">
+							<form class="tn-form" method="get" action="?src={{:data.src}}">
+								<input type="hidden" name="src" value="{{:data.src}}">
+								<input type="hidden" name="PRG_cart_save_form" value="1">
+								<label>Cart name:</label>
+								<input type="text" name="PRG_cart_save_name" value="">
+								<input type="submit" value="Save cart">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-inlineLink')}}
+							</form>
+						</div>
+					{{else data.cart_form_mode == 'order'}}
+						<div class="tn-form-shell">
+							<form class="tn-form" method="get" action="?src={{:data.src}}">
+								<input type="hidden" name="src" value="{{:data.src}}">
+								<input type="hidden" name="PRG_build_order_form" value="1">
+								<label class="tn-form-label-wide">Reason for this order:</label>
+								<textarea name="PRG_order_reason"></textarea>
+								<input type="submit" value="Submit order request">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-inlineLink')}}
+							</form>
+						</div>
+					{{/if}}
+
+					{{if !data.cart_count}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">Cart is empty</div>
+							<div class="tn-panel-subtitle tn-muted">Browse traders and add goods to start a purchase or build an order request.</div>
+						</div>
+					{{else}}
+						<div class="tn-flow-list">
+							{{for data.cart_groups:cart_group:cart_group_index}}
+								<div class="tn-list-block">
+									<div class="tn-list-block-title">{{:cart_group.station_name}}</div>
+									<div class="tn-list-block-subtitle tn-muted">Grouped by category for quick review before checkout.</div>
+									{{for cart_group.categories:cart_category:cart_category_index}}
+										<div class="tn-list-row">
+											<div class="tn-list-row-main">
+												<div class="tn-panel-label">{{:cart_category.name}}</div>
+												{{for cart_category.items:cart_item:cart_item_index}}
+													<div class="tn-list-row">
+														<div class="tn-list-row-main">{{:cart_item.name}} x{{:cart_item.amount}}</div>
+														<div class="tn-list-row-side">
+															<div>{{:cart_item.price}} {{:data.currency_short}}</div>
+															<div>{{:helper.link('Remove 1', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id}, null, 'tn-inlineLink')}}</div>
+														</div>
+													</div>
+												{{/for}}
+											</div>
+										</div>
+									{{/for}}
+								</div>
+							{{/for}}
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- Orders -->
+		{{else data.screen == 'orders'}}
+			<div class="tn-grid">
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Pending Orders</div>
+						<div class="section-content">
+							<div class="tn-panel">
+								<div class="tn-panel-header">
+									<div class="tn-panel-copy">
+										<div class="tn-panel-label">Queue</div>
+										<div class="tn-panel-title">{{:data.order_count}} pending orders</div>
+										<div class="tn-panel-subtitle tn-muted">Review orders, inspect request details, and approve or store them as reusable carts.</div>
+									</div>
+								</div>
+								<div class="tn-actions">
+									{{:helper.link('Set receiving beacon', null, {'PRG_receiving' : 1}, null, 'tn-inlineLink')}}
+								</div>
+							</div>
+
+							{{if !data.order_count}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">No pending orders</div>
+									<div class="tn-panel-subtitle tn-muted">New order requests will appear here for cargo review.</div>
+								</div>
+							{{else}}
+								<table class="tn-table">
+									<thead>
+										<tr>
+											<th class="tn-w-34">Order</th>
+											<th class="tn-w-26">Requestor</th>
+											<th class="tn-w-20">Total</th>
+											<th class="tn-w-20">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{for data.orders:order_entry:order_index}}
+											<tr class="candystripe tn-order-row{{if order_entry.selected}} tn-row-selected{{/if}}">
+												<td>{{:helper.link('#' + order_entry.id, null, {'PRG_view_order' : order_entry.id}, order_entry.selected ? 'selected' : null, 'tn-inlineLink')}}</td>
+												<td>{{:order_entry.requestor_name}}</td>
+												<td>{{:order_entry.total}} {{:data.currency_short}}</td>
+												<td class="tn-table-actions">
+													{{:helper.link('Approve', null, {'PRG_approve_order' : order_entry.id}, (data.can_approve_orders && data.has_receiving) ? null : 'disabled', 'tn-inlineLink')}}
+													{{:helper.link('Save as cart', null, {'PRG_save_order' : order_entry.id}, null, 'tn-inlineLink')}}
+													{{:helper.link('Delete', null, {'PRG_remove_order' : order_entry.id}, data.can_manage_orders ? null : 'disabled', 'tn-inlineLink')}}
+												</td>
+											</tr>
+										{{/for}}
+									</tbody>
+								</table>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+
+				<div class="tn-col">
+					{{if data.has_selected_order}}
+						<div class="section">
+							<div class="section-title">Order Details</div>
+							<div class="section-content">
+								<div class="tn-panel">
+									<div class="tn-panel-header">
+										<div class="tn-panel-copy">
+											<div class="tn-panel-label">Selected Order</div>
+											<div class="tn-panel-title">Order #{{:data.selected_order.id}}</div>
+											<div class="tn-panel-subtitle tn-muted">{{:data.selected_order.requestor_name}} requested delivery for {{:data.selected_order.buyer_faction}}.</div>
+										</div>
+									</div>
+
+									<div class="tn-actions tn-actions-primary">
+										{{:helper.link('Approve', null, {'PRG_approve_order' : data.selected_order.id}, (data.can_approve_orders && data.has_receiving) ? null : 'disabled', 'tn-inlineLink')}}
+										{{:helper.link('Save as cart', null, {'PRG_save_order' : data.selected_order.id}, null, 'tn-inlineLink')}}
+										{{:helper.link('Delete', null, {'PRG_remove_order' : data.selected_order.id}, data.can_manage_orders ? null : 'disabled', 'tn-inlineLink')}}
+									</div>
+
+									<hr class="tn-section-divider">
+
+									<div class="tn-kv-grid">
+										<div class="tn-kv">
+											<div class="tn-panel-label">Reason</div>
+											<div class="tn-kv-value">{{:data.selected_order.reason}}</div>
+										</div>
+										<div class="tn-kv">
+											<div class="tn-panel-label">Base Cost</div>
+											<div class="tn-kv-value">{{:data.selected_order.cost}} {{:data.currency_short}}</div>
+										</div>
+										<div class="tn-kv">
+											<div class="tn-panel-label">Handling Fee</div>
+											<div class="tn-kv-value">{{:data.selected_order.fee}} {{:data.currency_short}}</div>
+										</div>
+										<div class="tn-kv">
+											<div class="tn-panel-label">Total Charged</div>
+											<div class="tn-kv-value">{{:data.selected_order.total}} {{:data.currency_short}}</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="tn-flow-list">
+									{{for data.selected_order.contents:order_group:order_group_index}}
+										<div class="tn-list-block">
+											<div class="tn-list-block-title">{{:order_group.station_name}}</div>
+											{{for order_group.categories:order_category:order_category_index}}
+												<div class="tn-list-row">
+													<div class="tn-list-row-main">
+														<div class="tn-panel-label">{{:order_category.name}}</div>
+														{{for order_category.items:order_item:order_item_index}}
+															<div class="tn-list-row">
+																<div class="tn-list-row-main">{{:order_item.name}} x{{:order_item.amount}}</div>
+																<div class="tn-list-row-side">{{:order_item.price}} {{:data.currency_short}}</div>
+															</div>
+														{{/for}}
+													</div>
+												</div>
+											{{/for}}
+										</div>
+									{{/for}}
+								</div>
+							</div>
+						</div>
+					{{else}}
+						<div class="section">
+							<div class="section-title">Order Details</div>
+							<div class="section-content">
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Select an order</div>
+									<div class="tn-panel-subtitle tn-muted">Choose a pending order to inspect its contents and approve it.</div>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- Saved -->
+		{{else data.screen == 'saved'}}
+			<div class="section">
+				<div class="section-title">Saved Carts</div>
+				<div class="section-content">
+					<div class="tn-panel">
+						<div class="tn-panel-header">
+							<div class="tn-panel-copy">
+								<div class="tn-panel-label">Reusable Loadouts</div>
+								<div class="tn-panel-title">{{if data.saved_carts}}{{:data.saved_carts.length}}{{else}}0{{/if}} saved carts</div>
+								<div class="tn-panel-subtitle tn-muted">Load a saved request back into the current cart or delete outdated presets.</div>
+							</div>
+						</div>
+					</div>
+
+					{{if !data.saved_carts || !data.saved_carts.length}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">No saved carts</div>
+							<div class="tn-panel-subtitle tn-muted">Save a configured cart from the trade flow to reuse it later.</div>
+						</div>
+					{{else}}
+						<table class="tn-table">
+							<thead>
+								<tr>
+									<th class="tn-w-45">Name</th>
+									<th class="tn-w-15">Items</th>
+									<th class="tn-w-20">Total</th>
+									<th class="tn-w-20">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{for data.saved_carts:saved_cart:saved_cart_index}}
+									<tr class="candystripe tn-saved-row">
+										<td>{{:saved_cart.name}}</td>
+										<td>{{:saved_cart.count}}</td>
+										<td>{{:saved_cart.total}} {{:data.currency_short}}</td>
+										<td class="tn-table-actions">
+											{{:helper.link('Load', null, {'PRG_cart_load_direct' : saved_cart.index}, null, 'tn-inlineLink')}}
+											{{:helper.link('Delete', null, {'PRG_cart_delete' : saved_cart.index}, null, 'tn-inlineLink')}}
+										</td>
+									</tr>
+								{{/for}}
+							</tbody>
+						</table>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- Contracts -->
+		{{else data.screen == 'contracts'}}
+			<div class="tn-grid">
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Available Contracts</div>
+						<div class="section-content">
+							<div class="tn-panel">
+								<div class="tn-panel-header">
+									<div class="tn-panel-copy">
+										<div class="tn-panel-label">Inbound Work</div>
+										<div class="tn-panel-title">{{:data.available_contract_count}} available contracts</div>
+										<div class="tn-panel-subtitle tn-muted">Accept a delivery or market-intelligence contract once the receiving route is ready.</div>
+									</div>
+								</div>
+								<div class="tn-actions">
+									{{:helper.link('Set receiving beacon', null, {'PRG_receiving' : 1}, null, 'tn-inlineLink')}}
+								</div>
+							</div>
+
+							{{if !data.available_contracts || !data.available_contracts.length}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">No available contracts</div>
+									<div class="tn-panel-subtitle tn-muted">New delivery and market-intelligence opportunities will appear here.</div>
+								</div>
+							{{else}}
+								<table class="tn-table">
+									<thead>
+										<tr>
+											<th class="tn-w-16">Route</th>
+											<th class="tn-w-10">Dist.</th>
+											<th class="tn-w-30">Cargo</th>
+											<th class="tn-w-12">Value</th>
+											<th class="tn-w-12">Reward</th>
+											<th class="tn-w-10">Status</th>
+											<th class="tn-w-10">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{for data.available_contracts:contract_entry:contract_index}}
+											<tr class="candystripe tn-order-row">
+												<td>
+													<div>#{{:contract_entry.serial}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.type_label}}</span>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.source_name}} -> {{:contract_entry.destination_name}}</span>
+												</td>
+												<td>{{:contract_entry.distance}}</td>
+												<td>
+													<div>{{:contract_entry.cargo}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.instruction_text}}</span>
+													{{if contract_entry.block_reason}}
+														<span class="tn-table-muted tn-contract-block">Blocked: {{:contract_entry.block_reason}}</span>
+													{{else}}
+														{{if contract_entry.action_hint}}
+															<span class="tn-table-muted tn-contract-hint">{{:contract_entry.action_hint}}</span>
+														{{/if}}
+													{{/if}}
+												</td>
+												<td>{{:contract_entry.base_value}} {{:data.currency_short}}</td>
+												<td>{{:contract_entry.reward}} {{:data.currency_short}}</td>
+												<td><span class="tn-badge tn-badge-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+												<td class="tn-table-actions">{{:helper.link('Accept', null, {'PRG_contract_accept' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-inlineLink')}}</td>
+											</tr>
+										{{/for}}
+									</tbody>
+								</table>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+
+				<div class="tn-col">
+					<div class="section">
+						<div class="section-title">Active Contracts</div>
+						<div class="section-content">
+							<div class="tn-panel">
+								<div class="tn-panel-header">
+									<div class="tn-panel-copy">
+										<div class="tn-panel-label">Outbound Work</div>
+										<div class="tn-panel-title">{{:data.active_contract_count}} active contracts</div>
+										<div class="tn-panel-subtitle tn-muted">Complete accepted deliveries or transmit market-intelligence packets through the configured sending route.</div>
+									</div>
+								</div>
+								<div class="tn-actions">
+									{{:helper.link('Set sending beacon', null, {'PRG_sending' : 1}, null, 'tn-inlineLink')}}
+								</div>
+							</div>
+
+							{{if !data.active_contracts || !data.active_contracts.length}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">No active contracts</div>
+									<div class="tn-panel-subtitle tn-muted">Accepted contracts will stay here until delivered or failed.</div>
+								</div>
+							{{else}}
+								<table class="tn-table">
+									<thead>
+										<tr>
+											<th class="tn-w-16">Route</th>
+											<th class="tn-w-10">Dist.</th>
+											<th class="tn-w-28">Cargo</th>
+											<th class="tn-w-16">Assigned To</th>
+											<th class="tn-w-10">Reward</th>
+											<th class="tn-w-10">Status</th>
+											<th class="tn-w-10">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{for data.active_contracts:contract_entry:contract_index}}
+											<tr class="candystripe tn-order-row">
+												<td>
+													<div>#{{:contract_entry.serial}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.type_label}}</span>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.source_name}} -> {{:contract_entry.destination_name}}</span>
+												</td>
+												<td>{{:contract_entry.distance}}</td>
+												<td>
+													<div>{{:contract_entry.cargo}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.instruction_text}}</span>
+													{{if contract_entry.block_reason}}
+														<span class="tn-table-muted tn-contract-block">Blocked: {{:contract_entry.block_reason}}</span>
+													{{else}}
+														{{if contract_entry.action_hint}}
+															<span class="tn-table-muted tn-contract-hint">{{:contract_entry.action_hint}}</span>
+														{{/if}}
+													{{/if}}
+												</td>
+												<td>{{:contract_entry.accepted_by}}</td>
+												<td>{{:contract_entry.reward}} {{:data.currency_short}}</td>
+												<td><span class="tn-badge tn-badge-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+												<td class="tn-table-actions">{{:helper.link(contract_entry.action_label, null, {'PRG_contract_deliver' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-inlineLink')}}</td>
+											</tr>
+										{{/for}}
+									</tbody>
+								</table>
+							{{/if}}
+						</div>
+					</div>
+
+					<div class="section">
+						<div class="section-title">Resolved Contracts</div>
+						<div class="section-content">
+							<div class="tn-panel">
+								<div class="tn-panel-label">History</div>
+								<div class="tn-panel-title">{{:data.resolved_contract_count}} resolved contracts</div>
+							</div>
+
+							{{if !data.resolved_contract_count}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">No resolved contracts</div>
+									<div class="tn-panel-subtitle tn-muted">Completed and failed contract history will appear here.</div>
+								</div>
+							{{else}}
+								<table class="tn-table">
+									<thead>
+										<tr>
+											<th class="tn-w-16">Route</th>
+											<th class="tn-w-10">Dist.</th>
+											<th class="tn-w-30">Cargo</th>
+											<th class="tn-w-14">Assigned To</th>
+											<th class="tn-w-10">Result</th>
+											<th class="tn-w-20">Notes</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{for data.completed_contracts:contract_entry:contract_index}}
+											<tr class="candystripe tn-order-row">
+												<td>
+													<div>#{{:contract_entry.serial}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.type_label}}</span>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.source_name}} -> {{:contract_entry.destination_name}}</span>
+												</td>
+												<td>{{:contract_entry.distance}}</td>
+												<td>
+													<div>{{:contract_entry.cargo}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.instruction_text}}</span>
+												</td>
+												<td>{{:contract_entry.accepted_by}}</td>
+												<td><span class="tn-badge tn-badge-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+												<td>{{:contract_entry.resolved_note}}</td>
+											</tr>
+										{{/for}}
+										{{for data.failed_contracts:contract_entry:contract_index}}
+											<tr class="candystripe tn-order-row">
+												<td>
+													<div>#{{:contract_entry.serial}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.type_label}}</span>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.source_name}} -> {{:contract_entry.destination_name}}</span>
+												</td>
+												<td>{{:contract_entry.distance}}</td>
+												<td>
+													<div>{{:contract_entry.cargo}}</div>
+													<span class="tn-table-muted tn-muted">{{:contract_entry.instruction_text}}</span>
+												</td>
+												<td>{{:contract_entry.accepted_by}}</td>
+												<td><span class="tn-badge tn-badge-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+												<td>{{:contract_entry.resolved_note}}</td>
+											</tr>
+										{{/for}}
+									</tbody>
+								</table>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Logs -->
+		{{else data.screen == 'logs'}}
+			<div class="section">
+				<div class="section-title">Logs</div>
+				<div class="section-content">
+					<div class="tn-panel">
+						<div class="tn-panel-header">
+							<div class="tn-panel-copy">
+								<div class="tn-panel-label">Archive</div>
+								<div class="tn-panel-title">{{if data.log_entries}}{{:data.log_entries.length}}{{else}}0{{/if}} entries in view</div>
+								<div class="tn-panel-subtitle tn-muted">Switch log channels and print invoices from the currently selected history stream.</div>
+							</div>
+						</div>
+						{{if data.has_printer}}
+							<div class="tn-note">Printer is available for invoice output.</div>
+						{{else}}
+							<div class="notice average">Install a printer to enable invoice output.</div>
+						{{/if}}
+					</div>
+
+					<div class="tn-pillnav">
+						{{:helper.link('Shipping', null, {'PRG_log_screen' : 'Shipping'}, data.log_screen == 'Shipping' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Export', null, {'PRG_log_screen' : 'Export'}, data.log_screen == 'Export' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Orders', null, {'PRG_log_screen' : 'Order'}, data.log_screen == 'Order' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Contracts', null, {'PRG_log_screen' : 'Contract'}, data.log_screen == 'Contract' ? 'selected' : null, 'tn-inlineLink')}}
+					</div>
+
+					{{if !data.log_entries || !data.log_entries.length}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">No entries in this log</div>
+							<div class="tn-panel-subtitle tn-muted">Change the log tab or wait for new trading activity to be recorded.</div>
+						</div>
+					{{else}}
+						<table class="tn-table">
+							<thead>
+								<tr>
+									<th class="tn-w-18">Invoice</th>
+									<th class="tn-w-16">Time</th>
+									<th class="tn-w-36">Account</th>
+									<th class="tn-w-15">Total</th>
+									<th class="tn-w-15">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{for data.log_entries:log_entry:log_entry_index}}
+									<tr class="candystripe tn-log-row">
+										<td>#{{:log_entry.id}}</td>
+										<td>{{:log_entry.time}}</td>
+										<td>{{:log_entry.ordering_acct}}</td>
+										<td>{{:log_entry.total_paid}} {{:data.currency_short}}</td>
+										<td class="tn-table-actions">
+											{{:helper.link('Print', null, {'PRG_print' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-inlineLink')}}
+											{{:helper.link('Internal', null, {'PRG_print_internal' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-inlineLink')}}
+										</td>
+									</tr>
+								{{/for}}
+							</tbody>
+						</table>
+					{{/if}}
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</div>
