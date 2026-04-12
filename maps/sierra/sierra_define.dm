@@ -29,6 +29,7 @@
 	boss_short    = "Centcomm"
 	company_name  = "NanoTrasen"
 	company_short = "NT"
+	trade_faction = FACTION_NANOTRASEN
 
 	map_admin_faxes = list(
 		"Kshar'va SDF Headquarters",
