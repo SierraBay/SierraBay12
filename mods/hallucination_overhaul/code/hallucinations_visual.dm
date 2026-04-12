@@ -86,7 +86,8 @@
 	for(var/obj/machinery/power/apc/apc in view(C))
 		if(MACHINE_IS_BROKEN(apc) || GET_FLAGS(apc.stat, MACHINE_STAT_MAINT))
 			continue
-		if(!apc.area || !apc.area.requires_power || apc.opened)
+		var/area/apc_area = get_area(apc)
+		if(!apc_area || !apc_area.requires_power || apc.opened)
 			continue
 		return null
 	return "no APC nearby"
@@ -104,7 +105,8 @@
 	for(var/obj/machinery/power/apc/apc in view(holder))
 		if(MACHINE_IS_BROKEN(apc) || GET_FLAGS(apc.stat, MACHINE_STAT_MAINT))
 			continue
-		if(!apc.area || !apc.area.requires_power || apc.opened)
+		var/area/apc_area = get_area(apc)
+		if(!apc_area || !apc_area.requires_power || apc.opened)
 			continue
 		nearby_apcs += apc
 	if(!length(nearby_apcs))
