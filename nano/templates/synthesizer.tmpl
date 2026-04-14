@@ -10,8 +10,12 @@
 		Playback:
 	</div>
 	<div class="itemContent">
-		{{:helper.link('Play', null, {'target': 'play', 'value': 1}, data.playback.playing ? 'selected' : null)}}
-		{{:helper.link('Stop', null, {'target': 'play', 'value': 0}, !data.playback.playing ? 'selected' : null)}}
+		{{if data.playback.playing}}
+			{{:helper.link('⏸', null, {'target': 'play', 'value': 0})}}
+		{{else}}
+			{{:helper.link('▶', null, {'target': 'play', 'value': 1})}}
+		{{/if}}
+		{{:helper.link('⏹', null, {'target': 'stop'})}}
 	</div>
 </div>
 

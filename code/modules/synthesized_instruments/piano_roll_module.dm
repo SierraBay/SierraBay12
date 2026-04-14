@@ -28,7 +28,7 @@
 	data["tempo"] = display_bpm
 
 	var/list/chords = list()
-	var/current_time = 0 // [SIERRA-ADD] - PIANO EDITOR
+	var/current_time = 0
 	
 	if(song && length(song.lines))
 		var/list/last_octaves = list("c"=3,"d"=3,"e"=3,"f"=3,"g"=3,"a"=3,"b"=3)
@@ -77,11 +77,15 @@
 				chord_data["div"] = div
 				chords += list(chord_data)
 				
-				current_time += (1 / div) // [SIERRA-ADD] - PIANO EDITOR
+				current_time += (1 / div)
 	
 	data["chords"] = chords
-	// [SIERRA-EDIT] - PIANO EDITOR: Include live playback position for the playhead
-	data["playback"] = list("playing" = song.playing, "pos" = song ? song.current_playback_time : 0)
+	data["playback"] = list(
+		"playing" = song.playing, 
+		"pos" = song ? song.current_playback_time : 0,
+		"can_resume" = (song.current_line > 1 && !song.playing),
+		"song_version" = song.song_version
+	)
 
 	ui = SSnano.try_update_ui(user, instrument.owner, ui_key, ui, data, force_open)
 	if (!ui)
@@ -98,13 +102,13 @@
 		var/idx = text2num(href_list["idx"])
 		var/total = text2num(href_list["total"])
 		var/chunk = href_list["data"]
-		if (idx == 0)
+		if (idx == 0 || !save_buffer || length(save_buffer) != total)
 			save_buffer = list()
 			for(var/i = 1; i <= total; i++)
 				save_buffer += ""
 			expected_chunks = total
-		if (length(save_buffer) >= total)
-			save_buffer[idx + 1] = chunk
+		
+		save_buffer[idx + 1] = chunk
 		return 1
 
 	if(href_list["save_commit"])
@@ -114,12 +118,12 @@
 		
 		if(received_count < expected_chunks)
 			to_chat(usr, "<span class='warning'>Save failed: Missing data chunks. Please try saving again.</span>")
-			save_buffer.Cut()
+			save_buffer = list() 
 			expected_chunks = 0
 			return 1
 
 		var/full_text = jointext(save_buffer, "")
-		save_buffer.Cut() 
+		save_buffer = list() 
 		expected_chunks = 0
 		
 		if(!full_text)

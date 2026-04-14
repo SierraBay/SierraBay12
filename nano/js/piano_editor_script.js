@@ -1,5 +1,9 @@
 (function() {
-    // Intercept NanoUI updates safely
+    /**
+     * NanoUI Update Interceptor
+     * Prevents the Piano Editor's DOM from being wiped during server pings
+     * and synchronizes the playback state in real-time.
+     */
     if (typeof NanoStateManager !== 'undefined' && !window._PianoEditorInterrupted) {
         var originalUpdate = NanoStateManager.receiveUpdateData;
         NanoStateManager.receiveUpdateData = function(json) {
@@ -11,26 +15,49 @@
                     
                     var editor = window.PianoEditorScriptInstance;
                     if (update.data.playback && editor) {
+                        // Detect remote song changes (e.g. from an Import or Start New Song action)
+                        // and trigger a local refresh of the note grid.
+                        if (update.data.playback.song_version !== undefined && update.data.playback.song_version > editor.songVersion) {
+                            if (update.data.chords) {
+                                editor.loadFromSong(update.data.chords);
+                                if (update.data.tempo) {
+                                    editor.tempo = update.data.tempo;
+                                    var bpmInp = document.getElementById('bpm-input');
+                                    if (bpmInp) bpmInp.value = editor.tempo;
+                                }
+                                editor.songVersion = update.data.playback.song_version;
+                            }
+                        }
+
+                        // State Synchronization: Ensure local playhead matches the server's authoritative clock.
                         if (!editor.playing && update.data.playback.playing) {
                             editor.playbackPos = update.data.playback.pos || 0; 
                         } else if (update.data.playback.playing && update.data.playback.pos !== undefined) {
                             var diff = editor.playbackPos - update.data.playback.pos;
                             if (Math.abs(diff) > 2.0) {
+                                // Jump to server position if we've drifted significantly (e.g. lag)
                                 editor.playbackPos = update.data.playback.pos; 
                             } else if (diff > 0.1) {
-                                // JS outruns the server naturally over time due to BYOND sleep overhead.
-                                // Gently slow the playhead down by softly pulling it back on each ping.
+                                // Client-side JS timers tend to run slightly faster than the BYOND server tick.
+                                // Gently slow down the local playhead to maintain smooth synchronization.
                                 editor.playbackPos -= diff * 0.2;
                             }
+                        } else if (!update.data.playback.playing && update.data.playback.pos !== undefined) {
+                            // Hard-sync the position when playback reaches a complete stop.
+                            editor.playbackPos = update.data.playback.pos;
                         }
                         
                         editor.playing = update.data.playback.playing;
-                        if (!editor.playing) {
-                            editor.playbackPos = 0;
+                        
+                        // Automatically return camera scroll to the start when playback and position reset.
+                        if (!editor.playing && update.data.playback.pos === 0 && editor.playbackPos !== 0) {
+                            var grid = document.getElementById('grid-container');
+                            if (grid) grid.scrollLeft = 0;
                         }
                         
-                        // BUG FIX: Prevent NanoUI from wiping the DOM and deleting unsaved notes!
-                        if (editor.canvas && document.body.contains(editor.canvas)) {
+                        // Prevent NanoUI from re-rendering the entire template if the editor is active,
+                        // unless a version mismatch was detected above.
+                        if (editor.canvas && document.body.contains(editor.canvas) && update.data.playback.song_version <= editor.songVersion) {
                             return; 
                         }
                     }
@@ -44,6 +71,10 @@
         window._PianoEditorInterrupted = true;
     }
 
+    /**
+     * PianoEditor Engine
+     * Handles note manipulation, rendering, and song generation.
+     */
     var PianoEditor = function() {
         this.notes = [];
         this.selectedNotes = []; 
@@ -59,17 +90,19 @@
         if (!this.canvas) return;
         this.ctx = this.canvas.getContext('2d');
         
-        // VISUAL SCALE: 1 cell = 1 Beat (Quarter Note)
+        // Visual Constants: 1 cell = 1 Beat (Quarter Note)
         this.cellHeight = 20; 
         this.cellWidth = 40; 
         this.snap = 16;
-        this.minNote = 21; this.maxNote = 108; this.totalNotes = this.maxNote - this.minNote + 1;
+        this.minNote = 21; this.maxNote = 108; // Standard 88-key piano range
+        this.totalNotes = this.maxNote - this.minNote + 1;
         this.resizeEdgeWidth = 8;
         
-        // Playback Sync
+        // Playback State
         this.playing = false;
         this.playbackPos = 0;
         this.lastFrameTime = 0;
+        this.songVersion = 0; // Tracks if the song structure has been modified remotely
         this.init();
     };
 
@@ -89,6 +122,8 @@
         var sidebar = document.getElementById('sidebar-content');
         if (!sidebar) return;
         var noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        
+        // Build the piano keyboard labels
         while (sidebar.firstChild) sidebar.removeChild(sidebar.firstChild);
         for (var i = this.maxNote; i >= this.minNote; i--) {
             var div = document.createElement('div');
@@ -99,8 +134,11 @@
             div.style.height = this.cellHeight + 'px';
             sidebar.appendChild(div);
         }
+        
         this.updateCanvasSize();
         this.canvas.height = this.totalNotes * this.cellHeight;
+        
+        // Load initial song data from the page's data attributes or global state
         var data = null;
         if (window.LatestPianoData && window.LatestPianoData.chords) data = window.LatestPianoData;
         else if (typeof jQuery !== 'undefined') {
@@ -112,7 +150,12 @@
             var bpmInp = document.getElementById('bpm-input');
             if (bpmInp) bpmInp.value = this.tempo;
             this.loadFromSong(data.chords);
+            if (data.playback && data.playback.song_version !== undefined) {
+                this.songVersion = data.playback.song_version;
+            }
         }
+
+        // Input Listeners
         this.canvas.onmousedown = function(e) { self.onMouseDown(e); };
         window.onmousemove = function(e) { self.onMouseMove(e); };
         window.onmouseup = function(e) { self.onMouseUp(e); };
@@ -122,6 +165,7 @@
         document.getElementById('close-export-btn').onclick = function() { document.getElementById('export-modal').style.display = 'none'; };
         document.getElementById('grid-snap').onchange = function(e) { self.snap = parseInt(e.target.value); };
         
+        // Manual Tempo Adjustment
         var bpmInp = document.getElementById('bpm-input');
         if (bpmInp) {
             bpmInp.onchange = function(e) {
@@ -130,6 +174,8 @@
                 self.tempo = newBpm;
             };
         }
+
+        // Sidebar tracking during grid scroll
         var gridContainer = document.getElementById('grid-container');
         if (gridContainer) {
             gridContainer.onscroll = function() {
@@ -137,6 +183,8 @@
                 if (sb) sb.style.marginTop = (-gridContainer.scrollTop) + 'px';
             };
         }
+
+        // Keyboard Shortcuts
         window.onkeydown = function(e) {
             if (e.ctrlKey && e.keyCode === 90) { self.undo(); e.preventDefault(); return; }
             if (e.ctrlKey && e.keyCode === 83) { self.save(); e.preventDefault(); return; }
@@ -145,9 +193,12 @@
                 if (e.target === document.body) e.preventDefault();
             }
         };
+
+        // Start High-Frequency Render Loop
         setInterval(function() { self.draw(); }, 50);
     };
 
+    // Dynamically expand canvas width if notes exceed current bounds
     PianoEditor.prototype.updateCanvasSize = function() {
         var maxT = 200; 
         for(var i=0; i<this.notes.length; i++) {
@@ -157,7 +208,7 @@
         var targetWidth = (maxT + 16) * this.cellWidth;
         if (this.canvas.width !== targetWidth) {
             this.canvas.width = targetWidth;
-            this.draw(); // Prevent visual flicker when canvas gets natively cleared
+            this.draw();
         }
     };
 
@@ -166,6 +217,9 @@
         return noteNames[midiVal % 12] + Math.floor(midiVal / 12);
     };
 
+    /**
+     * Decodes the server-side text-based chord list into internal note objects.
+     */
     PianoEditor.prototype.loadFromSong = function(chords) {
         var noteMap = {"c":0,"d":2,"e":4,"f":5,"g":7,"a":9,"b":11};
         var accidentalMap = {"#":1,"b":-1,"n":0,"s":1};
@@ -200,13 +254,16 @@
         var pitch = this.maxNote - Math.floor(y / this.cellHeight);
         var time = x / this.cellWidth;
         var hit = this.getNoteAt(x, y);
+        
         if (e.shiftKey) {
+            // Box Selection
             this.isSelecting = true;
             var grid = document.getElementById('grid-container'); var gRect = grid.getBoundingClientRect();
             this.selectionRect.x1 = e.clientX - gRect.left + grid.scrollLeft;
             this.selectionRect.y1 = e.clientY - gRect.top + grid.scrollTop;
             this.selectedNotes = []; 
         } else if (hit) {
+            // Note manipulation (Move or Resize)
             var alreadySelected = (this.selectedNotes.indexOf(hit.index) !== -1);
             if (!alreadySelected) { if (!e.ctrlKey) this.selectedNotes = [hit.index]; else this.selectedNotes.push(hit.index); }
             this.pushHistory();
@@ -218,6 +275,7 @@
                 };
             }
         } else {
+            // Create New Note
             this.pushHistory();
             var snapDiv = this.snap / 4; 
             var snappedTime = Math.floor(time * snapDiv) / snapDiv;
@@ -310,6 +368,9 @@
         this.selectedNotes = []; 
     };
 
+    /**
+     * Primary Canvas Renderer
+     */
     PianoEditor.prototype.draw = function() {
         var ctx = this.ctx; if (!ctx) return;
         var grid = document.getElementById('grid-container'); if (!grid) return;
@@ -326,16 +387,20 @@
         var viewL = grid.scrollLeft; var viewR = viewL + grid.clientWidth;
         var viewT = grid.scrollTop; var viewB = viewT + grid.clientHeight;
         ctx.clearRect(viewL, viewT, grid.clientWidth, grid.clientHeight);
+        
+        // Draw Horizontal Grid Lines
         ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
         for (var i = 0; i <= this.totalNotes; i++) {
             var y = i * this.cellHeight;
             if (y >= viewT && y <= viewB) { ctx.beginPath(); ctx.moveTo(viewL, y); ctx.lineTo(viewR, y); ctx.stroke(); }
         }
+        
+        // Draw Vertical Grid Lines (Beats and Subdivisions)
         for (var i = Math.floor(viewL / this.cellWidth); i <= Math.ceil(viewR / this.cellWidth); i++) {
             var x = i * this.cellWidth;
-            ctx.strokeStyle = (i % 4 == 0) ? '#555' : '#333';
+            ctx.strokeStyle = (i % 4 == 0) ? '#555' : '#333'; // Thicker lines for major measures
             ctx.beginPath(); ctx.moveTo(x, viewT); ctx.lineTo(x, viewB); ctx.stroke();
-            // Draw subdivision lines (1/4 of a cell)
+            
             ctx.strokeStyle = '#222';
             for (var sub=1; sub<4; sub++) {
                 var sx = x + sub * (this.cellWidth / 4);
@@ -344,6 +409,8 @@
                 }
             }
         }
+        
+        // Render Active Notes
         for (var i = 0; i < this.notes.length; i++) {
             var n = this.notes[i];
             var x = n.time * this.cellWidth; var w = n.duration * this.cellWidth;
@@ -356,16 +423,15 @@
             if (!this.isDragging) { ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.fillRect(x + w - 4, y + 1, 3, this.cellHeight - 2); }
         }
 
-        if (this.playing || this.playbackPos > 0) {
+        // Render Playhead Tracking
+        if (this.playing || this.playbackPos >= 0) {
             var phX = this.playbackPos * this.cellWidth;
             
-            // Auto-Scroll: Follow playhead if it goes off-screen or gets close to right margin
+            // Automatic Follow-Scroll logic
             if (this.playing) {
-                var rightMargin = 80; // pixels before hitting the edge
+                var rightMargin = 80; 
                 if (phX > (viewL + grid.clientWidth - rightMargin) || phX < viewL) {
-                    // Jump scroll so the playhead sits comfortably on the left (20% of screen)
                     grid.scrollLeft = Math.max(0, phX - (grid.clientWidth * 0.2));
-                    // Update view bounds after scrolling so the playhead still draws
                     viewL = grid.scrollLeft; 
                     viewR = viewL + grid.clientWidth;
                 }
@@ -385,8 +451,9 @@
         }
     };
 
-
-
+    /**
+     * Converts the current grid state into server-compatible song text.
+     */
     PianoEditor.prototype.generateSongText = function() {
         var bpmInp = document.getElementById('bpm-input');
         var tempo = bpmInp ? bpmInp.value : this.tempo;
@@ -400,7 +467,6 @@
         
         var fullText = "BPM: " + tempo + "\n";
         var currentLine = "";
-        var slicesInLine = 0;
         
         for(var i=0; i<sortedTimes.length - 1; i++) {
             var start = sortedTimes[i]; var end = sortedTimes[i+1];
@@ -423,21 +489,22 @@
             }
             
             var sliceText = (currCh || "") + divisorText;
-            
-            var extraChar = currentLine === "" ? 0 : 1; // Account for the comma
+            var extraChar = currentLine === "" ? 0 : 1; 
             if (currentLine.length + sliceText.length + extraChar > 49) { 
                 fullText += currentLine + "\n"; 
                 currentLine = sliceText; 
-                slicesInLine = 1;
             } else { 
                 currentLine += (currentLine === "" ? "" : ",") + sliceText; 
-                slicesInLine++;
             }
         }
         fullText += currentLine;
         return fullText;
     }
 
+    /**
+     * Fragmentation Save System: Sends the song text to the server in chunks
+     * to avoid URL length limitations (typical in old SS13 engines).
+     */
     PianoEditor.prototype.save = function() {
         var self = this;
         var ref = this.container.getAttribute('data-src'); if (!ref) return;
@@ -472,6 +539,10 @@
         }
     };
 
+    /**
+     * Initialization Monitor: Ensures the editor instance is recreated
+     * if NanoUI re-injects the HTML into the window.
+     */
     var initTimer = setInterval(function() {
         var canvas = document.getElementById('piano-roll-canvas');
         if (canvas) {
