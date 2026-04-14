@@ -1266,12 +1266,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	department_account_key = "Научный"
 	can_switch_account = TRUE
 
-/// Инженерная РнД-консоль. Списывает средства со счёта инженерного отдела.
-/obj/machinery/computer/rdconsole/core/sierra/engineer
-	name = "Engineering R&D Console"
-	department_account_key = "Инженерный"
-	can_switch_account = FALSE
-	req_access = list(access_engine)
 
 /obj/machinery/computer/rdconsole/attack_ai(mob/user)
 	return ui_interact(user)

@@ -26,7 +26,7 @@ those devices access via linked_console.
 	extended_desc = "Research and development management software. Provides server access, technology trees, corporate networks, and fabricator control."
 	nanomodule_path = /datum/nano_module/program/rnd_console
 	usage_flags   = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	required_access = access_research
+	required_access = access_rnd_network
 	program_icon_state = "research"
 	program_key_state = "tech_key"
 	category      = PROG_ENG
