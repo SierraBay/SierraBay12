@@ -1,22 +1,19 @@
 /*
-R&D Console — Downloadable Program
+R&D Console - Downloadable Program
 ===================================
 A modular computer program that provides full R&D console functionality.
 
 Architecture:
-  datum/computer_file/program/rnd_console  — the downloadable program file
-  datum/nano_module/program/rnd_console    — owns all state and logic directly;
-                                             no proxy obj is created.
+datum/computer_file/program/rnd_console - the downloadable program file
+datum/nano_module/program/rnd_console   - owns all state and logic directly; no proxy obj is created.
 
-  PROGRAM_CONSOLE — full interface: analyzer, protolathe, imprinter, trees,
-                    missions, corporations, disk management.
-  PROGRAM_LAPTOP  — lite mode: designs/disk/corporations/trees only (read-only
-                    tech tree, no fabricator/analyzer screens).
+PROGRAM_CONSOLE - full interface: analyzer, protolathe, imprinter, trees, missions, corporations, disk management.
+PROGRAM_LAPTOP  - lite mode: designs/disk/corporations/trees only (read-only tech tree, no fabricator/analyzer screens).
 
-  The nano_module datum itself is assigned as linked_console on nearby devices
-  (destructive_analyzer, protolathe, imprinter). BYOND's duck-typed proc calls
-  mean this works transparently — the datum implements every proc/var that
-  those devices access via linked_console.
+The nano_module datum itself is assigned as linked_console on nearby devices
+(destructive_analyzer, protolathe, imprinter). BYOND's duck-typed proc calls
+mean this works transparently - the datum implements every proc/var that
+those devices access via linked_console.
 */
 
 // ═══════════════════════════════════════════════════════════════════════════
