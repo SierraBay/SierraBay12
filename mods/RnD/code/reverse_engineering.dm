@@ -148,10 +148,15 @@
 		to_chat(user, SPAN_WARNING("Диск защищен от записи."))
 		return FALSE
 
+	var/datum/research/F = get_server_files()
+	if(!F)
+		to_chat(user, SPAN_WARNING("Нет подключения к серверу R&D."))
+		return FALSE
+
 	var/obj/item/I = linked_destroy.loaded_item
 
 	// Generate design
-	var/datum/design/new_design = files.generate_design_from_item(I, user)
+	var/datum/design/new_design = F.generate_design_from_item(I, user)
 
 	if(!new_design)
 		to_chat(user, SPAN_WARNING("Не удалось извлечь дизайн из [I.name]."))
@@ -173,7 +178,7 @@
 	var/datum/computer_file/binary/design/file_copy = new_design.file.clone()
 	if(disk.save_file(file_copy))
 		// Also add to known designs
-		files.AddDesign2Known(new_design)
+		F.AddDesign2Known(new_design)
 
 		// Quality notification
 		var/quality_message = ""

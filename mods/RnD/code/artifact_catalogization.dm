@@ -157,16 +157,17 @@
 /obj/machinery/computer/rdconsole/proc/find_artifact_rdf_files()
 	if(!disk)
 		return list()
+	var/datum/research/server_files = get_server_files()
 	var/list/result = list()
-	for(var/datum/computer_file/data/rdf/F in disk.stored_files)
-		if(!F.metadata)
+	for(var/datum/computer_file/data/rdf/rdf_file in disk.stored_files)
+		if(!rdf_file.metadata)
 			continue
-		var/art_id = F.metadata["artifact_id"]
+		var/art_id = rdf_file.metadata["artifact_id"]
 		if(!art_id)
 			continue
-		if(files && (art_id in files.catalogized_artifact_ids))
+		if(server_files && (art_id in server_files.catalogized_artifact_ids))
 			continue
-		result += F
+		result += rdf_file
 	return result
 
 /// Start artifact catalogization from an RDF file on disk
@@ -188,9 +189,10 @@
 		to_chat(user, SPAN_WARNING("Файл не содержит данных сканирования артефакта."))
 		return
 
-	if(!files)
+	var/datum/research/F = get_server_files()
+	if(!F)
 		return
-	if(art_id in files.catalogized_artifact_ids)
+	if(art_id in F.catalogized_artifact_ids)
 		to_chat(user, SPAN_WARNING("Этот артефакт уже каталогизирован."))
 		return
 
@@ -266,8 +268,9 @@
 	if(catalog_correct >= 3)
 		total_rep += 10  // +10 bonus for perfect classification
 
-	if(total_rep > 0 && catalog_reward_corp && files)
-		files.ChangeCorporationReputation(catalog_reward_corp, total_rep)
+	var/datum/research/F = get_server_files()
+	if(total_rep > 0 && catalog_reward_corp && F)
+		F.ChangeCorporationReputation(catalog_reward_corp, total_rep)
 		var/corp_name = get_rnd_mission_corporation_name(catalog_reward_corp)
 		catalog_result_text += "<br><span class='good'>Каталогизация завершена. Репутация с [corp_name]: +[total_rep]</span>"
 		if(user)
@@ -278,8 +281,8 @@
 			to_chat(user, SPAN_NOTICE("Каталогизация завершена, но классификация слишком неточна."))
 
 	// Mark this artifact as catalogized
-	if(catalog_artifact_id && files)
-		files.catalogized_artifact_ids += catalog_artifact_id
+	if(catalog_artifact_id && F)
+		F.catalogized_artifact_ids += catalog_artifact_id
 
 	catalog_active = FALSE
 	catalog_step = 0

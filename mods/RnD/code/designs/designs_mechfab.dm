@@ -596,3 +596,43 @@
 	req_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 6,  TECH_ENGINEERING = 6)
 	id = "rig_kinetic"
 	sort_string = "WCLAC"
+
+/datum/design/item/mechfab/rig/mining
+	category = "Hardsuits"
+	name = "Mining hardsuit"
+	build_path = /obj/item/rig/industrial/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 5000, MATERIAL_PHORON = 2000, MATERIAL_GOLD = 5000, MATERIAL_TITANIUM = 1500)
+	id = "mining_hardsuit"
+
+/obj/item/rig/industrial/equipped/empty
+	initial_modules = list()
+
+/datum/design/item/mechfab/rig/hazard
+	category = "Hardsuits"
+	name = "Hazard hardsuit"
+	build_path = /obj/item/rig/hazard
+	materials = list(MATERIAL_TITANIUM = 7000, MATERIAL_STEEL = 10000, MATERIAL_GOLD = 2000, MATERIAL_GLASS = 3000)
+	id = "hazzard_suit"
+	time = 190
+
+
+/datum/design/item/mechfab/rig/eva
+	category = "Hardsuits"
+	name = "Engineering hardsuit"
+	build_path = /obj/item/rig/eva/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 5000, MATERIAL_PHORON = 2000, MATERIAL_GLASS = 5000)
+	id = "engi_eva_rig"
+	time = 190
+
+/obj/item/rig/eva/equipped/empty
+	initial_modules = list()
+
+/datum/design/item/mechfab/rig/medical
+	category = "Hardsuits"
+	name = "Medical hardsuit"
+	build_path = /obj/item/rig/medical/equipped/empty
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 500, MATERIAL_GOLD = 1500)
+	id = "medical_hardsuit"
+
+/obj/item/rig/medical/equipped/empty
+	initial_modules = list()

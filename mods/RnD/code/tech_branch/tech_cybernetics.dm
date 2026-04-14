@@ -40,7 +40,8 @@
 	unlocks_designs = list(
 		"rig_decompiler",
 		"rig_anomaly_scanner",
-		"rig_plasmacutter"
+		"rig_plasmacutter",
+		"mining_hardsuit"
 	)
 
 /datum/technology/cybernetics/heavy_duty_mining_grayson
@@ -259,7 +260,7 @@
 	)
 
 /datum/technology/cybernetics/basic_engineering_augments_xion
-	name = "Basic Engineering Augments (Xion)"
+	name = "Basic Engineering (Xion)"
 	desc = "Fundamental cybernetic augmentations for engineering."
 	id = "basic_engineering_augments_xion"
 
@@ -274,7 +275,9 @@
 
 	unlocks_designs = list(
 		"augment_toolset_engineering",
-		"augment_glare_dampeners"
+		"augment_glare_dampeners",
+		"engi_eva_rig",
+		"null _suit"
 	)
 
 /datum/technology/cybernetics/advanced_engineering_augments_xion
@@ -401,7 +404,8 @@
 
 	unlocks_designs = list(
 		"rig_medhud",
-		"rig_healthscanner"
+		"rig_healthscanner",
+		"medical_hardsuit"
 	)
 
 /datum/technology/cybernetics/medical_exosuit_systems_veymed
@@ -542,8 +546,6 @@
 		"augment_blade",
 		"augment_powerfist",
 		"augment_knuckles",
-		"rig_taser",
-		"rig_egun",
 		"rig_kinetic",
 		"rig_cooler"
 	)
@@ -602,12 +604,32 @@
 		"mech_armour_laserproof"
 	)
 
+/datum/technology/cybernetics/combat_rig_design_heph
+	name = "RIG (Hephaestus)"
+	desc = "Combat RIG construction."
+	id = "combat_mech_design_heph"
+
+	x = 0.2
+	y = 0.5
+	icon = "hardsuitmodule"
+
+	required_corp_id = RND_MISSION_CORP_HEPHAESTUS
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 1000
+
+	unlocks_designs = list(
+		"hazzard_suit",
+		"rig_taser",
+		"rig_egun",
+	)
+
 /datum/technology/cybernetics/mech_heavy_weapons_heph
 	name = "Mech Heavy Weapons (Hephaestus)"
 	desc = "Heavy weapon systems for combat exosuits."
 	id = "mech_heavy_weapons_heph"
 
-	x = 0.2
+	x = 0.3
 	y = 0.5
 	icon = "mechlaser"
 
@@ -629,7 +651,7 @@
 	desc = "Military-grade cybernetic combat augmentations."
 	id = "military_augments_heph"
 
-	x = 0.3
+	x = 0.4
 	y = 0.5
 	icon = "augment"
 

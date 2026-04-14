@@ -130,12 +130,13 @@
 		return FALSE
 
 	var/obj/machinery/computer/rdconsole/console = find_nearest_rdconsole()
-	if(!console || !console.files)
+	var/datum/research/console_files = console ? console.get_server_files() : null
+	if(!console || !console_files)
 		if(user)
 			to_chat(user, SPAN_WARNING("Дрон пад не привязан к R&D консоли. Используйте мультитул для привязки."))
 		return FALSE
 
-	if(!mission.finalize(console.files))
+	if(!mission.finalize(console_files))
 		if(user)
 			to_chat(user, SPAN_WARNING("Не удалось обработать награду контракта."))
 		return FALSE

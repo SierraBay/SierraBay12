@@ -38,11 +38,17 @@ Used In File(s): \code\modules\research\server.dm
 						<span class="srvServerStatus {{:value.operable ? 'srvServerStatus--on' : 'srvServerStatus--off'}}">
 							{{:value.operable ? 'ОНЛАЙН' : 'ОФФЛАЙН'}}
 						</span>
+						{{if value.is_public}}
+							<span class="srvPublicBadge">&#9670; PUBLIC</span>
+						{{/if}}
 					</div>
 					<div class="srvServerActions">
 						{{:helper.link("Доступ", 'locked', {'select_server' : value.id, 'target_screen' : 1})}}
 						{{:helper.link("Данные", 'disk', {'select_server' : value.id, 'target_screen' : 2})}}
 						{{:helper.link("Дизайны", 'wrench', {'select_server' : value.id, 'target_screen' : 4})}}
+						{{if !value.is_public}}
+							{{:helper.link("→ Public", 'arrowthick-1-e', {'set_public_server' : value.id}, value.operable ? null : 'disabled', 'srvSmallBtn')}}
+						{{/if}}
 					</div>
 				</div>
 				{{/for}}
@@ -235,6 +241,13 @@ Used In File(s): \code\modules\research\server.dm
 							<div class="srvDataActions">
 								{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.id}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
 								{{:helper.link("На диск", 'disk', {'download_design_to_disk' : value.ref}, data.has_disk && !data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
+								{{if !value.starts_unlocked}}
+									{{if data.has_public_server && !data.is_public_server}}
+										{{:helper.link("→ Public", 'arrowthick-1-e', {'publish_design' : value.ref}, null, 'srvSmallBtn')}}
+									{{/if}}
+									{{:helper.link("Копировать", 'copy', {'copy_design_choose' : value.ref}, null, 'srvSmallBtn')}}
+									{{:helper.link("Удалить", 'trash', {'delete_design' : value.ref}, null, 'srvDangerBtn srvSmallBtn')}}
+								{{/if}}
 							</div>
 						</div>
 						{{/for}}
@@ -512,6 +525,18 @@ Used In File(s): \code\modules\research\server.dm
 	background: rgba(80, 30, 30, 0.4);
 	color: #cc4444;
 	border: 1px solid rgba(130, 50, 50, 0.4);
+}
+
+.srvPublicBadge {
+	display: inline-block;
+	padding: 1px 6px;
+	background: rgba(124, 58, 237, 0.18);
+	border: 1px solid rgba(124, 58, 237, 0.5);
+	color: #a78bfa;
+	border-radius: 2px;
+	font-size: 9px;
+	letter-spacing: 0.8px;
+	font-weight: bold;
 }
 
 .srvServerActions {

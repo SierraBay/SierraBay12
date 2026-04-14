@@ -38,6 +38,11 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 			{{:helper.link("Корпорации", '', {'go_screen' : 'corps'}, data.screen == 'corps' ? 'selected' : null, 'rndTab')}}
 		</div>
 		<div class="rndNavStatus">
+			{{if data.has_server}}
+				<span class="rndServerBadge rndServerBadge--online"><span class="rndServerDot"></span>{{:data.server_name}}</span>
+			{{else}}
+				<span class="rndServerBadge rndServerBadge--offline"><span class="rndServerDot"></span>Нет сервера</span>
+			{{/if}}
 			{{if data.has_science_account}}
 				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}
 				<span class="rndBalanceLabel">{{:data.science_account_name}}</span>
@@ -309,7 +314,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 					{{if data.show_settings}}
 					<div class="rndSubPanel">
 						<div class="rndBtnRow">
-							{{:helper.link("Синхронизировать с сетью", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
+							{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
 						</div>
 						<div class="rndBtnRow">
 							{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
@@ -784,7 +789,14 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		</div>
 		<div class="rndNavStatus">
 			{{if data.has_disk}}
-				<span class="rndMuted">{{:data.disk_used}}GQ / {{:data.disk_size}}GQ</span>
+				{{var pct = Math.round(data.disk_used / data.disk_size * 100);}}
+				<div class="rndDiskBarWrap">
+					<span class="rndMuted" style="font-size:10px;">{{:data.disk_used}} / {{:data.disk_size}} GQ</span>
+					<div class="rndDiskBar">
+						<div class="rndDiskBarFill {{:pct >= 100 ? 'rndDiskBarFull' : pct >= 75 ? 'rndDiskBarWarn' : ''}}" style="width:{{:pct}}%;"></div>
+					</div>
+					<span class="rndMuted" style="font-size:10px; min-width:28px;">{{:pct}}%</span>
+				</div>
 			{{/if}}
 		</div>
 	</div>
@@ -810,7 +822,10 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	<div class="rndTwoCol">
 		<div class="rndCol" style="width: 50%;">
 			<div class="rndSection">
-				<div class="rndSectionTitle">Диск</div>
+				<div class="rndSectionTitle" style="display:flex; justify-content:space-between; align-items:center;">
+					<span>Диск</span>
+					<span style="font-size:10px; font-weight:normal; color:#5a7a9a; letter-spacing:0;">{{:data.disk_designs.length}} дизайнов</span>
+				</div>
 				<div class="rndSectionContent rndFileList">
 					{{for data.disk_designs}}
 					<div class="rndFileItem">
@@ -828,7 +843,10 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		</div>
 		<div class="rndCol" style="width: 50%;">
 			<div class="rndSection">
-				<div class="rndSectionTitle">Локальная база данных</div>
+				<div class="rndSectionTitle" style="display:flex; justify-content:space-between; align-items:center;">
+					<span>Локальная база данных</span>
+					<span style="font-size:10px; font-weight:normal; color:#5a7a9a; letter-spacing:0;">{{:data.known_designs.length}} дизайнов</span>
+				</div>
 				<div class="rndSectionContent rndFileList">
 					{{for data.known_designs}}
 					<div class="rndFileItem">
@@ -1113,6 +1131,43 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	display: flex;
 	align-items: center;
 	gap: 8px;
+}
+
+.rndServerBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+.rndServerBadge--online {
+	background: rgba(30, 80, 50, 0.35);
+	border: 1px solid rgba(50, 160, 80, 0.4);
+	color: #66dd88;
+}
+.rndServerBadge--offline {
+	background: rgba(80, 30, 30, 0.35);
+	border: 1px solid rgba(160, 50, 50, 0.4);
+	color: #dd6666;
+}
+.rndServerDot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	display: inline-block;
+	flex-shrink: 0;
+}
+.rndServerBadge--online .rndServerDot {
+	background: #44cc66;
+	box-shadow: 0 0 4px rgba(68, 204, 102, 0.7);
+}
+.rndServerBadge--offline .rndServerDot {
+	background: #cc4444;
+	box-shadow: 0 0 4px rgba(204, 68, 68, 0.7);
 }
 
 .rndTab {
@@ -1825,6 +1880,38 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 /* === Disk Info === */
 .rndDiskInfo {
 	margin-bottom: 6px;
+}
+
+/* === Disk fill bar (disk_management_designs nav) === */
+.rndDiskBarWrap {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.rndDiskBar {
+	width: 80px;
+	height: 5px;
+	border-radius: 3px;
+	background: rgba(30, 50, 80, 0.7);
+	border: 1px solid rgba(64, 98, 138, 0.4);
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.rndDiskBarFill {
+	height: 100%;
+	border-radius: 3px;
+	background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+	transition: width 0.3s;
+}
+
+.rndDiskBarFill.rndDiskBarWarn {
+	background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.rndDiskBarFill.rndDiskBarFull {
+	background: linear-gradient(90deg, #ef4444, #f87171);
 }
 
 /* === Sprite Icons === */

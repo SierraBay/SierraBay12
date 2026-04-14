@@ -191,8 +191,9 @@
 					O.current_count = O.required_count
 					O.check_complete()
 			var/obj/machinery/computer/rdconsole/console = locate(/obj/machinery/computer/rdconsole) in world
-			if(console && console.files)
-				M.finalize(console.files)
+			var/datum/research/console_files = console ? console.get_server_files() : null
+			if(console && console_files)
+				M.finalize(console_files)
 				to_chat(C.mob, SPAN_NOTICE("Finalized mission: [M.title] — rewards granted!"))
 			else
 				to_chat(C.mob, SPAN_WARNING("No R&D console found to grant rewards."))
@@ -206,8 +207,9 @@
 					O.current_count = O.required_count
 					O.check_complete()
 			var/obj/machinery/computer/rdconsole/console = locate(/obj/machinery/computer/rdconsole) in world
-			if(console && console.files)
-				M.finalize(console.files)
+			var/datum/research/console_files = console ? console.get_server_files() : null
+			if(console && console_files)
+				M.finalize(console_files)
 		to_chat(C.mob, SPAN_NOTICE("All missions completed and finalized!"))
 
 	// Auto-refresh after any action

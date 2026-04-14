@@ -276,7 +276,7 @@
 		var/datum/research/incoming_files
 		if(istype(input_device,/obj/machinery/computer/rdconsole))
 			var/obj/machinery/computer/rdconsole/input_machine = input_device
-			incoming_files = input_machine.files
+			incoming_files = input_machine.get_server_files()
 		else if(istype(input_device,/obj/machinery/r_n_d/server))
 			var/obj/machinery/r_n_d/server/input_machine = input_device
 			incoming_files = input_machine.files

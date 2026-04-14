@@ -13,6 +13,10 @@
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
 	var/id_with_download_string = ""
 	var/server_id = 0
+	/// If TRUE this server acts as the public design repository for NTNet Download Design.
+	/// Only one server should have this flag set at a time.
+	/// Can be toggled via R&D Server Control console → server list.
+	var/is_public_server = FALSE
 	var/produces_heat = 1
 	idle_power_usage = 800
 	var/delay = 10
@@ -148,9 +152,10 @@
 				server_ids += num
 		no_id_servers -= S
 
+/*
 /obj/machinery/r_n_d/server/centcom/Process()
 	return PROCESS_KILL //don't need process()
-
+*/
 /obj/machinery/computer/rdservercontrol
 	name = "\improper R&D server controller"
 	icon_keyboard = "rd_key"
@@ -310,7 +315,54 @@
 		if(selected_design_category == "__all__")
 			selected_design_category = null
 		. = TOPIC_REFRESH
-//[/SIERRA-EDIT] - MODPACK_RND
+
+	else if(href_list["publish_design"])
+		if(temp_server)
+			var/datum/design/D = locate(href_list["publish_design"]) in temp_server.files.known_designs
+			if(D)
+				var/turf/ctrl_turf = get_turf(src)
+				for(var/obj/machinery/r_n_d/server/PS as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+					if(!PS.is_public_server)
+						continue
+					var/turf/ps_turf = get_turf(PS)
+					if(ps_turf && AreConnectedZLevels(ps_turf.z, ctrl_turf.z) && PS.operable())
+						PS.files.AddDesign2Known(D)
+						to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" опубликован на публичном сервере."))
+						break
+		. = TOPIC_REFRESH
+
+	else if(href_list["delete_design"])
+		if(temp_server)
+			var/datum/design/D = locate(href_list["delete_design"]) in temp_server.files.known_designs
+			if(D)
+				var/choice = alert("Удалить дизайн \"[D.name]\" с сервера [temp_server.name]? Действие нельзя отменить.", "Удаление дизайна", "Удалить", "Отмена")
+				if(choice == "Удалить")
+					temp_server.files.known_designs -= D
+					to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" удалён с сервера [temp_server.name]."))
+		. = TOPIC_REFRESH
+
+	else if(href_list["copy_design_choose"])
+		if(temp_server)
+			var/datum/design/D = locate(href_list["copy_design_choose"]) in temp_server.files.known_designs
+			if(D)
+				var/turf/ctrl_turf = get_turf(src)
+				var/list/available = list()
+				for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+					if(S == temp_server)
+						continue
+					var/turf/s_turf = get_turf(S)
+					if(!s_turf || !AreConnectedZLevels(s_turf.z, ctrl_turf.z))
+						continue
+					available[S.name] = S
+				if(length(available))
+					var/choice = input(user, "Выберите целевой сервер", "Копировать дизайн") as null|anything in available
+					if(choice)
+						var/obj/machinery/r_n_d/server/target = available[choice]
+						target.files.AddDesign2Known(D)
+						to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" скопирован на [target.name]."))
+				else
+					to_chat(user, SPAN_WARNING("Нет доступных серверов для копирования."))
+		. = TOPIC_REFRESH
 
 	else if(href_list["send_to"])
 		var/target_id = text2num(href_list["send_to"])
@@ -318,6 +370,19 @@
 			if(S.server_id == target_id && temp_server)
 				S.files.download_from(temp_server.files)
 				break
+		. = TOPIC_REFRESH
+
+	else if(href_list["set_public_server"])
+		var/target_id = text2num(href_list["set_public_server"])
+		var/turf/ctrl_turf = get_turf(src)
+		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+			var/turf/s_turf = get_turf(S)
+			if(!s_turf || !AreConnectedZLevels(s_turf.z, ctrl_turf.z))
+				continue
+			var/was_public = S.is_public_server
+			S.is_public_server = (S.server_id == target_id)
+			if(!was_public && S.is_public_server)
+				to_chat(user, SPAN_NOTICE("[S.name] назначен публичным сервером дизайнов."))
 		. = TOPIC_REFRESH
 
 /obj/machinery/computer/rdservercontrol/interface_interact(mob/user)
@@ -344,7 +409,8 @@
 				server_list += list(list(
 					"name" = S.name,
 					"id" = S.server_id,
-					"operable" = S.operable()
+					"operable" = S.operable(),
+					"is_public" = S.is_public_server
 				))
 			data["servers"] = server_list
 
@@ -440,14 +506,22 @@
 		if(4) // Design Management
 			if(temp_server)
 				data["server_name"] = temp_server.name
+				data["is_public_server"] = temp_server.is_public_server
+				data["has_public_server"] = FALSE
+				var/turf/ctrl_turf = get_turf(src)
+				for(var/obj/machinery/r_n_d/server/PS as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+					if(!PS.is_public_server)
+						continue
+					var/turf/ps_turf = get_turf(PS)
+					if(ps_turf && AreConnectedZLevels(ps_turf.z, ctrl_turf.z) && PS.operable())
+						data["has_public_server"] = TRUE
+						break
 				data["design_search"] = design_search_text
 				data["selected_design_category"] = selected_design_category
 
 				// Always collect category list (lightweight pass, no ref building)
 				var/list/all_categories = list()
 				for(var/datum/design/D in temp_server.files.known_designs)
-					if(D.starts_unlocked)
-						continue
 					var/cat_name = "Unspecified"
 					if(LAZYLEN(D.category))
 						cat_name = D.category[1]
@@ -463,8 +537,6 @@
 				if(selected_design_category || design_search_text)
 					var/list/categorized_designs = list()
 					for(var/datum/design/D in temp_server.files.known_designs)
-						if(D.starts_unlocked)
-							continue
 						if(design_search_text && !findtext(D.name, design_search_text))
 							continue
 						var/cat_name = "Unspecified"
@@ -479,7 +551,8 @@
 							"name" = D.name,
 							"id" = D.id,
 							"ref" = "\ref[D]",
-							"banned" = (D.id in temp_server.files.banned_designs)
+							"banned" = (D.id in temp_server.files.banned_designs),
+							"starts_unlocked" = D.starts_unlocked
 						))
 					var/list/grouped = list()
 					for(var/cat_name in categorized_designs)
@@ -529,3 +602,13 @@
 	for(var/datum/technology/T in SSresearch.all_tech_nodes)
 		if(T.required_corp_id == RND_MISSION_CORP_NANOTRASEN)
 			files.UnlockTechology(T, force = TRUE)
+
+// ─── Public Design Server ──────────────────────────────────────────────────
+// Stores designs that have been published for NTNet-wide distribution.
+// NTNet Download Design program reads from any server with is_public_server = TRUE.
+// Designs are pushed here via R&D Server Control (screen 4 → "→ Public" button).
+// Role can be reassigned to any server via R&D Server Control → server list.
+/obj/machinery/r_n_d/server/public
+	name = "public design server"
+	server_id = 3
+	is_public_server = TRUE

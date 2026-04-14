@@ -240,7 +240,7 @@
 		if(!RDC.sync)
 			sync_message = "Error: no console found."
 			return
-		files = RDC.files
+		files = RDC.get_server_files()
 		sync_message = "Sync complete."
 		update_categories()
 	if(disk)

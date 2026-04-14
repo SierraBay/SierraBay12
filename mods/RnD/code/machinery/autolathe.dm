@@ -954,7 +954,12 @@
 
 /obj/machinery/fabricator/proc/fabricate_design(datum/design/design)
 	consume_materials(design)
-	design.Fabricate(get_turf(loc), mat_efficiency, src)
+	var/obj/new_item = design.Fabricate(get_turf(loc), mat_efficiency, src)
+	// Fabricated storage containers are always printed empty.
+	// Contents spawned by Initialize() are free items the player didn't pay for.
+	if(istype(new_item, /obj/item/storage) && length(new_item.contents))
+		for(var/atom/movable/A in new_item.contents)
+			qdel(A)
 	working = FALSE
 	current_file = null
 	print_post()

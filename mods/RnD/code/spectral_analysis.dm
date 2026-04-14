@@ -54,11 +54,12 @@
 	if(!loaded_item.origin_tech || !LAZYLEN(loaded_item.origin_tech))
 		to_chat(user, SPAN_WARNING("Предмет не содержит технологических данных."))
 		return FALSE
-	if(!linked_console || !linked_console.files)
+	var/datum/research/F = linked_console ? linked_console.get_server_files() : null
+	if(!linked_console || !F)
 		to_chat(user, SPAN_WARNING("Нет подключения к R&D консоли."))
 		return FALSE
 	var/item_type = loaded_item.type
-	if(item_type in linked_console.files.spectral_analyzed_types)
+	if(item_type in F.spectral_analyzed_types)
 		to_chat(user, SPAN_WARNING("Предмет этого типа уже прошёл спектральный анализ."))
 		return FALSE
 	busy = TRUE
@@ -223,8 +224,9 @@
 	if(spectral_correct >= LAZYLEN(spectral_sequence))
 		total_rep += 3  // perfect bonus
 
-	if(total_rep > 0 && spectral_reward_corp && files)
-		files.ChangeCorporationReputation(spectral_reward_corp, total_rep)
+	var/datum/research/F = get_server_files()
+	if(total_rep > 0 && spectral_reward_corp && F)
+		F.ChangeCorporationReputation(spectral_reward_corp, total_rep)
 		var/corp_name = get_rnd_mission_corporation_name(spectral_reward_corp)
 		spectral_result_text += "<br><span class='good'>Анализ завершён. Репутация с [corp_name]: +[total_rep]</span>"
 		if(user)
@@ -235,9 +237,9 @@
 			to_chat(user, SPAN_NOTICE("Спектральный анализ завершён, но данных недостаточно."))
 
 	// Mark type as analyzed & register experiment
-	if(linked_destroy.loaded_item && files)
-		files.spectral_analyzed_types += linked_destroy.loaded_item.type
-		files.experiments.do_research_object(linked_destroy.loaded_item)
+	if(linked_destroy.loaded_item && F)
+		F.spectral_analyzed_types += linked_destroy.loaded_item.type
+		F.experiments.do_research_object(linked_destroy.loaded_item)
 
 	linked_destroy.finish_spectral()
 	spectral_active = FALSE

@@ -259,7 +259,7 @@
 
 /obj/machinery/robotics_fabricator/proc/get_build_options()
 	. = list()
-	for(var/i in files.known_designs)
+	for(var/i in (files ? files.known_designs : list()))
 		var/datum/design/D = i
 		if(!(D.build_type & MECHFAB))
 			continue
@@ -280,7 +280,7 @@
 
 /obj/machinery/robotics_fabricator/proc/update_categories()
 	categories = list()
-	for(var/datum/design/D in files.known_designs)
+	for(var/datum/design/D in (files ? files.known_designs : list()))
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
@@ -340,7 +340,7 @@
 		if(!RDC.sync)
 			continue
 //[SIERRA-EDIT] - MODPACK_RND
-		files = RDC.files
+		files = RDC.get_server_files()
 	sync_message = "Sync complete."
 	update_categories()
 //[/SIERRA-EDIT] - MODPACK_RND

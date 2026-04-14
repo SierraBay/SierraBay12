@@ -39,7 +39,6 @@
 #include "code/machinery/recipe_analyzer.dm"
 
 #include "code/machinery/rdconsole.dm"
-#include "code/machinery/design_terminal.dm"
 #include "code/machinery/rdmachines.dm"
 #include "code/machinery/server.dm"
 #include "code/machinery/robotics_fabricator.dm"
@@ -57,6 +56,7 @@
 #include "code/program/filetypes.dm"
 #include "code/program/codeprocessor.dm"
 #include "code/program/itcommand.dm"
+#include "code/program/rnd_console.dm"
 
 // Миссии и награды
 #include "code/admin.dm"

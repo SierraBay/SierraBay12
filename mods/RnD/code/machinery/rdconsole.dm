@@ -44,7 +44,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_screen = "rdcomp"
 	desc = "Console controlling the various fabrication devices. Uses self-learning matrix to hold and optimize blueprints. Prone to corrupting said matrix, so back up often."
 	light_color = COLOR_PURPLE
-	var/datum/research/files								//Stores all the collected research data.
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk = null	//Stores the data disk.
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
@@ -114,11 +113,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
-	files = new /datum/research(src) //Setup the research data holder.
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
-	files = null
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -182,16 +179,31 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	SSnano.update_uis(src)
 
 /obj/machinery/computer/rdconsole/proc/handle_item_analysis(obj/item/I) // handles deconstructing items.
-	files.check_item_for_tech(I)
+	var/datum/research/F = get_server_files()
+	if(!F)
+		return
+	F.check_item_for_tech(I)
 	// NOTE: Research points removed - new system uses money and missions instead
 	// Players can now extract designs to disk using "Extract Design" button
-	files.experiments.do_research_object(I)
+	F.experiments.do_research_object(I)
 
 /obj/machinery/computer/rdconsole/proc/get_science_account()
 	if(linked_account_number)
 		return get_account(linked_account_number)
 	if(department_account_key)
 		return department_accounts[department_account_key]
+	return null
+
+/// Returns the research datum of the connected R&D server, or null if no server is reachable.
+/// The console no longer owns a local datum/research — the server is the sole authoritative storage.
+/obj/machinery/computer/rdconsole/proc/get_server_files()
+	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
+		if(!S.files || MACHINE_IS_BROKEN(S))
+			continue
+		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
+			continue
+		if(id in S.id_with_download)
+			return S.files
 	return null
 
 /// Print an R&D sales invoice linking to the science department account
@@ -220,19 +232,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /// Find /datum/tech by its string ID (e.g. "materials", "engineering")
 /obj/machinery/computer/rdconsole/proc/find_tech_by_id(tech_id)
-	if(!files)
+	var/datum/research/F = get_server_files()
+	if(!F)
 		return null
-	for(var/datum/tech/T in files.researched_tech)
+	for(var/datum/tech/T in F.researched_tech)
 		if(T.id == tech_id)
 			return T
 	return null
 
 /// Compile deconstructed tech levels into a sellable research report disk
 /obj/machinery/computer/rdconsole/proc/compile_research_report(mob/living/user)
-	if(!files || !files.experiments)
+	var/datum/research/F = get_server_files()
+	if(!F || !F.experiments)
 		return
 
-	var/list/saved = files.experiments.saved_tech_levels
+	var/list/saved = F.experiments.saved_tech_levels
 	if(!LAZYLEN(saved))
 		to_chat(user, SPAN_WARNING("Нет данных деконструкции. Поместите предметы в деструктивный анализатор."))
 		return
@@ -249,7 +263,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/lvl in levels)
 			if(lvl > max_level)
 				max_level = lvl
-		var/compiled = files.compiled_tech_levels[tech_id]
+		var/compiled = F.compiled_tech_levels[tech_id]
 		if(!compiled)
 			compiled = 0
 		if(max_level > compiled)
@@ -272,17 +286,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	report.delta_levels = delta
 	report.cargo_value = max(1, cargo_value * 15)
 
-	// Update compiled levels
+	// Update compiled levels on server directly
 	for(var/tech_id in tech_data)
-		files.compiled_tech_levels[tech_id] = tech_data[tech_id]
+		F.compiled_tech_levels[tech_id] = tech_data[tech_id]
 
 	to_chat(user, SPAN_NOTICE("Отчёт скомпилирован: [delta] новых уровней. Оценочная стоимость: [report.cargo_value *15] таллеров."))
 	SSnano.update_uis(src)
 
 /obj/machinery/computer/rdconsole/proc/buy_corp_node(mob/living/user, node_id)
-	if(!files)
-		return
-	if(!node_id)
+	var/datum/research/F = get_server_files()
+	if(!F || !node_id)
 		return
 
 	var/list/corp_nodes = get_rnd_category_tree_nodes(selected_category_id, selected_corp_id)
@@ -295,11 +308,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/technology/tech_node = SSresearch.get_tech_node(node_id)
 	if(!tech_node)
 		return
-	if(!get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set))
+	if(!get_rnd_corp_node_requirements_met(F, tech_node, corp_node_set))
 		to_chat(user, SPAN_WARNING("Условия узла ещё не выполнены."))
 		return
 
-	var/price = get_rnd_corp_node_price(tech_node, files)
+	var/price = get_rnd_corp_node_price(tech_node, F)
 	var/datum/money_account/science_account = get_science_account()
 	if(!science_account)
 		to_chat(user, SPAN_WARNING("Не удалось получить доступ к счёту научного отдела."))
@@ -308,7 +321,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		to_chat(user, SPAN_WARNING("Недостаточно средств на счёте научного отдела."))
 		return
 
-	files.UnlockTechology(tech_node, force = TRUE)
+	F.UnlockTechology(tech_node, force = TRUE)
 	SSnano.update_uis(src)
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list) // Oh boy here we go.
@@ -331,18 +344,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["buy_corp_node"]) // User attempts to buy a corporate tech node.
 		buy_corp_node(usr, href_list["buy_corp_node"])
 	if(href_list["select_tech_tree"]) // User selected a tech tree.
-		var/datum/tech/tech_tree = locate(href_list["select_tech_tree"]) in files.researched_tech
-		if(tech_tree && tech_tree.shown)
-			selected_tech_tree = tech_tree
-			selected_technology = null
+		var/datum/research/F_stt = get_server_files()
+		if(F_stt)
+			var/datum/tech/tech_tree = locate(href_list["select_tech_tree"]) in F_stt.researched_tech
+			if(tech_tree && tech_tree.shown)
+				selected_tech_tree = tech_tree
+				selected_technology = null
 	if(href_list["select_technology"]) // User selected a technology node.
 		var/tech_node = locate(href_list["select_technology"]) in SSresearch.all_tech_nodes
 		if(tech_node)
 			selected_technology = tech_node
 	if(href_list["unlock_technology"]) // User attempts to unlock a technology node (Safeties are within UnlockTechnology)
-		var/tech_node = locate(href_list["unlock_technology"]) in SSresearch.all_tech_nodes
-		if(tech_node)
-			files.UnlockTechology(tech_node)
+		var/datum/research/F_ut = get_server_files()
+		if(F_ut)
+			var/tech_node = locate(href_list["unlock_technology"]) in SSresearch.all_tech_nodes
+			if(tech_node)
+				F_ut.UnlockTechology(tech_node)
 	if(href_list["go_screen"]) // User is changing the screen.
 		var/where = href_list["go_screen"]
 		if(href_list["need_access"])
@@ -363,16 +380,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/datum/computer_file/file = locate(href_list["delete_disk_file"]) in disk.stored_files
 			disk.remove_file(file)
 
-	if(href_list["download_disk_design"]) // User is attempting to download (disk->rdconsole) a design from the disk.
+	if(href_list["download_disk_design"]) // User is attempting to upload (disk -> server) a design from the disk.
 		if(disk)
 			var/datum/computer_file/binary/design/file = locate(href_list["download_disk_design"]) in disk.stored_files
 			if(file)
-				files.AddDesign2Known(file.design)
-	if(href_list["upload_disk_design"]) // User is attempting to upload (rdconsole->disk) a design to the disk.
+				var/datum/research/F_dd = get_server_files()
+				if(F_dd)
+					F_dd.AddDesign2Known(file.design)
+				else
+					to_chat(usr, SPAN_WARNING("Нет подключения к серверу. Дизайн не загружен."))
+	if(href_list["upload_disk_design"]) // User is attempting to save (server -> disk) a design to the disk.
 		if(disk)
-			var/datum/design/D = locate(href_list["upload_disk_design"]) in files.known_designs
-			if(D)
-				disk.save_file(D.file.clone())
+			var/datum/research/F_ud = get_server_files()
+			if(F_ud)
+				var/datum/design/D = locate(href_list["upload_disk_design"]) in F_ud.known_designs
+				if(D)
+					disk.save_file(D.file.clone())
 	if(href_list["toggle_settings"]) // User wants to see the settings.
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
@@ -504,13 +527,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		print_rnd_invoice(usr)
 
 	if(href_list["build"])
-		var/amount = clamp(text2num(href_list["amount"]), 1, 10)
-		var/datum/design/being_built = locate(href_list["build"]) in files.known_designs
-		if(being_built && target_device)
-			if((being_built.id in files.banned_designs) || is_design_banned_on_server(being_built.id))
-				to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
-			else
-				target_device.queue_design(being_built.file, amount)
+		var/datum/research/F_b = get_server_files()
+		if(F_b)
+			var/amount = clamp(text2num(href_list["amount"]), 1, 10)
+			var/datum/design/being_built = locate(href_list["build"]) in F_b.known_designs
+			if(being_built && target_device)
+				if((being_built.id in F_b.banned_designs) || is_design_banned_on_server(being_built.id))
+					to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
+				else
+					target_device.queue_design(being_built.file, amount)
 	if(href_list["clear_queue"]) // Clearing a queue
 		if(target_device)
 			target_device.clear_queue()
@@ -537,14 +562,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	if(href_list["reset"]) //Reset the R&D console's database.
-		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
-			log_and_message_admins("reset the R&D console's database")
-			screen = SCREEN_WORKING
-			qdel(files)
-			files = new /datum/research(src)
-			addtimer(new Callback(src, PROC_REF(reset_screen)), 2 SECONDS)
+	if(href_list["reset"]) // Database is now on the server — cannot be reset from the console.
+		to_chat(usr, SPAN_WARNING("База данных хранится на сервере R&D. Для сброса обратитесь к серверной машине напрямую."))
 	if(href_list["lock"]) //Lock the console from use by anyone without tox access.
 		if(allowed(usr) || emagged)
 			screen = SCREEN_LOCKED
@@ -583,19 +602,32 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	SyncRDevices()
 	reset_screen()
 
+/// Sync: if a disk is inserted, upload its designs to the server.
+/// The console no longer has a local research datum, so there is nothing else to sync.
 /obj/machinery/computer/rdconsole/proc/sync_tech()
+	var/datum/research/F = get_server_files()
+	if(!F)
+		to_chat(usr, SPAN_WARNING("Нет подключения к серверу R&D."))
+		reset_screen()
+		return
+
+	if(disk)
+		var/uploaded = 0
+		for(var/datum/computer_file/binary/design/file in disk.find_files_by_type(/datum/computer_file/binary/design))
+			if(file.design)
+				F.AddDesign2Known(file.design)
+				uploaded++
+		if(uploaded)
+			to_chat(usr, SPAN_NOTICE("Загружено [uploaded] дизайн(ов) с диска на сервер."))
+
+	// Also notify any connected server to produce heat (legacy behaviour for balance)
 	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
-		var/server_processed = FALSE
 		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
-			break
-		if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
-			S.files.download_from(files)
-			server_processed = TRUE
-		if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)))
-			files.download_from(S.files)
-			server_processed = TRUE
-		if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
+			continue
+		if((id in S.id_with_upload) || (id in S.id_with_download))
 			S.produce_heat(400)
+			break
+
 	reset_screen()
 
 // --- Mission data submission procs ---
@@ -700,8 +732,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
+	var/datum/research/F = get_server_files()
+	if(!F)
+		return list()
 	var/list/designs_list = list()
-	for(var/datum/design/D in files.known_designs)
+	for(var/datum/design/D in F.known_designs)
 		if(D.build_type & target_machine.build_type)
 			var/cat = "Unspecified"
 			if(D.category)
@@ -724,7 +759,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						missing_chemicals += chemical
 					can_build = min(can_build, can_build_temp)
 
-				var/is_banned = (D.id in files.banned_designs) || is_design_banned_on_server(D.id)
+				var/is_banned = (D.id in F.banned_designs) || is_design_banned_on_server(D.id)
 				designs_list += list(list(
 					"data" = D.ui_data(),
 					"id" = "\ref[D]",
@@ -745,10 +780,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if((screen == SCREEN_PROTO && !linked_lathe) || (screen == SCREEN_IMPRINTER && !linked_imprinter))
 		screen = SCREEN_MAIN // Kick us from protolathe or imprinter screen if they were destroyed
 
+	var/datum/research/F = get_server_files()
+
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync
 	data["has_disk"] = !!disk
+	data["has_server"] = !!F
 
 	// Science balance (shown on nav bar)
 	var/datum/money_account/sci_acc = get_science_account()
@@ -773,18 +811,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["can_research"] = can_research
 
 		var/list/tech_tree_list = list()
-		for(var/tree in files.researched_tech)
-			var/datum/tech/tech_tree = tree
-			if(!tech_tree.shown)
-				continue
-			var/list/tech_tree_data = list(
-				"id" =             tech_tree.type,
-				"name" =           "[tech_tree.name]",
-				"shortname" =      "[tech_tree.shortname]",
-				"level" =          tech_tree.level,
-				"maxlevel" =       tech_tree.maxlevel,
-			)
-			tech_tree_list += list(tech_tree_data)
+		if(F)
+			for(var/tree in F.researched_tech)
+				var/datum/tech/tech_tree = tree
+				if(!tech_tree.shown)
+					continue
+				var/list/tech_tree_data = list(
+					"id" =             tech_tree.type,
+					"name" =           "[tech_tree.name]",
+					"shortname" =      "[tech_tree.shortname]",
+					"level" =          tech_tree.level,
+					"maxlevel" =       tech_tree.maxlevel,
+				)
+				tech_tree_list += list(tech_tree_data)
 		data[SCREEN_TREES] = tech_tree_list
 
 		if(linked_destroy)
@@ -813,7 +852,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				destroy_list["tech_data"] = item_data
 
 				// Spectral analysis: can we analyze this item type?
-				var/can_spectral = !(linked_destroy.loaded_item.type in files.spectral_analyzed_types)
+				var/can_spectral = F ? !(linked_destroy.loaded_item.type in F.spectral_analyzed_types) : FALSE
 				destroy_list["can_spectral"] = can_spectral
 
 				data["destroy_data"] = destroy_list
@@ -828,15 +867,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/list/disk_design_files = disk.find_files_by_type(/datum/computer_file/binary/design)
 			data["search_text"] = search_text
 
-			// Collect all unique categories from local designs
+			// Collect all unique categories from server designs
 			var/list/all_disk_categories = list()
-			for(var/i in files.known_designs)
-				var/datum/design/cat_D = i
-				if(cat_D.starts_unlocked)
-					continue
-				if(LAZYLEN(cat_D.category))
-					for(var/cat in cat_D.category)
-						all_disk_categories |= cat
+			if(F)
+				for(var/i in F.known_designs)
+					var/datum/design/cat_D = i
+					if(cat_D.starts_unlocked)
+						continue
+					if(LAZYLEN(cat_D.category))
+						for(var/cat in cat_D.category)
+							all_disk_categories |= cat
 			data["disk_design_categories"] = all_disk_categories
 			data["selected_disk_category"] = selected_disk_category
 
@@ -851,17 +891,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
 			data["disk_designs"] = disk_designs
 
-			// Build local known designs list
+			// Build server known designs list
 			var/list/known_designs = list()
-			for(var/i in files.known_designs)
-				var/datum/design/D = i
-				if(D.starts_unlocked)
-					continue
-				if(search_text && !findtext(D.name, search_text))
-					continue
-				if(selected_disk_category && LAZYLEN(D.category) && !(selected_disk_category in D.category))
-					continue
-				known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+			if(F)
+				for(var/i in F.known_designs)
+					var/datum/design/D = i
+					if(D.starts_unlocked)
+						continue
+					if(search_text && !findtext(D.name, search_text))
+						continue
+					if(selected_disk_category && LAZYLEN(D.category) && !(selected_disk_category in D.category))
+						continue
+					known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
 			data["known_designs"] = known_designs
 
 	if(screen == SCREEN_DISK_TECH)
@@ -873,9 +914,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				disk_tech_nodes += list(list("name" = tech_file.design.name, "id" = "\ref[tech_file]"))
 			data["disk_tech_nodes"] = disk_tech_nodes
 			var/list/known_nodes = list()
-			for(var/i in files.researched_nodes)
-				var/datum/technology/T = i
-				known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
+			if(F)
+				for(var/i in F.researched_nodes)
+					var/datum/technology/T = i
+					known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
 			data["known_nodes"] = known_nodes
 	if(screen == SCREEN_PROTO || screen == SCREEN_IMPRINTER)
 		var/obj/machinery/fabricator/rnd/target_device
@@ -884,11 +926,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(screen == SCREEN_PROTO && linked_lathe)
 			target_device = linked_lathe
-			design_categories = files.design_categories_protolathe
+			design_categories = F ? F.design_categories_protolathe : list()
 			selected_category = selected_protolathe_category
 		else if(screen == SCREEN_IMPRINTER && linked_imprinter)
 			target_device = linked_imprinter
-			design_categories = files.design_categories_imprinter
+			design_categories = F ? F.design_categories_imprinter : list()
 			selected_category = selected_imprinter_category
 
 		if(target_device)
@@ -963,8 +1005,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/datum/technology/tech_node = SSresearch.get_tech_node(node_id)
 			if(!tech_node)
 				continue
-			var/is_researched = files.IsResearched(tech_node)
-			var/can_unlock = get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set)
+			var/is_researched = F ? F.IsResearched(tech_node) : FALSE
+			var/can_unlock = F ? get_rnd_corp_node_requirements_met(F, tech_node, corp_node_set) : FALSE
 			var/list/node_data = list(
 				"id" = node_id,
 				"name" = tech_node.name,
@@ -1014,9 +1056,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(selected_node)
 			var/datum/technology/tech_node = SSresearch.get_tech_node(selected_node)
 			if(tech_node)
-				var/is_researched = files.IsResearched(tech_node)
-				var/can_unlock = get_rnd_corp_node_requirements_met(files, tech_node, corp_node_set)
-				var/price = get_rnd_corp_node_price(tech_node, files)
+				var/is_researched = F ? F.IsResearched(tech_node) : FALSE
+				var/can_unlock = F ? get_rnd_corp_node_requirements_met(F, tech_node, corp_node_set) : FALSE
+				var/price = get_rnd_corp_node_price(tech_node, F)
 				var/list/technology_data = list(
 					"name" = tech_node.name,
 					"desc" = tech_node.desc,
@@ -1027,7 +1069,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				)
 
 				if(tech_node.required_corp_id)
-					var/current_rep = files.GetCorporationReputation(tech_node.required_corp_id)
+					var/current_rep = F ? F.GetCorporationReputation(tech_node.required_corp_id) : 0
 					var/required_rep = tech_node.min_reputation
 					technology_data["current_reputation"] = current_rep
 					technology_data["required_reputation"] = required_rep
@@ -1036,10 +1078,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				var/list/requirement_list = list()
 				for(var/t in tech_node.required_tech_levels)
-					var/datum/tech/tree = locate(t) in files.researched_tech
+					var/datum/tech/tree = F ? (locate(t) in F.researched_tech) : null
 					var/level = tech_node.required_tech_levels[t]
 					var/list/req_data = list(
-						"text" = "[tree.shortname] level [level]",
+						"text" = "[tree ? tree.shortname : t] level [level]",
 						"isgood" = (tree && tree.level >= level)
 					)
 					requirement_list += list(req_data)
@@ -1049,7 +1091,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						continue
 					var/list/req_data = list(
 						"text" = "[other_tech.name]",
-						"isgood" = files.IsResearched(other_tech)
+						"isgood" = F ? F.IsResearched(other_tech) : FALSE
 					)
 					requirement_list += list(req_data)
 				technology_data["requirements"] = requirement_list
@@ -1091,18 +1133,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["has_disk"] = !!disk
 		if(disk)
 			var/list/rdf_files = list()
-			for(var/datum/computer_file/data/rdf/F in disk.stored_files)
+			for(var/datum/computer_file/data/rdf/rdf_file in disk.stored_files)
 				rdf_files += list(list(
-					"id" = "\ref[F]",
-					"filename" = "[F.filename].[F.filetype]",
-					"scan_area" = (F.metadata ? F.metadata["scan_area"] : "???")
+					"id" = "\ref[rdf_file]",
+					"filename" = "[rdf_file.filename].[rdf_file.filetype]",
+					"scan_area" = (rdf_file.metadata ? rdf_file.metadata["scan_area"] : "???")
 				))
 			data["rdf_files"] = rdf_files
 			var/list/photo_files = list()
-			for(var/datum/computer_file/binary/photo/F in disk.stored_files)
+			for(var/datum/computer_file/binary/photo/photo_file in disk.stored_files)
 				photo_files += list(list(
-					"id" = "\ref[F]",
-					"filename" = "[F.filename].[F.filetype]"
+					"id" = "\ref[photo_file]",
+					"filename" = "[photo_file.filename].[photo_file.filetype]"
 				))
 			data["photo_files"] = photo_files
 
@@ -1112,7 +1154,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/list/corps_data = list()
 		for(var/corp_id in corporations)
 			var/corp_name = get_rnd_mission_corporation_name(corp_id)
-			var/current_rep = files ? files.GetCorporationReputation(corp_id) : 0
+			var/current_rep = F ? F.GetCorporationReputation(corp_id) : 0
 			corps_data += list(list(
 				"id" = corp_id,
 				"name" = corp_name,
@@ -1123,7 +1165,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(selected_dialogue_corp_id)
 			var/corp_name = get_rnd_mission_corporation_name(selected_dialogue_corp_id)
-			var/current_rep = files ? files.GetCorporationReputation(selected_dialogue_corp_id) : 0
+			var/current_rep = F ? F.GetCorporationReputation(selected_dialogue_corp_id) : 0
 			var/corp_info_text = get_rdconsole_corp_info(selected_dialogue_corp_id)
 			data["selected_corp_dialogue"] = list(
 				"name" = corp_name,
@@ -1154,8 +1196,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/list/artifact_files = find_artifact_rdf_files()
 		if(LAZYLEN(artifact_files))
 			var/list/file_list = list()
-			for(var/datum/computer_file/data/rdf/F in artifact_files)
-				file_list += list(list("name" = F.filename, "ref" = "\ref[F]", "artifact_id" = F.metadata["artifact_id"]))
+			for(var/datum/computer_file/data/rdf/rdf_file in artifact_files)
+				file_list += list(list("name" = rdf_file.filename, "ref" = "\ref[rdf_file]", "artifact_id" = rdf_file.metadata["artifact_id"]))
 			data["catalog_files"] = file_list
 			data["can_catalog"] = TRUE
 		else
@@ -1164,11 +1206,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["can_catalog"] = FALSE
 
 	// Research report compilation state — based on deconstructed item tech levels
-	if(files && files.experiments)
+	if(F && F.experiments)
 		var/list/report_tech_data = list()
 		var/report_delta = 0
 		var/report_value = 0
-		var/list/saved = files.experiments.saved_tech_levels
+		var/list/saved = F.experiments.saved_tech_levels
 		for(var/tech_id in saved)
 			var/list/levels = saved[tech_id]
 			if(!LAZYLEN(levels))
@@ -1177,7 +1219,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/lvl in levels)
 				if(lvl > max_level)
 					max_level = lvl
-			var/compiled = files.compiled_tech_levels[tech_id]
+			var/compiled = F.compiled_tech_levels[tech_id]
 			if(!compiled)
 				compiled = 0
 			var/new_levels = max(0, max_level - compiled)
@@ -1284,6 +1326,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(RND_MISSION_CORP_FTU)
 			return "Free Trade Union — торговый союз, поставляющий разнообразное вооружение от независимых производителей со всей галактики."
 	return "Информация о корпорации недоступна."
+
+
+
+/obj/machinery/computer/modular/preset/cardslot/science
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/power/apc,
+		/obj/item/stock_parts/computer/card_slot
+		)
+	default_software = list(
+		/datum/computer_file/program/camera_monitor,
+		/datum/computer_file/program/records,
+		/datum/computer_file/program/email_client,
+		/datum/computer_file/program/supply,
+		/datum/computer_file/program/wordprocessor,
+		/datum/computer_file/program/rnd_console,
+		/datum/computer_file/program/ntnetdesign
+	)
+
 
 #undef SCREEN_MAIN
 #undef SCREEN_PROTO
