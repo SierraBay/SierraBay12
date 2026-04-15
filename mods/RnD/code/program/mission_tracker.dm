@@ -16,6 +16,32 @@
 /datum/nano_module/program/rnd_mission_tracker
 	name = "R&D Mission Tracker"
 
+/datum/nano_module/program/rnd_mission_tracker/Topic(href, href_list)
+	if(..())
+		return TOPIC_HANDLED
+
+	if(href_list["print_missions"])
+		var/dat = "<h3>R&D Mission Tracker</h3><hr>"
+		dat += "<b>Дата:</b> [stationtime2text()]<br><hr>"
+		if(LAZYLEN(derelict_missions_list))
+			for(var/datum/derelict_mission/M in derelict_missions_list)
+				var/status = (M.state == RND_MISSION_STATE_REWARDED) ? "Выполнен" : "Активен"
+				dat += "<b>[M.title]</b> ([get_rnd_mission_corporation_name(M.corporation_id)])<br>"
+				dat += "&nbsp;Объект: [M.away_site_name] | Статус: [status]<br>"
+				for(var/datum/derelict_mission_objective/O in M.objectives)
+					dat += "&nbsp;&nbsp;- [O.description]: [O.get_status_text()]<br>"
+				dat += "<br>"
+		else
+			dat += "<i>Нет активных миссий.</i><br>"
+
+		var/obj/item/paper/P = new(get_turf(program.computer.nano_host()))
+		P.SetName("R&D Mission Report")
+		P.info = dat
+		to_chat(usr, SPAN_NOTICE("Отчёт по миссиям распечатан."))
+		return TOPIC_HANDLED
+
+	return TOPIC_NOACTION
+
 /datum/nano_module/program/rnd_mission_tracker/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = host.initial_data(program)
 

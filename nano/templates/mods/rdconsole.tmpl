@@ -42,6 +42,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				<span class="rndServerBadge rndServerBadge--online"><span class="rndServerDot"></span>{{:data.server_name}}</span>
 			{{else}}
 				<span class="rndServerBadge rndServerBadge--offline"><span class="rndServerDot"></span>Нет сервера</span>
+				{{:helper.link("Подключить", 'link', {'connect_server_manual' : 1}, null, 'rndTab')}}
 			{{/if}}
 			{{if data.has_science_account}}
 				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}

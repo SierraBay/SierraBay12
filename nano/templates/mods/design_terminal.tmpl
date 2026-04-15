@@ -740,6 +740,7 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 				<span class="dtServerBadge dtServerBadge--online"><span class="dtServerDot"></span>{{:data.server_name}}</span>
 			{{else}}
 				<span class="dtServerBadge dtServerBadge--offline"><span class="dtServerDot"></span>Нет сервера</span>
+				{{:helper.link("Подключить", 'link', {'connect_server_manual' : 1}, null, 'dtTab')}}
 			{{/if}}
 			{{if data.has_account}}
 				<span class="dtBalanceLabel">{{:data.account_name}}</span>

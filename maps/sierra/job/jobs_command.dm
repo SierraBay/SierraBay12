@@ -307,9 +307,8 @@
 		access_sec_doors, access_medical, access_network, access_ce,
 		access_RC_announce, access_keycard_auth, access_tcomsat,
 		access_seneng, access_hangar, access_network_admin,
-		access_employment_records, access_rnd_network
-		access_seneng, access_hangar, access_network_admin, access_employment_records,
-		access_medical_records, access_security_records, access_rnd_network
+		access_employment_records, access_medical_records,
+		access_security_records, access_rnd_network
 
 	)
 

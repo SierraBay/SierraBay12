@@ -317,6 +317,7 @@ those devices access via linked_console.
 
 	to_chat(user, SPAN_NOTICE("Накладная напечатана. Счёт: [science_account.account_name] (#[science_account.account_number])."))
 
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Tech / research helpers
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1310,6 +1311,25 @@ those devices access via linked_console.
 		if(href_list["eject_sheet"])
 			if(target_device)
 				target_device.eject(href_list["eject_sheet"], text2num(href_list["amount"]))
+
+		if(href_list["connect_server_manual"])
+			var/entered_id = input(usr, "Введите сетевой ID сервера (задаётся мультитулом по серверу):", "Подключение к серверу", null) as num|null
+			if(!isnull(entered_id))
+				entered_id = round(entered_id)
+				var/atom/host = get_host()
+				var/obj/machinery/r_n_d/server/found = null
+				for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
+					if(S.server_id == entered_id && S.files)
+						if(GLOB.using_map.use_overmap && host && !(host.z in GetConnectedZlevels(S.z)))
+							continue
+						found = S
+						break
+				if(found)
+					if(!(id in found.id_with_download))
+						found.id_with_download += id
+					to_chat(usr, SPAN_NOTICE("Консоль подключена к [found.name] (ID: [found.server_id])."))
+				else
+					to_chat(usr, SPAN_WARNING("Сервер с ID [entered_id] не найден в сети."))
 
 		if(href_list["find_device"])
 			screen = RND_SCREEN_WORKING

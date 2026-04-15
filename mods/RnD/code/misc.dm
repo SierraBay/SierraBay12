@@ -120,3 +120,25 @@
 	if(disk.check_away_zone())
 		if(prob(20))
 			disk.install_away_designs()
+
+
+/obj/item/rig_module/datajack/accepts_item(obj/item/input_device, mob/living/user)
+
+	if(istype(input_device, /obj/machinery))
+		var/datum/research/incoming_files
+		if(istype(input_device, /obj/machinery/computer/rdconsole))
+			var/obj/machinery/computer/rdconsole/input_machine = input_device
+			incoming_files = input_machine.get_server_files()
+		else if(istype(input_device, /obj/machinery/r_n_d/server))
+			var/obj/machinery/r_n_d/server/input_machine = input_device
+			incoming_files = input_machine.files
+
+		if(!incoming_files || !length(incoming_files.researched_tech))
+			to_chat(user, SPAN_WARNING("Memory failure. There is nothing accessible stored on this terminal."))
+		else
+			if(load_data(incoming_files))
+				to_chat(user, SPAN_INFO("Download successful; local and remote repositories synchronized."))
+			else
+				to_chat(user, SPAN_WARNING("Scan complete. There is nothing useful stored on this terminal."))
+		return 1
+	return 0

@@ -58,6 +58,18 @@
 	return !inoperable(MACHINE_STAT_EMPED)
 
 
+/obj/machinery/r_n_d/server/use_tool(obj/item/I, mob/living/user, list/click_params)
+	if(isMultitool(I) && !panel_open)
+		to_chat(user, SPAN_NOTICE("\The [src]: текущий сетевой ID — [server_id ? server_id : "не задан (0)"]."))
+		var/new_id = input(user, "Введите новый числовой ID сервера (1–99). Текущий: [server_id]", "Сетевой ID сервера", server_id) as num|null
+		if(!isnull(new_id))
+			new_id = round(clamp(new_id, 0, 99))
+			server_id = new_id
+			to_chat(user, SPAN_NOTICE("\The [src]: сетевой ID установлен как [server_id]."))
+		return TRUE
+	return ..()
+
+
 /obj/machinery/r_n_d/server/on_update_icon()
 	ClearOverlays()
 	if (operable())
@@ -407,6 +419,11 @@
 	return TRUE
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	// If the selected server was deconstructed, drop the reference and return to main screen.
+	if(temp_server && (QDELETED(temp_server) || !temp_server.files))
+		temp_server = null
+		screen = 0
+
 	var/list/data = list()
 	data["screen"] = screen
 	data["badmin"] = badmin
