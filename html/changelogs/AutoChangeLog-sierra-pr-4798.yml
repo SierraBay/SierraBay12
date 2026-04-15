@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - bugfix: Пофиксил дебаг спам сообщениями
+delete-after: true
