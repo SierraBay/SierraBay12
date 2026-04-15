@@ -204,14 +204,27 @@
 		. = TOPIC_REFRESH
 
 	else if(href_list["select_server"])
-		var/target_id = text2num(href_list["select_server"])
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
-			if(S.server_id == target_id)
-				temp_server = S
-				break
+		// Locate by direct ref if provided (reliable, no server_id collisions)
+		if(href_list["server_ref"])
+			temp_server = locate(href_list["server_ref"])
+			if(!istype(temp_server, /obj/machinery/r_n_d/server))
+				temp_server = null
+		// Fallback: search by server_id with z-level filter
+		if(!temp_server)
+			var/target_id = text2num(href_list["select_server"])
+			var/turf/ctrl_turf = get_turf(src)
+			for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+				var/turf/ST = get_turf(S)
+				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
+					continue
+				if(ST && !AreConnectedZLevels(ST.z, ctrl_turf.z))
+					continue
+				if(S.server_id == target_id)
+					temp_server = S
+					break
 		if(temp_server)
 			var/target_screen = text2num(href_list["target_screen"])
 			screen = target_screen
@@ -366,7 +379,11 @@
 
 	else if(href_list["send_to"])
 		var/target_id = text2num(href_list["send_to"])
+		var/turf/send_ctrl_turf = get_turf(src)
 		for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+			var/turf/s_turf = get_turf(S)
+			if(s_turf && !AreConnectedZLevels(s_turf.z, send_ctrl_turf.z))
+				continue
 			if(S.server_id == target_id && temp_server)
 				S.files.download_from(temp_server.files)
 				break
@@ -394,6 +411,7 @@
 	data["screen"] = screen
 	data["badmin"] = badmin
 	data["has_disk"] = !!loaded_disk
+	data["server_name"] = temp_server ? temp_server.name : ""
 	if(loaded_disk)
 		data["disk_has_blueprint"] = !!loaded_disk.blueprint
 		data["disk_blueprint_name"] = loaded_disk.blueprint ? loaded_disk.blueprint.name : null
@@ -409,6 +427,7 @@
 				server_list += list(list(
 					"name" = S.name,
 					"id" = S.server_id,
+					"ref" = "\ref[S]",
 					"operable" = S.operable(),
 					"is_public" = S.is_public_server
 				))
@@ -522,10 +541,11 @@
 				// Always collect category list (lightweight pass, no ref building)
 				var/list/all_categories = list()
 				for(var/datum/design/D in temp_server.files.known_designs)
-					var/cat_name = "Unspecified"
 					if(LAZYLEN(D.category))
-						cat_name = D.category[1]
-					all_categories |= cat_name
+						for(var/cat in D.category)
+							all_categories |= cat
+					else
+						all_categories |= "Unspecified"
 
 				var/list/cat_filter = list()
 				for(var/cat in all_categories)
@@ -539,21 +559,29 @@
 					for(var/datum/design/D in temp_server.files.known_designs)
 						if(design_search_text && !findtext(D.name, design_search_text))
 							continue
-						var/cat_name = "Unspecified"
+						// Collect the categories this design belongs to
+						var/list/design_cats
 						if(LAZYLEN(D.category))
-							cat_name = D.category[1]
-						if(selected_design_category && selected_design_category != cat_name)
+							design_cats = D.category
+						else
+							design_cats = list("Unspecified")
+						// Filter by selected category
+						if(selected_design_category && !(selected_design_category in design_cats))
 							continue
-						if(!categorized_designs[cat_name])
-							categorized_designs[cat_name] = list()
-						var/list/cat_list = categorized_designs[cat_name]
-						cat_list += list(list(
-							"name" = D.name,
-							"id" = D.id,
-							"ref" = "\ref[D]",
-							"banned" = (D.id in temp_server.files.banned_designs),
-							"starts_unlocked" = D.starts_unlocked
-						))
+						// Add to each matching category bucket
+						for(var/cat_name in design_cats)
+							if(selected_design_category && selected_design_category != cat_name)
+								continue
+							if(!categorized_designs[cat_name])
+								categorized_designs[cat_name] = list()
+							var/list/cat_list = categorized_designs[cat_name]
+							cat_list += list(list(
+								"name" = D.name,
+								"id" = D.id,
+								"ref" = "\ref[D]",
+								"banned" = (D.id in temp_server.files.banned_designs),
+								"starts_unlocked" = D.starts_unlocked
+							))
 					var/list/grouped = list()
 					for(var/cat_name in categorized_designs)
 						grouped += list(list(
