@@ -740,7 +740,6 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 				<span class="dtServerBadge dtServerBadge--online"><span class="dtServerDot"></span>{{:data.server_name}}</span>
 			{{else}}
 				<span class="dtServerBadge dtServerBadge--offline"><span class="dtServerDot"></span>Нет сервера</span>
-				{{:helper.link("Подключить", 'link', {'connect_server_manual' : 1}, null, 'dtTab')}}
 			{{/if}}
 			{{if data.has_account}}
 				<span class="dtBalanceLabel">{{:data.account_name}}</span>
@@ -759,6 +758,12 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 
 		<!-- Toolbar: sync + disk -->
 		<div class="dtToolbar">
+			{{if data.has_server}}
+				{{:helper.link("Отключиться от сети", 'cancel', {'togglesync':1}, null, 'rndTab')}}
+			{{else}}
+				{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync':1}, null, 'rndTab')}}
+			{{/if}}
+			<div class="dtToolbarSep"></div>
 			{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync':1}, null, 'rndTab')}}
 			<div class="dtToolbarSep"></div>
 			{{if data.has_disk}}

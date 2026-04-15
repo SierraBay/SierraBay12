@@ -42,7 +42,6 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				<span class="rndServerBadge rndServerBadge--online"><span class="rndServerDot"></span>{{:data.server_name}}</span>
 			{{else}}
 				<span class="rndServerBadge rndServerBadge--offline"><span class="rndServerDot"></span>Нет сервера</span>
-				{{:helper.link("Подключить", 'link', {'connect_server_manual' : 1}, null, 'rndTab')}}
 			{{/if}}
 			{{if data.has_science_account}}
 				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}
@@ -487,7 +486,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		<div class="rndCol" style="width: 100%;">
 
 			<div class="rndSection">
-				<div class="rndSectionTitle">Корпоративные контракты</div>
+				<div class="rndSectionTitle">Корпоративные контракты {{:helper.link("Печать", 'printer', {'print_missions': 1}, null, 'rndTab')}}</div>
 				<div class="rndSectionContent">
 					<p class="rndMuted" style="font-size: 11px; margin-bottom: 10px;"><i>Контракты на исследование объектов, обнаруженных на заброшенных объектах в системе. Выполнение контрактов открывает доступ к корпоративным технологиям.</i></p>
 

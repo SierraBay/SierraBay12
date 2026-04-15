@@ -317,6 +317,23 @@ those devices access via linked_console.
 
 	to_chat(user, SPAN_NOTICE("Накладная напечатана. Счёт: [science_account.account_name] (#[science_account.account_number])."))
 
+/datum/nano_module/program/rnd_console/proc/print_missions(mob/living/user)
+	var/dat = "<h3>R&D Mission Tracker</h3><hr>"
+	dat += "<b>Дата:</b> [stationtime2text()]<br><hr>"
+	if(LAZYLEN(derelict_missions_list))
+		for(var/datum/derelict_mission/M in derelict_missions_list)
+			var/status = (M.state == RND_MISSION_STATE_REWARDED) ? "Выполнен" : "Активен"
+			dat += "<b>[M.title]</b> ([get_rnd_mission_corporation_name(M.corporation_id)])<br>"
+			dat += "&nbsp;Объект: [M.away_site_name] | Статус: [status]<br>"
+			for(var/datum/derelict_mission_objective/O in M.objectives)
+				dat += "&nbsp;&nbsp;- [O.description]: [O.get_status_text()]<br>"
+			dat += "<br>"
+	else
+		dat += "<i>Нет активных миссий.</i><br>"
+	var/obj/item/paper/P = new(get_turf(get_host()))
+	P.SetName("R&D Mission Report")
+	P.info = dat
+	to_chat(user, SPAN_NOTICE("Отчёт по миссиям распечатан."))
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Tech / research helpers
@@ -1173,13 +1190,34 @@ those devices access via linked_console.
 		else
 			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 	if(href_list["sync"])
-		if(!sync)
-			to_chat(usr, SPAN_WARNING("You must connect to the network first!"))
+		if(!get_server())
+			to_chat(usr, SPAN_WARNING("Консоль не подключена к серверу R&D."))
 		else
 			screen = RND_SCREEN_WORKING
 			addtimer(new Callback(src, PROC_REF(sync_tech)), 3 SECONDS)
 	if(href_list["togglesync"])
-		sync = !sync
+		var/obj/machinery/r_n_d/server/cur = get_server()
+		if(cur)
+			cur.id_with_download -= id
+			to_chat(usr, SPAN_NOTICE("Консоль отключена от [cur.name]."))
+		else
+			var/entered_id = input(usr, "Введите сетевой ID сервера (задаётся мультитулом):", "Подключение к серверу", 1) as num|null
+			if(!isnull(entered_id))
+				entered_id = round(entered_id)
+				var/atom/host = get_host()
+				var/obj/machinery/r_n_d/server/found = null
+				for(var/obj/machinery/r_n_d/server/FS in SSresearch.rnd_server_list)
+					if(FS.server_id == entered_id && FS.files)
+						if(GLOB.using_map.use_overmap && host && !(host.z in GetConnectedZlevels(FS.z)))
+							continue
+						found = FS
+						break
+				if(found)
+					if(!(id in found.id_with_download))
+						found.id_with_download += id
+					to_chat(usr, SPAN_NOTICE("Консоль подключена к [found.name] (ID: [found.server_id])."))
+				else
+					to_chat(usr, SPAN_WARNING("Сервер с ID [entered_id] не найден в сети."))
 	if(href_list["select_category"])
 		var/what_cat = href_list["select_category"]
 		if(screen == RND_SCREEN_PROTO)
@@ -1312,25 +1350,6 @@ those devices access via linked_console.
 			if(target_device)
 				target_device.eject(href_list["eject_sheet"], text2num(href_list["amount"]))
 
-		if(href_list["connect_server_manual"])
-			var/entered_id = input(usr, "Введите сетевой ID сервера (задаётся мультитулом по серверу):", "Подключение к серверу", null) as num|null
-			if(!isnull(entered_id))
-				entered_id = round(entered_id)
-				var/atom/host = get_host()
-				var/obj/machinery/r_n_d/server/found = null
-				for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
-					if(S.server_id == entered_id && S.files)
-						if(GLOB.using_map.use_overmap && host && !(host.z in GetConnectedZlevels(S.z)))
-							continue
-						found = S
-						break
-				if(found)
-					if(!(id in found.id_with_download))
-						found.id_with_download += id
-					to_chat(usr, SPAN_NOTICE("Консоль подключена к [found.name] (ID: [found.server_id])."))
-				else
-					to_chat(usr, SPAN_WARNING("Сервер с ID [entered_id] не найден в сети."))
-
 		if(href_list["find_device"])
 			screen = RND_SCREEN_WORKING
 			addtimer(new Callback(src, PROC_REF(find_devices)), 2 SECONDS)
@@ -1367,6 +1386,8 @@ those devices access via linked_console.
 		SSnano.update_uis(src)
 	if(href_list["print_invoice"])
 		print_rnd_invoice(usr)
+	if(href_list["print_missions"])
+		print_missions(usr)
 
 	if(href_list["reset"])
 		to_chat(usr, SPAN_WARNING("База данных хранится на сервере R&D. Для сброса обратитесь к серверной машине напрямую."))
@@ -1610,7 +1631,7 @@ those devices access via linked_console.
 	var/obj/machinery/r_n_d/server/connected_server = get_server()
 	var/list/data = program ? program.get_header_data() : list()
 	data["screen"] = screen
-	data["sync"] = sync
+	data["sync"] = !!connected_server
 	data["has_disk"] = !!disk
 	data["has_server"] = !!connected_server
 	data["server_name"] = connected_server ? connected_server.name : ""
