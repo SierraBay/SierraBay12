@@ -27,7 +27,6 @@
 		/obj/item/stack/material/deuterium,
 		/obj/item/stack/material/tritium,
 		/obj/item/stack/tile,
-		/obj/item/reagent_containers/chem_disp_cartridge // [SIERRA-ADD] cartridges like boron
 		)
 
 	var/obj/item/wrapped = null // Item currently being held.
