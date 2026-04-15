@@ -414,6 +414,30 @@
 	font-size: 10px !important;
 }
 
+/* Banned design row */
+.dldDesignRow--banned {
+	opacity: 0.65;
+}
+.dldDesignRow--banned .dldDesignName {
+	color: #f87171;
+}
+.dldBannedBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	font-size: 9px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: #f87171;
+	border: 1px solid rgba(248, 113, 113, 0.4);
+	background: rgba(248, 113, 113, 0.08);
+	border-radius: 2px;
+	padding: 1px 5px;
+	margin-left: 5px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
 /* Scrollbar */
 .dldConsole ::-webkit-scrollbar       { width: 5px; }
 .dldConsole ::-webkit-scrollbar-track { background: rgba(10, 6, 20, 0.4); }
@@ -514,16 +538,19 @@
 		<div class="dldList">
 			{{if data.possible_designs && data.possible_designs.length}}
 				{{for data.possible_designs}}
-				<div class="dldDesignRow">
+				<div class="dldDesignRow{{:value.banned ? ' dldDesignRow--banned' : ''}}">
 					<div class="dldDesignInfo">
-						<div class="dldDesignName">{{:value.name}}</div>
+						<div class="dldDesignName">
+							{{:value.name}}
+							{{if value.banned}}<span class="dldBannedBadge">&#9888; Запрещён</span>{{/if}}
+						</div>
 						{{if data.show_desc_menu && value.desc}}
 							<div class="dldDesignDesc">{{:value.desc}}</div>
 						{{/if}}
 					</div>
 					<span class="dldDesignSize">{{:value.size}}&nbsp;GQ</span>
 					<span class="dldDownloadBtn">
-						{{:helper.link("↓", 'arrowthickstop-1-s', {'PRG_downloadfile':value.design_ref}, null, 'dldBtn--download')}}
+						{{:helper.link("↓", 'arrowthickstop-1-s', {'PRG_downloadfile':value.design_ref}, value.banned ? 'disabled' : null, 'dldBtn--download')}}
 					</span>
 				</div>
 				{{/for}}

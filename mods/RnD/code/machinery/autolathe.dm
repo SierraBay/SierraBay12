@@ -183,6 +183,11 @@
 	var/list/L = list()
 	for(var/d in design_list())
 		var/datum/computer_file/binary/design/design_file = d
+		if(!design_file.design)
+			continue
+		// Skip hidden or server-banned designs
+		if(can_print(design_file) == ERR_NOTFOUND)
+			continue
 		if(!show_category || design_file.design.category == show_category)
 			var/list/ddata = design_file.ui_data()
 			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
@@ -191,6 +196,10 @@
 	var/list/O = list()
 	for(var/f in design_list_two())
 		var/datum/computer_file/binary/design/design_file = f
+		if(!design_file.design)
+			continue
+		if(can_print(design_file) == ERR_NOTFOUND)
+			continue
 		if(!show_category || design_file.design.category == show_category)
 			var/list/ddata = design_file.ui_data()
 			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
@@ -955,9 +964,10 @@
 /obj/machinery/fabricator/proc/fabricate_design(datum/design/design)
 	consume_materials(design)
 	var/obj/new_item = design.Fabricate(get_turf(loc), mat_efficiency, src)
-	// Fabricated storage containers are always printed empty.
+	// Reverse-engineered storage containers are printed empty.
 	// Contents spawned by Initialize() are free items the player didn't pay for.
-	if(istype(new_item, /obj/item/storage) && length(new_item.contents))
+	// Normal designs (e.g. toolboxes) retain their default contents.
+	if(design.reverse_engineered && istype(new_item, /obj/item/storage) && length(new_item.contents))
 		for(var/atom/movable/A in new_item.contents)
 			qdel(A)
 	working = FALSE

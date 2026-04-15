@@ -29,11 +29,15 @@ those devices access via linked_console.
 	required_access = access_rnd_network
 	program_icon_state = "research"
 	program_key_state = "tech_key"
+
 	category      = PROG_ENG
 	size          = 12
 	/// Saved billing account number — persists while the program file stays on the HDD.
 	var/saved_account_number = 0
 	var/saved_account_key    = null
+	/// Default department account key — used if no personal account is linked.
+	/// Set on subtypes to pre-configure a console for a specific department.
+	var/default_account_key  = null
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Screen constants (mirrors rdconsole.dm — redefined here because that file
@@ -132,11 +136,17 @@ those devices access via linked_console.
 	. = ..()
 	if(is_lite())
 		can_research = FALSE
-	// Restore saved billing account from the program file (survives app restarts)
+	// Restore billing account from the program file (survives app restarts).
+	// Priority: saved personal account number > saved dept key > default dept key.
 	var/datum/computer_file/program/rnd_console/prog_file = program
-	if(prog_file && prog_file.saved_account_number)
-		linked_account_number = prog_file.saved_account_number
-		department_account_key = prog_file.saved_account_key
+	if(prog_file)
+		if(prog_file.saved_account_number)
+			linked_account_number  = prog_file.saved_account_number
+			department_account_key = prog_file.saved_account_key
+		else if(prog_file.saved_account_key)
+			department_account_key = prog_file.saved_account_key
+		else if(prog_file.default_account_key)
+			department_account_key = prog_file.default_account_key
 	SyncRDevices()
 
 /datum/nano_module/program/rnd_console/Destroy()
@@ -169,10 +179,14 @@ those devices access via linked_console.
 	return null
 
 /// Returns the portable drive inserted into the host computer (used as R&D disk).
+/// Works for both stationary modular consoles (/obj/machinery/computer/modular)
+/// and laptops/PDAs (/obj/item/modular_computer).
 /datum/nano_module/program/rnd_console/proc/get_disk()
-	var/obj/machinery/computer/modular/comp = get_host()
-	if(istype(comp))
-		return comp.portable_drive
+	var/host = get_host()
+	if(istype(host, /obj/machinery/computer/modular))
+		return host:portable_drive
+	if(istype(host, /obj/item/modular_computer))
+		return host:portable_drive
 	return null
 
 /// Returns TRUE when running in laptop / lite mode.
@@ -421,12 +435,24 @@ those devices access via linked_console.
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk = get_disk()
 	if(disk)
 		var/uploaded = 0
+		var/blocked = 0
 		for(var/datum/computer_file/binary/design/file in disk.find_files_by_type(/datum/computer_file/binary/design))
-			if(file.design)
-				F.AddDesign2Known(file.design)
-				uploaded++
+			if(!file.design)
+				continue
+			// Hidden designs are flagged as too dangerous to distribute — block upload to server.
+			if(istype(file.design, /datum/design/autolathe) && (file.design:hidden))
+				blocked++
+				continue
+			// Banned designs cannot be uploaded back to the server.
+			if("[file.design.id]" in F.banned_designs)
+				blocked++
+				continue
+			F.AddDesign2Known(file.design)
+			uploaded++
 		if(uploaded)
 			to_chat(usr, SPAN_NOTICE("Загружено [uploaded] дизайн(ов) с диска на сервер."))
+		if(blocked)
+			to_chat(usr, SPAN_WARNING("[blocked] дизайн(ов) заблокировано: запрещены к распространению."))
 
 	var/atom/host = get_host()
 	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
@@ -470,7 +496,7 @@ those devices access via linked_console.
 						missing_chemicals += chemical
 					can_build = min(can_build, can_build_temp)
 
-				var/is_banned = (D.id in F.banned_designs) || is_design_banned_on_server(D.id)
+				var/is_banned = ("[D.id]" in F.banned_designs) || is_design_banned_on_server("[D.id]")
 				designs_list += list(list(
 					"data" = D.ui_data(),
 					"id" = "\ref[D]",
@@ -1053,7 +1079,17 @@ those devices access via linked_console.
 			selected_disk_category = null
 	if(href_list["eject_disk"])
 		if(disk)
-			disk.forceMove(get_turf(get_host()))
+			var/host = get_host()
+			var/turf/T = get_turf(host)
+			if(istype(host, /obj/machinery/computer/modular))
+				// Stationary console — clear its own portable_drive var
+				host:portable_drive = null
+				disk.forceMove(T)
+			else if(istype(host, /obj/item/modular_computer))
+				// Laptop — use the proper uninstall proc which clears portable_drive
+				host:uninstall_component(usr, disk)
+			else
+				disk.forceMove(T)
 	if(href_list["delete_disk_file"])
 		if(disk)
 			var/datum/computer_file/file = locate(href_list["delete_disk_file"]) in disk.stored_files
@@ -1062,19 +1098,30 @@ those devices access via linked_console.
 	if(href_list["download_disk_design"])
 		if(disk)
 			var/datum/computer_file/binary/design/file = locate(href_list["download_disk_design"]) in disk.stored_files
-			if(file)
-				var/datum/research/F_dd = get_server_files()
-				if(F_dd)
-					F_dd.AddDesign2Known(file.design)
+			if(file && file.design)
+				if(istype(file.design, /datum/design/autolathe) && (file.design:hidden))
+					to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к распространению."))
 				else
-					to_chat(usr, SPAN_WARNING("Нет подключения к серверу. Дизайн не загружен."))
+					var/datum/research/F_dd = get_server_files()
+					if(F_dd)
+						if("[file.design.id]" in F_dd.banned_designs)
+							to_chat(usr, SPAN_WARNING("Загрузка этого дизайна на сервер запрещена администратором."))
+						else
+							F_dd.AddDesign2Known(file.design)
+					else
+						to_chat(usr, SPAN_WARNING("Нет подключения к серверу. Дизайн не загружен."))
 	if(href_list["upload_disk_design"])
 		if(disk)
 			var/datum/research/F_ud = get_server_files()
 			if(F_ud)
 				var/datum/design/D = locate(href_list["upload_disk_design"]) in F_ud.known_designs
 				if(D)
-					disk.save_file(D.file.clone())
+					if(istype(D, /datum/design/autolathe) && (D:hidden))
+						to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к сохранению на диск."))
+					else if("[D.id]" in F_ud.banned_designs)
+						to_chat(usr, SPAN_WARNING("Сохранение этого дизайна на диск запрещено администратором."))
+					else
+						disk.save_file(D.file.clone())
 
 	if(href_list["toggle_settings"])
 		if(is_allowed(usr))
@@ -1110,11 +1157,14 @@ those devices access via linked_console.
 		if(!can_switch_account)
 			return
 		linked_account_number = 0
-		department_account_key = null
 		var/datum/computer_file/program/rnd_console/pf2 = program
 		if(pf2)
 			pf2.saved_account_number = 0
 			pf2.saved_account_key    = null
+			// Restore department default if one was preset
+			department_account_key = pf2.default_account_key
+		else
+			department_account_key = null
 		to_chat(usr, SPAN_NOTICE("Счёт отвязан."))
 	if(href_list["toggle_link_menu"])
 		if(is_allowed(usr))
@@ -1194,13 +1244,18 @@ those devices access via linked_console.
 				var/datum/research/F_std = get_server_files()
 				var/datum/design/D = F_std ? (locate(href_list["save_to_disk"]) in F_std.known_designs) : null
 				if(D)
-					if(!D.file)
-						D.file = new /datum/computer_file/binary/design()
-						D.file.design = D
-						D.file.filename = sanitizeFileName("[D.id]")
-						D.file.filetype = "design"
-						D.file.size = 10
-					disk.save_file(D.file.clone())
+					if(istype(D, /datum/design/autolathe) && (D:hidden))
+						to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к сохранению на диск."))
+					else if("[D.id]" in F_std.banned_designs)
+						to_chat(usr, SPAN_WARNING("Сохранение этого дизайна на диск запрещено администратором."))
+					else
+						if(!D.file)
+							D.file = new /datum/computer_file/binary/design()
+							D.file.design = D
+							D.file.filename = sanitizeFileName("[D.id]")
+							D.file.filetype = "design"
+							D.file.size = 10
+						disk.save_file(D.file.clone())
 
 		// Load design from disk → server
 		if(href_list["load_from_disk"])
@@ -1208,9 +1263,15 @@ those devices access via linked_console.
 				var/list/disk_files = disk.find_files_by_type(/datum/computer_file/binary/design)
 				var/datum/computer_file/binary/design/file = locate(href_list["load_from_disk"]) in disk_files
 				if(file && file.design)
-					var/datum/research/F_lfd = get_server_files()
-					if(F_lfd)
-						F_lfd.AddDesign2Known(file.design)
+					if(istype(file.design, /datum/design/autolathe) && (file.design:hidden))
+						to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к распространению."))
+					else
+						var/datum/research/F_lfd = get_server_files()
+						if(F_lfd)
+							if("[file.design.id]" in F_lfd.banned_designs)
+								to_chat(usr, SPAN_WARNING("Загрузка этого дизайна на сервер запрещена администратором."))
+							else
+								F_lfd.AddDesign2Known(file.design)
 
 	if(!lite)
 		if(href_list["deconstruct"])
@@ -1239,7 +1300,7 @@ those devices access via linked_console.
 				var/amount = clamp(text2num(href_list["amount"]), 1, 10)
 				var/datum/design/being_built = locate(href_list["build"]) in F_b.known_designs
 				if(being_built && target_device)
-					if((being_built.id in F_b.banned_designs) || is_design_banned_on_server(being_built.id))
+					if(("[being_built.id]" in F_b.banned_designs) || is_design_banned_on_server("[being_built.id]"))
 						to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
 					else
 						target_device.queue_design(being_built.file, amount)
@@ -1519,7 +1580,7 @@ those devices access via linked_console.
 
 		ui = SSnano.try_update_ui(user, src, ui_key, ui, lite_data)
 		if(!ui)
-			ui = new(user, src, ui_key, "mods-design_terminal.tmpl", "R&D Console", 1200, 700)
+			ui = new(user, src, ui_key, "mods-design_terminal.tmpl", "R&D Console", 1300, 800)
 			ui.auto_update_layout = 1
 			ui.set_initial_data(lite_data)
 			ui.open()
@@ -1612,11 +1673,18 @@ those devices access via linked_console.
 			var/list/disk_designs = list()
 			for(var/f in disk_design_files)
 				var/datum/computer_file/binary/design/d_file = f
+				if(!d_file.design)
+					continue
 				if(search_text && !findtext(d_file.design.name, search_text))
 					continue
 				if(selected_disk_category && LAZYLEN(d_file.design.category) && !(selected_disk_category in d_file.design.category))
 					continue
-				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
+				var/is_hidden = istype(d_file.design, /datum/design/autolathe) && (d_file.design:hidden)
+				disk_designs += list(list(
+					"name"   = d_file.design.name,
+					"id"     = "\ref[d_file]",
+					"banned" = (is_hidden || (F && ("[d_file.design.id]" in F.banned_designs))),
+				))
 			data["disk_designs"] = disk_designs
 
 			var/list/known_designs = list()
@@ -1629,7 +1697,12 @@ those devices access via linked_console.
 						continue
 					if(selected_disk_category && LAZYLEN(D.category) && !(selected_disk_category in D.category))
 						continue
-					known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+					var/is_hidden = istype(D, /datum/design/autolathe) && (D:hidden)
+					known_designs += list(list(
+						"name"   = D.name,
+						"id"     = "\ref[D]",
+						"banned" = (is_hidden || ("[D.id]" in F.banned_designs)),
+					))
 			data["known_designs"] = known_designs
 
 	if(screen == RND_SCREEN_DISK_TECH)
@@ -1932,7 +2005,7 @@ those devices access via linked_console.
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mods-rdconsole.tmpl", "R&D Console", 1200, 700)
+		ui = new(user, src, ui_key, "mods-rdconsole.tmpl", "R&D Console", 1300, 800)
 		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
 		ui.open()

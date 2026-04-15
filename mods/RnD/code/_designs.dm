@@ -22,7 +22,7 @@ other types of metals and chemistry for reagents).
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
 	var/item_name = null			//An item name before it is modified by various name-modifying procs
 	var/name_category		//If set, name is modified into "[name_category] ([item_name])"
-	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
+	var/id = null					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
 	var/list/req_tech = list()		//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.
@@ -152,6 +152,7 @@ GLOBAL_LIST_AS(build_path_to_design_datum_path, populate_design_datum_index())
 
 /datum/design/autolathe/
 	build_type = PROTOLATHE			// From now on autolathe capable printing protolathe designs
+	starts_unlocked = TRUE			// Autolathe designs are available from the start on all servers
 	var/hidden = FALSE 				// If design deemed to be too dangerous
 
 /datum/design/autolathe/New()

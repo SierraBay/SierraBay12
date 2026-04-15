@@ -239,7 +239,7 @@ Used In File(s): \code\modules\research\server.dm
 								{{:value.name}}
 							</span>
 							<div class="srvDataActions">
-								{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.id}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
+								{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.ref}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
 								{{:helper.link("На диск", 'disk', {'download_design_to_disk' : value.ref}, data.has_disk && !data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
 								{{if !value.starts_unlocked}}
 									{{if data.has_public_server && !data.is_public_server}}

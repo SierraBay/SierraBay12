@@ -80,6 +80,16 @@ Flow:
 	if(!D || !istype(D, /datum/design))
 		return FALSE
 
+	// Hidden designs are too dangerous to distribute — block even if ref was obtained externally
+	if(!backdoor_access && istype(D, /datum/design/autolathe) && (D:hidden))
+		return FALSE
+
+	// Banned designs cannot be downloaded from the public server
+	if(!backdoor_access)
+		var/obj/machinery/r_n_d/server/pub = get_public_server()
+		if(pub && ("[D.id]" in pub.files.banned_designs))
+			return FALSE
+
 	// Create a computer file for this design if it doesn't have one yet.
 	if(!D.file)
 		D.file = new /datum/computer_file/binary/design()
@@ -271,22 +281,12 @@ Flow:
 		ui.open()
 		ui.set_auto_update(1)
 
-/// Returns combined category list from autolathe designs + public server research designs.
+/// Returns category list from the public server's known_designs.
 /// Respects access_security check for "Arms and Ammunition" unless backdoor_access.
 /datum/nano_module/program/computer_ntnetdesign/proc/get_category(obj/machinery/r_n_d/server/public/pub)
 	var/list/categories = list()
 
-	// Autolathe designs (always available)
-	for(var/datum/design/autolathe/D in SSresearch.all_designs)
-		if(!D.build_type)
-			continue
-		var/cat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
-		categories |= cat
-
-	// Research designs published to the public server
 	for(var/datum/design/D in pub.files.known_designs)
-		if(D.starts_unlocked)
-			continue
 		var/cat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
 		categories |= cat
 
@@ -303,14 +303,11 @@ Flow:
 	categories -= "Arms and Ammunition"
 	return categories
 
-/// Returns design rows from both autolathe designs and public server research designs.
+/// Returns design rows from the public server's known_designs.
 /datum/nano_module/program/computer_ntnetdesign/proc/get_public_designs_data(obj/machinery/r_n_d/server/public/pub, category, search_query)
 	var/list/designs_list = list()
 
-	// Autolathe designs (always available)
-	for(var/datum/design/autolathe/D in SSresearch.all_designs)
-		if(!D.build_type)
-			continue
+	for(var/datum/design/D in pub.files.known_designs)
 		var/dname = lowertext(D.shortname || D.name || "")
 		if(search_query)
 			if(!findtext(dname, search_query))
@@ -319,32 +316,13 @@ Flow:
 			var/cat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
 			if(cat != category)
 				continue
+		var/is_hidden = istype(D, /datum/design/autolathe) && (D:hidden)
 		designs_list += list(list(
 			"design_ref" = "\ref[D]",
 			"name"       = D.shortname || D.name,
 			"desc"       = D.desc,
 			"size"       = D.file ? D.file.size : 2,
-		))
-
-	// Research designs published to the public server
-	for(var/datum/design/D in pub.files.known_designs)
-		if(D.starts_unlocked)
-			continue
-		if(istype(D, /datum/design/autolathe))
-			continue  // Already covered above
-		var/dname = lowertext(D.name || "")
-		if(search_query)
-			if(!findtext(dname, search_query))
-				continue
-		else if(category)
-			var/cat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
-			if(cat != category)
-				continue
-		designs_list += list(list(
-			"design_ref" = "\ref[D]",
-			"name"       = D.name,
-			"desc"       = D.desc,
-			"size"       = 10,
+			"banned"     = (is_hidden || ("[D.id]" in pub.files.banned_designs)),
 		))
 
 	return designs_list

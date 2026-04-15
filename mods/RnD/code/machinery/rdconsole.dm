@@ -532,7 +532,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/amount = clamp(text2num(href_list["amount"]), 1, 10)
 			var/datum/design/being_built = locate(href_list["build"]) in F_b.known_designs
 			if(being_built && target_device)
-				if((being_built.id in F_b.banned_designs) || is_design_banned_on_server(being_built.id))
+				if(("[being_built.id]" in F_b.banned_designs) || is_design_banned_on_server("[being_built.id]"))
 					to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
 				else
 					target_device.queue_design(being_built.file, amount)
@@ -759,7 +759,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						missing_chemicals += chemical
 					can_build = min(can_build, can_build_temp)
 
-				var/is_banned = (D.id in F.banned_designs) || is_design_banned_on_server(D.id)
+				var/is_banned = ("[D.id]" in F.banned_designs) || is_design_banned_on_server("[D.id]")
 				designs_list += list(list(
 					"data" = D.ui_data(),
 					"id" = "\ref[D]",
@@ -1337,7 +1337,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		/datum/computer_file/program/rnd_console,
 		/datum/computer_file/program/ntnetdesign
 	)
-
 
 #undef SCREEN_MAIN
 #undef SCREEN_PROTO

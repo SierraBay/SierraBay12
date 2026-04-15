@@ -828,11 +828,13 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				</div>
 				<div class="rndSectionContent rndFileList">
 					{{for data.disk_designs}}
-					<div class="rndFileItem">
-						<span>{{:value.name}}</span>
+					<div class="rndFileItem{{:value.banned ? ' rndDesignBanned' : ''}}">
+						<span>
+							{{if value.banned}}<span class="rndBannedMark" title="Дизайн запрещён администратором">&#9888;</span> {{/if}}{{:value.name}}
+						</span>
 						<span>
 							{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-							{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
+							{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id}, value.banned ? 'disabled' : null)}}
 						</span>
 					</div>
 					{{empty}}
@@ -849,9 +851,11 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				</div>
 				<div class="rndSectionContent rndFileList">
 					{{for data.known_designs}}
-					<div class="rndFileItem">
-						<span>{{:value.name}}</span>
-						{{:helper.link("", 'arrowthick-1-w', {'upload_disk_design' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+					<div class="rndFileItem{{:value.banned ? ' rndDesignBanned' : ''}}">
+						<span>
+							{{if value.banned}}<span class="rndBannedMark" title="Дизайн запрещён администратором">&#9888;</span> {{/if}}{{:value.name}}
+						</span>
+						{{:helper.link("", 'arrowthick-1-w', {'upload_disk_design' : value.id}, (data.disk_read_only || value.banned) ? 'disabled' : null)}}
 					</div>
 					{{empty}}
 					<span class="rndMuted">Локальная база пуста</span>

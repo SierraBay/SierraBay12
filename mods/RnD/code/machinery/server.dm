@@ -277,11 +277,13 @@
 
 	else if(href_list["toggle_ban_design"])
 		if(temp_server)
-			var/design_id = href_list["toggle_ban_design"]
-			if(design_id in temp_server.files.banned_designs)
-				temp_server.files.banned_designs -= design_id
-			else
-				temp_server.files.banned_designs += design_id
+			var/datum/design/D = locate(href_list["toggle_ban_design"]) in temp_server.files.known_designs
+			if(D)
+				var/design_id = "[D.id]"
+				if(design_id in temp_server.files.banned_designs)
+					temp_server.files.banned_designs -= design_id
+				else
+					temp_server.files.banned_designs += design_id
 		. = TOPIC_REFRESH
 
 	else if(href_list["download_design_to_disk"])
@@ -348,10 +350,8 @@
 		if(temp_server)
 			var/datum/design/D = locate(href_list["delete_design"]) in temp_server.files.known_designs
 			if(D)
-				var/choice = alert("Удалить дизайн \"[D.name]\" с сервера [temp_server.name]? Действие нельзя отменить.", "Удаление дизайна", "Удалить", "Отмена")
-				if(choice == "Удалить")
-					temp_server.files.known_designs -= D
-					to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" удалён с сервера [temp_server.name]."))
+				temp_server.files.known_designs -= D
+				to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" удалён с сервера [temp_server.name]."))
 		. = TOPIC_REFRESH
 
 	else if(href_list["copy_design_choose"])
@@ -579,7 +579,7 @@
 								"name" = D.name,
 								"id" = D.id,
 								"ref" = "\ref[D]",
-								"banned" = (D.id in temp_server.files.banned_designs),
+								"banned" = ("[D.id]" in temp_server.files.banned_designs),
 								"starts_unlocked" = D.starts_unlocked
 							))
 					var/list/grouped = list()
@@ -595,7 +595,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "rdservercontrol.tmpl", "R&D Server Control", 600, 560)
+		ui = new(user, src, ui_key, "rdservercontrol.tmpl", "R&D Server Control", 1300, 800)
 		ui.set_initial_data(data)
 		ui.open()
 
