@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - bugfix: Убрал лишний дебаг
+delete-after: true
