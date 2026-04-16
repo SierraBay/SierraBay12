@@ -217,6 +217,8 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/anomaly_control,
 	/client/proc/jumptokey,
 	/client/proc/jumptoturf,
+	/client/proc/Getmob,
+	/client/proc/Getkey,
 	/client/proc/fixatmos,
 	/client/proc/investigate_show,
 	/client/proc/list_traders,
