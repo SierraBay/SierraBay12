@@ -236,6 +236,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/respawn_as_self,
 	/client/proc/virus2_editor,
 	/datum/admins/proc/mass_debug_closet_icons,
+	/datum/admins/proc/show_skills,	// Right-click skill menu,
 	//[/SIERRA-ADD],
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
