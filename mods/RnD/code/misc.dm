@@ -1,3 +1,62 @@
+// ─── RnD категория на базовом hard_drive ─────────────────────────────────────
+// Любой HDD можно назначить категорией через мультитул и вставить в R&D сервер.
+
+/obj/item/stock_parts/computer/hard_drive
+	/// R&D категория дизайнов на этом диске. Null = не назначено.
+	var/rnd_category = null
+
+/obj/item/stock_parts/computer/hard_drive/use_tool(obj/item/tool, mob/living/user, list/click_params)
+	if(isMultitool(tool))
+		if(rnd_category)
+			to_chat(user, SPAN_WARNING("Этот диск уже назначен категории \"[rnd_category]\"."))
+			return TRUE
+		var/list/cats = list()
+		for(var/datum/design/D in SSresearch.all_designs)
+			for(var/cat in D.category)
+				cats |= cat
+		if(!length(cats))
+			to_chat(user, SPAN_WARNING("Категории дизайнов недоступны."))
+			return TRUE
+		var/choice = input(user, "Выберите категорию R&D для этого диска:", "Настройка R&D диска") as null|anything in cats
+		if(!choice || QDELETED(src))
+			return TRUE
+		rnd_category = choice
+		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
+		return TRUE
+	return ..()
+
+
+/obj/structure/noticeboard/science_nt
+	name = "Доска объявлений НИО"
+
+/obj/structure/noticeboard/science_nt/Initialize()
+	. = ..()
+	var/obj/item/paper/science_account/P = new()
+	P.stamped = list(/obj/item/stamp/rd)
+	P.AddOverlays("paper_stamp-circle")
+	add_paper(P)
+
+
+// Бумажка с реквизитами счёта НИО — показывает актуальный счёт в момент чтения
+/obj/item/paper/science_account
+	name = "реквизиты счёта НИО"
+	info = "<h3>Реквизиты счёта отдела НИО</h3>"
+
+/obj/item/paper/science_account/show_content(mob/user, force, editable)
+	// Подставляем актуальные данные счёта прямо перед показом
+	var/datum/money_account/A = department_accounts["Научный"]
+	if(A)
+		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
+	else
+		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><i>Счёт ещё не создан (раунд не начался).</i>"
+	return ..()
+
+/obj/item/paper/science_account/examine(mob/user, distance)
+	var/datum/money_account/A = department_accounts["Научный"]
+	if(A)
+		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
+	return ..()
+
 // Design disk management and away-site design spawning
 
 /obj/item/stock_parts/computer/hard_drive/proc/get_disk_name()
