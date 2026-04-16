@@ -14,7 +14,10 @@ var/global/floorIsLava = 0
 	msg = SPAN_CLASS("log_message", "[SPAN_CLASS("prefix", "STAFF LOG:")] [SPAN_CLASS("message", msg)]")
 	log_adminwarn(msg)
 	for(var/client/C as anything in GLOB.admins)
-		if(C && C.holder && (R_INVESTIGATE & C.holder.rights))
+		// [SIERRA-EDIT]
+		// if(C && C.holder && (R_INVESTIGATE & C.holder.rights)) // SIERRA-EDIT - ORIGINAL
+		if(C && C.holder && ((R_INVESTIGATE|R_DEBUG) & C.holder.rights))
+		// [/SIERRA-EDIT]
 			to_chat(C, msg)
 /proc/msg_admin_attack(text) //Toggleable Attack Messages
 	log_attack(text)
