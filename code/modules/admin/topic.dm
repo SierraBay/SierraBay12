@@ -1355,7 +1355,7 @@
 
 	else if(href_list["adminplayerobservejump"])
 		// [SIERRA-EDIT]
-		// if(!check_rights(R_MOD|R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+		// if(!check_rights(R_MOD|R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
 		if(!check_rights(R_MOD|R_ADMIN|R_DEBUG))	return
 		// [/SIERRA-EDIT]
 
