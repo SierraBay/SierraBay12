@@ -152,6 +152,7 @@
 	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
+	#include "z8_virtualreality.dmm" // [SIERRA-ADD] - MOD_VR
 	#include "../away/empty.dmm"
 
 		// ~AWAY SITES~ //
