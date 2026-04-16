@@ -250,7 +250,7 @@
 /area/security/sierra/hangar
 	name = "Fourth Deck - Security - Hangar"
 	icon_state = "checkpoint1"
-	req_access = list(list(access_sec_doors, access_qm))
+	req_access = list(list(access_sec_doors, access_mailsorting))
 
 /area/security/sierra/dockcheckport
 	name = "Fourth Deck - Security - Port Docks Checkpoint"
