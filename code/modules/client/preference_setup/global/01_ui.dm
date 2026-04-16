@@ -240,4 +240,7 @@
 
 
 /proc/can_select_ooc_color(mob/user)
-	return config.allow_admin_ooccolor && check_rights(R_ADMIN, 0, user)
+	// [SIERRA-EDIT]
+	// return config.allow_admin_ooccolor && check_rights(R_ADMIN, 0, user) // SIERRA-EDIT - ORIGINAL
+	return config.allow_admin_ooccolor && check_rights(R_ADMIN|R_DEBUG, 0, user)
+	// [/SIERRA-EDIT]
