@@ -13,6 +13,7 @@
 	// [/SIERRA-ADD]
 
 	var/tooltip_style = "Midnight" //Style for popup tooltips
+	var/maptext_font = ""
 
 
 /datum/category_item/player_setup_item/player_global/ui
@@ -33,6 +34,7 @@
 	pref.ui_scale = R.read("ui_scale")
 	pref.window_size = R.read("window_size")
 	// [/SIERRA-ADD]
+	pref.maptext_font = R.read("maptext_font")
 
 
 /datum/category_item/player_setup_item/player_global/ui/save_preferences(datum/pref_record_writer/W)
@@ -48,6 +50,7 @@
 	W.write("ui_scale", pref.ui_scale)
 	W.write("window_size", pref.window_size)
 	// [/SIERRA-ADD]
+	W.write("maptext_font", pref.maptext_font)
 
 
 /datum/category_item/player_setup_item/player_global/ui/sanitize_preferences()
@@ -73,7 +76,15 @@
 	else
 		pref.window_size = initial(pref.window_size)
 	// [/SIERRA-ADD]
+	pref.maptext_font = sanitize_text(pref.maptext_font, initial(pref.maptext_font))
 	sanitize_client_fps()
+
+
+/datum/category_item/player_setup_item/player_global/ui/sanitize_character()
+	if (pref.maptext_font)
+		winset(pref.client, ":map", "font-family='[pref.maptext_font]','Small Fonts',Fixedsys,sans-serif")
+	else
+		winset(pref.client, ":map", "font-family='Small Fonts',Fixedsys,sans-serif")
 
 
 /datum/category_item/player_setup_item/player_global/ui/content(mob/user)
@@ -83,6 +94,7 @@
 	. += "-Color: <a href='byond://?src=\ref[src];select_color=1'><b>[pref.UI_style_color]</b></a> <table style='display:inline;' bgcolor='[pref.UI_style_color]'><tr><td>__</td></tr></table> <a href='byond://?src=\ref[src];reset=ui'>reset</a><br>"
 	. += "-Alpha(transparency): <a href='byond://?src=\ref[src];select_alpha=1'><b>[pref.UI_style_alpha]</b></a> <a href='byond://?src=\ref[src];reset=alpha'>reset</a><br>"
 	. += "<b>Tooltip Style:</b> <a href='byond://?src=\ref[src];select_tooltip_style=1'><b>[pref.tooltip_style]</b></a><br>"
+	. += {"<b>Maptext Font:</b> <a href='byond://?src=\ref[src];select_maptext_font=1'><span style="font-weight: bold; font-family:[pref.maptext_font ? " '[pref.maptext_font]'," : ""] 'Small Fonts', Fixedsys, sans-serif; text-rendering: geometricPrecision;">[pref.maptext_font || "Default"]</span></a><br>"}
 	. += "<b>Atom Hover Outlines</b><br>"
 	var/outlines_enabled = user.get_preference_value(/datum/client_preference/atom_outlines) == GLOB.PREF_YES
 	. += "- Enabled: <a href='byond://?src=\ref[src];outline_toggle=1'>[outlines_enabled ? "Yes" : "No"]</a><br>"
@@ -193,6 +205,21 @@
 		if(!tooltip_style_new || !CanUseTopic(user))
 			return TOPIC_NOACTION
 		pref.tooltip_style = tooltip_style_new
+		return TOPIC_REFRESH
+
+	else if (href_list["select_maptext_font"])
+		var/response = input(user, "Maptext font name, or empty to reset:", "Global Preference", pref.maptext_font) as null | text
+		if (isnull(response))
+			return
+		if (response)
+			response = copytext_char(response, 1, 48)
+			response = replacetext_char(response, "\\", "")
+			response = replacetext_char(response, "'", "\\'")
+		pref.maptext_font = response
+		if (pref.maptext_font)
+			winset(pref.client, ":map", "font-family='[pref.maptext_font]','Small Fonts',Fixedsys,sans-serif")
+		else
+			winset(pref.client, ":map", "font-family='Small Fonts',Fixedsys,sans-serif")
 		return TOPIC_REFRESH
 
 	else if(href_list["reset"])

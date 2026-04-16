@@ -82,7 +82,7 @@
 	// exp_track_branch = COM
 
 	access = list(
-		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory,
+		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
 		access_forensics_lockers, access_heads, access_medical, access_morgue,
 		access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks,
 		access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter,
@@ -165,7 +165,8 @@
 		access_sec_doors, access_medical, access_network,
 		access_maint_tunnels, access_eva, access_expedition_shuttle, access_expedition_shuttle_helm,
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
-		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage, access_employment_records
+		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage,
+		access_employment_records, access_medical_records, access_security_records
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -228,7 +229,8 @@
 		access_sec_doors,access_chapel_office, access_crematorium,
 		access_chemistry, access_virology, access_cmo, access_surgery,
 		access_RC_announce, access_keycard_auth, access_psychiatrist,
-		access_medical_equip, access_senmed, access_hangar, access_medical_records, access_employment_records
+		access_medical_equip, access_senmed, access_hangar, access_medical_records,
+		access_employment_records, access_security_records
 	)
 
 
@@ -301,7 +303,8 @@
 		access_atmospherics, access_janitor, access_construction,
 		access_sec_doors, access_medical, access_network, access_ce,
 		access_RC_announce, access_keycard_auth, access_tcomsat,
-		access_seneng, access_hangar, access_network_admin, access_employment_records
+		access_seneng, access_hangar, access_network_admin, access_employment_records,
+		access_medical_records, access_security_records
 	)
 
 

@@ -21,5 +21,6 @@
 #include "code\ai_machine_interaction.dm" //Взаимодействие ИИ с машинами
 #include "code\boris.dm" //Модуль B.O.R.I.S. и его логика
 #include "code\modules.dm" //Модуль роботов
+#include "code\equipment_items.dm" //Айтемы модулей роботов
 
 #endif
