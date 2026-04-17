@@ -7,7 +7,11 @@
 	machine_name = "\improper R&D server"
 	machine_desc = "A powerful piece of hardware used as the hub of a research matrix, containing every byte of data gleaned from an experiment."
 	var/datum/research/files
+	/// Associative list: category string => /obj/item/stock_parts/computer/hard_drive
+	var/list/rnd_drives = list()
 	var/health = 100
+	/// Cooldown ticks before another forget_random_technology call after health bottoms out.
+	var/health_punish_cooldown = 0
 	var/list/id_with_upload = list()	//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
 	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
@@ -24,22 +28,39 @@
 
 
 /obj/machinery/r_n_d/server/Destroy()
-	//[SIERRA-ADD] - MODPACK_RND
 	SSresearch.rnd_server_list -= src
-	//[/SIERRA-ADD] - MODPACK_RND
-
+	for(var/cat in rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = rnd_drives[cat]
+		if(!QDELETED(HDD))
+			HDD.forceMove(get_turf(src))
+	rnd_drives.Cut()
 	QDEL_NULL(files)
 	return ..()
 
 
-/obj/machinery/r_n_d/server/Initialize()
+/obj/machinery/r_n_d/server/Initialize(mapload)
 	. = ..()
-	//[SIERRA-ADD] - MODPACK_RND
 	SSresearch.rnd_server_list += src
-	//[/SIERRA-ADD] - MODPACK_RND
 
 	if(!files)
 		files = new /datum/research(src)
+
+	// Create HDDs only on initial map load (pre-placed servers).
+	// Player-built servers start empty — they reinsert HDDs manually.
+	if(mapload)
+		_populate_rnd_drives()
+
+	// Now set physical_server so AddDesign2Known writes to HDD going forward
+	files.physical_server = src
+
+	// Migrate designs that landed in known_designs during New() (before physical_server was set)
+	for(var/datum/design/D in files.known_designs)
+		files.AddDesign2Known(D)
+	files.known_designs.Cut()
+
+	// Rebuild category cache from HDD files (needed when server is rebuilt with existing disks)
+	_rebuild_design_categories()
+
 	var/list/temp_list
 	if(!length(id_with_upload))
 		temp_list = list()
@@ -54,6 +75,58 @@
 	update_icon()
 
 
+/// Creates one cluster HDD per consolidated design category and registers them in rnd_drives.
+/// Called on mapload for pre-placed servers. Player-built servers start empty.
+/obj/machinery/r_n_d/server/proc/_populate_rnd_drives()
+	var/list/cats = list()
+	for(var/datum/design/D in SSresearch.all_designs)
+		if(!D.category)
+			continue
+		if(islist(D.category))
+			for(var/cat in D.category)
+				cats |= get_hdd_category(cat)
+		else
+			cats |= get_hdd_category(D.category)
+	if(!length(cats))
+		cats += "General"
+	for(var/cat in cats)
+		var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
+		HDD.rnd_category = cat
+		HDD.name = "[cat] R&D Drive"
+		rnd_drives[cat] = HDD
+
+/// Rebuilds design_categories_protolathe/imprinter cache from actual HDD file contents.
+/// Call after inserting a disk into a server whose files datum was freshly created.
+/obj/machinery/r_n_d/server/proc/_rebuild_design_categories()
+	files.design_categories_protolathe = list()
+	files.design_categories_imprinter = list()
+	for(var/datum/computer_file/binary/design/F in get_all_hdd_files())
+		var/datum/design/D = F.design
+		if(!D || !D.category)
+			continue
+		if(D.build_type & PROTOLATHE)
+			for(var/cat in D.category)
+				files.design_categories_protolathe |= cat
+		else if(D.build_type & IMPRINTER)
+			for(var/cat in D.category)
+				files.design_categories_imprinter |= cat
+
+/// Returns a flat list of all design files across all installed HDDs (including uncategorized).
+/obj/machinery/r_n_d/server/proc/get_all_hdd_files()
+	var/list/result = list()
+	var/list/registered = list()
+	for(var/cat in rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = rnd_drives[cat]
+		registered += HDD
+		for(var/datum/computer_file/binary/design/F in HDD.stored_files)
+			result += F
+	for(var/obj/item/stock_parts/computer/hard_drive/HDD in src)
+		if(HDD in registered)
+			continue
+		for(var/datum/computer_file/binary/design/F in HDD.stored_files)
+			result += F
+	return result
+
 /obj/machinery/r_n_d/server/operable()
 	return !inoperable(MACHINE_STAT_EMPED)
 
@@ -67,7 +140,172 @@
 			server_id = new_id
 			to_chat(user, SPAN_NOTICE("\The [src]: сетевой ID установлен как [server_id]."))
 		return TRUE
+	// Insert an RnD HDD when panel is open
+	if(panel_open && istype(I, /obj/item/stock_parts/computer/hard_drive))
+		if(!user.unEquip(I, src))
+			return TRUE
+		if(files)
+			_rebuild_design_categories()
+		to_chat(user, SPAN_NOTICE("Установлен [I.name]. Назначьте категорию через интерфейс сервера."))
+		update_icon()
+		return TRUE
 	return ..()
+
+/obj/machinery/r_n_d/server/attack_hand(mob/user)
+	return interface_interact(user)
+
+/obj/machinery/r_n_d/server/interface_interact(mob/user)
+	ui_interact(user)
+	return TRUE
+
+/obj/machinery/r_n_d/server/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	var/list/data = list()
+	data["server_id"]  = server_id
+	data["health"]     = health
+	data["operable"]   = operable()
+	data["panel_open"] = panel_open
+
+	var/list/hdd_list = list()
+	var/list/registered_hdds = list()
+	// Зарегистрированные диски (есть в rnd_drives)
+	for(var/cat in rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = rnd_drives[cat]
+		registered_hdds += HDD
+		hdd_list += list(list(
+			"ref"      = "\ref[HDD]",
+			"name"     = HDD.name,
+			"category" = cat,
+			"desc"     = get_hdd_description(cat),
+			"used"     = HDD.used_capacity,
+			"max"      = HDD.max_capacity,
+			"pct"      = round(HDD.used_capacity / max(1, HDD.max_capacity) * 100)
+		))
+	// Диски физически в сервере, но не зарегистрированные в rnd_drives
+	for(var/obj/item/stock_parts/computer/hard_drive/HDD in src)
+		if(HDD in registered_hdds)
+			continue
+		hdd_list += list(list(
+			"ref"      = "\ref[HDD]",
+			"name"     = HDD.name,
+			"category" = "—",
+			"desc"     = "",
+			"used"     = HDD.used_capacity,
+			"max"      = HDD.max_capacity,
+			"pct"      = round(HDD.used_capacity / max(1, HDD.max_capacity) * 100)
+		))
+	data["hdds"] = hdd_list
+
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "mods-rdserver_panel.tmpl", "[src.name]", 500, 420)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/r_n_d/server/OnTopic(mob/user, list/href_list, datum/topic_state/state)
+	if(href_list["eject"])
+		if(!panel_open)
+			return TOPIC_NOACTION
+		var/obj/item/stock_parts/computer/hard_drive/HDD = locate(href_list["eject"]) in src
+		if(HDD && !QDELETED(HDD))
+			var/old_name = HDD.name
+			rnd_drives -= HDD.rnd_category
+			HDD.forceMove(get_turf(src))
+			user.put_in_hands(HDD)
+			to_chat(user, SPAN_NOTICE("Диск [old_name] извлечён."))
+			update_icon()
+		return TOPIC_REFRESH
+
+	if(href_list["assign_cat"])
+		if(!panel_open)
+			return TOPIC_NOACTION
+		var/obj/item/stock_parts/computer/hard_drive/HDD = locate(href_list["assign_cat"]) in src
+		if(!HDD || QDELETED(HDD))
+			return TOPIC_REFRESH
+		var/list/cats = list()
+		for(var/datum/design/D in SSresearch.all_designs)
+			if(!D.category) continue
+			if(islist(D.category))
+				for(var/c in D.category) cats |= get_hdd_category(c)
+			else
+				cats |= get_hdd_category(D.category)
+		for(var/c in rnd_drives)
+			if(rnd_drives[c] != HDD)
+				cats -= c
+		if(!length(cats))
+			to_chat(user, SPAN_WARNING("Нет свободных категорий."))
+			return TOPIC_REFRESH
+		var/old_cat = HDD.rnd_category
+		var/choice = input(user, "Выберите категорию для диска:", "Назначение категории") as null|anything in cats
+		if(!choice || QDELETED(src) || QDELETED(HDD))
+			return TOPIC_REFRESH
+		if(old_cat)
+			rnd_drives -= old_cat
+		HDD.rnd_category = choice
+		HDD.name = "[choice] R&D Drive"
+		rnd_drives[choice] = HDD
+		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
+		return TOPIC_REFRESH
+
+/obj/machinery/r_n_d/server/Exited(atom/movable/AM, direction)
+	. = ..()
+	if(istype(AM, /obj/item/stock_parts/computer/hard_drive))
+		var/obj/item/stock_parts/computer/hard_drive/HDD = AM
+		if(HDD.rnd_category && (HDD.rnd_category in rnd_drives))
+			rnd_drives -= HDD.rnd_category
+		HDD.rnd_category = null
+		HDD.name = initial(HDD.name)
+
+/// Returns a flat list of all /datum/design available across all installed RnD HDDs.
+/obj/machinery/r_n_d/server/proc/get_all_designs()
+	var/list/result = list()
+	for(var/cat in rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = rnd_drives[cat]
+		for(var/datum/computer_file/binary/design/F in HDD.stored_files)
+			if(F.design)
+				result |= F.design
+	return result
+
+/// Maps a raw design category to one of 5 consolidated HDD categories.
+/// Autolathe / Medical / Exosuit / Electronics / Research
+/obj/machinery/r_n_d/server/proc/get_hdd_category(cat)
+	switch(cat)
+		// ── Exosuit ──────────────────────────────────────────────────────────
+		if("Mech Equipment", "Mech armour", "Mech cockpit", \
+		   "Mech left arm", "Mech left leg", "Mech main", \
+		   "Mech right arm", "Mech right leg", "Mech sensors", \
+		   "Doubled legs", "Exosuit Equipment", "Exosuit", "Hardsuits")
+			return "Exosuit"
+		// ── Electronics ──────────────────────────────────────────────────────
+		if("AI Module", "Computer Parts", \
+		   "Robot", "Robot Upgrade", "Cyborg Upgrade Modules")
+			return "Electronics"
+		// ── Medical ──────────────────────────────────────────────────────────
+		if("Medical")
+			return "Medical"
+		// ── Autolathe ────────────────────────────────────────────────────────
+		if("Arms and Ammunition", "Drinking Glasses", "General", \
+		   "Devices and Components", "Cutlery", "Food", \
+		   "Tools", "Engineering")
+			return "Autolathe"
+		// ── Research (всё остальное: Weapon, Augments, Optical, Misc, RE) ────
+	return "Research"
+
+/// Returns the list of original design categories stored on this consolidated HDD.
+/obj/machinery/r_n_d/server/proc/get_hdd_description(cat)
+	switch(cat)
+		if("Autolathe")
+			return "Arms and Ammunition, Drinking Glasses, General, Devices and Components, Cutlery, Food, Tools, Engineering"
+		if("Medical")
+			return "Medical"
+		if("Exosuit")
+			return "Exosuit, Exosuit Equipment, Hardsuits, Mech armour, Mech cockpit, Mech main, Mech left/right arm, Mech left/right leg, Mech sensors, Doubled legs"
+		if("Electronics")
+			return "Computer Parts, AI Module, Robot, Robot Upgrade, Cyborg Upgrade Modules"
+		if("Research")
+			return "Weapon, Augments, Optical, Misc, Reverse Engineered"
+	return ""
+
 
 
 /obj/machinery/r_n_d/server/on_update_icon()
@@ -97,23 +335,30 @@
 /obj/machinery/r_n_d/server/Process()
 	..()
 	var/datum/gas_mixture/environment = loc.return_air()
-	switch(environment.temperature)
-		if(0 to T0C)
-			health = min(100, health + 1)
-		if(T0C to (T20C + 20))
-			health = clamp(health, 0, 100)
-		if((T20C + 20) to (T0C + 70))
-			health = max(0, health - 1)
+	var/temp = environment.temperature
+	var/old_health = health
+	if(temp >= (T0C + 70))
+		health = max(0, health - 2)
+	else if(temp >= (T20C + 20))
+		health = max(0, health - 1)
 	if(health <= 0)
-	//[SIERRA-EDIT] - MODPACK_RND
-		files.forget_random_technology()
-	//[/SIERRA-EDIT] - MODPACK_RND
+		if(health_punish_cooldown <= 0)
+			files.forget_random_technology()
+			health = 30
+			health_punish_cooldown = 30
+		else
+			health_punish_cooldown--
+	else
+		health_punish_cooldown = 0
+
 	if(delay)
 		delay--
 	else
 		produce_heat()
 		delay = initial(delay)
-	update_icon()
+	// Обновляем иконку только если здоровье изменилось
+	if(health != old_health)
+		update_icon()
 
 /obj/machinery/r_n_d/server/proc/produce_heat()
 	if(!produces_heat)
@@ -289,7 +534,7 @@
 
 	else if(href_list["toggle_ban_design"])
 		if(temp_server)
-			var/datum/design/D = locate(href_list["toggle_ban_design"]) in temp_server.files.known_designs
+			var/datum/design/D = locate(href_list["toggle_ban_design"]) in temp_server.get_all_designs()
 			if(D)
 				var/design_id = "[D.id]"
 				if(design_id in temp_server.files.banned_designs)
@@ -309,7 +554,7 @@
 			to_chat(user, SPAN_WARNING("На диске уже есть дизайн. Извлеките диск или очистите его."))
 			. = TOPIC_REFRESH
 			return
-		var/datum/design/D = locate(href_list["download_design_to_disk"]) in temp_server.files.known_designs
+		var/datum/design/D = locate(href_list["download_design_to_disk"]) in temp_server.get_all_designs()
 		if(D)
 			loaded_disk.blueprint = D
 			to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" записан на диск."))
@@ -345,7 +590,7 @@
 
 	else if(href_list["publish_design"])
 		if(temp_server)
-			var/datum/design/D = locate(href_list["publish_design"]) in temp_server.files.known_designs
+			var/datum/design/D = locate(href_list["publish_design"]) in temp_server.get_all_designs()
 			if(D)
 				var/turf/ctrl_turf = get_turf(src)
 				for(var/obj/machinery/r_n_d/server/PS as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
@@ -360,15 +605,15 @@
 
 	else if(href_list["delete_design"])
 		if(temp_server)
-			var/datum/design/D = locate(href_list["delete_design"]) in temp_server.files.known_designs
+			var/datum/design/D = locate(href_list["delete_design"]) in temp_server.get_all_designs()
 			if(D)
-				temp_server.files.known_designs -= D
+				temp_server.files._remove_design_from_drives(D.id)
 				to_chat(user, SPAN_NOTICE("Дизайн \"[D.name]\" удалён с сервера [temp_server.name]."))
 		. = TOPIC_REFRESH
 
 	else if(href_list["copy_design_choose"])
 		if(temp_server)
-			var/datum/design/D = locate(href_list["copy_design_choose"]) in temp_server.files.known_designs
+			var/datum/design/D = locate(href_list["copy_design_choose"]) in temp_server.get_all_designs()
 			if(D)
 				var/turf/ctrl_turf = get_turf(src)
 				var/list/available = list()
@@ -441,12 +686,22 @@
 				var/turf/ST = get_turf(S)
 				if((istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin) || (ST && !AreConnectedZLevels(ST.z, T.z)))
 					continue
+				var/total_used = 0
+				var/total_max = 0
+				for(var/cat in S.rnd_drives)
+					var/obj/item/stock_parts/computer/hard_drive/HDD = S.rnd_drives[cat]
+					total_used += HDD.used_capacity
+					total_max  += HDD.max_capacity
 				server_list += list(list(
-					"name" = S.name,
-					"id" = S.server_id,
-					"ref" = "\ref[S]",
-					"operable" = S.operable(),
-					"is_public" = S.is_public_server
+					"name"        = S.name,
+					"id"          = S.server_id,
+					"ref"         = "\ref[S]",
+					"operable"    = S.operable(),
+					"is_public"   = S.is_public_server,
+					"health"      = S.health,
+					"hdd_used"    = total_used,
+					"hdd_max"     = total_max,
+					"hdd_drives"  = length(S.rnd_drives)
 				))
 			data["servers"] = server_list
 
@@ -557,7 +812,7 @@
 
 				// Always collect category list (lightweight pass, no ref building)
 				var/list/all_categories = list()
-				for(var/datum/design/D in temp_server.files.known_designs)
+				for(var/datum/design/D in temp_server.get_all_designs())
 					if(LAZYLEN(D.category))
 						for(var/cat in D.category)
 							all_categories |= cat
@@ -573,7 +828,7 @@
 				// (sending all designs at once causes "Invalid string length" in NanoUI)
 				if(selected_design_category || design_search_text)
 					var/list/categorized_designs = list()
-					for(var/datum/design/D in temp_server.files.known_designs)
+					for(var/datum/design/D in temp_server.get_all_designs())
 						if(design_search_text && !findtext(D.name, design_search_text))
 							continue
 						// Collect the categories this design belongs to
@@ -657,3 +912,9 @@
 	name = "public design server"
 	server_id = 3
 	is_public_server = TRUE
+
+/obj/machinery/r_n_d/server/public/_populate_rnd_drives()
+	var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
+	HDD.rnd_category = "Autolathe"
+	HDD.name = "Autolathe R&D Drive"
+	rnd_drives["Autolathe"] = HDD

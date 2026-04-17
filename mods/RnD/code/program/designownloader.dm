@@ -202,7 +202,7 @@ Flow:
 		// Research designs from public server
 		var/obj/machinery/r_n_d/server/public/pub = get_public_server()
 		if(pub)
-			for(var/datum/design/D in pub.files.known_designs)
+			for(var/datum/design/D in pub.get_all_designs())
 				if(D.starts_unlocked || istype(D, /datum/design/autolathe))
 					continue
 				var/dcat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
@@ -281,12 +281,12 @@ Flow:
 		ui.open()
 		ui.set_auto_update(1)
 
-/// Returns category list from the public server's known_designs.
+/// Returns category list from the public server's designs.
 /// Respects access_security check for "Arms and Ammunition" unless backdoor_access.
 /datum/nano_module/program/computer_ntnetdesign/proc/get_category(obj/machinery/r_n_d/server/public/pub)
 	var/list/categories = list()
 
-	for(var/datum/design/D in pub.files.known_designs)
+	for(var/datum/design/D in pub.get_all_designs())
 		var/cat = LAZYLEN(D.category) ? D.category[1] : "Unspecified"
 		categories |= cat
 
@@ -303,11 +303,11 @@ Flow:
 	categories -= "Arms and Ammunition"
 	return categories
 
-/// Returns design rows from the public server's known_designs.
+/// Returns design rows from the public server's designs.
 /datum/nano_module/program/computer_ntnetdesign/proc/get_public_designs_data(obj/machinery/r_n_d/server/public/pub, category, search_query)
 	var/list/designs_list = list()
 
-	for(var/datum/design/D in pub.files.known_designs)
+	for(var/datum/design/D in pub.get_all_designs())
 		var/dname = lowertext(D.shortname || D.name || "")
 		if(search_query)
 			if(!findtext(dname, search_query))

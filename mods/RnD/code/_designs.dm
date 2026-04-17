@@ -125,14 +125,19 @@ other types of metals and chemistry for reagents).
 				for(var/i in O.matter)
 					O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)
 
-	if(reverse_engineered && quality < 100 && isitem(A))
+	if(reverse_engineered && isitem(A))
 		var/obj/item/I = A
-		I.AddComponent(/datum/component/defective_item, quality)
+		// Reverse-engineered reagent containers print empty — they weren't filled during fabrication
+		if(I.reagents && I.reagents.total_volume > 0)
+			I.reagents.clear_reagents()
 
-		if(quality < 40)
-			var/turf/T = get_turf(I)
-			if(T)
-				T.visible_message(SPAN_WARNING("[I] looks defective and may malfunction!"))
+		if(quality < 100)
+			I.AddComponent(/datum/component/defective_item, quality)
+
+			if(quality < 40)
+				var/turf/T = get_turf(I)
+				if(T)
+					T.visible_message(SPAN_WARNING("[I] looks defective and may malfunction!"))
 
 	return A
 

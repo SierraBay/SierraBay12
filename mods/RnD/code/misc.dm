@@ -1,29 +1,9 @@
 // ─── RnD категория на базовом hard_drive ─────────────────────────────────────
-// Любой HDD можно назначить категорией через мультитул и вставить в R&D сервер.
+// Категория назначается через интерфейс R&D сервера (панель управления).
 
 /obj/item/stock_parts/computer/hard_drive
 	/// R&D категория дизайнов на этом диске. Null = не назначено.
 	var/rnd_category = null
-
-/obj/item/stock_parts/computer/hard_drive/use_tool(obj/item/tool, mob/living/user, list/click_params)
-	if(isMultitool(tool))
-		if(rnd_category)
-			to_chat(user, SPAN_WARNING("Этот диск уже назначен категории \"[rnd_category]\"."))
-			return TRUE
-		var/list/cats = list()
-		for(var/datum/design/D in SSresearch.all_designs)
-			for(var/cat in D.category)
-				cats |= cat
-		if(!length(cats))
-			to_chat(user, SPAN_WARNING("Категории дизайнов недоступны."))
-			return TRUE
-		var/choice = input(user, "Выберите категорию R&D для этого диска:", "Настройка R&D диска") as null|anything in cats
-		if(!choice || QDELETED(src))
-			return TRUE
-		rnd_category = choice
-		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
-		return TRUE
-	return ..()
 
 
 /obj/structure/noticeboard/science_nt

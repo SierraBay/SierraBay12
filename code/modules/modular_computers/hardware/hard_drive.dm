@@ -40,7 +40,7 @@
 
 /obj/item/stock_parts/computer/hard_drive/cluster
 	name = "cluster hard drive"
-	desc = "A large storage cluster consisting of multiple hard drives for usage in high capacity storage systems. Has capacity of 2048 GQ."
+	desc = "A large storage cluster consisting of multiple hard drives for usage in high capacity storage systems. Has capacity of 1024 GQ."
 	power_usage = 500
 	origin_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 4)
 	max_capacity = 1024

@@ -688,11 +688,21 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				</div>
 				<div class="rndSectionContent">
 					<!-- Design Categories -->
-					<div class="rndBtnRow" style="margin-bottom: 8px; flex-wrap: wrap;">
+					<div class="rndBtnRow" style="margin-bottom: 6px; flex-wrap: wrap;">
 						{{for data.all_categories}}
 							{{:helper.link(value, '', {'select_category' : value}, data.selected_category == value ? 'selected' : null)}}
 						{{/for}}
 					</div>
+					{{if data.selected_category && data.hdd_capacities[data.selected_category]}}
+						{{var pct = Math.round(data.hdd_capacities[data.selected_category].used / data.hdd_capacities[data.selected_category].max * 100);}}
+						<div class="rndDiskBarWrap" style="margin-bottom: 8px;">
+							<span class="rndMuted" style="font-size:10px;">HDD: {{:data.hdd_capacities[data.selected_category].used}} / {{:data.hdd_capacities[data.selected_category].max}} GQ</span>
+							<div class="rndDiskBar">
+								<div class="rndDiskBarFill {{:pct >= 100 ? 'rndDiskBarFull' : pct >= 75 ? 'rndDiskBarWarn' : ''}}" style="width:{{:pct}}%;"></div>
+							</div>
+							<span class="rndMuted" style="font-size:10px; min-width:28px;">{{:pct}}%</span>
+						</div>
+					{{/if}}
 
 					<!-- Design List -->
 					<table class="rndDesignTable">
@@ -1847,7 +1857,10 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 .rndDesignCost {
 	text-align: right;
 	font-size: 11px;
-	white-space: nowrap;
+	white-space: normal;
+	word-break: break-word;
+	max-width: 180px;
+	width: 180px;
 }
 
 .rndDesignBanned {

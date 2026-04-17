@@ -59,7 +59,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_CYBERNETICS   /datum/tech/magnets
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
-	var/list/known_designs = list()			//List of available designs (at base reliability).
+	var/list/known_designs = list()			//List of available designs (at base reliability). NOTE: empty when physical_server is set — use server.get_all_designs() instead.
+	/// Back-reference to the owning server, if this datum belongs to one. Set in server Initialize().
+	var/obj/machinery/r_n_d/server/physical_server = null
 	//Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
 	var/list/design_categories_protolathe = list()
 	var/list/design_categories_imprinter = list()
@@ -195,14 +197,17 @@ The tech datums are the actual "tech trees" that you improve through researching
 	researched_tech[tree] -= T
 	researched_nodes -= T
 
-	for(var/D in T.unlocks_designs)
-		known_designs -= D
+	for(var/id in T.unlocks_designs)
+		if(physical_server)
+			_remove_design_from_drives(id)
+		else
+			var/datum/design/DD = SSresearch.get_design(id)
+			if(DD)
+				known_designs -= DD
 
 /datum/research/proc/forget_random_technology()
-	if(LAZYLEN(researched_tech) > 0)
-		var/random_tech = pick(researched_tech)
-		var/datum/technology/T = researched_tech[random_tech]
-
+	if(LAZYLEN(researched_nodes) > 0)
+		var/datum/technology/T = pick(researched_nodes)
 		forget_techology(T)
 
 /datum/research/proc/forget_all(tech_type)
@@ -213,17 +218,52 @@ The tech datums are the actual "tech trees" that you improve through researching
 	researched_nodes -= researched_tech[tree] // Remove all the nodes of the tree from the general researched nodes list
 	for(var/tech in researched_tech[tree])
 		var/datum/technology/T = tech
-		for(var/D in T.unlocks_designs)
-			known_designs -= D
+		for(var/id in T.unlocks_designs)
+			if(physical_server)
+				_remove_design_from_drives(id)
+			else
+				var/datum/design/DD = SSresearch.get_design(id)
+				if(DD)
+					known_designs -= DD
+
+/datum/research/proc/_remove_design_from_drives(design_id)
+	if(!physical_server)
+		return
+	var/safe_id = replacetext("[design_id]", "/", "_")
+	for(var/cat in physical_server.rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = physical_server.rnd_drives[cat]
+		var/datum/computer_file/F = HDD.find_file_by_name(safe_id)
+		if(F)
+			HDD.remove_file(F)
+			return
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
-	if(D in known_designs)
-		return
-
-	for(var/datum/design/known in known_designs)
-		if(D.id == known.id)
+	if(physical_server)
+		// Write to the physical HDD on the server
+		var/raw_cat = islist(D.category) ? (length(D.category) ? D.category[1] : null) : D.category
+		var/primary_cat = physical_server.get_hdd_category(raw_cat || "General")
+		var/obj/item/stock_parts/computer/hard_drive/HDD = physical_server.rnd_drives[primary_cat]
+		if(!HDD)
+			HDD = physical_server.rnd_drives["General"]
+		// Fallback: any available disk (e.g. public server with only one Autolathe HDD)
+		if(!HDD)
+			for(var/any_cat in physical_server.rnd_drives)
+				HDD = physical_server.rnd_drives[any_cat]
+				break
+		// D.id may be a type path (e.g. /datum/design/autolathe/arms_ammo) — strip slashes for a valid filename
+		var/safe_id = replacetext("[D.id]", "/", "_")
+		if(HDD && !HDD.find_file_by_name(safe_id))
+			var/datum/computer_file/binary/design/F = D.file.clone()
+			F.filename = safe_id
+			HDD.save_file(F)
+	else
+		// Non-server datum (e.g. robotics fab): use in-memory list
+		if(D in known_designs)
 			return
-	known_designs += D
+		for(var/datum/design/known in known_designs)
+			if(D.id == known.id)
+				return
+		known_designs += D
 
 	if(D.category)
 		if(D.build_type & PROTOLATHE)

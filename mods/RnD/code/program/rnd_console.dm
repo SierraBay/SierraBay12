@@ -487,11 +487,12 @@ those devices access via linked_console.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /datum/nano_module/program/rnd_console/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category)
-	var/datum/research/F = get_server_files()
-	if(!F)
+	var/obj/machinery/r_n_d/server/S = get_server()
+	if(!S)
 		return list()
+	var/datum/research/F = S.files
 	var/list/designs_list = list()
-	for(var/datum/design/D in F.known_designs)
+	for(var/datum/design/D in S.get_all_designs())
 		if(D.build_type & target_machine.build_type)
 			var/cat = "Unspecified"
 			if(D.category)
@@ -1130,9 +1131,10 @@ those devices access via linked_console.
 						to_chat(usr, SPAN_WARNING("Нет подключения к серверу. Дизайн не загружен."))
 	if(href_list["upload_disk_design"])
 		if(disk)
-			var/datum/research/F_ud = get_server_files()
-			if(F_ud)
-				var/datum/design/D = locate(href_list["upload_disk_design"]) in F_ud.known_designs
+			var/obj/machinery/r_n_d/server/S_ud = get_server()
+			var/datum/research/F_ud = S_ud ? S_ud.files : null
+			if(F_ud && S_ud)
+				var/datum/design/D = locate(href_list["upload_disk_design"]) in S_ud.get_all_designs()
 				if(D)
 					if(istype(D, /datum/design/autolathe) && (D:hidden))
 						to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к сохранению на диск."))
@@ -1280,8 +1282,9 @@ those devices access via linked_console.
 		// Save design from server → disk
 		if(href_list["save_to_disk"])
 			if(disk)
-				var/datum/research/F_std = get_server_files()
-				var/datum/design/D = F_std ? (locate(href_list["save_to_disk"]) in F_std.known_designs) : null
+				var/obj/machinery/r_n_d/server/S_std = get_server()
+				var/datum/research/F_std = S_std ? S_std.files : null
+				var/datum/design/D = S_std ? (locate(href_list["save_to_disk"]) in S_std.get_all_designs()) : null
 				if(D)
 					if(istype(D, /datum/design/autolathe) && (D:hidden))
 						to_chat(usr, SPAN_WARNING("Этот дизайн запрещён к сохранению на диск."))
@@ -1334,10 +1337,11 @@ those devices access via linked_console.
 			SSnano.update_uis(src)
 
 		if(href_list["build"])
-			var/datum/research/F_b = get_server_files()
-			if(F_b)
+			var/obj/machinery/r_n_d/server/S_b = get_server()
+			var/datum/research/F_b = S_b ? S_b.files : null
+			if(F_b && S_b)
 				var/amount = clamp(text2num(href_list["amount"]), 1, 10)
-				var/datum/design/being_built = locate(href_list["build"]) in F_b.known_designs
+				var/datum/design/being_built = locate(href_list["build"]) in S_b.get_all_designs()
 				if(being_built && target_device)
 					if(("[being_built.id]" in F_b.banned_designs) || is_design_banned_on_server("[being_built.id]"))
 						to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
@@ -1453,8 +1457,10 @@ those devices access via linked_console.
 
 		// ── Designs screen ────────────────────────────────────────────────
 		if(screen == "designs")
+			var/obj/machinery/r_n_d/server/S_lite = get_server()
+			var/list/lite_designs = S_lite ? S_lite.get_all_designs() : list()
 			var/list/categories = list()
-			for(var/datum/design/D in (F ? F.known_designs : list()))
+			for(var/datum/design/D in lite_designs)
 				if(D.starts_unlocked)
 					continue
 				for(var/cat in D.category)
@@ -1464,7 +1470,7 @@ those devices access via linked_console.
 			lite_data["search_text"]       = search_text
 
 			var/list/terminal_designs = list()
-			for(var/datum/design/D in (F ? F.known_designs : list()))
+			for(var/datum/design/D in lite_designs)
 				if(D.starts_unlocked)
 					continue
 				if(search_text && !findtext(lowertext(D.name), lowertext(search_text)))
@@ -1700,9 +1706,9 @@ those devices access via linked_console.
 			data["search_text"] = search_text
 
 			var/list/all_disk_categories = list()
-			if(F)
-				for(var/i in F.known_designs)
-					var/datum/design/cat_D = i
+			var/obj/machinery/r_n_d/server/S_ddc = get_server()
+			if(S_ddc)
+				for(var/datum/design/cat_D in S_ddc.get_all_designs())
 					if(cat_D.starts_unlocked)
 						continue
 					if(LAZYLEN(cat_D.category))
@@ -1729,9 +1735,9 @@ those devices access via linked_console.
 			data["disk_designs"] = disk_designs
 
 			var/list/known_designs = list()
-			if(F)
-				for(var/i in F.known_designs)
-					var/datum/design/D = i
+			var/obj/machinery/r_n_d/server/S_kd = get_server()
+			if(S_kd)
+				for(var/datum/design/D in S_kd.get_all_designs())
 					if(D.starts_unlocked)
 						continue
 					if(search_text && !findtext(D.name, search_text))
@@ -1742,7 +1748,7 @@ those devices access via linked_console.
 					known_designs += list(list(
 						"name"   = D.name,
 						"id"     = "\ref[D]",
-						"banned" = (is_hidden || ("[D.id]" in F.banned_designs)),
+						"banned" = (is_hidden || (F && ("[D.id]" in F.banned_designs))),
 					))
 			data["known_designs"] = known_designs
 
@@ -1780,6 +1786,17 @@ those devices access via linked_console.
 			data["all_categories"] = design_categories
 			if(search_text)
 				data["all_categories"] = list("Search Results") + data["all_categories"]
+
+			// HDD capacity per original design category
+			var/list/hdd_capacities = list()
+			var/obj/machinery/r_n_d/server/S_hdd = get_server()
+			if(S_hdd)
+				for(var/orig_cat in design_categories)
+					var/hdd_cat = S_hdd.get_hdd_category(orig_cat)
+					var/obj/item/stock_parts/computer/hard_drive/HDD = S_hdd.rnd_drives[hdd_cat]
+					if(HDD)
+						hdd_capacities[orig_cat] = list("used" = HDD.used_capacity, "max" = HDD.max_capacity)
+			data["hdd_capacities"] = hdd_capacities
 
 			if((!selected_category || !(selected_category in data["all_categories"])) && LAZYLEN(design_categories))
 				selected_category = design_categories[1]

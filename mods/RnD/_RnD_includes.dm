@@ -92,9 +92,8 @@
 
 // Диски и рынок дизайнов
 #include "code/misc.dm"
-#include "code/design_market.dm"
 
-// Дизайны автолейта
+// Дизайны автолата
 #include "code/designs_autolathe/designs_arms_ammo.dm"
 #include "code/designs_autolathe/designs_cutlery.dm"
 #include "code/designs_autolathe/designs_devices_components.dm"

@@ -206,6 +206,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return S.files
 	return null
 
+/obj/machinery/computer/rdconsole/proc/get_server()
+	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
+		if(!S.files || MACHINE_IS_BROKEN(S))
+			continue
+		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
+			continue
+		if(id in S.id_with_download)
+			return S
+	return null
+
 /// Print an R&D sales invoice linking to the science department account
 /obj/machinery/computer/rdconsole/proc/print_rnd_invoice(mob/living/user)
 	var/datum/money_account/science_account = get_science_account()
@@ -391,9 +401,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					to_chat(usr, SPAN_WARNING("Нет подключения к серверу. Дизайн не загружен."))
 	if(href_list["upload_disk_design"]) // User is attempting to save (server -> disk) a design to the disk.
 		if(disk)
-			var/datum/research/F_ud = get_server_files()
-			if(F_ud)
-				var/datum/design/D = locate(href_list["upload_disk_design"]) in F_ud.known_designs
+			var/obj/machinery/r_n_d/server/S_ud = get_server()
+			if(S_ud)
+				var/datum/design/D = locate(href_list["upload_disk_design"]) in S_ud.get_all_designs()
 				if(D)
 					disk.save_file(D.file.clone())
 	if(href_list["toggle_settings"]) // User wants to see the settings.
@@ -527,10 +537,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		print_rnd_invoice(usr)
 
 	if(href_list["build"])
-		var/datum/research/F_b = get_server_files()
-		if(F_b)
+		var/obj/machinery/r_n_d/server/S_b = get_server()
+		if(S_b)
+			var/datum/research/F_b = S_b.files
 			var/amount = clamp(text2num(href_list["amount"]), 1, 10)
-			var/datum/design/being_built = locate(href_list["build"]) in F_b.known_designs
+			var/datum/design/being_built = locate(href_list["build"]) in S_b.get_all_designs()
 			if(being_built && target_device)
 				if(("[being_built.id]" in F_b.banned_designs) || is_design_banned_on_server("[being_built.id]"))
 					to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
@@ -732,11 +743,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
-	var/datum/research/F = get_server_files()
-	if(!F)
+	var/obj/machinery/r_n_d/server/S_gpd = get_server()
+	if(!S_gpd)
 		return list()
+	var/datum/research/F = S_gpd.files
 	var/list/designs_list = list()
-	for(var/datum/design/D in F.known_designs)
+	for(var/datum/design/D in S_gpd.get_all_designs())
 		if(D.build_type & target_machine.build_type)
 			var/cat = "Unspecified"
 			if(D.category)
@@ -869,9 +881,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// Collect all unique categories from server designs
 			var/list/all_disk_categories = list()
-			if(F)
-				for(var/i in F.known_designs)
-					var/datum/design/cat_D = i
+			var/obj/machinery/r_n_d/server/S_ddc = get_server()
+			if(S_ddc)
+				for(var/datum/design/cat_D in S_ddc.get_all_designs())
 					if(cat_D.starts_unlocked)
 						continue
 					if(LAZYLEN(cat_D.category))
@@ -893,9 +905,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			// Build server known designs list
 			var/list/known_designs = list()
-			if(F)
-				for(var/i in F.known_designs)
-					var/datum/design/D = i
+			var/obj/machinery/r_n_d/server/S_kd = get_server()
+			if(S_kd)
+				for(var/datum/design/D in S_kd.get_all_designs())
 					if(D.starts_unlocked)
 						continue
 					if(search_text && !findtext(D.name, search_text))
@@ -940,6 +952,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			data["all_categories"] = design_categories
 			if(search_text)
 				data["all_categories"] = list("Search Results") + data["all_categories"]
+
+			// HDD capacity per original design category
+			var/list/hdd_capacities = list()
+			var/obj/machinery/r_n_d/server/S_hdd = get_server()
+			if(S_hdd)
+				for(var/orig_cat in design_categories)
+					var/hdd_cat = S_hdd.get_hdd_category(orig_cat)
+					var/obj/item/stock_parts/computer/hard_drive/HDD = S_hdd.rnd_drives[hdd_cat]
+					if(HDD)
+						hdd_capacities[orig_cat] = list("used" = HDD.used_capacity, "max" = HDD.max_capacity)
+			data["hdd_capacities"] = hdd_capacities
 
 			if((!selected_category || !(selected_category in data["all_categories"])) && LAZYLEN(design_categories))
 				selected_category = design_categories[1]

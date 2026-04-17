@@ -189,7 +189,6 @@
 
 	unlocks_designs = list(
 		"bullpup",
-		"assault_rifle",
 		"lasercannon",
 		"xraypistol"
 	)

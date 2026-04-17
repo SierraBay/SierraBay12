@@ -41,6 +41,14 @@ Used In File(s): \code\modules\research\server.dm
 						{{if value.is_public}}
 							<span class="srvPublicBadge">&#9670; PUBLIC</span>
 						{{/if}}
+						<span class="srvHealthBadge {{:value.health <= 30 ? 'srvHealthBadge--bad' : value.health <= 60 ? 'srvHealthBadge--warn' : 'srvHealthBadge--ok'}}">
+							&#9829; {{:value.health}}%
+						</span>
+						{{if value.hdd_drives > 0}}
+							<span class="srvDiskBadge">&#128190; {{:value.hdd_used}}/{{:value.hdd_max}} GQ ({{:value.hdd_drives}} HDD)</span>
+						{{else}}
+							<span class="srvDiskBadge">&#128190; нет дисков</span>
+						{{/if}}
 					</div>
 					<div class="srvServerActions">
 						{{:helper.link("Доступ", 'locked', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 1})}}
@@ -542,6 +550,23 @@ Used In File(s): \code\modules\research\server.dm
 .srvServerActions {
 	display: flex;
 	gap: 3px;
+}
+
+.srvHealthBadge {
+	font-size: 10px;
+	padding: 1px 5px;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+.srvHealthBadge--ok   { color: #4ade80; }
+.srvHealthBadge--warn { color: #fbbf24; }
+.srvHealthBadge--bad  { color: #f87171; }
+
+.srvDiskBadge {
+	font-size: 10px;
+	color: #64748b;
+	padding: 1px 5px;
 }
 
 /* === Access Rows === */

@@ -12,14 +12,14 @@
  * Add istype() checks here to permanently block specific item categories.
  */
 /proc/can_be_reverse_engineered(obj/item/I)
+	// Living creatures in holder wrappers — never allow extracting mob designs
+	if(istype(I, /obj/item/holder))
+		return FALSE
 	// Raw materials (sheets, rods, ingots) — unlimited printing of materials is not allowed
 	if(istype(I, /obj/item/stack))
 		return FALSE
 	// Slime extracts — obtained via xenobiology only
 	if(istype(I, /obj/item/slime_extract))
-		return FALSE
-	// First aid kits — would print filled with medical supplies
-	if(istype(I, /obj/item/storage/firstaid))
 		return FALSE
 	return TRUE
 
@@ -34,7 +34,8 @@
 		return null
 
 	// Check if design already exists for this item type
-	for(var/datum/design/existing in known_designs)
+	var/list/check_designs = physical_server ? physical_server.get_all_designs() : known_designs
+	for(var/datum/design/existing in check_designs)
 		if(existing.build_path == I.type)
 			return existing // Already have this design
 
