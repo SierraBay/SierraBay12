@@ -188,6 +188,8 @@ SUBSYSTEM_DEF(experience)
 
 		execute_update_queue()
 
+	log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")
+
 /datum/controller/subsystem/experience/proc/execute_update_queue()
 
 	for (var/DBQuery/query as anything in player_update_queries)
@@ -198,7 +200,6 @@ SUBSYSTEM_DEF(experience)
 		invoke_async(query, TYPE_PROC_REF(/DBQuery, Execute))
 	playtime_history_update_queries.Cut()
 
-	log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")
 	step = SSEXP_STEP_WAIT
 
 /datum/controller/subsystem/experience/proc/create_exp_records(list/exp_map, list/old_records)
