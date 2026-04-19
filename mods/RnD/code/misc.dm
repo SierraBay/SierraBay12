@@ -181,3 +181,18 @@
 				to_chat(user, SPAN_WARNING("Scan complete. There is nothing useful stored on this terminal."))
 		return 1
 	return 0
+
+
+/obj/item/stock_parts/circuitboard/rdserver/use_tool(obj/item/I, mob/living/user, list/click_params)
+	if(!isScrewdriver(I))
+		return ..()
+	if(build_path == /obj/machinery/r_n_d/server)
+		build_path = /obj/machinery/r_n_d/server/core
+		SetName("circuit board (R&D core server)")
+		to_chat(user, SPAN_NOTICE("Вы перенастраиваете плату под core сервер."))
+	else
+		build_path = /obj/machinery/r_n_d/server
+		SetName("circuit board (R&D server)")
+		to_chat(user, SPAN_NOTICE("Вы перенастраиваете плату под стандартный сервер."))
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+	return TRUE

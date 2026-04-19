@@ -323,7 +323,7 @@
 /datum/design/item/weapon/c20a
 	id = "c20a"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500)
+	materials = list(MATERIAL_STEEL = 11000, MATERIAL_SILVER = 4000, MATERIAL_DIAMOND = 2000)
 	build_path = /obj/item/gun/projectile/automatic/sec_smg/c20a
 	sort_string = "TAZGA"
 

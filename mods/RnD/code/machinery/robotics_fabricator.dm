@@ -3,6 +3,7 @@
 	var/fab_status_flags
 	wires = /datum/wires/fabricator/robotics_fabricator
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
+	var/obj/machinery/r_n_d/server/linked_server
 
 /obj/machinery/robotics_fabricator/Initialize()
 	files = new /datum/research(src) //Setup the research data holder.
@@ -58,13 +59,13 @@
 
 /obj/machinery/robotics_fabricator/get_build_options()
 	. = list()
-	for(var/i in files.known_designs)
-		var/datum/design/D = i
+	var/list/all_designs = linked_server ? linked_server.get_all_designs() : list()
+	for(var/datum/design/D in all_designs)
 		if(!(D.build_type & MECHFAB))
 			continue
 		. += list(list("name" = D.name, "id" = "\ref[D]", "category" = D.category, "resourses" = get_design_resourses(D), "time" = get_design_time(D)))
 	if(disk)
-		for(var/i in design_list(disk))
+		for(var/i in design_list())
 			var/datum/computer_file/binary/design/file = i
 			if(!(file.design.build_type == MECHFAB))
 				continue
@@ -108,7 +109,13 @@
 	if(..())
 		return
 	if(href_list["build"])
-		var/datum/design/D = locate(href_list["build"]) in files.known_designs
+		var/list/all_designs = linked_server ? linked_server.get_all_designs() : list()
+		var/datum/design/D = locate(href_list["build"]) in all_designs
+		if(!D && disk)
+			for(var/datum/computer_file/binary/design/file in design_list())
+				if(file.design == locate(href_list["build"]))
+					D = file.design
+					break
 		if(D)
 			add_to_queue(D)
 			return TOPIC_HANDLED
@@ -230,20 +237,26 @@
 
 /obj/machinery/robotics_fabricator/update_categories()
 	categories = list()
-	for(var/datum/design/D in files.known_designs)
+	var/list/all_designs = linked_server ? linked_server.get_all_designs() : list()
+	for(var/datum/design/D in all_designs)
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
 		categories |= D.category
 
 /obj/machinery/robotics_fabricator/sync()
-	for(var/obj/machinery/computer/rdconsole/RDC in view(11, src))
-		if(!RDC.sync)
-			sync_message = "Error: no console found."
-			return
-		files = RDC.get_server_files()
+	sync_message = "Error: server not found."
+	linked_server = null
+	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
+		if(!S.files || MACHINE_IS_BROKEN(S))
+			continue
+		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
+			continue
+		linked_server = S
+		files = S.files
 		sync_message = "Sync complete."
 		update_categories()
+		break
 	if(disk)
 		categories |= "Disk"
-	else if(!disk)
+	else
 		categories -= "Disk"

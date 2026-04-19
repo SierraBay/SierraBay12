@@ -18,13 +18,13 @@
 /datum/design/item/weapon/revolver
 	id = "revolver"
 	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 6000, MATERIAL_PLASTEEL = 2000)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_PLASTEEL = 4500, MATERIAL_SILVER = 1500)
 	build_path = /obj/item/gun/projectile/revolver
 	sort_string = "TAPAE"
 
 /datum/design/item/weapon/holdout_revolver
 	id = "holdout_revolver"
 	req_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 3000, MATERIAL_PLASTEEL = 1000)
+	materials = list(MATERIAL_STEEL = 6000, MATERIAL_PLASTEEL = 3000)
 	build_path = /obj/item/gun/projectile/revolver/holdout
 	sort_string = "TAPAF"
