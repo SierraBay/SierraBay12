@@ -218,6 +218,34 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/view_runtimes,
 	/client/proc/cmd_analyse_health_context,
 	/client/proc/cmd_analyse_health_panel,
+	//[SIERRA-ADD],
+	/datum/admins/proc/map_template_colony_spawn_settings,
+	/datum/admins/proc/anomaly_control,
+	/client/proc/jumptokey,
+	/client/proc/jumptoturf,
+	/client/proc/Getmob,
+	/client/proc/Getkey,
+	/client/proc/fixatmos,
+	/client/proc/investigate_show,
+	/client/proc/list_traders,
+	/client/proc/cmd_mod_say,
+	/client/proc/aooc,
+	/client/proc/colorooc,
+	/datum/admins/proc/restart,
+	/client/proc/game_panel,
+	/datum/admins/proc/spawn_fruit,
+	/datum/admins/proc/spawn_fluid_verb,
+	/datum/admins/proc/spawn_custom_item,
+	/datum/admins/proc/check_custom_items,
+	/datum/admins/proc/spawn_plant,
+	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
+	/datum/admins/proc/spawn_artifact,
+	/client/proc/spawn_chemdisp_cartridge,
+	/client/proc/respawn_as_self,
+	/client/proc/virus2_editor,
+	/datum/admins/proc/mass_debug_closet_icons,
+	/datum/admins/proc/show_skills,	// Right-click skill menu,
+	//[/SIERRA-ADD],
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
 	/client/proc/ping_webhook,
@@ -584,8 +612,10 @@ var/global/list/admin_verbs_mod = list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-
-	if(!check_rights(R_ADMIN))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	if(!usr.RemoveClickHandler(/datum/click_handler/build_mode))

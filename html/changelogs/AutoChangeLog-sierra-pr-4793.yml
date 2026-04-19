@@ -1,5 +1,0 @@
-author: Spookerton
-changes:
-  - tweak: Adds a menu preference for the font to use for maptext (except status
-      displays).
-delete-after: true

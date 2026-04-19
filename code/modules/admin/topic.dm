@@ -219,7 +219,10 @@
 
 	else if(href_list["simplemake"])
 
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/M = locate(href_list["mob"])
 		if(!ismob(M))
@@ -1005,7 +1008,10 @@
 		.(href, list("f_secret"=1))
 
 	else if(href_list["monkeyone"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["monkeyone"])
 		if(!istype(H))
@@ -1016,7 +1022,10 @@
 		H.monkeyize()
 
 	else if(href_list["corgione"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["corgione"])
 		if(!istype(H))
@@ -1262,7 +1271,10 @@
 			to_chat(usr, "Admin Rejuvinates have been disabled")
 
 	else if(href_list["makeai"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
 		if(!istype(H))
@@ -1273,7 +1285,10 @@
 		H.AIize()
 
 	else if(href_list["makeslime"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
@@ -1283,7 +1298,10 @@
 		usr.client.cmd_admin_slimeize(H)
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 		if(!istype(H))
@@ -1293,7 +1311,10 @@
 		usr.client.cmd_admin_robotize(H)
 
 	else if(href_list["makeanimal"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/M = locate(href_list["makeanimal"])
 		if(istype(M, /mob/new_player))
@@ -1313,7 +1334,10 @@
 		H.zombify()
 
 	else if(href_list["togmutate"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["togmutate"])
 		if(!istype(H))
@@ -1330,7 +1354,10 @@
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_MOD|R_ADMIN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_MOD|R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_MOD|R_ADMIN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 		var/client/C = usr.client
@@ -1343,7 +1370,10 @@
 		C.jumptomob(M)
 
 	else if(href_list["adminplayerobservefollow"])
-		if(!check_rights(R_MOD|R_ADMIN))
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_MOD|R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_MOD|R_ADMIN|R_DEBUG))
+		// [/SIERRA-EDIT]
 			return
 
 		var/mob/M = locate(href_list["adminplayerobservefollow"])
@@ -1383,7 +1413,10 @@
 		ticket.take(client_repository.get_lite_client(usr.client))
 
 	else if(href_list["adminplayerobservecoodjump"])
-		if(!check_rights(R_ADMIN))	return
+		// [SIERRA-EDIT]
+		//	if(!check_rights(R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_ADMIN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
@@ -1601,8 +1634,10 @@
 		P.adminbrowse()
 
 	else if(href_list["jumpto"])
-		if(!check_rights(R_ADMIN))	return
-
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_ADMIN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 		var/mob/M = locate(href_list["jumpto"])
 		usr.client.jumptomob(M)
 
@@ -1644,19 +1679,31 @@
 		show_skills(M)
 
 	else if(href_list["create_object"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 		return create_object(usr)
 
 	else if(href_list["create_turf"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 		return create_turf(usr)
 
 	else if(href_list["create_mob"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 		return create_mob(usr)
 
 	else if(href_list["object_list"])			//this is the laggiest thing ever
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		if(!config.allow_admin_spawning)
 			to_chat(usr, "Spawning of items is not allowed.")
@@ -1963,7 +2010,10 @@
 		src.access_news_network()
 
 	else if(href_list["vsc"])
-		if(check_rights(R_ADMIN|R_SERVER))
+		// [SIERRA-EDIT]
+		// if(check_rights(R_ADMIN|R_SERVER)) // SIERRA-EDIT - ORIGINAL
+		if(check_rights(R_ADMIN|R_SERVER|R_DEBUG))
+		// [/SIERRA-EDIT]
 			if(href_list["vsc"] == "airflow")
 				vsc.ChangeSettingsDialog(usr,vsc.settings)
 			if(href_list["vsc"] == "phoron")
@@ -1972,7 +2022,10 @@
 				vsc.SetDefault(usr)
 
 	else if(href_list["toglang"])
-		if(check_rights(R_SPAWN))
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))
+		// [/SIERRA-EDIT]
 			var/mob/M = locate(href_list["toglang"])
 			if(!istype(M))
 				to_chat(usr, "[M] is illegal type, must be /mob!")

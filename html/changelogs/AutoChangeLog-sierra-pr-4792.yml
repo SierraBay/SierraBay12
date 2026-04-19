@@ -1,5 +1,0 @@
-author: KommissarRed
-changes:
-  - tweak: Добавлены доступы всем главам ко всем видам записей экипажа, а также 
-      доступ Вардена для ГП
-delete-after: true

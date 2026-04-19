@@ -14,7 +14,10 @@ var/global/floorIsLava = 0
 	msg = SPAN_CLASS("log_message", "[SPAN_CLASS("prefix", "STAFF LOG:")] [SPAN_CLASS("message", msg)]")
 	log_adminwarn(msg)
 	for(var/client/C as anything in GLOB.admins)
-		if(C && C.holder && (R_INVESTIGATE & C.holder.rights))
+		// [SIERRA-EDIT]
+		// if(C && C.holder && (R_INVESTIGATE & C.holder.rights)) // SIERRA-EDIT - ORIGINAL
+		if(C && C.holder && ((R_INVESTIGATE|R_DEBUG) & C.holder.rights))
+		// [/SIERRA-EDIT]
 			to_chat(C, msg)
 /proc/msg_admin_attack(text) //Toggleable Attack Messages
 	log_attack(text)
@@ -147,7 +150,7 @@ var/global/floorIsLava = 0
 			body += "<a href='byond://?src=\ref[psyker.psi];remove_psionics=1'>Remove psionics.</a><br/><br/>"
 			body += "<a href='byond://?src=\ref[psyker.psi];trigger_psi_latencies=1'>Trigger latencies.</a><br/>"
 		body += "<table width = '100%'>"
-		for(var/faculty in list(PSI_COERCION, PSI_CONSCIOUSNESS, PSI_PSYCHOKINESIS, PSI_MANIFESTATION, PSI_ENERGISTICS, PSI_REDACTION, PSI_METAKINESIS, PSI_SHAYMANISM)) 
+		for(var/faculty in list(PSI_COERCION, PSI_CONSCIOUSNESS, PSI_PSYCHOKINESIS, PSI_MANIFESTATION, PSI_ENERGISTICS, PSI_REDACTION, PSI_METAKINESIS, PSI_SHAYMANISM))
 			var/singleton/psionic_faculty/faculty_singleton = SSpsi.get_faculty(faculty)
 			var/faculty_rank = psyker.psi ? psyker.psi.get_rank(faculty) : 0
 			body += "<tr><td><b>[faculty_singleton.name]</b></td>"
@@ -1028,7 +1031,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "Spawn every possible custom closet. Do not do this on live."
 	set category = "Debug"
 
-	if(!check_rights(R_SPAWN))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG)) // SIERRA-EDIT
+	// [/SIERRA-EDIT]
 		return
 
 	if((input(usr, "Are you sure you want to spawn all these closets?", "So Many Closets") as null|anything in list("No", "Yes")) == "Yes")
@@ -1049,7 +1055,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "Spawn the product of a seed."
 	set name = "Spawn Fruit"
 
-	if(!check_rights(R_SPAWN))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	if(!seedtype || !SSplants.seeds[seedtype])
 		return
@@ -1062,7 +1071,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "Spawn a custom item."
 	set name = "Spawn Custom Item"
 
-	if(!check_rights(R_SPAWN))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	var/owner = input("Select a ckey.", "Spawn Custom Item") as null|anything in SScustomitems.custom_items_by_ckey
 	if(!owner|| !SScustomitems.custom_items_by_ckey[owner])
@@ -1082,7 +1094,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "Check the custom item list."
 	set name = "Check Custom Items"
 
-	if(!check_rights(R_SPAWN))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	if(!SScustomitems.custom_items_by_ckey)
 		to_chat(usr, "Custom item list is null.")
@@ -1103,7 +1118,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "Spawn a spreading plant effect."
 	set name = "Spawn Plant"
 
-	if(!check_rights(R_SPAWN))	return
+	// [SIERRA-EDIT]
+	//	if(!check_rights(R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	if(!seedtype || !SSplants.seeds[seedtype])
 		return
@@ -1115,7 +1133,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
+	// [SIERRA-EDIT]
+	//	if(!check_rights(R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	var/list/matches = typesof_filtered(/atom, object)
 
@@ -1146,7 +1167,10 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	set desc = "(atom path) Spawn an artifact with a specified effect."
 	set name = "Spawn Artifact"
 
-	if (!check_rights(R_SPAWN))
+	// [SIERRA-EDIT]
+	//	if(!check_rights(R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
+	if (!check_rights(R_SPAWN|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	var/obj/machinery/artifact/A
