@@ -1,0 +1,5 @@
+author: thekekman666
+changes:
+  - soundadd: Добавил новый звук для пуль с трассером
+  - rscadd: Добавил пули с трассером для АМки
+delete-after: true

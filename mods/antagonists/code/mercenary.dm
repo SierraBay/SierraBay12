@@ -177,6 +177,13 @@ Used for quick dress-up. Also comes with several discount
 	path = /obj/item/ammo_casing/rpg_rocket/hel/tandem
 	antag_roles = list(MODE_MERCENARY)
 
+/datum/uplink_item/item/ammo/sniperammo/tracer
+	name = "Ammobox of Tracer Sniper Rounds"
+	desc = "A container of tracer rounds for the anti-materiel rifle. Contains 7 rounds."
+	item_cost = 12
+	path = /obj/item/storage/box/ammo/sniperammo/tracer
+	antag_roles = list(MODE_MERCENARY)
+
 // Weapon
 /datum/uplink_item/item/visible_weapons/rpg
 	name = "Missile Launcher"
