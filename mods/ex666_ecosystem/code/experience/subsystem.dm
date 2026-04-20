@@ -188,8 +188,6 @@ SUBSYSTEM_DEF(experience)
 
 		execute_update_queue()
 
-	log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")
-
 /datum/controller/subsystem/experience/proc/execute_update_queue()
 
 	for (var/DBQuery/query as anything in player_update_queries)
