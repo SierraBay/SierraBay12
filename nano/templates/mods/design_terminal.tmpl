@@ -11,13 +11,13 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	--dt-accent-dim:   #38bdf8;
 	--dt-accent-glow:  rgba(125, 211, 252, 0.18);
 	--dt-accent-badge: rgba(125, 211, 252, 0.12);
-	--dt-border:       rgba(51, 65, 85, 0.9);
-	--dt-border-accent:rgba(56, 189, 248, 0.45);
+	--dt-border:       rgba(60, 100, 160, 0.4);
+	--dt-border-accent:rgba(80, 140, 220, 0.55);
 	--dt-bg:           #0b1120;
-	--dt-bg-panel:     rgba(15, 23, 42, 0.85);
-	--dt-bg-header:    rgba(20, 30, 50, 0.95);
-	--dt-bg-row-hover: rgba(30, 41, 59, 0.6);
-	--dt-title-color:  #7dd3fc;
+	--dt-bg-panel:     rgba(12, 20, 36, 0.85);
+	--dt-bg-header:    rgba(16, 28, 48, 0.95);
+	--dt-bg-row-hover: rgba(24, 40, 70, 0.6);
+	--dt-title-color:  #8ab4e8;
 	--dt-label:        "ТЕРМИНАЛ ДИЗАЙНОВ";
 }
 
@@ -54,11 +54,11 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	display: flex;
 	flex-direction: column;
 	background: var(--dt-bg);
-	color: #dde6f0;
+	color: #c8dae8;
 	min-height: 100%;
 	box-sizing: border-box;
 	font-size: 12px;
-	font-family: inherit;
+	font-family: 'Consolas', 'Courier New', monospace;
 }
 
 /* ── Nav bar ─────────────────────────────────────────────────────── */
@@ -210,9 +210,6 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	overflow: hidden;
 }
 
-.dtPanel:hover {
-	border-color: var(--dt-border-accent);
-}
 
 .dtPanelHead {
 	display: flex;
@@ -248,12 +245,8 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	justify-content: space-between;
 	padding: 4px 8px;
 	border-bottom: 1px solid rgba(30, 41, 59, 0.6);
-	transition: background 0.1s;
 }
 
-.dtFileItem:hover {
-	background: var(--dt-bg-row-hover);
-}
 
 .dtFileItem:last-child {
 	border-bottom: none;
@@ -335,17 +328,12 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	font-size: 10px !important;
 	letter-spacing: 0.5px;
 	border: 1px solid var(--dt-border) !important;
-	background: rgba(10, 18, 36, 0.5) !important;
+	background: rgba(24, 48, 80, 0.4) !important;
 	border-radius: 2px !important;
 	color: #64748b !important;
 	cursor: pointer;
 	float: none;
 	height: auto;
-}
-.dtThemeBtn:hover {
-	background: var(--dt-accent-badge) !important;
-	border-color: var(--dt-border-accent) !important;
-	color: var(--dt-accent) !important;
 }
 .dtThemeBtn.selected {
 	background: var(--dt-accent-badge) !important;
@@ -377,25 +365,19 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 .dtConsole a.link:link,
 .dtConsole a.link:visited,
 .dtConsole a.link:active {
-	background: rgba(10, 18, 36, 0.75);
+	background: rgba(24, 48, 80, 0.7);
 	border: 1px solid var(--dt-border);
-	color: #c0d4e8;
+	color: #a8c8e8;
 	border-radius: 2px;
 	float: none;
 	height: auto;
-	padding: 2px 9px 3px;
+	padding: 1px 6px 3px;
 	margin: 0 2px 2px 0;
 	font-size: 11px;
+	font-family: 'Consolas', 'Courier New', monospace;
 	letter-spacing: 0.3px;
-	transition: background 0.12s, border-color 0.12s;
 }
 
-.dtConsole a:hover,
-.dtConsole .link:hover {
-	background: var(--dt-accent-badge) !important;
-	border-color: var(--dt-border-accent) !important;
-	color: var(--dt-accent) !important;
-}
 
 /* "selected" state for category/corp filter buttons */
 .dtConsole .link.selected,
@@ -403,10 +385,10 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 .dtConsole a.selected:visited,
 .dtConsole a.selected:active,
 .dtConsole a.selected:hover {
-	background: var(--dt-accent-badge) !important;
-	border-color: var(--dt-accent) !important;
-	color: var(--dt-accent) !important;
-	box-shadow: 0 0 6px var(--dt-accent-glow);
+	background: rgba(30, 80, 50, 0.75) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
 }
 
 /* disabled */
@@ -427,25 +409,20 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	letter-spacing: 0.6px;
 	text-transform: uppercase;
 	border: 1px solid var(--dt-border) !important;
-	background: rgba(10, 18, 36, 0.5) !important;
+	background: rgba(24, 48, 80, 0.5) !important;
 	border-radius: 2px !important;
 	color: #94a3b8 !important;
-	transition: all 0.15s;
 	float: none;
 	height: auto;
+	font-family: 'Consolas', 'Courier New', monospace !important;
 }
 
-.dtConsole .rndTab:hover {
-	background: var(--dt-accent-badge) !important;
-	border-color: var(--dt-border-accent) !important;
-	color: var(--dt-accent) !important;
-}
 
 .dtConsole .rndTab.selected {
-	background: var(--dt-accent-badge) !important;
-	border-color: var(--dt-accent) !important;
-	color: var(--dt-accent) !important;
-	box-shadow: 0 0 6px var(--dt-accent-glow);
+	background: rgba(30, 80, 50, 0.75) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
 }
 
 /* ── Scrollbars ──────────────────────────────────────────────────── */
@@ -469,11 +446,6 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	border: 1px solid var(--dt-border);
 	border-radius: 3px;
 	overflow: hidden;
-	transition: border-color 0.15s;
-}
-.rndTwoCol .rndSection:hover,
-.dtConsole .rndSection:hover {
-	border-color: var(--dt-border-accent);
 }
 .rndTwoCol .rndSectionTitle,
 .dtConsole .rndSectionTitle {

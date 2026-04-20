@@ -153,6 +153,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/id in T.unlocks_designs)
 		AddDesign2Known(SSresearch.get_design(id))
 
+	physical_server?.queue_save_rnd_state()
 	return TRUE
 
 
@@ -186,6 +187,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	for(var/ban_id in banned_designs)
 		if(!(ban_id in O.banned_designs))
 			banned_designs -= ban_id
+
+	physical_server?.queue_save_rnd_state()
 
 /datum/research/proc/forget_techology(datum/technology/T)
 	if(!IsResearched(T))
@@ -240,7 +243,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(physical_server)
 		// Write to the physical HDD on the server
-		var/raw_cat = islist(D.category) ? (length(D.category) ? D.category[1] : null) : D.category
+		var/raw_cat = length(D.category) ? D.category[1] : null
 		var/primary_cat = physical_server.get_hdd_category(raw_cat || "General")
 		var/obj/item/stock_parts/computer/hard_drive/HDD = physical_server.rnd_drives[primary_cat]
 		if(!HDD)
@@ -277,6 +280,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 			design_categories_protolathe |= "Unspecified"
 		else if(D.build_type & IMPRINTER)
 			design_categories_imprinter |= "Unspecified"
+
+	physical_server?.queue_save_rnd_state()
 
 // Unlocks hidden tech trees
 /datum/research/proc/check_item_for_tech(obj/item/I)
@@ -450,6 +455,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	if(!corporation_id)
 		return
 	corporation_reputation[corporation_id] = clamp(value, -50, 50)
+	physical_server?.queue_save_rnd_state()
 
 /// Change corporation reputation by amount (clamped to -50 to 50)
 /datum/research/proc/ChangeCorporationReputation(corporation_id, amount)

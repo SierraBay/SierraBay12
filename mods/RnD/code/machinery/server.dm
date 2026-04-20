@@ -24,7 +24,7 @@
 	var/produces_heat = 1
 	idle_power_usage = 800
 	var/delay = 10
-	req_access = list(access_heads) //Only the R&D can change server settings.
+	req_access = list()
 
 
 /obj/machinery/r_n_d/server/Destroy()
@@ -61,6 +61,9 @@
 	// Rebuild category cache from HDD files (needed when server is rebuilt with existing disks)
 	_rebuild_design_categories()
 
+	// Restore persisted state from system HDD if present
+	load_rnd_state()
+
 	var/list/temp_list
 	if(!length(id_with_upload))
 		temp_list = list()
@@ -82,13 +85,16 @@
 	for(var/datum/design/D in SSresearch.all_designs)
 		if(!D.category)
 			continue
-		if(islist(D.category))
-			for(var/cat in D.category)
-				cats |= get_hdd_category(cat)
-		else
-			cats |= get_hdd_category(D.category)
+		for(var/cat in D.category)
+			cats |= get_hdd_category(cat)
 	if(!length(cats))
 		cats += "General"
+
+	var/obj/item/stock_parts/computer/hard_drive/super/sys_hdd = new(src)
+	sys_hdd.rnd_category = "System"
+	sys_hdd.name = "System R&D Drive"
+	rnd_drives["System"] = sys_hdd
+
 	for(var/cat in cats)
 		var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
 		HDD.rnd_category = cat
@@ -104,11 +110,10 @@
 		var/datum/design/D = F.design
 		if(!D || !D.category)
 			continue
-		if(D.build_type & PROTOLATHE)
-			for(var/cat in D.category)
+		for(var/cat in D.category)
+			if(D.build_type & PROTOLATHE)
 				files.design_categories_protolathe |= cat
-		else if(D.build_type & IMPRINTER)
-			for(var/cat in D.category)
+			else if(D.build_type & IMPRINTER)
 				files.design_categories_imprinter |= cat
 
 /// Returns a flat list of all design files across all installed HDDs (including uncategorized).
@@ -172,13 +177,13 @@
 		var/obj/item/stock_parts/computer/hard_drive/HDD = rnd_drives[cat]
 		registered_hdds += HDD
 		hdd_list += list(list(
-			"ref"      = "\ref[HDD]",
-			"name"     = HDD.name,
+			"ref"  = "\ref[HDD]",
+			"name" = HDD.name,
 			"category" = cat,
-			"desc"     = get_hdd_description(cat),
-			"used"     = HDD.used_capacity,
-			"max"      = HDD.max_capacity,
-			"pct"      = round(HDD.used_capacity / max(1, HDD.max_capacity) * 100)
+			"desc" = get_hdd_description(cat),
+			"used" = HDD.used_capacity,
+			"max"  = HDD.max_capacity,
+			"pct"  = round(HDD.used_capacity / max(1, HDD.max_capacity) * 100)
 		))
 	// Диски физически в сервере, но не зарегистрированные в rnd_drives
 	for(var/obj/item/stock_parts/computer/hard_drive/HDD in src)
@@ -222,13 +227,11 @@
 		var/obj/item/stock_parts/computer/hard_drive/HDD = locate(href_list["assign_cat"]) in src
 		if(!HDD || QDELETED(HDD))
 			return TOPIC_REFRESH
-		var/list/cats = list()
+		var/list/cats = list("System")
 		for(var/datum/design/D in SSresearch.all_designs)
 			if(!D.category) continue
-			if(islist(D.category))
-				for(var/c in D.category) cats |= get_hdd_category(c)
-			else
-				cats |= get_hdd_category(D.category)
+			for(var/c in D.category)
+				cats |= get_hdd_category(c)
 		for(var/c in rnd_drives)
 			if(rnd_drives[c] != HDD)
 				cats -= c
@@ -245,6 +248,8 @@
 		HDD.name = "[choice] R&D Drive"
 		rnd_drives[choice] = HDD
 		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
+		if(choice == "System")
+			load_rnd_state()
 		return TOPIC_REFRESH
 
 /obj/machinery/r_n_d/server/Exited(atom/movable/AM, direction)
@@ -281,14 +286,14 @@
 		   "Robot", "Robot Upgrade", "Cyborg Upgrade Modules")
 			return "Electronics"
 		// ── Medical ──────────────────────────────────────────────────────────
-		if("Medical")
+		if("Medical", "Augments", "Optical")
 			return "Medical"
 		// ── Autolathe ────────────────────────────────────────────────────────
 		if("Arms and Ammunition", "Drinking Glasses", "General", \
 		   "Devices and Components", "Cutlery", "Food", \
 		   "Tools", "Engineering")
 			return "Autolathe"
-		// ── Research (всё остальное: Weapon, Augments, Optical, Misc, RE) ────
+		// ── Research (всё остальное: Weapon, Misc, RE) ────────────────────────
 	return "Research"
 
 /// Returns the list of original design categories stored on this consolidated HDD.
@@ -297,13 +302,15 @@
 		if("Autolathe")
 			return "Arms and Ammunition, Drinking Glasses, General, Devices and Components, Cutlery, Food, Tools, Engineering"
 		if("Medical")
-			return "Medical"
+			return "Medical, Augments, Optical"
 		if("Exosuit")
 			return "Exosuit, Exosuit Equipment, Hardsuits, Mech armour, Mech cockpit, Mech main, Mech left/right arm, Mech left/right leg, Mech sensors, Doubled legs"
 		if("Electronics")
 			return "Computer Parts, AI Module, Robot, Robot Upgrade, Cyborg Upgrade Modules"
 		if("Research")
-			return "Weapon, Augments, Optical, Misc, Reverse Engineered"
+			return "Weapon, Misc, Reverse Engineered"
+		if("System")
+			return "Корневой раздел матрицы. Журнал исследований, сертификаты разработок, корпоративные соглашения"
 	return ""
 
 
@@ -813,7 +820,7 @@
 				// Always collect category list (lightweight pass, no ref building)
 				var/list/all_categories = list()
 				for(var/datum/design/D in temp_server.get_all_designs())
-					if(LAZYLEN(D.category))
+					if(D.category)
 						for(var/cat in D.category)
 							all_categories |= cat
 					else
@@ -832,11 +839,7 @@
 						if(design_search_text && !findtext(D.name, design_search_text))
 							continue
 						// Collect the categories this design belongs to
-						var/list/design_cats
-						if(LAZYLEN(D.category))
-							design_cats = D.category
-						else
-							design_cats = list("Unspecified")
+						var/list/design_cats = D.category ? D.category : list("Unspecified")
 						// Filter by selected category
 						if(selected_design_category && !(selected_design_category in design_cats))
 							continue

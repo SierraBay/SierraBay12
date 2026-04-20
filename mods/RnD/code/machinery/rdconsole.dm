@@ -403,9 +403,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(disk)
 			var/obj/machinery/r_n_d/server/S_ud = get_server()
 			if(S_ud)
-				var/datum/design/D = locate(href_list["upload_disk_design"]) in S_ud.get_all_designs()
-				if(D)
-					disk.save_file(D.file.clone())
+				var/datum/computer_file/binary/design/src_file = locate(href_list["upload_disk_design"]) in S_ud.get_all_hdd_files()
+				if(src_file)
+					disk.save_file(src_file.clone())
 	if(href_list["toggle_settings"]) // User wants to see the settings.
 		if(allowed(usr) || emagged)
 			show_settings = !show_settings
@@ -879,16 +879,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/list/disk_design_files = disk.find_files_by_type(/datum/computer_file/binary/design)
 			data["search_text"] = search_text
 
-			// Collect all unique categories from server designs
+			// Collect categories from all HDD files on the server (including unregistered drives)
 			var/list/all_disk_categories = list()
 			var/obj/machinery/r_n_d/server/S_ddc = get_server()
 			if(S_ddc)
-				for(var/datum/design/cat_D in S_ddc.get_all_designs())
-					if(cat_D.starts_unlocked)
+				for(var/datum/computer_file/binary/design/cat_F in S_ddc.get_all_hdd_files())
+					var/datum/design/cat_D = cat_F.design
+					if(!cat_D || !cat_D.category)
 						continue
-					if(LAZYLEN(cat_D.category))
-						for(var/cat in cat_D.category)
-							all_disk_categories |= cat
+					for(var/cat in cat_D.category)
+						all_disk_categories |= cat
 			data["disk_design_categories"] = all_disk_categories
 			data["selected_disk_category"] = selected_disk_category
 
@@ -898,23 +898,24 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/datum/computer_file/binary/design/d_file = f
 				if(search_text && !findtext(d_file.design.name, search_text))
 					continue
-				if(selected_disk_category && LAZYLEN(d_file.design.category) && !(selected_disk_category in d_file.design.category))
+				if(selected_disk_category && !(selected_disk_category in d_file.design.category))
 					continue
 				disk_designs += list(list("name" = d_file.design.name, "id" = "\ref[d_file]"))
 			data["disk_designs"] = disk_designs
 
-			// Build server known designs list
+			// Build server known designs list from all HDD files (including unregistered drives)
 			var/list/known_designs = list()
 			var/obj/machinery/r_n_d/server/S_kd = get_server()
 			if(S_kd)
-				for(var/datum/design/D in S_kd.get_all_designs())
-					if(D.starts_unlocked)
+				for(var/datum/computer_file/binary/design/kd_F in S_kd.get_all_hdd_files())
+					var/datum/design/D = kd_F.design
+					if(!D)
 						continue
 					if(search_text && !findtext(D.name, search_text))
 						continue
-					if(selected_disk_category && LAZYLEN(D.category) && !(selected_disk_category in D.category))
+					if(selected_disk_category && !(selected_disk_category in D.category))
 						continue
-					known_designs += list(list("name" = D.name, "id" = "\ref[D]"))
+					known_designs += list(list("name" = D.name, "id" = "\ref[kd_F]"))
 			data["known_designs"] = known_designs
 
 	if(screen == SCREEN_DISK_TECH)

@@ -11,8 +11,8 @@
 
 	var/copying_delay = 0
 
-	var/obj/item/stock_parts/computer/hard_drive/portable/original = null
-	var/obj/item/stock_parts/computer/hard_drive/portable/copy = null
+	var/obj/item/stock_parts/computer/hard_drive/original = null
+	var/obj/item/stock_parts/computer/hard_drive/copy = null
 	base_type = /obj/machinery/disk_cloner
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = list(
@@ -52,7 +52,7 @@
 	if(panel_open)
 		return
 
-	if(istype(I, /obj/item/stock_parts/computer/hard_drive/portable))
+	if(istype(I, /obj/item/stock_parts/computer/hard_drive))
 		if(!original)
 			original = put_disk(I, user)
 			to_chat(user, SPAN_NOTICE("You put \the [I] into the first slot of [src]."))
@@ -76,7 +76,7 @@
 		copy = null
 	. = ..()
 
-/obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/portable/AD, mob/user)
+/obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/AD, mob/user)
 	ASSERT(istype(AD))
 
 	user.unEquip(AD,src)
@@ -136,10 +136,10 @@
 
 	if(href_list["eject"])
 		var/mob/living/H = null
-		var/obj/item/stock_parts/computer/hard_drive/portable/D = null
+		var/obj/item/stock_parts/computer/hard_drive/D = null
 		if(ishuman(usr))
 			H = usr
-			D = H.get_active_hand()
+			D = istype(H.get_active_hand(), /obj/item/stock_parts/computer/hard_drive) ? H.get_active_hand() : null
 
 		if(href_list["eject"] == "f")
 			if(original)
@@ -148,7 +148,7 @@
 					H.put_in_active_hand(original)
 				original = null
 			else
-				if(istype(D))
+				if(D)
 					H.drop_item()
 					D.forceMove(src)
 					original = D
@@ -159,7 +159,7 @@
 					H.put_in_active_hand(copy)
 				copy = null
 			else
-				if(istype(D))
+				if(D)
 					H.drop_item()
 					D.forceMove(src)
 					copy = D
@@ -173,7 +173,7 @@
 	update_use_power(POWER_USE_ACTIVE)
 	SSnano.update_uis(src)
 	update_icon()
-	if(original && copy && !copy.used_capacity)
+	if(original && copy)
 		copy.name = original.name
 
 		for(var/f in original.stored_files)

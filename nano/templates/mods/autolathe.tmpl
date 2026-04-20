@@ -107,7 +107,7 @@ Used In File(s): \code\game\machinery\autolathe.dm
 <!-- Designs & Queue Columns -->
 <div class="fabMainArea">
 	<div class="fabDesignCol">
-		<div class="fabSection">
+		<div class="fabSection fabDesignSection">
 			<div class="fabSectionTitle">Дизайны</div>
 			<div class="fabSectionContent fabDesignList">
 				{{#def._designs}}
@@ -127,7 +127,10 @@ Used In File(s): \code\game\machinery\autolathe.dm
 .fabConsole {
 	font-family: 'Consolas', 'Courier New', monospace;
 	color: #c8dae8;
-	min-height: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 
 /* === Global Button Overrides === */
@@ -426,23 +429,43 @@ Used In File(s): \code\game\machinery\autolathe.dm
 	display: flex;
 	gap: 6px;
 	padding: 0 6px 6px 6px;
-	align-items: flex-start;
+	align-items: stretch;
+	flex: 1;
+	min-height: 0;
 }
 
 .fabDesignCol {
 	flex: 1;
 	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
 
 .fabQueueCol {
 	width: 240px;
 	flex-shrink: 0;
+	align-self: flex-start;
+}
+
+.fabDesignSection {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0;
+}
+
+.fabDesignSection > .fabSectionContent {
+	flex: 1;
+	min-height: 0;
 }
 
 .fabDesignList {
-	max-height: 380px;
+	height: 100%;
 	overflow-y: auto;
 	padding: 4px 6px;
+	box-sizing: border-box;
 }
 
 /* === Design Items === */

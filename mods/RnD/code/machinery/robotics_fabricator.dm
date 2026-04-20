@@ -9,6 +9,7 @@
 	files = new /datum/research(src) //Setup the research data holder.
 	manufacturer = basic_robolimb.company
 	. = ..()
+	update_categories()
 
 
 /obj/machinery/robotics_fabricator/attack_hand(mob/user)
@@ -67,7 +68,7 @@
 	if(disk)
 		for(var/i in design_list())
 			var/datum/computer_file/binary/design/file = i
-			if(!(file.design.build_type == MECHFAB))
+			if(!(file.design.build_type & MECHFAB))
 				continue
 			. += list(list("name" = file.design.name, "id" = "\ref[file.design]", "category" = "Disk", "resourses" = get_design_resourses(file.design), "time" = get_design_time(file.design)))
 
@@ -241,7 +242,8 @@
 	for(var/datum/design/D in all_designs)
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
-		categories |= D.category
+		if(D.category)
+			categories |= D.category
 
 /obj/machinery/robotics_fabricator/sync()
 	sync_message = "Error: server not found."
