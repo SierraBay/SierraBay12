@@ -35,7 +35,7 @@
 	if(loading_rnd_state || save_rnd_queued || QDELETED(src))
 		return
 	save_rnd_queued = TRUE
-	addtimer(CALLBACK(src, PROC_REF(_do_save_rnd_state)), 5)
+	addtimer(new Callback(src, PROC_REF(_do_save_rnd_state)), 5)
 
 /obj/machinery/r_n_d/server/proc/_do_save_rnd_state()
 	save_rnd_queued = FALSE
