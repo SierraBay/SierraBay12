@@ -35,10 +35,12 @@
 	if(loading_rnd_state || save_rnd_queued || QDELETED(src))
 		return
 	save_rnd_queued = TRUE
-	spawn(5)
-		save_rnd_queued = FALSE
-		if(!QDELETED(src))
-			save_rnd_state()
+	addtimer(CALLBACK(src, PROC_REF(_do_save_rnd_state)), 5)
+
+/obj/machinery/r_n_d/server/proc/_do_save_rnd_state()
+	save_rnd_queued = FALSE
+	if(!QDELETED(src))
+		save_rnd_state()
 
 /// Serialises current R&D state and writes it to the system HDD.
 /obj/machinery/r_n_d/server/proc/save_rnd_state()
