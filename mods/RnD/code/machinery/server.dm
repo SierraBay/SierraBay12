@@ -151,6 +151,17 @@
 			return TRUE
 		if(files)
 			_rebuild_design_categories()
+		// Auto-detect system drive by state file presence
+		var/obj/item/stock_parts/computer/hard_drive/HDD = I
+		if(!rnd_drives["System"])
+			for(var/datum/computer_file/data/rnd_state/state_file in HDD.stored_files)
+				HDD.rnd_category = "System"
+				HDD.name = "System R&D Drive"
+				rnd_drives["System"] = HDD
+				load_rnd_state()
+				to_chat(user, SPAN_NOTICE("Системный диск установлен. Данные сервера восстановлены."))
+				update_icon()
+				return TRUE
 		to_chat(user, SPAN_NOTICE("Установлен [I.name]. Назначьте категорию через интерфейс сервера."))
 		update_icon()
 		return TRUE

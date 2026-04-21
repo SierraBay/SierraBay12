@@ -182,9 +182,10 @@
 		return 1
 	return 0
 
-
 /obj/item/stock_parts/circuitboard/rdserver/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(!isScrewdriver(I))
+		return ..()
+	if(istype(loc, /obj/machinery))
 		return ..()
 	if(build_path == /obj/machinery/r_n_d/server)
 		build_path = /obj/machinery/r_n_d/server/core
