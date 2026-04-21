@@ -38,7 +38,7 @@
 
 //Hud stuff
 
-	var/list/inv = list()
+	var/list/obj/screen/inv = list()
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
