@@ -46,7 +46,7 @@
 //3 Modules can be activated at any one time.
 	var/obj/item/robot_module/module = null
 	var/module_active_index = null
-	var/list/module_states = list(null, null, null)
+	var/list/obj/item/module_states = list(null, null, null)
 
 	silicon_camera = /obj/item/device/camera/siliconcam/robot_camera
 	silicon_radio = /obj/item/device/radio/borg
