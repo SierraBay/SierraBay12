@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - bugfix: Некорректно заданы списки
+delete-after: true

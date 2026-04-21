@@ -86,7 +86,7 @@
 	uneq_active()
 	hud_used.update_robot_modules_display()
 
-/mob/living/silicon/robot/proc/eq_module(index, obj/O)
+/mob/living/silicon/robot/proc/eq_module(index, obj/item/O)
 	if (isnull(index))
 		return
 
