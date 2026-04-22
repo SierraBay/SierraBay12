@@ -349,6 +349,9 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 							{{:helper.link("Откл. протолат", 'close', {'disconnect' : "lathe"}, data.has_protolathe ? null : 'disabled')}}
 							{{:helper.link("Откл. импринтер", 'close', {'disconnect' : "imprinter"}, data.has_circuit_imprinter ? null : 'disabled')}}
 						</div>
+						<div class="rndBtnRow">
+							{{:helper.link(data.linked_drone_pad_id ? "Дрон пад ID: " + data.linked_drone_pad_id : "Привязать дрон пад", 'airplay', {'link_drone_pad' : 1})}}
+						</div>
 					</div>
 					{{/if}}
 				</div>

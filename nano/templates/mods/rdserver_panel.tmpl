@@ -15,7 +15,7 @@
 			<th>Диск</th>
 			<th>Категория</th>
 			<th>Заполнение</th>
-			{{if data.panel_open}}<th>Действия</th>{{/if}}
+			<th>Действия</th>
 		</tr>
 		{{for data.hdds}}
 		<tr class="rndHddRow">
@@ -37,6 +37,15 @@
 			<td class="rndActions">
 				{{:helper.link("Извлечь", '', {'eject': value.ref})}}
 				{{:helper.link(value.category == '—' ? "Назначить" : "Сменить", '', {'assign_cat': value.ref})}}
+				{{if value.category == 'System'}}
+					{{:helper.link("Загрузить", '', {'load_rnd': 1})}}
+				{{/if}}
+			</td>
+			{{else}}
+			<td class="rndActions">
+				{{if value.category == 'System'}}
+					{{:helper.link("Загрузить данные", '', {'load_rnd': 1})}}
+				{{/if}}
 			</td>
 			{{/if}}
 		</tr>

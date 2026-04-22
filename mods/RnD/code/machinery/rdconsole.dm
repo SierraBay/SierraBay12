@@ -1,32 +1,3 @@
-/*
-Research and Development (R&D) Console
-
-This is the main work horse of the R&D system. It contains the menus/controls for the Destructive Analyzer, Protolathe, and Circuit
-imprinter. It also contains the /datum/research holder which handles the local research database.
-
-Basic use: When it first is created, it will attempt to link up to related devices within 3 squares. It'll only link up if they
-aren't already linked to another console. Any consoles it cannot link up with (either because all of a certain type are already
-linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
-allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
-
-The imprinting and construction menus do NOT require toxins access to access but all the other menus do. However, if you leave it
-on a menu, nothing is to stop the person from using the options on that menu (although they won't be able to change to a different
-one). You can also lock the console on the settings menu if you're feeling paranoid and you don't want anyone messing with it who
-doesn't have toxins access.
-
-When a R&D console is destroyed or even partially disassembled, you lose all research data on it. However, there are two ways around
-this dire fate:
-- The easiest way is to go to the settings menu and select "Sync Database with Network." That causes it to upload
-it's data to every other device in the game. Each console has a "disconnect from network" option that'll will cause data base sync
-operations to skip that console. This is useful if you want to make a "public" R&D console or, for example, give the engineers
-a circuit imprinter with certain designs on it and don't want it accidentally updating. The downside of this method is that you have
-to have physical access to the other console to send data back. Note: An R&D console is on CentCom so if a random griffan happens to
-cause a ton of data to be lost, an admin can go send it back.
-- The second method is with data disks. Each of these disks can hold multiple technology or design datum in
-it's entirety. You can then take the disk to any R&D console and upload it's data to it. This method is a lot more secure (since it
-won't update every console in existence) but it's more of a hassle to do. Also, the disks can be stolen.
-*/
-
 #define SCREEN_MAIN "main"
 #define SCREEN_PROTO "protolathe"
 #define SCREEN_IMPRINTER "circuit_imprinter"
@@ -53,7 +24,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/screen = SCREEN_MAIN	//Which screen is currently showing.
 	var/id     = 0			//ID of the computer (for server restrictions).
-	var/sync   = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/can_research = TRUE   //Is this console capable of researching
 
 	/// Ключ счёта отдела для предзаданных подтипов (map-spawn). null = не задан.
@@ -80,7 +50,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/searched_disk_design_text
 	var/search_text
 	var/quick_deconstruct = FALSE
-	var/list/diskstored = list()
+	/// pad_id of the R&D mission drone pad linked to this console. 0 = not linked.
+	var/linked_drone_pad_id = 0
+	/// Set to TRUE when the player explicitly disconnects from a server, prevents auto-reconnect via fallback.
+	var/server_disconnected = FALSE
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/destructive_analyzer/D in range(3, src))
@@ -197,14 +170,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /// Returns the research datum of the connected R&D server, or null if no server is reachable.
 /// The console no longer owns a local datum/research — the server is the sole authoritative storage.
 /obj/machinery/computer/rdconsole/proc/get_server_files()
-	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
-		if(!S.files || MACHINE_IS_BROKEN(S))
-			continue
-		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
-			continue
-		if(id in S.id_with_download)
-			return S.files
-	return null
+	var/obj/machinery/r_n_d/server/S = get_server()
+	return S ? S.files : null
 
 /obj/machinery/computer/rdconsole/proc/get_server()
 	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
@@ -212,7 +179,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			continue
 		if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(S.z)))
 			continue
+		// Explicit access list configured — use it.
 		if(id in S.id_with_download)
+			return S
+		// No explicit list: pair by server_id == console id (e.g. away-site servers).
+		if(S.server_id == id && !length(S.id_with_download) && !server_disconnected)
 			return S
 	return null
 
@@ -249,6 +220,30 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(T.id == tech_id)
 			return T
 	return null
+
+/// Link this console to a drone pad by its pad_id. Called from settings UI.
+/obj/machinery/computer/rdconsole/proc/link_drone_pad(mob/user)
+	var/entered_id = input(user, "Введите ID дрон пада (задаётся мультитулом на самом паде):", "Привязка дрон пада", linked_drone_pad_id) as num|null
+	if(isnull(entered_id))
+		return
+	entered_id = round(entered_id)
+	if(!entered_id)
+		linked_drone_pad_id = 0
+		to_chat(user, SPAN_NOTICE("Привязка к дрон паду сброшена."))
+		SSnano.update_uis(src)
+		return
+	var/obj/machinery/drone_pad/rd_mission/found = null
+	for(var/obj/machinery/drone_pad/rd_mission/P in SSmachines.get_machinery_of_type(/obj/machinery/drone_pad/rd_mission))
+		if(P.pad_id == entered_id)
+			found = P
+			break
+	if(!found)
+		to_chat(user, SPAN_WARNING("Дрон пад с ID [entered_id] не найден."))
+		return
+	linked_drone_pad_id = entered_id
+	found.linked_console = src
+	to_chat(user, SPAN_NOTICE("Консоль привязана к дрон паду ID [entered_id]."))
+	SSnano.update_uis(src)
 
 /// Compile deconstructed tech levels into a sellable research report disk
 /obj/machinery/computer/rdconsole/proc/compile_research_report(mob/living/user)
@@ -300,7 +295,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	for(var/tech_id in tech_data)
 		F.compiled_tech_levels[tech_id] = tech_data[tech_id]
 
-	to_chat(user, SPAN_NOTICE("Отчёт скомпилирован: [delta] новых уровней. Оценочная стоимость: [report.cargo_value *15] таллеров."))
+	to_chat(user, SPAN_NOTICE("Отчёт скомпилирован: [delta] новых уровней. Оценочная стоимость: [report.cargo_value] таллеров."))
 	SSnano.update_uis(src)
 
 /obj/machinery/computer/rdconsole/proc/buy_corp_node(mob/living/user, node_id)
@@ -438,19 +433,46 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_account_number = 0
 		department_account_key = null
 		to_chat(usr, SPAN_NOTICE("Счёт отвязан."))
+	if(href_list["link_drone_pad"])
+		if(allowed(usr) || emagged)
+			link_drone_pad(usr)
+		else
+			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 	if(href_list["toggle_link_menu"]) // User wants to see the device linkage menu.
 		if(allowed(usr) || emagged)
 			show_link_menu = !show_link_menu
 		else
 			to_chat(usr, SPAN_WARNING("Unauthorized access."))
-	if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected (after a 3 seconds delay).
-		if(!sync)
-			to_chat(usr, SPAN_WARNING("You must connect to the network first!"))
+	if(href_list["sync"])
+		if(!get_server())
+			to_chat(usr, SPAN_WARNING("Консоль не подключена к серверу R&D."))
 		else
 			screen = SCREEN_WORKING
-			addtimer(new Callback(src, PROC_REF(sync_tech)), 3 SECONDS)
-	if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
-		sync = !sync
+			addtimer(new Callback(src, PROC_REF(sync_tech), usr), 3 SECONDS)
+	if(href_list["togglesync"])
+		var/obj/machinery/r_n_d/server/cur = get_server()
+		if(cur)
+			cur.id_with_download -= id
+			server_disconnected = TRUE
+			to_chat(usr, SPAN_NOTICE("Консоль отключена от [cur.name]."))
+		else
+			var/entered_id = input(usr, "Введите сетевой ID сервера (задаётся мультитулом):", "Подключение к серверу", 1) as num|null
+			if(!isnull(entered_id))
+				entered_id = round(entered_id)
+				var/obj/machinery/r_n_d/server/found = null
+				for(var/obj/machinery/r_n_d/server/FS in SSresearch.rnd_server_list)
+					if(FS.server_id == entered_id && FS.files)
+						if(GLOB.using_map.use_overmap && !(src.z in GetConnectedZlevels(FS.z)))
+							continue
+						found = FS
+						break
+				if(found)
+					server_disconnected = FALSE
+					if(!(id in found.id_with_download))
+						found.id_with_download += id
+					to_chat(usr, SPAN_NOTICE("Консоль подключена к [found.name] (ID: [found.server_id])."))
+				else
+					to_chat(usr, SPAN_WARNING("Сервер с ID [entered_id] не найден в сети."))
 	if(href_list["select_category"]) // User is selecting a design category while in the protolathe/imprinter screen
 		var/what_cat = href_list["select_category"]
 		if(screen == SCREEN_PROTO)
@@ -615,10 +637,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /// Sync: if a disk is inserted, upload its designs to the server.
 /// The console no longer has a local research datum, so there is nothing else to sync.
-/obj/machinery/computer/rdconsole/proc/sync_tech()
+/obj/machinery/computer/rdconsole/proc/sync_tech(mob/user)
 	var/datum/research/F = get_server_files()
 	if(!F)
-		to_chat(usr, SPAN_WARNING("Нет подключения к серверу R&D."))
+		to_chat(user, SPAN_WARNING("Нет подключения к серверу R&D."))
 		reset_screen()
 		return
 
@@ -629,7 +651,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				F.AddDesign2Known(file.design)
 				uploaded++
 		if(uploaded)
-			to_chat(usr, SPAN_NOTICE("Загружено [uploaded] дизайн(ов) с диска на сервер."))
+			to_chat(user, SPAN_NOTICE("Загружено [uploaded] дизайн(ов) с диска на сервер."))
 
 	// Also notify any connected server to produce heat (legacy behaviour for balance)
 	for(var/obj/machinery/r_n_d/server/S in SSresearch.rnd_server_list)
@@ -796,9 +818,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	var/list/data = list()
 	data["screen"] = screen
-	data["sync"] = sync
+	var/obj/machinery/r_n_d/server/connected_server = get_server()
+	data["sync"] = !!connected_server
 	data["has_disk"] = !!disk
-	data["has_server"] = !!F
+	data["has_server"] = !!connected_server
+	data["server_name"] = connected_server ? connected_server.name : ""
 
 	// Science balance (shown on nav bar)
 	var/datum/money_account/sci_acc = get_science_account()
@@ -821,6 +845,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		data["has_protolathe"] = !!linked_lathe
 		data["has_circuit_imprinter"] = !!linked_imprinter
 		data["can_research"] = can_research
+		data["linked_drone_pad_id"] = linked_drone_pad_id
 
 		var/list/tech_tree_list = list()
 		if(F)
@@ -1259,7 +1284,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			report_value += tech_value
 		data["report_tech_data"] = report_tech_data
 		data["report_delta"] = report_delta
-		data["report_value"] = (report_value * 15)
+		data["report_value"] = report_value
 		data["can_compile"] = (report_delta > 0)
 		data["report_collapsed"] = report_collapsed
 

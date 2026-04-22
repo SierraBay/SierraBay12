@@ -61,9 +61,6 @@
 	// Rebuild category cache from HDD files (needed when server is rebuilt with existing disks)
 	_rebuild_design_categories()
 
-	// Restore persisted state from system HDD if present
-	load_rnd_state()
-
 	var/list/temp_list
 	if(!length(id_with_upload))
 		temp_list = list()
@@ -78,7 +75,8 @@
 	update_icon()
 
 
-/// Creates one cluster HDD per consolidated design category and registers them in rnd_drives.
+/// Creates one super HDD per consolidated design category and registers them in rnd_drives.
+/// Does NOT create a System disk — only /server/core overrides this to add one.
 /// Called on mapload for pre-placed servers. Player-built servers start empty.
 /obj/machinery/r_n_d/server/proc/_populate_rnd_drives()
 	var/list/cats = list()
@@ -89,12 +87,6 @@
 			cats |= get_hdd_category(cat)
 	if(!length(cats))
 		cats += "General"
-
-	var/obj/item/stock_parts/computer/hard_drive/super/sys_hdd = new(src)
-	sys_hdd.rnd_category = "System"
-	sys_hdd.name = "System R&D Drive"
-	rnd_drives["System"] = sys_hdd
-
 	for(var/cat in cats)
 		var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
 		HDD.rnd_category = cat
@@ -224,6 +216,7 @@
 			return TOPIC_NOACTION
 		var/obj/item/stock_parts/computer/hard_drive/HDD = locate(href_list["eject"]) in src
 		if(HDD && !QDELETED(HDD))
+			save_rnd_state()
 			var/old_name = HDD.name
 			rnd_drives -= HDD.rnd_category
 			HDD.forceMove(get_turf(src))
@@ -261,6 +254,11 @@
 		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
 		if(choice == "System")
 			load_rnd_state()
+		return TOPIC_REFRESH
+
+	if(href_list["load_rnd"])
+		load_rnd_state()
+		to_chat(user, SPAN_NOTICE("Данные с системного диска загружены на сервер."))
 		return TOPIC_REFRESH
 
 /obj/machinery/r_n_d/server/Exited(atom/movable/AM, direction)
@@ -506,7 +504,7 @@
 			selected_data_category = null
 			if(target_screen == 1)
 				for(var/obj/machinery/computer/rdconsole/C as anything in SSmachines.get_machinery_of_type(/obj/machinery/computer/rdconsole))
-					if(C.sync)
+					if(C.get_server())
 						consoles += C
 			else if(target_screen == 3)
 				for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
@@ -905,6 +903,13 @@
 	id_with_upload_string = "1;3"
 	id_with_download_string = "1;3"
 	server_id = 1
+
+/obj/machinery/r_n_d/server/core/_populate_rnd_drives()
+	..()
+	var/obj/item/stock_parts/computer/hard_drive/super/sys_hdd = new(src)
+	sys_hdd.rnd_category = "System"
+	sys_hdd.name = "System R&D Drive"
+	rnd_drives["System"] = sys_hdd
 
 // Sierra variant: starts with all Nanotrasen technologies pre-researched.
 // Used on the NanoTrasen vessel SSV Sierra.

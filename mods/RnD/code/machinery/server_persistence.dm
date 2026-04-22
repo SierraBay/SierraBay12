@@ -1,49 +1,76 @@
 // ─── R&D Server Persistence ───────────────────────────────────────────────────
-// A standard super hard drive assigned to the "System" category acts as the
-// persistence drive. State is saved as a file on that drive and survives server
-// destruction/rebuild. State includes:
+// Only /server/core has a System HDD and full persistence. All other server
+// types get stub no-op procs so call sites in server.dm and research.dm stay
+// clean without null-checks everywhere.
+//
+// Usage: assign any HDD to the "System" category via the server panel UI on a
+//        core server. The drive can be ejected and moved to another core server
+//        to transfer progress. State includes:
 //   • Researched technology nodes
 //   • Compiled tech levels
 //   • Corporation reputation
 //   • Known design IDs (so stolen design HDDs can be re-populated)
-//
-// Usage: assign any HDD to the "System" category via the server panel UI.
-//        The drive can be ejected and inserted into another server to transfer progress.
 
 // ── State file type ───────────────────────────────────────────────────────────
 
 /datum/computer_file/data/rnd_state
 	filetype = "RDS"
 	filename = "rnd_state"
+	size = 20
+	read_only = TRUE
+	undeletable = TRUE
 
-// ── Additional server vars ────────────────────────────────────────────────────
+// ── Stub no-ops on base server ────────────────────────────────────────────────
 
-/obj/machinery/r_n_d/server
+/obj/machinery/r_n_d/server/proc/get_system_drive()
+	return null
+
+/obj/machinery/r_n_d/server/proc/load_rnd_state()
+	return
+
+/obj/machinery/r_n_d/server/proc/save_rnd_state()
+	return
+
+/obj/machinery/r_n_d/server/proc/queue_save_rnd_state()
+	return
+
+// ── Core server — persistence vars ───────────────────────────────────────────
+
+/obj/machinery/r_n_d/server/core
 	/// Suppresses save calls while loading state to avoid infinite loops.
 	var/loading_rnd_state = FALSE
 	/// Prevents spawning multiple deferred save procs simultaneously.
 	var/save_rnd_queued = FALSE
 
-// ── Server persistence procs ──────────────────────────────────────────────────
+// ── Core server — real implementations ───────────────────────────────────────
 
-/// Returns the HDD assigned to the "System" category, or null if not present.
-/obj/machinery/r_n_d/server/proc/get_system_drive()
+/obj/machinery/r_n_d/server/core/dismantle()
+	// dismantle() drops contents via dropInto() before qdel(src), which fires Exited and clears
+	// rnd_drives. Save while HDDs are still registered, then let the base handle the rest.
+	save_rnd_state()
+	return ..()
+
+/obj/machinery/r_n_d/server/core/Destroy()
+	// Covers direct qdel/destruction (explosion, admin delete) where dismantle() wasn't called.
+	// At this point HDDs haven't been force-moved yet, so rnd_drives is still intact.
+	save_rnd_state()
+	return ..()
+
+/obj/machinery/r_n_d/server/core/get_system_drive()
 	return rnd_drives["System"]
 
-/// Schedules a deferred save (batches rapid successive changes into one write).
-/obj/machinery/r_n_d/server/proc/queue_save_rnd_state()
+/obj/machinery/r_n_d/server/core/queue_save_rnd_state()
 	if(loading_rnd_state || save_rnd_queued || QDELETED(src))
 		return
 	save_rnd_queued = TRUE
 	addtimer(new Callback(src, PROC_REF(_do_save_rnd_state)), 5)
 
-/obj/machinery/r_n_d/server/proc/_do_save_rnd_state()
+/obj/machinery/r_n_d/server/core/proc/_do_save_rnd_state()
 	save_rnd_queued = FALSE
 	if(!QDELETED(src))
 		save_rnd_state()
 
-/// Serialises current R&D state and writes it to the system HDD.
-/obj/machinery/r_n_d/server/proc/save_rnd_state()
+/obj/machinery/r_n_d/server/core/save_rnd_state()
 	if(loading_rnd_state)
 		return
 	var/obj/item/stock_parts/computer/hard_drive/sys = get_system_drive()
@@ -78,8 +105,11 @@
 	F.stored_data = json_encode(data)
 	sys.save_file(F)
 
-/// Reads the system HDD state file and restores all R&D progress.
-/obj/machinery/r_n_d/server/proc/load_rnd_state()
+/obj/machinery/r_n_d/server/core/Initialize(mapload)
+	. = ..()
+	load_rnd_state()
+
+/obj/machinery/r_n_d/server/core/load_rnd_state()
 	var/obj/item/stock_parts/computer/hard_drive/sys = get_system_drive()
 	if(!sys || !files)
 		return

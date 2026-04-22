@@ -105,6 +105,8 @@ those devices access via linked_console.
 	var/searched_disk_design_text
 	var/search_text
 	var/quick_deconstruct = FALSE
+	/// pad_id of the R&D mission drone pad linked to this console. 0 = not linked.
+	var/linked_drone_pad_id = 0
 
 	// ── Spectral analysis state ───────────────────────────────────────────
 	var/spectral_active       = FALSE
@@ -260,7 +262,11 @@ those devices access via linked_console.
 			continue
 		if(GLOB.using_map.use_overmap && host && !(host.z in GetConnectedZlevels(S.z)))
 			continue
+		// Explicit access list configured — use it.
 		if(id in S.id_with_download)
+			return S
+		// No explicit list: pair by server_id == console id (e.g. away-site servers).
+		if(S.server_id == id && !length(S.id_with_download))
 			return S
 	return null
 
@@ -277,7 +283,8 @@ those devices access via linked_console.
 			continue
 		if(GLOB.using_map.use_overmap && host && !(host.z in GetConnectedZlevels(S.z)))
 			continue
-		if(!(id in S.id_with_download))
+		var/reachable = (id in S.id_with_download) || (S.server_id == id && !length(S.id_with_download))
+		if(!reachable)
 			continue
 		if(design_id in S.files.banned_designs)
 			return TRUE
@@ -338,6 +345,30 @@ those devices access via linked_console.
 // ─────────────────────────────────────────────────────────────────────────────
 // Tech / research helpers
 // ─────────────────────────────────────────────────────────────────────────────
+
+/// Link this console to a drone pad by its pad_id. Called from settings UI.
+/datum/nano_module/program/rnd_console/proc/link_drone_pad(mob/user)
+	var/entered_id = input(user, "Введите ID дрон пада (задаётся мультитулом на самом паде):", "Привязка дрон пада", linked_drone_pad_id) as num|null
+	if(isnull(entered_id))
+		return
+	entered_id = round(entered_id)
+	if(!entered_id)
+		linked_drone_pad_id = 0
+		to_chat(user, SPAN_NOTICE("Привязка к дрон паду сброшена."))
+		SSnano.update_uis(src)
+		return
+	var/obj/machinery/drone_pad/rd_mission/found = null
+	for(var/obj/machinery/drone_pad/rd_mission/P in SSmachines.get_machinery_of_type(/obj/machinery/drone_pad/rd_mission))
+		if(P.pad_id == entered_id)
+			found = P
+			break
+	if(!found)
+		to_chat(user, SPAN_WARNING("Дрон пад с ID [entered_id] не найден."))
+		return
+	linked_drone_pad_id = entered_id
+	found.linked_console = src
+	to_chat(user, SPAN_NOTICE("Консоль привязана к дрон паду ID [entered_id]."))
+	SSnano.update_uis(src)
 
 /datum/nano_module/program/rnd_console/proc/find_tech_by_id(tech_id)
 	var/datum/research/F = get_server_files()
@@ -1186,6 +1217,11 @@ those devices access via linked_console.
 		else
 			department_account_key = null
 		to_chat(usr, SPAN_NOTICE("Счёт отвязан."))
+	if(href_list["link_drone_pad"])
+		if(is_allowed(usr))
+			link_drone_pad(usr)
+		else
+			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 	if(href_list["toggle_link_menu"])
 		if(is_allowed(usr))
 			show_link_menu = !show_link_menu
@@ -1662,6 +1698,7 @@ those devices access via linked_console.
 		data["has_protolathe"]        = !!linked_lathe && !lite
 		data["has_circuit_imprinter"] = !!linked_imprinter && !lite
 		data["can_research"]          = can_research
+		data["linked_drone_pad_id"]   = linked_drone_pad_id
 
 		var/list/tech_tree_list = list()
 		if(F)
