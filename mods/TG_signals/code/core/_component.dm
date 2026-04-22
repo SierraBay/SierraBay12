@@ -278,13 +278,9 @@
 	var/list/dc = _datum_components
 	if(!dc)
 		return null
-	var/datum/component/C = dc[c_type]
-	if(C)
-		if(length(C))
-			C = C[1]
-		if(C.type == c_type)
-			return C
-	return null
+	. = dc[c_type]
+	if(length(.))
+		return .[1]
 
 /**
  * Get all components of a given type that are attached to this datum

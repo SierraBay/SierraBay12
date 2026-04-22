@@ -12,5 +12,6 @@
 #include "code/mule.dm"
 #include "code/diseases.dm"
 #include "code/loadouttraits.dm"
+#include "code/stutter.dm"
 
 #endif
