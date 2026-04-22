@@ -20,21 +20,21 @@
 // Бумажка с реквизитами счёта НИО — показывает актуальный счёт в момент чтения
 /obj/item/paper/science_account
 	name = "реквизиты счёта НИО"
-	info = "<h3>Реквизиты счёта отдела НИО</h3>"
+	info = "<h3>Реквизиты счёта НИО</h3>"
 
 /obj/item/paper/science_account/show_content(mob/user, force, editable)
 	// Подставляем актуальные данные счёта прямо перед показом
 	var/datum/money_account/A = department_accounts["Научный"]
 	if(A)
-		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
+		info = "<h3>Реквизиты счёта НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
 	else
-		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><i>Счёт ещё не создан (раунд не начался).</i>"
+		info = "<h3>Реквизиты счёта НИО</h3><hr><i>Счёт ещё не создан (раунд не начался).</i>"
 	return ..()
 
 /obj/item/paper/science_account/examine(mob/user, distance)
 	var/datum/money_account/A = department_accounts["Научный"]
 	if(A)
-		info = "<h3>Реквизиты счёта отдела НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
+		info = "<h3>Реквизиты счёта НИО</h3><hr><b>Название счёта:</b> [A.account_name]<br><b>Номер счёта:</b> [A.account_number]<br>"
 	return ..()
 
 // Design disk management and away-site design spawning
