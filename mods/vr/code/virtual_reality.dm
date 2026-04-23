@@ -71,13 +71,21 @@ SUBSYSTEM_DEF(virtual_reality)
 	listclearnulls(virtual_clients)
 
 // New
+/datum/controller/subsystem/virtual_reality/proc/clone_atom_vr(atom/A)
+	var/atom/cloned_atom = clone_atom(A)
+
+	if(A.color)
+		cloned_atom.color = A.color
+
+	return cloned_atom
+
 /datum/controller/subsystem/virtual_reality/proc/recursive_storage_copy(obj/item/storage/S, obj/item/storage/O)
 	for(var/obj/item/I in S.contents)
 		qdel(I)
 
 	for(var/obj/item/I in O.contents)
 		if(!is_type_in_list(I, vr_blacklist))
-			var/obj/item/cloned_I = clone_atom(I)
+			var/obj/item/cloned_I = clone_atom_vr(I)
 			S.handle_item_insertion(cloned_I)
 
 			if(istype(cloned_I, /obj/item/storage))
@@ -86,13 +94,14 @@ SUBSYSTEM_DEF(virtual_reality)
 /datum/controller/subsystem/virtual_reality/proc/accessories_copy(obj/item/clothing/cloned_I, obj/item/clothing/I)
 	for(var/obj/item/clothing/accessory/A in I.accessories)
 		if(!is_type_in_list(A, vr_blacklist))
-			var/obj/item/clothing/accessory/cloned_A = clone_atom(A)
+			var/obj/item/clothing/accessory/cloned_A = clone_atom_vr(A)
 			cloned_I.attach_accessory(null, cloned_A)
 
 /datum/controller/subsystem/virtual_reality/proc/apply_vr_equipment(mob/living/simulated_mob, mob/living/new_occupant)
 	for(var/obj/item/I in new_occupant.contents)
 		if(!is_type_in_list(I, vr_blacklist))
-			var/obj/item/cloned_I = clone_atom(I)
+			var/obj/item/cloned_I = clone_atom_vr(I)
+
 			var/item_slot = new_occupant.get_inventory_slot(I)
 
 			if(istype(cloned_I, /obj/item/storage))
@@ -144,7 +153,7 @@ SUBSYSTEM_DEF(virtual_reality)
 		apply_vr_equipment(simulated_mob, new_occupant)
 
 		for(var/obj/item/organ/internal/augment/aug in H_original.internal_organs)
-			var/obj/item/organ/internal/augment/augment = clone_atom(aug)
+			var/obj/item/organ/internal/augment/augment = clone_atom_vr(aug)
 
 			var/obj/item/organ/external/parent = H.organs_by_name[aug.parent_organ]
 			if (!parent)
