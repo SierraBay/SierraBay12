@@ -86,18 +86,21 @@ SIERRA_ESCAPE_POD(11)
 	fuel_consumption = 7
 	warmup_time = 10
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	shuttle_area = list(/area/shuttle/petrov/airlock,
-	/area/shuttle/petrov/cockpit,
-	/area/shuttle/petrov/ship,
-	/area/shuttle/petrov/test_room,
+	shuttle_area = list(
+	/area/shuttle/petrov/monitoring,
+	/area/shuttle/petrov/storage_primary,
+	/area/shuttle/petrov/power,
+	/area/shuttle/petrov/storage_secondary,
+	/area/shuttle/petrov/storage_atmos,
+	/area/shuttle/petrov/lab_airlock,
+	/area/shuttle/petrov/lab_hall,
+	/area/shuttle/petrov/chem_lab,
+	/area/shuttle/petrov/anomaly_lab,
+	/area/shuttle/petrov/spectrometry_lab,
+	/area/shuttle/petrov/toxin_lab,
 	/area/shuttle/petrov/cell1,
 	/area/shuttle/petrov/cell2,
-	/area/shuttle/petrov/cell3,
-	/area/shuttle/petrov/gas,
-	/area/shuttle/petrov/equipment,
-	/area/shuttle/petrov/eva,
-	/area/shuttle/petrov/security,
-	/area/shuttle/petrov/scan
+	/area/shuttle/petrov/cell3
 	)
 
 /obj/machinery/computer/shuttle_control/explore/petrov
