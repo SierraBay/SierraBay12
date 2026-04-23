@@ -384,6 +384,12 @@ SUBSYSTEM_DEF(virtual_reality)
 		log_and_message_admins("changed the VR area to [A.name], ejecting [LAZYLEN(the_matrix)] occupants.", user)
 	else
 		log_and_message_admins("changed the VR area to [A.name].", user)
+
+	if(vr_program && vr_program.area_cooldown > world.time)
+		to_chat(user, SPAN_WARNING("VR program is recalibrating, try again later."))
+		return TRUE
+
+	vr_program.area_cooldown = world.time + 30 SECONDS
 	to_chat(user, SPAN_WARNING("Loading template: [A.name]..."))
 
 	var/list/mobs_in_zone = mobs_in_area(zone_area)
@@ -431,5 +437,4 @@ SUBSYSTEM_DEF(virtual_reality)
 	to_chat(user, SPAN_NOTICE("Successfully loaded new area: [A.name]!"))
 	if (loaded_normally)
 		playsound(vr_program.program.computer.holder, 'sound/machines/ping.ogg', 50)
-	vr_program.area_cooldown = world.time + 30 SECONDS
 	return TRUE
