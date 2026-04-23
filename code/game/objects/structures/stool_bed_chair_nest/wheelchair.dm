@@ -63,6 +63,15 @@
 	// Let's roll
 	driving = 1
 	var/turf/T = null
+	//[SIERA-ADD]
+	//--0---Sync glide size---0--//
+	if(buckled_mob)
+		var/mob_delay = buckled_mob.movement_delay(/singleton/move_intent/walk)
+		if(direction & (direction - 1))
+			mob_delay *= sqrt(2)
+		set_glide_size(DELAY2GLIDESIZE(mob_delay))
+		buckled_mob.set_glide_size(glide_size)
+	//[/SIERA-ADD]
 	//--1---Move occupant---1--//
 	if(buckled_mob)
 		buckled_mob.buckled = null
@@ -74,9 +83,19 @@
 		if(get_dist(src, pulling) >= 1)
 			step(pulling, get_dir(pulling.loc, src.loc))
 	//--3--Move wheelchair--3--//
+	//[SIERA-ADD]
+	var/mob/living/stored_mob = buckled_mob
+	buckled_mob = null // Prevent obj/Move() from force-moving the mob during each cardinal sub-step of a diagonal move
+	//[/SIERA-ADD]
 	step(src, direction)
+	buckled_mob = stored_mob 	//[SIERA-ADD]
 	if(buckled_mob) // Make sure it stays beneath the occupant
-		Move(buckled_mob.loc)
+		//Move(buckled_mob.loc) //[SIERA-REMOVED]
+		//[SIERA-ADD]
+		if(src.loc != buckled_mob.loc)
+			forceMove(buckled_mob.loc)
+		buckled_mob.set_glide_size(glide_size) // Re-sync after the step since obj/Move() was suppressed
+		//[/SIERA-ADD]
 		var/datum/movement_handler/delay/delay = GetMovementHandler(/datum/movement_handler/delay)
 		delay.SetDelay(buckled_mob.movement_delay(/singleton/move_intent/walk))
 	set_dir(direction)
