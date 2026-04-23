@@ -50,10 +50,12 @@
 /area/maintenance/substation/fourthdeck
 	name = "Fourth Deck - Substation"
 
+/*
 /area/maintenance/waterstore
 	name = "Fourth Deck - Water Cistern"
 	icon_state = "disposal"
 	req_access = list(list(access_cargo, access_engine, access_el))
+*/
 
 /area/crew_quarters/garden
 	name = "Fourth Deck - Garden"
@@ -211,11 +213,13 @@
 /area/quartermaster/exploration/briefing_room
 	name = "Fourth Deck - Expedition - Briefing Room"
 
+/*
 /area/quartermaster/shuttlefuel
 	name = "Fourth Deck - Hangar - Fuel Bay"
 	icon_state = "toxstorage"
 	sound_env = SMALL_ENCLOSED
 	req_access = list(list(access_cargo, access_expedition_shuttle_helm, access_guppy_helm))
+*/
 
 /area/quartermaster/hangar
 	name = "Fourth Deck - Hangar"

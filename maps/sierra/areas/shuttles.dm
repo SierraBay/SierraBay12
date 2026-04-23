@@ -115,10 +115,17 @@
 /area/shuttle/petrov/storage_primary
 	name = "Shuttle - Petrov - Primary Storage"
 	icon_state = "shuttlered"
+	req_access = list(list(access_petrov, access_sec_doors))
 
 /area/shuttle/petrov/power
 	name = "Shuttle - Petrov - Power Supply"
 	icon_state = "shuttlered"
+	req_access = list(list(access_petrov, access_sec_doors))
+
+/area/shuttle/petrov/lab_airlock
+	name = "Shuttle - Petrov - Airlock"
+	icon_state = "shuttlered"
+	req_access = list(list(access_petrov, access_sec_doors))
 
 /area/shuttle/petrov/storage_secondary
 	name = "Shuttle - Petrov - Secondary Storage"
@@ -126,10 +133,6 @@
 
 /area/shuttle/petrov/storage_atmos
 	name = "Shuttle - Petrov - Atmospheric Storage"
-	icon_state = "shuttlered"
-
-/area/shuttle/petrov/lab_airlock
-	name = "Shuttle - Petrov - Airlock"
 	icon_state = "shuttlered"
 
 /area/shuttle/petrov/lab_hall
