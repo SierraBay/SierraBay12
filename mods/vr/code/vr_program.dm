@@ -117,11 +117,9 @@
 /datum/extension/interactive/ntos/get_ntnet_status()
 	if(on)
 		var/z_level = get_z(holder)
-		if (isAdminLevel(z_level))
-			return 3
 
 		if (z_level in GLOB.using_map.vr_levels)
 			return 3
-	..()
+	. = ..()
 
 #undef VRCONTROL_HOME
