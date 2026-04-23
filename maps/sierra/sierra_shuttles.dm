@@ -77,13 +77,13 @@ SIERRA_ESCAPE_POD(11)
 	name = "Petrov"
 	dock_target = "petrov_shuttle_airlock"
 	current_location = "nav_petrov_start"
-	landmark_transition = "nav_transit_scavshuttle"
+	landmark_transition = "nav_transit_petrov"
 	logging_home_tag = "nav_petrov_start"
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
 	logging_access = access_petrov_helm
 	range = 1
-	fuel_consumption = 6
+	fuel_consumption = 7
 	warmup_time = 10
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 	shuttle_area = list(/area/shuttle/petrov/airlock,
@@ -100,7 +100,6 @@ SIERRA_ESCAPE_POD(11)
 	/area/shuttle/petrov/scan
 	)
 
-
 /obj/machinery/computer/shuttle_control/explore/petrov
 	name = "Petrov control console"
 	shuttle_tag = "Petrov"
@@ -111,6 +110,7 @@ SIERRA_ESCAPE_POD(11)
 	fore_dir = WEST
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 9000
+	skill_needed = SKILL_BASIC
 
 /obj/machinery/computer/shuttle_control/explore/petrov
 	skill_req = SKILL_BASIC
@@ -123,6 +123,10 @@ SIERRA_ESCAPE_POD(11)
 /obj/shuttle_landmark/sierra/petrov/out
 	name = "Space near the vessel"
 	landmark_tag = "nav_petrov_out"
+
+/obj/shuttle_landmark/sierra/transit/petrov
+	name = "In transit"
+	landmark_tag = "nav_transit_petrov"
 
 //Ninja Shuttle.
 /datum/shuttle/autodock/multi/antag/ninja
@@ -565,6 +569,8 @@ SIERRA_ESCAPE_POD(11)
 /obj/shuttle_landmark/sierra/transit/blueriver_shuttle
 	name = "In transit"
 	landmark_tag = "nav_transit_blueriver"
+
+// docking ladmarks
 
 /obj/shuttle_landmark/sierra/deck4/vox_raider
 	name = "Dock STBD-3"

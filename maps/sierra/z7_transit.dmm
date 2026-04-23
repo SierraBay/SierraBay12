@@ -372,6 +372,23 @@
 	},
 /turf/space,
 /area/space)
+"Es" = (
+/obj/step_trigger/thrower{
+	affect_ghosts = 0;
+	direction = 4;
+	icon_state = "eb";
+	name = "thrower_right";
+	tiles = 12
+	},
+/obj/step_trigger/thrower{
+	affect_ghosts = 0;
+	direction = 4;
+	icon_state = "eb";
+	name = "thrower_right";
+	tiles = 12
+	},
+/turf/space,
+/area/space)
 "Pb" = (
 /obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
@@ -408,6 +425,10 @@
 "XE" = (
 /obj/shuttle_landmark/escape_pod/transit/pod10,
 /turf/space/transit/north,
+/area/space)
+"YD" = (
+/obj/shuttle_landmark/sierra/transit/petrov,
+/turf/space,
 /area/space)
 
 (1,1,1) = {"
@@ -1679,13 +1700,13 @@ aa
 ba
 Pb
 at
-at
-at
-at
-at
-at
-at
-at
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 at
 Pb
 ba
@@ -1883,9 +1904,9 @@ Pb
 at
 aJ
 aJ
-aJ
-aJ
-aJ
+at
+at
+at
 aJ
 aJ
 at
@@ -2084,11 +2105,11 @@ ba
 Pb
 at
 aJ
-aJ
 at
 at
 at
-aJ
+at
+at
 aJ
 at
 Pb
@@ -2692,7 +2713,7 @@ at
 aJ
 at
 at
-at
+Si
 at
 at
 aJ
@@ -2894,7 +2915,7 @@ at
 aJ
 at
 at
-Si
+at
 at
 at
 aJ
@@ -3498,11 +3519,11 @@ ba
 Pb
 at
 aJ
-at
-at
-at
-at
-at
+aJ
+aJ
+aJ
+aJ
+aJ
 aJ
 at
 Pb
@@ -3901,13 +3922,13 @@ aa
 ba
 Pb
 at
-aJ
-aJ
-aJ
-aJ
-aJ
-aJ
-aJ
+ba
+ba
+ba
+ba
+ba
+ba
+ba
 at
 Pb
 ba
@@ -31317,35 +31338,35 @@ ba
 ba
 "}
 (154,1,1) = {"
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+ie
+Cm
+Cm
+Cm
+Cm
 ba
 Cm
 at
@@ -31519,6 +31540,7 @@ ba
 ba
 "}
 (155,1,1) = {"
+Cm
 ba
 ba
 ba
@@ -31546,8 +31568,7 @@ ba
 ba
 ba
 ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -31721,6 +31742,7 @@ ba
 ba
 "}
 (156,1,1) = {"
+Cm
 ba
 ba
 ba
@@ -31731,6 +31753,13 @@ ba
 ba
 ba
 ba
+ay
+ay
+ay
+ay
+ay
+ay
+ay
 ba
 ba
 ba
@@ -31741,15 +31770,7 @@ ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -31923,6 +31944,7 @@ ba
 ba
 "}
 (157,1,1) = {"
+ie
 ba
 ba
 ba
@@ -31933,6 +31955,13 @@ ba
 ba
 ba
 ba
+ay
+ba
+ba
+YD
+ba
+ba
+ay
 ba
 ba
 ba
@@ -31943,15 +31972,7 @@ ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -32125,6 +32146,24 @@ ba
 ba
 "}
 (158,1,1) = {"
+ie
+ba
+ba
+ba
+ba
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+ba
+ba
+ba
+ba
+ba
+ay
 ba
 ba
 ba
@@ -32135,25 +32174,7 @@ ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -32327,6 +32348,24 @@ ba
 ba
 "}
 (159,1,1) = {"
+ie
+ba
+ba
+ba
+Aw
+Aw
+ba
+ba
+ba
+ba
+ba
+ay
+ba
+ba
+ba
+ba
+ba
+ay
 ba
 ba
 ba
@@ -32337,25 +32376,7 @@ ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -32529,6 +32550,11 @@ ba
 ba
 "}
 (160,1,1) = {"
+Cm
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -32541,6 +32567,8 @@ ba
 ba
 ba
 ba
+ay
+ay
 ba
 ba
 ba
@@ -32550,14 +32578,7 @@ ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 at
@@ -32731,6 +32752,11 @@ ba
 ba
 "}
 (161,1,1) = {"
+ie
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -32744,22 +32770,17 @@ ba
 ba
 ba
 ba
+ay
+ay
+ay
+ay
+ay
+as
 ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 Cm
 Cm
@@ -32933,6 +32954,11 @@ ba
 ba
 "}
 (162,1,1) = {"
+ie
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -32951,17 +32977,12 @@ ba
 ba
 ba
 ba
+as
 ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -33135,6 +33156,11 @@ ba
 ba
 "}
 (163,1,1) = {"
+Cm
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -33153,17 +33179,12 @@ ba
 ba
 ba
 ba
+as
 ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -33337,6 +33358,11 @@ ba
 ba
 "}
 (164,1,1) = {"
+ie
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -33355,17 +33381,12 @@ ba
 ba
 ba
 ba
+as
 ba
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -33539,6 +33560,11 @@ ba
 ba
 "}
 (165,1,1) = {"
+ie
+ba
+ba
+ba
+Aw
 ba
 ba
 ba
@@ -33557,17 +33583,12 @@ ba
 ba
 ba
 ba
+as
+as
 ba
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -33741,6 +33762,11 @@ ba
 ba
 "}
 (166,1,1) = {"
+Cm
+ba
+ba
+Aw
+Aw
 ba
 ba
 ba
@@ -33760,16 +33786,11 @@ ba
 ba
 ba
 ba
+as
+as
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -33943,6 +33964,10 @@ ba
 ba
 "}
 (167,1,1) = {"
+ie
+ba
+Aw
+Aw
 ba
 ba
 ba
@@ -33964,14 +33989,10 @@ ba
 ba
 ba
 ba
+as
+as
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -34145,6 +34166,9 @@ ba
 ba
 "}
 (168,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -34168,12 +34192,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -34347,6 +34368,9 @@ ba
 ba
 "}
 (169,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -34370,12 +34394,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -34549,6 +34570,9 @@ ba
 ba
 "}
 (170,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -34572,12 +34596,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -34751,6 +34772,9 @@ ba
 ba
 "}
 (171,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -34774,12 +34798,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -34953,6 +34974,9 @@ ba
 ba
 "}
 (172,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -34976,12 +35000,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -35155,6 +35176,9 @@ ba
 ba
 "}
 (173,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -35178,12 +35202,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -35357,6 +35378,9 @@ ba
 ba
 "}
 (174,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -35380,12 +35404,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -35559,6 +35580,9 @@ ba
 ba
 "}
 (175,1,1) = {"
+ie
+ba
+ax
 ba
 ba
 ba
@@ -35582,12 +35606,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -35761,6 +35782,9 @@ ba
 ba
 "}
 (176,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -35784,12 +35808,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -35963,6 +35984,9 @@ ba
 ba
 "}
 (177,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -35986,12 +36010,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -36165,6 +36186,9 @@ ba
 ba
 "}
 (178,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -36188,12 +36212,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -36367,6 +36388,9 @@ ba
 ba
 "}
 (179,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -36390,12 +36414,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -36569,6 +36590,9 @@ ba
 ba
 "}
 (180,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -36592,12 +36616,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -36771,6 +36792,9 @@ ba
 ba
 "}
 (181,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -36794,12 +36818,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -36973,6 +36994,9 @@ ba
 ba
 "}
 (182,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -36996,12 +37020,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -37175,6 +37196,9 @@ ba
 ba
 "}
 (183,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -37198,12 +37222,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -37377,6 +37398,9 @@ ba
 ba
 "}
 (184,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -37400,12 +37424,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -37579,6 +37600,9 @@ ba
 ba
 "}
 (185,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -37602,12 +37626,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -37781,6 +37802,9 @@ ba
 ba
 "}
 (186,1,1) = {"
+Cm
+ba
+ax
 ba
 ba
 ba
@@ -37804,12 +37828,9 @@ ba
 ba
 ba
 ba
+ax
 ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -37983,6 +38004,10 @@ ba
 ba
 "}
 (187,1,1) = {"
+Cm
+ba
+ax
+ax
 ba
 ba
 ba
@@ -38004,14 +38029,10 @@ ba
 ba
 ba
 ba
+ax
+ax
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -38185,6 +38206,10 @@ ba
 ba
 "}
 (188,1,1) = {"
+Cm
+ba
+ba
+ax
 ba
 ba
 ba
@@ -38206,14 +38231,10 @@ ba
 ba
 ba
 ba
+ax
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -38387,6 +38408,10 @@ ba
 ba
 "}
 (189,1,1) = {"
+Cm
+ba
+ba
+ax
 ba
 ba
 ba
@@ -38408,14 +38433,10 @@ ba
 ba
 ba
 ba
+ax
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -38589,35 +38610,35 @@ ba
 ba
 "}
 (190,1,1) = {"
+Cm
 ba
 ba
+Es
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -38791,6 +38812,7 @@ ba
 ba
 "}
 (191,1,1) = {"
+Cm
 ba
 ba
 ba
@@ -38818,8 +38840,7 @@ ba
 ba
 ba
 ba
-ba
-ba
+Cm
 ba
 ba
 ba
@@ -38993,35 +39014,35 @@ ba
 ba
 "}
 (192,1,1) = {"
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
+Cm
 ba
 ba
 ba

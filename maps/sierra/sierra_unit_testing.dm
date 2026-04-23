@@ -51,12 +51,7 @@
 		/area/vacant/infirmary = NO_SCRUBBER|NO_VENT,
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/vacant/prototype = 0,
-		/area/vacant/storage = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/atmos  = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/cell_1 = NO_APC,
-		/area/rnd/xenobiology/cell_2 = NO_APC,
-		/area/rnd/xenobiology/cell_3 = NO_APC,
-		/area/rnd/xenobiology/cell_4 = NO_APC
+		/area/vacant/storage = NO_SCRUBBER|NO_VENT
 	)
 
 	area_coherency_test_exempt_areas = list(
@@ -75,7 +70,6 @@
 		/area/shuttle/syndicate_elite/station,
 		/area/shuttle/syndicate_elite/mothership,
 		/area/shuttle/escape/centcom,
-		/area/rnd/xenobiology/xenoflora_storage,
 		/area/turbolift,
 		/area/turbolift/start,
 		/area/turbolift/firstdeck,
@@ -88,6 +82,9 @@
 		/area/bluespace_interlude,
 		/area/bluespace_interlude/platform,
 		/area/bluespace_interlude/surroundings,
+		/area/rnd/xenobiology,
+		/area/rnd/xenobiology/xenoflora,
+		/area/rnd/xenobiology/xenoflora_storage,
 		/area/rnd/xenobiology/cell_1,
 		/area/rnd/xenobiology/cell_2,
 		/area/rnd/xenobiology/cell_3,
@@ -115,4 +112,4 @@
 
 /datum/unit_test/zas_area_test/xenobio
 	name = "ZAS: Xenobiology"
-	area_path = /area/rnd/xenobiology
+	area_path = /area/rnd/sierra/xenobiology
