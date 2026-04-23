@@ -21,9 +21,11 @@
 	var/list/coolant_reagents_efficiency = list()
 	var/coolant_reagent_water
 
-/obj/item/organ/internal/cooling_system/New()
+/obj/item/organ/internal/cooling_system/Initialize()
+	. = ..()
 	robotize()
-	create_reagents(refrigerant_max)
+	reagents.clear_reagents()
+	reagents.maximum_volume = refrigerant_max
 	coolant_reagents_efficiency[/datum/reagent/water] = 17
 	coolant_reagents_efficiency[/datum/reagent/ethanol] = 10
 	coolant_reagents_efficiency[/datum/reagent/space_cleaner] = 5
@@ -32,7 +34,6 @@
 	coolant_reagents_efficiency[/datum/reagent/frostoil] = -8
 	reagents.add_reagent(/datum/reagent/coolant, 60)
 	reagents.add_reagent(/datum/reagent/water, 30)
-	..()
 
 /obj/item/organ/internal/cooling_system/emp_act(severity)
 	damage += rand(15 - severity * 5, 20 - severity * 5)

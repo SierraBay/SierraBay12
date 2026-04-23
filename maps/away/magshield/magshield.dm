@@ -22,6 +22,11 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/magshield)
 
+/datum/map_template/ruin/away_site/magshield/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/shield_frequency, z)
+	spawn_derelict_mission_object(/obj/item/device/mission_sensor, z)
+
 /obj/shuttle_landmark/nav_magshield/nav1
 	name = "Orbital Station Navpoint #1"
 	landmark_tag = "nav_magshield_1"

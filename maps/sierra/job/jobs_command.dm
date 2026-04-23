@@ -97,7 +97,8 @@
 		access_guppy_helm, access_expedition_shuttle_helm, access_explorer, access_el, access_tox,
 		access_tox_storage, access_research, access_mining, access_mining_office, access_mining_station,
 		access_xenobiology, access_xenoarch, access_petrov, access_petrov_helm, access_actor, access_chief_steward,
-		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin, access_research_storage, access_adjutants, access_employment_records
+		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin,
+		access_research_storage, access_adjutants, access_employment_records, access_rnd_network
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -166,7 +167,8 @@
 		access_maint_tunnels, access_eva, access_expedition_shuttle, access_expedition_shuttle_helm,
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
 		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage,
-		access_employment_records, access_medical_records, access_security_records
+		access_employment_records, access_medical_records, access_security_records, access_rnd_network
+
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -230,7 +232,8 @@
 		access_chemistry, access_virology, access_cmo, access_surgery,
 		access_RC_announce, access_keycard_auth, access_psychiatrist,
 		access_medical_equip, access_senmed, access_hangar, access_medical_records,
-		access_employment_records, access_security_records
+		access_employment_records, access_security_records, access_rnd_network
+
 	)
 
 
@@ -303,8 +306,10 @@
 		access_atmospherics, access_janitor, access_construction,
 		access_sec_doors, access_medical, access_network, access_ce,
 		access_RC_announce, access_keycard_auth, access_tcomsat,
-		access_seneng, access_hangar, access_network_admin, access_employment_records,
-		access_medical_records, access_security_records
+		access_seneng, access_hangar, access_network_admin,
+		access_employment_records, access_medical_records,
+		access_security_records, access_rnd_network
+
 	)
 
 
@@ -375,7 +380,7 @@
 		access_teleporter, access_eva, access_bridge,
 		access_heads, access_hos, access_RC_announce,
 		access_keycard_auth, access_sec_doors, access_hangar,
-		access_gun, access_warden, access_employment_records
+		access_gun, access_warden, access_employment_records, access_rnd_network
 	)
 
 
@@ -432,7 +437,7 @@
 		access_heads, access_bridge, access_hangar, access_employment_records,
 		access_petrov, access_commissary, access_maint_tunnels,
 		access_tox, access_tox_storage, access_xenobiology, access_research_storage, access_robotics,
-		access_morgue, access_senmed, access_surgery, access_medical_equip
+		access_morgue, access_senmed, access_surgery, access_medical_equip, access_rnd_network
 	)
 
 
@@ -536,7 +541,8 @@
 		access_heads, access_bridge, access_janitor, access_kitchen, access_actor, access_cargo,
 		access_RC_announce, access_keycard_auth, access_guppy, access_guppy_helm,
 		access_external_airlocks, access_expedition_shuttle, access_eva, access_hangar,
-		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar, access_adjutants, access_employment_records
+		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar, access_adjutants, access_employment_records,
+		access_rnd_network
 	)
 
 	software_on_spawn = list(

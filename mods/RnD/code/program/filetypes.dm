@@ -1,3 +1,9 @@
+// Research Data File — saved by the field research scanner module
+// metadata stores: "target_type" (type path string), "scan_z" (z-level), "scan_area" (area name)
+/datum/computer_file/data/rdf
+	filetype = "RDF"
+	read_only = TRUE
+
 /datum/computer_file/data/config
 	filetype = "CFG"
 	do_not_edit = 1

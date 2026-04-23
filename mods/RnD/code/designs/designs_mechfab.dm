@@ -399,10 +399,10 @@
 
 //BigRigs
 /datum/design/item/mechfab/rig
-	category = "Hardsuits"
+	category = list("Hardsuits")
 
 /datum/design/item/mechfab/rig/zero
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Null suit control module"
 	build_path = /obj/item/rig/zero
 	materials = list(MATERIAL_STEEL = 30000, MATERIAL_GLASS = 5000, MATERIAL_SILVER = 1000)
@@ -410,7 +410,7 @@
 	time = 120
 
 /datum/design/item/mechfab/rig/meson
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Meson Scanner"
 	build_path = /obj/item/rig_module/vision/meson
 	materials = list(MATERIAL_STEEL = 100, MATERIAL_GLASS = 200, MATERIAL_PLASTIC = 300)
@@ -419,7 +419,7 @@
 	sort_string = "WCAAA"
 
 /datum/design/item/mechfab/rig/medhud
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Medical HUD"
 	build_path = /obj/item/rig_module/vision/medhud
 	materials = list(MATERIAL_STEEL = 100, MATERIAL_GLASS = 200,  MATERIAL_PLASTIC = 300)
@@ -428,7 +428,7 @@
 	sort_string = "WCAAB"
 
 /datum/design/item/mechfab/rig/sechud
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Security HUD"
 	build_path = /obj/item/rig_module/vision/sechud
 	materials = list(MATERIAL_STEEL = 100, MATERIAL_GLASS = 200,  MATERIAL_PLASTIC = 300)
@@ -437,7 +437,7 @@
 	sort_string = "WCAAC"
 
 /datum/design/item/mechfab/rig/nvg
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Night Vision"
 	build_path = /obj/item/rig_module/vision/nvg
 	materials = list(MATERIAL_PLASTIC = 500, MATERIAL_STEEL = 300, MATERIAL_GLASS = 200, MATERIAL_URANIUM = 200)
@@ -446,7 +446,7 @@
 	sort_string = "WCAAD"
 
 /datum/design/item/mechfab/rig/healthscanner
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Medical Scanner"
 	build_path = /obj/item/rig_module/device/healthscanner
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_STEEL = 700, MATERIAL_GLASS = 500)
@@ -455,7 +455,7 @@
 	sort_string = "WCBAA"
 
 /datum/design/item/mechfab/rig/drill
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Mining Drill"
 	build_path = /obj/item/rig_module/device/drill
 	materials = list(MATERIAL_STEEL = 3500, MATERIAL_GLASS = 1500, MATERIAL_DIAMOND = 2000, MATERIAL_PLASTIC = 1000)
@@ -464,7 +464,7 @@
 	sort_string = "WCCAA"
 
 /datum/design/item/mechfab/rig/plasmacutter
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Plasma Cutter"
 	build_path = /obj/item/rig_module/mounted/energy/plasmacutter
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1000, MATERIAL_PLASTIC = 1000, MATERIAL_GOLD = 700, MATERIAL_PHORON = 500)
@@ -473,7 +473,7 @@
 	sort_string = "VCCAB"
 
 /datum/design/item/mechfab/rig/orescanner
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Ore Scanner"
 	build_path = /obj/item/rig_module/device/orescanner
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_STEEL = 800, MATERIAL_GLASS = 500)
@@ -482,7 +482,7 @@
 	sort_string = "WCDAA"
 
 /datum/design/item/mechfab/rig/anomaly_scanner
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Anomaly Scanner"
 	build_path = /obj/item/rig_module/device/anomaly_scanner
 	materials = list(MATERIAL_PLASTIC = 1000, MATERIAL_STEEL = 800, MATERIAL_GLASS = 500)
@@ -491,7 +491,7 @@
 	sort_string = "WCDAB"
 
 /datum/design/item/mechfab/rig/rcd
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "RCD Module"
 	build_path = /obj/item/rig_module/device/rcd
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1000, MATERIAL_PLASTIC = 1000, MATERIAL_GOLD = 700, MATERIAL_SILVER = 700)
@@ -500,7 +500,7 @@
 	sort_string = "WCEAA"
 
 /datum/design/item/mechfab/rig/jets
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Maneuvering Jets"
 	build_path = /obj/item/rig_module/maneuvering_jets
 	materials = list(MATERIAL_STEEL = 3000, MATERIAL_PLASTIC = 2000, MATERIAL_GLASS = 1000)
@@ -509,7 +509,7 @@
 	sort_string = "WCFAA"
 
 /datum/design/item/mechfab/rig/decompiler
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Matter Decompiler"
 	build_path = /obj/item/rig_module/device/decompiler
 	materials = list(MATERIAL_STEEL = 3000, MATERIAL_PLASTIC = 2000, MATERIAL_GLASS = 1000)
@@ -518,7 +518,7 @@
 	sort_string = "WCGAA"
 
 /datum/design/item/mechfab/rig/powersink
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Power Sink"
 	build_path = /obj/item/rig_module/power_sink
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 1000, MATERIAL_PLASTIC = 1000)
@@ -527,7 +527,7 @@
 	sort_string = "WCHAA"
 
 /datum/design/item/mechfab/rig/ai_container
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "AI Core Container"
 	build_path = /obj/item/rig_module/ai_container
 	materials = list(MATERIAL_STEEL = 1000, MATERIAL_GLASS = 1000, MATERIAL_PLASTIC = 1000, MATERIAL_GOLD = 500)
@@ -536,7 +536,7 @@
 	sort_string = "WCIAA"
 
 /datum/design/item/mechfab/rig/flash
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Flash"
 	build_path = /obj/item/rig_module/device/flash
 	materials = list(MATERIAL_PLASTIC = 1500, MATERIAL_STEEL = 1000, MATERIAL_GLASS = 500)
@@ -545,7 +545,7 @@
 	sort_string = "WCJAA"
 
 /datum/design/item/mechfab/rig/taser
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Electrolaser"
 	build_path = /obj/item/rig_module/mounted/energy/taser
 	materials = list(MATERIAL_STEEL = 4000, MATERIAL_PLASTIC = 2500, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 1000)
@@ -554,7 +554,7 @@
 	sort_string = "WCKAA"
 
 /datum/design/item/mechfab/rig/egun
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Energy Gun"
 	build_path = /obj/item/rig_module/mounted/energy/egun
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_PLASTIC = 2500, MATERIAL_GOLD = 2000, MATERIAL_SILVER = 1000)
@@ -562,7 +562,7 @@
 	id = "rig_egun"
 	sort_string = "WCKAB"
 /datum/design/item/mechfab/rig/enet
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Energy Net"
 	build_path = /obj/item/rig_module/fabricator/energy_net
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_DIAMOND = 2000, MATERIAL_PLASTIC = 2000)
@@ -571,7 +571,7 @@
 	sort_string = "WCKAC"
 
 /datum/design/item/mechfab/rig/stealth
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Active Camouflage"
 	build_path = /obj/item/rig_module/stealth_field
 	materials = list(MATERIAL_STEEL = 6000, MATERIAL_GLASS = 3000, MATERIAL_DIAMOND = 2000, MATERIAL_SILVER = 2000, MATERIAL_URANIUM = 2000, MATERIAL_GOLD = 2000, MATERIAL_PLASTIC = 2000)
@@ -580,7 +580,7 @@
 	sort_string = "WCLAA"
 
 /datum/design/item/mechfab/rig/cooling_unit
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Cooling Unit"
 	build_path = /obj/item/rig_module/cooling_unit
 	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 3500, MATERIAL_PLASTIC = 2000)
@@ -589,10 +589,50 @@
 	sort_string = "WCLAB"
 
 /datum/design/item/mechfab/rig/kinetic_module
-	category = "Hardsuits"
+	category = list("Hardsuits")
 	name = "Gravikinetic Module"
 	build_path = /obj/item/rig_module/kinetic_module
 	materials = list(MATERIAL_STEEL = 4000, MATERIAL_GLASS = 4500, MATERIAL_PLASTIC = 3000)
 	req_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 6,  TECH_ENGINEERING = 6)
 	id = "rig_kinetic"
 	sort_string = "WCLAC"
+
+/datum/design/item/mechfab/rig/mining
+	category = list("Hardsuits")
+	name = "Mining hardsuit"
+	build_path = /obj/item/rig/industrial/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 5000, MATERIAL_PHORON = 2000, MATERIAL_GOLD = 5000, MATERIAL_TITANIUM = 1500)
+	id = "mining_hardsuit"
+
+/obj/item/rig/industrial/equipped/empty
+	initial_modules = list()
+
+/datum/design/item/mechfab/rig/hazard
+	category = list("Hardsuits")
+	name = "Hazard hardsuit"
+	build_path = /obj/item/rig/hazard
+	materials = list(MATERIAL_TITANIUM = 7000, MATERIAL_STEEL = 10000, MATERIAL_GOLD = 2000, MATERIAL_GLASS = 3000)
+	id = "hazzard_suit"
+	time = 190
+
+
+/datum/design/item/mechfab/rig/eva
+	category = list("Hardsuits")
+	name = "Engineering hardsuit"
+	build_path = /obj/item/rig/eva/equipped/empty
+	materials = list(MATERIAL_STEEL = 25000, MATERIAL_GLASS = 2000, MATERIAL_GOLD = 5000, MATERIAL_PHORON = 2000, MATERIAL_GLASS = 5000)
+	id = "engi_eva_rig"
+	time = 190
+
+/obj/item/rig/eva/equipped/empty
+	initial_modules = list()
+
+/datum/design/item/mechfab/rig/medical
+	category = list("Hardsuits")
+	name = "Medical hardsuit"
+	build_path = /obj/item/rig/medical/equipped/empty
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 500, MATERIAL_GOLD = 1500)
+	id = "medical_hardsuit"
+
+/obj/item/rig/medical/equipped/empty
+	initial_modules = list()

@@ -254,6 +254,6 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	category = "Misc"
 	sort_string = "VACAC"
 
-/datum/technology/robo/ai/New()
+/datum/technology/cybernetics/ai_construction_morpheus/New()
 	..()
 	unlocks_designs |= "boris"

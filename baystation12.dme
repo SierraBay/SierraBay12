@@ -2003,15 +2003,15 @@
 #include "code\modules\events\mob_spawning\whale.dm"
 #include "code\modules\ext_scripts\irc.dm"
 #include "code\modules\fabrication\__fabricator_defines.dm"
-#include "code\modules\fabrication\_fabricator.dm"
+//#include "code\modules\fabrication\_fabricator.dm"			//[SIERRA-REMOVE] RND
 #include "code\modules\fabrication\_fabricator_build_order.dm"
-#include "code\modules\fabrication\fabricator_build.dm"
-#include "code\modules\fabrication\fabricator_food.dm"
-#include "code\modules\fabrication\fabricator_hacked.dm"
-#include "code\modules\fabrication\fabricator_intake.dm"
-#include "code\modules\fabrication\fabricator_microlathe.dm"
-#include "code\modules\fabrication\fabricator_topic.dm"
-#include "code\modules\fabrication\fabricator_ui.dm"
+//#include "code\modules\fabrication\fabricator_build.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_food.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_hacked.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_intake.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_microlathe.dm"	//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_topic.dm"		//[SIERRA-REMOVE] RND
+//#include "code\modules\fabrication\fabricator_ui.dm"			//[SIERRA-REMOVE] RND
 #include "code\modules\fabrication\designs\_design.dm"
 #include "code\modules\fabrication\designs\general\designs_arms_ammo.dm"
 #include "code\modules\fabrication\designs\general\designs_devices_components.dm"
@@ -3133,7 +3133,7 @@
 //#include "code\modules\research\rdconsole.dm"
 //#include "code\modules\research\rdmachines.dm"
 //#include "code\modules\research\research.dm" [SIERRA-REMOVE] RND
-#include "code\modules\research\server.dm"
+//#include "code\modules\research\server.dm" [SIERRA-REMOVE] RND
 //#include "code\modules\research\designs\_designs.dm"
 #include "code\modules\research\designs\design_aimodule.dm"
 #include "code\modules\research\designs\designs_beaker.dm"
@@ -3419,12 +3419,12 @@
 #include "code\modules\xenoarcheaology\finds\special.dm"
 #include "code\modules\xenoarcheaology\finds\talking.dm"
 #include "code\modules\xenoarcheaology\tools\ano_device_battery.dm"
-#include "code\modules\xenoarcheaology\tools\artifact_analyser.dm"
+//#include "code\modules\xenoarcheaology\tools\artifact_analyser.dm" [SIERRA-REMOVE] RND
 #include "code\modules\xenoarcheaology\tools\artifact_harvester.dm"
 #include "code\modules\xenoarcheaology\tools\artifact_scanner.dm"
 #include "code\modules\xenoarcheaology\tools\coolant_tank.dm"
 #include "code\modules\xenoarcheaology\tools\equipment.dm"
-#include "code\modules\xenoarcheaology\tools\geosample_scanner.dm"
+//#include "code\modules\xenoarcheaology\tools\geosample_scanner.dm" [SIERRA-REMOVE] RND
 #include "code\modules\xenoarcheaology\tools\suspension_generator.dm"
 #include "code\modules\xenoarcheaology\tools\tools.dm"
 #include "code\modules\xenoarcheaology\tools\tools_pickaxe.dm"

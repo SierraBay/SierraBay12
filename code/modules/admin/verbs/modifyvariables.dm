@@ -108,7 +108,10 @@
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar)
-	if(!check_rights(R_VAREDIT))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_VAREDIT|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 	if(!istype(L,/list)) to_chat(src, "Not a List.")
 	if(length(L) > 1000)
 		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
@@ -325,7 +328,10 @@
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_VAREDIT|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	for(var/p in forbidden_varedit_object_types())
 		if( istype(O,p) )

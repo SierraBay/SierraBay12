@@ -8,8 +8,7 @@ Variables:
 - all_designs is a list of all /datum/technology that can potentially be researched by the player.
 - researched_tech contains all researched technologies
 - known_designs contains all researched /datum/design.
-- experiments contains data related to earning research points, more info in experiment.dm
-- research_points is an amount of points that can be spend on researching technologies
+- experiments contains data related to research progress, more info in experiment.dm
 - design_categories_protolathe stores all unlocked categories for protolathe designs
 - design_categories_imprinter stores all unlocked categories for circuit imprinter designs
 
@@ -35,6 +34,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 **						Master Types						  **
 **	Includes all the helper procs and basic tech processing.  **
 ***************************************************************/
+// Corporation ID defines are in corporations.dm
+
 #define RESEARCH_ENGINEERING   /datum/tech/engineering
 #define RESEARCH_BIOTECH       /datum/tech/biotech
 #define RESEARCH_COMBAT        /datum/tech/combat
@@ -45,14 +46,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 #define RESEARCH_MAGNETS       /datum/tech/magnets
 #define RESEARCH_MATERIALS     /datum/tech/materials
 
-GLOBAL_VAR_AS(research_point_gained, 0)
-GLOBAL_VAR_AS(score_research_point_gained, 0)
-var/global/list/RDcomputer_list = list()
-var/global/list/explosion_watcher_list = list()
-
+// New technology tree categories mapped to existing /datum/tech types
+// Map new categories to closest existing tech trees to avoid Unknown tech_type warnings
+#define RESEARCH_ROBOTICS      /datum/tech/magnets
+#define RESEARCH_SYNDICATE     /datum/tech/esoteric
+#define RESEARCH_WEAPONS       /datum/tech/combat
+#define RESEARCH_STOCK_PARTS   /datum/tech/engineering
+#define RESEARCH_AI_CIRCUITS   /datum/tech/programming
+#define RESEARCH_EXOSUITS      /datum/tech/engineering
+#define RESEARCH_MINING        /datum/tech/engineering
+#define RESEARCH_POWER         /datum/tech/powerstorage
+#define RESEARCH_CYBERNETICS   /datum/tech/magnets
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
-	var/list/known_designs = list()			//List of available designs (at base reliability).
+	var/list/known_designs = list()			//List of available designs (at base reliability). NOTE: empty when physical_server is set — use server.get_all_designs() instead.
+	/// Back-reference to the owning server, if this datum belongs to one. Set in server Initialize().
+	var/obj/machinery/r_n_d/server/physical_server = null
 	//Increased by each created prototype with formula: reliability += reliability * (RND_RELIABILITY_EXPONENT^created_prototypes)
 	var/list/design_categories_protolathe = list()
 	var/list/design_categories_imprinter = list()
@@ -61,9 +70,20 @@ var/global/list/explosion_watcher_list = list()
 	var/list/researched_nodes = list() // All research nodes
 
 	var/datum/experiment_data/experiments
-	var/research_points = 0
 	var/list/uniquekeys = list()
 	var/known_research_file_ids = list()
+
+	/// Corporation reputation system - tracks reputation with each corporation
+	/// Values range from -50 to +50 for each corporation
+	/// Used to determine access to and cost of corporate tech nodes
+	var/list/corporation_reputation = list()
+
+	/// Tracks last compiled tech level per tech string ID (e.g. "materials", "engineering") for research report system
+	var/list/compiled_tech_levels = list()
+
+	/// List of design IDs banned from printing on fabricators
+	/// Designs in this list are hidden from protolathe/imprinter but visible in server controller
+	var/list/banned_designs = list()
 
 
 /datum/research/New()
@@ -73,12 +93,26 @@ var/global/list/explosion_watcher_list = list()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
 
+	// Initialize corporation reputation list
+	corporation_reputation[RND_MISSION_CORP_NANOTRASEN] = 0
+	corporation_reputation[RND_MISSION_CORP_VEYMED] = 0
+	corporation_reputation[RND_MISSION_CORP_HEPHAESTUS] = 0
+	corporation_reputation[RND_MISSION_CORP_DAIS] = 0
+	corporation_reputation[RND_MISSION_CORP_GRAYSON] = 0
+	corporation_reputation[RND_MISSION_CORP_KAPPA] = 0
+	corporation_reputation[RND_MISSION_CORP_AETHER] = 0
+	corporation_reputation[RND_MISSION_CORP_WARD_TAKAHASHI] = 0
+	corporation_reputation[RND_MISSION_CORP_EINSTEIN] = 0
+	corporation_reputation[RND_MISSION_CORP_XION] = 0
+	corporation_reputation[RND_MISSION_CORP_SLATE] = 0
+	corporation_reputation[RND_MISSION_CORP_FOCAL] = 0
+	corporation_reputation[RND_MISSION_CORP_HELTEK] = 0
+	corporation_reputation[RND_MISSION_CORP_FTU] = 0
+
 /datum/research/proc/IsResearched(datum/technology/T)
 	return (T in researched_nodes)
 
 /datum/research/proc/CanResearch(datum/technology/T)
-	if(T.cost > research_points)
-		return FALSE
 	var/datum/tech/mytree = locate(T.tech_type) in researched_tech
 	if(!mytree || !mytree.shown) // invalid tech_type or hidden tree, no bypassing safeties!
 		return
@@ -90,9 +124,10 @@ var/global/list/explosion_watcher_list = list()
 		if(tech_tree.level < level)
 			return FALSE
 
-	for(var/tech in T.required_technologies)
-		var/datum/technology/tech_node = locate(tech) in SSresearch.all_tech_nodes
-		if(!IsResearched(tech_node))
+	// Check corporation reputation requirement instead of required_technologies
+	if(T.required_corp_id)
+		var/corp_rep = corporation_reputation[T.required_corp_id]
+		if(corp_rep < T.min_reputation)
 			return FALSE
 
 	return TRUE
@@ -105,17 +140,20 @@ var/global/list/explosion_watcher_list = list()
 	researched_nodes += T
 	var/datum/tech/tree = locate(T.tech_type) in researched_tech
 	researched_tech[tree] += T
-	if(!force)
-		adjust_research_points(-T.cost)
 
 	if(initial) // Initial technologies don't add levels
 		tree.maxlevel -= 1
 	else
 		tree.level += 1
 
+	// Increase reputation with corporation when tech is researched
+	if(T.required_corp_id)
+		ChangeCorporationReputation(T.required_corp_id, 5)
+
 	for(var/id in T.unlocks_designs)
 		AddDesign2Known(SSresearch.get_design(id))
 
+	physical_server?.queue_save_rnd_state()
 	return TRUE
 
 
@@ -134,6 +172,23 @@ var/global/list/explosion_watcher_list = list()
 				. = TRUE // we actually updated something
 	known_research_file_ids |= O.known_research_file_ids
 	experiments.merge_with(O.experiments)
+	// Sync compiled tech levels (take higher values to prevent re-compilation exploits)
+	for(var/tech_type in O.compiled_tech_levels)
+		if(!(tech_type in compiled_tech_levels) || O.compiled_tech_levels[tech_type] > compiled_tech_levels[tech_type])
+			compiled_tech_levels[tech_type] = O.compiled_tech_levels[tech_type]
+	// Sync corporation reputation (take the higher value)
+	for(var/corp_id in O.corporation_reputation)
+		if(!(corp_id in corporation_reputation) || O.corporation_reputation[corp_id] > corporation_reputation[corp_id])
+			corporation_reputation[corp_id] = O.corporation_reputation[corp_id]
+	// Sync banned designs list from source
+	if(LAZYLEN(O.banned_designs))
+		banned_designs |= O.banned_designs
+	// Remove bans that were lifted on source
+	for(var/ban_id in banned_designs)
+		if(!(ban_id in O.banned_designs))
+			banned_designs -= ban_id
+
+	physical_server?.queue_save_rnd_state()
 
 /datum/research/proc/forget_techology(datum/technology/T)
 	if(!IsResearched(T))
@@ -145,14 +200,17 @@ var/global/list/explosion_watcher_list = list()
 	researched_tech[tree] -= T
 	researched_nodes -= T
 
-	for(var/D in T.unlocks_designs)
-		known_designs -= D
+	for(var/id in T.unlocks_designs)
+		if(physical_server)
+			_remove_design_from_drives(id)
+		else
+			var/datum/design/DD = SSresearch.get_design(id)
+			if(DD)
+				known_designs -= DD
 
 /datum/research/proc/forget_random_technology()
-	if(LAZYLEN(researched_tech) > 0)
-		var/random_tech = pick(researched_tech)
-		var/datum/technology/T = researched_tech[random_tech]
-
+	if(LAZYLEN(researched_nodes) > 0)
+		var/datum/technology/T = pick(researched_nodes)
 		forget_techology(T)
 
 /datum/research/proc/forget_all(tech_type)
@@ -163,17 +221,52 @@ var/global/list/explosion_watcher_list = list()
 	researched_nodes -= researched_tech[tree] // Remove all the nodes of the tree from the general researched nodes list
 	for(var/tech in researched_tech[tree])
 		var/datum/technology/T = tech
-		for(var/D in T.unlocks_designs)
-			known_designs -= D
+		for(var/id in T.unlocks_designs)
+			if(physical_server)
+				_remove_design_from_drives(id)
+			else
+				var/datum/design/DD = SSresearch.get_design(id)
+				if(DD)
+					known_designs -= DD
+
+/datum/research/proc/_remove_design_from_drives(design_id)
+	if(!physical_server)
+		return
+	var/safe_id = replacetext("[design_id]", "/", "_")
+	for(var/cat in physical_server.rnd_drives)
+		var/obj/item/stock_parts/computer/hard_drive/HDD = physical_server.rnd_drives[cat]
+		var/datum/computer_file/F = HDD.find_file_by_name(safe_id)
+		if(F)
+			HDD.remove_file(F)
+			return
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
-	if(D in known_designs)
-		return
-
-	for(var/datum/design/known in known_designs)
-		if(D.id == known.id)
+	if(physical_server)
+		// Write to the physical HDD on the server
+		var/raw_cat = length(D.category) ? D.category[1] : null
+		var/primary_cat = physical_server.get_hdd_category(raw_cat || "General")
+		var/obj/item/stock_parts/computer/hard_drive/HDD = physical_server.rnd_drives[primary_cat]
+		if(!HDD)
+			HDD = physical_server.rnd_drives["General"]
+		// Fallback: any available disk (e.g. public server with only one Autolathe HDD)
+		if(!HDD)
+			for(var/any_cat in physical_server.rnd_drives)
+				HDD = physical_server.rnd_drives[any_cat]
+				break
+		// D.id may be a type path (e.g. /datum/design/autolathe/arms_ammo) — strip slashes for a valid filename
+		var/safe_id = replacetext("[D.id]", "/", "_")
+		if(HDD && !HDD.find_file_by_name(safe_id))
+			var/datum/computer_file/binary/design/F = D.file.clone()
+			F.filename = safe_id
+			HDD.save_file(F)
+	else
+		// Non-server datum (e.g. robotics fab): use in-memory list
+		if(D in known_designs)
 			return
-	known_designs += D
+		for(var/datum/design/known in known_designs)
+			if(D.id == known.id)
+				return
+		known_designs += D
 
 	if(D.category)
 		if(D.build_type & PROTOLATHE)
@@ -187,6 +280,8 @@ var/global/list/explosion_watcher_list = list()
 			design_categories_protolathe |= "Unspecified"
 		else if(D.build_type & IMPRINTER)
 			design_categories_imprinter |= "Unspecified"
+
+	physical_server?.queue_save_rnd_state()
 
 // Unlocks hidden tech trees
 /datum/research/proc/check_item_for_tech(obj/item/I)
@@ -204,16 +299,6 @@ var/global/list/explosion_watcher_list = list()
 				T.shown = TRUE
 				return
 
-/datum/research/proc/AddSciPoints(datum/computer_file/binary/sci/D)
-	if(D.uniquekey in uniquekeys)
-		return 0
-	uniquekeys += D.uniquekey
-	return (rand(500, 1000) * D.size)
-
-/datum/research/proc/adjust_research_points(value)
-	if(value > 0)
-		GLOB.research_point_gained += value
-	research_points += value
 
 /datum/tech	//Datum of individual technologies.
 	var/name = "name"          //Name of the technology.
@@ -249,42 +334,57 @@ var/global/list/explosion_watcher_list = list()
 
 //Trunk Technologies (don't require any other techs and you start knowning them).
 
+/datum/tech/materials
+	shortname = "Materials"
+	rare = 97       // 3500 thalers at level 8
+
 /datum/tech/engineering
 	name = "Engineering Research"
 	shortname = "Engineering"
 	desc = "Development of new and improved engineering parts."
 	id = RESEARCH_ENGINEERING
+	rare = 111      // 4000 thalers at level 8
+
+/datum/tech/phorontech
+	shortname = "Phoron"
+	rare = 167      // 6000 thalers at level 8
 
 /datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	shortname = "Power Manipulation"
 	desc = "The various technologies behind the storage and generation of electicity."
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/bluespace
 	name = "'Blue-space' Technology"
 	shortname = "Blue-space"
 	desc = "Devices that utilize the sub-reality known as 'blue-space'"
+	rare = 222      // 8000 thalers at level 8
 
 /datum/tech/biotech
 	name = "Biological Technology"
 	shortname = "Biotech"
 	desc = "Deeper mysteries of life and organic substances."
 	id = RESEARCH_BIOTECH
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/magnets
 	name = "Robotics"
 	shortname = "Robotics"
 	desc = "The use of magnetic fields to make electrical devices."
+	rare = 167      // 6000 thalers at level 8
 
 /datum/tech/combat
 	name = "Combat Systems"
 	shortname = "Combat"
 	desc = "Offensive and defensive systems."
+	rare = 139      // 5000 thalers at level 8
 
 /datum/tech/programming
 	name = "Data Theory"
 	shortname = "Data Theory"
 	desc = "Computer and artificial intelligence and data storage systems."
+	rare = 111      // 4000 thalers at level 8
 
 /datum/tech/esoteric
 	name = "Esoteric Technology"
@@ -293,6 +393,7 @@ var/global/list/explosion_watcher_list = list()
 	id = RESEARCH_ESOTERIC
 	shown = FALSE
 	item_tech_req = TECH_ESOTERIC
+	rare = 181      // 6500 thalers at level 8
 
 /obj/item/disk/tech_disk
 	name = "fabricator data disk"
@@ -327,8 +428,13 @@ var/global/list/explosion_watcher_list = list()
 
 	var/list/required_technologies = list() // Ids of techologies that are required to be unlocked before this one. Should have same tech_type
 	var/list/required_tech_levels = list()  // list("biotech" = 5, ...) Ids and required levels of tech
-	var/cost = 100                          // How much research points required to unlock this techology
+	var/cost = 100                          // Base cost used for tech node pricing
 	var/list/unlocks_designs = list()       // Ids of designs that this technology unlocks
+
+	/// Corporation ID required for this tech (e.g., RND_MISSION_CORP_NANOTRASEN)
+	var/required_corp_id = null
+	/// Minimum reputation with corporation required to research this tech (-50 to 50)
+	var/min_reputation = 0
 
 /datum/technology/proc/getCost()
 	// Calculates tech disk's supply points sell cost
@@ -337,3 +443,43 @@ var/global/list/explosion_watcher_list = list()
 		return (cost/100)*initial(tree.rare)
 	else
 		return cost/100
+/// Get corporation reputation from research datum
+/datum/research/proc/GetCorporationReputation(corporation_id)
+	if(!corporation_id)
+		return 0
+	var/rep = corporation_reputation[corporation_id]
+	return rep ? rep : 0
+
+/// Set corporation reputation (clamped to -50 to 50)
+/datum/research/proc/SetCorporationReputation(corporation_id, value)
+	if(!corporation_id)
+		return
+	corporation_reputation[corporation_id] = clamp(value, -50, 50)
+	physical_server?.queue_save_rnd_state()
+
+/// Change corporation reputation by amount (clamped to -50 to 50)
+/datum/research/proc/ChangeCorporationReputation(corporation_id, amount)
+	if(!corporation_id || !amount)
+		return
+	var/current = GetCorporationReputation(corporation_id)
+	SetCorporationReputation(corporation_id, current + amount)
+
+/// Calculate adjusted cost based on corporation reputation
+/proc/get_rnd_tech_cost_with_reputation(datum/technology/tech_node, datum/research/research_datum = null)
+	if(!tech_node)
+		return 0
+
+	var/base_cost = tech_node.cost
+	if(!research_datum || !tech_node.required_corp_id)
+		return base_cost
+
+	var/rep = research_datum.GetCorporationReputation(tech_node.required_corp_id)
+	if(rep == 0)
+		return base_cost
+
+	// Reputation affects price:
+	// Positive reputation = discount (cheaper)
+	// Negative reputation = markup (more expensive)
+	// Each reputation point = 1% cost adjustment
+	var/cost_multiplier = 1 + (rep / 100.0)
+	return round(base_cost * cost_multiplier)
