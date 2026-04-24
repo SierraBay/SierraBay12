@@ -52,8 +52,7 @@
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/vacant/prototype = 0,
 		/area/vacant/storage = NO_SCRUBBER|NO_VENT,
-		/area/security/sierra/dockcheckaft = NO_APC,
-		/area/shuttle/petrov/storage_atmos = NO_SCRUBBER|NO_VENT
+		/area/security/sierra/dockcheckaft = NO_APC
 	)
 
 	area_coherency_test_exempt_areas = list(

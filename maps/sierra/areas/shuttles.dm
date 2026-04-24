@@ -131,10 +131,6 @@
 	name = "Shuttle - Petrov - Secondary Storage"
 	icon_state = "shuttlered"
 
-/area/shuttle/petrov/storage_atmos
-	name = "Shuttle - Petrov - Atmospheric Storage"
-	icon_state = "shuttlered"
-
 /area/shuttle/petrov/lab_hall
 	name = "Shuttle - Petrov - Hallway"
 	icon_state = "shuttlered"
