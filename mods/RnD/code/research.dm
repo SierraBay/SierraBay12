@@ -241,6 +241,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 			return
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
+	if(!D)
+		return
 	if(physical_server)
 		// Write to the physical HDD on the server
 		var/raw_cat = length(D.category) ? D.category[1] : null
