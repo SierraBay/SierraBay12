@@ -91,7 +91,6 @@ SIERRA_ESCAPE_POD(11)
 	/area/shuttle/petrov/storage_primary,
 	/area/shuttle/petrov/power,
 	/area/shuttle/petrov/storage_secondary,
-	/area/shuttle/petrov/storage_atmos,
 	/area/shuttle/petrov/lab_airlock,
 	/area/shuttle/petrov/lab_hall,
 	/area/shuttle/petrov/chem_lab,
