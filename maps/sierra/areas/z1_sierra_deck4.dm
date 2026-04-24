@@ -265,3 +265,8 @@
 	name = "Fourth Deck - Security - Starboard Docks Checkpoint"
 	icon_state = "checkpoint1"
 	req_access = list(access_sec_doors)
+
+/area/security/sierra/dockcheckaft
+	name = "Fourth Deck - Security - Aft Dock Checkpoint"
+	icon_state = "checkpoint1"
+	req_access = list(access_sec_doors)

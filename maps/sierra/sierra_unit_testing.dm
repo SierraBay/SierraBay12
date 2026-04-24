@@ -15,7 +15,7 @@
 		//area/turret_protected/ai = NO_SCRUBBER|NO_VENT,
 		//area/turret_protected/ai_maint = NO_SCRUBBER|NO_VENT,
 		/area/maintenance/fourthdeck/aft = 0,
-		/area/maintenance/waterstore = 0,
+		// /area/maintenance/waterstore = 0,
 		/area/maintenance/abandoned_hydroponics = 0,
 		/area/maintenance/firstdeck/aftport = 0,
 		/area/maintenance/incinerator = 0,
@@ -51,7 +51,8 @@
 		/area/vacant/infirmary = NO_SCRUBBER|NO_VENT,
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/vacant/prototype = 0,
-		/area/vacant/storage = NO_SCRUBBER|NO_VENT
+		/area/vacant/storage = NO_SCRUBBER|NO_VENT,
+		/area/security/sierra/dockcheckaft = NO_APC
 	)
 
 	area_coherency_test_exempt_areas = list(

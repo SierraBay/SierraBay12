@@ -108,7 +108,7 @@
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/shuttle/petrov/monitoring
-	name = "Shuttle - Petrov - Monitoring"
+	name = "Shuttle - Petrov - Control room"
 	icon_state = "shuttlered"
 	req_access = list(list(access_petrov, access_sec_doors))
 
