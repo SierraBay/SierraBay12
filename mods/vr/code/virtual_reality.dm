@@ -366,6 +366,11 @@ SUBSYSTEM_DEF(virtual_reality)
 		SSair.mark_for_update(simulated)
 	return copied_movables
 
+/datum/controller/subsystem/virtual_reality/proc/after_template_load(area/source, area/target)
+	if(istype(source, /area/virtual_reality/infirmary))
+		for(var/obj/machinery/body_scanconsole/C in target)
+			C.FindScanner()
+
 /datum/controller/subsystem/virtual_reality/proc/load_template(datum/nano_module/program/vr_control/vr_program, user, zone, template_area)
 	if (!zone)
 		to_chat(user, SPAN_WARNING("No VR zone selected. Cannot load template."))
@@ -443,6 +448,7 @@ SUBSYSTEM_DEF(virtual_reality)
 	for (var/obj/effect/vr_spawn/V in active_area)
 		GLOB.vr_spawns[zone] += V
 
+	after_template_load(A, active_area)
 	to_chat(user, SPAN_NOTICE("Successfully loaded new area: [A.name]!"))
 	if (loaded_normally)
 		playsound(vr_program.program.computer.holder, 'sound/machines/ping.ogg', 50)

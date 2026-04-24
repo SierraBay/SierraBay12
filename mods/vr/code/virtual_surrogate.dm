@@ -59,6 +59,13 @@
 		usr.client.prefs.copy_to(H) // Redo hair, augments, and limbs after rejuvenating
 		H.set_nutrition(400)
 		H.set_hydration(400)
+
+		var/datum/extension/virtual_surrogate/VM = get_extension(H, /datum/extension/virtual_surrogate)
+
+		if(VM && VM.real_mob)
+			H.languages = VM.real_mob.languages.Copy()
+			H.default_language = VM.real_mob.default_language
+
 	to_chat(usr, SPAN_NOTICE("You fully rejuvenate your virtual body."))
 
 /datum/skill_buff/virtual_reality

@@ -10,7 +10,8 @@
 "av" = (
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "Pill Cabinet";
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = null
 	},
 /obj/floor_decal/corner/beige/mono,
 /obj/machinery/reagentgrinder,
@@ -847,7 +848,9 @@
 	},
 /area/virtual_reality/volleyball_court)
 "nD" = (
-/obj/machinery/smartfridge/secure/medbay/ert/shuttle,
+/obj/machinery/smartfridge/secure/medbay/ert/shuttle{
+	req_access = null
+	},
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "nI" = (
@@ -1785,10 +1788,10 @@
 /turf/simulated/wall/r_wall/hull,
 /area/virtual_reality/snowfield)
 "Cn" = (
+/obj/floor_decal/corner/pink/mono,
 /obj/machinery/bodyscanner{
 	dir = 1
 	},
-/obj/floor_decal/corner/pink/mono,
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "Cy" = (
@@ -1895,7 +1898,8 @@
 /obj/item/reagent_containers/ivbag/blood/unathi/oneg,
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "IV Blood Cabinet";
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = null
 	},
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
@@ -2093,7 +2097,9 @@
 /area/virtual_reality/infirmary)
 "Gt" = (
 /obj/floor_decal/corner/beige/mono,
-/obj/structure/closet/secure_closet/chemical,
+/obj/structure/closet/secure_closet/chemical{
+	req_access = null
+	},
 /obj/item/storage/box/pillbottles,
 /obj/item/book/manual/chemistry_recipes,
 /obj/item/device/radio/headset/headset_med,
@@ -2118,7 +2124,8 @@
 /area/virtual_reality/thunderdome)
 "GV" = (
 /obj/machinery/vending/medical{
-	dir = 1
+	dir = 1;
+	req_access = null
 	},
 /obj/floor_decal/corner/paleblue/mono,
 /turf/simulated/floor/holofloor/tiled/white,
@@ -2770,7 +2777,9 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 5
 	},
-/obj/structure/closet/crate/secure/biohazard/alt,
+/obj/structure/closet/crate/secure/biohazard/alt{
+	req_access = null
+	},
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "Qy" = (
@@ -3221,7 +3230,8 @@
 /obj/item/defibrillator/loaded,
 /obj/structure/closet/secure_closet/medical_wall{
 	name = "Medical Equipment Cabinet";
-	pixel_y = 32
+	pixel_y = 32;
+	req_access = null
 	},
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe/antiviral,
