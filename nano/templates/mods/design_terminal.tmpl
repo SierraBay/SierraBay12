@@ -1,0 +1,966 @@
+<!--
+Title: Design Terminal
+Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
+-->
+{{:helper.ntscieMode()}}
+<style>
+
+/* ── Theme variables ─────────────────────────────────────────────── */
+.dtConsole {
+	--dt-accent:       #7dd3fc;
+	--dt-accent-dim:   #38bdf8;
+	--dt-accent-glow:  rgba(125, 211, 252, 0.18);
+	--dt-accent-badge: rgba(125, 211, 252, 0.12);
+	--dt-border:       rgba(60, 100, 160, 0.4);
+	--dt-border-accent:rgba(80, 140, 220, 0.55);
+	--dt-bg:           #0b1120;
+	--dt-bg-panel:     rgba(12, 20, 36, 0.85);
+	--dt-bg-header:    rgba(16, 28, 48, 0.95);
+	--dt-bg-row-hover: rgba(24, 40, 70, 0.6);
+	--dt-title-color:  #8ab4e8;
+	--dt-label:        "ТЕРМИНАЛ ДИЗАЙНОВ";
+}
+
+.dtConsole.dtTheme--medical {
+	--dt-accent:       #34d399;
+	--dt-accent-dim:   #10b981;
+	--dt-accent-glow:  rgba(52, 211, 153, 0.18);
+	--dt-accent-badge: rgba(52, 211, 153, 0.12);
+	--dt-border:       rgba(6, 78, 59, 0.9);
+	--dt-border-accent:rgba(52, 211, 153, 0.45);
+	--dt-bg:           #060f0b;
+	--dt-bg-panel:     rgba(6, 18, 13, 0.9);
+	--dt-bg-header:    rgba(5, 20, 14, 0.97);
+	--dt-bg-row-hover: rgba(6, 40, 28, 0.65);
+	--dt-title-color:  #34d399;
+}
+
+.dtConsole.dtTheme--engineering {
+	--dt-accent:       #fbbf24;
+	--dt-accent-dim:   #f59e0b;
+	--dt-accent-glow:  rgba(251, 191, 36, 0.18);
+	--dt-accent-badge: rgba(251, 191, 36, 0.12);
+	--dt-border:       rgba(78, 52, 6, 0.9);
+	--dt-border-accent:rgba(251, 191, 36, 0.45);
+	--dt-bg:           #100c02;
+	--dt-bg-panel:     rgba(20, 14, 3, 0.9);
+	--dt-bg-header:    rgba(22, 15, 3, 0.97);
+	--dt-bg-row-hover: rgba(50, 35, 5, 0.65);
+	--dt-title-color:  #fbbf24;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────── */
+.dtConsole {
+	display: flex;
+	flex-direction: column;
+	background: var(--dt-bg);
+	color: #c8dae8;
+	min-height: 100%;
+	box-sizing: border-box;
+	font-size: 12px;
+	font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* ── Nav bar ─────────────────────────────────────────────────────── */
+.dtNav {
+	display: flex;
+	align-items: stretch;
+	background: var(--dt-bg-header);
+	border-bottom: 1px solid var(--dt-border-accent);
+	padding: 0 8px;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+.dtNavTitle {
+	display: flex;
+	align-items: center;
+	padding: 0 10px 0 4px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	color: var(--dt-accent);
+	text-transform: uppercase;
+	border-right: 1px solid var(--dt-border);
+	margin-right: 6px;
+	white-space: nowrap;
+}
+
+.dtNavTitle .dtDeptBadge {
+	display: inline-block;
+	margin-left: 7px;
+	padding: 1px 7px;
+	border-radius: 2px;
+	font-size: 9px;
+	letter-spacing: 0.5px;
+	background: var(--dt-accent-badge);
+	border: 1px solid var(--dt-border-accent);
+	color: var(--dt-accent);
+	vertical-align: middle;
+	font-weight: normal;
+}
+
+.dtNavStatus {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 0;
+	font-size: 11px;
+}
+
+.dtBalanceLabel { color: #94a3b8; }
+.dtBalanceValue { color: var(--dt-accent); font-weight: bold; }
+.dtBalanceError { color: #f87171; font-weight: bold; font-size: 10px; letter-spacing: 0.5px; }
+
+.dtServerBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+.dtServerBadge--online {
+	background: rgba(30, 80, 50, 0.35);
+	border: 1px solid rgba(50, 160, 80, 0.4);
+	color: #66dd88;
+}
+.dtServerBadge--offline {
+	background: rgba(80, 30, 30, 0.35);
+	border: 1px solid rgba(160, 50, 50, 0.4);
+	color: #dd6666;
+}
+.dtServerDot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	display: inline-block;
+	flex-shrink: 0;
+}
+.dtServerBadge--online .dtServerDot { background: #44cc66; box-shadow: 0 0 4px rgba(68, 204, 102, 0.7); }
+.dtServerBadge--offline .dtServerDot { background: #cc4444; box-shadow: 0 0 4px rgba(204, 68, 68, 0.7); }
+
+/* ── Body padding ────────────────────────────────────────────────── */
+.dtBody {
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1;
+}
+
+/* ── Toolbar strip ───────────────────────────────────────────────── */
+.dtToolbar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 8px;
+	background: var(--dt-bg-panel);
+	border: 1px solid var(--dt-border);
+	border-radius: 3px;
+	flex-wrap: wrap;
+}
+
+.dtToolbarSep {
+	width: 1px;
+	height: 14px;
+	background: var(--dt-border);
+	flex-shrink: 0;
+}
+
+/* ── Category filter bar ─────────────────────────────────────────── */
+.dtFilterBar {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-wrap: wrap;
+	padding: 5px 8px;
+	background: var(--dt-bg-panel);
+	border: 1px solid var(--dt-border);
+	border-radius: 3px;
+}
+
+.dtFilterLabel {
+	font-size: 10px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: #64748b;
+	margin-right: 4px;
+	white-space: nowrap;
+}
+
+/* ── Two-column layout ───────────────────────────────────────────── */
+.dtCols {
+	display: flex;
+	gap: 6px;
+	flex: 1;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────── */
+.dtPanel {
+	background: var(--dt-bg-panel);
+	border: 1px solid var(--dt-border);
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+
+.dtPanelHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px 8px;
+	background: var(--dt-bg-header);
+	border-bottom: 1px solid var(--dt-border);
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: var(--dt-accent);
+	flex-shrink: 0;
+}
+
+.dtPanelCount {
+	font-size: 10px;
+	font-weight: normal;
+	color: #64748b;
+}
+
+.dtPanelBody {
+	overflow-y: auto;
+	flex: 1;
+	max-height: 360px;
+}
+
+/* ── File item row ───────────────────────────────────────────────── */
+.dtFileItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 8px;
+	border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+}
+
+
+.dtFileItem:last-child {
+	border-bottom: none;
+}
+
+.dtFileName {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex: 1;
+	margin-right: 8px;
+	color: #cbd5e1;
+}
+
+.dtFileActions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-shrink: 0;
+}
+
+.dtOnDisk {
+	font-size: 10px;
+	color: #34d399;
+}
+
+.dtEmpty {
+	padding: 24px 8px;
+	text-align: center;
+	color: #475569;
+	font-size: 11px;
+}
+
+/* ── Disk info strip ─────────────────────────────────────────────── */
+.dtDiskStrip {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 6px;
+	background: var(--dt-accent-badge);
+	border: 1px solid var(--dt-border-accent);
+	border-radius: 2px;
+	font-size: 10px;
+}
+
+.dtDiskBar {
+	height: 4px;
+	border-radius: 2px;
+	background: var(--dt-border);
+	width: 64px;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.dtDiskBarFill {
+	height: 100%;
+	background: var(--dt-accent);
+	border-radius: 2px;
+}
+
+/* ── Account footer ──────────────────────────────────────────────── */
+.dtFooter {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 8px;
+	background: var(--dt-bg-header);
+	border-top: 1px solid var(--dt-border);
+	font-size: 11px;
+	flex-shrink: 0;
+}
+
+.dtFooterLabel { color: #475569; }
+.dtFooterValue { color: #93c5fd; }
+
+/* ── Theme switcher ──────────────────────────────────────────────── */
+.dtThemeBtn {
+	padding: 2px 8px !important;
+	font-size: 10px !important;
+	letter-spacing: 0.5px;
+	border: 1px solid var(--dt-border) !important;
+	background: rgba(24, 48, 80, 0.4) !important;
+	border-radius: 2px !important;
+	color: #64748b !important;
+	cursor: pointer;
+	float: none;
+	height: auto;
+}
+.dtThemeBtn.selected {
+	background: var(--dt-accent-badge) !important;
+	border-color: var(--dt-accent) !important;
+	color: var(--dt-accent) !important;
+	box-shadow: 0 0 4px var(--dt-accent-glow);
+}
+.dtThemeSwitcher {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	padding: 0 6px;
+	border-left: 1px solid var(--dt-border);
+	border-right: 1px solid var(--dt-border);
+	margin: 0 4px;
+}
+
+/* ── "No account" corp warning ───────────────────────────────────── */
+.dtNoAccount {
+	padding: 40px 8px;
+	text-align: center;
+	color: #f87171;
+	font-size: 13px;
+}
+
+/* ── Base link/button overrides (scoped to dtConsole) ───────────── */
+/* shared.css gives all buttons flat #40628a; we replace that here   */
+.dtConsole .link,
+.dtConsole a.link:link,
+.dtConsole a.link:visited,
+.dtConsole a.link:active {
+	background: rgba(24, 48, 80, 0.7);
+	border: 1px solid var(--dt-border);
+	color: #a8c8e8;
+	border-radius: 2px;
+	float: none;
+	height: auto;
+	padding: 1px 6px 3px;
+	margin: 0 2px 2px 0;
+	font-size: 11px;
+	font-family: 'Consolas', 'Courier New', monospace;
+	letter-spacing: 0.3px;
+}
+
+
+/* "selected" state for category/corp filter buttons */
+.dtConsole .link.selected,
+.dtConsole a.selected:link,
+.dtConsole a.selected:visited,
+.dtConsole a.selected:active,
+.dtConsole a.selected:hover {
+	background: rgba(30, 80, 50, 0.75) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+/* disabled */
+.dtConsole .link.disabled,
+.dtConsole a.disabled:link,
+.dtConsole a.disabled:visited {
+	background: rgba(20, 25, 35, 0.5) !important;
+	border-color: rgba(50, 60, 80, 0.4) !important;
+	color: #374151 !important;
+	box-shadow: none !important;
+	cursor: default;
+}
+
+/* ── dtNav tab buttons ───────────────────────────────────────────── */
+.dtConsole .rndTab {
+	padding: 4px 12px !important;
+	font-size: 11px !important;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	border: 1px solid var(--dt-border) !important;
+	background: rgba(24, 48, 80, 0.5) !important;
+	border-radius: 2px !important;
+	color: #94a3b8 !important;
+	float: none;
+	height: auto;
+	font-family: 'Consolas', 'Courier New', monospace !important;
+}
+
+
+.dtConsole .rndTab.selected {
+	background: rgba(30, 80, 50, 0.75) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────── */
+.dtConsole ::-webkit-scrollbar       { width: 5px; }
+.dtConsole ::-webkit-scrollbar-track { background: rgba(6,12,24,0.4); }
+.dtConsole ::-webkit-scrollbar-thumb { background: var(--dt-border-accent); border-radius: 3px; }
+.dtConsole ::-webkit-scrollbar-thumb:hover { background: var(--dt-accent-dim); }
+
+/* ── rnd* layout (not in shared CSS — defined only in rdconsole) ─── */
+.rndTwoCol {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	padding: 0 4px;
+}
+.rndCol { flex-shrink: 0; }
+.rndTwoCol .rndSection,
+.dtConsole .rndSection {
+	margin-bottom: 8px;
+	background: var(--dt-bg-panel);
+	border: 1px solid var(--dt-border);
+	border-radius: 3px;
+	overflow: hidden;
+}
+.rndTwoCol .rndSectionTitle,
+.dtConsole .rndSectionTitle {
+	padding: 5px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: var(--dt-accent);
+	background: var(--dt-bg-header);
+	border-bottom: 1px solid var(--dt-border);
+}
+.rndSectionContent { padding: 8px 10px; }
+.rndBtnRow { display: flex; gap: 4px; flex-wrap: wrap; }
+.rndMuted { color: #5a7a9a; }
+.rndBuyBtn {
+	display: block;
+	text-align: center !important;
+	padding: 6px 16px !important;
+	background: var(--dt-accent-badge) !important;
+	border-color: var(--dt-border-accent) !important;
+	color: var(--dt-accent) !important;
+	margin-top: 8px;
+	border-radius: 2px;
+}
+.rndBuyBtn:hover {
+	background: var(--dt-accent-glow) !important;
+	box-shadow: 0 0 8px var(--dt-accent-glow);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* Tech Tree (identical to rdconsole)                                 */
+/* ═══════════════════════════════════════════════════════════════════ */
+#sciTechTreeContainer {
+	position: relative;
+	width: 99%;
+	height: 440px;
+	overflow: hidden;
+	border: 1px solid var(--dt-border-accent);
+	background: url(nanomapBackground.png);
+	border-radius: 3px;
+	background-color: rgba(4, 8, 16, 0.6);
+	box-shadow: inset 0 0 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(40,70,110,0.3);
+}
+
+.rndTreeWatermark {
+	position: absolute;
+	left: 50%; top: 50%;
+	width: 60%; height: 60%;
+	transform: translate(-50%, -50%);
+	background: center center / contain no-repeat;
+	opacity: 0.08;
+	pointer-events: none;
+}
+
+.rndCorpSubTabs {
+	border-top: 1px solid rgba(64,98,138,0.3);
+	padding-top: 6px;
+}
+
+.sciTechTreeIcon {
+	position: absolute;
+	width: 32px; height: 32px;
+	background-image: url(science.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	zoom: 1;
+	top: 4px; left: 4px;
+}
+
+.sciTechTreeIconBox {
+	width: 40px !important; height: 40px !important;
+	min-width: 40px !important;
+	padding: 0 !important;
+	border-radius: 3px;
+	transition: all 0.15s;
+	border: 1px solid transparent;
+	display: block !important;
+	line-height: 40px !important;
+	position: relative;
+}
+
+.sciTechResearched   { background: rgba(30,110,45,0.75)!important; border-color: rgba(60,180,80,0.6)!important; box-shadow: 0 0 8px rgba(50,180,70,0.3); }
+.sciTechResearched:hover { background: rgba(40,140,55,0.85)!important; }
+.sciTechAvailable    { background: rgba(25,60,120,0.75)!important; border-color: rgba(60,140,240,0.5)!important; box-shadow: 0 0 8px rgba(50,120,220,0.3); }
+.sciTechAvailable:hover  { background: rgba(35,75,150,0.85)!important; }
+.sciTechCantResearch { background: rgba(100,30,35,0.65)!important; border-color: rgba(160,50,60,0.45)!important; }
+.sciTechCantResearch:hover { background: rgba(120,40,45,0.75)!important; }
+.sciTechSelected     { border-color: rgba(140,180,255,0.8)!important; box-shadow: 0 0 12px rgba(100,160,255,0.5), inset 0 0 8px rgba(100,160,255,0.15)!important; }
+
+/* Node detail */
+.rndNodeName  { font-size: 15px; font-weight: bold; color: #cde; margin-bottom: 4px; }
+.rndNodeLogo  { max-width: 100%; max-height: 70px; display: block; margin: 6px 0 10px; opacity: 0.85; }
+.rndNodeField { margin-bottom: 10px; }
+.rndNodeLabel { font-size: 10px; color: #6a8aaa; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 2px; }
+.rndNodeValue { line-height: 1.35; font-size: 12px; }
+.rndPriceValue { font-size: 15px; font-weight: bold; color: #44cc88; }
+.rndNodeStatus { padding: 4px 0; text-align: center; font-size: 11px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase; border-radius: 2px; }
+.rndNodeStatus--good   { color: #44ff44; background: rgba(40,100,40,0.3); border: 1px solid rgba(60,160,60,0.3); }
+.rndNodeStatus--locked { color: #ff6644; background: rgba(100,40,40,0.3); border: 1px solid rgba(160,60,60,0.3); }
+.rndBuyBtn { display: block; width: 100%; text-align: center; margin-top: 6px; padding: 5px; background: rgba(30,80,160,0.5); border: 1px solid rgba(60,140,240,0.4); border-radius: 2px; }
+.rndBuyBtn:hover { background: rgba(40,100,200,0.6); }
+
+/* Sprite Icons */
+.sciTechTreeIcon.icon-teleport { background-position: 0px 0px; }
+.sciTechTreeIcon.icon-adv_mass_spec { background-position: -32px 0px; }
+.sciTechTreeIcon.icon-cell { background-position: -64px 0px; }
+.sciTechTreeIcon.icon-wrench { background-position: -96px 0px; }
+.sciTechTreeIcon.icon-drill { background-position: -128px 0px; }
+.sciTechTreeIcon.icon-monitoring { background-position: -160px 0px; }
+.sciTechTreeIcon.icon-rd { background-position: -192px 0px; }
+.sciTechTreeIcon.icon-telecom_part { background-position: -224px 0px; }
+.sciTechTreeIcon.icon-arcade { background-position: -256px 0px; }
+.sciTechTreeIcon.icon-engaugment { background-position: -288px 0px; }
+.sciTechTreeIcon.icon-c20r { background-position: -320px 0px; }
+.sciTechTreeIcon.icon-spaceheater { background-position: 0px -32px; }
+.sciTechTreeIcon.icon-hypo { background-position: -32px -32px; }
+.sciTechTreeIcon.icon-smelter { background-position: -64px -32px; }
+.sciTechTreeIcon.icon-circuit { background-position: -96px -32px; }
+.sciTechTreeIcon.icon-pickaxe { background-position: -128px -32px; }
+.sciTechTreeIcon.icon-cutter { background-position: -160px -32px; }
+.sciTechTreeIcon.icon-advmatterbin { background-position: -192px -32px; }
+.sciTechTreeIcon.icon-supermatterbin { background-position: -224px -32px; }
+.sciTechTreeIcon.icon-circuitautolathe { background-position: -256px -32px; }
+.sciTechTreeIcon.icon-advprostheticrepairs { background-position: -288px 0px; }
+.sciTechTreeIcon.icon-anom { background-position: 0px -64px; }
+.sciTechTreeIcon.icon-rped { background-position: -32px -64px; }
+.sciTechTreeIcon.icon-jawsoflife { background-position: -64px -64px; }
+.sciTechTreeIcon.icon-healthanalyzer { background-position: -96px -64px; }
+.sciTechTreeIcon.icon-hydroponics { background-position: -128px -64px; }
+.sciTechTreeIcon.icon-microwave { background-position: -160px -64px; }
+.sciTechTreeIcon.icon-processor { background-position: -192px -64px; }
+.sciTechTreeIcon.icon-operationcomputer { background-position: -224px -64px; }
+.sciTechTreeIcon.icon-advgenerator { background-position: -256px -64px; }
+.sciTechTreeIcon.icon-cybersonar { background-position: -288px 64px; }
+.sciTechTreeIcon.icon-add_sec_eq { background-position: 0px -96px; }
+.sciTechTreeIcon.icon-sleeper { background-position: -32px -96px; }
+.sciTechTreeIcon.icon-medhud { background-position: -64px -96px; }
+.sciTechTreeIcon.icon-mechsleeper { background-position: -96px -96px; }
+.sciTechTreeIcon.icon-gps { background-position: -128px -96px; }
+.sciTechTreeIcon.icon-rapidsyringegun { background-position: -160px -96px; }
+.sciTechTreeIcon.icon-scalpelmanager { background-position: -192px -96px; }
+.sciTechTreeIcon.icon-stunbaton { background-position: -224px -96px; }
+.sciTechTreeIcon.icon-highcell { background-position: -256px -96px; }
+.sciTechTreeIcon.icon-c20 { background-position: -288px -96px; }
+.sciTechTreeIcon.icon-seccomputer { background-position: 0px -128px; }
+.sciTechTreeIcon.icon-shock { background-position: -32px -128px; }
+.sciTechTreeIcon.icon-riotgun { background-position: -64px -128px; }
+.sciTechTreeIcon.icon-lasercanon { background-position: -96px -128px; }
+.sciTechTreeIcon.icon-bullpup { background-position: -128px -128px; }
+.sciTechTreeIcon.icon-telepad { background-position: -160px -128px; }
+.sciTechTreeIcon.icon-emiammo { background-position: -192px -128px; }
+.sciTechTreeIcon.icon-wt550 { background-position: -224px -128px; }
+.sciTechTreeIcon.icon-hypercell { background-position: -256px -128px; }
+.sciTechTreeIcon.icon-revolver { background-position: -288px -128px; }
+.sciTechTreeIcon.icon-relay { background-position: 0px -160px; }
+.sciTechTreeIcon.icon-subspace { background-position: -32px -160px; }
+.sciTechTreeIcon.icon-batteryrack { background-position: -64px -160px; }
+.sciTechTreeIcon.icon-solarcontrol { background-position: -96px -160px; }
+.sciTechTreeIcon.icon-generator { background-position: -128px -160px; }
+.sciTechTreeIcon.icon-solnet_relay { background-position: -160px -160px; }
+.sciTechTreeIcon.icon-smes { background-position: -192px -160px; }
+.sciTechTreeIcon.icon-implant { background-position: -224px -160px; }
+.sciTechTreeIcon.icon-bsbeaker { background-position: -256px -160px; }
+.sciTechTreeIcon.icon-shayatin { background-position: -288px -160px; }
+.sciTechTreeIcon.icon-icupgradv { background-position: 0px -192px; }
+.sciTechTreeIcon.icon-communications { background-position: -32px -192px; }
+.sciTechTreeIcon.icon-icprinter { background-position: -64px -192px; }
+.sciTechTreeIcon.icon-rfid { background-position: -96px -192px; }
+.sciTechTreeIcon.icon-icupclo { background-position: -128px -192px; }
+.sciTechTreeIcon.icon-pcpu { background-position: -160px -192px; }
+.sciTechTreeIcon.icon-pcpu_small { background-position: -192px -192px; }
+.sciTechTreeIcon.icon-cpu_small { background-position: -224px -192px; }
+.sciTechTreeIcon.icon-cryobag { background-position: -256px -192px; }
+.sciTechTreeIcon.icon-g40 { background-position: -288px -192px; }
+.sciTechTreeIcon.icon-diamond_drill { background-position: 0px -224px; }
+.sciTechTreeIcon.icon-nanoprinter { background-position: -32px -224px; }
+.sciTechTreeIcon.icon-netcard_adv { background-position: -64px -224px; }
+.sciTechTreeIcon.icon-netcard_w { background-position: -96px -224px; }
+.sciTechTreeIcon.icon-cpu { background-position: -128px -224px; }
+.sciTechTreeIcon.icon-tablet_frame { background-position: -160px -224px; }
+.sciTechTreeIcon.icon-blue_beaker { background-position: -192px -224px; }
+.sciTechTreeIcon.icon-brace { background-position: -224px -224px; }
+.sciTechTreeIcon.icon-meson { background-position: -256px -224px; }
+.sciTechTreeIcon.icon-empcharge { background-position: -288px -224px; }
+.sciTechTreeIcon.icon-tesla_link { background-position: 0px -256px; }
+.sciTechTreeIcon.icon-modular_bat_advanced { background-position: -32px -256px; }
+.sciTechTreeIcon.icon-modular_bat_super { background-position: -64px -256px; }
+.sciTechTreeIcon.icon-modular_bat_ultra { background-position: -96px -256px; }
+.sciTechTreeIcon.icon-modular_bat_micro { background-position: -128px -256px; }
+.sciTechTreeIcon.icon-smg { background-position: -160px -256px; }
+.sciTechTreeIcon.icon-adflash { background-position: -192px -256px; }
+.sciTechTreeIcon.icon-hdd512 { background-position: -224px -256px; }
+.sciTechTreeIcon.icon-augment { background-position: -256px -256px; }
+.sciTechTreeIcon.icon-heltek_optimus { background-position: -288px -256px; }
+.sciTechTreeIcon.icon-decloner { background-position: 0px -288px; }
+.sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
+.sciTechTreeIcon.icon-chemdisp { background-position: -64px -288px; }
+.sciTechTreeIcon.icon-mechlaser { background-position: -96px -288px; }
+.sciTechTreeIcon.icon-mechclaw { background-position: -128px -288px; }
+.sciTechTreeIcon.icon-hdd2048 { background-position: -160px -288px; }
+.sciTechTreeIcon.icon-hdd256 { background-position: -192px -288px; }
+.sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
+.sciTechTreeIcon.icon-empmech { background-position: -256px -288px; }
+.sciTechTreeIcon.icon-la700 { background-position: -288px -288px; }
+.sciTechTreeIcon.icon-shieldgen { background-position: 0px -320px; }
+.sciTechTreeIcon.icon-mechheavy { background-position: -32px -320px; }
+.sciTechTreeIcon.icon-mechcombat { background-position: -64px -320px; }
+.sciTechTreeIcon.icon-ai { background-position: -96px -320px; }
+.sciTechTreeIcon.icon-gene { background-position: -128px -320px; }
+.sciTechTreeIcon.icon-box { background-position: -160px -320px; }
+.sciTechTreeIcon.icon-implantcase { background-position: -192px -320px; }
+.sciTechTreeIcon.icon-aicircuit { background-position: -224px -320px; }
+.sciTechTreeIcon.icon-smgmech { background-position: -256px -320px; }
+.sciTechTreeIcon.icon-railgun { background-position: -288px -320px; }
+.sciTechTreeIcon.icon-multitool { background-position: 0px -352px; }
+.sciTechTreeIcon.icon-posibrain { background-position: -32px -352px; }
+.sciTechTreeIcon.icon-bug { background-position: -64px -352px; }
+.sciTechTreeIcon.icon-kit { background-position: -96px -352px; }
+.sciTechTreeIcon.icon-radiokey { background-position: -128px -352px; }
+.sciTechTreeIcon.icon-hardsuitmodule { background-position: -160px -352px; }
+.sciTechTreeIcon.icon-bluespace { background-position: -192px -352px; }
+.sciTechTreeIcon.icon-roboscanner { background-position: -224px -352px; }
+.sciTechTreeIcon.icon-shieldmech { background-position: -256px -352px; }
+.sciTechTreeIcon.icon-smallegun { background-position: -288px -352px; }
+.sciTechTreeIcon.icon-bscrystal { background-position: 0px -384px; }
+.sciTechTreeIcon.icon-nav { background-position: -32px -384px; }
+.sciTechTreeIcon.icon-pump { background-position: -64px -384px; }
+.sciTechTreeIcon.icon-eva { background-position: -96px -384px; }
+.sciTechTreeIcon.icon-mechloader { background-position: -128px -384px; }
+.sciTechTreeIcon.icon-mechlight { background-position: -160px -384px; }
+.sciTechTreeIcon.icon-jetpack { background-position: -192px -384px; }
+.sciTechTreeIcon.icon-xray { background-position: -224px -384px; }
+.sciTechTreeIcon.icon-clawsaugment { background-position: -256px -384px; }
+.sciTechTreeIcon.icon-egun { background-position: -288px -384px; }
+
+</style>
+
+<div class="dtConsole dtTheme--{{:data.ui_theme}}">
+
+	<!-- ── Navigation bar ─────────────────────────────────────────── -->
+	<div class="dtNav">
+		<div class="dtNavTitle">
+			{{if data.ui_theme == 'medical'}}
+				МЕДИЦИНСКИЙ
+			{{else data.ui_theme == 'engineering'}}
+				ИНЖЕНЕРНЫЙ
+			{{else}}
+				НИО
+			{{/if}}
+			<span class="dtDeptBadge">ТЕРМИНАЛ</span>
+		</div>
+		{{:helper.link("Дизайны", '', {'go_screen':'designs'}, data.dt_screen == 'designs' ? 'selected' : null, 'rndTab')}}
+		{{:helper.link("Корпорации", '', {'go_screen':'corps'}, data.dt_screen == 'corps' ? 'selected' : null, 'rndTab')}}
+		{{if data.has_theme_selector}}
+		<div class="dtThemeSwitcher">
+			{{:helper.link("◑", '', {'set_theme':'neutral'},    data.ui_theme == 'neutral'     ? 'selected' : null, 'dtThemeBtn')}}
+			{{:helper.link("✚", '', {'set_theme':'medical'},    data.ui_theme == 'medical'     ? 'selected' : null, 'dtThemeBtn')}}
+			{{:helper.link("⚙", '', {'set_theme':'engineering'},data.ui_theme == 'engineering' ? 'selected' : null, 'dtThemeBtn')}}
+		</div>
+		{{/if}}
+		<div class="dtNavStatus">
+			{{if data.has_server}}
+				<span class="dtServerBadge dtServerBadge--online"><span class="dtServerDot"></span>{{:data.server_name}}</span>
+			{{else}}
+				<span class="dtServerBadge dtServerBadge--offline"><span class="dtServerDot"></span>Нет сервера</span>
+			{{/if}}
+			{{if data.has_account}}
+				<span class="dtBalanceLabel">{{:data.account_name}}</span>
+				<span class="dtBalanceValue">{{:data.currency_short}}{{:data.balance}}</span>
+			{{else data.can_switch_account}}
+				<span class="dtBalanceError">СЧЁТ НЕ ПРИВЯЗАН</span>
+			{{/if}}
+		</div>
+	</div>
+
+	<!-- ══════════════════════════════════════════════════════════════ -->
+	<!-- DESIGNS SCREEN                                                -->
+	<!-- ══════════════════════════════════════════════════════════════ -->
+	{{if data.dt_screen == 'designs'}}
+	<div class="dtBody">
+
+		<!-- Toolbar: sync + disk -->
+		<div class="dtToolbar">
+			{{if data.has_server}}
+				{{:helper.link("Отключиться от сети", 'cancel', {'togglesync':1}, null, 'rndTab')}}
+			{{else}}
+				{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync':1}, null, 'rndTab')}}
+			{{/if}}
+			<div class="dtToolbarSep"></div>
+			{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync':1}, null, 'rndTab')}}
+			<div class="dtToolbarSep"></div>
+			{{if data.has_disk}}
+				<div class="dtDiskStrip">
+					<span style="color:var(--dt-accent);">&#128190;</span>
+					<div class="dtDiskBar"><div class="dtDiskBarFill" style="width:{{:Math.round(data.disk_used/data.disk_size*100)}}%;"></div></div>
+					<span style="color:#94a3b8;">{{:data.disk_used}}/{{:data.disk_size}} GQ</span>
+					{{:helper.link("Извлечь", 'eject', {'eject_disk':1})}}
+				</div>
+			{{else}}
+				<span style="color:#475569; font-size:11px;">Диск не вставлен</span>
+			{{/if}}
+			<div class="dtToolbarSep"></div>
+			{{:helper.link("Поиск", '', {'search':1})}}
+			{{if data.search_text}}
+				<span style="color:#94a3b8; font-size:11px;">«{{:data.search_text}}»</span>
+				{{:helper.link("✕", '', {'search':1, 'search_text':''})}}
+			{{/if}}
+		</div>
+
+		<!-- Category filter -->
+		{{if data.categories.length}}
+		<div class="dtFilterBar">
+			<span class="dtFilterLabel">Раздел</span>
+			{{:helper.link("Все", '', {'set_category':1,'category':'all'}, !data.selected_category ? 'selected' : null)}}
+			{{for data.categories}}
+				{{:helper.link(value, '', {'set_category':1,'category':value}, data.selected_category == value ? 'selected' : null)}}
+			{{/for}}
+		</div>
+		{{/if}}
+
+		<!-- Two-column design lists -->
+		<div class="dtCols">
+
+			<!-- Terminal designs -->
+			<div class="dtPanel" style="flex:1;">
+				<div class="dtPanelHead">
+					<span>Дизайны в терминале</span>
+					<span class="dtPanelCount">{{:data.terminal_designs.length}}</span>
+				</div>
+				<div class="dtPanelBody">
+					{{for data.terminal_designs}}
+					<div class="dtFileItem">
+						<span class="dtFileName">{{:value.name}}</span>
+						<div class="dtFileActions">
+							{{if value.on_disk}}
+								<span class="dtOnDisk">✓ на диске</span>
+							{{else data.has_disk}}
+								{{:helper.link("", 'arrowthick-1-e', {'save_to_disk':value.id})}}
+							{{/if}}
+						</div>
+					</div>
+					{{empty}}
+					<div class="dtEmpty">Нет дизайнов на сервере.</div>
+					{{/for}}
+				</div>
+			</div>
+
+			<!-- Disk designs -->
+			{{if data.has_disk}}
+			<div class="dtPanel" style="flex:1;">
+				<div class="dtPanelHead">
+					<span>На диске</span>
+					<span class="dtPanelCount">{{:data.disk_designs.length}}</span>
+				</div>
+				<div class="dtPanelBody">
+					{{for data.disk_designs}}
+					<div class="dtFileItem">
+						<span class="dtFileName">{{:value.name}}</span>
+						<div class="dtFileActions">
+							{{:helper.link("", 'arrowthick-1-w', {'load_from_disk':value.id})}}
+						</div>
+					</div>
+					{{empty}}
+					<div class="dtEmpty">Диск пуст.</div>
+					{{/for}}
+				</div>
+			</div>
+			{{/if}}
+
+		</div>
+	</div>
+	{{/if}}
+
+	<!-- ══════════════════════════════════════════════════════════════ -->
+	<!-- CORPS SCREEN                                                  -->
+	<!-- ══════════════════════════════════════════════════════════════ -->
+	{{if data.dt_screen == 'corps'}}
+
+	{{if data.has_account}}
+	<div class="rndTwoCol" style="padding:8px 8px 0 8px;">
+
+		<!-- Left: tree -->
+		<div class="rndCol" style="width:68%;">
+
+			<div class="rndSection">
+				<div class="rndSectionTitle">Категории технологий</div>
+				<div class="rndSectionContent">
+					<div class="rndBtnRow" style="margin-bottom:8px;">
+						{{for data.corp_categories}}
+							{{:helper.link(value.name, '', {'select_tech_category':value.id}, data.selected_category_id == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+					<div class="rndBtnRow rndCorpSubTabs">
+						{{for data.corp_trees}}
+							{{:helper.link(value.name, '', {'select_corp':value.id}, data.selected_corp == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+			<div class="rndSection">
+				<div class="rndSectionContent" style="padding:0;">
+					<div id='sciTechTreeContainer'>
+						{{if data.selected_corp_logo}}
+							<div class="rndTreeWatermark" style="background-image:url({{:data.selected_corp_logo}});"></div>
+						{{/if}}
+						{{for data.corp_lines}}
+							<div style="position:absolute;border-{{:value.istop?'top':'bottom'}}:1px solid rgba(100,180,255,0.35);border-{{:value.isright?'right':'left'}}:1px solid rgba(100,180,255,0.35);width:{{:value.width}}%;height:{{:value.height}}%;left:{{:value.line_x}}%;bottom:{{:value.line_y}}%"></div>
+						{{/for}}
+						{{for data.corp_nodes}}
+							<div style="position:absolute;left:{{:value.x}}%;bottom:{{:value.y}}%;margin-left:-20px;margin-bottom:-20px;">
+								{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_corp_node':value.id}, null, "link sciTechTreeIconBox "+((value.isresearched==1)?'sciTechResearched':((value.canunlock==1)?'sciTechAvailable':'sciTechCantResearch'))+" "+((value.id==data.selected_node_id)?'sciTechSelected':''))}}
+							</div>
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Right: node detail -->
+		<div class="rndCol" style="width:32%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Узел технологии</div>
+				<div class="rndSectionContent">
+					{{if data.selected_node}}
+						<div class="rndNodeName">{{:data.selected_node.name}}</div>
+						{{if data.selected_corp_logo}}
+							<img src="{{:data.selected_corp_logo}}" class="rndNodeLogo" />
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Стоимость</div>
+							<div class="rndNodeValue rndPriceValue">{{:data.currency_short}}{{:data.selected_node.price}}</div>
+						</div>
+
+						{{if data.selected_node.current_reputation !== null && data.selected_node.current_reputation !== undefined}}
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Репутация</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.corp_id}}{{:data.selected_node.corp_id}}: {{/if}}<span style="color:{{:data.selected_node.current_reputation >= 0?'#00FF00':'#FF0000'}}">
+									{{:data.selected_node.current_reputation >= 0 ? '+' : ''}}{{:data.selected_node.current_reputation}}
+								</span> / {{:data.selected_node.required_reputation}}
+								{{if !data.selected_node.reputation_met}}<br/>
+									<span style="color:#FF6644;font-size:11px;">Ещё {{:data.selected_node.required_reputation - data.selected_node.current_reputation}} репутации</span>
+								{{/if}}
+							</div>
+						</div>
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Требования</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.requirements && data.selected_node.requirements.length > 0}}
+									{{for data.selected_node.requirements}}
+										<span style="color:{{:value.isgood?'#44ff44':'#ff4444'}}">{{:value.text}}</span><br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">Нет требований</span>
+								{{/if}}
+							</div>
+						</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Открывает</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.unlocks && data.selected_node.unlocks.length > 0}}
+									{{for data.selected_node.unlocks}}
+										{{:value.text}}<br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">—</span>
+								{{/if}}
+							</div>
+						</div>
+
+						{{if data.selected_node.isresearched}}
+							<div class="rndNodeStatus rndNodeStatus--good">Открыто</div>
+						{{else}}
+							{{if data.selected_node.can_buy}}
+								{{:helper.link("Приобрести", '', {'buy_corp_node':data.selected_node_id}, null, 'rndBuyBtn')}}
+							{{else}}
+								<div class="rndNodeStatus rndNodeStatus--locked">Недоступно</div>
+							{{/if}}
+						{{/if}}
+					{{else}}
+						<div class="rndMuted" style="text-align:center;padding:20px 0;">Выберите узел на карте технологий</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	{{else}}
+		<div class="dtBody">
+			<div class="dtNoAccount">
+				Для покупки корпоративных лицензий необходимо привязать счёт отдела.
+			</div>
+		</div>
+	{{/if}}
+
+	{{/if}}
+
+	<!-- ── Account footer ──────────────────────────────────────────── -->
+	{{if data.can_switch_account}}
+	<div class="dtFooter">
+		<span class="dtFooterLabel">Счёт:</span>
+		<span class="dtFooterValue">{{:data.has_account ? data.account_name : "Не привязан"}}</span>
+		{{:helper.link("Привязать", 'key', {'link_account':1}, null, 'rndTab')}}
+		{{if data.has_account}}
+			{{:helper.link("Отвязать", 'cancel', {'unlink_account':1}, null, 'rndTab')}}
+		{{/if}}
+	</div>
+	{{/if}}
+
+</div>

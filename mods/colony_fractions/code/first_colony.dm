@@ -352,7 +352,6 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/machinery/computer/rdconsole/core/colony/Initialize()
 	. = ..()
-	files.research_points = 41250
 
 	/*
 	files.UnlockTechology(/datum/technology/engineering)

@@ -203,3 +203,26 @@
 		to_chat(H, SPAN_DANGER("Your new [O.name] explodes with a stream of blood and unformed chitin!"))
 		O.droplimb()
 	H.update_body()
+
+// Xenobiology storage
+
+/obj/item/storage/xenobio
+	name = "xenobiology satchel"
+	desc = "This insulated bag can be used to store slime extracts and other potentially contaminated materials."
+	icon = 'mods/RnD/icons/biobag.dmi'
+	icon_state = "biobag"
+	slot_flags = SLOT_BELT
+	max_storage_space = 100
+	max_w_class = ITEM_SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
+	contents_allowed = list(
+		/obj/item/slime_extract,
+		/obj/item/slimesteroid,
+		/obj/item/slimesteroid2,
+		/obj/item/slimepotion,
+		/obj/item/slimepotion2,
+		/obj/item/slimepotion3,
+		/obj/item/reagent_containers/food/snacks/monkeycube
+	)
+	allow_quick_gather = TRUE
+	allow_quick_empty = TRUE

@@ -29,13 +29,16 @@
 		var/obj/overmap/visitable/O = map_sectors[zlevel]
 		if(!isnull(O))
 			var/should_send = TRUE
+			var/has_target_players = FALSE
 			var/list/overmap_z_list = O.map_z
 			for(var/z_map in overmap_z_list)
 				if(z_map in sent_to_z)
 					should_send = FALSE
 				else
 					sent_to_z.Add(z_map)
-			if(should_send && length(overmap_z_list))
+					if(SSpresence.population(z_map))
+						has_target_players = TRUE
+			if(should_send && has_target_players && length(overmap_z_list))
 				priority_announcement.Announce(distress_message, "Automated Distress Signal", new_sound = sound('packs/infinity/sound/AI/sos.ogg'), zlevels = overmap_z_list)
 
 	//sends to a single random z-level (original)
@@ -71,13 +74,16 @@
 		var/obj/overmap/visitable/O = map_sectors[zlevel]
 		if(!isnull(O))
 			var/should_send = TRUE
+			var/has_target_players = FALSE
 			var/list/overmap_z_list = O.map_z
 			for(var/z_map in overmap_z_list)
 				if(z_map in sent_to_z)
 					should_send = FALSE
 				else
 					sent_to_z.Add(z_map)
-			if(should_send && length(overmap_z_list))
+					if(SSpresence.population(z_map))
+						has_target_players = TRUE
+			if(should_send && has_target_players && length(overmap_z_list))
 				priority_announcement.Announce(message, "Automated Distress Signal", new_sound = sound('packs/infinity/sound/AI/sos.ogg'), zlevels = overmap_z_list)
 
 	//sends to a single random z-level (original)

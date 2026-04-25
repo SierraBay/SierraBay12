@@ -1,0 +1,6 @@
+author: Lexanx
+changes:
+  - bugfix: Пара фиксов фракций
+  - bugfix: Инвалидные коляски теперь имеют глайдинг персонажа
+  - bugfix: Поправлен цвет текста в навыках
+delete-after: true

@@ -17,6 +17,11 @@
 		/area/mobius_rift = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
+/datum/map_template/ruin/away_site/mobius_rift/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/anomaly_readings, z)
+	spawn_derelict_mission_object(/obj/item/device/mission_sensor, z)
+
 /obj/step_trigger/mobius_rift/seamless_portal
 	var/obj/step_trigger/mobius_rift/seamless_portal/dest
 	//NORTH or EAST cases

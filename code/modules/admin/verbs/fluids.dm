@@ -3,7 +3,10 @@
 	set desc = "Flood the turf you are standing on."
 	set category = "Debug"
 
-	if(!check_rights(R_SPAWN)) return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 	var/mob/user = usr
 	if(istype(user) && user.client)
 		for(var/thing in trange(1, get_turf(user)))
@@ -16,7 +19,10 @@
 	set desc = "Jump to an active fluid source."
 	set category = "Debug"
 
-	if(!check_rights(R_SPAWN)) return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 	var/mob/user = usr
 	if(istype(user) && user.client)
 		if(length(SSfluids.water_sources))
@@ -30,7 +36,10 @@
 	set desc = "Jump to an active fluid overlay."
 	set category = "Debug"
 
-	if(!check_rights(R_SPAWN)) return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_SPAWN|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 	var/mob/user = usr
 	if(istype(user) && user.client)
 		if(length(SSfluids.active_fluids))

@@ -1,6 +1,10 @@
 /mob/living/simple_animal/friendly/koala
 	name = "space koala"
 	desc = "A little grey bear, now much time he gonna sleep today?"
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.55
 	icon = 'mods/petting_zoo/icons/mobs.dmi'
 	icon_state = "koala"
 	icon_living = "koala"

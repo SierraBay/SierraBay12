@@ -2,8 +2,10 @@
 	set category = "Fun"
 	set name = "MP Panel"
 	set desc = "Lists all current music players and control it."
-
-	if(!check_rights(R_ADMIN|R_FUN, 0, usr))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN|R_FUN, 0, usr)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_FUN|R_DEBUG, 0, usr))
+	// [/SIERRA-EDIT]
 		return
 
 	var/list/dat = list("<div align='center'><h1>Music Player Control Panel</h1><br>")

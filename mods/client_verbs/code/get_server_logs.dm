@@ -2,8 +2,10 @@
 	set name = "Get Server Logs"
 	set desc = "Fetch logfiles from data/logs"
 	set category = "Admin"
-
-	if(!check_rights(R_ADMIN))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	var/path = browse_files("data/logs/")

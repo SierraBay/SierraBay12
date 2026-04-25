@@ -51,6 +51,16 @@
 	. = ..()
 	update_watch_area()
 
+/obj/machinery/pointdefense/Activate()
+	. = ..()
+	if(.)
+		update_watch_area()
+
+/obj/machinery/pointdefense/Deactivate()
+	. = ..()
+	if(.)
+		update_watch_area()
+
 /obj/machinery/pointdefense/Topic(href, href_list)
 	. = ..()
 	if(. && href_list["active"])

@@ -77,8 +77,9 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
-	/datum/admins/proc/show_skills, //Right click skill menu,
-	/client/proc/man_up,
+	/datum/admins/proc/show_skills, //Right click skill menu. [SIERRA-ADD] - HALLUCINATION_OVERHAUL,
+	/datum/admins/proc/hallucination_panel, // Admin hallucination control panel,
+	/client/proc/man_up, // [/SIERRA-ADD] - HALLUCINATION_OVERHAUL,
 	/client/proc/global_man_up,
 	/client/proc/response_team, // Response Teams admin verb,
 	/client/proc/toggle_antagHUD_use,
@@ -105,7 +106,8 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/SetMaximumRoundLength,
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
-	/client/proc/delete_crew_record
+	/client/proc/delete_crew_record,
+	/datum/admins/proc/view_persistent_data		//[SIERR-ADD]
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -137,7 +139,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/rename_shuttle,
 	/client/proc/give_disease2, // [/SIERRA-ADD] - CLIENT_VERBS,
 	/datum/admins/proc/mp_panel, // [/SIERRA-ADD],
-	/client/proc/hivemind_panel // [/SIERRA-ADD] - HIVEMIND
+	/client/proc/hivemind_panel, // [/SIERRA-ADD] - HIVEMIND,
+	/client/proc/leviathan_panel // [/SIERRA-ADD] - LEVIATHANS
 	)
 
 var/global/list/admin_verbs_spawn = list(
@@ -196,6 +199,7 @@ var/global/list/admin_verbs_debug = list(
 	//[SIERRA-ADD] - Colony-types,
 	/datum/admins/proc/map_template_colony_spawn_settings,
 	/datum/admins/proc/anomaly_control,
+	/client/proc/rnd_mission_debug,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
@@ -214,6 +218,34 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/view_runtimes,
 	/client/proc/cmd_analyse_health_context,
 	/client/proc/cmd_analyse_health_panel,
+	//[SIERRA-ADD],
+	/datum/admins/proc/map_template_colony_spawn_settings,
+	/datum/admins/proc/anomaly_control,
+	/client/proc/jumptokey,
+	/client/proc/jumptoturf,
+	/client/proc/Getmob,
+	/client/proc/Getkey,
+	/client/proc/fixatmos,
+	/client/proc/investigate_show,
+	/client/proc/list_traders,
+	/client/proc/cmd_mod_say,
+	/client/proc/aooc,
+	/client/proc/colorooc,
+	/datum/admins/proc/restart,
+	/client/proc/game_panel,
+	/datum/admins/proc/spawn_fruit,
+	/datum/admins/proc/spawn_fluid_verb,
+	/datum/admins/proc/spawn_custom_item,
+	/datum/admins/proc/check_custom_items,
+	/datum/admins/proc/spawn_plant,
+	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
+	/datum/admins/proc/spawn_artifact,
+	/client/proc/spawn_chemdisp_cartridge,
+	/client/proc/respawn_as_self,
+	/client/proc/virus2_editor,
+	/datum/admins/proc/mass_debug_closet_icons,
+	/datum/admins/proc/show_skills,	// Right-click skill menu,
+	//[/SIERRA-ADD],
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
 	/client/proc/ping_webhook,
@@ -580,8 +612,10 @@ var/global/list/admin_verbs_mod = list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-
-	if(!check_rights(R_ADMIN))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	if(!usr.RemoveClickHandler(/datum/click_handler/build_mode))

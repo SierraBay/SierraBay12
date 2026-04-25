@@ -22,7 +22,7 @@ other types of metals and chemistry for reagents).
 	var/desc = null					//Description of the created object. If null it will use group_desc and name where applicable.
 	var/item_name = null			//An item name before it is modified by various name-modifying procs
 	var/name_category		//If set, name is modified into "[name_category] ([item_name])"
-	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
+	var/id = null					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols.
 	var/list/req_tech = list()		//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()		//List of materials. Format: "id" = amount.
@@ -38,6 +38,8 @@ other types of metals and chemistry for reagents).
 	var/list/ui_data = new 			// Additional data for UI use
 	var/list/autolathe_category = list()	//Categories for the autolathe design download software
 	var/list/access = list()		//List of access groups that can use this design
+	var/quality = 100				// Quality of reverse-engineered design (0-100). 100 = perfect, < 50 = defective
+	var/reverse_engineered = FALSE	// Was this design created via reverse engineering?
 
 
 /datum/design/New()
@@ -67,7 +69,7 @@ other types of metals and chemistry for reagents).
 /datum/design/proc/AssembleDesignDesc()
 	if(desc)
 		return
-	if(!desc)								//Try to make up a nice description if we don't have one
+	if(!desc)
 		desc = "Allows for the construction of \a [item_name]."
 		return
 
@@ -112,8 +114,7 @@ other types of metals and chemistry for reagents).
 /datum/design/ui_data()
 	RETURN_TYPE(/list)
 	return ui_data
-//Returns a new instance of the item for this design
-//This is to allow additional initialization to be performed, including possibly additional contructor arguments.
+
 /datum/design/proc/Fabricate(newloc, mat_efficiency, fabricator)
 
 	var/atom/A = new build_path(newloc)
@@ -124,6 +125,19 @@ other types of metals and chemistry for reagents).
 				for(var/i in O.matter)
 					O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)
 
+	if(reverse_engineered && isitem(A))
+		var/obj/item/I = A
+		// Reverse-engineered reagent containers print empty — they weren't filled during fabrication
+		if(I.reagents && I.reagents.total_volume > 0)
+			I.reagents.clear_reagents()
+
+		if(quality < 100)
+			I.AddComponent(/datum/component/defective_item, quality)
+
+			if(quality < 40)
+				var/turf/T = get_turf(I)
+				if(T)
+					T.visible_message(SPAN_WARNING("[I] looks defective and may malfunction!"))
 
 	return A
 
@@ -143,6 +157,7 @@ GLOBAL_LIST_AS(build_path_to_design_datum_path, populate_design_datum_index())
 
 /datum/design/autolathe/
 	build_type = PROTOLATHE			// From now on autolathe capable printing protolathe designs
+	starts_unlocked = TRUE			// Autolathe designs are available from the start on all servers
 	var/hidden = FALSE 				// If design deemed to be too dangerous
 
 /datum/design/autolathe/New()

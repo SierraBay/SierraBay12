@@ -166,9 +166,11 @@
 /obj/shuttle_landmark/pod_hand_one/start
 	name = "Port EE S-class Dock"
 	landmark_tag = "nav_handpodone_start"
+	docking_controller = "handpodone_port_shuttle_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/pod_hand_two/start
 	name = "Starboard EE S-class Dock"
 	landmark_tag = "nav_handpodtwo_start"
+	docking_controller = "handpodtwo_port_shuttle_dock"
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
