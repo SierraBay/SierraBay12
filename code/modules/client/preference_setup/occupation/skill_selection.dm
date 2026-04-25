@@ -179,8 +179,8 @@
 	dat += "<body>"
 	dat += "<style>.Selectable,.Current,.Unavailable,.Toohigh{border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0}</style>"
 	dat += "<style>.Selectable,a.Selectable{background: #40628a}</style>"
-	dat += "<style>.Current,a.Current{background: #2f943c}</style>"
-	dat += "<style>.Unavailable{background: #d09000}</style>"
+	dat += "<style>.Current,a.Current{background: #2f943c; color: #161616}</style>" //[SIERRA-ADD]; color: #161616}]
+	dat += "<style>.Unavailable{background: #d09000; color: #161616}</style>" //[SIERRA-ADD]; color: #161616}]
 	dat += "<tt><center>"
 	dat += "<b>Skill points remaining: [pref.points_by_job[job]].</b><hr>"
 	dat += "<hr>"
