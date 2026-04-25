@@ -32,12 +32,8 @@
 /area/virtual_reality/beach
 	name = "\improper Virtual Reality - Beach"
 	sound_env = PLAIN
-	dynamic_lighting = FALSE
+	dynamic_lighting = TRUE
 	forced_ambience = list('sound/music/europa/WildEncounters.ogg')
-
-/area/virtual_reality/plaza
-	name = "\improper Virtual Reality - Plaza"
-	dynamic_lighting = FALSE
 
 /area/virtual_reality/volleyball_court
 	name = "\improper Virtual Reality - Volleyball Court"
@@ -63,12 +59,8 @@
 	name = "\improper Virtual Reality - Empty Court"
 	dynamic_lighting = FALSE
 
-/area/virtual_reality/temple
-	name = "\improper Virtual Reality - Temple"
-	dynamic_lighting = FALSE
-
 /area/virtual_reality/cafe
-	name = "\improper Virtual Reality - Cafe"
+	name = "\improper Virtual Reality - Cafe and Plaza"
 	dynamic_lighting = FALSE
 
 /area/virtual_reality/space
@@ -95,3 +87,8 @@
 /area/virtual_reality/boxing_ring
 	name = "\improper Virtual Reality - Boxing Ring"
 	dynamic_lighting = FALSE
+
+/area/virtual_reality/netspace
+	name = "\improper Virtual Reality - Netspace"
+	dynamic_lighting = FALSE
+	requires_power = FALSE

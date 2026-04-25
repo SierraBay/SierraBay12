@@ -1,11 +1,9 @@
 GLOBAL_LIST_AS(active_vr_areas , list())
 GLOBAL_LIST_AS(vr_areas, list(
-	"Plaza" = /area/virtual_reality/plaza,
 	"Courtroom" = /area/virtual_reality/courtroom,
 	"Meeting Hall" = /area/virtual_reality/meeting_hall,
 	"Theatre" = /area/virtual_reality/theatre,
-	"Cafe" = /area/virtual_reality/cafe,
-	"Temple" = /area/virtual_reality/temple,
+	"Cafe and Plaza" = /area/virtual_reality/cafe,
 	"Boxing Ring" = /area/virtual_reality/boxing_ring,
 	"Empty Court" = /area/virtual_reality/empty_court,
 	"Volleyball Court" = /area/virtual_reality/volleyball_court,
@@ -19,7 +17,8 @@ GLOBAL_LIST_AS(vr_areas, list(
 	"Infirmary" = /area/virtual_reality/infirmary
 ))
 GLOBAL_LIST_AS(emagged_vr_areas, list(
-	"Shady Room" = /area/virtual_reality/shady_room
+	"Shady Room" = /area/virtual_reality/shady_room,
+	"Netspace" = /area/virtual_reality/netspace
 ))
 
 

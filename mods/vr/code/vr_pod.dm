@@ -1,8 +1,8 @@
 /obj/machinery/vr_pod
 	name = "\improper VR pod"
 	desc = "An advanced machine that simulates extremely lifelike environments and sensations. Useful for hands-on training as well as recreation."
-	icon = 'icons/obj/machines/medical/cryopod.dmi'
-	icon_state = "redpod0"
+	icon = 'mods/vr/icons/vr_pod.dmi'
+	icon_state = "vr_red"
 	density = TRUE
 	anchored = TRUE
 	clicksound = 'sound/machines/pda_click.ogg'
@@ -267,12 +267,13 @@
 
 /obj/machinery/vr_pod/on_update_icon()
 	if(!occupant)
-		icon_state = "redpod0"
-	else if(GET_FLAGS(stat, MACHINE_BROKEN_GENERIC) || GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
-		//icon_state = "redpod2"
-		icon_state = "redpod1"
+		icon_state = "vr_red"
+	else if(GET_FLAGS(stat, MACHINE_BROKEN_GENERIC))
+		icon_state = "vr_red_broken"
+	else if(GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
+		icon_state = "vr_red_closed"
 	else
-		icon_state = "redpod1"
+		icon_state = "vr_red_closed"
 
 // Used to mark spawn locations for VR. unlike landmarks, these aren't deleted, and are kept after template copy to designate valid spawn locations
 /obj/effect/vr_spawn
