@@ -71,6 +71,34 @@ SUBSYSTEM_DEF(virtual_reality)
 	listclearnulls(virtual_clients)
 
 // New
+/datum/controller/subsystem/virtual_reality/proc/clone_atom_template(obj/original, copy_vars, atom/loc)
+	RETURN_TYPE(/obj)
+	if (!original)
+		return
+	if (loc && !isloc(loc))
+		loc = original.loc
+	var/obj/result = new original.type (loc)
+	if (!copy_vars || !result)
+		return result
+	var/list/vars = original.vars
+
+	for (var/name in vars)
+		if (name in GLOB.duplicate_object_disallowed_vars)
+			continue
+		if (!issaved(vars[name]))
+			continue
+		if (isdatum(vars[name]))
+			continue
+		if(islist(vars[name]) && LAZYLEN(vars[name]))
+			if(isdatum(vars[name][1]))
+				continue
+		result.vars[name] = vars[name]
+
+	if(istype(result, /obj/machinery/atmospherics))
+		result.vars["atmos_initalized"] = FALSE
+
+	return result
+
 /datum/controller/subsystem/virtual_reality/proc/clone_atom_vr(atom/A)
 	var/atom/cloned_atom = clone_atom(A)
 
@@ -349,11 +377,11 @@ SUBSYSTEM_DEF(virtual_reality)
 					for (var/obj/obj in source_turf)
 						if (!obj.simulated)
 							continue
-						copied_movables += clone_atom(obj, TRUE, temp_target_turf)
+						copied_movables += clone_atom_template(obj, TRUE, temp_target_turf)
 					for (var/mob/mob in source_turf)
 						if (!mob.simulated)
 							continue
-						copied_movables += clone_atom(mob, TRUE, temp_target_turf)
+						copied_movables += clone_atom_template(mob, TRUE, temp_target_turf)
 					turfs_to_update += temp_target_turf
 					refined_src -= source_turf
 					refined_trg -= target_turf
@@ -366,7 +394,20 @@ SUBSYSTEM_DEF(virtual_reality)
 		SSair.mark_for_update(simulated)
 	return copied_movables
 
+/datum/controller/subsystem/virtual_reality/proc/build_atmospherics(area/target)
+	for(var/obj/machinery/atmospherics/A in target)
+		A.atmos_init()
+
+/datum/controller/subsystem/virtual_reality/proc/before_template_load(area/source, area/target)
+	for(var/obj/structure/closet/C in source)
+		C.dump_contents()
+
 /datum/controller/subsystem/virtual_reality/proc/after_template_load(area/source, area/target)
+	for(var/obj/structure/closet/C in target)
+		C.store_contents()
+
+	build_atmospherics(target)
+
 	if(istype(source, /area/virtual_reality/infirmary))
 		for(var/obj/machinery/body_scanconsole/C in target)
 			C.FindScanner()
@@ -440,6 +481,7 @@ SUBSYSTEM_DEF(virtual_reality)
 	// in this way, we use the selected area as a template. we copy all of its contents to the actual area,
 	// allowing users to "reset" the template by refreshing it
 	var/area/active_area = zone_area
+	before_template_load(A, active_area)
 	copy_template(A, active_area)
 	active_area.forced_ambience = A.forced_ambience
 	active_area.dynamic_lighting = A.dynamic_lighting
