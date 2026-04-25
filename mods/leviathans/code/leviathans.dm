@@ -106,7 +106,8 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 
 /obj/overmap/event/leviathan/proc/can_attack()
 	// If healing, don't attack unless at healing location (or if specific type allows it)
-	if(is_healing && needs_healing_location() && loc != healing_target_ref?.resolve()?.loc)
+	var/atom/healing_loc = healing_target_ref?.resolve()
+	if(is_healing && needs_healing_location() && loc != healing_loc?.loc)
 		return FALSE
 	return TRUE
 
