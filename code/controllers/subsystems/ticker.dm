@@ -370,7 +370,7 @@ Helpers
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
 				player.AIize()
-			else if(!player.mind.assigned_role)
+			else if(!player.mind.assigned_role || player_is_antag(player.mind, only_offstation_roles = 1))
 				continue
 			else
 				if(player.create_character())
