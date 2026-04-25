@@ -173,18 +173,23 @@
 	icon_state = "xeno_f_store"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/sierra/assembly
+/area/assembly
 	req_access = list(access_robotics)
 
-/area/rnd/sierra/assembly/chargebay
+/area/assembly/chargebay
 	name = "First Deck - RND - Mech Bay"
 	icon_state = "mechbay"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/sierra/assembly/robotics
+/area/assembly/robotics
 	name = "First Deck - RND - Robotics Lab"
 	icon_state = "robotics"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+/*
+/area/assembly/office
+	name = "First Deck - RND - Robotics Office"
+	icon_state = "mechbay"
+*/
 
 /* CREW AREAS
  * ==========
