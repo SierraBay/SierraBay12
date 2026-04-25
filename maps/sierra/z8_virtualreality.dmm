@@ -56,7 +56,7 @@
 /turf/simulated/floor/holofloor/carpet,
 /area/virtual_reality/theatre)
 "bF" = (
-/obj/structure/bed/sauna_bench/middle/north,
+/obj/structure/bed/sauna_bench,
 /turf/simulated/floor/holofloor/beach/sand,
 /area/virtual_reality/beach)
 "bJ" = (
@@ -294,7 +294,7 @@
 /turf/simulated/floor/holofloor/tiled,
 /area/virtual_reality/boxing_ring)
 "eV" = (
-/turf/simulated/floor/exoplanet/titan_water/minimal/holodeck,
+/turf/simulated/floor/exoplanet/titan_water/holodeck/minimal,
 /area/virtual_reality/beach)
 "eW" = (
 /obj/floor_decal/floordetail/edgedrain{
@@ -408,12 +408,9 @@
 /obj/structure/flora/grass/both,
 /turf/simulated/floor/holofloor/snow,
 /area/virtual_reality/snowfield)
-"fW" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/holofloor/beach/sand,
-/area/virtual_reality/beach)
+"fV" = (
+/turf/unsimulated/wall/netspace,
+/area/virtual_reality/shady_room)
 "fX" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -439,6 +436,11 @@
 	},
 /turf/simulated/floor/holofloor/tiled,
 /area/virtual_reality/thunderdome)
+"gt" = (
+/turf/unsimulated/wall/netspace{
+	dir = 5
+	},
+/area/virtual_reality/shady_room)
 "gu" = (
 /obj/floor_decal/corner/red{
 	dir = 9
@@ -1461,7 +1463,7 @@
 /turf/simulated/floor/holofloor/carpet,
 /area/virtual_reality/meeting_hall)
 "wh" = (
-/obj/machinery/door/netspace/firewall{
+/obj/machinery/door/airlock/netspace/firewall{
 	id_tag = "netwall1";
 	locked = 1
 	},
@@ -1545,6 +1547,11 @@
 /obj/effect/vr_spawn,
 /turf/simulated/floor/holofloor/concrete,
 /area/virtual_reality/cafe)
+"xA" = (
+/turf/unsimulated/wall/netspace{
+	dir = 9
+	},
+/area/virtual_reality/shady_room)
 "xE" = (
 /obj/floor_decal/spline/plain{
 	dir = 10;
@@ -1919,7 +1926,7 @@
 /turf/simulated/floor/holofloor/carpet,
 /area/virtual_reality/theatre)
 "BU" = (
-/obj/structure/curtain{
+/obj/structure/curtain/open{
 	color = "#cd6889"
 	},
 /turf/simulated/floor/holofloor/wood{
@@ -1998,6 +2005,11 @@
 	},
 /turf/simulated/floor/holofloor/carpet,
 /area/virtual_reality/meeting_hall)
+"CY" = (
+/turf/unsimulated/wall/netspace{
+	dir = 1
+	},
+/area/virtual_reality/netspace)
 "Dc" = (
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/sleeper{
@@ -2169,8 +2181,8 @@
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "EN" = (
-/turf/unsimulated/wall{
-	desc = "This is as far as the simulated area goes out."
+/turf/unsimulated/wall/netspace{
+	dir = 6
 	},
 /area/virtual_reality/shady_room)
 "EU" = (
@@ -2297,7 +2309,7 @@
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "Gx" = (
-/obj/structure/curtain{
+/obj/structure/curtain/open{
 	color = "#68ccab"
 	},
 /turf/simulated/floor/holofloor/wood{
@@ -2357,9 +2369,12 @@
 /turf/simulated/wall/sandstone,
 /area/virtual_reality/beach)
 "Hv" = (
-/obj/machinery/door/netspace,
+/obj/machinery/door/airlock/netspace,
 /turf/simulated/floor/holofloor/netspace,
 /area/virtual_reality/netspace)
+"HA" = (
+/turf/simulated/floor/exoplanet/titan_water/holodeck/middle,
+/area/virtual_reality/beach)
 "HD" = (
 /obj/structure/table/woodentable,
 /obj/structure/window/reinforced/holowindow,
@@ -2420,7 +2435,7 @@
 	alpha = 204;
 	pixel_x = 0
 	},
-/turf/simulated/floor/exoplanet/titan_water/minimal/holodeck,
+/turf/simulated/floor/exoplanet/titan_water/holodeck/minimal,
 /area/virtual_reality/beach)
 "Ix" = (
 /turf/simulated/wall/wood,
@@ -2664,7 +2679,7 @@
 /turf/simulated/floor/holofloor/grass,
 /area/virtual_reality/cafe)
 "LW" = (
-/obj/machinery/door/netspace/dojo{
+/obj/machinery/door/airlock/netspace/dojo{
 	id_tag = "netwall2";
 	locked = 1
 	},
@@ -3674,7 +3689,7 @@
 /turf/simulated/floor/holofloor/beach/sand,
 /area/virtual_reality/beach)
 "Xb" = (
-/obj/structure/curtain,
+/obj/structure/curtain/open,
 /turf/simulated/floor/holofloor/wood{
 	icon_state = "wood_broken4"
 	},
@@ -3756,8 +3771,10 @@
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "Ye" = (
-/turf/simulated/floor/holofloor/beach/water,
-/area/virtual_reality/beach)
+/turf/unsimulated/wall/netspace{
+	dir = 4
+	},
+/area/virtual_reality/shady_room)
 "Yg" = (
 /obj/floor_decal/carpet{
 	dir = 8
@@ -3815,6 +3832,11 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/holofloor/grass,
 /area/virtual_reality/cafe)
+"YD" = (
+/turf/unsimulated/wall/netspace{
+	dir = 10
+	},
+/area/virtual_reality/shady_room)
 "YE" = (
 /obj/floor_decal/corner/beige{
 	dir = 6
@@ -10388,9 +10410,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -10590,9 +10612,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -10792,9 +10814,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -10994,9 +11016,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -11196,9 +11218,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -11398,9 +11420,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -11600,9 +11622,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -11779,7 +11801,7 @@ Ws
 Ws
 Ws
 kh
-WU
+bF
 WU
 Sr
 WU
@@ -11802,9 +11824,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -11981,7 +12003,7 @@ Ws
 Ws
 Ws
 kh
-WU
+bF
 WU
 Sr
 WU
@@ -12004,9 +12026,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -12183,7 +12205,7 @@ Ws
 Ws
 Ws
 kh
-WU
+bF
 WU
 Sr
 ok
@@ -12206,9 +12228,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -12385,7 +12407,7 @@ Ws
 Ws
 Ws
 kh
-WU
+bF
 WU
 KB
 Jz
@@ -12403,14 +12425,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 Kk
 FV
 Ha
-Ye
 eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -12605,14 +12627,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 Yn
 ye
 oQ
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -12807,14 +12829,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 Yn
 PW
 oQ
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -13009,14 +13031,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 Yn
 WU
 oQ
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -13211,14 +13233,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 Yn
 Jz
 oQ
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -13413,14 +13435,14 @@ oQ
 eV
 eV
 eV
-Ye
+eV
 RF
 eC
 qy
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -13620,9 +13642,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -13822,9 +13844,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -14024,9 +14046,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -14226,9 +14248,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -14428,9 +14450,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -14630,9 +14652,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -14832,9 +14854,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -15034,9 +15056,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -15236,9 +15258,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -15438,9 +15460,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -15640,9 +15662,9 @@ Ha
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -15842,9 +15864,9 @@ oQ
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -16044,9 +16066,9 @@ qy
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -16246,9 +16268,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -16439,7 +16461,7 @@ Hr
 Hr
 WU
 WU
-fW
+WU
 WU
 WU
 oQ
@@ -16448,9 +16470,9 @@ eV
 eV
 eV
 eV
-eV
-eV
-eV
+HA
+HA
+HA
 kh
 Ws
 Ws
@@ -18853,7 +18875,7 @@ mh
 Ww
 wD
 Zn
-ig
+ub
 ig
 Zn
 ub
@@ -19054,7 +19076,7 @@ Wr
 mh
 WG
 ig
-sG
+ig
 ig
 ig
 ig
@@ -19660,7 +19682,7 @@ Wr
 mh
 Ww
 ig
-Gz
+ig
 ig
 ig
 ig
@@ -19863,7 +19885,7 @@ mh
 Ww
 wD
 Zn
-ig
+ub
 ig
 Zn
 ub
@@ -37429,11 +37451,11 @@ Bt
 Ws
 Ws
 Ws
-Ld
-wF
+CY
+qB
+ko
 wF
 OD
-qB
 qB
 qB
 qB
@@ -37633,9 +37655,9 @@ Ws
 Ws
 Ld
 wF
-wF
 Ld
 wF
+Ld
 wF
 wF
 wF
@@ -37835,9 +37857,9 @@ Ws
 Ws
 Ld
 wF
-wF
-Ld
-wF
+dT
+qB
+rG
 wF
 wF
 wF
@@ -37869,15 +37891,15 @@ Ws
 Ws
 Ws
 Ws
-EN
-EN
-EN
-EN
-EN
-EN
-EN
-EN
-EN
+xA
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
+YD
 Ws
 Ws
 Ws
@@ -38038,7 +38060,7 @@ Ws
 Ld
 wF
 wF
-Ld
+Hv
 wF
 wF
 wF
@@ -38071,7 +38093,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 PJ
 PJ
@@ -38079,7 +38101,7 @@ PJ
 PJ
 PJ
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -38240,7 +38262,7 @@ Ws
 Ld
 wF
 wF
-Ld
+Hv
 wF
 wF
 wF
@@ -38273,7 +38295,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 SU
 SU
@@ -38281,7 +38303,7 @@ Tq
 SU
 Ih
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -38441,9 +38463,9 @@ Ws
 Ws
 Ld
 wF
-wF
-Ld
-wF
+OD
+qB
+ko
 wF
 wF
 wF
@@ -38475,7 +38497,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 pL
 SU
@@ -38483,7 +38505,7 @@ VN
 pL
 oj
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -38643,9 +38665,9 @@ Ws
 Ws
 Ld
 wF
-wF
 Ld
 wF
+Ld
 wF
 wF
 wF
@@ -38677,7 +38699,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 ta
 VN
@@ -38685,7 +38707,7 @@ SU
 VN
 SU
 Sd
-EN
+fV
 Ws
 Ws
 Ws
@@ -38843,11 +38865,11 @@ Bt
 Ws
 Ws
 Ws
-Ld
-wF
+CY
+qB
+rG
 wF
 dT
-qB
 qB
 qB
 qB
@@ -38879,7 +38901,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 SU
 pL
@@ -38887,7 +38909,7 @@ VN
 sw
 pL
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -39049,7 +39071,7 @@ Ld
 wF
 wF
 wF
-wF
+Hv
 wF
 wF
 wF
@@ -39081,7 +39103,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 SU
 SU
@@ -39089,7 +39111,7 @@ pL
 SU
 Fg
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -39251,7 +39273,7 @@ Ld
 wF
 wF
 wF
-wF
+Hv
 wF
 wF
 wF
@@ -39283,7 +39305,7 @@ Ws
 Ws
 Ws
 Ws
-EN
+fV
 PJ
 PJ
 PJ
@@ -39291,7 +39313,7 @@ PJ
 PJ
 PJ
 PJ
-EN
+fV
 Ws
 Ws
 Ws
@@ -39485,14 +39507,14 @@ Ws
 Ws
 Ws
 Ws
-EN
-EN
-EN
-EN
-EN
-EN
-EN
-EN
+gt
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
+Ye
 EN
 Ws
 Ws

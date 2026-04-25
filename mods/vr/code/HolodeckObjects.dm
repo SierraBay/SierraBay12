@@ -43,7 +43,19 @@
 
 // Beach area
 
-/turf/simulated/floor/exoplanet/titan_water/minimal/holodeck
+/turf/simulated/floor/exoplanet/titan_water/holodeck
+	thermal_conductivity = 0
+	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_TOOLS
+
+/turf/simulated/floor/exoplanet/titan_water/holodeck/affect_atom_crossed(atom/movable/input_movable)
+	if(ishuman(input_movable))
+		var/mob/living/carbon/human/detected_human = input_movable
+		detected_human.handle_footsteps()
+		affect_slowdown(detected_human)
+		if(swim_stamina_spend)
+			start_spend_stamina()
+
+/turf/simulated/floor/exoplanet/titan_water/holodeck/minimal
 	name = "water"
 	deep_status = MIN_DEEP
 	icon = 'icons/misc/beach.dmi'
@@ -52,8 +64,16 @@
 	possible_icons = list("seashallow")
 	footstep_type = /singleton/footsteps/min_water
 	swim_delay = 1
-	thermal_conductivity = 0
-	atom_flags = ATOM_FLAG_NO_TEMP_CHANGE | ATOM_FLAG_NO_TOOLS
+
+/turf/simulated/floor/exoplanet/titan_water/holodeck/middle
+	name = "water"
+	deep_status = MIDDLE_DEEP
+	icon = 'icons/misc/beach.dmi'
+	mask_icon_state = "middle_deep"
+	icon_state = "seashallow"
+	possible_icons = list("seashallow")
+	footstep_type = /singleton/footsteps/mid_water
+	swim_delay = 2
 
 /obj/effect/lightsourse
 	name = "lightsourse"
@@ -93,62 +113,23 @@
 
 
 // Doors core
-/obj/machinery/door/netspace
+/obj/machinery/door/airlock/netspace
 	name = "netspace blockade"
 	icon = 'mods/vr/icons/netspace_obj.dmi'
 	icon_state = "barrier"
 	var/icon_base = "barrier"
+	bolts_file = 'icons/obj/doors/elevator/lights_bolts.dmi'
+	deny_file = 'icons/obj/doors/elevator/lights_deny.dmi'
+	lights_file = 'icons/obj/doors/elevator/lights_green.dmi'
 
-	/// Boolean. Whether or not the door is locked/bolted.
-	var/locked = FALSE
+	layer = ABOVE_HUMAN_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 
-	uncreated_component_parts = list(
-		/obj/item/stock_parts/radio/receiver,
-		/obj/item/stock_parts/power/apc
-	)
-	// To be fleshed out and moved to parent door, but staying minimal for now.
-	public_methods = list(
-		/singleton/public_access/public_method/toggle_door,
-		/singleton/public_access/public_method/netspace_toggle_bolts
-	)
-	stock_part_presets = list(/singleton/stock_part_preset/radio/receiver/netspace = 1)
-
-/obj/machinery/door/netspace/proc/lock(forced=0)
-	if(locked)
-		return 0
-
-	locked = TRUE
-	update_icon()
-	return 1
-
-/obj/machinery/door/netspace/proc/unlock(forced=0)
-	if(!src.locked)
-		return
-
-	locked = FALSE
-	update_icon()
-	return 1
-
-/obj/machinery/door/netspace/proc/toggle_lock(forced = 0)
-	return locked ? unlock() : lock()
-
-/singleton/public_access/public_method/netspace_toggle_bolts
-	name = "toggle bolts"
-	desc = "Toggles whether the netspace door is bolted or not, if possible."
-	call_proc = TYPE_PROC_REF(/obj/machinery/door/netspace, toggle_lock)
-
-/singleton/stock_part_preset/radio/receiver/netspace
-	frequency = AIRLOCK_FREQ
-	receive_and_call = list(
-		"toggle_door" = /singleton/public_access/public_method/toggle_door,
-		"toggle_bolts" = /singleton/public_access/public_method/netspace_toggle_bolts
-	)
-
-/obj/machinery/door/netspace/on_update_icon()
+/obj/machinery/door/airlock/netspace/on_update_icon()
 	update_dir()
 	if(density && !locked)
 		icon_state = "[icon_base]"
-	if(density && locked)
+	else if(locked)
 		icon_state = "[icon_base]_locked"
 	else
 		icon_state = "[icon_base]_open"
@@ -157,11 +138,11 @@
 
 // Doors variants
 
-/obj/machinery/door/netspace/dojo
+/obj/machinery/door/airlock/netspace/dojo
 	icon_state = "door_dojo"
 	icon_base = "door_dojo"
 
-/obj/machinery/door/netspace/firewall
+/obj/machinery/door/airlock/netspace/firewall
 	icon_state = "firewall"
 	icon_base = "firewall"
 

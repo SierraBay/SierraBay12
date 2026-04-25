@@ -18,7 +18,7 @@ GLOBAL_LIST_AS(vr_areas, list(
 ))
 GLOBAL_LIST_AS(emagged_vr_areas, list(
 	"Shady Room" = /area/virtual_reality/shady_room,
-	"Netspace" = /area/virtual_reality/netspace
+//	"Netspace" = /area/virtual_reality/netspace
 ))
 
 
