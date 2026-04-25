@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(virtual_reality)
 	var/list/virtual_clients = list()				// Associative list of /client => /mob/living. Each client is linked to its virtual mob.
 	var/list/was_warned = list()					// A list of clients that have already received the disclaimer message when entering VR.
 
+	var/list/loading_tracker = list()
 	var/static/list/vr_blacklist = list(
 		/obj/item/disk/nuclear,
 		/obj/item/clothing/accessory/bs_silk,
@@ -443,7 +444,16 @@ SUBSYSTEM_DEF(virtual_reality)
 		to_chat(user, SPAN_WARNING("VR program is recalibrating, try again later."))
 		return TRUE
 
+	if(loading_tracker[zone])
+		// in case of runtimes
+		if(world.time > loading_tracker[zone])
+			loading_tracker[zone] = FALSE
+		else
+			to_chat(user, SPAN_WARNING("This zone is already loading a template. Try again, once its finished."))
+			return TRUE
+
 	vr_program.area_cooldown = world.time + 30 SECONDS
+	loading_tracker[zone] = world.time + 120 SECONDS
 	to_chat(user, SPAN_WARNING("Loading template: [A.name]..."))
 
 	var/list/mobs_in_zone = mobs_in_area(zone_area)
@@ -493,6 +503,7 @@ SUBSYSTEM_DEF(virtual_reality)
 
 	after_template_load(A, active_area)
 	to_chat(user, SPAN_NOTICE("Successfully loaded new area: [A.name]!"))
+	loading_tracker[zone] = FALSE
 	if (loaded_normally)
 		playsound(vr_program.program.computer.holder, 'sound/machines/ping.ogg', 50)
 	return TRUE
