@@ -5,5 +5,11 @@
 
 /obj/machinery/alarm/monitor/isolation/petrov //just for a managment
 
+/obj/machinery/alarm/petrov
+	req_access = list(list(access_petrov, access_atmospherics, access_engine_equip))
+
+/obj/machinery/alarm/charon
+	req_access = list(list(access_expedition_shuttle, access_atmospherics, access_engine_equip))
+
 /obj/machinery/alarm/merchant
 	req_access = list(access_merchant)
