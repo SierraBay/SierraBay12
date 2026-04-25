@@ -359,6 +359,10 @@
 	},
 /turf/space,
 /area/space)
+"AM" = (
+/obj/shuttle_landmark/sierra/transit/petrov,
+/turf/space/transit/east,
+/area/space)
 "Cm" = (
 /obj/step_trigger/teleporter/random{
 	affect_ghosts = 0;
@@ -31970,7 +31974,7 @@ az
 az
 at
 at
-at
+AM
 at
 at
 az
