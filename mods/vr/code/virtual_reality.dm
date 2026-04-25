@@ -484,7 +484,9 @@ SUBSYSTEM_DEF(virtual_reality)
 	before_template_load(A, active_area)
 	copy_template(A, active_area)
 	active_area.forced_ambience = A.forced_ambience
-	active_area.dynamic_lighting = A.dynamic_lighting
+	// Just in case, set_dynamic_lighting already returns false for the same type of lighting
+	if(active_area.dynamic_lighting != A.dynamic_lighting)
+		active_area.set_dynamic_lighting(A.dynamic_lighting)
 	active_area.sound_env = A.sound_env
 	GLOB.vr_spawns[zone] = list()
 	for (var/obj/effect/vr_spawn/V in active_area)

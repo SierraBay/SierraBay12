@@ -32,50 +32,66 @@
 /area/virtual_reality/beach
 	name = "\improper Virtual Reality - Beach"
 	sound_env = PLAIN
+	dynamic_lighting = FALSE
 	forced_ambience = list('sound/music/europa/WildEncounters.ogg')
 
 /area/virtual_reality/plaza
 	name = "\improper Virtual Reality - Plaza"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/volleyball_court
 	name = "\improper Virtual Reality - Volleyball Court"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/desert
 	name = "\improper Virtual Reality - Desert"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/picnic_area
 	name = "\improper Virtual Reality - Picnic Area"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/theatre
 	name = "\improper Virtual Reality - Theatre"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/courtroom
 	name = "\improper Virtual Reality - Courtroom"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/empty_court
 	name = "\improper Virtual Reality - Empty Court"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/temple
 	name = "\improper Virtual Reality - Temple"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/cafe
 	name = "\improper Virtual Reality - Cafe"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/space
 	name = "\improper Virtual Reality - Space"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/snowfield
 	name = "\improper Virtual Reality - Snowfield"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/meeting_hall
 	name = "\improper Virtual Reality - Meeting Hall"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/basketball_court
 	name = "\improper Virtual Reality - Basketball Court"
+	dynamic_lighting = FALSE
 
 /area/virtual_reality/thunderdome
 	name = "\improper Virtual Reality - Thunderdome"
+	dynamic_lighting = FALSE
 	forced_ambience = list('sound/music/THUNDERDOME.ogg')
 
 /area/virtual_reality/boxing_ring
 	name = "\improper Virtual Reality - Boxing Ring"
+	dynamic_lighting = FALSE
