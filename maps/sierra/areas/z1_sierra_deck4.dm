@@ -236,10 +236,12 @@
 /area/quartermaster/hangar_atmos
 	name = "Fourth Deck - Hangar - Atmospherics Storage"
 	icon_state = "auxstorage"
+	req_access = list(access_hangar)
 
 /area/quartermaster/hangar_stairs
 	name = "Fourth Deck - Hangar - Stairs"
 	icon_state = "auxstorage"
+	req_access = list(access_hangar)
 
 /* SECURITY AREAS
  *
