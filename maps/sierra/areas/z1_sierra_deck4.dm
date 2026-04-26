@@ -266,7 +266,8 @@
 	icon_state = "checkpoint1"
 	req_access = list(access_sec_doors)
 
-/area/security/sierra/dockcheckaft
+/area/security/sierra/dockcheckaft // abandoned sec checkpoint
 	name = "Fourth Deck - Security - Aft Dock Checkpoint"
 	icon_state = "checkpoint1"
+	area_flags = AREA_FLAG_RAD_SHIELDED
 	req_access = list(access_sec_doors)
