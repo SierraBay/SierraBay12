@@ -404,6 +404,7 @@ SIERRA_ESCAPE_POD(11)
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
 	warmup_time = 7
 
+/* // access override disabled
 /datum/shuttle/autodock/overmap/exploration_shuttle/refresh_fuel_ports_list()	// Setting access onto APC and air alarms. "Overrides code. Overrides map. WHY?!" - LordNest
 	..()
 	for(var/area/A in shuttle_area)
@@ -413,6 +414,7 @@ SIERRA_ESCAPE_POD(11)
 		for(var/obj/machinery/power/apc/apc in A)
 			if(apc.req_access)
 				apc.req_access = list(list(access_engine, access_field_eng, access_expedition_shuttle_helm))  // engineering OR field eng
+*/
 
 /obj/shuttle_landmark/sierra/hangar/exploration_shuttle
 	name = "Charon Hangar"
