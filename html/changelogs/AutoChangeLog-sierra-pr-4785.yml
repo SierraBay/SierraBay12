@@ -1,0 +1,5 @@
+author: thekekman666
+changes:
+  - rscadd: Добавил визуальный редактор нот
+  - rscadd: Добавил визуализатор проигрываемых нот
+delete-after: true
