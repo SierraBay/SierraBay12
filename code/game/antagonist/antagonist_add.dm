@@ -3,7 +3,9 @@
 	if(!add_antagonist_mind(player, ignore_role, bypass=bypass))
 		return
 
+	// [SIERRA-EDIT]
 	load_antag_base()
+	// [/SIERRA-EDIT]
 
 	//do this again, just in case
 	if(flags & ANTAG_OVERRIDE_JOB)

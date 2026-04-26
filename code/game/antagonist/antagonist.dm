@@ -274,6 +274,7 @@
 /datum/antagonist/proc/arrive()
 	return
 
+// [SIERRA-ADD] - ANTAGBASE
 /datum/antagonist/proc/load_antag_base()
 	if(base_to_load)
 		var/datum/map_template/base = new base_to_load()
@@ -281,3 +282,4 @@
 		base_to_load = null
 		base.load_new_z()
 		get_starting_locations()
+// [/SIERRA-ADD]
