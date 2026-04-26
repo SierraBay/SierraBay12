@@ -167,6 +167,10 @@
 		new_player_panel()
 
 	if(href_list["observe"])
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+
 		if (GAME_STATE < RUNLEVEL_LOBBY)
 			if (!client.holder)
 				to_chat(src, SPAN_WARNING("Please wait for server initialization to complete..."))
@@ -211,6 +215,10 @@
 			return 1
 
 	if(href_list["late_join"])
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+
 		if(GAME_STATE != RUNLEVEL_GAME)
 			to_chat(usr, SPAN_WARNING("The round has either not started yet or already ended."))
 			return
@@ -229,6 +237,10 @@
 		LateChoices()
 
 	if(href_list["SelectedJob"])
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+
 		var/datum/job/job = SSjobs.get_by_title(href_list["SelectedJob"])
 
 		if(!SSjobs.check_general_join_blockers(src, job))

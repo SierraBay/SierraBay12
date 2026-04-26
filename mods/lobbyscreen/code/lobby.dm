@@ -24,10 +24,16 @@
 		GLOB.using_map.update_titlescreen(client)
 		return TOPIC_HANDLED
 	if (href_list["lobby_ready"])
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
 		ready = !ready
 		GLOB.using_map.update_titlescreen(client)
 		return TOPIC_HANDLED
 	if (href_list["change_character"])
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
 		client.prefs.open_load_dialog(src, TRUE)
 		return TOPIC_HANDLED
 	if (href_list["lobby_wiki"])
