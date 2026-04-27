@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - bugfix: Пофиксил спавн гост ролей и антагонистов в начале раунда
+delete-after: true

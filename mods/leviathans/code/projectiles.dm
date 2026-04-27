@@ -1,4 +1,4 @@
-// Огромный фаербол
+// Large fireball projectile
 /obj/meteor/leviathan_fireball
 	name = "draconic fireball"
 	desc = "A massive ball of stellar plasma."
@@ -14,13 +14,13 @@
 
 /obj/meteor/leviathan_fireball/meteor_effect()
 	..()
-	// Большой бум для большого дракона
+	// Massive explosion for the dragon
 	explosion(src.loc, 18, adminlog = 1, turf_breaker = TRUE)
 
 /obj/meteor/leviathan_fireball/get_shield_damage()
 	return ..() * rand(40, 80)
 
-// Шаровой ЭМИ заряд
+// Ball EMP charge
 /obj/meteor/supermatter/medusa
 	name = "medusa charge"
 	icon = 'mods/leviathans/icons/projectiles.dmi'
@@ -36,7 +36,7 @@
 	empulse(get_turf(src), rand(5,8), rand(6,9))
 	log_and_message_admins("Medusa charge exploded", null, src)
 
-// Пробивающий снаряд с дронами внутри
+// Piercing pod containing drones
 /obj/meteor/drone_pod
 	name = "autonomous dronepod missile"
 	desc = "A small metallic pod missile containing hostile drones."
@@ -49,7 +49,7 @@
 	hits = 12
 	pixel_x = -16
 	pixel_y = -16
-	// шанс пробития щита
+	// Chance to pierce ship shields
 	var/pass_chance = 33
 
 /obj/meteor/drone_pod/meteor_effect()
@@ -71,7 +71,7 @@
 	for(var/i = 1 to drone_count)
 		new /mob/living/simple_animal/hostile/retaliate/malf_drone(T)
 
-	// 10% шанс, что появится хуллбрейкер
+	// 10% chance to spawn a hullbreaker animal
 	if(prob(10))
 		new /mob/living/simple_animal/hostile/fleet_heavy/malf(T)
 

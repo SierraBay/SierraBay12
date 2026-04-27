@@ -224,7 +224,6 @@
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
-	// #include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
