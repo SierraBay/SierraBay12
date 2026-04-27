@@ -122,10 +122,9 @@
 
 				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 				log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
-				// [SIERRA-EDIT] - EX666_ECOSYSTEM
-				// log_admin_rank_modification(adm_ckey, "Removed") // SIERRA-EDIT - ORIGINAL
-				log_admin_rank_modification(adm_ckey, "Удален")
-				// [/SIERRA-EDIT]
+
+				log_admin_rank_modification(adm_ckey, "Removed")
+
 
 		else if(task == "rank")
 			var/new_rank

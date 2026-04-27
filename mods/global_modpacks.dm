@@ -9,7 +9,6 @@
 #include "220_cult/_220_cult_includes.dm"
 #include "eris_announcer/_eris_announcer_includes.dm"
 #include "emote_panel/_emote_panel_includes.dm"
-#include "ex666_ecosystem/_ex666_ecosystem_includes.dm"
 #include "escpodinf/_escpodinf_includes.dm"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
 //#include "explosions/_explosions_includes.dm"

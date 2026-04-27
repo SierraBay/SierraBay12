@@ -1,1 +1,0 @@
-var/global/sqlfdbkdbutil = "test"
