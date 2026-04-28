@@ -1,0 +1,4 @@
+author: thekekman666
+changes:
+  - bugfix: Исправлена точность стреляющих мобов в упоре
+delete-after: true

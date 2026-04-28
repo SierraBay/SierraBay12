@@ -1,6 +1,0 @@
-author: 'Podszywacz '
-changes:
-  - bugfix: Changes the deuterium reaction by making oxyphoron into a substrate 
-      instead of a catalyst, so players cannot create infinite amount of 
-      deuterium
-delete-after: true

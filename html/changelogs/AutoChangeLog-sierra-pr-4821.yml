@@ -1,0 +1,5 @@
+author: ArReiA
+changes:
+  - tweak: Резоми теперь могут издавать первую скрелльскую трель (sktrill1)
+  - soundadd: Добавлены новые звуки эмоций резоми
+delete-after: true

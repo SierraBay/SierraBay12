@@ -3,12 +3,9 @@
 	if(!add_antagonist_mind(player, ignore_role, bypass=bypass))
 		return
 
-	if(base_to_load)
-		var/datum/map_template/base = new base_to_load()
-		report_progress("Loading map template '[base]' for [role_text]...")
-		base_to_load = null
-		base.load_new_z()
-		get_starting_locations()
+	// [SIERRA-EDIT]
+	load_antag_base()
+	// [/SIERRA-EDIT]
 
 	//do this again, just in case
 	if(flags & ANTAG_OVERRIDE_JOB)
