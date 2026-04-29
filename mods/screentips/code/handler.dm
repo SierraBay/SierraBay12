@@ -4,7 +4,7 @@
 /client/MouseEntered(atom/hoverOn)
 	. = ..()
 
-	if (GAME_STATE <= RUNLEVEL_SETUP || !screentip.show)
+	if (GAME_STATE <= RUNLEVEL_SETUP || !screentip || !screentip.show)
 		return
 
 	screen |= screentip
