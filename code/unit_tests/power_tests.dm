@@ -237,6 +237,26 @@
 	pass("local powernet APC state application stays batched and cheap on no-ops.")
 	return 1
 
+/datum/unit_test/local_powernet_total_usage_is_raw
+	name = "POWER: local powernet total usage includes unpowered channels."
+
+/datum/unit_test/local_powernet_total_usage_is_raw/start_test()
+	var/datum/local_powernet/local_net = new
+	local_net.adjust_static_power(PW_CHANNEL_EQUIPMENT, 10)
+	local_net.adjust_static_power(PW_CHANNEL_LIGHTING, 20)
+	local_net.use_active_power(PW_CHANNEL_ENVIRONMENT, 30)
+	local_net.set_power_channel(PW_CHANNEL_EQUIPMENT, FALSE)
+
+	if(local_net.get_channel_usage(PW_CHANNEL_EQUIPMENT) != 0)
+		fail("Unpowered channel display usage should be gated to zero.")
+		return 1
+	if(local_net.get_total_usage() != 60)
+		fail("Total usage should preserve raw used + oneoff semantics across all channels.")
+		return 1
+
+	pass("local powernet total usage preserves raw area.usage(TOTAL) semantics.")
+	return 1
+
 /datum/unit_test/powernet_apc_cache
 	name = "POWER: powernet caches APC membership for sensors and APC balancing."
 
@@ -351,6 +371,7 @@
 	var/surplus_power = 0
 	var/connected = TRUE
 	var/draw_calls = 0
+	var/drawn_power = 0
 	var/connect_calls = 0
 	var/disconnect_calls = 0
 
@@ -366,10 +387,13 @@
 	draw_calls++
 	// Model a steady-state external feed for APC tests rather than a draining battery.
 	// APC logic already accounts for the post-draw surplus within the sampled tick state.
-	return min(amount, surplus_power)
+	var/drawn = min(amount, surplus_power)
+	drawn_power += drawn
+	return drawn
 
 /obj/machinery/power/terminal/unit_test_apc/proc/reset_counts()
 	draw_calls = 0
+	drawn_power = 0
 	connect_calls = 0
 	disconnect_calls = 0
 
@@ -730,6 +754,40 @@
 
 	return pass_fixture(fixture, "APC steady-state performs one external draw and one fallback discharge at most.")
 
+/datum/unit_test/apc_behavior_template/apc_charging_draws_immediately
+	name = "POWER: APC charging draws immediately without delayed local oneoff."
+
+/datum/unit_test/apc_behavior_template/apc_charging_draws_immediately/start_test()
+	var/list/fixture = setup_apc_fixture(TRUE, 2000, 999)
+	var/obj/machinery/power/apc/unit_test_apc/apc = fixture["apc"]
+	var/datum/local_powernet/local_net = fixture["local_net"]
+	var/obj/machinery/power/terminal/unit_test_apc/terminal = fixture["terminal"]
+	var/obj/item/stock_parts/power/battery/battery = fixture["battery"]
+	var/obj/item/cell/unit_test_apc/cell = fixture["cell"]
+
+	configure_apc_channels(apc, POWERCHAN_ON, POWERCHAN_ON, POWERCHAN_ON)
+	apc.update()
+	battery.charge_wait_counter = 0
+	reset_apc_fixture_counters(fixture)
+	var/usage_revision = local_net.usage_revision
+	var/cell_charge_before = cell.charge
+	apc.Process()
+
+	if(terminal.draw_calls != 1)
+		return fail_fixture(fixture, "APC charging should perform exactly one terminal draw, saw [terminal.draw_calls].")
+	if(terminal.drawn_power <= 0)
+		return fail_fixture(fixture, "APC charging did not draw any external terminal power.")
+	if(cell.charge <= cell_charge_before)
+		return fail_fixture(fixture, "APC charging did not increase the cell charge.")
+	if(cell.discharge_calls)
+		return fail_fixture(fixture, "APC charging unexpectedly discharged the backup cell [cell.discharge_calls] times.")
+	if(local_net.environment_consumption)
+		return fail_fixture(fixture, "APC charging queued delayed local environment usage ([local_net.environment_consumption]W).")
+	if(local_net.usage_revision != usage_revision)
+		return fail_fixture(fixture, "APC charging changed local powernet usage_revision instead of drawing directly from the terminal.")
+
+	return pass_fixture(fixture, "APC charging consumes terminal power in the same tick without queuing local oneoff usage.")
+
 /datum/unit_test/apc_behavior_template/apc_no_component_processing
 	name = "POWER: APC steady-state removes terminal and battery from processing_parts."
 
@@ -789,6 +847,36 @@
 		return fail_fixture(fixture, "Terminal move/ripout did not refresh APC no-power state.")
 
 	return pass_fixture(fixture, "Terminal connect, disconnect, and move events wake APC and refresh APC power state immediately.")
+
+/datum/unit_test/apc_behavior_template/apc_terminal_replacement_clears_old_terminal
+	name = "POWER: APC terminal replacement clears the old terminal owner."
+
+/datum/unit_test/apc_behavior_template/apc_terminal_replacement_clears_old_terminal/start_test()
+	var/list/fixture = setup_apc_fixture(FALSE, 50, null)
+	var/obj/machinery/power/apc/unit_test_apc/apc = fixture["apc"]
+	var/obj/item/stock_parts/power/terminal/terminal_part = fixture["terminal_part"]
+	var/obj/machinery/power/terminal/unit_test_apc/old_terminal = fixture["terminal"]
+	var/turf/center = fixture["center"]
+	var/obj/machinery/power/terminal/unit_test_apc/replacement = new(center)
+	replacement.set_supply(50)
+
+	terminal_part.set_terminal(apc, replacement)
+	fixture["terminal"] = replacement
+
+	var/failure
+	if(terminal_part.terminal != replacement)
+		failure = "Terminal replacement did not install the replacement terminal."
+	else if(replacement.master != terminal_part)
+		failure = "Replacement terminal did not point back at the APC terminal component."
+	else if(old_terminal.master)
+		failure = "Old terminal still pointed at the APC terminal component after replacement."
+	else if(!(terminal_part.status & PART_STAT_CONNECTED))
+		failure = "APC terminal component lost PART_STAT_CONNECTED during replacement."
+
+	qdel(old_terminal)
+	if(failure)
+		return fail_fixture(fixture, failure)
+	return pass_fixture(fixture, "Terminal replacement detaches the old terminal without dropping the replacement connection.")
 
 /datum/unit_test/apc_behavior_template/apc_cell_events_wake
 	name = "POWER: APC cell insert/remove wakes APC and refreshes power state."

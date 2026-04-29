@@ -24,7 +24,7 @@
 		machine.update_power_channel(cached_channel)
 		unset_status(machine, PART_STAT_ACTIVE)
 	cache_terminal_state(null, 0, 0, FALSE)
-	unset_terminal(loc, terminal)
+	unset_terminal(terminal, loc)
 	..()
 
 /obj/item/stock_parts/power/terminal/Destroy()
@@ -97,7 +97,7 @@
 
 /obj/item/stock_parts/power/terminal/proc/set_terminal(obj/machinery/machine, obj/machinery/power/new_terminal)
 	if(terminal)
-		unset_terminal(machine, terminal)
+		unset_terminal(terminal, machine)
 	terminal = new_terminal
 	terminal.master = src
 	cache_terminal_state(terminal, 0, 0, FALSE)
@@ -131,6 +131,10 @@
 /obj/item/stock_parts/power/terminal/proc/unset_terminal(obj/machinery/power/old_terminal, obj/machinery/machine)
 	remove_extension(src, /datum/extension/event_registration/shuttle_stationary)
 	GLOB.destroyed_event.unregister(old_terminal, src)
+	if(istype(old_terminal, /obj/machinery/power/terminal))
+		var/obj/machinery/power/terminal/old_power_terminal = old_terminal
+		if(old_power_terminal.master == src)
+			old_power_terminal.master = null
 	if(!machine && istype(loc, /obj/machinery))
 		machine = loc
 	if(machine)

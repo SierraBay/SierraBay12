@@ -172,7 +172,7 @@
 	return use_active_power(channel, amount)
 
 /datum/local_powernet/proc/get_total_usage()
-	return get_channel_usage(PW_CHANNEL_EQUIPMENT) + get_channel_usage(PW_CHANNEL_LIGHTING) + get_channel_usage(PW_CHANNEL_ENVIRONMENT)
+	return passive_equipment_consumption + equipment_consumption + passive_lighting_consumption + lighting_consumption + passive_environment_consumption + environment_consumption
 
 /datum/local_powernet/proc/get_channel_usage(channel)
 	switch(channel)

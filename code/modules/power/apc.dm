@@ -904,11 +904,14 @@
 	var/obj/item/stock_parts/power/battery/power = state.battery_part
 	var/obj/item/cell/cell = state.cell
 	var/cell_charge_before = cell ? cell.charge : 0
+	var/charging_drawn = 0
+	var/charging_used = 0
 	if(power)
 		power.last_cell_charge = cell_charge_before
 
 	if(state.external_terminal && state.desired_total_load > 0)
 		state.external_drawn = state.external_terminal.draw_power(state.desired_total_load)
+	var/remaining_external_surplus = max(state.external_surplus - state.external_drawn, 0)
 	var/remaining_deficit = max(state.desired_total_load - state.external_drawn, 0)
 
 	if(cell && !shorted && remaining_deficit > 0)
@@ -925,6 +928,9 @@
 			power.set_battery_mode(APC_BATTERY_MODE_DISCHARGING, state.desired_total_load)
 		else
 			power.unset_status(src, PART_STAT_ACTIVE)
+			var/can_charge_from_terminal = FALSE
+			if(power.can_charge && cell && !cell.fully_charged() && state.external_terminal && remaining_external_surplus > 0)
+				can_charge_from_terminal = !!(apc_area && apc_area.powered(power.charge_channel))
 			if(!cell)
 				power.charge_wait_counter = initial(power.charge_wait_counter)
 				power.set_battery_mode(APC_BATTERY_MODE_UNAVAILABLE, state.desired_total_load)
@@ -933,26 +939,28 @@
 				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
 			else if(state.desired_total_load > 0 && !state.powered && cell.fully_charged())
 				power.set_battery_mode(APC_BATTERY_MODE_READY, state.desired_total_load)
-			else if(!power.can_charge || cell.fully_charged() || !apc_area.powered(power.charge_channel))
+			else if(!power.can_charge || cell.fully_charged() || !can_charge_from_terminal)
 				power.charge_wait_counter = initial(power.charge_wait_counter)
 				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
 			else if(power.charge_wait_counter > 0)
 				power.charge_wait_counter--
 				power.set_battery_mode(APC_BATTERY_MODE_IDLE, state.desired_total_load)
 			else
-				var/give = cell.give(power.charge_rate) / CELLRATE
-				if(give > 0)
-					apc_area.use_power_oneoff(give, power.charge_channel)
-				power.set_battery_mode(give > 0 ? APC_BATTERY_MODE_CHARGING : APC_BATTERY_MODE_IDLE, state.desired_total_load)
+				var/charge_request = min(power.charge_rate, cell.maxcharge - cell.charge) / CELLRATE
+				if(charge_request > 0)
+					charging_drawn = state.external_terminal.draw_power(min(charge_request, remaining_external_surplus))
+				if(charging_drawn > 0)
+					charging_used = cell.give(charging_drawn * CELLRATE) / CELLRATE
+				power.set_battery_mode(charging_used > 0 ? APC_BATTERY_MODE_CHARGING : APC_BATTERY_MODE_IDLE, state.desired_total_load)
 
 	if(state.terminal_part)
-		state.external_surplus = max(state.external_surplus - state.external_drawn, 0)
+		state.external_surplus = max(remaining_external_surplus - charging_drawn, 0)
 		state.terminal_part.cache_terminal_state(state.external_terminal, state.desired_total_load, state.external_surplus, state.external_avail > 0)
 
 	if(debug)
 		log_debug("Status: [state.main_status] - Excess: [state.external_surplus] - Desired Equip: [state.desired_equipment_load] - Desired Light: [state.desired_lighting_load] - Longterm: [longtermpower]")
 
-	last_used_charging = max((cell && (cell.charge - cell_charge_before) * CELLRATE) || 0, 0)
+	last_used_charging = charging_used
 	charging = last_used_charging ? 1 : 0
 	if(cell?.fully_charged())
 		charging = 2
