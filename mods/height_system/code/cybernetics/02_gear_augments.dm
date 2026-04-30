@@ -104,14 +104,14 @@
 
 	var/list/slot_gear = (pref.gear_list && pref.gear_list[pref.gear_slot]) ? pref.gear_list[pref.gear_slot] : list()
 	var/found_any = FALSE
-
-	// Build job list from pref (same logic as loadout tab)
+//[SIERRA-ADD] HEIGHT
+ 	// Build job list from pref (same logic as loadout tab)
 	var/list/jobs = list()
 	for(var/job_title in (pref.job_medium | pref.job_low | pref.job_high))
 		var/datum/job/J = SSjobs.get_by_title(job_title)
 		if(J)
 			jobs += J
-
+//[/SIERRA-ADD] HEIGHT
 	for(var/gear_name in gear_datums)
 		var/datum/gear/augment/G = gear_datums[gear_name]
 		if(!istype(G))
@@ -123,7 +123,7 @@
 		var/ticked     = (G.display_name in slot_gear)
 		var/btn_label  = ticked ? "&#91;&#215;&#93;" : "&#91;+&#93;"
 		var/btn_color  = ticked ? COLOR_CYBERUI_RED       : COLOR_CYBERUI_BTN_GREEN
-
+//[SIERRA-ADD] HEIGHT
 		// Determine name colour + job restriction label
 		var/name_color = COLOR_GRAY80
 		var/list/jobchecks = list()
@@ -150,16 +150,20 @@
 						jobchecks += SPAN_COLOR(COLOR_CYBERUI_TEXT_MID, J.title)
 
 		var/name_style = ticked ? "color:[name_color];font-weight:bold;" : "color:[name_color];"
+//[/SIERRA-ADD] HEIGHT
 		var/cost_color = ticked ? COLOR_CYBERUI_GREEN_SEL : COLOR_CYBERUI_TEXT_MID
 
 		. += "<div style=\"margin:1px 0 1px 4px;\">"
 		. += {"<a href="?src=\ref[src];aug_toggle=\ref[G]" style="font-family:monospace;color:[btn_color];text-decoration:none;">[btn_label]</a> "}
 		. += {"<span style="[name_style]">[G.display_name]</span> "}
 		. += {"<span style="font-size:10px;color:[cost_color];">[G.cost] pt[G.cost != 1 ? "s" : ""]</span>"}
+//[SIERRA-ADD] HEIGHT
 		if(length(jobchecks))
 			. += {"<br><span style="font-size:10px;color:[COLOR_CYBERUI_TEXT_DIM];margin-left:20px;">[english_list(jobchecks)]</span>"}
+//[/SIERRA-ADD] HEIGHT
 		if(G.description)
 			. += {"<br><span style="font-size:10px;color:[COLOR_CYBERUI_TEXT_DIM];margin-left:20px;">[G.description]</span>"}
+//[SIERRA-ADD] HEIGHT
 		if(ticked && length(G.gear_tweaks))
 			for(var/datum/gear_tweak/tweak in G.gear_tweaks)
 				var/tweak_meta = get_aug_tweak_metadata(G, tweak)
@@ -167,6 +171,7 @@
 				if(contents)
 					. += {"<br><a href="?src=\ref[src];aug_gear=\ref[G];aug_tweak=\ref[tweak]" style="display:inline-block;margin:2px 0 0 20px;padding:1px 5px;background:#0e1e2c;border:1px solid [COLOR_CYBERUI_BLUE];border-radius:2px;color:[COLOR_CYBERUI_TEXT_SOFT];font-size:9px;text-decoration:none;">[contents]</a>"}
 		. += "</div>"
+//[/SIERRA-ADD] HEIGHT
 
 	if(!found_any)
 		. += "<div style=\"margin-left:4px;font-size:10px;color:[COLOR_CYBERUI_GRAY_DIM];\"><i>None available.</i></div>"

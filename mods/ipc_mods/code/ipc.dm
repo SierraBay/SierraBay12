@@ -33,6 +33,8 @@
 
 /obj/item/organ/internal/posibrain/ipc/replaced(mob/living/carbon/human/target, obj/item/organ/external/affected)
 	. = ..()
+	if(. && shackles_module)
+		shackles_module.owner = owner
 	if(. && shackle)
 		action_button_name = "show_laws"
 		refresh_action_button()
@@ -361,6 +363,10 @@
 		return STATUS_CLOSE
 	if(user.IsHolding(src))
 		return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
+	if(istype(loc, /obj/item/organ/internal/posibrain/ipc))
+		var/obj/item/organ/internal/posibrain/ipc/brain_container = loc
+		if(user.Adjacent(brain_container) && user.IsHolding(/obj/item/device/multitool/multimeter/datajack))
+			return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
 	var/atom/interaction_target = src
 	if(owner)
 		interaction_target = owner

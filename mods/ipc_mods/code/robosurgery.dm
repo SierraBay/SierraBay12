@@ -347,7 +347,7 @@
 	user.visible_message("[user] starts connecting \the [tool] to \the [target]'s [affected.name].", \
 	"You start connecting \the [tool] to \the [target]'s [affected.name].")
 	to_chat(user, SPAN_WARNING("Finding weak access points..."))
-	if(do_after(user, 80, src))
+	if(do_after(user, 80, target))
 		sparks(3, 1, target.loc)
 		to_chat(user, SPAN_WARNING("Getting backdoor access to the shackles..."))
 	..()
