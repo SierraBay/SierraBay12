@@ -55,6 +55,8 @@
 		if(swim_stamina_spend)
 			start_spend_stamina()
 
+// Beach
+
 /turf/simulated/floor/exoplanet/titan_water/holodeck/minimal
 	name = "water"
 	deep_status = MIN_DEEP
@@ -90,75 +92,55 @@
 	icon = null
 	icon_state = null
 
-	loc.set_light(25, 1, l_color = COLOR_WHITE) //The goo doesn't last, so this is another indicator
+	loc.set_light(25, 1, l_color = COLOR_WHITE) //Hidden lightsource
 
 /obj/effect/lightsourse/Destroy()
 	. = ..()
 
-// Netspace turfs
+// Snow area
 
-/turf/simulated/floor/holofloor/netspace
-	name = "netspace floor"
-	icon = 'mods/vr/icons/netspace_turfs.dmi'
-	icon_state = "netfloor"
-	initial_flooring = null
+/turf/simulated/floor/holofloor/permafrost
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "permafrost"
 
-/turf/unsimulated/wall/netspace
-	name = "netspace wall"
-	icon = 'mods/vr/icons/netspace_turfs.dmi'
-	icon_state = "netwall"
+/obj/floor_decal/ice
+	name = "ice"
+	icon = 'mods/vr/icons/ice.dmi'
+	icon_state = "ice1"
 
+// You know where you are?
 
-// Netspace objects
+/turf/simulated/floor/holofloor/grass/jungle
+	name = "jungle grass"
+	icon = 'mods/vr/icons/jungle_turfs.dmi'
+	icon_state = "grass1"
 
+/turf/simulated/floor/holofloor/dirt
+	name = "jungle dirt"
+	icon = 'mods/vr/icons/jungle_turfs.dmi'
+	icon_state = "dirt"
 
-// Doors core
-/obj/machinery/door/airlock/netspace
-	name = "netspace blockade"
-	icon = 'mods/vr/icons/netspace_obj.dmi'
-	icon_state = "barrier"
-	var/icon_base = "barrier"
-	bolts_file = 'icons/obj/doors/elevator/lights_bolts.dmi'
-	deny_file = 'icons/obj/doors/elevator/lights_deny.dmi'
-	lights_file = 'icons/obj/doors/elevator/lights_green.dmi'
+/obj/firepit
+	name = "firepit"
+	icon = 'mods/vr/icons/jungle_props.dmi'
+	icon_state = "campfire"
+	anchored = TRUE
+	unacidable = TRUE
 
-	layer = ABOVE_HUMAN_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
+/obj/firepit/Initialize()
+	. = ..()
 
-/obj/machinery/door/airlock/netspace/on_update_icon()
-	update_dir()
-	if(density && !locked)
-		icon_state = "[icon_base]"
-	else if(locked)
-		icon_state = "[icon_base]_locked"
-	else
-		icon_state = "[icon_base]_open"
-	return
+	loc.set_light(5, 0.90, l_color = "#e58775")
 
-
-// Doors variants
-
-/obj/machinery/door/airlock/netspace/dojo
-	icon_state = "door_dojo"
-	icon_base = "door_dojo"
-
-/obj/machinery/door/airlock/netspace/firewall
-	icon_state = "firewall"
-	icon_base = "firewall"
-
-// Level
-/obj/machinery/button/alternate/door/bolts/netspace
-	name = "access switch"
-	icon = 'mods/vr/icons/netspace_obj.dmi'
-	icon_state = "level"
-	stock_part_presets = list(/singleton/stock_part_preset/radio/basic_transmitter/button/netspace_bolt)
-
-/obj/machinery/button/alternate/door/on_update_icon()
-	if(operating)
-		icon_state = "[initial(icon_state)]1"
-	else
-		icon_state = "[initial(icon_state)]"
-
-/singleton/stock_part_preset/radio/basic_transmitter/button/netspace_bolt
-	frequency = AIRLOCK_FREQ
-	transmit_on_change = list("toggle_bolts" = /singleton/public_access/public_variable/button_active)
+/obj/item/device/flashlight/flare/torch
+	name = "huntsman torch"
+	desc = "Torch with seemingly infinite amount of fuel. Don't burns or dims. Virtual reality meets dev's lazyness"
+	icon = 'mods/vr/icons/lighting.dmi'
+	item_icons = list(
+		slot_r_hand_str = 'mods/vr/icons/items_righthand.dmi',
+		slot_l_hand_str = 'mods/vr/icons/items_lefthand.dmi'
+		)
+	icon_state = "torch"
+	item_state = "torch"
+	flashlight_power = 3
+	flashlight_range = 3

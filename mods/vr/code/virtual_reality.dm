@@ -3,7 +3,7 @@ GLOBAL_LIST_AS(vr_areas, list(
 	"Courtroom" = /area/virtual_reality/courtroom,
 	"Meeting Hall" = /area/virtual_reality/meeting_hall,
 	"Theatre" = /area/virtual_reality/theatre,
-	"Cafe and Plaza" = /area/virtual_reality/cafe,
+	"Summer Cafe" = /area/virtual_reality/cafe,
 	"Boxing Ring" = /area/virtual_reality/boxing_ring,
 	"Empty Court" = /area/virtual_reality/empty_court,
 	"Volleyball Court" = /area/virtual_reality/volleyball_court,
@@ -11,13 +11,13 @@ GLOBAL_LIST_AS(vr_areas, list(
 	"Thunderdome" = /area/virtual_reality/thunderdome,
 	"Beach" = /area/virtual_reality/beach,
 	"Snowy Field" = /area/virtual_reality/snowfield,
-	"Picnic Area" = /area/virtual_reality/picnic_area,
 	"Desert" = /area/virtual_reality/desert,
 	"Space" = /area/virtual_reality/space,
 	"Infirmary" = /area/virtual_reality/infirmary
 ))
 GLOBAL_LIST_AS(emagged_vr_areas, list(
 	"Shady Room" = /area/virtual_reality/shady_room,
+	"Night Jungle" = /area/virtual_reality/jungle,
 //	"Netspace" = /area/virtual_reality/netspace
 ))
 

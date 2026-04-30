@@ -43,10 +43,6 @@
 	name = "\improper Virtual Reality - Desert"
 	dynamic_lighting = FALSE
 
-/area/virtual_reality/picnic_area
-	name = "\improper Virtual Reality - Picnic Area"
-	dynamic_lighting = FALSE
-
 /area/virtual_reality/theatre
 	name = "\improper Virtual Reality - Theatre"
 	dynamic_lighting = FALSE
@@ -70,6 +66,10 @@
 /area/virtual_reality/snowfield
 	name = "\improper Virtual Reality - Snowfield"
 	dynamic_lighting = FALSE
+
+/area/virtual_reality/jungle
+	name = "\improper Virtual Reality - Jungle Night"
+	dynamic_lighting = TRUE
 
 /area/virtual_reality/meeting_hall
 	name = "\improper Virtual Reality - Meeting Hall"

@@ -15,4 +15,7 @@
 #include "code\security_state.dm"
 #include "code\implants.dm"
 
+#include "code\zones\netspace.dm"
+#include "code\zones\props.dm"
+
 #endif

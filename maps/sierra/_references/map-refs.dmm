@@ -4078,6 +4078,13 @@
 	},
 /turf/simulated/floor/carpet/blue,
 /area/space)
+"ecg" = (
+/obj/structure/table/standard,
+/obj/floor_decal/spline/fancy/wood{
+	dir = 6
+	},
+/turf/simulated/floor/wood/walnut,
+/area/space)
 "edj" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/structure/cable/cyan{
@@ -4749,6 +4756,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/corner/lime/diagonal,
 /turf/simulated/floor/tiled/white,
+/area/space)
+"eRb" = (
+/obj/machinery/vr_pod,
+/obj/floor_decal/spline/fancy/wood/cee{
+	dir = 8
+	},
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "eSB" = (
 /obj/floor_decal/borderfloorblack{
@@ -5534,6 +5548,14 @@
 	dir = 1
 	},
 /turf/simulated/floor/tiled/white,
+/area/space)
+"fzq" = (
+/obj/structure/table/standard,
+/obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/spline/fancy/wood/corner{
+	dir = 4
+	},
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "fzK" = (
 /obj/floor_decal/floordetail/edgedrain{
@@ -7206,8 +7228,8 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/space)
 "hxa" = (
-/obj/machinery/vr_pod{
-	dir = 8
+/obj/floor_decal/spline/fancy/wood{
+	dir = 4
 	},
 /turf/simulated/floor/wood/walnut,
 /area/space)
@@ -7739,6 +7761,16 @@
 /obj/structure/catwalk,
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
+/area/space)
+"idf" = (
+/obj/machinery/vr_pod{
+	dir = 1
+	},
+/obj/floor_decal/spline/fancy/wood,
+/obj/floor_decal/spline/fancy/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "iel" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -8287,7 +8319,10 @@
 /area/space)
 "iLo" = (
 /obj/machinery/vr_pod{
-	dir = 4
+	dir = 1
+	},
+/obj/floor_decal/spline/fancy/wood/cee{
+	dir = 8
 	},
 /turf/simulated/floor/wood/walnut,
 /area/space)
@@ -10995,6 +11030,12 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/space)
+"lFj" = (
+/obj/floor_decal/spline/fancy/wood{
+	dir = 8
+	},
+/turf/simulated/floor/wood/walnut,
+/area/space)
 "lFN" = (
 /obj/machinery/sleeper/survival_pod{
 	dir = 4
@@ -11061,7 +11102,9 @@
 /turf/simulated/wall/titanium,
 /area/space)
 "lJa" = (
-/obj/structure/bed/chair/padded/green,
+/obj/structure/bed/chair/padded/green{
+	dir = 4
+	},
 /turf/simulated/floor/tiled,
 /area/space)
 "lKc" = (
@@ -12407,10 +12450,12 @@
 /turf/simulated/floor/tiled/dark/monotile,
 /area/space)
 "mQz" = (
-/obj/machinery/computer/modular/preset/vr_control{
+/obj/machinery/vr_pod,
+/obj/floor_decal/spline/fancy/wood{
 	dir = 1
 	},
-/turf/simulated/floor/tiled,
+/obj/floor_decal/spline/fancy/wood,
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "mQU" = (
 /obj/floor_decal/techfloor{
@@ -15262,8 +15307,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/space)
 "pvL" = (
-/obj/structure/bed/chair/comfy/brown{
-	dir = 1
+/obj/machinery/computer/modular/preset/vr_control{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/space)
@@ -20021,6 +20066,15 @@
 	},
 /obj/structure/railing/mapped,
 /turf/simulated/floor/reinforced,
+/area/space)
+"uER" = (
+/obj/floor_decal/spline/fancy/wood/corner{
+	dir = 4
+	},
+/obj/floor_decal/spline/fancy/wood/corner{
+	dir = 8
+	},
+/turf/simulated/floor/wood/walnut,
 /area/space)
 "uFM" = (
 /obj/floor_decal/floordetail/edgedrain{
@@ -28420,7 +28474,7 @@ sxs
 xXY
 sxs
 sxs
-sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -28617,12 +28671,12 @@ sNE
 vxt
 kIc
 sxs
-iLo
-iLo
-iLo
-iLo
+eRb
+jbZ
+jbZ
 iLo
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -28819,12 +28873,12 @@ sNE
 jrM
 qXV
 sxs
-btQ
+mQz
 jbZ
 jbZ
-jbZ
-btQ
+idf
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -29021,12 +29075,12 @@ gdY
 rHq
 cFe
 sxs
-btQ
+mQz
 jbZ
 jbZ
-jbZ
-btQ
+idf
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -29223,12 +29277,12 @@ nSu
 uHa
 bmc
 sxs
-btQ
+mQz
 jbZ
-vdz
-vdz
-hxa
+jbZ
+idf
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -29425,12 +29479,12 @@ sxs
 sxs
 sxs
 sxs
-btQ
+mQz
 jbZ
 jbZ
-jbZ
-btQ
+idf
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -29622,17 +29676,17 @@ iua
 yhs
 aSf
 sxs
+nJV
+bFm
+bFm
 hpa
-lJa
-mQz
-fSZ
-btQ
-btQ
-jbZ
-jbZ
-jbZ
-btQ
 sxs
+mQz
+jbZ
+jbZ
+idf
+sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -29823,18 +29877,18 @@ eJJ
 wdd
 cdE
 aSf
-tFe
-bFm
-bFm
-bFm
-tFe
-btQ
-btQ
-jbZ
-aZG
-aZG
-iLo
 sxs
+nJV
+bFm
+bFm
+lJa
+sxs
+mQz
+jbZ
+jbZ
+idf
+sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -30025,18 +30079,18 @@ eJJ
 vHp
 xwl
 mbH
-fnk
-bFm
-bFm
-bFm
-fnk
-btQ
-btQ
-jbZ
-jbZ
-jbZ
-btQ
 sxs
+nJV
+bFm
+bFm
+pvL
+sxs
+mQz
+jbZ
+jbZ
+idf
+sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -30227,18 +30281,18 @@ eJJ
 wdd
 cdE
 aSf
-fSZ
-nJV
+tFe
 bFm
-pvL
-fSZ
-btQ
-btQ
-jbZ
-jbZ
-jbZ
-btQ
+bFm
+bFm
+bFm
+tFe
+uER
+lFj
+lFj
+fzq
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -30429,18 +30483,18 @@ eJJ
 etn
 cdE
 tGN
-sxs
-nJV
+fnk
 bFm
-pvL
-fSZ
-btQ
+bFm
+bFm
+bFm
+fnk
 hxa
 hxa
 hxa
-hxa
-hxa
+ecg
 sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -30642,7 +30696,7 @@ sxs
 sxs
 sxs
 sxs
-sxs
+eJJ
 eJJ
 eJJ
 eJJ
@@ -31041,7 +31095,7 @@ eJJ
 eJJ
 eJJ
 eJJ
-eJJ
+sxs
 eJJ
 eJJ
 eJJ
