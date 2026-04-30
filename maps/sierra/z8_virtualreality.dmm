@@ -295,7 +295,7 @@
 /area/virtual_reality/infirmary)
 "ej" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 9
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -484,6 +484,13 @@
 /obj/structure/holonet,
 /turf/simulated/floor/holofloor/beach/sand,
 /area/virtual_reality/volleyball_court)
+"fI" = (
+/obj/floor_decal/ice{
+	icon_state = "icedge";
+	dir = 8
+	},
+/turf/simulated/floor/holofloor/snow,
+/area/virtual_reality/snowfield)
 "fJ" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/floor_decal/spline/plain/grey{
@@ -723,7 +730,7 @@
 /area/virtual_reality/desert)
 "jq" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 9
 	},
 /turf/simulated/floor/holofloor/permafrost,
@@ -764,7 +771,14 @@
 /area/virtual_reality/jungle)
 "jF" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
+	dir = 4
+	},
+/turf/simulated/floor/holofloor/snow,
+/area/virtual_reality/snowfield)
+"jU" = (
+/obj/floor_decal/ice{
+	icon_state = "icedge";
 	dir = 10
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -1201,7 +1215,7 @@
 /area/virtual_reality/infirmary)
 "oM" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 1
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -1861,7 +1875,7 @@
 /area/virtual_reality/jungle)
 "xh" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 5
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -1932,8 +1946,7 @@
 /area/virtual_reality/theatre)
 "ya" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
-	dir = 8
+	icon_state = "icedge"
 	},
 /turf/simulated/floor/holofloor/snow,
 /area/virtual_reality/snowfield)
@@ -2588,7 +2601,7 @@
 /area/virtual_reality/shady_room)
 "ER" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 1
 	},
 /turf/simulated/floor/holofloor/permafrost,
@@ -2612,7 +2625,7 @@
 /area/virtual_reality/cafe)
 "Fi" = (
 /obj/floor_decal/ice{
-	icon_state = "edge";
+	icon_state = "icedge";
 	dir = 6
 	},
 /turf/simulated/floor/holofloor/snow,
@@ -3013,6 +3026,12 @@
 	dir = 4
 	},
 /area/virtual_reality/jungle)
+"Jv" = (
+/obj/floor_decal/ice{
+	icon_state = "corner"
+	},
+/turf/simulated/floor/holofloor/snow,
+/area/virtual_reality/snowfield)
 "Jz" = (
 /turf/simulated/floor/holofloor/beach/sand{
 	icon_state = "desert3"
@@ -27307,11 +27326,11 @@ fO
 CM
 CM
 xk
-ya
+fI
 Ci
 mE
-RZ
-VA
+jF
+Jv
 CM
 CM
 CG
@@ -27508,12 +27527,12 @@ CM
 CM
 CM
 jz
-jF
+jU
 nZ
 Ci
 mE
 mE
-RZ
+ya
 VA
 CM
 CM
@@ -27709,15 +27728,15 @@ CM
 CG
 CM
 xk
-ya
+fI
 Ci
 nZ
 vu
 mE
 mE
 mE
-RZ
-VA
+jF
+Jv
 fO
 CM
 PZ
@@ -27910,7 +27929,7 @@ CM
 CM
 CM
 jz
-jF
+jU
 mE
 Ci
 nZ
@@ -27919,7 +27938,7 @@ mE
 mE
 mE
 mE
-RZ
+ya
 VA
 CM
 PZ
@@ -28717,7 +28736,7 @@ fO
 CM
 CM
 xk
-ya
+fI
 nZ
 Ci
 Ci
@@ -28918,7 +28937,7 @@ CM
 CM
 CM
 jz
-jF
+jU
 nZ
 nZ
 Ci
@@ -29119,7 +29138,7 @@ CM
 CM
 CM
 xk
-ya
+fI
 Ci
 Ci
 Ci
@@ -29320,7 +29339,7 @@ CM
 fO
 CM
 jz
-jF
+jU
 nZ
 Ci
 Ci
@@ -29521,7 +29540,7 @@ CM
 CM
 CM
 xk
-ya
+fI
 Ci
 Ci
 ER
@@ -29722,7 +29741,7 @@ CM
 CM
 CM
 jz
-jF
+jU
 nZ
 Ci
 jq
@@ -30731,7 +30750,7 @@ CM
 CM
 CM
 xk
-ya
+fI
 Ci
 gl
 CM
@@ -30932,7 +30951,7 @@ WI
 WI
 WI
 WI
-jF
+jU
 mE
 oM
 St
@@ -31331,7 +31350,7 @@ Ws
 Ws
 PZ
 xk
-ya
+fI
 Ci
 Ci
 mE
@@ -31532,7 +31551,7 @@ Ws
 Ws
 Ws
 PZ
-jF
+jU
 nZ
 mE
 mE
