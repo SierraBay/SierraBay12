@@ -11,7 +11,7 @@
 		/obj/overmap/event/leviathan/swarm
 	)
 	var/spawn_radius = 5 // Минимум в 5 квадратах от Сьерры
-	announceWhen = 150
+	announceWhen = 50
 
 /datum/event/leviathan_spawn/setup()
 	return

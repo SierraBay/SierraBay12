@@ -77,29 +77,30 @@ SIERRA_ESCAPE_POD(11)
 	name = "Petrov"
 	dock_target = "petrov_shuttle_airlock"
 	current_location = "nav_petrov_start"
-	landmark_transition = "nav_transit_scavshuttle"
+	landmark_transition = "nav_transit_petrov"
 	logging_home_tag = "nav_petrov_start"
 	sound_takeoff = 'sound/effects/rocket.ogg'
 	sound_landing = 'sound/effects/rocket_backwards.ogg'
 	logging_access = access_petrov_helm
 	range = 1
-	fuel_consumption = 6
+	fuel_consumption = 7
 	warmup_time = 10
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	shuttle_area = list(/area/shuttle/petrov/airlock,
-	/area/shuttle/petrov/cockpit,
-	/area/shuttle/petrov/ship,
-	/area/shuttle/petrov/test_room,
+	shuttle_area = list(
+	/area/shuttle/petrov/monitoring,
+	/area/shuttle/petrov/storage_primary,
+	/area/shuttle/petrov/power,
+	/area/shuttle/petrov/storage_secondary,
+	/area/shuttle/petrov/lab_airlock,
+	/area/shuttle/petrov/lab_hall,
+	/area/shuttle/petrov/chem_lab,
+	/area/shuttle/petrov/anomaly_lab,
+	/area/shuttle/petrov/spectrometry_lab,
+	/area/shuttle/petrov/toxin_lab,
 	/area/shuttle/petrov/cell1,
 	/area/shuttle/petrov/cell2,
-	/area/shuttle/petrov/cell3,
-	/area/shuttle/petrov/gas,
-	/area/shuttle/petrov/equipment,
-	/area/shuttle/petrov/eva,
-	/area/shuttle/petrov/security,
-	/area/shuttle/petrov/scan
+	/area/shuttle/petrov/cell3
 	)
-
 
 /obj/machinery/computer/shuttle_control/explore/petrov
 	name = "Petrov control console"
@@ -111,6 +112,7 @@ SIERRA_ESCAPE_POD(11)
 	fore_dir = WEST
 	vessel_size = SHIP_SIZE_SMALL
 	vessel_mass = 9000
+	skill_needed = SKILL_BASIC
 
 /obj/machinery/computer/shuttle_control/explore/petrov
 	skill_req = SKILL_BASIC
@@ -123,6 +125,10 @@ SIERRA_ESCAPE_POD(11)
 /obj/shuttle_landmark/sierra/petrov/out
 	name = "Space near the vessel"
 	landmark_tag = "nav_petrov_out"
+
+/obj/shuttle_landmark/sierra/transit/petrov
+	name = "In transit"
+	landmark_tag = "nav_transit_petrov"
 
 //Ninja Shuttle.
 /datum/shuttle/autodock/multi/antag/ninja
@@ -398,16 +404,6 @@ SIERRA_ESCAPE_POD(11)
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
 	warmup_time = 7
 
-/datum/shuttle/autodock/overmap/exploration_shuttle/refresh_fuel_ports_list()	// Setting access onto APC and air alarms. "Overrides code. Overrides map. WHY?!" - LordNest
-	..()
-	for(var/area/A in shuttle_area)
-		for(var/obj/machinery/alarm/alarm in A)
-			if(alarm.req_access)
-				alarm.req_access = list(list(access_engine, access_field_eng, access_expedition_shuttle_helm))  // engineering OR field eng
-		for(var/obj/machinery/power/apc/apc in A)
-			if(apc.req_access)
-				apc.req_access = list(list(access_engine, access_field_eng, access_expedition_shuttle_helm))  // engineering OR field eng
-
 /obj/shuttle_landmark/sierra/hangar/exploration_shuttle
 	name = "Charon Hangar"
 	landmark_tag = "nav_hangar_calypso"
@@ -565,6 +561,8 @@ SIERRA_ESCAPE_POD(11)
 /obj/shuttle_landmark/sierra/transit/blueriver_shuttle
 	name = "In transit"
 	landmark_tag = "nav_transit_blueriver"
+
+// docking ladmarks
 
 /obj/shuttle_landmark/sierra/deck4/vox_raider
 	name = "Dock STBD-3"

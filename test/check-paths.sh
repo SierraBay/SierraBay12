@@ -27,7 +27,7 @@ exactly() { # exactly N name search [mode] [filter]
 
 # If you increase any of these numbers you're probably doing it wrong
 exactly 0 "escapes" '\\\\(red|blue|green|black|b|i[^mc])'
-exactly 4 "Del()s" '\WDel\('
+exactly 5 "Del()s" '\WDel\('
 exactly 2 "/atom text paths" '"/atom'
 exactly 2 "/area text paths" '"/area'
 exactly 18 "/datum text paths" '"/datum'
@@ -38,7 +38,7 @@ exactly 118 "to_world uses" '\sto_world\('
 exactly 0 "globals with leading /" '^/var' -P
 exactly 0 "globals without global sugar" '^var/(?!global/)' -P
 exactly 0 "apparent paths with trailing /" '\w/[,\)\n]' -P
-exactly $((50 + 3)) "to_world_log uses" '\sto_world_log\('
+exactly $((50 + 2)) "to_world_log uses" '\sto_world_log\('
 exactly 0 "world<< uses" 'world<<|world[[:space:]]<<'
 exactly 0 "world.log<< uses" 'world.log<<|world.log[[:space:]]<<'
 exactly 2 "<< uses" '(?<!<)<<(?!<)' -P

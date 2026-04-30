@@ -180,9 +180,6 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
-	// [SIERRA-ADD] - EX666_ECOSYSTEM
-	load_player_discord(src)
-	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
 	//view = get_preference_value(/datum/client_preference/client_view)

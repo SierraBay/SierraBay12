@@ -189,7 +189,6 @@
 		"mech_software_engineering",
 		"mech_software_utility",
 		"mech_frame",
-		"mech_armour_civil",
 		"mech_control_module",
 		"powerloader_head",
 		"powerloader_body",
@@ -600,8 +599,6 @@
 		"right_combat_leg",
 		"left_combat_leg",
 		"mech_armour_combat",
-		"mech_armour_buletproof",
-		"mech_armour_laserproof"
 	)
 
 /datum/technology/cybernetics/combat_rig_design_heph

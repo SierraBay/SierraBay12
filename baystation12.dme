@@ -3326,6 +3326,8 @@
 #include "code\modules\synthesized_instruments\event_manager.dm"
 #include "code\modules\synthesized_instruments\globals.dm"
 #include "code\modules\synthesized_instruments\instruments.dm"
+#include "code\modules\synthesized_instruments\visualizer.dm"
+#include "code\modules\synthesized_instruments\piano_roll_module.dm"
 #include "code\modules\synthesized_instruments\real_instruments.dm"
 #include "code\modules\synthesized_instruments\song.dm"
 #include "code\modules\synthesized_instruments\song_editor.dm"
