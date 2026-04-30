@@ -50,10 +50,12 @@
 /area/maintenance/substation/fourthdeck
 	name = "Fourth Deck - Substation"
 
+/*
 /area/maintenance/waterstore
 	name = "Fourth Deck - Water Cistern"
 	icon_state = "disposal"
 	req_access = list(list(access_cargo, access_engine, access_el))
+*/
 
 /area/crew_quarters/garden
 	name = "Fourth Deck - Garden"
@@ -146,7 +148,7 @@
  * =========
  */
 
-/area/rnd/canister
+/area/rnd/sierra/canister
 	name = "Fourth Deck - Hangar - Canister Storage"
 	icon_state = "toxstorage"
 	sound_env = SMALL_ENCLOSED
@@ -234,10 +236,12 @@
 /area/quartermaster/hangar_atmos
 	name = "Fourth Deck - Hangar - Atmospherics Storage"
 	icon_state = "auxstorage"
+	req_access = list(access_hangar)
 
 /area/quartermaster/hangar_stairs
 	name = "Fourth Deck - Hangar - Stairs"
 	icon_state = "auxstorage"
+	req_access = list(access_hangar)
 
 /* SECURITY AREAS
  *
@@ -250,7 +254,7 @@
 /area/security/sierra/hangar
 	name = "Fourth Deck - Security - Hangar"
 	icon_state = "checkpoint1"
-	req_access = list(list(access_sec_doors, access_qm))
+	req_access = list(list(access_sec_doors, access_mailsorting))
 
 /area/security/sierra/dockcheckport
 	name = "Fourth Deck - Security - Port Docks Checkpoint"
@@ -260,4 +264,10 @@
 /area/security/sierra/dockcheckstarboard
 	name = "Fourth Deck - Security - Starboard Docks Checkpoint"
 	icon_state = "checkpoint1"
+	req_access = list(access_sec_doors)
+
+/area/security/sierra/dockcheckaft // abandoned sec checkpoint
+	name = "Fourth Deck - Security - Aft Dock Checkpoint"
+	icon_state = "checkpoint1"
+	area_flags = AREA_FLAG_RAD_SHIELDED
 	req_access = list(access_sec_doors)

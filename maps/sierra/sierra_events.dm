@@ -21,15 +21,15 @@
 	eventDept = "Science"
 	areaName = list("Xenobiology")
 	areaType = list(
-		/area/rnd/xenobiology,
-		/area/rnd/xenobiology/level1,
-		/area/rnd/xenobiology/entry,
-		/area/rnd/xenobiology/level2,
-		/area/rnd/xenobiology/entry2,
-		/area/rnd/xenobiology/storage2,
+		/area/rnd/sierra/xenobiology,
+		/area/rnd/sierra/xenobiology/level1,
+		/area/rnd/sierra/xenobiology/airlock1,
+		/area/rnd/sierra/xenobiology/level2,
+		/area/rnd/sierra/xenobiology/airlock2,
+		/area/rnd/sierra/xenobiology/compartment,
 		/area/maintenance/seconddeck/xenobio
 	)
-	areaNotType = list(/area/rnd/xenobiology/xenoflora, /area/rnd/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event/prison_break/warehouse
 	eventDept = "Supply"
@@ -52,19 +52,18 @@
 		/area/security/sierra/hallway/port,
 		/area/security/sierra/brig,
 		/area/security/sierra/prison,
-		/area/rnd/xenobiology,
-		/area/rnd/xenobiology/level1,
-		/area/rnd/xenobiology/entry,
-		/area/rnd/xenobiology/level2,
-		/area/rnd/xenobiology/entry2,
-		/area/rnd/xenobiology/storage2,
+		/area/rnd/sierra/xenobiology,
+		/area/rnd/sierra/xenobiology/level1,
+		/area/rnd/sierra/xenobiology/airlock1,
+		/area/rnd/sierra/xenobiology/level2,
+		/area/rnd/sierra/xenobiology/airlock2,
 		/area/maintenance/seconddeck/xenobio,
 		/area/quartermaster/storage,
 		/area/engineering/hardstorage,
 		/area/storage/tech,
 		/area/storage/tech/high_risk
 	)
-	areaNotType = list(/area/rnd/xenobiology/xenoflora, /area/rnd/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event_container/moderate/sierra
 	available_events = list(
