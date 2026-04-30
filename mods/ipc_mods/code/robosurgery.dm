@@ -319,7 +319,14 @@
 	max_duration = 110
 
 /singleton/surgery_step/robotics/connect_to_posibrain/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(user == target)
+		to_chat(user, SPAN_WARNING("ERROR: Self-service access denied. External operator required."))
+		return
 	var/obj/item/organ/internal/posibrain/ipc/I = target.internal_organs_by_name[BP_POSIBRAIN]
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	if(!affected || affected.hatch_state != HATCH_OPENED)
+		to_chat(user, SPAN_WARNING("The access hatch is closed."))
+		return
 	if(I && !(I.status & ORGAN_CUT_AWAY) && !BP_IS_CRYSTAL(I) && I.parent_organ == target_zone)
 		if(I.shackles_module)
 			return I

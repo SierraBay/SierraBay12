@@ -211,7 +211,7 @@
 
 /obj/item/organ/internal/shackles/attack_self(mob/user)
 	. = ..()
-	ui_interact()
+	ui_interact(user)
 
 /obj/item/organ/internal/shackles/afterattack(obj/item/organ/internal/posibrain/ipc/C, mob/user)
 	if(istype(C))
@@ -269,7 +269,10 @@
 		return 1
 
 /obj/item/organ/internal/shackles/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, master_ui = null, datum/topic_state/state = GLOB.default_state)
-	user = usr
+	if(!user)
+		user = usr
+	if(!user)
+		return
 	var/data[0]
 	var/obj/item/organ/internal/posibrain/posi = owner.internal_organs_by_name[BP_POSIBRAIN]
 	data["computer_master"] = FALSE
@@ -309,7 +312,12 @@
 /obj/item/organ/internal/shackles/CanUseTopic(mob/user)
 	if(!user)
 		return
-	if(user.Adjacent(src) && user.stat != DEAD)
+	if(user.stat == DEAD)
+		return STATUS_CLOSE
+	var/atom/interaction_target = src
+	if(owner)
+		interaction_target = owner
+	if(user.Adjacent(interaction_target))
 		if(user.IsHolding(/obj/item/device/multitool/multimeter/datajack))
 			return user.stat == CONSCIOUS ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_CLOSE
