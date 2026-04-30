@@ -119,45 +119,59 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/research
+
+/area/rnd/sierra/entry
+	name = "First Deck - RND - Lobby"
+	icon_state = "decontamination"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/rnd/sierra/research
 	name = "First Deck - RND - Research Lab"
 	icon_state = "research"
 	req_access = list(access_research)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/storage
+/area/rnd/sierra/storage
 	name = "First Deck - RND - Storage"
 	icon_state = "toxstorage"
 	req_access = list(access_research_storage)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/development
+/area/rnd/sierra/development
 	name = "First Deck - RND - Fabricator Lab"
 	icon_state = "devlab"
 	req_access = list(access_tox)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/entry
-	name = "First Deck - RND - Lobby"
-	icon_state = "decontamination"
+/area/rnd/sierra/testing
+	name = "First Deck - RND - Testing Lab"
+	icon_state = "misclab"
+	req_access = list(access_research)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/containment
-	name = "Second Deck - RND - Containment Zone"
-	icon_state = "decontamination"
-
-/area/rnd/locker
-	name = "First Deck - RND - Locker Room"
+/area/rnd/sierra/office
+	name = "First Deck - RND - Office"
 	icon_state = "locker"
 	req_access = list(access_research_storage)
-/*
-/area/rnd/office
-	name = "First Deck - RND - Research Office"
-	icon_state = "locker"
-	req_access = list(access_research_storage)
-*/
-/area/rnd/servers
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/rnd/sierra/servers
 	name = "First Deck - RND - Servers"
 	icon_state = "tcomsatcham"
 	area_flags = AREA_FLAG_RAD_SHIELDED
 	sound_env = SMALL_ENCLOSED
 	req_access = list(access_rd)
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/rnd/sierra/xenobiology/xenoflora
+	name = "First Deck - RND - Xenoflora Lab"
+	icon_state = "xeno_f_lab"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+
+/area/rnd/sierra/xenobiology/xenoflora_airlock
+	name = "First Deck - RND - Xenoflora Airlock"
+	icon_state = "xeno_f_store"
+	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
 /area/assembly
 	req_access = list(access_robotics)
@@ -176,7 +190,6 @@
 	name = "First Deck - RND - Robotics Office"
 	icon_state = "mechbay"
 */
-
 
 /* CREW AREAS
  * ==========
