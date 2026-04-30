@@ -191,8 +191,9 @@
 		if(action.button) action.button.UpdateIcon()
 
 /obj/item/organ/internal/posibrain/ipc/attack_self(mob/user)
-	if(action_button_name == "show_laws" && owner)
-		owner.update_ipc_verbs()
+	if(action_button_name == "show_laws" && (owner || user == brainmob))
+		if(owner)
+			owner.update_ipc_verbs()
 		refresh_action_button()
 		src.brain_checklaws()
 
