@@ -60,11 +60,10 @@
 		H.set_nutrition(400)
 		H.set_hydration(400)
 
-		var/datum/extension/virtual_surrogate/VM = get_extension(H, /datum/extension/virtual_surrogate)
-
-		if(VM && VM.real_mob)
-			H.languages = VM.real_mob.languages.Copy()
-			H.default_language = VM.real_mob.default_language
+		var/mob/living/occupant = SSvirtual_reality.virtual_mobs_to_occupants[H]
+		if(occupant)
+			H.languages = occupant.languages.Copy()
+			H.default_language = occupant.default_language
 
 	to_chat(usr, SPAN_NOTICE("You fully rejuvenate your virtual body."))
 
