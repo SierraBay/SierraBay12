@@ -2022,10 +2022,7 @@
 				vsc.SetDefault(usr)
 
 	else if(href_list["toglang"])
-		// [SIERRA-EDIT]
-		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
-		if(!check_rights(R_SPAWN|R_DEBUG))
-		// [/SIERRA-EDIT]
+		if(check_rights(R_SPAWN|R_DEBUG)) // SIERRA-EDIT - Добавление R_DEBUG
 			var/mob/M = locate(href_list["toglang"])
 			if(!istype(M))
 				to_chat(usr, "[M] is illegal type, must be /mob!")
