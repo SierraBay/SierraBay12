@@ -29,6 +29,17 @@
 /obj/machinery/computer/arcade/orion_trail/proc/newgame(emag = 0)
 	SetName("orion trail[emag ? ": Realism Edition" : ""]")
 	supplies = list("1" = 1, "2" = 1, "3" = 1, "4" = 60, "5" = 20, "6" = 5000)
+	events = list(
+		ORION_TRAIL_RAIDERS		= 3,
+		ORION_TRAIL_FLUX		= 1,
+		ORION_TRAIL_ILLNESS		= 3,
+		ORION_TRAIL_BREAKDOWN	= 2,
+		ORION_TRAIL_MUTINY		= 3,
+		ORION_TRAIL_MALFUNCTION	= 2,
+		ORION_TRAIL_COLLISION	= 1,
+		ORION_TRAIL_CARP		= 3,
+		ORION_TRAIL_DERELICT	= 2
+	)
 	emagged = emag
 	distance = 0
 	settlers = list("[usr]")
@@ -154,12 +165,16 @@
 					if(ORION_TRAIL_STUCK)
 						dat += "<div class='event-description'>You've ran out of fuel. Your only hope to survive is to get refueled by a passing ship, if there are any.</div>"
 						dat += "<div class='event-info'>[event_info]</div>"
+						dat += "<div class='actions'>"
 						if(supplies["5"] == 0)
-							dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1;food=1' class='action-btn'>Wait</a></div>"
+							dat += "<a href='byond://?src=\ref[src];continue=1;food=1' class='action-btn'>Wait</a>"
+						else
+							dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue your journey</a>"
+						dat += "</div>"
 					if(ORION_TRAIL_CARP)
 						dat += "<div class='event-description'>You've chanced upon a large carp migration! Known both for their delicious meat as well as their bite, you and your crew arm yourselves for a small hunting trip.</div>"
 						dat += "<div class='event-info'>[event_info]</div>"
-						dat += "<a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue as normal</a>"
+						dat += "<div class='actions'><a href='byond://?src=\ref[src];continue=1' class='action-btn'>Continue as normal</a></div>"
 					if(ORION_TRAIL_MUTINY)
 						dat += "<div class='event-description'>You've been hearing rumors of dissenting opinions and missing items from the armory...</div>"
 						dat += "<div class='event-info'>[event_info]</div>"
@@ -356,6 +371,7 @@
 		else
 			specific = pickweight(events)
 
+	event_info = ""
 	switch(specific)
 		if(ORION_TRAIL_RAIDERS)
 			if(prob(17 * length(settlers)))
@@ -404,9 +420,10 @@
 			change_resource(4)
 
 		if(ORION_TRAIL_MUTINY)
-			event_info = "Whispers grew more"
+			event_info = ""
 			if(num_traitors < length(settlers) - 1 && prob(55)) //gotta have at LEAST one non-traitor.
 				num_traitors++
+				event_info = "The whispers among your crew grow louder...<BR>"
 		if(ORION_TRAIL_MUTINY_ATTACK)
 			//check to see if they just jump ship
 			if(prob(30+(length(settlers)-num_traitors)*20))

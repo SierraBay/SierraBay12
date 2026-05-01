@@ -55,12 +55,15 @@
 		return
 	if(!computer)
 		return
-	if(computer.battery_module.battery.charge < (computer.battery_module.battery.maxcharge))
+	if(computer.battery_module.battery.charge < (computer.battery_module.battery.maxcharge * 0.9))
 		transfer_charge()
 
 /obj/item/organ/internal/ecs/proc/transfer_charge()
 	var/obj/item/organ/internal/cell/potato = owner.internal_organs_by_name[BP_CELL]
-	var/charge_needed =(computer.battery_module.battery.maxcharge - computer.battery_module.battery.charge)
+	if(!potato || !potato.cell)
+		return
+	var/charge_needed = computer.battery_module.battery.maxcharge - computer.battery_module.battery.charge
+	charge_needed = min(charge_needed, max(0, potato.cell.charge))
 	if(charge_needed)
 		potato.cell.charge -= charge_needed
 		computer.battery_module.battery.charge += charge_needed
@@ -86,7 +89,7 @@
 	if (istype(W, /obj/item/modular_computer/ecs))
 		if(open)
 			if(computer)
-				to_chat(user, "<span class ='warning'>There \the [computer] already installed.</span>")
+				to_chat(user, SPAN_WARNING("There is already \a [computer] installed."))
 			else if(user.unEquip(W, src))
 				computer = W
 				to_chat(user, "<span class = 'notice'>You insert \the [computer].</span>")
