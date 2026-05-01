@@ -1,542 +1,1929 @@
+<!--
+Title: R&D Console (Unified)
+Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
+-->
+{{:helper.ntscieMode()}}
 {{if data.screen == "working"}}
-	<h5 class='average'>The R&amp;D Console is currently busy.</h5>
-	<div class='notice'>
-	<center>Working...</center>
+<div class="rndConsole">
+	<div class="rndCenterScreen">
+		<div class="rndLoadingIcon">&#9881;</div>
+		<div class="rndLoadingText">ОБРАБОТКА ДАННЫХ</div>
+		<div class="rndLoadingSubtext">Пожалуйста, подождите...</div>
 	</div>
-	<p>
-	Thank you for your patience!
-	</p>
+</div>
 {{else data.screen == "locked"}}
-	<h5 class='average'>The R&amp;D Console</h5>
-	<div class='notice'>
-	<center>SYSTEM LOCKED</center>
+<div class="rndConsole">
+	<div class="rndCenterScreen">
+		<div class="rndLoadingIcon">&#128274;</div>
+		<div class="rndLoadingText">СИСТЕМА ЗАБЛОКИРОВАНА</div>
+		<div style="margin-top: 16px;">
+			{{:helper.link("Разблокировать", 'unlocked', {'unlock' : 1}, null, 'rndUnlockBtn')}}
+		</div>
 	</div>
-	<p>
-	{{:helper.link("Unlock", 'unlocked', {'unlock' : 1})}}
-	</p>
+</div>
 {{/if}}
 
+<!-- ============================================================ -->
+<!-- MAIN NAVIGATION SCREENS (lab, tech_trees, missions, corps)   -->
+<!-- ============================================================ -->
+{{if !data.screen || data.screen == "main" || data.screen == "tech_trees" || data.screen == "missions" || data.screen == "corps"}}
+<div class="rndConsole">
 
-{{if !data.screen || data.screen == "main"}}
-<table style="width: 100%">
-	<tr>
-		<td valign="top">
-			<H2>R&amp;D Console Menu</H2>
-			<div class='item'>
-				{{:helper.link("Research", 'contact', {'go_screen' : 'tech_trees', 'need_access': 1},data.can_research ? null : 'disabled', data.can_research ? 'sciMenuButton' : null)}}
-			</div>
-			<div class='item'>
-				{{:helper.link("Protolathe Construction Menu", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled', data.has_protolathe ? 'sciMenuButton' : null)}}
-			</div>
-			<div class='item'>
-				{{:helper.link("Circuit Construction Menu", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', data.has_circuit_imprinter ? 'sciMenuButton' : null)}}
-			</div>
+	<!-- Top Navigation Bar -->
+	<div class="rndNav">
+		<div class="rndNavTabs">
+			{{:helper.link("Лаборатория", '', {'go_screen' : 'main'}, (!data.screen || data.screen == 'main') ? 'selected' : null, 'rndTab')}}
+			{{:helper.link("Технологии", '', {'go_screen' : 'tech_trees'}, data.screen == 'tech_trees' ? 'selected' : null, 'rndTab')}}
+			{{:helper.link("Контракты", '', {'go_screen' : 'missions'}, data.screen == 'missions' ? 'selected' : null, 'rndTab')}}
+			{{:helper.link("Корпорации", '', {'go_screen' : 'corps'}, data.screen == 'corps' ? 'selected' : null, 'rndTab')}}
+		</div>
+		<div class="rndNavStatus">
+			{{if data.has_server}}
+				<span class="rndServerBadge rndServerBadge--online"><span class="rndServerDot"></span>{{:data.server_name}}</span>
+			{{else}}
+				<span class="rndServerBadge rndServerBadge--offline"><span class="rndServerDot"></span>Нет сервера</span>
+			{{/if}}
+			{{if data.has_science_account}}
+				{{:helper.link("Накладная", 'receipt', {'print_invoice' : 1}, null, 'rndTab')}}
+				<span class="rndBalanceLabel">{{:data.science_account_name}}</span>
+				<span class="rndBalanceValue">{{:data.currency_short}}{{:data.science_balance}}</span>
+			{{else data.can_switch_account}}
+				<span class="rndBalanceError">СЧЁТ НЕ ПРИВЯЗАН</span>
+			{{/if}}
+		</div>
+	</div>
 
-			<div class="statusDisplayRecords">
-				<div class="item">
-					<div class="itemContent" style="width: 100%;">
-						{{if !data.destroy_data}}
-						<span class="average">No Destructive Analyzer detected</span>
-						{{else}}
-							{{if !data.destroy_data.has_item}}
-								<span class="average">No item loaded inside Destructive Analyzer</span>
-							{{else}}
-								<span class="average">Destructive Analyzer:</span><br>
-								Name: {{:data.destroy_data.item_name}}<br>
-								Detected tech:<br>
-								<table style="width: 100%">
-								{{for data.destroy_data.tech_data}}
-									<tr>
-										<td style="width: 20%">{{:value.name}}</td><td style="width: 20%"><div style="width: 95%">{{:helper.displayBar(value.level, 0, 5, 'good', value.level)}}</div></td>
-									</tr>
-								{{/for}}
-								</table>
-								Estimated research value: {{:data.destroy_data.item_tech_points}} points ({{:data.destroy_data.item_tech_mod}}%)<br>
-								{{:helper.link("Deconstruct item", '', {'deconstruct' : 1})}}
-								{{:helper.link("Eject", '', {'eject_item' : 1})}}
-							{{/if}}
-						{{/if}}
+	<!-- ======================== -->
+	<!-- LAB / MAIN SCREEN        -->
+	<!-- ======================== -->
+	{{if !data.screen || data.screen == "main"}}
+	<div class="rndTwoCol">
+		<!-- Left Column: Fabrication, Analysis, Experiments -->
+		<div class="rndCol" style="width: 58%;">
+
+			<!-- Fabrication Access -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Производство</div>
+				<div class="rndSectionContent">
+					<div class="rndBtnRow">
+						{{:helper.link("Protolathe", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled', 'rndMenuBtn')}}
+						{{:helper.link("Circuit Imprinter", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', 'rndMenuBtn')}}
 					</div>
 				</div>
 			</div>
 
-			<div class='item'>
-				{{:helper.link("Settings", 'wrench', {'toggle_settings' : 1},null,'sciMenuButton')}}
+			<!-- Destructive Analyzer -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Деструктивный анализатор</div>
+				<div class="rndSectionContent">
+					{{if !data.destroy_data}}
+						<span class="rndMuted">Деструктивный анализатор не обнаружен</span>
+					{{else}}
+						{{if !data.destroy_data.has_item}}
+							<span class="rndMuted">Предмет не загружен</span>
+						{{else}}
+							<div class="rndAnalyzerItem">
+								<span class="rndLabel">Объект:</span> {{:data.destroy_data.item_name}}
+							</div>
+							<table class="rndTechTable">
+								{{for data.destroy_data.tech_data}}
+								<tr>
+									<td class="rndTechName">{{:value.name}}</td>
+									<td class="rndTechBar"><div style="width: 95%">{{:helper.displayBar(value.level, 0, 5, 'good', value.level)}}</div></td>
+								</tr>
+								{{/for}}
+							</table>
+							<div class="rndBtnRow" style="margin-top: 6px;">
+								{{:helper.link("Извлечь дизайн", 'save', {'extract_design' : 1}, data.has_disk ? null : 'disabled')}}
+								{{:helper.link("Деконструировать", '', {'deconstruct' : 1})}}
+								{{:helper.link("Спектральный анализ", 'signal-diag', {'start_spectral' : 1}, data.destroy_data.can_spectral ? null : 'disabled')}}
+								{{:helper.link("Извлечь", '', {'eject_item' : 1})}}
+							</div>
+						{{/if}}
+					{{/if}}
+				</div>
 			</div>
 
-			{{if data.show_settings}}
-				<div class='item'>
-					{{:helper.link("Sync Database with Network", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
+			<!-- Spectral Analysis -->
+			{{if data.spectral_active}}
+			<div class="rndSection">
+				<div class="rndSectionTitle">Спектральный анализ</div>
+				<div class="rndSectionContent">
+					<div class="rndColorGrid">
+						<div class="rndColorBlock {{:data.spectral_flash == 'red' ? 'rndColorActive' : ''}}" style="background: {{:data.spectral_flash == 'red' ? '#ff4444' : '#880000'}};">
+							{{if data.spectral_phase == 'input'}}{{:helper.link("", '', {'spectral_choice' : 'red'}, null, 'rndColorOverlay')}}{{/if}}
+						</div>
+						<div class="rndColorBlock {{:data.spectral_flash == 'green' ? 'rndColorActive' : ''}}" style="background: {{:data.spectral_flash == 'green' ? '#44ff44' : '#008800'}};">
+							{{if data.spectral_phase == 'input'}}{{:helper.link("", '', {'spectral_choice' : 'green'}, null, 'rndColorOverlay')}}{{/if}}
+						</div>
+						<div class="rndColorBlock {{:data.spectral_flash == 'blue' ? 'rndColorActive' : ''}}" style="background: {{:data.spectral_flash == 'blue' ? '#4444ff' : '#000088'}};">
+							{{if data.spectral_phase == 'input'}}{{:helper.link("", '', {'spectral_choice' : 'blue'}, null, 'rndColorOverlay')}}{{/if}}
+						</div>
+						<div class="rndColorBlock {{:data.spectral_flash == 'yellow' ? 'rndColorActive' : ''}}" style="background: {{:data.spectral_flash == 'yellow' ? '#ffff44' : '#888800'}};">
+							{{if data.spectral_phase == 'input'}}{{:helper.link("", '', {'spectral_choice' : 'yellow'}, null, 'rndColorOverlay')}}{{/if}}
+						</div>
+					</div>
+					{{:helper.link("Отмена", 'cancel', {'cancel_spectral' : 1})}}
+					{{if data.spectral_result_text}}<hr class="rndDivider">{{:data.spectral_result_text}}{{/if}}
 				</div>
-				<div class='item'>
-					{{:helper.link("Connect to Research Network", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
-				</div>
-				<div class='item'>
-					{{:helper.link("Disconnect from Research Network", 'cancel', {'togglesync' : 1}, data.sync ? null : 'disabled')}}
-				</div>
-				<div class='item'>
-					{{:helper.link("Lock Console", 'locked', {'lock' : 1})}}
-					{{:helper.link("Reset R&D Database", 'trash', {'reset' : 1})}}
-				</div>
-			{{/if}}
-
-			{{if data.has_disk}}
-				<div class='item' style="width: 80%">
-					Disk capacity: <div style="width: 90%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</div>
-					{{:helper.link("Disk Designs Management", 'save', {'go_screen' : 'disk_management_designs'}, null, 'sciMenuButton')}}
-					{{:helper.link("Disk Research Data Management", 'save', {'go_screen' : 'disk_management_data'}, null, 'sciMenuButton')}}
-					{{:helper.link("Eject", 'eject', {'eject_disk' : 1}, null, 'sciMenuButton')}}
-				</div>
+			</div>
 			{{else}}
-				No disk detected
+				{{if data.spectral_result_text}}
+				<div class="rndSection">
+					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Результаты спектрального анализа</span>
+						{{:helper.link("✕", 'cancel', {'clear_spectral' : 1})}}
+					</div>
+					<div class="rndSectionContent">{{:data.spectral_result_text}}</div>
+				</div>
+				{{/if}}
 			{{/if}}
 
-			<div class='item'>
-				{{:helper.link("Device Linkage Menu", 'link', {'toggle_link_menu' : 1},null,'sciMenuButton')}}
-			</div>
-
-			{{if data.show_link_menu}}
-				<div class='item'>
-					{{:helper.link("Re-sync with Nearby Devices", 'link', {'find_device' : 1})}}
+			<!-- Research Report Compilation -->
+			<div class="rndSection">
+				<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+					<span>Компиляция научного отчёта</span>
+					{{:helper.link(data.report_collapsed ? "▶" : "▼", '', {'toggle_report_collapse' : 1})}}
 				</div>
-				<div class='item'>
-					{{:helper.link("Disconnect Destructive Analyzer", 'close', {'disconnect' : "destroy"}, data.has_dest_analyzer ? null : 'disabled')}}
-				</div>
-				<div class='item'>
-					{{:helper.link("Disconnect Protolathe", 'close', {'disconnect' : "lathe"}, data.has_protolathe ? null : 'disabled')}}
-				</div>
-				<div class='item'>
-					{{:helper.link("Disconnect Circuit Imprinter", 'close', {'disconnect' : "imprinter"}, data.has_circuit_imprinter ? null : 'disabled')}}
-				</div>
-			{{/if}}
-		</td>
-		<td style="width: 450px" valign="top">
-			<H2>Technology Research</H2>
-			<div class="statusDisplayRecords">
-				<div class="item">
-					<div class="itemContent" style="width: 100%;">
-						<table class="fixed" style="width: 100%">
-						{{for data.tech_trees}}
+				{{if !data.report_collapsed}}
+				<div class="rndSectionContent">
+					{{if data.report_tech_data && data.report_tech_data.length}}
+					<table style="width: 100%; border-collapse: collapse;">
 						<tr>
-							<td><span class="average">{{:value.shortname}}</span></td><td><div style="width: 95%">{{:helper.displayBar(value.level, 0, value.maxlevel, 'good', value.level + ' / ' + value.maxlevel)}}</div></td>
+							<th style="text-align: left; padding: 2px 6px;">Технология</th>
+							<th style="text-align: center; padding: 2px 6px;">Уровень</th>
+							<th style="text-align: center; padding: 2px 6px;">Скомп.</th>
+							<th style="text-align: center; padding: 2px 6px;">Новое</th>
+							<th style="text-align: center; padding: 2px 6px;">Стоимость</th>
+						</tr>
+						{{for data.report_tech_data}}
+						<tr>
+							<td style="padding: 2px 6px;">{{:value.name}}</td>
+							<td style="text-align: center; padding: 2px 6px;">{{:value.level}}</td>
+							<td style="text-align: center; padding: 2px 6px; color: #888;">{{:value.compiled}}</td>
+							<td style="text-align: center; padding: 2px 6px;">
+								{{if value.new_levels > 0}}
+									<span style="color: #00ff00;">+{{:value.new_levels}}</span>
+								{{else}}
+									<span style="color: #666;">—</span>
+								{{/if}}
+							</td>
+							<td style="text-align: center; padding: 2px 6px;">
+								{{if value.value > 0}}
+									<span style="color: #ffcc00;">{{:value.value * 15}} Т</span>
+								{{else}}
+									<span style="color: #666;">—</span>
+								{{/if}}
+							</td>
 						</tr>
 						{{/for}}
+					</table>
+					{{else}}
+						<span class="rndMuted">Нет данных деконструкции. Поместите предметы в деструктивный анализатор.</span>
+					{{/if}}
+					<div class="rndBtnRow" style="margin-top: 8px;">
+						{{:helper.link("Скомпилировать отчёт (" + data.report_value + " Т)", 'save', {'compile_report' : 1}, data.can_compile ? null : 'disabled', 'rndExpBtn')}}
+					</div>
+					<span class="rndMuted"><i>Скомпилированный отчёт можно продать через карго шаттл.</i></span>
+				</div>
+				{{/if}}
+			</div>
+
+			<!-- Artifact Catalogization -->
+			{{if data.catalog_active}}
+			<div class="rndSection">
+				<div class="rndSectionTitle">Каталогизация артефакта — Этап {{:data.catalog_step}}/3</div>
+				<div class="rndSectionContent">
+					<b>{{:data.catalog_step_name}}</b><br>
+					<span class="rndMuted"><i>{{:data.catalog_step_hint}}</i></span><br><br>
+					{{if data.catalog_step == 1}}
+						<span class="rndLabel">Тип излучения:</span><br>
+						<div class="rndBtnRow">
+							{{:helper.link("Неопознанное", '', {'catalog_choice' : '0'})}}
+							{{:helper.link("Энергетическое", '', {'catalog_choice' : '1'})}}
+							{{:helper.link("Псионическое", '', {'catalog_choice' : '2'})}}
+							{{:helper.link("Электромагнитное", '', {'catalog_choice' : '3'})}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Корпускулярное", '', {'catalog_choice' : '4'})}}
+							{{:helper.link("Органическое", '', {'catalog_choice' : '5'})}}
+							{{:helper.link("Блюспейс", '', {'catalog_choice' : '6'})}}
+							{{:helper.link("Синтетическое", '', {'catalog_choice' : '7'})}}
+						</div>
+					{{else data.catalog_step == 2}}
+						<span class="rndLabel">Режим активации:</span><br>
+						<div class="rndBtnRow">
+							{{:helper.link("Тактильный", '', {'catalog_choice' : '0'})}}
+							{{:helper.link("Аура", '', {'catalog_choice' : '1'})}}
+							{{:helper.link("Импульсный", '', {'catalog_choice' : '2'})}}
+						</div>
+					{{else data.catalog_step == 3}}
+						<span class="rndLabel">Радиус действия:</span><br>
+						<div class="rndBtnRow">
+							{{:helper.link("Малый (1-2)", '', {'catalog_choice' : 'short'})}}
+							{{:helper.link("Средний (3-4)", '', {'catalog_choice' : 'medium'})}}
+							{{:helper.link("Большой (5+)", '', {'catalog_choice' : 'long'})}}
+						</div>
+					{{/if}}
+					<br>
+					{{:helper.link("Отмена", 'cancel', {'cancel_catalog' : 1})}}
+					{{if data.catalog_result_text}}<hr class="rndDivider">{{:data.catalog_result_text}}{{/if}}
+				</div>
+			</div>
+			{{else}}
+				{{if data.catalog_result_text}}
+				<div class="rndSection">
+					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
+						<span>Результаты каталогизации</span>
+						{{:helper.link("✕", 'cancel', {'clear_catalog' : 1})}}
+					</div>
+					<div class="rndSectionContent">{{:data.catalog_result_text}}</div>
+				</div>
+				{{/if}}
+				<div class="rndSection">
+					<div class="rndSectionTitle">Каталогизация артефактов</div>
+					<div class="rndSectionContent">
+						{{if data.can_catalog && data.catalog_files}}
+							<span class="rndMuted"><i>Отсканируйте артефакт полевым сканером, сохраните файл на диск и вставьте в консоль.</i></span>
+							<table style="width: 100%; border-collapse: collapse; margin-top: 4px;">
+								{{for data.catalog_files}}
+								<tr>
+									<td style="padding: 2px 6px;">{{:value.name}}.RDF</td>
+									<td style="padding: 2px 6px; color: #888;">ID: {{:value.artifact_id}}</td>
+									<td style="padding: 2px 6px; text-align: right;">
+										{{:helper.link("Каталогизировать", 'search', {'start_catalog' : value.ref})}}
+									</td>
+								</tr>
+								{{/for}}
+							</table>
+						{{else}}
+							<span class="rndMuted">Нет доступных файлов сканирования артефактов на диске.</span><br>
+							<span class="rndMuted"><i>Отсканируйте артефакт полевым исследовательским сканером, сохраните RDF файл на диск и вставьте его в консоль.</i></span>
+						{{/if}}
+					</div>
+				</div>
+			{{/if}}
+		</div>
+
+		<!-- Right Column: Tech Levels, Disk, System -->
+		<div class="rndCol" style="width: 42%;">
+
+			<!-- Research Levels -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Уровни исследований</div>
+				<div class="rndSectionContent">
+					<table class="rndTechTable" style="width: 100%;">
+						{{for data.tech_trees}}
+						<tr>
+							<td class="rndTechName">{{:value.shortname}}</td>
+							<td class="rndTechBar"><div style="width: 95%">{{:helper.displayBar(value.level, 0, value.maxlevel, 'good', value.level + ' / ' + value.maxlevel)}}</div></td>
+						</tr>
+						{{/for}}
+					</table>
+				</div>
+			</div>
+
+			<!-- Disk -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Накопитель данных</div>
+				<div class="rndSectionContent">
+					{{if data.has_disk}}
+						<div class="rndDiskInfo">
+							<span class="rndLabel">Заполнение:</span>
+							<div style="width: 90%; margin: 4px 0;">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</div>
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Управление дизайнами", 'save', {'go_screen' : 'disk_management_designs'})}}
+							{{:helper.link("Извлечь", 'eject', {'eject_disk' : 1})}}
+						</div>
+					{{else}}
+						<span class="rndMuted">Диск не обнаружен</span>
+					{{/if}}
+				</div>
+			</div>
+
+			<!-- System Controls -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Система</div>
+				<div class="rndSectionContent">
+					<div class="rndBtnRow">
+						{{:helper.link("Настройки", 'wrench', {'toggle_settings' : 1}, null, data.show_settings ? 'rndMenuBtn selected' : 'rndMenuBtn')}}
+						{{:helper.link("Устройства", 'link', {'toggle_link_menu' : 1}, null, data.show_link_menu ? 'rndMenuBtn selected' : 'rndMenuBtn')}}
+					</div>
+
+					{{if data.show_settings}}
+					<div class="rndSubPanel">
+						<div class="rndBtnRow">
+							{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
+							{{:helper.link("Отключиться от сети", 'cancel', {'togglesync' : 1}, data.sync ? null : 'disabled')}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Заблокировать", 'locked', {'lock' : 1})}}
+							{{:helper.link("Сбросить базу данных", 'trash', {'reset' : 1})}}
+						</div>
+						{{if data.can_switch_account}}
+						<div class="rndBtnRow" style="margin-top:6px;">
+							<span class="rndMuted" style="margin-right:6px;">Счёт списания:</span>
+							<span style="color:#aaddff;">{{:data.has_science_account ? data.science_account_name : "Не привязан"}}</span>
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Привязать счёт", 'key', {'link_account' : 1})}}
+							{{if data.has_science_account}}
+								{{:helper.link("Отвязать", 'cancel', {'unlink_account' : 1})}}
+							{{/if}}
+						</div>
+						{{/if}}
+					</div>
+					{{/if}}
+
+					{{if data.show_link_menu}}
+					<div class="rndSubPanel">
+						<div class="rndBtnRow">
+							{{:helper.link("Переподключить устройства", 'link', {'find_device' : 1})}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Откл. анализатор", 'close', {'disconnect' : "destroy"}, data.has_dest_analyzer ? null : 'disabled')}}
+							{{:helper.link("Откл. протолат", 'close', {'disconnect' : "lathe"}, data.has_protolathe ? null : 'disabled')}}
+							{{:helper.link("Откл. импринтер", 'close', {'disconnect' : "imprinter"}, data.has_circuit_imprinter ? null : 'disabled')}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link(data.linked_drone_pad_id ? "Дрон пад ID: " + data.linked_drone_pad_id : "Привязать дрон пад", 'airplay', {'link_drone_pad' : 1})}}
+						</div>
+					</div>
+					{{/if}}
+				</div>
+			</div>
+
+		</div>
+	</div>
+	{{/if}}
+
+	<!-- ======================== -->
+	<!-- TECHNOLOGY TREES SCREEN  -->
+	<!-- ======================== -->
+	{{if data.screen == "tech_trees"}}
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 68%;">
+
+			<!-- Category Tabs -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Категории технологий</div>
+				<div class="rndSectionContent">
+					<div class="rndBtnRow" style="margin-bottom: 8px;">
+						{{for data.categories}}
+							{{:helper.link(value.name, '', {'select_tech_category' : value.id}, data.selected_category == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+					<!-- Corporation Sub-tabs -->
+					<div class="rndBtnRow rndCorpSubTabs">
+						{{for data.corp_trees}}
+							{{:helper.link(value.name, '', {'select_corp' : value.id}, data.selected_corp == value.id ? 'selected' : null)}}
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+			<!-- Tech Tree Visualization -->
+			<div class="rndSection">
+				<div class="rndSectionContent" style="padding: 0;">
+					<div id='sciTechTreeContainer'>
+						{{if data.selected_corp_logo}}
+							<div class="rndTreeWatermark" style="background-image: url({{:data.selected_corp_logo}});"></div>
+						{{/if}}
+						{{for data.corp_lines}}
+							<div style="position: absolute;border-{{:value.istop?'top':'bottom'}}: 1px solid rgba(100,180,255,0.35);border-{{:value.isright?'right':'left'}}: 1px solid rgba(100,180,255,0.35);width: {{:value.width}}%;height: {{:value.height}}%;left: {{:value.line_x}}%;bottom: {{:value.line_y}}%"></div>
+						{{/for}}
+						{{for data.corp_nodes}}
+							<div style="position: absolute; left: {{:value.x}}%; bottom: {{:value.y}}%; margin-left: -20px; margin-bottom: -20px;">
+								{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_corp_node' : value.id}, null, "link sciTechTreeIconBox "+((value.isresearched==1)?'sciTechResearched':((value.canunlock==1)?'sciTechAvailable':'sciTechCantResearch'))+" "+((value.id == data.selected_node_id)?'sciTechSelected':'') )}}
+							</div>
+						{{/for}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Right Column: Selected Node Details -->
+		<div class="rndCol" style="width: 32%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Узел технологии</div>
+				<div class="rndSectionContent">
+					{{if data.selected_node}}
+						<div class="rndNodeName">{{:data.selected_node.name}}</div>
+						{{if data.selected_corp_logo}}
+							<img src="{{:data.selected_corp_logo}}" class="rndNodeLogo" />
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Стоимость</div>
+							<div class="rndNodeValue rndPriceValue">{{:data.currency_short}}{{:data.selected_node.price}}</div>
+						</div>
+
+						{{if data.selected_node.current_reputation !== null && data.selected_node.current_reputation !== undefined}}
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Репутация</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.corp_id}}{{:data.selected_node.corp_id}}: {{/if}}<span style="color: {{:data.selected_node.current_reputation >= 0?'#00FF00':'#FF0000'}}">
+									{{:data.selected_node.current_reputation >= 0 ? '+' : ''}}{{:data.selected_node.current_reputation}}
+								</span> / {{:data.selected_node.required_reputation}}
+								{{if !data.selected_node.reputation_met}}<br/>
+									<span style="color: #FF6644; font-size: 11px;">Требуется ещё {{:data.selected_node.required_reputation - data.selected_node.current_reputation}} репутации</span>
+								{{/if}}
+							</div>
+						</div>
+						{{/if}}
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Требования</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.requirements && data.selected_node.requirements.length > 0}}
+									{{for data.selected_node.requirements}}
+										<span style="color: {{:value.isgood?'#44ff44':'#ff4444'}}">{{:value.text}}</span><br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">Нет требований</span>
+								{{/if}}
+							</div>
+						</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Открывает</div>
+							<div class="rndNodeValue">
+								{{if data.selected_node.unlocks && data.selected_node.unlocks.length > 0}}
+									{{for data.selected_node.unlocks}}
+										{{:value.text}}<br />
+									{{/for}}
+								{{else}}
+									<span class="rndMuted">—</span>
+								{{/if}}
+							</div>
+						</div>
+
+						{{if data.selected_node.isresearched}}
+							<div class="rndNodeStatus rndNodeStatus--good">Открыто</div>
+						{{else}}
+							{{if data.selected_node.can_buy}}
+								{{:helper.link("Приобрести", '', {'buy_corp_node' : data.selected_node_id}, null, 'rndBuyBtn')}}
+							{{else}}
+								<div class="rndNodeStatus rndNodeStatus--locked">Недоступно</div>
+							{{/if}}
+						{{/if}}
+					{{else}}
+						<div class="rndMuted" style="text-align: center; padding: 20px 0;">Выберите узел на карте технологий</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/if}}
+
+	<!-- ======================== -->
+	<!-- CONTRACTS / MISSIONS     -->
+	<!-- ======================== -->
+	{{if data.screen == "missions"}}
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 100%;">
+
+			<div class="rndSection">
+				<div class="rndSectionTitle">Корпоративные контракты {{:helper.link("Печать", 'printer', {'print_missions': 1}, null, 'rndTab')}}</div>
+				<div class="rndSectionContent">
+					<p class="rndMuted" style="font-size: 11px; margin-bottom: 10px;"><i>Контракты на исследование объектов, обнаруженных на заброшенных объектах в системе. Выполнение контрактов открывает доступ к корпоративным технологиям.</i></p>
+
+					{{if data.missions && data.missions.length}}
+						{{for data.missions}}
+						<div class="rndMissionCard">
+							<div class="rndMissionHeader">
+								<span class="rndMissionTitle">{{:value.title}}</span>
+								<span class="rndMissionType rndMissionType--{{:value.state == 4 ? 'done' : (value.mission_type == 'complex' ? 'complex' : 'simple')}}">{{:value.state == 4 ? 'Выполнен' : (value.mission_type == 'complex' ? 'Сложный' : 'Простой')}}</span>
+							</div>
+							<table class="rndMissionTable">
+								<tr><td class="rndMissionLabel">Корпорация</td><td>{{:value.corp_name}}</td></tr>
+								<tr><td class="rndMissionLabel">Локация</td><td>{{:value.site_name}}</td></tr>
+								<tr><td class="rndMissionLabel">Статус</td><td>{{if value.state == 4}}<span style="color:#44ff44;">Выполнен</span>{{else}}<span class="rndMuted">В процессе</span>{{/if}}</td></tr>
+							</table>
+							<div class="rndMissionDesc">{{:value.description}}</div>
+							{{if value.state != 4}}
+							<div class="rndMissionObjectives">
+								{{for value.objectives :obj:obj_i}}
+								<div class="rndMissionObj {{:obj.completed ? 'rndMissionObj--done' : ''}}">
+									<span class="rndMissionObjIcon">{{:obj.completed ? '&#10003;' : '&#9744;'}}</span>
+									<span class="rndMissionObjText">{{:obj.description}}</span>
+									<span class="rndMissionObjStatus">{{:obj.status}}</span>
+								</div>
+								{{/for}}
+							</div>
+							{{/if}}
+						</div>
+						{{/for}}
+					{{else}}
+						<div class="rndEmptyNotice">Контрактов нет. Контракты генерируются при обнаружении заброшенных объектов в системе.</div>
+					{{/if}}
+				</div>
+			</div>
+
+			<!-- Data Submission (RDF & Photos) -->
+			{{if data.has_disk}}
+			<div class="rndSection">
+				<div class="rndSectionTitle">Подача данных сканирования</div>
+				<div class="rndSectionContent">
+					{{if data.rdf_files && data.rdf_files.length}}
+					<table class="rndDataTable">
+						<tr><th>Файл</th><th>Зона</th><th>Подать для контракта</th></tr>
+						{{for data.rdf_files}}
+						<tr>
+							<td>{{:value.filename}}</td>
+							<td>{{:value.scan_area}}</td>
+							<td>
+								{{for data.missions :mission:mi}}
+									{{if mission.state != 4}}
+										{{:helper.link(mission.title, 'transferthick-e-w', {'submit_rdf' : value.id, 'submit_rdf_mission' : mission.ref})}}
+									{{/if}}
+								{{/for}}
+							</td>
+						</tr>
+						{{/for}}
+					</table>
+					{{else}}
+						<span class="rndMuted"><i>На диске нет файлов RDF.</i></span>
+					{{/if}}
+				</div>
+			</div>
+			<div class="rndSection">
+				<div class="rndSectionTitle">Подача фотографий</div>
+				<div class="rndSectionContent">
+					{{if data.photo_files && data.photo_files.length}}
+					<table class="rndDataTable">
+						<tr><th>Файл</th><th>Подать для контракта</th></tr>
+						{{for data.photo_files}}
+						<tr>
+							<td>{{:value.filename}}</td>
+							<td>
+								{{for data.missions :mission:mi}}
+									{{if mission.state != 4}}
+										{{:helper.link(mission.title, 'transferthick-e-w', {'submit_photo' : value.id, 'submit_photo_mission' : mission.ref})}}
+									{{/if}}
+								{{/for}}
+							</td>
+						</tr>
+						{{/for}}
+					</table>
+					{{else}}
+						<span class="rndMuted"><i>На диске нет фотографий.</i></span>
+					{{/if}}
+				</div>
+			</div>
+			{{/if}}
+			<p class="rndMuted" style="font-size: 11px; margin-top: 4px;"><i>Физические фотографии и отчёты об артефактах можно подать, положив их на консоль.</i></p>
+
+		</div>
+	</div>
+	{{/if}}
+
+	<!-- ======================== -->
+	<!-- CORPORATIONS SCREEN      -->
+	<!-- ======================== -->
+	{{if data.screen == "corps"}}
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 60%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Корпорации</div>
+				<div class="rndSectionContent">
+					<div class="rndCorpGrid">
+						{{for data.corporations}}
+						<div class="rndCorpCard {{:data.selected_dialogue_corp_id == value.id ? 'rndCorpCard--selected' : ''}}">
+							{{:helper.link(value.name, '', {'select_corp_dialogue' : value.id}, null, 'link rndCorpLink')}}
+							<div class="rndCorpRep">
+								<div class="rndCorpRepBar"><div class="rndCorpRepFill" style="width:{{:(value.reputation + 50)}}%; background-color:{{:value.reputation >= 0 ? '#2a8a2a' : '#8a2a2a'}};"></div></div>
+								<span style="color:{{:value.reputation >= 0 ? '#44dd44' : '#dd4444'}}; font-size:11px;">{{:value.reputation >= 0 ? '+' : ''}}{{:value.reputation}}</span>
+							</div>
+						</div>
+						{{/for}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="rndCol" style="width: 40%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Информация о корпорации</div>
+				<div class="rndSectionContent">
+					{{if data.selected_corp_dialogue}}
+						<div class="rndNodeName" style="margin-bottom: 12px;">{{:data.selected_corp_dialogue.name}}</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Текущая репутация</div>
+							<div class="rndNodeValue">
+								<span style="font-size: 18px; font-weight: bold; color: {{:data.selected_corp_dialogue.reputation_color}}">
+									{{:data.selected_corp_dialogue.reputation >= 0 ? '+' : ''}}{{:data.selected_corp_dialogue.reputation}}/50
+								</span>
+								<div class="rndRepBar">
+									<div class="rndRepFill" style="width: {{:(data.selected_corp_dialogue.reputation + 50)}}%; background-color: {{:data.selected_corp_dialogue.reputation >= 0 ? '#00AA00' : '#AA0000'}};"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">Статус отношений</div>
+							<div class="rndNodeValue">
+								{{if data.selected_corp_dialogue.reputation >= 40}}
+									<span style="color: #00FF00">Отличные отношения</span>
+								{{else}}
+									{{if data.selected_corp_dialogue.reputation >= 20}}
+										<span style="color: #00DD00">Хорошие отношения</span>
+									{{else}}
+										{{if data.selected_corp_dialogue.reputation >= 0}}
+											<span style="color: #FFDD00">Нейтральные отношения</span>
+										{{else}}
+											{{if data.selected_corp_dialogue.reputation >= -20}}
+												<span style="color: #FF8800">Напряжённые отношения</span>
+											{{else}}
+												<span style="color: #FF0000">Враждебные отношения</span>
+											{{/if}}
+										{{/if}}
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+
+						<div class="rndNodeField">
+							<div class="rndNodeLabel">О корпорации</div>
+							<div class="rndNodeValue rndCorpInfo">
+								{{:data.selected_corp_dialogue.info}}
+							</div>
+						</div>
+					{{else}}
+						<div class="rndMuted" style="text-align: center; padding: 20px 0;">Выберите корпорацию для просмотра информации</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/if}}
+
+</div>
+{{/if}}
+
+<!-- ============================================================ -->
+<!-- PROTOLATHE / CIRCUIT IMPRINTER SCREEN                        -->
+<!-- ============================================================ -->
+{{if data.screen == "protolathe" || data.screen == "circuit_imprinter"}}
+<div class="rndConsole">
+	<div class="rndNav rndNavSub">
+		<div class="rndNavTabs">
+			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
+			<span class="rndNavTitle">{{if data.screen == "protolathe"}}Protolathe{{else}}Circuit Imprinter{{/if}}</span>
+		</div>
+	</div>
+
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 60%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">
+					{{if data.screen == "protolathe"}}Меню протолата{{else}}Меню импринтера{{/if}}
+					<span style="float: right;">
+						{{:helper.link("Поиск", '', {'search' : 1})}}
+						{{if data.search_text}} <span class="rndMuted">«{{:data.search_text}}»</span>{{/if}}
+					</span>
+				</div>
+				<div class="rndSectionContent">
+					<!-- Design Categories -->
+					<div class="rndBtnRow" style="margin-bottom: 6px; flex-wrap: wrap;">
+						{{for data.all_categories}}
+							{{:helper.link(value, '', {'select_category' : value}, data.selected_category == value ? 'selected' : null)}}
+						{{/for}}
+					</div>
+					{{if data.selected_category && data.hdd_capacities[data.selected_category]}}
+					{{var hddInfo = data.hdd_capacities[data.selected_category];}}
+					{{var pct = Math.round(hddInfo.used / hddInfo.max * 100);}}
+					<div class="rndDiskBarWrap" style="margin-bottom: 8px;">
+						<span class="rndMuted" style="font-size:10px;">HDD: {{:hddInfo.used}} / {{:hddInfo.max}} GQ</span>
+						<div class="rndDiskBar">
+							<div class="rndDiskBarFill {{:pct >= 100 ? 'rndDiskBarFull' : pct >= 75 ? 'rndDiskBarWarn' : ''}}" style="width:{{:pct}}%;"></div>
+						</div>
+						<span class="rndMuted" style="font-size:10px; min-width:28px;">{{:pct}}%</span>
+					</div>
+					{{/if}}
+
+					<!-- Design List -->
+					<div class="rndDesignListScroll" data-scroll-id="rnd-proto-designs">
+						<table class="rndDesignTable">
+							{{for data.possible_designs}}
+							<tr class="{{:value.banned ? 'rndDesignBanned' : ''}}">
+								<td class="rndDesignIcon"><img src={{:value.data.icon}} height=24 width=24></td>
+								<td class="rndDesignName">
+									{{if value.banned}}<span class="rndBannedMark">&#9888;</span>{{/if}}
+									{{:helper.link(value.data.name, '', {'build' : value.id, 'amount': 1}, value.can_create >= 1 && !value.banned ? null : 'disabled')}}
+									{{if data.screen == "protolathe" && !value.banned}}
+										{{if value.can_create >= 3}}{{:helper.link('x3', '', {'build' : value.id, 'amount': 3})}}{{/if}}
+										{{if value.can_create >= 5}}{{:helper.link('x5', '', {'build' : value.id, 'amount': 5})}}{{/if}}
+									{{/if}}
+								</td>
+								<td class="rndDesignCost">
+									{{for value.data.materials :material:material_i}}
+										{{material.amount = value.data.adjust_materials ? Math.round((material.req * data.materials_data.mat_efficiency) * 100) / 100 : material.req;}}
+										<span style="color: {{:value.missing_materials.indexOf(material.id) == -1 ? '#cde' : '#ff4444'}}">{{:material.amount}} {{:material.name}} </span>
+									{{/for}}
+									{{for value.data.chemicals :chemical:chemical_i}}
+										<span style="color: {{:value.missing_chemicals.indexOf(chemical.id) == -1 ? '#cde' : '#ff4444'}}">{{:chemical.req}} {{:chemical.name}} </span>
+									{{/for}}
+									{{if value.temp_chemical}}{{:value.temp_chemical}}{{/if}}
+								</td>
+							</tr>
+							<tr><td colspan='3'><small class="rndMuted">{{:value.data.desc}}</small></td></tr>
+							{{/for}}
 						</table>
 					</div>
 				</div>
 			</div>
-		</td>
-	</tr>
-</table>
+		</div>
 
-{{/if}}
-
-{{if data.screen == "protolathe" || data.screen == "circuit_imprinter"}}
-	<div class='item'>
-		{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
-	</div>
-
-	<table class="fixed" style="width: 100%">
-		<tr>
-			<td valign="top">
-				<div class="statusDisplayRecords">
-					<div class="item">
-						<div class="itemContent" style="width: 100%;">
-							<table class="fixed" style="border-collapse: collapse;"><tr><td style="padding:0; margin:0;">
-							{{if data.screen == "protolathe"}}
-								<H2>Protolathe Menu:</H2>
-							{{else data.screen == "circuit_imprinter"}}
-								<H2>Circuit Imprinter Menu:</H2>
-							{{/if}}
-							</td><td style="padding:0; margin:0;padding-left: 10px">
-							{{:helper.link("Search", '', {'search' : 1})}}
-							{{if data.search_text}}
-							Searching for '{{:data.search_text}}'
-							{{/if}}
-							</td></tr></table>
-							<hr>
-							<div class='item'>
-								{{for data.all_categories}}
-									{{:helper.link(value, '', {'select_category' : value}, data.selected_category == value ? 'selected' : null)}}
-								{{/for}}
-							</div>
-							<div class='item'>
-								<table class="fixed" style="width: 100%;">
-									{{for data.possible_designs}}
-										<tr style="width: 100%;">
-											<td style="width: 32px">
-												<img class="statusDisplayItem" src={{:value.data.icon}} height=24 width=24></img>
-											</td>
-											<td style="width: 100%">
-												{{:helper.link(value.data.name, '', {'build' : value.id, 'amount': 1}, value.can_create >= 1 ? null : 'disabled')}}
-												{{if data.screen == "protolathe"}}
-													{{if value.can_create >= 3}}
-														{{:helper.link('x3', '', {'build' : value.id, 'amount': 3})}}
-													{{/if}}
-													{{if value.can_create >= 5}}
-														{{:helper.link('x5', '', {'build' : value.id, 'amount': 5})}}
-													{{/if}}
-												{{/if}}
-											</td>
-											<td style="width: 100%" align="right">
-												{{for value.data.materials  :material:material_i}}
-													{{material.amount = value.data.adjust_materials ? Math.round((material.req * data.materials_data.mat_efficiency) * 100) / 100 : material.req;}}
-													{{if value.missing_materials.indexOf(material.id) == -1}}
-														<span>{{:material.amount}} {{:material.name}} </span>
-													{{else}}
-														<span style="color:red">{{:material.amount}} {{:material.name}} </span>
-													{{/if}}
-												{{/for}}
-
-												{{for value.data.chemicals  :chemical:chemical_i}}
-													{{if value.missing_chemicals.indexOf(chemical.id) == -1}}
-														<span>{{:chemical.req}} {{:chemical.name}} </span>
-													{{else}}
-														<span style="color:red">{{:chemical.req}} {{:chemical.name}} </span>
-													{{/if}}
-												{{/for}}
-
-												{{if value.temp_chemical}}
-													{{:value.temp_chemical}}
-												{{/if}}
-											</td>
-										</tr>
-										<tr style="width: 100%">
-										 <td colspan = '3'><small>{{:value.data.desc}}</small></td>
-										</tr>
-									{{/for}}
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</td>
-			<td style="width: 430px" valign="top">
-				<h3>Material Storage</h3>
-				<div class="statusDisplayRecords">
-					<div class="item">
-						<div class="itemContent" style="width: 100%;">
-							<table class="fixed" style="width: 100%">
-
-							{{for data.materials_data.reagents}}
-							<tr><td><span class="average">{{:value.name}}</span></td><td>{{:Math.round(value.amount * 100) / 100}}</td></tr>
-							{{/for}}
-
-							{{for data.materials_data.materials}}
-							<tr>
-								<td><span class="average">{{:value.name.toTitleCase()}}</span></td>
-								<td>{{:Math.round(value.amount * 100) / 100}}/{{:data.materials_data.mat_capacity}}</td>
-								<td>
+		<div class="rndCol" style="width: 40%;">
+			<!-- Material Storage -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Хранилище материалов</div>
+				<div class="rndSectionContent">
+					<table class="rndTechTable" style="width: 100%;">
+						{{for data.materials_data.reagents}}
+						<tr><td class="rndTechName">{{:value.name}}</td><td>{{:Math.round(value.amount * 100) / 100}}</td></tr>
+						{{/for}}
+						{{for data.materials_data.materials}}
+						<tr>
+							<td class="rndTechName">{{:value.name.toTitleCase()}}</td>
+							<td>{{:Math.round(value.amount * 100) / 100}}/{{:data.materials_data.mat_capacity}}</td>
+							<td>
 								{{if value.amount && value.ejectable}}
-									{{:helper.link("Eject x1", '', {'eject_sheet' : value.id, 'amount' : 1})}}
+									{{:helper.link("x1", '', {'eject_sheet' : value.id, 'amount' : 1})}}
 									{{:helper.link("x5", '', {'eject_sheet' : value.id, 'amount' : 5}, value.amount >= 5 ? "" : "disabled")}}
 									{{:helper.link("All", '', {'eject_sheet' : value.id, 'amount' : 1000})}}
 								{{/if}}
-								</td>
-							</tr>
-							{{/for}}
-
-							{{if (!data.materials_data.materials || !data.materials_data.materials.length) && (!data.materials_data.reagents || !data.materials_data.reagents.length)}}
-								Empty
-							{{/if}}
-							</table>
-						</div>
-					</div>
+							</td>
+						</tr>
+						{{/for}}
+						{{if (!data.materials_data.materials || !data.materials_data.materials.length) && (!data.materials_data.reagents || !data.materials_data.reagents.length)}}
+							<tr><td class="rndMuted">Пусто</td></tr>
+						{{/if}}
+					</table>
 				</div>
-
-				<h3>Construction information</h3>
-				<div class="statusDisplayRecords">
-					<div class="item">
-						<div class="itemContent" style="width: 100%;">
-							{{if data.device_current}}
-								Constructing: {{:data.device_current}}<br/>
-								{{if data.device_error}}
-									<div class="bad">{{:data.device_error}}</div>
-								{{/if}}
-								<br/>
-							{{/if}}
-							Queue:<br/>
-							{{for data.queue}}
-								{{:index + 1}}) {{:value}}<br/>
-							{{empty}}
-								Empty<br/>
-							{{/for}}
-							{{if data.queue.length > 0}}
-								<div class="item">
-									{{:helper.link("Clear", '', {'clear_queue' : 1})}}
-								</div>
-							{{/if}}
-						</div>
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-{{/if}}
-
-{{if data.screen == "tech_trees"}}
-	<div class='item'>
-	{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
-
-	<span class="average">Research points:</span> {{:data.research_points}} <span class="average">{{:data.tech_tree_name}} level:</span> {{:data.tech_tree_level}}
-	</div>
-	<div class='item'>
-
-		{{for data.tech_trees}}
-			{{:helper.link(value.shortname, '', {'select_tech_tree' : value.id}, data.selected_tech_tree == value.id ? 'selected' : null)}}
-		{{/for}}
-	</div>
-
-	<table class="fixed" style="width: 100%">
-	  <tr>
-		<td valign="top">
-			<div id='sciTechTreeContainer'>
-				{{for data.lines}}
-					<div style="position: absolute;border-{{:value.istop?'top':'bottom'}}: 1px solid white;border-{{:value.isright?'right':'left'}}: 1px solid white;width: {{:value.width}}%;height: {{:value.height}}%;left: {{:value.line_x}}%;bottom: {{:value.line_y}}%"></div>
-				{{/for}}
-
-				{{for data.techs}}
-					<div style="position: absolute; left: {{:value.x}}%; bottom: {{:value.y}}%;margin-left: -20px;margin-bottom: -20px;">
-						{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_technology' : value.id}, null, "link sciTechTreeIconBox "+" "+((value.canresearch==0 && value.isresearched!=1)?'sciTechCantResearch':'')+" "+((value.isresearched==1)?'sciTechResearched':'')+" "+((value.id == data.selected_technology_id)?'sciTechSelected':'') )}}
-					</div>
-				{{/for}}
 			</div>
-		</td>
-			<td style="width: 200px" valign="top">
-				{{if data.selected_technology}}
-					<b>Name</b></br>
-					{{:data.selected_technology.name}}
-					</br></br>
-					<b>Cost</b></br>
-					{{:data.selected_technology.cost}} Research Points
-					</br></br>
-					<b>Requirements</b></br>
-					{{for data.selected_technology.requirements}}
-						<span style="color: {{:value.isgood?'#00FF00':'#FF0000'}}">{{:value.text}}</span></br>
-					{{/for}}
-					</br>
-					<b>Unlocks</b></br>
-					{{for data.selected_technology.unlocks}}
-						{{:value.text}}</br>
-					{{/for}}
-					</br>
-					{{if data.selected_technology.isresearched}}
-						<span class="average">Researched</span>
-					{{else}}
-						{{:helper.link("Research", '', {'unlock_technology' : data.selected_technology.id})}}
+
+			<!-- Construction Queue -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Очередь производства</div>
+				<div class="rndSectionContent">
+					{{if data.device_current}}
+						<div style="margin-bottom: 4px;">Производство: <b>{{:data.device_current}}</b></div>
+						{{if data.device_error}}<div class="bad">{{:data.device_error}}</div>{{/if}}
 					{{/if}}
-				{{else}}
-					{{:data.tech_tree_desc}}
-				{{/if}}
-			</td>
-	  </tr>
-	</table>
+					{{for data.queue}}
+						<div>{{:index + 1}}) {{:value}}</div>
+					{{empty}}
+						<span class="rndMuted">Очередь пуста</span>
+					{{/for}}
+					{{if data.queue.length > 0}}
+						<div style="margin-top: 6px;">{{:helper.link("Очистить", '', {'clear_queue' : 1})}}</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {{/if}}
+
+<!-- ============================================================ -->
+<!-- DISK MANAGEMENT SCREENS                                      -->
+<!-- ============================================================ -->
 {{if data.screen == "disk_management_designs"}}
-	<table style="width: 30%">
-	<div class='item'>
-	<tr><td>{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}</td></tr>
-	<tr><td>Disk capacity:</td><td style="width: 100%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</td>
-	</div>
-	</table>
-	{{if data.has_disk}}
-		<table style="width: 100%">
-		<tr>
-			<th>Disk</th>
-			<th>Local database</th>
-		</tr>
-		<tr>
-			<th>{{:helper.link("Search", '', {'search' : 1})}}
-			{{if data.search_text}}
-				Searching for '{{:data.search_text}}'
-				{{:helper.link("Clear Search", '', {'clear_search' : 1})}}
+<div class="rndConsole">
+	<div class="rndNav rndNavSub">
+		<div class="rndNavTabs">
+			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
+			<span class="rndNavTitle">Управление дизайнами</span>
+		</div>
+		<div class="rndNavStatus">
+			{{if data.has_disk}}
+				{{var pct = Math.round(data.disk_used / data.disk_size * 100);}}
+				<div class="rndDiskBarWrap">
+					<span class="rndMuted" style="font-size:10px;">{{:data.disk_used}} / {{:data.disk_size}} GQ</span>
+					<div class="rndDiskBar">
+						<div class="rndDiskBarFill {{:pct >= 100 ? 'rndDiskBarFull' : pct >= 75 ? 'rndDiskBarWarn' : ''}}" style="width:{{:pct}}%;"></div>
+					</div>
+					<span class="rndMuted" style="font-size:10px; min-width:28px;">{{:pct}}%</span>
+				</div>
 			{{/if}}
-		</tr>
-		<tr>
-		<td valign="top" style="width: 50%">
-		<div class="statusDisplayRecords">
-		{{if data.search_text}}
-			Detected designs:
-			{{for data.disk_designs}}
-				<div class="item">
-					{{:value.name}}
-					{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-					{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
-				</div>
-			{{empty}}
-				<div class="item">The disk has no accessible design files stored on it.</div>
-			{{/for}}
-			</div>
-			</td>
-		{{else}}
-			Detected designs:
-			{{for data.disk_designs}}
-				<div class="item">
-					{{:value.name}}
-					{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-					{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id})}}
-				</div>
-			{{empty}}
-				<div class="item">The disk has no accessible design files stored on it.</div>
-			{{/for}}
-			</div>
-			</td>
-		{{/if}}
-
-		<td valign="top" style="width: 50%">
-		<div class="statusDisplayRecords">
-		Local designs:
-		{{for data.known_designs}}
-			<div class="item">{{:helper.link("", 'arrowthick-1-w', {'upload_disk_design' : value.id}, data.disk_read_only ? 'disabled' : null)}} {{:value.name}}</div>
-		{{empty}}
-			<div class="item">The local database has no design data.</div>
-		{{/for}}
 		</div>
-		</td>
-		</tr>
-		</table>
+	</div>
+
+	{{if data.has_disk}}
+	<!-- Category Filter & Search -->
+	<div class="rndSection">
+		<div class="rndSectionTitle">Фильтр</div>
+		<div class="rndSectionContent">
+			<div class="rndBtnRow" style="flex-wrap: wrap; gap: 3px;">
+				{{:helper.link("Все", '', {'select_disk_category' : '__all__'}, !data.selected_disk_category ? 'selected' : null)}}
+				{{for data.disk_design_categories}}
+					{{:helper.link(value, '', {'select_disk_category' : value}, data.selected_disk_category == value ? 'selected' : null)}}
+				{{/for}}
+				<span style="margin-left: auto;">
+					{{:helper.link("Поиск", '', {'search' : 1})}}
+					{{if data.search_text}} <span class="rndMuted">«{{:data.search_text}}»</span> {{:helper.link("X", '', {'clear_search' : 1})}}{{/if}}
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 50%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle" style="display:flex; justify-content:space-between; align-items:center;">
+					<span>Диск</span>
+					<span style="font-size:10px; font-weight:normal; color:#5a7a9a; letter-spacing:0;">{{:data.disk_designs.length}} дизайнов</span>
+				</div>
+				<div class="rndSectionContent rndFileList" data-scroll-id="rnd-disk-designs">
+					{{for data.disk_designs}}
+					<div class="rndFileItem{{:value.banned ? ' rndDesignBanned' : ''}}">
+						<span>
+							{{if value.banned}}<span class="rndBannedMark" title="Дизайн запрещён администратором">&#9888;</span> {{/if}}{{:value.name}}
+						</span>
+						<span>
+							{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+							{{:helper.link("", 'arrowthick-1-e', {'download_disk_design' : value.id}, value.banned ? 'disabled' : null)}}
+						</span>
+					</div>
+					{{empty}}
+					<span class="rndMuted">На диске нет дизайнов</span>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+		<div class="rndCol" style="width: 50%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle" style="display:flex; justify-content:space-between; align-items:center;">
+					<span>Локальная база данных</span>
+					<span style="font-size:10px; font-weight:normal; color:#5a7a9a; letter-spacing:0;">{{:data.known_designs.length}} дизайнов</span>
+				</div>
+				<div class="rndSectionContent rndFileList" data-scroll-id="rnd-disk-known">
+					{{for data.known_designs}}
+					<div class="rndFileItem{{:value.banned ? ' rndDesignBanned' : ''}}">
+						<span>
+							{{if value.banned}}<span class="rndBannedMark" title="Дизайн запрещён администратором">&#9888;</span> {{/if}}{{:value.name}}
+						</span>
+						{{:helper.link("", 'arrowthick-1-w', {'upload_disk_design' : value.id}, (data.disk_read_only || value.banned) ? 'disabled' : null)}}
+					</div>
+					{{empty}}
+					<span class="rndMuted">Локальная база пуста</span>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
 	{{/if}}
+</div>
 {{/if}}
+
 {{if data.screen == "disk_management_tech"}}
-	<table style="width: 30%">
-	<div class='item'>
-	<tr><td>{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}</td></tr>
-	<tr><td>Disk capacity:</td><td style="width: 100%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</td>
-	</div>
-	</table>
-	{{if data.has_disk}}
-		<table style="width: 100%">
-		<tr>
-			<th>Disk</th>
-			<th>Local database</th>
-		</tr>
-		<tr>
-		<td valign="top" style="width: 50%">
-		<div class="statusDisplayRecords">
-		Detected technology nodes:
-		{{for data.disk_tech_nodes}}
-			<div class="item">
-				{{:value.name}}
-				{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_node' : value.id})}}
-				</div>
-		{{empty}}
-			<div class="item">The disk has no accessible technology files stored on it.</div>
-		{{/for}}
+<div class="rndConsole">
+	<div class="rndNav rndNavSub">
+		<div class="rndNavTabs">
+			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
+			<span class="rndNavTitle">Управление технологиями</span>
 		</div>
-		</td>
+		<div class="rndNavStatus">
+			{{if data.has_disk}}
+				<span class="rndMuted">{{:data.disk_used}}GQ / {{:data.disk_size}}GQ</span>
+			{{/if}}
+		</div>
+	</div>
 
-		<td valign="top" style="width: 50%">
-		<div class="statusDisplayRecords">
-		Local technology nodes:
-		{{for data.known_nodes}}
-			<div class="item">{{:helper.link("", 'arrowthick-1-w', {'upload_disk_node' : value.id}, data.disk_read_only ? 'disabled' : null)}} {{:value.name}}</div>
-		{{empty}}
-			<div class="item">The local database has no technology data.</div>
-		{{/for}}
-		</div>
-		</td>
-		</tr>
-		</table>
-	{{/if}}
-{{/if}}
-{{if data.screen == "disk_management_data"}}
-	<table style="width: 30%">
-	<div class='item'>
-	<tr><td>{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}</td></tr>
-	<tr><td>Disk capacity:</td><td style="width: 100%">{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good', data.disk_used + "GQ / " + data.disk_size + "GQ")}}</td>
-	</div>
-	</table>
 	{{if data.has_disk}}
-		<div class="statusDisplayRecords">
-		Detected research data files:
-		{{for data.disk_research_data}}
-			<div class="item">
-				{{:value.name}}
-				{{:helper.link("", 'trash', {'delete_disk_file' : value.id},data.disk_read_only ? 'disabled' : null)}}
-				{{:helper.link("", 'arrowthick-1-e', {'download_disk_data' : value.id})}}
+	<div class="rndTwoCol">
+		<div class="rndCol" style="width: 50%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Диск</div>
+				<div class="rndSectionContent rndFileList">
+					{{for data.disk_tech_nodes}}
+					<div class="rndFileItem">
+						<span>{{:value.name}}</span>
+						<span>
+							{{:helper.link("", 'trash', {'delete_disk_file' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+							{{:helper.link("", 'arrowthick-1-e', {'download_disk_node' : value.id})}}
+						</span>
+					</div>
+					{{empty}}
+					<span class="rndMuted">На диске нет технологий</span>
+					{{/for}}
 				</div>
-		{{empty}}
-			<div class="item">The disk has no accessible research data files stored on it.</div>
-		{{/for}}
+			</div>
 		</div>
+		<div class="rndCol" style="width: 50%;">
+			<div class="rndSection">
+				<div class="rndSectionTitle">Локальная база данных</div>
+				<div class="rndSectionContent rndFileList">
+					{{for data.known_nodes}}
+					<div class="rndFileItem">
+						<span>{{:value.name}}</span>
+						{{:helper.link("", 'arrowthick-1-w', {'upload_disk_node' : value.id}, data.disk_read_only ? 'disabled' : null)}}
+					</div>
+					{{empty}}
+					<span class="rndMuted">Локальная база пуста</span>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
 	{{/if}}
+</div>
 {{/if}}
 
-<!--
-<div class="section">
-	<div class="section-title">
-
-	</div>
-	<div class="section-content">
-
-	</div>
-</div>
-
-<div class="labelList">
-	<div class="labelList-item">
-		<div class="labelList-item-label">
-
-		</div>
-		<div class="labelList-item-content">
-
-		</div>
-	</div>
-</div>
--->
+<!-- ============================================================ -->
+<!-- STYLES                                                       -->
+<!-- ============================================================ -->
 <style>
 
+/* === Console Root === */
+.rndConsole {
+	font-family: 'Consolas', 'Courier New', monospace;
+	color: #c8dae8;
+	min-height: 100%;
+}
+
+/* === Global Button Overrides === */
+.rndConsole .link,
+.rndConsole .linkActive,
+.rndConsole .linkOn,
+.rndConsole .linkOff,
+.rndConsole .selected,
+.rndConsole .warning,
+.rndConsole .disabled {
+	background: rgba(24, 48, 80, 0.7);
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	color: #a8c8e8;
+	border-radius: 2px;
+	padding: 1px 6px 3px 6px;
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-size: 11px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+	float: none;
+	display: inline-block;
+	height: auto;
+	min-width: 0;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.rndConsole .hasIcon {
+	padding: 1px 6px 3px 2px;
+}
+
+
+.rndConsole .selected,
+.rndConsole .linkActive.selected,
+.rndConsole .linkActive.selected:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+.rndConsole .linkOn,
+.rndConsole a.linkOn:link,
+.rndConsole a.linkOn:visited,
+.rndConsole a.linkOn:active,
+.rndConsole a.linkOn:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+}
+
+.rndConsole .disabled,
+.rndConsole a.disabled:link,
+.rndConsole a.disabled:visited,
+.rndConsole a.disabled:active,
+.rndConsole a.disabled:hover {
+	background: rgba(30, 36, 48, 0.5);
+	border-color: rgba(50, 60, 80, 0.4);
+	color: #4a5a70;
+	cursor: not-allowed;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.rndConsole .linkWarning,
+.rndConsole .warning,
+.rndConsole a.warning:link,
+.rndConsole a.warning:visited,
+.rndConsole a.warning:active,
+.rndConsole a.warning:hover {
+	background: rgba(120, 50, 10, 0.65);
+	border-color: rgba(200, 100, 30, 0.5);
+	color: #ffbb66;
+}
+
+
+/* Icon buttons inside console */
+.rndConsole a.icon,
+.rndConsole .link.icon,
+.rndConsole .linkActive.icon,
+.rndConsole .linkOn.icon,
+.rndConsole .linkOff.icon,
+.rndConsole .selected.icon,
+.rndConsole .disabled.icon {
+	position: relative;
+	padding: 1px 6px 3px 22px;
+}
+
+/* === Progress Bars Override === */
+.rndConsole .displayBar {
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	background: rgba(6, 12, 24, 0.6);
+	border-radius: 2px;
+	height: 14px;
+}
+
+.rndConsole .displayBarFill {
+	background: rgba(40, 70, 120, 0.6);
+}
+
+.rndConsole .displayBarFill.good {
+	background: linear-gradient(90deg, rgba(30, 90, 50, 0.8), rgba(50, 130, 70, 0.7));
+}
+
+.rndConsole .displayBarFill.average {
+	background: linear-gradient(90deg, rgba(140, 80, 10, 0.8), rgba(180, 110, 20, 0.7));
+}
+
+.rndConsole .displayBarFill.bad {
+	background: linear-gradient(90deg, rgba(140, 20, 20, 0.8), rgba(180, 40, 30, 0.7));
+}
+
+.rndConsole .displayBarText {
+	font-size: 10px;
+	letter-spacing: 0.3px;
+	top: -1px;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* === Text Indicator Overrides === */
+.rndConsole .good {
+	color: #44cc66;
+}
+
+.rndConsole .average {
+	color: #ddaa22;
+}
+
+.rndConsole .bad {
+	color: #ee4444;
+}
+
+.rndConsole .notice {
+	color: #6a8aaa;
+	font-style: italic;
+}
+
+/* === Scrollbar Styling === */
+.rndConsole ::-webkit-scrollbar {
+	width: 6px;
+}
+
+.rndConsole ::-webkit-scrollbar-track {
+	background: rgba(6, 12, 24, 0.4);
+}
+
+.rndConsole ::-webkit-scrollbar-thumb {
+	background: rgba(60, 100, 160, 0.4);
+	border-radius: 3px;
+}
+
+.rndConsole ::-webkit-scrollbar-thumb:hover {
+	background: rgba(80, 130, 200, 0.5);
+}
+
+/* === Navigation Bar === */
+.rndNav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4px 8px;
+	background: linear-gradient(180deg, rgba(16, 28, 48, 0.9), rgba(8, 16, 32, 0.95));
+	border-bottom: 1px solid rgba(64, 128, 200, 0.4);
+	margin-bottom: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.rndNavSub {
+	border-bottom-color: rgba(64, 98, 138, 0.5);
+}
+
+.rndNavTabs {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.rndNavTitle {
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	margin-left: 12px;
+}
+
+.rndNavStatus {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.rndServerBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+.rndServerBadge--online {
+	background: rgba(30, 80, 50, 0.35);
+	border: 1px solid rgba(50, 160, 80, 0.4);
+	color: #66dd88;
+}
+.rndServerBadge--offline {
+	background: rgba(80, 30, 30, 0.35);
+	border: 1px solid rgba(160, 50, 50, 0.4);
+	color: #dd6666;
+}
+.rndServerDot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	display: inline-block;
+	flex-shrink: 0;
+}
+.rndServerBadge--online .rndServerDot {
+	background: #44cc66;
+	box-shadow: 0 0 4px rgba(68, 204, 102, 0.7);
+}
+.rndServerBadge--offline .rndServerDot {
+	background: #cc4444;
+	box-shadow: 0 0 4px rgba(204, 68, 68, 0.7);
+}
+
+.rndTab {
+	padding: 4px 12px !important;
+	font-size: 11px !important;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	border: 1px solid rgba(60, 100, 160, 0.4) !important;
+	background: rgba(24, 48, 80, 0.5) !important;
+	border-radius: 2px !important;
+}
+
+
+.rndTab.selected {
+	background: rgba(30, 80, 50, 0.75) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+.rndBalanceLabel {
+	font-size: 10px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: #6a8aaa;
+	margin-right: 4px;
+}
+
+.rndBalanceValue {
+	font-size: 14px;
+	font-weight: bold;
+	color: #44cc44;
+	text-shadow: 0 0 8px rgba(68, 204, 68, 0.3);
+}
+
+.rndBalanceError {
+	font-size: 11px;
+	color: #ff6644;
+	letter-spacing: 0.4px;
+}
+
+/* === Layout === */
+.rndTwoCol {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	padding: 0 4px;
+}
+
+.rndCol {
+	flex-shrink: 0;
+}
+
+/* === Sections === */
+.rndSection {
+	margin-bottom: 8px;
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+}
+
+.rndSectionTitle {
+	padding: 5px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+}
+
+.rndSectionContent {
+	padding: 8px 10px;
+}
+
+/* === Utility Classes === */
+.rndMuted {
+	color: #5a7a9a;
+}
+
+.rndLabel {
+	font-size: 12px;
+	color: #8ab4e8;
+	letter-spacing: 0.3px;
+}
+
+.rndDivider {
+	border: none;
+	border-top: 1px solid rgba(64, 98, 138, 0.3);
+	margin: 8px 0;
+}
+
+.rndBtnRow {
+	display: flex;
+	gap: 4px;
+	flex-wrap: wrap;
+}
+
+.rndSubPanel {
+	margin-top: 8px;
+	padding: 8px;
+	background: rgba(6, 12, 24, 0.4);
+	border: 1px solid rgba(40, 70, 110, 0.3);
+	border-radius: 2px;
+}
+
+.rndMenuBtn {
+	padding: 8px 16px !important;
+	font-size: 12px !important;
+	letter-spacing: 0.4px;
+	flex: 1;
+	text-align: center !important;
+}
+
+.rndExpBtn {
+	flex: 1;
+}
+
+.rndUnlockBtn {
+	padding: 8px 24px !important;
+	font-size: 13px !important;
+}
+
+.rndBuyBtn {
+	display: block;
+	text-align: center !important;
+	padding: 6px 16px !important;
+	background: rgba(40, 100, 60, 0.5) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	margin-top: 8px;
+}
+
+.rndBuyBtn:hover {
+	background: rgba(50, 120, 70, 0.6) !important;
+}
+
+/* === Center Screen (Loading / Locked) === */
+.rndCenterScreen {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 300px;
+	text-align: center;
+}
+
+.rndLoadingIcon {
+	font-size: 48px;
+	color: #4a88cc;
+	animation: rndSpin 2s linear infinite;
+	margin-bottom: 16px;
+}
+
+@keyframes rndSpin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+.rndLoadingText {
+	font-size: 18px;
+	font-weight: bold;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+}
+
+.rndLoadingSubtext {
+	font-size: 12px;
+	color: #5a7a9a;
+	margin-top: 8px;
+}
+
+/* === Tech Table === */
+.rndTechTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.rndTechTable td {
+	padding: 2px 0;
+}
+
+.rndTechName {
+	width: 120px;
+	color: #8ab4e8;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.rndTechBar {
+	width: 100%;
+}
+
+/* === Analyzer === */
+.rndAnalyzerItem {
+	margin-bottom: 6px;
+	font-size: 13px;
+}
+
+/* === Color Grid (Spectral) === */
+.rndColorGrid {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 8px;
+	justify-content: center;
+}
+
+.rndColorBlock {
+	width: 56px;
+	height: 56px;
+	border-radius: 4px;
+	border: 2px solid rgba(40, 70, 110, 0.5);
+	position: relative;
+	transition: all 0.2s;
+}
+
+.rndColorBlock:hover {
+	border-color: rgba(160, 200, 255, 0.6);
+	box-shadow: 0 0 14px rgba(100, 160, 255, 0.25);
+	transform: scale(1.05);
+}
+
+.rndColorBlock.rndColorActive {
+	border-color: white;
+	box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+}
+
+.rndColorOverlay {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	min-width: 0 !important;
+	max-width: none !important;
+	float: none !important;
+	display: block !important;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 4px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	cursor: pointer !important;
+	box-shadow: none !important;
+}
+
+/* === Experiment Cards === */
+.rndExpCard {
+	padding: 8px;
+	margin-bottom: 6px;
+	background: rgba(8, 16, 32, 0.5);
+	border: 1px solid rgba(64, 98, 138, 0.4);
+	border-radius: 3px;
+}
+
+.rndExpHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 4px;
+}
+
+.rndExpTitle {
+	font-weight: bold;
+	font-size: 12px;
+	color: #aaccee;
+}
+
+.rndExpBadge {
+	font-size: 9px;
+	padding: 2px 6px;
+	border-radius: 2px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+
+.rndExpBadge--active {
+	background: rgba(60, 120, 40, 0.4);
+	color: #6c6;
+	border: 1px solid rgba(80, 160, 60, 0.4);
+}
+
+.rndExpBody {
+	font-size: 12px;
+	margin-bottom: 6px;
+	line-height: 1.4;
+}
+
+.rndExpResult {
+	padding: 4px 8px;
+	margin-bottom: 4px;
+	background: rgba(6, 12, 24, 0.4);
+	border-left: 2px solid rgba(80, 160, 255, 0.4);
+	font-size: 12px;
+}
+
+/* === Tech Tree === */
 #sciTechTreeContainer {
-    position: relative;
-    width: 99%;
-    height: 590px;
-    overflow: hidden;
-    border: 1px solid #40628a;
-    background: url(nanomapBackground.png);
+	position: relative;
+	width: 99%;
+	height: 480px;
+	overflow: hidden;
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	background: url(nanomapBackground.png);
+	border-radius: 3px;
+	background-color: rgba(4, 8, 16, 0.6);
+	box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(40, 70, 110, 0.3);
+}
+
+.rndTreeWatermark {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 60%;
+	height: 60%;
+	transform: translate(-50%, -50%);
+	background: center center / contain no-repeat;
+	opacity: 0.08;
+	pointer-events: none;
+}
+
+.rndCorpSubTabs {
+	border-top: 1px solid rgba(64, 98, 138, 0.3);
+	padding-top: 6px;
 }
 
 .sciTechTreeIcon {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    background-image: url(science.png);
-    background-position: -0px -0px;
-    background-repeat: no-repeat;
-    zoom: 1;
-    margin-left: 0px;
-	margin-bottom: -16px;
-    /*margin-bottom: -1px;*/
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background-image: url(science.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	zoom: 1;
+	top: 4px;
+	left: 4px;
 }
 
 .sciTechTreeIconBox {
-    width: 32px;
-    height: 32px;
+	width: 40px !important;
+	height: 40px !important;
+	min-width: 40px !important;
+	padding: 0 !important;
+	border-radius: 3px;
+	transition: all 0.15s;
+	border: 1px solid transparent;
+	display: block !important;
+	line-height: 40px !important;
+	position: relative;
 }
 
+/* Researched — green, fully unlocked */
 .sciTechResearched {
-	background: #2f943c;
+	background: rgba(30, 110, 45, 0.75) !important;
+	border-color: rgba(60, 180, 80, 0.6) !important;
+	box-shadow: 0 0 8px rgba(50, 180, 70, 0.3);
 }
 
 .sciTechResearched:hover {
-    background: #3fB44c;
+	background: rgba(40, 140, 55, 0.85) !important;
+	box-shadow: 0 0 12px rgba(60, 200, 80, 0.4);
 }
 
+/* Available — cyan/blue, can be purchased */
+.sciTechAvailable {
+	background: rgba(25, 60, 120, 0.75) !important;
+	border-color: rgba(60, 140, 240, 0.5) !important;
+	box-shadow: 0 0 8px rgba(50, 120, 220, 0.3);
+}
+
+.sciTechAvailable:hover {
+	background: rgba(35, 75, 150, 0.85) !important;
+	box-shadow: 0 0 12px rgba(60, 140, 255, 0.45);
+}
+
+/* Locked — dark red, requirements not met */
 .sciTechCantResearch {
-	background: #942f3c;
+	background: rgba(100, 30, 35, 0.65) !important;
+	border-color: rgba(160, 50, 60, 0.45) !important;
+	box-shadow: 0 0 6px rgba(140, 40, 50, 0.2);
 }
 
 .sciTechCantResearch:hover {
-    background: #B43f4c;
+	background: rgba(120, 40, 45, 0.75) !important;
+	box-shadow: 0 0 10px rgba(160, 50, 60, 0.35);
 }
 
+/* Selected — bright highlight, overrides state color */
 .sciTechSelected {
-	background: #3333cc;
+	border-color: rgba(140, 180, 255, 0.8) !important;
+	box-shadow: 0 0 12px rgba(100, 160, 255, 0.5), inset 0 0 8px rgba(100, 160, 255, 0.15) !important;
 }
 
-.sciTechSelected:hover {
-    background: #3333cf;
+/* === Node Detail Panel === */
+.rndNodeName {
+	font-size: 16px;
+	font-weight: bold;
+	color: #cde;
+	margin-bottom: 4px;
 }
 
+.rndNodeLogo {
+	max-width: 270px;
+	max-height: 80px;
+	display: block;
+	margin: 6px 0 10px 0;
+	opacity: 0.85;
+}
+
+.rndNodeField {
+	margin-bottom: 10px;
+}
+
+.rndNodeLabel {
+	font-size: 10px;
+	color: #6a8aaa;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	margin-bottom: 2px;
+}
+
+.rndNodeValue {
+	line-height: 1.35;
+	font-size: 13px;
+}
+
+.rndPriceValue {
+	font-size: 16px;
+	font-weight: bold;
+	color: #44cc88;
+}
+
+.rndNodeStatus {
+	padding: 4px 0;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	border-radius: 2px;
+}
+
+.rndNodeStatus--good {
+	color: #44ff44;
+	background: rgba(40, 100, 40, 0.3);
+	border: 1px solid rgba(60, 160, 60, 0.3);
+}
+
+.rndNodeStatus--locked {
+	color: #ff6644;
+	background: rgba(100, 40, 40, 0.3);
+	border: 1px solid rgba(160, 60, 60, 0.3);
+}
+
+/* === Mission Cards === */
+.rndMissionCard {
+	margin-bottom: 8px;
+	padding: 8px 10px;
+	background: rgba(8, 16, 28, 0.5);
+	border: 1px solid rgba(40, 70, 110, 0.5);
+	border-radius: 3px;
+	transition: border-color 0.15s;
+}
+
+.rndMissionCard:hover {
+	border-color: rgba(60, 100, 150, 0.6);
+}
+
+.rndMissionHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 6px;
+}
+
+.rndMissionTitle {
+	font-weight: bold;
+	font-size: 13px;
+	color: #aaccee;
+}
+
+.rndMissionType {
+	font-size: 10px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.rndMissionType--simple { background: rgba(26, 58, 42, 0.6); color: #6c6; border: 1px solid rgba(42, 90, 58, 0.5); }
+.rndMissionType--complex { background: rgba(58, 42, 26, 0.6); color: #da6; border: 1px solid rgba(90, 58, 26, 0.5); }
+.rndMissionType--done { background: rgba(26, 58, 26, 0.6); color: #4f4; border: 1px solid rgba(42, 106, 42, 0.5); }
+
+.rndMissionTable {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 4px;
+	font-size: 12px;
+}
+
+.rndMissionTable td { padding: 1px 0; vertical-align: top; }
+
+.rndMissionLabel {
+	width: 100px;
+	color: #6a8aaa;
+	white-space: nowrap;
+	padding-right: 8px;
+}
+
+.rndMissionDesc {
+	font-size: 11px;
+	color: #5a7a9a;
+	margin: 4px 0 6px 0;
+	line-height: 1.3;
+}
+
+.rndMissionObjectives {
+	border-top: 1px solid rgba(20, 40, 60, 0.5);
+	padding-top: 4px;
+}
+
+.rndMissionObj {
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	padding: 2px 0;
+	font-size: 12px;
+}
+
+.rndMissionObjIcon { flex-shrink: 0; width: 14px; text-align: center; color: #ffaa00; }
+.rndMissionObj--done .rndMissionObjIcon { color: #44ff44; }
+.rndMissionObjText { flex: 1; color: #8aa; }
+.rndMissionObj--done .rndMissionObjText { color: #6a6; }
+.rndMissionObjStatus { flex-shrink: 0; min-width: 40px; text-align: right; color: #ffaa00; font-size: 11px; }
+.rndMissionObj--done .rndMissionObjStatus { color: #44ff44; }
+
+.rndEmptyNotice {
+	text-align: center;
+	padding: 20px;
+	color: #5a7a9a;
+	font-style: italic;
+}
+
+/* === Corporation Grid === */
+.rndCorpGrid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.rndCorpCard {
+	flex: 0 0 calc(50% - 2px);
+	max-width: calc(50% - 2px);
+	padding: 6px 8px;
+	background: rgba(12, 24, 40, 0.5);
+	border: 1px solid rgba(40, 70, 110, 0.4);
+	border-radius: 3px;
+	transition: all 0.15s;
+}
+
+.rndCorpCard:hover {
+	border-color: rgba(60, 100, 160, 0.5);
+	background: rgba(16, 32, 52, 0.5);
+}
+
+.rndCorpCard--selected {
+	background: rgba(30, 50, 80, 0.5);
+	border-color: rgba(80, 140, 220, 0.5);
+	box-shadow: 0 0 6px rgba(80, 140, 220, 0.15);
+}
+
+.rndCorpLink {
+	display: block;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.rndCorpRep {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 3px;
+}
+
+.rndCorpRepBar {
+	flex: 1;
+	height: 4px;
+	background: rgba(6, 12, 24, 0.6);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.rndCorpRepFill {
+	height: 100%;
+	border-radius: 2px;
+	transition: width 0.3s;
+}
+
+.rndCorpInfo {
+	font-size: 12px;
+	color: #8aa8cc;
+	line-height: 1.4;
+}
+
+.rndRepBar {
+	margin-top: 6px;
+	width: 100%;
+	height: 18px;
+	background-color: rgba(10, 20, 36, 0.6);
+	border: 1px solid rgba(40, 70, 110, 0.4);
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.rndRepFill {
+	height: 100%;
+	transition: width 0.3s;
+}
+
+/* === Data Tables === */
+.rndDataTable {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.rndDataTable th {
+	text-align: left;
+	color: #6a8aaa;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	padding: 4px 0;
+	border-bottom: 1px solid rgba(64, 98, 138, 0.3);
+}
+
+.rndDataTable td {
+	padding: 4px 0;
+	border-bottom: 1px solid rgba(20, 40, 60, 0.3);
+}
+
+/* === Design Table (Protolathe/Imprinter) === */
+.rndDesignListScroll {
+	overflow-y: auto;
+	max-height: calc(100vh - 210px);
+}
+
+.rndDesignTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.rndDesignTable tr {
+	border-bottom: 1px solid rgba(20, 40, 60, 0.2);
+}
+
+.rndDesignIcon {
+	width: 32px;
+	padding: 2px 0;
+}
+
+.rndDesignName {
+	padding: 2px 4px;
+}
+
+.rndDesignCost {
+	text-align: right;
+	font-size: 11px;
+	white-space: normal;
+	word-break: break-word;
+	max-width: 180px;
+	width: 180px;
+}
+
+.rndDesignBanned {
+	background: rgba(120, 30, 20, 0.15);
+}
+
+.rndDesignBanned .rndDesignName .disabled {
+	color: #aa4444 !important;
+	border-color: rgba(160, 50, 40, 0.4) !important;
+}
+
+.rndBannedMark {
+	color: #dd4444;
+	font-size: 13px;
+	margin-right: 2px;
+	vertical-align: middle;
+}
+
+/* === Disk File List === */
+.rndFileList {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+.rndFileItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 3px 0;
+	border-bottom: 1px solid rgba(20, 40, 60, 0.2);
+	font-size: 12px;
+}
+
+/* === Disk Info === */
+.rndDiskInfo {
+	margin-bottom: 6px;
+}
+
+/* === Disk fill bar (disk_management_designs nav) === */
+.rndDiskBarWrap {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.rndDiskBar {
+	width: 80px;
+	height: 5px;
+	border-radius: 3px;
+	background: rgba(30, 50, 80, 0.7);
+	border: 1px solid rgba(64, 98, 138, 0.4);
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.rndDiskBarFill {
+	height: 100%;
+	border-radius: 3px;
+	background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+	transition: width 0.3s;
+}
+
+.rndDiskBarFill.rndDiskBarWarn {
+	background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.rndDiskBarFill.rndDiskBarFull {
+	background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+/* === Sprite Icons === */
 .sciTechTreeIcon.icon-teleport { background-position: 0px 0px; }
 .sciTechTreeIcon.icon-adv_mass_spec { background-position: -32px 0px; }
 .sciTechTreeIcon.icon-cell { background-position: -64px 0px; }
@@ -545,6 +1932,9 @@
 .sciTechTreeIcon.icon-monitoring { background-position: -160px 0px; }
 .sciTechTreeIcon.icon-rd { background-position: -192px 0px; }
 .sciTechTreeIcon.icon-telecom_part { background-position: -224px 0px; }
+.sciTechTreeIcon.icon-arcade { background-position: -256px 0px; }
+.sciTechTreeIcon.icon-engaugment { background-position: -288px 0px; }
+.sciTechTreeIcon.icon-c20r { background-position: -320px 0px; }
 
 .sciTechTreeIcon.icon-spaceheater { background-position: 0px -32px; }
 .sciTechTreeIcon.icon-hypo { background-position: -32px -32px; }
@@ -554,6 +1944,8 @@
 .sciTechTreeIcon.icon-cutter { background-position: -160px -32px; }
 .sciTechTreeIcon.icon-advmatterbin { background-position: -192px -32px; }
 .sciTechTreeIcon.icon-supermatterbin { background-position: -224px -32px; }
+.sciTechTreeIcon.icon-circuitautolathe { background-position: -256px -32px; }
+.sciTechTreeIcon.icon-advprostheticrepairs { background-position: -288px 0px; }
 
 .sciTechTreeIcon.icon-anom { background-position: 0px -64px; }
 .sciTechTreeIcon.icon-rped { background-position: -32px -64px; }
@@ -563,6 +1955,8 @@
 .sciTechTreeIcon.icon-microwave { background-position: -160px -64px; }
 .sciTechTreeIcon.icon-processor { background-position: -192px -64px; }
 .sciTechTreeIcon.icon-operationcomputer { background-position: -224px -64px; }
+.sciTechTreeIcon.icon-advgenerator { background-position: -256px -64px; }
+.sciTechTreeIcon.icon-cybersonar { background-position: -288px 64px; }
 
 .sciTechTreeIcon.icon-add_sec_eq { background-position: 0px -96px; }
 .sciTechTreeIcon.icon-sleeper { background-position: -32px -96px; }
@@ -572,16 +1966,19 @@
 .sciTechTreeIcon.icon-rapidsyringegun { background-position: -160px -96px; }
 .sciTechTreeIcon.icon-scalpelmanager { background-position: -192px -96px; }
 .sciTechTreeIcon.icon-stunbaton { background-position: -224px -96px; }
+.sciTechTreeIcon.icon-highcell { background-position: -256px -96px; }
+.sciTechTreeIcon.icon-c20 { background-position: -288px -96px; }
 
 .sciTechTreeIcon.icon-seccomputer { background-position: 0px -128px; }
 .sciTechTreeIcon.icon-shock { background-position: -32px -128px; }
 .sciTechTreeIcon.icon-riotgun { background-position: -64px -128px; }
-.sciTechTreeIcon.icon-laser { background-position: -96px -128px; }
-.sciTechTreeIcon.icon-xray { background-position: -224px -384px; }
+.sciTechTreeIcon.icon-lasercanon { background-position: -96px -128px; }
 .sciTechTreeIcon.icon-bullpup { background-position: -128px -128px; }
 .sciTechTreeIcon.icon-telepad { background-position: -160px -128px; }
 .sciTechTreeIcon.icon-emiammo { background-position: -192px -128px; }
 .sciTechTreeIcon.icon-wt550 { background-position: -224px -128px; }
+.sciTechTreeIcon.icon-hypercell { background-position: -256px -128px; }
+.sciTechTreeIcon.icon-revolver { background-position: -288px -128px; }
 
 .sciTechTreeIcon.icon-relay { background-position: 0px -160px; }
 .sciTechTreeIcon.icon-subspace { background-position: -32px -160px; }
@@ -591,6 +1988,8 @@
 .sciTechTreeIcon.icon-solnet_relay { background-position: -160px -160px; }
 .sciTechTreeIcon.icon-smes { background-position: -192px -160px; }
 .sciTechTreeIcon.icon-implant { background-position: -224px -160px; }
+.sciTechTreeIcon.icon-bsbeaker { background-position: -256px -160px; }
+.sciTechTreeIcon.icon-shayatin { background-position: -288px -160px; }
 
 .sciTechTreeIcon.icon-icupgradv { background-position: 0px -192px; }
 .sciTechTreeIcon.icon-communications { background-position: -32px -192px; }
@@ -600,6 +1999,8 @@
 .sciTechTreeIcon.icon-pcpu { background-position: -160px -192px; }
 .sciTechTreeIcon.icon-pcpu_small { background-position: -192px -192px; }
 .sciTechTreeIcon.icon-cpu_small { background-position: -224px -192px; }
+.sciTechTreeIcon.icon-cryobag { background-position: -256px -192px; }
+.sciTechTreeIcon.icon-g40 { background-position: -288px -192px; }
 
 .sciTechTreeIcon.icon-diamond_drill { background-position: 0px -224px; }
 .sciTechTreeIcon.icon-nanoprinter { background-position: -32px -224px; }
@@ -609,6 +2010,8 @@
 .sciTechTreeIcon.icon-tablet_frame { background-position: -160px -224px; }
 .sciTechTreeIcon.icon-blue_beaker { background-position: -192px -224px; }
 .sciTechTreeIcon.icon-brace { background-position: -224px -224px; }
+.sciTechTreeIcon.icon-meson { background-position: -256px -224px; }
+.sciTechTreeIcon.icon-empcharge { background-position: -288px -224px; }
 
 .sciTechTreeIcon.icon-tesla_link { background-position: 0px -256px; }
 .sciTechTreeIcon.icon-modular_bat_advanced { background-position: -32px -256px; }
@@ -618,6 +2021,8 @@
 .sciTechTreeIcon.icon-smg { background-position: -160px -256px; }
 .sciTechTreeIcon.icon-adflash { background-position: -192px -256px; }
 .sciTechTreeIcon.icon-hdd512 { background-position: -224px -256px; }
+.sciTechTreeIcon.icon-augment { background-position: -256px -256px; }
+.sciTechTreeIcon.icon-heltek_optimus { background-position: -288px -256px; }
 
 .sciTechTreeIcon.icon-decloner { background-position: 0px -288px; }
 .sciTechTreeIcon.icon-fusion { background-position: -32px -288px; }
@@ -627,6 +2032,8 @@
 .sciTechTreeIcon.icon-hdd2048 { background-position: -160px -288px; }
 .sciTechTreeIcon.icon-hdd256 { background-position: -192px -288px; }
 .sciTechTreeIcon.icon-hdd64 { background-position: -224px -288px; }
+.sciTechTreeIcon.icon-empmech { background-position: -256px -288px; }
+.sciTechTreeIcon.icon-la700 { background-position: -288px -288px; }
 
 .sciTechTreeIcon.icon-shieldgen { background-position: 0px -320px; }
 .sciTechTreeIcon.icon-mechheavy { background-position: -32px -320px; }
@@ -636,6 +2043,8 @@
 .sciTechTreeIcon.icon-box { background-position: -160px -320px; }
 .sciTechTreeIcon.icon-implantcase { background-position: -192px -320px; }
 .sciTechTreeIcon.icon-aicircuit { background-position: -224px -320px; }
+.sciTechTreeIcon.icon-smgmech { background-position: -256px -320px; }
+.sciTechTreeIcon.icon-railgun { background-position: -288px -320px; }
 
 .sciTechTreeIcon.icon-multitool { background-position: 0px -352px; }
 .sciTechTreeIcon.icon-posibrain { background-position: -32px -352px; }
@@ -645,6 +2054,8 @@
 .sciTechTreeIcon.icon-hardsuitmodule { background-position: -160px -352px; }
 .sciTechTreeIcon.icon-bluespace { background-position: -192px -352px; }
 .sciTechTreeIcon.icon-roboscanner { background-position: -224px -352px; }
+.sciTechTreeIcon.icon-shieldmech { background-position: -256px -352px; }
+.sciTechTreeIcon.icon-smallegun { background-position: -288px -352px; }
 
 .sciTechTreeIcon.icon-bscrystal { background-position: 0px -384px; }
 .sciTechTreeIcon.icon-nav { background-position: -32px -384px; }
@@ -653,9 +2064,9 @@
 .sciTechTreeIcon.icon-mechloader { background-position: -128px -384px; }
 .sciTechTreeIcon.icon-mechlight { background-position: -160px -384px; }
 .sciTechTreeIcon.icon-jetpack { background-position: -192px -384px; }
+.sciTechTreeIcon.icon-xray { background-position: -224px -384px; }
+.sciTechTreeIcon.icon-clawsaugment { background-position: -256px -384px; }
+.sciTechTreeIcon.icon-egun { background-position: -288px -384px; }
 
-.sciMenuButton {
-    width: 300px;
-    float: left;
-}
+
 </style>

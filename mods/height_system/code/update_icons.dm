@@ -53,6 +53,7 @@
 	var/image/ret = ..()
 	if(istype(ret, /image) && ishuman(user_mob) && istype(loc, /obj/item/clothing))
 		var/mob/living/carbon/human/H = user_mob
-		H.update_height(ret)
-		H.human_update_offset(ret, FALSE) // body-level: pixel_y = 0, no head shift
+		if(!(body_location & HEAD))
+			H.update_height(ret)
+		H.human_update_offset(ret, FALSE) // sub-overlay:
 	return ret

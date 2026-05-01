@@ -1,4 +1,5 @@
 #if !defined(using_map_DATUM)
+	#include "away_sites_testing_define.dm"
 	#include "away_sites_testing_lobby.dm"
 
 	#include "blank.dmm"

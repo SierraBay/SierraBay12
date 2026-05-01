@@ -1,185 +1,550 @@
-<!-- 
-Title: Radiometric Scanner UI 
-Used In File(s): \code\modules\research\xenoarchaeology\machinery\geosample_scanner.dm
- -->
- 
-<h3>Machine Status</h3>
-<div class="item">
-	<div class="itemContent" style="width: 20%;">
-		{{:helper.link(data.scanning ? 'Halt Scan' : 'Begin Scan', 'signal-diag', {'scanItem' : 1}, null)}}
+<!--
+Title: High Resolution Radiocarbon Spectrometer
+Used In File(s): \code\modules\xenoarcheaology\tools\geosample_scanner.dm
+-->
+
+<div class="xeno-root">
+
+<!-- Header -->
+<div class="xeno-header">
+	<div class="xeno-header-icon">&#9670;</div>
+	<div class="xeno-header-title">
+		<div class="xeno-header-main">RADIOCARBON SPECTROMETER</div>
+		<div class="xeno-header-sub">High Resolution Xenoarchaeological Analysis System</div>
 	</div>
-	<div class="itemContent" style="width: 20%;">
-		{{:helper.link('Eject item', 'eject', {'ejectItem' : 1}, (data.scanned_item && !data.scanning) ? null : 'disabled')}}
+	<div class="xeno-header-status {{if data.scanning}}xeno-active{{/if}}">
+		{{if data.scanning}}SCANNING{{else}}STANDBY{{/if}}
 	</div>
 </div>
 
-<div class="statusDisplay">
-	<div class="line">
-		<div class="statusLabel">Item:</div>
-		<div class="statusValue">
-			{{if data.scanned_item}}
-				<span class="good">{{:data.scanned_item}}</span>
+<!-- Scan Pad -->
+<div class="xeno-section">
+	<div class="xeno-section-head">
+		<span class="xeno-section-icon">&#9670;</span> ANOMALY SCAN PAD
+		<div class="xeno-section-controls">
+			{{if data.scanning}}
+				{{:helper.link('HALT SCAN', '', {'halt_external_scan' : 1}, null, 'xeno-btn xeno-btn-danger')}}
 			{{else}}
-				<span class="bad">No item inserted</span>
+				{{:helper.link('BEGIN SCAN', '', {'begin_external_scan' : 1}, (data.pad_linked && data.pad_target && !data.scanning && data.scanner_seal_integrity > 0) ? null : 'disabled', 'xeno-btn xeno-btn-primary')}}
 			{{/if}}
+			{{:helper.link('SYNC PAD', '', {'sync_pad' : 1}, null, 'xeno-btn xeno-btn-sm')}}
 		</div>
 	</div>
-	<div class="line">
-		<div class="statusLabel">Heuristic analysis:</div>
-		<div class="statusValue">
-			{{if data.scanned_item_desc}}
-				<span class="average">{{:data.scanned_item_desc}}</span>
-			{{/if}}
+	<div class="xeno-section-body">
+		<div class="xeno-specimen-row">
+			<div class="xeno-specimen-label">Pad Status:</div>
+			<div class="xeno-specimen-value">
+				{{if data.pad_linked}}
+					<span class="xeno-text-good">Linked</span>
+				{{else}}
+					<span class="xeno-text-bad">Not linked</span>
+				{{/if}}
+			</div>
+		</div>
+		<div class="xeno-specimen-row">
+			<div class="xeno-specimen-label">Target:</div>
+			<div class="xeno-specimen-value">
+				{{if data.pad_target}}
+					<span class="xeno-text-good">{{:data.pad_target}}</span>
+				{{else}}
+					<span class="xeno-text-dim">No target on pad</span>
+				{{/if}}
+			</div>
+		</div>
+		{{if !data.pad_linked}}
+		<div class="xeno-notice xeno-notice-bad">Scan pad not detected — press SYNC PAD</div>
+		{{/if}}
+	</div>
+</div>
+
+<!-- Two-column layout: Scanner + MASER -->
+<div class="xeno-columns">
+
+	<!-- Left column: Scanner Status -->
+	<div class="xeno-col">
+		<div class="xeno-section">
+			<div class="xeno-section-head">
+				<span class="xeno-section-icon">&#9702;</span> SCAN PROGRESS
+			</div>
+			<div class="xeno-section-body">
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Analysis</span>
+						<span class="xeno-bar-value">{{:data.scan_progress}}%</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill xeno-bar-good" style="width: {{:Math.min(100, Math.max(0, data.scan_progress))}}%;"></div>
+						{{if data.scanning}}<div class="xeno-bar-glow"></div>{{/if}}
+					</div>
+					{{if data.scan_progress >= 100}}
+					<div class="xeno-notice xeno-notice-good">Scan completed successfully</div>
+					{{/if}}
+				</div>
+
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Vacuum Seal</span>
+						<span class="xeno-bar-value">{{:data.scanner_seal_integrity}}%</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill {{if data.scanner_seal_integrity < 33}}xeno-bar-bad{{else data.scanner_seal_integrity < 66}}xeno-bar-warn{{else}}xeno-bar-good{{/if}}" style="width: {{:Math.min(100, Math.max(0, data.scanner_seal_integrity))}}%;"></div>
+					</div>
+					{{if data.scanner_seal_integrity < 25}}
+					<div class="xeno-notice xeno-notice-bad">Seal breach imminent — use nanopaste</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+
+		<!-- Environment -->
+		<div class="xeno-section">
+			<div class="xeno-section-head">
+				<span class="xeno-section-icon">&#9702;</span> ENVIRONMENT
+			</div>
+			<div class="xeno-section-body">
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Centrifuge</span>
+						<span class="xeno-bar-value">{{:data.scanner_rpm}} RPM</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill xeno-bar-teal" style="width: {{:Math.min(100, data.scanner_rpm / 10)}}%;"></div>
+					</div>
+				</div>
+
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Temperature</span>
+						<span class="xeno-bar-value">{{:data.scanner_temperature}} K</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill {{if data.scanner_temperature > 1000}}xeno-bar-bad{{else data.scanner_temperature > 250}}xeno-bar-warn{{else}}xeno-bar-teal{{/if}}" style="width: {{:Math.min(100, data.scanner_temperature / 12.73)}}%;"></div>
+					</div>
+					{{if data.scanner_temperature > 1000}}
+					<div class="xeno-notice xeno-notice-bad">Critical temperature — failure at 1273K</div>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Right column: MASER + Radiation -->
+	<div class="xeno-col">
+		<div class="xeno-section">
+			<div class="xeno-section-head">
+				<span class="xeno-section-icon">&#9702;</span> MASER TUNING
+			</div>
+			<div class="xeno-section-body">
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Efficiency</span>
+						<span class="xeno-bar-value">{{:data.maser_efficiency}}%</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill {{if data.maser_efficiency < 33}}xeno-bar-bad{{else data.maser_efficiency < 66}}xeno-bar-warn{{else}}xeno-bar-good{{/if}}" style="width: {{:Math.min(100, Math.max(0, data.maser_efficiency))}}%;"></div>
+					</div>
+				</div>
+
+				<div class="xeno-wavelength-group">
+					<div class="xeno-wl-row">
+						<span class="xeno-wl-label">Optimal</span>
+						<div class="xeno-wl-bar-wrap">
+							<div class="xeno-wl-marker xeno-wl-optimal" style="left: {{:Math.min(100, data.optimal_wavelength / 100)}}%;"></div>
+						</div>
+						<span class="xeno-wl-value">{{:data.optimal_wavelength}} nm</span>
+					</div>
+					<div class="xeno-wl-row">
+						<span class="xeno-wl-label">Current</span>
+						<div class="xeno-wl-bar-wrap">
+							<div class="xeno-wl-marker xeno-wl-current" style="left: {{:Math.min(100, data.maser_wavelength / 100)}}%;"></div>
+						</div>
+						<span class="xeno-wl-value">{{:data.maser_wavelength}} nm</span>
+					</div>
+				</div>
+
+				<div class="xeno-btn-row">
+					{{:helper.link('-2 GHz', '', {'maserWavelength' : -2}, null, 'xeno-btn xeno-btn-sm')}}
+					{{:helper.link('-1 GHz', '', {'maserWavelength' : -1}, null, 'xeno-btn xeno-btn-sm')}}
+					{{:helper.link('-0.5', '', {'maserWavelength' : -0.5}, null, 'xeno-btn xeno-btn-sm')}}
+					{{:helper.link('+0.5', '', {'maserWavelength' : 0.5}, null, 'xeno-btn xeno-btn-sm')}}
+					{{:helper.link('+1 GHz', '', {'maserWavelength' : 1}, null, 'xeno-btn xeno-btn-sm')}}
+					{{:helper.link('+2 GHz', '', {'maserWavelength' : 2}, null, 'xeno-btn xeno-btn-sm')}}
+				</div>
+
+				{{if data.maser_efficiency < 50}}
+				<div class="xeno-notice">Match wavelengths to progress scan</div>
+				{{/if}}
+			</div>
+		</div>
+
+		<!-- Radiation -->
+		<div class="xeno-section">
+			<div class="xeno-section-head">
+				<span class="xeno-section-icon">&#9702;</span> RADIATION
+				<div class="xeno-section-controls">
+					{{:helper.link(data.rad_shield_on ? 'SHIELD ON' : 'SHIELD OFF', '', {'toggle_rad_shield' : 1}, null, 'xeno-btn xeno-btn-sm' + (data.rad_shield_on ? ' xeno-btn-active' : ''))}}
+				</div>
+			</div>
+			<div class="xeno-section-body">
+				<div class="xeno-bar-group">
+					<div class="xeno-bar-label">
+						<span>Ambient</span>
+						<span class="xeno-bar-value">{{:data.radiation}} mSv</span>
+					</div>
+					<div class="xeno-bar">
+						<div class="xeno-bar-fill {{if data.radiation > 65}}xeno-bar-bad{{else data.radiation > 15}}xeno-bar-warn{{else}}xeno-bar-teal{{/if}}" style="width: {{:Math.min(100, data.radiation)}}%;"></div>
+					</div>
+				</div>
+				{{if data.rad_shield_on}}
+				<div class="xeno-notice">Radiation shield active — scan paused</div>
+				{{/if}}
+			</div>
 		</div>
 	</div>
 </div>
 
-<h3>Scanner</h3>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Scan progress:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.scan_progress, 0, 100, 'good')}}
-		{{:data.scan_progress}} %
+<!-- Cooling -->
+<div class="xeno-section">
+	<div class="xeno-section-head">
+		<span class="xeno-section-icon">&#9702;</span> CRYOGENIC COOLING
 	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.scan_progress >= 100}}
-			<span class="notice" style="width: 100%;">Scan completed successfully.</span>
-		{{/if}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Vacuum seal integrity:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.scanner_seal_integrity, 0, 100, ((data.scanner_seal_integrity < 66) ? ((data.scanner_seal_integrity < 33) ? 'bad' : 'average') : 'good'))}}
-		{{:data.scanner_seal_integrity}} %
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.scanner_seal_integrity < 25}}
-			<span class="notice">Warning! Vacuum seal breach will result in scan failure!</span>
-		{{/if}}
-	</div>
-</div>
-
-<h3>MASER</h3>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">MASER Efficiency:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.maser_efficiency, 1, 100, ((data.maser_efficiency < 66) ? ((data.maser_efficiency) < 33 ? 'bad' : 'average') : 'good'))}}
-		{{:data.maser_efficiency}} %
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.maser_efficiency < 50}}
-			<span class="notice">Match wavelengths to progress the scan.</span>
-		{{/if}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Optimal Wavelength:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.optimal_wavelength, 1, 10000, 'good')}}
-		{{:data.optimal_wavelength}} MHz
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Current Wavelength:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.maser_wavelength, 1, 10000, 'good')}}
-		{{:data.maser_wavelength}} MHz
-	</div>
-	<div class="itemContent" style="text-align:left; width: 22%;">
-		{{:helper.link('-2 GHz', null, {'maserWavelength' : -2}, null)}}
-		{{:helper.link('-1 GHz', null, {'maserWavelength' : -1}, null)}}
-		{{:helper.link('-0.5 GHz', null, {'maserWavelength' : -0.5}, null)}}
-	</div>
-	<div class="itemContent" style="text-align:right; width: 22%;">
-		{{:helper.link('+0.5 GHz', null, {'maserWavelength' : 0.5}, null)}}
-		{{:helper.link('+1 GHz', null, {'maserWavelength' : 1}, null)}}
-		{{:helper.link('+2 GHz', null, {'maserWavelength' : 2}, null)}}
+	<div class="xeno-section-body xeno-cooling-grid">
+		<div class="xeno-cooling-cell">
+			<div class="xeno-bar-group">
+				<div class="xeno-bar-label">
+					<span>Coolant Reserve</span>
+					<span class="xeno-bar-value">{{:data.unused_coolant_abs}} u ({{:data.unused_coolant_per}}%)</span>
+				</div>
+				<div class="xeno-bar">
+					<div class="xeno-bar-fill {{if data.unused_coolant_per < 33}}xeno-bar-bad{{else data.unused_coolant_per < 66}}xeno-bar-warn{{else}}xeno-bar-teal{{/if}}" style="width: {{:Math.min(100, Math.max(0, data.unused_coolant_per))}}%;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="xeno-cooling-cell">
+			<div class="xeno-bar-group">
+				<div class="xeno-bar-label">
+					<span>Purity</span>
+					<span class="xeno-bar-value">{{:data.coolant_purity}}%</span>
+				</div>
+				<div class="xeno-bar">
+					<div class="xeno-bar-fill {{if data.coolant_purity < 33}}xeno-bar-bad{{else data.coolant_purity < 66}}xeno-bar-warn{{else}}xeno-bar-teal{{/if}}" style="width: {{:Math.min(100, Math.max(0, data.coolant_purity))}}%;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="xeno-cooling-cell xeno-cooling-flow">
+			<div class="xeno-bar-label">
+				<span>Flow Rate</span>
+				<span class="xeno-bar-value">{{:data.coolant_usage_rate}} u/s</span>
+			</div>
+			<div class="xeno-btn-row">
+				{{:helper.link('MIN', '', {'coolantRate' : -10}, null, 'xeno-btn xeno-btn-sm')}}
+				{{:helper.link('-3', '', {'coolantRate' : -3}, null, 'xeno-btn xeno-btn-sm')}}
+				{{:helper.link('-1', '', {'coolantRate' : -1}, null, 'xeno-btn xeno-btn-sm')}}
+				{{:helper.link('+1', '', {'coolantRate' : 1}, null, 'xeno-btn xeno-btn-sm')}}
+				{{:helper.link('+3', '', {'coolantRate' : 3}, null, 'xeno-btn xeno-btn-sm')}}
+				{{:helper.link('MAX', '', {'coolantRate' : 10}, null, 'xeno-btn xeno-btn-sm')}}
+			</div>
+		</div>
 	</div>
 </div>
 
-<h3>Environment / Internal</h3>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Centrifuge speed:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.scanner_rpm, 0, 1000, 'good')}}
-		{{:data.scanner_rpm}} RPM
+<!-- Latest Results -->
+{{if data.last_scan_data}}
+<div class="xeno-section">
+	<div class="xeno-section-head">
+		<span class="xeno-section-icon">&#9702;</span> LATEST ANALYSIS RESULTS
+	</div>
+	<div class="xeno-section-body xeno-results">
+		{{:data.last_scan_data}}
 	</div>
 </div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Internal temperature:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.scanner_temperature, 0, 1273, (data.scanner_temperature > 250 ? (data.scanner_temperature > 1000 ? 'bad' : 'average') : 'good'))}}
-		{{:data.scanner_temperature}} K
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.scanner_temperature > 1000}}
-			<span class="notice" style="width: 100%;">Warning! Exceeding 1200K will result in scan failure!</span>
-		{{/if}}
-	</div>
+{{/if}}
+
 </div>
 
-<h3>Radiation</h3>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Ambient radiation:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.radiation, 0, 100, ((data.radiation > 15) ? ((data.radiation > 65) ? 'bad' : 'average') : 'good'))}}
-		{{:data.radiation}} mSv
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{:helper.link(data.rad_shield_on ? 'Disable Radiation Shielding' : 'Enable Radiation Shielding', 'radiation', {'toggle_rad_shield' : 1}, null)}}
-		{{if data.rad_shield_on}}
-			<span class="notice" style="width: 100%;">Shield blocking scanner.</span>
-		{{/if}}
-	</div>
-</div>
+<style>
+/* === XENOARCHAEOLOGY SPECTROMETER THEME === */
 
-<h3>Cooling</h3>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Coolant remaining:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.unused_coolant_per, 0, 100, ((data.unused_coolant_per < 66) ? ((data.unused_coolant_per < 33) ? 'bad' : 'average') : 'good'))}}
-		{{:data.unused_coolant_abs}} u
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.unused_coolant_per < 20}}
-			<span class="notice" style="width: 100%;">Warning! Coolant stocks low!</span>
-		{{/if}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Coolant flow rate:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.coolant_usage_rate, 0, 10, 'good')}}
-		{{:data.coolant_usage_rate}} u/s
-	</div>
-	<div class="itemContent" style="text-align:left; width: 22%;">
-		{{:helper.link('Min u/s', null, {'coolantRate' : -10}, null)}}
-		{{:helper.link('-3 u/s', null, {'coolantRate' : -3}, null)}}
-		{{:helper.link('-1 u/s', null, {'coolantRate' : -1}, null)}}
-	</div>
-	<div class="itemContent" style="text-align:right; width: 22%;">
-		{{:helper.link('+1 u/s', null, {'coolantRate' : 1}, null)}}
-		{{:helper.link('+3 u/s', null, {'coolantRate' : 3}, null)}}
-		{{:helper.link('Max u/s', null, {'coolantRate' : 10}, null)}}
-	</div>
-</div>
-<div class="item">
-	<div class="itemLabel" style="width: 21%;">Coolant purity:</div>
-	<div class="itemContent" style="width: 35%;">
-		{{:helper.displayBar(data.coolant_purity, 0, 100, ((data.coolant_purity < 66) ? ((data.coolant_purity < 33) ? 'bad' : 'average') : 'good'))}}
-		{{:data.coolant_purity}} %
-	</div>
-	<div class="itemContent" style="width: 44%;">
-		{{if data.coolant_purity < 0.5}}
-			<span class="notice" style="width: 100%;">Warning! Check coolant for contaminants!</span>
-		{{/if}}
-	</div>
-</div>
+.xeno-root {
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-size: 12px;
+	color: #c8d6e0;
+	padding: 0;
+}
 
-<h3>Latest Results</h3>
-<div class="statusDisplay">
-	<div class="line">
-		<span class="highlight">{{:data.last_scan_data}}</span>
-	</div>
-</div>
+/* --- Header --- */
+.xeno-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 12px;
+	margin-bottom: 8px;
+	background: linear-gradient(90deg, rgba(20, 50, 70, 0.85), rgba(12, 28, 42, 0.6));
+	border: 1px solid rgba(60, 140, 160, 0.35);
+	border-left: 3px solid #3ca8b8;
+}
+.xeno-header-icon {
+	font-size: 22px;
+	color: #3ca8b8;
+	text-shadow: 0 0 8px rgba(60, 168, 184, 0.5);
+}
+.xeno-header-title { flex: 1; }
+.xeno-header-main {
+	font-size: 14px;
+	font-weight: bold;
+	color: #e0ecf0;
+	letter-spacing: 2px;
+}
+.xeno-header-sub {
+	font-size: 10px;
+	color: #6a8a96;
+	letter-spacing: 1px;
+	margin-top: 1px;
+}
+.xeno-header-status {
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	padding: 3px 10px;
+	border: 1px solid rgba(90, 120, 140, 0.4);
+	color: #6a8a96;
+	background: rgba(20, 35, 50, 0.6);
+}
+.xeno-header-status.xeno-active {
+	color: #50e8a0;
+	border-color: rgba(80, 232, 160, 0.4);
+	background: rgba(20, 60, 45, 0.4);
+	text-shadow: 0 0 6px rgba(80, 232, 160, 0.3);
+}
+
+/* --- Sections --- */
+.xeno-section {
+	margin-bottom: 6px;
+	border: 1px solid rgba(60, 120, 140, 0.2);
+	background: rgba(14, 28, 38, 0.45);
+}
+.xeno-section-head {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	color: #7abcc8;
+	background: rgba(25, 55, 72, 0.5);
+	border-bottom: 1px solid rgba(60, 140, 160, 0.15);
+}
+.xeno-section-icon {
+	color: #3ca8b8;
+	font-size: 8px;
+}
+.xeno-section-controls {
+	margin-left: auto;
+	display: flex;
+	gap: 4px;
+}
+.xeno-section-body {
+	padding: 8px 10px;
+}
+
+/* --- Columns --- */
+.xeno-columns {
+	display: flex;
+	gap: 6px;
+}
+.xeno-col {
+	flex: 1;
+	min-width: 0;
+}
+
+/* --- Progress Bars --- */
+.xeno-bar-group {
+	margin-bottom: 7px;
+}
+.xeno-bar-group:last-child {
+	margin-bottom: 0;
+}
+.xeno-bar-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	font-size: 11px;
+	color: #8aaab4;
+	margin-bottom: 3px;
+}
+.xeno-bar-value {
+	font-size: 11px;
+	color: #c8dce4;
+	font-weight: bold;
+}
+.xeno-bar {
+	position: relative;
+	height: 14px;
+	background: rgba(10, 22, 30, 0.7);
+	border: 1px solid rgba(50, 100, 120, 0.25);
+	overflow: hidden;
+}
+.xeno-bar-fill {
+	height: 100%;
+	transition: width 0.4s ease;
+	position: relative;
+}
+.xeno-bar-good {
+	background: linear-gradient(90deg, #1a6b3a, #2ca854);
+	box-shadow: inset 0 0 8px rgba(44, 168, 84, 0.2);
+}
+.xeno-bar-warn {
+	background: linear-gradient(90deg, #8a6a10, #c89520);
+	box-shadow: inset 0 0 8px rgba(200, 149, 32, 0.2);
+}
+.xeno-bar-bad {
+	background: linear-gradient(90deg, #8a1a1a, #cc3030);
+	box-shadow: inset 0 0 8px rgba(204, 48, 48, 0.2);
+}
+.xeno-bar-teal {
+	background: linear-gradient(90deg, #1a5a6a, #28889a);
+	box-shadow: inset 0 0 8px rgba(40, 136, 154, 0.2);
+}
+.xeno-bar-glow {
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: linear-gradient(90deg, transparent 0%, rgba(80, 232, 160, 0.12) 50%, transparent 100%);
+	animation: xeno-scan-pulse 2s ease-in-out infinite;
+}
+@keyframes xeno-scan-pulse {
+	0%, 100% { opacity: 0.3; }
+	50% { opacity: 1; }
+}
+
+/* --- Wavelength Display --- */
+.xeno-wavelength-group {
+	margin-bottom: 8px;
+}
+.xeno-wl-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 4px;
+}
+.xeno-wl-label {
+	width: 55px;
+	font-size: 10px;
+	color: #7a9aa6;
+	text-align: right;
+}
+.xeno-wl-bar-wrap {
+	flex: 1;
+	height: 10px;
+	position: relative;
+	background: rgba(10, 22, 30, 0.7);
+	border: 1px solid rgba(50, 100, 120, 0.2);
+}
+.xeno-wl-marker {
+	position: absolute;
+	top: -1px;
+	width: 3px;
+	height: 12px;
+	transform: translateX(-1px);
+}
+.xeno-wl-optimal {
+	background: #50e8a0;
+	box-shadow: 0 0 6px rgba(80, 232, 160, 0.5);
+}
+.xeno-wl-current {
+	background: #e8c850;
+	box-shadow: 0 0 6px rgba(232, 200, 80, 0.5);
+}
+.xeno-wl-value {
+	width: 65px;
+	font-size: 10px;
+	color: #a0bcc6;
+	text-align: left;
+}
+
+/* --- Buttons --- */
+.xeno-btn-row {
+	display: flex;
+	gap: 3px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+/* --- Notices --- */
+.xeno-notice {
+	font-size: 10px;
+	color: #7a9aa6;
+	margin-top: 4px;
+	padding: 2px 6px;
+	border-left: 2px solid rgba(60, 140, 160, 0.3);
+}
+.xeno-notice-good {
+	color: #50e8a0;
+	border-left-color: rgba(80, 232, 160, 0.4);
+}
+.xeno-notice-bad {
+	color: #e85050;
+	border-left-color: rgba(232, 80, 80, 0.4);
+	animation: xeno-blink 1.5s ease-in-out infinite;
+}
+@keyframes xeno-blink {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+/* --- Specimen --- */
+.xeno-specimen-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 3px;
+}
+.xeno-specimen-row:last-child { margin-bottom: 0; }
+.xeno-specimen-label {
+	width: 70px;
+	font-size: 11px;
+	color: #6a8a96;
+	text-align: right;
+	flex-shrink: 0;
+}
+.xeno-specimen-value {
+	font-size: 11px;
+	flex: 1;
+}
+
+/* --- Cooling Grid --- */
+.xeno-cooling-grid {
+	display: flex;
+	gap: 10px;
+}
+.xeno-cooling-cell {
+	flex: 1;
+	min-width: 0;
+}
+.xeno-cooling-flow {
+	flex: 1.3;
+}
+
+/* --- Results --- */
+.xeno-results {
+	font-size: 11px;
+	color: #a0bcc6;
+	line-height: 1.5;
+	max-height: 120px;
+	overflow-y: auto;
+	background: rgba(8, 18, 26, 0.4);
+	padding: 8px 10px;
+	border: 1px solid rgba(40, 90, 110, 0.15);
+}
+
+/* --- Text Helpers --- */
+.xeno-text-good { color: #50e8a0; }
+.xeno-text-bad { color: #e85050; }
+.xeno-text-dim { color: #5a7a86; font-style: italic; }
+
+/* --- Button overrides for theme --- */
+.xeno-btn { letter-spacing: 0.5px; }
+.xeno-btn-sm { font-size: 10px; padding: 1px 5px; }
+.xeno-btn-primary .linkContent { color: #50e8a0; }
+.xeno-btn-danger .linkContent { color: #e85050; }
+.xeno-btn-active .linkContent { color: #50e8a0; }
+</style>

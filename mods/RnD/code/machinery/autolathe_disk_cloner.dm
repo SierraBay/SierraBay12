@@ -10,10 +10,9 @@
 	active_power_usage = 500
 
 	var/copying_delay = 0
-	var/hack_fail_chance = 0
 
-	var/obj/item/stock_parts/computer/hard_drive/portable/original = null
-	var/obj/item/stock_parts/computer/hard_drive/portable/copy = null
+	var/obj/item/stock_parts/computer/hard_drive/original = null
+	var/obj/item/stock_parts/computer/hard_drive/copy = null
 	base_type = /obj/machinery/disk_cloner
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = list(
@@ -41,13 +40,11 @@
 		laser_rating += ML.rating
 
 	if(scanner_rating+laser_rating >= 9)
-		copying_delay = 15
+		copying_delay = 5
 	else if(scanner_rating+laser_rating >= 6)
-		copying_delay = 30
+		copying_delay = 10
 	else
-		copying_delay = 80
-
-	hack_fail_chance = ((scanner_rating+laser_rating) >= 9) ? 20 : 40
+		copying_delay = 25
 
 /obj/machinery/disk_cloner/use_tool(obj/item/I, mob/user)
 	if ((. = ..()))
@@ -55,7 +52,7 @@
 	if(panel_open)
 		return
 
-	if(istype(I, /obj/item/stock_parts/computer/hard_drive/portable))
+	if(istype(I, /obj/item/stock_parts/computer/hard_drive))
 		if(!original)
 			original = put_disk(I, user)
 			to_chat(user, SPAN_NOTICE("You put \the [I] into the first slot of [src]."))
@@ -79,7 +76,7 @@
 		copy = null
 	. = ..()
 
-/obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/portable/AD, mob/user)
+/obj/machinery/disk_cloner/proc/put_disk(obj/item/stock_parts/computer/hard_drive/AD, mob/user)
 	ASSERT(istype(AD))
 
 	user.unEquip(AD,src)
@@ -139,10 +136,10 @@
 
 	if(href_list["eject"])
 		var/mob/living/H = null
-		var/obj/item/stock_parts/computer/hard_drive/portable/D = null
+		var/obj/item/stock_parts/computer/hard_drive/D = null
 		if(ishuman(usr))
 			H = usr
-			D = H.get_active_hand()
+			D = istype(H.get_active_hand(), /obj/item/stock_parts/computer/hard_drive) ? H.get_active_hand() : null
 
 		if(href_list["eject"] == "f")
 			if(original)
@@ -151,7 +148,7 @@
 					H.put_in_active_hand(original)
 				original = null
 			else
-				if(istype(D))
+				if(D)
 					H.drop_item()
 					D.forceMove(src)
 					original = D
@@ -162,7 +159,7 @@
 					H.put_in_active_hand(copy)
 				copy = null
 			else
-				if(istype(D))
+				if(D)
 					H.drop_item()
 					D.forceMove(src)
 					copy = D
@@ -176,7 +173,7 @@
 	update_use_power(POWER_USE_ACTIVE)
 	SSnano.update_uis(src)
 	update_icon()
-	if(original && copy && !copy.used_capacity)
+	if(original && copy)
 		copy.name = original.name
 
 		for(var/f in original.stored_files)
@@ -184,36 +181,9 @@
 				break
 
 			var/datum/computer_file/original_file = f
-			var/datum/computer_file/copying_file
+			var/datum/computer_file/copying_file = original_file.clone()
 
-			// Design files with copy protection require special treatment
-			if(istype(original_file, /datum/computer_file))
-				var/datum/computer_file/file = original_file
-				var/datum/computer_file/copy
-
-				if(prob(hack_fail_chance))
-					// Make a corrupted design with same filename as the original
-					if(istype(original_file, /datum/computer_file/binary/design))
-						var/datum/computer_file/binary/design/design_copy
-						design_copy = new
-
-						design_copy.set_design_type(/datum/computer_file/binary/design/corrupted)
-						design_copy.filetype = "CCD"
-						design_copy.filename = original_file.filename
-				else
-					// Copy the original design, remove DRM
-					copy = new
-					copy = file.clone()
-
-					copying_file = copy
-			else
-				break
-
-			// Any other files can be simply cloned
-			if(!copying_file)
-				copying_file = original_file.clone()
-
-			// Store the copied file. If the disc is corrupted, faulty, out of space - stop the copying process.
+			// Store the copied file. If the disc is faulty or out of space - stop the copying process.
 			if(!copy.create_file(copying_file))
 				break
 

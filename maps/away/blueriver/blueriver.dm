@@ -29,6 +29,11 @@
 		/area/bluespaceriver/ground = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
+/datum/map_template/ruin/away_site/blueriver/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/machinery/artifact/mission/alien_fragment, z, /area/bluespaceriver)
+	spawn_derelict_mission_object(/obj/item/device/mission_sensor, z, /area/bluespaceriver)
+
 //This is ported from /vg/ and isn't entirely functional. If it sees a threat, it moves towards it, and then activates it's animation.
 //At that point while it sees threats, it will remain in it's attack stage. It's a bug, but I figured it nerfs it enough to not be impossible to deal with
 /mob/living/simple_animal/hostile/hive_alien/defender
@@ -43,6 +48,7 @@
 	health = 280
 	maxHealth = 280
 	can_escape = TRUE
+	possession_candidate = TRUE
 
 	harm_intent_damage = 8
 	natural_weapon = /obj/item/natural_weapon/defender_blades

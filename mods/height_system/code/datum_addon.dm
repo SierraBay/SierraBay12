@@ -73,6 +73,8 @@
 			return COLOR_WHITE
 		if("white")
 			return COLOR_WHITE
+		if("plating", "reinforced")
+			return COLOR_GRAY40
 		else
 			return COLOR_GRAY
 
@@ -82,6 +84,10 @@
 			return "dark"
 		if("FFF", "white")
 			return "white"
+		if("plating")
+			return "plating"
+		if("reinforced")
+			return "steel"
 		else
 			return "steel"
 

@@ -967,14 +967,6 @@
 			if ("disable_high_pop_mc_mode_amount")
 				disable_high_pop_mc_mode_amount = text2num(value)
 			// [/SIERRA-ADD]
-			// [SIERRA-ADD] - EX666_ECOSYSTEM
-			if ("overflow_server_url")
-				overflow_server_url = value
-			if("usewhitelist_database")
-				usewhitelist_database = TRUE
-			if("minimum_byondacc_age")
-				minimum_byondacc_age = text2num(value)
-			// [/SIERRA-ADD]
 			else
 				log_misc("Unknown setting in config/config.txt: '[name]'")
 

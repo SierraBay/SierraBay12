@@ -26,6 +26,10 @@
 		/area/abandoned_hotel/overlook = NO_APC
 	)
 
+/datum/map_template/ruin/away_site/abandoned_hotel/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/automation_log, z)
+
 // Landing Markers
 
 /obj/shuttle_landmark/abandoned_hotel/one

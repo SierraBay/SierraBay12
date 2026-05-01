@@ -23,7 +23,7 @@
 			access_tox,					access_tox_storage,	access_research,	access_mining,		access_mining_office,
 			access_mining_station,		access_xenobiology,	access_xenoarch,	access_robotics,	access_guppy_helm,
 			access_expedition_shuttle,	access_guppy,		access_hangar,		access_petrov,		access_petrov_helm,
-			access_research_storage
+			access_research_storage, access_rnd_network
 		)
 
 
@@ -98,7 +98,7 @@
 	access = list(
 			access_tox,				access_tox_storage,			access_research,	access_petrov,		access_petrov_helm,
 			access_mining_office,	access_mining_station,		access_xenobiology,	access_guppy_helm, 	access_hangar,
-			access_xenoarch,		access_expedition_shuttle,	access_guppy, access_research_storage
+			access_xenoarch,		access_expedition_shuttle,	access_guppy, access_research_storage, access_rnd_network
 		)
 
 
@@ -163,7 +163,8 @@
 			access_tech_storage,
 			access_research_storage,
 			access_medical_records,
-			access_medical
+			access_medical,
+			access_rnd_network
 		)
 
 

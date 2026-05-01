@@ -1,22 +1,17 @@
-<div class="display">
-	<header><h3>Loaded materials</h3></header>
-
-	<article>
+<div class="fabResSection">
+	<div class="fabResTitle">Материалы</div>
+	<div class="fabResContent">
 	{{for data.materials}}
-		<div class="section">
-			<div class="labelList-item">
-				<div class="content">{{:helper.link('', 'eject', {'eject_material' : value.id}, null, 'statusValue')}}</div>
-				<span class="label">{{:value.name.toTitleCase()}}</span>
-				<div class="content">{{:Math.round(value.amount * 100) / 100}}/{{:data.mat_capacity}}</div>
-			</div>
+		<div class="fabResItem">
+			<span class="fabResName">{{:value.name.toTitleCase()}}</span>
+			<span class="fabResAmount">{{:Math.round(value.amount * 100) / 100}}/{{:data.mat_capacity}}</span>
+			<span>{{:helper.link('', 'eject', {'eject_material' : value.id})}}</span>
 		</div>
 	{{empty}}
-		<section>
-			<span class="label">None loaded</span>
-		</section>
+		<div style="padding: 6px; text-align: center;" class="fabMuted">Нет материалов</div>
 	{{/for}}
-		<section>
-			<div class="content">{{:helper.link('RECYCLE MATERIALS', '', {'insert' : 1}, null, 'bigButton')}}</div>
-		</section>
-	</article>
+		<div class="fabResActions">
+			{{:helper.link('Переработка', 'refresh', {'insert' : 1})}}
+		</div>
+	</div>
 </div>

@@ -1,85 +1,586 @@
-{{if data.error}}
-<div class="block" style="margin:4px; padding:6px 8px; border-color:#ee0000">
-	<div class="item">
-		<div class="itemLabelWide" style="color:#ee0000"><b>Download Error</b></div>
-		<div class="itemContentNarrow" style="text-align:right">{{:helper.link("Dismiss", "refresh", {'PRG_reseterror':1})}}</div>
-	</div>
-	<div class="item">
-		<div class="itemLabelWidest" style="font-size:10px">{{:data.error}}</div>
-	</div>
-</div>
-{{/if}}
+{{:helper.ntscieMode()}}
+<style>
 
-<div class="block" style="margin:4px; padding:6px 8px">
-	<div class="item">
-		<div class="itemLabel" style="line-height:18px">Storage:</div>
-		<div class="itemContent">
-			{{:helper.displayBar(data.disk_used, 0, data.disk_size, 'good')}}
-			<span style="font-size:10px; margin-left:4px">{{:data.disk_used}} / {{:data.disk_size}} GQ</span>
+/* ── Theme variables ─────────────────────────────────────────────── */
+.dldConsole {
+	--dld-accent:        #a78bfa;
+	--dld-accent-dim:    #7c3aed;
+	--dld-accent-glow:   rgba(167, 139, 250, 0.20);
+	--dld-accent-badge:  rgba(167, 139, 250, 0.12);
+	--dld-border:        rgba(55, 48, 80, 0.9);
+	--dld-border-accent: rgba(124, 58, 237, 0.50);
+	--dld-bg:            #0d0b16;
+	--dld-bg-panel:      rgba(20, 15, 35, 0.88);
+	--dld-bg-header:     rgba(26, 18, 48, 0.97);
+	--dld-bg-row-hover:  rgba(40, 28, 72, 0.65);
+	--dld-ok:            #34d399;
+	--dld-warn:          #fbbf24;
+	--dld-err:           #f87171;
+}
+
+/* ── Root layout ─────────────────────────────────────────────────── */
+.dldConsole {
+	display: flex;
+	flex-direction: column;
+	background: var(--dld-bg);
+	color: #dde6f0;
+	min-height: 100%;
+	box-sizing: border-box;
+	font-size: 12px;
+	font-family: inherit;
+}
+
+/* ── Nav bar ─────────────────────────────────────────────────────── */
+.dldNav {
+	display: flex;
+	align-items: center;
+	background: var(--dld-bg-header);
+	border-bottom: 1px solid var(--dld-border-accent);
+	padding: 0 8px;
+	gap: 8px;
+	flex-shrink: 0;
+	min-height: 34px;
+}
+
+.dldNavTitle {
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	color: var(--dld-accent);
+	text-transform: uppercase;
+	white-space: nowrap;
+	padding-right: 10px;
+	border-right: 1px solid var(--dld-border);
+}
+
+.dldStatusBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	font-size: 10px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.dldStatusBadge--online {
+	background: rgba(52, 211, 153, 0.12);
+	border: 1px solid rgba(52, 211, 153, 0.4);
+	color: #34d399;
+}
+
+.dldStatusBadge--offline {
+	background: rgba(248, 113, 113, 0.12);
+	border: 1px solid rgba(248, 113, 113, 0.4);
+	color: #f87171;
+}
+
+.dldStatusDot {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: currentColor;
+}
+
+.dldNavSpacer { flex: 1; }
+
+.dldStorageStrip {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 10px;
+	color: #64748b;
+}
+
+.dldStorageBar {
+	width: 60px;
+	height: 4px;
+	background: var(--dld-border);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.dldStorageBarFill {
+	height: 100%;
+	background: var(--dld-accent);
+	border-radius: 2px;
+}
+
+/* ── Download progress banner ────────────────────────────────────── */
+.dldProgressBanner {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 10px;
+	background: var(--dld-accent-badge);
+	border-bottom: 1px solid var(--dld-border-accent);
+	font-size: 11px;
+	flex-shrink: 0;
+}
+
+.dldProgressLabel {
+	color: var(--dld-accent);
+	font-weight: bold;
+	white-space: nowrap;
+	min-width: 70px;
+}
+
+.dldProgressTrack {
+	flex: 1;
+	height: 6px;
+	background: var(--dld-border);
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.dldProgressFill {
+	height: 100%;
+	background: linear-gradient(90deg, var(--dld-accent-dim), var(--dld-accent));
+	border-radius: 3px;
+	transition: width 0.3s;
+}
+
+.dldProgressMeta {
+	color: #94a3b8;
+	font-size: 10px;
+	white-space: nowrap;
+}
+
+/* ── Error banner ────────────────────────────────────────────────── */
+.dldErrorBanner {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 6px 10px;
+	background: rgba(248, 113, 113, 0.10);
+	border-bottom: 1px solid rgba(248, 113, 113, 0.35);
+	font-size: 11px;
+	flex-shrink: 0;
+}
+
+.dldErrorIcon { color: var(--dld-err); font-size: 14px; line-height: 1; flex-shrink: 0; }
+.dldErrorText { color: #fca5a5; flex: 1; font-size: 10px; line-height: 1.4; }
+.dldErrorDismiss { flex-shrink: 0; }
+
+/* ── Offline overlay ─────────────────────────────────────────────── */
+.dldOffline {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 40px 20px;
+	color: #475569;
+}
+
+.dldOfflineIcon {
+	font-size: 36px;
+	opacity: 0.4;
+}
+
+.dldOfflineTitle {
+	font-size: 14px;
+	font-weight: bold;
+	color: #f87171;
+	letter-spacing: 0.5px;
+}
+
+.dldOfflineHint {
+	font-size: 11px;
+	text-align: center;
+	color: #475569;
+	max-width: 280px;
+	line-height: 1.5;
+}
+
+/* ── Main body ───────────────────────────────────────────────────── */
+.dldBody {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	overflow: hidden;
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.dldToolbar {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 8px;
+	background: var(--dld-bg-panel);
+	border-bottom: 1px solid var(--dld-border);
+	flex-shrink: 0;
+	flex-wrap: wrap;
+}
+
+.dldSearchActive {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 1px 6px;
+	background: var(--dld-accent-badge);
+	border: 1px solid var(--dld-border-accent);
+	border-radius: 2px;
+	font-size: 10px;
+	color: var(--dld-accent);
+}
+
+.dldToolbarSep {
+	width: 1px;
+	height: 14px;
+	background: var(--dld-border);
+	flex-shrink: 0;
+}
+
+.dldToolbarRight {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+/* ── Category filter ─────────────────────────────────────────────── */
+.dldCatBar {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 5px 8px;
+	background: var(--dld-bg-panel);
+	border-bottom: 1px solid var(--dld-border);
+	flex-shrink: 0;
+	flex-wrap: wrap;
+}
+
+.dldCatLabel {
+	font-size: 10px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: #475569;
+	margin-right: 2px;
+	white-space: nowrap;
+}
+
+/* ── Design list ─────────────────────────────────────────────────── */
+.dldList {
+	flex: 1;
+	overflow-y: auto;
+}
+
+.dldDesignRow {
+	display: flex;
+	align-items: center;
+	padding: 5px 10px;
+	border-bottom: 1px solid rgba(40, 30, 65, 0.7);
+	transition: background 0.1s;
+	gap: 8px;
+}
+
+.dldDesignRow:hover {
+	background: var(--dld-bg-row-hover);
+}
+
+.dldDesignRow:last-child {
+	border-bottom: none;
+}
+
+.dldDesignInfo {
+	flex: 1;
+	min-width: 0;
+}
+
+.dldDesignName {
+	font-weight: bold;
+	color: #cbd5e1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 12px;
+}
+
+.dldDesignDesc {
+	color: #4b5563;
+	font-size: 10px;
+	font-style: italic;
+	margin-top: 1px;
+	line-height: 1.3;
+}
+
+.dldDesignSize {
+	font-size: 10px;
+	color: #475569;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.dldDownloadBtn {
+	flex-shrink: 0;
+}
+
+.dldEmpty {
+	padding: 32px 12px;
+	text-align: center;
+	color: #334155;
+	font-size: 11px;
+	line-height: 1.6;
+}
+
+/* ── Queue footer ────────────────────────────────────────────────── */
+.dldQueue {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	background: var(--dld-bg-header);
+	border-top: 1px solid var(--dld-border);
+	flex-shrink: 0;
+	flex-wrap: wrap;
+}
+
+.dldQueueLabel {
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+	color: #475569;
+	white-space: nowrap;
+	margin-right: 2px;
+}
+
+.dldQueueItem {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	padding: 1px 5px;
+	background: rgba(40, 28, 72, 0.7);
+	border: 1px solid var(--dld-border);
+	border-radius: 2px;
+	font-size: 10px;
+	color: #94a3b8;
+}
+
+/* ── Button overrides ────────────────────────────────────────────── */
+.dldConsole .link,
+.dldConsole a.link:link,
+.dldConsole a.link:visited,
+.dldConsole a.link:active {
+	background: rgba(14, 10, 28, 0.8);
+	border: 1px solid var(--dld-border);
+	color: #94a3b8;
+	border-radius: 2px;
+	float: none;
+	height: auto;
+	padding: 2px 9px 3px;
+	margin: 0 1px;
+	font-size: 11px;
+	transition: background 0.1s, border-color 0.1s, color 0.1s;
+}
+
+.dldConsole a:hover,
+.dldConsole .link:hover {
+	background: var(--dld-accent-badge) !important;
+	border-color: var(--dld-border-accent) !important;
+	color: var(--dld-accent) !important;
+}
+
+.dldConsole .link.selected,
+.dldConsole a.selected:link,
+.dldConsole a.selected:visited {
+	background: var(--dld-accent-badge) !important;
+	border-color: var(--dld-accent) !important;
+	color: var(--dld-accent) !important;
+	box-shadow: 0 0 5px var(--dld-accent-glow);
+}
+
+/* Download button — stands out */
+.dldConsole .dldBtn--download {
+	padding: 3px 10px !important;
+	background: var(--dld-accent-badge) !important;
+	border-color: var(--dld-border-accent) !important;
+	color: var(--dld-accent) !important;
+	font-size: 11px !important;
+}
+
+.dldConsole .dldBtn--download:hover {
+	background: var(--dld-accent-glow) !important;
+	border-color: var(--dld-accent) !important;
+	box-shadow: 0 0 6px var(--dld-accent-glow);
+}
+
+/* Small utility button */
+.dldConsole .dldBtn--sm {
+	padding: 1px 6px !important;
+	font-size: 10px !important;
+}
+
+/* Banned design row */
+.dldDesignRow--banned {
+	opacity: 0.65;
+}
+.dldDesignRow--banned .dldDesignName {
+	color: #f87171;
+}
+.dldBannedBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	font-size: 9px;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: #f87171;
+	border: 1px solid rgba(248, 113, 113, 0.4);
+	background: rgba(248, 113, 113, 0.08);
+	border-radius: 2px;
+	padding: 1px 5px;
+	margin-left: 5px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+/* Scrollbar */
+.dldConsole ::-webkit-scrollbar       { width: 5px; }
+.dldConsole ::-webkit-scrollbar-track { background: rgba(10, 6, 20, 0.4); }
+.dldConsole ::-webkit-scrollbar-thumb { background: var(--dld-border-accent); border-radius: 3px; }
+.dldConsole ::-webkit-scrollbar-thumb:hover { background: var(--dld-accent-dim); }
+
+</style>
+
+<div class="dldConsole">
+
+	<!-- ── Navigation bar ───────────────────────────────────────── -->
+	<div class="dldNav">
+		<div class="dldNavTitle">NTNet · Репозиторий</div>
+
+		{{if data.server_online}}
+			<span class="dldStatusBadge dldStatusBadge--online">
+				<span class="dldStatusDot"></span>Онлайн
+			</span>
+		{{else}}
+			<span class="dldStatusBadge dldStatusBadge--offline">
+				<span class="dldStatusDot"></span>Офлайн
+			</span>
+		{{/if}}
+
+		<div class="dldNavSpacer"></div>
+
+		<div class="dldStorageStrip">
+			<div class="dldStorageBar">
+				<div class="dldStorageBarFill" style="width:{{:Math.round(data.disk_used / data.disk_size * 100)}}%;"></div>
+			</div>
+			<span>{{:data.disk_used}}/{{:data.disk_size}} GQ</span>
 		</div>
 	</div>
-	{{if data.downloadname}}
-	<div class="item">
-		<div class="itemLabel" style="line-height:18px">Downloading:</div>
-		<div class="itemContent">
-			{{:helper.displayBar(data.downloadcompletion, 0, data.downloadsize, 'good')}}
-			<span style="font-size:10px; margin-left:4px">{{:data.downloadname}} &mdash; {{:data.downloadcompletion}}/{{:data.downloadsize}} GQ &nbsp;@&nbsp;{{:data.downloadspeed}} GQ/s</span>
-		</div>
+
+	<!-- ── Error banner ─────────────────────────────────────────── -->
+	{{if data.error}}
+	<div class="dldErrorBanner">
+		<span class="dldErrorIcon">&#9888;</span>
+		<span class="dldErrorText">{{:data.error}}</span>
+		<span class="dldErrorDismiss">{{:helper.link("Закрыть", 'close', {'PRG_reseterror':1}, null, 'dldBtn--sm')}}</span>
 	</div>
 	{{/if}}
-	{{if data.downloads_queue}}
-	<div class="item">
-		<div class="itemLabel" style="line-height:18px">Queue:</div>
-		<div class="itemContent">
-			{{for data.downloads_queue}}
-			<div style="font-size:10px; line-height:180%">
-				{{:index + 1}}. {{:value.name}}&nbsp;{{:helper.link("×", "close", {'PRG_removequeued':value.path})}}
+
+	<!-- ── Active download progress ─────────────────────────────── -->
+	{{if data.downloadname}}
+	<div class="dldProgressBanner">
+		<span class="dldProgressLabel">&#8595; Загрузка</span>
+		<div class="dldProgressTrack">
+			<div class="dldProgressFill" style="width:{{:Math.round(data.downloadcompletion / data.downloadsize * 100)}}%;"></div>
+		</div>
+		<span class="dldProgressMeta">
+			{{:data.downloadname}} &nbsp;·&nbsp; {{:data.downloadcompletion}}/{{:data.downloadsize}} GQ &nbsp;·&nbsp; {{:data.downloadspeed}} GQ/s
+		</span>
+	</div>
+	{{/if}}
+
+	<!-- ── Server offline state ─────────────────────────────────── -->
+	{{if !data.server_online}}
+	<div class="dldOffline">
+		<div class="dldOfflineIcon">&#128312;</div>
+		<div class="dldOfflineTitle">Сервер недоступен</div>
+		<div class="dldOfflineHint">Публичный сервер дизайнов не отвечает.<br>Обратитесь в научный отдел для проверки оборудования.</div>
+	</div>
+	{{else}}
+
+	<!-- ── Main content ─────────────────────────────────────────── -->
+	<div class="dldBody">
+
+		<!-- Toolbar -->
+		<div class="dldToolbar">
+			{{:helper.link("Поиск", 'search', {'PRG_searchdesign':1}, null, 'dldBtn--sm')}}
+			{{if data.search_query}}
+				<span class="dldSearchActive">
+					&#128269; {{:data.search_query}}
+					{{:helper.link("✕", '', {'PRG_clearsearch':1}, null, 'dldBtn--sm')}}
+				</span>
+			{{/if}}
+			<div class="dldToolbarSep"></div>
+			<div class="dldToolbarRight">
+				{{if !data.search_query}}
+					{{:helper.link("↓ Скачать всё", 'arrowthickstop-1-s', {'PRG_downloadcategory':data.selected_category}, null, 'dldBtn--sm')}}
+				{{/if}}
+				{{:helper.link(data.show_desc_menu ? "Скрыть описания" : "Описания", data.show_desc_menu ? 'triangle-1-n' : 'triangle-1-s', {'show_desc_menu':1}, null, 'dldBtn--sm')}}
 			</div>
+		</div>
+
+		<!-- Category filter -->
+		{{if !data.search_query && data.all_categories && data.all_categories.length}}
+		<div class="dldCatBar">
+			<span class="dldCatLabel">Раздел</span>
+			{{for data.all_categories}}
+				{{:helper.link(value, '', {'select_category':value}, data.selected_category == value ? 'selected' : null)}}
 			{{/for}}
 		</div>
-	</div>
-	{{/if}}
-</div>
+		{{/if}}
 
-<div class="block" style="margin:4px; padding:6px 8px">
-	<div class="item" style="margin-bottom:4px">
-		<div style="float:left">
-			{{:helper.link("Search", "search", {'PRG_searchdesign':1})}}
-			{{if data.search_query}}
-				<b style="color:#4f7529; margin:0 4px">{{:data.search_query}}</b>{{:helper.link("×", "close", {'PRG_clearsearch':1})}}
+		<!-- Design list -->
+		<div class="dldList">
+			{{if data.possible_designs && data.possible_designs.length}}
+				{{for data.possible_designs}}
+				<div class="dldDesignRow{{:value.banned ? ' dldDesignRow--banned' : ''}}">
+					<div class="dldDesignInfo">
+						<div class="dldDesignName">
+							{{:value.name}}
+							{{if value.banned}}<span class="dldBannedBadge">&#9888; Запрещён</span>{{/if}}
+						</div>
+						{{if data.show_desc_menu && value.desc}}
+							<div class="dldDesignDesc">{{:value.desc}}</div>
+						{{/if}}
+					</div>
+					<span class="dldDesignSize">{{:value.size}}&nbsp;GQ</span>
+					<span class="dldDownloadBtn">
+						{{:helper.link("↓", 'arrowthickstop-1-s', {'PRG_downloadfile':value.design_ref}, value.banned ? 'disabled' : null, 'dldBtn--download')}}
+					</span>
+				</div>
+				{{/for}}
+			{{else}}
+			<div class="dldEmpty">
+				{{if data.search_query}}
+					Дизайнов по запросу «{{:data.search_query}}» не найдено.
+				{{else data.selected_category}}
+					В категории «{{:data.selected_category}}» нет дизайнов.<br>
+					<span style="color:#1e293b;">Репозиторий пуст или раздел не заполнен.</span>
+				{{else}}
+					Выберите категорию или воспользуйтесь поиском.
+				{{/if}}
+			</div>
 			{{/if}}
 		</div>
-		<div style="float:right">
-			{{if !data.search_query}}{{:helper.link("Download All", 'arrowthickstop-1-s', {'PRG_downloadcategory':data.selected_category})}}&nbsp;&nbsp;{{/if}}{{:helper.link(data.show_desc_menu ? "Hide desc" : "Show desc", data.show_desc_menu ? 'triangle-1-n' : 'triangle-1-s', {'show_desc_menu':1})}}
-		</div>
-	</div>
 
-	{{if !data.search_query}}
-	<div class="item" style="margin-bottom:4px; padding-bottom:4px; border-bottom:1px solid #40628a">
-		{{for data.all_categories}}
-			{{:helper.link(value, null, {'select_category':value}, data.selected_category == value ? 'selected' : null)}}
+	</div>
+	{{/if}}
+
+	<!-- ── Download queue footer ─────────────────────────────────── -->
+	{{if data.downloads_queue && data.downloads_queue.length}}
+	<div class="dldQueue">
+		<span class="dldQueueLabel">Очередь</span>
+		{{for data.downloads_queue}}
+		<span class="dldQueueItem">
+			{{:value.name}}&nbsp;{{:helper.link("✕", '', {'PRG_removequeued':value.path}, null, 'dldBtn--sm')}}
+		</span>
 		{{/for}}
 	</div>
 	{{/if}}
 
-	{{if data.possible_designs}}
-	<table style="width:100%; border-collapse:collapse; margin-top:2px">
-		{{for data.possible_designs}}
-		<tr class="candystripe" style="line-height:140%">
-			<td style="padding:2px 6px 2px 4px">
-				<b>{{:value.name}}</b>
-				{{if data.show_desc_menu && value.desc}}
-				<div style="color:#808080; font-size:10px; font-style:italic; font-weight:normal; margin-top:1px">{{:value.desc}}</div>
-				{{/if}}
-			</td>
-			<td style="padding:2px 20px 2px 6px; text-align:right; white-space:nowrap; font-size:10px; color:#808080; width:1%">{{:value.size}}&nbsp;GQ</td>
-			<td style="padding:2px 20px 2px 4px; text-align:right; white-space:nowrap; width:1%">{{:helper.link("&nbsp;&nbsp;", "arrowthickstop-1-s", {'PRG_downloadfile':value.build_path})}}</td>
-		</tr>
-		{{/for}}
-	</table>
-	{{else}}
-	<div style="text-align:center; color:#666; font-style:italic; padding:16px 0">
-		{{:data.search_query ? "No designs match your search." : "No designs in this category."}}
-	</div>
-	{{/if}}
 </div>

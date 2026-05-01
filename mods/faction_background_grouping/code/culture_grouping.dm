@@ -176,7 +176,7 @@
 
 /singleton/cultural_info/culture/human/nyxian
 	nickname = "Никсиец"
-	faction = FACTION_SOL_CENTRAL
+	faction = FACTION_OTHER
 
 // Оверрайды для культур ГКК (+ добавлены и переведены культуры с оффбэя)
 /singleton/cultural_info/culture/human/confederate_terra
@@ -316,6 +316,9 @@
 /singleton/cultural_info/culture/human/pirx_high/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/pirx_bug/faction = FACTION_SOL_CENTRAL
 /singleton/cultural_info/culture/human/pirx_frontier/faction = FACTION_SOL_CENTRAL
+/singleton/cultural_info/culture/human/avalon_noble/faction = FACTION_OTHER
+/singleton/cultural_info/culture/human/avalon_common/faction = FACTION_OTHER
+/singleton/cultural_info/culture/human/miranian/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/magnitka/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/spacer/faction = FACTION_OTHER
 /singleton/cultural_info/culture/human/offworld/faction = FACTION_OTHER

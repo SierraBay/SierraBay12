@@ -62,8 +62,12 @@
 	var/turf/T = target.loc
 	if (!istype(T))
 		return
+	//[SIERRA-ADD] RND
+	var/obj/machinery/drone_pad/rd_mission/mission_pad = locate(/obj/machinery/drone_pad/rd_mission) in T
+	var/skip_external_check = mission_pad ? TRUE : FALSE
+	//[/SIERRA-ADD] RND
 	var/area/A = T.loc
-	if (!(istype(A) && A.area_flags & AREA_FLAG_EXTERNAL))
+	if (!skip_external_check && !(istype(A) && A.area_flags & AREA_FLAG_EXTERNAL))		//[SIERRA-EDIT] RND !skip_external_check && ! added
 		to_chat(user, SPAN_WARNING("You should probably try to use this outside."))
 		return
 	if (validate_target(target, user))

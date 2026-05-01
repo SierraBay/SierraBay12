@@ -18,8 +18,10 @@
 	set category = "Special Verbs"
 	set name = "Msay"
 	set hidden = 1
-
-	if(!check_rights(R_ADMIN|R_MOD))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN|R_MOD)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	msg = sanitize(msg)
