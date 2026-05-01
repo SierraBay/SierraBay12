@@ -442,6 +442,7 @@
 		'html/images/amlogo.png',
 		'html/images/hilogo.png',
 		'html/images/ftulogo.png',
+		'html/images/krriglilogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)
