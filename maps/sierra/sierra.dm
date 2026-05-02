@@ -219,6 +219,8 @@
 	// #include "../../mods/contraband_vending/_contraband_vending_includes.dm" // Перенесено в global_modpacks.dm
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
+	#include "../../mods/vr/_vr_includes.dm" // [SIERRA-ADD] - MOD_VR
+	#include "../../mods/vr/code/sierra_vr_override.dm" // [SIERRA-ADD] - MOD_VR
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please

@@ -63,28 +63,6 @@ SUBSYSTEM_DEF(virtual_reality)
 	GLOB.vr_spawns["Zone 2"] = list()
 	GLOB.vr_spawns["Zone 3"] = list()
 
-	// special zones
-	GLOB.active_vr_areas["Thunderdome"] = null
-	GLOB.vr_spawns["Thunderdome Team 1"] = list()
-	GLOB.vr_spawns["Thunderdome Team 2"] = list()
-	GLOB.vr_spawns["Thunderdome Spectators"] = list()
-
-	for(var/obj/landmark/L in locate(/area/tdome/tdome1))
-		var/turf/T = get_turf(L)
-		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Team 1"] += V
-
-	for(var/obj/landmark/L in locate(/area/tdome/tdome2))
-		var/turf/T = get_turf(L)
-		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Team 2"] += V
-
-	for(var/obj/landmark/L in locate(/area/tdome/tdomeobserve))
-		var/turf/T = get_turf(L)
-		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Spectators"] += V
-	. = ..()
-
 /datum/controller/subsystem/virtual_reality/fire(resumed = FALSE)
 	for (var/mob/living/L in virtual_occupants_to_mobs)
 		if (!check_vr(L))
@@ -449,12 +427,6 @@ SUBSYSTEM_DEF(virtual_reality)
 /datum/controller/subsystem/virtual_reality/proc/after_mob_creation(mob/living/L, zone)
 	if(!L)
 		return
-
-	if(zone == "Thunderdome")
-		L.verbs += /mob/living/proc/select_vr_equipment
-		L.verbs += /mob/living/proc/spawn_vr_item
-		L.select_vr_equipment()
-		L.spawn_vr_item()
 
 /datum/controller/subsystem/virtual_reality/proc/load_template(datum/nano_module/program/vr_control/vr_program, user, zone, template_area)
 	if (!zone)
