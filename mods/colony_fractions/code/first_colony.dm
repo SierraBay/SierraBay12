@@ -470,4 +470,3 @@ GLOBAL_VAR_AS(error_colony_reaction, "Прервать спавн колонии
 
 /obj/machinery/robotics_fabricator/colony
 	req_access = list()
-	fab_status_flags = FAB_HACKED

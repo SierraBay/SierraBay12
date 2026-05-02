@@ -1,5 +1,5 @@
 /datum/design/item/powercell
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | ROBOTFAB
 	category = list("Power Cells")
 	materials = list(MATERIAL_STEEL = 700, MATERIAL_GLASS = 50, MATERIAL_PLASTIC = 20)
 
@@ -52,7 +52,7 @@
 
 /datum/design/item/powercell/device/high
 	name = "high-capacity"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | ROBOTFAB
 	id = "device_cell_high"
 	req_tech = list(TECH_POWER = 2)
 	materials = list(MATERIAL_STEEL = 70, MATERIAL_GLASS = 6)

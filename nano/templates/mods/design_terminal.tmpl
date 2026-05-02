@@ -2,7 +2,13 @@
 Title: Design Terminal
 Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 -->
+{{if data.ui_theme == "engineering"}}
+{{:helper.ntengiMode()}}
+{{else data.ui_theme == "medical"}}
+{{:helper.ntmedMode()}}
+{{else}}
 {{:helper.ntscieMode()}}
+{{/if}}
 <style>
 
 /* ── Theme variables ─────────────────────────────────────────────── */
@@ -28,9 +34,10 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	--dt-accent-badge: rgba(52, 211, 153, 0.12);
 	--dt-border:       rgba(6, 78, 59, 0.9);
 	--dt-border-accent:rgba(52, 211, 153, 0.45);
-	--dt-bg:           #060f0b;
-	--dt-bg-panel:     rgba(6, 18, 13, 0.9);
-	--dt-bg-header:    rgba(5, 20, 14, 0.97);
+	/* Match nano body fill (ntmedMode) for seamless edge with uiBackground-NTmed.png */
+	--dt-bg:           #000a0a;
+	--dt-bg-panel:     rgba(0, 14, 14, 0.92);
+	--dt-bg-header:    rgba(0, 18, 16, 0.97);
 	--dt-bg-row-hover: rgba(6, 40, 28, 0.65);
 	--dt-title-color:  #34d399;
 }
@@ -42,9 +49,10 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 	--dt-accent-badge: rgba(251, 191, 36, 0.12);
 	--dt-border:       rgba(78, 52, 6, 0.9);
 	--dt-border-accent:rgba(251, 191, 36, 0.45);
-	--dt-bg:           #100c02;
-	--dt-bg-panel:     rgba(20, 14, 3, 0.9);
-	--dt-bg-header:    rgba(22, 15, 3, 0.97);
+	/* Near ntengiMode body (#372102) so terminal body and window fill read as one */
+	--dt-bg:           #2a1a08;
+	--dt-bg-panel:     rgba(45, 28, 6, 0.9);
+	--dt-bg-header:    rgba(40, 24, 5, 0.97);
 	--dt-bg-row-hover: rgba(50, 35, 5, 0.65);
 	--dt-title-color:  #fbbf24;
 }
@@ -817,6 +825,62 @@ Used In File(s): \mods\RnD\code\machinery\design_terminal.dm
 			{{/if}}
 
 		</div>
+
+		{{if data.has_robotics_fab || data.has_mech_fab}}
+		<div class="rndTwoCol" style="padding:0;">
+			{{if data.has_robotics_fab}}
+			<div class="rndCol" style="width:50%;">
+				<div class="rndSection">
+					<div class="rndSectionTitle">Robotics Fabricator</div>
+					<div class="rndSectionContent">
+						<div class="rndBtnRow" style="margin-bottom:6px;">
+							{{for data.robotics_designs}}
+								{{:helper.link(value.name, '', {'build_to_fab':value.id, 'fab_target':'robotics', 'amount':1})}}
+							{{/for}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Очистить очередь", '', {'clear_fab_queue':1, 'fab_target':'robotics'})}}
+						</div>
+						{{if data.robotics_queue.length}}
+							<hr>
+							{{for data.robotics_queue}}
+								<div>{{:index + 1}}) {{:value}}</div>
+							{{/for}}
+						{{else}}
+							<div class="rndMuted">Очередь пуста</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+
+			{{if data.has_mech_fab}}
+			<div class="rndCol" style="width:50%;">
+				<div class="rndSection">
+					<div class="rndSectionTitle">Mech Fabricator</div>
+					<div class="rndSectionContent">
+						<div class="rndBtnRow" style="margin-bottom:6px;">
+							{{for data.mech_designs}}
+								{{:helper.link(value.name, '', {'build_to_fab':value.id, 'fab_target':'mech', 'amount':1})}}
+							{{/for}}
+						</div>
+						<div class="rndBtnRow">
+							{{:helper.link("Очистить очередь", '', {'clear_fab_queue':1, 'fab_target':'mech'})}}
+						</div>
+						{{if data.mech_queue.length}}
+							<hr>
+							{{for data.mech_queue}}
+								<div>{{:index + 1}}) {{:value}}</div>
+							{{/for}}
+						{{else}}
+							<div class="rndMuted">Очередь пуста</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{/if}}
+		</div>
+		{{/if}}
 	</div>
 	{{/if}}
 

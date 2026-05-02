@@ -762,7 +762,7 @@
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
 
 	if(design.build_type != build_type)
-		var/second_check = build_type | MECHFAB
+		var/second_check = build_type | MECHFAB | ROBOTFAB
 		if(design.build_type != second_check)
 			return ERR_NOCOMPAT
 

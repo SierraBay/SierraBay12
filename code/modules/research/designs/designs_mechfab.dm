@@ -1,5 +1,5 @@
 /datum/design/item/mechfab
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	req_tech = list(TECH_MATERIAL = 1)
 
 /datum/design/item/mechfab/robot
@@ -7,8 +7,8 @@
 
 //if the fabricator is a exosuit fab pass the manufacturer info over to the robot part constructor
 /datum/design/item/mechfab/robot/Fabricate(newloc, fabricator)
-	if(istype(fabricator, /obj/machinery/robotics_fabricator))
-		var/obj/machinery/robotics_fabricator/mechfab = fabricator
+	if(istype(fabricator, /obj/machinery/fabricator/rnd/robotics))
+		var/obj/machinery/fabricator/rnd/robotics = fabricator
 		return new build_path(newloc, mechfab.manufacturer)
 	return ..()
 
@@ -111,6 +111,7 @@
 	materials = list(MATERIAL_STEEL = 2500)
 
 /datum/design/item/mechfab/exosuit
+	build_type = MECHFAB
 	name = "exosuit frame"
 	id = "mech_frame"
 	build_path = /obj/structure/heavy_vehicle_frame
@@ -293,7 +294,7 @@
 	materials = list(MATERIAL_STEEL = 18000)
 
 /datum/design/item/robot_upgrade
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	time = 12
 	materials = list(MATERIAL_STEEL = 10000)
 	category = list("Robot Upgrade")
@@ -516,7 +517,7 @@
 	name = "Synthetic flash"
 	id = "sflash"
 	req_tech = list(TECH_MAGNET = 3, TECH_COMBAT = 2)
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 750)
 	build_path = /obj/item/device/flash/synthetic
 	category = list("Misc")

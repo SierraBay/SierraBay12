@@ -100,6 +100,8 @@
 /obj/item/card/id/sierra/crew/engineering/comms
 	job_access_type = /datum/job/infsys
 
+/obj/item/card/id/sierra/crew/engineering/roboticist
+	job_access_type = /datum/job/roboticist
 
 
 /obj/item/card/id/sierra/crew/supply/quartermaster
@@ -187,9 +189,6 @@
 
 /obj/item/card/id/sierra/crew/research/scientist
 	job_access_type = /datum/job/scientist
-
-/obj/item/card/id/sierra/crew/research/roboticist
-	job_access_type = /datum/job/roboticist
 
 /obj/item/card/id/sierra/crew/liaison
 	desc = "A card issued to corporate represenatives aboard the NSV Sierra."
