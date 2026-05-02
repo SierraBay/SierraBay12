@@ -145,7 +145,10 @@
 	var/mob/living/occupant = SSvirtual_reality.virtual_mobs_to_occupants[src]
 	var/list/real_access = list()
 	if(occupant)
-		real_access = occupant.GetIdCard()?.access.Copy()
+		var/obj/item/card/id/O = occupant.GetIdCard()
+
+		if(O)
+			real_access = O.access.Copy()
 
 	for(var/obj/item/card/id/I in src)
 		I.access = real_access

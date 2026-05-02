@@ -72,17 +72,17 @@ SUBSYSTEM_DEF(virtual_reality)
 	for(var/obj/landmark/L in locate(/area/tdome/tdome1))
 		var/turf/T = get_turf(L)
 		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Team 1"].Add(V)
+		GLOB.vr_spawns["Thunderdome Team 1"] += V
 
 	for(var/obj/landmark/L in locate(/area/tdome/tdome2))
 		var/turf/T = get_turf(L)
 		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Team 2"].Add(V)
+		GLOB.vr_spawns["Thunderdome Team 2"] += V
 
 	for(var/obj/landmark/L in locate(/area/tdome/tdomeobserve))
 		var/turf/T = get_turf(L)
 		var/obj/effect/vr_spawn/V = new(T)
-		GLOB.vr_spawns["Thunderdome Spectators"].Add(V)
+		GLOB.vr_spawns["Thunderdome Spectators"] += V
 	. = ..()
 
 /datum/controller/subsystem/virtual_reality/fire(resumed = FALSE)
