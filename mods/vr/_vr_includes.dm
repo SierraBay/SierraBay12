@@ -5,6 +5,7 @@
 #include "_vr.dm"
 
 #include "code\globals.dm"
+#include "code\outfits.dm"
 #include "code\virtual_reality.dm"
 #include "code\virtual_surrogate.dm"
 #include "code\mob.dm"

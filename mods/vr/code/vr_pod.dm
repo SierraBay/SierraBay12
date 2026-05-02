@@ -209,6 +209,7 @@
 		return
 	playsound(src, 'sound/machines/signal.ogg', 100)
 	var/mob/living/simulated_mob = SSvirtual_reality.create_virtual_mob(occupant, mob_type, pick(spawn_locs))
+	SSvirtual_reality.after_mob_creation(simulated_mob, zone)
 	simulated_mob.visible_message(
 		SPAN_NOTICE("The world shimmers and distorts. There's a small *pop* as \the [simulated_mob] appears from nothing."),
 		SPAN_NOTICE("Your pod fills with light and sound. You feel weightless and disoriented. And then, suddenly, you're someone else!")

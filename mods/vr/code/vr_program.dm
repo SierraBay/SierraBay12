@@ -84,6 +84,9 @@
 
 	data["active_templates"] = list()
 	for (var/zone in GLOB.active_vr_areas)
+		if(zone in SSvirtual_reality.special_zones)
+			continue
+
 		var/list/template_data = list()
 		template_data["name"] = zone
 		var/area/active_area = GLOB.active_vr_areas[zone]

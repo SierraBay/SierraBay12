@@ -48,7 +48,7 @@ var/global/datum/announcement/minor/minor_announcement = new(new_sound = 'sound/
 		//if(M.client && (get_z(M) in (zlevels | GLOB.using_map.admin_levels)) && !istype(M,/mob/new_player) && !isdeaf(M))
 		var/matching_z = (M.z in (zlevels | GLOB.using_map.admin_levels))
 		var/mob/living/virtual = SSvirtual_reality.virtual_mobs_to_occupants[M] // mirror announcements to VR users on the receiving Z's
-		if (virtual && !matching_z)
+		if (virtual)
 			var/turf/T = get_turf(virtual)
 			matching_z = (T.z in (zlevels | GLOB.using_map.admin_levels))
 			var/vr_msg = FormMessage(message, message_title)

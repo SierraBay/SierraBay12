@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(virtual_reality)
 	var/list/was_warned = list()					// A list of clients that have already received the disclaimer message when entering VR.
 
 	var/list/loading_tracker = list()
+	var/list/special_zones = list(
+		"Thunderdome"
+	) // special, unchangable zones
 	var/static/list/vr_blacklist = list(
 		/obj/item/disk/nuclear,
 		/obj/item/clothing/accessory/bs_silk,
@@ -59,6 +62,27 @@ SUBSYSTEM_DEF(virtual_reality)
 	GLOB.vr_spawns["Zone 1"] = list()
 	GLOB.vr_spawns["Zone 2"] = list()
 	GLOB.vr_spawns["Zone 3"] = list()
+
+	// special zones
+	GLOB.active_vr_areas["Thunderdome"] = null
+	GLOB.vr_spawns["Thunderdome Team 1"] = list()
+	GLOB.vr_spawns["Thunderdome Team 2"] = list()
+	GLOB.vr_spawns["Thunderdome Spectators"] = list()
+
+	for(var/obj/landmark/L in locate(/area/tdome/tdome1))
+		var/turf/T = get_turf(L)
+		var/obj/effect/vr_spawn/V = new(T)
+		GLOB.vr_spawns["Thunderdome Team 1"].Add(V)
+
+	for(var/obj/landmark/L in locate(/area/tdome/tdome2))
+		var/turf/T = get_turf(L)
+		var/obj/effect/vr_spawn/V = new(T)
+		GLOB.vr_spawns["Thunderdome Team 2"].Add(V)
+
+	for(var/obj/landmark/L in locate(/area/tdome/tdomeobserve))
+		var/turf/T = get_turf(L)
+		var/obj/effect/vr_spawn/V = new(T)
+		GLOB.vr_spawns["Thunderdome Spectators"].Add(V)
 	. = ..()
 
 /datum/controller/subsystem/virtual_reality/fire(resumed = FALSE)
@@ -311,6 +335,11 @@ SUBSYSTEM_DEF(virtual_reality)
 /// Gets a list of all turfs that are valid VR entry points at call time.
 /datum/controller/subsystem/virtual_reality/proc/get_vr_spawns(zone)
 	. = list()
+
+	if(zone == "Thunderdome")
+		var/list/spawn_options = list("Thunderdome Team 1","Thunderdome Team 2","Thunderdome Spectators")
+		zone = input("Select a spawn point.", "Select spawnpoint.") as null|anything in spawn_options
+
 	for (var/obj/effect/vr_spawn/L in GLOB.vr_spawns[zone])
 		var/turf/T = get_turf(L)
 		. += T
@@ -417,9 +446,23 @@ SUBSYSTEM_DEF(virtual_reality)
 		for(var/obj/machinery/body_scanconsole/C in target)
 			C.FindScanner()
 
+/datum/controller/subsystem/virtual_reality/proc/after_mob_creation(mob/living/L, zone)
+	if(!L)
+		return
+
+	if(zone == "Thunderdome")
+		L.verbs += /mob/living/proc/select_vr_equipment
+		L.verbs += /mob/living/proc/spawn_vr_item
+		L.select_vr_equipment()
+		L.spawn_vr_item()
+
 /datum/controller/subsystem/virtual_reality/proc/load_template(datum/nano_module/program/vr_control/vr_program, user, zone, template_area)
 	if (!zone)
 		to_chat(user, SPAN_WARNING("No VR zone selected. Cannot load template."))
+		return TRUE
+
+	if (zone in special_zones)
+		to_chat(user, SPAN_WARNING("This zone is unchangable."))
 		return TRUE
 
 	var/area/zone_area = GLOB.active_vr_areas[zone]
