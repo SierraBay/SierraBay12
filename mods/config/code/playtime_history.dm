@@ -1,4 +1,3 @@
-/// Periodic write of tracked play minutes to `erro_playtime_history` (feedback DB / `dbcon`).
 SUBSYSTEM_DEF(playtime_history)
 	name = "Playtime History"
 	flags = SS_NO_INIT
