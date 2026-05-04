@@ -1,0 +1,4 @@
+author: KommissarRed
+changes:
+  - tweak: Вырезал систему Локутус из задач Сьерры
+delete-after: true
