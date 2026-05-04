@@ -9,7 +9,11 @@
 	{{if data.disabled}}
 		<div class='notice'><center><h2><span class="bad">Вайтлист на ксеносов отключен в конфигурации сервера.</span></h2></center></div><br>
 	{{/if}}
+	{{if data.sql_whitelist_mode}}
+	<div class='notice'><center><h3><span class="average">Режим: <b>SQL</b> (таблица <code>whitelist</code>)<br>«Применить» выполняет <code>DELETE</code>/<code>INSERT</code> в БД и перечитывает вайтлист.</span></h3></center></div><br>
+	{{else}}
 	<div class='notice'><center><h3><span class="average">Режим: <b>config/alienwhitelist.txt</b><br>Применение изменений сохраняет файл и перезагружает вайтлист в память.</span></h3></center></div><br>
+	{{/if}}
 	<table style="width:100%", align="center">
 	<tr>
 		<th>

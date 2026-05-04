@@ -61,6 +61,15 @@ CREATE TABLE IF NOT EXISTS `erro_player` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 
+CREATE TABLE IF NOT EXISTS `erro_playtime_history` (
+  `ckey` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `date` date NOT NULL,
+  `time_living` int(11) NOT NULL DEFAULT 0,
+  `time_ghost` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`ckey`, `date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+
 CREATE TABLE IF NOT EXISTS `library` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` text DEFAULT NULL,

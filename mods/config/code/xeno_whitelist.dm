@@ -71,6 +71,7 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 	data["sorting"] = sortkey
 	data["debug"] = check_rights(R_DEBUG)
 	data["disabled"] = !config.usealienwhitelist
+	data["sql_whitelist_mode"] = config.usealienwhitelistSQL
 	data["currentlist"] = used
 	data["lowerallxenos"] = lowerxenoname
 
@@ -131,15 +132,23 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 				revoke["[ckey["ckey"]]"] += local
 		var/success = upload_CONFIG(usr, grant, revoke)
 		if(!success)
-			log_admin("Error: Alien Whitelist Panel - Unable to save whitelist to config")
-			message_staff("Error: Alien Whitelist Panel - Unable to save whitelist to config")
-		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), "ckey")
+			log_admin("Error: Alien Whitelist Panel - Unable to save whitelist to config/database")
+			message_staff("Error: Alien Whitelist Panel - Unable to save whitelist to config/database")
+		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), sortkey)
 		. = TOPIC_REFRESH
 
 	else if (href_list["refresh"])
-		if(alert("Вы уверены что хотите перезагрузить данные из config/alienwhitelist.txt?\nВсе несохранённые изменения ниже будут отменены!", "Refresh", "Да", "Отмена") == "Отмена")
+		var/confirm_reload = "Вы уверены что хотите перезагрузить данные из config/alienwhitelist.txt?\nВсе несохранённые изменения ниже будут отменены!"
+		if(config.usealienwhitelistSQL)
+			confirm_reload = "Перезагрузить вайтлист из БД? Локальные несохранённые правки в панели будут сброшены."
+		if(alert(confirm_reload, "Refresh", "Да", "Отмена") == "Отмена")
 			return TOPIC_NOACTION
-		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), "ckey")
+		if(config.usealienwhitelistSQL)
+			if(!load_alienwhitelistSQL())
+				to_chat(usr, SPAN_WARNING("Не удалось перезагрузить вайтлист из БД (см. лог сервера)."))
+		else
+			load_alienwhitelist()
+		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), sortkey)
 		. = TOPIC_REFRESH
 	else if (href_list["input"])
 		var/input = lowertext(sanitize(href_list["input"]))
@@ -184,8 +193,7 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 	. = 1
 	user = user.get_client()
 	if(config.usealienwhitelistSQL)
-		to_chat(user, SPAN_WARNING("Сервер в режиме SQL-вайтлиста: панель только для просмотра. Измените БД или отключите SQL в конфиге."))
-		return 0
+		return save_xenowhitelist_to_db(user, grant, revoke)
 	var/text = file2text("config/alienwhitelist.txt")
 	if (!text)
 		log_misc("Failed to load config/alienwhitelist.txt")
@@ -326,7 +334,65 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 				secondary[A[1]] = list(lowertext(A[2]))
 	return secondary
 
-/// Whitelist as `list(ckey = list(races...))` for the panel. File mode: from `alien_whitelist` lines or disk. (SQL-backed server list is read-only here; saves always go to config.)
+/proc/save_xenowhitelist_to_db(client/user, list/grant, list/revoke)
+	if(!dbcon_old || !dbcon_old.IsConnected())
+		if(user)
+			to_chat(user, SPAN_WARNING("База данных недоступна, вайтлист не сохранён."))
+		return FALSE
+	var/list/errors = list()
+	if(!length(grant) && !length(revoke))
+		return TRUE
+	if(length(revoke))
+		for(var/ckey_str in revoke)
+			var/list/check = revoke[ckey_str]
+			var/sql_ck = sql_sanitize_text("[ckey(ckey_str)]")
+			for(var/race in check)
+				var/sql_race = sql_sanitize_text(lowertext("[race]"))
+				var/DBQuery/q = dbcon_old.NewQuery("DELETE FROM whitelist WHERE ckey = '[sql_ck]' AND race = '[sql_race]'")
+				if(!q.Execute())
+					errors += dbcon_old.ErrorMsg()
+					break
+			if(length(errors))
+				break
+			log_admin("Alien Whitelist REVOKED (SQL) by [user ? user.ckey : "system"]. [lowertext(ckey_str)]: [jointext(check, ", ")]")
+			message_staff("Alien Whitelist REVOKED (SQL) by [user ? user.ckey : "system"]. [lowertext(ckey_str)]: [jointext(check, ", ")]")
+	if(length(errors))
+		if(user)
+			to_chat(user, SPAN_WARNING("Ошибка SQL при отзыве вайтлиста: [errors[1]]"))
+		log_admin("Alien Whitelist SQL error: [errors[1]]")
+		return FALSE
+	if(length(grant))
+		for(var/ckey_str in grant)
+			var/list/check = grant[ckey_str]
+			var/sql_ck = sql_sanitize_text("[ckey(ckey_str)]")
+			for(var/race in check)
+				var/sql_race = sql_sanitize_text(lowertext("[race]"))
+				var/DBQuery/qdel = dbcon_old.NewQuery("DELETE FROM whitelist WHERE ckey = '[sql_ck]' AND race = '[sql_race]'")
+				if(!qdel.Execute())
+					errors += dbcon_old.ErrorMsg()
+					break
+				var/DBQuery/qins = dbcon_old.NewQuery("INSERT INTO whitelist (ckey, race) VALUES ('[sql_ck]', '[sql_race]')")
+				if(!qins.Execute())
+					errors += dbcon_old.ErrorMsg()
+					break
+			if(length(errors))
+				break
+			log_admin("Alien Whitelist GRANTED (SQL) by [user ? user.ckey : "system"]. [lowertext(ckey_str)]: [jointext(check, ", ")]")
+			message_staff("Alien Whitelist GRANTED (SQL) by [user ? user.ckey : "system"]. [lowertext(ckey_str)]: [jointext(check, ", ")]")
+	if(length(errors))
+		if(user)
+			to_chat(user, SPAN_WARNING("Ошибка SQL при выдаче вайтлиста: [errors[1]]"))
+		log_admin("Alien Whitelist SQL error: [errors[1]]")
+		return FALSE
+	if(!load_alienwhitelistSQL())
+		if(user)
+			to_chat(user, SPAN_WARNING("Изменения записаны, но не удалось перечитать вайтлист из БД."))
+		return FALSE
+	if(user)
+		to_chat(user, SPAN_NOTICE("Ксеновайтлист сохранён в БД."))
+	return TRUE
+
+
 /proc/GetXenoWhitelist()
 	if(config.usealienwhitelistSQL && alien_whitelist && length(alien_whitelist))
 		return alien_whitelist
