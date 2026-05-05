@@ -45,7 +45,11 @@ var/global/datum/announcement/minor/minor_announcement = new(new_sound = 'sound/
 	// [/SIERRA-EDIT]
 	for(var/mob/M in GLOB.player_list)
 		if(M.client && (get_z(M) in (zlevels | GLOB.using_map.admin_levels)) && !istype(M,/mob/new_player) && !isdeaf(M))
-			to_chat(M, msg)
+			// [SIERRA-EDIT] - ERIS_ANNOUNCER - FormRadioMessage may fall back to radio broadcast and return null.
+			// to_chat(M, msg) // SIERRA-EDIT - ORIGINAL
+			if(msg)
+				to_chat(M, msg)
+			// [/SIERRA-EDIT]
 			if(message_sound && M.client.get_preference_value(/datum/client_preference/play_announcement_sfx) == GLOB.PREF_YES)
 				sound_to(M, message_sound)
 
