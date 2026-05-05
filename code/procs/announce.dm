@@ -46,7 +46,6 @@ var/global/datum/announcement/minor/minor_announcement = new(new_sound = 'sound/
 	for(var/mob/M in GLOB.player_list)
 		if(M.client && (get_z(M) in (zlevels | GLOB.using_map.admin_levels)) && !istype(M,/mob/new_player) && !isdeaf(M))
 			// [SIERRA-EDIT] - ERIS_ANNOUNCER - FormRadioMessage may fall back to radio broadcast and return null.
-			// to_chat(M, msg) // SIERRA-EDIT - ORIGINAL
 			if(msg)
 				to_chat(M, msg)
 			// [/SIERRA-EDIT]
