@@ -100,6 +100,9 @@
 	req_access = list(access_teleporter)
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
+/area/teleporter/seconddeck
+	name = "Second Deck - Teleporter"
+
 /area/crew_quarters/heads/office/iaa
 	icon_state = "heads_cl"
 	name = "Bridge - Command - IAA's Office"
