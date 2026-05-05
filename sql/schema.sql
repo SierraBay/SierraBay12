@@ -86,7 +86,10 @@ CREATE TABLE IF NOT EXISTS `library` (
 CREATE TABLE IF NOT EXISTS `whitelist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` text NOT NULL,
+  `ackey` text DEFAULT NULL,
   `race` text NOT NULL,
+  `date` date NOT NULL,
+  `date_remove` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ckey` (`ckey`(768)),
   KEY `race` (`race`(768))

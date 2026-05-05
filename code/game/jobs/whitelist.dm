@@ -36,7 +36,7 @@ var/global/list/alien_whitelist = list()
 		return 1
 /proc/load_alienwhitelistSQL()
 	alien_whitelist = list()
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM whitelist")
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM whitelist WHERE date_remove IS NULL")
 	if(!query.Execute())
 		to_world_log(dbcon_old.ErrorMsg())
 		return 0

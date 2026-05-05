@@ -49,6 +49,8 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 	var/list/used = list()
 	var/list/lowerxenoname = list()
 	var/sortkey = "ckey"
+	var/selected_ckey = ""
+	var/ui_layout = "compact"
 	var/datum/nanoui/myui	// Shame on me
 
 /datum/nano_module/xenopanel/New()
@@ -61,6 +63,9 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 	for(var/s2 in HOLDER_LIST)
 		lowerxenoname.Add("[lowertext(s2)]")
 	used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), sortkey)
+	if(length(used))
+		var/list/first = used[1]
+		selected_ckey = first["ckey"]
 
 /datum/nano_module/xenopanel/CanUseTopic(mob/user, datum/topic_state/state = GLOB.xeno_state)
 	. = ..()
@@ -68,12 +73,19 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 /datum/nano_module/xenopanel/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.xeno_state)
 	var/list/data = list()
 	data["searchbox"] = "<form action='byond://'><input type='hidden' name='src' value='\ref[src]'>New ckey <input type='text' size='40' name='input' autofocus><input type='submit' value='Search'></form>"
+	data["src_ref"] = "\ref[src]"
 	data["sorting"] = sortkey
 	data["debug"] = check_rights(R_DEBUG)
 	data["disabled"] = !config.usealienwhitelist
 	data["sql_whitelist_mode"] = config.usealienwhitelistSQL
+	data["ui_layout"] = ui_layout
 	data["currentlist"] = used
+	data["ckey_list"] = get_ckey_list(used)
+	data["selected_ckey"] = selected_ckey
+	data["selected_entry"] = get_selected_xeno_entry(used, selected_ckey)
 	data["lowerallxenos"] = lowerxenoname
+	if(config.usealienwhitelistSQL)
+		data["selected_meta"] = get_xeno_whitelist_sql_meta(selected_ckey)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
@@ -120,6 +132,10 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 		used = SortByRace(used, sortkey)
 		. = TOPIC_REFRESH
 
+	else if (href_list["pick_ckey"])
+		selected_ckey = lowertext(sanitize(href_list["pick_ckey"]))
+		. = TOPIC_REFRESH
+
 	else if (href_list["send"])
 		var/list/grant = list()
 		var/list/revoke = list()
@@ -135,6 +151,9 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 			log_admin("Error: Alien Whitelist Panel - Unable to save whitelist to config/database")
 			message_staff("Error: Alien Whitelist Panel - Unable to save whitelist to config/database")
 		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), sortkey)
+		if(!length(get_selected_xeno_entry(used, selected_ckey)) && length(used))
+			var/list/first = used[1]
+			selected_ckey = first["ckey"]
 		. = TOPIC_REFRESH
 
 	else if (href_list["refresh"])
@@ -149,6 +168,12 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 		else
 			load_alienwhitelist()
 		used = SortByRace(ParseXenoWhitelist(GetXenoWhitelist(), lowerxenoname), sortkey)
+		if(!length(get_selected_xeno_entry(used, selected_ckey)) && length(used))
+			var/list/first = used[1]
+			selected_ckey = first["ckey"]
+		. = TOPIC_REFRESH
+	else if (href_list["toggle_layout"])
+		ui_layout = (ui_layout == "compact") ? "classic" : "compact"
 		. = TOPIC_REFRESH
 	else if (href_list["input"])
 		var/input = lowertext(sanitize(href_list["input"]))
@@ -157,6 +182,9 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 			return TOPIC_NOACTION
 		if(used)
 			used = inckeysearch(used, input)
+		if(!length(get_selected_xeno_entry(used, selected_ckey)) && length(used))
+			var/list/first = used[1]
+			selected_ckey = first["ckey"]
 		if(myui)
 			myui.update()
 		. = TOPIC_REFRESH
@@ -348,7 +376,7 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 			var/sql_ck = sql_sanitize_text("[ckey(ckey_str)]")
 			for(var/race in check)
 				var/sql_race = sql_sanitize_text(lowertext("[race]"))
-				var/DBQuery/q = dbcon_old.NewQuery("DELETE FROM whitelist WHERE ckey = '[sql_ck]' AND race = '[sql_race]'")
+				var/DBQuery/q = dbcon_old.NewQuery("UPDATE whitelist SET date = COALESCE(date, CURDATE()), date_remove = CURDATE() WHERE ckey = '[sql_ck]' AND race = '[sql_race]' AND date_remove IS NULL")
 				if(!q.Execute())
 					errors += dbcon_old.ErrorMsg()
 					break
@@ -365,13 +393,14 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 		for(var/ckey_str in grant)
 			var/list/check = grant[ckey_str]
 			var/sql_ck = sql_sanitize_text("[ckey(ckey_str)]")
+			var/sql_admin_ckey = sql_sanitize_text("[user ? user.ckey : "system"]")
 			for(var/race in check)
 				var/sql_race = sql_sanitize_text(lowertext("[race]"))
-				var/DBQuery/qdel = dbcon_old.NewQuery("DELETE FROM whitelist WHERE ckey = '[sql_ck]' AND race = '[sql_race]'")
+				var/DBQuery/qdel = dbcon_old.NewQuery("UPDATE whitelist SET date = COALESCE(date, CURDATE()), date_remove = CURDATE() WHERE ckey = '[sql_ck]' AND race = '[sql_race]' AND date_remove IS NULL")
 				if(!qdel.Execute())
 					errors += dbcon_old.ErrorMsg()
 					break
-				var/DBQuery/qins = dbcon_old.NewQuery("INSERT INTO whitelist (ckey, race) VALUES ('[sql_ck]', '[sql_race]')")
+				var/DBQuery/qins = dbcon_old.NewQuery("INSERT INTO whitelist (ckey, ackey, race, date, date_remove) VALUES ('[sql_ck]', '[sql_admin_ckey]', '[sql_race]', CURDATE(), NULL)")
 				if(!qins.Execute())
 					errors += dbcon_old.ErrorMsg()
 					break
@@ -406,6 +435,39 @@ GLOBAL_TYPED_NEW(xeno_state, /datum/topic_state/admin_state/xeno)
 	if(!length(lines))
 		return list()
 	return xeno_whitelist_lines_to_assoc(lines)
+
+/proc/get_ckey_list(list/l)
+	var/list/out = list()
+	for(var/list/item in l)
+		out += list(item["ckey"])
+	return out
+
+/proc/get_selected_xeno_entry(list/l, selected)
+	for(var/list/item in l)
+		if(item["ckey"] == selected)
+			return item
+	return list()
+
+/proc/get_xeno_whitelist_sql_meta(selected)
+	var/list/out = list()
+	if(!config.usealienwhitelistSQL || !length(selected) || !dbcon_old || !dbcon_old.IsConnected())
+		return out
+	var/sql_selected = sql_sanitize_text(lowertext(selected))
+	var/sql = "SELECT race, ackey, date, date_remove FROM whitelist WHERE LOWER(ckey) = '[sql_selected]' ORDER BY id DESC LIMIT 500"
+	var/DBQuery/query = dbcon_old.NewQuery(sql)
+	if(!query.Execute())
+		return out
+	while(query.NextRow())
+		var/list/row = query.GetRowData()
+		var/race = lowertext("[row["race"]]")
+		if(out[race])
+			continue
+		var/list/item = list()
+		item["ackey"] = row["ackey"]
+		item["date"] = row["date"]
+		item["date_remove"] = row["date_remove"]
+		out[race] = item
+	return out
 
 #undef HOLDER_LIST
 
