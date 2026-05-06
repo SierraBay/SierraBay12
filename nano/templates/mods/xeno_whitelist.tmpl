@@ -3,6 +3,11 @@
 		min-width: 70px;
 		margin: 0px 2px 0px 0px;
 	}
+	.ckey-scroll {
+		max-height: 620px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 </style>
 
 {{if data}}
@@ -25,6 +30,7 @@
 		<td style="width:22%; vertical-align:top;">
 			<div class='notice'><center><h3><span class="average">Ckeys</span></h3></center></div>
 			<center>{{:data.searchbox}}</center>
+			<div class="ckey-scroll">
 			<table style="width:100%" align="center" border="1" rules="rows">
 				<tr><th>Ckey
 				{{for data.ckey_list :ckey_value:ckey_key}}
@@ -34,6 +40,7 @@
 					<tr><td><span class="average">Список пуст</span>
 				{{/for}}
 			</table>
+			</div>
 		</td>
 
 		<td style="width:2%;"></td>
