@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `whitelist` (
   `ckey` text NOT NULL,
   `ackey` text DEFAULT NULL,
   `race` text NOT NULL,
-  `date` date NOT NULL,
-  `date_remove` date DEFAULT NULL,
+  `date` datetime NOT NULL,
+  `date_remove` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ckey` (`ckey`(768)),
   KEY `race` (`race`(768))
