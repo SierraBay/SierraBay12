@@ -70,7 +70,8 @@
 		"implant_death",
 		"implant_chem",
 		"implant_tracking",
-		"implant_imprinting"
+		"implant_imprinting",
+		"psi_damp"
 	)
 
 /datum/technology/bio/adv_injection_zh
