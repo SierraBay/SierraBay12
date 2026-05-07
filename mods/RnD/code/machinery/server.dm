@@ -88,7 +88,7 @@
 	if(!length(cats))
 		cats += "General"
 	for(var/cat in cats)
-		var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
+		var/obj/item/stock_parts/computer/hard_drive/cluster/HDD = new(src)
 		HDD.rnd_category = cat
 		HDD.name = "[cat] R&D Drive"
 		rnd_drives[cat] = HDD
@@ -906,7 +906,7 @@
 
 /obj/machinery/r_n_d/server/core/_populate_rnd_drives()
 	..()
-	var/obj/item/stock_parts/computer/hard_drive/super/sys_hdd = new(src)
+	var/obj/item/stock_parts/computer/hard_drive/cluster/sys_hdd = new(src)
 	sys_hdd.rnd_category = "System"
 	sys_hdd.name = "System R&D Drive"
 	rnd_drives["System"] = sys_hdd
@@ -933,7 +933,7 @@
 	is_public_server = TRUE
 
 /obj/machinery/r_n_d/server/public/_populate_rnd_drives()
-	var/obj/item/stock_parts/computer/hard_drive/super/HDD = new(src)
+	var/obj/item/stock_parts/computer/hard_drive/cluster/HDD = new(src)
 	HDD.rnd_category = "Autolathe"
 	HDD.name = "Autolathe R&D Drive"
 	rnd_drives["Autolathe"] = HDD
