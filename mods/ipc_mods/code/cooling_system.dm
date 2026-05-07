@@ -68,6 +68,10 @@
 
 	if(!owner || owner.stat == DEAD || owner.bodytemperature < 32)
 		return
+	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
+	if(!C)
+		owner.ipc_temp_gain = 0
+		return
 	coolant_purity()
 	handle_cooling()
 	..()
@@ -76,9 +80,9 @@
 
 	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
 	refrigerant_rate = heating_modificator
-	if (C && C.get_charge() < 10)
+	if (!C || C.get_charge() < 10)
 		return
-	if(reagents.total_volume >= 0)
+	if(reagents.total_volume > 0)
 		var/bruised_cost = get_coolant_drain()
 
 		if(is_bruised())
@@ -86,7 +90,6 @@
 			reagents.remove_any(reagents_remove)
 
 		if(is_damaged())
-			get_coolant_drain()
 			refrigerant_rate += bruised_cost     // Нагрев владельца при повреждениях высчитывается тут.
 
 		if(reagents.get_reagent_amount(/datum/reagent/water) <= (0.3 * reagents.total_volume))
@@ -117,7 +120,7 @@
 /obj/item/organ/internal/cooling_system/examine(mob/user, distance)
 	. = ..()
 	if(distance <= 0)
-		to_chat(user, text("[icon2html(src, viewers(get_turf(src)))] [] contains [] units of liquid left!", src, src.reagents.total_volume))
+		to_chat(user, "[icon2html(src, viewers(get_turf(src)))] \The [src] contains [src.reagents.total_volume] units of coolant.")
 
 /obj/item/organ/internal/cooling_system/attack_self(mob/user as mob)
 	safety = !safety
