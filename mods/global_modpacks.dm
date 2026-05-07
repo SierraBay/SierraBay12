@@ -77,3 +77,4 @@
 #include "hallucination_overhaul/_hallucination_overhaul_includes.dm"
 #include "../packs/factions/fa/_pack.dm"
 #include "tribe/_tribe_includes.dm"
+#include "vr/_vr_includes.dm"

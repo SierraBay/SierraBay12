@@ -369,3 +369,13 @@
 
 /area/medical/virology/ward
 	name = "Second Deck - Virology - Isolation"
+
+/area/crew_quarters/virtual_reality_control
+	name = "\improper VR Control"
+	icon_state = "vr_control"
+
+/area/crew_quarters/virtual_reality
+	name = "\improper VR Suites"
+	icon_state = "vr_suites"
+	sound_env = SMALL_SOFTFLOOR
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED

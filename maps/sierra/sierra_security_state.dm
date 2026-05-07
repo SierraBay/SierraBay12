@@ -147,6 +147,8 @@
 	overlay_status_display = "status_display_red"
 	alert_border = "alert_border_red"
 
+	kick_vr_users = TRUE // [SIERRA-ADD] - MOD_VR
+
 	psionic_control_level = PSI_IMPLANT_DISABLED
 	var/static/datum/announcement/priority/security/security_announcement_red = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/misc/redalert1.ogg'))
 
@@ -182,6 +184,8 @@
 	overlay_alarm = "alarm_delta"
 	overlay_status_display = "status_display_delta"
 	alert_border = "alert_border_delta"
+
+	kick_vr_users = TRUE // [SIERRA-ADD] - MOD_VR
 
 	psionic_control_level = PSI_IMPLANT_DISABLED
 	var/static/datum/announcement/priority/security/security_announcement_delta = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/effects/siren.ogg'))
