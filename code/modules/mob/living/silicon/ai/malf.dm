@@ -10,8 +10,6 @@
 	hacked_apcs = list()
 	recalc_cpu()
 
-	verbs += /datum/game_mode/malfunction/verb/ai_select_hardware
-	verbs += /datum/game_mode/malfunction/verb/ai_select_research
 	verbs += /mob/living/silicon/ai/proc/ai_malf_modules
 	if(istype(hud_used, /datum/hud/ai))
 		var/datum/hud/ai/ai_hud = hud_used
@@ -31,6 +29,8 @@
 	// Generic variables
 	malfunctioning = 0
 	stop_apu(1)
+	if(client)
+		src << browse(null, "window=malf_modules")
 	// Reset our verbs and HUD before delayed cleanup so malf controls cannot be reused while stop_malf() yields.
 	src.verbs.Cut()
 	add_ai_verbs()
@@ -130,20 +130,33 @@
 		return
 	show_malf_modules()
 
-/mob/living/silicon/ai/proc/show_malf_modules()
+/mob/living/silicon/ai/proc/show_malf_modules(screen = "status")
 	if(!malfunctioning || !research)
+		if(client)
+			src << browse(null, "window=malf_modules")
 		return
+
+	if(!(screen in list("status", "hardware", "research", "abilities")))
+		screen = "status"
 
 	var/list/dat = list()
 	dat += "<html><head><style>"
 	dat += "body{font-family:Verdana,Arial,sans-serif;font-size:12px;background:#111;color:#ddd;margin:8px;}"
 	dat += "h2{font-size:16px;margin:0 0 8px;color:#f06b6b;} h3{font-size:13px;margin:12px 0 4px;color:#f0d06b;}"
 	dat += ".panel{border:1px solid #444;background:#1b1b1b;padding:8px;margin-bottom:8px;}"
+	dat += ".tabs{margin-bottom:8px;} .tabs a{display:inline-block;border:1px solid #444;background:#222;padding:4px 8px;margin-right:4px;}"
+	dat += ".tabs .active{color:#111;background:#f0d06b;border-color:#f0d06b;}"
 	dat += ".row{border-top:1px solid #333;padding:6px 0;} .row:first-child{border-top:0;}"
 	dat += ".muted{color:#999;} .bad{color:#f06b6b;} .good{color:#7fd17f;}"
 	dat += "a{color:#8cc8ff;text-decoration:none;} a:hover{text-decoration:underline;}"
 	dat += "</style></head><body>"
 	dat += "<h2>Malfunction Modules</h2>"
+	dat += "<div class='tabs'>"
+	dat += malf_module_tab_link("status", "Status", screen)
+	dat += malf_module_tab_link("hardware", "Hardware", screen)
+	dat += malf_module_tab_link("research", "Research", screen)
+	dat += malf_module_tab_link("abilities", "Abilities", screen)
+	dat += "</div>"
 	dat += "<div class='panel'>"
 	dat += "CPU: [round(research.stored_cpu, 0.1)] / [round(research.max_cpu, 0.1)] TFlops<br>"
 	dat += "Generation: [round(research.cpu_increase_per_tick * 10, 0.1)] TFlops/s<br>"
@@ -157,11 +170,44 @@
 		dat += "<br><span class='bad'>APU power active. Research and most abilities are paused.</span>"
 	dat += "</div>"
 
+	switch(screen)
+		if("hardware")
+			build_malf_hardware_panel(dat)
+		if("research")
+			build_malf_research_panel(dat)
+		if("abilities")
+			build_malf_abilities_panel(dat)
+		else
+			build_malf_status_panel(dat)
+	dat += "</body></html>"
+
+	var/datum/browser/popup = new(src, "malf_modules", "Malf Modules", 520, 650, src)
+	popup.set_content(jointext(dat, null))
+	popup.open()
+
+/mob/living/silicon/ai/proc/malf_module_tab_link(tab, label, active_tab)
+	if(tab == active_tab)
+		return "<a class='active' href='byond://?src=\ref[src];malf_screen=[tab]'>[label]</a>"
+	return "<a href='byond://?src=\ref[src];malf_screen=[tab]'>[label]</a>"
+
+/mob/living/silicon/ai/proc/build_malf_status_panel(list/dat)
+	dat += "<h3>Status</h3><div class='panel'>"
+	dat += "<div class='row'>Hacked APCs: [LAZYLEN(hacked_apcs)]</div>"
+	dat += "<div class='row'>System Status: [hacking ? "Busy" : "Stand-By"]</div>"
+	dat += "<div class='row'>Hardware Integrity: [hardware_integrity()]%</div>"
+	dat += "<div class='row'>Internal Capacitor: [backup_capacitor()]%</div>"
+	if(system_override == 1)
+		dat += "<div class='row bad'>SYSTEM OVERRIDE INITIATED</div>"
+	else if(system_override == 2)
+		dat += "<div class='row good'>SYSTEM OVERRIDE COMPLETED</div>"
+	dat += "</div>"
+
+/mob/living/silicon/ai/proc/build_malf_hardware_panel(list/dat)
 	dat += "<h3>Hardware</h3><div class='panel'>"
 	if(hardware)
 		dat += "<div class='row'><b>[html_encode(hardware.name)]</b><br>[html_encode(hardware.desc)]</div>"
 		if(hardware.driver)
-			dat += "<div class='row'><a href='byond://?src=\ref[src];malf_hardware_action=1'>Run hardware driver</a></div>"
+			dat += "<div class='row'><a href='byond://?src=\ref[src];malf_hardware_action=1'>[html_encode(hardware.driver_name)]</a></div>"
 	else
 		for(var/H in typesof(/datum/malf_hardware))
 			var/datum/malf_hardware/HW = new H
@@ -173,6 +219,7 @@
 			qdel(HW)
 	dat += "</div>"
 
+/mob/living/silicon/ai/proc/build_malf_research_panel(list/dat)
 	dat += "<h3>Research</h3><div class='panel'>"
 	if(!LAZYLEN(research.available_abilities))
 		dat += "<span class='muted'>No available research targets.</span>"
@@ -187,11 +234,22 @@
 				dat += "<br><a href='byond://?src=\ref[src];malf_select_research=\ref[ability]'>Set focus</a>"
 			dat += "</div>"
 	dat += "</div>"
-	dat += "</body></html>"
 
-	var/datum/browser/popup = new(src, "malf_modules", "Malf Modules", 520, 650, src)
-	popup.set_content(jointext(dat, null))
-	popup.open()
+/mob/living/silicon/ai/proc/build_malf_abilities_panel(list/dat)
+	dat += "<h3>Abilities</h3><div class='panel'>"
+	var/has_abilities = FALSE
+	if(hardware && hardware.driver)
+		has_abilities = TRUE
+		dat += "<div class='row'><b>[html_encode(hardware.name)]</b><br><a href='byond://?src=\ref[src];malf_hardware_action=1'>[html_encode(hardware.driver_name)]</a></div>"
+	if(LAZYLEN(research.unlocked_abilities))
+		for(var/datum/malf_research_ability/ability in research.unlocked_abilities)
+			if(!ability || !ability.ability)
+				continue
+			has_abilities = TRUE
+			dat += "<div class='row'><b>[html_encode(ability.name)]</b><br><a href='byond://?src=\ref[src];malf_activate_ability=\ref[ability]'>Activate</a></div>"
+	if(!has_abilities)
+		dat += "<span class='muted'>No active modules unlocked.</span>"
+	dat += "</div>"
 
 /mob/living/silicon/ai/proc/select_malf_hardware(hardware_type, confirmed = FALSE)
 	if(!ability_prechecks(src, 0, TRUE))
@@ -229,6 +287,14 @@
 	research.focus = ability
 	to_chat(src, "Research set: [ability.name]")
 	log_ability_use(src, "Selected research: [ability.name]", null, 0)
+
+/mob/living/silicon/ai/proc/activate_malf_ability(datum/malf_research_ability/ability)
+	if(!ability_prechecks(src, 0, FALSE))
+		return
+	if(!ability || !(ability in research.unlocked_abilities) || !ability.ability || !(ability.ability in verbs))
+		to_chat(src, "This ability is not available.")
+		return
+	call(src, ability.ability)()
 
 // Shows capacitor charge and hardware integrity information to the AI in Status tab.
 /mob/living/silicon/ai/show_system_integrity()

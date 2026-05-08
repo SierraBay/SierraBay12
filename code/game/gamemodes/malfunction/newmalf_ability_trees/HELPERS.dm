@@ -27,6 +27,8 @@
 	possible_choices += "CANCEL"
 	var/choice = input("Select desired hardware. You may only choose one hardware piece!: ") in possible_choices
 	if(choice == "CANCEL")
+		for(var/datum/malf_hardware/H in hardware_list)
+			qdel(H)
 		return
 	var/note = null
 
@@ -41,16 +43,22 @@
 		note = C.desc
 	else
 		to_chat(user, "This hardware does not exist! Probably a bug in game. Please report this.")
+		for(var/datum/malf_hardware/H in hardware_list)
+			qdel(H)
 		return
 
 
 	if(!note)
 		error("Hardware without description: [C]")
+		for(var/datum/malf_hardware/H in hardware_list)
+			qdel(H)
 		return
 
 	var/confirmation = alert("[note] - Is this what you want?", "Hardware selection", "Yes", "No")
 	if(confirmation != "Yes")
 		to_chat(user, "Selection cancelled. Use command again to select")
+		for(var/datum/malf_hardware/H in hardware_list)
+			qdel(H)
 		return
 
 	if(C)

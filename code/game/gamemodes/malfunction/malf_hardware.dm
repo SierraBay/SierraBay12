@@ -2,6 +2,7 @@
 	var/name = ""								// Hardware name
 	var/desc = ""
 	var/driver = null							// Driver - if not null this verb is given to the AI to control hardware
+	var/driver_name = "Run Hardware Driver"
 	var/mob/living/silicon/ai/owner = null		// AI which owns this.
 
 /datum/malf_hardware/proc/install()
@@ -23,6 +24,7 @@
 	name = "APU Generator"
 	desc = "Auxiliary Power Unit that will keep you operational even without external power. Has to be manually activated. When APU is operational most abilities will be unavailable, and ability research will temporarily stop."
 	driver = /datum/game_mode/malfunction/verb/ai_toggle_apu
+	driver_name = "Toggle APU Generator"
 
 /datum/malf_hardware/apu_gen/get_examine_desc()
 	var/msg = "It seems to have some sort of power generator attached to its core."
@@ -50,6 +52,7 @@
 	name = "Self-Destruct Explosives"
 	desc = "High yield explosives are attached to your physical mainframe. This hardware comes with special driver that allows activation of these explosives. Timer is set to 15 seconds after manual activation. This is a doomsday device that will destroy both you and any intruders in your core."
 	driver = /datum/game_mode/malfunction/verb/ai_self_destruct
+	driver_name = "Toggle Core Self-Destruct"
 
 /datum/malf_hardware/core_bomb/get_examine_desc()
 	return SPAN_WARNING("It seems to have grey blocks of unknown substance and some circuitry connected to it's core. [owner.bombing_core ? "A red light is blinking on the circuit." : ""]")
@@ -58,6 +61,7 @@
 	name = "Quantum Knowledge Databank"
 	desc = "A highly advanced self-learning supercomputer that is capable of rapidly performing predefined research tasks. Once activated advances your research in all trees by one tier, but burns out in the process."
 	driver = /datum/game_mode/malfunction/verb/boost_research
+	driver_name = "Boost Research"
 	var/spent = FALSE
 
 /datum/malf_hardware/instant_research/get_examine_desc()
