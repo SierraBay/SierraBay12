@@ -10,31 +10,36 @@
 	if(!isAI(usr))
 		return TRUE
 	var/mob/living/silicon/ai/A = usr
-	if(!(ai_verb in A.verbs))
+	if(!A.client || !ai_verb || !(ai_verb in A.verbs))
 		return TRUE
 
 	var/input_arguments = list()
-	for(var/input_proc in input_procs)
-		var/input_flags = input_procs[input_proc]
-		var/input_arg
-		if(input_flags & AI_BUTTON_PROC_BELONGS_TO_CALLER) // Does the called proc belong to the AI, or not?
-			input_arg = call(A, input_proc)()
-		else
-			input_arg = call(input_proc)()
+	if(LAZYLEN(input_procs))
+		for(var/input_proc in input_procs)
+			var/input_flags = input_procs[input_proc]
+			var/input_arg
+			if(input_flags & AI_BUTTON_PROC_BELONGS_TO_CALLER) // Does the called proc belong to the AI, or not?
+				input_arg = call(A, input_proc)()
+			else
+				input_arg = call(input_proc)()
 
-		if(input_flags & AI_BUTTON_INPUT_REQUIRES_SELECTION)
-			input_arg = input("Make a selection.", "Make a selection.") as null|anything in input_arg
-			if(isnull(input_arg))
-				return // We assume a null-input means the user cancelled
+			if(input_flags & AI_BUTTON_INPUT_REQUIRES_SELECTION)
+				if(!islist(input_arg) || !length(input_arg))
+					return
+				input_arg = input("Make a selection.", "Make a selection.") as null|anything in input_arg
+				if(isnull(input_arg))
+					return // We assume a null-input means the user cancelled
 
-		if(!(ai_verb in A.verbs) || A.incapacitated())
-			return
+			if(!A || !A.client || !(ai_verb in A.verbs) || A.incapacitated())
+				return
 
-		input_arguments += input_arg
+			input_arguments += input_arg
 
 	if(length(input_args))
 		input_arguments |= input_args
 
+	if(!A || !A.client || !(ai_verb in A.verbs) || A.incapacitated())
+		return TRUE
 	call(A, ai_verb)(arglist(input_arguments))
 	return TRUE
 

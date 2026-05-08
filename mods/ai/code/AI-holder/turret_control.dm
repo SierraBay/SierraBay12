@@ -15,7 +15,7 @@ AIHOLDER_INITIALIZE(/obj/machinery/porta_turret)
 	onAiHolderLife()
 
 /obj/machinery/porta_turret/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
-	if(!AiHolder.client)
+	if(!AiHolder?.client)
 		. = ..()
 
 /obj/machinery/porta_turret/onAiHolderClickOn(atom/A, params)

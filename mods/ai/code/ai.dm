@@ -20,6 +20,8 @@
 	set desc = "Activates the given subsystem"
 	set category = "Silicon Commands"
 
+	if(!silicon_camera)
+		return
 	silicon_camera.toggle_camera_mode()
 
 /mob/living/silicon/ai/proc/ai_view_images()
@@ -27,6 +29,8 @@
 	set desc = "Activates the given subsystem"
 	set category = "Silicon Commands"
 
+	if(!silicon_camera)
+		return
 	silicon_camera.viewpictures()
 
 /mob/living/silicon/ai/proc/change_floor()
@@ -39,13 +43,13 @@
 
 	for (var/color in GetHexColors(f_color))
 		if (color <= 80)
-			to_chat(usr, SPAN_WARNING("Color \"[f_color]\" is not allowed!"))
+			to_chat(src, SPAN_WARNING("Color \"[f_color]\" is not allowed!"))
 			return
 
-	var/area/A = get_area(usr)
+	var/area/A = get_area(src)
 	for(var/turf/simulated/floor/bluegrid/F in A)
 		F.color = f_color
-	to_chat(usr, SPAN_NOTICE("Proccessing strata color was change to [f_color]"))
+	to_chat(src, SPAN_NOTICE("Proccessing strata color was change to [f_color]"))
 
 /mob/living/silicon/ai/proc/show_crew_manifest()
 	set category = "Silicon Commands"
@@ -77,6 +81,8 @@
 		if("Interact")
 			return attack_self(user)
 		if("Terminal")
+			if(!os)
+				return
 			return os.open_terminal(user)
 
 
@@ -86,6 +92,8 @@
 		if("Interact")
 			return interface_interact(user)
 		if("Terminal")
+			if(!os)
+				return
 			os.system_boot()
 			return os.open_terminal(user)
 

@@ -3,7 +3,9 @@
 	var/aiHacking = FALSE
 
 
-/obj/machinery/door/airlock/proc/canAIHack()
+/obj/machinery/door/airlock/proc/canAIHack(mob/user = null)
+	if(user && (!issilicon(user) || user.stat == DEAD || !user.client))
+		return FALSE
 	return ((src.ai_control_disabled == TRUE) && (!hackProof) && (!src.isAllPowerLoss()));
 
 /obj/machinery/door/airlock/proc/start_hack(mob/user)
@@ -13,13 +15,18 @@
 		addtimer(new Callback(src, PROC_REF(result_hack), user), 40 SECONDS)
 
 /obj/machinery/door/airlock/proc/result_hack(mob/user)
+	if(QDELETED(src))
+		return
+	if(!user || !issilicon(user) || user.stat == DEAD || !user.client)
+		aiHacking = FALSE
+		return
 	if(src.canAIControl())
 		to_chat(user, "Alert cancelled. Airlock control has been restored without our assistance.")
 		src.aiHacking = FALSE
 		return
-	else if(!src.canAIHack(user))
+	if(!canAIHack(user))
 		to_chat(user, "We've lost our connection! Unable to hack airlock.")
-		src.aiHacking = FALSE
+		aiHacking = FALSE
 		return
 
 
@@ -29,5 +36,5 @@
 	to_chat(user, "Receiving control information from airlock. Forcing airlock to execute program.")
 	//bring up airlock dialog
 	src.aiHacking = FALSE
-	if (user)
+	if(user && issilicon(user) && user.client && user.stat != DEAD)
 		src.attack_ai(user)

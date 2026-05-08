@@ -3,6 +3,9 @@
 		next_alarm_notice = world.time + 100
 
 	var/list/alarms = queued_alarms[alarm_handler]
+	if(!alarms)
+		alarms = list()
+		queued_alarms[alarm_handler] = alarms
 	if(was_raised)
 		// Raised alarms are always set
 		alarms[alarm] = 1
@@ -29,9 +32,9 @@
 					alarm_raised = 1
 					if(!reported)
 						reported = 1
-						var/datum/alarm_source/sources_of_alarm = A.sources[1]
+						var/datum/alarm_source/sources_of_alarm = LAZYLEN(A.sources) ? A.sources[1] : null
 						// sources_of_alarm.source
-						if(AreConnectedZLevels(get_z(src), get_z(sources_of_alarm.source)))
+						if(sources_of_alarm?.source && AreConnectedZLevels(get_z(src), get_z(sources_of_alarm.source)))
 							to_chat(src, "<span class='warning'>--- [AH.category] Detected ---</span>")
 							dont_show = FALSE
 							raised_alarm(A)
@@ -41,11 +44,13 @@
 			var/reported = 0
 			for(var/datum/alarm/A in alarms)
 				if(alarms[A] == -1)
+					var/datum/alarm_source/sources_of_alarm = LAZYLEN(A.sources) ? A.sources[1] : null
+					if(!sources_of_alarm?.source || !AreConnectedZLevels(get_z(src), get_z(sources_of_alarm.source)))
+						continue
 					if(!reported)
 						reported = 1
 						to_chat(src, "<span class='notice'>--- [AH.category] Cleared ---</span>")
-					if(!dont_show)
-						to_chat(src, "\The [A.alarm_name()].")
+					to_chat(src, "\The [A.alarm_name()].")
 
 		if(alarm_raised && !dont_show)
 			to_chat(src, "<A HREF=?src=\ref[src];showalerts=1>\[Show Alerts\]</A>")

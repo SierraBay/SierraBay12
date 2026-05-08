@@ -27,33 +27,39 @@
 /mob/AiHolder/Destroy()
 	ExitHolder()
 	GLOB.moved_event.unregister(holder, src)
-	GLOB.moved_event.unregister(src, holder)
+	GLOB.moved_event.unregister(src, src, .proc/Move2Holder)
 	GLOB.destroyed_event.unregister(holder, src)
 	. = ..()
 
 /mob/AiHolder/proc/Move2Holder()
+	if(!holder)
+		return
 	loc = holder.loc
 
 /mob/AiHolder/verb/ExitHolder()
 	set name = "Return to core"
 	set category = "Silicon Commands"
 
-	mind?.transfer_to(MyAI)
+	if(!MyAI)
+		return
+	var/mob/living/silicon/ai/returning_ai = MyAI
+	mind?.transfer_to(returning_ai)
 	MyAI = null
+	returning_ai.Controlling = null
 	holder?.onReturnAi2Core()
 
 /mob/AiHolder/Life()
 	. = ..()
-	holder.onAiHolderLife()
+	holder?.onAiHolderLife()
 
 /mob/AiHolder/Login()
 	. = ..()
 	Life()
-	holder.onAiHolderLogin()
+	holder?.onAiHolderLogin()
 
 /mob/AiHolder/ClickOn(atom/A, params)
 	. = ..()
-	holder.onAiHolderClickOn(A, params)
+	holder?.onAiHolderClickOn(A, params)
 
 /mob/AiHolder/bullet_act()
 	return

@@ -26,14 +26,18 @@
 
 
 ///ИНТЕРАКТ С ШЛЮЗОМ
+/obj/machinery/door/airlock/proc/try_start_ai_hack(mob/user)
+	if(!issilicon(user) || src.canAIControl())
+		return FALSE
+	if(ai_control_disabled != 2 && src.canAIHack(user))
+		src.start_hack(user)
+	return TRUE
+
 /obj/machinery/door/airlock/CanUseTopic(mob/user)
 	if (operating == DOOR_OPERATING_BROKEN) //emagged
 		to_chat(user, SPAN_WARNING("Unable to interface: Internal error."))
 		return STATUS_CLOSE
-	if(issilicon(user) && !src.canAIControl())
-		if(ai_control_disabled != 2)
-			if(src.canAIHack(user))
-				src.start_hack(user)
+	if(try_start_ai_hack(user))
 		if(ai_control_disabled == 2)
 			return ..()
 		else
@@ -74,21 +78,14 @@
 	if (operating == DOOR_OPERATING_BROKEN) //emagged
 		to_chat(user, SPAN_WARNING("Unable to interface: Internal error."))
 		return FALSE
-	if(issilicon(user) && !src.canAIControl())
-		//[SIERRA-ADD] - AI-UPDATE
-		if(ai_control_disabled != 2)
-			if(src.canAIHack(user))
-				src.start_hack(user)
-		if(ai_control_disabled == 2)
-			return TRUE
-		//[SIERRA-ADD]
-		return FALSE
+	if(try_start_ai_hack(user))
+		return ai_control_disabled == 2
 	return TRUE
 
 // Дополнительные интеракции с АПЦ
 
-/obj/machinery/power/apc/AIAltClick() // Ребут АПЦ, если тот пострадал он требует перезагрузки
-	if(usr.incapacitated())
+/obj/machinery/power/apc/AIAltClick(mob/living/silicon/user) // Ребут АПЦ, если тот пострадал он требует перезагрузки
+	if(!user || user.incapacitated())
 		return FALSE
 	Topic(src, list("reboot"="1"))
 	return TRUE

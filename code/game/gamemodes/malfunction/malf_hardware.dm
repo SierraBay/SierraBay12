@@ -9,6 +9,9 @@
 		owner.hardware = src
 		if(driver)
 			owner.verbs += driver
+		if(istype(owner.hud_used, /datum/hud/ai))
+			var/datum/hud/ai/ai_hud = owner.hud_used
+			ai_hud.sync_malf_buttons()
 
 /datum/malf_hardware/proc/get_examine_desc()
 	return "It has some sort of hardware attached to its core"

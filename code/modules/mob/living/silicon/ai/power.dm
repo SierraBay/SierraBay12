@@ -211,10 +211,12 @@
 
 /obj/machinery/ai_powersupply/proc/get_power_state()
 	// Dead, powered by APU, admin power, or inside an item (inteliCard/IIS). No power usage.
-	if(!powered_ai.is_real_dead() || powered_ai.APU_power || powered_ai.admin_powered || istype(powered_ai.loc, /obj/item))
+	if(!powered_ai || powered_ai.is_real_dead() || powered_ai.APU_power || powered_ai.admin_powered || istype(powered_ai.loc, /obj/item))
 		return 0
 	// Normal power usage.
 	return 2
 
 /obj/machinery/ai_powersupply/powered(chan = -1)
+	if(!powered_ai)
+		return FALSE
 	return ..(chan, get_area(powered_ai))

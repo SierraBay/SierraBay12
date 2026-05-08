@@ -11,7 +11,7 @@
 /atom/proc/assume_AI_control(mob/living/silicon/ai/ai)
 	if(!AiHolder)
 		AIHOLDERINIT
-	to_chat(ai, SPAN_GOOD("Use MIDLE MOUSE BUTTON to popdown/popup turret"))
+	to_chat(ai, SPAN_GOOD("Use MIDDLE MOUSE BUTTON to popdown/popup turret"))
 	ai.mind?.transfer_to(AiHolder)
 	AiHolder.MyAI = ai
 	ai.Controlling = src
@@ -28,7 +28,7 @@
 	CRASH(AIHOLDER_CRASHMESSAGE)
 /mob/AiHolder/onAiHolderLogin()
 	CRASH(AIHOLDER_CRASHMESSAGE)
-/mob/AiHolder/onAiHolderClickOn(/atom/A, params)
+/mob/AiHolder/onAiHolderClickOn(atom/A, params)
 	CRASH(AIHOLDER_CRASHMESSAGE)
 /mob/AiHolder/assume_AI_control(mob/living/silicon/ai/ai)
 	CRASH(AIHOLDER_CRASHMESSAGE)

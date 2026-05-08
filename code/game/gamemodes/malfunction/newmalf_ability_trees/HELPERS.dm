@@ -17,7 +17,8 @@
 	var/hardware_list = list()
 	for(var/H in typesof(/datum/malf_hardware))
 		var/datum/malf_hardware/HW = new H
-		hardware_list += HW
+		if(HW.name)
+			hardware_list += HW
 
 	var/possible_choices = list()
 	for(var/datum/malf_hardware/H in hardware_list)
@@ -53,9 +54,11 @@
 		return
 
 	if(C)
-		log_ability_use(src, "Picked hardware [C.name]")
-		C.owner = user
-		C.install()
+		user.select_malf_hardware(C.type, TRUE)
+
+	for(var/datum/malf_hardware/H in hardware_list)
+		if(H != user.hardware)
+			qdel(H)
 
 // Verb: ai_select_research()
 // Parameters: None
@@ -71,11 +74,7 @@
 
 	var/datum/malf_research/res = user.research
 	var/datum/malf_research_ability/tar = input("Select your next research target") in res.available_abilities
-	if(!tar)
-		return
-	res.focus = tar
-	to_chat(user, "Research set: [tar.name]")
-	log_ability_use(src, "Selected research: [tar.name]", null, 0)
+	user.select_malf_research(tar)
 
 // HELPER PROCS
 // Proc: ability_prechecks()

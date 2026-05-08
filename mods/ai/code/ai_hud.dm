@@ -45,12 +45,7 @@
 #define ui_ai_crew_rec "RIGHT-2:30, TOP:0"
 
 // AI: Malf
-#define ui_ai_research "LEFT:6, TOP-2:0"
-#define ui_ai_hardware "LEFT:6, TOP-3:0"
-#define ui_ai_apu "LEFT:6, TOP-3:0"
-#define ui_ai_self_destruct "LEFT:6, TOP-3:0"
-
-#define ui_ai_destroy "RIGHT-1:30, TOP-1:0"
+#define ui_ai_malf_modules "LEFT:6, TOP-2:0"
 
 
 // HUD Code
@@ -58,179 +53,68 @@
 /mob/living/silicon/ai
 	hud_type = /datum/hud/ai
 
+/datum/hud/ai/proc/add_ai_button(screen_loc, name, icon_state, ai_verb, list/input_procs = null, list/input_args = null)
+	adding += new /obj/screen/ai_button(null, screen_loc, name, icon_state, ai_verb, input_procs, input_args)
+
+/datum/hud/ai/proc/sync_malf_buttons()
+	if(!isAI(mymob))
+		return
+
+	var/mob/living/silicon/ai/A = mymob
+	var/obj/screen/ai_button/malf_modules_button
+	for(var/obj/screen/ai_button/button in adding)
+		if(button.ai_verb == /mob/living/silicon/ai/proc/ai_malf_modules)
+			malf_modules_button = button
+			break
+
+	if(A.malfunctioning)
+		if(!malf_modules_button)
+			add_ai_button(ui_ai_malf_modules, "Malf Modules", "ai_research", /mob/living/silicon/ai/proc/ai_malf_modules)
+			malf_modules_button = adding[length(adding)]
+			if(A.client && hud_shown)
+				A.client.screen += malf_modules_button
+	else if(malf_modules_button)
+		if(A.client)
+			A.client.screen -= malf_modules_button
+		adding -= malf_modules_button
+		qdel(malf_modules_button)
+
 /datum/hud/ai/FinalizeInstantiation()
 
 	if(!isAI(mymob))
 		return
 
 	var/mob/living/silicon/ai/A = mymob
+	if(!A.client)
+		return
 
 	src.adding = list()
 	src.other = list()
 
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_core,
-			"AI Core",
-			"ai_core",
-			/mob/living/silicon/ai/proc/core
-			)
+	add_ai_button(ui_ai_core, "AI Core", "ai_core", /mob/living/silicon/ai/proc/core)
+	add_ai_button(ui_ai_announcement, "AI Announcement", "announcement", /mob/living/silicon/ai/proc/ai_announcement)
+	add_ai_button(ui_ai_cam_track, "Track With Camera", "track", /mob/living/silicon/ai/proc/ai_camera_track, list(TYPE_PROC_REF(/mob/living/silicon/ai, trackable_mobs) = (AI_BUTTON_PROC_BELONGS_TO_CALLER|AI_BUTTON_INPUT_REQUIRES_SELECTION)))
+	add_ai_button(ui_ai_cam_light, "Toggle Camera Lights", "camera_light", /mob/living/silicon/ai/proc/toggle_camera_light)
+	add_ai_button(ui_ai_cam_change_network, "Jump to Network", "camera", /mob/living/silicon/ai/proc/ai_network_change, list(TYPE_PROC_REF(/mob/living/silicon/ai, get_camera_network_list) = (AI_BUTTON_PROC_BELONGS_TO_CALLER|AI_BUTTON_INPUT_REQUIRES_SELECTION)))
+	add_ai_button(ui_ai_sensor, "Set Sensor Mode", "ai_sensor", /mob/living/silicon/ai/proc/sensor_mode)
+	add_ai_button(ui_ai_crew_manifest, "Show Crew Manifest", "manifest", /mob/living/silicon/ai/proc/show_crew_manifest)
+	add_ai_button(ui_ai_take_image, "Toggle Camera Mode", "take_picture", /mob/living/silicon/ai/proc/ai_take_image)
+	add_ai_button(ui_ai_view_images, "View Images", "view_images", /mob/living/silicon/ai/proc/ai_view_images)
+	add_ai_button(ui_ai_state_laws, "State Laws", "state_laws", /mob/living/silicon/ai/proc/ai_checklaws)
+	add_ai_button(ui_ai_call_shuttle, "Call Shuttle", "call_shuttle", /mob/living/silicon/ai/proc/ai_call_shuttle)
+	add_ai_button(ui_ai_up, "Move Upwards", "ai_up", /mob/verb/up)
+	add_ai_button(ui_ai_down, "Move Downwards", "ai_down", /mob/verb/down)
+	add_ai_button(ui_ai_color, "Change Floor Color", "ai_floor", /mob/living/silicon/ai/proc/change_floor)
+	add_ai_button(ui_ai_holo_change, "Change Hologram", "ai_holo_change", /mob/living/silicon/ai/proc/ai_hologram_change)
+	add_ai_button(ui_ai_crew_mon, "Crew Monitor", "crew_monitor", /mob/living/silicon/ai/proc/show_crew_monitor)
+	add_ai_button(ui_ai_power_override, "Toggle Power Override", "ai_p_override", /mob/living/silicon/ai/proc/ai_power_override)
+	add_ai_button(ui_ai_shutdown, "Shutdown", "ai_shutdown", /mob/living/silicon/ai/proc/ai_shutdown)
+	add_ai_button(ui_ai_holo_mov, "Toggle Hologram Movement", "ai_holo_mov", /mob/living/silicon/ai/proc/toggle_hologram_movement)
+	add_ai_button(ui_ai_core_icon, "Pick Icon", "ai_core_pick", /mob/living/silicon/ai/proc/pick_icon)
+	add_ai_button(ui_ai_status, "Pick Status", "ai_status", /mob/living/silicon/ai/proc/ai_statuschange)
+	add_ai_button(ui_ai_crew_rec, "Crew Records", "ai_crew_rec", /mob/living/silicon/ai/proc/show_crew_records)
 
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_announcement,
-			"AI Announcement",
-			"announcement",
-			/mob/living/silicon/ai/proc/ai_announcement
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_cam_track,
-			"Track With Camera",
-			"track",
-			/mob/living/silicon/ai/proc/ai_camera_track,
-			list(TYPE_PROC_REF(/mob/living/silicon/ai, trackable_mobs) = (AI_BUTTON_PROC_BELONGS_TO_CALLER|AI_BUTTON_INPUT_REQUIRES_SELECTION))
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_cam_light,
-			"Toggle Camera Lights",
-			"camera_light",
-			/mob/living/silicon/ai/proc/toggle_camera_light
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_cam_change_network,
-			"Jump to Network",
-			"camera",
-			/mob/living/silicon/ai/proc/ai_network_change,
-			list(TYPE_PROC_REF(/mob/living/silicon/ai, get_camera_network_list) = (AI_BUTTON_PROC_BELONGS_TO_CALLER|AI_BUTTON_INPUT_REQUIRES_SELECTION))
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_sensor,
-			"Set Sensor Mode",
-			"ai_sensor",
-			/mob/living/silicon/ai/proc/sensor_mode
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_crew_manifest,
-			"Show Crew Manifest",
-			"manifest",
-			/mob/living/silicon/ai/proc/show_crew_manifest
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_take_image,
-			"Toggle Camera Mode",
-			"take_picture",
-			/mob/living/silicon/ai/proc/ai_take_image
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_view_images,
-			"View Images",
-			"view_images",
-			/mob/living/silicon/ai/proc/ai_view_images
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_state_laws,
-			"State Laws",
-			"state_laws",
-			/mob/living/silicon/ai/proc/ai_checklaws
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_call_shuttle,
-			"Call Shuttle",
-			"call_shuttle",
-			/mob/living/silicon/ai/proc/ai_call_shuttle
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_up,
-			"Move Upwards",
-			"ai_up",
-			/mob/verb/up
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_down,
-			"Move Downwards",
-			"ai_down",
-			/mob/verb/down
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_color,
-			"Change Floor Color",
-			"ai_floor",
-			/mob/living/silicon/ai/proc/change_floor
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_holo_change,
-			"Change Hologram",
-			"ai_holo_change",
-			/mob/living/silicon/ai/proc/ai_hologram_change
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_crew_mon,
-			"Crew Monitor",
-			"crew_monitor",
-			/mob/living/silicon/ai/proc/show_crew_monitor
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_power_override,
-			"Toggle Power Override",
-			"ai_p_override",
-			/mob/living/silicon/ai/proc/ai_power_override
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_shutdown,
-			"Shutdown",
-			"ai_shutdown",
-			/mob/living/silicon/ai/proc/ai_shutdown
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_holo_mov,
-			"Toggle Hologram Movement",
-			"ai_holo_mov",
-			/mob/living/silicon/ai/proc/toggle_hologram_movement
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_core_icon,
-			"Pick Icon",
-			"ai_core_pick",
-			/mob/living/silicon/ai/proc/pick_icon
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_status,
-			"Pick Status",
-			"ai_status",
-			/mob/living/silicon/ai/proc/ai_statuschange
-			)
-
-	adding += new /obj/screen/ai_button(null,
-			ui_ai_crew_rec,
-			"Crew Records",
-			"ai_crew_rec",
-			/mob/living/silicon/ai/proc/show_crew_records
-			)
-
-	if(A.malfunctioning)
-		adding += new /obj/screen/ai_button(null,
-			ui_ai_research,
-				"Select Research",
-				"ai_research",
-				/datum/game_mode/malfunction/verb/ai_select_research
-				)
+	sync_malf_buttons()
 
 	A.client.screen = list()
 	A.client.screen += src.adding + src.other
@@ -267,8 +151,4 @@
 #undef ui_ai_crew_mon
 #undef ui_ai_crew_rec
 
-#undef ui_ai_research
-#undef ui_ai_hardware
-#undef ui_ai_apu
-
-#undef ui_ai_destroy
+#undef ui_ai_malf_modules

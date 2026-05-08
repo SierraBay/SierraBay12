@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	var/mob/living/silicon/ai/shell_link = null
 
 /obj/item/aicard/grab_ai(mob/living/silicon/ai/ai, mob/living/user)
-	if(ai.Controlling && istype(ai.Controlling, /mob/living/silicon/robot))
+	if(ai?.Controlling && istype(ai.Controlling, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = ai.Controlling
 		R.dropAiBack()
 	..()
@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	// AI Card - Load AI
 	if (istype(tool, /obj/item/aicard))
 		var/mob/living/silicon/ai/ai = locate() in tool
-		if(ai.Controlling && istype(ai.Controlling, /mob/living/silicon/robot))
+		if(ai?.Controlling && istype(ai.Controlling, /mob/living/silicon/robot))
 			var/mob/living/silicon/robot/R = ai.Controlling
 			R.dropAiBack()
 	..()
@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 			var/obj/item/organ/internal/posibrain/P = W
 			B = P.brainmob
 
-		if(B.is_dead())
+		if(!B || B.is_dead())
 			to_chat(user, SPAN_WARNING("Sticking a dead [W.name] into the frame would sort of defeat the purpose."))
 			return TRUE
 
@@ -92,8 +92,11 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 /mob/living/silicon/robot/proc/dropAiBack()
 	if(shell && AiHolder && AiHolder.MyAI)
 		to_chat(src, SPAN_BAD("Connection lost."))
-		mind?.transfer_to(AiHolder.MyAI)
+		var/mob/living/silicon/ai/returning_ai = AiHolder.MyAI
+		mind?.transfer_to(returning_ai)
 		AiHolder.MyAI = null
+		returning_ai.Controlling = null
+		verbs -= /mob/proc/ExitMobHolder
 		src?.onReturnAi2Core()
 
 /mob/living/silicon/robot/Destroy()
@@ -120,8 +123,13 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	//set category = "Silicon Commands"
 	set category = "Software"
 
-	mind?.transfer_to(AiHolder.MyAI)
+	if(!AiHolder?.MyAI)
+		return
+	var/mob/living/silicon/ai/returning_ai = AiHolder.MyAI
+	mind?.transfer_to(returning_ai)
 	AiHolder.MyAI = null
+	returning_ai.Controlling = null
+	verbs -= /mob/proc/ExitMobHolder
 	src?.onReturnAi2Core()
 
 /mob/proc/registerShell()
@@ -216,7 +224,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 
 	var/mob/living/silicon/robot/target
 
-	if(usr.incapacitated())
+	if(src.incapacitated())
 		return
 	if(control_disabled)
 		to_chat(src, SPAN_WARNING("Wireless networking module is offline."))
@@ -238,11 +246,12 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 
 	if(isnull(target))
 		return
-	if (target.stat == DEAD || !(!target.shell_link || (target.shell_link == src)))
+	if(!target.shell || target.stat == DEAD || !(!target.shell_link || (target.shell_link == src)) || !mind)
 		return
+	if(!target.AiHolder)
+		target.AiHolder = new /mob/AiHolder(target)
 
-	if(mind)
-		target.attack_ai(src)
+	target.attack_ai(src)
 
 /datum/design/item/synthstorage/boris
 	name = "B.O.R.I.S. module"

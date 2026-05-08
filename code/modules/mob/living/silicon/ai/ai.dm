@@ -436,6 +436,23 @@ var/global/list/ai_verbs_default = list(
 			open_subsystem(/datum/nano_module/program/alarm_monitor/all)
 			return TOPIC_HANDLED
 
+		if(href_list["malf_select_hardware"])
+			select_malf_hardware(href_list["malf_select_hardware"])
+			show_malf_modules()
+			return TOPIC_HANDLED
+
+		if(href_list["malf_select_research"])
+			var/datum/malf_research_ability/ability = locate(href_list["malf_select_research"])
+			select_malf_research(ability)
+			show_malf_modules()
+			return TOPIC_HANDLED
+
+		if(href_list["malf_hardware_action"])
+			if(ability_prechecks(src, 0, TRUE) && hardware && hardware.driver && (hardware.driver in verbs))
+				call(src, hardware.driver)()
+			show_malf_modules()
+			return TOPIC_HANDLED
+
 		//Carn: holopad requests
 		if (href_list["jumptoholopad"])
 			var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
