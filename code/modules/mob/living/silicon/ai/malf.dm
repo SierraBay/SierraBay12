@@ -30,7 +30,7 @@
 	malfunctioning = 0
 	stop_apu(1)
 	if(client)
-		src << browse(null, "window=malf_modules")
+		show_browser(src, null, "window=malf_modules")
 	// Reset our verbs and HUD before delayed cleanup so malf controls cannot be reused while stop_malf() yields.
 	src.verbs.Cut()
 	add_ai_verbs()
@@ -133,7 +133,7 @@
 /mob/living/silicon/ai/proc/show_malf_modules(screen = "status")
 	if(!malfunctioning || !research)
 		if(client)
-			src << browse(null, "window=malf_modules")
+			show_browser(src, null, "window=malf_modules")
 		return
 
 	if(!(screen in list("status", "hardware", "research", "abilities")))
@@ -257,7 +257,12 @@
 	if(hardware)
 		to_chat(src, "You have already selected your hardware.")
 		return
-	var/hardware_path = ispath(hardware_type) ? hardware_type : text2path(hardware_type)
+	var/hardware_path = ispath(hardware_type) ? hardware_type : null
+	if(!hardware_path && istext(hardware_type))
+		for(var/candidate in typesof(/datum/malf_hardware))
+			if("[candidate]" == hardware_type)
+				hardware_path = candidate
+				break
 	if(!ispath(hardware_path, /datum/malf_hardware))
 		to_chat(src, "This hardware does not exist. Please report this.")
 		return
