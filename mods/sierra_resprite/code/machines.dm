@@ -38,6 +38,9 @@
 	icon = 'mods/sierra_resprite/icons/smes.dmi'
 	overlay_icon = 'mods/sierra_resprite/icons/smes.dmi'
 
+/obj/machinery/drone_fabricator
+	icon = 'mods/sierra_resprite/icons/drone_fab.dmi'
+
 /obj/machinery/fusion_fuel_compressor
 	name = "fuel compressor"
 	icon = 'mods/sierra_resprite/icons/fusion_fuel_compressor.dmi'
