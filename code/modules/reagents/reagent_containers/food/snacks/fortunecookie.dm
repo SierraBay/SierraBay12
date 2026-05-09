@@ -71,7 +71,7 @@ GLOBAL_LIST_AS(fortune_cookie_default_fortunes, list(
 	if (new_fortune == fortune)
 		return
 	if (fortune)
-		fortune.dropInto(loc)
+		qdel(fortune)
 	if (new_fortune)
 		new_fortune.forceMove(src)
 	fortune = new_fortune

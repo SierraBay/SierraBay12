@@ -82,8 +82,11 @@
 			to_chat(user, SPAN_WARNING("\The [M]'s [S.name] is hard and brittle - \the [src] cannot repair it."))
 			return TRUE
 
-		if(can_use(1))
-			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+		if(!can_use(1))
+			to_chat(user, SPAN_WARNING("You don't have enough [src.name] left."))
+			return TRUE
+
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
 		if(S.brute_dam > S.burn_dam)
 			if(S.robo_repair(15, DAMAGE_BRUTE, "some broken elements", src, user))

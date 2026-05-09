@@ -2022,8 +2022,8 @@
 
 	else if(href_list["toglang"])
 		// [SIERRA-EDIT]
-		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
-		if(!check_rights(R_SPAWN|R_DEBUG))
+		// if(check_rights(R_SPAWN)) // SIERRA-EDIT - ORIGINAL
+		if(check_rights(R_SPAWN|R_DEBUG))
 		// [/SIERRA-EDIT]
 			var/mob/M = locate(href_list["toglang"])
 			if(!istype(M))

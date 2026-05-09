@@ -13,7 +13,7 @@
 		if(H.species.name == SPECIES_TAJARA)
 			H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
 
-	if(!whitelist_lookup(SPECIES_PSI, H.client.ckey))
+	if(!H.client || !whitelist_lookup(SPECIES_PSI, H.client.ckey))
 		return
 
 	var/list/psi_abilities_by_name = H.client.prefs.psi_abilities

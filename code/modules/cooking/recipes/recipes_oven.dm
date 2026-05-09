@@ -412,10 +412,22 @@
 	cooked_scent = /datum/extension/scent/food/cookie
 
 /singleton/cooking_recipe/fortunecookie/CreateResult(obj/container as obj, ...)
-	var/obj/item/paper/paper = locate() in container
-	if (paper.info)
-		container -= paper
-	return ..(container)
+	var/obj/item/paper/custom_fortune = null
+	for (var/obj/item/paper/P in container.contents)
+		if (P.info)
+			custom_fortune = P
+			P.forceMove(null)
+			break
+
+	var/list/results = ..(container)
+
+	if (custom_fortune && length(results))
+		var/obj/item/reagent_containers/food/snacks/fortunecookie/F = results[1]
+		if (istype(F))
+			QDEL_NULL(F.fortune)
+			F.set_fortune(custom_fortune)
+
+	return results
 
 /singleton/cooking_recipe/spacylibertyduff
 	appliance = COOKING_APPLIANCE_OVEN

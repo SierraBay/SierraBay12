@@ -165,7 +165,9 @@
 
 	unlocks_designs = list(
 		"aicore",
-		"rig_ai_container"
+		"rig_ai_container",
+		"aiupload",
+		"borgupload"
 	)
 
 // ========== Xion ==========
@@ -201,7 +203,8 @@
 		"right_light_leg",
 		"left_light_leg",
 		"sphere_body",
-		"treads"
+		"treads",
+		"mech_armour_basic"
 	)
 
 /datum/technology/cybernetics/mech_machinery_xion
@@ -232,7 +235,7 @@
 	)
 
 /datum/technology/cybernetics/advanced_mech_modules_xion
-	name = "Advanced Mech Modules (Xion)"
+	name = "Advanced Mech and RIG Modules (Xion)"
 	desc = "High-performance movement and specialized tools."
 	id = "advanced_mech_modules_xion"
 
@@ -255,7 +258,8 @@
 		"rig_rcd",
 		"rig_jets",
 		"self_repair",
-		"rig_powersink"
+		"rig_powersink",
+		"mech_armour_radproof"
 	)
 
 /datum/technology/cybernetics/basic_engineering_augments_xion
@@ -443,7 +447,8 @@
 	cost = 800
 
 	unlocks_designs = list(
-		"mech_software_weapons"
+		"mech_software_weapons",
+		"mech_armour_em",
 	)
 
 /datum/technology/cybernetics/heavy_energy_weapons_shellguard
@@ -604,7 +609,7 @@
 /datum/technology/cybernetics/combat_rig_design_heph
 	name = "RIG (Hephaestus)"
 	desc = "Combat RIG construction."
-	id = "combat_mech_design_heph"
+	id = "combat_rig_design_heph"
 
 	x = 0.2
 	y = 0.5
