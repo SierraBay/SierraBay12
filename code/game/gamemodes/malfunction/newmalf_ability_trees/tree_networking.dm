@@ -46,7 +46,9 @@
 	var/mob/living/silicon/ai/user = usr
 
 	if(!A)
-		return
+		A = input(user, "Select APC to hack", "Basic Encryption Hack") as null|obj in get_unhacked_apcs(user)
+		if(!A)
+			return
 
 	if(!istype(A))
 		to_chat(user, "This is not an APC!")
@@ -58,6 +60,9 @@
 			return
 		else if(A.aidisabled)
 			to_chat(user, SPAN_NOTICE("Unable to connect to APC. Please verify wire connection and try again."))
+			return
+		else if(!can_malf_hack_apc(user, A))
+			to_chat(user, SPAN_NOTICE("Unable to connect to APC. Target is outside your accessible network."))
 			return
 	else
 		return
@@ -207,8 +212,8 @@
 	sleep(1 MINUTE)
 	// Hack all APCs, including those built during hack sequence.
 	for(var/obj/machinery/power/apc/A as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/apc))
-		if((!A.hacker || A.hacker != src) && !A.aidisabled && (A.z in valid_zlevels))
-			A.ai_hack(src)
+		if((!A.hacker || A.hacker != user) && !A.aidisabled && (A.z in valid_zlevels))
+			A.ai_hack(user)
 
 	log_ability_use(user, "system override (FINISHED)")
 	to_chat(user, "## PRIMARY FIREWALL BYPASSED. YOU NOW HAVE FULL SYSTEM CONTROL.")

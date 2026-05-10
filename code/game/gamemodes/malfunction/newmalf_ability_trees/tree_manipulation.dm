@@ -76,7 +76,9 @@
 		return
 
 	if(!target)
-		return
+		target = input(user, "Select camera to reboot", "Reboot Camera") as null|obj in cameranet.cameras
+		if(!target)
+			return
 
 	if(!ability_prechecks(user, price) || !ability_pay(user, price))
 		return
@@ -95,7 +97,11 @@
 	set category = "Software"
 	var/price = 275
 	var/mob/living/silicon/ai/user = usr
-	if(!T || !istype(T))
+	if(!T)
+		T = input(user, "Select forcefield location", "Emergency Forcefield") as null|turf in world
+		if(!T)
+			return
+	if(!istype(T))
 		return
 	if(!ability_prechecks(user, price) || !ability_pay(user, price))
 		return
@@ -114,6 +120,11 @@
 	set category = "Software"
 	var/price = 400
 	var/mob/living/silicon/ai/user = usr
+
+	if(!M)
+		M = input(user, "Select machine to overload", "Machine Overload") as null|obj in SSmachines.get_all_machinery()
+		if(!M)
+			return
 
 	if(!ability_prechecks(user, price))
 		return
@@ -190,7 +201,9 @@
 	var/mob/living/silicon/ai/user = usr
 
 	if(!M)
-		return
+		M = input(user, "Select machine to upgrade", "Machine Upgrade") as null|obj in SSmachines.get_all_machinery()
+		if(!M)
+			return
 
 	if(!ability_prechecks(user, price))
 		return

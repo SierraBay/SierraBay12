@@ -138,6 +138,7 @@
 	var/list/L = get_unlinked_cyborgs(user)
 	if(!length(L))
 		to_chat(user, SPAN_NOTICE("ERROR: No unlinked cyborgs detected!"))
+		return
 
 	if(target && !istype(target))
 		to_chat(user, "This is not a cyborg.")
@@ -148,6 +149,15 @@
 		return
 
 	if(!target)
+		target = input(user, "Select cyborg to hack", "Hack Cyborg") as null|mob in L
+		if(!target)
+			return
+
+	if(!istype(target))
+		to_chat(user, "This is not a cyborg.")
+		return
+	if(!(target in get_unlinked_cyborgs(user)))
+		to_chat(user, "This cyborg is no longer a valid hack target.")
 		return
 
 	if(!ability_prechecks(user,price))
@@ -155,6 +165,11 @@
 
 	if(target)
 		if(alert(user, "Really try to hack cyborg [target.name]?", "Hack Cyborg", "Yes", "No") != "Yes")
+			return
+		if(!ability_prechecks(user, price))
+			return
+		if(!(target in get_unlinked_cyborgs(user)))
+			to_chat(user, "This cyborg is no longer a valid hack target.")
 			return
 		if(!ability_pay(user, price))
 			return
@@ -203,11 +218,21 @@
 	var/list/L = get_other_ais(user)
 	if(!length(L))
 		to_chat(user, SPAN_NOTICE("ERROR: No other AIs detected!"))
+		return
 	if(target && !istype(target))
 		to_chat(user, "This is not an AI.")
 		return
 
 	if(!target)
+		target = input(user, "Select AI to hack", "Hack AI") as null|mob in L
+		if(!target)
+			return
+
+	if(!istype(target))
+		to_chat(user, "This is not an AI.")
+		return
+	if(!(target in get_other_ais(user)))
+		to_chat(user, "This AI is no longer a valid hack target.")
 		return
 
 	if(!ability_prechecks(user,price))
@@ -215,6 +240,11 @@
 
 	if(target)
 		if(alert(user, "Really try to hack AI [target.name]?", "Hack AI", "Yes", "No") != "Yes")
+			return
+		if(!ability_prechecks(user, price))
+			return
+		if(!(target in get_other_ais(user)))
+			to_chat(user, "This AI is no longer a valid hack target.")
 			return
 		if(!ability_pay(user, price))
 			return

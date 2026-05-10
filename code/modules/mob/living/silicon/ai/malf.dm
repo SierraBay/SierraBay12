@@ -276,6 +276,9 @@
 		if(confirmation != "Yes")
 			qdel(HW)
 			return
+		if(!ability_prechecks(src, 0, TRUE))
+			qdel(HW)
+			return
 	if(hardware)
 		qdel(HW)
 		return
@@ -299,6 +302,7 @@
 	if(!ability || !(ability in research.unlocked_abilities) || !ability.ability || !(ability.ability in verbs))
 		to_chat(src, "This ability is not available.")
 		return
+	// Targeted malf verbs handle null arguments by prompting for their target.
 	call(src, ability.ability)()
 
 // Shows capacitor charge and hardware integrity information to the AI in Status tab.

@@ -165,7 +165,7 @@
 	var/list/offstation_apcs = list()
 
 	for(var/obj/machinery/power/apc/A as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/apc))
-		if(A.hacker && A.hacker == user)
+		if(!can_malf_hack_apc(user, A))
 			continue
 		if(A.z in GLOB.using_map.station_levels)
 			station_apcs.Add(A)
@@ -175,6 +175,18 @@
 	// Append off-station APCs to the end of station APCs list and return it.
 	station_apcs.Add(offstation_apcs)
 	return station_apcs
+
+/proc/can_malf_hack_apc(mob/living/silicon/ai/user, obj/machinery/power/apc/A)
+	if(!user || !istype(user) || !A || !istype(A))
+		return FALSE
+	if(A.hacker == user || A.aidisabled)
+		return FALSE
+	var/list/valid_zlevels = GetConnectedZlevels(user.z)
+	if(!(A.z in valid_zlevels))
+		return FALSE
+	if(user.default_can_use_topic(A) < STATUS_INTERACTIVE)
+		return FALSE
+	return TRUE
 
 
 // Helper procs which return lists of relevant mobs.
@@ -205,7 +217,7 @@
 
 	var/list/L = list()
 	for(var/mob/living/silicon/ai/AT in SSmobs.mob_list)
-		if(L == A)
+		if(AT == A)
 			continue
 		L.Add(AT)
 	return L
