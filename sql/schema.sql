@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS `erro_ban` (
   `unbanned_computerid` text DEFAULT NULL,
   `unbanned_ip` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `ckey` (`ckey`(768))
+  KEY `ckey` (`ckey`(768)),
+  KEY `ip` (`ip`(768)),
+  KEY `computerid` (`computerid`(768))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 
@@ -41,6 +43,36 @@ CREATE TABLE IF NOT EXISTS `erro_connection_log` (
   `computerid` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ckey` (`ckey`(768))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+
+CREATE TABLE IF NOT EXISTS `erro_device_fingerprint` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `last_seen` datetime NOT NULL,
+  `ckey` text NOT NULL,
+  `ckey_key` varchar(128) NOT NULL,
+  `schema_version` varchar(16) NOT NULL DEFAULT 'v2',
+  `fingerprint_hash` varchar(64) NOT NULL,
+  `computerid_hash` varchar(64) DEFAULT NULL,
+  `ip_prefix_hash` varchar(64) DEFAULT NULL,
+  `browser_hash` varchar(64) DEFAULT NULL,
+  `browser_token_hash` varchar(64) DEFAULT NULL,
+  `raw_computerid` text DEFAULT NULL,
+  `raw_ip` text DEFAULT NULL,
+  `raw_browser_payload` text DEFAULT NULL,
+  `byond_version` varchar(32) DEFAULT NULL,
+  `byond_build` varchar(32) DEFAULT NULL,
+  `risk_score` int(11) NOT NULL DEFAULT 0,
+  `flags` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fingerprint_hash` (`fingerprint_hash`),
+  KEY `computerid_hash` (`computerid_hash`),
+  KEY `ip_prefix_hash` (`ip_prefix_hash`),
+  KEY `browser_hash` (`browser_hash`),
+  KEY `browser_token_hash` (`browser_token_hash`),
+  KEY `ckey` (`ckey`(128)),
+  UNIQUE KEY `ckey_fingerprint` (`ckey_key`, `fingerprint_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 
