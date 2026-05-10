@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Device Fingerprint</title>
+</head>
+<body style="margin:0;overflow:hidden;background:transparent;">
+<script>
+(function () {
+	function persistentToken() {
+		try {
+			var key = "sierra_device_fp_token";
+			var token = localStorage.getItem(key);
+			if (!token) {
+				var random = "";
+				if (window.crypto && window.crypto.getRandomValues) {
+					var values = new Uint32Array(4);
+					window.crypto.getRandomValues(values);
+					random = Array.prototype.join.call(values, "-");
+				} else {
+					random = String(Math.random()).slice(2) + "-" + String(Math.random()).slice(2);
+				}
+				token = String(Date.now()) + "-" + random;
+				localStorage.setItem(key, token);
+			}
+			return token;
+		} catch (e) {
+			return "";
+		}
+	}
+
+	function webglInfo() {
+		try {
+			var canvas = document.createElement("canvas");
+			var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+			if (!gl) {
+				return {};
+			}
+			var dbg = gl.getExtension("WEBGL_debug_renderer_info");
+			if (!dbg) {
+				return {};
+			}
+			return {
+				webgl_vendor: gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) || "",
+				webgl_renderer: gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || ""
+			};
+		} catch (e) {
+			return {};
+		}
+	}
+
+	var gl = webglInfo();
+	var payload = {
+		ua: navigator.userAgent || "",
+		lang: navigator.language || "",
+		tz: String(new Date().getTimezoneOffset()),
+		screen: String(screen.width || 0) + "x" + String(screen.height || 0) + "x" + String(screen.colorDepth || 0),
+		dpr: String(window.devicePixelRatio || 1),
+		dnt: navigator.doNotTrack || "",
+		platform: navigator.platform || "",
+		hardware_concurrency: String(navigator.hardwareConcurrency || ""),
+		device_memory: String(navigator.deviceMemory || ""),
+		webdriver: String(!!navigator.webdriver),
+		webgl_vendor: gl.webgl_vendor || "",
+		webgl_renderer: gl.webgl_renderer || "",
+		persistent_token: persistentToken()
+	};
+
+	location.href = "byond://?src=__CLIENT_REF__;device_fp_browser=1;nonce=__NONCE__;payload=" + encodeURIComponent(JSON.stringify(payload));
+	setTimeout(function () {
+		window.close();
+	}, 100);
+})();
+</script>
+</body>
+</html>
