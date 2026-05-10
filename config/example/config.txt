@@ -48,6 +48,15 @@ LOG_ADMIN
 ## log client access (logon/logoff)
 LOG_ACCESS
 
+## Device fingerprinting for staff-only anti-evasion risk alerts.
+## Requires SQL and a non-empty secret. The secret should be long and private.
+# DEVICE_FINGERPRINT_SECRET change-me
+DEVICE_FINGERPRINT_BROWSER 1
+## Stores raw CID, IP, and browser payload when enabled. Keep disabled unless policy requires it.
+DEVICE_FINGERPRINT_RAW_STORAGE 0
+DEVICE_FINGERPRINT_RETENTION_DAYS 180
+DEVICE_FINGERPRINT_ALERT_THRESHOLD 25
+
 ## When not set, staff with R_MOD and shared IPs do not cause warnings.
 WARN_IF_STAFF_SAME_IP
 
