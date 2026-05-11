@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `erro_device_fingerprint` (
   `last_seen` datetime NOT NULL,
   `ckey` text NOT NULL,
   `ckey_key` varchar(128) NOT NULL,
-  `schema_version` varchar(16) NOT NULL DEFAULT 'v2',
+  `schema_version` varchar(16) NOT NULL DEFAULT 'v3',
   `fingerprint_hash` varchar(64) NOT NULL,
   `computerid_hash` varchar(64) DEFAULT NULL,
   `ip_prefix_hash` varchar(64) DEFAULT NULL,

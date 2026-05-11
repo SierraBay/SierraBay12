@@ -65,13 +65,18 @@
 	var/persistent_token = decoded["persistent_token"]
 	if(!isnull(persistent_token))
 		persistent_token = copytext("[persistent_token]", 1, 256)
-	if(length(persistent_token))
-		browser_token_hash = make_device_fingerprint_hash("browser_token", persistent_token)
+	if(device_fingerprint_client_save_token)
+		browser_token_hash = make_device_fingerprint_hash("browser_token", device_fingerprint_client_save_token)
+		device_fingerprint_debug("browser payload kept existing client save token over localStorage token.")
+	else if(length(persistent_token))
+		if(!device_fingerprint_save_client_token(persistent_token, "browser token migration"))
+			browser_token_hash = make_device_fingerprint_hash("browser_token", persistent_token)
+			device_fingerprint_debug("browser payload fell back to localStorage token after client save export failure.")
 	else
-		browser_token_hash = null
+		device_fingerprint_save_client_token(device_fingerprint_generate_client_save_token(), "server token generation")
 
 	var/list/normalized = list()
-	for(var/key in list("ua", "lang", "tz", "screen", "dpr", "dnt", "platform", "hardware_concurrency", "device_memory", "webdriver", "webgl_vendor", "webgl_renderer"))
+	for(var/key in list("ua", "lang", "tz", "screen", "dpr", "dnt", "platform", "hardware_concurrency", "device_memory", "webdriver", "webgl_vendor", "webgl_renderer", "canvas_hash"))
 		var/value = decoded[key]
 		if(isnull(value))
 			continue
@@ -84,15 +89,11 @@
 		device_fingerprint_close_browser()
 		return
 	normalized["persistent_token_present"] = browser_token_hash ? "1" : "0"
-
-	device_fingerprint_check_browser_environment(normalized)
+	normalized["client_save_token_present"] = device_fingerprint_client_save_token ? "1" : "0"
 
 	var/normalized_payload = json_encode(normalized)
-	var/new_browser_hash = make_device_fingerprint_hash("browser", normalized_payload)
-	if(device_fingerprint_previous_browser_changed(new_browser_hash))
-		device_fingerprint_add_browser_flag("browser_payload_changed")
-	browser_fingerprint_hash = new_browser_hash
 	device_browser_payload_raw = normalized_payload
+	browser_fingerprint_hash = make_device_fingerprint_hash("browser", normalized_payload)
 	device_fingerprint_update_with_browser()
 	device_fingerprint_close_browser()
 
@@ -100,29 +101,3 @@
 	if(!device_fingerprint_enabled())
 		return
 	collect_device_fingerprint(FALSE)
-
-/client/proc/device_fingerprint_check_browser_environment(list/normalized)
-	if(!islist(normalized))
-		return
-
-	var/browser_text = ""
-	for(var/key in list("ua", "platform", "webgl_vendor", "webgl_renderer"))
-		var/value = normalized[key]
-		if(isnull(value))
-			continue
-		browser_text += "|[lowertext("[value]")]"
-
-	for(var/marker in list("virtualbox", "vmware", "parallels", "qemu", "virtio", "hyper-v"))
-		if(findtext(browser_text, marker))
-			device_fingerprint_add_browser_flag("possible_vm_environment")
-			break
-
-	for(var/marker in list("swiftshader", "llvmpipe", "mesa offscreen", "microsoft basic render driver"))
-		if(findtext(browser_text, marker))
-			device_fingerprint_add_browser_flag("browser_software_renderer")
-			break
-
-	var/webdriver_value = normalized["webdriver"]
-	var/webdriver = lowertext("[webdriver_value]")
-	if(webdriver == "true" || webdriver == "1")
-		device_fingerprint_add_browser_flag("browser_automation_hint")

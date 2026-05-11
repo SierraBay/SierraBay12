@@ -134,7 +134,7 @@
 		selection += "computerid = '[sql_sanitize_text(computer_id)]'"
 	if(!length(selection))
 		return 0
-	selection = english_list(selection, "", "", " OR ", " OR ")
+	selection = jointext(selection, " OR ")
 	var/DBQuery/query = dbcon.NewQuery("SELECT COUNT(DISTINCT ckey) FROM erro_ban WHERE ([selection]) AND [device_fingerprint_active_ban_clause()]")
 	if(!query.Execute())
 		log_debug("Device Fingerprint: connection ban match failed: [query.ErrorMsg()]")
@@ -167,7 +167,7 @@
 		conditions += "ip_prefix_hash = '[sql_sanitize_text(device_ip_prefix_hash)]'"
 	else
 		conditions += "ip_prefix_hash IS NULL"
-	var/selection = english_list(conditions, "", "", " AND ", " AND ")
+	var/selection = jointext(conditions, " AND ")
 	var/DBQuery/query = dbcon.NewQuery("DELETE FROM erro_device_fingerprint WHERE [selection] AND browser_hash IS NULL AND flags LIKE '%browser_payload_missing%'")
 	if(!query.Execute())
 		log_debug("Device Fingerprint: stale browser-missing cleanup failed: [query.ErrorMsg()]")

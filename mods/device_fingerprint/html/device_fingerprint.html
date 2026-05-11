@@ -49,6 +49,57 @@
 		}
 	}
 
+	function hashString(value) {
+		var hash = 2166136261;
+		for (var i = 0; i < value.length; i++) {
+			hash ^= value.charCodeAt(i);
+			hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+		}
+		return ("0000000" + (hash >>> 0).toString(16)).slice(-8);
+	}
+
+	function canvasFingerprint() {
+		try {
+			var canvas = document.createElement("canvas");
+			canvas.width = 240;
+			canvas.height = 80;
+			var ctx = canvas.getContext("2d");
+			if (!ctx) {
+				return "";
+			}
+
+			ctx.textBaseline = "alphabetic";
+			ctx.fillStyle = "#f60";
+			ctx.fillRect(10, 10, 100, 45);
+			ctx.fillStyle = "#069";
+			ctx.font = "16px Arial";
+			ctx.fillText("Sierra Bay fp 1.0", 14, 32);
+			ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+			ctx.font = "18px Times New Roman";
+			ctx.fillText("Canvas \u2603 fingerprint", 12, 58);
+			ctx.globalCompositeOperation = "multiply";
+			ctx.fillStyle = "rgb(255,0,255)";
+			ctx.beginPath();
+			ctx.arc(160, 30, 25, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle = "rgb(0,255,255)";
+			ctx.beginPath();
+			ctx.arc(185, 30, 25, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle = "rgb(255,255,0)";
+			ctx.beginPath();
+			ctx.arc(172, 52, 25, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+
+			return hashString(canvas.toDataURL());
+		} catch (e) {
+			return "";
+		}
+	}
+
 	var gl = webglInfo();
 	var payload = {
 		ua: navigator.userAgent || "",
@@ -63,6 +114,7 @@
 		webdriver: String(!!navigator.webdriver),
 		webgl_vendor: gl.webgl_vendor || "",
 		webgl_renderer: gl.webgl_renderer || "",
+		canvas_hash: canvasFingerprint(),
 		persistent_token: persistentToken()
 	};
 
