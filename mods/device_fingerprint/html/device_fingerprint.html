@@ -7,28 +7,6 @@
 <body style="margin:0;overflow:hidden;background:transparent;">
 <script>
 (function () {
-	function persistentToken() {
-		try {
-			var key = "sierra_device_fp_token";
-			var token = localStorage.getItem(key);
-			if (!token) {
-				var random = "";
-				if (window.crypto && window.crypto.getRandomValues) {
-					var values = new Uint32Array(4);
-					window.crypto.getRandomValues(values);
-					random = Array.prototype.join.call(values, "-");
-				} else {
-					random = String(Math.random()).slice(2) + "-" + String(Math.random()).slice(2);
-				}
-				token = String(Date.now()) + "-" + random;
-				localStorage.setItem(key, token);
-			}
-			return token;
-		} catch (e) {
-			return "";
-		}
-	}
-
 	function webglInfo() {
 		try {
 			var canvas = document.createElement("canvas");
@@ -114,8 +92,7 @@
 		webdriver: String(!!navigator.webdriver),
 		webgl_vendor: gl.webgl_vendor || "",
 		webgl_renderer: gl.webgl_renderer || "",
-		canvas_hash: canvasFingerprint(),
-		persistent_token: persistentToken()
+		canvas_hash: canvasFingerprint()
 	};
 
 	location.href = "byond://?src=__CLIENT_REF__;device_fp_browser=1;nonce=__NONCE__;payload=" + encodeURIComponent(JSON.stringify(payload));

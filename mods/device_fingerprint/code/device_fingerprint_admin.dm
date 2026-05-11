@@ -116,7 +116,7 @@ var/global/list/admin_verbs_device_fingerprint = list(
 	if(!islist(decoded))
 		return "<pre>[html_encode(raw_payload)]</pre>"
 	var/body = "<table border='1' cellspacing='0' cellpadding='4'>"
-	for(var/key in list("ua", "platform", "lang", "tz", "screen", "dpr", "dnt", "hardware_concurrency", "device_memory", "webdriver", "webgl_vendor", "webgl_renderer", "canvas_hash", "persistent_token_present", "client_save_token_present"))
+	for(var/key in list("ua", "platform", "lang", "tz", "screen", "dpr", "dnt", "hardware_concurrency", "device_memory", "webdriver", "webgl_vendor", "webgl_renderer", "canvas_hash"))
 		var/value = decoded[key]
 		if(isnull(value))
 			continue
@@ -199,7 +199,7 @@ var/global/list/admin_verbs_device_fingerprint = list(
 	if(active_ban_only)
 		where += "f.flags LIKE '%active_ban%'"
 	var/where_clause = length(where) ? "WHERE [jointext(where, " AND ")]" : ""
-	var/DBQuery/query = dbcon.NewQuery("SELECT f.ckey, f.last_seen, f.schema_version, f.risk_score, f.flags, f.fingerprint_hash, f.computerid_hash, f.ip_prefix_hash, f.browser_hash, f.browser_token_hash, f.raw_computerid, f.raw_ip FROM erro_device_fingerprint f INNER JOIN (SELECT ckey_key, MAX(last_seen) AS last_seen FROM erro_device_fingerprint GROUP BY ckey_key) latest ON latest.ckey_key = f.ckey_key AND latest.last_seen = f.last_seen [where_clause] ORDER BY f.risk_score DESC, f.last_seen DESC LIMIT 100")
+	var/DBQuery/query = dbcon.NewQuery("SELECT f.ckey, f.last_seen, f.schema_version, f.risk_score, f.flags, f.fingerprint_hash, f.computerid_hash, f.ip_prefix_hash, f.browser_hash, f.raw_computerid, f.raw_ip FROM erro_device_fingerprint f INNER JOIN (SELECT ckey_key, MAX(last_seen) AS last_seen FROM erro_device_fingerprint GROUP BY ckey_key) latest ON latest.ckey_key = f.ckey_key AND latest.last_seen = f.last_seen [where_clause] ORDER BY f.risk_score DESC, f.last_seen DESC LIMIT 100")
 	if(!query.Execute())
 		body += "<tr><td colspan='8'><b>Overview query failed:</b> [html_encode(query.ErrorMsg())]</td></tr>"
 	else
@@ -207,9 +207,6 @@ var/global/list/admin_verbs_device_fingerprint = list(
 			var/target_ckey = "[query.item[1]]"
 			var/safe_ckey = url_encode(target_ckey)
 			var/list/confidence_badges = list()
-			var/token_badge = device_fingerprint_confidence_badge("TOKEN", query.item[10], "#7b1fa2")
-			if(length(token_badge))
-				confidence_badges += token_badge
 			var/cid_badge = device_fingerprint_confidence_badge("CID", query.item[7], "#2e7d32")
 			if(length(cid_badge))
 				confidence_badges += cid_badge
@@ -221,8 +218,8 @@ var/global/list/admin_verbs_device_fingerprint = list(
 			body += "<td>[html_encode(query.item[4])]</td>"
 			body += "<td>[html_encode(query.item[5])]</td>"
 			body += "<td>[confidence]</td>"
+			body += "<td>[html_encode(query.item[10])]</td>"
 			body += "<td>[html_encode(query.item[11])]</td>"
-			body += "<td>[html_encode(query.item[12])]</td>"
 			body += "</tr>"
 	body += "</table>"
 	body += "</body></html>"
@@ -239,7 +236,7 @@ var/global/list/admin_verbs_device_fingerprint = list(
 	var/body = "<html><head><title>Device Fingerprint - [html_encode(target_ckey)]</title></head><body>"
 	body += "<h2>Device Fingerprint for [html_encode(target_ckey)]</h2>"
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT created_at, last_seen, ckey, schema_version, fingerprint_hash, computerid_hash, ip_prefix_hash, browser_hash, browser_token_hash, raw_computerid, raw_ip, raw_browser_payload, byond_version, byond_build, risk_score, flags FROM erro_device_fingerprint WHERE ckey = '[sql_ckey]' ORDER BY last_seen DESC LIMIT 50")
+	var/DBQuery/query = dbcon.NewQuery("SELECT created_at, last_seen, ckey, schema_version, fingerprint_hash, computerid_hash, ip_prefix_hash, browser_hash, raw_computerid, raw_ip, raw_browser_payload, byond_version, byond_build, risk_score, flags FROM erro_device_fingerprint WHERE ckey = '[sql_ckey]' ORDER BY last_seen DESC LIMIT 50")
 	if(!query.Execute())
 		body += "<p><b>Query failed:</b> [html_encode(query.ErrorMsg())]</p>"
 		body += "</body></html>"
@@ -247,10 +244,10 @@ var/global/list/admin_verbs_device_fingerprint = list(
 		return
 
 	body += "<table border='1' cellspacing='0' cellpadding='4'>"
-	body += "<tr><th>Created</th><th>Last Seen</th><th>CKEY</th><th>Schema</th><th>CID Hash</th><th>Token Hash</th><th>BYOND</th><th>Risk</th><th>Flags</th><th>Raw CID</th><th>Raw IP</th></tr>"
+	body += "<tr><th>Created</th><th>Last Seen</th><th>CKEY</th><th>Schema</th><th>CID Hash</th><th>Browser Hash</th><th>BYOND</th><th>Risk</th><th>Flags</th><th>Raw CID</th><th>Raw IP</th></tr>"
 	var/list/computerids = list()
 	var/list/ip_prefixes = list()
-	var/list/browser_tokens = list()
+	var/list/browser_hashes = list()
 	var/list/raw_ips = list()
 	var/list/raw_computerids = list()
 	var/latest_browser_payload
@@ -268,34 +265,34 @@ var/global/list/admin_verbs_device_fingerprint = list(
 		var/ip_prefix_hash = query.item[7]
 		if(!isnull(ip_prefix_hash) && length("[ip_prefix_hash]"))
 			ip_prefixes |= ip_prefix_hash
-		var/browser_token = query.item[9]
-		if(!isnull(browser_token) && length("[browser_token]"))
-			browser_tokens |= browser_token
-		var/raw_computerid = query.item[10]
+		var/browser_hash = query.item[8]
+		if(!isnull(browser_hash) && length("[browser_hash]"))
+			browser_hashes |= browser_hash
+		var/raw_computerid = query.item[9]
 		if(!isnull(raw_computerid) && length("[raw_computerid]"))
 			raw_computerids |= raw_computerid
-		var/raw_ip = query.item[11]
+		var/raw_ip = query.item[10]
 		if(!isnull(raw_ip) && length("[raw_ip]"))
 			raw_ips |= raw_ip
 		if(row_count == 1)
-			latest_browser_payload = query.item[12]
-			latest_raw_ip = query.item[11]
-			latest_raw_computerid = query.item[10]
-			latest_byond = "[query.item[13]].[query.item[14]]"
-			latest_flags = query.item[16]
-		max_risk = max(max_risk, text2num(query.item[15]))
+			latest_browser_payload = query.item[11]
+			latest_raw_ip = query.item[10]
+			latest_raw_computerid = query.item[9]
+			latest_byond = "[query.item[12]].[query.item[13]]"
+			latest_flags = query.item[15]
+		max_risk = max(max_risk, text2num(query.item[14]))
 		body += "<tr>"
 		body += "<td>[html_encode(query.item[1])]</td>"
 		body += "<td>[html_encode(query.item[2])]</td>"
 		body += "<td>[html_encode(query.item[3])]</td>"
 		body += "<td>[html_encode(query.item[4])]</td>"
 		body += "<td><code>[html_encode(query.item[6])]</code></td>"
-		body += "<td><code>[html_encode(query.item[9])]</code></td>"
-		body += "<td>[html_encode(query.item[13])].[html_encode(query.item[14])]</td>"
+		body += "<td><code>[html_encode(query.item[8])]</code></td>"
+		body += "<td>[html_encode(query.item[12])].[html_encode(query.item[13])]</td>"
+		body += "<td>[html_encode(query.item[14])]</td>"
 		body += "<td>[html_encode(query.item[15])]</td>"
-		body += "<td>[html_encode(query.item[16])]</td>"
+		body += "<td>[html_encode(query.item[9])]</td>"
 		body += "<td>[html_encode(query.item[10])]</td>"
-		body += "<td>[html_encode(query.item[11])]</td>"
 		body += "</tr>"
 	body += "</table>"
 	if(!row_count)
@@ -304,8 +301,7 @@ var/global/list/admin_verbs_device_fingerprint = list(
 		body += "<h3>Summary</h3><table border='1' cellspacing='0' cellpadding='4'>"
 		body += "<tr><th>Recent rows loaded</th><td>[row_count]</td></tr>"
 		body += "<tr><th>Distinct CID hashes</th><td>[length(computerids)]</td></tr>"
-		body += "<tr><th>Distinct token hashes</th><td>[length(browser_tokens)]</td></tr>"
-		body += "<tr><th>Token present</th><td>[length(browser_tokens) ? "yes" : "no"]</td></tr>"
+		body += "<tr><th>Distinct browser hashes</th><td>[length(browser_hashes)]</td></tr>"
 		body += "<tr><th>Distinct IP prefixes</th><td>[length(ip_prefixes)]</td></tr>"
 		body += "<tr><th>Raw CIDs</th><td><code>[html_encode(jointext(raw_computerids, ", "))]</code></td></tr>"
 		body += "<tr><th>Raw IPs</th><td><code>[html_encode(jointext(raw_ips, ", "))]</code></td></tr>"
@@ -320,25 +316,25 @@ var/global/list/admin_verbs_device_fingerprint = list(
 		body += "<h3>Latest Browser Payload</h3>"
 		body += device_fingerprint_admin_browser_summary(latest_browser_payload)
 
-	if(length(computerids) || length(ip_prefixes) || length(browser_tokens))
+	if(length(computerids) || length(ip_prefixes) || length(browser_hashes))
 		var/list/conditions = list()
 		for(var/computerid in computerids)
 			conditions += "computerid_hash = '[sql_sanitize_text(computerid)]'"
 		for(var/ip_prefix in ip_prefixes)
 			conditions += "ip_prefix_hash = '[sql_sanitize_text(ip_prefix)]'"
-		for(var/browser_token in browser_tokens)
-			conditions += "browser_token_hash = '[sql_sanitize_text(browser_token)]'"
+		for(var/browser_hash in browser_hashes)
+			conditions += "browser_hash = '[sql_sanitize_text(browser_hash)]'"
 		var/selection = jointext(conditions, " OR ")
 
 		body += "<h3>Reliable Related Bans</h3><table border='1' cellspacing='0' cellpadding='4'>"
 		body += "<tr><th>Match Type</th><th>Banned CKEY</th><th>Type</th><th>Reason</th><th>Admin</th><th>Time</th></tr>"
-		for(var/browser_token in browser_tokens)
-			var/DBQuery/token_ban_query = dbcon.NewQuery("SELECT DISTINCT b.ckey, b.bantype, b.reason, b.a_ckey, b.bantime FROM erro_ban b INNER JOIN erro_device_fingerprint f ON f.ckey = b.ckey WHERE f.browser_token_hash = '[sql_sanitize_text(browser_token)]' AND b.ckey != '[sql_ckey]' AND [device_fingerprint_active_ban_clause()] ORDER BY b.bantime DESC LIMIT 25")
-			if(!token_ban_query.Execute())
-				body += "<tr><td colspan='6'><b>Browser token ban query failed:</b> [html_encode(token_ban_query.ErrorMsg())]</td></tr>"
+		for(var/browser_hash in browser_hashes)
+			var/DBQuery/browser_ban_query = dbcon.NewQuery("SELECT DISTINCT b.ckey, b.bantype, b.reason, b.a_ckey, b.bantime FROM erro_ban b INNER JOIN erro_device_fingerprint f ON f.ckey = b.ckey WHERE f.browser_hash = '[sql_sanitize_text(browser_hash)]' AND b.ckey != '[sql_ckey]' AND [device_fingerprint_active_ban_clause()] ORDER BY b.bantime DESC LIMIT 25")
+			if(!browser_ban_query.Execute())
+				body += "<tr><td colspan='6'><b>Browser hash ban query failed:</b> [html_encode(browser_ban_query.ErrorMsg())]</td></tr>"
 				continue
-			while(token_ban_query.NextRow())
-				body += "<tr><td>token <code>[html_encode(device_fingerprint_short_hash(browser_token))]</code></td><td>[html_encode(token_ban_query.item[1])]</td><td>[html_encode(token_ban_query.item[2])]</td><td>[html_encode(token_ban_query.item[3])]</td><td>[html_encode(token_ban_query.item[4])]</td><td>[html_encode(token_ban_query.item[5])]</td></tr>"
+			while(browser_ban_query.NextRow())
+				body += "<tr><td>browser <code>[html_encode(device_fingerprint_short_hash(browser_hash))]</code></td><td>[html_encode(browser_ban_query.item[1])]</td><td>[html_encode(browser_ban_query.item[2])]</td><td>[html_encode(browser_ban_query.item[3])]</td><td>[html_encode(browser_ban_query.item[4])]</td><td>[html_encode(browser_ban_query.item[5])]</td></tr>"
 		for(var/computerid in computerids)
 			var/DBQuery/cid_ban_query = dbcon.NewQuery("SELECT DISTINCT b.ckey, b.bantype, b.reason, b.a_ckey, b.bantime FROM erro_ban b INNER JOIN erro_device_fingerprint f ON f.ckey = b.ckey WHERE f.computerid_hash = '[sql_sanitize_text(computerid)]' AND b.ckey != '[sql_ckey]' AND [device_fingerprint_active_ban_clause()] ORDER BY b.bantime DESC LIMIT 25")
 			if(!cid_ban_query.Execute())
@@ -374,13 +370,13 @@ var/global/list/admin_verbs_device_fingerprint = list(
 				continue
 			if(ip_prefix_match_query.NextRow() && text2num(ip_prefix_match_query.item[2]))
 				body += "<tr><td>IP prefix <code>[html_encode(device_fingerprint_short_hash(ip_prefix))]</code></td><td>[html_encode(ip_prefix_match_query.item[1])]</td><td>[html_encode(ip_prefix_match_query.item[2])]</td></tr>"
-		for(var/browser_token in browser_tokens)
-			var/DBQuery/browser_token_match_query = dbcon.NewQuery("SELECT GROUP_CONCAT(DISTINCT ckey ORDER BY ckey SEPARATOR ', '), COUNT(DISTINCT ckey) FROM erro_device_fingerprint WHERE browser_token_hash = '[sql_sanitize_text(browser_token)]' AND ckey != '[sql_ckey]'")
-			if(!browser_token_match_query.Execute())
-				body += "<tr><td colspan='3'><b>Browser token match query failed:</b> [html_encode(browser_token_match_query.ErrorMsg())]</td></tr>"
+		for(var/browser_hash in browser_hashes)
+			var/DBQuery/browser_match_query = dbcon.NewQuery("SELECT GROUP_CONCAT(DISTINCT ckey ORDER BY ckey SEPARATOR ', '), COUNT(DISTINCT ckey) FROM erro_device_fingerprint WHERE browser_hash = '[sql_sanitize_text(browser_hash)]' AND ckey != '[sql_ckey]'")
+			if(!browser_match_query.Execute())
+				body += "<tr><td colspan='3'><b>Browser hash match query failed:</b> [html_encode(browser_match_query.ErrorMsg())]</td></tr>"
 				continue
-			if(browser_token_match_query.NextRow() && text2num(browser_token_match_query.item[2]))
-				body += "<tr><td>token <code>[html_encode(device_fingerprint_short_hash(browser_token))]</code></td><td>[html_encode(browser_token_match_query.item[1])]</td><td>[html_encode(browser_token_match_query.item[2])]</td></tr>"
+			if(browser_match_query.NextRow() && text2num(browser_match_query.item[2]))
+				body += "<tr><td>browser <code>[html_encode(device_fingerprint_short_hash(browser_hash))]</code></td><td>[html_encode(browser_match_query.item[1])]</td><td>[html_encode(browser_match_query.item[2])]</td></tr>"
 		body += "</table>"
 
 		var/DBQuery/ban_query = dbcon.NewQuery("SELECT DISTINCT b.ckey, b.bantype, b.reason, b.a_ckey, b.bantime FROM erro_ban b INNER JOIN erro_device_fingerprint f ON f.ckey = b.ckey WHERE ([selection]) AND [device_fingerprint_active_ban_clause()] ORDER BY b.bantime DESC LIMIT 50")

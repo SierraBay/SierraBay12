@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `erro_device_fingerprint` (
   `computerid_hash` varchar(64) DEFAULT NULL,
   `ip_prefix_hash` varchar(64) DEFAULT NULL,
   `browser_hash` varchar(64) DEFAULT NULL,
-  `browser_token_hash` varchar(64) DEFAULT NULL,
   `raw_computerid` text DEFAULT NULL,
   `raw_ip` text DEFAULT NULL,
   `raw_browser_payload` text DEFAULT NULL,
@@ -70,7 +69,6 @@ CREATE TABLE IF NOT EXISTS `erro_device_fingerprint` (
   KEY `computerid_hash` (`computerid_hash`),
   KEY `ip_prefix_hash` (`ip_prefix_hash`),
   KEY `browser_hash` (`browser_hash`),
-  KEY `browser_token_hash` (`browser_token_hash`),
   KEY `ckey` (`ckey`(128)),
   UNIQUE KEY `ckey_fingerprint` (`ckey_key`, `fingerprint_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;

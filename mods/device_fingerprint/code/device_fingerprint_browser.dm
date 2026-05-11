@@ -62,19 +62,6 @@
 		device_fingerprint_close_browser()
 		return
 
-	var/persistent_token = decoded["persistent_token"]
-	if(!isnull(persistent_token))
-		persistent_token = copytext("[persistent_token]", 1, 256)
-	if(device_fingerprint_client_save_token)
-		browser_token_hash = make_device_fingerprint_hash("browser_token", device_fingerprint_client_save_token)
-		device_fingerprint_debug("browser payload kept existing client save token over localStorage token.")
-	else if(length(persistent_token))
-		if(!device_fingerprint_save_client_token(persistent_token, "browser token migration"))
-			browser_token_hash = make_device_fingerprint_hash("browser_token", persistent_token)
-			device_fingerprint_debug("browser payload fell back to localStorage token after client save export failure.")
-	else
-		device_fingerprint_save_client_token(device_fingerprint_generate_client_save_token(), "server token generation")
-
 	var/list/normalized = list()
 	for(var/key in list("ua", "lang", "tz", "screen", "dpr", "dnt", "platform", "hardware_concurrency", "device_memory", "webdriver", "webgl_vendor", "webgl_renderer", "canvas_hash"))
 		var/value = decoded[key]
@@ -88,8 +75,6 @@
 		device_fingerprint_update_with_browser()
 		device_fingerprint_close_browser()
 		return
-	normalized["persistent_token_present"] = browser_token_hash ? "1" : "0"
-	normalized["client_save_token_present"] = device_fingerprint_client_save_token ? "1" : "0"
 
 	var/normalized_payload = json_encode(normalized)
 	device_browser_payload_raw = normalized_payload

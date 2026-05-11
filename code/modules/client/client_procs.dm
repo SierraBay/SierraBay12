@@ -100,13 +100,6 @@
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
-	if(device_fingerprint_client_save_importing)
-		var/debug_key = key ? key : "<no key>"
-		if(filelength <= 8192)
-			log_debug("Device Fingerprint: [debug_key] allowed client save import upload [filelength] bytes.")
-			return 1
-		log_debug("Device Fingerprint: [debug_key] blocked client save import upload [filelength] bytes; limit is 8192 bytes.")
-		return 0
 	if(!user_acted(src))
 		return 0
 	if(filelength > UPLOAD_LIMIT)
