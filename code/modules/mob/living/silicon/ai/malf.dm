@@ -130,7 +130,7 @@
 		return
 	show_malf_modules()
 
-/mob/living/silicon/ai/proc/show_malf_modules(screen = "status")
+/mob/living/silicon/ai/proc/show_malf_modules(screen = "status", refresh = FALSE)
 	if(!malfunctioning || !research)
 		if(client)
 			show_browser(src, null, "window=malf_modules")
@@ -179,11 +179,15 @@
 			build_malf_abilities_panel(dat)
 		else
 			build_malf_status_panel(dat)
+	dat += "<script type='text/javascript'>setTimeout(function(){window.location='byond://?src=\ref[src];malf_screen=[screen];malf_refresh=1';},1000);</script>"
 	dat += "</body></html>"
 
 	var/datum/browser/popup = new(src, "malf_modules", "Malf Modules", 520, 650, src)
 	popup.set_content(jointext(dat, null))
-	popup.open()
+	if(refresh)
+		popup.update()
+	else
+		popup.open()
 
 /mob/living/silicon/ai/proc/malf_module_tab_link(tab, label, active_tab)
 	if(tab == active_tab)

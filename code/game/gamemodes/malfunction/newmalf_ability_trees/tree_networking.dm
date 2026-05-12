@@ -38,55 +38,6 @@
 // END RESEARCH DATUMS
 // BEGIN ABILITY VERBS
 
-/datum/game_mode/malfunction/verb/basic_encryption_hack(obj/machinery/power/apc/A as obj in get_unhacked_apcs(src))
-	set category = "Software"
-	set name = "Basic Encryption Hack"
-	set desc = "10 CPU - Basic encryption hack that allows you to overtake APCs"
-	var/price = 10
-	var/mob/living/silicon/ai/user = usr
-
-	if(!A)
-		A = input(user, "Select APC to hack", "Basic Encryption Hack") as null|obj in get_unhacked_apcs(user)
-		if(!A)
-			return
-
-	if(!istype(A))
-		to_chat(user, "This is not an APC!")
-		return
-
-	if(A)
-		if(A.hacker && A.hacker == user)
-			to_chat(user, "You already control this APC!")
-			return
-		else if(A.aidisabled)
-			to_chat(user, SPAN_NOTICE("Unable to connect to APC. Please verify wire connection and try again."))
-			return
-		else if(!can_malf_hack_apc(user, A))
-			to_chat(user, SPAN_NOTICE("Unable to connect to APC. Target is outside your accessible network."))
-			return
-	else
-		return
-
-	if(!ability_prechecks(user, price, TRUE) || !ability_pay(user, price))
-		return
-
-	log_ability_use(user, "basic encryption hack", A, 0)	// Does not notify admins, but it's still logged for reference.
-	to_chat(user, "Beginning APC system override...")
-	sleep(300)
-	to_chat(user, "APC hack completed. Uploading modified operation software..")
-	sleep(200)
-	to_chat(user, "Restarting APC to apply changes..")
-	sleep(100)
-	if(A)
-		A.ai_hack(user)
-		if(A.hacker == user)
-			to_chat(user, "Hack successful. You now have full control over \the [A].")
-		else
-			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-	else
-		to_chat(user, SPAN_NOTICE("Hack failed. Unable to locate APC. Please verify the APC still exists."))
-
-
 /datum/game_mode/malfunction/verb/advanced_encryption_hack()
 	set category = "Software"
 	set name = "Advanced Encryption Hack"

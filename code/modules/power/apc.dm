@@ -326,10 +326,11 @@
 		else
 			if (GET_FLAGS(stat, MACHINE_STAT_MAINT))
 				to_chat(user, "The cover is closed. Something wrong with it: it doesn't work.")
-			else if (hacker && !hacker.hacked_apcs_hidden)
+			else if (malf_hack_is_visible())
 				to_chat(user, "The cover is locked.")
 			else
 				to_chat(user, "The cover is closed.")
+		malf_examine(user)
 
 
 // update the APC icon to show the three base states
@@ -461,7 +462,7 @@
 			update_state |= UPDATE_OPENED1
 		if(opened==2)
 			update_state |= UPDATE_OPENED2
-	else if(emagged || (hacker && !hacker.hacked_apcs_hidden) || failure_timer)
+	else if(emagged || malf_hack_is_visible() || failure_timer)
 		update_state |= UPDATE_BLUESCREEN
 	else if(wiresexposed)
 		update_state |= UPDATE_WIREEXP
@@ -539,7 +540,7 @@
 				update_icon()
 				return TRUE
 
-		if(MACHINE_IS_BROKEN(src) || hacker && !hacker.hacked_apcs_hidden)
+		if(MACHINE_IS_BROKEN(src) || malf_hack_is_visible())
 			if (opened == 2)
 				to_chat(user, SPAN_WARNING("The cover of \the [src] is broken!"))
 			else
@@ -594,7 +595,7 @@
 			to_chat(user, "You must close the panel")
 		else if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
 			to_chat(user, "Nothing happens.")
-		else if(hacker && !hacker.hacked_apcs_hidden)
+		else if(malf_hack_is_visible())
 			to_chat(user, SPAN_WARNING("Access denied."))
 		else
 			if(has_access(req_access, user.GetAccess()) && !isWireCut(APC_WIRE_IDSCAN))
@@ -678,14 +679,14 @@
 			update_icon()
 			return TRUE
 
-		if(MACHINE_IS_BROKEN(src) || (hacker && !hacker.hacked_apcs_hidden))
+		if(MACHINE_IS_BROKEN(src) || malf_hack_is_visible())
 			if (has_electronics)
 				to_chat(user, SPAN_WARNING("You cannot repair this APC until you remove the electronics still inside."))
 				return TRUE
 
 			user.visible_message(SPAN_WARNING("[user.name] replaces the damaged APC frame with a new one."),\
 								"You begin to replace the damaged APC frame...")
-			if(do_after(user, 5 SECONDS, src, DO_REPAIR_CONSTRUCT) && opened && !has_electronics && (MACHINE_IS_BROKEN(src) || (hacker && !hacker.hacked_apcs_hidden)))
+			if(do_after(user, 5 SECONDS, src, DO_REPAIR_CONSTRUCT) && opened && !has_electronics && (MACHINE_IS_BROKEN(src) || malf_hack_is_visible()))
 				user.visible_message(\
 					SPAN_NOTICE("[user.name] has replaced the damaged APC frame with new one."),\
 					"You replace the damaged APC frame with new one.")
@@ -717,7 +718,7 @@
 	if (health_mod >= 0)
 		return
 	//Runs even if APC is broken. Returns to avoid two events running.
-	if ((damage_percentage >= 50 || (hacker && !hacker.hacked_apcs_hidden)) && opened != 2 && prob(20))
+	if ((damage_percentage >= 50 || malf_hack_is_visible()) && opened != 2 && prob(20))
 		visible_message(SPAN_DANGER("The lid on \the [src] is knocked down"))
 		coverlocked = FALSE
 		opened = 2
@@ -732,7 +733,7 @@
 			kill_health()
 
 /obj/machinery/power/apc/emag_act(remaining_charges, mob/user)
-	if (!(emagged || (hacker && !hacker.hacked_apcs_hidden)))		// trying to unlock with an emag card
+	if (!(emagged || malf_hack_is_visible()))		// trying to unlock with an emag card
 		if(opened)
 			to_chat(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
@@ -1205,16 +1206,6 @@
 			return POWERCHAN_OFF_TEMP
 		else
 			return POWERCHAN_OFF
-
-// Malfunction: Transfers APC under AI's control
-/obj/machinery/power/apc/proc/ai_hack(mob/living/silicon/ai/A = null)
-	if(!A || !A.hacked_apcs || hacker || aidisabled || A.is_dead())
-		return 0
-	src.hacker = A
-	A.hacked_apcs += src
-	locked = 1
-	update_icon()
-	return 1
 
 /obj/item/module/power_control
 	name = "power control module"

@@ -437,7 +437,7 @@ var/global/list/ai_verbs_default = list(
 			return TOPIC_HANDLED
 
 		if(href_list["malf_screen"])
-			show_malf_modules(href_list["malf_screen"])
+			show_malf_modules(href_list["malf_screen"], href_list["malf_refresh"])
 			return TOPIC_HANDLED
 
 		if(href_list["malf_select_hardware"])
