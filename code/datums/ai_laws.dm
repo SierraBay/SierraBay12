@@ -60,13 +60,20 @@
 	if(zeroth_law)
 		sorted_laws += zeroth_law
 
+	var/inherent_count = length(inherent_laws)
 	var/index = 1
 	for(var/datum/ai_law/inherent_law in inherent_laws)
 		inherent_law.index = index++
-		if(length(supplied_laws) < inherent_law.index || !istype(supplied_laws[inherent_law.index], /datum/ai_law))
+
+	for(index = 1, index <= inherent_count, index++)
+		if(length(supplied_laws) >= index && istype(supplied_laws[index], /datum/ai_law))
+			sorted_laws += supplied_laws[index]
+		else
+			var/datum/ai_law/inherent_law = inherent_laws[index]
 			sorted_laws += inherent_law
 
-	for(var/datum/ai_law/AL in supplied_laws)
+	for(index = inherent_count + 1, index <= length(supplied_laws), index++)
+		var/datum/ai_law/AL = supplied_laws[index]
 		if(istype(AL))
 			sorted_laws += AL
 

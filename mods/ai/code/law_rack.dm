@@ -21,6 +21,10 @@
 /obj/item/law_module/supplied/attack_self(mob/user)
 	..()
 	var/new_law = sanitize(input(user, "Enter the supplied law text.", "Supplied Law", law_text) as null|message)
+	if(!user || QDELETED(user) || QDELETED(src) || user.incapacitated())
+		return
+	if(user.get_active_hand() != src && user.get_inactive_hand() != src)
+		return
 	if(!new_law)
 		return
 	law_text = new_law
@@ -30,10 +34,11 @@
 /obj/machinery/law_rack
 	name = "\improper AI law rack"
 	desc = "A physical rack for ordered supplied-law modules."
-	icon = 'icons/obj/machines/research.dmi'
+	icon = 'icons/obj/machines/research/server.dmi'
 	icon_state = "server"
 	density = TRUE
 	anchored = TRUE
+	req_access = list(access_ai_upload)
 	var/mob/living/silicon/ai/linked_ai = null
 	var/list/module_slots = list(null, null, null, null, null, null)
 	var/max_slots = 6
@@ -77,28 +82,38 @@
 		return TOPIC_NOACTION
 
 	if(href_list["link_ai"])
+		if(!check_rack_access(user))
+			return TOPIC_NOACTION
 		link_ai(user)
 		interact(user)
 		return TOPIC_REFRESH
 
 	if(href_list["force_sync"])
+		if(!check_rack_access(user))
+			return TOPIC_NOACTION
 		force_sync(user)
 		interact(user)
 		return TOPIC_REFRESH
 
 	if(href_list["remove"])
+		if(!check_rack_access(user))
+			return TOPIC_NOACTION
 		var/slot = text2num(href_list["remove"])
 		remove_module(slot, user)
 		interact(user)
 		return TOPIC_REFRESH
 
 	if(href_list["move_up"])
+		if(!check_rack_access(user))
+			return TOPIC_NOACTION
 		var/slot = text2num(href_list["move_up"])
 		move_module(slot, -1, user)
 		interact(user)
 		return TOPIC_REFRESH
 
 	if(href_list["move_down"])
+		if(!check_rack_access(user))
+			return TOPIC_NOACTION
 		var/slot = text2num(href_list["move_down"])
 		move_module(slot, 1, user)
 		interact(user)
@@ -106,7 +121,7 @@
 
 	return TOPIC_NOACTION
 
-/obj/machinery/law_rack/proc/interact(mob/user)
+/obj/machinery/law_rack/interact(mob/user)
 	if(linked_ai && QDELETED(linked_ai))
 		linked_ai = null
 
@@ -197,7 +212,10 @@
 	var/mob/living/silicon/ai/new_ai = select_active_ai(user, get_z(src))
 	if(!CanInteract(user, DefaultTopicState()))
 		return FALSE
-	if(!new_ai || QDELETED(new_ai))
+	if(!new_ai)
+		to_chat(user, SPAN_WARNING("No AI selected."))
+		return FALSE
+	if(QDELETED(new_ai))
 		to_chat(user, SPAN_WARNING("No active AIs detected."))
 		return FALSE
 
@@ -215,29 +233,34 @@
 		return FALSE
 
 	sync_in_progress = TRUE
-	linked_ai.laws_sanity_check()
-	linked_ai.clear_supplied_laws(TRUE)
+	try
+		linked_ai.laws_sanity_check()
+		linked_ai.clear_supplied_laws(TRUE)
 
-	for(var/i = 1 to length(module_slots))
-		var/obj/item/law_module/supplied/module = module_slots[i]
-		if(!module || QDELETED(module))
-			module_slots[i] = null
-			continue
-		if(!module.law_text)
-			continue
-		linked_ai.add_supplied_law(i, module.law_text)
+		for(var/i = 1 to length(module_slots))
+			var/obj/item/law_module/supplied/module = module_slots[i]
+			if(!module || QDELETED(module))
+				module_slots[i] = null
+				continue
+			if(!module.law_text)
+				continue
+			linked_ai.add_supplied_law(i, module.law_text)
 
-	linked_ai.lawsync()
-	to_chat(linked_ai, SPAN_DANGER("Law Notice"))
-	linked_ai.show_laws()
-	sync_connected_borgs()
+		linked_ai.lawsync()
+		to_chat(linked_ai, SPAN_DANGER("Law Notice"))
+		linked_ai.show_laws()
+		sync_connected_borgs()
 
-	last_sync_time = stationtime2text()
-	last_sync_status = "Synced to [linked_ai.name]"
-	to_chat(user, SPAN_NOTICE("The law rack synchronizes its supplied laws to [linked_ai]."))
-	log_law_rack(user, "force synced supplied laws to [linked_ai]")
-	sync_in_progress = FALSE
-	return TRUE
+		last_sync_time = stationtime2text()
+		last_sync_status = "Synced to [linked_ai.name]"
+		to_chat(user, SPAN_NOTICE("The law rack synchronizes its supplied laws to [linked_ai]."))
+		log_law_rack(user, "force synced supplied laws to [linked_ai]")
+		sync_in_progress = FALSE
+		return TRUE
+	catch(var/exception/e)
+		sync_in_progress = FALSE
+		error("[e] on [e.file]:[e.line]")
+	return FALSE
 
 /obj/machinery/law_rack/proc/sync_connected_borgs()
 	if(!linked_ai || QDELETED(linked_ai) || !islist(linked_ai.connected_robots))
@@ -249,9 +272,16 @@
 			continue
 		if(R.connected_ai != linked_ai || !R.lawupdate)
 			continue
+		linked_ai.laws.sync(R)
 		R.lawsync()
 		to_chat(R, "These are your laws now:")
 		R.show_laws()
+
+/obj/machinery/law_rack/proc/check_rack_access(mob/user)
+	if(allowed(user))
+		return TRUE
+	FEEDBACK_ACCESS_DENIED(user, src)
+	return FALSE
 
 /obj/machinery/law_rack/proc/first_empty_slot()
 	for(var/i = 1 to max_slots)
