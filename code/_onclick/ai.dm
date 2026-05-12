@@ -175,11 +175,13 @@
 	Topic(src, list("command"="enable", "value"="[!enabled]"))
 	return TRUE
 
-/atom/proc/AIAltClick(atom/A)
+/atom/proc/AIAltClick(mob/living/silicon/user)
 	return FALSE
 
-/obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
-	if(usr.incapacitated())
+/obj/machinery/turretid/AIAltClick(mob/living/silicon/user) //toggles lethal on turrets
+	if(!user)
+		user = usr
+	if(!istype(user) || user.incapacitated())
 		return FALSE
 	Topic(src, list("command"="lethal", "value"="[!lethal]"))
 	return TRUE
