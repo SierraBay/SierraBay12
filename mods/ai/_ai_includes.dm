@@ -22,5 +22,6 @@
 #include "code\boris.dm" //Модуль B.O.R.I.S. и его логика
 #include "code\modules.dm" //Модуль роботов
 #include "code\equipment_items.dm" //Айтемы модулей роботов
+#include "code\law_rack.dm" //Физическая стойка законов ИИ
 
 #endif
