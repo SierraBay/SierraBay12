@@ -70,7 +70,7 @@
 		if(law_rack.linked_ai != src)
 			law_rack.linked_ai = src
 		if(!law_rack.has_installed_modules())
-			law_rack.apply_preset(pick_roundstart_law_rack_preset(), FALSE)
+			law_rack.apply_roundstart_preset(pick_roundstart_law_rack_preset(), FALSE)
 		law_rack.force_sync()
 		return TRUE
 
@@ -85,7 +85,7 @@
 	rack.linked_ai = src
 	law_rack = rack
 	if(!rack.has_installed_modules())
-		rack.apply_preset(pick_roundstart_law_rack_preset(), FALSE)
+		rack.apply_roundstart_preset(pick_roundstart_law_rack_preset(), FALSE)
 	rack.force_sync()
 	rack.log_law_rack(null, "roundstart linked [src]")
 	return TRUE
@@ -117,6 +117,8 @@
 	var/mob/living/silicon/ai/linked_ai = null
 	var/list/module_slots = list(null, null, null, null, null, null)
 	var/max_slots = 6
+	var/obj/item/card/id/inserted_id = null
+	var/slots_unlocked = FALSE
 	var/sync_in_progress = FALSE
 	var/last_sync_time = ""
 	var/last_sync_status = "Never"
@@ -130,6 +132,10 @@
 
 /obj/machinery/law_rack/Destroy()
 	var/turf/T = get_turf(src)
+	if(inserted_id && !QDELETED(inserted_id) && T)
+		inserted_id.forceMove(T)
+	inserted_id = null
+	slots_unlocked = FALSE
 	for(var/i = 1 to length(module_slots))
 		var/obj/item/law_module/module = module_slots[i]
 		if(module && !QDELETED(module) && T)
@@ -150,7 +156,13 @@
 	return TRUE
 
 /obj/machinery/law_rack/use_tool(obj/item/O, mob/living/user, list/click_params)
+	if(istype(O, /obj/item/card/id))
+		insert_id_card(O, user)
+		return TRUE
+
 	if(istype(O, /obj/item/law_module))
+		if(!can_modify_rack(user))
+			return TRUE
 		insert_module(O, user)
 		return TRUE
 	return ..()
@@ -160,21 +172,26 @@
 		return TOPIC_NOACTION
 
 	if(href_list["link_ai"])
-		if(!check_rack_access(user))
+		if(!can_modify_rack(user))
 			return TOPIC_NOACTION
 		link_ai(user)
 		interact(user)
 		return TOPIC_REFRESH
 
 	if(href_list["force_sync"])
-		if(!check_rack_access(user))
+		if(!can_modify_rack(user))
 			return TOPIC_NOACTION
 		force_sync(user)
 		interact(user)
 		return TOPIC_REFRESH
 
+	if(href_list["eject_id"])
+		eject_id_card(user)
+		interact(user)
+		return TOPIC_REFRESH
+
 	if(href_list["remove"])
-		if(!check_rack_access(user))
+		if(!can_modify_rack(user))
 			return TOPIC_NOACTION
 		var/slot = text2num(href_list["remove"])
 		remove_module(slot, user)
@@ -182,7 +199,7 @@
 		return TOPIC_REFRESH
 
 	if(href_list["move_up"])
-		if(!check_rack_access(user))
+		if(!can_modify_rack(user))
 			return TOPIC_NOACTION
 		var/slot = text2num(href_list["move_up"])
 		move_module(slot, -1, user)
@@ -190,17 +207,10 @@
 		return TOPIC_REFRESH
 
 	if(href_list["move_down"])
-		if(!check_rack_access(user))
+		if(!can_modify_rack(user))
 			return TOPIC_NOACTION
 		var/slot = text2num(href_list["move_down"])
 		move_module(slot, 1, user)
-		interact(user)
-		return TOPIC_REFRESH
-
-	if(href_list["apply_preset"])
-		if(!check_rack_access(user))
-			return TOPIC_NOACTION
-		apply_preset(pick_roundstart_law_rack_preset(), TRUE, user)
 		interact(user)
 		return TOPIC_REFRESH
 
@@ -209,16 +219,32 @@
 /obj/machinery/law_rack/interact(mob/user)
 	if(linked_ai && QDELETED(linked_ai))
 		linked_ai = null
+	update_rack_lock()
 
 	var/list/dat = list()
+	var/unlocked = slots_unlocked
 	dat += "<b>[html_encode(name)]</b><br>"
 	dat += "Linked AI: [linked_ai ? html_encode(linked_ai.name) : "None"]<br>"
 	dat += "Active preset: [active_preset_name ? html_encode(active_preset_name) : "None"]<br>"
+	dat += "Inserted ID: [inserted_id ? html_encode(inserted_id.name) : "None"]"
+	if(inserted_id)
+		dat += " (<a href='byond://?src=\ref[src];eject_id=1'>Eject ID</a>)"
+	else
+		dat += " (use an ID card on the rack to insert it)"
+	dat += "<br>"
+	dat += "Access Status: [unlocked ? "Unlocked" : "Locked"]<br>"
+	if(!unlocked)
+		if(inserted_id)
+			dat += "Invalid access. Slots are locked.<br>"
+		else
+			dat += "Insert an authorized ID to modify law slots.<br>"
 	dat += "Module slots: [max_slots]<br>"
 	dat += "Last sync: [last_sync_time ? "[html_encode(last_sync_time)] - [html_encode(last_sync_status)]" : html_encode(last_sync_status)]<br><br>"
-	dat += "<a href='byond://?src=\ref[src];link_ai=1'>Link AI</a> | "
-	dat += "<a href='byond://?src=\ref[src];force_sync=1'>Force Sync</a> | "
-	dat += "<a href='byond://?src=\ref[src];apply_preset=1'>Apply Default Preset</a><br><hr>"
+	if(unlocked)
+		dat += "<a href='byond://?src=\ref[src];link_ai=1'>Link AI</a> | "
+		dat += "<a href='byond://?src=\ref[src];force_sync=1'>Force Sync</a><br><hr>"
+	else
+		dat += "Link AI unavailable while locked. | Force Sync unavailable while locked.<br><hr>"
 
 	for(var/i = 1 to max_slots)
 		var/obj/item/law_module/module = module_slots[i]
@@ -233,18 +259,23 @@
 				module_type = "core"
 			else if(istype(module, /obj/item/law_module/supplied))
 				module_type = "supplied"
-			var/preview = module.law_text ? copytext(module.law_text, 1, 96) : "No valid supplied law"
+			var/preview = module.law_text ? copytext(module.law_text, 1, 96) : "No valid law"
 			if(module.law_text && length(module.law_text) >= 96)
 				preview += "..."
 			dat += "[html_encode(module.name)] ([module_type])<br>"
 			dat += "<small>[html_encode(preview)]</small><br>"
-			dat += "<a href='byond://?src=\ref[src];remove=[i]'>Remove</a>"
-			if(i > 1)
-				dat += " | <a href='byond://?src=\ref[src];move_up=[i]'>Move Up</a>"
-			if(i < max_slots)
-				dat += " | <a href='byond://?src=\ref[src];move_down=[i]'>Move Down</a>"
+			if(unlocked)
+				dat += "<a href='byond://?src=\ref[src];remove=[i]'>Remove</a>"
+				if(i > 1)
+					dat += " | <a href='byond://?src=\ref[src];move_up=[i]'>Move Up</a>"
+				if(i < max_slots)
+					dat += " | <a href='byond://?src=\ref[src];move_down=[i]'>Move Down</a>"
+			else
+				dat += "Slots are locked."
 		else
 			dat += "Empty"
+			if(!unlocked)
+				dat += "<br>Slots are locked."
 		dat += "<br><br>"
 
 	var/datum/browser/popup = new(user, "law_rack", name, 620, 500, src)
@@ -252,6 +283,10 @@
 	popup.open()
 
 /obj/machinery/law_rack/proc/insert_module(obj/item/law_module/module, mob/living/user)
+	if(user && !can_modify_rack(user))
+		return FALSE
+	if(!user)
+		return FALSE
 	if(!module || QDELETED(module))
 		return FALSE
 	if(!module.law_text)
@@ -272,6 +307,8 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/remove_module(slot, mob/user)
+	if(user && !can_modify_rack(user))
+		return FALSE
 	if(!valid_slot(slot))
 		return FALSE
 	var/obj/item/law_module/module = module_slots[slot]
@@ -288,6 +325,8 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/move_module(slot, direction, mob/user)
+	if(user && !can_modify_rack(user))
+		return FALSE
 	if(!valid_slot(slot))
 		return FALSE
 	var/target_slot = slot + direction
@@ -301,14 +340,18 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/link_ai(mob/user)
-	var/mob/living/silicon/ai/new_ai = select_active_ai(user, get_z(src))
-	if(!CanInteract(user, DefaultTopicState()))
+	if(user && !can_modify_rack(user))
 		return FALSE
+	if(user && !CanInteract(user, DefaultTopicState()))
+		return FALSE
+	var/mob/living/silicon/ai/new_ai = select_active_ai(user, get_z(src))
 	if(!new_ai)
-		to_chat(user, SPAN_WARNING("No AI selected."))
+		if(user)
+			to_chat(user, SPAN_WARNING("No AI selected."))
 		return FALSE
 	if(QDELETED(new_ai))
-		to_chat(user, SPAN_WARNING("No active AIs detected."))
+		if(user)
+			to_chat(user, SPAN_WARNING("No active AIs detected."))
 		return FALSE
 
 	if(linked_ai && !QDELETED(linked_ai) && linked_ai.law_rack == src)
@@ -317,22 +360,29 @@
 		new_ai.law_rack.linked_ai = null
 	linked_ai = new_ai
 	linked_ai.law_rack = src
-	to_chat(user, SPAN_NOTICE("[linked_ai.name] linked for law rack synchronization."))
+	if(user)
+		to_chat(user, SPAN_NOTICE("[linked_ai.name] linked for law rack synchronization."))
 	log_law_rack(user, "linked [linked_ai]")
 	return TRUE
 
 /obj/machinery/law_rack/proc/force_sync(mob/user)
+	if(user && !can_modify_rack(user))
+		return FALSE
 	if(sync_in_progress)
 		return FALSE
 	if(!linked_ai || QDELETED(linked_ai))
 		linked_ai = null
-		to_chat(user, SPAN_WARNING("No AI is linked to this law rack."))
+		if(user)
+			to_chat(user, SPAN_WARNING("No AI is linked to this law rack."))
 		return FALSE
 
 	sync_in_progress = TRUE
 	try
 		linked_ai.laws_sanity_check()
-		// The rack is canonical for normal laws. The silicon datum is rebuilt as a runtime projection.
+		// Law Rack is the canonical physical source of normal AI laws.
+		// AI.laws is rebuilt from rack modules as a runtime-compatible projection.
+		// Rack laws are currently projected through supplied_laws to preserve existing
+		// show_laws(), state_laws(), lawsync(), and borg sync behavior.
 		linked_ai.clear_inherent_laws(TRUE)
 		linked_ai.clear_supplied_laws(TRUE)
 
@@ -378,7 +428,7 @@
 		to_chat(R, "These are your laws now:")
 		R.show_laws()
 
-/obj/machinery/law_rack/proc/apply_preset(datum/law_rack_preset/preset, overwrite = FALSE, mob/user)
+/obj/machinery/law_rack/proc/apply_roundstart_preset(datum/law_rack_preset/preset, overwrite = FALSE)
 	if(!preset || !islist(preset.laws_by_slot))
 		return FALSE
 
@@ -408,7 +458,7 @@
 
 	if(applied)
 		active_preset_name = preset.name
-		log_law_rack(user, "applied preset [preset.name]")
+		log_law_rack(null, "applied roundstart preset [preset.name]")
 	return applied
 
 /obj/machinery/law_rack/proc/has_installed_modules()
@@ -420,11 +470,65 @@
 			module_slots[i] = null
 	return FALSE
 
-/obj/machinery/law_rack/proc/check_rack_access(mob/user)
-	if(allowed(user))
+/obj/machinery/law_rack/proc/has_rack_access()
+	update_rack_lock()
+	return slots_unlocked
+
+/obj/machinery/law_rack/proc/update_rack_lock()
+	if(inserted_id && (QDELETED(inserted_id) || inserted_id.loc != src))
+		inserted_id = null
+	slots_unlocked = inserted_id && check_access(inserted_id)
+	return slots_unlocked
+
+/obj/machinery/law_rack/proc/can_modify_rack(mob/user)
+	if(has_rack_access())
 		return TRUE
-	FEEDBACK_ACCESS_DENIED(user, src)
+	if(user)
+		FEEDBACK_ACCESS_DENIED(user, src)
 	return FALSE
+
+/obj/machinery/law_rack/proc/insert_id_card(obj/item/card/id/card, mob/living/user)
+	if(!card || QDELETED(card))
+		return FALSE
+	if(inserted_id && (QDELETED(inserted_id) || inserted_id.loc != src))
+		inserted_id = null
+	if(inserted_id)
+		if(user)
+			to_chat(user, SPAN_WARNING("\The [src] already has an ID inserted."))
+		return FALSE
+	if(user && !user.unEquip(card, src))
+		FEEDBACK_UNEQUIP_FAILURE(user, card)
+		return FALSE
+
+	card.forceMove(src)
+	inserted_id = card
+	update_rack_lock()
+	if(user)
+		if(slots_unlocked)
+			to_chat(user, SPAN_NOTICE("You insert [card] into [src]. The law rack unlocks."))
+		else
+			to_chat(user, SPAN_WARNING("You insert [card] into [src], but its access is not accepted."))
+	log_law_rack(user, "inserted ID [card]")
+	return TRUE
+
+/obj/machinery/law_rack/proc/eject_id_card(mob/user)
+	if(inserted_id && (QDELETED(inserted_id) || inserted_id.loc != src))
+		inserted_id = null
+	if(!inserted_id)
+		if(user)
+			to_chat(user, SPAN_WARNING("There is no ID inserted in [src]."))
+		update_rack_lock()
+		return FALSE
+
+	var/obj/item/card/id/card = inserted_id
+	inserted_id = null
+	slots_unlocked = FALSE
+	card.forceMove(get_turf(src))
+	if(user)
+		user.put_in_hands(card)
+		to_chat(user, SPAN_NOTICE("You eject [card] from [src]."))
+	log_law_rack(user, "ejected ID [card]")
+	return TRUE
 
 /obj/machinery/law_rack/proc/first_empty_slot()
 	for(var/i = 1 to max_slots)
