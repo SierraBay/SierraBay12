@@ -81,7 +81,9 @@
 		return
 
 	var/datum/malf_research/res = user.research
-	var/datum/malf_research_ability/tar = input("Select your next research target") in res.available_abilities
+	var/datum/malf_research_ability/tar = input("Select your next research target") as null|anything in res.available_abilities
+	if(!tar)
+		return
 	user.select_malf_research(tar)
 
 // HELPER PROCS
