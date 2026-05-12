@@ -85,7 +85,9 @@
 // Дополнительные интеракции с АПЦ
 
 /obj/machinery/power/apc/AIAltClick(mob/living/silicon/user) // Ребут АПЦ, если тот пострадал он требует перезагрузки
-	if(!user || user.incapacitated())
+	if(!user)
+		user = usr
+	if(!istype(user) || user.incapacitated())
 		return FALSE
 	Topic(src, list("reboot"="1"))
 	return TRUE
