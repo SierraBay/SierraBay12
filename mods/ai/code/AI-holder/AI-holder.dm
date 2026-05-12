@@ -97,4 +97,7 @@
 
 /mob/living/silicon/ai/Destroy()
 	Controlling?.AiHolder?.ExitHolder()
+	if(law_rack && !QDELETED(law_rack) && law_rack.linked_ai == src)
+		law_rack.linked_ai = null
+	law_rack = null
 	. = ..()

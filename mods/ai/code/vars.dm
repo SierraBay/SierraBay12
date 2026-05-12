@@ -4,6 +4,7 @@
 
 /mob/living/silicon/ai
 	var/obj/machinery/computer/modular/internal_computer = new /obj/machinery/computer/modular/preset/engineering
+	var/obj/machinery/law_rack/law_rack = null
 
 /obj/machinery/computer/modular/preset/sensors
 	//Синтетики могут смотреть на сенсоры

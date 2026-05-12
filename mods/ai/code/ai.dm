@@ -7,11 +7,12 @@
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = FALSE)
 	. = ..()
+	if(!QDELETED(src))
+		setup_law_rack()
 	add_language(LANGUAGE_SIIK_MAAS, TRUE)
 	add_language(LANGUAGE_LEGALESE, TRUE)
 	add_language(LANGUAGE_RESOMI, TRUE)
 	set_extension(src, /datum/extension/interactive/ntos/ai)
-
 
 // New verbs
 
