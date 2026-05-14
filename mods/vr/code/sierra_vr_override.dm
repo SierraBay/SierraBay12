@@ -124,6 +124,20 @@
 
 	flags = OUTFIT_RESET_EQUIPMENT
 
+/singleton/hierarchy/outfit/vr/surgeon
+	name = "VR - Surgeon"
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	head = /obj/item/clothing/head/surgery/blue
+	glasses = /obj/item/clothing/glasses/hud/health/goggle/prescription
+	mask = /obj/item/clothing/mask/surgical
+	suit = /obj/item/clothing/suit/surgicalapron
+	gloves = /obj/item/clothing/gloves/latex/nitrile
+	shoes = /obj/item/clothing/shoes/blue
+
+/datum/controller/subsystem/virtual_reality
+	var/list/vr_spawn_categories = list()
+	var/list/vr_spawn_categories_by_zone = list()
+	var/list/vr_spawn_cooldown = list()
 
 /datum/controller/subsystem/virtual_reality/Initialize(start_timeofday)
 	. = ..()
@@ -149,20 +163,136 @@
 		var/obj/effect/vr_spawn/V = new(T)
 		GLOB.vr_spawns["Thunderdome Spectators"] += V
 
+
+	// Items
+	vr_spawn_categories["Gun"] = typesof(/obj/item/gun)
+
+	vr_spawn_categories["Ammo"] = typesof(/obj/item/ammo_magazine)
+	vr_spawn_categories["Ammo"] += typesof(/obj/item/ammobox)
+	vr_spawn_categories["Ammo"] += typesof(/obj/item/ammo_casing)
+
+	vr_spawn_categories["Melee weapon"] = typesof(/obj/item/melee)
+	vr_spawn_categories["Melee weapon"] -= typesof(/obj/item/melee/changeling)
+	vr_spawn_categories["Melee weapon"] += typesof(/obj/item/material/sword)
+	vr_spawn_categories["Melee weapon"] += typesof(/obj/item/material/twohanded)
+
+	vr_spawn_categories["Medical supplies"] = list(
+		/obj/item/stack/material/steel/fifty,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/ivbag/nanoblood,
+		/obj/item/reagent_containers/food/snacks/candy/donor,
+		/obj/item/reagent_containers/spray/cleaner,
+		/obj/item/reagent_containers/spray/sterilizine,
+		/obj/item/reagent_containers/glass/bottle/adminordrazine
+	)
+
+	vr_spawn_categories["Food"] = typesof(/obj/item/reagent_containers/food/snacks)
+
+	vr_spawn_categories["Drinks"] = typesof(/obj/item/reagent_containers/food/drinks)
+
+	vr_spawn_categories["Utensil"] = typesof(/obj/item/material/utensil)
+
+	vr_spawn_categories_by_zone["Thunderdome"] = list("Gun", "Ammo", "Melee weapon")
+	vr_spawn_categories_by_zone["Summer Cafe"] = list("Food", "Drinks", "Utensil")
+	vr_spawn_categories_by_zone["Infirmary"] = list("Medical supplies")
+
 /datum/controller/subsystem/virtual_reality/after_mob_creation(mob/living/L, zone)
 	. = ..()
-	if(zone == "Thunderdome")
+	var/area/zone_area = GLOB.active_vr_areas[zone]
+	var/zone_name = ""
+
+	if(zone_area)
+		zone_name = SSvirtual_reality.zone_current_area[zone_area.name]
+
+	if(zone == "Thunderdome" || zone_name && vr_spawn_categories_by_zone[zone_name])
 		L.verbs += /mob/living/proc/select_vr_equipment
 		L.verbs += /mob/living/proc/spawn_vr_item
 
+/datum/controller/subsystem/virtual_reality/proc/vr_spawn_menu(mob/user, list/paths, item_type)
+	var/objectjs = null
+	objectjs = jointext(paths, ";")
+	var/vr_object_html = ""
+	vr_object_html = file2text('mods/vr/html/vr_create_object.html')
+	vr_object_html = replacetext(vr_object_html, "null /* object types */", "\"[objectjs]\"")
+	vr_object_html = replacetext(vr_object_html, "/* ref category */", "[item_type]")
+
+	show_browser(user, replacetext(vr_object_html, "/* ref src */", "\ref[src]"), "window=vr_create_object;size=425x530")
+
+/datum/controller/subsystem/virtual_reality/Topic(href, href_list)
+	if(href_list["vr_object_list"])
+		if(!virtual_mobs_to_occupants[usr])
+			alert("Not a VR mob")
+			return
+		if(vr_spawn_cooldown[usr] && vr_spawn_cooldown[usr] > world.time )
+			to_chat(usr, SPAN_WARNING("Wait a few seconds before spawning a new item."))
+			return
+
+		var/category = href_list["category"]
+		var/area/user_area = get_area(usr)
+		var/zone_name = ""
+
+		if(user_area)
+			zone_name = SSvirtual_reality.zone_current_area[user_area.name]
+
+		if(istype(user_area, /area/tdome))
+			zone_name = "Thunderdome"
+
+		if(!vr_spawn_categories[category] || !vr_spawn_categories_by_zone[zone_name] || !(category in vr_spawn_categories_by_zone[zone_name]))
+			alert("There is no such category.")
+			return
+
+		var/dirty_paths
+		if (istext(href_list["vr_object_list"]))
+			dirty_paths = list(href_list["vr_object_list"])
+		else if (istype(href_list["vr_object_list"], /list))
+			dirty_paths = href_list["vr_object_list"]
+
+		var/paths = list()
+
+		for(var/dirty_path in dirty_paths)
+			var/path = text2path(dirty_path)
+			if (!prevent_spawn_reason(path))
+				if(!(path in vr_spawn_categories[category]))
+					alert("There is no such item.")
+					return
+				paths += path
+
+		if(!paths)
+			alert("The path list you sent is empty")
+			return
+		if(length(paths) > 1)
+			alert("Select fewer object types, (max 1)")
+			return
+
+		var/number = 1
+
+		var/atom/target = get_turf(usr)
+
+		if(target)
+			for (var/path in paths)
+				for (var/i = 0; i < number; i++)
+					if(path in typesof(/turf))
+						var/turf/O = target
+						O.ChangeTurf(path)
+					else
+						new path(target)
+
+		vr_spawn_cooldown[usr] = world.time + 5 SECONDS
+		return
+
+
 /mob/living/proc/select_vr_equipment()
-	set name = "Select Tournament Equipment"
+	set name = "Select VR Equipment"
 	set desc = "Pick a provided set of equipment."
 	set category = "VR"
 	set src = usr
 
-	var/list/available_outfits = list()
+	var/mob/living/carbon/human/H = src
 
+	if(!H)
+		return
+
+	var/list/available_outfits = list()
 
 	available_outfits = list(
 		"NT officer" = /singleton/hierarchy/outfit/nanotrasen/officer,
@@ -190,7 +320,27 @@
 		"Tournamet gear - green" = /singleton/hierarchy/outfit/tournament_gear/green,
 		"Tournamet gear - chef" = /singleton/hierarchy/outfit/tournament_gear/chef,
 		"Tournamet gear - janitor" = /singleton/hierarchy/outfit/tournament_gear/janitor,
-	)
+	) // default
+
+	var/area/user_area = get_area(usr)
+	var/zone_name = ""
+
+	if(user_area)
+		zone_name = SSvirtual_reality.zone_current_area[user_area.name]
+
+	if(zone_name)
+		switch(zone_name)
+			if("Infirmary")
+				available_outfits = list(
+					"Surgeon" = /singleton/hierarchy/outfit/vr/surgeon,
+					"Paramedic" = /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
+				)
+			if("Summer Cafe")
+				available_outfits = list()
+
+	if(!LAZYLEN(available_outfits))
+		to_chat(usr, SPAN_WARNING("No equipment to spawn."))
+		return
 
 	var/outfit_name = input("Select outfit.", "Select equipment.") as null|anything in available_outfits
 
@@ -230,27 +380,31 @@
 
 	var/item_type
 
-	item_type = input("What to spawn", "Select spawn type") as null|anything in list("Gun", "Ammo", "Melee weapon")
+	var/available_categories = list("Gun", "Ammo", "Melee weapon") // default
 
-	if(item_type == "Gun")
-		var/list/available_gun = typesof(/obj/item/gun)
-		var/path_gun = input("Select a gun.", "Select gun.") as null|anything in available_gun
-		if(path_gun)
-			new path_gun(get_turf(src))
-	else if(item_type == "Ammo")
-		var/list/available_ammo = list()
-		available_ammo += typesof(/obj/item/ammo_magazine)
-		available_ammo += typesof(/obj/item/ammobox)
-		available_ammo += typesof(/obj/item/ammo_casing)
+	var/area/user_area = get_area(usr)
+	var/zone_name = ""
 
-		var/path_ammo = input("Select ammo for spawn.", "Select ammo.") as null|anything in available_ammo
-		if(path_ammo)
-			new path_ammo(get_turf(src))
-	else if(item_type == "Melee weapon")
-		var/list/available_melee = typesof(/obj/item/melee)
-		available_melee -= typesof(/obj/item/melee/changeling)
-		available_melee += typesof(/obj/item/material/sword)
-		available_melee += typesof(/obj/item/material/twohanded)
-		var/path_melee = input("Select melee weapon.", "Select melee.") as null|anything in available_melee
-		if(path_melee)
-			new path_melee(get_turf(src))
+	if(user_area)
+		zone_name = SSvirtual_reality.zone_current_area[user_area.name]
+
+	if(zone_name)
+		if(SSvirtual_reality.vr_spawn_categories_by_zone[zone_name])
+			available_categories = SSvirtual_reality.vr_spawn_categories_by_zone[zone_name]
+
+	if(!LAZYLEN(available_categories))
+		to_chat(usr, SPAN_WARNING("No items to spawn."))
+		return
+
+	item_type = input("What to spawn", "Select spawn type") as null|anything in available_categories
+
+	if(item_type)
+		var/list/available_obj = list()
+
+		available_obj = SSvirtual_reality.vr_spawn_categories[item_type]
+
+		if(!LAZYLEN(available_obj))
+			to_chat(usr, SPAN_WARNING("No items to spawn."))
+			return
+
+		SSvirtual_reality.vr_spawn_menu(usr, available_obj, item_type)
