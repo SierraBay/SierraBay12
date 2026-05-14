@@ -20,5 +20,6 @@
 #include "code/datum/misc.dm"
 #include "code/datum/resomi_culture.dm"
 #include "code/datum/species.dm"
+#include "code/hearing_overhaul.dm"
 
 #endif
