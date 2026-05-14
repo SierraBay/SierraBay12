@@ -9,7 +9,7 @@
 
 // Расчет мощности звука выстрела на основе калибра
 /obj/item/gun/proc/calculate_sound_power()
-	if(silenced || fire_sound == null)
+	if(silenced || isnull(fire_sound))
 		sound_power = 0
 		return
 
