@@ -16,7 +16,7 @@
 	if(!isliving(T))
 		return FALSE
 	var/mob/living/L = T
-	// Цель должна быть активным псиоником — иначе паук её «не замечает».
+	// Цель должна быть активным псиоником — иначе бродяга её «не замечает».
 	if(!L.psi || L.psi.suppressed)
 		return FALSE
 	return ..()
@@ -56,6 +56,15 @@
 /mob/living/simple_animal/hostile/vagrant/psi/attack_hand(mob/user)
 	if(!can_perceive_psi_plane(user))
 		return
+	return ..()
+
+/datum/ai_holder/hostile/melee/vagrant/psi/engage_target()
+	if(!ishuman(target))
+		return FALSE
+	var/mob/living/L = target
+	// Цель должна быть активным псиоником — иначе бродяга её «не замечает».
+	if(!L.psi || L.psi.suppressed)
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/hostile/vagrant/psi/Life()

@@ -26,4 +26,4 @@
 			break
 
 	log_and_message_admins("Psionic breach spawned in \the [get_area(start_location)]", location = start_location)
-	new /obj/structure/psinomaly(start_location)
+	new /obj/psi_plane/psinomaly(start_location)
