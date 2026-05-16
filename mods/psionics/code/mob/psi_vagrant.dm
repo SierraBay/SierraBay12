@@ -27,13 +27,16 @@
 // =============================================================================
 
 /mob/living/simple_animal/hostile/vagrant/psi
-	name = "Пси-бродяга"
-	desc = "Странное существо, питающееся псионической энергией. Обитает на гранях реальностей и питается теми, чей разум открыт."
+	desc = "Strange creature, resonating with psionic power. Run."
 
 	maxbodytemp = INFINITY
 
 	invisibility = INVISIBILITY_PSI_PLANE
 	var/stamina_per_tick = 3
+
+	ai_holder = /datum/ai_holder/hostile/melee/vagrant/psi
+
+	faction = "psi_breach"
 
 
 /mob/living/simple_animal/hostile/vagrant/psi/death(gibbed, deathmessage, show_dead_message)
@@ -72,8 +75,10 @@
 	if(!.)
 		return FALSE
 	if(gripping)
+		invisibility = null
 		if(!(get_turf(src) == get_turf(gripping)))
 			gripping = null
+			invisibility = INVISIBILITY_PSI_PLANE
 
 		else if(gripping.psi)
 			var/stamina_volume = gripping.psi.stamina
@@ -85,6 +90,7 @@
 			else
 				gripping.psi.backblast(rand(5,10))
 				gripping = null
+				invisibility = INVISIBILITY_PSI_PLANE
 
 		if(turns_per_move != initial(turns_per_move))
 			turns_per_move = initial(turns_per_move)
