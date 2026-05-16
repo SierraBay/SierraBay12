@@ -101,6 +101,11 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 				if(istype(target))
 					start_following(target)
 			return TOPIC_HANDLED
+		// [SIERRA-ADD]
+		else if (href_list["refresh_follow_targets"])
+			follow()
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 	return ..()
 
 /*
@@ -297,13 +302,145 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghost_to_turf(T)
 	else
 		to_chat(src, SPAN_WARNING("Invalid coordinates."))
-/mob/observer/ghost/verb/follow(datum/follow_holder/fh in get_follow_targets())
+// [SIERRA-ADD]
+/mob/observer/ghost/verb/follow()
 	set category = "Ghost"
 	set name = "Follow"
-	set desc = "Follow and haunt a mob."
+	set desc = "Follow and haunt a mob or object."
 
-	if(!fh.show_entry()) return
-	start_following(fh.followed_instance)
+	var/list/targets = get_follow_targets()
+	if(!length(targets))
+		to_chat(src, SPAN_WARNING("There are no valid targets to follow right now."))
+		return
+
+	var/src_ref = "\ref[src]"
+	var/html = {"
+		<style type="text/css">
+			.action-link { display: inline-block; font-weight: bold; }
+			.search-input { width: 100%; padding: 4px; box-sizing: border-box; }
+		</style>
+		<div style="padding-bottom: 10px;">
+			<input type="text" id="search_input" class="search-input" oninput="window.filterTable()" onkeyup="window.filterTable()" placeholder="Search for names, jobs, types...">
+		</div>
+		<div style="padding-bottom: 10px;">
+			<a href="?src=[src_ref];refresh_follow_targets=1">Refresh</a>
+		</div>
+		<table class="data hover" id="follow_table">
+			<thead>
+				<tr>
+					<th onclick="window.sortTable(0)" style="cursor: pointer; width: 35%;">Name</th>
+					<th onclick="window.sortTable(1)" style="cursor: pointer; width: 20%;">Type</th>
+					<th onclick="window.sortTable(2)" style="cursor: pointer; width: 15%;">Player?</th>
+					<th onclick="window.sortTable(3)" style="cursor: pointer; width: 20%;">Job / Info</th>
+					<th style="width: 10%;">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+	"}
+
+	for (var/datum/follow_holder/fh in targets)
+		if(!fh || !fh.followed_instance || !fh.show_entry()) continue
+
+		var/atom/movable/AM = fh.followed_instance
+		var/name_text = AM.name
+		if (ismob(AM))
+			var/mob/M = AM
+			name_text = M.real_name || M.name
+
+		// 1. Determine Type
+		var/type_text = "Object"
+		var/type_color = "#f1c40f"
+		if (istype(fh, /datum/follow_holder/human))
+			type_text = "Human"
+			type_color = "#e0e0e0"
+		else if (istype(fh, /datum/follow_holder/ai))
+			type_text = "AI"
+			type_color = "#3498db"
+		else if (istype(fh, /datum/follow_holder/pai))
+			type_text = "pAI"
+			type_color = "#85c1e9"
+		else if (istype(fh, /datum/follow_holder/robot))
+			type_text = "Robot"
+			type_color = "#5dade2"
+		else if (istype(fh, /datum/follow_holder/ghost))
+			type_text = "Ghost"
+			type_color = "#7f8c8d"
+		else if (istype(fh, /datum/follow_holder/brain))
+			type_text = "Brain"
+			type_color = "#9b59b6"
+		else if (istype(fh, /datum/follow_holder/alien))
+			type_text = "Alien"
+			type_color = "#9b59b6"
+		else if (istype(fh, /datum/follow_holder/simple_animal))
+			type_text = "Animal"
+			type_color = "#e67e22"
+		else if (istype(fh, /datum/follow_holder/slime))
+			type_text = "Slime"
+			type_color = "#9b59b6"
+		else if (istype(fh, /datum/follow_holder/bot))
+			type_text = "Bot"
+			type_color = "#e67e22"
+		else if (istype(fh, /datum/follow_holder/blob))
+			type_text = "Blob"
+			type_color = "#e74c3c"
+		else if (istype(fh, /datum/follow_holder/supermatter))
+			type_text = "Supermatter"
+			type_color = "#e74c3c"
+		else if (istype(fh, /datum/follow_holder/singularity))
+			type_text = "Singularity"
+			type_color = "#e74c3c"
+		else if (ismob(AM))
+			type_text = "Mob"
+			type_color = "#e67e22"
+
+		// 2. Determine if Player-controlled
+		var/is_player = "NO"
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client || M.key)
+				is_player = "YES"
+
+		// 3. Determine Job/Info
+		var/info_text = "N/A"
+		if (istype(fh, /datum/follow_holder/human))
+			var/mob/living/carbon/human/H = AM
+			info_text = H.job || "No Job"
+			if (H.stat == DEAD)
+				info_text = "[info_text] \[DEAD\]"
+		else if (ismob(AM))
+			var/mob/M = AM
+			info_text = M.stat == DEAD ? "DEAD" : "ALIVE"
+		else
+			if (fh.suffix)
+				info_text = fh.suffix
+
+		var/ref = "\ref[AM]"
+
+		html += {"
+				<tr class="follow-row">
+					<td>[name_text]</td>
+					<td style="color: [type_color]; font-weight: bold;">[type_text]</td>
+					<td>[is_player]</td>
+					<td>[info_text]</td>
+					<td>
+						<a href='?src=[src_ref];track=[ref]' class='action-link'>Follow</a>
+					</td>
+				</tr>
+		"}
+
+
+
+	html += {"
+			</tbody>
+		</table>
+		<script type="text/javascript" src="followlist.js"></script>
+	"}
+
+	send_rsc(src, 'html/scripts/follow_list.js', "followlist.js")
+	var/datum/browser/popup = new(src, "follow_list", "Follow Targets", 800, 500)
+	popup.set_content(html)
+	popup.open()
+// [/SIERRA-ADD]
 
 /mob/observer/ghost/proc/ghost_to_turf(turf/target_turf)
 	if(check_is_holy_turf(target_turf))
