@@ -1352,6 +1352,21 @@
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
+	// [SIERRA-ADD]
+	else if(href_list["priv_msg"])
+		var/mob/M = locate(href_list["priv_msg"])
+		if(ismob(M) && M.client)
+			src.owner.cmd_admin_pm(M.client)
+
+	else if(href_list["refresh_player_list"])
+		player_list()
+
+	else if(href_list["show_connections"])
+		var/mob/M = locate(href_list["show_connections"])
+		if(ismob(M))
+			M.show_associated_connections(usr)
+	// [/SIERRA-ADD]
+
 	else if(href_list["adminplayerobservejump"])
 		// [SIERRA-EDIT]
 		// if(!check_rights(R_MOD|R_ADMIN))	return // SIERRA-EDIT - ORIGINAL
