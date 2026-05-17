@@ -53,9 +53,20 @@
 
 	var/html = {"
 		<style type="text/css">
+			body { overflow: hidden !important; margin: 0; padding: 10px; box-sizing: border-box; }
 			.action-link { display: inline-block; margin-right: 4px; font-family: monospace; }
 			.search-input { width: 100%; padding: 4px; box-sizing: border-box; }
 			.multikey-warn { color: #ff4444; font-weight: bold; margin-left: 5px; }
+			table { border-collapse: collapse; border-spacing: 0; width: 100%; margin: 0; }
+			th {
+				position: -webkit-sticky;
+				position: sticky;
+				top: 0;
+				background: #202020;
+				z-index: 10;
+				box-shadow: inset 0 -1px 0 #333;
+				background-clip: padding-box;
+			}
 		</style>
 		<div style="padding-bottom: 10px;">
 			<input type="text" id="search_input" class="search-input" oninput="window.filterTable()" onkeyup="window.filterTable()" placeholder="Search for keys, names, jobs, IPs...">
@@ -64,19 +75,20 @@
 			<a href="?_src_=holder;refresh_player_list=1">Refresh</a> | 
 			<a href="?_src_=holder;check_antagonist=1">Check Antagonists</a>
 		</div>
-		<table class="data hover" id="player_table">
-			<thead>
-				<tr>
-					<th onclick="window.sortTable(0)" style="cursor: pointer;">Ckey</th>
-					<th onclick="window.sortTable(1)" style="cursor: pointer;">Name</th>
-					<th onclick="window.sortTable(2)" style="cursor: pointer;">Real Name</th>
-					<th onclick="window.sortTable(3)" style="cursor: pointer;">IP Address</th>
-					<th onclick="window.sortTable(4)" style="cursor: pointer;">Job</th>
-					<th onclick="window.sortTable(5)" style="cursor: pointer;">Antag</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody id="player_body">
+		<div style="height: calc(100vh - 140px); overflow-y: auto; border: 1px solid #333; border-radius: 4px;">
+			<table class="data hover" id="player_table">
+				<thead>
+					<tr>
+						<th onclick="window.sortTable(0)" style="cursor: pointer;">Ckey</th>
+						<th onclick="window.sortTable(1)" style="cursor: pointer;">Name</th>
+						<th onclick="window.sortTable(2)" style="cursor: pointer;">Real Name</th>
+						<th onclick="window.sortTable(3)" style="cursor: pointer;">IP Address</th>
+						<th onclick="window.sortTable(4)" style="cursor: pointer;">Job</th>
+						<th onclick="window.sortTable(5)" style="cursor: pointer;">Antag</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody id="player_body">
 	"}
 
 	for (var/mob/player as anything in GLOB.player_list)
@@ -150,14 +162,16 @@
 		"}
 
 
+
 	html += {"
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 		<script type="text/javascript" src="playerlist.js"></script>
 	"}
 
 	send_rsc(usr, 'html/scripts/player_list.js', "playerlist.js")
-	var/datum/browser/popup = new(usr, "player_list", "Player List", 1150, 650)
+	var/datum/browser/popup = new(usr, "player_list", "Player List", 1150, 700)
 	popup.set_content(html)
 	popup.open()
 // [/SIERRA-ADD]
