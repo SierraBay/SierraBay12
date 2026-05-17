@@ -5,7 +5,9 @@ var/global/list/admin_verbs_default = list(
 	// [/SIERRA-ADD],
 	/datum/admins/proc/show_player_panel, //shows an interface for individual players, with various links (links require additional flags), right-click player panel,
 	/client/proc/player_list,
-	/client/proc/player_list_legacy, // [SIERRA-EDIT]
+	//[SIERRA-EDIT] - sierra ui tweaks
+	/client/proc/player_list_legacy,
+	//[/SIERRA-EDIT]
 	/client/proc/secrets,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
