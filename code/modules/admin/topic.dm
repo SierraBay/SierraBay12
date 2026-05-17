@@ -6,6 +6,14 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		return
 
+	// [SIERRA-ADD]
+	if(href_list["refresh_player_panel"])
+		var/mob/M = locate(href_list["refresh_player_panel"])
+		if(ismob(M))
+			show_player_panel(M)
+		return
+	// [/SIERRA-ADD]
+
 	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
 		check_antagonists()
 		return
