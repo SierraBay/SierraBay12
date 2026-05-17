@@ -173,9 +173,9 @@ var/global/floorIsLava = 0
 			rank_link = "<a href='byond://?src=\ref[src];editrights=show'>[M.client.holder.rank]</a>"
 		else
 			rank_link = "Player"
-		player_details = "played by <b>[M.client]</b> \[[rank_link]\]"
+		player_details = "played by <span style='font-weight: bold;'>[M.client]</span> \[[rank_link]\]"
 	else if(last_ckey)
-		player_details = "last occupied by <b>[last_ckey]</b>"
+		player_details = "last occupied by <span style='font-weight: bold;'>[last_ckey]</span>"
 	else
 		player_details = "No client association"
 
@@ -278,7 +278,7 @@ var/global/floorIsLava = 0
 					[M.client.staffwarn ? "<a href='byond://?src=\ref[src];removestaffwarn=\ref[M]' class='action-btn danger' style='flex-grow: 1;'>Remove StaffWarn</a>" : "<a href='byond://?src=\ref[src];setstaffwarn=\ref[M]' class='action-btn warning' style='flex-grow: 1;'>Set StaffWarn</a>"]
 				</div>
 				<div style='margin-top: 8px; font-size: 11px; text-align: center; color: #888;'>
-					Staff Warning Status: <b style='color: [staffwarn_color]'>[staffwarn_text]</b>
+					Staff Warning Status: <span style='font-weight: bold; color: [staffwarn_color]'>[staffwarn_text]</span>
 				</div>
 			</div>
 		"}
