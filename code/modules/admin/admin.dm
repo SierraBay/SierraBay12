@@ -260,6 +260,8 @@ var/global/floorIsLava = 0
 	// 4. Mutes & Warnings Panel
 	if(M.client)
 		var/muted = M.client.prefs.muted
+		var/staffwarn_color = M.client.staffwarn ? "#e74c3c" : "#2ecc71"
+		var/staffwarn_text = M.client.staffwarn ? M.client.staffwarn : "None"
 		body += {"
 			<div class='control-card' style='grid-column: span 2;'>
 				<div class='card-title'>Communication Mutes</div>
@@ -276,7 +278,7 @@ var/global/floorIsLava = 0
 					[M.client.staffwarn ? "<a href='byond://?src=\ref[src];removestaffwarn=\ref[M]' class='action-btn danger' style='flex-grow: 1;'>Remove StaffWarn</a>" : "<a href='byond://?src=\ref[src];setstaffwarn=\ref[M]' class='action-btn warning' style='flex-grow: 1;'>Set StaffWarn</a>"]
 				</div>
 				<div style='margin-top: 8px; font-size: 11px; text-align: center; color: #888;'>
-					Staff Warning Status: <b style='color: [M.client.staffwarn ? "#e74c3c" : "#2ecc71"]'>[M.client.staffwarn ? M.client.staffwarn : "None"]</b>
+					Staff Warning Status: <b style='color: [staffwarn_color]'>[staffwarn_text]</b>
 				</div>
 			</div>
 		"}
