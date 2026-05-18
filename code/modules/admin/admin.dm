@@ -161,7 +161,7 @@ var/global/floorIsLava = 0
 			.goal-text { font-size: 11px; font-style: italic; color: #ccc; background: #222; border-left: 2px solid #f1c40f; padding: 6px; margin-bottom: 6px; border-radius: 0 4px 4px 0; }
 			.refresh-btn:hover { background: #3498db !important; color: #fff !important; border-color: #3498db !important; box-shadow: 0 0 6px rgba(52, 152, 219, 0.4); }
 		</style>
-		<div class="admin-container">
+		<div class="admin-container" id="admin-player-container">
 	"}
 
 	// 1. Profile Hero Card
@@ -334,7 +334,7 @@ var/global/floorIsLava = 0
 	// 7. Collapsible Psionics (if living)
 	if(isliving(M))
 		var/mob/living/psyker = M
-		body += "<details><summary>Psionics Controls</summary><div style='padding-top: 8px;'>"
+		body += "<details id='details-psionics'><summary>Psionics Controls</summary><div style='padding-top: 8px;'>"
 		if(psyker.psi)
 			body += {"
 				<div class='action-buttons' style='margin-bottom: 10px;'>
@@ -361,7 +361,7 @@ var/global/floorIsLava = 0
 
 	// 8. Transformations & DNA blocks (if carbon)
 	if(M.client && !istype(M, /mob/new_player))
-		body += "<details><summary>Transformations & Character DNA</summary><div style='padding-top: 8px;'>"
+		body += "<details id='details-dna'><summary>Transformations & Character DNA</summary><div style='padding-top: 8px;'>"
 		
 		// DNA Blocks Grid (if M.dna is present)
 		if(M.dna && iscarbon(M))
@@ -461,7 +461,7 @@ var/global/floorIsLava = 0
 		"}
 
 	// 9. Other Actions details
-	body += "<details><summary>Other Actions & Languages</summary><div style='padding-top: 8px;'>"
+	body += "<details id='details-actions'><summary>Other Actions & Languages</summary><div style='padding-top: 8px;'>"
 	body += {"
 		<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Speech & Manipulation:</div>
 		<div class='action-buttons' style='margin-bottom: 12px;'>
@@ -497,7 +497,38 @@ var/global/floorIsLava = 0
 	body += "</div></div></details>"
 
 	// End container
-	body += "</div>"
+	body += {"
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var detailsIds = new Array('details-psionics', 'details-dna', 'details-actions');
+				detailsIds.forEach(function(id) {
+					var d = document.getElementById(id);
+					if (d) {
+						var stateId = 'player_panel_' + id + '_[ref(M)]';
+						var savedState = localStorage.getItem(stateId);
+						if (savedState === 'open') d.open = true;
+						else if (savedState === 'closed') d.open = false;
+						
+						d.addEventListener('toggle', function() {
+							localStorage.setItem(stateId, d.open ? 'open' : 'closed');
+						});
+					}
+				});
+
+				var container = document.getElementById('admin-player-container');
+				if (container) {
+					var savedScroll = localStorage.getItem('player_panel_scroll_[ref(M)]');
+					if (savedScroll) {
+						container.scrollTop = parseInt(savedScroll, 10);
+					}
+					container.onscroll = function() {
+						localStorage.setItem('player_panel_scroll_[ref(M)]', container.scrollTop);
+					};
+				}
+			};
+		</script>
+	"}
 
 	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key ? M.key : M.name]", 750, 750)
 	popup.set_content(body)
