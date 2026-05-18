@@ -104,7 +104,7 @@
 	required_tech_levels = list()
 	cost = 2500
 
-	unlocks_designs = list("null _suit","rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_powersink","rig_ai_container","rig_taser","rig_egun","rig_cooler","rig_kinetic", "self_repair", "ai_advanced")
+	unlocks_designs = list("null _suit","rig_nvg","rig_plasmacutter", "rig_rcd","rig_jets","rig_decompiler","rig_powersink","rig_ai_container","rig_taser","rig_egun","rig_cooler","rig_kinetic", "rig_radiation", "self_repair", "ai_advanced")
 
 /datum/technology/robo/heavy_mech
 	name = "Heavy Mech Design"
