@@ -121,8 +121,8 @@
 		var/is_multiban = 0
 		var/ip_address = "No Client"
 		if (player.client)
-			is_multicon = player.have_connection_warn
-			is_multiban = player.have_bans_warn
+			is_multicon = player.client.have_connection_warn
+			is_multiban = player.client.have_bans_warn
 			ip_address = player.client.address || "localhost"
 
 		var/antag_role = "NO"
