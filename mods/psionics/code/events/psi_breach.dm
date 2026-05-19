@@ -26,4 +26,7 @@
 			break
 
 	log_and_message_admins("Psionic breach spawned in \the [get_area(start_location)]", location = start_location)
-	new /obj/psi_plane/psinomaly(start_location)
+
+	var/list/possible_types = typesof(/obj/psi_plane/psinomaly)
+	var/picked_type = pick(possible_types)
+	new picked_type(start_location)
