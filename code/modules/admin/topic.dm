@@ -1373,6 +1373,11 @@
 		var/mob/M = locate(href_list["show_connections"])
 		if(ismob(M))
 			M.show_associated_connections(usr)
+
+	else if(href_list["show_bans"])
+		var/mob/M = locate(href_list["show_bans"])
+		if(ismob(M))
+			M.show_associated_bans(usr)
 	// [/SIERRA-ADD]
 
 	else if(href_list["adminplayerobservejump"])

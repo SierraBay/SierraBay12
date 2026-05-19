@@ -44,19 +44,13 @@
 
 // [SIERRA-ADD]
 /datum/admins/proc/player_list()
-	var/list/all_ips = list()
-	var/list/all_cids = list()
-	for (var/mob/player as anything in GLOB.player_list)
-		if(!player.client) continue
-		if(player.client.address) all_ips[player.client.address]++
-		if(player.client.computer_id) all_cids[player.client.computer_id]++
-
 	var/html = {"
 		<style type="text/css">
 			body { overflow: hidden !important; margin: 0; padding: 10px; box-sizing: border-box; }
 			.action-link { display: inline-block; margin-right: 4px; font-family: monospace; }
 			.search-input { width: 100%; padding: 4px; box-sizing: border-box; }
 			.multikey-warn { color: #ff4444; font-weight: bold; margin-left: 5px; }
+			.multiban-warn { color: #ff0000 ; font-weight: bold; margin-left: 5px; }
 			table { border-collapse: collapse; border-spacing: 0; width: 100%; margin: 0; }
 			th {
 				position: -webkit-sticky;
@@ -72,7 +66,7 @@
 			<input type="text" id="search_input" class="search-input" oninput="window.filterTable()" onkeyup="window.filterTable()" placeholder="Search for keys, names, jobs, IPs...">
 		</div>
 		<div style="padding-bottom: 10px;">
-			<a href="?_src_=holder;refresh_player_list=1">Refresh</a> | 
+			<a href="?_src_=holder;refresh_player_list=1">Refresh</a> |
 			<a href="?_src_=holder;check_antagonist=1">Check Antagonists</a>
 		</div>
 		<div style="height: calc(100vh - 140px); overflow-y: auto; border: 1px solid #333; border-radius: 4px;">
@@ -123,30 +117,30 @@
 			job_text = "[player.type]"
 			job_color = "#f1c40f"
 
-		var/is_multikey = 0
+		var/is_multicon = 0
+		var/is_multiban = 0
 		var/ip_address = "No Client"
 		if (player.client)
+			is_multicon = player.have_connection_warn
+			is_multiban = player.have_bans_warn
 			ip_address = player.client.address || "localhost"
-			var/list/conns = player.fetch_connections()
-			var/list/unique_keys = _unique_ckeys_from_connections(conns)
-			if (length(unique_keys) > 1)
-				is_multikey = 1
 
 		var/antag_role = "NO"
 		if (is_special_character(player))
 			antag_role = (player.mind && player.mind.special_role) ? player.mind.special_role : "Antagonist"
 
 		var/antag_html = (antag_role != "NO") ? "<span class='highlight'>[antag_role]</span>" : "NO"
-		var/multikey_html = is_multikey ? "<a href='?src=\ref[src];show_connections=\ref[player]' class='multikey-warn' title='Multiple connections detected!'>&#91;!&#93;</a>" : ""
+		var/multicon_html = is_multicon ? "<a href='?src=\ref[src];show_connections=\ref[player]' class='multikey-warn' title='Multiple connections detected!'>&#91;!&#93;</a>" : ""
+		var/multiban_html = is_multiban ? "<a href='?src=\ref[src];show_bans=\ref[player]' class='multiban-warn' title='Associated bans detected!'>&#91;!&#93;</a>" : ""
 		var/ref = "\ref[player]"
 		var/src_ref = "\ref[src]"
 
 		html += {"
 				<tr class="player-row">
-					<td>[player.key] [multikey_html]</td>
+					<td>[player.key] [multiban_html]</td>
 					<td>[player.name]</td>
 					<td>[player.real_name]</td>
-					<td>[ip_address]</td>
+					<td>[ip_address] [multicon_html]</td>
 					<td style="color: [job_color];">[job_text]</td>
 					<td>[antag_html]</td>
 					<td style="white-space: nowrap;">
@@ -175,5 +169,3 @@
 	popup.set_content(html)
 	popup.open()
 // [/SIERRA-ADD]
-
-
