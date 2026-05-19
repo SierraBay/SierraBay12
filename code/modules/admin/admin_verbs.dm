@@ -400,6 +400,10 @@ var/global/list/admin_verbs_mod = list(
 		debug_verbs,
 		admin_verbs_mod
 		)
+	//[SIERRA-ADD]
+	if(is_special_character(mob))
+		verbs += /client/proc/aooc
+	//[/SIERRA-ADD]
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"

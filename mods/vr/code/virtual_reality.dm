@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(virtual_reality)
 	var/list/special_zones = list(
 		"Thunderdome"
 	) // special, unchangable zones
+	var/list/zone_current_area = list()
 	var/static/list/vr_blacklist = list(
 		/obj/item/disk/nuclear,
 		/obj/item/clothing/accessory/bs_silk,
@@ -260,10 +261,6 @@ SUBSYSTEM_DEF(virtual_reality)
 
 	var/client/C = virtual_clients[vir_mob.client]
 
-	virtual_occupants_to_mobs[occ_mob] = null
-	virtual_occupants_to_mobs -= occ_mob
-	virtual_mobs_to_occupants[vir_mob] = null
-	virtual_mobs_to_occupants -= vir_mob
 	virtual_clients -= C
 
 	if (!silent)
@@ -293,6 +290,12 @@ SUBSYSTEM_DEF(virtual_reality)
 			for (var/datum/skill_buff/virtual_reality/VRB in vr_buffs)
 				VRB.remove()
 		occ_mob.lastarea = vir_mob.lastarea
+
+	virtual_occupants_to_mobs[occ_mob] = null
+	virtual_occupants_to_mobs -= occ_mob
+	virtual_mobs_to_occupants[vir_mob] = null
+	virtual_mobs_to_occupants -= vir_mob
+
 	QDEL_NULL(vir_mob)
 	return TRUE
 
@@ -423,6 +426,10 @@ SUBSYSTEM_DEF(virtual_reality)
 	if(istype(source, /area/virtual_reality/infirmary))
 		for(var/obj/machinery/body_scanconsole/C in target)
 			C.FindScanner()
+		for(var/obj/machinery/vitals_monitor/V in target)
+			var/obj/machinery/optable/O = locate(/obj/machinery/optable) in range(1, V)
+			if(O)
+				V.update_optable(O)
 
 /datum/controller/subsystem/virtual_reality/proc/after_mob_creation(mob/living/L, zone)
 	if(!L)
@@ -524,6 +531,7 @@ SUBSYSTEM_DEF(virtual_reality)
 	after_template_load(A, active_area)
 	to_chat(user, SPAN_NOTICE("Successfully loaded new area: [A.name]!"))
 	loading_tracker[zone] = FALSE
+	zone_current_area[active_area.name] = template_area
 	if (loaded_normally)
 		playsound(vr_program.program.computer.holder, 'sound/machines/ping.ogg', 50)
 	return TRUE

@@ -3,66 +3,166 @@
 		min-width: 70px;
 		margin: 0px 2px 0px 0px;
 	}
+	.ckey-scroll {
+		max-height: 620px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 </style>
 
 {{if data}}
 	{{if data.disabled}}
 		<div class='notice'><center><h2><span class="bad">Вайтлист на ксеносов отключен в конфигурации сервера.</span></h2></center></div><br>
 	{{/if}}
-	<div class='notice'><center><h3><span class="average">Режим: <b>config/alienwhitelist.txt</b><br>Применение изменений сохраняет файл и перезагружает вайтлист в память.</span></h3></center></div><br>
+
+	<center>
+	{{if data.ui_layout == "compact"}}
+		{{:helper.link('Вид: компакт — переключить на таблицу', null, {'toggle_layout' : 1}, null, 'yellowButton')}}
+	{{else}}
+		{{:helper.link('Вид: таблица (все) — переключить на компакт', null, {'toggle_layout' : 1}, null, 'yellowButton')}}
+	{{/if}}
+	</center>
+	<br>
+
+	{{if data.ui_layout == "compact"}}
+	<table style="width:100%", align="center" border="0">
+	<tr>
+		<td style="width:22%; vertical-align:top;">
+			<div class='notice'><center><h3><span class="average">Ckeys</span></h3></center></div>
+			<center>{{:data.searchbox}}</center>
+			<div class="ckey-scroll">
+			<table style="width:100%" align="center" border="1" rules="rows">
+				<tr><th>Ckey
+				{{for data.ckey_list :ckey_value:ckey_key}}
+					<tr>
+						<td>{{:helper.link(ckey_value, "search", {'pick_ckey' : ckey_value}, data.selected_ckey == ckey_value ? 'selected' : null)}}
+				{{empty}}
+					<tr><td><span class="average">Список пуст</span>
+				{{/for}}
+			</table>
+			</div>
+		</td>
+
+		<td style="width:2%;"></td>
+
+		<td style="width:76%; vertical-align:top;">
+			{{if data.sql_whitelist_mode}}
+				<div class='notice'><center><h3><span class="average">Режим: <b>SQL</b> (таблица <code>whitelist</code>)<br>Карточка выбранного ckey.</span></h3></center></div>
+			{{else}}
+				<div class='notice'><center><h3><span class="average">Режим: <b>config/alienwhitelist.txt</b></span></h3></center></div>
+			{{/if}}
+			<br>
+			<table style="width:100%" align="center">
+				<tr>
+					<th>{{:helper.link('<span class="bad">ПРИМЕНИТЬ ИЗМЕНЕНИЯ</span>', 'arrowstop-1-n', {'send': 1}, null, 'yellowButton')}}
+					<th>{{:helper.link('Обновить из источника', 'refresh', {'refresh': 1}, null)}}
+				</tr>
+			</table>
+			<br>
+			<div class='notice'><center><h3><span class="average">Выбран: <b>{{:data.selected_ckey}}</b></span></h3></center></div>
+			<table style="width:100%" align="center" border="1" rules="rows">
+				<tr>
+					<th>Race
+					<th>State
+					{{if data.sql_whitelist_mode}}
+						<th>Admin
+						<th>Date grant
+						<th>Date remove
+					{{/if}}
+				{{if data.selected_entry}}
+					{{for data.lowerallxenos :name_value:name_key}}
+						<tr>
+						<td>{{:name_value}}
+						<td>
+						{{for data.selected_entry.YES :xenos_value:xenos_key}}
+							{{if xenos_value == name_value}}
+								{{:helper.link("ACTIVE", "check", {'ckey' : data.selected_ckey, 'race' : name_value}, null, 'selected')}}
+							{{/if}}
+						{{/for}}
+						{{for data.selected_entry.NO :xenos_value:xenos_key}}
+							{{if xenos_value == name_value}}
+								{{:helper.link("NO", "close", {'ckey' : data.selected_ckey, 'race' : name_value}, null)}}
+							{{/if}}
+						{{/for}}
+						{{for data.selected_entry.GRANT :xenos_value:xenos_key}}
+							{{if xenos_value == name_value}}
+								{{:helper.link("GRANT", "plus", {'ckey' : data.selected_ckey, 'race' : name_value}, null, 'yellowButton')}}
+							{{/if}}
+						{{/for}}
+						{{for data.selected_entry.REVOKE :xenos_value:xenos_key}}
+							{{if xenos_value == name_value}}
+								{{:helper.link("REVOKE", "cancel", {'ckey' : data.selected_ckey, 'race' : name_value}, null, 'redButton')}}
+							{{/if}}
+						{{/for}}
+						{{if data.sql_whitelist_mode}}
+							<td>{{if data.selected_meta && data.selected_meta[name_value]}}{{:data.selected_meta[name_value].ackey}}{{/if}}
+							<td>{{if data.selected_meta && data.selected_meta[name_value]}}{{:data.selected_meta[name_value].date}}{{/if}}
+							<td>{{if data.selected_meta && data.selected_meta[name_value]}}{{:data.selected_meta[name_value].date_remove}}{{/if}}
+						{{/if}}
+					{{/for}}
+				{{else}}
+					<tr><td colspan="{{if data.sql_whitelist_mode}}5{{else}}2{{/if}}"><span class="average">Выберите ckey слева.</span>
+				{{/if}}
+			</table>
+		</td>
+	</tr>
+	</table>
+
+	{{else}}
+	{{if data.sql_whitelist_mode}}
+		<div class='notice'><center><h3><span class="average">Режим: <b>SQL</b> (таблица <code>whitelist</code>)<br>Матрица всех ckey × расы. «Применить» — запись в БД и перечитка вайтлиста.</span></h3></center></div><br>
+	{{else}}
+		<div class='notice'><center><h3><span class="average">Режим: <b>config/alienwhitelist.txt</b><br>Применение изменений сохраняет файл и перезагружает вайтлист в память.</span></h3></center></div><br>
+	{{/if}}
 	<table style="width:100%", align="center">
-	<tr>
-		<th>
-			{{:helper.link('<span class="bad">ПРИМЕНИТЬ ИЗМЕНЕНИЯ</span>', 'arrowstop-1-n', {'send': 1}, null, 'yellowButton')}}
-		<th>
-			{{:helper.link('Получить ВЛ | Сбросить изменения', 'refresh', {'refresh': 1}, null)}}
-	<tr>
+		<tr>
+			<th>{{:helper.link('<span class="bad">ПРИМЕНИТЬ ИЗМЕНЕНИЯ</span>', 'arrowstop-1-n', {'send': 1}, null, 'yellowButton')}}
+			<th>{{:helper.link('Обновить из источника', 'refresh', {'refresh': 1}, null)}}
+		</tr>
 	</table>
 	<br>
 	<center>{{:data.searchbox}}</center>
 	<hr>
 	<table style="width:100%", align="center", border="1", rules="rows">
-	<tr>
-	{{if data.currentlist}}
-		<th>
-			{{:helper.link("Ckey", "search", {'sorting' : "ckey"}, data.sorting ? data.sorting == "ckey" ? 'selected' : null : null)}}
-		{{for data.lowerallxenos :name_value:name_key}}
-			<th>
-				{{:helper.link(name_value, "search", {'sorting' : name_value}, data.sorting ? data.sorting == name_value ? 'selected' : null : null)}}
-		{{/for}}
-	{{/if}}
-	{{for data.currentlist}}
 		<tr>
-		<th>
-			{{:value.ckey}}
-		{{for data.lowerallxenos :name_value:name_key}}
-			<td>
-			{{for value.YES :xenos_value:xenos_key}}
-				{{if xenos_value == name_value}}
-					{{:helper.link(name_value, "check", {'ckey' : value.ckey, 'race' : name_value}, null, 'selected')}}
-				{{/if}}
+		{{if data.currentlist}}
+			<th>{{:helper.link("Ckey", "search", {'sorting' : "ckey"}, data.sorting ? data.sorting == "ckey" ? 'selected' : null : null)}}
+			{{for data.lowerallxenos :name_value:name_key}}
+				<th>{{:helper.link(name_value, "search", {'sorting' : name_value}, data.sorting ? data.sorting == name_value ? 'selected' : null : null)}}
 			{{/for}}
-			{{for value.NO :xenos_value:xenos_key}}
-				{{if xenos_value == name_value}}
-					{{:helper.link(name_value, "close", {'ckey' : value.ckey, 'race' : name_value}, null)}}
-				{{/if}}
+		{{/if}}
+		{{for data.currentlist}}
+			<tr>
+			<th>{{:value.ckey}}
+			{{for data.lowerallxenos :name_value:name_key}}
+				<td>
+				{{for value.YES :xenos_value:xenos_key}}
+					{{if xenos_value == name_value}}
+						{{:helper.link(name_value, "check", {'ckey' : value.ckey, 'race' : name_value}, null, 'selected')}}
+					{{/if}}
+				{{/for}}
+				{{for value.NO :xenos_value:xenos_key}}
+					{{if xenos_value == name_value}}
+						{{:helper.link(name_value, "close", {'ckey' : value.ckey, 'race' : name_value}, null)}}
+					{{/if}}
+				{{/for}}
+				{{for value.GRANT :xenos_value:xenos_key}}
+					{{if xenos_value == name_value}}
+						{{:helper.link(name_value, "plus", {'ckey' : value.ckey, 'race' : name_value}, null, 'yellowButton')}}
+					{{/if}}
+				{{/for}}
+				{{for value.REVOKE :xenos_value:xenos_key}}
+					{{if xenos_value == name_value}}
+						{{:helper.link(name_value, "cancel", {'ckey' : value.ckey, 'race' : name_value}, null, 'redButton')}}
+					{{/if}}
+				{{/for}}
 			{{/for}}
-			{{for value.GRANT :xenos_value:xenos_key}}
-				{{if xenos_value == name_value}}
-					{{:helper.link(name_value, "plus", {'ckey' : value.ckey, 'race' : name_value}, null, 'yellowButton')}}
-				{{/if}}
-			{{/for}}
-			{{for value.REVOKE :xenos_value:xenos_key}}
-				{{if xenos_value == name_value}}
-					{{:helper.link(name_value, "cancel", {'ckey' : value.ckey, 'race' : name_value}, null, 'redButton')}}
-				{{/if}}
-			{{/for}}
+		{{empty}}
+			<tr>
+				<td><center><h1><span class="average">Список пуст. Внесите новый ckey.</span></h1></center></td>
 		{{/for}}
-	{{empty}}
-		<tr>
-			<center><h1><span class="average">Список пуст. Внесите новый ckey.</span></h1></center>
-	{{/for}}
 	</table>
+	{{/if}}
 {{else}}
 	<center><h2><span class="bad">Интерфейс не получил никаких данных.<br>Перезагрузите окно.</span></h2></center>
 {{/if}}

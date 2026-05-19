@@ -23,6 +23,7 @@
 	new_mob.verbs += /mob/living/proc/clear_reagents_vr
 	new_mob.verbs += /mob/living/proc/rejuvenate_self_vr
 	new_mob.verbs += /mob/living/proc/toggle_max_skills_vr
+	new_mob.verbs += /mob/living/proc/change_appearance_vr // new
 	GLOB.death_event.register(virtual_mob, SSvirtual_reality, /datum/controller/subsystem/virtual_reality/proc/remove_virtual_mob, virtual_mob)
 	GLOB.death_event.register(real_mob, SSvirtual_reality, /datum/controller/subsystem/virtual_reality/proc/remove_virtual_mob, real_mob)
 	GLOB.destroyed_event.register(virtual_mob, SSvirtual_reality, /datum/controller/subsystem/virtual_reality/proc/remove_virtual_mob, real_mob)
@@ -88,3 +89,13 @@
 			buffs[S.type] = SKILL_MAX
 		user.buff_skill(buffs, buff_type = /datum/skill_buff/virtual_reality)
 		to_chat(user, SPAN_NOTICE("You connect yourself to a database and augment your skills. Your virtual body is now a master in all skills."))
+
+/mob/living/proc/change_appearance_vr()
+	set name = "Appearance editor"
+	set desc = "Change your appearance at will."
+	set category = "VR"
+	set src = usr
+
+	var/mob/living/carbon/human/user = usr
+	if(user)
+		user.change_appearance((APPEARANCE_BASIC|APPEARANCE_RACE), state = GLOB.z_state)
