@@ -19,6 +19,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/is_manifest = FALSE
 	var/next_visibility_toggle = 0
+	// [SIERRA-ADD]
+	var/next_dead_tele = 0
+	var/next_follow = 0
+	// [/SIERRA-ADD]
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -293,6 +297,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Teleport"
 	set desc = "Teleport to a location."
 
+	// [SIERRA-ADD]
+	if(next_dead_tele > world.time)
+		return
+
+	next_dead_tele = world.time + 1 SECOND
+	// [/SIERRA-ADD]
+
 	var/list/areas = area_repository.get_areas_by_z_level()
 	if(!length(areas))
 		to_chat(src, SPAN_WARNING("There are no valid teleport targets available."))
@@ -333,6 +344,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	"}
 
 	for(var/area_name in areas)
+		// [SIERRA-ADD]
+		CHECK_TICK
+		// [/SIERRA-ADD]
 		var/area/A = areas[area_name]
 		if(!A) continue
 
@@ -350,14 +364,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else if(istype(sector, /obj/overmap/visitable/sector/exoplanet) || istype(A, /area/exoplanet))
 			type_text = "Planet"
 			type_color = "#e67e22"
-		else if(istype(sector, /obj/overmap/visitable/ship) || istype(A, /area/shuttle) || findtext(A.name, "shuttle") || findtext(A.name, "ship") || findtext(A.name, "station") || findtext(A.name, "outpost") || findtext("[A.type]", "shuttle") || findtext("[A.type]", "station") || findtext("[A.type]", "ship"))
-			type_text = "Ship/Station"
-			type_color = "#5dade2"
+		else
+			var/a_type = "[A.type]"
+			if(istype(sector, /obj/overmap/visitable/ship) || istype(A, /area/shuttle) || findtext(A.name, "shuttle") || findtext(A.name, "ship") || findtext(A.name, "station") || findtext(A.name, "outpost") || findtext(a_type, "shuttle") || findtext(a_type, "station") || findtext(a_type, "ship"))
+				type_text = "Ship/Station"
+				type_color = "#5dade2"
 
 		var/ref = "\ref[A]"
 
 		// Clean up coordinates suffix from display name
-		var/display_name = replacetext_char(area_name, regex(@" \[\d+,\d+,\d+\]$"), "")
+		var/bracket_index = findlasttext(area_name, " \[")
+		var/display_name = bracket_index ? copytext(area_name, 1, bracket_index) : area_name
 
 		html += {"
 				<tr class="tele-row" data-z="[A.z]">
@@ -398,6 +415,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Follow"
 	set desc = "Follow and haunt a mob or object."
+
+	// [SIERRA-ADD]
+	if(next_follow > world.time)
+		return
+
+	next_follow = world.time + 1 SECOND
+	// [/SIERRA-ADD]
 
 	var/list/targets = get_follow_targets()
 	if(!length(targets))
@@ -440,6 +464,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	"}
 
 	for (var/datum/follow_holder/fh in targets)
+		// [SIERRA-ADD]
+		CHECK_TICK
+		// [/SIERRA-ADD]
 		if(!fh || !fh.followed_instance || !fh.show_entry()) continue
 
 		var/atom/movable/AM = fh.followed_instance
