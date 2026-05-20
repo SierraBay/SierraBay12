@@ -3,7 +3,7 @@
 	species_to_job_whitelist = list(
 		/singleton/species/adherent = list(ADHERENT_JOBS),
 		/singleton/species/nabber = list(NABBER_JOBS),
-		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
+		/singleton/species/vox = list(SILICON_JOBS),
 		/singleton/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
