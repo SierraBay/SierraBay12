@@ -107,33 +107,115 @@
 		alert("Not before round-start!", "Alert")
 		return
 
-	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
-	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='byond://?src=\ref[src];role_edit=1'>Edit</a><br>"
-	out += "<hr>"
-	out += "Factions and special roles:<br><table>"
+	// [SIERRA-EDIT]
+	var/datum/goal/ambition/ambition = SSgoals.ambitions[src]
+
+	var/antag_rows = ""
 	var/list/all_antag_types = GLOB.all_antag_types_
 	for(var/antag_type in all_antag_types)
 		var/datum/antagonist/antag = all_antag_types[antag_type]
-		out += "[antag.get_panel_entry(src)]"
-	out += "</table><hr>"
-	out += "<b>Objectives</b></br>"
+		antag_rows += "[antag.get_panel_entry(src)]"
 
+	var/objectives_html = ""
 	if(objectives && length(objectives))
 		var/num = 1
 		for(var/datum/objective/O in objectives)
-			out += "<b>Objective #[num]:</b> [O.explanation_text] "
-			out += " <a href='byond://?src=\ref[src];obj_delete=\ref[O]'>\[remove\]</a><br>"
+			objectives_html += {"
+				<div class="obj-item">
+					<span class="obj-text"><span style="font-weight: bold; color: #e67e22; margin-right: 4px;">#[num]</span> [O.explanation_text]</span>
+					<a href='byond://?src=\ref[src];obj_delete=\ref[O]' class='action-btn danger' style='margin: 0; padding: 2px 6px; font-size: 10px;'>Remove</a>
+				</div>
+			"}
 			num++
-		out += "<br><a href='byond://?src=\ref[src];obj_announce=1'>\[announce objectives\]</a>"
-
+		objectives_html += "<div style='margin-top: 10px;'><a href='byond://?src=\ref[src];obj_announce=1' class='action-btn warning'>Announce Objectives</a> <a href='byond://?src=\ref[src];obj_add=1' class='action-btn'>Add Objective</a></div>"
 	else
-		out += "None."
-	out += "<br><a href='byond://?src=\ref[src];obj_add=1'>\[add\]</a><br><br>"
+		objectives_html = "<i>No objectives defined.</i><br/><br/><a href='byond://?src=\ref[src];obj_add=1' class='action-btn'>Add Objective</a>"
 
-	var/datum/goal/ambition/ambition = SSgoals.ambitions[src]
-	out += "<b>Ambitions:</b> [ambition ? ambition.description : "None"] <a href='byond://?src=\ref[src];amb_edit=\ref[src]'>\[edit\]</a></br>"
-	show_browser(usr, out, "window=edit_memory[src]")
+	var/out = {"
+		<style type="text/css">
+			body { overflow: hidden !important; margin: 0; padding: 10px; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #272727; color: #fff; }
+			.admin-container { height: calc(100vh - 20px); overflow-y: auto; padding-right: 5px; }
+			.hero-card { background: #1c1c1c; border: 1px solid #333; border-radius: 6px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+			.hero-left { display: flex; align-items: center; gap: 10px; }
+			.hero-title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
+			.hero-sub { font-size: 11px; color: #aaa; }
+			.role-badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; background: rgba(52, 152, 219, 0.15); border: 1px solid rgba(52, 152, 219, 0.3); color: #3498db; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+
+			.control-card { background: #1c1c1c; border: 1px solid #333; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+			.card-title { font-size: 12px; font-weight: bold; color: #3498db; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; border-bottom: 1px solid #333; padding-bottom: 6px; }
+
+			.action-btn { display: inline-block; padding: 4px 8px; border-radius: 4px; background: #222; border: 1px solid #444; color: #ddd; font-weight: bold; font-size: 11px; transition: all 0.2s; text-decoration: none; margin-right: 4px; margin-bottom: 4px; }
+			.action-btn:hover { background: #3498db; border-color: #3498db; color: #fff; }
+			.action-btn.danger { background: rgba(231, 76, 60, 0.15); border-color: #e74c3c; color: #e74c3c; }
+			.action-btn.danger:hover { background: #e74c3c; color: #fff; }
+			.action-btn.warning { background: rgba(241, 196, 15, 0.15); border-color: #f1c40f; color: #f1c40f; }
+			.action-btn.warning:hover { background: #f1c40f; color: #222; }
+
+			.antag-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+			.antag-table td { padding: 8px; border-bottom: 1px solid #2a2a2a; font-size: 12px; vertical-align: middle; }
+			.antag-table tr:last-child td { border-bottom: none; }
+			.antag-table a { color: #3498db; text-decoration: none; font-weight: bold; padding: 4px 8px; background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 4px; margin-left: 6px; transition: all 0.2s; display: inline-flex; align-items: center; }
+			.antag-table a:hover { background: #3498db; color: #fff; border-color: #3498db; }
+
+			.obj-item { background: #222; border-left: 3px solid #e67e22; padding: 8px; margin-bottom: 8px; border-radius: 0 4px 4px 0; font-size: 11px; display: flex; align-items: center; justify-content: space-between; }
+			.obj-text { color: #eee; flex-grow: 1; margin-right: 10px; }
+		</style>
+		<div class="admin-container" id="admin-container">
+			<div class="hero-card">
+				<div class="hero-left">
+					<div>
+						<div class="hero-title">[name][(current && current.real_name != name) ? " (as [current.real_name])" : ""]</div>
+						<div class="hero-sub">Key: <span style="font-weight: bold;">[key || "No key"]</span> [active ? "(synced)" : "(not synced)"]</div>
+					</div>
+				</div>
+				<div class="role-badge">
+					Role: <span style="color: #fff;">[assigned_role || "None"]</span>
+					<a href='byond://?src=\ref[src];role_edit=1' class='action-btn' style='margin: 0 0 0 8px; padding: 2px 6px; font-size: 10px;'>Edit</a>
+				</div>
+			</div>
+
+			<div class="control-card">
+				<div class="card-title">Factions & Special Roles</div>
+				<table class="antag-table">
+					[antag_rows]
+				</table>
+			</div>
+
+			<div class="control-card">
+				<div class="card-title">Objectives & Ambitions</div>
+				<div style="margin-bottom: 12px;">
+					<span style="font-weight: bold; color: #e67e22; font-size: 11px; text-transform: uppercase;">Objectives:</span>
+					<div style="margin-top: 6px;">
+						[objectives_html]
+					</div>
+				</div>
+				<div style="border-top: 1px solid #333; padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+					<div>
+						<span style="font-weight: bold; color: #e67e22; font-size: 11px; text-transform: uppercase;">Ambitions:</span>
+						<span style="font-size: 11px; color: #ccc; margin-left: 8px;">[ambition ? ambition.description : "None"]</span>
+					</div>
+					<a href='byond://?src=\ref[src];amb_edit=\ref[src]' class='action-btn' style='margin: 0;'>Edit Ambitions</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var container = document.getElementById('admin-container');
+				if (container) {
+					var savedScroll = localStorage.getItem('traitor_panel_scroll_[ref(src)]');
+					if (savedScroll) {
+						container.scrollTop = parseInt(savedScroll, 10);
+					}
+					container.onscroll = function() {
+						localStorage.setItem('traitor_panel_scroll_[ref(src)]', container.scrollTop);
+					};
+				}
+			};
+		</script>
+	"}
+
+	show_browser(usr, out, "window=edit_memory[ref(src)];size=600x700")
+	// [/SIERRA-EDIT]
 
 /datum/mind/Topic(href, href_list)
 
@@ -464,6 +546,12 @@
 		for(var/datum/objective/objective in objectives)
 			to_chat(current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
+
+	// [SIERRA-ADD]
+	if(is_admin)
+		edit_memory()
+	return TRUE
+	// [/SIERRA-ADD]
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()

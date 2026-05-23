@@ -47,27 +47,190 @@ var/global/floorIsLava = 0
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/body = "<html><head><title>Options for [M.key]</title></head>"
-	body += "<body>Options panel for <b>[M]</b>"
+	// [SIERRA-EDIT]
 	var/last_ckey = LAST_CKEY(M)
+	var/is_online = M.client ? 1 : 0
+	var/status_class = is_online ? "status-online" : "status-offline"
+	var/status_text = is_online ? "Online" : "Offline"
+	var/css_open_selector = "details\[open\]"
+	var/is_paralyzed = 0
+	var/current_species = ""
+	if(isliving(M))
+		var/mob/living/L = M
+		is_paralyzed = L.admin_paralyzed
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.species)
+				current_species = H.species.name
+
+	var/is_ghost = istype(M, /mob/observer/ghost)
+	var/is_larva = 0
+	var/is_nymph = istype(M, /mob/living/carbon/alien/diona)
+	var/is_slime = istype(M, /mob/living/carbon/slime)
+	var/is_adult_slime = istype(M, /mob/living/carbon/slime) && M:is_adult
+	var/is_monkey = istype(M, /mob/living/carbon/human/monkey)
+	var/is_cyborg = istype(M, /mob/living/silicon/robot)
+	var/is_runtime = istype(M, /mob/living/simple_animal/passive/cat/fluff/Runtime)
+	var/is_cat = istype(M, /mob/living/simple_animal/passive/cat) && !is_runtime
+	var/is_ian = istype(M, /mob/living/simple_animal/passive/corgi/Ian)
+	var/is_corgi = istype(M, /mob/living/simple_animal/passive/corgi) && !is_ian
+	var/is_coffee = istype(M, /mob/living/simple_animal/passive/crab/Coffee)
+	var/is_crab = istype(M, /mob/living/simple_animal/passive/crab) && !is_coffee
+	var/is_constr_arm = istype(M, /mob/living/simple_animal/construct/armoured)
+	var/is_constr_bld = istype(M, /mob/living/simple_animal/construct/builder)
+	var/is_constr_wrt = istype(M, /mob/living/simple_animal/construct/wraith)
+	var/is_shade = istype(M, /mob/living/simple_animal/shade)
+
+	var/is_human_base = (current_species == "Human")
+	var/is_unathi = (current_species == "Unathi")
+	var/is_skrell = (current_species == "Skrell")
+	var/is_tajara = (current_species == "Tajara")
+	var/is_resomi = (current_species == "Resomi")
+	var/is_vox = (current_species == "Vox")
+	var/is_diona_adult = (current_species == "Diona")
+
+	var/body = {"
+		<style type="text/css">
+			body { overflow: hidden !important; margin: 0; padding: 10px; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #272727; color: #fff; }
+			.admin-container { height: calc(100vh - 50px); overflow-y: auto; padding-right: 5px; }
+			.hero-card { background: #1c1c1c; border: 1px solid #333; border-radius: 6px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+			.hero-left { display: flex; align-items: center; gap: 10px; }
+			.hero-avatar { width: 48px; height: 48px; border-radius: 6px; background: #111; border: 1px solid #444; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+			.hero-title { font-size: 14px; font-weight: bold; margin-bottom: 2px; }
+			.hero-sub { font-size: 11px; color: #aaa; }
+			.status-badge { padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+			.status-online { background: rgba(46, 204, 113, 0.15); color: #2ec571; border: 1px solid rgba(46, 204, 113, 0.3); }
+			.status-offline { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3); }
+
+			.quick-actions { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 12px; }
+			.qa-btn { display: block; text-align: center; padding: 8px 4px; border-radius: 4px; background: #1c1c1c; border: 1px solid #333; color: #fff; font-weight: bold; font-size: 11px; transition: all 0.2s; text-decoration: none; }
+			.qa-btn:hover { background: #3498db; border-color: #3498db; color: #fff; }
+			.qa-btn.heal { background: rgba(46, 204, 113, 0.15); border-color: #2ecc71; color: #2ecc71; }
+			.qa-btn.heal:hover { background: #2ecc71; color: #fff; }
+
+			.section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+			.control-card { background: #1c1c1c; border: 1px solid #333; border-radius: 6px; padding: 12px; box-sizing: border-box; }
+			.card-title { font-size: 13px; font-weight: bold; color: #3498db; border-bottom: 1px solid #333; padding-bottom: 6px; margin-bottom: 10px; }
+
+			.action-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+			.action-btn { font-size: 11px; padding: 6px 10px; border-radius: 3px; background: #2a2a2a; border: 1px solid #444; color: #ddd; text-decoration: none; font-weight: bold; text-align: center; }
+			.action-btn:hover { background: #3498db; color: #fff; border-color: #3498db; }
+			.action-btn.danger { background: rgba(231, 76, 60, 0.15); border-color: #e74c3c; color: #e74c3c; }
+			.action-btn.danger:hover { background: #e74c3c; color: #fff; }
+			.action-btn.warning { background: rgba(241, 196, 15, 0.15); border-color: #f1c40f; color: #f1c40f; }
+			.action-btn.warning:hover { background: #f1c40f; color: #000; }
+			.action-btn.active { background: rgba(46, 204, 113, 0.2) !important; border-color: #2ecc71 !important; color: #2ecc71 !important; box-shadow: 0 0 6px rgba(46, 204, 113, 0.4); }
+
+			.grid-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+			.grid-item { font-size: 11px; color: #aaa; }
+			.grid-value { font-weight: bold; color: #fff; word-break: break-all; }
+
+			.mute-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+			.mute-btn { display: block; text-align: center; font-size: 11px; padding: 6px 2px; border-radius: 3px; text-decoration: none; font-weight: bold; border: 1px solid #333; }
+			.mute-btn.on { background: rgba(231, 76, 60, 0.15); border-color: #e74c3c; color: #e74c3c; }
+			.mute-btn.off { background: rgba(46, 204, 113, 0.15); border-color: #2ecc71; color: #2ecc71; }
+
+			.dna-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 10px; background: #111; border-radius: 4px; overflow: hidden; }
+			.dna-table th { background: #222; color: #888; font-size: 10px; padding: 4px; font-weight: bold; }
+			.dna-table td { padding: 6px 4px; border: 1px solid #222; text-align: center; }
+			.dna-link { display: block; padding: 2px 4px; border-radius: 3px; text-decoration: none; font-weight: bold; font-size: 10px; text-align: center; }
+
+			.admin-jump-links a {
+				display: inline-block;
+				font-size: 11px;
+				padding: 5px 10px;
+				border-radius: 3px;
+				background: #2a2a2a;
+				border: 1px solid #444;
+				color: #ddd;
+				text-decoration: none;
+				font-weight: bold;
+				margin-right: 4px;
+				margin-bottom: 4px;
+			}
+			.admin-jump-links a:hover {
+				background: #3498db;
+				color: #fff;
+				border-color: #3498db;
+			}
+
+			details { background: #1c1c1c; border: 1px solid #333; border-radius: 6px; padding: 8px 12px; margin-bottom: 8px; }
+			details summary { cursor: pointer; font-size: 12px; font-weight: bold; color: #3498db; outline: none; }
+			[css_open_selector] summary { border-bottom: 1px solid #333; padding-bottom: 6px; margin-bottom: 8px; }
+
+			.goal-text { font-size: 11px; font-style: italic; color: #ccc; background: #222; border-left: 2px solid #f1c40f; padding: 6px; margin-bottom: 6px; border-radius: 0 4px 4px 0; }
+			.refresh-btn:hover { background: #3498db !important; color: #fff !important; border-color: #3498db !important; box-shadow: 0 0 6px rgba(52, 152, 219, 0.4); }
+		</style>
+		<div class="admin-container" id="admin-player-container">
+	"}
+
+	// 1. Profile Hero Card
+	var/player_name = M.name
+	var/player_details = ""
 	if(M.client)
-		body += " played by <b>[M.client]</b> "
-		body += "\[<a href='byond://?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		var/rank_link = ""
+		if(M.client.holder)
+			rank_link = "<a href='byond://?src=\ref[src];editrights=show'>[M.client.holder.rank]</a>"
+		else
+			rank_link = "Player"
+		player_details = "played by <span style='font-weight: bold;'>[M.client]</span> \[[rank_link]\]"
 	else if(last_ckey)
-		body += " (last occupied by ckey <b>[last_ckey]</b>)"
-
-	if(istype(M, /mob/new_player))
-		body += " <B>Hasn't Entered Game</B> "
+		player_details = "last occupied by <span style='font-weight: bold;'>[last_ckey]</span>"
 	else
-		body += " \[<a href='byond://?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
+		player_details = "No client association"
 
+	var/avatar_file = "avatar_[ref(M)].png"
+	var/icon/flat_icon = getFlatIcon(M, SOUTH)
+	send_rsc(usr, flat_icon, avatar_file)
+
+	body += {"
+		<div class="hero-card">
+			<div class="hero-left">
+				<div class="hero-avatar"><img src="[avatar_file]" style="width: 48px; height: 48px; image-rendering: pixelated; display: block; object-fit: contain;"></div>
+				<div>
+					<div class="hero-title" style="display: flex; align-items: center; gap: 8px;">
+						[player_name]
+						<a href='byond://?src=\ref[src];refresh_player_panel=\ref[M]' class='refresh-btn' title='Refresh Panel' style='text-decoration: none; font-size: 11px; color: #3498db; background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 4px; padding: 2px 6px; font-weight: bold; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;'>🔄 Refresh</a>
+					</div>
+					<div class="hero-sub">[player_details]</div>
+				</div>
+			</div>
+			<div class="status-badge [status_class]">[status_text]</div>
+		</div>
+	"}
+
+	// 2. Quick Actions
+	body += "<div class='quick-actions'>"
+	if(istype(M, /mob/new_player))
+		body += "<a href='#' class='qa-btn heal' style='opacity: 0.5; cursor: not-allowed;'>No Heal</a>"
+	else
+		body += "<a href='byond://?src=\ref[src];revive=\ref[M]' class='qa-btn heal'>Heal</a>"
+
+	body += {"
+			<a href='byond://?_src_=vars;Vars=\ref[M]' class='qa-btn'>VV</a>
+			<a href='byond://?src=\ref[src];traitor=\ref[M]' class='qa-btn'>TP</a>
+			<a href='byond://?src=\ref[usr];priv_msg=\ref[M]' class='qa-btn'>PM</a>
+			<a href='byond://?src=\ref[src];narrateto=\ref[M]' class='qa-btn'>DN</a>
+			<a href='byond://?src=\ref[src];jumpto=\ref[M]' class='qa-btn'>Jump</a>
+		</div>
+	"}
+
+	// Exosuit Pilots list (if E has pilots)
 	var/mob/living/exosuit/E = M
 	if(istype(E) && E.pilots)
-		body += "<br><b>Exosuit pilots:</b><br>"
+		body += {"
+			<div class="control-card" style="margin-bottom: 12px;">
+				<div class="card-title">Exosuit Pilots</div>
+				<div class="action-buttons">
+		"}
 		for(var/mob/living/pilot in E.pilots)
-			body += "[pilot] "
-			body += " \[<a href='byond://?src=\ref[src];pilot=\ref[pilot]'>link</a>\]<br>"
+			body += "<a href='byond://?src=\ref[src];pilot=\ref[pilot]' class='action-btn'>[pilot] (link)</a>"
+		body += {"
+				</div>
+			</div>
+		"}
 
+	// 3. Grid Content (Mob info & Jump tools)
 	var/inactivity_time = M.client ? time_to_readable(M.client.inactivity) : null
 
 	var/logout_time = null
@@ -75,207 +238,302 @@ var/global/floorIsLava = 0
 		logout_time = time_to_readable(world.time - M.logout_time)
 
 	body += {"
-		<br><br>\[
-		<a href='byond://?_src_=vars;Vars=\ref[M]'>VV</a> -
-		<a href='byond://?src=\ref[src];traitor=\ref[M]'>TP</a> -
-		<a href='byond://?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
-		<a href='byond://?src=\ref[src];narrateto=\ref[M]'>DN</a> -
-		[admin_jump_link(M, src)]\] <br>
-		<b>Mob type:</b> [M.type]<br>
-		<b>Inactivity time:</b> [inactivity_time ? "[inactivity_time]" : "Logged out"]<br/>
-		<b>Logout time:</b> [logout_time ? "[logout_time] ago" : "N/A"]<br/><br/>
-		<a href='byond://?src=\ref[src];paralyze=\ref[M]'>PARALYZE</A> |
-		<a href='byond://?src=\ref[src];boot2=\ref[M]'>Kick</A> |
-		<a href='byond://?_src_=holder;warn=[last_ckey]'>Warn</A> |
-		<a href='byond://?src=\ref[src];newban=\ref[M];last_key=[last_ckey]'>Ban</A> |
-		<a href='byond://?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
-		<a href='byond://?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A> |
-		<a href='byond://?src=\ref[src];connections=\ref[M]'>Check Connections</A> |
-		<a href='byond://?src=\ref[src];bans=\ref[M]'>Check Bans</A> |
+		<div class="section-grid">
+			<div class="control-card">
+				<div class="card-title">Entity Information</div>
+				<div class="grid-list">
+					<div class="grid-item">Mob Type: <span class="grid-value">[M.type]</span></div>
+					<div class="grid-item">Inactivity: <span class="grid-value">[inactivity_time ? "[inactivity_time]" : "Logged out / N/A"]</span></div>
+					<div class="grid-item">Logout Time: <span class="grid-value">[logout_time ? "[logout_time] ago" : "N/A"]</span></div>
+				</div>
+			</div>
+
+			<div class="control-card">
+				<div class="card-title">Movement & Observation</div>
+				<div class="admin-jump-links">
+					[admin_jump_link(M, src)]
+					<a href='byond://?src=\ref[src];jumpto=\ref[M]'>Jump To</a>
+					<a href='byond://?src=\ref[src];getmob=\ref[M]'>Get Mob</a>
+				</div>
+			</div>
+	"}
+
+	// 4. Mutes & Warnings Panel
+	if(M.client)
+		var/muted = M.client.prefs.muted
+		var/staffwarn_color = M.client.staffwarn ? "#e74c3c" : "#2ecc71"
+		var/staffwarn_text = M.client.staffwarn ? M.client.staffwarn : "None"
+		body += {"
+			<div class='control-card' style='grid-column: span 2;'>
+				<div class='card-title'>Communication Mutes</div>
+				<div class='mute-grid'>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]' class='mute-btn [(muted & MUTE_IC) ? "on" : "off"]'>IC Chat</a>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]' class='mute-btn [(muted & MUTE_OOC) ? "on" : "off"]'>OOC Chat</a>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_AOOC]' class='mute-btn [(muted & MUTE_AOOC) ? "on" : "off"]'>AOOC Chat</a>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]' class='mute-btn [(muted & MUTE_PRAY) ? "on" : "off"]'>Prayers</a>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]' class='mute-btn [(muted & MUTE_ADMINHELP) ? "on" : "off"]'>A-Help</a>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]' class='mute-btn [(muted & MUTE_DEADCHAT) ? "on" : "off"]'>Deadchat</a>
+				</div>
+				<div style='margin-top: 10px; display: flex; gap: 6px;'>
+					<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]' class='action-btn' style='flex-grow: 1;'>Toggle All Channels</a>
+					[M.client.staffwarn ? "<a href='byond://?src=\ref[src];removestaffwarn=\ref[M]' class='action-btn danger' style='flex-grow: 1;'>Remove StaffWarn</a>" : "<a href='byond://?src=\ref[src];setstaffwarn=\ref[M]' class='action-btn warning' style='flex-grow: 1;'>Set StaffWarn</a>"]
+				</div>
+				<div style='margin-top: 8px; font-size: 11px; text-align: center; color: #888;'>
+					Staff Warning Status: <span style='font-weight: bold; color: [staffwarn_color]'>[staffwarn_text]</span>
+				</div>
+			</div>
+		"}
+
+	body += "</div>" // end of section-grid
+
+	// 5. Core Actions Panel
+	body += {"
+		<div class="control-card" style="margin-bottom: 12px;">
+			<div class="card-title">Core Administrative Actions</div>
+			<div class="action-buttons">
+				[is_paralyzed ? "<a href='byond://?src=\ref[src];paralyze=\ref[M]' class='action-btn danger' style='background: #e74c3c; color: #fff; box-shadow: 0 0 8px rgba(231, 76, 60, 0.6); border-color: #e74c3c;'>Unparalyze</a>" : "<a href='byond://?src=\ref[src];paralyze=\ref[M]' class='action-btn danger'>Paralyze</a>"]
+				<a href='byond://?src=\ref[src];boot2=\ref[M]' class='action-btn danger'>Kick Player</a>
+				<a href='byond://?_src_=holder;warn=[last_ckey]' class='action-btn danger'>Warn Player</a>
+				<a href='byond://?src=\ref[src];newban=\ref[M];last_key=[last_ckey]' class='action-btn danger'>Ban Player</a>
+				<a href='byond://?src=\ref[src];jobban2=\ref[M]' class='action-btn danger'>Job Ban</a>
+				<a href='byond://?src=\ref[src];notes=show;mob=\ref[M]' class='action-btn warning'>Player Notes</a>
+				<a href='byond://?src=\ref[src];connections=\ref[M]' class='action-btn'>Check Connections</a>
+				<a href='byond://?src=\ref[src];bans=\ref[M]' class='action-btn'>Check Bans</a>
 	"}
 	if (M.ckey)
-		body += {"<a target="_blank" href="https://www.byond.com/members/[M.ckey]">View Byond Account</a> | "}
+		body += "<a target='_blank' href='https://www.byond.com/members/[M.ckey]' class='action-btn'>View BYOND Account</a>"
 
 	if (!istype(M, /mob/new_player) && !istype(M, /mob/observer))
-		body += "<a href='byond://?src=\ref[src];cryo=\ref[M]'>Cryo Character</A> | "
-		body += "<a href='byond://?src=\ref[src];equip_loadout=\ref[M]'>Equip Loadout</A> | "
+		body += "<a href='byond://?src=\ref[src];cryo=\ref[M]' class='action-btn warning'>Cryo Character</a>"
+		body += "<a href='byond://?src=\ref[src];equip_loadout=\ref[M]' class='action-btn warning'>Equip Loadout</a>"
 
 	if(M.client)
-		body += "<a href='byond://?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
-		body += "<a href='byond://?src=\ref[src];reloadsave=\ref[M]'>Reload Save</A> | "
-		body += "<a href='byond://?src=\ref[src];reloadchar=\ref[M]'>Reload Character</A> | "
-		var/muted = M.client.prefs.muted
-		body += {"<br><b>Mute: </b>
-			\[<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><span style='font-color: [(muted & MUTE_IC)?"red":"blue"]'>IC</span></a> |
-			<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><span style='font-color: [(muted & MUTE_OOC)?"red":"blue"]'>OOC</span></a> |
-			<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_AOOC]'><span style='font-color: [(muted & MUTE_AOOC)?"red":"blue"]'>AOOC</span></a> |
-			<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><span style='font-color: [(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</span></a> |
-			<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><span style='font-color: [(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</span></a> |
-			<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><span style='font-color: [(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</span></a>\]
-			(<a href='byond://?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><span style='font-color: [(muted & MUTE_ALL)?"red":"blue"]'>toggle all</span></a>)
-		"}
-		body += "<br><br><b>Staff Warning:</b> [M.client.staffwarn ? M.client.staffwarn : "No"]<br>"
-		if (!M.client.staffwarn)
-			body += "<a href='byond://?src=\ref[src];setstaffwarn=\ref[M]'>Set StaffWarn</A>"
-		else
-			body += "<a href='byond://?src=\ref[src];removestaffwarn=\ref[M]'>Remove StaffWarn</A>"
+		body += "<a href='byond://?src=\ref[src];sendtoprison=\ref[M]' class='action-btn danger'>Prison</a>"
+		body += "<a href='byond://?src=\ref[src];reloadsave=\ref[M]' class='action-btn'>Reload Save</a>"
+		body += "<a href='byond://?src=\ref[src];reloadchar=\ref[M]' class='action-btn'>Reload Character</a>"
 
-	body += {"<br><br>
-		<a href='byond://?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> |
-		<a href='byond://?src=\ref[src];getmob=\ref[M]'>Get</A> |
-		<a href='byond://?src=\ref[src];sendmob=\ref[M]'>Send To</A>
-		<br><br>
-		[check_rights(R_ADMIN|R_MOD,0) ? "<a href='byond://?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
-		[check_rights(R_INVESTIGATE,0) ? "<a href='byond://?src=\ref[src];skillpanel=\ref[M]'>Skill panel</A>" : "" ]
+	body += {"
+				[check_rights(R_ADMIN|R_MOD,0) ? "<a href='byond://?src=\ref[src];traitor=\ref[M]' class='action-btn warning'>Traitor Panel</a>" : "" ]
+				[check_rights(R_INVESTIGATE,0) ? "<a href='byond://?src=\ref[src];skillpanel=\ref[M]' class='action-btn'>Skill Panel</a>" : "" ]
+			</div>
+		</div>
 	"}
-
+	// 6. Goals Summary & Mind Panel
 	if(M.mind)
-		body += "<br><br>"
-		body += "<b>Goals:</b>"
-		body += "<br>"
-		body += "[jointext(M.mind.summarize_goals(FALSE, TRUE, src), "<br>")]"
-		body += "<br>"
-		body += "<a href='byond://?src=\ref[M.mind];add_goal=1'>Add Random Goal</a>"
+		var/goals_text = jointext(M.mind.summarize_goals(FALSE, TRUE, src), "<br>")
+		body += {"
+			<div class="control-card" style="margin-bottom: 12px;">
+				<div class="card-title">Mind Goals & Objectives</div>
+				[goals_text ? "<div class='goal-text'>[goals_text]</div>" : "<i>No objectives defined for this mind.</i><br/>"]
+				<div style="margin-top: 10px;">
+					<a href='byond://?src=\ref[M.mind];add_goal=1' class='action-btn warning'>Add Random Goal</a>
+				</div>
+			</div>
+		"}
 
-	body += "<br><br>"
-	// [SIERRA-ADD] - PSIONICS
-	body += "<details><summary><b>Psionics</b></summary><br/>"
+	// 7. Collapsible Psionics (if living)
 	if(isliving(M))
 		var/mob/living/psyker = M
+		body += "<details id='details-psionics'><summary>Psionics Controls</summary><div style='padding-top: 8px;'>"
 		if(psyker.psi)
-			body += "<a href='byond://?src=\ref[psyker.psi];remove_psionics=1'>Remove psionics.</a><br/><br/>"
-			body += "<a href='byond://?src=\ref[psyker.psi];trigger_psi_latencies=1'>Trigger latencies.</a><br/>"
-		body += "<table width = '100%'>"
+			body += {"
+				<div class='action-buttons' style='margin-bottom: 10px;'>
+					<a href='byond://?src=\ref[psyker.psi];remove_psionics=1' class='action-btn danger'>Remove Psionics</a>
+					<a href='byond://?src=\ref[psyker.psi];trigger_psi_latencies=1' class='action-btn warning'>Trigger Latencies</a>
+				</div>
+			"}
+		body += "<table width='100%' class='dna-table'><thead><tr><th>Faculty</th>"
+		for(var/i = 1 to LAZYLEN(GLOB.psychic_ranks_to_strings))
+			body += "<th>[GLOB.psychic_ranks_to_strings[i]]</th>"
+		body += "</tr></thead><tbody>"
 		for(var/faculty in list(PSI_COERCION, PSI_CONSCIOUSNESS, PSI_PSYCHOKINESIS, PSI_MANIFESTATION, PSI_ENERGISTICS, PSI_REDACTION, PSI_METAKINESIS, PSI_SHAYMANISM))
 			var/singleton/psionic_faculty/faculty_singleton = SSpsi.get_faculty(faculty)
 			var/faculty_rank = psyker.psi ? psyker.psi.get_rank(faculty) : 0
 			body += "<tr><td><b>[faculty_singleton.name]</b></td>"
 			for(var/i = 1 to LAZYLEN(GLOB.psychic_ranks_to_strings))
 				var/psi_title = GLOB.psychic_ranks_to_strings[i]
+				var/psi_style = ""
 				if(i == faculty_rank)
-					psi_title = "<b>[psi_title]</b>"
-				body += "<td><a href='byond://?src=\ref[psyker.mind];set_psi_faculty_rank=[i];set_psi_faculty=[faculty]'>[psi_title]</a></td>"
+					psi_style = "background: rgba(52, 152, 219, 0.2); border-color: #3498db; color: #3498db; text-shadow: 0 0 4px #3498db;"
+				body += "<td><a href='byond://?src=\ref[psyker.mind];set_psi_faculty_rank=[i];set_psi_faculty=[faculty]' class='dna-link' style='[psi_style]'>[psi_title]</a></td>"
 			body += "</tr>"
-		body += "</table>"
-	else
-		body += "<i>Non-living entities cannot have psionics.</i><br/>"
-	body += "</details>"
-	// [SIERRA-ADD] - PSIONICS
+		body += "</tbody></table></div></details>"
 
-	if (M.client)
-		if(!istype(M, /mob/new_player))
-			body += "<br><br>"
-			body += "<b>Transformation:</b>"
-			body += "<br>"
+	// 8. Transformations & DNA blocks (if carbon)
+	if(M.client && !istype(M, /mob/new_player))
+		body += "<details id='details-dna'><summary>Transformations & Character DNA</summary><div style='padding-top: 8px;'>"
 
-			//Monkey
-			if(issmall(M))
-				body += "<B>Monkeyized</B> | "
-			else
-				body += "<a href='byond://?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | "
-
-			//Corgi
-			if(iscorgi(M))
-				body += "<B>Corgized</B> | "
-			else
-				body += "<a href='byond://?src=\ref[src];corgione=\ref[M]'>Corgize</A> | "
-
-			//AI / Cyborg
-			if(isAI(M))
-				body += "<B>Is an AI</B> "
-			else if(ishuman(M))
-				body += {"<a href='byond://?src=\ref[src];makeai=\ref[M]'>Make AI</A> |
-					<a href='byond://?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
-					<a href='byond://?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<a href='byond://?src=\ref[src];makeslime=\ref[M]'>Make Slime</A> |
-					<a href='byond://?src=\ref[src];makezombie=\ref[M]'>Make Zombie</A> |
-				"}
-
-			//Simple Animals
-			if(isanimal(M))
-				body += "<a href='byond://?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> | "
-			else
-				body += "<a href='byond://?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
-
-			// DNA2 - Admin Hax
-			if(M.dna && iscarbon(M))
-				body += "<br><br>"
-				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
-				var/bname
-				for(var/block=1;block<=DNA_SE_LENGTH;block++)
-					if(((block-1)%5)==0)
-						body += "</tr><tr><th>[block-1]</th>"
-					bname = assigned_blocks[block]
-					body += "<td>"
-					if(bname)
-						var/bstate=M.dna.GetSEState(block)
-						var/bcolor="[(bstate)?"#006600":"#ff0000"]"
-						body += "<a href='byond://?src=\ref[src];togmutate=\ref[M];block=[block]' style='color:[bcolor];'>[bname]</A><sub>[block]</sub>"
-					else
-						body += "[block]"
-					body+="</td>"
-				body += "</tr></table>"
-			// [SIERRA-EDIT] - Tajara mod, Resomi mod
-			body += {"<br><br>
-				<b>Rudimentary transformation:</b>[FONT_NORMAL("<br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.")]<br>
-				<a href='byond://?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
-				\[ Xenos: <a href='byond://?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A>
-				\[ Crew: <a href='byond://?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species=Unathi;mob=\ref[M]'>Unathi</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species=Skrell;mob=\ref[M]'>Skrell</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species=Tajara;mob=\ref[M]'>Tajara</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species=Resomi;mob=\ref[M]'>Resomi</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species=Vox;mob=\ref[M]'>Vox</A> \] | \[
-				<a href='byond://?src=\ref[src];simplemake=nymph;mob=\ref[M]'>Nymph</A>
-				<a href='byond://?src=\ref[src];simplemake=human;species='Diona';mob=\ref[M]'>Diona</A> \] |
-				\[ slime: <a href='byond://?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
-				<a href='byond://?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \]
-				<a href='byond://?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> |
-				<a href='byond://?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> |
-				<a href='byond://?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> |
-				<a href='byond://?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> |
-				<a href='byond://?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> |
-				<a href='byond://?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> |
-				<a href='byond://?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> |
-				<a href='byond://?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> |
-				\[ Construct: <a href='byond://?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> ,
-				<a href='byond://?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> ,
-				<a href='byond://?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \]
-				<a href='byond://?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
-				<br>
+		// DNA Blocks Grid (if M.dna is present)
+		if(M.dna && iscarbon(M))
+			body += {"
+				<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>DNA Mutant SE Blocks:</div>
+				<table class="dna-table">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+						</tr>
+					</thead>
+					<tbody>
 			"}
-			// [/SIERRA-EDIT] - Tajara mod, Resomi mod
-	body += {"<br><br>
-			<b>Other actions:</b>
-			<br>
-			<a href='byond://?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> |
-			<a href='byond://?src=\ref[src];cloneother=\ref[M]'>Clone Other</a>
-			"}
-	if (M.client)
-		body += {" |
-			<a href='byond://?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> |
-			<a href='byond://?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> |
-			<a href='byond://?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> |
-			<a href='byond://?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> |
+			var/bname
+			for(var/block=1;block<=DNA_SE_LENGTH;block++)
+				if(((block-1)%5)==0)
+					if(block > 1) body += "</tr>"
+					body += "<tr><th>[block-1]</th>"
+				bname = assigned_blocks[block]
+				body += "<td>"
+				if(bname)
+					var/bstate=M.dna.GetSEState(block)
+					var/bstyle = bstate ? "background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3);" : "background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3);"
+					body += "<a href='byond://?src=\ref[src];togmutate=\ref[M];block=[block]' class='dna-link' style='[bstyle]'>[bname]<sub>[block]</sub></a>"
+				else
+					body += "<span style='color: #555;'>[block]</span>"
+				body += "</td>"
+			body += "</tr></tbody></table><br/>"
+
+		// Transformations Action Buttons
+		body += {"
+			<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Standard Transformations:</div>
+			<div class='action-buttons' style='margin-bottom: 12px;'>
 		"}
-	// language toggles
-	body += "<br><br><b>Languages:</b><br>"
-	var/f = 1
+		if(issmall(M))
+			body += "<a href='#' class='action-btn' style='opacity: 0.5; cursor: not-allowed;'>Monkeyized</a>"
+		else
+			body += "<a href='byond://?src=\ref[src];monkeyone=\ref[M]' class='action-btn'>Monkeyize</a>"
+
+		if(iscorgi(M))
+			body += "<a href='#' class='action-btn' style='opacity: 0.5; cursor: not-allowed;'>Corgized</a>"
+		else
+			body += "<a href='byond://?src=\ref[src];corgione=\ref[M]' class='action-btn'>Corgize</a>"
+
+		if(isAI(M))
+			body += "<a href='#' class='action-btn' style='opacity: 0.5; cursor: not-allowed;'>Is an AI</a>"
+		else if(ishuman(M))
+			body += {"
+				<a href='byond://?src=\ref[src];makeai=\ref[M]' class='action-btn'>Make AI</a>
+				<a href='byond://?src=\ref[src];makerobot=\ref[M]' class='action-btn'>Make Robot</a>
+				<a href='byond://?src=\ref[src];makealien=\ref[M]' class='action-btn'>Make Alien</a>
+				<a href='byond://?src=\ref[src];makeslime=\ref[M]' class='action-btn'>Make Slime</a>
+				<a href='byond://?src=\ref[src];makezombie=\ref[M]' class='action-btn'>Make Zombie</a>
+			"}
+
+		if(isanimal(M))
+			body += "<a href='byond://?src=\ref[src];makeanimal=\ref[M]' class='action-btn'>Re-Animalize</a>"
+		else
+			body += "<a href='byond://?src=\ref[src];makeanimal=\ref[M]' class='action-btn'>Animalize</a>"
+
+		body += {"
+			</div>
+
+			<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Rudimentary Transformations (Quick Switch):</div>
+			<div class='action-buttons'>
+				<a href='byond://?src=\ref[src];simplemake=observer;mob=\ref[M]' class='action-btn warning[is_ghost ? " active" : ""]'>Observer</a>
+				<a href='byond://?src=\ref[src];simplemake=larva;mob=\ref[M]' class='action-btn warning[is_larva ? " active" : ""]'>Xeno Larva</a>
+				<a href='byond://?src=\ref[src];simplemake=human;mob=\ref[M]' class='action-btn[is_human_base ? " active" : ""]'>Human Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Unathi;mob=\ref[M]' class='action-btn[is_unathi ? " active" : ""]'>Unathi Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Skrell;mob=\ref[M]' class='action-btn[is_skrell ? " active" : ""]'>Skrell Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Tajara;mob=\ref[M]' class='action-btn[is_tajara ? " active" : ""]'>Tajara Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Resomi;mob=\ref[M]' class='action-btn[is_resomi ? " active" : ""]'>Resomi Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Vox;mob=\ref[M]' class='action-btn[is_vox ? " active" : ""]'>Vox Crew</a>
+				<a href='byond://?src=\ref[src];simplemake=nymph;mob=\ref[M]' class='action-btn[is_nymph ? " active" : ""]'>Diona Nymph</a>
+				<a href='byond://?src=\ref[src];simplemake=human;species=Diona;mob=\ref[M]' class='action-btn[is_diona_adult ? " active" : ""]'>Diona Adult</a>
+				<a href='byond://?src=\ref[src];simplemake=slime;mob=\ref[M]' class='action-btn[is_slime && !is_adult_slime ? " active" : ""]'>Baby Slime</a>
+				<a href='byond://?src=\ref[src];simplemake=adultslime;mob=\ref[M]' class='action-btn[is_adult_slime ? " active" : ""]'>Adult Slime</a>
+				<a href='byond://?src=\ref[src];simplemake=monkey;mob=\ref[M]' class='action-btn[is_monkey ? " active" : ""]'>Monkey</a>
+				<a href='byond://?src=\ref[src];simplemake=robot;mob=\ref[M]' class='action-btn[is_cyborg ? " active" : ""]'>Cyborg</a>
+				<a href='byond://?src=\ref[src];simplemake=cat;mob=\ref[M]' class='action-btn[is_cat ? " active" : ""]'>Normal Cat</a>
+				<a href='byond://?src=\ref[src];simplemake=runtime;mob=\ref[M]' class='action-btn[is_runtime ? " active" : ""]'>Runtime Cat</a>
+				<a href='byond://?src=\ref[src];simplemake=corgi;mob=\ref[M]' class='action-btn[is_corgi ? " active" : ""]'>Normal Corgi</a>
+				<a href='byond://?src=\ref[src];simplemake=ian;mob=\ref[M]' class='action-btn[is_ian ? " active" : ""]'>Ian Corgi</a>
+				<a href='byond://?src=\ref[src];simplemake=crab;mob=\ref[M]' class='action-btn[is_crab ? " active" : ""]'>Crab</a>
+				<a href='byond://?src=\ref[src];simplemake=coffee;mob=\ref[M]' class='action-btn[is_coffee ? " active" : ""]'>Coffee Crab</a>
+				<a href='byond://?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]' class='action-btn[is_constr_arm ? " active" : ""]'>Armoured Construct</a>
+				<a href='byond://?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]' class='action-btn[is_constr_bld ? " active" : ""]'>Builder Construct</a>
+				<a href='byond://?src=\ref[src];simplemake=constructwraith;mob=\ref[M]' class='action-btn[is_constr_wrt ? " active" : ""]'>Wraith Construct</a>
+				<a href='byond://?src=\ref[src];simplemake=shade;mob=\ref[M]' class='action-btn[is_shade ? " active" : ""]'>Shade</a>
+			</div>
+		</div></details>
+		"}
+
+	// 9. Other Actions details
+	body += "<details id='details-actions'><summary>Other Actions & Languages</summary><div style='padding-top: 8px;'>"
+	body += {"
+		<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Speech & Manipulation:</div>
+		<div class='action-buttons' style='margin-bottom: 12px;'>
+			<a href='byond://?src=\ref[src];forcespeech=\ref[M]' class='action-btn warning'>Forcesay Speech</a>
+			<a href='byond://?src=\ref[src];cloneother=\ref[M]' class='action-btn'>Clone Other Character</a>
+		</div>
+	"}
+
+	if(M.client)
+		body += {"
+			<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Thunderdome Arenas:</div>
+			<div class='action-buttons' style='margin-bottom: 12px;'>
+				<a href='byond://?src=\ref[src];tdome1=\ref[M]' class='action-btn'>Thunderdome 1</a>
+				<a href='byond://?src=\ref[src];tdome2=\ref[M]' class='action-btn'>Thunderdome 2</a>
+				<a href='byond://?src=\ref[src];tdomeadmin=\ref[M]' class='action-btn warning'>Thunderdome Admin</a>
+				<a href='byond://?src=\ref[src];tdomeobserve=\ref[M]' class='action-btn'>Thunderdome Observe</a>
+			</div>
+		"}
+
+	body += {"
+		<div style='font-weight: bold; font-size: 11px; margin-bottom: 6px; color: #3498db;'>Languages:</div>
+		<div class='action-buttons'>
+	"}
 	for(var/k in all_languages)
 		var/datum/language/L = all_languages[k]
 		if(!(L.flags & INNATE))
-			if(!f) body += " | "
-			else f = 0
+			var/lang_style = ""
 			if(L in M.languages)
-				body += "<a href='byond://?src=\ref[src];toglang=\ref[M];lang=[html_encode(k)]' style='color:#006600'>[k]</a>"
+				lang_style = "background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3);"
 			else
-				body += "<a href='byond://?src=\ref[src];toglang=\ref[M];lang=[html_encode(k)]' style='color:#ff0000'>[k]</a>"
+				lang_style = "background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3);"
+			body += "<a href='byond://?src=\ref[src];toglang=\ref[M];lang=[html_encode(k)]' class='action-btn' style='[lang_style]'>[k]</a>"
+	body += "</div></div></details>"
 
-	body += {"<br>
-		</body></html>
+// End container
+	body += {"
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var detailsIds = new Array('details-psionics', 'details-dna', 'details-actions');
+				detailsIds.forEach(function(id) {
+					var d = document.getElementById(id);
+					if (d) {
+						var stateId = 'player_panel_' + id + '_[ref(M)]';
+						var savedState = localStorage.getItem(stateId);
+						if (savedState === 'open') d.open = true;
+						else if (savedState === 'closed') d.open = false;
+
+						d.addEventListener('toggle', function() {
+							localStorage.setItem(stateId, d.open ? 'open' : 'closed');
+						});
+					}
+				});
+
+				var container = document.getElementById('admin-player-container');
+				if (container) {
+					var savedScroll = localStorage.getItem('player_panel_scroll_[ref(M)]');
+					if (savedScroll) {
+						container.scrollTop = parseInt(savedScroll, 10);
+					}
+					container.onscroll = function() {
+						localStorage.setItem('player_panel_scroll_[ref(M)]', container.scrollTop);
+					};
+				}
+			};
+		</script>
 	"}
 
-	show_browser(usr, body, "window=adminplayeropts;size=550x515")
+	var/datum/browser/popup = new(usr, "adminplayeropts", "Options for [M.key ? M.key : M.name]", 750, 750)
+	popup.set_content(body)
+	popup.open()
+	// [/SIERRA-EDIT]
 
 
 /datum/player_info/var/author // admin who authored the information

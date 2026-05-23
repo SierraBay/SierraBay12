@@ -5,6 +5,9 @@ var/global/list/admin_verbs_default = list(
 	// [/SIERRA-ADD],
 	/datum/admins/proc/show_player_panel, //shows an interface for individual players, with various links (links require additional flags), right-click player panel,
 	/client/proc/player_list,
+	// [SIERRA-EDIT] - sierra ui tweaks,
+	/client/proc/player_list_legacy,
+	// [/SIERRA-EDIT],
 	/client/proc/secrets,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
@@ -485,6 +488,13 @@ var/global/list/admin_verbs_mod = list(
 	set category = "Admin"
 	if(holder)
 		holder.player_list()
+	return
+
+/client/proc/player_list_legacy()
+	set name = "Player List (Legacy)"
+	set category = "Admin"
+	if(holder)
+		holder.player_list_legacy()
 	return
 
 /client/proc/check_antagonists()

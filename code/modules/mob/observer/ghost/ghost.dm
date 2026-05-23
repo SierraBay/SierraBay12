@@ -19,6 +19,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/is_manifest = FALSE
 	var/next_visibility_toggle = 0
+	// [SIERRA-ADD]
+	var/next_dead_tele = 0
+	var/next_follow = 0
+	// [/SIERRA-ADD]
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -101,6 +105,23 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 				if(istype(target))
 					start_following(target)
 			return TOPIC_HANDLED
+		// [SIERRA-ADD]
+		else if (href_list["refresh_follow_targets"])
+			follow()
+			return TOPIC_HANDLED
+		else if (href_list["teleport_to_area"])
+			var/area/thearea = locate(href_list["teleport_to_area"])
+			if(istype(thearea))
+				var/list/area_turfs = get_area_turfs(thearea, shall_check_if_holy() ? list(GLOBAL_PROC_REF(is_not_holy_turf)) : list())
+				if(!length(area_turfs))
+					to_chat(src, SPAN_WARNING("This area has been entirely made into sacred grounds, you cannot enter it while you are in this plane of existence!"))
+					return TOPIC_HANDLED
+				ghost_to_turf(pick(area_turfs))
+			return TOPIC_HANDLED
+		else if (href_list["dead_tele_refresh"])
+			dead_tele()
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 	return ..()
 
 /*
