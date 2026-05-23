@@ -99,3 +99,18 @@
 	var/mob/living/carbon/human/user = usr
 	if(user)
 		user.change_appearance((APPEARANCE_BASIC|APPEARANCE_RACE), state = GLOB.z_state)
+
+/datum/nano_module/program/appearance_changer/generate_data()
+	if(has_extension(owner, /datum/extension/virtual_surrogate))
+		var/mob/living/carbon/human/L = SSvirtual_reality.get_occupant_for(owner)
+		if(L)
+			owner.languages = L.languages.Copy()
+			owner.default_language = L.default_language
+
+			if(owner.species.name != L.species.name)
+				owner.species.equip_survival_gear(owner)
+				var/list/held_items = owner.GetAllHeld(/obj/item/storage/box)
+
+				for(var/obj/item/storage/box/B in held_items)
+					qdel(B)
+	..()
