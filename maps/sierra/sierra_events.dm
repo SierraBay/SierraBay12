@@ -2,6 +2,7 @@
 #define ASSIGNMENT_ENGINEER "Engineer"
 #define ASSIGNMENT_SUPPLY "Supply"
 #define ASSIGNMENT_SECURITY "Security"
+#define ASSIGNMENT_COMMAND "Command"
 
 /datum/map/sierra/setup_events()
 	map_event_container = list(
@@ -20,15 +21,15 @@
 	eventDept = "Science"
 	areaName = list("Xenobiology")
 	areaType = list(
-		/area/rnd/xenobiology,
-		/area/rnd/xenobiology/level1,
-		/area/rnd/xenobiology/entry,
-		/area/rnd/xenobiology/level2,
-		/area/rnd/xenobiology/entry2,
-		/area/rnd/xenobiology/storage2,
+		/area/rnd/sierra/xenobiology,
+		/area/rnd/sierra/xenobiology/level1,
+		/area/rnd/sierra/xenobiology/airlock1,
+		/area/rnd/sierra/xenobiology/level2,
+		/area/rnd/sierra/xenobiology/airlock2,
+		/area/rnd/sierra/xenobiology/compartment,
 		/area/maintenance/seconddeck/xenobio
 	)
-	areaNotType = list(/area/rnd/xenobiology/xenoflora, /area/rnd/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event/prison_break/warehouse
 	eventDept = "Supply"
@@ -51,19 +52,18 @@
 		/area/security/sierra/hallway/port,
 		/area/security/sierra/brig,
 		/area/security/sierra/prison,
-		/area/rnd/xenobiology,
-		/area/rnd/xenobiology/level1,
-		/area/rnd/xenobiology/entry,
-		/area/rnd/xenobiology/level2,
-		/area/rnd/xenobiology/entry2,
-		/area/rnd/xenobiology/storage2,
+		/area/rnd/sierra/xenobiology,
+		/area/rnd/sierra/xenobiology/level1,
+		/area/rnd/sierra/xenobiology/airlock1,
+		/area/rnd/sierra/xenobiology/level2,
+		/area/rnd/sierra/xenobiology/airlock2,
 		/area/maintenance/seconddeck/xenobio,
 		/area/quartermaster/storage,
 		/area/engineering/hardstorage,
 		/area/storage/tech,
 		/area/storage/tech/high_risk
 	)
-	areaNotType = list(/area/rnd/xenobiology/xenoflora, /area/rnd/xenobiology/xenoflora_storage)
+	areaNotType = list(/area/rnd/sierra/xenobiology/xenoflora)
 
 /datum/event_container/moderate/sierra
 	available_events = list(
@@ -76,7 +76,8 @@
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Psionic Signal", 							/datum/event/minispasm,				0, 		list(ASSIGNMENT_MEDICAL = 10), 1),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Hivemind",								/datum/event/hivemind, 				0,		list(ASSIGNMENT_ENGINEER = 40,ASSIGNMENT_MEDICAL = 20,ASSIGNMENT_SECURITY = 40), 1),
-		new/datum/event_meta(EVENT_LEVEL_MAJOR, "Containment Breach",						/datum/event/prison_break/station,	0,		list(ASSIGNMENT_ANY = 5))
+		new/datum/event_meta(EVENT_LEVEL_MAJOR, "Containment Breach",						/datum/event/prison_break/station,	0,		list(ASSIGNMENT_ANY = 5)),
+		new/datum/event_meta(EVENT_LEVEL_MAJOR, "Leviathan",								/datum/event/leviathan_spawn,		0,		list(ASSIGNMENT_COMMAND = 40,ASSIGNMENT_ENGINEER = 20, ASSIGNMENT_SUPPLY = 10), 1)
 	)
 
 
@@ -85,3 +86,4 @@
 #undef ASSIGNMENT_ENGINEER
 #undef ASSIGNMENT_SUPPLY
 #undef ASSIGNMENT_SECURITY
+#undef ASSIGNMENT_COMMAND

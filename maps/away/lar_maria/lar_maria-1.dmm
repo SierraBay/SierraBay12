@@ -540,7 +540,7 @@
 /turf/simulated/floor/plating,
 /area/lar_maria/cells)
 "bG" = (
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/plating,
 /area/lar_maria/morgue)
 "bH" = (
@@ -797,7 +797,7 @@
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_main)
 "cr" = (
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_main)
 "cs" = (
@@ -834,7 +834,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/cells)
 "cw" = (
@@ -844,7 +844,7 @@
 /area/lar_maria/cells)
 "cx" = (
 /obj/structure/mattress/dirty,
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/plating,
 /area/lar_maria/cells)
 "cy" = (
@@ -881,7 +881,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/mob/living/simple_animal/hostile/lar_maria/virologist/female,
+/obj/landmark/lar_maria_npc/virologist/female,
 /turf/simulated/floor/plating,
 /area/lar_maria/morgue)
 "cB" = (
@@ -925,7 +925,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/simple_animal/hostile/lar_maria/virologist,
+/obj/landmark/lar_maria_npc/virologist,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_main)
 "cE" = (
@@ -947,7 +947,7 @@
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_main)
 "cH" = (
-/mob/living/simple_animal/hostile/lar_maria/virologist/female,
+/obj/landmark/lar_maria_npc/virologist/female,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_main)
 "cI" = (
@@ -1044,7 +1044,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/plating,
 /area/lar_maria/cells)
 "cW" = (
@@ -1358,7 +1358,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/lar_maria/guard,
+/obj/landmark/lar_maria_npc/guard,
 /turf/simulated/floor/tiled,
 /area/lar_maria/vir_hallway)
 "dI" = (
@@ -1433,7 +1433,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/lar_maria/guard/ranged,
+/obj/landmark/lar_maria_npc/guard/ranged,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/sec_wing)
 "dW" = (
@@ -1689,7 +1689,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled,
 /area/lar_maria/cells)
 "eI" = (
@@ -1839,7 +1839,7 @@
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_aux)
 "fa" = (
-/mob/living/simple_animal/hostile/lar_maria/virologist,
+/obj/landmark/lar_maria_npc/virologist,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_aux)
 "fb" = (
@@ -1858,7 +1858,7 @@
 /obj/structure/bed/chair{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled,
 /area/lar_maria/cells)
 "fe" = (
@@ -2120,7 +2120,7 @@
 /obj/structure/hygiene/toilet{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/cells)
 "fI" = (
@@ -2475,7 +2475,7 @@
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_aux)
 "gd" = (
-/mob/living/simple_animal/hostile/lar_maria/virologist/female,
+/obj/landmark/lar_maria_npc/virologist/female,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_aux)
 "ge" = (
@@ -2599,7 +2599,7 @@
 /turf/simulated/floor/tiled,
 /area/lar_maria/vir_hallway)
 "gx" = (
-/mob/living/simple_animal/hostile/lar_maria/guard/ranged,
+/obj/landmark/lar_maria_npc/guard/ranged,
 /turf/simulated/floor/tiled,
 /area/lar_maria/vir_access)
 "gy" = (
@@ -2621,7 +2621,7 @@
 /turf/simulated/wall/r_wall,
 /area/lar_maria/vir_access)
 "gA" = (
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled,
 /area/lar_maria/cells)
 "gB" = (
@@ -2830,7 +2830,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/plating,
 /area/lar_maria/cells)
 "hc" = (
@@ -3440,7 +3440,7 @@
 /area/lar_maria/vir_access)
 "ix" = (
 /obj/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/lar_maria/test_subject,
+/obj/landmark/lar_maria_npc/test_subject,
 /turf/simulated/floor/tiled/white,
 /area/lar_maria/vir_access)
 "iy" = (
@@ -3554,7 +3554,7 @@
 /obj/structure/bed/chair{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/lar_maria/guard,
+/obj/landmark/lar_maria_npc/guard,
 /turf/simulated/floor/tiled,
 /area/lar_maria/sec_wing)
 "iN" = (

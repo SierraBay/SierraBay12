@@ -26,7 +26,7 @@
 	zos = get_turf(os.get_physical_host())
 	if(!zos)
 		return
-	for(var/obj/machinery/r_n_d/server/server in rnd_server_list)
+	for(var/obj/machinery/r_n_d/server/server in SSresearch.rnd_server_list)
 		if(server.stat & MACHINE_STAT_NOPOWER)
 			continue
 		if(server.z in GetConnectedZlevels(zos.z))
@@ -34,7 +34,10 @@
 	var/obj/machinery/r_n_d/server/download_from_server = pick(server_leaked)
 	while(ndesigns > 0)
 		ndesigns--
-		var/datum/design/D = pick(download_from_server.files.known_designs)
+		var/list/event_designs = download_from_server.get_all_designs()
+		if(!length(event_designs))
+			return
+		var/datum/design/D = pick(event_designs)
 		var/datum/computer_file/binary/design/design_file = D.file
 		os.save_file(design_file)
 		download_from_server.produce_heat(400)

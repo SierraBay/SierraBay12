@@ -47,7 +47,7 @@
 	y = 0.7
 	icon = "implant"
 
-	required_technologies = list(/datum/technology/bio/implants)
+	required_technologies = list(/datum/technology/bio/implant_injection_zh)
 	required_tech_levels = list()
 	cost = 1500
 

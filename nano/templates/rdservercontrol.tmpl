@@ -1,0 +1,739 @@
+<!--
+Title: R&D Server Control
+Used In File(s): \code\modules\research\server.dm
+-->
+
+<div class="srvConsole">
+
+<div class="srvHeader">
+	<span class="srvHeaderTitle">&#9741; КОНТРОЛЛЕР СЕРВЕРОВ R&D</span>
+	<div class="srvHeaderDisk">
+		{{if data.has_disk}}
+			{{if data.disk_has_blueprint}}
+				<span class="srvDiskStatus srvDiskStatus--full">&#9679; Диск: {{:data.disk_blueprint_name}}</span>
+			{{else}}
+				<span class="srvDiskStatus srvDiskStatus--empty">&#9675; Диск: пуст</span>
+			{{/if}}
+			{{:helper.link("Очистить", 'trash', {'clear_disk' : 1}, data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
+			{{:helper.link("Извлечь", 'eject', {'eject_disk' : 1}, null, 'srvSmallBtn')}}
+		{{else}}
+			<span class="srvDiskStatus srvDiskStatus--none">Нет диска</span>
+		{{/if}}
+	</div>
+</div>
+
+<!-- ======================== -->
+<!-- MAIN MENU - Server List  -->
+<!-- ======================== -->
+{{if data.screen == 0}}
+<div class="srvBody">
+	<div class="srvSection">
+		<div class="srvSectionTitle">Подключённые серверы</div>
+		<div class="srvSectionContent">
+			{{if data.servers && data.servers.length}}
+				{{for data.servers}}
+				<div class="srvServerCard {{:value.operable ? '' : 'srvServerCard--offline'}}">
+					<div class="srvServerInfo">
+						<span class="srvServerName">{{:value.name}}</span>
+						<span class="srvServerStatus {{:value.operable ? 'srvServerStatus--on' : 'srvServerStatus--off'}}">
+							{{:value.operable ? 'ОНЛАЙН' : 'ОФФЛАЙН'}}
+						</span>
+						{{if value.is_public}}
+							<span class="srvPublicBadge">&#9670; PUBLIC</span>
+						{{/if}}
+						<span class="srvHealthBadge {{:value.health <= 30 ? 'srvHealthBadge--bad' : value.health <= 60 ? 'srvHealthBadge--warn' : 'srvHealthBadge--ok'}}">
+							&#9829; {{:value.health}}%
+						</span>
+						{{if value.hdd_drives > 0}}
+							<span class="srvDiskBadge">&#128190; {{:value.hdd_used}}/{{:value.hdd_max}} GQ ({{:value.hdd_drives}} HDD)</span>
+						{{else}}
+							<span class="srvDiskBadge">&#128190; нет дисков</span>
+						{{/if}}
+					</div>
+					<div class="srvServerActions">
+						{{:helper.link("Доступ", 'locked', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 1})}}
+						{{:helper.link("Данные", 'disk', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 2})}}
+						{{:helper.link("Дизайны", 'wrench', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 4})}}
+						{{if !value.is_public}}
+							{{:helper.link("→ Public", 'arrowthick-1-e', {'set_public_server' : value.id}, value.operable ? null : 'disabled', 'srvSmallBtn')}}
+						{{/if}}
+					</div>
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Серверы не обнаружены</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/if}}
+
+<!-- ======================== -->
+<!-- ACCESS RIGHTS            -->
+<!-- ======================== -->
+{{if data.screen == 1}}
+<div class="srvBody">
+	<div class="srvSubHeader">
+		{{:helper.link("Назад", 'arrow-1-w', {'go_screen' : 0}, null, 'srvBackBtn')}}
+		<span class="srvSubTitle">{{:data.server_name}} — Права доступа</span>
+	</div>
+
+	<div class="srvSection">
+		<div class="srvSectionTitle">Загрузка на сервер (Upload)</div>
+		<div class="srvSectionContent">
+			{{if data.consoles && data.consoles.length}}
+				{{for data.consoles}}
+				<div class="srvAccessRow">
+					<span class="srvAccessName">{{:value.name}}</span>
+					{{:helper.link(value.has_upload ? 'Отключить' : 'Включить', value.has_upload ? 'circle-close' : 'circle-check', {'upload_toggle' : value.id}, null, value.has_upload ? 'srvAccessOn' : 'srvAccessOff')}}
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Нет синхронизированных консолей</div>
+			{{/if}}
+		</div>
+	</div>
+
+	<div class="srvSection">
+		<div class="srvSectionTitle">Загрузка с сервера (Download)</div>
+		<div class="srvSectionContent">
+			{{if data.consoles && data.consoles.length}}
+				{{for data.consoles}}
+				<div class="srvAccessRow">
+					<span class="srvAccessName">{{:value.name}}</span>
+					{{:helper.link(value.has_download ? 'Отключить' : 'Включить', value.has_download ? 'circle-close' : 'circle-check', {'download_toggle' : value.id}, null, value.has_download ? 'srvAccessOn' : 'srvAccessOff')}}
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Нет синхронизированных консолей</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/if}}
+
+<!-- ======================== -->
+<!-- DATA MANAGEMENT          -->
+<!-- ======================== -->
+{{if data.screen == 2}}
+<div class="srvBody">
+	<div class="srvSubHeader">
+		{{:helper.link("Назад", 'arrow-1-w', {'go_screen' : 0}, null, 'srvBackBtn')}}
+		<span class="srvSubTitle">{{:data.server_name}} — Управление данными</span>
+	</div>
+
+	<!-- Tech Trees -->
+	<div class="srvSection">
+		<div class="srvSectionTitle">Ветки технологий</div>
+		<div class="srvSectionContent srvDataList">
+			{{if data.tech_trees && data.tech_trees.length}}
+				{{for data.tech_trees}}
+				<div class="srvDataRow">
+					<span class="srvDataName">{{:value.name}}</span>
+					<span class="srvDataLevel">Ур. {{:value.level}}</span>
+					{{:helper.link("Сброс", 'trash', {'reset_tech' : value.ref}, null, 'srvDangerBtn')}}
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Нет данных</div>
+			{{/if}}
+		</div>
+	</div>
+
+	<!-- Category Filter -->
+	{{if data.categories && data.categories.length}}
+	<div class="srvSection">
+		<div class="srvSectionTitle">Исследованные технологии</div>
+		<div class="srvCategoryFilter">
+			{{:helper.link("Все", '', {'select_data_category' : '__all__'}, null, data.selected_data_category ? 'srvCatBtn' : 'srvCatBtn srvCatBtn--active')}}
+			{{for data.categories}}
+				{{:helper.link(value.name, '', {'select_data_category' : value.id}, null, data.selected_data_category == value.id ? 'srvCatBtn srvCatBtn--active' : 'srvCatBtn')}}
+			{{/for}}
+		</div>
+		<div class="srvSectionContent srvDataList srvDataList--tall">
+			{{if data.categorized_technologies && data.categorized_technologies.length}}
+				{{for data.categorized_technologies}}
+				<div class="srvCategoryGroup">
+					<div class="srvCategoryLabel">{{:value.category_name}}</div>
+					{{for value.nodes}}
+					<div class="srvDataRow">
+						<span class="srvDataName">{{:value.name}}</span>
+						{{:helper.link("Удалить", 'trash', {'reset_technology' : value.ref}, null, 'srvDangerBtn')}}
+					</div>
+					{{/for}}
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Нет исследованных технологий</div>
+			{{/if}}
+		</div>
+	</div>
+	{{/if}}
+</div>
+{{/if}}
+
+<!-- ======================== -->
+<!-- SERVER TRANSFER          -->
+<!-- ======================== -->
+{{if data.screen == 3}}
+<div class="srvBody">
+	<div class="srvSubHeader">
+		{{:helper.link("Назад", 'arrow-1-w', {'go_screen' : 0}, null, 'srvBackBtn')}}
+		<span class="srvSubTitle">{{:data.server_name}} — Передача данных</span>
+	</div>
+
+	<div class="srvSection">
+		<div class="srvSectionTitle">Целевой сервер</div>
+		<div class="srvSectionContent">
+			{{if data.transfer_servers && data.transfer_servers.length}}
+				{{for data.transfer_servers}}
+				<div class="srvServerCard">
+					<div class="srvServerInfo">
+						<span class="srvServerName">{{:value.name}}</span>
+					</div>
+					<div class="srvServerActions">
+						{{:helper.link("Передать", 'transferthick-e-w', {'send_to' : value.id})}}
+					</div>
+				</div>
+				{{/for}}
+			{{else}}
+				<div class="srvEmpty">Нет доступных серверов</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/if}}
+
+<!-- ======================== -->
+<!-- DESIGN MANAGEMENT        -->
+<!-- ======================== -->
+{{if data.screen == 4}}
+<div class="srvBody">
+	<div class="srvSubHeader">
+		{{:helper.link("Назад", 'arrow-1-w', {'go_screen' : 0}, null, 'srvBackBtn')}}
+		<span class="srvSubTitle">{{:data.server_name}} — Управление дизайнами</span>
+		<div class="srvSearchBar">
+			{{:helper.link("Поиск", 'search', {'design_search' : 1}, null, 'srvSmallBtn')}}
+			{{if data.design_search}}
+				<span class="srvSearchText">«{{:data.design_search}}»</span>
+				{{:helper.link("✕", '', {'clear_design_search' : 1}, null, 'srvSmallBtn')}}
+			{{/if}}
+		</div>
+	</div>
+
+	<!-- Category Filter -->
+	{{if data.design_categories && data.design_categories.length}}
+	<div class="srvCategoryFilter">
+		{{:helper.link("Все", '', {'select_design_category' : '__all__'}, null, data.selected_design_category ? 'srvCatBtn' : 'srvCatBtn srvCatBtn--active')}}
+		{{for data.design_categories}}
+			{{:helper.link(value.name, '', {'select_design_category' : value.id}, null, data.selected_design_category == value.id ? 'srvCatBtn srvCatBtn--active' : 'srvCatBtn')}}
+		{{/for}}
+	</div>
+	{{/if}}
+
+	<div class="srvSection">
+		<div class="srvSectionContent srvDataList srvDataList--designs" data-scroll-id="srv-designs">
+			{{if data.require_filter}}
+				<div class="srvEmpty">Выберите категорию или воспользуйтесь поиском для просмотра дизайнов</div>
+			{{else}}
+				{{if data.design_groups && data.design_groups.length}}
+					{{for data.design_groups}}
+					<div class="srvCategoryGroup">
+						<div class="srvCategoryLabel">{{:value.category_name}}</div>
+						{{for value.designs}}
+						<div class="srvDataRow {{:value.banned ? 'srvDataRow--banned' : ''}}">
+							<span class="srvDataName">
+								{{if value.banned}}<span class="srvBannedIcon">&#9888;</span>{{/if}}
+								{{:value.name}}
+							</span>
+							<div class="srvDataActions">
+								{{:helper.link(value.banned ? 'Разрешить' : 'Запретить', value.banned ? 'circle-check' : 'cancel', {'toggle_ban_design' : value.ref}, null, value.banned ? 'srvUnbanBtn' : 'srvBanBtn')}}
+								{{:helper.link("На диск", 'disk', {'download_design_to_disk' : value.ref}, data.has_disk && !data.disk_has_blueprint ? null : 'disabled', 'srvSmallBtn')}}
+								{{if !value.starts_unlocked}}
+									{{if data.has_public_server && !data.is_public_server}}
+										{{:helper.link("→ Public", 'arrowthick-1-e', {'publish_design' : value.ref}, null, 'srvSmallBtn')}}
+									{{/if}}
+									{{:helper.link("Копировать", 'copy', {'copy_design_choose' : value.ref}, null, 'srvSmallBtn')}}
+									{{:helper.link("Удалить", 'trash', {'delete_design' : value.ref}, null, 'srvDangerBtn srvSmallBtn')}}
+								{{/if}}
+							</div>
+						</div>
+						{{/for}}
+					</div>
+					{{/for}}
+				{{else}}
+					<div class="srvEmpty">Ничего не найдено</div>
+				{{/if}}
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/if}}
+
+</div>
+
+<style>
+
+/* === Server Console Root === */
+.srvConsole {
+	font-family: 'Consolas', 'Courier New', monospace;
+	color: #c8dae8;
+	min-height: 100%;
+}
+
+/* === Global Button Overrides === */
+.srvConsole .link,
+.srvConsole .linkActive,
+.srvConsole .linkOn,
+.srvConsole .linkOff,
+.srvConsole .selected,
+.srvConsole .warning,
+.srvConsole .disabled {
+	background: rgba(24, 48, 80, 0.7);
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	color: #a8c8e8;
+	border-radius: 2px;
+	padding: 1px 6px 3px 6px;
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-size: 11px;
+	transition: all 0.12s ease;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+	float: none;
+	display: inline-block;
+	height: auto;
+	min-width: 0;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.srvConsole .hasIcon {
+	padding: 1px 6px 3px 2px;
+}
+
+.srvConsole a:hover,
+.srvConsole .link:hover,
+.srvConsole .linkActive:hover {
+	background: rgba(40, 70, 120, 0.8);
+	border-color: rgba(80, 140, 220, 0.55);
+	color: #cce4ff;
+	box-shadow: 0 0 6px rgba(60, 130, 220, 0.15);
+}
+
+.srvConsole .selected,
+.srvConsole a.selected:link,
+.srvConsole a.selected:visited,
+.srvConsole a.selected:active,
+.srvConsole a.selected:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+.srvConsole .disabled,
+.srvConsole a.disabled:link,
+.srvConsole a.disabled:visited,
+.srvConsole a.disabled:active,
+.srvConsole a.disabled:hover {
+	background: rgba(30, 36, 48, 0.5);
+	border-color: rgba(50, 60, 80, 0.4);
+	color: #4a5a70;
+	cursor: not-allowed;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.srvConsole a.icon,
+.srvConsole .link.icon,
+.srvConsole .linkActive.icon,
+.srvConsole .selected.icon,
+.srvConsole .disabled.icon {
+	padding: 1px 6px 3px 22px;
+}
+
+/* === Scrollbar === */
+.srvConsole ::-webkit-scrollbar { width: 6px; }
+.srvConsole ::-webkit-scrollbar-track { background: rgba(6, 12, 24, 0.4); }
+.srvConsole ::-webkit-scrollbar-thumb { background: rgba(60, 100, 160, 0.4); border-radius: 3px; }
+.srvConsole ::-webkit-scrollbar-thumb:hover { background: rgba(80, 130, 200, 0.5); }
+
+/* === Header === */
+.srvHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 10px;
+	background: linear-gradient(180deg, rgba(16, 28, 48, 0.9), rgba(8, 16, 32, 0.95));
+	border-bottom: 1px solid rgba(64, 128, 200, 0.4);
+	margin-bottom: 6px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.srvHeaderTitle {
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+}
+
+.srvHeaderDisk {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.srvDiskStatus {
+	font-size: 10px;
+	padding: 1px 6px;
+	border-radius: 2px;
+	letter-spacing: 0.4px;
+}
+
+.srvDiskStatus--full {
+	color: #88eea0;
+	background: rgba(30, 80, 50, 0.4);
+	border: 1px solid rgba(60, 160, 80, 0.3);
+}
+
+.srvDiskStatus--empty {
+	color: #aaccee;
+	background: rgba(24, 48, 80, 0.4);
+	border: 1px solid rgba(60, 100, 160, 0.3);
+}
+
+.srvDiskStatus--none {
+	color: #5a7a9a;
+	background: rgba(20, 30, 40, 0.4);
+	border: 1px solid rgba(40, 60, 80, 0.3);
+}
+
+.srvSmallBtn {
+	font-size: 10px !important;
+	padding: 0px 4px 2px 4px !important;
+}
+
+/* === Body === */
+.srvBody {
+	padding: 0 6px 6px 6px;
+}
+
+/* === Sub Header (back + title) === */
+.srvSubHeader {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 6px;
+}
+
+.srvSubTitle {
+	font-size: 12px;
+	font-weight: bold;
+	color: #aaccee;
+	letter-spacing: 0.4px;
+}
+
+.srvBackBtn {
+	padding: 3px 8px !important;
+	font-size: 10px !important;
+}
+
+/* === Search Bar === */
+.srvSearchBar {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-left: auto;
+}
+
+.srvSearchText {
+	font-size: 10px;
+	color: #8ab4e8;
+	font-style: italic;
+}
+
+/* === Sections === */
+.srvSection {
+	margin-bottom: 6px;
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+}
+
+.srvSectionTitle {
+	padding: 5px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+}
+
+.srvSectionContent {
+	padding: 6px 8px;
+}
+
+/* === Server Cards === */
+.srvServerCard {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 8px;
+	margin-bottom: 4px;
+	background: rgba(8, 16, 28, 0.5);
+	border: 1px solid rgba(40, 70, 110, 0.4);
+	border-radius: 3px;
+	transition: border-color 0.12s;
+}
+
+.srvServerCard:last-child {
+	margin-bottom: 0;
+}
+
+.srvServerCard:hover {
+	border-color: rgba(60, 100, 160, 0.5);
+}
+
+.srvServerCard--offline {
+	opacity: 0.5;
+}
+
+.srvServerInfo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.srvServerName {
+	font-size: 12px;
+	font-weight: bold;
+	color: #aaccee;
+}
+
+.srvServerStatus {
+	font-size: 9px;
+	padding: 1px 6px;
+	border-radius: 2px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.srvServerStatus--on {
+	background: rgba(30, 80, 30, 0.4);
+	color: #44cc66;
+	border: 1px solid rgba(50, 130, 50, 0.4);
+}
+
+.srvServerStatus--off {
+	background: rgba(80, 30, 30, 0.4);
+	color: #cc4444;
+	border: 1px solid rgba(130, 50, 50, 0.4);
+}
+
+.srvPublicBadge {
+	display: inline-block;
+	padding: 1px 6px;
+	background: rgba(124, 58, 237, 0.18);
+	border: 1px solid rgba(124, 58, 237, 0.5);
+	color: #a78bfa;
+	border-radius: 2px;
+	font-size: 9px;
+	letter-spacing: 0.8px;
+	font-weight: bold;
+}
+
+.srvServerActions {
+	display: flex;
+	gap: 3px;
+}
+
+.srvHealthBadge {
+	font-size: 10px;
+	padding: 1px 5px;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+.srvHealthBadge--ok   { color: #4ade80; }
+.srvHealthBadge--warn { color: #fbbf24; }
+.srvHealthBadge--bad  { color: #f87171; }
+
+.srvDiskBadge {
+	font-size: 10px;
+	color: #64748b;
+	padding: 1px 5px;
+}
+
+/* === Access Rows === */
+.srvAccessRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 3px 6px;
+	border-bottom: 1px solid rgba(20, 36, 60, 0.3);
+}
+
+.srvAccessRow:last-child {
+	border-bottom: none;
+}
+
+.srvAccessName {
+	font-size: 11px;
+	color: #a0b8d0;
+}
+
+.srvAccessOn {
+	background: rgba(30, 80, 50, 0.6) !important;
+	border-color: rgba(60, 160, 80, 0.4) !important;
+	color: #88eea0 !important;
+}
+
+.srvAccessOff {
+	background: rgba(60, 30, 30, 0.4) !important;
+	border-color: rgba(120, 50, 50, 0.4) !important;
+	color: #cc8888 !important;
+}
+
+/* === Category Filter === */
+.srvCategoryFilter {
+	padding: 4px 8px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	border-bottom: 1px solid rgba(64, 98, 138, 0.25);
+	background: rgba(12, 20, 36, 0.4);
+}
+
+.srvCatBtn {
+	font-size: 10px !important;
+	padding: 1px 6px 2px 6px !important;
+}
+
+.srvCatBtn--active {
+	background: rgba(40, 80, 140, 0.7) !important;
+	border-color: rgba(80, 140, 220, 0.6) !important;
+	color: #cce4ff !important;
+}
+
+/* === Category Groups === */
+.srvCategoryGroup {
+	margin-bottom: 2px;
+}
+
+.srvCategoryLabel {
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: #6a9acc;
+	padding: 4px 6px 2px 6px;
+	background: rgba(16, 28, 48, 0.5);
+	border-bottom: 1px solid rgba(40, 70, 110, 0.3);
+}
+
+/* === Data Management Rows === */
+.srvDataList {
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.srvDataList--tall {
+	max-height: 280px;
+}
+
+.srvDataList--designs {
+	max-height: 400px;
+}
+
+.srvDataRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 3px 6px;
+	border-bottom: 1px solid rgba(20, 36, 60, 0.3);
+}
+
+.srvDataRow:last-child {
+	border-bottom: none;
+}
+
+.srvDataRow--banned {
+	background: rgba(80, 30, 20, 0.15);
+}
+
+.srvDataName {
+	font-size: 11px;
+	color: #a0b8d0;
+	flex: 1;
+}
+
+.srvDataLevel {
+	font-size: 10px;
+	color: #6a8aaa;
+	margin-right: 8px;
+}
+
+.srvDataActions {
+	display: flex;
+	gap: 3px;
+	flex-shrink: 0;
+}
+
+.srvBannedIcon {
+	color: #cc6644;
+	margin-right: 2px;
+}
+
+.srvDangerBtn {
+	background: rgba(100, 30, 20, 0.5) !important;
+	border-color: rgba(180, 60, 40, 0.4) !important;
+	color: #ee8866 !important;
+}
+
+.srvDangerBtn:hover {
+	background: rgba(130, 40, 25, 0.6) !important;
+	border-color: rgba(200, 80, 50, 0.5) !important;
+	color: #ffaa88 !important;
+}
+
+.srvBanBtn {
+	background: rgba(100, 60, 20, 0.5) !important;
+	border-color: rgba(180, 120, 40, 0.4) !important;
+	color: #ddaa66 !important;
+	font-size: 10px !important;
+}
+
+.srvBanBtn:hover {
+	background: rgba(120, 70, 25, 0.6) !important;
+	border-color: rgba(200, 140, 50, 0.5) !important;
+	color: #eecc88 !important;
+}
+
+.srvUnbanBtn {
+	background: rgba(30, 80, 50, 0.5) !important;
+	border-color: rgba(60, 160, 80, 0.4) !important;
+	color: #88eea0 !important;
+	font-size: 10px !important;
+}
+
+.srvUnbanBtn:hover {
+	background: rgba(40, 100, 60, 0.6) !important;
+	border-color: rgba(80, 180, 100, 0.5) !important;
+	color: #aaffbb !important;
+}
+
+/* === Empty State === */
+.srvEmpty {
+	text-align: center;
+	padding: 12px;
+	color: #5a7a9a;
+	font-style: italic;
+	font-size: 12px;
+}
+
+</style>

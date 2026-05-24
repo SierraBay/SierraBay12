@@ -11,7 +11,7 @@ NanoBaseHelpers = function () {
       return ''
     },
     ntscieMode: function () {
-      $('body').css("background-color","#502a42")
+      $('body').css("background-color","#313442")
       $('body').css("background-image","url('uiBackground-NTsci.png')")
       $('body').css("background-position","50% 0")
       $('body').css("background-repeat","repeat-x")

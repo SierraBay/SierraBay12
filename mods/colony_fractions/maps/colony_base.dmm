@@ -332,10 +332,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	level = 2
 	},
-/obj/item/device/science_tool{
-	pixel_y = 12;
-	pixel_x = 6
-	},
 /obj/item/device/scanner/xenobio{
 	pixel_x = -6;
 	pixel_y = 12
@@ -959,6 +955,7 @@
 	desc = "this card can be used to access the Colony's telepad to exchange goods.";
 	name = "trade array access card"
 	},
+/obj/item/paper/manifest/rnd_invoice/colony,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/command)
 "bU" = (
@@ -1135,6 +1132,8 @@
 	pixel_y = -24;
 	req_access = list()
 	},
+/obj/machinery/drone_pad/rd_mission,
+/obj/item/device/drone_designator,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "cm" = (
@@ -8770,6 +8769,7 @@
 	dir = 8
 	},
 /obj/machinery/cell_charger,
+/obj/item/paper/manifest/rnd_invoice/colony,
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
 "DK" = (

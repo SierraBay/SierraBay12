@@ -3,7 +3,6 @@
 	name = "Away Sites Testing"
 	full_name = "Away Sites Testing Land"
 	path = "away_sites_testing"
-
 	station_levels = list()
 	contact_levels = list()
 	player_levels = list()
@@ -44,6 +43,8 @@
 		/area/rnd/xenobiology/cell_2,
 		/area/rnd/xenobiology/cell_3,
 		/area/rnd/xenobiology/cell_4,
+		/area/bluespace_interlude,
+		/area/bluespace_interlude/platform,
 		/area/carp_racing
 	)
 

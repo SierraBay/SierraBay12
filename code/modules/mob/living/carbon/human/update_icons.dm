@@ -193,12 +193,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(istype(entry, /image))
 			var/image/overlay = entry
 			//SIERRA-ADD
-			overlay.filters = filters
-			if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
-				overlay.transform = get_lying_offset(overlay)
+			overlay.filters = null
+			overlay.transform = null
 			// [SIERRA-ADD] HEIGHT
 			var/is_head_level = (i in head_level_layers)
-			if(!is_head_level) // Displacement maps are for body (torso/legs); applying to head-level overlays causes 1px shift
+			if(!is_head_level)
 				overlay = update_height(overlay)
 			overlay = human_update_offset(overlay, is_head_level)
 			// [/SIERRA-ADD]
@@ -206,9 +205,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		else if(istype(entry, /list))
 			for(var/image/overlay in entry)
 				//SIERRA-ADD
-				overlay.filters = filters
-				if(i != HO_DAMAGE_LAYER && i != HO_BODY_LAYER)
-					overlay.transform = get_lying_offset(overlay)
+				overlay.filters = null
+				overlay.transform = null
 				// [SIERRA-ADD] HEIGHT
 				var/is_head_level = (i in head_level_layers)
 				if(!is_head_level)
@@ -222,14 +220,12 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/I = head.get_eye_overlay()
 		//SIERRA-REMOVE 		if(I) overlays_to_apply += I
 		//SIERRA-ADD
-		//SIERRA-ADD
 		if(I)
-			I.filters = filters
+			I.filters = null
 			// [SIERRA-ADD] HEIGHT — eyes are head-level: only pixel_y offset, no body displacement
 			I = human_update_offset(I, TRUE)
 			// [/SIERRA-ADD]
 			overlays_to_apply += I
-		//SIERRA-ADD
 		//SIERRA-ADD
 
 
@@ -238,7 +234,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	SetOverlays(overlays_to_apply)
 	// [SIERRA-ADD] HEIGHT
-	// Disable legacy matrix-scaling based height adjustments. Use pixel displacement filters instead.
 	animate(
 		src,
 		transform = matrix().Update(

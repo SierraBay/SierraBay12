@@ -2,6 +2,7 @@
 	name = "paper scanner module"
 	desc = "A paper scanning module. It can scan writing and save it to a file."
 	external_slot = TRUE
+	scan_beam_color = "#e8d96b" //[SIERRA-ADD] RND
 
 /obj/item/stock_parts/computer/scanner/paper/can_use_scanner(mob/user, obj/item/paper/target, proximity = TRUE)
 	if(!..())
@@ -14,6 +15,8 @@
 	if(!driver || !driver.using_scanner)
 		return
 	if(!can_use_scanner(user, target, proximity))
+		return
+	if(!do_scan_animation(user, target)) //[SIERRA-ADD] RND
 		return
 	var/data = html2pencode(target.info)
 	if(!data)

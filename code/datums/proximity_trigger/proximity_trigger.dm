@@ -83,11 +83,11 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 		return
 
 	for(var/t in (turfs_in_range - new_turfs))
-		GLOB.opacity_set_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_visibility_changed)
-		GLOB.destroyed_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_destroyed)
+		GLOB.opacity_set_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_visibility_changed))
+		GLOB.destroyed_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_destroyed))
 	for(var/t in (new_turfs - turfs_in_range))
-		GLOB.opacity_set_event.register(t, src, /datum/proximity_trigger/proc/on_turf_visibility_changed)
-		GLOB.destroyed_event.register(t, src, /datum/proximity_trigger/proc/on_turf_destroyed)
+		GLOB.opacity_set_event.register(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_visibility_changed))
+		GLOB.destroyed_event.register(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_destroyed))
 
 	turfs_in_range = new_turfs
 	on_turf_visibility_changed()
@@ -98,11 +98,11 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 	GLOB.dir_set_event.unregister(holder, src, TYPE_PROC_REF(/datum/proximity_trigger, register_turfs))
 
 	for(var/t in turfs_in_range)
-		GLOB.opacity_set_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_visibility_changed)
-		GLOB.destroyed_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_destroyed)
+		GLOB.opacity_set_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_visibility_changed))
+		GLOB.destroyed_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_destroyed))
 	for(var/t in seen_turfs_)
-		GLOB.entered_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_entered)
-		GLOB.destroyed_event.unregister(t, src, /datum/proximity_trigger/proc/on_turf_destroyed)
+		GLOB.entered_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_entered))
+		GLOB.destroyed_event.unregister(t, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_destroyed))
 
 	call(proc_owner, on_turfs_changed)(seen_turfs_.Copy(), list())
 
@@ -110,9 +110,9 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 	seen_turfs_.Cut()
 
 /datum/proximity_trigger/proc/on_turf_destroyed(turf/destroyed)
-	GLOB.opacity_set_event.unregister(destroyed, src, /datum/proximity_trigger/proc/on_turf_visibility_changed)
-	GLOB.entered_event.unregister(destroyed, src, /datum/proximity_trigger/proc/on_turf_entered)
-	GLOB.destroyed_event.unregister(destroyed, src, /datum/proximity_trigger/proc/on_turf_destroyed)
+	GLOB.opacity_set_event.unregister(destroyed, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_visibility_changed))
+	GLOB.entered_event.unregister(destroyed, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_entered))
+	GLOB.destroyed_event.unregister(destroyed, src, TYPE_PROC_REF(/datum/proximity_trigger, on_turf_destroyed))
 	// The cycle of when things run mean this is one of the only ways to make sure we don't encounter the debug log spam
 	addtimer(new Callback(src, .proc/register_turfs), 1, TIMER_UNIQUE | TIMER_OVERRIDE)
 

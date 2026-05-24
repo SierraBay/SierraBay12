@@ -167,6 +167,12 @@
 		new_player_panel()
 
 	if(href_list["observe"])
+		// [SIERRA-EDIT]
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+		// [/SIERRA-EDIT]
+
 		if (GAME_STATE < RUNLEVEL_LOBBY)
 			if (!client.holder)
 				to_chat(src, SPAN_WARNING("Please wait for server initialization to complete..."))
@@ -211,6 +217,12 @@
 			return 1
 
 	if(href_list["late_join"])
+		// [SIERRA-EDIT]
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+		// [/SIERRA-EDIT]
+
 		if(GAME_STATE != RUNLEVEL_GAME)
 			to_chat(usr, SPAN_WARNING("The round has either not started yet or already ended."))
 			return
@@ -229,6 +241,12 @@
 		LateChoices()
 
 	if(href_list["SelectedJob"])
+		// [SIERRA-EDIT]
+		if(player_is_antag(mind, only_offstation_roles = 1))
+			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
+			return TOPIC_HANDLED
+		// [/SIERRA-EDIT]
+
 		var/datum/job/job = SSjobs.get_by_title(href_list["SelectedJob"])
 
 		if(!SSjobs.check_general_join_blockers(src, job))

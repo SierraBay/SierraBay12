@@ -472,7 +472,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return 0
 
 /mob/observer/ghost/can_admin_interact()
-	return check_rights(R_ADMIN, 0, src)
+	// [SIERRA-EDIT]
+	// return check_rights(R_ADMIN, 0, src) // SIERRA-EDIT - ORIGINAL
+	return check_rights(R_ADMIN|R_DEBUG, 0, src)
+	// [/SIERRA-EDIT]
 
 /mob/observer/ghost/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
@@ -549,7 +552,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/observer/ghost/proc/shall_check_if_holy()
 	if(invisibility >= INVISIBILITY_OBSERVER)
 		return FALSE
-	if(check_rights(R_ADMIN|R_FUN, 0, src))
+	// [SIERRA-EDIT]
+	// if(check_rights(R_ADMIN|R_FUN, 0, src)) // SIERRA-EDIT - ORIGINAL
+	if(check_rights(R_ADMIN|R_FUN|R_DEBUG, 0, src))
+	// [/SIERRA-EDIT]
 		return FALSE
 	return TRUE
 

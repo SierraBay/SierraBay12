@@ -1,4 +1,3 @@
-/* [SIERRA-REMOVE] - MODPACK_RND
 /obj/machinery/r_n_d/protolathe
 	name = "protolathe"
 	desc = "Accessed by a connected core fabricator console, it produces items from various materials."
@@ -178,4 +177,3 @@
 			if(new_item.matter && length(new_item.matter) > 0)
 				for(var/i in new_item.matter)
 					new_item.matter[i] = new_item.matter[i] * mat_efficiency
-					*/

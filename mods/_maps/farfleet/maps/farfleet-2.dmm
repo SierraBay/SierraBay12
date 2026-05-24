@@ -1196,10 +1196,6 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/device/science_tool{
-	pixel_x = 4;
-	pixel_y = 0
-	},
 /obj/item/anobattery{
 	pixel_x = 6;
 	pixel_y = 11
