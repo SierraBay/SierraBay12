@@ -8,7 +8,7 @@
 	if(!preference_mob?.client)
 		return
 
-	for(var/atom/movable/renderer/exposure/exposure_to_update in preference_mob.renderers)
+	for(var/atom/movable/renderer/exposure/exposure_to_update in preference_mob.renderer_plane_map)
 		exposure_to_update.UpdateRenderer()
 
 /datum/client_preference/bloomlevel
@@ -21,7 +21,7 @@
 	if(!preference_mob?.client)
 		return
 
-	for(var/atom/movable/renderer/lamps/lamps_to_update in preference_mob.renderers)
+	for(var/atom/movable/renderer/lamps/lamps_to_update in preference_mob.renderer_plane_map)
 		lamps_to_update.UpdateRenderer()
 
 /datum/client_preference/glare
@@ -34,5 +34,5 @@
 	if(!preference_mob?.client)
 		return
 
-	for(var/atom/movable/renderer/lamps_glare/glare_to_update in preference_mob.renderers)
+	for(var/atom/movable/renderer/lamps_glare/glare_to_update in preference_mob.renderer_plane_map)
 		glare_to_update.UpdateRenderer()

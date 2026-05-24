@@ -11,11 +11,13 @@
 	filters = list()
 
 	var/mob/M = owner
+	var/has_exposure = TRUE
 	if(istype(M))
 		var/level = M.get_preference_value(/datum/client_preference/exposurelevel)
 		var/alpha = 255
 		if(level == GLOB.PREF_OFF)
 			alpha *= 0
+			has_exposure = FALSE
 		else if(level == GLOB.PREF_LOW)
 			alpha *= 0.33
 		else if(level == GLOB.PREF_MED)
@@ -26,13 +28,15 @@
 			color = rgb(255, 255, 255, alpha)
 		)
 
-		if(level == GLOB.PREF_OFF)
-			return
+	if(has_exposure)
+		filters += filter(
+			type = "blur",
+			size = 20
+		)
 
-	filters += filter(
-		type = "blur",
-		size = 20
-	)
+#ifdef MODPACK_FOV
+	filters += filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+#endif
 
 /atom/movable/renderer/exposure/proc/UpdateRenderer()
 	Setup()
@@ -57,10 +61,11 @@
 	var/bloomoffset = 0
 
 	var/mob/M = owner
+	var/has_bloom = TRUE
 	if(istype(M))
 		var/level = M.get_preference_value(/datum/client_preference/bloomlevel)
 		if(level == GLOB.PREF_OFF)
-			return
+			has_bloom = FALSE
 		else if(level == GLOB.PREF_LOW)
 			bloomsize = 2
 			bloomoffset = 1
@@ -71,13 +76,18 @@
 			bloomsize = 5
 			bloomoffset = 3
 
-	filters += filter(
-		type = "bloom",
-		threshold = "#aaaaaa",
-		size = bloomsize,
-		offset = bloomoffset,
-		alpha = 100
-	)
+	if(has_bloom)
+		filters += filter(
+			type = "bloom",
+			threshold = "#aaaaaa",
+			size = bloomsize,
+			offset = bloomoffset,
+			alpha = 100
+		)
+
+#ifdef MODPACK_FOV
+	filters += filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+#endif
 
 /atom/movable/renderer/lamps/proc/UpdateRenderer()
 	Setup()
@@ -99,6 +109,7 @@
 	filters = list()
 
 	var/mob/M = owner
+	var/has_glare = TRUE
 	if(istype(M))
 		var/enabled = M.get_preference_value(/datum/client_preference/glare)
 		if(enabled == GLOB.PREF_NO)
@@ -106,12 +117,17 @@
 				type = "color",
 				color = "#00000000"
 			)
-			return
+			has_glare = FALSE
 
-	filters += filter(
-		type = "radial_blur",
-		size = 0.03
-	)
+	if(has_glare)
+		filters += filter(
+			type = "radial_blur",
+			size = 0.03
+		)
+
+#ifdef MODPACK_FOV
+	filters += filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+#endif
 
 /atom/movable/renderer/lamps_glare/proc/UpdateRenderer()
 	Setup()
