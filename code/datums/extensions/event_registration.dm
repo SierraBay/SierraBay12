@@ -30,7 +30,7 @@
 	base_type = /datum/extension/event_registration/shuttle_stationary
 	var/list/shuttles_registered
 	var/shuttle_moving = FALSE
-	var/given_area
+	var/area/given_area
 
 /datum/extension/event_registration/shuttle_stationary/New(datum/holder, singleton/observ/event, datum/target, callproc, area/given_area)
 	..()

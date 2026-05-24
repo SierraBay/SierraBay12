@@ -9,12 +9,6 @@
 // There are three different power channels, lighting, equipment, and enviroment
 // Each may have one of the following states
 
-#define POWERCHAN_OFF		0	// Power channel is off
-#define POWERCHAN_OFF_TEMP	1	// Power channel is off until there is power
-#define POWERCHAN_OFF_AUTO	2	// Power channel is off until power passes a threshold
-#define POWERCHAN_ON		3	// Power channel is on until there is no power
-#define POWERCHAN_ON_AUTO	4	// Power channel is on until power drops below a threshold
-
 // Power channels set to Auto change when power levels rise or drop below a threshold
 
 #define AUTO_THRESHOLD_LIGHTING  50
