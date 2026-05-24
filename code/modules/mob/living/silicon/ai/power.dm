@@ -102,9 +102,9 @@
 		return
 
 	A.operating = 1
-	A.set_channel_state(EQUIP, 3)
+	A.set_channel_state(EQUIP, POWERCHAN_ON)
 	A.failure_timer = 0
-	A.update()
+	A.force_update_channels()
 
 	update_icon()
 

@@ -94,12 +94,12 @@
 		out += "<table><tr><th>Name<th>EQUIP<th>LIGHT<th>ENVIRON<th>CELL<th>LOAD"
 
 		// These lists are used as replacement for number based APC settings
-		var/list/S = list("M-OFF","A-OFF","M-ON", "A-ON")
+		var/list/S = list("M-OFF", "DC-OFF", "A-OFF", "M-ON", "A-ON")
 		var/list/chg = list("N","C","F")
 
 		// Split to multiple lines to make it more readable
 		for(var/obj/machinery/power/apc/A in L)
-			out += "<tr><td>\The [A.apc_area]" 															// Add area name
+			out += "<tr><td>[A.apc_area ? "\The [A.apc_area]" : "Unknown Space"]" 															// Add area name
 			out += "<td>[S[A.equipment_channel+1]]<td>[S[A.lighting_channel+1]]<td>[S[A.environment_channel+1]]" 				// Show status of channels
 			var/obj/item/cell/cell = A.get_cell()
 			if(cell)
@@ -154,7 +154,7 @@
 			APC_entry["cell_status"] = cell ? chg[A.charging+1] : "N"
 			// Other info
 			APC_entry["total_load"] = reading_to_text(A.last_used_total)
-			APC_entry["name"] = A.apc_area.name
+			APC_entry["name"] = A.apc_area ? A.apc_area.name : "Unknown Space"
 			// Add data into main list of APC data.
 			APC_data += list(APC_entry)
 			// Add load of this APC to total APC load calculation

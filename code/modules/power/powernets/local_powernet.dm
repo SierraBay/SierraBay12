@@ -200,6 +200,8 @@
 	passive_lighting_consumption = 0
 	passive_environment_consumption = 0
 	for(var/obj/machinery/M as anything in registered_machines)
+		if(!M)
+			continue
 		switch(M.power_channel)
 			if(EQUIP)
 				passive_equipment_consumption += M.get_power_usage()

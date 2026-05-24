@@ -305,9 +305,10 @@
 		apc_area = get_area_name(areastring)
 	else
 		apc_area = get_area(src)
-	if(autoname)
-		SetName("\improper [apc_area.name] APC")
-	apc_area.apc = src
+	if(apc_area)
+		if(autoname)
+			SetName("\improper [apc_area.name] APC")
+		apc_area.apc = src
 
 	. = ..()
 	machine_powernet = apc_area?.create_powernet()
@@ -327,7 +328,6 @@
 	power_change()
 
 /obj/machinery/power/apc/Destroy()
-	src.update()
 	if(apc_area)
 		apc_area.apc = null
 	var/datum/local_powernet/local_net = machine_powernet || apc_area?.powernet
@@ -719,7 +719,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[apc_area.name] - APC", 520, data["siliconUser"] ? 465 : 440)
+		ui = new(user, src, ui_key, "apc.tmpl", "[apc_area ? apc_area.name : "Unknown Space"] - APC", 520, data["siliconUser"] ? 465 : 440)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -729,7 +729,7 @@
 
 /obj/machinery/power/apc/proc/report()
 	var/obj/item/cell/cell = get_cell()
-	return "[apc_area.name] : [equipment_channel]/[lighting_channel]/[environment_channel] ([last_used_equipment+last_used_lighting+last_used_environment]) : [cell? cell.percent() : "N/C"] ([charging])"
+	return "[apc_area ? apc_area.name : "Unknown Space"] : [equipment_channel]/[lighting_channel]/[environment_channel] ([last_used_equipment+last_used_lighting+last_used_environment]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/power_change(datum/apc_tick_state/state_override = null)
 	if(stat_immune & MACHINE_STAT_NOPOWER)
@@ -767,7 +767,7 @@
 			power_change()
 		if(apc_area && old_lighting_power != local_net.has_power(PW_CHANNEL_LIGHTING))
 			apc_area.set_emergency_lighting(lighting_channel == POWERCHAN_OFF_AUTO) //if lights go auto-off, emergency lights go on
-	else
+	else if(apc_area)
 		apc_area.power_change()
 
 	var/obj/item/cell/cell = get_cell()
@@ -875,7 +875,7 @@
 	return state ? state.desired_total_load : 0
 
 /obj/machinery/power/apc/Process()
-	if(!apc_area.requires_power)
+	if(!apc_area || !apc_area.requires_power)
 		return PROCESS_KILL
 
 	if(MACHINE_IS_BROKEN(src) || GET_FLAGS(stat, MACHINE_STAT_MAINT))
@@ -930,7 +930,7 @@
 			power.unset_status(src, PART_STAT_ACTIVE)
 			var/can_charge_from_terminal = FALSE
 			if(power.can_charge && cell && !cell.fully_charged() && state.external_terminal && remaining_external_surplus > 0)
-				can_charge_from_terminal = !!(apc_area && apc_area.powered(power.charge_channel))
+				can_charge_from_terminal = TRUE
 			if(!cell)
 				power.charge_wait_counter = initial(power.charge_wait_counter)
 				power.set_battery_mode(APC_BATTERY_MODE_UNAVAILABLE, state.desired_total_load)
