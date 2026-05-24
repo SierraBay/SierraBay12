@@ -18,7 +18,7 @@
 			alpha *= 0
 		else if(level == GLOB.PREF_LOW)
 			alpha *= 0.33
-		else if(level == GLOB.PREF_MEDIUM)
+		else if(level == GLOB.PREF_MED)
 			alpha *= 0.66
 
 		filters += filter(

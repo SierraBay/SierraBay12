@@ -58,33 +58,17 @@
 			matrix += 0
 
 	else if(matrixlen == 12)
-		for(var/i = matrixlen to matrixlen - 3 step -1)
+		for(var/i = matrixlen to matrixlen - 2 step -1)
 			matrix[i] = brightness
 
 	else if(matrixlen == 3)
-		for(var/i = matrixlen - 1 to matrixlen - 4 step -1)
+		for(var/i = matrixlen to matrixlen - 2 step -1)
 			matrix[i] = brightness
 
-/datum/ColorMatrix/proc/hex2value(hex)
-	var/num1 = copytext(hex, 1, 2)
-	var/num2 = copytext(hex, 2)
-
-	if(isnum(text2num(num1)))
-		num1 = text2num(num1)
-	else
-		num1 = text2ascii(lowertext(num1)) - 87
-
-	if(isnum(text2num(num1)))
-		num2 = text2num(num1)
-	else
-		num2 = text2ascii(lowertext(num2)) - 87
-
-	return num1 * 16 + num2
-
 /datum/ColorMatrix/proc/SetColor(color, contrast = 1, brightness = null)
-	var/rr = hex2value(copytext(color, 2, 4)) / 255
-	var/gg = hex2value(copytext(color, 4, 6)) / 255
-	var/bb = hex2value(copytext(color, 6, 8)) / 255
+	var/rr = hex2num(copytext(color, 2, 4)) / 255
+	var/gg = hex2num(copytext(color, 4, 6)) / 255
+	var/bb = hex2num(copytext(color, 6, 8)) / 255
 
 	rr = round(rr * 1000) / 1000 * contrast
 	gg = round(gg * 1000) / 1000 * contrast
