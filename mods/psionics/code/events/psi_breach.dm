@@ -1,5 +1,5 @@
 /datum/event/psibreach
-	announceWhen	= 180
+	announceWhen	= 30
 
 
 /datum/event/psibreach/announce()
@@ -30,3 +30,28 @@
 	var/list/possible_types = typesof(/obj/psi_plane/psinomaly)
 	var/picked_type = pick(possible_types)
 	new picked_type(start_location)
+
+	var/list/places_to_spawn = list()
+	for(var/turf/T in orange(1, start_location))
+		if(istype(T,/turf/space)) continue
+		if(T.density) continue
+		if(locate(/obj/structure/wall_frame) in T) continue
+		places_to_spawn.Add(T)
+	if(!LAZYLEN(places_to_spawn))
+		places_to_spawn.Add(get_turf(start_location))
+
+	var/mob_path
+	var/amount = rand(1,3)
+
+	var/squad = pick("spider", "vagrant")
+	switch(squad)
+		if("spider")
+			mob_path = /mob/living/simple_animal/hostile/giant_spider/psi
+		if("vagrant")
+			mob_path = /mob/living/simple_animal/hostile/vagrant/psi
+
+	for(var/i = 1 to amount)
+		var/turf/spawn_loc = pick(places_to_spawn)
+		new mob_path(spawn_loc)
+		if(LAZYLEN(places_to_spawn) > 1)
+			places_to_spawn -= spawn_loc

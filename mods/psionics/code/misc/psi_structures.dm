@@ -3,6 +3,9 @@
 	desc = "Breach in fabric of reality itself, leading to realm on infinite possibilities and dangers."
 	icon = 'mods/psionics/icons/effects/psi_effects.dmi'
 	icon_state = "reality_smash"
+
+	blend_mode = BLEND_ADD
+
 	layer = ABOVE_HUMAN_LAYER
 	density = TRUE
 	anchored = TRUE
@@ -14,31 +17,6 @@
 
 /obj/psi_plane/psinomaly/Initialize()
 	. = ..()
-
-	var/list/places_to_spawn = list()
-	for(var/turf/T in orange(1, src))
-		if(istype(T,/turf/space)) continue
-		if(T.density) continue
-		if(locate(/obj/structure/wall_frame) in T) continue
-		places_to_spawn.Add(T)
-	if(!LAZYLEN(places_to_spawn))
-		places_to_spawn.Add(get_turf(src))
-
-	var/mob_path
-	var/amount = rand(1,3)
-
-	var/squad = pick("spider", "vagrant")
-	switch(squad)
-		if("spider")
-			mob_path = /mob/living/simple_animal/hostile/giant_spider/psi
-		if("vagrant")
-			mob_path = /mob/living/simple_animal/hostile/vagrant/psi
-
-	for(var/i = 1 to amount)
-		var/turf/spawn_loc = pick(places_to_spawn)
-		new mob_path(spawn_loc)
-		if(LAZYLEN(places_to_spawn) > 1)
-			places_to_spawn -= spawn_loc
 
 	update_icon()
 
@@ -95,49 +73,12 @@
 
 // Подтипы аномалий разных вкусов и цветов, ассоциированы со школами псионики
 
+// Принуждение. При провале - будто блайндстрайком по лицу
+
 /obj/psi_plane/psinomaly/coercion
 	aura_color = "#3333cc"
 
-/obj/psi_plane/psinomaly/psychokinesis
-	aura_color = "#cc3333"
-
-/obj/psi_plane/psinomaly/redaction
-	aura_color = "#33cc33"
-
-// Хил как от медитации
-
-/obj/psi_plane/psinomaly/redaction/attack_hand(mob/user)
-	visible_message("[user] touches \the [src].")
-	var/mob/living/carbon/human/H = user
-	if(H.psi && !H.psi.suppressed)
-		if(charged)
-			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
-			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
-				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
-				charged = FALSE
-				H.psi.attempt_regeneration()
-				to_chat(H, SPAN_GOOD("You feel invigorated with energies of anomaly"))
-				for(var/i = 0; i <= 5; i++)
-					new /obj/temporary/psi(get_turf(user), 16, 'mods/psionics/icons/effects/psi_effects.dmi', "green[rand(1,8)]", 5)
-				return
-			else
-				var/obj/item/organ/external/E = H.get_organ(H.hand ? BP_L_HAND : BP_R_HAND)
-				to_chat(H, SPAN_DANGER("A wave of uncontrolled energy emerges from the [src], and ruches into your arm!"))
-				E.mutate()
-				H.Paralyse(5)
-				H.make_jittery(100)
-		else
-			if(charged)
-				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
-	else
-		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
-
-/obj/psi_plane/psinomaly/energistics
-	aura_color = "#cc8221"
-
-// Триггер латентностей, в случае провала - ЭМИ и разрядка аномалии
-
-/obj/psi_plane/psinomaly/energistics/attack_hand(mob/user)
+/obj/psi_plane/psinomaly/coercion/attack_hand(mob/user)
 	visible_message("[user] touches \the [src].")
 	var/mob/living/carbon/human/H = user
 	if(H.psi && !H.psi.suppressed)
@@ -148,25 +89,90 @@
 				charged = FALSE
 				H.psi.check_latency_trigger(100, "a psionic plane breach", redactive = TRUE)
 				to_chat(H, SPAN_WARNING("You feel like something inside your head try to reach for the anomaly!"))
+				update_icon()
 			else
 				to_chat(H, SPAN_DANGER("A wave of uncontrolled energy emerges from the [src]!"))
-				new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
-				empulse(user, 6, 8)
+				H.eye_blind = max(H.eye_blind,4)
+				H.ear_deaf = max(H.ear_deaf,4 * 2)
+				H.mod_confused(4 * rand(1,3))
 				charged = FALSE
+				update_icon()
 		else
 			if(charged)
 				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
 	else
 		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
 
+// Психокинетика. Полёт, если провал, то отлетаем в рандомное направление
 
-/obj/psi_plane/psinomaly/consciousness
-	aura_color = "#5233cc"
+/obj/psi_plane/psinomaly/psychokinesis
+	aura_color = "#cc3333"
 
-/obj/psi_plane/psinomaly/metakinesis
-	aura_color = "#cccc33"
+/obj/psi_plane/psinomaly/psychokinesis/attack_hand(mob/user)
+	visible_message("[user] touches \the [src].")
+	var/mob/living/carbon/human/H = user
+	if(H.psi && !H.psi.suppressed)
+		if(charged)
+			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
+			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
+				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
+				charged = FALSE
+				H.levitation = TRUE
+				H.pass_flags |= PASS_FLAG_TABLE
+				H.pixel_y = 8
+				H.AddOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
+				H.make_floating(5)
+				to_chat(H, SPAN_WARNING("You feel like flying, but you have no idea how to stop it!"))
+				update_icon()
+			else
+				to_chat(H, SPAN_DANGER("Suddenly, [src] emits a powerful gravitational blast!"))
+				H.throw_at_random(FALSE, 4, 3)
+				charged = FALSE
+				update_icon()
+		else
+			if(charged)
+				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
+	else
+		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
 
-// Добавление латентностей. В случае провала - поджигаем
+// Редакция. Хил, немного от генокрада. При провале - мутируем руку
+
+/obj/psi_plane/psinomaly/redaction
+	aura_color = "#33cc33"
+
+/obj/psi_plane/psinomaly/redaction/attack_hand(mob/user)
+	visible_message("[user] touches \the [src].")
+	var/mob/living/carbon/human/H = user
+	if(H.psi && !H.psi.suppressed)
+		if(charged)
+			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
+			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
+				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
+				charged = FALSE
+				update_icon()
+				H.adjustBruteLoss(-rand(5,15))
+				H.adjustOxyLoss(-rand(5,15))
+				H.adjustFireLoss(-rand(5,15))
+				H.regenerate_icons()
+				to_chat(H, SPAN_GOOD("You feel invigorated with energies of anomaly"))
+			else
+				var/obj/item/organ/external/E = H.get_organ(H.hand ? BP_L_HAND : BP_R_HAND)
+				to_chat(H, SPAN_DANGER("A wave of uncontrolled energy emerges from the [src], and ruches into your arm!"))
+				charged = FALSE
+				update_icon()
+				E.mutate()
+				H.Paralyse(5)
+				H.make_jittery(100)
+		else
+			if(charged)
+				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
+	else
+		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
+
+// Энергии. Триггер латентностей, в случае провала - ЭМИ и разрядка аномалии
+
+/obj/psi_plane/psinomaly/energistics
+	aura_color = "#cc8221"
 
 /obj/psi_plane/psinomaly/energistics/attack_hand(mob/user)
 	visible_message("[user] touches \the [src].")
@@ -177,6 +183,75 @@
 			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
 				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
 				charged = FALSE
+				update_icon()
+				H.psi.check_latency_trigger(100, "a psionic plane breach", redactive = TRUE)
+				to_chat(H, SPAN_WARNING("You feel like something inside your head try to reach for the anomaly!"))
+			else
+				to_chat(H, SPAN_DANGER("A wave of uncontrolled energy emerges from the [src]!"))
+				new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
+				empulse(user, 6, 8)
+				charged = FALSE
+				update_icon()
+		else
+			if(charged)
+				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
+	else
+		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
+
+//
+
+/obj/psi_plane/psinomaly/consciousness
+	aura_color = "#5233cc"
+
+/obj/psi_plane/psinomaly/consciousness/attack_hand(mob/user)
+	visible_message("[user] touches \the [src].")
+	var/mob/living/carbon/human/H = user
+	if(H.psi && !H.psi.suppressed)
+		if(charged)
+			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
+			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
+				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
+				charged = FALSE
+				update_icon()
+				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
+				new /obj/item/device/soulstone(H.get_active_hand())
+			else
+				to_chat(H, SPAN_DANGER("Suddenly, something meterialize around [src]!"))
+				charged = FALSE
+				update_icon()
+				var/list/places_to_spawn = list()
+				for(var/turf/T in orange(1, src))
+					if(T.density) continue
+					if(locate(/obj/structure/wall_frame) in T) continue
+					places_to_spawn.Add(T)
+				if(!LAZYLEN(places_to_spawn))
+					places_to_spawn.Add(get_turf(src))
+				for(var/i = 1 to 3)
+				var/turf/spawn_loc = pick(places_to_spawn)
+				new /mob/living/simple_animal/hostile/bluespace/doppelganger(spawn_loc)
+				if(LAZYLEN(places_to_spawn) > 1)
+					places_to_spawn -= spawn_loc
+		else
+			if(charged)
+				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
+	else
+		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
+
+// Добавление латентностей. В случае провала - поджигаем
+
+/obj/psi_plane/psinomaly/metakinesis
+	aura_color = "#cccc33"
+
+/obj/psi_plane/psinomaly/metakinesis/attack_hand(mob/user)
+	visible_message("[user] touches \the [src].")
+	var/mob/living/carbon/human/H = user
+	if(H.psi && !H.psi.suppressed)
+		if(charged)
+			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
+			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
+				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
+				charged = FALSE
+				update_icon()
 				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
 				if(H.species.name in HUMAN_SPECIES)
 					H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
@@ -185,6 +260,7 @@
 			else
 				to_chat(H, SPAN_DANGER("An elementary backlash emerges from [src]!"))
 				charged = FALSE
+				update_icon()
 				if(prob(33))
 					H.IgniteMob()
 				if(prob(33))
@@ -199,10 +275,12 @@
 	else
 		to_chat(user, SPAN_NOTICE("You touch [src], but it doesn't react to you in any way, as if you don't exist for it."))
 
+// Манифестация всякой шелухи
+
 /obj/psi_plane/psinomaly/manifestation
 	aura_color = "#cc8221"
 
-/obj/psi_plane/psinomaly/energistics/attack_hand(mob/user)
+/obj/psi_plane/psinomaly/manifestation/attack_hand(mob/user)
 	visible_message("[user] touches \the [src].")
 	var/mob/living/carbon/human/H = user
 	if(H.psi && !H.psi.suppressed)
@@ -211,12 +289,26 @@
 			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
 				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
 				charged = FALSE
-				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
+				update_icon()
+				to_chat(H, SPAN_WARNING("You feel like shards of other's identity materializes in youh hand!"))
 				new /obj/item/device/soulstone(H.get_active_hand())
 			else
-				to_chat(H, SPAN_DANGER("An elementary backlash emerges from [src]!"))
+				to_chat(H, SPAN_DANGER("[src] emits sickening cracks and shatters like thousands of metal pieces!"))
+				playsound(src, 'sound/effects/psi/power_fabrication.ogg', 100, 1)
 				charged = FALSE
-
+				update_icon()
+				var/list/places_to_spawn = list()
+				for(var/turf/T in orange(3, src))
+					if(T.density) continue
+					if(locate(/obj/structure/wall_frame) in T) continue
+					places_to_spawn.Add(T)
+				if(!LAZYLEN(places_to_spawn))
+					places_to_spawn.Add(get_turf(src))
+				for(var/i = 1 to 16)
+				var/turf/spawn_loc = pick(places_to_spawn)
+				new /obj/item/material/shard/caltrop(spawn_loc)
+				if(LAZYLEN(places_to_spawn) > 1)
+					places_to_spawn -= spawn_loc
 		else
 			if(charged)
 				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
