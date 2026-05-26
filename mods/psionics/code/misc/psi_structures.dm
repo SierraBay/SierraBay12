@@ -181,11 +181,13 @@
 		if(charged)
 			user.visible_message(SPAN_WARNING("\The [user] concentrates and extends his hand forward"), SPAN_WARNING("You begin to carefully collect energy from the anomaly."), "You feel unplesant wave of cold.")
 			if(do_after(user, 6 SECONDS, src, DO_PUBLIC_UNIQUE))
-				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
+				playsound(src, 'sound/effects/psi/power_unlock.ogg', 100, 1)
 				charged = FALSE
 				update_icon()
-				H.psi.check_latency_trigger(100, "a psionic plane breach", redactive = TRUE)
-				to_chat(H, SPAN_WARNING("You feel like something inside your head try to reach for the anomaly!"))
+				H.psi.max_stamina = 120
+				H.psi.stamina = H.psi.max_stamina
+				new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
+				to_chat(H, SPAN_GOOD("You feel like a second wind opened up!"))
 			else
 				to_chat(H, SPAN_DANGER("A wave of uncontrolled energy emerges from the [src]!"))
 				new /obj/temporary(get_turf(user),3, 'icons/effects/effects.dmi', "blue_electricity_constant")
@@ -214,7 +216,10 @@
 				charged = FALSE
 				update_icon()
 				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
-				new /obj/item/device/soulstone(H.get_active_hand())
+				if(H.species.name in HUMAN_SPECIES)
+					H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
+				if(H.species.name == SPECIES_TAJARA)
+					H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
 			else
 				to_chat(H, SPAN_DANGER("Suddenly, something meterialize around [src]!"))
 				charged = FALSE
@@ -252,11 +257,21 @@
 				playsound(src, 'sound/effects/psi/power_used.ogg', 100, 1)
 				charged = FALSE
 				update_icon()
-				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
-				if(H.species.name in HUMAN_SPECIES)
-					H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
-				if(H.species.name == SPECIES_TAJARA)
-					H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
+				// Честно упёрто у /datum/artifact_effect/cellcharge
+				var/last_message
+				var/turf/T = get_turf(src)
+				for (var/obj/machinery/power/apc/C in range(200, T))
+					for (var/obj/item/cell/B in C.contents)
+						B.charge += 25
+				for (var/obj/machinery/power/smes/S in range(10, T))
+					S.charge += 25
+				for (var/mob/living/silicon/robot/M in range(50, T))
+					for (var/obj/item/cell/D in M.contents)
+						D.charge += 25
+						if(world.time - last_message > 200)
+							to_chat(M, SPAN_WARNING("SYSTEM ALERT: Energy boost detected!"))
+							last_message = world.time
+				to_chat(H, SPAN_DANGER("You feel like energy spreads from [src] to nearby machinery!"))
 			else
 				to_chat(H, SPAN_DANGER("An elementary backlash emerges from [src]!"))
 				charged = FALSE
@@ -266,9 +281,9 @@
 				if(prob(33))
 					H.electrocute_act(rand(15,35), src, def_zone = H.hand ? BP_L_HAND : BP_R_HAND)
 				else
-					new /obj/temporary(H,3, 'icons/effects/effects.dmi', "blueshatter")
-					sleep(1)
-					new /obj/structure/girder/ice_wall(get_turf(H))
+					var/datum/gas_mixture/env = src.loc.return_air()
+					if(env)
+						env.temperature = max(env.temperature - rand(5,50), 0)
 		else
 			if(charged)
 				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
