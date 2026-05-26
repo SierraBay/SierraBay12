@@ -237,3 +237,58 @@
 	for(var/mob/living/silicon/ai/A in SSmobs.mob_list)
 		if(A.intercepts_communication)
 			return A
+
+// Proc: get_machines_in_network()
+// Parameters 1 - (user - AI user)
+// Description: Returns all machines on the AI's connected Z-levels.
+/proc/get_machines_in_network(mob/living/silicon/ai/user)
+	RETURN_TYPE(/list)
+	var/list/valid_machines = list()
+	if(!user || !istype(user))
+		return valid_machines
+	var/list/connected_z = GetConnectedZlevels(user.z)
+	for(var/obj/machinery/mach in SSmachines.get_all_machinery())
+		if(mach.z in connected_z)
+			valid_machines += mach
+	return valid_machines
+
+// Proc: get_cameras_in_network()
+// Parameters 1 - (user - AI user)
+// Description: Returns all cameras on the AI's connected Z-levels.
+/proc/get_cameras_in_network(mob/living/silicon/ai/user)
+	RETURN_TYPE(/list)
+	var/list/valid_cameras = list()
+	if(!user || !istype(user))
+		return valid_cameras
+	var/list/connected_z = GetConnectedZlevels(user.z)
+	for(var/obj/machinery/camera/C in cameranet.cameras)
+		if(C.z in connected_z)
+			valid_cameras += C
+	return valid_cameras
+
+// Proc: can_ai_reach_target()
+// Parameters 2 - (user - AI user, target - target atom)
+// Description: Checks if the target is on the AI's connected Z-levels.
+/proc/can_ai_reach_target(mob/living/silicon/ai/user, atom/target)
+	if(!user || !istype(user) || !target)
+		return FALSE
+	var/list/connected_z = GetConnectedZlevels(user.z)
+	return target.z in connected_z
+
+// Proc: validate_cyborg_hack()
+// Description: Validates if the cyborg hack can continue, resetting hacking state on failure.
+/proc/validate_cyborg_hack(mob/living/silicon/ai/user, mob/living/silicon/robot/target)
+	if(!user || QDELETED(user) || user.is_dead() || !user.malfunctioning || !target || QDELETED(target) || target.stat == DEAD || !(target in get_unlinked_cyborgs(user)))
+		if(user && !QDELETED(user))
+			user.hacking = 0
+		return FALSE
+	return TRUE
+
+// Proc: validate_ai_hack()
+// Description: Validates if the AI hack can continue, resetting hacking state on failure.
+/proc/validate_ai_hack(mob/living/silicon/ai/user, mob/living/silicon/ai/target)
+	if(!user || QDELETED(user) || user.is_dead() || !user.malfunctioning || !target || QDELETED(target) || target.stat == DEAD || !(target in get_other_ais(user)))
+		if(user && !QDELETED(user))
+			user.hacking = 0
+		return FALSE
+	return TRUE

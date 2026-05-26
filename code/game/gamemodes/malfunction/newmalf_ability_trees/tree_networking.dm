@@ -129,19 +129,19 @@
 	if(user.hack_can_fail)								// Two types of announcements. Short hacks trigger immediate warnings. Long hacks are more "progressive".
 		spawn(0)
 			sleep(duration/5)
-			if(!user || user.stat == DEAD)
+			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 				return
 			command_announcement.Announce("Caution, [GLOB.using_map.station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || user.stat == DEAD)
+			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 				return
 			command_announcement.Announce("We started tracing the intruder. Whoever is doing this, they seem to be onboard. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || user.stat == DEAD)
+			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 				return
 			command_announcement.Announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || user.stat == DEAD)
+			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 				return
 			command_announcement.Announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 
@@ -151,7 +151,7 @@
 	// Now actually begin the hack. Each APC takes 10 seconds.
 	for(var/obj/machinery/power/apc/A in shuffle(remaining_apcs))
 		sleep(100)
-		if(!user || user.stat == DEAD)
+		if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 			return
 		if(!A || !istype(A) || A.aidisabled)
 			continue
@@ -159,8 +159,15 @@
 		if(A.hacker == user)
 			to_chat(user, "## OVERRIDDEN: [A.name]")
 
+	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+		return
+
 	to_chat(user, "## REACHABLE APC SYSTEMS OVERTAKEN. BYPASSING PRIMARY FIREWALL.")
 	sleep(1 MINUTE)
+
+	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+		return
+
 	// Hack all APCs, including those built during hack sequence.
 	for(var/obj/machinery/power/apc/A as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/apc))
 		if((!A.hacker || A.hacker != user) && !A.aidisabled && (A.z in valid_zlevels))

@@ -54,7 +54,10 @@
 	if(!ability_prechecks(user, price) || !ability_pay(user,price))
 		return
 	to_chat(user, "Sending feedback pulse...")
+	var/list/valid_zlevels = GetConnectedZlevels(user.z)
 	for(var/obj/machinery/power/apc/AP as anything in SSmachines.get_machinery_of_type(/obj/machinery/power/apc))
+		if(!(AP.z in valid_zlevels))
+			continue
 		if(prob(5))
 			AP.overload_lighting()
 		if(prob(2.5) && (get_area(AP) != get_area(user))) // Very very small chance to actually destroy the APC, but not if the APC is powering the AI.
@@ -62,7 +65,8 @@
 	user.hacking = 1
 	log_ability_use(user, "electrical pulse")
 	spawn(15 SECONDS)
-		user.hacking = 0
+		if(user && !QDELETED(user))
+			user.hacking = 0
 
 /datum/game_mode/malfunction/verb/reboot_camera(obj/machinery/camera/target as obj in cameranet.cameras)
 	set name = "Reboot Camera"
@@ -76,9 +80,17 @@
 		return
 
 	if(!target)
-		target = input(user, "Select camera to reboot", "Reboot Camera") as null|obj in cameranet.cameras
+		var/list/valid_cameras = get_cameras_in_network(user)
+		if(!length(valid_cameras))
+			to_chat(user, "No valid cameras found on your connected network.")
+			return
+		target = input(user, "Select camera to reboot", "Reboot Camera") as null|obj in valid_cameras
 		if(!target)
 			return
+
+	if(target && !can_ai_reach_target(user, target))
+		to_chat(user, "This camera is outside your accessible network.")
+		return
 
 	if(!ability_prechecks(user, price) || !ability_pay(user, price))
 		return
@@ -98,10 +110,12 @@
 	var/price = 275
 	var/mob/living/silicon/ai/user = usr
 	if(!T)
-		T = input(user, "Select forcefield location", "Emergency Forcefield") as null|turf in world
-		if(!T)
-			return
+		to_chat(user, "Please select a turf by clicking on it directly in your camera view.")
+		return
 	if(!istype(T))
+		return
+	if(!can_ai_reach_target(user, T))
+		to_chat(user, "This location is outside your accessible network.")
 		return
 	if(!ability_prechecks(user, price) || !ability_pay(user, price))
 		return
@@ -111,7 +125,8 @@
 	user.hacking = 1
 	log_ability_use(user, "emergency forcefield", T)
 	spawn(2 SECONDS)
-		user.hacking = 0
+		if(user && !QDELETED(user))
+			user.hacking = 0
 
 
 /datum/game_mode/malfunction/verb/machine_overload(obj/machinery/M as obj in SSmachines.get_all_machinery())
@@ -122,9 +137,17 @@
 	var/mob/living/silicon/ai/user = usr
 
 	if(!M)
-		M = input(user, "Select machine to overload", "Machine Overload") as null|obj in SSmachines.get_all_machinery()
+		var/list/valid_machines = get_machines_in_network(user)
+		if(!length(valid_machines))
+			to_chat(user, "No valid machines found on your connected network.")
+			return
+		M = input(user, "Select machine to overload", "Machine Overload") as null|obj in valid_machines
 		if(!M)
 			return
+
+	if(M && !can_ai_reach_target(user, M))
+		to_chat(user, "This machine is outside your accessible network.")
+		return
 
 	if(!ability_prechecks(user, price))
 		return
@@ -188,9 +211,12 @@
 
 	log_ability_use(user, "machine overload", M)
 	M.visible_message(SPAN_NOTICE("BZZZZZZZT"))
+	var/turf/epicenter = get_turf(M)
+	var/final_range = min(round(explosion_intensity * 0.35), 4) // Cap range to 4 tiles maximum to keep it balanced and avoid destroying half the station!
 	spawn(5 SECONDS)
-		explosion(get_turf(M), round(explosion_intensity * 1.75))
-		if(M)
+		if(epicenter)
+			explosion(epicenter, final_range)
+		if(M && !QDELETED(M))
 			qdel(M)
 
 /datum/game_mode/malfunction/verb/machine_upgrade(obj/machinery/M as obj in SSmachines.get_all_machinery())
@@ -201,9 +227,17 @@
 	var/mob/living/silicon/ai/user = usr
 
 	if(!M)
-		M = input(user, "Select machine to upgrade", "Machine Upgrade") as null|obj in SSmachines.get_all_machinery()
+		var/list/valid_machines = get_machines_in_network(user)
+		if(!length(valid_machines))
+			to_chat(user, "No valid machines found on your connected network.")
+			return
+		M = input(user, "Select machine to upgrade", "Machine Upgrade") as null|obj in valid_machines
 		if(!M)
 			return
+
+	if(M && !can_ai_reach_target(user, M))
+		to_chat(user, "This machine is outside your accessible network.")
+		return
 
 	if(!ability_prechecks(user, price))
 		return

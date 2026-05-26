@@ -112,7 +112,7 @@
 			sparks.set_up(3, 1, A)
 			sparks.start()
 
-/datum/game_mode/malfunction/verb/basic_encryption_hack(obj/machinery/power/apc/A as obj in get_unhacked_apcs(src))
+/datum/game_mode/malfunction/verb/basic_encryption_hack(obj/machinery/power/apc/A as obj in get_unhacked_apcs(usr))
 	set category = "Software"
 	set name = "Basic Encryption Hack"
 	set desc = "10-15 CPU - Basic encryption hack that allows you to overtake APCs"

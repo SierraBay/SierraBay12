@@ -20,7 +20,11 @@
 		to_chat(user, SPAN_WARNING("Remove the module from its rack before editing it."))
 		return
 
-	var/new_law = sanitize(input(user, "Enter the law text.", "Law Module", law_text) as null|message)
+	if(!isadmin(user))
+		to_chat(user, SPAN_WARNING("\The [src] cannot be programmed directly by hand. You must use an AI Upload Console to write laws to it."))
+		return
+
+	var/new_law = sanitize(input(user, "Enter the law text (Admin Debug).", "Law Module", law_text) as null|message)
 	if(!user || QDELETED(user) || QDELETED(src) || user.incapacitated())
 		return
 	if(user.get_active_hand() != src && user.get_inactive_hand() != src)
@@ -30,7 +34,7 @@
 	if(!new_law)
 		return
 	law_text = new_law
-	module_label = copytext(law_text, 1, 32)
+	module_label = copytext_char(law_text, 1, 32)
 	desc = "A removable law module containing: '[law_text]'"
 
 /obj/item/law_module/core
@@ -42,6 +46,13 @@
 	desc = "A removable supplied-law module for use in a physical AI law rack."
 
 /obj/item/law_module/supplied/attack_self(mob/user)
+	return ..()
+
+/obj/item/law_module/hacked
+	name = "\improper glitched law module"
+	desc = "A corrupted removable law module. Its status light is blinking erratically."
+
+/obj/item/law_module/hacked/attack_self(mob/user)
 	return ..()
 
 /datum/law_rack_preset
@@ -113,6 +124,9 @@
 	icon_state = "server"
 	density = TRUE
 	anchored = TRUE
+	use_power = POWER_USE_IDLE
+	idle_power_usage = 100
+	active_power_usage = 250
 	req_access = list(access_ai_upload)
 	var/mob/living/silicon/ai/linked_ai = null
 	var/list/module_slots = list(null, null, null, null, null, null)
@@ -259,8 +273,10 @@
 				module_type = "core"
 			else if(istype(module, /obj/item/law_module/supplied))
 				module_type = "supplied"
-			var/preview = module.law_text ? copytext(module.law_text, 1, 96) : "No valid law"
-			if(module.law_text && length(module.law_text) >= 96)
+			else if(istype(module, /obj/item/law_module/hacked))
+				module_type = "corrupted"
+			var/preview = module.law_text ? copytext_char(module.law_text, 1, 96) : "No valid law"
+			if(module.law_text && length_char(module.law_text) >= 96)
 				preview += "..."
 			dat += "[html_encode(module.name)] ([module_type])<br>"
 			dat += "<small>[html_encode(preview)]</small><br>"
@@ -283,26 +299,34 @@
 	popup.open()
 
 /obj/machinery/law_rack/proc/insert_module(obj/item/law_module/module, mob/living/user)
-	if(user && !can_modify_rack(user))
-		return FALSE
-	if(!user)
-		return FALSE
-	if(!module || QDELETED(module))
-		return FALSE
-	if(!module.law_text)
-		to_chat(user, SPAN_WARNING("This module does not contain a valid law."))
-		return FALSE
+	if(user)
+		if(!can_modify_rack(user))
+			return FALSE
+		if(!module || QDELETED(module))
+			return FALSE
+		if(!module.law_text)
+			to_chat(user, SPAN_WARNING("This module does not contain a valid law."))
+			return FALSE
+	else
+		if(!module || QDELETED(module))
+			return FALSE
+		if(!module.law_text)
+			return FALSE
 
 	var/slot = first_empty_slot()
 	if(!slot)
-		to_chat(user, SPAN_WARNING("The law rack has no empty module slots."))
+		if(user)
+			to_chat(user, SPAN_WARNING("The law rack has no empty module slots."))
 		return FALSE
 
-	if(!user.unEquip(module, src))
-		return FALSE
+	if(user)
+		if(!user.unEquip(module, src))
+			return FALSE
 	module.forceMove(src)
 	module_slots[slot] = module
-	to_chat(user, SPAN_NOTICE("You insert [module] into slot [slot] of [src]."))
+
+	if(user)
+		to_chat(user, SPAN_NOTICE("You insert [module] into slot [slot] of [src]."))
 	log_law_rack(user, "inserted [module] into slot [slot]")
 	return TRUE
 
@@ -366,6 +390,8 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/force_sync(mob/user)
+	if(inoperable())
+		return FALSE
 	if(user && !can_modify_rack(user))
 		return FALSE
 	if(sync_in_progress)
@@ -409,7 +435,7 @@
 		return TRUE
 	catch(var/exception/e)
 		sync_in_progress = FALSE
-		error("[e] on [e.file]:[e.line]")
+		log_error("[e] on [e.file]:[e.line]")
 	return FALSE
 
 /obj/machinery/law_rack/proc/sync_connected_borgs()
@@ -451,7 +477,7 @@
 
 		var/obj/item/law_module/core/module = new(src)
 		module.law_text = law_text
-		module.module_label = copytext(law_text, 1, 32)
+		module.module_label = copytext_char(law_text, 1, 32)
 		module.desc = "A removable core-law module containing: '[law_text]'"
 		module_slots[slot] = module
 		applied = TRUE
@@ -566,3 +592,48 @@
 	var/message = "law rack [src] [action][linked_ai ? " for [linked_ai]" : ""]"
 	log_and_message_admins(message, user, get_turf(src))
 	GLOB.lawchanges += "[stationtime2text()] - [user ? key_name(user) : "EVENT"] [message]"
+
+/obj/item/stock_parts/circuitboard/law_rack
+	name = "circuit board (AI Law Rack)"
+	build_path = /obj/machinery/law_rack
+	board_type = "machine"
+	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/console_screen = 1
+	)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/keyboard = 1,
+		/obj/item/stock_parts/power/apc/buildable = 1
+	)
+
+/datum/design/circuit/law_rack
+	name = "AI Law Rack"
+	id = "law_rack_board"
+	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
+	build_path = /obj/item/stock_parts/circuitboard/law_rack
+	sort_string = "XAAAD"
+
+/datum/design/aimodule/law_module
+	name = "AI Law Module"
+	id = "law_module"
+	req_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2)
+	build_path = /obj/item/law_module
+	sort_string = "XADAA"
+
+/datum/design/aimodule/law_module/AssembleDesignDesc()
+	desc = "Allows for the construction of \a '[name]' physical AI law module."
+
+/datum/design/aimodule/law_module/core
+	name = "AI Core Law Module"
+	id = "law_module_core"
+	build_path = /obj/item/law_module/core
+	req_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
+	sort_string = "XADAB"
+
+/datum/design/aimodule/law_module/supplied
+	name = "AI Supplied Law Module"
+	id = "law_module_supplied"
+	build_path = /obj/item/law_module/supplied
+	req_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
+	sort_string = "XADAC"
