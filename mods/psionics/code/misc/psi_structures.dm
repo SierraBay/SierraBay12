@@ -232,10 +232,10 @@
 				if(!LAZYLEN(places_to_spawn))
 					places_to_spawn.Add(get_turf(src))
 				for(var/i = 1 to 3)
-				var/turf/spawn_loc = pick(places_to_spawn)
-				new /mob/living/simple_animal/hostile/bluespace/doppelganger(spawn_loc)
-				if(LAZYLEN(places_to_spawn) > 1)
-					places_to_spawn -= spawn_loc
+					var/turf/spawn_loc = pick(places_to_spawn)
+					new /mob/living/simple_animal/hostile/bluespace/doppelganger(spawn_loc)
+					if(LAZYLEN(places_to_spawn) > 1)
+						places_to_spawn -= spawn_loc
 		else
 			if(charged)
 				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
@@ -320,10 +320,10 @@
 				if(!LAZYLEN(places_to_spawn))
 					places_to_spawn.Add(get_turf(src))
 				for(var/i = 1 to 16)
-				var/turf/spawn_loc = pick(places_to_spawn)
-				new /obj/item/material/shard/caltrop(spawn_loc)
-				if(LAZYLEN(places_to_spawn) > 1)
-					places_to_spawn -= spawn_loc
+					var/turf/spawn_loc = pick(places_to_spawn)
+					new /obj/item/material/shard/caltrop(spawn_loc)
+					if(LAZYLEN(places_to_spawn) > 1)
+						places_to_spawn -= spawn_loc
 		else
 			if(charged)
 				to_chat(user, SPAN_NOTICE("You touch [src], but it faded and does not react to you, leaving only a feeling of loss in your chest and cold in your hand..."))
