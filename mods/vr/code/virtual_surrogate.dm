@@ -54,7 +54,7 @@
 	set category = "VR"
 	set src = usr
 
-	rejuvenate()
+	revive()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		usr.client.prefs.copy_to(H) // Redo hair, augments, and limbs after rejuvenating
