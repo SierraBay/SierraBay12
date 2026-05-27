@@ -129,7 +129,7 @@
 	active_power_usage = 250
 	req_access = list(access_ai_upload)
 	var/mob/living/silicon/ai/linked_ai = null
-	var/list/module_slots = list(null, null, null, null, null, null)
+	var/list/obj/item/law_module/module_slots = list(null, null, null, null, null, null)
 	var/max_slots = 6
 	var/obj/item/card/id/inserted_id = null
 	var/slots_unlocked = FALSE
