@@ -274,6 +274,14 @@
 
 /mob/living/silicon/ai/on_hear_radio(part_a, speaker_name, track, part_b, part_c, formatted)
 	var/time = say_timestamp()
+	var/datum/component/cognitive_load/CL = GetComponent(/datum/component/cognitive_load)
+	if(CL && length(CL.muted_channels))
+		for(var/channel in CL.muted_channels)
+			if(findtext(part_a, "\[[channel]\]"))
+				formatted = "<i>*ШИПЕНИЕ И СТАТИЧЕСКИЕ ПОМЕХИ*</i>"
+				track = "unknown"
+				speaker_name = "unknown"
+				break
 	to_chat(src, "[time][part_a][track][part_b][formatted][part_c]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)

@@ -31,6 +31,7 @@ var/global/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/show_crew_monitor,
 	/mob/living/silicon/ai/proc/show_crew_records,
 	/mob/living/silicon/ai/proc/show_crew_manifest,
+	/mob/living/silicon/ai/proc/ai_cognitive_manager,
 	/mob/living/silicon/ai/verb/interact_with_machine,
 	// [/SIERRA-ADD] ,
 	/mob/living/silicon/ai/proc/ai_power_override,
@@ -203,6 +204,7 @@ var/global/list/ai_verbs_default = list(
 	. = ..()
 	ai_radio = silicon_radio
 	ai_radio.myAi = src
+	AddComponent(/datum/component/cognitive_load)
 
 /mob/living/silicon/ai/proc/on_mob_init()
 	to_chat(src, "<B>You are playing the [station_name()]'s AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -520,18 +522,23 @@ var/global/list/ai_verbs_default = list(
 	if(!src.eyeobj)
 		view_core()
 		return
-	// ok, we're alive, camera is good and in our network...
+
+	var/obj/machinery/camera/old_cam = src.camera
+	src.camera = C
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
 
+	SEND_SIGNAL(src, COMSIG_AI_CAMERA_CHANGED, C, old_cam)
 	return 1
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "Silicon Commands"
 	set name = "Cancel Camera View"
 
-	//src.cameraFollow = null
+	var/obj/machinery/camera/old_cam = src.camera
+	src.camera = null
 	src.view_core()
+	SEND_SIGNAL(src, COMSIG_AI_CAMERA_CHANGED, null, old_cam)
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
 //Adds in /mob/living/silicon/ai/proc/ai_network_change() instead

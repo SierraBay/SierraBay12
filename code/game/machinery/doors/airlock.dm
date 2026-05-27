@@ -574,6 +574,8 @@ About the new airlock wires panel:
 		to_chat(usr, message)
 	if(.)
 		playsound(src, 'sound/effects/sparks3.ogg', 30, 0, -6)
+	if(usr && issilicon(usr))
+		SEND_SIGNAL(usr, COMSIG_AI_DOOR_ELECTRIFIED, src, electrified_until != 0)
 
 /obj/machinery/door/airlock/proc/set_idscan(activate, feedback = 0)
 	var/message = ""
@@ -1275,6 +1277,8 @@ About the new airlock wires panel:
 	playsound(src, bolts_dropping, 30, 0, -6)
 	audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 	update_icon()
+	if(usr && issilicon(usr))
+		SEND_SIGNAL(usr, COMSIG_AI_BOLT_CHANGED, src, TRUE)
 	return 1
 
 /obj/machinery/door/airlock/proc/unlock(forced=0)
@@ -1289,10 +1293,22 @@ About the new airlock wires panel:
 	playsound(src, bolts_rising, 30, 0, -6)
 	audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 	update_icon()
+	if(usr && issilicon(usr))
+		SEND_SIGNAL(usr, COMSIG_AI_BOLT_CHANGED, src, FALSE)
 	return 1
 
 /obj/machinery/door/airlock/proc/toggle_lock(forced = 0)
 	return locked ? unlock() : lock()
+
+/obj/machinery/door/airlock/proc/on_ai_process_crash(mob/living/silicon/ai/AI)
+	if(locked)
+		unlock(1)
+		visible_message(SPAN_WARNING("\The [src]'s magnetic bolts click open with a loud sparks hiss!"))
+		var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread
+		sparks.set_up(2, 1, src)
+		sparks.start()
+	if(electrified_until)
+		electrify(0)
 
 /obj/machinery/door/airlock/allowed(mob/M)
 	if(locked)

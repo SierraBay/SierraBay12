@@ -544,6 +544,17 @@
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+
+// AI Cognitive Load signals
+#define COMSIG_LIVING_LIFE "living_life"
+#define COMSIG_AI_CAMERA_CHANGED "ai_camera_changed"
+#define COMSIG_AI_BOLT_CHANGED "ai_bolt_changed"
+#define COMSIG_AI_DOOR_ELECTRIFIED "ai_door_electrified"
+#define COMSIG_AI_APC_HACK_STATE "ai_apc_hack_state"
+#define COMSIG_AI_ATMOS_OVERRIDE "ai_atmos_override"
+#define COMSIG_AI_CREW_MONITOR_STATE "ai_crew_monitor_state"
+#define COMSIG_AI_RADIO_DECRYPT "ai_radio_decrypt"
+#define COMSIG_AI_SHELL_POSSESS "ai_shell_possess"
 //[/SIERRA-ADD]
 
 /// A null statement to guard against EmptyBlock lint without necessitating the use of pass()

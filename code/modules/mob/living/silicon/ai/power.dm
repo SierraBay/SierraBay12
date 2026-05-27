@@ -132,6 +132,12 @@
 /mob/living/silicon/ai/proc/update_power_usage()
 	var/newusage = calculate_power_usage()
 	newusage *= AI_POWERUSAGE_OXYLOSS_TO_WATTS_MULTIPLIER
+	
+	var/datum/component/cognitive_load/CL = GetComponent(/datum/component/cognitive_load)
+	if(CL && CL.cognitive_load > 30)
+		var/load_bonus = round((CL.cognitive_load - 30) / 10) * 10000
+		newusage += load_bonus
+
 	if(psupply)
 		psupply.change_power_consumption(newusage, POWER_USE_ACTIVE)
 		psupply.update_power_state()
