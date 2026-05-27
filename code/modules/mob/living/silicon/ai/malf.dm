@@ -43,8 +43,10 @@
 	// Fix hacked APCs
 	if(hacked_apcs)
 		for(var/obj/machinery/power/apc/A in hacked_apcs)
-			A.hacker = null
-			A.update_icon()
+			if(A && !QDELETED(A))
+				A.hacker = null
+				A.malf_silent_hack = FALSE
+				A.update_icon()
 	hacked_apcs = null
 	// Stop the delta alert, and, if applicable, self-destruct timer.
 	bombing_core = 0

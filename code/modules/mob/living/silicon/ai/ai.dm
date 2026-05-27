@@ -437,29 +437,46 @@ var/global/list/ai_verbs_default = list(
 			return TOPIC_HANDLED
 
 		if(href_list["malf_screen"])
+			if(!malfunctioning || !research)
+				show_browser(src, null, "window=malf_modules")
+				return TOPIC_HANDLED
 			show_malf_modules(href_list["malf_screen"], href_list["malf_refresh"])
 			return TOPIC_HANDLED
 
 		if(href_list["malf_select_hardware"])
+			if(!malfunctioning || !research)
+				show_browser(src, null, "window=malf_modules")
+				return TOPIC_HANDLED
 			select_malf_hardware(href_list["malf_select_hardware"])
 			show_malf_modules("hardware")
 			return TOPIC_HANDLED
 
 		if(href_list["malf_select_research"])
+			if(!malfunctioning || !research)
+				show_browser(src, null, "window=malf_modules")
+				return TOPIC_HANDLED
 			var/datum/malf_research_ability/ability = locate(href_list["malf_select_research"])
-			select_malf_research(ability)
+			if(istype(ability) && research && (ability in research.available_abilities))
+				select_malf_research(ability)
 			show_malf_modules("research")
 			return TOPIC_HANDLED
 
 		if(href_list["malf_hardware_action"])
+			if(!malfunctioning || !research)
+				show_browser(src, null, "window=malf_modules")
+				return TOPIC_HANDLED
 			if(ability_prechecks(src, 0, TRUE) && hardware && hardware.driver && (hardware.driver in verbs))
 				call(src, hardware.driver)()
 			show_malf_modules("abilities")
 			return TOPIC_HANDLED
 
 		if(href_list["malf_activate_ability"])
+			if(!malfunctioning || !research)
+				show_browser(src, null, "window=malf_modules")
+				return TOPIC_HANDLED
 			var/datum/malf_research_ability/ability = locate(href_list["malf_activate_ability"])
-			activate_malf_ability(ability)
+			if(istype(ability) && research && (ability in research.unlocked_abilities))
+				activate_malf_ability(ability)
 			show_malf_modules("abilities")
 			return TOPIC_HANDLED
 

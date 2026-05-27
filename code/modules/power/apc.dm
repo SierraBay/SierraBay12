@@ -696,7 +696,8 @@
 				// Malf AI, removes the APC from AI's hacked APCs list.
 				if(hacker && hacker.hacked_apcs && (src in hacker.hacked_apcs))
 					hacker.hacked_apcs -= src
-					hacker = null
+				hacker = null
+				malf_silent_hack = FALSE
 				if (opened==2)
 					opened = 1
 				queue_icon_update()
@@ -1224,6 +1225,10 @@
 	to_chat(user, "\The [src] has been upgraded. It is now protected against EM pulses.")
 	return 1
 
+/obj/machinery/power/apc/proc/malf_hack_is_visible()
+	return FALSE
 
+/obj/machinery/power/apc/proc/malf_examine(mob/user)
+	return
 
 #undef APC_UPDATE_ICON_COOLDOWN

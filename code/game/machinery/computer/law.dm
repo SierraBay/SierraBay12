@@ -8,13 +8,18 @@
 
 /obj/machinery/computer/upload/Destroy()
 	if(inserted_module)
-		inserted_module.forceMove(get_turf(src))
+		if(!QDELETED(inserted_module))
+			inserted_module.forceMove(get_turf(src))
 		inserted_module = null
-	if(swiped_aimodule)
-		swiped_aimodule = null
+	swiped_aimodule = null
 	return ..()
 
 /obj/machinery/computer/upload/use_tool(obj/item/O, mob/living/user, list/click_params)
+	if(QDELETED(inserted_module))
+		inserted_module = null
+	if(QDELETED(swiped_aimodule))
+		swiped_aimodule = null
+
 	if(istype(O, /obj/item/law_module))
 		if(inserted_module)
 			to_chat(user, SPAN_WARNING("\The [src] already has a law module inserted."))
@@ -125,6 +130,8 @@
 	return ..()
 
 /obj/machinery/computer/upload/proc/eject_module(mob/user)
+	if(QDELETED(inserted_module))
+		inserted_module = null
 	if(!inserted_module)
 		return FALSE
 	var/obj/item/law_module/LM = inserted_module
@@ -142,12 +149,18 @@
 	return TRUE
 
 /obj/machinery/computer/upload/interact(mob/user)
+	if(QDELETED(inserted_module))
+		inserted_module = null
+	if(QDELETED(swiped_aimodule))
+		swiped_aimodule = null
+
 	var/list/dat = list()
-	dat += "<b>[html_encode(name)]</b><br><br>"
+	dat += "<b>[html_encode(name)] - Physical Module Programmer</b><br>"
+	dat += "<small style='color: #888;'>This console programs removable law modules. Programmed modules must be inserted into the physical AI Law Rack and synchronized to take effect.</small><br><br>"
 
 	// Target Silicon Reference
-	dat += "<b>Target Intelligence Reference:</b> [current ? html_encode(current.name) : "None Selected"]"
-	dat += " (<a href='byond://?src=\ref[src];select_ai=1'>Select Intelligence</a>)<br>"
+	dat += "<b>Target Intelligence (Read-Only Preview):</b> [current ? html_encode(current.name) : "None Selected"]"
+	dat += " (<a href='byond://?src=\ref[src];select_ai=1'>Change Target</a>)<br>"
 	if(current)
 		dat += "<small>Current Laws on Target:<br>"
 		if(current.laws)
@@ -163,35 +176,35 @@
 	dat += "<hr>"
 
 	// Inserted Law Module Slot
-	dat += "<b>Physical Law Module Slot:</b><br>"
+	dat += "<b>Physical Law Module Slot (Insert module here):</b><br>"
 	if(inserted_module)
-		dat += "Inserted: <b>[html_encode(inserted_module.name)]</b><br>"
-		dat += "Current Text: <i>\"[inserted_module.law_text ? html_encode(inserted_module.law_text) : "(Blank / Unprogrammed Module)"]\"</i><br>"
-		dat += "<a href='byond://?src=\ref[src];eject_module=1'>Eject Module</a><br>"
+		dat += "Inserted Module: <b>[html_encode(inserted_module.name)]</b><br>"
+		dat += "Programmed Law Text: <span style='color: #4f4;'><i>\"[inserted_module.law_text ? html_encode(inserted_module.law_text) : "(Blank / Unprogrammed Module)"]\"</i></span><br>"
+		dat += "\[ <a href='byond://?src=\ref[src];eject_module=1'>Eject Law Module</a> \]<br>"
 	else
-		dat += "<i>No Law Module inserted. Please insert a Law Module (board/plate) to program it.</i><br>"
+		dat += "<span style='color: #f66;'><i>No Law Module inserted. Please insert a Physical Law Module to begin programming.</i></span><br>"
 	dat += "<hr>"
 
 	// Swiped Template
-	if(swiped_aimodule)
-		dat += "<b>Active Programmer Template:</b> [html_encode(swiped_aimodule.name)]"
+	if(swiped_aimodule && !QDELETED(swiped_aimodule))
+		dat += "<b>Active AI Module Template (Swiped):</b> [html_encode(swiped_aimodule.name)]"
 		dat += " (<a href='byond://?src=\ref[src];clear_template=1'>Clear Template</a>)<br><br>"
 
-		if(swiped_aimodule.laws)
-			dat += "Select a law to write to the inserted module:<br>"
+		if(swiped_aimodule.laws && !QDELETED(swiped_aimodule.laws))
+			dat += "Select a template law to program into the inserted module:<br>"
 			var/list/datum/ai_law/laws_list = swiped_aimodule.laws.all_laws()
 			for(var/j = 1 to length(laws_list))
 				var/datum/ai_law/L = laws_list[j]
 				dat += "[j]. [html_encode(L.law)] "
 				if(inserted_module)
-					dat += "\[ <a href='byond://?src=\ref[src];write_swiped_law=[j]'>Program Board</a> \]"
+					dat += "\[ <a href='byond://?src=\ref[src];write_swiped_law=[j]'>Program Inserted Module</a> \]"
 				else
-					dat += "<small>(Insert a board first)</small>"
+					dat += "<small style='color: #aaa;'>(Insert a physical law module first)</small>"
 				dat += "<br>"
 		else
 			dat += "This module template has no readable law set."
 	else
-		dat += "<i>No programmer template active. Swipe an AI Module (Asimov, Safeguard, Freeform, etc.) on the console to load a template.</i>"
+		dat += "<i>No programmer template active. Swipe an AI Module (Asimov, Safeguard, Freeform, etc.) on the console reader to load a template.</i>"
 
 	var/datum/browser/popup = new(user, "upload_console", name, 620, 500, src)
 	popup.set_content(jointext(dat, null))
@@ -200,6 +213,11 @@
 /obj/machinery/computer/upload/OnTopic(mob/user, href_list, datum/topic_state/state)
 	if(!CanInteract(user, state))
 		return TOPIC_NOACTION
+
+	if(QDELETED(inserted_module))
+		inserted_module = null
+	if(QDELETED(swiped_aimodule))
+		swiped_aimodule = null
 
 	if(href_list["select_ai"])
 		var/mob/living/silicon/new_target = select_active_ai(user, get_z(src))
@@ -221,10 +239,10 @@
 		return TOPIC_REFRESH
 
 	if(href_list["write_swiped_law"])
-		if(!inserted_module)
+		if(!inserted_module || QDELETED(inserted_module))
 			to_chat(user, SPAN_WARNING("No law module inserted!"))
 			return TOPIC_NOACTION
-		if(!swiped_aimodule || !swiped_aimodule.laws)
+		if(!swiped_aimodule || QDELETED(swiped_aimodule) || !swiped_aimodule.laws || QDELETED(swiped_aimodule.laws))
 			return TOPIC_NOACTION
 
 		var/idx = text2num(href_list["write_swiped_law"])

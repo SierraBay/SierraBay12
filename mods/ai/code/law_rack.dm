@@ -357,6 +357,11 @@
 	if(!valid_slot(target_slot))
 		return FALSE
 
+	if(module_slots[slot] && QDELETED(module_slots[slot]))
+		module_slots[slot] = null
+	if(module_slots[target_slot] && QDELETED(module_slots[target_slot]))
+		module_slots[target_slot] = null
+
 	var/obj/item/law_module/old_module = module_slots[slot]
 	module_slots[slot] = module_slots[target_slot]
 	module_slots[target_slot] = old_module
@@ -409,6 +414,7 @@
 		// AI.laws is rebuilt from rack modules as a runtime-compatible projection.
 		// Rack laws are currently projected through supplied_laws to preserve existing
 		// show_laws(), state_laws(), lawsync(), and borg sync behavior.
+		// Rack projection intentionally goes through supplied_laws for compatibility.
 		linked_ai.clear_inherent_laws(TRUE)
 		linked_ai.clear_supplied_laws(TRUE)
 

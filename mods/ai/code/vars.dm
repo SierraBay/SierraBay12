@@ -1,3 +1,5 @@
+/obj/machinery/law_rack
+
 /mob/living/silicon
 	var/list/datum/alarm/queued_alarms = new()
 	var/next_alarm_notice = 0

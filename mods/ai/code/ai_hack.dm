@@ -112,11 +112,21 @@
 			sparks.set_up(3, 1, A)
 			sparks.start()
 
+/proc/validate_apc_hack_mid_stage(mob/living/silicon/ai/user, obj/machinery/power/apc/A)
+	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+		if(user && !QDELETED(user))
+			user.hacking = 0
+		return FALSE
+	if(!A || QDELETED(A) || !can_malf_hack_apc(user, A))
+		user.hacking = 0
+		return FALSE
+	return TRUE
+
 /datum/game_mode/malfunction/verb/basic_encryption_hack(obj/machinery/power/apc/A as obj in get_unhacked_apcs(usr))
 	set category = "Software"
 	set name = "Basic Encryption Hack"
 	set desc = "10-15 CPU - Basic encryption hack that allows you to overtake APCs"
-	var/mob/living/silicon/ai/user = usr
+	var/mob/living/silicon/ai/user = istype(src, /mob/living/silicon/ai) ? src : usr
 
 	if(!A)
 		A = input(user, "Select APC to hack", "Basic Encryption Hack") as null|obj in get_unhacked_apcs(user)
@@ -160,42 +170,45 @@
 	var/list/stage_delays = get_apc_hack_stage_delays(hack_mode)
 	to_chat(user, "Beginning APC system override using [hack_mode]...")
 	show_basic_apc_hack_feedback(A, hack_mode, 1)
+
+	user.hacking = 1
+
 	sleep(stage_delays[1])
-	if(QDELETED(user) || user.stat == DEAD)
+	if(!validate_apc_hack_mid_stage(user, A))
+		if(user && !QDELETED(user))
+			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
 		return
-	if(!validate_basic_apc_hack(user, A, FALSE))
-		to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
+
 	to_chat(user, "APC hack completed. Uploading modified operation software..")
 	show_basic_apc_hack_feedback(A, hack_mode, 2)
+
 	sleep(stage_delays[2])
-	if(QDELETED(user) || user.stat == DEAD)
+	if(!validate_apc_hack_mid_stage(user, A))
+		if(user && !QDELETED(user))
+			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
 		return
-	if(!validate_basic_apc_hack(user, A, FALSE))
-		to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
+
 	to_chat(user, "Restarting APC to apply changes..")
 	show_basic_apc_hack_feedback(A, hack_mode, 3)
+
 	sleep(stage_delays[3])
-	if(QDELETED(user) || user.stat == DEAD)
+	if(!validate_apc_hack_mid_stage(user, A))
+		if(user && !QDELETED(user))
+			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
 		return
-	if(QDELETED(A) || !istype(A))
-		to_chat(user, SPAN_NOTICE("Hack failed. Unable to locate APC. Please verify the APC still exists."))
-		return
-	if(!validate_basic_apc_hack(user, A, FALSE))
-		to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
+
+	user.hacking = 0
 	A.ai_hack(user, is_silent_apc_hack_mode(hack_mode))
 	if(A.hacker == user)
 		to_chat(user, "Hack successful. You now have full control over \the [A].")
 	else
 		to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
 
-/obj/machinery/power/apc/proc/malf_hack_is_visible()
+/obj/machinery/power/apc/malf_hack_is_visible()
 	return hacker && !hacker.hacked_apcs_hidden && !malf_silent_hack
 
 /obj/machinery/power/apc/proc/can_detect_silent_malf_hack(mob/user)
-	if(!malf_silent_hack || !user || !user.mind)
+	if(!hacker || !malf_silent_hack || !user || !user.mind)
 		return FALSE
 	if(!(user.mind.assigned_role in SSjobs.titles_by_department(ENG)))
 		return FALSE
@@ -203,7 +216,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/power/apc/proc/malf_examine(mob/user)
+/obj/machinery/power/apc/malf_examine(mob/user)
 	if(can_detect_silent_malf_hack(user))
 		to_chat(user, SPAN_NOTICE("Its control firmware shows subtle irregularities consistent with a concealed intrusion."))
 
