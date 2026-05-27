@@ -199,7 +199,7 @@
 	if(cognitive_load > max_cognitive_capacity)
 		AI.adjustOxyLoss(1)
 		var/overload_percent = cognitive_load - max_cognitive_capacity
-		if(prob(overload_percent))
+		if(prob(min(overload_percent, 100)))
 			crash_random_process()
 
 /datum/component/cognitive_load/proc/crash_random_process()
@@ -291,7 +291,7 @@
 	if(..())
 		return 1
 	
-	if(usr != parent)
+	if(usr != parent && !isadmin(usr))
 		return
 
 	if(href_list["crash"])

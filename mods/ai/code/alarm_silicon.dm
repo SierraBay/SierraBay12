@@ -1,5 +1,5 @@
 /mob/living/silicon/proc/receive_alarm(datum/alarm_handler/alarm_handler, datum/alarm/alarm, was_raised)
-	if(!next_alarm_notice || next_alarm_notice == 0)
+	if(!next_alarm_notice)
 		next_alarm_notice = world.time + 100
 
 	var/list/alarms = queued_alarms[alarm_handler]

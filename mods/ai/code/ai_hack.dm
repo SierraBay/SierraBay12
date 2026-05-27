@@ -155,15 +155,7 @@
 	if(!ability_prechecks(user, price, TRUE))
 		return
 
-	if(!ability_prechecks(user, 0, TRUE))
-		to_chat(user, SPAN_NOTICE("Hack cancelled. Your system can no longer sustain the selected hack mode."))
-		return
-
 	if(!ability_pay(user, price))
-		return
-
-	if(!ability_prechecks(user, 0, TRUE))
-		to_chat(user, SPAN_NOTICE("Hack cancelled. Your system can no longer sustain the selected hack mode."))
 		return
 
 	log_ability_use(user, "basic encryption hack ([hack_mode])", A, 0)	// Does not notify admins, but it's still logged for reference.

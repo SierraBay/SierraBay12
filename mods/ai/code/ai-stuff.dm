@@ -6,10 +6,10 @@
 	A.attack_ai(user)
 
 
-/proc/get_all_machines(mob/living/silicon/ai/user)
+/proc/get_all_machines()
 	RETURN_TYPE(/list)
 	var/list/list_of_machines = list()
-	for(var/obj/machinery/power/apc/A as anything in SSmachines.get_machinery_of_type(/obj/machinery))
+	for(var/obj/machinery/A as anything in SSmachines.get_machinery_of_type(/obj/machinery))
 		LAZYADD(list_of_machines, A)
 	return list_of_machines
 

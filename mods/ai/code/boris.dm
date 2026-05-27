@@ -108,6 +108,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 /mob/living/silicon/robot/death()
 	if(shell)
 		dropAiBack()
+		unregisterShell()
 	..()
 
 /mob/living/silicon/ai/death()
@@ -174,7 +175,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	if(connected_ai)
 		additional_text = " This board is currently linked to [connected_ai.name]."
 
-	var/list/ais = active_ais(z)
+	var/list/ais = active_ais(get_z(M))
 	var/mob/living/silicon/current
 
 	ais += "No restrictions"

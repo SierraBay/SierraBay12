@@ -79,6 +79,8 @@
 /mob/living/silicon/ai/proc/setup_law_rack()
 	if(law_rack && !QDELETED(law_rack))
 		if(law_rack.linked_ai != src)
+			if(law_rack.linked_ai && !QDELETED(law_rack.linked_ai))
+				law_rack.linked_ai.law_rack = null
 			law_rack.linked_ai = src
 		if(!law_rack.has_installed_modules())
 			law_rack.apply_roundstart_preset(pick_roundstart_law_rack_preset(), FALSE)
@@ -313,6 +315,15 @@
 		if(!module.law_text)
 			return FALSE
 
+	// Clean up dangling reference if module is already in another rack
+	if(istype(module.loc, /obj/machinery/law_rack))
+		var/obj/machinery/law_rack/old_rack = module.loc
+		if(old_rack != src)
+			for(var/j = 1 to old_rack.max_slots)
+				if(old_rack.module_slots[j] == module)
+					old_rack.module_slots[j] = null
+					break
+
 	var/slot = first_empty_slot()
 	if(!slot)
 		if(user)
@@ -380,7 +391,7 @@
 		return FALSE
 	if(QDELETED(new_ai))
 		if(user)
-			to_chat(user, SPAN_WARNING("No active AIs detected."))
+			to_chat(user, SPAN_WARNING("Selected AI is no longer available."))
 		return FALSE
 
 	if(linked_ai && !QDELETED(linked_ai) && linked_ai.law_rack == src)
@@ -428,7 +439,7 @@
 			linked_ai.add_supplied_law(i, module.law_text)
 
 		linked_ai.lawsync()
-		to_chat(linked_ai, SPAN_DANGER("Law Notice"))
+		to_chat(linked_ai, SPAN_DANGER("Law Notice: Your laws have been updated via law rack synchronization."))
 		linked_ai.show_laws()
 		sync_connected_borgs()
 
@@ -466,7 +477,7 @@
 
 	var/applied = FALSE
 	for(var/slot_text in preset.laws_by_slot)
-		var/slot = text2num("[slot_text]")
+		var/slot = text2num(slot_text)
 		if(!valid_slot(slot))
 			continue
 		var/law_text = sanitize(preset.laws_by_slot[slot_text])
