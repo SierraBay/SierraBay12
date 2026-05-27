@@ -1,19 +1,28 @@
 /atom/proc/on_ai_process_crash(mob/living/silicon/ai/AI)
 	return
 
+/obj/item/device/radio/on_ai_process_crash(mob/living/silicon/ai/AI)
+	var/datum/component/cognitive_load/CL = AI.GetComponent(/datum/component/cognitive_load)
+	if(CL)
+		if(islist(channels))
+			CL.muted_channels = channels.Copy()
+		CL.on_radio_decrypt(AI)
+
 /datum/cognitive_process
 	var/name = "Unspecified Process"
 	var/load_cost = 0
 	var/atom/source = null
+	var/category = ""
 
-/datum/cognitive_process/New(process_name, cost, atom/src_obj)
+/datum/cognitive_process/New(process_name, cost, atom/src_obj, process_category = "")
 	src.name = process_name
 	src.load_cost = cost
 	src.source = src_obj
+	src.category = process_category
 
 /datum/component/cognitive_load
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/max_cognitive_capacity = 100
+	var/max_cognitive_capacity = AI_CAPACITY_DEFAULT
 	var/cognitive_load = 0
 	var/list/datum/cognitive_process/active_processes = list()
 	var/list/muted_channels = list() // Track which channels are muted (not decrypting)
@@ -30,7 +39,7 @@
 	RegisterSignal(parent, COMSIG_AI_ATMOS_OVERRIDE, PROC_REF(on_atmos_override))
 	RegisterSignal(parent, COMSIG_AI_RADIO_DECRYPT, PROC_REF(on_radio_decrypt))
 	RegisterSignal(parent, COMSIG_AI_SHELL_POSSESS, PROC_REF(on_shell_possess))
-	RegisterSignal(parent, COMSIG_LIVING_LIFE, PROC_REF(on_ai_life))
+	RegisterSignal(parent, COMSIG_AI_LIFE_TICK, PROC_REF(on_ai_life))
 
 /datum/component/cognitive_load/Destroy(force = FALSE)
 	for(var/datum/cognitive_process/P in active_processes)
@@ -51,17 +60,17 @@
 	for(var/datum/cognitive_process/P in active_processes)
 		cognitive_load += P.load_cost
 
-/datum/component/cognitive_load/proc/register_process(process_name, cost, atom/source)
+/datum/component/cognitive_load/proc/register_process(process_name, cost, atom/source, category = "")
 	if(!source)
 		return
 	
-	var/datum/cognitive_process/existing = get_process_by_source(source)
+	var/datum/cognitive_process/existing = get_process_by_source(source, category)
 	if(existing)
 		existing.load_cost = cost
 		recalculate_load()
 		return existing
 
-	var/datum/cognitive_process/P = new(process_name, cost, source)
+	var/datum/cognitive_process/P = new(process_name, cost, source, category)
 	active_processes += P
 	recalculate_load()
 
@@ -72,8 +81,8 @@
 	
 	return P
 
-/datum/component/cognitive_load/proc/unregister_process(atom/source)
-	var/datum/cognitive_process/P = get_process_by_source(source)
+/datum/component/cognitive_load/proc/unregister_process(atom/source, category = "")
+	var/datum/cognitive_process/P = get_process_by_source(source, category)
 	if(P)
 		active_processes -= P
 		qdel(P)
@@ -81,9 +90,22 @@
 		return TRUE
 	return FALSE
 
-/datum/component/cognitive_load/proc/get_process_by_source(atom/source)
+/datum/component/cognitive_load/proc/unregister_all_by_source(atom/source)
+	if(!source)
+		return FALSE
+	var/removed = FALSE
 	for(var/datum/cognitive_process/P in active_processes)
 		if(P.source == source)
+			active_processes -= P
+			qdel(P)
+			removed = TRUE
+	if(removed)
+		recalculate_load()
+	return removed
+
+/datum/component/cognitive_load/proc/get_process_by_source(atom/source, category = "")
+	for(var/datum/cognitive_process/P in active_processes)
+		if(P.source == source && P.category == category)
 			return P
 	return null
 
@@ -94,65 +116,69 @@
 /datum/component/cognitive_load/proc/on_camera_changed(mob/living/silicon/ai/AI, obj/machinery/camera/new_camera, obj/machinery/camera/old_camera)
 	SIGNAL_HANDLER
 	if(old_camera)
-		unregister_process(old_camera)
+		unregister_process(old_camera, "camera")
 	if(new_camera)
-		register_process("Active Camera Feed: [new_camera.c_tag]", 10, new_camera)
+		register_process("Active Camera Feed: [new_camera.c_tag]", AI_CPU_CAMERA_FEED, new_camera, "camera")
 
 /datum/component/cognitive_load/proc/on_bolt_changed(mob/living/silicon/ai/AI, obj/machinery/door/airlock/door, is_bolted)
 	SIGNAL_HANDLER
 	if(is_bolted)
-		register_process("Airlock Bolt Lock: [door.name]", 15, door)
+		register_process("Airlock Bolt Lock: [door.name]", AI_CPU_BOLT_LOCK, door, "bolt")
 	else
-		unregister_process(door)
+		unregister_process(door, "bolt")
 
 /datum/component/cognitive_load/proc/on_door_electrified(mob/living/silicon/ai/AI, obj/machinery/door/airlock/door, is_electrified)
 	SIGNAL_HANDLER
 	if(is_electrified)
-		register_process("Airlock Power Grid Pulse: [door.name]", 25, door)
+		register_process("Airlock Power Grid Pulse: [door.name]", AI_CPU_DOOR_ELECTRIFIED, door, "electrify")
 	else
-		unregister_process(door)
+		unregister_process(door, "electrify")
 
 /datum/component/cognitive_load/proc/on_apc_hack_state(mob/living/silicon/ai/AI, obj/machinery/power/apc/apc, is_hacking)
 	SIGNAL_HANDLER
 	if(is_hacking)
-		register_process("APC Override Brute-force: [apc.name]", 30, apc)
+		register_process("APC Override Brute-force: [apc.name]", AI_CPU_APC_HACK, apc, "apc_hack")
 	else
-		unregister_process(apc)
+		unregister_process(apc, "apc_hack")
 
 /datum/component/cognitive_load/proc/on_atmos_override(mob/living/silicon/ai/AI, obj/machinery/alarm/alarm, is_override)
 	SIGNAL_HANDLER
 	if(is_override)
-		register_process("Atmospheric Alarm Override: [alarm.name]", 20, alarm)
+		register_process("Atmospheric Alarm Override: [alarm.name]", AI_CPU_ATMOS_OVERRIDE, alarm, "atmos_override")
 	else
-		unregister_process(alarm)
+		unregister_process(alarm, "atmos_override")
 
 /datum/component/cognitive_load/proc/on_radio_decrypt(mob/living/silicon/ai/AI, channel, is_decrypting)
 	SIGNAL_HANDLER
 	if(!AI.silicon_radio)
 		return
-	if(is_decrypting)
-		muted_channels -= channel
-	else
-		if(!(channel in muted_channels))
-			muted_channels += channel
+	if(channel)
+		if(is_decrypting)
+			muted_channels -= channel
+		else
+			if(!(channel in muted_channels))
+				muted_channels += channel
 	
 	var/total_channels = islist(AI.silicon_radio.channels) ? length(AI.silicon_radio.channels) : 0
 	var/active_channels = total_channels - length(muted_channels)
-	var/cost = active_channels * 5
+	var/cost = active_channels * AI_CPU_RADIO_CHANNEL
 	if(cost > 0)
-		register_process("Radio Decryption: [active_channels] channels", cost, AI.silicon_radio)
+		register_process("Radio Decryption: [active_channels] channels", cost, AI.silicon_radio, "radio_decrypt")
 	else
-		unregister_process(AI.silicon_radio)
+		unregister_process(AI.silicon_radio, "radio_decrypt")
 
 /datum/component/cognitive_load/proc/on_shell_possess(mob/living/silicon/ai/AI, mob/living/silicon/ai_shell/shell, is_possessing)
 	SIGNAL_HANDLER
+	// TODO: Implement AI Shell system. Signal COMSIG_AI_SHELL_POSSESS is not sent anywhere yet.
 	if(is_possessing)
-		register_process("AI Shell Bandwidth: [shell.name]", 40, shell)
+		register_process("AI Shell Bandwidth: [shell.name]", AI_CPU_SHELL_BANDWIDTH, shell, "shell_possess")
 	else
-		unregister_process(shell)
+		unregister_process(shell, "shell_possess")
 
 /datum/component/cognitive_load/proc/on_ai_life(mob/living/silicon/ai/AI)
 	SIGNAL_HANDLER
+	
+	max_cognitive_capacity = AI_CAPACITY_DEFAULT
 	
 	// 1. Temperature-based capacity scaling
 	var/turf/T = get_turf(AI)
@@ -161,13 +187,11 @@
 		if(env)
 			var/temp = env.temperature
 			if(temp < 150) // Liquid Nitrogen -> Overclocking
-				max_cognitive_capacity = 120
+				max_cognitive_capacity = AI_CAPACITY_OVERCLOCK
 			else if(temp > 320 && temp <= 380) // High temp -> Throttling
-				max_cognitive_capacity = 80
+				max_cognitive_capacity = AI_CAPACITY_THROTTLE
 			else if(temp > 380) // Critical heat -> Safety degradation
-				max_cognitive_capacity = 50
-			else
-				max_cognitive_capacity = 100
+				max_cognitive_capacity = AI_CAPACITY_CRITICAL
 
 	// 2. Hardware coprocessor blades
 	var/area/A = get_area(AI)
@@ -176,8 +200,8 @@
 		for(var/obj/machinery/ai_server_blade/B in A)
 			if(B.operational)
 				blades_count++
-		max_cognitive_capacity += blades_count * 25
-		max_cognitive_capacity = min(max_cognitive_capacity, 200)
+		max_cognitive_capacity += blades_count * AI_CAPACITY_BLADE_BONUS
+		max_cognitive_capacity = min(max_cognitive_capacity, AI_CAPACITY_MAX)
 
 	// 3. Crew Lifesigns Monitor UI tracking
 	var/datum/nano_module/program/crew_monitor/CM = null
@@ -187,15 +211,20 @@
 				CM = ui.src_object
 				break
 	if(CM)
-		register_process("Crew Monitor Vital Sync", 25, CM)
+		if(!get_process_by_source(CM, "crew_monitor"))
+			register_process("Crew Monitor Vital Sync", AI_CPU_CREW_MONITOR, CM, "crew_monitor")
 	else
 		// Scan for and unregister any crew_monitor process
 		for(var/datum/cognitive_process/P in active_processes)
 			if(istype(P.source, /datum/nano_module/program/crew_monitor))
-				unregister_process(P.source)
+				unregister_process(P.source, "crew_monitor")
 				break
 
-	// 4. Overload consequences
+	// 4. Initialize radio decryption cost if not already registered and radio is available
+	if(AI.silicon_radio && !get_process_by_source(AI.silicon_radio, "radio_decrypt"))
+		on_radio_decrypt(AI)
+
+	// 5. Overload consequences
 	if(cognitive_load > max_cognitive_capacity)
 		AI.adjustOxyLoss(1)
 		var/overload_percent = cognitive_load - max_cognitive_capacity
@@ -213,15 +242,24 @@
 		
 		if(P.source)
 			P.source.on_ai_process_crash(AI)
-		
-		unregister_process(P.source)
+			unregister_all_by_source(P.source)
+		else
+			active_processes -= P
+			qdel(P)
+			recalculate_load()
 
 /* ========================================== */
 /*             PROCESS MANAGER UI             */
 /* ========================================== */
 
 /datum/component/cognitive_load/proc/interact(mob/user)
+	ui_interact(user)
+
+/datum/component/cognitive_load/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
 	var/mob/living/silicon/ai/AI = parent
+	if(!AI)
+		return
+
 	var/turf/T = get_turf(AI)
 	var/temp = 293
 	if(T)
@@ -232,60 +270,41 @@
 	var/celsius = round(temp - T0C, 0.1)
 	var/integrity = round(AI.hardware_integrity(), 0.1)
 
-	var/list/dat = list()
-	dat += "<html><head><title>AI Cognitive System Manager</title></head><body>"
-	dat += "<h2>AI Cognitive System Manager</h2>"
-	dat += "<table border='1' cellpadding='4' width='100%'>"
-	dat += "<tr><td><b>CPU Load:</b></td><td>[cognitive_load] / [max_cognitive_capacity] CPU</td></tr>"
-	dat += "<tr><td><b>Core Temp:</b></td><td>[celsius]&deg;C</td></tr>"
-	dat += "<tr><td><b>Core Integrity:</b></td><td>[integrity]%</td></tr>"
-	dat += "</table><br>"
+	var/list/data = list()
+	data["cognitive_load"] = cognitive_load
+	data["max_cognitive_capacity"] = max_cognitive_capacity
+	data["temp"] = celsius
+	data["integrity"] = integrity
 
-	dat += "<h3>Active Computational Threads</h3>"
-	if(length(active_processes))
-		dat += "<table border='1' cellpadding='4' width='100%'>"
-		dat += "<tr><th>Process Name</th><th>CPU Cost</th><th>Actions</th></tr>"
-		for(var/datum/cognitive_process/P in active_processes)
-			dat += "<tr>"
-			dat += "<td>[html_encode(P.name)]</td>"
-			dat += "<td align='center'>[P.load_cost] CPU</td>"
-			if(P.source)
-				dat += "<td align='center'><a href='byond://?src=\ref[src];crash=\ref[P.source]'>\[CRASH THREAD\]</a></td>"
-			else
-				dat += "<td align='center'>N/A</td>"
-			dat += "</tr>"
-		dat += "</table>"
-	else
-		dat += "<p>No active computational threads. System idle.</p>"
+	var/list/process_list = list()
+	for(var/datum/cognitive_process/P in active_processes)
+		var/list/process_data = list(
+			"name" = P.name,
+			"load_cost" = P.load_cost,
+			"ref" = "\ref[P]",
+			"has_source" = P.source ? 1 : 0
+		)
+		process_list += list(process_data)
+	data["active_processes"] = process_list
 
-	dat += "<h3>Radio Subspace Decryption Channels</h3>"
-	dat += "<table border='1' cellpadding='4' width='100%'>"
-	dat += "<tr><th>Channel</th><th>Status</th><th>CPU Cost</th><th>Action</th></tr>"
-	dat += "<tr><td>Common</td><td><font color='green'>Decrypted</font></td><td align='center'>0 CPU</td><td align='center'>N/A</td></tr>"
-	dat += "<tr><td>Binary (Cyborgs)</td><td><font color='green'>Decrypted</font></td><td align='center'>0 CPU</td><td align='center'>N/A</td></tr>"
-
+	var/list/channel_list = list()
 	if(AI.silicon_radio && islist(AI.silicon_radio.channels))
 		for(var/channel in AI.silicon_radio.channels)
 			var/is_muted = (channel in muted_channels)
-			dat += "<tr>"
-			dat += "<td>[html_encode(channel)]</td>"
-			dat += "<td>[is_muted ? "<font color='red'>Muted (Static Hiss)</font>" : "<font color='green'>Decrypted</font>"]</td>"
-			dat += "<td align='center'>[is_muted ? "0" : "5"] CPU</td>"
-			dat += "<td align='center'>"
-			if(is_muted)
-				dat += "<a href='byond://?src=\ref[src];decrypt=[html_encode(channel)]'>\[DECRYPT\]</a>"
-			else
-				dat += "<a href='byond://?src=\ref[src];mute=[html_encode(channel)]'>\[MUTE\]</a>"
-			dat += "</td>"
-			dat += "</tr>"
-	dat += "</table>"
+			var/list/chan_data = list(
+				"name" = channel,
+				"muted" = is_muted,
+				"cost" = is_muted ? 0 : AI_CPU_RADIO_CHANNEL
+			)
+			channel_list += list(chan_data)
+	data["radio_channels"] = channel_list
 
-	dat += "<br><a href='byond://?src=\ref[src];refresh=1'>Refresh Dashboard</a>"
-	dat += "</body></html>"
-
-	var/datum/browser/popup = new(user, "cognitive_manager", "AI Cognitive System Manager", 500, 520, src)
-	popup.set_content(jointext(dat, null))
-	popup.open()
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "cognitive_manager.tmpl", "AI Cognitive System Manager", 500, 520, state = state)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
 
 /datum/component/cognitive_load/Topic(href, href_list)
 	if(..())
@@ -295,14 +314,17 @@
 		return
 
 	if(href_list["crash"])
-		var/atom/source = locate(href_list["crash"])
-		if(source)
-			var/datum/cognitive_process/P = get_process_by_source(source)
-			if(P)
-				var/mob/living/silicon/ai/AI = parent
-				to_chat(AI, SPAN_DANGER("<b>ВЫЧИСЛИТЕЛЬНЫЙ СБОЙ: Процесс '[P.name]' принудительно аварийно завершен пользователем!</b>"))
-				source.on_ai_process_crash(AI)
-				unregister_process(source)
+		var/datum/cognitive_process/P = locate(href_list["crash"])
+		if(P && (P in active_processes))
+			var/mob/living/silicon/ai/AI = parent
+			to_chat(AI, SPAN_DANGER("<b>ВЫЧИСЛИТЕЛЬНЫЙ СБОЙ: Процесс '[P.name]' принудительно аварийно завершен пользователем!</b>"))
+			if(P.source)
+				P.source.on_ai_process_crash(AI)
+				unregister_all_by_source(P.source)
+			else
+				active_processes -= P
+				qdel(P)
+				recalculate_load()
 		interact(usr)
 		return 1
 

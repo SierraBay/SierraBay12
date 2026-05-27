@@ -548,7 +548,8 @@ About the new airlock wires panel:
 
 	update_icon()
 
-/obj/machinery/door/airlock/proc/electrify(duration, feedback = 0)
+/obj/machinery/door/airlock/proc/electrify(duration, feedback = 0, mob/user)
+	var/mob/U = user || usr
 	var/message = ""
 	if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && arePowerSystemsOn())
 		message = "The electrification wire is cut - Door permanently electrified."
@@ -561,21 +562,21 @@ About the new airlock wires panel:
 		message = "The door is now un-electrified."
 		src.electrified_until = 0
 	else if(duration)	//electrify door for the given duration seconds
-		if(usr)
-			shockedby += "\[[time_stamp()]\] - [key_name(usr)]"
-			admin_attacker_log(usr, "electrified \the [name] [duration == -1 ? "permanently" : "for [duration] second\s"]")
+		if(U)
+			shockedby += "\[[time_stamp()]\] - [key_name(U)]"
+			admin_attacker_log(U, "electrified \the [name] [duration == -1 ? "permanently" : "for [duration] second\s"]")
 		else
 			shockedby += "\[[time_stamp()]\] - EMP)"
 		message = "The door is now electrified [duration == -1 ? "permanently" : "for [duration] second\s"]."
 		src.electrified_until = duration == -1 ? -1 : world.time + SecondsToTicks(duration)
 		. = 1
 
-	if(feedback && message)
-		to_chat(usr, message)
+	if(feedback && message && U)
+		to_chat(U, message)
 	if(.)
 		playsound(src, 'sound/effects/sparks3.ogg', 30, 0, -6)
-	if(usr && issilicon(usr))
-		SEND_SIGNAL(usr, COMSIG_AI_DOOR_ELECTRIFIED, src, electrified_until != 0)
+	if(user && issilicon(user))
+		SEND_SIGNAL(user, COMSIG_AI_DOOR_ELECTRIFIED, src, electrified_until != 0)
 
 /obj/machinery/door/airlock/proc/set_idscan(activate, feedback = 0)
 	var/message = ""
@@ -898,14 +899,14 @@ About the new airlock wires panel:
 		if("bolts")
 			if(src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 				to_chat(usr, "The door bolt control wire is cut - Door bolts permanently dropped.")
-			else if(activate && src.lock())
+			else if(activate && src.lock(0, usr))
 				to_chat(usr, "The door bolts have been dropped.")
-			else if(!activate && src.unlock())
+			else if(!activate && src.unlock(0, usr))
 				to_chat(usr, "The door bolts have been raised.")
 		if("electrify_temporary")
-			electrify(30 * activate, 1)
+			electrify(30 * activate, 1, usr)
 		if("electrify_permanently")
-			electrify(-1 * activate, 1)
+			electrify(-1 * activate, 1, usr)
 		if("open")
 			if(src.welded)
 				to_chat(usr, "The airlock has been welded shut!")
@@ -1265,7 +1266,7 @@ About the new airlock wires panel:
 
 	..()
 
-/obj/machinery/door/airlock/proc/lock(forced=0)
+/obj/machinery/door/airlock/proc/lock(forced=0, mob/user)
 	if(locked)
 		return 0
 
@@ -1277,11 +1278,11 @@ About the new airlock wires panel:
 	playsound(src, bolts_dropping, 30, 0, -6)
 	audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 	update_icon()
-	if(usr && issilicon(usr))
-		SEND_SIGNAL(usr, COMSIG_AI_BOLT_CHANGED, src, TRUE)
+	if(user && issilicon(user))
+		SEND_SIGNAL(user, COMSIG_AI_BOLT_CHANGED, src, TRUE)
 	return 1
 
-/obj/machinery/door/airlock/proc/unlock(forced=0)
+/obj/machinery/door/airlock/proc/unlock(forced=0, mob/user)
 	if(!src.locked)
 		return
 
@@ -1293,12 +1294,12 @@ About the new airlock wires panel:
 	playsound(src, bolts_rising, 30, 0, -6)
 	audible_message("You hear a click from the bottom of the door.", hearing_distance = 1)
 	update_icon()
-	if(usr && issilicon(usr))
-		SEND_SIGNAL(usr, COMSIG_AI_BOLT_CHANGED, src, FALSE)
+	if(user && issilicon(user))
+		SEND_SIGNAL(user, COMSIG_AI_BOLT_CHANGED, src, FALSE)
 	return 1
 
-/obj/machinery/door/airlock/proc/toggle_lock(forced = 0)
-	return locked ? unlock() : lock()
+/obj/machinery/door/airlock/proc/toggle_lock(forced = 0, mob/user)
+	return locked ? unlock(forced, user) : lock(forced, user)
 
 /obj/machinery/door/airlock/on_ai_process_crash(mob/living/silicon/ai/AI)
 	if(locked)

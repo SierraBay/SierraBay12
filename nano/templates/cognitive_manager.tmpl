@@ -1,0 +1,102 @@
+<div class="item">
+	<div class="itemLabel">
+		CPU Load:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.cognitive_load, 0, data.max_cognitive_capacity, (data.cognitive_load <= data.max_cognitive_capacity) ? 'good' : 'bad')}}
+		<div class="statusValue">
+			{{:data.cognitive_load}} / {{:data.max_cognitive_capacity}} CPU
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Core Temperature:
+	</div>
+	<div class="itemContent">
+		<span class="{{if data.temp < 0}}good{{else data.temp <= 45}}average{{else}}bad{{/if}}">
+			{{:data.temp}}&deg;C
+		</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Core Integrity:
+	</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.integrity, 0, 100, (data.integrity == 100) ? 'good' : (data.integrity >= 50) ? 'average' : 'bad')}}
+		<div class="statusValue">
+			{{:data.integrity}}%
+		</div>
+	</div>
+</div>
+
+<h3>Active Computational Threads</h3>
+{{if data.active_processes && data.active_processes.length}}
+	{{for data.active_processes}}
+		<div class="item">
+			<div class="itemLabel">
+				{{:value.name}}
+			</div>
+			<div class="itemContent">
+				<span style="float: left; width: 80px;">{{:value.load_cost}} CPU</span>
+				{{if value.has_source}}
+					{{:helper.link('CRASH THREAD', 'alert', {'crash' : value.ref}, null, 'redButton')}}
+				{{else}}
+					<span class="idle">N/A</span>
+				{{/if}}
+			</div>
+		</div>
+	{{/for}}
+{{else}}
+	<div class="item">
+		<span class="idle">No active computational threads. System idle.</span>
+	</div>
+{{/if}}
+
+<h3>Radio Subspace Decryption Channels</h3>
+
+<div class="item">
+	<div class="itemLabel">
+		Common
+	</div>
+	<div class="itemContent">
+		<span class="good" style="float: left; width: 120px;">Decrypted</span>
+		<span style="float: left; width: 80px;">0 CPU</span>
+		<span class="idle">N/A</span>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Binary (Cyborgs)
+	</div>
+	<div class="itemContent">
+		<span class="good" style="float: left; width: 120px;">Decrypted</span>
+		<span style="float: left; width: 80px;">0 CPU</span>
+		<span class="idle">N/A</span>
+	</div>
+</div>
+
+{{if data.radio_channels && data.radio_channels.length}}
+	{{for data.radio_channels}}
+		<div class="item">
+			<div class="itemLabel">
+				{{:value.name}}
+			</div>
+			<div class="itemContent">
+				{{if value.muted}}
+					<span class="bad" style="float: left; width: 120px;">Muted (Static Hiss)</span>
+					<span style="float: left; width: 80px;">0 CPU</span>
+					{{:helper.link('DECRYPT', 'unlocked', {'decrypt' : value.name})}}
+				{{else}}
+					<span class="good" style="float: left; width: 120px;">Decrypted</span>
+					<span style="float: left; width: 80px;">{{:value.cost}} CPU</span>
+					{{:helper.link('MUTE', 'locked', {'mute' : value.name})}}
+				{{/if}}
+			</div>
+		</div>
+	{{/for}}
+{{/if}}

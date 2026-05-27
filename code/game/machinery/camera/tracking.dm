@@ -149,6 +149,10 @@
 	cameraFollow.tracking_cancelled()
 	cameraFollow = null
 
+	var/obj/machinery/camera/old_cam = src.camera
+	src.camera = null
+	SEND_SIGNAL(src, COMSIG_AI_CAMERA_CHANGED, null, old_cam)
+
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if (!istype(target))
 		return
@@ -168,6 +172,9 @@
 	var/status = cameraFollow.tracking_status()
 	if (status == TRACKING_NO_COVERAGE)
 		to_chat(src, SPAN_WARNING("Target is not near any active cameras."))
+		var/obj/machinery/camera/old_cam = src.camera
+		src.camera = null
+		SEND_SIGNAL(src, COMSIG_AI_CAMERA_CHANGED, null, old_cam)
 		addtimer(new Callback(src, PROC_REF(ai_actual_track_action)), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT)
 		return
 	else if (status == TRACKING_TERMINATE)
@@ -175,6 +182,11 @@
 		return
 	if (eyeobj)
 		eyeobj.setLoc(get_turf(cameraFollow), FALSE)
+		var/obj/machinery/camera/C = near_range_camera(cameraFollow)
+		if(C != src.camera)
+			var/obj/machinery/camera/old_cam = src.camera
+			src.camera = C
+			SEND_SIGNAL(src, COMSIG_AI_CAMERA_CHANGED, C, old_cam)
 		addtimer(new Callback(src, PROC_REF(ai_actual_track_action)), 1 SECOND, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_NO_HASH_WAIT)
 		return
 	view_core()

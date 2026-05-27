@@ -546,7 +546,7 @@
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
 
 // AI Cognitive Load signals
-#define COMSIG_LIVING_LIFE "living_life"
+#define COMSIG_AI_LIFE_TICK "ai_life_tick"
 #define COMSIG_AI_CAMERA_CHANGED "ai_camera_changed"
 #define COMSIG_AI_BOLT_CHANGED "ai_bolt_changed"
 #define COMSIG_AI_DOOR_ELECTRIFIED "ai_door_electrified"
@@ -555,6 +555,21 @@
 #define COMSIG_AI_CREW_MONITOR_STATE "ai_crew_monitor_state"
 #define COMSIG_AI_RADIO_DECRYPT "ai_radio_decrypt"
 #define COMSIG_AI_SHELL_POSSESS "ai_shell_possess"
+
+#define AI_CPU_CAMERA_FEED       10
+#define AI_CPU_BOLT_LOCK         15
+#define AI_CPU_DOOR_ELECTRIFIED    25
+#define AI_CPU_APC_HACK          30
+#define AI_CPU_ATMOS_OVERRIDE    20
+#define AI_CPU_CREW_MONITOR      25
+#define AI_CPU_SHELL_BANDWIDTH   40
+#define AI_CPU_RADIO_CHANNEL     2
+#define AI_CAPACITY_DEFAULT      100
+#define AI_CAPACITY_OVERCLOCK    120
+#define AI_CAPACITY_THROTTLE     80
+#define AI_CAPACITY_CRITICAL     50
+#define AI_CAPACITY_MAX          200
+#define AI_CAPACITY_BLADE_BONUS  25
 //[/SIERRA-ADD]
 
 /// A null statement to guard against EmptyBlock lint without necessitating the use of pass()
