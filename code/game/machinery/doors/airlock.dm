@@ -1300,7 +1300,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/toggle_lock(forced = 0)
 	return locked ? unlock() : lock()
 
-/obj/machinery/door/airlock/proc/on_ai_process_crash(mob/living/silicon/ai/AI)
+/obj/machinery/door/airlock/on_ai_process_crash(mob/living/silicon/ai/AI)
 	if(locked)
 		unlock(1)
 		visible_message(SPAN_WARNING("\The [src]'s magnetic bolts click open with a loud sparks hiss!"))
