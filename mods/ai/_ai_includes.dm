@@ -23,6 +23,7 @@
 #include "code/modules.dm" //Модуль роботов
 #include "code/equipment_items.dm" //Айтемы модулей роботов
 #include "code/law_rack.dm" //Физическая стойка законов ИИ
+#include "code/preprogrammed_laws.dm" //Предустановленные платы законов и автоматическая замена дисков
 #include "code/cognitive_load.dm" //Когнитивная нагрузка ИИ
 
 #endif
