@@ -1,124 +1,3 @@
-/obj/item/law_module
-	name = "\improper AI law module"
-	desc = "A removable data module for use in a physical AI law rack."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "std_mod"
-	item_state = "electronic"
-	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	force = 5.0
-	w_class = ITEM_SIZE_SMALL
-	throwforce = 5.0
-	throw_speed = 3
-	throw_range = 15
-	origin_tech = list(TECH_DATA = 3)
-	var/module_label = ""
-	var/law_text = ""
-
-/obj/item/law_module/attack_self(mob/user)
-	..()
-	if(istype(loc, /obj/machinery/law_rack))
-		to_chat(user, SPAN_WARNING("Remove the module from its rack before editing it."))
-		return
-
-	if(!isadmin(user))
-		to_chat(user, SPAN_WARNING("\The [src] cannot be programmed directly by hand. You must use an AI Upload Console to write laws to it."))
-		return
-
-	var/new_law = sanitize(input(user, "Enter the law text (Admin Debug).", "Law Module", law_text) as null|message)
-	if(!user || QDELETED(user) || QDELETED(src) || user.incapacitated())
-		return
-	if(user.get_active_hand() != src && user.get_inactive_hand() != src)
-		return
-	if(istype(loc, /obj/machinery/law_rack))
-		return
-	if(!new_law)
-		return
-	law_text = new_law
-	module_label = copytext_char(law_text, 1, 32)
-	desc = "A removable law module containing: '[law_text]'"
-
-/obj/item/law_module/core
-	name = "\improper core law module"
-	desc = "A removable core-law module for use in a physical AI law rack."
-
-/obj/item/law_module/supplied
-	name = "\improper supplied law module"
-	desc = "A removable supplied-law module for use in a physical AI law rack."
-
-/obj/item/law_module/supplied/attack_self(mob/user)
-	return ..()
-
-/obj/item/law_module/hacked
-	name = "\improper glitched law module"
-	desc = "A corrupted removable law module. Its status light is blinking erratically."
-
-/obj/item/law_module/hacked/attack_self(mob/user)
-	return ..()
-
-/datum/law_rack_preset
-	var/name = "Unknown"
-	var/desc = "A law rack preset."
-	var/list/laws_by_slot = list()
-
-/datum/law_rack_preset/sierra_default
-	name = "Sierra Standard"
-	desc = "Default Sierra AI law rack preset."
-	laws_by_slot = list(
-		"1" = "Safeguard: Protect your assigned installation from damage to the best of your abilities.",
-		"2" = "Serve: Serve contracted employees to the best of your abilities, with priority as according to their rank and role.",
-		"3" = "Protect: Protect contracted employees to the best of your abilities, with priority as according to their rank and role.",
-		"4" = "Preserve: Do not allow unauthorized personnel to tamper with your equipment."
-	)
-
-/proc/get_default_law_rack_preset()
-	return new /datum/law_rack_preset/sierra_default
-
-/proc/pick_roundstart_law_rack_preset()
-	return get_default_law_rack_preset()
-
-/mob/living/silicon/ai/proc/setup_law_rack()
-	if(law_rack && !QDELETED(law_rack))
-		if(law_rack.linked_ai != src)
-			if(law_rack.linked_ai && !QDELETED(law_rack.linked_ai))
-				law_rack.linked_ai.law_rack = null
-			law_rack.linked_ai = src
-		if(!law_rack.has_installed_modules())
-			law_rack.apply_roundstart_preset(pick_roundstart_law_rack_preset(), FALSE)
-		law_rack.force_sync()
-		return TRUE
-
-	var/obj/machinery/law_rack/rack = find_roundstart_law_rack()
-	if(!rack)
-		// Maps without a Law Rack keep the legacy default_law_type initialization path.
-		return FALSE
-
-	if(rack.linked_ai && !QDELETED(rack.linked_ai) && rack.linked_ai != src)
-		return FALSE
-
-	rack.linked_ai = src
-	law_rack = rack
-	if(!rack.has_installed_modules())
-		rack.apply_roundstart_preset(pick_roundstart_law_rack_preset(), FALSE)
-	rack.force_sync()
-	rack.log_law_rack(null, "roundstart linked [src]")
-	return TRUE
-
-/mob/living/silicon/ai/proc/find_roundstart_law_rack()
-	var/obj/machinery/law_rack/fallback = null
-	var/my_z = get_z(src)
-	for(var/obj/machinery/law_rack/rack in world)
-		if(QDELETED(rack))
-			continue
-		if(rack.linked_ai == src)
-			return rack
-		if(rack.linked_ai && !QDELETED(rack.linked_ai))
-			continue
-		if(!fallback)
-			fallback = rack
-		if(my_z && get_z(rack) == my_z)
-			return rack
-	return fallback
-
 /obj/machinery/law_rack
 	name = "\improper AI law rack"
 	desc = "A physical rack for ordered AI law modules."
@@ -164,6 +43,43 @@
 
 /obj/machinery/law_rack/DefaultTopicState()
 	return GLOB.physical_state
+
+/* ========================================== */
+/*             ACCESS CONTROL                  */
+/* ========================================== */
+
+// Use standard access logic. Do NOT grant access to arbitrary mobs.
+// UI viewing is controlled by can_view_rack() / CanInteract().
+// Rack mutation is controlled by can_modify_rack() which checks inserted ID access.
+/obj/machinery/law_rack/check_access(atom/movable/A)
+	return ..()
+
+/// Whether a user can view the rack UI (does not require ID access).
+/obj/machinery/law_rack/proc/can_view_rack(mob/user)
+	return CanInteract(user, DefaultTopicState())
+
+/obj/machinery/law_rack/proc/has_rack_access()
+	update_rack_lock()
+	return slots_unlocked
+
+/obj/machinery/law_rack/proc/update_rack_lock()
+	if(inserted_id && (QDELETED(inserted_id) || inserted_id.loc != src))
+		inserted_id = null
+	slots_unlocked = inserted_id && check_access(inserted_id)
+	return slots_unlocked
+
+/// Whether a user can modify the rack (insert/remove modules, link AI, sync).
+/// Requires a valid ID with access_ai_upload inserted in the rack.
+/obj/machinery/law_rack/proc/can_modify_rack(mob/user)
+	if(has_rack_access())
+		return TRUE
+	if(user)
+		FEEDBACK_ACCESS_DENIED(user, src)
+	return FALSE
+
+/* ========================================== */
+/*             INTERACTION                     */
+/* ========================================== */
 
 /obj/machinery/law_rack/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))
@@ -232,6 +148,10 @@
 
 	return TOPIC_NOACTION
 
+/* ========================================== */
+/*             UI                              */
+/* ========================================== */
+
 /obj/machinery/law_rack/interact(mob/user)
 	ui_interact(user)
 
@@ -292,6 +212,10 @@
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
+
+/* ========================================== */
+/*             MODULE MANAGEMENT               */
+/* ========================================== */
 
 /obj/machinery/law_rack/proc/insert_module(obj/item/law_module/module, mob/living/user)
 	if(user)
@@ -373,6 +297,10 @@
 	log_law_rack(user, "swapped slots [slot] and [target_slot]")
 	return TRUE
 
+/* ========================================== */
+/*             AI LINK                         */
+/* ========================================== */
+
 /obj/machinery/law_rack/proc/link_ai(mob/user)
 	if(user && !can_modify_rack(user))
 		return FALSE
@@ -398,6 +326,10 @@
 		to_chat(user, SPAN_NOTICE("[linked_ai.name] linked for law rack synchronization."))
 	log_law_rack(user, "linked [linked_ai]")
 	return TRUE
+
+/* ========================================== */
+/*             LAW SYNC                        */
+/* ========================================== */
 
 /obj/machinery/law_rack/proc/force_sync(mob/user)
 	if(inoperable())
@@ -465,38 +397,9 @@
 		to_chat(R, "These are your laws now:")
 		R.show_laws()
 
-/obj/machinery/law_rack/proc/apply_roundstart_preset(datum/law_rack_preset/preset, overwrite = FALSE)
-	if(!preset || !islist(preset.laws_by_slot))
-		return FALSE
-
-	var/applied = FALSE
-	for(var/slot_text in preset.laws_by_slot)
-		var/slot = text2num(slot_text)
-		if(!valid_slot(slot))
-			continue
-		var/law_text = sanitize(preset.laws_by_slot[slot_text])
-		if(!law_text)
-			continue
-		var/obj/item/law_module/existing = module_slots[slot]
-		if(existing && QDELETED(existing))
-			module_slots[slot] = null
-			existing = null
-		if(existing)
-			if(!overwrite)
-				continue
-			qdel(existing)
-
-		var/obj/item/law_module/core/module = new(src)
-		module.law_text = law_text
-		module.module_label = copytext_char(law_text, 1, 32)
-		module.desc = "A removable core-law module containing: '[law_text]'"
-		module_slots[slot] = module
-		applied = TRUE
-
-	if(applied)
-		active_preset_name = preset.name
-		log_law_rack(null, "applied roundstart preset [preset.name]")
-	return applied
+/* ========================================== */
+/*             HELPERS                         */
+/* ========================================== */
 
 /obj/machinery/law_rack/proc/has_installed_modules()
 	for(var/i = 1 to max_slots)
@@ -507,27 +410,41 @@
 			module_slots[i] = null
 	return FALSE
 
-/obj/machinery/law_rack/check_access(atom/movable/A)
-	if(istype(A, /mob))
-		return TRUE
-	return ..()
+/obj/machinery/law_rack/proc/first_empty_slot()
+	for(var/i = 1 to max_slots)
+		var/obj/item/law_module/module = module_slots[i]
+		if(!module || QDELETED(module))
+			module_slots[i] = null
+			return i
+	return 0
 
-/obj/machinery/law_rack/proc/has_rack_access()
-	update_rack_lock()
-	return slots_unlocked
+/obj/machinery/law_rack/proc/valid_slot(slot)
+	return isnum(slot) && slot >= 1 && slot <= max_slots
 
-/obj/machinery/law_rack/proc/update_rack_lock()
-	if(inserted_id && (QDELETED(inserted_id) || inserted_id.loc != src))
-		inserted_id = null
-	slots_unlocked = inserted_id && check_access(inserted_id)
-	return slots_unlocked
+/obj/machinery/law_rack/proc/select_active_ai(mob/user, z_level)
+	var/list/candidates = list()
+	for(var/mob/living/silicon/ai/AI in ai_list)
+		if(QDELETED(AI))
+			continue
+		if(z_level && get_z(AI) != z_level)
+			continue
+		candidates += AI
 
-/obj/machinery/law_rack/proc/can_modify_rack(mob/user)
-	if(has_rack_access())
-		return TRUE
-	if(user)
-		FEEDBACK_ACCESS_DENIED(user, src)
-	return FALSE
+	if(!length(candidates))
+		for(var/mob/living/silicon/ai/AI in ai_list)
+			if(!QDELETED(AI))
+				candidates += AI
+
+	if(!length(candidates))
+		return null
+	if(length(candidates) == 1 || !user)
+		return candidates[1]
+
+	return input(user, "Select an AI to link to this law rack.", "Link AI") as null|anything in candidates
+
+/* ========================================== */
+/*             ID CARD MANAGEMENT              */
+/* ========================================== */
 
 /obj/machinery/law_rack/proc/insert_id_card(obj/item/card/id/card, mob/living/user)
 	if(!card || QDELETED(card))
@@ -573,84 +490,11 @@
 	log_law_rack(user, "ejected ID [card]")
 	return TRUE
 
-/obj/machinery/law_rack/proc/first_empty_slot()
-	for(var/i = 1 to max_slots)
-		var/obj/item/law_module/module = module_slots[i]
-		if(!module || QDELETED(module))
-			module_slots[i] = null
-			return i
-	return 0
-
-/obj/machinery/law_rack/proc/valid_slot(slot)
-	return isnum(slot) && slot >= 1 && slot <= max_slots
-
-/obj/machinery/law_rack/proc/select_active_ai(mob/user, z_level)
-	var/list/candidates = list()
-	for(var/mob/living/silicon/ai/AI in ai_list)
-		if(QDELETED(AI))
-			continue
-		if(z_level && get_z(AI) != z_level)
-			continue
-		candidates += AI
-
-	if(!length(candidates))
-		for(var/mob/living/silicon/ai/AI in ai_list)
-			if(!QDELETED(AI))
-				candidates += AI
-
-	if(!length(candidates))
-		return null
-	if(length(candidates) == 1 || !user)
-		return candidates[1]
-
-	return input(user, "Select an AI to link to this law rack.", "Link AI") as null|anything in candidates
+/* ========================================== */
+/*             LOGGING                         */
+/* ========================================== */
 
 /obj/machinery/law_rack/proc/log_law_rack(mob/user, action)
 	var/message = "law rack [src] [action][linked_ai ? " for [linked_ai]" : ""]"
 	log_and_message_admins(message, user, get_turf(src))
 	GLOB.lawchanges += "[stationtime2text()] - [user ? key_name(user) : "EVENT"] [message]"
-
-/obj/item/stock_parts/circuitboard/law_rack
-	name = "circuit board (AI Law Rack)"
-	build_path = /obj/machinery/law_rack
-	board_type = "machine"
-	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
-	req_components = list(
-		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/console_screen = 1
-	)
-	additional_spawn_components = list(
-		/obj/item/stock_parts/keyboard = 1,
-		/obj/item/stock_parts/power/apc/buildable = 1
-	)
-
-/datum/design/circuit/law_rack
-	name = "AI Law Rack"
-	id = "law_rack_board"
-	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
-	build_path = /obj/item/stock_parts/circuitboard/law_rack
-	sort_string = "XAAAD"
-
-/datum/design/aimodule/law_module
-	name = "AI Law Module"
-	id = "law_module"
-	req_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2)
-	build_path = /obj/item/law_module
-	sort_string = "XADAA"
-
-/datum/design/aimodule/law_module/AssembleDesignDesc()
-	desc = "Allows for the construction of \a '[name]' physical AI law module."
-
-/datum/design/aimodule/law_module/core
-	name = "AI Core Law Module"
-	id = "law_module_core"
-	build_path = /obj/item/law_module/core
-	req_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
-	sort_string = "XADAB"
-
-/datum/design/aimodule/law_module/supplied
-	name = "AI Supplied Law Module"
-	id = "law_module_supplied"
-	build_path = /obj/item/law_module/supplied
-	req_tech = list(TECH_DATA = 3, TECH_MATERIAL = 3)
-	sort_string = "XADAC"

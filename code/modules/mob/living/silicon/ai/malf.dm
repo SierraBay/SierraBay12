@@ -1,5 +1,51 @@
 // NEWMALF FUNCTIONS/PROCEDURES
 
+/// Handles all malf-related Topic actions delegated from OnSelfTopic.
+/// Returns TRUE if the href was handled, FALSE if unrelated to malf UI.
+/mob/living/silicon/ai/proc/handle_malf_modules_topic(list/href_list)
+	if(!href_list)
+		return FALSE
+	if(!href_list["malf_screen"] && !href_list["malf_select_hardware"] \
+	   && !href_list["malf_select_research"] && !href_list["malf_hardware_action"] \
+	   && !href_list["malf_activate_ability"])
+		return FALSE
+
+	if(!malfunctioning || !research)
+		if(client)
+			show_browser(src, null, "window=malf_modules")
+		return TRUE
+
+	if(href_list["malf_screen"])
+		show_malf_modules(href_list["malf_screen"], href_list["malf_refresh"])
+		return TRUE
+
+	if(href_list["malf_select_hardware"])
+		select_malf_hardware(href_list["malf_select_hardware"])
+		show_malf_modules("hardware")
+		return TRUE
+
+	if(href_list["malf_select_research"])
+		var/datum/malf_research_ability/ability = locate(href_list["malf_select_research"])
+		if(istype(ability) && research && (ability in research.available_abilities))
+			select_malf_research(ability)
+		show_malf_modules("research")
+		return TRUE
+
+	if(href_list["malf_hardware_action"])
+		if(ability_prechecks(src, 0, TRUE) && hardware && hardware.driver && (hardware.driver in verbs))
+			call(src, hardware.driver)()
+		show_malf_modules("abilities")
+		return TRUE
+
+	if(href_list["malf_activate_ability"])
+		var/datum/malf_research_ability/ability = locate(href_list["malf_activate_ability"])
+		if(istype(ability) && research && (ability in research.unlocked_abilities))
+			activate_malf_ability(ability)
+		show_malf_modules("abilities")
+		return TRUE
+
+	return FALSE
+
 // Sets up malfunction-related variables, research system and such.
 /mob/living/silicon/ai/proc/setup_for_malf()
 	var/mob/living/silicon/ai/user = src

@@ -42,7 +42,7 @@
 	RegisterSignal(parent, COMSIG_AI_LIFE_TICK, PROC_REF(on_ai_life))
 
 /datum/component/cognitive_load/Destroy(force = FALSE)
-	for(var/datum/cognitive_process/P in active_processes)
+	for(var/datum/cognitive_process/P in active_processes.Copy())
 		if(P.source && !QDELETED(P.source))
 			P.source.on_ai_process_crash(parent)
 	active_processes.Cut()
@@ -94,7 +94,7 @@
 	if(!source)
 		return FALSE
 	var/removed = FALSE
-	for(var/datum/cognitive_process/P in active_processes)
+	for(var/datum/cognitive_process/P in active_processes.Copy())
 		if(P.source == source)
 			active_processes -= P
 			qdel(P)
@@ -169,7 +169,11 @@
 
 /datum/component/cognitive_load/proc/on_shell_possess(mob/living/silicon/ai/AI, mob/living/silicon/ai_shell/shell, is_possessing)
 	SIGNAL_HANDLER
-	// TODO: Implement AI Shell system. Signal COMSIG_AI_SHELL_POSSESS is not sent anywhere yet.
+	// Forward-compatible stub: COMSIG_AI_SHELL_POSSESS is not sent anywhere yet.
+	// When AI Shell system is implemented, send this signal on possess/unpossess.
+	// Handler is null-safe and ready for future use.
+	if(!shell || QDELETED(shell))
+		return
 	if(is_possessing)
 		register_process("AI Shell Bandwidth: [shell.name]", AI_CPU_SHELL_BANDWIDTH, shell, "shell_possess")
 	else
@@ -177,10 +181,12 @@
 
 /datum/component/cognitive_load/proc/on_ai_life(mob/living/silicon/ai/AI)
 	SIGNAL_HANDLER
-	
+	if(QDELETED(parent))
+		return
+
 	// Automatic cleanup of dead/deleted sources
 	var/cleaned_any = FALSE
-	for(var/datum/cognitive_process/P in active_processes)
+	for(var/datum/cognitive_process/P in active_processes.Copy())
 		if(!P.source || QDELETED(P.source))
 			active_processes -= P
 			qdel(P)
@@ -244,19 +250,24 @@
 /datum/component/cognitive_load/proc/crash_random_process()
 	if(!length(active_processes))
 		return
-	
+
 	var/datum/cognitive_process/P = pick(active_processes)
-	if(P)
-		var/mob/living/silicon/ai/AI = parent
-		to_chat(AI, SPAN_DANGER("<b>ВЫЧИСЛИТЕЛЬНЫЙ СБОЙ: Процесс '[P.name]' аварийно завершен для предотвращения расплавления ядра!</b>"))
-		
-		if(P.source)
-			P.source.on_ai_process_crash(AI)
-			unregister_all_by_source(P.source)
-		else
-			active_processes -= P
-			qdel(P)
-			recalculate_load()
+	if(!P || QDELETED(P))
+		return
+	if(!(P in active_processes))
+		return
+	var/mob/living/silicon/ai/AI = parent
+	if(!AI || QDELETED(AI))
+		return
+	to_chat(AI, SPAN_DANGER("<b>ВЫЧИСЛИТЕЛЬНЫЙ СБОЙ: Процесс '[P.name]' аварийно завершен для предотвращения расплавления ядра!</b>"))
+
+	if(P.source && !QDELETED(P.source))
+		P.source.on_ai_process_crash(AI)
+		unregister_all_by_source(P.source)
+	else
+		active_processes -= P
+		qdel(P)
+		recalculate_load()
 
 /* ========================================== */
 /*             PROCESS MANAGER UI             */
@@ -369,7 +380,8 @@
 	if(CL)
 		CL.interact(src)
 
-// Physical Server Blade hardware machine
+// AI Auxiliary Server Blade — used by cognitive load capacity calculation.
+// Place these machines in the AI's area to increase max cognitive capacity.
 /obj/machinery/ai_server_blade
 	name = "AI Auxiliary Server Blade"
 	desc = "A high-performance computing coprocessor blade installed in an AI server rack."
@@ -379,7 +391,8 @@
 	anchored = TRUE
 	var/operational = TRUE
 
-// Dummy class for AI Shell forward compatibility
+// Forward-compatible: AI Shell class for COMSIG_AI_SHELL_POSSESS signal.
+// Will be implemented when AI remote body control system is built.
 /mob/living/silicon/ai_shell
 
 /datum/nano_module/on_ai_process_crash(mob/living/silicon/ai/AI)

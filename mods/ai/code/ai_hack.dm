@@ -79,6 +79,14 @@
 /proc/validate_basic_apc_hack(mob/living/silicon/ai/user, obj/machinery/power/apc/A, show_message = TRUE)
 	if(!user || !istype(user) || QDELETED(user))
 		return FALSE
+	if(user.stat == DEAD)
+		if(show_message)
+			to_chat(user, SPAN_NOTICE("Unable to initiate hack. System requirements not met."))
+		return FALSE
+	if(!user.malfunctioning)
+		if(show_message)
+			to_chat(user, SPAN_NOTICE("Unable to initiate hack. System requirements not met."))
+		return FALSE
 	if(QDELETED(A) || !istype(A))
 		if(show_message)
 			to_chat(user, "This is not an APC!")

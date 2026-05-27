@@ -1,7 +1,7 @@
 /obj/item/storage/box/law_modules
 	name = "box of law modules"
 	desc = "A box containing a themed set of physical AI law modules."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/boxes.dmi'
 	icon_state = "box"
 
 // ==========================================
@@ -538,10 +538,14 @@
 // ==========================================
 /obj/item/aiModule/Initialize(mapload)
 	. = ..()
-	
-	// Auto-convert standard multi-law templates to box sets
+
+	// Backward compatibility: auto-convert mapped aiModules to physical law modules.
+	// Only converts on mapload to preserve admin-spawn, R&D protolathe output,
+	// and runtime aiModules needed for upload console programming.
+	if(!mapload)
+		return
 	var/replacement_type = null
-	
+
 	if(istype(src, /obj/item/aiModule/asimov))
 		replacement_type = /obj/item/storage/box/law_modules/asimov
 	else if(istype(src, /obj/item/aiModule/nanotrasen))

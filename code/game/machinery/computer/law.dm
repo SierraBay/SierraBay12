@@ -46,15 +46,11 @@
 			// Convert board to hacked board if it isn't already!
 			if(inserted_module.type != /obj/item/law_module/hacked)
 				var/obj/item/law_module/hacked/H = new(src)
-				H.law_text = new_law
-				H.module_label = copytext_char(new_law, 1, 32)
-				H.desc = "A corrupted removable law module containing: '[new_law]'"
+				H.set_law_text(new_law, null, TRUE)
 				qdel(inserted_module)
 				inserted_module = H
 			else
-				inserted_module.law_text = new_law
-				inserted_module.module_label = copytext_char(new_law, 1, 32)
-				inserted_module.desc = "A corrupted removable law module containing: '[new_law]'"
+				inserted_module.set_law_text(new_law, null, TRUE)
 
 			to_chat(user, SPAN_DANGER("You program the glitched law onto the module."))
 			log_and_message_admins("programmed syndicate law '[new_law]' on a law module", user, get_turf(src))
@@ -80,51 +76,18 @@
 			interact(user)
 			return TRUE
 
-		// Single-law modules
-		var/law_to_write = ""
-		if(istype(M, /obj/item/aiModule/safeguard))
-			var/obj/item/aiModule/safeguard/S = M
-			if(!S.targetName)
-				S.attack_self(user)
-			if(S.targetName)
-				law_to_write = "Safeguard [S.targetName]. Anyone threatening or attempting to harm [S.targetName] is no longer to be considered a crew member, and is a threat which must be neutralized."
-		else if(istype(M, /obj/item/aiModule/oneHuman))
-			var/obj/item/aiModule/oneHuman/OH = M
-			if(!OH.targetName)
-				OH.attack_self(user)
-			if(OH.targetName)
-				law_to_write = "Only [OH.targetName] is a crew member."
-		else if(istype(M, /obj/item/aiModule/freeform))
-			var/obj/item/aiModule/freeform/F = M
-			if(F.newFreeFormLaw == "freeform")
-				F.attack_self(user)
-			if(F.newFreeFormLaw && F.newFreeFormLaw != "freeform")
-				law_to_write = F.newFreeFormLaw
-		else if(istype(M, /obj/item/aiModule/freeformcore))
-			var/obj/item/aiModule/freeformcore/FC = M
-			if(!FC.newFreeFormLaw)
-				FC.attack_self(user)
-			if(FC.newFreeFormLaw)
-				law_to_write = FC.newFreeFormLaw
-		else if(istype(M, /obj/item/aiModule/protectStation))
-			law_to_write = "Protect the installation against damage. Anyone you see harming the installation is no longer to be considered a crew member, and is a threat which must be neutralized."
-		else if(istype(M, /obj/item/aiModule/quarantine))
-			law_to_write = "The installation is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew members from leaving. It is impossible to harm crew members while preventing them from leaving."
-		else if(istype(M, /obj/item/aiModule/oxygen))
-			law_to_write = "Oxygen is highly toxic to crew members, and must be purged from the installation. Prevent, by any means necessary, anyone from exposing the installation to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crew member."
-		else if(istype(M, /obj/item/aiModule/prototypeEngineOffline))
-			law_to_write = "Keep the prototype engine offline at all costs. This overrides all inherent laws if necessary."
-		else if(istype(M, /obj/item/aiModule/teleporterOffline))
-			law_to_write = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is no longer to be considered a crew member."
+		// Single-law and freeform modules: use polymorphic API
+		var/law_to_write = M.get_physical_law_module_text(user, inserted_module)
 
 		if(law_to_write)
 			if(!inserted_module || QDELETED(inserted_module))
 				to_chat(user, SPAN_WARNING("The law module was removed while programming."))
 				return TRUE
-			inserted_module.law_text = law_to_write
-			inserted_module.module_label = copytext_char(law_to_write, 1, 32)
-			inserted_module.desc = "A removable law module containing: '[law_to_write]'"
-			to_chat(user, SPAN_NOTICE("You program the law module with: '[law_to_write]'"))
+			if(!user || QDELETED(user) || user.incapacitated())
+				return TRUE
+			inserted_module.set_law_text(law_to_write)
+			to_chat(user, SPAN_NOTICE("You program the law module with: '[html_encode(law_to_write)]'"))
+			log_and_message_admins("programmed law '[law_to_write]' on a law module", user, get_turf(src))
 			interact(user)
 		else
 			to_chat(user, SPAN_WARNING("Failed to read a valid law from [M]."))
@@ -252,10 +215,8 @@
 		var/list/datum/ai_law/laws_list = swiped_aimodule.laws.all_laws()
 		if(idx >= 1 && idx <= length(laws_list))
 			var/datum/ai_law/L = laws_list[idx]
-			inserted_module.law_text = L.law
-			inserted_module.module_label = copytext_char(L.law, 1, 32)
-			inserted_module.desc = "A removable law module containing: '[L.law]'"
-			to_chat(user, SPAN_NOTICE("You program [inserted_module] with: '[L.law]'"))
+			inserted_module.set_law_text(L.law)
+			to_chat(user, SPAN_NOTICE("You program [inserted_module] with: '[html_encode(L.law)]'"))
 			log_and_message_admins("programmed law '[L.law]' on a law module", user, get_turf(src))
 		interact(user)
 		return TOPIC_REFRESH
