@@ -90,6 +90,7 @@ var/global/list/ai_verbs_default = list(
 	var/datum/malf_hardware/hardware = null		// Installed piece of hardware.
 	var/datum/malf_research/research = null		// Malfunction research datum.
 	var/obj/machinery/power/apc/hack = null		// APC that is currently being hacked.
+	var/obj/machinery/power/apc/current_malf_apc_hack_target = null
 	var/list/hacked_apcs = null					// List of all hacked APCs
 	var/APU_power = 0							// If set to 1 AI runs on APU power
 	var/hacking = 0								// Set to 1 if AI is hacking APC, cyborg, other AI, or running system override.

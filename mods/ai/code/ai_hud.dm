@@ -57,26 +57,29 @@
 	adding += new /obj/screen/ai_button(null, screen_loc, name, icon_state, ai_verb, input_procs, input_args)
 
 /datum/hud/ai/proc/sync_malf_buttons()
-	if(!isAI(mymob))
+	if(!mymob || QDELETED(mymob) || !isAI(mymob))
 		return
 
 	var/mob/living/silicon/ai/A = mymob
 	var/obj/screen/ai_button/malf_modules_button
-	for(var/obj/screen/ai_button/button in adding)
-		if(button.ai_verb == /mob/living/silicon/ai/proc/ai_malf_modules)
-			malf_modules_button = button
-			break
+	if(adding)
+		for(var/obj/screen/ai_button/button in adding)
+			if(button && !QDELETED(button) && button.ai_verb == /mob/living/silicon/ai/proc/ai_malf_modules)
+				malf_modules_button = button
+				break
 
 	if(A.malfunctioning)
 		if(!malf_modules_button)
 			add_ai_button(ui_ai_malf_modules, "Malf Modules", "ai_research", /mob/living/silicon/ai/proc/ai_malf_modules)
-			malf_modules_button = adding[length(adding)]
-			if(A.client && hud_shown)
-				A.client.screen += malf_modules_button
+			if(adding && length(adding))
+				malf_modules_button = adding[length(adding)]
+				if(A.client && hud_shown && malf_modules_button)
+					A.client.screen |= malf_modules_button
 	else if(malf_modules_button)
 		if(A.client)
 			A.client.screen -= malf_modules_button
-		adding -= malf_modules_button
+		if(adding)
+			adding -= malf_modules_button
 		qdel(malf_modules_button)
 
 /datum/hud/ai/FinalizeInstantiation()

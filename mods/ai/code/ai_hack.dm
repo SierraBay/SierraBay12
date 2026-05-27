@@ -131,9 +131,18 @@
 	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
 		if(user && !QDELETED(user))
 			user.hacking = 0
+			user.current_malf_apc_hack_target = null
+			if(A && !QDELETED(A))
+				SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, FALSE)
+		if(A && !QDELETED(A))
+			A.being_hacked = FALSE
 		return FALSE
 	if(!A || QDELETED(A) || !A.being_hacked || !can_malf_hack_apc(user, A))
 		user.hacking = 0
+		user.current_malf_apc_hack_target = null
+		if(A && !QDELETED(A))
+			SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, FALSE)
+			A.being_hacked = FALSE
 		return FALSE
 	return TRUE
 
@@ -178,6 +187,7 @@
 	to_chat(user, "Beginning APC system override using [hack_mode]...")
 	show_basic_apc_hack_feedback(A, hack_mode, 1)
 
+	user.current_malf_apc_hack_target = A
 	user.hacking = 1
 	A.being_hacked = TRUE
 	SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, TRUE)
@@ -200,7 +210,9 @@
 
 	if(user && !QDELETED(user))
 		user.hacking = 0
-		SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, FALSE)
+		user.current_malf_apc_hack_target = null
+		if(A && !QDELETED(A))
+			SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, FALSE)
 	if(A && !QDELETED(A))
 		A.being_hacked = FALSE
 
@@ -236,7 +248,8 @@
 		return FALSE
 	src.hacker = A
 	malf_silent_hack = silent
-	A.hacked_apcs += src
+	if(!(src in A.hacked_apcs))
+		A.hacked_apcs += src
 	if(!silent)
 		locked = TRUE
 		update_icon()

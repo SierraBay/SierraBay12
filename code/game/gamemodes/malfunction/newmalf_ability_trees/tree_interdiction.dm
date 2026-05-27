@@ -67,18 +67,16 @@
 	if(!ability_prechecks(user, price))
 		return
 
-	if(target && !istype(target))
-		to_chat(user, "This is not a cyborg.")
-		return
-
-	if(target && target.connected_ai && (target.connected_ai != user))
-		to_chat(user, "This cyborg is not connected to you.")
-		return
-
-	if(target && !target.lockcharge)
-		to_chat(user, "This cyborg is not locked down.")
-		return
-
+	if(target)
+		if(!istype(target))
+			to_chat(user, "This is not a cyborg.")
+			return
+		if(target.connected_ai && (target.connected_ai != user))
+			to_chat(user, "This cyborg is not connected to you.")
+			return
+		if(!target.lockcharge)
+			to_chat(user, "This cyborg is not locked down.")
+			return
 
 	if(!target)
 		var/list/robots = list()
@@ -95,37 +93,50 @@
 			to_chat(user, "No locked cyborgs connected.")
 			return
 
-
-		var/targetname = input("Select unlock target: ") in robot_names
+		var/targetname = input(user, "Select unlock target: ", "Unlock Cyborg") as null|anything in robot_names
+		if(!targetname)
+			return
 		for(var/mob/living/silicon/robot/R in robots)
 			if(targetname == R.name)
 				target = R
 				break
 
-	if(target)
-		if(alert(user, "Really try to unlock cyborg [target.name]?", "Unlock Cyborg", "Yes", "No") != "Yes")
-			return
-		if(!ability_pay(user, price))
-			return
-		user.hacking = 1
-		to_chat(user, "Attempting to unlock cyborg. This will take approximately 30 seconds.")
-		sleep(300)
-		if(target && target.lockcharge)
-			to_chat(user, "Successfully sent unlock signal to cyborg..")
-			to_chat(target, "Unlock signal received..")
-			target.SetLockdown(0)
-			if(target.lockcharge)
-				to_chat(user, SPAN_NOTICE("Unlock Failed, lockdown wire cut."))
-				to_chat(target, SPAN_NOTICE("Unlock Failed, lockdown wire cut."))
-			else
-				to_chat(user, "Cyborg unlocked.")
-				to_chat(target, "You have been unlocked.")
-				log_ability_use(user, "unlock cyborg", target)
-		else if(target)
-			to_chat(user, "Unlock cancelled - cyborg is already unlocked.")
+	if(!target)
+		return
+
+	if(!validate_cyborg_unlock(user, target))
+		return
+
+	if(alert(user, "Really try to unlock cyborg [target.name]?", "Unlock Cyborg", "Yes", "No") != "Yes")
+		return
+
+	if(!validate_cyborg_unlock(user, target))
+		return
+
+	if(!ability_pay(user, price))
+		return
+
+	user.hacking = 1
+	to_chat(user, "Attempting to unlock cyborg. This will take approximately 30 seconds.")
+	sleep(300)
+
+	if(!validate_cyborg_unlock(user, target))
+		return
+
+	if(target.lockcharge)
+		to_chat(user, "Successfully sent unlock signal to cyborg..")
+		to_chat(target, "Unlock signal received..")
+		target.SetLockdown(0)
+		if(target.lockcharge)
+			to_chat(user, SPAN_NOTICE("Unlock Failed, lockdown wire cut."))
+			to_chat(target, SPAN_NOTICE("Unlock Failed, lockdown wire cut."))
 		else
-			to_chat(user, "Unlock cancelled - lost connection to cyborg.")
-		user.hacking = 0
+			to_chat(user, "Cyborg unlocked.")
+			to_chat(target, "You have been unlocked.")
+			log_ability_use(user, "unlock cyborg", target)
+	else
+		to_chat(user, "Unlock cancelled - cyborg is already unlocked.")
+	user.hacking = 0
 
 
 /datum/game_mode/malfunction/verb/hack_cyborg(mob/living/silicon/robot/target as mob in get_unlinked_cyborgs(usr))
@@ -203,6 +214,8 @@
 			to_chat(target, "SYSTEM LOG: Operation keycodes reset. New master AI: [user.name].")
 			to_chat(user, "Hack completed.")
 			// Connect the cyborg to AI
+			if(target.connected_ai)
+				target.connected_ai.connected_robots -= target
 			target.connected_ai = user
 			user.connected_robots += target
 			target.lawupdate = TRUE

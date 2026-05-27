@@ -88,7 +88,10 @@
 		if(!target)
 			return
 
-	if(target && !can_ai_reach_target(user, target))
+	if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
+		return
+
+	if(!target || QDELETED(target) || !can_ai_reach_target(user, target))
 		to_chat(user, "This camera is outside your accessible network.")
 		return
 
@@ -145,7 +148,10 @@
 		if(!M)
 			return
 
-	if(M && !can_ai_reach_target(user, M))
+	if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
+		return
+
+	if(!M || QDELETED(M) || !can_ai_reach_target(user, M))
 		to_chat(user, "This machine is outside your accessible network.")
 		return
 
@@ -235,7 +241,10 @@
 		if(!M)
 			return
 
-	if(M && !can_ai_reach_target(user, M))
+	if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
+		return
+
+	if(!M || QDELETED(M) || !can_ai_reach_target(user, M))
 		to_chat(user, "This machine is outside your accessible network.")
 		return
 
@@ -246,10 +255,13 @@
 		to_chat(user, "\The [M] has already been upgraded.")
 		return
 
-	if(!M.malf_upgrade(user))
-		to_chat(user, "\The [M] cannot be upgraded.")
+	if(!ability_pay(user, price))
 		return
 
-	ability_pay(user,price)
+	if(!M.malf_upgrade(user))
+		to_chat(user, "\The [M] cannot be upgraded.")
+		if(user && !QDELETED(user) && user.research)
+			user.research.stored_cpu += price
+		return
 
 // END ABILITY VERBS

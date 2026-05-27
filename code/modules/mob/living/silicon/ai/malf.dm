@@ -3,17 +3,16 @@
 /// Handles all malf-related Topic actions delegated from OnSelfTopic.
 /// Returns TRUE if the href was handled, FALSE if unrelated to malf UI.
 /mob/living/silicon/ai/proc/handle_malf_modules_topic(list/href_list)
-	if(!href_list)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
+		if(client)
+			show_browser(src, null, "window=malf_modules")
+		return TRUE
+	if(!href_list || !islist(href_list))
 		return FALSE
 	if(!href_list["malf_screen"] && !href_list["malf_select_hardware"] \
 	   && !href_list["malf_select_research"] && !href_list["malf_hardware_action"] \
 	   && !href_list["malf_activate_ability"])
 		return FALSE
-
-	if(!malfunctioning || !research)
-		if(client)
-			show_browser(src, null, "window=malf_modules")
-		return TRUE
 
 	if(href_list["malf_screen"])
 		show_malf_modules(href_list["malf_screen"], href_list["malf_refresh"])
@@ -74,7 +73,18 @@
 	log_ability_use(user, "malfunction status removed")
 	// Generic variables
 	malfunctioning = 0
+	hacking = 0
+	system_override = 0
+	last_failed_malf_title = null
+	last_failed_malf_message = null
 	stop_apu(1)
+	APU_power = 0
+
+	// Clear current basic APC hack target and send FALSE signal
+	if(current_malf_apc_hack_target)
+		SEND_SIGNAL(src, COMSIG_AI_APC_HACK_STATE, current_malf_apc_hack_target, FALSE)
+		current_malf_apc_hack_target = null
+
 	if(client)
 		show_browser(src, null, "window=malf_modules")
 	src.verbs -= typesof(/datum/game_mode/malfunction/verb)
@@ -123,15 +133,21 @@
 
 // Recalculates CPU time gain and storage capacities.
 /mob/living/silicon/ai/proc/recalc_cpu()
+	if(!research)
+		return
 	// AI Starts with these values.
 	var/cpu_gain = 0.01
 	var/cpu_storage = 10
 
 	// Off-Station APCs should not count towards CPU generation.
-	for(var/obj/machinery/power/apc/A in hacked_apcs)
-		if(A.z in GLOB.using_map.station_levels)
-			cpu_gain += 0.004 * (hacked_apcs_hidden ? 0.5 : 1)
-			cpu_storage += 10
+	if(hacked_apcs)
+		for(var/obj/machinery/power/apc/A in hacked_apcs.Copy())
+			if(!A || QDELETED(A) || A.hacker != src)
+				hacked_apcs -= A
+				continue
+			if(A.z in GLOB.using_map.station_levels)
+				cpu_gain += 0.004 * (hacked_apcs_hidden ? 0.5 : 1)
+				cpu_storage += 10
 
 	research.max_cpu = cpu_storage + override_CPUStorage
 	if(hardware && istype(hardware, /datum/malf_hardware/dual_ram))
@@ -178,7 +194,7 @@
 	show_malf_modules()
 
 /mob/living/silicon/ai/proc/show_malf_modules(screen = "status", refresh = FALSE)
-	if(!malfunctioning || !research)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
 		if(client)
 			show_browser(src, null, "window=malf_modules")
 		return
@@ -205,13 +221,14 @@
 	dat += malf_module_tab_link("abilities", "Abilities", screen)
 	dat += "</div>"
 	dat += "<div class='panel'>"
-	dat += "CPU: [round(research.stored_cpu, 0.1)] / [round(research.max_cpu, 0.1)] TFlops<br>"
-	dat += "Generation: [round(research.cpu_increase_per_tick * 10, 0.1)] TFlops/s<br>"
-	var/focus_text = research.focus ? html_encode(research.focus.name) : "<span class='muted'>None</span>"
+	if(research)
+		dat += "CPU: [round(research.stored_cpu, 0.1)] / [round(research.max_cpu, 0.1)] TFlops<br>"
+		dat += "Generation: [round(research.cpu_increase_per_tick * 10, 0.1)] TFlops/s<br>"
+		var/focus_text = research.focus ? html_encode(research.focus.name) : "<span class='muted'>None</span>"
+		dat += "Research: [focus_text]"
+		if(research.focus)
+			dat += " ([round(research.focus.invested, 0.1)] / [round(research.focus.price, 0.1)])"
 	var/hardware_text = hardware ? html_encode(hardware.name) : "<span class='muted'>None selected</span>"
-	dat += "Research: [focus_text]"
-	if(research.focus)
-		dat += " ([round(research.focus.invested, 0.1)] / [round(research.focus.price, 0.1)])"
 	dat += "<br>Hardware: [hardware_text]"
 	if(APU_power)
 		dat += "<br><span class='bad'>APU power active. Research and most abilities are paused.</span>"
@@ -226,7 +243,8 @@
 			build_malf_abilities_panel(dat)
 		else
 			build_malf_status_panel(dat)
-	dat += "<script type='text/javascript'>setTimeout(function(){window.location='byond://?src=\ref[src];malf_screen=[screen];malf_refresh=1';},1000);</script>"
+	if(screen == "status")
+		dat += "<script type='text/javascript'>setTimeout(function(){window.location='byond://?src=\ref[src];malf_screen=[screen];malf_refresh=1';},4000);</script>"
 	dat += "</body></html>"
 
 	var/datum/browser/popup = new(src, "malf_modules", "Malf Modules", 520, 650, src)
@@ -242,6 +260,8 @@
 	return "<a href='byond://?src=\ref[src];malf_screen=[tab]'>[label]</a>"
 
 /mob/living/silicon/ai/proc/build_malf_status_panel(list/dat)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research || !islist(dat))
+		return
 	dat += "<h3>Status</h3><div class='panel'>"
 	dat += "<div class='row'>Hacked APCs: [LAZYLEN(hacked_apcs)]</div>"
 	dat += "<div class='row'>System Status: [hacking ? "Busy" : "Stand-By"]</div>"
@@ -254,6 +274,8 @@
 	dat += "</div>"
 
 /mob/living/silicon/ai/proc/build_malf_hardware_panel(list/dat)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research || !islist(dat))
+		return
 	dat += "<h3>Hardware</h3><div class='panel'>"
 	if(hardware)
 		dat += "<div class='row'><b>[html_encode(hardware.name)]</b><br>[html_encode(hardware.desc)]</div>"
@@ -271,6 +293,8 @@
 	dat += "</div>"
 
 /mob/living/silicon/ai/proc/build_malf_research_panel(list/dat)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research || !islist(dat))
+		return
 	dat += "<h3>Research</h3><div class='panel'>"
 	if(!LAZYLEN(research.available_abilities))
 		dat += "<span class='muted'>No available research targets.</span>"
@@ -287,6 +311,8 @@
 	dat += "</div>"
 
 /mob/living/silicon/ai/proc/build_malf_abilities_panel(list/dat)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research || !islist(dat))
+		return
 	dat += "<h3>Abilities</h3><div class='panel'>"
 	var/has_abilities = FALSE
 	if(hardware && hardware.driver)
@@ -303,6 +329,8 @@
 	dat += "</div>"
 
 /mob/living/silicon/ai/proc/select_malf_hardware(hardware_type, confirmed = FALSE)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
+		return
 	if(!ability_prechecks(src, 0, TRUE))
 		return
 	if(hardware)
@@ -327,6 +355,9 @@
 		if(confirmation != "Yes")
 			qdel(HW)
 			return
+		if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
+			qdel(HW)
+			return
 		if(!ability_prechecks(src, 0, TRUE))
 			qdel(HW)
 			return
@@ -338,6 +369,8 @@
 	HW.install()
 
 /mob/living/silicon/ai/proc/select_malf_research(datum/malf_research_ability/ability)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
+		return
 	if(!ability_prechecks(src, 0, TRUE))
 		return
 	if(!ability || !(ability in research.available_abilities))
@@ -348,6 +381,8 @@
 	log_ability_use(src, "Selected research: [ability.name]", null, 0)
 
 /mob/living/silicon/ai/proc/activate_malf_ability(datum/malf_research_ability/ability)
+	if(QDELETED(src) || stat == DEAD || !malfunctioning || !research)
+		return
 	if(!ability_prechecks(src, 0, FALSE))
 		return
 	if(!ability || !(ability in research.unlocked_abilities) || !ability.ability || !(ability.ability in verbs))

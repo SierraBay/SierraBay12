@@ -83,6 +83,12 @@
 	if(choice != "YES")
 		return
 
+	if(!ability_prechecks(user, 0, 1))
+		return
+
+	if(!user.hardware || !istype(user.hardware, /datum/malf_hardware/instant_research))
+		return
+
 	if(HW.spent)
 		return
 

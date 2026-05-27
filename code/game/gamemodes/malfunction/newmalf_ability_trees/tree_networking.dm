@@ -53,12 +53,29 @@
 			user.last_failed_malf_title = null
 			user.last_failed_malf_message = null
 
-	var/title = user.last_failed_malf_title ? user.last_failed_malf_title : sanitize(input("Select message title: "))
-	var/text = user.last_failed_malf_message ? user.last_failed_malf_message : sanitize(input("Select message text: "))
+		if(!ability_prechecks(user, price))
+			return
 
-	if(!title || !text || !ability_pay(user, price))
+	var/title = user.last_failed_malf_title ? user.last_failed_malf_title : sanitize(input(user, "Select message title: ", "Advanced Encryption Hack"))
+	if(!title)
 		to_chat(user, "Hack Aborted")
 		return
+
+	if(!ability_prechecks(user, price))
+		return
+
+	var/text = user.last_failed_malf_message ? user.last_failed_malf_message : sanitize(input(user, "Select message text: ", "Advanced Encryption Hack"))
+	if(!text)
+		to_chat(user, "Hack Aborted")
+		return
+
+	if(!ability_prechecks(user, price))
+		return
+
+	if(!ability_pay(user, price))
+		to_chat(user, "Hack Aborted")
+		return
+
 	log_ability_use(user, "advanced encryption hack")
 
 	if(prob(60) && user.hack_can_fail)
@@ -66,13 +83,13 @@
 		if(prob(10))
 			user.hack_fails ++
 			announce_hack_failure(user, "quantum message relay")
-			log_ability_use(user, "elite encryption hack (CRITFAIL - title: [title])")
+			log_ability_use(user, "advanced encryption hack (CRITFAIL - title: [title])")
 		else
-			log_ability_use(user, "elite encryption hack (FAIL - title: [title])")
+			log_ability_use(user, "advanced encryption hack (FAIL - title: [title])")
 		user.last_failed_malf_message = text
 		user.last_failed_malf_title = title
 		return
-	log_ability_use(user, "elite encryption hack (SUCCESS - title: [title])")
+	log_ability_use(user, "advanced encryption hack (SUCCESS - title: [title])")
 	command_announcement.Announce(text, title)
 
 /datum/game_mode/malfunction/verb/elite_encryption_hack()
@@ -85,8 +102,15 @@
 		return
 
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
-	var/alert_target = input("Select new alert level:") as null|anything in (security_state.all_security_levels - security_state.current_security_level)
-	if(!alert_target || !ability_pay(user, price))
+	var/alert_target = input(user, "Select new alert level:", "Elite Encryption Hack") as null|anything in (security_state.all_security_levels - security_state.current_security_level)
+	if(!alert_target)
+		to_chat(user, "Hack Aborted")
+		return
+
+	if(!ability_prechecks(user, price))
+		return
+
+	if(!ability_pay(user, price))
 		to_chat(user, "Hack Aborted")
 		return
 
@@ -109,12 +133,25 @@
 	set desc = "500 CPU - Begins hacking primary firewall, quickly overtaking remaining APC systems. When completed grants access to the self-destruct mechanism. Network administrators will probably notice this."
 	var/price = 500
 	var/mob/living/silicon/ai/user = usr
+
+	if(!ability_prechecks(user, price))
+		return
+	if(user.system_override)
+		to_chat(user, "You already started the system override sequence.")
+		return
+
 	if (alert(user, "Begin system override? This cannot be stopped once started. The network administrators will probably notice this.", "System Override:", "Yes", "No") != "Yes")
 		return
-	if (!ability_prechecks(user, price) || !ability_pay(user, price) || user.system_override)
-		if(user.system_override)
-			to_chat(user, "You already started the system override sequence.")
+
+	if(!ability_prechecks(user, price))
 		return
+	if(user.system_override)
+		to_chat(user, "You already started the system override sequence.")
+		return
+
+	if(!ability_pay(user, price))
+		return
+
 	log_ability_use(user, "system override (STARTED)")
 	var/list/remaining_apcs = list()
 	var/list/valid_zlevels = GetConnectedZlevels(user.z)
@@ -129,19 +166,19 @@
 	if(user.hack_can_fail)								// Two types of announcements. Short hacks trigger immediate warnings. Long hacks are more "progressive".
 		spawn(0)
 			sleep(duration/5)
-			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+			if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 				return
 			command_announcement.Announce("Caution, [GLOB.using_map.station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+			if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 				return
 			command_announcement.Announce("We started tracing the intruder. Whoever is doing this, they seem to be onboard. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+			if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 				return
 			command_announcement.Announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
 			sleep(duration/5)
-			if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+			if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 				return
 			command_announcement.Announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 
@@ -151,7 +188,7 @@
 	// Now actually begin the hack. Each APC takes 10 seconds.
 	for(var/obj/machinery/power/apc/A in shuffle(remaining_apcs))
 		sleep(100)
-		if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+		if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 			return
 		if(!A || !istype(A) || A.aidisabled)
 			continue
@@ -159,13 +196,13 @@
 		if(A.hacker == user)
 			to_chat(user, "## OVERRIDDEN: [A.name]")
 
-	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+	if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 		return
 
 	to_chat(user, "## REACHABLE APC SYSTEMS OVERTAKEN. BYPASSING PRIMARY FIREWALL.")
 	sleep(1 MINUTE)
 
-	if(!user || QDELETED(user) || user.stat == DEAD || !user.malfunctioning)
+	if(!user || QDELETED(user) || user.stat == DEAD || user.is_dead() || !user.malfunctioning || !user.research)
 		return
 
 	// Hack all APCs, including those built during hack sequence.

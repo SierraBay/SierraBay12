@@ -91,7 +91,9 @@
 // Parameters 2 - (user - User which used this ability check_price - If different than 0 checks for ability CPU price too. Does NOT use the CPU time!)
 // Description: This is pre-check proc used to determine if the AI can use the ability.
 /proc/ability_prechecks(mob/living/silicon/ai/user = null, check_price = 0, override = 0)
-	if(!user)
+	if(!user || QDELETED(user))
+		return 0
+	if(user.stat == DEAD || user.is_dead())
 		return 0
 	if(!istype(user))
 		to_chat(user, "GAME ERROR: You tried to use ability that is only available for malfunctioning AIs, but you are not AI! Please report this.")
@@ -120,7 +122,11 @@
 // Parameters 2 - (user - User from which we deduct CPU from, price - Amount of CPU power to use)
 // Description: Uses up certain amount of CPU power. Returns 1 on success, 0 on failure.
 /proc/ability_pay(mob/living/silicon/ai/user = null, price = 0)
-	if(!user)
+	if(!user || QDELETED(user))
+		return 0
+	if(user.stat == DEAD || user.is_dead())
+		return 0
+	if(!user.malfunctioning)
 		return 0
 	if(user.APU_power)
 		to_chat(user, "Low power. Unable to proceed.")
@@ -288,6 +294,15 @@
 // Description: Validates if the AI hack can continue, resetting hacking state on failure.
 /proc/validate_ai_hack(mob/living/silicon/ai/user, mob/living/silicon/ai/target)
 	if(!user || QDELETED(user) || user.is_dead() || !user.malfunctioning || !target || QDELETED(target) || target.stat == DEAD || !(target in get_other_ais(user)))
+		if(user && !QDELETED(user))
+			user.hacking = 0
+		return FALSE
+	return TRUE
+
+// Proc: validate_cyborg_unlock()
+// Description: Validates if the cyborg unlock can continue safely.
+/proc/validate_cyborg_unlock(mob/living/silicon/ai/user, mob/living/silicon/robot/target)
+	if(!user || QDELETED(user) || user.is_dead() || user.stat == DEAD || !user.malfunctioning || !target || QDELETED(target) || target.stat == DEAD || !(target in get_unlinked_cyborgs(user)))
 		if(user && !QDELETED(user))
 			user.hacking = 0
 		return FALSE
