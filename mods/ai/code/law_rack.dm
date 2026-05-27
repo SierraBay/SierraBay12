@@ -233,72 +233,65 @@
 	return TOPIC_NOACTION
 
 /obj/machinery/law_rack/interact(mob/user)
+	ui_interact(user)
+
+/obj/machinery/law_rack/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
 	if(linked_ai && QDELETED(linked_ai))
 		linked_ai = null
 	update_rack_lock()
 
-	var/list/dat = list()
-	var/unlocked = slots_unlocked
-	dat += "<b>[html_encode(name)]</b><br>"
-	dat += "Linked AI: [linked_ai ? html_encode(linked_ai.name) : "None"]<br>"
-	dat += "Active preset: [active_preset_name ? html_encode(active_preset_name) : "None"]<br>"
-	dat += "Inserted ID: [inserted_id ? html_encode(inserted_id.name) : "None"]"
-	if(inserted_id)
-		dat += " (<a href='byond://?src=\ref[src];eject_id=1'>Eject ID</a>)"
-	else
-		dat += " (use an ID card on the rack to insert it)"
-	dat += "<br>"
-	dat += "Access Status: [unlocked ? "Unlocked" : "Locked"]<br>"
-	if(!unlocked)
-		if(inserted_id)
-			dat += "Invalid access. Slots are locked.<br>"
-		else
-			dat += "Insert an authorized ID to modify law slots.<br>"
-	dat += "Module slots: [max_slots]<br>"
-	dat += "Last sync: [last_sync_time ? "[html_encode(last_sync_time)] - [html_encode(last_sync_status)]" : html_encode(last_sync_status)]<br><br>"
-	if(unlocked)
-		dat += "<a href='byond://?src=\ref[src];link_ai=1'>Link AI</a> | "
-		dat += "<a href='byond://?src=\ref[src];force_sync=1'>Force Sync</a><br><hr>"
-	else
-		dat += "Link AI unavailable while locked. | Force Sync unavailable while locked.<br><hr>"
+	var/list/data = list()
+	data["name"] = name
+	data["linked_ai"] = linked_ai ? linked_ai.name : null
+	data["active_preset_name"] = active_preset_name
+	data["inserted_id"] = inserted_id ? inserted_id.name : null
+	data["slots_unlocked"] = slots_unlocked ? 1 : 0
+	data["max_slots"] = max_slots
+	data["last_sync_time"] = last_sync_time
+	data["last_sync_status"] = last_sync_status
+	data["sync_in_progress"] = sync_in_progress ? 1 : 0
 
+	var/list/slots = list()
 	for(var/i = 1 to max_slots)
 		var/obj/item/law_module/module = module_slots[i]
 		if(module && QDELETED(module))
 			module_slots[i] = null
 			module = null
 
-		dat += "<b>Slot [i]:</b> "
 		if(module)
-			var/module_type = "law"
+			var/module_type = "std"
 			if(istype(module, /obj/item/law_module/core))
 				module_type = "core"
 			else if(istype(module, /obj/item/law_module/supplied))
 				module_type = "supplied"
 			else if(istype(module, /obj/item/law_module/hacked))
 				module_type = "corrupted"
+
 			var/preview = module.law_text ? copytext_char(module.law_text, 1, 96) : "No valid law"
 			if(module.law_text && length_char(module.law_text) >= 96)
 				preview += "..."
-			dat += "[html_encode(module.name)] ([module_type])<br>"
-			dat += "<small>[html_encode(preview)]</small><br>"
-			if(unlocked)
-				dat += "<a href='byond://?src=\ref[src];remove=[i]'>Remove</a>"
-				if(i > 1)
-					dat += " | <a href='byond://?src=\ref[src];move_up=[i]'>Move Up</a>"
-				if(i < max_slots)
-					dat += " | <a href='byond://?src=\ref[src];move_down=[i]'>Move Down</a>"
-			else
-				dat += "Slots are locked."
-		else
-			dat += "Empty"
-			if(!unlocked)
-				dat += "<br>Slots are locked."
-		dat += "<br><br>"
 
-	var/datum/browser/popup = new(user, "law_rack", name, 620, 500, src)
-	popup.set_content(jointext(dat, null))
-	popup.open()
+			slots += list(list(
+				"index" = i,
+				"has_module" = 1,
+				"name" = module.name,
+				"type" = module_type,
+				"preview" = preview,
+				"ref" = "\ref[module]"
+			))
+		else
+			slots += list(list(
+				"index" = i,
+				"has_module" = 0
+			))
+	data["slots"] = slots
+
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "law_rack.tmpl", name, 620, 520, state = state)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
 
 /obj/machinery/law_rack/proc/insert_module(obj/item/law_module/module, mob/living/user)
 	if(user)
@@ -338,6 +331,7 @@
 
 	if(user)
 		to_chat(user, SPAN_NOTICE("You insert [module] into slot [slot] of [src]."))
+		interact(user)
 	log_law_rack(user, "inserted [module] into slot [slot]")
 	return TRUE
 
@@ -513,6 +507,11 @@
 			module_slots[i] = null
 	return FALSE
 
+/obj/machinery/law_rack/check_access(atom/movable/A)
+	if(istype(A, /mob))
+		return TRUE
+	return ..()
+
 /obj/machinery/law_rack/proc/has_rack_access()
 	update_rack_lock()
 	return slots_unlocked
@@ -551,6 +550,7 @@
 			to_chat(user, SPAN_NOTICE("You insert [card] into [src]. The law rack unlocks."))
 		else
 			to_chat(user, SPAN_WARNING("You insert [card] into [src], but its access is not accepted."))
+		interact(user)
 	log_law_rack(user, "inserted ID [card]")
 	return TRUE
 
