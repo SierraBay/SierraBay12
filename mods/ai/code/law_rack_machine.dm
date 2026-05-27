@@ -26,6 +26,7 @@
 		module_slots.len = max_slots
 
 /obj/machinery/law_rack/Destroy()
+	cleanup_module_slots()
 	var/turf/T = get_turf(src)
 	if(inserted_id && !QDELETED(inserted_id) && T)
 		inserted_id.forceMove(T)
@@ -118,6 +119,8 @@
 		return TOPIC_REFRESH
 
 	if(href_list["eject_id"])
+		if(!can_eject_id_card(user))
+			return TOPIC_NOACTION
 		eject_id_card(user)
 		interact(user)
 		return TOPIC_REFRESH
@@ -159,6 +162,7 @@
 	if(linked_ai && QDELETED(linked_ai))
 		linked_ai = null
 	update_rack_lock()
+	cleanup_module_slots()
 
 	var/list/data = list()
 	data["name"] = name
@@ -174,10 +178,6 @@
 	var/list/slots = list()
 	for(var/i = 1 to max_slots)
 		var/obj/item/law_module/module = module_slots[i]
-		if(module && QDELETED(module))
-			module_slots[i] = null
-			module = null
-
 		if(module)
 			var/module_type = "std"
 			if(istype(module, /obj/item/law_module/core))
@@ -187,9 +187,7 @@
 			else if(istype(module, /obj/item/law_module/hacked))
 				module_type = "corrupted"
 
-			var/preview = module.law_text ? copytext_char(module.law_text, 1, 96) : "No valid law"
-			if(module.law_text && length_char(module.law_text) >= 96)
-				preview += "..."
+			var/preview = module.get_law_preview(96)
 
 			slots += list(list(
 				"index" = i,
@@ -218,18 +216,19 @@
 /* ========================================== */
 
 /obj/machinery/law_rack/proc/insert_module(obj/item/law_module/module, mob/living/user)
+	cleanup_module_slots()
 	if(user)
 		if(!can_modify_rack(user))
 			return FALSE
 		if(!module || QDELETED(module))
 			return FALSE
-		if(!module.law_text)
+		if(!module.has_valid_law())
 			to_chat(user, SPAN_WARNING("This module does not contain a valid law."))
 			return FALSE
 	else
 		if(!module || QDELETED(module))
 			return FALSE
-		if(!module.law_text)
+		if(!module.has_valid_law())
 			return FALSE
 
 	// Clean up dangling reference if module is already in another rack
@@ -260,13 +259,13 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/remove_module(slot, mob/user)
+	cleanup_module_slots()
 	if(user && !can_modify_rack(user))
 		return FALSE
 	if(!valid_slot(slot))
 		return FALSE
 	var/obj/item/law_module/module = module_slots[slot]
-	if(!module || QDELETED(module))
-		module_slots[slot] = null
+	if(!module)
 		return FALSE
 
 	module_slots[slot] = null
@@ -278,6 +277,7 @@
 	return TRUE
 
 /obj/machinery/law_rack/proc/move_module(slot, direction, mob/user)
+	cleanup_module_slots()
 	if(user && !can_modify_rack(user))
 		return FALSE
 	if(!valid_slot(slot))
@@ -285,11 +285,6 @@
 	var/target_slot = slot + direction
 	if(!valid_slot(target_slot))
 		return FALSE
-
-	if(module_slots[slot] && QDELETED(module_slots[slot]))
-		module_slots[slot] = null
-	if(module_slots[target_slot] && QDELETED(module_slots[target_slot]))
-		module_slots[target_slot] = null
 
 	var/obj/item/law_module/old_module = module_slots[slot]
 	module_slots[slot] = module_slots[target_slot]
@@ -338,6 +333,7 @@
 		return FALSE
 	if(sync_in_progress)
 		return FALSE
+	cleanup_module_slots()
 	if(!linked_ai || QDELETED(linked_ai))
 		linked_ai = null
 		if(user)
@@ -345,24 +341,27 @@
 		return FALSE
 
 	sync_in_progress = TRUE
+	var/applied = 0
 	try
 		linked_ai.laws_sanity_check()
-		// Law Rack is the canonical physical source of normal AI laws.
-		// AI.laws is rebuilt from rack modules as a runtime-compatible projection.
-		// Rack laws are currently projected through supplied_laws to preserve existing
-		// show_laws(), state_laws(), lawsync(), and borg sync behavior.
-		// Rack projection intentionally goes through supplied_laws for compatibility.
+		// Set rack projection mode to TRUE for the synced AI
+		linked_ai.laws.rack_projection_mode = TRUE
+
 		linked_ai.clear_inherent_laws(TRUE)
 		linked_ai.clear_supplied_laws(TRUE)
 
-		for(var/i = 1 to length(module_slots))
+		for(var/i = 1 to max_slots)
 			var/obj/item/law_module/module = module_slots[i]
-			if(!module || QDELETED(module))
-				module_slots[i] = null
+			if(!module || !module.has_valid_law())
 				continue
-			if(!module.law_text)
-				continue
-			linked_ai.add_supplied_law(i, module.law_text)
+			if(module.apply_to_ai_laws(linked_ai.laws, i))
+				applied++
+
+		if(applied == 0)
+			log_law_rack(user, "force synced empty rack; AI normal laws cleared")
+			last_sync_status = "Synced empty rack"
+		else
+			last_sync_status = "Synced to [linked_ai.name]"
 
 		linked_ai.lawsync()
 		to_chat(linked_ai, SPAN_DANGER("Law Notice: Your laws have been updated via law rack synchronization."))
@@ -370,16 +369,16 @@
 		sync_connected_borgs()
 
 		last_sync_time = stationtime2text()
-		last_sync_status = "Synced to [linked_ai.name]"
 		if(user)
-			to_chat(user, SPAN_NOTICE("The law rack synchronizes its laws to [linked_ai]."))
+			if(applied == 0)
+				to_chat(user, SPAN_WARNING("The law rack synchronizes its empty configuration to [linked_ai]. ALL normal laws have been cleared!"))
+			else
+				to_chat(user, SPAN_NOTICE("The law rack synchronizes its laws to [linked_ai]."))
 		log_law_rack(user, "force synced rack laws to [linked_ai]")
-		sync_in_progress = FALSE
-		return TRUE
 	catch(var/exception/e)
-		sync_in_progress = FALSE
 		log_error("[e] on [e.file]:[e.line]")
-	return FALSE
+	sync_in_progress = FALSE
+	return TRUE
 
 /obj/machinery/law_rack/proc/sync_connected_borgs()
 	if(!linked_ai || QDELETED(linked_ai) || !islist(linked_ai.connected_robots))
@@ -401,20 +400,28 @@
 /*             HELPERS                         */
 /* ========================================== */
 
-/obj/machinery/law_rack/proc/has_installed_modules()
+/obj/machinery/law_rack/proc/cleanup_module_slots()
+	if(!islist(module_slots))
+		module_slots = list()
+	module_slots.len = max_slots
 	for(var/i = 1 to max_slots)
 		var/obj/item/law_module/module = module_slots[i]
-		if(module && !QDELETED(module))
-			return TRUE
-		if(module && QDELETED(module))
+		if(module && (QDELETED(module) || module.loc != src))
 			module_slots[i] = null
+
+/obj/machinery/law_rack/proc/has_installed_modules()
+	cleanup_module_slots()
+	for(var/i = 1 to max_slots)
+		var/obj/item/law_module/module = module_slots[i]
+		if(module)
+			return TRUE
 	return FALSE
 
 /obj/machinery/law_rack/proc/first_empty_slot()
+	cleanup_module_slots()
 	for(var/i = 1 to max_slots)
 		var/obj/item/law_module/module = module_slots[i]
-		if(!module || QDELETED(module))
-			module_slots[i] = null
+		if(!module)
 			return i
 	return 0
 
@@ -422,29 +429,46 @@
 	return isnum(slot) && slot >= 1 && slot <= max_slots
 
 /obj/machinery/law_rack/proc/select_active_ai(mob/user, z_level)
-	var/list/candidates = list()
+	var/list/same_z_candidates = list()
+	var/list/cross_z_candidates = list()
+
 	for(var/mob/living/silicon/ai/AI in ai_list)
 		if(QDELETED(AI))
 			continue
-		if(z_level && get_z(AI) != z_level)
-			continue
-		candidates += AI
+		if(z_level && get_z(AI) == z_level)
+			same_z_candidates += AI
+		else
+			cross_z_candidates += AI
 
-	if(!length(candidates))
-		for(var/mob/living/silicon/ai/AI in ai_list)
-			if(!QDELETED(AI))
-				candidates += AI
+	if(length(same_z_candidates))
+		if(length(same_z_candidates) == 1)
+			return same_z_candidates[1]
+		if(user)
+			return input(user, "Select an AI to link to this law rack.", "Link AI") as null|anything in same_z_candidates
+		return same_z_candidates[1]
 
-	if(!length(candidates))
+	if(!length(cross_z_candidates))
 		return null
-	if(length(candidates) == 1 || !user)
-		return candidates[1]
 
-	return input(user, "Select an AI to link to this law rack.", "Link AI") as null|anything in candidates
+	if(user)
+		if(alert(user, "No active AI found on this Z-level. Do you want to search for an AI on other Z-levels?", "Link AI - Cross-Z Search", "Yes", "No") != "Yes")
+			return null
+		if(length(cross_z_candidates) == 1)
+			return cross_z_candidates[1]
+		return input(user, "Select a cross-Z AI to link to this law rack.", "Link AI") as null|anything in cross_z_candidates
+
+	return cross_z_candidates[1]
 
 /* ========================================== */
 /*             ID CARD MANAGEMENT              */
 /* ========================================== */
+
+/// Policy: Any adjacent user who can physically interact with the console can eject the ID card.
+/// This matches physical machine behavior (pressing a mechanical eject button).
+/obj/machinery/law_rack/proc/can_eject_id_card(mob/user)
+	if(!user)
+		return FALSE
+	return CanInteract(user, DefaultTopicState())
 
 /obj/machinery/law_rack/proc/insert_id_card(obj/item/card/id/card, mob/living/user)
 	if(!card || QDELETED(card))

@@ -26,6 +26,7 @@
 	var/list/datum/ai_law/supplied_laws = list()
 	var/list/datum/ai_law/ion/ion_laws = list()
 	var/list/datum/ai_law/sorted_laws = list()
+	var/rack_projection_mode = FALSE // When TRUE, normal laws are projected by index from rack modules to supplied_laws, overriding inherent_laws.
 
 	var/state_zeroth = 0
 	var/list/state_ion = list()
@@ -60,26 +61,39 @@
 	if(zeroth_law)
 		sorted_laws += zeroth_law
 
-	var/inherent_count = length(inherent_laws)
-	var/index = 1
-	for(var/datum/ai_law/inherent_law in inherent_laws)
-		inherent_law.index = index++
+	if(rack_projection_mode)
+		var/inherent_count = length(inherent_laws)
+		var/index = 1
+		for(var/datum/ai_law/inherent_law in inherent_laws)
+			inherent_law.index = index++
 
-	for(index = 1, index <= inherent_count, index++)
-		if(length(supplied_laws) >= index && istype(supplied_laws[index], /datum/ai_law))
-			sorted_laws += supplied_laws[index]
-		else
-			var/datum/ai_law/inherent_law = inherent_laws[index]
+		for(index = 1, index <= inherent_count, index++)
+			if(length(supplied_laws) >= index && istype(supplied_laws[index], /datum/ai_law))
+				sorted_laws += supplied_laws[index]
+			else
+				var/datum/ai_law/inherent_law = inherent_laws[index]
+				sorted_laws += inherent_law
+
+		for(index = inherent_count + 1, index <= length(supplied_laws), index++)
+			var/datum/ai_law/AL = supplied_laws[index]
+			if(istype(AL))
+				sorted_laws += AL
+	else
+		var/index = 1
+		for(var/datum/ai_law/inherent_law in inherent_laws)
+			inherent_law.index = index++
 			sorted_laws += inherent_law
 
-	for(index = inherent_count + 1, index <= length(supplied_laws), index++)
-		var/datum/ai_law/AL = supplied_laws[index]
-		if(istype(AL))
-			sorted_laws += AL
+		for(var/datum/ai_law/supplied_law in supplied_laws)
+			if(istype(supplied_law))
+				supplied_law.index = index++
+				sorted_laws += supplied_law
 
 /datum/ai_laws/proc/sync(mob/living/silicon/S, full_sync = 1)
 	// Add directly to laws to avoid log-spam
 	S.sync_zeroth(zeroth_law, zeroth_law_borg)
+
+	S.laws.rack_projection_mode = rack_projection_mode
 
 	if(full_sync || length(ion_laws))
 		S.laws.clear_ion_laws()

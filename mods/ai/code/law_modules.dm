@@ -35,15 +35,40 @@
 		return
 	set_law_text(new_law)
 
-/// Helper to set law text, label and description in one place.
-/// Used by upload console, admin edit, and preset application.
 /obj/item/law_module/proc/set_law_text(new_law, new_label = null, corrupted = FALSE)
 	law_text = sanitize(new_law)
-	module_label = new_label || copytext_char(law_text, 1, 32)
+	module_label = new_label ? new_label : copytext_char(law_text, 1, 32)
 	if(corrupted)
 		desc = "A corrupted removable law module containing: '[law_text]'"
-	else
+	else if(law_text)
 		desc = "A removable law module containing: '[law_text]'"
+	else
+		desc = initial(desc)
+
+/obj/item/law_module/proc/clear_law_text()
+	law_text = ""
+	module_label = ""
+	desc = initial(desc)
+
+/obj/item/law_module/proc/has_valid_law()
+	return !!law_text
+
+/obj/item/law_module/proc/get_law_preview(max_len = 96)
+	if(!law_text)
+		return "No valid law"
+	var/preview = copytext_char(law_text, 1, max_len)
+	if(length_char(law_text) >= max_len)
+		preview += "..."
+	return preview
+
+/obj/item/law_module/proc/apply_to_ai_laws(datum/ai_laws/laws, slot)
+	// Module subtype is currently physical/display metadata.
+	// Rack projection writes all normal rack laws through supplied_laws for compatibility
+	// with existing AI law display/sync systems.
+	if(!laws || !law_text)
+		return FALSE
+	laws.add_supplied_law(slot, law_text)
+	return TRUE
 
 /obj/item/law_module/core
 	name = "\improper core law module"

@@ -2,6 +2,8 @@
 	name = "unused upload console"
 	icon_keyboard = "rd_key"
 	icon_screen = "command"
+	var/mob/living/silicon/preview_target = null
+	// Keep current as a legacy/compatibility alias for external/unaffected systems (e.g. AI modules)
 	var/mob/living/silicon/current = null
 	var/obj/item/law_module/inserted_module = null
 	var/obj/item/aiModule/swiped_aimodule = null
@@ -37,60 +39,28 @@
 
 		var/obj/item/aiModule/M = O
 
-		// Handle syndicate module bypass/hacked logic
-		if(istype(M, /obj/item/aiModule/syndicate))
-			var/new_law = sanitize(input(user, "Enter custom syndicate law to program.", "Hacked Law Entry", inserted_module.law_text) as null|message)
-			if(!new_law || QDELETED(src) || QDELETED(inserted_module) || QDELETED(M) || user.incapacitated())
-				return TRUE
-
-			// Convert board to hacked board if it isn't already!
-			if(inserted_module.type != /obj/item/law_module/hacked)
-				var/obj/item/law_module/hacked/H = new(src)
-				H.set_law_text(new_law, null, TRUE)
-				qdel(inserted_module)
-				inserted_module = H
-			else
-				inserted_module.set_law_text(new_law, null, TRUE)
-
-			to_chat(user, SPAN_DANGER("You program the glitched law onto the module."))
-			log_and_message_admins("programmed syndicate law '[new_law]' on a law module", user, get_turf(src))
-			interact(user)
-			return TRUE
-
-		// Handle reset or purge modules
-		if(istype(M, /obj/item/aiModule/reset) || istype(M, /obj/item/aiModule/purge))
-			if(alert(user, "Erase all law text from the inserted law module?", "Erase Module", "Yes", "No") == "Yes")
-				if(QDELETED(src) || QDELETED(inserted_module) || user.incapacitated())
-					return TRUE
-				inserted_module.law_text = ""
-				inserted_module.module_label = ""
-				inserted_module.desc = "A removable data module for use in a physical AI law rack."
-				to_chat(user, SPAN_NOTICE("You wipe the law module's data buffer."))
-				interact(user)
-			return TRUE
-
-		// If it's a multi-law module
-		if(M.laws)
+		var/list/options = M.get_physical_law_programming_options(user, inserted_module)
+		if(length(options))
 			swiped_aimodule = M
 			to_chat(user, SPAN_NOTICE("You swipe [M] on the console's scanner. Select a law to write from the interface."))
 			interact(user)
 			return TRUE
 
-		// Single-law and freeform modules: use polymorphic API
-		var/law_to_write = M.get_physical_law_module_text(user, inserted_module)
+		if(!M.can_program_physical_law_module(user, inserted_module))
+			to_chat(user, SPAN_WARNING("Cannot program module with [M]."))
+			return TRUE
 
-		if(law_to_write)
-			if(!inserted_module || QDELETED(inserted_module))
-				to_chat(user, SPAN_WARNING("The law module was removed while programming."))
-				return TRUE
-			if(!user || QDELETED(user) || user.incapacitated())
-				return TRUE
-			inserted_module.set_law_text(law_to_write)
-			to_chat(user, SPAN_NOTICE("You program the law module with: '[html_encode(law_to_write)]'"))
-			log_and_message_admins("programmed law '[law_to_write]' on a law module", user, get_turf(src))
+		if(M.program_physical_law_module(user, inserted_module, src))
+			// Post-prompt/async safety verification:
+			if(user && !QDELETED(user) && !user.incapacitated() && inserted_module && !QDELETED(inserted_module))
+				var/law_text = inserted_module.law_text
+				if(law_text)
+					to_chat(user, SPAN_NOTICE("You program the law module with: '[html_encode(law_text)]'"))
+					log_and_message_admins("programmed law '[law_text]' on a law module", user, get_turf(src))
 			interact(user)
 		else
-			to_chat(user, SPAN_WARNING("Failed to read a valid law from [M]."))
+			if(user && !QDELETED(user) && !user.incapacitated())
+				to_chat(user, SPAN_WARNING("Failed to program the law module using [M]."))
 		return TRUE
 
 	return ..()
@@ -124,13 +94,13 @@
 	dat += "<b>[html_encode(name)] - Physical Module Programmer</b><br>"
 	dat += "<small style='color: #888;'>This console programs removable law modules. Programmed modules must be inserted into the physical AI Law Rack and synchronized to take effect.</small><br><br>"
 
-	// Target Silicon Reference
-	dat += "<b>Target Intelligence (Read-Only Preview):</b> [current ? html_encode(current.name) : "None Selected"]"
+	// Target Silicon Reference (Read-Only Preview)
+	dat += "<b>Target Intelligence (Read-Only Preview):</b> [preview_target ? html_encode(preview_target.name) : "None Selected"]"
 	dat += " (<a href='byond://?src=\ref[src];select_ai=1'>Change Target</a>)<br>"
-	if(current)
+	if(preview_target)
 		dat += "<small>Current Laws on Target:<br>"
-		if(current.laws)
-			var/list/datum/ai_law/target_laws = current.laws.all_laws()
+		if(preview_target.laws)
+			var/list/datum/ai_law/target_laws = preview_target.laws.all_laws()
 			if(length(target_laws))
 				for(var/datum/ai_law/AL in target_laws)
 					dat += "[AL.get_index()]. [html_encode(AL.law)]<br>"
@@ -156,14 +126,14 @@
 		dat += "<b>Active AI Module Template (Swiped):</b> [html_encode(swiped_aimodule.name)]"
 		dat += " (<a href='byond://?src=\ref[src];clear_template=1'>Clear Template</a>)<br><br>"
 
-		if(swiped_aimodule.laws && !QDELETED(swiped_aimodule.laws))
+		var/list/options = swiped_aimodule.get_physical_law_programming_options(user, inserted_module)
+		if(length(options))
 			dat += "Select a template law to program into the inserted module:<br>"
-			var/list/datum/ai_law/laws_list = swiped_aimodule.laws.all_laws()
-			for(var/j = 1 to length(laws_list))
-				var/datum/ai_law/L = laws_list[j]
-				dat += "[j]. [html_encode(L.law)] "
+			for(var/option_key in options)
+				var/option_val = options[option_key]
+				dat += "[option_key]. [html_encode(option_val)] "
 				if(inserted_module)
-					dat += "\[ <a href='byond://?src=\ref[src];write_swiped_law=[j]'>Program Inserted Module</a> \]"
+					dat += "\[ <a href='byond://?src=\ref[src];write_swiped_law=[option_key]'>Program Inserted Module</a> \]"
 				else
 					dat += "<small style='color: #aaa;'>(Insert a physical law module first)</small>"
 				dat += "<br>"
@@ -188,8 +158,9 @@
 	if(href_list["select_ai"])
 		var/mob/living/silicon/new_target = select_active_ai(user, get_z(src))
 		if(new_target)
+			preview_target = new_target
 			current = new_target
-			to_chat(user, SPAN_NOTICE("Linked [current] to console memory."))
+			to_chat(user, SPAN_NOTICE("Linked [preview_target] to console memory."))
 		interact(user)
 		return TOPIC_REFRESH
 
@@ -208,16 +179,16 @@
 		if(!inserted_module || QDELETED(inserted_module))
 			to_chat(user, SPAN_WARNING("No law module inserted!"))
 			return TOPIC_NOACTION
-		if(!swiped_aimodule || QDELETED(swiped_aimodule) || !swiped_aimodule.laws || QDELETED(swiped_aimodule.laws))
+		if(!swiped_aimodule || QDELETED(swiped_aimodule))
 			return TOPIC_NOACTION
 
-		var/idx = text2num(href_list["write_swiped_law"])
-		var/list/datum/ai_law/laws_list = swiped_aimodule.laws.all_laws()
-		if(idx >= 1 && idx <= length(laws_list))
-			var/datum/ai_law/L = laws_list[idx]
-			inserted_module.set_law_text(L.law)
-			to_chat(user, SPAN_NOTICE("You program [inserted_module] with: '[html_encode(L.law)]'"))
-			log_and_message_admins("programmed law '[L.law]' on a law module", user, get_turf(src))
+		var/option_key = href_list["write_swiped_law"]
+		if(swiped_aimodule.program_physical_law_module(user, inserted_module, src, option_key))
+			// Post-prompt/async safety verification:
+			if(user && !QDELETED(user) && !user.incapacitated() && inserted_module && !QDELETED(inserted_module))
+				var/law_text = inserted_module.law_text
+				to_chat(user, SPAN_NOTICE("You program [inserted_module] with: '[html_encode(law_text)]'"))
+				log_and_message_admins("programmed law '[law_text]' on a law module", user, get_turf(src))
 		interact(user)
 		return TOPIC_REFRESH
 
@@ -232,8 +203,9 @@
 /obj/machinery/computer/upload/ai/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))
 		return FALSE
-	if(!current)
-		current = select_active_ai(user, get_z(src))
+	if(!preview_target)
+		preview_target = select_active_ai(user, get_z(src))
+		current = preview_target
 	return ..()
 
 /obj/machinery/computer/upload/robot
@@ -245,6 +217,7 @@
 /obj/machinery/computer/upload/robot/interface_interact(mob/user)
 	if(!CanInteract(user, DefaultTopicState()))
 		return FALSE
-	if(!current)
-		current = freeborg(get_z(src))
+	if(!preview_target)
+		preview_target = freeborg(get_z(src))
+		current = preview_target
 	return ..()

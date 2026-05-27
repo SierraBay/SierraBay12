@@ -88,7 +88,7 @@
 
 <hr/>
 
-<h3>Installed Law Modules</h3>
+<h3>Installed Law Modules <span style="font-size: 11px; font-weight: normal; color: #888; margin-left: 8px;">(Physical module types serve as structural metadata; synchronized laws are projected compatibly)</span></h3>
 
 {{if data.slots && data.slots.length}}
 	{{for data.slots}}
@@ -132,7 +132,11 @@
 					{{/if}}
 				{{else}}
 					<div style="color: #666; font-style: italic; padding: 12px 0;">
-						Insert a law module to program this slot
+						{{if data.slots_unlocked}}
+							Insert a law module to program this slot
+						{{else}}
+							Unlock rack to insert a law module
+						{{/if}}
 					</div>
 				{{/if}}
 			</div>

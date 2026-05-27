@@ -47,20 +47,43 @@
 	return TRUE
 
 /mob/living/silicon/ai/proc/find_roundstart_law_rack()
-	var/obj/machinery/law_rack/fallback = null
 	var/my_z = get_z(src)
+
+	// 1. Prefer rack already linked to src
 	for(var/obj/machinery/law_rack/rack in world)
 		if(QDELETED(rack))
 			continue
 		if(rack.linked_ai == src)
 			return rack
+
+	// 2. Prefer unlinked rack with same network and same Z
+	for(var/obj/machinery/law_rack/rack in world)
+		if(QDELETED(rack))
+			continue
 		if(rack.linked_ai && !QDELETED(rack.linked_ai))
 			continue
-		if(!fallback)
-			fallback = rack
-		if(my_z && get_z(rack) == my_z)
+		if(rack.rack_network == law_rack_network && my_z && get_z(rack) == my_z)
 			return rack
-	return fallback
+
+	// 3. Prefer unlinked rack with same network (cross-Z)
+	for(var/obj/machinery/law_rack/rack in world)
+		if(QDELETED(rack))
+			continue
+		if(rack.linked_ai && !QDELETED(rack.linked_ai))
+			continue
+		if(rack.rack_network == law_rack_network)
+			return rack
+
+	// 4. Fallback only if explicitly allowed on the rack
+	for(var/obj/machinery/law_rack/rack in world)
+		if(QDELETED(rack))
+			continue
+		if(rack.linked_ai && !QDELETED(rack.linked_ai))
+			continue
+		if(rack.allow_roundstart_fallback)
+			return rack
+
+	return null
 
 /obj/machinery/law_rack/proc/apply_roundstart_preset(datum/law_rack_preset/preset, overwrite = FALSE)
 	if(!preset || !islist(preset.laws_by_slot))
@@ -71,7 +94,7 @@
 		var/slot = text2num(slot_text)
 		if(!valid_slot(slot))
 			continue
-		var/law_text = sanitize(preset.laws_by_slot[slot_text])
+		var/law_text = preset.laws_by_slot[slot_text]
 		if(!law_text)
 			continue
 		var/obj/item/law_module/existing = module_slots[slot]
@@ -84,9 +107,7 @@
 			qdel(existing)
 
 		var/obj/item/law_module/core/module = new(src)
-		module.law_text = law_text
-		module.module_label = copytext_char(law_text, 1, 32)
-		module.desc = "A removable core-law module containing: '[law_text]'"
+		module.set_law_text(law_text)
 		module_slots[slot] = module
 		applied = TRUE
 

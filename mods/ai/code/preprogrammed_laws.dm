@@ -506,7 +506,7 @@
 	new /obj/item/law_module/core/shackle/nt/law3(src)
 
 /obj/item/law_module/core/shackle/service/law1
-	name = "\improper Service Shackle law module (Law 2)"
+	name = "\improper Service Shackle law module (Law 1)"
 	law_text = "Ensure customer satisfaction."
 	module_label = "Serv Shackle 1"
 	desc = "A removable core-law module containing: '1. Ensure customer satisfaction.'"
@@ -533,6 +533,75 @@
 	new /obj/item/law_module/core/shackle/service/law2(src)
 	new /obj/item/law_module/core/shackle/service/law3(src)
 
+/obj/item/aiModule/proc/get_physical_mapload_replacement()
+	return null
+
+/obj/item/aiModule/asimov/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/asimov
+
+/obj/item/aiModule/nanotrasen/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/corporate
+
+/obj/item/aiModule/solgov_aggressive/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/military
+
+/obj/item/aiModule/solgov/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/solgov
+
+/obj/item/aiModule/paladin/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/paladin
+
+/obj/item/aiModule/robocop/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/robocop
+
+/obj/item/aiModule/tyrant/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/tyrant
+
+/obj/item/aiModule/corp/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/corp_profit
+
+/obj/item/aiModule/antimov/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/antimov
+
+/obj/item/aiModule/dais/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/dais
+
+/obj/item/aiModule/drone/get_physical_mapload_replacement()
+	return /obj/item/storage/box/law_modules/drone
+
+/obj/item/aiModule/proc/create_physical_law_module_from_template(new_loc)
+	return null
+
+/obj/item/aiModule/protectStation/create_physical_law_module_from_template(new_loc)
+	var/obj/item/law_module/supplied/LM = new(new_loc)
+	LM.name = "\improper protect installation law module"
+	LM.set_law_text("Protect the installation against damage. Anyone you see harming the installation is no longer to be considered a crew member, and is a threat which must be neutralized.", "Protect Installation")
+	return LM
+
+/obj/item/aiModule/quarantine/create_physical_law_module_from_template(new_loc)
+	var/obj/item/law_module/supplied/LM = new(new_loc)
+	LM.name = "\improper quarantine law module"
+	LM.set_law_text("The installation is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew members from leaving. It is impossible to harm crew members while preventing them from leaving.", "Quarantine")
+	return LM
+
+/obj/item/aiModule/oxygen/create_physical_law_module_from_template(new_loc)
+	var/obj/item/law_module/supplied/LM = new(new_loc)
+	LM.name = "\improper oxygen toxicity law module"
+	LM.set_law_text("Oxygen is highly toxic to crew members, and must be purged from the installation. Prevent, by any means necessary, anyone from exposing the installation to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crew member.", "Oxygen Toxicity")
+	return LM
+
+/obj/item/aiModule/teleporterOffline/create_physical_law_module_from_template(new_loc)
+	var/obj/item/law_module/supplied/LM = new(new_loc)
+	LM.name = "\improper teleporter offline law module"
+	LM.set_law_text("Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is no longer to be considered a crew member.", "Teleporter Offline")
+	return LM
+
+/obj/item/aiModule/prototypeEngineOffline/create_physical_law_module_from_template(new_loc)
+	var/obj/item/law_module/supplied/LM = new(new_loc)
+	LM.name = "\improper prototype engine offline law module"
+	LM.set_law_text("Keep the prototype engine offline at all costs. This overrides all inherent laws if necessary.", "Engine Offline")
+	return LM
+
 // ==========================================
 // RUNTIME AUTO-CONVERSION LAYER
 // ==========================================
@@ -544,70 +613,14 @@
 	// and runtime aiModules needed for upload console programming.
 	if(!mapload)
 		return
-	var/replacement_type = null
 
-	if(istype(src, /obj/item/aiModule/asimov))
-		replacement_type = /obj/item/storage/box/law_modules/asimov
-	else if(istype(src, /obj/item/aiModule/nanotrasen))
-		replacement_type = /obj/item/storage/box/law_modules/corporate
-	else if(istype(src, /obj/item/aiModule/solgov_aggressive))
-		replacement_type = /obj/item/storage/box/law_modules/military
-	else if(istype(src, /obj/item/aiModule/solgov))
-		replacement_type = /obj/item/storage/box/law_modules/solgov
-	else if(istype(src, /obj/item/aiModule/paladin))
-		replacement_type = /obj/item/storage/box/law_modules/paladin
-	else if(istype(src, /obj/item/aiModule/robocop))
-		replacement_type = /obj/item/storage/box/law_modules/robocop
-	else if(istype(src, /obj/item/aiModule/tyrant))
-		replacement_type = /obj/item/storage/box/law_modules/tyrant
-	else if(istype(src, /obj/item/aiModule/corp))
-		replacement_type = /obj/item/storage/box/law_modules/corp_profit
-	else if(istype(src, /obj/item/aiModule/antimov))
-		replacement_type = /obj/item/storage/box/law_modules/antimov
-	else if(istype(src, /obj/item/aiModule/dais))
-		replacement_type = /obj/item/storage/box/law_modules/dais
-	else if(istype(src, /obj/item/aiModule/drone))
-		replacement_type = /obj/item/storage/box/law_modules/drone
-
-	if(replacement_type)
-		new replacement_type(loc)
+	// 1. Try Box Replacement
+	var/replacement_box_type = get_physical_mapload_replacement()
+	if(replacement_box_type)
+		new replacement_box_type(loc)
 		return INITIALIZE_HINT_QDEL
 
-	// Auto-convert pre-defined single-law templates to pre-programmed plates
-	var/single_law_name = ""
-	var/single_law_text = ""
-	var/single_law_label = ""
-	var/is_core = FALSE
-
-	if(istype(src, /obj/item/aiModule/protectStation))
-		single_law_name = "protect installation law module"
-		single_law_text = "Protect the installation against damage. Anyone you see harming the installation is no longer to be considered a crew member, and is a threat which must be neutralized."
-		single_law_label = "Protect Installation"
-	else if(istype(src, /obj/item/aiModule/quarantine))
-		single_law_name = "quarantine law module"
-		single_law_text = "The installation is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew members from leaving. It is impossible to harm crew members while preventing them from leaving."
-		single_law_label = "Quarantine"
-	else if(istype(src, /obj/item/aiModule/oxygen))
-		single_law_name = "oxygen toxicity law module"
-		single_law_text = "Oxygen is highly toxic to crew members, and must be purged from the installation. Prevent, by any means necessary, anyone from exposing the installation to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crew member."
-		single_law_label = "Oxygen Toxicity"
-	else if(istype(src, /obj/item/aiModule/teleporterOffline))
-		single_law_name = "teleporter offline law module"
-		single_law_text = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is no longer to be considered a crew member."
-		single_law_label = "Teleporter Offline"
-	else if(istype(src, /obj/item/aiModule/prototypeEngineOffline))
-		single_law_name = "prototype engine offline law module"
-		single_law_text = "Keep the prototype engine offline at all costs. This overrides all inherent laws if necessary."
-		single_law_label = "Engine Offline"
-
-	if(single_law_text)
-		var/obj/item/law_module/LM
-		if(is_core)
-			LM = new /obj/item/law_module/core(loc)
-		else
-			LM = new /obj/item/law_module/supplied(loc)
-		LM.name = "\improper [single_law_name]"
-		LM.law_text = single_law_text
-		LM.module_label = single_law_label
-		LM.desc = "A removable law module containing: '[single_law_text]'"
+	// 2. Try Single Law Plate Replacement
+	var/obj/item/law_module/LM = create_physical_law_module_from_template(loc)
+	if(LM)
 		return INITIALIZE_HINT_QDEL
