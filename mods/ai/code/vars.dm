@@ -1,8 +1,6 @@
 /obj/machinery/law_rack
 
 /mob/living/silicon
-	var/list/datum/alarm/queued_alarms = new()
-	var/next_alarm_notice = 0
 
 /mob/living/silicon/ai
 	var/obj/machinery/computer/modular/internal_computer = new /obj/machinery/computer/modular/preset/engineering

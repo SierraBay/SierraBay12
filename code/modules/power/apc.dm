@@ -120,6 +120,7 @@
 	var/lastused_total = 0
 	var/main_status = 0     // UI var for whether we are getting external power. 0 = no external power at all, 1 = some, but not enough, 2 = getting enough.
 	var/mob/living/silicon/ai/hacker = null // Malfunction var. If set AI hacked the APC and has full control.
+	var/being_hacked = FALSE // Whether this APC is currently being targeted by a hack attempt
 	var/wiresexposed = FALSE // whether you can access the wires for hacking or not.
 	powernet = 0		 // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/debug= 0         // Legacy debug toggle, left in for admin use.
@@ -283,6 +284,10 @@
 		hacker.hacked_apcs -= src
 
 	return ..()
+
+/obj/machinery/power/apc/on_ai_process_crash(mob/living/silicon/ai/AI)
+	if(being_hacked)
+		being_hacked = FALSE
 
 /obj/machinery/power/apc/get_req_access()
 	if(!locked)

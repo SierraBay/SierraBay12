@@ -6,6 +6,8 @@
 		/datum/nano_module/program/email_client,
 		/datum/nano_module/program/crew_manifest
 	)
+	var/list/datum/alarm/queued_alarms = list()
+	var/next_alarm_notice = 0
 
 
 /mob/living/silicon/ai/Initialize(mapload)
@@ -39,6 +41,9 @@
 			AH.register_alarm(src, /mob/living/silicon/proc/receive_alarm)
 			queued_alarms[AH] = list()	// Makes sure alarms remain listed in consistent order
 	//[SIERRA-ADD]
+
+/mob/living/silicon/proc/receive_alarm(datum/alarm_handler/alarm_handler, datum/alarm/alarm, was_raised)
+	return
 
 /mob/living/silicon/proc/init_subsystem(subsystem_type)
 	var/existing_entry = silicon_subsystems[subsystem_type]

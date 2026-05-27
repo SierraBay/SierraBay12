@@ -1,4 +1,4 @@
-/atom/proc/on_ai_process_crash(mob/living/silicon/ai/AI)
+/datum/proc/on_ai_process_crash(mob/living/silicon/ai/AI)
 	return
 
 /obj/item/device/radio/on_ai_process_crash(mob/living/silicon/ai/AI)
@@ -11,10 +11,10 @@
 /datum/cognitive_process
 	var/name = "Unspecified Process"
 	var/load_cost = 0
-	var/atom/source = null
+	var/datum/source = null
 	var/category = ""
 
-/datum/cognitive_process/New(process_name, cost, atom/src_obj, process_category = "")
+/datum/cognitive_process/New(process_name, cost, datum/src_obj, process_category = "")
 	src.name = process_name
 	src.load_cost = cost
 	src.source = src_obj
@@ -43,7 +43,7 @@
 
 /datum/component/cognitive_load/Destroy(force = FALSE)
 	for(var/datum/cognitive_process/P in active_processes)
-		if(P.source)
+		if(P.source && !QDELETED(P.source))
 			P.source.on_ai_process_crash(parent)
 	active_processes.Cut()
 	active_processes = null
@@ -60,7 +60,7 @@
 	for(var/datum/cognitive_process/P in active_processes)
 		cognitive_load += P.load_cost
 
-/datum/component/cognitive_load/proc/register_process(process_name, cost, atom/source, category = "")
+/datum/component/cognitive_load/proc/register_process(process_name, cost, datum/source, category = "")
 	if(!source)
 		return
 	
@@ -81,7 +81,7 @@
 	
 	return P
 
-/datum/component/cognitive_load/proc/unregister_process(atom/source, category = "")
+/datum/component/cognitive_load/proc/unregister_process(datum/source, category = "")
 	var/datum/cognitive_process/P = get_process_by_source(source, category)
 	if(P)
 		active_processes -= P
@@ -90,7 +90,7 @@
 		return TRUE
 	return FALSE
 
-/datum/component/cognitive_load/proc/unregister_all_by_source(atom/source)
+/datum/component/cognitive_load/proc/unregister_all_by_source(datum/source)
 	if(!source)
 		return FALSE
 	var/removed = FALSE
@@ -103,7 +103,7 @@
 		recalculate_load()
 	return removed
 
-/datum/component/cognitive_load/proc/get_process_by_source(atom/source, category = "")
+/datum/component/cognitive_load/proc/get_process_by_source(datum/source, category = "")
 	for(var/datum/cognitive_process/P in active_processes)
 		if(P.source == source && P.category == category)
 			return P
@@ -178,6 +178,16 @@
 /datum/component/cognitive_load/proc/on_ai_life(mob/living/silicon/ai/AI)
 	SIGNAL_HANDLER
 	
+	// Automatic cleanup of dead/deleted sources
+	var/cleaned_any = FALSE
+	for(var/datum/cognitive_process/P in active_processes)
+		if(!P.source || QDELETED(P.source))
+			active_processes -= P
+			qdel(P)
+			cleaned_any = TRUE
+	if(cleaned_any)
+		recalculate_load()
+
 	max_cognitive_capacity = AI_CAPACITY_DEFAULT
 	
 	// 1. Temperature-based capacity scaling
@@ -371,3 +381,6 @@
 
 // Dummy class for AI Shell forward compatibility
 /mob/living/silicon/ai_shell
+
+/datum/nano_module/on_ai_process_crash(mob/living/silicon/ai/AI)
+	SSnano.close_user_uis(AI, src)

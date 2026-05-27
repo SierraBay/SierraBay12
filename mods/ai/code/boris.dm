@@ -129,7 +129,8 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	var/mob/living/silicon/ai/returning_ai = AiHolder.MyAI
 	mind?.transfer_to(returning_ai)
 	AiHolder.MyAI = null
-	returning_ai.Controlling = null
+	if(returning_ai && !QDELETED(returning_ai))
+		returning_ai.Controlling = null
 	verbs -= /mob/proc/ExitMobHolder
 	src?.onReturnAi2Core()
 

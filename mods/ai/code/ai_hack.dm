@@ -83,9 +83,16 @@
 		if(show_message)
 			to_chat(user, "This is not an APC!")
 		return FALSE
-	if(A.hacker && A.hacker == user)
+	if(A.hacker)
 		if(show_message)
-			to_chat(user, "You already control this APC!")
+			if(A.hacker == user)
+				to_chat(user, "You already control this APC!")
+			else
+				to_chat(user, "This APC is already controlled by another AI!")
+		return FALSE
+	if(A.being_hacked)
+		if(show_message)
+			to_chat(user, "This APC is already being targeted by a hacking process.")
 		return FALSE
 	if(A.aidisabled)
 		if(show_message)
@@ -117,7 +124,7 @@
 		if(user && !QDELETED(user))
 			user.hacking = 0
 		return FALSE
-	if(!A || QDELETED(A) || !can_malf_hack_apc(user, A))
+	if(!A || QDELETED(A) || !A.being_hacked || !can_malf_hack_apc(user, A))
 		user.hacking = 0
 		return FALSE
 	return TRUE
@@ -164,37 +171,40 @@
 	show_basic_apc_hack_feedback(A, hack_mode, 1)
 
 	user.hacking = 1
+	A.being_hacked = TRUE
+	SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, TRUE)
+
+	var/success = FALSE
 
 	sleep(stage_delays[1])
-	if(!validate_apc_hack_mid_stage(user, A))
-		if(user && !QDELETED(user))
+	if(validate_apc_hack_mid_stage(user, A))
+		to_chat(user, "APC hack completed. Uploading modified operation software..")
+		show_basic_apc_hack_feedback(A, hack_mode, 2)
+
+		sleep(stage_delays[2])
+		if(validate_apc_hack_mid_stage(user, A))
+			to_chat(user, "Restarting APC to apply changes..")
+			show_basic_apc_hack_feedback(A, hack_mode, 3)
+
+			sleep(stage_delays[3])
+			if(validate_apc_hack_mid_stage(user, A))
+				success = TRUE
+
+	if(user && !QDELETED(user))
+		user.hacking = 0
+		SEND_SIGNAL(user, COMSIG_AI_APC_HACK_STATE, A, FALSE)
+	if(A && !QDELETED(A))
+		A.being_hacked = FALSE
+
+	if(success)
+		A.ai_hack(user, is_silent_apc_hack_mode(hack_mode))
+		if(A.hacker == user)
+			to_chat(user, "Hack successful. You now have full control over \the [A].")
+		else
 			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
-
-	to_chat(user, "APC hack completed. Uploading modified operation software..")
-	show_basic_apc_hack_feedback(A, hack_mode, 2)
-
-	sleep(stage_delays[2])
-	if(!validate_apc_hack_mid_stage(user, A))
-		if(user && !QDELETED(user))
-			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
-
-	to_chat(user, "Restarting APC to apply changes..")
-	show_basic_apc_hack_feedback(A, hack_mode, 3)
-
-	sleep(stage_delays[3])
-	if(!validate_apc_hack_mid_stage(user, A))
-		if(user && !QDELETED(user))
-			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
-		return
-
-	user.hacking = 0
-	A.ai_hack(user, is_silent_apc_hack_mode(hack_mode))
-	if(A.hacker == user)
-		to_chat(user, "Hack successful. You now have full control over \the [A].")
 	else
-		to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
+		if(user && !QDELETED(user))
+			to_chat(user, SPAN_NOTICE("Hack failed. Connection to APC has been lost. Please verify wire connection and try again."))
 
 /obj/machinery/power/apc/malf_hack_is_visible()
 	return hacker && !hacker.hacked_apcs_hidden && !malf_silent_hack

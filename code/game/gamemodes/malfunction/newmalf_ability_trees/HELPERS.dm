@@ -181,7 +181,7 @@
 /proc/can_malf_hack_apc(mob/living/silicon/ai/user, obj/machinery/power/apc/A)
 	if(!user || !istype(user) || !A || !istype(A))
 		return FALSE
-	if(A.hacker == user || A.aidisabled)
+	if(A.hacker || A.aidisabled)
 		return FALSE
 	var/list/valid_zlevels = GetConnectedZlevels(user.z)
 	if(!(A.z in valid_zlevels))

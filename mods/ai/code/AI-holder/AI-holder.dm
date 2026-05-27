@@ -45,7 +45,8 @@
 	var/mob/living/silicon/ai/returning_ai = MyAI
 	mind?.transfer_to(returning_ai)
 	MyAI = null
-	returning_ai.Controlling = null
+	if(returning_ai && !QDELETED(returning_ai))
+		returning_ai.Controlling = null
 	holder?.onReturnAi2Core()
 
 /mob/AiHolder/Life()

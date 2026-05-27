@@ -118,6 +118,9 @@
 			law_to_write = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is no longer to be considered a crew member."
 
 		if(law_to_write)
+			if(!inserted_module || QDELETED(inserted_module))
+				to_chat(user, SPAN_WARNING("The law module was removed while programming."))
+				return TRUE
 			inserted_module.law_text = law_to_write
 			inserted_module.module_label = copytext_char(law_to_write, 1, 32)
 			inserted_module.desc = "A removable law module containing: '[law_to_write]'"

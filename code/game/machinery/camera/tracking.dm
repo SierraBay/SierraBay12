@@ -277,3 +277,7 @@
 #undef TRACKING_POSSIBLE
 #undef TRACKING_NO_COVERAGE
 #undef TRACKING_TERMINATE
+
+/obj/machinery/camera/on_ai_process_crash(mob/living/silicon/ai/AI)
+	if(AI && AI.camera == src)
+		AI.cancel_camera()

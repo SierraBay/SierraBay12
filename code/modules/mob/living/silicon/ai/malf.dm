@@ -31,9 +31,8 @@
 	stop_apu(1)
 	if(client)
 		show_browser(src, null, "window=malf_modules")
-	// Reset our verbs and HUD before delayed cleanup so malf controls cannot be reused while stop_malf() yields.
-	src.verbs.Cut()
-	add_ai_verbs()
+	src.verbs -= typesof(/datum/game_mode/malfunction/verb)
+	src.verbs -= /mob/living/silicon/ai/proc/ai_malf_modules
 	if(istype(hud_used, /datum/hud/ai))
 		var/datum/hud/ai/ai_hud = hud_used
 		ai_hud.sync_malf_buttons()

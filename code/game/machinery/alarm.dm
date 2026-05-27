@@ -807,9 +807,25 @@
 			return TOPIC_REFRESH
 
 		if(href_list["mode"])
-			mode = text2num(href_list["mode"])
+			var/new_mode = text2num(href_list["mode"])
+			if(issilicon(user))
+				var/mob/living/silicon/ai/AI = istype(user, /mob/living/silicon/ai) ? user : null
+				if(!AI && istype(user, /mob/living/silicon/robot))
+					var/mob/living/silicon/robot/R = user
+					AI = R.connected_ai
+				if(AI)
+					if(new_mode != AALARM_MODE_SCRUBBING)
+						SEND_SIGNAL(AI, COMSIG_AI_ATMOS_OVERRIDE, src, TRUE)
+					else
+						SEND_SIGNAL(AI, COMSIG_AI_ATMOS_OVERRIDE, src, FALSE)
+			mode = new_mode
 			apply_mode()
 			return TOPIC_REFRESH
+
+/obj/machinery/alarm/on_ai_process_crash(mob/living/silicon/ai/AI)
+	if(mode != AALARM_MODE_SCRUBBING)
+		mode = AALARM_MODE_SCRUBBING
+		apply_mode()
 
 /obj/machinery/alarm/use_tool(obj/item/W, mob/living/user, list/click_params)
 	switch(buildstage)
