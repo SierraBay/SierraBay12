@@ -56,6 +56,11 @@
 /singleton/species/proc/get_vr(mob/living/carbon/human/H)
 	return ((H && H.isSynthetic()) ? "flashing a 'system occupied' glyph on their monitor" : show_vr)
 
+/mob/living/Destroy()
+	if (has_extension(src, /datum/extension/virtual_surrogate))
+		death()
+	..()
+
 /datum/mind/transfer_to(mob/living/new_character)
 	if (current && has_extension(current, /datum/extension/virtual_surrogate))
 		var/mob/M = SSvirtual_reality.virtual_mobs_to_occupants[current]
