@@ -38,6 +38,25 @@
 			return TRUE
 	return ..()
 
+/obj/psi_plane/psinomaly/use_weapon(obj/item/weapon, mob/living/user, list/click_params)
+	SHOULD_CALL_PARENT(FALSE)
+	if (istype(weapon, /obj/item/nullrod))
+		playsound(src, 'sound/effects/psi/power_feedback.ogg', 100, 1)
+		new /obj/temporary(get_turf(src),3, 'icons/effects/effects.dmi', "purple_electricity_constant")
+		qdel(src)
+		return TRUE
+	else
+		return TRUE
+
+/obj/psi_plane/psinomaly/bullet_act(obj/item/projectile/P)
+	if (istype(P) && P.disrupts_psionics())
+		playsound(src, 'sound/effects/psi/power_feedback.ogg', 100, 1)
+		new /obj/temporary(get_turf(src),3, 'icons/effects/effects.dmi', "purple_electricity_constant")
+		qdel(src)
+		return FALSE
+	else
+		return FALSE
+
 // Базовый тип аномалии - вызывает при активации глобальный мини-ивент
 
 /obj/psi_plane/psinomaly/attack_hand(mob/user)
