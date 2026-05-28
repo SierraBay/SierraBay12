@@ -42,6 +42,14 @@
 	/// Prevents people from being spammed about multikeying every time their mob changes
 	var/warned_about_multikeying = TRUE
 
+	// [SIERRA-ADD]
+	/// If player has multiple connections warn to the server
+	var/have_connection_warn = FALSE
+
+	/// If player has bans warn
+	var/have_bans_warn = FALSE
+	// [/SIERRA-ADD]
+
 	/// If the database is available, how old the account is in days
 	var/player_age = "Requires database"
 
