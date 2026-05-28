@@ -86,14 +86,21 @@
 	H.set_fullscreen(how_nearsighted, "nearsighted", /obj/screen/fullscreen/oxy, how_nearsighted)
 	H.set_fullscreen(H.druggy, "high", /obj/screen/fullscreen/high)
 
-	// Keep nearsightedness as a fullscreen overlay only.
-	// Applying actual blur filters to scene renderers also blurs remote views,
-	// such as camera consoles, sensors and overmap monitors.
-	for(var/atom/movable/renderer/nearsight_blur/blur in H.renderer_plane_map)
-		blur.filters = list()
+	// Keep the pre-Bloom Light behavior: apply nearsighted blur only to the
+	// dedicated vision-cone renderers, not to every plane master in renderer_plane_map.
+	// Blurring all plane masters makes remote views such as cameras, sensors and
+	// overmap monitors unreadable.
+	for(var/atom/movable/renderer/nearsight_blur/blur in H.renderers)
+		if(how_nearsighted)
+			blur.filters = list(filter(type="blur", size=2))
+		else
+			blur.filters = list()
 
-	for(var/atom/movable/renderer/fov_hidden/blur in H.renderer_plane_map)
-		blur.filters = list(filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+	for(var/atom/movable/renderer/fov_hidden/blur in H.renderers)
+		if(how_nearsighted)
+			blur.filters = list(filter(type="blur", size=2), filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+		else
+			blur.filters = list(filter(type="alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
 
 	for(var/overlay in H.equipment_overlays)
 		H.client.screen |= overlay
