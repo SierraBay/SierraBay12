@@ -130,8 +130,8 @@
 			playsound(src, 'sound/effects/splat.ogg', 30, 1)
 			visible_message("<span class='warning'>[src] pulls on their clothes, peeling it off along with parts of their skin attached!</span>",
 			"<span class='notice'>We remove and deform our equipment.</span>")
-		M.mind.changeling.armor_deployed = 0
-		src.update_icon()
+		M.mind.changeling.armor_deployed = FALSE
+		update_icon()
 		return success
 
 	else
@@ -235,9 +235,9 @@
 		to_chat(M, "<span class='notice'>We have grown [feedback].</span>")
 
 		if(success)
-			M.mind.changeling.armor_deployed = 1
+			M.mind.changeling.armor_deployed = TRUE
 			M.mind.changeling.chem_charges -= 10
-		src.update_icon()
+		update_icon()
 		return success
 
 ///This is a generic proc that should be called by other ling weapon procs to equip them.

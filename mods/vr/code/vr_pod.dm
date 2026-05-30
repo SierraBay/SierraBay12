@@ -269,7 +269,7 @@
 /obj/machinery/vr_pod/on_update_icon()
 	if(!occupant)
 		icon_state = "vr_red"
-	else if(GET_FLAGS(stat, MACHINE_BROKEN_GENERIC))
+	else if(MACHINE_IS_BROKEN(src))
 		icon_state = "vr_red_broken"
 	else if(GET_FLAGS(stat, MACHINE_STAT_NOPOWER))
 		icon_state = "vr_red_closed"
