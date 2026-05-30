@@ -3,7 +3,7 @@
 	desc = "We evolve additional sacs of adrenaline throughout our body."
 	helptext = "We can instantly recover from stuns and reduce the effect of future stuns, but we will suffer toxicity in the long term.  Can be used while unconscious."
 	enhancedtext = "Immunity from most disabling effects for 30 seconds."
-	ability_icon_state = "ling_epinephrine_overdose"
+	ability_icon_state = "ling_epinepherine_overdose" //Sierra Fix
 	genomecost = 2
 	verbpath = /mob/proc/changeling_synaptizine_overdose
 

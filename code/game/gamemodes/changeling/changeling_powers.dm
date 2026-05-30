@@ -24,12 +24,18 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	var/selected_ranged_sting = null;
 	var/tendons_reinforced = FALSE;
 	var/list/toxin_victims = list()
-	var/armor_deployed = 0 //This is only used for changeling_generic_equip_all_slots() at the moment.
-	var/recursive_enhancement = 0 //Used to power up other abilities from the ling power with the same name.
-	var/list/purchased_powers_history = list() //Used for round-end report, includes respec uses too.
-	var/last_shriek = null // world.time when the ling last used a shriek.
-	var/next_escape = 0	// world.time when the ling can next use Escape Restraints
-	var/thermal_sight = FALSE	// Is our Vision Augmented? With thermals?
+	/// This is only used for changeling_generic_equip_all_slots() at the moment.
+	var/armor_deployed = FALSE
+	/// Used to power up other abilities from the ling power with the same name.
+	var/recursive_enhancement = FALSE
+	/// Used for round-end report, includes respec uses too.
+	var/list/purchased_powers_history = list()
+	/// world.time when the ling last used a shriek.
+	var/last_shriek = null
+	/// world.time when the ling can next use Escape Restraints
+	var/next_escape = 0
+	/// Is our Vision Augmented? With thermals?
+	var/thermal_sight = FALSE
 	var/last_human_form = null
 /datum/changeling/New(gender=FEMALE)
 	..()
