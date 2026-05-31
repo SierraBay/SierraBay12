@@ -44,5 +44,5 @@
 			log_debug("link_discord_account: failed db update discord_id for ckey [ckey]")
 			return
 
-		to_chat(usr, SPAN_CLASS("darkmblue", "Для завершения используйте команду: [SPAN_CLASS("boldannounce", "/verify server:Sierra code:[token]")] в канале <b>#bot-chat</b> в Discord-сообществе! <br><br> Celadon Discord: https://discord.com/invite/rxsggTJzY3"))
+		to_chat(usr, SPAN_CLASS("darkmblue", "Для завершения используйте команду: <br> [SPAN_CLASS("boldannounce", "/verify server:Sierra code:[token]")] <br> в канале <b>#bot-chat</b> в Discord-сообществе! <br><br> Celadon Discord: https://discord.com/invite/rxsggTJzY3"))
 		load_player_discord(usr)
