@@ -1,3 +1,6 @@
+/datum/configuration
+		var/minimum_byondacc_age
+
 /datum/configuration/New()
 	load_config()
 	max_gear_cost = 30
