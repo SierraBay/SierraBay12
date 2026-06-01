@@ -1,6 +1,6 @@
 /datum/power/changeling/absorb_dna
 	name = "Absorb DNA"
-	desc = "Permits us to syphon the DNA from a human. They become one with us, and we become stronger if they were of our kind."
+	desc = "Permits us to syphon the DNA from a human. They become one with us, and we become stronger if they were of our kind. Emboldens our core, so that it may help us."
 	ability_icon_state = "ling_absorb_dna"
 	genomecost = 0
 	power_category = CHANGELING_POWER_INHERENT
@@ -13,7 +13,7 @@
 /mob/proc/toggle_absorb_type()
 	set category = "Changeling"
 	set name = "Toggle Absorb Type"
-	set desc = "Allows us to determine whether we wish to kill targets we absorb"
+	set desc = "Allows us to determine whether we wish to kill targets we absorb."
 	if(src.mind.changeling)
 		if(src.mind.changeling.absorbing_lethally == ABSORB_NONLETHAL)
 			to_chat(src,SPAN_INFO("We will now kill creatures whose DNA we sample."))
@@ -33,7 +33,7 @@
 
 	var/obj/item/grab/G = src.get_active_hand()
 	if(!istype(G))
-		to_chat(src, "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>")
+		to_chat(src, SPAN_WARNING("We must be grabbing a creature in our active hand to absorb them."))
 		return
 
 	var/mob/living/carbon/human/T = G.affecting
@@ -45,52 +45,54 @@
 	if(T == src)
 		to_chat(src,SPAN_WARNING("We would have to be very silly to try absorbing ourselves."))
 		return
-	if(!istype(T) || T.isSynthetic() || istype(T.species,/singleton/species/vox))
-		to_chat(src, "<span class='warning'>\The [T] is not compatible with our biology.</span>")
+	if(!istype(T) || T.isSynthetic() || istype(T.species, /singleton/species/vox))
+		to_chat(src, SPAN_WARNING("\The [T] is not compatible with our biology."))
 		return
 
 	if(MUTATION_HUSK in T.mutations) //Lings can always absorb other lings, unless someone beat them to it first.
 		if(!T.mind.changeling || T.mind.changeling && T.mind.changeling.geneticpoints < 0)
-			to_chat(src, "<span class='warning'>This creature's DNA is ruined beyond useability!</span>")
+			to_chat(src, SPAN_WARNING("This creature's DNA is ruined beyond useability!"))
 			return
 
 	if(!G.force_danger())
-		to_chat(src, "<span class='warning'>We must have a tighter grip to absorb this creature.</span>")
+		to_chat(src, SPAN_WARNING("We must have a tighter grip to absorb this creature."))
 		return
 
 	if(changeling.isabsorbing)
-		to_chat(src, "<span class='warning'>We are already absorbing!</span>")
+		to_chat(src, SPAN_WARNING("We are already absorbing!"))
 		return
 
-	changeling.isabsorbing = 1
+	changeling.isabsorbing = TRUE
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
-				to_chat(src, "<span class='notice'>This creature is compatible. We must hold still...</span>")
+				to_chat(src, SPAN_NOTICE("This creature is compatible. We must hold still.."))
 			if(2)
-				to_chat(src, "<span class='notice'>We extend a proboscis.</span>")
-				src.visible_message("<span class='warning'>[src] extends a proboscis!</span>")
+				to_chat(src, SPAN_NOTICE("We extend a proboscis."))
+				src.visible_message(SPAN_WARNING("[src] extends a proboscis!"))
 			if(3)
-				to_chat(src, "<span class='notice'>We stab [T] with the proboscis.</span>")
-				src.visible_message("<span class='danger'>[src] stabs [T] with the proboscis!</span>")
-				to_chat(T, "<span class='danger'>You feel a sharp stabbing pain!</span>")
+				to_chat(src, SPAN_NOTICE("We stab [T] with the proboscis."))
+				src.visible_message(SPAN_DANGER("[src] stabs [T] with the proboscis!"))
+				to_chat(T, SPAN_DANGER("You feel a sharp stabbing pain!"))
 				admin_attack_log(src,T,"Absorbed (changeling)")
 				var/obj/item/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				T.apply_damage(50, DAMAGE_BRUTE, affecting , damage_flags = DAMAGE_FLAG_SHARP, used_weapon="organic needle", armor_pen=50)
 
-
 		if(!do_mob(src, T, 150, progress= TRUE) || !G.force_danger())
-			to_chat(src, "<span class='warning'>Our absorption of the DNA of \the [T] has been interrupted!</span>")
-			changeling.isabsorbing = 0
+			to_chat(src, SPAN_WARNING("Our absorption of the DNA of \the [T] has been interrupted!"))
+			changeling.isabsorbing = FALSE
 			return
 
-	to_chat(src, "<span class='notice'>We have absorbed the DNA of \the [T]!</span>")
-
-
+	to_chat(src, SPAN_NOTICE("We have absorbed the DNA of \the [T]!"))
 	changeling.chem_charges += 10
 
+	var/mob/living/carbon/ling = src
+	for (var/obj/item/organ/internal/augment/lingcore/core in ling.internal_organs)
+		if (core.stasiscount < 2)
+			to_chat(ling, SPAN_NOTICE("Our core feels emboldened. We can once again count on its help. Stasis now has [core.stasiscount] charges."))
+			core.stasiscount++ // Can stasis again.
 
-	//add pronouns to this line
+	// Add pronouns to this line.
 	var/datum/absorbed_dna/newDNA = new(T.real_name, T.dna, T.species.name, T.languages, T.gender, T.pronouns, T.flavor_texts, T.icon_render_keys, T.descriptors)
 	absorbDNA(newDNA)
 
@@ -121,7 +123,7 @@
 		T.Drain()
 		return TRUE
 	changeling.absorbedcount++
-	changeling.isabsorbing = 0
+	changeling.isabsorbing = FALSE
 	to_chat(T, SPAN_DANGER("You feel everything go black, as \the [src] releases you."))
 	if(changeling.absorbing_lethally == ABSORB_LETHAL)
 		T.death(0)

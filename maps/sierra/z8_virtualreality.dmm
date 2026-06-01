@@ -135,16 +135,10 @@
 /obj/floor_decal/floordetail/edgedrain{
 	dir = 10
 	},
+/obj/machinery/organ_printer/robot/mapped,
 /obj/floor_decal/corner/paleblue{
 	dir = 4
 	},
-/obj/structure/closet/crate/freezer,
-/obj/item/device/mmi,
-/obj/item/reagent_containers/ivbag/nanoblood,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/human/oneg,
-/obj/item/reagent_containers/ivbag/blood/skrell/oneg,
-/obj/item/reagent_containers/ivbag/blood/unathi/oneg,
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "ci" = (
@@ -1961,6 +1955,13 @@
 	dir = 5
 	},
 /obj/machinery/light,
+/obj/structure/closet/crate/freezer,
+/obj/item/device/mmi,
+/obj/item/reagent_containers/ivbag/nanoblood,
+/obj/item/reagent_containers/ivbag/blood/human/oneg,
+/obj/item/reagent_containers/ivbag/blood/human/oneg,
+/obj/item/reagent_containers/ivbag/blood/skrell/oneg,
+/obj/item/reagent_containers/ivbag/blood/unathi/oneg,
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "yk" = (
@@ -2689,6 +2690,12 @@
 	},
 /turf/simulated/floor/holofloor/netspace,
 /area/virtual_reality/netspace)
+"FQ" = (
+/obj/structure/closet/crate/secure/biohazard/alt{
+	req_access = null
+	},
+/turf/simulated/floor/holofloor/tiled/white,
+/area/virtual_reality/infirmary)
 "FU" = (
 /obj/structure/bed/chair/wood{
 	dir = 4;
@@ -3697,9 +3704,7 @@
 /obj/floor_decal/corner/paleblue{
 	dir = 5
 	},
-/obj/structure/closet/crate/secure/biohazard/alt{
-	req_access = null
-	},
+/obj/machinery/organ_printer/flesh/mapped,
 /turf/simulated/floor/holofloor/tiled/white,
 /area/virtual_reality/infirmary)
 "Qy" = (
@@ -11182,12 +11187,12 @@ ND
 VM
 Xm
 zu
-cd
+QO
 ND
 VM
 Xm
 zu
-QO
+cd
 ND
 Ws
 Ws
@@ -12197,7 +12202,7 @@ MZ
 sA
 Py
 gH
-iu
+FQ
 ND
 Ws
 Ws

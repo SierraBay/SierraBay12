@@ -14,7 +14,7 @@
 
 	var/datum/changeling/changeling = changeling_power(0,0,100,UNCONSCIOUS)
 	if(!changeling)
-		return 0
+		return FALSE
 
 	if(istype(src,/mob/living/carbon))
 		var/mob/living/carbon/C = src
@@ -22,9 +22,13 @@
 		src.sight &= ~(SEE_MOBS)
 		if(C.seedarkness)
 			to_chat(C, SPAN_NOTICE("We no longer need light to see."))
-			C.seedarkness = 0
+			set_see_in_dark(2)
+			set_see_invisible(SEE_INVISIBLE_LIVING)
+			C.seedarkness = FALSE
 		else
 			to_chat(C, SPAN_NOTICE("We allow the shadows to return."))
-			C.seedarkness = 1
+			set_see_in_dark(8)
+			set_see_invisible(SEE_INVISIBLE_NOLIGHTING)
+			C.seedarkness = TRUE
 
 	return 0
