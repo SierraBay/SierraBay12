@@ -1,30 +1,23 @@
-<div class="display">
-	<header><h3>Inserted beaker</h3></header>
-
-	<article>
+<div class="fabResSection">
+	<div class="fabResTitle">Ёмкость</div>
+	<div class="fabResContent">
 	{{if data.container}}
 		{{for data.reagents}}
-			<div class="section">
-				<div class="labelList-item">
-					<span class="label">{{:value.name}}</span>
-					<div class="content">{{:Math.round(value.amount * 100) / 100}}</div>
-				</div>
-			</section>
+			<div class="fabResItem">
+				<span class="fabResName">{{:value.name}}</span>
+				<span class="fabResAmount">{{:Math.round(value.amount * 100) / 100}}</span>
+			</div>
 		{{empty}}
-			<section>
-				<span class="label">Empty</span>
-			</section>
+			<div style="padding: 6px; text-align: center;" class="fabMuted">Пусто</div>
 		{{/for}}
-		<section>
-			<div class="content">{{:helper.link('Remove', '', {'container' : 1}, null, 'statusValue')}}</div>
-		</section>
+		<div class="fabResActions">
+			{{:helper.link('Извлечь', 'eject', {'container' : 1})}}
+		</div>
 	{{else}}
-		<section>
-			<span class="label">Not inserted</span>
-		</section>
-		<section>
-			<div class="content">{{:helper.link('Insert', 'eject', {'container' : 1}, null, 'statusValue')}}</div>
-		</section>
+		<div style="padding: 6px; text-align: center;" class="fabMuted">Не вставлена</div>
+		<div class="fabResActions">
+			{{:helper.link('Вставить', 'eject', {'container' : 1})}}
+		</div>
 	{{/if}}
-	</article>
+	</div>
 </div>

@@ -281,6 +281,7 @@
 
 	play_ambience(L)
 	L.lastarea = newarea
+	check_derelict_first_visit(L)
 
 
 /// Handles playing ambient sounds to a given mob, including ship hum.

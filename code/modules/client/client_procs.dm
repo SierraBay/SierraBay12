@@ -180,9 +180,6 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
-	// [SIERRA-ADD] - EX666_ECOSYSTEM
-	load_player_discord(src)
-	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
 	//view = get_preference_value(/datum/client_preference/client_view)
@@ -243,11 +240,13 @@
 			var/list/ckeys = _unique_ckeys_from_connections(connections) - ckey
 			if (length(ckeys))
 				log_and_message_staff(SPAN_INFO("[key_name_admin(src)] has connection details associated with [length(ckeys)] other ckeys in the log."))
+				have_connection_warn = TRUE // [SIERRA-ADD]
 
 			// Check bans
 			var/list/bans = _find_bans_in_connections(connections)
 			if (length(bans))
 				log_and_message_staff(SPAN_DANGER("[key_name_admin(src)] has connection details associated with [length(bans)] active bans."))
+				have_bans_warn = TRUE // [SIERRA-ADD]
 
 	//////////////
 	//DISCONNECT//
@@ -427,9 +426,28 @@
 		'html/images/ouerelogo.png',
 		'html/images/terstenlogo.png',
 		'html/images/kmslogo.png',
+		'html/images/wardlogo.png',
+		'html/images/graylogo.png',
+		'html/images/aetherlogo.png',
+		'html/images/xionlogo.png',
+		'html/images/eelogo.png',
+		'html/images/slatelogo.png',
+		'html/images/kappalogo.png',
+		'html/images/daisnlogo.png',
+		'html/images/mklogo.png',
+		'html/images/vmlogo.png',
+		'html/images/sglogo.png',
+		'html/images/mmlogo.png',
+		'html/images/zenhulogo.png',
+		'html/images/focallogo.png',
+		'html/images/bishoplogo.png',
+		'html/images/amlogo.png',
+		'html/images/hilogo.png',
+		'html/images/ftulogo.png',
+		'html/images/krriglilogo.png',
 		// [/SIERRA-ADD]
-		'html/images/zhlogo.png'
-		)
+		'html/images/zhlogo.png',
+	)
 	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
 
 

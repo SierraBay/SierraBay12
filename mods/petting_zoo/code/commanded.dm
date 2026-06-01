@@ -18,14 +18,25 @@
 	possible_natural_weapon = list(/obj/item/natural_weapon/bite, /obj/item/natural_weapon/claws)
 	can_escape = TRUE
 
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.75
+
 	max_gas = list(GAS_PHORON = 10, GAS_CO2 = 10)
 
 	response_help = "pets"
 	response_harm = "bites"
 	response_disarm = "pushes"
 
-	known_commands = list("stay", "stop", "attack", "follow", "guard", "forget master", "obey", "forget target")
 	ai_holder = /datum/ai_holder/simple_animal/melee/commanded
+
+/mob/living/simple_animal/hostile/commanded/rex/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
 
 /mob/living/simple_animal/hostile/commanded/rex/get_natural_weapon()
 	if(natural_weapon)
@@ -39,28 +50,32 @@
 		var/mob/living/carbon/human/S = speaker
 		if ("ACCESS_HEAD_OF_SECURITY" in S.GetAccess())
 			master = S
-			ai_holder.leader = S
+			owner_mob = S
 			friends |= weakref(S)
 			allowed_targets -= S
 			S.guards += src
+			if(tame_datum)
+				tame_datum.current_tamer = weakref(S)
+				tame_datum.named_already = TRUE
 	..()
 
 /mob/living/simple_animal/hostile/commanded/rex/can_use_item(obj/item/O, mob/user)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/meat) && stat != DEAD)
+	if(istype(O, /obj/item/reagent_containers/food/snacks/meat) && stat != DEAD && master)
+		// Master gets a direct healing bonus; others get blocked with a growl
 		if(user != master)
 			visible_message(SPAN_WARNING("\The [src] started to growl"))
-		else
-			visible_message(SPAN_NOTICE("\The [user] start feeding the [src] [O]"))
-			if(do_after(user, 30, src))
-				var/prev_AI_busy = ai_holder.busy
-				set_AI_busy(FALSE)
-				heal_overall_damage(10, 10)
-				qdel(O)
-				visible_message(SPAN_NOTICE("\The [src] ate [O]"))
-				set_AI_busy(prev_AI_busy)
+			return FALSE
+		visible_message(SPAN_NOTICE("\The [user] start feeding the [src] [O]"))
+		if(do_after(user, 30, src))
+			var/prev_AI_busy = ai_holder.busy
+			set_AI_busy(FALSE)
+			heal_overall_damage(10, 10)
+			qdel(O)
+			visible_message(SPAN_NOTICE("\The [src] ate [O]"))
+			set_AI_busy(prev_AI_busy)
+		return TRUE
+	return ..()
 
-	else
-		..()
 
 /mob/living/simple_animal/hostile/commanded/rex/attack_hand(mob/living/carbon/human/target)
 	if(target.a_intent != I_HELP && retribution) //assume he wants to hurt us.
@@ -84,7 +99,7 @@
 		target_mob = target
 		allowed_targets |= target
 		stance = STANCE_ATTACK
-		friends |= weakref(target)
+		friends -= weakref(target)
 		set_AI_busy(FALSE)
 		ai_holder.react_to_attack(target)
 		return TRUE
@@ -179,12 +194,23 @@
 	density = TRUE
 	can_escape = TRUE
 
-	known_commands = list("stay", "stop", "attack", "follow", "guard", "forget master", "obey", "forget target")
 	ai_holder = /datum/ai_holder/simple_animal/melee/commanded
 
 	response_help = "pets"
 	response_harm = "bites"
 	response_disarm = "pushes"
+
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.6
+
+/mob/living/simple_animal/hostile/commanded/boo/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
 
 /mob/living/simple_animal/hostile/commanded/boo/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol)
 
@@ -192,25 +218,29 @@
 		var/mob/living/carbon/human/S = speaker
 		if ("ACCESS_RESEARCH_DIRECTOR" in S.GetAccess())
 			master = S
-			ai_holder.leader = S
+			owner_mob = S
 			friends |= weakref(S)
 			allowed_targets -= S
 			S.guards += src
+			if(tame_datum)
+				tame_datum.current_tamer = weakref(S)
+				tame_datum.named_already = TRUE
 	..()
 
 /mob/living/simple_animal/hostile/commanded/boo/can_use_item(obj/item/O, mob/user)
-	if(istype(O, /obj/item/reagent_containers/food/snacks) && stat != DEAD)
+	if(istype(O, /obj/item/reagent_containers/food/snacks) && stat != DEAD && master)
+		// Master gets a direct healing bonus; others get blocked with a growl
 		if(user != master)
 			visible_message(SPAN_WARNING("\The [src] started to growl"))
-		else
-			visible_message(SPAN_NOTICE("\The [user] start feeding the [src] [O]"))
-			if(do_after(user, 30, src))
-				var/prev_AI_busy = ai_holder.busy
-				set_AI_busy(FALSE)
-				heal_overall_damage(5, 5)
-				qdel(O)
-				visible_message(SPAN_NOTICE("\The [src] ate [O]"))
-				set_AI_busy(prev_AI_busy)
+			return FALSE
+		visible_message(SPAN_NOTICE("\The [user] start feeding the [src] [O]"))
+		if(do_after(user, 30, src))
+			var/prev_AI_busy = ai_holder.busy
+			set_AI_busy(FALSE)
+			heal_overall_damage(5, 5)
+			qdel(O)
+			visible_message(SPAN_NOTICE("\The [src] ate [O]"))
+			set_AI_busy(prev_AI_busy)
+		return TRUE
+	return ..()
 
-	else
-		..()

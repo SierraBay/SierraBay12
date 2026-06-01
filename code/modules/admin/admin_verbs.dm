@@ -5,6 +5,9 @@ var/global/list/admin_verbs_default = list(
 	// [/SIERRA-ADD],
 	/datum/admins/proc/show_player_panel, //shows an interface for individual players, with various links (links require additional flags), right-click player panel,
 	/client/proc/player_list,
+	// [SIERRA-EDIT] - sierra ui tweaks,
+	/client/proc/player_list_legacy,
+	// [/SIERRA-EDIT],
 	/client/proc/secrets,
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
@@ -106,7 +109,8 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/SetMaximumRoundLength,
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
-	/client/proc/delete_crew_record
+	/client/proc/delete_crew_record,
+	/datum/admins/proc/view_persistent_data		//[SIERR-ADD]
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -198,6 +202,7 @@ var/global/list/admin_verbs_debug = list(
 	//[SIERRA-ADD] - Colony-types,
 	/datum/admins/proc/map_template_colony_spawn_settings,
 	/datum/admins/proc/anomaly_control,
+	/client/proc/rnd_mission_debug,
 	//[SIERRA-ADD],
 	/datum/admins/proc/map_template_upload,
 	/client/proc/enable_debug_verbs,
@@ -216,6 +221,34 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/view_runtimes,
 	/client/proc/cmd_analyse_health_context,
 	/client/proc/cmd_analyse_health_panel,
+	//[SIERRA-ADD],
+	/datum/admins/proc/map_template_colony_spawn_settings,
+	/datum/admins/proc/anomaly_control,
+	/client/proc/jumptokey,
+	/client/proc/jumptoturf,
+	/client/proc/Getmob,
+	/client/proc/Getkey,
+	/client/proc/fixatmos,
+	/client/proc/investigate_show,
+	/client/proc/list_traders,
+	/client/proc/cmd_mod_say,
+	/client/proc/aooc,
+	/client/proc/colorooc,
+	/datum/admins/proc/restart,
+	/client/proc/game_panel,
+	/datum/admins/proc/spawn_fruit,
+	/datum/admins/proc/spawn_fluid_verb,
+	/datum/admins/proc/spawn_custom_item,
+	/datum/admins/proc/check_custom_items,
+	/datum/admins/proc/spawn_plant,
+	/datum/admins/proc/spawn_atom,		// allows us to spawn instances,
+	/datum/admins/proc/spawn_artifact,
+	/client/proc/spawn_chemdisp_cartridge,
+	/client/proc/respawn_as_self,
+	/client/proc/virus2_editor,
+	/datum/admins/proc/mass_debug_closet_icons,
+	/datum/admins/proc/show_skills,	// Right-click skill menu,
+	//[/SIERRA-ADD],
 	/client/proc/visualpower,
 	/client/proc/visualpower_remove,
 	/client/proc/ping_webhook,
@@ -370,6 +403,10 @@ var/global/list/admin_verbs_mod = list(
 		debug_verbs,
 		admin_verbs_mod
 		)
+	//[SIERRA-ADD]
+	if(is_special_character(mob))
+		verbs += /client/proc/aooc
+	//[/SIERRA-ADD]
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
@@ -451,6 +488,13 @@ var/global/list/admin_verbs_mod = list(
 	set category = "Admin"
 	if(holder)
 		holder.player_list()
+	return
+
+/client/proc/player_list_legacy()
+	set name = "Player List (Legacy)"
+	set category = "Admin"
+	if(holder)
+		holder.player_list_legacy()
 	return
 
 /client/proc/check_antagonists()
@@ -582,8 +626,10 @@ var/global/list/admin_verbs_mod = list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-
-	if(!check_rights(R_ADMIN))
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_ADMIN)) // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_ADMIN|R_DEBUG))
+	// [/SIERRA-EDIT]
 		return
 
 	if(!usr.RemoveClickHandler(/datum/click_handler/build_mode))

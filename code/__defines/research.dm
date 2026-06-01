@@ -11,7 +11,8 @@
 #define TECH_DATA "programming"
 #define TECH_ESOTERIC "esoteric"
 
-#define IMPRINTER     FLAG_01  //For circuits. Uses glass/chemicals.
-#define PROTOLATHE    FLAG_02  //New stuff. Uses glass/metal/chemicals
-#define MECHFAB       FLAG_03  //Mechfab
-#define CHASSIS       FLAG_04  //For protolathe, but differently
+#define IMPRINTER        FLAG_01  //For circuits. Uses glass/chemicals.
+#define PROTOLATHE       FLAG_02  //New stuff. Uses glass/metal/chemicals
+#define MECHFAB          FLAG_03  //Mechfab
+#define CHASSIS          FLAG_04  //For protolathe, but differently
+#define FOOD_REPLICATOR  FLAG_05  //Food replicator. Uses nutriment reagent. //[SIERRA-ADD] RND

@@ -15,7 +15,7 @@
 		//area/turret_protected/ai = NO_SCRUBBER|NO_VENT,
 		//area/turret_protected/ai_maint = NO_SCRUBBER|NO_VENT,
 		/area/maintenance/fourthdeck/aft = 0,
-		/area/maintenance/waterstore = 0,
+		// /area/maintenance/waterstore = 0,
 		/area/maintenance/abandoned_hydroponics = 0,
 		/area/maintenance/firstdeck/aftport = 0,
 		/area/maintenance/incinerator = 0,
@@ -55,11 +55,7 @@
 		/area/vacant/monitoring = NO_SCRUBBER|NO_VENT,
 		/area/vacant/prototype = 0,
 		/area/vacant/storage = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/atmos  = NO_SCRUBBER|NO_VENT,
-		/area/rnd/xenobiology/cell_1 = NO_APC,
-		/area/rnd/xenobiology/cell_2 = NO_APC,
-		/area/rnd/xenobiology/cell_3 = NO_APC,
-		/area/rnd/xenobiology/cell_4 = NO_APC
+		/area/security/sierra/dockcheckaft = NO_APC
 	)
 
 	area_coherency_test_exempt_areas = list(
@@ -78,7 +74,6 @@
 		/area/shuttle/syndicate_elite/station,
 		/area/shuttle/syndicate_elite/mothership,
 		/area/shuttle/escape/centcom,
-		/area/rnd/xenobiology/xenoflora_storage,
 		/area/turbolift,
 		/area/turbolift/start,
 		/area/turbolift/firstdeck,
@@ -91,11 +86,16 @@
 		/area/bluespace_interlude,
 		/area/bluespace_interlude/platform,
 		/area/bluespace_interlude/surroundings,
+		/area/rnd/xenobiology,
+		/area/rnd/xenobiology/xenoflora,
+		/area/rnd/xenobiology/xenoflora_storage,
 		/area/rnd/xenobiology/cell_1,
 		/area/rnd/xenobiology/cell_2,
 		/area/rnd/xenobiology/cell_3,
 		/area/rnd/xenobiology/cell_4,
-		/area/carp_racing
+		/area/carp_racing,
+		/area/holodeck/alphadeck,
+		/area/holocontrol
 	)
 
 /datum/unit_test/zas_area_test/ai_chamber
@@ -118,4 +118,4 @@
 
 /datum/unit_test/zas_area_test/xenobio
 	name = "ZAS: Xenobiology"
-	area_path = /area/rnd/xenobiology
+	area_path = /area/rnd/sierra/xenobiology

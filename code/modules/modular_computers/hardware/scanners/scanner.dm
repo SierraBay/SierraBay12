@@ -18,6 +18,8 @@
 	var/can_view_scan = TRUE
 	/// Whether the scan output can be saved to disk.
 	var/can_save_scan = TRUE
+	/// Color of the scan beam effect (null = no tint).
+	var/scan_beam_color = null
 
 /obj/item/stock_parts/computer/scanner/Destroy()
 	do_before_uninstall()
@@ -51,6 +53,38 @@
 		driver = null
 
 /obj/item/stock_parts/computer/scanner/proc/run_scan(mob/user, datum/computer_file/program/scanner/program) //For scans done from the software.
+
+/obj/item/stock_parts/computer/scanner/proc/do_scan_animation(mob/user, atom/target)
+	var/atom/beam_origin = loc ? loc : user
+	var/turf/origin_turf = get_turf(beam_origin)
+	var/turf/target_turf = get_turf(target)
+	var/dx = (target_turf.x - origin_turf.x) * WORLD_ICON_SIZE
+	var/dy = (target_turf.y - origin_turf.y) * WORLD_ICON_SIZE
+	var/dist = sqrt(dx * dx + dy * dy)
+	if(dist < 1)
+		dist = WORLD_ICON_SIZE
+
+	var/obj/effect/scan_effect = new /obj/effect(origin_turf)
+	scan_effect.icon = 'mods/RnD/icons/device.dmi'
+	scan_effect.icon_state = "scan_med"
+	scan_effect.mouse_opacity = 0
+	scan_effect.layer = ABOVE_OBJ_LAYER
+	if(scan_beam_color)
+		scan_effect.color = scan_beam_color
+	var/angle = Get_Angle(origin_turf, target_turf)
+	var/matrix/M = matrix()
+	M.Scale(1, dist / WORLD_ICON_SIZE)
+	M.Turn(angle)
+	M.Translate(dx / 2, dy / 2)
+	scan_effect.transform = M
+
+	playsound(src, 'sound/effects/scanbeep.ogg', 30)
+	to_chat(user, SPAN_NOTICE("Сканирование [target]..."))
+	if(!do_after(user, 1 SECONDS, target))
+		qdel(scan_effect)
+		return FALSE
+	qdel(scan_effect)
+	return TRUE
 
 /obj/item/stock_parts/computer/scanner/proc/do_on_afterattack(mob/user, atom/target, proximity)
 

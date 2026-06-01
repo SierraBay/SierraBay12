@@ -44,8 +44,18 @@ var/global/datum/announcement/minor/minor_announcement = new(new_sound = 'sound/
 	var/msg = FormRadioMessage(message, message_title, length(zlevels) ? pick(zlevels) : 1)
 	// [/SIERRA-EDIT]
 	for(var/mob/M in GLOB.player_list)
-		if(M.client && (get_z(M) in (zlevels | GLOB.using_map.admin_levels)) && !istype(M,/mob/new_player) && !isdeaf(M))
+		// [SIERRA-EDIT] - MOD_VR
+		//if(M.client && (get_z(M) in (zlevels | GLOB.using_map.admin_levels)) && !istype(M,/mob/new_player) && !isdeaf(M))
+		var/matching_z = (M.z in (zlevels | GLOB.using_map.admin_levels))
+		var/mob/living/virtual = SSvirtual_reality.virtual_mobs_to_occupants[M] // mirror announcements to VR users on the receiving Z's
+		if (virtual)
+			var/turf/T = get_turf(virtual)
+			matching_z = (T.z in (zlevels | GLOB.using_map.admin_levels))
+			var/vr_msg = FormMessage(message, message_title)
+			to_chat(M, vr_msg) // Eris fix
+		if((matching_z) && !istype(M,/mob/new_player) && !isdeaf(M))
 			to_chat(M, msg)
+		// [/SIERRA-EDIT]
 			if(message_sound && M.client.get_preference_value(/datum/client_preference/play_announcement_sfx) == GLOB.PREF_YES)
 				sound_to(M, message_sound)
 

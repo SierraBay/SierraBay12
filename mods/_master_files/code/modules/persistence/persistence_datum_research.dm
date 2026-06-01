@@ -13,6 +13,7 @@
 	. = tokens
 
 /datum/persistent/research/ProcessAndApplyTokens(list/tokens)
+/*[SIERRA-REMOVE]
 	for (var/list/entry in tokens)
 		if (prob(10)) //small chance to keep all progress from previous round
 			break
@@ -47,7 +48,7 @@
 						current_techs.Cut(first_index + 1, 0)
 
 						entry["tree"] = current_techs
-
+*///[/SIERRA-REMOVE] RND
 
 	for (var/list/entry in tokens)
 		var/_z = entry["z"]
@@ -58,7 +59,9 @@
 
 /datum/persistent/research/CheckTokenSanity(list/tokens)
 	for (var/list/entry in tokens)
-		if (!entry["type"] || !entry["tree"])
+		// Tech tree entries must have type and tree
+		// Extra data entries (corp_rep, compiled_levels) have data_type instead
+		if(!entry["data_type"] && (!entry["type"] || !islist(entry["tree"])))
 			return FALSE
 	return TRUE
 
@@ -68,18 +71,44 @@
 /datum/persistent/research/CreateEntryInstance(turf/creating, list/tokens)
 	var/obj/machinery/r_n_d/server/core/server = locate() in creating
 
-	if (!server)
+	if (!server || !server.files)
 		return
 
 	var/obj/machinery/r_n_d/server/robotics/second = locate(/obj/machinery/r_n_d/server/robotics) in range(5, server)
 
+	// Handle extra data entries
+	if(tokens["data_type"] == "corp_rep")
+		var/list/saved_rep = tokens["corp_rep"]
+		if(islist(saved_rep))
+			for(var/corp_id in saved_rep)
+				server.files.SetCorporationReputation(corp_id, saved_rep[corp_id])
+				if(second)
+					second.files.SetCorporationReputation(corp_id, saved_rep[corp_id])
+		SSpersistence.track_value(server, /datum/persistent/research)
+		return
+
+	if(tokens["data_type"] == "compiled_levels")
+		var/list/saved_compiled = tokens["compiled"]
+		if(islist(saved_compiled))
+			for(var/tech_id in saved_compiled)
+				server.files.compiled_tech_levels[tech_id] = saved_compiled[tech_id]
+				if(second)
+					second.files.compiled_tech_levels[tech_id] = saved_compiled[tech_id]
+		SSpersistence.track_value(server, /datum/persistent/research)
+		return
+
+	// Handle tech tree entries
 	var/tech_type = tokens["type"]
 	var/list/id_tech_nodes = list()
 
 	for(var/datum/technology/tech in SSresearch.all_tech_nodes)
 		id_tech_nodes[tech.id] = tech
 
-	var/datum/tech/T = locate(tech_type) in server.files.researched_tech
+	var/datum/tech/T = null
+	for(var/datum/tech/tree_datum in server.files.researched_tech)
+		if(tree_datum.type == tech_type)
+			T = tree_datum
+			break
 
 	if(T)
 		for(var/tech_id in tokens["tree"])
@@ -93,9 +122,13 @@
 
 /datum/persistent/research/CompileEntry(atom/entry)
 	var/obj/machinery/r_n_d/server/core/server = entry
+	if(!server.files)
+		return list()
+
+	// Compile unlocked tech nodes
 	var/list/techs = list()
 	for (var/datum/tech/tech in server.files.researched_tech)
-		if (tech.id == RESEARCH_ESOTERIC)
+		if (tech.type == /datum/tech/esoteric)
 			continue
 
 		var/list/tree_techs = list()
@@ -114,6 +147,25 @@
 		_entry["y"] = server.y
 		_entry["z"] = server.z
 		techs += list(_entry)
+
+	// Compile corporation reputation
+	var/list/rep_entry = list()
+	rep_entry["data_type"] = "corp_rep"
+	rep_entry["x"] = server.x
+	rep_entry["y"] = server.y
+	rep_entry["z"] = server.z
+	rep_entry["corp_rep"] = server.files.corporation_reputation.Copy()
+	techs += list(rep_entry)
+
+	// Compile compiled tech levels (prevents re-selling same data)
+	if(LAZYLEN(server.files.compiled_tech_levels))
+		var/list/compiled_entry = list()
+		compiled_entry["data_type"] = "compiled_levels"
+		compiled_entry["x"] = server.x
+		compiled_entry["y"] = server.y
+		compiled_entry["z"] = server.z
+		compiled_entry["compiled"] = server.files.compiled_tech_levels.Copy()
+		techs += list(compiled_entry)
 
 	return techs
 

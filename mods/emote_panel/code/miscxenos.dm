@@ -120,3 +120,42 @@
 	set name = "X - Отрицание"
 	set category = "Emote"
 	emote("deny")
+
+/singleton/species/resomi/proc/add_resomi_verbs()
+	var/list/resomi_verbs = list(
+		/mob/living/carbon/human/resomi/verb/resomi_chirp,
+		/mob/living/carbon/human/resomi/verb/resomi_trill,
+		/mob/living/carbon/human/resomi/verb/skrell_trill1,
+		/mob/living/carbon/human/resomi/verb/resomi_warble,
+		/mob/living/carbon/human/resomi/verb/resomi_wurble
+	)
+	LAZYADD(inherent_verbs, resomi_verbs)
+
+/singleton/species/resomi/New()
+	. = ..()
+	add_resomi_verbs()
+
+/mob/living/carbon/human/resomi/verb/resomi_chirp()
+	set name = "X - Чирикнуть"
+	set category = "Emote"
+	emote("rschirp")
+
+/mob/living/carbon/human/resomi/verb/resomi_trill()
+	set name = "X - Трель 1"
+	set category = "Emote"
+	emote("rstrill")
+
+/mob/living/carbon/human/resomi/verb/skrell_trill1()
+	set name = "X - Трель 2"
+	set category = "Emote"
+	emote("sktrill1")
+
+/mob/living/carbon/human/resomi/verb/resomi_warble()
+	set name = "X - Пение"
+	set category = "Emote"
+	emote("rswarble")
+
+/mob/living/carbon/human/resomi/verb/resomi_wurble()
+	set name = "X - Урчать"
+	set category = "Emote"
+	emote("rswurble")

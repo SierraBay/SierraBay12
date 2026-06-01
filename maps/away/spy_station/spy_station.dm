@@ -76,6 +76,10 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/spy_station)
 
+/datum/map_template/ruin/away_site/spy_station/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/encrypted_disk, z)
+
 
 /obj/shuttle_landmark/nav_spy_station/nav1
 	name = "West Landing Spot"

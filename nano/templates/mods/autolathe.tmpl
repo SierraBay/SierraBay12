@@ -3,100 +3,788 @@ Title: Autolathe
 Used In File(s): \code\game\machinery\autolathe.dm
  -->
 
-<div style="display: table; width:100%">
+<div class="fabConsole">
 
-<div style="display: table-row">
+<div class="fabHeader">
+	<span class="fabHeaderTitle">&#9881; ФАБРИКАТОР</span>
+	<span class="fabHeaderStatus">
+		{{if data.paused}}
+			<span class="fabStatusBadge fabStatusBadge--paused">ПАУЗА</span>
+		{{else data.current}}
+			<span class="fabStatusBadge fabStatusBadge--active">РАБОТА</span>
+		{{else}}
+			<span class="fabStatusBadge fabStatusBadge--idle">ОЖИДАНИЕ</span>
+		{{/if}}
+	</span>
+</div>
+
+<!-- Materials & Reagents Row -->
+<div class="fabResourceRow">
 	{{if data.have_materials && data.have_reagents}}
-		<div class="fixedLeft" style="width:48%; display: table-cell; padding: 0 1%">
+		<div class="fabResourceCol">
 			{{#def._materials}}
 		</div>
-		<div class="fixedLeft" style="width:48%; display: table-cell; padding: 0 1%">
+		<div class="fabResourceCol">
 			{{#def._reagents}}
 		</div>
 	{{else data.have_materials}}
-		{{#def._materials}}
+		<div style="width: 100%;">
+			{{#def._materials}}
+		</div>
 	{{else data.have_reagents}}
-		{{#def._reagents}}
+		<div style="width: 100%;">
+			{{#def._reagents}}
+		</div>
 	{{/if}}
 </div>
 
+<!-- Disk Slots -->
 {{if data.have_disk}}
-<div class="fixedWidest" style="width:100%; display: table-row">
-	<div class="block">
-		<div class="item">
-			<div class="itemContentWide">
-			Disk:
+<div class="fabSection">
+	<div class="fabSectionContent" style="padding: 5px 10px;">
+		<div class="fabDiskRow">
+			<span class="fabDiskLabel">ДИСК:</span>
 			{{if data.disk}}
-				<b>{{:data.disk.name ? data.disk.name : 'data disk'}}</b>
-
+				<span class="fabDiskName">{{:data.disk.name ? data.disk.name : 'data disk'}}</span>
 				{{if data.disk.license > 0}}
-					<div class="unimportant">{{:data.disk.license}} license points left</div>
+					<span class="fabDiskLicense">{{:data.disk.license}} лицензий</span>
 				{{else data.disk.license == 0}}
-					<div class="bad">{{:data.disk.license}} license points left</div>
+					<span class="fabDiskLicense fabDiskLicense--empty">0 лицензий</span>
 				{{/if}}
 			{{else}}
-				not inserted
+				<span class="fabMuted">не вставлен</span>
 			{{/if}}
-			</div>
-			<div class="itemlabelNarrow">{{:helper.link(data.disk ? 'eject' : 'insert', 'eject', {'disk' : 1}, null, 'statusValue')}}</div>
+			<span style="margin-left: auto;">{{:helper.link(data.disk ? 'Извлечь' : 'Вставить', 'eject', {'disk' : 1})}}</span>
 		</div>
 	</div>
 </div>
 {{/if}}
 
 {{if data.have_disk2}}
-<div class="fixedWidest" style="width:100%; display: table-row">
-	<div class="block">
-		<div class="item">
-			<div class="itemContentWide">
-			Disk:
+<div class="fabSection">
+	<div class="fabSectionContent" style="padding: 5px 10px;">
+		<div class="fabDiskRow">
+			<span class="fabDiskLabel">ДИСК 2:</span>
 			{{if data.disk2}}
-				<b>{{:data.disk2.name ? data.disk2.name : 'data disk'}}</b>
-
+				<span class="fabDiskName">{{:data.disk2.name ? data.disk2.name : 'data disk'}}</span>
 				{{if data.disk2.license > 0}}
-					<div class="unimportant">{{:data.disk2.license}} license points left</div>
+					<span class="fabDiskLicense">{{:data.disk2.license}} лицензий</span>
 				{{else data.disk2.license == 0}}
-					<div class="bad">{{:data.disk2.license}} license points left</div>
+					<span class="fabDiskLicense fabDiskLicense--empty">0 лицензий</span>
 				{{/if}}
 			{{else}}
-				not inserted
+				<span class="fabMuted">не вставлен</span>
 			{{/if}}
-			</div>
-			<div class="itemlabelNarrow">{{:helper.link(data.disk2 ? 'eject' : 'insert', 'eject', {'disk2' : 1}, null, 'statusValue')}}</div>
+			<span style="margin-left: auto;">{{:helper.link(data.disk2 ? 'Извлечь' : 'Вставить', 'eject', {'disk2' : 1})}}</span>
 		</div>
 	</div>
 </div>
 {{/if}}
 
+<!-- Skill Quality Notice -->
 {{if data.uses_stat}}
-<div class="fixedWidest" style="width:100%; display: table-row">
-	<div class="block" style="padding: 0px 4px 2px 4px">
-	<b>With your skills and the current components, you may print "{{:data.max_quality < 0 ? data.max_quality : '+' + data.max_quality}}" quality parts.</b>
+<div class="fabSection">
+	<div class="fabSectionContent" style="padding: 5px 10px;">
+		<span class="fabLabel">Качество деталей:</span>
+		<span class="{{:data.max_quality >= 0 ? 'good' : 'average'}}">{{:data.max_quality < 0 ? data.max_quality : '+' + data.max_quality}}</span>
 	</div>
 </div>
 {{/if}}
 
+<!-- Categories Bar -->
 {{if data.categories}}
-<div class="fixedWidest" style="width:100%; display: table-row">
-	<div class="block" style="padding: 0px 4px 2px 4px">
-		<div class="item">
-			{{for data.categories :category:category_i}}
-				{{:helper.link(category, null, {'category' : category_i+1}, category == data.show_category ? 'selected' : null)}}
-			{{empty}}
-			There are no known designs
-			{{/for}}
+<div class="fabSection">
+	<div class="fabSectionContent fabCategoryBar">
+		{{for data.categories :category:category_i}}
+			{{:helper.link(category, null, {'category' : category_i+1}, category == data.show_category ? 'selected' : null, 'fabCatBtn')}}
+		{{empty}}
+			<span class="fabMuted">Нет известных дизайнов</span>
+		{{/for}}
+	</div>
+</div>
+{{/if}}
+
+<!-- Designs & Queue Columns -->
+<div class="fabMainArea">
+	<div class="fabDesignCol">
+		<div class="fabSection fabDesignSection">
+			<div class="fabSectionTitle">Дизайны</div>
+			<div class="fabSectionContent fabDesignList">
+				{{#def._designs}}
+			</div>
 		</div>
 	</div>
-</div>
-{{/if}}
-
-<div style="display: table-row">
-	<div class="fixedLeftWider" style="width:50%; display: table-cell">
-		{{#def._designs}}
-	</div>
-	<div class="fixedLeft" style="width:50%; display: table-cell">
+	<div class="fabQueueCol">
 		{{#def._queue}}
 	</div>
 </div>
 
 </div>
+
+<style>
+
+/* === Fabricator Console Root === */
+.fabConsole {
+	font-family: 'Consolas', 'Courier New', monospace;
+	color: #c8dae8;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+/* === Global Button Overrides === */
+.fabConsole .link,
+.fabConsole .linkActive,
+.fabConsole .linkOn,
+.fabConsole .linkOff,
+.fabConsole .selected,
+.fabConsole .warning,
+.fabConsole .disabled {
+	background: rgba(24, 48, 80, 0.7);
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	color: #a8c8e8;
+	border-radius: 2px;
+	padding: 1px 6px 3px 6px;
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-size: 11px;
+	transition: all 0.12s ease;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+	float: none;
+	display: inline-block;
+	height: auto;
+	min-width: 0;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.fabConsole .hasIcon {
+	padding: 1px 6px 3px 2px;
+}
+
+.fabConsole a:hover,
+.fabConsole .link:hover,
+.fabConsole .linkActive:hover {
+	background: rgba(40, 70, 120, 0.8);
+	border-color: rgba(80, 140, 220, 0.55);
+	color: #cce4ff;
+	box-shadow: 0 0 6px rgba(60, 130, 220, 0.15);
+}
+
+.fabConsole .selected,
+.fabConsole a.selected:link,
+.fabConsole a.selected:visited,
+.fabConsole a.selected:active,
+.fabConsole a.selected:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+.fabConsole .linkOn,
+.fabConsole a.linkOn:link,
+.fabConsole a.linkOn:visited,
+.fabConsole a.linkOn:active,
+.fabConsole a.linkOn:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+}
+
+.fabConsole .disabled,
+.fabConsole a.disabled:link,
+.fabConsole a.disabled:visited,
+.fabConsole a.disabled:active,
+.fabConsole a.disabled:hover {
+	background: rgba(30, 36, 48, 0.5);
+	border-color: rgba(50, 60, 80, 0.4);
+	color: #4a5a70;
+	cursor: not-allowed;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.fabConsole .linkWarning,
+.fabConsole .warning,
+.fabConsole a.warning:link,
+.fabConsole a.warning:visited,
+.fabConsole a.warning:active,
+.fabConsole a.warning:hover {
+	background: rgba(120, 50, 10, 0.65);
+	border-color: rgba(200, 100, 30, 0.5);
+	color: #ffbb66;
+}
+
+.fabConsole .warning:hover {
+	background: rgba(140, 60, 15, 0.75) !important;
+	border-color: rgba(220, 120, 40, 0.6) !important;
+	color: #ffcc88 !important;
+}
+
+.fabConsole a.icon,
+.fabConsole .link.icon,
+.fabConsole .linkActive.icon,
+.fabConsole .linkOn.icon,
+.fabConsole .linkOff.icon,
+.fabConsole .selected.icon,
+.fabConsole .disabled.icon {
+	position: relative;
+	padding: 1px 6px 3px 22px;
+}
+
+/* === Progress Bars Override === */
+.fabConsole .displayBar {
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	background: rgba(6, 12, 24, 0.6);
+	border-radius: 2px;
+	height: 14px;
+	width: 100% !important;
+	float: none !important;
+	box-sizing: border-box;
+}
+
+.fabConsole .displayBarFill {
+	background: rgba(40, 70, 120, 0.6);
+}
+
+.fabConsole .displayBarFill.good {
+	background: linear-gradient(90deg, rgba(30, 90, 50, 0.8), rgba(50, 130, 70, 0.7));
+}
+
+.fabConsole .displayBarFill.average {
+	background: linear-gradient(90deg, rgba(140, 80, 10, 0.8), rgba(180, 110, 20, 0.7));
+}
+
+.fabConsole .displayBarFill.bad {
+	background: linear-gradient(90deg, rgba(140, 20, 20, 0.8), rgba(180, 40, 30, 0.7));
+}
+
+.fabConsole .displayBarText {
+	font-size: 10px;
+	letter-spacing: 0.3px;
+	top: -1px;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* === Text Indicator Overrides === */
+.fabConsole .good { color: #44cc66; }
+.fabConsole .average { color: #ddaa22; }
+.fabConsole .bad { color: #ee4444; }
+
+/* === Scrollbar Styling === */
+.fabConsole ::-webkit-scrollbar { width: 6px; }
+.fabConsole ::-webkit-scrollbar-track { background: rgba(6, 12, 24, 0.4); }
+.fabConsole ::-webkit-scrollbar-thumb { background: rgba(60, 100, 160, 0.4); border-radius: 3px; }
+.fabConsole ::-webkit-scrollbar-thumb:hover { background: rgba(80, 130, 200, 0.5); }
+
+/* === Header === */
+.fabHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 10px;
+	background: linear-gradient(180deg, rgba(16, 28, 48, 0.9), rgba(8, 16, 32, 0.95));
+	border-bottom: 1px solid rgba(64, 128, 200, 0.4);
+	margin-bottom: 6px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.fabHeaderTitle {
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+}
+
+.fabStatusBadge {
+	font-size: 9px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.fabStatusBadge--idle {
+	background: rgba(40, 60, 90, 0.4);
+	color: #6a8aaa;
+	border: 1px solid rgba(60, 90, 130, 0.4);
+}
+
+.fabStatusBadge--active {
+	background: rgba(60, 120, 40, 0.4);
+	color: #6c6;
+	border: 1px solid rgba(80, 160, 60, 0.4);
+	animation: fabPulse 1.5s ease-in-out infinite;
+}
+
+.fabStatusBadge--paused {
+	background: rgba(120, 90, 10, 0.4);
+	color: #ddaa22;
+	border: 1px solid rgba(180, 130, 30, 0.4);
+}
+
+@keyframes fabPulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
+/* === Resource Row === */
+.fabResourceRow {
+	display: flex;
+	gap: 6px;
+	padding: 0 6px;
+	margin-bottom: 6px;
+}
+
+.fabResourceCol {
+	flex: 1;
+	min-width: 0;
+}
+
+/* === Sections === */
+.fabSection {
+	margin: 0 6px 6px 6px;
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+}
+
+.fabSectionTitle {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+}
+
+.fabSectionContent {
+	padding: 6px 8px;
+}
+
+/* === Disk Row === */
+.fabDiskRow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.fabDiskLabel {
+	font-size: 10px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	color: #6a8aaa;
+}
+
+.fabDiskName {
+	font-weight: bold;
+	color: #aaccee;
+	font-size: 12px;
+}
+
+.fabDiskLicense {
+	font-size: 11px;
+	color: #44cc66;
+}
+
+.fabDiskLicense--empty {
+	color: #ee4444;
+}
+
+/* === Utility Classes === */
+.fabMuted {
+	color: #5a7a9a;
+}
+
+.fabLabel {
+	font-size: 11px;
+	color: #8ab4e8;
+	letter-spacing: 0.3px;
+}
+
+/* === Category Bar === */
+.fabCategoryBar {
+	display: flex;
+	gap: 3px;
+	flex-wrap: wrap;
+	padding: 4px 8px;
+}
+
+.fabCatBtn {
+	padding: 3px 10px !important;
+	font-size: 10px !important;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+}
+
+/* === Main Area (Designs + Queue) === */
+.fabMainArea {
+	display: flex;
+	gap: 6px;
+	padding: 0 6px 6px 6px;
+	align-items: stretch;
+	flex: 1;
+	min-height: 0;
+}
+
+.fabDesignCol {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.fabQueueCol {
+	width: 240px;
+	flex-shrink: 0;
+	align-self: flex-start;
+}
+
+.fabDesignSection {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0;
+}
+
+.fabDesignSection > .fabSectionContent {
+	flex: 1;
+	min-height: 0;
+}
+
+.fabDesignList {
+	height: 100%;
+	overflow-y: auto;
+	padding: 4px 6px;
+	box-sizing: border-box;
+}
+
+/* === Design Items === */
+.fabDesignItem {
+	margin-bottom: 4px;
+	background: rgba(8, 16, 28, 0.5);
+	border: 1px solid rgba(40, 70, 110, 0.4);
+	border-radius: 3px;
+	transition: border-color 0.12s;
+}
+
+.fabDesignItem:hover {
+	border-color: rgba(60, 100, 160, 0.5);
+}
+
+.fabDesignItem--unavailable {
+	background: rgba(40, 12, 12, 0.4);
+	border-color: rgba(120, 40, 40, 0.35);
+}
+
+.fabDesignItem--unavailable .fabDesignName {
+	color: #8a5a5a;
+}
+
+.fabDesignItem--unavailable .fabDesignIcon {
+	opacity: 0.5;
+}
+
+.fabDesignRow {
+	display: flex;
+	align-items: center;
+	padding: 3px 6px;
+	gap: 6px;
+}
+
+.fabDesignIcon {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+.fabDesignIcon img {
+	width: 24px;
+	height: 24px;
+	display: block;
+}
+
+.fabDesignName {
+	flex: 1;
+	font-size: 12px;
+	color: #c8dae8;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fabDesignLicense {
+	font-size: 10px;
+}
+
+.fabDesignLicense--ok { color: #6a8aaa; }
+.fabDesignLicense--bad { color: #ee4444; }
+
+.fabDesignActions {
+	display: flex;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+/* === Design Details (unfolded) === */
+.fabDesignDetails {
+	padding: 4px 8px 6px 8px;
+	background: rgba(4, 10, 20, 0.5);
+	border-top: 1px solid rgba(40, 70, 110, 0.3);
+	font-size: 11px;
+}
+
+.fabDetailGroup {
+	margin-bottom: 4px;
+}
+
+.fabDetailLabel {
+	font-size: 10px;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	color: #6a8aaa;
+	margin-bottom: 1px;
+}
+
+.fabDetailValue {
+	color: #a0b8d0;
+	padding-left: 6px;
+}
+
+.fabDetailStat {
+	display: inline-block;
+	margin-right: 12px;
+	color: #8ab4e8;
+}
+
+.fabDetailStat b {
+	color: #c8dae8;
+}
+
+/* === Empty State === */
+.fabEmptyState {
+	text-align: center;
+	padding: 16px;
+	color: #5a7a9a;
+	font-style: italic;
+	font-size: 12px;
+}
+
+/* === Queue === */
+.fabQueueSection {
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+}
+
+.fabQueueTitle {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.fabQueueControls {
+	display: flex;
+	gap: 3px;
+}
+
+.fabQueueContent {
+	padding: 6px;
+}
+
+/* Current Print */
+.fabCurrentPrint {
+	padding: 6px 8px;
+	background: rgba(8, 16, 28, 0.5);
+	border: 1px solid rgba(40, 70, 110, 0.4);
+	border-radius: 3px;
+	margin-bottom: 6px;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.fabCurrentHeader {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.fabCurrentIcon {
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+}
+
+.fabCurrentIcon img {
+	width: 36px;
+	height: 36px;
+	display: block;
+}
+
+.fabCurrentInfo {
+	flex: 1;
+	min-width: 0;
+}
+
+.fabCurrentName {
+	font-size: 12px;
+	font-weight: bold;
+	color: #aaccee;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fabCurrentProgress {
+	margin-top: 4px;
+	overflow: hidden;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.fabCurrentDetails {
+	font-size: 10px;
+	color: #6a8aaa;
+	margin-top: 3px;
+}
+
+.fabIdleState {
+	text-align: center;
+	padding: 8px;
+	color: #5a7a9a;
+	font-size: 11px;
+	font-style: italic;
+}
+
+/* Queue Items */
+.fabQueueList {
+	max-height: 220px;
+	overflow-y: auto;
+}
+
+.fabQueueCounter {
+	font-size: 10px;
+	color: #6a8aaa;
+}
+
+.fabQueueItem {
+	display: flex;
+	align-items: center;
+	padding: 3px 4px;
+	gap: 4px;
+	border-bottom: 1px solid rgba(20, 36, 60, 0.3);
+}
+
+.fabQueueItem:last-child {
+	border-bottom: none;
+}
+
+.fabQueueItemIcon {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+}
+
+.fabQueueItemIcon img {
+	width: 20px;
+	height: 20px;
+	display: block;
+}
+
+.fabQueueItemName {
+	flex: 1;
+	font-size: 11px;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fabQueueItemActions {
+	display: flex;
+	gap: 1px;
+	flex-shrink: 0;
+}
+
+.fabQueueEmpty {
+	text-align: center;
+	padding: 6px;
+	color: #4a5a70;
+	font-size: 11px;
+}
+
+/* === Material/Reagent Section styling === */
+.fabResSection {
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+}
+
+.fabResTitle {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+}
+
+.fabResContent {
+	padding: 4px 6px;
+}
+
+.fabResItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2px 4px;
+	border-bottom: 1px solid rgba(20, 36, 60, 0.3);
+}
+
+.fabResItem:last-child {
+	border-bottom: none;
+}
+
+.fabResName {
+	font-size: 11px;
+	color: #a0b8d0;
+}
+
+.fabResAmount {
+	font-size: 11px;
+	color: #8ab4e8;
+}
+
+.fabResActions {
+	margin-top: 4px;
+	padding: 2px 4px;
+	display: flex;
+	justify-content: center;
+}
+
+</style>

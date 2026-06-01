@@ -29,6 +29,21 @@
 		/area/slavers_base/hangar = NO_SCRUBBER
 	)
 
+/datum/map_template/ruin/away_site/slavers/after_load(z)
+	..()
+	var/obj/item/tactical_terminal/terminal = \
+		spawn_derelict_mission_object(/obj/item/tactical_terminal, z, /area/slavers_base)
+	// Spawn the access log containing the terminal's code
+	if(terminal)
+		var/obj/item/paper/log = spawn_derelict_mission_object(/obj/item/paper, z, /area/slavers_base)
+		if(log)
+			log.name = "Shellguard tactical operations log"
+			log.info = "<b>Shellguard PRIVATE MILITARY — OPERATIONS TERMINAL</b><hr>" + \
+				"Authorization code for field terminal access:<br><br>" + \
+				"<b>ACCESS VERIFICATION CODE: [terminal.access_code]</b><br><br>" + \
+				"This document is classified. Destruction required after use."
+			log.update_icon()
+
 /obj/shuttle_landmark/nav_slavers_base/nav1
 	name = "Slavers Base Navpoint #1"
 	landmark_tag = "nav_slavers_base_1"
@@ -132,39 +147,45 @@
 	uniform = /obj/item/clothing/under/color/orange
 	shoes = /obj/item/clothing/shoes/tactical
 
-/mob/living/simple_animal/hostile/abolition_extremist
-	name = "abolition extremist"
-	desc = "Vigiliant fighter against slavery."
-	icon = 'maps/away/slavers/slavers_base_sprites.dmi'
-	icon_state = "extremist"
-	icon_living = "extremist"
-	icon_dead = "extremist_dead"
-	turns_per_move = 5
-	response_help = "pushes"
-	response_disarm = "shoves"
-	response_harm = "hits"
-	speed = 4
-	maxHealth = 100
-	health = 100
-	natural_weapon = /obj/item/natural_weapon/punch
-	can_escape = TRUE
-	unsuitable_atmos_damage = 15
-	var/corpse = /obj/landmark/corpse/abolitionist
-	var/weapon = /obj/item/gun/energy/laser
-	projectilesound = 'sound/weapons/Laser.ogg'
-	ranged = 1
-	projectiletype = /obj/item/projectile/beam
-	faction = "extremist abolitionists"
+// ============================================================
+// Abolition Extremist NPC Spawner (carbon/human with AI)
+// ============================================================
 
-	ai_holder = /datum/ai_holder/simple_animal/ranged
+/obj/landmark/slavers_npc/extremist
+	name = "abolition extremist spawner"
+	var/npc_name = "abolition extremist"
+	var/outfit_type = /singleton/hierarchy/outfit/corpse/abolitionist
+	var/ai_type = /datum/ai_holder/human/abolition_extremist
+	var/faction_name = "extremist abolitionists"
+	var/list/weapons = list(/obj/item/gun/energy/laser)
 
-/mob/living/simple_animal/hostile/abolition_extremist/death(gibbed, deathmessage, show_dead_message)
-	. = ..(gibbed, deathmessage, show_dead_message)
-	if(corpse)
-		new corpse(loc)
-	if(weapon)
-		new weapon(loc)
+/obj/landmark/slavers_npc/extremist/Initialize()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/landmark/slavers_npc/extremist/LateInitialize()
+	var/mob/living/carbon/human/H = new(loc)
+	H.real_name = npc_name
+	H.SetName(npc_name)
+	H.faction = faction_name
+	H.a_intent = I_HURT
+	// Equip outfit
+	if(outfit_type)
+		var/singleton/hierarchy/outfit/O = outfit_by_type(outfit_type)
+		O.equip(H, equip_adjustments = OUTFIT_ADJUSTMENT_SKIP_ID_PDA|OUTFIT_ADJUSTMENT_SKIP_BACKPACK|OUTFIT_ADJUSTMENT_SKIP_SURVIVAL_GEAR|OUTFIT_ADJUSTMENT_SKIP_POST_EQUIP)
+	// Weapons in hands
+	for(var/W in weapons)
+		var/obj/item/I = new W(H)
+		H.put_in_hands(I)
+	// AI setup
+	H.ai_holder = new ai_type(H)
+	H.update_icon()
 	qdel(src)
+
+/datum/ai_holder/human/abolition_extremist
+	hostile = TRUE
+	wander = TRUE
+	cooperative = TRUE
 
 /obj/landmark/corpse/abolitionist
 	name = "abolitionist"

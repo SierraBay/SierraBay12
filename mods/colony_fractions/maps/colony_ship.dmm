@@ -1546,6 +1546,7 @@
 /obj/floor_decal/corner/paleblue/mono,
 /obj/machinery/atmospherics/valve/open,
 /obj/structure/table/steel_reinforced,
+/obj/item/paper/manifest/rnd_invoice/colony,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "CJ" = (
@@ -2279,6 +2280,8 @@
 /obj/machinery/light_switch{
 	pixel_x = -22
 	},
+/obj/machinery/drone_pad/rd_mission,
+/obj/item/device/drone_designator,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/engineering)
 "Pa" = (

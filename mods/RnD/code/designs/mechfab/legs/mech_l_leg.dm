@@ -1,5 +1,5 @@
 /datum/design/item/mechfab/mech_l_leg
-	category = list("Mech left leg")
+	category = list("Mech propulsion")
 
 /datum/design/item/mechfab/mech_l_leg/powerloader
 	name = "left power loader motivator"

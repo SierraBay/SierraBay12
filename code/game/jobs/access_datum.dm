@@ -268,6 +268,14 @@ var/global/const/access_research = "ACCESS_RESEARCH" //47
 	desc = "Science"
 	region = ACCESS_REGION_RESEARCH
 
+//[SIERRA-ADD] RND
+var/global/const/access_rnd_network = "ACCESS_RND_NETWORK"
+/datum/access/rnd_network
+	id = access_rnd_network
+	desc = "R&D Network"
+	region = ACCESS_REGION_RESEARCH
+//[/SIERRA-ADD] RND
+
 var/global/const/access_mining = "ACCESS_MINING" //48
 /datum/access/mining
 	id = access_mining
