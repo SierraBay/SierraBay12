@@ -14,7 +14,6 @@
 #include "code/reagents.dm"
 #include "code/cell_charger.dm"
 #include "code/cig_smoke.dm"
-#include "code/vox.dm"
 #include "code/simple.dm"
 #include "code/circuit.dm"
 #include "code/flashlight.dm"
