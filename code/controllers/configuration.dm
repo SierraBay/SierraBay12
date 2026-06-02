@@ -947,13 +947,10 @@
 			// [SIERRA-ADD]
 			if ("explosion_z_threshold")
 				iterative_explosives_z_threshold = text2num(value)
-
 			if ("explosion_z_mult")
 				iterative_explosives_z_multiplier = text2num(value)
-
 			if ("explosion_z_sub")
 				iterative_explosives_z_subtraction = text2num(value)
-
 			if ("use_spreading_explosions")
 				use_spreading_explosions = TRUE
 			if("minimum_byondacc_age")
