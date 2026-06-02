@@ -15,9 +15,14 @@
 		/obj/item/clothing/suit/space
 		)
 
+
+
 ///Чтоб не крутило спрайты на держалке. Более простое решение.
 /obj/structure/coatrack/set_dir()
 	return
+
+
+
 
 //Тыкаем голой рукой
 /obj/structure/coatrack/attack_hand(mob/user as mob)
@@ -41,6 +46,9 @@
 		remove_suit(user)
 	else if(choice == "Снять шляпку")
 		remove_helmet(user)
+
+
+
 
 ///Пытаемся надеть шмотку
 /obj/structure/coatrack/use_tool(obj/item/tool, mob/user, list/click_params)
