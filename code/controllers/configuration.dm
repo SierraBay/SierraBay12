@@ -947,17 +947,15 @@
 			// [SIERRA-ADD]
 			if ("explosion_z_threshold")
 				iterative_explosives_z_threshold = text2num(value)
-
 			if ("explosion_z_mult")
 				iterative_explosives_z_multiplier = text2num(value)
-
 			if ("explosion_z_sub")
 				iterative_explosives_z_subtraction = text2num(value)
-
 			if ("use_spreading_explosions")
 				use_spreading_explosions = TRUE
-			// [/SIERRA-ADD]
-			// [SIERRA-ADD] - MC
+			if("minimum_byondacc_age")
+				minimum_byondacc_age = text2num(value)
+			// - MC -
 			if ("base_mc_tick_rate")
 				base_mc_tick_rate = text2num(value)
 			if ("high_pop_mc_tick_rate")
