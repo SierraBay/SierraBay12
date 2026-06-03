@@ -262,7 +262,8 @@ var/global/list/hallucination_observed_tells = load_hallucination_config("config
 	for(var/obj/machinery/power/apc/apc in view(src, 7))
 		if(MACHINE_IS_BROKEN(apc) || GET_FLAGS(apc.stat, MACHINE_STAT_MAINT))
 			continue
-		if(!apc.area || !apc.area.requires_power || apc.opened)
+		var/area/apc_area = get_area(apc)
+		if(!apc_area || !apc_area.requires_power || apc.opened)
 			continue
 		context.apc_count++
 	for(var/obj/machinery/alarm/alarm in view(src, 7))

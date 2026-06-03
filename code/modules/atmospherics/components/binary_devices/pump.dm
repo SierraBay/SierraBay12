@@ -149,7 +149,7 @@ Thus, the two variables affect pump operation are set in New():
 	if((. = ..())) return
 
 	if(href_list["power"])
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 
 	switch(href_list["set_press"])

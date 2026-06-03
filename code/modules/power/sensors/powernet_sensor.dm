@@ -69,14 +69,7 @@
 /obj/machinery/power/sensor/proc/find_apcs()
 	if(!powernet)
 		return
-
-	var/list/L = list()
-	for(var/obj/machinery/power/terminal/term in powernet.nodes)
-		var/obj/machinery/power/apc/A = term.master_machine()
-		if(istype(A))
-			L += A
-
-	return L
+	return powernet.apcs
 
 
 // Proc: return_reading_text()
@@ -101,19 +94,19 @@
 		out += "<table><tr><th>Name<th>EQUIP<th>LIGHT<th>ENVIRON<th>CELL<th>LOAD"
 
 		// These lists are used as replacement for number based APC settings
-		var/list/S = list("M-OFF","A-OFF","M-ON", "A-ON")
+		var/list/S = list("M-OFF", "DC-OFF", "A-OFF", "M-ON", "A-ON")
 		var/list/chg = list("N","C","F")
 
 		// Split to multiple lines to make it more readable
 		for(var/obj/machinery/power/apc/A in L)
-			out += "<tr><td>\The [A.area]" 															// Add area name
-			out += "<td>[S[A.equipment+1]]<td>[S[A.lighting+1]]<td>[S[A.environ+1]]" 				// Show status of channels
+			out += "<tr><td>[A.apc_area ? "\The [A.apc_area]" : "Unknown Space"]" 															// Add area name
+			out += "<td>[S[A.equipment_channel+1]]<td>[S[A.lighting_channel+1]]<td>[S[A.environment_channel+1]]" 				// Show status of channels
 			var/obj/item/cell/cell = A.get_cell()
 			if(cell)
 				out += "<td>[round(cell.percent())]% - [chg[A.charging+1]]"
 			else
 				out += "<td>NO CELL"
-			var/load = A.lastused_total // Load.
+			var/load = A.last_used_total // Load.
 			total_apc_load += load
 			load = reading_to_text(load)
 			out += "<td>[load]"
@@ -152,20 +145,20 @@
 		for(var/obj/machinery/power/apc/A in L)
 			var/list/APC_entry = list()
 			// Channel Statuses
-			APC_entry["s_equipment"] = S[A.equipment+1]
-			APC_entry["s_lighting"] = S[A.lighting+1]
-			APC_entry["s_environment"] = S[A.environ+1]
+			APC_entry["s_equipment"] = S[A.equipment_channel+1]
+			APC_entry["s_lighting"] = S[A.lighting_channel+1]
+			APC_entry["s_environment"] = S[A.environment_channel+1]
 			// Cell Status
 			var/obj/item/cell/cell = A.get_cell()
 			APC_entry["cell_charge"] = cell ? round(cell.percent()) : "NO CELL"
 			APC_entry["cell_status"] = cell ? chg[A.charging+1] : "N"
 			// Other info
-			APC_entry["total_load"] = reading_to_text(A.lastused_total)
-			APC_entry["name"] = A.area.name
+			APC_entry["total_load"] = reading_to_text(A.last_used_total)
+			APC_entry["name"] = A.apc_area ? A.apc_area.name : "Unknown Space"
 			// Add data into main list of APC data.
 			APC_data += list(APC_entry)
 			// Add load of this APC to total APC load calculation
-			total_apc_load += A.lastused_total
+			total_apc_load += A.last_used_total
 	data["apc_data"] = APC_data
 	data["total_avail"] = reading_to_text(max(powernet.avail, 0))
 	data["total_used_apc"] = reading_to_text(max(total_apc_load, 0))

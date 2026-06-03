@@ -66,8 +66,8 @@ Public vars at /obj/machinery level. Just because they are here does not mean th
 
 /singleton/public_access/public_variable/use_power
 	expected_type = /obj/machinery
-	name = "power use code"
-	desc = "Whether the machine is off (0) or on (positive). Some machines have multiple power states. Writing to this variable may turn the machine off or on."
+	name = "power state"
+	desc = "The machine's current power state."
 	can_write = TRUE
 	has_updates = FALSE
 	var_type = IC_FORMAT_NUMBER
@@ -105,7 +105,7 @@ Public vars at /obj/machinery level. Just because they are here does not mean th
 
 /// Toggles the machine's power state. Used by the `toggle_power` public method.
 /obj/machinery/proc/toggle_power()
-	update_use_power(!use_power)
+	update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 
 /singleton/public_access/public_method/refresh
 	name = "refresh machine"

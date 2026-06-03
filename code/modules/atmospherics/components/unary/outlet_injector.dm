@@ -86,7 +86,7 @@
 	if((. = ..())) return
 
 	if(href_list["power"])
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 
 	if(href_list["settag"])
@@ -197,7 +197,7 @@
 		queue_icon_update()
 
 	if(signal.data["power_toggle"] || signal.data["command"] == "valve_toggle") // some atmos buttons use "valve_toggle" as a command
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		queue_icon_update()
 
 	if(signal.data["inject"])

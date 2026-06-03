@@ -203,7 +203,7 @@
 	if(..())
 		return 1
 	if(href_list["toggleStatus"])
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		update_icon()
 		return 1
 	if(href_list["setPower"]) //setting power to 0 is redundant anyways

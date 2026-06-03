@@ -68,7 +68,6 @@
 	if(!A.powered(EQUIP))
 		return
 	A.use_power_oneoff(5000, EQUIP)
-	var/light = A.power_light
 	A.update_icon()
 
 	flick("echair1", src)
@@ -82,7 +81,5 @@
 		buckled_mob.burn_skin(85)
 		buckled_mob.Stun(600)
 	visible_message(SPAN_DANGER("The electric chair went off!"), SPAN_DANGER("You hear a deep sharp shock!"))
-
-	A.power_light = light
 	A.update_icon()
 	return

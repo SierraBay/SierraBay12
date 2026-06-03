@@ -84,7 +84,7 @@
 	if((. = ..())) return
 
 	if(href_list["power"])
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		. = 1
 		
 	if(href_list["settag"])
@@ -163,7 +163,7 @@
 		return 0
 
 	if(signal.data["power_toggle"] || signal.data["command"] == "valve_toggle")
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		queue_icon_update()
 
 	if(signal.data[2] == "set_internal_pressure")

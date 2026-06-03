@@ -25,12 +25,16 @@
 	var/datum/wires/wires
 	/// One of `POWER_USE_*`. The power usage state of the machine. Use `update_use_power()` to modify this during runtime.
 	var/use_power = POWER_USE_IDLE
+	/// Whether this machine participates in local powernet checks.
+	var/requires_power = TRUE
 	/// Power usage for idle machinery. Used if `use_power` is set to `POWER_USE_IDLE`. Use `change_power_consumption()` to modify this during runtime.
 	var/idle_power_usage = 0
 	/// Power usage for active machinery. Used if `use_power` is set to `POWER_USE_ACTIVE`. Use `change_power_consumption()` to modify this during runtime.
 	var/active_power_usage = 0
 	/// Power channel the machine draws from in APCs. `EQUIP`, `ENVIRON`, or `LIGHT`. Use `update_power_channel()` to modify this during runtime.
 	var/power_channel = EQUIP
+	/// Area-local APC power controller this machine is currently registered to.
+	var/datum/local_powernet/machine_powernet
 	/// Helps with bookkeeping when initializing atoms. Don't modify.
 	var/power_init_complete = FALSE
 	/// List of component instances. Expected type: `/obj/item/stock_parts.`

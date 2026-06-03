@@ -103,7 +103,7 @@
 	if(..())
 		return 1
 	if(href_list["toggleStatus"])
-		update_use_power(!use_power)
+		update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 		update_icon()
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])

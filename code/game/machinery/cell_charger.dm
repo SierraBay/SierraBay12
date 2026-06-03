@@ -55,7 +55,8 @@
 			return TRUE
 
 		var/area/a = get_area(loc)
-		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+		var/datum/local_powernet/local_net = a?.create_powernet()
+		if(!local_net || !local_net.has_power(PW_CHANNEL_EQUIPMENT)) // There's no APC-backed equipment power in this area, don't try to cheat power!
 			to_chat(user, SPAN_WARNING("The [name] blinks red as you try to insert the cell!"))
 			return TRUE
 		if(!user.unEquip(W, src))

@@ -194,7 +194,7 @@ GLOBAL_LIST_AS(filter_mode_to_gas_id, list( \
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)
-				update_use_power(!use_power)
+				update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 			else
 				update_use_power(POWER_USE_OFF)
 		if("configure")

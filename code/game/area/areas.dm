@@ -16,11 +16,7 @@
 /area/New()
 	icon_state = ""
 	uid = ++global_uid
-
-	if(!requires_power)
-		power_light = 0
-		power_equip = 0
-		power_environ = 0
+	create_powernet()
 
 	if(dynamic_lighting)
 		luminosity = 0
@@ -31,16 +27,36 @@
 
 /area/Initialize()
 	. = ..()
-	if(!requires_power || !apc)
-		power_light = 0
-		power_equip = 0
-		power_environ = 0
+	if(!powernet)
+		create_powernet()
 	power_change()		// all machines set to current power level, also updates lighting icon
 	if (turfs_airless)
 		return INITIALIZE_HINT_LATELOAD
 
 /area/LateInitialize(mapload)
 	turfs_airless = FALSE
+
+/area/proc/create_powernet()
+	RETURN_TYPE(/datum/local_powernet)
+	if(powernet)
+		return powernet
+	powernet = new
+	powernet.powernet_area = src
+	if(always_unpowered)
+		powernet.power_flags |= PW_ALWAYS_UNPOWERED
+		powernet.equipment_powered = FALSE
+		powernet.lighting_powered = FALSE
+		powernet.environment_powered = FALSE
+	else if(!requires_power)
+		powernet.power_flags |= PW_ALWAYS_POWERED
+		powernet.equipment_powered = TRUE
+		powernet.lighting_powered = TRUE
+		powernet.environment_powered = TRUE
+	else if(apc_starts_off)
+		powernet.equipment_powered = FALSE
+		powernet.lighting_powered = FALSE
+		powernet.environment_powered = FALSE
+	return powernet
 
 
 // Changes the area of T to A. Do not do this manually.
@@ -216,7 +232,9 @@
 	return
 
 /area/on_update_icon()
-	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
+	if(!powernet)
+		create_powernet()
+	if ((fire || eject || party) && (!requires_power || powernet.has_power(PW_CHANNEL_ENVIRONMENT)))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -277,7 +295,9 @@
 		return
 
 	var/vent_ambience
-	if (!always_unpowered && power_environ && length(vent_pumps) && living.get_sound_volume_multiplier() > 0.2)
+	if(!powernet)
+		create_powernet()
+	if (!always_unpowered && powernet.has_power(PW_CHANNEL_ENVIRONMENT) && length(vent_pumps) && living.get_sound_volume_multiplier() > 0.2)
 		for (var/obj/machinery/atmospherics/unary/vent_pump/vent as anything in vent_pumps)
 			if (vent.can_pump())
 				vent_ambience = TRUE

@@ -1168,7 +1168,7 @@
 /mob/living/silicon/robot/binarycheck()
 	if(is_component_functioning("comms"))
 		var/datum/robot_component/RC = get_component("comms")
-		use_power(RC.active_usage)
+		cell_use_power(RC.active_usage)
 		return 1
 	return 0
 

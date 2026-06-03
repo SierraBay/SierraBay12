@@ -312,44 +312,38 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
-	var/list/to_connect = list()
-
 	if(!powernet) //if we somehow have no powernet, make one (should not happen for cables)
 		var/datum/powernet/newPN = new()
 		newPN.add_cable(src)
 
-	//first let's add turf cables to our powernet
-	//then we'll connect machines on turf with a node cable is present
-	for(var/AM in loc)
-		if(istype(AM,/obj/structure/cable))
-			var/obj/structure/cable/C = AM
-			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
-				if(C.powernet == powernet)	continue
-				if(C.powernet)
-					merge_powernets(powernet, C.powernet)
-				else
-					powernet.add_cable(C) //the cable was powernetless, let's just add it to our powernet
+	// First merge same-turf cables that share one of our directions.
+	for(var/obj/structure/cable/C in loc)
+		if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
+			if(C.powernet == powernet)
+				continue
+			if(C.powernet)
+				merge_powernets(powernet, C.powernet)
+			else
+				powernet.add_cable(C) //the cable was powernetless, let's just add it to our powernet
 
-		else if(istype(AM,/obj/machinery/power/apc))
-			var/obj/machinery/power/apc/N = AM
-			var/obj/machinery/power/terminal/terminal = N.terminal()
-			if(!terminal)	continue // APC are connected through their terminal
+	// Only node cables can connect power machinery on their turf.
+	if(d1 != 0)
+		return
 
+	// Cables are merged, so machines can connect immediately without staging a second list.
+	for(var/obj/machinery/power/P in loc)
+		var/obj/machinery/power/PM = P
+		if(istype(P, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = P
+			var/obj/machinery/power/terminal/terminal = apc.terminal()
+			if(!terminal)
+				continue // APCs are connected through their terminal.
 			if(terminal.powernet == powernet)
 				continue
+			PM = terminal
+		else if(P.powernet == powernet)
+			continue
 
-			to_connect += terminal //we'll connect the machines after all cables are merged
-
-		else if(istype(AM,/obj/machinery/power)) //other power machines
-			var/obj/machinery/power/M = AM
-
-			if(M.powernet == powernet)
-				continue
-
-			to_connect += M //we'll connect the machines after all cables are merged
-
-	//now that cables are done, let's connect found machines
-	for(var/obj/machinery/power/PM in to_connect)
 		if(!PM.connect_to_network())
 			PM.disconnect_from_network() //if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
 

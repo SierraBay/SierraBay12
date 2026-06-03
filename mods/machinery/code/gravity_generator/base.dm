@@ -327,7 +327,7 @@
 /obj/machinery/gravity_generator/main/OnTopic(mob/user, href_list, datum/topic_state/state)
 	if(href_list["gentoggle"])
 		if(!can_toggle_breaker || !power_supply || stat & MACHINE_STAT_NOPOWER)
-			to_chat(user, SPAN_WARNING("You pressed a button, but it doesn’t seem to respond."))
+			to_chat(user, SPAN_WARNING("You pressed a button, but it doesn't seem to respond."))
 			return
 		set_state(breaker ? FALSE : TRUE)
 

@@ -295,7 +295,7 @@
 		return // No turning on if broken or misplaced.
 	if (!use_power) //need some juice to kickstart
 		use_power_oneoff(idle_power_usage*5)
-	update_use_power(!use_power)
+	update_use_power(use_power ? POWER_USE_OFF : POWER_USE_IDLE)
 	power_change()
 	queue_icon_update()
 

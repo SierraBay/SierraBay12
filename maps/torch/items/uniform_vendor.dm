@@ -8,7 +8,7 @@
 	density = TRUE
 
 	// Power
-	use_power = 1
+	use_power = POWER_USE_IDLE
 	idle_power_usage = 10
 	var/vend_power_usage = 150 //actuators and stuff
 

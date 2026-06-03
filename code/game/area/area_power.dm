@@ -8,46 +8,50 @@
 
 /// Returns boolean. Whether or not the area is considered to have power for the given power channel. See `requires_power` and `always_unpowered` for some area-level overrides.
 /area/proc/powered(chan)
+	if(!powernet)
+		create_powernet()
 	if(!requires_power)
 		return 1
 	if(always_unpowered)
 		return 0
+	if(chan == LOCAL)
+		return FALSE // if you're running on local power, don't come begging for help here.
 	switch(chan)
 		if(EQUIP)
-			return power_equip
+			return powernet.has_power(PW_CHANNEL_EQUIPMENT)
 		if(LIGHT)
-			return power_light
+			return powernet.has_power(PW_CHANNEL_LIGHTING)
 		if(ENVIRON)
-			return power_environ
-		if(LOCAL)
-			return FALSE // if you're running on local power, don't come begging for help here.
-
-	return 0
+			return powernet.has_power(PW_CHANNEL_ENVIRONMENT)
+	return FALSE
 
 /// Called whenever the area's power or power usage state should change.
 /area/proc/power_change()
-	for(var/obj/machinery/M as anything in machinery_list)	// for each machine in the area
-		M.power_change()			// reverify power status (to update icons etc.)
+	if(!powernet)
+		create_powernet()
+	powernet.power_change()
 	if (fire || eject || party)
 		update_icon()
 
 /// Returns Integer. The total amount of power usage queued for the area from both `used_*` and `oneoff_*` for the given power channel, or all channels if `TOTAL` is passed instead.
 /area/proc/usage(chan)
+	if(!powernet)
+		create_powernet()
 	switch(chan)
 		if(LIGHT)
-			return used_light + oneoff_light
+			return powernet.passive_lighting_consumption + powernet.lighting_consumption
 		if(EQUIP)
-			return used_equip + oneoff_equip
+			return powernet.passive_equipment_consumption + powernet.equipment_consumption
 		if(ENVIRON)
-			return used_environ + oneoff_environ
+			return powernet.passive_environment_consumption + powernet.environment_consumption
 		if(TOTAL)
-			return .(LIGHT) + .(EQUIP) + .(ENVIRON)
+			return powernet.get_total_usage()
 
 /// Sets all `oneoff_*` vars to `0`. Helper for APCs. Called every machinery process tick.
 /area/proc/clear_usage()
-	oneoff_equip = 0
-	oneoff_light = 0
-	oneoff_environ = 0
+	if(!powernet)
+		create_powernet()
+	powernet.clear_usage()
 
 /**
  * Adds the given amount of power to the `used_*` var for the given power channel, effectively increasing continuous power usage.
@@ -59,13 +63,9 @@
  * - `chan` Integer (`EQUIP`, `LIGHT`, or `ENVIRON`). The power channel to add the power to.
  */
 /area/proc/use_power(amount, chan)
-	switch(chan)
-		if(EQUIP)
-			used_equip += amount
-		if(LIGHT)
-			used_light += amount
-		if(ENVIRON)
-			used_environ += amount
+	if(!powernet)
+		create_powernet()
+	powernet.adjust_static_power(chan, amount)
 
 /**
  * Updates the area's continuous power use (See the `used_*` vars) for the given channel.
@@ -79,7 +79,9 @@
  * - `chan` Integer (`ENVIRON`, `EQUIP`, or `LIGHT`). The channel to update.
  */
 /area/proc/power_use_change(old_amount, new_amount, chan)
-	use_power(new_amount - old_amount, chan)
+	if(!powernet)
+		create_powernet()
+	powernet.power_use_change(old_amount, new_amount, chan)
 
 /**
  * Adds the given amount of power to the `oneoff_*` var for the given power channel. This results in a single spike in power usage that is reset on the next power tick.
@@ -90,24 +92,12 @@
  * - `chan` Integer (`EQUIP`, `LIGHT`, or `ENVIRON`). The power channel to add the power to.
  */
 /area/proc/use_power_oneoff(amount, chan)
-	switch(chan)
-		if(EQUIP)
-			oneoff_equip += amount
-		if(LIGHT)
-			oneoff_light += amount
-		if(ENVIRON)
-			oneoff_environ += amount
+	if(!powernet)
+		create_powernet()
+	powernet.use_power_oneoff(amount, chan)
 
 /// Recomputes the continued power usage; can be used for testing or error recovery, but is not called under normal conditions.
 /area/proc/retally_power()
-	used_equip = 0
-	used_light = 0
-	used_environ = 0
-	for(var/obj/machinery/M in src)
-		switch(M.power_channel)
-			if(EQUIP)
-				used_equip += M.get_power_usage()
-			if(LIGHT)
-				used_light += M.get_power_usage()
-			if(ENVIRON)
-				used_environ += M.get_power_usage()
+	if(!powernet)
+		create_powernet()
+	powernet.retally_passive_usage()

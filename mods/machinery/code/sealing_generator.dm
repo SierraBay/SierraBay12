@@ -45,7 +45,7 @@
 	if(stat & MACHINE_STAT_NOPOWER)
 		off()
 	update_icon()
-	change_power_consumption(field_density ? initial(active_power_usage)*3 : initial(active_power_usage), use_power_mode = POWER_USE_ACTIVE)
+	change_power_consumption(field_density ? initial(active_power_usage)*3 : initial(active_power_usage), POWER_USE_ACTIVE)
 	update_use_power(current_field ? POWER_USE_ACTIVE : POWER_USE_IDLE)
 	if(current_field)
 		current_field.density = field_density

@@ -10,7 +10,7 @@
 	density = TRUE
 	opacity = TRUE
 	//Just 300 Watts here. Power is drawn by the piston when it moves
-	use_power = 1
+	use_power = POWER_USE_IDLE
 	idle_power_usage = 300
 
 	var/obj/machinery/crusher_piston/piston //Piston

@@ -13,3 +13,6 @@
 
 #define COMSIG_CABINE_OPEN "cabine_open"
 #define COMSIG_CABINE_CLOSED "cabine_closed"
+
+// POWER
+#define COMSIG_POWERNET_POWER_CHANGE "powernet_power_change"
