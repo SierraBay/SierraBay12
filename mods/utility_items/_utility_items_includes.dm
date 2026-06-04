@@ -67,6 +67,4 @@
 #include "code/coat_rack/can_be_added.dm"
 #include "code/coat_rack/coat_rack.dm"
 #include "code/coat_rack/removing.dm"
-#include "code\polytool\polytool.dm"
-#include "code\polytool\hotkeing.dm"
 #endif

@@ -15,7 +15,7 @@
 		var/obj/item/I = new path (src)
 		I.canremove = FALSE
 		LAZYADD(items, I)
-		var/image/img = image(icon = 'mods/utility_items/icons/polytool_instruments.dmi', icon_state = I.icon_state)
+		var/image/img = image(icon = 'mods/RnD/icons/polytool_instruments.dmi', icon_state = I.icon_state)
 		img.name = I.name
 		images[I] = img
 

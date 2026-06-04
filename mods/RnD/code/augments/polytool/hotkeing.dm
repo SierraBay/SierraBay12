@@ -8,7 +8,8 @@
 
 /datum/keybinding/human/down(client/user)
 	var/obj/item/organ/internal/augment/active/polytool/polytool = get_current_polytool()
-	polytool.activate()
+	if(polytool)
+		polytool.activate()
 
 
 ///Задача функции - найти какой политул сейчас активен у игрока. Не та рука - не можем найти.
