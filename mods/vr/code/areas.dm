@@ -40,7 +40,7 @@
 	dynamic_lighting = FALSE
 
 /area/virtual_reality/desert
-	name = "\improper Virtual Reality - Desert"
+	name = "\improper Virtual Reality - Wild West Desert"
 	dynamic_lighting = FALSE
 
 /area/virtual_reality/theatre
@@ -70,6 +70,8 @@
 /area/virtual_reality/jungle
 	name = "\improper Virtual Reality - Jungle Night"
 	dynamic_lighting = TRUE
+	forced_ambience = list('sound/ambience/jungle.ogg')
+
 
 /area/virtual_reality/meeting_hall
 	name = "\improper Virtual Reality - Meeting Hall"
