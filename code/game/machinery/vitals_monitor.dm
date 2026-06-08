@@ -56,7 +56,7 @@
 		var/obj/item/organ/internal/heart/heart = victim.internal_organs_by_name[BP_HEART]
 		if (istype(heart))
 			var/rhythm_color = RHYTHM_HAS_PULSE(heart.cardiac_rhythm) ? "notice" : "warning"
-			to_chat(user, SPAN_CLASS(rhythm_color, "Cardiac Rhythm: [heart.cardiac_rhythm] ([heart.bpm] BPM)"))
+			to_chat(user, SPAN_CLASS(rhythm_color, "Cardiac Rhythm: [heart.cardiac_rhythm] ([victim.get_pulse_as_number()] BPM)"))
 		// [/SIERRA-ADD]
 		to_chat(user, SPAN_NOTICE("Blood pressure: [victim.get_blood_pressure()]"))
 		to_chat(user, SPAN_NOTICE("Blood oxygenation: [victim.get_blood_oxygenation()]%"))
@@ -292,7 +292,7 @@
 					AddOverlays(image(icon, icon_state = "pulse_veryfast"))
 					if (beep)
 						playsound(src, 'sound/machines/quiet_double_beep.ogg', 40)
-					if (heart.bpm > 150 && read_alerts)
+					if (victim.get_pulse_as_number() > 150 && read_alerts)
 						alerts[PULSE_ALERT] = "Excessive heartbeat! Possible Shock Detected!"
 	else
 		AddOverlays(emissive_appearance(icon, "pulse_flatline"))
@@ -398,7 +398,7 @@
 					data["cardiac_status"] = "Pump Failure"
 			else
 				data["cardiac_rhythm"] = heart.cardiac_rhythm
-				data["bpm"] = heart.bpm
+				data["bpm"] = victim.get_pulse_as_number()
 				data["rhythm_is_safe"] = RHYTHM_HAS_PULSE(heart.cardiac_rhythm)
 				data["infarct_progress"] = heart.infarct_progress
 				if(heart.cardiac_rhythm == RHYTHM_NSR)

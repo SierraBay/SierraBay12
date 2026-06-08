@@ -92,7 +92,7 @@
 					data["cardiac_status"] = "Pump Failure"
 			else
 				data["cardiac_rhythm"] = heart.cardiac_rhythm
-				data["bpm"] = heart.bpm
+				data["bpm"] = victim.get_pulse_as_number()
 				data["rhythm_is_safe"] = RHYTHM_HAS_PULSE(heart.cardiac_rhythm)
 				data["infarct_progress"] = heart.infarct_progress
 				if(heart.cardiac_rhythm == RHYTHM_NSR)
