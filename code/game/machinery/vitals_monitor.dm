@@ -52,6 +52,12 @@
 			return
 		to_chat(user, SPAN_NOTICE("Vitals of [victim]:"))
 		to_chat(user, SPAN_NOTICE("Pulse: [victim.get_pulse(GETPULSE_TOOL)]"))
+		// [SIERRA-ADD] - CARDIAC_OVERHAUL - Display cardiac rhythm and BPM in examine
+		var/obj/item/organ/internal/heart/heart = victim.internal_organs_by_name[BP_HEART]
+		if (istype(heart))
+			var/rhythm_color = RHYTHM_HAS_PULSE(heart.cardiac_rhythm) ? "notice" : "warning"
+			to_chat(user, SPAN_CLASS(rhythm_color, "Cardiac Rhythm: [heart.cardiac_rhythm] ([heart.bpm] BPM)"))
+		// [/SIERRA-ADD]
 		to_chat(user, SPAN_NOTICE("Blood pressure: [victim.get_blood_pressure()]"))
 		to_chat(user, SPAN_NOTICE("Blood oxygenation: [victim.get_blood_oxygenation()]%"))
 		to_chat(user, SPAN_NOTICE("Body temperature: [victim.bodytemperature-T0C]&deg;C ([victim.bodytemperature*1.8-459.67]&deg;F)"))
@@ -176,9 +182,12 @@
 	if (!victim)
 		return
 	var/obj/item/organ/internal/heart/heart = victim.internal_organs_by_name[BP_HEART]
-	if (istype(heart) && !BP_IS_ROBOTIC(heart))
-		switch (victim.pulse())
-			if (PULSE_NONE)
+	if (istype(heart))
+		if (BP_IS_ROBOTIC(heart))
+			if (heart.is_working())
+				AddOverlays(emissive_appearance(icon, "pulse_flatline"))
+				AddOverlays(image(icon, icon_state = "pulse_flatline"))
+			else
 				AddOverlays(emissive_appearance(icon, "pulse_flatline"))
 				AddOverlays(emissive_appearance(icon, "pulse_warning"))
 				AddOverlays(image(icon, icon_state = "pulse_flatline"))
@@ -186,29 +195,111 @@
 				if (beep)
 					playsound(src, 'sound/machines/flatline.ogg', 20)
 				if (read_alerts)
-					alerts[PULSE_ALERT] = "Cardiac flatline detected!"
-			if (PULSE_SLOW, PULSE_NORM,)
-				AddOverlays(emissive_appearance(icon, "pulse_normal"))
-				AddOverlays(image(icon, icon_state = "pulse_normal"))
-				if (beep)
-					playsound(src, 'sound/machines/quiet_beep.ogg', 40)
-			if (PULSE_FAST, PULSE_2FAST)
-				AddOverlays(emissive_appearance(icon, "pulse_veryfast"))
-				AddOverlays(image(icon, icon_state = "pulse_veryfast"))
-				if (beep)
-					playsound(src, 'sound/machines/quiet_double_beep.ogg', 40)
-			if (PULSE_THREADY)
-				AddOverlays(emissive_appearance(icon, "pulse_thready"))
-				AddOverlays(image(icon, icon_state = "pulse_thready"))
-				AddOverlays(emissive_appearance(icon, "pulse_warning"))
-				AddOverlays(image(icon, icon_state = "pulse_warning"))
-				if (beep)
-					playsound(src, 'sound/machines/ekg_alert.ogg', 40)
-				if (read_alerts)
-					alerts[PULSE_ALERT] = "Excessive heartbeat! Possible Shock Detected!"
+					alerts[PULSE_ALERT] = "Prosthetic heart failure! No flow detected!"
+		// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Use cardiac rhythm instead of raw pulse level for EKG and alerts
+		/*
+		else
+			switch(victim.pulse())
+				if(PULSE_NONE)
+					AddOverlays(emissive_appearance(icon, "pulse_flatline"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_flatline"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if(beep)
+						playsound(src, 'sound/machines/flatline.ogg', 20)
+					if(read_alerts)
+						alerts[PULSE_ALERT] = "Cardiac flatline detected!"
+				if(PULSE_SLOW, PULSE_NORM)
+					AddOverlays(emissive_appearance(icon, "pulse_normal"))
+					AddOverlays(image(icon, icon_state = "pulse_normal"))
+					if(beep)
+						playsound(src, 'sound/machines/quiet_beep.ogg', 40)
+				if(PULSE_FAST, PULSE_2FAST)
+					AddOverlays(emissive_appearance(icon, "pulse_veryfast"))
+					AddOverlays(image(icon, icon_state = "pulse_veryfast"))
+					if(beep)
+						playsound(src, 'sound/machines/quiet_double_beep.ogg', 40)
+				if(PULSE_THREADY)
+					AddOverlays(emissive_appearance(icon, "pulse_thready"))
+					AddOverlays(image(icon, icon_state = "pulse_thready"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if(beep)
+						playsound(src, 'sound/machines/ekg_alert.ogg', 40)
+					if(read_alerts)
+						alerts[PULSE_ALERT] = "Excessive heartbeat! Possible Shock Detected!"
+		*/
+		else
+			// Use cardiac rhythm for more specific alerts
+			switch (heart.cardiac_rhythm)
+				if (RHYTHM_ASYSTOLE)
+					AddOverlays(emissive_appearance(icon, "pulse_flatline"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_flatline"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if (beep)
+						playsound(src, 'sound/machines/flatline.ogg', 20)
+					if (read_alerts)
+						alerts[PULSE_ALERT] = "Cardiac flatline detected! Asystole!"
+				if (RHYTHM_STEMI)
+					AddOverlays(emissive_appearance(icon, "pulse_veryfast"))
+					AddOverlays(image(icon, icon_state = "pulse_veryfast"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if (beep)
+						playsound(src, 'sound/machines/ekg_alert.ogg', 40)
+					if (read_alerts)
+						alerts[PULSE_ALERT] = "Myocardial Infarction detected! Emergency medical aid required!"
+				if (RHYTHM_VFIB)
+					AddOverlays(emissive_appearance(icon, "pulse_thready"))
+					AddOverlays(image(icon, icon_state = "pulse_thready"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if (beep)
+						playsound(src, 'sound/machines/ekg_alert.ogg', 40)
+					if (read_alerts)
+						alerts[PULSE_ALERT] = "Ventricular Fibrillation detected! Defibrillation required!"
+				if (RHYTHM_PEA)
+					AddOverlays(emissive_appearance(icon, "pulse_flatline"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_flatline"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if (beep)
+						playsound(src, 'sound/machines/flatline.ogg', 20)
+					if (read_alerts)
+						alerts[PULSE_ALERT] = "Pulseless Electrical Activity! No mechanical pulse!"
+				if (RHYTHM_BLOCK)
+					AddOverlays(emissive_appearance(icon, "pulse_veryfast"))
+					AddOverlays(image(icon, icon_state = "pulse_veryfast"))
+					AddOverlays(emissive_appearance(icon, "pulse_warning"))
+					AddOverlays(image(icon, icon_state = "pulse_warning"))
+					if (beep)
+						playsound(src, 'sound/machines/ekg_alert.ogg', 40)
+					if (read_alerts)
+						alerts[PULSE_ALERT] = "Heart Block detected! Irregular cardiac conduction!"
+				if (RHYTHM_BRADY)
+					AddOverlays(emissive_appearance(icon, "pulse_normal"))
+					AddOverlays(image(icon, icon_state = "pulse_normal"))
+					if (beep)
+						playsound(src, 'sound/machines/quiet_beep.ogg', 40)
+				if (RHYTHM_NSR)
+					AddOverlays(emissive_appearance(icon, "pulse_normal"))
+					AddOverlays(image(icon, icon_state = "pulse_normal"))
+					if (beep)
+						playsound(src, 'sound/machines/quiet_beep.ogg', 40)
+				if (RHYTHM_TACHY)
+					AddOverlays(emissive_appearance(icon, "pulse_veryfast"))
+					AddOverlays(image(icon, icon_state = "pulse_veryfast"))
+					if (beep)
+						playsound(src, 'sound/machines/quiet_double_beep.ogg', 40)
+					if (heart.bpm > 150 && read_alerts)
+						alerts[PULSE_ALERT] = "Excessive heartbeat! Possible Shock Detected!"
 	else
+		AddOverlays(emissive_appearance(icon, "pulse_flatline"))
 		AddOverlays(emissive_appearance(icon, "pulse_warning"))
+		AddOverlays(image(icon, icon_state = "pulse_flatline"))
 		AddOverlays(image(icon, icon_state = "pulse_warning"))
+	// [/SIERRA-EDIT]
 
 /obj/machinery/vitals_monitor/proc/handle_brain()
 	if (!victim)
@@ -275,6 +366,170 @@
 
 
 
+// [SIERRA-ADD] - CARDIAC_OVERHAUL - NanoUI patient monitoring interface and Topic support
+/obj/machinery/vitals_monitor/interface_interact(mob/user)
+	ui_interact(user)
+	return TRUE
+
+/obj/machinery/vitals_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/nanoui/master_ui = null, datum/topic_state/state = GLOB.default_state)
+	var/list/data = list()
+
+	data["ref"] = "\ref[src]"
+	data["beep"] = beep
+	data["read_alerts"] = read_alerts
+	data["detailed"] = detailed
+	data["connected_table"] = connected_optable ? TRUE : FALSE
+
+	if(victim)
+		data["victim"] = list("name" = victim.name)
+		
+		var/obj/item/organ/internal/heart/heart = victim.internal_organs_by_name[BP_HEART]
+		if(istype(heart))
+			if(BP_IS_ROBOTIC(heart))
+				if(heart.is_working())
+					data["cardiac_rhythm"] = "Continuous Flow"
+					data["bpm"] = 0
+					data["rhythm_is_safe"] = TRUE
+					data["cardiac_status"] = "Steady Whirr"
+				else
+					data["cardiac_rhythm"] = "Asystole"
+					data["bpm"] = 0
+					data["rhythm_is_safe"] = FALSE
+					data["cardiac_status"] = "Pump Failure"
+			else
+				data["cardiac_rhythm"] = heart.cardiac_rhythm
+				data["bpm"] = heart.bpm
+				data["rhythm_is_safe"] = RHYTHM_HAS_PULSE(heart.cardiac_rhythm)
+				data["infarct_progress"] = heart.infarct_progress
+				if(heart.cardiac_rhythm == RHYTHM_NSR)
+					data["cardiac_status"] = "Normal"
+				else
+					data["cardiac_status"] = heart.cardiac_rhythm
+		else
+			data["cardiac_rhythm"] = "Asystole"
+			data["bpm"] = 0
+			data["rhythm_is_safe"] = FALSE
+			data["cardiac_status"] = "No Heartbeat"
+
+		data["blood_pressure"] = victim.get_blood_pressure()
+		data["oxygenation"] = victim.get_blood_oxygenation()
+
+		// BP status class
+		if(victim.get_blood_volume() <= 70)
+			data["bp_status"] = "danger"
+		else
+			data["bp_status"] = ""
+
+		// Oxy status class
+		var/oxy = victim.get_blood_oxygenation()
+		if(oxy < BLOOD_VOLUME_SURVIVE)
+			data["oxy_status"] = "danger"
+		else if(oxy < BLOOD_VOLUME_OKAY)
+			data["oxy_status"] = "warning"
+		else
+			data["oxy_status"] = "normal-pulse"
+
+		data["temperature"] = round(victim.bodytemperature - T0C, 0.1)
+
+		// Breathing
+		var/breathing = "none"
+		var/breath_status = "danger"
+		var/obj/item/organ/internal/lungs/lungs = victim.internal_organs_by_name[BP_LUNGS]
+		if (istype(lungs) && !(victim.status_flags & FAKEDEATH))
+			if (lungs.breath_fail_ratio < 0.3)
+				breathing = "normal"
+				breath_status = "normal-pulse"
+			else if (lungs.breath_fail_ratio < 1)
+				breathing = "shallow"
+				breath_status = "warning"
+		data["breathing"] = breathing
+		data["breath_status"] = breath_status
+
+		// Brain
+		var/brain_activity = "none"
+		var/brain_status = "danger"
+		var/obj/item/organ/internal/brain/brain = victim.internal_organs_by_name[BP_BRAIN]
+		if (istype(brain) && !victim.is_dead())
+			switch (brain.get_current_damage_threshold())
+				if (0)
+					brain_activity = "normal"
+					brain_status = ""
+				if (1 to 2)
+					brain_activity = "minor damage"
+					brain_status = "warning"
+				if (3 to 5)
+					brain_activity = "weak"
+					brain_status = "danger"
+				if (6 to 8)
+					brain_activity = "extremely weak"
+					brain_status = "danger"
+				if (9 to INFINITY)
+					brain_activity = "fading"
+					brain_status = "danger"
+		data["brain_activity"] = brain_activity
+		data["brain_status"] = brain_status
+
+		// Alerts list
+		var/list/active_alerts = list()
+		for(var/alert_idx in 1 to length(alerts))
+			if(alerts[alert_idx])
+				active_alerts += alerts[alert_idx]
+		data["alerts"] = active_alerts
+
+		// Injury details for detailed scans
+		var/list/injuries = list()
+		var/has_injuries = FALSE
+		if(detailed)
+			for(var/name in victim.organs_by_name)
+				var/obj/item/organ/external/organ = victim.organs_by_name[name]
+				if (!organ)
+					continue
+				if (GET_FLAGS(organ.status, ORGAN_BROKEN | ORGAN_ARTERY_CUT))
+					has_injuries = TRUE
+					var/list/injury = list("limb" = organ.name)
+					var/issue = ""
+					if (GET_FLAGS(organ.status, ORGAN_BROKEN))
+						issue += "Fracture. "
+					if (GET_FLAGS(organ.status, ORGAN_ARTERY_CUT))
+						issue += "Arterial bleed."
+					injury["issue"] = issue
+					injuries += list(injury)
+		data["injuries"] = injuries
+		data["has_injuries"] = has_injuries
+
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "mods-vitals_monitor.tmpl", "Vitals Monitor", 550, 600, state = state)
+		ui.set_initial_data(data)
+		ui.add_script("vitals_monitor.js")
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/vitals_monitor/Topic(href, href_list, state)
+	if(..())
+		return TRUE
+
+	if(href_list["toggle_beep"])
+		beep = !beep
+		update_icon()
+		return TRUE
+
+	if(href_list["toggle_alerts"])
+		read_alerts = !read_alerts
+		update_icon()
+		return TRUE
+
+	if(href_list["disconnect_table"])
+		update_optable(null)
+		update_victim(null)
+		return TRUE
+
+	if(href_list["release_patient"])
+		update_victim(null)
+		return TRUE
+// [/SIERRA-ADD]
+
+// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Update UI status when toggling sound or alerts
 /obj/machinery/vitals_monitor/verb/toggle_beep()
 	set name = "Toggle Monitor Beeping"
 	set category = "Object"
@@ -287,6 +542,10 @@
 	if (CanPhysicallyInteract(user))
 		beep = !beep
 		to_chat(user, SPAN_NOTICE("You turn the sound on \the [src] [beep ? "on" : "off"]."))
+		// update_icon() // SIERRA-EDIT - ORIGINAL
+		// SSnano.update_uis(src) // SIERRA-EDIT - ORIGINAL
+		update_icon()
+		SSnano.update_uis(src)
 
 /obj/machinery/vitals_monitor/verb/toggle_alerts()
 	set name = "Toggle Alert Annunciator"
@@ -300,6 +559,11 @@
 	if (CanPhysicallyInteract(user))
 		read_alerts = !read_alerts
 		to_chat(user, SPAN_NOTICE("You turn the alert reader on \the [src] [read_alerts ? "on" : "off"]."))
+		// update_icon() // SIERRA-EDIT - ORIGINAL
+		// SSnano.update_uis(src) // SIERRA-EDIT - ORIGINAL
+		update_icon()
+		SSnano.update_uis(src)
+// [/SIERRA-EDIT]
 
 /obj/item/stock_parts/circuitboard/vitals_monitor
 	name = "circuit board (vitals monitor)"

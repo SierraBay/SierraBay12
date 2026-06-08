@@ -33,9 +33,16 @@
 	else
 		pulse_result = -1
 
-	if(pulse_result == ">250")
-		pulse_result = -3
-	scan["pulse"] = text2num(pulse_result)
+	// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Support numerical pulse results
+	// scan["pulse"] = text2num(pulse_result) // SIERRA-EDIT - ORIGINAL
+	if(isnum(pulse_result))
+		scan["pulse"] = pulse_result
+	else
+		if(pulse_result == ">250")
+			scan["pulse"] = -3
+		else
+			scan["pulse"] = text2num(pulse_result)
+	// [/SIERRA-EDIT]
 
 	scan["blood_pressure"] = H.get_blood_pressure()
 	scan["blood_o2"] = H.get_blood_oxygenation()
