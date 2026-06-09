@@ -86,6 +86,10 @@
 	H.set_fullscreen(how_nearsighted, "nearsighted", /obj/screen/fullscreen/oxy, how_nearsighted)
 	H.set_fullscreen(H.druggy, "high", /obj/screen/fullscreen/high)
 
+	// Keep the pre-Bloom Light behavior: apply nearsighted blur only to the
+	// dedicated vision-cone renderers, not to every plane master in renderer_plane_map.
+	// Blurring all plane masters makes remote views such as cameras, sensors and
+	// overmap monitors unreadable.
 	for(var/atom/movable/renderer/nearsight_blur/blur in H.renderers)
 		if(how_nearsighted)
 			blur.filters = list(filter(type="blur", size=2))

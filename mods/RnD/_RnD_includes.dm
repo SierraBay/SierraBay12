@@ -12,6 +12,9 @@
 #include "code/augments/sonar.dm"
 #include "code/augments/vampire.dm"
 #include "code/augments/sandevistan.dm"
+#include "code/augments/polytool/hotkeing.dm"
+#include "code/augments/polytool/polytool.dm"
+
 
 // Корпорации и деревья технологий
 #include "code/corporations.dm"

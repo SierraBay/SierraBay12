@@ -14,11 +14,11 @@
 	var/datum/changeling/changeling = changeling_power(0,0,100,UNCONSCIOUS)
 	if(!changeling)
 		return FALSE
-	if(src.mind.changeling.recursive_enhancement)
+	if (mind.changeling.recursive_enhancement)
 		to_chat(src, "<span class='warning'>We will no longer empower our abilities.</span>")
-		src.mind.changeling.recursive_enhancement = 0
+		mind.changeling.recursive_enhancement = FALSE
 		return FALSE
 	to_chat(src, "<span class='notice'>We empower ourselves. Our next ability will now be extra potent.</span>")
-	src.mind.changeling.recursive_enhancement = 1
+	mind.changeling.recursive_enhancement = TRUE
 	changeling.chem_charges -= 10
 	return TRUE

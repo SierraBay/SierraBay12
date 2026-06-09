@@ -1,0 +1,11 @@
+#ifndef MODPACK_BLOOM_LIGHT
+#define MODPACK_BLOOM_LIGHT
+
+#include "_bloom_light.dm"
+#include "code/__HELPERS/color_matrix.dm"
+#include "code/preferences.dm"
+#include "code/_renderer.dm"
+#include "code/lighting.dm"
+#include "code/lighting_atom.dm"
+
+#endif
