@@ -24106,7 +24106,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/computer/modular/preset/cardslot/science{
+/obj/machinery/computer/modular/preset/cardslot/robotics{
 	dir = 1
 	},
 /obj/floor_decal/borderfloorblack,
@@ -25042,9 +25042,9 @@
 "miG" = (
 /obj/floor_decal/borderfloor,
 /obj/floor_decal/corner/yellow/border,
-/obj/structure/table/steel_reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/structure/table/steel_reinforced,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_monitoring)
 "miO" = (
@@ -25381,8 +25381,6 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/structure/table/steel_reinforced,
-/obj/machinery/recharger,
 /obj/floor_decal/borderfloor{
 	dir = 8
 	},
@@ -25395,6 +25393,7 @@
 /obj/floor_decal/corner/yellow/bordercorner2{
 	dir = 10
 	},
+/obj/machinery/fabricator/rnd/imprinter/loaded,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_monitoring)
 "mrp" = (
@@ -40699,6 +40698,8 @@
 /obj/floor_decal/corner/yellow/border,
 /obj/floor_decal/borderfloor/corner2,
 /obj/floor_decal/corner/yellow/bordercorner2,
+/obj/structure/table/steel_reinforced,
+/obj/machinery/recharger,
 /turf/simulated/floor/tiled/steel_grid,
 /area/engineering/engineering_monitoring)
 "twj" = (

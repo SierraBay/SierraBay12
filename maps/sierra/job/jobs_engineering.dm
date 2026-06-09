@@ -224,6 +224,7 @@
 			SKILL_COMPUTER		=	SKILL_TRAINED,
 			SKILL_DEVICES		=	SKILL_EXPERIENCED,
 			SKILL_ANATOMY		=	SKILL_TRAINED,
+			SKILL_CONSTRUCTION	=	SKILL_BASIC,
 			SKILL_MECH			=	HAS_PERK,
 			SKILL_ELECTRICAL	=	SKILL_TRAINED
 		)
@@ -238,13 +239,13 @@
 			SKILL_ANATOMY		=	SKILL_EXPERIENCED
 		)
 
-	skill_points = 26
+	skill_points = 22
 
 	access = list(
 			access_robotics,
-			access_research,
+			access_engine,
 			access_tech_storage,
-			access_research_storage,
+			access_construction,
 			access_medical_records,
 			access_medical,
 			access_rnd_network

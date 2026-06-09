@@ -134,10 +134,13 @@
 	forced_ambience = list('maps/sierra/sound/ambience/ambxerxes_looped.wav')
 	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
+// AI removal. Temporary or not? We'll see
+
+/*
 /area/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
-/*
+
 /area/turret_protected/ai_maint
 	name = "AI Chamber - Maintenance"
 	icon_state = "ai_chamber"
@@ -145,20 +148,20 @@
 /area/turret_protected/ai_teleport
 	name = "AI Chamber - Teleporter"
 	icon_state = "ai_upload"
-*/
+
 /area/turret_protected/ai_upload
 	name = "Third Deck - AI Upload"
 	icon_state = "ai_upload"
-
+*/
 /area/turret_protected/ai_cyborg_station
-	name = "First Deck - Cyborg Station"
+	name = "Third Deck - Cyborg Station"
 	icon_state = "ai_cyborg"
 	sound_env = SMALL_ENCLOSED
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/turret_protected/ai_cyborg_upload
-	name = "First Deck - Cyborg Upload"
+	name = "Third Deck - Cyborg Upload"
 	icon_state = "ai_cyborg"
 	sound_env = SMALL_ENCLOSED
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED

@@ -56,6 +56,9 @@
 /obj/item/card/id/sierra/crew/medical/counselor
 	job_access_type = /datum/job/psychiatrist
 
+/obj/item/card/id/sierra/crew/medical/biomech
+	job_access_type = /datum/job/biomech
+
 //Security
 
 /obj/item/card/id/sierra/silver/security

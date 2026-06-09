@@ -173,23 +173,30 @@
 	icon_state = "xeno_f_store"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
+// Robotics and Ripper-Doc
+
 /area/assembly
 	req_access = list(access_robotics)
 
 /area/assembly/chargebay
-	name = "First Deck - RND - Mech Bay"
+	name = "Third Deck - Engineering - Mech Bay"
 	icon_state = "mechbay"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/assembly/robotics
-	name = "First Deck - RND - Robotics Lab"
+	name = "Third Deck - Engineering - Robotics Lab"
 	icon_state = "robotics"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-/*
-/area/assembly/office
-	name = "First Deck - RND - Robotics Office"
-	icon_state = "mechbay"
-*/
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
+
+/area/assembly/robotics/office
+	name = "First Deck - Infirmary - Biomech Office"
+	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
+	req_access = list(access_robotics)
+
+/area/assembly/robotics/surgery
+	name = "First Deck - Infirmary - Biomech Operating Theatre"
+	lighting_tone = AREA_LIGHTING_COOL
+	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
 
 /* CREW AREAS
  * ==========

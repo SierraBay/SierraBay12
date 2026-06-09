@@ -197,7 +197,6 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	shoes = /obj/item/clothing/shoes/black
 	l_ear = /obj/item/device/radio/headset/sierra_roboticist
 	id_types = list(/obj/item/card/id/sierra/crew/engineering/roboticist)
-//	pda_type = /obj/item/modular_computer/pda/roboticist
 
 	////////////
 	//SECURITY//
@@ -355,6 +354,12 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Counselor - Mentalist - Sierra")
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	shoes = /obj/item/clothing/shoes/laceup
+
+/singleton/hierarchy/outfit/job/sierra/crew/medical/biomech
+	name = OUTFIT_JOB_NAME("Surgeon - Sierra")
+	suit = /obj/item/clothing/suit/storage/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/black
+	id_types = list(/obj/item/card/id/sierra/crew/medical/biomech)
 
 	/////////
 	//CARGO//

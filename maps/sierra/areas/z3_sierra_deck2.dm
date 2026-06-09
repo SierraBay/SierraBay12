@@ -64,12 +64,12 @@
 
 /area/maintenance/substation/seconddeck
 	name = "Second Deck - Substation"
-/*
+
 /area/crew_quarters/laundry
 	name = "Second Deck - Laundry Room"
 	icon_state = "Sleep"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 /area/maintenance/abandoned_hydroponics
 	name = "Second Deck - Abandoned - Hydroponics"
 	icon_state = "hydro"
@@ -226,12 +226,10 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/*
 /area/crew_quarters/garden_room
 	name = "Second deck - living - Lounge"
 	icon_state = "game_room_inf"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
 
 /area/crew_quarters/dungeon_master_lounge
 	name = "Second Deck - Living Room"

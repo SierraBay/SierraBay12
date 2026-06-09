@@ -672,7 +672,7 @@ var/global/const/NO_EMAG_ACT = -50
 	job_access_type = /datum/job/chief_engineer
 	extra_details = list("goldstripe")
 
-/obj/item/card/id/engineering/roboticist
+/obj/item/card/id/science/roboticist
 	job_access_type = /datum/job/roboticist
 
 /obj/item/card/id/science

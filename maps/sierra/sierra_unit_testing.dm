@@ -94,10 +94,11 @@
 		/area/holodeck/alphadeck,
 		/area/holocontrol
 	)
-
+/*
 /datum/unit_test/zas_area_test/ai_chamber
 	name = "ZAS: AI Chamber"
 	area_path = /area/turret_protected/ai
+ */
 
 /datum/unit_test/zas_area_test/cargo_bay
 	name = "ZAS: Cargo Bay"

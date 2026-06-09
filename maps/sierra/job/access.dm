@@ -68,6 +68,12 @@ var/global/const/access_senmed = "ACCESS_SENMED"
 	desc = "Physician"
 	region = ACCESS_REGION_MEDBAY
 
+var/global/const/access_biomech = "ACCESS_BIOMECH"
+/datum/access/biomech
+	id = access_biomech
+	desc = "Biomechanical Engineer"
+	region = ACCESS_REGION_MEDBAY
+
 var/global/const/access_guard = "ACCESS_GUARD"
 /datum/access/guard
 	id = access_guard

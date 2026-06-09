@@ -38,12 +38,3 @@
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	belt = /obj/item/storage/belt/utility/atmostech
 	pda_type = /obj/item/modular_computer/pda/engineering
-
-/singleton/hierarchy/outfit/job/engineering/roboticist
-	name = OUTFIT_JOB_NAME("Roboticist")
-	uniform = /obj/item/clothing/under/rank/roboticist
-	shoes = /obj/item/clothing/shoes/black
-	belt = /obj/item/storage/belt/utility/full
-	id_types = list(/obj/item/card/id/engineering/roboticist)
-	pda_slot = slot_r_store
-	pda_type = /obj/item/modular_computer/pda/roboticist
