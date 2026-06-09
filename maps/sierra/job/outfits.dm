@@ -356,7 +356,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	shoes = /obj/item/clothing/shoes/laceup
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/biomech
-	name = OUTFIT_JOB_NAME("Surgeon - Sierra")
+	name = OUTFIT_JOB_NAME("Biomechanical Engineer - Sierra")
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/black
 	id_types = list(/obj/item/card/id/sierra/crew/medical/biomech)
