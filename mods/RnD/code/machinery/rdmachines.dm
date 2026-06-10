@@ -69,6 +69,9 @@
 	have_disk2 = FALSE
 	base_type = /obj/machinery/fabricator/rnd/robotics
 
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = null
+
 /obj/machinery/fabricator/rnd/robotics/Initialize()
 	stored_material = list(
 		MATERIAL_STEEL = 0,
