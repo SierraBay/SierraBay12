@@ -72,6 +72,8 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
+	var/manufacturer = null
+
 /obj/machinery/fabricator/rnd/robotics/Initialize()
 	stored_material = list(
 		MATERIAL_STEEL = 0,
