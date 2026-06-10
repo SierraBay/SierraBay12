@@ -205,10 +205,7 @@
 	economic_power = 7
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 27
-	alt_titles = list(
-			"Biomechanical Engineer",
-			"Mechatronic Technician",
-		)
+	alt_titles = list("Mechatronic Technician")
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/roboticist
 	allowed_branches = list(
 			/datum/mil_branch/employee,
