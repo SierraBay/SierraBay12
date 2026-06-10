@@ -13265,7 +13265,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/space)
 "gAk" = (
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
@@ -32863,7 +32863,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/assembly/robotics)
 "pOE" = (
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/space)
