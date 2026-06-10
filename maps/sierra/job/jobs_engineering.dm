@@ -242,6 +242,7 @@
 	skill_points = 22
 
 	access = list(
+			access_maint_tunnels,
 			access_robotics,
 			access_engine,
 			access_tech_storage,

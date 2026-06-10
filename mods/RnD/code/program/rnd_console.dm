@@ -49,6 +49,16 @@ those devices access via linked_console.
 	program_key_state = "tech_key"
 	size = 8
 
+/datum/computer_file/program/rnd_console/biomech_console
+	filename      = "robofab_console"
+	filedesc      = "Robotics Design Console"
+	extended_desc = "Robotics fabrication management software. Provides access to robotics/mech design catalogs, syncing, and corporate unlock purchases."
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/biomech
+	required_access = access_biomech
+	program_icon_state = "research"
+	program_key_state = "tech_key"
+	size = 8
+
 // ═══════════════════════════════════════════════════════════════════════════
 // Screen constants (mirrors rdconsole.dm — redefined here because that file
 // #undef's them at its end)
@@ -192,6 +202,18 @@ those devices access via linked_console.
 	if(target == "mech")
 		return linked_mech_fab
 	return linked_robotics_fab
+
+// Biomech
+
+/datum/nano_module/program/rnd_console/robotics_console/biomech
+	id = 2
+	can_research = FALSE
+	lite_theme = "medical"
+
+/datum/nano_module/program/rnd_console/robotics_console/biomech/is_allowed(mob/user)
+	if(emagged)
+		return TRUE
+	return check_access(user, list(access_biomech))
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Lifecycle

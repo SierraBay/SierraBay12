@@ -190,11 +190,12 @@
 
 /area/assembly/robotics/office
 	name = "First Deck - Infirmary - Biomech Office"
+	req_access = list(access_biomech)
 	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
-	req_access = list(access_robotics)
 
 /area/assembly/robotics/surgery
 	name = "First Deck - Infirmary - Biomech Operating Theatre"
+	req_access = list(access_biomech)
 	lighting_tone = AREA_LIGHTING_COOL
 	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
 

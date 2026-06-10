@@ -274,7 +274,7 @@
 	minimum_character_age = list(SPECIES_HUMAN = 28)
 	ideal_character_age = 45
 	economic_power = 8
-	skill_points = 24
+	skill_points = 20
 
 	total_positions = 1
 	spawn_positions = 1
@@ -292,15 +292,16 @@
 		/datum/mil_rank/civ/probation_contractor
 	)
 	min_skill = list(
-		SKILL_BUREAUCRACY = SKILL_BASIC,
+		SKILL_ELECTRICAL  = SKILL_BASIC,
+		SKILL_COMPUTER    = SKILL_BASIC,
 		SKILL_MEDICAL     = SKILL_TRAINED,
 		SKILL_DEVICES     = SKILL_TRAINED,
-		SKILL_ANATOMY     = SKILL_TRAINED
+		SKILL_ANATOMY     = SKILL_EXPERIENCED
 	)
 	max_skill = list(
-		SKILL_MEDICAL     = SKILL_MAX,
-		SKILL_DEVICES     = SKILL_EXPERIENCED,
-		SKILL_ANATOMY     = SKILL_MAX
+		SKILL_MEDICAL     = SKILL_EXPERIENCED,
+		SKILL_DEVICES     = SKILL_MASTER,
+		SKILL_ANATOMY     = SKILL_EXPERIENCED
 	)
 	access = list(
 		access_medical, access_morgue, access_medical_records,
