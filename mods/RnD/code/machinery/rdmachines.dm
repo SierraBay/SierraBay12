@@ -147,9 +147,22 @@
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
 
+/datum/design/circuit/robotics_fabricator
+	name = "robotech fabricator"
+	id = "robofab"
+	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
+	build_path = /obj/item/stock_parts/circuitboard/robotics_fabricator
+	sort_string = "HABAE"
+
 /obj/item/stock_parts/circuitboard/robotics_fabricator/mech
 	name = "circuit board (exosuit fabricator)"
 	build_path = /obj/machinery/fabricator/rnd/robotics/mech
+
+/datum/design/circuit/robotics_fabricator/mech
+	name = "exosuit fabricator"
+	id = "mechfab"
+	build_path = /obj/item/stock_parts/circuitboard/robotics_fabricator/mech
+	sort_string = "HABAF"
 
 /obj/item/stock_parts/circuitboard/protolathe
 	name = "circuit board (protolathe)"

@@ -304,12 +304,14 @@
 	build_path = /obj/item/stock_parts/circuitboard/rdserver
 	sort_string = "HABBB"
 
+/*
 /datum/design/circuit/mechfab
 	name = "exosuit fabricator"
 	id = "mechfab"
 	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
 	build_path = /obj/item/stock_parts/circuitboard/mechfab
 	sort_string = "HABAE"
+*/
 
 /datum/design/circuit/mech_recharger
 	name = "mech recharger"
