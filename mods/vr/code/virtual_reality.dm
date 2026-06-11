@@ -11,7 +11,7 @@ GLOBAL_LIST_AS(vr_areas, list(
 	"Thunderdome" = /area/virtual_reality/thunderdome,
 	"Beach" = /area/virtual_reality/beach,
 	"Snowy Field" = /area/virtual_reality/snowfield,
-	"Desert" = /area/virtual_reality/desert,
+	"Wild West Desert" = /area/virtual_reality/desert,
 	"Space" = /area/virtual_reality/space,
 	"Infirmary" = /area/virtual_reality/infirmary
 ))
