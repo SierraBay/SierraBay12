@@ -27,7 +27,7 @@
 			// This space intentionally left blank (for Omega-Minus psi vampires. todo)
 			if(viewer != usr && GLOB.thralls.is_antagonist(mind) && ishuman(viewer))
 				var/mob/living/H = viewer
-				if(H.psi && H.psi.get_rank(PSI_REDACTION) >= PSI_RANK_GRANDMASTER)
+				if(H.psi && H.psi.get_rank(PSI_REDACTION) >= PSI_RANK_OPERANT)
 					dat += SPAN_COLOR("#ff0000", "<b>Their mind has been cored like an apple, and enslaved by another operant psychic.</b>")
 
 		if(!use_rating)
