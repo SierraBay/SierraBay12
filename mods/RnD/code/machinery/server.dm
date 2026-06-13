@@ -894,8 +894,8 @@
 
 /obj/machinery/r_n_d/server/robotics
 	name = "robotics server"
-	id_with_upload_string = "1;2;3"
-	id_with_download_string = "1;2;3"
+	id_with_upload_string = "2;3"
+	id_with_download_string = "2;3"
 	server_id = 2
 
 /obj/machinery/r_n_d/server/core
@@ -916,6 +916,16 @@
 /obj/machinery/r_n_d/server/core/sierra
 
 /obj/machinery/r_n_d/server/core/sierra/Initialize()
+	. = ..()
+	files.SetCorporationReputation(RND_MISSION_CORP_NANOTRASEN, 50)
+	for(var/datum/technology/T in SSresearch.all_tech_nodes)
+		if(T.required_corp_id == RND_MISSION_CORP_NANOTRASEN)
+			files.UnlockTechology(T, force = TRUE)
+
+// Robotics Sierra variant
+/obj/machinery/r_n_d/server/robotics/sierra
+
+/obj/machinery/r_n_d/server/robotics/sierra/Initialize()
 	. = ..()
 	files.SetCorporationReputation(RND_MISSION_CORP_NANOTRASEN, 50)
 	for(var/datum/technology/T in SSresearch.all_tech_nodes)

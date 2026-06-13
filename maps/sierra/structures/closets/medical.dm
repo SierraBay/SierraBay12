@@ -54,6 +54,27 @@
 		/obj/item/storage/firstaid/adv,
 	)
 
+/obj/structure/closet/secure_closet/biomech_sierra
+	name = "surgeon's locker"
+	req_access = list(access_biomech)
+	closet_appearance = /singleton/closet_appearance/secure_closet/medical/alt
+
+
+/obj/structure/closet/secure_closet/biomech_sierra/WillContain()
+	return list(
+		/obj/item/clothing/suit/surgicalapron,
+		/obj/item/clothing/accessory/storage/white_vest,
+		/obj/item/device/radio/headset/headset_med,
+		/obj/item/device/radio/headset/headset_med/alt,
+		/obj/item/storage/belt/utility/full,
+		/obj/item/device/flashlight/pen,
+		/obj/item/device/scanner/health,
+		/obj/item/device/robotanalyzer,
+		/obj/item/clothing/accessory/stethoscope,
+		/obj/item/clothing/glasses/hud/health,
+		/obj/item/storage/firstaid/adv,
+	)
+
 /obj/structure/closet/secure_closet/medical_sierra
 	name = "doctor's locker"
 	req_access = list(access_medical_equip)

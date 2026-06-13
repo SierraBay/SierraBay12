@@ -339,18 +339,6 @@
 	)
 	req_access = list(access_morgue)
 
-/area/medical/mentalhealth
-	name = "Second Deck - Infirmary - Mental Health"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
-/area/medical/mentalhealth/therapyroom
-	name = "Second Deck - Infirmary - Therapy Room"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
 // Virology
 
 /area/medical/virology
