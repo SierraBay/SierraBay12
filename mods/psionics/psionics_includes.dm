@@ -49,23 +49,44 @@
 #include "code/faculties/_faculty.dm"
 #include "code/faculties/_power.dm"
 #include "code/faculties/coercion.dm"
-#include "code/faculties/consciousness.dm"
 #include "code/faculties/manifestation.dm"
 #include "code/faculties/metakinesis.dm"
-#include "code/faculties/psychokinesis.dm"
+
+
+#include "code/faculties/psychokinesis/_psychokinesis.dm"
+#include "code/faculties/psychokinesis/propel.dm"
+#include "code/faculties/psychokinesis/repulse.dm"
+#include "code/faculties/psychokinesis/telekinesis.dm"
+#include "code/faculties/psychokinesis/telepunch.dm"
+
+#include "code/faculties/consciousness/_consciousness.dm"
+#include "code/faculties/consciousness/absorb.dm"
+#include "code/faculties/consciousness/assay.dm"
+#include "code/faculties/consciousness/copies.dm"
+#include "code/faculties/consciousness/focus.dm"
+#include "code/faculties/consciousness/hallucinations.dm"
+#include "code/faculties/consciousness/invisibility.dm"
+#include "code/faculties/consciousness/mindread.dm"
+#include "code/faculties/consciousness/swap.dm"
+#include "code/faculties/consciousness/telepathy.dm"
+#include "code/faculties/consciousness/revelation.dm"
+
 #include "code\faculties\redaction\_redaction.dm"
 #include "code\faculties\redaction\meditate.dm"
 #include "code\faculties\redaction\health_swap.dm"
 #include "code\faculties\redaction\retribute.dm"
 #include "code\faculties\redaction\revive.dm"
 #include "code\faculties\redaction\skinsight.dm"
+
 #include "code\faculties\energistics\_energistics.dm"
 #include "code\faculties\energistics\disrupt.dm"
 #include "code\faculties\energistics\zorch.dm"
 #include "code\faculties\energistics\cloud.dm"
+
 #include "code\faculties\shaymanism\_shaymanism.dm"
 #include "code\faculties\shaymanism\ventriloquism.dm"
 #include "code\faculties\shaymanism\ritual_crayon.dm"
+
 
 #include "code/interface/ui_hub.dm"
 #include "code/interface/ui_toggles.dm"

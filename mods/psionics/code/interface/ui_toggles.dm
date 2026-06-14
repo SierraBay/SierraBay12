@@ -21,25 +21,9 @@
 		return
 	owner.psi.use_psi_armour = !owner.psi.use_psi_armour
 	if(owner.psi.use_psi_armour)
-		var/mob/living/carbon/human/A = owner
-		if(A.psi.get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_MASTER && A.psi.ranks_stat[PSI_PSYCHOKINESIS] && !A.psi.suppressed)
-			A.levitation = TRUE
-			A.pass_flags |= PASS_FLAG_TABLE
-			A.pixel_y = 8
-			A.AddOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
-			A.make_floating(5)
-			to_chat(owner, SPAN_NOTICE("Теперь ты защищаешься от остальных атак с помощью псионики и левитируешь."))
-			return
 		to_chat(owner, SPAN_NOTICE("Теперь ты защищаешься от остальных атак с помощью псионики."))
 	else
 		to_chat(owner, SPAN_NOTICE("Теперь ты не защищаешься от остальных атак с помощью псионики."))
-		var/mob/living/carbon/human/A = owner
-		if(A.levitation)
-			A.levitation = FALSE
-			A.pass_flags &= ~PASS_FLAG_TABLE
-			A.pixel_y = 0
-			A.CutOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
-			A.stop_floating()
 	update_icon()
 
 // End psi armour toggle.
@@ -106,3 +90,28 @@
 		to_chat(owner, SPAN_NOTICE("Вы вновь можете использовать силы школы [faculty_id]."))
 	update_icon()
 // End facility toggle
+
+/obj/screen/psi/levitate
+	name = "Levitate"
+	icon_state = "levitate"
+
+/obj/screen/psi/levitate/Initialize(mapload)
+	. = ..()
+	AddOverlays(image(icon, "cooldown"))
+
+/obj/screen/psi/levitate/Click()
+	var/mob/living/carbon/human/A = owner
+	if(A.levitation)
+		A.levitation = FALSE
+		A.pass_flags &= ~PASS_FLAG_TABLE
+		A.pixel_y = 0
+		A.CutOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
+		A.stop_floating()
+		AddOverlays(image(icon, "cooldown"))
+	if(A.psi.get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_MASTER && A.psi.ranks_stat[PSI_PSYCHOKINESIS] && !A.psi.suppressed && !A.levitation)
+		A.levitation = TRUE
+		A.pass_flags |= PASS_FLAG_TABLE
+		A.pixel_y = 8
+		A.AddOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
+		A.make_floating(5)
+		ClearOverlays()

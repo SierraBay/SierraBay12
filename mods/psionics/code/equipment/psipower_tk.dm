@@ -3,6 +3,7 @@
 	maintain_cost = 3
 	icon_state = "telekinesis"
 	var/atom/movable/focus
+	var/cooldown
 
 /obj/item/psychic_power/telekinesis/Destroy()
 	focus = null
@@ -19,17 +20,17 @@
 	if(!_focus.simulated || !isturf(_focus.loc))
 		return FALSE
 
-	var/check_paramount
+	var/check_weight
 	if(ismob(_focus))
 		var/mob/victim = _focus
-		check_paramount = (victim.mob_size >= MOB_MEDIUM)
+		check_weight = (victim.mob_size >= MOB_MEDIUM)
 	else if(isobj(_focus))
 		var/obj/thing = _focus
-		check_paramount = (thing.w_class >= 5)
+		check_weight = (thing.w_class >= 5)
 	else
 		return FALSE
 
-	if(check_paramount && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_GRANDMASTER)
+	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_OPERANT)
 		focus = _focus
 		. = attack_self(owner)
 		if(!.)
@@ -44,7 +45,10 @@
 	AddOverlays(I)
 	return TRUE
 
-/obj/item/psychic_power/telekinesis/attack_self(mob/user)
+/obj/item/psychic_power/telekinesis/attack_self(mob/living/user)
+	if(world.time < cooldown)
+		return FALSE
+	cooldown = (5 SECONDS) / user.psi.get_rank(PSI_PSYCHOKINESIS) + world.time
 	user.visible_message(SPAN_NOTICE("\The [user] показывает странный жест."))
 	sparkle()
 	if (focus.do_simple_ranged_interaction(user))
@@ -87,13 +91,23 @@
 		else
 			if(!focus.anchored)
 				var/user_rank = owner.psi.get_rank(PSI_PSYCHOKINESIS)
-				if(target == user)
+				if(target == user && !ishuman(focus))
 					user.swap_hand()
 					user.throw_mode_on()
 					focus.throw_at(target, user_rank*2, 1, owner)
 				else
 					var/skill = (user.get_skill_value(SKILL_HAULING) - SKILL_MIN)/(SKILL_MAX - SKILL_MIN)
-					focus.throw_at(target, user_rank*2, focus.throw_speed * skill + user_rank, owner)
+					if(ishuman(focus))
+						if(user_rank >= PSI_RANK_OPERANT)
+							to_chat(user, SPAN_NOTICE("Слишком тяжело."))
+							return
+						var/mob/living/carbon/human/H = focus
+						H.throw_at(target, user_rank*2, H.throw_speed * skill + user_rank, owner)
+						H.Weaken(1)
+						owner.drop_from_inventory(src)
+						to_chat(H, SPAN_WARNING("Меня отталкивает невидимая сила!"))
+					else
+						focus.throw_at(target, user_rank*2, focus.throw_speed * skill + user_rank, owner)
 				sleep(1)
 				sparkle()
 		//owner.drop_from_inventory(src)

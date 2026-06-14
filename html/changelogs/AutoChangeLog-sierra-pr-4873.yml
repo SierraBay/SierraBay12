@@ -1,0 +1,4 @@
+author: Mucker
+changes:
+  - rscadd: The supermatter can now be shut down.
+delete-after: true
