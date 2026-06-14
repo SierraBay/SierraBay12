@@ -228,7 +228,7 @@
 
 /area/crew_quarters/garden_room
 	name = "Second deck - living - Lounge"
-	icon_state = "game_room_inf"
+	icon_state = "crew_quarters"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
 /area/crew_quarters/dungeon_master_lounge
@@ -358,10 +358,10 @@
 
 /area/crew_quarters/virtual_reality_control
 	name = "\improper VR Control"
-	icon_state = "vr_control"
+	icon_state = "Holodeck"
 
 /area/crew_quarters/virtual_reality
 	name = "\improper VR Suites"
-	icon_state = "vr_suites"
+	icon_state = "Holodeck"
 	sound_env = SMALL_SOFTFLOOR
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
