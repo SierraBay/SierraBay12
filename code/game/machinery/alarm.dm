@@ -357,7 +357,8 @@
 			new_color = COLOR_RED_LIGHT
 	AddOverlays(list(
 		emissive_appearance(icon, "alarm[icon_level]"),
-		image(icon, "alarm[icon_level]")
+		image(icon, "alarm[icon_level]"),
+		overlay_image(icon, "alarm[icon_level]", plane = LIGHTING_LAMPS_PLANE) // SS220 Bloom-Lighting
 	))
 
 	pixel_x = 0

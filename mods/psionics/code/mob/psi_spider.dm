@@ -50,7 +50,7 @@
 
 	ai_holder = /datum/ai_holder/simple_animal/melee/psi_spider
 
-	faction = "psi_spiders"
+	faction = "psi_breach"
 
 	// Паук существует на псионическом плане — не боится обычной атмосферы.
 	min_gas = null

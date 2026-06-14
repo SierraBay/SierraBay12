@@ -6,6 +6,14 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		return
 
+		// [SIERRA-ADD]
+	if(href_list["refresh_player_panel"])
+		var/mob/M = locate(href_list["refresh_player_panel"])
+		if(ismob(M))
+			show_player_panel(M)
+		return
+	// [/SIERRA-ADD]
+
 	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
 		check_antagonists()
 		return
@@ -1351,6 +1359,26 @@
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
+
+	// [SIERRA-ADD]
+	else if(href_list["priv_msg"])
+		var/mob/M = locate(href_list["priv_msg"])
+		if(ismob(M) && M.client)
+			src.owner.cmd_admin_pm(M.client)
+
+	else if(href_list["refresh_player_list"])
+		player_list()
+
+	else if(href_list["show_connections"])
+		var/mob/M = locate(href_list["show_connections"])
+		if(ismob(M))
+			M.show_associated_connections(usr)
+
+	else if(href_list["show_bans"])
+		var/mob/M = locate(href_list["show_bans"])
+		if(ismob(M))
+			M.show_associated_bans(usr)
+	// [/SIERRA-ADD]
 
 	else if(href_list["adminplayerobservejump"])
 		// [SIERRA-EDIT]

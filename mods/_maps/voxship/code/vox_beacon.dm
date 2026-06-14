@@ -59,6 +59,7 @@
 		"Nanoblood - 1" = list(1, /obj/item/reagent_containers/ivbag/nanoblood),
 		"Advanced Tools - 2" = list(2, /obj/item/swapper/power_drill, /obj/item/swapper/jaws_of_life),
 		"Slug Launcher - 2" = list(2, /obj/item/gun/launcher/alien/slugsling),
+		"Gunk thrower - 2" = list(2, /obj/item/gun/energy/voxshot),
 		"Soundcannon - 2" = list(2, /obj/item/gun/energy/sonic),
 		"Dart gun - 2" = list(2, /obj/item/gun/projectile/dartgun/vox/raider),
 		"Jetpack - 2" = list(2, /obj/item/tank/jetpack),

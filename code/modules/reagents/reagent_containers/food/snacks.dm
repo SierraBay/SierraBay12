@@ -4013,3 +4013,83 @@
 	w_class = ITEM_SIZE_TINY
 	bitesize = 3
 	volume = 15
+
+/obj/item/reagent_containers/food/snacks/sliceable/clowncake
+	name = "clown cake"
+	desc = "You've honked your last honk."
+	icon_state = "clown_cake"
+	slice_path = /obj/item/reagent_containers/food/snacks/slice/clowncake
+	slices_num = 5
+	filling_color = "#ffb85d"
+	center_of_mass = "x=16;y=12"
+	nutriment_amt = 10
+	nutriment_desc = list("banana and silliness" = 1)
+
+/obj/item/reagent_containers/food/snacks/slice/clowncake
+	name = "slice of clown cake"
+	desc = "A slice of colorful cake. Is that a clown nose instead of a cherry?"
+	icon_state = "clown_cake_slice"
+	filling_color = "#ffb85d"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	whole_path = /obj/item/reagent_containers/food/snacks/sliceable/clowncake
+
+/obj/item/reagent_containers/food/snacks/caprese
+	name = "caprese salad"
+	desc = "A plate of burrata cheese and tomato slices, drizzled in a vinegrette and heavily peppered."
+	icon_state = "caprese"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	w_class = ITEM_SIZE_TINY
+	bitesize = 3
+	nutriment_amt = 10
+	nutriment_desc = list("tomato and cheese" = 1)
+
+/obj/item/reagent_containers/food/snacks/dark_orchard_pie
+	name = "dark orchard pie"
+	desc = "A unique pie made with hearty sweet and spiced ham chunks and pear compote."
+	icon_state = "darkorchard"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	w_class = ITEM_SIZE_TINY
+	bitesize = 3
+	nutriment_amt = 10
+	nutriment_desc = list("pears and cream" = 1)
+
+/obj/item/reagent_containers/food/snacks/mozzsticks
+	name = "mozzarella sticks"
+	desc = "Hey, you want five string cheese sticks? No? How about I deep fry them?"
+	icon_state = "mozzsticks"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	w_class = ITEM_SIZE_TINY
+	bitesize = 3
+	nutriment_amt = 10
+	nutriment_desc = list("cheese and friedness" = 1)
+
+/obj/item/reagent_containers/food/snacks/hamslider
+	name = "ham slider"
+	desc = "A small, toasted slider with ham and ooey gooey cheese."
+	icon_state = "hamslider"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	w_class = ITEM_SIZE_TINY
+	bitesize = 2
+	nutriment_amt = 5
+	nutriment_desc = list("ham and cheese" = 1)
+
+/obj/item/reagent_containers/food/snacks/charboard
+	name = "charcuterie board"
+	desc = "Basically an adult lunchable."
+	icon_state = "charboard"
+	bitesize = 3
+	center_of_mass = "x=16;y=12"
+	w_class = ITEM_SIZE_TINY
+	bitesize = 5
+	nutriment_amt = 15
+	nutriment_desc = list("ham and cheese" = 1)

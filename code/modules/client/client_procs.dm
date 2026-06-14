@@ -180,6 +180,9 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
+	// [SIERRA-ADD] - CELADON DISCORD INTEGRATION
+	load_player_discord(src)
+	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
 	//view = get_preference_value(/datum/client_preference/client_view)
@@ -240,11 +243,13 @@
 			var/list/ckeys = _unique_ckeys_from_connections(connections) - ckey
 			if (length(ckeys))
 				log_and_message_staff(SPAN_INFO("[key_name_admin(src)] has connection details associated with [length(ckeys)] other ckeys in the log."))
+				have_connection_warn = TRUE // [SIERRA-ADD]
 
 			// Check bans
 			var/list/bans = _find_bans_in_connections(connections)
 			if (length(bans))
 				log_and_message_staff(SPAN_DANGER("[key_name_admin(src)] has connection details associated with [length(bans)] active bans."))
+				have_bans_warn = TRUE // [SIERRA-ADD]
 
 	//////////////
 	//DISCONNECT//

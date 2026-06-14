@@ -72,6 +72,9 @@
 	w_class = ITEM_SIZE_LARGE
 
 /obj/item/clothing/head/helmet/psipump/active/disrupts_psionics()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.psi?.suppressed = TRUE
 	return src
 
 /datum/codex_entry/psipump
