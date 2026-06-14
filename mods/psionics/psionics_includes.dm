@@ -51,8 +51,13 @@
 #include "code/faculties/coercion.dm"
 #include "code/faculties/manifestation.dm"
 #include "code/faculties/metakinesis.dm"
-#include "code/faculties/psychokinesis.dm"
 
+
+#include "code/faculties/psychokinesis/_psychokinesis.dm"
+#include "code/faculties/psychokinesis/propel.dm"
+#include "code/faculties/psychokinesis/repulse.dm"
+#include "code/faculties/psychokinesis/telekinesis.dm"
+#include "code/faculties/psychokinesis/telepunch.dm"
 
 #include "code/faculties/consciousness/_consciousness.dm"
 #include "code/faculties/consciousness/absorb.dm"

@@ -25,7 +25,7 @@
 	for(var/mob/living/soul in psi?.linked_souls)
 		var/televoicename
 		switch(soul.gender)
-			if(NEUTER || PLURAL)
+			if(NEUTER, PLURAL)
 				televoicename = pick("чужой", "необычный", "странный")
 			if(MALE)
 				televoicename = pick("мужской", "грубый", "сильный", "низкий")

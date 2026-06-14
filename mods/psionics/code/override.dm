@@ -9,9 +9,9 @@
 
 	if(psi_latency_chance && prob(psi_latency_chance))
 		if(H.species.name in HUMAN_SPECIES)
-			H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
+			H.set_psi_rank(pick(PSI_HUMAN_DISCIPLES), 1, defer_update = TRUE)
 		if(H.species.name == SPECIES_TAJARA)
-			H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
+			H.set_psi_rank(pick(PSI_TAJARAN_DISCIPLES), 1, defer_update = TRUE)
 
 	if(!H.client || !whitelist_lookup(SPECIES_PSI, H.client.ckey))
 		return
@@ -81,6 +81,9 @@
 
 /datum/job
 	give_psionic_implant_on_join = TRUE // Все псионики теперь имплантируются, за некоторыми исключениями.
+
+/datum/job/submap
+	give_psionic_implant_on_join = FALSE
 
 // ranged interaction telekinesis
 /obj/machinery/button/do_simple_ranged_interaction(mob/user)
@@ -188,7 +191,14 @@
 	to_chat(user, info || SPAN_WARNING("\The [src] is completely blank!"))
 
 /datum/antagonist/thrall
-	skill_setter = null // Issue #3698 Баг: Траллирование псионика сбрасывает все скиллы цели на бейсик
+	skill_setter = null // Issue #3698 Баг: Траллирование псиоником сбрасывает все скиллы цели на бейсик
+
+/datum/reagent/drugs/three_eye
+	metabolism = REM * 0.5
+	overdose = 10
+
+	var/boosted = FALSE
+	var/boosted_overdose = FALSE
 
 /datum/reagent/drugs/three_eye/affect_blood(mob/living/carbon/M, removed)
 	M.add_client_color(/datum/client_color/thirdeye)
@@ -198,17 +208,53 @@
 	M.make_jittery(3)
 	M.make_dizzy(3)
 	if(M.psi)
+		if(!boosted)
+			for(var/rank in M.psi.ranks)
+				if(M.psi.ranks[rank] > 1 && M.psi.ranks[rank] < 5)
+					M.set_psi_rank(rank, M.psi.get_rank(rank) + 1, take_larger = TRUE, temporary = TRUE)
+			boosted = TRUE
 		M.psi.stamina = M.psi.max_stamina
 	if(prob(0.1) && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.seizure()
 		H.adjustBrainLoss(rand(8, 12))
 	..()
+
+/datum/reagent/drugs/three_eye/process_overdose(mob/living/carbon/M)
+	..()
+	M.adjustBrainLoss(rand(1, 5))
+	if(ishuman(M) && prob(10))
+		var/mob/living/carbon/human/H = M
+		H.vomit()
+	if(prob(10))
+		to_chat(M, SPAN_DANGER(SPAN_SIZE(rand(2,4), pick(overdose_messages))))
+	if(M.psi)
+		M.psi.check_latency_trigger(30, "передоза Три-глазом", TRUE) // Урон мозгу может и клево, но выжить почти нереально.
+		if(!boosted_overdose)
+			for(var/rank in M.psi.ranks)
+				if(M.psi.ranks[rank] > 1 && M.psi.ranks[rank] < 5)
+					M.set_psi_rank(rank, M.psi.get_rank(rank) + 1, take_larger = TRUE, temporary = TRUE)
+			boosted_overdose = TRUE
 
 /datum/reagent/drugs/three_eye/on_leaving_metabolism(mob/parent, metabolism_class)
 	var/mob/living/carbon/M = parent
 	parent.remove_client_color(/datum/client_color/thirdeye)
 	if(M.psi)
+		boosted = FALSE
+		boosted_overdose = FALSE
+		M.psi.reset()
 		M.psi.stamina = 0
-		M.psi.backblast(30)
-		parent.flash_eyes(override_blindness_check = TRUE, visual = TRUE)
+
+		M.empty_stomach()
+
+		sound_to(M, sound('mods/psionics/sounds/screamer.ogg'))
+
+		var/obj/screen/revelation = new /obj/screen()
+		revelation.screen_loc = "1,1"
+		revelation.icon = 'mods/psionics/icons/fullscreen.dmi'
+		revelation.icon_state = "scary[rand(1,9)]"
+		revelation.mouse_opacity = 0
+
+		M.client.screen += revelation
+		sleep(1 SECOND)
+		animate(revelation, 4 SECONDS, alpha = 0)
+		QDEL_IN(revelation, 4 SECONDS)
