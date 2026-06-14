@@ -4,6 +4,8 @@
 	icon = 'mods/utility_items/icons/coatrack.dmi'
 	icon_state = "coatrack"
 
+	density = FALSE
+
 	var/obj/item/clothing/suit
 	var/image/suit_image
 

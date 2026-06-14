@@ -37,7 +37,7 @@
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chaplain, /datum/job/actor,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg,
+		/datum/job/cyborg,
 		/datum/job/assistant, /datum/job/vagabond
 	)
 

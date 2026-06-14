@@ -50,11 +50,21 @@ those devices access via linked_console.
 	size = 8
 
 /datum/computer_file/program/rnd_console/biomech_console
+	filename      = "augfab_console"
+	filedesc      = "Augmentation Design Console"
+	extended_desc = "Biomechanical fabrication management software. Provides access to augments design catalogs, syncing, and corporate unlock purchases."
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/biomech
+	required_access = access_biomech
+	program_icon_state = "research"
+	program_key_state = "tech_key"
+	size = 8
+
+/datum/computer_file/program/rnd_console/public_console
 	filename      = "robofab_console"
 	filedesc      = "Robotics Design Console"
 	extended_desc = "Robotics fabrication management software. Provides access to robotics/mech design catalogs, syncing, and corporate unlock purchases."
-	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/biomech
-	required_access = access_biomech
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/public
+	required_access = null
 	program_icon_state = "research"
 	program_key_state = "tech_key"
 	size = 8
@@ -214,6 +224,16 @@ those devices access via linked_console.
 	if(emagged)
 		return TRUE
 	return check_access(user, list(access_biomech))
+
+// Public domain
+
+/datum/nano_module/program/rnd_console/robotics_console/public
+	id = null
+	sync = FALSE
+	can_research = FALSE
+
+/datum/nano_module/program/rnd_console/robotics_console/public/is_allowed(mob/user)
+	return TRUE
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Lifecycle
