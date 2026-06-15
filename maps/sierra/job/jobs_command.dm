@@ -83,7 +83,7 @@
 
 	access = list(
 		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
-		access_forensics_lockers, access_heads, access_medical, access_morgue,
+		access_forensics_lockers, access_heads, access_medical, access_morgue, access_biomech,
 		access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks,
 		access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter,
 		access_eva, access_bridge, access_all_personal_lockers, access_chapel_office,
