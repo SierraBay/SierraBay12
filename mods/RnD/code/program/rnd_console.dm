@@ -228,8 +228,7 @@ those devices access via linked_console.
 // Public domain
 
 /datum/nano_module/program/rnd_console/robotics_console/public
-	id = null
-	sync = FALSE
+	id = 3
 	can_research = FALSE
 
 /datum/nano_module/program/rnd_console/robotics_console/public/is_allowed(mob/user)

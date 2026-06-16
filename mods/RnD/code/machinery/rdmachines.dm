@@ -206,62 +206,26 @@
 	accepted_types = list(
 		/obj/item/stock_parts/computer/hard_drive/portable)
 
-/obj/machinery/smartfridge/disks/New()
-	. = ..()
-	on_update_icon()
-
-/obj/machinery/smartfridge/disks/accept_check(obj/item/O as obj)
-	if(istype(O, /obj/item/stock_parts/computer/hard_drive/portable))
-		return 1
-	return 0
-
-/obj/machinery/smartfridge/disks/on_update_icon()
-	ClearOverlays()
-	if(MACHINE_IS_BROKEN(src))
-		icon_state = "[icon_state]-broken"
-	else
-		icon_state = icon_base
-
-	if(panel_open)
-		AddOverlays(image(icon, "[icon_base]-panel"))
-
-	var/image/I
-	var/is_off = ""
-	if(stat & MACHINE_STAT_NOPOWER)
-		is_off = "-off"
-
-	// Fridge contents
-	switch(length(contents))
-		if(0)
-			I = image(icon, "empty[is_off]")
-		if(1 to 2)
-			I = image(icon, "[icon_contents]-1[is_off]")
-		if(3 to 5)
-			I = image(icon, "[icon_contents]-2[is_off]")
-		else
-			I = image(icon, "[icon_contents]-3[is_off]")
-	AddOverlays(I)
-
 /obj/machinery/smartfridge/disks/permitted
 	startswith = list(
-		/obj/item/stock_parts/computer/hard_drive/portable/design/components,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/exploration,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/general,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/tool
+		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/exploration = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/general = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/medical = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/tool = 1
 	)
 
 /obj/machinery/smartfridge/disks/full
 	startswith = list(
-		/obj/item/stock_parts/computer/hard_drive/portable/design/components,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/general,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/medical,
-		/obj/item/stock_parts/computer/hard_drive/portable/design/tool
+		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/arms = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/general = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/medical = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/tool = 1
 	)
