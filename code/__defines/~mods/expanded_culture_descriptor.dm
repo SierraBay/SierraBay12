@@ -19,6 +19,7 @@
 #define FACTION_KMS             "Komatsu Medical Services Inc."
 #define FACTION_FOUNDATION      "Cuchulain Foundation"
 #define FACTION_ASSAMBLEE      	"Assamblee of Abnormal Activities on Frontier"
+#define FACTION_BARC            "Basilard Asset Recovery and Control"
 
 #define CULTURE_HUMAN_PLUTO    "Plutonian"
 #define CULTURE_HUMAN_LORRIMAN "Lorrimanian"

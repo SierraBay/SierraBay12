@@ -127,6 +127,7 @@
 	atags["SAARE tag"] = /obj/item/clothing/accessory/armor_tag/saare
 	atags["SCP tag"] = /obj/item/clothing/accessory/armor_tag/scp
 	atags["ZPCI tag"] = /obj/item/clothing/accessory/armor_tag/zpci
+	atags["BARC tag"] = /obj/item/clothing/accessory/armor_tag/barc
 	gear_tweaks += new/datum/gear_tweak/path(atags)
 
 /datum/gear/tactical/press_tag
