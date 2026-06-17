@@ -60,9 +60,9 @@ those devices access via linked_console.
 	size = 8
 
 /datum/computer_file/program/rnd_console/public_console
-	filename      = "robofab_console"
-	filedesc      = "Robotics Design Console"
-	extended_desc = "Robotics fabrication management software. Provides access to robotics/mech design catalogs, syncing, and corporate unlock purchases."
+	filename      = "pubdes_console"
+	filedesc      = "Common Design Console"
+	extended_desc = "Public design repository access. Provides public network access to published design files."
 	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/public
 	required_access = null
 	program_icon_state = "research"
@@ -230,6 +230,8 @@ those devices access via linked_console.
 /datum/nano_module/program/rnd_console/robotics_console/public
 	id = 3
 	can_research = FALSE
+	/// You can't purchase things
+	can_switch_account = FALSE
 
 /datum/nano_module/program/rnd_console/robotics_console/public/is_allowed(mob/user)
 	return TRUE

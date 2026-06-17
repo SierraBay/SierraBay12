@@ -895,7 +895,7 @@
 /obj/machinery/r_n_d/server/robotics
 	name = "robotics server"
 	id_with_upload_string = "1;2"
-	id_with_download_string = "2;3"
+	id_with_download_string = "2"
 	server_id = 2
 
 /obj/machinery/r_n_d/server/core
