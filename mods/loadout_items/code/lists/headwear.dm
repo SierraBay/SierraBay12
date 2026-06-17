@@ -63,7 +63,7 @@
 	cost = 1
 
 /datum/gear/head/barc_cap
-	display_name = "P317 Cap"
+	display_name = "P317 cap"
 	description = "It’s a baseball cap in colors of Periphery 317 - Enclave under the BARC PMC."
 	path = /obj/item/clothing/head/soft/baseball/barc
 	slot = slot_head

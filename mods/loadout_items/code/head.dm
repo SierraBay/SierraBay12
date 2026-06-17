@@ -124,7 +124,7 @@
 		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_head_unathi.dmi',
 		SPECIES_RESOMI = "mods/resomi/icons/clothing/onmob_head_resomi.dmi"
 		)
-	icon_state = "baseballcap"
+	icon_state = "cprescap"
 	item_state = "baseballcap"
 
 /obj/item/clothing/head/soft/baseball/barc
