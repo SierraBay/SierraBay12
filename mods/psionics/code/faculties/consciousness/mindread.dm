@@ -8,7 +8,7 @@
 	use_description = "Выберите голову на зелёном интенте и затем нажмите по цели находясь на расстоянии, чтобы попытаться прочитать его мысли."
 
 /singleton/psionic_power/consciousness/mindread/invoke(mob/living/user, mob/living/target)
-	if(user.zone_sel.selecting != BP_HEAD || user.a_intent != I_HELP || target == user)
+	if(user.zone_sel.selecting != BP_HEAD || user.a_intent != I_HELP || target == user || !istype(target))
 		return FALSE
 	. = ..()
 	if(.)

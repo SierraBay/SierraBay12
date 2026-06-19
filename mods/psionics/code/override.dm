@@ -7,11 +7,17 @@
 		return // No psionics for cyborgs.
 	*/
 
-	if(psi_latency_chance && prob(psi_latency_chance))
+	if(psi_latency_chance && prob(psi_latency_chance) || H.species.name == SPECIES_MULE)
 		if(H.species.name in HUMAN_SPECIES)
-			H.set_psi_rank(pick(PSI_HUMAN_DISCIPLES), 1, defer_update = TRUE)
+			H.set_psi_rank(lowertext(pick(PSI_HUMAN_DISCIPLES)), TRUE, take_larger = TRUE, defer_update = TRUE)
 		if(H.species.name == SPECIES_TAJARA)
-			H.set_psi_rank(pick(PSI_TAJARAN_DISCIPLES), 1, defer_update = TRUE)
+			H.set_psi_rank(lowertext(pick(PSI_TAJARAN_DISCIPLES)), TRUE, take_larger = TRUE, defer_update = TRUE)
+	if(H.species.name == SPECIES_MULE)
+		var/buff_per_mutation
+		for(var/obj/item/organ/external/E in H.organs)
+			if(E.status & ORGAN_MUTATED)
+				buff_per_mutation -= 1
+		H.psi.cooldown_modifier -= buff_per_mutation
 
 	if(!H.client || !whitelist_lookup(SPECIES_PSI, H.client.ckey))
 		return
@@ -78,9 +84,6 @@
 	if(faction)
 		H.faction = faction
 		H.last_faction = faction
-
-/datum/job
-	give_psionic_implant_on_join = TRUE // Все псионики теперь имплантируются, за некоторыми исключениями.
 
 /datum/job/submap
 	give_psionic_implant_on_join = FALSE
@@ -236,23 +239,25 @@
 			boosted_overdose = TRUE
 
 /datum/reagent/drugs/three_eye/on_leaving_metabolism(mob/parent, metabolism_class)
-	var/mob/living/carbon/M = parent
+	var/mob/living/carbon/human/M = parent
 	parent.remove_client_color(/datum/client_color/thirdeye)
 	if(M.psi)
 		boosted = FALSE
 		boosted_overdose = FALSE
-		M.psi.reset()
+		if(!istype(M.head, /obj/item/clothing/head/helmet/space/psi_amp) && M.head.canremove != TRUE)
+			M.psi.reset()
 		M.psi.stamina = 0
 
 		M.empty_stomach()
 
 		sound_to(M, sound('mods/psionics/sounds/screamer.ogg'))
 
-		var/obj/screen/revelation = new /obj/screen()
+		var/obj/screen/fullscreen/revelation = new /obj/screen/fullscreen()
 		revelation.screen_loc = "1,1"
 		revelation.icon = 'mods/psionics/icons/fullscreen.dmi'
 		revelation.icon_state = "scary[rand(1,9)]"
-		revelation.mouse_opacity = 0
+		revelation.mouse_opacity = FALSE
+		revelation.scale_to_view = TRUE
 
 		M.client.screen += revelation
 		sleep(1 SECOND)

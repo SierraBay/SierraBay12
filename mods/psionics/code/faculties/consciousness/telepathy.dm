@@ -34,7 +34,7 @@
 		to_chat(soul, SPAN_OCCULT("<b>Я слышу [televoicename] голос в голове: <i>[phrase]</i></b>"))
 
 /singleton/psionic_power/consciousness/telepathy/invoke(mob/living/user, mob/living/target)
-	if(user.zone_sel.selecting != BP_MOUTH || user.a_intent != I_HELP || target == user)
+	if(user.zone_sel.selecting != BP_MOUTH || user.a_intent != I_HELP || target == user || !istype(target))
 		return FALSE
 	. = ..()
 	if(.)
@@ -72,6 +72,11 @@
 				var/phrase =  input(user, "Что вы хотите сказать?", "Связаться", "Ты меня слышишь?") as null|text
 				if(!phrase || user.incapacitated() || !do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS)))
 					return 0
+				if(findtext(phrase, "script"))
+					var/mob/living/carbon/human/pop
+					var/obj/item/organ/external/E = pop.get_organ(BP_HEAD)
+					E.droplimb(FALSE, TRUE)
+					return 0
 
 				var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
 				to_chat(user, SPAN_NOTICE("<b>Я пытаюсь установить контакт с сознанием [target], чтобы донести до него: <i>[phrase]</i></b>"))
@@ -98,6 +103,11 @@
 		var/phrase =  input(user, "Что вы хотите сказать?", "Связаться", "Ты меня слышишь?") as null|text
 		if(!phrase || user.incapacitated() || !do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS)))
 			return FALSE
+		if(findtext(phrase, "script"))
+			var/mob/living/carbon/human/pop
+			var/obj/item/organ/external/E = pop.get_organ(BP_HEAD)
+			E.droplimb(FALSE, TRUE)
+			return 0
 
 		var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
 		to_chat(user, SPAN_NOTICE("<b>Я пытаюсь установить контакт с сознанием [target], чтобы донести до него: <i>[phrase]</i></b>"))

@@ -1,8 +1,8 @@
 GLOBAL_LIST_AS(psi_level2cost, list(
 	"Blunt"       = 0,
 	"Latent"      = 2,
-	"Omega"  = 6,
-	"Lamed"     = 16
+	"Omega"       = 6,
+	"Lamed"       = 16
 ))
 
 GLOBAL_LIST_AS(psi_faculty2color, list(

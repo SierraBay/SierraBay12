@@ -30,7 +30,7 @@
 	else
 		return FALSE
 
-	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_OPERANT)
+	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_MASTER)
 		focus = _focus
 		. = attack_self(owner)
 		if(!.)

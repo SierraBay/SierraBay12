@@ -20,7 +20,7 @@
 	cost =            50
 	cooldown =        100
 	use_melee =       TRUE
-	min_rank =        PSI_RANK_OPERANT
+	min_rank =        PSI_RANK_MASTER
 	use_description = "Выберите рот на синем интенте, и затем нажмите по себе, чтобы создать сразу несколько копий самого себя."
 	var/amount = 1
 

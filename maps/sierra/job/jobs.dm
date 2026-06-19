@@ -3,8 +3,7 @@
 	species_to_job_whitelist = list(
 		/singleton/species/adherent = list(ADHERENT_JOBS),
 		/singleton/species/nabber = list(NABBER_JOBS),
-		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
-		/singleton/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
+		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
@@ -24,7 +23,8 @@
 	 		HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/exploration_leader,
 	 		/datum/job/warden, /datum/job/chief_engineer, /datum/job/rd,
 	 		/datum/job/iaa, /datum/job/security_assistant
- 		)
+ 		),
+		/singleton/species/human/mule = list(HUMAN_ONLY_JOBS, /datum/job/detective, /datum/job/psychiatrist)
 	)
 
 	allowed_jobs = list(
@@ -182,6 +182,16 @@
 	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MULES  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/singleton/cultural_info/faction/mule
+	var/valid_jobs = list(/datum/job/hop)
+
+/singleton/species/mule/check_background(datum/job/job, datum/preferences/prefs)
+	var/singleton/cultural_info/faction/mule/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
+	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /datum/job
 	allowed_branches = list(
 		/datum/mil_branch/civilian
@@ -191,7 +201,7 @@
 	)
 	required_language = LANGUAGE_HUMAN_EURO
 	psi_latency_chance = 8
-	give_psionic_implant_on_join = FALSE
+	give_psionic_implant_on_join = TRUE
 	var/requires_head
 
 /datum/job/is_position_available()

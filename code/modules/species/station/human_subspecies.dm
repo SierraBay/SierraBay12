@@ -143,6 +143,7 @@
 			return TRUE
 	return FALSE
 
+/* [SIERRA-EDIT] - mods\mules
 /singleton/species/human/mule
 	name = SPECIES_MULE
 	name_plural = "Mules"
@@ -177,3 +178,4 @@
 		E.limb_flags |= ORGAN_FLAG_DEFORMED
 		E.status |= ORGAN_DISFIGURED
 		E.status |= ORGAN_MUTATED
+[/SIERRA-EDIT] */

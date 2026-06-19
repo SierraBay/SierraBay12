@@ -24,7 +24,7 @@
 			switch(con_rank_user)
 				if(PSI_RANK_APPRENTICE)
 					scream(user, target, "scary", 3)
-					target.custom_emote(1, "[target] [pick("кровоточит", "истекает кровью", "льет кровь", "капает кровью")] из носа")
+					target.custom_emote(1, "[pick("кровоточит", "истекает кровью", "льет кровь", "капает кровью")] из носа")
 				if(PSI_RANK_OPERANT)
 					scream(user, target, "scary", 9)
 					target.Stun(3)
@@ -63,13 +63,14 @@
 
 	sound_to(target, sound('mods/psionics/sounds/screamer.ogg'))
 
-	var/obj/screen/revelation = new /obj/screen()
+	var/obj/screen/fullscreen/revelation = new /obj/screen/fullscreen()
 	revelation.screen_loc = "1,1"
 	revelation.icon = 'mods/psionics/icons/fullscreen.dmi'
 	revelation.icon_state = "[type][rand(1,num)]"
-	revelation.mouse_opacity = 0
+	revelation.mouse_opacity = FALSE
+	revelation.scale_to_view = TRUE
 
-	if(prob(0.1))
+	if(prob(0.001))
 		revelation.icon_state = "his_holyness" // DEEP LORE : Bearer of rating ALEPH 7
 
 	target.client.screen += revelation
