@@ -13,10 +13,13 @@
 		if(H.species.name == SPECIES_TAJARA)
 			H.set_psi_rank(lowertext(pick(PSI_TAJARAN_DISCIPLES)), TRUE, take_larger = TRUE, defer_update = TRUE)
 	if(H.species.name == SPECIES_MULE)
-		var/buff_per_mutation
+		H.psi.max_stamina = 100
+		H.psi.cooldown_modifier -= 0.1
+
+		var/buff_per_mutation = 0
 		for(var/obj/item/organ/external/E in H.organs)
 			if(E.status & ORGAN_MUTATED)
-				buff_per_mutation -= 1
+				buff_per_mutation += 0.1
 		H.psi.cooldown_modifier -= buff_per_mutation
 
 	if(!H.client || !whitelist_lookup(SPECIES_PSI, H.client.ckey))
