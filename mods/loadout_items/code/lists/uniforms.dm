@@ -269,6 +269,7 @@
 	corps += /obj/item/clothing/under/rank/roboticist/bishop
 	corps += /obj/item/clothing/under/kms_uniform
 	corps += /obj/item/clothing/under/kms_utility_uniform
+	corps += /obj/item/clothing/under/barc
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(corps)
 
 /datum/gear/uniform/facloth

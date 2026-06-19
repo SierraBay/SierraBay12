@@ -54,3 +54,28 @@
 	stetson += /obj/item/clothing/head/bighat/kgbhat
 	stetson += /obj/item/clothing/head/bighat/black
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(stetson)
+
+/datum/gear/head/baseball
+	display_name = "baseball cap, colour select"
+	path = /obj/item/clothing/head/soft/baseball/colorable
+	flags = GEAR_HAS_COLOR_SELECTION
+	slot = slot_head
+	cost = 1
+
+/datum/gear/head/barc_cap
+	display_name = "P317 cap"
+	description = "It’s a baseball cap in colors of Periphery 317 - Enclave under the BARC PMC."
+	path = /obj/item/clothing/head/soft/baseball/barc
+	slot = slot_head
+	cost = 1
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_BARC)
+
+/datum/gear/head/barc_beret
+	display_name = "P317 beret"
+	description = "It’s a beret with crudely sewn over old ones Periphery 317 colors. The owner is employed by BARC PMC."
+	path = /obj/item/clothing/head/beret/barc
+	slot = slot_head
+	cost = 1
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_BARC)

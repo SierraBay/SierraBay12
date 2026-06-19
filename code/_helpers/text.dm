@@ -452,6 +452,8 @@
 	t = replacetext(t, "\[terstenlogo\]", "<img src = terstenlogo.png>")
 	t = replacetext(t, "\[kmslogo\]", "<img src = kmslogo.png>")
 	t = replacetext(t, "\[krriglilogo\]", "<img src = krriglilogo.png>")
+	t = replacetext(t, "\[barclogo\]", "<img src = barclogo.png>")
+	t = replacetext(t, "\[barcblacklogo\]", "<img src = barcblacklogo.png>")
 	// [/SIERRA-ADD]
 	t = replacetext(t, "\[zhlogo\]", "<img src = zhlogo.png>")
 	t = replacetext(t, "\[editorbr\]", "")
