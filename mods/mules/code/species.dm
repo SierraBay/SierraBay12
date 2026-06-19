@@ -23,10 +23,10 @@
 	strength =      STR_LOW
 
 	available_cultural_info = list(
-		TAG_FACTION = list("Lumpen")
+		TAG_FACTION = list(FACTION_LUMPEN)
 	)
 
-	default_cultural_info = list(TAG_FACTION = "Lumpen")
+	default_cultural_info = list(TAG_FACTION = FACTION_LUMPEN)
 
 	extended_cultural_info = list(
 		TAG_FACTION = list()
