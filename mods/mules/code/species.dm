@@ -23,9 +23,9 @@
 	strength =      STR_LOW
 
 	available_cultural_info = list(
-		TAG_FACTION = list(/singleton/cultural_info/faction/mule)
+		TAG_FACTION = list("Люмпен")
 	)
 
 	extended_cultural_info = list(
-		TAG_FACTION = list()
+		TAG_FACTION = list("Люмпен")
 	)
