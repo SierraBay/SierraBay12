@@ -448,6 +448,8 @@
 		'html/images/hilogo.png',
 		'html/images/ftulogo.png',
 		'html/images/krriglilogo.png',
+		'html/images/barclogo.png',
+		'html/images/barcblacklogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)
