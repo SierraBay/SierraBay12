@@ -339,10 +339,12 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 						<div class="rndBtnRow">
 							{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
 						</div>
+						{{if data.can_switch_server}}
 						<div class="rndBtnRow">
 							{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
 							{{:helper.link("Отключиться от сети", 'cancel', {'togglesync' : 1}, data.sync ? null : 'disabled')}}
 						</div>
+						{{/if}}
 						<div class="rndBtnRow">
 							{{:helper.link("Заблокировать", 'locked', {'lock' : 1})}}
 							{{:helper.link("Сбросить базу данных", 'trash', {'reset' : 1})}}

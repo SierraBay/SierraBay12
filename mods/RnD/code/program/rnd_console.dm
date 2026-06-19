@@ -108,6 +108,8 @@ those devices access via linked_console.
 	var/can_research = TRUE
 	/// If TRUE, security checks are bypassed
 	var/emagged = FALSE
+	/// If FALSE, console can't switch form initial server
+	var/can_switch_server = TRUE
 
 	// ── Billing account ──────────────────────────────────────────────────
 	var/department_account_key = null
@@ -230,7 +232,8 @@ those devices access via linked_console.
 /datum/nano_module/program/rnd_console/robotics_console/public
 	id = 3
 	can_research = FALSE
-	/// You can't purchase things
+	can_switch_server = FALSE
+	// You can't purchase things
 	can_switch_account = FALSE
 
 /datum/nano_module/program/rnd_console/robotics_console/public/is_allowed(mob/user)
@@ -1642,6 +1645,7 @@ those devices access via linked_console.
 		lite_data["account_name"]         = lite_acc ? lite_acc.account_name : ""
 		lite_data["balance"]              = lite_acc ? lite_acc.money : 0
 		lite_data["currency_short"]       = GLOB.using_map.local_currency_name_short
+		lite_data["can_switch_server"]    = can_switch_server
 		lite_data["can_switch_account"]   = can_switch_account
 		lite_data["linked_account_number"]= linked_account_number
 		lite_data["has_disk"]             = !!disk
@@ -1882,6 +1886,7 @@ those devices access via linked_console.
 	data["has_science_account"]   = !!sci_acc
 	data["science_account_name"]  = sci_acc ? sci_acc.account_name : ""
 	data["currency_short"]        = GLOB.using_map.local_currency_name_short
+	data["can_switch_server"]    = can_switch_server
 	data["can_switch_account"]    = can_switch_account
 	data["linked_account_number"] = linked_account_number
 

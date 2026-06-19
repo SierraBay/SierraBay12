@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/mech_r_arm
+	build_type = MECHFAB
 	category = list("Mech manipulators")
 
 /datum/design/item/mechfab/mech_r_arm/powerloader

@@ -507,7 +507,13 @@
 					if(C.get_server())
 						consoles += C
 			else if(target_screen == 3)
+				var/turf/ctrl_turf = get_turf(src)
 				for(var/obj/machinery/r_n_d/server/S as anything in SSmachines.get_machinery_of_type(/obj/machinery/r_n_d/server))
+					var/turf/ST = get_turf(S)
+					if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
+						continue
+					if(ST && !AreConnectedZLevels(ST.z, ctrl_turf.z))
+						continue
 					if(S != temp_server)
 						servers += S
 		. = TOPIC_REFRESH
@@ -900,7 +906,7 @@
 
 /obj/machinery/r_n_d/server/core
 	name = "core R&D server"
-	id_with_upload_string = "1;3"
+	id_with_upload_string = "1;2;3"
 	id_with_download_string = "1;3"
 	server_id = 1
 
