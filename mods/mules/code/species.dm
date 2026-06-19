@@ -26,6 +26,8 @@
 		TAG_FACTION = list("Люмпен")
 	)
 
+	default_cultural_info = list("Люмпен")
+
 	extended_cultural_info = list(
-		TAG_FACTION = list("Люмпен")
+		TAG_FACTION = list()
 	)
