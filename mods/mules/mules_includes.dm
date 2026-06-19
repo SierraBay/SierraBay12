@@ -3,7 +3,7 @@
 
 #include "mules.dm"
 
-#include "code/species.dm"
 #include "code/faction.dm"
+#include "code/species.dm"
 
 #endif
