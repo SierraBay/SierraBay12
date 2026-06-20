@@ -33,6 +33,7 @@
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
 
 /datum/design/item/mechfab/mech_arms_heavy
+	build_type = MECHFAB
 	category = list("Mech manipulators")
 
 /datum/design/item/mechfab/mech_arms_heavy/heavy
