@@ -20,7 +20,6 @@
 	blood_volume =  SPECIES_BLOOD_DEFAULT * 0.85
 	min_age =       18
 	max_age =       45
-	strength =      STR_LOW
 
 	available_cultural_info = list(
 		TAG_CULTURE = list(
