@@ -165,7 +165,8 @@ those devices access via linked_console.
 	var/catalog_effectrange  = 0
 
 /datum/nano_module/program/rnd_console/robotics_console
-	id = 2
+	/// Temporary solution for sync problem
+	id = 1
 	can_research = FALSE
 	lite_theme = "engineering"
 	var/obj/machinery/fabricator/rnd/robotics/linked_robotics_fab = null
@@ -218,7 +219,7 @@ those devices access via linked_console.
 // Biomech
 
 /datum/nano_module/program/rnd_console/robotics_console/biomech
-	id = 2
+	id = 1
 	can_research = FALSE
 	lite_theme = "medical"
 
