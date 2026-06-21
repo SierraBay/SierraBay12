@@ -8434,7 +8434,7 @@
 "pBW" = (/obj/machinery/light/small{dir = 4},/obj/floor_decal/spline/plain/brown{dir = 4},/obj/machinery/vending/costumes{dir = 4},/turf/simulated/floor/wood/walnut,/area/crew_quarters/actor)
 "pBZ" = (/obj/structure/sign/warning/hot_exhaust,/obj/paint/nt_white,/obj/paint_stripe/nt_red,/turf/simulated/wall/r_titanium,/area/shuttle/petrov/storage_secondary)
 "pCa" = (/obj/paint_stripe/red,/obj/paint/red,/turf/simulated/wall/r_titanium,/area/shuttle/escape_pod/escape_pod2/station)
-"pCw" = (/obj/floor_decal/borderfloorblack,/obj/floor_decal/corner/yellow/border,/obj/floor_decal/borderfloorblack/corner2{dir = 9},/obj/floor_decal/corner/yellow/bordercorner2{dir = 9},/turf/simulated/floor/tiled,/area/assembly/robotics)
+"pCw" = (/obj/floor_decal/borderfloorblack,/obj/floor_decal/corner/yellow/border,/obj/floor_decal/borderfloorblack/corner2{dir = 9},/obj/floor_decal/corner/yellow/bordercorner2{dir = 9},/obj/structure/cart{dir = 1},/obj/floor_decal/industrial/outline/yellow,/turf/simulated/floor/tiled,/area/assembly/robotics)
 "pCK" = (/turf/simulated/wall/prepainted,/area/medical/mentalhealth/therapyroom)
 "pCO" = (/obj/floor_decal/techfloor/corner{dir = 1},/obj/floor_decal/industrial/warning/corner{dir = 4},/obj/structure/closet/emcloset,/turf/simulated/floor/tiled/techfloor,/area/maintenance/firstdeck/centralstarboard)
 "pCQ" = (/obj/machinery/atmospherics/pipe/manifold/visible/fuel{dir = 8},/turf/simulated/floor/reinforced,/area/thruster/d1starboard)

@@ -771,10 +771,12 @@
 			return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
+		var/material_cost = design.adjust_materials ? SANITIZE_LATHE_COST(design.materials[rmat]) : design.materials[rmat]
+
 		if(!(rmat in stored_material))
 			return ERR_NOMATERIAL
 
-		if(stored_material[rmat] < SANITIZE_LATHE_COST(design.materials[rmat]))
+		if(stored_material[rmat] < material_cost * mat_efficiency)
 			return ERR_NOMATERIAL
 
 	if(LAZYLEN(design.chemicals))

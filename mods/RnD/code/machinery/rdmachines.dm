@@ -120,9 +120,9 @@
 
 /// Tall sprite sits on one turf; spawn printed parts on the tile to the machine's right (see computer.dm left/right vs dir).
 /obj/machinery/fabricator/rnd/robotics/mech/proc/get_output_turf_for_build()
-	var/turf/right_step = get_step(src, turn(dir, -90))
-	if(isturf(right_step) && !right_step.density)
-		return right_step
+	var/turf/left_step = get_step(src, turn(dir, 90))
+	if(isturf(left_step) && !left_step.density)
+		return left_step
 	return get_turf(loc)
 
 /obj/machinery/fabricator/rnd/robotics/mech/fabricate_design(datum/design/design)
