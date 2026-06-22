@@ -85,9 +85,11 @@
 	name = "Second Deck - Command - Briefing Room"
 	icon_state = "bridge_room"
 
-/area/bridge/lobby
+/*
+ /area/bridge/lobby
 	name = "Second Deck - Bridge - Lobby"
 	req_access = list()
+ */
 
 /area/bridge/hallway
 	name = "Second Deck - Bridge - Entrance"
