@@ -26,7 +26,7 @@
 		/area/maintenance/seconddeck/hangar = 0,
 		/area/maintenance/seconddeck/aftstarboard = 0,
 		/area/maintenance/substation/seconddeck = 0,
-		//area/maintenance/substation/bridgedeck = 0,
+		/area/maintenance/substation/bridge = 0,
 		/area/maintenance/firstdeck/foreport = 0,
 		/area/maintenance/firstdeck/centralport = 0,
 		/area/maintenance/firstdeck/forestarboard = 0,
