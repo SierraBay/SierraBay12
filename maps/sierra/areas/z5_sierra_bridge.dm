@@ -86,7 +86,7 @@
 	icon_state = "bridge_room"
 
 /*
- /area/bridge/lobby
+/area/bridge/lobby
 	name = "Second Deck - Bridge - Lobby"
 	req_access = list()
  */
