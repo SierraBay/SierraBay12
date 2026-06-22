@@ -25,6 +25,9 @@
 	var/base_icon_state
 	var/build_type = PROTOLATHE
 
+	var/mech_type = PROTOLATHE | MECHFAB
+	var/robo_type = PROTOLATHE | ROBOTFAB
+
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk2
 
@@ -762,15 +765,18 @@
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
 
 	if(design.build_type != build_type)
-		var/second_check = build_type | MECHFAB
-		if(design.build_type != second_check)
+		var/mech_check = mech_type
+		var/robo_check = robo_type
+		if(design.build_type != mech_check && design.build_type != robo_check)
 			return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
+		var/material_cost = design.adjust_materials ? SANITIZE_LATHE_COST(design.materials[rmat]) : design.materials[rmat]
+
 		if(!(rmat in stored_material))
 			return ERR_NOMATERIAL
 
-		if(stored_material[rmat] < SANITIZE_LATHE_COST(design.materials[rmat]))
+		if(stored_material[rmat] < material_cost * mat_efficiency)
 			return ERR_NOMATERIAL
 
 	if(LAZYLEN(design.chemicals))

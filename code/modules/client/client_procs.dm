@@ -180,6 +180,9 @@
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
+	// [SIERRA-ADD] - CELADON DISCORD INTEGRATION
+	load_player_discord(src)
+	// [SIERRA-ADD]
 
 	. = ..()	//calls mob.Login()
 	//view = get_preference_value(/datum/client_preference/client_view)
@@ -445,6 +448,8 @@
 		'html/images/hilogo.png',
 		'html/images/ftulogo.png',
 		'html/images/krriglilogo.png',
+		'html/images/barclogo.png',
+		'html/images/barcblacklogo.png',
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)

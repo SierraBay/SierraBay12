@@ -72,7 +72,7 @@
 	description = "A lightweight augmentation for the engineer on-the-go. This one comes with a series of common tools."
 	path = /obj/item/organ/internal/augment/active/polytool/engineer
 	cost = 6
-	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/explorer_engineer, /datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist)
+	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, /datum/job/biomech, /datum/job/explorer_engineer, /datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist)
 
 /datum/gear/augment/toolset_engineer/New()
 	..()
@@ -94,7 +94,7 @@
 	description = "Part of Zeng-Hu Pharmaceutical's line of biomedical augmentations, this device contains the full set of tools any surgeon would ever need."
 	path = /obj/item/organ/internal/augment/active/polytool/surgical
 	cost = 6
-	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
+	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/biomech, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
 
 /datum/gear/augment/toolset_surgical/New()
 	..()
@@ -137,7 +137,7 @@
 	description = "Integrated medical scanner. Always with you, always ready."
 	path = /obj/item/organ/internal/augment/active/item/scanner
 	cost = 4
-	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
+	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist, /datum/job/biomech, /datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
 
 /datum/gear/augment/scanner/New()
 	..()

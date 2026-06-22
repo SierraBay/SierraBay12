@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/mech_body
+	build_type = MECHFAB
 	category = list("Mech cockpit")
 
 /datum/design/item/mechfab/mech_body/powerloader

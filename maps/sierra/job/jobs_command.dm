@@ -83,7 +83,7 @@
 
 	access = list(
 		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
-		access_forensics_lockers, access_heads, access_medical, access_morgue,
+		access_forensics_lockers, access_heads, access_medical, access_morgue, access_biomech,
 		access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks,
 		access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter,
 		access_eva, access_bridge, access_all_personal_lockers, access_chapel_office,
@@ -160,7 +160,7 @@
 	access = list(
 		access_tox, access_tox_storage, access_emergency_storage,
 		access_teleporter, access_bridge, access_rd, access_ai_upload,
-		access_research, access_robotics, access_mining, access_mining_office,
+		access_research, access_mining, access_mining_office,
 		access_mining_station, access_xenobiology, access_RC_announce,
 		access_keycard_auth, access_xenoarch, access_heads,
 		access_sec_doors, access_medical, access_network,
@@ -232,7 +232,7 @@
 		access_chemistry, access_virology, access_cmo, access_surgery,
 		access_RC_announce, access_keycard_auth, access_psychiatrist,
 		access_medical_equip, access_senmed, access_hangar, access_medical_records,
-		access_employment_records, access_security_records, access_rnd_network
+		access_employment_records, access_security_records, access_rnd_network, access_biomech
 
 	)
 
@@ -308,7 +308,7 @@
 		access_RC_announce, access_keycard_auth, access_tcomsat,
 		access_seneng, access_hangar, access_network_admin,
 		access_employment_records, access_medical_records,
-		access_security_records, access_rnd_network
+		access_security_records, access_rnd_network, access_robotics
 
 	)
 

@@ -39,6 +39,36 @@ those devices access via linked_console.
 	/// Set on subtypes to pre-configure a console for a specific department.
 	var/default_account_key  = null
 
+/datum/computer_file/program/rnd_console/robotics_console
+	filename      = "robofab_console"
+	filedesc      = "Robotics Design Console"
+	extended_desc = "Robotics fabrication management software. Provides access to robotics/mech design catalogs, syncing, and corporate unlock purchases."
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console
+	required_access = access_robotics
+	program_icon_state = "research"
+	program_key_state = "tech_key"
+	size = 8
+
+/datum/computer_file/program/rnd_console/biomech_console
+	filename      = "augfab_console"
+	filedesc      = "Augmentation Design Console"
+	extended_desc = "Biomechanical fabrication management software. Provides access to augments design catalogs, syncing, and corporate unlock purchases."
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/biomech
+	required_access = access_biomech
+	program_icon_state = "research"
+	program_key_state = "tech_key"
+	size = 8
+
+/datum/computer_file/program/rnd_console/public_console
+	filename      = "pubdes_console"
+	filedesc      = "Common Design Console"
+	extended_desc = "Public design repository access. Provides public network access to published design files."
+	nanomodule_path = /datum/nano_module/program/rnd_console/robotics_console/public
+	required_access = null
+	program_icon_state = "research"
+	program_key_state = "tech_key"
+	size = 8
+
 // ═══════════════════════════════════════════════════════════════════════════
 // Screen constants (mirrors rdconsole.dm — redefined here because that file
 // #undef's them at its end)
@@ -78,6 +108,8 @@ those devices access via linked_console.
 	var/can_research = TRUE
 	/// If TRUE, security checks are bypassed
 	var/emagged = FALSE
+	/// If FALSE, console can't switch form initial server
+	var/can_switch_server = TRUE
 
 	// ── Billing account ──────────────────────────────────────────────────
 	var/department_account_key = null
@@ -102,6 +134,8 @@ those devices access via linked_console.
 	var/report_collapsed           = FALSE
 	var/selected_protolathe_category
 	var/selected_imprinter_category
+	var/selected_robotics_category
+	var/selected_mech_category
 	var/searched_disk_design_text
 	var/search_text
 	var/quick_deconstruct = FALSE
@@ -129,6 +163,82 @@ those devices access via linked_console.
 	var/catalog_effect_type  = 0
 	var/catalog_effect_mode  = 0
 	var/catalog_effectrange  = 0
+
+/datum/nano_module/program/rnd_console/robotics_console
+	/// Temporary solution for sync problem
+	id = 1
+	can_research = FALSE
+	lite_theme = "engineering"
+	var/obj/machinery/fabricator/rnd/robotics/linked_robotics_fab = null
+	var/obj/machinery/fabricator/rnd/robotics/mech/linked_mech_fab = null
+
+/datum/nano_module/program/rnd_console/robotics_console/New(host, topic_manager, datum/computer_file/program/prog)
+	. = ..()
+	screen = RND_SCREEN_MAIN
+
+/datum/nano_module/program/rnd_console/robotics_console/Destroy()
+	if(linked_robotics_fab)
+		if(linked_robotics_fab.linked_console == src)
+			linked_robotics_fab.linked_console = null
+		linked_robotics_fab = null
+	if(linked_mech_fab)
+		if(linked_mech_fab.linked_console == src)
+			linked_mech_fab.linked_console = null
+		linked_mech_fab = null
+	. = ..()
+
+/datum/nano_module/program/rnd_console/robotics_console/is_allowed(mob/user)
+	if(emagged)
+		return TRUE
+	return check_access(user, list(access_robotics))
+
+/datum/nano_module/program/rnd_console/robotics_console/SyncRDevices()
+	var/atom/host = get_host()
+	if(!host)
+		return
+	// Destructive analyzer, protolathe, circuit imprinter — same as full R&D console.
+	..()
+
+	for(var/obj/machinery/fabricator/rnd/robotics/F in range(3, host))
+		if(!isnull(F.linked_console) || F.panel_open)
+			continue
+		if(istype(F, /obj/machinery/fabricator/rnd/robotics/mech))
+			if(isnull(linked_mech_fab))
+				linked_mech_fab = F
+				F.linked_console = src
+		else
+			if(isnull(linked_robotics_fab))
+				linked_robotics_fab = F
+				F.linked_console = src
+
+/datum/nano_module/program/rnd_console/robotics_console/proc/get_robotics_target_fab(target)
+	if(target == "mech")
+		return linked_mech_fab
+	return linked_robotics_fab
+
+// Biomech
+
+/datum/nano_module/program/rnd_console/robotics_console/biomech
+	id = 1
+	can_research = FALSE
+	lite_theme = "medical"
+
+/datum/nano_module/program/rnd_console/robotics_console/biomech/is_allowed(mob/user)
+	if(emagged)
+		return TRUE
+	return check_access(user, list(access_biomech))
+
+// Public domain
+
+/datum/nano_module/program/rnd_console/robotics_console/public
+	id = 3
+	can_research = FALSE
+	can_switch_server = FALSE
+	// You can't purchase things
+	can_switch_account = FALSE
+
+/datum/nano_module/program/rnd_console/robotics_console/public/is_allowed(mob/user)
+	return TRUE
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Lifecycle
@@ -1087,6 +1197,12 @@ those devices access via linked_console.
 			target_device = linked_lathe
 		else if(screen == RND_SCREEN_IMPRINTER && linked_imprinter)
 			target_device = linked_imprinter
+		else if(screen == "robotics_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			var/datum/nano_module/program/rnd_console/robotics_console/RC_TS = src
+			target_device = RC_TS.linked_robotics_fab
+		else if(screen == "mech_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			var/datum/nano_module/program/rnd_console/robotics_console/RC_TM = src
+			target_device = RC_TM.linked_mech_fab
 
 	if(href_list["select_corp"])
 		var/new_corp = href_list["select_corp"]
@@ -1118,12 +1234,14 @@ those devices access via linked_console.
 		var/where = href_list["go_screen"]
 		if(lite && (where == RND_SCREEN_PROTO || where == RND_SCREEN_IMPRINTER))
 			return TRUE
+		if(istype(src, /datum/nano_module/program/rnd_console/robotics_console) && where == RND_SCREEN_MISSIONS)
+			where = RND_SCREEN_MAIN
 		if(href_list["need_access"])
 			if(!is_allowed(usr))
 				to_chat(usr, SPAN_WARNING("Unauthorized access."))
 				return
 		screen = where
-		if(screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == RND_SCREEN_DISK_DESIGNS)
+		if(screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == "robotics_fabricator" || screen == "mech_fabricator" || screen == RND_SCREEN_DISK_DESIGNS)
 			search_text = ""
 		if(screen == RND_SCREEN_DISK_DESIGNS)
 			selected_disk_category = null
@@ -1262,6 +1380,10 @@ those devices access via linked_console.
 			selected_protolathe_category = what_cat
 		if(screen == RND_SCREEN_IMPRINTER)
 			selected_imprinter_category = what_cat
+		if(screen == "robotics_fabricator")
+			selected_robotics_category = what_cat
+		if(screen == "mech_fabricator")
+			selected_mech_category = what_cat
 	if(href_list["select_tech_category"])
 		selected_category_id = href_list["select_tech_category"]
 		selected_corp_id = null
@@ -1272,6 +1394,11 @@ those devices access via linked_console.
 		selected_disk_category = href_list["select_disk_category"]
 		if(selected_disk_category == "__all__")
 			selected_disk_category = null
+	if(href_list["set_theme"])
+		var/new_theme = href_list["set_theme"]
+		if(new_theme == "neutral" || new_theme == "medical" || new_theme == "engineering")
+			lite_theme = new_theme
+
 	if(href_list["search"])
 		if(lite)
 			// Lite (laptop) mode: inline search from template input field
@@ -1289,6 +1416,16 @@ those devices access via linked_console.
 					selected_imprinter_category = null
 				else
 					selected_imprinter_category = "Search Results"
+			if(screen == "robotics_fabricator")
+				if(!search_text)
+					selected_robotics_category = null
+				else
+					selected_robotics_category = "Search Results"
+			if(screen == "mech_fabricator")
+				if(!search_text)
+					selected_mech_category = null
+				else
+					selected_mech_category = "Search Results"
 			if(screen == RND_SCREEN_DISK_DESIGNS)
 				if(!search_text)
 					searched_disk_design_text = null
@@ -1302,6 +1439,10 @@ those devices access via linked_console.
 				selected_protolathe_category = null
 			if(screen == RND_SCREEN_IMPRINTER)
 				selected_imprinter_category = null
+			if(screen == "robotics_fabricator")
+				selected_robotics_category = null
+			if(screen == "mech_fabricator")
+				selected_mech_category = null
 			if(screen == RND_SCREEN_DISK_DESIGNS)
 				searched_disk_design_text = null
 
@@ -1309,11 +1450,6 @@ those devices access via linked_console.
 	if(lite)
 		if(href_list["set_category"])
 			lite_selected_category = (href_list["category"] == "all") ? null : href_list["category"]
-
-		if(href_list["set_theme"])
-			var/new_theme = href_list["set_theme"]
-			if(new_theme == "neutral" || new_theme == "medical" || new_theme == "engineering")
-				lite_theme = new_theme
 
 		// Save design from server → disk
 		if(href_list["save_to_disk"])
@@ -1350,6 +1486,28 @@ those devices access via linked_console.
 								to_chat(usr, SPAN_WARNING("Загрузка этого дизайна на сервер запрещена администратором."))
 							else
 								F_lfd.AddDesign2Known(file.design)
+
+		if(istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			if(href_list["build_to_fab"])
+				var/datum/nano_module/program/rnd_console/robotics_console/RC = src
+				var/obj/machinery/fabricator/rnd/robotics/target_fab = RC.get_robotics_target_fab(href_list["fab_target"])
+				var/obj/machinery/r_n_d/server/S_rf = get_server()
+				if(target_fab && S_rf)
+					var/datum/design/D_rf = locate(href_list["build_to_fab"]) in S_rf.get_all_designs()
+					if(D_rf)
+						var/amount_rf = clamp(text2num(href_list["amount"]), 1, 10)
+						if(D_rf.build_type & target_fab.build_type)
+							target_fab.queue_design(D_rf.file, amount_rf)
+			if(href_list["clear_fab_queue"])
+				var/datum/nano_module/program/rnd_console/robotics_console/RCQ = src
+				var/obj/machinery/fabricator/rnd/robotics/target_fab_q = RCQ.get_robotics_target_fab(href_list["fab_target"])
+				if(target_fab_q)
+					target_fab_q.clear_queue()
+			if(href_list["fab_eject_sheet"])
+				var/datum/nano_module/program/rnd_console/robotics_console/RCE = src
+				var/obj/machinery/fabricator/rnd/robotics/target_fab_e = RCE.get_robotics_target_fab(href_list["fab_target"])
+				if(target_fab_e)
+					target_fab_e.eject(href_list["fab_eject_sheet"], text2num(href_list["amount"]))
 
 	if(!lite)
 		if(href_list["deconstruct"])
@@ -1461,6 +1619,12 @@ those devices access via linked_console.
 	if(!lite)
 		if((screen == RND_SCREEN_PROTO && !linked_lathe) || (screen == RND_SCREEN_IMPRINTER && !linked_imprinter))
 			screen = RND_SCREEN_MAIN
+		if(istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			var/datum/nano_module/program/rnd_console/robotics_console/RCU = src
+			if(screen == "robotics_fabricator" && !RCU.linked_robotics_fab)
+				screen = RND_SCREEN_MAIN
+			if(screen == "mech_fabricator" && !RCU.linked_mech_fab)
+				screen = RND_SCREEN_MAIN
 	else
 		// In lite mode only "designs" and "corps" are valid screens
 		if(screen != "corps")
@@ -1482,6 +1646,7 @@ those devices access via linked_console.
 		lite_data["account_name"]         = lite_acc ? lite_acc.account_name : ""
 		lite_data["balance"]              = lite_acc ? lite_acc.money : 0
 		lite_data["currency_short"]       = GLOB.using_map.local_currency_name_short
+		lite_data["can_switch_server"]    = can_switch_server
 		lite_data["can_switch_account"]   = can_switch_account
 		lite_data["linked_account_number"]= linked_account_number
 		lite_data["has_disk"]             = !!disk
@@ -1531,6 +1696,42 @@ those devices access via linked_console.
 						continue
 					disk_designs += list(list("name" = file.design.name, "id" = "\ref[file]"))
 			lite_data["disk_designs"] = disk_designs
+
+			if(istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+				var/datum/nano_module/program/rnd_console/robotics_console/RCUI = src
+				var/list/robotics_designs = list()
+				var/list/mech_designs = list()
+				for(var/datum/design/D_rf in lite_designs)
+					if(D_rf.starts_unlocked)
+						continue
+					if(search_text && !findtext(lowertext(D_rf.name), lowertext(search_text)))
+						continue
+					if(lite_selected_category && LAZYLEN(D_rf.category) && !(lite_selected_category in D_rf.category))
+						continue
+					var/list/entry = list("name" = D_rf.name, "id" = "\ref[D_rf]")
+					if(D_rf.build_type & ROBOTFAB)
+						robotics_designs += list(entry)
+					if(D_rf.build_type & MECHFAB)
+						mech_designs += list(entry)
+				lite_data["robotics_designs"] = robotics_designs
+				lite_data["mech_designs"] = mech_designs
+
+				var/list/r_queue = list()
+				if(RCUI.linked_robotics_fab)
+					for(var/datum/computer_file/binary/design/rf in RCUI.linked_robotics_fab.queue)
+						if(rf.design)
+							r_queue += rf.design.name
+				lite_data["robotics_queue"] = r_queue
+
+				var/list/m_queue = list()
+				if(RCUI.linked_mech_fab)
+					for(var/datum/computer_file/binary/design/mf in RCUI.linked_mech_fab.queue)
+						if(mf.design)
+							m_queue += mf.design.name
+				lite_data["mech_queue"] = m_queue
+
+				lite_data["has_robotics_fab"] = !!RCUI.linked_robotics_fab
+				lite_data["has_mech_fab"] = !!RCUI.linked_mech_fab
 
 		// ── Corps screen ──────────────────────────────────────────────────
 		if(screen == "corps")
@@ -1673,6 +1874,9 @@ those devices access via linked_console.
 	var/obj/machinery/r_n_d/server/connected_server = get_server()
 	var/list/data = program ? program.get_header_data() : list()
 	data["screen"] = screen
+	data["is_robotics_console"] = istype(src, /datum/nano_module/program/rnd_console/robotics_console)
+	data["ui_theme"] = lite_theme
+	data["has_theme_selector"] = TRUE
 	data["sync"] = !!connected_server
 	data["has_disk"] = !!disk
 	data["has_server"] = !!connected_server
@@ -1683,6 +1887,7 @@ those devices access via linked_console.
 	data["has_science_account"]   = !!sci_acc
 	data["science_account_name"]  = sci_acc ? sci_acc.account_name : ""
 	data["currency_short"]        = GLOB.using_map.local_currency_name_short
+	data["can_switch_server"]    = can_switch_server
 	data["can_switch_account"]    = can_switch_account
 	data["linked_account_number"] = linked_account_number
 
@@ -1714,6 +1919,11 @@ those devices access via linked_console.
 					"maxlevel" =  tech_tree.maxlevel
 				))
 		data[RND_SCREEN_TREES] = tech_tree_list
+
+		if(data["is_robotics_console"])
+			var/datum/nano_module/program/rnd_console/robotics_console/RC_MAIN = src
+			data["has_robotics_fab"] = !!RC_MAIN.linked_robotics_fab
+			data["has_mech_fab"] = !!RC_MAIN.linked_mech_fab
 
 		if(!lite && linked_destroy)
 			if(linked_destroy.loaded_item)
@@ -1803,7 +2013,7 @@ those devices access via linked_console.
 					known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
 			data["known_nodes"] = known_nodes
 
-	if(!lite && (screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER))
+	if(!lite && (screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == "robotics_fabricator" || screen == "mech_fabricator"))
 		var/obj/machinery/fabricator/rnd/target_device
 		var/list/design_categories
 		var/selected_category
@@ -1816,8 +2026,28 @@ those devices access via linked_console.
 			target_device = linked_imprinter
 			design_categories = F ? F.design_categories_imprinter : list()
 			selected_category = selected_imprinter_category
+		else if(screen == "robotics_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			var/datum/nano_module/program/rnd_console/robotics_console/RC_RF = src
+			target_device = RC_RF.linked_robotics_fab
+			selected_category = selected_robotics_category
+		else if(screen == "mech_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+			var/datum/nano_module/program/rnd_console/robotics_console/RC_MF = src
+			target_device = RC_MF.linked_mech_fab
+			selected_category = selected_mech_category
 
 		if(target_device)
+			if(!design_categories)
+				design_categories = list()
+				var/obj/machinery/r_n_d/server/S_dc = get_server()
+				if(S_dc)
+					for(var/datum/design/D_dc in S_dc.get_all_designs())
+						if(D_dc.starts_unlocked)
+							continue
+						if(!(D_dc.build_type & target_device.build_type))
+							continue
+						if(LAZYLEN(D_dc.category))
+							for(var/cat in D_dc.category)
+								design_categories |= cat
 			data["search_text"] = search_text
 			data["materials_data"] = target_device.materials_data()
 			data["all_categories"] = design_categories

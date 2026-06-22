@@ -173,23 +173,31 @@
 	icon_state = "xeno_f_store"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
+// Robotics and Ripper-Doc
+
 /area/assembly
 	req_access = list(access_robotics)
 
 /area/assembly/chargebay
-	name = "First Deck - RND - Mech Bay"
+	name = "Third Deck - Engineering - Mech Bay"
 	icon_state = "mechbay"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
 /area/assembly/robotics
-	name = "First Deck - RND - Robotics Lab"
+	name = "Third Deck - Engineering - Robotics Lab"
 	icon_state = "robotics"
-	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
-/*
-/area/assembly/office
-	name = "First Deck - RND - Robotics Office"
-	icon_state = "mechbay"
-*/
+	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
+
+/area/assembly/robotics/office
+	name = "Second Deck - Infirmary - Biomech Office"
+	req_access = list(access_biomech)
+	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
+
+/area/assembly/robotics/surgery
+	name = "Second Deck - Infirmary - Biomech Operating Theatre"
+	req_access = list(access_biomech)
+	lighting_tone = AREA_LIGHTING_COOL
+	holomap_color = HOLOMAP_AREACOLOR_MEDICAL
 
 /* CREW AREAS
  * ==========
@@ -349,6 +357,18 @@
 /area/medical/backstorage
 	name = "First Deck - Infirmary - Auxiliary Storage"
 	icon_state = "auxstorage"
+
+/area/medical/mentalhealth
+	name = "First Deck - Infirmary - Mental Health"
+	icon_state = "medbay3"
+	ambience = list('sound/ambience/signal.ogg')
+	req_access = list(access_psychiatrist)
+
+/area/medical/mentalhealth/therapyroom
+	name = "First Deck - Infirmary - Therapy Room"
+	icon_state = "medbay3"
+	ambience = list('sound/ambience/signal.ogg')
+	req_access = list(access_psychiatrist)
 
 /* VACANT AREAS
  * ============

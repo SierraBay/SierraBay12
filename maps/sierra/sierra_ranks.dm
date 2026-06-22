@@ -62,8 +62,12 @@
 		/singleton/species/vox      = list(
 			/datum/mil_branch/contractor,
 			/datum/mil_branch/employee,
-			/datum/mil_branch/skrell_fleet
-		)
+			/datum/mil_branch/skrell_fleet),
+		/singleton/species/human/mule = list(
+			/datum/mil_branch/contractor,
+			/datum/mil_branch/employee,
+			/datum/mil_branch/alien,
+			/datum/mil_branch/skrell_fleet),
 	)
 
 	species_to_branch_whitelist = list(
@@ -80,7 +84,8 @@
 		/singleton/species/adherent   = list(/datum/mil_branch/civilian,
 										 /datum/mil_branch/employee),
 		/singleton/species/vox        = list(/datum/mil_branch/alien,
-										 /datum/mil_branch/civilian)
+										 /datum/mil_branch/civilian),
+		/singleton/species/human/mule = list(/datum/mil_branch/civilian)
 	)
 
 	species_to_rank_whitelist = list(

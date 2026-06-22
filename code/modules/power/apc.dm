@@ -344,23 +344,23 @@
 		status_overlays_environ = new (6)
 
 		status_overlays_lock[1] = emissive_appearance(icon, "apcox")
-		status_overlays_lock[2] = overlay_image(icon, "apcox", COLOR_GREEN_LIGHT)
-		status_overlays_lock[3] = overlay_image(icon, "apcox", COLOR_RED_LIGHT)
+		status_overlays_lock[2] = overlay_image(icon, "apcox", COLOR_GREEN_LIGHT, plane = LIGHTING_LAMPS_PLANE)
+		status_overlays_lock[3] = overlay_image(icon, "apcox", COLOR_RED_LIGHT, plane = LIGHTING_LAMPS_PLANE)
 
 		status_overlays_charging[1] = emissive_appearance(icon, "apco3-emissive")
-		status_overlays_charging[2] = overlay_image(icon, "apco3-0")
-		status_overlays_charging[3] = overlay_image(icon, "apco3-1")
-		status_overlays_charging[4] = overlay_image(icon, "apco3-2")
+		status_overlays_charging[2] = overlay_image(icon, "apco3-0", plane = LIGHTING_LAMPS_PLANE)
+		status_overlays_charging[3] = overlay_image(icon, "apco3-1", plane = LIGHTING_LAMPS_PLANE)
+		status_overlays_charging[4] = overlay_image(icon, "apco3-2", plane = LIGHTING_LAMPS_PLANE)
 
 		var/list/channel_overlays = list(status_overlays_equipment, status_overlays_lighting, status_overlays_environ)
 		var/channel = 0
 		for(var/list/channel_leds in channel_overlays)
 			channel_leds[1] = emissive_appearance(icon, "apco[channel]")
-			channel_leds[POWERCHAN_OFF + 2] = overlay_image(icon,"apco[channel]", COLOR_RED_LIGHT)
-			channel_leds[POWERCHAN_OFF_TEMP + 2] = overlay_image(icon,"apco[channel]", COLOR_ORANGE_LIGHT)
-			channel_leds[POWERCHAN_OFF_AUTO + 2] = overlay_image(icon,"apco[channel]", COLOR_ORANGE_LIGHT)
-			channel_leds[POWERCHAN_ON + 2] = overlay_image(icon,"apco[channel]", COLOR_GREEN_LIGHT)
-			channel_leds[POWERCHAN_ON_AUTO + 2] = overlay_image(icon,"apco[channel]", COLOR_BLUE_LIGHT)
+			channel_leds[POWERCHAN_OFF + 2] = overlay_image(icon, "apco[channel]", COLOR_RED_LIGHT, plane = LIGHTING_LAMPS_PLANE)
+			channel_leds[POWERCHAN_OFF_TEMP + 2] = overlay_image(icon, "apco[channel]", COLOR_ORANGE_LIGHT, plane = LIGHTING_LAMPS_PLANE)
+			channel_leds[POWERCHAN_OFF_AUTO + 2] = overlay_image(icon, "apco[channel]", COLOR_ORANGE_LIGHT, plane = LIGHTING_LAMPS_PLANE)
+			channel_leds[POWERCHAN_ON + 2] = overlay_image(icon, "apco[channel]", COLOR_GREEN_LIGHT, plane = LIGHTING_LAMPS_PLANE)
+			channel_leds[POWERCHAN_ON_AUTO + 2] = overlay_image(icon, "apco[channel]", COLOR_BLUE_LIGHT, plane = LIGHTING_LAMPS_PLANE)
 			channel++
 
 	if(update_state < 0)

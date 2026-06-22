@@ -2,9 +2,15 @@
 Title: R&D Console (Unified)
 Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 -->
+{{if data.ui_theme == "engineering"}}
+{{:helper.ntengiMode()}}
+{{else data.ui_theme == "medical"}}
+{{:helper.ntmedMode()}}
+{{else}}
 {{:helper.ntscieMode()}}
+{{/if}}
 {{if data.screen == "working"}}
-<div class="rndConsole">
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 	<div class="rndCenterScreen">
 		<div class="rndLoadingIcon">&#9881;</div>
 		<div class="rndLoadingText">ОБРАБОТКА ДАННЫХ</div>
@@ -12,7 +18,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	</div>
 </div>
 {{else data.screen == "locked"}}
-<div class="rndConsole">
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 	<div class="rndCenterScreen">
 		<div class="rndLoadingIcon">&#128274;</div>
 		<div class="rndLoadingText">СИСТЕМА ЗАБЛОКИРОВАНА</div>
@@ -27,17 +33,26 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 <!-- MAIN NAVIGATION SCREENS (lab, tech_trees, missions, corps)   -->
 <!-- ============================================================ -->
 {{if !data.screen || data.screen == "main" || data.screen == "tech_trees" || data.screen == "missions" || data.screen == "corps"}}
-<div class="rndConsole">
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 
 	<!-- Top Navigation Bar -->
 	<div class="rndNav">
 		<div class="rndNavTabs">
 			{{:helper.link("Лаборатория", '', {'go_screen' : 'main'}, (!data.screen || data.screen == 'main') ? 'selected' : null, 'rndTab')}}
 			{{:helper.link("Технологии", '', {'go_screen' : 'tech_trees'}, data.screen == 'tech_trees' ? 'selected' : null, 'rndTab')}}
-			{{:helper.link("Контракты", '', {'go_screen' : 'missions'}, data.screen == 'missions' ? 'selected' : null, 'rndTab')}}
+			{{if !data.is_robotics_console}}
+				{{:helper.link("Контракты", '', {'go_screen' : 'missions'}, data.screen == 'missions' ? 'selected' : null, 'rndTab')}}
+			{{/if}}
 			{{:helper.link("Корпорации", '', {'go_screen' : 'corps'}, data.screen == 'corps' ? 'selected' : null, 'rndTab')}}
 		</div>
 		<div class="rndNavStatus">
+			{{if data.has_theme_selector}}
+				<div class="rndThemeSwitch">
+					{{:helper.link("◑", '', {'set_theme':'neutral'},    data.ui_theme == 'neutral'     ? 'selected' : null, 'rndThemeBtn')}}
+					{{:helper.link("✚", '', {'set_theme':'medical'},    data.ui_theme == 'medical'     ? 'selected' : null, 'rndThemeBtn')}}
+					{{:helper.link("⚙", '', {'set_theme':'engineering'},data.ui_theme == 'engineering' ? 'selected' : null, 'rndThemeBtn')}}
+				</div>
+			{{/if}}
 			{{if data.has_server}}
 				<span class="rndServerBadge rndServerBadge--online"><span class="rndServerDot"></span>{{:data.server_name}}</span>
 			{{else}}
@@ -66,8 +81,14 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				<div class="rndSectionTitle">Производство</div>
 				<div class="rndSectionContent">
 					<div class="rndBtnRow">
-						{{:helper.link("Protolathe", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled', 'rndMenuBtn')}}
-						{{:helper.link("Circuit Imprinter", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', 'rndMenuBtn')}}
+						{{if data.is_robotics_console}}
+							{{:helper.link("Robofabricator", 'image', {'go_screen' : 'robotics_fabricator'}, data.has_robotics_fab ? null : 'disabled', 'rndMenuBtn')}}
+							{{:helper.link("Mech Fabricator", 'video', {'go_screen' : 'mech_fabricator'}, data.has_mech_fab ? null : 'disabled', 'rndMenuBtn')}}
+							{{:helper.link("Circuit Imprinter", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', 'rndMenuBtn')}}
+						{{else}}
+							{{:helper.link("Protolathe", 'image', {'go_screen' : 'protolathe'}, data.has_protolathe ? null : 'disabled', 'rndMenuBtn')}}
+							{{:helper.link("Circuit Imprinter", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', 'rndMenuBtn')}}
+						{{/if}}
 					</div>
 				</div>
 			</div>
@@ -105,7 +126,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 			</div>
 
 			<!-- Spectral Analysis -->
-			{{if data.spectral_active}}
+			{{if !data.is_robotics_console && data.spectral_active}}
 			<div class="rndSection">
 				<div class="rndSectionTitle">Спектральный анализ</div>
 				<div class="rndSectionContent">
@@ -127,7 +148,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 					{{if data.spectral_result_text}}<hr class="rndDivider">{{:data.spectral_result_text}}{{/if}}
 				</div>
 			</div>
-			{{else}}
+			{{else !data.is_robotics_console}}
 				{{if data.spectral_result_text}}
 				<div class="rndSection">
 					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
@@ -140,6 +161,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 			{{/if}}
 
 			<!-- Research Report Compilation -->
+			{{if !data.is_robotics_console}}
 			<div class="rndSection">
 				<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
 					<span>Компиляция научного отчёта</span>
@@ -188,9 +210,10 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 				</div>
 				{{/if}}
 			</div>
+			{{/if}}
 
 			<!-- Artifact Catalogization -->
-			{{if data.catalog_active}}
+			{{if !data.is_robotics_console && data.catalog_active}}
 			<div class="rndSection">
 				<div class="rndSectionTitle">Каталогизация артефакта — Этап {{:data.catalog_step}}/3</div>
 				<div class="rndSectionContent">
@@ -230,7 +253,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 					{{if data.catalog_result_text}}<hr class="rndDivider">{{:data.catalog_result_text}}{{/if}}
 				</div>
 			</div>
-			{{else}}
+			{{else !data.is_robotics_console}}
 				{{if data.catalog_result_text}}
 				<div class="rndSection">
 					<div class="rndSectionTitle" style="display: flex; justify-content: space-between; align-items: center;">
@@ -316,10 +339,12 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 						<div class="rndBtnRow">
 							{{:helper.link("Загрузить дизайны с диска", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
 						</div>
+						{{if data.can_switch_server}}
 						<div class="rndBtnRow">
 							{{:helper.link("Подключиться к сети", 'lightbulb', {'togglesync' : 1}, data.sync ? 'disabled' : null)}}
 							{{:helper.link("Отключиться от сети", 'cancel', {'togglesync' : 1}, data.sync ? null : 'disabled')}}
 						</div>
+						{{/if}}
 						<div class="rndBtnRow">
 							{{:helper.link("Заблокировать", 'locked', {'lock' : 1})}}
 							{{:helper.link("Сбросить базу данных", 'trash', {'reset' : 1})}}
@@ -484,7 +509,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	<!-- ======================== -->
 	<!-- CONTRACTS / MISSIONS     -->
 	<!-- ======================== -->
-	{{if data.screen == "missions"}}
+	{{if !data.is_robotics_console && data.screen == "missions"}}
 	<div class="rndTwoCol">
 		<div class="rndCol" style="width: 100%;">
 
@@ -670,12 +695,12 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 <!-- ============================================================ -->
 <!-- PROTOLATHE / CIRCUIT IMPRINTER SCREEN                        -->
 <!-- ============================================================ -->
-{{if data.screen == "protolathe" || data.screen == "circuit_imprinter"}}
-<div class="rndConsole">
+{{if data.screen == "protolathe" || data.screen == "circuit_imprinter" || data.screen == "robotics_fabricator" || data.screen == "mech_fabricator"}}
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 	<div class="rndNav rndNavSub">
 		<div class="rndNavTabs">
 			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
-			<span class="rndNavTitle">{{if data.screen == "protolathe"}}Protolathe{{else}}Circuit Imprinter{{/if}}</span>
+			<span class="rndNavTitle">{{if data.screen == "protolathe"}}Protolathe{{else data.screen == "circuit_imprinter"}}Circuit Imprinter{{else data.screen == "robotics_fabricator"}}Robofabricator{{else}}Mech Fabricator{{/if}}</span>
 		</div>
 	</div>
 
@@ -683,7 +708,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		<div class="rndCol" style="width: 60%;">
 			<div class="rndSection">
 				<div class="rndSectionTitle">
-					{{if data.screen == "protolathe"}}Меню протолата{{else}}Меню импринтера{{/if}}
+					{{if data.screen == "protolathe"}}Меню протолата{{else data.screen == "circuit_imprinter"}}Меню импринтера{{else data.screen == "robotics_fabricator"}}Меню робофабрикатора{{else}}Меню мехфабрикатора{{/if}}
 					<span style="float: right;">
 						{{:helper.link("Поиск", '', {'search' : 1})}}
 						{{if data.search_text}} <span class="rndMuted">«{{:data.search_text}}»</span>{{/if}}
@@ -797,7 +822,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 <!-- DISK MANAGEMENT SCREENS                                      -->
 <!-- ============================================================ -->
 {{if data.screen == "disk_management_designs"}}
-<div class="rndConsole">
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 	<div class="rndNav rndNavSub">
 		<div class="rndNavTabs">
 			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
@@ -885,7 +910,7 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 {{/if}}
 
 {{if data.screen == "disk_management_tech"}}
-<div class="rndConsole">
+<div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 	<div class="rndNav rndNavSub">
 		<div class="rndNavTabs">
 			{{:helper.link("Назад", 'arrowreturn-1-w', {'go_screen' : 'main'}, null, 'rndTab')}}
@@ -1139,6 +1164,18 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	gap: 8px;
 }
 
+.rndThemeSwitch {
+	display: inline-flex;
+	gap: 3px;
+	margin-right: 6px;
+}
+
+.rndThemeBtn {
+	min-width: 20px !important;
+	padding: 2px 5px !important;
+	text-align: center !important;
+}
+
 .rndServerBadge {
 	display: inline-flex;
 	align-items: center;
@@ -1192,6 +1229,145 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	border-color: rgba(60, 160, 80, 0.5) !important;
 	color: #88eea0 !important;
 	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+/* === Theme accents === */
+.rndTheme--engineering .rndNav {
+	background: linear-gradient(180deg, rgba(64, 34, 8, 0.92), rgba(40, 20, 6, 0.96));
+	border-bottom-color: rgba(214, 126, 40, 0.45);
+}
+
+.rndTheme--engineering .rndSection {
+	background: linear-gradient(180deg, rgba(36, 20, 8, 0.75), rgba(24, 14, 6, 0.58));
+	border-color: rgba(194, 114, 36, 0.48);
+	box-shadow: inset 0 0 0 1px rgba(70, 40, 14, 0.55);
+}
+
+.rndTheme--engineering .rndSectionTitle {
+	color: #ffbf73;
+	background: linear-gradient(180deg, rgba(78, 44, 14, 0.62), rgba(56, 30, 10, 0.45));
+	border-bottom-color: rgba(214, 126, 40, 0.35);
+}
+
+.rndTheme--engineering .rndMuted { color: #c8965e; }
+.rndTheme--engineering .rndLabel,
+.rndTheme--engineering .rndTechName,
+.rndTheme--engineering .rndNavTitle { color: #ffbf73; }
+
+/* Exclude corp-tech tree node tiles (.sciTechTreeIconBox) — they use sciTech* state colors */
+.rndTheme--engineering .link:not(.sciTechTreeIconBox),
+.rndTheme--engineering .linkActive:not(.sciTechTreeIconBox),
+.rndTheme--engineering .linkOn:not(.sciTechTreeIconBox),
+.rndTheme--engineering .linkOff:not(.sciTechTreeIconBox),
+.rndTheme--engineering .selected:not(.sciTechTreeIconBox),
+.rndTheme--engineering .warning:not(.sciTechTreeIconBox) {
+	background: rgba(92, 52, 16, 0.72) !important;
+	border-color: rgba(214, 126, 40, 0.55) !important;
+	color: #ffd6a3 !important;
+}
+
+.rndTheme--engineering .selected:not(.sciTechTreeIconBox),
+.rndTheme--engineering .linkActive.selected:not(.sciTechTreeIconBox),
+.rndTheme--engineering .linkActive.selected:not(.sciTechTreeIconBox):hover,
+.rndTheme--engineering .rndTab.selected {
+	background: rgba(134, 74, 18, 0.86) !important;
+	border-color: rgba(255, 174, 84, 0.65) !important;
+	color: #fff1de !important;
+	box-shadow: 0 0 8px rgba(255, 154, 51, 0.25) !important;
+}
+
+.rndTheme--engineering .rndTab {
+	background: rgba(86, 48, 14, 0.62) !important;
+	border-color: rgba(214, 126, 40, 0.5) !important;
+	color: #ffd6a3 !important;
+}
+
+/* Disabled controls must stay muted — themed .link rules use !important above */
+.rndTheme--engineering .disabled,
+.rndTheme--engineering .link.disabled,
+.rndTheme--engineering .rndTab.disabled,
+.rndTheme--engineering .rndMenuBtn.disabled,
+.rndTheme--engineering .rndExpBtn.disabled,
+.rndTheme--engineering a.disabled:link,
+.rndTheme--engineering a.disabled:visited,
+.rndTheme--engineering a.disabled:active,
+.rndTheme--engineering a.disabled:hover {
+	background: rgba(36, 24, 12, 0.55) !important;
+	border-color: rgba(90, 62, 34, 0.38) !important;
+	color: #5c4838 !important;
+	cursor: not-allowed !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	opacity: 1;
+	filter: none;
+}
+
+.rndTheme--medical .rndNav {
+	background: linear-gradient(180deg, rgba(10, 44, 40, 0.9), rgba(6, 28, 26, 0.95));
+	border-bottom-color: rgba(64, 184, 160, 0.42);
+}
+
+.rndTheme--medical .rndSection {
+	background: linear-gradient(180deg, rgba(8, 30, 28, 0.72), rgba(6, 20, 18, 0.56));
+	border-color: rgba(54, 154, 138, 0.45);
+	box-shadow: inset 0 0 0 1px rgba(14, 56, 52, 0.52);
+}
+
+.rndTheme--medical .rndSectionTitle {
+	color: #89e9dc;
+	background: linear-gradient(180deg, rgba(14, 54, 50, 0.6), rgba(10, 38, 36, 0.43));
+	border-bottom-color: rgba(64, 184, 160, 0.33);
+}
+
+.rndTheme--medical .rndMuted { color: #67b6ac; }
+.rndTheme--medical .rndLabel,
+.rndTheme--medical .rndTechName,
+.rndTheme--medical .rndNavTitle { color: #89e9dc; }
+
+.rndTheme--medical .link:not(.sciTechTreeIconBox),
+.rndTheme--medical .linkActive:not(.sciTechTreeIconBox),
+.rndTheme--medical .linkOn:not(.sciTechTreeIconBox),
+.rndTheme--medical .linkOff:not(.sciTechTreeIconBox),
+.rndTheme--medical .selected:not(.sciTechTreeIconBox),
+.rndTheme--medical .warning:not(.sciTechTreeIconBox) {
+	background: rgba(14, 54, 50, 0.72) !important;
+	border-color: rgba(64, 184, 160, 0.52) !important;
+	color: #b9fff7 !important;
+}
+
+.rndTheme--medical .selected:not(.sciTechTreeIconBox),
+.rndTheme--medical .linkActive.selected:not(.sciTechTreeIconBox),
+.rndTheme--medical .linkActive.selected:not(.sciTechTreeIconBox):hover,
+.rndTheme--medical .rndTab.selected {
+	background: rgba(18, 86, 78, 0.86) !important;
+	border-color: rgba(104, 232, 204, 0.64) !important;
+	color: #e9fffc !important;
+	box-shadow: 0 0 8px rgba(82, 224, 196, 0.22) !important;
+}
+
+.rndTheme--medical .rndTab {
+	background: rgba(14, 54, 50, 0.62) !important;
+	border-color: rgba(64, 184, 160, 0.45) !important;
+	color: #b9fff7 !important;
+}
+
+.rndTheme--medical .disabled,
+.rndTheme--medical .link.disabled,
+.rndTheme--medical .rndTab.disabled,
+.rndTheme--medical .rndMenuBtn.disabled,
+.rndTheme--medical .rndExpBtn.disabled,
+.rndTheme--medical a.disabled:link,
+.rndTheme--medical a.disabled:visited,
+.rndTheme--medical a.disabled:active,
+.rndTheme--medical a.disabled:hover {
+	background: rgba(6, 22, 22, 0.58) !important;
+	border-color: rgba(36, 88, 82, 0.38) !important;
+	color: #3a5854 !important;
+	cursor: not-allowed !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	opacity: 1;
+	filter: none;
 }
 
 .rndBalanceLabel {

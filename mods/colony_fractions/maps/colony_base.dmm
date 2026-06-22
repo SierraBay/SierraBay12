@@ -2604,7 +2604,7 @@
 	dir = 1;
 	icon_state = "warning"
 	},
-/obj/machinery/robotics_fabricator/colony,
+/obj/machinery/fabricator/rnd/robotics/colony,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/colony/science)
 "fe" = (

@@ -263,3 +263,58 @@
 	среднестатистческого менталиста из Фонда, и, вероятно, не просто так.<hr>В то время, как Менталист склонен к \
 	исправлению психологических недугов, поиску псионики и даже чтению мыслей, Советник может проводить медицинскую \
 	диагностику и слабое лечение."
+
+/datum/job/biomech
+	title = "Biomechanical Engineer"
+	supervisors = "Главному врачу"
+	department = "Медицинский"
+	department_flag = MED
+
+	minimal_player_age = 14
+	minimum_character_age = list(SPECIES_HUMAN = 28)
+	ideal_character_age = 45
+	economic_power = 8
+	skill_points = 20
+
+	total_positions = 1
+	spawn_positions = 1
+	selection_color = "#013d3b"
+
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/medical/biomech
+	allowed_branches = list(
+		/datum/mil_branch/employee,
+		/datum/mil_branch/contractor
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt,
+		/datum/mil_rank/civ/contractor,
+		/datum/mil_rank/civ/probation_employee,
+		/datum/mil_rank/civ/probation_contractor
+	)
+	min_skill = list(
+		SKILL_ELECTRICAL  = SKILL_BASIC,
+		SKILL_COMPUTER    = SKILL_BASIC,
+		SKILL_MEDICAL     = SKILL_TRAINED,
+		SKILL_DEVICES     = SKILL_EXPERIENCED,
+		SKILL_ANATOMY     = SKILL_EXPERIENCED
+	)
+	max_skill = list(
+		SKILL_MEDICAL     = SKILL_EXPERIENCED,
+		SKILL_DEVICES     = SKILL_MASTER,
+		SKILL_ANATOMY     = SKILL_EXPERIENCED
+	)
+	access = list(
+		access_medical, access_morgue, access_medical_records,
+		access_maint_tunnels, access_emergency_storage, access_crematorium,
+		access_medical_equip, access_biomech,
+	)
+	software_on_spawn = list(
+		/datum/computer_file/program/suit_sensors,
+		/datum/computer_file/program/camera_monitor
+	)
+	// SIERRA TODO: need_exp_to_play
+	// need_exp_to_play = 2
+
+/datum/job/senior_doctor/get_description_blurb()
+	return "Биомеханический инженер - специалист по киберпротезам. В его ведение входит обслуживание, ремонт и установка всевозможных аугментов и имплантов, которые широко распространены среди членов экипажа. \
+	Будучи частью медицинского отдела, оказывайте помощь пострадавшему персоналу, отдавая предпочтение пациентам с киберимплантами и протезами, а также пациентам с полным протезом тела."

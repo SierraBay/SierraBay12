@@ -24,6 +24,35 @@
 	if (state)
 		icon_state = "[initial(icon_state)]_[state]"
 
+/obj/structure/flora/tree/spooky
+	icon = 'mods/vr/icons/hdtrees.dmi'
+	icon_state = "spook"
+	pixel_x = -48
+	pixel_y = -22
+
+/obj/structure/flora/tree/spooky/Initialize()
+	. = ..()
+	var/state = rand(2)
+	if (state)
+		icon_state = "[initial(icon_state)]_[state]"
+
+/obj/structure/flora/tree/dead/snowless
+	icon = 'mods/vr/icons/deadtrees.dmi'
+
+/obj/structure/flora/tree/sakura
+	icon = 'mods/vr/icons/oriental.dmi'
+	icon_state = "spacesakura"
+	pixel_x = -48
+	pixel_y = -22
+
+/obj/structure/flora/tree/sakura/Initialize()
+	. = ..()
+	AddOverlays(image(icon, "spacesakura-overlay"))
+
+/obj/structure/flora/tree/sakura/on_death()
+	. = ..()
+	ClearOverlays()
+
 // Кустарники и трава
 
 /obj/structure/flora/ausbushes/rocky

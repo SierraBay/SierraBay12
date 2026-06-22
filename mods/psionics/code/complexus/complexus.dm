@@ -7,6 +7,7 @@
 
 	var/rating = 0                    // Overall psi rating.
 	var/cost_modifier = 1             // Multiplier for power use stamina costs.
+	var/cooldown_modifier = 1         // Multiplier for power cooldown.
 	var/stun = 0                      // Number of process ticks we are stunned for.
 	var/next_power_use = 0            // world.time minimum before next power use.
 	var/stamina = 75                  // Current psi pool.

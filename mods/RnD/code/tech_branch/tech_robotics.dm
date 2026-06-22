@@ -12,7 +12,7 @@
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("dronecontrol","recharge_station","robot_scanner", "paicard", "sflash","robot_exoskeleton","robot_exoskeleton_hover","robot_torso","robot_head","robot_l_arm","robot_r_arm","robot_l_leg","robot_r_leg","binary_communication_device","radio","actuator","diagnosis_unit","camera","armour","light_armour")
+	unlocks_designs = list("robofab","dronecontrol","recharge_station","robot_scanner", "paicard", "sflash","robot_exoskeleton","robot_exoskeleton_hover","robot_torso","robot_head","robot_l_arm","robot_r_arm","robot_l_leg","robot_r_leg","binary_communication_device","radio","actuator","diagnosis_unit","camera","armour","light_armour")
 
 /datum/technology/robo/basic_augments
 	name = "Basic Augments"

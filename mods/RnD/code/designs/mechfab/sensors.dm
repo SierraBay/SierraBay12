@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/mech_sensors
+	build_type = MECHFAB
 	category = list("Mech sensors")
 
 /datum/design/item/mechfab/mech_sensors/powerloader

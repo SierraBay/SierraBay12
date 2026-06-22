@@ -84,7 +84,7 @@
 		/datum/design/autolathe/arms_ammo/hidden/electrode_high,
 		)
 
-/obj/item/stock_parts/computer/hard_drive/portable/design/exloration
+/obj/item/stock_parts/computer/hard_drive/portable/design/exploration
 	name = "Expeditionary Designs"
 	icon_state = "moebius"
 	designs = list(

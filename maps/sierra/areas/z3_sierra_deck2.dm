@@ -64,12 +64,12 @@
 
 /area/maintenance/substation/seconddeck
 	name = "Second Deck - Substation"
-/*
+
 /area/crew_quarters/laundry
 	name = "Second Deck - Laundry Room"
 	icon_state = "Sleep"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
+
 /area/maintenance/abandoned_hydroponics
 	name = "Second Deck - Abandoned - Hydroponics"
 	icon_state = "hydro"
@@ -226,12 +226,10 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
-/*
 /area/crew_quarters/garden_room
 	name = "Second deck - living - Lounge"
-	icon_state = "game_room_inf"
+	icon_state = "crew_quarters"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
-*/
 
 /area/crew_quarters/dungeon_master_lounge
 	name = "Second Deck - Living Room"
@@ -341,18 +339,6 @@
 	)
 	req_access = list(access_morgue)
 
-/area/medical/mentalhealth
-	name = "Second Deck - Infirmary - Mental Health"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
-/area/medical/mentalhealth/therapyroom
-	name = "Second Deck - Infirmary - Therapy Room"
-	icon_state = "medbay3"
-	ambience = list('sound/ambience/signal.ogg')
-	req_access = list(access_psychiatrist)
-
 // Virology
 
 /area/medical/virology
@@ -372,10 +358,10 @@
 
 /area/crew_quarters/virtual_reality_control
 	name = "\improper VR Control"
-	icon_state = "vr_control"
+	icon_state = "Holodeck"
 
 /area/crew_quarters/virtual_reality
 	name = "\improper VR Suites"
-	icon_state = "vr_suites"
+	icon_state = "Holodeck"
 	sound_env = SMALL_SOFTFLOOR
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED

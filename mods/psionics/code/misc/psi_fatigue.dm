@@ -78,7 +78,7 @@
 	psi_exhaustion = clamp(psi_exhaustion + delta, 0, PSI_EXHAUSTION_MAX)
 
 	// Только что истощились
-	if(!psi_exhausted && psi_exhaustion <= 0)
+	if(!psi_exhausted && psi_exhaustion <= 0 && announced)
 		psi_exhausted = TRUE
 		if(suppressed)
 			suppressed = FALSE
@@ -92,7 +92,7 @@
 		if(owner)
 			to_chat(owner, "<hr>")
 			to_chat(owner, SPAN_DANGER(FONT_LARGE("Твой разум истощён — ты больше не можешь скрывать свои пси-силы!")))
-			to_chat(owner, SPAN_DANGER("Чтобы восстановиться: <b>поспи, отдохни или хорошо поешь</b>."))
+			to_chat(owner, SPAN_DANGER("Чтобы восстановиться: <b>поспи, отдохни или поешь</b>."))
 			to_chat(owner, "<hr>")
 		return
 
@@ -101,10 +101,3 @@
 		psi_exhausted = FALSE
 		if(owner)
 			to_chat(owner, SPAN_NOTICE("Твоя пси-усталость прошла — ты снова контролируешь свои способности."))
-
-// ── Блок UI-переключения подавления ──────────────────────────
-/obj/screen/psi/hub/Click(location, control, click_params)
-	if(owner?.psi?.psi_exhausted)
-		to_chat(owner, SPAN_WARNING("Твой разум слишком истощён, чтобы подавлять пси-силы! Отдохни или поешь."))
-		return
-	. = ..()

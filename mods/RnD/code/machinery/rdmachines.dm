@@ -17,6 +17,7 @@
 	queue_max = 16
 
 	have_disk = FALSE
+	have_disk2 = FALSE
 	have_recycling = TRUE
 	have_design_selector = FALSE
 
@@ -55,6 +56,119 @@
 	. = ..()
 	container = new /obj/item/reagent_containers/glass/beaker(src)
 
+/obj/machinery/fabricator/rnd/robotics
+	name = "robotics fabricator"
+	desc = "A heavy-duty fabricator for robotics parts and compact modules."
+	icon = 'mods/RnD/icons/autolathe.dmi'
+	icon_state = "robofab"
+	base_icon_state = "robofab"
+	req_access = list(access_robotics)
+	build_type = ROBOTFAB
+	have_disk = TRUE
+	have_design_selector = TRUE
+	have_reagents = FALSE
+	have_disk2 = FALSE
+	base_type = /obj/machinery/fabricator/rnd/robotics
+
+	construct_state = /singleton/machine_construction/default/panel_closed
+	uncreated_component_parts = null
+
+	var/manufacturer = null
+
+/obj/machinery/fabricator/rnd/robotics/Initialize()
+	stored_material = list(
+		MATERIAL_STEEL = 0,
+		MATERIAL_PLASTEEL = 0,
+		MATERIAL_TITANIUM = 0,
+		MATERIAL_ALUMINIUM = 0,
+		MATERIAL_PLASTIC = 0,
+		MATERIAL_GLASS = 0,
+		MATERIAL_GOLD = 0,
+		MATERIAL_SILVER = 0,
+		MATERIAL_PHORON = 0,
+		MATERIAL_URANIUM = 0,
+		MATERIAL_DIAMOND = 0
+	)
+	. = ..()
+
+/obj/machinery/fabricator/rnd/robotics/mech
+	name = "exosuit fabricator"
+	desc = "A heavy-duty fabricator dedicated to large exosuit and mech components."
+	build_type = MECHFAB
+	base_type = /obj/machinery/fabricator/rnd/robotics/mech
+	icon = 'mods/RnD/icons/mech_fab.dmi'
+	icon_state = "mechfab"
+	base_icon_state = "mechfab"
+
+// mech_fab.dmi uses overlay/body state names _lights / _work / _pause (no mechfab_ prefix).
+/obj/machinery/fabricator/rnd/robotics/mech/on_update_icon()
+	ClearOverlays()
+	if(panel_open)
+		AddOverlays("[icon_state]_panel")
+
+	icon_state = initial(icon_state)
+
+	if(icon_off())
+		icon_state = "[icon_state]_off"
+		return
+
+	if(working) // if paused, work animation looks awkward.
+		if(paused || error)
+			icon_state = "[icon_state]_pause"
+		else
+			icon_state = "[icon_state]_work"
+
+/// Tall sprite sits on one turf; spawn printed parts on the tile to the machine's right (see computer.dm left/right vs dir).
+/obj/machinery/fabricator/rnd/robotics/mech/proc/get_output_turf_for_build()
+	var/turf/left_step = get_step(src, turn(dir, 90))
+	if(isturf(left_step) && !left_step.density)
+		return left_step
+	return get_turf(loc)
+
+/obj/machinery/fabricator/rnd/robotics/mech/fabricate_design(datum/design/design)
+	consume_materials(design)
+	var/turf/output_turf = get_output_turf_for_build()
+	var/obj/new_item = design.Fabricate(output_turf, mat_efficiency, src)
+	if(design.reverse_engineered && istype(new_item, /obj/item/storage) && length(new_item.contents))
+		for(var/atom/movable/A in new_item.contents)
+			qdel(A)
+	working = FALSE
+	current_file = null
+	print_post()
+	next_file()
+
+
+/obj/item/stock_parts/circuitboard/robotics_fabricator
+	name = "circuit board (robotics fabricator)"
+	build_path = /obj/machinery/fabricator/rnd/robotics
+	board_type = "machine"
+	origin_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1)
+	additional_spawn_components = list(
+		/obj/item/stock_parts/console_screen = 1,
+		/obj/item/stock_parts/keyboard = 1,
+		/obj/item/stock_parts/power/apc/buildable = 1
+	)
+
+/datum/design/circuit/robotics_fabricator
+	name = "robotech fabricator"
+	id = "robofab"
+	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 3)
+	build_path = /obj/item/stock_parts/circuitboard/robotics_fabricator
+	sort_string = "HABAE"
+
+/obj/item/stock_parts/circuitboard/robotics_fabricator/mech
+	name = "circuit board (exosuit fabricator)"
+	build_path = /obj/machinery/fabricator/rnd/robotics/mech
+
+/datum/design/circuit/robotics_fabricator/mech
+	name = "exosuit fabricator"
+	id = "mechfab"
+	build_path = /obj/item/stock_parts/circuitboard/robotics_fabricator/mech
+	sort_string = "HABAF"
 
 /obj/item/stock_parts/circuitboard/protolathe
 	name = "circuit board (protolathe)"
@@ -92,38 +206,26 @@
 	accepted_types = list(
 		/obj/item/stock_parts/computer/hard_drive/portable)
 
-/obj/machinery/smartfridge/disks/New()
-	. = ..()
-	on_update_icon()
+/obj/machinery/smartfridge/disks/permitted
+	startswith = list(
+		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/exploration = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/general = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/medical = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/tool = 1
+	)
 
-/obj/machinery/smartfridge/disks/accept_check(obj/item/O as obj)
-	if(istype(O, /obj/item/stock_parts/computer/hard_drive/portable))
-		return 1
-	return 0
-
-/obj/machinery/smartfridge/disks/on_update_icon()
-	ClearOverlays()
-	if(MACHINE_IS_BROKEN(src))
-		icon_state = "[icon_state]-broken"
-	else
-		icon_state = icon_base
-
-	if(panel_open)
-		AddOverlays(image(icon, "[icon_base]-panel"))
-
-	var/image/I
-	var/is_off = ""
-	if(stat & MACHINE_STAT_NOPOWER)
-		is_off = "-off"
-
-	// Fridge contents
-	switch(length(contents))
-		if(0)
-			I = image(icon, "empty[is_off]")
-		if(1 to 2)
-			I = image(icon, "[icon_contents]-1[is_off]")
-		if(3 to 5)
-			I = image(icon, "[icon_contents]-2[is_off]")
-		else
-			I = image(icon, "[icon_contents]-3[is_off]")
-	AddOverlays(I)
+/obj/machinery/smartfridge/disks/full
+	startswith = list(
+		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/arms = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/engineering = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/general = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/medical = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/tool = 1
+	)
