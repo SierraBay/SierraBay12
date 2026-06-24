@@ -238,8 +238,14 @@
 	coolingefficiency = 0.4
 	siemens_coefficient = 0.8
 	have_synth_skin = TRUE
-	expensive = 2
+	expensive = 1
 
+/datum/robolimb/zenghu/premium
+	company = "Zeng-Hu Premium"
+	desc = "This limb has a high-quality naturalistic fleshtone covering with visible seams."
+	icon = 'mods/ipc_mods/icons/zenghu_cyberlimbs.dmi'
+	expensive = 2
+	skintone = 1
 
 /datum/robolimb/zenghu/spirit
 	company = "Zeng-Hu Spirit"
@@ -257,6 +263,7 @@
 	)
 	speed_modifier = - 0.3
 	coolingefficiency = 0.4
+	have_synth_skin = FALSE
 	expensive = 1
 
 /datum/robolimb/xion
