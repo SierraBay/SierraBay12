@@ -166,8 +166,10 @@
 	user.visible_message(SPAN_CLASS("rose", "You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing."))
 	playsound(src.loc, 'sound/items/zippo_close.ogg', 100, 1, -4)
 
-/obj/item/flame/lighter/zippo/use_after(atom/O, mob/living/user, click_parameters)
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && !lit)
+/obj/item/flame/lighter/zippo/use_after(obj/O, mob/living/user, click_parameters)
+	if(lit && istype(O))
+		O.HandleObjectHeating(src, user, 700)
+	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && !lit)
 		O.reagents.trans_to_obj(src, max_fuel)
 		to_chat(user, SPAN_NOTICE("You refuel [src] from \the [O]"))
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
