@@ -9,6 +9,8 @@
 	var/on = 0
 	var/power = 0
 
+	construct_state = /singleton/machine_construction/default/panel_closed
+
 	var/foodsupply = 0
 	var/toxins = 0
 
