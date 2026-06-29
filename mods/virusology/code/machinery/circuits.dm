@@ -31,7 +31,7 @@
 	name = "antibody analyser"
 	id = "antibodyanalyser"
 	req_tech = list(TECH_BIO = 2, TECH_ENGINEERING = 3)
-	build_path = /obj/machinery/disease2/antibodyanalyser
+	build_path = /obj/item/stock_parts/circuitboard/antibodyanalyser
 	sort_string = "FACAM"
 
 /datum/design/circuit/incubator
