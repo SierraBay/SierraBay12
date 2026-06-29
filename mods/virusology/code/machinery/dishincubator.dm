@@ -1,4 +1,4 @@
-/obj/machinery/disease2/incubator/
+/obj/machinery/disease2/incubator
 	name = "pathogenic incubator"
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "incubator"

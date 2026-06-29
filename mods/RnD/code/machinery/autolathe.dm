@@ -69,6 +69,9 @@
 	var/have_recycling = TRUE
 	var/have_design_selector = TRUE
 
+	/// Robofab sause
+	var/manufacturer = null
+
 	var/list/unsuitable_materials = list()
 	var/list/suitable_materials //List that limits autolathes to eating mats only in that list.
 

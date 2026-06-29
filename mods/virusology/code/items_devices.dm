@@ -112,33 +112,3 @@
 	name = "blank GNA disk (stage: [stage])"
 	effect = new /datum/disease2/effect/invisible
 	effect.stage = stage
-
-
-/obj/item/stock_parts/circuitboard/curefab
-	name = "circuit board (cure fabricator)"
-	build_path = /obj/machinery/computer/curer
-
-/obj/item/stock_parts/circuitboard/splicer
-	name = "circuit board (disease splicer)"
-	build_path = /obj/machinery/computer/diseasesplicer
-	origin_tech = list(TECH_DATA = 5, TECH_BIO = 5)
-
-/obj/item/stock_parts/circuitboard/centrifuge
-	name = "circuit board (isolation centrifuge)"
-	build_path = /obj/machinery/computer/centrifuge
-	origin_tech = list(TECH_DATA = 2, TECH_BIO = 3)
-
-
-/datum/design/circuit/centrifuge
-	name = "isolation centrifuge console"
-	id = "iso_centrifuge"
-	req_tech = list(TECH_DATA = 2, TECH_BIO = 3)
-	build_path = /obj/item/stock_parts/circuitboard/centrifuge
-	sort_string = "FACAG"
-
-/datum/design/circuit/splicer
-	name = "disease splicer"
-	id = "isplicer"
-	req_tech = list(TECH_DATA = 5, TECH_BIO = 5)
-	build_path = /obj/item/stock_parts/circuitboard/splicer
-	sort_string = "FACAH"

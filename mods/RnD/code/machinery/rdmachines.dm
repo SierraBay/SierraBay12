@@ -73,8 +73,6 @@
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 
-	var/manufacturer = null
-
 /obj/machinery/fabricator/rnd/robotics/Initialize()
 	stored_material = list(
 		MATERIAL_STEEL = 0,
@@ -89,6 +87,7 @@
 		MATERIAL_URANIUM = 0,
 		MATERIAL_DIAMOND = 0
 	)
+	manufacturer = basic_robolimb.company
 	. = ..()
 
 /obj/machinery/fabricator/rnd/robotics/mech

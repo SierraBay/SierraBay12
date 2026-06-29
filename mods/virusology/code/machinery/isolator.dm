@@ -3,7 +3,7 @@
 #define LIST "list"
 #define ENTRY "entry"
 
-/obj/machinery/disease2/isolator/
+/obj/machinery/disease2/isolator
 	name = "pathogenic isolator"
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "isolator"

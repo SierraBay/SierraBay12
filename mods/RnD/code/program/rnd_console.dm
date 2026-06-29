@@ -77,6 +77,8 @@ those devices access via linked_console.
 #define RND_SCREEN_MAIN          "main"
 #define RND_SCREEN_PROTO         "protolathe"
 #define RND_SCREEN_IMPRINTER     "circuit_imprinter"
+#define RND_SCREEN_ROBOFAB       "robotics_fabricator"
+#define RND_SCREEN_MECHFAB       "mech_fabricator"
 #define RND_SCREEN_WORKING       "working"
 #define RND_SCREEN_TREES         "tech_trees"
 #define RND_SCREEN_LOCKED        "locked"
@@ -1197,10 +1199,10 @@ those devices access via linked_console.
 			target_device = linked_lathe
 		else if(screen == RND_SCREEN_IMPRINTER && linked_imprinter)
 			target_device = linked_imprinter
-		else if(screen == "robotics_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+		else if(screen == RND_SCREEN_ROBOFAB && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
 			var/datum/nano_module/program/rnd_console/robotics_console/RC_TS = src
 			target_device = RC_TS.linked_robotics_fab
-		else if(screen == "mech_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+		else if(screen == RND_SCREEN_MECHFAB && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
 			var/datum/nano_module/program/rnd_console/robotics_console/RC_TM = src
 			target_device = RC_TM.linked_mech_fab
 
@@ -1241,7 +1243,7 @@ those devices access via linked_console.
 				to_chat(usr, SPAN_WARNING("Unauthorized access."))
 				return
 		screen = where
-		if(screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == "robotics_fabricator" || screen == "mech_fabricator" || screen == RND_SCREEN_DISK_DESIGNS)
+		if(screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == RND_SCREEN_ROBOFAB || screen == RND_SCREEN_MECHFAB || screen == RND_SCREEN_DISK_DESIGNS)
 			search_text = ""
 		if(screen == RND_SCREEN_DISK_DESIGNS)
 			selected_disk_category = null
@@ -1380,9 +1382,9 @@ those devices access via linked_console.
 			selected_protolathe_category = what_cat
 		if(screen == RND_SCREEN_IMPRINTER)
 			selected_imprinter_category = what_cat
-		if(screen == "robotics_fabricator")
+		if(screen == RND_SCREEN_ROBOFAB)
 			selected_robotics_category = what_cat
-		if(screen == "mech_fabricator")
+		if(screen == RND_SCREEN_MECHFAB)
 			selected_mech_category = what_cat
 	if(href_list["select_tech_category"])
 		selected_category_id = href_list["select_tech_category"]
@@ -1416,12 +1418,12 @@ those devices access via linked_console.
 					selected_imprinter_category = null
 				else
 					selected_imprinter_category = "Search Results"
-			if(screen == "robotics_fabricator")
+			if(screen == RND_SCREEN_ROBOFAB)
 				if(!search_text)
 					selected_robotics_category = null
 				else
 					selected_robotics_category = "Search Results"
-			if(screen == "mech_fabricator")
+			if(screen == RND_SCREEN_MECHFAB)
 				if(!search_text)
 					selected_mech_category = null
 				else
@@ -1439,9 +1441,9 @@ those devices access via linked_console.
 				selected_protolathe_category = null
 			if(screen == RND_SCREEN_IMPRINTER)
 				selected_imprinter_category = null
-			if(screen == "robotics_fabricator")
+			if(screen == RND_SCREEN_ROBOFAB)
 				selected_robotics_category = null
-			if(screen == "mech_fabricator")
+			if(screen == RND_SCREEN_MECHFAB)
 				selected_mech_category = null
 			if(screen == RND_SCREEN_DISK_DESIGNS)
 				searched_disk_design_text = null
@@ -1508,6 +1510,12 @@ those devices access via linked_console.
 				var/obj/machinery/fabricator/rnd/robotics/target_fab_e = RCE.get_robotics_target_fab(href_list["fab_target"])
 				if(target_fab_e)
 					target_fab_e.eject(href_list["fab_eject_sheet"], text2num(href_list["amount"]))
+			if(href_list["manufacturer"])
+				var/datum/nano_module/program/rnd_console/robotics_console/RCM = src
+				var/obj/machinery/fabricator/rnd/robotics/target_fab_m = RCM.get_robotics_target_fab(href_list["fab_target"])
+				if(target_fab_m)
+					if(href_list["manufacturer"] in all_robolimbs)
+						target_fab_m.manufacturer = href_list["manufacturer"]
 
 	if(!lite)
 		if(href_list["deconstruct"])
@@ -1547,6 +1555,9 @@ those devices access via linked_console.
 		if(href_list["eject_sheet"])
 			if(target_device)
 				target_device.eject(href_list["eject_sheet"], text2num(href_list["amount"]))
+		if(href_list["manufacturer"])
+			if(href_list["manufacturer"] in all_robolimbs)
+				target_device.manufacturer = href_list["manufacturer"]
 
 		if(href_list["find_device"])
 			screen = RND_SCREEN_WORKING
@@ -2013,7 +2024,7 @@ those devices access via linked_console.
 					known_nodes += list(list("name" = T.name, "id" = "\ref[T]"))
 			data["known_nodes"] = known_nodes
 
-	if(!lite && (screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == "robotics_fabricator" || screen == "mech_fabricator"))
+	if(!lite && (screen == RND_SCREEN_PROTO || screen == RND_SCREEN_IMPRINTER || screen == RND_SCREEN_ROBOFAB || screen == RND_SCREEN_MECHFAB))
 		var/obj/machinery/fabricator/rnd/target_device
 		var/list/design_categories
 		var/selected_category
@@ -2026,11 +2037,11 @@ those devices access via linked_console.
 			target_device = linked_imprinter
 			design_categories = F ? F.design_categories_imprinter : list()
 			selected_category = selected_imprinter_category
-		else if(screen == "robotics_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+		else if(screen == RND_SCREEN_ROBOFAB && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
 			var/datum/nano_module/program/rnd_console/robotics_console/RC_RF = src
 			target_device = RC_RF.linked_robotics_fab
 			selected_category = selected_robotics_category
-		else if(screen == "mech_fabricator" && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
+		else if(screen == RND_SCREEN_MECHFAB && istype(src, /datum/nano_module/program/rnd_console/robotics_console))
 			var/datum/nano_module/program/rnd_console/robotics_console/RC_MF = src
 			target_device = RC_MF.linked_mech_fab
 			selected_category = selected_mech_category
@@ -2074,6 +2085,17 @@ those devices access via linked_console.
 
 			if(target_device.current_file)
 				data["device_current"] = target_device.current_file.design.name
+
+			if(target_device.manufacturer)
+				if(all_robolimbs)
+					var/list/T = list()
+					for(var/A in all_robolimbs)
+						var/datum/robolimb/R = all_robolimbs[A]
+						if(R.unavailable_at_fab || length(R.applies_to_part))
+							continue
+						T += list(list("id" = A, "company" = R.company))
+					data["manufacturers"] = T
+					data["manufacturer"] = target_device.manufacturer
 
 			data["device_error"] = target_device.error
 
@@ -2343,6 +2365,8 @@ those devices access via linked_console.
 #undef RND_SCREEN_MAIN
 #undef RND_SCREEN_PROTO
 #undef RND_SCREEN_IMPRINTER
+#undef RND_SCREEN_ROBOFAB
+#undef RND_SCREEN_MECHFAB
 #undef RND_SCREEN_WORKING
 #undef RND_SCREEN_TREES
 #undef RND_SCREEN_LOCKED

@@ -577,14 +577,14 @@
 
 /datum/design/circuit/miningdrill
 	name = "mining drill head"
-	id = "mining drill head"
+	id = "mining_drill_head"
 	req_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/miningdrill
 	sort_string = "KCAAA"
 
 /datum/design/circuit/miningdrillbrace
 	name = "mining drill brace"
-	id = "mining drill brace"
+	id = "mining_drill_brace"
 	req_tech = list(TECH_DATA = 1, TECH_ENGINEERING = 1)
 	build_path = /obj/item/stock_parts/circuitboard/miningdrillbrace
 	sort_string = "KCAAB"

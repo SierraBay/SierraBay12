@@ -7,6 +7,7 @@
 	var/addmax_damage
 	var/addmin_broken_damage
 	var/have_synth_skin = FALSE
+	can_eat = FALSE
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -215,7 +216,7 @@
 	company = "Hephaestus Monitor."
 	icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_monitor.dmi'
 	allowed_bodytypes = list(SPECIES_IPC)
-	can_eat = null
+	can_eat = FALSE
 	unavailable_at_fab = 1
 	has_screen = TRUE
 
@@ -223,7 +224,7 @@
 	company = "Zeng-Hu"
 	desc = "This limb has a rubbery fleshtone covering with visible seams."
 	icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_main.dmi'
-	can_eat = 1
+	can_eat = TRUE
 	unavailable_at_fab = 1
 	allowed_bodytypes = list(SPECIES_HUMAN,SPECIES_IPC)
 	armor = list(
@@ -309,7 +310,7 @@
 	company = "Xion Monitor."
 	icon = 'icons/mob/human_races/cyberlimbs/xion/xion_monitor.dmi'
 	allowed_bodytypes = list(SPECIES_IPC)
-	can_eat = null
+	can_eat = FALSE
 	unavailable_at_fab = 1
 	has_screen = TRUE
 
@@ -334,7 +335,7 @@
 	company = "Ward-Takahashi"
 	desc = "This limb features sleek black and white polymers."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
-	can_eat = 1
+	can_eat = TRUE
 	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -374,7 +375,7 @@
 	company = "Ward-Takahashi Monitor."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_monitor.dmi'
 	allowed_bodytypes = list(SPECIES_IPC)
-	can_eat = null
+	can_eat = FALSE
 	unavailable_at_fab = 1
 	has_screen = TRUE
 
@@ -451,7 +452,7 @@
 	company = "Vey-Med"
 	desc = "This high quality limb is nearly indistinguishable from an organic one."
 	icon = 'icons/mob/human_races/cyberlimbs/veymed/veymed_main.dmi'
-	can_eat = 1
+	can_eat = TRUE
 	skintone = 1
 	unavailable_at_fab = 1
 	expensive = 2

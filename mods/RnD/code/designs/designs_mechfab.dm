@@ -6,7 +6,7 @@
 	category = list("Robot")
 
 //if the fabricator is a exosuit fab pass the manufacturer info over to the robot part constructor
-/datum/design/item/mechfab/robot/Fabricate(newloc, fabricator)
+/datum/design/item/mechfab/robot/Fabricate(newloc, mat_efficiency, fabricator)
 	if(istype(fabricator, /obj/machinery/fabricator/rnd/robotics))
 		var/obj/machinery/fabricator/rnd/robotics/mechfab = fabricator
 		return new build_path(newloc, mechfab.manufacturer)
