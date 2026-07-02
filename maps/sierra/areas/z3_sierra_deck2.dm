@@ -241,6 +241,7 @@
 	icon_state = "fitness"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 
+/*
 /area/crew_quarters/actor
 	name = "Second Deck - Service - Actor"
 	icon_state = "Theatre"
@@ -251,6 +252,7 @@
 /area/crew_quarters/actor/stage
 	name = "Second Deck - Service - Stage"
 	holomap_color = HOLOMAP_AREACOLOR_CREW
+ */
 
 /area/crew_quarters/lounge/upper
 	name = "Second Deck - Living - Lounge"
@@ -356,12 +358,10 @@
 /area/medical/virology/ward
 	name = "Second Deck - Virology - Isolation"
 
-/area/crew_quarters/virtual_reality_control
-	name = "\improper VR Control"
-	icon_state = "Holodeck"
 
 /area/crew_quarters/virtual_reality
-	name = "\improper VR Suites"
+	name = "Second Deck - VR Suites"
 	icon_state = "Holodeck"
 	sound_env = SMALL_SOFTFLOOR
+	holomap_color = HOLOMAP_AREACOLOR_CREW
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED

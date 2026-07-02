@@ -87,3 +87,60 @@
 	add_field(/datum/report_field/people/list_from_manifest, "Список привлечённых работников", required = 1)
 	add_field(/datum/report_field/pencode_text,"Список систем судна и проведённое технического обслуживание", required = 1)
 	add_field(/datum/report_field/signature,"Подпись ответственного", required = 1)
+
+/datum/computer_file/report/recipient/eng/exosuit
+	form_name = "NT-ENG-14"
+	title = "Передача экзокостюма"
+	available_on_ntnet = 1
+
+/datum/computer_file/report/recipient/eng/exosuit/generate_fields()
+	..()
+	var/list/ce_fields = list()
+	var/list/robo_fields = list()
+	add_field(/datum/report_field/text_label/header, "ИКН Сьерра - Инженерный департамент")
+	add_field(/datum/report_field/simple_text, "Отдел, в который передатеся экзокостюм", required = 1)
+	robo_fields += add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, передающего экзокостюм", required = 1)
+	robo_fields += add_field(/datum/report_field/signature, "Подпись сотрудника инженерного отдела", required = 1)
+	add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, принимающего экзокостюм", required = 1)
+	add_field(/datum/report_field/signature, "Подпись принимающего сотрудника", required = 1)
+	add_field(/datum/report_field/date, "Дата передачи")
+	add_field(/datum/report_field/time, "Время передачи")
+	add_field(/datum/report_field/simple_text, "Назначение экзокостюма", required = 1)
+	add_field(/datum/report_field/pencode_text, "Список установленного оборудования", required = 1)
+	add_field(/datum/report_field/text_label/instruction, "Каждый элемент оборудования описать в виде: место установки, если не установлено, то указать. \
+	При необходимости - вписать дополнительные пункты в списке. Пустые графы заполнить, как N/A")
+	ce_fields += add_field(/datum/report_field/signature, "Подпись Главного Инженера")
+	for(var/datum/report_field/field in robo_fields)
+		field.set_access(access_edit = access_robotics)
+	for(var/datum/report_field/field in ce_fields)
+		field.set_access(access_edit = access_ce)
+
+/datum/computer_file/report/recipient/eng/augmentations
+	form_name = "AG17-N1S"
+	title = "Аугментация сотрудника (Синтетика)"
+	available_on_ntnet = 1
+
+/datum/computer_file/report/recipient/eng/augmentations/generate_fields()
+	..()
+	var/list/ce_fields = list()
+	var/list/robo_fields = list()
+	add_field(/datum/report_field/text_label/header, "ИКН Сьерра - Инженерный департамент")
+	add_field(/datum/report_field/simple_text, "Отдел, в котором работает аугментируемый", required = 1)
+	add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, в которого имплантируются аугментации", required = 1)
+	add_field(/datum/report_field/simple_text, "Поколение (для ИПС)")
+	robo_fields += add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, проводящего операцию", required = 1)
+	robo_fields += add_field(/datum/report_field/signature, "Подпись сотрудника, проводящего операцию", required = 1)
+	add_field(/datum/report_field/date, "Дата аугментации")
+	add_field(/datum/report_field/time, "Время аугментации")
+	add_field(/datum/report_field/simple_text, "Причина аугментации", required = 1)
+	add_field(/datum/report_field/options/yes_no, "Добавить инфомацию об аугментациях в базу данных?")
+	add_field(/datum/report_field/pencode_text, "Список аугментаций", required = 1)
+	add_field(/datum/report_field/text_label/instruction, "Каждую аугментацию оформить в виде: часть тела, если протез - описать марку протеза, функционал, название. \
+	При необходимости - вписать дополнительные пункты в списке. Пустые графы заполнить, как N/A.")
+	ce_fields += add_field(/datum/report_field/signature, "Подпись Главного Инженера")
+	add_field(/datum/report_field/signature, "Подпись главы отдела аугментированного")
+	set_access(access_robotics)
+	for(var/datum/report_field/field in ce_fields)
+		field.set_access(access_edit = access_ce)
+	for(var/datum/report_field/field in robo_fields)
+		field.set_access(access_edit = access_robotics)

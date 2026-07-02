@@ -30,14 +30,17 @@
 	name = "Bridge - Maintenance - Port"
 	icon_state = "pmaint"
 
-/area/maintenance/substation/bridgedeck
-	name = "Bridge - Substation"
+
 
 /area/crew_quarters/sleep/cryo/bridge
 	name = "Bridge - Living - Cryogenic Storage"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	holomap_color = HOLOMAP_AREACOLOR_CREW
 */
+
+/area/maintenance/substation/bridge
+	name = "Bridge - Substation"
+
 /* COMMAND AREAS
  * =============
  */
@@ -82,9 +85,11 @@
 	name = "Second Deck - Command - Briefing Room"
 	icon_state = "bridge_room"
 
+/*
 /area/bridge/lobby
 	name = "Second Deck - Bridge - Lobby"
 	req_access = list()
+ */
 
 /area/bridge/hallway
 	name = "Second Deck - Bridge - Entrance"
