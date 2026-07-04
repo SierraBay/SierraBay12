@@ -372,6 +372,9 @@
 	for(var/obj/item/card/id/I in src)
 		I.access = real_access
 
+	if(istype(src, /mob/living/carbon/human))
+		SSvirtual_reality.recreate_headset(src)
+
 /mob/living/proc/spawn_vr_item()
 	set name = "Spawn VR item"
 	set desc = "Pick an item to spawn."
@@ -408,3 +411,39 @@
 			return
 
 		SSvirtual_reality.vr_spawn_menu(usr, available_obj, item_type)
+
+/obj/item/device/radio/receive_range(freq, level)
+	var/z_level = get_z(src)
+
+	if((z_level in GLOB.using_map.admin_levels) || (z_level in GLOB.using_map.vr_levels))
+		// station_levels check simplification
+		if(!(1 in level) && !(z_level in level))
+			return -1
+
+		if (!wires)
+			return -1
+		if (wires.IsIndexCut(WIRE_RECEIVE))
+			return -1
+		if(!listening)
+			return -1
+		if(freq in ANTAG_FREQS)
+			if(!(src.syndie))
+				return -1
+		if (!on)
+			return -1
+		if (!freq)
+			if (!listening)
+				return -1
+		else
+			var/accept = (freq==frequency && listening)
+			if (!accept)
+				for (var/ch_name in channels)
+					var/datum/radio_frequency/RF = secure_radio_connections[ch_name]
+					if (RF && RF.frequency==freq && (channels[ch_name]&FREQ_LISTENING))
+						accept = 1
+						break
+			if (!accept)
+				return -1
+
+		return canhear_range
+	. = ..()
