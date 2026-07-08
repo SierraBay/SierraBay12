@@ -20,7 +20,8 @@
 		return PULSE_NUMBER_THREADY
 
 	// Apply species blood volume modifier and slight randomization for realism.
-	var/modified_bpm = heart_organ.bpm * (2 - species.blood_volume / SPECIES_BLOOD_DEFAULT)
+	var/blood_volume_factor = species ? species.blood_volume : SPECIES_BLOOD_DEFAULT
+	var/modified_bpm = heart_organ.bpm * clamp(2 - blood_volume_factor / SPECIES_BLOOD_DEFAULT, 0.5, 1.5)
 	modified_bpm += modified_bpm * rand(-10, 10) / 100
 	return clamp(round(modified_bpm), 0, PULSE_MAX_BPM)
 

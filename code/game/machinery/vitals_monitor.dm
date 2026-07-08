@@ -299,6 +299,10 @@
 		AddOverlays(emissive_appearance(icon, "pulse_warning"))
 		AddOverlays(image(icon, icon_state = "pulse_flatline"))
 		AddOverlays(image(icon, icon_state = "pulse_warning"))
+		if (beep)
+			playsound(src, 'sound/machines/flatline.ogg', 20)
+		if (read_alerts)
+			alerts[PULSE_ALERT] = "No heartbeat detected! Heart organ missing!"
 	// [/SIERRA-EDIT]
 
 /obj/machinery/vitals_monitor/proc/handle_brain()

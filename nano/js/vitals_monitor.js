@@ -281,21 +281,7 @@
                 originalReceive.apply(this, arguments);
                 
                 try {
-                    var updateData = jQuery.parseJSON(jsonString);
-                    if (updateData && updateData.data) {
-                        var rhythm = updateData.data.cardiac_rhythm || 'Asystole';
-                        var bpm = updateData.data.bpm || 0;
-                        var infarct = updateData.data.infarct_progress || 0;
-                        
-                        var canvases = document.getElementsByClassName('ecg-canvas');
-                        for (var i = 0; i < canvases.length; i++) {
-                            canvases[i].setAttribute('data-rhythm', rhythm);
-                            canvases[i].setAttribute('data-bpm', bpm);
-                            canvases[i].setAttribute('data-infarct-progress', infarct);
-                        }
-                        
-                        initECG();
-                    }
+                    initECG();
                 } catch (e) {}
             };
             NanoStateManager.receiveUpdateData.isHooked = true;
