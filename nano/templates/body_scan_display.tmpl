@@ -7,8 +7,230 @@
 {{/for}}
 </table>
 <hr>
+
+<style>
+/* Custom Body Scanner UI Stylesheet */
+.body-scanner-container {
+    margin-top: 10px;
+}
+
+/* Tabs Panel */
+.scanner-tabs {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 12px;
+}
+
+.scanner-tab-btn {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 8px 12px;
+    background-color: transparent;
+    color: #888888;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.scanner-tab-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.scanner-tab-btn.selected {
+    color: #ffffff;
+    background-color: #4972a1;
+}
+
+/* Tab contents and animation */
+@keyframes tabSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scan-section {
+    animation: tabSlideIn 0.2s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+/* Tab filter system */
+.body-scanner-container[data-active-tab="vitals"] .scan-row-severity,
+.body-scanner-container[data-active-tab="vitals"] .scan-row-reagent,
+.body-scanner-container[data-active-tab="vitals"] .scan-section-body {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="organs"] .scan-section-health {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="reagents"] .scan-row-vital,
+.body-scanner-container[data-active-tab="reagents"] .scan-row-severity,
+.body-scanner-container[data-active-tab="reagents"] .scan-section-body {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="trauma"] .scan-row-vital,
+.body-scanner-container[data-active-tab="trauma"] .scan-row-reagent,
+.body-scanner-container[data-active-tab="trauma"] .scan-section-body {
+    display: none !important;
+}
+
+/* Heartbeat/Pulse Indicator Animation */
+.pulse-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #44dd44;
+    margin-left: 8px;
+    box-shadow: 0 0 6px #44dd44;
+    animation: heart-beat 1s infinite ease-in-out;
+}
+.pulse-indicator.fast {
+    background: #ff4444;
+    box-shadow: 0 0 6px #ff4444;
+    animation: heart-beat 0.4s infinite ease-in-out;
+}
+.pulse-indicator.stopped {
+    background: #888888;
+    box-shadow: none;
+    animation: none;
+}
+.pulse-indicator.robotic {
+    background: #44aaff;
+    box-shadow: 0 0 6px #44aaff;
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes heart-beat {
+    0% { transform: scale(0.85); opacity: 0.5; }
+    30% { transform: scale(1.2); opacity: 1; }
+    40% { transform: scale(1); opacity: 0.8; }
+    70% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.85); opacity: 0.5; }
+}
+
+@keyframes pulse-glow {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+/* Modern tables look */
+.scanner-header-table, .scanner-data-table, .organ-status-table {
+    border-collapse: collapse;
+    width: 100% !important;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid #333333 !important;
+}
+
+.scanner-header-table td, .scanner-data-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #282828;
+}
+
+.scanner-header-table tr:hover, .scanner-data-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.organ-status-table th {
+    background-color: #2e2e2e !important;
+    border: 1px solid #3a3a3a !important;
+    color: #eaeaea;
+    padding: 6px 10px;
+}
+
+.organ-status-table td {
+    border: 1px solid #2a2a2a !important;
+    padding: 6px 10px;
+}
+</style>
+
 {{if data.selected > 0}}
+<div id="bodyScannerContainer" class="body-scanner-container" data-active-tab="vitals">
+    <div class="scanner-tabs" unselectable="on">
+        <div class="scanner-tab-btn selected" data-tab-target="vitals" onclick="setBodyScannerTab('vitals')">Жизненные показатели</div>
+        <div class="scanner-tab-btn" data-tab-target="organs" onclick="setBodyScannerTab('organs')">Состояние тела</div>
+        <div class="scanner-tab-btn" data-tab-target="reagents" onclick="setBodyScannerTab('reagents')">Химический анализ</div>
+        <div class="scanner-tab-btn" data-tab-target="trauma" onclick="setBodyScannerTab('trauma')">Анализ травм</div>
+    </div>
 	{{:data.scan_header}}
     {{:data.scan_health}}
     {{:data.scan_body}}
+</div>
 {{/if}}
+
+<script>
+(function() {
+    // Initialize tab state
+    if (typeof window.activeBodyScannerTab === 'undefined') {
+        window.activeBodyScannerTab = 'vitals';
+    }
+    
+    // Tab switching function
+    window.setBodyScannerTab = function(tabName) {
+        window.activeBodyScannerTab = tabName;
+        var container = document.getElementById('bodyScannerContainer');
+        if (container) {
+            container.setAttribute('data-active-tab', tabName);
+        }
+        
+        var buttons = document.querySelectorAll('.scanner-tab-btn');
+        buttons.forEach(function(btn) {
+            if (btn.getAttribute('data-tab-target') === tabName) {
+                btn.classList.add('selected');
+            } else {
+                btn.classList.remove('selected');
+            }
+        });
+    };
+
+    // Keep UI synchronized with state after DOM updates
+    function syncTab() {
+        var container = document.getElementById('bodyScannerContainer');
+        if (container) {
+            var activeTab = window.activeBodyScannerTab;
+            if (container.getAttribute('data-active-tab') !== activeTab) {
+                container.setAttribute('data-active-tab', activeTab);
+            }
+            
+            var buttons = document.querySelectorAll('.scanner-tab-btn');
+            buttons.forEach(function(btn) {
+                if (btn.getAttribute('data-tab-target') === activeTab) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+    }
+
+    // Set up MutationObserver to sync state when DOM changes
+    if (!window.bodyScannerObserver) {
+        window.bodyScannerObserver = new MutationObserver(function() {
+            syncTab();
+        });
+        var target = document.getElementById('uiContent') || document.body;
+        window.bodyScannerObserver.observe(target, { childList: true, subtree: true });
+    }
+    
+    // Sync immediately
+    syncTab();
+    requestAnimationFrame(syncTab);
+})();
+</script>
