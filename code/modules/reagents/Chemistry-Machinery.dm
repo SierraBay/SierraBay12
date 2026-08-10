@@ -31,6 +31,8 @@
 
 	var/bottle_dosage = 60
 	var/pill_dosage = 30
+	var/blister_dosage = 30 //[SiERRA-ADD] - KONVALUTKI - mods\medical\code\konvalutki.dm
+	var/blister_type = 6  //[SiERRA-ADD] - KONVALUTKI - mods\medical\code\konvalutki.dm
 
 	var/bottlesprite = "bottle-1" //yes, strings
 	var/pillsprite = "1"
@@ -252,7 +254,63 @@
 				if(loaded_pill_bottle)
 					if(length(loaded_pill_bottle.contents) < loaded_pill_bottle.max_storage_space)
 						P.forceMove(loaded_pill_bottle)
+		//[SIERRA-ADD] - KONVALUTKI - mods\medical\code\konvalutki.dm
+		else if (href_list["blister_dosage"])
+			var/initial_dosage = initial(blister_dosage)
+			var/new_dosage = input(usr, "Select a new dosage for your pills.", initial_dosage, "Pill Dosage") as null|num
+			if (!new_dosage)
+				return
+			new_dosage = clamp(new_dosage, 0, initial_dosage)
+			blister_dosage = new_dosage
+			to_chat(user, SPAN_NOTICE("You configure \the [src] to create pills with a maximum dosage of [blister_dosage] units."))
+		else if (href_list["blister_type"])
+			var/new_type = input(usr, "Select a new blister type.",, "Pill Dosage") in list(6, 4, 2)
+			if (!new_type)
+				return
+			blister_type = new_type
+			to_chat(user, SPAN_NOTICE("You configure \the [src] to create blisters with [blister_type] slots."))
+		else if (href_list["createkonvalutka"])
+			if (!reagents.total_volume)
+				to_chat(user, SPAN_WARNING("\The [src] doesn't have any reagents to make into a pill."))
+				return
+			var/count = 6
+			switch(blister_type)
+				if(6)
+					count = 6
+				if(4)
+					count = 4
+				if(2)
+					count = 2
 
+			if(reagents.total_volume/count < 1) //Sanity checking.
+				return
+
+			var/amount_per_pill = reagents.total_volume / count
+			if (amount_per_pill > blister_dosage)
+				amount_per_pill = blister_dosage
+
+			var/name = sanitizeSafe(input(usr, "Name:", "Name your pill!", "[reagents.get_master_reagent_name()] ([amount_per_pill]u)") as null|text, MAX_NAME_LEN)
+			if (!name)
+				return
+			var/obj/item/storage/pill_bottle/blister/konvaluta
+			switch(blister_type)
+				if(6)
+					konvaluta = new /obj/item/storage/pill_bottle/blister(loc)
+				if(4)
+					konvaluta = new /obj/item/storage/pill_bottle/blister/four(loc)
+				if(2)
+					konvaluta = new /obj/item/storage/pill_bottle/blister/two(loc)
+			while (count-- && count >= 0)
+				var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(loc)
+				if(!name) name = reagents.get_master_reagent_name()
+				P.SetName("[name] pill")
+				P.icon_state = "pill"+pillsprite
+				if(P.icon_state in list("pill1", "pill2", "pill3", "pill4", "pill5")) // if using greyscale, take colour from reagent
+					P.color = reagents.get_color()
+				reagents.trans_to_obj(P,amount_per_pill)
+				P.forceMove(konvaluta)
+			konvaluta.update_icon()
+		//[/SIERRA-ADD]
 		else if (href_list["createbottle"])
 			create_bottle(user)
 		else if(href_list["change_pill"])
@@ -384,6 +442,8 @@
 
 	data["pillDosage"] = "[pill_dosage]u"
 	data["bottleDosage"] = "[bottle_dosage]u"
+	data["blisterDosage"] = "[blister_dosage]u" // [SIERRA-ADD] - KONVALUTKI - mods\medical\code\konvalutki.dm
+	data["blisterType"] = "[blister_type] slots" // [SIERRA-ADD] - KONVALUTKI - mods\medical\code\konvalutki.dm
 
 	if (switching_sprite)
 		data["pillSprites"] = list()

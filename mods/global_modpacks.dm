@@ -81,3 +81,4 @@
 #include "vr/_vr_includes.dm"
 #include "discord/_discord_includes.dm"
 #include "mules/mules_includes.dm"
+#include "medical/medical_includes.dm"
