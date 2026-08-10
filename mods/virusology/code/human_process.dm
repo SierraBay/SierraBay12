@@ -45,6 +45,7 @@
 			immunity = min(immunity + 0.25, immunity_norm)
 		else if(immunity > 132)
 			immunity = max(immunity - 0.15, immunity_norm)
+/*
 	if(life_tick % 5 && immunity < 15 && chem_effects[CE_ANTIVIRAL] < VIRUS_COMMON && !LAZYLEN(virus2))
 		var/infection_prob = 5 - immunity
 		var/turf/simulated/T = get_turf(src)
@@ -58,3 +59,4 @@
 				infect_mob_random_greater(src)
 			else
 				infect_mob_random_lesser(src)
+ */

@@ -91,7 +91,7 @@
 
 /obj/item/device/radio/headset/sierra_roboticist
 	name = "roboticist's headset"
-	desc = "A headset with access to the science and medical channels."
+	desc = "A headset with access to the engineering and medical channels."
 	icon_state = "eng_headset"
 	item_state = "headset"
 	ks1type = /obj/item/device/encryptionkey/sierra_roboticist

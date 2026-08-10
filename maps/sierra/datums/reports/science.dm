@@ -79,32 +79,3 @@
 		field.set_access(access_edit = access_research)
 	for(var/datum/report_field/field in rd_fields)
 		field.set_access(access_edit = access_rd)
-
-/datum/computer_file/report/recipient/sci/augmentations
-	form_name = "AG17-N1"
-	title = "Аугментация сотрудника"
-	available_on_ntnet = 1
-
-/datum/computer_file/report/recipient/sci/augmentations/generate_fields()
-	..()
-	var/list/rd_fields = list()
-	var/list/sci_fields = list()
-	add_field(/datum/report_field/text_label/header, "ИКН Сьерра - Научный департамент")
-	add_field(/datum/report_field/simple_text, "Отдел, в котором работает аугментируемый", required = 1)
-	add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, в которого имплантируются аугментации", required = 1)
-	sci_fields += add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, проводящего операцию", required = 1)
-	sci_fields += add_field(/datum/report_field/signature, "Подпись сотрудника, проводящего операцию", required = 1)
-	add_field(/datum/report_field/date, "Дата аугментации")
-	add_field(/datum/report_field/time, "Время аугментации")
-	add_field(/datum/report_field/simple_text, "Причина аугментации", required = 1)
-	add_field(/datum/report_field/options/yes_no, "Добавить инфомацию об аугментациях в базу данных?")
-	add_field(/datum/report_field/pencode_text, "Список аугментаций", required = 1)
-	add_field(/datum/report_field/text_label/instruction, "Каждую аугментацию оформить в виде: часть тела, если протез - описать марку протеза, функционал, название. \
-	При необходимости - вписать дополнительные пункты в списке. Пустые графы заполнить, как N/A.")
-	rd_fields += add_field(/datum/report_field/signature, "Подпись Директора Исследований")
-	add_field(/datum/report_field/signature, "Подпись главы отдела аугментированного")
-	set_access(access_robotics)
-	for(var/datum/report_field/field in rd_fields)
-		field.set_access(access_edit = access_rd)
-	for(var/datum/report_field/field in sci_fields)
-		field.set_access(access_edit = access_robotics)

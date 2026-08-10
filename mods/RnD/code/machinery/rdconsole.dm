@@ -1387,6 +1387,45 @@
 		/datum/computer_file/program/ntnetdesign
 	)
 
+/obj/machinery/computer/modular/preset/cardslot/robotics
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/power/apc,
+		/obj/item/stock_parts/computer/card_slot
+		)
+	default_software = list(
+		/datum/computer_file/program/camera_monitor,
+		/datum/computer_file/program/email_client,
+		/datum/computer_file/program/wordprocessor,
+		/datum/computer_file/program/rnd_console/robotics_console,
+		/datum/computer_file/program/ntnetdesign
+	)
+
+/obj/machinery/computer/modular/preset/cardslot/biomech
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/power/apc,
+		/obj/item/stock_parts/computer/card_slot
+		)
+	default_software = list(
+		/datum/computer_file/program/camera_monitor,
+		/datum/computer_file/program/email_client,
+		/datum/computer_file/program/wordprocessor,
+		/datum/computer_file/program/rnd_console/biomech_console,
+		/datum/computer_file/program/ntnetdesign
+	)
+
+/obj/machinery/computer/modular/preset/cardslot/public
+	uncreated_component_parts = list(
+		/obj/item/stock_parts/power/apc,
+		/obj/item/stock_parts/computer/card_slot
+		)
+	default_software = list(
+		/datum/computer_file/program/camera_monitor,
+		/datum/computer_file/program/email_client,
+		/datum/computer_file/program/wordprocessor,
+		/datum/computer_file/program/rnd_console/public_console,
+		/datum/computer_file/program/ntnetdesign
+	)
+
 #undef SCREEN_MAIN
 #undef SCREEN_PROTO
 #undef SCREEN_IMPRINTER

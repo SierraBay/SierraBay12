@@ -46,7 +46,6 @@
 #include "code/machinery/server.dm"
 #include "code/machinery/server_persistence.dm"
 #include "code/machinery/away_servers.dm"
-#include "code/machinery/robotics_fabricator.dm"
 #include "code/machinery/autolathe_disk_cloner.dm"
 #include "code/machinery/rd_mission_drone_pad.dm"
 

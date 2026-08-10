@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/mech_armour
+	build_type = MECHFAB
 	category = list("Mech armour")
 
 /datum/design/item/mechfab/mech_armour/basic_armour

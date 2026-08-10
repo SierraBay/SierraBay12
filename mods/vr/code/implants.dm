@@ -36,7 +36,7 @@
 		to_chat(imp_in, SPAN_WARNING("Your implant refuses to activate. Wherever the VR space is hosted, it's gone to high alert and disabled connection."))
 		return
 	var/list/zone_list = list()
-	for(var/key in GLOB.vr_spawns)
+	for(var/key in GLOB.active_vr_areas)
 		zone_list.Add(key)
 	var/zone = input("Choose a zone.") as null|anything in zone_list
 	var/list/spawn_locs = SSvirtual_reality.get_vr_spawns(zone)
@@ -47,7 +47,8 @@
 		SPAN_WARNING("\The [imp_in] abruptly stiffens and goes unresponsive."),
 		SPAN_NOTICE("Your awareness rapidly shifts as your VR implant activates.")
 	)
-	SSvirtual_reality.create_virtual_mob(imp_in, imp_in.type, pick(spawn_locs))
+	var/mob/living/simulated_mob = SSvirtual_reality.create_virtual_mob(imp_in, imp_in.type, pick(spawn_locs))
+	SSvirtual_reality.after_mob_creation(simulated_mob, zone)
 
 /obj/item/implant/virtual_reality/emp_act(severity)
 	var/mob/living/carbon/human/C = imp_in

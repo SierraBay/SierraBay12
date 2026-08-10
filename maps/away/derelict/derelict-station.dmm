@@ -1213,7 +1213,7 @@
 /turf/simulated/floor,
 /area/constructionsite/storage)
 "ed" = (
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor,
 /area/constructionsite/storage)
 "ee" = (

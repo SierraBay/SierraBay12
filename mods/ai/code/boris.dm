@@ -248,7 +248,7 @@ GLOBAL_LIST_EMPTY(available_ai_shells)
 	name = "B.O.R.I.S. module"
 	id = "boris"
 	req_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 3, TECH_DATA = 5, TECH_BLUESPACE = 4)
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | ROBOTFAB
 	materials = list(MATERIAL_STEEL = 2000, MATERIAL_GLASS = 1000, MATERIAL_SILVER = 1000, MATERIAL_GOLD = 500, MATERIAL_PHORON = 1000, MATERIAL_DIAMOND = 500)
 	build_path = /obj/item/device/mmi/digital/robot/ai/boris
 	category = "Misc"

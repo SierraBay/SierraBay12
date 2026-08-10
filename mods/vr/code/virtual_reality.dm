@@ -110,6 +110,45 @@ SUBSYSTEM_DEF(virtual_reality)
 
 	return cloned_atom
 
+/datum/controller/subsystem/virtual_reality/proc/recreate_headset(mob/living/carbon/human/M)
+	var/mob/living/carbon/human/occupant = SSvirtual_reality.virtual_mobs_to_occupants[M]
+
+	if(!occupant)
+		return
+
+	var/obj/item/device/radio/headset/R // headset of virtual mob
+	if(M.l_ear && istype(M.l_ear,/obj/item/device/radio))
+		R = M.l_ear
+	else if(M.r_ear && istype(M.r_ear,/obj/item/device/radio))
+		R = M.r_ear
+
+	var/obj/item/device/radio/headset/H // headset of real mob
+
+	if(occupant.l_ear && istype(occupant.l_ear,/obj/item/device/radio))
+		H = occupant.l_ear
+	else if(occupant.r_ear && istype(occupant.r_ear,/obj/item/device/radio))
+		H = occupant.l_ear
+
+	if(!H)
+		return
+
+	if(!R)
+		R = new H.type
+		M.equip_to_slot_or_del(R, slot_l_ear)
+
+	if(R)
+		if(istype(R, /obj/item/device/radio/headset))
+			for(var/channel_name in R.channels)
+				radio_controller.remove_object(R, radiochannels[channel_name])
+				R.secure_radio_connections[channel_name] = null
+			for(var/obj/key in R.encryption_keys)
+				qdel(key)
+			R.encryption_keys.Cut()
+			// clone the exact same keys that real body had
+			for(var/obj/item/device/encryptionkey/E in H.encryption_keys)
+				R.encryption_keys += new E.type(R)
+			R.recalculateChannels(TRUE)
+
 /datum/controller/subsystem/virtual_reality/proc/recursive_storage_copy(obj/item/storage/S, obj/item/storage/O)
 	for(var/obj/item/I in S.contents)
 		qdel(I)
@@ -236,6 +275,10 @@ SUBSYSTEM_DEF(virtual_reality)
 		simulated_mob.languages = new_occupant.languages.Copy()
 		simulated_mob.default_language = new_occupant.default_language
 	simulated_mob.lastarea = null
+
+	if(istype(simulated_mob, /mob/living/carbon/human))
+		recreate_headset(simulated_mob)
+
 	return simulated_mob
 
 /// Removes a mob from VR. Accepts both occupants and virtual mobs as a first argument.

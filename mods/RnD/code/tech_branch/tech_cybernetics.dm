@@ -82,6 +82,7 @@
 
 	unlocks_designs = list(
 		"dronecontrol",
+		"robofab",
 		"recharge_station",
 		"robot_scanner",
 		"scan_robotic",

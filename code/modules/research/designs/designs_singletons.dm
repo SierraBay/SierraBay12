@@ -51,7 +51,7 @@
 	desc = "Schematics for a robotic module, scraped from seedy parts of the net. Who knows what it does."
 	id = "borg_party_module"
 	req_tech = list(TECH_DATA = 2, TECH_ESOTERIC = 2)
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	materials = list(MATERIAL_STEEL = 7500, MATERIAL_ALUMINIUM = 5000, MATERIAL_DIAMOND = 2000)
 	build_path = /obj/item/borg/upgrade/uncertified/party
 	category = "Cyborg Upgrade Modules"

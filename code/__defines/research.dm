@@ -16,3 +16,4 @@
 #define MECHFAB          FLAG_03  //Mechfab
 #define CHASSIS          FLAG_04  //For protolathe, but differently
 #define FOOD_REPLICATOR  FLAG_05  //Food replicator. Uses nutriment reagent. //[SIERRA-ADD] RND
+#define ROBOTFAB         FLAG_06  //Robotics fabricator (non-mech)

@@ -117,6 +117,7 @@ var/global/list/rnd_tech_categories = list(
 				"name" = "Zeng Hu Pharmaceuticals",
 				"nodes" = list(
 					"reagent_tools_zh",
+					"virology_zh",
 					"adv_reagent_tools_zh",
 					"implant_injection_zh",
 					"adv_injection_zh"

@@ -1876,7 +1876,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/mininghome_living_north)
 "qe" = (
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_robotics)
