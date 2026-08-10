@@ -10,14 +10,14 @@
 	allow_quick_empty = FALSE
 	var/pill_color = "#ffffffff"
 
-/obj/item/storage/pill_bottle/blister/update_icon()
-	. = ..()
-	if(contents[1] && pill_color == "#ffffffff")
+/obj/item/storage/pill_bottle/blister/on_update_icon()
+	if(LAZYLEN(contents) && pill_color == "#ffffffff")
 		var/obj/item/reagent_containers/pill/P = contents[1]
 		pill_color = P.reagents.get_color()
 		name = "[P.name] blister"
 	var/image/I = image('mods/medical/icons/blister.dmi', icon_state = "[LAZYLEN(contents)]")
 	I.color = pill_color
+	ClearOverlays()
 	AddOverlays(I)
 
 /obj/item/storage/pill_bottle/blister/Initialize()
