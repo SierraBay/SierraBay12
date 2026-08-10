@@ -14,7 +14,6 @@
 #include "code/other_obj.dm"
 #include "code/bathfixtures.dm"
 #include "code/machines.dm"
-#include "code/robolimbs.dm"
 #include "code/vendors.dm"
 #include "code/circuitboard.dm"
 #include "code/airlock_electronics.dm"

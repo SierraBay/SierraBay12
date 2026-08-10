@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/mech
+	build_type = MECHFAB
 	name = "mech frame"
 	id = "mech_frame"
 	build_path = /obj/structure/heavy_vehicle_frame

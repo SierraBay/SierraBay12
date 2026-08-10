@@ -85,7 +85,7 @@
 	additional_spawn_components = list(
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-*/
+
 /obj/item/stock_parts/circuitboard/mechfab
 	name = "circuit board (exosuit fabricator)"
 	build_path = /obj/machinery/robotics_fabricator
@@ -100,7 +100,7 @@
 		/obj/item/stock_parts/keyboard = 1,
 		/obj/item/stock_parts/power/apc/buildable = 1
 	)
-
+*/
 /obj/item/stock_parts/circuitboard/ntnet_relay
 	name = "circuit board (NTNet quantum relay)"
 	build_path = /obj/machinery/ntnet_relay

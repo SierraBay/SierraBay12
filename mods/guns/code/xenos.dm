@@ -167,7 +167,7 @@
 	pixel_y = rand(-16, 16)
 	pixel_x = rand(-16, 16)
 
-/obj/item/projectile/bullet/attack_mob(mob/living/target_mob, distance, miss_modifier)
+/obj/item/projectile/bullet/teeth/attack_mob(mob/living/target_mob, distance, miss_modifier)
 	def_zone = ran_zone(def_zone, 0)
 	. = ..()
 

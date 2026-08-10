@@ -64,6 +64,26 @@
 	)
 	spawn_weight = 0.67
 
+// целый биркет для ивентов
+/datum/map_template/ruin/away_site/bearcat_wreck/repaired
+	name = "Bearcat (fixed)"
+	id = "awaysite_bearcat"
+	description = "A light freighter."
+	suffixes = list("bearcat_repaired-1.dmm", "bearcat_repaired-2.dmm")
+	spawn_cost = 2000 // спавн только вручную
+	apc_test_exempt_areas = list(
+		/area/ship/scrap/maintenance/engine/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/maintenance/engine/starboard = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/crew/hallway/port= NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/crew/hallway/starboard= NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/maintenance/hallway = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/maintenance/lower = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/escape_port = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/escape_star = NO_SCRUBBER|NO_VENT,
+		/area/ship/scrap/shuttle/lift = NO_SCRUBBER|NO_VENT|NO_APC,
+		/area/ship/scrap/command/hallway = NO_SCRUBBER|NO_VENT
+	)
+
 //перенос старых тайлов для биркета
 /turf/simulated/floor/usedup
 	initial_gas = list(GAS_CO2 = MOLES_O2STANDARD, GAS_NITROGEN = MOLES_N2STANDARD)

@@ -110,68 +110,6 @@
 	Будучи ученым на Сьерре, Вы можете собирать и исследовать множество уникальных инструментов и гаджетов,\
 	создавать взрывоопасные или очень полезные бомбы, улетать на поверхность планет и странные места за пределами корабля на Хароне или Гуппи в горных или археологических целях, и даже взаимодействовать с неизвестной инопланетной жизнью."
 
-/datum/job/roboticist
-	title = "Roboticist"
-	department = "Научный"
-	department_flag = SCI|ROB
-
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "Директору Исследований и Старшему Исследователю"
-	selection_color = "#633d63"
-	economic_power = 7
-	minimum_character_age = list(SPECIES_HUMAN = 25)
-	ideal_character_age = 27
-	alt_titles = list(
-			"Biomechanical Engineer",
-			"Mechatronic Technician",
-		)
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/roboticist
-	allowed_branches = list(
-			/datum/mil_branch/employee,
-			/datum/mil_branch/contractor
-		)
-	allowed_ranks = list(
-			/datum/mil_rank/civ/nt,
-			/datum/mil_rank/civ/contractor,
-			/datum/mil_rank/civ/probation_employee,
-			/datum/mil_rank/civ/probation_contractor
-		)
-	min_skill = list(
-			SKILL_COMPUTER		=	SKILL_TRAINED,
-			SKILL_DEVICES		=	SKILL_EXPERIENCED,
-			SKILL_ANATOMY		=	SKILL_TRAINED,
-			SKILL_MECH			=	HAS_PERK,
-			SKILL_ELECTRICAL	=	SKILL_TRAINED
-		)
-
-	max_skill = list(
-			SKILL_CONSTRUCTION	=	SKILL_MAX,
-			SKILL_ELECTRICAL	=	SKILL_MAX,
-			SKILL_ATMOS			=	SKILL_EXPERIENCED,
-			SKILL_ENGINES		=	SKILL_EXPERIENCED,
-			SKILL_DEVICES		=	SKILL_MAX,
-			SKILL_MEDICAL		=	SKILL_EXPERIENCED,
-			SKILL_ANATOMY		=	SKILL_EXPERIENCED
-		)
-
-	skill_points = 26
-
-	access = list(
-			access_robotics,
-			access_research,
-			access_tech_storage,
-			access_research_storage,
-			access_medical_records,
-			access_medical,
-			access_rnd_network
-		)
-
-
-/datum/job/roboticist/get_description_blurb()
-	return "Корабельный роботехник, в первую очередь, занимается производством и обслуживанием киборгов и роботов корабля.\
-	Он также может быть призван собирать различные экзокостюмы, ремонтировать протезированные конечности у членов экипажа и пересаживать чей-то мозг в корпус киборга или полностью синтетический юнит."
-
 /datum/job/scientist_assistant
 	title = "Research Assistant"
 	department = "Научный"

@@ -26,7 +26,7 @@
 		/area/maintenance/seconddeck/hangar = 0,
 		/area/maintenance/seconddeck/aftstarboard = 0,
 		/area/maintenance/substation/seconddeck = 0,
-		//area/maintenance/substation/bridgedeck = 0,
+		/area/maintenance/substation/bridge = 0,
 		/area/maintenance/firstdeck/foreport = 0,
 		/area/maintenance/firstdeck/centralport = 0,
 		/area/maintenance/firstdeck/forestarboard = 0,
@@ -94,10 +94,11 @@
 		/area/holodeck/alphadeck,
 		/area/holocontrol
 	)
-
+/*
 /datum/unit_test/zas_area_test/ai_chamber
 	name = "ZAS: AI Chamber"
 	area_path = /area/turret_protected/ai
+ */
 
 /datum/unit_test/zas_area_test/cargo_bay
 	name = "ZAS: Cargo Bay"

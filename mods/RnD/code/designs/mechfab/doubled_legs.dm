@@ -1,4 +1,5 @@
 /datum/design/item/mechfab/doubled_legs
+	build_type = MECHFAB
 	category = list("Mech propulsion")
 
 /datum/design/item/mechfab/doubled_legs/spider

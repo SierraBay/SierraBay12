@@ -2934,7 +2934,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "YI" = (

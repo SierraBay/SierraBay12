@@ -16,12 +16,9 @@
 		)
 
 
-
 ///Чтоб не крутило спрайты на держалке. Более простое решение.
 /obj/structure/coatrack/set_dir()
 	return
-
-
 
 
 //Тыкаем голой рукой
@@ -48,8 +45,6 @@
 		remove_helmet(user)
 
 
-
-
 ///Пытаемся надеть шмотку
 /obj/structure/coatrack/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(!istype(tool, /obj/item/clothing))
@@ -70,12 +65,9 @@
 	return ..()
 
 
-
-
-
 /obj/structure/coatrack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!isitem(mover))
-		return
+		return TRUE
 	var/obj/item/item_moved = mover
 	if (!suit && istype(item_moved, /obj/item/clothing/suit))
 		if(!can_be_added_suit(usr, item_moved))

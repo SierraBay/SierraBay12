@@ -414,6 +414,15 @@ var/global/const/access_security_records = "ACCESS_SECURITY_RECORDS"
 	id = access_security_records
 	desc = "Security Records"
 	region = ACCESS_REGION_SECURITY
+
+// [SIERRA-ADD] - BIOMECH_ACCESS
+
+var/global/const/access_biomech = "ACCESS_BIOMECH"
+/datum/access/biomech
+	id = access_biomech
+	desc = "Biomechanical Engineer"
+	region = ACCESS_REGION_MEDBAY
+
 // [/SIERRA-ADD]
 
 /******************

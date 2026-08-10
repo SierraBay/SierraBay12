@@ -54,6 +54,14 @@
 /obj/item/gun/projectile/automatic/nt41,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"jGF" = (
+/obj/machinery/computer/modular/preset/full,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"jIh" = (
+/obj/machinery/fabricator/rnd/robotics/mech,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "kSl" = (
 /obj/item/gun/projectile/heavysniper/ant,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -85,17 +93,14 @@
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "nFA" = (
-/obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "odH" = (
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/liberia/atmos)
 "ooX" = (
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
-/turf/unsimulated/floor/grass,
+/obj/machinery/fabricator/rnd/robotics,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "pnX" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -107,13 +112,10 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
 /obj/landmark{
 	name = "JoinLateCryo"
 	},
-/turf/unsimulated/floor/grass,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "qMW" = (
 /obj/item/gun/projectile/pistol/m19,
@@ -277,7 +279,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ooX
 cpC
 cpC
 cpC
@@ -307,9 +309,9 @@ dSB
 dSB
 dSB
 dSB
+jGF
 cpC
 cpC
-nFA
 cpC
 cpC
 cpC
@@ -337,7 +339,7 @@ djw
 djw
 djw
 dSB
-cpC
+jIh
 cpC
 cpC
 cpC
@@ -368,9 +370,9 @@ vuz
 djw
 dSB
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
@@ -397,11 +399,11 @@ djw
 djw
 djw
 dSB
-ooX
-ooX
-kWp
-ooX
-ooX
+cpC
+cpC
+nFA
+cpC
+cpC
 cpC
 cpC
 uzJ
@@ -427,11 +429,11 @@ dSB
 dSB
 dSB
 dSB
-ooX
-kWp
+cpC
+nFA
 pSk
-kWp
-ooX
+nFA
+cpC
 cpC
 cpC
 uzJ
@@ -457,11 +459,11 @@ cpC
 cpC
 cpC
 cpC
-ooX
-ooX
-kWp
-ooX
-ooX
+cpC
+cpC
+nFA
+cpC
+cpC
 cpC
 cpC
 uzJ
@@ -488,9 +490,9 @@ cpC
 cpC
 cpC
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC

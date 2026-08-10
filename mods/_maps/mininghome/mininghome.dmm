@@ -1102,9 +1102,9 @@
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_living_south)
 "ik" = (
-/obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/decal/cleanable/cobweb,
+/obj/machinery/fabricator/rnd/robotics/mech,
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_robotics)
 "io" = (
@@ -1312,20 +1312,6 @@
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
 /area/map_template/mininghome_power)
-"kr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/steel_dirty,
-/area/map_template/mininghome_robotics)
 "kD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -1917,7 +1903,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/mininghome_living_north)
 "qe" = (
-/obj/machinery/robotics_fabricator,
 /obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_robotics)
@@ -4125,20 +4110,20 @@
 /area/map_template/mininghome_hangar)
 "KZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/steel_dirty,
 /area/map_template/mininghome_robotics)
@@ -24784,13 +24769,13 @@ VZ
 VZ
 VZ
 DE
-Xi
-Of
-Bm
-Nu
-Qv
-Qv
-kr
+Qq
+cZ
+lb
+WY
+qe
+jw
+jw
 jw
 sm
 LX
@@ -24986,12 +24971,12 @@ VZ
 VZ
 VZ
 DE
-Qq
-Db
-lb
-WY
-qe
-jw
+Xi
+Of
+Bm
+Nu
+Qv
+Qv
 KZ
 ix
 fE

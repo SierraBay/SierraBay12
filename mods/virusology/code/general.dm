@@ -86,43 +86,7 @@
 	initial_reagent_types = list(/datum/reagent/nutriment/virus_food = 1)
 
 
-
-/obj/item/stock_parts/circuitboard/curefab
-	name = "circuit board (cure fabricator)"
-	build_path = /obj/machinery/computer/curer
-
-/obj/item/stock_parts/circuitboard/splicer
-	name = "circuit board (disease splicer)"
-	build_path = /obj/machinery/computer/diseasesplicer
-	origin_tech = list(TECH_DATA = 5, TECH_BIO = 5)
-
-/obj/item/stock_parts/circuitboard/centrifuge
-	name = "circuit board (isolation centrifuge)"
-	build_path = /obj/machinery/computer/centrifuge
-	origin_tech = list(TECH_DATA = 2, TECH_BIO = 3)
-
-/datum/design/circuit/curefab
-	name = "cure fabricator"
-	id = "curefab"
-	req_tech = list(TECH_DATA = 4, TECH_ENGINEERING = 5)
-	build_path = /obj/item/stock_parts/circuitboard/curefab
-	sort_string = "FACAI"
-
-/datum/design/circuit/centrifuge
-	name = "isolation centrifuge console"
-	id = "iso_centrifuge"
-	req_tech = list(TECH_DATA = 2, TECH_BIO = 3)
-	build_path = /obj/item/stock_parts/circuitboard/centrifuge
-	sort_string = "FACAG"
-
-/datum/design/circuit/splicer
-	name = "disease splicer"
-	id = "isplicer"
-	req_tech = list(TECH_DATA = 5, TECH_BIO = 5)
-	build_path = /obj/item/stock_parts/circuitboard/splicer
-	sort_string = "FACAH"
-
-/mob/living/carbon/
+/mob/living/carbon
 	var/list/datum/disease2/disease/virus2 = list()
 	var/list/antibodies = list()
 

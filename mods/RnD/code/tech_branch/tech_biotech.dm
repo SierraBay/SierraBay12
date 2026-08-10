@@ -26,6 +26,33 @@
 		"mass_spectrometer"
 	)
 
+// Virology
+
+/datum/technology/bio/virology_zh
+	name = "Pathogen Research Machinery (Zeng Hu)"
+	desc = "Virus research and vaccine development machinery."
+	id = "virology_zh"
+	tech_type = RESEARCH_BIOTECH
+
+	x = 0.1
+	y = 0.6
+	icon = "gene"
+
+	required_corp_id = RND_MISSION_CORP_ZENG_HU
+	min_reputation = 0
+	required_tech_levels = list()
+	cost = 2000
+
+	unlocks_designs = list(
+		"diseaseanalyser",
+		"antibodyanalyser",
+		"incubator",
+		"isolator",
+		"curefab",
+		"iso_centrifuge",
+		"isplicer"
+	)
+
 /datum/technology/bio/adv_reagent_tools_zh
 	name = "Advanced Reagent Tools (Zeng Hu)"
 	desc = "Advanced reagent analysis and containment systems."

@@ -6,7 +6,7 @@
 /obj/item/device/encryptionkey/sierra_roboticist
 	name = "roboticist's encryption key"
 	icon_state = "eng_cypherkey"
-	channels = list("Science" = 1, "Medical" = 1)
+	channels = list("Engineering" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/sierra_quartermaster
 	name = "quartermaster's encryption key"

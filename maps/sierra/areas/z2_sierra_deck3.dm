@@ -151,11 +151,12 @@
 	icon_state = "engineering_locker"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
+/*
 /area/engineering/materials_storage
 	name = "Third Deck - Engineering - Materials Storage"
 	icon_state = "engineering_storage"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
+ */
 /area/engineering/atmos
 	name = "Third Deck - Engineering - Atmospherics"
 	icon_state = "atmos"

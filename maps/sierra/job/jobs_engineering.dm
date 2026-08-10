@@ -32,7 +32,7 @@
 
 	access = list(	access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage,
 			        access_eva, access_tech_storage, access_atmospherics, access_janitor, access_construction,
-			        access_tcomsat, access_seneng, access_hangar, access_network)
+			        access_tcomsat, access_seneng, access_hangar, access_network, access_robotics)
 
 
 	software_on_spawn = list(/datum/computer_file/program/power_monitor,
@@ -192,3 +192,63 @@
 /datum/job/infsys/get_description_blurb()
 	return "Вы когда-нибудь хотели стать человеком, который сутками сидит на попе смирно и начинает проявлять признаки бурной деятельности, когда всё идёт коту под хвост?\
 	Поздравляю, Вы приняты на должность информационного техника. Сидите на попе смирно, серфите NTNet, истерите, когда связь внезапно обрывается, становитесь главным Hackerman-ом этой смены."
+
+/datum/job/roboticist
+	title = "Roboticist"
+	department = "Инженерный"
+	department_flag = ENG|ROB
+
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "Главному и Старшему инженерам"
+	selection_color = "#5b4d20"
+	economic_power = 7
+	minimum_character_age = list(SPECIES_HUMAN = 25)
+	ideal_character_age = 27
+	alt_titles = list("Mechatronic Technician")
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/engineering/roboticist
+	allowed_branches = list(
+			/datum/mil_branch/employee,
+			/datum/mil_branch/contractor
+		)
+	allowed_ranks = list(
+			/datum/mil_rank/civ/nt,
+			/datum/mil_rank/civ/contractor,
+			/datum/mil_rank/civ/probation_employee,
+			/datum/mil_rank/civ/probation_contractor
+		)
+	min_skill = list(
+			SKILL_COMPUTER		=	SKILL_TRAINED,
+			SKILL_DEVICES		=	SKILL_EXPERIENCED,
+			SKILL_ANATOMY		=	SKILL_TRAINED,
+			SKILL_CONSTRUCTION	=	SKILL_BASIC,
+			SKILL_MECH			=	HAS_PERK,
+			SKILL_ELECTRICAL	=	SKILL_TRAINED
+		)
+
+	max_skill = list(
+			SKILL_CONSTRUCTION	=	SKILL_MAX,
+			SKILL_ELECTRICAL	=	SKILL_MAX,
+			SKILL_ATMOS			=	SKILL_EXPERIENCED,
+			SKILL_ENGINES		=	SKILL_EXPERIENCED,
+			SKILL_DEVICES		=	SKILL_MAX,
+			SKILL_MEDICAL		=	SKILL_EXPERIENCED,
+			SKILL_ANATOMY		=	SKILL_EXPERIENCED
+		)
+
+	skill_points = 22
+
+	access = list(
+			access_maint_tunnels,
+			access_robotics,
+			access_engine,
+			access_tech_storage,
+			access_construction,
+			access_medical_records,
+			access_medical,
+			access_rnd_network
+		)
+
+/datum/job/roboticist/get_description_blurb()
+	return "Корабельный роботехник, в первую очередь, занимается производством и обслуживанием киборгов и роботов корабля.\
+	Он также может быть призван собирать различные экзокостюмы, ремонтировать протезированные конечности у членов экипажа и пересаживать чей-то мозг в корпус киборга или полностью синтетический юнит. Вы подчиняетесь инженерному отделу."

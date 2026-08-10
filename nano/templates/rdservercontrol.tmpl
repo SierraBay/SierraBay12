@@ -54,6 +54,7 @@ Used In File(s): \code\modules\research\server.dm
 						{{:helper.link("Доступ", 'locked', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 1})}}
 						{{:helper.link("Данные", 'disk', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 2})}}
 						{{:helper.link("Дизайны", 'wrench', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 4})}}
+						{{:helper.link("Синхронизация", 'link', {'select_server' : value.id, 'server_ref' : value.ref, 'target_screen' : 3})}}
 						{{if !value.is_public}}
 							{{:helper.link("→ Public", 'arrowthick-1-e', {'set_public_server' : value.id}, value.operable ? null : 'disabled', 'srvSmallBtn')}}
 						{{/if}}

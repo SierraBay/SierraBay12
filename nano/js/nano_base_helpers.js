@@ -11,10 +11,33 @@ NanoBaseHelpers = function () {
       return ''
     },
     ntscieMode: function () {
-      $('body').css("background-color","#313442")
+      $('body').css("background-color","#2d3441")
       $('body').css("background-image","url('uiBackground-NTsci.png')")
       $('body').css("background-position","50% 0")
       $('body').css("background-repeat","repeat-x")
+      $('body').css("background-attachment","scroll")
+      $('#uiTitleFluff').css("background-image","url('uiTitleFluff.png')")
+      $('#uiTitleFluff').css("background-position","50% 50%")
+      $('#uiTitleFluff').css("background-repeat", "no-repeat")
+      return ''
+    },
+    ntengiMode: function () {
+      $('body').css("background-color","#372102")
+      $('body').css("background-image","url('uiBackground-NTengi.png')")
+      $('body').css("background-position","50% 0")
+      $('body').css("background-repeat","repeat-x")
+      $('body').css("background-attachment","scroll")
+      $('#uiTitleFluff').css("background-image","url('uiTitleFluff.png')")
+      $('#uiTitleFluff').css("background-position","50% 50%")
+      $('#uiTitleFluff').css("background-repeat", "no-repeat")
+      return ''
+    },
+    ntmedMode: function () {
+      $('body').css("background-color","#000a0a")
+      $('body').css("background-image","url('uiBackground-NTmed.png')")
+      $('body').css("background-position","50% 0")
+      $('body').css("background-repeat","repeat-x")
+      $('body').css("background-attachment","scroll")
       $('#uiTitleFluff').css("background-image","url('uiTitleFluff.png')")
       $('#uiTitleFluff').css("background-position","50% 50%")
       $('#uiTitleFluff').css("background-repeat", "no-repeat")

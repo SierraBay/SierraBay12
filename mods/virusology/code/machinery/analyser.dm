@@ -4,6 +4,8 @@
 	icon_state = "analyser"
 	density = TRUE
 
+	construct_state = /singleton/machine_construction/default/panel_closed
+
 	var/scanning = 0
 	var/pause = 0
 

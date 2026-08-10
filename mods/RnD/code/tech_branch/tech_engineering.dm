@@ -229,8 +229,8 @@
 
 	unlocks_designs = list(
 		"floodlight",
-		"mining drill brace",
-		"mining drill head",
+		"mining_drill_brace",
+		"mining_drill_head",
 		"drill",
 		"jackhammer",
 		"mesons"
