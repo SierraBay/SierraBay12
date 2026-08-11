@@ -208,6 +208,7 @@
 /obj/machinery/smartfridge/disks/permitted
 	startswith = list(
 		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cookware = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/exploration = 1,
@@ -220,6 +221,7 @@
 /obj/machinery/smartfridge/disks/full
 	startswith = list(
 		/obj/item/stock_parts/computer/hard_drive/portable/design/components = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/design/cookware = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/cuttery = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/drinking = 1,
 		/obj/item/stock_parts/computer/hard_drive/portable/design/arms = 1,

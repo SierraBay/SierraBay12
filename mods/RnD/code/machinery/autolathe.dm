@@ -31,6 +31,8 @@
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk2
 
+	var/disk_box
+
 	var/list/stored_material = list()
 	var/obj/item/reagent_containers/glass/container
 
@@ -1001,7 +1003,7 @@
 /obj/machinery/fabricator/micro/check_materials(datum/design/design)
 	. = ..()
 	var/cat = design.category[1]
-	if(!(cat == "Cutlery" || cat == "Drinking Glasses" || cat == "Medical"))
+	if(!(cat == "Cookware" || cat == "Cutlery" || cat == "Drinking Glasses" || cat == "Medical"))
 		return ERR_NOCOMPAT
 
 
@@ -1041,25 +1043,24 @@
 /obj/machinery/fabricator/hacked
 	fab_status_flags = FAB_HACKED
 
-	var/disk_box = /obj/item/storage/box/autolathe_designs
+	disk_box = /obj/item/storage/box/autolathe_designs
 
 /obj/machinery/fabricator/hacked/Initialize()
 	. = ..()
 	new disk_box(loc)
 
 /obj/machinery/fabricator/micro/loaded
-	default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/glass
-	additional_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/cuttery
+	disk_box = /obj/item/storage/box/microlathe_designs
 
 /obj/machinery/fabricator/micro/loaded/Initialize()
 	. = ..()
+	new disk_box(loc)
 	stored_material = list(
 	MATERIAL_STEEL = 40000,
 	MATERIAL_ALUMINIUM = 40000,
 	MATERIAL_PLASTIC = 40000,
 	MATERIAL_GLASS = 90000,
 	)
-
 
 /obj/machinery/fabricator/micro/bartender
 	name = "Bartender Microlathe"

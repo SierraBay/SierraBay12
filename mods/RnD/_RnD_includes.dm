@@ -99,6 +99,7 @@
 
 // Дизайны автолата
 #include "code/designs_autolathe/designs_arms_ammo.dm"
+#include "code/designs_autolathe/designs_cookware.dm"
 #include "code/designs_autolathe/designs_cutlery.dm"
 #include "code/designs_autolathe/designs_devices_components.dm"
 #include "code/designs_autolathe/designs_engineering.dm"
