@@ -33,6 +33,7 @@
 	prefix = "mods/_maps/phobos/maps/"
 	suffixes = list("phobos.dmm")
 	spawn_cost = 50 // We're testing this
+	votable_as_main_ship = TRUE
 	area_usage_test_exempted_root_areas = list(/area/ship/phobos)
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/interseptor)
 // We're deep in frontier. So no elite troops or terrans

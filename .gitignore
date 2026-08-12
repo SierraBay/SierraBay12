@@ -12,6 +12,7 @@ dmdoc/
 cfg/
 build_log.txt
 use_map
+use_ship
 stopserver
 reboot_called
 atupdate

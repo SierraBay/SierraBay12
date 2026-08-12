@@ -23,7 +23,7 @@
 
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()
-	data["manifest"] = html_crew_manifest()
+	data["manifest"] = html_crew_manifest(FALSE, FALSE, nano_host())
 	data["assignments"] = show_assignments
 	data["have_id_slot"] = !!card_slot
 	data["have_printer"] = program.computer.has_component(PART_PRINTER)
@@ -194,7 +194,7 @@
 					else
 						var/contents = {"<h4>Crew Manifest</h4>
 										<br>
-										[html_crew_manifest()]
+										[html_crew_manifest(FALSE, FALSE, nano_host())]
 										"}
 						if(!computer.print_paper(contents, "crew manifest ([stationtime2text()])"))
 							to_chat(usr, SPAN_NOTICE("Hardware error: Printer was unable to print the file. It may be out of paper."))
