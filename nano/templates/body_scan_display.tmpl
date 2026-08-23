@@ -27,27 +27,45 @@
     margin-bottom: 12px;
 }
 
-.scanner-tab-btn {
+.scanner-tabs .scanner-tab-btn,
+.scanner-tabs .linkActive.scanner-tab-btn,
+.scanner-tabs .link.scanner-tab-btn {
+    float: none;
+    display: block;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
     text-align: center;
     padding: 8px 12px;
+    margin: 0;
+    background: transparent;
     background-color: transparent;
     color: #888888;
     font-size: 11px;
     font-weight: bold;
+    border: none;
     border-radius: 3px;
     cursor: pointer;
+    white-space: nowrap;
     transition: all 0.15s ease-in-out;
 }
 
-.scanner-tab-btn:hover {
+.scanner-tabs .scanner-tab-btn:hover,
+.scanner-tabs .linkActive.scanner-tab-btn:hover,
+.scanner-tabs .link.scanner-tab-btn:hover {
     color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.scanner-tab-btn.selected {
+.scanner-tabs .scanner-tab-btn.selected,
+.scanner-tabs .linkActive.scanner-tab-btn.selected,
+.scanner-tabs .link.scanner-tab-btn.selected,
+.scanner-tabs .linkActive.scanner-tab-btn.selected:hover {
     color: #ffffff;
+    background: #4972a1;
     background-color: #4972a1;
 }
 
@@ -69,23 +87,23 @@
 
 /* Tab filter system */
 .body-scanner-container[data-active-tab="vitals"] .scan-row-severity,
-.body-scanner-container[data-active-tab="vitals"] .scan-row-reagent,
+.body-scanner-container[data-active-tab="vitals"] .scan-section-reagents,
 .body-scanner-container[data-active-tab="vitals"] .scan-section-body {
     display: none !important;
 }
 
-.body-scanner-container[data-active-tab="organs"] .scan-section-health {
+.body-scanner-container[data-active-tab="organs"] .scan-section-health,
+.body-scanner-container[data-active-tab="organs"] .scan-section-reagents {
     display: none !important;
 }
 
-.body-scanner-container[data-active-tab="reagents"] .scan-row-vital,
-.body-scanner-container[data-active-tab="reagents"] .scan-row-severity,
+.body-scanner-container[data-active-tab="reagents"] .scan-section-health,
 .body-scanner-container[data-active-tab="reagents"] .scan-section-body {
     display: none !important;
 }
 
 .body-scanner-container[data-active-tab="trauma"] .scan-row-vital,
-.body-scanner-container[data-active-tab="trauma"] .scan-row-reagent,
+.body-scanner-container[data-active-tab="trauma"] .scan-section-reagents,
 .body-scanner-container[data-active-tab="trauma"] .scan-section-body {
     display: none !important;
 }
@@ -162,75 +180,15 @@
 </style>
 
 {{if data.selected > 0}}
-<div id="bodyScannerContainer" class="body-scanner-container" data-active-tab="vitals">
+<div id="bodyScannerContainer" class="body-scanner-container" data-active-tab="{{:data.active_tab}}">
     <div class="scanner-tabs" unselectable="on">
-        <div class="scanner-tab-btn selected" data-tab-target="vitals" onclick="setBodyScannerTab('vitals')">Жизненные показатели</div>
-        <div class="scanner-tab-btn" data-tab-target="organs" onclick="setBodyScannerTab('organs')">Состояние тела</div>
-        <div class="scanner-tab-btn" data-tab-target="reagents" onclick="setBodyScannerTab('reagents')">Химический анализ</div>
-        <div class="scanner-tab-btn" data-tab-target="trauma" onclick="setBodyScannerTab('trauma')">Анализ травм</div>
+        {{:helper.link('Жизненные показатели', null, {'set_tab': 'vitals'}, null, data.active_tab == 'vitals' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Состояние тела', null, {'set_tab': 'organs'}, null, data.active_tab == 'organs' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Химический анализ', null, {'set_tab': 'reagents'}, null, data.active_tab == 'reagents' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Анализ травм', null, {'set_tab': 'trauma'}, null, data.active_tab == 'trauma' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
     </div>
 	{{:data.scan_header}}
     {{:data.scan_health}}
     {{:data.scan_body}}
 </div>
 {{/if}}
-
-<script>
-(function() {
-    // Initialize tab state
-    if (typeof window.activeBodyScannerTab === 'undefined') {
-        window.activeBodyScannerTab = 'vitals';
-    }
-    
-    // Tab switching function
-    window.setBodyScannerTab = function(tabName) {
-        window.activeBodyScannerTab = tabName;
-        var container = document.getElementById('bodyScannerContainer');
-        if (container) {
-            container.setAttribute('data-active-tab', tabName);
-        }
-        
-        var buttons = document.querySelectorAll('.scanner-tab-btn');
-        buttons.forEach(function(btn) {
-            if (btn.getAttribute('data-tab-target') === tabName) {
-                btn.classList.add('selected');
-            } else {
-                btn.classList.remove('selected');
-            }
-        });
-    };
-
-    // Keep UI synchronized with state after DOM updates
-    function syncTab() {
-        var container = document.getElementById('bodyScannerContainer');
-        if (container) {
-            var activeTab = window.activeBodyScannerTab;
-            if (container.getAttribute('data-active-tab') !== activeTab) {
-                container.setAttribute('data-active-tab', activeTab);
-            }
-            
-            var buttons = document.querySelectorAll('.scanner-tab-btn');
-            buttons.forEach(function(btn) {
-                if (btn.getAttribute('data-tab-target') === activeTab) {
-                    btn.classList.add('selected');
-                } else {
-                    btn.classList.remove('selected');
-                }
-            });
-        }
-    }
-
-    // Set up MutationObserver to sync state when DOM changes
-    if (!window.bodyScannerObserver) {
-        window.bodyScannerObserver = new MutationObserver(function() {
-            syncTab();
-        });
-        var target = document.getElementById('uiContent') || document.body;
-        window.bodyScannerObserver.observe(target, { childList: true, subtree: true });
-    }
-    
-    // Sync immediately
-    syncTab();
-    requestAnimationFrame(syncTab);
-})();
-</script>

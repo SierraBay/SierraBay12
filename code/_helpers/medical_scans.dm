@@ -58,11 +58,24 @@
 	scan["paralysis"] = H.paralysis
 	scan["immune_system"] = H.virus_immunity()
 	scan["worms"] = H.has_brain_worms()
+	scan["viruses"] = list()	//[SIERRA-ADD]
 //SEIRAA-ADD [VIRUSOLOGY]
 	if (LAZYLEN(H.virus2))
 		scan["virus"] = TRUE
+		for (var/ID in H.virus2)
+			var/list/virus_info = list()
+			if (ID in virusDB)
+				var/datum/computer_file/data/virus_record/V = virusDB[ID]
+				virus_info["identified"] = TRUE
+				virus_info["name"] = V.fields["name"]
+				virus_info["antigen"] = V.fields["antigen"]
+			else
+				virus_info["identified"] = FALSE
+			scan["viruses"] += list(virus_info)
 //SEIRAA-ADD
 	scan["reagents"] = list()
+	scan["ingested"] = list()
+	scan["metabolized"] = list()
 
 	if(H.reagents.total_volume)
 		for(var/datum/reagent/R in H.reagents.reagent_list)
@@ -71,7 +84,24 @@
 			reagent["quantity"] = round(H.reagents.get_reagent_amount(R.type),1)
 			reagent["scannable"] = R.scannable
 			scan["reagents"] += list(reagent)
+	//[SIERRA-ADD]
+	var/datum/reagents/ingested = H.get_ingested_reagents()
+	if(ingested && ingested.total_volume)
+		for(var/datum/reagent/R in ingested.reagent_list)
+			var/list/reagent = list()
+			reagent["name"] = R.name
+			reagent["quantity"] = round(ingested.get_reagent_amount(R.type), 1)
+			reagent["scannable"] = R.scannable
+			scan["ingested"] += list(reagent)
 
+	if(H.metabolized && H.metabolized.total_volume)
+		for(var/datum/reagent/R in H.metabolized.reagent_list)
+			var/list/reagent = list()
+			reagent["name"] = R.name
+			reagent["quantity"] = round(H.metabolized.get_reagent_amount(R.type), 1)
+			reagent["scannable"] = R.scannable
+			scan["metabolized"] += list(reagent)
+	//[/SIERRA-ADD]
 	scan["external_organs"] = list()
 
 	for(var/obj/item/organ/external/E in H.organs)
@@ -280,33 +310,6 @@
 			<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>
 		*/
 		dat += "<tr class='scan-row-vital'><td colspan = '2'>Antibody levels and immune system perfomance are at [scan["immune_system"]*100]% of baseline.</td></tr>"
-//SIERRA ADD [VIRUSOLOGY]
-		if (scan["virus"])
-			if(skill_level >= SKILL_TRAINED)
-				dat += "<tr class='scan-row-reagent'><td colspan='2'><span class='bad'><center>Viral pathogen detected in blood stream.</center></span></td></tr>"
-			else
-				dat += "<tr class='scan-row-reagent'><td colspan='2'><center>Viral pathogen detected in blood stream.</center></td></tr>"
-//SIERRA ADD
-		if(scan["worms"])
-			dat += "<tr class='scan-row-reagent'><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>"
-
-		//Reagent scan
-		/*
-			<tr><td colspan='2'>Beneficial reagents detected in subject's bloodstream:</td></tr>
-			<tr><td colspan='2'>10u dexalin plus</td></tr>
-		*/
-		var/other_reagent = FALSE
-
-		for(var/list/R in scan["reagents"])
-			if(R["scannable"])
-				subdat += "<tr class='scan-row-reagent'><td colspan='2'>[R["quantity"]]u [R["name"]]</td></tr>"
-			else
-				other_reagent = TRUE
-		if(subdat)
-			dat += "<tr class='scan-row-reagent'><td colspan='2'>Beneficial reagents detected in subject's bloodstream:</td></tr>"
-			dat += subdat
-		if(other_reagent)
-			dat += "<tr class='scan-row-reagent'><td colspan='2'>[SPAN_CLASS("average", "Warning: Unknown substance detected in subject's blood.")]</td></tr>"
 
 	//summary for the medically disinclined.
 	/*
@@ -317,6 +320,80 @@
 
 	dat += "</table>"
 	dat += "</div>"
+
+	//[SIERRA-ADD]
+	dat += "<div class='scan-section scan-section-reagents'>"
+	dat += "<table class='block scanner-data-table' width='95%'>"
+	if(skill_level >= SKILL_BASIC)
+		var/found_pathogens = FALSE
+//SIERRA ADD [VIRUSOLOGY]
+		for(var/list/virus_info in scan["viruses"])
+			found_pathogens = TRUE
+			if(virus_info["identified"] && skill_level >= SKILL_TRAINED)
+				dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Warning: Pathogen [virus_info["name"]] detected in subject's blood. Known antigen: [virus_info["antigen"]]</center>")]</td></tr>"
+			else
+				dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Viral pathogen detected in blood stream.</center>")]</td></tr>"
+		if(!length(scan["viruses"]) && scan["virus"])
+			found_pathogens = TRUE
+			dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Viral pathogen detected in blood stream.</center>")]</td></tr>"
+//SIERRA ADD
+		if(scan["worms"])
+			found_pathogens = TRUE
+			dat += "<tr><td colspan='2'>[SPAN_BAD("<center>Large growth detected in frontal lobe, possibly cancerous.</center>")]</td></tr>"
+
+		var/found_reagents = FALSE
+		var/unknown_blood = FALSE
+		subdat = list()
+		for(var/list/R in scan["reagents"])
+			if(R["scannable"])
+				subdat += "<tr><td colspan='2'>[R["quantity"]]u [R["name"]]</td></tr>"
+			else
+				unknown_blood = TRUE
+		if(subdat)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'><strong>Beneficial reagents detected in subject's bloodstream:</strong></td></tr>"
+			dat += subdat
+		if(unknown_blood)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'>[SPAN_CLASS("average", "Warning: Unknown substance detected in subject's blood.")]</td></tr>"
+
+		var/unknown_stomach = FALSE
+		subdat = list()
+		for(var/list/R in scan["ingested"])
+			if(R["scannable"])
+				subdat += "<tr><td colspan='2'>[R["quantity"]]u [R["name"]]</td></tr>"
+			else
+				unknown_stomach = TRUE
+		if(subdat)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'><strong>Reagents detected in subject's stomach:</strong></td></tr>"
+			dat += subdat
+		if(unknown_stomach)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'>[SPAN_CLASS("average", "Warning: Unknown substance detected in subject's stomach.")]</td></tr>"
+
+		var/unknown_metabolite = FALSE
+		subdat = list()
+		for(var/list/R in scan["metabolized"])
+			if(R["scannable"])
+				subdat += "<tr><td colspan='2'>[R["quantity"]]u [R["name"]]</td></tr>"
+			else
+				unknown_metabolite = TRUE
+		if(subdat)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'><strong>Metabolically active reagents detected in subject's system:</strong></td></tr>"
+			dat += subdat
+		if(unknown_metabolite)
+			found_reagents = TRUE
+			dat += "<tr><td colspan='2'>[SPAN_CLASS("average", "Warning: Unknown metabolic byproduct detected in subject's system.")]</td></tr>"
+
+		if(!found_reagents && !found_pathogens)
+			dat += "<tr><td colspan='2'><center>No reagents or pathogens detected in subject's system.</center></td></tr>"
+	else
+		dat += "<tr><td colspan='2'>You see a lot of numbers and abbreviations here, but you have no clue what any of it means.</td></tr>"
+	dat += "</table>"
+	dat += "</div>"
+	//[/SIERRA-ADD]
 
 	dat = JOINTEXT(dat)
 
