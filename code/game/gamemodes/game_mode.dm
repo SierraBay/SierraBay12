@@ -335,6 +335,11 @@ var/global/list/additional_antag_types = list()
 	if(anomaly_output)
 		text += anomaly_output
 	//[SIERRA-ADD]
+	//[SIERRA-ADD] - CHARACTER_PERSIST
+	var/persist_output = character_persist_roundend_text()
+	if(persist_output)
+		text += persist_output
+	//[SIERRA-ADD]
 
 	to_world(text)
 

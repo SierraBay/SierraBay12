@@ -239,6 +239,9 @@
 // ---------------------------------------------------------------------------
 /datum/category_item/player_setup_item/cyberware/prosthetics/OnTopic(href, list/href_list, mob/user)
 	var/singleton/species/mob_species = GLOB.species_by_name[pref.species]
+	if(pref.character_persist_is_locked())
+		to_chat(user, SPAN_WARNING("Кибернетика заблокирована: у персонажа есть сохранённое состояние с прошлой смены. Отключите персистентность, чтобы сбросить его."))
+		return TOPIC_NOACTION
 
 	if(href_list["aug_reset"])
 		pref.organ_data.Cut()

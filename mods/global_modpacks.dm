@@ -45,6 +45,7 @@
 #include "overmap/_overmap_includes.dm"
 #include "ooc_notes/_ooc_notes_includes.dm"
 #include "character_traits/_character_traits_includes.dm"
+#include "character_persist/_character_persist_includes.dm"
 #include "chemtweaks/_chemtweaks_includes.dm"
 #include "diona/_diona_includes.dm"
 #include "simplangs/simplangs_includes.dm"
