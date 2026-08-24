@@ -177,6 +177,7 @@
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 2,
 							/obj/item/stock_parts/manipulator = 2,
+							/obj/item/stock_parts/micro_laser = 1,
 							/obj/item/reagent_containers/glass/beaker = 2)
 	additional_spawn_components = list(
 		/obj/item/stock_parts/power/apc/buildable = 1
@@ -190,6 +191,7 @@
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/micro_laser = 1,
 							/obj/item/reagent_containers/glass/beaker = 2)
 	additional_spawn_components = list(
 		/obj/item/stock_parts/power/apc/buildable = 1

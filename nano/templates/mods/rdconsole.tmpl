@@ -767,6 +767,24 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		</div>
 
 		<div class="rndCol" style="width: 40%;">
+			<!-- Machine stats -->
+			<div class="rndSection">
+				<div class="rndSectionTitle">Параметры станка</div>
+				<div class="rndSectionContent">
+					<div class="rndMachineStats">
+						<span>
+							Скорость печати:
+							<b class="{{:data.materials_data.speed > 1 ? 'good' : ''}}">×{{:data.materials_data.speed || 1}}</b>
+						</span>
+						<span>
+							Стоимость материалов:
+							<b class="{{:data.materials_data.mat_efficiency < 1 ? 'good' : ''}}">{{:data.materials_data.mat_efficiency_percent || 100}}%</b>
+						</span>
+					</div>
+					<div class="rndMuted" style="font-size: 10px; margin-top: 4px;">Скорость — от лазеров. Стоимость — от манипуляторов.</div>
+				</div>
+			</div>
+
 			<!-- Manufacturers -->
 			<div class="rndSection">
 				<div class="rndSectionTitle">Производитель</div>
@@ -1451,6 +1469,19 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 	font-size: 12px;
 	color: #8ab4e8;
 	letter-spacing: 0.3px;
+}
+
+.rndMachineStats {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font-size: 12px;
+	color: #a0b8d0;
+}
+
+.rndMachineStats b {
+	color: #c8dae8;
+	margin-left: 4px;
 }
 
 .rndDivider {

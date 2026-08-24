@@ -265,6 +265,7 @@ those devices access via linked_console.
 
 /datum/nano_module/program/rnd_console/Destroy()
 	if(linked_destroy)
+		linked_destroy.interrupt_busy_operation()
 		if(linked_destroy.linked_console == src)
 			linked_destroy.linked_console = null
 		linked_destroy = null
@@ -1055,6 +1056,9 @@ those devices access via linked_console.
 		spectral_flash = spectral_sequence[i]
 		SSnano.update_uis(src)
 		sleep(10)
+
+	if(!spectral_active)
+		return
 
 	spectral_flash = null
 	spectral_phase = "input"

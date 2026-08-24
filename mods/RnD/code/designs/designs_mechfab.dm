@@ -9,7 +9,9 @@
 /datum/design/item/mechfab/robot/Fabricate(newloc, mat_efficiency, fabricator)
 	if(istype(fabricator, /obj/machinery/fabricator/rnd/robotics))
 		var/obj/machinery/fabricator/rnd/robotics/mechfab = fabricator
-		return new build_path(newloc, mechfab.manufacturer)
+		var/atom/A = new build_path(newloc, mechfab.manufacturer)
+		apply_material_efficiency(A, mat_efficiency)
+		return A
 	return ..()
 
 /datum/design/item/mechfab/robot/exoskeleton_ground

@@ -90,6 +90,7 @@
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(linked_destroy)
+		linked_destroy.interrupt_busy_operation()
 		linked_destroy.linked_console = null
 		linked_destroy = null
 	if(linked_lathe)

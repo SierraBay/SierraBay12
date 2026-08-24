@@ -18,6 +18,17 @@ Used In File(s): \code\game\machinery\autolathe.dm
 	</span>
 </div>
 
+<div class="fabStatsBar">
+	<span class="fabStat">
+		Скорость печати:
+		<span class="fabStatValue {{:data.speed > 1 ? 'good' : ''}}">×{{:data.speed}}</span>
+	</span>
+	<span class="fabStat">
+		Стоимость материалов:
+		<span class="fabStatValue {{:data.mat_efficiency < 1 ? 'good' : ''}}">{{:data.mat_efficiency_percent}}%</span>
+	</span>
+</div>
+
 <!-- Materials & Reagents Row -->
 <div class="fabResourceRow">
 	{{if data.have_materials && data.have_reagents}}
@@ -296,6 +307,25 @@ Used In File(s): \code\game\machinery\autolathe.dm
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #8ab4e8;
+}
+
+.fabStatsBar {
+	display: flex;
+	gap: 16px;
+	padding: 4px 10px;
+	margin: 0 6px 6px 6px;
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	font-size: 11px;
+	color: #6a8aaa;
+	letter-spacing: 0.3px;
+}
+
+.fabStatValue {
+	color: #c8dae8;
+	font-weight: bold;
+	margin-left: 4px;
 }
 
 .fabStatusBadge {

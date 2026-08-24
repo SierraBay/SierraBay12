@@ -11,7 +11,7 @@ NanoBaseHelpers = function () {
       return ''
     },
     ntscieMode: function () {
-      $('body').css("background-color","#2d3441")
+      $('body').css("background-color","#091020")
       $('body').css("background-image","url('uiBackground-NTsci.png')")
       $('body').css("background-position","50% 0")
       $('body').css("background-repeat","repeat-x")
@@ -22,7 +22,7 @@ NanoBaseHelpers = function () {
       return ''
     },
     ntengiMode: function () {
-      $('body').css("background-color","#372102")
+      $('body').css("background-color","#180c00")
       $('body').css("background-image","url('uiBackground-NTengi.png')")
       $('body').css("background-position","50% 0")
       $('body').css("background-repeat","repeat-x")
@@ -33,7 +33,7 @@ NanoBaseHelpers = function () {
       return ''
     },
     ntmedMode: function () {
-      $('body').css("background-color","#000a0a")
+      $('body').css("background-color","#000c0b")
       $('body').css("background-image","url('uiBackground-NTmed.png')")
       $('body').css("background-position","50% 0")
       $('body').css("background-repeat","repeat-x")

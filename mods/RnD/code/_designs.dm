@@ -115,15 +115,19 @@ other types of metals and chemistry for reagents).
 	RETURN_TYPE(/list)
 	return ui_data
 
+/datum/design/proc/apply_material_efficiency(atom/A, mat_efficiency)
+	if(mat_efficiency == 1 || !adjust_materials || !A)
+		return
+	var/list/targets = list(A) + A.GetAllContents()
+	for(var/obj/O in targets)
+		if(length(O.matter))
+			for(var/i in O.matter)
+				O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)
+
 /datum/design/proc/Fabricate(newloc, mat_efficiency, fabricator)
 
 	var/atom/A = new build_path(newloc)
-
-	if(mat_efficiency != 1 && adjust_materials)
-		for(var/obj/O in A.GetAllContents())
-			if(length(O.matter))
-				for(var/i in O.matter)
-					O.matter[i] = round(O.matter[i] * mat_efficiency, 0.01)
+	apply_material_efficiency(A, mat_efficiency)
 
 	if(reverse_engineered && isitem(A))
 		var/obj/item/I = A

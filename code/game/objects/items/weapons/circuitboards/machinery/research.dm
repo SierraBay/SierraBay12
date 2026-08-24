@@ -30,7 +30,8 @@
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2)
 	req_components = list(
 							/obj/item/stock_parts/matter_bin = 3,
-							/obj/item/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/micro_laser = 1)
 	additional_spawn_components = list(
 		/obj/item/stock_parts/console_screen = 1,
 		/obj/item/stock_parts/keyboard = 1,
@@ -43,7 +44,8 @@
 	origin_tech = list(TECH_ENGINEERING = 1, TECH_DATA = 1)
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/manipulator = 1
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1
 	)
 /* [SIERRA-REMOVE] - MODPACK_RND
 /obj/item/stock_parts/circuitboard/replicator

@@ -33,6 +33,28 @@ Note: Must be placed within 3 tiles of the R&D Console
 		T += S.rating
 	decon_mod = T * 0.1
 
+/obj/machinery/r_n_d/destructive_analyzer/power_change()
+	. = ..()
+	if(. && (stat & MACHINE_STAT_NOPOWER))
+		interrupt_busy_operation()
+
+/// Aborts an in-progress minigame or deconstruction and ejects the loaded item.
+/obj/machinery/r_n_d/destructive_analyzer/proc/interrupt_busy_operation()
+	var/minigame_running = linked_console && linked_console.spectral_active
+	if(!busy && !minigame_running)
+		return
+	if(linked_console)
+		linked_console.cancel_spectral()
+		linked_console.cancel_catalog()
+	busy = FALSE
+	if(loaded_item)
+		visible_message(SPAN_WARNING("\The [src] interrupts analysis and ejects \the [loaded_item]."))
+		loaded_item.forceMove(loc)
+		loaded_item = null
+	on_update_icon()
+	if(linked_console)
+		SSnano.update_uis(linked_console)
+
 /obj/machinery/r_n_d/destructive_analyzer/on_update_icon()
 	if(panel_open)
 		icon_state = "d_analyzer_t"
@@ -93,6 +115,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return TRUE
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
+	if(stat & MACHINE_STAT_NOPOWER)
+		interrupt_busy_operation()
+		return
 	busy = FALSE
 	if(!loaded_item)
 		return

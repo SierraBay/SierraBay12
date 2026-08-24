@@ -20,12 +20,6 @@
 
 	base_type = /obj/machinery/fabricator/food_replicator
 
-	uncreated_component_parts = list(
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 1,
-	)
-
 // Override design_list so built-in food designs are always available without a disk.
 // Reads directly from SSresearch.all_designs (initialized before any player interaction).
 /obj/machinery/fabricator/food_replicator/design_list()
@@ -84,5 +78,6 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/reagent_containers/glass/beaker = 1,
 	)

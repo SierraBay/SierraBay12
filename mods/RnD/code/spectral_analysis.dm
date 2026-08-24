@@ -178,10 +178,22 @@
 		SSnano.update_uis(src)
 		sleep(10)
 
+	if(!spectral_active)
+		return
+
 	// Playback done — let the player press buttons
 	spectral_flash = null
 	spectral_phase = "input"
 	SSnano.update_uis(src)
+
+/obj/machinery/computer/rdconsole/power_change()
+	. = ..()
+	if(. && (stat & MACHINE_STAT_NOPOWER))
+		if(linked_destroy)
+			linked_destroy.interrupt_busy_operation()
+		else
+			cancel_spectral()
+			cancel_catalog()
 
 // ── Handle a button press from the player ───────────────────
 /obj/machinery/computer/rdconsole/proc/do_spectral_step(mob/living/user, chosen_color)
