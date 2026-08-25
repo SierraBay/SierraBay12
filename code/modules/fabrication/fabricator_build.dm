@@ -10,10 +10,12 @@
 		return
 
 	// Print the item.
+	var/atom/printed_item
 	if(ispath(currently_building.target_recipe.path, /obj/item/stack))
-		new currently_building.target_recipe.path(get_turf(src), amount = currently_building.multiplier)
+		printed_item = new currently_building.target_recipe.path(get_turf(src), amount = currently_building.multiplier)
 	else
-		new currently_building.target_recipe.path(get_turf(src))
+		printed_item = new currently_building.target_recipe.path(get_turf(src))
+	printed_item.PostFabrication()
 	QDEL_NULL(currently_building)
 	get_next_build()
 	update_icon()
@@ -71,4 +73,12 @@
 		get_next_build()
 	else
 		start_building()
+<<<<<<< ours
 */
+=======
+
+/// Called after an item is created by a fabricator.
+/atom/proc/PostFabrication()
+	SHOULD_CALL_PARENT(TRUE)
+	return
+>>>>>>> theirs
