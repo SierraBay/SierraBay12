@@ -1,5 +1,4 @@
 //Easily change which map to build by uncommenting ONE below.
-<<<<<<< ours
 // #define DEV_MODE
 // #define DEV_MODE_NO_AWAYS
 #if NEW_AWAYS_TESTING == 1
@@ -18,8 +17,3 @@
 		#include "sierra\map.dm"
 	#endif
 #endif
-=======
-
-// #include "example\map.dm"
-#include "torch\map.dm"
->>>>>>> theirs
