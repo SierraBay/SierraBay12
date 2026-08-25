@@ -20,6 +20,7 @@
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_iccg.dmi',
 		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_iccg.dmi',
 		)
+	manufacturer = MANUFACTURER_HELTEK
 
 /obj/item/gun/projectile/automatic/assault_rifle/heltek/on_update_icon()
 	..()
@@ -51,6 +52,7 @@
 	bulk = GUN_BULK_RIFLE
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	manufacturer = MANUFACTURER_HELTEK
 
 	//Assault rifle, burst fire degrades quicker than SMG, worse one-handing penalty, slightly increased move delay
 	firemodes = list(
@@ -90,6 +92,7 @@
 	bulk = GUN_BULK_RIFLE + 1
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	manufacturer = MANUFACTURER_HELTEK
 
 	firemodes = list(
 		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null, can_autofire=FALSE),
@@ -131,6 +134,7 @@
 	matter = list(MATERIAL_STEEL = 2000)
 	projectile_type = /obj/item/projectile/beam/smalllaser
 	wielded_item_state = "bonfire-wielded"
+	manufacturer = MANUFACTURER_HELTEK
 
 	firemodes = list(
 		list("mode_name" = "semi auto",       burst=1, fire_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
@@ -184,6 +188,7 @@
 	one_hand_penalty = 0
 	charge_cost = 40
 	max_shots = 5
+	manufacturer = MANUFACTURER_HELTEK
 
 // CSS Anti-psionics stuff
 
@@ -229,6 +234,7 @@
 	bulk = -1
 	accuracy = 1
 	one_hand_penalty = 4
+	manufacturer = MANUFACTURER_MARS_MILITARY
 
 	barrel_thread = TRUE
 	silencer_offset = 6
@@ -305,6 +311,7 @@
 	allowed_magazines = /obj/item/ammo_magazine/smg_nt
 	auto_eject = 1
 	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	manufacturer = MANUFACTURER_NANOTRASEN
 
 /obj/item/gun/projectile/automatic/sec_smg/c20a/on_update_icon()
 	..()
