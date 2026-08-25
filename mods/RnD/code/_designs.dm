@@ -127,6 +127,7 @@ other types of metals and chemistry for reagents).
 /datum/design/proc/Fabricate(newloc, mat_efficiency, fabricator)
 
 	var/atom/A = new build_path(newloc)
+	A.PostFabrication()
 	apply_material_efficiency(A, mat_efficiency)
 
 	if(reverse_engineered && isitem(A))

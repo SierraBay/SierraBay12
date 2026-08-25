@@ -73,12 +73,4 @@
 		get_next_build()
 	else
 		start_building()
-<<<<<<< ours
 */
-=======
-
-/// Called after an item is created by a fabricator.
-/atom/proc/PostFabrication()
-	SHOULD_CALL_PARENT(TRUE)
-	return
->>>>>>> theirs
