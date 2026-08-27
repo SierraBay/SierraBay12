@@ -15,6 +15,7 @@
 	probabilities["thething"] = 1
 	probabilities["traitorling"] = 1
 	probabilities["operative"] = 1
+	allow_drone_spawn = TRUE
 	load_options()
 	load_map()
 	load_sql()
