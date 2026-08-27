@@ -154,8 +154,8 @@
 	var/list/snapshot = prefs.character_persist_snapshot
 	if (!islist(snapshot))
 		return
-	if (snapshot["med_record"])
-		CR.set_medRecord(character_persist_pencode_to_text(snapshot["med_record"]))
+	if (prefs.character_persist_med_autofill && snapshot["med_record"])
+		CR.set_medRecord(snapshot["med_record"])
 	var/status = snapshot["physical_status"]
 	if (status && (status in GLOB.physical_statuses))
 		CR.set_status(status)
@@ -173,8 +173,10 @@
 
 /proc/character_persist_append_med_record(existing, note)
 	if (!note)
-		return existing
+		return character_persist_pencode_to_text(existing)
 	var/base = character_persist_pencode_to_text(existing)
+	if (!base)
+		return note
 	var/entry = "\n\n[note]"
 	var/combined = "[base][entry]"
 	if (length(combined) > MAX_PAPER_MESSAGE_LEN)
@@ -195,7 +197,7 @@
 	if (islist(previous) && length(previous))
 		lines = character_persist_med_diff(H, previous)
 		if (!length(lines))
-			lines += "новых травм, ампутаций и протезирования не отмечено"
+			lines += "новых травм и протезирования не отмечено"
 	else
 		lines = character_persist_med_baseline(H)
 		if (!length(lines))
@@ -225,9 +227,9 @@
 		var/obj/item/organ/internal/I = H.internal_organs_by_name[tag]
 		if (istype(I, /obj/item/organ/internal/augment))
 			continue
-		var/label = character_persist_organ_label(tag)
 		if (!I)
 			continue
+		var/label = character_persist_organ_label(tag)
 		if (BP_IS_ROBOTIC(I))
 			lines += "механический орган: [label]"
 		else if (BP_IS_ASSISTED(I))
@@ -241,9 +243,6 @@
 				continue
 			if (!H.internal_organs_by_name[tag])
 				lines += "отсутствует орган: [character_persist_organ_label(tag)]"
-	for (var/obj/item/organ/external/E in H.organs)
-		for (var/obj/item/implant/implant in E.implants)
-			lines += "имплант изъят перед выпиской: [implant.name]"
 	var/status = character_persist_crew_physical_status(H)
 	if (status && status != GLOB.default_physical_status)
 		lines += "состояние: [character_persist_status_label(status)]"
@@ -320,10 +319,6 @@
 			var/organ_wound = character_persist_organ_wound_line(I, tag)
 			if (organ_wound)
 				lines += organ_wound
-
-	for (var/obj/item/organ/external/E in H.organs)
-		for (var/obj/item/implant/implant in E.implants)
-			lines += "имплант изъят перед выпиской: [implant.name]"
 	var/old_phys = islist(previous) ? previous["physical_status"] : null
 	var/new_phys = character_persist_crew_physical_status(H)
 	if (new_phys && new_phys != old_phys)

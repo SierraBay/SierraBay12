@@ -474,6 +474,10 @@
 /datum/preferences/proc/character_persist_is_locked()
 	return FALSE
 
+/// Overridden by mods/character_persist. True if medical records are locked by persist autofill.
+/datum/preferences/proc/character_persist_med_locked()
+	return FALSE
+
 /datum/preferences/proc/open_load_dialog(mob/user, details)
 	var/dat  = list()
 	dat += "<body>"

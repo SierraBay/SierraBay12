@@ -62,11 +62,11 @@
 		// [SIERRA-EDIT] - CHARACTER_PERSIST
 		// .+= TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения") // SIERRA-EDIT - ORIGINAL
 		var/med_line = TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения")
-		if (pref.character_persist_is_locked() && pref.character_persist_snapshot["med_record"])
+		if (pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
 			med_line += " <a href='?src=\ref[src];toggle_persist_med_record=1'>[show_persist_med_record ? "Скрыть" : "Расширить"]</a>"
 		.+= med_line
-		if (show_persist_med_record && pref.character_persist_is_locked() && pref.character_persist_snapshot["med_record"])
-			var/live_med = html_encode("[pref.character_persist_snapshot["med_record"]]")
+		if (show_persist_med_record && pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
+			var/live_med = html_encode(character_persist_pencode_to_text(pref.character_persist_snapshot["med_record"]))
 			live_med = replacetext(live_med, "\n", "<br>")
 			.+= "<div style='margin-left:1em;max-width:42em'><i>Снимок записи здравоохранения:</i><br>[live_med]</div>"
 		// [/SIERRA-EDIT]
@@ -101,8 +101,8 @@
 
 	else if(href_list["set_medical_records"])
 		// [SIERRA-ADD] - CHARACTER_PERSIST
-		if(pref.character_persist_is_locked())
-			to_chat(user, SPAN_WARNING("Медицинские записи заблокированы: у персонажа есть сохранённое состояние. Живая запись переносится и дополняется автоматически. Откройте снимок рядом с полем или отключите персистентность, чтобы снова править исходный текст."))
+		if(pref.character_persist_med_locked())
+			to_chat(user, SPAN_WARNING("Медицинские записи заблокированы: у персонажа есть сохранённое состояние. Живая запись переносится и дополняется автоматически. Откройте снимок рядом с полем, отключите автозаполнение мед. записей или отключите персистентность, чтобы снова править исходный текст."))
 			return TOPIC_NOACTION
 		// [/SIERRA-ADD]
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод

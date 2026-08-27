@@ -72,13 +72,24 @@
 	return prefs?.default_slot
 
 
-/proc/character_persist_in_evac(atom/A)
-	var/area/area = get_area(A)
-	if (!istype(area))
+/proc/character_persist_evac_active()
+	if (!evacuation_controller)
 		return FALSE
+	if (!evacuation_controller.emergency_evacuation)
+		return FALSE
+	return evacuation_controller.is_evacuating()
+
+
+/proc/character_persist_on_ship(atom/A)
+	var/area/area = get_area(A)
 	if (istype(area, /area/shuttle/escape_pod))
 		return TRUE
-	return FALSE
+	if (istype(area) && !istype(area, /area/turbolift) && (area in SSshuttle.shuttle_areas))
+		return TRUE
+	var/turf/T = get_turf(A)
+	if (!T)
+		return FALSE
+	return istype(map_sectors["[T.z]"], /obj/overmap/visitable/ship)
 
 
 /proc/character_persist_on_sierra(mob/living/carbon/human/H)
@@ -89,9 +100,19 @@
 		return FALSE
 	if (isAdminLevel(T.z) || isEscapeLevel(T.z))
 		return FALSE
-	if (character_persist_in_evac(T))
-		return FALSE
 	return TRUE
+
+
+/proc/character_persist_can_save_here(mob/living/carbon/human/H)
+	if (character_persist_on_sierra(H))
+		return TRUE
+	return character_persist_evac_active() && character_persist_on_ship(H)
+
+
+/proc/character_persist_is_offstation_antag(mob/living/carbon/human/H)
+	if (!istype(H) || !H.mind)
+		return FALSE
+	return !!player_is_antag(H.mind, TRUE)
 
 
 /proc/character_persist_num(value)
@@ -245,8 +266,13 @@
 				else
 					O.robotize()
 			var/max_keep = O.max_damage * CHARACTER_PERSIST_DAMAGE_RATIO
-			var/brute = min(character_persist_num(entry["brute"]), max_keep)
-			var/burn = min(character_persist_num(entry["burn"]), max_keep)
+			var/brute = character_persist_num(entry["brute"])
+			var/burn = character_persist_num(entry["burn"])
+			var/total = brute + burn
+			if (total > max_keep && total > 0)
+				var/scale = max_keep / total
+				brute *= scale
+				burn *= scale
 			if (brute > 0)
 				O.createwound(INJURY_TYPE_BRUISE, brute)
 			if (burn > 0)
@@ -266,8 +292,10 @@
 			if (!islist(entry))
 				continue
 			var/obj/item/organ/internal/I = H.internal_organs_by_name[tag]
+			if (istype(I, /obj/item/organ/internal/augment))
+				continue
 			if (entry["status"] == "missing")
-				if (!I || I.vital || istype(I, /obj/item/organ/internal/augment))
+				if (!I || I.vital)
 					continue
 				H.internal_organs_by_name[tag] = null
 				H.internal_organs_by_name -= tag
@@ -295,6 +323,8 @@
 /proc/character_persist_try_save(mob/living/carbon/human/H, reason)
 	if (!istype(H) || H.stat == DEAD)
 		return FALSE
+	if (character_persist_is_offstation_antag(H))
+		return FALSE
 	var/ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
 	if (!ckey || !slot)
@@ -302,7 +332,7 @@
 	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
 	if (!prefs || !prefs.character_persist)
 		return FALSE
-	if (reason != "cryo" && !character_persist_on_sierra(H))
+	if (reason != "cryo" && !character_persist_can_save_here(H))
 		return FALSE
 	if (H.character_persist_saved)
 		return TRUE
@@ -318,8 +348,11 @@
 	var/physical_status = character_persist_crew_physical_status(H)
 	if (physical_status)
 		snapshot["physical_status"] = physical_status
-	var/note = character_persist_build_med_note(H, previous, reason)
-	snapshot["med_record"] = character_persist_append_med_record(character_persist_current_med_record(H), note)
+	if (prefs.character_persist_med_autofill)
+		var/note = character_persist_build_med_note(H, previous, reason)
+		snapshot["med_record"] = character_persist_append_med_record(character_persist_current_med_record(H), note)
+	else
+		snapshot["med_record"] = character_persist_current_med_record(H)
 	if (!character_persist_write(ckey, slot, snapshot))
 		return FALSE
 	prefs.character_persist_snapshot = snapshot
@@ -342,6 +375,8 @@
 
 
 /proc/character_persist_try_clear(mob/living/carbon/human/H, reason)
+	if (character_persist_is_offstation_antag(H))
+		return
 	var/ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
 	var/datum/preferences/prefs = character_persist_prefs_of(ckey)

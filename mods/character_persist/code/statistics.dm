@@ -53,10 +53,12 @@ var/global/character_persist_roundend_done = FALSE
 		var/datum/preferences/prefs = character_persist_prefs_of(ckey)
 		if (!prefs || !prefs.character_persist)
 			continue
+		if (character_persist_is_offstation_antag(H))
+			continue
 		if (H.stat == DEAD)
 			character_persist_try_clear(H, "death")
 			continue
-		if (character_persist_on_sierra(H) || istype(H.loc, /obj/machinery/cryopod))
+		if (character_persist_can_save_here(H) || istype(H.loc, /obj/machinery/cryopod))
 			character_persist_try_save(H, "roundend")
 			continue
 		character_persist_try_clear(H, "abandoned")
