@@ -3,7 +3,7 @@
 	filedesc = "Case Dossier"
 	extended_desc = "Official NTsec program for the issuing and tracking of crew punishments."
 	size = 6
-	program_icon_state = "security"
+	program_icon_state = "warrant"
 	program_key_state = "security_key"
 	program_menu_icon = "flag"
 	requires_ntnet = TRUE
