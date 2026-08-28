@@ -167,7 +167,7 @@
 		return
 	if(H.species.name == SPECIES_MOTH)
 		return
-	if (dose < 1 || prob(30))
+	if (prob(30)) // [SIERRA-EDIT] if (dose < 1 || prob(30))
 		return
 	remove_self(dose)
 	var/list/meatchunks = list()
