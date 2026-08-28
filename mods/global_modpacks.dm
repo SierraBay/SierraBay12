@@ -82,3 +82,4 @@
 #include "discord/_discord_includes.dm"
 #include "mules/mules_includes.dm"
 #include "medical/medical_includes.dm"
+#include "case_dossier/_case_dossier_includes.dm"
