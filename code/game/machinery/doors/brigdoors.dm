@@ -158,7 +158,6 @@
 	data["timing"] = timing
 	data["minutes"] = round(timeval/60)
 	data["seconds"] = timeval % 60
-	data["linked_offender"] = linked_punishment ? linked_punishment.fields["offender_name"] : null
 
 	var/list/flashes = list()
 
@@ -174,7 +173,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "brig_timer.tmpl", name, 270, 185)
+		ui = new(user, src, ui_key, "brig_timer.tmpl", name, 270, 150)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -202,11 +201,6 @@
 	if (href_list["adjust"])
 		timetoset += text2num(href_list["adjust"])
 		timetoset = clamp(timetoset, 0, 36000)
-		. = TOPIC_REFRESH
-
-	if (href_list["load_punishment"])
-		if(!timing)
-			load_from_punishment_log(user)
 		. = TOPIC_REFRESH
 
 	update_icon()
