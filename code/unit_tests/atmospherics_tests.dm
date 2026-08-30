@@ -314,4 +314,61 @@
 		pass("All pipes were mapped properly.")
 	return 1
 
+/datum/unit_test/pipeline_mingle_conserves_moles
+	name = "ATMOS PIPELINE: mingle_with_turf() Conserves Moles with ZAS Zone"
+
+/datum/unit_test/pipeline_mingle_conserves_moles/start_test()
+	var/turf/simulated/floor/target_turf
+	for(var/turf/simulated/floor/T in world)
+		if(T.zone && !T.zone.invalid && T.zone.air)
+			target_turf = T
+			break
+
+	if(!target_turf)
+		skip("No simulated turf with a valid zone found.")
+		return 1
+
+	// Test 1: Empty pipeline intakes gas from zone
+	var/datum/pipeline/P1 = new
+	P1.air = new(ATMOS_DEFAULT_VOLUME_PIPE, 0)
+	var/zone/Z = target_turf.zone
+	var/list/before_moles = list()
+	for(var/g in gas_data.gases)
+		before_moles[g] = P1.air.get_gas(g) + Z.air.get_gas(g)
+
+	P1.mingle_with_turf(target_turf, P1.air.volume)
+
+	var/failed = FALSE
+	for(var/g in gas_data.gases)
+		var/after = P1.air.get_gas(g) + Z.air.get_gas(g)
+		if(abs(before_moles[g] - after) > ATMOS_PRECISION)
+			fail("Intake test: expected [before_moles[g]] moles of [g], got [after]")
+			failed = TRUE
+	if(!failed)
+		pass("Intake test conserved moles.")
+
+	// Test 2: Pressurized pipeline vents gas into zone
+	var/datum/pipeline/P2 = new
+	P2.air = new(ATMOS_DEFAULT_VOLUME_PIPE, T20C)
+	P2.air.adjust_gas(GAS_PHORON, 50)
+	P2.air.adjust_gas(GAS_OXYGEN, 50)
+	before_moles = list()
+	for(var/g in gas_data.gases)
+		before_moles[g] = P2.air.get_gas(g) + Z.air.get_gas(g)
+
+	P2.mingle_with_turf(target_turf, P2.air.volume)
+
+	failed = FALSE
+	for(var/g in gas_data.gases)
+		var/after = P2.air.get_gas(g) + Z.air.get_gas(g)
+		if(abs(before_moles[g] - after) > ATMOS_PRECISION)
+			fail("Venting test: expected [before_moles[g]] moles of [g], got [after]")
+			failed = TRUE
+	if(!failed)
+		pass("Venting test conserved moles.")
+
+	qdel(P1)
+	qdel(P2)
+	return 1
+
 #undef ALL_GASIDS
