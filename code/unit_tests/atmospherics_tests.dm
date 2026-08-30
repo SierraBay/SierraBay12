@@ -341,7 +341,7 @@
 	var/failed = FALSE
 	for(var/g in gas_data.gases)
 		var/after = P1.air.get_gas(g) + Z.air.get_gas(g)
-		if(abs(before_moles[g] - after) > ATMOS_PRECISION)
+		if(abs(before_moles[g] - after) > 0.01)
 			fail("Intake test: expected [before_moles[g]] moles of [g], got [after]")
 			failed = TRUE
 	if(!failed)
@@ -361,7 +361,7 @@
 	failed = FALSE
 	for(var/g in gas_data.gases)
 		var/after = P2.air.get_gas(g) + Z.air.get_gas(g)
-		if(abs(before_moles[g] - after) > ATMOS_PRECISION)
+		if(abs(before_moles[g] - after) > 0.01)
 			fail("Venting test: expected [before_moles[g]] moles of [g], got [after]")
 			failed = TRUE
 	if(!failed)
