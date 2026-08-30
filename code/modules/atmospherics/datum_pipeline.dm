@@ -1,8 +1,8 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
 
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/members = list()
+	var/list/obj/machinery/atmospherics/pipe/edges = list() //Used for building networks
 
 	var/datum/pipe_network/network
 	// Leaking nodes
@@ -22,9 +22,9 @@
 		QDEL_NULL(air)
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
-	leaks.Cut()
-	members.Cut()
-	edges.Cut()
+	leaks?.Cut()
+	members?.Cut()
+	edges?.Cut()
 	. = ..()
 
 /datum/pipeline/Process()//This use to be called called from the pipe networks
