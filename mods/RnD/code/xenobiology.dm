@@ -229,8 +229,6 @@
 
 // Infinite slimecell
 
-/obj/item/cell/slime
-
 /obj/item/cell/slime/check_charge()
 	return 1
 
