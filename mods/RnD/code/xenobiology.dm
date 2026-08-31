@@ -226,3 +226,13 @@
 	)
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
+
+// Infinite slimecell
+
+/obj/item/cell/slime
+
+/obj/item/cell/slime/check_charge()
+	return 1
+
+/obj/item/cell/slime/use(amount)
+	return amount
