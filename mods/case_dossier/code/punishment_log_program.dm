@@ -137,7 +137,7 @@
 
 	if(href_list["print_punishment"])
 		. = TRUE
-		if(!program.computer.has_component(PART_PRINTER))
+		if(!program || !program.computer.has_component(PART_PRINTER))
 			to_chat(usr, SPAN_WARNING("Hardware Error: Printer not found."))
 			return
 		var/datum/computer_file/data/punishment/P = active_punishment || find_punishment_by_id(text2num(href_list["print_punishment"]))

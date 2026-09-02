@@ -6,5 +6,7 @@
 #include "code/punishment_log_program.dm"
 #include "code/door_timer_integration.dm"
 #include "code/preset_integration.dm"
+#include "code/drone_forensics_integration.dm"
+#include "code/crew_records_integration.dm"
 
 #endif
