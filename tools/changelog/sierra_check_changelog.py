@@ -12,11 +12,11 @@ import os
 import re
 from pathlib import Path
 from ruamel import yaml
-from github import Github
+from github import Github, Auth
 import json
 
-CL_BODY = re.compile(r"(:cl:|🆑)(.+)?\r\n((.|\n|\r)+?)\r\n\/(:cl:|🆑)", re.MULTILINE)
-CL_SPLIT = re.compile(r"(^\w+):\s+(\w.+)", re.MULTILINE)
+CL_BODY = re.compile(r"(:cl:|🆑)\s*(.*)?\r\n((.|\n|\r)+?)\r\n\/(:cl:|🆑)", re.MULTILINE)
+CL_SPLIT = re.compile(r"(^\w+):\s+(\S.+)", re.MULTILINE)
 
 # Blessed is the GoOnStAtIoN birb ZeWaKa for thinking of this first
 repo = os.getenv("GITHUB_REPOSITORY")
@@ -26,7 +26,8 @@ event_path = os.getenv("GITHUB_EVENT_PATH")
 with open(event_path, 'r') as f:
     event_data = json.load(f)
 
-git = Github(token)
+auth = Auth.Token(token)
+git = Github(auth=auth)
 repo = git.get_repo(repo)
 pr = repo.get_pull(event_data['number'])
 
