@@ -72,7 +72,7 @@
 	if(company)
 		var/datum/robolimb/R = all_robolimbs[company]
 		if(!istype(R) || (species && (species.name in R.species_cannot_use)) || \
-			(species && !(species.get_bodytype(owner) in R.allowed_bodytypes)) || \
+			// (species && !(species.get_bodytype(owner) in R.allowed_bodytypes)) || \ легаси код оффов
 			(length(R.applies_to_part) && !(organ_tag in R.applies_to_part)))
 			R = basic_robolimb
 		else
