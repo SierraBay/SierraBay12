@@ -228,7 +228,10 @@ var/global/list/tank_gauge_cache = list()
 						to_chat(user, SPAN_DANGER("You accidentally rake \the [W] across \the [src]!"))
 						maxintegrity -= rand(2,6)
 						integrity = min(integrity,maxintegrity)
-						air_contents.add_thermal_energy(rand(2000,50000))
+						if(air_contents && air_contents.temperature < (1200 CELSIUS))
+							var/energy_limit = air_contents.get_thermal_energy_change(1200 CELSIUS)
+							if(energy_limit > 0)
+								air_contents.add_thermal_energy(min(rand(2000,50000), energy_limit))
 					return TRUE
 			else
 				to_chat(user, SPAN_NOTICE("The emergency pressure relief valve has already been welded."))
