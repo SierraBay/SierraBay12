@@ -19,7 +19,7 @@
 	combat_mode = enabled
 	if(combat_mode)
 		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_combat_mode_moved))
-		if(canface() && !lying)
+		if(canface() && !lying && !buckled)
 			facing_dir = dir
 			face_dir_click = dir
 		combat_update_neck_grabs()
@@ -42,6 +42,11 @@
 	if(!combat_mode)
 		return
 	if(!canface() || lying)
+		return
+	if(buckled)
+		if(facing_dir || face_dir_click)
+			facing_dir = null
+			face_dir_click = null
 		return
 
 	if(istype(A, /obj/screen))
