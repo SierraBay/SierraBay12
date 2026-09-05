@@ -825,12 +825,14 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/machinery/photocopier/faxmachine{
-	department = "phobos - Bridge";
-	tag_radio = "phobos";
-	name = "bridge fax machine"
-	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/photocopier/faxmachine{
+	send_access = list();
+	department = "phobos - Bridge";
+	destination = "Third Fleet HQ";
+	name = "bridge fax machine";
+	tag_radio = "phobos"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "ck" = (
