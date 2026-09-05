@@ -14,6 +14,11 @@
 	desc = "A sleek, sturdy dufflebag."
 	icon_state = "duffle_syndie"
 
+/obj/item/storage/backpack/dufflebag/syndie_kit/plastique
+	startswith = list(
+		/obj/item/plastique = 6
+		)
+
 /obj/item/storage/box/syndie_kit/imp_freedom
 	startswith = list(/obj/item/implanter/freedom)
 

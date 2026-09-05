@@ -2,6 +2,8 @@
 
 /datum/map_template/ruin/away_site
 	var/list/generate_mining_by_z
+	/// When TRUE, this site can be chosen as the main vessel on lobby_host.
+	var/votable_as_main_ship = FALSE
 	prefix = "maps/away/"
 	skip_main_unit_tests = "Is an away site."
 
