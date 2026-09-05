@@ -1,0 +1,261 @@
+<style>
+    .vitals-container {
+        font-family: 'Outfit', 'Inter', 'Roboto', sans-serif;
+        background-color: #0b0f0b;
+        color: #c4d7c4;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        border: 1px solid #1a2a1a;
+    }
+
+    .vitals-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #153015;
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+    }
+
+    .patient-name {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #66ff99;
+        text-shadow: 0 0 5px rgba(102, 255, 153, 0.3);
+    }
+
+    .monitor-status {
+        font-size: 0.9em;
+        color: #88a888;
+    }
+
+    .ecg-box {
+        margin: 10px 0;
+        background: #020502;
+        border: 2px solid #1a331a;
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .ecg-canvas {
+        display: block;
+        width: 100%;
+        height: 120px;
+    }
+
+    .ecg-rhythm-info {
+        position: absolute;
+        bottom: 5px;
+        left: 8px;
+        font-size: 0.85em;
+        color: #40c070;
+        background: rgba(2, 5, 2, 0.7);
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid #153015;
+    }
+
+    .ecg-bpm-info {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #ff3333;
+        background: rgba(2, 5, 2, 0.7);
+        padding: 2px 8px;
+        border-radius: 3px;
+        border: 1px solid #301515;
+        text-shadow: 0 0 5px rgba(255, 51, 51, 0.3);
+    }
+
+    .ecg-bpm-info.normal-pulse {
+        color: #00ff66;
+        border-color: #153015;
+        text-shadow: 0 0 5px rgba(0, 255, 102, 0.3);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .stat-card {
+        background: #111a11;
+        border: 1px solid #1d331d;
+        border-radius: 5px;
+        padding: 8px 12px;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    }
+
+    .stat-label {
+        font-size: 0.8em;
+        color: #8fa38f;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 3px;
+    }
+
+    .stat-value {
+        font-size: 1.15em;
+        font-weight: bold;
+        color: #e2ede2;
+    }
+
+    .stat-value.danger {
+        color: #ff3333;
+        text-shadow: 0 0 5px rgba(255, 51, 51, 0.4);
+    }
+
+    .stat-value.warning {
+        color: #ffaa00;
+        text-shadow: 0 0 5px rgba(255, 170, 0, 0.4);
+    }
+
+    .alerts-section {
+        margin-top: 15px;
+        border-top: 2px solid #153015;
+        padding-top: 10px;
+    }
+
+    .alerts-title {
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #ff5555;
+        margin-bottom: 5px;
+    }
+
+    .alert-item {
+        background: rgba(255, 50, 50, 0.1);
+        border-left: 3px solid #ff3333;
+        padding: 6px 10px;
+        border-radius: 0 4px 4px 0;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        color: #ffcccc;
+    }
+
+    .controls-row {
+        margin-top: 15px;
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .medical-details {
+        margin-top: 12px;
+        background: #101510;
+        border: 1px dashed #204020;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    .detail-heading {
+        font-size: 0.85em;
+        font-weight: bold;
+        color: #a0c0a0;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="vitals-container">
+    <div class="vitals-header">
+        <div class="patient-name">
+            {{if data.victim}}
+                {{:data.victim.name}}
+            {{else}}
+                No Patient Detected
+            {{/if}}
+        </div>
+        <div class="monitor-status">
+            {{if data.connected_table}}
+                Relaying from Operating Table
+            {{else}}
+                Stand-alone Monitor
+            {{/if}}
+        </div>
+    </div>
+
+    {{if data.victim}}
+        <div class="ecg-box">
+            <canvas class="ecg-canvas" id="ecg-canvas-{{:data.ref}}" width="500" height="120" data-rhythm="{{:data.cardiac_rhythm}}" data-bpm="{{:data.bpm}}" data-infarct-progress="{{:data.infarct_progress}}"></canvas>
+            <div class="ecg-rhythm-info">ECG: {{:data.cardiac_rhythm}}</div>
+            <div class="ecg-bpm-info {{:data.rhythm_is_safe ? 'normal-pulse' : ''}}">{{:data.bpm}} BPM</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Blood Pressure</div>
+                <div class="stat-value {{:data.bp_status}}">{{:data.blood_pressure}}</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">Oxygen Saturation</div>
+                <div class="stat-value {{:data.oxy_status}}">{{:data.oxygenation}}%</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Body Temp</div>
+                <div class="stat-value">{{:data.temperature}}&deg;C</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Respiration</div>
+                <div class="stat-value {{:data.breath_status}}">{{:data.breathing}}</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Brain Activity</div>
+                <div class="stat-value {{:data.brain_status}}">{{:data.brain_activity}}</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Cardiac Status</div>
+                <div class="stat-value {{:data.rhythm_is_safe ? '' : 'danger'}}">{{:data.cardiac_status}}</div>
+            </div>
+        </div>
+
+        {{if data.detailed && data.has_injuries}}
+            <div class="medical-details">
+                <div class="detail-heading">Anatomical Diagnostics</div>
+                {{for data.injuries}}
+                    <div class="alert-item" style="background: rgba(200, 100, 0, 0.1); border-left-color: #ffaa00; color: #ffebcc;">
+                        <strong>{{:value.limb}}</strong>: {{:value.issue}}
+                    </div>
+                {{/for}}
+            </div>
+        {{/if}}
+
+        {{if data.alerts && data.alerts.length > 0}}
+            <div class="alerts-section">
+                <div class="alerts-title">SYSTEM ALERTS</div>
+                {{for data.alerts}}
+                    <div class="alert-item">{{:value}}</div>
+                {{/for}}
+            </div>
+        {{/if}}
+
+    {{else}}
+        <div style="text-align: center; padding: 40px; color: #668866; border: 1px dashed #1a331a; border-radius: 6px; margin: 15px 0;">
+            <div style="font-size: 2em; margin-bottom: 10px;">&hearts;</div>
+            Waiting for connection or patient placement...
+        </div>
+    {{/if}}
+
+    <div class="controls-row">
+        {{:helper.link(data.beep ? "Audio: On" : "Audio: Mute", 'speaker', {'toggle_beep' : 1}, null, data.beep ? 'greenButton' : null)}}
+        {{:helper.link(data.read_alerts ? "Annunciator: Active" : "Annunciator: Off", 'alert', {'toggle_alerts' : 1}, null, data.read_alerts ? 'greenButton' : null)}}
+        {{if data.connected_table}}
+            {{:helper.link("Disconnect Table", 'unlink', {'disconnect_table' : 1})}}
+        {{else}}
+            {{if data.victim}}
+                {{:helper.link("Release Patient", 'close', {'release_patient' : 1})}}
+            {{/if}}
+        {{/if}}
+    </div>
+</div>

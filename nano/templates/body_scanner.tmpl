@@ -18,6 +18,190 @@
     {{/if}}
     </tr>
 </table>
-{{:data.html_scan_header}}
-{{:data.html_scan_health}}
-{{:data.html_scan_body}}
+
+<style>
+/* Custom Body Scanner UI Stylesheet */
+.body-scanner-container {
+    margin-top: 10px;
+}
+
+/* Tabs Panel */
+.scanner-tabs {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 12px;
+}
+
+.scanner-tabs .scanner-tab-btn,
+.scanner-tabs .linkActive.scanner-tab-btn,
+.scanner-tabs .link.scanner-tab-btn {
+    float: none;
+    display: block;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    text-align: center;
+    padding: 8px 12px;
+    margin: 0;
+    background: transparent;
+    background-color: transparent;
+    color: #888888;
+    font-size: 11px;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease-in-out;
+}
+
+.scanner-tabs .scanner-tab-btn:hover,
+.scanner-tabs .linkActive.scanner-tab-btn:hover,
+.scanner-tabs .link.scanner-tab-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.scanner-tabs .scanner-tab-btn.selected,
+.scanner-tabs .linkActive.scanner-tab-btn.selected,
+.scanner-tabs .link.scanner-tab-btn.selected,
+.scanner-tabs .linkActive.scanner-tab-btn.selected:hover {
+    color: #ffffff;
+    background: #4972a1;
+    background-color: #4972a1;
+}
+
+/* Tab contents and animation */
+@keyframes tabSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scan-section {
+    animation: tabSlideIn 0.2s cubic-bezier(0.1, 0.8, 0.3, 1);
+}
+
+/* Tab filter system */
+.body-scanner-container[data-active-tab="vitals"] .scan-row-severity,
+.body-scanner-container[data-active-tab="vitals"] .scan-section-reagents,
+.body-scanner-container[data-active-tab="vitals"] .scan-section-body {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="organs"] .scan-section-health,
+.body-scanner-container[data-active-tab="organs"] .scan-section-reagents {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="reagents"] .scan-section-health,
+.body-scanner-container[data-active-tab="reagents"] .scan-section-body {
+    display: none !important;
+}
+
+.body-scanner-container[data-active-tab="trauma"] .scan-row-vital,
+.body-scanner-container[data-active-tab="trauma"] .scan-section-reagents,
+.body-scanner-container[data-active-tab="trauma"] .scan-section-body {
+    display: none !important;
+}
+
+/* Heartbeat/Pulse Indicator Animation */
+.pulse-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #44dd44;
+    margin-left: 8px;
+    box-shadow: 0 0 6px #44dd44;
+    animation: heart-beat 1s infinite ease-in-out;
+}
+.pulse-indicator.fast {
+    background: #ff4444;
+    box-shadow: 0 0 6px #ff4444;
+    animation: heart-beat 0.4s infinite ease-in-out;
+}
+.pulse-indicator.stopped {
+    background: #888888;
+    box-shadow: none;
+    animation: none;
+}
+.pulse-indicator.robotic {
+    background: #44aaff;
+    box-shadow: 0 0 6px #44aaff;
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes heart-beat {
+    0% { transform: scale(0.85); opacity: 0.5; }
+    30% { transform: scale(1.2); opacity: 1; }
+    40% { transform: scale(1); opacity: 0.8; }
+    70% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.85); opacity: 0.5; }
+}
+
+@keyframes pulse-glow {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
+/* Modern tables look */
+.scanner-header-table, .scanner-data-table, .organ-status-table {
+    border-collapse: collapse;
+    width: 100% !important;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid #333333 !important;
+}
+
+.scanner-header-table td, .scanner-data-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #282828;
+}
+
+.scanner-header-table tr:hover, .scanner-data-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.organ-status-table th {
+    background-color: #2e2e2e !important;
+    border: 1px solid #3a3a3a !important;
+    color: #eaeaea;
+    padding: 6px 10px;
+}
+
+.organ-status-table td {
+    border: 1px solid #2a2a2a !important;
+    padding: 6px 10px;
+}
+</style>
+
+{{if data.scan}}
+<div id="bodyScannerContainer" class="body-scanner-container" data-active-tab="{{:data.active_tab}}">
+    <div class="scanner-tabs" unselectable="on">
+        {{:helper.link('Жизненные показатели', null, {'set_tab': 'vitals'}, null, data.active_tab == 'vitals' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Состояние тела', null, {'set_tab': 'organs'}, null, data.active_tab == 'organs' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Химический анализ', null, {'set_tab': 'reagents'}, null, data.active_tab == 'reagents' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+        {{:helper.link('Анализ травм', null, {'set_tab': 'trauma'}, null, data.active_tab == 'trauma' ? 'scanner-tab-btn selected' : 'scanner-tab-btn')}}
+    </div>
+    {{:data.html_scan_header}}
+    {{:data.html_scan_health}}
+    {{:data.html_scan_body}}
+</div>
+{{else}}
+    {{:data.html_scan_header}}
+{{/if}}
