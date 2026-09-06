@@ -3,6 +3,7 @@
 	icon_state = "beacon"
 	anchored = TRUE
 	density = TRUE
+	construct_state = /singleton/machine_construction/default/panel_closed/cannot_print
 
 /obj/machinery/trade_beacon/proc/Activate()
 	flick("[icon_state]_active", src)

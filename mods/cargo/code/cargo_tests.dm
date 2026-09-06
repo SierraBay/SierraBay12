@@ -238,7 +238,7 @@
 	var/obj/overmap/visitable/current_sector = SSsupply.GetOvermapSectorFor(source_turf)
 	var/fail_reason = null
 
-	if(!istype(source_turf) || !istype(current_sector))
+	if(!istype(source_turf) || !istype(current_sector) || !current_sector.loc)
 		qdel(program)
 		skip("Overmap sector unavailable for trade catalog distance test.")
 		return 1
@@ -567,8 +567,9 @@
 	NormalizeGoodsRecords()
 
 /proc/get_cargo_test_safe_turf()
-	for(var/obj/landmark/test/safe_turf/landmark in landmarks_list)
-		return get_turf(landmark)
+	for(var/landmark in landmarks_list)
+		if(istype(landmark, /obj/landmark/test/safe_turf))
+			return get_turf(landmark)
 	return null
 
 /proc/configure_cargo_contract_test_route(datum/trading_station/source_station, datum/trading_station/destination_station)
