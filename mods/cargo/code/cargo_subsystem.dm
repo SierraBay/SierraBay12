@@ -3,6 +3,7 @@
 	name = "Supply"
 	priority = SS_PRIORITY_SUPPLY
 	flags = SS_NO_FIRE
+	trade_network_active = TRUE
 
 	var/trade_stations_budget = 5
 	var/list/all_trading_stations = list()
@@ -63,18 +64,9 @@
 		var/datum/trade_faction/trade_faction = new faction_type
 		factions[trade_faction.name] = trade_faction
 
-	for(var/faction_name in factions)
-		var/datum/trade_faction/first = factions[faction_name]
-		for(var/other_name in factions)
-			var/datum/trade_faction/second = factions[other_name]
-			if(first == second)
-				first.relationship[second.name] = FACTION_STATE_PROTECTORATE
-				continue
-			if(!(second.name in first.relationship))
-				first.relationship[second.name] = FACTION_STATE_NEUTRAL
-			SetFactionRelations(first, second, first.relationship[second.name])
-
+	InitializeRelations()
 	InitTradeStations()
+
 	RefreshTradeBeacons()
 
 /datum/controller/subsystem/supply/Destroy()
@@ -115,6 +107,23 @@
 	first.ModifyRelationsWith(second.name, relation)
 	second.ModifyRelationsWith(first.name, relation)
 	return TRUE
+
+/datum/controller/subsystem/supply/proc/InitializeRelations()
+	for(var/faction_name in factions)
+		var/datum/trade_faction/first = factions[faction_name]
+		first.relationship[first.name] = FACTION_STATE_PROTECTORATE
+		for(var/other_name in factions)
+			if(faction_name == other_name)
+				continue
+			var/datum/trade_faction/second = factions[other_name]
+			var/has_first = (second.name in first.relationship)
+			var/has_second = (first.name in second.relationship)
+			if(!has_first && !has_second)
+				SetFactionRelations(first, second, FACTION_STATE_NEUTRAL)
+			else if(has_first && !has_second)
+				second.relationship[first.name] = first.relationship[second.name]
+			else if(!has_first && has_second)
+				first.relationship[second.name] = second.relationship[first.name]
 
 /datum/controller/subsystem/supply/proc/DiscoverAllTradeStations()
 	visible_trading_stations = all_trading_stations.Copy()
@@ -513,6 +522,9 @@
 	if(current_sector.z != station.overmap_location.z)
 		return "This trade beacon is outside your current overmap region."
 
+	if(HAS_FLAGS(current_sector.sector_flags, OVERMAP_SECTOR_BASE))
+		return null
+
 	var/distance = get_dist(current_sector, station.overmap_location)
 	if(distance > station.trade_range)
 		var/range_suffix = station.trade_range == 1 ? "" : "s"
@@ -702,11 +714,13 @@
 	if(price_for_all && account.money < price_for_all)
 		return FALSE
 
+	var/list/spawned_items = list()
 	var/obj/structure/closet/secure_closet/personal/trade/locker
 	if(count_of_all > 1)
 		locker = receiver_beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
 		if(!locker)
 			return FALSE
+		spawned_items += locker
 		if(is_order)
 			locker.locked = TRUE
 			locker.registered_name = buyer_name
@@ -730,6 +744,8 @@
 				var/count_of_good = goods[good_id]
 				var/good_path = station.GetGoodPath(category_name, good_id)
 				if(!good_path)
+					for(var/atom/movable/item as anything in spawned_items)
+						qdel(item)
 					return FALSE
 				for(var/i in 1 to count_of_good)
 					if(istype(locker))
@@ -737,7 +753,13 @@
 						invoice_location = locker
 					else
 						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
-						invoice_location = new_item ? new_item.loc : null
+						if(!new_item)
+							for(var/atom/movable/item as anything in spawned_items)
+								qdel(item)
+							return FALSE
+						spawned_items += new_item
+						invoice_location = new_item.loc
+
 				station.SetGoodAmount(category_name, good_id, max(0, station.GetGoodAmount(category_name, good_id) - count_of_good))
 				var/item_name = station.GetGoodName(category_name, good_id)
 				order_contents_info += "<li>[count_of_good]x [item_name]</li>"
@@ -750,49 +772,8 @@
 	account.withdraw(price_for_all, "Trade Network Purchase", "Trade Network")
 	return TRUE
 
-/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account)
-	if(QDELETED(sender_beacon) || !istype(money_account))
-		return FALSE
-
-	var/invoice_contents_info = ""
-	var/export_count = 0
-	var/cost = 0
-	var/list/exportables = list()
-
-	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
-		if(istype(exported, /obj/structure/closet/crate/trade_contract))
-			continue
-		if(!CanExportAtom(exported))
-			HandleRejectedExport(exported)
-			continue
-
-		var/export_value = GetExportValue(exported)
-		if(!export_value)
-			continue
-
-		exportables[exported] = export_value
-
-	if(!length(exportables))
-		return FALSE
-	if(!sender_beacon.StartExport())
-		return FALSE
-
-	for(var/atom/movable/exported as anything in exportables)
-		var/export_value = exportables[exported]
-		invoice_contents_info += "<li>[exported.name]</li>"
-		cost += export_value
-		qdel(exported)
-		++export_count
-
-		if(export_count > 100)
-			break
-
-	if(!cost)
-		return FALSE
-	money_account.deposit(cost, "Trade Network Export", "Trade Network")
-	if(invoice_contents_info)
-		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon))
-	return TRUE
+/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null)
+	return FALSE
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null)
 	var/log_id
@@ -872,12 +853,33 @@
 /datum/controller/subsystem/supply/proc/HandleRejectedExport(atom/movable/exported)
 	if(ishuman(exported))
 		var/mob/living/carbon/human/human = exported
+		to_chat(human, SPAN_DANGER("The export beacon rejects biological matter with a painful electric shock!"))
 		human.apply_damage(15, DAMAGE_BURN)
+
+/datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station)
+	. = 0
+	if(!istype(crate) || !istype(target_station))
+		return 0
+	var/list/all_contents = crate.GetAllContents(3, FALSE)
+	for(var/atom/movable/item as anything in all_contents)
+		if(item == crate || istype(item, /obj/structure/closet))
+			continue
+		if(!CanExportAtom(item))
+			continue
+		var/list/match = FindCommodityForExport(item, target_station)
+		if(islist(match))
+			. += GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
+	. = round(.)
 
 /datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null)
 	if(!CanExportAtom(exported))
 		return 0
 	if(istype(target_station))
+		if(istype(exported, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = exported
+			var/crate_val = GetStationCrateExportValue(crate, target_station)
+			if(crate_val > 0)
+				return crate_val
 		var/list/match = FindCommodityForExport(exported, target_station)
 		if(islist(match))
 			return GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])

@@ -21,6 +21,7 @@ SUBSYSTEM_DEF(supply)
 	//shuttle movement
 	var/movetime = 1200
 	var/datum/shuttle/autodock/ferry/supply/shuttle
+	var/trade_network_active = FALSE
 	var/list/point_source_descriptions = list(
 		"time" = "Base station supply",
 		"manifest" = "From exported manifests",

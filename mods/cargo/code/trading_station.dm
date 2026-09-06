@@ -42,6 +42,7 @@
 
 	var/update_time = 0
 	var/update_timer_start = 0
+	var/update_timer_id = null
 
 	var/obj/overmap/overmap_object
 	var/turf/overmap_location
@@ -85,7 +86,8 @@
 		name_pool.Remove(other_station.name)
 		if(!length(name_pool))
 			warning("Trade station name pool exhausted: [type]")
-			name_pool = other_station.name_pool.Copy()
+			var/list/reset_pool = initial(name_pool)
+			name_pool = reset_pool.Copy()
 			break
 
 	name = pick(name_pool)
@@ -333,8 +335,14 @@
 /datum/trading_station/proc/GetAvailabilityWindowRemaining()
 	return null
 
-/datum/trading_station/proc/Discovered(_, obj/overmap/visitable/ship)
-	if(!istype(ship) || !(HAS_FLAGS(ship.sector_flags, OVERMAP_SECTOR_BASE)))
+/datum/trading_station/proc/Discovered(_, atom/movable/O)
+	if(istype(O, /obj/overmap/visitable/ship))
+		// Mobile ship or shuttle discovered the station
+	else if(istype(O, /obj/overmap/visitable/sector))
+		var/obj/overmap/visitable/sector/S = O
+		if(!HAS_FLAGS(S.sector_flags, OVERMAP_SECTOR_BASE))
+			return
+	else
 		return
 
 	start_hidden = FALSE
@@ -485,46 +493,10 @@
 	category[GenerateGoodOfferId()] = good_packet
 
 /datum/trading_station/proc/InitGoods()
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		if(!islist(category))
-			continue
-		for(var/good_id in category)
-			var/cost = SSsupply.GetImportCost(good_id, src, null, category_name)
-			var/list/rand_args = list(5, max(5, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
+	return
 
 /datum/trading_station/proc/TryUnlockHiddenInv()
-	if(favor < unlock_favor || hidden_inv_unlocked)
-		return
-
-	hidden_inv_unlocked = TRUE
-	for(var/category_name in hidden_inventory)
-		var/list/category = hidden_inventory[category_name]
-		if(!istext(category_name) || !islist(category))
-			continue
-		if(!(category_name in inventory))
-			inventory[category_name] = list()
-		var/list/visible_category = inventory[category_name]
-		for(var/good_id in category)
-			visible_category[good_id] = category[good_id]
-			var/cost = SSsupply.GetImportCost(good_id, src, null, category_name)
-			var/list/rand_args = list(1, max(1, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
+	return
 
 /datum/trading_station/proc/SpendTradeStationsBudget(budget = spawn_cost)
 	if(!spawn_always)
@@ -535,56 +507,18 @@
 		SSsupply.trade_stations_budget += budget
 
 /datum/trading_station/proc/UpdateTick()
+	if(QDELETED(src))
+		return
 	if(initialized)
 		GoodsTick()
 	else
 		initialized = TRUE
 	update_time = rand(6, 8) MINUTES
 	update_timer_start = world.time
-	addtimer(new Callback(src, .proc/UpdateTick), update_time, TIMER_STOPPABLE)
+	update_timer_id = addtimer(new Callback(src, .proc/UpdateTick), update_time, TIMER_STOPPABLE)
 
 /datum/trading_station/proc/GoodsTick()
-	wealth += base_income
-
-	var/starting_balance = wealth
-	var/budget = unique_good_count ? round(starting_balance / unique_good_count) : 0
-	var/list/restock_candidates = list()
-
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		for(var/good_id in category)
-			var/good_index = category.Find(good_id)
-			var/current_amount = GetGoodAmount(category_name, good_index)
-			var/chance_to_restock = current_amount < 5 ? 100 : current_amount > 20 ? 0 : 15
-			if(rand(1, 100) > chance_to_restock)
-				continue
-			var/cost = max(1, round(SSsupply.GetImportCost(good_id, src, null, category_name) / 2))
-			var/amount_to_add = budget ? max(1, rand(1, max(1, round(budget / cost)))) : 1
-			var/list/content = list(
-				"cat" = category_name,
-				"index" = good_index,
-				"cost" = cost,
-				"to_add" = amount_to_add,
-				"current_amt" = current_amount
-			)
-			var/restock_index = length(restock_candidates) + 1
-			restock_candidates.Insert(restock_index, restock_index)
-			restock_candidates[restock_index] = content
-
-	for(var/i in 1 to 20)
-		if(!length(restock_candidates) || !wealth)
-			break
-
-		var/list/good_packet = pick(restock_candidates)
-		var/candidate_index = restock_candidates.Find(good_packet)
-		var/total_cost = good_packet["cost"] * good_packet["to_add"]
-		restock_candidates.Cut(candidate_index, candidate_index + 1)
-
-		if(total_cost < wealth)
-			SetGoodAmount(good_packet["cat"], good_packet["index"], good_packet["to_add"] + good_packet["current_amt"])
-			SubtractFromWealth(total_cost)
-
-	TryUnlockHiddenInv()
+	return
 
 /datum/trading_station/proc/GetGoodPacket(category_name, good_ref)
 	if(isnum(category_name))
@@ -661,3 +595,19 @@
 /datum/trading_station/proc/SubtractFromWealth(cost)
 	if(isnum(cost))
 		wealth -= cost
+
+/datum/trading_station/Destroy()
+	if(update_timer_id)
+		deltimer(update_timer_id)
+		update_timer_id = null
+	if(overmap_location)
+		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
+		overmap_location = null
+	if(overmap_object)
+		var/obj/overmap/saved_obj = overmap_object
+		overmap_object = null
+		qdel(saved_obj)
+	SSsupply.all_trading_stations -= src
+	SSsupply.visible_trading_stations -= src
+	SSsupply.hidden_trading_stations -= src
+	return ..()

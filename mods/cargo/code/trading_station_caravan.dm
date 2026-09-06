@@ -76,7 +76,8 @@
 	var/obj/overmap/trade_beacon/caravan/caravan_object = overmap_object
 	if(!istype(caravan_object))
 		return "This caravan is currently unavailable."
-	return null
+	return caravan_object.GetTradeAvailabilityBlockReason()
+
 
 /datum/trading_station/caravan/GetAvailabilityStatusData()
 	var/obj/overmap/trade_beacon/caravan/caravan_object = overmap_object

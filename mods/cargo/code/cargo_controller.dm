@@ -25,11 +25,17 @@
 	return istype(id_card) && id_card.registered_name && (!registered_name || registered_name == id_card.registered_name)
 
 /obj/structure/closet/secure_closet/personal/trade/togglelock(mob/user, obj/item/card/id/id_card)
+	locked = !locked
 	if(locked)
 		id_card = istype(id_card) ? id_card : user?.GetIdCard()
 		if(id_card)
 			set_owner(id_card.registered_name)
+		if(user)
+			to_chat(user, SPAN_NOTICE("You lock the locker."))
 	else
 		set_owner(null)
-	locked = !locked
+		if(user)
+			to_chat(user, SPAN_NOTICE("You unlock the locker."))
 	update_icon()
+	return TRUE
+

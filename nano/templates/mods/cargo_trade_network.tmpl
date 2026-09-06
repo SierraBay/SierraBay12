@@ -795,11 +795,11 @@
 															<tr class="candystripe">
 																<td colspan="5">
 																	<div class="tn-form-shell">
-																		<form class="tn-form" method="get" action="?src={{:data.src}}">
+																		<form class="tn-form" method="get" action="?src={{:data.src}}" onsubmit="var amt = parseInt(this.PRG_cart_add_amount.value, 10); if(isNaN(amt) || amt <= 0) { alert('Please enter a valid positive quantity.'); return false; }">
 																			<input type="hidden" name="src" value="{{:data.src}}">
 																			<input type="hidden" name="PRG_cart_add_form" value="{{:good_entry.id}}">
 																			<label>Quantity:</label>
-																			<input type="number" name="PRG_cart_add_amount" min="1" max="{{:good_entry.stock}}" value="1">
+																			<input type="number" name="PRG_cart_add_amount" min="1" step="1" max="{{:good_entry.stock}}" value="1" required oninput="if(this.value && this.value < 1) this.value = 1;">
 																			<input type="submit" value="Add to cart">
 																			{{:helper.link('Cancel', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-inlineLink')}}
 																		</form>

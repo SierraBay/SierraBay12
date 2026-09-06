@@ -493,8 +493,8 @@
 		"station_uid" = station.uid,
 		"category" = category_name,
 		"good_id" = good_id,
-		"buy_price" = GetStationBuyPrice(good_id, station, buyer_faction, category_name),
-		"sell_price" = GetStationSellPrice(good_id, station, category_name),
+		"buy_price" = round(GetStationBuyPrice(good_id, station, buyer_faction, category_name), 0.01),
+		"sell_price" = round(GetStationSellPrice(good_id, station, category_name), 0.01),
 		"stock" = max(0, station.GetGoodAmount(category_name, good_id))
 	)
 
@@ -581,12 +581,17 @@
 			if(!ispath(item_path, /atom/movable))
 				continue
 			if(istype(exported, item_path))
+				var/export_amount = 1
+				if(isstack(exported))
+					var/obj/item/stack/S = exported
+					export_amount = S.get_amount()
 				return list(
 					"category" = category_name,
 					"good_id" = good_id,
-					"amount" = 1
+					"amount" = export_amount
 				)
 	return null
+
 
 /datum/controller/subsystem/supply/proc/BuildStationMarketIntel(datum/trading_station/station, buyer_faction = null)
 	if(!istype(station))
@@ -601,8 +606,8 @@
 				"category" = category_name,
 				"good_id" = good_id,
 				"name" = station.GetGoodName(category_name, good_id),
-				"buy_price" = GetStationBuyPrice(good_id, station, buyer_faction, category_name),
-				"sell_price" = GetStationSellPrice(good_id, station, category_name),
+				"buy_price" = round(GetStationBuyPrice(good_id, station, buyer_faction, category_name), 0.01),
+				"sell_price" = round(GetStationSellPrice(good_id, station, category_name), 0.01),
 				"stock" = station.GetGoodAmount(category_name, good_id)
 			))
 			if(length(quotes) >= station.live_market_remote_quote_limit)
@@ -706,11 +711,13 @@
 	if(price_for_all && account.money < price_for_all)
 		return FALSE
 
+	var/list/spawned_items = list()
 	var/obj/structure/closet/secure_closet/personal/trade/locker
 	if(count_of_all > 1)
 		locker = receiver_beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
 		if(!locker)
 			return FALSE
+		spawned_items += locker
 		if(is_order)
 			locker.locked = TRUE
 			locker.registered_name = buyer_name
@@ -732,6 +739,8 @@
 				var/good_path = station.GetGoodPath(category_name, good_id)
 				var/unit_price = GetSnapshotUnitPrice(price_snapshot, station, category_name, good_id)
 				if(!good_path || !isnum(unit_price) || unit_price < 1)
+					for(var/atom/movable/item as anything in spawned_items)
+						qdel(item)
 					return FALSE
 				to_station_wealth += unit_price * count_of_good
 				for(var/i in 1 to count_of_good)
@@ -740,7 +749,13 @@
 						invoice_location = locker
 					else
 						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
-						invoice_location = new_item ? new_item.loc : null
+						if(!new_item)
+							for(var/atom/movable/item as anything in spawned_items)
+								qdel(item)
+							return FALSE
+						spawned_items += new_item
+						invoice_location = new_item.loc
+
 				station.SetGoodAmount(category_name, good_id, max(0, station.GetGoodAmount(category_name, good_id) - count_of_good))
 				ApplyTradeTransaction(station, category_name, good_id, count_of_good, "buy")
 				var/item_name = station.GetGoodName(category_name, good_id)
@@ -758,16 +773,24 @@
 	if(QDELETED(sender_beacon) || !istype(money_account))
 		return FALSE
 
+	if(sender_beacon.export_cooldown > world.time)
+		return FALSE
+	if(istype(target_station))
+		var/block_reason = GetTradeRangeBlockReason(sender_beacon, target_station)
+		if(block_reason)
+			return FALSE
+
 	var/invoice_contents_info = ""
 	var/export_count = 0
 	var/cost = 0
 	var/list/exportables = list()
+	var/list/rejected = list()
 
 	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
 			continue
 		if(!CanExportAtom(exported))
-			HandleRejectedExport(exported)
+			rejected += exported
 			continue
 
 		var/export_value = GetExportValue(exported, target_station)
@@ -778,29 +801,54 @@
 
 	if(!length(exportables))
 		return FALSE
-	if(istype(target_station))
-		var/block_reason = GetTradeRangeBlockReason(sender_beacon, target_station)
-		if(block_reason)
-			return FALSE
+
 	if(!sender_beacon.StartExport())
 		return FALSE
 
+	for(var/atom/movable/rejected_atom as anything in rejected)
+		HandleRejectedExport(rejected_atom)
+
 	for(var/atom/movable/exported as anything in exportables)
 		var/export_value = exportables[exported]
-		invoice_contents_info += "<li>[exported.name]</li>"
-		cost += export_value
-		if(istype(target_station))
-			var/list/match = FindCommodityForExport(exported, target_station)
-			if(islist(match))
-				ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
-		qdel(exported)
-		++export_count
+		if(istype(target_station) && istype(exported, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = exported
+			var/crate_sold_any = FALSE
+			var/list/all_contents = crate.GetAllContents(3, FALSE)
+			for(var/atom/movable/item as anything in all_contents)
+				if(item == crate || istype(item, /obj/structure/closet))
+					continue
+				if(!CanExportAtom(item))
+					continue
+				var/list/match = FindCommodityForExport(item, target_station)
+				if(islist(match))
+					var/item_val = GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
+					cost += item_val
+					invoice_contents_info += "<li>[item.name]</li>"
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+					qdel(item)
+					crate_sold_any = TRUE
+					++export_count
+					if(export_count > 100)
+						break
+			if(crate_sold_any && !length(crate.contents))
+				qdel(crate)
+		else
+			invoice_contents_info += "<li>[exported.name]</li>"
+			cost += export_value
+			if(istype(target_station))
+				var/list/match = FindCommodityForExport(exported, target_station)
+				if(islist(match))
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+			qdel(exported)
+			++export_count
 
 		if(export_count > 100)
 			break
 
 	if(!cost)
 		return FALSE
+	if(istype(target_station))
+		target_station.SubtractFromWealth(cost)
 	money_account.deposit(cost, "Trade Network Export", "Trade Network")
 	if(invoice_contents_info)
 		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon))

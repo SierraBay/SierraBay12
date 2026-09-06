@@ -116,22 +116,22 @@
 			shopping_list -= target_station
 
 /datum/computer_file/program/supply/proc/AddToShopList(good_id, amount, limit)
-	if(!good_id || !amount)
+	if(!good_id || !isnum(amount) || amount <= 0)
 		return
 	var/list/inventory_list = OpenShopList()
 	if(!islist(inventory_list))
 		return
-	inventory_list[good_id] = (inventory_list[good_id] || 0) + amount
+	inventory_list[good_id] = (inventory_list[good_id] || 0) + round(amount)
 	if(limit && inventory_list[good_id] > limit)
 		inventory_list[good_id] = limit
 
 /datum/computer_file/program/supply/proc/RemoveFromShopList(good_id, amount, datum/trading_station/target_station = station, target_category = chosen_category)
-	if(!good_id || !amount)
+	if(!good_id || !isnum(amount) || amount <= 0)
 		return
 	var/list/inventory_list = OpenShopList(target_station, target_category)
 	if(!islist(inventory_list) || !(good_id in inventory_list))
 		return
-	inventory_list[good_id] -= amount
+	inventory_list[good_id] -= round(amount)
 	if(inventory_list[good_id] < 1)
 		inventory_list -= good_id
 	SanitizeShopList()
@@ -414,7 +414,7 @@
 	)
 
 /datum/computer_file/program/supply/proc/TryAddToCart(good_ref, amount)
-	if(!istype(station) || !chosen_category || !amount)
+	if(!istype(station) || !chosen_category || !isnum(amount) || amount <= 0)
 		return FALSE
 	var/good_id = ResolveGoodId(chosen_category, good_ref)
 	if(!good_id)
@@ -425,7 +425,7 @@
 	var/good_amount = station.GetGoodAmount(chosen_category, good_id)
 	if(!good_amount)
 		return FALSE
-	AddToShopList(good_id, max(1, round(amount)), good_amount)
+	AddToShopList(good_id, round(amount), good_amount)
 	return TRUE
 
 /datum/computer_file/program/supply/proc/GetGoodMarkupText(basic_price, price)
@@ -533,8 +533,8 @@
 			"id" = good_id,
 			"name" = target_station.GetGoodName(chosen_category, good_id),
 			"stock" = stock,
-			"price" = round(price),
-			"sell_price" = round(sell_price),
+			"price" = round(price, 0.01),
+			"sell_price" = round(sell_price, 0.01),
 			"markup_text" = GetGoodMarkupText(basic_price, price),
 			"can_add" = can_add_goods && stock > 0,
 			"quantity_form_open" = goods_quantity_target == good_id
@@ -556,7 +556,7 @@
 			continue
 		result.Add(list(list(
 			"name" = exported.name,
-			"value" = round(cost),
+			"value" = round(cost, 0.01),
 			"target_station" = target_station ? target_station.name : "Trade Network"
 		)))
 	return result
@@ -593,7 +593,7 @@
 					"good_id" = good_id,
 					"name" = target_station.GetGoodName(category_name, good_id),
 					"amount" = amount,
-					"price" = round(unit_price * amount),
+					"price" = round(unit_price * amount, 0.01),
 					"category_name" = category_name,
 					"station_uid" = target_station.uid
 				)))
@@ -618,7 +618,7 @@
 		result.Add(list(list(
 			"id" = order_id,
 			"requestor_name" = requestor ? requestor.owner_name : "Unknown",
-			"total" = round(order_data["cost"] + order_data["fee"]),
+			"total" = round(order_data["cost"] + order_data["fee"], 0.01),
 			"selected" = current_order == order_id
 		)))
 	return result
@@ -657,10 +657,10 @@
 		"source_name" = source_station ? source_station.name : "Unknown",
 		"destination_name" = destination_station ? destination_station.name : "Unknown",
 		"cargo" = contract.GetDisplayCargoText(),
-		"reward" = round(contract.reward),
-		"penalty" = round(contract.penalty),
-		"distance" = round(contract.distance),
-		"base_value" = round(contract.base_value),
+		"reward" = round(contract.reward, 0.01),
+		"penalty" = round(contract.penalty, 0.01),
+		"distance" = round(contract.distance, 0.01),
+		"base_value" = round(contract.base_value, 0.01),
 		"accepted_by" = contract.accepted_by || "",
 		"status" = contract.GetStatusLabel(),
 		"status_tone" = contract.GetStatusTone(),
@@ -707,9 +707,9 @@
 		"requestor_name" = requestor ? requestor.owner_name : "Unknown",
 		"buyer_faction" = buyer_faction,
 		"reason" = order_data["reason"] || "Not provided",
-		"cost" = round(order_data["cost"]),
-		"fee" = round(order_data["fee"]),
-		"total" = round(order_data["cost"] + order_data["fee"]),
+		"cost" = round(order_data["cost"], 0.01),
+		"fee" = round(order_data["fee"], 0.01),
+		"total" = round(order_data["cost"] + order_data["fee"], 0.01),
 		"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
 	)
 
@@ -722,7 +722,7 @@
 			"index" = i,
 			"name" = cart_name,
 			"count" = SSsupply.CollectCountsFrom(cart_data),
-			"total" = round(SSsupply.CollectPriceForList(cart_data, faction))
+			"total" = round(SSsupply.CollectPriceForList(cart_data, faction), 0.01)
 		)))
 	return result
 
@@ -737,7 +737,7 @@
 			"id" = log_entry["id"],
 			"time" = log_entry["time"],
 			"ordering_acct" = log_entry["ordering_acct"],
-			"total_paid" = round(log_entry["total_paid"])
+			"total_paid" = round(log_entry["total_paid"], 0.01)
 		)))
 	return result
 
@@ -786,13 +786,13 @@
 	data["has_account"] = istype(account)
 	data["account_owner_name"] = account ? account.owner_name : ""
 	data["account_number"] = account ? account.account_number : 0
-	data["account_money"] = account ? round(account.money) : 0
+	data["account_money"] = account ? round(account.money, 0.01) : 0
 	var/obj/item/card/id/inserted_id = GetInsertedIdCard()
 	data["has_inserted_id"] = istype(inserted_id)
 	data["can_link_id_account"] = istype(inserted_id) && inserted_id.associated_account_number
 	data["inserted_id_account_number"] = inserted_id ? inserted_id.associated_account_number : 0
 	data["has_master_budget"] = istype(master_account)
-	data["master_budget"] = master_account ? round(master_account.money) : 0
+	data["master_budget"] = master_account ? round(master_account.money, 0.01) : 0
 	data["receiving"] = receiving_id || ""
 	data["has_receiving"] = !!receiving_id
 	data["sending"] = sending_id || ""
@@ -817,13 +817,14 @@
 	data["export_total"] = 0
 	for(var/list/export_item in export_items)
 		data["export_total"] += export_item["value"]
+	data["export_total"] = round(data["export_total"], 0.01)
 	data["can_export"] = !export_block_reason
 	data["export_block_reason"] = export_block_reason || ""
 	data["export_target_station"] = selected_station ? selected_station.name : ""
 	data["has_export_target_station"] = istype(selected_station)
 
 	data["cart_groups"] = cart_groups
-	data["cart_total"] = round(SSsupply.CollectPriceForList(shopping_list, faction))
+	data["cart_total"] = round(SSsupply.CollectPriceForList(shopping_list, faction), 0.01)
 	data["cart_count"] = SSsupply.CollectCountsFrom(shopping_list)
 	data["cart_trade_block_reason"] = cart_trade_block || ""
 	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_trade_block
@@ -1021,9 +1022,21 @@
 		var/good_ref = href_list["PRG_cart_add_good"] || href_list["PRG_cart_add_form"] || href_list["PRG_cart_add"] || href_list["PRG_cart_add_input"]
 		var/count_to_buy = 1
 		if(href_list["PRG_cart_add_input"])
-			count_to_buy = max(1, round(input(usr, "How many do you want to add?", "Trade", 2) as num|null))
+			var/raw_amount = input(usr, "How many do you want to add?", "Trade", 2) as num|null
+			if(isnull(raw_amount) || raw_amount <= 0)
+				ui_interact(usr)
+				return TRUE
+			count_to_buy = round(raw_amount)
 		else if(href_list["PRG_cart_add_form"])
-			count_to_buy = max(1, round(text2num(href_list["PRG_cart_add_amount"])))
+			var/form_amount = text2num(href_list["PRG_cart_add_amount"])
+			if(!isnum(form_amount) || form_amount <= 0)
+				ui_interact(usr)
+				return TRUE
+			count_to_buy = round(form_amount)
+
+		if(count_to_buy <= 0)
+			ui_interact(usr)
+			return TRUE
 
 		if(TryAddToCart(good_ref, count_to_buy))
 			CloseGoodsQuantityForm()
@@ -1034,10 +1047,20 @@
 		var/datum/trading_station/target_station = SSsupply.GetStationByUid(href_list["PRG_cart_remove_direct"])
 		var/target_category = href_list["PRG_cart_category_name"]
 		var/target_good_id = href_list["PRG_cart_good_id"]
+		var/remove_amount = 1
+		if(href_list["PRG_cart_remove_amount"])
+			var/parsed_amount = text2num(href_list["PRG_cart_remove_amount"])
+			if(!isnum(parsed_amount) || parsed_amount <= 0)
+				ui_interact(usr)
+				return TRUE
+			remove_amount = round(parsed_amount)
+		if(remove_amount <= 0)
+			ui_interact(usr)
+			return TRUE
 		if(istype(target_station) && target_category && target_good_id)
 			station = target_station
 			chosen_category = target_category
-			RemoveFromShopList(target_good_id, 1, target_station, target_category)
+			RemoveFromShopList(target_good_id, remove_amount, target_station, target_category)
 		ui_interact(usr)
 		return TRUE
 
