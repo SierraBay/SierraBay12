@@ -442,11 +442,11 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/deepmaint)
 "PX" = (
-/mob/living/simple_animal/hostile/lar_maria/guard,
+/obj/landmark/lar_maria_npc/guard,
 /turf/simulated/floor/wood,
 /area/map_template/deepmaint)
 "Tm" = (
-/mob/living/simple_animal/hostile/lar_maria/guard,
+/obj/landmark/lar_maria_npc/guard,
 /turf/simulated/floor/carpet/red,
 /area/map_template/deepmaint)
 

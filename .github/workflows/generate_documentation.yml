@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: paths-filter
-        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d
         id: filter
         with:
           filters: .github/workflow-config/preflight-filters.yml
@@ -37,9 +37,9 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Setup Cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ~/spaceman_dmm/${{ env.SPACEMAN_DMM_VERSION }}
           key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
@@ -49,7 +49,7 @@ jobs:
         run: |
           ~/dmdoc
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages

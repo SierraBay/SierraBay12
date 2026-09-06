@@ -253,7 +253,8 @@
 	if(ismech(target_mob))
 		hit_zone = def_zone
 	else
-		hit_zone = get_zone_with_miss_chance(def_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
+		var/target_zone = def_zone ? def_zone : BP_CHEST
+		hit_zone = get_zone_with_miss_chance(target_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss
 	//[SIERRA-ADD]
 
 	var/result = PROJECTILE_FORCE_MISS
@@ -523,6 +524,7 @@
 		return null
 
 	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+	trace.firer = firer //[SIERRA-ADD]
 
 	//Set the flags and pass flags to that of the real projectile...
 	if(!isnull(item_flags))

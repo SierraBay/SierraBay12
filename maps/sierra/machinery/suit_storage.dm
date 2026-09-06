@@ -29,21 +29,28 @@
 	if(!MACHINE_IS_BROKEN(src))
 		if(isopen)
 			AddOverlays(image(icon,"[base_icon_state]_lights_open"))
+			AddOverlays(overlay_image(icon,"[base_icon_state]_lights_open", plane = LIGHTING_LAMPS_PLANE))
 		else
 			if(isUV)
 				AddOverlays(image(icon,"[base_icon_state]_lights_red"))
+				AddOverlays(overlay_image(icon,"[base_icon_state]_lights_red", plane = LIGHTING_LAMPS_PLANE))
 			else
 				AddOverlays(image(icon,"[base_icon_state]_lights_closed"))
+				AddOverlays(overlay_image(icon,"[base_icon_state]_lights_closed", plane = LIGHTING_LAMPS_PLANE))
 		//top lights
 		if(isUV)
 			if(issuperUV)
 				AddOverlays(overlay_image(icon,"[base_icon_state]_uvstrong", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+				AddOverlays(overlay_image(icon,"[base_icon_state]_uvstrong", plane = LIGHTING_LAMPS_PLANE))
 			else
 				AddOverlays(overlay_image(icon,"[base_icon_state]_uv", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+				AddOverlays(overlay_image(icon,"[base_icon_state]_uv", plane = LIGHTING_LAMPS_PLANE))
 		if(islocked)
 			AddOverlays(overlay_image(icon, "[base_icon_state]_locked", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+			AddOverlays(overlay_image(icon, "[base_icon_state]_locked", plane = LIGHTING_LAMPS_PLANE))
 		else
 			AddOverlays(overlay_image(icon, "[base_icon_state]_ready", plane = EFFECTS_ABOVE_LIGHTING_PLANE, layer = ABOVE_LIGHTING_LAYER))
+			AddOverlays(overlay_image(icon, "[base_icon_state]_ready", plane = LIGHTING_LAMPS_PLANE))
 
 /obj/machinery/suit_storage_unit/toggle_lock(mob/user)
 	if(!is_powered())

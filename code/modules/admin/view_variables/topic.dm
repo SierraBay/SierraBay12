@@ -8,7 +8,10 @@
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
-		if(!check_rights(R_VAREDIT))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_VAREDIT|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/M = locate(href_list["rename"])
 		if(!istype(M))
@@ -23,7 +26,10 @@
 		href_list["datumrefresh"] = href_list["rename"]
 
 	else if(href_list["dressup"])
-		if(!check_rights(R_VAREDIT))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_VAREDIT|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["dressup"])
 		if(!istype(H))
@@ -36,7 +42,10 @@
 		dressup_human(H, outfit, TRUE)
 
 	else if(href_list["varnameedit"] && href_list["datumedit"])
-		if(!check_rights(R_VAREDIT))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_VAREDIT|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/D = locate(href_list["datumedit"])
 		if(!istype(D,/datum) && !istype(D,/client))
@@ -46,7 +55,10 @@
 		modify_variables(D, href_list["varnameedit"], 1)
 
 	else if(href_list["varnamechange"] && href_list["datumchange"])
-		if(!check_rights(R_VAREDIT))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_VAREDIT|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/D = locate(href_list["datumchange"])
 		if(!istype(D,/datum) && !istype(D,/client))
@@ -56,7 +68,10 @@
 		modify_variables(D, href_list["varnamechange"], 0)
 
 	else if(href_list["varnamemass"] && href_list["datummass"])
-		if(!check_rights(R_VAREDIT))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_VAREDIT|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/atom/A = locate(href_list["datummass"])
 		if(!istype(A))
@@ -273,7 +288,10 @@
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
 	else if(href_list["makemonkey"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
 		if(!istype(H))
@@ -287,7 +305,10 @@
 		holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 		if(!istype(H))
@@ -301,7 +322,10 @@
 		holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
 	else if(href_list["makeslime"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 		if(!istype(H))
@@ -315,7 +339,10 @@
 		holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 	else if(href_list["makeai"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["makeai"])
 		if(!istype(H))
@@ -329,7 +356,10 @@
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
 
 	else if(href_list["setspecies"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/human/H = locate(href_list["setspecies"])
 		if(!istype(H))
@@ -348,7 +378,10 @@
 			to_chat(usr, "Failed! Something went wrong.")
 
 	else if(href_list["addlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/H = locate(href_list["addlanguage"])
 		if(!istype(H))
@@ -370,7 +403,10 @@
 			to_chat(usr, "Mob already knows that language.")
 
 	else if(href_list["remlanguage"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/H = locate(href_list["remlanguage"])
 		if(!istype(H))
@@ -443,7 +479,10 @@
 			H.verbs -= verb
 
 	else if(href_list["addorgan"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/M = locate(href_list["addorgan"])
 		if(!istype(M))
@@ -465,7 +504,10 @@
 
 
 	else if(href_list["remorgan"])
-		if(!check_rights(R_SPAWN))	return
+		// [SIERRA-EDIT]
+		// if(!check_rights(R_SPAWN))	return // SIERRA-EDIT - ORIGINAL
+		if(!check_rights(R_SPAWN|R_DEBUG))	return
+		// [/SIERRA-EDIT]
 
 		var/mob/living/carbon/M = locate(href_list["remorgan"])
 		if(!istype(M))

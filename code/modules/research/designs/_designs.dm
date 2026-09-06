@@ -1,4 +1,3 @@
-/* [SIERRA-REMOVE] - MODPACK_RND
 /***************************************************************
 **						Design Datums						  **
 **	All the data for building stuff and tracking reliability. **
@@ -59,19 +58,18 @@ other types of metals and chemistry for reagents).
 //Returns a new instance of the item for this design
 //This is to allow additional initialization to be performed, including possibly additional contructor arguments.
 /datum/design/proc/Fabricate(newloc, fabricator)
-	return new build_path(newloc)
+	var/atom/thing = new build_path(newloc)
+	thing.PostFabrication()
+	return thing
 
 /datum/design/item
 	build_type = PROTOLATHE
 
 // Testing helper
-GLOBAL_LIST_AS(build_path_to_design_datum_path, populate_design_datum_index())
-
-/proc/populate_design_datum_index()
-	RETURN_TYPE(/list)
-	. = list()
-	for(var/path in typesof(/datum/design))
-		var/datum/design/fake_design = path
-		if(initial(fake_design.build_path))
-			.[initial(fake_design.build_path)] = path
-*/
+GLOBAL_LIST_INIT(build_path_to_design_datum_path)
+	build_path_to_design_datum_path = list()
+	for (var/datum/design/path as anything in typesof(/datum/design))
+		var/build_path = initial(path.build_path)
+		if (!build_path)
+			continue
+		build_path_to_design_datum_path[build_path] = path

@@ -69,6 +69,7 @@
 	auto_eject = 0
 	w_class = ITEM_SIZE_NORMAL
 	fire_sound = 'mods/guns/sounds/taser.ogg'
+	manufacturer = MANUFACTURER_NANOTRASEN
 
 /obj/item/gun/projectile/taser/on_update_icon()
 	..()

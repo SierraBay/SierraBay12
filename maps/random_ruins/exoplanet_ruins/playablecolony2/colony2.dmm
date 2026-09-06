@@ -2901,7 +2901,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red,
 /obj/catwalk_plated/dark,
 /obj/machinery/meter,
-/obj/machinery/robotics_fabricator{
+/obj/machinery/fabricator/rnd/robotics{
 	req_access = list()
 	},
 /turf/simulated/floor/plating,

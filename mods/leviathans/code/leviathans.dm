@@ -6,41 +6,46 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 /obj/overmap/event/leviathan
 	name = "Space Leviathan"
 	icon = 'mods/leviathans/icons/leviathan.dmi'
-	icon_state = "dragon" // TODO ПЛЕСХОЛДЕР!!!
+	icon_state = "dragon"
 	requires_contact = TRUE
 	opacity = 0
 	instant_contact = TRUE
 	color = COLOR_RED
-
 	var/health = 1000
 	var/max_health = 1000
 	var/damage = 10
 
-	var/weakref/target_ship = null // Целевое судно, будет следовать за ним через всю овермапу
-	var/manual_ai = FALSE // Если TRUE, левиафан не ищет цели сам
-	var/weakref/forced_target = null // Принудительно установленная цель
+	var/weakref/target_ship = null // Target vessel
+	var/manual_ai = FALSE // If TRUE, leviathan won't search for targets itself
+	var/weakref/forced_target = null // Manually set target
 
-	var/damage_cooldown = 10 SECONDS // КД следующего выстрела снарядом
+	var/damage_cooldown = 10 SECONDS // Cooldown for next damage event
 	var/next_damage_time = 0
 
-	var/movement_update_rate = 2 SECONDS // Как часто двигаться
+	var/movement_update_rate = 2 SECONDS // Frequency of movement updates
 	var/next_movement_update = 0
 
-	var/leviathan_speed = 1 / (1 MINUTES) // Скорость левиафана на овермапе
+	var/leviathan_speed = 1 / (1 MINUTES) // Speed on overmap
+	var/base_speed = 0 // Cached base speed
 
-	// Процессинг левиафанов
 	var/processing = FALSE
 
-	// Хил значения
-	var/is_healing = FALSE // Флаг хила
-	var/healing_threshold = 0.35 // Порог ХП в 35%, при котором левиафан летит лечиться
-	var/weakref/healing_target_ref = null // Зона, где хилится левиафан
+	// Healing variables
+	var/is_healing = FALSE
+	var/healing_threshold = 0.35 // HP threshold to trigger healing
+	var/weakref/healing_target_ref = null // Reference to healing location
 	var/last_heal_time = 0
-	var/base_speed = 0 // Временный буфер скорости
-	var/heal_min = 5 // 30 в минуту
-	var/heal_max = 8 // 50 в минуту
+	var/heal_min = 5
+	var/heal_max = 8
 
-	var/boredom_factor = 0 // На сколько увеличивается КД за каждый выстрел по стоячему судну
+	var/boredom_factor = 0 // Increases cooldown when attacking stationary targets
+	var/already_healed = FALSE // Has the leviathan already used its one-time retreat-and-heal?
+
+	var/weakref/distraction_ref = null // Target probe that distracts the leviathan
+
+	var/acceleration_mult = 1.0 // Current speed multiplier from acceleration
+	var/acceleration_step = 0.05 // 5% increase per move update
+	var/max_acceleration = 3.0 // Maximum 3x speed
 
 /obj/overmap/event/leviathan/Initialize(seed)
 	. = ..(seed)
@@ -67,8 +72,7 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 /obj/overmap/event/leviathan/proc/find_target()
 	if(manual_ai)
 		return
-	// Ищем самый тяжелый/большой корабль на овермапе (обычно Сьерра)
-	// и делаем его своей целью
+	
 	var/obj/overmap/visitable/ship/best_target = null
 	var/best_mass = 0
 	for(var/obj/overmap/visitable/ship/S in SSshuttle.ships)
@@ -90,34 +94,69 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 		update_movement()
 		next_movement_update = world.time + movement_update_rate
 
-	// Если хилимся, то приоритет на хил, атаковать не будем (кроме Роя)
-	if((!is_healing || !needs_healing_location()) && world.time >= next_damage_time)
+	if(can_attack() && world.time >= next_damage_time)
 		deal_damage_to_sector()
 
+	update_boredom()
+
+	if(!manual_ai)
+		handle_distraction()
+
+	..()
+
+/obj/overmap/event/leviathan/proc/can_attack()
+	// If healing, don't attack unless at healing location (or if specific type allows it)
+	var/atom/healing_loc = healing_target_ref?.resolve()
+	if(is_healing && needs_healing_location() && loc != healing_loc?.loc)
+		return FALSE
+	return TRUE
+
+/obj/overmap/event/leviathan/proc/handle_distraction()
+	var/obj/overmap/projectile/P = distraction_ref?.resolve()
+	if(P && !QDELETED(P) && get_wrapped_dist(src, P) <= 3)
+		return
+
+	distraction_ref = null
+	for(var/obj/overmap/projectile/OP in range(3, src))
+		if(QDELETED(OP) || !OP.actual_missile)
+			continue
+		if(istype(OP.actual_missile.equipment[MISSILE_PART_PAYLOAD], /obj/item/missile_equipment/payload/sensor))
+			distraction_ref = weakref(OP)
+			break
+
+/obj/overmap/event/leviathan/proc/update_boredom()
 	var/obj/overmap/O = target_ship?.resolve()
 	if(istype(O) && O.is_moving())
 		boredom_factor = 0
 
-	..()
-
 /obj/overmap/event/leviathan/proc/handle_healing()
-	if(!is_healing && (health <= max_health * healing_threshold || !needs_healing_location()))
-		is_healing = TRUE
-		healing_target_ref = null
-		// Если мало ХП, уносим ноги/щупальца/лапы
-		if(needs_healing_location())
-			leviathan_speed = base_speed * 2
+	if(!is_healing)
+		if(already_healed && needs_healing_location())
+			return
+
+		if(health <= max_health * healing_threshold || !needs_healing_location())
+			start_healing()
 
 	if(is_healing)
 		if(health >= max_health && needs_healing_location())
-			health = max_health
-			is_healing = FALSE
-			healing_target_ref = null
-			if(needs_healing_location())
-				leviathan_speed = base_speed
+			already_healed = TRUE
+			stop_healing()
 			return
 
 		perform_healing()
+
+/obj/overmap/event/leviathan/proc/start_healing()
+	is_healing = TRUE
+	healing_target_ref = null
+	if(needs_healing_location())
+		leviathan_speed = base_speed * 2 // Run away!
+
+/obj/overmap/event/leviathan/proc/stop_healing()
+	health = max_health
+	is_healing = FALSE
+	healing_target_ref = null
+	if(needs_healing_location())
+		leviathan_speed = base_speed
 
 /obj/overmap/event/leviathan/proc/perform_healing()
 	if(world.time < last_heal_time + 10 SECONDS)
@@ -131,39 +170,36 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 	return TRUE
 
 /obj/overmap/event/leviathan/proc/get_wrapped_dist(atom/A, atom/B)
+	var/map_size = GLOB.using_map.overmap_size
 	var/dx = abs(A.x - B.x)
 	var/dy = abs(A.y - B.y)
 
-	if(dx > GLOB.using_map.overmap_size / 2)
-		dx = GLOB.using_map.overmap_size - dx
-	if(dy > GLOB.using_map.overmap_size / 2)
-		dy = GLOB.using_map.overmap_size - dy
+	if(dx > map_size / 2)
+		dx = map_size - dx
+	if(dy > map_size / 2)
+		dy = map_size - dy
 
 	return sqrt(dx**2 + dy**2)
 
 /obj/overmap/event/leviathan/proc/get_wrapped_dir(atom/A, atom/B)
+	var/map_size = GLOB.using_map.overmap_size
 	var/dx = B.x - A.x
 	var/dy = B.y - A.y
 
-	if(abs(dx) > GLOB.using_map.overmap_size / 2)
-		dx = -SIGN(dx) * (GLOB.using_map.overmap_size - abs(dx))
-	if(abs(dy) > GLOB.using_map.overmap_size / 2)
-		dy = -SIGN(dy) * (GLOB.using_map.overmap_size - abs(dy))
+	if(abs(dx) > map_size / 2)
+		dx = -SIGN(dx) * (map_size - abs(dx))
+	if(abs(dy) > map_size / 2)
+		dy = -SIGN(dy) * (map_size - abs(dy))
 
 	var/res = 0
-	if(dx > 0)
-		res |= EAST
-	else if(dx < 0)
-		res |= WEST
+	if(dx > 0) res |= EAST
+	else if(dx < 0) res |= WEST
 
-	if(dy > 0)
-		res |= NORTH
-	else if(dy < 0)
-		res |= SOUTH
+	if(dy > 0) res |= NORTH
+	else if(dy < 0) res |= SOUTH
 
 	return res
 
-// Поиск ближайшего сектора для лечения
 /obj/overmap/event/leviathan/proc/find_healing_target(event_type)
 	var/obj/overmap/event/best_event = null
 	var/best_dist = 1000
@@ -177,65 +213,78 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 	return best_event
 
 /obj/overmap/event/leviathan/proc/update_movement()
-	var/atom/movable/current_target = null
+	var/atom/movable/current_target = get_current_target_atom()
 
+	if(!current_target)
+		stop_movement()
+		return
+
+	// Wraparound check
+	if(istype(get_turf(src), /turf/unsimulated/map/edge))
+		handle_wraparound(x, y)
+		return
+
+	// Arrival check
+	if(loc == current_target.loc)
+		if(is_healing || !manual_ai)
+			stop_movement()
+			return
+
+	var/target_dir = get_wrapped_dir(src, current_target)
+	if(!target_dir)
+		stop_movement()
+		return
+
+	apply_movement_vector(target_dir)
+
+/obj/overmap/event/leviathan/proc/get_current_target_atom()
 	if(manual_ai)
-		current_target = forced_target?.resolve()
-	else if(is_healing && needs_healing_location())
+		return forced_target?.resolve()
+	
+	var/atom/distraction = distraction_ref?.resolve()
+	if(distraction)
+		return distraction
+	
+	if(is_healing && needs_healing_location())
 		var/obj/overmap/H = healing_target_ref?.resolve()
 		if(!H || QDELETED(H))
 			H = find_healing_target()
 			if(H)
 				healing_target_ref = weakref(H)
+		return H
+	
+	var/atom/T = target_ship?.resolve()
+	if(!T)
+		find_target()
+		T = target_ship?.resolve()
+	return T
 
-		if(H)
-			current_target = H
-			// Если долетели до точки лечения, останавливаемся
-			if(loc == H.loc)
-				adjust_speed(-speed[1], -speed[2])
-				update_icon()
-				return
-	else
-		current_target = target_ship?.resolve()
-		if(!current_target)
-			find_target()
-			current_target = target_ship?.resolve()
-
-	if(!current_target)
-		adjust_speed(-speed[1], -speed[2])
-		update_icon()
+/obj/overmap/event/leviathan/proc/stop_movement()
+	if(speed[1] == 0 && speed[2] == 0)
 		return
+	adjust_speed(-speed[1], -speed[2])
+	acceleration_mult = 1.0
+	update_icon()
 
-	// Проверка на края карты
-	if(istype(get_turf(src), /turf/unsimulated/map/edge))
-		handle_wraparound(x, y)
-		return
-
-	if(!is_healing && loc == current_target.loc)
-		// Останавливаемся, если мы в том же секторе
-		adjust_speed(-speed[1], -speed[2])
-		update_icon()
-		return
-
-	var/target_dir = get_wrapped_dir(src, current_target)
-	if(!target_dir)
-		adjust_speed(-speed[1], -speed[2])
-		update_icon()
-		return
-
+/obj/overmap/event/leviathan/proc/apply_movement_vector(target_dir)
 	var/dir_x = SIGN((target_dir & EAST) * 1 + (target_dir & WEST) * -1)
 	var/dir_y = SIGN((target_dir & NORTH) * 1 + (target_dir & SOUTH) * -1)
 
 	if(dir_x == 0 && dir_y == 0)
-		adjust_speed(-speed[1], -speed[2])
-		update_icon()
+		stop_movement()
 		return
 
-	// Сбрасываем скорость перед тем, как сменить вектор направления
+	if(dir == target_dir)
+		acceleration_mult = min(acceleration_mult + acceleration_step, max_acceleration)
+	else
+		acceleration_mult = 1.0
+
+	// Reset speed before applying new vector
 	adjust_speed(-speed[1], -speed[2])
 
 	dir = target_dir
-	adjust_speed(dir_x * leviathan_speed, dir_y * leviathan_speed)
+	adjust_speed(dir_x * leviathan_speed * acceleration_mult, dir_y * leviathan_speed * acceleration_mult)
+	update_icon()
 
 /obj/overmap/event/leviathan/proc/deal_damage_to_sector()
 	var/damaged_something = FALSE
@@ -255,11 +304,33 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 		next_damage_time = world.time + (damage_cooldown * (1 + boredom_factor))
 
 /obj/overmap/event/leviathan/proc/deal_ship_damage(obj/overmap/visitable/ship/S)
-
 	return
 
 /obj/overmap/event/leviathan/proc/get_damage_multiplier(damage_source)
-	return 0 // Игнорирование урона
+	var/source_weakness = OVERMAP_WEAKNESS_NONE
+
+	if(ispath(damage_source, /obj/structure/ship_munition/disperser_charge))
+		var/obj/structure/ship_munition/disperser_charge/C = damage_source
+		source_weakness = initial(C.chargetype)
+	else if(istype(damage_source, /obj/structure/ship_munition/disperser_charge))
+		var/obj/structure/ship_munition/disperser_charge/C = damage_source
+		source_weakness = C.chargetype
+	else if(istype(damage_source, /obj/item/missile_equipment/payload) || ispath(damage_source, /obj/item/missile_equipment/payload))
+		var/payload_type = ispath(damage_source) ? damage_source : damage_source:type
+		if(ispath(payload_type, /obj/item/missile_equipment/payload/explosive))
+			source_weakness = OVERMAP_WEAKNESS_EXPLOSIVE
+		else if(ispath(payload_type, /obj/item/missile_equipment/payload/emp))
+			source_weakness = OVERMAP_WEAKNESS_EMP
+		else if(ispath(payload_type, /obj/item/missile_equipment/payload/cargo)) // Just in case
+			source_weakness = OVERMAP_WEAKNESS_NONE
+
+	if(source_weakness & weaknesses)
+		// If it's a military grade charge or a missile, it deals more damage
+		if(findtext("[damage_source]", "military") || istype(damage_source, /obj/item/missile_equipment/payload) || ispath(damage_source, /obj/item/missile_equipment/payload))
+			return 2
+		return 1
+
+	return 0
 
 /obj/overmap/event/leviathan/proc/take_damage(amount, damage_source)
 	var/modifier = get_damage_multiplier(damage_source)
@@ -272,14 +343,13 @@ GLOBAL_LIST_EMPTY(active_leviathans)
 		death_gasp()
 		die()
 
-// Предсмертный хрип левиафана
 /obj/overmap/event/leviathan/proc/death_gasp()
 	return
 
 /obj/overmap/event/leviathan/proc/die()
 	qdel(src)
 
-// Бродкаст по соседним секторам от текущего
+// Returns Z-levels of ships in range for broadcasting purposes
 /proc/get_overmap_broadcast_zlevels(obj/overmap/origin, range = 1)
 	var/list/z_levels = list(origin.z)
 	for(var/obj/overmap/visitable/ship/S in range(range, origin))

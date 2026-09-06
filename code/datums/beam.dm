@@ -154,7 +154,8 @@
 //Equivalent to /obj/ebeam, except it also adds an emissive layer
 /obj/ebeam/emissive/on_update_icon()
 	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
-	AddOverlays(emissive_overlay)
+	var/mutable_appearance/glow_overlay = overlay_image(icon, icon_state, plane = LIGHTING_LAMPS_PLANE) // SS220 Bloom-Light
+	AddOverlays(list(emissive_overlay, glow_overlay)) // SS220 Bloom-Light
 
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**

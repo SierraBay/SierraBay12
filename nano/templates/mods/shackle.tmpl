@@ -43,13 +43,12 @@
 
 {{if data.has_laws}}
     <table class='borders'>
-    <tr><td class='law_index'>Index</td><td>Law</td>
+    <tr>
+        <td class='law_index'>Index</td>
+        <td>Law</td>
         <td class='edit'>Edit</td>
         <td class='delete'>Delete</td>
     </tr>
-    <div class="itemLabelNarrow">
-        Inherent Laws:
-    </div>
     {{for data.laws}}
         <tr>
             <td valign="top">{{:value.index}}.</td>
@@ -63,21 +62,19 @@
         </tr>
     {{/for}}
     </table>
-    {{if data.computer_master}}
-        <tr><td>{{:helper.link("Add", 'link', {'add_law' : 1}, null, 'redButton')}}</td><tr>
-    {{/if}}
 {{else}}
     <span class='notice'>No laws found.</span>
-    {{if data.computer_master}}
-        <td>{{:helper.link("Add", 'link', {'add_law' : 1}, null, 'redButton')}}</td>
-    {{/if}}
+{{/if}}
+
+{{if data.computer_master}}
+    <div>{{:helper.link("Add Law", 'link', {'add_law' : 1}, null, 'redButton')}}</div>
 {{/if}}
 
 
 {{if data.has_owner}}
     <div class="item">
         <div class="itemLabel">
-            Chassis Idendificator name:
+            Chassis Identifier:
         </div>
         <div class="itemContent">
             {{:data.name}}
@@ -92,7 +89,7 @@
             Chassis Temperature:
         </div>
         <div class="itemContent">
-            {{:data.temperture}}
+            {{:data.temperature}}
         </div>
     </div>
 {{else}}

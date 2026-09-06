@@ -1734,8 +1734,8 @@
 /obj/item/storage/box/ammo/sniperammo/apds,
 /obj/item/storage/box/ammo/sniperammo/apds,
 /obj/item/storage/box/ammo/sniperammo/apds,
-/obj/item/storage/box/ammo/sniperammo/apds,
-/obj/item/storage/box/ammo/sniperammo/apds,
+/obj/item/storage/box/ammo/sniperammo/tracer,
+/obj/item/storage/box/ammo/sniperammo/tracer,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/ship/armory)
 "kJ" = (

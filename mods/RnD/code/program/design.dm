@@ -54,21 +54,6 @@
 	send_asset(user.client, assetname)
 	return "<img src='[assetname]' width='90%'><br>"
 
-/datum/computer_file/binary/sci
-	filetype = "SF" // Science Folded
-	size = 1
-	var/uniquekey
-
-/datum/computer_file/binary/sci/proc/set_filename(new_name)
-	filename = sanitizeFileName("folded_science [new_name]")
-
-
-/datum/computer_file/binary/sci/clone()
-	var/datum/computer_file/binary/sci/F = ..()
-	F.uniquekey = uniquekey
-	return F
-
-
 /datum/computer_file/binary/design/corrupted
 	filetype = "CCD" // Corrupted Construction Design
 	filename = "ERROR"

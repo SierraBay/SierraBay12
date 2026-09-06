@@ -73,12 +73,27 @@ var/global/can_call_ert
 		if(jobban_isbanned(usr, MODE_ERT) || jobban_isbanned(usr, "Security Officer"))
 			to_chat(usr, SPAN_DANGER("You are jobbanned from the emergency reponse team!"))
 			return
+		// [SIERRA-EDIT]
 		if(length(GLOB.ert.current_antagonists) >= GLOB.ert.hard_cap)
 			to_chat(usr, "The emergency response team is already full!")
-			if(!send_emergency_team)
-				return
 			close_ert()
+			return
+
+		// Prevent multiple clicks while base is loading
+		var/static/list/joining_ckeys = list()
+		if(usr.ckey in joining_ckeys)
+			to_chat(usr, SPAN_WARNING("You have already joined the Emergency Response Team. Please wait for the base to finish loading!"))
+			return
+		joining_ckeys += usr.ckey
+
 		GLOB.ert.create_default(usr)
+		
+		joining_ckeys -= usr.ckey
+
+		// If the team is now full, close it.
+		if(length(GLOB.ert.current_antagonists) >= GLOB.ert.hard_cap)
+			close_ert()
+		// [/SIERRA-EDIT]
 	else
 		to_chat(usr, "You need to be an observer or new player to use this.")
 

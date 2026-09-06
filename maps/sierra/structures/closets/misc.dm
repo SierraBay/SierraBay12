@@ -85,6 +85,10 @@
 /obj/structure/closet/white_sierra
 	closet_appearance = /singleton/closet_appearance/wardrobe/white
 
+/obj/structure/closet/research_sierra // empty open reasearch locker
+	name = "research equipment locker"
+	closet_appearance = /singleton/closet_appearance/wardrobe/sierra/research
+
 /obj/structure/closet/secure_closet/white_sierra
 	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/evidence
 

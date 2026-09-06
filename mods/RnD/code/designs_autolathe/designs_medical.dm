@@ -44,3 +44,9 @@
 
 /datum/design/autolathe/medical/hypospray/autoinjector
 	build_path = /obj/item/reagent_containers/hypospray/autoinjector
+
+/datum/design/autolathe/medical/hypospray/autoinjector/Fabricate(newloc, mat_efficiency, fabricator)
+	var/obj/item/reagent_containers/hypospray/A = ..()
+	if(A?.reagents)
+		A.reagents.clear_reagents()
+	return A

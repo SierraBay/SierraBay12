@@ -1,5 +1,5 @@
 /datum/design/item/mechfab
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	req_tech = list(TECH_MATERIAL = 1)
 
 /datum/design/item/mechfab/robot
@@ -111,6 +111,7 @@
 	materials = list(MATERIAL_STEEL = 2500)
 
 /datum/design/item/mechfab/exosuit
+	build_type = MECHFAB
 	name = "exosuit frame"
 	id = "mech_frame"
 	build_path = /obj/structure/heavy_vehicle_frame
@@ -293,7 +294,7 @@
 	materials = list(MATERIAL_STEEL = 18000)
 
 /datum/design/item/robot_upgrade
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	time = 12
 	materials = list(MATERIAL_STEEL = 10000)
 	category = list("Robot Upgrade")
@@ -516,7 +517,7 @@
 	name = "Synthetic flash"
 	id = "sflash"
 	req_tech = list(TECH_MAGNET = 3, TECH_COMBAT = 2)
-	build_type = MECHFAB
+	build_type = ROBOTFAB
 	materials = list(MATERIAL_STEEL = 750, MATERIAL_GLASS = 750)
 	build_path = /obj/item/device/flash/synthetic
 	category = list("Misc")
@@ -895,3 +896,12 @@
 	req_tech = list(TECH_MAGNET = 2, TECH_MATERIAL = 6,  TECH_ENGINEERING = 6)
 	id = "rig_kinetic"
 	sort_string = "WCLAC"
+
+/datum/design/item/mechfab/rig/radiation_module
+	category = "Hardsuits"
+	name = "Electromagnetic Cloak Module"
+	build_path = /obj/item/rig_module/radiation
+	materials = list(MATERIAL_STEEL = 5000, MATERIAL_GLASS = 2500, MATERIAL_PLASTIC = 2000, MATERIAL_SILVER = 1000, MATERIAL_GOLD = 1000, MATERIAL_URANIUM = 1000, MATERIAL_GOLD = 1000)
+	req_tech = list(TECH_MATERIAL = 5, TECH_MAGNET = 5, TECH_POWER = 5, TECH_ENGINEERING = 6)
+	id = "rig_radiation"
+	sort_string = "WCLAD"

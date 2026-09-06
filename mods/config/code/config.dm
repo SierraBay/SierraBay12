@@ -1,3 +1,7 @@
+/datum/configuration
+		var/minimum_byondacc_age
+		var/discord_verify = FALSE
+
 /datum/configuration/New()
 	load_config()
 	max_gear_cost = 30

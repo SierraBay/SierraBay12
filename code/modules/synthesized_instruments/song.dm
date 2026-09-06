@@ -5,6 +5,7 @@
 	var/playing = 0
 	var/autorepeat = 0
 	var/current_line = 0
+	var/current_playback_time = 0 // [SIERRA-ADD] - PIANO EDITOR
 
 	var/datum/sound_player/player // Not a physical thing
 	var/datum/instrument/instrument_data
@@ -18,7 +19,9 @@
 	var/octave_range_max
 
 	var/sound_id
-
+	var/playback_id = 0 // [SIERRA-ADD] - PIANO EDITOR: Track current playback session to prevent overlaps
+	var/song_version = 0 // [SIERRA-ADD] - PIANO EDITOR: Increment on song data change to sync UIs
+	var/current_note_index = 1 // [SIERRA-ADD] - PIANO EDITOR: Track exact chord index within a line for resumption
 	var/available_channels //Alright, this basically starts as the max config value and we will decrease and increase at runtime
 
 
@@ -56,6 +59,12 @@
 	#undef Q
 
 	src.play(pair.sample, duration, freq, note_num, where, which_one)
+	// [SIERRA-ADD] - VISUALIZER
+	if (src.player && src.player.actual_instrument)
+		var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
+		if (S.real_instrument)
+			S.real_instrument.on_note_played(note_num, duration)
+	// [/SIERRA-ADD] - VISUALIZER
 
 
 /datum/synthesized_song/proc/play(what, duration, frequency, which, where, which_one)
@@ -111,19 +120,36 @@
 #define IS_DIGIT(L) (L >= "0" && L <= "9" ? 1 : 0)
 
 #define STOP_PLAY_LINES \
-	autorepeat = 0 ;\
-	playing = 0 ;\
-	current_line = 0 ;\
-	player.event_manager.deactivate() ;\
-	return
+	autorepeat = 0; \
+	playing = 0; \
+	current_line = 1; \
+	current_note_index = 1; \
+	player.event_manager.deactivate(); \
+	if(player && player.actual_instrument) SSnano.update_uis(player.actual_instrument); \
+	return // [SIERRA-EDIT] - PIANO EDITOR
 
-/datum/synthesized_song/proc/play_lines(mob/user, list/allowed_suff, list/note_off_delta, list/lines)
+/datum/synthesized_song/proc/play_lines(mob/user, list/allowed_suff, list/note_off_delta, list/lines, my_id, start_line = 1, start_note = 1)
 	if (!length(lines))
 		STOP_PLAY_LINES
 	var/list/cur_accidentals = list("n", "n", "n", "n", "n", "n", "n")
 	var/list/cur_octaves = list(3, 3, 3, 3, 3, 3, 3)
-	src.current_line = 1
-	for (var/line in lines)
+	src.current_line = start_line // [SIERRA-EDIT] - PIANO EDITOR: Use start_line instead of 1
+	var/last_sync_time = world.time // [SIERRA-ADD] - PIANO EDITOR
+	
+	var/is_first_line = 1 // [SIERRA-ADD] - PIANO EDITOR
+	for(var/line in lines)
+		// [SIERRA-ADD] - PIANO EDITOR: Check for session expiration or object deletion
+		if(!src || !player || src.playback_id != my_id || !src.playing)
+			return
+			
+		// [SIERRA-ADD] - PIANO EDITOR: Send periodic sync ping to piano editor UI
+		if(world.time - last_sync_time >= 10)
+			var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
+			if(S && S.real_instrument && S.real_instrument.piano_editor)
+				SSnano.update_uis(S)
+			last_sync_time = world.time
+
+		src.current_note_index = 1 // [SIERRA-ADD] - PIANO EDITOR
 		var/cur_note = 1
 		if (src.player && src.player.actual_instrument)
 			var/obj/structure/synthesized_instrument/S = src.player.actual_instrument
@@ -131,10 +157,20 @@
 			if (R.song_editor)
 				SSnano.update_uis(R.song_editor)
 		for (var/notes in splittext(lowertext(line), ","))
+			if(findtext(notes, "bpm: ")) continue
+			
+			// [SIERRA-ADD] - PIANO EDITOR: Skip already played notes if resuming
+			if(is_first_line && cur_note < start_note)
+				cur_note++
+				continue
+			src.current_note_index = cur_note // [SIERRA-ADD] - PIANO EDITOR
+			
 			var/list/components = splittext(notes, "/")
 			var/duration = sanitize_tempo(src.tempo)
+			var/beat_dur = 1 // [SIERRA-ADD] - PIANO EDITOR
 			if (length(components))
 				var/delta = length(components)==2 && text2num(components[2]) ? text2num(components[2]) : 1
+				beat_dur = 1 / delta // [SIERRA-ADD] - PIANO EDITOR
 				var/note_str = splittext(components[1], "-")
 
 				duration = sanitize_tempo(src.tempo / delta)
@@ -173,22 +209,46 @@
 						STOP_PLAY_LINES
 			cur_note++
 			src.player.event_manager.suspended = 0
-			if (!src.playing || src.player.shouldStopPlaying(user))
+			if(!src.playing || src.player.shouldStopPlaying(user))
 				STOP_PLAY_LINES
 			sleep(duration)
+			if(!src.playing) return // [SIERRA-ADD] - PIANO EDITOR: Don't increment time if we stopped during sleep
+			src.current_playback_time += beat_dur // [SIERRA-ADD] - PIANO EDITOR
 		src.current_line++
-	if (src.autorepeat)
-		.()
+		is_first_line = 0 // [SIERRA-ADD] - PIANO EDITOR
+		src.current_note_index = 1 // [SIERRA-ADD] - PIANO EDITOR
+	if (src.autorepeat && src.playback_id == my_id && src.playing)
+		src.current_playback_time = 0 // [SIERRA-ADD] - PIANO EDITOR: Reset for loop
+		src.current_note_index = 1 // [SIERRA-ADD] - PIANO EDITOR
+		// [SIERRA-ADD] - PIANO EDITOR: Force immediate UI sync on loop
+		if(src.player && src.player.actual_instrument)
+			SSnano.update_uis(src.player.actual_instrument)
+		.(user, allowed_suff, note_off_delta, lines, my_id)
 
 #undef STOP_PLAY_LINES
 
-/datum/synthesized_song/proc/play_song(mob/user)
+/datum/synthesized_song/proc/play_song(mob/user, resume = 0) // [SIERRA-EDIT] - PIANO EDITOR: Added resume flag
 	// This code is really fucking horrible.
+	src.playback_id++ // [SIERRA-ADD] - PIANO EDITOR: Invalidate any previous playback loops
+	var/my_id = src.playback_id
+	
 	src.player.event_manager.activate()
 	var/list/allowed_suff = list("b", "n", "#", "s")
 	var/list/note_off_delta = list("a"=91, "b"=91, "c"=98, "d"=98, "e"=98, "f"=98, "g"=98)
-	var/list/lines_copy = src.lines.Copy()
-	addtimer(new Callback(src, PROC_REF(play_lines), user, allowed_suff, note_off_delta, lines_copy), 0)
+	
+	var/list/lines_to_play = src.lines.Copy() // [SIERRA-EDIT] - PIANO EDITOR: Changed name to reflect modification
+	var/start_line = 1
+	var/start_chord = 1
+	if(resume && src.current_line > 1) // [SIERRA-ADD] - PIANO EDITOR
+		start_line = src.current_line
+		start_chord = src.current_note_index // [SIERRA-ADD] - PIANO EDITOR
+		if(start_line <= length(lines_to_play))
+			lines_to_play = lines_to_play.Copy(start_line)
+	else
+		src.current_playback_time = 0
+		src.current_note_index = 1
+	
+	addtimer(new Callback(src, PROC_REF(play_lines), user, allowed_suff, note_off_delta, lines_to_play, my_id, start_line, start_chord), 0)
 
 #undef CP
 #undef IS_DIGIT

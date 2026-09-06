@@ -21,14 +21,18 @@
 		return
 
 	var/mob/living/carbon/C = src
+	for (var/obj/item/organ/internal/augment/lingcore/core in C.internal_organs)
+		if (!core.stasiscount)
+			to_chat(usr, SPAN_WARNING("Our core is decayed. It cannot help us, now."))
+			return FALSE
 
 	if(changeling.max_geneticpoints < 0) //Absorbed by another ling
-		to_chat(src, "<span class='danger'>We have no genomes, not even our own, and cannot regenerate.</span>")
-		return 0
+		to_chat(src, SPAN_WARNING("We have no genomes, not even our own, and cannot regenerate."))
+		return FALSE
 
 	if(!C.stat && alert("Are we sure we wish to regenerate?  We will appear to be dead while doing so.","Revival","Yes","No") == "No")
 		return
-	to_chat(C, "<span class='notice'>We will attempt to regenerate our form.</span>")
+	to_chat(C, SPAN_NOTICE("We will attempt to regenerate our form."))
 
 	C.UpdateLyingBuckledAndVerbStatus()
 	C.remove_changeling_powers()

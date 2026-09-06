@@ -77,6 +77,7 @@
 
 	remove_lum()
 	if (source_atom)
+		source_atom.delete_lights() // SS220 Bloom-Lights
 		REMOVE_SOURCE(source_atom)
 
 	if (top_atom)
@@ -331,6 +332,8 @@
 
 	if (update)
 		needs_update = LIGHTING_CHECK_UPDATE
+		if (source_atom) // SS220 Bloom-Lights
+			source_atom.update_bloom()
 	else if (needs_update == LIGHTING_CHECK_UPDATE)
 		return	// No change.
 

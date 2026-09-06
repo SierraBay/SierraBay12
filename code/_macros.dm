@@ -189,6 +189,8 @@
 
 #define SPAN_BAD(X) SPAN_CLASS("bad", "[X]")
 
+#define SPAN_AVERAGE(X) SPAN_CLASS("average", "[X]")
+
 #define SPAN_DANGER(X) SPAN_CLASS("danger", "[X]")
 
 #define SPAN_OCCULT(X) SPAN_CLASS("cult", "[X]")
@@ -201,9 +203,9 @@
 
 #define SPAN_INFO(X) SPAN_CLASS("info", "[X]")
 
-#define STYLE_SMALLFONTS(X, S, C1) SPAN_STYLE("font-family: 'Small Fonts'; color: [C1]; font-size: [S]px", "[X]")
+#define STYLE_SMALLFONTS(X, S, C1) SPAN_STYLE("color: [C1]; font-size: [S]px", "[X]")
 
-#define STYLE_SMALLFONTS_OUTLINE(X, S, C1, C2) SPAN_STYLE("font-family: 'Small Fonts'; color: [C1]; -dm-text-outline: 1 [C2]; font-size: [S]px", "[X]")
+#define STYLE_SMALLFONTS_OUTLINE(X, S, C1, C2) SPAN_STYLE("color: [C1]; -dm-text-outline: 1 [C2]; font-size: [S]px", "[X]")
 
 #define SPAN_DEBUG(X) SPAN_CLASS("debug", "[X]")
 

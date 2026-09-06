@@ -98,3 +98,45 @@
 	desc = "A black hat with a wide brim and low crown."
 	icon_state = "blackhat"
 	item_state = "blackhat"
+
+/obj/item/clothing/head/beret/barc
+	name = "P317 beret"
+	desc = "It’s a beret with crudely sewn over old ones Periphery 317 colors. The owner is employed by BARC PMC."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_head_unathi.dmi',
+		SPECIES_RESOMI = "mods/resomi/icons/clothing/onmob_head_resomi.dmi"
+		)
+	icon_state = "barcberet"
+	item_state = "barcberet"
+
+/obj/item/clothing/head/soft/baseball/colorable
+	name = "baseball cap"
+	desc = "It’s just a baseball cap."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_head_unathi.dmi',
+		SPECIES_RESOMI = "mods/resomi/icons/clothing/onmob_head_resomi.dmi"
+		)
+	icon_state = "cprescap"
+	item_state = "baseballcap"
+
+/obj/item/clothing/head/soft/baseball/barc
+	name = "P317 cap"
+	desc = "It’s a Baseball cap in colors of Periphery 317 - Enclave under the BARC PMC."
+	icon = 'mods/loadout_items/icons/obj_head.dmi'
+	item_icons = list(
+		slot_head_str = 'mods/loadout_items/icons/onmob_head.dmi'
+	)
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_head_unathi.dmi',
+		SPECIES_RESOMI = "mods/resomi/icons/clothing/onmob_head_resomi.dmi"
+		)
+	icon_state = "barccap"
+	item_state = "barccap"

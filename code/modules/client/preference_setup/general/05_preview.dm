@@ -1,4 +1,4 @@
-/datum/preferences/var/list/background_states = list("000", "FFF", MATERIAL_STEEL, "white")
+/datum/preferences/var/list/background_states = list("000", "FFF", MATERIAL_STEEL, "white", "plating", "reinforced")
 
 /datum/preferences/var/icon/bgstate = "000"
 

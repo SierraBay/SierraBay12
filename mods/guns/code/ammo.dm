@@ -19,6 +19,20 @@
 	penetration_modifier = 0.5
 	hitchance_mod = 5
 
+/obj/item/projectile/bullet/shotgun/beanbag
+	damage = 25
+	agony = 60
+
+/* PISTOL - 10mm
+ * =============
+ */
+
+/obj/item/projectile/bullet/pistol/rubber
+	name = "rubber bullet"
+	damage_flags = 0
+	damage = 5
+	agony = 30
+
 /*************************
 sierra specific ammo types
 **************************/

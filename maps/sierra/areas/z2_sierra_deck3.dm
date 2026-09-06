@@ -151,11 +151,12 @@
 	icon_state = "engineering_locker"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
+/*
 /area/engineering/materials_storage
 	name = "Third Deck - Engineering - Materials Storage"
 	icon_state = "engineering_storage"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
+ */
 /area/engineering/atmos
 	name = "Third Deck - Engineering - Atmospherics"
 	icon_state = "atmos"
@@ -334,13 +335,13 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/xenobiology/entry2
-	name = "Xenobiology Access"
+/area/rnd/sierra/xenobiology/airlock2
+	name = "Third Deck - Xenobiology Airlock"
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/xenobiology/level2
-	name = "Xenobiology Level Two"
+/area/rnd/sierra/xenobiology/level2
+	name = "Third Deck - Xenobiology Lab"
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 

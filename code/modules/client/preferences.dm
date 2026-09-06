@@ -463,6 +463,21 @@
 		character.set_nutrition(rand(140,360))
 		character.set_hydration(rand(140,360))
 
+	if (!is_preview_copy)
+		apply_character_persist(character)
+
+/// Overridden by mods/character_persist. Applies a saved body overlay after copy_to().
+/datum/preferences/proc/apply_character_persist(mob/living/carbon/human/character)
+	return
+
+/// Overridden by mods/character_persist. True if this slot has a live persist snapshot.
+/datum/preferences/proc/character_persist_is_locked()
+	return FALSE
+
+/// Overridden by mods/character_persist. True if medical records are locked by persist autofill.
+/datum/preferences/proc/character_persist_med_locked()
+	return FALSE
+
 /datum/preferences/proc/open_load_dialog(mob/user, details)
 	var/dat  = list()
 	dat += "<body>"

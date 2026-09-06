@@ -118,3 +118,37 @@
 	add_field(/datum/report_field/signature, "Подпись", required = 1)
 	add_field(/datum/report_field/text_label/instruction, "Документ имеет юридическую силу исключительно в случае наличия подписи сотрудника, \
 	а также печати Главного Врача, либо любых двух и более печатей действующих на объекте сотрудников командного департамента.")
+
+/datum/computer_file/report/recipient/med/augmentations
+	form_name = "AG17-N1B"
+	title = "Аугментация сотрудника (Органика)"
+	available_on_ntnet = 1
+
+/datum/computer_file/report/recipient/med/augmentations/generate_fields()
+	..()
+	var/list/cmo_fields = list()
+	var/list/med_fields = list()
+	var/list/psy_fields = list()
+	add_field(/datum/report_field/text_label/header, "ИКН Сьерра - Медицинский департамент")
+	add_field(/datum/report_field/simple_text, "Отдел, в котором работает аугментируемый", required = 1)
+	add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, в которого имплантируются аугментации", required = 1)
+	psy_fields += add_field(/datum/report_field/options/yes_no, "Диагностирован ли/подозрение на киберпсихоз?")
+	psy_fields += add_field(/datum/report_field/simple_text, "Тяжесть киберпсихоза, его происхождение")
+	med_fields += add_field(/datum/report_field/people/from_manifest, "Имя сотрудника, проводящего операцию", required = 1)
+	med_fields += add_field(/datum/report_field/signature, "Подпись сотрудника, проводящего операцию", required = 1)
+	add_field(/datum/report_field/date, "Дата аугментации")
+	add_field(/datum/report_field/time, "Время аугментации")
+	add_field(/datum/report_field/simple_text, "Причина аугментации", required = 1)
+	add_field(/datum/report_field/options/yes_no, "Добавить инфомацию об аугментациях в базу данных?")
+	add_field(/datum/report_field/pencode_text, "Список аугментаций", required = 1)
+	add_field(/datum/report_field/text_label/instruction, "Каждую аугментацию оформить в виде: часть тела, если протез - описать марку протеза, функционал, название. \
+	При необходимости - вписать дополнительные пункты в списке. Пустые графы заполнить, как N/A.")
+	cmo_fields += add_field(/datum/report_field/signature, "Подпись Директора Исследований")
+	add_field(/datum/report_field/signature, "Подпись главы отдела аугментированного")
+	set_access(access_biomech)
+	for(var/datum/report_field/field in cmo_fields)
+		field.set_access(access_edit = access_cmo)
+	for(var/datum/report_field/field in med_fields)
+		field.set_access(access_edit = access_biomech)
+	for(var/datum/report_field/field in cmo_fields)
+		field.set_access(access_edit = access_psychiatrist)

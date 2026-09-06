@@ -13,8 +13,12 @@
 
 	station_levels = list(1,2,3,4)
 	admin_levels = list(5,6)
-	empty_levels = list(7)
-	accessible_z_levels = list("1"=1,"2"=1,"3"=1,"4"=1,"7"=25)
+	// [SIERRA-EDIT] - MOD_VR
+	/*empty_levels = list(7)
+	accessible_z_levels = list("1"=1,"2"=1,"3"=1,"4"=1,"7"=25)*/
+	vr_levels  = list(7)
+	accessible_z_levels = list("1"=1,"2"=1,"3"=1,"4"=1)
+	// [/SIERRA-EDIT]
 	overmap_size = 40
 	overmap_event_areas = 34
 	usable_email_tlds = list("freemail.net")

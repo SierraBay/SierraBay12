@@ -72,21 +72,21 @@
 	desc = "The lasing medium of this prototype is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core."
 	id = "lasercannon"
 	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_POWER = 3)
-	materials = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 1000, MATERIAL_DIAMOND = 2000)
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_GLASS = 3000, MATERIAL_DIAMOND = 4000) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/energy/lasercannon
 	sort_string = "TAEAB"
 
 /datum/design/item/weapon/xraypistol
 	id = "xraypistol"
 	req_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_MAGNET = 2, TECH_ESOTERIC = 2)
-	materials = list(MATERIAL_STEEL = 4000, MATERIAL_GLASS = 500, MATERIAL_URANIUM = 500)
+	materials = list(MATERIAL_STEEL = 8000, MATERIAL_GLASS = 2000, MATERIAL_URANIUM = 3000) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/energy/xray/pistol
 	sort_string = "TAFAA"
 
 /datum/design/item/weapon/xrayrifle
 	id = "xrayrifle"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 3, TECH_MAGNET = 2, TECH_ESOTERIC = 2)
-	materials = list(MATERIAL_STEEL = 5000, MATERIAL_GLASS = 1000, MATERIAL_URANIUM = 1000)
+	materials = list(MATERIAL_STEEL = 12000, MATERIAL_GLASS = 2500, MATERIAL_URANIUM = 4500)  //[SIERRA-EDIT]
 	build_path = /obj/item/gun/energy/xray
 	sort_string = "TAFAB"
 
@@ -100,7 +100,7 @@
 /datum/design/item/weapon/flechette
 	id = "flechette"
 	req_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 4, TECH_MAGNET = 4)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_GOLD = 4000, MATERIAL_SILVER = 4000, MATERIAL_DIAMOND = 2000)
+	materials = list(MATERIAL_STEEL = 16000, MATERIAL_GOLD = 6000, MATERIAL_SILVER = 6000, MATERIAL_DIAMOND = 4000) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/magnetic/railgun/flechette
 	sort_string = "TAHAA"
 
@@ -122,21 +122,21 @@
 /datum/design/item/weapon/wt550
 	id = "wt550"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500)
+	materials = list(MATERIAL_STEEL = 11000, MATERIAL_SILVER = 4000, MATERIAL_DIAMOND = 2000) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/projectile/automatic/sec_smg
 	sort_string = "TAPAA"
 
 /datum/design/item/weapon/smg
 	id = "smg"
 	req_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 4)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 2000, MATERIAL_DIAMOND = 2000)
+	materials = list(MATERIAL_STEEL = 16000, MATERIAL_SILVER = 4000, MATERIAL_DIAMOND = 4000) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/projectile/automatic
 	sort_string = "TAPAB"
 
 /datum/design/item/weapon/bullpup
 	id = "bullpup"
 	req_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 3)
-	materials = list(MATERIAL_STEEL = 10000, MATERIAL_SILVER = 5000, MATERIAL_DIAMOND = 3000)
+	materials = list(MATERIAL_STEEL = 15000, MATERIAL_SILVER = 7500, MATERIAL_DIAMOND = 4500) //[SIERRA-EDIT]
 	build_path = /obj/item/gun/projectile/automatic/bullpup_rifle
 	sort_string = "TAPAC"
 
@@ -193,6 +193,9 @@
 /datum/design/item/weapon/missile/AssembleDesignName()
 	..()
 	name = "Missile payload prototype ([item_name])"
+
+/datum/design/item/weapon/missile_payload
+	build_type = MECHFAB
 
 /datum/design/item/weapon/missile_payload/antimissile
 	id = "anti-missile"

@@ -200,7 +200,7 @@
  *
  * Returns boolean - Whether or not the mob was able to perform the interaction.
  */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag, use_in_world_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag, use_in_world_flag, params) //SIERRA ADD: variable params, for proc UnarmedAttack() , like click_params.
 	return
 
 /mob/living/UnarmedAttack(atom/A, proximity_flag, use_in_world_flag)

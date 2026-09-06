@@ -25,8 +25,13 @@
 	var/base_icon_state
 	var/build_type = PROTOLATHE
 
+	var/mech_type = PROTOLATHE | MECHFAB
+	var/robo_type = PROTOLATHE | ROBOTFAB
+
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk2
+
+	var/disk_box
 
 	var/list/stored_material = list()
 	var/obj/item/reagent_containers/glass/container
@@ -66,6 +71,9 @@
 	var/have_recycling = TRUE
 	var/have_design_selector = TRUE
 
+	/// Robofab sause
+	var/manufacturer = null
+
 	var/list/unsuitable_materials = list()
 	var/list/suitable_materials //List that limits autolathes to eating mats only in that list.
 
@@ -87,13 +95,7 @@
 	wires = /datum/wires/fabricator
 	base_type = /obj/machinery/fabricator
 	construct_state = /singleton/machine_construction/default/panel_closed
-	uncreated_component_parts = list(
-		/obj/item/stock_parts/matter_bin,
-		/obj/item/stock_parts/matter_bin,
-		/obj/item/stock_parts/matter_bin,
-		/obj/item/stock_parts/manipulator,
-
-	)
+	uncreated_component_parts = null // parts come from the circuit board; duplicating them here blocks rebuilds
 
 /obj/machinery/fabricator/Initialize()
 	. = ..()
@@ -117,6 +119,8 @@
 	var/list/data = list()
 
 	data["mat_efficiency"] = mat_efficiency
+	data["mat_efficiency_percent"] = round(mat_efficiency * 100)
+	data["speed"] = speed
 	data["mat_capacity"] = storage_capacity
 
 	data["container"] = !!container
@@ -183,14 +187,27 @@
 	var/list/L = list()
 	for(var/d in design_list())
 		var/datum/computer_file/binary/design/design_file = d
+		if(!design_file.design)
+			continue
+		// Skip hidden or server-banned designs
+		if(can_print(design_file) == ERR_NOTFOUND)
+			continue
 		if(!show_category || design_file.design.category == show_category)
-			L.Add(list(design_file.ui_data()))
+			var/list/ddata = design_file.ui_data()
+			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
+			L.Add(list(ddata))
 
 	var/list/O = list()
 	for(var/f in design_list_two())
 		var/datum/computer_file/binary/design/design_file = f
+		if(!design_file.design)
+			continue
+		if(can_print(design_file) == ERR_NOTFOUND)
+			continue
 		if(!show_category || design_file.design.category == show_category)
-			O.Add(list(design_file.ui_data()))
+			var/list/ddata = design_file.ui_data()
+			ddata["can_build"] = (check_materials(design_file.design) == ERR_OK)
+			O.Add(list(ddata))
 
 	L |= O
 
@@ -217,7 +234,7 @@
 			if(!(rmat in qmats))
 				qmats[rmat] = 0
 
-			qmats[rmat] -= design_file.design.materials[rmat]
+			qmats[rmat] -= get_design_material_cost(design_file.design, rmat)
 			if(qmats[rmat] < 0)
 				QR["error"] = 1
 
@@ -240,7 +257,7 @@
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "mods-autolathe.tmpl", capitalize(name), 600, 700)
+		ui = new(user, src, ui_key, "mods-autolathe.tmpl", capitalize(name), 660, 720)
 
 		// template keys starting with _ are not appended to the UI automatically and have to be called manually
 		ui.add_template("_materials", "mods-autolathe_materials.tmpl")
@@ -677,8 +694,14 @@
 /obj/machinery/fabricator/proc/clear_queue()
 	queue.Cut()
 
+/obj/machinery/fabricator/proc/get_design_material_cost(datum/design/design, material)
+	var/material_cost = design.adjust_materials ? SANITIZE_LATHE_COST(design.materials[material]) : design.materials[material]
+	if(design.adjust_materials)
+		material_cost *= mat_efficiency
+	return material_cost
+
 /obj/machinery/fabricator/proc/check_craftable_amount_by_material(datum/design/design, material)
-	return stored_material[material] / max(1, SANITIZE_LATHE_COST(design.materials[material])) // loaded material / required material
+	return stored_material[material] / max(1, get_design_material_cost(design, material)) // loaded material / required material
 
 /obj/machinery/fabricator/proc/check_craftable_amount_by_chemical(datum/design/design, reagent)
 	if(!container || !container.reagents)
@@ -749,15 +772,16 @@
 /obj/machinery/fabricator/proc/check_materials(datum/design/design)
 
 	if(design.build_type != build_type)
-		var/second_check = build_type | MECHFAB
-		if(design.build_type != second_check)
+		var/mech_check = mech_type
+		var/robo_check = robo_type
+		if(design.build_type != mech_check && design.build_type != robo_check)
 			return ERR_NOCOMPAT
 
 	for(var/rmat in design.materials)
 		if(!(rmat in stored_material))
 			return ERR_NOMATERIAL
 
-		if(stored_material[rmat] < SANITIZE_LATHE_COST(design.materials[rmat]))
+		if(stored_material[rmat] < get_design_material_cost(design, rmat))
 			return ERR_NOMATERIAL
 
 	if(LAZYLEN(design.chemicals))
@@ -829,8 +853,7 @@
 
 /obj/machinery/fabricator/proc/consume_materials(datum/design/design)
 	for(var/material in design.materials)
-		var/material_cost = design.adjust_materials ? SANITIZE_LATHE_COST(design.materials[material]) : design.materials[material]
-		stored_material[material] = max(0, stored_material[material] - material_cost * mat_efficiency)
+		stored_material[material] = max(0, stored_material[material] - get_design_material_cost(design, material))
 
 	for(var/reagent in design.chemicals)
 		container.reagents.remove_reagent(reagent, design.chemicals[reagent])
@@ -909,29 +932,22 @@
 /obj/machinery/fabricator/RefreshParts()
 	for(var/a in uncreated_component_parts)
 		get_component_of_type(a)
-	var/mb_rating = 0
-	var/mb_amount = 0
-	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
-		mb_rating += MB.rating
-		mb_amount++
 
-	if(mb_amount == 0)
-		return
-
-	var/man_rating = 0
-	var/man_amount = 0
-	man_rating = total_component_rating_of_type(/obj/item/stock_parts/manipulator)
-	man_amount = number_of_components(/obj/item/stock_parts/manipulator)
+	var/man_rating = total_component_rating_of_type(/obj/item/stock_parts/manipulator)
+	var/man_amount = number_of_components(/obj/item/stock_parts/manipulator)
 	man_rating -= man_amount
 	max_quality = man_rating
 
-	var/las_rating = 0
-	las_rating = total_component_rating_of_type(/obj/item/stock_parts/micro_laser)
+	var/las_rating = total_component_rating_of_type(/obj/item/stock_parts/micro_laser)
+	var/las_amount = number_of_components(/obj/item/stock_parts/micro_laser)
+	las_rating -= las_amount
 
-	speed = initial(speed) + man_rating + las_rating
+	speed = initial(speed) + las_rating
 	mat_efficiency = max(0.4, 1 - (man_rating * 0.1))
 
-	storage_capacity = 30000 * clamp(total_component_rating_of_type(/obj/item/stock_parts/matter_bin), 0, 20)
+	var/mb_rating = total_component_rating_of_type(/obj/item/stock_parts/matter_bin)
+	if(mb_rating)
+		storage_capacity = 30000 * clamp(mb_rating, 0, 20)
 	..()
 
 //Cancels the current construction
@@ -950,7 +966,13 @@
 
 /obj/machinery/fabricator/proc/fabricate_design(datum/design/design)
 	consume_materials(design)
-	design.Fabricate(get_turf(loc), mat_efficiency, src)
+	var/obj/new_item = design.Fabricate(get_turf(loc), mat_efficiency, src)
+	// Reverse-engineered storage containers are printed empty.
+	// Contents spawned by Initialize() are free items the player didn't pay for.
+	// Normal designs (e.g. toolboxes) retain their default contents.
+	if(design.reverse_engineered && istype(new_item, /obj/item/storage) && length(new_item.contents))
+		for(var/atom/movable/A in new_item.contents)
+			qdel(A)
 	working = FALSE
 	current_file = null
 	print_post()
@@ -973,7 +995,7 @@
 /obj/machinery/fabricator/micro/check_materials(datum/design/design)
 	. = ..()
 	var/cat = design.category[1]
-	if(!(cat == "Cutlery" || cat == "Drinking Glasses" || cat == "Medical"))
+	if(!(cat == "Cookware" || cat == "Cutlery" || cat == "Drinking Glasses" || cat == "Medical"))
 		return ERR_NOCOMPAT
 
 
@@ -1013,25 +1035,24 @@
 /obj/machinery/fabricator/hacked
 	fab_status_flags = FAB_HACKED
 
-	var/disk_box = /obj/item/storage/box/autolathe_designs
+	disk_box = /obj/item/storage/box/autolathe_designs
 
 /obj/machinery/fabricator/hacked/Initialize()
 	. = ..()
 	new disk_box(loc)
 
 /obj/machinery/fabricator/micro/loaded
-	default_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/glass
-	additional_disk = /obj/item/stock_parts/computer/hard_drive/portable/design/cuttery
+	disk_box = /obj/item/storage/box/microlathe_designs
 
 /obj/machinery/fabricator/micro/loaded/Initialize()
 	. = ..()
+	new disk_box(loc)
 	stored_material = list(
 	MATERIAL_STEEL = 40000,
 	MATERIAL_ALUMINIUM = 40000,
 	MATERIAL_PLASTIC = 40000,
 	MATERIAL_GLASS = 90000,
 	)
-
 
 /obj/machinery/fabricator/micro/bartender
 	name = "Bartender Microlathe"

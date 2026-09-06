@@ -39,6 +39,10 @@
 		/area/casino/casino_maintenance = NO_SCRUBBER|NO_VENT
 	)
 
+/datum/map_template/ruin/away_site/casino/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/entertainment_ai, z)
+
 /obj/shuttle_landmark/nav_casino/nav1
 	name = "Casino Ship Navpoint #1"
 	landmark_tag = "nav_casino_1"

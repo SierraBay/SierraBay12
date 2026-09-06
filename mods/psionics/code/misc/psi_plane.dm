@@ -12,7 +12,10 @@
 	C.images += I
 	animate(I, alpha = 200, time = duration/2)
 	animate(I, alpha = 0, time = duration/2)
-	spawn(duration)
+	addtimer(new Callback(src, PROC_REF(glow_cleanup), C, I), duration)
+
+/atom/proc/glow_cleanup(client/C, image/I)
+	if(C)
 		C.images -= I
 // =============================================================================
 // Psionic Plane

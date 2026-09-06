@@ -4,3 +4,4 @@
 
 /obj/overmap/visitable/ship/landable/vox_ship
 	can_throw_off = FALSE
+	vessel_mass = 8000

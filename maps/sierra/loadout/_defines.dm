@@ -156,7 +156,7 @@
 #define RESEARCH_ROLES list(\
 	/datum/job/rd, /datum/job/iaa, /datum/job/scientist,\
 	/datum/job/scientist_assistant, /datum/job/assistant,\
-	/datum/job/senior_scientist, /datum/job/roboticist \
+	/datum/job/senior_scientist \
 )
 
 //For jobs that spawn with weapons in their lockers

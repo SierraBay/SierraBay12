@@ -100,3 +100,15 @@
 /datum/gear/utility/modular_scanner/medical
 	display_name = "Scanner module, medical"
 	path = /obj/item/stock_parts/computer/scanner/medical
+
+/datum/gear/utility/modular_scanner/flora
+	display_name = "Scanner module, flora"
+	path = /obj/item/stock_parts/computer/scanner/flora
+
+/datum/gear/utility/modular_scanner/robotic
+	display_name = "Scanner module, robotic"
+	path = /obj/item/stock_parts/computer/scanner/robotic
+
+/datum/gear/utility/modular_scanner/research
+	display_name = "Scanner module, research"
+	path = /obj/item/stock_parts/computer/scanner/research

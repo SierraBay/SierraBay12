@@ -10,6 +10,8 @@
 	var/obj/owner
 	var/datum/nano_module/env_editor/env_editor
 	var/datum/nano_module/echo_editor/echo_editor
+	var/datum/nano_module/visualizer/visualizer // [SIERRA-ADD] - VISUALIZER
+	var/datum/nano_module/piano_editor/piano_editor // [SIERRA-ADD] - PIANO EDITOR
 
 /datum/real_instrument/New(obj/who, datum/sound_player/how, datum/instrument/what)
 	player = how
@@ -18,7 +20,7 @@
 	maximum_line_length = GLOB.musical_config.max_line_length
 	instruments = what //This can be a list, or it can also not be one
 
-/datum/real_instrument/proc/Topic_call(href, href_list, user)
+/datum/real_instrument/proc/Topic_call(href, href_list, mob/user)
 	var/target = href_list["target"]
 	var/value = text2num(href_list["value"])
 	if (href_list["value"] && !isnum(value))
@@ -28,11 +30,27 @@
 
 	switch (target)
 		if ("tempo") src.player.song.tempo = src.player.song.sanitize_tempo(src.player.song.tempo + value*world.tick_lag)
-		if ("play")
-			src.player.song.playing = value
-			if (src.player.song.playing)
-				GLOB.instrument_synchronizer.raise_event(player.actual_instrument)
-				src.player.song.play_song(user)
+		if("play")
+			if (value)
+				// Play or Resume
+				src.player.song.playing = 1
+				if(player.actual_instrument)
+					SSnano.update_uis(player.actual_instrument)
+				if(src.player.song.playing)
+					GLOB.instrument_synchronizer.raise_event(player.actual_instrument)
+					src.player.song.play_song(user, resume = 1)
+			else
+				// Pause
+				src.player.song.playing = 0
+				if(player.actual_instrument)
+					SSnano.update_uis(player.actual_instrument)
+		if("stop") // [SIERRA-ADD] - PIANO EDITOR: Complete stop and reset
+			src.player.song.playing = 0
+			src.player.song.current_line = 1
+			src.player.song.current_note_index = 1
+			src.player.song.current_playback_time = 0
+			if(player.actual_instrument)
+				SSnano.update_uis(player.actual_instrument)
 		if ("wait")
 			if(value)
 				src.player.wait = weakref(user)
@@ -40,7 +58,10 @@
 				src.player.wait = null
 		if ("newsong")
 			src.player.song.lines.Cut()
+			src.player.song.song_version++ // [SIERRA-ADD] - PIANO EDITOR Sync
 			src.player.song.tempo = src.player.song.sanitize_tempo(5) // default 120 BPM
+			if(player.actual_instrument) // [SIERRA-ADD] - PIANO EDITOR Sync
+				SSnano.update_uis(player.actual_instrument)
 		if ("import")
 			var/t = ""
 			do
@@ -75,6 +96,9 @@
 						src.player.song.lines.Remove(l)
 					else
 						linenum++
+				src.player.song.song_version++ // [SIERRA-ADD] - PIANO EDITOR Sync
+				if(player.actual_instrument) // [SIERRA-ADD] - PIANO EDITOR Sync
+					SSnano.update_uis(player.actual_instrument)
 		if ("show_song_editor")
 			if (!src.song_editor)
 				src.song_editor = new (host = src.owner, song = src.player.song)
@@ -138,26 +162,53 @@
 
 		if ("show_echo_editor")
 			if (!src.echo_editor)
-				src.echo_editor = new (src.player)
+				src.echo_editor = new /datum/nano_module/echo_editor(src.player)
 			src.echo_editor.ui_interact(user)
 
 		if ("select_env")
 			if (value in -1 to 26)
 				src.player.virtual_environment_selected = round(value)
-		else
-			return 0
+		// [SIERRA-ADD] - VISUALIZER
+		if ("show_visualizer")
+			if (!src.visualizer)
+				src.visualizer = new /datum/nano_module/visualizer(src)
+			src.visualizer.ui_interact(user)
+		// [/SIERRA-ADD]
+		// [SIERRA-ADD] - PIANO EDITOR
+		if ("show_piano_editor")
+			if (!src.piano_editor)
+				src.piano_editor = new /datum/nano_module/piano_editor(src, src.player.song)
+			src.piano_editor.ui_interact(user)
+		// [/SIERRA-ADD]
 
 	return 1
 
-
+// [SIERRA-ADD] - VISUALIZER
+/datum/real_instrument/proc/on_note_played(note_num, duration)
+	if (visualizer)
+		visualizer.note_on(note_num, duration)
+// [/SIERRA-ADD]
 
 /datum/real_instrument/proc/ui_call(mob/user, ui_key, datum/nanoui/ui = null, force_open = 0)
+	// [SIERRA-ADD] - VISUALIZER
+	if(ui_key == "visualizer")
+		if(visualizer)
+			visualizer.ui_interact(user, ui_key, ui, force_open)
+		return
+	// [/SIERRA-ADD]
+	// [SIERRA-ADD] - PIANO EDITOR
+	if(ui_key == "piano_editor")
+		if(piano_editor)
+			piano_editor.ui_interact(user, ui_key, ui, force_open)
+		return
+	// [/SIERRA-ADD]
 	var/list/data
 	data = list(
 		"playback" = list(
 			"playing" = src.player.song.playing,
 			"autorepeat" = src.player.song.autorepeat,
-			"wait" = src.player.wait != null
+			"wait" = src.player.wait != null,
+			"can_resume" = (src.player.song.current_line > 1 && !src.player.song.playing) // [SIERRA-ADD] - PIANO EDITOR
 		),
 		"basic_options" = list(
 			"cur_instrument" = src.player.song.instrument_data.name,

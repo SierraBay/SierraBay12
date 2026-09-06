@@ -7,16 +7,20 @@
 #include "code/misc/decoyobj.dm"
 #include "code/misc/foundation_misc.dm"
 #include "code/misc/psi_plane.dm"
+#include "code/misc/psi_structures.dm"
+#include "code/misc/background.dm"
+
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
 #include "code/complexus/complexus_power_cache.dm"
 #include "code/complexus/complexus_process.dm"
 #include "code/complexus/complexus_topic.dm"
 #include "code/complexus/complexus.dm"
+
 #include "code/misc/psi_fatigue.dm"
+
 #include "code/equipment/cerebro_enhancers.dm"
 #include "code/equipment/asamblee_clothing.dm"
-#include "code/misc/background.dm"
 #include "code/equipment/foundation_clothing.dm"
 #include "code/equipment/foundation_exosuit.dm"
 #include "code/equipment/foundation_implanter.dm"
@@ -35,38 +39,66 @@
 #include "code/equipment/psipower_tinker.dm"
 #include "code/equipment/psipower_tk.dm"
 #include "code/equipment/psipower.dm"
+
 #include "code/events/_psi.dm"
 #include "code/events/mini_spasm.dm"
 #include "code/events/psi_balm.dm"
+#include "code/events/psi_breach.dm"
 #include "code/events/psi_wail.dm"
+
 #include "code/faculties/_faculty.dm"
 #include "code/faculties/_power.dm"
 #include "code/faculties/coercion.dm"
-#include "code/faculties/consciousness.dm"
 #include "code/faculties/manifestation.dm"
 #include "code/faculties/metakinesis.dm"
-#include "code/faculties/psychokinesis.dm"
+
+
+#include "code/faculties/psychokinesis/_psychokinesis.dm"
+#include "code/faculties/psychokinesis/propel.dm"
+#include "code/faculties/psychokinesis/repulse.dm"
+#include "code/faculties/psychokinesis/telekinesis.dm"
+#include "code/faculties/psychokinesis/telepunch.dm"
+
+#include "code/faculties/consciousness/_consciousness.dm"
+#include "code/faculties/consciousness/absorb.dm"
+#include "code/faculties/consciousness/assay.dm"
+#include "code/faculties/consciousness/copies.dm"
+#include "code/faculties/consciousness/focus.dm"
+#include "code/faculties/consciousness/hallucinations.dm"
+#include "code/faculties/consciousness/invisibility.dm"
+#include "code/faculties/consciousness/mindread.dm"
+#include "code/faculties/consciousness/swap.dm"
+#include "code/faculties/consciousness/telepathy.dm"
+#include "code/faculties/consciousness/revelation.dm"
+
 #include "code\faculties\redaction\_redaction.dm"
 #include "code\faculties\redaction\meditate.dm"
 #include "code\faculties\redaction\health_swap.dm"
 #include "code\faculties\redaction\retribute.dm"
 #include "code\faculties\redaction\revive.dm"
 #include "code\faculties\redaction\skinsight.dm"
+
 #include "code\faculties\energistics\_energistics.dm"
 #include "code\faculties\energistics\disrupt.dm"
 #include "code\faculties\energistics\zorch.dm"
 #include "code\faculties\energistics\cloud.dm"
+
 #include "code\faculties\shaymanism\_shaymanism.dm"
 #include "code\faculties\shaymanism\ventriloquism.dm"
 #include "code\faculties\shaymanism\ritual_crayon.dm"
+
+
 #include "code/interface/ui_hub.dm"
 #include "code/interface/ui_toggles.dm"
 #include "code/interface/ui.dm"
+
 #include "code/mob/mob_assay.dm"
 #include "code/mob/mob_interactions.dm"
 #include "code/mob/foundation_simplemobs.dm"
 #include "code/mob/mob.dm"
 #include "code/mob/psi_spider.dm"
+#include "code/mob/psi_vagrant.dm"
+
 #include "code/null/_null.dm"
 #include "code/null/~null.dm"
 #include "code/null/chemistry.dm"
@@ -76,9 +108,12 @@
 #include "code/null/material.dm"
 #include "code/null/turf_floor.dm"
 #include "code/null/turf_wall.dm"
+
 #include "code/equipment/psipump.dm"
+
 #include "code/preferences/01_basic.dm"
 #include "code/preferences/02_abilities.dm"
+
 #include "code/override.dm"
 
 #endif

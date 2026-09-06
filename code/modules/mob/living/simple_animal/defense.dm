@@ -31,6 +31,9 @@
 	switch (M.a_intent)
 		if (I_HELP)
 			if (health > 0)
+				// Taming system: intercept help-intent for petting progress
+				if(tame_datum && tame_datum.try_pet(M))
+					return
 				M.visible_message(SPAN_NOTICE("\The [M] [response_help] \the [src]."))
 				M.update_personal_goal(/datum/goal/achievement/specific_object/pet, type)
 

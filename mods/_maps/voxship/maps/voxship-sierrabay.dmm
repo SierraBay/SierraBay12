@@ -217,20 +217,19 @@
 /obj/random/advdevice,
 /obj/random/powercell,
 /obj/item/device/gps,
+/obj/item/gun/energy/darkmatter,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "aJ" = (
 /obj/structure/table/rack,
-/obj/item/gun/energy/darkmatter,
-/obj/item/gun/energy/sonic,
 /obj/item/gun/launcher/alien/spikethrower,
 /obj/item/gun/launcher/alien/slugsling,
-/obj/item/gun/launcher/alien/spikethrower,
+/obj/item/gun/energy/voxshot,
+/obj/item/gun/energy/darkmatter,
 /turf/simulated/floor/tiled/techmaint/vox,
 /area/voxship/fore)
 "aK" = (
 /obj/structure/table/rack,
-/obj/item/rig/vox,
 /obj/item/rig/vox,
 /obj/machinery/light/small{
 	dir = 1

@@ -99,6 +99,16 @@
 		os.create_file(new/datum/computer_file/program/crew_manifest())
 
 
+/obj/item/modular_computer/ecs/GetIdCard()
+	. = ..()
+	if(.)
+		return
+	var/atom/movable/container = loc
+	while(container && !ismob(container))
+		container = container.loc
+	if(ismob(container))
+		return container.GetIdCard()
+
 /obj/item/modular_computer/ecs/attack_self(mob/user) // Оставляем возможность вызывать окно только через абилку ИПСа
 	return
 

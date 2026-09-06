@@ -1,5 +1,5 @@
 /obj/meteor
-	// ХП метеора для турелей
+	// Meteor health for point defense tracking
 	var/health = 1
 
 /obj/meteor/proc/take_damage(amount)
@@ -9,7 +9,7 @@
 		meteor_effect()
 		qdel(src)
 
-// Переопределяем выстрелы турели по метеорам, которые имеют хп
+// Override point defense to target meteors with health
 /obj/machinery/pointdefense/finish_shot(weakref/target)
 	var/datum/extension/local_network_member/pointdefense = get_extension(src, /datum/extension/local_network_member)
 	var/datum/local_network/lan = pointdefense.get_local_network()

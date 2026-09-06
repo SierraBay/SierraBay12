@@ -45,7 +45,8 @@
 						   ORION_TRAIL_MUTINY		= 3,
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_CARP			= 3
+						   ORION_TRAIL_CARP			= 3,
+							   ORION_TRAIL_DERELICT		= 2
 						   )
 	var/list/stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	var/list/stopblurbs = list(

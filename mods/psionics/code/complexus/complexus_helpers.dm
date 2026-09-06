@@ -33,7 +33,7 @@
 			update()
 
 /datum/psi_complexus/proc/set_cooldown(value)
-	next_power_use = world.time + value
+	next_power_use = world.time + (value * cooldown_modifier)
 	ui.update_icon()
 
 /datum/psi_complexus/proc/can_use_passive()

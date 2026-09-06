@@ -672,6 +672,9 @@ var/global/const/NO_EMAG_ACT = -50
 	job_access_type = /datum/job/chief_engineer
 	extra_details = list("goldstripe")
 
+/obj/item/card/id/science/roboticist
+	job_access_type = /datum/job/roboticist
+
 /obj/item/card/id/science
 	name = "identification card"
 	desc = "A card issued to science staff."
@@ -680,9 +683,6 @@ var/global/const/NO_EMAG_ACT = -50
 
 /obj/item/card/id/science/xenobiologist
 	job_access_type = /datum/job/xenobiologist
-
-/obj/item/card/id/science/roboticist
-	job_access_type = /datum/job/roboticist
 
 /obj/item/card/id/science/head
 	name = "identification card"

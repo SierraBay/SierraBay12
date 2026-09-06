@@ -14,7 +14,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER | ATOM_FLAG_NO_REACT
-	matter = list(MATERIAL_ALUMINIUM = 3000)
+	matter = list(MATERIAL_ALUMINIUM = 300)
 	var/list/insertable = list(
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/holder,
@@ -99,7 +99,7 @@
 	return TRUE
 
 /obj/item/reagent_containers/cooking_container/use_before(atom/target, mob/living/user, click_parameters)
-	var/intent_check = ishuman(user) ? I_GRAB : I_HELP
+	var/intent_check = ishuman(user) ? I_GRAB : I_HURT
 	if (user.a_intent != intent_check || istype(target, /obj/item/storage) || istype(target, /obj/screen/item_relayed/storage))
 		return ..()
 
@@ -517,13 +517,17 @@
 	do_empty(usr, get_turf(src))
 	update_icon()
 
+/obj/item/reagent_containers/cooking_container/board/cheese
+  name = "cheesecloth"
+  appliancetype = COOKING_APPLIANCE_CHEESE
+  icon_state = "cheesecloth"
+
 /obj/item/reagent_containers/cooking_container/board/bowl
 	name = "mixing bowl"
 	desc = "A large mixing bowl."
 	desc = "A bowl. You bowl foods... wait, what?"
 	icon_state = "mixingbowl"
 	center_of_mass = "x=17;y=7"
-	matter = list(MATERIAL_STEEL = 300)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = "5;10;15;25;30;60;180"

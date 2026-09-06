@@ -88,17 +88,33 @@ function nanoDiffAttrs(oldEl, newEl) {
 
 // Renders newHtml into container using DOM diffing.
 // Falls back to innerHTML on first render (when container is empty).
-// newHtml is pre-rendered by NanoTemplate.parse() (jsrender) which HTML-escapes data by default.
+// Saves/restores scrollTop for elements with data-scroll-id by key,
+// so scroll survives even if the element is replaced during diffing.
 function nanoPatchHtml(container, newHtml) {
   var el = container[0]
   if (!el) return
+  var scrollSaves = {}
+  var scrollEls = el.querySelectorAll('[data-scroll-id]')
+  for (var si = 0; si < scrollEls.length; si++) {
+    var sid = scrollEls[si].getAttribute('data-scroll-id')
+    scrollSaves[sid] = scrollEls[si].scrollTop
+  }
   if (!el.hasChildNodes()) {
     el.innerHTML = newHtml
-    return
+  } else {
+    var scratch = document.createElement('div')
+    scratch.innerHTML = newHtml
+    nanoDiffNodes(el, scratch)
   }
-  var scratch = document.createElement('div')
-  scratch.innerHTML = newHtml
-  nanoDiffNodes(el, scratch)
+  function restoreScrolls() {
+    var els = el.querySelectorAll('[data-scroll-id]')
+    for (var ri = 0; ri < els.length; ri++) {
+      var rsid = els[ri].getAttribute('data-scroll-id')
+      if (scrollSaves[rsid] > 0) els[ri].scrollTop = scrollSaves[rsid]
+    }
+  }
+  restoreScrolls()
+  requestAnimationFrame(restoreScrolls)
 }
 //[/SIERRA-ADD]
 

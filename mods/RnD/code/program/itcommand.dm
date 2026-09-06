@@ -174,3 +174,80 @@
 				return
 	if(.)
 		SSnano.update_uis(NM)
+
+// ─── R&D System Drive Management ─────────────────────────────────────────────
+// rndsys — manage the R&D core server System HDD.
+//
+// Usage:
+//   rndsys           — show system drive status for all reachable core servers
+//   rndsys -init     — fabricate a blank System HDD and drop it at this terminal.
+//                      Insert the drive into the core server manually.
+//                      WARNING: does NOT restore lost research progress.
+//
+// Requires network admin access.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/datum/terminal_command/rndsys
+	name = "rndsys"
+	man_entry = list(
+		"Format: rndsys \[-init\]",
+		"Without options: report System HDD status for all reachable R&D core servers.",
+		"-init: format this terminal's internal HDD as a System R&D Drive.",
+		"  Extract the HDD and insert it into the R&D core server.",
+		"  WARNING: does NOT restore lost research progress.",
+		"Requires network admin access."
+	)
+	pattern = "^rndsys"
+	req_access = list(list(access_network_admin))
+
+/datum/terminal_command/rndsys/proper_input_entered(text, mob/user, datum/terminal/terminal)
+	var/list/arguments = get_arguments(text)
+	if(isnull(arguments))
+		return syntax_error()
+
+	var/atom/host = terminal.computer.get_physical_host()
+	var/host_z = host ? host.z : user.z
+
+	// Status report — no arguments
+	if(!length(arguments))
+		var/list/out = list()
+		out += "rndsys: Scanning for R&D core servers..."
+		var/found = 0
+		for(var/obj/machinery/r_n_d/server/core/S in SSresearch.rnd_server_list)
+			if(GLOB.using_map.use_overmap && !(host_z in GetConnectedZlevels(S.z)))
+				continue
+			found++
+			var/obj/item/stock_parts/computer/hard_drive/sys = S.get_system_drive()
+			if(sys)
+				var/datum/computer_file/data/rnd_state/state_file = sys.find_file_by_name("rnd_state")
+				var/state_ok = (state_file && state_file.stored_data)
+				out += "  Server ID [S.server_id] ([S.name]): System HDD installed — state [state_ok ? "OK" : "EMPTY"]"
+			else
+				out += "  Server ID [S.server_id] ([S.name]): NO SYSTEM HDD — insert one via server panel or run 'rndsys -init'"
+		if(!found)
+			out += "  No R&D core servers found on this network."
+		return out
+
+	// -init: format this terminal's internal HDD as a System R&D Drive
+	if(length(arguments) == 1 && arguments[1] == "-init")
+		var/obj/item/stock_parts/computer/hard_drive/hdd = terminal.computer.get_component(PART_HDD)
+		if(!istype(hdd))
+			return "[name]: Error; no internal hard drive detected in this terminal."
+		if(hdd.rnd_category == "System")
+			return "[name]: This drive is already formatted as a System R&D Drive."
+		// Mark as System drive and write an empty-but-valid state file
+		hdd.rnd_category = "System"
+		hdd.SetName("System R&D Drive")
+		var/datum/computer_file/data/rnd_state/F = new
+		F.stored_data = json_encode(list("researched" = list(), "levels" = list(), "reputation" = list(), "designs" = list()))
+		hdd.save_file(F)
+		message_admins("[key_name(user)] formatted terminal HDD as System R&D Drive via rndsys.")
+		return list(
+			"rndsys: Internal HDD formatted as System R&D Drive.",
+			"WARNING: This drive contains no research data. All tech nodes must be re-unlocked.",
+			"Extract the HDD from this terminal (screwdriver the panel),",
+			"then insert it into the R&D core server.",
+			"rndsys: Done."
+		)
+
+	return syntax_error()

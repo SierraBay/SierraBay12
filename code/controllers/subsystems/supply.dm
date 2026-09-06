@@ -100,7 +100,19 @@ SUBSYSTEM_DEF(supply)
 			if(istype(AM, /obj/structure/closet/crate))
 				var/obj/structure/closet/crate/CR = AM
 				callHook("sell_crate", list(CR, subarea))
+
+				// [SIERRA-ADD] RnD Invoice — check for a valid R&D invoice before selling contents
+				var/obj/item/paper/manifest/rnd_invoice/rnd_slip = null
+				for(var/obj/item/paper/manifest/rnd_invoice/S in CR)
+					if(!S.is_copy && LAZYLEN(S.stamped) && S.target_account_number)
+						rnd_slip = S
+						break
+				var/crate_earnings = 0  // accumulated points for R&D invoice redirect
+				// [/SIERRA-ADD]
+
 				add_points_from_source(CR.points_per_crate, "crate")
+				if(rnd_slip)
+					crate_earnings += CR.points_per_crate
 				var/find_slip = 1
 
 				for(var/atom in CR)
@@ -109,43 +121,84 @@ SUBSYSTEM_DEF(supply)
 					if(find_slip && istype(A,/obj/item/paper/manifest))
 						var/obj/item/paper/manifest/slip = A
 						if(!slip.is_copy && slip.stamped && length(slip.stamped)) //Any stamp works.
-							add_points_from_source(points_per_slip, "manifest")
+							if(rnd_slip)
+								crate_earnings += points_per_slip
+							else
+								add_points_from_source(points_per_slip, "manifest")
 							find_slip = 0
 						continue
 
 					// Sell materials
 					if(istype(A, /obj/item/stack/material))
 						var/obj/item/stack/material/P = A
+						var/mat_points = 0
 						if(P.material && P.material.sale_price > 0)
-							material_count[P.material.display_name] += P.get_amount() * P.material.sale_price * P.matter_multiplier
+							mat_points += P.get_amount() * P.material.sale_price * P.matter_multiplier
 						if(P.reinf_material && P.reinf_material.sale_price > 0)
-							material_count[P.reinf_material.display_name] += P.get_amount() * P.reinf_material.sale_price * P.matter_multiplier * 0.5
+							mat_points += P.get_amount() * P.reinf_material.sale_price * P.matter_multiplier * 0.5
+						if(rnd_slip)
+							crate_earnings += mat_points
+						else
+							if(P.material && P.material.sale_price > 0)
+								material_count[P.material.display_name] += P.get_amount() * P.material.sale_price * P.matter_multiplier
+							if(P.reinf_material && P.reinf_material.sale_price > 0)
+								material_count[P.reinf_material.display_name] += P.get_amount() * P.reinf_material.sale_price * P.matter_multiplier * 0.5
 						continue
 
 					// Must sell ore detector disks in crates
 					if(istype(A, /obj/item/disk/survey))
 						var/obj/item/disk/survey/D = A
-						add_points_from_source(round(D.Value() * 0.05), "gep")
+						var/gep_points = round(D.Value() * 0.05)
+						if(rnd_slip)
+							crate_earnings += gep_points
+						else
+							add_points_from_source(gep_points, "gep")
+//SIERRA-ADD RND - Research report compilation disks
+					if(istype(A, /obj/item/disk/research_report))
+						var/obj/item/disk/research_report/report = A
+						if(report.cargo_value > 0)
+							if(rnd_slip)
+								crate_earnings += report.cargo_value
+							else
+								add_points_from_source(report.cargo_value, "research_reports")
+//SIERRA-ADD
 //SIERRA-ADD VIRUSOLOGY
-										// Sell virus dishes.
+									// Sell virus dishes.
 					if(istype(A, /obj/item/virusdish))
 						//Obviously the dish must be unique and never sold before.
 						var/obj/item/virusdish/dish = A
 						if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
 							if(!(dish.virus2.uniqueID in sold_virus_strains))
-								add_points_from_source(5, "virology_dishes")
+								if(rnd_slip)
+									crate_earnings += 5
+								else
+									add_points_from_source(5, "virology_dishes")
 								sold_virus_strains += dish.virus2.uniqueID
 //SIERRA-ADD
 					//[SIERRA-ADD] - ANOMALY - Продажа артефактов
 					if(istype(A, /obj/item/artefact))
 						var/obj/item/artefact/D = A
-						add_points_from_source(D.cargo_price, "artefacts")
+						if(rnd_slip)
+							crate_earnings += D.cargo_price
+						else
+							add_points_from_source(D.cargo_price, "artefacts")
 						SSanom.earned_cargo_points += D.cargo_price
 					if(istype(A, /obj/item/collector))
 						var/obj/item/collector/D = A
-						add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
+						if(rnd_slip)
+							crate_earnings += D.stored_artefact.cargo_price
+						else
+							add_points_from_source(D.stored_artefact.cargo_price, "artefacts")
 						SSanom.earned_cargo_points += D.stored_artefact.cargo_price
 					//[SIERRA-ADD]
+
+				// [SIERRA-ADD] RnD Invoice — redirect earnings to science account
+				if(rnd_slip && crate_earnings > 0)
+					var/datum/money_account/target = get_account(rnd_slip.target_account_number)
+					if(target)
+						var/thaller_amount = crate_earnings * 15 //CARGO_POINT_TO_THALLER
+						target.deposit(thaller_amount, "R&D Invoice sale", "Cargo Shuttle")
+				// [/SIERRA-ADD]
 
 			// Sell artefacts (in anomaly cages)
 			if (istype(AM, /obj/machinery/anomaly_container))

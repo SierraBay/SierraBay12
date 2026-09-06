@@ -1,0 +1,98 @@
+{{if data.message}}
+<p>{{:helper.link('X', null, {'clear_message' : 1})}}{{:data.message}}</p>
+{{/if}}
+
+{{if data.active_punishment}}
+	{{:helper.link('Back to Log', null, {'back' : 1})}}
+	<hr>
+	<div class='item'>
+		<div class='itemLabel'>Offender:</div>
+		<div class='itemContent'>{{:data.active_punishment.offender_name}} ({{:data.active_punishment.offender_job}})</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Charges:</div>
+		<div class='itemContent'>{{:data.active_punishment.charges}}</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Punishment:</div>
+		<div class='itemContent'>{{:data.active_punishment.type}}
+			{{if data.active_punishment.type == "Brig Time"}}
+				&mdash; {{:data.active_punishment.brig_minutes}} minutes
+			{{/if}}
+			{{if data.active_punishment.type == "Fine"}}
+				&mdash; {{:data.active_punishment.fine_amount}} credits
+			{{/if}}
+		</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Notes:</div>
+		<div class='itemContent'>{{:data.active_punishment.notes}}</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Criminal status on record:</div>
+		<div class='itemContent'>{{:data.active_punishment.criminal_status}}</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Authorized by:</div>
+		<div class='itemContent'>{{:data.active_punishment.authorized_by}}</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Issued:</div>
+		<div class='itemContent'>{{:data.active_punishment.issued}}</div>
+	</div>
+	<div class='item'>
+		<div class='itemLabel'>Status:</div>
+		<div class='itemContent'>{{:data.active_punishment.status}}</div>
+	</div>
+
+	<hr>
+	<div class='item'>
+		<div class='itemLabel'>Actions:</div>
+		<div class='itemContent'>
+			<table>
+				<tr><td>{{:helper.link('Select Offender', null, {'select_offender' : 1})}}
+				<td>{{:helper.link('Custom Offender', null, {'custom_offender' : 1})}}
+				<tr><td>{{:helper.link('Edit Charges', null, {'edit_charges' : 1})}}
+				<td>{{:helper.link('Edit Punishment Type', null, {'edit_type' : 1})}}
+				{{if data.active_punishment.type == "Brig Time"}}
+					<tr><td>{{:helper.link('Set Brig Time', null, {'edit_brig_minutes' : 1})}}
+				{{/if}}
+				{{if data.active_punishment.type == "Fine"}}
+					<tr><td>{{:helper.link('Set Fine Amount', null, {'edit_fine_amount' : 1})}}
+				{{/if}}
+				<tr><td>{{:helper.link('Edit Notes', null, {'edit_notes' : 1})}}
+				<td>{{:helper.link('Set Criminal Status', null, {'edit_criminal_status' : 1})}}
+				<tr><td>{{:helper.link('Sync to Crew Record', null, {'sync_criminal_status' : 1})}}
+				<tr><td>{{:helper.link('Authorize', null, {'authorize' : 1})}}
+				<tr><td>{{:helper.link('Save', null, {'save_punishment' : 1})}}
+				<td>{{:helper.link('Print', null, {'print_punishment' : 1})}}
+				{{:helper.link('Delete', 'trash', {'delete_punishment' : 1})}}
+			</table>
+		</div>
+	</div>
+
+{{else}}
+
+	<div class="itemContent">{{:helper.link('Issue New Punishment', null, {'new_punishment' : 1})}}</div>
+	<hr>
+	{{if data.punishments}}
+		<table width=100%>
+			<tr><th width=18%>Offender<th width=12%>Type<th>Charges<th width=25%>Authorized By<th width=10%>Status<th width=115px>
+			{{for data.punishments}}
+				<tr><td>{{:value.offender_name}}</td>
+				<td>{{:value.type}}</td>
+				<td>{{:value.charges}}</td>
+				<td>{{:value.authorized_by}}</td>
+				<td>{{:value.status}}</td>
+				<td>{{:helper.link('', 'pencil', {'open_punishment' : value.id})}}
+				{{:helper.link('', 'print', {'print_punishment' : value.id})}}
+				{{if value.status == "Active"}}
+					{{:helper.link('Mark Served', null, {'set_status' : value.id, 'status' : 'Served'})}}
+				{{/if}}</td>
+			{{/for}}
+		</table>
+	{{else}}
+		<p>No punishment records on file.</p>
+	{{/if}}
+
+{{/if}}

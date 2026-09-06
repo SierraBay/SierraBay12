@@ -403,7 +403,8 @@
 
 	if(href_list["close"])
 		user.unset_machine()
-		ui.close()
+		if(ui)
+			ui.close()
 		return 0
 
 	if(href_list["vend"])

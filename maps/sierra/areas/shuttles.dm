@@ -107,40 +107,57 @@
 	req_access = list(access_petrov)
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/shuttle/petrov/ship
+/area/shuttle/petrov/monitoring
+	name = "Shuttle - Petrov - Control room"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/cockpit
-	name = "Shuttle - Petrov - Cockpit"
+	req_access = list(list(access_petrov, access_sec_doors))
+
+/area/shuttle/petrov/storage_primary
+	name = "Shuttle - Petrov - Primary Storage"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/test_room
-	name = "Shuttle - Petrov - Test Room"
+	req_access = list(list(access_petrov, access_sec_doors))
+
+/area/shuttle/petrov/power
+	name = "Shuttle - Petrov - Power Supply"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/gas
-	name = "Shuttle - Petrov - Gas"
-	icon_state = "shuttlered"
-/area/shuttle/petrov/airlock
+	req_access = list(list(access_petrov, access_sec_doors))
+
+/area/shuttle/petrov/lab_airlock
 	name = "Shuttle - Petrov - Airlock"
-	req_access = list(list(access_petrov, access_security))
 	icon_state = "shuttlered"
-/area/shuttle/petrov/equipment
-	name = "Shuttle - Petrov - Equipment"
+	req_access = list(list(access_petrov, access_sec_doors))
+
+/area/shuttle/petrov/storage_secondary
+	name = "Shuttle - Petrov - Secondary Storage"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/eva
-	name = "Shuttle - Petrov - Storage"
+
+/area/shuttle/petrov/lab_hall
+	name = "Shuttle - Petrov - Hallway"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/security
-	name = "Shuttle - Petrov - Security Room"
-	req_access = list(list(access_petrov, access_security))
+
+/area/shuttle/petrov/chem_lab
+	name = "Shuttle - Petrov - Synthesis Lab"
 	icon_state = "shuttlered"
-/area/shuttle/petrov/scan
-	name = "Shuttle - Petrov - Scan Room"
+
+/area/shuttle/petrov/anomaly_lab
+	name = "Shuttle - Petrov - Anomaly Research Lab"
 	icon_state = "shuttlered"
+
+/area/shuttle/petrov/spectrometry_lab
+	name = "Shuttle - Petrov - Spectrometry Lab"
+	icon_state = "shuttlered"
+
+/area/shuttle/petrov/toxin_lab
+	name = "Shuttle - Petrov - Toxin Research Lab"
+	icon_state = "shuttlered"
+
 /area/shuttle/petrov/cell1
 	name = "Shuttle - Petrov - Isolation Cell 1"
 	icon_state = "shuttle"
 /area/shuttle/petrov/cell2
 	name = "Shuttle - Petrov - Isolation Cell 2"
 	icon_state = "shuttlegrn"
+
 /area/shuttle/petrov/cell3
 	name = "Shuttle - Petrov - Isolation Cell 3"
 	icon_state = "shuttle"

@@ -44,7 +44,7 @@
 					else
 						return FALSE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("The structural damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
 					return FALSE
 			if(istype(tool, /obj/item/stock_parts/manipulator))
 				var/obj/item/stock_parts/manipulator = tool
@@ -52,25 +52,24 @@
 					qdel(tool)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("This high-grade prosthetic requires a manipulator of rating [affected.expensive] or higher to repair."))
 					return FALSE
 			else
-				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				to_chat(user, SPAN_DANGER("High-grade prosthetics can only be repaired with a manipulator or integrity repair tool, not \a [tool]."))
 				return FALSE
 		if(affected.expensive == 1)
 			if(istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
 				if(affected.brute_dam < affected.max_damage)
 					if(istype(tool, /obj/item/integrity_repair_tool))
 						var/obj/item/integrity_repair_tool/integrity_repair_tool = tool
-						if(affected.brute_dam < affected.max_damage)
-							if(integrity_repair_tool.can_use(1))
-								return FALSE
+						if(!integrity_repair_tool.can_use(1))
+							return FALSE
 					if(istype(tool, /obj/item/stack/nanopaste))
 						var/obj/item/stack/nanopaste = tool
 						nanopaste.use(1)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("The structural damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
 					return FALSE
 			if(istype(tool, /obj/item/stock_parts/manipulator))
 				var/obj/item/stock_parts/manipulator = tool
@@ -78,19 +77,18 @@
 					qdel(tool)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("This prosthetic requires a manipulator of rating [affected.expensive] or higher to repair."))
 					return FALSE
 			else
-				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				to_chat(user, SPAN_DANGER("This prosthetic requires a manipulator, integrity repair tool, or nanopaste to repair — \a [tool] won't work."))
 				return FALSE
 
 		if(affected.expensive == 0)
 			if(affected.brute_dam < affected.max_damage)
 				if(istype(tool, /obj/item/integrity_repair_tool))
 					var/obj/item/integrity_repair_tool/integrity_repair_tool = tool
-					if(affected.brute_dam < affected.max_damage)
-						if(!integrity_repair_tool.can_use(1))
-							return FALSE
+					if(!integrity_repair_tool.can_use(1))
+						return FALSE
 				if(istype(tool, /obj/item/stack/nanopaste))
 					var/obj/item/stack/nanopaste = tool
 					nanopaste.use(1)
@@ -102,10 +100,12 @@
 					var/obj/item/gun/energy/plasmacutter/cutter = tool
 					if(!cutter.slice(user))
 						return FALSE
-			if(istype(tool, /obj/item/stock_parts/manipulator))
-				qdel(tool)
+				if(istype(tool, /obj/item/stock_parts/manipulator))
+					qdel(tool)
 				return TRUE
-		return TRUE
+			else
+				to_chat(user, SPAN_DANGER("The structural damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
+				return FALSE
 	return FALSE
 
 /singleton/surgery_step/robotics/repair_brute/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -220,7 +220,7 @@
 						qdel(tool)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("The electrical damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
 					return FALSE
 			if(istype(tool, /obj/item/stock_parts/capacitor))
 				var/obj/item/stock_parts/capacitor = tool
@@ -228,10 +228,10 @@
 					qdel(tool)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("This high-grade prosthetic requires a capacitor of rating [affected.expensive] or higher to repair."))
 					return FALSE
 			else
-				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				to_chat(user, SPAN_DANGER("High-grade prosthetics can only have burns repaired with a capacitor or prosthetic wiring layerer, not \a [tool]."))
 				return FALSE
 
 		if(affected.expensive == 1)
@@ -247,36 +247,41 @@
 						nanopaste.use(1)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("The electrical damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
 					return FALSE
 			if(istype(tool, /obj/item/stock_parts/capacitor))
 				var/obj/item/stock_parts/capacitor = tool
 				if(capacitor.rating >= affected.expensive)
+					qdel(tool)
 					return TRUE
 				else
-					to_chat(user, SPAN_DANGER("The damage is far too severe, shoud use stock parts rating = [max(1, affected.expensive)] or higher."))
+					to_chat(user, SPAN_DANGER("This prosthetic requires a capacitor of rating [affected.expensive] or higher to repair."))
 					return FALSE
 			else
-				to_chat(user, SPAN_DANGER("[tool.name] cannot be used for such expensive repairs."))
+				to_chat(user, SPAN_DANGER("This prosthetic requires a capacitor, prosthetic wiring layerer, or nanopaste to repair — \a [tool] won't work."))
 				return FALSE
 
 		if(affected.expensive == 0)
-			var/obj/item/stack/cable_coil/C = tool
-			if(istype(C))
-				if(!C.use(3))
-					to_chat(user, SPAN_WARNING("You need three or more cable pieces to repair this damage."))
+			if(affected.burn_dam < affected.max_damage)
+				var/obj/item/stack/cable_coil/C = tool
+				if(istype(C))
+					if(!C.use(3))
+						to_chat(user, SPAN_WARNING("You need at least three cable pieces to repair this damage."))
+					else
+						return TRUE
 				else
+					if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+						var/obj/item/prosthetic_wiring_layerer/prosthetic_wiring_layerer = tool
+						prosthetic_wiring_layerer.amount = prosthetic_wiring_layerer.amount - 1
+						if(prosthetic_wiring_layerer.amount < 1)
+							qdel(tool)
+					if(istype(tool, /obj/item/stack/nanopaste))
+						var/obj/item/stack/nanopaste = tool
+						nanopaste.use(1)
 					return TRUE
 			else
-				if(istype(tool, /obj/item/prosthetic_wiring_layerer))
-					var/obj/item/prosthetic_wiring_layerer/prosthetic_wiring_layerer = tool
-					prosthetic_wiring_layerer.amount = prosthetic_wiring_layerer.amount - 1
-					if(prosthetic_wiring_layerer.amount < 1)
-						qdel(tool)
-				if(istype(tool, /obj/item/stack/nanopaste))
-					var/obj/item/stack/nanopaste = tool
-					nanopaste.use(1)
-				return TRUE
+				to_chat(user, SPAN_DANGER("The electrical damage is catastrophic — this prosthetic cannot be repaired and must be replaced entirely."))
+				return FALSE
 	return FALSE
 
 /singleton/surgery_step/robotics/repair_burn/assess_bodypart(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -294,7 +299,7 @@
 /singleton/surgery_step/robotics/repair_burn/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 	user.visible_message(SPAN_NOTICE("[user] finishes splicing cable into [target]'s [affected.name]."), \
-	SPAN_NOTICE("You finishes splicing new cable into [target]'s [affected.name]."))
+	SPAN_NOTICE("You finish splicing new cable into [target]'s [affected.name]."))
 	affected.heal_damage(0,rand(30,50),1,1)
 	affected.status &= ~ORGAN_DISFIGURED
 
@@ -319,7 +324,14 @@
 	max_duration = 110
 
 /singleton/surgery_step/robotics/connect_to_posibrain/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(user == target)
+		to_chat(user, SPAN_WARNING("ERROR: Self-service access denied. External operator required."))
+		return
 	var/obj/item/organ/internal/posibrain/ipc/I = target.internal_organs_by_name[BP_POSIBRAIN]
+	var/obj/item/organ/external/affected = target.get_organ(target_zone)
+	if(!affected || affected.hatch_state != HATCH_OPENED)
+		to_chat(user, SPAN_WARNING("The access hatch is closed."))
+		return
 	if(I && !(I.status & ORGAN_CUT_AWAY) && !BP_IS_CRYSTAL(I) && I.parent_organ == target_zone)
 		if(I.shackles_module)
 			return I
@@ -332,26 +344,24 @@
 
 /singleton/surgery_step/robotics/connect_to_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/removing = target.internal_organs_by_name[LAZYACCESS(target.surgeries_in_progress, target_zone)]
-	user.visible_message("[user] starts connect \the [removing] from \the [target]'s [affected.name] with \the [tool].", \
-	"You connect \the [removing] to \the [target]'s [affected.name] with \the [tool]." )
+	user.visible_message("[user] starts connecting \the [tool] to \the [target]'s [affected.name].", \
+	"You start connecting \the [tool] to \the [target]'s [affected.name].")
 	to_chat(user, SPAN_WARNING("Finding weak access points..."))
-	if(do_after(user, 80, src))
+	if(do_after(user, 80, target))
 		sparks(3, 1, target.loc)
 		to_chat(user, SPAN_WARNING("Getting backdoor access to the shackles..."))
 	..()
 
 /singleton/surgery_step/robotics/connect_to_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/affected = target.get_organ(target_zone)
-	var/obj/removing = LAZYACCESS(target.surgeries_in_progress, target_zone)
-	if(!(user.skill_check(SKILL_COMPUTER, SKILL_EXPERIENCED) && user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED)))
-		to_chat(user, "You have no idea what to do next!")
-		return
-	user.visible_message(SPAN_NOTICE("[user] has established a connection to \the [removing] from \the [target]'s [affected.name] with \the [tool].") , \
-	SPAN_NOTICE("You have successfully established a connection to \the [removing] from \the [target]'s [affected.name] with \the [tool]."))
-	sparks(3, 1, target.loc)
-	sparks(3, 1, target.loc)
 	var/obj/item/organ/internal/posibrain/ipc/I = target.internal_organs_by_name[BP_POSIBRAIN]
+	if(!(user.skill_check(SKILL_COMPUTER, SKILL_EXPERIENCED) && user.skill_check(SKILL_DEVICES, SKILL_EXPERIENCED)))
+		to_chat(user, SPAN_WARNING("You have no idea what to do next!"))
+		return
+	user.visible_message(SPAN_NOTICE("[user] has established a connection to \the [I] in \the [target]'s [affected.name] with \the [tool].") , \
+	SPAN_NOTICE("You have successfully established a connection to \the [I] in \the [target]'s [affected.name] with \the [tool]."))
+	sparks(3, 1, target.loc)
+	sparks(3, 1, target.loc)
 	if(I && I.shackles_module)
 		I.shackles_module.update_laws()
 		I.shackles_module.ui_interact(user)

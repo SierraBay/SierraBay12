@@ -35,6 +35,8 @@ var/global/photo_count = 0
 	var/scribble	//Scribble on the back.
 	var/icon/tiny
 	var/photo_size = 3
+	var/photo_z // [SIERRA-ADD] RND
+	var/list/captured_object_types = list() // [SIERRA-ADD] RND - types of objects captured in photo
 
 /obj/item/photo/Initialize()
 	. = ..()
@@ -284,11 +286,23 @@ var/global/photo_count = 0
 	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
 	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
 
+	// [SIERRA-ADD] RND - Collect object and mob types from captured turfs
+	var/list/photo_object_types = list()
+	for(var/turf/CT in turfs)
+		for(var/obj/O in CT)
+			if(!O.invisibility)
+				photo_object_types |= O.type
+		for(var/mob/living/M in CT)
+			if(!M.invisibility)
+				photo_object_types |= M.type
+
 	var/obj/item/photo/p = new()
 	p.name = "photo"
 	p.icon = ic
 	p.tiny = pc
 	p.img = photoimage
+	p.photo_z = z_c
+	p.captured_object_types = photo_object_types
 	if(black_white)
 		p.img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		p.tiny.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
@@ -316,6 +330,8 @@ var/global/photo_count = 0
 	p.pixel_y = pixel_y
 	p.photo_size = photo_size
 	p.scribble = scribble
+	p.photo_z = photo_z
+	p.captured_object_types = captured_object_types.Copy()
 
 	if(copy_id)
 		p.id = id

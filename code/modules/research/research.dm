@@ -1,5 +1,4 @@
-/* // mods\RnD\code\research.dm
-/* [SIERRA-REMOVE] - MODPACK_RND
+/*
 General Explination:
 The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
 various procs used to manipulate it. It has four variables and seven procs:
@@ -218,5 +217,3 @@ research holder datum.
 	w_class = ITEM_SIZE_SMALL
 	matter = list(MATERIAL_PLASTIC = 30, MATERIAL_STEEL = 30, MATERIAL_GLASS = 10)
 	var/datum/design/blueprint
-
-*/

@@ -44,6 +44,9 @@
 					owner.client.screen |= ui.components
 					owner.client.screen |= ui*/
 //FD PSIONICS//
+			if(get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_MASTER)
+				var/obj/screen/psi/levitate/levitate = new(owner)
+				ui.components.Insert(3, levitate)
 			for(var/faculty in ranks)
 				var/existing_button = FALSE
 				for(var/obj/screen/psi/toggle_faculty/button in ui.components)

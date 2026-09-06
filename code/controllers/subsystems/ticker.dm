@@ -370,8 +370,10 @@ Helpers
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
 				player.AIize()
-			else if(!player.mind.assigned_role)
+			// [SIERRA-EDIT]
+			else if(!player.mind.assigned_role || player_is_antag(player.mind, only_offstation_roles = 1))
 				continue
+			// [/SIERRA-EDIT]
 			else
 				if(player.create_character())
 					qdel(player)

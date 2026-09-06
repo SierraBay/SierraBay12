@@ -63,6 +63,15 @@
 			. += "Known toxins:\t[list_gases(A.max_gas)]"
 		if(A.minbodytemp && A.maxbodytemp)
 			. += "Temperature comfort zone:\t[A.minbodytemp] K to [A.maxbodytemp] K"
+		if(A.diet_type)
+			var/diet_name
+			switch(A.diet_type)
+				if(DIET_CARNIVORE) diet_name = "хищник (мясо)"
+				if(DIET_HERBIVORE) diet_name = "травоядное (растения)"
+				if(DIET_OMNIVORE)  diet_name = "всеядное"
+			. += "Тип питания:\t[diet_name]"
+		if(A.tame_datum)
+			. += "Уровень доверия:\t[A.tame_datum.stage_name()] ([A.tame_datum.trust]/100)"
 		species = A.type
 		var/area/map = locate(/area/overmap)
 		for(var/obj/overmap/visitable/sector/exoplanet/P in map)

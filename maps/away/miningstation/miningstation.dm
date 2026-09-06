@@ -19,6 +19,10 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/miningstation)
 
+/datum/map_template/ruin/away_site/miningstation/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/machinery/artifact/mission/alien_artifact, z)
+
 /obj/shuttle_landmark/nav_miningstation/hangar
 	name = "Hangar"
 	landmark_tag = "nav_miningstation_hangar"

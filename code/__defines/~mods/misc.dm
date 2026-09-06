@@ -62,3 +62,8 @@
 		if(FACTION_STATE_WAR)
 			return "#bd0000"
 	return null
+
+/// Diet types for tameable animals (used by petting_zoo mod and xenobio scanner)
+#define DIET_CARNIVORE  1 // Meat only
+#define DIET_HERBIVORE  2 // Plants and vegetables only
+#define DIET_OMNIVORE   3 // Eats anything

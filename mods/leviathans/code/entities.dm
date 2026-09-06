@@ -11,13 +11,6 @@
 	heal_min = 5
 	heal_max = 10
 
-/obj/overmap/event/leviathan/medusa/get_damage_multiplier(damage_source)
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
-		return 2
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp))
-		return 1
-	return 0
-
 /obj/overmap/event/leviathan/medusa/deal_ship_damage(obj/overmap/visitable/ship/S)
 	if(LAZYLEN(S.map_z))
 		var/z_target = pick(S.map_z)
@@ -55,13 +48,6 @@
 	res.blend_mode = BLEND_OVERLAY
 	return res
 
-/obj/overmap/event/leviathan/dragon/get_damage_multiplier(damage_source)
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive))
-		return 2
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive))
-		return 1
-	return 0
-
 /obj/overmap/event/leviathan/dragon/deal_ship_damage(obj/overmap/visitable/ship/S)
 	if(LAZYLEN(S.map_z))
 		var/z_target = pick(S.map_z)
@@ -82,20 +68,13 @@
 /obj/overmap/event/leviathan/swarm
 	name = "Autonomous Drone Swarm"
 	icon_state = "swarm"
-	health = 600
+	health = 1200
 	damage_cooldown = 1 MINUTE
 	leviathan_speed = 1 / (15 SECONDS)
-	weaknesses = OVERMAP_WEAKNESS_MINING | OVERMAP_WEAKNESS_EXPLOSIVE
+	weaknesses = OVERMAP_WEAKNESS_EMP | OVERMAP_WEAKNESS_EXPLOSIVE
 	color = COLOR_DARK_BLUE_GRAY
-	heal_min = 5
-	heal_max = 10
-
-/obj/overmap/event/leviathan/swarm/get_damage_multiplier(damage_source)
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive/military) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp/military) || istype(damage_source, /obj/item/missile_equipment/payload/explosive) || istype(damage_source, /obj/item/missile_equipment/payload/emp))
-		return 1.5
-	if(istype(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/explosive) || istype(damage_source, /obj/structure/ship_munition/disperser_charge/emp) || ispath(damage_source, /obj/structure/ship_munition/disperser_charge/emp))
-		return 0.5
-	return 0
+	heal_min = 10
+	heal_max = 20
 
 /obj/overmap/event/leviathan/swarm/deal_ship_damage(obj/overmap/visitable/ship/S)
 	if(LAZYLEN(S.map_z))

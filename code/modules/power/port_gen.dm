@@ -400,10 +400,12 @@
 			if(!active && HasFuel() && !IsBroken())
 				active = 1
 				update_icon()
+				log_and_message_admins("has turned on [src.name] at [loc].", usr) // [SIERRA-ADD] adming logs
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
 				update_icon()
+				log_and_message_admins("has turned off [src.name] at [loc].", usr) // [SIERRA-ADD] adming logs
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
@@ -455,6 +457,7 @@
 	var/rads = rad_power*25 + (sheets + sheet_left)*1.5
 	SSradiation.radiate(src, (max(40, rads)))
 
+	log_and_message_admins("[src.name] exploded at [loc]!") // [SIERRA-ADD] adming logs
 	explosion(src.loc, rad_power * 4)
 	qdel(src)
 

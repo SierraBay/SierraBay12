@@ -61,3 +61,10 @@ Armor Patches, covers, ect
 	restricted_accessory_slots = list(ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
 	blood_overlay_type = "armorblood"
 	flags_inv = 0
+
+/obj/item/clothing/accessory/armor_tag/barc
+	name = "BARC tag"
+	desc = "An armor tag with the words P317 BARC printed in orange lettering on it."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "barctag"

@@ -78,6 +78,10 @@
 		to_chat(owner, SPAN_WARNING("Ты ошеломлен и не можешь сконцентрироваться на своих психических способностях!"))
 		return
 
+	if(owner.psi.psi_exhausted)
+		to_chat(owner, SPAN_WARNING("Твой разум слишком истощён, чтобы подавлять пси-силы!"))
+		return
+
 	owner.psi.suppressed = !owner.psi.suppressed
 	to_chat(owner, SPAN_NOTICE("Ты <b>[owner.psi.suppressed ? "теперь подавляешь" : "больше не подавляешь"]</b> свои способности."))
 	// Немедленно обновляем видимость псионического плана.

@@ -1,5 +1,6 @@
 /datum/design/item/mechfab/mech_r_arm
-	category = list("Mech right arm")
+	build_type = MECHFAB
+	category = list("Mech manipulators")
 
 /datum/design/item/mechfab/mech_r_arm/powerloader
 	name = "right power loader manipulator"
@@ -28,5 +29,17 @@
 	id = "right_heavy_arm"
 	time = 45
 	build_path =  /obj/item/mech_component/manipulators/heavy/right
+	req_tech = list(TECH_COMBAT = 4)
+	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
+
+/datum/design/item/mechfab/mech_arms_heavy
+	build_type = MECHFAB
+	category = list("Mech manipulators")
+
+/datum/design/item/mechfab/mech_arms_heavy/heavy
+	name = "left heavy mech manipulator"
+	id = "heavy_arms"
+	time = 45
+	build_path = /obj/item/mech_component/manipulators/heavy
 	req_tech = list(TECH_COMBAT = 4)
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)

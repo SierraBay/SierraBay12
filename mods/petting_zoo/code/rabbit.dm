@@ -34,6 +34,11 @@
 	ai_holder = /datum/ai_holder/simple_animal/passive
 	say_list_type = /datum/say_list/rabbit
 
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.4
+
 /datum/say_list/rabbit
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")

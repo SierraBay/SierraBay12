@@ -9,8 +9,8 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	flags = SS_NO_FIRE
 	init_order = SS_INIT_EARLY
-
-	var/list/all_designs = list()	// All design datums
+	var/list/rnd_server_list = list() // R&D servers registered for syncing
+	var/list/all_designs = list() // All design datums
 	var/list/starting_designs = list() // List of designs starts_unlocked = TRUE
 	var/list/statting_technologies = list() // List of technologies that have no cost and no unlock requirements
 	var/list/list/all_tech_trees = list() // All tech tree typepaths (keys) associated to a list of their tech node instances (list(values))
@@ -53,6 +53,29 @@ SUBSYSTEM_DEF(research)
 			all_tech_trees[tech.tech_type] += tech
 		else
 			WARNING("Unknown tech_type '[tech.tech_type]' in technology '[tech.name]'")
+
+	// Validate that all node IDs in rnd_tech_categories have corresponding technology datums
+	var/list/tech_node_ids = list()
+	for(var/datum/technology/node in all_tech_nodes)
+		tech_node_ids[node.id] = TRUE
+
+	for(var/cat_id in rnd_tech_categories)
+		var/list/category = rnd_tech_categories[cat_id]
+		if(!category)
+			continue
+		var/list/trees = category["trees"]
+		if(!trees)
+			continue
+		for(var/corp_id in trees)
+			var/list/tree = trees[corp_id]
+			if(!tree)
+				continue
+			var/list/nodes = tree["nodes"]
+			if(!nodes)
+				continue
+			for(var/node_id in nodes)
+				if(!tech_node_ids[node_id])
+					WARNING("Tech tree node '[node_id]' in category '[cat_id]' / corp '[corp_id]' has no matching /datum/technology definition!")
 
 	research_initialized = TRUE
 	for(var/i in research_files_to_init)
@@ -112,6 +135,12 @@ SUBSYSTEM_DEF(research)
 		if(D.build_type)
 			if(D.category)
 				design_categories_autolathe |= D.category
+
+/datum/controller/subsystem/research/proc/get_tech_node(id)
+	for(var/datum/technology/T in all_tech_nodes)
+		if(T.id == id)
+			return T
+	return null
 
 /datum/controller/subsystem/research/proc/fabricator_recycle(obj/item/build_path)
 	for(var/datum/design/design in all_designs)
