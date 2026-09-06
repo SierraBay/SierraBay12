@@ -978,14 +978,7 @@
 		else if(is_asystole())
 			holder.icon_state = "flatline"
 		else
-			// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Display flatline for working robotic hearts
-			// holder.icon_state = "[pulse()]" // SIERRA-EDIT - ORIGINAL
-			var/obj/item/organ/internal/heart/heart = internal_organs_by_name[BP_HEART]
-			if(heart && BP_IS_ROBOTIC(heart) && heart.is_working())
-				holder.icon_state = "flatline"
-			else
-				holder.icon_state = "[pulse()]"
-			// [/SIERRA-EDIT]
+			holder.icon_state = "[pulse()]"
 		hud_list[HEALTH_HUD] = holder
 
 	if (GET_BIT(hud_updateflag, LIFE_HUD) && hud_list[LIFE_HUD])

@@ -18,7 +18,6 @@ ID мода: CARDIAC_OVERHAUL
 - `code/game/objects/items/devices/scanners/health.dm`: 
 - `code/modules/events/event_container.dm`: 
 - `code/modules/events/event_dynamic.dm`: 
-- `code/modules/mob/living/carbon/human/life.dm`: 
 
 ### Оверрайды
 
