@@ -308,7 +308,7 @@
 		if(isnum(modifier["duration"]))
 			modifier["duration"] = max(0, modifier["duration"] - 1)
 		if(!modifier["duration"])
-			live_market_modifiers -= modifier
+			live_market_modifiers -= list(modifier)
 
 /datum/trading_station/proc/ApplyLiveMarketModifierStockEffects()
 	if(!live_market_enabled || !length(live_market_modifiers))
@@ -426,12 +426,12 @@
 				"to_add" = amount_to_add,
 				"current_amt" = current_amount
 			)
-			var/restock_index = restock_candidates.len + 1
+			var/restock_index = length(restock_candidates) + 1
 			restock_candidates.Insert(restock_index, restock_index)
 			restock_candidates[restock_index] = content
 
 	for(var/i in 1 to 20)
-		if(!restock_candidates.len || !wealth)
+		if(!length(restock_candidates) || !wealth)
 			break
 
 		var/list/good_packet = pick(restock_candidates)

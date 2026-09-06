@@ -4,6 +4,7 @@ Thumbs.db
 *.int
 *.rsc
 *.dmb
+*.mdme
 *.lk
 *.backup
 *.before
@@ -12,6 +13,8 @@ dmdoc/
 cfg/
 build_log.txt
 use_map
+scratch/
+test_sierra.dme
 stopserver
 reboot_called
 atupdate

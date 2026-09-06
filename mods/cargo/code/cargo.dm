@@ -1273,7 +1273,7 @@
 			return TRUE
 		var/list/id_data = splittext(log_id, "-")
 		var/log_type = LOG_SHIPPING
-		switch(id_data.len >= 2 ? id_data[2] : null)
+		switch(length(id_data) >= 2 ? id_data[2] : null)
 			if("E")
 				log_type = LOG_EXPORT
 			if("O")

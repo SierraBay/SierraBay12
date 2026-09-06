@@ -200,6 +200,9 @@
 		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
 		station.AdjustLiveMarketDemand("Alpha", good_id, 5)
 		var/sell_price = SSsupply.GetStationSellPrice(good_id, station, "Alpha")
+		for(var/atom/movable/AM in range(2, beacon))
+			if(AM != beacon && !AM.anchored)
+				qdel(AM)
 		new good_path(get_turf(beacon))
 		if(!SSsupply.Export(beacon, account, station))
 			fail_reason = "Export() rejected a matching commodity."

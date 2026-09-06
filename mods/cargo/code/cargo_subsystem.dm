@@ -847,7 +847,7 @@
 
 /datum/controller/subsystem/supply/proc/GetLogDataById(log_id)
 	var/list/id_data = splittext(log_id, "-")
-	if(id_data.len < 2)
+	if(length(id_data) < 2)
 		return null
 	var/log_num = text2num(id_data[1])
 	switch(id_data[2])

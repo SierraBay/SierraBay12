@@ -1,6 +1,7 @@
 /datum/trading_station/legacy
 	faction = FACTION_INDEPENDENT
 	spawn_always = FALSE
+	spawn_probability = 0
 	markup = 1.2
 	start_hidden = FALSE
 	var/legacy_station_group_type = null

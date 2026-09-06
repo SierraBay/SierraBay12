@@ -459,7 +459,7 @@
 	var/list/path_bits = splittext("[root_type]", "/")
 	if(!length(path_bits))
 		return "Legacy"
-	var/root_name = path_bits[path_bits.len]
+	var/root_name = path_bits[length(path_bits)]
 	root_name = replacetext(root_name, "_", " ")
 	if(length(root_name) <= 1)
 		return uppertext(root_name)
@@ -567,12 +567,12 @@
 				"to_add" = amount_to_add,
 				"current_amt" = current_amount
 			)
-			var/restock_index = restock_candidates.len + 1
+			var/restock_index = length(restock_candidates) + 1
 			restock_candidates.Insert(restock_index, restock_index)
 			restock_candidates[restock_index] = content
 
 	for(var/i in 1 to 20)
-		if(!restock_candidates.len || !wealth)
+		if(!length(restock_candidates) || !wealth)
 			break
 
 		var/list/good_packet = pick(restock_candidates)

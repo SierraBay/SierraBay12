@@ -245,13 +245,14 @@
 
 	var/turf/near_turf = null
 	var/turf/far_turf = null
-	if(current_sector.x + 6 <= world.maxx)
+	var/overmap_limit = GLOB.using_map.overmap_size
+	if(current_sector.x + 6 <= overmap_limit)
 		near_turf = locate(current_sector.x + 5, current_sector.y, current_sector.z)
 		far_turf = locate(current_sector.x + 6, current_sector.y, current_sector.z)
 	else if(current_sector.x - 6 >= 1)
 		near_turf = locate(current_sector.x - 5, current_sector.y, current_sector.z)
 		far_turf = locate(current_sector.x - 6, current_sector.y, current_sector.z)
-	else if(current_sector.y + 6 <= world.maxy)
+	else if(current_sector.y + 6 <= overmap_limit)
 		near_turf = locate(current_sector.x, current_sector.y + 5, current_sector.z)
 		far_turf = locate(current_sector.x, current_sector.y + 6, current_sector.z)
 	else if(current_sector.y - 6 >= 1)
@@ -386,8 +387,21 @@
 		skip("Overmap sector unavailable for smart placement spacing test.")
 		return 1
 
-	var/turf/near_turf = locate(current_sector.x + 2, current_sector.y, current_sector.z)
-	var/turf/far_turf = locate(current_sector.x + 8, current_sector.y, current_sector.z)
+	var/turf/near_turf = null
+	var/turf/far_turf = null
+	var/overmap_limit = GLOB.using_map.overmap_size
+	if(current_sector.x + 8 <= overmap_limit)
+		near_turf = locate(current_sector.x + 2, current_sector.y, current_sector.z)
+		far_turf = locate(current_sector.x + 8, current_sector.y, current_sector.z)
+	else if(current_sector.x - 8 >= 1)
+		near_turf = locate(current_sector.x - 2, current_sector.y, current_sector.z)
+		far_turf = locate(current_sector.x - 8, current_sector.y, current_sector.z)
+	else if(current_sector.y + 8 <= overmap_limit)
+		near_turf = locate(current_sector.x, current_sector.y + 2, current_sector.z)
+		far_turf = locate(current_sector.x, current_sector.y + 8, current_sector.z)
+	else if(current_sector.y - 8 >= 1)
+		near_turf = locate(current_sector.x, current_sector.y - 2, current_sector.z)
+		far_turf = locate(current_sector.x, current_sector.y - 8, current_sector.z)
 	if(!istype(near_turf, /turf/unsimulated/map) || !istype(far_turf, /turf/unsimulated/map))
 		skip("Suitable overmap turfs unavailable for smart placement spacing test.")
 		return 1
@@ -428,8 +442,21 @@
 		skip("Overmap sector unavailable for smart placement hazard test.")
 		return 1
 
-	var/turf/hazard_turf = locate(current_sector.x + 4, current_sector.y, current_sector.z)
-	var/turf/adjacent_turf = locate(current_sector.x + 5, current_sector.y, current_sector.z)
+	var/turf/hazard_turf = null
+	var/turf/adjacent_turf = null
+	var/overmap_limit = GLOB.using_map.overmap_size
+	if(current_sector.x + 5 <= overmap_limit)
+		hazard_turf = locate(current_sector.x + 4, current_sector.y, current_sector.z)
+		adjacent_turf = locate(current_sector.x + 5, current_sector.y, current_sector.z)
+	else if(current_sector.x - 5 >= 1)
+		hazard_turf = locate(current_sector.x - 4, current_sector.y, current_sector.z)
+		adjacent_turf = locate(current_sector.x - 5, current_sector.y, current_sector.z)
+	else if(current_sector.y + 5 <= overmap_limit)
+		hazard_turf = locate(current_sector.x, current_sector.y + 4, current_sector.z)
+		adjacent_turf = locate(current_sector.x, current_sector.y + 5, current_sector.z)
+	else if(current_sector.y - 5 >= 1)
+		hazard_turf = locate(current_sector.x, current_sector.y - 4, current_sector.z)
+		adjacent_turf = locate(current_sector.x, current_sector.y - 5, current_sector.z)
 	if(!istype(hazard_turf, /turf/unsimulated/map) || !istype(adjacent_turf, /turf/unsimulated/map))
 		skip("Suitable overmap turfs unavailable for smart placement hazard test.")
 		return 1
@@ -552,13 +579,14 @@
 
 	var/turf/source_market = null
 	var/turf/destination_market = null
-	if(current_sector.x + 3 <= world.maxx)
+	var/overmap_limit = GLOB.using_map.overmap_size
+	if(current_sector.x + 3 <= overmap_limit)
 		source_market = locate(current_sector.x + 1, current_sector.y, current_sector.z)
 		destination_market = locate(current_sector.x + 3, current_sector.y, current_sector.z)
 	else if(current_sector.x - 3 >= 1)
 		source_market = locate(current_sector.x - 1, current_sector.y, current_sector.z)
 		destination_market = locate(current_sector.x - 3, current_sector.y, current_sector.z)
-	else if(current_sector.y + 3 <= world.maxy)
+	else if(current_sector.y + 3 <= overmap_limit)
 		source_market = locate(current_sector.x, current_sector.y + 1, current_sector.z)
 		destination_market = locate(current_sector.x, current_sector.y + 3, current_sector.z)
 	else if(current_sector.y - 3 >= 1)
