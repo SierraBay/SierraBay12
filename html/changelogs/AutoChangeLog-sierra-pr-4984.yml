@@ -1,0 +1,4 @@
+author: Jorjorwells
+changes:
+  - rscadd: Off-ship antagonist spawns strip you of selected allergies.
+delete-after: true
