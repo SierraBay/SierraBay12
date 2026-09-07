@@ -1,5 +1,7 @@
 #if !defined(using_map_DATUM)
 
+	#include "sierra_define.dm"
+
 	// --- MAP MAINTENANCE --- //
 	#include "sierra_setup.dm"
 	#include "sierra_announcements.dm"

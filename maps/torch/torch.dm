@@ -1,5 +1,7 @@
 #if !defined(using_map_DATUM)
 
+	#include "torch_define.dm"
+
 	#include "../../packs/deepmaint/_pack.dm"
 	#include "../../packs/event_2022jul30/_pack.dm"
 	#include "../../packs/event_2024jul20/_pack.dm"
