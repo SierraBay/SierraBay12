@@ -4,6 +4,7 @@
 		"FTB \"Steel Deck\"" = "Free Trade Beacon \"Steel Deck\": Best materials around this sector of space!"
 	)
 	uid = "materials"
+	icon_states = list("materials")
 	unlock_favor = 2500
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE

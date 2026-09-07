@@ -4,6 +4,7 @@
 		"FTB \"Spacer\"" = "Free Trade Beacon \"Spacer\": Affordable gear for EVA operations!"
 	)
 	uid = "eva"
+	icon_states = list("atmospherics")
 	unlock_favor = 8000
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE

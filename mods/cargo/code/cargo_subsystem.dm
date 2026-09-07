@@ -501,13 +501,30 @@
 		return null
 	return map_sectors["[source_turf.z]"]
 
-/datum/controller/subsystem/supply/proc/GetTradeDistance(atom/source, datum/trading_station/station)
-	if(!GLOB.using_map.use_overmap || !istype(station) || !station.overmap_location)
+/datum/controller/subsystem/supply/proc/GetTradeDistance(source, datum/trading_station/station)
+	if(!GLOB.using_map.use_overmap || !istype(station))
 		return null
-	var/obj/overmap/visitable/current_sector = GetOvermapSectorFor(source)
-	if(!istype(current_sector) || current_sector.z != station.overmap_location.z)
+
+	var/turf/target_turf = station.overmap_location
+	if(!istype(target_turf))
 		return null
-	return get_dist(current_sector, station.overmap_location)
+
+	var/atom/origin
+	if(istype(source, /datum/trading_station))
+		var/datum/trading_station/source_station = source
+		origin = source_station.overmap_location || get_turf(source_station.overmap_object)
+	else if(istype(source, /obj/overmap))
+		origin = source
+	else if(isturf(source))
+		var/turf/source_turf = source
+		origin = (source_turf.z == target_turf.z) ? source_turf : GetOvermapSectorFor(source_turf)
+	else if(istype(source, /atom))
+		origin = GetOvermapSectorFor(source)
+
+	if(!istype(origin) || origin.z != target_turf.z)
+		return null
+
+	return get_dist(origin, target_turf)
 
 /datum/controller/subsystem/supply/proc/GetTradeRangeBlockReason(atom/source, datum/trading_station/station)
 	if(!GLOB.using_map.use_overmap || !istype(station) || !station.overmap_location || station.trade_range < 0)
@@ -773,7 +790,89 @@
 	return TRUE
 
 /datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null)
-	return FALSE
+	if(QDELETED(sender_beacon) || !istype(money_account))
+		return FALSE
+
+	if(sender_beacon.export_cooldown > world.time)
+		return FALSE
+	if(istype(target_station))
+		var/block_reason = GetTradeRangeBlockReason(sender_beacon, target_station)
+		if(block_reason)
+			return FALSE
+
+	var/invoice_contents_info = ""
+	var/export_count = 0
+	var/cost = 0
+	var/list/exportables = list()
+	var/list/rejected = list()
+
+	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
+		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+			continue
+		if(!CanExportAtom(exported))
+			rejected += exported
+			continue
+
+		var/export_value = GetExportValue(exported, target_station)
+		if(!export_value)
+			continue
+
+		exportables[exported] = export_value
+
+	if(!length(exportables))
+		return FALSE
+
+	if(!sender_beacon.StartExport())
+		return FALSE
+
+	for(var/atom/movable/rejected_atom as anything in rejected)
+		HandleRejectedExport(rejected_atom)
+
+	for(var/atom/movable/exported as anything in exportables)
+		var/export_value = exportables[exported]
+		if(istype(target_station) && istype(exported, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = exported
+			var/crate_sold_any = FALSE
+			var/list/all_contents = crate.GetAllContents(3, FALSE)
+			for(var/atom/movable/item as anything in all_contents)
+				if(item == crate || istype(item, /obj/structure/closet))
+					continue
+				if(!CanExportAtom(item))
+					continue
+				var/list/match = FindCommodityForExport(item, target_station)
+				if(islist(match))
+					var/item_val = GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
+					cost += item_val
+					invoice_contents_info += "<li>[item.name]</li>"
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+					qdel(item)
+					crate_sold_any = TRUE
+					++export_count
+					if(export_count > 100)
+						break
+			if(crate_sold_any && !length(crate.contents))
+				qdel(crate)
+		else
+			invoice_contents_info += "<li>[exported.name]</li>"
+			cost += export_value
+			if(istype(target_station))
+				var/list/match = FindCommodityForExport(exported, target_station)
+				if(islist(match))
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+			qdel(exported)
+			++export_count
+
+		if(export_count > 100)
+			break
+
+	if(!cost)
+		return FALSE
+	if(istype(target_station))
+		target_station.SubtractFromWealth(cost)
+	money_account.deposit(cost, "Trade Network Export", "Trade Network")
+	if(invoice_contents_info)
+		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon))
+	return TRUE
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null)
 	var/log_id

@@ -4,14 +4,16 @@
 	scannable = TRUE
 	requires_contact = TRUE
 	instant_contact = TRUE
-	icon_state = "trading_station"
+	icon = 'mods/cargo/icons/trading_stations.dmi'
+	icon_state = "trade"
 
 /datum/trading_station
 	var/name
 	var/desc
 	var/uid
 	var/list/name_pool = list()
-	var/list/icon_states = list("trading_station")
+	var/icon = 'mods/cargo/icons/trading_stations.dmi'
+	var/list/icon_states = list("trade")
 	var/initialized = FALSE
 
 	var/favor = 0
@@ -64,17 +66,6 @@
 	if(init_on_new)
 		InitSrc()
 
-/datum/trading_station/Destroy()
-	if(overmap_location && start_hidden)
-		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
-	if(SSsupply)
-		SSsupply.all_trading_stations -= src
-		SSsupply.hidden_trading_stations -= src
-		SSsupply.visible_trading_stations -= src
-	QDEL_NULL(overmap_object)
-	overmap_location = null
-	return ..()
-
 /datum/trading_station/proc/GetFaction()
 	return SSsupply.GetFaction(faction)
 
@@ -85,13 +76,17 @@
 	for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
 		name_pool.Remove(other_station.name)
 		if(!length(name_pool))
-			warning("Trade station name pool exhausted: [type]")
+			log_debug("Trade station name pool exhausted: [type]")
 			var/list/reset_pool = initial(name_pool)
-			name_pool = reset_pool.Copy()
+			name_pool = islist(reset_pool) ? reset_pool.Copy() : list()
 			break
 
-	name = pick(name_pool)
-	desc = name_pool[name]
+	if(length(name_pool))
+		name = pick(name_pool)
+		desc = name_pool[name]
+	else if(!name)
+		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
+		desc = initial(desc) || "An automated merchant outpost."
 
 	AssembleInventory()
 	InitGoods()
@@ -294,6 +289,8 @@
 	overmap_object.scanner_desc = GetOvermapScannerDesc()
 	overmap_object.opacity = overmap_opacity
 	overmap_object.dir = pick(rand(1, 2), 4, 8)
+	if(icon)
+		overmap_object.icon = icon
 	overmap_object.icon_state = pick(icon_states)
 
 	if(start_hidden)
@@ -606,8 +603,10 @@
 	if(overmap_object)
 		var/obj/overmap/saved_obj = overmap_object
 		overmap_object = null
-		qdel(saved_obj)
-	SSsupply.all_trading_stations -= src
-	SSsupply.visible_trading_stations -= src
-	SSsupply.hidden_trading_stations -= src
+		if(!istype(saved_obj, /obj/overmap/visitable))
+			qdel(saved_obj)
+	if(SSsupply)
+		SSsupply.all_trading_stations -= src
+		SSsupply.visible_trading_stations -= src
+		SSsupply.hidden_trading_stations -= src
 	return ..()

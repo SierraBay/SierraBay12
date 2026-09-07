@@ -14,6 +14,7 @@
 		"FTB \"Longhaul\"" = "Free Trade Beacon \"Longhaul\": practical freight and expedition logistics."
 	)
 	uid = "legacy_operations"
+	icon_states = list("operations")
 	legacy_supply_roots = list(
 		/singleton/hierarchy/supply_pack/operations,
 		/singleton/hierarchy/supply_pack/supply,
@@ -28,6 +29,7 @@
 		"FTB \"Gridline\"" = "Free Trade Beacon \"Gridline\": power and construction stock for hard jobs."
 	)
 	uid = "legacy_engineering"
+	icon_states = list("engineering")
 	legacy_supply_roots = list(
 		/singleton/hierarchy/supply_pack/engineering,
 		/singleton/hierarchy/supply_pack/flooring
@@ -40,6 +42,7 @@
 		"FTB \"Blue Lung\"" = "Free Trade Beacon \"Blue Lung\": atmospherics gear, tanks, canisters, and emergency response stock."
 	)
 	uid = "legacy_atmospherics"
+	icon_states = list("atmospherics")
 	legacy_supply_roots = list(/singleton/hierarchy/supply_pack/atmospherics)
 
 /datum/trading_station/legacy/materials
@@ -49,6 +52,7 @@
 		"FTB \"Bulkhead\"" = "Free Trade Beacon \"Bulkhead\": sheet goods, wood, and industrial construction materials."
 	)
 	uid = "legacy_materials"
+	icon_states = list("materials")
 	legacy_supply_roots = list(/singleton/hierarchy/supply_pack/materials)
 
 /datum/trading_station/legacy/security
@@ -58,6 +62,7 @@
 		"TTB \"Bulwark\"" = "Terran Trade Beacon \"Bulwark\": armor, security tools, and authorized weapons stock."
 	)
 	uid = "legacy_security"
+	icon_states = list("weapons")
 	faction = FACTION_INDIE_CONFED
 	markup = 1.3
 	legacy_supply_roots = list(
@@ -72,6 +77,7 @@
 		"FTB \"Trauma Bay\"" = "Free Trade Beacon \"Trauma Bay\": medical replenishment, triage stock, and dispenser cartridges."
 	)
 	uid = "legacy_medicine"
+	icon_states = list("medical")
 	legacy_supply_roots = list(
 		/singleton/hierarchy/supply_pack/medical,
 		/singleton/hierarchy/supply_pack/dispenser_cartridges
@@ -84,6 +90,7 @@
 		"FTB \"Peer Review\"" = "Free Trade Beacon \"Peer Review\": research consumables, lab gear, and anomaly support stock."
 	)
 	uid = "legacy_science"
+	icon_states = list("science")
 	legacy_supply_roots = list(/singleton/hierarchy/supply_pack/science)
 
 /datum/trading_station/legacy/service
@@ -93,6 +100,7 @@
 		"FTB \"Mess Hall\"" = "Free Trade Beacon \"Mess Hall\": hydroponics, galley supplies, and janitorial support."
 	)
 	uid = "legacy_service"
+	icon_states = list("service")
 	legacy_supply_roots = list(
 		/singleton/hierarchy/supply_pack/hydroponics,
 		/singleton/hierarchy/supply_pack/galley,
@@ -106,6 +114,7 @@
 		"FTB \"Wardrobe\"" = "Free Trade Beacon \"Wardrobe\": leisure goods, uniforms, and non-essential comforts."
 	)
 	uid = "legacy_civilian"
+	icon_states = list("trade")
 	legacy_supply_roots = list(
 		/singleton/hierarchy/supply_pack/nonessent,
 		/singleton/hierarchy/supply_pack/clothes_uniforms
@@ -118,6 +127,7 @@
 		"TTB \"Palisade\"" = "Terran Trade Beacon \"Palisade\": heavy ordnance, munitions, and battlefield support cargo."
 	)
 	uid = "legacy_munitions"
+	icon_states = list("munitions")
 	faction = FACTION_INDIE_CONFED
 	markup = 1.35
 	legacy_supply_roots = list(/singleton/hierarchy/supply_pack/munition)

@@ -420,7 +420,7 @@
 	return "rendezvous"
 
 /datum/trade_contract/caravan_rendezvous/GetTypeLabel()
-	return "Market Intel Contract"
+	return "Rendezvous Contract"
 
 /datum/trade_contract/caravan_rendezvous/GetSummaryText()
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()

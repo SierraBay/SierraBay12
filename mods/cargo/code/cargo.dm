@@ -48,11 +48,15 @@
 	var/cart_form_mode
 	var/trade_catalog_view_distance = 6
 
+/datum/computer_file/program/supply/New()
+	..()
+	if(GLOB.using_map?.trade_faction)
+		faction = GLOB.using_map.trade_faction
+
 /datum/computer_file/program/supply/on_startup(mob/living/user, datum/extension/interactive/ntos/new_host)
 	. = ..()
-	if(. && faction == FACTION_INDEPENDENT)
-		var/atom/host = computer ? computer.get_physical_host() : null
-		if(istype(host) && (host.z in GLOB.using_map.station_levels))
+	if(.)
+		if(GLOB.using_map?.trade_faction)
 			faction = GLOB.using_map.trade_faction
 
 /datum/computer_file/program/supply/process_tick()
@@ -871,38 +875,6 @@
 
 	if(href_list["PRG_log_screen"])
 		log_screen = href_list["PRG_log_screen"]
-		ui_interact(usr)
-		return TRUE
-
-	if(href_list["PRG_faction"])
-		var/obj/item/stock_parts/computer/card_slot/card_slot = computer.get_component(PART_CARD)
-		if(!istype(card_slot))
-			to_chat(usr, SPAN_WARNING("Card slot is not installed."))
-			ui_interact(usr)
-			return TRUE
-		var/obj/item/card/id/id_card = card_slot.stored_card
-		if(!istype(id_card))
-			to_chat(usr, SPAN_WARNING("Insert an ID card first."))
-			ui_interact(usr)
-			return TRUE
-		var/list/valid_factions = list()
-		for(var/faction_name in SSsupply.factions)
-			var/datum/trade_faction/trade_faction = SSsupply.factions[faction_name]
-			if(!trade_faction.access_required || !(trade_faction.access_required in id_card.access))
-				continue
-			valid_factions += trade_faction.name
-		if(!length(valid_factions))
-			to_chat(usr, SPAN_WARNING("No eligible trade factions were found for this ID."))
-			ui_interact(usr)
-			return TRUE
-		var/faction_choice = input(usr, "Select a faction to link.", "Faction Link") as null|anything in valid_factions
-		if(faction_choice)
-			faction = faction_choice
-		ui_interact(usr)
-		return TRUE
-
-	if(href_list["PRG_faction_unlink"])
-		faction = FACTION_INDEPENDENT
 		ui_interact(usr)
 		return TRUE
 

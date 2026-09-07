@@ -387,31 +387,38 @@
 		skip("Overmap sector unavailable for smart placement spacing test.")
 		return 1
 
-	var/turf/near_turf = null
-	var/turf/far_turf = null
-	var/overmap_limit = GLOB.using_map.overmap_size
-	if(current_sector.x + 8 <= overmap_limit)
-		near_turf = locate(current_sector.x + 2, current_sector.y, current_sector.z)
-		far_turf = locate(current_sector.x + 8, current_sector.y, current_sector.z)
-	else if(current_sector.x - 8 >= 1)
-		near_turf = locate(current_sector.x - 2, current_sector.y, current_sector.z)
-		far_turf = locate(current_sector.x - 8, current_sector.y, current_sector.z)
-	else if(current_sector.y + 8 <= overmap_limit)
-		near_turf = locate(current_sector.x, current_sector.y + 2, current_sector.z)
-		far_turf = locate(current_sector.x, current_sector.y + 8, current_sector.z)
-	else if(current_sector.y - 8 >= 1)
-		near_turf = locate(current_sector.x, current_sector.y - 2, current_sector.z)
-		far_turf = locate(current_sector.x, current_sector.y - 8, current_sector.z)
-	if(!istype(near_turf, /turf/unsimulated/map) || !istype(far_turf, /turf/unsimulated/map))
-		skip("Suitable overmap turfs unavailable for smart placement spacing test.")
-		return 1
-
 	var/datum/trading_station/unit_test_duplicate_pricing/anchor_station = new
 	var/datum/trading_station/unit_test_duplicate_pricing/test_station = new
-	anchor_station.overmap_location = near_turf
 	test_station.min_overmap_station_spacing = 5
 	test_station.preferred_distance_from_base = 8
 	test_station.max_distance_from_base = 20
+
+	var/turf/near_turf = null
+	var/turf/far_turf = null
+
+	var/list/candidates = list()
+	for(var/turf/candidate as anything in test_station.GetOvermapSpawnCandidateTurfs(current_sector.z))
+		var/base_distance = test_station.GetBaseDistance(candidate)
+		if(isnum(base_distance) && (base_distance < test_station.min_distance_from_base || base_distance > test_station.max_distance_from_base))
+			continue
+		candidates += candidate
+
+	for(var/turf/candidate_a as anything in candidates)
+		for(var/turf/candidate_b as anything in candidates)
+			if(get_dist(candidate_a, candidate_b) >= test_station.min_overmap_station_spacing)
+				near_turf = candidate_a
+				far_turf = candidate_b
+				break
+		if(near_turf && far_turf)
+			break
+
+	if(!istype(near_turf) || !istype(far_turf))
+		qdel(anchor_station)
+		qdel(test_station)
+		skip("Suitable overmap turfs unavailable for smart placement spacing test.")
+		return 1
+
+	anchor_station.overmap_location = near_turf
 	SSsupply.all_trading_stations = list(anchor_station)
 
 	var/near_score = test_station.ScoreOvermapSpawnLocation(near_turf)
@@ -442,28 +449,27 @@
 		skip("Overmap sector unavailable for smart placement hazard test.")
 		return 1
 
+	var/datum/trading_station/unit_test_duplicate_pricing/test_station = new
+	test_station.hazard_buffer = 1
+
 	var/turf/hazard_turf = null
 	var/turf/adjacent_turf = null
-	var/overmap_limit = GLOB.using_map.overmap_size
-	if(current_sector.x + 5 <= overmap_limit)
-		hazard_turf = locate(current_sector.x + 4, current_sector.y, current_sector.z)
-		adjacent_turf = locate(current_sector.x + 5, current_sector.y, current_sector.z)
-	else if(current_sector.x - 5 >= 1)
-		hazard_turf = locate(current_sector.x - 4, current_sector.y, current_sector.z)
-		adjacent_turf = locate(current_sector.x - 5, current_sector.y, current_sector.z)
-	else if(current_sector.y + 5 <= overmap_limit)
-		hazard_turf = locate(current_sector.x, current_sector.y + 4, current_sector.z)
-		adjacent_turf = locate(current_sector.x, current_sector.y + 5, current_sector.z)
-	else if(current_sector.y - 5 >= 1)
-		hazard_turf = locate(current_sector.x, current_sector.y - 4, current_sector.z)
-		adjacent_turf = locate(current_sector.x, current_sector.y - 5, current_sector.z)
-	if(!istype(hazard_turf, /turf/unsimulated/map) || !istype(adjacent_turf, /turf/unsimulated/map))
+
+	for(var/turf/candidate as anything in test_station.GetOvermapSpawnCandidateTurfs(current_sector.z))
+		for(var/turf/neighbor as anything in orange(1, candidate))
+			if(test_station.CanUseOvermapSpawnLocation(neighbor))
+				hazard_turf = candidate
+				adjacent_turf = neighbor
+				break
+		if(hazard_turf && adjacent_turf)
+			break
+
+	if(!istype(hazard_turf) || !istype(adjacent_turf))
+		qdel(test_station)
 		skip("Suitable overmap turfs unavailable for smart placement hazard test.")
 		return 1
 
 	var/fail_reason = null
-	var/datum/trading_station/unit_test_duplicate_pricing/test_station = new
-	test_station.hazard_buffer = 1
 	var/obj/overmap/event/dust/hazard = new(hazard_turf)
 
 	if(test_station.CanUseOvermapSpawnLocation(hazard_turf))
@@ -581,25 +587,32 @@
 	var/turf/source_market = null
 	var/turf/destination_market = null
 	var/overmap_limit = GLOB.using_map.overmap_size
-	if(current_sector.x + 3 <= overmap_limit)
+	if(current_sector.x + 4 <= overmap_limit)
 		source_market = locate(current_sector.x + 1, current_sector.y, current_sector.z)
+		destination_market = locate(current_sector.x + 4, current_sector.y, current_sector.z)
+	else if(current_sector.x - 4 >= 1)
+		source_market = locate(current_sector.x - 1, current_sector.y, current_sector.z)
+		destination_market = locate(current_sector.x - 4, current_sector.y, current_sector.z)
+	else if(current_sector.y + 4 <= overmap_limit)
+		source_market = locate(current_sector.x, current_sector.y + 1, current_sector.z)
+		destination_market = locate(current_sector.x, current_sector.y + 4, current_sector.z)
+	else if(current_sector.y - 4 >= 1)
+		source_market = locate(current_sector.x, current_sector.y - 1, current_sector.z)
+		destination_market = locate(current_sector.x, current_sector.y - 4, current_sector.z)
+	else if(current_sector.x + 3 <= overmap_limit)
+		source_market = locate(current_sector.x, current_sector.y, current_sector.z)
 		destination_market = locate(current_sector.x + 3, current_sector.y, current_sector.z)
 	else if(current_sector.x - 3 >= 1)
-		source_market = locate(current_sector.x - 1, current_sector.y, current_sector.z)
+		source_market = locate(current_sector.x, current_sector.y, current_sector.z)
 		destination_market = locate(current_sector.x - 3, current_sector.y, current_sector.z)
-	else if(current_sector.y + 3 <= overmap_limit)
-		source_market = locate(current_sector.x, current_sector.y + 1, current_sector.z)
-		destination_market = locate(current_sector.x, current_sector.y + 3, current_sector.z)
-	else if(current_sector.y - 3 >= 1)
-		source_market = locate(current_sector.x, current_sector.y - 1, current_sector.z)
-		destination_market = locate(current_sector.x, current_sector.y - 3, current_sector.z)
 
 	if(!istype(source_market) || !istype(destination_market))
 		return FALSE
 
-	source_station.overmap_object = current_sector
 	source_station.overmap_location = source_market
+	source_station.overmap_object = new /obj/overmap/trade_beacon(source_market)
 	destination_station.overmap_location = destination_market
+	destination_station.overmap_object = new /obj/overmap/trade_beacon(destination_market)
 	source_station.trade_range = 5
 	destination_station.trade_range = 5
 	return TRUE
@@ -642,6 +655,7 @@
 	var/obj/overmap/trade_beacon/caravan/caravan_object = new(destination_station.overmap_location)
 	caravan_object.BindToStation(caravan_station)
 	caravan_object.current_stop = source_station
+	caravan_object.BeginTradeWindow(10 MINUTES)
 	return caravan_station
 
 /datum/unit_test/cargo_trade_contract_market_selection_test

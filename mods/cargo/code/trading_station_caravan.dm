@@ -10,7 +10,7 @@
 	supports_contracts = FALSE
 	can_host_caravans = FALSE
 	is_mobile = TRUE
-	icon_states = list("trading_station")
+	icon_states = list("unknown", "trade")
 	random_factions = list(
 		FACTION_INDEPENDENT,
 		FACTION_FREETRADE,
@@ -103,7 +103,7 @@
 /obj/overmap/trade_beacon/caravan
 	name = "trade caravan"
 	desc = "A mobile merchant caravan moving between beacon routes."
-	icon_state = "trading_station"
+	icon_state = "unknown"
 	movable = TRUE
 	randomize_start_pos = FALSE
 	requires_contact = TRUE

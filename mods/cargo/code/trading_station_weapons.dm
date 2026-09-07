@@ -3,6 +3,7 @@
 		"TTB \"Telum\"" = "Terran Trade Beacon \"Telum\": Surplus marine equipment sold to friends of humanity!"
 	)
 	uid = "weapons_terra"
+	icon_states = list("weapons")
 	unlock_favor = 15000
 	faction = FACTION_INDIE_CONFED
 	spawn_probability = 30
