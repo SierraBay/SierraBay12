@@ -14153,6 +14153,10 @@
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
+/obj/item/ammobox/shotgun/slug,
+/obj/item/ammobox/shotgun/slug,
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "biu" = (
@@ -18405,20 +18409,12 @@
 "htK" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/storage/box/ammo/light_bullpup,
-/obj/item/storage/box/ammo/light_bullpup,
-/obj/item/gun/projectile/automatic/bullpup_rifle/light{
-	starts_loaded = 0
-	},
-/obj/item/gun/projectile/automatic/bullpup_rifle/light{
-	starts_loaded = 0
-	},
-/obj/item/gun/projectile/automatic/bullpup_rifle/light{
-	starts_loaded = 0
-	},
-/obj/item/gun/projectile/automatic/bullpup_rifle/light{
-	starts_loaded = 0
-	},
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/storage/box/ammo/smg_sol,
+/obj/item/storage/box/ammo/smg_sol,
+/obj/item/storage/box/ammo/smg_sol,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "hub" = (
@@ -18769,10 +18765,6 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/fore)
 "hOb" = (
-/obj/structure/table/rack,
-/obj/floor_decal/industrial/outline/grey,
-/obj/item/gun/energy/ionrifle,
-/obj/item/gun/energy/ionrifle,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "hOZ" = (
@@ -19992,6 +19984,11 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal,
 /turf/simulated/floor/tiled/monotile,
 /area/security/detectives_office)
 "jrH" = (
@@ -24155,8 +24152,8 @@
 "oBI" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/xray,
+/obj/item/gun/energy/xray,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "oBZ" = (
@@ -24501,12 +24498,12 @@
 "oXv" = (
 /obj/structure/table/rack,
 /obj/floor_decal/industrial/outline/grey,
-/obj/item/gun/projectile/automatic/sec_smg/empty,
-/obj/item/gun/projectile/automatic/sec_smg/empty,
-/obj/item/gun/projectile/automatic/sec_smg/empty,
-/obj/item/gun/projectile/automatic/sec_smg/empty,
-/obj/item/storage/box/ammo/smg/rubber,
-/obj/item/storage/box/ammo/smg/rubber,
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/gun/projectile/automatic/sol_smg/empty,
+/obj/item/storage/box/ammo/smg_sol/rubber,
+/obj/item/storage/box/ammo/smg_sol/rubber,
+/obj/item/storage/box/ammo/smg_sol/rubber,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "oXx" = (
@@ -25248,12 +25245,14 @@
 /turf/simulated/floor/tiled,
 /area/security/processing)
 "pVv" = (
-/obj/machinery/disposal,
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/structure/disposalpipe/trunk,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1"
+	},
+/obj/structure/closet/secure_closet/forensics,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/security/detectives_office)
@@ -26251,7 +26250,8 @@
 	},
 /obj/machinery/mech_recharger,
 /obj/item/gun/energy/ionrifle/small,
-/obj/item/gun/energy/ionrifle/small,
+/obj/item/gun/energy/ionrifle,
+/obj/item/gun/energy/ionrifle,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "rcb" = (
@@ -26876,6 +26876,9 @@
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
+/obj/structure/table/rack,
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "rLb" = (

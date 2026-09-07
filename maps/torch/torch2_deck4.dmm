@@ -3745,6 +3745,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/smartfridge/disks/permitted{
+	dir = 1;
+	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/components,/obj/item/stock_parts/computer/hard_drive/portable/design/exploration,/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,/obj/item/stock_parts/computer/hard_drive/portable/design/general,/obj/item/stock_parts/computer/hard_drive/portable/design/tool)
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/office)
 "mB" = (
@@ -10641,6 +10645,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms/sec,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/office)
 "KE" = (
