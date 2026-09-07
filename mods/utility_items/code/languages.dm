@@ -12,7 +12,7 @@
 	. = ..()
 	W.write("additional_languages", pref.additional_languages)
 
-/datum/preferences/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+/datum/preferences/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE, apply_persist = TRUE)
 	. = ..()
 	additional_languages = character.species.additional_languages
 
