@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - bugfix: Пофиксил перенос урона в VR
+delete-after: true
