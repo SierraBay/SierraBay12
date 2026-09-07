@@ -46,6 +46,8 @@ var/global/character_persist_roundend_done = FALSE
 	for (var/mob/living/carbon/human/H in GLOB.human_mobs)
 		if (QDELETED(H))
 			continue
+		if (character_persist_is_virtual_body(H))
+			continue
 		var/ckey = character_persist_ckey_of(H)
 		var/slot = character_persist_slot_of(H)
 		if (!ckey || !slot)

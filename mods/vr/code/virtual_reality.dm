@@ -214,7 +214,7 @@ SUBSYSTEM_DEF(virtual_reality)
 		var/mob/living/carbon/human/H = simulated_mob
 		var/mob/living/carbon/human/H_original = new_occupant
 
-		new_occupant.client.prefs.copy_to(simulated_mob)
+		new_occupant.client.prefs.copy_to(simulated_mob, apply_persist = FALSE)
 		H.set_nutrition(400)
 		H.set_hydration(400)
 		H.job = new_occupant.job
