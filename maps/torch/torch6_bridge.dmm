@@ -13327,7 +13327,7 @@
 /turf/simulated/floor/tiled/freezer,
 /area/crew_quarters/heads/cobed)
 "Oj" = (
-/obj/machinery/computer/rdconsole{
+/obj/machinery/computer/rdconsole/core/torch{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/monotile,

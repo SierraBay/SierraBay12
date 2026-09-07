@@ -26,6 +26,16 @@
 
 	return freq_text
 
+/proc/get_frequency_default_color(display_freq)
+	if(display_freq in ANTAG_FREQS)
+		return COMMS_COLOR_SYNDICATE
+
+	var/channel = get_frequency_default_name(display_freq)
+	if(channel in radiochannel_colors)
+		return radiochannel_colors[channel]
+
+	return COMMS_COLOR_DEFAULT
+
 /datum/reception
 	var/obj/machinery/message_server/message_server = null
 	var/telecomms_reception = TELECOMMS_RECEPTION_NONE

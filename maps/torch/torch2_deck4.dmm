@@ -13436,7 +13436,7 @@
 	pixel_x = 32
 	},
 /obj/random_multi/single_item/memo_supply,
-/obj/item/folder/envelope/dcorder,
+/obj/item/folder/envelope/preset/dcorder,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/deckchief)
 "Sz" = (

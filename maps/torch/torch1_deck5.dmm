@@ -10194,7 +10194,7 @@
 /area/shuttle/petrov/hallwaya)
 "xB" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/fabricator/rnd/protolathe,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -14554,7 +14554,7 @@
 /area/shuttle/petrov/cockpit)
 "OO" = (
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/structure/window/reinforced{
 	dir = 1

@@ -174,6 +174,29 @@ var/global/list/radiochannels = list(
 	"ICGNV Hound"   = ICCGN_FREQ
 )
 
+var/global/list/radiochannel_colors = list(
+	"Common"		= COMMS_COLOR_COMMON,
+	"Hailing"		= COMMS_COLOR_HAILING,
+	"Science"		= COMMS_COLOR_SCIENCE,
+	"Command"		= COMMS_COLOR_COMMAND,
+	"Medical"		= COMMS_COLOR_MEDICAL,
+	"Engineering"	= COMMS_COLOR_ENGINEER,
+	"Security" 		= COMMS_COLOR_SECURITY,
+	"ERT"           = COMMS_COLOR_CENTCOMM,
+	"Special Ops" 	= COMMS_COLOR_SYNDICATE,
+	"Mercenary" 	= COMMS_COLOR_SYNDICATE,
+	"Raider"		= COMMS_COLOR_SYNDICATE,
+	"Vox Raider"	= COMMS_COLOR_VOX,
+	"Exploration"	= COMMS_COLOR_EXPLORER,
+	"Supply" 		= COMMS_COLOR_SUPPLY,
+	"Service" 		= COMMS_COLOR_SERVICE,
+	"AI Private"	= COMMS_COLOR_AI,
+	"Entertainment" = COMMS_COLOR_ENTERTAIN,
+	"Medical (I)"	= COMMS_COLOR_MEDICAL_I,
+	"Security (I)"	= COMMS_COLOR_SECURITY_I,
+	"ICGNV Hound"   = COMMS_COLOR_ICCG
+)
+
 var/global/list/channel_color_presets = list(
 	"Bemoaning Brown" = COMMS_COLOR_SUPPLY,
 	"Bitchin' Blue" = COMMS_COLOR_COMMAND,

@@ -11449,7 +11449,7 @@
 /area/storage/cargo)
 "CC" = (
 /obj/structure/table/steel_reinforced,
-/obj/item/material/folder/yellow,
+/obj/item/folder/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 4
 	},
@@ -12888,7 +12888,7 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/fabricator/rnd/imprinter,
 /turf/simulated/floor/tiled/dark/monotile,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/assembly/robotics)
