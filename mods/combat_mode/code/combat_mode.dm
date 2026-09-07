@@ -31,8 +31,6 @@
 		face_dir_click = null
 		combat_update_neck_grabs(TRUE)
 		to_chat(src, SPAN_NOTICE("Боевой режим выключен."))
-	if(combat_mode_icon)
-		combat_mode_icon.update_combat_icon(combat_mode)
 
 /mob/living/proc/on_combat_mode_moved(atom/old_loc)
 	SIGNAL_HANDLER
