@@ -168,3 +168,11 @@
 	#define UNIT_TEST 1
 #endif
 //New aways testing mod
+
+// CARGO_CONTRACTS - Start
+#define CONTRACT_STATUS_AVAILABLE "available"
+#define CONTRACT_STATUS_ACTIVE "active"
+#define CONTRACT_STATUS_COMPLETED "completed"
+#define CONTRACT_STATUS_FAILED "failed"
+// CARGO_CONTRACTS - End
+

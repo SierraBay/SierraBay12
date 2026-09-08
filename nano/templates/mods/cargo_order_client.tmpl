@@ -1,0 +1,1527 @@
+<style>
+	html, body {
+		overflow-y: scroll;
+	}
+
+	.tn-wrap {
+		padding: 8px;
+	}
+
+	.tn-screen-view {
+		min-height: 480px;
+	}
+
+	.tn-goods-container {
+		min-height: 400px;
+	}
+
+	.tn-goods-empty {
+		min-height: 380px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.tn-stack > * + * {
+		margin-top: 8px;
+	}
+
+	.tn-nav,
+	.tn-actions,
+	.tn-tabs {
+		overflow: hidden;
+	}
+
+	.tn-inlineLink,
+	.tn-inlineLink.link,
+	.tn-inlineLink.linkActive {
+		float: none;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.tn-toolbar {
+		padding: 8px 12px;
+	}
+
+	.tn-toolbar-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		align-items: center;
+	}
+
+	.tn-workflow-group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		align-items: center;
+	}
+
+	.tn-workflow-label {
+		min-width: 65px;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #7e90a7;
+	}
+
+	.tn-summary-grid,
+	.tn-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.tn-summary-card,
+	.tn-col {
+		flex: 1 1 260px;
+		min-width: 260px;
+	}
+
+	.tn-summary-card {
+		padding: 8px 12px;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-summary-label,
+	.tn-panel-label,
+	.tn-subtle,
+	.tn-muted {
+		color: #7e90a7;
+	}
+
+	.tn-summary-label,
+	.tn-panel-label {
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.tn-summary-value,
+	.tn-panel-title {
+		margin-top: 4px;
+		font-size: 14px;
+		font-weight: bold;
+		color: #eef4ff;
+	}
+
+	.tn-summary-meta {
+		margin-top: 4px;
+		font-size: 11px;
+	}
+
+	.tn-empty {
+		color: #aaa;
+		font-style: italic;
+	}
+
+	.tn-empty-panel {
+		padding: 16px;
+		border: 1px dashed rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.02);
+		text-align: center;
+	}
+
+	.tn-panel {
+		padding: 10px 12px;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-panel + .tn-panel,
+	.tn-panel + .section,
+	.section + .tn-panel {
+		margin-top: 8px;
+	}
+
+	.tn-panel-header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 8px;
+		align-items: flex-start;
+		margin-bottom: 8px;
+	}
+
+	.tn-panel-copy {
+		flex: 1 1 200px;
+		min-width: 200px;
+	}
+
+	.tn-panel-title {
+		margin: 0;
+	}
+
+	.tn-panel-subtitle {
+		margin-top: 4px;
+	}
+
+	.tn-panel-side {
+		text-align: right;
+	}
+
+	.tn-kv-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+		gap: 6px;
+	}
+
+	.tn-kv {
+		padding: 6px 8px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(0, 0, 0, 0.14);
+	}
+
+	.tn-kv-value {
+		margin-top: 3px;
+		word-break: break-word;
+		font-weight: bold;
+	}
+
+	.tn-pillnav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		margin-bottom: 8px;
+	}
+
+	.tn-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		align-items: center;
+	}
+
+	.tn-station-list {
+		height: 400px;
+		min-height: 400px;
+		max-height: 400px;
+		overflow-y: auto;
+		padding-right: 4px;
+	}
+
+	.tn-station-list > * + * {
+		margin-top: 6px;
+	}
+
+	.tn-scroll-box {
+		overflow-y: auto;
+		overflow-x: hidden;
+		max-height: 400px;
+		padding-right: 4px;
+	}
+
+	.tn-scroll-box .tn-table th {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		background: #25282e;
+		z-index: 2;
+	}
+
+	.tn-goods-scroll {
+		height: 480px;
+		min-height: 400px;
+		max-height: 480px;
+	}
+
+	.tn-cart-scroll {
+		min-height: 340px;
+		max-height: 420px;
+	}
+
+	.tn-orders-scroll {
+		min-height: 340px;
+		max-height: 400px;
+	}
+
+	.tn-order-details-scroll {
+		min-height: 280px;
+		max-height: 340px;
+	}
+
+	.tn-station {
+		padding: 6px 8px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-station-name {
+		display: block;
+		font-weight: bold;
+		word-break: break-word;
+	}
+
+	.tn-station-meta {
+		margin-top: 4px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 6px;
+		align-items: center;
+	}
+
+	.tn-station-faction {
+		font-size: 11px;
+		font-weight: bold;
+	}
+
+	.tn-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.tn-table th,
+	.tn-table td {
+		padding: 5px 6px;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	.tn-table th {
+		color: #7e90a7;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.tn-table td {
+		word-break: break-word;
+	}
+
+	.tn-table-actions {
+		white-space: nowrap;
+		text-align: right;
+	}
+
+	.tn-order-row {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.tn-row-selected {
+		background: rgba(73, 114, 161, 0.18);
+	}
+
+	.tn-badge {
+		display: inline-block;
+		padding: 2px 6px;
+		border-radius: 999px;
+		font-size: 10px;
+		font-weight: bold;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	.tn-badge-good {
+		background: rgba(56, 142, 60, 0.28);
+		color: #a9e6a6;
+	}
+
+	.tn-badge-average {
+		background: rgba(177, 134, 44, 0.28);
+		color: #f0d48a;
+	}
+
+	.tn-badge-bad {
+		background: rgba(160, 58, 58, 0.28);
+		color: #ffb0b0;
+	}
+
+	.tn-flow-list > * + * {
+		margin-top: 6px;
+	}
+
+	.tn-list-block {
+		padding: 8px 10px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.tn-list-block-title {
+		font-size: 13px;
+		font-weight: bold;
+	}
+
+	.tn-list-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 5px 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	.tn-list-row:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+
+	.tn-list-row-main {
+		min-width: 0;
+	}
+
+	.tn-list-row-side {
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	.tn-form-shell {
+		padding: 8px 10px;
+		border: 1px solid rgba(73, 114, 161, 0.28);
+		background: rgba(73, 114, 161, 0.12);
+	}
+
+	.tn-form {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		align-items: center;
+	}
+
+	.tn-form textarea,
+	.tn-form input[type='text'],
+	.tn-form input[type='number'] {
+		background: #111;
+		color: #fff;
+		border: 1px solid #444;
+		padding: 4px 6px;
+		box-sizing: border-box;
+	}
+
+	.tn-form input[type='number'] {
+		width: 80px;
+	}
+
+	.tn-form textarea {
+		width: 100%;
+		min-height: 60px;
+		resize: vertical;
+	}
+
+	.tn-form input[type='submit'] {
+		background: #4972a1;
+		color: #fff;
+		border: none;
+		border-radius: 0.16em;
+		padding: 4px 10px;
+		cursor: pointer;
+	}
+
+	.tn-form input[type='submit']:disabled,
+	.tn-form input[type='submit'].disabled {
+		background: #555;
+		color: #888;
+		cursor: default;
+	}
+
+	.tn-form-label-wide {
+		width: 100%;
+		font-weight: bold;
+		font-size: 11px;
+		color: #cfd8e7;
+	}
+
+	.tn-section-divider {
+		margin: 8px 0;
+		border: 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.tn-note {
+		padding: 6px 8px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+		color: #cfd8e7;
+	}
+
+	.tn-w-15 { width: 15%; }
+	.tn-w-20 { width: 20%; }
+	.tn-w-25 { width: 25%; }
+	.tn-w-30 { width: 30%; }
+	.tn-w-40 { width: 40%; }
+
+	/* Marketplace Layout Styles */
+	.tn-market-sidebar {
+		flex: 0 0 240px !important;
+		max-width: 250px !important;
+		min-width: 210px !important;
+	}
+
+	.tn-market-main {
+		flex: 1 1 500px !important;
+		min-width: 320px !important;
+	}
+
+	.tn-station-list-compact {
+		max-height: 190px;
+		overflow-y: auto;
+		padding-right: 4px;
+	}
+
+	.tn-station-list-compact > * + * {
+		margin-top: 5px;
+	}
+
+	.tn-category-vertical-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		max-height: 250px;
+		overflow-y: auto;
+		padding-right: 4px;
+	}
+
+	.tn-category-item {
+		display: block;
+		padding: 6px 10px;
+		border-radius: 4px;
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		color: #cfd8e7 !important;
+		text-decoration: none;
+		font-size: 12px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.tn-category-item:hover {
+		background: rgba(255, 255, 255, 0.06);
+		color: #ffffff !important;
+	}
+
+	.tn-category-item.selected {
+		background: #2a4c73;
+		border-color: #4a80ba;
+		color: #ffffff !important;
+	}
+
+	.tn-market-filter-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 10px;
+		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid rgba(255, 255, 255, 0.06);
+		border-radius: 4px;
+		margin-bottom: 10px;
+	}
+
+	.tn-search-box {
+		position: relative;
+		flex: 1 1 180px;
+		min-width: 160px;
+		display: flex;
+		align-items: center;
+	}
+
+	.tn-search-icon {
+		position: absolute;
+		left: 8px;
+		font-size: 11px;
+		color: #7e90a7;
+		pointer-events: none;
+	}
+
+	.tn-search-input {
+		width: 100%;
+		height: 26px;
+		padding: 2px 24px 2px 24px;
+		background: #111418;
+		color: #eef4ff;
+		border: 1px solid #3b424f;
+		border-radius: 4px;
+		font-size: 12px;
+		box-sizing: border-box;
+	}
+
+	.tn-search-input:focus {
+		border-color: #5a8cc8;
+		outline: none;
+	}
+
+	.tn-search-clear {
+		position: absolute;
+		right: 6px;
+		background: transparent;
+		border: none;
+		color: #7e90a7;
+		cursor: pointer;
+		font-size: 11px;
+		padding: 2px;
+		line-height: 1;
+	}
+
+	.tn-search-clear:hover {
+		color: #ff8080;
+	}
+
+	.tn-sort-box {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		flex: 0 0 auto;
+	}
+
+	.tn-sort-label {
+		font-size: 11px;
+		color: #7e90a7;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 0.04em;
+	}
+
+	.tn-sort-select {
+		height: 26px;
+		background: #111418;
+		color: #eef4ff;
+		border: 1px solid #3b424f;
+		border-radius: 4px;
+		padding: 2px 6px;
+		font-size: 11px;
+		cursor: pointer;
+	}
+
+	.tn-sort-select:focus {
+		border-color: #5a8cc8;
+		outline: none;
+	}
+
+	.tn-cards-counter {
+		font-size: 11px;
+		color: #7e90a7;
+		margin-left: auto;
+		white-space: nowrap;
+	}
+
+	.tn-market-grid {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		gap: 10px;
+		padding: 2px;
+	}
+
+	@supports (display: grid) {
+		.tn-market-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+			gap: 10px;
+		}
+	}
+
+	.tn-product-card {
+		flex: 1 1 200px;
+		max-width: 280px;
+		min-width: 185px;
+		display: inline-block;
+		vertical-align: top;
+		background: #1e2229;
+		border: 1px solid rgba(255, 255, 255, 0.07);
+		border-radius: 6px;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		position: relative;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+		box-sizing: border-box;
+	}
+
+	.tn-product-card:hover {
+		border-color: rgba(90, 140, 200, 0.45);
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+	}
+
+	.tn-product-card-restricted {
+		opacity: 0.72;
+		border-color: rgba(180, 70, 70, 0.25);
+		background: #1b1c22;
+	}
+
+	.tn-product-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 4px;
+		margin-bottom: 6px;
+		min-height: 18px;
+	}
+
+	.tn-product-icon-box {
+		width: 56px;
+		height: 56px;
+		background: #121418;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 2px auto 8px auto;
+		box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+	}
+
+	.tn-product-icon {
+		width: 48px;
+		height: 48px;
+		image-rendering: -webkit-optimize-contrast;
+		image-rendering: -moz-crisp-edges;
+		image-rendering: pixelated;
+		image-rendering: crisp-edges;
+		-ms-interpolation-mode: nearest-neighbor;
+		object-fit: contain;
+	}
+
+	.tn-product-icon-placeholder {
+		font-size: 26px;
+		color: #7e90a7;
+	}
+
+	.tn-product-info {
+		flex: 1 1 auto;
+		text-align: center;
+		margin-bottom: 8px;
+	}
+
+	.tn-product-name {
+		font-weight: bold;
+		font-size: 12px;
+		line-height: 1.25;
+		color: #eef4ff;
+		margin-bottom: 4px;
+		word-break: break-word;
+		min-height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.tn-product-price-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.tn-product-price {
+		font-size: 13px;
+		font-weight: bold;
+		color: #64b5f6;
+	}
+
+	.tn-product-markup {
+		font-size: 10px;
+	}
+
+	.tn-product-actions {
+		margin-top: auto;
+	}
+
+	.tn-btn-cart {
+		display: block;
+		text-align: center;
+		padding: 5px 8px;
+		border-radius: 4px;
+		font-size: 12px;
+		font-weight: bold;
+		box-sizing: border-box;
+		cursor: pointer;
+		text-decoration: none;
+		user-select: none;
+	}
+
+	.tn-btn-primary {
+		background: #2e6297;
+		color: #ffffff !important;
+		border: 1px solid #4a80ba;
+	}
+
+	.tn-btn-primary:hover {
+		background: #3a75b2;
+	}
+
+	.tn-btn-disabled {
+		background: #25282f;
+		color: #6a7485 !important;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		cursor: not-allowed;
+	}
+
+	.tn-stepper-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.tn-stepper-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: #16191f;
+		border: 1px solid #365578;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+
+	.tn-stepper-btn {
+		flex: 0 0 28px;
+		height: 26px;
+		line-height: 26px;
+		text-align: center;
+		background: #2a4c73;
+		color: #ffffff !important;
+		font-size: 14px;
+		font-weight: bold;
+		cursor: pointer;
+		text-decoration: none;
+		user-select: none;
+	}
+
+	.tn-stepper-btn:hover {
+		background: #396599;
+	}
+
+	.tn-stepper-value {
+		flex: 1 1 auto;
+		text-align: center;
+		font-size: 11px;
+		font-weight: bold;
+		color: #a9e6a6;
+		padding: 0 4px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.tn-stepper-exact-row {
+		display: flex;
+		justify-content: center;
+	}
+
+	.tn-stepper-exact-btn {
+		font-size: 10px;
+		color: #8da4be !important;
+		background: transparent;
+		padding: 2px 6px;
+		border-radius: 2px;
+		text-decoration: none;
+	}
+
+	.tn-stepper-exact-btn:hover {
+		color: #c7dcf7 !important;
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.tn-card-qty-popover {
+		margin-top: 6px;
+		padding: 4px;
+		background: #16191f;
+		border: 1px solid #4a80ba;
+		border-radius: 4px;
+	}
+
+	.tn-card-form {
+		display: flex;
+		gap: 4px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.tn-card-qty-input {
+		width: 50px !important;
+		height: 22px;
+		padding: 2px 4px !important;
+		font-size: 11px;
+	}
+
+	.tn-card-qty-submit {
+		height: 22px;
+		padding: 2px 6px !important;
+		font-size: 11px;
+		font-weight: bold;
+	}
+
+	.tn-card-qty-cancel {
+		font-size: 11px;
+		color: #ff8080 !important;
+		padding: 2px 4px;
+	}
+</style>
+
+<div class="tn-wrap" data-scroll-id="tn-wrap">
+	<div class="tn-stack">
+		<!-- Top Toolbar Navigation -->
+		<div class="section">
+			<div class="section-content tn-toolbar">
+				<div class="tn-toolbar-row">
+					<div class="tn-workflow-group">
+						<div class="tn-workflow-label">Navigation</div>
+						{{:helper.link('Catalog', 'cart', {'PRG_trade_screen' : 'goods'}, data.screen == 'goods' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('Cart', 'calculator', {'PRG_trade_screen' : 'cart'}, data.screen == 'cart' ? 'selected' : null, 'tn-inlineLink')}}
+						{{:helper.link('My Orders', 'check', {'PRG_trade_screen' : 'orders'}, data.screen == 'orders' ? 'selected' : null, 'tn-inlineLink')}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Summary Bar Cards -->
+		<div class="tn-summary-grid">
+			<!-- Account Card -->
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Account</div>
+				<div class="tn-summary-value">
+					{{if data.has_account}}
+						{{:data.account_owner_name}}
+					{{else}}
+						<span class="tn-empty">No Linked Account</span>
+					{{/if}}
+				</div>
+				<div class="tn-summary-meta">
+					{{if data.has_account}}
+						#{{:data.account_number}} — {{:data.account_money}} {{:data.currency_short}}
+					{{else}}
+						{{if data.can_link_id_account}}
+							{{:helper.link('Link ID', null, {'PRG_account_id' : 1}, null, 'tn-inlineLink')}}
+						{{/if}}
+						{{:helper.link('Link PIN', null, {'PRG_account' : 1}, null, 'tn-inlineLink')}}
+					{{/if}}
+				</div>
+			</div>
+
+			<!-- Cart Card -->
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Shopping Cart</div>
+				<div class="tn-summary-value">{{:data.cart_count}} items</div>
+				<div class="tn-summary-meta">
+					Total: {{:data.cart_total}} {{:data.currency_short}} (Fee: {{:data.cart_fee}} {{:data.currency_short}})
+				</div>
+			</div>
+
+			<!-- Orders Status Card -->
+			<div class="tn-summary-card">
+				<div class="tn-summary-label">Supply Queue</div>
+				<div class="tn-summary-value">{{:data.my_order_count}} My Orders</div>
+				<div class="tn-summary-meta">
+					{{:data.order_count}} total orders pending in system
+				</div>
+			</div>
+		</div>
+
+		<!-- Tab 1: Catalog (goods) -->
+		{{if data.screen == 'goods'}}
+			<div class="tn-screen-view" data-view="screen-goods">
+				<div class="tn-grid">
+					<!-- Left: Stations and Categories Sidebar -->
+					<div class="tn-col tn-market-sidebar">
+						<!-- Stations Section -->
+						<div class="section">
+							<div class="section-title">Станции снабжения</div>
+							<div class="section-content">
+								{{if !data.has_visible_stations}}
+									<div class="tn-empty-panel" style="padding: 10px;">
+										<div class="tn-panel-title" style="font-size: 12px;">Нет доступных станций</div>
+										<div class="tn-panel-subtitle tn-muted" style="font-size: 11px;">Вне зоны действия сенсоров.</div>
+									</div>
+								{{else}}
+									<div class="tn-station-list-compact tn-scroll-box" data-scroll-id="tn-station-list">
+										{{for data.stations:station_entry:station_index}}
+											<div class="tn-station">
+												<div class="tn-station-name">
+													{{:helper.link(station_entry.name, null, {'PRG_station' : station_entry.uid}, station_entry.selected ? 'selected' : null, 'tn-inlineLink')}}
+												</div>
+												<div class="tn-station-meta">
+													<span class="tn-badge tn-badge-{{:station_entry.status_tone}}">{{:station_entry.status_label}}</span>
+													<span class="tn-station-faction" style="color:{{:station_entry.faction_color}}">{{:station_entry.faction}}</span>
+												</div>
+											</div>
+										{{/for}}
+									</div>
+								{{/if}}
+							</div>
+						</div>
+
+						<!-- Categories Section -->
+						{{if data.has_selected_station}}
+							<div class="section" style="margin-top: 8px;">
+								<div class="section-title">Категории</div>
+								<div class="section-content">
+									{{if data.selected_station && data.selected_station.block_reason}}
+										<div class="tn-empty" style="font-size: 11px; padding: 4px;">Каталог недоступен</div>
+									{{else data.categories && data.categories.length}}
+										<div class="tn-category-vertical-list tn-scroll-box" data-scroll-id="tn-category-list">
+											{{for data.categories:category_entry:category_index}}
+												{{:helper.link(category_entry.name, null, {'PRG_goods_category' : category_entry.name}, category_entry.selected ? 'selected' : null, 'tn-category-item tn-inlineLink')}}
+											{{/for}}
+										</div>
+									{{else}}
+										<div class="tn-empty" style="font-size: 11px; padding: 4px;">Нет категорий</div>
+									{{/if}}
+								</div>
+							</div>
+						{{/if}}
+					</div>
+
+					<!-- Right: Goods Marketplace Grid -->
+					<div class="tn-col tn-market-main">
+						{{if data.has_selected_station}}
+							<div class="section">
+								<div class="section-title">
+									{{:data.selected_station.name}}{{if data.selected_category && !data.selected_station.block_reason}} &rsaquo; {{:data.selected_category}}{{/if}}
+								</div>
+								<div class="section-content">
+									{{if data.selected_station.block_reason}}
+										<div class="notice bad" style="margin-bottom: 8px;">{{:data.selected_station.block_reason}}</div>
+										<div class="tn-empty-panel tn-goods-empty">
+											<div class="tn-panel-title">Каталог недоступен</div>
+											<div class="tn-panel-subtitle tn-muted">Связь с торговым маяком вне зоны действия или заблокирована. Для просмотра каталога и заказа товаров необходимо приблизиться к маяку на овермапе.</div>
+										</div>
+									{{else}}
+										<div id="cargo-current-category" data-station="{{:data.selected_station.uid}}" data-cat="{{:data.selected_category}}" style="display:none;"></div>
+
+										<!-- Client-side Instant Live Search & Sorting Bar -->
+										<div class="tn-market-filter-bar">
+											<div class="tn-search-box">
+												<span class="tn-search-icon">🔍</span>
+												<input type="text" id="cargo-search-input" class="tn-search-input" placeholder="Поиск по названию..." oninput="window.cargoLiveFilter && window.cargoLiveFilter()" onpropertychange="window.cargoLiveFilter && window.cargoLiveFilter()" onkeyup="window.cargoLiveFilter && window.cargoLiveFilter()">
+												<button type="button" class="tn-search-clear" title="Очистить поиск" onclick="var inp=document.getElementById('cargo-search-input'); if(inp){ inp.value=''; window.cargoLiveFilter && window.cargoLiveFilter(); inp.focus(); }">✕</button>
+											</div>
+											<div class="tn-sort-box">
+												<label for="cargo-sort-select" class="tn-sort-label">Сортировка:</label>
+												<select id="cargo-sort-select" class="tn-sort-select" onchange="window.cargoLiveSort && window.cargoLiveSort()">
+													<option value="default">По умолчанию</option>
+													<option value="price_asc">Сначала дешевле</option>
+													<option value="price_desc">Сначала дороже</option>
+													<option value="name_asc">По названию (А-Я / A-Z)</option>
+													<option value="name_desc">По названию (Я-А / Z-A)</option>
+												</select>
+											</div>
+											<div id="cargo-cards-counter" class="tn-cards-counter"></div>
+										</div>
+
+										<!-- Goods Cards Container -->
+										<div class="tn-goods-container">
+											{{if data.goods && data.goods.length}}
+												<div class="tn-scroll-box tn-goods-scroll" data-scroll-id="tn-goods-cards">
+													<div id="cargo-cards-grid" class="tn-market-grid">
+														{{for data.goods:good_entry:good_index}}
+															<div class="tn-product-card{{if !good_entry.can_add}} tn-product-card-restricted{{/if}}" data-price="{{:good_entry.price}}" data-stock="{{:good_entry.stock}}" data-id="{{:good_entry.id}}" data-index="{{:good_index}}">
+																<!-- Card Top Badge Row -->
+																<div class="tn-product-top">
+																	<div>
+																		{{if good_entry.stock <= 0}}
+																			<span class="tn-badge tn-badge-bad">Нет в наличии</span>
+																		{{else}}
+																			<span class="tn-badge tn-badge-average">Склад: {{:good_entry.stock}}</span>
+																		{{/if}}
+																	</div>
+																	<div>
+																		{{if good_entry.in_cart_amount > 0}}
+																			<span class="tn-badge tn-badge-good">В корзине: {{:good_entry.in_cart_amount}}</span>
+																		{{/if}}
+																	</div>
+																</div>
+
+																<!-- 48x48 Pixel-Art Icon in Dark Stylized Container -->
+																<div class="tn-product-icon-box">
+																	{{if good_entry.icon}}
+																		<img class="tn-product-icon" src="{{:good_entry.icon}}" alt="{{>good_entry.name}}">
+																	{{else}}
+																		<span class="tn-product-icon-placeholder">📦</span>
+																	{{/if}}
+																</div>
+
+																<!-- Product Information -->
+																<div class="tn-product-info">
+																	<div class="tn-product-name" title="{{>good_entry.name}}">{{:good_entry.name}}</div>
+																	<div class="tn-product-price-row">
+																		<span class="tn-product-price">{{:good_entry.price}} {{:data.currency_short}}</span>
+																		{{if good_entry.markup_text}}
+																			<span class="tn-product-markup tn-muted">{{:good_entry.markup_text}}</span>
+																		{{/if}}
+																	</div>
+																</div>
+
+																<!-- Card Actions / Cart Controls -->
+																<div class="tn-product-actions">
+																	{{if !good_entry.can_add}}
+																		<div unselectable="on" class="link tn-btn-cart tn-btn-disabled">Нет в наличии</div>
+																	{{else}}
+																		{{if good_entry.in_cart_amount <= 0}}
+																			{{:helper.link('В корзину 🛒', null, {'PRG_cart_add_good' : good_entry.id}, null, 'tn-btn-cart tn-btn-primary tn-inlineLink')}}
+																		{{else}}
+																			<div class="tn-stepper-wrap">
+																				<div class="tn-stepper-row">
+																					{{:helper.link('-', null, {'PRG_cart_remove_good' : good_entry.id}, null, 'tn-stepper-btn tn-stepper-minus tn-inlineLink')}}
+																					<span class="tn-stepper-value" title="{{:good_entry.in_cart_amount}} в корзине">{{:good_entry.in_cart_amount}} в корзине</span>
+																					{{:helper.link('+', null, {'PRG_cart_add_good' : good_entry.id}, good_entry.in_cart_amount >= good_entry.stock ? 'disabled' : null, 'tn-stepper-btn tn-stepper-plus tn-inlineLink')}}
+																				</div>
+																				<div class="tn-stepper-exact-row">
+																					{{:helper.link('Кол-во...', null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-stepper-exact-btn tn-inlineLink')}}
+																				</div>
+																			</div>
+																		{{/if}}
+
+																		{{if good_entry.quantity_form_open}}
+																			<div class="tn-card-qty-popover">
+																				<form class="tn-form tn-card-form" method="get" action="?src={{:data.src}}" onsubmit="var fld=(this.elements &amp;&amp; this.elements['PRG_cart_set_amount']) ? this.elements['PRG_cart_set_amount'] : this.PRG_cart_set_amount; var amt = parseInt(fld ? fld.value : 0, 10); if(isNaN(amt) || amt &lt; 0) { alert('Введите корректное число.'); return false; } var maxAmt = parseInt(fld ? fld.getAttribute('max') : 0, 10); if(maxAmt &gt; 0 &amp;&amp; amt &gt; maxAmt) { alert('Нельзя заказать больше остатка на складе (' + maxAmt + ').'); return false; }">
+																					<input type="hidden" name="src" value="{{:data.src}}">
+																					<input type="hidden" name="PRG_cart_set_form" value="{{:good_entry.id}}">
+																					<input type="number" name="PRG_cart_set_amount" min="0" max="{{:good_entry.stock}}" value="{{:good_entry.in_cart_amount || 1}}" class="tn-card-qty-input" required>
+																					<input type="submit" value="OK" class="tn-card-qty-submit">
+																					{{:helper.link('✕', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-card-qty-cancel tn-inlineLink')}}
+																				</form>
+																			</div>
+																		{{/if}}
+																	{{/if}}
+																</div>
+															</div>
+														{{/for}}
+													</div>
+													<div id="cargo-search-no-results" class="tn-empty-panel tn-goods-empty" style="display:none;">
+														<div class="tn-panel-title">Ничего не найдено</div>
+														<div class="tn-panel-subtitle tn-muted">Попробуйте изменить поисковый запрос.</div>
+													</div>
+												</div>
+											{{else}}
+												<div class="tn-empty-panel tn-goods-empty">
+													<div class="tn-panel-title">Нет товаров в этой категории</div>
+													<div class="tn-panel-subtitle tn-muted">Выберите другую категорию или станцию.</div>
+												</div>
+											{{/if}}
+										</div>
+									{{/if}}
+								</div>
+							</div>
+						{{else}}
+							<div class="section">
+								<div class="section-title">Каталог товаров</div>
+								<div class="section-content">
+									<div class="tn-empty-panel">
+										<div class="tn-panel-title">Выберите станцию снабжения</div>
+										<div class="tn-panel-subtitle tn-muted">Выберите доступную станцию слева для просмотра категорий и заказа товаров.</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+
+			<!-- Instant Search & Sorting Logic -->
+			<script id="cargo-market-script">
+			window.cargoLiveFilter = function() {
+				var searchInput = document.getElementById('cargo-search-input');
+				var filterText = searchInput ? searchInput.value.toLowerCase().replace(/^\s+|\s+$/g, '') : '';
+				var grid = document.getElementById('cargo-cards-grid');
+				if (!grid) return;
+				var cards = [];
+				if (window.jQuery) {
+					cards = $(grid).find('.tn-product-card').get();
+				} else if (grid.querySelectorAll) {
+					var nodeList = grid.querySelectorAll('.tn-product-card');
+					for (var k = 0; k < nodeList.length; k++) cards.push(nodeList[k]);
+				}
+				var visibleCount = 0;
+				for (var i = 0; i < cards.length; i++) {
+					var card = cards[i];
+					var nameEl = card.querySelector ? card.querySelector('.tn-product-name') : (window.jQuery ? $(card).find('.tn-product-name')[0] : null);
+					var name = nameEl ? (nameEl.textContent || nameEl.innerText || '').toLowerCase() : '';
+					if (!filterText || name.indexOf(filterText) !== -1) {
+						card.style.display = '';
+						visibleCount++;
+					} else {
+						card.style.display = 'none';
+					}
+				}
+				var noResults = document.getElementById('cargo-search-no-results');
+				if (noResults) {
+					noResults.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
+				}
+				var counter = document.getElementById('cargo-cards-counter');
+				if (counter) {
+					counter.innerHTML = 'Товаров: ' + visibleCount + (filterText ? ' <span class="tn-muted">(из ' + cards.length + ')</span>' : '');
+				}
+				window._cargoSearchQuery = filterText;
+			};
+
+			window.cargoLiveSort = function() {
+				var sortSelect = document.getElementById('cargo-sort-select');
+				var sortVal = sortSelect ? sortSelect.value : 'default';
+				var grid = document.getElementById('cargo-cards-grid');
+				if (!grid) return;
+				var cards = [];
+				if (window.jQuery) {
+					cards = $(grid).find('.tn-product-card').get();
+				} else if (grid.querySelectorAll) {
+					var nodeList = grid.querySelectorAll('.tn-product-card');
+					for (var k = 0; k < nodeList.length; k++) cards.push(nodeList[k]);
+				}
+				if (!cards.length) return;
+
+				cards.sort(function(a, b) {
+					if (sortVal === 'price_asc') {
+						return (parseFloat(a.getAttribute('data-price')) || 0) - (parseFloat(b.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'price_desc') {
+						return (parseFloat(b.getAttribute('data-price')) || 0) - (parseFloat(a.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'name_asc' || sortVal === 'name_desc') {
+						var elA = a.querySelector ? a.querySelector('.tn-product-name') : (window.jQuery ? $(a).find('.tn-product-name')[0] : null);
+						var elB = b.querySelector ? b.querySelector('.tn-product-name') : (window.jQuery ? $(b).find('.tn-product-name')[0] : null);
+						var nameA = (elA ? (elA.textContent || elA.innerText || '') : '').toLowerCase();
+						var nameB = (elB ? (elB.textContent || elB.innerText || '') : '').toLowerCase();
+						var cmp = nameA.localeCompare ? nameA.localeCompare(nameB) : (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
+						return sortVal === 'name_asc' ? cmp : -cmp;
+					} else {
+						return (parseInt(a.getAttribute('data-index'), 10) || 0) - (parseInt(b.getAttribute('data-index'), 10) || 0);
+					}
+				});
+
+				for (var i = 0; i < cards.length; i++) {
+					grid.appendChild(cards[i]);
+				}
+				window._cargoSortVal = sortVal;
+			};
+
+			window.cargoApplyFilterAndSort = function() {
+				var catEl = document.getElementById('cargo-current-category');
+				var currentCatKey = catEl ? ((catEl.getAttribute('data-station') || '') + '::' + (catEl.getAttribute('data-cat') || '')) : '';
+				if (window._cargoLastCategoryKey !== undefined && window._cargoLastCategoryKey !== currentCatKey) {
+					window._cargoSearchQuery = '';
+					var searchInput = document.getElementById('cargo-search-input');
+					if (searchInput) searchInput.value = '';
+				}
+				window._cargoLastCategoryKey = currentCatKey;
+
+				var searchInput = document.getElementById('cargo-search-input');
+				if (searchInput && window._cargoSearchQuery !== undefined && window._cargoSearchQuery !== '') {
+					searchInput.value = window._cargoSearchQuery;
+				}
+				var sortSelect = document.getElementById('cargo-sort-select');
+				if (sortSelect && window._cargoSortVal !== undefined) {
+					sortSelect.value = window._cargoSortVal;
+				}
+				if (window.cargoLiveSort) window.cargoLiveSort();
+				if (window.cargoLiveFilter) window.cargoLiveFilter();
+			};
+
+			if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+				window.NanoStateManager.addAfterUpdateCallback('cargo_order_market', function(data) {
+					if (window.cargoApplyFilterAndSort) {
+						window.cargoApplyFilterAndSort();
+					}
+					return data;
+				});
+			}
+			</script>
+			<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none;" onload="var s = document.getElementById('cargo-market-script'); if(s && !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" onerror="var s = document.getElementById('cargo-market-script'); if(s && !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }">
+
+		<!-- Tab 2: Cart (cart) -->
+		{{else data.screen == 'cart'}}
+			<div class="tn-screen-view" data-view="screen-cart">
+				<div class="tn-grid">
+					<!-- Left: Cart Items Review -->
+					<div class="tn-col">
+						<div class="section">
+							<div class="section-title">Cart Items ({{:data.cart_count}})</div>
+							<div class="section-content">
+								{{if !data.cart_count}}
+									<div class="tn-empty-panel">
+										<div class="tn-panel-title">Cart is empty</div>
+										<div class="tn-panel-subtitle tn-muted">Browse the catalog to add items to your cart.</div>
+										<div style="margin-top: 10px;">
+											{{:helper.link('Go to Catalog', 'cart', {'PRG_trade_screen' : 'goods'}, null, 'tn-inlineLink')}}
+										</div>
+									</div>
+								{{else}}
+									<div class="tn-actions" style="margin-bottom: 8px;">
+										{{:helper.link('Clear Entire Cart', null, {'PRG_cart_reset' : 1}, null, 'tn-inlineLink')}}
+										{{:helper.link('Add More Items', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-inlineLink')}}
+									</div>
+									<div class="tn-flow-list tn-scroll-box tn-cart-scroll" data-scroll-id="tn-cart-list">
+										{{for data.cart_groups:cart_group:cart_group_index}}
+											<div class="tn-list-block">
+												<div class="tn-list-block-title">{{:cart_group.station_name}}</div>
+												{{for cart_group.categories:cart_category:cart_category_index}}
+													<div style="margin-top: 6px;">
+														<div class="tn-panel-label">{{:cart_category.name}}</div>
+														{{for cart_category.items:cart_item:cart_item_index}}
+															<div class="tn-list-row">
+																<div class="tn-list-row-main">
+																	<strong>{{:cart_item.name}}</strong> x{{:cart_item.amount}}
+																	<div class="tn-muted" style="font-size: 11px;">
+																		{{if cart_item.unit_price}}
+																			Unit: {{:cart_item.unit_price}} {{:data.currency_short}} | 
+																		{{/if}}
+																		Total: {{:cart_item.price}} {{:data.currency_short}}
+																	</div>
+																</div>
+																<div class="tn-list-row-side">
+																	{{:helper.link('-1', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : 1}, null, 'tn-inlineLink')}}
+																	{{:helper.link('Remove', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : cart_item.amount}, null, 'tn-inlineLink')}}
+																</div>
+															</div>
+														{{/for}}
+													</div>
+												{{/for}}
+											</div>
+										{{/for}}
+									</div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+
+					<!-- Right: Checkout & Account Linking -->
+					<div class="tn-col">
+						<!-- Financial Breakdown -->
+						<div class="section">
+							<div class="section-title">Order Total Breakdown</div>
+							<div class="section-content">
+								<div class="tn-kv-grid">
+									<div class="tn-kv">
+										<div class="tn-panel-label">Items Subtotal</div>
+										<div class="tn-kv-value">{{:data.cart_subtotal}} {{:data.currency_short}}</div>
+									</div>
+									<div class="tn-kv">
+										<div class="tn-panel-label">Handling Fee ({{:data.handling_fee_percent}})</div>
+										<div class="tn-kv-value">{{:data.cart_fee}} {{:data.currency_short}}</div>
+									</div>
+									<div class="tn-kv">
+										<div class="tn-panel-label">Total Due</div>
+										<div class="tn-kv-value" style="color: #64b5f6;">{{:data.cart_total}} {{:data.currency_short}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Account Linking -->
+						<div class="section">
+							<div class="section-title">Customer Bank Account</div>
+							<div class="section-content">
+								{{if data.has_account}}
+									<div class="tn-panel">
+										<div class="tn-panel-label">Linked Account</div>
+										<div class="tn-panel-title">{{:data.account_owner_name}} #{{:data.account_number}}</div>
+										<div class="tn-panel-subtitle">
+											Balance: <strong>{{:data.account_money}} {{:data.currency_short}}</strong>
+											{{if data.account_money < data.cart_total && data.cart_count > 0}}
+												<span style="color: #ff8080; margin-left: 8px;">(Insufficient balance)</span>
+											{{/if}}
+										</div>
+										<hr class="tn-section-divider">
+										<div class="tn-actions">
+											{{:helper.link('Unlink Account', null, {'PRG_account_unlink' : 1}, null, 'tn-inlineLink')}}
+										</div>
+									</div>
+								{{else}}
+									<div class="notice bad">
+										A personal bank account must be linked before an order can be submitted.
+									</div>
+									<div class="tn-actions" style="margin-top: 8px;">
+										{{if data.can_link_id_account}}
+											{{:helper.link('Link Inserted ID Card', null, {'PRG_account_id' : 1}, null, 'tn-inlineLink')}}
+										{{/if}}
+										{{:helper.link('Link via Account # and PIN', null, {'PRG_account' : 1}, null, 'tn-inlineLink')}}
+									</div>
+								{{/if}}
+							</div>
+						</div>
+
+						<!-- Order Submission Form -->
+						<div class="section">
+							<div class="section-title">Submit Order Request</div>
+							<div class="section-content">
+								{{if data.submit_block_reason}}
+									<div class="notice average">{{:data.submit_block_reason}}</div>
+								{{/if}}
+
+								{{if data.orders_locked}}
+									<div class="notice average">Ordering cooldown active. Please wait a few seconds.</div>
+								{{/if}}
+
+								<div class="tn-form-shell" style="margin-top: 8px;">
+									<form class="tn-form" method="get" action="?src={{:data.src}}" onsubmit="if(!this.PRG_order_reason.value || !this.PRG_order_reason.value.trim()) { alert('Order reason is mandatory.'); return false; }">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<input type="hidden" name="PRG_build_order_form" value="1">
+										<label class="tn-form-label-wide">Order Justification / Reason (Required):</label>
+										<textarea name="PRG_order_reason" required placeholder="State your department, project, or reason for requesting these supplies..." {{if !data.can_submit_order}}disabled{{/if}}>{{:data.order_reason}}</textarea>
+										<div style="margin-top: 8px; width: 100%;">
+											<input type="submit" value="Submit Order Request" {{if !data.can_submit_order}}disabled class="disabled"{{/if}}>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- Tab 3: Orders (orders) -->
+		{{else data.screen == 'orders'}}
+			<div class="tn-screen-view" data-view="screen-orders">
+				<div class="tn-grid">
+					<!-- Left: Orders Queue List -->
+					<div class="tn-col">
+						<div class="section">
+							<div class="section-title">Supply Order Queue</div>
+							<div class="section-content">
+								{{if !data.order_count}}
+									<div class="tn-empty-panel">
+										<div class="tn-panel-title">No pending orders</div>
+										<div class="tn-panel-subtitle tn-muted">No orders are currently in the supply queue.</div>
+									</div>
+								{{else}}
+									<div class="tn-panel">
+										<div class="tn-panel-header">
+											<div class="tn-panel-copy">
+												<div class="tn-panel-label">Queue Overview</div>
+												<div class="tn-panel-title">{{:data.order_count}} orders pending in system</div>
+												<div class="tn-panel-subtitle tn-muted">You may review all orders, and cancel orders submitted by your account.</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="tn-scroll-box tn-orders-scroll" data-scroll-id="tn-orders-table">
+										<table class="tn-table">
+											<thead>
+												<tr>
+													<th class="tn-w-20">Order</th>
+													<th class="tn-w-30">Requester</th>
+													<th class="tn-w-15">Total</th>
+													<th class="tn-w-15">Status</th>
+													<th class="tn-w-20 tn-table-actions">Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												{{for data.orders:order_entry:order_index}}
+													<tr class="candystripe tn-order-row{{if order_entry.selected}} tn-row-selected{{/if}}">
+														<td>
+															{{:helper.link('#' + order_entry.id, null, {'PRG_view_order' : order_entry.id}, order_entry.selected ? 'selected' : null, 'tn-inlineLink')}}
+														</td>
+														<td>
+															{{:order_entry.requestor_name}}
+															{{if order_entry.is_mine}}
+																<span class="tn-badge tn-badge-good" style="margin-left: 4px;">Mine</span>
+															{{/if}}
+														</td>
+														<td>{{:order_entry.total}} {{:data.currency_short}}</td>
+														<td>
+															<span class="tn-badge tn-badge-{{:order_entry.status_tone}}">{{:order_entry.status}}</span>
+														</td>
+														<td class="tn-table-actions">
+															{{if order_entry.can_cancel}}
+																{{:helper.link('Cancel', null, {'PRG_cancel_order' : order_entry.id}, null, 'tn-inlineLink')}}
+															{{else}}
+																<span class="tn-muted" style="font-size: 11px;">Locked</span>
+															{{/if}}
+														</td>
+													</tr>
+												{{/for}}
+											</tbody>
+										</table>
+									</div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+
+					<!-- Right: Selected Order Detail -->
+					<div class="tn-col">
+						{{if data.has_selected_order}}
+							<div class="section">
+								<div class="section-title">Order Details: #{{:data.selected_order.id}}</div>
+								<div class="section-content">
+									<div class="tn-panel">
+										<div class="tn-panel-header">
+											<div class="tn-panel-copy">
+												<div class="tn-panel-label">Requester Information</div>
+												<div class="tn-panel-title">{{:data.selected_order.requestor_name}}</div>
+												<div class="tn-panel-subtitle tn-muted">
+													Account #{{:data.selected_order.requestor_account_number}}
+													{{if data.selected_order.is_mine}}
+														<span class="tn-badge tn-badge-good">Your Account</span>
+													{{/if}}
+												</div>
+											</div>
+											<div class="tn-panel-side">
+												<span class="tn-badge tn-badge-{{:data.selected_order.status_tone}}">{{:data.selected_order.status}}</span>
+											</div>
+										</div>
+
+										<div class="tn-kv-grid">
+											<div class="tn-kv">
+												<div class="tn-panel-label">Base Cost</div>
+												<div class="tn-kv-value">{{:data.selected_order.cost}} {{:data.currency_short}}</div>
+											</div>
+											<div class="tn-kv">
+												<div class="tn-panel-label">Handling Fee</div>
+												<div class="tn-kv-value">{{:data.selected_order.fee}} {{:data.currency_short}}</div>
+											</div>
+											<div class="tn-kv">
+												<div class="tn-panel-label">Total Cost</div>
+												<div class="tn-kv-value" style="color: #64b5f6;">{{:data.selected_order.total}} {{:data.currency_short}}</div>
+											</div>
+										</div>
+
+										<div style="margin-top: 8px;">
+											<div class="tn-panel-label">Reason / Purpose:</div>
+											<div class="tn-note" style="margin-top: 4px; font-style: italic;">
+												{{:data.selected_order.reason}}
+											</div>
+										</div>
+
+										{{if data.selected_order.can_cancel}}
+											<hr class="tn-section-divider">
+											<div class="tn-actions">
+												{{:helper.link('Cancel This Order', 'cross', {'PRG_cancel_order' : data.selected_order.id}, null, 'redButton tn-inlineLink')}}
+											</div>
+										{{/if}}
+									</div>
+
+									<!-- Order Contents List -->
+									<div class="tn-panel" style="margin-top: 8px;">
+										<div class="tn-panel-label">Requested Items</div>
+										<div class="tn-flow-list tn-scroll-box tn-order-details-scroll" data-scroll-id="tn-order-details" style="margin-top: 6px;">
+											{{for data.selected_order.contents:order_group:order_group_index}}
+												<div class="tn-list-block">
+													<div class="tn-list-block-title">{{:order_group.station_name}}</div>
+													{{for order_group.categories:order_category:order_category_index}}
+														<div style="margin-top: 4px;">
+															<div class="tn-panel-label">{{:order_category.name}}</div>
+															{{for order_category.items:order_item:order_item_index}}
+																<div class="tn-list-row">
+																	<div class="tn-list-row-main">{{:order_item.name}} x{{:order_item.amount}}</div>
+																	<div class="tn-list-row-side">{{:order_item.price}} {{:data.currency_short}}</div>
+																</div>
+															{{/for}}
+														</div>
+													{{/for}}
+												</div>
+											{{/for}}
+										</div>
+									</div>
+								</div>
+							</div>
+						{{else}}
+							<div class="section">
+								<div class="section-title">Order Details</div>
+								<div class="section-content">
+									<div class="tn-empty-panel">
+										<div class="tn-panel-title">Select an order</div>
+										<div class="tn-panel-subtitle tn-muted">Click an order ID from the queue to view justification, breakdown, and items.</div>
+									</div>
+								</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</div>

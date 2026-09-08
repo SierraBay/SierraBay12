@@ -1,8 +1,3 @@
-#define CONTRACT_STATUS_AVAILABLE "available"
-#define CONTRACT_STATUS_ACTIVE "active"
-#define CONTRACT_STATUS_COMPLETED "completed"
-#define CONTRACT_STATUS_FAILED "failed"
-
 /obj/structure/closet/crate/trade_contract
 	name = "sealed contract crate"
 	desc = "A sealed freight crate assigned to a trade-network delivery contract."
@@ -15,9 +10,15 @@
 	var/reward = 0
 	var/penalty = 0
 	var/allow_contract_disposal = FALSE
+	var/datum/trade_contract/linked_contract
 
 /obj/structure/closet/crate/trade_contract/proc/GetLinkedContract()
-	return SSsupply.GetTradeContract(contract_id)
+	if(istype(linked_contract) && !QDELETED(linked_contract))
+		return linked_contract
+	if(contract_id)
+		linked_contract = SSsupply.GetTradeContract(contract_id)
+		return linked_contract
+	return null
 
 /obj/structure/closet/crate/trade_contract/proc/IsActiveContractCrate()
 	var/datum/trade_contract/contract = GetLinkedContract()
@@ -48,14 +49,28 @@
 	if(penalty)
 		to_chat(user, SPAN_WARNING("Tampering penalty: [round(penalty)] [GLOB.using_map.local_currency_name_short]."))
 
+/obj/structure/closet/crate/trade_contract/proc/ConfirmTamper(mob/user)
+	if(!user || !user.client)
+		return TRUE
+	var/currency = GLOB.using_map ? GLOB.using_map.local_currency_name_short : "credits"
+	var/penalty_display = round(penalty)
+	var/confirm = alert(
+		user,
+		"Breaking the security seal will void trade contract #[contract_id] and incur a tampering penalty of [penalty_display] [currency]. Are you sure you want to breach the seal?",
+		"Breach Cargo Seal",
+		"Breach Seal",
+		"Cancel"
+	)
+	return confirm == "Breach Seal"
+
 /obj/structure/closet/crate/trade_contract/proc/HandleTamper(mob/user, reason = "Tampering detected.")
 	var/datum/trade_contract/contract = GetLinkedContract()
 	if(!istype(contract) || contract.status != CONTRACT_STATUS_ACTIVE)
 		return FALSE
-	var/user_name = user ? user.real_name : null
+	var/user_name = user ? (user.real_name || user.name) : null
 	visible_message(
-		SPAN_DANGER("\The [src] emits a sharp warning tone and locks down."),
-		SPAN_DANGER("A warning tone sounds from \the [src].")
+		SPAN_DANGER("\The [src] security seal is breached! A sharp warning tone sounds as the container initiates emergency lockdown disposal!"),
+		SPAN_DANGER("A sharp alarm sounds from \the [src] as its security seal is breached!")
 	)
 	contract.Fail(reason, 2, user_name)
 	return TRUE
@@ -65,26 +80,40 @@
 		return FALSE
 	return ..()
 
-/obj/structure/closet/crate/trade_contract/toggle(mob/user as mob)
+/obj/structure/closet/crate/trade_contract/toggle(mob/user)
 	if(!opened && IsActiveContractCrate())
+		if(!ConfirmTamper(user))
+			to_chat(user, SPAN_NOTICE("You decide against breaching the security seal on \the [src]."))
+			return
 		HandleTamper(user, "Cargo seal was broken before delivery.")
 		return
 	return ..()
 
 /obj/structure/closet/crate/trade_contract/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(!opened && IsActiveContractCrate())
-		HandleTamper(user, "[user ? user.real_name : "Unknown"] tampered with the cargo seal.")
+		if(user && user.a_intent != I_HURT && !isCrowbar(tool) && !isWirecutter(tool) && !isWelder(tool) && !isScrewdriver(tool) && !istype(tool, /obj/item/gun/energy/plasmacutter))
+			to_chat(user, SPAN_NOTICE("\The [src] is sealed for trade contract #[contract_id]. Use a prying or cutting tool to breach the seal."))
+			return TRUE
+		if(!ConfirmTamper(user))
+			to_chat(user, SPAN_NOTICE("You decide against tampering with the security seal on \the [src]."))
+			return TRUE
+		HandleTamper(user, "[user ? (user.real_name || user.name) : "Unknown"] tampered with the cargo seal.")
 		return TRUE
 	return ..()
 
 /obj/structure/closet/crate/trade_contract/use_weapon(obj/item/weapon, mob/user, list/click_params)
 	if(!opened && IsActiveContractCrate())
-		HandleTamper(user, "[user ? user.real_name : "Unknown"] attempted to force the crate open.")
+		if(!ConfirmTamper(user))
+			to_chat(user, SPAN_NOTICE("You hold back from forcing open the security seal on \the [src]."))
+			return TRUE
+		HandleTamper(user, "[user ? (user.real_name || user.name) : "Unknown"] attempted to force the crate open.")
 		return TRUE
 	return ..()
 
 /obj/structure/closet/crate/trade_contract/slice_into_parts(obj/W, mob/user)
 	if(IsActiveContractCrate())
+		if(!ConfirmTamper(user))
+			return
 		HandleTamper(user, "Contract cargo was dismantled before delivery.")
 		return
 	return ..()
@@ -93,7 +122,8 @@
 	if(!allow_contract_disposal)
 		var/datum/trade_contract/contract = GetLinkedContract()
 		if(istype(contract) && contract.status == CONTRACT_STATUS_ACTIVE)
-			contract.Fail("Contract cargo was destroyed or lost in transit.")
+			contract.Fail("Contract cargo was destroyed or lost in transit.", 2)
+	linked_contract = null
 	return ..()
 
 /datum/trade_contract
@@ -115,13 +145,27 @@
 	var/distance = 0
 	var/status = CONTRACT_STATUS_AVAILABLE
 	var/list/contents = list()
+	var/cargo_summary
 	var/datum/money_account/linked_account
 	var/accepted_by
 	var/failure_reason
+	var/actual_penalty = 0
 	var/created_at = 0
 	var/accepted_at = 0
 	var/resolved_at = 0
 	var/obj/structure/closet/crate/trade_contract/assigned_crate
+
+/datum/trade_contract/Destroy()
+	SSsupply?.trade_contracts -= src
+	linked_account = null
+	if(assigned_crate && !QDELETED(assigned_crate))
+		assigned_crate.allow_contract_disposal = TRUE
+		qdel(assigned_crate)
+	assigned_crate = null
+	if(islist(contents))
+		contents.Cut()
+		contents = null
+	return ..()
 
 /datum/trade_contract/proc/GetSourceStation()
 	return SSsupply.GetStationByUid(source_uid)
@@ -158,20 +202,23 @@
 	return "average"
 
 /datum/trade_contract/proc/GetContentsInfo()
-	var/text = ""
+	var/list/entries = list()
 	for(var/list/content as anything in contents)
 		if(!islist(content))
 			continue
-		text += "<li>[content["amount"]]x [content["name"]]</li>"
-	return text
+		entries += "<li>[content["amount"]]x [content["name"]]</li>"
+	return jointext(entries, "")
 
 /datum/trade_contract/proc/GetSummaryText()
+	if(cargo_summary)
+		return cargo_summary
 	var/list/parts = list()
 	for(var/list/content as anything in contents)
 		if(!islist(content))
 			continue
 		parts += "[content["amount"]]x [content["name"]]"
-	return jointext(parts, ", ")
+	cargo_summary = jointext(parts, ", ")
+	return cargo_summary
 
 /datum/trade_contract/proc/GetDisplayCargoText()
 	return GetSummaryText()
@@ -209,8 +256,8 @@
 	if(status == CONTRACT_STATUS_COMPLETED)
 		return "[round(reward)] [GLOB.using_map.local_currency_name_short] paid."
 	if(status == CONTRACT_STATUS_FAILED)
-		if(penalty)
-			return "[failure_reason || "Contract failed."] ([round(penalty)] [GLOB.using_map.local_currency_name_short] penalty)"
+		if(actual_penalty > 0)
+			return "[failure_reason || "Contract failed."] ([round(actual_penalty)] [GLOB.using_map.local_currency_name_short] penalty)"
 		return failure_reason || "Contract failed."
 	return null
 
@@ -223,10 +270,12 @@
 	return (source_station in SSsupply.visible_trading_stations) && (destination_station in SSsupply.visible_trading_stations)
 
 /datum/trade_contract/proc/CanStayActive()
-	return GetSourceStation() && GetDestinationStation()
+	var/datum/trading_station/source_station = GetSourceStation()
+	var/datum/trading_station/destination_station = GetDestinationStation()
+	return istype(source_station) && istype(destination_station) && (destination_station in SSsupply.visible_trading_stations)
 
 /datum/trade_contract/proc/HandleActiveTargetLoss()
-	Fail("Route data was lost before delivery.")
+	Fail("Route data was lost before delivery.", 0)
 
 /datum/trade_contract/proc/GetAssignedCrate()
 	if(istype(assigned_crate) && !QDELETED(assigned_crate))
@@ -244,16 +293,19 @@
 		return crate
 	return null
 
-/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon)
-	if(status != CONTRACT_STATUS_AVAILABLE || QDELETED(receiver_beacon))
+/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null)
+	if(status != CONTRACT_STATUS_AVAILABLE)
 		return FALSE
 
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(source_station) || !istype(destination_station))
 		return FALSE
-	if(SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station))
+	if(!(source_station in SSsupply.visible_trading_stations) || !(destination_station in SSsupply.visible_trading_stations))
 		return FALSE
+	if(receiver_beacon)
+		if(QDELETED(receiver_beacon) || SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station))
+			return FALSE
 
 	for(var/list/content as anything in contents)
 		if(!islist(content))
@@ -271,16 +323,25 @@
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(source_station) || !istype(destination_station))
 		return "Contract route data is invalid."
-	if(!CanAccept(receiver_beacon))
-		var/range_block = source_station ? SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station) : null
-		if(range_block)
-			return "[source_station.name]: [range_block]"
-		return "The source station cannot assemble this cargo right now."
+	if(!(source_station in SSsupply.visible_trading_stations))
+		return "[source_station.name] is out of communication range."
+	if(!(destination_station in SSsupply.visible_trading_stations))
+		return "[destination_station.name] is out of communication range."
+	var/range_block = SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
+	if(range_block)
+		return "[source_station.name]: [range_block]"
+	for(var/list/content as anything in contents)
+		if(!islist(content) || source_station.GetGoodAmount(content["category"], content["good_id"]) < content["amount"])
+			return "The source station cannot assemble this cargo right now."
 	return null
 
 /datum/trade_contract/proc/Accept(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account)
-	if(!CanAccept(receiver_beacon) || !istype(account))
+	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon) || !istype(account))
 		return FALSE
+
+	for(var/list/content as anything in contents)
+		if(!islist(content) || !ispath(content["item_path"], /atom/movable))
+			return FALSE
 
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
@@ -290,15 +351,12 @@
 
 	for(var/list/content as anything in contents)
 		var/item_path = content["item_path"]
-		if(!ispath(item_path, /atom/movable))
-			crate.allow_contract_disposal = TRUE
-			qdel(crate)
-			return FALSE
 		for(var/i in 1 to content["amount"])
 			new item_path(crate)
 		source_station.SetGoodAmount(content["category"], content["good_id"], max(0, source_station.GetGoodAmount(content["category"], content["good_id"]) - content["amount"]))
 
 	crate.contract_id = id
+	crate.linked_contract = src
 	crate.contract_serial = contract_serial
 	crate.destination_uid = destination_uid
 	crate.destination_name = destination_station ? destination_station.name : "Unknown"
@@ -316,6 +374,8 @@
 /datum/trade_contract/proc/CanDeliver(obj/machinery/trade_beacon/sending/sender_beacon)
 	if(status != CONTRACT_STATUS_ACTIVE || QDELETED(sender_beacon) || !istype(linked_account))
 		return FALSE
+	if(sender_beacon.export_cooldown > world.time)
+		return FALSE
 
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(destination_station))
@@ -329,6 +389,8 @@
 		return "Select a sending beacon first."
 	if(status != CONTRACT_STATUS_ACTIVE)
 		return "This contract is not active."
+	if(!istype(linked_account))
+		return "Linked payment account is invalid or missing."
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!destination_station)
 		return "The destination station is unavailable."
@@ -342,17 +404,20 @@
 		return "The sending beacon is on cooldown."
 	return null
 
-/datum/trade_contract/proc/Fail(reason = "Contract failed.", penalty_multiplier = 0, failed_by = null)
+/datum/trade_contract/proc/Fail(reason = "Contract failed.", penalty_multiplier = null, failed_by = null)
 	if(status == CONTRACT_STATUS_COMPLETED || status == CONTRACT_STATUS_FAILED)
 		return FALSE
 
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
-	var/penalty_amount = round(base_value * penalty_multiplier)
+	var/penalty_amount = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
 	var/account_name = accepted_by || (linked_account ? linked_account.owner_name : "Unassigned")
 	if(istype(linked_account) && penalty_amount > 0 && linked_account.money > 0)
 		penalty_amount = min(penalty_amount, linked_account.money)
 		linked_account.withdraw(penalty_amount, "Trade Contract Penalty", "Trade Network")
+		actual_penalty = penalty_amount
+	else
+		actual_penalty = 0
 
 	var/obj/structure/closet/crate/trade_contract/crate = GetAssignedCrate()
 	if(istype(crate) && !QDELETED(crate))
@@ -360,6 +425,7 @@
 		qdel(crate)
 	assigned_crate = null
 
+	cargo_summary = GetSummaryText()
 	status = CONTRACT_STATUS_FAILED
 	failure_reason = reason
 	resolved_at = world.time
@@ -367,10 +433,12 @@
 		"Contract",
 		account_name,
 		"<li>Contract #[id]: [GetSummaryText()]</li><li>Route: [source_station ? source_station.name : "Unknown"] -> [destination_station ? destination_station.name : "Unknown"]</li><li>Status: Failed</li><li>Reason: [reason]</li>[failed_by ? "<li>Triggered by: [failed_by]</li>" : ""]",
-		-penalty_amount,
+		-actual_penalty,
 		FALSE,
 		null
 	)
+	linked_account = null
+	SSsupply?.TrimResolvedContracts()
 	return TRUE
 
 /datum/trade_contract/proc/Deliver(obj/machinery/trade_beacon/sending/sender_beacon)
@@ -380,20 +448,25 @@
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	var/obj/structure/closet/crate/trade_contract/crate = GetCrate(sender_beacon)
-	var/list/content = length(contents) ? contents[1] : null
-	var/delivery_amount = islist(content) ? content["amount"] : 0
 	if(!istype(crate))
 		return FALSE
 	if(!sender_beacon.StartExport())
 		return FALSE
 
+	cargo_summary = GetSummaryText()
 	crate.allow_contract_disposal = TRUE
 	qdel(crate)
 	assigned_crate = null
 	linked_account.deposit(reward, "Trade Contract Delivery", "Trade Network")
 	if(istype(destination_station))
-		if(destination_category && destination_good_id && isnum(delivery_amount) && delivery_amount > 0)
-			SSsupply.ApplyTradeTransaction(destination_station, destination_category, destination_good_id, delivery_amount, "sell")
+		for(var/list/content as anything in contents)
+			if(!islist(content))
+				continue
+			var/target_cat = content["category"] || destination_category
+			var/target_good = content["good_id"] || destination_good_id
+			var/delivery_amount = content["amount"]
+			if(target_cat && target_good && isnum(delivery_amount) && delivery_amount > 0)
+				SSsupply.ApplyTradeTransaction(destination_station, target_cat, target_good, delivery_amount, "sell")
 		destination_station.AddToWealth(reward, TRUE)
 	if(istype(source_station))
 		source_station.AddToWealth(round(reward * 0.25), TRUE)
@@ -408,10 +481,13 @@
 		TRUE,
 		get_turf(sender_beacon)
 	)
+	linked_account = null
+	SSsupply?.TrimResolvedContracts()
 	return TRUE
 
 /datum/trade_contract/caravan_rendezvous
-	var/briefing_text = "Transmit market intelligence package"
+	var/briefing_text = "Transmit market intelligence package (digital data packet, no physical cargo crate)"
+	var/trade_window_end = 0
 
 /datum/trade_contract/caravan_rendezvous/proc/GetCaravanStation()
 	return GetDestinationStation()
@@ -436,9 +512,9 @@
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	switch(status)
 		if(CONTRACT_STATUS_AVAILABLE)
-			return "Accept near [source_station ? source_station.name : "the briefing station"] to download the market-intelligence packet."
+			return "Accept near [source_station ? source_station.name : "the briefing station"] to download the market-intelligence packet (digital transmission, no crate dispensed)."
 		if(CONTRACT_STATUS_ACTIVE)
-			return "Move within trade range of [caravan_station ? caravan_station.name : "the target caravan"] and transmit the packet through the sending beacon."
+			return "Move within trade range of [caravan_station ? caravan_station.name : "the target caravan"] and transmit the digital packet through the sending beacon."
 		if(CONTRACT_STATUS_COMPLETED)
 			return "Market intelligence transmitted."
 		if(CONTRACT_STATUS_FAILED)
@@ -446,18 +522,9 @@
 	return ..()
 
 /datum/trade_contract/caravan_rendezvous/GetStatusText()
-	var/datum/trading_station/source_station = GetSourceStation()
-	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
-	switch(status)
-		if(CONTRACT_STATUS_AVAILABLE)
-			return "Accept near [source_station ? source_station.name : "the briefing station"] to prepare a market-intelligence handoff."
-		if(CONTRACT_STATUS_ACTIVE)
-			return "Move within trade range of [caravan_station ? caravan_station.name : "the target caravan"] and transmit the market packet through the sending beacon."
-		if(CONTRACT_STATUS_COMPLETED)
-			return "Market intelligence delivered."
-		if(CONTRACT_STATUS_FAILED)
-			return failure_reason || "The rendezvous contract failed."
-	return ..()
+	if(status == CONTRACT_STATUS_FAILED && failure_reason)
+		return failure_reason
+	return GetStatusLabel()
 
 /datum/trade_contract/caravan_rendezvous/GetActiveActionLabel()
 	return "Transmit"
@@ -467,9 +534,9 @@
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	switch(status)
 		if(CONTRACT_STATUS_AVAILABLE)
-			return "Requires receiving range to [source_station ? source_station.name : "the briefing station"]."
+			return "Requires receiving range to [source_station ? source_station.name : "the briefing station"] (digital download)."
 		if(CONTRACT_STATUS_ACTIVE)
-			return "Requires sending range to [caravan_station ? caravan_station.name : "the target caravan"]."
+			return "Requires sending range to [caravan_station ? caravan_station.name : "the target caravan"] (digital transmission)."
 	return null
 
 /datum/trade_contract/caravan_rendezvous/GetResolvedNote()
@@ -487,19 +554,24 @@
 	return istype(caravan_station) && (caravan_station in SSsupply.visible_trading_stations) && !caravan_station.GetAvailabilityBlockReason()
 
 /datum/trade_contract/caravan_rendezvous/HandleActiveTargetLoss()
-	Fail("Target caravan departed before data handoff.")
+	Fail("Target caravan departed before data handoff.", 0)
 
-/datum/trade_contract/caravan_rendezvous/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon)
-	if(status != CONTRACT_STATUS_AVAILABLE || QDELETED(receiver_beacon))
+/datum/trade_contract/caravan_rendezvous/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null)
+	if(status != CONTRACT_STATUS_AVAILABLE)
 		return FALSE
 
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	if(!istype(source_station) || !istype(caravan_station))
 		return FALSE
+	if(!(source_station in SSsupply.visible_trading_stations) || !(caravan_station in SSsupply.visible_trading_stations))
+		return FALSE
 	if(caravan_station.GetAvailabilityBlockReason())
 		return FALSE
-	return !SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
+	if(receiver_beacon)
+		if(QDELETED(receiver_beacon) || SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station))
+			return FALSE
+	return TRUE
 
 /datum/trade_contract/caravan_rendezvous/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon)
 	if(!istype(receiver_beacon))
@@ -510,6 +582,8 @@
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	if(!istype(source_station) || !istype(caravan_station))
 		return "Contract route data is invalid."
+	if(!(source_station in SSsupply.visible_trading_stations))
+		return "[source_station.name] is out of communication range."
 	var/caravan_block = caravan_station.GetAvailabilityBlockReason()
 	if(caravan_block)
 		return "[caravan_station.name]: [caravan_block]"
@@ -519,9 +593,10 @@
 	return null
 
 /datum/trade_contract/caravan_rendezvous/Accept(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account)
-	if(!CanAccept(receiver_beacon) || !istype(account))
+	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon) || !istype(account))
 		return FALSE
 
+	cargo_summary = GetSummaryText()
 	status = CONTRACT_STATUS_ACTIVE
 	linked_account = account
 	accepted_by = account.owner_name
@@ -546,6 +621,8 @@
 		return "Select a sending beacon first."
 	if(status != CONTRACT_STATUS_ACTIVE)
 		return "This contract is not active."
+	if(!istype(linked_account))
+		return "Linked payment account is invalid or missing."
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	if(!istype(caravan_station))
 		return "The target caravan is unavailable."
@@ -565,6 +642,7 @@
 	if(!sender_beacon.StartExport())
 		return FALSE
 
+	cargo_summary = GetSummaryText()
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	linked_account.deposit(reward, "Trade Contract Delivery", "Trade Network")
@@ -578,14 +656,12 @@
 	SSsupply.CreateLogEntry(
 		"Contract",
 		linked_account.owner_name,
-		"<li>Contract #[id]: [GetSummaryText()]</li><li>Route: [source_station ? source_station.name : "Unknown"] -> [caravan_station ? caravan_station.name : "Unknown"]</li><li>Status: Completed</li><li>Payload: Market intelligence packet transmitted.</li>",
+		"<li>Contract #[id]: [cargo_summary]</li><li>Route: [source_station ? source_station.name : "Unknown"] -> [caravan_station ? caravan_station.name : "Unknown"]</li><li>Status: Completed</li><li>Payload: Market intelligence packet transmitted.</li>",
 		reward,
 		TRUE,
 		get_turf(sender_beacon)
 	)
+	linked_account = null
+	SSsupply?.TrimResolvedContracts()
 	return TRUE
 
-#undef CONTRACT_STATUS_AVAILABLE
-#undef CONTRACT_STATUS_ACTIVE
-#undef CONTRACT_STATUS_COMPLETED
-#undef CONTRACT_STATUS_FAILED

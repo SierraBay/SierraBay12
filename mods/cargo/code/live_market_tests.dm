@@ -290,3 +290,78 @@
 	else
 		pass("Market intel exposes station metadata and quotes.")
 	return 1
+
+/datum/unit_test/cargo_market_isolated_state_test
+	name = "CARGO MARKET: Stations maintain isolated market state and modifier lists"
+
+/datum/unit_test/cargo_market_isolated_state_test/start_test()
+	var/datum/trading_station/station_a = new
+	var/datum/trading_station/station_b = new
+	var/fail_reason = null
+
+	station_a.InitSrc(null, TRUE)
+	station_b.InitSrc(null, TRUE)
+
+	if(station_a.live_market_state == station_b.live_market_state)
+		fail_reason = "station_a and station_b share the same live_market_state list reference."
+	else if(station_a.live_market_modifiers == station_b.live_market_modifiers)
+		fail_reason = "station_a and station_b share the same live_market_modifiers list reference."
+	else
+		station_a.AddLiveMarketModifier("boom", 4)
+		if(length(station_b.live_market_modifiers) > 0)
+			fail_reason = "Adding modifier to station_a contaminated station_b."
+
+	qdel(station_a)
+	qdel(station_b)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Stations maintain strictly isolated market state.")
+	return 1
+
+/datum/unit_test/cargo_market_single_demand_accounting_test
+	name = "CARGO MARKET: Buy with price snapshot records demand exactly once"
+
+/datum/unit_test/cargo_market_single_demand_accounting_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/obj/machinery/trade_beacon/receiving/beacon = new(get_safe_turf())
+	var/datum/money_account/account = new
+	var/fail_reason = null
+
+	account.owner_name = "Unit Test Account"
+	account.money = 10000
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/good_id = station.inventory["Alpha"][1]
+	if(!good_id)
+		fail_reason = "Failed to create test inventory."
+	else
+		station.SetGoodAmount("Alpha", good_id, 20)
+		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 20)
+
+		var/list/shop_list = list()
+		var/list/categories = list("Alpha" = list())
+		shop_list[station] = categories
+		categories["Alpha"][good_id] = 2
+
+		var/list/price_snapshot = SSsupply.BuildMarketSnapshot(shop_list, FACTION_INDEPENDENT)
+		var/initial_demand = station.GetLiveMarketDemandScore("Alpha", good_id)
+
+		if(!SSsupply.Buy(beacon, account, shop_list, FALSE, null, FACTION_INDEPENDENT, price_snapshot))
+			fail_reason = "Buy() with price snapshot failed."
+		else
+			var/new_demand = station.GetLiveMarketDemandScore("Alpha", good_id)
+			var/expected_demand = initial_demand + (2 / 20)
+			if(abs(new_demand - expected_demand) > 0.001)
+				fail_reason = "Expected demand [expected_demand], but got [new_demand] (possible double counting)."
+
+	qdel(beacon)
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Buy() with price snapshot increments demand exactly once.")
+	return 1

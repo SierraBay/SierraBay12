@@ -339,7 +339,7 @@
 		return 1
 
 	var/cost = 1
-	for(var/turf/nearby as anything in orange(1, target_turf))
+	for(var/turf/nearby as anything in RANGE_TURFS(target_turf, 1))
 		if(nearby == target_turf)
 			continue
 		var/list/hazards = overmap_event_handler.hazard_by_turf[nearby]

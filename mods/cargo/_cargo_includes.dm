@@ -4,6 +4,7 @@
 #include "_cargo.dm"
 #include "code/cargo_computery.dm"
 #include "code/cargo.dm"
+#include "code/cargo_order.dm"
 #include "code/cargo_controller.dm"
 #include "code/cargo_subsystem.dm"
 #include "code/contracts.dm"

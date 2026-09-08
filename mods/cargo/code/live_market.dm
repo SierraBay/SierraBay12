@@ -1,7 +1,15 @@
+#define MARKET_MOD_BOOM "boom"
+#define MARKET_MOD_SHORTAGE "shortage"
+#define MARKET_MOD_INDUSTRIAL_DEMAND "industrial_demand"
+#define MARKET_MOD_BLOCKADE "blockade"
+
+#define MARKET_TRANS_BUY "buy"
+#define MARKET_TRANS_SELL "sell"
+
 /datum/trading_station
 	var/live_market_enabled = TRUE
-	var/list/live_market_state = list()
-	var/list/live_market_modifiers = list()
+	var/list/live_market_state
+	var/list/live_market_modifiers
 	var/live_market_demand_decay = 0.6
 	var/live_market_min_buy_multiplier = 0.75
 	var/live_market_max_buy_multiplier = 1.8
@@ -165,7 +173,7 @@
 	)
 
 	switch(type)
-		if("boom")
+		if(MARKET_MOD_BOOM)
 			modifier["name"] = "Economic Boom"
 			modifier["desc"] = "Civilian demand is strong and the station is paying well for finished goods."
 			modifier["buy_shift"] = -0.08
@@ -175,7 +183,7 @@
 			modifier["tone"] = "good"
 			if(!length(modifier["tag_weights"]))
 				modifier["tag_weights"] = list("consumer" = 1, "food" = 0.8, "service" = 1, "general" = 0.4)
-		if("shortage")
+		if(MARKET_MOD_SHORTAGE)
 			modifier["name"] = "Acute Shortage"
 			modifier["desc"] = "Stocks are strained and the station is bidding aggressively for replacements."
 			modifier["buy_shift"] = 0.18
@@ -185,7 +193,7 @@
 			modifier["tone"] = "bad"
 			if(!length(modifier["tag_weights"]))
 				modifier["tag_weights"] = list("*" = 0.55)
-		if("industrial_demand")
+		if(MARKET_MOD_INDUSTRIAL_DEMAND)
 			modifier["name"] = "Industrial Demand"
 			modifier["desc"] = "Manufacturing demand is spiking for parts and raw materials."
 			modifier["buy_shift"] = 0.1
@@ -195,7 +203,7 @@
 			modifier["tone"] = "average"
 			if(!length(modifier["tag_weights"]))
 				modifier["tag_weights"] = list("materials" = 1, "industrial" = 1, "parts" = 0.9)
-		if("blockade")
+		if(MARKET_MOD_BLOCKADE)
 			modifier["name"] = "Shipping Blockade"
 			modifier["desc"] = "Logistics disruption is tightening supply and pushing import prices up."
 			modifier["buy_shift"] = 0.22
@@ -338,7 +346,7 @@
 	if(!live_market_enabled || !live_market_auto_events || length(live_market_modifiers))
 		return
 	if(prob(35))
-		AddLiveMarketModifier(pick("boom", "shortage", "industrial_demand", "blockade"), rand(3, 6))
+		AddLiveMarketModifier(pick(MARKET_MOD_BOOM, MARKET_MOD_SHORTAGE, MARKET_MOD_INDUSTRIAL_DEMAND, MARKET_MOD_BLOCKADE), rand(3, 6))
 
 /datum/trading_station/proc/GetLiveMarketStatusLabel()
 	var/list/modifier = GetPrimaryLiveMarketModifier()
@@ -353,48 +361,12 @@
 	return islist(modifier) ? (modifier["desc"] || "Prices are following normal local conditions.") : "Prices are following normal local conditions."
 
 /datum/trading_station/InitGoods()
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		if(!islist(category))
-			continue
-		for(var/good_id in category)
-			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
-			var/list/rand_args = list(5, max(5, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
+	..()
 	RecordLiveMarketBaselines()
 	EnsureLiveMarketActivity()
 
 /datum/trading_station/TryUnlockHiddenInv()
-	if(favor < unlock_favor || hidden_inv_unlocked)
-		return
-
-	hidden_inv_unlocked = TRUE
-	for(var/category_name in hidden_inventory)
-		var/list/category = hidden_inventory[category_name]
-		if(!istext(category_name) || !islist(category))
-			continue
-		if(!(category_name in inventory))
-			inventory[category_name] = list()
-		var/list/visible_category = inventory[category_name]
-		for(var/good_id in category)
-			visible_category[good_id] = category[good_id]
-			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
-			var/list/rand_args = list(1, max(1, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
+	..()
 	RecordLiveMarketBaselines()
 
 /datum/trading_station/GoodsTick()
@@ -402,48 +374,7 @@
 	DecayLiveMarketModifiers()
 	EnsureLiveMarketActivity()
 	ApplyLiveMarketModifierStockEffects()
-
-	wealth += base_income
-
-	var/starting_balance = wealth
-	var/budget = unique_good_count ? round(starting_balance / unique_good_count) : 0
-	var/list/restock_candidates = list()
-
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		for(var/good_id in category)
-			var/good_index = category.Find(good_id)
-			var/current_amount = GetGoodAmount(category_name, good_index)
-			var/chance_to_restock = current_amount < 5 ? 100 : current_amount > 20 ? 0 : 15
-			if(rand(1, 100) > chance_to_restock)
-				continue
-			var/cost = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name) / 2))
-			var/amount_to_add = budget ? max(1, rand(1, max(1, round(budget / cost)))) : 1
-			var/list/content = list(
-				"cat" = category_name,
-				"index" = good_index,
-				"cost" = cost,
-				"to_add" = amount_to_add,
-				"current_amt" = current_amount
-			)
-			var/restock_index = length(restock_candidates) + 1
-			restock_candidates.Insert(restock_index, restock_index)
-			restock_candidates[restock_index] = content
-
-	for(var/i in 1 to 20)
-		if(!length(restock_candidates) || !wealth)
-			break
-
-		var/list/good_packet = pick(restock_candidates)
-		var/candidate_index = restock_candidates.Find(good_packet)
-		var/total_cost = good_packet["cost"] * good_packet["to_add"]
-		restock_candidates.Cut(candidate_index, candidate_index + 1)
-
-		if(total_cost < wealth)
-			SetGoodAmount(good_packet["cat"], good_packet["index"], good_packet["to_add"] + good_packet["current_amt"])
-			SubtractFromWealth(total_cost)
-
-	TryUnlockHiddenInv()
+	..()
 	RecordLiveMarketBaselines()
 
 /datum/controller/subsystem/supply/proc/GetStationTradeBasePrice(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
@@ -470,7 +401,7 @@
 /datum/controller/subsystem/supply/proc/GetStationBuyPrice(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
 	var/base_price = GetStationTradeBasePrice(good_ref, station, buyer_faction, category_name)
 	if(!base_price || !istype(station) || !istext(category_name) || !station.live_market_enabled || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return base_price
+		return max(1, round(base_price))
 	return max(1, round(base_price * station.GetLiveMarketBuyMultiplier(category_name, good_ref)))
 
 /datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, category_name = null)
@@ -549,9 +480,9 @@
 	if(!istype(station) || !istext(category_name) || !good_id || !isnum(amount) || amount <= 0)
 		return
 	switch(transaction_type)
-		if("buy")
+		if(MARKET_TRANS_BUY)
 			station.AdjustLiveMarketDemand(category_name, good_id, amount)
-		if("sell")
+		if(MARKET_TRANS_SELL)
 			station.AdjustLiveMarketDemand(category_name, good_id, -amount)
 			station.SetGoodAmount(category_name, good_id, station.GetGoodAmount(category_name, good_id) + amount)
 
@@ -567,17 +498,20 @@
 			if(!istext(category_name) || !islist(goods))
 				continue
 			for(var/good_id in goods)
-				ApplyTradeTransaction(station, category_name, good_id, goods[good_id], "buy")
+				ApplyTradeTransaction(station, category_name, good_id, goods[good_id], MARKET_TRANS_BUY)
 
 /datum/controller/subsystem/supply/proc/FindCommodityForExport(atom/movable/exported, datum/trading_station/station)
-	if(!istype(exported) || !istype(station))
+	if(!istype(exported) || !istype(station) || !islist(station.inventory))
 		return null
 	for(var/category_name in station.inventory)
 		var/list/category = station.inventory[category_name]
 		if(!islist(category))
 			continue
 		for(var/good_id in category)
-			var/item_path = station.GetGoodPath(category_name, good_id)
+			var/list/good_packet = category[good_id]
+			if(!islist(good_packet))
+				continue
+			var/item_path = good_packet["item_path"]
 			if(!ispath(item_path, /atom/movable))
 				continue
 			if(istype(exported, item_path))
@@ -628,13 +562,6 @@
 /datum/controller/subsystem/supply/GetImportCost(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
 	return GetStationBuyPrice(good_ref, station, buyer_faction, category_name)
 
-/datum/controller/subsystem/supply/CollectPriceForCategory(list/category, datum/trading_station/station, buyer_faction = null, category_name = null)
-	. = 0
-	if(!islist(category) || !istype(station) || !istext(category_name))
-		return
-	for(var/good_id in category)
-		. += GetStationBuyPrice(good_id, station, buyer_faction, category_name) * category[good_id]
-
 /datum/controller/subsystem/supply/BuildOrder(requesting_account, reason, list/shopping_list, buyer_faction = null)
 	. = ..(requesting_account, reason, shopping_list, buyer_faction)
 	if(!. || !(. in order_queue))
@@ -643,129 +570,11 @@
 	if(islist(order_data))
 		order_data["price_snapshot"] = BuildMarketSnapshot(shopping_list, buyer_faction)
 
-/datum/controller/subsystem/supply/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id)
-	if(QDELETED(beacon) || !order_id || !(order_id in order_queue))
-		return FALSE
+#undef MARKET_MOD_BOOM
+#undef MARKET_MOD_SHORTAGE
+#undef MARKET_MOD_INDUSTRIAL_DEMAND
+#undef MARKET_MOD_BLOCKADE
 
-	var/list/order = order_queue[order_id]
-	var/list/price_snapshot = islist(order) ? order["price_snapshot"] : null
-	if(!islist(price_snapshot))
-		return ..(beacon, order_id)
-
-	var/datum/money_account/master_account = get_supply_department_account()
-	var/datum/money_account/requesting_account = order["requesting_acct"]
-	var/list/shopping_list = order["contents"]
-	var/list/viewable_contents = order["viewable_contents"]
-	var/buyer_faction = order["buyer_faction"]
-	var/base_cost = order["cost"]
-	var/total_cost = base_cost + order["fee"]
-	var/is_requestor_master = master_account && requesting_account == master_account
-
-	if(!master_account || !requesting_account || master_account.money < base_cost || requesting_account.money < total_cost)
-		return FALSE
-	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction, price_snapshot))
-		return FALSE
-	if(!is_requestor_master)
-		requesting_account.transfer(master_account, total_cost, "Trade Network Order")
-	CreateLogEntry("Order", requesting_account.owner_name, viewable_contents, total_cost)
-	return TRUE
-
-/datum/controller/subsystem/supply/Buy(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account, list/shop_list, is_order = FALSE, buyer_name = null, buyer_faction = null, list/price_snapshot = null)
-	if(!islist(price_snapshot))
-		. = ..(receiver_beacon, account, shop_list, is_order, buyer_name, buyer_faction)
-		if(.)
-			TrackLiveMarketSales(shop_list)
-		return
-
-	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !account || !islist(shop_list) || !length(shop_list))
-		return FALSE
-
-	var/count_of_all = CollectCountsFrom(shop_list)
-	if(!count_of_all)
-		return FALSE
-
-	var/price_for_all = 0
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		if(!istype(station) || !islist(categories))
-			return FALSE
-		if(GetTradeRangeBlockReason(receiver_beacon, station))
-			return FALSE
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!istext(category_name) || !islist(goods) || !islist(station.inventory[category_name]))
-				return FALSE
-			for(var/good_id in goods)
-				var/count_of_good = goods[good_id]
-				if(!isnum(count_of_good) || count_of_good < 1)
-					return FALSE
-				if(!station.GetGoodPacket(category_name, good_id) || !station.GetGoodPath(category_name, good_id))
-					return FALSE
-				if(station.GetGoodAmount(category_name, good_id) < count_of_good)
-					return FALSE
-				var/unit_price = GetSnapshotUnitPrice(price_snapshot, station, category_name, good_id)
-				if(!isnum(unit_price) || unit_price < 1)
-					return FALSE
-				price_for_all += unit_price * count_of_good
-
-	if(price_for_all && account.money < price_for_all)
-		return FALSE
-
-	var/list/spawned_items = list()
-	var/obj/structure/closet/secure_closet/personal/trade/locker
-	if(count_of_all > 1)
-		locker = receiver_beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
-		if(!locker)
-			return FALSE
-		spawned_items += locker
-		if(is_order)
-			locker.locked = TRUE
-			locker.registered_name = buyer_name
-			locker.name = "[initial(locker.name)] ([locker.registered_name])"
-			locker.update_icon()
-
-	var/order_contents_info = ""
-	var/invoice_location
-
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		var/to_station_wealth = 0
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods) || !islist(station.inventory[category_name]))
-				continue
-			for(var/good_id in goods)
-				var/count_of_good = goods[good_id]
-				var/good_path = station.GetGoodPath(category_name, good_id)
-				var/unit_price = GetSnapshotUnitPrice(price_snapshot, station, category_name, good_id)
-				if(!good_path || !isnum(unit_price) || unit_price < 1)
-					for(var/atom/movable/item as anything in spawned_items)
-						qdel(item)
-					return FALSE
-				to_station_wealth += unit_price * count_of_good
-				for(var/i in 1 to count_of_good)
-					if(istype(locker))
-						new good_path(locker)
-						invoice_location = locker
-					else
-						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
-						if(!new_item)
-							for(var/atom/movable/item as anything in spawned_items)
-								qdel(item)
-							return FALSE
-						spawned_items += new_item
-						invoice_location = new_item.loc
-
-				station.SetGoodAmount(category_name, good_id, max(0, station.GetGoodAmount(category_name, good_id) - count_of_good))
-				ApplyTradeTransaction(station, category_name, good_id, count_of_good, "buy")
-				var/item_name = station.GetGoodName(category_name, good_id)
-				order_contents_info += "<li>[count_of_good]x [item_name]</li>"
-		station.AddToWealth(to_station_wealth)
-
-	if(count_of_all > 1)
-		invoice_location = locker
-
-	CreateLogEntry("Shipping", is_order && buyer_name ? buyer_name : account.owner_name, order_contents_info, price_for_all, TRUE, invoice_location)
-	account.withdraw(price_for_all, "Trade Network Purchase", "Trade Network")
-	return TRUE
+#undef MARKET_TRANS_BUY
+#undef MARKET_TRANS_SELL
 

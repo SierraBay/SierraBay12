@@ -64,8 +64,10 @@
 	return TRUE
 
 /obj/machinery/trade_beacon/receiving/proc/DropItem(drop_type)
+	if(inoperable() || QDELETED(src))
+		return null
 	var/list/valid_turfs = list()
-	for(var/turf/simulated/floor/floor in range(2, src))
+	for(var/turf/simulated/floor/floor in view(2, src))
 		if(!CanDropOnTurf(floor))
 			continue
 		valid_turfs += floor

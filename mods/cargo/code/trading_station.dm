@@ -88,6 +88,9 @@
 		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
 		desc = initial(desc) || "An automated merchant outpost."
 
+	live_market_state = list()
+	live_market_modifiers = list()
+
 	AssembleInventory()
 	InitGoods()
 	UpdateTick()
@@ -201,7 +204,9 @@
 	if(length(overmap_event_handler.hazard_by_turf[candidate]))
 		return FALSE
 	if(hazard_buffer > 0)
-		for(var/turf/nearby as anything in orange(hazard_buffer, candidate))
+		for(var/turf/nearby as anything in RANGE_TURFS(candidate, hazard_buffer))
+			if(nearby == candidate)
+				continue
 			if(length(overmap_event_handler.hazard_by_turf[nearby]))
 				return FALSE
 	return TRUE
@@ -258,7 +263,9 @@
 /datum/trading_station/proc/GetOpenSpaceScore(turf/candidate)
 	ASSERT(istype(candidate, /turf))
 	var/score = 0
-	for(var/turf/nearby as anything in orange(2, candidate))
+	for(var/turf/nearby as anything in RANGE_TURFS(candidate, 2))
+		if(nearby == candidate)
+			continue
 		if(!istype(nearby, /turf/unsimulated/map) || istype(nearby, /turf/unsimulated/map/edge))
 			continue
 		if(locate(/obj/overmap/visitable) in nearby)
@@ -471,10 +478,71 @@
 	return "[uppertext(copytext(root_name, 1, 2))][copytext(root_name, 2)]"
 
 /datum/trading_station/proc/GetLegacyGoodName(singleton/hierarchy/supply_pack/supply_pack, item_path, item_count)
+	if(istype(supply_pack) && length(supply_pack.contains) == 1 && supply_pack.name)
+		return supply_pack.name
+
+	var/specific_name = ResolveSpecificItemName(item_path)
+	if(specific_name)
+		return specific_name
+
 	if(istype(supply_pack) && item_count == 1 && supply_pack.name)
 		return supply_pack.name
+
 	var/atom/movable/item_type = item_path
 	return ispath(item_path, /atom/movable) ? initial(item_type.name) : null
+
+/datum/trading_station/proc/ResolveSpecificItemName(item_path)
+	if(!ispath(item_path, /atom/movable))
+		return null
+
+	if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
+		return ResolveCartridgeName(item_path)
+	if(ispath(item_path, /obj/item/seeds))
+		return ResolveSeedName(item_path)
+	if(ispath(item_path, /obj/item/ammobox))
+		return ResolveAmmoBoxName(item_path)
+	if(ispath(item_path, /obj/item/ammo_magazine))
+		return ResolveMagazineName(item_path)
+	return null
+
+/datum/trading_station/proc/ResolveCartridgeName(item_path)
+	var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
+	var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
+	if(ispath(reagent_type, /datum/reagent))
+		return "[initial(cartridge.name)] ([initial(reagent_type.name)])"
+	return null
+
+/datum/trading_station/proc/ResolveSeedName(item_path)
+	if(item_path == /obj/item/seeds/random)
+		return "packet of random seeds"
+	var/obj/item/seeds/seed_item = item_path
+	var/seed_key = initial(seed_item.seed_type)
+	if(!seed_key)
+		return null
+	var/datum/seed/seed_datum = SSplants?.seeds?[seed_key]
+	if(seed_datum?.seed_name && seed_datum?.seed_noun)
+		var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
+		return "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
+	return "packet of [seed_key] seeds"
+
+/datum/trading_station/proc/ResolveAmmoBoxName(item_path)
+	var/obj/item/ammobox/box_item = item_path
+	var/obj/item/ammo_casing/casing = initial(box_item.ammo_type)
+	if(!ispath(casing, /obj/item/ammo_casing))
+		return null
+	var/casing_desc = _get_ammo_casing_name(casing)
+	if(casing_desc)
+		return "[initial(box_item.name)] - [casing_desc]"
+	if(initial(casing.name))
+		return "[initial(casing.name)] box"
+	return null
+
+/datum/trading_station/proc/ResolveMagazineName(item_path)
+	var/obj/item/ammo_magazine/mag_item = item_path
+	var/list/labels = initial(mag_item.labels)
+	if(length(labels))
+		return "[initial(mag_item.name)] ([jointext(labels, ", ")])"
+	return null
 
 /datum/trading_station/proc/RegisterLegacyPackItem(list/target_inventory, category_name, item_path, singleton/hierarchy/supply_pack/supply_pack, item_count)
 	if(!islist(target_inventory) || !istext(category_name) || !istype(supply_pack) || !ispath(item_path, /atom/movable))
@@ -490,10 +558,46 @@
 	category[GenerateGoodOfferId()] = good_packet
 
 /datum/trading_station/proc/InitGoods()
-	return
+	for(var/category_name in inventory)
+		var/list/category = inventory[category_name]
+		if(!islist(category))
+			continue
+		for(var/good_id in category)
+			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
+			var/list/rand_args = list(5, max(5, round(30 / max(cost / 200, 1))))
+			var/list/good_packet = category[good_id]
+			if(islist(good_packet) && islist(good_packet["amount_range"]))
+				rand_args = good_packet["amount_range"]
+			if(!islist(amounts_of_goods[category_name]))
+				amounts_of_goods[category_name] = list()
+			var/list/content = amounts_of_goods[category_name]
+			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
+			unique_good_count += 1
 
 /datum/trading_station/proc/TryUnlockHiddenInv()
-	return
+	if(favor < unlock_favor || hidden_inv_unlocked)
+		return
+
+	hidden_inv_unlocked = TRUE
+	for(var/category_name in hidden_inventory)
+		var/list/category = hidden_inventory[category_name]
+		if(!istext(category_name) || !islist(category))
+			continue
+		if(!(category_name in inventory))
+			inventory[category_name] = list()
+		var/list/visible_category = inventory[category_name]
+		for(var/good_id in category)
+			visible_category[good_id] = category[good_id]
+			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
+			var/list/rand_args = list(1, max(1, round(30 / max(cost / 200, 1))))
+			var/list/good_packet = category[good_id]
+			if(islist(good_packet) && islist(good_packet["amount_range"]))
+				rand_args = good_packet["amount_range"]
+			if(!islist(amounts_of_goods[category_name]))
+				amounts_of_goods[category_name] = list()
+			var/list/content = amounts_of_goods[category_name]
+			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
+			unique_good_count += 1
 
 /datum/trading_station/proc/SpendTradeStationsBudget(budget = spawn_cost)
 	if(!spawn_always)
@@ -515,7 +619,46 @@
 	update_timer_id = addtimer(new Callback(src, .proc/UpdateTick), update_time, TIMER_STOPPABLE)
 
 /datum/trading_station/proc/GoodsTick()
-	return
+	wealth += base_income
+
+	var/starting_balance = wealth
+	var/budget = unique_good_count ? round(starting_balance / unique_good_count) : 0
+	var/list/restock_candidates = list()
+
+	for(var/category_name in inventory)
+		var/list/category = inventory[category_name]
+		if(!islist(category))
+			continue
+		for(var/good_id in category)
+			var/current_amount = GetGoodAmount(category_name, good_id)
+			var/chance_to_restock = current_amount < 5 ? 100 : current_amount > 20 ? 0 : 15
+			if(rand(1, 100) > chance_to_restock)
+				continue
+			var/cost = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name) / 2))
+			var/amount_to_add = budget ? max(1, rand(1, max(1, round(budget / cost)))) : 1
+			var/list/content = list(
+				"cat" = category_name,
+				"good_id" = good_id,
+				"cost" = cost,
+				"to_add" = amount_to_add,
+				"current_amt" = current_amount
+			)
+			restock_candidates += list(content)
+
+	for(var/i in 1 to 20)
+		if(!length(restock_candidates) || !wealth)
+			break
+
+		var/idx = rand(1, length(restock_candidates))
+		var/list/good_packet = restock_candidates[idx]
+		restock_candidates.Cut(idx, idx + 1)
+		var/total_cost = good_packet["cost"] * good_packet["to_add"]
+
+		if(total_cost < wealth)
+			SetGoodAmount(good_packet["cat"], good_packet["good_id"], good_packet["to_add"] + good_packet["current_amt"])
+			SubtractFromWealth(total_cost)
+
+	TryUnlockHiddenInv()
 
 /datum/trading_station/proc/GetGoodPacket(category_name, good_ref)
 	if(isnum(category_name))
@@ -606,7 +749,42 @@
 		if(!istype(saved_obj, /obj/overmap/visitable))
 			qdel(saved_obj)
 	if(SSsupply)
+		SSsupply.PurgeStationFromOrders(src)
 		SSsupply.all_trading_stations -= src
 		SSsupply.visible_trading_stations -= src
 		SSsupply.hidden_trading_stations -= src
+	if(islist(inventory))
+		for(var/category_name in inventory)
+			var/list/goods = inventory[category_name]
+			if(islist(goods))
+				goods.Cut()
+		inventory.Cut()
+	if(islist(hidden_inventory))
+		for(var/category_name in hidden_inventory)
+			var/list/goods = hidden_inventory[category_name]
+			if(islist(goods))
+				goods.Cut()
+		hidden_inventory.Cut()
+	if(islist(amounts_of_goods))
+		amounts_of_goods.Cut()
+	if(islist(live_market_modifiers))
+		for(var/list/modifier as anything in live_market_modifiers)
+			if(islist(modifier))
+				modifier.Cut()
+		live_market_modifiers.Cut()
+		live_market_modifiers = null
+	if(islist(live_market_state))
+		for(var/category_name in live_market_state)
+			var/list/cat_state = live_market_state[category_name]
+			if(islist(cat_state))
+				for(var/good_id in cat_state)
+					var/list/comm_state = cat_state[good_id]
+					if(islist(comm_state))
+						var/list/tags = comm_state["tags"]
+						if(islist(tags))
+							tags.Cut()
+						comm_state.Cut()
+				cat_state.Cut()
+		live_market_state.Cut()
+		live_market_state = null
 	return ..()

@@ -70,6 +70,68 @@
 	pass("Legacy stations imported supply-pack contents.")
 	return 1
 
+/datum/unit_test/cargo_legacy_good_names_test
+	name = "CARGO: Legacy stations generate descriptive names for cartridges, seeds, and accessories"
+
+/datum/unit_test/cargo_legacy_good_names_test/start_test()
+	var/datum/trading_station/med_station = SSsupply.GetStationByUid("legacy_medicine")
+	if(!istype(med_station))
+		fail("Legacy medicine station was not initialized.")
+		return 1
+
+	for(var/cat_name in med_station.inventory)
+		var/list/goods = med_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = med_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/reagent_containers/chem_disp_cartridge))
+				var/good_name = med_station.GetGoodName(cat_name, good_id)
+				if(good_name == "chemical dispenser cartridge")
+					var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = good_path
+					if(initial(cartridge.spawn_reagent))
+						fail("Cartridge with reagent [initial(cartridge.spawn_reagent)] has generic name '[good_name]'.")
+						return 1
+
+	var/datum/trading_station/service_station = SSsupply.GetStationByUid("legacy_service")
+	if(!istype(service_station))
+		fail("Legacy service station was not initialized.")
+		return 1
+
+	for(var/cat_name in service_station.inventory)
+		var/list/goods = service_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = service_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/seeds) && good_path != /obj/item/seeds && good_path != /obj/item/seeds/random)
+				var/obj/item/seeds/seed_item = good_path
+				if(initial(seed_item.seed_type))
+					var/good_name = service_station.GetGoodName(cat_name, good_id)
+					if(good_name == "packet of seeds")
+						fail("Seed [good_path] with seed_type '[initial(seed_item.seed_type)]' has generic name '[good_name]'.")
+						return 1
+
+	var/datum/trading_station/sec_station = SSsupply.GetStationByUid("legacy_security")
+	if(!istype(sec_station))
+		fail("Legacy security station was not initialized.")
+		return 1
+
+	for(var/cat_name in sec_station.inventory)
+		var/list/goods = sec_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = sec_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/clothing/accessory/arm_guards/blue))
+				var/good_name = sec_station.GetGoodName(cat_name, good_id)
+				if(good_name == "arm guards")
+					fail("Blue arm guards have generic name '[good_name]'.")
+					return 1
+
+	pass("Legacy stations generated descriptive names for cartridges, seeds, and accessories.")
+	return 1
+
 /datum/trading_station/unit_test_duplicate_pricing
 	name = "Unit Test Trader"
 	desc = "Trade station used for cargo unit tests."
@@ -456,7 +518,9 @@
 	var/turf/adjacent_turf = null
 
 	for(var/turf/candidate as anything in test_station.GetOvermapSpawnCandidateTurfs(current_sector.z))
-		for(var/turf/neighbor as anything in orange(1, candidate))
+		for(var/turf/neighbor as anything in RANGE_TURFS(candidate, 1))
+			if(neighbor == candidate)
+				continue
 			if(test_station.CanUseOvermapSpawnLocation(neighbor))
 				hazard_turf = candidate
 				adjacent_turf = neighbor
@@ -795,7 +859,7 @@
 		fail_reason = "CreateTradeContract() did not return a contract."
 	else if(!SSsupply.AcceptTradeContract(receiver, account, contract.id))
 		fail_reason = "AcceptTradeContract() failed for a valid contract."
-	else if(contract.status != "active")
+	else if(contract.status != CONTRACT_STATUS_ACTIVE)
 		fail_reason = "Contract status did not update to active."
 	else if(source_station.GetGoodAmount("Alpha", offer_id) >= starting_amount)
 		fail_reason = "Accepting a contract did not reserve the source station stock."
@@ -870,7 +934,7 @@
 				fail_reason = "DeliverTradeContract() failed for a crate in sender range."
 			else if(account.money <= starting_money)
 				fail_reason = "Delivering the contract did not pay the linked account."
-			else if(contract.status != "completed")
+			else if(contract.status != CONTRACT_STATUS_COMPLETED)
 				fail_reason = "Contract status did not update to completed."
 			else if(destination_station.GetGoodAmount("Demand", destination_good_id) <= starting_destination_stock)
 				fail_reason = "Contract delivery did not replenish destination market stock."
@@ -936,7 +1000,7 @@
 			fail_reason = "Contract crate was not spawned for tamper test."
 		else
 			crate.toggle(null)
-			if(contract.status != "failed")
+			if(contract.status != CONTRACT_STATUS_FAILED)
 				fail_reason = "Tampering did not mark the contract as failed."
 			else if(account.money != max(0, 1000 - round(contract.base_value * 2)))
 				fail_reason = "Tampering penalty was [account.money], expected [max(0, 1000 - round(contract.base_value * 2))]."
@@ -1068,13 +1132,13 @@
 		fail_reason = "Caravan contract did not expose the rendezvous type label."
 	else if(!SSsupply.AcceptTradeContract(receiver, account, contract.id))
 		fail_reason = "AcceptTradeContract() failed for a valid caravan rendezvous contract."
-	else if(contract.status != "active")
+	else if(contract.status != CONTRACT_STATUS_ACTIVE)
 		fail_reason = "Caravan contract status did not update to active."
 	else if(locate(/obj/structure/closet/crate/trade_contract) in range(2, receiver))
 		fail_reason = "Caravan rendezvous contracts should not spawn a contract crate."
 	else if(!SSsupply.DeliverTradeContract(sender, contract.id))
 		fail_reason = "DeliverTradeContract() failed for a caravan rendezvous contract in beacon range."
-	else if(contract.status != "completed")
+	else if(contract.status != CONTRACT_STATUS_COMPLETED)
 		fail_reason = "Caravan rendezvous contract did not complete after transmission."
 	else if(account.money <= starting_money)
 		fail_reason = "Completing a caravan rendezvous contract did not pay the linked account."
@@ -1134,7 +1198,7 @@
 	else
 		qdel(caravan_object)
 		SSsupply.RefreshCaravanContracts()
-		if(contract.status != "failed")
+		if(contract.status != CONTRACT_STATUS_FAILED)
 			fail_reason = "Caravan contract did not fail after the caravan became unavailable."
 		else if(contract.failure_reason != "Target caravan departed before data handoff.")
 			fail_reason = "Caravan departure failure reason was '[contract.failure_reason]' instead of the expected data-handoff message."
