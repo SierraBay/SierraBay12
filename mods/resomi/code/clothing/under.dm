@@ -457,3 +457,15 @@
 	icon_state = "thermores_2"
 	item_state = "thermores_2"
 */
+
+/obj/item/clothing/under/resomi_kms_uniform
+	name = "KMS utility uniform"
+	desc = "Fitted utility uniform for a few resomi, who have been recruited to the organisation"
+	icon = 'mods/loadout_items/icons/resomi/obj_resomi_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi')
+	item_state = "resomi_kms_uniform_s"
+	icon_state = "resomi_kms_uniform_s"
+	worn_state = "resomi_kms_uniform"
+	species_restricted = list(SPECIES_RESOMI)
+	sprite_sheets = list(SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi')
+	sprite_sheets_obj = list(SPECIES_RESOMI = 'mods/loadout_items/icons/resomi/onmob_resomi_under.dmi')

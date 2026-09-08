@@ -213,6 +213,11 @@
 			light1.set_dir(SOUTH)
 			light2.set_dir(NORTH)
 
+		// SS220 Bloom-Light
+		// Stacked light exposure masks look way too ugly, so we want to avoid it.
+		light1.exposure_icon_state = null
+		light2.exposure_icon_state = null
+
 		// Update area.
 		if(az > length(areas_to_use))
 			log_debug("Insufficient defined areas in turbolift datum, aborting.")

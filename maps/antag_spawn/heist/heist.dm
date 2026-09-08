@@ -30,7 +30,7 @@
 	landmark_tag = "nav_skipjack_transition"
 
 /obj/shuttle_landmark/skipjack/dock
-	name = "Docking Port"
+	name = "Dock PRSD-1"
 	landmark_tag = "nav_skipjack_dock"
 	docking_controller = "skipjack_shuttle_dock_airlock"
 

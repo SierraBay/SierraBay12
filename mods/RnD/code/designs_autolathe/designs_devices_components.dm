@@ -57,9 +57,11 @@
 
 /datum/design/autolathe/device_component/electropack
 	build_path = /obj/item/device/radio/electropack
+	hidden = TRUE
 
 /datum/design/autolathe/device_component/beartrap
 	build_path = /obj/item/beartrap
+	hidden = TRUE
 
 /datum/design/autolathe/device_component/cell_device
 	build_path = /obj/item/cell/device/standard

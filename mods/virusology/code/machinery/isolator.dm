@@ -3,10 +3,13 @@
 #define LIST "list"
 #define ENTRY "entry"
 
-/obj/machinery/disease2/isolator/
+/obj/machinery/disease2/isolator
 	name = "pathogenic isolator"
 	icon = 'mods/virusology/icons/virology.dmi'
 	icon_state = "isolator"
+
+	construct_state = /singleton/machine_construction/default/panel_closed
+
 	var/isolating = 0
 	var/state = HOME
 	var/datum/disease2/disease/virus2 = null

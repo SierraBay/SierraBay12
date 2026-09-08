@@ -54,7 +54,6 @@
 	playsound(src, 'sound/effects/blobattack.ogg', 30, 1)
 
 /obj/item/clothing/suit/space/changeling/Destroy()
-
 	STOP_PROCESSING(SSobj, src)
 
 	return ..()
@@ -66,7 +65,8 @@
 	flags_inv = HIDEEARS|BLOCKHEADHAIR //Again, no THICKMATERIAL.
 	body_parts_covered = HEAD|FACE|EYES
 	var/remove_on_respec = TRUE
-	canremove = 0
+	canremove = FALSE
+
 	flags_inv = BLOCKHAIR | HIDETAIL | HIDEFACE
 
 
@@ -79,7 +79,8 @@
 	name = "fleshy grippers"
 	icon_state = "lingspacesuit"
 	action_button_name = "Toggle Grippers"
-	canremove = 0
+	canremove = FALSE
+
 	online_slowdown = 3
 	var/remove_on_respec = TRUE
 
@@ -136,14 +137,7 @@
 	if(ismob(loc))
 		to_chat(src,SPAN_WARNING("Our muscles twist and our bones crack with a crunching noise as we form claws, teeth and armor!"))
 
-		/*
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>",
-		"<span class='warning'>We harden our flesh, creating a suit of armor!</span>",
-		"<span class='italics'>You hear organic matter ripping and tearing!</span>")
-		*/
 /obj/item/clothing/suit/space/changeling/armored/Destroy()
-
-
 	STOP_PROCESSING(SSobj, src)
 
 	return ..()

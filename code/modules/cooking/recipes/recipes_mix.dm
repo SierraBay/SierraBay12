@@ -238,8 +238,7 @@
 	required_items = list(
 		/obj/item/reagent_containers/food/snacks/shellfish/shrimp,
 		/obj/item/reagent_containers/food/snacks/shellfish/shrimp,
-		/obj/item/reagent_containers/food/snacks/shellfish/shrimp,
-		/obj/item/reagent_containers/food/drinks/glass2/cocktail
+		/obj/item/reagent_containers/food/snacks/shellfish/shrimp
 	)
 	result_path = /obj/item/reagent_containers/food/snacks/shrimp_cocktail
 
@@ -255,3 +254,59 @@
 		"gukhe" = 1
 	)
 	result_path = /obj/item/reagent_containers/food/snacks/gukhe_fish
+
+/singleton/cooking_recipe/ribs
+	appliance = COOKING_APPLIANCE_OVEN
+	required_items = list(
+		/obj/item/reagent_containers/food/snacks/cutlet,
+		/obj/item/reagent_containers/food/snacks/cutlet
+	)
+	required_reagents = list(
+		/datum/reagent/nutriment/honey = 5,
+		/datum/reagent/spacespice = 3,
+		/datum/reagent/nutriment/barbecue = 5
+	)
+	result_path = /obj/item/reagent_containers/food/snacks/ribs
+	cooked_scent = /datum/extension/scent/food/bbq
+
+/singleton/cooking_recipe/bbqwich
+	appliance = COOKING_APPLIANCE_SKILLET | COOKING_APPLIANCE_OVEN
+	required_items = list(
+		/obj/item/reagent_containers/food/snacks/cutlet,
+		/obj/item/reagent_containers/food/snacks/cutlet,
+		/obj/item/reagent_containers/food/snacks/doughslice
+	)
+	required_reagents = list(
+		/datum/reagent/nutriment/barbecue = 5,
+		/datum/reagent/spacespice = 3
+	)
+	result_path = /obj/item/reagent_containers/food/snacks/bbqwich
+	cooked_scent = /datum/extension/scent/food/bbq
+
+/singleton/cooking_recipe/ramen
+	appliance = COOKING_APPLIANCE_SAUCEPAN | COOKING_APPLIANCE_POT
+	required_items = list(
+		/obj/item/reagent_containers/food/snacks/tofu,
+		/obj/item/reagent_containers/food/snacks/tofu,
+		/obj/item/reagent_containers/food/snacks/egg
+	)
+	required_reagents = list(
+		/datum/reagent/nutriment/soysauce = 3,
+		/datum/reagent/spacespice = 3
+	)
+	required_produce = list(
+		"onion" = 1,
+		"cabbage" = 1
+	)
+	result_path = /obj/item/reagent_containers/food/snacks/ramen
+	cooked_scent = /datum/extension/scent/food/veg
+
+/singleton/cooking_recipe/hamslider
+	appliance = COOKING_APPLIANCE_SKILLET
+	required_items = list(
+		/obj/item/reagent_containers/food/snacks/bacon/ham,
+		/obj/item/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/reagent_containers/food/snacks/bun
+	)
+	result_path = /obj/item/reagent_containers/food/snacks/hamslider
+	cooked_scent = /datum/extension/scent/food/meat

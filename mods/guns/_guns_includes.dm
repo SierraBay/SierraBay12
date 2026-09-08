@@ -8,5 +8,7 @@
 #include "code/modded.dm"
 #include "code/projectile.dm"
 #include "code/xenos.dm"
+#include "code/neutralizer.dm"
+#include "code/armor.dm"
 
 #endif

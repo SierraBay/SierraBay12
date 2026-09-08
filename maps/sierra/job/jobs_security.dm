@@ -5,7 +5,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Главе Службы безопасности"
-	economic_power = 8
+	economic_power = 9
 	minimal_player_age = 14
 	minimum_character_age = list(SPECIES_HUMAN = 26)
 	ideal_character_age = 28
@@ -54,7 +54,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "Главе Службы безопасности"
-	economic_power = 5
+	economic_power = 8
 	minimal_player_age = 7
 	minimum_character_age = list(SPECIES_HUMAN = 25)
 	ideal_character_age = 30

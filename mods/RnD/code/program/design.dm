@@ -54,21 +54,6 @@
 	send_asset(user.client, assetname)
 	return "<img src='[assetname]' width='90%'><br>"
 
-/datum/computer_file/binary/sci
-	filetype = "SF" // Science Folded
-	size = 1
-	var/uniquekey
-
-/datum/computer_file/binary/sci/proc/set_filename(new_name)
-	filename = sanitizeFileName("folded_science [new_name]")
-
-
-/datum/computer_file/binary/sci/clone()
-	var/datum/computer_file/binary/sci/F = ..()
-	F.uniquekey = uniquekey
-	return F
-
-
 /datum/computer_file/binary/design/corrupted
 	filetype = "CCD" // Corrupted Construction Design
 	filename = "ERROR"
@@ -340,8 +325,32 @@
 /datum/design/item/weapon/large_grenade
 	category = list("Misc")
 
-//////////////////////////////items/////////////////////////////////////////
+/datum/design/circuit/dnaforensics
 
+	name = "DNA analyzer"
+	desc = "A high tech machine that is designed to read DNA samples properly."
+	id = "dnaforensics"
+	req_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4)
+	build_path = /obj/item/stock_parts/circuitboard/dnaforensics
+	sort_string = "VBGAM"
+
+/obj/item/stock_parts/circuitboard/dnaforensics
+	name = "circuit board (DNA analyzer)"
+	build_path = /obj/machinery/computer/dnaforensics
+	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4)
+
+/datum/design/circuit/microscope
+	name = "high powered electron microscope"
+	desc = "A highly advanced microscope capable of zooming up to 3000x."
+	id = "microscope"
+	req_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4)
+	build_path = /obj/item/stock_parts/circuitboard/microscope
+	sort_string = "VBGAN"
+
+/obj/item/stock_parts/circuitboard/microscope
+	name = "circuit board (microscope)"
+	build_path = /obj/machinery/computer/microscope
+	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4)
 
 /obj/item/net_shell
 	matter = list(MATERIAL_STEEL = 50, MATERIAL_PLASTIC = 50)

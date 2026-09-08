@@ -41,8 +41,10 @@
 
 //гиб конечностей - отрубание, сжигание и т.д.
 /obj/item/organ/external/droplimb(clean, disintegrate = DROPLIMB_EDGE, ignore_children, silent, skip_throw)
-	.=..()
 	var/mob/living/carbon/human/victim = owner
+	.=..()
+	if(!victim)
+		return
 
 	var/use_flesh_colour = species.get_flesh_colour(owner)
 	var/use_blood_colour = species.get_blood_colour(owner)

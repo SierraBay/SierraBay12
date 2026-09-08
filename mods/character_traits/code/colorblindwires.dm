@@ -102,8 +102,9 @@ var/global/list/tritanopia_replacements = list(
 		close_browser(user, "window=wires")
 		return FALSE
 
+	var/scroll_script = {"<script>window.onscroll=function(){window.name=String(document.documentElement.scrollTop||document.body.scrollTop)};window.onload=function(){var p=parseInt(window.name);if(p>0)setTimeout(function(){document.documentElement.scrollTop=document.body.scrollTop=p},0)};</script>"}
 	var/datum/browser/popup = new(user, "wires", holder.name, window_x, window_y)
-	popup.set_content(html)
+	popup.set_content("[scroll_script][html]") // [SIERRA-EDIT] popup.set_content(html)
 	popup.set_title_image(user.browse_rsc_icon(holder.icon, holder.icon_state))
 	popup.open()
 	return TRUE

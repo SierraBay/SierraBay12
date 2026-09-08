@@ -16,6 +16,10 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/errant_pisces)
 
+/datum/map_template/ruin/away_site/errant_pisces/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/carp_genetic, z)
+
 /obj/item/clothing/under/carp
 	name = "space carp suit"
 	desc = "A suit in a shape of a space carp. Usually worn by corporate interns who are sent to entertain children during HQ excursions."

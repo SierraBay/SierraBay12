@@ -15,7 +15,8 @@
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/skrellscoutship, /datum/shuttle/autodock/overmap/skrellscoutshuttle)
 	apc_test_exempt_areas = list(
 		/area/ship/skrellscoutship/externalwing/port = NO_SCRUBBER|NO_VENT|NO_APC,
-		/area/ship/skrellscoutship/externalwing/starboard = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/ship/skrellscoutship/externalwing/starboard = NO_SCRUBBER|NO_VENT|NO_APC,
+		/area/ship/skrellscoutship/hangar = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 	spawn_weight = 0.67
 

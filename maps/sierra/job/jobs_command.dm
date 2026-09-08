@@ -50,7 +50,7 @@
 
 	minimal_player_age = 14
 	ideal_character_age = 45
-	economic_power = 14
+	economic_power = 12
 	skill_points = 30
 
 	minimum_character_age = list(SPECIES_HUMAN = 28)
@@ -82,8 +82,8 @@
 	// exp_track_branch = COM
 
 	access = list(
-		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory,
-		access_forensics_lockers, access_heads, access_medical, access_morgue,
+		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
+		access_forensics_lockers, access_heads, access_medical, access_morgue, access_biomech,
 		access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks,
 		access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter,
 		access_eva, access_bridge, access_all_personal_lockers, access_chapel_office,
@@ -97,7 +97,8 @@
 		access_guppy_helm, access_expedition_shuttle_helm, access_explorer, access_el, access_tox,
 		access_tox_storage, access_research, access_mining, access_mining_office, access_mining_station,
 		access_xenobiology, access_xenoarch, access_petrov, access_petrov_helm, access_actor, access_chief_steward,
-		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin, access_research_storage, access_adjutants, access_employment_records
+		access_bar, access_commissary, access_pilot, access_field_eng, access_field_med, access_network_admin,
+		access_research_storage, access_adjutants, access_employment_records, access_rnd_network
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -127,7 +128,7 @@
 
 	minimum_character_age = list(SPECIES_HUMAN = 37)
 	ideal_character_age = 42
-	economic_power = 20
+	economic_power = 17
 	skill_points = 36
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/rd
@@ -159,13 +160,15 @@
 	access = list(
 		access_tox, access_tox_storage, access_emergency_storage,
 		access_teleporter, access_bridge, access_rd, access_ai_upload,
-		access_research, access_robotics, access_mining, access_mining_office,
+		access_research, access_mining, access_mining_office,
 		access_mining_station, access_xenobiology, access_RC_announce,
 		access_keycard_auth, access_xenoarch, access_heads,
 		access_sec_doors, access_medical, access_network,
 		access_maint_tunnels, access_eva, access_expedition_shuttle, access_expedition_shuttle_helm,
 		access_guppy, access_hangar, access_petrov, access_petrov_helm,
-		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage, access_employment_records
+		access_guppy_helm, access_explorer, access_el, access_network_admin, access_research_storage,
+		access_employment_records, access_medical_records, access_security_records, access_rnd_network
+
 	)
 	software_on_spawn = list(
 		/datum/computer_file/program/comm,
@@ -191,7 +194,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 14
 
 	minimal_player_age = 21
 
@@ -228,7 +231,9 @@
 		access_sec_doors,access_chapel_office, access_crematorium,
 		access_chemistry, access_virology, access_cmo, access_surgery,
 		access_RC_announce, access_keycard_auth, access_psychiatrist,
-		access_medical_equip, access_senmed, access_hangar, access_medical_records, access_employment_records
+		access_medical_equip, access_senmed, access_hangar, access_medical_records,
+		access_employment_records, access_security_records, access_rnd_network, access_biomech
+
 	)
 
 
@@ -259,7 +264,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 14
 
 	minimal_player_age = 21
 
@@ -301,7 +306,10 @@
 		access_atmospherics, access_janitor, access_construction,
 		access_sec_doors, access_medical, access_network, access_ce,
 		access_RC_announce, access_keycard_auth, access_tcomsat,
-		access_seneng, access_hangar, access_network_admin, access_employment_records
+		access_seneng, access_hangar, access_network_admin,
+		access_employment_records, access_medical_records,
+		access_security_records, access_rnd_network, access_robotics
+
 	)
 
 
@@ -339,7 +347,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	req_admin_notify = 1
-	economic_power = 10
+	economic_power = 12
 
 	minimal_player_age = 21
 
@@ -372,7 +380,7 @@
 		access_teleporter, access_eva, access_bridge,
 		access_heads, access_hos, access_RC_announce,
 		access_keycard_auth, access_sec_doors, access_hangar,
-		access_gun, access_warden, access_employment_records
+		access_gun, access_warden, access_employment_records, access_rnd_network
 	)
 
 
@@ -403,7 +411,7 @@
 	spawn_positions = 1
 	supervisors = "Центральному Командованию"
 	selection_color = "#2f2f7f"
-	economic_power = 15
+	economic_power = 14
 
 	minimal_player_age = 10
 
@@ -429,7 +437,7 @@
 		access_heads, access_bridge, access_hangar, access_employment_records,
 		access_petrov, access_commissary, access_maint_tunnels,
 		access_tox, access_tox_storage, access_xenobiology, access_research_storage, access_robotics,
-		access_morgue, access_senmed, access_surgery, access_medical_equip
+		access_morgue, access_senmed, access_surgery, access_medical_equip, access_rnd_network
 	)
 
 
@@ -533,7 +541,8 @@
 		access_heads, access_bridge, access_janitor, access_kitchen, access_actor, access_cargo,
 		access_RC_announce, access_keycard_auth, access_guppy, access_guppy_helm,
 		access_external_airlocks, access_expedition_shuttle, access_eva, access_hangar,
-		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar, access_adjutants, access_employment_records
+		access_explorer, access_expedition_shuttle_helm, access_gun, access_bar, access_adjutants, access_employment_records,
+		access_rnd_network
 	)
 
 	software_on_spawn = list(

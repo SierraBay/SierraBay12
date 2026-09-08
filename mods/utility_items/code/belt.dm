@@ -60,7 +60,8 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/knife)
+		/obj/item/material/knife,
+		/obj/item/ammo_casing/battery)
 
 /obj/item/storage/belt/security
 	contents_allowed = list(
@@ -90,7 +91,8 @@
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/material/knife)
+		/obj/item/material/knife,
+		/obj/item/ammo_casing/battery)
 
 /obj/item/storage/belt/forensic
 	storage_slots = 10
@@ -166,5 +168,4 @@
 		/obj/item/toy/bosunwhistle,
 		/obj/item/clothing/head/beret,
 		/obj/item/material/knife/folding,
-		/obj/item/device/tape,
-		/obj/item/device/science_tool)
+		/obj/item/device/tape)

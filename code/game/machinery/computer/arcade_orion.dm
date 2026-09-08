@@ -1,4 +1,4 @@
-
+/*
 //////////////////////////
 //   ORION TRAIL HERE   //
 //////////////////////////
@@ -25,7 +25,7 @@
 #define ORION_VIEW_MAIN			0
 #define ORION_VIEW_SUPPLIES		1
 #define ORION_VIEW_CREW			2
-
+*/
 
 /obj/machinery/computer/arcade/orion_trail
 	name = "orion trail"
@@ -45,7 +45,8 @@
 						   ORION_TRAIL_MUTINY		= 3,
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_CARP			= 3
+						   ORION_TRAIL_CARP			= 3,
+							   ORION_TRAIL_DERELICT		= 2
 						   )
 	var/list/stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	var/list/stopblurbs = list(
@@ -68,7 +69,7 @@
 	var/distance = 0
 	var/port = 0
 	var/view = 0
-
+/*
 /obj/machinery/computer/arcade/orion_trail/proc/newgame(emag = 0)
 	SetName("orion trail[emag ? ": Realism Edition" : ""]")
 	supplies = list("1" = 1, "2" = 1, "3" = 1, "4" = 60, "5" = 20, "6" = 5000)
@@ -470,7 +471,7 @@
 		prizevend()
 	event = null
 	src.updateUsrDialog()
-
+*/
 /obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
@@ -503,7 +504,7 @@
 	src.visible_message(SPAN_DANGER("[src] explodes!"))
 	explosion(src.loc, 7)
 	qdel(src)
-
+/*
 #undef ORION_TRAIL_RAIDERS
 #undef ORION_TRAIL_FLUX
 #undef ORION_TRAIL_ILLNESS
@@ -523,3 +524,4 @@
 #undef ORION_VIEW_MAIN
 #undef ORION_VIEW_SUPPLIES
 #undef ORION_VIEW_CREW
+*/

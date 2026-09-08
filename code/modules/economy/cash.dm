@@ -104,6 +104,14 @@
 		// amount = round(clamp(amount, 0, src.worth))
 		amount = round(clamp(amount, 0, src.worth) * 100) / 100
 		// [/SIERRA-EDIT] - CHICHNOMICS
+		// [SIERRA-ADD] Money dupe fix
+		if(!src || QDELETED(src))
+			return
+
+		if(user.get_inactive_hand() != src)
+			return
+		// [/SIERRA-ADD]
+		amount = round(clamp(amount, 0, src.worth))
 		if (amount==0) return 0
 
 		src.worth -= amount

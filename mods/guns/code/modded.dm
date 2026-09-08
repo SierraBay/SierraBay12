@@ -20,6 +20,7 @@
 		slot_r_hand_str = 'mods/guns/icons/mob/righthand_iccg.dmi',
 		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_iccg.dmi',
 		)
+	manufacturer = MANUFACTURER_HELTEK
 
 /obj/item/gun/projectile/automatic/assault_rifle/heltek/on_update_icon()
 	..()
@@ -51,12 +52,13 @@
 	bulk = GUN_BULK_RIFLE
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	manufacturer = MANUFACTURER_HELTEK
 
 	//Assault rifle, burst fire degrades quicker than SMG, worse one-handing penalty, slightly increased move delay
 	firemodes = list(
-		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null),
+		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null, can_autofire=FALSE),
 		list("mode_name" = "2-round bursts", burst=2,    fire_delay=null, one_hand_penalty=9,  burst_accuracy=list(0,-1,-1),       dispersion=list(0.0, 0.6, 1.0)),
-		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
+		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), can_autofire=TRUE)
 		)
 
 /obj/item/gun/projectile/automatic/mr735/on_update_icon()
@@ -90,11 +92,12 @@
 	bulk = GUN_BULK_RIFLE + 1
 	mag_insert_sound = 'sound/weapons/guns/interaction/ltrifle_magin.ogg'
 	mag_remove_sound = 'sound/weapons/guns/interaction/ltrifle_magout.ogg'
+	manufacturer = MANUFACTURER_HELTEK
 
 	firemodes = list(
-		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null),
+		list("mode_name" = "semi auto",      burst=1,    fire_delay=null, one_hand_penalty=8,  burst_accuracy=null,                dispersion=null, can_autofire=FALSE),
 		list("mode_name" = "2-round bursts", burst=2,    fire_delay=null, one_hand_penalty=9,  burst_accuracy=list(0,-1,-1),       dispersion=list(0.0, 0.6, 1.0)),
-		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), autofire_enabled=1)
+		list("mode_name" = "full auto",      burst=1,    fire_delay=1.7,    burst_delay=1.3,     one_hand_penalty=7,  burst_accuracy=list(0,-1,-1), dispersion=list(1.3, 1.5, 1.7, 1.9, 2.2), can_autofire=TRUE)
 		)
 
 /obj/item/gun/projectile/automatic/mbr/on_update_icon()
@@ -131,6 +134,7 @@
 	matter = list(MATERIAL_STEEL = 2000)
 	projectile_type = /obj/item/projectile/beam/smalllaser
 	wielded_item_state = "bonfire-wielded"
+	manufacturer = MANUFACTURER_HELTEK
 
 	firemodes = list(
 		list("mode_name" = "semi auto",       burst=1, fire_delay=null, one_hand_penalty=0, burst_accuracy=null, dispersion=null),
@@ -184,6 +188,7 @@
 	one_hand_penalty = 0
 	charge_cost = 40
 	max_shots = 5
+	manufacturer = MANUFACTURER_HELTEK
 
 // CSS Anti-psionics stuff
 
@@ -229,6 +234,7 @@
 	bulk = -1
 	accuracy = 1
 	one_hand_penalty = 4
+	manufacturer = MANUFACTURER_MARS_MILITARY
 
 	barrel_thread = TRUE
 	silencer_offset = 6
@@ -250,11 +256,15 @@
 /obj/item/gun/projectile/automatic/sol_smg/empty
 	starts_loaded = FALSE
 
+// Old Lathe
 /datum/fabricator_recipe/arms_ammo/hidden/magazine_smg_sol
 	name = "ammunition (SOLMAG submachine gun)"
 	path = /obj/item/ammo_magazine/smg_sol
 
-/obj/item/ammo_magazine/smg_sol
+// Modded MODPACK_RND Lathe
+/datum/design/autolathe/arms_ammo/hidden/magazine_smg_sol
+	name = "ammunition (SOLMAG submachine gun)"
+	build_path = /obj/item/ammo_magazine/smg_sol
 
 /obj/item/ammo_magazine/smg_sol
 	name = "SOLMAG magazine"
@@ -301,6 +311,7 @@
 	allowed_magazines = /obj/item/ammo_magazine/smg_nt
 	auto_eject = 1
 	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
+	manufacturer = MANUFACTURER_NANOTRASEN
 
 /obj/item/gun/projectile/automatic/sec_smg/c20a/on_update_icon()
 	..()
@@ -319,7 +330,7 @@
 /datum/design/item/weapon/c20a
 	id = "c20a"
 	req_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
-	materials = list(MATERIAL_STEEL = 8000, MATERIAL_SILVER = 3000, MATERIAL_DIAMOND = 1500)
+	materials = list(MATERIAL_STEEL = 11000, MATERIAL_SILVER = 4000, MATERIAL_DIAMOND = 2000)
 	build_path = /obj/item/gun/projectile/automatic/sec_smg/c20a
 	sort_string = "TAZGA"
 
@@ -360,10 +371,6 @@
 /obj/item/projectile/bullet/pistol/holdout/ap
 	damage = 30
 	armor_penetration = 15
-	//[SIERRA-ADD] - Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 20 //15 попаданий чтоб сорвать броню
-	//[SIERRA-ADD]
 
 /obj/item/storage/box/ammo/smg_nt
 	name = "box of 7mm box magazines - lethal"

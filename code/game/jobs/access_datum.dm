@@ -268,6 +268,14 @@ var/global/const/access_research = "ACCESS_RESEARCH" //47
 	desc = "Science"
 	region = ACCESS_REGION_RESEARCH
 
+//[SIERRA-ADD] RND
+var/global/const/access_rnd_network = "ACCESS_RND_NETWORK"
+/datum/access/rnd_network
+	id = access_rnd_network
+	desc = "R&D Network"
+	region = ACCESS_REGION_RESEARCH
+//[/SIERRA-ADD] RND
+
 var/global/const/access_mining = "ACCESS_MINING" //48
 /datum/access/mining
 	id = access_mining
@@ -406,6 +414,15 @@ var/global/const/access_security_records = "ACCESS_SECURITY_RECORDS"
 	id = access_security_records
 	desc = "Security Records"
 	region = ACCESS_REGION_SECURITY
+
+// [SIERRA-ADD] - BIOMECH_ACCESS
+
+var/global/const/access_biomech = "ACCESS_BIOMECH"
+/datum/access/biomech
+	id = access_biomech
+	desc = "Biomechanical Engineer"
+	region = ACCESS_REGION_MEDBAY
+
 // [/SIERRA-ADD]
 
 /******************

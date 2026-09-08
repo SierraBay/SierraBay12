@@ -11232,7 +11232,7 @@
 	},
 /obj/item/stack/material/steel/ten,
 /obj/item/stack/material/steel/ten,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white,
 /area/rnd/misc_lab)
 "bGP" = (
@@ -21841,7 +21841,7 @@
 /area/crew_quarters/heads/office/ce/cobed)
 "diN" = (
 /obj/structure/table/glass,
-/obj/machinery/microscope,
+/obj/machinery/computer/microscope,
 /obj/floor_decal/borderfloorwhite{
 	dir = 1
 	},
@@ -37857,7 +37857,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white/monotile,
 /area/shuttle/petrov/test_room)
 "fzr" = (
@@ -80793,7 +80793,7 @@
 "lQj" = (
 /obj/structure/table/standard,
 /obj/item/folder/nt,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /obj/item/device/scanner/health,
 /obj/item/device/geiger,
 /turf/simulated/floor/tiled/white,
@@ -111612,7 +111612,7 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled,
 /area/rnd/locker)
 "quf" = (
@@ -128358,7 +128358,7 @@
 /area/crew_quarters/sleep/cryo/south)
 "sOJ" = (
 /obj/structure/table/glass,
-/obj/machinery/dnaforensics,
+/obj/machinery/computer/dnaforensics,
 /obj/machinery/recharger/wallcharger{
 	dir = 4;
 	pixel_x = -22
@@ -139543,7 +139543,7 @@
 	c_tag = "Research - Devlab";
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/rnd/development)
 "uyK" = (
@@ -144873,7 +144873,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white/monotile,
 /area/rnd/office)
 "vlt" = (
@@ -157900,7 +157900,7 @@
 /obj/floor_decal/corner/purple/border{
 	dir = 1
 	},
-/obj/item/device/science_tool,
+/obj/item/stock_parts/computer/scanner/research,
 /turf/simulated/floor/tiled/white,
 /area/rnd/xenobiology/xenoflora)
 "xkH" = (

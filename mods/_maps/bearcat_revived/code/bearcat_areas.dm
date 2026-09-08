@@ -180,3 +180,20 @@
 	icon_state = "tcomsatcham"
 	area_flags = AREA_FLAG_RAD_SHIELDED
 	req_access = list(access_bearcat)
+
+
+
+/area/ship/scrap/broken1/repaired
+	turfs_airless = FALSE
+
+/area/ship/scrap/broken2/repaired
+	turfs_airless = FALSE
+
+/area/ship/scrap/maintenance/atmos/repaired
+	turfs_airless = FALSE
+
+/area/ship/scrap/maintenance/power/repaired
+	turfs_airless = FALSE
+
+/area/ship/scrap/maintenance/engine/aft/repaired
+	turfs_airless = FALSE

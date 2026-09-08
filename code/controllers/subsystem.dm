@@ -29,6 +29,7 @@
 	var/times_fired = 0   //number of times we have called fire()
 	var/queued_time = 0   //time we entered the queue, (for timing and priority reasons)
 	var/queued_priority   //we keep a running total to make the math easier, if priority changes mid-fire that would break our running total, so we store it here
+	var/postponed_fires = 0 // [SIERRA-ADD] - MC //number of postponed fire()s, if any
 	//linked list stuff for the queue
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
@@ -94,7 +95,7 @@
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
-		if (queue_node_flags & (SS_TICKER|SS_BACKGROUND) == SS_TICKER)
+		if ((queue_node_flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER) // [SIERRA-EDIT] - MC
 			if (!(SS_flags & SS_TICKER))
 				continue
 			if (queue_node_priority < SS_priority)
@@ -109,7 +110,7 @@
 		else
 			if (SS_flags & SS_BACKGROUND)
 				continue
-			if (SS_flags & SS_TICKER)
+			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER) // [SIERRA-EDIT] - MC //SS_BACKGROUND overrides SS_TICKER's priority bump
 				break
 			if (queue_node_priority < SS_priority)
 				break
@@ -238,8 +239,23 @@
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
 /datum/controller/subsystem/proc/postpone(cycles = 1)
-	if(next_fire - world.time < wait)
-		next_fire += (wait*cycles)
+	postponed_fires += cycles // [SIERRA-EDIT] - MC
+
+// [SIERRA-ADD] - MC
+/// Calculates and sets the next fire time based on subsystem flags and timing mode.
+/datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
+	var/SS_flags = flags
+	if (SS_flags & SS_TICKER)
+		next_fire = world.time + (world.tick_lag * wait)
+	else if (reset_time)
+		next_fire = world.time + wait
+	else if (SS_flags & SS_POST_FIRE_TIMING)
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun/100))
+	else if (SS_flags & SS_KEEP_TIMING)
+		next_fire += wait
+	else
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
+// [/SIERRA-ADD]
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
@@ -252,8 +268,8 @@
 // Admin-enables this subsystem.
 /datum/controller/subsystem/proc/enable()
 	if (!can_fire)
-		next_fire = world.time + wait
 		can_fire = TRUE
+		update_nextfire(reset_time = TRUE) // [SIERRA-EDIT] - MC
 
 // Suspends this subsystem. Functionally identical to disable(), but shows SUSPEND in MC panel.
 // 	Preferred over disable() for self-disabling subsystems.
@@ -265,7 +281,7 @@
 	if (suspended)
 		suspended = FALSE
 		if (can_fire)
-			next_fire = world.time + wait
+			update_nextfire(reset_time = TRUE) // [SIERRA-EDIT] - MC
 
 /datum/controller/subsystem/VV_static()
 	return ..() + list("queued_priority", "suspended")

@@ -13,7 +13,10 @@
 #include "code/rouge_ai.dm"
 #include "code/operative.dm"
 #include "code/traitor.dm"
+#include "code/tricky_smokes.dm"
 #include "code/uplink.dm"
 #include "code/maint_ninja.dm"
 #include "code/raider.dm"
+#include "code/registry.dm"
+#include "code/objective.dm"
 #endif

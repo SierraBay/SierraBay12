@@ -1,0 +1,233 @@
+<style>
+.bsd-status {
+	padding: 7px 12px;
+	margin-bottom: 8px;
+	border-radius: 3px;
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 1px;
+	font-size: 12px;
+}
+.bsd-jumping  { background: #2a1000; color: #ff7700; border: 1px solid #ff7700; }
+.bsd-cooldown { background: #10102a; color: #7070ff; border: 1px solid #7070ff; }
+.bsd-ready    { background: #0a200a; color: #00cc44; border: 1px solid #00cc44; }
+.bsd-standby  { background: #181818; color: #777777; border: 1px solid #444444; }
+.bsd-warn {
+	padding: 5px 10px;
+	margin: 3px 0 6px 0;
+	border-radius: 2px;
+	background: #2a1a00;
+	color: #ffaa00;
+	border: 1px solid #ffaa00;
+	font-size: 11px;
+}
+.bsd-crit {
+	padding: 5px 10px;
+	margin: 3px 0 6px 0;
+	border-radius: 2px;
+	background: #2a0000;
+	color: #ff4444;
+	border: 1px solid #ff4444;
+	font-size: 11px;
+}
+.bsd-sep { border: 0; border-top: 1px solid #2a2a2a; margin: 6px 0; }
+</style>
+
+{{if data.jumping}}
+<div class="bsd-status bsd-jumping">
+	&#9889; JUMP SEQUENCE IN PROGRESS
+	{{if data.emergency_jump}}&nbsp;&mdash;&nbsp;<span style="color:#ff4444">EMERGENCY</span>{{/if}}
+</div>
+{{else data.on_cooldown}}
+<div class="bsd-status bsd-cooldown">&#9711; DRIVE COOLING DOWN &mdash; {{:data.cooldown_remaining}}s remaining</div>
+{{else data.energized}}
+<div class="bsd-status bsd-ready">&#9654; DRIVE ENERGIZED &mdash; READY</div>
+{{else}}
+<div class="bsd-status bsd-standby">&#9711; STANDBY</div>
+{{/if}}
+
+{{if data.overcharged}}
+<div class="bsd-crit">&#9888; OVERCHARGE DETECTED &mdash; Power cascade failure risk on jump!</div>
+{{else data.near_overcharge}}
+<div class="bsd-warn">&#9888; High power accumulation &mdash; approaching overcharge threshold</div>
+{{/if}}
+
+{{if data.fuel_total_moles < data.min_fuel && data.fuel_total_moles >= data.emergency_min_fuel}}
+<div class="bsd-crit">&#9888; LOW FUEL &mdash; Emergency jump only! Destination unreliable. Cooldown doubled.</div>
+{{/if}}
+
+<hr class="bsd-sep"/>
+<h3>System Status</h3>
+
+<div class="item">
+	<div class="itemLabel">Ship Link:</div>
+	<div class="itemContent">
+		{{if data.linked}}
+			<span class='good'>{{:data.ship_name}}</span>
+			<span style="color:#666"> ({{:data.ship_x}}, {{:data.ship_y}})</span>
+		{{else}}
+			<span class='bad'>NOT LINKED</span>
+		{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">Abort Lock:</div>
+	<div class="itemContent">
+		{{if data.jump_locked}}
+			<span class='bad'><b>LOCKED</b> &mdash; Final approach, abort disabled</span>
+		{{else}}
+			<span class='good'>Armed</span>
+		{{/if}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">Rift Status:</div>
+	<div class="itemContent">
+		{{if data.rift_open}}
+			<span class='bad'>&#9888; <b>RIFT OPEN</b> &mdash; Bluespace hazard active</span>
+		{{else}}
+			<span style="color:#555">Sealed</span>
+		{{/if}}
+	</div>
+</div>
+
+<hr class="bsd-sep"/>
+<h3>Gas Intake</h3>
+
+<div class="item">
+	<div class="itemLabel">Intake Rate:</div>
+	<div class="itemContent">
+		{{:helper.link('Low',    null, {'set_intake': 1}, data.intake_rate == 1 ? 'selected' : null)}}
+		{{:helper.link('Medium', null, {'set_intake': 2}, data.intake_rate == 2 ? 'selected' : null)}}
+		{{:helper.link('High',   null, {'set_intake': 3}, data.intake_rate == 3 ? 'selected' : null)}}
+		<span style="color:#aaa; margin-left:6px">
+			{{if data.intake_rate == 1}}~5 mol/tick
+			{{else data.intake_rate == 2}}~20 mol/tick
+			{{else}}~60 mol/tick
+			{{/if}}
+		</span>
+	</div>
+</div>
+
+<hr class="bsd-sep"/>
+<h3>Tanks</h3>
+
+<style>
+.bsd-tank { width:100%; border-collapse:collapse; margin-bottom:4px; }
+.bsd-tank td { padding: 1px 4px; vertical-align:top; }
+.bsd-tank .tl { color:#888; width:90px; }
+.bsd-tank .tgases { color:#aaa; font-size:11px; padding-left:94px; }
+</style>
+
+<!-- Fuel tank -->
+<table class="bsd-tank">
+<tr>
+	<td class="tl">Fuel:</td>
+	<td>
+		{{:helper.displayBar(data.fuel_total_moles, 0, data.min_fuel, (data.fuel_total_moles >= data.min_fuel) ? 'good' : 'bad')}}
+		<span style="color:#ccc">&nbsp;{{:data.fuel_total_moles}} / {{:data.min_fuel}} mol</span>
+		{{if data.fuel_total_moles > 0}}
+			<span style="color:#555">&nbsp;&mdash;&nbsp;{{:data.fuel_temp_k}}K&nbsp;/&nbsp;{{:data.fuel_pres}} kPa</span>
+		{{/if}}
+	</td>
+</tr>
+{{if data.fuel_total_moles > 0}}
+<tr>
+	<td class="tgases" colspan="2">
+		{{:data.fuel_contents_str}}
+	</td>
+</tr>
+{{/if}}
+</table>
+
+<hr class="bsd-sep"/>
+<h3>Jump Power</h3>
+
+<div class="item">
+	<div class="itemLabel">Accumulated:</div>
+	<div class="itemContent">
+		{{:helper.displayBar(data.jump_power, 0, data.overcharge_threshold, data.overcharged ? 'bad' : (data.near_overcharge ? 'average' : 'good'))}}
+		<div class="statusValue">
+			{{:data.jump_power}} BSU
+			{{if data.overcharged}}
+				&nbsp;<span class='bad'>OVERCHARGE (safe max: {{:data.overcharge_threshold}} BSU)</span>
+			{{else data.near_overcharge}}
+				&nbsp;<span class='average'>HIGH (safe max: {{:data.overcharge_threshold}} BSU)</span>
+			{{else}}
+				&nbsp;<span style="color:#555">(safe max: {{:data.overcharge_threshold}} BSU)</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">Destination:</div>
+	<div class="itemContent">
+		{{if data.has_destination}}
+			<span class='good'>Valid jump path</span>
+			<span style="color:#666">&nbsp;&mdash;&nbsp;({{:data.dest_x}}, {{:data.dest_y}})</span>
+		{{else}}
+			<span class='bad'>No valid path</span>
+		{{/if}}
+	</div>
+</div>
+
+<hr class="bsd-sep"/>
+<h3>Jump Parameters</h3>
+
+<div class="item">
+	<div class="itemLabel">Rotation:</div>
+	<div class="itemContent">
+		<b>{{:data.rotation}}&deg;</b>
+		&nbsp;
+		{{:helper.link('Edit', 'pencil', {'set_rotation' : 1}, (data.jumping || data.jump_locked) ? 'disabled' : null)}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">Angle:</div>
+	<div class="itemContent">
+		<b>{{:data.angle}}&deg;</b>
+		&nbsp;
+		{{:helper.link('Edit', 'pencil', {'set_angle' : 1}, (data.jumping || data.jump_locked) ? 'disabled' : null)}}
+	</div>
+</div>
+
+<hr class="bsd-sep"/>
+<h3>Controls</h3>
+
+<div class="item">
+	<div class="itemContent">
+		{{if data.jumping}}
+			{{if data.jump_locked}}
+				{{:helper.link('ABORT JUMP', 'alert', {'abort' : 1}, 'disabled')}}
+				&nbsp;<span class='bad'>(abort sequence locked)</span>
+			{{else}}
+				{{:helper.link('ABORT JUMP', 'alert', {'abort' : 1}, 'redButton')}}
+			{{/if}}
+		{{else}}
+			{{:helper.link(data.energized ? 'De-energize' : 'Energize', 'power', {'toggle_energized' : 1}, data.jump_locked ? 'disabled' : null)}}
+			&nbsp;
+			{{:helper.link('Purge Charge', 'trash', {'purge' : 1}, (data.fuel_total_moles > 0 || data.jump_power > 0) ? null : 'disabled')}}
+			{{if data.energized}}
+				{{if data.on_cooldown}}
+					&nbsp;<span class='average'>Cooldown: {{:data.cooldown_remaining}}s</span>
+				{{else}}
+					&nbsp;
+					{{:helper.link(
+					data.fuel_total_moles < data.min_fuel ? 'EMERGENCY JUMP' : 'INITIATE JUMP',
+					'arrowthickstop-1-s',
+					{'jump' : 1},
+					(data.has_destination && data.fuel_total_moles >= data.emergency_min_fuel) ? (data.overcharged ? 'redButton' : (data.fuel_total_moles < data.min_fuel ? 'redButton' : null)) : 'disabled')}}
+					{{if data.overcharged}}
+						&nbsp;<span class='bad'>(OVERCHARGE WARNING)</span>
+					{{else data.fuel_total_moles < data.min_fuel && data.fuel_total_moles >= data.emergency_min_fuel}}
+						&nbsp;<span class='bad'>(DESTINATION UNRELIABLE)</span>
+					{{/if}}
+				{{/if}}
+			{{/if}}
+		{{/if}}
+	</div>
+</div>

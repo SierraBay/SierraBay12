@@ -2016,7 +2016,9 @@
 /obj/machinery/alarm/merchant{
 	pixel_y = 24
 	},
-/obj/structure/closet/secure_closet/engineering_electrical/bearcat,
+/obj/structure/closet/secure_closet/engineering_electrical/bearcat{
+	req_access = list("ACCESS_MERCHANT")
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/engineeringreactor)
 "dx" = (
@@ -6240,12 +6242,6 @@
 	tag_exterior_door = "merchant_station_exterior";
 	tag_interior_door = "merchant_station_interior"
 	},
-/obj/machinery/airlock_sensor{
-	frequency = 1380;
-	id_tag = "merchant_station_sensor";
-	pixel_x = -28;
-	pixel_y = -10
-	},
 /obj/decal/cleanable/dirt,
 /obj/structure/catwalk,
 /obj/structure/cable/blue{
@@ -6253,22 +6249,20 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
-/area/liberia/dockinghall)
-"lh" = (
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
 	dir = 4;
 	id_tag = "merchant_station_vent"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/liberia/dockinghall)
+"lh" = (
 /obj/structure/cable/blue{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/liberia/dockinghall)
 "li" = (
@@ -6923,7 +6917,6 @@
 /obj/machinery/fabricator/micro/bartender{
 	pixel_x = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /obj/floor_decal/spline/fancy/wood,
 /turf/simulated/floor/carpet/red,
 /area/liberia/traidingroom)
@@ -7310,6 +7303,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor,
 /area/liberia/engineeringstorage)
+"ue" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 10
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/liberia/dockinghall)
 "uf" = (
 /turf/simulated/wall/r_wall/prepainted,
 /area/liberia/engineeringreactor)
@@ -7829,6 +7832,26 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/liberia/toiletroom1)
+"EW" = (
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "merchant_station_sensor";
+	pixel_x = -28;
+	pixel_y = -10
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/catwalk,
+/obj/structure/cable/blue{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+	dir = 4;
+	id_tag = "merchant_station_vent"
+	},
+/turf/simulated/floor/plating,
+/area/liberia/dockinghall)
 "EZ" = (
 /obj/wallframe_spawn/no_grille,
 /turf/simulated/floor/plating,
@@ -8197,10 +8220,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/liberia/merchantstorage)
 "Kv" = (
-/obj/machinery/fabricator{
-	fab_status_flags = 1
-	},
-/obj/item/storage/box/autolathe_designs,
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/steel_ridged,
 /area/liberia/engineeringlobby)
 "Lh" = (
@@ -22512,12 +22532,12 @@ aa
 aa
 aa
 aa
+ex
+bC
+bC
+bC
+ex
 aa
-ex
-bC
-bC
-bC
-ex
 aa
 aa
 aa
@@ -22616,7 +22636,6 @@ aa
 aa
 "}
 (68,1,1) = {"
-aa
 aa
 aa
 aa
@@ -22816,9 +22835,9 @@ aa
 aa
 aa
 aa
+aa
 "}
 (69,1,1) = {"
-aa
 aa
 aa
 aa
@@ -23018,9 +23037,9 @@ aa
 aa
 aa
 aa
+aa
 "}
 (70,1,1) = {"
-aa
 aa
 aa
 aa
@@ -23220,9 +23239,9 @@ aa
 aa
 aa
 aa
+aa
 "}
 (71,1,1) = {"
-aa
 aa
 aa
 aa
@@ -23422,6 +23441,7 @@ aa
 aa
 aa
 aa
+aa
 "}
 (72,1,1) = {"
 aa
@@ -23521,7 +23541,6 @@ aa
 aa
 aa
 aa
-aa
 ex
 ex
 ex
@@ -23529,6 +23548,7 @@ cg
 cN
 ex
 ex
+aa
 aa
 aa
 aa
@@ -23723,7 +23743,6 @@ uh
 aa
 aa
 aa
-aa
 ex
 br
 bO
@@ -23731,6 +23750,7 @@ ch
 cO
 dm
 ex
+aa
 aa
 aa
 oM
@@ -23924,7 +23944,6 @@ iR
 uh
 aa
 aa
-aa
 ex
 ex
 bs
@@ -23934,6 +23953,7 @@ cP
 dT
 ex
 ex
+aa
 aa
 oM
 ZO
@@ -24126,7 +24146,6 @@ iR
 uh
 aa
 aa
-aa
 bb
 ex
 bt
@@ -24136,6 +24155,7 @@ cQ
 dU
 ex
 bb
+aa
 aa
 oM
 ZO
@@ -24328,7 +24348,6 @@ iR
 uh
 aa
 aa
-aa
 fl
 ex
 ex
@@ -24338,6 +24357,7 @@ cR
 ex
 ex
 fl
+aa
 aa
 oM
 ZO
@@ -24531,7 +24551,6 @@ uh
 aa
 aa
 aa
-aa
 bo
 bu
 bS
@@ -24539,6 +24558,7 @@ cq
 cS
 ec
 bo
+aa
 aa
 aa
 oM
@@ -24733,7 +24753,6 @@ uh
 aa
 aa
 aa
-aa
 bo
 bv
 bT
@@ -24741,6 +24760,7 @@ cr
 cV
 ef
 bo
+aa
 aa
 aa
 oM
@@ -24935,7 +24955,6 @@ uh
 aa
 aa
 aa
-aa
 ex
 bw
 bU
@@ -24943,6 +24962,7 @@ cs
 cU
 bw
 ex
+aa
 aa
 aa
 oM
@@ -25136,7 +25156,6 @@ iR
 uh
 aa
 aa
-aa
 ex
 ex
 bx
@@ -25146,6 +25165,7 @@ cV
 eg
 ex
 ex
+aa
 aa
 oM
 ZO
@@ -25338,7 +25358,6 @@ iR
 uh
 aa
 aa
-aa
 kf
 ex
 by
@@ -25348,6 +25367,7 @@ cV
 eh
 ex
 kf
+aa
 aa
 oM
 ZO
@@ -25541,7 +25561,6 @@ uh
 aa
 aa
 aa
-aa
 ex
 bw
 bU
@@ -25549,6 +25568,7 @@ cv
 cU
 bw
 ex
+aa
 aa
 aa
 oM
@@ -25743,7 +25763,6 @@ uh
 aa
 aa
 aa
-aa
 ex
 bz
 bW
@@ -25751,6 +25770,7 @@ cw
 cV
 ep
 ex
+aa
 aa
 aa
 oM
@@ -25945,7 +25965,6 @@ uh
 aa
 aa
 aa
-aa
 ex
 bA
 bX
@@ -25953,6 +25972,7 @@ cx
 cW
 VS
 ex
+aa
 aa
 aa
 oM
@@ -26147,7 +26167,6 @@ uh
 aa
 aa
 aa
-aa
 bp
 bB
 bY
@@ -26155,6 +26174,7 @@ cy
 dg
 ex
 ex
+aa
 aa
 aa
 oM
@@ -26349,13 +26369,13 @@ uh
 aa
 aa
 aa
-aa
 bq
 ex
 bZ
 cz
 di
 ex
+EG
 EG
 EG
 EG
@@ -26552,13 +26572,13 @@ aa
 aa
 aa
 aa
-aa
 ex
 ca
 cA
 dl
 ey
 ac
+EW
 lg
 EG
 Sm
@@ -26754,13 +26774,13 @@ aa
 aa
 aa
 aa
-aa
 ex
 ex
 ex
 ex
 ex
 EG
+ue
 lh
 EG
 GP

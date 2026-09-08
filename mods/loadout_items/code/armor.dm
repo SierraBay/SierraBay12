@@ -16,7 +16,15 @@
 Armor Patches, covers, ect
 */
 
-/obj/item/clothing/accessory/armor/helmcover/scp_cover
+/obj/item/clothing/accessory/helmet_cover/black
+	name = "black cover"
+	desc = "A fabric cover for armored helmets. This one is flat black."
+	icon_override = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	icon_state = "black_cover"
+	accessory_icons = list(slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_head_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+
+/obj/item/clothing/accessory/helmet_cover/scp_cover
 	name = "SCP cover"
 	desc = "A fabric cover for armored helmets. This one has SCP's colors."
 	icon_override = 'mods/loadout_items/icons/obj_accessory.dmi'
@@ -53,3 +61,10 @@ Armor Patches, covers, ect
 	restricted_accessory_slots = list(ACCESSORY_SLOT_ARMOR_CHEST, ACCESSORY_SLOT_ARMOR_ARMS, ACCESSORY_SLOT_ARMOR_LEGS, ACCESSORY_SLOT_ARMOR_STORAGE)
 	blood_overlay_type = "armorblood"
 	flags_inv = 0
+
+/obj/item/clothing/accessory/armor_tag/barc
+	name = "BARC tag"
+	desc = "An armor tag with the words P317 BARC printed in orange lettering on it."
+	icon = 'mods/loadout_items/icons/obj_accessory.dmi'
+	accessory_icons = list(slot_tie_str = 'mods/loadout_items/icons/onmob_accessory.dmi', slot_wear_suit_str = 'mods/loadout_items/icons/onmob_accessory.dmi')
+	icon_state = "barctag"

@@ -61,7 +61,9 @@
 /mob/living/simple_animal/IIsAlly(mob/living/L)
 	. = ..()
 	if (!.) // Outside the faction, try to see if they're friends.
-		return L in friends
+		if(L in friends)
+			return TRUE
+		return weakref(L) in friends
 
 /mob/living/proc/IGetID()
 

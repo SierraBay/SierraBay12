@@ -17,6 +17,7 @@
 #include "code\machinery\analyser.dm"
 #include "code\machinery\antibodyanalyser.dm"
 #include "code\machinery\centrifuge.dm"
+#include "code\machinery\circuits.dm"
 #include "code\machinery\diseasesplicer.dm"
 #include "code\machinery\dishincubator.dm"
 #include "code\machinery\isolator.dm"

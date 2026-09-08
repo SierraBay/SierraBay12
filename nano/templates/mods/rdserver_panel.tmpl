@@ -1,0 +1,170 @@
+<div class="rndServerPanel">
+	<div class="rndServerHeader">
+		<span>Сервер ID: {{:data.server_id ? data.server_id : "не задан"}}</span>
+		<span class="{{:data.operable ? 'rndOnline' : 'rndOffline'}}">
+			{{:data.operable ? "● Online" : "● Offline"}}
+		</span>
+		<span class="rndHealth">Здоровье: {{:data.health}}%</span>
+		{{if data.panel_open}}
+			<span class="rndPanelOpen">[ Панель открыта ]</span>
+		{{/if}}
+	</div>
+
+	<table class="rndHddTable">
+		<tr class="rndHddHead">
+			<th>Диск</th>
+			<th>Категория</th>
+			<th>Заполнение</th>
+			<th>Действия</th>
+		</tr>
+		{{for data.hdds}}
+		<tr class="rndHddRow">
+			<td>
+				{{:value.name}}
+				{{if value.desc}}<div class="rndHddDesc">{{:value.desc}}</div>{{/if}}
+			</td>
+			<td class="{{:value.category == '—' ? 'rndNoCategory' : ''}}">{{:value.category}}</td>
+			<td>
+				<div class="rndBarWrap">
+					<div class="rndDiskBar">
+						<div class="rndDiskBarFill {{:value.pct >= 100 ? 'rndDiskBarFull' : value.pct >= 75 ? 'rndDiskBarWarn' : ''}}"
+							style="width:{{:value.pct}}%;"></div>
+					</div>
+					<span class="rndMuted">{{:value.used}}/{{:value.max}} GQ</span>
+				</div>
+			</td>
+			{{if data.panel_open}}
+			<td class="rndActions">
+				{{:helper.link("Извлечь", '', {'eject': value.ref})}}
+				{{:helper.link(value.category == '—' ? "Назначить" : "Сменить", '', {'assign_cat': value.ref})}}
+				{{if value.category == 'System'}}
+					{{:helper.link("Загрузить", '', {'load_rnd': 1})}}
+				{{/if}}
+			</td>
+			{{else}}
+			<td class="rndActions">
+				{{if value.category == 'System'}}
+					{{:helper.link("Загрузить данные", '', {'load_rnd': 1})}}
+				{{/if}}
+			</td>
+			{{/if}}
+		</tr>
+		{{/for}}
+		{{if !data.hdds || !data.hdds.length}}
+		<tr>
+			<td colspan="4" class="rndMuted rndEmpty">Нет установленных дисков</td>
+		</tr>
+		{{/if}}
+	</table>
+
+	{{if data.panel_open}}
+	<div class="rndHint">
+		Вставьте HDD из рук чтобы установить новый диск.
+	</div>
+	{{/if}}
+</div>
+
+<style>
+.rndServerPanel {
+	padding: 10px;
+	font-family: monospace;
+	color: #cde;
+}
+
+.rndServerHeader {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	margin-bottom: 10px;
+	font-size: 13px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid rgba(64, 98, 138, 0.5);
+}
+
+.rndOnline  { color: #4ade80; }
+.rndOffline { color: #f87171; }
+.rndHealth  { color: #94a3b8; font-size: 12px; }
+.rndPanelOpen { color: #fbbf24; font-size: 11px; }
+
+.rndHddTable {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.rndHddHead th {
+	text-align: left;
+	padding: 3px 8px;
+	border-bottom: 1px solid rgba(64, 98, 138, 0.5);
+	color: #7dd3fc;
+	font-weight: normal;
+}
+
+.rndHddRow td {
+	padding: 5px 8px;
+	border-bottom: 1px solid rgba(20, 40, 60, 0.3);
+	vertical-align: middle;
+}
+
+.rndNoCategory {
+	color: #6b7280;
+	font-style: italic;
+}
+
+.rndBarWrap {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.rndDiskBar {
+	width: 70px;
+	height: 5px;
+	border-radius: 3px;
+	background: rgba(30, 50, 80, 0.7);
+	border: 1px solid rgba(64, 98, 138, 0.4);
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.rndDiskBarFill {
+	height: 100%;
+	border-radius: 3px;
+	background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+}
+
+.rndDiskBarFill.rndDiskBarWarn {
+	background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.rndDiskBarFill.rndDiskBarFull {
+	background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.rndActions {
+	white-space: nowrap;
+}
+
+.rndHddDesc {
+	color: #6b7280;
+	font-size: 10px;
+	margin-top: 2px;
+	font-style: italic;
+	white-space: normal;
+	max-width: 200px;
+}
+
+.rndMuted { color: #6b7280; }
+
+.rndEmpty {
+	text-align: center;
+	padding: 12px;
+	font-style: italic;
+}
+
+.rndHint {
+	margin-top: 8px;
+	font-size: 11px;
+	color: #6b7280;
+}
+</style>

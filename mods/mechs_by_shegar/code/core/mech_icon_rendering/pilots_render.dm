@@ -17,7 +17,7 @@
 		var/rel_pos = local_dir == NORTH ? -1 : 1
 		draw_pilot.layer = MECH_PILOT_LAYER + (body ? ((LAZYLEN(body.pilot_positions)-i)*0.001 * rel_pos) : 0)
 		draw_pilot.plane = FLOAT_PLANE
-		draw_pilot.appearance_flags = KEEP_TOGETHER
+		draw_pilot.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 		if(body && i <= LAZYLEN(body.pilot_positions))
 			var/list/offset_values = body.pilot_positions[i]
 			var/list/directional_offset_values = offset_values["[local_dir]"]
@@ -35,4 +35,3 @@
 		LAZYADD(pilot_overlays, draw_pilot)
 	if(update_overlays && LAZYLEN(pilot_overlays))
 		AddOverlays(pilot_overlays)
-

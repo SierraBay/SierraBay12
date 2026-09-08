@@ -25,20 +25,10 @@
 	tracer_type = /obj/projectile/laser/tracer
 	impact_type = /obj/projectile/laser/impact
 
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 30 //Абилятивная броня слетит после 10 попаданий
-	//[SIERRA-ADD]
-
 /obj/item/projectile/beam/practice
 	fire_sound = 'sound/weapons/Taser.ogg'
 	damage = 0
 	eyeblur = 2
-
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 0
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/smalllaser
 	damage = 35
@@ -47,10 +37,6 @@
 		list(5, 0.87),
 		list(7, 0.67),
 	)
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 10
-	mech_armor_damage = 20 //Пистолетный ЛАЕП, сбивает после 15 попаданий
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/midlaser
 	damage = 40
@@ -60,10 +46,6 @@
 		list(6, 0.98),
 		list(8, 0.92),
 	)
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20 //Г40 прошивает противопульную
-	mech_armor_damage = 30 //10 попаданий для убийства противолазерной брони
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
@@ -81,10 +63,6 @@
 	muzzle_type = /obj/projectile/laser/heavy/muzzle
 	tracer_type = /obj/projectile/laser/heavy/tracer
 	impact_type = /obj/projectile/laser/heavy/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20 //Г40 прошивает противопульную
-	mech_armor_damage = 100 //3 попадания по противолазерной
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/xray
 	name = "x-ray beam"
@@ -104,11 +82,6 @@
 	tracer_type = /obj/projectile/laser/xray/tracer
 	impact_type = /obj/projectile/laser/xray/impact
 
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 10 //Пистолетный лазер, значит не пробьёт обе брони
-	mech_armor_damage = 25 //Абилятивная броня слетит после 12 попаданий
-	//[SIERRA-ADD]
-
 /obj/item/projectile/beam/xray/midlaser
 	damage = 30
 	armor_penetration = 50
@@ -118,11 +91,6 @@
 		list(6, 0.92),
 		list(8, 0.84),
 	)
-
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 30 //Абилятивная броня слетит после 10 попаданий
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
@@ -141,11 +109,6 @@
 	tracer_type = /obj/projectile/laser/pulse/tracer
 	impact_type = /obj/projectile/laser/pulse/impact
 
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 10 //Пистолетный лазер, значит не пробьёт обе брони
-	mech_armor_damage = 45 //Абилятивная броня слетит после 7 попаданий
-	//[SIERRA-ADD]
-
 /obj/item/projectile/beam/pulse/mid
 	damage = 20
 	armor_penetration = 30
@@ -155,11 +118,6 @@
 		list(6, 0.92),
 		list(8, 0.84),
 	)
-
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 30 //Абилятивная броня слетит после 10 попаданий
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/pulse/heavy
 	damage = 25
@@ -171,12 +129,6 @@
 		list(11, 0.88),
 	)
 
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 45 //Абилятивная броня слетит после 7 попаданий
-	//[SIERRA-ADD]
-
-
 /obj/item/projectile/beam/pulse/destroy
 	name = "destroyer pulse"
 	damage = 100 //badmins be badmins I don't give a fuck
@@ -186,11 +138,6 @@
 		list(9, 0.98),
 		list(11, 0.97),
 	)
-
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 100
-	mech_armor_damage = 300
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/pulse/destroy/on_hit(atom/target, blocked = 0)
 	if(isturf(target))
@@ -206,17 +153,9 @@
 
 /obj/item/projectile/beam/pulse/skrell/heavy
 	damage = 30
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 45 //Абилятивная броня слетит после 7 попаданий
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/pulse/skrell/single
 	damage = 50
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 60 //Абилятивная броня слетит после 5 попаданий
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
@@ -227,16 +166,6 @@
 	muzzle_type = /obj/projectile/laser/emitter/muzzle
 	tracer_type = /obj/projectile/laser/emitter/tracer
 	impact_type = /obj/projectile/laser/emitter/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20
-	mech_armor_damage = 100 //Абилятивная броня слетит после 3
-	//[SIERRA-ADD]
-
-//[SIERRA-ADD] Mechs-by-Shegar - Почему-то не обьявили родителя всему лазертагу
-/obj/item/projectile/beam/lastertag
-	mech_armor_penetration = 0
-	mech_armor_damage = 0
-//[SIERRA-ADD]
 
 /obj/item/projectile/beam/lastertag/blue
 	name = "lasertag beam"
@@ -303,11 +232,6 @@
 	tracer_type = /obj/projectile/laser/xray/tracer
 	impact_type = /obj/projectile/laser/xray/impact
 
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 100
-	mech_armor_damage = 30
-	//[SIERRA-ADD]
-
 /obj/item/projectile/beam/stun
 	name = "stun beam"
 	icon_state = "stun"
@@ -328,10 +252,6 @@
 	muzzle_type = /obj/projectile/stun/muzzle
 	tracer_type = /obj/projectile/stun/tracer
 	impact_type = /obj/projectile/stun/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 0 //Бесполезен на меха
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/stun/smalllaser
 	distance_falloff = 2
@@ -403,10 +323,6 @@
 	muzzle_type = /obj/projectile/trilaser/muzzle
 	tracer_type = /obj/projectile/trilaser/tracer
 	impact_type = /obj/projectile/trilaser/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20 //Прожигает противопульную
-	mech_armor_damage = 15 //Малоэффективен против противолазерной
-	//[SIERRA-ADD]
 
 //Exosuits have heavier cutters with less falloff
 /obj/item/projectile/beam/plasmacutter/mech
@@ -440,10 +356,6 @@
 	muzzle_type = /obj/projectile/confuseray/muzzle
 	tracer_type = /obj/projectile/confuseray/tracer
 	impact_type = /obj/projectile/confuseray/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 0
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/confuseray/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living))
@@ -467,20 +379,12 @@
 	tracer_type = /obj/projectile/laser_particle/tracer
 	impact_type = /obj/projectile/laser_particle/impact
 	penetration_modifier = 0.5
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 30
-	mech_armor_damage = 45
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/particle/small
 	name = "particle beam"
 	damage = 20
 	armor_penetration = 20
 	penetration_modifier = 0.3
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 20
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/darkmatter
 	name = "dark matter bolt"
@@ -491,10 +395,6 @@
 	muzzle_type = /obj/projectile/darkmatter/muzzle
 	tracer_type = /obj/projectile/darkmatter/tracer
 	impact_type = /obj/projectile/darkmatter/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 20 //прошьёт противопульную
-	mech_armor_damage = 45 //7 попаданий для убийства противолазерной брон
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/stun/darkmatter
 	name = "dark matter wave"
@@ -516,11 +416,6 @@
 	muzzle_type = /obj/projectile/pointdefense/muzzle
 	tracer_type = /obj/projectile/pointdefense/tracer
 	impact_type = /obj/projectile/pointdefense/impact
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 15 //20 попаданий для убийства противолазерной брон
-	//[SIERRA-ADD]
-
 
 /obj/item/projectile/beam/incendiary_laser
 	name = "scattered laser blast"
@@ -542,11 +437,6 @@
 	muzzle_type = /obj/projectile/incen/muzzle
 	tracer_type = /obj/projectile/incen/tracer
 	impact_type = /obj/projectile/incen/impact
-
-	//[SIERRA-ADD] Mechs-by-Shegar
-	mech_armor_penetration = 0
-	mech_armor_damage = 10 //30 попаданий для убийства противолазерной брон
-	//[SIERRA-ADD]
 
 /obj/item/projectile/beam/incendiary_laser/on_hit(atom/target, blocked = 0)
 	..()

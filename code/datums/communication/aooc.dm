@@ -29,7 +29,10 @@
 	var/datum/admins/holder = C.holder
 
 	for(var/client/target in GLOB.clients)
-		if(check_rights(R_INVESTIGATE, FALSE, target))
+		// [SIERRA-EDIT]
+		// if(check_rights(R_INVESTIGATE, FALSE, target)) // SIERRA-EDIT - ORIGINAL
+		if(check_rights(R_INVESTIGATE|R_DEBUG, FALSE, target))
+		// [/SIERRA-EDIT]
 			receive_communication(C, target, SPAN_AOOC("<EM>[get_options_bar(C, 0, 1, 1)]:</EM> [SPAN_CLASS("message linkify", "[message]")]"))
 		else if(target.mob?.mind?.special_role)
 			var/display_name = C.key
@@ -39,5 +42,8 @@
 
 /singleton/communication_channel/aooc/do_broadcast(message)
 	for (var/client/target in GLOB.clients)
-		if (check_rights(R_INVESTIGATE, FALSE, target) || target.mob?.mind?.special_role)
+		// [SIERRA-EDIT]
+		// if (check_rights(R_INVESTIGATE, FALSE, target) || target.mob?.mind?.special_role) // SIERRA-EDIT - ORIGINAL
+		if (check_rights(R_INVESTIGATE|R_DEBUG, FALSE, target) || target.mob?.mind?.special_role)
+		// [/SIERRA-EDIT]
 			receive_broadcast(target, SPAN_AOOC("<strong>SYSTEM BROADCAST:</strong> [SPAN_CLASS("message linkify", "[message]")]"))

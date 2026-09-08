@@ -14,6 +14,10 @@
 	spawn_cost = 2
 	area_usage_test_exempted_root_areas = list(/area/lar_maria)
 
+/datum/map_template/ruin/away_site/lar_maria/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_artifact/virus_container, z)
+
 ///////////////////////////////////crew and prisoners
 /obj/landmark/corpse/lar_maria
 	eye_colors_per_species = list(SPECIES_HUMAN = list(COLOR_RED))//red eyes
@@ -21,46 +25,59 @@
 	facial_styles_per_species = list(SPECIES_HUMAN = list("Shaved"))
 	genders_per_species = list(SPECIES_HUMAN = list(MALE))
 
-/mob/living/simple_animal/hostile/lar_maria
-	name = "Lar Maria hostile mob"
-	desc = "You shouldn't see me!"
-	icon = 'maps/away/lar_maria/lar_maria_sprites.dmi'
-	unsuitable_atmos_damage = 15
-	environment_smash = 1
-	faction = "lar_maria"
-	status_flags = CANPUSH
-	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
-	speed = 8
-	can_escape = TRUE
-	natural_weapon = /obj/item/natural_weapon/punch
-	var/obj/landmark/corpse/lar_maria/corpse = null
-	var/weapon = null
+// ============================================================
+// Lar Maria NPC Spawner (carbon/human with AI)
+// ============================================================
 
-	ai_holder = /datum/ai_holder/simple_animal/lar_maria
-	say_list_type = /datum/say_list/lar_maria
+/obj/landmark/lar_maria_npc
+	var/npc_name = "hostile"
+	var/outfit_type                          // singleton outfit for equipping
+	var/ai_type = /datum/ai_holder/human/lar_maria
+	var/faction_name = "lar_maria"
+	var/list/weapons = list()                // item types to put in hands
+	var/npc_gender = MALE
 
-/mob/living/simple_animal/hostile/lar_maria/death(gibbed, deathmessage, show_dead_message)
-	..(gibbed, deathmessage, show_dead_message)
-	if(corpse)
-		new corpse (src.loc)
-	if (weapon)
-		new weapon(src.loc)
-	visible_message(SPAN_WARNING("Small shining spores float away from dying [src]!"))
+/obj/landmark/lar_maria_npc/Initialize()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/landmark/lar_maria_npc/LateInitialize()
+	var/mob/living/carbon/human/H = new(loc)
+	H.real_name = npc_name
+	H.SetName(npc_name)
+	H.faction = faction_name
+	H.a_intent = I_HURT
+	H.change_gender(npc_gender)
+	// Infected appearance: red eyes, pale skin
+	H.change_eye_color(255, 0, 0)
+	H.change_skin_tone(-15)
+	H.change_facial_hair("Shaved")
+	apply_appearance(H)
+	// Equip outfit
+	if(outfit_type)
+		var/singleton/hierarchy/outfit/O = outfit_by_type(outfit_type)
+		O.equip(H, equip_adjustments = OUTFIT_ADJUSTMENT_SKIP_ID_PDA|OUTFIT_ADJUSTMENT_SKIP_BACKPACK|OUTFIT_ADJUSTMENT_SKIP_SURVIVAL_GEAR|OUTFIT_ADJUSTMENT_SKIP_POST_EQUIP)
+	// Weapons in hands
+	for(var/W in weapons)
+		var/obj/item/I = new W(H)
+		H.put_in_hands(I)
+	// AI setup
+	H.ai_holder = new ai_type(H)
+	H.say_list = new /datum/say_list/lar_maria()
+	H.say_list_type = /datum/say_list/lar_maria
+	// Infect with Lar Maria virus (defined in virusology mod)
+	lar_maria_npc_infect_human(H)
+	H.update_icon()
 	qdel(src)
 
-/mob/living/simple_animal/hostile/lar_maria/test_subject
-	name = "\improper test subject"
-	desc = "Sick, filthy, angry and probably crazy human in an orange robe."
-	icon_state = "test_subject"
-	icon_living = "test_subject"
-	icon_dead = "test_subject_dead"
-	maxHealth = 40
-	health = 40
-	harm_intent_damage = 5
-	corpse = /obj/landmark/corpse/lar_maria/test_subject
+// Override for subtype-specific appearance tweaks
+/obj/landmark/lar_maria_npc/proc/apply_appearance(mob/living/carbon/human/H)
+	return
+
+// --- Test Subject ---
+/obj/landmark/lar_maria_npc/test_subject
+	npc_name = "test subject"
+	outfit_type = /singleton/hierarchy/outfit/corpse/test_subject
 
 /obj/landmark/corpse/lar_maria/test_subject
 	name = "Dead test subject"
@@ -88,32 +105,19 @@
 	shoes = /obj/item/clothing/shoes/dutyboots
 	l_ear = /obj/item/device/radio/headset
 
-/mob/living/simple_animal/hostile/lar_maria/guard//angry guards armed with batons and shotguns. Still bite
-	name = "\improper security"
-	desc = "Guard dressed at Zeng-Hu Pharmaceuticals uniform."
-	icon_state = "guard_light"
-	maxHealth = 60
-	health = 60
-	harm_intent_damage = 5
-	natural_weapon = /obj/item/melee/baton
-	weapon = /obj/item/melee/baton
-	corpse = /obj/landmark/corpse/lar_maria/zhp_guard
+// --- Guard (melee, baton) ---
+/obj/landmark/lar_maria_npc/guard
+	npc_name = "security"
+	outfit_type = /singleton/hierarchy/outfit/corpse/zhp_guard
+	weapons = list(/obj/item/melee/baton)
 
-/mob/living/simple_animal/hostile/lar_maria/guard/Initialize()
-	. = ..()
-	var/skin_color = pick(list("light","dark"))
-	icon_state = "guard_[skin_color]"
-	if (skin_color == "dark")
-		corpse = /obj/landmark/corpse/lar_maria/zhp_guard/dark
+/obj/landmark/lar_maria_npc/guard/apply_appearance(mob/living/carbon/human/H)
+	if(prob(50))
+		H.change_skin_tone(-115) // dark skin variant
 
-/mob/living/simple_animal/hostile/lar_maria/guard/ranged
-	weapon = /obj/item/gun/projectile/shotgun/pump
-	ranged = 1
-	projectiletype = /obj/item/projectile/bullet/shotgun/beanbag
-
-/mob/living/simple_animal/hostile/lar_maria/guard/ranged/Initialize()
-	. = ..()
-	icon_state = "[icon_state]_ranged"
+// --- Guard (ranged, shotgun with beanbags) ---
+/obj/landmark/lar_maria_npc/guard/ranged
+	weapons = list(/obj/item/gun/projectile/shotgun/pump)
 
 /obj/item/clothing/head/soft/lar_maria/zhp_cap
 	name = "Zeng-Hu Pharmaceuticals cap"
@@ -122,14 +126,10 @@
 	icon_state = "zhp_cap"
 	item_icons = list(slot_head_str = 'maps/away/lar_maria/lar_maria_clothing_sprites.dmi')
 
-/mob/living/simple_animal/hostile/lar_maria/virologist
-	name = "\improper virologist"
-	desc = "Virologist dressed at Zeng-Hu Pharmaceuticals uniform."
-	icon_state = "virologist_m"
-	maxHealth = 50
-	health = 50
-	harm_intent_damage = 5
-	corpse = /obj/landmark/corpse/lar_maria/virologist
+// --- Virologist (male) ---
+/obj/landmark/lar_maria_npc/virologist
+	npc_name = "virologist"
+	outfit_type = /singleton/hierarchy/outfit/corpse/zhp_virologist
 
 /obj/landmark/corpse/lar_maria/virologist
 	name = "dead virologist"
@@ -145,10 +145,16 @@
 	mask = /obj/item/clothing/mask/surgical
 	glasses = /obj/item/clothing/glasses/eyepatch/hud/medical
 
-/mob/living/simple_animal/hostile/lar_maria/virologist/female
-	icon_state = "virologist_f"
-	weapon = /obj/item/scalpel/basic
-	corpse = /obj/landmark/corpse/lar_maria/virologist_female
+// --- Virologist (female, with scalpel) ---
+/obj/landmark/lar_maria_npc/virologist/female
+	npc_name = "virologist"
+	outfit_type = /singleton/hierarchy/outfit/corpse/zhp_virologist_female
+	weapons = list(/obj/item/scalpel/basic)
+	npc_gender = FEMALE
+
+/obj/landmark/lar_maria_npc/virologist/female/apply_appearance(mob/living/carbon/human/H)
+	H.change_hair("Flaired Hair")
+	H.change_hair_color(174, 123, 72) // #ae7b48
 
 /obj/landmark/corpse/lar_maria/virologist_female
 	name = "dead virologist"
@@ -227,8 +233,11 @@
 	name = "paper note"
 	info = "<i><span style='color: blue'>can we get some fresh carp sometime? Or freshish? Or frozen? I just really want carp, ok? I'm willing to pay for it if so.</span></i>"
 
-/datum/ai_holder/simple_animal/lar_maria
+/datum/ai_holder/human/lar_maria
+	hostile = TRUE
 	speak_chance = 50
+	wander = TRUE
+	cooperative = TRUE
 
 /datum/say_list/lar_maria
 	speak = list("Die!", "Fresh meat!", "Hurr!", "You said help will come!", "I did nothing!", "Eat my fist!", "One for the road!")

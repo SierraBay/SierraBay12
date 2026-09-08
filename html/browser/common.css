@@ -400,6 +400,19 @@ a.gold:hover
 	background: #f5b338;
 }
 
+a.gold.linkOn, a.gold.linkOn:link, a.gold.linkOn:visited, a.gold.linkOn:active
+{
+	color: #ffa600;
+	background: #2f2000;
+	border-color: #a06800;
+}
+
+a.gold.linkOn:hover
+{
+	color: #ffd04d;
+	background: #3d2a00;
+}
+
 a.gray, a.gray:link, a.gray:visited, a.gray:active
 {
 	color: #ffffff;

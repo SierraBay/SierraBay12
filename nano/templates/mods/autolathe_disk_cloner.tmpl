@@ -1,109 +1,495 @@
 <!--
-Title: Autolathe disk cloner
-Used In File(s): \code\game\machinery\autolathe_disk_cloner.dm
- -->
-<div class="fixedWidest" style="width:100%;">
-	<div class="block">
-		<div class="item">
-			<div class="itemContentWidest">
-				{{if data.copying}}
-					{{:helper.link('STOP', '', {'start' : 1}, null, 'bigRedButton')}}
+Title: Disk Cloner
+Used In File(s): \mods\RnD\code\machinery\autolathe_disk_cloner.dm
+-->
+
+<div class="dcConsole">
+
+<div class="dcHeader">
+	<span class="dcHeaderTitle">&#9881; КЛОНЕР ДИСКОВ</span>
+	<div class="dcHeaderRight">
+		{{if data.copying}}
+			<span class="dcStatusBadge dcStatusBadge--active">КОПИРОВАНИЕ {{:data.copyingnow}}/{{:data.copyingtotal}}</span>
+			{{:helper.link("Стоп", 'close', {'start' : 1}, null, 'dcStopBtn')}}
+		{{else}}
+			{{if data.disk1 && data.disk2 && data.disk2.used_capacity == 0}}
+				{{:helper.link("Копировать", 'play', {'start' : 1}, null, 'dcStartBtn')}}
+			{{else}}
+				<span class="dcStatusBadge dcStatusBadge--idle">ОЖИДАНИЕ</span>
+			{{/if}}
+		{{/if}}
+	</div>
+</div>
+
+{{if data.copying}}
+<div class="dcProgressBar">
+	{{:helper.displayBar(data.copyingtotal > 0 ? data.copyingnow / data.copyingtotal : 0, 0, 1, 'good', data.copyingnow + ' / ' + data.copyingtotal)}}
+</div>
+{{/if}}
+
+<!-- Disk Slots -->
+<div class="dcDiskRow">
+	<!-- Source Disk -->
+	<div class="dcDiskSlot">
+		<div class="dcSection">
+			<div class="dcSectionTitle">
+				<span>Исходный диск</span>
+				<span class="dcSlotBadge">СЛОТ 1</span>
+			</div>
+			<div class="dcSectionContent">
+				{{if data.disk1}}
+					<div class="dcDiskInfo">
+						<span class="dcDiskName">{{:data.disk1.disk_name ? data.disk1.disk_name : 'data disk'}}</span>
+						<span class="dcDiskCapacity">{{:data.disk1.used_capacity}} / {{:data.disk1.max_capacity}} GQ</span>
+					</div>
+					<div class="dcFileList">
+						{{for data.disk1.files}}
+							<div class="dcFileItem {{:value.filetype == 'SCD' ? 'dcFileItem--protected' : ''}}">
+								<span class="dcFileName">{{:value.filename}}</span>
+								<span class="dcFileType">.{{:value.filetype}}</span>
+								<span class="dcFileSize">{{:value.size}} GQ</span>
+							</div>
+						{{empty}}
+							<div class="dcEmpty">Пусто</div>
+						{{/for}}
+					</div>
+					<div class="dcDiskActions">
+						{{:helper.link("Извлечь", 'eject', {'eject' : 'f'})}}
+					</div>
 				{{else}}
-					{{:helper.link('START', '', {'start' : 1}, null, 'bigButton')}}
+					<div class="dcNoDisk">
+						<div class="dcNoDiskIcon">&#9711;</div>
+						<div class="dcMuted">Диск не вставлен</div>
+					</div>
+					<div class="dcDiskActions">
+						{{:helper.link("Вставить", 'eject', {'eject' : 'f'})}}
+					</div>
 				{{/if}}
 			</div>
-			<div class="itemContentWidest">
-				{{if data.copying}}
-					Copying {{:data.copyingnow}}/{{:data.copyingtotal}}
+		</div>
+	</div>
+
+	<!-- Arrow -->
+	<div class="dcArrow">&#10132;</div>
+
+	<!-- Target Disk -->
+	<div class="dcDiskSlot">
+		<div class="dcSection">
+			<div class="dcSectionTitle">
+				<span>Целевой диск</span>
+				<span class="dcSlotBadge">СЛОТ 2</span>
+			</div>
+			<div class="dcSectionContent">
+				{{if data.disk2}}
+					<div class="dcDiskInfo">
+						<span class="dcDiskName">{{:data.disk2.disk_name ? data.disk2.disk_name : 'data disk'}}</span>
+						<span class="dcDiskCapacity {{:data.disk2.used_capacity > 0 ? 'dcDiskCapacity--warn' : ''}}">{{:data.disk2.used_capacity}} / {{:data.disk2.max_capacity}} GQ</span>
+					</div>
+					<div class="dcFileList">
+						{{for data.disk2.files}}
+							<div class="dcFileItem {{:value.filetype == 'SCD' ? 'dcFileItem--protected' : ''}}">
+								<span class="dcFileName">{{:value.filename}}</span>
+								<span class="dcFileType">.{{:value.filetype}}</span>
+								<span class="dcFileSize">{{:value.size}} GQ</span>
+							</div>
+						{{empty}}
+							<div class="dcEmpty">Пусто</div>
+						{{/for}}
+					</div>
+					<div class="dcDiskActions">
+						{{:helper.link("Извлечь", 'eject', {'eject' : 's'})}}
+					</div>
 				{{else}}
-					IDLE
+					<div class="dcNoDisk">
+						<div class="dcNoDiskIcon">&#9711;</div>
+						<div class="dcMuted">Диск не вставлен</div>
+					</div>
+					<div class="dcDiskActions">
+						{{:helper.link("Вставить", 'eject', {'eject' : 's'})}}
+					</div>
 				{{/if}}
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="fixedLeftWider" style="width:50%;">
-	<div class="block">
-		<div class="item">
-			{{if data.disk1}}
-				<div class="itemLabelWidest">Source disk</div>
-				<div class="itemContentWidest">{{:data.disk1.disk_name ? data.disk1.disk_name : 'data disk'}}</div>
-				<div class="itemContent">
-					{{if data.disk1.license >= 0}}
-						<span class="good">Licenses: {{:data.disk1.license}}</span>
-					{{/if}}
-				</div>
-				<div class="itemLabelWidest">{{:helper.link('eject', 'eject', {'eject' : 'f'}, null, 'statusValue')}}</div>
-			{{else}}
-				<div class="itemLabelWidest">Source disk</div>
-				<div class="itemContentWidest"><span class="bad">no disk</span></div>
-				<div class="itemLabelWidest">{{:helper.link('insert', 'eject', {'eject' : 'f'}, null, 'statusValue')}}</div>
-			{{/if}}
-		</div>
-		<div class="block">
-			{{if data.disk1}}
-			<div class="item">
-			{{for data.disk1.files}}
-				<div class="itemContent">
-					{{if value.filetype == 'CCD'}}
-					<div class="itemLabelWidest" style="background-color: #ee0000;">
-					{{else value.filetype == 'SCD'}}
-					<div class="itemLabelWidest" style="color: #ee0000;">
-					{{else}}
-					<div class="itemLabelWidest">
-					{{/if}}
-						{{:value.filename}}.{{:value.filetype}}
-					</div>
-				</div>
-			{{empty}}
-				<div class="itemLabelWide">Empty.</div>
-			{{/for}}
-			</div>
-			{{/if}}
-		</div>
-	</div>
 </div>
-<div class="fixedLeftWider" style="width:50%;">
-	<div class="block">
-		<div class="item">
-			{{if data.disk2}}
-				<div class="itemLabelWidest">Target disk</div>
-				<div class="itemContentWidest">{{:data.disk2.disk_name ? data.disk2.disk_name : 'data disk'}}</div>
-				<div class="itemContent">
-					{{if (data.copyingnow && !data.copying) || data.disk2.used_capacity}}
-						<span class="bad">NOT EMPTY</span>
-					{{else}}
-						<span class="good">OK</span>
-					{{/if}}
-				</div>
-				<div class="itemLabelWidest">{{:helper.link('eject', 'eject', {'eject' : 's'}, null, 'statusValue')}}</div>
-			{{else}}
-				<div class="itemLabelWidest">Target disk</div>
-				<div class="itemContentWidest"><span class="bad">no disk</span></div>
-				<div class="itemLabelWidest">{{:helper.link('insert', 'eject', {'eject' : 's'}, null, 'statusValue')}}</div>
-			{{/if}}
-		</div>
-		<div class="block">
-			{{if data.disk2}}
-			<div class="item">
-			{{for data.disk2.files}}
-				<div class="itemContent">
-					{{if value.filetype == 'CCD'}}
-					<div class="itemLabelWidest" style="background-color: #ee0000;">
-					{{else value.filetype == 'SCD'}}
-					<div class="itemLabelWidest" style="color: #ee0000;">
-					{{else}}
-					<div class="itemLabelWidest">
-					{{/if}}
-						{{:value.filename}}.{{:value.filetype}}
-					</div>
-				</div>
-			{{empty}}
-				<div class="itemLabelWide">Empty.</div>
-			{{/for}}
-			</div>
-			{{/if}}
-		</div>
-	</div>
-</div>
+
+<style>
+
+/* === Disk Cloner Console Root === */
+.dcConsole {
+	font-family: 'Consolas', 'Courier New', monospace;
+	color: #c8dae8;
+	min-height: 100%;
+}
+
+/* === Global Button Overrides === */
+.dcConsole .link,
+.dcConsole .linkActive,
+.dcConsole .linkOn,
+.dcConsole .linkOff,
+.dcConsole .selected,
+.dcConsole .warning,
+.dcConsole .disabled {
+	background: rgba(24, 48, 80, 0.7);
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	color: #a8c8e8;
+	border-radius: 2px;
+	padding: 1px 6px 3px 6px;
+	font-family: 'Consolas', 'Courier New', monospace;
+	font-size: 11px;
+	transition: all 0.12s ease;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+	float: none;
+	display: inline-block;
+	height: auto;
+	min-width: 0;
+	line-height: 1.3;
+	cursor: pointer;
+}
+
+.dcConsole .hasIcon {
+	padding: 1px 6px 3px 2px;
+}
+
+.dcConsole a:hover,
+.dcConsole .link:hover,
+.dcConsole .linkActive:hover {
+	background: rgba(40, 70, 120, 0.8);
+	border-color: rgba(80, 140, 220, 0.55);
+	color: #cce4ff;
+	box-shadow: 0 0 6px rgba(60, 130, 220, 0.15);
+}
+
+.dcConsole .selected,
+.dcConsole a.selected:link,
+.dcConsole a.selected:visited,
+.dcConsole a.selected:active,
+.dcConsole a.selected:hover {
+	background: rgba(30, 80, 50, 0.75);
+	border-color: rgba(60, 160, 80, 0.5);
+	color: #88eea0;
+	box-shadow: 0 0 6px rgba(60, 160, 80, 0.2);
+}
+
+.dcConsole .disabled,
+.dcConsole a.disabled:link,
+.dcConsole a.disabled:visited,
+.dcConsole a.disabled:active,
+.dcConsole a.disabled:hover {
+	background: rgba(30, 36, 48, 0.5);
+	border-color: rgba(50, 60, 80, 0.4);
+	color: #4a5a70;
+	cursor: not-allowed;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+.dcConsole a.icon,
+.dcConsole .link.icon,
+.dcConsole .linkActive.icon,
+.dcConsole .selected.icon,
+.dcConsole .disabled.icon {
+	position: relative;
+	padding: 1px 6px 3px 22px;
+}
+
+/* === Progress Bars === */
+.dcConsole .displayBar {
+	border: 1px solid rgba(60, 100, 160, 0.4);
+	background: rgba(6, 12, 24, 0.6);
+	border-radius: 2px;
+	height: 14px;
+}
+
+.dcConsole .displayBarFill {
+	background: rgba(40, 70, 120, 0.6);
+}
+
+.dcConsole .displayBarFill.good {
+	background: linear-gradient(90deg, rgba(30, 90, 50, 0.8), rgba(50, 130, 70, 0.7));
+}
+
+.dcConsole .displayBarText {
+	font-size: 10px;
+	letter-spacing: 0.3px;
+	top: -1px;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* === Text Indicators === */
+.dcConsole .good { color: #44cc66; }
+.dcConsole .average { color: #ddaa22; }
+.dcConsole .bad { color: #ee4444; }
+
+/* === Scrollbar === */
+.dcConsole ::-webkit-scrollbar { width: 6px; }
+.dcConsole ::-webkit-scrollbar-track { background: rgba(6, 12, 24, 0.4); }
+.dcConsole ::-webkit-scrollbar-thumb { background: rgba(60, 100, 160, 0.4); border-radius: 3px; }
+.dcConsole ::-webkit-scrollbar-thumb:hover { background: rgba(80, 130, 200, 0.5); }
+
+/* === Header === */
+.dcHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 10px;
+	background: linear-gradient(180deg, rgba(16, 28, 48, 0.9), rgba(8, 16, 32, 0.95));
+	border-bottom: 1px solid rgba(64, 128, 200, 0.4);
+	margin-bottom: 6px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dcHeaderTitle {
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+}
+
+.dcStatusBadge {
+	font-size: 9px;
+	padding: 2px 8px;
+	border-radius: 2px;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.dcStatusBadge--idle {
+	background: rgba(40, 60, 90, 0.4);
+	color: #6a8aaa;
+	border: 1px solid rgba(60, 90, 130, 0.4);
+}
+
+.dcStatusBadge--active {
+	background: rgba(60, 120, 40, 0.4);
+	color: #6c6;
+	border: 1px solid rgba(80, 160, 60, 0.4);
+	animation: dcPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dcPulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.6; }
+}
+
+/* === Header Right === */
+.dcHeaderRight {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+/* === Progress Bar === */
+.dcProgressBar {
+	margin: 0 6px 6px 6px;
+	overflow: hidden;
+}
+
+.dcConsole .dcProgressBar .displayBar {
+	width: 100% !important;
+	float: none !important;
+	box-sizing: border-box;
+}
+
+.dcStartBtn {
+	background: rgba(30, 80, 50, 0.6) !important;
+	border-color: rgba(60, 160, 80, 0.5) !important;
+	color: #88eea0 !important;
+}
+
+.dcStartBtn:hover {
+	background: rgba(40, 100, 60, 0.7) !important;
+	border-color: rgba(80, 180, 100, 0.6) !important;
+}
+
+.dcStopBtn {
+	background: rgba(120, 30, 20, 0.6) !important;
+	border-color: rgba(200, 60, 40, 0.5) !important;
+	color: #ff8866 !important;
+}
+
+.dcStopBtn:hover {
+	background: rgba(150, 40, 25, 0.7) !important;
+	border-color: rgba(220, 80, 50, 0.6) !important;
+}
+
+.dcMuted {
+	color: #5a7a9a;
+	font-size: 11px;
+}
+
+/* === Disk Row === */
+.dcDiskRow {
+	display: flex;
+	gap: 4px;
+	padding: 0 6px 6px 6px;
+	align-items: stretch;
+}
+
+.dcDiskSlot {
+	flex: 1;
+	min-width: 0;
+}
+
+.dcArrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+	color: rgba(80, 140, 220, 0.5);
+	padding: 0 4px;
+	flex-shrink: 0;
+}
+
+/* === Sections === */
+.dcSection {
+	background: linear-gradient(180deg, rgba(12, 20, 36, 0.7), rgba(8, 14, 24, 0.5));
+	border: 1px solid rgba(64, 98, 138, 0.5);
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(20, 36, 60, 0.5);
+	overflow: hidden;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.dcSectionTitle {
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: #8ab4e8;
+	background: linear-gradient(180deg, rgba(20, 36, 60, 0.6), rgba(12, 24, 44, 0.4));
+	border-bottom: 1px solid rgba(64, 98, 138, 0.35);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.dcSectionContent {
+	padding: 6px 8px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.dcSlotBadge {
+	font-size: 8px;
+	padding: 1px 4px;
+	border-radius: 2px;
+	background: rgba(40, 60, 90, 0.4);
+	color: #6a8aaa;
+	border: 1px solid rgba(60, 90, 130, 0.3);
+	letter-spacing: 0.5px;
+}
+
+/* === Disk Info === */
+.dcDiskInfo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 6px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid rgba(40, 70, 110, 0.3);
+}
+
+.dcDiskName {
+	font-size: 12px;
+	font-weight: bold;
+	color: #aaccee;
+}
+
+.dcDiskCapacity {
+	font-size: 10px;
+	color: #6a8aaa;
+}
+
+.dcDiskCapacity--warn {
+	color: #ddaa22;
+}
+
+/* === File List === */
+.dcFileList {
+	flex: 1;
+	max-height: 240px;
+	overflow-y: auto;
+	margin-bottom: 6px;
+}
+
+.dcFileItem {
+	display: flex;
+	align-items: center;
+	padding: 2px 4px;
+	border-bottom: 1px solid rgba(20, 36, 60, 0.25);
+	font-size: 11px;
+}
+
+.dcFileItem:last-child {
+	border-bottom: none;
+}
+
+.dcFileName {
+	flex: 1;
+	color: #a0b8d0;
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.dcFileType {
+	color: #6a8aaa;
+	margin-right: 6px;
+	flex-shrink: 0;
+}
+
+.dcFileSize {
+	font-size: 10px;
+	color: #5a7a9a;
+	flex-shrink: 0;
+}
+
+.dcFileItem--protected .dcFileName {
+	color: #ddaa22;
+}
+
+/* === No Disk State === */
+.dcNoDisk {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 16px 0;
+}
+
+.dcNoDiskIcon {
+	font-size: 28px;
+	color: rgba(60, 100, 160, 0.3);
+	margin-bottom: 6px;
+}
+
+/* === Disk Actions === */
+.dcDiskActions {
+	display: flex;
+	justify-content: center;
+	padding-top: 4px;
+	border-top: 1px solid rgba(40, 70, 110, 0.2);
+	margin-top: auto;
+}
+
+/* === Empty State === */
+.dcEmpty {
+	text-align: center;
+	padding: 10px;
+	color: #5a7a9a;
+	font-style: italic;
+	font-size: 11px;
+}
+
+</style>

@@ -1,5 +1,6 @@
 //DNA machine
-/obj/machinery/dnaforensics
+//[SIERRA-EDIT] - Complete path refactoring /obj/machinery/dnaforensics originally
+/obj/machinery/computer/dnaforensics
 	name = "DNA analyzer"
 	desc = "A high tech machine that is designed to read DNA samples properly."
 	icon = 'icons/obj/machines/forensics/dna_scanner.dmi'
@@ -15,7 +16,7 @@
 	var/last_process_worldtime = 0
 	var/report_num = 0
 
-/obj/machinery/dnaforensics/use_tool(obj/item/W, mob/living/user, list/click_params)
+/obj/machinery/computer/dnaforensics/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(!istype(W, /obj/item/forensics/swab))
 		return .. ()
 
@@ -38,7 +39,7 @@
 		to_chat(user, SPAN_WARNING("\The [src] only accepts used swabs."))
 		return TRUE
 
-/obj/machinery/dnaforensics/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
+/obj/machinery/computer/dnaforensics/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
 	if(!is_powered()) return
 	if(user.stat || user.restrained()) return
 	var/list/data = list()
@@ -55,7 +56,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/dnaforensics/Topic(href, href_list)
+/obj/machinery/computer/dnaforensics/Topic(href, href_list)
 
 	if(..()) return 1
 
@@ -87,7 +88,7 @@
 
 	return 1
 
-/obj/machinery/dnaforensics/Process()
+/obj/machinery/computer/dnaforensics/Process()
 	if(scanning)
 		if(!bloodsamp || bloodsamp.loc != src)
 			bloodsamp = null
@@ -101,7 +102,7 @@
 			scanner_progress = min(100, scanner_progress + scanner_rate * deltaT)
 	last_process_worldtime = world.time
 
-/obj/machinery/dnaforensics/proc/complete_scan()
+/obj/machinery/computer/dnaforensics/proc/complete_scan()
 	src.visible_message(SPAN_NOTICE("[icon2html(src, viewers(get_turf(src)))] makes an insistent chime."), 2)
 	update_icon()
 	if(bloodsamp)
@@ -125,11 +126,11 @@
 		update_icon()
 	return
 
-/obj/machinery/dnaforensics/interface_interact(mob/user)
+/obj/machinery/computer/dnaforensics/interface_interact(mob/user)
 	ui_interact(user)
 	return TRUE
 
-/obj/machinery/dnaforensics/verb/toggle_lid()
+/obj/machinery/computer/dnaforensics/verb/toggle_lid()
 	set category = "Object"
 	set name = "Toggle Lid"
 	set src in oview(1)
@@ -144,7 +145,7 @@
 	closed = !closed
 	src.update_icon()
 
-/obj/machinery/dnaforensics/on_update_icon()
+/obj/machinery/computer/dnaforensics/on_update_icon()
 	ClearOverlays()
 	if(panel_open)
 		AddOverlays("[icon_state]_panel")

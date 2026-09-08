@@ -744,3 +744,28 @@
 		melee = ARMOR_MELEE_MINOR,
 		energy = ARMOR_ENERGY_MINOR
 		)
+
+// Children override
+/obj/item/clothing/under/solgov/utility/fleet
+	icon = 'maps/torch/icons/obj/obj_under_solgov.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/torch/icons/mob/onmob_under_solgov.dmi')
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'maps/torch/icons/mob/unathi/onmob_under_solgov_unathi.dmi'
+		)
+// Override end
+
+/obj/item/clothing/under/barc
+	name = "P317 jumpsuit"
+	desc = "It’s a Pioneer Corps jumpsuit resewn with “Periphery 317” patches - Mercenary Enclave under the wing of BARC. 100% guaranteed non-space-proof."
+	icon = 'mods/loadout_items/icons/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'mods/loadout_items/icons/onmob_under.dmi')
+	sprite_sheets = list(
+		SPECIES_UNATHI = 'mods/loadout_items/icons/unathi/onmob_under_unathi.dmi',
+		SPECIES_RESOMI = "mods/resomi/icons/clothing/onmob_under_resomi.dmi"
+		)
+	icon_state = "barc"
+	item_state = "barc"
+	worn_state = "barc"
+	rolled_down = 0
+	rolled_sleeves = 0
+	gender_icons = 1

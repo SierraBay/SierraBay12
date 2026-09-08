@@ -12,7 +12,7 @@
 	var/chargelevel = -1
 	construct_state = /singleton/machine_construction/default/panel_closed
 	uncreated_component_parts = null
-//Sierra add
+// [SIERRA-ADD] Fix ABS and fix sprites charges OFD, fix damage rods#2387
 /obj/machinery/cell_charger/Initialize()
 	. = ..()
 	RefreshParts()
@@ -21,7 +21,7 @@
 	for(var/obj/item/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/stock_parts/capacitor))
 			active_power_usage *= SP.rating
-// Sierra add-end
+// [/SIERRA-ADD]
 /obj/machinery/cell_charger/on_update_icon()
 	icon_state = "ccharger[charging ? 1 : 0]"
 	if(charging && operable())

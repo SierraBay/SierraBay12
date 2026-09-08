@@ -2,6 +2,11 @@
 /datum/design/item/modularcomponent/
 	category = list("Computer Parts")
 
+/datum/design/item/modularcomponent/AssembleDesignDesc()
+	if(build_path)
+		var/obj/item/stock_parts/computer/C = build_path
+		desc = "[C.desc]"
+
 /datum/design/item/modularcomponent/disk/normal
 	name = "basic hard drive"
 	id = "hdd_basic"

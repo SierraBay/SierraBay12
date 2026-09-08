@@ -25,7 +25,6 @@
 	cost =           25
 	cooldown =       120
 	use_ranged =     TRUE
-	use_melee =      TRUE
 	min_rank =       PSI_RANK_OPERANT
 	use_description = "Выберите глаза и переключитесь на синий интент. Затем, нажмите куда угодно чтобы применить круговую атаку, слепящую и оглушающую всех, кто оказался поблизости."
 
@@ -35,11 +34,13 @@
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("[user] закидывает голову назад, издавая пронзительный крик!"))
-		to_chat(user, SPAN_DANGER("Вы издаёте пронзительный крик, оглушая всех вокруг!"))
+		to_chat(user, SPAN_DANGER("Я издаю пронзительный крик, оглушая всех вокруг!"))
 		var/cn_rank = user.psi.get_rank(PSI_COERCION)
 		for(var/mob/living/M in range(user, user.psi.get_rank(PSI_COERCION)))
 			if(M == user)
 				continue
+			if(M.disrupts_psionics())
+				return
 			if(prob(cn_rank * 20) && iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(C.can_feel_pain())
@@ -214,6 +215,7 @@
 			return TRUE
 		to_chat(user, SPAN_DANGER("Ты прорываешься через мозг \the [target], изменяя его под твое желание, оставляя его подчиненным твоей воле!"))
 		to_chat(target, SPAN_DANGER("Ты ослаб и \the [user] поработил тебя."))
+		alert(target, "Ты теперь подчинен воле [user], служи ему слепо и верно, пока он не скажет обратного.", "Ты был порабощен")
 		GLOB.thralls.add_antagonist(target.mind, new_controller = user)
 		return TRUE
 /*

@@ -39,6 +39,10 @@
 		/area/casino/casino_maintenance = NO_SCRUBBER|NO_VENT
 	)
 
+/datum/map_template/ruin/away_site/casino/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/entertainment_ai, z)
+
 /obj/shuttle_landmark/nav_casino/nav1
 	name = "Casino Ship Navpoint #1"
 	landmark_tag = "nav_casino_1"
@@ -89,10 +93,10 @@
 	desc = "Spin the roulette to try your luck."
 	icon = 'maps/away/casino/casino_sprites.dmi'
 	icon_state = "roulette_r"
+/* [SIERRA-REMOVE] - NEW UI
 	density = FALSE
 	anchored = TRUE
 	var/busy=0
-
 /obj/structure/casino/roulette/attack_hand(mob/user as mob)
 	if (busy)
 		to_chat(user,"[SPAN_NOTICE("You cannot spin now! \The [src] is already spinning.")] ")
@@ -115,15 +119,16 @@
 	spawn(5 SECONDS)
 		visible_message(SPAN_NOTICE("\The [src] stops spinning, the ball landing on [n], [color]."))
 		busy=0
-
+*/
 /obj/structure/casino/roulette_chart
 	name = "roulette chart"
 	desc = "Roulette chart. Place your bets! "
 	icon = 'maps/away/casino/casino_sprites.dmi'
 	icon_state = "roulette_l"
+/* [SIERRA-REMOVE] - NEW UI
 	density = FALSE
 	anchored = TRUE
-
+*/
 /obj/structure/casino/bj_table
 	name = "blackjack table"
 	desc = "This is a blackjack table. "

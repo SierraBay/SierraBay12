@@ -1,13 +1,7 @@
 // Access
 
 /mob/living/silicon/ai
-	idcard = /obj/item/card/id/all/ai
-
-/obj/item/card/id/all/ai
-	job_access_type = /datum/job/ai
-
-/datum/job/ai/get_access()
-	return get_all_station_access()
+	idcard = /obj/item/card/id/synthetic/ai
 
 // Languages
 
@@ -16,6 +10,7 @@
 	add_language(LANGUAGE_SIIK_MAAS, TRUE)
 	add_language(LANGUAGE_LEGALESE, TRUE)
 	add_language(LANGUAGE_RESOMI, TRUE)
+	set_extension(src, /datum/extension/interactive/ntos/ai)
 
 
 // New verbs

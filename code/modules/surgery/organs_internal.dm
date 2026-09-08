@@ -272,6 +272,10 @@
 			if(O.type == /obj/item/organ/internal/posibrain)
 				to_chat(user, SPAN_WARNING("There's no place in [target] to fit \the [O.organ_tag]."))
 				return
+			if(O.type == /obj/item/organ/internal/cooling_system)
+				if(target_zone != O.parent_organ)
+					to_chat(user, SPAN_WARNING("There's no place in [target] to fit \the [O.organ_tag]."))
+					return
 //[/SIERRA-ADD] IPC_MODS
 			if(O.organ_tag == BP_POSIBRAIN && !target.species.has_organ[BP_POSIBRAIN])
 				to_chat(user, SPAN_WARNING("There's no place in [target] to fit \the [O.organ_tag]."))

@@ -2,6 +2,7 @@
 	name = "atmospheric scanner module"
 	desc = "An atmospheric scanner module. It can scan the surroundings and report the composition of gases."
 	can_run_scan = 1
+	scan_beam_color = "#4dcece" //[SIERRA-ADD] RND
 
 /obj/item/stock_parts/computer/scanner/atmos/can_use_scanner(mob/user, atom/target, proximity = TRUE)
 	if(!..())
@@ -16,11 +17,15 @@
 /obj/item/stock_parts/computer/scanner/atmos/do_on_afterattack(mob/user, atom/target, proximity)
 	if (!can_use_scanner(user, target, proximity))
 		return
+	/*
 	user.visible_message(
 		SPAN_NOTICE("\The [user] runs \the [src] over \the [target]."),
 		SPAN_NOTICE("You run \the [src] over \the [target]."),
 		range = 2
 	)
+*///[SIERRA-REMOVE]
+	if(!do_scan_animation(user, target)) //[SIERRA-ADD] RND
+		return
 	var/data = scan_data(user, target, proximity)
 	if (!data)
 		return

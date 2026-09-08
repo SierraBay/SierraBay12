@@ -24,10 +24,18 @@ GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 
 /datum/computer_file/report/crew_record/proc/load_from_mob(mob/living/carbon/human/H)
 	if(istype(H))
-		H.ImmediateOverlayUpdate()
 //[SIERRA-EDIT]
+		var/saved_height = H.height
+		if(saved_height != HUMANHEIGHT_MEDIUM)
+			H.height = HUMANHEIGHT_MEDIUM
+			H.update_icons()
+			H.ImmediateOverlayUpdate()
 		photo_front = getFlatIcon(H, SOUTH)
 		photo_side = getFlatIcon(H, WEST)
+		if(saved_height != HUMANHEIGHT_MEDIUM)
+			H.height = saved_height
+			H.update_icons()
+			H.ImmediateOverlayUpdate()
 	else
 		var/mob/living/carbon/human/dummy = new()
 		photo_front = getFlatIcon(dummy, SOUTH)

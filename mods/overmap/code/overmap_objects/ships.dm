@@ -37,6 +37,14 @@
 [b]Notice[/b]: NanoTrasen Shuttle"}
 	contact_class = /decl/ship_contact_class/nt_sshuttle
 
+/obj/overmap/visitable/ship/landable/phaethon
+	scanner_desc = @{"
+<center><img src = bluentlogo.png></center></br><b>Property of NanoTrasen Corporation:</b>
+<i>Registration</i>: NSS Phaethon
+<i>Transponder</i>: Transmitting (CIV), non-hostile
+<b>Notice</b>: NanoTrasen Shuttle"}
+	contact_class = /decl/ship_contact_class/nt_sshuttle
+
 /obj/overmap/visitable/ship/landable/merc
 	scanner_desc = @{"[i]Registration[/i]: UNKNOWN
 [i]Class[/i]: UNKNOWN
@@ -84,10 +92,10 @@
 	contact_class = /decl/ship_contact_class/gagarin
 
 /obj/overmap/visitable/ship/landable/snz
-	scanner_desc = @{"[i]Registration[/i]: ICCGN Speedboat
+	scanner_desc = @{"[i]Registration[/i]: ICCGN Baydarka
 [i]Class[/i]: Shuttle
 [i]Transponder[/i]: Transmitting (MIL), ICCG
-[b]Notice[/b]: SNZ-350 Speedboat. Space and atmosphere assault craft. The standard mass military production model of the Shipyards of Novaya Zemlya."}
+[b]Notice[/b]: SNZ-350 Baydarka. Space and atmosphere assault craft. The standard mass military production model of the Shipyards of Novaya Zemlya."}
 	contact_class = /decl/ship_contact_class/destroyer_escort
 
 /obj/overmap/visitable/ship/liberia

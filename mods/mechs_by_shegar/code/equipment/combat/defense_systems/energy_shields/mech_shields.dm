@@ -16,7 +16,7 @@
 	var/last_overheat = 0
 	var/overheat_cooldown = 50 SECONDS //Огромное окно для пробития меха.
 	var/current_mode = NORMAL_MODE
-	can_be_pickuped = TRUE
+//	can_be_pickuped = TRUE
 	//Содержит в себе список установленных вспомогательных частей щита.
 	var/list/deployed_wide_parts = list()
 

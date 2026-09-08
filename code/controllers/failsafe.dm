@@ -50,6 +50,20 @@ var/global/datum/controller/failsafe/Failsafe
 		// Only poke it if overrides are not in effect.
 		if(processing_interval > 0)
 			if(Master.processing && Master.iteration)
+				// [SIERRA-ADD] - MC
+				// Check for stack overflow - if the canary is dead, the MC's loop stack was destroyed
+				if (defcon > 1 && (!Master.stack_end_detector || !Master.stack_end_detector.check()))
+					to_chat(GLOB.admins, SPAN_CLASS("boldannounce", "Warning: MC stack overflow detected. Killing and restarting MC immediately."))
+					defcon = 0
+					var/rtn = Recreate_MC()
+					if(rtn > 0)
+						defcon = 4
+						master_iteration = 0
+						to_chat(GLOB.admins, SPAN_CLASS("adminnotice", "MC restarted successfully after stack overflow"))
+					sleep(processing_interval)
+					continue
+				// [/SIERRA-ADD]
+
 				// Check if processing is done yet.
 				if(Master.iteration == master_iteration)
 					switch(defcon)

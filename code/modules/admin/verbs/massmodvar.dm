@@ -5,7 +5,10 @@
 
 	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL itms)
 
-	if(!check_rights(R_VAREDIT))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_VAREDIT|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	if(A && A.type)
 		if(typesof(A.type))
@@ -23,7 +26,10 @@
 
 
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
-	if(!check_rights(R_VAREDIT))	return
+	// [SIERRA-EDIT]
+	// if(!check_rights(R_VAREDIT))	return // SIERRA-EDIT - ORIGINAL
+	if(!check_rights(R_VAREDIT|R_DEBUG))	return
+	// [/SIERRA-EDIT]
 
 	var/list/locked = list("vars", "key", "ckey", "client")
 

@@ -224,7 +224,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	supervisors = "captain"
 	loadout_allowed = TRUE
 	info = "Вы просыпаетесь и выходите из криосна, ощущая прохладный воздух на своём лице, а также лёгкую тошноту. \
-	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в ведении огня из корабельного орудия, пилотирования корабля, поддержании работоспособности судна и экипировки экипажа. \
+	Являясь одним из членов экипажа разведывательного корабля Пионерского Корпуса ГКК, ваша задача состоит в ведении огня из торпедных шахт, пилотирования корабля, поддержании работоспособности судна и экипировки экипажа. \
 	\
 	 Вам крайне нежелательно приближаться к кораблям и станциям с опозновательными знаками, или вступать в огневой контакт с кораблями или войсками ЦПСС без разрешения от командования группировкой. \
 	 Исключением являются те ситуации, когда вы атакованы противником,  терпите бедствие или на вашем судне аварийная ситуация."
@@ -321,7 +321,7 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	uniform = /obj/item/clothing/under/iccgn/service
 	suit = /obj/item/clothing/suit/iccgn/service_officer
 	belt = /obj/item/storage/belt/utility/full
-	gloves = /obj/item/clothing/gloves/insulated //black
+	gloves = /obj/item/clothing/gloves/insulated/black
 
 /singleton/hierarchy/outfit/job/iccgn/iccgn_medic
 	name = ICCGN_OUTFIT_JOB_NAME("Pioneer Corpsman")
@@ -339,7 +339,6 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	id_types = list(/obj/item/card/id/awayiccgn/fleet/captain)
 	shoes = /obj/item/clothing/shoes/iccgn/service
 	gloves = /obj/item/clothing/gloves/iccgn/duty
-	belt = /obj/item/storage/belt/holster/security/tactical/farfleet
 
 /singleton/hierarchy/outfit/job/iccgn/iccgn_pawn
 	name = ICCGN_OUTFIT_JOB_NAME("Eighth Department's Consultant")
@@ -350,7 +349,6 @@ var/global/const/access_away_iccgn_captain = "ACCESS_ICCGN_CAPTAIN"
 	shoes =    /obj/item/clothing/shoes/dress
 	gloves = /obj/item/clothing/gloves/iccgn/duty
 	holster =  /obj/item/clothing/accessory/storage/holster/armpit
-	belt = /obj/item/storage/belt/holster/security/farfleet/iccgn_pawn
 
 #undef ICCGN_OUTFIT_JOB_NAME
 #undef WEBHOOK_SUBMAP_LOADED_ICCGN

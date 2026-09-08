@@ -168,6 +168,11 @@ var/global/list/ai_verbs_default = list(
 	add_language(LANGUAGE_HUMAN_INDIAN, TRUE)
 	add_language(LANGUAGE_HUMAN_RUSSIAN, TRUE)
 	add_language(LANGUAGE_HUMAN_SELENIAN, TRUE)
+	// [SIERRA-ADD]
+	add_language(LANGUAGE_HUMAN_LORRIMAN, TRUE)
+	add_language(LANGUAGE_HUMAN_AVALON, TRUE)
+	add_language(LANGUAGE_HUMAN_MIRANIAN, TRUE)
+	// [/SIERRA-ADD]
 	add_language(LANGUAGE_UNATHI_SINTA, TRUE)
 	add_language(LANGUAGE_SKRELLIAN, TRUE)
 	add_language(LANGUAGE_SPACER, TRUE)

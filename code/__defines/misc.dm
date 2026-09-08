@@ -578,6 +578,7 @@
 #define COOKING_APPLIANCE_POT		FLAG_06
 #define COOKING_APPLIANCE_GRILL		FLAG_07
 #define COOKING_APPLIANCE_MICROWAVE	FLAG_08
+#define COOKING_APPLIANCE_CHEESE	FLAG_09
 
 // Cooking misc.
 // can_insert return values
@@ -593,3 +594,9 @@
 #define COOKING_CHECK_FAIL			-1
 #define COOKING_CHECK_EXTRA			0
 #define COOKING_CHECK_EXACT			1
+
+// used to define a paired produce item and seed datum, eg wheat
+#define PRODUCE_SEED(PATH, NAME) \
+/obj/item/reagent_containers/food/snacks/grown/PATH/plantname = NAME;\
+/datum/seed/PATH/name = NAME;\
+/datum/seed/PATH

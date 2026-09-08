@@ -1,7 +1,7 @@
 /mob/living/exosuit/premade/foundation
 	name = "Orange Suit"
 	desc = "A streamlined exosuit with orange armor plates."
-	external_armor_type = /obj/item/mech_external_armor/buletproof
+
 
 /mob/living/exosuit/premade/foundation/Initialize()
 	if(!head)

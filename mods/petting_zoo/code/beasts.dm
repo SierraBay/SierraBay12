@@ -1,3 +1,4 @@
+// Butterfly - too small to tame (tame_datum = null by default)
 /mob/living/simple_animal/butterfly
 	name = "butterfly"
 	desc = "A colorful butterfly, how'd it get up here?"
@@ -83,6 +84,11 @@
 	ai_holder = /datum/ai_holder/simple_animal/passive/corgi
 	say_list_type = /datum/say_list/dog
 
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat/corgi, /obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.35
+
 /datum/say_list/dog
 	emote_see = list("wiggles its tail warily", "scratches itself")
 	emote_hear = list("woofs", "barks")
@@ -115,6 +121,10 @@
 /mob/living/simple_animal/hostile/gorilla
 	name = "gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the tropic forests."
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.9
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "gorilla"
 	icon_living = "gorilla"
@@ -151,6 +161,9 @@
 /mob/living/simple_animal/friendly/frog
 	name = "frog"
 	desc = "They seem a little sad."
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	tame_difficulty = 0.6
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "frog"
 	icon_living = "frog"
@@ -186,6 +199,10 @@
 /mob/living/simple_animal/friendly/rabbit
 	name = "\improper rabbit"
 	desc = "He do be hoppin doe"
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.4
 	gender = PLURAL
 	health = 15
 	maxHealth = 15
@@ -223,6 +240,10 @@
 /mob/living/simple_animal/hostile/retaliate/kangaroo
 	name = "kangaroo"
 	real_name = "kangaroo"
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.75
 	desc = "A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws."
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "kangaroo" // Credit: FoS
@@ -256,6 +277,9 @@
 // TG breached contaiment, call MTF
 /mob/living/simple_animal/friendly/megamoth
 	name = "big moff"
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	tame_difficulty = 0.5
 	desc = "Keep it away from fire."
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "megamoth"
@@ -285,6 +309,10 @@
 /mob/living/simple_animal/hostile/panther
 	name = "panther"
 	desc = "A long sleek, black cat with sharp teeth and claws."
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 1.0
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "panther"
 	icon_living = "panther"
@@ -369,6 +397,10 @@
 
 /mob/living/simple_animal/penguin/emperor
 	name = "emperor penguin"
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.5
 	real_name = "penguin"
 	desc = "Emperor of all he surveys."
 
@@ -424,6 +456,10 @@
 // I think i little late for X-mas with this code. But anyway, this comments made for easier splitting different types of beasts, isn't it?
 /mob/living/simple_animal/hostile/retaliate/reindeer
 	name = "reindeer"
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.65
 	desc = "The king of tundra, extremely endurant beast."
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
 	icon_state = "reindeer"
@@ -470,6 +506,10 @@
 // And worker from HR NT Department
 /mob/living/simple_animal/pet/sloth
 	name = "sloth"
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/grown)
+	tame_difficulty = 0.25
 	desc = "An adorable, sleepy creature. Still twice more productive than most of the crewmembers."
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x32.dmi'
 	icon_state = "sloth"
@@ -498,9 +538,186 @@
 // Override of legacy space bear
 /mob/living/simple_animal/hostile/bear
 	icon = 'mods/petting_zoo/icons/leroy_beasts_32x64.dmi'
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 1.25
 	icon_state = "brown_bear"
 	icon_living = "brown_bear"
 	icon_dead = "brown_bear_dead"
 	icon_gib = "bear_gib"
 	default_pixel_x = -16
 	pixel_x = -16
+
+// ============================================================
+// Taming overrides for base game animals
+// ============================================================
+
+// --- Passive animals ---
+
+/mob/living/simple_animal/passive/cat
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.4
+
+/mob/living/simple_animal/passive/corgi
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.3
+
+/mob/living/simple_animal/passive/mouse
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks)
+	tame_difficulty = 0.15
+
+/mob/living/simple_animal/passive/crab
+	tame_datum = /datum/taming
+	diet_type = DIET_OMNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.25
+
+/mob/living/simple_animal/passive/snake
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.5
+
+// --- Hostile animals ---
+
+/mob/living/simple_animal/hostile/giant_spider
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 1.0
+
+/mob/living/simple_animal/hostile/carp
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.9
+
+/mob/living/simple_animal/hostile/retaliate/snake
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.75
+
+/mob/living/simple_animal/hostile/retaliate/goose
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks)
+	tame_difficulty = 0.75
+
+/mob/living/simple_animal/hostile/retaliate/goose/dire
+	tame_difficulty = 2.0
+
+/mob/living/simple_animal/hostile/retaliate/goat
+	tame_datum = /datum/taming
+	diet_type = DIET_HERBIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks)
+	tame_difficulty = 0.65
+
+/mob/living/simple_animal/hostile/retaliate/goat/king
+	tame_difficulty = 2.5
+
+/mob/living/simple_animal/hostile/retaliate/goat/king/phase2
+	tame_difficulty = 4.0
+
+/mob/living/simple_animal/hostile/retaliate/giant_crab
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 1.75
+
+/mob/living/simple_animal/hostile/retaliate/aquatic/carp
+	tame_datum = /datum/taming
+	diet_type = DIET_CARNIVORE
+	preferred_foods = list(/obj/item/reagent_containers/food/snacks/meat)
+	tame_difficulty = 0.6
+
+// ============================================================
+// Named pets of department heads
+// ============================================================
+
+// Ian — Head of Personnel's corgi
+/mob/living/simple_animal/passive/corgi/Ian/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+/mob/living/simple_animal/passive/corgi/Ian/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol)
+	. = ..()
+	if(!owner_mob && istype(speaker, /mob/living/carbon/human))
+		var/mob/living/carbon/human/S = speaker
+		if("ACCESS_HEAD_OF_PERSONNEL" in S.GetAccess())
+			owner_mob = S
+			friends |= weakref(S)
+			if(tame_datum)
+				tame_datum.current_tamer = weakref(S)
+
+// Runtime — Chief Medical Officer's cat
+/mob/living/simple_animal/passive/cat/fluff/Runtime/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+/mob/living/simple_animal/passive/cat/fluff/Runtime/hear_say(message, verb = "says", datum/language/language = null, alt_name = "", italics = 0, mob/speaker = null, sound/speech_sound, sound_vol)
+	. = ..()
+	if(!owner_mob && istype(speaker, /mob/living/carbon/human))
+		var/mob/living/carbon/human/S = speaker
+		if("ACCESS_CHIEF_MEDICAL_OFFICER" in S.GetAccess())
+			owner_mob = S
+			friends |= weakref(S)
+			if(tame_datum)
+				tame_datum.current_tamer = weakref(S)
+
+// ============================================================
+// Other named pets — friendly, no specific owner
+// ============================================================
+
+// Bones — cat
+/mob/living/simple_animal/passive/cat/fluff/bones/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+// Lisa — corgi
+/mob/living/simple_animal/passive/corgi/Lisa/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+// Coffee — crab
+/mob/living/simple_animal/passive/crab/Coffee/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+// Tom — mouse
+/mob/living/simple_animal/passive/mouse/brown/Tom/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE
+
+// Cobby — corn snake
+/mob/living/simple_animal/passive/snake/cob/Initialize()
+	. = ..()
+	if(tame_datum)
+		tame_datum.trust = 100
+		tame_datum.decay_exempt = TRUE
+		tame_datum.named_already = TRUE

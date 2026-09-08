@@ -210,6 +210,7 @@
 		to_chat(user, SPAN_DANGER("None of the reagents seem suitable."))
 	return 1
 
+/*[SIERRA-REMOVE] - HARDSUITS
 /obj/item/rig_module/chem_dispenser/engage(atom/target)
 
 	if(!..())
@@ -252,6 +253,8 @@
 
 	return 1
 
+[SIERRA-REMOVE] - HARDSUITS
+*/
 /obj/item/rig_module/chem_dispenser/combat
 
 	name = "combat chemical dispenser"
@@ -511,6 +514,7 @@
 	var/charge_consumption = 0.5 KILOWATTS
 	var/max_cooling = 12
 	var/thermostat = T20C
+	show_toggle_button = TRUE
 
 /obj/item/rig_module/cooling_unit/Process()
 	if(!active)
@@ -595,3 +599,40 @@
 
 			else
 				deactivate()
+
+/obj/item/rig_module/radiation
+	name = "radiation shielding module"
+	desc = "Highly advanced electromagnetic radiation cloak that allows most harmful radiation to pass through the suit harmlessly."
+	icon_state = "rad_resist"
+	selectable = TRUE
+	toggleable = TRUE
+	disruptive = FALSE
+	use_power_cost = 80 KILOWATTS
+	active_power_cost = 20 KILOWATTS
+	passive_power_cost = 0
+
+	interface_name = "radiation shielding module"
+	interface_desc = "Electromagnetic radiation cloak that allows most harmful radiation to pass around the suit, instead of through the wearer."
+	origin_tech = list(TECH_BIO = 3, TECH_MAGNET = 3, TECH_ENGINEERING = 5)
+
+	var/radiation_protection = ARMOR_RAD_SHIELDED
+	var/initial_protection = ARMOR_RAD_MINOR
+
+/obj/item/rig_module/radiation/activate()
+	if(!..())
+		return FALSE
+
+	initial_protection = holder.armor["rad"]
+	for(var/obj/item/piece in list(holder.gloves,holder.helmet,holder.boots,holder.chest))
+		piece.armor["rad"] = radiation_protection
+
+	holder.wearer.alpha = 200
+
+/obj/item/rig_module/radiation/deactivate()
+	if(!..())
+		return FALSE
+
+	for(var/obj/item/piece in list(holder.gloves,holder.helmet,holder.boots,holder.chest))
+		piece.armor["rad"] = initial_protection
+
+	holder.wearer.alpha = 255

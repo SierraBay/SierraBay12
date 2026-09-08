@@ -195,7 +195,7 @@
 
 	minimum_character_age = list(SPECIES_HUMAN = 24)
 	ideal_character_age = 26
-	economic_power = 8
+	economic_power = 7
 	skill_points = 26
 
 	min_skill = list(

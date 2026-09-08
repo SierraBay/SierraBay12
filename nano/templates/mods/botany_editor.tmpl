@@ -1,0 +1,181 @@
+<!--
+Title: Bioballistic Delivery System UI
+Used In File(s): \code\modules\hydroponics\seed_machines.dm
+ -->
+
+<style>
+    .editor-container {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .editor-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .editor-panel {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(100, 200, 255, 0.3);
+        border-radius: 4px;
+        padding: 12px;
+    }
+
+    .editor-header {
+        background: rgba(100, 150, 200, 0.2);
+        border-bottom: 2px solid rgba(100, 200, 255, 0.5);
+        padding: 8px;
+        margin: -12px -12px 10px -12px;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .editor-header h3 {
+        margin: 0;
+        font-size: 1.1em;
+        color: #64c8ff;
+        text-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
+    }
+
+    .editor-section {
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .editor-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .editor-label {
+        color: #aaa;
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+    }
+
+    .editor-content {
+        color: #e0e0e0;
+        padding-left: 10px;
+        border-left: 2px solid rgba(100, 200, 255, 0.4);
+    }
+
+    .editor-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .editor-buttons a {
+        flex: 1;
+        min-width: 80px;
+    }
+
+    .processing-notice {
+        background: rgba(255, 100, 0, 0.2);
+        border: 2px solid rgba(255, 150, 0, 0.6);
+        border-radius: 4px;
+        padding: 20px;
+        text-align: center;
+        color: #ffa500;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-shadow: 0 0 5px rgba(255, 150, 0, 0.5);
+    }
+</style>
+
+{{if data.active}}
+    <div class="processing-notice">Processing...</div>
+{{else}}
+    <div class="editor-container">
+        <!-- LEFT COLUMN -->
+        <div class="editor-column">
+            {{if data.loaded_gene}}
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <h3>Buffered Gene</h3>
+                </div>
+                <div class="editor-section">
+                    <div class="editor-label">Source:</div>
+                    <div class="editor-content">{{:data.loaded_gene.source}}</div>
+                </div>
+                <div class="editor-section">
+                    <div class="editor-label">Locus:</div>
+                    <div class="editor-content">{{:data.loaded_gene.mask}}</div>
+                </div>
+                <div class="editor-buttons">
+                    {{:helper.link('Clear Buffer', 'closethick', {'clear_gene' : 1}, null)}}
+                    {{if data.seed}}
+                        {{:helper.link('Apply to Target', 'circle-arrow-e', {'apply_gene' : 1}, (data.seed.degradation < 100) ? null : 'disabled')}}
+                    {{/if}}
+                </div>
+            </div>
+            {{/if}}
+
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <h3>Modification Target</h3>
+                </div>
+                {{if data.seed}}
+                    <div class="editor-section">
+                        <div class="editor-label">Target:</div>
+                        <div class="editor-content">{{:data.seed.name}}</div>
+                    </div>
+                    <div class="editor-section">
+                        <div class="editor-label">Degradation:</div>
+                        <div class="editor-content">{{:data.seed.degradation}}%</div>
+                    </div>
+                    <div class="editor-buttons">
+                        {{:helper.link('Eject Target', 'eject', {'eject_seed' : 1}, null)}}
+                    </div>
+                {{else}}
+                    <div style="text-align: center; padding: 20px; color: #888;">No target seed packet loaded</div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="editor-column">
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <h3>Loaded Disk</h3>
+                </div>
+                {{if data.disk}}
+                    <div class="editor-section">
+                        <div class="editor-label">Disk Space:</div>
+                        <div class="editor-content">{{:helper.displayBar(data.disk.used_capacity, 0, data.disk.max_capacity, 'good', data.disk.used_capacity + " / " + data.disk.max_capacity + " GQ")}}</div>
+                    </div>
+
+                    {{if data.disk.stored_genes.length}}
+                    <div class="editor-section">
+                        <div class="editor-label">Stored Genes:</div>
+                        <div style="margin-top: 8px;">
+                            {{for data.disk.stored_genes}}
+                            <div style="background: rgba(50, 100, 150, 0.15); padding: 8px; border-radius: 3px; margin-bottom: 6px; border-left: 3px solid rgba(100, 200, 255, 0.6);">
+                                <div style="color: #64c8ff; font-weight: bold; margin-bottom: 4px;">{{:value.mask}}</div>
+                                <div style="color: #aaa; font-size: 0.9em; margin-bottom: 5px;">Source: {{:value.source}}</div>
+                                <div style="display: flex; gap: 5px;">
+                                    {{:helper.link('Load', 'arrowthickstop-1-n', {'load_gene' : value.filename}, null)}}
+                                    {{:helper.link('Delete', 'trash', {'delete_gene' : value.filename}, null)}}
+                                </div>
+                            </div>
+                            {{/for}}
+                        </div>
+                    </div>
+                    {{/if}}
+
+                    <div class="editor-buttons">
+                        {{:helper.link('Eject Disk', 'eject', {'eject_disk' : 1}, null)}}
+                    </div>
+                {{else}}
+                    <div style="text-align: center; padding: 20px; color: #888;">No disk loaded</div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+{{/if}}

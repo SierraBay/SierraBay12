@@ -10,6 +10,8 @@
 #include "..\torch\items\clothing\solgov-suit.dm"
 #include "..\torch\items\clothing\solgov-under.dm"
 
+#include "..\torch\datums\uplink.dm"
+
 #include "..\torch\language\human\euro.dm"
 #include "..\torch\language\human\misc\spacer.dm"
 

@@ -182,7 +182,6 @@
 "yb" = (
 /obj/structure/table/marble,
 /obj/machinery/fabricator/micro/bartender,
-/obj/item/storage/box/microlathe_designs,
 /obj/item/stack/material/plastic/ten,
 /obj/item/stack/material/glass/ten,
 /obj/item/stack/material/steel/ten,

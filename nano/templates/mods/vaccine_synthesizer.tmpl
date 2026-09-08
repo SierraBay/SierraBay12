@@ -1,0 +1,340 @@
+<style>
+  .vs-wrap {
+    padding: 4px;
+  }
+  .vs-header {
+    background: #6b8661;
+    color: #ffffff;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #4a5e42;
+    margin-bottom: 6px;
+  }
+  .vs-status {
+    background: #2a3a26;
+    border: 1px solid #6b8661;
+    padding: 8px;
+    margin: 4px 0;
+    text-align: center;
+  }
+  .vs-hint {
+    background: #3a4a35;
+    border: 1px solid #6b8661;
+    border-left: 3px solid #8aad7e;
+    padding: 6px 10px;
+    margin: 6px 0;
+    font-style: italic;
+    color: #b8d4ae;
+  }
+  .vs-grid-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    margin: 6px 0;
+    background: #1e2e1a;
+    border: 1px solid #4a5e42;
+    transition: border-color 0.3s;
+  }
+  .vs-cell {
+    float: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 68px !important;
+    height: 34px !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    font-family: monospace !important;
+    border: 2px solid #6b8661 !important;
+    background: #3a4a35 !important;
+    color: #d0e8c8 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .vs-cell:hover {
+    background: #4a6b40 !important;
+    border-color: #8aad7e !important;
+  }
+  .vs-cell-hidden {
+    color: #5a7a50 !important;
+    font-size: 16px !important;
+    letter-spacing: 2px;
+  }
+  .vs-cell.vs-cell-found {
+    background: #2d6a1e !important;
+    border-color: #5cb85c !important;
+    color: #ffffff !important;
+    cursor: default !important;
+  }
+  .vs-cell.vs-cell-wrong {
+    background: #5a2020 !important;
+    border-color: #d9534f !important;
+    color: #ff9999 !important;
+    cursor: default !important;
+    text-decoration: line-through;
+  }
+  .vs-cell-reveal {
+    background: #3a4a55 !important;
+    border-color: #6b8699 !important;
+    color: #b8d4ee !important;
+    cursor: default !important;
+  }
+  .vs-integrity-row {
+    text-align: center;
+    margin: 4px 0 2px 0;
+  }
+  .vs-pip {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #6b8661;
+    background: #5cb85c;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+  .vs-pip-lost {
+    background: #5a2020 !important;
+    border-color: #d9534f !important;
+  }
+  .vs-progress-bar {
+    width: 80%;
+    height: 22px;
+    background: #2a3a26;
+    border: 1px solid #6b8661;
+    margin: 10px auto;
+    position: relative;
+  }
+  .vs-progress-fill {
+    height: 100%;
+    background: #6b8661;
+  }
+  .vs-progress-text {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    text-align: center;
+    line-height: 22px;
+    font-size: 11px;
+    color: #ffffff;
+  }
+  .vs-section {
+    margin: 6px 0;
+    padding: 12px 8px;
+    background: #243020;
+    border: 1px solid #4a5e42;
+    text-align: center;
+  }
+  .vs-footer {
+    text-align: center;
+    padding: 6px 0;
+    margin-top: 4px;
+    border-top: 1px solid #4a5e42;
+  }
+  .vs-counter {
+    color: #8aad7e;
+    font-size: 12px;
+    text-align: center;
+    margin: 2px 0;
+  }
+  .vs-round-info {
+    color: #b8a86e;
+    font-size: 11px;
+    text-align: center;
+    margin: 2px 0;
+  }
+  .vs-reveal-banner {
+    background: #2a3a45;
+    border: 1px solid #5a8a9a;
+    color: #8ac8dd;
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 4px 0;
+    animation: vs-pulse 1s ease-in-out infinite;
+  }
+  @keyframes vs-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .vs-success {
+    color: #5cb85c;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .vs-fail {
+    color: #d9534f;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .vs-btn {
+    float: none !important;
+    display: inline-block !important;
+    min-width: 60px !important;
+    height: auto !important;
+    padding: 4px 14px !important;
+    margin: 4px !important;
+    background: #6b8661 !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5e42 !important;
+    cursor: pointer !important;
+    text-align: center;
+    font-weight: bold;
+  }
+  .vs-btn:hover {
+    background: #8aad7e !important;
+  }
+  .vs-btn-danger {
+    background: #885050 !important;
+    border-color: #664040 !important;
+  }
+  .vs-btn-danger:hover {
+    background: #aa6060 !important;
+  }
+</style>
+
+<div class="vs-wrap">
+<div class="vs-header">VACCINE SYNTHESIZER</div>
+
+{{if data.phase == 0}}
+  <div class="vs-section">
+    <div style="font-size: 14px; color: #8aad7e; padding: 16px 10px;">
+      Insert a virus culture dish to begin vaccine research.
+    </div>
+    <div style="color: #6b8661; font-size: 11px;">
+      The machine will analyze the pathogen and guide you<br>
+      through antigen identification to synthesize a vaccine.
+    </div>
+  </div>
+  <div class="vs-footer">
+    {{:helper.link('Close', 'close', {'close': 1}, null, 'vs-btn')}}
+  </div>
+{{/if}}
+
+{{if data.phase == 1}}
+  <div class="vs-section">
+    <div style="color: #8aad7e; font-size: 11px; margin-bottom: 6px;">CULTURE LOADED</div>
+    <div style="color: #ffffff; font-size: 15px; font-weight: bold; margin-bottom: 8px;">
+      {{:data.virus_name}}
+    </div>
+    <div style="color: #b8d4ae; font-size: 12px; margin-bottom: 12px;">
+      Viable pathogen sample detected.<br>
+      Begin the calibration protocol to synthesize a vaccine.
+    </div>
+    {{:helper.link('Begin Vaccine Protocol', 'triangle-1-e', {'begin': 1}, null, 'vs-btn')}}
+  </div>
+  <div class="vs-footer">
+    {{:helper.link('Eject Dish', 'eject', {'eject': 1}, null, 'vs-btn vs-btn-danger')}}
+    {{:helper.link('Close', 'close', {'close': 1}, null, 'vs-btn')}}
+  </div>
+{{/if}}
+
+{{if data.phase == 2}}
+  <div class="vs-status">
+    <div style="color: #8aad7e; font-size: 11px;">ANTIGEN IDENTIFICATION</div>
+    <div style="color: #ffffff; font-size: 13px; margin-top: 2px;">
+      Locate <b>{{:data.targets_total}}</b> pathogen marker{{if data.targets_total != 1}}s{{/if}} in the sample grid
+    </div>
+  </div>
+
+  {{if data.max_rounds > 1}}
+    <div class="vs-round-info">
+      Round {{:data.current_round}} / {{:data.max_rounds}}
+    </div>
+  {{/if}}
+
+  {{if data.subphase == 0}}
+    <div class="vs-reveal-banner">
+      MEMORIZE THE GRID
+    </div>
+  {{/if}}
+
+  <div class="vs-hint">{{:data.hint}}</div>
+
+  <div class="vs-counter">
+    Found: <b>{{:data.targets_found}}</b> / {{:data.targets_total}}
+  </div>
+
+  <div class="vs-integrity-row">
+    <span style="color: #6b8661; font-size: 11px;">Integrity: </span>
+    {{ for(var i = 0; i < data.max_integrity; i++) { }}
+      <span class="vs-pip{{if i >= data.integrity}} vs-pip-lost{{/if}}"></span>
+    {{ } }}
+  </div>
+
+  <div class="vs-grid-wrap">
+    {{for data.grid}}
+      {{if value.state == 0}}
+        {{if data.subphase == 0}}
+          {{:helper.link(value.code, null, null, 'vs-cell-reveal', 'vs-cell')}}
+        {{else}}
+          {{:helper.link(value.code, null, {'pick': value.index}, null, 'vs-cell vs-cell-hidden')}}
+        {{/if}}
+      {{/if}}
+      {{if value.state == 1}}
+        {{:helper.link(value.code, null, null, 'vs-cell-found', 'vs-cell')}}
+      {{/if}}
+      {{if value.state == 2}}
+        {{:helper.link(value.code, null, null, 'vs-cell-wrong', 'vs-cell')}}
+      {{/if}}
+    {{/for}}
+  </div>
+
+  <div class="vs-footer">
+    {{:helper.link('Abort & Eject', 'eject', {'eject': 1}, null, 'vs-btn vs-btn-danger')}}
+  </div>
+{{/if}}
+
+{{if data.phase == 3}}
+  <div class="vs-section">
+    <div style="color: #8aad7e; font-size: 11px; margin-bottom: 4px;">SYNTHESIZING VACCINE</div>
+    <div style="color: #ffffff; font-size: 14px; font-weight: bold; margin-bottom: 8px;">
+      {{:data.virus_name}}
+    </div>
+    <div style="color: #b8d4ae; font-size: 12px; margin-bottom: 8px;">
+      Antigen markers identified. Compiling antibody sequence...
+    </div>
+    <div class="vs-progress-bar">
+      <div class="vs-progress-fill" style="width: {{: Math.round((data.synth_progress / data.synth_max) * 100) }}%;"></div>
+      <div class="vs-progress-text">{{:data.synth_progress}} / {{:data.synth_max}}</div>
+    </div>
+    <div style="color: #6b8661; font-size: 11px; margin-top: 6px;">
+      Please wait...
+    </div>
+  </div>
+{{/if}}
+
+{{if data.phase == 4}}
+  <div class="vs-section">
+    <div class="vs-success">VACCINE SYNTHESIZED</div>
+    <div style="color: #b8d4ae; font-size: 12px; margin: 10px 0;">
+      The vaccine beaker has been dispensed.<br>
+      Inject or ingest the antibody solution to gain immunity.
+    </div>
+    <div style="color: #6b8661; font-size: 11px; margin-bottom: 8px;">
+      The virus culture dish has been consumed in the process.
+    </div>
+    {{:helper.link('Acknowledge', 'check', {'collect': 1}, null, 'vs-btn')}}
+  </div>
+{{/if}}
+
+{{if data.phase == 5}}
+  <div class="vs-section">
+    <div class="vs-fail">CALIBRATION FAILED</div>
+    <div style="color: #d9a9a9; font-size: 12px; margin: 10px 0;">
+      Sample integrity compromised. Too many incorrect selections.<br>
+      The viral culture remains intact.
+    </div>
+    {{:helper.link('Retry Protocol', 'refresh', {'retry': 1}, null, 'vs-btn')}}
+    {{:helper.link('Eject Dish', 'eject', {'eject': 1}, null, 'vs-btn vs-btn-danger')}}
+  </div>
+{{/if}}
+
+</div>

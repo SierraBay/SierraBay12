@@ -2428,7 +2428,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/storage/box/microlathe_designs,
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
 "yW" = (

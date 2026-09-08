@@ -22,6 +22,7 @@
 	icon = 'mods/mechs_by_shegar/icons/mech_parts.dmi'
 	icon_state = "backbone"
 	density = TRUE
+	w_class = ITEM_SIZE_GARGANTUAN
 	anchored = TRUE
 	pixel_x = -8
 
@@ -104,7 +105,42 @@
 /obj/structure/heavy_vehicle_frame/set_dir()
 	..(SOUTH)
 
+/obj/structure/heavy_vehicle_frame/proc/install_component(obj/item/thing, mob/user)
+	var/obj/item/mech_component/MC = thing
+	if(istype(MC) && !MC.ready_to_install())
+		to_chat(user, SPAN_WARNING("\The [MC] [MC.gender == PLURAL ? "are" : "is"] not ready to install."))
+		return 0
+	if(user)
+		visible_message(SPAN_NOTICE("\The [user] begins installing \the [thing] into \the [src]."))
+		if(!user.canUnEquip(thing) || !do_after(user, 3 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || user.get_active_hand() != thing)
+			return
+		if(!user.unEquip(thing))
+			return
+	thing.forceMove(src)
+	visible_message(SPAN_NOTICE("\The [user] installs \the [thing] into \the [src]."))
+	playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
+	return 1
 
+/obj/structure/heavy_vehicle_frame/proc/uninstall_component(obj/item/component, mob/user)
+	if(!istype(component) || (component.loc != src) || !istype(user))
+		return FALSE
+	if(!do_after(user, 4 SECONDS * user.skill_delay_mult(SKILL_DEVICES), src, DO_PUBLIC_UNIQUE) || component.loc != src)
+		return FALSE
+	user.visible_message(SPAN_NOTICE("\The [user] crowbars \the [component] off \the [src]."))
+	component.forceMove(get_turf(src))
+	user.put_in_hands(component)
+	if(user.mob_size >= MOB_LARGE)
+		to_chat(user, SPAN_NOTICE("You remove \the [component] off \the [src] without paying attention to its weight."))
+	if(user.mob_size == MOB_MEDIUM)
+		user.adjust_stamina(-15)
+		to_chat(user, SPAN_WARNING("You feel a little unsteady when you remove \the [component] off \the [src]."))
+	if(user.mob_size <= MOB_SMALL)
+		user.adjust_stamina(-30)
+		to_chat(user, SPAN_WARNING("You bend under the weight of \the [component] when you remove it off \the [src]."))
+	playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	return TRUE
+
+/*
 /obj/structure/heavy_vehicle_frame/proc/install_component(obj/item/thing, mob/user)
 	var/obj/item/mech_component/MC = thing
 	if(istype(MC) && !MC.ready_to_install())
@@ -136,6 +172,7 @@
 	component.forceMove(get_turf(src))
 	playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	return TRUE
+*/
 
 /obj/structure/heavy_vehicle_frame/proc/paint_spray_interaction(mob/living/user, color)
 	var/obj/item/mech_component/choice = show_radial_menu(user, src, parts_list_images, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))

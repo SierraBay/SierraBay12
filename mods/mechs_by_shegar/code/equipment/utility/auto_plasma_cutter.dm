@@ -6,6 +6,9 @@
 	origin_tech = list(TECH_MATERIAL = 5, TECH_PHORON = 4, TECH_ENGINEERING = 6, TECH_COMBAT = 4)
 	heat_generation = 20
 
+/obj/item/mech_equipment/mounted_system/taser/autoplasma/need_combat_skill()
+	return FALSE
+
 /obj/item/gun/energy/plasmacutter/mounted/mech/auto
 	charge_cost = 13
 	name = "rotatory plasma cutter"

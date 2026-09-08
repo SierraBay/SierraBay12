@@ -221,11 +221,13 @@
 /obj/structure/table/steel,
 /obj/structure/window/reinforced,
 /obj/item/stock_parts/circuitboard/helm,
-/obj/item/stock_parts/circuitboard/modular_computer,/obj/item/stock_parts/computer/hard_drive/super/helm,/obj/item/stock_parts/computer/ship_interface,
+/obj/item/stock_parts/circuitboard/modular_computer,
+/obj/item/stock_parts/computer/hard_drive/super/helm,
+/obj/item/stock_parts/computer/ship_interface,
 /obj/item/stock_parts/circuitboard/shuttle_console/explore,
 /obj/item/stock_parts/circuitboard/modular_computer,
 /obj/item/stock_parts/computer/hard_drive/super/helm,
-/obj/item/stock_parts/computer/ship_interface,,
+/obj/item/stock_parts/computer/ship_interface,
 /obj/item/clothing/glasses/welding,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
@@ -256,6 +258,17 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/workshop)
+"ba" = (
+/obj/floor_decal/techfloor{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/item/paper/manifest/rnd_invoice/verne,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/verne/engineering/comms)
 "bh" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
@@ -1181,6 +1194,7 @@
 	pixel_x = 20
 	},
 /obj/random/assembly,
+/obj/item/paper/manifest/rnd_invoice/verne,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "eq" = (
@@ -1899,10 +1913,6 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
 "kA" = (
-/obj/machinery/alarm/server{
-	pixel_y = 24;
-	req_access = list("ACCESS_VERNE")
-	},
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
@@ -2690,9 +2700,6 @@
 	},
 /area/verne/engineering/external)
 "qG" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/floor_decal/techfloor/orange{
 	dir = 8
 	},
@@ -3223,6 +3230,13 @@
 	},
 /turf/simulated/floor/tiled/white/monotile,
 /area/verne/xenosci)
+"uc" = (
+/obj/floor_decal/techfloor{
+	dir = 4
+	},
+/obj/machinery/r_n_d/server,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/verne/engineering/comms)
 "ue" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/red,
 /obj/machinery/portable_atmospherics/canister/nitrogen/prechilled,
@@ -3741,10 +3755,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/hangar)
 "ye" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
 /obj/floor_decal/techfloor{
 	dir = 8
 	},
@@ -4962,6 +4972,8 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/drone_pad/rd_mission,
+/obj/item/device/drone_designator,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/storage)
 "HI" = (
@@ -6339,6 +6351,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/verne/engineering/decktransfer)
+"Uh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/floor_decal/techfloor/orange{
+	dir = 8
+	},
+/obj/floor_decal/techfloor/orange{
+	dir = 4
+	},
+/obj/machinery/alarm/server{
+	pixel_y = 24;
+	req_access = list("ACCESS_VERNE")
+	},
+/turf/simulated/floor/tiled/techfloor,
+/area/verne/engineering/comms)
 "Un" = (
 /obj/catwalk_plated/dark,
 /obj/structure/cable{
@@ -12782,7 +12810,7 @@ Ql
 Ql
 Ql
 Ql
-Ql
+CH
 CH
 CH
 CH
@@ -12933,8 +12961,8 @@ Ql
 Ql
 Ql
 Ql
-Ql
 um
+yr
 yr
 yr
 yr
@@ -13084,10 +13112,10 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 um
 yr
+Ql
 Ql
 jS
 Ql
@@ -13235,12 +13263,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 jS
 nV
 yr
 Ql
+GX
 GX
 GX
 GX
@@ -13386,12 +13414,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 RV
 jS
 Ql
 nV
 yr
+GX
 GX
 GX
 GX
@@ -13538,7 +13566,6 @@ Ql
 Ql
 Ql
 Ql
-Ql
 ap
 CH
 CH
@@ -13546,6 +13573,7 @@ ol
 VZ
 GX
 GX
+uc
 kA
 Na
 iY
@@ -13689,7 +13717,6 @@ Ql
 Ql
 Ql
 Ql
-Ql
 qV
 Uv
 Uv
@@ -13698,6 +13725,7 @@ Uv
 Un
 GX
 GX
+Uh
 qG
 fY
 Ib
@@ -13842,7 +13870,6 @@ Ql
 Ql
 Ql
 Ql
-Ql
 Ai
 hb
 hb
@@ -13850,6 +13877,7 @@ xI
 sz
 GX
 GX
+ba
 ye
 qf
 rp
@@ -13994,12 +14022,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 CO
+GX
 GX
 GX
 GX
@@ -14146,12 +14174,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+fy
 fy
 fy
 MC
@@ -14298,12 +14326,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+fy
 fy
 fy
 ML
@@ -14450,12 +14478,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+fy
 fy
 fy
 fy
@@ -14602,13 +14630,13 @@ Ql
 Ql
 Ql
 Ql
-Ql
 RV
 Ql
 Ql
 Ri
 iU
 Ns
+Ud
 Ud
 mG
 DD
@@ -14754,12 +14782,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+Nw
 Nw
 Nw
 pV
@@ -14906,12 +14934,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+Nw
 Nw
 Nw
 Ko
@@ -15058,12 +15086,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 sz
+Nw
 Nw
 Nw
 OP
@@ -15210,12 +15238,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 Ql
 Ql
 nV
 CO
+Nw
 Nw
 Nw
 aD
@@ -15362,12 +15390,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 ap
 CH
 CH
 wn
 sz
+Nw
 Nw
 Nw
 ZA
@@ -15513,13 +15541,13 @@ Ql
 Ql
 Ql
 Ql
-Ql
 qV
 Uv
 Uv
 Uv
 Uv
 QE
+Nw
 Nw
 Nw
 fr
@@ -15666,12 +15694,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 Ai
 hb
 hb
 wR
 VZ
+Nw
 Nw
 Nw
 rh
@@ -15818,12 +15846,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jM
 jS
 Ql
 nV
 yr
+Nw
 Nw
 Nw
 Nw
@@ -15971,12 +15999,12 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 jS
 nV
 yr
 Ql
+Nw
 Nw
 Nw
 Nw
@@ -16124,10 +16152,10 @@ Ql
 Ql
 Ql
 Ql
-Ql
 jS
 um
 yr
+Ql
 Ql
 jS
 Ql
@@ -16277,8 +16305,8 @@ Ql
 Ql
 Ql
 Ql
-Ql
 um
+yr
 yr
 yr
 yr
@@ -16430,7 +16458,7 @@ Ql
 Ql
 Ql
 Ql
-Ql
+hb
 hb
 hb
 hb

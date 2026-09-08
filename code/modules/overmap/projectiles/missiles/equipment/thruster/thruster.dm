@@ -71,8 +71,10 @@
 		return TRUE
 	return FALSE
 
-/obj/item/missile_equipment/thruster/proc/is_target_valid(obj/overmap/visitable/overmap_site)
-	return (istype(overmap_site) && (overmap_site.sector_flags & OVERMAP_SECTOR_IN_SPACE) && !(overmap_site.sector_flags & OVERMAP_SECTOR_UNTARGETABLE) && LAZYLEN(overmap_site.map_z) && !(z in overmap_site.map_z))
+/obj/item/missile_equipment/thruster/proc/is_target_valid(obj/overmap/overmap_site)
+	if(istype(overmap_site, /obj/overmap/event/leviathan)) // [SIERRA-ADD]
+		return TRUE
+	return (istype(overmap_site, /obj/overmap/visitable) && (overmap_site:sector_flags & OVERMAP_SECTOR_IN_SPACE) && !(overmap_site:sector_flags & OVERMAP_SECTOR_UNTARGETABLE) && LAZYLEN(overmap_site:map_z) && !(z in overmap_site:map_z))
 
 /obj/item/missile_equipment/thruster/proc/remove_tank(mob/user as mob)
 	if (length(contents) > 0)

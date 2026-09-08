@@ -102,7 +102,7 @@
 			else
 				if(ismob(A)) // No instant mob attacking
 					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-				UnarmedAttack(A, 1, use_in_world)
+				UnarmedAttack(A, 1, use_in_world, params)
 
 			trigger_aiming(TARGET_CAN_CLICK)
 			return

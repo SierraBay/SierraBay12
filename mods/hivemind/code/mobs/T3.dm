@@ -31,7 +31,7 @@
 	ai_holder = /datum/ai_holder/simple_animal/humanoid/hostile
 	say_list_type = /datum/say_list/mechiver
 
-	mob_flags = MOB_FLAG_UNPINNABLE
+	status_flags = FLAGS_OFF
 	can_be_buckled = FALSE
 
 	natural_weapon = /obj/item/natural_weapon/juggernaut
@@ -117,7 +117,7 @@
 	if(!Adjacent(target_mob))
 		return
 
-	if(world.time > special_ability_cooldown && !passenger && target_mob != /mob/living/exosuit)
+	if(world.time > special_ability_cooldown && !passenger && !istype(target_mob, /mob/living/exosuit) && !istype(target_mob, /mob/observer/ghost))
 		special_ability(target_mob)
 
 	..()
@@ -226,15 +226,12 @@
 	pixel_x = -16
 	ranged = TRUE
 
-	mob_flags = MOB_FLAG_UNPINNABLE
+	status_flags = FLAGS_OFF
 	can_be_buckled = FALSE
 
 	health = 1850
 	maxHealth = 1850 //Only way for it to show up right now is via adminbus OR Champion call (which gives it 150hp).
 	break_stuff_probability = 95
-
-//	hivemind_min_cooldown = 50
-//	hivemind_max_cooldown = 80
 
 	projectiletype = /obj/item/projectile/goo
 	natural_weapon = /obj/item/natural_weapon/juggernaut/behemoth
@@ -253,6 +250,7 @@
 	..()
 	if(GLOB.hive_data_bool["tyrant_death_kills_hive"])
 		delhivetech()
+	qdel(src)
 
 /mob/living/simple_animal/hostile/hivemind/hivemind_tyrant/proc/delhivetech()
 	var/othertyrant = 0

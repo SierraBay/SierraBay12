@@ -106,6 +106,10 @@
 		user.put_in_hands(portable_drive)
 	else
 		portable_drive.dropInto(loc)
+//[SIERRA-ADD]
+	if(portable_drive.find_file_by_name("DISK_NAME"))
+		portable_drive.name = portable_drive.get_disk_name()
+//[/SIERRA-ADD]
 	portable_drive = null
 	verbs -= /obj/machinery/computer/modular/proc/eject_usb
 

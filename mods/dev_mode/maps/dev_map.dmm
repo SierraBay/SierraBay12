@@ -43,6 +43,9 @@
 /obj/structure/closet/coffin/wooden,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"jet" = (
+/turf/space,
+/area/space)
 "jjy" = (
 /obj/item/artefact/svetlyak,
 /turf/simulated/floor/exoplanet/titan_water/middle,
@@ -51,10 +54,20 @@
 /obj/item/gun/projectile/automatic/nt41,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"jGF" = (
+/obj/machinery/computer/modular/preset/full,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
+"jIh" = (
+/obj/machinery/fabricator/rnd/robotics/mech,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "kSl" = (
 /obj/item/gun/projectile/heavysniper/ant,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"kWp" = (
+)
 "ldi" = (
 /obj/item/gun/projectile/automatic/bullpup_rifle/light,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
@@ -79,14 +92,15 @@
 /obj/item/gun/projectile/automatic/mbr,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
+"nFA" = (
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
+/area/centcom)
 "odH" = (
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/liberia/atmos)
 "ooX" = (
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
-/turf/unsimulated/floor/grass,
+/obj/machinery/fabricator/rnd/robotics,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "pnX" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -98,13 +112,10 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
 /obj/landmark{
 	name = "JoinLateCryo"
 	},
-/turf/unsimulated/floor/grass,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "qMW" = (
 /obj/item/gun/projectile/pistol/m19,
@@ -186,6 +197,10 @@ uzJ
 uzJ
 uzJ
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (2,1,1) = {"
 uzJ
@@ -212,6 +227,10 @@ cpC
 cpC
 cpC
 uzJ
+jet
+jet
+jet
+jet
 "}
 (3,1,1) = {"
 uzJ
@@ -238,6 +257,10 @@ cpC
 cpC
 cpC
 uzJ
+jet
+jet
+jet
+kWp
 "}
 (4,1,1) = {"
 uzJ
@@ -256,7 +279,7 @@ cpC
 cpC
 cpC
 cpC
-cpC
+ooX
 cpC
 cpC
 cpC
@@ -264,6 +287,10 @@ cpC
 cpC
 cpC
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (5,1,1) = {"
 uzJ
@@ -282,7 +309,7 @@ dSB
 dSB
 dSB
 dSB
-cpC
+jGF
 cpC
 cpC
 cpC
@@ -290,6 +317,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (6,1,1) = {"
 uzJ
@@ -308,7 +339,7 @@ djw
 djw
 djw
 dSB
-cpC
+jIh
 cpC
 cpC
 cpC
@@ -316,6 +347,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (7,1,1) = {"
 uzJ
@@ -335,13 +370,17 @@ vuz
 djw
 dSB
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (8,1,1) = {"
 uzJ
@@ -360,14 +399,18 @@ djw
 djw
 djw
 dSB
-ooX
-ooX
-ooX
-ooX
-ooX
+cpC
+cpC
+nFA
+cpC
+cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (9,1,1) = {"
 uzJ
@@ -386,14 +429,18 @@ dSB
 dSB
 dSB
 dSB
-ooX
-ooX
+cpC
+nFA
 pSk
-ooX
-ooX
+nFA
+cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (10,1,1) = {"
 uzJ
@@ -412,14 +459,18 @@ cpC
 cpC
 cpC
 cpC
-ooX
-ooX
-ooX
-ooX
-ooX
+cpC
+cpC
+nFA
+cpC
+cpC
 cpC
 cpC
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (11,1,1) = {"
 uzJ
@@ -439,13 +490,17 @@ cpC
 cpC
 cpC
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (12,1,1) = {"
 uzJ
@@ -472,6 +527,10 @@ cpC
 cpC
 cpC
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (13,1,1) = {"
 uzJ
@@ -498,6 +557,10 @@ cpC
 ieF
 cpC
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (14,1,1) = {"
 uzJ
@@ -524,6 +587,10 @@ xBf
 lUp
 wVg
 uzJ
+jet
+jet
+kWp
+kWp
 "}
 (15,1,1) = {"
 uzJ
@@ -550,6 +617,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (16,1,1) = {"
 uzJ
@@ -576,6 +647,10 @@ nsq
 cPZ
 geK
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (17,1,1) = {"
 uzJ
@@ -602,6 +677,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (18,1,1) = {"
 uzJ
@@ -628,6 +707,10 @@ eZS
 vLC
 nyu
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (19,1,1) = {"
 uzJ
@@ -654,6 +737,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (20,1,1) = {"
 uzJ
@@ -680,6 +767,10 @@ qMW
 reO
 kSl
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (21,1,1) = {"
 uzJ
@@ -706,6 +797,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (22,1,1) = {"
 uzJ
@@ -732,6 +827,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (23,1,1) = {"
 uzJ
@@ -758,6 +857,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (24,1,1) = {"
 uzJ
@@ -784,6 +887,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (25,1,1) = {"
 uzJ
@@ -810,6 +917,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (26,1,1) = {"
 uzJ
@@ -836,6 +947,10 @@ cpC
 cpC
 cpC
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}
 (27,1,1) = {"
 uzJ
@@ -862,4 +977,8 @@ uzJ
 uzJ
 uzJ
 uzJ
+kWp
+kWp
+kWp
+kWp
 "}

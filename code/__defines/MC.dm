@@ -1,8 +1,25 @@
-#define TICK_CHECK ( world.tick_usage > Master.current_ticklimit )
+// [SIERRA-ADD] - MC
+/// Dynamic tick limit based on world.map_cpu. Reserves TICK_BYOND_RESERVE for BYOND overhead.
+#define MAPTICK_MC_MIN_RESERVE 70
+#define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
+#define TICK_BYOND_RESERVE 2
+#define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
+
+/// Static tick limit thresholds
+#define TICK_LIMIT_TO_RUN 78
+#define TICK_LIMIT_MC 70
+#define TICK_LIMIT_INIT 98
+
+/// Wrappers for world.tick_usage
+#define TICK_USAGE world.tick_usage
+#define TICK_USAGE_REAL world.tick_usage
+// [/SIERRA-ADD]
+
+#define TICK_CHECK ( TICK_USAGE > Master.current_ticklimit ) // [SIERRA-EDIT] - MC
 
 #define CHECK_TICK if TICK_CHECK stoplag()
 
-#define MC_TICK_CHECK ( ( world.tick_usage > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 )
+#define MC_TICK_CHECK ( ( TICK_USAGE > Master.current_ticklimit || src.state != SS_RUNNING ) ? pause() : 0 ) // [SIERRA-EDIT] - MC
 
 
 #define GAME_STATE 2 ** (Master.current_runlevel - 1)
@@ -11,9 +28,10 @@
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = Master.current_ticklimit; var/split_tick_phases = ##phase_count
 
 
+// [SIERRA-EDIT] - MC
 #define MC_SPLIT_TICK \
 	if(split_tick_phases > 1){\
-		Master.current_ticklimit = ((original_tick_limit - world.tick_usage) / split_tick_phases) + world.tick_usage;\
+		Master.current_ticklimit = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
 		--split_tick_phases;\
 	} else {\
 		Master.current_ticklimit = original_tick_limit;\
@@ -112,13 +130,13 @@ if(Datum.is_processing) {\
 /// The subsystem's fire() will not be called. This is preferable to can_fire = FALSE because it will not be added to the MC's list of active systems.
 #define SS_NO_FIRE FLAG_02
 
-/// The subsystem runs on spare CPU time, after all non-background subsystems have run that tick. Priority is considered against other SS_BACKGROUND subsystems.
+/// The subsystem runs on spare CPU time, after all non-background subsystems have run that tick. Priority is considered against other SS_BACKGROUND subsystems. Overrides SS_TICKER's priority bump. // [SIERRA-EDIT] - MC
 #define SS_BACKGROUND FLAG_03
 
 /// The subsystem does not tick check and should not run unless enough time can be guaranteed or it must to stay current.
 #define SS_NO_TICK_CHECK FLAG_04
 
-/// Treat the value of the subsystem's wait as ticks, not time. Forces it to run in the first tick. Implicitly has all runlevels. Ignores SS_BACKGROUND if set. Intended for systems that act like a mini-MC, like timers.
+/// Treat the value of the subsystem's wait as ticks, not time. Forces it to run in the first tick. Implicitly has all runlevels. Ignores SS_BACKGROUND if set (unless SS_BACKGROUND also set). Intended for systems that act like a mini-MC, like timers. // [SIERRA-EDIT] - MC
 #define SS_TICKER FLAG_05
 
 /// Attempt to keep the subsystem's timing real-world regular by adjusting fire timing to be earlier the later it previously ran.

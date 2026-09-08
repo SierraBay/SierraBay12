@@ -3,8 +3,7 @@
 	species_to_job_whitelist = list(
 		/singleton/species/adherent = list(ADHERENT_JOBS),
 		/singleton/species/nabber = list(NABBER_JOBS),
-		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS),
-		/singleton/species/human/mule = list(SILICON_JOBS, VAGABONDS_JOBS)
+		/singleton/species/vox = list(SILICON_JOBS, VAGABONDS_JOBS)
 	)
 
 	species_to_job_blacklist = list(
@@ -24,20 +23,21 @@
 	 		HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/exploration_leader,
 	 		/datum/job/warden, /datum/job/chief_engineer, /datum/job/rd,
 	 		/datum/job/iaa, /datum/job/security_assistant
- 		)
+ 		),
+		/singleton/species/human/mule = list(HUMAN_ONLY_JOBS, /datum/job/detective, /datum/job/psychiatrist)
 	)
 
 	allowed_jobs = list(
 		/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos,
 		/datum/job/iaa, /datum/job/iso, /datum/job/adjutant,
 		/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot, /datum/job/explorer_medic, /datum/job/explorer_engineer,
-		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
+		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist,
 		/datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/security_assistant,
-		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/psychiatrist,
+		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/psychiatrist, /datum/job/biomech,
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/chief_steward, /datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chaplain, /datum/job/actor,
-		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
-		/datum/job/ai, /datum/job/cyborg,
+		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant,
+		/datum/job/cyborg,
 		/datum/job/assistant, /datum/job/vagabond
 	)
 
@@ -93,7 +93,7 @@
 	valid_jobs = list(/datum/job/cargo_assistant,
 					  /datum/job/bartender,  /datum/job/cook, /datum/job/steward,
 					  /datum/job/chemist,    /datum/job/doctor_trainee,
-					  /datum/job/roboticist, /datum/job/engineer_trainee,
+					  /datum/job/roboticist, /datum/job/engineer,
 					  /datum/job/scientist_assistant)
 
 
@@ -102,7 +102,7 @@
 	valid_jobs = list(/datum/job/cargo_assistant,
 					  /datum/job/bartender,  /datum/job/cook, /datum/job/steward,
 					  /datum/job/chemist,    /datum/job/doctor_trainee,
-					  /datum/job/roboticist, /datum/job/engineer_trainee,
+					  /datum/job/roboticist, /datum/job/engineer,
 					  /datum/job/scientist_assistant)
 
 
@@ -114,7 +114,7 @@
 
 /singleton/cultural_info/culture/ipc
 	valid_jobs = list(
-		/datum/job/engineer_trainee, /datum/job/doctor_trainee, /datum/job/cargo_tech, /datum/job/cargo_assistant,
+		/datum/job/engineer, /datum/job/doctor_trainee, /datum/job/cargo_tech, /datum/job/cargo_assistant,
 		/datum/job/mining, /datum/job/janitor, /datum/job/cook, /datum/job/scientist_assistant, /datum/job/assistant, /datum/job/steward,
 		/datum/job/ai, /datum/job/cyborg, /datum/job/vagabond,
 		/datum/job/submap/scavver_pilot, /datum/job/submap/scavver_doctor, /datum/job/submap/scavver_engineer,
@@ -127,8 +127,8 @@
 /singleton/cultural_info/culture/ipc/gen2
 	valid_jobs = list(/datum/job/adjutant,
 		/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot, /datum/job/explorer_medic, /datum/job/explorer_engineer,
-		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
-		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/chaplain,
+		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys,
+		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/biomech, /datum/job/chaplain,
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
@@ -150,9 +150,9 @@
 	valid_jobs = list(/datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,
 		/datum/job/iaa, /datum/job/iso, /datum/job/adjutant,
 		/datum/job/exploration_leader, /datum/job/explorer, /datum/job/explorer_pilot, /datum/job/explorer_medic, /datum/job/explorer_engineer,
-		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/engineer_trainee,
+		/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys,
 		/datum/job/warden, /datum/job/detective, /datum/job/officer,
-		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist,
+		/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/chemist, /datum/job/biomech,
 		/datum/job/qm, /datum/job/cargo_tech,  /datum/job/cargo_assistant, /datum/job/mining,
 		/datum/job/janitor, /datum/job/cook, /datum/job/bartender, /datum/job/steward, /datum/job/chief_steward,
 		/datum/job/senior_scientist, /datum/job/scientist, /datum/job/roboticist, /datum/job/scientist_assistant,
@@ -173,13 +173,23 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ADHERENT  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /singleton/cultural_info/faction/adherent/
 
-	var/list/valid_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer_trainee, /datum/job/cook, /datum/job/cargo_tech, /datum/job/scientist_assistant, /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant, /datum/job/roboticist, /datum/job/chemist, /datum/job/bartender, /datum/job/steward, /datum/job/explorer_engineer)
+	var/list/valid_jobs = list(/datum/job/ai, /datum/job/cyborg, /datum/job/assistant, /datum/job/janitor, /datum/job/engineer, /datum/job/cook, /datum/job/cargo_tech, /datum/job/scientist_assistant, /datum/job/doctor_trainee, /datum/job/engineer, /datum/job/mining, /datum/job/cargo_assistant, /datum/job/roboticist, /datum/job/chemist, /datum/job/bartender, /datum/job/steward, /datum/job/explorer_engineer)
 
 /singleton/cultural_info/faction/adherent/loyalists
 	valid_jobs = list(ADHERENT_JOBS)
 
 /singleton/species/adherent/check_background(datum/job/job, datum/preferences/prefs)
 	var/singleton/cultural_info/faction/adherent/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
+	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MULES  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/singleton/cultural_info/faction/mule
+	var/valid_jobs = list(/datum/job/hop)
+
+/singleton/species/mule/check_background(datum/job/job, datum/preferences/prefs)
+	var/singleton/cultural_info/faction/mule/faction = SSculture.get_culture(prefs.cultural_info[TAG_FACTION])
 	. = istype(faction) ? (job.type in faction.valid_jobs) : ..()
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /datum/job
@@ -191,7 +201,7 @@
 	)
 	required_language = LANGUAGE_HUMAN_EURO
 	psi_latency_chance = 8
-	give_psionic_implant_on_join = FALSE
+	give_psionic_implant_on_join = TRUE
 	var/requires_head
 
 /datum/job/is_position_available()

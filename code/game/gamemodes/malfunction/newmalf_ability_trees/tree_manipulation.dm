@@ -64,7 +64,7 @@
 	spawn(15 SECONDS)
 		user.hacking = 0
 
-/datum/game_mode/malfunction/verb/reboot_camera(obj/machinery/camera/target in cameranet.cameras)
+/datum/game_mode/malfunction/verb/reboot_camera(obj/machinery/camera/target as obj in cameranet.cameras)
 	set name = "Reboot Camera"
 	set desc = "100 CPU - Reboots a damaged but not completely destroyed camera."
 	set category = "Software"
@@ -108,7 +108,7 @@
 		user.hacking = 0
 
 
-/datum/game_mode/malfunction/verb/machine_overload(obj/machinery/M as anything in SSmachines.get_all_machinery())
+/datum/game_mode/malfunction/verb/machine_overload(obj/machinery/M as obj in SSmachines.get_all_machinery())
 	set name = "Machine Overload"
 	set desc = "400 CPU - Causes cyclic short-circuit in machine, resulting in weak explosion after some time."
 	set category = "Software"
@@ -182,7 +182,7 @@
 		if(M)
 			qdel(M)
 
-/datum/game_mode/malfunction/verb/machine_upgrade(obj/machinery/M as anything in SSmachines.get_all_machinery())
+/datum/game_mode/malfunction/verb/machine_upgrade(obj/machinery/M as obj in SSmachines.get_all_machinery())
 	set name = "Machine Upgrade"
 	set desc = "800 CPU - Pushes existing hardware to it's technological limits by rapidly upgrading it's software."
 	set category = "Software"

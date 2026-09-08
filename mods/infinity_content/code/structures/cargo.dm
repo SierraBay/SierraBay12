@@ -5,7 +5,7 @@
 	icon_state = "cart"
 	layer = STRUCTURE_LAYER
 	density = FALSE
-	w_class = ITEM_SIZE_LARGE
+	w_class = ITEM_SIZE_SMALL
 	var/cargoweight = 0
 	var/atom/movable/load = null
 

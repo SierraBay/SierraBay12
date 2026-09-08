@@ -637,7 +637,8 @@
 	return
 
 //Mutates a specific trait/set of traits.
-/datum/seed/proc/apply_gene(datum/plantgene/gene)
+//[SIERRA-REMOVE]/datum/seed/proc/apply_gene(datum/plantgene/gene)
+/datum/seed/proc/apply_gene(datum/computer_file/binary/plantgene/gene) //[SIERRA-ADD]/ RND
 
 	if(!gene || !gene.values || get_trait(TRAIT_IMMUTABLE) > 0) return
 
@@ -691,6 +692,7 @@
 
 	update_growth_stages()
 
+/* mods\RnD\code\xenobot\seedfile.dm overrided
 //Returns a list of the desired trait values.
 /datum/seed/proc/get_gene(genetype)
 
@@ -734,7 +736,7 @@
 	for(var/trait in traits_to_copy)
 		P.values["[trait]"] = get_trait(trait)
 	return (P ? P : 0)
-
+*/
 //Place the plant products at the feet of the user.
 /datum/seed/proc/harvest(mob/user,yield_mod,harvest_sample,force_amount)
 

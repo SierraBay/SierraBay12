@@ -19,7 +19,7 @@
 /obj/structure/sign/fifthfleet
 	name = "\improper Fifth Fleet"
 	desc = "Недавно созданный, оборудованный и модифицированный Пятый Флот был введен в 2297 г Ассамблеями для того, чтобы действовать как Силы Быстрого Реагирования. Хотя он еще невелик, в Пятый Флот входят одни из самых ярких умов Сил Обороны и оснащен новейшими технологиями."
-	icon = 'packs/infinity/icons/obj/decals.dmi'
+	icon = 'mods/_maps/sentinel/icons/obj/signs.dmi'
 	icon_state = "fifthfleet"
 
 /obj/structure/sign/fifthfleet/small

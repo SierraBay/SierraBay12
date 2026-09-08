@@ -625,6 +625,7 @@
 /obj/item/clothing/shoes/magboots/vox,
 /obj/item/clothing/gloves/vox,
 /obj/item/clothing/under/vox/vox_casual,
+/obj/item/gun/energy/voxshot,
 /turf/unsimulated/floor{
 	icon_state = "asteroid"
 	},
@@ -1639,7 +1640,6 @@
 "dR" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/fabricator/hacked,
-/obj/item/storage/box/autolathe_designs,
 /obj/item/stack/material/glass{
 	amount = 50
 	},

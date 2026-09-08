@@ -92,6 +92,9 @@ visible_generation - нужно ли рисовать анимацию разм�
 /proc/generate_anomalies_in_turfs(list/anomalies_types, list/all_turfs_for_spawn, min_anomalies_ammount, max_anomalies_ammount, min_artefacts_ammount, max_artefacts_ammount, source, visible_generation = FALSE)
 	set background = TRUE
 	set waitfor = FALSE
+#ifdef DEV_MODE_NO_AWAYS
+	return
+#endif
 	//Расчитываем мин и макс количество аномалий
 	var/result_anomalies_ammount = 1
 	if(!min_anomalies_ammount)

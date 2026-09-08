@@ -16,7 +16,8 @@
 //[SIERRA-EDIT]
 	if(!owner)
 		return
-	owner.immunity = min(owner.immunity + 0.025, owner.immunity_norm)
+	if(owner.immunity < owner.immunity_norm)
+		owner.immunity = min(owner.immunity + 0.025, owner.immunity_norm)
 	if(inflamed)
 //[SIERRA-EDIT]
 		inflamed++
@@ -56,10 +57,10 @@
 
 /obj/item/organ/internal/appendix/replaced(mob/living/carbon/human/target, obj/item/organ/external/affected)
 	..()
-	if(owner)
+	if(owner && owner.immunity_norm <= 100)
 		owner.immunity_norm += 10
 
 /obj/item/organ/internal/appendix/New(mob/living/carbon/holder)
 	..()
-	if(owner)
+	if(owner && owner.immunity_norm <= 100)
 		owner.immunity_norm += 10

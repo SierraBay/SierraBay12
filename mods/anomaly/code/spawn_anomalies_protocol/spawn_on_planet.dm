@@ -1,4 +1,5 @@
 /datum/map/build_exoplanets()
+#ifndef DEV_MODE_NO_AWAYS
 	//Игра заспавнит 1 обычную планету и 1 аномальную
 	var/list/anomaly_planets_list = list(
 		/obj/overmap/visitable/sector/exoplanet/flying = 35,
@@ -37,6 +38,7 @@
 		var/normal_planet_type = pick(all_planets_list)
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)
 		new_planet.build_level()
+#endif
 
 /obj/overmap/visitable/sector/exoplanet/proc/generate_anomalies()
 	set background = 1

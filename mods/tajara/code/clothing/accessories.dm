@@ -585,3 +585,7 @@
 	capes["decorated cape"] = /obj/item/clothing/accessory/shouldercape/officer
 	capes["government cape"] = /obj/item/clothing/accessory/shouldercape/command
 	gear_tweaks += new/datum/gear_tweak/path(capes)
+
+// Overrides
+/obj/item/clothing/ears/earring
+	species_restricted = list(SPECIES_HUMAN, SPECIES_TAJARA)

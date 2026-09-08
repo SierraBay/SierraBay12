@@ -3,7 +3,7 @@
 	var/next_alarm_notice = 0
 
 /mob/living/silicon/ai
-	var/obj/machinery/computer/modular/ai/internal_computer = new /obj/machinery/computer/modular/preset/engineering
+	var/obj/machinery/computer/modular/internal_computer = new /obj/machinery/computer/modular/preset/engineering
 
 /obj/machinery/computer/modular/preset/sensors
 	//Синтетики могут смотреть на сенсоры

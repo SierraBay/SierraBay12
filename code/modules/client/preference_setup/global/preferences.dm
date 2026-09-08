@@ -365,6 +365,8 @@ var/global/list/_client_preferences_by_type
 
 
 /datum/client_preference/atom_outlines/changed(mob/user, new_value)
+	if(!user)
+		return
 	var/client/client = user.client
 	client?.SetOutlineAtom()
 	client?.outline_enabled = new_value == GLOB.PREF_YES

@@ -468,3 +468,8 @@ var/global/list/all_objectives = list()
 	else
 		explanation_text = "Free Objective"
 	return target
+
+// [SIERRA-ADD] - ANTAGONISTS
+/datum/objective/proc/get_display_text()
+	return explanation_text
+// [/SIERRA-ADD]

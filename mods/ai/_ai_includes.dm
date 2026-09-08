@@ -15,8 +15,12 @@
 #include "code\vars.dm" //Переменные
 #include "code\borgs_equipments.dm" //Перепись снаряжения для боргов
 #include "code\alarm_silicon.dm" //Тревоги для боргов и ИИ
+#include "code\ntos_ai.dm" //НТОС для ИИ
 #include "code\ai_hack.dm" //Взлом шлюза у ИИ
 #include "code\ai-stuff.dm" //Дополнительные действия и фичи у ИИ
 #include "code\ai_machine_interaction.dm" //Взаимодействие ИИ с машинами
 #include "code\boris.dm" //Модуль B.O.R.I.S. и его логика
+#include "code\modules.dm" //Модуль роботов
+#include "code\equipment_items.dm" //Айтемы модулей роботов
+
 #endif

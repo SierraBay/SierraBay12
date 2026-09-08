@@ -26,7 +26,7 @@
 	allowed_roles = list(/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic, /datum/job/psychiatrist, /datum/job/chemist, /datum/job/roboticist,   )
 
 /datum/gear/suit/engineering_poncho
-	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/roboticist, /datum/job/engineer_trainee, /datum/job/explorer_engineer,   /datum/job/infsys)
+	allowed_roles = list(/datum/job/chief_engineer, /datum/job/senior_engineer, /datum/job/engineer, /datum/job/roboticist, /datum/job/explorer_engineer,   /datum/job/infsys)
 
 /datum/gear/suit/science_poncho
 	allowed_roles = list(/datum/job/rd, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/senior_scientist, /datum/job/roboticist,   )
@@ -356,3 +356,8 @@
 	display_name = "moonlight robe"
 	allowed_roles = SERVICE_ROLES
 	path = /obj/item/clothing/suit/storage/hooded/moonrobe
+
+/datum/gear/suit/sc_labcoat
+	display_name = "robotic bathrobe"
+	path = /obj/item/clothing/suit/sc_labcoat
+	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/roboticist,   )

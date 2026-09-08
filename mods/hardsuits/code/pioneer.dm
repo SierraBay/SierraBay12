@@ -62,13 +62,15 @@
 		rad = ARMOR_RAD_SHIELDED
 		)
 	initial_modules = list(
-		/obj/item/rig_module/vision/meson,
+		/obj/item/rig_module/vision/multi/cheap,
 		/obj/item/rig_module/chem_dispenser,
 		/obj/item/rig_module/ai_container,
 		/obj/item/rig_module/device/anomaly_scanner,
 		/obj/item/rig_module/power_sink,
 		/obj/item/rig_module/cooling_unit,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/grenade_launcher/light
 		)
 
 	chest_type = /obj/item/clothing/suit/space/rig/pioneer
@@ -116,14 +118,18 @@
 	suit_type = "heavy"
 
 	initial_modules = list(
-		/obj/item/rig_module/vision/meson,
+		/obj/item/rig_module/vision/multi,
 		/obj/item/rig_module/chem_dispenser,
 		/obj/item/rig_module/ai_container,
 		/obj/item/rig_module/mounted/ballistic/minigun,
 		/obj/item/rig_module/device/anomaly_scanner,
 		/obj/item/rig_module/power_sink,
 		/obj/item/rig_module/cooling_unit,
-		/obj/item/rig_module/maneuvering_jets
+		/obj/item/rig_module/maneuvering_jets,
+		/obj/item/rig_module/electrowarfare_suite,
+		/obj/item/rig_module/grenade_launcher/light,
+		/obj/item/rig_module/device/healthscanner,
+		/obj/item/rig_module/device/rcd
 		)
 
 /obj/item/rig/pioneer/on_update_icon(update_mob_icon)

@@ -24,6 +24,7 @@
 	startswith = list(/obj/item/disk/botany = 14)
 
 /obj/machinery/botany
+/*
 	icon = 'icons/obj/machines/hydroponics_machines.dmi'
 	icon_state = "hydrotray3"
 	density = TRUE
@@ -322,3 +323,4 @@
 
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
+*/

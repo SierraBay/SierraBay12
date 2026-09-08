@@ -9,9 +9,9 @@
 )
 	// Добавляем действия
 	actions_list = list(
-		new /datum/cutscene_action/say("player1", "пошёл нахуй"),
+		new /datum/cutscene_action/say("player1", "Съешь ещё этих мягких французских булок, да выпей чаю"),
 		new /datum/cutscene_action/sleeping(2 SECONDS),
-		new /datum/cutscene_action/say("player2", "сам пошёл нахуй"),
+		new /datum/cutscene_action/say("player2", "Нет, ты съешь ещё этих мягких французских булок, да выпей чаю"),
 		new /datum/cutscene_action/sleeping(2 SECONDS)
 	)
 	delete_everyone_after_playing = TRUE

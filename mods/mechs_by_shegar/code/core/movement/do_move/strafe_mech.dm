@@ -1,9 +1,9 @@
 /mob/living/exosuit/proc/strafe_mech(direction)
-	var/move_speed = L_leg.min_speed + R_leg.min_speed
+	var/move_speed = L_leg.move_delay + R_leg.move_delay
 	if(!L_leg.good_in_strafe || !R_leg.good_in_strafe)
-		move_speed = L_leg.max_speed + R_leg.max_speed
+		move_speed = move_speed * 2.5
 	if(direction == NORTHWEST || direction == NORTHEAST || direction == SOUTHWEST || direction == SOUTHEAST)
-		move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed)) //Гипотенуза
+		move_speed = sqrt((move_speed*move_speed) + (move_speed * move_speed))
 	if(move_speed > 12)
 		move_speed = 12
 	SetMoveCooldown(min_speed)

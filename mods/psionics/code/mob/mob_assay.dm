@@ -17,6 +17,7 @@
 	if(psi)
 		var/use_rating
 		var/effective_rating = psi.rating
+		var/num_of_disps = LAZYLEN(psi.ranks)
 		if(effective_rating > 1 && psi.suppressed)
 			effective_rating = max(0, psi.rating-2)
 		var/rating_descriptor
@@ -27,28 +28,28 @@
 			// This space intentionally left blank (for Omega-Minus psi vampires. todo)
 			if(viewer != usr && GLOB.thralls.is_antagonist(mind) && ishuman(viewer))
 				var/mob/living/H = viewer
-				if(H.psi && H.psi.get_rank(PSI_REDACTION) >= PSI_RANK_GRANDMASTER)
+				if(H.psi && H.psi.get_rank(PSI_REDACTION) >= PSI_RANK_OPERANT)
 					dat += SPAN_COLOR("#ff0000", "<b>Their mind has been cored like an apple, and enslaved by another operant psychic.</b>")
 
 		if(!use_rating)
 			switch(effective_rating)
 				if(1)
-					use_rating = "[effective_rating-1]-Omicron"
+					use_rating = "[num_of_disps-1]-Omicron"
 					rating_descriptor = "This indicates the presence of minor latent psi potential with little or no appentice capabilities."
 				if(2)
-					use_rating = "[effective_rating]-Omega"
+					use_rating = "[num_of_disps]-Omega"
 					rating_descriptor = "This indicates the presence of minor psi capabilities of the Appentice rank or higher."
 				if(3)
-					use_rating = SPAN_COLOR("#f4f441", "[effective_rating]-Lamed")
+					use_rating = SPAN_COLOR("#f4f441", "[num_of_disps]-Lamed")
 					rating_descriptor = "This indicates the presence of minor psi capabilities of the Operant rank or higher."
 				if(4)
-					use_rating = SPAN_COLOR("#f4bc42", "[effective_rating]-Gimmel")
+					use_rating = SPAN_COLOR("#f4bc42", "[num_of_disps]-Gimmel")
 					rating_descriptor = "This indicates the presence of significant psi capabilities of the Master rank or higher."
 				if(5)
-					use_rating = SPAN_COLOR("#ff0000", "[effective_rating]-Aleph")
+					use_rating = SPAN_COLOR("#ff0000", "[num_of_disps]-Aleph")
 					rating_descriptor = "This indicates the presence of significant psi capabilities of the Grandmaster rank or higher."
 				else
-					use_rating = "[effective_rating]-Omicron"
+					use_rating = "[num_of_disps]-Omicron"
 					rating_descriptor = "This indicates the presence of trace latent psi capabilities."
 
 		dat += "[use_He_has] an overall psi rating of [use_rating].<br><i>[rating_descriptor]</i><hr>"

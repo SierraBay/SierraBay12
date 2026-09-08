@@ -129,3 +129,9 @@
 		list("mode_name" = "kill", "projectile_type" = /obj/item/projectile/beam, "modifystate" = "energyrevolverkill")
 		)
 	req_access = list(list(access_brig, access_heads))
+
+/obj/item/gun/energy/plasmastun
+	item_icons = list(
+		slot_l_hand_str = 'mods/guns/icons/mob/lefthand_plasmastun.dmi',
+		slot_r_hand_str = 'mods/guns/icons/mob/righthand_plasmastun.dmi'
+		)

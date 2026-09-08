@@ -23,11 +23,11 @@
 	icon_state = "maintcentral"
 
 /area/maintenance/thirddeck/aftstarboard
-	name = "Second Deck - Maintenance - Aft-Starboard "
+	name = "Third Deck - Maintenance - Aft-Starboard "
 	icon_state = "asmaint"
 
 /area/maintenance/thirddeck/aftport
-	name = "Second Deck - Maintenance - Aft-Port"
+	name = "Third Deck - Maintenance - Aft-Port"
 	icon_state = "apmaint"
 
 /area/maintenance/thirddeck/foreport
@@ -151,11 +151,12 @@
 	icon_state = "engineering_locker"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
+/*
 /area/engineering/materials_storage
 	name = "Third Deck - Engineering - Materials Storage"
 	icon_state = "engineering_storage"
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
+ */
 /area/engineering/atmos
 	name = "Third Deck - Engineering - Atmospherics"
 	icon_state = "atmos"
@@ -202,19 +203,12 @@
 	req_access = list(access_atmospherics)
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
 
-/area/turret_protected/ai_cyborg_station
-	name = "Third Deck - Cyborg Station"
-	icon_state = "ai_cyborg"
+/area/engineering/atmos/burnout
+	name = "Third Deck - Engineering - Gas Heating"
+	icon_state = "atmos_storage"
 	sound_env = SMALL_ENCLOSED
-	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_atmospherics)
 	holomap_color = HOLOMAP_AREACOLOR_ENGINEERING
-
-/area/turret_protected/ai_cyborg_upload
-	name = "Third Deck - Cyborg Upload"
-	icon_state = "ai_cyborg"
-	sound_env = SMALL_ENCLOSED
-	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
-	holomap_color = HOLOMAP_AREACOLOR_COMMAND
 
 /area/shield/thirddeck
 	name = "Third Deck - Shield Generator"
@@ -341,13 +335,13 @@
 /* RND AREAS
  * =========
  */
-/area/rnd/xenobiology/entry2
-	name = "Xenobiology Access"
+/area/rnd/sierra/xenobiology/airlock2
+	name = "Third Deck - Xenobiology Airlock"
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 
-/area/rnd/xenobiology/level2
-	name = "Xenobiology Level Two"
+/area/rnd/sierra/xenobiology/level2
+	name = "Third Deck - Xenobiology Lab"
 	icon_state = "xeno_lab"
 	holomap_color = HOLOMAP_AREACOLOR_SCIENCE
 

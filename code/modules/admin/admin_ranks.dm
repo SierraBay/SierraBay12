@@ -19,12 +19,10 @@ var/global/list/admin_ranks = list()								//list of all ranks with associated 
 
 		var/rank = ckeyEx(List[1])
 		switch(rank)
-			if(null,"")		continue
-			// [SIERRA-EDIT] - EX666_ECOSYSTEM
-			// if("Removed")	continue				//Reserved // SIERRA-EDIT - ORIGINAL
-			if("Удален")	continue				//Reserved
-			// [/SIERRA-EDIT]
-
+			if(null,"")
+				continue
+			if("Removed")
+				continue
 		var/rights = 0
 		for(var/i=2, i<=length(List), i++)
 			switch(ckey(List[i]))
@@ -118,10 +116,9 @@ var/global/list/admin_ranks = list()								//list of all ranks with associated 
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			// [SIERRA-EDIT] - EX666_ECOSYSTEM
-			// if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes. // SIERRA-EDIT - ORIGINAL
-			if(rank == "Удален")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
-			// [/SIERRA-EDIT]
+			if(rank == "Removed")
+				continue	//This person was de-adminned. They are only in the admin list for archive purposes. // SIERRA-EDIT - ORIGINAL
+
 
 			var/rights = query.item[4]
 			if(istext(rights))	rights = text2num(rights)

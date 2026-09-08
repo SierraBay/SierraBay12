@@ -38,7 +38,9 @@
 /client/proc/is_key_ignored(key_to_check)
 	key_to_check = ckey(key_to_check)
 	if(key_to_check in prefs.ignored_players)
-		if(check_rights(R_MOD|R_ADMIN, 0)) // Admins and moderators are not ignorable
-			return 0
+		// [SIERRA-EDIT] - Make staff ignorable
+		// if(check_rights(R_MOD|R_ADMIN, 0)) // Admins and moderators are not ignorable // SIERRA-EDIT - ORIGINAL
+		//	return 0 // SIERRA-EDIT - ORIGINAL
+		// [/SIERRA-EDIT]
 		return 1
 	return 0

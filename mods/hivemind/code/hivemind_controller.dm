@@ -44,7 +44,9 @@ GLOBAL_VAR_INIT(hivemind_panel)
 	for(var/i in GLOB.hivemind_mobs)
 		data += "<br>[i] - [GLOB.hivemind_mobs[i]]."
 	data += "</td></tr></table>"
-	show_browser(usr, data, "window=hive_mob;size=600x600")
+	var/datum/browser/popup = new(usr, "hive_mob", 600, 600)
+	popup.set_content(data)
+	popup.open()
 
 
 /datum/hivemind_panel/proc/area_list_interact()
@@ -52,7 +54,9 @@ GLOBAL_VAR_INIT(hivemind_panel)
 	for(var/i in GLOB.hivemind_areas)
 		data += "<br>[i] - [GLOB.hivemind_areas[i]] wireweed."
 	data += "</td></tr></table>"
-	show_browser(usr, data, "window=hive_area;size=600x600")
+	var/datum/browser/popup = new(usr, "hive_area", 600, 600)
+	popup.set_content(data)
+	popup.open()
 
 
 /datum/hivemind_panel/proc/main_interact()
@@ -104,7 +108,9 @@ GLOBAL_VAR_INIT(hivemind_panel)
 	<a href='?src=\ref[src];toggle_tyrant_gameover=1'>\[TOGGLE\]</a>"
 
 	data += "</td></tr></table>"
-	show_browser(usr, data, "window=hive_main;size=600x600")
+	var/datum/browser/popup = new(usr, "hive_main", 600, 600)
+	popup.set_content(data)
+	popup.open()
 
 
 /datum/hivemind_panel/Topic(href,href_list)

@@ -11,5 +11,10 @@
 #include "code\preferences.dm"
 #include "code\manifest.dm"
 #include "code\joinpanel.dm"
+#include "code\arcade_orion.dm"
+#include "code\casino.dm"
+#include "code\roulette.dm"
+#include "code\arcades.dm"
+
 
 #endif

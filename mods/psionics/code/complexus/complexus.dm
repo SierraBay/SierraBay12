@@ -7,10 +7,11 @@
 
 	var/rating = 0                    // Overall psi rating.
 	var/cost_modifier = 1             // Multiplier for power use stamina costs.
+	var/cooldown_modifier = 1         // Multiplier for power cooldown.
 	var/stun = 0                      // Number of process ticks we are stunned for.
 	var/next_power_use = 0            // world.time minimum before next power use.
-	var/stamina = 50                  // Current psi pool.
-	var/max_stamina = 50              // Max psi pool.
+	var/stamina = 75                  // Current psi pool.
+	var/max_stamina = 75              // Max psi pool.
 	var/armor_cost = 0                // Amount of power to substract this tick from psi armor blocking damage
 
 	var/list/latencies                // List of all currently latent faculties.
@@ -48,15 +49,12 @@
 
 /proc/create_aura_image(newloc)
 	RETURN_TYPE(/image)
-	var/image/aura_image = image(loc = newloc, icon = 'icons/effects/psi_aura_small.dmi', icon_state = "aura")
+	var/image/aura_image = image(loc = newloc, icon = 'mods/psionics/icons/psi_aura.dmi', icon_state = "aura")
 	aura_image.blend_mode = BLEND_MULTIPLY
 	aura_image.appearance_flags = DEFAULT_APPEARANCE_FLAGS | NO_CLIENT_COLOR | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	aura_image.layer = TURF_LAYER + 0.5
 	aura_image.alpha = 0
-	aura_image.pixel_x = -64
-	aura_image.pixel_y = -64
 	aura_image.mouse_opacity = 0
-	aura_image.appearance_flags = DEFAULT_APPEARANCE_FLAGS
 	for(var/thing in SSpsi.processing)
 		var/datum/psi_complexus/psychic = thing
 		if(psychic.owner.client && !psychic.suppressed)

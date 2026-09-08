@@ -1,0 +1,56 @@
+<div class="section">
+	<div class="section-title">
+		Корпоративные контракты
+		{{:helper.link("Печать", 'printer', {'print_missions': 1}, null, 'linkButton')}}
+	</div>
+	<div class="section-content">
+		{{if !data.has_missions}}
+			<div class="notice">Контрактов нет. Контракты генерируются при обнаружении заброшенных объектов в системе.</div>
+		{{else}}
+			{{for data.missions}}
+				<div class="labelList" style="margin-bottom: 8px; border-bottom: 1px solid #40628a; padding-bottom: 6px;">
+					<div class="labelList-item">
+						<div class="labelList-item-label">Корпорация</div>
+						<div class="labelList-item-content">{{:value.corp_name}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Контракт</div>
+						<div class="labelList-item-content">{{:value.title}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Локация</div>
+						<div class="labelList-item-content">{{:value.site_name}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Тип</div>
+						<div class="labelList-item-content">{{:value.mission_type}}</div>
+					</div>
+					<div class="labelList-item">
+						<div class="labelList-item-label">Статус</div>
+						<div class="labelList-item-content">
+							{{if value.state == 4}}
+								<span style="color: #44ff44;">{{:value.status}}</span>
+							{{else}}
+								{{:value.status}}
+							{{/if}}
+						</div>
+					</div>
+					{{if value.state != 4}}
+					<div class="labelList-item">
+						<div class="labelList-item-label">Задачи</div>
+						<div class="labelList-item-content">
+							{{for value.objectives :obj:obj_i}}
+								{{if obj.completed}}
+									<span style="color: #44ff44;">&#10003; {{:obj.description}} — {{:obj.status}}</span><br>
+								{{else}}
+									&#9744; {{:obj.description}} — <span style="color: #ffaa00;">{{:obj.status}}</span><br>
+								{{/if}}
+							{{/for}}
+						</div>
+					</div>
+					{{/if}}
+				</div>
+			{{/for}}
+		{{/if}}
+	</div>
+</div>

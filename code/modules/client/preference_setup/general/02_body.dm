@@ -4,7 +4,10 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	var/species = SPECIES_HUMAN
 	var/gender = MALE					//gender of character (well duh)
 	var/pronouns = PRONOUNS_THEY_THEM
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/b_type = "A+"				//blood type (not-chooseable)
+	// [SIERRA-ADD] HEIGHT
+	var/height = HUMANHEIGHT_MEDIUM //character height
+	// [/SIERRA-ADD]
 	var/head_hair_style = "Bald"				//Hair type
 	var/head_hair_color = "#000000"
 	var/facial_hair_style = "Shaved"				//Face hair type
@@ -34,6 +37,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	if(R.get_version() < 2 && pref.species == "booster")
 		pref.species = "human"
 	pref.age = R.read("age")
+	// [SIERRA-ADD] HEIGHT
+	pref.height = R.read("height")
+	// [/SIERRA-ADD]
 	pref.gender = R.read("gender")
 	pref.pronouns = R.read("pronouns")
 	if(R.get_version() < 3 && !(pref.pronouns))
@@ -75,6 +81,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	W.write("gender", pref.gender)
 	W.write("pronouns", pref.pronouns)
 	W.write("age", pref.age)
+	// [SIERRA-ADD] HEIGHT
+	W.write("height", pref.height)
+	// [/SIERRA-ADD]
 	W.write("head_hair_color", pref.head_hair_color)
 	W.write("facial_hair_color", pref.facial_hair_color)
 	W.write("skin_tone", pref.skin_tone)
@@ -112,6 +121,9 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 	pref.gender = sanitize_inlist(pref.gender, mob_species.genders, pick(mob_species.genders))
 	pref.pronouns = sanitize_inlist(pref.pronouns, mob_species.pronouns, pick(mob_species.pronouns))
 	pref.age = sanitize_integer(pref.age, mob_species.min_age, mob_species.max_age, initial(pref.age))
+	// [SIERRA-ADD] HEIGHT
+	pref.height = sanitize_inlist(pref.height, GLOB.heights_list, initial(pref.height))
+	// [/SIERRA-ADD]
 
 	var/low_skin_tone = mob_species ? (35 - mob_species.max_skin_tone()) : -185
 	sanitize_integer(pref.skin_tone, low_skin_tone, 34, initial(pref.skin_tone))
@@ -285,6 +297,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 /datum/category_item/player_setup_item/physical/body/OnTopic(href,list/href_list, mob/user)
 	var/singleton/species/mob_species = GLOB.species_by_name[pref.species]
+	// [SIERRA-ADD] CHARACTER_PERSIST
+	if(pref.character_persist_is_locked() && !href_list["toggle_species_verbose"] && !href_list["show_species"])
+		to_chat(user, SPAN_WARNING("Внешность заблокирована: у персонажа есть сохранённое состояние с прошлой смены. Отключите персистентность, чтобы сбросить его."))
+		return TOPIC_NOACTION
+	// [/SIERRA-ADD]
 
 	if(href_list["toggle_species_verbose"])
 		hide_species = !hide_species
@@ -326,10 +343,16 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 			var/desc_id = href_list["change_descriptor"]
 			if(pref.body_descriptors[desc_id])
 				var/datum/mob_descriptor/descriptor = mob_species.descriptors[desc_id]
+	//[SIERRA-EDIT] HEIGHT
 				var/choice = input("Please select a descriptor.", "Descriptor") as null|anything in descriptor.chargen_value_descriptors
-				if(choice && mob_species.descriptors[desc_id]) // Check in case they sneakily changed species.
+				if(choice && mob_species.descriptors[desc_id])
 					pref.body_descriptors[desc_id] = descriptor.chargen_value_descriptors[choice]
-					return TOPIC_REFRESH_UPDATE_PREVIEW
+				if(desc_id == "height")
+					var/idx = pref.body_descriptors["height"]
+					if(idx && idx <= length(GLOB.heights_list))
+						pref.height = GLOB.heights_list[idx]
+				return TOPIC_REFRESH_UPDATE_PREVIEW
+	//[/SIERRA-EDIT] HEIGHT
 
 	else if(href_list["blood_type"])
 		var/new_b_type = input(user, "Choose your character's blood-type:", CHARACTER_PREFERENCE_INPUT_TITLE) as null|anything in valid_bloodtypes

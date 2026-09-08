@@ -249,3 +249,11 @@ var/global/const/access_away_hand_captain = "ACCESS_HAND_CAPTAIN"
 
 #undef HAND_OUTFIT_JOB_NAME
 #undef WEBHOOK_SUBMAP_LOADED_HAND
+
+// item
+
+/obj/item/storage/belt/holster/security/tactical/away_solpatrol/New()
+	..()
+	new /obj/item/gun/projectile/pistol/m22f(src)
+	new /obj/item/ammo_magazine/pistol/double(src)
+	new /obj/item/ammo_magazine/pistol/double(src)

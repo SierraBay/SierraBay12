@@ -1,0 +1,501 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a2e1a; font-family: 'Georgia', serif; color: #f0e6c8; }
+
+  .roulette-wrap {
+    padding: 12px;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Header ---------- */
+  .r-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .r-header h1 {
+    font-size: 22px;
+    color: #f5d57a;
+    text-shadow: 0 0 10px rgba(245,213,122,0.5);
+    letter-spacing: 3px;
+  }
+  .r-header .subtitle {
+    font-size: 12px;
+    color: #a8c89a;
+    letter-spacing: 2px;
+    margin-top: 2px;
+  }
+
+  /* ---------- Locked banner ---------- */
+  .locked-banner {
+    background: #6b0000;
+    border: 2px solid #ff4444;
+    border-radius: 6px;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #ff9999;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- Ghost banner ---------- */
+  .ghost-banner {
+    background: #1a1a3a;
+    border: 2px solid #6666cc;
+    border-radius: 6px;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #aaaaff;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  /* ---------- Main layout ---------- */
+  .r-main {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  /* ---------- Betting board ---------- */
+  .board-wrap {
+    flex: 1;
+  }
+  .board-wrap.ghost-overlay {
+    pointer-events: none;
+    opacity: 0.55;
+    filter: grayscale(0.4);
+  }
+
+  .bet-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .bet-table td {
+    border: 1px solid #2d5c2d;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  /* Number cells */
+  .num-cell {
+    height: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    transition: filter 0.15s;
+  }
+  .num-cell a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  .num-cell:hover { filter: brightness(1.35); }
+
+  .num-zero  { background: #0a7a30; color: #fff; }
+  .num-red   { background: #a81a1a; color: #fff; }
+  .num-black { background: #141414; color: #e8e8e8; }
+
+  /* Outside bet cells */
+  .out-cell {
+    height: 36px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+    transition: filter 0.15s;
+  }
+  .out-cell a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  .out-cell:hover { filter: brightness(1.35); }
+
+  .cell-dozen  { background: #1c4a1c; color: #b8d9b0; }
+  .cell-low    { background: #1c4a1c; color: #b8d9b0; }
+  .cell-even   { background: #1c4a1c; color: #b8d9b0; }
+  .cell-red-o  { background: #7a1010; color: #ffaaaa; }
+  .cell-blk-o  { background: #111;    color: #ccc;    }
+  .cell-odd    { background: #1c4a1c; color: #b8d9b0; }
+  .cell-high   { background: #1c4a1c; color: #b8d9b0; }
+  .cell-2to1   { background: #0e330e; color: #a0d09a; font-size: 10px; }
+
+  /* Chip selector */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin: 6px 0;
+  }
+  .chip {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 3px solid #f5d57a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: bold;
+    cursor: pointer; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    color: #fff;
+  }
+  .chip-10   { background: radial-gradient(circle at 35% 35%, #4488cc, #1a4a88); }
+  .chip-25   { background: radial-gradient(circle at 35% 35%, #33aa55, #1a5530); }
+  .chip-50   { background: radial-gradient(circle at 35% 35%, #aa4433, #6a1a10); }
+  .chip-100  { background: radial-gradient(circle at 35% 35%, #cc8800, #7a4400); }
+  .chip-500  { background: radial-gradient(circle at 35% 35%, #aa22cc, #5a0a88); }
+  .chip-1000 { background: radial-gradient(circle at 35% 35%, #181818, #3a3a3a); border-color: #f5d57a; }
+  .chip:hover              { transform: scale(1.12); box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
+  .chip.active             { transform: scale(1.15); box-shadow: 0 0 14px 3px #f5d57a; }
+  .chip.disabled           { filter: grayscale(0.6); cursor: default; pointer-events: none; opacity: 0.5; }
+  .chip.cant-afford        { filter: grayscale(0.4); cursor: default; pointer-events: none; opacity: 0.45; border-color: #555; }
+
+  /* Hand balance */
+  .hand-balance {
+    text-align: center;
+    font-size: 12px;
+    color: #a0d09a;
+    margin-bottom: 4px;
+  }
+  .hand-balance.low { color: #ff9999; }
+
+  /* ---------- Right sidebar ---------- */
+  .sidebar {
+    width: 170px;
+    flex-shrink: 0;
+  }
+  .sidebar-box {
+    background: #0d2a0d;
+    border: 1px solid #2d5c2d;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+  }
+  .sidebar-box h3 {
+    font-size: 11px;
+    color: #a8c89a;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .bet-entry {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 2px 0;
+    border-bottom: 1px solid #1a3a1a;
+    color: #d0e8cc;
+  }
+  .bet-entry.mine { color: #f5d57a; }
+  .bet-entry:last-child { border-bottom: none; }
+  .total-line {
+    font-size: 12px;
+    font-weight: bold;
+    color: #f5d57a;
+    margin-top: 6px;
+    padding-top: 4px;
+    border-top: 1px solid #2d5c2d;
+  }
+  .no-bets { font-size: 11px; color: #5a7a5a; font-style: italic; }
+
+  .clear-btn {
+    display: block; width: 100%;
+    padding: 7px;
+    background: #5a1a1a; border: 1px solid #aa3333;
+    border-radius: 5px; color: #ff9999;
+    font-size: 11px; font-weight: bold;
+    text-align: center; text-decoration: none;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .clear-btn:hover { background: #7a2222; }
+  .clear-btn.disabled { background: #333; border-color: #555; color: #666; pointer-events: none; }
+
+  /* History */
+  .history-row {
+    display: flex; flex-wrap: wrap;
+    gap: 4px; margin-top: 4px;
+  }
+  .hist-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: bold;
+  }
+  .hist-red   { background: #a81a1a; color: #fff; }
+  .hist-black { background: #141414; color: #e0e0e0; border: 1px solid #333; }
+  .hist-green { background: #0a7a30; color: #fff; }
+  .hist-none  { background: #333; color: #666; font-size: 8px; }
+
+  /* Bank display */
+  .bank-box { text-align: center; }
+  .bank-amount {
+    font-size: 20px; font-weight: bold; color: #f5d57a;
+    margin: 4px 0;
+  }
+  .bank-low .bank-amount { color: #ff6666; }
+  .bank-warning { font-size: 10px; color: #ff6666; letter-spacing: 1px; }
+
+  /* Payouts */
+  .payout-table { width: 100%; font-size: 10px; border-collapse: collapse; }
+  .payout-table td { padding: 2px 4px; border-bottom: 1px solid #1a3a1a; color: #b0c8b0; }
+  .payout-table td:last-child { text-align: right; color: #f5d57a; }
+</style>
+
+<div class="roulette-wrap">
+  <div class="r-header">
+    <h1>♠ ROULETTE ♠</h1>
+    <div class="subtitle">Martian Single-Zero</div>
+  </div>
+
+  {{if data.locked}}
+  <div class="locked-banner">🎡 NO MORE BETS — WHEEL IS SPINNING</div>
+  {{/if}}
+
+  {{if data.is_ghost}}
+  <div class="ghost-banner">👻 Spectating only — ghosts cannot place bets</div>
+  {{/if}}
+
+  <div class="r-main">
+
+    <!-- ========== Betting Board ========== -->
+    <div class="board-wrap{{if data.is_ghost}} ghost-overlay{{/if}}">
+
+      <!-- Chip selector -->
+      {{if !data.is_ghost}}
+      <div class="hand-balance{{if data.hand_money < data.selected_amount}} low{{/if}}">
+        💰 In hand: {{:data.hand_money}} thalers
+      </div>
+      {{/if}}
+      <div class="chip-row">
+        {{if data.locked || data.is_ghost}}
+        <span class="chip chip-10 disabled">10</span>
+        <span class="chip chip-25 disabled">25</span>
+        <span class="chip chip-50 disabled">50</span>
+        <span class="chip chip-100 disabled">100</span>
+        <span class="chip chip-500 disabled">500</span>
+        <span class="chip chip-1000 disabled">1000</span>
+        {{else}}
+        <a href='?src={{:data.src}}&set_amount=10'   class='chip chip-10   {{if data.selected_amount == 10  }}active{{else data.hand_money < 10  }}cant-afford{{/if}}'>10</a>
+        <a href='?src={{:data.src}}&set_amount=25'   class='chip chip-25   {{if data.selected_amount == 25  }}active{{else data.hand_money < 25  }}cant-afford{{/if}}'>25</a>
+        <a href='?src={{:data.src}}&set_amount=50'   class='chip chip-50   {{if data.selected_amount == 50  }}active{{else data.hand_money < 50  }}cant-afford{{/if}}'>50</a>
+        <a href='?src={{:data.src}}&set_amount=100'  class='chip chip-100  {{if data.selected_amount == 100 }}active{{else data.hand_money < 100 }}cant-afford{{/if}}'>100</a>
+        <a href='?src={{:data.src}}&set_amount=500'  class='chip chip-500  {{if data.selected_amount == 500 }}active{{else data.hand_money < 500 }}cant-afford{{/if}}'>500</a>
+        <a href='?src={{:data.src}}&set_amount=1000' class='chip chip-1000 {{if data.selected_amount == 1000}}active{{else data.hand_money < 1000}}cant-afford{{/if}}'>1000</a>
+        {{/if}}
+      </div>
+
+      <!-- Number grid + outside bets -->
+      <table class="bet-table">
+        <tr>
+          <!-- 0 spans 3 rows -->
+          <td rowspan="3" class="num-cell num-zero" style="width:32px">
+            {{if data.locked}}<span>0</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_0'>0</a>{{/if}}
+          </td>
+          <!-- Row 1: 3,6,9,...,36 -->
+          <td class="num-cell num-red">  {{if data.locked}}<span> 3</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_3'> 3</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span> 6</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_6'> 6</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span> 9</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_9'> 9</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>12</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_12'>12</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>15</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_15'>15</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>18</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_18'>18</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>21</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_21'>21</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>24</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_24'>24</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>27</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_27'>27</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>30</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_30'>30</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>33</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_33'>33</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>36</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_36'>36</a>{{/if}}</td>
+          <td class="out-cell cell-2to1" style="width:34px">
+            {{if data.locked}}<span>2:1</span>{{else}}<a href='?src={{:data.src}}&place_bet=col3'>2:1</a>{{/if}}
+          </td>
+        </tr>
+        <tr>
+          <!-- Row 2: 2,5,8,...,35 -->
+          <td class="num-cell num-black">{{if data.locked}}<span> 2</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_2'> 2</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span> 5</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_5'> 5</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span> 8</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_8'> 8</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>11</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_11'>11</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>14</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_14'>14</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>17</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_17'>17</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>20</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_20'>20</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>23</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_23'>23</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>26</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_26'>26</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>29</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_29'>29</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>32</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_32'>32</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>35</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_35'>35</a>{{/if}}</td>
+          <td class="out-cell cell-2to1">
+            {{if data.locked}}<span>2:1</span>{{else}}<a href='?src={{:data.src}}&place_bet=col2'>2:1</a>{{/if}}
+          </td>
+        </tr>
+        <tr>
+          <!-- Row 3: 1,4,7,...,34 -->
+          <td class="num-cell num-red">  {{if data.locked}}<span> 1</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_1'> 1</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span> 4</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_4'> 4</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span> 7</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_7'> 7</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>10</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_10'>10</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>13</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_13'>13</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>16</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_16'>16</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>19</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_19'>19</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>22</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_22'>22</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>25</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_25'>25</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>28</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_28'>28</a>{{/if}}</td>
+          <td class="num-cell num-black">{{if data.locked}}<span>31</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_31'>31</a>{{/if}}</td>
+          <td class="num-cell num-red">  {{if data.locked}}<span>34</span>{{else}}<a href='?src={{:data.src}}&place_bet=straight_34'>34</a>{{/if}}</td>
+          <td class="out-cell cell-2to1">
+            {{if data.locked}}<span>2:1</span>{{else}}<a href='?src={{:data.src}}&place_bet=col1'>2:1</a>{{/if}}
+          </td>
+        </tr>
+
+        <!-- Dozen row -->
+        <tr>
+          <td></td>
+          <td colspan="4" class="out-cell cell-dozen">
+            {{if data.locked}}<span>1st 12</span>{{else}}<a href='?src={{:data.src}}&place_bet=dozen1'>1st 12</a>{{/if}}
+          </td>
+          <td colspan="4" class="out-cell cell-dozen">
+            {{if data.locked}}<span>2nd 12</span>{{else}}<a href='?src={{:data.src}}&place_bet=dozen2'>2nd 12</a>{{/if}}
+          </td>
+          <td colspan="4" class="out-cell cell-dozen">
+            {{if data.locked}}<span>3rd 12</span>{{else}}<a href='?src={{:data.src}}&place_bet=dozen3'>3rd 12</a>{{/if}}
+          </td>
+          <td></td>
+        </tr>
+
+        <!-- 1-18 / Even / Red / Black / Odd / 19-36 -->
+        <tr>
+          <td></td>
+          <td colspan="2" class="out-cell cell-low">
+            {{if data.locked}}<span>1–18</span>{{else}}<a href='?src={{:data.src}}&place_bet=low'>1–18</a>{{/if}}
+          </td>
+          <td colspan="2" class="out-cell cell-even">
+            {{if data.locked}}<span>EVEN</span>{{else}}<a href='?src={{:data.src}}&place_bet=even'>EVEN</a>{{/if}}
+          </td>
+          <td colspan="2" class="out-cell cell-red-o">
+            {{if data.locked}}<span>RED</span>{{else}}<a href='?src={{:data.src}}&place_bet=red'>RED</a>{{/if}}
+          </td>
+          <td colspan="2" class="out-cell cell-blk-o">
+            {{if data.locked}}<span>BLACK</span>{{else}}<a href='?src={{:data.src}}&place_bet=black'>BLACK</a>{{/if}}
+          </td>
+          <td colspan="2" class="out-cell cell-odd">
+            {{if data.locked}}<span>ODD</span>{{else}}<a href='?src={{:data.src}}&place_bet=odd'>ODD</a>{{/if}}
+          </td>
+          <td colspan="2" class="out-cell cell-high">
+            {{if data.locked}}<span>19–36</span>{{else}}<a href='?src={{:data.src}}&place_bet=high'>19–36</a>{{/if}}
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </div><!-- /board-wrap -->
+
+    <!-- ========== Sidebar ========== -->
+    <div class="sidebar">
+
+      <!-- Casino bank -->
+      <div class="sidebar-box bank-box {{if data.bank_balance < 5000}}bank-low{{/if}}">
+        <h3>Casino Bank</h3>
+        <div class="bank-amount">{{:data.bank_balance}}T</div>
+        {{if data.bank_balance == 0}}
+          <div class="bank-warning">BANK EMPTY — NO PAYOUTS</div>
+        {{else data.bank_balance < 5000}}
+          <div class="bank-warning">⚠ Low funds</div>
+        {{/if}}
+      </div>
+
+      <!-- Last result -->
+      <div class="sidebar-box">
+        <h3>Last Number</h3>
+        {{if data.last_result >= 0}}
+          {{if data.last_result == 0}}
+            <div class="hist-num hist-green" style="width:36px;height:36px;font-size:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto">0</div>
+            <div style="text-align:center;font-size:10px;color:#6aff6a;margin-top:4px">GREEN — ZERO</div>
+          {{else}}
+            {{if data.last_result == 1 || data.last_result == 3 || data.last_result == 5 || data.last_result == 7 || data.last_result == 9 || data.last_result == 12 || data.last_result == 14 || data.last_result == 16 || data.last_result == 18 || data.last_result == 19 || data.last_result == 21 || data.last_result == 23 || data.last_result == 25 || data.last_result == 27 || data.last_result == 30 || data.last_result == 32 || data.last_result == 34 || data.last_result == 36}}
+              <div class="hist-num hist-red" style="width:36px;height:36px;font-size:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto">{{:data.last_result}}</div>
+              <div style="text-align:center;font-size:10px;color:#ff8888;margin-top:4px">RED</div>
+            {{else}}
+              <div class="hist-num hist-black" style="width:36px;height:36px;font-size:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto">{{:data.last_result}}</div>
+              <div style="text-align:center;font-size:10px;color:#aaa;margin-top:4px">BLACK</div>
+            {{/if}}
+          {{/if}}
+        {{else}}
+          <div class="no-bets">Not spun yet</div>
+        {{/if}}
+      </div>
+
+      <!-- History -->
+      <div class="sidebar-box">
+        <h3>History</h3>
+        {{if data.result_history.length}}
+        <div class="history-row">
+          {{for data.result_history}}
+            {{if value == 0}}
+              <div class="hist-num hist-green" title="0">0</div>
+            {{else}}
+              {{if value == 1 || value == 3 || value == 5 || value == 7 || value == 9 || value == 12 || value == 14 || value == 16 || value == 18 || value == 19 || value == 21 || value == 23 || value == 25 || value == 27 || value == 30 || value == 32 || value == 34 || value == 36}}
+                <div class="hist-num hist-red"   title="{{:value}}">{{:value}}</div>
+              {{else}}
+                <div class="hist-num hist-black" title="{{:value}}">{{:value}}</div>
+              {{/if}}
+            {{/if}}
+          {{/for}}
+        </div>
+        {{else}}
+          <div class="no-bets">No history yet</div>
+        {{/if}}
+      </div>
+
+      <!-- Current bets -->
+      <div class="sidebar-box">
+        <h3>Current Bets</h3>
+        {{if data.bets.length}}
+          {{for data.bets}}
+            <div class="bet-entry {{if value.is_mine}}mine{{/if}}">
+              <span title="{{:value.bettor_name}}">{{:value.bettor_name}} — {{:value.type}}</span>
+              <span>{{:value.amount}}T</span>
+            </div>
+          {{/for}}
+          <div class="total-line">Total: {{:data.total_bet}}T</div>
+        {{else}}
+          <div class="no-bets">No bets placed</div>
+        {{/if}}
+      </div>
+
+      <!-- Clear bets -->
+      {{if data.locked || data.is_ghost}}
+        <span class="clear-btn disabled">Clear my bets</span>
+      {{else}}
+        <a href='?src={{:data.src}}&clear_bets=1' class='clear-btn'>Clear my bets</a>
+      {{/if}}
+
+      <!-- Payouts reference -->
+      <div class="sidebar-box" style="margin-top:8px">
+        <h3>Payouts</h3>
+        <table class="payout-table">
+          <tr><td>Straight</td><td>35:1</td></tr>
+          <tr><td>Red/Black</td><td>1:1</td></tr>
+          <tr><td>Even/Odd</td><td>1:1</td></tr>
+          <tr><td>1–18/19–36</td><td>1:1</td></tr>
+          <tr><td>Dozen</td><td>2:1</td></tr>
+          <tr><td>Column</td><td>2:1</td></tr>
+        </table>
+      </div>
+
+    </div><!-- /sidebar -->
+  </div><!-- /r-main -->
+</div>

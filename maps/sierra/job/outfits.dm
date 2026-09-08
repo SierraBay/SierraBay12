@@ -189,7 +189,14 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/engineering/engineer/trainee
 	name = OUTFIT_JOB_NAME("Engineer Trainee - Sierra")
-	id_types = list(/obj/item/card/id/sierra/crew/engineering/trainee)
+	id_types = list(/obj/item/card/id/sierra/crew/engineering)
+
+/singleton/hierarchy/outfit/job/sierra/crew/engineering/roboticist
+	name = OUTFIT_JOB_NAME("Roboticist - Sierra")
+	uniform = /obj/item/clothing/under/rank/roboticist
+	shoes = /obj/item/clothing/shoes/black
+	l_ear = /obj/item/device/radio/headset/sierra_roboticist
+	id_types = list(/obj/item/card/id/sierra/crew/engineering/roboticist)
 
 	////////////
 	//SECURITY//
@@ -268,6 +275,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Physican")
 	uniform = /obj/item/clothing/under/rank/medical
 
+// unused for now
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor
 	name = OUTFIT_JOB_NAME("Doctor")
 	uniform = /obj/item/clothing/under/rank/medical
@@ -276,6 +284,10 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/orderly
 	name = OUTFIT_JOB_NAME("Orderly")
 	uniform = /obj/item/clothing/under/rank/orderly
+
+/singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/emt
+	name = OUTFIT_JOB_NAME("Trainee EMT")
+	uniform = /obj/item/clothing/under/new_uniform/ems
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic
 	name = OUTFIT_JOB_NAME("Paramedic - Sierra")
@@ -289,7 +301,7 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/paramedic/emt
 	name = OUTFIT_JOB_NAME("Emergency Medical Technician - Sierra")
-	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	uniform = /obj/item/clothing/under/new_uniform/ems
 
 /singleton/hierarchy/outfit/job/sierra/crew/medical/doctor/nurse
 	name = OUTFIT_JOB_NAME("Nurse - Sierra")
@@ -342,6 +354,12 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	name = OUTFIT_JOB_NAME("Counselor - Mentalist - Sierra")
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	shoes = /obj/item/clothing/shoes/laceup
+
+/singleton/hierarchy/outfit/job/sierra/crew/medical/biomech
+	name = OUTFIT_JOB_NAME("Biomechanical Engineer - Sierra")
+	suit = /obj/item/clothing/suit/storage/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/black
+	id_types = list(/obj/item/card/id/sierra/crew/medical/biomech)
 
 	/////////
 	//CARGO//
@@ -501,14 +519,6 @@ Keeping them simple for now, just spawning with basic EC uniforms, and pretty mu
 	uniform = /obj/item/clothing/under/rank/scientist/nanotrasen
 	shoes = /obj/item/clothing/shoes/white
 	id_types = list(/obj/item/card/id/sierra/crew/research/scientist)
-
-/singleton/hierarchy/outfit/job/sierra/crew/research/roboticist
-	name = OUTFIT_JOB_NAME("Roboticist - Sierra")
-	uniform = /obj/item/clothing/under/rank/roboticist
-	shoes = /obj/item/clothing/shoes/black
-	l_ear = /obj/item/device/radio/headset/sierra_roboticist
-	id_types = list(/obj/item/card/id/sierra/crew/research/roboticist)
-//	pda_type = /obj/item/modular_computer/pda/roboticist
 
 /singleton/hierarchy/outfit/job/sierra/crew/research/assist
 	name = OUTFIT_JOB_NAME("Research Assistant - Sierra")

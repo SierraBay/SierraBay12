@@ -44,6 +44,7 @@
 			INVOKE_PSI_POWERS(src, psi.get_ranged_powers(SSpsi.faculties_by_name_new["Psychokinesis"]), A, TRUE)
 			INVOKE_PSI_POWERS(src, psi.get_ranged_powers(SSpsi.faculties_by_name_new["Metakinesis"]), A, TRUE)
 			INVOKE_PSI_POWERS(src, psi.get_ranged_powers(SSpsi.faculties_by_name_new["Manifestation"]), A, TRUE)
+			INVOKE_PSI_POWERS(src, psi.get_ranged_powers(SSpsi.faculties_by_name_new["Shaymanism"]), A, TRUE)
 		if(a_intent == I_DISARM)
 			INVOKE_PSI_POWERS(src, psi.get_ranged_powers(SSpsi.faculties_by_name_new["Coercion"]), A, TRUE)
 		if(a_intent == I_HELP)

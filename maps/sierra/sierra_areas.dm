@@ -25,6 +25,9 @@
 /area/medical
 	icon_state = "medbay"
 
+/area/rnd/sierra
+	icon_state = "research"
+
 /area/maintenance/substation
 	name = "Substation"
 	icon_state = "substation"

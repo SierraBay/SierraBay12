@@ -190,7 +190,8 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 
 /obj/overmap/event/Initialize(seed)
 	. = ..()
-	icon_state = pick(event_icon_states)
+	if(length(event_icon_states)) // [SIERRA-ADD]
+		icon_state = pick(event_icon_states)
 	overmap_event_handler.update_hazards(loc)
 	if(length(colors))
 		color = pick(colors)

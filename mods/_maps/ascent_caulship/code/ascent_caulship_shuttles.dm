@@ -12,7 +12,7 @@
 	hide_from_reports = TRUE
 	initial_restricted_waypoints = list(
 		"Caulship Landing Zone" = list("nav_ascent_caulship_start"),
-		"NSV Sierra Docking Port" = list("nav_ascent_caulship_sierra")
+		"Dock STBD-3" = list("nav_ascent_caulship_sierra")
 	)
 
 /obj/machinery/computer/shuttle_control/explore/ascent
@@ -29,7 +29,7 @@
 	movable_flags = MOVABLE_FLAG_EFFECTMOVE
 
 /obj/shuttle_landmark/ascent_caulship/sierra
-	name = "NSV Sierra Docking Port"
+	name = "Dock STBD-3"
 	landmark_tag = "nav_ascent_caulship_sierra"
 	docking_controller = "admin_shuttle_dock"
 

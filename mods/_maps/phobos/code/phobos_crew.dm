@@ -42,6 +42,8 @@
 
 /datum/job/submap/lieutenant
 	title = "Patrol Commanding Officer"
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "Third Fleet HQ, the Sol Central Government and the Sol Code of Uniform Justice"
 	selection_color = "#2f2f7f"
 	outfit_type = /singleton/hierarchy/outfit/job/phobos/command
@@ -120,7 +122,7 @@
 	selection_color = "#601c1c"
 	outfit_type = /singleton/hierarchy/outfit/job/phobos/security
 	required_language = LANGUAGE_HUMAN_EURO
-	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES)
+	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES, SPECIES_IPC)
 	allowed_branches = list(
 		/datum/mil_branch/fleet
 	)
@@ -150,7 +152,7 @@
 	economic_power = 10
 	outfit_type = /singleton/hierarchy/outfit/job/phobos/medical/senior
 	required_language = LANGUAGE_HUMAN_EURO
-	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES)
+	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES, SPECIES_IPC)
 	allowed_branches = list(
 		/datum/mil_branch/fleet
 	)
@@ -193,7 +195,7 @@
 	max_skill = list(   SKILL_MEDICAL     = SKILL_MAX,
 	                    SKILL_CHEMISTRY   = SKILL_MAX)
 	required_language = LANGUAGE_HUMAN_EURO
-	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES)
+	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES, SPECIES_IPC)
 	skill_points = 22
 
 /datum/job/submap/engineer
@@ -213,7 +215,7 @@
 		/datum/mil_rank/fleet/e5,
 	)
 	required_language = LANGUAGE_HUMAN_EURO
-	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES)
+	whitelisted_species = list(SPECIES_HUMAN,HUMAN_SPECIES,SPECIES_IPC)
 	min_skill = list(   SKILL_COMPUTER     = SKILL_BASIC,
 	                    SKILL_EVA          = SKILL_BASIC,
 	                    SKILL_CONSTRUCTION = SKILL_TRAINED,

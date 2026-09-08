@@ -34,9 +34,7 @@
 		</div>
 	</div>
 	<div id="computerButtons">
-		{{if !data.PC_showexitprogram}}
-			{{:helper.link('', 'image', {'PC_camera' : 1}, null, data.in_camera_mode ? 'yellowButton' : null)}}
-		{{/if}}
+		{{:helper.link('', 'image', {'PC_camera' : 1}, null, data.in_camera_mode ? 'yellowButton' : null)}}
 		{{if data.PC_showexitprogram}}
 			{{:helper.link('', 'minusthick', {'PC_minimize' : data.PC_activeprogram})}}
 			{{:helper.link('', 'closethick', {'PC_exit' : data.PC_activeprogram})}}

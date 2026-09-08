@@ -188,7 +188,7 @@
 		user.visible_message(SPAN_INFO("[user] adds some coal to the hookah."), SPAN_INFO("You added coal to the hookah."))
 		return TRUE
 
-	else if(istype(tool, /obj/item/reagent_containers/food/snacks/grown/dried_tobacco))
+	else if(istype(tool, /obj/item/reagent_containers/food/snacks/grown/tobacco/dried))
 		if(tool.reagents)
 			tool.reagents.trans_to_obj(src, tool.reagents.total_volume)
 			user.unEquip(tool, src)

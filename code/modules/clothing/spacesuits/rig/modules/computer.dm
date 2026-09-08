@@ -256,7 +256,7 @@
 		if(!accepts_item(target,H))
 			return 0
 	return 1
-
+/*[SIERRA-REMOVE] RND
 /obj/item/rig_module/datajack/accepts_item(obj/item/input_device, mob/living/user)
 
 	if(istype(input_device, /obj/item/stock_parts/computer/hard_drive))
@@ -276,7 +276,7 @@
 		var/datum/research/incoming_files
 		if(istype(input_device,/obj/machinery/computer/rdconsole))
 			var/obj/machinery/computer/rdconsole/input_machine = input_device
-			incoming_files = input_machine.files
+			incoming_files = input_machine.get_server_files()
 		else if(istype(input_device,/obj/machinery/r_n_d/server))
 			var/obj/machinery/r_n_d/server/input_machine = input_device
 			incoming_files = input_machine.files
@@ -291,6 +291,7 @@
 				to_chat(user, SPAN_WARNING("Scan complete. There is nothing useful stored on this terminal."))
 		return 1
 	return 0
+*/
 
 /obj/item/rig_module/datajack/proc/load_data(datum/research/incoming_files)
 	return files.download_from(incoming_files)

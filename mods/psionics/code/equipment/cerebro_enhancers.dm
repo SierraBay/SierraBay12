@@ -15,7 +15,7 @@
 	var/boosted_rank = PSI_RANK_GRANDMASTER
 	var/unboosted_rank = PSI_RANK_MASTER
 	var/max_boosted_faculties = 3
-	var/boosted_psipower = 120
+	var/boosted_psipower = 175
 
 /obj/item/clothing/head/helmet/space/psi_amp/lesser
 	name = "psionic amplifier"
@@ -27,7 +27,7 @@
 	max_boosted_faculties = 1
 	boosted_rank = PSI_RANK_MASTER
 	unboosted_rank = PSI_RANK_APPRENTICE
-	boosted_psipower = 100
+	boosted_psipower = 125
 
 /obj/item/clothing/head/helmet/space/psi_amp/Initialize()
 	. = ..()

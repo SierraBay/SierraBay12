@@ -69,9 +69,10 @@
 
 
 				// If the log is a speech file
-				if(C.input_type == "Speech File")
+				if(C.input_type == "Speech File" || C.input_type == "Corrupt File")
 
 					dat += "<li>[SPAN_COLOR("#008f00", C.name)]  <a href='byond://?src=\ref[src];delete=[i]'>[SPAN_COLOR("#ff0000", "\[X\]")]</a><br>"
+					dat += "<u>[SPAN_COLOR("#18743e", "Timestamp")]</u>: [C.timestamp]<br>"
 
 					// -- Determine race of orator --
 
@@ -84,9 +85,9 @@
 						dat += "<u>[SPAN_COLOR("#18743e", "Data type")]</u>: [C.input_type]<br>"
 						dat += "<u>[SPAN_COLOR("#18743e", "Source")]</u>: [C.parameters["name"]]<br>"
 						dat += "<u>[SPAN_COLOR("#18743e", "Class")]</u>: [race]<br>"
-						dat += "<u>[SPAN_COLOR("#18743e", "Contents")]</u>: \"[C.parameters["message"]]\"<br>"
 						if(language)
 							dat += "<u>[SPAN_COLOR("#18743e", "Language")]</u>: [language]<br/>"
+						dat += "<u>[SPAN_COLOR("#18743e", "Contents")]</u>: \"[C.parameters["message"]]\"<br>"
 
 					// -- Orator is not human and universal translate not active --
 
@@ -152,8 +153,8 @@
 
 	if(href_list["delete"])
 
-		if(!src.allowed(usr) && !emagged)
-			to_chat(usr, SPAN_WARNING("ACCESS DENIED."))
+		if(!src.allowed(user) && !emagged)
+			to_chat(user, SPAN_WARNING("ACCESS DENIED."))
 			return
 
 		if(SelectedServer)
@@ -174,9 +175,9 @@
 
 	if(href_list["network"])
 
-		var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
+		var/newnet = input(user, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-		if(newnet && ((usr in range(1, src) || issilicon(usr))))
+		if(newnet && ((user in range(1, src) || issilicon(user))))
 			if(length(newnet) > 15)
 				temp = SPAN_COLOR("#d70b00", "- FAILED: NETWORK TAG STRING TOO LENGHTLY -")
 

@@ -94,3 +94,12 @@
 
 /datum/extension/scent/food/stew
 	scent = "stew"
+
+/datum/extension/scent/food/bbq
+	scent = "barbeque"
+
+/datum/extension/scent/food/crisp
+	scent = "crisp and fresh"
+
+/datum/extension/scent/food/fruity
+	scent = "fruity"

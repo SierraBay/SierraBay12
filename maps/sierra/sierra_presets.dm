@@ -9,6 +9,7 @@ var/global/const/NETWORK_FOURTH_DECK = "Fourth Deck"
 var/global/const/NETWORK_SUPPLY      = "Supply"
 var/global/const/NETWORK_HANGAR      = "Hangar"
 var/global/const/NETWORK_PETROV      = "Petrov"
+var/global/const/NETWORK_PHAETHON    = "Phaethon"
 
 //Overrides
 var/global/const/NETWORK_COMMAND = "Command"
@@ -28,6 +29,8 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 			return access_hangar
 		if(NETWORK_PETROV)
 			return access_petrov
+		if(NETWORK_PHAETHON)
+			return access_sec_doors
 		if(NETWORK_EXPEDITION)
 			return access_expedition_shuttle
 	return get_shared_network_access(network) || ..()
@@ -52,6 +55,7 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 		NETWORK_HANGAR,
 		NETWORK_CALYPSO,
 		NETWORK_PETROV,
+		NETWORK_PHAETHON,
 		NETWORK_POD,
 		NETWORK_HELMETS,
 		NETWORK_ALARM_ATMOS,
@@ -115,6 +119,9 @@ var/global/const/NETWORK_ENGINEERING_OUTPOST = "Engineering Outpost"
 
 /obj/machinery/camera/network/petrov
 	network = list(NETWORK_PETROV)
+
+/obj/machinery/camera/network/phaethon
+	network = list(NETWORK_PHAETHON)
 
 /obj/machinery/camera/network/supply
 	network = list(NETWORK_SUPPLY)

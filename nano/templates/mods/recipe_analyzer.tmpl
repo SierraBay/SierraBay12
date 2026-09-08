@@ -1,0 +1,51 @@
+<!--
+Title: Recipe Analyzer
+Used In File(s): \mods\RnD\code\machinery\recipe_analyzer.dm
+-->
+<div style="font-family: 'Consolas', monospace; color: #c8dae8; padding: 10px;">
+
+	<div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #2a5080; padding-bottom: 6px;">
+		RECIPE ANALYZER
+	</div>
+
+	<!-- Dish slot -->
+	<div style="margin-bottom: 8px;">
+		<span style="color: #888;">Dish:</span>
+		{{if data.has_food}}
+			<b style="color: #c8dae8;">{{:data.food_name}}</b>
+			{{if data.nutriment_total !== undefined}}
+				<span style="color: #888; font-size: 11px;"> (nutriment: {{:data.nutriment_total}} u → cost: {{:data.nutriment_cost}} u)</span>
+			{{/if}}
+			<br>
+			{{if !data.busy}}
+				{{:helper.link("Eject dish", 'arrowreturn-1-w', {'eject_food' : 1})}}
+			{{/if}}
+		{{else}}
+			<span style="color: #555;">Empty — place a food item</span>
+		{{/if}}
+	</div>
+
+	<!-- Disk slot -->
+	<div style="margin-bottom: 10px;">
+		<span style="color: #888;">Disk:</span>
+		{{if data.has_disk}}
+			<b style="color: #c8dae8;">{{:data.disk_name}}</b>
+			<br>
+			{{if !data.busy}}
+				{{:helper.link("Eject disk", 'arrowreturn-1-w', {'eject_disk' : 1})}}
+			{{/if}}
+		{{else}}
+			<span style="color: #555;">No disk inserted</span>
+		{{/if}}
+	</div>
+
+	<hr style="border-color: #2a5080; margin: 8px 0;">
+
+	<!-- Analyze button -->
+	{{if data.busy}}
+		<div style="color: #ffcc44;">Analyzing... please wait.</div>
+	{{else}}
+		{{:helper.link("Analyze recipe", 'search', {'analyze' : 1}, (data.has_food && data.has_disk) ? null : 'disabled', 'rndExpBtn')}}
+	{{/if}}
+
+</div>

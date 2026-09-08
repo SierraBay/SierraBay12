@@ -31,7 +31,7 @@
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
 		dat += "<p><a href='byond://?src=\ref[src];reset=1'>Back</A>"
 
-	var/datum/browser/popup = new(user, "kad_window", "Keycard Authentication Device", 500, 250)
+	var/datum/browser/popup = new(user, "kad_window", "Keycard Authentication Device", 500, 320)
 	popup.set_content(JOINTEXT(dat))
 	popup.open()
 	return

@@ -157,20 +157,49 @@
 /datum/preferences/proc/open_setup_window(mob/user)
 	if (!SScharacter_setup.initialized)
 		return
-	popup = new (user, "preferences_browser", "Character Setup", 1200, 800, src)
-	var/content = {"
+	// [SIERRA-EDIT] HEIGHT — Use skin.dmf
+	var/content = {"<!DOCTYPE html>
+<html>
+	<meta charset="UTF-8">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<link rel='stylesheet' type='text/css' href='common.css'>
+	</head>
+	<body scroll=auto>
+		<div class='uiWrapper'>
+			<div class='uiTitleWrapper'><div class='uiTitle'><tt>Character Setup</tt></div></div>
+			<div class='uiContent'>
 	<script type='text/javascript'>
 		function update_content(data){
 			document.getElementById('content').innerHTML = data;
 		}
+		// \[SIERRA-ADD]
+		function setJobLevel(source, title, level)
+		{
+			window.location.href = "byond://?src=" + source + ";set_job=" + title + ";inc_level=" + level;
+			return 1;
+		}
+		// \[/SIERRA-ADD]
 	</script>
 	<div id='content'>[get_content(user)]</div>
+			</div>
+		</div>
+	</body>
+</html>
 	"}
-	popup.set_content(content)
-	popup.open()
+	// Send the common CSS resource
+	send_rsc(user, 'html/browser/common.css', "common.css")
+	// Show the pre-defined window and send HTML to its browser child
+	winshow(user, "preferences_window", TRUE)
+	show_browser(user, content, "window=preferences_browser")
+	onclose(user, "preferences_window", src)
+	refresh_preview_map_visibility()
+	refresh_preview_map_contents()
+
+	// [/SIERRA-EDIT]
 
 /datum/preferences/proc/update_setup_window(mob/user)
-	send_output(user, url_encode(get_content(user)), "preferences_browser.browser:update_content")
+	send_output(user, url_encode(get_content(user)), "preferences_window.preferences_browser:update_content")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 
@@ -191,6 +220,16 @@
 		return 1
 
 	if (href_list["close"])
+		// [SIERRA-ADD] HEIGHT — Clean up character preview screen objects on window close
+		if(client)
+			client.clear_character_previews()
+			client.preview_active_map = ""
+		// Null preview_icon so it's rebuilt when the window is reopened
+		preview_icon = null
+		// Hide the preferences window
+		if(client?.mob)
+			winshow(client.mob, "preferences_window", FALSE)
+		// [/SIERRA-ADD]
 		popup = null
 
 	. = 1
@@ -217,7 +256,7 @@
 		sanitize_preferences()
 		close_load_dialog(usr)
 
-		if (winget(usr, "preferences_browser", "is-visible") == "true")
+		if (winget(usr, "preferences_window", "is-visible") == "true")
 			open_setup_window(usr)
 
 	else if(href_list["resetslot"])
@@ -264,7 +303,7 @@
 
 	update_setup_window(usr)
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE, apply_persist = TRUE) //[SIERRA-ADD]--> apply_persist = TRUE)
 	// Sanitizing rather than saving as someone might still be editing when copy_to occurs.
 	player_setup.sanitize_setup()
 	character.set_species(species)
@@ -274,6 +313,9 @@
 	character.gender = gender
 	character.pronouns = pronouns
 	character.age = age
+	// [SIERRA-ADD] HEIGHT
+	character.height = height
+	// [/SIERRA-ADD]
 	character.b_type = b_type
 
 	character.eye_color = eye_color
@@ -420,6 +462,21 @@
 	if(!character.isSynthetic())
 		character.set_nutrition(rand(140,360))
 		character.set_hydration(rand(140,360))
+
+	if (!is_preview_copy && apply_persist)		//[SIERRA-ADD]--> apply_persist)
+		apply_character_persist(character)
+
+/// Overridden by mods/character_persist. Applies a saved body overlay after copy_to().
+/datum/preferences/proc/apply_character_persist(mob/living/carbon/human/character)
+	return
+
+/// Overridden by mods/character_persist. True if this slot has a live persist snapshot.
+/datum/preferences/proc/character_persist_is_locked()
+	return FALSE
+
+/// Overridden by mods/character_persist. True if medical records are locked by persist autofill.
+/datum/preferences/proc/character_persist_med_locked()
+	return FALSE
 
 /datum/preferences/proc/open_load_dialog(mob/user, details)
 	var/dat  = list()

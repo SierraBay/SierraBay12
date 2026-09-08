@@ -1,6 +1,8 @@
 #define TOPIC_UPDATE_PREVIEW 4
 #define TOPIC_HARD_REFRESH   8 // use to force a browse() call, unblocking some rsc operations
-#define TOPIC_REFRESH_UPDATE_PREVIEW (TOPIC_HARD_REFRESH|TOPIC_UPDATE_PREVIEW)
+
+#define TOPIC_REFRESH_UPDATE_PREVIEW (TOPIC_REFRESH|TOPIC_UPDATE_PREVIEW) // [SIERRA-EDIT] #define TOPIC_REFRESH_UPDATE_PREVIEW (TOPIC_HARD_REFRESH|TOPIC_UPDATE_PREVIEW)
+
 
 var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 
@@ -29,6 +31,13 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 	name = "Roles"
 	sort_order = 4
 	category_item_type = /datum/category_item/player_setup_item/antagonism
+
+// [SIERRA-ADD] — Cybernetics category: prosthetics + gear augments
+/datum/category_group/player_setup_category/cybernetics_preferences
+	name = "Cybernetics"
+	sort_order = 5
+	category_item_type = /datum/category_item/player_setup_item/cyberware
+// [/SIERRA-ADD]
 
 /datum/category_group/player_setup_category/loadout_preferences
 	name = "Loadout"
@@ -254,6 +263,9 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 		pref_mob.client.prefs.open_setup_window(usr)
 	else if (. & TOPIC_REFRESH)
 		pref_mob.client.prefs.update_setup_window(usr)
+	// [SIERRA-ADD] HEIGHT — eagerly update MAP preview from any tab (after window refresh to avoid blocking UI)
+	if ((. & TOPIC_UPDATE_PREVIEW) && pref_mob.client?.prefs && !pref_mob.client.prefs.preview_icon)
+		pref_mob.client.prefs.update_preview_icon()
 
 /datum/category_item/player_setup_item/CanUseTopic(mob/user)
 	return 1

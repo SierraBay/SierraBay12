@@ -20,11 +20,27 @@
 		announce_antagonist_spawn()
 
 /datum/antagonist/proc/create_default(mob/source)
+	// [SIERRA-EDIT]
+	load_antag_base()
+	// [/SIERRA-EDIT]
+
 	var/mob/living/M
+	var/turf/spawn_loc = get_turf(source)
+
+	if(isghost(source))
+		// [SIERRA-EDIT]
+		if(!length(starting_locations))
+			get_starting_locations()
+		if(length(starting_locations))
+			var/turf/T = pick_mobless_turf_if_exists(starting_locations)
+			if(T)
+				spawn_loc = T
+		// [/SIERRA-EDIT]
+
 	if(mob_path)
-		M = new mob_path(get_turf(source))
+		M = new mob_path(spawn_loc)
 	else
-		M = new /mob/living/carbon/human(get_turf(source))
+		M = new /mob/living/carbon/human(spawn_loc)
 	M.ckey = source.ckey
 
 	if(!M.ckey && source.mind)

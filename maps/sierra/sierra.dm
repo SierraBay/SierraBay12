@@ -152,6 +152,7 @@
 	#include "z1-z4_sierra.dmm"
 	#include "z6_admin.dmm"
 	#include "z7_transit.dmm"
+	#include "z8_virtualreality.dmm" // [SIERRA-ADD] - MOD_VR
 	#include "../away/empty.dmm"
 
 		// ~AWAY SITES~ //
@@ -215,16 +216,17 @@
 	#include "../../mods/screentips/_screentips_includes.dm"
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "../../mods/sauna_props/_sauna_props_includes.dm"
-	#include "../../mods/contraband_vending/_contraband_vending_includes.dm"
+	// #include "../../mods/contraband_vending/_contraband_vending_includes.dm" // Перенесено в global_modpacks.dm
 	#include "../../mods/telecomms/_telecomms_includes.dm"
 	#include "../../mods/modernUI/_modernUI_includes.dm"
+	#include "../../mods/vr/_vr_includes.dm" // [SIERRA-ADD] - MOD_VR
+	#include "../../mods/vr/code/sierra_vr_override.dm" // [SIERRA-ADD] - MOD_VR
 
 	// UNUSED MODS
 	// Keep them in ascending alphabetical order too, please
 
 	// #include "../../mods/atmos_ret_field/_atm_ret_field.dme"
 	// #include "../../mods/bluespace_kitty/_bluespace_kitty.dme"
-	// #include "../../mods/wyccbay_optimization/_wyccbay_optimization_includes.dm"
 
 	// Почему UNUSED MODS стоит хранить?
 	// Потому что никто не проверяет использование тех или иных файлов
@@ -235,7 +237,7 @@
 	#include "../../packs/factions/iccgn/_pack.dm"
 	#include "../../packs/factions/scga/_pack.dm"
 	#include "../../packs/factions/scgf/_pack.dm"
-	#include "../../packs/factions/fa/_pack.dm"
+	// #include "../../packs/factions/fa/_pack.dm" // Перенесено в global_modpacks.dm
 	#include "../../packs/infinity/_pack.dm"
 	#include "../../packs/deepmaint/_pack.dm"
 

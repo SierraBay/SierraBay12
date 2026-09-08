@@ -79,6 +79,7 @@
 	bar.icon_state = "pub_prog_bar_0"
 	calculate_position()
 	bar.layer = ABOVE_HUMAN_LAYER
+	bar.plane = EFFECTS_ABOVE_LIGHTING_PLANE //SIERRA-ADD ORIGINAL - HUD_PLANE
 	actor.add_vis_contents(bar)
 
 /datum/progressbar/public/update(progress)

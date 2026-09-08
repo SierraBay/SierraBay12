@@ -194,11 +194,10 @@ var/global/list/asset_datums = list()
 		"nano/images/",
 		"nano/images/status_icons/",
 		"nano/images/modular_computers/",
-		"nano/js/"
-	)
-	var/list/uncommon_dirs = list(
+		"nano/js/",
 		"nano/templates/"
 	)
+	var/list/uncommon_dirs = list()
 //[SIERRA-ADD] - ASSETS
 	var/list/mod_dirs = list(
 		"nano/templates/mods/"

@@ -67,7 +67,7 @@
 			else
 				SSxenoarch.xeno_artifact_turfs -= T
 
-		for(var/turf/simulated/mineral/T as anything in SSxenoarch.xeno_artifact_turfs)
+		for(var/turf/simulated/mineral/T as anything in SSxenoarch.xeno_digsite_turfs)
 			if(T.density && T.finds && length(T.finds))
 				if(T.z == cur_turf.z)
 					var/cur_dist = get_dist(cur_turf, T) * 2

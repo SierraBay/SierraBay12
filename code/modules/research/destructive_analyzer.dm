@@ -1,11 +1,11 @@
-/* [SIERRA-REMOVE] - MODPACK_RND
+/*
 Destructive Analyzer
 
 It is used to destroy hand-held objects and advance technological research. Controls are in the linked R&D console.
 
 Note: Must be placed within 3 tiles of the R&D Console
 */
-/*
+
 /obj/machinery/r_n_d/destructive_analyzer
 	name = "destructive analyzer"
 	desc = "Accessed by a connected core fabricator console, it destroys and analyzes items and materials, recycling materials to any connected protolathe, and progressing the learning matrix of the connected core fabricator console."
@@ -92,4 +92,3 @@ Note: Must be placed within 3 tiles of the R&D Console
 				linked_console.deconstruct(weakref(user))
 
 		return TRUE
-*/

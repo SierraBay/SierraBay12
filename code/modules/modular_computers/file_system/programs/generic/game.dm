@@ -64,6 +64,7 @@
 /datum/nano_module/program/arcade_classic/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
 
+	data["src"] = "\ref[src]" //[SIERRA-ADD]
 	data["player_health"] = player_health
 	data["player_mana"] = player_mana
 	data["enemy_health"] = enemy_health
@@ -74,7 +75,7 @@
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "arcade_classic.tmpl", "Defeat [enemy_name]", 500, 350, state = state)
+		ui = new(user, src, ui_key, "mods-arcade_classic.tmpl", "Defeat [enemy_name]", 700, 600, state = state) //[SIERRA-EDIT]
 		if(host.update_layout())
 			ui.auto_update_layout = 1
 		ui.set_initial_data(data)
@@ -87,15 +88,18 @@
 		player_mana -= steal
 		enemy_mana += steal
 		information += "[enemy_name] steals [steal] of your power!"
+		playsound(program.holder.loc, pick('mods/newUI/sound/-mana1.ogg', 'mods/newUI/sound/-mana2.ogg'), 50, 1)//[SIERRA-ADD]
 	else if((enemy_health < 15) && (enemy_mana > 3) && prob(80))
 		var/healamt = min(rand(3, 5), enemy_mana)
 		enemy_mana -= healamt
 		enemy_health += healamt
 		information += "[enemy_name] heals for [healamt] health!"
+		playsound(program.holder.loc, pick('mods/newUI/sound/heal1.ogg', 'mods/newUI/sound/heal2.ogg'), 50, 1)//[SIERRA-ADD]
 	else
 		var/dam = rand(3,6)
 		player_health -= dam
 		information += "[enemy_name] attacks for [dam] damage!"
+		playsound(program.holder.loc, pick('mods/newUI/sound/gethit1.ogg', 'mods/newUI/sound/gethit2.ogg'), 50, 1)//[SIERRA-ADD]
 
 /datum/nano_module/program/arcade_classic/proc/check_gameover()
 	if((player_health <= 0) || player_mana <= 0)
@@ -103,11 +107,13 @@
 			information += "You have defeated [enemy_name], but you have died in the fight!"
 		else
 			information += "You have been defeated by [enemy_name]!"
+		playsound(program.holder.loc, pick('mods/newUI/sound/p_death.ogg'), 50, 1)//[SIERRA-ADD]
 		gameover = 1
 		return TRUE
 	else if(enemy_health <= 0)
 		gameover = 1
 		information += "Congratulations! You have defeated [enemy_name]!"
+		playsound(program.holder.loc, pick('mods/newUI/sound/e_death.ogg'), 50, 1) //[SIERRA-ADD]
 		return TRUE
 	return FALSE
 
@@ -132,6 +138,7 @@
 	if(href_list["attack"])
 		var/damage = rand(2, 6)
 		information = "You attack for [damage] damage."
+		playsound(program.holder.loc, pick('mods/newUI/sound/attack1.ogg', 'mods/newUI/sound/attack2.ogg'), 50, 1)//[SIERRA-ADD]
 		enemy_health -= damage
 		enemy_play()
 		check_gameover()
@@ -140,6 +147,7 @@
 		var/healfor = rand(6, 8)
 		var/cost = rand(1, 3)
 		information = "You heal yourself for [healfor] damage, using [cost] energy in the process."
+		playsound(program.holder.loc, pick('mods/newUI/sound/heal1.ogg', 'mods/newUI/sound/heal2.ogg'), 50, 1)//[SIERRA-ADD]
 		player_health += healfor
 		player_mana -= cost
 		enemy_play()
@@ -148,6 +156,7 @@
 	if(href_list["regain_mana"])
 		var/regen = rand(4, 7)
 		information = "You rest of a while, regaining [regen] energy."
+		playsound(program.holder.loc, pick('mods/newUI/sound/-mana2.ogg', 'mods/newUI/sound/-mana1.ogg'), 50, 1)//[SIERRA-ADD]
 		player_mana += regen
 		enemy_play()
 		check_gameover()

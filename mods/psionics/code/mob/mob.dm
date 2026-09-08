@@ -22,6 +22,12 @@
 	if(current_rank != rank && (!take_larger || current_rank < rank))
 		psi.set_rank(faculty, rank, defer_update, temporary)
 
+// Псионики видят объекты на псионическом плане, пока их способности активны и не подавлены.
+/mob/living/update_living_sight()
+	. = ..()
+	if(psi && !psi.suppressed)
+		set_see_invisible(max(see_invisible, SEE_INVISIBLE_PSI_PLANE))
+
 /mob/living/proc/deflect_psionic_attack(attacker)
 	var/blocked = 80 * get_blocked_ratio(null, DAMAGE_PSIONIC)
 	if(prob(blocked))

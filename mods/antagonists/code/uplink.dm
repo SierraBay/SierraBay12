@@ -4,7 +4,8 @@
 
 /datum/uplink_item/item/tools/door_charge
 	name = "Door Charge"
-	desc = "Special explosive, which can be planted on doors and will explode when somebody will open this door."
+	desc = "Special explosive, which can be planted on doors and will explode when somebody will open this door. \
+			Note: Door have to be opened to plant charge inside it's mechanisms"
 	item_cost = 14
 	path = /obj/item/door_charge
 

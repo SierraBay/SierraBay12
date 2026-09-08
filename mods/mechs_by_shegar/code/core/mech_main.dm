@@ -22,6 +22,8 @@
 	bone_material = null
 	bone_amount = 0
 
+	blood_color = "#1f181f"
+
 	can_be_buckled = FALSE
 
 	ignore_hazard_flags = HAZARD_FLAG_SHARD
@@ -93,6 +95,8 @@
 	///Мех никогда не должен свапаться
 	mob_never_swap = TRUE
 
+/mob/living/exosuit/get_blood_name()
+	return "oil"
 
 /mob/living/exosuit/MayZoom()
 	if(head?.vision_flags)

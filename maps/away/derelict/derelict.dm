@@ -40,6 +40,10 @@
 		/area/constructionsite/solar = 3,
 	)
 
+/datum/map_template/ruin/away_site/derelict/after_load(z)
+	..()
+	spawn_derelict_mission_object(/obj/item/derelict_mission_sample/structural_blueprint, z)
+
 /obj/shuttle_landmark/derelict/nav1
 	name = "Debris Navpoint #1"
 	landmark_tag = "nav_derelict_1"

@@ -78,32 +78,32 @@
 			infect_virus2(Target, src, 1)
 
 
-/mob/living/simple_animal/hostile/lar_maria
+// Lar Maria NPC virus infection: infect spawned carbon/human NPCs with the Lar Maria disease.
+// The disease spreads naturally via airborne transmission.
+// On death, spores infect nearby humans.
+
+// Called during NPC spawn to infect the human with Lar Maria virus and register death spore handler
+/proc/lar_maria_npc_infect_human(mob/living/carbon/human/H)
 	var/datum/disease2/disease/lar_maria/LMD = new()
-	special_attack_min_range = 0
-	special_attack_max_range = 1
-	special_attack_cooldown = 1 SECONDS
+	infect_virus2(H, LMD, 1)
+	// Create handler datum for death spore spread
+	var/datum/lar_maria_death_handler/handler = new()
+	GLOB.death_event.register(H, handler, TYPE_PROC_REF(/datum/lar_maria_death_handler, on_death))
 
-/mob/living/simple_animal/hostile/lar_maria/Destroy()
-	. = ..()
-	QDEL_NULL(LMD)
+/datum/lar_maria_death_handler
 
-
-/mob/living/simple_animal/hostile/lar_maria/death(gibbed, deathmessage, show_dead_message)
+/datum/lar_maria_death_handler/proc/on_death(mob/living/carbon/human/H)
 	var/list/victims = list()
 	var/list/objs = list()
-	var/turf/T = get_turf(src)
+	var/turf/T = get_turf(H)
+	if(!T)
+		return
 	get_mobs_and_objs_in_view_fast(T, 3, victims, objs)
+	var/datum/disease2/disease/lar_maria/LMD = new()
 	for(var/mob/living/M in victims)
-		if(ishuman(M))
+		if(ishuman(M) && M != H)
 			if(prob(infection_chance(M, "Airborne")))
 				infect_virus2(M, LMD, 1)
-	.=..()
+	H.visible_message(SPAN_WARNING("Small shining spores float away from dying [H]!"))
+	GLOB.death_event.unregister(H, src)
 	qdel(src)
-
-/mob/living/simple_animal/hostile/lar_maria/do_special_attack(atom/A)
-	if(ishuman(A))//if it's human who can be infected standing nearby
-		var/mob/living/L = A
-		if (prob(12))
-			visible_message("<span class='alert'>[src] violently bites [L]!</span>")
-			infect_virus2(L, LMD, 1)

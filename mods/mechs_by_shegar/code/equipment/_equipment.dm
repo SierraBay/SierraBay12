@@ -6,7 +6,7 @@
 	icon_state = ""
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_PLASTIC = 5000, MATERIAL_OSMIUM = 500)
 	force = 10
-	var/can_be_pickuped = FALSE
+//	var/can_be_pickuped = FALSE
 
 	var/list/restricted_hardpoints
 	var/mob/living/exosuit/owner
@@ -25,12 +25,23 @@
 	///Генерация тепла от модуля при активном состоянии оного
 	var/active_heat_generation = 0
 
+	/// Замедление при переноске
+	var/slowdown_held = 3 // Yes, you can carry it. But this thing is cumbersome.
+
+/obj/item/mech_component/Initialize()
+	slowdown_per_slot[slot_l_hand] =  slowdown_held
+	slowdown_per_slot[slot_r_hand] =  slowdown_held
+
+	. = ..()
+
+/*
 /obj/item/mech_equipment/attack_hand(mob/user)
 	if(!can_be_pickuped && !owner)
 		to_chat(user, SPAN_BAD("Я такое не подниму!"))
 		return
 	else
 		.=..()
+*/
 
 /obj/item/mech_equipment/MouseDrop(atom/over_atom, atom/source_loc, atom/over_loc, source_control, over_control, list/mouse_params)
 	if(!CanMouseDrop(over_atom, usr))

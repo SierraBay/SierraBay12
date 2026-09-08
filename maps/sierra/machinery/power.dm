@@ -1,5 +1,8 @@
 /obj/machinery/power/apc/charon
-	req_access = list(list(access_expedition_shuttle_helm, access_engine)) //for pilot, EL and field/regular engineers
+	req_access = list(list(access_expedition_shuttle, access_engine_equip)) // shuttle & engineering access
+
+/obj/machinery/power/apc/petrov
+	req_access = list(list(access_petrov, access_engine_equip))
 
 /obj/machinery/power/apc/merchant
 	req_access = list(access_merchant)

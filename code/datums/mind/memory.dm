@@ -63,7 +63,11 @@
 
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
-			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+			// [SIERRA-EDIT] - ANTAGONISTS - display text по умолчанию выводит тот же explanation text,
+			// но может быть динамично изменен для кнопок в нотесах
+			// output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]" // SIERRA-EDIT - ORIGINAL
+			output += "<B>Objective #[obj_count]</B>: [objective.get_display_text()]"
+			// [SIERRA-EDIT]
 			obj_count++
 
 	if(SSgoals.ambitions[src])

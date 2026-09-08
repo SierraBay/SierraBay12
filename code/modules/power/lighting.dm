@@ -299,12 +299,16 @@
 			on = FALSE
 
 	if(istype(lightbulb, /obj/item/light))
+		var/light_color
+		if (current_mode in lightbulb.lighting_modes)
+			light_color = lightbulb.lighting_modes[current_mode]["l_color"]
+		else
+			light_color = lightbulb.color
 		if (on)
 			AddOverlays(emissive_appearance(icon, _state))
-		if (current_mode in lightbulb.lighting_modes)
-			AddOverlays(overlay_image(icon, _state, lightbulb.lighting_modes[current_mode]["l_color"]))
-		else
-			AddOverlays(overlay_image(icon, _state, lightbulb.color))
+			AddOverlays(overlay_image(icon, _state, light_color, plane = LIGHTING_LAMPS_GLARE))
+			AddOverlays(overlay_image(icon, _state, light_color, plane = LIGHTING_LAMPS_PLANE))
+		AddOverlays(overlay_image(icon, _state, light_color))
 
 	if(on)
 

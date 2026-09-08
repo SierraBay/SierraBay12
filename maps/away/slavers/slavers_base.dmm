@@ -1567,7 +1567,7 @@
 /obj/decal/cleanable/dirt,
 /obj/item/ammo_casing/pistol/used,
 /obj/item/ammo_casing/pistol/used,
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "eH" = (
@@ -2589,7 +2589,7 @@
 "gS" = (
 /obj/item/ammo_casing/pistol/used,
 /obj/item/ammo_casing/pistol/used,
-/obj/machinery/robotics_fabricator,
+/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor/tiled/techfloor,
 /area/slavers_base/powatm)
 "gT" = (

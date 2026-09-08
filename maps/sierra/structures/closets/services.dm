@@ -69,7 +69,8 @@
 		/obj/item/storage/belt/janitor,
 		/obj/item/clothing/mask/plunger,
 		/obj/item/soap,
-		/obj/item/clothing/head/beret/infinity
+		/obj/item/clothing/head/beret/infinity,
+		/obj/item/drain = 2
 	)
 
 /obj/structure/closet/secure_closet/bar_sierra

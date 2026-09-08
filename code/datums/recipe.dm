@@ -77,9 +77,11 @@
 	if (LAZYLEN(required_items))
 		for (var/item in required_items)
 			var/obj/item/obj_item = locate(item) in container
-			if (obj_item && obj_item.reagents)
+			if (!obj_item)
+				continue
+			if (obj_item.reagents)
 				obj_item.reagents.trans_to_holder(buffer, obj_item.reagents.total_volume)
-				qdel(obj_item)
+			qdel(obj_item)
 
 	if (LAZYLEN(required_produce))
 		var/list/checklist = list()

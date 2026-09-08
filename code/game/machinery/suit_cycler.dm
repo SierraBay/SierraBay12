@@ -215,21 +215,23 @@
 		dat += "<B>Welcome to the [model_text ? "[model_text] " : ""]suit cycler control panel. <a href='byond://?src=\ref[src];toggle_lock=1'>\[lock unit\]</a></B><HR>"
 
 		dat += "<h2>Maintenance</h2>"
-		dat += "<b>Helmet: </b> [helmet ? "\the [helmet]" : "no helmet stored" ]. <a href='byond://?src=\ref[src];eject_helmet=1'>\[eject\]</a><br/>"
-		dat += "<b>Suit: </b> [suit ? "\the [suit]" : "no suit stored" ]. <a href='byond://?src=\ref[src];eject_suit=1'>\[eject\]</a>"
+		dat += "<b>Helmet: </b> [helmet ? "\the [helmet]" : "no helmet stored" ]. <A href='byond://?src=\ref[src];eject_helmet=1'>\[eject\]</a><br/>"
+		dat += "<b>Suit: </b> [suit ? "\the [suit]" : "no suit stored" ]. <A href='byond://?src=\ref[src];eject_suit=1'>\[eject\]</a>"
 
 		if(can_repair && suit && istype(suit))
-			dat += "[(suit.damage ? " <a href='byond://?src=\ref[src];repair_suit=1'>\[repair\]</a>" : "")]"
+			dat += "[(suit.damage ? " <A href='byond://?src=\ref[src];repair_suit=1'>\[repair\]</a>" : "")]"
 
 		dat += "<br/><b>UV decontamination systems:</b> [emagged ? SPAN_COLOR("red", "SYSTEM ERROR") : SPAN_COLOR("green", "READY")]<br>"
 		dat += "Output level: [radiation_level]<br>"
-		dat += "<a href='byond://?src=\ref[src];select_rad_level=1'>\[select power level\]</a> <a href='byond://?src=\ref[src];begin_decontamination=1'>\[begin decontamination cycle\]</a><br><hr>"
+		dat += "<A href='byond://?src=\ref[src];select_rad_level=1'>\[select power level\]</a> <A href='byond://?src=\ref[src];begin_decontamination=1'>\[begin decontamination cycle\]</a><br><hr>"
 
 		dat += "<h2>Customisation</h2>"
-		dat += "<b>Target product:</b> <a href='byond://?src=\ref[src];select_department=1'>[target_modification.name]</a>, <a href='byond://?src=\ref[src];select_species=1'>[target_species]</a>."
-		dat += "<a href='byond://?src=\ref[src];apply_paintjob=1'><br>\[apply customisation routine\]</a><br><hr>"
+		dat += "<b>Target product:</b> <A href='byond://?src=\ref[src];select_department=1'>[target_modification.name]</a>, <A href='byond://?src=\ref[src];select_species=1'>[target_species]</a>."
+		dat += "<A href='byond://?src=\ref[src];apply_paintjob=1'>\[apply customisation routine\]</a><br><hr>"
 
-	show_browser(user, JOINTEXT(dat), "window=suit_cycler")
+	var/datum/browser/popup = new(user, "suit_cycler", name)
+	popup.set_content(jointext(dat, null))
+	popup.open()
 	onclose(user, "suit_cycler")
 	return
 

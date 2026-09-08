@@ -10,8 +10,12 @@
 		Playback:
 	</div>
 	<div class="itemContent">
-		{{:helper.link('Play', null, {'target': 'play', 'value': 1}, data.playback.playing ? 'selected' : null)}}
-		{{:helper.link('Stop', null, {'target': 'play', 'value': 0}, !data.playback.playing ? 'selected' : null)}}
+		{{if data.playback.playing}}
+			{{:helper.link('⏸', null, {'target': 'play', 'value': 0})}}
+		{{else}}
+			{{:helper.link('▶', null, {'target': 'play', 'value': 1})}}
+		{{/if}}
+		{{:helper.link('⏹', null, {'target': 'stop'})}}
 	</div>
 </div>
 
@@ -144,7 +148,9 @@
 		{{:helper.link('Open virtual environment editor', null, {'target': 'show_env_editor'})}}
 	{{/if}}
 	{{:helper.link('Open echo editor', null, {'target': 'show_echo_editor'})}}
-	{{:helper.link('Open song editor', null, {'target': 'show_song_editor'})}}
+	{{:helper.link('Open visualizer', null, {'target': 'show_visualizer'})}}
+	{{:helper.link('Open visual editor', null, {'target': 'show_piano_editor'})}}
+	{{:helper.link('Open legacy editor', null, {'target': 'show_song_editor'})}}
 	{{:helper.link(data.advanced_options.apply_echo ? 'Do not apply echo' : 'Apply echo', null, {'target': 'echo', 'value': data.advanced_options.apply_echo ? 0 : 1})}}
 </div>
 {{if data.show.env_settings}}

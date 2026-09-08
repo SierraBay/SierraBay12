@@ -177,6 +177,13 @@ Used for quick dress-up. Also comes with several discount
 	path = /obj/item/ammo_casing/rpg_rocket/hel/tandem
 	antag_roles = list(MODE_MERCENARY)
 
+/datum/uplink_item/item/ammo/sniperammo/tracer
+	name = "Ammobox of Tracer Sniper Rounds"
+	desc = "A container of tracer rounds for the anti-materiel rifle. Contains 7 rounds."
+	item_cost = 12
+	path = /obj/item/storage/box/ammo/sniperammo/tracer
+	antag_roles = list(MODE_MERCENARY)
+
 // Weapon
 /datum/uplink_item/item/visible_weapons/rpg
 	name = "Missile Launcher"
@@ -436,7 +443,10 @@ Used for quick dress-up. Also comes with several discount
 
 	icon = 'maps/sierra/icons/obj/clothing/obj_head.dmi'
 	item_icons = list(slot_head_str = 'maps/sierra/icons/mob/onmob/onmob_head.dmi')
-	icon_state = "syndie_helm"
+	icon_state = "syndie_helm_heavy"
+	item_state_slots = list(slot_l_hand_str = "s_helmet",
+							slot_r_hand_str = "s_helmet",
+							slot_head_str = "syndie_helm_heavy")
 	action_button_name = "Toggle Combat Mode"
 
 	armor = list(
@@ -449,7 +459,7 @@ Used for quick dress-up. Also comes with several discount
 		rad = ARMOR_RAD_RESISTANT
 		)
 	siemens_coefficient = 0.3
-	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC)
+	species_restricted = list(SPECIES_HUMAN, SPECIES_IPC, SPECIES_TAJARA)
 	camera = /obj/machinery/camera/network/mercenary
 	light_overlay = "yellow_double_light"
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -485,7 +495,7 @@ Used for quick dress-up. Also comes with several discount
 
 	allowed = list(/obj/item/device/flashlight,/obj/item/tank,/obj/item/device/suit_cooling_unit,/obj/item/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/melee/baton,/obj/item/melee/energy/sword,/obj/item/handcuffs)
 	siemens_coefficient = 0.3
-	species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_IPC)
+	species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_IPC, SPECIES_TAJARA)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/mode = 0
 
@@ -578,11 +588,38 @@ Used for quick dress-up. Also comes with several discount
 	. = ..()
 	shuttles_to_initialise += list(/datum/shuttle/autodock/overmap/merc_drop_pod)
 
+/obj/overmap/visitable/sector/merc_base
+	name = "Tiny Asteroid"
+	desc = "Sensor array detects an small, insignificant asteroid. The core appears to be reflecting scans."
+	place_near_main = list(2, 4)
+	icon_state = "meteor4"
+	hide_from_reports = TRUE
+	sensor_visibility = 10
+	initial_generic_waypoints = list(
+		"nav_merc_start",
+		"nav_merc_1",
+		"nav_merc_2",
+		"nav_merc_3",
+		"nav_merc_4"
+	)
+	scannable = FALSE
+	sector_flags = OVERMAP_SECTOR_UNTARGETABLE | OVERMAP_SECTOR_IN_SPACE
+
 /obj/overmap/visitable/sector/merc_base/New()
 	. = ..()
 	initial_generic_waypoints += list(
 		"nav_merc_pod_start"
 	)
+
+/obj/machinery/computer/ship/helm/mercenary
+	construct_state = /singleton/machine_construction/default/panel_closed/computer
+	base_type = /obj/machinery/computer/ship/helm
+	name = "Mercenary helm control console"
+
+/obj/overmap/visitable/sector/merc_base/Initialize()
+	. = ..()
+	for(var/obj/machinery/computer/ship/helm/mercenary/H in world)
+		H.add_known_sector(src)
 
 /datum/shuttle/autodock/overmap/merc_drop_pod
 	name = "Cyclopes Droppod"
@@ -680,3 +717,19 @@ Used for quick dress-up. Also comes with several discount
 			if(!H.stat && !istype(H, /mob/living/silicon/ai))\
 				shake_camera(H, 5, 2)
 		qdel(src)
+
+/datum/uplink_item/item/mercenary/stealthy
+	path = /obj/structure/closet/crate/stealthy
+
+/obj/structure/closet/crate/stealthy
+	name = "Disguise crate"
+
+/obj/structure/closet/crate/stealthy/New()
+	..()
+	new /obj/item/storage/backpack/chameleon/sydie_kit(src)
+	new /obj/item/clothing/accessory/armor_plate/sneaky/tactical(src)
+	new /obj/item/device/chameleon(src)
+	new /obj/item/storage/box/syndie_kit/silenced(src)
+	new /obj/item/storage/lunchbox/caltrops(src)
+	new /obj/item/card/emag(src)
+	new /obj/item/device/uplink_service/fake_crew_announcement(src)

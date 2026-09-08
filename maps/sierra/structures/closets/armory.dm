@@ -24,7 +24,7 @@
 	name = "laser guncabinet"
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/laser/WillContain()
-	return list(/obj/item/gun/energy/laser/secure = 6)
+	return list(/obj/item/gun/energy/laser/secure = 4)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/stun
 	name = "stun guncabinet"
@@ -54,7 +54,6 @@
 	return list(/obj/item/gun/launcher/grenade = 1,
 				/obj/item/storage/box/smokes = 1,
 				/obj/item/storage/box/flashbangs = 2,
-				/obj/item/storage/box/emps = 1,
 				/obj/item/storage/box/teargas = 1)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/militia
