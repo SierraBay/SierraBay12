@@ -18765,6 +18765,9 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/firstdeck/fore)
 "hOb" = (
+/obj/item/stock_parts/computer/hard_drive/portable/design/arms,
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/command/armoury/tactical)
 "hOZ" = (

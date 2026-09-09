@@ -50,7 +50,7 @@
 		data["shopping_cart_length"] = length(SSsupply.shoppinglist)
 		data["request_length"] = length(SSsupply.requestlist)
 	data["screen"] = screen
-	data["credits"] = "[department_accounts["Снабжения"].money]"
+	data["credits"] = "[department_accounts[GLOB.using_map.supply_department_key].money]"
 	data["currency"] = GLOB.using_map.local_currency_name
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
 	os = get_extension(nano_host(), /datum/extension/interactive/ntos)
@@ -191,7 +191,7 @@
 		O.reason = reason
 		O.orderedrank = idrank
 		O.comment = "#[O.ordernum]"
-		O.accountnubmer = department_accounts["Снабжения"]
+		O.accountnubmer = department_accounts[GLOB.using_map.supply_department_key]
 		O.sum_money = P.cost * CARGO_POINT_TO_THALLER
 		O.payer = "None Provided"
 		if(card_use)
@@ -202,7 +202,7 @@
 			if(custom_account.money < O.sum_money)
 				to_chat(user, SPAN_WARNING("Not enough funds to purchase \the [P.name]!"))
 				return
-			custom_account.transfer(department_accounts["Снабжения"], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
+			custom_account.transfer(department_accounts[GLOB.using_map.supply_department_key], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
 			O.accountnubmer = custom_account
 			O.payer = card_slot.stored_card.registered_name
 
@@ -249,12 +249,12 @@
 		var/id = text2num(href_list["approve_order"])
 		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
 		if(SO)
-			if(SO.object.cost >= department_accounts["Снабжения"].money)
+			if(SO.object.cost >= department_accounts[GLOB.using_map.supply_department_key].money)
 				to_chat(usr, SPAN_WARNING("Not enough points to purchase \the [SO.object.name]!"))
 			else
 				SSsupply.requestlist -= SO
 				SSsupply.shoppinglist += SO
-				department_accounts["Снабжения"].money -= SO.object.cost * CARGO_POINT_TO_THALLER
+				department_accounts[GLOB.using_map.supply_department_key].money -= SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to approve."))
@@ -267,7 +267,7 @@
 		if(SO)
 			SSsupply.requestlist += SO
 			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
+			department_accounts[GLOB.using_map.supply_department_key].money += SO.object.cost * CARGO_POINT_TO_THALLER
 
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
@@ -281,7 +281,7 @@
 			return 1
 		if(SO)
 			SSsupply.requestlist -= SO
-			department_accounts["Снабжения"].transfer(SO.accountnubmer, SO.sum_money , "Deny of order [SO.ordernum]")
+			department_accounts[GLOB.using_map.supply_department_key].transfer(SO.accountnubmer, SO.sum_money , "Deny of order [SO.ordernum]")
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to deny."))
 
@@ -294,7 +294,7 @@
 			return 1
 		if(SO)
 			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
+			department_accounts[GLOB.using_map.supply_department_key].money += SO.object.cost * CARGO_POINT_TO_THALLER
 		else
 			to_chat(user, SPAN_WARNING("Could not find order number [id] to cancel."))
 

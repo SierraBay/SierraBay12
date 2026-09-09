@@ -5868,10 +5868,7 @@
 /obj/machinery/vending/wallmed1{
 	pixel_y = 32
 	},
-/obj/structure/table/standard,
-/obj/item/device/robotanalyzer,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/circular_saw,
+/obj/machinery/external_cooling_device,
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics/surgery)
 "nf" = (
@@ -16375,13 +16372,15 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/synth/borg_upload)
 "RG" = (
-/obj/structure/closet/secure_closet/engineering_welding,
-/obj/floor_decal/industrial/outline/yellow,
 /obj/item/device/radio/intercom{
 	pixel_y = 23
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/smartfridge/disks/permitted{
+	dir = 1;
+	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/components,/obj/item/stock_parts/computer/hard_drive/portable/design/exploration,/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,/obj/item/stock_parts/computer/hard_drive/portable/design/general,/obj/item/stock_parts/computer/hard_drive/portable/design/tool)
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/engineering_bay)
@@ -17826,6 +17825,9 @@
 /obj/item/reagent_containers/spray/sterilizine,
 /obj/item/stack/nanopaste,
 /obj/item/hemostat,
+/obj/item/device/robotanalyzer,
+/obj/item/circular_saw,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/tiled/white,
 /area/assembly/robotics/surgery)
 "WI" = (

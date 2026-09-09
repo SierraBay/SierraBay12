@@ -10645,7 +10645,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/item/stock_parts/computer/hard_drive/portable/design/arms/sec,
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/office)
 "KE" = (

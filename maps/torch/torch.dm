@@ -202,6 +202,10 @@
 	#include "../bluespace_interlude/bluespace_interlude.dm"
 	#include "../bluespace_interlude/bluespace_interlude.dmm"
 
+	// Xenoraces ported in from NSV Sierra (SCGEC-only on Torch, see species_xeno_restrictions.dm)
+	#include "../../mods/resomi/_resomi_includes.dm"
+	#include "../../mods/tajara/_tajara_includes.dm"
+	#include "species_xeno_restrictions.dm"
 
 	#define using_map_DATUM /datum/map/torch
 

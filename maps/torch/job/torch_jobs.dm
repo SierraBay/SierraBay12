@@ -13,6 +13,8 @@
 	species_to_job_blacklist = list(
 		/singleton/species/unathi  = list(HUMAN_ONLY_JOBS, /datum/job/liaison, /datum/job/warden), //Other jobs unavailable via branch restrictions,
 		/singleton/species/unathi/yeosa = list(HUMAN_ONLY_JOBS, /datum/job/liaison, /datum/job/warden),
+		/singleton/species/resomi = list(HUMAN_ONLY_JOBS, /datum/job/liaison, /datum/job/warden),
+		/singleton/species/tajaran = list(HUMAN_ONLY_JOBS, /datum/job/liaison, /datum/job/warden),
 		/singleton/species/skrell  = list(HUMAN_ONLY_JOBS),
 		/singleton/species/machine = list(HUMAN_ONLY_JOBS, /datum/job/liaison, /datum/job/psychiatrist, /datum/job/bridgeofficer, /datum/job/senior_engineer, /datum/job/warden, /datum/job/qm, /datum/job/senior_scientist, /datum/job/chief_steward),
 		/singleton/species/diona   = list(HUMAN_ONLY_JOBS, /datum/job/officer, /datum/job/liaison, /datum/job/warden, /datum/job/doctor, /datum/job/medical_trainee),	//Other jobs unavailable via branch restrictions,
@@ -52,7 +54,7 @@
 		var/datum/job/job = SSjobs.get_by_path(job_type)
 		// Most species are restricted from SCG security and command roles
 		if(job && (job.department_flag & COM) && length(job.allowed_branches) && !(/datum/mil_branch/civilian in job.allowed_branches))
-			for(var/species_name in list(SPECIES_IPC, SPECIES_SKRELL, SPECIES_UNATHI))
+			for(var/species_name in list(SPECIES_IPC, SPECIES_SKRELL, SPECIES_UNATHI, SPECIES_RESOMI, SPECIES_TAJARA))
 				var/singleton/species/S = GLOB.species_by_name[species_name]
 				var/species_blacklist = species_to_job_blacklist[S.type]
 				if(!species_blacklist)

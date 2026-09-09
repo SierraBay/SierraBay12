@@ -41,7 +41,8 @@
 	var/static/datum/announcement/priority/security/security_announcement_green = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/misc/notice2.ogg'))
 
 /singleton/security_level/default/torchdept/code_green/switching_down_to()
-	security_announcement_green.Announce("The situation has been resolved, and all crew are to return to their regular duties.", "Attention! Alert level lowered to code green.")
+	security_announcement_green.Announce("Угрозы для судна и его экипажа отсутствуют. \
+	Персоналу следует вернуться к выполнению рабочих обязанностей в штатном режиме.", "Внимание! Зелёный код")
 	notify_station()
 
 /singleton/security_level/default/torchdept/code_violet
@@ -59,8 +60,8 @@
 	overlay_status_display = "status_display_violet"
 	alert_border = "alert_border_violet"
 
-	up_description = "A major medical emergency has developed. Medical personnel are required to report to their supervisor for orders, and non-medical personnel are required to obey all relevant instructions from medical staff."
-	down_description = "Code violet procedures are now in effect; Medical personnel are required to report to their supervisor for orders, and non-medical personnel are required to obey relevant instructions from medical staff."
+	up_description = "На судне находятся нелокализованные вредоносные патогены. Всему медицинскому персоналу требуется обратиться к вышестоящим сотрудникам для получения инструкций. Не-медицинскому персоналу следует выполнять инструкции от медицинского персонала."
+	down_description = "На судне находятся нелокализованные вредоносные патогены. Всему медицинскому персоналу требуется обратиться к вышестоящим сотрудникам для получения инструкций. Не-медицинскому персоналу следует выполнять инструкции от медицинского персонала."
 
 /singleton/security_level/default/torchdept/code_orange
 	name = "code orange"
@@ -76,8 +77,8 @@
 
 	psionic_control_level = PSI_IMPLANT_LOG
 
-	up_description = "A major engineering emergency has developed. Engineering personnel are required to report to their supervisor for orders, and non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff."
-	down_description = "Code orange procedures are now in effect; Engineering personnel are required to report to their supervisor for orders, and non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff."
+	up_description = "Тяжелые нарушения в работе оборудования и повреждение переборок. Всему инженерному персоналу требуется обратиться к вышестоящим сотрудникам для получения инструкций. Весь не-инженерный персонал должен покинуть затронутые повреждениями отсеки. Рекомендуется ношение скафандров и следование указаниям инженерного персонала."
+	down_description = "Тяжелые нарушения в работе оборудования и повреждение переборок. Всему инженерному персоналу требуется обратиться к вышестоящим сотрудникам для получения инструкций. Весь не-инженерный персонал должен покинуть затронутые повреждениями отсеки. Рекомендуется ношение скафандров и следование указаниям инженерного персонала."
 
 
 /singleton/security_level/default/torchdept/code_blue
@@ -95,8 +96,8 @@
 
 	psionic_control_level = PSI_IMPLANT_LOG
 
-	up_description = "A major security emergency has developed. Security personnel are to report to their supervisor for orders, are permitted to search staff and facilities, and may have weapons visible on their person."
-	down_description = "Code blue procedures are now in effect. Security personnel are to report to their supervisor for orders, are permitted to search staff and facilities, and may have weapons visible on their person."
+	up_description = "Согласно полученной информации на судне может присутствовать угроза для безопасности экипажа. Всей охране требуется обратиться к вышестоящим сотрудникам для получения указаний; разрешено обыскивать сотрудников и отсеки, а также держать оружие на виду."
+	down_description = "Потенциальная угроза для экипажа. Всей охране требуется обратиться к вышестоящим сотрудникам для получения указаний; разрешено обыскивать сотрудников и отсеки, а также держать оружие на виду."
 
 /singleton/security_level/default/torchdept/code_red
 	name = "code red"
@@ -112,18 +113,18 @@
 	overlay_status_display = "status_display_red"
 	alert_border = "alert_border_red"
 
-	up_description = "A severe emergency has occurred. All staff are to report to their supervisor for orders. All crew should obey orders from relevant emergency personnel. Security personnel are permitted to search staff and facilities, and may have weapons unholstered at any time. Saferooms have been unbolted."
+	up_description = "На судно объявлено чрезвычайное положение. Весь экипаж должен обратиться к главам для получения инструкций. Охране разрешено обыскивать сотрудников и отсеки, а так же держать оружие на виду."
 	psionic_control_level = PSI_IMPLANT_DISABLED
 
 	var/static/datum/announcement/priority/security/security_announcement_red = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/misc/redalert1.ogg'))
 
 /singleton/security_level/default/torchdept/code_red/switching_up_to()
-	security_announcement_red.Announce(up_description, "Attention! Code red alert procedures now in effect!")
+	security_announcement_red.Announce(up_description, "Внимание! Красный код")
 	notify_station()
 	GLOB.using_map.unbolt_saferooms()
 
 /singleton/security_level/default/torchdept/code_red/switching_down_to()
-	security_announcement_red.Announce("Code Delta has been disengaged. All staff are to report to their supervisor for orders. All crew should obey orders from relevant emergency personnel. Security personnel are permitted to search staff and facilities, and may have weapons unholstered at any time.", "Attention! Code red alert procedures now in effect!")
+	security_announcement_red.Announce("Взрывное устройство было обезврежено. Весь экипаж должен обратиться к главам для получения инструкций. Охране разрешено обыскивать сотрудников и отсеки, а так же держать оружие на виду.", "Внимание! Код угрозы понижен до Красного")
 	notify_station()
 
 /singleton/security_level/default/torchdept/code_delta
@@ -144,7 +145,7 @@
 	var/static/datum/announcement/priority/security/security_announcement_delta = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/effects/siren.ogg'))
 
 /singleton/security_level/default/torchdept/code_delta/switching_up_to()
-	security_announcement_delta.Announce("Code Delta procedures have been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.", "Attention! Delta security level reached!")
+	security_announcement_delta.Announce("Внимание всему персоналу! На судне обнаружено взрывное устройство большой мощности с активированным обратным отсчетом. Весь экипаж должен следовать инструкциям глав и охраны. Это не учебная тревога.", "Внимание! Код Дельта")
 	notify_station()
 
 #undef PSI_IMPLANT_AUTOMATIC
