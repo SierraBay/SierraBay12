@@ -33,6 +33,9 @@
 /datum/gear/shoes/flipflobsters_toeless
 	allowed_branches = CIVILIAN_BRANCHES
 
+/datum/gear/uniform/resomi/expedition
+	allowed_branches = list(/datum/mil_branch/expeditionary_corps)
+
 // Patches
 /datum/gear/accessory/cultex_patch
 	display_name = "Cultural Exchange patch"
