@@ -15,7 +15,7 @@
 /mob
 	var/ooc_notes = null
 
-/datum/preferences/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+/datum/preferences/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE, apply_persist = TRUE)
 	..()
 	character.ooc_notes = metadata
 
