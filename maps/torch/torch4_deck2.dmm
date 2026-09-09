@@ -16379,7 +16379,6 @@
 	dir = 1
 	},
 /obj/machinery/smartfridge/disks/permitted{
-	dir = 1;
 	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/components,/obj/item/stock_parts/computer/hard_drive/portable/design/exploration,/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,/obj/item/stock_parts/computer/hard_drive/portable/design/general,/obj/item/stock_parts/computer/hard_drive/portable/design/tool)
 	},
 /turf/simulated/floor/tiled/techfloor/grid,

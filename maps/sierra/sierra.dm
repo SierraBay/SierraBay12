@@ -146,6 +146,7 @@
 	#include "loadout/loadout_tactical.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
+	#include "../loadout_shared.dm"
 	#include "loadout/~defines.dm"
 
 	// --- MAP FILES --- //

@@ -24327,11 +24327,14 @@
 /obj/floor_decal/industrial/warning{
 	dir = 1
 	},
-/obj/structure/table/standard,
 /obj/structure/closet/shipping_wall/filled{
 	pixel_x = 26
 	},
 /obj/machinery/light,
+/obj/machinery/smartfridge/disks/permitted{
+	startswith = list(/obj/item/stock_parts/computer/hard_drive/portable/design/components,/obj/item/stock_parts/computer/hard_drive/portable/design/exploration,/obj/item/stock_parts/computer/hard_drive/portable/design/engineering,/obj/item/stock_parts/computer/hard_drive/portable/design/general,/obj/item/stock_parts/computer/hard_drive/portable/design/tool);
+	dir = 8
+	},
 /turf/simulated/floor/tiled/white,
 /area/rnd/development)
 "oPD" = (

@@ -158,6 +158,7 @@
 	#include "loadout/loadout_suit.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
+	#include "../loadout_shared.dm"
 	#include "loadout/~defines.dm"
 
 	#include "torch1_deck5.dmm"

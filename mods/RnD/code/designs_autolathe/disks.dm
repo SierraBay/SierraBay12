@@ -27,6 +27,7 @@
 		/datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_uzi,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_smg_topmounted,
+		/datum/design/autolathe/arms_ammo/hidden/magazine_smg_sol,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_arifle,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_bullpupheavy,
 		/datum/design/autolathe/arms_ammo/hidden/magazine_bullpuplight,

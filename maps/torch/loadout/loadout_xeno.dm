@@ -21,9 +21,6 @@
 /datum/gear/suit/unathi/savage_hunter
 	allowed_branches = CIVILIAN_BRANCHES
 
-/datum/gear/head/skrell_helmet
-	allowed_roles = ARMORED_ROLES
-
 /datum/gear/uniform/harness
 	allowed_branches = null
 

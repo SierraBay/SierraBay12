@@ -2,9 +2,6 @@
 	display_name = "utility uniform"
 	path = /obj/item/clothing/under/solgov/utility
 
-/datum/gear/uniform/roboticist_skirt
-	allowed_roles = list(/datum/job/roboticist)
-
 /datum/gear/uniform/sterile
 	allowed_roles = STERILE_ROLES
 
