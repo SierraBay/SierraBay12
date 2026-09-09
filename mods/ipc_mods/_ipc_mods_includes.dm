@@ -14,6 +14,7 @@
 #include "code/pictures.dm"
 #include "code/coolerbelt.dm"
 #include "code/prosthetics.dm"
+#include "code/crafting_prosthetics.dm"
 #include "code/roborepair.dm"
 #include "code/robosurgery.dm"
 #include "code/cargo.dm"
