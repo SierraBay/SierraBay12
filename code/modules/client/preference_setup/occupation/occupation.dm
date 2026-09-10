@@ -105,11 +105,15 @@
 	for(var/job_map in SSjobs.job_lists_by_map_name)
 
 		var/list/map_data = SSjobs.job_lists_by_map_name[job_map]
+		var/is_current_vessel = (GLOB.using_map.active_main_ship_descriptor == job_map)
 		if(isnull(pref.hiding_maps[job_map]))
-			pref.hiding_maps[job_map] = map_data["default_to_hidden"]
+			pref.hiding_maps[job_map] = is_current_vessel ? FALSE : map_data["default_to_hidden"]
 
 		. += "<hr><table width = '100%' style='font-size: 16px'><tr>"
-		. += "<td width = '50%' align = 'right'><b>[capitalize(job_map)]</b></td>"
+		. += "<td width = '50%' align = 'right'><b>[capitalize(job_map)]</b>"
+		if(is_current_vessel)
+			. += " <span style='color:#55cc55'>\[current vessel]</span>"
+		. += "</td>"
 		. += "<td width = '50%' align = 'left''><a href='byond://?src=\ref[src];toggle_map=[job_map]'>[pref.hiding_maps[job_map] ? "Show" : "Hide"]</a></td>"
 		. += "</tr></table>"
 

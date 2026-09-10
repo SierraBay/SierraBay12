@@ -14,9 +14,6 @@
 #undef LANGUAGE_MANTID_VOCAL
 #undef LANGUAGE_MANTID_BROADCAST
 
-//Species
-#undef SPECIES_MONARCH_WORKER
-#undef SPECIES_MONARCH_QUEEN
-#undef SPECIES_MANTID_ALATE
-#undef SPECIES_MANTID_GYNE
+// ALL_ASCENT_SPECIES is pack-local; species name macros live in master_defines and must stay defined
+// for ascent map packs (caulship/seedship jobs) compiled around this modpack.
 #undef ALL_ASCENT_SPECIES

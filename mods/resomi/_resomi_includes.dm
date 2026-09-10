@@ -15,6 +15,7 @@
 #include "code/clothing/under.dm"
 #include "code/datum/_defines.dm"
 #include "code/datum/body.dm"
+#include "code/datum/passport.dm"
 #include "code/datum/gear.dm"
 #include "code/datum/language.dm"
 #include "code/datum/misc.dm"

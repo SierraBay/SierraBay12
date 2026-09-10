@@ -10,6 +10,10 @@ SUBSYSTEM_DEF(ticker)
 	var/start_ASAP = FALSE          //the game will start as soon as possible, bypassing all pre-game nonsense
 	var/list/gamemode_vote_results  //Will be a list, in order of preference, of form list(config_tag = number of votes).
 	var/bypass_gamemode_vote = 0    //Intended for use with admin tools. Will avoid voting and ignore any results.
+	var/list/ship_vote_results      // Preference list from /datum/vote/ship.
+	var/bypass_ship_vote = 0
+	var/selected_ship_id            // Winning / fallback away-site template id for lobby_host.
+	var/ship_loading = FALSE        // TRUE while deferred main-ship load_new_z is running.
 
 	var/master_mode = "extended"    //The underlying game mode (so "secret" or the voted mode). Saved to default back to previous round's mode in case the vote failed. This is a config_tag.
 	var/datum/game_mode/mode        //The actual gamemode, if selected.
@@ -118,6 +122,42 @@ SUBSYSTEM_DEF(ticker)
 		Master.SetRunLevel(RUNLEVEL_SETUP)
 		return
 
+	if(!bypass_ship_vote && GLOB.using_map.ship_vote_enabled && !ship_vote_results && (pregame_timeleft <= config.vote_autogamemode_timeleft SECONDS))
+#ifndef UNIT_TEST
+		var/list/lobby_for_ship = lobby_players()
+		if (!length(lobby_for_ship))
+			pregame_timeleft = config.vote_period + 60 SECONDS
+			return
+#endif
+		var/preset_ship = consume_next_ship_id()
+		if (preset_ship)
+			selected_ship_id = preset_ship
+			ship_vote_results = list(preset_ship)
+			var/preset_name = preset_ship
+			for (var/site_name in SSmapping.away_sites_templates)
+				var/datum/map_template/ruin/away_site/site = SSmapping.away_sites_templates[site_name]
+				if (site.id == preset_ship)
+					preset_name = site.name
+					break
+			to_world(SPAN_NOTICE("Loading vessel from previous vote: <b>[preset_name]</b>."))
+			return
+		if(!SSvote.active_vote)
+			if (!SSvote.initiate_vote(/datum/vote/ship, automatic = 1))
+				ship_vote_results = list(GLOB.using_map.default_main_ship_id)
+				selected_ship_id = GLOB.using_map.default_main_ship_id
+		return
+
+	// Load voted ship outside SS fire (SSticker/SSvote are SS_NO_TICK_CHECK; load_new_z desyncs MC budgets).
+	if (GLOB.using_map.ship_vote_enabled && !GLOB.using_map.ship_loaded && !bypass_ship_vote)
+		if (ship_loading)
+			return
+		if (ship_vote_results)
+			ship_loading = TRUE
+			spawn(0)
+				ensure_main_ship_loaded()
+				ship_loading = FALSE
+			return
+
 	if(!bypass_gamemode_vote && (pregame_timeleft <= config.vote_autogamemode_timeleft SECONDS) && !gamemode_vote_results)
 #ifndef UNIT_TEST
 		var/list/lobby = lobby_players()
@@ -125,6 +165,8 @@ SUBSYSTEM_DEF(ticker)
 			pregame_timeleft = config.vote_period + 60 SECONDS
 			return
 #endif
+		if (GLOB.using_map.ship_vote_enabled && (!GLOB.using_map.ship_loaded || ship_loading) && !bypass_ship_vote)
+			return
 		if(!SSvote.active_vote)
 			SSvote.initiate_vote(/datum/vote/gamemode, automatic = 1)
 
@@ -139,6 +181,12 @@ SUBSYSTEM_DEF(ticker)
 			to_world("<b>No ready players.</b> Returning to pre-game lobby.")
 			return
 #endif
+
+	if (GLOB.using_map.ship_vote_enabled && !ensure_main_ship_loaded())
+		pregame_timeleft = 30 SECONDS
+		Master.SetRunLevel(RUNLEVEL_LOBBY)
+		to_world("<b>Failed to load the selected vessel.</b> Returning to pre-game lobby.")
+		return
 
 	switch(choose_gamemode())
 		if(CHOOSE_GAMEMODE_SILENT_REDO)
@@ -169,8 +217,7 @@ SUBSYSTEM_DEF(ticker)
 	equip_characters()
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.mind && !player_is_antag(H.mind, only_offstation_roles = 1))
-			var/datum/job/job = SSjobs.get_by_title(H.mind.assigned_role)
-			if(job && job.create_record)
+			if(should_create_crew_record(H))
 				CreateModularRecord(H)
 
 	callHook("roundstart")
@@ -191,10 +238,10 @@ SUBSYSTEM_DEF(ticker)
 
 	if(mode_finished && game_finished())
 		Master.SetRunLevel(RUNLEVEL_POSTGAME)
-		end_game_state = END_GAME_READY_TO_END
 		invoke_async(src, PROC_REF(declare_completion))
-		if(config.allow_map_switching && config.auto_map_vote && length(GLOB.all_maps) > 1)
-			SSvote.initiate_vote(/datum/vote/map/end_game, automatic = 1)
+		if (!SSvote.initiate_vote(/datum/vote/vessel/end_game, automatic = 1))
+			end_game_state = END_GAME_READY_TO_END
+		// Successful start sets END_GAME_AWAITING_MAP in /datum/vote/vessel/end_game/start_vote.
 
 	else if(mode_finished && (end_game_state <= END_GAME_NOT_OVER))
 		end_game_state = END_GAME_MODE_FINISH_DONE
@@ -270,6 +317,10 @@ SUBSYSTEM_DEF(ticker)
 	pregame_timeleft = SSticker.pregame_timeleft
 	gamemode_vote_results = SSticker.gamemode_vote_results
 	bypass_gamemode_vote = SSticker.bypass_gamemode_vote
+	ship_vote_results = SSticker.ship_vote_results
+	bypass_ship_vote = SSticker.bypass_ship_vote
+	selected_ship_id = SSticker.selected_ship_id
+	ship_loading = SSticker.ship_loading
 
 	master_mode = SSticker.master_mode
 	mode = SSticker.mode
@@ -586,8 +637,28 @@ Helpers
 	if(istype(SSvote.active_vote, /datum/vote/gamemode))
 		SSvote.cancel_vote(user)
 		bypass_gamemode_vote = 1
+	if(istype(SSvote.active_vote, /datum/vote/ship))
+		SSvote.cancel_vote(user)
+		bypass_ship_vote = 1
+	ensure_main_ship_loaded()
 	Master.SetRunLevel(RUNLEVEL_SETUP)
 	return 1
+
+
+/datum/controller/subsystem/ticker/proc/ensure_main_ship_loaded()
+	if (!GLOB.using_map.ship_vote_enabled)
+		return TRUE
+	if (GLOB.using_map.ship_loaded)
+		return TRUE
+	if (!selected_ship_id)
+		selected_ship_id = GLOB.using_map.default_main_ship_id
+	if (!ship_vote_results)
+		ship_vote_results = list(selected_ship_id)
+	var/datum/map/lobby_host/host = GLOB.using_map
+	if (!istype(host))
+		log_error("Ship vote enabled but using_map is not /datum/map/lobby_host.")
+		return FALSE
+	return host.load_voted_ship(selected_ship_id)
 
 
 /hook/roundstart/proc/PlayWelcomeSound()

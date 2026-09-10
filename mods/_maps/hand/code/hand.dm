@@ -48,6 +48,7 @@
 	prefix = "mods/_maps/hand/maps/"
 	suffixes = list("hand-1.dmm", "hand-2.dmm")
 	spawn_cost = 0.5
+	votable_as_main_ship = TRUE
 	player_cost = 7
 	spawn_weight = 1
 	shuttles_to_initialise = list(

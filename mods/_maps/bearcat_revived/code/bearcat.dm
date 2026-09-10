@@ -71,6 +71,7 @@
 	description = "A light freighter."
 	suffixes = list("bearcat_repaired-1.dmm", "bearcat_repaired-2.dmm")
 	spawn_cost = 2000 // спавн только вручную
+	votable_as_main_ship = TRUE
 	apc_test_exempt_areas = list(
 		/area/ship/scrap/maintenance/engine/port = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/maintenance/engine/starboard = NO_SCRUBBER|NO_VENT,
