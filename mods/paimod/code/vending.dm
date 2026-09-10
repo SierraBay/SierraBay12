@@ -11,6 +11,7 @@
 					/obj/item/paimod/memory/advanced			=	3,
 					/obj/item/paimod/memory/lambda			=	1
 					)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(/obj/item/device/paicard = 500,
 					/obj/item/paimod/special/advanced_holo		=	150,
 					/obj/item/paimod/holoskins/paiwoman		=	50,

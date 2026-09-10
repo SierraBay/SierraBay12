@@ -79,6 +79,7 @@
 		/obj/item/reagent_containers/food/drinks/cans/thirteenloko = 5,
 		/obj/item/reagent_containers/food/snacks/liquidfood = 5
 	)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/reagent_containers/food/drinks/cans/cola = 1,
 		/obj/item/reagent_containers/food/drinks/cans/space_mountain_wind = 1,
@@ -104,6 +105,7 @@
 	contraband = list(
 		/obj/item/reagent_containers/food/drinks/ice = 5
 	)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/reagent_containers/food/drinks/coffee = 3,
 		/obj/item/reagent_containers/food/drinks/tea = 3,
