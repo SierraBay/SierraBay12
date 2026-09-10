@@ -102,7 +102,7 @@
 
 /obj/structure/bed/chair/set_dir()
 	..()
-	if(buckled_mob)
+	if(buckled_mob && buckled_mob.dir != dir)
 		buckled_mob.set_dir(dir)
 
 /obj/structure/bed/chair/padded/red/New(newloc, newmaterial = DEFAULT_FURNITURE_MATERIAL)
