@@ -208,6 +208,9 @@
 	#include "../../mods/tajara/_tajara_includes.dm"
 	#include "species_xeno_restrictions.dm"
 
+	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
+
 	#define using_map_DATUM /datum/map/torch
 
 #elif !defined(MAP_OVERRIDE)

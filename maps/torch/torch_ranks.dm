@@ -14,6 +14,7 @@
 		/datum/mil_branch/alien,
 		/datum/mil_branch/skrell_fleet,
 		/datum/mil_branch/iccgn,
+		/datum/mil_branch/css,
 		/datum/mil_branch/scga,
 		/datum/mil_branch/auf
 	)
@@ -26,6 +27,7 @@
 		/datum/mil_branch/alien,
 		/datum/mil_branch/skrell_fleet,
 		/datum/mil_branch/iccgn,
+		/datum/mil_branch/css,
 		/datum/mil_branch/scga,
 		/datum/mil_branch/auf
 	)
