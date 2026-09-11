@@ -168,3 +168,18 @@
 	#define UNIT_TEST 1
 #endif
 //New aways testing mod
+
+// CARDIAC_OVERHAUL - Start
+// Cardiac rhythm states — electrical activity of the heart.
+#define RHYTHM_NSR       "Normal Sinus Rhythm"  // Normal heart function
+#define RHYTHM_TACHY     "Sinus Tachycardia"    // Fast but regular rhythm
+#define RHYTHM_BRADY     "Sinus Bradycardia"    // Slow but regular rhythm
+#define RHYTHM_VFIB      "Ventricular Fibrillation" // Chaotic electrical activity, no pumping
+#define RHYTHM_BLOCK     "Heart Block"           // Delayed/dropped beats
+#define RHYTHM_PEA       "Pulseless Electrical Activity" // Looks normal on ECG, but no mechanical pump
+#define RHYTHM_ASYSTOLE  "Asystole"             // No electrical activity at all (flatline)
+#define RHYTHM_STEMI     "Myocardial Infarction" // Myocardial infarction (heart attack)
+
+// Helper — does this rhythm produce a mechanical pulse (pump blood)?
+#define RHYTHM_HAS_PULSE(r) ((r) == RHYTHM_NSR || (r) == RHYTHM_TACHY || (r) == RHYTHM_BRADY || (r) == RHYTHM_BLOCK || (r) == RHYTHM_STEMI)
+// CARDIAC_OVERHAUL - End

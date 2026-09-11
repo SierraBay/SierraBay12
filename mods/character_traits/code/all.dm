@@ -119,3 +119,15 @@
 
 /datum/mod_trait/all/deafness/apply_trait(mob/living/carbon/human/H)
 	H.add_deafness()
+
+/datum/mod_trait/all/weak_heart
+	name = "Disease - Weak Heart"
+	description = "Ваше сердце слабое, мало-ли к чему это может привести."
+
+/datum/mod_trait/all/weak_heart/apply_trait(mob/living/carbon/human/H)
+	if(H.species && H.species.name == SPECIES_FBP)
+		return
+	if(H.client?.prefs?.organ_data && (H.client.prefs.organ_data[BP_CHEST] == "cyborg"))
+		return
+	H.weak_heart = TRUE
+	H.add_weak_heart()

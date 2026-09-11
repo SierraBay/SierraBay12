@@ -17,6 +17,7 @@
 	var/list/connected_displays = list()
 	var/list/data = list()
 	var/scan_data
+	var/active_tab = "vitals"	//[SIERRA-ADD]
 	var/obj/item/stock_parts/computer/hard_drive/portable/disk = null	//Stores the data disk.
 
 /obj/machinery/body_scanconsole/Initialize()
@@ -78,6 +79,7 @@
 	return ..()
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	data["active_tab"] = active_tab	//[SIERRA-ADD]
 	data["has_disk"] = !!disk
 	if(connected && connected.occupant)
 		data["scanEnabled"] = TRUE
@@ -104,6 +106,13 @@
 		ui.open()
 
 /obj/machinery/body_scanconsole/OnTopic(mob/user, href_list)
+	//[SIERRA-ADD]
+	if(href_list["set_tab"])
+		if(href_list["set_tab"] in list("vitals", "organs", "reagents", "trauma"))
+			active_tab = href_list["set_tab"]
+			return TOPIC_REFRESH
+		return TOPIC_HANDLED
+	//[/SIERRA-ADD]
 	if(href_list["scan"])
 		if (!connected.occupant)
 			to_chat(user, SPAN_WARNING("[icon2html(src, user)]The body scanner is empty."))

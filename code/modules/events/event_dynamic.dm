@@ -52,6 +52,9 @@ var/global/list/event_last_fired = list()
 	if(active_with_role["Medical"] > 0)
 		possibleEvents[/datum/event/radiation_storm] = active_with_role["Medical"] * 10
 		possibleEvents[/datum/event/spontaneous_appendicitis] = active_with_role["Medical"] * 10
+		// [SIERRA-ADD] - CARDIAC_OVERHAUL - Spontaneous heart attack event
+		possibleEvents[/datum/event/spontaneous_heart_attack] = active_with_role["Medical"] * 10
+		// [/SIERRA-ADD]
 
 	possibleEvents[/datum/event/prison_break] = active_with_role["Security"] * 50
 	if(active_with_role["Security"] > 0)
