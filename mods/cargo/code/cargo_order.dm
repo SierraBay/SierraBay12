@@ -766,8 +766,9 @@ var/global/list/cargo_item_icon_cache = list()
 	return FALSE
 
 /datum/computer_file/program/supply_order/proc/HandleCatalogTopic(list/href_list)
-	if("PRG_station" in href_list)
-		station = SSsupply.GetVisibleStationByUid(href_list["PRG_station"])
+	var/station_id = href_list["PRG_station"] || href_list["amp;PRG_station"]
+	if(station_id)
+		station = SSsupply.GetVisibleStationByUid(station_id)
 		SetChosenCategory()
 		goods_quantity_target = null
 		return TRUE
@@ -863,14 +864,19 @@ var/global/list/cargo_item_icon_cache = list()
 	if(..() || href_list["close"])
 		return TRUE
 	if(HandleTabTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleAccountTopic(usr, href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleCatalogTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleCartTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleOrderTopic(usr, href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	return FALSE
 

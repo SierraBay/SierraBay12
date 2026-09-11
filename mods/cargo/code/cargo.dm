@@ -547,6 +547,58 @@
 		)))
 	return result
 
+/datum/computer_file/program/supply/proc/GetGoodIconBase64(item_path)
+	if(!ispath(item_path, /atom/movable))
+		return ""
+	var/cached = cargo_item_icon_cache[item_path]
+	if(!isnull(cached))
+		return cached
+	if(!GLOB.iconCache)
+		return ""
+	var/atom/movable/dummy = item_path
+	var/item_icon = initial(dummy.icon)
+	var/item_state = initial(dummy.icon_state)
+	if(!item_icon)
+		cargo_item_icon_cache[item_path] = ""
+		return ""
+	var/list/valid_states
+	if(isfile(item_icon) || isicon(item_icon))
+		valid_states = icon_states(item_icon)
+	var/icon/I
+	if(item_state && islist(valid_states) && (item_state in valid_states))
+		I = icon(item_icon, item_state, SOUTH, 1)
+	else if(islist(valid_states) && length(valid_states))
+		I = icon(item_icon, valid_states[1], SOUTH, 1)
+	else
+		I = icon(item_icon, item_state, SOUTH, 1)
+	if(!isicon(I))
+		cargo_item_icon_cache[item_path] = ""
+		return ""
+	var/b64 = icon2base64(I, "cargo_[md5("[item_path]")]")
+	var/icon_url = b64 ? "data:image/png;base64,[b64]" : ""
+	cargo_item_icon_cache[item_path] = icon_url
+	return icon_url
+
+/datum/computer_file/program/supply/proc/GetCategoryIcon(category_name)
+	switch(lowertext(category_name))
+		if("supply") return "📦"
+		if("operations") return "📋"
+		if("mining") return "💎"
+		if("robotics") return "🤖"
+		if("engineering") return "🔧"
+		if("atmospherics") return "🌐"
+		if("hospitality") return "🍴"
+		if("custodial") return "🧹"
+		if("hydroponics") return "🌿"
+		if("recreation") return "🎲"
+		if("medical") return "🩺"
+		if("cartridges") return "💾"
+		if("science") return "🔬"
+		if("security") return "🛡️"
+		if("weaponry") return "🔫"
+		else
+			return "📁"
+
 /datum/computer_file/program/supply/proc/SerializeCategories(datum/trading_station/target_station = null)
 	var/list/result = list()
 	if(!istype(target_station))
@@ -556,6 +608,7 @@
 	for(var/category_name in target_station.inventory)
 		result.Add(list(list(
 			"name" = category_name,
+			"icon" = GetCategoryIcon(category_name),
 			"selected" = category_name == chosen_category
 		)))
 	return result
@@ -611,6 +664,7 @@
 	if(block_reason)
 		return result
 	var/can_add_goods = istype(account)
+	var/list/category_cart = islist(shopping_list[target_station]) ? shopping_list[target_station][chosen_category] : null
 	for(var/good_id in category)
 		var/path = target_station.GetGoodPath(chosen_category, good_id)
 		if(!ispath(path, /atom/movable))
@@ -619,15 +673,21 @@
 		var/basic_price = SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
 		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
 		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, chosen_category)
+		var/in_cart = islist(category_cart) ? (category_cart[good_id] || 0) : 0
+		var/atom/movable/item_type = path
+		var/desc_text = initial(item_type.desc) || ""
 		result.Add(list(list(
 			"id" = good_id,
 			"name" = target_station.GetGoodName(chosen_category, good_id),
+			"desc" = desc_text,
 			"stock" = stock,
 			"price" = round(price, 0.01),
 			"sell_price" = round(sell_price, 0.01),
 			"markup_text" = GetGoodMarkupText(basic_price, price),
 			"can_add" = can_add_goods && stock > 0,
-			"quantity_form_open" = goods_quantity_target == good_id
+			"quantity_form_open" = goods_quantity_target == good_id,
+			"icon" = GetGoodIconBase64(path),
+			"in_cart_amount" = in_cart
 		)))
 	return result
 
@@ -636,6 +696,7 @@
 	if(!IsSendingSelected())
 		return result
 	var/datum/trading_station/target_station = EnsureSelectedStation()
+	var/list/grouped = list()
 	for(var/atom/movable/exported as anything in sending.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
 			continue
@@ -644,11 +705,22 @@
 		var/cost = SSsupply.GetExportValue(exported, target_station)
 		if(!cost)
 			continue
-		result.Add(list(list(
-			"name" = exported.name,
-			"value" = round(cost, 0.01),
-			"target_station" = target_station ? target_station.name : "Trade Network"
-		)))
+		var/item_name = exported.name
+		if(!grouped[item_name])
+			grouped[item_name] = list(
+				"name" = item_name,
+				"amount" = 1,
+				"unit_value" = round(cost, 0.01),
+				"value" = round(cost, 0.01),
+				"target_station" = target_station ? target_station.name : "Trade Network"
+			)
+		else
+			var/list/entry = grouped[item_name]
+			entry["amount"] += 1
+			entry["value"] = round(entry["value"] + cost, 0.01)
+
+	for(var/item_name in grouped)
+		result.Add(list(grouped[item_name]))
 	return result
 
 /datum/computer_file/program/supply/proc/SerializeShopListGroups(list/shop_list, buyer_faction = null, list/price_snapshot = null)
@@ -710,11 +782,19 @@
 		if(!islist(order_data))
 			continue
 		var/datum/money_account/requestor = order_data["requesting_acct"]
+		var/buyer_faction = order_data["buyer_faction"] || FACTION_INDEPENDENT
+		var/list/price_snapshot = order_data["price_snapshot"]
 		result.Add(list(list(
 			"id" = order_id,
 			"requestor_name" = requestor ? requestor.owner_name : "Unknown",
+			"buyer_faction" = buyer_faction,
+			"reason" = order_data["reason"] || "No reason provided.",
+			"cost" = round(order_data["cost"], 0.01),
+			"fee" = round(order_data["fee"], 0.01),
 			"total" = round(order_data["cost"] + order_data["fee"], 0.01),
-			"selected" = current_order == order_id
+			"selected" = current_order == order_id,
+			"item_count" = SSsupply.CollectCountsFrom(order_data["contents"]),
+			"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
 		)))
 		total_serialized++
 	return result
@@ -843,7 +923,7 @@
 			count++
 	return count
 
-/datum/computer_file/program/supply/proc/PopulateBaseTradeUiData(list/data)
+/datum/computer_file/program/supply/proc/PopulateBaseTradeUiData(list/data, mob/user = null)
 	var/receiving_id = GetBeaconDisplayId(receiving)
 	var/sending_id = GetBeaconDisplayId(sending)
 	data["src"] = ref(src)
@@ -863,8 +943,35 @@
 	data["goods_quantity_target"] = goods_quantity_target || ""
 	data["cart_form_mode"] = cart_form_mode || ""
 	data["cart_count"] = SSsupply.CollectCountsFrom(shopping_list)
-	data["cart_total"] = round(SSsupply.CollectPriceForList(shopping_list, faction), 0.01)
+	var/cart_total = SSsupply.CollectPriceForList(shopping_list, faction)
+	data["cart_total"] = round(cart_total, 0.01)
+	data["cart_fee"] = round(cart_total * SSsupply.handling_fee, 0.01)
+	var/cart_range_block = receiving ? SSsupply.GetShopListTradeRangeBlockReason(receiving, shopping_list) : null
+	data["cart_trade_block_reason"] = cart_range_block || ""
+	var/orders_locked = (world.time < order_cooldown_until)
+	data["orders_locked"] = orders_locked
+	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_range_block
+	data["can_build_order"] = istype(account) && length(shopping_list) && !orders_locked
 	data["order_count"] = length(SSsupply.order_queue)
+	var/pending_total = 0
+	for(var/order_id as anything in SSsupply.order_queue)
+		var/list/order_entry = SSsupply.order_queue[order_id]
+		if(islist(order_entry))
+			pending_total += (order_entry["cost"] + order_entry["fee"])
+	data["pending_orders_total"] = round(pending_total, 0.01)
+	var/cooldown_sec = (sending && sending.export_cooldown > world.time) ? round((sending.export_cooldown - world.time) / 10) : 0
+	data["export_cooldown_remaining"] = cooldown_sec
+	data["export_cooldown_text"] = cooldown_sec ? "[cooldown_sec]s" : "Ready"
+	var/user_greeting = ""
+	if(istype(user))
+		var/obj/item/card/id/I = user.GetIdCard()
+		if(istype(I))
+			user_greeting = "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)]"
+			if(I.military_branch)
+				user_greeting += " ([uppertext(I.military_branch)])"
+		else
+			user_greeting = "WELCOME, [uppertext(user.name)]"
+	data["user_greeting"] = user_greeting
 
 /datum/computer_file/program/supply/proc/BuildSettingsScreenData(list/data)
 	var/datum/money_account/master_account = GetMasterAccount()
@@ -931,6 +1038,7 @@
 	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_trade_block
 	data["can_build_order"] = istype(account) && length(shopping_list) && !orders_locked
 	data["can_save_cart"] = !!length(shopping_list)
+	data["saved_carts"] = SerializeSavedCarts()
 	data["orders_locked"] = orders_locked
 
 /datum/computer_file/program/supply/proc/BuildOrdersScreenData(list/data, mob/user)
@@ -968,7 +1076,7 @@
 /datum/computer_file/program/supply/proc/BuildTradeUiData(mob/user)
 	var/list/data = get_header_data() || list()
 	ValidateSelectedTradeBeacons()
-	PopulateBaseTradeUiData(data)
+	PopulateBaseTradeUiData(data, user)
 	switch(trade_screen)
 		if(SETTINGS_SCREEN)
 			BuildSettingsScreenData(data)
@@ -1049,8 +1157,9 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/HandleCatalogTopic(list/href_list)
-	if("PRG_station" in href_list)
-		station = SSsupply.GetVisibleStationByUid(href_list["PRG_station"])
+	var/station_id = href_list["PRG_station"] || href_list["amp;PRG_station"]
+	if(station_id)
+		station = SSsupply.GetVisibleStationByUid(station_id)
 		SetChosenCategory()
 		CloseGoodsQuantityForm()
 		return TRUE
@@ -1095,6 +1204,9 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/ResolveCartAddQuantity(list/href_list)
+	if("PRG_cart_add_amount" in href_list)
+		var/amount = text2num(href_list["PRG_cart_add_amount"])
+		return (isnum(amount) && amount > 0) ? round(amount) : 0
 	if("PRG_cart_add_input" in href_list)
 		var/raw_amount = input(usr, "How many do you want to add?", "Trade", 2) as num|null
 		return (isnum(raw_amount) && raw_amount > 0) ? round(raw_amount) : 0
@@ -1133,7 +1245,9 @@
 	var/target_category = href_list["PRG_cart_category_name"]
 	var/target_good_id = href_list["PRG_cart_good_id"]
 	var/remove_amount = 1
-	if("PRG_cart_remove_amount" in href_list)
+	if("PRG_cart_remove_all" in href_list)
+		remove_amount = 1000000
+	else if("PRG_cart_remove_amount" in href_list)
 		var/parsed_amount = text2num(href_list["PRG_cart_remove_amount"])
 		if(!isnum(parsed_amount) || parsed_amount <= 0)
 			return TRUE
@@ -1195,6 +1309,26 @@
 /datum/computer_file/program/supply/proc/HandleCartTopic(list/href_list)
 	if(("PRG_cart_add" in href_list) || ("PRG_cart_add_input" in href_list) || ("PRG_cart_add_good" in href_list) || ("PRG_cart_add_form" in href_list))
 		return HandleCartAdd(href_list)
+	if("PRG_cart_remove_good" in href_list)
+		if(istype(station) && chosen_category)
+			RemoveFromShopList(href_list["PRG_cart_remove_good"], 1, station, chosen_category)
+		return TRUE
+	if("PRG_cart_set_form" in href_list)
+		var/good_id = href_list["PRG_cart_set_form"]
+		var/set_amount = text2num(href_list["PRG_cart_set_amount"])
+		if(isnum(set_amount) && set_amount >= 0 && istype(station) && chosen_category)
+			var/stock = station.GetGoodAmount(chosen_category, good_id)
+			var/current_in_cart = 0
+			var/list/category_cart = islist(shopping_list[station]) ? shopping_list[station][chosen_category] : null
+			if(islist(category_cart))
+				current_in_cart = category_cart[good_id] || 0
+			var/clamped = min(stock, round(set_amount))
+			if(clamped > current_in_cart)
+				AddToShopList(good_id, clamped - current_in_cart, stock)
+			else if(clamped < current_in_cart)
+				RemoveFromShopList(good_id, current_in_cart - clamped, station, chosen_category)
+			CloseGoodsQuantityForm()
+		return TRUE
 	if("PRG_cart_remove_direct" in href_list)
 		return HandleCartRemove(href_list)
 	if("PRG_cart_reset" in href_list)
@@ -1418,22 +1552,31 @@
 		return TRUE
 	ValidateSelectedTradeBeacons()
 	if(HandleScreenTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleAccountTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleCatalogTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleBeaconTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleCartTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleTradeTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleContractTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandleOrderTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	if(HandlePrintTopic(href_list))
+		SSnano.update_uis(src)
 		return TRUE
 	return FALSE
 

@@ -70,6 +70,68 @@
 	pass("Legacy stations imported supply-pack contents.")
 	return 1
 
+/datum/unit_test/cargo_legacy_good_names_test
+	name = "CARGO: Legacy stations generate descriptive names for cartridges, seeds, and accessories"
+
+/datum/unit_test/cargo_legacy_good_names_test/start_test()
+	var/datum/trading_station/med_station = SSsupply.GetStationByUid("legacy_medicine")
+	if(!istype(med_station))
+		fail("Legacy medicine station was not initialized.")
+		return 1
+
+	for(var/cat_name in med_station.inventory)
+		var/list/goods = med_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = med_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/reagent_containers/chem_disp_cartridge))
+				var/good_name = med_station.GetGoodName(cat_name, good_id)
+				if(good_name == "chemical dispenser cartridge")
+					var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = good_path
+					if(initial(cartridge.spawn_reagent))
+						fail("Cartridge with reagent [initial(cartridge.spawn_reagent)] has generic name '[good_name]'.")
+						return 1
+
+	var/datum/trading_station/service_station = SSsupply.GetStationByUid("legacy_service")
+	if(!istype(service_station))
+		fail("Legacy service station was not initialized.")
+		return 1
+
+	for(var/cat_name in service_station.inventory)
+		var/list/goods = service_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = service_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/seeds) && good_path != /obj/item/seeds && good_path != /obj/item/seeds/random)
+				var/obj/item/seeds/seed_item = good_path
+				if(initial(seed_item.seed_type))
+					var/good_name = service_station.GetGoodName(cat_name, good_id)
+					if(good_name == "packet of seeds")
+						fail("Seed [good_path] with seed_type '[initial(seed_item.seed_type)]' has generic name '[good_name]'.")
+						return 1
+
+	var/datum/trading_station/sec_station = SSsupply.GetStationByUid("legacy_security")
+	if(!istype(sec_station))
+		fail("Legacy security station was not initialized.")
+		return 1
+
+	for(var/cat_name in sec_station.inventory)
+		var/list/goods = sec_station.inventory[cat_name]
+		if(!islist(goods))
+			continue
+		for(var/good_id in goods)
+			var/good_path = sec_station.GetGoodPath(cat_name, good_id)
+			if(ispath(good_path, /obj/item/clothing/accessory/arm_guards/blue))
+				var/good_name = sec_station.GetGoodName(cat_name, good_id)
+				if(good_name == "arm guards")
+					fail("Blue arm guards have generic name '[good_name]'.")
+					return 1
+
+	pass("Legacy stations generated descriptive names for cartridges, seeds, and accessories.")
+	return 1
+
 /datum/trading_station/unit_test_duplicate_pricing
 	name = "Unit Test Trader"
 	desc = "Trade station used for cargo unit tests."
@@ -456,7 +518,9 @@
 	var/turf/adjacent_turf = null
 
 	for(var/turf/candidate as anything in test_station.GetOvermapSpawnCandidateTurfs(current_sector.z))
-		for(var/turf/neighbor as anything in orange(1, candidate))
+		for(var/turf/neighbor as anything in RANGE_TURFS(candidate, 1))
+			if(neighbor == candidate)
+				continue
 			if(test_station.CanUseOvermapSpawnLocation(neighbor))
 				hazard_turf = candidate
 				adjacent_turf = neighbor

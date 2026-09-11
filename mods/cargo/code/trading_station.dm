@@ -201,7 +201,9 @@
 	if(length(overmap_event_handler.hazard_by_turf[candidate]))
 		return FALSE
 	if(hazard_buffer > 0)
-		for(var/turf/nearby as anything in orange(hazard_buffer, candidate))
+		for(var/turf/nearby as anything in RANGE_TURFS(candidate, hazard_buffer))
+			if(nearby == candidate)
+				continue
 			if(length(overmap_event_handler.hazard_by_turf[nearby]))
 				return FALSE
 	return TRUE
@@ -258,7 +260,9 @@
 /datum/trading_station/proc/GetOpenSpaceScore(turf/candidate)
 	ASSERT(istype(candidate, /turf))
 	var/score = 0
-	for(var/turf/nearby as anything in orange(2, candidate))
+	for(var/turf/nearby as anything in RANGE_TURFS(candidate, 2))
+		if(nearby == candidate)
+			continue
 		if(!istype(nearby, /turf/unsimulated/map) || istype(nearby, /turf/unsimulated/map/edge))
 			continue
 		if(locate(/obj/overmap/visitable) in nearby)
@@ -471,10 +475,71 @@
 	return "[uppertext(copytext(root_name, 1, 2))][copytext(root_name, 2)]"
 
 /datum/trading_station/proc/GetLegacyGoodName(singleton/hierarchy/supply_pack/supply_pack, item_path, item_count)
+	if(istype(supply_pack) && length(supply_pack.contains) == 1 && supply_pack.name)
+		return supply_pack.name
+
+	var/specific_name = ResolveSpecificItemName(item_path)
+	if(specific_name)
+		return specific_name
+
 	if(istype(supply_pack) && item_count == 1 && supply_pack.name)
 		return supply_pack.name
+
 	var/atom/movable/item_type = item_path
 	return ispath(item_path, /atom/movable) ? initial(item_type.name) : null
+
+/datum/trading_station/proc/ResolveSpecificItemName(item_path)
+	if(!ispath(item_path, /atom/movable))
+		return null
+
+	if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
+		return ResolveCartridgeName(item_path)
+	if(ispath(item_path, /obj/item/seeds))
+		return ResolveSeedName(item_path)
+	if(ispath(item_path, /obj/item/ammobox))
+		return ResolveAmmoBoxName(item_path)
+	if(ispath(item_path, /obj/item/ammo_magazine))
+		return ResolveMagazineName(item_path)
+	return null
+
+/datum/trading_station/proc/ResolveCartridgeName(item_path)
+	var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
+	var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
+	if(ispath(reagent_type, /datum/reagent))
+		return "[initial(cartridge.name)] ([initial(reagent_type.name)])"
+	return null
+
+/datum/trading_station/proc/ResolveSeedName(item_path)
+	if(item_path == /obj/item/seeds/random)
+		return "packet of random seeds"
+	var/obj/item/seeds/seed_item = item_path
+	var/seed_key = initial(seed_item.seed_type)
+	if(!seed_key)
+		return null
+	var/datum/seed/seed_datum = SSplants?.seeds?[seed_key]
+	if(seed_datum?.seed_name && seed_datum?.seed_noun)
+		var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
+		return "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
+	return "packet of [seed_key] seeds"
+
+/datum/trading_station/proc/ResolveAmmoBoxName(item_path)
+	var/obj/item/ammobox/box_item = item_path
+	var/obj/item/ammo_casing/casing = initial(box_item.ammo_type)
+	if(!ispath(casing, /obj/item/ammo_casing))
+		return null
+	var/casing_desc = _get_ammo_casing_name(casing)
+	if(casing_desc)
+		return "[initial(box_item.name)] - [casing_desc]"
+	if(initial(casing.name))
+		return "[initial(casing.name)] box"
+	return null
+
+/datum/trading_station/proc/ResolveMagazineName(item_path)
+	var/obj/item/ammo_magazine/mag_item = item_path
+	var/list/labels = initial(mag_item.labels)
+	if(length(labels))
+		return "[initial(mag_item.name)] ([jointext(labels, ", ")])"
+	return null
 
 /datum/trading_station/proc/RegisterLegacyPackItem(list/target_inventory, category_name, item_path, singleton/hierarchy/supply_pack/supply_pack, item_count)
 	if(!islist(target_inventory) || !istext(category_name) || !istype(supply_pack) || !ispath(item_path, /atom/movable))
