@@ -145,7 +145,7 @@
 	var/static/datum/announcement/priority/security/security_announcement_delta = new(do_log = 0, do_newscast = 1, new_sound = sound('sound/effects/siren.ogg'))
 
 /singleton/security_level/default/torchdept/code_delta/switching_up_to()
-	security_announcement_delta.Announce("Внимание всему персоналу! На судне обнаружено взрывное устройство большой мощности с активированным обратным отсчетом. Весь экипаж должен следовать инструкциям глав и охраны. Это не учебная тревога.", "Внимание! Код Дельта")
+	security_announcement_delta.Announce("Внимание всему персоналу! Код Дельта. Устройство самоуничтожения судна приведено в боевую готовность. Это не учебная тревога.", "Внимание! Код Дельта")
 	notify_station()
 
 #undef PSI_IMPLANT_AUTOMATIC

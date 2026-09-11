@@ -311,6 +311,8 @@
 
 	var/static/enter_allowed = TRUE
 
+	var/static/observer_spawn_allowed = FALSE
+
 	var/static/player_limit = FALSE
 
 	var/static/use_irc_bot = FALSE

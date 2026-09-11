@@ -1188,6 +1188,17 @@ GLOBAL_VAR_AS(skip_allow_lists, FALSE)
 	log_and_message_admins("toggled respawn to [config.abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 
+/datum/admins/proc/toggleobserverjoin()
+	set category = "Server"
+	set desc="People can't join as observers"
+	set name="Toggle Observe"
+	config.observer_spawn_allowed = !(config.observer_spawn_allowed)
+	if (!(config.observer_spawn_allowed))
+		to_world("<B>New players may no longer join as observers.</B>")
+	else
+		to_world("<B>New players may now join as observers.</B>")
+	log_and_message_admins("[key_name_admin(usr)] toggled new player observer joining.")
+
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start/end"

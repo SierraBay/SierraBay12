@@ -51,7 +51,9 @@
 		/singleton/species/unathi       = list(/datum/mil_branch/civilian, /datum/mil_branch/expeditionary_corps),
 		/singleton/species/unathi/yeosa = list(/datum/mil_branch/civilian, /datum/mil_branch/expeditionary_corps),
 		/singleton/species/adherent     = list(/datum/mil_branch/civilian),
-		/singleton/species/vox          = list(/datum/mil_branch/alien)
+		/singleton/species/vox          = list(/datum/mil_branch/alien),
+		/singleton/species/resomi       = list(/datum/mil_branch/civilian, /datum/mil_branch/expeditionary_corps),
+		/singleton/species/tajaran      = list(/datum/mil_branch/civilian, /datum/mil_branch/expeditionary_corps)
 	)
 
 	species_to_rank_blacklist = list(

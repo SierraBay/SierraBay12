@@ -14013,8 +14013,8 @@
 /obj/structure/cable/green,
 /obj/floor_decal/industrial/outline/grey,
 /obj/structure/table/rack,
-/obj/item/storage/box/ammo/smg,
-/obj/item/storage/box/ammo/smg,
+/obj/item/storage/box/ammo/smg_sol,
+/obj/item/storage/box/ammo/smg_sol,
 /turf/simulated/floor/tiled/dark,
 /area/security/armoury)
 "aXb" = (
@@ -25260,6 +25260,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/monotile,
 /area/security/detectives_office)
 "pWb" = (
@@ -26882,9 +26883,9 @@
 /obj/floor_decal/techfloor{
 	dir = 10
 	},
-/obj/structure/table/rack,
 /obj/item/gun/energy/laser,
 /obj/item/gun/energy/laser,
+/obj/structure/closet/secure_closet/guncabinet,
 /turf/simulated/floor/tiled/dark,
 /area/security/secure_storage)
 "rLb" = (
