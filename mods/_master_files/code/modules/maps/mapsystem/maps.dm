@@ -1,5 +1,8 @@
 // calculating a difference between last online and real players
 // to override player count budget in away sites generation
+/datum/map
+	var/trade_faction = FACTION_INDEPENDENT
+
 /datum/map/build_away_sites()
 	get_previous_online()
 	..()

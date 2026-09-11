@@ -1,383 +1,1606 @@
-#define SUPPLY_LIST_ID_CART 1
-#define SUPPLY_LIST_ID_REQUEST 2
-#define SUPPLY_LIST_ID_DONE 3
-#define CARGO_POINT_TO_THALLER 15	// Если кому то когда то захочется поменять курс таллера, менять тут, и в mods\cargo\code\cargo_controller.dm
+#define SETTINGS_SCREEN "settings"
+#define GOODS_SCREEN "goods"
+#define EXPORT_SCREEN "export"
+#define CART_SCREEN "cart"
+#define ORDER_SCREEN "orders"
+#define CONTRACT_SCREEN "contracts"
+#define SAVED_SCREEN "saved"
+#define LOG_SCREEN "logs"
+#define LOG_SHIPPING "Shipping"
+#define LOG_EXPORT "Export"
+#define LOG_ORDER "Order"
+#define LOG_CONTRACT "Contract"
 
-/datum/supply_order
-	var/accountnubmer = null //аккаунт, с которого списали деньги
-	var/payer = null
-	var/sum_money = 0 //сумма, списанная с аккаунта
+/datum/computer_file/program/supply
+	filename = "supply"
+	filedesc = "Supply Management"
+	nanomodule_path = null
+	ui_header = null
+	program_icon_state = "supply"
+	program_key_state = "rd_key"
+	program_menu_icon = "cart"
+	extended_desc = "Trade network management for purchasing, exporting, and approving supply orders."
+	size = 21
+	available_on_ntnet = TRUE
+	requires_ntnet = FALSE
+	category = PROG_SUPPLY
+	usage_flags = PROGRAM_ALL
+	required_access = list(access_cargo, access_qm, access_bridge)
 
-/datum/nano_module/program/supply
-	var/card_inserted
-	var/card_use = FALSE
-	var/datum/money_account/custom_account
-	var/money
-	var/datum/extension/interactive/ntos/os
-	var/obj/item/stock_parts/computer/card_slot/card_slot
+	var/faction = FACTION_INDEPENDENT
+	var/trade_screen = GOODS_SCREEN
+	var/log_screen = LOG_SHIPPING
 
-/datum/nano_module/program/supply/print_order(datum/supply_order/O, mob/user)
-	if(!O)
+	var/obj/machinery/trade_beacon/sending/sending
+	var/obj/machinery/trade_beacon/receiving/receiving
+	var/datum/money_account/account
+
+	var/list/shopping_list = list()
+	var/list/saved_shopping_lists = list()
+	var/saved_cart_id = 0
+
+	var/datum/trading_station/station
+	var/chosen_category
+	var/current_order
+	var/order_cooldown_until = 0
+	var/list/known_market_intel = list()
+
+	var/goods_quantity_target
+	var/cart_form_mode
+	var/trade_catalog_view_distance = 6
+
+/datum/computer_file/program/supply/can_run(mob/living/user, loud = FALSE, access_to_check)
+	if(!requires_access_to_run)
+		return TRUE
+	if(!access_to_check)
+		access_to_check = required_access
+	if(!access_to_check)
+		return TRUE
+	if(isghost(user) && check_rights(R_ADMIN, 0, user))
+		return TRUE
+	if(!istype(user))
+		return FALSE
+	var/obj/item/card/id/I = user.GetIdCard()
+	if(!I)
+		if(loud)
+			to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+		return FALSE
+	if(islist(access_to_check))
+		for(var/acc in access_to_check)
+			if(acc in I.access)
+				return TRUE
+	else if(access_to_check in I.access)
+		return TRUE
+	if(loud)
+		to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"Access Denied\" warning."))
+	return FALSE
+
+/datum/computer_file/program/supply/Destroy()
+	sending = null
+	receiving = null
+	account = null
+	station = null
+	current_order = null
+	if(shopping_list)
+		ClearShopList(shopping_list)
+		shopping_list = null
+	if(saved_shopping_lists)
+		for(var/name in saved_shopping_lists)
+			ClearShopList(saved_shopping_lists[name])
+		saved_shopping_lists.Cut()
+		saved_shopping_lists = null
+	if(known_market_intel)
+		for(var/station_uid in known_market_intel)
+			var/list/intel = known_market_intel[station_uid]
+			if(islist(intel))
+				var/list/quotes = intel["quotes"]
+				if(islist(quotes))
+					quotes.Cut()
+				intel.Cut()
+		known_market_intel.Cut()
+		known_market_intel = null
+	return ..()
+
+/datum/computer_file/program/supply/New()
+	..()
+	if(GLOB.using_map?.trade_faction)
+		faction = GLOB.using_map.trade_faction
+
+/datum/computer_file/program/supply/on_startup(mob/living/user, datum/extension/interactive/ntos/new_host)
+	. = ..()
+	if(.)
+		if(GLOB.using_map?.trade_faction)
+			faction = GLOB.using_map.trade_faction
+
+/datum/computer_file/program/supply/process_tick()
+	..()
+	if(length(SSsupply.order_queue))
+		ui_header = "supply_new_order.gif"
+	else if(length(shopping_list))
+		ui_header = "supply_awaiting_delivery.gif"
+	else
+		ui_header = "supply_idle.gif"
+
+/datum/computer_file/program/supply/proc/SetChosenCategory(value)
+	if(!istype(station))
+		chosen_category = null
 		return
+	if(value && (value in station.inventory))
+		chosen_category = value
+		return
+	var/index = isnum(value) ? value : (istext(value) ? text2num(value) : null)
+	if(isnum(index))
+		index = round(index)
+		if(index >= 1 && index <= length(station.inventory))
+			chosen_category = station.inventory[index]
+			return
+	if(length(station.inventory))
+		chosen_category = station.inventory[1]
+	else
+		chosen_category = null
 
-	var/t = ""
-	t += "<h3>[GLOB.using_map.station_name] Supply Requisition Reciept</h3><hr>"
-	t += "INDEX: #[O.ordernum]<br>"
-	t += "TIME: [O.timestamp]<br>"
-	t += "REQUESTED BY: [O.orderedby]<br>"
-	t += "PAID BY: [O.payer]<br>"
-	t += "RANK: [O.orderedrank]<br>"
-	t += "REASON: [O.reason]<br>"
-	t += "SUPPLY CRATE TYPE: [O.object.name]<br>"
-	t += "ACCESS RESTRICTION: [get_access_desc(O.object.access)]<br>"
-	t += "CONTENTS:<br>"
-	t += O.object.manifest
-	t += "<hr>"
-	print_text(t, user)
+/datum/computer_file/program/supply/proc/CopyShopList(list/source)
+	var/list/copied = list()
+	if(!islist(source))
+		return copied
+	for(var/datum/trading_station/target_station as anything in source)
+		var/list/categories = source[target_station]
+		if(!islist(categories))
+			continue
+		var/list/category_copy = list()
+		for(var/category_name in categories)
+			var/list/goods = categories[category_name]
+			if(!islist(goods))
+				continue
+			category_copy[category_name] = goods.Copy()
+		if(length(category_copy))
+			copied[target_station] = category_copy
+	return copied
 
+/datum/computer_file/program/supply/proc/OpenShopList(datum/trading_station/target_station = station, target_category = chosen_category)
+	if(!istype(target_station) || !target_category)
+		return null
+	if(!islist(shopping_list[target_station]))
+		shopping_list[target_station] = list()
+	var/list/categories = shopping_list[target_station]
+	if(!islist(categories[target_category]))
+		categories[target_category] = list()
+	return categories[target_category]
 
-/datum/nano_module/program/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
-	var/list/data = host.initial_data(program)
-	var/is_admin = emagged || check_access(user, admin_access) || istype(user, /mob/living/silicon/ai)
-	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
-	if(!LAZYLEN(category_names) || !LAZYLEN(category_contents) || current_security_level != security_state.current_security_level || emagged_memory != emagged )
-		generate_categories()
-		current_security_level = security_state.current_security_level
-		emagged_memory = emagged
+/datum/computer_file/program/supply/proc/SanitizeShopList()
+	for(var/datum/trading_station/target_station as anything in shopping_list.Copy())
+		if(!istype(target_station) || QDELETED(target_station))
+			shopping_list -= target_station
+			continue
+		var/list/categories = shopping_list[target_station]
+		if(!islist(categories))
+			shopping_list -= target_station
+			continue
+		for(var/category_name in categories.Copy())
+			var/list/goods = categories[category_name]
+			if(!islist(goods) || !length(goods))
+				categories -= category_name
+		if(!length(categories))
+			shopping_list -= target_station
 
-	data["is_admin"] = is_admin
-	if(is_admin)
-		data["shopping_cart_length"] = length(SSsupply.shoppinglist)
-		data["request_length"] = length(SSsupply.requestlist)
-	data["screen"] = screen
-	data["credits"] = "[department_accounts["Снабжения"].money]"
+/datum/computer_file/program/supply/proc/AddToShopList(good_id, amount, limit)
+	if(!good_id || !isnum(amount) || amount <= 0)
+		return
+	var/list/inventory_list = OpenShopList()
+	if(!islist(inventory_list))
+		return
+	inventory_list[good_id] = (inventory_list[good_id] || 0) + round(amount)
+	if(limit && inventory_list[good_id] > limit)
+		inventory_list[good_id] = limit
+
+/datum/computer_file/program/supply/proc/RemoveFromShopList(good_id, amount, datum/trading_station/target_station = station, target_category = chosen_category)
+	if(!good_id || !isnum(amount) || amount <= 0)
+		return
+	var/list/inventory_list = OpenShopList(target_station, target_category)
+	if(!islist(inventory_list) || !(good_id in inventory_list))
+		return
+	inventory_list[good_id] -= round(amount)
+	if(inventory_list[good_id] < 1)
+		inventory_list -= good_id
+	SanitizeShopList()
+
+/datum/computer_file/program/supply/proc/ClearShopList(list/target_list)
+	if(!islist(target_list))
+		return
+	for(var/datum/trading_station/target_station as anything in target_list)
+		var/list/categories = target_list[target_station]
+		if(islist(categories))
+			for(var/category_name in categories)
+				var/list/goods = categories[category_name]
+				if(islist(goods))
+					goods.Cut()
+			categories.Cut()
+	target_list.Cut()
+
+/datum/computer_file/program/supply/proc/ResetShopList()
+	if(shopping_list)
+		ClearShopList(shopping_list)
+	shopping_list = list()
+
+/datum/computer_file/program/supply/proc/SaveShopList(name, list/shop_list = null)
+	var/list/source = islist(shop_list) ? shop_list : shopping_list
+	var/list/copy = CopyShopList(source)
+	if(!length(copy))
+		return FALSE
+	var/list_name = name ? name : "Saved Cart #[++saved_cart_id]"
+	if(list_name in saved_shopping_lists)
+		ClearShopList(saved_shopping_lists[list_name])
+	saved_shopping_lists[list_name] = copy
+	return TRUE
+
+/datum/computer_file/program/supply/proc/LoadShopList(name)
+	if(!(name in saved_shopping_lists))
+		return null
+	return CopyShopList(saved_shopping_lists[name])
+
+/datum/computer_file/program/supply/proc/DeleteShopList(name)
+	if(name in saved_shopping_lists)
+		ClearShopList(saved_shopping_lists[name])
+		saved_shopping_lists -= name
+
+/datum/computer_file/program/supply/proc/UnlockOrdering()
+	order_cooldown_until = 0
+
+/datum/computer_file/program/supply/proc/GetMasterAccount()
+	return get_supply_department_account()
+
+/datum/computer_file/program/supply/proc/GetInsertedIdCard()
+	var/obj/item/stock_parts/computer/card_slot/card_slot = computer ? computer.get_component(PART_CARD) : null
+	return istype(card_slot) ? card_slot.stored_card : null
+
+/datum/computer_file/program/supply/proc/HasCargoApprovalAccess(mob/user)
+	var/obj/item/card/id/id_card = user ? user.GetIdCard() : null
+	if(!istype(id_card))
+		return FALSE
+	return (access_cargo in id_card.access) || (access_qm in id_card.access) || (access_bridge in id_card.access)
+
+/datum/computer_file/program/supply/proc/GetLogCollection()
+	switch(log_screen)
+		if(LOG_EXPORT)
+			return SSsupply.export_log
+		if(LOG_ORDER)
+			return SSsupply.order_log
+		if(LOG_CONTRACT)
+			return SSsupply.contract_log
+		else
+			return SSsupply.shipping_log
+
+/datum/computer_file/program/supply/proc/FormatCountdown(deciseconds)
+	if(!isnum(deciseconds))
+		return "00:00"
+	var/seconds = max(0, round(deciseconds / 10))
+	return "[pad_left(num2text((seconds / 60) % 60), 2, "0")]:[pad_left(num2text(seconds % 60), 2, "0")]"
+
+/datum/computer_file/program/supply/proc/ResetUiForms()
+	goods_quantity_target = null
+	cart_form_mode = null
+
+/datum/computer_file/program/supply/proc/CloseGoodsQuantityForm()
+	goods_quantity_target = null
+
+/datum/computer_file/program/supply/proc/OpenGoodsQuantityForm(good_id)
+	goods_quantity_target = good_id
+	cart_form_mode = null
+
+/datum/computer_file/program/supply/proc/CloseCartForm()
+	cart_form_mode = null
+
+/datum/computer_file/program/supply/proc/OpenCartForm(mode)
+	if(mode != "save" && mode != "order")
+		return
+	cart_form_mode = mode
+	goods_quantity_target = null
+
+/datum/computer_file/program/supply/proc/GetBeaconDisplayId(obj/machinery/trade_beacon/beacon)
+	if(istype(beacon) && !QDELETED(beacon) && beacon.loc)
+		return beacon.GetId()
+	return null
+
+/datum/computer_file/program/supply/proc/IsReceivingSelected()
+	return !!GetBeaconDisplayId(receiving)
+
+/datum/computer_file/program/supply/proc/IsSendingSelected()
+	return !!GetBeaconDisplayId(sending)
+
+/datum/computer_file/program/supply/proc/EnsureSelectedStation()
+	if(!length(SSsupply.visible_trading_stations))
+		station = null
+		chosen_category = null
+		return null
+
+	if(!istype(station) || !(station in SSsupply.visible_trading_stations))
+		station = SSsupply.visible_trading_stations[1]
+
+	if(!chosen_category || !(chosen_category in station.inventory))
+		SetChosenCategory()
+
+	RememberMarketIntel(station)
+	return station
+
+/datum/computer_file/program/supply/proc/RememberMarketIntel(datum/trading_station/target_station)
+	if(!istype(target_station))
+		return
+	var/list/intel = SSsupply.BuildStationMarketIntel(target_station, faction)
+	if(!islist(intel))
+		return
+	if(!islist(known_market_intel))
+		known_market_intel = list()
+	known_market_intel[target_station.uid] = intel
+
+/datum/computer_file/program/supply/proc/GetMarketIntelAgeText(timestamp)
+	if(!isnum(timestamp))
+		return "Unknown"
+	return FormatCountdown(world.time - timestamp)
+
+/datum/computer_file/program/supply/proc/SerializeKnownMarketIntel()
+	var/list/result = list()
+	if(!islist(known_market_intel))
+		return result
+	for(var/station_uid in known_market_intel)
+		var/list/intel = known_market_intel[station_uid]
+		if(!islist(intel))
+			continue
+		result.Add(list(list(
+			"station_uid" = intel["station_uid"],
+			"station_name" = intel["station_name"],
+			"status_label" = intel["status_label"] || "Stable Market",
+			"status_tone" = intel["status_tone"] || "good",
+			"status_desc" = intel["status_desc"] || "",
+			"quality" = intel["quality"] || "limited",
+			"age" = GetMarketIntelAgeText(intel["timestamp"]),
+			"quotes" = intel["quotes"] || list()
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/ResolveGoodId(category_name = null, good_ref)
+	if(!istype(station))
+		return null
+	if(!category_name)
+		category_name = chosen_category
+	var/list/category = station.inventory[category_name]
+	if(!islist(category) || !good_ref)
+		return null
+	if(good_ref in category)
+		return good_ref
+	var/index = isnum(good_ref) ? good_ref : text2num(good_ref)
+	if(isnum(index))
+		index = round(index)
+		if(index >= 1 && index <= length(category))
+			return category[index]
+	return null
+
+/datum/computer_file/program/supply/proc/GetTradeSource()
+	return computer ? computer.get_physical_host() : null
+
+/datum/computer_file/program/supply/proc/GetTradeSourceSector()
+	var/atom/trade_source = GetTradeSource()
+	if(!trade_source)
+		return null
+	return SSsupply.GetOvermapSectorFor(trade_source)
+
+/datum/computer_file/program/supply/proc/IsLocalTradeBeacon(obj/machinery/trade_beacon/beacon)
+	if(!istype(beacon) || QDELETED(beacon) || !beacon.loc)
+		return FALSE
+	var/obj/overmap/visitable/source_sector = GetTradeSourceSector()
+	if(!istype(source_sector))
+		return FALSE
+	return SSsupply.GetOvermapSectorFor(beacon) == source_sector
+
+/datum/computer_file/program/supply/proc/ValidateSelectedTradeBeacons()
+	if(receiving && !IsLocalTradeBeacon(receiving))
+		receiving = null
+	if(sending && !IsLocalTradeBeacon(sending))
+		sending = null
+
+/datum/computer_file/program/supply/proc/GetLocalReceivingBeaconsById()
+	var/list/result = list()
+	for(var/obj/machinery/trade_beacon/receiving/beacon as anything in SSsupply.beacons_receiving)
+		if(!IsLocalTradeBeacon(beacon))
+			continue
+		result[beacon.GetId()] = beacon
+	return result
+
+/datum/computer_file/program/supply/proc/GetLocalSendingBeaconsById()
+	var/list/result = list()
+	for(var/obj/machinery/trade_beacon/sending/beacon as anything in SSsupply.beacons_sending)
+		if(!IsLocalTradeBeacon(beacon))
+			continue
+		result[beacon.GetId()] = beacon
+	return result
+
+/datum/computer_file/program/supply/proc/GetStationCatalogBlockReason(datum/trading_station/target_station, buyer_faction = faction)
+	if(!istype(target_station))
+		return "Station unavailable."
+
+	var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
+	if(istype(station_faction) && (buyer_faction in station_faction.embargo))
+		return "Economic embargo in effect. Trading denied."
+	if(length(target_station.whitelist_factions) && !(buyer_faction in target_station.whitelist_factions))
+		return "This station trades only with approved factions."
+	if(length(target_station.blacklist_factions) && (buyer_faction in target_station.blacklist_factions))
+		return "This station refuses trade with your faction."
+	var/availability_block = target_station.GetAvailabilityBlockReason(GetTradeSource())
+	if(availability_block)
+		return availability_block
+	return null
+
+/datum/computer_file/program/supply/proc/GetStationTradeBlockReason(datum/trading_station/target_station, buyer_faction = faction)
+	var/catalog_block = GetStationCatalogBlockReason(target_station, buyer_faction)
+	if(catalog_block)
+		return catalog_block
+
+	if(!GLOB.using_map.use_overmap || !istype(target_station) || !target_station.overmap_location)
+		return null
+
+	var/atom/trade_source = GetTradeSource()
+	if(!trade_source)
+		return null
+
+	var/obj/overmap/visitable/current_sector = GetTradeSourceSector()
+	if(!istype(current_sector))
+		return "Trade catalog is available only while your vessel is present on the overmap."
+	if(current_sector.z != target_station.overmap_location.z)
+		return "This trade beacon is outside your current overmap region."
+
+	var/distance = get_dist(current_sector, target_station.overmap_location)
+	if(distance >= trade_catalog_view_distance)
+		return "Move closer than [trade_catalog_view_distance] overmap tiles to browse this trade beacon's catalog."
+	return null
+
+/datum/computer_file/program/supply/proc/GetStationStatusData(datum/trading_station/target_station, buyer_faction = faction, has_local_receiving_beacon = null)
+	if(!istype(target_station))
+		return list(
+			"label" = "Unavailable",
+			"tone" = "bad"
+		)
+
+	var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
+	if(istype(station_faction) && (buyer_faction in station_faction.embargo))
+		return list(
+			"label" = "Embargoed",
+			"tone" = "bad"
+		)
+
+	if(length(target_station.whitelist_factions) && !(buyer_faction in target_station.whitelist_factions))
+		return list(
+			"label" = "Wrong faction",
+			"tone" = "bad"
+		)
+
+	if(length(target_station.blacklist_factions) && (buyer_faction in target_station.blacklist_factions))
+		return list(
+			"label" = "Wrong faction",
+			"tone" = "bad"
+		)
+
+	var/list/availability_status = target_station.GetAvailabilityStatusData()
+	if(islist(availability_status) && target_station.GetAvailabilityBlockReason(GetTradeSource()))
+		return availability_status
+
+	if(isnull(has_local_receiving_beacon))
+		has_local_receiving_beacon = length(GetLocalReceivingBeaconsById()) > 0
+	if(!has_local_receiving_beacon)
+		return list(
+			"label" = "No local beacon",
+			"tone" = "average"
+		)
+
+	if(GetStationTradeBlockReason(target_station, buyer_faction))
+		return list(
+			"label" = "Out of range",
+			"tone" = "bad"
+		)
+
+	return list(
+		"label" = "In range",
+		"tone" = "good"
+	)
+
+/datum/computer_file/program/supply/proc/TryAddToCart(good_ref, amount)
+	if(!istype(station) || !chosen_category || !isnum(amount) || amount <= 0)
+		return FALSE
+	var/good_id = ResolveGoodId(chosen_category, good_ref)
+	if(!good_id)
+		return FALSE
+	var/path = station.GetGoodPath(chosen_category, good_id)
+	if(!ispath(path, /atom/movable))
+		return FALSE
+	var/good_amount = station.GetGoodAmount(chosen_category, good_id)
+	if(!good_amount)
+		return FALSE
+	AddToShopList(good_id, round(amount), good_amount)
+	return TRUE
+
+/datum/computer_file/program/supply/proc/GetGoodMarkupText(basic_price, price)
+	if(!basic_price || price == basic_price)
+		return ""
+	var/markup_percent = round(((price / basic_price) * 100) - 100)
+	if(price > basic_price)
+		return " (+[markup_percent]%)"
+	return " ([markup_percent]%)"
+
+/datum/computer_file/program/supply/proc/SerializeVisibleStations()
+	var/list/result = list()
+	var/has_local_receiving_beacon = length(GetLocalReceivingBeaconsById()) > 0
+	for(var/datum/trading_station/target_station as anything in SSsupply.visible_trading_stations)
+		var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
+		var/faction_color = TradeRelationsColor(station_faction ? station_faction.relationship[faction] : null) || "#ffffff"
+		var/list/status_data = GetStationStatusData(target_station, faction, has_local_receiving_beacon)
+		var/list/availability_status = target_station.GetAvailabilityStatusData()
+		result.Add(list(list(
+			"uid" = target_station.uid,
+			"name" = target_station.name,
+			"faction" = target_station.faction,
+			"faction_color" = faction_color,
+			"selected" = target_station == station,
+			"market_label" = target_station.GetLiveMarketStatusLabel(),
+			"market_tone" = target_station.GetLiveMarketStatusTone(),
+			"status_label" = status_data["label"],
+			"status_tone" = status_data["tone"],
+			"availability_label" = islist(availability_status) ? availability_status["label"] : "",
+			"availability_tone" = islist(availability_status) ? availability_status["tone"] : ""
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/GetGoodIconBase64(item_path)
+	if(!ispath(item_path, /atom/movable))
+		return ""
+	var/cached = cargo_item_icon_cache[item_path]
+	if(!isnull(cached))
+		return cached
+	if(!GLOB.iconCache)
+		return ""
+	var/atom/movable/dummy = item_path
+	var/item_icon = initial(dummy.icon)
+	var/item_state = initial(dummy.icon_state)
+	if(!item_icon)
+		cargo_item_icon_cache[item_path] = ""
+		return ""
+	var/list/valid_states
+	if(isfile(item_icon) || isicon(item_icon))
+		valid_states = icon_states(item_icon)
+	var/icon/I
+	if(item_state && islist(valid_states) && (item_state in valid_states))
+		I = icon(item_icon, item_state, SOUTH, 1)
+	else if(islist(valid_states) && length(valid_states))
+		I = icon(item_icon, valid_states[1], SOUTH, 1)
+	else
+		I = icon(item_icon, item_state, SOUTH, 1)
+	if(!isicon(I))
+		cargo_item_icon_cache[item_path] = ""
+		return ""
+	var/b64 = icon2base64(I, "cargo_[md5("[item_path]")]")
+	var/icon_url = b64 ? "data:image/png;base64,[b64]" : ""
+	cargo_item_icon_cache[item_path] = icon_url
+	return icon_url
+
+/datum/computer_file/program/supply/proc/GetCategoryIcon(category_name)
+	switch(lowertext(category_name))
+		if("supply") return "📦"
+		if("operations") return "📋"
+		if("mining") return "💎"
+		if("robotics") return "🤖"
+		if("engineering") return "🔧"
+		if("atmospherics") return "🌐"
+		if("hospitality") return "🍴"
+		if("custodial") return "🧹"
+		if("hydroponics") return "🌿"
+		if("recreation") return "🎲"
+		if("medical") return "🩺"
+		if("cartridges") return "💾"
+		if("science") return "🔬"
+		if("security") return "🛡️"
+		if("weaponry") return "🔫"
+		else
+			return "📁"
+
+/datum/computer_file/program/supply/proc/SerializeCategories(datum/trading_station/target_station = null)
+	var/list/result = list()
+	if(!istype(target_station))
+		target_station = station
+	if(!istype(target_station))
+		return result
+	for(var/category_name in target_station.inventory)
+		result.Add(list(list(
+			"name" = category_name,
+			"icon" = GetCategoryIcon(category_name),
+			"selected" = category_name == chosen_category
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeSelectedStation(datum/trading_station/target_station = null)
+	if(!istype(target_station))
+		target_station = station
+	if(!istype(target_station))
+		return null
+	var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
+	var/faction_color = TradeRelationsColor(station_faction ? station_faction.relationship[faction] : null) || "#ffffff"
+	var/time_remaining = max(0, (target_station.update_timer_start + target_station.update_time) - world.time)
+	var/block_reason = GetStationTradeBlockReason(target_station)
+	var/purchase_block_reason = GetStationTradeBlockReason(target_station)
+	var/list/status_data = GetStationStatusData(target_station)
+	var/list/availability_status = target_station.GetAvailabilityStatusData()
+	var/trade_window_remaining = target_station.GetAvailabilityWindowRemaining()
+	var/desc_text = target_station.desc || ""
+	if(isnum(trade_window_remaining) && trade_window_remaining > 0)
+		desc_text += " Departs in [FormatCountdown(trade_window_remaining)]."
+	return list(
+		"uid" = target_station.uid,
+		"name" = target_station.name,
+		"faction" = target_station.faction,
+		"faction_color" = faction_color,
+		"desc" = desc_text,
+		"favor" = round(target_station.favor),
+		"unlock_favor" = round(target_station.unlock_favor),
+		"restock_in" = FormatCountdown(time_remaining),
+		"status_label" = status_data["label"],
+		"status_tone" = status_data["tone"],
+		"availability_label" = islist(availability_status) ? availability_status["label"] : "",
+		"availability_tone" = islist(availability_status) ? availability_status["tone"] : "",
+		"market_label" = target_station.GetLiveMarketStatusLabel(),
+		"market_tone" = target_station.GetLiveMarketStatusTone(),
+		"market_desc" = target_station.GetLiveMarketStatusDescription(),
+		"block_reason" = block_reason || "",
+		"can_trade" = !purchase_block_reason,
+		"trade_window_remaining" = isnum(trade_window_remaining) ? FormatCountdown(trade_window_remaining) : ""
+	)
+
+/datum/computer_file/program/supply/proc/SerializeGoods(datum/trading_station/target_station = null)
+	var/list/result = list()
+	if(!istype(target_station))
+		target_station = station
+	if(!istype(target_station) || !chosen_category)
+		return result
+	var/list/category = target_station.inventory[chosen_category]
+	if(!islist(category))
+		return result
+
+	var/block_reason = GetStationTradeBlockReason(target_station)
+	if(block_reason)
+		return result
+	var/can_add_goods = istype(account)
+	var/list/category_cart = islist(shopping_list[target_station]) ? shopping_list[target_station][chosen_category] : null
+	for(var/good_id in category)
+		var/path = target_station.GetGoodPath(chosen_category, good_id)
+		if(!ispath(path, /atom/movable))
+			continue
+		var/stock = target_station.GetGoodAmount(chosen_category, good_id)
+		var/basic_price = SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
+		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
+		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, chosen_category)
+		var/in_cart = islist(category_cart) ? (category_cart[good_id] || 0) : 0
+		var/atom/movable/item_type = path
+		var/desc_text = initial(item_type.desc) || ""
+		result.Add(list(list(
+			"id" = good_id,
+			"name" = target_station.GetGoodName(chosen_category, good_id),
+			"desc" = desc_text,
+			"stock" = stock,
+			"price" = round(price, 0.01),
+			"sell_price" = round(sell_price, 0.01),
+			"markup_text" = GetGoodMarkupText(basic_price, price),
+			"can_add" = can_add_goods && stock > 0,
+			"quantity_form_open" = goods_quantity_target == good_id,
+			"icon" = GetGoodIconBase64(path),
+			"in_cart_amount" = in_cart
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeExportItems()
+	var/list/result = list()
+	if(!IsSendingSelected())
+		return result
+	var/datum/trading_station/target_station = EnsureSelectedStation()
+	var/list/grouped = list()
+	for(var/atom/movable/exported as anything in sending.GetObjects())
+		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+			continue
+		if(!SSsupply.CanExportAtom(exported))
+			continue
+		var/cost = SSsupply.GetExportValue(exported, target_station)
+		if(!cost)
+			continue
+		var/item_name = exported.name
+		if(!grouped[item_name])
+			grouped[item_name] = list(
+				"name" = item_name,
+				"amount" = 1,
+				"unit_value" = round(cost, 0.01),
+				"value" = round(cost, 0.01),
+				"target_station" = target_station ? target_station.name : "Trade Network"
+			)
+		else
+			var/list/entry = grouped[item_name]
+			entry["amount"] += 1
+			entry["value"] = round(entry["value"] + cost, 0.01)
+
+	for(var/item_name in grouped)
+		result.Add(list(grouped[item_name]))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeShopListGroups(list/shop_list, buyer_faction = null, list/price_snapshot = null)
+	var/list/result = list()
+	if(!islist(shop_list))
+		return result
+	if(isnull(buyer_faction))
+		buyer_faction = faction
+
+	for(var/datum/trading_station/target_station as anything in shop_list)
+		var/list/categories = shop_list[target_station]
+		if(!istype(target_station) || !islist(categories))
+			continue
+
+		var/list/category_entries = list()
+		for(var/category_name in categories)
+			var/list/goods = categories[category_name]
+			if(!islist(goods) || !length(goods))
+				continue
+
+			var/list/item_entries = list()
+			for(var/good_id in goods)
+				var/amount = goods[good_id]
+				if(!isnum(amount) || amount < 1)
+					continue
+				var/unit_price = SSsupply.GetStationBuyPrice(good_id, target_station, buyer_faction, category_name)
+				if(islist(price_snapshot))
+					var/snapshot_price = SSsupply.GetSnapshotUnitPrice(price_snapshot, target_station, category_name, good_id)
+					if(isnum(snapshot_price))
+						unit_price = snapshot_price
+				item_entries.Add(list(list(
+					"good_id" = good_id,
+					"name" = target_station.GetGoodName(category_name, good_id),
+					"amount" = amount,
+					"price" = round(unit_price * amount, 0.01),
+					"category_name" = category_name,
+					"station_uid" = target_station.uid
+				)))
+			if(length(item_entries))
+				category_entries.Add(list(list(
+					"name" = category_name,
+					"items" = item_entries
+				)))
+		if(length(category_entries))
+			result.Add(list(list(
+				"station_uid" = target_station.uid,
+				"station_name" = target_station.name,
+				"categories" = category_entries
+			)))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeOrders()
+	var/list/result = list()
+	var/total_serialized = 0
+	for(var/order_id as anything in SSsupply.order_queue)
+		if(total_serialized >= 50)
+			break
+		var/list/order_data = SSsupply.order_queue[order_id]
+		if(!islist(order_data))
+			continue
+		var/datum/money_account/requestor = order_data["requesting_acct"]
+		var/buyer_faction = order_data["buyer_faction"] || FACTION_INDEPENDENT
+		var/list/price_snapshot = order_data["price_snapshot"]
+		result.Add(list(list(
+			"id" = order_id,
+			"requestor_name" = requestor ? requestor.owner_name : "Unknown",
+			"buyer_faction" = buyer_faction,
+			"reason" = order_data["reason"] || "No reason provided.",
+			"cost" = round(order_data["cost"], 0.01),
+			"fee" = round(order_data["fee"], 0.01),
+			"total" = round(order_data["cost"] + order_data["fee"], 0.01),
+			"selected" = current_order == order_id,
+			"item_count" = SSsupply.CollectCountsFrom(order_data["contents"]),
+			"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
+		)))
+		total_serialized++
+	return result
+
+/datum/computer_file/program/supply/proc/GetContractAcceptBlockReason(datum/trade_contract/contract)
+	if(!istype(contract))
+		return "Contract data is unavailable."
+	if(!account)
+		return "Link an account before accepting contracts."
+	return contract.GetAcceptBlockReason(receiving)
+
+/datum/computer_file/program/supply/proc/GetContractDeliverBlockReason(datum/trade_contract/contract)
+	if(!istype(contract))
+		return "Contract data is unavailable."
+	return contract.GetDeliverBlockReason(sending)
+
+/datum/computer_file/program/supply/proc/SerializeContractEntry(datum/trade_contract/contract)
+	if(!istype(contract))
+		return null
+	var/datum/trading_station/source_station = contract.GetSourceStation()
+	var/datum/trading_station/destination_station = contract.GetDestinationStation()
+	var/block_reason = null
+	switch(contract.status)
+		if("available")
+			block_reason = GetContractAcceptBlockReason(contract)
+		if("active")
+			block_reason = GetContractDeliverBlockReason(contract)
+		if("failed")
+			block_reason = contract.failure_reason || "Contract failed."
+	var/can_act = contract.status == "available" || contract.status == "active"
+	can_act = can_act && !block_reason
+	return list(
+		"id" = contract.id,
+		"serial" = contract.contract_serial || "",
+		"type_label" = contract.GetTypeLabel(),
+		"source_name" = source_station ? source_station.name : "Unknown",
+		"destination_name" = destination_station ? destination_station.name : "Unknown",
+		"cargo" = contract.GetDisplayCargoText(),
+		"reward" = round(contract.reward, 0.01),
+		"penalty" = round(contract.penalty, 0.01),
+		"distance" = round(contract.distance, 0.01),
+		"base_value" = round(contract.base_value, 0.01),
+		"accepted_by" = contract.accepted_by || "",
+		"status" = contract.GetStatusLabel(),
+		"status_tone" = contract.GetStatusTone(),
+		"instruction_text" = contract.GetInstructionText(),
+		"status_text" = block_reason || contract.GetStatusText(),
+		"block_reason" = block_reason || "",
+		"action_hint" = contract.GetActionHint() || "",
+		"resolved_note" = contract.GetResolvedNote() || "",
+		"can_act" = can_act,
+		"action_label" = contract.status == "active" ? contract.GetActiveActionLabel() : "Accept"
+	)
+
+/datum/computer_file/program/supply/proc/SerializeContracts(status)
+	var/list/result = list()
+	for(var/datum/trade_contract/contract as anything in SSsupply.trade_contracts)
+		if(contract.status != status)
+			continue
+		if(status == "available" && !contract.ShouldDisplayAvailable())
+			continue
+		if(status == "active" && !contract.CanStayActive())
+			contract.HandleActiveTargetLoss()
+			continue
+		var/list/entry = SerializeContractEntry(contract)
+		if(islist(entry))
+			result.Add(list(entry))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeSelectedOrder()
+	if(current_order && !(current_order in SSsupply.order_queue))
+		current_order = null
+	if(!current_order)
+		return null
+
+	var/list/order_data = SSsupply.order_queue[current_order]
+	if(!islist(order_data))
+		return null
+
+	var/datum/money_account/requestor = order_data["requesting_acct"]
+	var/buyer_faction = order_data["buyer_faction"] || FACTION_INDEPENDENT
+	var/list/price_snapshot = order_data["price_snapshot"]
+	return list(
+		"id" = current_order,
+		"requestor_name" = requestor ? requestor.owner_name : "Unknown",
+		"buyer_faction" = buyer_faction,
+		"reason" = order_data["reason"] || "Not provided",
+		"cost" = round(order_data["cost"], 0.01),
+		"fee" = round(order_data["fee"], 0.01),
+		"total" = round(order_data["cost"] + order_data["fee"], 0.01),
+		"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
+	)
+
+/datum/computer_file/program/supply/proc/SerializeSavedCarts()
+	var/list/result = list()
+	for(var/i in 1 to length(saved_shopping_lists))
+		var/cart_name = saved_shopping_lists[i]
+		var/list/cart_data = saved_shopping_lists[cart_name]
+		result.Add(list(list(
+			"index" = i,
+			"name" = cart_name,
+			"count" = SSsupply.CollectCountsFrom(cart_data),
+			"total" = round(SSsupply.CollectPriceForList(cart_data, faction), 0.01)
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeLogEntries()
+	var/list/result = list()
+	var/list/log_collection = GetLogCollection()
+	if(!islist(log_collection))
+		return result
+	for(var/i in length(log_collection) to 1 step -1)
+		var/list/log_entry = log_collection[i]
+		result.Add(list(list(
+			"id" = log_entry["id"],
+			"time" = log_entry["time"],
+			"ordering_acct" = log_entry["ordering_acct"],
+			"total_paid" = round(log_entry["total_paid"], 0.01)
+		)))
+	return result
+
+/datum/computer_file/program/supply/proc/GetActiveContractCount()
+	var/count = 0
+	for(var/datum/trade_contract/contract as anything in SSsupply.trade_contracts)
+		if(contract.status == "active" && contract.CanStayActive())
+			count++
+	return count
+
+/datum/computer_file/program/supply/proc/PopulateBaseTradeUiData(list/data, mob/user = null)
+	var/receiving_id = GetBeaconDisplayId(receiving)
+	var/sending_id = GetBeaconDisplayId(sending)
+	data["src"] = ref(src)
+	data["screen"] = trade_screen
+	data["log_screen"] = log_screen
 	data["currency"] = GLOB.using_map.local_currency_name
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
-	os = get_extension(nano_host(), /datum/extension/interactive/ntos)
-	if(os)
-		card_slot = os.get_component(PART_CARD)
-	card_inserted = FALSE
-	if(card_slot)
-		if(card_slot.stored_card)
-			card_inserted = TRUE
-			custom_account = get_account(card_slot.stored_card.associated_account_number)
-			if(custom_account)
-				money = custom_account.money
-				data["money"] = "[money]"
-				data["card_use"] = card_use
+	data["faction"] = faction
+	data["has_account"] = istype(account)
+	data["account_owner_name"] = account ? account.owner_name : ""
+	data["account_number"] = account ? account.account_number : 0
+	data["account_money"] = account ? round(account.money, 0.01) : 0
+	data["receiving"] = receiving_id || ""
+	data["has_receiving"] = !!receiving_id
+	data["sending"] = sending_id || ""
+	data["has_sending"] = !!sending_id
+	data["goods_quantity_target"] = goods_quantity_target || ""
+	data["cart_form_mode"] = cart_form_mode || ""
+	data["cart_count"] = SSsupply.CollectCountsFrom(shopping_list)
+	var/cart_total = SSsupply.CollectPriceForList(shopping_list, faction)
+	data["cart_total"] = round(cart_total, 0.01)
+	data["cart_fee"] = round(cart_total * SSsupply.handling_fee, 0.01)
+	var/cart_range_block = receiving ? SSsupply.GetShopListTradeRangeBlockReason(receiving, shopping_list) : null
+	data["cart_trade_block_reason"] = cart_range_block || ""
+	var/orders_locked = (world.time < order_cooldown_until)
+	data["orders_locked"] = orders_locked
+	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_range_block
+	data["can_build_order"] = istype(account) && length(shopping_list) && !orders_locked
+	data["order_count"] = length(SSsupply.order_queue)
+	var/pending_total = 0
+	for(var/order_id as anything in SSsupply.order_queue)
+		var/list/order_entry = SSsupply.order_queue[order_id]
+		if(islist(order_entry))
+			pending_total += (order_entry["cost"] + order_entry["fee"])
+	data["pending_orders_total"] = round(pending_total, 0.01)
+	var/cooldown_sec = (sending && sending.export_cooldown > world.time) ? round((sending.export_cooldown - world.time) / 10) : 0
+	data["export_cooldown_remaining"] = cooldown_sec
+	data["export_cooldown_text"] = cooldown_sec ? "[cooldown_sec]s" : "Ready"
+	var/user_greeting = ""
+	if(istype(user))
+		var/obj/item/card/id/I = user.GetIdCard()
+		if(istype(I))
+			user_greeting = "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)]"
+			if(I.military_branch)
+				user_greeting += " ([uppertext(I.military_branch)])"
+		else
+			user_greeting = "WELCOME, [uppertext(user.name)]"
+	data["user_greeting"] = user_greeting
 
+/datum/computer_file/program/supply/proc/BuildSettingsScreenData(list/data)
+	var/datum/money_account/master_account = GetMasterAccount()
+	data["has_master_budget"] = istype(master_account)
+	data["master_budget"] = master_account ? round(master_account.money, 0.01) : 0
+	var/obj/item/card/id/inserted_id = GetInsertedIdCard()
+	data["has_inserted_id"] = istype(inserted_id)
+	data["can_link_id_account"] = istype(inserted_id) && inserted_id.associated_account_number
+	data["inserted_id_account_number"] = inserted_id ? inserted_id.associated_account_number : 0
 
-	data["card_inserted"] = card_inserted
-	switch(screen)
-		if(1)// Main ordering menu
-			data["categories"] = category_names
-			if(selected_category)
-				data["category"] = selected_category
-				data["possible_purchases"] = category_contents[selected_category]
-				if(showing_contents_of_ref)
-					data["showing_contents_of"] = showing_contents_of_ref
-					data["contents_of_order"] = contents_of_order
+/datum/computer_file/program/supply/proc/BuildGoodsScreenData(list/data)
+	var/datum/trading_station/selected_station = EnsureSelectedStation()
+	var/list/stations = SerializeVisibleStations()
+	data["has_visible_stations"] = length(stations) ? TRUE : FALSE
+	data["stations"] = stations
+	data["has_selected_station"] = istype(selected_station)
+	data["selected_category"] = chosen_category || ""
+	if(istype(selected_station))
+		data["selected_station"] = SerializeSelectedStation(selected_station)
+		data["selected_station_intel"] = known_market_intel[selected_station.uid]
+		var/block_reason = GetStationTradeBlockReason(selected_station)
+		if(!block_reason)
+			data["categories"] = SerializeCategories(selected_station)
+			data["goods"] = SerializeGoods(selected_station)
+		else
+			data["categories"] = list()
+			data["goods"] = list()
+	else
+		data["categories"] = list()
+		data["goods"] = list()
+	data["market_intel"] = SerializeKnownMarketIntel()
 
-		if(2)// Statistics screen with credit overview
-			var/list/point_breakdown = list()
-			for(var/tag in SSsupply.point_source_descriptions)
-				var/entry = list()
-				entry["desc"] = SSsupply.point_source_descriptions[tag]
-				entry["points"] = SSsupply.point_sources[tag] || 0
-				point_breakdown += list(entry) //Make a list of lists, don't flatten
-			data["point_breakdown"] = point_breakdown
-			data["can_print"] = can_print()
+/datum/computer_file/program/supply/proc/BuildExportScreenData(list/data)
+	var/datum/trading_station/selected_station = EnsureSelectedStation()
+	var/list/export_items = SerializeExportItems()
+	var/export_block_reason = null
+	if(!istype(account))
+		export_block_reason = "Link an account before exporting goods."
+	else if(!GetBeaconDisplayId(sending))
+		export_block_reason = "Select a sending beacon first."
+	else if(sending && sending.export_cooldown > world.time)
+		export_block_reason = "The sending beacon is on cooldown."
+	else if(istype(selected_station))
+		export_block_reason = SSsupply.GetTradeRangeBlockReason(sending, selected_station)
+	else if(!length(export_items))
+		export_block_reason = "No exportable objects are inside the sending beacon range."
 
-		if(3)// Shuttle monitoring and control
-			var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
-			data["shuttle_name"] = shuttle.name
-			if(istype(shuttle))
-				data["shuttle_location"] = shuttle.at_station() ? GLOB.using_map.name : "Remote location"
-			else
-				data["shuttle_location"] = "No Connection"
-			data["shuttle_status"] = get_shuttle_status()
-			data["shuttle_can_control"] = shuttle.can_launch()
+	data["export_items"] = export_items
+	var/export_total = 0
+	for(var/list/export_item as anything in export_items)
+		export_total += export_item["value"]
+	data["export_total"] = round(export_total, 0.01)
+	data["can_export"] = !export_block_reason
+	data["export_block_reason"] = export_block_reason || ""
+	data["export_target_station"] = selected_station ? selected_station.name : ""
+	data["has_export_target_station"] = istype(selected_station)
 
+/datum/computer_file/program/supply/proc/BuildCartScreenData(list/data)
+	var/receiving_id = GetBeaconDisplayId(receiving)
+	var/cart_trade_block = receiving ? SSsupply.GetShopListTradeRangeBlockReason(receiving, shopping_list) : null
+	var/orders_locked = (world.time < order_cooldown_until)
+	data["cart_groups"] = SerializeShopListGroups(shopping_list, faction)
+	data["cart_trade_block_reason"] = cart_trade_block || ""
+	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_trade_block
+	data["can_build_order"] = istype(account) && length(shopping_list) && !orders_locked
+	data["can_save_cart"] = !!length(shopping_list)
+	data["saved_carts"] = SerializeSavedCarts()
+	data["orders_locked"] = orders_locked
 
-		if(4)// Order processing
-			if(is_admin) // No bother sending all of this if the user can't see it.
-				var/list/cart[0]
-				var/list/requests[0]
-				var/list/done[0]
-				for(var/datum/supply_order/SO in SSsupply.shoppinglist)
-					cart.Add(order_to_nanoui(SO, SUPPLY_LIST_ID_CART))
-				for(var/datum/supply_order/SO in SSsupply.requestlist)
-					requests.Add(order_to_nanoui(SO, SUPPLY_LIST_ID_REQUEST))
-				for(var/datum/supply_order/SO in SSsupply.donelist)
-					done.Add(order_to_nanoui(SO, SUPPLY_LIST_ID_DONE))
-				data["cart"] = cart
-				data["requests"] = requests
-				data["done"] = done
-				data["can_print"] = can_print()
-				data["is_NTOS"] = istype(nano_host(), /obj/item/modular_computer) // Can we even use notifications?
-				data["notifications_enabled"] = notifications_enabled
+/datum/computer_file/program/supply/proc/BuildOrdersScreenData(list/data, mob/user)
+	var/selected_order_data = SerializeSelectedOrder()
+	data["can_approve_orders"] = HasCargoApprovalAccess(user)
+	data["can_manage_orders"] = data["can_approve_orders"]
+	data["orders"] = SerializeOrders()
+	data["has_selected_order"] = islist(selected_order_data)
+	if(islist(selected_order_data))
+		data["selected_order"] = selected_order_data
 
+/datum/computer_file/program/supply/proc/BuildContractsScreenData(list/data)
+	SSsupply.EnsureVisibleContractOffers()
+	var/list/available_contracts = SerializeContracts("available")
+	var/list/active_contracts = SerializeContracts("active")
+	var/list/completed_contracts = SerializeContracts("completed")
+	var/list/failed_contracts = SerializeContracts("failed")
+	data["available_contracts"] = available_contracts
+	data["available_contract_count"] = length(available_contracts)
+	data["active_contracts"] = active_contracts
+	data["active_contract_count"] = length(active_contracts)
+	data["completed_contracts"] = completed_contracts
+	data["completed_contract_count"] = length(completed_contracts)
+	data["failed_contracts"] = failed_contracts
+	data["failed_contract_count"] = length(failed_contracts)
+	data["resolved_contract_count"] = length(completed_contracts) + length(failed_contracts)
+
+/datum/computer_file/program/supply/proc/BuildSavedScreenData(list/data)
+	data["saved_carts"] = SerializeSavedCarts()
+
+/datum/computer_file/program/supply/proc/BuildLogsScreenData(list/data)
+	data["has_printer"] = !!(computer?.get_component(PART_PRINTER))
+	data["log_entries"] = SerializeLogEntries()
+
+/datum/computer_file/program/supply/proc/BuildTradeUiData(mob/user)
+	var/list/data = get_header_data() || list()
+	ValidateSelectedTradeBeacons()
+	PopulateBaseTradeUiData(data, user)
+	switch(trade_screen)
+		if(SETTINGS_SCREEN)
+			BuildSettingsScreenData(data)
+		if(GOODS_SCREEN)
+			BuildGoodsScreenData(data)
+		if(EXPORT_SCREEN)
+			BuildExportScreenData(data)
+		if(CART_SCREEN)
+			BuildCartScreenData(data)
+		if(ORDER_SCREEN)
+			BuildOrdersScreenData(data, user)
+		if(CONTRACT_SCREEN)
+			BuildContractsScreenData(data)
+		if(SAVED_SCREEN)
+			BuildSavedScreenData(data)
+		if(LOG_SCREEN)
+			BuildLogsScreenData(data)
+	if(trade_screen != CONTRACT_SCREEN)
+		data["active_contract_count"] = GetActiveContractCount()
+	return data
+
+/datum/computer_file/program/supply/proc/HandleScreenTopic(list/href_list)
+	if("PRG_trade_screen" in href_list)
+		trade_screen = href_list["PRG_trade_screen"]
+		if(trade_screen == LOG_SCREEN && !log_screen)
+			log_screen = LOG_SHIPPING
+		ResetUiForms()
+		return TRUE
+	if("PRG_log_screen" in href_list)
+		log_screen = href_list["PRG_log_screen"]
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/supply/proc/PromptLinkAccount()
+	var/obj/item/stock_parts/computer/card_slot/card_slot = computer?.get_component(PART_CARD)
+	var/default_number = (istype(card_slot) && card_slot.stored_card) ? card_slot.stored_card.associated_account_number : null
+	var/account_number = input(usr, "Enter account number.", "Account Link", default_number) as num|null
+	if(!account_number)
+		return TRUE
+	var/account_pin = input(usr, "Enter PIN.", "Account Link") as num|null
+	if(!account_pin)
+		return TRUE
+	var/card_check = istype(card_slot) && card_slot.stored_card && card_slot.stored_card.associated_account_number == account_number
+	var/datum/money_account/linked_account = attempt_account_access(account_number, account_pin, card_check ? 2 : 1, TRUE)
+	if(!linked_account)
+		to_chat(usr, SPAN_WARNING("Unable to link account: access denied."))
+	else
+		account = linked_account
+	return TRUE
+
+/datum/computer_file/program/supply/proc/LinkInsertedIdAccount()
+	var/obj/item/card/id/id_card = GetInsertedIdCard()
+	if(!istype(id_card))
+		to_chat(usr, SPAN_WARNING("Insert an ID card first."))
+		return TRUE
+	if(!id_card.associated_account_number)
+		to_chat(usr, SPAN_WARNING("This ID card is not linked to any bank account."))
+		return TRUE
+	var/account_pin = input(usr, "Enter the PIN for account #[id_card.associated_account_number].", "ID Account Link") as num|null
+	if(!account_pin)
+		return TRUE
+	var/datum/money_account/linked_account = attempt_account_access(id_card.associated_account_number, account_pin, 2, TRUE)
+	if(!linked_account)
+		to_chat(usr, SPAN_WARNING("Unable to link the ID-linked account: access denied."))
+	else
+		account = linked_account
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleAccountTopic(list/href_list)
+	if("PRG_account" in href_list)
+		return PromptLinkAccount()
+	if("PRG_account_id" in href_list)
+		return LinkInsertedIdAccount()
+	if("PRG_account_unlink" in href_list)
+		account = null
+		current_order = null
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/supply/proc/HandleCatalogTopic(list/href_list)
+	var/station_id = href_list["PRG_station"] || href_list["amp;PRG_station"]
+	if(station_id)
+		station = SSsupply.GetVisibleStationByUid(station_id)
+		SetChosenCategory()
+		CloseGoodsQuantityForm()
+		return TRUE
+	if("PRG_goods_category" in href_list)
+		SetChosenCategory(href_list["PRG_goods_category"])
+		CloseGoodsQuantityForm()
+		return TRUE
+	if("PRG_goods_quantity_target" in href_list)
+		EnsureSelectedStation()
+		OpenGoodsQuantityForm(href_list["PRG_goods_quantity_target"])
+		return TRUE
+	if("PRG_goods_quantity_cancel" in href_list)
+		CloseGoodsQuantityForm()
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/supply/proc/SelectReceivingBeacon()
+	var/list/beacons_by_id = GetLocalReceivingBeaconsById()
+	if(!length(beacons_by_id))
+		to_chat(usr, SPAN_WARNING("No receiving beacons are available on the current vessel."))
+		return TRUE
+	var/chosen_id = input(usr, "Select a receiving beacon.", "Receiving Beacon") as null|anything in beacons_by_id
+	if(chosen_id)
+		receiving = beacons_by_id[chosen_id]
+	return TRUE
+
+/datum/computer_file/program/supply/proc/SelectSendingBeacon()
+	var/list/beacons_by_id = GetLocalSendingBeaconsById()
+	if(!length(beacons_by_id))
+		to_chat(usr, SPAN_WARNING("No sending beacons are available on the current vessel."))
+		return TRUE
+	var/chosen_id = input(usr, "Select a sending beacon.", "Sending Beacon") as null|anything in beacons_by_id
+	if(chosen_id)
+		sending = beacons_by_id[chosen_id]
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleBeaconTopic(list/href_list)
+	if("PRG_receiving" in href_list)
+		return SelectReceivingBeacon()
+	if("PRG_sending" in href_list)
+		return SelectSendingBeacon()
+	return FALSE
+
+/datum/computer_file/program/supply/proc/ResolveCartAddQuantity(list/href_list)
+	if("PRG_cart_add_amount" in href_list)
+		var/amount = text2num(href_list["PRG_cart_add_amount"])
+		return (isnum(amount) && amount > 0) ? round(amount) : 0
+	if("PRG_cart_add_input" in href_list)
+		var/raw_amount = input(usr, "How many do you want to add?", "Trade", 2) as num|null
+		return (isnum(raw_amount) && raw_amount > 0) ? round(raw_amount) : 0
+	if("PRG_cart_add_form" in href_list)
+		var/form_amount = text2num(href_list["PRG_cart_add_amount"])
+		return (isnum(form_amount) && form_amount > 0) ? round(form_amount) : 0
+	return 1
+
+/datum/computer_file/program/supply/proc/HandleCartAdd(list/href_list)
+	if(!account)
+		to_chat(usr, SPAN_WARNING("Link an account before adding goods to the cart."))
+		return TRUE
+	EnsureSelectedStation()
+	if(!istype(station) || !chosen_category)
+		return TRUE
+	var/block_reason = GetStationCatalogBlockReason(station)
+	if(block_reason)
+		to_chat(usr, SPAN_WARNING(block_reason))
+		return TRUE
+	var/good_ref = null
+	if("PRG_cart_add_good" in href_list)
+		good_ref = href_list["PRG_cart_add_good"]
+	else if("PRG_cart_add_form" in href_list)
+		good_ref = href_list["PRG_cart_add_form"]
+	else if("PRG_cart_add" in href_list)
+		good_ref = href_list["PRG_cart_add"]
+	else if("PRG_cart_add_input" in href_list)
+		good_ref = href_list["PRG_cart_add_input"]
+	var/count_to_buy = ResolveCartAddQuantity(href_list)
+	if(count_to_buy > 0 && TryAddToCart(good_ref, count_to_buy))
+		CloseGoodsQuantityForm()
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleCartRemove(list/href_list)
+	var/datum/trading_station/target_station = SSsupply.GetStationByUid(href_list["PRG_cart_remove_direct"])
+	var/target_category = href_list["PRG_cart_category_name"]
+	var/target_good_id = href_list["PRG_cart_good_id"]
+	var/remove_amount = 1
+	if("PRG_cart_remove_all" in href_list)
+		remove_amount = 1000000
+	else if("PRG_cart_remove_amount" in href_list)
+		var/parsed_amount = text2num(href_list["PRG_cart_remove_amount"])
+		if(!isnum(parsed_amount) || parsed_amount <= 0)
+			return TRUE
+		remove_amount = round(parsed_amount)
+	if(remove_amount > 0 && istype(target_station) && target_category && target_good_id)
+		station = target_station
+		chosen_category = target_category
+		RemoveFromShopList(target_good_id, remove_amount, target_station, target_category)
+	return TRUE
+
+/datum/computer_file/program/supply/proc/LoadSavedCartDirect(raw_index)
+	var/index = isnum(raw_index) ? raw_index : text2num(raw_index)
+	if(isnum(index))
+		index = round(index)
+		if(index >= 1 && index <= length(saved_shopping_lists))
+			var/name = saved_shopping_lists[index]
+			var/list/loaded = LoadShopList(name)
+			if(islist(loaded))
+				ResetShopList()
+				shopping_list = loaded
+				trade_screen = CART_SCREEN
+				ResetUiForms()
+	return TRUE
+
+/datum/computer_file/program/supply/proc/DeleteSavedCartDirect(raw_index)
+	var/index = isnum(raw_index) ? raw_index : text2num(raw_index)
+	if(isnum(index))
+		index = round(index)
+		if(index >= 1 && index <= length(saved_shopping_lists))
+			var/name = saved_shopping_lists[index]
+			DeleteShopList(name)
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleSavedCartTopic(list/href_list)
+	if("PRG_cart_save" in href_list)
+		OpenCartForm("save")
+		return TRUE
+	if("PRG_cart_save_form" in href_list)
+		var/name = sanitizeName(href_list["PRG_cart_save_name"], MAX_NAME_LEN)
+		SaveShopList(name)
+		CloseCartForm()
+		return TRUE
+	if("PRG_cart_load" in href_list)
+		var/name = input(usr, "Choose a saved cart.", "Load Cart") as null|anything in saved_shopping_lists
+		if(name)
+			var/list/loaded = LoadShopList(name)
+			if(islist(loaded))
+				ResetShopList()
+				shopping_list = loaded
+				trade_screen = CART_SCREEN
+				ResetUiForms()
+		return TRUE
+	if("PRG_cart_load_direct" in href_list)
+		return LoadSavedCartDirect(href_list["PRG_cart_load_direct"])
+	if("PRG_cart_delete" in href_list)
+		return DeleteSavedCartDirect(href_list["PRG_cart_delete"])
+	return FALSE
+
+/datum/computer_file/program/supply/proc/HandleCartTopic(list/href_list)
+	if(("PRG_cart_add" in href_list) || ("PRG_cart_add_input" in href_list) || ("PRG_cart_add_good" in href_list) || ("PRG_cart_add_form" in href_list))
+		return HandleCartAdd(href_list)
+	if("PRG_cart_remove_good" in href_list)
+		if(istype(station) && chosen_category)
+			RemoveFromShopList(href_list["PRG_cart_remove_good"], 1, station, chosen_category)
+		return TRUE
+	if("PRG_cart_set_form" in href_list)
+		var/good_id = href_list["PRG_cart_set_form"]
+		var/set_amount = text2num(href_list["PRG_cart_set_amount"])
+		if(isnum(set_amount) && set_amount >= 0 && istype(station) && chosen_category)
+			var/stock = station.GetGoodAmount(chosen_category, good_id)
+			var/current_in_cart = 0
+			var/list/category_cart = islist(shopping_list[station]) ? shopping_list[station][chosen_category] : null
+			if(islist(category_cart))
+				current_in_cart = category_cart[good_id] || 0
+			var/clamped = min(stock, round(set_amount))
+			if(clamped > current_in_cart)
+				AddToShopList(good_id, clamped - current_in_cart, stock)
+			else if(clamped < current_in_cart)
+				RemoveFromShopList(good_id, current_in_cart - clamped, station, chosen_category)
+			CloseGoodsQuantityForm()
+		return TRUE
+	if("PRG_cart_remove_direct" in href_list)
+		return HandleCartRemove(href_list)
+	if("PRG_cart_reset" in href_list)
+		ResetShopList()
+		ResetUiForms()
+		return TRUE
+	if("PRG_cart_form" in href_list)
+		OpenCartForm(href_list["PRG_cart_form"])
+		return TRUE
+	if("PRG_cart_form_cancel" in href_list)
+		CloseCartForm()
+		return TRUE
+	if(("PRG_cart_save" in href_list) || ("PRG_cart_save_form" in href_list) || ("PRG_cart_load" in href_list) || ("PRG_cart_load_direct" in href_list) || ("PRG_cart_delete" in href_list))
+		return HandleSavedCartTopic(href_list)
+	return FALSE
+
+/datum/computer_file/program/supply/proc/PurchaseCart()
+	if(!account)
+		to_chat(usr, SPAN_WARNING("Link an account before purchasing goods."))
+		return TRUE
+	if(!receiving)
+		to_chat(usr, SPAN_WARNING("Select a receiving beacon first."))
+		return TRUE
+	if(!length(shopping_list))
+		return TRUE
+	var/cart_range_block = SSsupply.GetShopListTradeRangeBlockReason(receiving, shopping_list)
+	if(cart_range_block)
+		to_chat(usr, SPAN_WARNING(cart_range_block))
+		return TRUE
+	if(!SSsupply.Buy(receiving, account, shopping_list, FALSE, null, faction))
+		to_chat(usr, SPAN_WARNING("Purchase failed. Check account balance, stock, and receiving area."))
+	else
+		ResetShopList()
+		ResetUiForms()
+	return TRUE
+
+/datum/computer_file/program/supply/proc/ExecuteExport()
+	if(!account)
+		to_chat(usr, SPAN_WARNING("Link an account before exporting goods."))
+		return TRUE
+	if(!sending)
+		to_chat(usr, SPAN_WARNING("Select a sending beacon first."))
+		return TRUE
+	if(!length(SerializeExportItems()))
+		to_chat(usr, SPAN_WARNING("No exportable objects were found near the sending beacon."))
+		return TRUE
+	if(!SSsupply.Export(sending, account, EnsureSelectedStation()))
+		to_chat(usr, SPAN_WARNING("Export failed. The beacon may still be on cooldown."))
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleTradeTopic(list/href_list)
+	if("PRG_receive" in href_list)
+		return PurchaseCart()
+	if("PRG_export" in href_list)
+		return ExecuteExport()
+	return FALSE
+
+/datum/computer_file/program/supply/proc/AcceptContract(contract_id)
+	if(!account)
+		to_chat(usr, SPAN_WARNING("Link an account before accepting contracts."))
+		return TRUE
+	if(!receiving)
+		to_chat(usr, SPAN_WARNING("Select a receiving beacon first."))
+		return TRUE
+	var/datum/trade_contract/contract_to_accept = SSsupply.GetTradeContract(contract_id)
+	var/accept_block = GetContractAcceptBlockReason(contract_to_accept)
+	if(accept_block)
+		to_chat(usr, SPAN_WARNING(accept_block))
+		return TRUE
+	if(!SSsupply.AcceptTradeContract(receiving, account, contract_id))
+		if(istype(contract_to_accept, /datum/trade_contract/caravan_rendezvous))
+			to_chat(usr, SPAN_WARNING("Market-intelligence briefing failed. Check source access and caravan availability."))
+		else
+			to_chat(usr, SPAN_WARNING("Contract acceptance failed. Check source stock and the receiving area."))
+	return TRUE
+
+/datum/computer_file/program/supply/proc/DeliverContract(contract_id)
+	if(!sending)
+		to_chat(usr, SPAN_WARNING("Select a sending beacon first."))
+		return TRUE
+	var/datum/trade_contract/contract_to_deliver = SSsupply.GetTradeContract(contract_id)
+	var/deliver_block = GetContractDeliverBlockReason(contract_to_deliver)
+	if(deliver_block)
+		to_chat(usr, SPAN_WARNING(deliver_block))
+		return TRUE
+	if(!SSsupply.DeliverTradeContract(sending, contract_id))
+		if(istype(contract_to_deliver, /datum/trade_contract/caravan_rendezvous))
+			to_chat(usr, SPAN_WARNING("Market-intelligence transmission failed. The caravan may have moved out of range or the beacon may be on cooldown."))
+		else
+			to_chat(usr, SPAN_WARNING("Contract delivery failed. The crate may be missing or the beacon may be on cooldown."))
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleContractTopic(list/href_list)
+	if("PRG_contract_accept" in href_list)
+		return AcceptContract(href_list["PRG_contract_accept"])
+	if("PRG_contract_deliver" in href_list)
+		return DeliverContract(href_list["PRG_contract_deliver"])
+	return FALSE
+
+/datum/computer_file/program/supply/proc/BuildOrderFromForm(raw_reason)
+	CloseCartForm()
+	if(world.time < order_cooldown_until)
+		to_chat(usr, SPAN_WARNING("Wait a few seconds before submitting another order."))
+		return TRUE
+	if(!account)
+		to_chat(usr, SPAN_WARNING("Link an account before building an order."))
+		return TRUE
+	if(!length(shopping_list) || SSsupply.CollectCountsFrom(shopping_list) <= 0)
+		to_chat(usr, SPAN_WARNING("Your cart is empty."))
+		return TRUE
+	var/reason = sanitize(raw_reason, MAX_MESSAGE_LEN)
+	current_order = SSsupply.BuildOrder(account, reason, CopyShopList(shopping_list), faction)
+	if(current_order)
+		ResetShopList()
+		ResetUiForms()
+		trade_screen = ORDER_SCREEN
+		order_cooldown_until = world.time + 10 SECONDS
+	return TRUE
+
+/datum/computer_file/program/supply/proc/RemoveOrder(order_id)
+	if(!HasCargoApprovalAccess(usr))
+		to_chat(usr, SPAN_WARNING("Cargo approval access is required to remove orders."))
+		return TRUE
+	if(order_id in SSsupply.order_queue)
+		var/list/order_data = SSsupply.order_queue[order_id]
+		if(islist(order_data) && (order_data["processing"] || order_data["status"] == "processing"))
+			to_chat(usr, SPAN_WARNING("Order [order_id] is currently being processed and cannot be removed."))
+			return TRUE
+		SSsupply.DismantleOrder(order_id)
+		if(current_order == order_id)
+			current_order = null
+	return TRUE
+
+/datum/computer_file/program/supply/proc/SaveOrderToCart(order_id)
+	if(order_id in SSsupply.order_queue)
+		var/name = sanitizeName(input(usr, "Optional cart name.", "Save Order", ""), MAX_NAME_LEN)
+		var/list/order_data = SSsupply.order_queue[order_id]
+		SaveShopList(name, order_data["contents"])
+	return TRUE
+
+/datum/computer_file/program/supply/proc/ApproveOrder(order_id)
+	if(!HasCargoApprovalAccess(usr))
+		to_chat(usr, SPAN_WARNING("Cargo approval access is required to approve orders."))
+		return TRUE
+	if(!receiving)
+		to_chat(usr, SPAN_WARNING("Select a receiving beacon first."))
+		return TRUE
+	if(!receiving.operable())
+		to_chat(usr, SPAN_WARNING("The receiving beacon is inoperable or unpowered."))
+		return TRUE
+	if(order_id in SSsupply.order_queue)
+		var/list/order_data = SSsupply.order_queue[order_id]
+		if(islist(order_data) && (order_data["processing"] || order_data["status"] == "processing"))
+			to_chat(usr, SPAN_WARNING("Order [order_id] is already being processed."))
+			return TRUE
+		var/order_range_block = SSsupply.GetShopListTradeRangeBlockReason(receiving, order_data["contents"])
+		if(order_range_block)
+			to_chat(usr, SPAN_WARNING(order_range_block))
+			return TRUE
+	if(!SSsupply.PurchaseOrder(receiving, order_id))
+		to_chat(usr, SPAN_WARNING("Order approval failed. Check department and requestor balances."))
+	else
+		if(current_order == order_id)
+			current_order = null
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandleOrderTopic(list/href_list)
+	if("PRG_build_order" in href_list)
+		OpenCartForm("order")
+		return TRUE
+	if("PRG_build_order_form" in href_list)
+		return BuildOrderFromForm(href_list["PRG_order_reason"])
+	if("PRG_view_order" in href_list)
+		current_order = href_list["PRG_view_order"]
+		return TRUE
+	if("PRG_remove_order" in href_list)
+		return RemoveOrder(href_list["PRG_remove_order"])
+	if("PRG_save_order" in href_list)
+		return SaveOrderToCart(href_list["PRG_save_order"])
+	if("PRG_approve_order" in href_list)
+		return ApproveOrder(href_list["PRG_approve_order"])
+	return FALSE
+
+/datum/computer_file/program/supply/proc/PrintLogInvoice(raw_log_id, is_internal = FALSE)
+	var/list/log_data = SSsupply.GetLogDataById(raw_log_id)
+	if(!length(log_data))
+		to_chat(usr, SPAN_WARNING("Invoice #[html_encode(copytext(strip_html_properly(trimtext("[raw_log_id]")), 1, 33))] was not found."))
+		return TRUE
+	var/clean_id = copytext(strip_html_properly(trimtext("[log_data["id"] || raw_log_id]")), 1, 33)
+	var/safe_id = html_encode(clean_id)
+	var/list/id_data = splittext(clean_id, "-")
+	var/log_type = LOG_SHIPPING
+	switch(length(id_data) >= 2 ? uppertext(id_data[2]) : null)
+		if("E")
+			log_type = LOG_EXPORT
+		if("O")
+			log_type = LOG_ORDER
+		if("C")
+			log_type = LOG_CONTRACT
+	var/title = "[lowertext(log_type)] invoice - #[clean_id][is_internal ? " (internal)" : ""]"
+	var/safe_recipient = html_encode("[log_data["ordering_acct"]]")
+	var/safe_paid = html_encode("[log_data["total_paid"]]")
+	var/text = "<h3>[log_type] Invoice - #[safe_id]</h3><hr><font size='2'>"
+	if(is_internal)
+		text += "FOR INTERNAL USE ONLY<br><br>"
+	text += "Recipient: [safe_recipient]<br>Contents:<br><ul>[log_data["contents"]]</ul>Total Credits Paid: [safe_paid]<br></font>"
+	computer.print_paper(text, strip_html_properly(title))
+	return TRUE
+
+/datum/computer_file/program/supply/proc/HandlePrintTopic(list/href_list)
+	if(!("PRG_print" in href_list) && !("PRG_print_internal" in href_list))
+		return FALSE
+	if(!computer?.get_component(PART_PRINTER))
+		to_chat(usr, SPAN_WARNING("No printer is installed in this computer."))
+		return TRUE
+	var/raw_log_id = ("PRG_print" in href_list) ? href_list["PRG_print"] : href_list["PRG_print_internal"]
+	return PrintLogInvoice(raw_log_id, ("PRG_print_internal" in href_list))
+
+/datum/computer_file/program/supply/Topic(href, href_list)
+	if(..() || href_list["close"])
+		return TRUE
+	ValidateSelectedTradeBeacons()
+	if(HandleScreenTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleAccountTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleCatalogTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleBeaconTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleCartTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleTradeTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleContractTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandleOrderTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	if(HandlePrintTopic(href_list))
+		SSnano.update_uis(src)
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	. = ..()
+	if(!.)
+		return
+
+	var/list/data = BuildTradeUiData(user)
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "mods-supply.tmpl", name, 1050, 800, state = state)
-		ui.set_auto_update(1)
+	if(!ui)
+		ui = new(user, src, ui_key, "mods-cargo_trade_network.tmpl", "Trade Network", 1050, 800, state = GLOB.default_state)
 		ui.set_initial_data(data)
 		ui.open()
 
-/datum/nano_module/program/supply/Topic(href, href_list)
-	var/mob/user = usr
-	if(..())
-		return 1
-
-	if(href_list["use_card"])
-		if(card_slot.stored_card)
-			custom_account = get_account(card_slot.stored_card.associated_account_number)
-			if(custom_account && custom_account.suspended)
-				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
-				card_use = FALSE
-				return
-			card_use = !card_use
-
-
-	if(href_list["select_category"])
-		clear_order_contents()
-		selected_category = href_list["select_category"]
-		return 1
-
-	if(href_list["set_screen"])
-		clear_order_contents()
-		screen = text2num(href_list["set_screen"])
-		return 1
-
-	if(href_list["show_contents"])
-		generate_order_contents(href_list["show_contents"])
-
-	if(href_list["hide_contents"])
-		clear_order_contents()
-
-	if(href_list["order"])
-		clear_order_contents()
-		var/singleton/hierarchy/supply_pack/P = locate(href_list["order"]) in SSsupply.master_supply_list
-		if(!istype(P))
-			return 1
-
-		if(P.hidden && !emagged)
-			return 1
-
-		var/reason = sanitize(input(user,"Reason:","Why do you require this item?","") as null|text,,0)
-		if(!reason)
-			return 1
-
-		var/idname = "*None Provided*"
-		var/idrank = "*None Provided*"
-		if(ishuman(user))
-			if(!card_use)
-				var/mob/living/carbon/human/H = user
-				idname = H.get_authentification_name()
-				idrank = H.get_assignment()
-			else
-				idname = card_slot.stored_card.registered_name
-				idrank = card_slot.stored_card.assignment
-		else if(issilicon(user))
-			idname = user.real_name
-
-		SSsupply.ordernum++
-
-		var/datum/supply_order/O = new /datum/supply_order()
-		O.ordernum = SSsupply.ordernum
-		O.timestamp = stationtime2text()
-		O.object = P
-		O.orderedby = idname
-		O.reason = reason
-		O.orderedrank = idrank
-		O.comment = "#[O.ordernum]"
-		O.accountnubmer = department_accounts["Снабжения"]
-		O.sum_money = P.cost * CARGO_POINT_TO_THALLER
-		O.payer = "None Provided"
-		if(card_use)
-			custom_account = get_account(card_slot.stored_card.associated_account_number)
-			if(!custom_account || custom_account.suspended)
-				to_chat(user, SPAN_WARNING("Card is invalid or suspended."))
-				return
-			if(custom_account.money < O.sum_money)
-				to_chat(user, SPAN_WARNING("Not enough funds to purchase \the [P.name]!"))
-				return
-			custom_account.transfer(department_accounts["Снабжения"], O.sum_money , "Order of [P.name]. Order number [O.ordernum]")
-			O.accountnubmer = custom_account
-			O.payer = card_slot.stored_card.registered_name
-
-
-		SSsupply.requestlist += O
-
-		if(can_print() && alert(user, "Would you like to print a confirmation receipt?", "Print receipt?", "Yes", "No") == "Yes")
-			print_order(O, user)
-		return 1
-
-	if(href_list["print_summary"])
-		if(!can_print())
-			return
-		print_summary(user)
-
-	// Items requiring cargo access go below this entry. Other items go above.
-	if(!check_access(access_cargo))
-		return 1
-
-	if(href_list["launch_shuttle"])
-		var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
-		if(!shuttle)
-			to_chat(user, SPAN_WARNING("Error connecting to the shuttle."))
-			return
-		if(shuttle.at_station())
-			if (shuttle.forbidden_atoms_check())
-				to_chat(usr, SPAN_WARNING("For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons."))
-			else
-				shuttle.launch(user)
-		else
-			shuttle.launch(user)
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
-			if(!frequency)
-				return
-
-			var/datum/signal/status_signal = new
-			status_signal.source = src
-			status_signal.transmission_method = 1
-			status_signal.data["command"] = "supply"
-			frequency.post_signal(src, status_signal)
-		return 1
-
-	if(href_list["approve_order"])
-		var/id = text2num(href_list["approve_order"])
-		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
-		if(SO)
-			if(SO.object.cost >= department_accounts["Снабжения"].money)
-				to_chat(usr, SPAN_WARNING("Not enough points to purchase \the [SO.object.name]!"))
-			else
-				SSsupply.requestlist -= SO
-				SSsupply.shoppinglist += SO
-				department_accounts["Снабжения"].money -= SO.object.cost * CARGO_POINT_TO_THALLER
-
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to approve."))
-
-		return 1
-
-	if(href_list["order_back_to_pending"])
-		var/id = text2num(href_list["order_back_to_pending"])
-		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.shoppinglist)
-		if(SO)
-			SSsupply.requestlist += SO
-			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
-
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to move back to pending."))
-
-		return 1
-
-	if(href_list["deny_order"])
-		var/id = text2num(href_list["deny_order"])
-		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.requestlist)
-		if(alert(user, "Are you sure?", "Deny Order", "Yes", "No") != "Yes")
-			return 1
-		if(SO)
-			SSsupply.requestlist -= SO
-			department_accounts["Снабжения"].transfer(SO.accountnubmer, SO.sum_money , "Deny of order [SO.ordernum]")
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to deny."))
-
-		return 1
-
-	if(href_list["cancel_order"])
-		var/id = text2num(href_list["cancel_order"])
-		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.shoppinglist)
-		if(alert(user, "Are you sure?", "Cancel Order", "Yes", "No") != "Yes")
-			return 1
-		if(SO)
-			SSsupply.shoppinglist -= SO
-			department_accounts["Снабжения"].money += SO.object.cost * CARGO_POINT_TO_THALLER
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to cancel."))
-
-		return 1
-
-	if(href_list["delete_order"])
-		var/id = text2num(href_list["delete_order"])
-		var/datum/supply_order/SO = find_order_by_id(id, SSsupply.donelist)
-		if(alert(user, "Are you sure?", "Delete Order", "Yes", "No") != "Yes")
-			return 1
-		if(SO)
-			SSsupply.donelist -= SO
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to delete."))
-
-		return 1
-
-	if(href_list["print_receipt"])
-		if(!can_print())
-			to_chat(user, SPAN_WARNING("No printer connected to print receipts."))
-			return 1
-
-		var/id = text2num(href_list["print_receipt"])
-		var/list_id = text2num(href_list["list_id"])
-		var/list/list_to_search
-		switch(list_id)
-			if(SUPPLY_LIST_ID_CART)
-				list_to_search = SSsupply.shoppinglist
-			if(SUPPLY_LIST_ID_REQUEST)
-				list_to_search = SSsupply.requestlist
-			if(SUPPLY_LIST_ID_DONE)
-				list_to_search = SSsupply.donelist
-			else
-				to_chat(user, SPAN_WARNING("Invalid list ID for order number [id]. Receipt not printed."))
-				return 1
-
-		var/datum/supply_order/SO = find_order_by_id(id, list_to_search)
-		if(SO)
-			print_order(SO, user)
-		else
-			to_chat(user, SPAN_WARNING("Could not find order number [id] to print receipt."))
-
-		return 1
-
-	if(href_list["toggle_notifications"])
-		notifications_enabled = !notifications_enabled
-		return 1
-
-
-/datum/nano_module/program/supply/generate_categories()
-	category_names.Cut()
-	category_contents.Cut()
-	var/singleton/hierarchy/supply_pack/root = GET_SINGLETON(/singleton/hierarchy/supply_pack)
-	for(var/singleton/hierarchy/supply_pack/sp in root.children)
-		if(!sp.is_category())
-			continue // No children
-		category_names.Add(sp.name)
-		var/list/category[0]
-		for(var/singleton/hierarchy/supply_pack/spc in sp.get_descendents())
-			if((spc.hidden || spc.contraband || !spc.sec_available()) && !emagged)
-				continue
-			category.Add(list(list(
-				"name" = spc.name,
-				"cost" = spc.cost * CARGO_POINT_TO_THALLER,
-				"ref" = "\ref[spc]"
-			)))
-		category_contents[sp.name] = category
-
-
-
-/datum/nano_module/program/supply/order_to_nanoui(datum/supply_order/SO, list_id)
-	return list(list(
-		"id" = SO.ordernum,
-		"time" = SO.timestamp,
-		"object" = SO.object.name,
-		"orderer" = SO.orderedby,
-		"cost" = SO.object.cost * CARGO_POINT_TO_THALLER,
-		"payer" = SO.payer,
-		"reason" = SO.reason,
-		"list_id" = list_id
-		))
-
-#undef CARGO_POINT_TO_THALLER
-#undef SUPPLY_LIST_ID_CART
-#undef SUPPLY_LIST_ID_REQUEST
-#undef SUPPLY_LIST_ID_DONE
+#undef SETTINGS_SCREEN
+#undef GOODS_SCREEN
+#undef EXPORT_SCREEN
+#undef CART_SCREEN
+#undef ORDER_SCREEN
+#undef CONTRACT_SCREEN
+#undef SAVED_SCREEN
+#undef LOG_SCREEN
+#undef LOG_SHIPPING
+#undef LOG_EXPORT
+#undef LOG_ORDER
+#undef LOG_CONTRACT

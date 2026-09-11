@@ -1,0 +1,2482 @@
+<style>
+	html, body {
+		background-color: #090b0e;
+		color: #ffaa22;
+		font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", Arial, sans-serif;
+		overflow-y: scroll;
+		margin: 0;
+		padding: 0;
+	}
+
+	::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+	::-webkit-scrollbar-track {
+		background: #0d0f14;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #332200;
+		border-radius: 0;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #553800;
+	}
+
+	.font-mono {
+		font-family: Consolas, "Lucida Console", Monaco, "Courier New", monospace !important;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.tn-wrap {
+		padding: 6px 8px;
+		background: #090b0e;
+		color: #ffaa22;
+		min-height: 100%;
+		box-sizing: border-box;
+	}
+
+	.tn-screen-view {
+		min-height: 520px;
+	}
+
+	.tn-stack > * + * {
+		margin-top: 6px;
+	}
+
+	/* Top System Banner */
+	.tn-sys-banner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 4px 8px;
+		background: #0f1217;
+		border: 1px solid #332200;
+		color: #ff9900;
+		font-family: Consolas, "Lucida Console", monospace;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.tn-sys-banner-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tn-sys-banner-ntos {
+		color: #8c602a;
+		font-size: 10px;
+		letter-spacing: 0.12em;
+		white-space: nowrap;
+		margin-left: 12px;
+	}
+
+	/* Primary Navigation Bar */
+	.tn-nav-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		padding: 4px 6px;
+		background: #111419;
+		border: 1px solid #332200;
+	}
+
+	.tn-nav-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.tn-nav-tabs > * + * {
+		margin-left: 4px;
+	}
+
+	.tn-nav-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 4px 10px;
+		background: #14171f;
+		border: 1px solid #2a1c08;
+		border-radius: 0;
+		color: #a67030 !important;
+		font-family: Consolas, monospace;
+		font-size: 11px;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		transition: all 0.1s ease;
+		float: none !important;
+		height: auto !important;
+		min-height: 0 !important;
+		box-sizing: border-box !important;
+	}
+
+	.tn-nav-btn .uiIcon16 {
+		margin-right: 4px;
+	}
+
+	.tn-nav-btn:hover {
+		background: #1d212b;
+		color: #ffaa22 !important;
+		border-color: #553800;
+	}
+
+	.tn-nav-btn.selected {
+		background: #ff9900 !important;
+		color: #090b0e !important;
+		border-color: #ffaa22 !important;
+		box-shadow: none !important;
+		float: none !important;
+		height: auto !important;
+	}
+
+	.tn-nav-btn.selected .tn-nav-badge {
+		background: #090b0e;
+		color: #ff9900;
+		border-color: #090b0e;
+	}
+
+	.tn-nav-badge {
+		display: inline-block;
+		padding: 0 4px;
+		margin-left: 4px;
+		border-radius: 0;
+		font-size: 10px;
+		line-height: 1.2;
+		background: #1b1408;
+		border: 1px solid #442d08;
+		color: #ffaa22;
+		font-family: Consolas, monospace;
+	}
+
+	/* Compact Cart Ticker (Empty Basket) */
+	.tn-cart-ticker {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		padding: 4px 8px;
+		background: #101318;
+		border: 1px solid #332200;
+		font-size: 11px;
+	}
+
+	.tn-ticker-items {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.tn-ticker-items > * + * {
+		margin-left: 8px;
+	}
+
+	.tn-ticker-tag {
+		font-family: Consolas, monospace;
+		font-weight: bold;
+		font-size: 11px;
+		color: #8c602a;
+		background: #141109;
+		border: 1px solid #2a1c08;
+		padding: 1px 5px;
+	}
+
+	.tn-ticker-sep {
+		color: #332200;
+	}
+
+	.tn-ticker-lbl {
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		color: #8c602a;
+		font-weight: bold;
+		text-transform: uppercase;
+		margin-right: 4px;
+	}
+
+	.tn-ticker-val {
+		color: #ffaa22;
+	}
+
+	/* Expanded Active Basket Header */
+	.tn-cart-active-header {
+		padding: 6px 10px;
+		background: #111419;
+		border: 1px solid #443010;
+	}
+
+	.tn-basket-summary-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.tn-basket-lead {
+		display: flex;
+		align-items: center;
+	}
+
+	.tn-basket-lead > * + * {
+		margin-left: 8px;
+	}
+
+	.tn-basket-status-badge {
+		background: #1c1408;
+		border: 1px solid #ff9900;
+		color: #ff9900;
+		font-size: 11px;
+		font-weight: bold;
+		padding: 2px 6px;
+	}
+
+	.tn-basket-total {
+		font-size: 13px;
+		font-weight: bold;
+		color: #55cc55;
+	}
+
+	.tn-basket-fee {
+		font-size: 10px;
+		color: #8c602a;
+	}
+
+	.tn-basket-quick-meta {
+		display: flex;
+		flex-wrap: wrap;
+		font-size: 11px;
+		color: #a67030;
+	}
+
+	.tn-basket-quick-meta > * + * {
+		margin-left: 12px;
+	}
+
+	.tn-basket-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.tn-basket-actions > * + * {
+		margin-left: 4px;
+	}
+
+	/* Dynamic Workspace Headers for other screens */
+	.tn-workspace-header {
+		padding: 6px 10px;
+		background: #111419;
+		border: 1px solid #332200;
+	}
+
+	/* General Industrial Action Buttons */
+	.tn-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 3px 8px;
+		border-radius: 0 !important;
+		font-family: Consolas, monospace;
+		font-size: 11px;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		user-select: none;
+		box-sizing: border-box;
+		line-height: 1.3;
+		transition: all 0.1s ease;
+		float: none !important;
+		height: auto !important;
+	}
+
+	.tn-btn .uiIcon16 {
+		margin-right: 4px;
+	}
+
+	.tn-btn + .tn-btn {
+		margin-left: 4px;
+	}
+
+	.tn-btn-primary {
+		background: #ff9900;
+		color: #090b0e !important;
+		border: 1px solid #ffaa22;
+	}
+	.tn-btn-primary:hover {
+		background: #ffaa22;
+		color: #000000 !important;
+	}
+
+	.tn-btn-outline {
+		background: #13171e;
+		color: #ffaa22 !important;
+		border: 1px solid #3d2808;
+	}
+	.tn-btn-outline:hover {
+		background: #1c212b;
+		border-color: #ffaa22;
+	}
+
+	.tn-btn-danger {
+		background: #1e1010;
+		color: #ff7777 !important;
+		border: 1px solid #551c1c;
+	}
+	.tn-btn-danger:hover {
+		background: #2b1414;
+		border-color: #ff5555;
+	}
+
+	.tn-btn-disabled,
+	.link.disabled,
+	.tn-btn.disabled {
+		background: #111317 !important;
+		color: #4a3820 !important;
+		border: 1px solid #221a10 !important;
+		cursor: not-allowed !important;
+		pointer-events: none;
+	}
+
+	/* Layout Grids and Panels */
+	.tn-grid {
+		display: flex;
+		flex-wrap: wrap;
+		margin: -3px;
+	}
+
+	.tn-col {
+		flex: 1 1 320px;
+		min-width: 280px;
+		margin: 3px;
+		box-sizing: border-box;
+	}
+
+	.tn-panel {
+		padding: 8px 10px;
+		background: #111419;
+		border: 1px solid #332200;
+		border-radius: 0;
+	}
+
+	.tn-panel + .tn-panel {
+		margin-top: 6px;
+	}
+
+	.tn-panel-header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: 6px;
+	}
+
+	.tn-panel-title {
+		font-family: Consolas, monospace;
+		font-size: 12px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #ff9900;
+	}
+
+	.tn-panel-subtitle {
+		font-size: 11px;
+		color: #8c602a;
+		margin-top: 2px;
+	}
+
+	.tn-panel-label {
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #8c602a;
+	}
+
+	.tn-empty-panel {
+		padding: 16px;
+		border: 1px dashed #332200;
+		background: #0f1217;
+		border-radius: 0;
+		text-align: center;
+	}
+
+	.tn-empty {
+		color: #664411;
+		font-style: italic;
+	}
+
+	.tn-muted {
+		color: #8c602a;
+	}
+
+	.tn-subtle {
+		color: #664411;
+	}
+
+	/* Status Indicators & Tags (Diegetic Amber NTOS) */
+	.tn-status-dot {
+		display: inline-block;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		vertical-align: middle;
+		margin-right: 4px;
+	}
+
+	.tn-dot-good {
+		background: #55cc55;
+		box-shadow: 0 0 4px #55cc55;
+	}
+
+	.tn-dot-average {
+		background: #ffaa22;
+		box-shadow: 0 0 4px #ffaa22;
+	}
+
+	.tn-dot-bad {
+		background: #ff4444;
+		box-shadow: 0 0 4px #ff4444;
+	}
+
+	.tn-tag {
+		display: inline-block;
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 1px 4px;
+		border-radius: 0;
+		line-height: 1.2;
+		white-space: nowrap;
+		background: #13171e;
+		border: 1px solid #2a1c08;
+		color: #ffaa22;
+	}
+
+	.tn-tag-good {
+		background: #0e1a10;
+		color: #55cc55;
+		border-color: #225522;
+	}
+
+	.tn-tag-average {
+		background: #1a1408;
+		color: #ffaa22;
+		border-color: #443010;
+	}
+
+	.tn-tag-bad {
+		background: #1c0e0e;
+		color: #ff7777;
+		border-color: #551c1c;
+	}
+
+	.tn-tag-disabled {
+		background: #111317;
+		color: #554425;
+		border-color: #221808;
+	}
+
+	.notice {
+		padding: 6px 10px;
+		border-radius: 0;
+		font-size: 11px;
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+
+	.notice.good {
+		background: #0e1a10;
+		color: #55cc55;
+		border: 1px solid #225522;
+	}
+
+	.notice.average {
+		background: #1a1408;
+		color: #ffaa22;
+		border: 1px solid #443010;
+	}
+
+	.notice.bad {
+		background: #1c0e0e;
+		color: #ff7777;
+		border: 1px solid #551c1c;
+	}
+
+	.tn-section-divider {
+		margin: 6px 0;
+		border: 0;
+		border-top: 1px solid #221608;
+	}
+
+	/* Forms & Inputs */
+	.tn-form-shell {
+		padding: 6px 8px;
+		border: 1px solid #332200;
+		background: #0f1217;
+		border-radius: 0;
+		margin-top: 6px;
+	}
+
+	.tn-form {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.tn-form > * + * {
+		margin-left: 4px;
+	}
+
+	.tn-form textarea,
+	.tn-form input[type='text'],
+	.tn-form input[type='number'] {
+		background: #07080a;
+		color: #ffaa22;
+		border: 1px solid #3d2808;
+		padding: 3px 5px;
+		box-sizing: border-box;
+		border-radius: 0;
+		font-family: Consolas, monospace;
+		font-size: 11px;
+	}
+
+	.tn-form textarea:focus,
+	.tn-form input[type='text']:focus,
+	.tn-form input[type='number']:focus {
+		border-color: #ff9900;
+		outline: none;
+	}
+
+	.tn-form textarea {
+		width: 100%;
+		min-height: 48px;
+		resize: vertical;
+	}
+
+	.tn-form input[type='submit'] {
+		background: #ff9900;
+		color: #090b0e;
+		border: 1px solid #ffaa22;
+		border-radius: 0;
+		padding: 3px 8px;
+		font-family: Consolas, monospace;
+		font-weight: bold;
+		cursor: pointer;
+		font-size: 11px;
+	}
+
+	.tn-form input[type='submit']:hover {
+		background: #ffaa22;
+	}
+
+	.tn-form input[type='submit']:disabled,
+	.tn-form input[type='submit'].disabled {
+		background: #14171f;
+		color: #4a3820;
+		border-color: #221a10;
+		cursor: not-allowed;
+	}
+
+	/* Market Sidebar Styles */
+	.tn-market-sidebar {
+		flex: 0 0 210px !important;
+		max-width: 220px !important;
+		min-width: 190px !important;
+	}
+
+	.tn-market-main {
+		flex: 1 1 520px !important;
+		min-width: 320px !important;
+	}
+
+	.tn-station-select-wrap {
+		position: relative;
+		width: 100%;
+	}
+
+	.tn-station-select {
+		width: 100%;
+		height: 26px;
+		background: #07080a;
+		color: #ffaa22;
+		border: 1px solid #332200;
+		border-radius: 0;
+		padding: 2px 6px;
+		font-family: Consolas, monospace;
+		font-size: 11px;
+		font-weight: bold;
+		cursor: pointer;
+		box-sizing: border-box;
+		text-overflow: ellipsis;
+	}
+
+	.tn-station-select:focus {
+		border-color: #ff9900;
+		outline: none;
+	}
+
+	.tn-station-select option {
+		background: #111419;
+		color: #ffaa22;
+		padding: 3px 5px;
+	}
+
+	.tn-wrap .tn-station-card {
+		display: block !important;
+		float: none !important;
+		clear: both !important;
+		width: 100% !important;
+		height: auto !important;
+		box-sizing: border-box !important;
+		padding: 5px 6px !important;
+		border: 1px solid #2a1c08 !important;
+		background: #13171f !important;
+		border-radius: 0 !important;
+		margin-top: 4px !important;
+		text-align: left !important;
+	}
+
+	.tn-station-name {
+		font-weight: bold;
+		font-size: 11px;
+		color: #ffaa22;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.tn-station-meta-row {
+		margin-top: 3px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		font-size: 10px;
+	}
+
+	.tn-station-meta-row > * + * {
+		margin-left: 4px;
+	}
+
+	.tn-station-faction {
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.tn-wrap .tn-category-vertical-list {
+		display: block;
+		width: 100%;
+		max-height: 440px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		box-sizing: border-box;
+	}
+
+	.tn-wrap .tn-category-item,
+	.tn-wrap .link.tn-category-item,
+	.tn-wrap .linkActive.tn-category-item,
+	.tn-wrap .selected.tn-category-item {
+		display: block !important;
+		float: none !important;
+		clear: both !important;
+		width: 100% !important;
+		height: auto !important;
+		min-height: 24px !important;
+		line-height: 18px !important;
+		padding: 3px 8px !important;
+		margin: 0 0 2px 0 !important;
+		border-radius: 0 !important;
+		background: #12151b !important;
+		border: 1px solid #261b0a !important;
+		border-left: 3px solid transparent !important;
+		color: #8c602a !important;
+		text-align: left !important;
+		white-space: normal !important;
+		word-break: break-word !important;
+		text-decoration: none !important;
+		font-family: Consolas, monospace !important;
+		font-size: 11px !important;
+		font-weight: bold !important;
+		cursor: pointer !important;
+		box-sizing: border-box !important;
+		transition: background 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+	}
+
+	.tn-wrap .tn-category-item .uiIcon16 {
+		float: left;
+		margin-right: 6px;
+		margin-top: 1px;
+	}
+
+	.tn-wrap .tn-category-item:hover,
+	.tn-wrap .linkActive.tn-category-item:hover {
+		background: #1a1e27 !important;
+		color: #ffaa22 !important;
+		border-color: #443010 !important;
+		border-left-color: #ffaa22 !important;
+	}
+
+	.tn-wrap .tn-category-item.selected,
+	.tn-wrap .link.tn-category-item.selected,
+	.tn-wrap .tn-category-item.tn-selected {
+		background: #1f190a !important;
+		border: 1px solid #443010 !important;
+		border-left: 3px solid #ff9900 !important;
+		color: #ff9900 !important;
+		cursor: default !important;
+		box-shadow: inset 1px 0 0 rgba(255, 153, 0, 0.2) !important;
+	}
+
+	/* Catalog Header Bar: Live Search & Sort */
+	.tn-catalog-header-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		padding: 4px 8px;
+		background: #111419;
+		border: 1px solid #332200;
+		margin-bottom: 6px;
+	}
+
+	.tn-catalog-title {
+		font-family: Consolas, monospace;
+		font-size: 12px;
+		font-weight: bold;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: #ff9900;
+	}
+
+	.tn-filter-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.tn-filter-controls > * + * {
+		margin-left: 6px;
+	}
+
+	.tn-search-box {
+		position: relative;
+		display: flex;
+		align-items: center;
+		min-width: 150px;
+	}
+
+	.tn-search-icon {
+		position: absolute;
+		left: 6px;
+		font-size: 10px;
+		color: #664411;
+		pointer-events: none;
+	}
+
+	.tn-search-input {
+		width: 100%;
+		height: 24px;
+		padding: 2px 20px 2px 20px;
+		background: #07080a;
+		color: #ffaa22;
+		border: 1px solid #332200;
+		border-radius: 0;
+		font-size: 11px;
+		box-sizing: border-box;
+	}
+
+	.tn-search-input:focus {
+		border-color: #ff9900;
+		outline: none;
+	}
+
+	.tn-search-input::placeholder {
+		color: #664411;
+		font-style: italic;
+	}
+
+	.tn-search-clear {
+		position: absolute;
+		right: 4px;
+		background: transparent;
+		border: none;
+		color: #664411;
+		cursor: pointer;
+		font-size: 11px;
+		padding: 1px;
+		line-height: 1;
+	}
+
+	.tn-search-clear:hover {
+		color: #ff7777;
+	}
+
+	.tn-sort-select {
+		height: 24px;
+		background: #07080a;
+		color: #ffaa22;
+		border: 1px solid #332200;
+		border-radius: 0;
+		padding: 1px 4px;
+		font-family: Consolas, monospace;
+		font-size: 11px;
+		cursor: pointer;
+	}
+
+	.tn-sort-select:focus {
+		border-color: #ff9900;
+		outline: none;
+	}
+
+	.tn-cards-counter {
+		font-size: 11px;
+		color: #8c602a;
+		white-space: nowrap;
+	}
+
+	/* High-Density Catalog Data Table */
+	.tn-catalog-table {
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+		background: #0c0e12;
+		border: 1px solid #332200;
+	}
+
+	.tn-catalog-table th {
+		background: #141820;
+		color: #ff9900;
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		font-weight: bold;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		padding: 5px 6px;
+		border-bottom: 1px solid #ff9900;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	.tn-catalog-table th.tn-th-right {
+		text-align: right;
+	}
+
+	.tn-catalog-table th.tn-th-center {
+		text-align: center;
+	}
+
+	.tn-catalog-table td {
+		padding: 3px 6px;
+		border-bottom: 1px solid #1a140a;
+		vertical-align: middle;
+		font-size: 11px;
+	}
+
+	.tn-good-row:nth-child(even) td {
+		background: rgba(255, 153, 0, 0.012);
+	}
+
+	.tn-good-row:hover td {
+		background: #1c1a14;
+		border-bottom-color: #3d2b10;
+	}
+
+	.tn-good-row.tn-restricted td {
+		opacity: 0.55;
+		background: #111317;
+	}
+
+	/* Fixed 32x32 crisp sprite display container */
+	.tn-sprite-box {
+		width: 32px;
+		height: 32px;
+		background: #07080a;
+		border: 1px solid #2a1c08;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+		box-sizing: border-box;
+	}
+
+	.tn-sprite-img {
+		width: 32px;
+		height: 32px;
+		image-rendering: pixelated;
+		image-rendering: -moz-crisp-edges;
+		image-rendering: crisp-edges;
+		-ms-interpolation-mode: nearest-neighbor;
+		object-fit: contain;
+	}
+
+	.tn-sprite-placeholder {
+		font-size: 14px;
+		color: #664411;
+	}
+
+	/* Title Case Item Name & Subtitle */
+	.tn-item-title {
+		font-weight: bold;
+		font-size: 11px;
+		color: #ffbb33;
+		text-transform: capitalize;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		display: block;
+		cursor: help;
+	}
+
+	.tn-item-sub {
+		font-family: Consolas, monospace;
+		font-size: 9px;
+		color: #8c602a;
+		display: block;
+		margin-top: 1px;
+	}
+
+	/* In-Table Steppers and Action Controls */
+	.tn-table-stepper {
+		display: inline-flex;
+		align-items: center;
+		background: #090b0e;
+		border: 1px solid #3d2808;
+		height: 22px;
+		vertical-align: middle;
+	}
+
+	.tn-table-stepper-btn {
+		width: 20px;
+		height: 20px !important;
+		line-height: 20px !important;
+		text-align: center;
+		background: #13171e;
+		color: #ffaa22 !important;
+		font-size: 11px;
+		font-weight: bold;
+		cursor: pointer;
+		text-decoration: none;
+		user-select: none;
+		float: none !important;
+		box-sizing: border-box !important;
+	}
+
+	.tn-table-stepper-btn:hover {
+		background: #202633;
+		color: #ff9900 !important;
+	}
+
+	.tn-table-stepper-val {
+		padding: 0 5px;
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		font-weight: bold;
+		color: #55cc55;
+		white-space: nowrap;
+	}
+
+	.tn-actions-wrap {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.tn-actions-wrap > * + * {
+		margin-left: 3px;
+	}
+
+	.tn-popover-form {
+		display: flex;
+		align-items: center;
+		background: #141108;
+		border: 1px solid #ff9900;
+		padding: 1px 3px;
+		margin-top: 2px;
+	}
+
+	.tn-popover-form > * + * {
+		margin-left: 2px;
+	}
+
+	.tn-popover-input {
+		width: 44px !important;
+		height: 19px !important;
+		padding: 1px 3px !important;
+		font-family: Consolas, monospace;
+		font-size: 10px !important;
+		background: #07080a !important;
+		color: #ffaa22 !important;
+		border: 1px solid #332200 !important;
+	}
+
+	.tn-popover-btn {
+		height: 19px !important;
+		padding: 0 5px !important;
+		font-size: 9px !important;
+		font-family: Consolas, monospace;
+		font-weight: bold;
+		background: #ff9900 !important;
+		color: #090b0e !important;
+		border: none !important;
+		cursor: pointer;
+	}
+
+	.tn-popover-close {
+		color: #ff7777 !important;
+		text-decoration: none;
+		font-size: 11px;
+		padding: 0 2px;
+	}
+
+	/* Scroll Containers */
+	.tn-scroll-box {
+		overflow-y: auto;
+		overflow-x: hidden;
+		max-height: 480px;
+		padding-right: 2px;
+	}
+
+	.tn-goods-scroll {
+		height: 480px;
+		min-height: 420px;
+		max-height: 520px;
+	}
+
+	/* Orders Cards */
+	.tn-wrap .tn-order-card,
+	.tn-wrap .tn-order-card.selected,
+	.tn-wrap .tn-order-card.tn-selected {
+		display: block !important;
+		float: none !important;
+		clear: both !important;
+		width: 100% !important;
+		height: auto !important;
+		min-height: 0 !important;
+		max-height: none !important;
+		white-space: normal !important;
+		overflow: visible !important;
+		text-align: left !important;
+		box-sizing: border-box !important;
+		margin: 0 0 6px 0 !important;
+		padding: 8px 10px !important;
+		background: #111419 !important;
+		border: 1px solid #332200 !important;
+	}
+
+	.tn-wrap .tn-order-card.selected,
+	.tn-wrap .tn-order-card.tn-selected {
+		border-color: #ff9900 !important;
+		background: #151922 !important;
+		box-shadow: 0 0 8px rgba(255, 153, 0, 0.15) !important;
+	}
+
+	.tn-order-items-box {
+		margin-top: 6px;
+		padding: 4px 6px;
+		background: #090b0e;
+		border: 1px solid #261b0a;
+		font-size: 11px;
+	}
+
+	/* Contracts Cards */
+	.tn-wrap .tn-contract-card {
+		display: block !important;
+		float: none !important;
+		clear: both !important;
+		width: 100% !important;
+		height: auto !important;
+		box-sizing: border-box !important;
+		padding: 8px 10px !important;
+		margin: 0 0 6px 0 !important;
+		background: #111419 !important;
+		border: 1px solid #332200 !important;
+		text-align: left !important;
+	}
+
+	.tn-contract-top {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 4px;
+	}
+
+	.tn-contract-route {
+		font-family: Consolas, monospace;
+		font-size: 12px;
+		font-weight: bold;
+		color: #ff9900;
+	}
+
+	.tn-contract-grid {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 6px -3px 0 -3px;
+		padding: 4px;
+		background: #090b0e;
+		border: 1px solid #261b0a;
+		font-size: 11px;
+	}
+
+	.tn-contract-grid > div {
+		flex: 1 1 160px;
+		min-width: 140px;
+		margin: 3px;
+		box-sizing: border-box;
+	}
+
+	.tn-contract-footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 8px;
+	}
+
+	/* Export Grouped Rows */
+	.tn-export-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 4px 8px;
+		background: #111419;
+		border: 1px solid #261b0a;
+	}
+
+	.tn-export-item + .tn-export-item {
+		margin-top: 3px;
+	}
+
+	.tn-export-name {
+		font-weight: bold;
+		font-size: 11px;
+		color: #ffaa22;
+	}
+
+	.tn-export-meta {
+		font-size: 10px;
+		color: #8c602a;
+	}
+
+	/* Tab Pillnavs */
+	.tn-pillnav {
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 6px;
+	}
+
+	.tn-pillnav > * + * {
+		margin-left: 4px;
+	}
+
+	.tn-wrap .tn-pillnav-link,
+	.tn-wrap .link.tn-pillnav-link,
+	.tn-wrap .linkActive.tn-pillnav-link,
+	.tn-wrap .selected.tn-pillnav-link {
+		display: inline-block !important;
+		padding: 3px 8px !important;
+		border-radius: 0 !important;
+		background: #13171e !important;
+		border: 1px solid #2a1c08 !important;
+		color: #8c602a !important;
+		font-family: Consolas, monospace !important;
+		font-size: 11px !important;
+		font-weight: bold !important;
+		text-decoration: none !important;
+		cursor: pointer !important;
+		float: none !important;
+		height: auto !important;
+		min-height: 20px !important;
+		line-height: 18px !important;
+		box-sizing: border-box !important;
+	}
+
+	.tn-wrap .tn-pillnav-link:hover,
+	.tn-wrap .linkActive.tn-pillnav-link:hover {
+		background: #1d212b !important;
+		color: #ffaa22 !important;
+	}
+
+	.tn-wrap .tn-pillnav-link.selected,
+	.tn-wrap .link.tn-pillnav-link.selected {
+		background: #ff9900 !important;
+		color: #090b0e !important;
+		border-color: #ffaa22 !important;
+	}
+
+	/* Standard Tables */
+	.tn-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.tn-table th,
+	.tn-table td {
+		padding: 4px 6px;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	.tn-table th {
+		color: #8c602a;
+		font-family: Consolas, monospace;
+		font-size: 10px;
+		font-weight: bold;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		border-bottom: 1px solid #332200;
+	}
+
+	.tn-table td {
+		border-bottom: 1px solid #1a140a;
+		font-size: 11px;
+		word-break: break-word;
+	}
+
+	.tn-table tr:hover td {
+		background: rgba(255, 153, 0, 0.03);
+	}
+
+	.tn-inlineLink {
+		float: none !important;
+		display: inline-block !important;
+		vertical-align: middle;
+	}
+
+	/* NanoUI Legacy Isolation: Neutralize global .linkPending and blue spinner GIF */
+	.tn-wrap .uiLinkPendingIcon {
+		display: none !important;
+	}
+	.tn-wrap .linkPending .uiIcon16 {
+		display: inline-block !important;
+		opacity: 0.6;
+	}
+	.tn-wrap .linkPending,
+	.tn-wrap .linkPending:hover {
+		background: inherit !important;
+		color: inherit !important;
+	}
+
+	/* Utility Flex Spacers for IE11 */
+	.tn-flex-row {
+		display: flex;
+		align-items: center;
+	}
+	.tn-flex-row > * + * {
+		margin-left: 8px;
+	}
+	.tn-flex-row-sm {
+		display: flex;
+		align-items: center;
+	}
+	.tn-flex-row-sm > * + * {
+		margin-left: 4px;
+	}
+	.tn-flex-row-lg {
+		display: flex;
+		align-items: center;
+	}
+	.tn-flex-row-lg > * + * {
+		margin-left: 14px;
+	}
+	.tn-flex-col-sm {
+		display: flex;
+		flex-direction: column;
+	}
+	.tn-flex-col-sm > * + * {
+		margin-top: 4px;
+	}
+</style>
+
+<div class="tn-wrap" data-scroll-id="tn-wrap">
+	<div class="tn-stack">
+		<!-- System Greeting Banner -->
+		<div class="tn-sys-banner">
+			<div class="tn-sys-banner-title" title="{{>data.user_greeting || 'WELCOME TO TRADE NETWORK'}}">
+				{{>data.user_greeting || "WELCOME TO TRADE NETWORK"}}
+			</div>
+			<div class="tn-sys-banner-ntos">
+				AMBER NTOS v4.2 // TRADE TERMINAL
+			</div>
+		</div>
+
+		<!-- Top Hubs Navigation Bar -->
+		<div class="tn-nav-bar">
+			<div class="tn-nav-tabs">
+				{{:helper.link('Market', 'search', {'PRG_trade_screen' : 'goods'}, data.screen == 'goods' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Cart' + (data.cart_count ? ' <span class="tn-nav-badge">' + data.cart_count + '</span>' : ''), 'cart', {'PRG_trade_screen' : 'cart'}, data.screen == 'cart' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Orders' + (data.order_count ? ' <span class="tn-nav-badge">' + data.order_count + '</span>' : ''), 'tag', {'PRG_trade_screen' : 'orders'}, data.screen == 'orders' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Contracts' + ((data.available_contract_count || data.active_contract_count) ? ' <span class="tn-nav-badge">' + (data.available_contract_count + data.active_contract_count) + '</span>' : ''), 'clipboard', {'PRG_trade_screen' : 'contracts'}, data.screen == 'contracts' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Export', 'refresh', {'PRG_trade_screen' : 'export'}, data.screen == 'export' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Logs', 'document', {'PRG_trade_screen' : 'logs'}, data.screen == 'logs' ? 'selected' : null, 'tn-nav-btn')}}
+			</div>
+			<div class="tn-nav-actions">
+				{{:helper.link('Settings', 'gear', {'PRG_trade_screen' : 'settings'}, data.screen == 'settings' ? 'selected' : null, 'tn-nav-btn')}}
+			</div>
+		</div>
+
+		<!-- =================================================================== -->
+		<!-- ADAPTIVE WORKSPACE HEADER / BASKET STATUS                           -->
+		<!-- =================================================================== -->
+		{{if data.screen == 'goods'}}
+			{{if data.cart_count <= 0}}
+				<!-- Ultra-Compact Single-Line Ticker when Cart is Empty -->
+				<div class="tn-cart-ticker">
+					<div class="tn-ticker-items">
+						<span class="tn-ticker-tag">[BASKET: EMPTY]</span>
+						<span class="tn-ticker-sep">|</span>
+						<span class="tn-ticker-lbl">ACCOUNT:</span>
+						<span class="tn-ticker-val">
+							{{if data.has_account}}
+								{{>data.account_owner_name}} #{{:data.account_number}} (<span class="font-mono" style="color:#55cc55;">{{:data.account_money}} {{:data.currency_short}}</span>)
+							{{else}}
+								<span class="tn-empty">None Linked</span>
+							{{/if}}
+						</span>
+						<span class="tn-ticker-sep">|</span>
+						<span class="tn-ticker-lbl">BEACON:</span>
+						<span class="tn-ticker-val">
+							{{if data.has_receiving}}
+								{{>data.receiving}}
+							{{else}}
+								<span class="tn-empty">None Selected</span>
+							{{/if}}
+						</span>
+						<span class="tn-ticker-sep">|</span>
+						<span class="tn-ticker-lbl">STATUS:</span>
+						<span class="tn-ticker-val tn-muted">
+							{{if !data.has_account}}Link account in Settings or Cart{{else !data.has_receiving}}Select receiving beacon{{else}}Catalog Ready{{/if}}
+						</span>
+					</div>
+					<div>
+						{{:helper.link('View Cart', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+					</div>
+				</div>
+			{{else}}
+				<!-- Expanded Operational Basket Header when Cart has Items -->
+				<div class="tn-workspace-header tn-cart-active-header">
+					<div class="tn-basket-summary-row">
+						<div class="tn-basket-lead">
+							<span class="tn-basket-status-badge font-mono">[BASKET: {{:data.cart_count}} ITEMS]</span>
+							<span class="tn-basket-total font-mono">{{:data.cart_total}} {{:data.currency_short}}</span>
+							{{if data.cart_fee > 0}}
+								<span class="tn-basket-fee font-mono">(Fee: {{:data.cart_fee}} {{:data.currency_short}})</span>
+							{{/if}}
+						</div>
+						<div class="tn-basket-quick-meta">
+							<span>
+								<strong class="font-mono" style="color: #ff9900;">ACC:</strong>
+								{{if data.has_account}}#{{:data.account_number}} (<span class="font-mono">{{:data.account_money}} {{:data.currency_short}}</span>){{else}}<span class="tn-empty">NO ACCT</span>{{/if}}
+							</span>
+							<span>
+								<strong class="font-mono" style="color: #ff9900;">BCN:</strong>
+								{{if data.has_receiving}}{{>data.receiving}}{{else}}<span class="tn-empty">NO BEACON</span>{{/if}}
+							</span>
+							{{if data.cart_trade_block_reason}}
+								<span style="color: #ff7777;">[{{>data.cart_trade_block_reason}}]</span>
+							{{/if}}
+						</div>
+						<div class="tn-basket-actions">
+							{{:helper.link('Purchase to Beacon', 'check', {'PRG_receive' : 1}, data.can_purchase_cart ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+							{{:helper.link('Submit Requisition', 'clipboard', {'PRG_cart_form' : 'order'}, data.can_build_order ? null : 'disabled', 'tn-btn tn-btn-outline tn-inlineLink')}}
+							{{:helper.link('Details', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+							{{:helper.link('Clear', 'close', {'PRG_cart_reset' : 1}, null, 'tn-btn tn-btn-danger tn-inlineLink')}}
+						</div>
+					</div>
+
+					{{if data.cart_form_mode == 'order'}}
+						<div class="tn-form-shell">
+							<form class="tn-form" method="get" action="?src={{:data.src}}" onsubmit="if(!this.PRG_order_reason.value || !this.PRG_order_reason.value.trim()) { alert('Order reason is mandatory.'); return false; }">
+								<input type="hidden" name="src" value="{{:data.src}}">
+								<input type="hidden" name="PRG_build_order_form" value="1">
+								<div class="tn-panel-label" style="width: 100%;">Order Justification / Reason (Required):</div>
+								<textarea name="PRG_order_reason" required placeholder="State department, project requirements, or justification..."></textarea>
+								<div class="tn-flex-row-sm" style="width: 100%; margin-top: 4px;">
+									<input type="submit" value="Submit Order Request" class="tn-btn tn-btn-primary">
+									{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
+				</div>
+			{{/if}}
+
+		{{else data.screen == 'orders'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">Crew Supply Queue</div>
+						<div class="tn-panel-subtitle">Review incoming supply requests from station departments.</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Pending:</span>
+							<strong class="font-mono" style="color: #ffaa22; font-size: 13px; margin-left: 4px;">{{:data.order_count}}</strong>
+						</div>
+						<div>
+							<span class="tn-panel-label">Volume:</span>
+							<strong class="font-mono" style="color: #55cc55; font-size: 13px; margin-left: 4px;">{{:data.pending_orders_total}} {{:data.currency_short}}</strong>
+						</div>
+						<div>
+							{{:helper.link('Receiving Beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'contracts'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">Contract Operations</div>
+						<div class="tn-panel-subtitle">High-value freight delivery routes and market intelligence missions.</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Available:</span>
+							<strong class="font-mono" style="color: #ffaa22; font-size: 13px; margin-left: 4px;">{{:data.available_contract_count}}</strong>
+						</div>
+						<div>
+							<span class="tn-panel-label">Active:</span>
+							<strong class="font-mono" style="color: #55cc55; font-size: 13px; margin-left: 4px;">{{:data.active_contract_count}}</strong>
+						</div>
+						<div class="tn-flex-row-sm">
+							{{:helper.link('Inbound Beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+							{{:helper.link('Outbound Beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'export'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">Export Platform</div>
+						<div class="tn-panel-subtitle">Appraise and transmit freight from the outbound trade beacon.</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Beacon:</span>
+							<strong style="color: #ffaa22; margin-left: 4px;">{{if data.has_sending}}{{>data.sending}}{{else}}<span class="tn-empty">None</span>{{/if}}</strong>
+						</div>
+						<div>
+							<span class="tn-panel-label">Cooldown:</span>
+							<span class="tn-tag {{if data.export_cooldown_remaining}}tn-tag-average{{else}}tn-tag-good{{/if}}" style="margin-left: 4px;">
+								{{:data.export_cooldown_text}}
+							</span>
+						</div>
+						<div>
+							<span class="tn-panel-label">Estimated:</span>
+							<strong class="font-mono" style="color: #55cc55; font-size: 13px; margin-left: 4px;">{{:data.export_total}} {{:data.currency_short}}</strong>
+						</div>
+						<div>
+							{{:helper.link('Export Now', 'refresh', {'PRG_export' : 1}, data.can_export ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'logs'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">Transaction Archives</div>
+						<div class="tn-panel-subtitle">Audit records, print invoices, and inspect cargo history.</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Stream:</span>
+							<strong style="color: #ffaa22; margin-left: 4px;">{{:data.log_screen}}</strong>
+						</div>
+						<div>
+							<span class="tn-panel-label">Printer:</span>
+							<span class="tn-tag {{if data.has_printer}}tn-tag-good{{else}}tn-tag-bad{{/if}}" style="margin-left: 4px;">
+								{{if data.has_printer}}ONLINE{{else}}OFFLINE{{/if}}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'cart'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">Current Cart Inspection</div>
+						<div class="tn-panel-subtitle">Review items, adjust quantities, or submit requisition orders.</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Total:</span>
+							<strong class="font-mono" style="color: #55cc55; font-size: 13px; margin-left: 4px;">{{:data.cart_total}} {{:data.currency_short}}</strong>
+						</div>
+						<div>
+							{{:helper.link('&larr; Back to Catalog', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'settings'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header" style="margin-bottom: 0;">
+					<div>
+						<div class="tn-panel-title">System Settings & Routing</div>
+						<div class="tn-panel-subtitle">Bank account authentication, beacon hardware endpoints, and network preferences.</div>
+					</div>
+					<div>
+						{{:helper.link('&larr; Back to Catalog', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+					</div>
+				</div>
+			</div>
+		{{/if}}
+
+		<!-- =================================================================== -->
+		<!-- TAB 1: MARKET CATALOG (goods)                                       -->
+		<!-- =================================================================== -->
+		{{if data.screen == 'goods'}}
+			<div class="tn-screen-view" data-view="screen-goods" data-view-screen="market">
+				<div class="tn-grid">
+					<!-- Left Sidebar: Traders & Categories -->
+					<div class="tn-col tn-market-sidebar">
+						<!-- Stations Panel -->
+						<div class="tn-panel">
+							<div class="tn-panel-title">Overmap Traders</div>
+							<div class="tn-panel-subtitle">Sensor-linked beacons</div>
+							<hr class="tn-section-divider">
+							{{if !data.has_visible_stations}}
+								<div class="tn-empty" style="font-size: 11px; padding: 2px;">No trade stations in sensor range.</div>
+							{{else}}
+								<div class="tn-station-select-wrap">
+									<select class="tn-station-select" onchange="if(this.value){ var fn = window.NanoUtility &amp;&amp; window.NanoUtility.generateHref; window.location.href = fn ? fn({'PRG_station': this.value}) : ('?src={{:data.src}};PRG_station=' + this.value); }">
+										{{for data.stations:station_entry:station_index}}
+											<option value="{{:station_entry.uid}}" {{if station_entry.selected}}selected{{/if}}>
+												{{>station_entry.name}} [{{:station_entry.status_label}} | {{:station_entry.market_label}}]
+											</option>
+										{{/for}}
+									</select>
+								</div>
+								{{if data.has_selected_station && data.selected_station}}
+									<div class="tn-station-card">
+										<div style="display: flex; justify-content: space-between; align-items: baseline;">
+											<strong class="tn-station-name">{{>data.selected_station.name}}</strong>
+											<span class="tn-station-faction" style="color: {{:data.selected_station.faction_color}}; margin-left: 4px;">
+												{{>data.selected_station.faction}}
+											</span>
+										</div>
+										<div class="tn-station-meta-row">
+											<span class="font-mono">
+												<span class="tn-status-dot tn-dot-{{:data.selected_station.status_tone}}"></span>{{:data.selected_station.status_label}}
+											</span>
+											<span class="tn-tag tn-tag-{{:data.selected_station.market_tone}}">
+												[{{:data.selected_station.market_label}}]
+											</span>
+										</div>
+										{{if data.selected_station.block_reason}}
+											<div style="font-size: 10px; margin-top: 3px; font-style: italic; color: #ff7777;">
+												{{>data.selected_station.block_reason}}
+											</div>
+										{{/if}}
+									</div>
+								{{/if}}
+							{{/if}}
+						</div>
+
+						<!-- Categories Panel -->
+						{{if data.has_selected_station}}
+							<div class="tn-panel">
+								<div class="tn-panel-title">Categories</div>
+								<div class="tn-panel-subtitle">Station inventories</div>
+								<hr class="tn-section-divider">
+								{{if data.selected_station && data.selected_station.block_reason}}
+									<div class="tn-empty" style="font-size: 11px; padding: 2px;">Catalog blocked.</div>
+								{{else data.categories && data.categories.length}}
+									<div class="tn-category-vertical-list tn-scroll-box" data-scroll-id="tn-category-list">
+										{{for data.categories:category_entry:category_index}}
+											{{:helper.link(category_entry.name, null, {'PRG_goods_category' : category_entry.name}, category_entry.selected ? 'selected' : null, 'tn-category-item tn-inlineLink')}}
+										{{/for}}
+									</div>
+								{{else}}
+									<div class="tn-empty" style="font-size: 11px; padding: 2px;">No categories available.</div>
+								{{/if}}
+							</div>
+						{{/if}}
+					</div>
+
+					<!-- Right Main Area: Catalog Header & High-Density Table -->
+					<div class="tn-col tn-market-main">
+						{{if data.has_selected_station}}
+							<!-- Catalog Header Row: Live Instant Search & Sort -->
+							<div class="tn-catalog-header-bar">
+								<div class="tn-catalog-title">
+									CATALOG &rsaquo; {{>data.selected_station.name}}{{if data.selected_category && !data.selected_station.block_reason}} &rsaquo; {{>data.selected_category}}{{/if}}
+								</div>
+								<div class="tn-filter-controls">
+									<!-- Client-Side Live Search Box -->
+									<div class="tn-search-box">
+										<span class="tn-search-icon">🔍</span>
+										<input type="text" id="cargo-search-input" class="tn-search-input font-mono" placeholder="Filter items..." oninput="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onpropertychange="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onkeyup="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()">
+										<button type="button" class="tn-search-clear" title="Clear search" onclick="var inp=document.getElementById('cargo-search-input'); if(inp){ inp.value=''; window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter(); inp.focus(); }">✕</button>
+									</div>
+									<!-- Sorting Dropdown -->
+									<select id="cargo-sort-select" class="tn-sort-select" onchange="window.cargoLiveSort &amp;&amp; window.cargoLiveSort()">
+										<option value="default">Default Order</option>
+										<option value="price_asc">Price: Low &rarr; High</option>
+										<option value="price_desc">Price: High &rarr; Low</option>
+										<option value="name_asc">Name: A &rarr; Z</option>
+										<option value="name_desc">Name: Z &rarr; A</option>
+									</select>
+									<div id="cargo-cards-counter" class="tn-cards-counter font-mono"></div>
+								</div>
+							</div>
+
+							<div id="cargo-current-category" data-station="{{:data.selected_station.uid}}" data-cat="{{:data.selected_category}}" style="display:none;"></div>
+
+							{{if data.selected_station.block_reason}}
+								<div class="notice bad">{{>data.selected_station.block_reason}}</div>
+								<div class="tn-empty-panel" style="min-height: 380px;">
+									<div class="tn-panel-title">Trader Communication Blocked</div>
+									<div class="tn-panel-subtitle tn-muted" style="max-width: 480px; margin: 6px auto 0 auto;">
+										This station is currently out of sensor range or radio connection is jammed. Move closer on the overmap or clear radio interference to view inventory.
+									</div>
+								</div>
+							{{else}}
+								<!-- High-Density Data Table Container -->
+								<div class="tn-scroll-box tn-goods-scroll" data-scroll-id="tn-goods-table">
+									{{if data.goods && data.goods.length}}
+										<table class="tn-catalog-table">
+											<thead>
+												<tr>
+													<th style="width: 40px; text-align: center;">Icon</th>
+													<th>Item Description</th>
+													<th class="tn-th-right" style="width: 75px;">Stock</th>
+													<th class="tn-th-right" style="width: 120px;">Price / Markup</th>
+													<th class="tn-th-center" style="width: 75px;">In Cart</th>
+													<th class="tn-th-right" style="width: 155px;">Actions</th>
+												</tr>
+											</thead>
+											<tbody id="cargo-goods-tbody">
+												{{for data.goods:good_entry:good_index}}
+													<tr class="tn-good-row{{if !good_entry.can_add}} tn-restricted{{/if}}" data-name="{{>good_entry.name}}" data-price="{{:good_entry.price}}" data-stock="{{:good_entry.stock}}" data-id="{{:good_entry.id}}" data-index="{{:good_index}}">
+														<!-- 1. Crisp Pixel Icon -->
+														<td style="text-align: center; padding: 2px;">
+															<div class="tn-sprite-box">
+																{{if good_entry.icon}}
+																	<img class="tn-sprite-img" src="{{:good_entry.icon}}" alt="{{>good_entry.name}}">
+																{{else}}
+																	<span class="tn-sprite-placeholder">📦</span>
+																{{/if}}
+															</div>
+														</td>
+
+														<!-- 2. Clean Title Case Name with Tooltip -->
+														<td>
+															<span class="tn-item-title" title="{{>good_entry.desc || good_entry.name}}">
+																{{>good_entry.name}}
+															</span>
+															<span class="tn-item-sub">
+																Buyback: {{:good_entry.sell_price}} {{:data.currency_short}}
+															</span>
+														</td>
+
+														<!-- 3. Monospace Stock Display -->
+														<td style="text-align: right;">
+															{{if good_entry.stock <= 0}}
+																<span class="font-mono" style="color: #ff6666; font-size: 10px; font-weight: bold;">DEPLETED</span>
+															{{else}}
+																<strong class="font-mono" style="color: #55cc55; font-size: 11px;">{{:good_entry.stock}}</strong>
+															{{/if}}
+														</td>
+
+														<!-- 4. Monospace Price & Markup Display -->
+														<td style="text-align: right;">
+															<span class="font-mono" style="color: #ffaa22; font-weight: bold; font-size: 11px;">
+																{{:good_entry.price}} {{:data.currency_short}}
+															</span>
+															{{if good_entry.markup_text}}
+																<div class="font-mono" style="font-size: 9px; color: #8c602a; margin-top: 1px;">
+																	{{:good_entry.markup_text}}
+																</div>
+															{{/if}}
+														</td>
+
+														<!-- 5. Current Basket Quantity -->
+														<td style="text-align: center;">
+															{{if good_entry.in_cart_amount > 0}}
+																<span class="tn-tag tn-tag-good font-mono" style="font-size: 10px;">
+																	{{:good_entry.in_cart_amount}}
+																</span>
+															{{else}}
+																<span class="tn-muted font-mono" style="font-size: 10px;">-</span>
+															{{/if}}
+														</td>
+
+														<!-- 6. Compact Industrial Actions -->
+														<td style="text-align: right;">
+															{{if !good_entry.can_add}}
+																<span class="tn-tag tn-tag-disabled font-mono">UNAVAILABLE</span>
+															{{else}}
+																<div class="tn-actions-wrap">
+																	{{if good_entry.in_cart_amount > 0}}
+																		<!-- Compact Table Stepper -->
+																		<div class="tn-table-stepper">
+																			{{:helper.link('-', null, {'PRG_cart_remove_direct' : data.selected_station.uid, 'PRG_cart_category_name' : data.selected_category, 'PRG_cart_good_id' : good_entry.id, 'PRG_cart_remove_amount' : 1}, null, 'tn-table-stepper-btn tn-inlineLink')}}
+																			<span class="tn-table-stepper-val font-mono">{{:good_entry.in_cart_amount}}</span>
+																			{{:helper.link('+', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, good_entry.in_cart_amount >= good_entry.stock ? 'disabled' : null, 'tn-table-stepper-btn tn-inlineLink')}}
+																		</div>
+																	{{else}}
+																		<!-- Single Add Button -->
+																		{{:helper.link('+ Add', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, null, 'tn-btn tn-btn-primary tn-inlineLink')}}
+																	{{/if}}
+
+																	<!-- Exact Quantity Toggle Button -->
+																	{{:helper.link('Qty', null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+																</div>
+
+																{{if good_entry.quantity_form_open}}
+																	<div class="tn-popover-form">
+																		<form class="tn-form" method="get" action="?src={{:data.src}}" onsubmit="var fld=(this.elements &amp;&amp; this.elements['PRG_cart_set_amount']) ? this.elements['PRG_cart_set_amount'] : this.PRG_cart_set_amount; var amt = parseInt(fld ? fld.value : 0, 10); if(isNaN(amt) || amt &lt; 0) { alert('Enter a valid amount.'); return false; } var maxAmt = parseInt(fld ? fld.getAttribute('max') : 0, 10); if(maxAmt &gt; 0 &amp;&amp; amt &gt; maxAmt) { alert('Cannot order more than available stock (' + maxAmt + ').'); return false; }">
+																			<input type="hidden" name="src" value="{{:data.src}}">
+																			<input type="hidden" name="PRG_cart_set_form" value="{{:good_entry.id}}">
+																			<input type="number" name="PRG_cart_set_amount" min="0" max="{{:good_entry.stock}}" value="{{:good_entry.in_cart_amount || 1}}" class="tn-popover-input font-mono" required>
+																			<input type="submit" value="Set" class="tn-popover-btn">
+																			{{:helper.link('✕', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-popover-close tn-inlineLink')}}
+																		</form>
+																	</div>
+																{{/if}}
+															{{/if}}
+														</td>
+													</tr>
+												{{/for}}
+											</tbody>
+										</table>
+										<div id="cargo-search-no-results" class="tn-empty-panel" style="display:none; margin-top: 6px;">
+											<div class="tn-panel-title">No matching goods found</div>
+											<div class="tn-panel-subtitle tn-muted">Try adjusting your filter query or clearing the search.</div>
+										</div>
+									{{else}}
+										<div class="tn-empty-panel" style="min-height: 380px;">
+											<div class="tn-panel-title">No goods in this category</div>
+											<div class="tn-panel-subtitle tn-muted">Choose another category or station from the sidebar.</div>
+										</div>
+									{{/if}}
+								</div>
+							{{/if}}
+						{{else}}
+							<div class="tn-empty-panel" style="min-height: 420px;">
+								<div class="tn-panel-title">Select a Trade Station</div>
+								<div class="tn-panel-subtitle tn-muted">Select an active overmap trade partner on the left to inspect its catalog and inventory.</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+
+			<!-- Instant Search & Sorting Client-Side Script -->
+			<script id="cargo-market-script">
+			window.cargoLiveFilter = function() {
+				var searchInput = document.getElementById('cargo-search-input');
+				var rawQuery = searchInput ? searchInput.value.toLowerCase().replace(/^\s+|\s+$/g, '') : '';
+				var filterTokens = rawQuery ? rawQuery.split(/\s+/) : [];
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				var visibleCount = 0;
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					var name = row.getAttribute('data-name') || '';
+					if (!name) {
+						var nameEl = row.querySelector ? row.querySelector('.tn-item-title') : (window.jQuery ? $(row).find('.tn-item-title')[0] : null);
+						name = nameEl ? (nameEl.textContent || nameEl.innerText || '') : '';
+					}
+					name = name.toLowerCase();
+					var match = true;
+					for (var t = 0; t < filterTokens.length; t++) {
+						if (name.indexOf(filterTokens[t]) === -1) {
+							match = false;
+							break;
+						}
+					}
+					if (match) {
+						row.style.display = '';
+						visibleCount++;
+					} else {
+						row.style.display = 'none';
+					}
+				}
+				var noResults = document.getElementById('cargo-search-no-results');
+				if (noResults) {
+					noResults.style.display = (visibleCount === 0 && rows.length > 0) ? 'block' : 'none';
+				}
+				var counter = document.getElementById('cargo-cards-counter');
+				if (counter) {
+					counter.innerHTML = visibleCount + (rawQuery ? ' / ' + rows.length : '') + ' items';
+				}
+				window._cargoSearchQuery = rawQuery;
+			};
+
+			window.cargoLiveSort = function() {
+				var sortSelect = document.getElementById('cargo-sort-select');
+				var sortVal = sortSelect ? sortSelect.value : 'default';
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				if (!rows.length) return;
+
+				rows.sort(function(a, b) {
+					if (sortVal === 'price_asc') {
+						return (parseFloat(a.getAttribute('data-price')) || 0) - (parseFloat(b.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'price_desc') {
+						return (parseFloat(b.getAttribute('data-price')) || 0) - (parseFloat(a.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'name_asc' || sortVal === 'name_desc') {
+						var nameA = (a.getAttribute('data-name') || '').toLowerCase();
+						var nameB = (b.getAttribute('data-name') || '').toLowerCase();
+						var cmp = nameA.localeCompare ? nameA.localeCompare(nameB) : (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
+						return sortVal === 'name_asc' ? cmp : -cmp;
+					} else {
+						return (parseInt(a.getAttribute('data-index'), 10) || 0) - (parseInt(b.getAttribute('data-index'), 10) || 0);
+					}
+				});
+
+				for (var i = 0; i < rows.length; i++) {
+					tbody.appendChild(rows[i]);
+				}
+				window._cargoSortVal = sortVal;
+			};
+
+			window.cargoApplyFilterAndSort = function() {
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+
+				var catEl = document.getElementById('cargo-current-category');
+				var currentCatKey = catEl ? ((catEl.getAttribute('data-station') || '') + '::' + (catEl.getAttribute('data-cat') || '')) : '';
+				if (window._cargoLastCategoryKey !== undefined && window._cargoLastCategoryKey !== currentCatKey) {
+					window._cargoSearchQuery = '';
+					var searchInput = document.getElementById('cargo-search-input');
+					if (searchInput) searchInput.value = '';
+				}
+				window._cargoLastCategoryKey = currentCatKey;
+
+				var searchInput = document.getElementById('cargo-search-input');
+				if (searchInput && window._cargoSearchQuery !== undefined && window._cargoSearchQuery !== '') {
+					searchInput.value = window._cargoSearchQuery;
+				}
+				var sortSelect = document.getElementById('cargo-sort-select');
+				if (sortSelect && window._cargoSortVal !== undefined) {
+					sortSelect.value = window._cargoSortVal;
+				}
+				if (window.cargoLiveSort) window.cargoLiveSort();
+				if (window.cargoLiveFilter) window.cargoLiveFilter();
+			};
+
+			if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+				window.NanoStateManager.addAfterUpdateCallback('cargo_trade_market', function(data) {
+					if (window.cargoApplyFilterAndSort) {
+						window.cargoApplyFilterAndSort();
+					}
+					return data;
+				});
+			}
+
+			if (window.cargoApplyFilterAndSort) {
+				window.cargoApplyFilterAndSort();
+			}
+			</script>
+			<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none;" onload="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" onerror="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }">
+
+		<!-- =================================================================== -->
+		<!-- TAB 2: ORDERS QUEUE (orders)                                        -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'orders'}}
+			<div class="tn-screen-view" data-view="screen-orders" data-view-screen="orders">
+				{{if !data.has_receiving}}
+					<div class="notice average">
+						<strong>Receiving Beacon Not Configured:</strong> A local receiving beacon must be selected to approve and deliver orders.
+						<span style="margin-left: 8px;">
+							{{:helper.link('Set Receiving Beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+						</span>
+					</div>
+				{{/if}}
+
+				{{if !data.order_count}}
+					<div class="tn-empty-panel">
+						<div class="tn-panel-title">No Pending Orders</div>
+						<div class="tn-panel-subtitle tn-muted">The station supply queue is clear. New requests submitted by crew will appear here.</div>
+					</div>
+				{{else}}
+					<div class="tn-scroll-box" data-scroll-id="tn-orders-list" style="max-height: 520px;">
+						{{for data.orders:order_entry:order_index}}
+							<div class="tn-order-card{{if order_entry.selected}} tn-selected{{/if}}">
+								<div class="tn-panel-header">
+									<div>
+										<span class="tn-panel-title">Order #{{:order_entry.id}}</span>
+										<span style="color: #ffaa22; margin-left: 6px;">&mdash; {{>order_entry.requestor_name}} ({{>order_entry.buyer_faction}})</span>
+									</div>
+									<div class="font-mono" style="font-size: 13px; font-weight: bold; color: #55cc55;">
+										{{:order_entry.total}} {{:data.currency_short}}
+									</div>
+								</div>
+
+								<div style="font-size: 11px; margin-top: 3px;">
+									<span class="tn-panel-label">Reason:</span>
+									<span style="font-style: italic; color: #e0d5c1; margin-left: 4px;">{{>order_entry.reason}}</span>
+								</div>
+
+								<div class="tn-flex-row-lg" style="font-size: 10px; margin-top: 4px; color: #8c602a;">
+									<div>Base Cost: <span class="font-mono" style="color: #ffaa22;">{{:order_entry.cost}} {{:data.currency_short}}</span></div>
+									<div>Handling Fee: <span class="font-mono" style="color: #ffaa22;">{{:order_entry.fee}} {{:data.currency_short}}</span></div>
+									<div>Positions: <span class="font-mono" style="color: #ffaa22;">{{:order_entry.item_count}}</span></div>
+								</div>
+
+								<!-- Expandable Contents Breakdown -->
+								<div class="tn-order-items-box">
+									<div class="tn-panel-label" style="margin-bottom: 3px;">Requested Items:</div>
+									{{for order_entry.contents:order_group:order_group_index}}
+										<div style="font-weight: bold; color: #ff9900; margin-top: 2px;">{{>order_group.station_name}}</div>
+										{{for order_group.categories:order_category:order_category_index}}
+											{{for order_category.items:order_item:order_item_index}}
+												<div style="display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px solid #1a140a;">
+													<span>{{>order_item.name}} &times; <strong class="font-mono">{{:order_item.amount}}</strong></span>
+													<span class="font-mono" style="color: #55cc55;">{{:order_item.price}} {{:data.currency_short}}</span>
+												</div>
+											{{/for}}
+										{{/for}}
+									{{/for}}
+								</div>
+
+								<!-- Card Actions Footer -->
+								<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+									<div class="tn-flex-row-sm">
+										{{:helper.link('Approve', 'check', {'PRG_approve_order' : order_entry.id}, (data.can_approve_orders && data.has_receiving) ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+										{{:helper.link('Reject', 'close', {'PRG_remove_order' : order_entry.id}, data.can_manage_orders ? null : 'disabled', 'tn-btn tn-btn-danger tn-inlineLink')}}
+									</div>
+									<div>
+										{{:helper.link('Save as Template', 'clipboard', {'PRG_save_order' : order_entry.id}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+									</div>
+								</div>
+							</div>
+						{{/for}}
+					</div>
+				{{/if}}
+			</div>
+
+		<!-- =================================================================== -->
+		<!-- TAB 3: CONTRACTS FULL-WIDTH (contracts)                             -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'contracts'}}
+			<div class="tn-screen-view" data-view="screen-contracts" data-view-screen="contracts">
+				<!-- 1. Available Contracts Section -->
+				<div class="tn-panel" style="margin-bottom: 6px;">
+					<div class="tn-panel-header">
+						<div>
+							<div class="tn-panel-title">Available Contract Opportunities</div>
+							<div class="tn-panel-subtitle">Inbound delivery and market-intelligence assignments ready to accept.</div>
+						</div>
+					</div>
+
+					{{if !data.available_contracts || !data.available_contracts.length}}
+						<div class="tn-empty" style="padding: 10px; text-align: center;">No new trade contracts currently available in this sector.</div>
+					{{else}}
+						<div class="tn-scroll-box" data-scroll-id="tn-contracts-available" style="max-height: 380px;">
+							{{for data.available_contracts:contract_entry:contract_index}}
+								<div class="tn-contract-card">
+									<div class="tn-contract-top">
+										<div>
+											<span class="tn-contract-route">#{{:contract_entry.serial}} &mdash; {{:contract_entry.type_label}}</span>
+											<span style="margin-left: 8px; color: #8c602a;">Route:</span>
+											<strong style="color: #ffaa22; margin-left: 4px;">{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</strong>
+											<span class="tn-muted" style="margin-left: 6px;">(Dist: {{:contract_entry.distance}})</span>
+										</div>
+										<div>
+											<span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span>
+										</div>
+									</div>
+
+									<div class="tn-contract-grid">
+										<div>
+											<span class="tn-panel-label">Cargo:</span>
+											<div style="color: #e0d5c1; font-weight: bold; margin-top: 2px;">{{>contract_entry.cargo}}</div>
+										</div>
+										<div>
+											<span class="tn-panel-label">Instructions:</span>
+											<div class="tn-muted" style="margin-top: 2px;">{{>contract_entry.instruction_text}}</div>
+										</div>
+										<div>
+											<span class="tn-panel-label">Base Value:</span>
+											<div class="font-mono" style="color: #ffaa22; margin-top: 2px;">{{:contract_entry.base_value}} {{:data.currency_short}}</div>
+										</div>
+										<div>
+											<span class="tn-panel-label">Contract Reward:</span>
+											<div class="font-mono" style="color: #55cc55; font-size: 12px; font-weight: bold; margin-top: 2px;">
+												{{:contract_entry.reward}} {{:data.currency_short}}
+											</div>
+										</div>
+									</div>
+
+									{{if contract_entry.block_reason}}
+										<div class="notice bad" style="margin-top: 4px;">Blocked: {{>contract_entry.block_reason}}</div>
+									{{/if}}
+
+									<div class="tn-contract-footer">
+										<div>
+											{{if contract_entry.action_hint}}
+												<span class="tn-subtle">{{>contract_entry.action_hint}}</span>
+											{{/if}}
+										</div>
+										<div>
+											{{:helper.link('Accept: ' + contract_entry.reward + ' ' + data.currency_short, 'check', {'PRG_contract_accept' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+										</div>
+									</div>
+								</div>
+							{{/for}}
+						</div>
+					{{/if}}
+				</div>
+
+				<!-- 2. Active Contracts Section -->
+				<div class="tn-panel" style="margin-bottom: 6px;">
+					<div class="tn-panel-header">
+						<div>
+							<div class="tn-panel-title">Active Assigned Contracts</div>
+							<div class="tn-panel-subtitle">Contracts currently accepted and awaiting outbound transmission or delivery.</div>
+						</div>
+					</div>
+
+					{{if !data.active_contracts || !data.active_contracts.length}}
+						<div class="tn-empty" style="padding: 10px; text-align: center;">No active contracts in progress.</div>
+					{{else}}
+						<div class="tn-scroll-box" data-scroll-id="tn-contracts-active" style="max-height: 380px;">
+							{{for data.active_contracts:contract_entry:contract_index}}
+								<div class="tn-contract-card">
+									<div class="tn-contract-top">
+										<div>
+											<span class="tn-contract-route">#{{:contract_entry.serial}} &mdash; {{:contract_entry.type_label}}</span>
+											<span style="margin-left: 8px; color: #8c602a;">Route:</span>
+											<strong style="color: #ffaa22; margin-left: 4px;">{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</strong>
+										</div>
+										<div>
+											<span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span>
+										</div>
+									</div>
+
+									<div class="tn-contract-grid">
+										<div>
+											<span class="tn-panel-label">Cargo:</span>
+											<div style="color: #e0d5c1; font-weight: bold; margin-top: 2px;">{{>contract_entry.cargo}}</div>
+										</div>
+										<div>
+											<span class="tn-panel-label">Accepted By:</span>
+											<div style="color: #ffaa22; margin-top: 2px;">{{>contract_entry.accepted_by}}</div>
+										</div>
+										<div>
+											<span class="tn-panel-label">Payout Reward:</span>
+											<div class="font-mono" style="color: #55cc55; font-size: 12px; font-weight: bold; margin-top: 2px;">
+												{{:contract_entry.reward}} {{:data.currency_short}}
+											</div>
+										</div>
+									</div>
+
+									{{if contract_entry.block_reason}}
+										<div class="notice bad" style="margin-top: 4px;">Blocked: {{>contract_entry.block_reason}}</div>
+									{{/if}}
+
+									<div class="tn-contract-footer">
+										<div>
+											{{if contract_entry.action_hint}}
+												<span class="tn-subtle">{{>contract_entry.action_hint}}</span>
+											{{/if}}
+										</div>
+										<div>
+											{{:helper.link(contract_entry.action_label || 'Deliver', 'refresh', {'PRG_contract_deliver' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+										</div>
+									</div>
+								</div>
+							{{/for}}
+						</div>
+					{{/if}}
+				</div>
+
+				<!-- 3. Resolved History Section -->
+				<div class="tn-panel">
+					<div class="tn-panel-title">Contract History Archive</div>
+					<hr class="tn-section-divider">
+					{{if !data.resolved_contract_count}}
+						<div class="tn-empty" style="padding: 8px; text-align: center;">No resolved contract history recorded yet.</div>
+					{{else}}
+						<div class="tn-scroll-box" data-scroll-id="tn-contracts-history" style="max-height: 240px;">
+							<table class="tn-table">
+								<thead>
+									<tr>
+										<th>Serial</th>
+										<th>Type</th>
+										<th>Route</th>
+										<th>Assigned</th>
+										<th>Status</th>
+										<th>Notes</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{for data.completed_contracts:contract_entry:contract_index}}
+										<tr>
+											<td>#{{:contract_entry.serial}}</td>
+											<td>{{:contract_entry.type_label}}</td>
+											<td>{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</td>
+											<td>{{>contract_entry.accepted_by}}</td>
+											<td><span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+											<td>{{>contract_entry.resolved_note}}</td>
+										</tr>
+									{{/for}}
+									{{for data.failed_contracts:contract_entry:contract_index}}
+										<tr>
+											<td>#{{:contract_entry.serial}}</td>
+											<td>{{:contract_entry.type_label}}</td>
+											<td>{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</td>
+											<td>{{>contract_entry.accepted_by}}</td>
+											<td><span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{:contract_entry.status}}</span></td>
+											<td>{{>contract_entry.resolved_note}}</td>
+										</tr>
+									{{/for}}
+								</tbody>
+							</table>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- =================================================================== -->
+		<!-- TAB 4: EXPORT PLATFORM (export)                                     -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'export'}}
+			<div class="tn-screen-view" data-view="screen-export" data-view-screen="export">
+				<div class="tn-panel">
+					<div class="tn-panel-header">
+						<div>
+							<div class="tn-panel-title">Sending Beacon Range Appraisal</div>
+							<div class="tn-panel-subtitle">Items located within range of the active sending beacon are grouped below.</div>
+						</div>
+						<div>
+							{{:helper.link('Set Sending Beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+						</div>
+					</div>
+
+					{{if data.export_block_reason}}
+						<div class="notice bad">{{>data.export_block_reason}}</div>
+					{{/if}}
+
+					{{if !data.export_items || !data.export_items.length}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">No Exportable Freight Detected</div>
+							<div class="tn-panel-subtitle tn-muted">Place sellable cargo or crates within range of the configured sending beacon.</div>
+						</div>
+					{{else}}
+						<div class="tn-scroll-box" data-scroll-id="tn-export-list" style="max-height: 440px; margin-top: 6px;">
+							{{for data.export_items}}
+								<div class="tn-export-item">
+									<div>
+										<span class="tn-export-name">{{>value.name}}</span>
+										{{if value.amount > 1}}
+											<span class="tn-tag tn-tag-average" style="margin-left: 6px;">x{{:value.amount}}</span>
+										{{/if}}
+										<span class="tn-export-meta" style="margin-left: 8px;">
+											({{if value.amount > 1}}{{:value.unit_value}} {{:data.currency_short}} ea &bull; {{/if}}Target: {{>value.target_station}})
+										</span>
+									</div>
+									<div class="font-mono" style="font-size: 12px; font-weight: bold; color: #55cc55;">
+										{{:value.value}} {{:data.currency_short}}
+									</div>
+								</div>
+							{{/for}}
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- =================================================================== -->
+		<!-- TAB 5: LOGS ARCHIVE (logs)                                          -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'logs'}}
+			<div class="tn-screen-view" data-view="screen-logs" data-view-screen="logs">
+				<div class="tn-pillnav">
+					{{:helper.link('Shipping', null, {'PRG_log_screen' : 'Shipping'}, data.log_screen == 'Shipping' ? 'selected' : null, 'tn-pillnav-link tn-inlineLink')}}
+					{{:helper.link('Export', null, {'PRG_log_screen' : 'Export'}, data.log_screen == 'Export' ? 'selected' : null, 'tn-pillnav-link tn-inlineLink')}}
+					{{:helper.link('Orders', null, {'PRG_log_screen' : 'Order'}, data.log_screen == 'Order' ? 'selected' : null, 'tn-pillnav-link tn-inlineLink')}}
+					{{:helper.link('Contracts', null, {'PRG_log_screen' : 'Contract'}, data.log_screen == 'Contract' ? 'selected' : null, 'tn-pillnav-link tn-inlineLink')}}
+				</div>
+
+				<div class="tn-panel">
+					{{if !data.log_entries || !data.log_entries.length}}
+						<div class="tn-empty-panel">
+							<div class="tn-panel-title">No Log Entries in Channel</div>
+							<div class="tn-panel-subtitle tn-muted">No activity has been recorded for the {{>data.log_screen}} stream yet.</div>
+						</div>
+					{{else}}
+						<div class="tn-scroll-box" data-scroll-id="tn-logs-list-{{:data.log_screen}}" style="max-height: 440px;">
+							<table class="tn-table">
+								<thead>
+									<tr>
+										<th>Invoice</th>
+										<th>Timestamp</th>
+										<th>Account</th>
+										<th>Total Paid</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{for data.log_entries:log_entry:log_entry_index}}
+										<tr>
+											<td class="font-mono"><strong>#{{:log_entry.id}}</strong></td>
+											<td class="font-mono">{{:log_entry.time}}</td>
+											<td>{{>log_entry.ordering_acct}}</td>
+											<td class="font-mono" style="color: #55cc55; font-weight: bold;">
+												{{:log_entry.total_paid}} {{:data.currency_short}}
+											</td>
+											<td>
+												<div class="tn-flex-row-sm">
+													{{:helper.link('Print', 'clipboard', {'PRG_print' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-btn tn-btn-outline tn-inlineLink')}}
+													{{:helper.link('Internal', null, {'PRG_print_internal' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-btn tn-btn-outline tn-inlineLink')}}
+												</div>
+											</td>
+										</tr>
+									{{/for}}
+								</tbody>
+							</table>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+
+		<!-- =================================================================== -->
+		<!-- TAB 6: CART DETAIL SCREEN (cart)                                    -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'cart'}}
+			<div class="tn-screen-view" data-view="screen-cart" data-view-screen="cart">
+				<div class="tn-grid">
+					<!-- Left Column: Cart Items List -->
+					<div class="tn-col" style="flex: 2 1 450px;">
+						<div class="tn-panel">
+							<div class="tn-panel-header">
+								<div>
+									<div class="tn-panel-title">Shopping Cart Contents</div>
+									<div class="tn-panel-subtitle">{{:data.cart_count}} items queued across all trade partners</div>
+								</div>
+								<div>
+									{{:helper.link('Clear Cart', 'close', {'PRG_cart_reset' : 1}, data.cart_count ? null : 'disabled', 'tn-btn tn-btn-danger tn-inlineLink')}}
+								</div>
+							</div>
+
+							{{if !data.cart_count}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Cart is Empty</div>
+									<div class="tn-panel-subtitle tn-muted">Browse the catalog to add items for purchase or requisition.</div>
+									<div style="margin-top: 10px;">
+										{{:helper.link('&larr; Go to Catalog', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-primary tn-inlineLink')}}
+									</div>
+								</div>
+							{{else}}
+								<div class="tn-scroll-box" data-scroll-id="tn-cart-list" style="max-height: 440px;">
+									{{for data.cart_groups:cart_group:cart_group_index}}
+										<div style="padding: 6px 8px; background: #0c0e12; border: 1px solid #2a1c08; margin-bottom: 6px;">
+											<div style="font-weight: bold; color: #ff9900; font-size: 12px; margin-bottom: 3px;">{{>cart_group.station_name}}</div>
+											{{for cart_group.categories:cart_category:cart_category_index}}
+												<div class="tn-panel-label" style="margin-top: 4px; margin-bottom: 2px;">{{>cart_category.name}}</div>
+												{{for cart_category.items:cart_item:cart_item_index}}
+													<div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-top: 1px solid #1a140a;">
+														<div>
+															<strong style="color: #ffaa22;">{{>cart_item.name}}</strong>
+															<span class="font-mono" style="color: #8c602a; margin-left: 4px;">&times; {{:cart_item.amount}}</span>
+														</div>
+														<div class="tn-flex-row-sm" style="margin-left: 6px;">
+															<span class="font-mono" style="color: #55cc55; font-weight: bold;">{{:cart_item.price}} {{:data.currency_short}}</span>
+															{{:helper.link('-1', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+															{{:helper.link('Remove All', 'close', {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : cart_item.amount, 'PRG_cart_remove_all' : 1}, null, 'tn-btn tn-btn-danger tn-inlineLink')}}
+														</div>
+													</div>
+												{{/for}}
+											{{/for}}
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+
+					<!-- Right Column: Checkout Controls & Saved Carts -->
+					<div class="tn-col" style="flex: 1 1 300px;">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Checkout Controls</div>
+							<hr class="tn-section-divider">
+							<div style="font-size: 11px; line-height: 1.5;">
+								<div style="display: flex; justify-content: space-between;">
+									<span class="tn-muted">Total Quantity:</span>
+									<strong class="font-mono">{{:data.cart_count}} items</strong>
+								</div>
+								<div style="display: flex; justify-content: space-between; margin-top: 3px;">
+									<span class="tn-muted">Total Price:</span>
+									<strong class="font-mono" style="color: #55cc55; font-size: 13px;">{{:data.cart_total}} {{:data.currency_short}}</strong>
+								</div>
+								<div style="display: flex; justify-content: space-between; margin-top: 3px;">
+									<span class="tn-muted">Handling Fee (Orders):</span>
+									<span class="font-mono">{{:data.cart_fee}} {{:data.currency_short}}</span>
+								</div>
+							</div>
+
+							<hr class="tn-section-divider">
+
+							<div class="tn-flex-col-sm">
+								{{:helper.link('Purchase to Beacon', 'check', {'PRG_receive' : 1}, data.can_purchase_cart ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+								{{:helper.link('Submit Requisition', 'clipboard', {'PRG_cart_form' : 'order'}, data.can_build_order ? null : 'disabled', 'tn-btn tn-btn-outline tn-inlineLink')}}
+								{{:helper.link('Save Cart Preset', null, {'PRG_cart_form' : 'save'}, data.can_save_cart ? null : 'disabled', 'tn-btn tn-btn-outline tn-inlineLink')}}
+							</div>
+
+							{{if data.cart_form_mode == 'order'}}
+								<div class="tn-form-shell">
+									<form class="tn-form" method="get" action="?src={{:data.src}}" onsubmit="if(!this.PRG_order_reason.value || !this.PRG_order_reason.value.trim()) { alert('Order reason is mandatory.'); return false; }">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<input type="hidden" name="PRG_build_order_form" value="1">
+										<div class="tn-panel-label" style="width: 100%;">Order Justification / Reason (Required):</div>
+										<textarea name="PRG_order_reason" required placeholder="State department, project requirements, or justification..."></textarea>
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 4px;">
+											<input type="submit" value="Submit Order Request" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{else data.cart_form_mode == 'save'}}
+								<div class="tn-form-shell">
+									<form class="tn-form" method="get" action="?src={{:data.src}}">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<input type="hidden" name="PRG_cart_save_form" value="1">
+										<div class="tn-panel-label" style="width: 100%;">Cart Preset Name:</div>
+										<input type="text" name="PRG_cart_save_name" value="" placeholder="e.g. Standard Medbay Restock" style="width: 100%;" required>
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 4px;">
+											<input type="submit" value="Save Preset" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{/if}}
+						</div>
+
+						<!-- Saved Carts Manager Block -->
+						<div class="tn-panel" style="margin-top: 6px;">
+							<div class="tn-panel-title">Saved Cart Presets</div>
+							<hr class="tn-section-divider">
+							{{if !data.saved_carts || !data.saved_carts.length}}
+								<div class="tn-empty" style="padding: 4px; font-size: 11px;">No saved presets available.</div>
+							{{else}}
+								<div class="tn-scroll-box" data-scroll-id="tn-saved-table" style="max-height: 220px;">
+									{{for data.saved_carts:saved_cart:saved_cart_index}}
+										<div style="display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid #1a140a;">
+											<div>
+												<strong style="color: #ffaa22; font-size: 11px;">{{>saved_cart.name}}</strong>
+												<div class="font-mono tn-muted" style="font-size: 10px;">{{:saved_cart.count}} items &bull; {{:saved_cart.total}} {{:data.currency_short}}</div>
+											</div>
+											<div class="tn-flex-row-sm">
+												{{:helper.link('Load', null, {'PRG_cart_load_direct' : saved_cart.index}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+												{{:helper.link('✕', null, {'PRG_cart_delete' : saved_cart.index}, null, 'tn-btn tn-btn-danger tn-inlineLink')}}
+											</div>
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<!-- =================================================================== -->
+		<!-- TAB 7: SETTINGS SCREEN (settings)                                   -->
+		<!-- =================================================================== -->
+		{{else data.screen == 'settings'}}
+			<div class="tn-screen-view" data-view="screen-settings" data-view-screen="settings">
+				<div class="tn-grid">
+					<div class="tn-col">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Linked Bank Account</div>
+							<div class="tn-panel-subtitle">Identity credentials used for automated debit and credit settlement.</div>
+							<hr class="tn-section-divider">
+							<div style="font-size: 11px; line-height: 1.6;">
+								<div><span class="tn-panel-label">Account Owner:</span> <strong>{{if data.has_account}}{{>data.account_owner_name}}{{else}}<span class="tn-empty">None</span>{{/if}}</strong></div>
+								<div><span class="tn-panel-label">Account Number:</span> <span class="font-mono">#{{:data.account_number}}</span></div>
+								<div><span class="tn-panel-label">Current Balance:</span> <strong class="font-mono" style="color: #55cc55;">{{:data.account_money}} {{:data.currency_short}}</strong></div>
+								{{if data.has_master_budget}}
+									<div><span class="tn-panel-label">Supply Budget:</span> <span class="font-mono">{{:data.master_budget}} {{:data.currency_short}}</span></div>
+								{{/if}}
+							</div>
+							<hr class="tn-section-divider">
+							<div class="tn-flex-row-sm" style="flex-wrap: wrap;">
+								{{if data.has_account}}
+									{{:helper.link('Unlink Account', 'close', {'PRG_account_unlink' : 1}, null, 'tn-btn tn-btn-danger tn-inlineLink')}}
+								{{else}}
+									{{if data.can_link_id_account}}
+										{{:helper.link('Link ID Card Account', 'check', {'PRG_account_id' : 1}, null, 'tn-btn tn-btn-primary tn-inlineLink')}}
+									{{/if}}
+									{{:helper.link('Link via Account # and PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+								{{/if}}
+							</div>
+						</div>
+					</div>
+
+					<div class="tn-col">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Trade Beacon Routing</div>
+							<div class="tn-panel-subtitle">Configure hardware endpoints for receiving shipments and exporting freight.</div>
+							<hr class="tn-section-divider">
+							<div style="font-size: 11px; line-height: 1.6;">
+								<div style="margin-bottom: 6px;">
+									<div class="tn-panel-label">Receiving Beacon (Inbound Cargo):</div>
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3px;">
+										<strong>{{if data.has_receiving}}{{>data.receiving}}{{else}}<span class="tn-empty">None Selected</span>{{/if}}</strong>
+										{{:helper.link('Select Receiving Beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+									</div>
+								</div>
+								<div>
+									<div class="tn-panel-label">Sending Beacon (Outbound Export):</div>
+									<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3px;">
+										<strong>{{if data.has_sending}}{{>data.sending}}{{else}}<span class="tn-empty">None Selected</span>{{/if}}</strong>
+										{{:helper.link('Select Sending Beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</div>
+
+<script id="tn-global-cleanup-script">
+if (window.jQuery) {
+	var $els = $('.tn-wrap .link, .tn-wrap .selected, .tn-wrap .tn-nav-btn, .tn-wrap .tn-btn, .tn-wrap .linkActive');
+	if ($els.stopTime) {
+		$els.stopTime('linkPending');
+	}
+	$els.removeClass('linkPending');
+}
+</script>
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none;" onload="if(window.jQuery){ var $els = $('.tn-wrap .link, .tn-wrap .selected, .tn-wrap .tn-nav-btn, .tn-wrap .tn-btn, .tn-wrap .linkActive'); if($els.stopTime){ $els.stopTime('linkPending'); } $els.removeClass('linkPending'); }" onerror="if(window.jQuery){ var $els = $('.tn-wrap .link, .tn-wrap .selected, .tn-wrap .tn-nav-btn, .tn-wrap .tn-btn, .tn-wrap .linkActive'); if($els.stopTime){ $els.stopTime('linkPending'); } $els.removeClass('linkPending'); }">
