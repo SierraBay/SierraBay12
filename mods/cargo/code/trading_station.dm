@@ -606,7 +606,22 @@
 		if(!istype(saved_obj, /obj/overmap/visitable))
 			qdel(saved_obj)
 	if(SSsupply)
+		SSsupply.PurgeStationFromOrders(src)
 		SSsupply.all_trading_stations -= src
 		SSsupply.visible_trading_stations -= src
 		SSsupply.hidden_trading_stations -= src
+	if(islist(inventory))
+		for(var/category_name in inventory)
+			var/list/goods = inventory[category_name]
+			if(islist(goods))
+				goods.Cut()
+		inventory.Cut()
+	if(islist(hidden_inventory))
+		for(var/category_name in hidden_inventory)
+			var/list/goods = hidden_inventory[category_name]
+			if(islist(goods))
+				goods.Cut()
+		hidden_inventory.Cut()
+	if(islist(amounts_of_goods))
+		amounts_of_goods.Cut()
 	return ..()

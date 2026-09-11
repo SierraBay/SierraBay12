@@ -246,12 +246,19 @@
 	return null
 
 /datum/controller/subsystem/supply/proc/GetPendingCaravanContract(caravan_uid)
-	for(var/datum/trade_contract/contract as anything in trade_contracts)
-		if(!istype(contract, /datum/trade_contract/caravan_rendezvous))
+	var/datum/trading_station/caravan/caravan_station = GetStationByUid(caravan_uid)
+	var/obj/overmap/trade_beacon/caravan/caravan_object = istype(caravan_station) ? caravan_station.overmap_object : null
+	var/current_stop_uid = (istype(caravan_object) && istype(caravan_object.current_stop)) ? caravan_object.current_stop.uid : null
+	var/current_window_end = istype(caravan_object) ? caravan_object.trade_window_end : 0
+
+	for(var/datum/trade_contract/caravan_rendezvous/contract as anything in trade_contracts)
+		if(!istype(contract))
 			continue
 		if(contract.destination_uid != caravan_uid)
 			continue
 		if(contract.status == "available" || contract.status == "active")
+			return contract
+		if(current_stop_uid && contract.source_uid == current_stop_uid && contract.trade_window_end && contract.trade_window_end == current_window_end)
 			return contract
 	return null
 
@@ -456,6 +463,7 @@
 	contract.base_value = base_value
 	contract.reward = round(base_value + (route_distance * 25))
 	contract.penalty = 0
+	contract.trade_window_end = caravan_object ? caravan_object.trade_window_end : 0
 	trade_contracts += contract
 	return contract
 
@@ -472,6 +480,12 @@
 
 /datum/controller/subsystem/supply/proc/EnsureVisibleContractOffers()
 	RefreshCaravanContracts()
+	for(var/datum/trade_contract/contract as anything in trade_contracts.Copy())
+		if(contract.status != "available" || contract.GetTypeId() != "delivery")
+			continue
+		if(!contract.CanAccept())
+			trade_contracts -= contract
+			qdel(contract)
 	for(var/datum/trading_station/source_station as anything in visible_trading_stations)
 		if(!source_station.supports_contracts)
 			continue
@@ -539,9 +553,6 @@
 	if(current_sector.z != station.overmap_location.z)
 		return "This trade beacon is outside your current overmap region."
 
-	if(HAS_FLAGS(current_sector.sector_flags, OVERMAP_SECTOR_BASE))
-		return null
-
 	var/distance = get_dist(current_sector, station.overmap_location)
 	if(distance > station.trade_range)
 		var/range_suffix = station.trade_range == 1 ? "" : "s"
@@ -586,8 +597,8 @@
 			. = get_value(item_path)
 			if(istype(station))
 				. *= station.markup
-	if(!.)
-		return 0
+	if(!. || !isnum(.))
+		. = 1
 	. = max(1, round(.))
 
 /datum/controller/subsystem/supply/proc/GetImportCost(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
@@ -644,8 +655,99 @@
 		for(var/category_name in categories)
 			. += CollectPriceForCategory(categories[category_name], station, buyer_faction, category_name)
 
+/datum/controller/subsystem/supply/proc/ClearShopList(list/target_list)
+	if(!islist(target_list))
+		return
+	for(var/datum/trading_station/target_station as anything in target_list)
+		var/list/categories = target_list[target_station]
+		if(islist(categories))
+			for(var/category_name in categories)
+				var/list/goods = categories[category_name]
+				if(islist(goods))
+					goods.Cut()
+			categories.Cut()
+	target_list.Cut()
+
+/datum/controller/subsystem/supply/proc/ClearMarketSnapshot(list/snapshot)
+	if(!islist(snapshot))
+		return
+	for(var/datum/trading_station/station as anything in snapshot)
+		var/list/station_snap = snapshot[station]
+		if(islist(station_snap))
+			for(var/category_name in station_snap)
+				var/list/category_snap = station_snap[category_name]
+				if(islist(category_snap))
+					for(var/good_id in category_snap)
+						var/list/good_snap = category_snap[good_id]
+						if(islist(good_snap))
+							good_snap.Cut()
+					category_snap.Cut()
+			station_snap.Cut()
+	snapshot.Cut()
+
+/datum/controller/subsystem/supply/proc/DismantleOrder(order_id)
+	if(!order_id || !(order_id in order_queue))
+		return FALSE
+	var/list/order = order_queue[order_id]
+	order_queue.Remove(order_id)
+	if(islist(order))
+		order["requesting_acct"] = null
+		if(islist(order["contents"]))
+			ClearShopList(order["contents"])
+			order["contents"] = null
+		if(islist(order["price_snapshot"]))
+			ClearMarketSnapshot(order["price_snapshot"])
+			order["price_snapshot"] = null
+		order.Cut()
+	return TRUE
+
+/datum/controller/subsystem/supply/proc/PurgeStationFromOrders(datum/trading_station/station)
+	if(!istype(station))
+		return
+	for(var/order_id as anything in order_queue.Copy())
+		var/list/order = order_queue[order_id]
+		if(!islist(order))
+			order_queue.Remove(order_id)
+			continue
+		var/list/contents = order["contents"]
+		var/changed = FALSE
+		if(islist(contents) && (station in contents))
+			var/list/categories = contents[station]
+			if(islist(categories))
+				for(var/cat in categories)
+					var/list/goods = categories[cat]
+					if(islist(goods))
+						goods.Cut()
+				categories.Cut()
+			contents -= station
+			changed = TRUE
+		var/list/price_snapshot = order["price_snapshot"]
+		if(islist(price_snapshot) && (station in price_snapshot))
+			var/list/station_snap = price_snapshot[station]
+			if(islist(station_snap))
+				for(var/cat in station_snap)
+					var/list/cat_snap = station_snap[cat]
+					if(islist(cat_snap))
+						for(var/gid in cat_snap)
+							var/list/gsnap = cat_snap[gid]
+							if(islist(gsnap))
+								gsnap.Cut()
+						cat_snap.Cut()
+				station_snap.Cut()
+			price_snapshot -= station
+			changed = TRUE
+		if(changed)
+			if(CollectCountsFrom(contents) <= 0)
+				DismantleOrder(order_id)
+			else
+				var/new_cost = CollectPriceForList(contents, order["buyer_faction"])
+				order["cost"] = new_cost
+				var/datum/money_account/master_account = get_supply_department_account()
+				var/is_master = master_account && (order["requesting_acct"] == master_account)
+				order["fee"] = is_master ? 0 : round(new_cost * handling_fee, 0.01)
+
 /datum/controller/subsystem/supply/proc/BuildOrder(requesting_account, reason, list/shopping_list, buyer_faction = null)
-	if(!requesting_account || !islist(shopping_list) || !length(shopping_list))
+	if(!requesting_account || !islist(shopping_list) || !length(shopping_list) || CollectCountsFrom(shopping_list) <= 0)
 		return null
 
 	var/cost = CollectPriceForList(shopping_list, buyer_faction)
@@ -656,8 +758,12 @@
 
 	for(var/datum/trading_station/station as anything in shopping_list)
 		var/list/categories = shopping_list[station]
+		if(!islist(categories))
+			continue
 		for(var/category_name in categories)
 			var/list/goods = categories[category_name]
+			if(!islist(goods))
+				continue
 			for(var/good_id in goods)
 				var/amount_to_add = goods[good_id]
 				var/item_name = station.GetGoodName(category_name, good_id)
@@ -667,10 +773,12 @@
 		"requesting_acct" = requesting_account,
 		"reason" = reason,
 		"cost" = cost,
-		"fee" = is_requestor_master ? 0 : round(cost * handling_fee),
+		"fee" = is_requestor_master ? 0 : round(cost * handling_fee, 0.01),
 		"contents" = shopping_list,
 		"buyer_faction" = buyer_faction || FACTION_INDEPENDENT,
-		"viewable_contents" = contents_info
+		"viewable_contents" = contents_info,
+		"status" = "pending",
+		"processing" = FALSE
 	)
 
 	var/order_queue_slot = "order_[++order_queue_id]"
@@ -678,30 +786,58 @@
 	return order_queue_slot
 
 /datum/controller/subsystem/supply/proc/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id)
-	if(QDELETED(beacon) || !order_id || !(order_id in order_queue))
+	if(QDELETED(beacon) || !istype(beacon) || !beacon.operable())
+		return FALSE
+	if(!order_id || !(order_id in order_queue))
 		return FALSE
 
 	var/list/order = order_queue[order_id]
+	if(!islist(order))
+		return FALSE
+	if(order["processing"] || order["status"] == "processing")
+		return FALSE
+
 	var/datum/money_account/master_account = get_supply_department_account()
 	var/datum/money_account/requesting_account = order["requesting_acct"]
+	if(!master_account || !requesting_account || master_account.suspended || requesting_account.suspended)
+		return FALSE
+
 	var/list/shopping_list = order["contents"]
-	var/list/viewable_contents = order["viewable_contents"]
+	var/viewable_contents = order["viewable_contents"]
 	var/buyer_faction = order["buyer_faction"]
 	var/base_cost = order["cost"]
 	var/total_cost = base_cost + order["fee"]
-	var/is_requestor_master = master_account && requesting_account == master_account
+	var/is_requestor_master = (master_account == requesting_account)
 
-	if(!master_account || !requesting_account || master_account.money < base_cost || requesting_account.money < total_cost)
+	if(master_account.money < base_cost)
 		return FALSE
-	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction))
+	if(!is_requestor_master && requesting_account.money < total_cost)
 		return FALSE
+
+	order["processing"] = TRUE
+	order["status"] = "processing"
+
+	var/transferred = FALSE
 	if(!is_requestor_master)
-		requesting_account.transfer(master_account, total_cost, "Trade Network Order")
+		transferred = requesting_account.transfer(master_account, total_cost, "Trade Network Order (Escrow)")
+		if(!transferred)
+			order["processing"] = FALSE
+			order["status"] = "pending"
+			return FALSE
+
+	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction))
+		if(transferred)
+			master_account.transfer(requesting_account, total_cost, "Trade Network Order Refund")
+		order["processing"] = FALSE
+		order["status"] = "pending"
+		return FALSE
+
 	CreateLogEntry("Order", requesting_account.owner_name, viewable_contents, total_cost)
+	DismantleOrder(order_id)
 	return TRUE
 
 /datum/controller/subsystem/supply/proc/Buy(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account, list/shop_list, is_order = FALSE, buyer_name = null, buyer_faction = null)
-	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !account || !islist(shop_list) || !length(shop_list))
+	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !receiver_beacon.operable() || !account || !islist(shop_list) || !length(shop_list))
 		return FALSE
 
 	var/count_of_all = CollectCountsFrom(shop_list)
@@ -744,19 +880,13 @@
 			locker.name = "[initial(locker.name)] ([locker.registered_name])"
 			locker.update_icon()
 
-	var/order_contents_info = ""
-	var/invoice_location
-
+	var/invoice_location = locker
 	for(var/datum/trading_station/station as anything in shop_list)
 		var/list/categories = shop_list[station]
-		var/to_station_wealth = 0
 		for(var/category_name in categories)
 			var/list/goods = categories[category_name]
 			if(!islist(goods))
 				continue
-			if(!islist(station.inventory[category_name]))
-				continue
-			to_station_wealth += CollectPriceForCategory(goods, station, buyer_faction, category_name)
 			for(var/good_id in goods)
 				var/count_of_good = goods[good_id]
 				var/good_path = station.GetGoodPath(category_name, good_id)
@@ -767,7 +897,6 @@
 				for(var/i in 1 to count_of_good)
 					if(istype(locker))
 						new good_path(locker)
-						invoice_location = locker
 					else
 						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
 						if(!new_item)
@@ -777,6 +906,17 @@
 						spawned_items += new_item
 						invoice_location = new_item.loc
 
+	var/order_contents_info = ""
+	for(var/datum/trading_station/station as anything in shop_list)
+		var/list/categories = shop_list[station]
+		var/to_station_wealth = 0
+		for(var/category_name in categories)
+			var/list/goods = categories[category_name]
+			if(!islist(goods))
+				continue
+			to_station_wealth += CollectPriceForCategory(goods, station, buyer_faction, category_name)
+			for(var/good_id in goods)
+				var/count_of_good = goods[good_id]
 				station.SetGoodAmount(category_name, good_id, max(0, station.GetGoodAmount(category_name, good_id) - count_of_good))
 				var/item_name = station.GetGoodName(category_name, good_id)
 				order_contents_info += "<li>[count_of_good]x [item_name]</li>"

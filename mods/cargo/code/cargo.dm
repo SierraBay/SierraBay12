@@ -25,6 +25,7 @@
 	requires_ntnet = FALSE
 	category = PROG_SUPPLY
 	usage_flags = PROGRAM_ALL
+	required_access = list(access_cargo, access_qm, access_bridge)
 
 	var/faction = FACTION_INDEPENDENT
 	var/trade_screen = GOODS_SCREEN
@@ -41,18 +42,40 @@
 	var/datum/trading_station/station
 	var/chosen_category
 	var/current_order
-	var/orders_locked = FALSE
+	var/order_cooldown_until = 0
 	var/list/known_market_intel = list()
 
 	var/goods_quantity_target
 	var/cart_form_mode
 	var/trade_catalog_view_distance = 6
-	var/order_unlock_timer
+
+/datum/computer_file/program/supply/can_run(mob/living/user, loud = FALSE, access_to_check)
+	if(!requires_access_to_run)
+		return TRUE
+	if(!access_to_check)
+		access_to_check = required_access
+	if(!access_to_check)
+		return TRUE
+	if(isghost(user) && check_rights(R_ADMIN, 0, user))
+		return TRUE
+	if(!istype(user))
+		return FALSE
+	var/obj/item/card/id/I = user.GetIdCard()
+	if(!I)
+		if(loud)
+			to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+		return FALSE
+	if(islist(access_to_check))
+		for(var/acc in access_to_check)
+			if(acc in I.access)
+				return TRUE
+	else if(access_to_check in I.access)
+		return TRUE
+	if(loud)
+		to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"Access Denied\" warning."))
+	return FALSE
 
 /datum/computer_file/program/supply/Destroy()
-	if(order_unlock_timer)
-		deltimer(order_unlock_timer)
-		order_unlock_timer = null
 	sending = null
 	receiving = null
 	account = null
@@ -146,6 +169,9 @@
 
 /datum/computer_file/program/supply/proc/SanitizeShopList()
 	for(var/datum/trading_station/target_station as anything in shopping_list.Copy())
+		if(!istype(target_station) || QDELETED(target_station))
+			shopping_list -= target_station
+			continue
 		var/list/categories = shopping_list[target_station]
 		if(!islist(categories))
 			shopping_list -= target_station
@@ -218,8 +244,7 @@
 		saved_shopping_lists -= name
 
 /datum/computer_file/program/supply/proc/UnlockOrdering()
-	orders_locked = FALSE
-	order_unlock_timer = null
+	order_cooldown_until = 0
 
 /datum/computer_file/program/supply/proc/GetMasterAccount()
 	return get_supply_department_account()
@@ -583,7 +608,9 @@
 		return result
 
 	var/block_reason = GetStationTradeBlockReason(target_station)
-	var/can_add_goods = istype(account) && !block_reason
+	if(block_reason)
+		return result
+	var/can_add_goods = istype(account)
 	for(var/good_id in category)
 		var/path = target_station.GetGoodPath(chosen_category, good_id)
 		if(!ispath(path, /atom/movable))
@@ -675,8 +702,13 @@
 
 /datum/computer_file/program/supply/proc/SerializeOrders()
 	var/list/result = list()
-	for(var/order_id in SSsupply.order_queue)
+	var/total_serialized = 0
+	for(var/order_id as anything in SSsupply.order_queue)
+		if(total_serialized >= 50)
+			break
 		var/list/order_data = SSsupply.order_queue[order_id]
+		if(!islist(order_data))
+			continue
 		var/datum/money_account/requestor = order_data["requesting_acct"]
 		result.Add(list(list(
 			"id" = order_id,
@@ -684,6 +716,7 @@
 			"total" = round(order_data["cost"] + order_data["fee"], 0.01),
 			"selected" = current_order == order_id
 		)))
+		total_serialized++
 	return result
 
 /datum/computer_file/program/supply/proc/GetContractAcceptBlockReason(datum/trade_contract/contract)
@@ -738,7 +771,6 @@
 
 /datum/computer_file/program/supply/proc/SerializeContracts(status)
 	var/list/result = list()
-	SSsupply.EnsureVisibleContractOffers()
 	for(var/datum/trade_contract/contract as anything in SSsupply.trade_contracts)
 		if(contract.status != status)
 			continue
@@ -794,7 +826,7 @@
 	var/list/log_collection = GetLogCollection()
 	if(!islist(log_collection))
 		return result
-	for(var/i = length(log_collection) to 1 step -1)
+	for(var/i in length(log_collection) to 1 step -1)
 		var/list/log_entry = log_collection[i]
 		result.Add(list(list(
 			"id" = log_entry["id"],
@@ -850,11 +882,19 @@
 	data["stations"] = stations
 	data["has_selected_station"] = istype(selected_station)
 	data["selected_category"] = chosen_category || ""
-	data["categories"] = SerializeCategories(selected_station)
-	data["goods"] = SerializeGoods(selected_station)
 	if(istype(selected_station))
 		data["selected_station"] = SerializeSelectedStation(selected_station)
 		data["selected_station_intel"] = known_market_intel[selected_station.uid]
+		var/block_reason = GetStationTradeBlockReason(selected_station)
+		if(!block_reason)
+			data["categories"] = SerializeCategories(selected_station)
+			data["goods"] = SerializeGoods(selected_station)
+		else
+			data["categories"] = list()
+			data["goods"] = list()
+	else
+		data["categories"] = list()
+		data["goods"] = list()
 	data["market_intel"] = SerializeKnownMarketIntel()
 
 /datum/computer_file/program/supply/proc/BuildExportScreenData(list/data)
@@ -874,7 +914,7 @@
 
 	data["export_items"] = export_items
 	var/export_total = 0
-	for(var/list/export_item in export_items)
+	for(var/list/export_item as anything in export_items)
 		export_total += export_item["value"]
 	data["export_total"] = round(export_total, 0.01)
 	data["can_export"] = !export_block_reason
@@ -885,6 +925,7 @@
 /datum/computer_file/program/supply/proc/BuildCartScreenData(list/data)
 	var/receiving_id = GetBeaconDisplayId(receiving)
 	var/cart_trade_block = receiving ? SSsupply.GetShopListTradeRangeBlockReason(receiving, shopping_list) : null
+	var/orders_locked = (world.time < order_cooldown_until)
 	data["cart_groups"] = SerializeShopListGroups(shopping_list, faction)
 	data["cart_trade_block_reason"] = cart_trade_block || ""
 	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_trade_block
@@ -902,6 +943,7 @@
 		data["selected_order"] = selected_order_data
 
 /datum/computer_file/program/supply/proc/BuildContractsScreenData(list/data)
+	SSsupply.EnsureVisibleContractOffers()
 	var/list/available_contracts = SerializeContracts("available")
 	var/list/active_contracts = SerializeContracts("active")
 	var/list/completed_contracts = SerializeContracts("completed")
@@ -1254,13 +1296,14 @@
 
 /datum/computer_file/program/supply/proc/BuildOrderFromForm(raw_reason)
 	CloseCartForm()
-	if(orders_locked)
+	if(world.time < order_cooldown_until)
 		to_chat(usr, SPAN_WARNING("Wait a few seconds before submitting another order."))
 		return TRUE
 	if(!account)
 		to_chat(usr, SPAN_WARNING("Link an account before building an order."))
 		return TRUE
-	if(!length(shopping_list))
+	if(!length(shopping_list) || SSsupply.CollectCountsFrom(shopping_list) <= 0)
+		to_chat(usr, SPAN_WARNING("Your cart is empty."))
 		return TRUE
 	var/reason = sanitize(raw_reason, MAX_MESSAGE_LEN)
 	current_order = SSsupply.BuildOrder(account, reason, CopyShopList(shopping_list), faction)
@@ -1268,10 +1311,7 @@
 		ResetShopList()
 		ResetUiForms()
 		trade_screen = ORDER_SCREEN
-		orders_locked = TRUE
-		if(order_unlock_timer)
-			deltimer(order_unlock_timer)
-		order_unlock_timer = addtimer(new Callback(src, .proc/UnlockOrdering), 10 SECONDS, TIMER_STOPPABLE)
+		order_cooldown_until = world.time + 10 SECONDS
 	return TRUE
 
 /datum/computer_file/program/supply/proc/RemoveOrder(order_id)
@@ -1279,7 +1319,11 @@
 		to_chat(usr, SPAN_WARNING("Cargo approval access is required to remove orders."))
 		return TRUE
 	if(order_id in SSsupply.order_queue)
-		SSsupply.order_queue.Remove(order_id)
+		var/list/order_data = SSsupply.order_queue[order_id]
+		if(islist(order_data) && (order_data["processing"] || order_data["status"] == "processing"))
+			to_chat(usr, SPAN_WARNING("Order [order_id] is currently being processed and cannot be removed."))
+			return TRUE
+		SSsupply.DismantleOrder(order_id)
 		if(current_order == order_id)
 			current_order = null
 	return TRUE
@@ -1298,8 +1342,14 @@
 	if(!receiving)
 		to_chat(usr, SPAN_WARNING("Select a receiving beacon first."))
 		return TRUE
+	if(!receiving.operable())
+		to_chat(usr, SPAN_WARNING("The receiving beacon is inoperable or unpowered."))
+		return TRUE
 	if(order_id in SSsupply.order_queue)
 		var/list/order_data = SSsupply.order_queue[order_id]
+		if(islist(order_data) && (order_data["processing"] || order_data["status"] == "processing"))
+			to_chat(usr, SPAN_WARNING("Order [order_id] is already being processed."))
+			return TRUE
 		var/order_range_block = SSsupply.GetShopListTradeRangeBlockReason(receiving, order_data["contents"])
 		if(order_range_block)
 			to_chat(usr, SPAN_WARNING(order_range_block))
@@ -1307,7 +1357,6 @@
 	if(!SSsupply.PurchaseOrder(receiving, order_id))
 		to_chat(usr, SPAN_WARNING("Order approval failed. Check department and requestor balances."))
 	else
-		SSsupply.order_queue.Remove(order_id)
 		if(current_order == order_id)
 			current_order = null
 	return TRUE

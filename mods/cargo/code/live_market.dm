@@ -470,7 +470,7 @@
 /datum/controller/subsystem/supply/proc/GetStationBuyPrice(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
 	var/base_price = GetStationTradeBasePrice(good_ref, station, buyer_faction, category_name)
 	if(!base_price || !istype(station) || !istext(category_name) || !station.live_market_enabled || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return base_price
+		return max(1, round(base_price))
 	return max(1, round(base_price * station.GetLiveMarketBuyMultiplier(category_name, good_ref)))
 
 /datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, category_name = null)
@@ -644,30 +644,58 @@
 		order_data["price_snapshot"] = BuildMarketSnapshot(shopping_list, buyer_faction)
 
 /datum/controller/subsystem/supply/PurchaseOrder(obj/machinery/trade_beacon/receiving/beacon, order_id)
-	if(QDELETED(beacon) || !order_id || !(order_id in order_queue))
+	if(QDELETED(beacon) || !istype(beacon) || !beacon.operable())
+		return FALSE
+	if(!order_id || !(order_id in order_queue))
 		return FALSE
 
 	var/list/order = order_queue[order_id]
-	var/list/price_snapshot = islist(order) ? order["price_snapshot"] : null
+	if(!islist(order))
+		return FALSE
+	if(order["processing"] || order["status"] == "processing")
+		return FALSE
+
+	var/list/price_snapshot = order["price_snapshot"]
 	if(!islist(price_snapshot))
 		return ..(beacon, order_id)
 
 	var/datum/money_account/master_account = get_supply_department_account()
 	var/datum/money_account/requesting_account = order["requesting_acct"]
+	if(!master_account || !requesting_account || master_account.suspended || requesting_account.suspended)
+		return FALSE
+
 	var/list/shopping_list = order["contents"]
-	var/list/viewable_contents = order["viewable_contents"]
+	var/viewable_contents = order["viewable_contents"]
 	var/buyer_faction = order["buyer_faction"]
 	var/base_cost = order["cost"]
 	var/total_cost = base_cost + order["fee"]
-	var/is_requestor_master = master_account && requesting_account == master_account
+	var/is_requestor_master = (master_account == requesting_account)
 
-	if(!master_account || !requesting_account || master_account.money < base_cost || requesting_account.money < total_cost)
+	if(master_account.money < base_cost)
 		return FALSE
-	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction, price_snapshot))
+	if(!is_requestor_master && requesting_account.money < total_cost)
 		return FALSE
+
+	order["processing"] = TRUE
+	order["status"] = "processing"
+
+	var/transferred = FALSE
 	if(!is_requestor_master)
-		requesting_account.transfer(master_account, total_cost, "Trade Network Order")
+		transferred = requesting_account.transfer(master_account, total_cost, "Trade Network Order (Escrow)")
+		if(!transferred)
+			order["processing"] = FALSE
+			order["status"] = "pending"
+			return FALSE
+
+	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction, price_snapshot))
+		if(transferred)
+			master_account.transfer(requesting_account, total_cost, "Trade Network Order Refund")
+		order["processing"] = FALSE
+		order["status"] = "pending"
+		return FALSE
+
 	CreateLogEntry("Order", requesting_account.owner_name, viewable_contents, total_cost)
+	DismantleOrder(order_id)
 	return TRUE
 
 /datum/controller/subsystem/supply/Buy(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account, list/shop_list, is_order = FALSE, buyer_name = null, buyer_faction = null, list/price_snapshot = null)
@@ -677,7 +705,7 @@
 			TrackLiveMarketSales(shop_list)
 		return
 
-	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !account || !islist(shop_list) || !length(shop_list))
+	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !receiver_beacon.operable() || !account || !islist(shop_list) || !length(shop_list))
 		return FALSE
 
 	var/count_of_all = CollectCountsFrom(shop_list)
@@ -724,12 +752,9 @@
 			locker.name = "[initial(locker.name)] ([locker.registered_name])"
 			locker.update_icon()
 
-	var/order_contents_info = ""
-	var/invoice_location
-
+	var/invoice_location = locker
 	for(var/datum/trading_station/station as anything in shop_list)
 		var/list/categories = shop_list[station]
-		var/to_station_wealth = 0
 		for(var/category_name in categories)
 			var/list/goods = categories[category_name]
 			if(!islist(goods) || !islist(station.inventory[category_name]))
@@ -742,11 +767,9 @@
 					for(var/atom/movable/item as anything in spawned_items)
 						qdel(item)
 					return FALSE
-				to_station_wealth += unit_price * count_of_good
 				for(var/i in 1 to count_of_good)
 					if(istype(locker))
 						new good_path(locker)
-						invoice_location = locker
 					else
 						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
 						if(!new_item)
@@ -756,6 +779,18 @@
 						spawned_items += new_item
 						invoice_location = new_item.loc
 
+	var/order_contents_info = ""
+	for(var/datum/trading_station/station as anything in shop_list)
+		var/list/categories = shop_list[station]
+		var/to_station_wealth = 0
+		for(var/category_name in categories)
+			var/list/goods = categories[category_name]
+			if(!islist(goods) || !islist(station.inventory[category_name]))
+				continue
+			for(var/good_id in goods)
+				var/count_of_good = goods[good_id]
+				var/unit_price = GetSnapshotUnitPrice(price_snapshot, station, category_name, good_id)
+				to_station_wealth += unit_price * count_of_good
 				station.SetGoodAmount(category_name, good_id, max(0, station.GetGoodAmount(category_name, good_id) - count_of_good))
 				ApplyTradeTransaction(station, category_name, good_id, count_of_good, "buy")
 				var/item_name = station.GetGoodName(category_name, good_id)
@@ -767,5 +802,6 @@
 
 	CreateLogEntry("Shipping", is_order && buyer_name ? buyer_name : account.owner_name, order_contents_info, price_for_all, TRUE, invoice_location)
 	account.withdraw(price_for_all, "Trade Network Purchase", "Trade Network")
+	TrackLiveMarketSales(shop_list)
 	return TRUE
 
