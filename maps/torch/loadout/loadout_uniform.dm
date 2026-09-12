@@ -12,9 +12,6 @@
 /datum/gear/uniform/blackjumpshorts
 	allowed_roles = CASUAL_ROLES
 
-/datum/gear/uniform/roboticist_skirt
-	allowed_roles = list(/datum/job/roboticist)
-
 /datum/gear/uniform/suit
 	allowed_roles = SEMIANDFORMAL_ROLES
 

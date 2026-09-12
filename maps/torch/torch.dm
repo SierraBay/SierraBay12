@@ -1,5 +1,7 @@
 #if !defined(using_map_DATUM)
 
+	#include "torch_define.dm"
+
 	#include "../../packs/deepmaint/_pack.dm"
 	#include "../../packs/event_2022jul30/_pack.dm"
 	#include "../../packs/event_2024jul20/_pack.dm"
@@ -156,6 +158,7 @@
 	#include "loadout/loadout_suit.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
+	#include "../loadout_shared.dm"
 	#include "loadout/~defines.dm"
 
 	#include "torch1_deck5.dmm"
@@ -200,6 +203,14 @@
 	#include "../bluespace_interlude/bluespace_interlude.dm"
 	#include "../bluespace_interlude/bluespace_interlude.dmm"
 
+	// Xenoraces ported in from NSV Sierra (SCGEC-only on Torch, see species_xeno_restrictions.dm)
+	#include "../../mods/resomi/_resomi_includes.dm"
+	#include "../../mods/tajara/_tajara_includes.dm"
+	#include "species_xeno_restrictions.dm"
+
+	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
+	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
+	#include "../../mods/telecomms/_telecomms_includes.dm"
 
 	#define using_map_DATUM /datum/map/torch
 

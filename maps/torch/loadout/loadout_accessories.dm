@@ -54,15 +54,6 @@
 	allowed_roles = SECURITY_ROLES
 	flags = GEAR_HAS_NO_CUSTOMIZATION
 
-/datum/gear/accessory/armband_security
-	allowed_roles = SECURITY_ROLES
-
-/datum/gear/accessory/armband_cargo
-	allowed_roles = SUPPLY_ROLES
-
-/datum/gear/accessory/armband_medical
-	allowed_roles = MEDICAL_ROLES
-
 /datum/gear/accessory/armband_emt
 	allowed_roles = list(
 		/datum/job/doctor,
@@ -81,9 +72,6 @@
 		/datum/job/medical_trainee
 	)
 	flags = GEAR_HAS_NO_CUSTOMIZATION
-
-/datum/gear/accessory/armband_engineering
-	allowed_roles = ENGINEERING_ROLES
 
 /datum/gear/accessory/armband_hydro
 	allowed_roles = list(
@@ -104,12 +92,6 @@
 	allowed_branches = CIVILIAN_BRANCHES
 
 /datum/gear/accessory/neckerchief
-
-/datum/gear/accessory/stethoscope
-	allowed_roles = STERILE_ROLES
-
-/datum/gear/accessory/stole
-	allowed_roles = list(/datum/job/chaplain)
 
 /datum/gear/tactical/holster
 	allowed_roles = ARMED_ROLES

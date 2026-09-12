@@ -7,20 +7,8 @@
 	path = /obj/item/clothing/accessory/solgov/specialty/pilot
 	allowed_skills = list(SKILL_PILOT = SKILL_EXPERIENCED)
 
-/datum/gear/accessory/armband_security
-	allowed_roles = SECURITY_ROLES
-
-/datum/gear/accessory/armband_cargo
-	allowed_roles = SUPPLY_ROLES
-
-/datum/gear/accessory/armband_medical
-	allowed_roles = MEDICAL_ROLES
-
 /datum/gear/accessory/armband_emt
 	allowed_roles = list(/datum/job/doctor, /datum/job/doctor_trainee, /datum/job/explorer_medic)
-
-/datum/gear/accessory/armband_engineering
-	allowed_roles = ENGINEERING_ROLES
 
 /datum/gear/accessory/armband_hydro
 	allowed_roles = list(/datum/job/rd, /datum/job/senior_scientist, /datum/job/scientist, /datum/job/scientist_assistant, /datum/job/assistant)
@@ -28,9 +16,6 @@
 /datum/gear/award/ntaward
 	allowed_roles = NANOTRASEN_ROLES
 	allowed_branches = list(/datum/mil_branch/employee)
-
-/datum/gear/accessory/stethoscope
-	allowed_roles = STERILE_ROLES
 
 /datum/gear/passport/scg
 	display_name = "passports selection - SCG"
@@ -86,9 +71,6 @@
 	display_name = "investigator holobadge (IAA)"
 	path = /obj/item/clothing/accessory/badge/holo/investigator
 	allowed_roles = list(/datum/job/iaa)
-
-/datum/gear/accessory/stole
-	allowed_roles = list(/datum/job/chaplain)
 
 /datum/gear/accessory/solgov
 	display_name = "Solgov command insignia"

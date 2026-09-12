@@ -1,39 +1,16 @@
 /datum/map/build_exoplanets()
 #ifndef DEV_MODE_NO_AWAYS
-	//Игра заспавнит 1 обычную планету и 1 аномальную
-	var/list/anomaly_planets_list = list(
-		/obj/overmap/visitable/sector/exoplanet/flying = 35,
-		/obj/overmap/visitable/sector/exoplanet/ice = 35,
-		/obj/overmap/visitable/sector/exoplanet/volcanic/anomaly = 20,
-		/obj/overmap/visitable/sector/exoplanet/water = 10
-
-	)
 	//Планеты которые сами по себе никогда не заспавнятся
 	var/list/shitspawn_planets = list(
+		/obj/overmap/visitable/sector/exoplanet/volcanic/anomaly
 	)
-	var/spawn_only_anomaly_planet = FALSE
 	var/list/all_planets_list = subtypesof(/obj/overmap/visitable/sector/exoplanet)
-	//Я не придумал как обьяснять игре какая планета обычная, а какая аномальная без
-	//заранее подготовленных списков. Увы.
 
 	if(!use_overmap)
 		return
-	if(LAZYLEN(anomaly_planets_list))
-		LAZYREMOVE(all_planets_list, anomaly_planets_list)
 	if(LAZYLEN(shitspawn_planets))
 		LAZYREMOVE(all_planets_list, shitspawn_planets)
 
-
-	if(LAZYLEN(anomaly_planets_list))
-		LAZYREMOVE(all_planets_list, anomaly_planets_list)
-		var/anomaly_planet_type = pickweight(anomaly_planets_list)
-		//Почему тут выставлены world.maxx и world.maxy вместо того чтоб выставить подобные параметры в карте?
-		//Потому что я пытался и игра спавнит планеты некорректно. Хотите исправить - убедитесь что ваш вариант реально
-		//будет работать.
-		var/obj/overmap/visitable/sector/exoplanet/anomaly_new_planet = new anomaly_planet_type(null, world.maxx, world.maxy)
-		anomaly_new_planet.build_level()
-	if(spawn_only_anomaly_planet)
-		return
 	for(var/i = 0, i < num_exoplanets, i++)
 		var/normal_planet_type = pick(all_planets_list)
 		var/obj/overmap/visitable/sector/exoplanet/new_planet = new normal_planet_type(null, world.maxx, world.maxy)

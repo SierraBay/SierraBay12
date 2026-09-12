@@ -171,6 +171,9 @@
 		if(player_is_antag(mind, only_offstation_roles = 1))
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
+		if(!config.observer_spawn_allowed && !client.holder)
+			to_chat(src, SPAN_WARNING("Observer joining has been disabled by an administrator."))
+			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
 
 		if (GAME_STATE < RUNLEVEL_LOBBY)

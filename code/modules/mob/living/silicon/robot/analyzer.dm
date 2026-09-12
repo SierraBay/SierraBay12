@@ -122,7 +122,7 @@
 		if ("exosuit")
 			var/mob/living/exosuit/mech = M
 			to_chat(user, SPAN_INFO("Diagnostic Report for \the [M]:"))
-			for (var/obj/item/mech_component/component in list(mech.arms, mech.legs, mech.body, mech.head))
+			for (var/obj/item/mech_component/component in list(mech.L_arm, mech.R_arm, mech.L_leg, mech.R_leg, mech.body, mech.head))
 				if (component)
 					component.return_diagnostics(user)
 

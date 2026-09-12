@@ -4,9 +4,6 @@
 /datum/gear/suit/overalls
 	allowed_branches = CIVILIAN_BRANCHES
 
-/datum/gear/suit/medcoat
-	allowed_roles = MEDICAL_ROLES
-
 /datum/gear/suit/trenchcoat
 	allowed_roles = list(
 		/datum/job/assistant,

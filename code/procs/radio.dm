@@ -26,6 +26,7 @@
 
 	return freq_text
 
+
 /datum/reception
 	var/obj/machinery/message_server/message_server = null
 	var/telecomms_reception = TELECOMMS_RECEPTION_NONE
