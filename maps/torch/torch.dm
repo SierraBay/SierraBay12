@@ -210,6 +210,7 @@
 
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/fancy_sofas/_fancy_sofas_includes.dm"
+	#include "../../mods/telecomms/_telecomms_includes.dm"
 
 	#define using_map_DATUM /datum/map/torch
 

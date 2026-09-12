@@ -508,8 +508,8 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"channel_tag" = get_frequency_default_name(connection.frequency), // channel tag for the message
-			"channel_color" = get_frequency_default_color(connection.frequency), // radio message color
+			"channel_tag" = "[connection.frequency]", // channel tag for the message
+			"channel_color" = channel_color_presets["Menacing Maroon"], // radio message color
 			"language" = speaking,
 			"verb" = verb
 		)
@@ -533,7 +533,7 @@
 			return Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 							  src, message, displayname, jobname, real_name, M.voice_name,
 							  , 0, GetConnectedZlevels(position.z), connection.frequency, verb, speaking,
-							  get_frequency_default_name(connection.frequency), get_frequency_default_color(connection.frequency))
+							  "[connection.frequency]", channel_color_presets["Menacing Maroon"])
 
   /* ###### Intercoms and station-bounced radios ###### */
 
@@ -573,7 +573,7 @@
 		"reject" = 0,
 		"level" = position.z,
 		"channel_tag" = "#unkn",
-		"channel_color" = get_frequency_default_color(connection.frequency),
+		"channel_color" = channel_color_presets["Menacing Maroon"],
 		"language" = speaking,
 		"verb" = verb
 	)
@@ -600,7 +600,7 @@
 	return Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 					  src, message, displayname, jobname, real_name, M.voice_name,
 					  filter_type, signal.data["compression"], GetConnectedZlevels(position.z), connection.frequency, verb, speaking,
-					  get_frequency_default_name(connection.frequency), get_frequency_default_color(connection.frequency))
+					  "[connection.frequency]", channel_color_presets["Menacing Maroon"])
 
 
 /obj/item/device/radio/hear_talk(mob/M as mob, msg, verb = "says", datum/language/speaking = null)

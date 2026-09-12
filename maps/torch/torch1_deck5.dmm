@@ -14188,6 +14188,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/machinery/radiocarbon_spectrometer,
 /turf/simulated/floor/reinforced,
 /area/shuttle/petrov/cell1)
 "Nr" = (

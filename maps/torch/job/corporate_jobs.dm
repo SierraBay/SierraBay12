@@ -25,7 +25,7 @@
 	access = list(
 		access_liaison, access_bridge, access_solgov_crew,
 		access_nanotrasen, access_commissary, access_torch_fax,
-		access_radio_comm, access_radio_serv
+		access_radio_comm, access_radio_serv, access_employment_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/reports)

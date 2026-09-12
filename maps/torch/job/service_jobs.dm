@@ -37,7 +37,8 @@
 		access_commissary,
 		access_hydroponics,
 		access_kitchen,
-		access_o_mess
+		access_o_mess,
+		access_employment_records
 	)
 
 /datum/job/chaplain
