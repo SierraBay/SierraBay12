@@ -21661,7 +21661,7 @@
 /area/hallway/primary/firstdeck/aft)
 "ltb" = (
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/computer/rdconsole/core/torch{
+/obj/machinery/computer/modular/preset/cardslot/science{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
