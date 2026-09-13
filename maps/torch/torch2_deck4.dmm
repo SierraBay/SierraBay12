@@ -1090,10 +1090,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/maintenance/fourthdeck/starboard)
-"dF" = (
-/obj/shuttle_landmark/ert/dock,
-/turf/space,
-/area/space)
 "dH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10553,6 +10549,7 @@
 /area/space)
 "Ko" = (
 /obj/shuttle_landmark/skrellscout/dock,
+/obj/shuttle_landmark/ert/dock,
 /turf/space,
 /area/space)
 "Kq" = (
@@ -40742,7 +40739,7 @@ mR
 Tb
 TN
 Ko
-dF
+aa
 aa
 aa
 aa
