@@ -16,6 +16,7 @@
 #include "code/prosthetics.dm"
 #include "code/roborepair.dm"
 #include "code/robosurgery.dm"
+#include "code/prosthetic_kit.dm"
 #include "code/cargo.dm"
 #include "code/accessory_ipc.dm"
 #endif

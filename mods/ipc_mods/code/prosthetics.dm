@@ -65,15 +65,18 @@
 
 	dislocated = -1
 	remove_splint()
-	update_icon(1)
 	unmutate()
 
 	slowdown = 0
 	if(company)
 		var/datum/robolimb/R = all_robolimbs[company]
-		if(!istype(R) || (species && (species.name in R.species_cannot_use)) || \
-			(species && !(species.get_bodytype(owner) in R.allowed_bodytypes)) || \
-			(length(R.applies_to_part) && !(organ_tag in R.applies_to_part)))
+		var/use_basic = !istype(R)
+		if (!use_basic && length(R.applies_to_part) && !(organ_tag in R.applies_to_part))
+			use_basic = TRUE
+		if (!use_basic && owner && species)
+			if ((species.name in R.species_cannot_use) || !(species.get_bodytype(owner) in R.allowed_bodytypes))
+				use_basic = TRUE
+		if (use_basic)
 			R = basic_robolimb
 		else
 			model = company
@@ -91,6 +94,8 @@
 		have_synth_skin = R.have_synth_skin
 		if(have_synth_skin)
 			synth_skin_health = max_damage
+
+	update_icon(1)
 
 	for(var/obj/item/organ/external/T in children)
 		T.robotize(company, 1)
@@ -117,6 +122,14 @@
 	CLEAR_FLAGS(status, ORGAN_ARTERY_CUT)
 
 	return 1
+
+/obj/item/organ/external/chest/robotize(company, skip_prosthetics = 0, keep_organs = 0)
+	. = ..(company, skip_prosthetics, keep_organs)
+	if (!. || !owner)
+		return
+	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
+	if (!istype(C))
+		owner.internal_organs_by_name[BP_CELL] = new /obj/item/organ/internal/cell(owner, 1)
 
 
 /datum/robolimb/bishop
