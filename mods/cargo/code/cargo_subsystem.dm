@@ -379,6 +379,11 @@
 			if(base_value < min_trade_contract_value)
 				continue
 
+			var/value_commission = round(base_value * 0.2)
+			var/distance_pay = round(route_distance * 35)
+			var/spread_pay = round(max(0, (destination_sell_snapshot - source_unit_cost) * amount) * 0.5)
+			var/calculated_reward = max(value_commission + distance_pay, value_commission + spread_pay)
+
 			var/list/candidate = list(
 				"score" = score,
 				"market_reason" = GetTradeContractMarketReason(destination_shortage, destination_demand, spread_ratio),
@@ -390,8 +395,9 @@
 				"destination_sell_price" = destination_sell_snapshot,
 				"distance" = route_distance,
 				"base_value" = base_value,
-				"reward" = max(base_value + round(route_distance * 40), round(base_value + max(0, (destination_sell_snapshot - source_unit_cost) * amount) * 0.8)),
-				"penalty" = base_value * 2,
+				"reward" = max(100, calculated_reward),
+				"deposit" = round(base_value * 0.3),
+				"penalty" = round(base_value * 1.5),
 				"content" = list(
 					"category" = source_category_name,
 					"good_id" = source_good_id,
@@ -447,6 +453,7 @@
 	contract.created_at = world.time
 	contract.base_value = best_candidate["base_value"]
 	contract.reward = best_candidate["reward"]
+	contract.deposit = best_candidate["deposit"]
 	contract.penalty = best_candidate["penalty"]
 	trade_contracts += contract
 	return contract
@@ -476,7 +483,8 @@
 	contract.distance = route_distance
 	contract.created_at = world.time
 	contract.base_value = base_value
-	contract.reward = round(base_value + (route_distance * 25))
+	contract.reward = clamp(round(120 + (route_distance * 20)), 120, 350)
+	contract.deposit = 0
 	contract.penalty = 0
 	contract.trade_window_end = caravan_object ? caravan_object.trade_window_end : 0
 	trade_contracts += contract

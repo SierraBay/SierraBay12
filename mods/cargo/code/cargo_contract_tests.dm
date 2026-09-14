@@ -325,7 +325,7 @@
 	var/offer_id = fixture.source_shared_good
 	var/datum/trade_contract/contract = SSsupply.CreateTradeContract(fixture.source_station)
 	var/starting_amount = fixture.source_station.GetGoodAmount("Alpha", offer_id)
-	var/datum/money_account/account = fixture.create_account()
+	var/datum/money_account/account = fixture.create_account(500)
 	account.owner_name = "Unit Test"
 	var/obj/machinery/trade_beacon/receiving/receiver = fixture.create_receiver(get_safe_turf())
 	var/fail_reason = null
@@ -351,6 +351,50 @@
 		fail(fail_reason)
 	else
 		pass("Trade contracts spawn delivery cargo and reserve stock.")
+	return 1
+
+/datum/unit_test/cargo_trade_contract_insufficient_deposit_test
+	name = "CARGO: Trade contracts require security deposit"
+
+/datum/unit_test/cargo_trade_contract_insufficient_deposit_test/start_test()
+	var/datum/cargo_contract_test_fixture/fixture = new
+	if(!fixture.setup_route(src))
+		qdel(fixture)
+		skip("Overmap sector unavailable for trade contract deposit test.")
+		return 1
+
+	fixture.setup_market_fixture()
+	var/offer_id = fixture.source_shared_good
+	var/datum/trade_contract/contract = SSsupply.CreateTradeContract(fixture.source_station)
+	var/starting_amount = fixture.source_station.GetGoodAmount("Alpha", offer_id)
+	var/datum/money_account/account = fixture.create_account(0)
+	account.owner_name = "Unit Test"
+	var/obj/machinery/trade_beacon/receiving/receiver = fixture.create_receiver(get_safe_turf())
+	var/fail_reason = null
+
+	if(!istype(contract))
+		fail_reason = "CreateTradeContract() did not return a contract."
+	else if(contract.deposit <= 0)
+		fail_reason = "Trade contract was generated with 0 deposit."
+	else if(contract.CanAccept(receiver, account))
+		fail_reason = "CanAccept() returned true for an account with insufficient deposit."
+	else if(!findtext(contract.GetAcceptBlockReason(receiver, account), "Insufficient funds"))
+		fail_reason = "GetAcceptBlockReason() did not report insufficient funds: [contract.GetAcceptBlockReason(receiver, account)]"
+	else if(SSsupply.AcceptTradeContract(receiver, account, contract.id))
+		fail_reason = "AcceptTradeContract() succeeded despite insufficient deposit."
+	else if(contract.status != CONTRACT_STATUS_AVAILABLE)
+		fail_reason = "Contract status changed despite failed acceptance."
+	else if(fixture.source_station.GetGoodAmount("Alpha", offer_id) != starting_amount)
+		fail_reason = "Failed contract acceptance modified source station stock."
+	else if(fixture.track_crate(receiver))
+		fail_reason = "Failed contract acceptance spawned a crate."
+
+	qdel(fixture)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Trade contracts enforce security deposit requirements before acceptance.")
 	return 1
 
 /datum/unit_test/cargo_trade_contract_delivery_test

@@ -804,7 +804,7 @@
 		return "Contract data is unavailable."
 	if(!account)
 		return "Link an account before accepting contracts."
-	return contract.GetAcceptBlockReason(receiving)
+	return contract.GetAcceptBlockReason(receiving, account)
 
 /datum/computer_file/program/supply/proc/GetContractDeliverBlockReason(datum/trade_contract/contract)
 	if(!istype(contract))
@@ -834,6 +834,7 @@
 		"destination_name" = destination_station ? destination_station.name : "Unknown",
 		"cargo" = contract.GetDisplayCargoText(),
 		"reward" = round(contract.reward, 0.01),
+		"deposit" = round(contract.deposit, 0.01),
 		"penalty" = round(contract.penalty, 0.01),
 		"distance" = round(contract.distance, 0.01),
 		"base_value" = round(contract.base_value, 0.01),

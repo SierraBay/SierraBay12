@@ -9,6 +9,7 @@
 	var/destination_name
 	var/reward = 0
 	var/penalty = 0
+	var/deposit = 0
 	var/allow_contract_disposal = FALSE
 	var/datum/trade_contract/linked_contract
 
@@ -39,6 +40,8 @@
 	var/currency = GetCurrencyName()
 	if(reward)
 		desc += " Delivery reward: [round(reward)] [currency]."
+	if(deposit)
+		desc += " Security deposit: [round(deposit)] [currency]."
 	if(penalty)
 		desc += " Tampering penalty: [round(penalty)] [currency]."
 	desc += " Unauthorized opening voids the contract."
@@ -51,6 +54,8 @@
 	var/currency = GetCurrencyName()
 	if(reward)
 		to_chat(user, SPAN_NOTICE("Delivery reward: [round(reward)] [currency]."))
+	if(deposit)
+		to_chat(user, SPAN_NOTICE("Security deposit: [round(deposit)] [currency] (refunded upon successful delivery)."))
 	if(penalty)
 		to_chat(user, SPAN_WARNING("Tampering penalty: [round(penalty)] [currency]."))
 
@@ -150,6 +155,8 @@
 	var/reward = 0
 	var/base_value = 0
 	var/penalty = 0
+	var/deposit = 0
+	var/deposit_paid = 0
 	var/distance = 0
 	var/status = CONTRACT_STATUS_AVAILABLE
 	var/list/contents = list()
@@ -270,7 +277,10 @@
 /datum/trade_contract/proc/GetResolvedNote()
 	var/currency = GetCurrencyName()
 	if(status == CONTRACT_STATUS_COMPLETED)
-		return "[round(reward)] [currency] paid."
+		var/note = "[round(reward)] [currency] paid."
+		if(deposit > 0)
+			note += " [round(deposit)] [currency] deposit returned."
+		return note
 	if(status == CONTRACT_STATUS_FAILED)
 		var/reason = failure_reason || "Contract failed."
 		return (actual_penalty > 0) ? "[reason] ([round(actual_penalty)] [currency] penalty)" : reason
@@ -320,8 +330,10 @@
 		return crate
 	return null
 
-/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null)
+/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null)
 	if(status != CONTRACT_STATUS_AVAILABLE)
+		return FALSE
+	if(deposit > 0 && istype(account) && account.money < deposit)
 		return FALSE
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
@@ -343,11 +355,13 @@
 			return FALSE
 	return TRUE
 
-/datum/trade_contract/proc/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon)
+/datum/trade_contract/proc/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null)
 	if(!istype(receiver_beacon))
 		return "Select a receiving beacon first."
 	if(status != CONTRACT_STATUS_AVAILABLE)
 		return "This contract is no longer available."
+	if(deposit > 0 && istype(account) && account.money < deposit)
+		return "Insufficient funds for security deposit ([round(deposit)] [GetCurrencyName()] required)."
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(source_station) || !istype(destination_station))
@@ -371,9 +385,16 @@
 	return null
 
 /datum/trade_contract/proc/Accept(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account)
-	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon) || !istype(account))
+	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon, account) || !istype(account))
 		return FALSE
+	if(deposit > 0)
+		if(account.money < deposit || !account.withdraw(deposit, "Trade Contract Deposit", "Trade Network"))
+			return FALSE
+		deposit_paid = deposit
 	if(!ExecuteAccept(receiver_beacon))
+		if(deposit_paid > 0)
+			account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network")
+			deposit_paid = 0
 		return FALSE
 	status = CONTRACT_STATUS_ACTIVE
 	linked_account = account
@@ -413,6 +434,7 @@
 	crate.destination_uid = destination_uid
 	crate.destination_name = destination_station ? destination_station.name : "Unknown"
 	crate.reward = reward
+	crate.deposit = deposit
 	crate.penalty = penalty
 	crate.UpdateContractLabel()
 
@@ -475,13 +497,14 @@
 	return TRUE
 
 /datum/trade_contract/proc/DeductPenalty(penalty_multiplier)
-	var/penalty_amount = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
-	if(istype(linked_account) && penalty_amount > 0 && linked_account.money > 0)
-		penalty_amount = min(penalty_amount, linked_account.money)
-		linked_account.withdraw(penalty_amount, "Trade Contract Penalty", "Trade Network")
-		actual_penalty = penalty_amount
+	var/total_penalty = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
+	var/remaining_penalty = max(0, total_penalty - deposit_paid)
+	if(istype(linked_account) && remaining_penalty > 0 && linked_account.money > 0)
+		var/deduction = min(remaining_penalty, linked_account.money)
+		linked_account.withdraw(deduction, "Trade Contract Penalty", "Trade Network")
+		actual_penalty = deposit_paid + deduction
 	else
-		actual_penalty = 0
+		actual_penalty = deposit_paid
 
 /datum/trade_contract/proc/LogContractFailure(reason, failed_by)
 	var/datum/trading_station/source_station = GetSourceStation()
@@ -508,15 +531,17 @@
 
 /datum/trade_contract/proc/PayoutReward()
 	if(istype(linked_account))
-		linked_account.deposit(reward, "Trade Contract Delivery", "Trade Network")
+		var/total_payout = reward + deposit_paid
+		linked_account.deposit(total_payout, "Trade Contract Delivery", "Trade Network")
+		deposit_paid = 0
 
 /datum/trade_contract/proc/DistributeStationWealth()
 	var/datum/trading_station/source_station = GetSourceStation()
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(istype(destination_station))
-		destination_station.AddToWealth(reward, TRUE)
+		destination_station.SubtractFromWealth(reward)
 	if(istype(source_station))
-		source_station.AddToWealth(round(reward * 0.25), TRUE)
+		source_station.AddToWealth(base_value, TRUE)
 
 /datum/trade_contract/proc/ExecuteDeliver(obj/machinery/trade_beacon/sending/sender_beacon)
 	CleanupPayload()
