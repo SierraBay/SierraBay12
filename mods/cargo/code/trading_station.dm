@@ -62,36 +62,43 @@
 	return SSsupply.GetFaction(faction)
 
 /datum/trading_station/proc/InitSrc(turf/station_loc = null, force_discovered = FALSE)
-	AssignStationIdentity()
+	var/turf/spawn_turf = ResolveOvermapSpawnLocation(station_loc)
+	AssignStationIdentity(spawn_turf)
 	AssembleInventory()
 	InitGoods()
 	UpdateTick()
-	SetupOvermapPlacement(station_loc, force_discovered)
+	SetupOvermapPlacement(spawn_turf, force_discovered)
 	RegisterStation()
 
-/datum/trading_station/proc/AssignStationIdentity()
+/datum/trading_station/proc/AssignStationIdentity(turf/station_loc = null)
 	if(name)
 		CRASH("[type] trade station had name set before InitSrc() was called!")
 
-	for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
-		name_pool.Remove(other_station.name)
-	if(!length(name_pool))
-		log_debug("Trade station name pool exhausted: [type]")
-		var/list/reset_pool = initial(name_pool)
-		name_pool = islist(reset_pool) ? reset_pool.Copy() : list()
-		for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
-			name_pool.Remove(other_station.name)
+	var/list/available_names = islist(name_pool) ? name_pool.Copy() : list()
+	for(var/datum/trading_station/other_station as anything in SSsupply?.all_trading_stations)
+		if(other_station.name)
+			available_names.Remove(other_station.name)
 
-	if(length(name_pool))
-		name = pick(name_pool)
-		desc = name_pool[name]
-	else if(!name)
-		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
-		desc = initial(desc) || "An automated merchant outpost."
+	if(length(available_names))
+		name = pick(available_names)
+		desc = available_names[name]
+	else
+		log_debug("Trade station name pool exhausted for [type]; generating procedural identity.")
+		AssignProceduralIdentity(station_loc)
 
 	uid ||= "[type]_[random_id(type, 100, 999)]"
 	if(LAZYLEN(random_factions))
 		faction = pick(random_factions)
+
+/datum/trading_station/proc/AssignProceduralIdentity(turf/station_loc = null)
+	var/turf/target_turf = istype(station_loc) ? station_loc : overmap_location
+	var/list/identity = GenerateProceduralStationIdentity(src, target_turf)
+	name = identity["name"]
+	desc = identity["desc"]
+	if(!name)
+		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
+	if(!desc)
+		desc = initial(desc) || "An automated merchant outpost."
 
 /datum/trading_station/proc/SetupOvermapPlacement(turf/station_loc = null, force_discovered = FALSE)
 	if(start_hidden)

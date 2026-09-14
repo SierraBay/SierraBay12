@@ -207,3 +207,61 @@
 	else
 		pass("Trade UI log collection selection works correctly.")
 	return 1
+
+/datum/unit_test/cargo_trade_ui_available_stations_filter_test
+	name = "CARGO: Trade UI filters out-of-range and blocked stations from visible list"
+
+/datum/unit_test/cargo_trade_ui_available_stations_filter_test/start_test()
+	var/datum/computer_file/program/supply/program = new
+	var/datum/trading_station/unit_test_duplicate_pricing/station_in_range = new
+	var/datum/trading_station/unit_test_duplicate_pricing/station_blocked = new
+	var/list/original_visible_stations = SSsupply.visible_trading_stations
+	var/fail_reason = null
+
+	station_in_range.AssembleInventory()
+	station_blocked.AssembleInventory()
+	station_blocked.blacklist_factions = list(program.faction, FACTION_INDEPENDENT, FACTION_NANOTRASEN)
+	station_blocked.whitelist_factions = list("NonExistentFaction")
+
+	// Blocked station is first in the global list, in-range station is second
+	SSsupply.visible_trading_stations = list(station_blocked, station_in_range)
+
+	var/list/available = program.GetAvailableTradingStations()
+	if(length(available) != 1 || available[1] != station_in_range)
+		fail_reason = "GetAvailableTradingStations did not filter out the blocked station."
+
+	if(!fail_reason)
+		var/datum/trading_station/selected = program.EnsureSelectedStation()
+		if(selected != station_in_range)
+			fail_reason = "EnsureSelectedStation selected a blocked station instead of the available one."
+
+	if(!fail_reason)
+		var/list/serialized = program.SerializeVisibleStations()
+		if(length(serialized) != 1)
+			fail_reason = "SerializeVisibleStations produced [length(serialized)] entries instead of 1."
+		else
+			var/list/entry = serialized[1]
+			if(entry["uid"] != station_in_range.uid)
+				fail_reason = "Serialized visible station did not match the in-range station."
+
+	if(!fail_reason)
+		// Now test when all stations are blocked
+		SSsupply.visible_trading_stations = list(station_blocked)
+		program.station = null
+		var/datum/trading_station/selected_none = program.EnsureSelectedStation()
+		if(!isnull(selected_none))
+			fail_reason = "EnsureSelectedStation did not return null when all stations are blocked."
+		else if(length(program.SerializeVisibleStations()) != 0)
+			fail_reason = "SerializeVisibleStations was not empty when all stations are blocked."
+
+	SSsupply.visible_trading_stations = original_visible_stations
+	qdel(station_blocked)
+	qdel(station_in_range)
+	qdel(program)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Trade UI correctly filters out blocked and out-of-range stations.")
+	return 1
+

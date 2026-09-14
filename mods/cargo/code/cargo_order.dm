@@ -175,13 +175,22 @@ var/global/list/cargo_item_icon_cache = list()
 		ClearShopList(shopping_list)
 	shopping_list = list()
 
+/datum/computer_file/program/supply_order/proc/GetAvailableTradingStations()
+	var/list/result = list()
+	for(var/datum/trading_station/target_station as anything in SSsupply.visible_trading_stations)
+		if(GetStationTradeBlockReason(target_station, faction))
+			continue
+		result += target_station
+	return result
+
 /datum/computer_file/program/supply_order/proc/EnsureSelectedStation()
-	if(!length(SSsupply.visible_trading_stations))
+	var/list/available_stations = GetAvailableTradingStations()
+	if(!length(available_stations))
 		station = null
 		chosen_category = null
 		return null
-	if(!istype(station) || !(station in SSsupply.visible_trading_stations))
-		station = SSsupply.visible_trading_stations[1]
+	if(!istype(station) || !(station in available_stations))
+		station = available_stations[1]
 	if(!chosen_category || !(chosen_category in station.inventory))
 		SetChosenCategory()
 	return station
@@ -511,7 +520,8 @@ var/global/list/cargo_item_icon_cache = list()
 
 /datum/computer_file/program/supply_order/proc/SerializeVisibleStations()
 	var/list/result = list()
-	for(var/datum/trading_station/target_station as anything in SSsupply.visible_trading_stations)
+	var/list/available_stations = GetAvailableTradingStations()
+	for(var/datum/trading_station/target_station as anything in available_stations)
 		var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
 		var/faction_color = TradeRelationsColor(station_faction ? station_faction.relationship[faction] : null) || "#ffffff"
 		var/list/status_data = GetStationStatusData(target_station, faction)
@@ -768,9 +778,11 @@ var/global/list/cargo_item_icon_cache = list()
 /datum/computer_file/program/supply_order/proc/HandleCatalogTopic(list/href_list)
 	var/station_id = href_list["PRG_station"] || href_list["amp;PRG_station"]
 	if(station_id)
-		station = SSsupply.GetVisibleStationByUid(station_id)
-		SetChosenCategory()
-		goods_quantity_target = null
+		var/datum/trading_station/target_station = SSsupply.GetVisibleStationByUid(station_id)
+		if(istype(target_station) && !GetStationTradeBlockReason(target_station, faction))
+			station = target_station
+			SetChosenCategory()
+			goods_quantity_target = null
 		return TRUE
 	if("PRG_goods_category" in href_list)
 		EnsureSelectedStation()

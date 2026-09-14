@@ -258,6 +258,16 @@
 			return contract
 	return null
 
+/datum/controller/subsystem/supply/proc/GetPendingTradeContract(source_uid, contract_type = "delivery")
+	for(var/datum/trade_contract/contract as anything in trade_contracts)
+		if(contract.source_uid != source_uid)
+			continue
+		if(contract_type && contract.GetTypeId() != contract_type)
+			continue
+		if(contract.status == CONTRACT_STATUS_AVAILABLE || contract.status == CONTRACT_STATUS_ACTIVE)
+			return contract
+	return null
+
 /datum/controller/subsystem/supply/proc/GetPendingCaravanContract(caravan_uid)
 	var/datum/trading_station/caravan/caravan_station = GetStationByUid(caravan_uid)
 	var/obj/overmap/trade_beacon/caravan/caravan_object = istype(caravan_station) ? caravan_station.overmap_object : null
@@ -414,7 +424,7 @@
 	return best_candidate
 
 /datum/controller/subsystem/supply/proc/CreateTradeContract(datum/trading_station/source_station)
-	if(!istype(source_station) || !source_station.supports_contracts || !(source_station in visible_trading_stations) || GetVisibleContractBySourceAndType(source_station.uid, "delivery"))
+	if(!istype(source_station) || !source_station.supports_contracts || !(source_station in visible_trading_stations) || GetPendingTradeContract(source_station.uid, "delivery"))
 		return null
 
 	var/list/best_candidate = null
@@ -515,7 +525,7 @@
 	for(var/datum/trading_station/source_station as anything in visible_trading_stations)
 		if(!source_station.supports_contracts)
 			continue
-		if(GetVisibleContractBySourceAndType(source_station.uid, "delivery"))
+		if(GetPendingTradeContract(source_station.uid, "delivery"))
 			continue
 		CreateTradeContract(source_station)
 	for(var/datum/trading_station/caravan/caravan_station as anything in visible_trading_stations)
@@ -963,7 +973,7 @@
 	TrackLiveMarketSales(shop_list)
 	return TRUE
 
-/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null)
+/datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null, seller_faction = null)
 	if(QDELETED(sender_beacon) || !istype(money_account))
 		return FALSE
 
@@ -979,6 +989,7 @@
 	var/cost = 0
 	var/list/exportables = list()
 	var/list/rejected = list()
+	var/list/sold_counts = list()
 
 	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
@@ -987,7 +998,7 @@
 			rejected += exported
 			continue
 
-		var/export_value = GetExportValue(exported, target_station)
+		var/export_value = GetExportValue(exported, target_station, seller_faction, sold_counts)
 		if(!export_value)
 			continue
 
@@ -1004,8 +1015,8 @@
 
 	for(var/atom/movable/exported as anything in exportables)
 		var/export_value = exportables[exported]
-		if(istype(target_station) && istype(exported, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = exported
+		if(istype(target_station) && istype(exported, /obj/structure/closet))
+			var/obj/structure/closet/crate = exported
 			var/crate_sold_any = FALSE
 			var/list/all_contents = crate.GetAllContents(3, FALSE)
 			for(var/atom/movable/item as anything in all_contents)
@@ -1015,24 +1026,28 @@
 					continue
 				var/list/match = FindCommodityForExport(item, target_station)
 				if(islist(match))
-					var/item_val = GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
-					cost += item_val
 					invoice_contents_info += "<li>[item.name]</li>"
-					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
 					qdel(item)
 					crate_sold_any = TRUE
 					++export_count
 					if(export_count > 100)
 						break
-			if(crate_sold_any && !length(crate.contents))
-				qdel(crate)
+			if(crate_sold_any)
+				invoice_contents_info += "<li>[crate.name] (packaging)</li>"
+			else
+				invoice_contents_info += "<li>[crate.name]</li>"
+			crate.dump_contents()
+			qdel(crate)
+			cost += export_value
+			++export_count
 		else
 			invoice_contents_info += "<li>[exported.name]</li>"
 			cost += export_value
 			if(istype(target_station))
 				var/list/match = FindCommodityForExport(exported, target_station)
 				if(islist(match))
-					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell")
+					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
 			qdel(exported)
 			++export_count
 
@@ -1045,17 +1060,19 @@
 		target_station.SubtractFromWealth(cost)
 	money_account.deposit(cost, "Trade Network Export", "Trade Network")
 	if(invoice_contents_info)
-		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon))
+		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 	return TRUE
 
-/datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null)
+/datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null, faction_name = null, station_name = null)
 	var/log_id
 	var/list/log_entry = list(
 		"id" = null,
 		"ordering_acct" = ordering_account,
 		"contents" = contents,
 		"total_paid" = total_paid,
-		"time" = time2text(world.time, "hh:mm")
+		"time" = time2text(world.time, "hh:mm"),
+		"faction" = faction_name,
+		"station" = station_name
 	)
 
 	switch(type)
@@ -1079,11 +1096,11 @@
 			return
 
 	if(create_invoice && invoice_location && log_id)
-		PrintInvoice(type, log_id, ordering_account, contents, total_paid, FALSE, invoice_location)
+		PrintInvoice(type, log_id, ordering_account, contents, total_paid, FALSE, invoice_location, faction_name, station_name)
 		if(type == "Shipping")
-			PrintInvoice(type, log_id, ordering_account, contents, total_paid, TRUE, invoice_location)
+			PrintInvoice(type, log_id, ordering_account, contents, total_paid, TRUE, invoice_location, faction_name, station_name)
 
-/datum/controller/subsystem/supply/proc/PrintInvoice(type, log_id, ordering_account, contents, total_paid, is_internal = FALSE, location)
+/datum/controller/subsystem/supply/proc/PrintInvoice(type, log_id, ordering_account, contents, total_paid, is_internal = FALSE, location, faction_name = null, station_name = null)
 	if(!location)
 		return
 	var/title = "[lowertext(type)] invoice - #[log_id]"
@@ -1094,6 +1111,10 @@
 	if(is_internal)
 		text += "FOR INTERNAL USE ONLY<br><br>"
 	text += "Recipient: [ordering_account]<br>"
+	if(faction_name)
+		text += "Faction: [faction_name]<br>"
+	if(station_name)
+		text += "Trading Partner: [station_name]<br>"
 	text += "Contents:<ul>[contents]</ul>"
 	text += "Total Credits Paid: [total_paid]<br>"
 	text += "</font>"
@@ -1129,7 +1150,7 @@
 		to_chat(human, SPAN_DANGER("The export beacon rejects biological matter with a painful electric shock!"))
 		human.apply_damage(15, DAMAGE_BURN)
 
-/datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station)
+/datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null)
 	. = 0
 	if(!istype(crate) || !istype(target_station))
 		return 0
@@ -1141,21 +1162,36 @@
 			continue
 		var/list/match = FindCommodityForExport(item, target_station)
 		if(islist(match))
-			. += GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
+			var/good_id = match["good_id"]
+			var/amount = max(1, match["amount"])
+			var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
+			var/item_val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
+			if(islist(sold_counts))
+				sold_counts[good_id] = offset + amount
+			. += item_val
 	. = round(.)
 
-/datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null)
+/datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null, seller_faction = null, list/sold_counts = null)
 	if(!CanExportAtom(exported))
 		return 0
 	if(istype(target_station))
-		if(istype(exported, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = exported
-			var/crate_val = GetStationCrateExportValue(crate, target_station)
-			if(crate_val > 0)
-				return crate_val
+		if(istype(exported, /obj/structure/closet))
+			var/obj/structure/closet/crate = exported
+			var/crate_val = GetStationCrateExportValue(crate, target_station, seller_faction, sold_counts)
+			var/base_crate_val = round(get_value(crate))
+			if(istype(crate, /obj/structure/closet/crate))
+				var/obj/structure/closet/crate/CR = crate
+				base_crate_val = initial(CR.points_per_crate) * CARGO_POINT_TO_THALLER
+			return round(base_crate_val + crate_val)
 		var/list/match = FindCommodityForExport(exported, target_station)
 		if(islist(match))
-			return GetStationSellPrice(match["good_id"], target_station, match["category"]) * max(1, match["amount"])
+			var/good_id = match["good_id"]
+			var/amount = max(1, match["amount"])
+			var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
+			var/val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
+			if(islist(sold_counts))
+				sold_counts[good_id] = offset + amount
+			return val
 	if(istype(exported, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = exported
 		return round(GetLegacyCrateExportValue(crate))

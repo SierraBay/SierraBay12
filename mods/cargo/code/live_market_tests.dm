@@ -410,3 +410,194 @@
 	else
 		pass("Buy() with price snapshot increments demand exactly once.")
 	return 1
+
+/datum/unit_test/cargo_market_demand_decay_rebalance_test
+	name = "CARGO MARKET: Demand decay is calibrated to 0.85"
+
+/datum/unit_test/cargo_market_demand_decay_rebalance_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/good_id = station.inventory["Alpha"][1]
+	if(!good_id)
+		fail_reason = "Failed to create test inventory."
+	else if(abs(station.live_market_demand_decay - 0.85) > 0.001)
+		fail_reason = "live_market_demand_decay was [station.live_market_demand_decay] instead of 0.85."
+	else
+		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
+		station.AdjustLiveMarketDemand("Alpha", good_id, 10)
+		station.DecayLiveMarketDemand()
+		var/demand_after_1 = station.GetLiveMarketDemandScore("Alpha", good_id)
+		if(abs(demand_after_1 - 0.85) > 0.01)
+			fail_reason = "Demand after 1 decay tick was [demand_after_1], expected ~0.85."
+		else
+			station.DecayLiveMarketDemand()
+			var/demand_after_2 = station.GetLiveMarketDemandScore("Alpha", good_id)
+			var/expected_2 = 0.85 * 0.85
+			if(abs(demand_after_2 - expected_2) > 0.01)
+				fail_reason = "Demand after 2 decay ticks was [demand_after_2], expected ~[expected_2]."
+
+	qdel(station)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Live market demand decay holds smoothly at 0.85.")
+	return 1
+
+/datum/unit_test/cargo_market_faction_sell_price_test
+	name = "CARGO MARKET: Factions influence station sell prices and export"
+
+/datum/unit_test/cargo_market_faction_sell_price_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/datum/money_account/account = new
+	var/obj/machinery/trade_beacon/sending/beacon = new(get_safe_turf())
+	var/fail_reason = null
+
+	account.owner_name = "Faction Test Account"
+	account.money = 0
+
+	station.faction = FACTION_NANOTRASEN
+	station.AssembleInventory()
+	station.InitGoods()
+	var/good_id = station.inventory["Alpha"][1]
+	var/good_path = station.GetGoodPath("Alpha", good_id)
+	if(!good_id || !ispath(good_path, /atom/movable))
+		fail_reason = "Failed to create test inventory."
+	else
+		station.SetGoodAmount("Alpha", good_id, 10)
+		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
+
+		var/ally_price = SSsupply.GetStationSellPrice(good_id, station, FACTION_FREETRADE, "Alpha")
+		var/neutral_price = SSsupply.GetStationSellPrice(good_id, station, FACTION_INDEPENDENT, "Alpha")
+		var/hostile_price = SSsupply.GetStationSellPrice(good_id, station, FACTION_INDIE_CONFED, "Alpha")
+
+		if(ally_price <= neutral_price)
+			fail_reason = "Ally sell price [ally_price] did not exceed neutral price [neutral_price]."
+		else if(neutral_price <= hostile_price)
+			fail_reason = "Neutral sell price [neutral_price] did not exceed hostile price [hostile_price]."
+		else
+			var/datum/trade_faction/nt_faction = SSsupply.GetFaction(FACTION_NANOTRASEN)
+			if(istype(nt_faction))
+				nt_faction.embargo += "EmbargoedTestFaction"
+				var/embargo_price = SSsupply.GetStationSellPrice(good_id, station, "EmbargoedTestFaction", "Alpha")
+				if(embargo_price != 0)
+					fail_reason = "Embargoed faction sell price was [embargo_price] instead of 0."
+				else
+					for(var/atom/movable/AM in range(2, beacon))
+						if(AM != beacon && !AM.anchored)
+							qdel(AM)
+					new good_path(get_turf(beacon))
+					if(SSsupply.Export(beacon, account, station, "EmbargoedTestFaction"))
+						fail_reason = "Export succeeded for an embargoed faction."
+					else if(account.money != 0)
+						fail_reason = "Account received money [account.money] from an embargoed export."
+				nt_faction.embargo -= "EmbargoedTestFaction"
+
+	qdel(beacon)
+	qdel(account)
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Faction diplomatic standing correctly scales sell prices and enforces embargoes.")
+	return 1
+
+/datum/unit_test/cargo_market_volume_slippage_test
+	name = "CARGO MARKET: Bulk exports experience volume price slippage"
+
+/datum/unit_test/cargo_market_volume_slippage_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/datum/money_account/account = new
+	var/obj/machinery/trade_beacon/sending/beacon = new(get_safe_turf())
+	var/fail_reason = null
+
+	account.owner_name = "Volume Slippage Account"
+	account.money = 0
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/good_id = station.inventory["Alpha"][1]
+	var/good_path = station.GetGoodPath("Alpha", good_id)
+	if(!good_id || !ispath(good_path, /atom/movable))
+		fail_reason = "Failed to create test inventory."
+	else
+		station.SetGoodAmount("Alpha", good_id, 10)
+		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
+		station.AdjustLiveMarketDemand("Alpha", good_id, 5)
+
+		var/single_unit_price = SSsupply.GetStationSellPrice(good_id, station, null, "Alpha", 1)
+		var/bulk_50_price = SSsupply.GetStationSellPrice(good_id, station, null, "Alpha", 50)
+		var/linear_50_price = single_unit_price * 50
+
+		if(bulk_50_price >= linear_50_price)
+			fail_reason = "Bulk price [bulk_50_price] was not lower than linear price [linear_50_price] (no slippage)."
+		else
+			var/first_unit = SSsupply.GetStationSellPrice(good_id, station, null, "Alpha", 1, 0)
+			var/mid_unit = SSsupply.GetStationSellPrice(good_id, station, null, "Alpha", 1, 20)
+			var/late_unit = SSsupply.GetStationSellPrice(good_id, station, null, "Alpha", 1, 40)
+
+			if(first_unit <= mid_unit)
+				fail_reason = "First unit [first_unit] did not sell for more than mid unit [mid_unit]."
+			else if(mid_unit < late_unit)
+				fail_reason = "Mid unit [mid_unit] sold for less than late unit [late_unit]."
+			else
+				for(var/atom/movable/AM in range(2, beacon))
+					if(AM != beacon && !AM.anchored)
+						qdel(AM)
+
+				var/mat_id = station.inventory["Materials"][1]
+				var/mat_path = station.GetGoodPath("Materials", mat_id)
+				station.SetGoodAmount("Materials", mat_id, 10)
+				station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
+				var/obj/item/stack/material/steel/ten/bundle = new mat_path(get_turf(beacon))
+				var/expected_bundle_val = SSsupply.GetStationSellPrice(mat_id, station, null, "Materials", bundle.get_amount())
+				if(!SSsupply.Export(beacon, account, station))
+					fail_reason = "Export of stack bundle failed."
+				else if(account.money != expected_bundle_val)
+					fail_reason = "Export payout [account.money] did not match slipped price [expected_bundle_val]."
+
+	qdel(beacon)
+	qdel(account)
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Volume price slippage successfully discounts bulk exports.")
+	return 1
+
+/datum/unit_test/cargo_market_intra_station_arbitrage_prevention_test
+	name = "CARGO MARKET: Intra-station arbitrage is strictly impossible"
+
+/datum/unit_test/cargo_market_intra_station_arbitrage_prevention_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/good_id = station.inventory["Alpha"][1]
+	if(!good_id)
+		fail_reason = "Failed to create test inventory."
+	else
+		station.SetGoodAmount("Alpha", good_id, 1)
+		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
+		station.AdjustLiveMarketDemand("Alpha", good_id, 25)
+
+		var/buy_price = SSsupply.GetStationBuyPrice(good_id, station, FACTION_INDEPENDENT, "Alpha")
+		var/sell_price = SSsupply.GetStationSellPrice(good_id, station, FACTION_INDEPENDENT, "Alpha", 1)
+
+		if(sell_price >= buy_price)
+			fail_reason = "Sell price [sell_price] reached or exceeded buy price [buy_price] on the same station."
+		else if(sell_price > round(buy_price * 0.90))
+			fail_reason = "Sell price [sell_price] exceeded the 90% buy price cap ([round(buy_price * 0.90)])."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Intra-station arbitrage loops are guaranteed impossible.")
+	return 1

@@ -20,7 +20,11 @@
 		"FTV Wayfarer" = "A mobile trade caravan carrying mixed civilian cargo and opportunistic surplus.",
 		"FTV Long Haul" = "An itinerant merchant convoy moving between beacon routes with a rotating inventory.",
 		"FTV Open Palm" = "A roving independent trade caravan broadcasting merchant registry codes.",
-		"FTV Far Market" = "A caravan specializing in off-route deals and transient dockside trade."
+		"FTV Far Market" = "A caravan specializing in off-route deals and transient dockside trade.",
+		"FTV Stray Wind" = "A light independent merchant cutter trading regional surplus across peripheral jump points.",
+		"FTV Nomad's Coin" = "A veteran trader convoy bartering manufactured goods for raw salvage.",
+		"FTV Drift Hopper" = "A swift bulk runner connecting independent outposts outside core shipping lanes.",
+		"FTV Silver Horizon" = "A luxury and consumer provisions merchant vessel cruising between planetary outposts."
 	)
 	var/list/caravan_group_types = list(
 		/datum/legacy_station_group/operations,

@@ -10,11 +10,11 @@
 	var/live_market_enabled = TRUE
 	var/list/live_market_state = list()
 	var/list/live_market_modifiers = list()
-	var/live_market_demand_decay = 0.6
-	var/live_market_min_buy_multiplier = 0.75
-	var/live_market_max_buy_multiplier = 1.8
-	var/live_market_min_sell_multiplier = 0.45
-	var/live_market_max_sell_multiplier = 1.35
+	var/live_market_demand_decay = 0.85
+	var/live_market_min_buy_multiplier = 0.8
+	var/live_market_max_buy_multiplier = 1.75
+	var/live_market_min_sell_multiplier = 0.35
+	var/live_market_max_sell_multiplier = 1.15
 	var/live_market_restock_discount = 0.5
 	var/live_market_remote_quote_limit = 6
 	var/live_market_auto_events = TRUE
@@ -348,7 +348,7 @@
 	if(!live_market_enabled || !live_market_auto_events || length(live_market_modifiers))
 		return
 	if(prob(35))
-		AddLiveMarketModifier(pick(MARKET_MOD_BOOM, MARKET_MOD_SHORTAGE, MARKET_MOD_INDUSTRIAL_DEMAND, MARKET_MOD_BLOCKADE), rand(3, 6))
+		AddLiveMarketModifier(pick(MARKET_MOD_BOOM, MARKET_MOD_SHORTAGE, MARKET_MOD_INDUSTRIAL_DEMAND, MARKET_MOD_BLOCKADE), rand(3, 5))
 
 /datum/trading_station/proc/GetLiveMarketStatusLabel()
 	var/list/modifier = GetPrimaryLiveMarketModifier()
@@ -432,11 +432,121 @@
 		return max(1, round(base_price))
 	return max(1, round(base_price * station.GetLiveMarketBuyMultiplier(category_name, good_ref)))
 
-/datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, category_name = null)
+/datum/controller/subsystem/supply/proc/GetStationTradeRelationMultiplier(datum/trading_station/station, seller_faction = null)
+	if(!istype(station) || !seller_faction)
+		return 1
+	var/datum/trade_faction/station_faction = GetFaction(station.faction)
+	if(!istype(station_faction))
+		return 1
+
+	var/seller_name = seller_faction
+	if(istype(seller_faction, /datum/trade_faction))
+		var/datum/trade_faction/F = seller_faction
+		seller_name = F.name
+	else if(!istext(seller_name))
+		return 1
+
+	if(islist(station_faction.embargo) && (seller_name in station_faction.embargo))
+		return 0
+	if(length(station.blacklist_factions) && (seller_name in station.blacklist_factions))
+		return 0
+	if(length(station.whitelist_factions) && !(seller_name in station.whitelist_factions))
+		return 0
+
+	var/rel = station_faction.relationship[seller_name]
+	if(isnull(rel))
+		var/datum/trade_faction/seller_datum = GetFaction(seller_name)
+		if(istype(seller_datum) && isnum(station_faction.relationship[seller_datum.name]))
+			rel = station_faction.relationship[seller_datum.name]
+		else
+			rel = FACTION_STATE_NEUTRAL
+
+	var/multiplier = 1
+	switch(rel)
+		if(FACTION_STATE_WAR)
+			return 0
+		if(FACTION_STATE_ENEMY)
+			multiplier = 0.5
+		if(FACTION_STATE_RIVAL)
+			multiplier = 0.7
+		if(FACTION_STATE_ANIMOSITY)
+			multiplier = 0.85
+		if(FACTION_STATE_NEUTRAL)
+			multiplier = 0.95
+		if(FACTION_STATE_WELCOMING)
+			multiplier = 1.05
+		if(FACTION_STATE_FRIEND)
+			multiplier = 1.1
+		if(FACTION_STATE_ALLY)
+			multiplier = 1.2
+		if(FACTION_STATE_PROTECTORATE)
+			multiplier = 1.25
+
+	if(seller_name in station_faction.trade_markup)
+		var/markup = station_faction.trade_markup[seller_name]
+		if(isnum(markup) && markup > 1)
+			multiplier /= markup
+
+	return multiplier
+
+/datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, seller_faction = null, category_name = null, amount = 1, sold_offset = 0)
+	if(istype(station) && istext(seller_faction) && isnull(category_name))
+		if(seller_faction in station.inventory)
+			category_name = seller_faction
+			seller_faction = null
+
+	if(!isnum(amount) || amount <= 0)
+		return 0
+
 	var/base_price = GetStationTradeBasePrice(good_ref, station, null, category_name)
-	if(!base_price || !istype(station) || !istext(category_name) || !station.live_market_enabled || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return max(1, round(base_price * 0.55))
-	return max(1, round(base_price * station.GetLiveMarketSellMultiplier(category_name, good_ref)))
+	if(!base_price || !istype(station))
+		return 0
+
+	var/faction_mult = GetStationTradeRelationMultiplier(station, seller_faction)
+	if(!faction_mult)
+		return 0
+
+	if(!istext(category_name) || !station.live_market_enabled || !station.HasLiveMarketCommodity(category_name, good_ref))
+		return max(1, round(base_price * 0.55 * faction_mult)) * amount
+
+	var/baseline = max(1, station.GetLiveMarketBaseline(category_name, good_ref))
+	var/initial_stock = max(0, station.GetGoodAmount(category_name, good_ref))
+	var/initial_demand = station.GetLiveMarketDemandScore(category_name, good_ref)
+	var/event_mult = station.GetLiveMarketEventPriceMultiplier(category_name, good_ref, "sell_shift")
+	var/buy_price_cap = round(GetStationBuyPrice(good_ref, station, seller_faction, category_name) * 0.9)
+
+	var/total_price = 0
+	for(var/k in 1 to amount)
+		var/units_sold_before = (k - 1) + sold_offset
+		var/sim_stock = initial_stock + units_sold_before
+		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
+
+		var/sim_pressure = 0
+		if(sim_stock < baseline)
+			sim_pressure = min((baseline - sim_stock) / baseline, 1)
+		else if(sim_stock > baseline)
+			sim_pressure = -min((sim_stock - baseline) / baseline, 1)
+
+		var/unit_mult = 0.62
+		if(sim_pressure > 0)
+			unit_mult += min(sim_pressure * 0.35, 0.28)
+		else if(sim_pressure < 0)
+			unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
+
+		if(sim_demand > 0)
+			unit_mult += min(sim_demand * 0.18, 0.25)
+		else if(sim_demand < 0)
+			unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
+
+		unit_mult *= event_mult
+		unit_mult = clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
+
+		var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
+		if(buy_price_cap > 0)
+			unit_price = min(unit_price, buy_price_cap)
+		total_price += unit_price
+
+	return total_price
 
 /datum/controller/subsystem/supply/proc/GetStationRestockCost(good_ref, datum/trading_station/station, category_name = null)
 	var/base_price = GetBasicImportCost(good_ref, station, category_name)
@@ -453,7 +563,7 @@
 		"category" = category_name,
 		"good_id" = good_id,
 		"buy_price" = round(GetStationBuyPrice(good_id, station, buyer_faction, category_name), 0.01),
-		"sell_price" = round(GetStationSellPrice(good_id, station, category_name), 0.01),
+		"sell_price" = round(GetStationSellPrice(good_id, station, buyer_faction, category_name), 0.01),
 		"stock" = max(0, station.GetGoodAmount(category_name, good_id))
 	)
 
@@ -504,7 +614,7 @@
 		return value["unit_price"]
 	return null
 
-/datum/controller/subsystem/supply/proc/ApplyTradeTransaction(datum/trading_station/station, category_name, good_id, amount, transaction_type)
+/datum/controller/subsystem/supply/proc/ApplyTradeTransaction(datum/trading_station/station, category_name, good_id, amount, transaction_type, party_faction = null)
 	if(!istype(station) || !istext(category_name) || !good_id || !isnum(amount) || amount <= 0)
 		return
 	switch(transaction_type)
@@ -514,7 +624,7 @@
 			station.AdjustLiveMarketDemand(category_name, good_id, -amount)
 			station.SetGoodAmount(category_name, good_id, station.GetGoodAmount(category_name, good_id) + amount)
 
-/datum/controller/subsystem/supply/proc/TrackLiveMarketSales(list/shop_list)
+/datum/controller/subsystem/supply/proc/TrackLiveMarketSales(list/shop_list, buyer_faction = null)
 	if(!islist(shop_list))
 		return
 	for(var/datum/trading_station/station as anything in shop_list)
@@ -526,7 +636,7 @@
 			if(!istext(category_name) || !islist(goods))
 				continue
 			for(var/good_id in goods)
-				ApplyTradeTransaction(station, category_name, good_id, goods[good_id], MARKET_TRANS_BUY)
+				ApplyTradeTransaction(station, category_name, good_id, goods[good_id], MARKET_TRANS_BUY, buyer_faction)
 
 /datum/controller/subsystem/supply/proc/FindCommodityForExport(atom/movable/exported, datum/trading_station/station)
 	if(!istype(exported) || !istype(station) || !islist(station.inventory))
@@ -569,7 +679,7 @@
 				"good_id" = good_id,
 				"name" = station.GetGoodName(category_name, good_id),
 				"buy_price" = round(GetStationBuyPrice(good_id, station, buyer_faction, category_name), 0.01),
-				"sell_price" = round(GetStationSellPrice(good_id, station, category_name), 0.01),
+				"sell_price" = round(GetStationSellPrice(good_id, station, buyer_faction, category_name), 0.01),
 				"stock" = station.GetGoodAmount(category_name, good_id)
 			))
 			if(length(quotes) >= station.live_market_remote_quote_limit)

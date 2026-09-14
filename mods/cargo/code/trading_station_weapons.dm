@@ -1,6 +1,11 @@
 /datum/trading_station/weapons_terra
 	name_pool = list(
-		"TTB \"Telum\"" = "Terran Trade Beacon \"Telum\": Surplus marine equipment sold to friends of humanity!"
+		"TTB \"Telum\"" = "Terran Trade Beacon \"Telum\": Surplus marine equipment sold to friends of humanity!",
+		"TTB \"Aegis\"" = "Terran Trade Beacon \"Aegis\": Armored reserve supply depot authorizing defensive surplus.",
+		"TTB \"Glaive\"" = "Terran Trade Beacon \"Glaive\": Confederate munitions outpost clearing decommissioned weaponry.",
+		"TTB \"Ballista\"" = "Terran Trade Beacon \"Ballista\": Heavy-bore surplus supplier registered to Terran frontier patrol.",
+		"TTB \"Centurion\"" = "Terran Trade Beacon \"Centurion\": Tactical ordnance cache certified for authorized independent buyers.",
+		"TTB \"Castellan\"" = "Terran Trade Beacon \"Castellan\": Sol-border defense stockpile offering secondary armament sales."
 	)
 	uid = "weapons_terra"
 	icon_states = list("weapons")

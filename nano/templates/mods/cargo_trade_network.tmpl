@@ -2194,21 +2194,39 @@
 						</div>
 					{{else}}
 						<div class="tn-scroll-box" data-scroll-id="tn-export-list" style="max-height: 440px; margin-top: 6px;">
-							{{for data.export_items}}
+							{{for data.export_items:export_item:export_index}}
 								<div class="tn-export-item">
 									<div>
-										<span class="tn-export-name">{{>value.name}}</span>
-										{{if value.amount > 1}}
-											<span class="tn-tag tn-tag-average" style="margin-left: 6px;">x{{:value.amount}}</span>
+										<span class="tn-export-name">{{>export_item.name}}</span>
+										{{if export_item.amount > 1}}
+											<span class="tn-tag tn-tag-average" style="margin-left: 6px;">x{{:export_item.amount}}</span>
 										{{/if}}
 										<span class="tn-export-meta" style="margin-left: 8px;">
-											({{if value.amount > 1}}{{:value.unit_value}} {{:data.currency_short}} ea &bull; {{/if}}Target: {{>value.target_station}})
+											({{if export_item.amount > 1}}{{:export_item.unit_value}} {{:data.currency_short}} ea &bull; {{/if}}Target: {{>export_item.target_station}})
 										</span>
 									</div>
 									<div class="font-mono" style="font-size: 12px; font-weight: bold; color: #55cc55;">
-										{{:value.value}} {{:data.currency_short}}
+										{{:export_item.value}} {{:data.currency_short}}
 									</div>
 								</div>
+								{{if export_item.sub_items && export_item.sub_items.length}}
+									<div class="tn-export-subitems" style="margin-left: 18px; margin-top: 3px; margin-bottom: 8px; padding-left: 10px; border-left: 2px solid #555;">
+										{{for export_item.sub_items:sub_entry:sub_index}}
+											<div style="display: flex; justify-content: space-between; align-items: center; padding: 2px 0; font-size: 11px; color: #aaa;">
+												<div>
+													<span style="color: #ddd;">&bull; {{>sub_entry.name}}</span>
+													{{if sub_entry.amount > 1}}
+														<span class="tn-tag tn-tag-average" style="font-size: 10px; padding: 0 4px; margin-left: 4px;">x{{:sub_entry.amount}}</span>
+														<span style="color: #777; margin-left: 4px;">({{:sub_entry.unit_value}} {{:data.currency_short}} ea)</span>
+													{{/if}}
+												</div>
+												<div class="font-mono" style="color: #66bb66;">
+													{{:sub_entry.value}} {{:data.currency_short}}
+												</div>
+											</div>
+										{{/for}}
+									</div>
+								{{/if}}
 							{{/for}}
 						</div>
 					{{/if}}

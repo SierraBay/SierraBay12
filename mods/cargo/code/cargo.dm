@@ -307,14 +307,23 @@
 /datum/computer_file/program/supply/proc/IsSendingSelected()
 	return !!GetBeaconDisplayId(sending)
 
+/datum/computer_file/program/supply/proc/GetAvailableTradingStations()
+	var/list/result = list()
+	for(var/datum/trading_station/target_station as anything in SSsupply.visible_trading_stations)
+		if(GetStationTradeBlockReason(target_station, faction))
+			continue
+		result += target_station
+	return result
+
 /datum/computer_file/program/supply/proc/EnsureSelectedStation()
-	if(!length(SSsupply.visible_trading_stations))
+	var/list/available_stations = GetAvailableTradingStations()
+	if(!length(available_stations))
 		station = null
 		chosen_category = null
 		return null
 
-	if(!istype(station) || !(station in SSsupply.visible_trading_stations))
-		station = SSsupply.visible_trading_stations[1]
+	if(!istype(station) || !(station in available_stations))
+		station = available_stations[1]
 
 	if(!chosen_category || !(chosen_category in station.inventory))
 		SetChosenCategory()
@@ -527,7 +536,8 @@
 /datum/computer_file/program/supply/proc/SerializeVisibleStations()
 	var/list/result = list()
 	var/has_local_receiving_beacon = length(GetLocalReceivingBeaconsById()) > 0
-	for(var/datum/trading_station/target_station as anything in SSsupply.visible_trading_stations)
+	var/list/available_stations = GetAvailableTradingStations()
+	for(var/datum/trading_station/target_station as anything in available_stations)
 		var/datum/trade_faction/station_faction = SSsupply.GetFaction(target_station.faction)
 		var/faction_color = TradeRelationsColor(station_faction ? station_faction.relationship[faction] : null) || "#ffffff"
 		var/list/status_data = GetStationStatusData(target_station, faction, has_local_receiving_beacon)
@@ -537,7 +547,7 @@
 			"name" = target_station.name,
 			"faction" = target_station.faction,
 			"faction_color" = faction_color,
-			"selected" = target_station == station,
+			"selected" = (target_station == station),
 			"market_label" = target_station.GetLiveMarketStatusLabel(),
 			"market_tone" = target_station.GetLiveMarketStatusTone(),
 			"status_label" = status_data["label"],
@@ -672,7 +682,7 @@
 		var/stock = target_station.GetGoodAmount(chosen_category, good_id)
 		var/basic_price = SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
 		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
-		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, chosen_category)
+		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, faction, chosen_category)
 		var/in_cart = islist(category_cart) ? (category_cart[good_id] || 0) : 0
 		var/atom/movable/item_type = path
 		var/desc_text = initial(item_type.desc) || ""
@@ -691,33 +701,100 @@
 		)))
 	return result
 
+/datum/computer_file/program/supply/proc/SerializeCrateExportItem(obj/structure/closet/crate, datum/trading_station/target_station, list/sold_counts)
+	var/list/grouped_sub = list()
+	var/list/sub_items = list()
+	var/contents_total = 0
+
+	for(var/atom/movable/item as anything in crate.GetAllContents(3, FALSE))
+		if(item == crate || istype(item, /obj/structure/closet) || !SSsupply.CanExportAtom(item))
+			continue
+		var/list/match = SSsupply.FindCommodityForExport(item, target_station)
+		if(!islist(match))
+			continue
+		var/good_id = match["good_id"]
+		var/amount = max(1, match["amount"])
+		var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
+		var/item_val = SSsupply.GetStationSellPrice(good_id, target_station, faction, match["category"], amount, offset)
+		if(islist(sold_counts))
+			sold_counts[good_id] = offset + amount
+		var/sub_name = item.name
+		if(!grouped_sub[sub_name])
+			grouped_sub[sub_name] = list(
+				"name" = sub_name,
+				"amount" = amount,
+				"unit_value" = round(item_val / amount, 0.01),
+				"value" = round(item_val, 0.01)
+			)
+		else
+			var/list/sub_entry = grouped_sub[sub_name]
+			sub_entry["amount"] += amount
+			sub_entry["value"] = round(sub_entry["value"] + item_val, 0.01)
+			sub_entry["unit_value"] = round(sub_entry["value"] / sub_entry["amount"], 0.01)
+
+	for(var/sub_name in grouped_sub)
+		var/list/sub_entry = grouped_sub[sub_name]
+		contents_total += sub_entry["value"]
+		sub_items.Add(list(sub_entry))
+
+	var/base_crate_val = round(get_value(crate))
+	if(istype(crate, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/CR = crate
+		base_crate_val = initial(CR.points_per_crate) * CARGO_POINT_TO_THALLER
+	if(length(sub_items))
+		sub_items.Add(list(list(
+			"name" = "[crate.name] (packaging)",
+			"amount" = 1,
+			"unit_value" = base_crate_val,
+			"value" = base_crate_val
+		)))
+
+	var/total_crate_val = round(base_crate_val + contents_total, 0.01)
+	return list(
+		"name" = crate.name,
+		"amount" = 1,
+		"unit_value" = total_crate_val,
+		"value" = total_crate_val,
+		"target_station" = target_station ? target_station.name : "Trade Network",
+		"sub_items" = sub_items
+	)
+
 /datum/computer_file/program/supply/proc/SerializeExportItems()
 	var/list/result = list()
 	if(!IsSendingSelected())
 		return result
 	var/datum/trading_station/target_station = EnsureSelectedStation()
 	var/list/grouped = list()
+	var/list/sold_counts = list()
 	for(var/atom/movable/exported as anything in sending.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
 			continue
 		if(!SSsupply.CanExportAtom(exported))
 			continue
-		var/cost = SSsupply.GetExportValue(exported, target_station)
+		if(istype(exported, /obj/structure/closet) && istype(target_station))
+			result.Add(list(SerializeCrateExportItem(exported, target_station, sold_counts)))
+			continue
+		var/cost = SSsupply.GetExportValue(exported, target_station, faction, sold_counts)
 		if(!cost)
 			continue
 		var/item_name = exported.name
+		var/item_amount = 1
+		if(isstack(exported))
+			var/obj/item/stack/S = exported
+			item_amount = S.get_amount()
 		if(!grouped[item_name])
 			grouped[item_name] = list(
 				"name" = item_name,
-				"amount" = 1,
-				"unit_value" = round(cost, 0.01),
+				"amount" = item_amount,
+				"unit_value" = round(cost / item_amount, 0.01),
 				"value" = round(cost, 0.01),
 				"target_station" = target_station ? target_station.name : "Trade Network"
 			)
 		else
 			var/list/entry = grouped[item_name]
-			entry["amount"] += 1
+			entry["amount"] += item_amount
 			entry["value"] = round(entry["value"] + cost, 0.01)
+			entry["unit_value"] = round(entry["value"] / entry["amount"], 0.01)
 
 	for(var/item_name in grouped)
 		result.Add(list(grouped[item_name]))
@@ -1160,9 +1237,11 @@
 /datum/computer_file/program/supply/proc/HandleCatalogTopic(list/href_list)
 	var/station_id = href_list["PRG_station"] || href_list["amp;PRG_station"]
 	if(station_id)
-		station = SSsupply.GetVisibleStationByUid(station_id)
-		SetChosenCategory()
-		CloseGoodsQuantityForm()
+		var/datum/trading_station/target_station = SSsupply.GetVisibleStationByUid(station_id)
+		if(istype(target_station) && !GetStationTradeBlockReason(target_station, faction))
+			station = target_station
+			SetChosenCategory()
+			CloseGoodsQuantityForm()
 		return TRUE
 	if("PRG_goods_category" in href_list)
 		SetChosenCategory(href_list["PRG_goods_category"])
@@ -1376,7 +1455,7 @@
 	if(!length(SerializeExportItems()))
 		to_chat(usr, SPAN_WARNING("No exportable objects were found near the sending beacon."))
 		return TRUE
-	if(!SSsupply.Export(sending, account, EnsureSelectedStation()))
+	if(!SSsupply.Export(sending, account, EnsureSelectedStation(), faction))
 		to_chat(usr, SPAN_WARNING("Export failed. The beacon may still be on cooldown."))
 	return TRUE
 
