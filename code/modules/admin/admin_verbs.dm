@@ -168,6 +168,9 @@ var/global/list/admin_verbs_server = list(
 	/datum/admins/proc/endnow,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
+	// [SIERRA-ADD]
+	/datum/admins/proc/toggleobserverjoin,
+	// [SIERRA-ADD-END]
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
 	/client/proc/cmd_admin_delete,		// delete an instance/object/mob/etc,
@@ -317,6 +320,9 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/endnow,
+	// [SIERRA-ADD]
+	/datum/admins/proc/toggleobserverjoin,
+	// [SIERRA-ADD-END]
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
