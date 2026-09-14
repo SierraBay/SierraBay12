@@ -305,3 +305,17 @@
 	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
 	icon_state = "elite_coat"
 	item_state = "elite_coat"
+
+/obj/item/clothing/suit/storage/punk_jacket
+	name = "classic leather jacket"
+	desc = "Legendary design, never getting old."
+	icon = 'maps/sierra/icons/obj/clothing/obj_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/mob/onmob/onmob_suit.dmi')
+	icon_state = "punk_jacket_clean"
+	item_state = "punk_jacket_clean"
+
+/obj/item/clothing/suit/storage/punk_jacket/edgy
+	name = "punk jacket"
+	desc = "Embroidered with colorful patches, insignias, spikes and chains. It also reeks sharply of sweat."
+	icon_state = "punk_jacket_edgy"
+	item_state = "punk_jacket_edgy"
