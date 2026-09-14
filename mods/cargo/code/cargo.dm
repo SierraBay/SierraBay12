@@ -1399,10 +1399,8 @@
 		to_chat(usr, SPAN_WARNING(accept_block))
 		return TRUE
 	if(!SSsupply.AcceptTradeContract(receiving, account, contract_id))
-		if(istype(contract_to_accept, /datum/trade_contract/caravan_rendezvous))
-			to_chat(usr, SPAN_WARNING("Market-intelligence briefing failed. Check source access and caravan availability."))
-		else
-			to_chat(usr, SPAN_WARNING("Contract acceptance failed. Check source stock and the receiving area."))
+		var/fail_msg = contract_to_accept ? contract_to_accept.GetAcceptFailureMessage() : "Contract acceptance failed. Check source stock and the receiving area."
+		to_chat(usr, SPAN_WARNING(fail_msg))
 	return TRUE
 
 /datum/computer_file/program/supply/proc/DeliverContract(contract_id)
@@ -1415,10 +1413,8 @@
 		to_chat(usr, SPAN_WARNING(deliver_block))
 		return TRUE
 	if(!SSsupply.DeliverTradeContract(sending, contract_id))
-		if(istype(contract_to_deliver, /datum/trade_contract/caravan_rendezvous))
-			to_chat(usr, SPAN_WARNING("Market-intelligence transmission failed. The caravan may have moved out of range or the beacon may be on cooldown."))
-		else
-			to_chat(usr, SPAN_WARNING("Contract delivery failed. The crate may be missing or the beacon may be on cooldown."))
+		var/fail_msg = contract_to_deliver ? contract_to_deliver.GetDeliverFailureMessage() : "Contract delivery failed. The crate may be missing or the beacon may be on cooldown."
+		to_chat(usr, SPAN_WARNING(fail_msg))
 	return TRUE
 
 /datum/computer_file/program/supply/proc/HandleContractTopic(list/href_list)

@@ -8,8 +8,8 @@
 
 /datum/trading_station
 	var/live_market_enabled = TRUE
-	var/list/live_market_state
-	var/list/live_market_modifiers
+	var/list/live_market_state = list()
+	var/list/live_market_modifiers = list()
 	var/live_market_demand_decay = 0.6
 	var/live_market_min_buy_multiplier = 0.75
 	var/live_market_max_buy_multiplier = 1.8
@@ -19,10 +19,12 @@
 	var/live_market_remote_quote_limit = 6
 	var/live_market_auto_events = TRUE
 
-/datum/trading_station/proc/OpenLiveMarketCategory(list/storage, category_name)
+/datum/trading_station/proc/OpenLiveMarketCategory(list/storage, category_name, autocreate = TRUE)
 	if(!islist(storage) || !istext(category_name))
 		return null
 	if(!islist(storage[category_name]))
+		if(!autocreate)
+			return null
 		storage[category_name] = list()
 	return storage[category_name]
 
@@ -65,7 +67,7 @@
 /datum/trading_station/proc/GetLiveMarketState(category_name, good_id, autocreate = FALSE)
 	if(!live_market_enabled || !istext(category_name) || !good_id)
 		return null
-	var/list/category_state = OpenLiveMarketCategory(live_market_state, category_name)
+	var/list/category_state = OpenLiveMarketCategory(live_market_state, category_name, autocreate)
 	if(!islist(category_state))
 		return null
 	var/list/commodity_state = category_state[good_id]
@@ -376,6 +378,32 @@
 	ApplyLiveMarketModifierStockEffects()
 	..()
 	RecordLiveMarketBaselines()
+
+/datum/trading_station/proc/DestroyLiveMarket()
+	if(islist(live_market_modifiers))
+		for(var/list/modifier as anything in live_market_modifiers)
+			if(islist(modifier))
+				modifier.Cut()
+		live_market_modifiers.Cut()
+		live_market_modifiers = null
+	if(islist(live_market_state))
+		for(var/category_name in live_market_state)
+			var/list/cat_state = live_market_state[category_name]
+			if(islist(cat_state))
+				for(var/good_id in cat_state)
+					var/list/comm_state = cat_state[good_id]
+					if(islist(comm_state))
+						var/list/tags = comm_state["tags"]
+						if(islist(tags))
+							tags.Cut()
+						comm_state.Cut()
+				cat_state.Cut()
+		live_market_state.Cut()
+		live_market_state = null
+
+/datum/trading_station/Destroy()
+	DestroyLiveMarket()
+	return ..()
 
 /datum/controller/subsystem/supply/proc/GetStationTradeBasePrice(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
 	. = GetBasicImportCost(good_ref, station, category_name)

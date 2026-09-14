@@ -6,11 +6,22 @@
 	var/list/trade_markup = list()
 	var/access_required = null
 
-/datum/trade_faction/proc/ModifyRelationsWith(target = null, change = FACTION_STATE_NEUTRAL)
-	if(istype(target, /datum/trade_faction))
-		var/datum/trade_faction/faction = target
-		target = faction.name
-	relationship[target] = change
+/datum/trade_faction/proc/ModifyRelationsWith(target, change = FACTION_STATE_NEUTRAL)
+	var/target_name = target
+	if(istype(target_name, /datum/trade_faction))
+		var/datum/trade_faction/target_faction = target_name
+		target_name = target_faction.name
+
+	if(!istext(target_name) || !target_name || target_name == name)
+		return FALSE
+
+	if(!isnum(change))
+		return FALSE
+
+	change = clamp(change, FACTION_STATE_WAR, FACTION_STATE_PROTECTORATE)
+	relationship ||= list()
+	relationship[target_name] = change
+	return TRUE
 
 /datum/trade_faction/independent
 	name = FACTION_INDEPENDENT

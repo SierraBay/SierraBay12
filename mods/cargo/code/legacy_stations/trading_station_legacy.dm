@@ -4,7 +4,7 @@
 	spawn_probability = 0
 	markup = 1.2
 	start_hidden = FALSE
-	var/legacy_station_group_type = null
+	legacy_station_group_type = null
 
 /datum/trading_station/legacy/operations
 	spawn_always = TRUE

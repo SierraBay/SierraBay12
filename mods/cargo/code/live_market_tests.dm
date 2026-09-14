@@ -299,6 +299,9 @@
 	var/datum/trading_station/station_b = new
 	var/fail_reason = null
 
+	station_a.live_market_auto_events = FALSE
+	station_b.live_market_auto_events = FALSE
+
 	station_a.InitSrc(null, TRUE)
 	station_b.InitSrc(null, TRUE)
 
@@ -306,10 +309,21 @@
 		fail_reason = "station_a and station_b share the same live_market_state list reference."
 	else if(station_a.live_market_modifiers == station_b.live_market_modifiers)
 		fail_reason = "station_a and station_b share the same live_market_modifiers list reference."
+	else if(length(station_a.live_market_modifiers) != 0 || length(station_b.live_market_modifiers) != 0)
+		fail_reason = "Stations initialized with unexpected modifiers despite auto_events disabled."
 	else
-		station_a.AddLiveMarketModifier("boom", 4)
-		if(length(station_b.live_market_modifiers) > 0)
+		var/list/mod_a = station_a.AddLiveMarketModifier("boom", 4)
+		if(!islist(mod_a) || !(mod_a in station_a.live_market_modifiers))
+			fail_reason = "Failed to add modifier to station_a."
+		else if(length(station_b.live_market_modifiers) > 0 || (mod_a in station_b.live_market_modifiers))
 			fail_reason = "Adding modifier to station_a contaminated station_b."
+		else
+			station_a.EnsureLiveMarketCommodity("Alpha", "pen", 50, 10)
+			station_a.AdjustLiveMarketDemand("Alpha", "pen", 2)
+			if(!station_a.HasLiveMarketCommodity("Alpha", "pen"))
+				fail_reason = "Failed to record market commodity state on station_a."
+			else if(station_b.HasLiveMarketCommodity("Alpha", "pen") || length(station_b.live_market_state) > 0)
+				fail_reason = "Updating market commodity state on station_a contaminated station_b."
 
 	qdel(station_a)
 	qdel(station_b)
@@ -318,6 +332,36 @@
 		fail(fail_reason)
 	else
 		pass("Stations maintain strictly isolated market state.")
+	return 1
+
+/datum/unit_test/cargo_market_auto_event_test
+	name = "CARGO MARKET: Auto events trigger and respect flag"
+
+/datum/unit_test/cargo_market_auto_event_test/start_test()
+	var/datum/trading_station/station = new
+	var/fail_reason = null
+
+	station.live_market_auto_events = FALSE
+	station.InitSrc(null, TRUE)
+	if(length(station.live_market_modifiers) > 0)
+		fail_reason = "Station generated auto events while live_market_auto_events was FALSE."
+	else
+		station.live_market_auto_events = TRUE
+		var/triggered = FALSE
+		for(var/i in 1 to 50)
+			station.EnsureLiveMarketActivity()
+			if(length(station.live_market_modifiers) > 0)
+				triggered = TRUE
+				break
+		if(!triggered)
+			fail_reason = "EnsureLiveMarketActivity() failed to roll any event after 50 attempts with prob(35)."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Auto events respect configuration and trigger successfully.")
 	return 1
 
 /datum/unit_test/cargo_market_single_demand_accounting_test
@@ -344,7 +388,8 @@
 		var/list/shop_list = list()
 		var/list/categories = list("Alpha" = list())
 		shop_list[station] = categories
-		categories["Alpha"][good_id] = 2
+		var/list/alpha_goods = categories["Alpha"]
+		alpha_goods[good_id] = 2
 
 		var/list/price_snapshot = SSsupply.BuildMarketSnapshot(shop_list, FACTION_INDEPENDENT)
 		var/initial_demand = station.GetLiveMarketDemandScore("Alpha", good_id)

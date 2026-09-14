@@ -395,6 +395,8 @@
 				"content" = list(
 					"category" = source_category_name,
 					"good_id" = source_good_id,
+					"destination_category" = destination_category_name,
+					"destination_good_id" = destination_good_id,
 					"item_path" = item_path,
 					"name" = source_station.GetGoodName(source_category_name, source_good_id),
 					"amount" = amount

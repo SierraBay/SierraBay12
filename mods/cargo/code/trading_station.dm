@@ -1,12 +1,3 @@
-/obj/overmap/trade_beacon
-	name = "trade beacon"
-	desc = "A long-range commercial beacon offering remote trade services."
-	scannable = TRUE
-	requires_contact = TRUE
-	instant_contact = TRUE
-	icon = 'mods/cargo/icons/trading_stations.dmi'
-	icon_state = "trade"
-
 /datum/trading_station
 	var/name
 	var/desc
@@ -34,6 +25,7 @@
 	var/hidden_inv_unlocked = FALSE
 	var/list/hidden_inventory = list()
 	var/list/legacy_supply_roots = list()
+	var/legacy_station_group_type = null
 	var/list/amounts_of_goods = list()
 	var/unique_good_count = 0
 	var/next_good_offer_id = 0
@@ -70,16 +62,25 @@
 	return SSsupply.GetFaction(faction)
 
 /datum/trading_station/proc/InitSrc(turf/station_loc = null, force_discovered = FALSE)
+	AssignStationIdentity()
+	AssembleInventory()
+	InitGoods()
+	UpdateTick()
+	SetupOvermapPlacement(station_loc, force_discovered)
+	RegisterStation()
+
+/datum/trading_station/proc/AssignStationIdentity()
 	if(name)
 		CRASH("[type] trade station had name set before InitSrc() was called!")
 
 	for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
 		name_pool.Remove(other_station.name)
-		if(!length(name_pool))
-			log_debug("Trade station name pool exhausted: [type]")
-			var/list/reset_pool = initial(name_pool)
-			name_pool = islist(reset_pool) ? reset_pool.Copy() : list()
-			break
+	if(!length(name_pool))
+		log_debug("Trade station name pool exhausted: [type]")
+		var/list/reset_pool = initial(name_pool)
+		name_pool = islist(reset_pool) ? reset_pool.Copy() : list()
+		for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
+			name_pool.Remove(other_station.name)
 
 	if(length(name_pool))
 		name = pick(name_pool)
@@ -88,26 +89,23 @@
 		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
 		desc = initial(desc) || "An automated merchant outpost."
 
-	live_market_state = list()
-	live_market_modifiers = list()
-
-	AssembleInventory()
-	InitGoods()
-	UpdateTick()
-
-	if(start_hidden)
-		start_hidden = !force_discovered
-
+	uid ||= "[type]_[random_id(type, 100, 999)]"
 	if(LAZYLEN(random_factions))
 		faction = pick(random_factions)
 
+/datum/trading_station/proc/SetupOvermapPlacement(turf/station_loc = null, force_discovered = FALSE)
+	if(start_hidden)
+		start_hidden = !force_discovered
+
 	if(!GLOB.using_map.use_overmap)
 		start_hidden = FALSE
-	else
-		var/turf/spawn_turf = ResolveOvermapSpawnLocation(station_loc)
-		if(istype(spawn_turf))
-			PlaceOvermap(spawn_turf.x, spawn_turf.y, spawn_turf.z)
+		return
 
+	var/turf/spawn_turf = ResolveOvermapSpawnLocation(station_loc)
+	if(istype(spawn_turf))
+		PlaceOvermap(spawn_turf.x, spawn_turf.y, spawn_turf.z)
+
+/datum/trading_station/proc/RegisterStation()
 	SSsupply.all_trading_stations += src
 	if(start_hidden)
 		SSsupply.hidden_trading_stations += src
@@ -156,16 +154,18 @@
 /datum/trading_station/proc/SampleOvermapSpawnCandidates(list/candidate_turfs, sample_size)
 	if(!islist(candidate_turfs) || !length(candidate_turfs) || !isnum(sample_size) || sample_size <= 0)
 		return candidate_turfs
+	if(length(candidate_turfs) <= sample_size)
+		return candidate_turfs.Copy()
 
-	var/list/sampled_candidates = list()
-	var/list/used_indices = list()
-	while(length(sampled_candidates) < sample_size && length(used_indices) < length(candidate_turfs))
-		var/sample_index = rand(1, length(candidate_turfs))
-		if(used_indices["[sample_index]"])
-			continue
-		used_indices["[sample_index]"] = TRUE
-		sampled_candidates += candidate_turfs[sample_index]
-	return sampled_candidates
+	var/list/pool = candidate_turfs.Copy()
+	var/list/sampled = list()
+	for(var/i in 1 to sample_size)
+		if(!length(pool))
+			break
+		var/picked = pick(pool)
+		pool -= picked
+		sampled += picked
+	return sampled
 
 /datum/trading_station/proc/GetOvermapSpawnCandidateTurfs(spawn_z)
 	if(!spawn_z)
@@ -367,43 +367,18 @@
 /datum/trading_station/proc/NormalizeInventory(list/target_inventory)
 	if(!islist(target_inventory))
 		return
-	for(var/category_name as anything in target_inventory)
-		if(!islist(category_name))
+	for(var/category_key in target_inventory.Copy())
+		if(!islist(category_key))
 			continue
-		var/list/category_packet = category_name
-		if(length(category_packet) < 2 || !("name" in category_packet))
+		var/list/category_packet = category_key
+		if(length(category_packet) < 2 || !category_packet["name"])
 			continue
 		var/new_category_name = category_packet["name"]
-		var/list/content = target_inventory[category_packet]
+		var/list/content = target_inventory[category_key]
 		if(!istext(new_category_name) || !islist(content))
 			continue
-		var/category_name_index = target_inventory.Find(category_packet)
-		target_inventory.Cut(category_name_index, category_name_index + 1)
-		target_inventory.Insert(category_name_index, new_category_name)
+		target_inventory.Remove(category_key)
 		target_inventory[new_category_name] = content
-
-/datum/trading_station/proc/BuildLegacyInventory()
-	var/list/root_types = legacy_supply_roots
-	if(!LAZYLEN(root_types) && ("legacy_station_group_type" in vars))
-		var/group_type = vars["legacy_station_group_type"]
-		if(ispath(group_type, /datum/legacy_station_group))
-			var/datum/legacy_station_group/group = new group_type
-			root_types = group.root_categories
-	if(!LAZYLEN(root_types))
-		return
-	for(var/root_type in root_types)
-		var/list/pack_map = GET_SINGLETON_SUBTYPE_MAP(root_type)
-		for(var/pack_type in pack_map)
-			if(pack_type == root_type)
-				continue
-			var/singleton/hierarchy/supply_pack/supply_pack = pack_map[pack_type]
-			if(!istype(supply_pack) || !length(supply_pack.contains) || !supply_pack.sec_available())
-				continue
-			var/item_count = GetLegacyPackItemCount(supply_pack)
-			var/category_name = GetLegacyPackCategoryName(supply_pack, root_type)
-			var/list/target_inventory = (supply_pack.hidden || supply_pack.contraband) ? hidden_inventory : inventory
-			for(var/item_path in supply_pack.contains)
-				RegisterLegacyPackItem(target_inventory, category_name, item_path, supply_pack, item_count)
 
 /datum/trading_station/proc/NormalizeGoodsRecords()
 	NormalizeGoodsRecordsFor(inventory)
@@ -447,115 +422,6 @@
 	if(!("price" in good_packet))
 		good_packet["price"] = null
 	return good_packet
-
-/datum/trading_station/proc/GetLegacyPackItemCount(singleton/hierarchy/supply_pack/supply_pack)
-	if(!istype(supply_pack))
-		return 1
-	if(isnum(supply_pack.num_contained) && supply_pack.num_contained > 0)
-		return supply_pack.num_contained
-	. = 0
-	for(var/item_path in supply_pack.contains)
-		. += max(1, supply_pack.contains[item_path])
-	return max(1, .)
-
-/datum/trading_station/proc/GetLegacyPackCategoryName(singleton/hierarchy/supply_pack/supply_pack, root_type)
-	var/root_name = GetLegacyRootName(root_type)
-	if(!istype(supply_pack) || !supply_pack.name)
-		return root_name
-	var/separator = findtext(supply_pack.name, " - ")
-	if(separator > 1)
-		return copytext(supply_pack.name, 1, separator)
-	return root_name
-
-/datum/trading_station/proc/GetLegacyRootName(root_type)
-	var/list/path_bits = splittext("[root_type]", "/")
-	if(!length(path_bits))
-		return "Legacy"
-	var/root_name = path_bits[length(path_bits)]
-	root_name = replacetext(root_name, "_", " ")
-	if(length(root_name) <= 1)
-		return uppertext(root_name)
-	return "[uppertext(copytext(root_name, 1, 2))][copytext(root_name, 2)]"
-
-/datum/trading_station/proc/GetLegacyGoodName(singleton/hierarchy/supply_pack/supply_pack, item_path, item_count)
-	if(istype(supply_pack) && length(supply_pack.contains) == 1 && supply_pack.name)
-		return supply_pack.name
-
-	var/specific_name = ResolveSpecificItemName(item_path)
-	if(specific_name)
-		return specific_name
-
-	if(istype(supply_pack) && item_count == 1 && supply_pack.name)
-		return supply_pack.name
-
-	var/atom/movable/item_type = item_path
-	return ispath(item_path, /atom/movable) ? initial(item_type.name) : null
-
-/datum/trading_station/proc/ResolveSpecificItemName(item_path)
-	if(!ispath(item_path, /atom/movable))
-		return null
-
-	if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
-		return ResolveCartridgeName(item_path)
-	if(ispath(item_path, /obj/item/seeds))
-		return ResolveSeedName(item_path)
-	if(ispath(item_path, /obj/item/ammobox))
-		return ResolveAmmoBoxName(item_path)
-	if(ispath(item_path, /obj/item/ammo_magazine))
-		return ResolveMagazineName(item_path)
-	return null
-
-/datum/trading_station/proc/ResolveCartridgeName(item_path)
-	var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
-	var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
-	if(ispath(reagent_type, /datum/reagent))
-		return "[initial(cartridge.name)] ([initial(reagent_type.name)])"
-	return null
-
-/datum/trading_station/proc/ResolveSeedName(item_path)
-	if(item_path == /obj/item/seeds/random)
-		return "packet of random seeds"
-	var/obj/item/seeds/seed_item = item_path
-	var/seed_key = initial(seed_item.seed_type)
-	if(!seed_key)
-		return null
-	var/datum/seed/seed_datum = SSplants?.seeds?[seed_key]
-	if(seed_datum?.seed_name && seed_datum?.seed_noun)
-		var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
-		return "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
-	return "packet of [seed_key] seeds"
-
-/datum/trading_station/proc/ResolveAmmoBoxName(item_path)
-	var/obj/item/ammobox/box_item = item_path
-	var/obj/item/ammo_casing/casing = initial(box_item.ammo_type)
-	if(!ispath(casing, /obj/item/ammo_casing))
-		return null
-	var/casing_desc = _get_ammo_casing_name(casing)
-	if(casing_desc)
-		return "[initial(box_item.name)] - [casing_desc]"
-	if(initial(casing.name))
-		return "[initial(casing.name)] box"
-	return null
-
-/datum/trading_station/proc/ResolveMagazineName(item_path)
-	var/obj/item/ammo_magazine/mag_item = item_path
-	var/list/labels = initial(mag_item.labels)
-	if(length(labels))
-		return "[initial(mag_item.name)] ([jointext(labels, ", ")])"
-	return null
-
-/datum/trading_station/proc/RegisterLegacyPackItem(list/target_inventory, category_name, item_path, singleton/hierarchy/supply_pack/supply_pack, item_count)
-	if(!islist(target_inventory) || !istext(category_name) || !istype(supply_pack) || !ispath(item_path, /atom/movable))
-		return
-	if(!islist(target_inventory[category_name]))
-		target_inventory[category_name] = list()
-	var/list/category = target_inventory[category_name]
-	var/legacy_cost = isnum(supply_pack.cost) ? supply_pack.cost * CARGO_POINT_TO_THALLER : get_value(item_path)
-	var/unit_price = max(1, round(legacy_cost / max(1, item_count)))
-	var/name_override = GetLegacyGoodName(supply_pack, item_path, item_count)
-	var/list/good_packet = GOODS_DATA(name_override, null, unit_price)
-	good_packet["item_path"] = item_path
-	category[GenerateGoodOfferId()] = good_packet
 
 /datum/trading_station/proc/InitGoods()
 	for(var/category_name in inventory)
@@ -620,45 +486,44 @@
 
 /datum/trading_station/proc/GoodsTick()
 	wealth += base_income
+	var/budget = unique_good_count ? round(wealth / unique_good_count) : 0
+	var/list/restock_candidates = CollectRestockCandidates(budget)
+	ApplyRestockCandidates(restock_candidates)
+	TryUnlockHiddenInv()
 
-	var/starting_balance = wealth
-	var/budget = unique_good_count ? round(starting_balance / unique_good_count) : 0
-	var/list/restock_candidates = list()
-
+/datum/trading_station/proc/CollectRestockCandidates(budget)
+	var/list/candidates = list()
 	for(var/category_name in inventory)
 		var/list/category = inventory[category_name]
 		if(!islist(category))
 			continue
 		for(var/good_id in category)
 			var/current_amount = GetGoodAmount(category_name, good_id)
-			var/chance_to_restock = current_amount < 5 ? 100 : current_amount > 20 ? 0 : 15
-			if(rand(1, 100) > chance_to_restock)
+			var/chance = current_amount < 5 ? 100 : (current_amount > 20 ? 0 : 15)
+			if(!prob(chance))
 				continue
 			var/cost = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name) / 2))
 			var/amount_to_add = budget ? max(1, rand(1, max(1, round(budget / cost)))) : 1
-			var/list/content = list(
+			candidates += list(list(
 				"cat" = category_name,
 				"good_id" = good_id,
 				"cost" = cost,
 				"to_add" = amount_to_add,
 				"current_amt" = current_amount
-			)
-			restock_candidates += list(content)
+			))
+	return candidates
 
+/datum/trading_station/proc/ApplyRestockCandidates(list/restock_candidates)
 	for(var/i in 1 to 20)
 		if(!length(restock_candidates) || !wealth)
 			break
-
 		var/idx = rand(1, length(restock_candidates))
 		var/list/good_packet = restock_candidates[idx]
 		restock_candidates.Cut(idx, idx + 1)
 		var/total_cost = good_packet["cost"] * good_packet["to_add"]
-
 		if(total_cost < wealth)
 			SetGoodAmount(good_packet["cat"], good_packet["good_id"], good_packet["to_add"] + good_packet["current_amt"])
 			SubtractFromWealth(total_cost)
-
-	TryUnlockHiddenInv()
 
 /datum/trading_station/proc/GetGoodPacket(category_name, good_ref)
 	if(isnum(category_name))
@@ -685,13 +550,8 @@
 	var/item_path = GetGoodPath(category_name, good_ref)
 	var/resolved_name = null
 	if(ispath(item_path, /atom/movable))
-		var/atom/movable/temp_item = new item_path
-		if(istype(temp_item))
-			resolved_name = temp_item.name
-			qdel(temp_item)
-		if(!resolved_name)
-			var/atom/movable/item_type = item_path
-			resolved_name = initial(item_type.name)
+		var/atom/movable/item_type = item_path
+		resolved_name = initial(item_type.name)
 	if(islist(good_packet) && resolved_name)
 		good_packet["resolved_name"] = resolved_name
 	return resolved_name || "[good_ref]"
@@ -766,25 +626,9 @@
 				goods.Cut()
 		hidden_inventory.Cut()
 	if(islist(amounts_of_goods))
+		for(var/category_name in amounts_of_goods)
+			var/list/goods = amounts_of_goods[category_name]
+			if(islist(goods))
+				goods.Cut()
 		amounts_of_goods.Cut()
-	if(islist(live_market_modifiers))
-		for(var/list/modifier as anything in live_market_modifiers)
-			if(islist(modifier))
-				modifier.Cut()
-		live_market_modifiers.Cut()
-		live_market_modifiers = null
-	if(islist(live_market_state))
-		for(var/category_name in live_market_state)
-			var/list/cat_state = live_market_state[category_name]
-			if(islist(cat_state))
-				for(var/good_id in cat_state)
-					var/list/comm_state = cat_state[good_id]
-					if(islist(comm_state))
-						var/list/tags = comm_state["tags"]
-						if(islist(tags))
-							tags.Cut()
-						comm_state.Cut()
-				cat_state.Cut()
-		live_market_state.Cut()
-		live_market_state = null
 	return ..()
