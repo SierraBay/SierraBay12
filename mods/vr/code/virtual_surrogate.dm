@@ -57,7 +57,7 @@
 	revive()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		usr.client.prefs.copy_to(H) // Redo hair, augments, and limbs after rejuvenating
+		usr.client.prefs.copy_to(H, apply_persist = FALSE) // Redo hair, augments, and limbs after rejuvenating
 		H.set_nutrition(400)
 		H.set_hydration(400)
 

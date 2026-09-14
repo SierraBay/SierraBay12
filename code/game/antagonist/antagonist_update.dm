@@ -15,6 +15,18 @@
 		// [/SIERRA-EDIT]
 		if(holder) qdel(holder)
 	player.original = player.current
+
+	// Send opt-in maluses on antagonists to the hell dimension
+	if((flags & ANTAG_OVERRIDE_MOB) && ishuman(player.current))
+		var/mob/living/carbon/human/current_humanoid = player.current
+		for(var/singleton/trait/malus/malus in GET_SINGLETON_SUBTYPE_LIST(/singleton/trait/malus))
+			if(!malus.selectable)
+				continue
+			if(current_humanoid.HasTrait(malus.type))
+				current_humanoid.RemoveTrait(malus.type)
+		current_humanoid.stop_allergy()
+		current_humanoid.active_allergies.Cut()
+
 	if(!preserve_appearance && (flags & ANTAG_SET_APPEARANCE))
 		spawn(3)
 			var/mob/living/carbon/human/H = player.current

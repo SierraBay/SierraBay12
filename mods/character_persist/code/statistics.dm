@@ -39,12 +39,41 @@ var/global/character_persist_roundend_done = FALSE
 	return replacetext(text, "\n", "<br>")
 
 
+/proc/character_persist_split_med_record(text)
+	text = character_persist_pencode_to_text(text)
+	if (!text)
+		return list("", "")
+	var/cutpoint = character_persist_med_cutpoint(text)
+	if (!cutpoint)
+		return list(trim_left(trim_right(text)), "")
+	return list(
+		trim_left(trim_right(copytext(text, 1, cutpoint))),
+		trim_left(trim_right(copytext(text, cutpoint)))
+	)
+
+
+/proc/character_persist_format_stats_med(text)
+	var/list/parts = character_persist_split_med_record(text)
+	var/player_text = parts[1]
+	var/auto_text = parts[2]
+	var/list/blocks = list()
+	if (auto_text)
+		blocks += "<div style='margin-bottom:8px'><i>Автозапись:</i><br>[character_persist_format_med_html(auto_text)]</div>"
+	if (player_text)
+		blocks += "<details><summary style='cursor:pointer'><i>Медзапись</i></summary><div style='margin-top:6px'>[character_persist_format_med_html(player_text)]</div></details>"
+	if (!length(blocks))
+		return "<i>Запись здравоохранения пуста.</i>"
+	return jointext(blocks, "")
+
+
 /proc/character_persist_roundend_process()
 	if (character_persist_roundend_done)
 		return
 	character_persist_roundend_done = TRUE
 	for (var/mob/living/carbon/human/H in GLOB.human_mobs)
 		if (QDELETED(H))
+			continue
+		if (character_persist_is_virtual_body(H))
 			continue
 		var/ckey = character_persist_ckey_of(H)
 		var/slot = character_persist_slot_of(H)
@@ -69,24 +98,25 @@ var/global/character_persist_roundend_done = FALSE
 	if (!length(character_persist_round_stats))
 		return "<i>В этом раунде никто не использовал персистентность.</i>"
 	var/list/lines = list()
-	var/first = TRUE
+	var/index = 0
 	for (var/key in character_persist_round_stats)
 		var/list/entry = character_persist_round_stats[key]
 		if (!islist(entry))
 			continue
-		if (!first)
-			lines += "<hr>"
-		first = FALSE
+		index += 1
 		var/char_name = html_encode("[entry["name"] || "Неизвестный"]")
 		var/shifts = character_persist_num(entry["shifts"])
-		lines += "<b>[char_name]</b> — пережито смен: [shifts]"
+		var/list/card = list()
+		card += "<div style='border:1px solid #5a5a5a;margin:0 0 14px 0;padding:10px 12px'>"
+		card += "<div style='border-bottom:1px solid #444;padding-bottom:6px;margin-bottom:8px'><b>[index]. [char_name]</b><br>Пережито смен: [shifts]</div>"
 		if (entry["outcome"] == "dead")
-			lines += "<br><i>[html_encode("[entry["farewell"] || character_persist_farewell(entry["name"], shifts, "death")]")]</i>"
-			continue
-		if (entry["outcome"] == "abandoned")
-			lines += "<br><i>[char_name] покинул Сьерру. Состояние тела не сохранено.</i>"
-			continue
-		lines += "<br><i>Запись здравоохранения:</i><br>[character_persist_format_med_html(entry["med_record"])]"
+			card += "<i>[html_encode("[entry["farewell"] || character_persist_farewell(entry["name"], shifts, "death")]")]</i>"
+		else if (entry["outcome"] == "abandoned")
+			card += "<i>[char_name] покинул Сьерру. Состояние тела не сохранено.</i>"
+		else
+			card += character_persist_format_stats_med(entry["med_record"])
+		card += "</div>"
+		lines += jointext(card, null)
 	return jointext(lines, null)
 
 

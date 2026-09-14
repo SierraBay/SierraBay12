@@ -303,7 +303,7 @@
 
 	update_setup_window(usr)
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE, apply_persist = TRUE) //[SIERRA-ADD]--> apply_persist = TRUE)
 	// Sanitizing rather than saving as someone might still be editing when copy_to occurs.
 	player_setup.sanitize_setup()
 	character.set_species(species)
@@ -463,7 +463,7 @@
 		character.set_nutrition(rand(140,360))
 		character.set_hydration(rand(140,360))
 
-	if (!is_preview_copy)
+	if (!is_preview_copy && apply_persist)		//[SIERRA-ADD]--> apply_persist)
 		apply_character_persist(character)
 
 /// Overridden by mods/character_persist. Applies a saved body overlay after copy_to().

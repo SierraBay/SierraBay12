@@ -27,7 +27,7 @@
 	var/image/O = image(icon = 'icons/obj/structures/furniture.dmi', icon_state = "w_overlay", dir = src.dir)
 	O.layer = ABOVE_HUMAN_LAYER
 	AddOverlays(O)
-	if(buckled_mob)
+	if(buckled_mob && buckled_mob.dir != dir)
 		buckled_mob.set_dir(dir)
 
 /obj/structure/bed/chair/wheelchair/relaymove(mob/user, direction)

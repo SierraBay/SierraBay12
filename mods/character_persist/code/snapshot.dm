@@ -320,8 +320,14 @@
 	H.update_icons()
 
 
+/proc/character_persist_is_virtual_body(mob/living/carbon/human/H)
+	return istype(H) && has_extension(H, /datum/extension/virtual_surrogate)
+
+
 /proc/character_persist_try_save(mob/living/carbon/human/H, reason)
 	if (!istype(H) || H.stat == DEAD)
+		return FALSE
+	if (character_persist_is_virtual_body(H))
 		return FALSE
 	if (character_persist_is_offstation_antag(H))
 		return FALSE
@@ -375,6 +381,8 @@
 
 
 /proc/character_persist_try_clear(mob/living/carbon/human/H, reason)
+	if (character_persist_is_virtual_body(H))
+		return
 	if (character_persist_is_offstation_antag(H))
 		return
 	var/ckey = character_persist_ckey_of(H)
