@@ -489,6 +489,27 @@
 /obj/item/clothing/suit/color/storage/neo_jacket/female
 	icon_state = "neokitsch_jacket_f"
 
+/obj/item/clothing/suit/storage/toggle/color/blazer
+	name = "blazer"
+	desc = "A charming jacket."
+	icon = 'maps/sierra/icons/obj/clothing/suitjacket.dmi'
+	icon_state = "blazer"
+	item_state = "blazer_su"
+	item_icons = list(slot_wear_suit_str = 'maps/sierra/icons/obj/clothing/suitjacket.dmi')
+	blood_overlay_type = "coatblood"
+	body_parts_covered = UPPER_TORSO|ARMS
+	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)
+
+/obj/item/clothing/suit/storage/toggle/color/blazer/update_clothing_icon()
+	item_state = "[icon_state]_su"
+	..()
+
+/obj/item/clothing/suit/storage/toggle/color/blazer/long
+	name = "long blazer"
+	desc = "A charming long jacket."
+	icon_state = "longblazer"
+	item_state = "longblazer_su"
+
 
 /obj/item/clothing/suit/storage/toggle/new_suit/eng_bomber //отсюда искать remission
 	name = "engineer jacket"
