@@ -327,7 +327,7 @@ SUBSYSTEM_DEF(supply)
 				var/list/L = SP.access // access var is a plain var, we need a list
 				A.req_access = L.Copy()
 
-		var/list/spawned = SP.spawn_contents(A)
+		var/list/spawned = SP.spawn_contents(A, SO)		// [SIERRA-EDIT] -	, SO)
 		if(slip)
 			for(var/atom/content in spawned)
 				slip.info += "<li>[content.name]</li>" //add the item to the manifest
@@ -353,3 +353,7 @@ SUBSYSTEM_DEF(supply)
 	var/comment = null
 	var/reason = null
 	var/orderedrank = null //used for supply console printing
+	// [SIERRA-ADD] - IPC_MODS
+	var/ordered_item
+	var/ordered_item_name
+	// [/SIERRA-ADD]
