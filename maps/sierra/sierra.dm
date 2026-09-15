@@ -80,12 +80,14 @@
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
+	#include "items/clothing/scgec_solgov.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"
 	#include "job/access.dm"
 	#include "job/jobs.dm"
 	#include "job/outfits.dm"
+	#include "job/outfits_scgec.dm"
 	#include "job/infinity.dm"
 
 	#include "job/jobs_cargo.dm"

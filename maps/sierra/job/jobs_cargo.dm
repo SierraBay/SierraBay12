@@ -1,4 +1,4 @@
-/datum/job/qm
+﻿/datum/job/qm
 	title = "Quartermaster"
 	department = "Снабжения"
 	department_flag = SUP
@@ -54,8 +54,17 @@
 	ideal_character_age = 24
 	economic_power = 3
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/supply/tech/scgec_officer
+	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
 		SKILL_FINANCE     = SKILL_BASIC,
@@ -101,8 +110,17 @@
 	max_skill = list(   SKILL_PILOT       = SKILL_MAX)
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/supply/prospector/scgec_officer
+	)
 
 	access = list(access_mining, access_mining_office, access_mining_station,
 						access_expedition_shuttle, access_guppy, access_hangar, access_guppy_helm, access_cargo)
@@ -124,8 +142,17 @@
 	ideal_character_age = 20
 	selection_color = "#515151"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/supply/assistant/scgec_officer
+	)
 	min_skill = list(
 		SKILL_BUREAUCRACY = SKILL_BASIC,
 		SKILL_FINANCE     = SKILL_BASIC,

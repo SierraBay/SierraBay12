@@ -165,10 +165,65 @@
 /obj/machinery/uniform_vendor/proc/populate_uniforms(singleton/hierarchy/mil_uniform/user_outfit)
 	var/list/res = list()
 
-	res["Uniform Heads"] = user_outfit.dress_hat
-	res["Uniform Suits"] = user_outfit.dress_under
-	res["Uniform Shoes"] = user_outfit.dress_shoes
-	res["Uniform Extras"] = user_outfit.dress_extra
+	var/list/pt = list()
+	if(user_outfit.pt_under)
+		pt += user_outfit.pt_under
+	if(user_outfit.pt_shoes)
+		pt += user_outfit.pt_shoes
+	if(length(pt))
+		res["PT"] = pt
+
+	var/list/utility = list()
+	if(user_outfit.utility_under)
+		utility += user_outfit.utility_under
+	if(user_outfit.utility_shoes)
+		utility += user_outfit.utility_shoes
+	if(user_outfit.utility_hat)
+		utility += user_outfit.utility_hat
+	if(length(utility))
+		res["Utility"] = utility
+	if(user_outfit.utility_extra)
+		res["Utility Extras"] = user_outfit.utility_extra
+
+	var/list/service = list()
+	if(user_outfit.service_under)
+		service += user_outfit.service_under
+	if(user_outfit.service_skirt)
+		service += user_outfit.service_skirt
+	if(user_outfit.service_over)
+		service += user_outfit.service_over
+	if(user_outfit.service_shoes)
+		service += user_outfit.service_shoes
+	if(user_outfit.service_heels)
+		service += user_outfit.service_heels
+	if(user_outfit.service_hat)
+		service += user_outfit.service_hat
+	if(user_outfit.service_gloves)
+		service += user_outfit.service_gloves
+	if(length(service))
+		res["Service"] = service
+	if(user_outfit.service_extra)
+		res["Service Extras"] = user_outfit.service_extra
+
+	var/list/dress = list()
+	if(user_outfit.dress_under)
+		dress += user_outfit.dress_under
+	if(user_outfit.dress_skirt)
+		dress += user_outfit.dress_skirt
+	if(user_outfit.dress_over)
+		dress += user_outfit.dress_over
+	if(user_outfit.dress_shoes)
+		dress += user_outfit.dress_shoes
+	if(user_outfit.dress_heels)
+		dress += user_outfit.dress_heels
+	if(user_outfit.dress_hat)
+		dress += user_outfit.dress_hat
+	if(user_outfit.dress_gloves)
+		dress += user_outfit.dress_gloves
+	if(length(dress))
+		res["Dress"] = dress
+	if(user_outfit.dress_extra)
+		res["Dress Extras"] = user_outfit.dress_extra
 
 	return res
 

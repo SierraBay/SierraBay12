@@ -1,4 +1,4 @@
-/datum/job/exploration_leader
+﻿/datum/job/exploration_leader
 	title = "Exploration Leader"
 	department = "Экспедиционный"
 	department_flag = EXP
@@ -80,13 +80,18 @@
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer
 	allowed_branches = list(
 		/datum/mil_branch/employee,
-		/datum/mil_branch/contractor
+		/datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer/scgec_enlisted
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/probation_employee,
-		/datum/mil_rank/civ/probation_contractor
+		/datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/explorer/scgec_officer
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -138,13 +143,18 @@
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot
 	allowed_branches = list(
 		/datum/mil_branch/employee,
-		/datum/mil_branch/contractor
+		/datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot/scgec_enlisted
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/probation_employee,
-		/datum/mil_rank/civ/probation_contractor
+		/datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/pilot/scgec_officer
 	)
 	min_skill = list(
 		SKILL_EVA     = SKILL_BASIC,
@@ -188,8 +198,17 @@
 	supervisors = "Лидеру Экспедиции и Директору Исследований"
 	selection_color = "#68099e"
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/medic/scgec_officer
+	)
 
 	minimal_player_age = 8
 
@@ -254,13 +273,18 @@
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer
 	allowed_branches = list(
 		/datum/mil_branch/employee,
-		/datum/mil_branch/contractor
+		/datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer/scgec_enlisted
 	)
 	allowed_ranks = list(
 		/datum/mil_rank/civ/nt,
 		/datum/mil_rank/civ/contractor,
 		/datum/mil_rank/civ/probation_employee,
-		/datum/mil_rank/civ/probation_contractor
+		/datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/exploration/engineer/scgec_officer
 	)
 	min_skill = list(
 		SKILL_EVA          = SKILL_BASIC,
