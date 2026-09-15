@@ -1,7 +1,3 @@
-/datum/gear/uniform/utility
-	display_name = "utility uniform"
-	path = /obj/item/clothing/under/solgov/utility
-
 /datum/gear/uniform/roboticist_skirt
 	allowed_roles = list(/datum/job/roboticist)
 
