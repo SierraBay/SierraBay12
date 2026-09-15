@@ -1,4 +1,4 @@
-﻿/datum/job/senior_scientist
+/datum/job/senior_scientist
 	title = "Senior Researcher"
 	department = "Научный"
 	department_flag = SCI

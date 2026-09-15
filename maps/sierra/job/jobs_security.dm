@@ -1,4 +1,4 @@
-﻿/datum/job/warden
+/datum/job/warden
 	title = "Warden"
 	department = "Охранный"
 	department_flag = SEC

@@ -1,4 +1,4 @@
-﻿/datum/job/senior_doctor
+/datum/job/senior_doctor
 	title = "Surgeon"
 	supervisors = "Главному врачу"
 	department = "Медицинский"

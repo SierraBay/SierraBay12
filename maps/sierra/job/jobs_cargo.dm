@@ -1,4 +1,4 @@
-﻿/datum/job/qm
+/datum/job/qm
 	title = "Quartermaster"
 	department = "Снабжения"
 	department_flag = SUP

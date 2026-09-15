@@ -1,4 +1,4 @@
-﻿/datum/job/exploration_leader
+/datum/job/exploration_leader
 	title = "Exploration Leader"
 	department = "Экспедиционный"
 	department_flag = EXP

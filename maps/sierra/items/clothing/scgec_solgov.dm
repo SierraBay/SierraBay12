@@ -38,28 +38,6 @@
 	icon_state = "duty_gloves_sup"
 	item_state = "duty_gloves_sup"
 
-/obj/item/clothing/head/beret/solgov
-	name = "peacekeeper beret"
-	desc = "A beret in Sol Central Government colors. For peacekeepers that are more inclined towards style than safety."
-	icon_state = "beret_lightblue"
-	icon = 'maps/torch/icons/obj/obj_head_solgov.dmi'
-	item_icons = list(slot_head_str = 'maps/torch/icons/mob/onmob_head_solgov.dmi')
-	sprite_sheets = list(
-		SPECIES_UNATHI = 'maps/torch/icons/mob/unathi/onmob_head_solgov_unathi.dmi'
-	)
-
-/obj/item/clothing/head/beret/solgov/equipped(mob/user, slot)
-	..()
-	switch(slot)
-		if(slot_belt)
-			sprite_sheets = list()
-		if(slot_head)
-			sprite_sheets = list(
-				SPECIES_VOX = 'icons/mob/species/vox/onmob_head_vox.dmi',
-				SPECIES_UNATHI = 'maps/torch/icons/mob/unathi/onmob_head_solgov_unathi.dmi',
-				SPECIES_NABBER = 'icons/mob/species/nabber/onmob_head_gas.dmi'
-				)
-	return
 
 /obj/item/clothing/head/beret/solgov/expedition
 	name = "expeditionary beret"
