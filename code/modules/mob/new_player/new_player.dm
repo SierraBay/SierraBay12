@@ -345,7 +345,7 @@
 	SSticker.mode.handle_latejoin(character)
 	GLOB.universe.OnPlayerLatejoin(character)
 	spawnpoint.after_join(character)
-	if(job.create_record)
+	if(should_create_crew_record(character))
 		if(character.mind.assigned_role != "Robot")
 			CreateModularRecord(character)
 			SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
@@ -538,11 +538,17 @@
 		chosen_species = GLOB.species_by_name[client.prefs.species]
 
 	if(!spawn_turf)
-		var/datum/job/job = SSjobs.get_by_title(mind.assigned_role)
-		if(!job)
-			job = SSjobs.get_by_title(GLOB.using_map.default_assistant_title)
-		var/datum/spawnpoint/spawnpoint = job.get_spawnpoint(client, client.prefs.ranks[job.title])
-		spawn_turf = pick(spawnpoint.turfs)
+		var/datum/job/job = mind?.assigned_job
+		if(istype(job, /datum/job/submap))
+			var/datum/job/submap/sjob = job
+			if(LAZYLEN(sjob.spawnpoints))
+				spawn_turf = get_turf(pick(sjob.spawnpoints))
+		if(!spawn_turf)
+			job = SSjobs.get_by_title(mind.assigned_role)
+			if(!job)
+				job = SSjobs.get_by_title(GLOB.using_map.default_assistant_title)
+			var/datum/spawnpoint/spawnpoint = job.get_spawnpoint(client, client.prefs.ranks[job.title])
+			spawn_turf = pick(spawnpoint.turfs)
 
 	if(chosen_species)
 		if(!check_species_allowed(chosen_species))
