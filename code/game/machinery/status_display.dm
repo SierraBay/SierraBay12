@@ -267,6 +267,8 @@
 	return "[pad_left(num2text((timeleft / 60) % 60), 2, "0")]:[pad_left(num2text(timeleft % 60), 2, "0")]"
 
 /obj/machinery/status_display/proc/get_supply_shuttle_timer()
+	if(SSsupply && SSsupply.trade_network_active)
+		return "NET"
 	var/datum/shuttle/autodock/ferry/supply/shuttle = SSsupply.shuttle
 	if (!shuttle)
 		return "Error"
