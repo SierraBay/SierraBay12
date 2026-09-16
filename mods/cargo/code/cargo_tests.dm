@@ -340,3 +340,175 @@
 	else
 		pass("Smart placement filters direct and adjacent hazard tiles.")
 	return 1
+
+/datum/unit_test/cargo_export_science_disk_test
+	name = "CARGO EXPORT: Research report disks are valued and sold"
+
+/datum/unit_test/cargo_export_science_disk_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	if(!safe_turf)
+		skip("Safe turf unavailable.")
+		return 1
+
+	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
+	var/datum/money_account/account = new
+	account.owner_name = "Cargo Test Account"
+	account.account_number = 888101
+	account.money = 0
+	all_money_accounts += account
+
+	var/obj/structure/closet/crate/crate = new(safe_turf)
+	var/obj/item/disk/research_report/report = new(crate)
+	report.cargo_value = 300
+
+	var/expected_crate_val = initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER + 300
+	var/calc_val = SSsupply.GetExportValue(crate)
+	var/fail_reason = null
+
+	if(calc_val != expected_crate_val)
+		fail_reason = "GetExportValue returned [calc_val], expected [expected_crate_val]."
+	else if(!SSsupply.Export(beacon, account))
+		fail_reason = "Export() failed for crate containing research report disk."
+	else if(account.money != expected_crate_val)
+		fail_reason = "Cargo account credited [account.money], expected [expected_crate_val]."
+
+	all_money_accounts -= account
+	qdel(account)
+	qdel(beacon)
+	if(crate)
+		qdel(crate)
+	if(report)
+		qdel(report)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Research report disks are correctly valued and sold.")
+	return 1
+
+/datum/unit_test/cargo_export_virology_dish_test
+	name = "CARGO EXPORT: Virology dishes are sold and recorded uniquely"
+
+/datum/unit_test/cargo_export_virology_dish_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	if(!safe_turf)
+		skip("Safe turf unavailable.")
+		return 1
+
+	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
+	var/datum/money_account/account = new
+	account.owner_name = "Medical Cargo Account"
+	account.account_number = 888102
+	account.money = 0
+	all_money_accounts += account
+
+	var/test_strain_id = 998877
+	SSsupply.sold_virus_strains -= test_strain_id
+
+	var/obj/structure/closet/crate/crate = new(safe_turf)
+	var/obj/item/virusdish/dish1 = new(crate)
+	dish1.analysed = TRUE
+	dish1.virus2 = new /datum/disease2/disease
+	dish1.virus2.uniqueID = test_strain_id
+
+	var/obj/item/virusdish/dish2 = new(crate)
+	dish2.analysed = TRUE
+	dish2.virus2 = new /datum/disease2/disease
+	dish2.virus2.uniqueID = test_strain_id
+
+	var/expected_val = initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER + (5 * CARGO_POINT_TO_THALLER)
+	var/calc_val = SSsupply.GetExportValue(crate)
+	var/fail_reason = null
+
+	if(calc_val != expected_val)
+		fail_reason = "Duplicate strain in crate was counted multiple times. Expected [expected_val], got [calc_val]."
+	else if(!SSsupply.Export(beacon, account))
+		fail_reason = "Export() failed for crate containing virology dishes."
+	else if(account.money != expected_val)
+		fail_reason = "Account payout was [account.money], expected [expected_val]."
+	else if(!(test_strain_id in SSsupply.sold_virus_strains))
+		fail_reason = "Strain ID [test_strain_id] was not recorded in SSsupply.sold_virus_strains."
+	else
+		var/obj/item/virusdish/dish3 = new(safe_turf)
+		dish3.analysed = TRUE
+		dish3.virus2 = new /datum/disease2/disease
+		dish3.virus2.uniqueID = test_strain_id
+		var/second_val = SSsupply.GetExportValue(dish3)
+		if(second_val != 0)
+			fail_reason = "Previously sold virus strain was valued at [second_val] instead of 0."
+		qdel(dish3)
+
+	all_money_accounts -= account
+	qdel(account)
+	qdel(beacon)
+	if(crate)
+		qdel(crate)
+	if(dish1)
+		qdel(dish1)
+	if(dish2)
+		qdel(dish2)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Virology dishes sold uniquely and recorded in sold_virus_strains.")
+	return 1
+
+/datum/unit_test/cargo_export_rnd_invoice_redirection_test
+	name = "CARGO EXPORT: RnD invoice redirects crate earnings to science account"
+
+/datum/unit_test/cargo_export_rnd_invoice_redirection_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	if(!safe_turf)
+		skip("Safe turf unavailable.")
+		return 1
+
+	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
+	var/datum/money_account/cargo_account = new
+	cargo_account.owner_name = "Cargo Dept"
+	cargo_account.account_number = 888103
+	cargo_account.money = 0
+	all_money_accounts += cargo_account
+
+	var/datum/money_account/science_account = new
+	science_account.owner_name = "Science Dept"
+	science_account.account_number = 888104
+	science_account.money = 0
+	all_money_accounts += science_account
+
+	var/obj/structure/closet/crate/crate = new(safe_turf)
+	var/obj/item/paper/manifest/rnd_invoice/invoice = new(crate)
+	invoice.target_account_number = science_account.account_number
+	invoice.stamped = list("Science")
+	invoice.is_copy = FALSE
+
+	var/obj/item/disk/research_report/report = new(crate)
+	report.cargo_value = 450
+
+	var/expected_crate_val = initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER + 450
+	var/fail_reason = null
+
+	if(!SSsupply.Export(beacon, cargo_account))
+		fail_reason = "Export() failed for crate with R&D invoice."
+	else if(cargo_account.money != 0)
+		fail_reason = "Cargo account received [cargo_account.money] instead of 0."
+	else if(science_account.money != expected_crate_val)
+		fail_reason = "Science account received [science_account.money], expected [expected_crate_val]."
+
+	all_money_accounts -= cargo_account
+	all_money_accounts -= science_account
+	qdel(cargo_account)
+	qdel(science_account)
+	qdel(beacon)
+	if(crate)
+		qdel(crate)
+	if(report)
+		qdel(report)
+	if(invoice)
+		qdel(invoice)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("R&D invoice correctly redirected all crate earnings to science account.")
+	return 1

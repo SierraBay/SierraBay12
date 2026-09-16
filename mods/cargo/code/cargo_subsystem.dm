@@ -54,12 +54,14 @@
 		"crate" = "Legacy crate export",
 		"gep" = "Good explorer points",
 		"anomaly" = "Analyzed anomalies",
+		"research_reports" = "Research data compilations",
 		"virology_antibodies" = "Uploaded antibody data",
 		"virology_dishes" = "Exported virus dishes",
 		"animal" = "Captured exotic fauna",
 		"artefacts" = "Exported artefacts",
 		"total" = "Total legacy income"
 	)
+	sold_virus_strains = list()
 
 	for(var/faction_type in (typesof(/datum/trade_faction) - /datum/trade_faction))
 		var/datum/trade_faction/trade_faction = new faction_type
@@ -973,6 +975,56 @@
 	TrackLiveMarketSales(shop_list)
 	return TRUE
 
+/datum/controller/subsystem/supply/proc/FindRnDInvoice(obj/structure/closet/crate/crate)
+	if(!istype(crate))
+		return null
+	for(var/obj/item/paper/manifest/rnd_invoice/invoice in crate)
+		if(!invoice.is_copy && LAZYLEN(invoice.stamped) && invoice.target_account_number)
+			return invoice
+	return null
+
+/datum/controller/subsystem/supply/proc/ExportCrateItem(atom/movable/item, datum/trading_station/target_station = null, seller_faction = null)
+	if(istype(target_station))
+		var/list/match = FindCommodityForExport(item, target_station)
+		if(islist(match))
+			ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
+			qdel(item)
+			return TRUE
+
+	if(istype(item, /obj/item/disk/research_report))
+		var/obj/item/disk/research_report/report = item
+		if(report.cargo_value > 0)
+			qdel(report)
+			return TRUE
+
+	if(istype(item, /obj/item/virusdish))
+		var/obj/item/virusdish/dish = item
+		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+			if(!(dish.virus2.uniqueID in sold_virus_strains))
+				sold_virus_strains += dish.virus2.uniqueID
+		qdel(dish)
+		return TRUE
+
+	if(istype(item, /obj/item/paper/manifest))
+		var/obj/item/paper/manifest/slip = item
+		if(!slip.is_copy && LAZYLEN(slip.stamped))
+			qdel(slip)
+			return TRUE
+
+	if(istype(item, /obj/item/stack/material) || istype(item, /obj/item/disk/survey) || istype(item, /obj/item/artefact) || istype(item, /obj/item/collector) || get_value(item) > 0)
+		if(istype(item, /obj/item/artefact))
+			var/obj/item/artefact/A = item
+			if(SSanom)
+				SSanom.earned_cargo_points += A.cargo_price
+		else if(istype(item, /obj/item/collector))
+			var/obj/item/collector/C = item
+			if(SSanom && C.stored_artefact)
+				SSanom.earned_cargo_points += C.stored_artefact.cargo_price
+		qdel(item)
+		return TRUE
+
+	return FALSE
+
 /datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null, seller_faction = null)
 	if(QDELETED(sender_beacon) || !istype(money_account))
 		return FALSE
@@ -987,6 +1039,7 @@
 	var/invoice_contents_info = ""
 	var/export_count = 0
 	var/cost = 0
+	var/total_export_value = 0
 	var/list/exportables = list()
 	var/list/rejected = list()
 	var/list/sold_counts = list()
@@ -1015,52 +1068,83 @@
 
 	for(var/atom/movable/exported as anything in exportables)
 		var/export_value = exportables[exported]
-		if(istype(target_station) && istype(exported, /obj/structure/closet))
+		if(istype(exported, /obj/structure/closet))
 			var/obj/structure/closet/crate = exported
+			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(crate)
+			var/target_account_number = rnd_slip ? rnd_slip.target_account_number : null
+			var/crate_contents_info = ""
 			var/crate_sold_any = FALSE
 			var/list/all_contents = crate.GetAllContents(3, FALSE)
 			for(var/atom/movable/item as anything in all_contents)
-				if(item == crate || istype(item, /obj/structure/closet))
+				if(item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item))
 					continue
-				if(!CanExportAtom(item))
+				if(item == rnd_slip)
 					continue
-				var/list/match = FindCommodityForExport(item, target_station)
-				if(islist(match))
-					invoice_contents_info += "<li>[item.name]</li>"
-					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
-					qdel(item)
+				var/item_name = item.name
+				if(ExportCrateItem(item, target_station, seller_faction))
+					crate_contents_info += "<li>[item_name]</li>"
 					crate_sold_any = TRUE
 					++export_count
 					if(export_count > 100)
 						break
+
 			if(crate_sold_any)
-				invoice_contents_info += "<li>[crate.name] (packaging)</li>"
+				crate_contents_info += "<li>[crate.name] (packaging)</li>"
 			else
-				invoice_contents_info += "<li>[crate.name]</li>"
+				crate_contents_info += "<li>[crate.name]</li>"
+
+			QDEL_NULL(rnd_slip)
 			crate.dump_contents()
 			qdel(crate)
-			cost += export_value
 			++export_count
+			total_export_value += export_value
+
+			if(target_account_number && export_value > 0)
+				var/datum/money_account/target = get_account(target_account_number)
+				if(target)
+					target.deposit(export_value, "R&D Invoice sale", "Trade Network")
+					CreateLogEntry("Export", target.owner_name, crate_contents_info, export_value, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
+				else
+					cost += export_value
+					invoice_contents_info += crate_contents_info
+			else
+				cost += export_value
+				invoice_contents_info += crate_contents_info
 		else
 			invoice_contents_info += "<li>[exported.name]</li>"
 			cost += export_value
+			total_export_value += export_value
 			if(istype(target_station))
 				var/list/match = FindCommodityForExport(exported, target_station)
 				if(islist(match))
 					ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
+			if(istype(exported, /obj/item/virusdish))
+				var/obj/item/virusdish/dish = exported
+				if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+					if(!(dish.virus2.uniqueID in sold_virus_strains))
+						sold_virus_strains += dish.virus2.uniqueID
+			if(istype(exported, /obj/item/artefact))
+				var/obj/item/artefact/A = exported
+				if(SSanom)
+					SSanom.earned_cargo_points += A.cargo_price
+			else if(istype(exported, /obj/item/collector))
+				var/obj/item/collector/C = exported
+				if(SSanom && C.stored_artefact)
+					SSanom.earned_cargo_points += C.stored_artefact.cargo_price
 			qdel(exported)
 			++export_count
 
 		if(export_count > 100)
 			break
 
-	if(!cost)
+	if(!total_export_value)
 		return FALSE
 	if(istype(target_station))
-		target_station.SubtractFromWealth(cost)
-	money_account.deposit(cost, "Trade Network Export", "Trade Network")
-	if(invoice_contents_info)
-		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
+		target_station.SubtractFromWealth(total_export_value)
+	if(cost > 0)
+		money_account.deposit(cost, "Trade Network Export", "Trade Network")
+		if(invoice_contents_info)
+			CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 	return TRUE
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null, faction_name = null, station_name = null)
@@ -1150,15 +1234,58 @@
 		to_chat(human, SPAN_DANGER("The export beacon rejects biological matter with a painful electric shock!"))
 		human.apply_damage(15, DAMAGE_BURN)
 
+/datum/controller/subsystem/supply/proc/GetCrateItemLegacyValue(atom/movable/item, find_manifest = FALSE, list/seen_strains = null)
+	if(!istype(item) || !CanExportAtom(item))
+		return 0
+	if(istype(item, /obj/item/paper/manifest/rnd_invoice))
+		return 0
+	if(istype(item, /obj/item/disk/research_report))
+		var/obj/item/disk/research_report/report = item
+		return max(0, report.cargo_value)
+	if(istype(item, /obj/item/virusdish))
+		var/obj/item/virusdish/dish = item
+		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+			var/strain_id = dish.virus2.uniqueID
+			if(!(strain_id in sold_virus_strains) && (!islist(seen_strains) || !(strain_id in seen_strains)))
+				if(islist(seen_strains))
+					seen_strains += strain_id
+				return 5 * CARGO_POINT_TO_THALLER
+		return 0
+	if(find_manifest && istype(item, /obj/item/paper/manifest))
+		var/obj/item/paper/manifest/slip = item
+		if(!slip.is_copy && LAZYLEN(slip.stamped))
+			return points_per_slip * CARGO_POINT_TO_THALLER
+		return 0
+	if(istype(item, /obj/item/stack/material))
+		var/obj/item/stack/material/material_stack = item
+		var/val = 0
+		if(material_stack.material && material_stack.material.sale_price > 0)
+			val += material_stack.get_amount() * material_stack.material.sale_price * material_stack.matter_multiplier * CARGO_POINT_TO_THALLER
+		if(material_stack.reinf_material && material_stack.reinf_material.sale_price > 0)
+			val += material_stack.get_amount() * material_stack.reinf_material.sale_price * material_stack.matter_multiplier * 0.5 * CARGO_POINT_TO_THALLER
+		return val
+	if(istype(item, /obj/item/disk/survey))
+		var/obj/item/disk/survey/survey_disk = item
+		return round(survey_disk.Value() * 0.05) * CARGO_POINT_TO_THALLER
+	if(istype(item, /obj/item/artefact))
+		var/obj/item/artefact/artefact = item
+		return artefact.cargo_price * CARGO_POINT_TO_THALLER
+	if(istype(item, /obj/item/collector))
+		var/obj/item/collector/collector = item
+		if(collector.stored_artefact)
+			return collector.stored_artefact.cargo_price * CARGO_POINT_TO_THALLER
+		return 0
+	return round(get_value(item))
+
 /datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null)
 	. = 0
 	if(!istype(crate) || !istype(target_station))
 		return 0
 	var/list/all_contents = crate.GetAllContents(3, FALSE)
+	var/find_manifest = TRUE
+	var/list/seen_strains = list()
 	for(var/atom/movable/item as anything in all_contents)
-		if(item == crate || istype(item, /obj/structure/closet))
-			continue
-		if(!CanExportAtom(item))
+		if(item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item))
 			continue
 		var/list/match = FindCommodityForExport(item, target_station)
 		if(islist(match))
@@ -1169,6 +1296,12 @@
 			if(islist(sold_counts))
 				sold_counts[good_id] = offset + amount
 			. += item_val
+			continue
+		var/legacy_val = GetCrateItemLegacyValue(item, find_manifest, seen_strains)
+		if(legacy_val > 0)
+			if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
+				find_manifest = FALSE
+			. += legacy_val
 	. = round(.)
 
 /datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null, seller_faction = null, list/sold_counts = null)
@@ -1195,40 +1328,29 @@
 	if(istype(exported, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = exported
 		return round(GetLegacyCrateExportValue(crate))
+	if(istype(exported, /obj/item/disk/research_report))
+		var/obj/item/disk/research_report/report = exported
+		return max(0, report.cargo_value)
+	if(istype(exported, /obj/item/virusdish))
+		var/obj/item/virusdish/dish = exported
+		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID && !(dish.virus2.uniqueID in sold_virus_strains))
+			return 5 * CARGO_POINT_TO_THALLER
+		return 0
 	return round(get_value(exported))
 
 /datum/controller/subsystem/supply/proc/GetLegacyCrateExportValue(obj/structure/closet/crate/crate)
 	. = 0
 	if(!istype(crate))
-		return
+		return 0
 	. += initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER
 	var/find_manifest = TRUE
-	for(var/atom/movable/item as anything in crate)
-		if(find_manifest && istype(item, /obj/item/paper/manifest))
-			var/obj/item/paper/manifest/slip = item
-			if(!slip.is_copy && slip.stamped && length(slip.stamped))
-				. += points_per_slip * CARGO_POINT_TO_THALLER
+	var/list/seen_strains = list()
+	for(var/atom/movable/item as anything in crate.GetAllContents(3, FALSE))
+		if(item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item))
+			continue
+		var/legacy_val = GetCrateItemLegacyValue(item, find_manifest, seen_strains)
+		if(legacy_val > 0)
+			if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
 				find_manifest = FALSE
-			continue
-		if(istype(item, /obj/item/stack/material))
-			var/obj/item/stack/material/material_stack = item
-			if(material_stack.material && material_stack.material.sale_price > 0)
-				. += material_stack.get_amount() * material_stack.material.sale_price * material_stack.matter_multiplier * CARGO_POINT_TO_THALLER
-			if(material_stack.reinf_material && material_stack.reinf_material.sale_price > 0)
-				. += material_stack.get_amount() * material_stack.reinf_material.sale_price * material_stack.matter_multiplier * 0.5 * CARGO_POINT_TO_THALLER
-			continue
-		if(istype(item, /obj/item/disk/survey))
-			var/obj/item/disk/survey/survey_disk = item
-			. += round(survey_disk.Value() * 0.05) * CARGO_POINT_TO_THALLER
-			continue
-		if(istype(item, /obj/item/artefact))
-			var/obj/item/artefact/artefact = item
-			. += artefact.cargo_price * CARGO_POINT_TO_THALLER
-			continue
-		if(istype(item, /obj/item/collector))
-			var/obj/item/collector/collector = item
-			if(collector.stored_artefact)
-				. += collector.stored_artefact.cargo_price * CARGO_POINT_TO_THALLER
-			continue
-		if(CanExportAtom(item))
-			. += get_value(item)
+			. += legacy_val
+	. = round(.)

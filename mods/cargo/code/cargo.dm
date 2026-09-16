@@ -705,19 +705,32 @@
 	var/list/grouped_sub = list()
 	var/list/sub_items = list()
 	var/contents_total = 0
+	var/find_manifest = TRUE
+	var/list/seen_strains = list()
 
 	for(var/atom/movable/item as anything in crate.GetAllContents(3, FALSE))
 		if(item == crate || istype(item, /obj/structure/closet) || !SSsupply.CanExportAtom(item))
 			continue
+		var/item_val = 0
+		var/amount = 1
 		var/list/match = SSsupply.FindCommodityForExport(item, target_station)
-		if(!islist(match))
-			continue
-		var/good_id = match["good_id"]
-		var/amount = max(1, match["amount"])
-		var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
-		var/item_val = SSsupply.GetStationSellPrice(good_id, target_station, faction, match["category"], amount, offset)
-		if(islist(sold_counts))
-			sold_counts[good_id] = offset + amount
+		if(islist(match))
+			var/good_id = match["good_id"]
+			amount = max(1, match["amount"])
+			var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
+			item_val = SSsupply.GetStationSellPrice(good_id, target_station, faction, match["category"], amount, offset)
+			if(islist(sold_counts))
+				sold_counts[good_id] = offset + amount
+		else
+			item_val = SSsupply.GetCrateItemLegacyValue(item, find_manifest, seen_strains)
+			if(!item_val)
+				continue
+			if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
+				find_manifest = FALSE
+			if(isstack(item))
+				var/obj/item/stack/S = item
+				amount = S.get_amount()
+
 		var/sub_name = item.name
 		if(!grouped_sub[sub_name])
 			grouped_sub[sub_name] = list(
@@ -749,9 +762,11 @@
 			"value" = base_crate_val
 		)))
 
+	var/obj/item/paper/manifest/rnd_invoice/rnd_slip = SSsupply.FindRnDInvoice(crate)
+	var/crate_display_name = rnd_slip ? "[crate.name] (R&D #[rnd_slip.target_account_number])" : crate.name
 	var/total_crate_val = round(base_crate_val + contents_total, 0.01)
 	return list(
-		"name" = crate.name,
+		"name" = crate_display_name,
 		"amount" = 1,
 		"unit_value" = total_crate_val,
 		"value" = total_crate_val,
