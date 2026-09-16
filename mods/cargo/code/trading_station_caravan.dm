@@ -26,37 +26,68 @@
 		"FTV Drift Hopper" = "A swift bulk runner connecting independent outposts outside core shipping lanes.",
 		"FTV Silver Horizon" = "A luxury and consumer provisions merchant vessel cruising between planetary outposts."
 	)
-	var/list/caravan_group_types = list(
-		/datum/legacy_station_group/operations,
-		/datum/legacy_station_group/engineering,
-		/datum/legacy_station_group/materials,
-		/datum/legacy_station_group/medicine,
-		/datum/legacy_station_group/science,
-		/datum/legacy_station_group/service,
-		/datum/legacy_station_group/civilian
+	var/list/caravan_station_types = list(
+		/datum/trading_station/operations,
+		/datum/trading_station/engineering,
+		/datum/trading_station/materials,
+		/datum/trading_station/medicine,
+		/datum/trading_station/science,
+		/datum/trading_station/service,
+		/datum/trading_station/civilian,
+		/datum/trading_station/eva,
+		/datum/trading_station/atmospherics
 	)
 	var/min_groups = 2
 	var/max_groups = 3
 
 /datum/trading_station/caravan/InitSrc(turf/station_loc = null, force_discovered = FALSE)
 	uid = "trade_caravan_[random_id(type, 1000, 9999)]"
-	if(!length(legacy_supply_roots))
-		BuildCaravanSupplyRoots()
 	return ..(station_loc, force_discovered)
 
-/datum/trading_station/caravan/proc/BuildCaravanSupplyRoots()
-	legacy_supply_roots = list()
-	var/list/group_pool = caravan_group_types.Copy()
-	var/groups_to_pick = rand(min_groups, max_groups)
-	for(var/i = 1 to groups_to_pick)
-		if(!length(group_pool))
+/datum/trading_station/caravan/AssembleInventory()
+	BuildCaravanInventory()
+	return ..()
+
+/datum/trading_station/caravan/proc/BuildCaravanInventory()
+	inventory = list()
+	hidden_inventory = list()
+	var/list/available_stations = caravan_station_types.Copy()
+	var/stations_to_sample = clamp(rand(min_groups, max_groups), 1, length(available_stations))
+	for(var/i in 1 to stations_to_sample)
+		if(!length(available_stations))
 			break
-		var/group_type = pick(group_pool)
-		group_pool -= group_type
-		var/datum/legacy_station_group/group = new group_type
-		for(var/root_type in group.root_categories)
-			if(!(root_type in legacy_supply_roots))
-				legacy_supply_roots += root_type
+		var/chosen_station_type = pick(available_stations)
+		available_stations -= chosen_station_type
+		var/datum/trading_station/temp_station = new chosen_station_type(FALSE)
+		if(!istype(temp_station))
+			continue
+		temp_station.AssembleInventory()
+		for(var/category_name in temp_station.inventory)
+			var/list/source_goods = temp_station.inventory[category_name]
+			if(!islist(source_goods) || !length(source_goods))
+				continue
+			var/list/caravan_goods = inventory[category_name]
+			if(!islist(caravan_goods))
+				caravan_goods = list()
+				inventory[category_name] = caravan_goods
+			var/list/candidate_keys = source_goods.Copy()
+			var/items_to_pick = min(length(candidate_keys), rand(2, 5))
+			for(var/j in 1 to items_to_pick)
+				var/picked_key = pick(candidate_keys)
+				candidate_keys -= picked_key
+				caravan_goods[picked_key] = source_goods[picked_key]
+		if(length(temp_station.hidden_inventory) && prob(50))
+			for(var/hidden_cat in temp_station.hidden_inventory)
+				var/list/hidden_source = temp_station.hidden_inventory[hidden_cat]
+				if(!islist(hidden_source) || !length(hidden_source))
+					continue
+				var/list/caravan_hidden = hidden_inventory[hidden_cat]
+				if(!islist(caravan_hidden))
+					caravan_hidden = list()
+					hidden_inventory[hidden_cat] = caravan_hidden
+				var/picked_hidden_key = pick(hidden_source)
+				caravan_hidden[picked_hidden_key] = hidden_source[picked_hidden_key]
+		qdel(temp_station)
 
 /datum/trading_station/caravan/proc/GetCaravanRouteCandidates()
 	var/list/result = list()

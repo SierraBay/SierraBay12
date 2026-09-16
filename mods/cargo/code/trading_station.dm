@@ -24,8 +24,6 @@
 	var/list/inventory = list()
 	var/hidden_inv_unlocked = FALSE
 	var/list/hidden_inventory = list()
-	var/list/legacy_supply_roots = list()
-	var/legacy_station_group_type = null
 	var/list/amounts_of_goods = list()
 	var/unique_good_count = 0
 	var/next_good_offer_id = 0
@@ -366,7 +364,6 @@
 		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
 
 /datum/trading_station/proc/AssembleInventory()
-	BuildLegacyInventory()
 	NormalizeInventory(inventory)
 	NormalizeInventory(hidden_inventory)
 	NormalizeGoodsRecords()
@@ -522,7 +519,7 @@
 
 /datum/trading_station/proc/ApplyRestockCandidates(list/restock_candidates)
 	for(var/i in 1 to 20)
-		if(!length(restock_candidates) || !wealth)
+		if(!length(restock_candidates) || wealth <= 0)
 			break
 		var/idx = rand(1, length(restock_candidates))
 		var/list/good_packet = restock_candidates[idx]
@@ -558,7 +555,26 @@
 	var/resolved_name = null
 	if(ispath(item_path, /atom/movable))
 		var/atom/movable/item_type = item_path
-		resolved_name = initial(item_type.name)
+		if(ispath(item_path, /obj/item/seeds) && item_path != /obj/item/seeds && item_path != /obj/item/seeds/random)
+			var/obj/item/seeds/seed_item = item_path
+			var/seed_key = initial(seed_item.seed_type)
+			if(seed_key)
+				if(!isnull(SSplants?.seeds) && SSplants.seeds[seed_key])
+					var/datum/seed/seed_datum = SSplants.seeds[seed_key]
+					if(seed_datum.seed_name && seed_datum.seed_noun)
+						var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
+						resolved_name = "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
+					else
+						resolved_name = "packet of [seed_key] seeds"
+				else
+					resolved_name = "packet of [seed_key] seeds"
+		else if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
+			var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
+			var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
+			if(ispath(reagent_type, /datum/reagent))
+				resolved_name = "[initial(cartridge.name)] ([initial(reagent_type.name)])"
+		if(!resolved_name)
+			resolved_name = initial(item_type.name)
 	if(islist(good_packet) && resolved_name)
 		good_packet["resolved_name"] = resolved_name
 	return resolved_name || "[good_ref]"

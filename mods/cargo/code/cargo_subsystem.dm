@@ -358,32 +358,57 @@
 			if(!ispath(item_path, /atom/movable))
 				continue
 
-			var/list/destination_match = FindStationCommodityByPath(destination_station, item_path)
-			if(!islist(destination_match))
-				continue
-
-			var/destination_category_name = destination_match["category"]
-			var/destination_good_id = destination_match["good_id"]
 			var/source_unit_cost = GetStationRestockCost(source_good_id, source_station, source_category_name)
-			var/destination_sell_snapshot = GetStationSellPrice(destination_good_id, destination_station, destination_category_name)
-			if(source_unit_cost < 1 || destination_sell_snapshot < 1)
+			if(source_unit_cost < 1)
 				continue
 
-			var/destination_shortage = max(0, destination_station.GetLiveMarketStockPressure(destination_category_name, destination_good_id))
-			var/destination_demand = max(0, destination_station.GetLiveMarketDemandScore(destination_category_name, destination_good_id))
+			var/list/destination_match = FindStationCommodityByPath(destination_station, item_path)
+			var/is_shared = islist(destination_match)
+
+			var/destination_category_name = null
+			var/destination_good_id = null
+			var/destination_sell_snapshot = 0
+			var/destination_shortage = 0
+			var/destination_demand = 0
 			var/source_surplus = max(0, -source_station.GetLiveMarketStockPressure(source_category_name, source_good_id))
-			var/spread_ratio = destination_sell_snapshot / max(1, source_unit_cost)
-			if(destination_shortage < 0.2 && destination_demand < 0.25 && spread_ratio < 1.2)
-				continue
-
-			var/score = (destination_shortage * 4) + (destination_demand * 2) + (max(0, spread_ratio - 1) * 2) + source_surplus + min(route_distance / 10, 1)
+			var/spread_ratio = 1.0
+			var/market_reason = "procurement"
+			var/score = 0
 			var/desired_amount = max(1, round(target_value / source_unit_cost))
 			var/amount = 0
-			if(destination_shortage > 0)
-				var/shortage_units = max(1, GetTradeContractShortageUnits(destination_station, destination_category_name, destination_good_id))
-				amount = min(source_available, desired_amount, shortage_units)
+
+			if(is_shared)
+				destination_category_name = destination_match["category"]
+				destination_good_id = destination_match["good_id"]
+				destination_sell_snapshot = GetStationSellPrice(destination_good_id, destination_station, destination_category_name)
+				if(destination_sell_snapshot < 1)
+					continue
+
+				destination_shortage = max(0, destination_station.GetLiveMarketStockPressure(destination_category_name, destination_good_id))
+				destination_demand = max(0, destination_station.GetLiveMarketDemandScore(destination_category_name, destination_good_id))
+				spread_ratio = destination_sell_snapshot / max(1, source_unit_cost)
+				if(destination_shortage < 0.2 && destination_demand < 0.25 && spread_ratio < 1.2)
+					continue
+
+				market_reason = GetTradeContractMarketReason(destination_shortage, destination_demand, spread_ratio)
+				// Shared arbitrage has high baseline priority so it always outranks generic procurement
+				score = 3.0 + (destination_shortage * 4) + (destination_demand * 2) + (max(0, spread_ratio - 1) * 2) + source_surplus + min(route_distance / 10, 1)
+
+				if(destination_shortage > 0)
+					var/shortage_units = max(1, GetTradeContractShortageUnits(destination_station, destination_category_name, destination_good_id))
+					amount = min(source_available, desired_amount, shortage_units)
+				else
+					amount = min(source_available, desired_amount)
 			else
+				market_reason = (source_surplus >= 0.2) ? "surplus_export" : "procurement"
+				destination_sell_snapshot = round(source_unit_cost * 1.35)
 				amount = min(source_available, desired_amount)
+				var/base_val_candidate = source_unit_cost * amount
+				var/value_fit = max(0, 1 - (abs(base_val_candidate - target_value) / max(target_value, 1)))
+				var/diversity_salt = ((length(destination_station.name) * 7) + (length(source_good_id) * 13) + (trade_contract_id * 11)) % 23 / 100
+				// Unmatched freight score remains in range [0.3, 1.9], strictly below valid shared arbitrage (>= 3.0)
+				score = 0.3 + (source_surplus * 0.6) + (value_fit * 0.3) + min(route_distance / 30, 0.3) + diversity_salt
+
 			if(amount < 1)
 				continue
 
@@ -398,7 +423,7 @@
 
 			var/list/candidate = list(
 				"score" = score,
-				"market_reason" = GetTradeContractMarketReason(destination_shortage, destination_demand, spread_ratio),
+				"market_reason" = market_reason,
 				"source_category" = source_category_name,
 				"source_good_id" = source_good_id,
 				"destination_category" = destination_category_name,
@@ -434,7 +459,7 @@
 	for(var/datum/trading_station/candidate_destination as anything in visible_trading_stations)
 		if(candidate_destination == source_station || !candidate_destination.supports_contracts)
 			continue
-		var/route_distance = GetTradeDistance(source_station.overmap_object, candidate_destination)
+		var/route_distance = GetTradeDistance(source_station.overmap_object || source_station, candidate_destination)
 		if(!isnum(route_distance) || route_distance < min_trade_contract_distance)
 			continue
 		var/list/candidate = BuildTradeContractCandidate(source_station, candidate_destination, route_distance)
@@ -846,9 +871,6 @@
 	var/base_cost = order["cost"]
 	var/total_cost = base_cost + order["fee"]
 	var/is_requestor_master = (master_account == requesting_account)
-
-	if(master_account.money < base_cost)
-		return FALSE
 	if(!is_requestor_master && requesting_account.money < total_cost)
 		return FALSE
 
@@ -862,6 +884,13 @@
 			order["processing"] = FALSE
 			order["status"] = "pending"
 			return FALSE
+
+	if(master_account.money < base_cost)
+		if(transferred)
+			master_account.transfer(requesting_account, total_cost, "Trade Network Order Refund")
+		order["processing"] = FALSE
+		order["status"] = "pending"
+		return FALSE
 
 	var/list/price_snapshot = order["price_snapshot"]
 	if(!Buy(beacon, master_account, shopping_list, !is_requestor_master, requesting_account.owner_name, buyer_faction, price_snapshot))

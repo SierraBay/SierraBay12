@@ -1,6 +1,7 @@
-#define SUPPLY_ORDER_TAB_GOODS  "goods"
-#define SUPPLY_ORDER_TAB_CART   "cart"
-#define SUPPLY_ORDER_TAB_ORDERS "orders"
+#define SUPPLY_ORDER_TAB_GOODS   "goods"
+#define SUPPLY_ORDER_TAB_CART    "cart"
+#define SUPPLY_ORDER_TAB_ORDERS  "orders"
+#define SUPPLY_ORDER_TAB_ACCOUNT "account"
 
 var/global/list/cargo_item_icon_cache = list()
 
@@ -30,12 +31,16 @@ var/global/list/cargo_item_icon_cache = list()
 	var/datum/money_account/account
 	var/authenticated_via_card = FALSE
 	var/list/shopping_list = list()
+	var/list/saved_shopping_lists = list()
+	var/saved_cart_id = 0
 	var/datum/trading_station/station
 	var/chosen_category
 	var/current_order
 	var/order_cooldown_until = 0
 	var/goods_quantity_target
+	var/cart_form_mode
 	var/order_reason = ""
+	var/orders_filter = "all"
 	var/trade_catalog_view_distance = 6
 
 /datum/computer_file/program/supply_order/New()
@@ -63,6 +68,11 @@ var/global/list/cargo_item_icon_cache = list()
 	if(shopping_list)
 		ClearShopList(shopping_list)
 		shopping_list = null
+	if(saved_shopping_lists)
+		for(var/name in saved_shopping_lists)
+			ClearShopList(saved_shopping_lists[name])
+		saved_shopping_lists.Cut()
+		saved_shopping_lists = null
 	return ..()
 
 /datum/computer_file/program/supply_order/proc/ClearShopList(list/target_list)
@@ -94,6 +104,45 @@ var/global/list/cargo_item_icon_cache = list()
 		if(length(category_copy))
 			copied[target_station] = category_copy
 	return copied
+
+/datum/computer_file/program/supply_order/proc/SaveShopList(name, list/shop_list = null)
+	var/list/source = islist(shop_list) ? shop_list : shopping_list
+	var/list/copy = CopyShopList(source)
+	if(!length(copy))
+		return FALSE
+	var/list_name = name ? name : "Preset #[++saved_cart_id]"
+	if(list_name in saved_shopping_lists)
+		ClearShopList(saved_shopping_lists[list_name])
+	saved_shopping_lists[list_name] = copy
+	return TRUE
+
+/datum/computer_file/program/supply_order/proc/LoadShopList(name)
+	if(!(name in saved_shopping_lists))
+		return null
+	return CopyShopList(saved_shopping_lists[name])
+
+/datum/computer_file/program/supply_order/proc/DeleteShopList(name)
+	if(name in saved_shopping_lists)
+		ClearShopList(saved_shopping_lists[name])
+		saved_shopping_lists -= name
+
+/datum/computer_file/program/supply_order/proc/SerializeSavedCarts()
+	var/list/result = list()
+	if(!islist(saved_shopping_lists))
+		return result
+	for(var/name in saved_shopping_lists)
+		var/list/cart = saved_shopping_lists[name]
+		if(!islist(cart))
+			continue
+		var/count = SSsupply.CollectCountsFrom(cart)
+		var/subtotal = SSsupply.CollectPriceForList(cart, faction)
+		var/total = subtotal + round(subtotal * SSsupply.handling_fee, 0.01)
+		result.Add(list(list(
+			"name" = name,
+			"count" = count,
+			"total" = round(total, 0.01)
+		)))
+	return result
 
 /datum/computer_file/program/supply_order/proc/OpenShopList(datum/trading_station/target_station = station, target_category = chosen_category)
 	if(!istype(target_station) || !target_category)
@@ -315,28 +364,25 @@ var/global/list/cargo_item_icon_cache = list()
 	var/obj/item/stock_parts/computer/card_slot/card_slot = computer ? computer.get_component(PART_CARD) : null
 	return istype(card_slot) ? card_slot.stored_card : null
 
+/datum/computer_file/program/supply_order/proc/GetAvailableIdCard(mob/user)
+	var/obj/item/card/id/id_card = GetInsertedIdCard()
+	if(istype(id_card))
+		return id_card
+	if(istype(user))
+		id_card = user.GetIdCard()
+		if(istype(id_card))
+			return id_card
+	return null
+
 /datum/computer_file/program/supply_order/proc/CheckAccountValidity()
 	if(!account)
 		return
 	if(QDELETED(account) || account.suspended)
 		account = null
 		authenticated_via_card = FALSE
-		return
-	if(authenticated_via_card)
-		var/obj/item/card/id/id_card = GetInsertedIdCard()
-		if(!istype(id_card) || id_card.associated_account_number != account.account_number)
-			account = null
-			authenticated_via_card = FALSE
-			return
-	else if(account.account_type != ACCOUNT_TYPE_PERSONAL)
-		var/obj/item/card/id/id_card = GetInsertedIdCard()
-		if(!istype(id_card) || id_card.associated_account_number != account.account_number)
-			account = null
-			authenticated_via_card = FALSE
-			return
 
 /datum/computer_file/program/supply_order/proc/PromptLinkAccount(mob/user)
-	var/obj/item/card/id/id_card = GetInsertedIdCard()
+	var/obj/item/card/id/id_card = GetAvailableIdCard(user)
 	var/default_number = id_card ? id_card.associated_account_number : null
 	var/account_number = input(user, "Enter account number.", "Account Link", default_number) as num|null
 	if(!account_number)
@@ -356,7 +402,7 @@ var/global/list/cargo_item_icon_cache = list()
 		to_chat(user, SPAN_WARNING("Public ordering terminals only allow linking personal accounts without physical ID card verification."))
 		return TRUE
 	if(linked_account.security_level == 0 && !card_check)
-		to_chat(user, SPAN_WARNING("Accounts with level 0 security require a matching physical ID card to be inserted."))
+		to_chat(user, SPAN_WARNING("Accounts with level 0 security require a matching physical ID card to be verified."))
 		return TRUE
 	account = linked_account
 	authenticated_via_card = card_check ? TRUE : FALSE
@@ -364,32 +410,41 @@ var/global/list/cargo_item_icon_cache = list()
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/LinkInsertedIdAccount(mob/user)
-	var/obj/item/card/id/id_card = GetInsertedIdCard()
+	var/obj/item/card/id/id_card = GetAvailableIdCard(user)
 	if(!istype(id_card))
-		to_chat(user, SPAN_WARNING("Insert an ID card first."))
+		to_chat(user, SPAN_WARNING("Insert or equip an ID card first."))
 		return TRUE
 	if(!id_card.associated_account_number)
 		to_chat(user, SPAN_WARNING("This ID card is not linked to any bank account."))
 		return TRUE
-	var/account_pin = input(user, "Enter the PIN for account #[id_card.associated_account_number].", "ID Account Link") as num|null
-	if(!account_pin)
+	var/datum/money_account/target_account = get_account(id_card.associated_account_number)
+	if(!target_account)
+		to_chat(user, SPAN_WARNING("Unable to locate bank account #[id_card.associated_account_number]."))
 		return TRUE
+	if(target_account.suspended)
+		to_chat(user, SPAN_WARNING("Unable to link account: account is suspended."))
+		return TRUE
+	var/account_pin = 0
+	if(target_account.security_level > 0)
+		account_pin = input(user, "Enter PIN for account #[id_card.associated_account_number]:", "Account Verification") as num|null
+		if(!account_pin)
+			return TRUE
 	var/datum/money_account/linked_account = attempt_account_access(id_card.associated_account_number, account_pin, 2)
 	if(!linked_account)
-		to_chat(user, SPAN_WARNING("Unable to link the ID-linked account: access denied."))
-		return TRUE
-	if(linked_account.suspended)
-		to_chat(user, SPAN_WARNING("Unable to link account: account is suspended."))
+		to_chat(user, SPAN_WARNING("Unable to link account: access denied."))
 		return TRUE
 	account = linked_account
 	authenticated_via_card = TRUE
 	to_chat(user, SPAN_NOTICE("Account #[account.account_number] linked successfully."))
 	return TRUE
 
-/datum/computer_file/program/supply_order/proc/UnlinkAccount()
+/datum/computer_file/program/supply_order/proc/UnlinkAccount(mob/user)
 	account = null
 	authenticated_via_card = FALSE
-	to_chat(usr, SPAN_NOTICE("Account unlinked."))
+	if(user)
+		to_chat(user, SPAN_NOTICE("Account unlinked."))
+	else if(usr)
+		to_chat(usr, SPAN_NOTICE("Account unlinked."))
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/GetCartTotals()
@@ -447,6 +502,7 @@ var/global/list/cargo_item_icon_cache = list()
 	current_order = order_slot
 	ResetShopList()
 	order_reason = ""
+	cart_form_mode = null
 	current_tab = SUPPLY_ORDER_TAB_ORDERS
 	order_cooldown_until = world.time + 10 SECONDS
 	to_chat(user, SPAN_NOTICE("Order [order_slot] submitted successfully to cargo."))
@@ -487,18 +543,15 @@ var/global/list/cargo_item_icon_cache = list()
 
 /datum/computer_file/program/supply_order/proc/PopulateBaseUiData(list/data, mob/user)
 	CheckAccountValidity()
-	var/obj/item/card/id/inserted_id = GetInsertedIdCard()
+	var/obj/item/card/id/available_id = GetAvailableIdCard(user)
 	var/list/totals = GetCartTotals()
 	var/user_acct_num = account ? account.account_number : null
-	if(!user_acct_num && istype(inserted_id))
-		user_acct_num = inserted_id.associated_account_number
-	if(!user_acct_num && istype(user))
-		var/obj/item/card/id/held_card = user.GetIdCard()
-		if(istype(held_card))
-			user_acct_num = held_card.associated_account_number
+	if(!user_acct_num && istype(available_id))
+		user_acct_num = available_id.associated_account_number
 
 	data["src"] = ref(src)
 	data["screen"] = current_tab
+	data["user_greeting"] = (user && user.name) ? "WELCOME, [uppertext(user.name)]" : "WELCOME TO SUPPLY ORDER TERMINAL"
 	data["currency"] = GLOB.using_map?.local_currency_name || "Credits"
 	data["currency_short"] = GLOB.using_map?.local_currency_name_short || "cr"
 	data["faction"] = faction
@@ -506,17 +559,21 @@ var/global/list/cargo_item_icon_cache = list()
 	data["account_owner_name"] = account ? account.owner_name : ""
 	data["account_number"] = account ? account.account_number : 0
 	data["account_money"] = account ? round(account.money, 0.01) : 0
-	data["has_inserted_id"] = istype(inserted_id)
-	data["can_link_id_account"] = istype(inserted_id) && !!inserted_id.associated_account_number
-	data["inserted_id_account_number"] = inserted_id ? inserted_id.associated_account_number : 0
+	data["has_available_id"] = istype(available_id)
+	data["can_link_id_account"] = istype(available_id) && !!available_id.associated_account_number
+	data["available_id_name"] = available_id ? (available_id.registered_name || available_id.name) : ""
+	data["available_id_account_number"] = available_id ? available_id.associated_account_number : 0
 	data["cart_count"] = totals["count"]
 	data["cart_subtotal"] = totals["subtotal"]
 	data["cart_fee"] = totals["fee"]
 	data["cart_total"] = totals["total"]
 	data["handling_fee_percent"] = "[round(SSsupply.handling_fee * 100)]%"
 	data["order_count"] = length(SSsupply.order_queue)
-	data["my_order_count"] = (current_tab == SUPPLY_ORDER_TAB_ORDERS) ? GetMyOrderCount(user_acct_num) : 0
+	data["my_order_count"] = GetMyOrderCount(user_acct_num)
 	data["orders_locked"] = (world.time < order_cooldown_until)
+	data["cart_form_mode"] = cart_form_mode
+	data["saved_carts"] = SerializeSavedCarts()
+	data["orders_filter"] = orders_filter
 
 /datum/computer_file/program/supply_order/proc/SerializeVisibleStations()
 	var/list/result = list()
@@ -598,9 +655,12 @@ var/global/list/cargo_item_icon_cache = list()
 		var/basic_price = SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
 		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
 		var/in_cart = islist(category_cart) ? (category_cart[good_id] || 0) : 0
+		var/atom/movable/dummy = path
+		var/desc_text = initial(dummy.desc) || ""
 		result.Add(list(list(
 			"id" = good_id,
 			"name" = target_station.GetGoodName(chosen_category, good_id),
+			"desc" = desc_text,
 			"stock" = stock,
 			"price" = round(price, 0.01),
 			"markup_text" = GetGoodMarkupText(basic_price, price),
@@ -707,63 +767,48 @@ var/global/list/cargo_item_icon_cache = list()
 			continue
 		var/datum/money_account/requestor = order_data["requesting_acct"]
 		var/is_mine = requestor && user_acct_num && (requestor.account_number == user_acct_num)
+		if(orders_filter == "mine" && !is_mine)
+			continue
 		var/is_processing = (order_data["processing"] || order_data["status"] == "processing")
+		var/buyer_faction = order_data["buyer_faction"] || FACTION_INDEPENDENT
+		var/list/price_snapshot = order_data["price_snapshot"]
 		result.Add(list(list(
 			"id" = order_id,
 			"requestor_name" = requestor ? requestor.owner_name : "Unknown",
 			"requestor_account_number" = requestor ? requestor.account_number : 0,
+			"buyer_faction" = buyer_faction,
+			"cost" = round(order_data["cost"], 0.01),
+			"fee" = round(order_data["fee"], 0.01),
 			"total" = round(order_data["cost"] + order_data["fee"], 0.01),
+			"reason" = order_data["reason"] || "Not provided",
 			"status" = order_data["status"] || "Pending",
 			"status_tone" = is_processing ? "bad" : "average",
 			"is_mine" = is_mine,
 			"can_cancel" = is_mine && !is_processing,
-			"selected" = (current_order == order_id)
+			"selected" = (current_order == order_id),
+			"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
 		)))
 		total_serialized++
 	return result
 
-/datum/computer_file/program/supply_order/proc/SerializeSelectedOrder(mob/user)
-	if(current_order && !(current_order in SSsupply.order_queue))
-		current_order = null
-	if(!current_order)
-		return null
-	var/list/order_data = SSsupply.order_queue[current_order]
-	if(!islist(order_data))
-		return null
-	var/datum/money_account/requestor = order_data["requesting_acct"]
-	var/buyer_faction = order_data["buyer_faction"] || FACTION_INDEPENDENT
-	var/list/price_snapshot = order_data["price_snapshot"]
-	var/is_mine = CanUserCancelOrder(user, requestor)
-	var/is_processing = (order_data["processing"] || order_data["status"] == "processing")
-	return list(
-		"id" = current_order,
-		"requestor_name" = requestor ? requestor.owner_name : "Unknown",
-		"requestor_account_number" = requestor ? requestor.account_number : 0,
-		"status" = order_data["status"] || "Pending",
-		"status_tone" = is_processing ? "bad" : "average",
-		"is_mine" = is_mine,
-		"can_cancel" = is_mine && !is_processing,
-		"cost" = round(order_data["cost"], 0.01),
-		"fee" = round(order_data["fee"], 0.01),
-		"total" = round(order_data["cost"] + order_data["fee"], 0.01),
-		"reason" = order_data["reason"] || "Not provided",
-		"contents" = SerializeShopListGroups(order_data["contents"], buyer_faction, price_snapshot)
-	)
-
 /datum/computer_file/program/supply_order/proc/BuildOrdersScreenData(list/data, mob/user)
-	var/selected_order_data = SerializeSelectedOrder(user)
 	data["orders"] = SerializeOrders(user)
-	data["has_selected_order"] = islist(selected_order_data)
-	if(islist(selected_order_data))
-		data["selected_order"] = selected_order_data
+
+/datum/computer_file/program/supply_order/proc/BuildAccountScreenData(list/data, mob/user)
+	var/obj/item/card/id/inserted_id = GetInsertedIdCard()
+	var/obj/item/card/id/held_id = user ? user.GetIdCard() : null
+	data["inserted_id"] = istype(inserted_id) ? "[inserted_id.registered_name || inserted_id.name] (#[inserted_id.associated_account_number])" : "None"
+	data["carried_id"] = istype(held_id) ? "[held_id.registered_name || held_id.name] (#[held_id.associated_account_number])" : "None"
+	data["account_verified"] = authenticated_via_card
 
 /datum/computer_file/program/supply_order/proc/HandleTabTopic(list/href_list)
 	if(!("PRG_trade_screen" in href_list))
 		return FALSE
 	var/new_tab = href_list["PRG_trade_screen"]
-	if(new_tab in list(SUPPLY_ORDER_TAB_GOODS, SUPPLY_ORDER_TAB_CART, SUPPLY_ORDER_TAB_ORDERS))
+	if(new_tab in list(SUPPLY_ORDER_TAB_GOODS, SUPPLY_ORDER_TAB_CART, SUPPLY_ORDER_TAB_ORDERS, SUPPLY_ORDER_TAB_ACCOUNT))
 		current_tab = new_tab
 		goods_quantity_target = null
+		cart_form_mode = null
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/HandleAccountTopic(mob/user, list/href_list)
@@ -772,7 +817,7 @@ var/global/list/cargo_item_icon_cache = list()
 	if("PRG_account_id" in href_list)
 		return LinkInsertedIdAccount(user)
 	if("PRG_account_unlink" in href_list)
-		return UnlinkAccount()
+		return UnlinkAccount(user)
 	return FALSE
 
 /datum/computer_file/program/supply_order/proc/HandleCatalogTopic(list/href_list)
@@ -832,7 +877,8 @@ var/global/list/cargo_item_icon_cache = list()
 		if(block_reason)
 			to_chat(usr, SPAN_WARNING(block_reason))
 			return TRUE
-		TryAddToCart(href_list["PRG_cart_add_good"], 1)
+		var/amount = text2num(href_list["PRG_cart_add_amount"]) || 1
+		TryAddToCart(href_list["PRG_cart_add_good"], amount)
 		return TRUE
 	if("PRG_cart_remove_good" in href_list)
 		EnsureSelectedStation()
@@ -840,12 +886,38 @@ var/global/list/cargo_item_icon_cache = list()
 		if(good_id)
 			RemoveFromShopList(good_id, 1, station, chosen_category)
 		return TRUE
+	if("PRG_cart_form" in href_list)
+		cart_form_mode = href_list["PRG_cart_form"]
+		return TRUE
+	if("PRG_cart_form_cancel" in href_list)
+		cart_form_mode = null
+		return TRUE
+	if("PRG_cart_save_form" in href_list)
+		var/preset_name = sanitize(href_list["PRG_cart_save_name"], 32)
+		if(SaveShopList(preset_name))
+			to_chat(usr, SPAN_NOTICE("Cart preset saved successfully."))
+		cart_form_mode = null
+		return TRUE
+	if("PRG_cart_load_direct" in href_list)
+		var/preset_name = href_list["PRG_cart_load_direct"]
+		var/list/loaded = LoadShopList(preset_name)
+		if(loaded)
+			if(shopping_list)
+				ClearShopList(shopping_list)
+			shopping_list = loaded
+			to_chat(usr, SPAN_NOTICE("Cart preset loaded."))
+		return TRUE
+	if("PRG_cart_delete" in href_list)
+		DeleteShopList(href_list["PRG_cart_delete"])
+		to_chat(usr, SPAN_NOTICE("Cart preset removed."))
+		return TRUE
 	if(HandleCartFormTopic(href_list))
 		return TRUE
 	if("PRG_cart_remove_direct" in href_list)
 		return HandleCartRemove(href_list)
 	if("PRG_cart_reset" in href_list)
 		ResetShopList()
+		cart_form_mode = null
 		return TRUE
 	return FALSE
 
@@ -854,7 +926,9 @@ var/global/list/cargo_item_icon_cache = list()
 	var/target_category = href_list["PRG_cart_category_name"]
 	var/target_good_id = href_list["PRG_cart_good_id"]
 	var/remove_amount = 1
-	if("PRG_cart_remove_amount" in href_list)
+	if("PRG_cart_remove_all" in href_list)
+		remove_amount = 1000000
+	else if("PRG_cart_remove_amount" in href_list)
 		var/parsed_amount = text2num(href_list["PRG_cart_remove_amount"])
 		if(is_valid_cargo_quantity(parsed_amount))
 			remove_amount = parsed_amount
@@ -870,6 +944,9 @@ var/global/list/cargo_item_icon_cache = list()
 		return TRUE
 	if("PRG_cancel_order" in href_list)
 		return CancelOrder(user, href_list["PRG_cancel_order"])
+	if("PRG_orders_filter" in href_list)
+		orders_filter = href_list["PRG_orders_filter"]
+		return TRUE
 	return FALSE
 
 /datum/computer_file/program/supply_order/Topic(href, href_list)
@@ -907,6 +984,8 @@ var/global/list/cargo_item_icon_cache = list()
 			BuildCartScreenData(data)
 		if(SUPPLY_ORDER_TAB_ORDERS)
 			BuildOrdersScreenData(data, user)
+		if(SUPPLY_ORDER_TAB_ACCOUNT)
+			BuildAccountScreenData(data, user)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
@@ -917,3 +996,4 @@ var/global/list/cargo_item_icon_cache = list()
 #undef SUPPLY_ORDER_TAB_GOODS
 #undef SUPPLY_ORDER_TAB_CART
 #undef SUPPLY_ORDER_TAB_ORDERS
+#undef SUPPLY_ORDER_TAB_ACCOUNT

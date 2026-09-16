@@ -265,3 +265,45 @@
 		pass("Trade UI correctly filters out blocked and out-of-range stations.")
 	return 1
 
+/datum/unit_test/cargo_supply_order_program_test
+	name = "CARGO: Supply Order program initializes, handles presets, and manages cart"
+
+/datum/unit_test/cargo_supply_order_program_test/start_test()
+	var/datum/computer_file/program/supply_order/program = new
+	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	var/alpha_offer = station.inventory["Alpha"][1]
+	program.station = station
+	program.chosen_category = "Alpha"
+	program.TryAddToCart(alpha_offer, 3)
+
+	if(program.current_tab != "goods")
+		fail_reason = "Default tab was not 'goods'."
+	else if(!program.SaveShopList("Test Preset"))
+		fail_reason = "Failed to save cart preset."
+	else if(length(program.saved_shopping_lists) != 1)
+		fail_reason = "Saved shopping list count was not 1."
+	else
+		var/list/loaded = program.LoadShopList("Test Preset")
+		if(!length(loaded))
+			fail_reason = "Failed to load saved cart preset."
+		else
+			program.DeleteShopList("Test Preset")
+			if(length(program.saved_shopping_lists) != 0)
+				fail_reason = "Failed to delete saved cart preset."
+
+	if(!fail_reason)
+		var/list/serialized_presets = program.SerializeSavedCarts()
+		if(length(serialized_presets) != 0)
+			fail_reason = "SerializeSavedCarts returned items after deletion."
+
+	qdel(station)
+	qdel(program)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Supply Order program handles presets and cart state correctly.")
+	return 1

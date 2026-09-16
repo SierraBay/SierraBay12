@@ -18,42 +18,42 @@
 /proc/GetStationThematicCores(datum/trading_station/station)
 	if(istype(station, /datum/trading_station/caravan))
 		return list("Wayfarer", "Long Haul", "Open Palm", "Far Market", "Stray Wind", "Nomad's Coin", "Drift Hopper", "Silver Horizon", "Peregrine", "Wandering Star")
-	if(istype(station, /datum/trading_station/weapons_terra) || istype(station, /datum/trading_station/legacy/security) || istype(station, /datum/trading_station/legacy/munitions))
+	if(istype(station, /datum/trading_station/weapons_terra) || istype(station, /datum/trading_station/security) || istype(station, /datum/trading_station/munitions))
 		return list("Telum", "Aegis", "Glaive", "Ballista", "Centurion", "Castellan", "Bulwark", "Palisade", "Hoplon", "Redoubt", "Iron Gate", "Vanguard")
-	if(istype(station, /datum/trading_station/materials) || istype(station, /datum/trading_station/legacy/materials))
+	if(istype(station, /datum/trading_station/materials))
 		return list("Jacarta", "Steel Deck", "Crucible", "Foundry", "Slag Peak", "Anvil Point", "Bulkhead", "Bauxite Drift", "Ferrous Gate", "Cobalt Ridge")
-	if(istype(station, /datum/trading_station/eva) || istype(station, /datum/trading_station/legacy/atmospherics))
+	if(istype(station, /datum/trading_station/eva) || istype(station, /datum/trading_station/atmospherics))
 		return list("Oxyta", "Spacer", "Voidstrider", "Airlock Zero", "Cold Drift", "Vacuum Verge", "Blue Lung", "Zephyr", "Vortex", "Aero Wells")
-	if(istype(station, /datum/trading_station/legacy/medicine))
+	if(istype(station, /datum/trading_station/medicine))
 		return list("Trauma Bay", "Caduceus", "Hygeia", "Panacea", "Triage Point", "Bio-Pulse", "Sanctuary", "Vitalis", "Remedy", "Helix")
-	if(istype(station, /datum/trading_station/legacy/science))
+	if(istype(station, /datum/trading_station/science))
 		return list("Peer Review", "Synapse", "Observatory", "Collider", "Spectra", "Hypothesis", "Quark", "Prism", "Archimedes", "Cipher")
-	if(istype(station, /datum/trading_station/legacy/operations))
+	if(istype(station, /datum/trading_station/operations))
 		return list("Quartermaster", "Longhaul", "Crossroads", "Waypoint", "Cargo Core", "Freightline", "Manifest", "Tranship", "Dockside")
-	if(istype(station, /datum/trading_station/legacy/engineering))
+	if(istype(station, /datum/trading_station/engineering))
 		return list("Arc Weld", "Gridline", "Dyno Relay", "Conduit Point", "Scaffold", "Transformer", "Riveter", "Circuit", "Gantry")
-	if(istype(station, /datum/trading_station/legacy/service) || istype(station, /datum/trading_station/legacy/civilian))
+	if(istype(station, /datum/trading_station/service) || istype(station, /datum/trading_station/civilian))
 		return list("Mess Hall", "Wardrobe", "Pantry Post", "Cornucopia", "Hydro-Haven", "Bazaar", "Comfort Line", "Mercantile", "Haven")
 	return list("Apex", "Zenith", "Horizon", "Pioneer", "Frontier", "Endeavor", "Atlas", "Beacon", "Prometheus", "Orion", "Nova", "Eclipse")
 
 /proc/GetStationRoleSummary(datum/trading_station/station)
 	if(istype(station, /datum/trading_station/caravan))
 		return "mobile deep-space commercial cargo transit"
-	if(istype(station, /datum/trading_station/weapons_terra) || istype(station, /datum/trading_station/legacy/security) || istype(station, /datum/trading_station/legacy/munitions))
+	if(istype(station, /datum/trading_station/weapons_terra) || istype(station, /datum/trading_station/security) || istype(station, /datum/trading_station/munitions))
 		return "defensive surplus, tactical weaponry, and munitions logistics"
-	if(istype(station, /datum/trading_station/materials) || istype(station, /datum/trading_station/legacy/materials))
+	if(istype(station, /datum/trading_station/materials))
 		return "raw ore refining, structural alloys, and mineral distribution"
-	if(istype(station, /datum/trading_station/eva) || istype(station, /datum/trading_station/legacy/atmospherics))
+	if(istype(station, /datum/trading_station/eva) || istype(station, /datum/trading_station/atmospherics))
 		return "extravehicular life support, void suits, and gas replenishment"
-	if(istype(station, /datum/trading_station/legacy/medicine))
+	if(istype(station, /datum/trading_station/medicine))
 		return "pharmaceutical stock, triage medical replenishments, and sterile supplies"
-	if(istype(station, /datum/trading_station/legacy/science))
+	if(istype(station, /datum/trading_station/science))
 		return "scientific consumables, laboratory apparatus, and research provisions"
-	if(istype(station, /datum/trading_station/legacy/engineering))
+	if(istype(station, /datum/trading_station/engineering))
 		return "power grid machinery, structural materials, and technical field repair goods"
-	if(istype(station, /datum/trading_station/legacy/operations))
+	if(istype(station, /datum/trading_station/operations))
 		return "freight handling, expedition logistics, and mining equipment"
-	if(istype(station, /datum/trading_station/legacy/service) || istype(station, /datum/trading_station/legacy/civilian))
+	if(istype(station, /datum/trading_station/service) || istype(station, /datum/trading_station/civilian))
 		return "crew provisions, leisure goods, commissary wares, and textiles"
 	return "automated commercial supply and merchant transshipment"
 

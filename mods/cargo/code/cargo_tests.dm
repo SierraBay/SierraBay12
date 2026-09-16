@@ -43,40 +43,40 @@
 	pass("Trade stations initialized with inventory.")
 	return 1
 
-/datum/unit_test/cargo_legacy_station_inventory_test
-	name = "CARGO: Legacy stations import supply-pack contents"
+/datum/unit_test/cargo_native_station_inventory_test
+	name = "CARGO: Native stations declare catalog contents"
 
-/datum/unit_test/cargo_legacy_station_inventory_test/start_test()
+/datum/unit_test/cargo_native_station_inventory_test/start_test()
 	var/list/required_station_uids = list(
-		"legacy_operations",
-		"legacy_engineering",
-		"legacy_atmospherics",
-		"legacy_materials",
-		"legacy_security",
-		"legacy_medicine",
-		"legacy_science",
-		"legacy_service",
-		"legacy_civilian",
-		"legacy_munitions"
+		"operations",
+		"engineering",
+		"atmospherics",
+		"materials",
+		"security",
+		"medicine",
+		"science",
+		"service",
+		"civilian",
+		"munitions"
 	)
 	for(var/station_uid in required_station_uids)
 		var/datum/trading_station/trading_station = SSsupply.GetStationByUid(station_uid)
 		if(!istype(trading_station))
-			fail("Legacy station [station_uid] was not initialized.")
+			fail("Trading station [station_uid] was not initialized.")
 			return 1
 		if(!length(trading_station.inventory) && !length(trading_station.hidden_inventory))
-			fail("Legacy station [station_uid] did not import any inventory.")
+			fail("Trading station [station_uid] has no inventory.")
 			return 1
-	pass("Legacy stations imported supply-pack contents.")
+	pass("Native stations initialized with catalog contents.")
 	return 1
 
-/datum/unit_test/cargo_legacy_good_names_test
-	name = "CARGO: Legacy stations generate descriptive names for cartridges, seeds, and accessories"
+/datum/unit_test/cargo_native_good_names_test
+	name = "CARGO: Native stations generate descriptive names for cartridges, seeds, and accessories"
 
-/datum/unit_test/cargo_legacy_good_names_test/start_test()
-	var/datum/trading_station/med_station = SSsupply.GetStationByUid("legacy_medicine")
+/datum/unit_test/cargo_native_good_names_test/start_test()
+	var/datum/trading_station/med_station = SSsupply.GetStationByUid("medicine")
 	if(!istype(med_station))
-		fail("Legacy medicine station was not initialized.")
+		fail("Medicine station was not initialized.")
 		return 1
 
 	for(var/cat_name in med_station.inventory)
@@ -93,9 +93,9 @@
 						fail("Cartridge with reagent [initial(cartridge.spawn_reagent)] has generic name '[good_name]'.")
 						return 1
 
-	var/datum/trading_station/service_station = SSsupply.GetStationByUid("legacy_service")
+	var/datum/trading_station/service_station = SSsupply.GetStationByUid("service")
 	if(!istype(service_station))
-		fail("Legacy service station was not initialized.")
+		fail("Service station was not initialized.")
 		return 1
 
 	for(var/cat_name in service_station.inventory)
@@ -112,9 +112,9 @@
 						fail("Seed [good_path] with seed_type '[initial(seed_item.seed_type)]' has generic name '[good_name]'.")
 						return 1
 
-	var/datum/trading_station/sec_station = SSsupply.GetStationByUid("legacy_security")
+	var/datum/trading_station/sec_station = SSsupply.GetStationByUid("security")
 	if(!istype(sec_station))
-		fail("Legacy security station was not initialized.")
+		fail("Security station was not initialized.")
 		return 1
 
 	for(var/cat_name in sec_station.inventory)
@@ -129,7 +129,7 @@
 					fail("Blue arm guards have generic name '[good_name]'.")
 					return 1
 
-	pass("Legacy stations generated descriptive names for cartridges, seeds, and accessories.")
+	pass("Native stations generated descriptive names for cartridges, seeds, and accessories.")
 	return 1
 
 /datum/trading_station/unit_test_duplicate_pricing

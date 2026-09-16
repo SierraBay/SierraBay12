@@ -497,6 +497,13 @@
 	return TRUE
 
 /datum/trade_contract/proc/DeductPenalty(penalty_multiplier)
+	if(isnum(penalty_multiplier) && penalty_multiplier == 0)
+		if(istype(linked_account) && deposit_paid > 0)
+			linked_account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network")
+			deposit_paid = 0
+		actual_penalty = 0
+		return
+
 	var/total_penalty = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
 	var/remaining_penalty = max(0, total_penalty - deposit_paid)
 	if(istype(linked_account) && remaining_penalty > 0 && linked_account.money > 0)
