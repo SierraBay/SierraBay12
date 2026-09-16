@@ -309,10 +309,10 @@
 /obj/item/clothing/suit/storage/toggle/color/blazer
 	name = "blazer"
 	desc = "A charming jacket."
-	icon = 'mods/loadout_items/icons/suitjacket.dmi'
+	icon = 'mods/loadout_items/icons/obj_suit.dmi'
 	icon_state = "blazer"
 	item_state = "blazer_su"
-	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/suitjacket.dmi')
+	item_icons = list(slot_wear_suit_str = 'mods/loadout_items/icons/onmob_suit.dmi')
 	blood_overlay_type = "coatblood"
 	body_parts_covered = UPPER_TORSO|ARMS
 	valid_accessory_slots = list(ACCESSORY_SLOT_INSIGNIA)
