@@ -136,3 +136,14 @@
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/darkr
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/femine
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(asarobes)
+
+/datum/gear/suit/punk_jacket
+	display_name = "leather jacket selection"
+	path = /obj/item/clothing/suit/storage/punk_jacket
+
+/datum/gear/suit/punk_jacket/New()
+	..()
+	var/punk_jacket = list()
+	punk_jacket["classic leather jacket"] = /obj/item/clothing/suit/storage/punk_jacket
+	punk_jacket["punk jacket"] = /obj/item/clothing/suit/storage/punk_jacket/edgy
+	gear_tweaks += new/datum/gear_tweak/path(punk_jacket)
