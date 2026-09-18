@@ -2,7 +2,14 @@
 	if(exploded)
 		return ..()
 
-	playsound(src, 'mods/utility_items/sounds/sm_pnr_mixed.ogg', 100, FALSE)
+	var/turf/pull_start_turf = get_turf(src)
+	if(istype(pull_start_turf))
+		for(var/mob/M in GLOB.player_list)
+			if(!M || !M.client)
+				continue
+			var/turf/T = get_turf(M)
+			if(T && (T.z == pull_start_turf.z) && (get_dist(T, pull_start_turf) <= 14) && !isdeaf(M))
+				sound_to(M, 'mods/utility_items/sounds/sm_pnr_mixed.ogg')
 
 	return ..()
 
@@ -10,7 +17,12 @@
 	if(exploded)
 		var/turf/detonation_turf = get_turf(src)
 		if(istype(detonation_turf))
-			playsound(detonation_turf, 'mods/utility_items/sounds/smcombined.ogg', 100, FALSE)
+			for(var/mob/M in GLOB.player_list)
+				if(!M || !M.client)
+					continue
+				var/turf/T = get_turf(M)
+				if(T && (T.z == detonation_turf.z) && (get_dist(T, detonation_turf) <= 14) && !isdeaf(M))
+					sound_to(M, 'mods/utility_items/sounds/smcombined.ogg')
 
 			spawn(3 SECONDS)
 				var/list/affected_z = GetConnectedZlevels(detonation_turf.z)
