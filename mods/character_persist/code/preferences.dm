@@ -6,13 +6,13 @@
 	/// Loaded overlay from disk. Null if this slot has no live persist state.
 	var/list/character_persist_snapshot
 
-/datum/preferences/proc/character_persist_is_locked()
+/datum/preferences/character_persist_is_locked()
 	return islist(character_persist_snapshot) && length(character_persist_snapshot)
 
-/datum/preferences/proc/character_persist_med_locked()
+/datum/preferences/character_persist_med_locked()
 	return character_persist_is_locked() && character_persist_med_autofill
 
-/datum/preferences/proc/apply_character_persist(mob/living/carbon/human/character)
+/datum/preferences/apply_character_persist(mob/living/carbon/human/character)
 	if (!istype(character))
 		return
 	if (has_extension(character, /datum/extension/virtual_surrogate))
