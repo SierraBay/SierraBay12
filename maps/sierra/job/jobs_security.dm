@@ -63,8 +63,17 @@
 		"Forensic Technician"
 		)
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/detective
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/civilian, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/security/detective/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/civ, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/security/detective/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/security/detective/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/security/detective/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/security/detective/scgec_officer
+	)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
 	                    SKILL_COMPUTER    = SKILL_BASIC,
 	                    SKILL_EVA         = SKILL_BASIC,
@@ -107,8 +116,17 @@
 	skill_points = 20
 
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/officer
-	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	allowed_branches = list(
+		/datum/mil_branch/employee, /datum/mil_branch/contractor,
+		/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/scgec_enlisted
+	)
+	allowed_ranks = list(
+		/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor,
+		/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/scgec_enlisted,
+		/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/scgec_enlisted,
+		/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/scgec_enlisted,
+		/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/security/officer/scgec_officer
+	)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
 	                    SKILL_EVA         = SKILL_BASIC,
 	                    SKILL_COMBAT      = SKILL_BASIC,

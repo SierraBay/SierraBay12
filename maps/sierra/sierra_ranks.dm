@@ -14,7 +14,8 @@
 		/datum/mil_branch/iccgn,
 		/datum/mil_branch/css,
 		/datum/mil_branch/fleet,
-		/datum/mil_branch/scga
+		/datum/mil_branch/scga,
+		/datum/mil_branch/scgec
 	)
 
 	spawn_branch_types = list(
@@ -26,7 +27,8 @@
 		/datum/mil_branch/iccgn,
 		/datum/mil_branch/css,
 		/datum/mil_branch/fleet,
-		/datum/mil_branch/scga
+		/datum/mil_branch/scga,
+		/datum/mil_branch/scgec
 	)
 
 /*

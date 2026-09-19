@@ -17,6 +17,7 @@
 	var/service_skirt = null
 	var/service_over = null
 	var/service_shoes = null
+	var/service_heels = null
 	var/service_hat = null
 	var/service_gloves = null
 	var/service_extra = null
@@ -25,6 +26,7 @@
 	var/dress_skirt = null
 	var/dress_over = null
 	var/dress_shoes = null
+	var/dress_heels = null
 	var/dress_hat = null
 	var/dress_gloves = null
 	var/dress_extra = null
