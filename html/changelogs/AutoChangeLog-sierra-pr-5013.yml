@@ -1,0 +1,6 @@
+author: Banditoz
+changes:
+  - rscadd: Add an advanced placement mode for cables, that makes it easier to 
+      lay cable in funky directions! Toggle it off and on with an action button 
+      at the top left while holding cable.
+delete-after: true
