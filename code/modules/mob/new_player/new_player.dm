@@ -161,6 +161,10 @@
 		client.link_url(config.lore_url, "Lore", TRUE)
 		return 1
 	if (href_list["ready"])
+		if (text2num(href_list["ready"]) && odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот перед готовностью."))
+			ready = 0
+			return TOPIC_HANDLED
 		ready = GAME_STATE > RUNLEVEL_LOBBY ? 0 : text2num(href_list["ready"])
 	if (href_list["refresh"])
 		panel.close()
@@ -241,6 +245,9 @@
 		LateChoices()
 
 	if(href_list["SelectedJob"])
+		if(odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот."))
+			return TOPIC_HANDLED
 		// [SIERRA-EDIT]
 		if(player_is_antag(mind, only_offstation_roles = 1))
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
@@ -275,6 +282,9 @@
 
 /mob/new_player/proc/AttemptLateSpawn(datum/job/job, spawning_at)
 
+	if(odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+		to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот."))
+		return 0
 	if(GAME_STATE == RUNLEVEL_GAME)
 		if(job.late_joinable == FALSE)
 			to_chat(usr, SPAN_WARNING("Вы не можете зайти за эту роль во время раунда."))

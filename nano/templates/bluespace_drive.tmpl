@@ -165,7 +165,10 @@
 <div class="item">
 	<div class="itemLabel">Destination:</div>
 	<div class="itemContent">
-		{{if data.has_destination}}
+		{{if data.odyssey_jump && data.odyssey_dest_label}}
+			<span class='good'>Odyssey course</span>
+			<span style="color:#666">&nbsp;&mdash;&nbsp;{{:data.odyssey_dest_label}}</span>
+		{{else data.has_destination}}
 			<span class='good'>Valid jump path</span>
 			<span style="color:#666">&nbsp;&mdash;&nbsp;({{:data.dest_x}}, {{:data.dest_y}})</span>
 		{{else}}
@@ -173,6 +176,19 @@
 		{{/if}}
 	</div>
 </div>
+
+{{if data.odyssey_active}}
+<div class="item">
+	<div class="itemLabel">Odyssey:</div>
+	<div class="itemContent">
+		{{if data.odyssey_course}}
+			<span class='good'>Course: {{:data.odyssey_course}}</span>
+		{{else}}
+			<span class='average'>No Sector Map course selected</span>
+		{{/if}}
+	</div>
+</div>
+{{/if}}
 
 <hr class="bsd-sep"/>
 <h3>Jump Parameters</h3>
@@ -221,6 +237,14 @@
 					'arrowthickstop-1-s',
 					{'jump' : 1},
 					(data.has_destination && data.fuel_total_moles >= data.emergency_min_fuel) ? (data.overcharged ? 'redButton' : (data.fuel_total_moles < data.min_fuel ? 'redButton' : null)) : 'disabled')}}
+					{{if data.odyssey_active}}
+						&nbsp;
+						{{:helper.link(
+						data.fuel_total_moles < data.min_fuel ? 'EMERGENCY ODYSSEY JUMP' : 'ODYSSEY JUMP',
+						'transferthick-e-w',
+						{'odyssey_jump' : 1},
+						data.odyssey_can_jump ? (data.overcharged || data.fuel_total_moles < data.min_fuel ? 'redButton' : null) : 'disabled')}}
+					{{/if}}
 					{{if data.overcharged}}
 						&nbsp;<span class='bad'>(OVERCHARGE WARNING)</span>
 					{{else data.fuel_total_moles < data.min_fuel && data.fuel_total_moles >= data.emergency_min_fuel}}

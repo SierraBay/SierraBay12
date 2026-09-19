@@ -358,7 +358,8 @@ SUBSYSTEM_DEF(jobs)
 		if(player.client.prefs.use_slot_priority_list)
 			for(var/datum/preferences_slot/prefs in player.client.prefs.slot_priority_list)
 				if(prefs.CorrectLevel(job, level))
-					player.client.prefs.load_character(prefs.slot)
+					if(!player.client.prefs.load_character(prefs.slot))
+						continue
 					assign_role(player, job.title, mode = mode)
 					return TRUE
 		else if(player.client.prefs.CorrectLevel(job, level))

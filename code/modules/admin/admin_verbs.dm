@@ -110,7 +110,8 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/ToggleContinueVote,
 	/datum/admins/proc/togglemoderequirementchecks,
 	/client/proc/delete_crew_record,
-	/datum/admins/proc/view_persistent_data		//[SIERR-ADD]
+	/datum/admins/proc/view_persistent_data,		//[SIERR-ADD]
+	/client/proc/odyssey_panel						//[SIERRA-ADD] - ODYSSEY
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
