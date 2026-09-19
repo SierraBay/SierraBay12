@@ -92,7 +92,7 @@
 /obj/structure/closet/emcloset,
 /obj/item/device/radio/map_preset/phobos,
 /obj/floor_decal/industrial/hatch/blue,
-/obj/machinery/light/small/red{
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -173,6 +173,9 @@
 /obj/structure/table/woodentable/walnut,
 /obj/random/drinkbottle,
 /obj/random/drinkbottle,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/phobos/bridge/co_office)
 "aI" = (
@@ -822,12 +825,14 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/obj/machinery/photocopier/faxmachine{
-	department = "phobos - Bridge";
-	tag_radio = "phobos";
-	name = "bridge fax machine"
-	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/photocopier/faxmachine{
+	send_access = list();
+	department = "phobos - Bridge";
+	destination = "Third Fleet HQ";
+	name = "bridge fax machine";
+	tag_radio = "phobos"
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/phobos/bridge)
 "ck" = (
@@ -3302,14 +3307,14 @@
 	},
 /obj/machinery/button/blast_door{
 	desc = "A remote control-switch for the observation shutters";
-	id_tag = "interceptor_window_lock";
+	id_tag = "interceptor_sensor_lock";
 	name = "Sensor Blast Doors control";
 	pixel_x = -3;
 	pixel_y = -4
 	},
 /obj/machinery/button/blast_door{
 	desc = "A remote control-switch for the observation shutters";
-	id_tag = "interceptor_window_lock";
+	id_tag = "interceptor_sensor_lock";
 	name = "Drop Blast Doors control";
 	pixel_x = 7;
 	pixel_y = 1
@@ -3336,7 +3341,7 @@
 /turf/simulated/floor/plating,
 /area/ship/phobos/engine/thrusterport)
 "lS" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
 	id_tag = "interseptor_shuttle_pump"
 	},
 /obj/machinery/airlock_sensor{
@@ -3452,7 +3457,7 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/ship/phobos/medbay)
 "mq" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume/external_air{
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/airlock{
 	id_tag = "interseptor_shuttle_pump";
 	dir = 1
 	},
@@ -4475,11 +4480,11 @@
 	init_color = "#aa5f61";
 	color = "#aa5f61"
 	},
-/obj/structure/ship_munition/disperser_charge/emp,
-/obj/machinery/light/small/red{
+/obj/structure/ship_munition/disperser_charge/explosive/military,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/blue,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "qo" = (
@@ -4635,9 +4640,9 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
-/obj/machinery/light/small/red,
 /obj/floor_decal/industrial/outline/grey,
 /obj/structure/missile/impact,
+/obj/machinery/light,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "qQ" = (
@@ -7822,6 +7827,13 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/closet/crate,
+/obj/item/missile_equipment/payload/emp,
+/obj/item/missile_equipment/payload/emp,
+/obj/item/missile_equipment/payload/explosive,
+/obj/item/missile_equipment/payload/explosive,
+/obj/item/missile_equipment/payload/diffuser,
+/obj/item/missile_equipment/payload/diffuser,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "EK" = (
@@ -10595,11 +10607,11 @@
 	init_color = "#aa5f61";
 	color = "#aa5f61"
 	},
-/obj/structure/ship_munition/disperser_charge/explosive/military,
-/obj/machinery/light/small/red{
+/obj/structure/ship_munition/disperser_charge/emp,
+/obj/floor_decal/industrial/outline/blue,
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/yellow,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "Ri" = (
@@ -10839,6 +10851,13 @@
 	name = "Interseptor External Access";
 	frequency = 1379;
 	locked = 1
+	},
+/obj/machinery/button/blast_door{
+	desc = "A remote control-switch for the drop blast doors.";
+	id_tag = "interceptor_sensor_lock";
+	name = "Drop Blast Doors Control";
+	pixel_x = -5;
+	pixel_y = 28
 	},
 /obj/shuttle_landmark/interseptor/start,
 /turf/simulated/floor,
@@ -11599,10 +11618,10 @@
 	color = "#aa5f61"
 	},
 /obj/structure/ship_munition/disperser_charge/fire/military,
-/obj/machinery/light/small/red{
+/obj/floor_decal/industrial/outline/orange,
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/floor_decal/industrial/outline/orange,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/phobos/disperser/storage)
 "VA" = (
@@ -19058,7 +19077,7 @@ bM
 aa
 aa
 OR
-SR
+Rh
 bT
 Ud
 qB
@@ -19210,7 +19229,7 @@ aa
 aa
 OR
 OR
-qi
+SR
 bT
 uH
 VI
@@ -19514,7 +19533,7 @@ aa
 aa
 OR
 OR
-tD
+qi
 bT
 vp
 bV
@@ -19666,7 +19685,7 @@ aa
 aa
 OR
 OR
-Rh
+tD
 bT
 kB
 kB

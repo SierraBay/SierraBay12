@@ -303,7 +303,7 @@
 
 	update_setup_window(usr)
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, is_preview_copy = FALSE, apply_persist = TRUE) //[SIERRA-ADD]--> apply_persist = TRUE)
 	// Sanitizing rather than saving as someone might still be editing when copy_to occurs.
 	player_setup.sanitize_setup()
 	character.set_species(species)
@@ -462,6 +462,21 @@
 	if(!character.isSynthetic())
 		character.set_nutrition(rand(140,360))
 		character.set_hydration(rand(140,360))
+
+	if (!is_preview_copy && apply_persist)		//[SIERRA-ADD]--> apply_persist)
+		apply_character_persist(character)
+
+/// Overridden by mods/character_persist. Applies a saved body overlay after copy_to().
+/datum/preferences/proc/apply_character_persist(mob/living/carbon/human/character)
+	return
+
+/// Overridden by mods/character_persist. True if this slot has a live persist snapshot.
+/datum/preferences/proc/character_persist_is_locked()
+	return FALSE
+
+/// Overridden by mods/character_persist. True if medical records are locked by persist autofill.
+/datum/preferences/proc/character_persist_med_locked()
+	return FALSE
 
 /datum/preferences/proc/open_load_dialog(mob/user, details)
 	var/dat  = list()

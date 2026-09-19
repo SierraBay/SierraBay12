@@ -17897,7 +17897,9 @@
 	dir = 1
 	},
 /obj/structure/table/steel_reinforced,
-/obj/item/book/manual/solgov_law,
+/obj/machinery/photocopier/faxmachine/centcomm{
+	department = "Third Fleet HQ"
+	},
 /turf/unsimulated/floor/techfloor{
 	icon_state = "dark";
 	icon = 'icons/turf/flooring/tiles.dmi'

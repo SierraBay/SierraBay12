@@ -320,8 +320,14 @@
 	H.update_icons()
 
 
+/proc/character_persist_is_virtual_body(mob/living/carbon/human/H)
+	return istype(H) && has_extension(H, /datum/extension/virtual_surrogate)
+
+
 /proc/character_persist_try_save(mob/living/carbon/human/H, reason)
 	if (!istype(H) || H.stat == DEAD)
+		return FALSE
+	if (character_persist_is_virtual_body(H))
 		return FALSE
 	if (character_persist_is_offstation_antag(H))
 		return FALSE
@@ -372,7 +378,10 @@
 	character_persist_record_stat(ckey, slot, H.real_name, "saved", shifts, snapshot["med_record"], null)
 	log_game("CHARACTER_PERSIST: saved [ckey] slot [slot] ([H.real_name]) reason=[reason] shifts=[shifts]")
 	if (H.client)
-		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [CHARACTER_PERSIST_SHIFT_PAY] таллеров."))
+		var/pending_pay = shifts * CHARACTER_PERSIST_SHIFT_PAY
+		if (odyssey_state.active)
+			pending_pay = CHARACTER_PERSIST_SHIFT_PAY
+		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [pending_pay] таллеров."))
 	return TRUE
 
 
@@ -387,6 +396,8 @@
 
 
 /proc/character_persist_try_clear(mob/living/carbon/human/H, reason)
+	if (character_persist_is_virtual_body(H))
+		return
 	if (character_persist_is_offstation_antag(H))
 		return
 	var/ckey = character_persist_ckey_of(H)

@@ -19,6 +19,10 @@ GLOBAL_VAR_AS(war_declared, FALSE)
 	command_announcement.Announce("В секторе была замечена телепортация большого объема телекристаллов, использующихся Горлекскими Мародерами. Рекомендуется вызвать поддержку с ЦК для урегулирования ситуации.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
 	GLOB.max_mech = 1
 	GLOB.war_declared = TRUE
+	var/singleton/public_access/public_method/open_door = GET_SINGLETON(/singleton/public_access/public_method/open_door)
+	for(var/obj/machinery/door/blast/D as anything in SSmachines.get_machinery_of_type(/obj/machinery/door/blast))
+		if(D.id_tag == "merc_war_door")
+			open_door.perform(D)
 	return new /obj/item/stack/telecrystal(loc, 781)
 //Запрос кристаллов
 

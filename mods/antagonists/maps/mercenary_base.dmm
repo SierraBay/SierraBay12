@@ -395,6 +395,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/tiled,
 /area/map_template/merc_spawn)
+"dy" = (
+/obj/floor_decal/corner/red/three_quarters{
+	dir = 4
+	},
+/obj/machinery/door/blast/shutters{
+	name = "armor";
+	id_tag = "merc_war_door";
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/merc_spawn)
 "dT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -817,6 +830,18 @@
 	},
 /obj/floor_decal/corner/b_green/mono,
 /turf/simulated/floor/tiled/monotile,
+/area/map_template/merc_spawn)
+"iQ" = (
+/obj/structure/table/rack{
+	pixel_x = -1
+	},
+/obj/item/paper/merc/tutorial_3,
+/obj/item/cell/super,
+/obj/item/cell/super,
+/obj/item/cell/super,
+/obj/item/cell/super,
+/obj/floor_decal/corner/red/mono,
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "jb" = (
 /obj/machinery/airlock_sensor/airlock_exterior{
@@ -1433,10 +1458,9 @@
 /turf/simulated/wall/titanium,
 /area/map_template/merc_shuttle)
 "oK" = (
-/obj/floor_decal/corner/blue/mono,
-/obj/structure/table/standard,
-/obj/item/paper/merc/tutorial_1,
-/obj/machinery/light,
+/obj/floor_decal/corner/blue{
+	dir = 6
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "oT" = (
@@ -1654,17 +1678,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/dark/monotile,
-/area/map_template/merc_spawn)
-"rb" = (
-/obj/structure/table/rack{
-	pixel_x = -1
-	},
-/obj/item/rig/merc/heavy/empty,
-/obj/item/rig/merc/heavy/empty,
-/obj/item/cell/super,
-/obj/item/cell/super,
-/obj/floor_decal/corner/blue/mono,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "rt" = (
@@ -2164,6 +2177,15 @@
 "xD" = (
 /turf/simulated/floor/tiled/white,
 /area/map_template/merc_shuttle)
+"xM" = (
+/obj/structure/table/rack{
+	pixel_x = -1
+	},
+/obj/item/rig/merc/heavy/empty,
+/obj/item/rig/merc/heavy/empty,
+/obj/floor_decal/corner/red/mono,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/merc_spawn)
 "xT" = (
 /obj/machinery/door/airlock/multi_tile/glass/civilian{
 	dir = 4;
@@ -2665,6 +2687,7 @@
 /obj/floor_decal/corner/blue/mono,
 /obj/item/device/suit_cooling_unit/miniature,
 /obj/item/device/suit_cooling_unit/miniature,
+/obj/machinery/light,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "DI" = (
@@ -2784,9 +2807,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_shuttle)
 "Gl" = (
-/obj/floor_decal/corner/blue{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -2845,9 +2865,11 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/map_template/merc_spawn)
 "GQ" = (
-/obj/floor_decal/corner/blue/three_quarters,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/floor_decal/corner/blue{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_spawn)
@@ -2920,6 +2942,17 @@
 /obj/paint/merc,
 /turf/simulated/floor/plating,
 /area/map_template/merc_shuttle)
+"Jd" = (
+/obj/floor_decal/corner/red/half,
+/obj/machinery/door/blast/shutters{
+	name = "armor";
+	id_tag = "merc_war_door";
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
+	},
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/merc_spawn)
 "Jr" = (
 /obj/floor_decal/corner/purple{
 	dir = 9
@@ -2951,6 +2984,9 @@
 	},
 /turf/simulated/floor/tiled/freezer,
 /area/map_template/merc_spawn)
+"KK" = (
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/merc_spawn)
 "KT" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -2960,6 +2996,17 @@
 "Lb" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
+/area/map_template/merc_spawn)
+"Lc" = (
+/obj/floor_decal/corner/red/three_quarters,
+/obj/machinery/door/blast/shutters{
+	name = "armor";
+	id_tag = "merc_war_door";
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
+	},
+/turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "Lv" = (
 /obj/paint/merc,
@@ -2980,12 +3027,9 @@
 /turf/simulated/floor/tiled/white/monotile,
 /area/map_template/merc_shuttle)
 "Mp" = (
-/obj/floor_decal/corner/blue/mono,
-/obj/structure/table/standard,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/paper/merc/tutorial_3,
-/obj/machinery/light,
+/obj/floor_decal/corner/blue{
+	dir = 9
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "Mq" = (
@@ -3413,11 +3457,11 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/merc_shuttle/drop_pod)
 "Vt" = (
-/obj/floor_decal/corner/blue/three_quarters{
-	dir = 4
-	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/floor_decal/corner/blue{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/merc_spawn)
@@ -3540,6 +3584,15 @@
 	},
 /turf/simulated/floor/tiled,
 /area/map_template/merc_spawn)
+"XK" = (
+/obj/structure/table/rack{
+	pixel_x = -1
+	},
+/obj/item/rig/merc/empty,
+/obj/item/rig/merc/empty,
+/obj/floor_decal/corner/red/mono,
+/turf/simulated/floor/tiled/dark/monotile,
+/area/map_template/merc_spawn)
 "XL" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/plating,
@@ -3565,14 +3618,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/merc_spawn)
 "Yq" = (
-/obj/structure/table/rack{
-	pixel_x = -1
-	},
-/obj/item/rig/merc/empty,
-/obj/item/rig/merc/empty,
-/obj/item/cell/super,
-/obj/item/cell/super,
 /obj/floor_decal/corner/blue/mono,
+/obj/structure/table/standard,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/machinery/light,
+/obj/item/paper/merc/tutorial_1,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
 "Yv" = (
@@ -3601,6 +3652,9 @@
 	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
+/area/map_template/merc_spawn)
+"YU" = (
+/turf/simulated/wall/titanium/bunker_map,
 /area/map_template/merc_spawn)
 "YX" = (
 /obj/machinery/power/apc/hyper{
@@ -7726,12 +7780,12 @@ vn
 yD
 ga
 mo
-rb
+Mt
 zJ
 Yq
-mo
-Zl
-Zl
+YU
+YU
+YU
 Zl
 aa
 aa
@@ -7831,9 +7885,9 @@ ib
 bj
 GQ
 Mp
-mo
-Zl
-Zl
+Lc
+XK
+YU
 Zl
 Zl
 aa
@@ -7932,10 +7986,10 @@ lX
 CZ
 rK
 Gl
-Mt
-mo
-Zl
-Zl
+KK
+Jd
+iQ
+YU
 Zl
 Zl
 aa
@@ -8035,9 +8089,9 @@ ib
 UK
 Vt
 oK
-mo
-Zl
-Zl
+dy
+xM
+YU
 Zl
 Zl
 Zl
@@ -8137,9 +8191,9 @@ mo
 tS
 lg
 DH
-mo
-Zl
-Zl
+YU
+YU
+YU
 Zl
 Zl
 Zl

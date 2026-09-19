@@ -17,6 +17,8 @@
 /datum/preferences/apply_character_persist(mob/living/carbon/human/character)
 	if (!istype(character))
 		return
+	if (has_extension(character, /datum/extension/virtual_surrogate))
+		return
 	character.character_persist_ckey = client_ckey
 	character.character_persist_slot = default_slot
 	odyssey_register_character(character)

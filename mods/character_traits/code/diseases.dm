@@ -2,6 +2,7 @@
 	var/list/health_controllers = list()
 	var/trait_eye_protection = FALSE
 	var/trait_ear_protection = FALSE
+	var/weak_heart = FALSE
 
 /mob/living/carbon/human/eyecheck()
 	var/base = ..()
@@ -48,6 +49,11 @@
 
 /mob/living/carbon/human/proc/add_muteness()
 	var/datum/muteness_controller/H = new /datum/muteness_controller(src)
+	health_controllers += H
+	H.Start()
+
+/mob/living/carbon/human/proc/add_weak_heart()
+	var/datum/weak_heart_controller/H = new /datum/weak_heart_controller(src)
 	health_controllers += H
 	H.Start()
 
@@ -382,3 +388,62 @@
 		owner.eye_blind = INFINITY
 	owner.set_sdisability(BLINDED)
 	addtimer(new Callback(src, .proc/Enforce), 20)
+
+// СЛАБОЕ СЕРДЦЕ (WEAK HEART)
+/datum/weak_heart_controller
+	var/mob/living/carbon/human/owner
+	var/next_flutter = 0
+	var/running = FALSE
+	var/list/flutter_normal_phrases = list(
+		"Вы чувствуете странное покалывание в левой части груди.",
+		"Ваше сердце словно на секунду замирает, а затем делает сильный удар.",
+		"В груди на мгновение становится тяжело, но ощущение быстро проходит.",
+		"Вы ощущаете легкую, тупую боль за грудиной, которая быстро угасает."
+	)
+	var/list/flutter_high_phrases = list(
+		"Сердце колотится слишком быстро, отдавая глухим стуком в ушах.",
+		"Вам становится тяжело дышать, а в груди нарастает тревожная тяжесть.",
+		"Сердце бьется неровно, заставляя вас сделать глубокий вздох.",
+		"Резкий прилив слабости заставляет ваше сердце пропустить удар."
+	)
+
+/datum/weak_heart_controller/New(mob/living/carbon/human/H)
+	..()
+	owner = H
+	next_flutter = world.time + rand(5 MINUTES, 10 MINUTES)
+
+/datum/weak_heart_controller/proc/Start()
+	if(running || !owner) return
+	running = TRUE
+	ProcessWeakHeart()
+
+/datum/weak_heart_controller/proc/Stop()
+	running = FALSE
+
+/datum/weak_heart_controller/proc/ProcessWeakHeart()
+	if(!running || !owner || owner.stat == DEAD) return
+
+	var/obj/item/organ/internal/heart/heart = owner.internal_organs_by_name[BP_HEART]
+	if(!istype(heart) || BP_IS_ROBOTIC(heart) || (heart.status & ORGAN_DEAD))
+		addtimer(new Callback(src, .proc/ProcessWeakHeart), 30 SECONDS)
+		return
+
+	if(world.time >= next_flutter)
+		if(!owner.InStasis() && owner.stat != UNCONSCIOUS)
+			var/pulse_bpm = owner.get_pulse_as_number()
+			if(pulse_bpm >= 100 && pulse_bpm != 150)
+				to_chat(owner, SPAN_DANGER(pick(flutter_high_phrases)))
+				if(prob(40))
+					owner.apply_damage(rand(3, 7), DAMAGE_PAIN, BP_CHEST)
+					if(prob(50))
+						owner.emote("gasp")
+						owner.adjustOxyLoss(2)
+			else
+				to_chat(owner, SPAN_WARNING(pick(flutter_normal_phrases)))
+				if(prob(25))
+					owner.apply_damage(rand(1, 3), DAMAGE_PAIN, BP_CHEST)
+
+		next_flutter = world.time + rand(6 MINUTES, 12 MINUTES)
+
+	var/next_wake = max(1, next_flutter - world.time)
+	addtimer(new Callback(src, .proc/ProcessWeakHeart), next_wake)

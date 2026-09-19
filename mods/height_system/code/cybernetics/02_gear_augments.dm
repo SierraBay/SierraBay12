@@ -253,6 +253,9 @@
 // OnTopic
 // ---------------------------------------------------------------------------
 /datum/category_item/player_setup_item/cyberware/gear_augments/OnTopic(href, list/href_list, mob/user)
+	if(pref.character_persist_is_locked())
+		to_chat(user, SPAN_WARNING("Кибернетика заблокирована: у персонажа есть сохранённое состояние с прошлой смены. Отключите персистентность, чтобы сбросить его."))
+		return TOPIC_NOACTION
 
 	if(href_list["aug_slot_prev"])
 		pref.gear_slot = (pref.gear_slot > 1) ? pref.gear_slot - 1 : config.loadout_slots

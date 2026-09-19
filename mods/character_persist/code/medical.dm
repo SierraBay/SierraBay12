@@ -184,7 +184,7 @@
 	var/list/snapshot = prefs.character_persist_snapshot
 	if (!islist(snapshot))
 		return
-	if (!isnull(snapshot["med_record"]))
+	if (prefs.character_persist_med_autofill && !isnull(snapshot["med_record"]))
 		CR.set_medRecord(snapshot["med_record"])
 	if (!isnull(snapshot["sec_record"]))
 		CR.set_secRecord(snapshot["sec_record"])
