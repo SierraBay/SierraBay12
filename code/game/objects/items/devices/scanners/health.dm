@@ -115,6 +115,8 @@
 	if(H.is_dead())
 		dat += SPAN_CLASS("scan_warning", "[b]Time of Death:[endb] [time2text(worldtime2stationtime(H.timeofdeath), "hh:mm")]")
 
+	// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Support detailed cardiac rhythm and robotic heart formatting
+	/*
 	// Pulse rate.
 	var/pulse_result = "normal"
 	if(H.should_have_organ(BP_HEART))
@@ -132,6 +134,36 @@
 	else
 		pulse_result = SPAN_CLASS("scan_danger", "ERROR - Nonstandard biology")
 	dat += "Pulse rate: [pulse_result]."
+	*/
+	// Pulse rate.
+	var/pulse_result = "normal"
+	var/rhythm_name = ""
+	if(H.should_have_organ(BP_HEART))
+		var/obj/item/organ/internal/heart/heart = H.internal_organs_by_name[BP_HEART]
+		if(H.status_flags & FAKEDEATH)
+			pulse_result = SPAN_CLASS("scan_danger", "0bpm")
+		else if(heart && BP_IS_ROBOTIC(heart))
+			if(heart.is_working())
+				pulse_result = SPAN_CLASS("scan_notice", "0")
+				rhythm_name = " (Continuous Flow)"
+			else
+				pulse_result = SPAN_CLASS("scan_danger", "0")
+				rhythm_name = " (Pump Failure)"
+		else
+			pulse_result = H.get_pulse(GETPULSE_TOOL)
+			pulse_result = "[pulse_result]bpm"
+			if(H.pulse() == PULSE_NONE)
+				pulse_result = SPAN_CLASS("scan_danger", "[pulse_result]")
+			else if(H.pulse() < PULSE_NORM)
+				pulse_result = SPAN_CLASS("scan_notice", "[pulse_result]")
+			else if(H.pulse() > PULSE_NORM)
+				pulse_result = SPAN_CLASS("scan_warning", "[pulse_result]")
+			if(heart)
+				rhythm_name = " ([heart.cardiac_rhythm])"
+	else
+		pulse_result = SPAN_CLASS("scan_danger", "ERROR - Nonstandard biology")
+	dat += "Pulse rate: [pulse_result][rhythm_name]."
+	// [/SIERRA-EDIT]
 
 	// Blood pressure. Based on the idea of a normal blood pressure being 120 over 80.
 	if(H.should_have_organ(BP_HEART))
@@ -169,11 +201,24 @@
 		if(241 to INFINITY)
 			dat += SPAN_CLASS("scan_danger", "Patient is suffering from acute radiation poisoning. Immediate treatment recommended.")
 
+	// [SIERRA-EDIT] - CARDIAC_OVERHAUL - Display detailed cardiac rhythm in cardiovascular shock warning
+	/*
 	// Traumatic shock.
 	if(H.is_asystole())
 		dat += SPAN_CLASS("scan_danger", "Patient is suffering from cardiovascular shock. Administer CPR immediately.")
 	else if(H.shock_stage > 80)
 		dat += SPAN_CLASS("scan_warning", "Patient is at serious risk of going into shock. Pain relief recommended.")
+	*/
+	// Traumatic shock.
+	if(H.is_asystole())
+		var/obj/item/organ/internal/heart/heart = H.internal_organs_by_name[BP_HEART]
+		var/rhythm_info = ""
+		if(heart)
+			rhythm_info = " Cardiac rhythm: [heart.cardiac_rhythm]."
+		dat += SPAN_CLASS("scan_danger", "Patient is suffering from cardiovascular shock. Administer CPR immediately.[rhythm_info]")
+	else if(H.shock_stage > 80)
+		dat += SPAN_CLASS("scan_warning", "Patient is at serious risk of going into shock. Pain relief recommended.")
+	// [/SIERRA-EDIT]
 
 	// Other general warnings.
 	if(skill_level >= SKILL_BASIC)

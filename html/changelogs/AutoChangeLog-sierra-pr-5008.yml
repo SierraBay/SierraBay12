@@ -1,0 +1,5 @@
+author: 1he_Shogun
+changes:
+  - bugfix: Реконфигуратор генома больше не сбрасывает языки, протезы и одежду 
+      при смене вида.
+delete-after: true

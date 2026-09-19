@@ -3,6 +3,7 @@
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
 #include "cargo/_cargo_includes.dm"
+#include "cardiac_overhaul/_cardiac_overhaul_includes.dm"
 #include "client_verbs/_client_verbs_includes.dm"
 #include "colony_fractions/_colony_types_includes.dm"
 // #include "don_loadout/_don_loadout_includes.dm" // Не открывать до Рождества
@@ -57,6 +58,7 @@
 #include "sierra_resprite/_sierra_resprite_includes.dm"
 #include "sound_effects/_sound_effects_includes.dm"
 #include "vision_cone\vision_cone_includes.dm"
+#include "combat_mode/_combat_mode_includes.dm"
 #include "screen_big_text/_screen_text_includes.dm"
 #include "cut_scenes/_cut_scenes_includes.dm"
 #include "TG_signals/_tg_signals_includes.dm"
