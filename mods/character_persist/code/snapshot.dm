@@ -344,6 +344,8 @@
 		return TRUE
 
 	var/list/previous = prefs.character_persist_snapshot
+	if (islist(previous) && !odyssey_snapshot_valid(previous))
+		previous = null
 	var/list/snapshot = character_persist_capture(H)
 	if (!islist(snapshot))
 		return FALSE
@@ -359,6 +361,16 @@
 		snapshot["med_record"] = character_persist_append_med_record(character_persist_current_med_record(H), note)
 	else
 		snapshot["med_record"] = character_persist_current_med_record(H)
+	snapshot["sec_record"] = character_persist_current_sec_record(H)
+	snapshot["gen_record"] = character_persist_current_gen_record(H)
+	var/criminal_status = character_persist_current_criminal_status(H)
+	if (criminal_status)
+		snapshot["criminal_status"] = criminal_status
+	var/datum/odyssey_state/odyssey_state = odyssey_ensure_state()
+	if (odyssey_state.active)
+		snapshot["odyssey_campaign_id"] = odyssey_state.campaign_id
+	if (H.mind?.initial_account)
+		snapshot["account_money"] = H.mind.initial_account.money
 	if (!character_persist_write(ckey, slot, snapshot))
 		return FALSE
 	prefs.character_persist_snapshot = snapshot
@@ -366,7 +378,10 @@
 	character_persist_record_stat(ckey, slot, H.real_name, "saved", shifts, snapshot["med_record"], null)
 	log_game("CHARACTER_PERSIST: saved [ckey] slot [slot] ([H.real_name]) reason=[reason] shifts=[shifts]")
 	if (H.client)
-		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [shifts * CHARACTER_PERSIST_SHIFT_PAY] таллеров."))
+		var/pending_pay = shifts * CHARACTER_PERSIST_SHIFT_PAY
+		if (odyssey_state.active)
+			pending_pay = CHARACTER_PERSIST_SHIFT_PAY
+		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [pending_pay] таллеров."))
 	return TRUE
 
 
