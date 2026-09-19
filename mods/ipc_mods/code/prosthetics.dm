@@ -123,14 +123,6 @@
 
 	return 1
 
-/obj/item/organ/external/chest/robotize(company, skip_prosthetics = 0, keep_organs = 0)
-	. = ..(company, skip_prosthetics, keep_organs)
-	if (!. || !owner)
-		return
-	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
-	if (!istype(C))
-		owner.internal_organs_by_name[BP_CELL] = new /obj/item/organ/internal/cell(owner, 1)
-
 
 /datum/robolimb/bishop
 	company = "Bishop"
