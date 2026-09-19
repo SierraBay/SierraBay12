@@ -156,7 +156,7 @@
 		"merc_used_shift" = state.merc_used_shift,
 		"merc_used_reason" = state.merc_used_reason,
 		"abandoned_shuttles" = state.abandoned_shuttles,
-		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast")
+		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses")
 	)
 
 
@@ -265,6 +265,13 @@
 			errors += "newscast.json повреждён"
 		else if (expected_generation && newscast_data["generation"] != expected_generation)
 			errors += "newscast.json относится к другой генерации"
+	var/corpses_path = odyssey_snapshot_path("corpses", expected_generation)
+	if (fexists(corpses_path))
+		var/list/corpses_data = odyssey_read_json(corpses_path)
+		if (!islist(corpses_data))
+			errors += "corpses.json повреждён"
+		else if (expected_generation && corpses_data["generation"] != expected_generation)
+			errors += "corpses.json относится к другой генерации"
 	return errors
 
 
@@ -325,6 +332,7 @@
 	var/list/mechs = odyssey_collect_mechs()
 	var/list/economy = odyssey_collect_economy()
 	var/list/newscast = odyssey_collect_newscast(generation)
+	var/list/corpses = odyssey_collect_corpses()
 	var/list/common = list("version" = ODYSSEY_VERSION, "campaign_id" = state.campaign_id, "generation" = generation)
 	var/success = TRUE
 	success = odyssey_write_json(odyssey_snapshot_path("turfs", generation), common + list("entries" = turfs)) && success
@@ -334,6 +342,7 @@
 	success = odyssey_write_json(odyssey_snapshot_path("economy", generation), common + list("data" = economy)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("roster", generation), common + list("entries" = state.roster)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("newscast", generation), common + list("data" = newscast)) && success
+	success = odyssey_write_json(odyssey_snapshot_path("corpses", generation), common + list("entries" = corpses)) && success
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
 		return FALSE
@@ -349,7 +358,7 @@
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
 		return FALSE
 	state.save_generation = generation
-	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] force=[force]")
+	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] corpses=[length(corpses)] force=[force]")
 	to_world(SPAN_NOTICE("<b>Состояние Одиссеи сохранено (смена [state.shift_number]).</b>"))
 	return TRUE
 
@@ -365,19 +374,28 @@
 		return FALSE
 
 	odyssey_apply_abandoned_shuttles()
-	var/list/turfs = odyssey_read_json(odyssey_snapshot_path("turfs", state.save_generation))
-	var/list/machinery = odyssey_read_json(odyssey_snapshot_path("machinery", state.save_generation))
-	var/list/structures = odyssey_read_json(odyssey_snapshot_path("structures", state.save_generation))
-	var/list/mechs = odyssey_read_json(odyssey_snapshot_path("mechs", state.save_generation))
-	var/list/economy = odyssey_read_json(odyssey_snapshot_path("economy", state.save_generation))
-	var/list/newscast = odyssey_read_json(odyssey_snapshot_path("newscast", state.save_generation))
+	odyssey_ensure_persist_baselines()
+	var/list/meta = odyssey_load_meta()
+	var/generation = islist(meta) ? meta["generation"] : state.save_generation
+	if (generation)
+		state.save_generation = generation
+	var/list/turfs = odyssey_read_json(odyssey_snapshot_path("turfs", generation))
+	var/list/machinery = odyssey_read_json(odyssey_snapshot_path("machinery", generation))
+	var/list/structures = odyssey_read_json(odyssey_snapshot_path("structures", generation))
+	var/list/mechs = odyssey_read_json(odyssey_snapshot_path("mechs", generation))
+	var/list/economy = odyssey_read_json(odyssey_snapshot_path("economy", generation))
+	var/list/newscast = odyssey_read_json(odyssey_snapshot_path("newscast", generation))
+	var/list/corpses = odyssey_read_json(odyssey_snapshot_path("corpses", generation))
 
 	odyssey_apply_turfs(turfs?["entries"])
+	odyssey_build_persist_index()
 	odyssey_apply_machinery(machinery?["entries"])
 	odyssey_apply_structures(structures?["entries"])
 	odyssey_apply_mechs(mechs?["entries"])
+	odyssey_clear_persist_index()
 	odyssey_apply_economy(economy?["data"])
 	odyssey_apply_newscast(newscast?["data"], state.save_generation)
+	odyssey_apply_corpses(corpses?["entries"])
 
 	log_game("ODYSSEY: applied save campaign=[state.campaign_id] shift=[state.shift_number] force=[force]")
 	return TRUE

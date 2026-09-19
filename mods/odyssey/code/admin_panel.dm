@@ -91,7 +91,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "<div class='statusDisplay'>"
 	dat += "<table width='100%'>"
 	dat += "<tr><th>Файл</th><th>Есть</th><th>Версия</th><th>Записей</th><th></th></tr>"
-	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast"))
+	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses"))
 		var/list/summary = odyssey_snapshot_summary(kind)
 		dat += "<tr>"
 		dat += "<td><code>[kind].json</code></td>"
@@ -236,8 +236,17 @@ var/global/datum/odyssey_panel/odyssey_panel
 	if (href_list["begin_continue"])
 		if (alert(usr, "Пометить раунд как продолжение? Apply сам не запустится — используйте Force apply.", "Odyssey", "Да", "Нет") != "Да")
 			return
+		var/list/meta = odyssey_load_meta()
+		if (islist(meta) && !meta["active"])
+			if (alert(usr, "На диске кампания неактивна (status=[meta["status"]], reason=[meta["archive_reason"] || meta["outcome_reason"] || "—"]). Восстановить active и продолжить?", "Odyssey", "Восстановить", "Отмена") != "Восстановить")
+				return
+			if (!odyssey_reactivate_campaign_meta())
+				to_chat(usr, SPAN_WARNING("Odyssey: не удалось записать campaign.json."))
+				show(C)
+				return
+			log_and_message_admins("reactivated archived Odyssey campaign for continue", usr)
 		if (!odyssey_begin_campaign(TRUE, FALSE))
-			to_chat(usr, SPAN_WARNING("Odyssey: не удалось пометить продолжение (нет валидного сейва?)."))
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось пометить продолжение: [odyssey_continue_fail_reason()]."))
 			show(C)
 			return
 		odyssey_announce_admin_campaign("continue")
@@ -314,10 +323,15 @@ var/global/datum/odyssey_panel/odyssey_panel
 		return
 
 	if (href_list["capture_baseline"])
-		odyssey_capture_turf_baseline(force = TRUE)
 		var/datum/odyssey_state/state = odyssey_ensure_state()
-		to_chat(usr, SPAN_NOTICE("Odyssey: turf baseline captured ([length(state.turf_baseline)])."))
-		log_and_message_admins("captured Odyssey turf baseline", usr)
+		if (state.persist_baselines_ready)
+			if (alert(usr, "Baseline уже снят. Перезапись после apply сделает текущие повреждения «чистой картой» — они пропадут со следующего сейва. Перезаписать?", "Odyssey", "Перезаписать", "Отмена") != "Перезаписать")
+				return
+			odyssey_ensure_persist_baselines(overwrite = TRUE)
+		else
+			odyssey_ensure_persist_baselines()
+		to_chat(usr, SPAN_NOTICE("Odyssey: baseline captured (turfs=[length(state.turf_baseline)] machinery=[length(state.machinery_baseline)])."))
+		log_and_message_admins("captured Odyssey persist baselines", usr)
 		show(C)
 		return
 

@@ -101,69 +101,84 @@
 	A.update_icon()
 
 
+/proc/odyssey_apply_machinery_destroy_entry(list/entry)
+	if (!islist(entry) || entry["action"] != "destroyed")
+		return FALSE
+	var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
+	if (!M)
+		return FALSE
+	odyssey_index_remove(odyssey_ensure_state().persist_index_machinery, entry["id"])
+	qdel(M)
+	return TRUE
+
+
+/proc/odyssey_apply_machinery_entry(list/entry)
+	if (!islist(entry) || entry["action"] == "destroyed")
+		return FALSE
+	var/turf/T = odyssey_locate_turf(entry)
+	if (!T)
+		return FALSE
+	var/path = text2path(entry["type"])
+	if (!ispath(path, /obj/machinery))
+		return FALSE
+	var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
+	if (!M && !entry["action"])
+		M = locate(path) in T
+	if (!M && entry["action"] == "created")
+		M = new path(T)
+	if (!istype(M))
+		return FALSE
+	if (entry["id"])
+		M.odyssey_persist_id = entry["id"]
+		odyssey_index_put(odyssey_ensure_state().persist_index_machinery, entry["id"], M)
+	if (get_turf(M) != T)
+		M.forceMove(T)
+	if (!isnull(entry["dir"]))
+		M.set_dir(entry["dir"])
+	if (entry["name"])
+		M.SetName(entry["name"])
+	if (!isnull(entry["anchored"]))
+		M.anchored = !!entry["anchored"]
+	if (!isnull(entry["emagged"]))
+		M.emagged = !!entry["emagged"]
+	if (!isnull(entry["panel_open"]))
+		M.panel_open = !!entry["panel_open"]
+	var/saved_health = entry["health"]
+	if (!isnull(saved_health) && M.get_max_health() > 0)
+		M.set_health(saved_health)
+	var/desired_broken = entry["reason_broken"] || 0
+	for (var/cause in list(MACHINE_BROKEN_GENERIC, MACHINE_BROKEN_NO_PARTS, MACHINE_BROKEN_HEALTH))
+		var/has = !!(M.reason_broken & cause)
+		var/want = !!(desired_broken & cause)
+		if (has != want)
+			M.set_broken(want, cause)
+	if (istype(M, /obj/machinery/door/airlock) && islist(entry["airlock"]))
+		odyssey_apply_airlock_state(M, entry["airlock"])
+	else
+		M.update_icon()
+	return TRUE
+
+
 /proc/odyssey_apply_machinery(list/entries)
 	if (!islist(entries) || !length(entries))
 		return
 	var/applied = 0
-	// Tombstones must remove mapped objects before created replacements are spawned.
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] != "destroyed")
-			continue
-		var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
-		if (M)
-			qdel(M)
+		if (odyssey_apply_machinery_destroy_entry(entry))
 			applied++
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] == "destroyed")
-			continue
-		var/turf/T = odyssey_locate_turf(entry)
-		if (!T)
-			continue
-		var/path = text2path(entry["type"])
-		if (!ispath(path, /obj/machinery))
-			continue
-		var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
-		if (!M && !entry["action"])
-			M = locate(path) in T
-		if (!M && entry["action"] == "created")
-			M = new path(T)
-		if (!istype(M))
-			continue
-		if (entry["id"])
-			M.odyssey_persist_id = entry["id"]
-		if (get_turf(M) != T)
-			M.forceMove(T)
-		if (!isnull(entry["dir"]))
-			M.set_dir(entry["dir"])
-		if (entry["name"])
-			M.SetName(entry["name"])
-		if (!isnull(entry["anchored"]))
-			M.anchored = !!entry["anchored"]
-		if (!isnull(entry["emagged"]))
-			M.emagged = !!entry["emagged"]
-		if (!isnull(entry["panel_open"]))
-			M.panel_open = !!entry["panel_open"]
-		var/saved_health = entry["health"]
-		if (!isnull(saved_health) && M.get_max_health() > 0)
-			M.set_health(saved_health)
-		var/desired_broken = entry["reason_broken"] || 0
-		for (var/cause in list(MACHINE_BROKEN_GENERIC, MACHINE_BROKEN_NO_PARTS, MACHINE_BROKEN_HEALTH))
-			var/has = !!(M.reason_broken & cause)
-			var/want = !!(desired_broken & cause)
-			if (has != want)
-				M.set_broken(want, cause)
-		if (istype(M, /obj/machinery/door/airlock) && islist(entry["airlock"]))
-			odyssey_apply_airlock_state(M, entry["airlock"])
-		else
-			M.update_icon()
-		applied++
+		if (odyssey_apply_machinery_entry(entry))
+			applied++
 	log_debug("ODYSSEY: apply_machinery applied=[applied]/[length(entries)]")
 
 
 /proc/odyssey_find_machine_by_id(id)
 	if (!id)
 		return null
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (islist(state.persist_index_machinery))
+		return odyssey_index_get(state.persist_index_machinery, id)
 	for (var/obj/machinery/M in world)
-		if (M.odyssey_persist_id == id)
+		if (!QDELETED(M) && M.odyssey_persist_id == id)
 			return M
 	return null

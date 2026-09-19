@@ -10,9 +10,8 @@
 	if (state.continued)
 		odyssey_apply_abandoned_shuttles()
 	// Baseline from the freshly loaded DMM, after abandoned shuttles have left their hangars.
-	odyssey_capture_turf_baseline()
-	odyssey_capture_object_baselines()
-	odyssey_capture_mech_baseline()
+	// Never recapture after apply — that would treat loaded damage as the clean map.
+	odyssey_ensure_persist_baselines()
 	if (state.continued && !odyssey_apply_save())
 		odyssey_finish_campaign(ODYSSEY_STATUS_ADMIN_ABORTED, "save_validation_or_apply_failed")
 		to_world(SPAN_DANGER("<b>Одиссея остановлена: сохранение не прошло проверку. Администраторы уведомлены.</b>"))
@@ -36,6 +35,6 @@
 
 
 /hook/death/proc/odyssey_character_death(mob/living/carbon/human/H, gibbed)
-	if (istype(H))
+	if (istype(H) && !H.odyssey_corpse_restored)
 		odyssey_mark_character_dead(H, gibbed ? "gibbed" : "death")
 	return TRUE

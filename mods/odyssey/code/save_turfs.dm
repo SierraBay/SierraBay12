@@ -2,7 +2,9 @@
 /proc/odyssey_capture_turf_baseline(force = FALSE)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active && !force)
-		return
+		return FALSE
+	if (!force && islist(state.turf_baseline) && length(state.turf_baseline))
+		return TRUE
 	var/list/baseline = list()
 	for (var/z in GLOB.using_map.station_levels)
 		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
@@ -11,6 +13,7 @@
 			baseline[odyssey_coord_key(T.x, T.y, T.z)] = "[T.type]"
 	state.turf_baseline = baseline
 	log_debug("ODYSSEY: turf baseline captured ([length(baseline)] tiles) force=[force]")
+	return TRUE
 
 
 /proc/odyssey_collect_turfs()
@@ -66,29 +69,34 @@
 	return entry
 
 
+/proc/odyssey_apply_turf_entry(list/entry)
+	if (!islist(entry))
+		return FALSE
+	var/turf/T = odyssey_locate_turf(entry)
+	if (!T)
+		return FALSE
+	var/path = text2path(entry["type"])
+	if (ispath(path, /turf) && T.type != path)
+		T = T.ChangeTurf(path, tell_universe = FALSE, force_lighting_update = TRUE, keep_air = TRUE)
+		if (!T)
+			return FALSE
+	if (istype(T, /turf/simulated/wall) && !isnull(entry["health"]))
+		T.set_health(entry["health"])
+	else if (istype(T, /turf/simulated/floor))
+		var/turf/simulated/floor/F = T
+		if (!isnull(entry["broken"]))
+			F.broken = entry["broken"]
+		if (!isnull(entry["burnt"]))
+			F.burnt = entry["burnt"]
+		F.update_icon()
+	return TRUE
+
+
 /proc/odyssey_apply_turfs(list/entries)
 	if (!islist(entries) || !length(entries))
 		return
 	var/applied = 0
 	for (var/list/entry in entries)
-		if (!islist(entry))
-			continue
-		var/turf/T = odyssey_locate_turf(entry)
-		if (!T)
-			continue
-		var/path = text2path(entry["type"])
-		if (ispath(path, /turf) && T.type != path)
-			T = T.ChangeTurf(path, tell_universe = FALSE, force_lighting_update = TRUE, keep_air = TRUE)
-			if (!T)
-				continue
-		if (istype(T, /turf/simulated/wall) && !isnull(entry["health"]))
-			T.set_health(entry["health"])
-		else if (istype(T, /turf/simulated/floor))
-			var/turf/simulated/floor/F = T
-			if (!isnull(entry["broken"]))
-				F.broken = entry["broken"]
-			if (!isnull(entry["burnt"]))
-				F.burnt = entry["burnt"]
-			F.update_icon()
-		applied++
+		if (odyssey_apply_turf_entry(entry))
+			applied++
 	log_debug("ODYSSEY: apply_turfs applied=[applied]/[length(entries)]")

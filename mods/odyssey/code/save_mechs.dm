@@ -5,6 +5,8 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active && !force)
 		return FALSE
+	if (!force && islist(state.mech_baseline) && length(state.mech_baseline))
+		return TRUE
 	var/list/baseline = list()
 	var/list/ordinals = list()
 	for (var/mob/living/exosuit/M in world)
@@ -107,80 +109,96 @@
 	C.update_health()
 
 
+/proc/odyssey_apply_mech_destroy_entry(list/entry)
+	if (!islist(entry) || entry["action"] != "destroyed")
+		return FALSE
+	var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
+	if (!M)
+		return FALSE
+	odyssey_index_remove(odyssey_ensure_state().persist_index_mechs, entry["id"])
+	qdel(M)
+	return TRUE
+
+
+/proc/odyssey_apply_mech_entry(list/entry)
+	if (!islist(entry) || entry["action"] == "destroyed")
+		return FALSE
+	var/turf/T = odyssey_locate_turf(entry)
+	if (!T)
+		return FALSE
+	var/path = text2path(entry["type"])
+	if (!ispath(path, /mob/living/exosuit))
+		return FALSE
+	var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
+	if (!M && !entry["action"])
+		M = locate(path) in T
+	if (!M && entry["action"] == "created")
+		M = new path(T)
+	if (!istype(M))
+		return FALSE
+	if (entry["id"])
+		M.odyssey_persist_id = entry["id"]
+		odyssey_index_put(odyssey_ensure_state().persist_index_mechs, entry["id"], M)
+	if (get_turf(M) != T)
+		M.forceMove(T)
+	if (entry["name"])
+		M.SetName(entry["name"])
+	if (!isnull(entry["hatch_closed"]))
+		M.hatch_closed = !!entry["hatch_closed"]
+	if (!isnull(entry["hatch_locked"]))
+		M.hatch_locked = !!entry["hatch_locked"]
+	if (!isnull(entry["power"]))
+		M.power = entry["power"]
+	var/list/components = entry["components"]
+	if (islist(components))
+		odyssey_apply_mech_component(M.L_arm, components["L_arm"])
+		odyssey_apply_mech_component(M.R_arm, components["R_arm"])
+		odyssey_apply_mech_component(M.L_leg, components["L_leg"])
+		odyssey_apply_mech_component(M.R_leg, components["R_leg"])
+		odyssey_apply_mech_component(M.head, components["head"])
+		odyssey_apply_mech_component(M.body, components["body"])
+	var/obj/item/cell/cell = M.get_cell(TRUE)
+	if (istype(cell) && !isnull(entry["cell_charge"]))
+		cell.charge = clamp(entry["cell_charge"], 0, cell.maxcharge)
+	var/list/hardpoints = entry["hardpoints"]
+	if (islist(hardpoints))
+		var/list/existing_slots = M.hardpoints?.Copy() || list()
+		for (var/slot in existing_slots)
+			var/obj/item/old_eq = M.hardpoints[slot]
+			if (old_eq)
+				M.remove_system(slot, null, TRUE)
+				qdel(old_eq)
+		for (var/slot in hardpoints)
+			var/eq_path = text2path(hardpoints[slot])
+			if (!ispath(eq_path, /obj/item/mech_equipment))
+				continue
+			var/obj/item/mech_equipment/EQ = new eq_path(M)
+			M.install_system(EQ, slot, null)
+	M.updatehealth()
+	M.queue_icon_update()
+	return TRUE
+
+
 /proc/odyssey_apply_mechs(list/entries)
 	if (!islist(entries) || !length(entries))
 		return
 	var/applied = 0
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] != "destroyed")
-			continue
-		var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
-		if (M)
-			qdel(M)
+		if (odyssey_apply_mech_destroy_entry(entry))
 			applied++
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] == "destroyed")
-			continue
-		var/turf/T = odyssey_locate_turf(entry)
-		if (!T)
-			continue
-		var/path = text2path(entry["type"])
-		if (!ispath(path, /mob/living/exosuit))
-			continue
-		var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
-		if (!M && !entry["action"])
-			M = locate(path) in T
-		if (!M && entry["action"] == "created")
-			M = new path(T)
-		if (!istype(M))
-			continue
-		if (entry["id"])
-			M.odyssey_persist_id = entry["id"]
-		if (get_turf(M) != T)
-			M.forceMove(T)
-		if (entry["name"])
-			M.SetName(entry["name"])
-		if (!isnull(entry["hatch_closed"]))
-			M.hatch_closed = !!entry["hatch_closed"]
-		if (!isnull(entry["hatch_locked"]))
-			M.hatch_locked = !!entry["hatch_locked"]
-		if (!isnull(entry["power"]))
-			M.power = entry["power"]
-		var/list/components = entry["components"]
-		if (islist(components))
-			odyssey_apply_mech_component(M.L_arm, components["L_arm"])
-			odyssey_apply_mech_component(M.R_arm, components["R_arm"])
-			odyssey_apply_mech_component(M.L_leg, components["L_leg"])
-			odyssey_apply_mech_component(M.R_leg, components["R_leg"])
-			odyssey_apply_mech_component(M.head, components["head"])
-			odyssey_apply_mech_component(M.body, components["body"])
-		var/obj/item/cell/cell = M.get_cell(TRUE)
-		if (istype(cell) && !isnull(entry["cell_charge"]))
-			cell.charge = clamp(entry["cell_charge"], 0, cell.maxcharge)
-		var/list/hardpoints = entry["hardpoints"]
-		if (islist(hardpoints))
-			var/list/existing_slots = M.hardpoints?.Copy() || list()
-			for (var/slot in existing_slots)
-				var/obj/item/old_eq = M.hardpoints[slot]
-				if (old_eq)
-					M.remove_system(slot, null, TRUE)
-					qdel(old_eq)
-			for (var/slot in hardpoints)
-				var/eq_path = text2path(hardpoints[slot])
-				if (!ispath(eq_path, /obj/item/mech_equipment))
-					continue
-				var/obj/item/mech_equipment/EQ = new eq_path(M)
-				M.install_system(EQ, slot, null)
-		M.updatehealth()
-		M.queue_icon_update()
-		applied++
+		if (odyssey_apply_mech_entry(entry))
+			applied++
 	log_debug("ODYSSEY: apply_mechs applied=[applied]/[length(entries)]")
 
 
 /proc/odyssey_find_mech_by_id(id)
 	if (!id)
 		return null
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (islist(state.persist_index_mechs))
+		return odyssey_index_get(state.persist_index_mechs, id)
 	for (var/mob/living/exosuit/M in world)
-		if (M.odyssey_persist_id == id)
+		if (!QDELETED(M) && M.odyssey_persist_id == id)
 			return M
 	return null

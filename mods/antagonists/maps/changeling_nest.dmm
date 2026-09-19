@@ -211,8 +211,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/changeling_nest/tug)
 "bQ" = (
-/obj/landmark/start{
-	name = "wizard"
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "cult";
@@ -346,6 +346,7 @@
 "ej" = (
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
+/obj/item/card/id/syndicate,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -456,6 +457,13 @@
 	initial_gas = null
 	},
 /area/map_template/changeling_nest/crab/net)
+"ff" = (
+/obj/item/card/id/syndicate,
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
 "fg" = (
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	dir = 8;
@@ -625,6 +633,13 @@
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/changeling_nest/pod)
+"gY" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
 "hf" = (
 /obj/floor_decal/spline/fancy/wood{
 	dir = 8
@@ -641,6 +656,7 @@
 /obj/structure/table/woodentable,
 /obj/item/reagent_containers/food/snacks/chawanmushi,
 /obj/item/storage/box/syndie_kit/chameleon,
+/obj/item/card/id/syndicate,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -844,6 +860,13 @@
 /area/map_template/changeling_nest)
 "kO" = (
 /obj/machinery/door/unpowered/simple/iron,
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
+"kY" = (
+/obj/item/card/id/awayiccgn,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -1110,6 +1133,14 @@
 	},
 /turf/simulated/wall/titanium,
 /area/map_template/changeling_nest/crab/airlock)
+"nw" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/changeling_nest)
 "nx" = (
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -1148,9 +1179,6 @@
 /area/map_template/changeling_nest/tug)
 "nV" = (
 /obj/structure/table/woodentable,
-/obj/landmark{
-	name = "Teleport-Scroll"
-	},
 /obj/item/toy/figure/ninja,
 /turf/unsimulated/floor{
 	icon_state = "cult";
@@ -1257,6 +1285,13 @@
 	initial_gas = null
 	},
 /area/map_template/changeling_nest/crab/net)
+"pt" = (
+/obj/item/card/id/liberia,
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
 "pC" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /turf/simulated/floor/tiled/techfloor,
@@ -1499,8 +1534,20 @@
 	map_airless = 1
 	},
 /area/map_template/changeling_nest/tug)
+"td" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
 "te" = (
 /obj/structure/aliumizer,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -1617,10 +1664,7 @@
 	},
 /area/map_template/changeling_nest)
 "ur" = (
-/obj/machinery/door/airlock/external/glass/bolted/cycling{
-	id_tag = "handpodone_port_shuttle_dock_exterior_door";
-	frequency = 1431
-	},
+/obj/machinery/door/airlock/external/glass,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -1788,6 +1832,13 @@
 /area/map_template/changeling_nest/pod)
 "wW" = (
 /turf/unsimulated/wall/fakeglass,
+/area/map_template/changeling_nest)
+"xh" = (
+/obj/item/card/id/science,
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
 /area/map_template/changeling_nest)
 "xj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -2236,6 +2287,15 @@
 	name = "plating"
 	},
 /area/map_template/changeling_nest)
+"BU" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "cult";
+	name = "plating"
+	},
+/area/map_template/changeling_nest)
 "Ck" = (
 /obj/paint/pink,
 /turf/simulated/wall/titanium,
@@ -2459,6 +2519,7 @@
 "EY" = (
 /obj/structure/table/woodentable,
 /obj/item/dice/d20,
+/obj/item/card/emag,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -2489,6 +2550,9 @@
 /area/map_template/changeling_nest/crab/maintenance)
 "Fn" = (
 /obj/structure/closet/smuggler,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -2822,6 +2886,9 @@
 /area/map_template/changeling_nest/tug)
 "IP" = (
 /obj/structure/closet/wardrobe/yellow,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -3343,10 +3410,6 @@
 	dir = 10
 	},
 /obj/structure/catwalk,
-/obj/machinery/door/airlock/external/glass/bolted/cycling{
-	id_tag = "handpodone_port_shuttle_dock_exterior_door";
-	frequency = 1431
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3354,6 +3417,7 @@
 	pixel_y = 0
 	},
 /obj/shuttle_landmark/changeling/pod,
+/obj/machinery/door/airlock/external/glass,
 /turf/simulated/floor/plating,
 /area/map_template/changeling_nest)
 "Qi" = (
@@ -3657,6 +3721,14 @@
 	name = "plating"
 	},
 /area/map_template/changeling_nest)
+"UK" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/map_template/changeling_nest)
 "UO" = (
 /obj/structure/cable/green,
 /obj/machinery/power/apc{
@@ -3815,6 +3887,10 @@
 "Xt" = (
 /obj/structure/table/woodentable,
 /obj/item/storage/box/cups,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/card/union,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -3842,6 +3918,9 @@
 /area/map_template/changeling_nest)
 "XF" = (
 /obj/structure/closet/wardrobe/hand,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -4016,6 +4095,7 @@
 "ZN" = (
 /obj/structure/table/woodentable,
 /obj/item/reagent_containers/food/snacks/milosoup,
+/obj/item/card/id/syndicate,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -5753,7 +5833,7 @@ NI
 ur
 af
 af
-af
+bQ
 af
 af
 af
@@ -5986,7 +6066,7 @@ ac
 af
 af
 af
-af
+BU
 af
 ac
 aa
@@ -6521,15 +6601,15 @@ ac
 ac
 ac
 fQ
-af
+xh
 af
 af
 xw
-af
+kY
 Ae
 ac
 ad
-ad
+nw
 ae
 ad
 ad
@@ -6670,7 +6750,7 @@ aa
 ak
 CZ
 xV
-bQ
+af
 af
 af
 iC
@@ -6760,7 +6840,7 @@ af
 Vz
 ac
 ad
-ad
+UK
 ad
 ad
 ad
@@ -6831,9 +6911,9 @@ ac
 KN
 af
 af
+pt
 af
-af
-af
+ff
 yc
 ac
 ac
@@ -6916,7 +6996,7 @@ gu
 aa
 ac
 af
-af
+bQ
 ac
 aa
 aa
@@ -7214,7 +7294,7 @@ aa
 ac
 af
 af
-af
+bQ
 af
 af
 tB
@@ -7300,7 +7380,7 @@ ak
 aa
 aa
 ac
-af
+td
 af
 ac
 aa
@@ -7609,7 +7689,7 @@ EZ
 nL
 ac
 af
-af
+gY
 ac
 aa
 aa
@@ -8071,7 +8151,7 @@ Hn
 Yx
 ur
 af
-af
+BU
 ac
 aa
 aa

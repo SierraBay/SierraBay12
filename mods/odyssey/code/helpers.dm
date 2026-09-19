@@ -84,11 +84,25 @@
 	)
 
 
+/// Snapshots the clean DMM once so later roundend saves still diff against it, not against an already-applied world.
+/proc/odyssey_ensure_persist_baselines(overwrite = FALSE)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (state.persist_baselines_ready && !overwrite)
+		return TRUE
+	odyssey_capture_turf_baseline(TRUE)
+	odyssey_capture_object_baselines(TRUE)
+	odyssey_capture_mech_baseline(TRUE)
+	state.persist_baselines_ready = TRUE
+	return TRUE
+
+
 /// Assigns reproducible ids to clean-map objects before a continued save is applied.
 /proc/odyssey_capture_object_baselines(force = FALSE)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active && !force)
 		return FALSE
+	if (!force && islist(state.machinery_baseline) && length(state.machinery_baseline))
+		return TRUE
 	var/list/machines = list()
 	var/list/structures = list()
 	var/list/ordinals = list()

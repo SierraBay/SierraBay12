@@ -14,6 +14,7 @@
 #include "code/save_economy.dm"
 #include "code/save_newscast.dm"
 #include "code/save_shuttles.dm"
+#include "code/save_corpses.dm"
 #include "code/roster.dm"
 #include "code/crew_manifest.dm"
 #include "code/persist.dm"

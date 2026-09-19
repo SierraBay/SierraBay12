@@ -71,52 +71,68 @@
 	return entries
 
 
+/proc/odyssey_apply_structure_destroy_entry(list/entry)
+	if (!islist(entry) || entry["action"] != "destroyed")
+		return FALSE
+	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
+	if (!S)
+		S = odyssey_find_structure_for_entry(entry)
+	if (!S)
+		return FALSE
+	odyssey_index_remove(odyssey_ensure_state().persist_index_structures, entry["id"])
+	qdel(S)
+	return TRUE
+
+
+/proc/odyssey_apply_structure_entry(list/entry)
+	if (!islist(entry) || entry["action"] == "destroyed")
+		return FALSE
+	var/path = text2path(entry["type"])
+	var/turf/T = odyssey_locate_turf(entry)
+	if (!ispath(path, /obj/structure) || !T)
+		return FALSE
+	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
+	if (!S && entry["action"] == "created")
+		S = new path(T)
+	if (!S || !odyssey_structure_whitelisted(S))
+		return FALSE
+	S.odyssey_persist_id = entry["id"]
+	odyssey_index_put(odyssey_ensure_state().persist_index_structures, entry["id"], S)
+	if (get_turf(S) != T)
+		S.forceMove(T)
+	if (!isnull(entry["dir"]))
+		S.set_dir(entry["dir"])
+	if (entry["name"])
+		S.SetName(entry["name"])
+	if (!isnull(entry["anchored"]))
+		S.anchored = !!entry["anchored"]
+	if (istype(S, /obj/structure/catwalk))
+		odyssey_apply_catwalk_state(S, entry)
+	S.update_icon()
+	return TRUE
+
+
 /proc/odyssey_apply_structures(list/entries)
 	if (!islist(entries))
 		return
 	var/applied = 0
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] != "destroyed")
-			continue
-		var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
-		if (!S)
-			S = odyssey_find_structure_for_entry(entry)
-		if (S)
-			qdel(S)
+		if (odyssey_apply_structure_destroy_entry(entry))
 			applied++
 	for (var/list/entry in entries)
-		if (!islist(entry) || entry["action"] == "destroyed")
-			continue
-		var/path = text2path(entry["type"])
-		var/turf/T = odyssey_locate_turf(entry)
-		if (!ispath(path, /obj/structure) || !T)
-			continue
-		var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
-		if (!S && entry["action"] == "created")
-			S = new path(T)
-		if (!S || !odyssey_structure_whitelisted(S))
-			continue
-		S.odyssey_persist_id = entry["id"]
-		if (get_turf(S) != T)
-			S.forceMove(T)
-		if (!isnull(entry["dir"]))
-			S.set_dir(entry["dir"])
-		if (entry["name"])
-			S.SetName(entry["name"])
-		if (!isnull(entry["anchored"]))
-			S.anchored = !!entry["anchored"]
-		if (istype(S, /obj/structure/catwalk))
-			odyssey_apply_catwalk_state(S, entry)
-		S.update_icon()
-		applied++
+		if (odyssey_apply_structure_entry(entry))
+			applied++
 	log_debug("ODYSSEY: apply_structures applied=[applied]/[length(entries)]")
 
 
 /proc/odyssey_find_structure_by_id(id)
 	if (!id)
 		return null
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (islist(state.persist_index_structures))
+		return odyssey_index_get(state.persist_index_structures, id)
 	for (var/obj/structure/S in world)
-		if (S.odyssey_persist_id == id)
+		if (!QDELETED(S) && S.odyssey_persist_id == id)
 			return S
 	return null
 

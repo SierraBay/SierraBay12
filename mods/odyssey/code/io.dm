@@ -92,3 +92,31 @@
 	meta["archive_reason"] = reason
 	odyssey_write_meta(meta)
 	log_game("ODYSSEY: campaign archived status=[status] reason=[reason]")
+
+
+/// Admin-only: mark an archived campaign active again so continue can load it.
+/proc/odyssey_reactivate_campaign_meta()
+	var/list/meta = odyssey_load_meta()
+	if (!islist(meta))
+		return FALSE
+	meta["active"] = TRUE
+	meta["status"] = ODYSSEY_STATUS_ACTIVE
+	meta["outcome_reason"] = null
+	meta["archived_at"] = null
+	meta["archive_reason"] = null
+	if (!odyssey_write_meta(meta))
+		return FALSE
+	log_game("ODYSSEY: campaign reactivated id=[meta["campaign_id"]]")
+	return TRUE
+
+
+/proc/odyssey_continue_fail_reason()
+	var/list/meta = odyssey_load_meta()
+	if (!islist(meta))
+		return "нет файла [odyssey_meta_path()]"
+	if (!meta["active"])
+		return "кампания неактивна: [meta["status"] || "?"] ([meta["archive_reason"] || meta["outcome_reason"] || "без причины"])"
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (length(state.validation_errors))
+		return json_encode(state.validation_errors)
+	return "сейв отклонён при загрузке (status=[state.status])"

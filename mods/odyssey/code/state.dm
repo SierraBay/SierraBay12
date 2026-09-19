@@ -44,6 +44,8 @@ var/global/datum/odyssey_state/odyssey
 	var/list/machinery_baseline
 	var/list/structure_baseline
 	var/list/mech_baseline
+	/// TRUE after the clean-map persist baselines were taken this round. Blocks recapture after apply.
+	var/persist_baselines_ready = FALSE
 	var/next_object_id = 1
 	/// Campaign sleeper traitors keyed by "ckey|slot".
 	var/list/sleepers
@@ -66,6 +68,10 @@ var/global/datum/odyssey_state/odyssey
 	var/list/abandoned_shuttles
 	/// Last validation errors shown in the admin panel.
 	var/list/validation_errors
+	/// Temporary id → atom maps used during apply. Cleared after apply.
+	var/list/persist_index_machinery
+	var/list/persist_index_structures
+	var/list/persist_index_mechs
 
 
 /datum/odyssey_state/New()
@@ -90,3 +96,54 @@ var/global/datum/odyssey_state/odyssey
 
 /proc/odyssey_meta_path()
 	return "[ODYSSEY_DATA_DIR]_[odyssey_map_key()]_campaign.json"
+
+
+/proc/odyssey_build_persist_index()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/list/machines = list()
+	var/list/structures = list()
+	var/list/mechs = list()
+	for (var/obj/O in world)
+		if (QDELETED(O) || !O.odyssey_persist_id)
+			continue
+		if (istype(O, /obj/machinery))
+			machines[O.odyssey_persist_id] = O
+		else if (istype(O, /obj/structure))
+			structures[O.odyssey_persist_id] = O
+	for (var/mob/living/exosuit/M in world)
+		if (QDELETED(M) || !M.odyssey_persist_id)
+			continue
+		mechs[M.odyssey_persist_id] = M
+	state.persist_index_machinery = machines
+	state.persist_index_structures = structures
+	state.persist_index_mechs = mechs
+	log_debug("ODYSSEY: persist index machinery=[length(machines)] structures=[length(structures)] mechs=[length(mechs)]")
+
+
+/proc/odyssey_clear_persist_index()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	state.persist_index_machinery = null
+	state.persist_index_structures = null
+	state.persist_index_mechs = null
+
+
+/proc/odyssey_index_get(list/index, id)
+	if (!id || !islist(index))
+		return null
+	var/atom/A = index[id]
+	if (QDELETED(A))
+		index -= id
+		return null
+	return A
+
+
+/proc/odyssey_index_put(list/index, id, atom/A)
+	if (!id || !islist(index) || QDELETED(A))
+		return
+	index[id] = A
+
+
+/proc/odyssey_index_remove(list/index, id)
+	if (!id || !islist(index))
+		return
+	index -= id
