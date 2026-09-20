@@ -30,6 +30,8 @@
 	for(var/obj/overmap/visitable/candidate in T)
 		if(istype(candidate, /obj/overmap/visitable/star))
 			continue
+		if(candidate.advanced_landing_forbidden)
+			continue
 		if(candidate.map_z)
 			waypoints += candidate
 	return waypoints
@@ -224,7 +226,7 @@
 			var/datum/shuttle/shuttle_datum = SSshuttle.shuttles[shuttle_name]
 			if(area_oko in shuttle_datum.shuttle_area)
 				for(var/turf/simulated/T in turf)
-					var/image/I = image('mods/utility_items/icons/alphacolors.dmi', origin, "red")
+					var/image/I = image('mods/advanced_landing/icons/alphacolors.dmi', origin, "red")
 					var/x_off = T.x - origin.x
 					var/y_off = T.y - origin.y
 					I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
@@ -248,17 +250,14 @@
 		var/zone_good = FALSE
 		I.loc = T
 		shadow_images += I
-		if(T && !(T.density))
-			for(var/type in accesible_areas)
-				if(A.type in typesof(type))
-					zone_good = TRUE
-			if(zone_good)
-				I.icon_state = "blue"
-			else
-				I.icon_state = "red"
-		else
+		if(!T || !A || T.density)
 			I.icon_state = "red"
 			landable = FALSE
+			continue
+		for(var/type in accesible_areas)
+			if(A.type in typesof(type))
+				zone_good = TRUE
+		I.icon_state = zone_good ? "blue" : "red"
 	if(landable)
 		return landable
 
@@ -315,13 +314,15 @@
 						else
 							c.saved_landmarks -= l
 							qdel(l)
-					if(c.check_zone())
-						var/turf/eyeturf = get_turf(c.oko)
-						var/turf/T = locate(eyeturf.x + c.landmarkx_off, eyeturf.y + c.landmarky_off , eyeturf.z)
-						landmark = new (T, src)
-						c.saved_landmarks += landmark
-						c.shuttle_type.set_destination(landmark)
-						c.shuttle_type.next_location.image_shadow = c.shadow_images
+					if(!c.check_zone())
+						to_chat(src, SPAN_WARNING("This spot cannot be used as a landing site."))
+						continue
+					var/turf/eyeturf = get_turf(c.oko)
+					var/turf/T = locate(eyeturf.x + c.landmarkx_off, eyeturf.y + c.landmarky_off , eyeturf.z)
+					landmark = new (T, src)
+					c.saved_landmarks += landmark
+					c.shuttle_type.set_destination(landmark)
+					c.shuttle_type.next_location.image_shadow = c.shadow_images
 
 /turf
 	var/prev_type
