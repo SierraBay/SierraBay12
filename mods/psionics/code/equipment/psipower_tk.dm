@@ -92,7 +92,6 @@
 			if(!focus.anchored)
 				var/user_rank = owner.psi.get_rank(PSI_PSYCHOKINESIS)
 				if(target == user && !ishuman(focus))
-					user.swap_hand()
 					user.throw_mode_on()
 					focus.throw_at(target, user_rank*2, 1, owner)
 					qdel_self()
