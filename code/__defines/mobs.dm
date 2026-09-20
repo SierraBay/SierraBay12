@@ -402,6 +402,9 @@
 #define AURA_TYPE_THROWN "Thrown"
 /// Aura checks during mob life. Generally called by `/mob/living/Life()`. Results in `/obj/aura/proc/aura_check_life()`.
 #define AURA_TYPE_LIFE   "Life"
+/// [SIERRA-ADD] - Aura checks for fistfight. Generally called by `/mob/living/carbon/human/attack_hand`. Results in `/obj/aura/proc/aura_check_unarmed()`.
+#define AURA_TYPE_UNARMED   "Unarmed"
+// [/SIERRA-ADD]
 
 #define SPECIES_BLOOD_DEFAULT 560
 

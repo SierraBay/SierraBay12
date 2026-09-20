@@ -2,7 +2,7 @@
 	id = PSI_COERCION
 	name = "Coercion"
 	associated_intent = I_DISARM
-	armour_types = list(DAMAGE_PSIONIC)
+	armour_types = list(DAMAGE_PSIONIC, "melee")
 
 /singleton/psionic_power/coercion
 	faculty = PSI_COERCION
@@ -17,7 +17,7 @@
 		to_chat(user, SPAN_WARNING("Вы не можете пробиться в сознание [target]."))
 		return FALSE
 
-	if(. && target.deflect_psionic_attack(user))
+	if(. && target.psi?.deflect_psionic_attack(user))
 		return FALSE
 
 /singleton/psionic_power/coercion/blindstrike

@@ -14,12 +14,6 @@
 		ui.update_icon()
 	cancel()
 
-/datum/psi_complexus/proc/get_armour(armourtype)
-	if(use_psi_armour && can_use_passive())
-		return round(clamp(clamp(4 * rating, 0, 20) * get_rank(SSpsi.armour_faculty_by_type[armourtype]), 0, 100) * (stamina/max_stamina))
-	else
-		return 0
-
 /datum/psi_complexus/proc/get_rank(faculty)
 	return LAZYACCESS(ranks, faculty)
 
@@ -37,9 +31,13 @@
 	ui.update_icon()
 
 /datum/psi_complexus/proc/can_use_passive()
+	if(rating == PSI_RANK_GRANDMASTER)
+		return (!suppressed && !stun)
 	return (owner.stat == CONSCIOUS && !suppressed && !stun)
 
 /datum/psi_complexus/proc/can_use(incapacitation_flags)
+	if(rating == PSI_RANK_GRANDMASTER)
+		return (!suppressed && !stun && world.time >= next_power_use)
 	return (owner.stat == CONSCIOUS && (!incapacitation_flags || !owner.incapacitated(incapacitation_flags)) && !suppressed && !stun && world.time >= next_power_use)
 
 /datum/psi_complexus/proc/spend_power(value = 0, check_incapacitated)
@@ -59,6 +57,13 @@
 		ui.update_icon()
 
 /datum/psi_complexus/proc/spend_power_armor(value = 0)
+	if(owner.is_species(/singleton/species/human/mule))
+		var/mutt_buff = 0.6
+		var/mob/living/carbon/human/H = owner
+		for(var/obj/item/organ/external/E in H.organs)
+			if(E.status & ORGAN_MUTATED)
+				mutt_buff -= 0.05
+		value *= abs(mutt_buff)
 	armor_cost += value
 
 /datum/psi_complexus/proc/hide_auras()
@@ -116,3 +121,23 @@
 	stamina = min(stamina, max_stamina)
 	cancel()
 	update()
+
+/datum/psi_complexus/proc/check_armour(armourtype)
+	if(suppressed || !use_psi_armour)
+		return FALSE
+	for(var/faculties in ranks)
+		var/singleton/psionic_faculty/faculty = SSpsi.get_faculty(faculties)
+		for(var/armour in faculty.armour_types)
+			if(armour == armourtype)
+				return ranks[faculties]
+
+/datum/psi_complexus/proc/deflect_psionic_attack(mob/living/carbon/human/attacker)
+	var/blocked = check_armour(DAMAGE_PSIONIC) * 20
+	if(istype(attacker))
+		blocked = 20 * (check_armour(DAMAGE_PSIONIC) - attacker.psi?.check_armour(DAMAGE_PSIONIC))
+	if(prob(blocked))
+		if(attacker)
+			to_chat(attacker, SPAN_WARNING("Твое ментальное воздействие отражено с помощью защиты [src]!"))
+			to_chat(src, SPAN_DANGER("[attacker] ментально на тебя воздействует, но ты отражаешь его атаку!"))
+		return TRUE
+	return FALSE

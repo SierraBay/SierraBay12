@@ -335,7 +335,7 @@
 #include "code\datums\extensions\appearance\cardborg.dm"
 #include "code\datums\extensions\armor\ablative.dm"
 #include "code\datums\extensions\armor\armor.dm"
-#include "code\datums\extensions\armor\armor_psionic.dm"
+//#include "code\datums\extensions\armor\armor_psionic.dm"
 #include "code\datums\extensions\armor\armor_rig.dm"
 #include "code\datums\extensions\flame\flame_source.dm"
 #include "code\datums\extensions\holster\holster.dm"

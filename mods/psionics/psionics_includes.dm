@@ -8,7 +8,7 @@
 #include "code/misc/foundation_misc.dm"
 #include "code/misc/psi_plane.dm"
 #include "code/misc/psi_structures.dm"
-#include "code/misc/background.dm"
+#include "code/misc/armour.dm"
 
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
