@@ -51,6 +51,9 @@
 
 	// It also means they can do the old school cartoon schtick of eating an entire sandwich
 	// and spitting up an empty plate. Ptooie.
+	// [SIERRA-EDIT] - NYMPH_DEVOUR - (Only snacks are edible. Drinking glasses and condiment
+	// bottles are /food subtypes too and were being destroyed instead of held)
+	/*
 	if(istype(holding_item, /obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/food = holding_item
 		holding_item = null
@@ -59,6 +62,14 @@
 			if (snack.trash)
 				holding_item = new snack.trash(src)
 		qdel(food)
+	*/ // SIERRA-EDIT - ORIGINAL
+	if(istype(holding_item, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/snack = holding_item
+		holding_item = null
+		if (snack.trash)
+			holding_item = new snack.trash(src)
+		qdel(snack)
+	// [/SIERRA-EDIT]
 
 	if(!QDELETED(holding_item))
 		holding_item.equipped(src)
