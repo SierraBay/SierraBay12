@@ -381,12 +381,67 @@
 	if(!H || H.stat == DEAD)
 		return
 
-	if(donor_species)
-		H.set_species(donor_species, 1)
+	var/singleton/species/old_species = H.species
+	var/singleton/species/new_species = GLOB.species_by_name[donor_species]
+	if(new_species && H.species != new_species)
+		// Здесь пытаюсь изменить расу, при этом оставляя протезы, языки и т.д на местах
+		H.species.remove_base_auras(H)
+		H.species.remove_inherent_verbs(H)
+		LAZYINITLIST(H.traits)
+		H.traits -= H.species.traits
+		H.species = new_species
+		H.species.handle_pre_spawn(H)
+		H.traits |= H.species.traits
+		H.species.handle_post_spawn(H)
+		H.holder_type = H.species.holder_type
+		H.current_grab_type = all_grabobjects[H.species.grab_type]
+		H.icon_state = lowertext(H.species.name)
+		H.mob_size = H.species.mob_size
+		H.maxHealth = H.species.total_health
+		H.available_maneuvers = H.species.maneuvers.Copy()
+		remove_extension(H, /datum/extension/armor)
+		if(H.species.natural_armour_values)
+			set_extension(H, /datum/extension/armor, H.species.natural_armour_values)
+
+		H.default_pixel_x = initial(H.pixel_x) + H.species.pixel_offset_x
+		H.default_pixel_y = initial(H.pixel_y) + H.species.pixel_offset_y
+		H.default_pixel_z = initial(H.pixel_z) + H.species.pixel_offset_z
+		H.pixel_x = H.default_pixel_x
+		H.pixel_y = H.default_pixel_y
+		H.pixel_z = H.default_pixel_z
+		H.meat_type = H.species.meat_type
+		H.meat_amount = H.species.meat_amount
+		H.skin_material = H.species.skin_material
+		H.skin_amount = H.species.skin_amount
+		H.bone_material = H.species.bone_material
+		H.bone_amount = H.species.bone_amount
+
+		H.default_walk_intent = null
+		H.default_run_intent = null
+		H.move_intent = null
+		H.move_intents = H.species.move_intents.Copy()
+		H.set_move_intent(GET_SINGLETON(H.move_intents[1]))
+		if(!istype(H.move_intent))
+			H.set_next_usable_move_intent()
+		H.vessel.maximum_volume = H.species.blood_volume
+		for(var/datum/reagent/blood/B in H.vessel.reagent_list)
+			B.volume *= H.species.blood_volume / max(old_species.blood_volume, 1)
+		H.vessel.update_total()
+		if(H.client)
+			H.Login()
+		H.update_emotes()
 
 	if(donor_dna)
 		H.dna = donor_dna.Clone()
 		H.b_type = H.dna.b_type
+		H.base_skin = H.dna.base_skin
+		for(var/datum/reagent/blood/B in H.vessel.reagent_list)
+			if(B.type == /datum/reagent/blood)
+				B.data["species"] = H.species.name
+				B.data["blood_DNA"] = H.dna.unique_enzymes
+				B.data["blood_type"] = H.dna.b_type
+				B.data["blood_colour"] = H.species.get_blood_colour(H)
+				B.color = B.data["blood_colour"]
 
 	H.gender = donor_gender
 	H.pronouns = donor_pronouns
@@ -398,6 +453,8 @@
 	if(donor_icon_render_keys && islist(donor_icon_render_keys))
 		H.icon_render_keys = donor_icon_render_keys.Copy()
 
+	if(H.species != old_species)
+		update_organs(H, old_species)
 	H.sync_organ_dna()
 
 	H.real_name = donor_name
@@ -457,6 +514,64 @@
 			to_chat(target, SPAN_NOTICE("Ты чувствуешь себя... странно, тебе потребуется время чтобы привыкнуть к этому телу"))
 
 	clear_donor_data()
+
+/obj/item/reagent_containers/syringe/genome_reconfigurator/proc/update_organs(mob/living/carbon/human/H, singleton/species/old_species)
+	for(var/organ_tag in (old_species.has_organ | H.species.has_organ))
+		var/obj/item/organ/internal/old_organ = H.internal_organs_by_name[organ_tag]
+		// Оставляю протезы и аугменты
+		if(old_organ && (BP_IS_ROBOTIC(old_organ) || BP_IS_ASSISTED(old_organ) || istype(old_organ, /obj/item/organ/internal/augment)))
+			continue
+		if(!old_organ && (organ_tag in old_species.has_organ))
+			continue
+		var/obj/item/organ/internal/organ_type = H.species.has_organ[organ_tag]
+		if(!organ_type)
+			qdel(old_organ)
+			continue
+		if(!H.get_organ(initial(organ_type.parent_organ)))
+			continue
+
+		if(istype(old_organ, /obj/item/organ/internal/brain))
+			var/obj/item/organ/internal/brain/brain = old_organ
+			var/health_scale = H.species.total_health / old_species.total_health
+			brain.set_max_damage(brain.max_damage * health_scale)
+			brain.damage *= health_scale
+		if(istype(old_organ, /obj/item/organ/internal/lungs))
+			var/obj/item/organ/internal/lungs/lungs = old_organ
+			lungs.oxygen_deprivation *= H.species.total_health / old_species.total_health
+		if(istype(old_organ, /obj/item/organ/internal/eyes))
+			var/obj/item/organ/internal/eyes/eyes = old_organ
+			eyes.flash_mod = H.species.flash_mod
+			eyes.darksight_range = H.species.darksight_range
+			eyes.darksight_tint = H.species.darksight_tint
+		if(old_organ && old_organ.type == organ_type)
+			continue
+
+		var/obj/item/organ/internal/new_organ = new organ_type(H)
+		if(old_organ)
+			new_organ.damage = old_organ.damage
+			new_organ.status = old_organ.status
+			new_organ.germ_level = old_organ.germ_level
+			new_organ.death_time = old_organ.death_time
+			new_organ.rejecting = old_organ.rejecting
+			if(istype(old_organ, /obj/item/organ/internal/lungs) && istype(new_organ, /obj/item/organ/internal/lungs))
+				var/obj/item/organ/internal/lungs/old_lungs = old_organ
+				var/obj/item/organ/internal/lungs/new_lungs = new_organ
+				new_lungs.oxygen_deprivation = old_lungs.oxygen_deprivation
+				new_lungs.active_breathing = old_lungs.active_breathing
+			if(istype(old_organ, /obj/item/organ/internal/brain) && istype(new_organ, /obj/item/organ/internal/brain))
+				var/obj/item/organ/internal/brain/old_brain = old_organ
+				var/obj/item/organ/internal/brain/new_brain = new_organ
+				new_brain.set_max_damage(old_brain.max_damage)
+				new_brain.oxygen_reserve = old_brain.oxygen_reserve
+				new_brain.healed_threshold = old_brain.healed_threshold
+				new_brain.fake_brain = old_brain.fake_brain
+				new_brain.brainmob = old_brain.brainmob
+				old_brain.brainmob = null
+			for(var/atom/movable/contained in old_organ.contents)
+				contained.forceMove(new_organ)
+			qdel(old_organ)
+		new_organ.organ_tag = organ_tag
+		H.internal_organs_by_name[organ_tag] = new_organ
 
 /obj/item/reagent_containers/syringe/genome_reconfigurator/syringestab(mob/living/carbon/target, mob/living/carbon/user)
 	if(used_for_transformation)

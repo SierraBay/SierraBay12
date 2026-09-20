@@ -84,6 +84,18 @@
 	avalon_coats["Avalon consular's coat (red trim)"] = /obj/item/clothing/suit/storage/dominia/consular/coat/red
 	gear_tweaks += new/datum/gear_tweak/path(avalon_coats)
 
+/datum/gear/suit/blazer
+	display_name = "blazer selection"
+	path = /obj/item/clothing/suit/storage/toggle/color/blazer
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/suit/blazer/New()
+	. = ..()
+	var/list/options = list()
+	options["blazer"] = /obj/item/clothing/suit/storage/toggle/color/blazer
+	options["long blazer"] = /obj/item/clothing/suit/storage/toggle/color/blazer/long
+	gear_tweaks += new/datum/gear_tweak/path(options)
+
 /datum/gear/suit/cyan_jacket
 	display_name = "stylish cyan jacket"
 	path = /obj/item/clothing/suit/storage/toggle/cyan_jacket
@@ -124,3 +136,14 @@
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/darkr
 	asarobes += /obj/item/clothing/suit/storage/hooded/asamblee/femine
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(asarobes)
+
+/datum/gear/suit/punk_jacket
+	display_name = "leather jacket selection"
+	path = /obj/item/clothing/suit/storage/punk_jacket
+
+/datum/gear/suit/punk_jacket/New()
+	..()
+	var/punk_jacket = list()
+	punk_jacket["classic leather jacket"] = /obj/item/clothing/suit/storage/punk_jacket
+	punk_jacket["punk jacket"] = /obj/item/clothing/suit/storage/punk_jacket/edgy
+	gear_tweaks += new/datum/gear_tweak/path(punk_jacket)
