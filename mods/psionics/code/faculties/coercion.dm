@@ -8,16 +8,12 @@
 	faculty = PSI_COERCION
 	abstract_type = /singleton/psionic_power/coercion
 
-/singleton/psionic_power/coercion/invoke(mob/living/user, mob/living/target)
+/singleton/psionic_power/coercion/invoke(mob/living/user, atom/target)
 	. = ..()
 	if (!.)
 		return FALSE
 
 	if (!istype(target))
-		to_chat(user, SPAN_WARNING("Вы не можете пробиться в сознание [target]."))
-		return FALSE
-
-	if(. && target.psi?.deflect_psionic_attack(user))
 		return FALSE
 
 /singleton/psionic_power/coercion/blindstrike
@@ -28,7 +24,7 @@
 	min_rank =       PSI_RANK_OPERANT
 	use_description = "Выберите глаза и переключитесь на синий интент. Затем, нажмите куда угодно чтобы применить круговую атаку, слепящую и оглушающую всех, кто оказался поблизости."
 
-/singleton/psionic_power/coercion/blindstrike/invoke(mob/living/user, mob/living/target)
+/singleton/psionic_power/coercion/blindstrike/invoke(mob/living/user, atom/target)
 	if(user.zone_sel.selecting != BP_EYES)
 		return FALSE
 	. = ..()
@@ -40,6 +36,8 @@
 			if(M == user)
 				continue
 			if(M.disrupts_psionics())
+				return
+			if(M.psi?.deflect_psionic_attack(user))
 				return
 			if(prob(cn_rank * 20) && iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -79,6 +77,8 @@
 		return FALSE
 	if(isrobot(target))
 		return FALSE
+	if(target.psi?.deflect_psionic_attack(user))
+		return TRUE
 	. = ..()
 	if(.)
 
@@ -145,6 +145,8 @@
 		return FALSE
 	if(user.zone_sel.selecting != BP_GROIN)
 		return FALSE
+	if(target.psi?.deflect_psionic_attack(user))
+		return TRUE
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("\ [target] дотрагивается к [user]"))
@@ -168,6 +170,9 @@
 
 	if(!(user.zone_sel.selecting in list(BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND)))
 		return FALSE
+
+	if(target.psi?.deflect_psionic_attack(user))
+		return TRUE
 
 	. = ..()
 

@@ -26,11 +26,11 @@
 		check_weight = (victim.mob_size >= MOB_MEDIUM)
 	else if(isobj(_focus))
 		var/obj/thing = _focus
-		check_weight = (thing.w_class >= 5)
+		check_weight = (thing.w_class >= ITEM_SIZE_HUGE)
 	else
 		return FALSE
 
-	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_MASTER)
+	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_OPERANT)
 		focus = _focus
 		. = attack_self(owner)
 		if(!.)
@@ -52,7 +52,7 @@
 	user.visible_message(SPAN_NOTICE("\The [user] показывает странный жест."))
 	sparkle()
 	if (focus.do_simple_ranged_interaction(user))
-		return focus.do_simple_ranged_interaction(user)
+		return TRUE
 	else
 		focus.attack_hand(user)
 
@@ -95,10 +95,11 @@
 					user.swap_hand()
 					user.throw_mode_on()
 					focus.throw_at(target, user_rank*2, 1, owner)
+					qdel_self()
 				else
 					var/skill = (user.get_skill_value(SKILL_HAULING) - SKILL_MIN)/(SKILL_MAX - SKILL_MIN)
 					if(ishuman(focus))
-						if(user_rank >= PSI_RANK_OPERANT)
+						if(user_rank <= PSI_RANK_OPERANT)
 							to_chat(user, SPAN_NOTICE("Слишком тяжело."))
 							return
 						var/mob/living/carbon/human/H = focus
