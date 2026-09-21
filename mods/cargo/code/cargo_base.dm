@@ -41,109 +41,162 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 		saved_shopping_lists = null
 	return ..()
 
+/datum/computer_file/program/supply_base/proc/GetStationKey(station_ref = station)
+	if(istype(station_ref, /datum/trading_station))
+		var/datum/trading_station/target_station = station_ref
+		return target_station.uid || "[target_station.type]"
+	if(istext(station_ref))
+		return station_ref
+	return null
+
 /datum/computer_file/program/supply_base/proc/ClearShopList(list/target_list)
 	if(!islist(target_list))
 		return
-	for(var/datum/trading_station/target_station as anything in target_list)
-		var/list/categories = target_list[target_station]
-		if(islist(categories))
-			for(var/category_name in categories)
-				var/list/goods = categories[category_name]
-				if(islist(goods))
-					goods.Cut()
-			categories.Cut()
+	for(var/station_key in target_list)
+		var/list/sub = target_list[station_key]
+		if(islist(sub))
+			for(var/entry in sub)
+				var/list/inner = sub[entry]
+				if(islist(inner))
+					inner.Cut()
+			sub.Cut()
 	target_list.Cut()
 
 /datum/computer_file/program/supply_base/proc/CopyShopList(list/source)
 	var/list/copied = list()
 	if(!islist(source))
 		return copied
-	for(var/datum/trading_station/target_station as anything in source)
-		var/list/categories = source[target_station]
-		if(!islist(categories))
+	for(var/station_key in source)
+		var/list/sub = source[station_key]
+		if(!islist(sub))
 			continue
-		var/list/category_copy = list()
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods))
-				continue
-			category_copy[category_name] = goods.Copy()
-		if(length(category_copy))
-			copied[target_station] = category_copy
+		var/list/sub_copy = list()
+		for(var/key in sub)
+			var/val = sub[key]
+			if(islist(val))
+				var/list/val_list = val
+				sub_copy[key] = val_list.Copy()
+			else
+				sub_copy[key] = val
+		var/target_key = istype(station_key, /datum/trading_station) ? GetStationKey(station_key) : station_key
+		copied[target_key] = sub_copy
 	return copied
 
-/datum/computer_file/program/supply_base/proc/OpenShopList(datum/trading_station/target_station = station, target_category = chosen_category)
-	if(!istype(target_station) || !target_category)
+/datum/computer_file/program/supply_base/proc/OpenShopList(station_ref = station, target_category = chosen_category)
+	var/station_key = GetStationKey(station_ref)
+	if(!station_key)
 		return null
-	if(!islist(shopping_list[target_station]))
-		shopping_list[target_station] = list()
-	var/list/categories = shopping_list[target_station]
-	if(!islist(categories[target_category]))
-		categories[target_category] = list()
-	return categories[target_category]
+	if(!islist(shopping_list[station_key]))
+		shopping_list[station_key] = list()
+	return shopping_list[station_key]
 
-/datum/computer_file/program/supply_base/proc/GetShopList(datum/trading_station/target_station = station, target_category = chosen_category)
-	if(!istype(target_station) || !target_category || !islist(shopping_list))
+/datum/computer_file/program/supply_base/proc/GetShopList(station_ref = station, target_category = chosen_category)
+	var/station_key = GetStationKey(station_ref)
+	if(!station_key || !islist(shopping_list))
 		return null
-	var/list/categories = shopping_list[target_station]
-	if(!islist(categories))
+	var/list/cart = shopping_list[station_key] || (istype(station_ref, /datum/trading_station) ? shopping_list[station_ref] : null)
+	if(!islist(cart))
 		return null
-	return categories[target_category]
+	if(target_category && islist(cart[target_category]))
+		return cart[target_category]
+	return cart
 
 /datum/computer_file/program/supply_base/proc/SanitizeShopList()
-	for(var/datum/trading_station/target_station as anything in shopping_list.Copy())
+	if(!islist(shopping_list))
+		return
+	for(var/station_key in shopping_list.Copy())
+		var/datum/trading_station/target_station = SSsupply ? SSsupply.ResolveStation(station_key) : null
 		if(!istype(target_station) || QDELETED(target_station))
-			shopping_list -= target_station
+			shopping_list -= station_key
 			continue
-		var/list/categories = shopping_list[target_station]
-		if(!islist(categories))
-			shopping_list -= target_station
+		var/list/cart = shopping_list[station_key]
+		if(!islist(cart))
+			shopping_list -= station_key
 			continue
-		for(var/category_name in categories.Copy())
-			var/list/goods = categories[category_name]
-			if(!islist(goods) || !length(goods))
-				categories -= category_name
-		if(!length(categories))
-			shopping_list -= target_station
+		for(var/item_key in cart.Copy())
+			var/val = cart[item_key]
+			if(isnum(val))
+				var/datum/trade_offer/offer = target_station.GetOffer(item_key)
+				if(val < 1 || !offer || (offer.hidden && !target_station.hidden_inv_unlocked))
+					cart -= item_key
+			else if(islist(val))
+				var/list/val_list = val
+				var/category_name = item_key
+				var/list/cat_offers = islist(target_station.offers_by_category) ? target_station.offers_by_category[category_name] : null
+				var/list/cat_inv = islist(target_station.inventory) ? target_station.inventory[category_name] : null
+				if(!islist(cat_offers) && !islist(cat_inv))
+					cart -= item_key
+					continue
+				for(var/g_id in val_list.Copy())
+					var/datum/trade_offer/offer = target_station.GetOffer(g_id)
+					var/valid_item = FALSE
+					if(offer)
+						if(!offer.hidden || target_station.hidden_inv_unlocked)
+							if(offer.category == category_name || (islist(cat_offers) && (offer.id in cat_offers)))
+								valid_item = TRUE
+					else if(islist(cat_inv) && (g_id in cat_inv))
+						if(target_station.hidden_inv_unlocked || !islist(target_station.hidden_inventory) || !islist(target_station.hidden_inventory[category_name]) || !(g_id in target_station.hidden_inventory[category_name]))
+							valid_item = TRUE
+					if(val_list[g_id] < 1 || !valid_item)
+						val_list -= g_id
+				if(!length(val_list))
+					cart -= item_key
+		if(!length(cart))
+			shopping_list -= station_key
 
-/datum/computer_file/program/supply_base/proc/AddToShopList(good_id, amount, limit)
+/datum/computer_file/program/supply_base/proc/AddToShopList(good_id, amount, limit, station_ref = station)
 	if(!good_id || !isnum(amount) || isnan(amount) || amount <= 0)
 		return
-	var/list/inventory_list = OpenShopList()
-	if(!islist(inventory_list))
+	var/station_key = GetStationKey(station_ref)
+	if(!station_key)
 		return
-	var/target_amount = (inventory_list[good_id] || 0) + round(amount)
+	if(!islist(shopping_list[station_key]))
+		shopping_list[station_key] = list()
+	var/list/cart = shopping_list[station_key]
+	var/target_amount = (cart[good_id] || 0) + round(amount)
 	if(limit && target_amount > limit)
 		target_amount = limit
-	inventory_list[good_id] = target_amount
+	cart[good_id] = target_amount
 
-/datum/computer_file/program/supply_base/proc/RemoveFromShopList(good_id, amount, datum/trading_station/target_station = station, target_category = chosen_category)
+/datum/computer_file/program/supply_base/proc/RemoveFromShopList(good_id, amount, station_ref = station, target_category = chosen_category)
 	if(!good_id || !isnum(amount) || isnan(amount) || amount <= 0)
 		return
-	var/list/inventory_list = OpenShopList(target_station, target_category)
-	if(!islist(inventory_list) || !(good_id in inventory_list))
+	var/station_key = GetStationKey(station_ref)
+	if(!station_key)
 		return
-	inventory_list[good_id] -= round(amount)
-	if(inventory_list[good_id] < 1)
-		inventory_list -= good_id
+	var/list/cart = shopping_list[station_key]
+	if(islist(cart) && (good_id in cart))
+		cart[good_id] -= round(amount)
+		if(cart[good_id] < 1)
+			cart -= good_id
+		if(!length(cart))
+			shopping_list -= station_key
+	else if(istype(station_ref, /datum/trading_station) && islist(shopping_list[station_ref]))
+		var/list/leg_cats = shopping_list[station_ref]
+		if(target_category && islist(leg_cats[target_category]))
+			var/list/leg_goods = leg_cats[target_category]
+			if(good_id in leg_goods)
+				leg_goods[good_id] -= round(amount)
+				if(leg_goods[good_id] < 1)
+					leg_goods -= good_id
 	SanitizeShopList()
 
-/datum/computer_file/program/supply_base/proc/SetInShopList(good_id, amount, limit, datum/trading_station/target_station = station, target_category = chosen_category)
+/datum/computer_file/program/supply_base/proc/SetInShopList(good_id, amount, limit, station_ref = station, target_category = chosen_category)
 	if(!good_id || !isnum(amount) || isnan(amount))
 		return
 	if(amount <= 0)
-		var/list/inventory_list = GetShopList(target_station, target_category)
-		if(islist(inventory_list))
-			inventory_list -= good_id
-			SanitizeShopList()
+		RemoveFromShopList(good_id, 999999, station_ref, target_category)
 		return
+	var/station_key = GetStationKey(station_ref)
+	if(!station_key)
+		return
+	if(!islist(shopping_list[station_key]))
+		shopping_list[station_key] = list()
+	var/list/cart = shopping_list[station_key]
 	var/target_amount = round(amount)
-	var/list/inventory_list = OpenShopList(target_station, target_category)
-	if(!islist(inventory_list))
-		return
 	if(limit && target_amount > limit)
 		target_amount = limit
-	inventory_list[good_id] = target_amount
+	cart[good_id] = target_amount
 
 /datum/computer_file/program/supply_base/proc/ResetShopList()
 	if(shopping_list)
@@ -202,8 +255,16 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 			var/name = saved_shopping_lists[index]
 			var/list/loaded = LoadShopList(name)
 			if(islist(loaded))
-				ResetShopList()
+				var/count_before = SSsupply ? SSsupply.CollectCountsFrom(loaded) : 0
+				var/list/backup = shopping_list
 				shopping_list = loaded
+				SanitizeShopList()
+				var/count_after = SSsupply ? SSsupply.CollectCountsFrom(shopping_list) : 0
+				if(!length(shopping_list) || count_after != count_before)
+					shopping_list = backup
+					return FALSE
+				if(backup != shopping_list)
+					ClearShopList(backup)
 				return TRUE
 	return FALSE
 
@@ -396,14 +457,12 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	var/obj/item/stock_parts/computer/card_slot/card_slot = computer ? computer.get_component(PART_CARD) : null
 	return istype(card_slot) ? card_slot.stored_card : null
 
-/datum/computer_file/program/supply_base/proc/GetGoodIconBase64(item_path)
+/datum/computer_file/program/supply_base/proc/GetGoodIconAsset(item_path)
 	if(!ispath(item_path, /atom/movable))
 		return ""
 	var/cached = GLOB.cargo_item_icon_cache[item_path]
 	if(!isnull(cached))
 		return cached
-	if(!GLOB.iconCache)
-		return ""
 	var/atom/movable/dummy = item_path
 	var/item_icon = initial(dummy.icon)
 	var/item_state = initial(dummy.icon_state)
@@ -423,10 +482,10 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	if(!isicon(I))
 		GLOB.cargo_item_icon_cache[item_path] = ""
 		return ""
-	var/b64 = icon2base64(I, "cargo_[md5("[item_path]")]")
-	var/icon_url = b64 ? "data:image/png;base64,[b64]" : ""
-	GLOB.cargo_item_icon_cache[item_path] = icon_url
-	return icon_url
+	var/asset_name = "cargo_icon_[md5("[item_path]")].png"
+	register_asset(asset_name, I)
+	GLOB.cargo_item_icon_cache[item_path] = asset_name
+	return asset_name
 
 /datum/computer_file/program/supply_base/proc/GetCategoryIcon(category_name)
 	switch(lowertext(category_name))
@@ -486,7 +545,7 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 		)))
 	return result
 
-/datum/computer_file/program/supply_base/proc/SerializeGoods(datum/trading_station/target_station = null)
+/datum/computer_file/program/supply_base/proc/SerializeGoods(datum/trading_station/target_station = null, mob/user = null)
 	var/list/result = list()
 	if(!istype(target_station))
 		target_station = station
@@ -500,21 +559,32 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	if(block_reason)
 		return result
 	var/can_add_goods = CanAddGoodsToCart()
-	var/list/category_cart = islist(shopping_list[target_station]) ? shopping_list[target_station][chosen_category] : null
+	var/station_key = target_station.uid || "[target_station.type]"
+	var/list/station_cart = islist(shopping_list[station_key]) ? shopping_list[station_key] : (islist(shopping_list[target_station]) ? shopping_list[target_station] : null)
+	var/list/assets_to_send = list()
 	for(var/good_id in category)
-		var/path = target_station.GetGoodPath(chosen_category, good_id)
+		var/datum/trade_offer/offer = target_station.GetOffer(good_id)
+		var/path = offer ? offer.item_path : target_station.GetGoodPath(chosen_category, good_id)
 		if(!ispath(path, /atom/movable))
 			continue
-		var/stock = target_station.GetGoodAmount(chosen_category, good_id)
-		var/basic_price = SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
+		var/stock = offer ? offer.stock : target_station.GetGoodAmount(chosen_category, good_id)
+		var/basic_price = offer ? offer.base_price : SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
 		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
 		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, faction, chosen_category)
-		var/in_cart = islist(category_cart) ? (category_cart[good_id] || 0) : 0
+		var/in_cart = 0
+		if(islist(station_cart))
+			if(isnum(station_cart[good_id]))
+				in_cart = station_cart[good_id]
+			else if(islist(station_cart[chosen_category]))
+				in_cart = station_cart[chosen_category][good_id] || 0
 		var/atom/movable/item_type = path
 		var/desc_text = initial(item_type.desc) || ""
+		var/icon_asset = GetGoodIconAsset(path)
+		if(icon_asset)
+			assets_to_send |= icon_asset
 		result.Add(list(list(
 			"id" = good_id,
-			"name" = target_station.GetGoodName(chosen_category, good_id),
+			"name" = offer ? offer.name : target_station.GetGoodName(chosen_category, good_id),
 			"desc" = desc_text,
 			"stock" = stock,
 			"price" = round(price, 0.01),
@@ -522,9 +592,11 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 			"markup_text" = GetGoodMarkupText(basic_price, price),
 			"can_add" = can_add_goods && stock > 0,
 			"quantity_form_open" = ("[goods_quantity_target]" == "[good_id]"),
-			"icon" = GetGoodIconBase64(path),
+			"icon" = icon_asset,
 			"in_cart_amount" = in_cart
 		)))
+	if(user && user.client && length(assets_to_send))
+		send_asset_list(user.client, assets_to_send, FALSE)
 	return result
 
 /datum/computer_file/program/supply_base/proc/SerializeShopListGroups(list/shop_list, buyer_faction = null, list/price_snapshot = null)
@@ -534,41 +606,16 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	if(isnull(buyer_faction))
 		buyer_faction = faction
 
-	for(var/datum/trading_station/target_station as anything in shop_list)
-		var/list/categories = shop_list[target_station]
-		if(!istype(target_station) || !islist(categories))
+	for(var/station_key in shop_list)
+		var/datum/trading_station/target_station = SSsupply ? SSsupply.ResolveStation(station_key) : null
+		if(!istype(target_station))
+			continue
+		var/list/cart = shop_list[station_key]
+		if(!islist(cart))
 			continue
 
-		var/list/category_entries = list()
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods) || !length(goods))
-				continue
-
-			var/list/item_entries = list()
-			for(var/good_id in goods)
-				var/amount = goods[good_id]
-				if(!isnum(amount) || amount < 1)
-					continue
-				var/unit_price = SSsupply.GetStationBuyPrice(good_id, target_station, buyer_faction, category_name)
-				if(islist(price_snapshot))
-					var/snapshot_price = SSsupply.GetSnapshotUnitPrice(price_snapshot, target_station, category_name, good_id)
-					if(isnum(snapshot_price))
-						unit_price = snapshot_price
-				item_entries.Add(list(list(
-					"good_id" = good_id,
-					"name" = target_station.GetGoodName(category_name, good_id),
-					"amount" = amount,
-					"unit_price" = round(unit_price, 0.01),
-					"price" = round(unit_price * amount, 0.01),
-					"category_name" = category_name,
-					"station_uid" = target_station.uid
-				)))
-			if(length(item_entries))
-				category_entries.Add(list(list(
-					"name" = category_name,
-					"items" = item_entries
-				)))
+		var/list/categories = GroupCartEntriesByCategory(cart, target_station)
+		var/list/category_entries = SerializeCategoryEntries(categories, target_station, buyer_faction, price_snapshot)
 		if(length(category_entries))
 			result.Add(list(list(
 				"station_uid" = target_station.uid,
@@ -576,6 +623,53 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 				"categories" = category_entries
 			)))
 	return result
+
+/datum/computer_file/program/supply_base/proc/GroupCartEntriesByCategory(list/cart, datum/trading_station/target_station)
+	var/list/grouped = list()
+	for(var/key in cart)
+		var/val = cart[key]
+		if(islist(val))
+			grouped[key] = val
+		else if(isnum(val) && val > 0)
+			var/datum/trade_offer/offer = target_station.GetOffer(key)
+			var/cat_name = offer ? (offer.category || "General") : "General"
+			if(!islist(grouped[cat_name]))
+				grouped[cat_name] = list()
+			var/list/cat_items = grouped[cat_name]
+			cat_items[key] = val
+	return grouped
+
+/datum/computer_file/program/supply_base/proc/SerializeCategoryEntries(list/categories, datum/trading_station/target_station, buyer_faction, list/price_snapshot)
+	var/list/category_entries = list()
+	for(var/category_name in categories)
+		var/list/goods = categories[category_name]
+		if(!islist(goods) || !length(goods))
+			continue
+		var/list/item_entries = list()
+		for(var/good_id in goods)
+			var/amount = goods[good_id]
+			if(!isnum(amount) || amount < 1)
+				continue
+			var/unit_price = SSsupply.GetStationBuyPrice(good_id, target_station, buyer_faction, category_name)
+			if(islist(price_snapshot))
+				var/snapshot_price = SSsupply.GetSnapshotUnitPrice(price_snapshot, target_station, category_name, good_id)
+				if(isnum(snapshot_price))
+					unit_price = snapshot_price
+			item_entries.Add(list(list(
+				"good_id" = good_id,
+				"name" = target_station.GetGoodName(category_name, good_id),
+				"amount" = amount,
+				"unit_price" = round(unit_price, 0.01),
+				"price" = round(unit_price * amount, 0.01),
+				"category_name" = category_name,
+				"station_uid" = target_station.uid
+			)))
+		if(length(item_entries))
+			category_entries.Add(list(list(
+				"name" = category_name,
+				"items" = item_entries
+			)))
+	return category_entries
 
 /datum/computer_file/program/supply_base/proc/FormatCountdown(deciseconds)
 	if(!isnum(deciseconds))
@@ -598,10 +692,12 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	cart_form_mode = null
 
 /datum/computer_file/program/supply_base/proc/OpenCartForm(mode)
-	if(mode != "save" && mode != "order")
-		return
-	cart_form_mode = mode
-	goods_quantity_target = null
+	switch(mode)
+		if("save", "order", "link_account", "link_id_account", "select_receiving", "select_sending", "save_order")
+			cart_form_mode = mode
+			goods_quantity_target = null
+		else
+			return
 
 /datum/computer_file/program/supply_base/proc/HandleCartRemove(list/href_list)
 	var/datum/trading_station/target_station = SSsupply.GetStationByUid(href_list["PRG_cart_remove_direct"])

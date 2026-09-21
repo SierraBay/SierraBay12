@@ -1770,6 +1770,33 @@
 									{{/if}}
 									{{:helper.link('Link via PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 								</div>
+								{{if data.cart_form_mode == 'link_account'}}
+									<div class="tn-form-shell" style="margin-top: 8px;">
+										<form class="tn-form" method="get" action="?src={{:data.src}}">
+											<input type="hidden" name="src" value="{{:data.src}}">
+											<div class="tn-panel-label" style="width: 100%;">Account Number:</div>
+											<input type="number" name="PRG_link_account_number" value="{{if data.can_link_id_account}}{{:data.available_id_account_number}}{{/if}}" placeholder="Account #" required style="width: 100%;">
+											<div class="tn-panel-label" style="width: 100%; margin-top: 4px;">PIN:</div>
+											<input type="password" name="PRG_link_account_pin" value="" placeholder="PIN" required style="width: 100%;">
+											<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+												<input type="submit" value="Link Account" class="tn-btn tn-btn-primary">
+												{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+											</div>
+										</form>
+									</div>
+								{{else data.cart_form_mode == 'link_id_account'}}
+									<div class="tn-form-shell" style="margin-top: 8px;">
+										<form class="tn-form" method="get" action="?src={{:data.src}}">
+											<input type="hidden" name="src" value="{{:data.src}}">
+											<div class="tn-panel-label" style="width: 100%;">Enter PIN for ID Card Account (#{{:data.available_id_account_number}}):</div>
+											<input type="password" name="PRG_link_id_pin" value="" placeholder="PIN" required style="width: 100%;">
+											<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+												<input type="submit" value="Verify PIN" class="tn-btn tn-btn-primary">
+												{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+											</div>
+										</form>
+									</div>
+								{{/if}}
 							{{/if}}
 						</div>
 
@@ -2010,6 +2037,33 @@
 									{{:helper.link('Link via Account # and PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 								{{/if}}
 							</div>
+							{{if data.cart_form_mode == 'link_account'}}
+								<div class="tn-form-shell" style="margin-top: 8px;">
+									<form class="tn-form" method="get" action="?src={{:data.src}}">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<div class="tn-panel-label" style="width: 100%;">Account Number:</div>
+										<input type="number" name="PRG_link_account_number" value="{{if data.can_link_id_account}}{{:data.available_id_account_number}}{{/if}}" placeholder="Account #" required style="width: 100%;">
+										<div class="tn-panel-label" style="width: 100%; margin-top: 4px;">PIN:</div>
+										<input type="password" name="PRG_link_account_pin" value="" placeholder="PIN" required style="width: 100%;">
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+											<input type="submit" value="Link Account" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{else data.cart_form_mode == 'link_id_account'}}
+								<div class="tn-form-shell" style="margin-top: 8px;">
+									<form class="tn-form" method="get" action="?src={{:data.src}}">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<div class="tn-panel-label" style="width: 100%;">Enter PIN for ID Card Account (#{{:data.available_id_account_number}}):</div>
+										<input type="password" name="PRG_link_id_pin" value="" placeholder="PIN" required style="width: 100%;">
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+											<input type="submit" value="Verify PIN" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{/if}}
 						</div>
 					</div>
 

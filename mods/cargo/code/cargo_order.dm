@@ -65,35 +65,41 @@
 		account = null
 		authenticated_via_card = FALSE
 
-/datum/computer_file/program/supply_order/proc/PromptLinkAccount(mob/user)
+/datum/computer_file/program/supply_order/proc/PromptLinkAccount(mob/user, list/href_list)
+	var/account_number = text2num(href_list["PRG_link_account_number"])
+	var/account_pin = text2num(href_list["PRG_link_account_pin"])
+	if(!isnum(account_number) || !isnum(account_pin))
+		OpenCartForm("link_account")
+		return TRUE
+	if(!account_number || !account_pin)
+		to_chat(user, SPAN_WARNING("Account number and PIN are required."))
+		return TRUE
 	var/obj/item/card/id/id_card = GetAvailableIdCard(user)
-	var/default_number = id_card ? id_card.associated_account_number : null
-	var/account_number = input(user, "Enter account number.", "Account Link", default_number) as num|null
-	if(!account_number)
-		return TRUE
-	var/account_pin = input(user, "Enter PIN.", "Account Link") as num|null
-	if(!account_pin)
-		return TRUE
 	var/card_check = istype(id_card) && id_card.associated_account_number == account_number
 	var/datum/money_account/linked_account = attempt_account_access(account_number, account_pin, card_check ? 2 : 1)
 	if(!linked_account)
 		to_chat(user, SPAN_WARNING("Unable to link account: access denied."))
+		CloseCartForm()
 		return TRUE
 	if(linked_account.suspended)
 		to_chat(user, SPAN_WARNING("Unable to link account: account is suspended."))
+		CloseCartForm()
 		return TRUE
 	if(!card_check && linked_account.account_type != ACCOUNT_TYPE_PERSONAL)
 		to_chat(user, SPAN_WARNING("Public ordering terminals only allow linking personal accounts without physical ID card verification."))
+		CloseCartForm()
 		return TRUE
 	if(linked_account.security_level == 0 && !card_check)
 		to_chat(user, SPAN_WARNING("Accounts with level 0 security require a matching physical ID card to be verified."))
+		CloseCartForm()
 		return TRUE
 	account = linked_account
 	authenticated_via_card = card_check ? TRUE : FALSE
 	to_chat(user, SPAN_NOTICE("Account #[account.account_number] linked successfully."))
+	CloseCartForm()
 	return TRUE
 
-/datum/computer_file/program/supply_order/proc/LinkInsertedIdAccount(mob/user)
+/datum/computer_file/program/supply_order/proc/LinkInsertedIdAccount(mob/user, list/href_list)
 	var/obj/item/card/id/id_card = GetAvailableIdCard(user)
 	if(!istype(id_card))
 		to_chat(user, SPAN_WARNING("Insert or equip an ID card first."))
@@ -110,16 +116,19 @@
 		return TRUE
 	var/account_pin = 0
 	if(target_account.security_level > 0)
-		account_pin = input(user, "Enter PIN for account #[id_card.associated_account_number]:", "Account Verification") as num|null
-		if(!account_pin)
+		account_pin = text2num(href_list["PRG_link_id_pin"])
+		if(!isnum(account_pin) || !account_pin)
+			OpenCartForm("link_id_account")
 			return TRUE
 	var/datum/money_account/linked_account = attempt_account_access(id_card.associated_account_number, account_pin, 2)
 	if(!linked_account)
 		to_chat(user, SPAN_WARNING("Unable to link account: access denied."))
+		CloseCartForm()
 		return TRUE
 	account = linked_account
 	authenticated_via_card = TRUE
 	to_chat(user, SPAN_NOTICE("Account #[account.account_number] linked successfully."))
+	CloseCartForm()
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/UnlinkAccount(mob/user)
@@ -147,8 +156,9 @@
 		return "Please wait for the ordering cooldown to expire."
 	if(account.money < totals["total"])
 		return "Insufficient account balance to cover items and handling fee."
-	for(var/datum/trading_station/target_station as anything in shopping_list)
-		if(QDELETED(target_station))
+	for(var/station_key in shopping_list)
+		var/datum/trading_station/target_station = SSsupply.ResolveStation(station_key)
+		if(!istype(target_station) || QDELETED(target_station))
 			return "One of the stations in your cart is no longer available."
 		var/station_block = GetStationTradeBlockReason(target_station)
 		if(station_block)
@@ -259,7 +269,7 @@
 	data["saved_carts"] = SerializeSavedCarts()
 	data["orders_filter"] = orders_filter
 
-/datum/computer_file/program/supply_order/proc/BuildGoodsScreenData(list/data)
+/datum/computer_file/program/supply_order/proc/BuildGoodsScreenData(list/data, mob/user = null)
 	var/datum/trading_station/selected_station = EnsureSelectedStation()
 	var/list/stations = SerializeVisibleStations()
 	data["has_visible_stations"] = length(stations) ? TRUE : FALSE
@@ -275,7 +285,7 @@
 		)
 		if(!block_reason)
 			data["categories"] = SerializeCategories(selected_station)
-			data["goods"] = SerializeGoods(selected_station)
+			data["goods"] = SerializeGoods(selected_station, user)
 		else
 			data["categories"] = list()
 			data["goods"] = list()
@@ -352,10 +362,10 @@
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/HandleAccountTopic(mob/user, list/href_list)
-	if("PRG_account" in href_list)
-		return PromptLinkAccount(user)
-	if("PRG_account_id" in href_list)
-		return LinkInsertedIdAccount(user)
+	if(("PRG_account" in href_list) || ("PRG_link_account_number" in href_list))
+		return PromptLinkAccount(user, href_list)
+	if(("PRG_account_id" in href_list) || ("PRG_link_id_pin" in href_list))
+		return LinkInsertedIdAccount(user, href_list)
 	if("PRG_account_unlink" in href_list)
 		return UnlinkAccount(user)
 	return FALSE
@@ -504,7 +514,7 @@
 
 	switch(current_tab)
 		if(SUPPLY_ORDER_TAB_GOODS)
-			BuildGoodsScreenData(data)
+			BuildGoodsScreenData(data, user)
 		if(SUPPLY_ORDER_TAB_CART)
 			BuildCartScreenData(data)
 		if(SUPPLY_ORDER_TAB_ORDERS)

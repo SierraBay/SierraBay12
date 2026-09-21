@@ -21,6 +21,11 @@
 	var/can_host_caravans = TRUE
 	var/is_mobile = FALSE
 
+	var/list/offers = list()
+	var/list/offers_by_category = list()
+	var/list/commodity_by_path = list()
+	var/list/hidden_offers = list()
+
 	var/list/inventory = list()
 	var/hidden_inv_unlocked = FALSE
 	var/list/hidden_inventory = list()
@@ -36,7 +41,6 @@
 	var/update_timer_start = 0
 	var/update_timer_id = null
 	var/next_update_at = 0
-	var/list/commodity_by_path = list()
 
 	var/obj/overmap/overmap_object
 	var/turf/overmap_location
@@ -215,11 +219,14 @@
 	var/max_x = map_high
 	var/min_y = map_low
 	var/max_y = map_high
-	if(recursive_list_len(forced_overmap_zone) == 6)
-		min_x = max(map_low, forced_overmap_zone[1][1])
-		max_x = min(map_high, forced_overmap_zone[1][2])
-		min_y = max(map_low, forced_overmap_zone[2][1])
-		max_y = min(map_high, forced_overmap_zone[2][2])
+	if(islist(forced_overmap_zone) && length(forced_overmap_zone) >= 2)
+		var/list/x_bounds = forced_overmap_zone[1]
+		var/list/y_bounds = forced_overmap_zone[2]
+		if(islist(x_bounds) && length(x_bounds) >= 2 && islist(y_bounds) && length(y_bounds) >= 2)
+			min_x = max(map_low, x_bounds[1])
+			max_x = min(map_high, x_bounds[2])
+			min_y = max(map_low, y_bounds[1])
+			max_y = min(map_high, y_bounds[2])
 
 	if(min_x > max_x || min_y > max_y)
 		return list()
@@ -397,27 +404,94 @@
 		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
 
 /datum/trading_station/proc/AssembleInventory()
-	NormalizeInventory(inventory)
-	NormalizeInventory(hidden_inventory)
 	NormalizeGoodsRecords()
-	BuildCommodityPathIndex()
+
+/datum/trading_station/proc/ResetOfferRegistries()
+	offers = list()
+	offers_by_category = list()
+	commodity_by_path = list()
+	hidden_offers = list()
+	amounts_of_goods = list()
+	unique_good_count = 0
+	next_good_offer_id = 0
+
+/datum/trading_station/proc/AddOffer(datum/trade_offer/offer)
+	if(!istype(offer))
+		return null
+	if(!offer.id)
+		offer.id = GenerateGoodOfferId()
+	offer.station = src
+	offers[offer.id] = offer
+	if(offer.hidden)
+		hidden_offers[offer.id] = offer
+	else
+		var/cat = offer.category || "General"
+		if(!islist(offers_by_category[cat]))
+			offers_by_category[cat] = list()
+		var/list/cat_offers = offers_by_category[cat]
+		cat_offers[offer.id] = offer
+		if(ispath(offer.item_path, /atom/movable) && !(offer.item_path in commodity_by_path))
+			commodity_by_path[offer.item_path] = offer
+		unique_good_count = length(offers)
+	return offer
+
+/datum/trading_station/proc/GetOffer(offer_id, include_hidden = FALSE)
+	if(!offer_id || !islist(offers))
+		return null
+	var/datum/trade_offer/offer = null
+	if(istype(offer_id, /datum/trade_offer))
+		offer = offer_id
+	else if(offers[offer_id])
+		offer = offers[offer_id]
+	else if(isnum(offer_id))
+		var/idx = round(offer_id)
+		if(idx >= 1 && idx <= length(offers))
+			offer = offers[offers[idx]]
+	else if(include_hidden && islist(hidden_offers) && hidden_offers[offer_id])
+		offer = hidden_offers[offer_id]
+	if(istype(offer))
+		if(offer.hidden && !hidden_inv_unlocked && !include_hidden)
+			return null
+		return offer
+	return null
+
+/datum/trading_station/proc/GetOfferByPath(item_path)
+	if(!ispath(item_path) || !islist(commodity_by_path))
+		return null
+	var/datum/trade_offer/offer = commodity_by_path[item_path]
+	if(istype(offer))
+		return offer
+	var/curr_type = item_path
+	while(curr_type && curr_type != /atom/movable && curr_type != /obj && curr_type != /mob)
+		offer = commodity_by_path[curr_type]
+		if(istype(offer))
+			commodity_by_path[item_path] = offer
+			return offer
+		curr_type = type2parent(curr_type)
+	return null
+
+/datum/trading_station/proc/GetOffersByCategory(category)
+	var/list/result = list()
+	if(!istext(category) || !islist(offers_by_category))
+		return result
+	var/list/cat_offers = offers_by_category[category]
+	if(!islist(cat_offers))
+		return result
+	for(var/id in cat_offers)
+		var/datum/trade_offer/offer = cat_offers[id]
+		if(istype(offer))
+			result += offer
+		else if(offers[id])
+			result += offers[id]
+	return result
 
 /datum/trading_station/proc/BuildCommodityPathIndex()
 	commodity_by_path = list()
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		if(!islist(category))
-			continue
-		for(var/good_id in category)
-			var/list/good_packet = category[good_id]
-			if(!islist(good_packet))
-				continue
-			var/item_path = good_packet["item_path"]
-			if(ispath(item_path) && !(item_path in commodity_by_path))
-				commodity_by_path[item_path] = list(
-					"category" = category_name,
-					"good_id" = good_id
-				)
+	for(var/id in offers)
+		var/datum/trade_offer/offer = offers[id]
+		if(istype(offer) && ispath(offer.item_path, /atom/movable))
+			if(!(offer.item_path in commodity_by_path))
+				commodity_by_path[offer.item_path] = offer
 
 /datum/trading_station/proc/NormalizeInventory(list/target_inventory)
 	if(!islist(target_inventory))
@@ -436,34 +510,84 @@
 		target_inventory[new_category_name] = content
 
 /datum/trading_station/proc/NormalizeGoodsRecords()
-	NormalizeGoodsRecordsFor(inventory)
-	NormalizeGoodsRecordsFor(hidden_inventory)
-	BuildCommodityPathIndex()
+	NormalizeInventory(inventory)
+	NormalizeInventory(hidden_inventory)
+	var/list/raw_inv = inventory
+	var/list/raw_hidden = hidden_inventory
+	ResetOfferRegistries()
+	inventory = raw_inv
+	hidden_inventory = raw_hidden
+	PopulateOffers()
+	inventory = offers_by_category
+	SyncAmountsOfGoods()
 
-/datum/trading_station/proc/NormalizeGoodsRecordsFor(list/target_inventory)
-	if(!islist(target_inventory))
-		return
-	for(var/category_name in target_inventory.Copy())
-		var/list/category = target_inventory[category_name]
-		if(!islist(category))
-			continue
-		target_inventory[category_name] = NormalizeGoodCategory(category)
+/datum/trading_station/proc/PopulateOffers()
+	if(islist(inventory))
+		for(var/category_name in inventory)
+			var/list/goods = inventory[category_name]
+			if(!islist(goods))
+				continue
+			for(var/good_ref in goods)
+				CreateOfferFromTemplate(category_name, good_ref, goods[good_ref], FALSE)
+	if(islist(hidden_inventory))
+		for(var/category_name in hidden_inventory)
+			var/list/goods = hidden_inventory[category_name]
+			if(!islist(goods))
+				continue
+			for(var/good_ref in goods)
+				CreateOfferFromTemplate(category_name, good_ref, goods[good_ref], TRUE)
 
-/datum/trading_station/proc/NormalizeGoodCategory(list/category)
-	var/list/normalized = list()
-	if(!islist(category))
-		return normalized
-	for(var/good_ref in category)
-		var/list/source_packet = category[good_ref]
-		var/item_path = null
-		if(islist(source_packet) && ispath(source_packet["item_path"], /atom/movable))
+/datum/trading_station/proc/CreateOfferFromTemplate(category_name, good_ref, source_packet, is_hidden = FALSE)
+	var/item_path = null
+	var/custom_name = null
+	var/custom_price = null
+	var/list/amount_range = null
+	if(islist(source_packet))
+		custom_name = source_packet["name"]
+		custom_price = source_packet["price"]
+		amount_range = source_packet["amount_range"]
+		if(ispath(source_packet["item_path"], /atom/movable))
 			item_path = source_packet["item_path"]
-		else if(ispath(good_ref, /atom/movable))
-			item_path = good_ref
-		if(!ispath(item_path, /atom/movable))
+	if(!item_path && ispath(good_ref, /atom/movable))
+		item_path = good_ref
+	if(!item_path && !custom_name)
+		return null
+	var/datum/trade_offer/offer = new(
+		new_id = GenerateGoodOfferId(),
+		new_item_path = item_path,
+		new_name = custom_name,
+		new_category = category_name,
+		new_base_price = custom_price,
+		new_station = src,
+		new_hidden = is_hidden
+	)
+	RollOfferStock(offer, amount_range, is_hidden)
+	AddOffer(offer)
+	return offer
+
+/datum/trading_station/proc/RollOfferStock(datum/trade_offer/offer, list/amount_range, is_hidden)
+	if(islist(amount_range) && length(amount_range) >= 2)
+		offer.stock = max(0, rand(amount_range[1], amount_range[2]))
+		offer.baseline_stock = max(1, round((amount_range[1] + amount_range[2]) / 2))
+	else
+		var/cost = offer.base_price || 100
+		var/min_val = is_hidden ? 1 : 5
+		var/max_val = max(min_val, round(30 / max(cost / 200, 1)))
+		offer.stock = max(0, rand(min_val, max_val))
+		offer.baseline_stock = max(1, offer.stock)
+
+/datum/trading_station/proc/SyncAmountsOfGoods()
+	amounts_of_goods = list()
+	for(var/category_name in offers_by_category)
+		var/list/cat_offers = offers_by_category[category_name]
+		if(!islist(cat_offers))
 			continue
-		normalized[GenerateGoodOfferId()] = BuildGoodPacket(item_path, source_packet)
-	return normalized
+		var/list/cat_amounts = list()
+		for(var/offer_id in cat_offers)
+			var/datum/trade_offer/offer = cat_offers[offer_id]
+			if(istype(offer))
+				cat_amounts[offer_id] = offer.stock
+		amounts_of_goods[category_name] = cat_amounts
 
 /datum/trading_station/proc/GenerateGoodOfferId()
 	return "good_[++next_good_offer_id]"
@@ -480,47 +604,31 @@
 	return good_packet
 
 /datum/trading_station/proc/InitGoods()
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
-		if(!islist(category))
-			continue
-		for(var/good_id in category)
-			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
-			var/list/rand_args = list(5, max(5, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
+	SyncAmountsOfGoods()
+	unique_good_count = length(offers)
 
 /datum/trading_station/proc/TryUnlockHiddenInv()
 	if(favor < unlock_favor || hidden_inv_unlocked)
 		return
-
 	hidden_inv_unlocked = TRUE
-	for(var/category_name in hidden_inventory)
-		var/list/category = hidden_inventory[category_name]
-		if(!istext(category_name) || !islist(category))
+	for(var/id in hidden_offers)
+		var/datum/trade_offer/offer = hidden_offers[id]
+		if(!istype(offer))
 			continue
-		if(!(category_name in inventory))
-			inventory[category_name] = list()
-		var/list/visible_category = inventory[category_name]
-		for(var/good_id in category)
-			visible_category[good_id] = category[good_id]
-			var/cost = SSsupply.GetStationRestockCost(good_id, src, category_name)
-			var/list/rand_args = list(1, max(1, round(30 / max(cost / 200, 1))))
-			var/list/good_packet = category[good_id]
-			if(islist(good_packet) && islist(good_packet["amount_range"]))
-				rand_args = good_packet["amount_range"]
-			if(!islist(amounts_of_goods[category_name]))
-				amounts_of_goods[category_name] = list()
-			var/list/content = amounts_of_goods[category_name]
-			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
-			unique_good_count += 1
-	BuildCommodityPathIndex()
+		offer.hidden = FALSE
+		var/cat = offer.category || "General"
+		if(!islist(offers_by_category[cat]))
+			offers_by_category[cat] = list()
+		var/list/cat_offers = offers_by_category[cat]
+		cat_offers[offer.id] = offer
+		if(ispath(offer.item_path, /atom/movable) && !(offer.item_path in commodity_by_path))
+			commodity_by_path[offer.item_path] = offer
+		if(!islist(amounts_of_goods[cat]))
+			amounts_of_goods[cat] = list()
+		var/list/cat_amounts = amounts_of_goods[cat]
+		cat_amounts[offer.id] = offer.stock
+	hidden_offers.Cut()
+	unique_good_count = length(offers)
 
 /datum/trading_station/proc/SpendTradeStationsBudget(budget = spawn_cost)
 	if(!spawn_always)
@@ -588,81 +696,97 @@
 /datum/trading_station/proc/GetGoodPacket(category_name, good_ref)
 	if(isnum(category_name))
 		category_name = inventory[category_name]
-	if(!istext(category_name) || !good_ref)
+	var/datum/trade_offer/offer = GetOffer(good_ref)
+	if(!offer && istext(category_name) && islist(offers_by_category[category_name]))
+		var/list/cat = offers_by_category[category_name]
+		if(isnum(good_ref) && good_ref >= 1 && good_ref <= length(cat))
+			offer = cat[cat[good_ref]]
+	if(istype(offer))
+		return list(
+			"item_path" = offer.item_path,
+			"name" = offer.name,
+			"desc" = offer.desc,
+			"price" = offer.base_price,
+			"amount_range" = list(offer.stock, offer.stock),
+			"offer" = offer
+		)
+	if(!istext(category_name) || !good_ref || !islist(inventory))
 		return null
 	var/list/category = inventory[category_name]
-	if(!islist(category))
-		return null
-	var/list/good_packet = category[good_ref]
-	return islist(good_packet) ? good_packet : null
+	return islist(category) ? category[good_ref] : null
 
 /datum/trading_station/proc/GetGoodPath(category_name, good_ref)
+	var/datum/trade_offer/offer = GetOffer(good_ref)
+	if(!offer && istext(category_name) && islist(offers_by_category[category_name]))
+		var/list/cat = offers_by_category[category_name]
+		if(isnum(good_ref) && good_ref >= 1 && good_ref <= length(cat))
+			offer = cat[cat[good_ref]]
+	if(istype(offer))
+		return ispath(offer.item_path, /atom/movable) ? offer.item_path : null
 	var/list/good_packet = GetGoodPacket(category_name, good_ref)
 	var/item_path = islist(good_packet) ? good_packet["item_path"] : null
 	return ispath(item_path, /atom/movable) ? item_path : null
 
 /datum/trading_station/proc/GetGoodName(category_name, good_ref)
+	var/datum/trade_offer/offer = GetOffer(good_ref)
+	if(!offer && istext(category_name) && islist(offers_by_category[category_name]))
+		var/list/cat = offers_by_category[category_name]
+		if(isnum(good_ref) && good_ref >= 1 && good_ref <= length(cat))
+			offer = cat[cat[good_ref]]
+	if(istype(offer))
+		return offer.name || "[good_ref]"
 	var/list/good_packet = GetGoodPacket(category_name, good_ref)
 	if(islist(good_packet) && good_packet["name"])
 		return good_packet["name"]
-	if(islist(good_packet) && good_packet["resolved_name"])
-		return good_packet["resolved_name"]
-	var/item_path = GetGoodPath(category_name, good_ref)
-	var/resolved_name = null
-	if(ispath(item_path, /atom/movable))
-		var/atom/movable/item_type = item_path
-		if(ispath(item_path, /obj/item/seeds) && item_path != /obj/item/seeds && item_path != /obj/item/seeds/random)
-			var/obj/item/seeds/seed_item = item_path
-			var/seed_key = initial(seed_item.seed_type)
-			if(seed_key)
-				if(!isnull(SSplants?.seeds) && SSplants.seeds[seed_key])
-					var/datum/seed/seed_datum = SSplants.seeds[seed_key]
-					if(seed_datum.seed_name && seed_datum.seed_noun)
-						var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
-						resolved_name = "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
-					else
-						resolved_name = "packet of [seed_key] seeds"
-				else
-					resolved_name = "packet of [seed_key] seeds"
-		else if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
-			var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
-			var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
-			if(ispath(reagent_type, /datum/reagent))
-				resolved_name = "[initial(cartridge.name)] ([initial(reagent_type.name)])"
-		if(!resolved_name)
-			resolved_name = initial(item_type.name)
-	if(islist(good_packet) && resolved_name)
-		good_packet["resolved_name"] = resolved_name
-	return resolved_name || "[good_ref]"
+	return "[good_ref]"
 
 /datum/trading_station/proc/GetGoodPrice(good_ref, category_name = null)
-	. = 0
+	var/datum/trade_offer/offer = GetOffer(good_ref)
+	if(!offer && istext(category_name) && islist(offers_by_category[category_name]))
+		var/list/cat = offers_by_category[category_name]
+		if(isnum(good_ref) && good_ref >= 1 && good_ref <= length(cat))
+			offer = cat[cat[good_ref]]
+	if(istype(offer))
+		return offer.base_price
 	var/list/good_packet = GetGoodPacket(category_name, good_ref)
 	if(islist(good_packet) && isnum(good_packet["price"]))
 		return good_packet["price"]
+	return 0
 
 /datum/trading_station/proc/GetGoodAmount(cat, good_index)
 	. = 0
 	if(isnum(cat))
 		cat = inventory[cat]
-	if(!istext(cat) || !islist(amounts_of_goods))
-		return
-	var/list/goods = amounts_of_goods[cat]
-	var/list/category = inventory[cat]
-	if(islist(goods) && islist(category))
-		var/good_id = isnum(good_index) ? category[good_index] : good_index
-		. = goods[good_id]
+	var/datum/trade_offer/offer = GetOffer(good_index)
+	if(!offer && istext(cat) && islist(offers_by_category[cat]))
+		var/list/cat_list = offers_by_category[cat]
+		if(isnum(good_index) && good_index >= 1 && good_index <= length(cat_list))
+			offer = cat_list[cat_list[good_index]]
+	if(istype(offer))
+		return offer.stock
+	if(istext(cat) && islist(amounts_of_goods))
+		var/list/goods = amounts_of_goods[cat]
+		var/list/category = inventory[cat]
+		if(islist(goods) && islist(category))
+			var/good_id = isnum(good_index) ? category[good_index] : good_index
+			. = goods[good_id] || 0
 
 /datum/trading_station/proc/SetGoodAmount(cat, index, value)
 	if(isnum(cat))
 		cat = inventory[cat]
-	if(!istext(cat) || !islist(amounts_of_goods))
-		return
-	var/list/goods = amounts_of_goods[cat]
-	var/list/category = inventory[cat]
-	if(islist(goods) && islist(category))
-		var/good_id = isnum(index) ? category[index] : index
-		goods[good_id] = value
+	var/datum/trade_offer/offer = GetOffer(index)
+	if(!offer && istext(cat) && islist(offers_by_category[cat]))
+		var/list/cat_list = offers_by_category[cat]
+		if(isnum(index) && index >= 1 && index <= length(cat_list))
+			offer = cat_list[cat_list[index]]
+	if(istype(offer) && isnum(value))
+		offer.stock = max(0, round(value))
+	if(istext(cat) && islist(amounts_of_goods))
+		var/list/goods = amounts_of_goods[cat]
+		var/list/category = inventory[cat]
+		if(islist(goods) && islist(category))
+			var/good_id = isnum(index) ? category[index] : index
+			goods[good_id] = isnum(value) ? max(0, round(value)) : value
 
 /datum/trading_station/proc/AddToWealth(income, is_offer = FALSE)
 	if(!isnum(income))
@@ -692,25 +816,40 @@
 		SSsupply.all_trading_stations -= src
 		SSsupply.visible_trading_stations -= src
 		SSsupply.hidden_trading_stations -= src
-	if(islist(inventory))
-		for(var/category_name in inventory)
-			var/list/goods = inventory[category_name]
-			if(islist(goods))
-				goods.Cut()
-		inventory.Cut()
-	if(islist(hidden_inventory))
-		for(var/category_name in hidden_inventory)
-			var/list/goods = hidden_inventory[category_name]
-			if(islist(goods))
-				goods.Cut()
-		hidden_inventory.Cut()
-	if(islist(amounts_of_goods))
-		for(var/category_name in amounts_of_goods)
-			var/list/goods = amounts_of_goods[category_name]
-			if(islist(goods))
-				goods.Cut()
-		amounts_of_goods.Cut()
+	DestroyOfferRegistries()
+	return ..()
+
+/datum/trading_station/proc/DestroyOfferRegistries()
+	if(islist(offers))
+		for(var/offer_id in offers)
+			var/datum/trade_offer/offer = offers[offer_id]
+			if(istype(offer))
+				qdel(offer)
+		offers.Cut()
+		offers = null
+	if(islist(hidden_offers))
+		for(var/offer_id in hidden_offers)
+			var/datum/trade_offer/offer = hidden_offers[offer_id]
+			if(istype(offer) && !QDELETED(offer))
+				qdel(offer)
+		hidden_offers.Cut()
+		hidden_offers = null
+	if(islist(offers_by_category))
+		for(var/category_name in offers_by_category)
+			var/list/cat_offers = offers_by_category[category_name]
+			if(islist(cat_offers))
+				cat_offers.Cut()
+		offers_by_category.Cut()
+		offers_by_category = null
 	if(islist(commodity_by_path))
 		commodity_by_path.Cut()
 		commodity_by_path = null
-	return ..()
+	if(islist(amounts_of_goods))
+		for(var/category_name in amounts_of_goods)
+			var/list/cat_amts = amounts_of_goods[category_name]
+			if(islist(cat_amts))
+				cat_amts.Cut()
+		amounts_of_goods.Cut()
+		amounts_of_goods = null
+	inventory = null
+	hidden_inventory = null

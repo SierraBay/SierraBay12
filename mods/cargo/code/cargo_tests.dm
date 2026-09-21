@@ -882,3 +882,211 @@
 	else
 		pass("Caravan rendezvous successfully dispenses, validates, and consumes encrypted intel disk.")
 	return 1
+
+/datum/unit_test/cargo_trade_offer_datum_test
+	name = "CARGO: Trade offer datum lifecycle and operations"
+
+/datum/unit_test/cargo_trade_offer_datum_test/start_test()
+	var/datum/trade_offer/offer = new("offer_test_1", /obj/item/pen, "Test Pen", "A pen", "Tools", 50, 10, 10, 0, list("writing" = TRUE))
+	var/fail_reason = null
+	if(offer.id != "offer_test_1" || offer.base_price != 50 || offer.stock != 10)
+		fail_reason = "Offer fields not initialized correctly."
+	else if(!offer.CanFulfill(5) || offer.CanFulfill(15))
+		fail_reason = "CanFulfill() logic incorrect."
+	else if(!offer.ConsumeStock(4) || offer.stock != 6)
+		fail_reason = "ConsumeStock() did not decrement stock properly."
+	else if(offer.ConsumeStock(10))
+		fail_reason = "ConsumeStock() allowed overdrawing stock."
+	else
+		offer.AdjustStock(5)
+		if(offer.stock != 11)
+			fail_reason = "AdjustStock() failed."
+		else
+			fail_reason = VerifyOfferCloningAndSerial(offer)
+	qdel(offer)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Trade offer datum lifecycle and operations function correctly.")
+	return 1
+
+/datum/unit_test/cargo_trade_offer_datum_test/proc/VerifyOfferCloningAndSerial(datum/trade_offer/offer)
+	var/datum/trade_offer/clone = offer.Duplicate("offer_test_2")
+	if(!clone || clone.id != "offer_test_2" || clone.stock != offer.stock)
+		qdel(clone)
+		return "Duplicate() failed."
+	var/list/data = clone.Serialize()
+	qdel(clone)
+	if(!islist(data) || data["id"] != "offer_test_2" || data["price"] != 50)
+		return "Serialize() did not return valid offer data."
+	return null
+
+/datum/unit_test/cargo_station_offer_registry_test
+	name = "CARGO: Trading station offer registry indexing"
+
+/datum/unit_test/cargo_station_offer_registry_test/start_test()
+	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	station.AssembleInventory()
+	var/fail_reason = null
+	if(!length(station.offers) || !length(station.offers_by_category))
+		fail_reason = "Offers registry empty after AssembleInventory()."
+	else
+		var/good_id = station.inventory["Alpha"][1]
+		var/datum/trade_offer/offer = station.GetOffer(good_id)
+		if(!offer || offer.id != good_id)
+			fail_reason = "GetOffer() failed to retrieve offer by ID."
+		else if(station.GetOfferByPath(/obj/item/pen) != offer)
+			fail_reason = "GetOfferByPath() failed to resolve pen offer."
+		else
+			var/list/cat_offers = station.GetOffersByCategory("Alpha")
+			if(!islist(cat_offers) || !(offer in cat_offers))
+				fail_reason = "GetOffersByCategory() did not return category offers."
+	qdel(station)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Station offer registry indexes offers and maintains category access.")
+	return 1
+
+/datum/unit_test/cargo_2level_cart_test
+	name = "CARGO: 2-level cart UID structure and extraction"
+
+/datum/unit_test/cargo_2level_cart_test/start_test()
+	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	station.AssembleInventory()
+	var/good_id = station.inventory["Alpha"][1]
+	var/list/cart = list()
+	var/datum/computer_file/program/supply/prog = new
+	prog.shopping_list = cart
+	prog.station = station
+	prog.AddToShopList(good_id, 3, 3, station)
+	var/fail_reason = null
+	if(!islist(cart[station.uid]) || cart[station.uid][good_id] != 3)
+		fail_reason = "AddToShopList() did not populate 2-level cart structure."
+	else if(SSsupply.CollectCountsFrom(cart) != 3)
+		fail_reason = "CollectCountsFrom() returned incorrect count for 2-level cart."
+	else
+		var/list/items = SSsupply.ExtractCartItems(cart)
+		if(!length(items) || items[1]["count"] != 3 || items[1]["station"] != station)
+			fail_reason = "ExtractCartItems() failed to normalize 2-level cart entry."
+	qdel(prog)
+	qdel(station)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("2-level cart structure functions correctly with helper procs.")
+	return 1
+
+/datum/unit_test/cargo_snapshot_security_test
+	name = "CARGO: Market snapshot rejects mismatched good IDs"
+
+/datum/unit_test/cargo_snapshot_security_test/start_test()
+	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	station.AssembleInventory()
+	var/good_id = station.inventory["Alpha"][1]
+	var/list/cart = list()
+	cart[station] = list("Alpha" = list(good_id = 1))
+	var/list/snap = SSsupply.BuildMarketSnapshot(cart, FACTION_INDEPENDENT)
+	var/fail_reason = null
+	var/valid_price = SSsupply.GetSnapshotUnitPrice(snap, station, "Alpha", good_id)
+	if(!valid_price)
+		fail_reason = "GetSnapshotUnitPrice() returned null for valid good_id."
+	else
+		var/bad_price = SSsupply.GetSnapshotUnitPrice(snap, station, "Alpha", "nonexistent_exploit_id")
+		if(!isnull(bad_price))
+			fail_reason = "GetSnapshotUnitPrice() returned price [bad_price] for nonexistent good_id!"
+	qdel(station)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Market snapshot securely returns null for invalid offer IDs.")
+	return 1
+
+/datum/unit_test/cargo_asset_cache_icon_test
+	name = "CARGO: Asset cache registers commodity icons as file references"
+
+/datum/unit_test/cargo_asset_cache_icon_test/start_test()
+	var/datum/computer_file/program/supply/prog = new
+	var/asset_name = prog.GetGoodIconAsset(/obj/item/wrench)
+	var/fail_reason = null
+	if(!asset_name || !istext(asset_name))
+		fail_reason = "GetGoodIconAsset() failed to generate asset name for /obj/item/wrench."
+	else if(!findtext(asset_name, "cargo_icon_"))
+		fail_reason = "GetGoodIconAsset() returned invalid asset filename format: [asset_name]"
+	else
+		var/singleton/asset_cache/asset_cache = GET_SINGLETON(/singleton/asset_cache)
+		if(!asset_cache.cache[asset_name])
+			fail_reason = "Asset [asset_name] was not registered in asset_cache singleton."
+	qdel(prog)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Commodity icon properly registered in asset cache without Base64 overhead.")
+	return 1
+
+/datum/unit_test/cargo_export_biological_containment_test
+	name = "CARGO: Export beacon detects biological matter at arbitrary nesting depths"
+
+/datum/unit_test/cargo_export_biological_containment_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	var/obj/structure/closet/crate/crate = new(safe_turf)
+	var/obj/item/storage/backpack/backpack = new(crate)
+	var/obj/item/storage/box/box = new(backpack)
+	var/mob/living/simple_animal/passive/mouse/mouse = new(box)
+
+	var/fail_reason = null
+	if(!SSsupply.HasLivingOccupants(crate))
+		fail_reason = "HasLivingOccupants() failed to detect living mob nested at depth 4."
+	else if(SSsupply.CanExportAtom(crate))
+		fail_reason = "CanExportAtom() allowed export of crate with deeply nested living mob."
+
+	qdel(mouse)
+	qdel(box)
+	qdel(backpack)
+	qdel(crate)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Biological containment correctly rejects arbitrarily nested living occupants.")
+	return 1
+
+/datum/unit_test/cargo_contract_circular_reference_test
+	name = "CARGO: Contract and crate/disk references clean up cooperatively on deletion"
+
+/datum/unit_test/cargo_contract_circular_reference_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	var/obj/structure/closet/crate/trade_contract/crate = new(safe_turf)
+	var/datum/trade_contract/contract = new
+	crate.linked_contract = contract
+	contract.assigned_crate = crate
+
+	var/fail_reason = null
+	qdel(crate)
+	if(!isnull(contract.assigned_crate))
+		fail_reason = "Deleting crate failed to clear contract.assigned_crate reference."
+
+	var/obj/item/disk/trade_data/disk = new(safe_turf)
+	var/datum/trade_contract/caravan_rendezvous/caravan_contract = new
+	disk.linked_contract = caravan_contract
+	caravan_contract.assigned_disk = disk
+
+	qdel(disk)
+	if(!isnull(caravan_contract.assigned_disk))
+		fail_reason = "Deleting disk failed to clear caravan_contract.assigned_disk reference."
+
+	var/obj/structure/closet/crate/trade_contract/crate2 = new(safe_turf)
+	contract.assigned_crate = crate2
+	crate2.linked_contract = contract
+	qdel(contract)
+	if(!isnull(crate2.linked_contract))
+		fail_reason = "Deleting contract failed to clear crate.linked_contract reference."
+
+	qdel(caravan_contract)
+	qdel(crate2)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Cooperative destruction cleanly severed circular references between contracts and crates/disks.")
+	return 1

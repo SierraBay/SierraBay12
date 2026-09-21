@@ -763,6 +763,22 @@
 	oxygen_release_modifier = 100000000000
 	radiation_release_modifier = 1
 
+/obj/structure/closet/crate/secure/large/phoron/supermatter
+	name = "supermatter core crate (CAUTION)"
+	desc = "A heavily reinforced and radiation-shielded crate containing a supermatter core. Requires Chief Engineer access."
+	req_access = list(access_ce)
+
+/obj/structure/closet/crate/secure/large/phoron/supermatter/WillContain()
+	return list(/obj/machinery/power/supermatter)
+
+/obj/structure/closet/crate/secure/large/phoron/supermatter/shard
+	name = "supermatter shard crate (CAUTION)"
+	desc = "A heavily reinforced and radiation-shielded crate containing a supermatter shard. Requires Chief Engineer access."
+	req_access = list(access_ce)
+
+/obj/structure/closet/crate/secure/large/phoron/supermatter/shard/WillContain()
+	return list(/obj/machinery/power/supermatter/shard)
+
 /obj/structure/closet/crate/secure/large/phoron/experimentalsm
 	name = "experimental supermatter crate"
 	desc = "Are you sure you want to open this?"

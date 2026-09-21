@@ -13,6 +13,7 @@
 #include "code/beacons/trade_beacon.dm"
 #include "code/beacons/overmap_beacon.dm"
 #include "code/trade_faction.dm"
+#include "code/trade_offer.dm"
 #include "code/trading_station.dm"
 #include "code/trading_station_naming.dm"
 #include "code/trading_station_caravan.dm"

@@ -5,7 +5,6 @@
 	name = "Supply"
 	priority = SS_PRIORITY_SUPPLY
 	wait = 20 SECONDS
-	flags = SS_NO_TICK_CHECK
 	trade_network_active = TRUE
 
 	var/trade_stations_budget = 5
@@ -42,8 +41,10 @@
 	visible_trading_stations = list()
 	hidden_trading_stations = list()
 	factions = list()
-	beacons_sending = list()
-	beacons_receiving = list()
+	if(!islist(beacons_sending))
+		beacons_sending = list()
+	if(!islist(beacons_receiving))
+		beacons_receiving = list()
 	shipping_log = list()
 	export_log = list()
 	order_log = list()
@@ -76,15 +77,46 @@
 	RefreshTradeBeacons()
 
 /datum/controller/subsystem/supply/fire(reschedule)
+	ProcessPendingContractRefunds()
 	for(var/datum/trading_station/station as anything in all_trading_stations)
 		if(QDELETED(station))
 			continue
 		if(world.time >= station.next_update_at)
 			station.StationTick()
+		MC_TICK_CHECK
 	EnsureVisibleContractOffers()
 
 /datum/controller/subsystem/supply/Destroy()
 	DeInitTradeStations()
+	if(islist(trade_contracts))
+		for(var/datum/trade_contract/contract in trade_contracts)
+			qdel(contract)
+		trade_contracts.Cut()
+		trade_contracts = null
+	if(islist(factions))
+		for(var/f_key in factions)
+			qdel(factions[f_key])
+		factions.Cut()
+		factions = null
+	beacons_sending?.Cut()
+	beacons_sending = null
+	beacons_receiving?.Cut()
+	beacons_receiving = null
+	shipping_log?.Cut()
+	shipping_log = null
+	export_log?.Cut()
+	export_log = null
+	order_log?.Cut()
+	order_log = null
+	contract_log?.Cut()
+	contract_log = null
+	if(islist(order_queue))
+		for(var/order_id in order_queue)
+			var/list/order = order_queue[order_id]
+			if(islist(order))
+				order.Cut()
+		order_queue.Cut()
+		order_queue = null
 	return ..()
 
 /datum/controller/subsystem/supply/UpdateStat(time)
@@ -102,16 +134,12 @@
 	return null
 
 /datum/controller/subsystem/supply/proc/RefreshTradeBeacons()
-	beacons_sending = list()
-	beacons_receiving = list()
-	for(var/obj/machinery/machine as anything in SSmachines.get_all_machinery())
-		if(QDELETED(machine))
-			continue
-		if(istype(machine, /obj/machinery/trade_beacon/sending))
-			beacons_sending += machine
-			continue
-		if(istype(machine, /obj/machinery/trade_beacon/receiving))
-			beacons_receiving += machine
+	for(var/obj/machinery/trade_beacon/sending/beacon as anything in beacons_sending)
+		if(QDELETED(beacon))
+			beacons_sending -= beacon
+	for(var/obj/machinery/trade_beacon/receiving/beacon as anything in beacons_receiving)
+		if(QDELETED(beacon))
+			beacons_receiving -= beacon
 
 /datum/controller/subsystem/supply/proc/SetFactionRelations(fac1, fac2, relation)
 	var/datum/trade_faction/first = GetFaction(fac1)
@@ -200,9 +228,18 @@
 				GLOB.entered_event.unregister(trading_station.overmap_location, trading_station, /datum/trading_station/proc/Discovered)
 
 /datum/controller/subsystem/supply/proc/GetStationByUid(target_uid)
+	if(!target_uid)
+		return null
 	for(var/datum/trading_station/trading_station as anything in all_trading_stations)
-		if(trading_station.uid == target_uid)
+		if(trading_station.uid == target_uid || trading_station.name == target_uid)
 			return trading_station
+	return null
+
+/datum/controller/subsystem/supply/proc/ResolveStation(station_ref)
+	if(istype(station_ref, /datum/trading_station))
+		return station_ref
+	if(istext(station_ref))
+		return GetStationByUid(station_ref)
 	return null
 
 /datum/controller/subsystem/supply/proc/GetVisibleStationByUid(target_uid)
@@ -248,11 +285,21 @@
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
 		if(contract.status == CONTRACT_STATUS_COMPLETED || contract.status == CONTRACT_STATUS_FAILED)
 			resolved_count++
+			if(contract.HasPendingRefund())
+				continue
 			if(!oldest_resolved || contract.resolved_at < oldest_resolved.resolved_at)
 				oldest_resolved = contract
 	if(resolved_count > max_resolved_trade_contracts && oldest_resolved)
 		trade_contracts -= oldest_resolved
 		qdel(oldest_resolved)
+
+/datum/controller/subsystem/supply/proc/ProcessPendingContractRefunds()
+	var/settled_refund = FALSE
+	for(var/datum/trade_contract/contract as anything in trade_contracts)
+		if(contract.HasPendingRefund() && contract.TrySettlePendingRefund())
+			settled_refund = TRUE
+	if(settled_refund)
+		TrimResolvedContracts()
 
 /datum/controller/subsystem/supply/proc/GetVisibleContractBySource(source_uid)
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
@@ -315,6 +362,12 @@
 /datum/controller/subsystem/supply/proc/FindStationCommodityByPath(datum/trading_station/station, item_path)
 	if(!istype(station) || !ispath(item_path, /atom/movable))
 		return null
+	var/datum/trade_offer/offer = station.GetOfferByPath(item_path)
+	if(istype(offer))
+		return list(
+			"category" = offer.category,
+			"good_id" = offer.id
+		)
 	if(islist(station.commodity_by_path))
 		var/list/match = station.commodity_by_path[item_path]
 		if(islist(match))
@@ -644,10 +697,27 @@
 /datum/controller/subsystem/supply/proc/GetShopListTradeRangeBlockReason(atom/source, list/shop_list)
 	if(!islist(shop_list))
 		return null
-	for(var/datum/trading_station/station as anything in shop_list)
+	for(var/station_key in shop_list)
+		var/datum/trading_station/station = ResolveStation(station_key)
+		if(!istype(station))
+			continue
 		var/block_reason = GetTradeRangeBlockReason(source, station)
 		if(block_reason)
 			return "[station.name]: [block_reason]"
+	return null
+
+/datum/controller/subsystem/supply/proc/GetStationFactionBlockReason(datum/trading_station/target_station, buyer_faction = null)
+	if(!istype(target_station))
+		return "Station unavailable."
+	if(!buyer_faction)
+		return null
+	var/datum/trade_faction/station_faction = GetFaction(target_station.faction)
+	if(istype(station_faction) && (buyer_faction in station_faction.embargo))
+		return "Economic embargo in effect. Trading denied."
+	if(length(target_station.whitelist_factions) && !(buyer_faction in target_station.whitelist_factions))
+		return "This station trades only with approved factions."
+	if(length(target_station.blacklist_factions) && (buyer_faction in target_station.blacklist_factions))
+		return "This station refuses trade with your faction."
 	return null
 
 /datum/controller/subsystem/supply/proc/CollectSpawnAlways()
@@ -687,11 +757,14 @@
 	. = GetBasicImportCost(good_ref, station, category_name)
 	if(!. || !buyer_faction || !istype(station))
 		return
-	var/datum/trade_faction/buyer = GetFaction(buyer_faction)
+	var/buyer_name = buyer_faction
+	if(istype(buyer_name, /datum/trade_faction))
+		var/datum/trade_faction/F = buyer_name
+		buyer_name = F.name
 	var/datum/trade_faction/seller = GetFaction(station.faction)
-	if(!istype(buyer) || !istype(seller))
+	if(!istype(seller) || !istext(buyer_name))
 		return
-	switch(seller.relationship[buyer.name])
+	switch(seller.relationship[buyer_name])
 		if(FACTION_STATE_ANIMOSITY)
 			. *= 1.25
 		if(FACTION_STATE_RIVAL)
@@ -700,27 +773,54 @@
 			. *= 2
 		if(FACTION_STATE_WAR)
 			. *= 3
-	if(buyer.name in seller.trade_markup)
-		. *= seller.trade_markup[buyer.name]
+	if(buyer_name in seller.trade_markup)
+		. *= seller.trade_markup[buyer_name]
 	. = max(1, round(.))
 
 /datum/controller/subsystem/supply/proc/GetImportCost(good_ref, datum/trading_station/station, buyer_faction = null, category_name = null)
 	return GetStationBuyPrice(good_ref, station, buyer_faction, category_name)
 
+/datum/controller/subsystem/supply/proc/ExtractCartItems(list/shop_list)
+	var/list/items = list()
+	if(!islist(shop_list))
+		return items
+	for(var/station_key in shop_list)
+		var/datum/trading_station/station = ResolveStation(station_key)
+		if(!istype(station))
+			continue
+		var/list/sub = shop_list[station_key]
+		if(!islist(sub))
+			continue
+		for(var/key in sub)
+			var/val = sub[key]
+			if(isnum(val))
+				if(val >= 1)
+					var/datum/trade_offer/offer = station.GetOffer(key)
+					var/cat = offer ? offer.category : null
+					items += list(list("station" = station, "good_id" = key, "cat" = cat, "count" = round(val), "offer" = offer))
+			else if(islist(val))
+				for(var/good_id in val)
+					var/cnt = val[good_id]
+					if(isnum(cnt) && cnt >= 1)
+						var/datum/trade_offer/offer = station.GetOffer(good_id)
+						items += list(list("station" = station, "good_id" = good_id, "cat" = key, "count" = round(cnt), "offer" = offer))
+	return items
+
 /datum/controller/subsystem/supply/proc/CollectCountsFrom(list/shop_list)
 	. = 0
 	if(!islist(shop_list))
 		return
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		if(!islist(categories))
+	for(var/station_key in shop_list)
+		var/list/sub = shop_list[station_key]
+		if(!islist(sub))
 			continue
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods))
-				continue
-			for(var/good_id in goods)
-				. += goods[good_id]
+		for(var/key in sub)
+			var/val = sub[key]
+			if(isnum(val))
+				. += val
+			else if(islist(val))
+				for(var/good_id in val)
+					. += val[good_id]
 
 /datum/controller/subsystem/supply/proc/CollectPriceForCategory(list/category, datum/trading_station/station, buyer_faction = null, category_name = null)
 	. = 0
@@ -733,24 +833,31 @@
 	. = 0
 	if(!islist(shop_list))
 		return
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		if(!islist(categories))
+	for(var/station_key in shop_list)
+		var/datum/trading_station/station = ResolveStation(station_key)
+		if(!istype(station))
 			continue
-		for(var/category_name in categories)
-			. += CollectPriceForCategory(categories[category_name], station, buyer_faction, category_name)
+		var/list/sub = shop_list[station_key]
+		if(!islist(sub))
+			continue
+		for(var/key in sub)
+			var/val = sub[key]
+			if(isnum(val))
+				. += GetImportCost(key, station, buyer_faction) * val
+			else if(islist(val))
+				. += CollectPriceForCategory(val, station, buyer_faction, key)
 
 /datum/controller/subsystem/supply/proc/ClearShopList(list/target_list)
 	if(!islist(target_list))
 		return
-	for(var/datum/trading_station/target_station as anything in target_list)
-		var/list/categories = target_list[target_station]
-		if(islist(categories))
-			for(var/category_name in categories)
-				var/list/goods = categories[category_name]
-				if(islist(goods))
-					goods.Cut()
-			categories.Cut()
+	for(var/station_key in target_list)
+		var/list/sub = target_list[station_key]
+		if(islist(sub))
+			for(var/entry in sub)
+				var/list/inner = sub[entry]
+				if(islist(inner))
+					inner.Cut()
+			sub.Cut()
 	target_list.Cut()
 
 /datum/controller/subsystem/supply/proc/ClearMarketSnapshot(list/snapshot)
@@ -774,6 +881,8 @@
 	if(!order_id || !(order_id in order_queue))
 		return FALSE
 	var/list/order = order_queue[order_id]
+	if(islist(order) && (order["processing"] || order["status"] == "processing"))
+		return FALSE
 	order_queue.Remove(order_id)
 	if(islist(order))
 		order["requesting_acct"] = null
@@ -789,6 +898,7 @@
 /datum/controller/subsystem/supply/proc/PurgeStationFromOrders(datum/trading_station/station)
 	if(!istype(station))
 		return
+	var/st_uid = station.uid
 	for(var/order_id as anything in order_queue.Copy())
 		var/list/order = order_queue[order_id]
 		if(!islist(order))
@@ -796,31 +906,43 @@
 			continue
 		var/list/contents = order["contents"]
 		var/changed = FALSE
-		if(islist(contents) && (station in contents))
-			var/list/categories = contents[station]
-			if(islist(categories))
-				for(var/cat in categories)
-					var/list/goods = categories[cat]
-					if(islist(goods))
-						goods.Cut()
-				categories.Cut()
-			contents -= station
-			changed = TRUE
+		if(islist(contents))
+			var/list/station_keys = list()
+			if(station in contents)
+				station_keys += station
+			if(st_uid && (st_uid in contents))
+				station_keys += st_uid
+			for(var/station_key in station_keys)
+				var/list/station_cart = contents[station_key]
+				if(islist(station_cart))
+					for(var/entry in station_cart)
+						var/list/inner = station_cart[entry]
+						if(islist(inner))
+							inner.Cut()
+					station_cart.Cut()
+				contents -= station_key
+				changed = TRUE
 		var/list/price_snapshot = order["price_snapshot"]
-		if(islist(price_snapshot) && (station in price_snapshot))
-			var/list/station_snap = price_snapshot[station]
-			if(islist(station_snap))
-				for(var/cat in station_snap)
-					var/list/cat_snap = station_snap[cat]
-					if(islist(cat_snap))
-						for(var/gid in cat_snap)
-							var/list/gsnap = cat_snap[gid]
-							if(islist(gsnap))
-								gsnap.Cut()
-						cat_snap.Cut()
-				station_snap.Cut()
-			price_snapshot -= station
-			changed = TRUE
+		if(islist(price_snapshot))
+			var/list/snap_keys = list()
+			if(station in price_snapshot)
+				snap_keys += station
+			if(st_uid && (st_uid in price_snapshot))
+				snap_keys += st_uid
+			for(var/snap_key in snap_keys)
+				var/list/station_snap = price_snapshot[snap_key]
+				if(islist(station_snap))
+					for(var/cat in station_snap)
+						var/list/cat_snap = station_snap[cat]
+						if(islist(cat_snap))
+							for(var/gid in cat_snap)
+								var/list/gsnap = cat_snap[gid]
+								if(islist(gsnap))
+									gsnap.Cut()
+							cat_snap.Cut()
+					station_snap.Cut()
+				price_snapshot -= snap_key
+				changed = TRUE
 		if(changed)
 			if(CollectCountsFrom(contents) <= 0)
 				DismantleOrder(order_id)
@@ -831,43 +953,33 @@
 				var/is_master = master_account && (order["requesting_acct"] == master_account)
 				order["fee"] = is_master ? 0 : round(new_cost * handling_fee, 0.01)
 
+/datum/controller/subsystem/supply/proc/BuildOrderViewableContents(list/shopping_list)
+	. = ""
+	for(var/list/item_data as anything in ExtractCartItems(shopping_list))
+		var/datum/trading_station/station = item_data["station"]
+		var/item_name = station.GetGoodName(item_data["cat"], item_data["good_id"])
+		. += "<li>[item_data["count"]]x [item_name]</li>"
+
 /datum/controller/subsystem/supply/proc/BuildOrder(requesting_account, reason, list/shopping_list, buyer_faction = null)
 	if(!requesting_account || !islist(shopping_list) || !length(shopping_list) || CollectCountsFrom(shopping_list) <= 0)
 		return null
 
 	var/cost = CollectPriceForList(shopping_list, buyer_faction)
-	var/contents_info = ""
-	var/datum/money_account/requestor = requesting_account
 	var/datum/money_account/master_account = get_supply_department_account()
-	var/is_requestor_master = master_account && requestor == master_account
+	var/is_requestor_master = master_account && requesting_account == master_account
 
-	for(var/datum/trading_station/station as anything in shopping_list)
-		var/list/categories = shopping_list[station]
-		if(!islist(categories))
-			continue
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods))
-				continue
-			for(var/good_id in goods)
-				var/amount_to_add = goods[good_id]
-				var/item_name = station.GetGoodName(category_name, good_id)
-				contents_info += "<li>[amount_to_add]x [item_name]</li>"
-
-	var/list/new_order = list(
+	var/order_queue_slot = "order_[++order_queue_id]"
+	order_queue[order_queue_slot] = list(
 		"requesting_acct" = requesting_account,
 		"reason" = reason,
 		"cost" = cost,
 		"fee" = is_requestor_master ? 0 : round(cost * handling_fee, 0.01),
 		"contents" = shopping_list,
 		"buyer_faction" = buyer_faction || FACTION_INDEPENDENT,
-		"viewable_contents" = contents_info,
+		"viewable_contents" = BuildOrderViewableContents(shopping_list),
 		"status" = "pending",
 		"processing" = FALSE
 	)
-
-	var/order_queue_slot = "order_[++order_queue_id]"
-	order_queue[order_queue_slot] = new_order
 	return order_queue_slot
 
 /datum/controller/subsystem/supply/proc/RefundEscrowOrder(list/order, datum/money_account/master_account, datum/money_account/requesting_account, transferred, total_cost)
@@ -914,125 +1026,137 @@
 	DismantleOrder(order_id)
 	return TRUE
 
+/datum/controller/subsystem/supply/proc/ResolveCartOffer(datum/trading_station/station, cat, good_id)
+	if(!istype(station))
+		return null
+	var/datum/trade_offer/offer = station.GetOffer(good_id)
+	if(!istype(offer))
+		return null
+	if(cat && offer.category != cat)
+		return null
+	if(offer.hidden && !station.hidden_inv_unlocked)
+		return null
+	return offer
+
+/datum/controller/subsystem/supply/proc/ValidateCartItems(obj/machinery/trade_beacon/receiving/beacon, list/items, buyer_faction, list/price_snapshot)
+	var/total_price = 0
+	var/packable = 0
+	for(var/list/data as anything in items)
+		var/datum/trading_station/station = data["station"]
+		if(!istype(station) || GetTradeRangeBlockReason(beacon, station))
+			return null
+		if(GetStationFactionBlockReason(station, buyer_faction))
+			return null
+		var/datum/trade_offer/offer = data["offer"] || ResolveCartOffer(station, data["cat"], data["good_id"])
+		if(!istype(offer))
+			return null
+		if(offer.hidden && !station.hidden_inv_unlocked)
+			return null
+		if(data["cat"] && offer.category != data["cat"])
+			return null
+		if(offer.stock < data["count"])
+			return null
+		var/good_path = offer.item_path
+		if(!good_path)
+			return null
+		var/gid = offer.id
+		var/price = islist(price_snapshot) ? GetSnapshotUnitPrice(price_snapshot, station, data["cat"], gid) : GetImportCost(gid, station, buyer_faction, data["cat"])
+		if(!isnum(price) || price < 1)
+			return null
+		total_price += price * data["count"]
+		if(ispath(good_path, /obj/item))
+			packable += data["count"]
+	return list("price" = total_price, "packable" = packable)
+
+/datum/controller/subsystem/supply/proc/CreateOrderLocker(obj/machinery/trade_beacon/receiving/beacon, is_order, buyer_name)
+	var/obj/structure/closet/secure_closet/personal/trade/locker = beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
+	if(locker && is_order)
+		locker.locked = TRUE
+		locker.registered_name = buyer_name
+		locker.name = "[initial(locker.name)] ([locker.registered_name])"
+		locker.update_icon()
+	return locker
+
+/datum/controller/subsystem/supply/proc/SpawnPurchasedItems(obj/machinery/trade_beacon/receiving/beacon, list/cart_items, obj/structure/closet/locker)
+	var/list/spawned = list()
+	if(locker)
+		spawned += locker
+	for(var/list/data as anything in cart_items)
+		var/datum/trading_station/station = data["station"]
+		var/datum/trade_offer/offer = data["offer"] || ResolveCartOffer(station, data["cat"], data["good_id"])
+		var/path = offer ? offer.item_path : station.GetGoodPath(data["cat"], data["good_id"])
+		for(var/i in 1 to data["count"])
+			if(locker && ispath(path, /obj/item))
+				new path(locker)
+			else
+				var/atom/movable/item = beacon.DropItem(path)
+				if(!item)
+					for(var/atom/movable/spawned_item as anything in spawned)
+						qdel(spawned_item)
+					if(locker)
+						qdel(locker)
+					return null
+				spawned += item
+	return spawned
+
+/datum/controller/subsystem/supply/proc/FulfillCartStock(list/cart_items, buyer_faction, list/price_snapshot)
+	var/list/wealth_by_station = list()
+	var/contents_info = ""
+	for(var/list/data as anything in cart_items)
+		var/datum/trading_station/station = data["station"]
+		var/datum/trade_offer/offer = data["offer"] || ResolveCartOffer(station, data["cat"], data["good_id"])
+		var/gid = offer ? offer.id : data["good_id"]
+		var/count = data["count"]
+		var/price = islist(price_snapshot) ? GetSnapshotUnitPrice(price_snapshot, station, data["cat"], gid) : GetImportCost(gid, station, buyer_faction, data["cat"])
+		wealth_by_station[station] += price * count
+		if(offer)
+			offer.ConsumeStock(count)
+		else
+			station.SetGoodAmount(data["cat"], gid, max(0, station.GetGoodAmount(data["cat"], gid) - count))
+		var/item_name = offer ? offer.name : station.GetGoodName(data["cat"], gid)
+		contents_info += "<li>[count]x [item_name]</li>"
+	for(var/datum/trading_station/station as anything in wealth_by_station)
+		station.AddToWealth(wealth_by_station[station])
+	return contents_info
+
+/datum/controller/subsystem/supply/proc/ChargeBuyerAccount(datum/money_account/account, price, is_escrow)
+	if(!price)
+		return TRUE
+	if(is_escrow)
+		if(!account.withdraw(price, "Trade Network Purchase", "Trade Network"))
+			account.money -= price
+		return TRUE
+	if(account.money < price || !account.withdraw(price, "Trade Network Purchase", "Trade Network"))
+		return FALSE
+	return TRUE
+
 /datum/controller/subsystem/supply/proc/Buy(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account, list/shop_list, is_order = FALSE, buyer_name = null, buyer_faction = null, list/price_snapshot = null, is_escrow = FALSE, order_cost = null)
 	if(QDELETED(receiver_beacon) || !istype(receiver_beacon) || !receiver_beacon.operable() || !account || !islist(shop_list) || !length(shop_list))
 		return FALSE
-
-	var/count_of_all = CollectCountsFrom(shop_list)
-	if(!count_of_all)
+	var/list/cart_items = ExtractCartItems(shop_list)
+	if(!length(cart_items))
 		return FALSE
-
-	var/price_for_all = 0
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		if(!istype(station) || !islist(categories))
-			return FALSE
-		if(GetTradeRangeBlockReason(receiver_beacon, station))
-			return FALSE
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!istext(category_name) || !islist(goods) || !islist(station.inventory[category_name]))
-				return FALSE
-			for(var/good_id in goods)
-				var/count_of_good = goods[good_id]
-				if(!isnum(count_of_good) || count_of_good < 1)
-					return FALSE
-				var/resolved_good_id = good_id
-				if(!station.GetGoodPacket(category_name, resolved_good_id) && islist(station.inventory[category_name]) && length(station.inventory[category_name]) == 1)
-					resolved_good_id = station.inventory[category_name][1]
-				if(!station.GetGoodPacket(category_name, resolved_good_id) || !station.GetGoodPath(category_name, resolved_good_id))
-					return FALSE
-				if(station.GetGoodAmount(category_name, resolved_good_id) < count_of_good)
-					return FALSE
-				var/unit_price = islist(price_snapshot) ? GetSnapshotUnitPrice(price_snapshot, station, category_name, resolved_good_id) : GetImportCost(resolved_good_id, station, buyer_faction, category_name)
-				if(!isnum(unit_price) || unit_price < 1)
-					return FALSE
-				price_for_all += unit_price * count_of_good
-
-	if(isnum(order_cost) && order_cost > 0)
-		price_for_all = order_cost
-
-	if(price_for_all)
-		if(is_escrow)
-			if(!account.withdraw(price_for_all, "Trade Network Purchase", "Trade Network"))
-				account.money -= price_for_all
-		else
-			if(account.money < price_for_all || !account.withdraw(price_for_all, "Trade Network Purchase", "Trade Network"))
-				return FALSE
-
-	var/list/spawned_items = list()
-	var/obj/structure/closet/secure_closet/personal/trade/locker
-	if(count_of_all > 1)
-		locker = receiver_beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
-		if(!locker)
-			if(price_for_all && !is_escrow)
-				account.deposit(price_for_all, "Trade Network Refund", "Trade Network")
-			return FALSE
-		spawned_items += locker
-		if(is_order)
-			locker.locked = TRUE
-			locker.registered_name = buyer_name
-			locker.name = "[initial(locker.name)] ([locker.registered_name])"
-			locker.update_icon()
-
-	var/invoice_location = locker
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods) || !islist(station.inventory[category_name]))
-				continue
-			for(var/good_id in goods)
-				var/count_of_good = goods[good_id]
-				var/resolved_good_id = good_id
-				if(!station.GetGoodPacket(category_name, resolved_good_id) && islist(station.inventory[category_name]) && length(station.inventory[category_name]) == 1)
-					resolved_good_id = station.inventory[category_name][1]
-				var/good_path = station.GetGoodPath(category_name, resolved_good_id)
-				var/unit_price = islist(price_snapshot) ? GetSnapshotUnitPrice(price_snapshot, station, category_name, resolved_good_id) : GetImportCost(resolved_good_id, station, buyer_faction, category_name)
-				if(!good_path || !isnum(unit_price) || unit_price < 1)
-					for(var/atom/movable/item as anything in spawned_items)
-						qdel(item)
-					if(price_for_all && !is_escrow)
-						account.deposit(price_for_all, "Trade Network Refund", "Trade Network")
-					return FALSE
-				for(var/i in 1 to count_of_good)
-					if(istype(locker))
-						new good_path(locker)
-					else
-						var/atom/movable/new_item = receiver_beacon.DropItem(good_path)
-						if(!new_item)
-							for(var/atom/movable/item as anything in spawned_items)
-								qdel(item)
-							if(price_for_all && !is_escrow)
-								account.deposit(price_for_all, "Trade Network Refund", "Trade Network")
-							return FALSE
-						spawned_items += new_item
-						invoice_location = new_item.loc
-
-	var/order_contents_info = ""
-	for(var/datum/trading_station/station as anything in shop_list)
-		var/list/categories = shop_list[station]
-		var/to_station_wealth = 0
-		for(var/category_name in categories)
-			var/list/goods = categories[category_name]
-			if(!islist(goods) || !islist(station.inventory[category_name]))
-				continue
-			for(var/good_id in goods)
-				var/count_of_good = goods[good_id]
-				var/resolved_good_id = good_id
-				if(!station.GetGoodPacket(category_name, resolved_good_id) && islist(station.inventory[category_name]) && length(station.inventory[category_name]) == 1)
-					resolved_good_id = station.inventory[category_name][1]
-				var/unit_price = islist(price_snapshot) ? GetSnapshotUnitPrice(price_snapshot, station, category_name, resolved_good_id) : GetImportCost(resolved_good_id, station, buyer_faction, category_name)
-				to_station_wealth += unit_price * count_of_good
-				station.SetGoodAmount(category_name, resolved_good_id, max(0, station.GetGoodAmount(category_name, resolved_good_id) - count_of_good))
-				var/item_name = station.GetGoodName(category_name, resolved_good_id)
-				order_contents_info += "<li>[count_of_good]x [item_name]</li>"
-		station.AddToWealth(to_station_wealth)
-
-	if(count_of_all > 1)
-		invoice_location = locker
-
-	CreateLogEntry("Shipping", is_order && buyer_name ? buyer_name : account.owner_name, order_contents_info, price_for_all, TRUE, invoice_location)
+	var/list/check = ValidateCartItems(receiver_beacon, cart_items, buyer_faction, price_snapshot)
+	if(!check)
+		return FALSE
+	var/price = (isnum(order_cost) && order_cost > 0) ? order_cost : check["price"]
+	if(!is_escrow && account.money < price)
+		return FALSE
+	var/obj/structure/closet/locker = (check["packable"] > 1) ? CreateOrderLocker(receiver_beacon, is_order, buyer_name) : null
+	if(check["packable"] > 1 && !locker)
+		return FALSE
+	var/list/spawned = SpawnPurchasedItems(receiver_beacon, cart_items, locker)
+	if(!spawned)
+		return FALSE
+	if(!ChargeBuyerAccount(account, price, is_escrow))
+		if(locker)
+			qdel(locker)
+		for(var/atom/movable/spawned_item in spawned)
+			qdel(spawned_item)
+		return FALSE
+	var/info = FulfillCartStock(cart_items, buyer_faction, price_snapshot)
+	var/atom/invoice_loc = locker || (length(spawned) ? get_turf(spawned[1]) : null)
+	CreateLogEntry("Shipping", is_order && buyer_name ? buyer_name : account.owner_name, info, price, TRUE, invoice_loc)
 	TrackLiveMarketSales(shop_list)
 	return TRUE
 
@@ -1090,7 +1214,12 @@
 	if(istype(target_station))
 		var/list/match = FindCommodityForExport(exported, target_station)
 		if(islist(match))
-			ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
+			if(istype(exported, /obj/machinery/portable_atmospherics/canister) && !istype(exported, /obj/machinery/portable_atmospherics/canister/empty))
+				var/obj/machinery/portable_atmospherics/canister/C = exported
+				if(C.return_pressure() < 10 * ONE_ATMOSPHERE)
+					match = null
+			if(islist(match))
+				ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
 	if(istype(exported, /obj/item/virusdish))
 		var/obj/item/virusdish/dish = exported
 		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
@@ -1137,33 +1266,98 @@
 	return exportables
 
 /datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null, seller_faction = null)
-	if(QDELETED(sender_beacon) || !istype(money_account) || !sender_beacon.CanExport())
+	if(QDELETED(sender_beacon) || !istype(money_account) || money_account.suspended || !sender_beacon.CanExport())
 		return FALSE
 	if(istype(target_station) && (target_station.wealth <= 0 || GetTradeRangeBlockReason(sender_beacon, target_station)))
 		return FALSE
 
 	var/list/rejected = list()
-	var/list/exportables = CollectExportables(sender_beacon, target_station, seller_faction, rejected)
-	if(!length(exportables))
+	var/list/candidate_items = list()
+	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
+		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+			continue
+		if(!CanExportAtom(exported))
+			rejected += exported
+			continue
+		candidate_items += exported
+
+	if(!length(candidate_items))
 		return FALSE
 
 	var/remaining_station_wealth = istype(target_station) ? target_station.wealth : INFINITY
 	var/unpurchased_due_to_budget = FALSE
-	var/invoice_contents_info = ""
-	var/export_count = 0
-	var/cost = 0
+	var/list/confirmed_exports = list()
+	var/list/active_sold_counts = list()
 	var/total_export_value = 0
+	var/main_account_total = 0
+	var/export_count = 0
 
-	for(var/atom/movable/exported as anything in exportables)
-		var/export_value = exportables[exported]
+	for(var/atom/movable/exported as anything in candidate_items)
+		var/list/temp_sold_counts = active_sold_counts.Copy()
+		var/export_value = GetExportValue(exported, target_station, seller_faction, temp_sold_counts)
+		if(export_value <= 0)
+			continue
+
 		if(export_value > remaining_station_wealth)
 			unpurchased_due_to_budget = TRUE
 			continue
+
 		if(istype(target_station))
 			remaining_station_wealth -= export_value
 		total_export_value += export_value
+		active_sold_counts = temp_sold_counts
+		confirmed_exports[exported] = export_value
 		export_count++
+		if(export_count > 100)
+			break
 
+	if(!length(confirmed_exports) || total_export_value <= 0)
+		return FALSE
+
+	var/list/payouts_by_account = list()
+	for(var/atom/movable/exported as anything in confirmed_exports)
+		var/export_value = confirmed_exports[exported]
+		if(istype(exported, /obj/structure/closet))
+			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(exported)
+			var/target_account_number = rnd_slip ? rnd_slip.target_account_number : null
+			if(target_account_number)
+				var/datum/money_account/target = get_account(target_account_number)
+				if(!istype(target) || target.suspended)
+					return FALSE
+				payouts_by_account[target] += export_value
+				continue
+		main_account_total += export_value
+
+	if(main_account_total > 0)
+		payouts_by_account[money_account] += main_account_total
+
+	var/list/successful_deposits = list()
+	var/deposit_failed = FALSE
+	for(var/datum/money_account/acc as anything in payouts_by_account)
+		var/amount = payouts_by_account[acc]
+		if(amount <= 0)
+			continue
+		var/desc = (acc == money_account) ? "Trade Network Export" : "R&D Invoice sale"
+		if(!acc.deposit(amount, desc, "Trade Network"))
+			deposit_failed = TRUE
+			break
+		successful_deposits += list(list(acc, amount))
+
+	if(deposit_failed || !sender_beacon.StartExport())
+		for(var/list/dep in successful_deposits)
+			var/datum/money_account/acc = dep[1]
+			var/amount = dep[2]
+			acc.withdraw(amount, "Export Transaction Rollback", "Trade Network")
+		return FALSE
+
+	for(var/atom/movable/rejected_atom as anything in rejected)
+		HandleRejectedExport(rejected_atom)
+	if(istype(target_station))
+		target_station.SubtractFromWealth(total_export_value)
+
+	var/invoice_contents_info = ""
+	for(var/atom/movable/exported as anything in confirmed_exports)
+		var/export_value = confirmed_exports[exported]
 		if(istype(exported, /obj/structure/closet))
 			var/obj/structure/closet/crate = exported
 			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(crate)
@@ -1171,30 +1365,16 @@
 			var/crate_info = ProcessExportCrate(crate, target_station, seller_faction, rnd_slip)
 			if(target_account_number && export_value > 0 && get_account(target_account_number))
 				var/datum/money_account/target = get_account(target_account_number)
-				target.deposit(export_value, "R&D Invoice sale", "Trade Network")
 				CreateLogEntry("Export", target.owner_name, crate_info, export_value, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 			else
-				cost += export_value
 				invoice_contents_info += crate_info
 		else
 			invoice_contents_info += "<li>[exported.name]</li>"
-			cost += export_value
 			ProcessExportItem(exported, target_station, seller_faction)
 
-		if(export_count > 100)
-			break
+	if(main_account_total > 0 && invoice_contents_info)
+		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, main_account_total, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 
-	if(total_export_value <= 0 || !sender_beacon.StartExport())
-		return FALSE
-
-	for(var/atom/movable/rejected_atom as anything in rejected)
-		HandleRejectedExport(rejected_atom)
-	if(istype(target_station))
-		target_station.SubtractFromWealth(total_export_value)
-	if(cost > 0)
-		money_account.deposit(cost, "Trade Network Export", "Trade Network")
-		if(invoice_contents_info)
-			CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, cost, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 	return unpurchased_due_to_budget ? TRADE_EXPORT_PARTIAL : TRADE_EXPORT_SUCCESS
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null, faction_name = null, station_name = null)
@@ -1284,14 +1464,27 @@
 			return entry
 	return null
 
-/datum/controller/subsystem/supply/proc/CanExportAtom(atom/movable/exported)
+/datum/controller/subsystem/supply/proc/HasLivingOccupants(atom/movable/exported)
 	if(!istype(exported) || QDELETED(exported))
 		return FALSE
 	if(isliving(exported))
+		return TRUE
+	var/list/processing = list(exported)
+	var/index = 1
+	while(index <= length(processing))
+		var/atom/current = processing[index++]
+		for(var/atom/movable/content in current.contents)
+			if(isliving(content))
+				return TRUE
+			if(length(content.contents))
+				processing += content
+	return FALSE
+
+/datum/controller/subsystem/supply/proc/CanExportAtom(atom/movable/exported)
+	if(!istype(exported) || QDELETED(exported))
 		return FALSE
-	for(var/atom/movable/content as anything in exported.GetAllContents(3, TRUE))
-		if(isliving(content))
-			return FALSE
+	if(HasLivingOccupants(exported))
+		return FALSE
 	return TRUE
 
 /datum/controller/subsystem/supply/proc/HandleRejectedExport(atom/movable/exported)
@@ -1302,9 +1495,17 @@
 		to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter with a painful electric shock!"))
 		living_mob.apply_damage(15, DAMAGE_BURN)
 		return
-	for(var/mob/living/living_mob in exported.GetAllContents(3, FALSE))
-		to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter inside the container with a buzzing jolt!"))
-		living_mob.apply_damage(5, DAMAGE_BURN)
+	var/list/processing = list(exported)
+	var/index = 1
+	while(index <= length(processing))
+		var/atom/current = processing[index++]
+		for(var/atom/movable/content in current.contents)
+			if(isliving(content))
+				var/mob/living/living_mob = content
+				to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter inside the container with a buzzing jolt!"))
+				living_mob.apply_damage(5, DAMAGE_BURN)
+			else if(length(content.contents))
+				processing += content
 
 /datum/controller/subsystem/supply/proc/GetCrateItemLegacyValue(atom/movable/item, find_manifest = FALSE, list/seen_strains = null)
 	if(!istype(item) || !CanExportAtom(item))
@@ -1441,13 +1642,18 @@
 			return breakdown["total_value"]
 		var/list/match = FindCommodityForExport(exported, target_station)
 		if(islist(match))
-			var/good_id = match["good_id"]
-			var/amount = max(1, match["amount"])
-			var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
-			var/val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
-			if(islist(sold_counts))
-				sold_counts[good_id] = offset + amount
-			return val
+			if(istype(exported, /obj/machinery/portable_atmospherics/canister) && !istype(exported, /obj/machinery/portable_atmospherics/canister/empty))
+				var/obj/machinery/portable_atmospherics/canister/C = exported
+				if(C.return_pressure() < 10 * ONE_ATMOSPHERE)
+					match = null
+			if(islist(match))
+				var/good_id = match["good_id"]
+				var/amount = max(1, match["amount"])
+				var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
+				var/val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
+				if(islist(sold_counts))
+					sold_counts[good_id] = offset + amount
+				return val
 	if(istype(exported, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = exported
 		return round(GetLegacyCrateExportValue(crate))

@@ -1921,6 +1921,24 @@
 						</span>
 					</div>
 				{{/if}}
+				{{if data.cart_form_mode == 'select_receiving'}}
+					<div class="tn-form-shell" style="margin-bottom: 8px;">
+						<form class="tn-form" method="get" action="?src={{:data.src}}">
+							<input type="hidden" name="src" value="{{:data.src}}">
+							<div class="tn-panel-label" style="width: 100%;">Choose Receiving Beacon:</div>
+							<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+								<option value="none">-- None / Clear --</option>
+								{{for data.available_receiving_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.id}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{:beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+								<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+							</div>
+						</form>
+					</div>
+				{{/if}}
 
 				{{if !data.order_count}}
 					<div class="tn-empty-panel">
@@ -1978,6 +1996,20 @@
 										{{:helper.link('Save as Template', 'clipboard', {'PRG_save_order' : order_entry.id}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 									</div>
 								</div>
+								{{if data.cart_form_mode == 'save_order' && data.save_order_id == order_entry.id}}
+									<div class="tn-form-shell" style="margin-top: 8px;">
+										<form class="tn-form" method="get" action="?src={{:data.src}}">
+											<input type="hidden" name="src" value="{{:data.src}}">
+											<input type="hidden" name="PRG_save_order_form" value="1">
+											<div class="tn-panel-label" style="width: 100%;">Preset Name for Order #{{:order_entry.id}}:</div>
+											<input type="text" name="PRG_save_name" value="" placeholder="Preset Name..." required style="width: 100%;">
+											<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+												<input type="submit" value="Save Preset" class="tn-btn tn-btn-primary">
+												{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+											</div>
+										</form>
+									</div>
+								{{/if}}
 							</div>
 						{{/for}}
 					</div>
@@ -1989,6 +2021,41 @@
 		<!-- =================================================================== -->
 		{{else data.screen == 'contracts'}}
 			<div class="tn-screen-view" data-view="screen-contracts" data-view-screen="contracts">
+				{{if data.cart_form_mode == 'select_receiving'}}
+					<div class="tn-form-shell" style="margin-bottom: 8px;">
+						<form class="tn-form" method="get" action="?src={{:data.src}}">
+							<input type="hidden" name="src" value="{{:data.src}}">
+							<div class="tn-panel-label" style="width: 100%;">Choose Inbound Receiving Beacon:</div>
+							<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+								<option value="none">-- None / Clear --</option>
+								{{for data.available_receiving_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.id}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{:beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+								<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+							</div>
+						</form>
+					</div>
+				{{else data.cart_form_mode == 'select_sending'}}
+					<div class="tn-form-shell" style="margin-bottom: 8px;">
+						<form class="tn-form" method="get" action="?src={{:data.src}}">
+							<input type="hidden" name="src" value="{{:data.src}}">
+							<div class="tn-panel-label" style="width: 100%;">Choose Outbound Sending Beacon:</div>
+							<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+								<option value="none">-- None / Clear --</option>
+								{{for data.available_sending_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.id}}" {{if beacon.id == data.sending}}selected{{/if}}>{{:beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+								<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+							</div>
+						</form>
+					</div>
+				{{/if}}
 				<!-- 1. Available Contracts Section -->
 				<div class="tn-panel" style="margin-bottom: 6px;">
 					<div class="tn-panel-header">
@@ -2182,6 +2249,25 @@
 							{{:helper.link('Set Sending Beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 						</div>
 					</div>
+
+					{{if data.cart_form_mode == 'select_sending'}}
+						<div class="tn-form-shell" style="margin-bottom: 8px;">
+							<form class="tn-form" method="get" action="?src={{:data.src}}">
+								<input type="hidden" name="src" value="{{:data.src}}">
+								<div class="tn-panel-label" style="width: 100%;">Choose Sending Beacon:</div>
+								<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+									<option value="none">-- None / Clear --</option>
+									{{for data.available_sending_beacons:beacon:beacon_index}}
+										<option value="{{:beacon.id}}" {{if beacon.id == data.sending}}selected{{/if}}>{{:beacon.id}}</option>
+									{{/for}}
+								</select>
+								<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+									<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+									{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
 
 					{{if data.export_block_reason}}
 						<div class="notice bad">{{>data.export_block_reason}}</div>
@@ -2456,6 +2542,33 @@
 									{{:helper.link('Link via Account # and PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 								{{/if}}
 							</div>
+							{{if data.cart_form_mode == 'link_account'}}
+								<div class="tn-form-shell" style="margin-top: 8px;">
+									<form class="tn-form" method="get" action="?src={{:data.src}}">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<div class="tn-panel-label" style="width: 100%;">Account Number:</div>
+										<input type="number" name="PRG_link_account_number" value="{{if data.can_link_id_account}}{{:data.inserted_id_account_number}}{{/if}}" placeholder="Account #" required style="width: 100%;">
+										<div class="tn-panel-label" style="width: 100%; margin-top: 4px;">PIN:</div>
+										<input type="password" name="PRG_link_account_pin" value="" placeholder="PIN" required style="width: 100%;">
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+											<input type="submit" value="Link Account" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{else data.cart_form_mode == 'link_id_account'}}
+								<div class="tn-form-shell" style="margin-top: 8px;">
+									<form class="tn-form" method="get" action="?src={{:data.src}}">
+										<input type="hidden" name="src" value="{{:data.src}}">
+										<div class="tn-panel-label" style="width: 100%;">Enter PIN for ID Card Account (#{{:data.inserted_id_account_number}}):</div>
+										<input type="password" name="PRG_link_id_pin" value="" placeholder="PIN" required style="width: 100%;">
+										<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+											<input type="submit" value="Verify PIN" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+										</div>
+									</form>
+								</div>
+							{{/if}}
 						</div>
 					</div>
 
@@ -2471,6 +2584,24 @@
 										<strong>{{if data.has_receiving}}{{>data.receiving}}{{else}}<span class="tn-empty">None Selected</span>{{/if}}</strong>
 										{{:helper.link('Select Receiving Beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 									</div>
+									{{if data.cart_form_mode == 'select_receiving'}}
+										<div class="tn-form-shell" style="margin-top: 6px;">
+											<form class="tn-form" method="get" action="?src={{:data.src}}">
+												<input type="hidden" name="src" value="{{:data.src}}">
+												<div class="tn-panel-label" style="width: 100%;">Choose Receiving Beacon:</div>
+												<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+													<option value="none">-- None / Clear --</option>
+													{{for data.available_receiving_beacons:beacon:beacon_index}}
+														<option value="{{:beacon.id}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{:beacon.id}}</option>
+													{{/for}}
+												</select>
+												<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+													<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+													{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+												</div>
+											</form>
+										</div>
+									{{/if}}
 								</div>
 								<div>
 									<div class="tn-panel-label">Sending Beacon (Outbound Export):</div>
@@ -2478,6 +2609,24 @@
 										<strong>{{if data.has_sending}}{{>data.sending}}{{else}}<span class="tn-empty">None Selected</span>{{/if}}</strong>
 										{{:helper.link('Select Sending Beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
 									</div>
+									{{if data.cart_form_mode == 'select_sending'}}
+										<div class="tn-form-shell" style="margin-top: 6px;">
+											<form class="tn-form" method="get" action="?src={{:data.src}}">
+												<input type="hidden" name="src" value="{{:data.src}}">
+												<div class="tn-panel-label" style="width: 100%;">Choose Sending Beacon:</div>
+												<select name="PRG_beacon_id" style="width: 100%; margin-top: 2px;">
+													<option value="none">-- None / Clear --</option>
+													{{for data.available_sending_beacons:beacon:beacon_index}}
+														<option value="{{:beacon.id}}" {{if beacon.id == data.sending}}selected{{/if}}>{{:beacon.id}}</option>
+													{{/for}}
+												</select>
+												<div class="tn-flex-row-sm" style="width: 100%; margin-top: 6px;">
+													<input type="submit" value="Set Beacon" class="tn-btn tn-btn-primary">
+													{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+												</div>
+											</form>
+										</div>
+									{{/if}}
 								</div>
 							</div>
 						</div>

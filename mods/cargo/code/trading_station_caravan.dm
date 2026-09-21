@@ -54,12 +54,12 @@
 	return ..(station_loc, force_discovered)
 
 /datum/trading_station/caravan/AssembleInventory()
+	ResetOfferRegistries()
 	BuildCaravanInventory()
-	return ..()
+	inventory = offers_by_category
+	SyncAmountsOfGoods()
 
 /datum/trading_station/caravan/proc/BuildCaravanInventory()
-	inventory = list()
-	hidden_inventory = list()
 	var/list/available_stations = caravan_station_types.Copy()
 	var/stations_to_sample = clamp(rand(min_groups, max_groups), 1, length(available_stations))
 	for(var/i in 1 to stations_to_sample)
@@ -67,47 +67,55 @@
 			break
 		var/chosen_station_type = pick(available_stations)
 		available_stations -= chosen_station_type
-		var/datum/trading_station/source_station = null
-		var/needs_qdel = FALSE
-		if(SSsupply && islist(SSsupply.all_trading_stations))
-			for(var/datum/trading_station/existing in SSsupply.all_trading_stations)
-				if(existing.type == chosen_station_type && islist(existing.inventory) && length(existing.inventory))
-					source_station = existing
-					break
-		if(!source_station)
-			source_station = new chosen_station_type(FALSE)
-			if(!istype(source_station))
-				continue
-			source_station.AssembleInventory()
-			needs_qdel = TRUE
+		SampleStationOffers(chosen_station_type)
 
-		for(var/category_name in source_station.inventory)
-			var/list/source_goods = source_station.inventory[category_name]
-			if(!islist(source_goods) || !length(source_goods))
-				continue
-			var/list/caravan_goods = inventory[category_name]
-			if(!islist(caravan_goods))
-				caravan_goods = list()
-				inventory[category_name] = caravan_goods
-			var/list/candidate_keys = source_goods.Copy()
-			var/items_to_pick = min(length(candidate_keys), rand(2, 5))
-			for(var/j in 1 to items_to_pick)
-				var/picked_key = pick(candidate_keys)
-				candidate_keys -= picked_key
-				caravan_goods[picked_key] = source_goods[picked_key]
-		if(length(source_station.hidden_inventory) && prob(50))
-			for(var/hidden_cat in source_station.hidden_inventory)
-				var/list/hidden_source = source_station.hidden_inventory[hidden_cat]
-				if(!islist(hidden_source) || !length(hidden_source))
-					continue
-				var/list/caravan_hidden = hidden_inventory[hidden_cat]
-				if(!islist(caravan_hidden))
-					caravan_hidden = list()
-					hidden_inventory[hidden_cat] = caravan_hidden
-				var/picked_hidden_key = pick(hidden_source)
-				caravan_hidden[picked_hidden_key] = hidden_source[picked_hidden_key]
-		if(needs_qdel)
-			qdel(source_station)
+/datum/trading_station/caravan/proc/SampleStationOffers(chosen_station_type)
+	var/datum/trading_station/source_station = FindOrSpawnSourceStation(chosen_station_type)
+	if(!istype(source_station))
+		return
+	var/needs_qdel = !(source_station in SSsupply?.all_trading_stations)
+	SampleVisibleOffersFrom(source_station)
+	if(length(source_station.hidden_offers) && prob(50))
+		SampleHiddenOffersFrom(source_station)
+	if(needs_qdel)
+		qdel(source_station)
+
+/datum/trading_station/caravan/proc/FindOrSpawnSourceStation(chosen_station_type)
+	if(SSsupply && islist(SSsupply.all_trading_stations))
+		for(var/datum/trading_station/existing in SSsupply.all_trading_stations)
+			if(existing.type == chosen_station_type && length(existing.offers))
+				return existing
+	var/datum/trading_station/source_station = new chosen_station_type(FALSE)
+	if(istype(source_station))
+		source_station.AssembleInventory()
+		return source_station
+	return null
+
+/datum/trading_station/caravan/proc/SampleVisibleOffersFrom(datum/trading_station/source_station)
+	for(var/category_name in source_station.offers_by_category)
+		var/list/source_offers = source_station.offers_by_category[category_name]
+		if(!islist(source_offers) || !length(source_offers))
+			continue
+		var/list/candidate_keys = source_offers.Copy()
+		var/items_to_pick = min(length(candidate_keys), rand(2, 5))
+		for(var/j in 1 to items_to_pick)
+			var/picked_key = pick(candidate_keys)
+			candidate_keys -= picked_key
+			var/datum/trade_offer/source_offer = source_offers[picked_key]
+			if(istype(source_offer))
+				var/datum/trade_offer/cloned = source_offer.Duplicate(GenerateGoodOfferId(), src)
+				AddOffer(cloned)
+
+/datum/trading_station/caravan/proc/SampleHiddenOffersFrom(datum/trading_station/source_station)
+	var/list/hidden_keys = source_station.hidden_offers.Copy()
+	if(!length(hidden_keys))
+		return
+	var/picked_hidden_key = pick(hidden_keys)
+	var/datum/trade_offer/hidden_offer = source_station.hidden_offers[picked_hidden_key]
+	if(istype(hidden_offer))
+		var/datum/trade_offer/cloned = hidden_offer.Duplicate(GenerateGoodOfferId(), src)
+		cloned.hidden = TRUE
+		AddOffer(cloned)
 
 /datum/trading_station/caravan/proc/GetCaravanRouteCandidates()
 	var/list/result = list()
@@ -183,7 +191,9 @@
 	var/datum/trading_station/current_stop = null
 	var/datum/trading_station/route_destination = null
 	var/list/current_route = null
+	var/datum/caravan_route_search/route_search = null
 	var/route_index = 1
+	var/route_search_nodes_per_process = 150
 	var/next_action_at = 0
 	var/nav_update_rate = 2 SECONDS
 	var/next_nav_update = 0
@@ -206,6 +216,7 @@
 	current_stop = null
 	route_destination = null
 	current_route = null
+	QDEL_NULL(route_search)
 	return ..()
 
 /obj/overmap/trade_beacon/caravan/Process()
@@ -225,31 +236,19 @@
 		StopMovement()
 		next_action_at = world.time + trade_window_min
 		return
-	if(caravan_state == "docked" && world.time < next_action_at)
-		return
 
-	UpdateRouteProgress()
-	if(!istype(route_destination) || !length(current_route) || route_index > length(current_route))
+	if(caravan_state == "docked" || !istype(route_destination))
 		if(!SelectNextRoute())
 			StopMovement()
-			if(caravan_state == "docked")
-				BeginTradeWindow(1 MINUTE)
-			else
-				next_action_at = world.time + trade_window_min
+			BeginTradeWindow(1 MINUTE)
+			return
 		return
 
-	var/turf/destination = route_destination.overmap_location
+	var/turf/destination = istype(route_destination) ? route_destination.overmap_location : null
 	if(!istype(destination))
 		ClearRoute()
 		StopMovement()
 		next_action_at = world.time + repath_cooldown
-		return
-
-	var/turf/next_step = current_route[route_index]
-	if(!istype(next_step) || !CanTraverseTurf(next_step, destination))
-		if(!BuildRouteTo(destination))
-			StopMovement()
-			next_action_at = world.time + repath_cooldown
 		return
 
 	if(loc == destination)
@@ -257,6 +256,40 @@
 		current_stop = route_destination
 		ClearRoute()
 		BeginTradeWindow()
+		return
+
+	if(!length(current_route))
+		var/list/completed_route = ContinueRouteSearch(destination)
+		if(isnull(completed_route))
+			StopMovement()
+			return
+		if(!islist(completed_route))
+			ClearRoute()
+			StopMovement()
+			next_action_at = world.time + repath_cooldown
+			return
+		current_route = completed_route
+		route_index = 2
+
+	UpdateRouteProgress()
+
+	if(route_index > length(current_route))
+		current_route = null
+		route_index = 1
+		if(!BeginRouteSearch(destination))
+			ClearRoute()
+			StopMovement()
+			next_action_at = world.time + repath_cooldown
+		return
+
+	var/turf/next_step = current_route[route_index]
+	if(!istype(next_step) || !CanTraverseTurf(next_step, destination))
+		current_route = null
+		route_index = 1
+		if(!BeginRouteSearch(destination))
+			ClearRoute()
+			StopMovement()
+			next_action_at = world.time + repath_cooldown
 		return
 
 	if(world.time >= next_nav_update)
@@ -302,7 +335,7 @@
 		var/datum/trading_station/candidate = candidates[list_index]
 		if(candidate == current_stop || !istype(candidate.overmap_location))
 			continue
-		if(!BuildRouteTo(candidate.overmap_location))
+		if(!BeginRouteSearch(candidate.overmap_location))
 			continue
 		route_destination = candidate
 		BeginTransit()
@@ -313,68 +346,118 @@
 	StopMovement()
 	route_destination = null
 	current_route = null
+	QDEL_NULL(route_search)
 	route_index = 1
 
-/obj/overmap/trade_beacon/caravan/proc/BuildRouteTo(turf/goal)
-	current_route = null
-	route_index = 1
-	if(!istype(goal) || !istype(loc, /turf))
-		return FALSE
+/datum/caravan_route_node
+	var/turf/node
+	var/f_score = 0
+	var/g_score = 0
 
-	var/turf/start = loc
-	if(start == goal)
-		current_route = list(start)
-		route_index = 2
-		return TRUE
+/proc/cmp_caravan_route_node(datum/caravan_route_node/a, datum/caravan_route_node/b)
+	return a.f_score - b.f_score
 
-	var/list/open_nodes = list(start)
+/datum/caravan_route_search
+	var/turf/goal
+	var/PriorityQueue/open_queue
+	var/list/open_nodes = list()
+	var/list/closed_nodes = list()
 	var/list/came_from = list()
 	var/list/g_score = list()
-	var/list/f_score = list()
-	g_score[start] = 0
-	f_score[start] = EstimateRouteHeuristic(start, goal)
 	var/iterations = 0
+	var/max_iterations = 1500
 
-	while(length(open_nodes) && iterations++ < 1500)
-		var/turf/current = PickBestOpenNode(open_nodes, f_score)
-		if(!istype(current))
-			break
+/datum/caravan_route_search/Destroy()
+	QDEL_NULL(open_queue)
+	open_nodes.Cut()
+	closed_nodes.Cut()
+	came_from.Cut()
+	g_score.Cut()
+	goal = null
+	return ..()
+
+/datum/caravan_route_search/proc/InitializeSearch(turf/start, turf/new_goal, obj/overmap/trade_beacon/caravan/caravan)
+	if(!istype(start) || !istype(new_goal) || !istype(caravan))
+		return FALSE
+	goal = new_goal
+	open_queue = new /PriorityQueue(GLOBAL_PROC_REF(cmp_caravan_route_node))
+	var/datum/caravan_route_node/start_node = new
+	start_node.node = start
+	start_node.g_score = 0
+	start_node.f_score = caravan.EstimateRouteHeuristic(start, goal)
+	open_nodes[start] = start_node
+	g_score[start] = 0
+	open_queue.Enqueue(start_node)
+	return TRUE
+
+/datum/caravan_route_search/proc/Advance(obj/overmap/trade_beacon/caravan/caravan, node_budget)
+	if(!istype(caravan) || !istype(goal) || !istype(open_queue) || node_budget < 1)
+		return FALSE
+	var/processed_nodes = 0
+	while(!open_queue.IsEmpty() && processed_nodes++ < node_budget && iterations++ < max_iterations)
+		var/datum/caravan_route_node/current_node = open_queue.Dequeue()
+		var/turf/current = current_node?.node
+		if(!istype(current) || closed_nodes[current])
+			continue
+		open_nodes[current] = null
+		closed_nodes[current] = TRUE
 		if(current == goal)
-			current_route = ReconstructRoute(came_from, current)
-			route_index = 2
-			return length(current_route) >= 1
+			return ReconstructRoute(current)
+		ExpandNeighbors(current, caravan)
+	if(open_queue.IsEmpty() || iterations >= max_iterations)
+		return FALSE
+	return null
 
-		open_nodes -= current
-		var/current_cost = g_score[current]
-		for(var/turf/neighbor as anything in GetPathNeighbors(current, goal))
-			var/tentative_cost = current_cost + GetTraversalCost(neighbor, goal)
-			if(!isnum(g_score[neighbor]) || tentative_cost < g_score[neighbor])
-				came_from[neighbor] = current
-				g_score[neighbor] = tentative_cost
-				f_score[neighbor] = tentative_cost + EstimateRouteHeuristic(neighbor, goal)
-				if(!(neighbor in open_nodes))
-					open_nodes += neighbor
+/datum/caravan_route_search/proc/ExpandNeighbors(turf/current, obj/overmap/trade_beacon/caravan/caravan)
+	var/current_cost = g_score[current]
+	for(var/turf/neighbor as anything in caravan.GetPathNeighbors(current, goal))
+		if(closed_nodes[neighbor])
+			continue
+		var/tentative_cost = current_cost + caravan.GetTraversalCost(neighbor, goal)
+		var/datum/caravan_route_node/next_node = open_nodes[neighbor]
+		if(istype(next_node) && tentative_cost >= next_node.g_score)
+			continue
+		if(!istype(next_node))
+			next_node = new
+			next_node.node = neighbor
+		else
+			open_queue.Remove(next_node)
+		next_node.g_score = tentative_cost
+		next_node.f_score = tentative_cost + caravan.EstimateRouteHeuristic(neighbor, goal)
+		open_nodes[neighbor] = next_node
+		came_from[neighbor] = current
+		g_score[neighbor] = tentative_cost
+		open_queue.Enqueue(next_node)
 
-	return FALSE
-
-/obj/overmap/trade_beacon/caravan/proc/PickBestOpenNode(list/open_nodes, list/f_score)
-	var/turf/best_node = null
-	var/best_score = INFINITY
-	for(var/turf/node as anything in open_nodes)
-		var/score = f_score[node]
-		if(isnull(score))
-			score = INFINITY
-		if(score < best_score)
-			best_score = score
-			best_node = node
-	return best_node
-
-/obj/overmap/trade_beacon/caravan/proc/ReconstructRoute(list/came_from, turf/current)
+/datum/caravan_route_search/proc/ReconstructRoute(turf/current)
 	var/list/path = list(current)
 	while(came_from[current])
 		current = came_from[current]
-		path.Insert(1, current)
-	return path
+		path += current
+	return reverseRange(path)
+
+/obj/overmap/trade_beacon/caravan/proc/BeginRouteSearch(turf/goal)
+	QDEL_NULL(route_search)
+	if(!istype(goal) || !istype(loc, /turf))
+		return FALSE
+	route_search = new
+	if(route_search.InitializeSearch(loc, goal, src))
+		return TRUE
+	QDEL_NULL(route_search)
+	return FALSE
+
+/obj/overmap/trade_beacon/caravan/proc/ContinueRouteSearch(turf/goal)
+	if(!istype(route_search) || route_search.goal != goal)
+		if(!BeginRouteSearch(goal))
+			return FALSE
+	var/list/result = route_search.Advance(src, route_search_nodes_per_process)
+	if(islist(result))
+		QDEL_NULL(route_search)
+		return result
+	if(isnull(result))
+		return null
+	QDEL_NULL(route_search)
+	return FALSE
 
 /obj/overmap/trade_beacon/caravan/proc/GetPathNeighbors(turf/current, turf/goal)
 	var/list/neighbors = list()

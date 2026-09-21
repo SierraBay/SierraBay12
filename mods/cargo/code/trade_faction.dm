@@ -21,6 +21,15 @@
 	else
 		trade_markup = list()
 
+/datum/trade_faction/Destroy()
+	relationship?.Cut()
+	relationship = null
+	embargo?.Cut()
+	embargo = null
+	trade_markup?.Cut()
+	trade_markup = null
+	return ..()
+
 /datum/trade_faction/proc/ModifyRelationsWith(target, change = FACTION_STATE_NEUTRAL)
 	var/target_name = target
 	if(istype(target_name, /datum/trade_faction))

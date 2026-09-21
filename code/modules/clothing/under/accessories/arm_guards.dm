@@ -52,7 +52,7 @@
 
 /obj/item/clothing/accessory/arm_guards/merc
 	name = "heavy arm guards"
-	desc = "A pair of heavily armored arm pads in red-trimmed black. Attaches to a plate carrier."
+	desc = "A pair of red-trimmed black arm pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_merc"
 	armor = list(
 		melee = ARMOR_MELEE_RESISTANT,
@@ -64,7 +64,7 @@
 
 /obj/item/clothing/accessory/arm_guards/heavy
 	name = "heavy arm guards"
-	desc = "A pair of heavily armored arm pads in black. Attaches to a plate carrier."
+	desc = "A pair of black arm pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards"
 	armor = list(
 		melee = ARMOR_MELEE_MAJOR,

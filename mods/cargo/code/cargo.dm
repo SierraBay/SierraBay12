@@ -35,6 +35,7 @@
 	var/obj/machinery/trade_beacon/receiving/receiving
 
 	var/list/known_market_intel = list()
+	var/save_order_id
 
 /datum/computer_file/program/supply/can_run(mob/living/user, loud = FALSE, access_to_check)
 	if(!requires_access_to_run)
@@ -65,6 +66,7 @@
 /datum/computer_file/program/supply/Destroy()
 	sending = null
 	receiving = null
+	save_order_id = null
 	if(known_market_intel)
 		for(var/station_uid in known_market_intel)
 			var/list/intel = known_market_intel[station_uid]
@@ -190,6 +192,13 @@
 		if(!IsLocalTradeBeacon(beacon))
 			continue
 		result[beacon.GetId()] = beacon
+	return result
+
+/datum/computer_file/program/supply/proc/SerializeLocalBeacons(beacon_type)
+	var/list/result = list()
+	var/list/beacons_by_id = (beacon_type == "receiving") ? GetLocalReceivingBeaconsById() : GetLocalSendingBeaconsById()
+	for(var/beacon_id in beacons_by_id)
+		result.Add(list(list("id" = beacon_id)))
 	return result
 
 /datum/computer_file/program/supply/proc/SerializeSelectedStation(datum/trading_station/target_station = null)
@@ -469,6 +478,9 @@
 		else
 			user_greeting = "WELCOME, [uppertext(user.name)]"
 	data["user_greeting"] = user_greeting
+	data["available_receiving_beacons"] = SerializeLocalBeacons("receiving")
+	data["available_sending_beacons"] = SerializeLocalBeacons("sending")
+	data["save_order_id"] = save_order_id
 
 /datum/computer_file/program/supply/proc/BuildSettingsScreenData(list/data)
 	var/datum/money_account/master_account = GetMasterAccount()
@@ -479,7 +491,7 @@
 	data["can_link_id_account"] = istype(inserted_id) && inserted_id.associated_account_number
 	data["inserted_id_account_number"] = inserted_id ? inserted_id.associated_account_number : 0
 
-/datum/computer_file/program/supply/proc/BuildGoodsScreenData(list/data)
+/datum/computer_file/program/supply/proc/BuildGoodsScreenData(list/data, mob/user = null)
 	var/datum/trading_station/selected_station = EnsureSelectedStation()
 	var/list/stations = SerializeVisibleStations()
 	data["has_visible_stations"] = length(stations) ? TRUE : FALSE
@@ -492,7 +504,7 @@
 		var/block_reason = GetStationTradeBlockReason(selected_station)
 		if(!block_reason)
 			data["categories"] = SerializeCategories(selected_station)
-			data["goods"] = SerializeGoods(selected_station)
+			data["goods"] = SerializeGoods(selected_station, user)
 		else
 			data["categories"] = list()
 			data["goods"] = list()
@@ -578,7 +590,7 @@
 		if(SETTINGS_SCREEN)
 			BuildSettingsScreenData(data)
 		if(GOODS_SCREEN)
-			BuildGoodsScreenData(data)
+			BuildGoodsScreenData(data, user)
 		if(EXPORT_SCREEN)
 			BuildExportScreenData(data)
 		if(CART_SCREEN)
@@ -607,24 +619,26 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/supply/proc/PromptLinkAccount()
+/datum/computer_file/program/supply/proc/PromptLinkAccount(list/href_list)
+	var/account_number = text2num(href_list["PRG_link_account_number"])
+	var/account_pin = text2num(href_list["PRG_link_account_pin"])
+	if(!isnum(account_number) || !isnum(account_pin))
+		OpenCartForm("link_account")
+		return TRUE
+	if(!account_number || !account_pin)
+		to_chat(usr, SPAN_WARNING("Account number and PIN are required."))
+		return TRUE
 	var/obj/item/stock_parts/computer/card_slot/card_slot = computer?.get_component(PART_CARD)
-	var/default_number = (istype(card_slot) && card_slot.stored_card) ? card_slot.stored_card.associated_account_number : null
-	var/account_number = input(usr, "Enter account number.", "Account Link", default_number) as num|null
-	if(!account_number)
-		return TRUE
-	var/account_pin = input(usr, "Enter PIN.", "Account Link") as num|null
-	if(!account_pin)
-		return TRUE
 	var/card_check = istype(card_slot) && card_slot.stored_card && card_slot.stored_card.associated_account_number == account_number
 	var/datum/money_account/linked_account = attempt_account_access(account_number, account_pin, card_check ? 2 : 1, TRUE)
 	if(!linked_account)
 		to_chat(usr, SPAN_WARNING("Unable to link account: access denied."))
 	else
 		account = linked_account
+	CloseCartForm()
 	return TRUE
 
-/datum/computer_file/program/supply/proc/LinkInsertedIdAccount()
+/datum/computer_file/program/supply/proc/LinkInsertedIdAccount(list/href_list)
 	var/obj/item/card/id/id_card = GetInsertedIdCard()
 	if(!istype(id_card))
 		to_chat(usr, SPAN_WARNING("Insert an ID card first."))
@@ -632,21 +646,23 @@
 	if(!id_card.associated_account_number)
 		to_chat(usr, SPAN_WARNING("This ID card is not linked to any bank account."))
 		return TRUE
-	var/account_pin = input(usr, "Enter the PIN for account #[id_card.associated_account_number].", "ID Account Link") as num|null
-	if(!account_pin)
+	var/account_pin = text2num(href_list["PRG_link_id_pin"])
+	if(!isnum(account_pin) || !account_pin)
+		OpenCartForm("link_id_account")
 		return TRUE
 	var/datum/money_account/linked_account = attempt_account_access(id_card.associated_account_number, account_pin, 2, TRUE)
 	if(!linked_account)
 		to_chat(usr, SPAN_WARNING("Unable to link the ID-linked account: access denied."))
 	else
 		account = linked_account
+	CloseCartForm()
 	return TRUE
 
 /datum/computer_file/program/supply/proc/HandleAccountTopic(list/href_list)
-	if("PRG_account" in href_list)
-		return PromptLinkAccount()
-	if("PRG_account_id" in href_list)
-		return LinkInsertedIdAccount()
+	if(("PRG_account" in href_list) || ("PRG_link_account_number" in href_list))
+		return PromptLinkAccount(href_list)
+	if(("PRG_account_id" in href_list) || ("PRG_link_id_pin" in href_list))
+		return LinkInsertedIdAccount(href_list)
 	if("PRG_account_unlink" in href_list)
 		account = null
 		current_order = null
@@ -675,40 +691,43 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/supply/proc/SelectReceivingBeacon()
-	var/list/beacons_by_id = GetLocalReceivingBeaconsById()
-	if(!length(beacons_by_id))
-		to_chat(usr, SPAN_WARNING("No receiving beacons are available on the current vessel."))
+/datum/computer_file/program/supply/proc/SelectReceivingBeacon(list/href_list)
+	if(!("PRG_beacon_id" in href_list))
+		OpenCartForm("select_receiving")
 		return TRUE
-	var/chosen_id = input(usr, "Select a receiving beacon.", "Receiving Beacon") as null|anything in beacons_by_id
-	if(chosen_id)
+	var/chosen_id = href_list["PRG_beacon_id"]
+	var/list/beacons_by_id = GetLocalReceivingBeaconsById()
+	if(chosen_id in beacons_by_id)
 		receiving = beacons_by_id[chosen_id]
+	else if(chosen_id == "none")
+		receiving = null
+	CloseCartForm()
 	return TRUE
 
-/datum/computer_file/program/supply/proc/SelectSendingBeacon()
-	var/list/beacons_by_id = GetLocalSendingBeaconsById()
-	if(!length(beacons_by_id))
-		to_chat(usr, SPAN_WARNING("No sending beacons are available on the current vessel."))
+/datum/computer_file/program/supply/proc/SelectSendingBeacon(list/href_list)
+	if(!("PRG_beacon_id" in href_list))
+		OpenCartForm("select_sending")
 		return TRUE
-	var/chosen_id = input(usr, "Select a sending beacon.", "Sending Beacon") as null|anything in beacons_by_id
-	if(chosen_id)
+	var/chosen_id = href_list["PRG_beacon_id"]
+	var/list/beacons_by_id = GetLocalSendingBeaconsById()
+	if(chosen_id in beacons_by_id)
 		sending = beacons_by_id[chosen_id]
+	else if(chosen_id == "none")
+		sending = null
+	CloseCartForm()
 	return TRUE
 
 /datum/computer_file/program/supply/proc/HandleBeaconTopic(list/href_list)
-	if("PRG_receiving" in href_list)
-		return SelectReceivingBeacon()
-	if("PRG_sending" in href_list)
-		return SelectSendingBeacon()
+	if(("PRG_receiving" in href_list) || (cart_form_mode == "select_receiving" && ("PRG_beacon_id" in href_list)))
+		return SelectReceivingBeacon(href_list)
+	if(("PRG_sending" in href_list) || (cart_form_mode == "select_sending" && ("PRG_beacon_id" in href_list)))
+		return SelectSendingBeacon(href_list)
 	return FALSE
 
 /datum/computer_file/program/supply/proc/ResolveCartAddQuantity(list/href_list)
 	if("PRG_cart_add_amount" in href_list)
 		var/amount = text2num(href_list["PRG_cart_add_amount"])
 		return (isnum(amount) && amount > 0) ? round(amount) : 0
-	if("PRG_cart_add_input" in href_list)
-		var/raw_amount = input(usr, "How many do you want to add?", "Trade", 2) as num|null
-		return (isnum(raw_amount) && raw_amount > 0) ? round(raw_amount) : 0
 	if("PRG_cart_add_form" in href_list)
 		var/form_amount = text2num(href_list["PRG_cart_add_amount"])
 		return (isnum(form_amount) && form_amount > 0) ? round(form_amount) : 0
@@ -732,8 +751,6 @@
 		good_ref = href_list["PRG_cart_add_form"]
 	else if("PRG_cart_add" in href_list)
 		good_ref = href_list["PRG_cart_add"]
-	else if("PRG_cart_add_input" in href_list)
-		good_ref = href_list["PRG_cart_add_input"]
 	var/count_to_buy = ResolveCartAddQuantity(href_list)
 	if(count_to_buy > 0 && TryAddToCart(good_ref, count_to_buy))
 		CloseGoodsQuantityForm()
@@ -755,14 +772,8 @@
 		CloseCartForm()
 		return TRUE
 	if("PRG_cart_load" in href_list)
-		var/name = input(usr, "Choose a saved cart.", "Load Cart") as null|anything in saved_shopping_lists
-		if(name)
-			var/list/loaded = LoadShopList(name)
-			if(islist(loaded))
-				ResetShopList()
-				shopping_list = loaded
-				trade_screen = CART_SCREEN
-				ResetUiForms()
+		trade_screen = SAVED_SCREEN
+		ResetUiForms()
 		return TRUE
 	if("PRG_cart_load_direct" in href_list)
 		return LoadSavedCartDirect(href_list["PRG_cart_load_direct"])
@@ -771,21 +782,32 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/HandleCartTopic(list/href_list)
-	if(("PRG_cart_add" in href_list) || ("PRG_cart_add_input" in href_list) || ("PRG_cart_add_good" in href_list) || ("PRG_cart_add_form" in href_list))
+	if(("PRG_cart_add" in href_list) || ("PRG_cart_add_good" in href_list) || ("PRG_cart_add_form" in href_list))
 		return HandleCartAdd(href_list)
 	if("PRG_cart_remove_good" in href_list)
 		if(istype(station) && chosen_category)
-			RemoveFromShopList(href_list["PRG_cart_remove_good"], 1, station, chosen_category)
+			var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_remove_good"])
+			if(good_id)
+				RemoveFromShopList(good_id, 1, station, chosen_category)
 		return TRUE
 	if("PRG_cart_set_form" in href_list)
-		var/good_id = href_list["PRG_cart_set_form"]
+		if(!istype(station) || !chosen_category)
+			return TRUE
+		var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_set_form"])
+		if(!good_id)
+			return TRUE
 		var/set_amount = text2num(href_list["PRG_cart_set_amount"])
-		if(isnum(set_amount) && set_amount >= 0 && istype(station) && chosen_category)
+		if(isnum(set_amount) && set_amount >= 0)
 			var/stock = station.GetGoodAmount(chosen_category, good_id)
 			var/current_in_cart = 0
-			var/list/category_cart = islist(shopping_list[station]) ? shopping_list[station][chosen_category] : null
-			if(islist(category_cart))
-				current_in_cart = category_cart[good_id] || 0
+			var/station_key = GetStationKey(station)
+			var/list/station_cart = islist(shopping_list[station_key]) ? shopping_list[station_key] : shopping_list[station]
+			if(islist(station_cart))
+				if(isnum(station_cart[good_id]))
+					current_in_cart = station_cart[good_id]
+				else if(islist(station_cart[chosen_category]))
+					var/list/category_cart = station_cart[chosen_category]
+					current_in_cart = category_cart[good_id] || 0
 			var/clamped = min(stock, round(set_amount))
 			if(clamped > current_in_cart)
 				AddToShopList(good_id, clamped - current_in_cart, stock)
@@ -907,6 +929,9 @@
 		to_chat(usr, SPAN_WARNING("Your cart is empty."))
 		return TRUE
 	var/reason = sanitize(raw_reason, MAX_MESSAGE_LEN)
+	if(!length(trimtext(reason)))
+		to_chat(usr, SPAN_WARNING("A justification reason is required to submit a supply order."))
+		return TRUE
 	current_order = SSsupply.BuildOrder(account, reason, CopyShopList(shopping_list), faction)
 	if(current_order)
 		ResetShopList()
@@ -929,11 +954,28 @@
 			current_order = null
 	return TRUE
 
-/datum/computer_file/program/supply/proc/SaveOrderToCart(order_id)
-	if(order_id in SSsupply.order_queue)
-		var/name = sanitizeName(input(usr, "Optional cart name.", "Save Order", ""), MAX_NAME_LEN)
-		var/list/order_data = SSsupply.order_queue[order_id]
-		SaveShopList(name, order_data["contents"])
+/datum/computer_file/program/supply/CloseCartForm()
+	save_order_id = null
+	return ..()
+
+/datum/computer_file/program/supply/ResetUiForms()
+	save_order_id = null
+	return ..()
+
+/datum/computer_file/program/supply/proc/SaveOrderToCart(order_id, list/href_list)
+	if(!(order_id in SSsupply.order_queue))
+		return TRUE
+	var/name = href_list["PRG_save_name"]
+	if(!name)
+		save_order_id = order_id
+		OpenCartForm("save_order")
+		return TRUE
+	name = sanitizeName(name, MAX_NAME_LEN)
+	var/list/order_data = SSsupply.order_queue[order_id]
+	SaveShopList(name, order_data["contents"])
+	save_order_id = null
+	CloseCartForm()
+	to_chat(usr, SPAN_NOTICE("Order saved to cart presets."))
 	return TRUE
 
 /datum/computer_file/program/supply/proc/ApproveOrder(order_id)
@@ -973,8 +1015,12 @@
 		return TRUE
 	if("PRG_remove_order" in href_list)
 		return RemoveOrder(href_list["PRG_remove_order"])
+	if("PRG_save_order_form" in href_list)
+		if(save_order_id)
+			return SaveOrderToCart(save_order_id, href_list)
+		return TRUE
 	if("PRG_save_order" in href_list)
-		return SaveOrderToCart(href_list["PRG_save_order"])
+		return SaveOrderToCart(href_list["PRG_save_order"], href_list)
 	if("PRG_approve_order" in href_list)
 		return ApproveOrder(href_list["PRG_approve_order"])
 	return FALSE

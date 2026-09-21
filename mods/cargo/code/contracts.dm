@@ -137,10 +137,12 @@
 	return ..()
 
 /obj/structure/closet/crate/trade_contract/Destroy()
-	if(!allow_contract_disposal)
-		var/datum/trade_contract/contract = GetLinkedContract()
-		if(istype(contract) && contract.status == CONTRACT_STATUS_ACTIVE)
+	var/datum/trade_contract/contract = GetLinkedContract()
+	if(istype(contract))
+		if(!allow_contract_disposal && contract.status == CONTRACT_STATUS_ACTIVE)
 			contract.Fail("Contract cargo was destroyed or lost in transit.", 2)
+		if(contract.assigned_crate == src)
+			contract.assigned_crate = null
 	linked_contract = null
 	return ..()
 
@@ -162,6 +164,7 @@
 	var/penalty = 0
 	var/deposit = 0
 	var/deposit_paid = 0
+	var/pending_refund = 0
 	var/distance = 0
 	var/status = CONTRACT_STATUS_AVAILABLE
 	var/list/contents = list()
@@ -188,9 +191,12 @@
 	return GLOB.using_map?.local_currency_name_short || "credits"
 
 /datum/trade_contract/proc/CleanupPayload()
-	if(istype(assigned_crate) && !QDELETED(assigned_crate))
-		assigned_crate.allow_contract_disposal = TRUE
-		qdel(assigned_crate)
+	if(istype(assigned_crate))
+		if(!QDELETED(assigned_crate))
+			assigned_crate.allow_contract_disposal = TRUE
+			qdel(assigned_crate)
+		else if(assigned_crate.linked_contract == src)
+			assigned_crate.linked_contract = null
 	assigned_crate = null
 
 /datum/trade_contract/proc/GetSourceStation()
@@ -398,8 +404,11 @@
 		deposit_paid = deposit
 	if(!ExecuteAccept(receiver_beacon))
 		if(deposit_paid > 0)
-			account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network")
-			deposit_paid = 0
+			if(account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network"))
+				deposit_paid = 0
+			else
+				linked_account = account
+				Fail("Unable to prepare the contract cargo. The security deposit will be refunded when the linked account is available.", 0, account.owner_name)
 		return FALSE
 	status = CONTRACT_STATUS_ACTIVE
 	linked_account = account
@@ -446,6 +455,8 @@
 /datum/trade_contract/proc/CanDeliver(obj/machinery/trade_beacon/sending/sender_beacon)
 	if(status != CONTRACT_STATUS_ACTIVE || QDELETED(sender_beacon) || !istype(linked_account))
 		return FALSE
+	if(linked_account.suspended)
+		return FALSE
 	if(sender_beacon.export_cooldown > world.time)
 		return FALSE
 	var/datum/trading_station/destination_station = GetDestinationStation()
@@ -465,6 +476,8 @@
 		return "This contract is not active."
 	if(!istype(linked_account))
 		return "Linked payment account is invalid or missing."
+	if(linked_account.suspended)
+		return "Linked payment account is suspended."
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(destination_station))
 		return "The destination station is unavailable."
@@ -497,26 +510,46 @@
 	failure_reason = reason
 	resolved_at = world.time
 	LogContractFailure(reason, failed_by)
-	linked_account = null
+	if(!HasPendingRefund())
+		linked_account = null
 	SSsupply?.TrimResolvedContracts()
+	return TRUE
+
+/datum/trade_contract/proc/HasPendingRefund()
+	return pending_refund > 0
+
+/datum/trade_contract/proc/TrySettlePendingRefund()
+	if(!HasPendingRefund())
+		return TRUE
+	if(!istype(linked_account) || linked_account.suspended)
+		return FALSE
+	if(!linked_account.deposit(pending_refund, "Trade Contract Deposit Refund", "Trade Network"))
+		return FALSE
+	deposit_paid = max(0, deposit_paid - pending_refund)
+	pending_refund = 0
+	if(status == CONTRACT_STATUS_FAILED)
+		linked_account = null
 	return TRUE
 
 /datum/trade_contract/proc/DeductPenalty(penalty_multiplier)
 	if(isnum(penalty_multiplier) && penalty_multiplier == 0)
+		pending_refund = 0
 		if(istype(linked_account) && deposit_paid > 0)
-			linked_account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network")
-			deposit_paid = 0
+			if(linked_account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network"))
+				deposit_paid = 0
+			else
+				pending_refund = deposit_paid
 		actual_penalty = 0
 		return
 
 	var/total_penalty = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
 	var/remaining_penalty = max(0, total_penalty - deposit_paid)
+	var/deduction = 0
 	if(istype(linked_account) && remaining_penalty > 0 && linked_account.money > 0)
-		var/deduction = min(remaining_penalty, linked_account.money)
-		linked_account.withdraw(deduction, "Trade Contract Penalty", "Trade Network")
-		actual_penalty = deposit_paid + deduction
-	else
-		actual_penalty = deposit_paid
+		var/attempted_deduction = min(remaining_penalty, linked_account.money)
+		if(attempted_deduction > 0 && linked_account.withdraw(attempted_deduction, "Trade Contract Penalty", "Trade Network"))
+			deduction = attempted_deduction
+	actual_penalty = deposit_paid + deduction
 
 /datum/trade_contract/proc/LogContractFailure(reason, failed_by)
 	var/datum/trading_station/source_station = GetSourceStation()
@@ -528,10 +561,11 @@
 /datum/trade_contract/proc/Deliver(obj/machinery/trade_beacon/sending/sender_beacon)
 	if(!CanDeliver(sender_beacon) || !sender_beacon.StartExport())
 		return FALSE
+	if(!PayoutReward())
+		return FALSE
 
 	cargo_summary = GetSummaryText()
 	ExecuteDeliver(sender_beacon)
-	PayoutReward()
 	DistributeStationWealth()
 
 	status = CONTRACT_STATUS_COMPLETED
@@ -542,10 +576,13 @@
 	return TRUE
 
 /datum/trade_contract/proc/PayoutReward()
-	if(istype(linked_account))
-		var/total_payout = reward + deposit_paid
-		linked_account.deposit(total_payout, "Trade Contract Delivery", "Trade Network")
-		deposit_paid = 0
+	if(!istype(linked_account) || linked_account.suspended)
+		return FALSE
+	var/total_payout = reward + deposit_paid
+	if(!linked_account.deposit(total_payout, "Trade Contract Delivery", "Trade Network"))
+		return FALSE
+	deposit_paid = 0
+	return TRUE
 
 /datum/trade_contract/proc/DistributeStationWealth()
 	var/datum/trading_station/source_station = GetSourceStation()
@@ -621,10 +658,13 @@
 		to_chat(user, SPAN_NOTICE("Caravan destination: [destination_name]."))
 
 /obj/item/disk/trade_data/Destroy()
-	if(!allow_contract_disposal)
-		var/datum/trade_contract/contract = GetLinkedContract()
-		if(istype(contract) && contract.status == CONTRACT_STATUS_ACTIVE)
+	var/datum/trade_contract/contract = GetLinkedContract()
+	if(istype(contract))
+		if(!allow_contract_disposal && contract.status == CONTRACT_STATUS_ACTIVE)
 			contract.Fail("Market intelligence disk was destroyed before transmission.", 2)
+		var/datum/trade_contract/caravan_rendezvous/caravan_contract = contract
+		if(istype(caravan_contract) && caravan_contract.assigned_disk == src)
+			caravan_contract.assigned_disk = null
 	linked_contract = null
 	return ..()
 
@@ -735,9 +775,12 @@
 
 /datum/trade_contract/caravan_rendezvous/CleanupPayload()
 	..()
-	if(istype(assigned_disk) && !QDELETED(assigned_disk))
-		assigned_disk.allow_contract_disposal = TRUE
-		qdel(assigned_disk)
+	if(istype(assigned_disk))
+		if(!QDELETED(assigned_disk))
+			assigned_disk.allow_contract_disposal = TRUE
+			qdel(assigned_disk)
+		else if(assigned_disk.linked_contract == src)
+			assigned_disk.linked_contract = null
 	assigned_disk = null
 
 /datum/trade_contract/caravan_rendezvous/ExecuteAccept(obj/machinery/trade_beacon/receiving/receiver_beacon)

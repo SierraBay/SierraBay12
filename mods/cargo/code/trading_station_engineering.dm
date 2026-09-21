@@ -44,7 +44,7 @@
 			/obj/structure/closet/crate/rcd = GOODS_DEFAULT,
 			/obj/item/rcd = GOODS_DEFAULT,
 			/obj/item/rcd_ammo = GOODS_DEFAULT,
-			/obj/machinery/power/supermatter = CUSTOM_GOODS_PRICE(6750)
+			/obj/structure/closet/crate/secure/large/phoron/supermatter = CUSTOM_GOODS_PRICE(6750)
 		)
 	)
 	hidden_inventory = list(
