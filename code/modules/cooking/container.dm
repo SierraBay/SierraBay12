@@ -463,8 +463,23 @@
 	var/singleton/cooking_recipe/recipe = select_recipe(src, appliance = appliancetype)
 
 	if(!recipe && length(contents))
+		// [SIERRA-EDIT] - contents[1] was assumed to be a snack, but the board also accepts
+		// rods, paper, holders, brains and nanopaste
+		/*
 		var/obj/item/reagent_containers/food/snacks/source = contents[1]
 		var/obj/item/reagent_containers/food/snacks/variable/result = new (get_turf(src))
+		*/ // SIERRA-EDIT - ORIGINAL
+		for(var/obj/item/component in contents)
+			if(istype(component, /obj/item/reagent_containers/food/snacks))
+				continue
+			to_chat(usr, SPAN_WARNING("\The [component] will not combine into a meal on its own - \the [src] does not hold a complete recipe."))
+			return
+		var/obj/item/reagent_containers/food/snacks/source = locate(/obj/item/reagent_containers/food/snacks) in contents
+		if(!source)
+			to_chat(usr, SPAN_WARNING("There is nothing on \the [src] you could make a meal out of."))
+			return
+		var/obj/item/reagent_containers/food/snacks/variable/result = new (get_turf(src))
+		// [/SIERRA-EDIT]
 		if (source.reagents?.total_volume)
 			source.reagents.trans_to(result, source.reagents.total_volume)
 		for (var/hint in source.nutriment_desc)
