@@ -1,5 +1,5 @@
 /proc/get_supply_department_account()
-	return department_accounts["Снабжения"] || department_accounts["Supply"]
+	return department_accounts["Supply"] || department_accounts["Cargo"] || department_accounts["Снабжения"]
 
 /proc/recursive_list_len(list/input)
 	. = 0
@@ -22,7 +22,12 @@
 	return
 
 /obj/structure/closet/secure_closet/personal/trade/CanToggleLock(mob/user, obj/item/card/id/id_card)
-	return istype(id_card) && id_card.registered_name && (!registered_name || registered_name == id_card.registered_name)
+	if(istype(id_card))
+		if((access_cargo in id_card.access) || (access_qm in id_card.access) || (access_captain in id_card.access))
+			return TRUE
+		if(id_card.registered_name && (!registered_name || registered_name == id_card.registered_name))
+			return TRUE
+	return FALSE
 
 /obj/structure/closet/secure_closet/personal/trade/togglelock(mob/user, obj/item/card/id/id_card)
 	locked = !locked

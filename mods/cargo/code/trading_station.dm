@@ -24,8 +24,6 @@
 	var/list/inventory = list()
 	var/hidden_inv_unlocked = FALSE
 	var/list/hidden_inventory = list()
-	var/list/legacy_supply_roots = list()
-	var/legacy_station_group_type = null
 	var/list/amounts_of_goods = list()
 	var/unique_good_count = 0
 	var/next_good_offer_id = 0
@@ -37,6 +35,8 @@
 	var/update_time = 0
 	var/update_timer_start = 0
 	var/update_timer_id = null
+	var/next_update_at = 0
+	var/list/commodity_by_path = list()
 
 	var/obj/overmap/overmap_object
 	var/turf/overmap_location
@@ -50,48 +50,86 @@
 	var/hazard_buffer = 1
 	var/placement_attempt_sample = 250
 
-	var/list/whitelist_factions = list()
-	var/list/blacklist_factions = list()
+	var/list/whitelist_factions
+	var/list/blacklist_factions
+	var/list/thematic_cores = list("Apex", "Zenith", "Horizon", "Pioneer", "Frontier", "Endeavor", "Atlas", "Beacon", "Prometheus", "Orion", "Nova", "Eclipse")
+	var/role_summary = "automated commercial supply and merchant transshipment"
 
 /datum/trading_station/New(init_on_new)
 	. = ..()
+	if(whitelist_factions)
+		whitelist_factions = whitelist_factions.Copy()
+	else
+		whitelist_factions = list()
+	if(blacklist_factions)
+		blacklist_factions = blacklist_factions.Copy()
+	else
+		blacklist_factions = list()
+	if(thematic_cores)
+		thematic_cores = thematic_cores.Copy()
+	else
+		thematic_cores = list("Apex", "Zenith", "Horizon", "Pioneer", "Frontier", "Endeavor", "Atlas", "Beacon", "Prometheus", "Orion", "Nova", "Eclipse")
 	if(init_on_new)
 		InitSrc()
+
+/datum/trading_station/proc/GetFacilitySuffix()
+	var/list/facility_suffixes = list("Depot", "Outpost", "Relay", "Hub", "Platform", "Terminal", "Exchange", "Array", "Facility")
+	return prob(65) ? " [pick(facility_suffixes)]" : ""
+
+/datum/trading_station/proc/GetNamingPrefixData()
+	if(faction == FACTION_INDIE_CONFED)
+		return list("short" = pick("TTB", "CTB", "PTB"), "full" = "Terran Trade Beacon")
+	if(faction == FACTION_NANOTRASEN)
+		return list("short" = pick("NTB", "NSB"), "full" = "NanoTrasen Beacon")
+	return list("short" = pick("FTB", "ISB", "OSB", "ASB"), "full" = "Free Trade Beacon")
+
+/datum/trading_station/proc/GetThematicCores()
+	return thematic_cores
+
+/datum/trading_station/proc/GetRoleSummary()
+	return role_summary
 
 /datum/trading_station/proc/GetFaction()
 	return SSsupply.GetFaction(faction)
 
 /datum/trading_station/proc/InitSrc(turf/station_loc = null, force_discovered = FALSE)
-	AssignStationIdentity()
+	var/turf/spawn_turf = ResolveOvermapSpawnLocation(station_loc)
+	AssignStationIdentity(spawn_turf)
 	AssembleInventory()
 	InitGoods()
 	UpdateTick()
-	SetupOvermapPlacement(station_loc, force_discovered)
+	SetupOvermapPlacement(spawn_turf, force_discovered)
 	RegisterStation()
 
-/datum/trading_station/proc/AssignStationIdentity()
+/datum/trading_station/proc/AssignStationIdentity(turf/station_loc = null)
 	if(name)
 		CRASH("[type] trade station had name set before InitSrc() was called!")
 
-	for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
-		name_pool.Remove(other_station.name)
-	if(!length(name_pool))
-		log_debug("Trade station name pool exhausted: [type]")
-		var/list/reset_pool = initial(name_pool)
-		name_pool = islist(reset_pool) ? reset_pool.Copy() : list()
-		for(var/datum/trading_station/other_station as anything in SSsupply.all_trading_stations)
-			name_pool.Remove(other_station.name)
+	var/list/available_names = islist(name_pool) ? name_pool.Copy() : list()
+	for(var/datum/trading_station/other_station as anything in SSsupply?.all_trading_stations)
+		if(other_station.name)
+			available_names.Remove(other_station.name)
 
-	if(length(name_pool))
-		name = pick(name_pool)
-		desc = name_pool[name]
-	else if(!name)
-		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
-		desc = initial(desc) || "An automated merchant outpost."
+	if(length(available_names))
+		name = pick(available_names)
+		desc = available_names[name]
+	else
+		log_debug("Trade station name pool exhausted for [type]; generating procedural identity.")
+		AssignProceduralIdentity(station_loc)
 
 	uid ||= "[type]_[random_id(type, 100, 999)]"
 	if(LAZYLEN(random_factions))
 		faction = pick(random_factions)
+
+/datum/trading_station/proc/AssignProceduralIdentity(turf/station_loc = null)
+	var/turf/target_turf = istype(station_loc) ? station_loc : overmap_location
+	var/list/identity = GenerateProceduralStationIdentity(src, target_turf)
+	name = identity["name"]
+	desc = identity["desc"]
+	if(!name)
+		name = "[initial(name) || "Trade Station"] [random_id(type, 100, 999)]"
+	if(!desc)
+		desc = initial(desc) || "An automated merchant outpost."
 
 /datum/trading_station/proc/SetupOvermapPlacement(turf/station_loc = null, force_discovered = FALSE)
 	if(start_hidden)
@@ -359,10 +397,27 @@
 		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
 
 /datum/trading_station/proc/AssembleInventory()
-	BuildLegacyInventory()
 	NormalizeInventory(inventory)
 	NormalizeInventory(hidden_inventory)
 	NormalizeGoodsRecords()
+	BuildCommodityPathIndex()
+
+/datum/trading_station/proc/BuildCommodityPathIndex()
+	commodity_by_path = list()
+	for(var/category_name in inventory)
+		var/list/category = inventory[category_name]
+		if(!islist(category))
+			continue
+		for(var/good_id in category)
+			var/list/good_packet = category[good_id]
+			if(!islist(good_packet))
+				continue
+			var/item_path = good_packet["item_path"]
+			if(ispath(item_path) && !(item_path in commodity_by_path))
+				commodity_by_path[item_path] = list(
+					"category" = category_name,
+					"good_id" = good_id
+				)
 
 /datum/trading_station/proc/NormalizeInventory(list/target_inventory)
 	if(!islist(target_inventory))
@@ -383,6 +438,7 @@
 /datum/trading_station/proc/NormalizeGoodsRecords()
 	NormalizeGoodsRecordsFor(inventory)
 	NormalizeGoodsRecordsFor(hidden_inventory)
+	BuildCommodityPathIndex()
 
 /datum/trading_station/proc/NormalizeGoodsRecordsFor(list/target_inventory)
 	if(!islist(target_inventory))
@@ -464,6 +520,7 @@
 			var/list/content = amounts_of_goods[category_name]
 			content[good_id] = max(0, rand(rand_args[1], rand_args[2]))
 			unique_good_count += 1
+	BuildCommodityPathIndex()
 
 /datum/trading_station/proc/SpendTradeStationsBudget(budget = spawn_cost)
 	if(!spawn_always)
@@ -473,7 +530,7 @@
 	if(!spawn_always)
 		SSsupply.trade_stations_budget += budget
 
-/datum/trading_station/proc/UpdateTick()
+/datum/trading_station/proc/StationTick()
 	if(QDELETED(src))
 		return
 	if(initialized)
@@ -482,7 +539,10 @@
 		initialized = TRUE
 	update_time = rand(6, 8) MINUTES
 	update_timer_start = world.time
-	update_timer_id = addtimer(new Callback(src, .proc/UpdateTick), update_time, TIMER_STOPPABLE)
+	next_update_at = world.time + update_time
+
+/datum/trading_station/proc/UpdateTick()
+	StationTick()
 
 /datum/trading_station/proc/GoodsTick()
 	wealth += base_income
@@ -515,7 +575,7 @@
 
 /datum/trading_station/proc/ApplyRestockCandidates(list/restock_candidates)
 	for(var/i in 1 to 20)
-		if(!length(restock_candidates) || !wealth)
+		if(!length(restock_candidates) || wealth <= 0)
 			break
 		var/idx = rand(1, length(restock_candidates))
 		var/list/good_packet = restock_candidates[idx]
@@ -551,7 +611,26 @@
 	var/resolved_name = null
 	if(ispath(item_path, /atom/movable))
 		var/atom/movable/item_type = item_path
-		resolved_name = initial(item_type.name)
+		if(ispath(item_path, /obj/item/seeds) && item_path != /obj/item/seeds && item_path != /obj/item/seeds/random)
+			var/obj/item/seeds/seed_item = item_path
+			var/seed_key = initial(seed_item.seed_type)
+			if(seed_key)
+				if(!isnull(SSplants?.seeds) && SSplants.seeds[seed_key])
+					var/datum/seed/seed_datum = SSplants.seeds[seed_key]
+					if(seed_datum.seed_name && seed_datum.seed_noun)
+						var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
+						resolved_name = "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
+					else
+						resolved_name = "packet of [seed_key] seeds"
+				else
+					resolved_name = "packet of [seed_key] seeds"
+		else if(ispath(item_path, /obj/item/reagent_containers/chem_disp_cartridge))
+			var/obj/item/reagent_containers/chem_disp_cartridge/cartridge = item_path
+			var/datum/reagent/reagent_type = initial(cartridge.spawn_reagent)
+			if(ispath(reagent_type, /datum/reagent))
+				resolved_name = "[initial(cartridge.name)] ([initial(reagent_type.name)])"
+		if(!resolved_name)
+			resolved_name = initial(item_type.name)
 	if(islist(good_packet) && resolved_name)
 		good_packet["resolved_name"] = resolved_name
 	return resolved_name || "[good_ref]"
@@ -593,8 +672,8 @@
 	TryUnlockHiddenInv()
 
 /datum/trading_station/proc/SubtractFromWealth(cost)
-	if(isnum(cost))
-		wealth -= cost
+	if(isnum(cost) && cost > 0)
+		wealth = max(0, wealth - cost)
 
 /datum/trading_station/Destroy()
 	if(update_timer_id)
@@ -631,4 +710,7 @@
 			if(islist(goods))
 				goods.Cut()
 		amounts_of_goods.Cut()
+	if(islist(commodity_by_path))
+		commodity_by_path.Cut()
+		commodity_by_path = null
 	return ..()

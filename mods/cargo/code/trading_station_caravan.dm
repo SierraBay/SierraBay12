@@ -20,39 +20,94 @@
 		"FTV Wayfarer" = "A mobile trade caravan carrying mixed civilian cargo and opportunistic surplus.",
 		"FTV Long Haul" = "An itinerant merchant convoy moving between beacon routes with a rotating inventory.",
 		"FTV Open Palm" = "A roving independent trade caravan broadcasting merchant registry codes.",
-		"FTV Far Market" = "A caravan specializing in off-route deals and transient dockside trade."
+		"FTV Far Market" = "A caravan specializing in off-route deals and transient dockside trade.",
+		"FTV Stray Wind" = "A light independent merchant cutter trading regional surplus across peripheral jump points.",
+		"FTV Nomad's Coin" = "A veteran trader convoy bartering manufactured goods for raw salvage.",
+		"FTV Drift Hopper" = "A swift bulk runner connecting independent outposts outside core shipping lanes.",
+		"FTV Silver Horizon" = "A luxury and consumer provisions merchant vessel cruising between planetary outposts."
 	)
-	var/list/caravan_group_types = list(
-		/datum/legacy_station_group/operations,
-		/datum/legacy_station_group/engineering,
-		/datum/legacy_station_group/materials,
-		/datum/legacy_station_group/medicine,
-		/datum/legacy_station_group/science,
-		/datum/legacy_station_group/service,
-		/datum/legacy_station_group/civilian
+	var/list/caravan_station_types = list(
+		/datum/trading_station/operations,
+		/datum/trading_station/engineering,
+		/datum/trading_station/materials,
+		/datum/trading_station/medicine,
+		/datum/trading_station/science,
+		/datum/trading_station/service,
+		/datum/trading_station/civilian,
+		/datum/trading_station/eva,
+		/datum/trading_station/atmospherics
 	)
 	var/min_groups = 2
 	var/max_groups = 3
+	var/has_departed = FALSE
+	thematic_cores = list("Wayfarer", "Long Haul", "Open Palm", "Far Market", "Stray Wind", "Nomad's Coin", "Drift Hopper", "Silver Horizon", "Peregrine", "Wandering Star")
+	role_summary = "mobile deep-space commercial cargo transit"
+
+/datum/trading_station/caravan/GetNamingPrefixData()
+	return list("short" = pick("FTV", "MSV", "CSV"), "full" = "Free Trade Vessel")
+
+/datum/trading_station/caravan/GetFacilitySuffix()
+	return prob(30) ? " [pick("Runner", "Hauler", "Convoy", "Express")]" : ""
 
 /datum/trading_station/caravan/InitSrc(turf/station_loc = null, force_discovered = FALSE)
 	uid = "trade_caravan_[random_id(type, 1000, 9999)]"
-	if(!length(legacy_supply_roots))
-		BuildCaravanSupplyRoots()
 	return ..(station_loc, force_discovered)
 
-/datum/trading_station/caravan/proc/BuildCaravanSupplyRoots()
-	legacy_supply_roots = list()
-	var/list/group_pool = caravan_group_types.Copy()
-	var/groups_to_pick = rand(min_groups, max_groups)
-	for(var/i = 1 to groups_to_pick)
-		if(!length(group_pool))
+/datum/trading_station/caravan/AssembleInventory()
+	BuildCaravanInventory()
+	return ..()
+
+/datum/trading_station/caravan/proc/BuildCaravanInventory()
+	inventory = list()
+	hidden_inventory = list()
+	var/list/available_stations = caravan_station_types.Copy()
+	var/stations_to_sample = clamp(rand(min_groups, max_groups), 1, length(available_stations))
+	for(var/i in 1 to stations_to_sample)
+		if(!length(available_stations))
 			break
-		var/group_type = pick(group_pool)
-		group_pool -= group_type
-		var/datum/legacy_station_group/group = new group_type
-		for(var/root_type in group.root_categories)
-			if(!(root_type in legacy_supply_roots))
-				legacy_supply_roots += root_type
+		var/chosen_station_type = pick(available_stations)
+		available_stations -= chosen_station_type
+		var/datum/trading_station/source_station = null
+		var/needs_qdel = FALSE
+		if(SSsupply && islist(SSsupply.all_trading_stations))
+			for(var/datum/trading_station/existing in SSsupply.all_trading_stations)
+				if(existing.type == chosen_station_type && islist(existing.inventory) && length(existing.inventory))
+					source_station = existing
+					break
+		if(!source_station)
+			source_station = new chosen_station_type(FALSE)
+			if(!istype(source_station))
+				continue
+			source_station.AssembleInventory()
+			needs_qdel = TRUE
+
+		for(var/category_name in source_station.inventory)
+			var/list/source_goods = source_station.inventory[category_name]
+			if(!islist(source_goods) || !length(source_goods))
+				continue
+			var/list/caravan_goods = inventory[category_name]
+			if(!islist(caravan_goods))
+				caravan_goods = list()
+				inventory[category_name] = caravan_goods
+			var/list/candidate_keys = source_goods.Copy()
+			var/items_to_pick = min(length(candidate_keys), rand(2, 5))
+			for(var/j in 1 to items_to_pick)
+				var/picked_key = pick(candidate_keys)
+				candidate_keys -= picked_key
+				caravan_goods[picked_key] = source_goods[picked_key]
+		if(length(source_station.hidden_inventory) && prob(50))
+			for(var/hidden_cat in source_station.hidden_inventory)
+				var/list/hidden_source = source_station.hidden_inventory[hidden_cat]
+				if(!islist(hidden_source) || !length(hidden_source))
+					continue
+				var/list/caravan_hidden = hidden_inventory[hidden_cat]
+				if(!islist(caravan_hidden))
+					caravan_hidden = list()
+					hidden_inventory[hidden_cat] = caravan_hidden
+				var/picked_hidden_key = pick(hidden_source)
+				caravan_hidden[picked_hidden_key] = hidden_source[picked_hidden_key]
+		if(needs_qdel)
+			qdel(source_station)
 
 /datum/trading_station/caravan/proc/GetCaravanRouteCandidates()
 	var/list/result = list()
@@ -73,15 +128,29 @@
 \[b\]Notice\[/b\]: [GetOvermapDesc()]"}
 
 /datum/trading_station/caravan/GetAvailabilityBlockReason(atom/source = null)
+	if(has_departed)
+		return "This caravan has departed."
+	if(!GLOB.using_map.use_overmap || !overmap_location)
+		return null
 	var/obj/overmap/trade_beacon/caravan/caravan_object = overmap_object
-	if(!istype(caravan_object))
+	if(!istype(caravan_object) || QDELETED(caravan_object))
 		return "This caravan is currently unavailable."
 	return caravan_object.GetTradeAvailabilityBlockReason()
 
 
 /datum/trading_station/caravan/GetAvailabilityStatusData()
+	if(has_departed)
+		return list(
+			"label" = "Departed",
+			"tone" = "bad"
+		)
+	if(!GLOB.using_map.use_overmap || !overmap_location)
+		return list(
+			"label" = "Docked",
+			"tone" = "good"
+		)
 	var/obj/overmap/trade_beacon/caravan/caravan_object = overmap_object
-	if(!istype(caravan_object))
+	if(!istype(caravan_object) || QDELETED(caravan_object))
 		return list(
 			"label" = "Unavailable",
 			"tone" = "bad"
@@ -130,6 +199,7 @@
 
 /obj/overmap/trade_beacon/caravan/Destroy()
 	if(linked_station && linked_station.overmap_object == src)
+		linked_station.has_departed = TRUE
 		linked_station.overmap_object = null
 		linked_station.overmap_location = null
 	linked_station = null
@@ -261,11 +331,11 @@
 	var/list/came_from = list()
 	var/list/g_score = list()
 	var/list/f_score = list()
-	g_score[RouteNodeKey(start)] = 0
-	f_score[RouteNodeKey(start)] = EstimateRouteHeuristic(start, goal)
+	g_score[start] = 0
+	f_score[start] = EstimateRouteHeuristic(start, goal)
 	var/iterations = 0
 
-	while(length(open_nodes) && iterations++ < 2500)
+	while(length(open_nodes) && iterations++ < 1500)
 		var/turf/current = PickBestOpenNode(open_nodes, f_score)
 		if(!istype(current))
 			break
@@ -275,15 +345,13 @@
 			return length(current_route) >= 1
 
 		open_nodes -= current
-		var/current_key = RouteNodeKey(current)
-		var/current_cost = g_score[current_key]
+		var/current_cost = g_score[current]
 		for(var/turf/neighbor as anything in GetPathNeighbors(current, goal))
-			var/neighbor_key = RouteNodeKey(neighbor)
 			var/tentative_cost = current_cost + GetTraversalCost(neighbor, goal)
-			if(!isnum(g_score[neighbor_key]) || tentative_cost < g_score[neighbor_key])
-				came_from[neighbor_key] = current
-				g_score[neighbor_key] = tentative_cost
-				f_score[neighbor_key] = tentative_cost + EstimateRouteHeuristic(neighbor, goal)
+			if(!isnum(g_score[neighbor]) || tentative_cost < g_score[neighbor])
+				came_from[neighbor] = current
+				g_score[neighbor] = tentative_cost
+				f_score[neighbor] = tentative_cost + EstimateRouteHeuristic(neighbor, goal)
 				if(!(neighbor in open_nodes))
 					open_nodes += neighbor
 
@@ -293,7 +361,7 @@
 	var/turf/best_node = null
 	var/best_score = INFINITY
 	for(var/turf/node as anything in open_nodes)
-		var/score = f_score[RouteNodeKey(node)]
+		var/score = f_score[node]
 		if(isnull(score))
 			score = INFINITY
 		if(score < best_score)
@@ -303,11 +371,9 @@
 
 /obj/overmap/trade_beacon/caravan/proc/ReconstructRoute(list/came_from, turf/current)
 	var/list/path = list(current)
-	var/node_key = RouteNodeKey(current)
-	while(came_from[node_key])
-		current = came_from[node_key]
+	while(came_from[current])
+		current = came_from[current]
 		path.Insert(1, current)
-		node_key = RouteNodeKey(current)
 	return path
 
 /obj/overmap/trade_beacon/caravan/proc/GetPathNeighbors(turf/current, turf/goal)

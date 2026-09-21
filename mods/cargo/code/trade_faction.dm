@@ -1,10 +1,25 @@
 /datum/trade_faction
 	var/name = "Trade Faction"
 	var/desc = "A trade faction."
-	var/list/relationship = list()
-	var/list/embargo = list()
-	var/list/trade_markup = list()
+	var/list/relationship
+	var/list/embargo
+	var/list/trade_markup
 	var/access_required = null
+
+/datum/trade_faction/New()
+	..()
+	if(relationship)
+		relationship = relationship.Copy()
+	else
+		relationship = list()
+	if(embargo)
+		embargo = embargo.Copy()
+	else
+		embargo = list()
+	if(trade_markup)
+		trade_markup = trade_markup.Copy()
+	else
+		trade_markup = list()
 
 /datum/trade_faction/proc/ModifyRelationsWith(target, change = FACTION_STATE_NEUTRAL)
 	var/target_name = target

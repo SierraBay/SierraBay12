@@ -57,10 +57,15 @@
 			continue
 		. += movable
 
-/obj/machinery/trade_beacon/sending/proc/StartExport()
+/obj/machinery/trade_beacon/sending/proc/CanExport()
 	if(inoperable() || !anchored || QDELETED(src))
 		return FALSE
 	if(export_cooldown > world.time)
+		return FALSE
+	return TRUE
+
+/obj/machinery/trade_beacon/sending/proc/StartExport()
+	if(!CanExport())
 		return FALSE
 	Activate()
 	export_cooldown = world.time + export_cooldown_time

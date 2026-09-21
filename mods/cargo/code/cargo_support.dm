@@ -25,14 +25,3 @@
 			return TRUE
 	return FALSE
 
-/datum/event/mail/setup()
-	kill(TRUE)
-
-/datum/event/mail/announce()
-	return
-
-/datum/event/mail/tick()
-	kill(TRUE)
-
-/datum/event/shipping_error/start()
-	kill(TRUE)

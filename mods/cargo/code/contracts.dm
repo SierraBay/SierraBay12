@@ -62,16 +62,7 @@
 /obj/structure/closet/crate/trade_contract/proc/ConfirmTamper(mob/user)
 	if(!user || !user.client)
 		return TRUE
-	var/currency = GetCurrencyName()
-	var/penalty_display = round(penalty)
-	var/confirm = alert(
-		user,
-		"Breaking the security seal will void trade contract #[contract_id] and incur a tampering penalty of [penalty_display] [currency]. Are you sure you want to breach the seal?",
-		"Breach Cargo Seal",
-		"Breach Seal",
-		"Cancel"
-	)
-	return confirm == "Breach Seal"
+	return user.a_intent != I_HELP
 
 /obj/structure/closet/crate/trade_contract/proc/HandleTamper(mob/user, reason = "Tampering detected.")
 	var/datum/trade_contract/contract = GetLinkedContract()
@@ -79,9 +70,23 @@
 		return FALSE
 	var/user_name = user ? (user.real_name || user.name) : null
 	visible_message(
-		SPAN_DANGER("\The [src] security seal is breached! A sharp warning tone sounds as the container initiates emergency lockdown disposal!"),
+		SPAN_DANGER("\The [src] security seal is breached! Alarm sirens blare and emergency locks disengage!"),
 		SPAN_DANGER("A sharp alarm sounds from \the [src] as its security seal is breached!")
 	)
+	var/datum/effect/spark_spread/sparks = new /datum/effect/spark_spread
+	sparks.set_up(3, 1, src)
+	sparks.start()
+	playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
+
+	contract.assigned_crate = null
+	linked_contract = null
+	contract_id = null
+	name = "breached contract crate"
+	desc = "A freight crate whose trade-network security seal was forcefully breached."
+
+	locked = FALSE
+	open()
+
 	contract.Fail(reason, 2, user_name)
 	return TRUE
 
@@ -89,8 +94,8 @@
 	if(opened || !IsActiveContractCrate())
 		return FALSE
 	if(!ConfirmTamper(user))
-		if(user && cancel_message)
-			to_chat(user, SPAN_NOTICE(cancel_message))
+		var/currency = GetCurrencyName()
+		to_chat(user, SPAN_WARNING("\The [src] is sealed for trade contract #[contract_id] (Tampering penalty: [round(penalty)] [currency]). Switch to Harm intent or pry with a tool to force it open."))
 		return TRUE
 	if(user && (!user.Adjacent(src) || !user.client))
 		return TRUE
@@ -104,13 +109,13 @@
 
 /obj/structure/closet/crate/trade_contract/toggle(mob/user)
 	if(!opened && IsActiveContractCrate())
-		AttemptTamper(user, "Cargo seal was broken before delivery.", "You decide against breaching the security seal on \the [src].")
+		AttemptTamper(user, "Cargo seal was forced open before delivery.", "You decide against breaching the security seal on \the [src].")
 		return
 	return ..()
 
 /obj/structure/closet/crate/trade_contract/use_tool(obj/item/tool, mob/user, list/click_params)
 	if(!opened && IsActiveContractCrate())
-		if(user && user.a_intent != I_HURT && !isCrowbar(tool) && !isWirecutter(tool) && !isWelder(tool) && !isScrewdriver(tool) && !istype(tool, /obj/item/gun/energy/plasmacutter))
+		if(user && user.a_intent == I_HELP && !isCrowbar(tool) && !isWirecutter(tool) && !isWelder(tool) && !isScrewdriver(tool) && !istype(tool, /obj/item/gun/energy/plasmacutter))
 			to_chat(user, SPAN_NOTICE("\The [src] is sealed for trade contract #[contract_id]. Use a prying or cutting tool to breach the seal."))
 			return TRUE
 		var/who = user ? (user.real_name || user.name) : "Unknown"
@@ -121,7 +126,7 @@
 /obj/structure/closet/crate/trade_contract/use_weapon(obj/item/weapon, mob/user, list/click_params)
 	if(!opened && IsActiveContractCrate())
 		var/who = user ? (user.real_name || user.name) : "Unknown"
-		AttemptTamper(user, "[who] attempted to force the crate open.", "You hold back from forcing open the security seal on \the [src].")
+		AttemptTamper(user, "[who] forced open the security seal.", "You hold back from forcing open the security seal on \the [src].")
 		return TRUE
 	return ..()
 
@@ -497,6 +502,13 @@
 	return TRUE
 
 /datum/trade_contract/proc/DeductPenalty(penalty_multiplier)
+	if(isnum(penalty_multiplier) && penalty_multiplier == 0)
+		if(istype(linked_account) && deposit_paid > 0)
+			linked_account.deposit(deposit_paid, "Trade Contract Deposit Refund", "Trade Network")
+			deposit_paid = 0
+		actual_penalty = 0
+		return
+
 	var/total_penalty = isnum(penalty_multiplier) ? round(base_value * penalty_multiplier) : penalty
 	var/remaining_penalty = max(0, total_penalty - deposit_paid)
 	if(istype(linked_account) && remaining_penalty > 0 && linked_account.money > 0)
@@ -571,9 +583,55 @@
 /datum/trade_contract/proc/GetCompletionLogPayload()
 	return ""
 
+/obj/item/disk/trade_data
+	name = "encrypted intelligence disk"
+	desc = "An encrypted data storage medium containing sensitive market intelligence."
+	icon = 'icons/obj/datadisks.dmi'
+	icon_state = "datadisk3"
+	w_class = ITEM_SIZE_TINY
+	var/contract_id
+	var/contract_serial
+	var/destination_uid
+	var/destination_name
+	var/allow_contract_disposal = FALSE
+	var/datum/trade_contract/linked_contract
+
+/obj/item/disk/trade_data/proc/GetLinkedContract()
+	if(istype(linked_contract) && !QDELETED(linked_contract))
+		return linked_contract
+	if(contract_id)
+		linked_contract = SSsupply.GetTradeContract(contract_id)
+		return linked_contract
+	return null
+
+/obj/item/disk/trade_data/proc/UpdateIntelLabel()
+	name = "encrypted intelligence disk"
+	if(contract_serial)
+		name = "[name] #[contract_serial]"
+	if(destination_name)
+		name = "[name] -> [destination_name]"
+	desc = "An encrypted data storage medium assigned to rendezvous contract #[contract_id]."
+	if(destination_name)
+		desc += " Destination: [destination_name]."
+
+/obj/item/disk/trade_data/examine(mob/user)
+	. = ..()
+	to_chat(user, SPAN_NOTICE("Contract #[contract_id], serial #[contract_serial]."))
+	if(destination_name)
+		to_chat(user, SPAN_NOTICE("Caravan destination: [destination_name]."))
+
+/obj/item/disk/trade_data/Destroy()
+	if(!allow_contract_disposal)
+		var/datum/trade_contract/contract = GetLinkedContract()
+		if(istype(contract) && contract.status == CONTRACT_STATUS_ACTIVE)
+			contract.Fail("Market intelligence disk was destroyed before transmission.", 2)
+	linked_contract = null
+	return ..()
+
 /datum/trade_contract/caravan_rendezvous
-	var/briefing_text = "Transmit market intelligence package (digital data packet, no physical cargo crate)"
+	var/briefing_text = "Market intelligence data packet (encrypted disk required)"
 	var/trade_window_end = 0
+	var/obj/item/disk/trade_data/assigned_disk
 
 /datum/trade_contract/caravan_rendezvous/proc/GetCaravanStation()
 	return GetDestinationStation()
@@ -601,9 +659,9 @@
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	switch(status)
 		if(CONTRACT_STATUS_AVAILABLE)
-			return "Accept near [source_station ? source_station.name : "the briefing station"] to download the market-intelligence packet (digital transmission, no crate dispensed)."
+			return "Accept near [source_station ? source_station.name : "the briefing station"] to receive the encrypted intelligence disk."
 		if(CONTRACT_STATUS_ACTIVE)
-			return "Move within trade range of [caravan_station ? caravan_station.name : "the target caravan"] and transmit the digital packet through the sending beacon."
+			return "Move within trade range of [caravan_station ? caravan_station.name : "the target caravan"] and transmit the encrypted intelligence disk via the sending beacon."
 		if(CONTRACT_STATUS_COMPLETED)
 			return "Market intelligence transmitted."
 		if(CONTRACT_STATUS_FAILED)
@@ -615,9 +673,9 @@
 	var/datum/trading_station/caravan/caravan_station = GetCaravanStation()
 	switch(status)
 		if(CONTRACT_STATUS_AVAILABLE)
-			return "Requires receiving range to [source_station ? source_station.name : "the briefing station"] (digital download)."
+			return "Requires receiving range to [source_station ? source_station.name : "the briefing station"]."
 		if(CONTRACT_STATUS_ACTIVE)
-			return "Requires sending range to [caravan_station ? caravan_station.name : "the target caravan"] (digital transmission)."
+			return "Requires the encrypted intelligence disk and sending range to [caravan_station ? caravan_station.name : "the target caravan"]."
 	return null
 
 /datum/trade_contract/caravan_rendezvous/GetResolvedNote()
@@ -634,23 +692,94 @@
 /datum/trade_contract/caravan_rendezvous/HandleActiveTargetLoss()
 	Fail("Target caravan departed before data handoff.", 0)
 
+/datum/trade_contract/caravan_rendezvous/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null)
+	if(status != CONTRACT_STATUS_AVAILABLE)
+		return FALSE
+	if(deposit > 0 && istype(account) && account.money < deposit)
+		return FALSE
+	var/datum/trading_station/source_station = GetSourceStation()
+	var/datum/trading_station/destination_station = GetDestinationStation()
+	if(!istype(source_station) || !istype(destination_station))
+		return FALSE
+	if(!(source_station in SSsupply.visible_trading_stations) || !(destination_station in SSsupply.visible_trading_stations))
+		return FALSE
+	if(receiver_beacon && (QDELETED(receiver_beacon) || SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)))
+		return FALSE
+	return TRUE
+
+/datum/trade_contract/caravan_rendezvous/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null)
+	if(!istype(receiver_beacon))
+		return "Select a receiving beacon first."
+	if(status != CONTRACT_STATUS_AVAILABLE)
+		return "This contract is no longer available."
+	if(deposit > 0 && istype(account) && account.money < deposit)
+		return "Insufficient funds for security deposit ([round(deposit)] [GetCurrencyName()] required)."
+	var/datum/trading_station/source_station = GetSourceStation()
+	var/datum/trading_station/destination_station = GetDestinationStation()
+	if(!istype(source_station) || !istype(destination_station))
+		return "Contract route data is invalid."
+	if(!(source_station in SSsupply.visible_trading_stations))
+		return "[source_station.name] is out of communication range."
+	if(!(destination_station in SSsupply.visible_trading_stations))
+		return "[destination_station.name] is out of communication range."
+	var/range_block = SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
+	if(range_block)
+		return "[source_station.name]: [range_block]"
+	return null
+
 /datum/trade_contract/caravan_rendezvous/CanFulfillCargoRequirements(datum/trading_station/source_station)
 	return TRUE
 
 /datum/trade_contract/caravan_rendezvous/GetCargoAcceptBlockReason(datum/trading_station/source_station)
 	return null
 
+/datum/trade_contract/caravan_rendezvous/CleanupPayload()
+	..()
+	if(istype(assigned_disk) && !QDELETED(assigned_disk))
+		assigned_disk.allow_contract_disposal = TRUE
+		qdel(assigned_disk)
+	assigned_disk = null
+
 /datum/trade_contract/caravan_rendezvous/ExecuteAccept(obj/machinery/trade_beacon/receiving/receiver_beacon)
+	var/obj/item/disk/trade_data/disk = receiver_beacon.DropItem(/obj/item/disk/trade_data)
+	if(!disk)
+		return FALSE
+	var/datum/trading_station/destination_station = GetDestinationStation()
+	disk.contract_id = id
+	disk.linked_contract = src
+	disk.contract_serial = contract_serial
+	disk.destination_uid = destination_uid
+	disk.destination_name = destination_station ? destination_station.name : "Caravan"
+	disk.UpdateIntelLabel()
+	assigned_disk = disk
 	return TRUE
+
+/datum/trade_contract/caravan_rendezvous/proc/GetIntelDisk(obj/machinery/trade_beacon/sending/sender_beacon = null)
+	if(istype(assigned_disk) && !QDELETED(assigned_disk))
+		if(!sender_beacon || (assigned_disk in sender_beacon.GetObjects()))
+			return assigned_disk
+	if(sender_beacon)
+		for(var/obj/item/disk/trade_data/disk as anything in sender_beacon.GetObjects())
+			if(disk.contract_id == id)
+				return disk
+	return null
 
 /datum/trade_contract/caravan_rendezvous/CanFulfillDeliveryPayload(obj/machinery/trade_beacon/sending/sender_beacon)
-	return TRUE
+	var/obj/item/disk/trade_data/disk = GetIntelDisk(sender_beacon)
+	return istype(disk)
 
 /datum/trade_contract/caravan_rendezvous/GetPayloadDeliverBlockReason(obj/machinery/trade_beacon/sending/sender_beacon)
+	var/obj/item/disk/trade_data/disk = GetIntelDisk(sender_beacon)
+	if(!istype(disk))
+		return "Place the encrypted market intelligence disk on the sending beacon."
 	return null
 
 /datum/trade_contract/caravan_rendezvous/ExecuteDeliver(obj/machinery/trade_beacon/sending/sender_beacon)
-	return
+	var/obj/item/disk/trade_data/disk = GetIntelDisk(sender_beacon)
+	if(istype(disk))
+		disk.allow_contract_disposal = TRUE
+		qdel(disk)
+	assigned_disk = null
 
 /datum/trade_contract/caravan_rendezvous/GetCompletionLogPayload()
-	return "<li>Payload: Market intelligence packet transmitted.</li>"
+	return "<li>Payload: Encrypted intelligence disk transmitted.</li>"

@@ -535,6 +535,9 @@ var/global/list/worths = list(
 					/obj/item/bee_pack = 200,
 					/obj/item/weedkiller = 30,
 					/obj/item/sign/medipolma = 1500,
+// [SIERRA-ADD]
+					/obj/item/paper = 0,
+// [/SIERRA-ADD]
 					/obj/item = 5,
 //STRUCTURES,
 					/obj/structure/dogbed = 15,

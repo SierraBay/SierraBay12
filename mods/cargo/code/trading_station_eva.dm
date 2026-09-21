@@ -1,7 +1,11 @@
 /datum/trading_station/eva
 	name_pool = list(
 		"FTB \"Oxyta\"" = "Free Trade Beacon \"Oxyta\": All you will ever need for your space walks!",
-		"FTB \"Spacer\"" = "Free Trade Beacon \"Spacer\": Affordable gear for EVA operations!"
+		"FTB \"Spacer\"" = "Free Trade Beacon \"Spacer\": Affordable gear for EVA operations!",
+		"FTB \"Voidstrider\"" = "Free Trade Beacon \"Voidstrider\": Specialized hardsuits, thruster packs, and vacuum survival kits.",
+		"FTB \"Airlock Zero\"" = "Free Trade Beacon \"Airlock Zero\": Frontier EVA equipment and industrial void gear.",
+		"FTB \"Cold Drift\"" = "Free Trade Beacon \"Cold Drift\": Heavy EVA suits, maneuvering rigs, and tether supplies.",
+		"FTB \"Vacuum Verge\"" = "Free Trade Beacon \"Vacuum Verge\": Precision zero-G gear and high-altitude space suits."
 	)
 	uid = "eva"
 	icon_states = list("atmospherics")
@@ -9,6 +13,8 @@
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE
 	markup = 1.2
+	thematic_cores = list("Oxyta", "Spacer", "Voidstrider", "Airlock Zero", "Cold Drift", "Vacuum Verge", "Blue Lung", "Zephyr", "Vortex", "Aero Wells")
+	role_summary = "extravehicular life support, void suits, and gas replenishment"
 	inventory = list(
 		TRADE_CAT_CLOTHING = list(
 			/obj/item/clothing/under/space = GOODS_DEFAULT,

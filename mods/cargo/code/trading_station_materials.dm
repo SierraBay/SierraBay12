@@ -1,7 +1,11 @@
 /datum/trading_station/materials
 	name_pool = list(
 		"FTB \"Jacarta\"" = "Free Trade Beacon \"Jacarta\": Selling every kind of materials you will ever need!",
-		"FTB \"Steel Deck\"" = "Free Trade Beacon \"Steel Deck\": Best materials around this sector of space!"
+		"FTB \"Steel Deck\"" = "Free Trade Beacon \"Steel Deck\": Best materials around this sector of space!",
+		"FTB \"Crucible\"" = "Free Trade Beacon \"Crucible\": High-heat smelter output and refined industrial alloys.",
+		"FTB \"Foundry\"" = "Free Trade Beacon \"Foundry\": Bulk plate stock, framing alloys, and mineral ingots.",
+		"FTB \"Slag Peak\"" = "Free Trade Beacon \"Slag Peak\": Deep-core asteroid mining yield and raw construction stock.",
+		"FTB \"Anvil Point\"" = "Free Trade Beacon \"Anvil Point\": Structural grade steel and exotic mineral reserves."
 	)
 	uid = "materials"
 	icon_states = list("materials")
@@ -9,6 +13,8 @@
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE
 	markup = 1.5
+	thematic_cores = list("Jacarta", "Steel Deck", "Crucible", "Foundry", "Slag Peak", "Anvil Point", "Bulkhead", "Bauxite Drift", "Ferrous Gate", "Cobalt Ridge")
+	role_summary = "raw ore refining, structural alloys, and mineral distribution"
 	inventory = list(
 		TRADE_CAT_MATERIALS = list(
 			/obj/item/stack/material/steel/ten = CUSTOM_GOODS_NAME("steel (x10)"),

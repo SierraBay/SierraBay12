@@ -118,13 +118,16 @@
 	original_contracts = null
 
 	if(receiver)
-		for(var/obj/structure/closet/crate/trade_contract/crate in range(2, receiver))
-			LAZYADD(spawned_crates, crate)
+		for(var/atom/movable/AM in range(2, receiver))
+			if(!AM.anchored && AM != receiver)
+				qdel(AM)
 	if(sender)
-		for(var/obj/structure/closet/crate/trade_contract/crate in range(2, sender))
-			LAZYADD(spawned_crates, crate)
+		for(var/atom/movable/AM in range(2, sender))
+			if(!AM.anchored && AM != sender)
+				qdel(AM)
 	for(var/obj/structure/closet/crate/trade_contract/crate as anything in spawned_crates)
-		qdel(crate)
+		if(!QDELETED(crate))
+			qdel(crate)
 	spawned_crates = null
 
 	QDEL_NULL(receiver)

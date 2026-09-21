@@ -29,6 +29,15 @@
 #define TRADE_CAT_MEDICAL "Medical"
 #define TRADE_CAT_MEDKIT "Medical Kits"
 #define TRADE_CAT_CHEMICAL "Chemical"
+#define TRADE_CAT_SURGERY "Surgery"
+#define TRADE_CAT_POWER "Power"
+#define TRADE_CAT_GAS "Gas"
+#define TRADE_CAT_CRATES "Crates and Packaging"
+#define TRADE_CAT_BOTANY "Botany"
+#define TRADE_CAT_FOOD "Food and Drinks"
+#define TRADE_CAT_JANITORIAL "Janitorial"
+#define TRADE_CAT_SECURITY "Security"
+#define TRADE_CAT_LEISURE "Leisure"
 
 // Trade-faction diplomatic states.
 #define FACTION_STATE_PROTECTORATE 4
@@ -67,3 +76,7 @@
 #define DIET_CARNIVORE  1 // Meat only
 #define DIET_HERBIVORE  2 // Plants and vegetables only
 #define DIET_OMNIVORE   3 // Eats anything
+
+// Trade export operation status
+#define TRADE_EXPORT_SUCCESS 1
+#define TRADE_EXPORT_PARTIAL 2
