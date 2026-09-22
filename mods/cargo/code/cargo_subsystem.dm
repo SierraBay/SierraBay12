@@ -6,6 +6,7 @@
 	priority = SS_PRIORITY_SUPPLY
 	wait = 20 SECONDS
 	trade_network_active = TRUE
+	flags = 0
 
 	var/trade_stations_budget = 5
 	var/list/all_trading_stations = list()
