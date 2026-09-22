@@ -125,6 +125,9 @@
 /datum/psi_complexus/proc/check_armour(armourtype)
 	if(suppressed || !use_psi_armour)
 		return FALSE
+	if(!can_use_passive())
+		return FALSE
+
 	for(var/faculties in ranks)
 		var/singleton/psionic_faculty/faculty = SSpsi.get_faculty(faculties)
 		for(var/armour in faculty.armour_types)
