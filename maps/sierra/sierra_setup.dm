@@ -65,7 +65,7 @@
 
 	// Контакты сенсоров
 	R += "<hr style='border: 0; border-top: 1px solid #335577; margin: 8px 0;'>"
-	R += "<b style='font-size: 11px; color: #7fa4c7;'>ОБЪЕКТЫ В ЗОНЕ ДЕЙСТВИЯ СЕНСОРОВ (РЛС / СПЕКТРОМЕТРИЯ):</b>"
+	R += "<span style='font-size: 11px; color: #7fa4c7;'><b>ОБЪЕКТЫ В ЗОНЕ ДЕЙСТВИЯ СЕНСОРОВ (РЛС / СПЕКТРОМЕТРИЯ):</b></span>"
 	if(!length(space_things))
 		R += "<br><span style='color: #8fa7be; font-size: 11px;'>В радиусе действия сенсоров устойчивых сигнатур не зафиксировано.</span>"
 	else
@@ -98,7 +98,7 @@
 	// Торговые маяки
 	if(length(trade_stations))
 		R += "<hr style='border: 0; border-top: 1px solid #335577; margin: 8px 0;'>"
-		R += "<b style='font-size: 11px; color: #7fa4c7;'>ОБНАРУЖЕННЫЕ ТОРГОВЫЕ МАЯКИ ФРОНТИРА:</b>"
+		R += "<span style='font-size: 11px; color: #7fa4c7;'><b>ОБНАРУЖЕННЫЕ ТОРГОВЫЕ МАЯКИ ФРОНТИРА:</b></span>"
 		R += "<table style='width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px;'>"
 		R += "<tr style='border-bottom: 1px solid #335577; color: #7fa4c7; font-size: 10px;'>"
 		R += "<th align='left' style='padding: 3px 6px; width: 180px;'>МАЯК</th>"
@@ -124,7 +124,7 @@
 	// Сигналы бедствия
 	R += "<hr style='border: 0; border-top: 1px solid #335577; margin: 8px 0;'>"
 	if(length(distress_calls))
-		R += "<b style='font-size: 11px; color: #e74c3c;'>ВНИМАНИЕ: ЗАРЕГИСТРИРОВАН СИГНАЛ БЕДСТВИЯ (СТАНДАРТ MIL-DTL-93352)</b>"
+		R += "<span style='font-size: 11px; color: #e74c3c;'><b>ВНИМАНИЕ: ЗАРЕГИСТРИРОВАН СИГНАЛ БЕДСТВИЯ (СТАНДАРТ MIL-DTL-93352)</b></span>"
 		R += "<ul style='margin: 4px 0 0 16px; padding: 0; font-size: 11px; color: #e74c3c;'>"
 		R += jointext(distress_calls, "")
 		R += "</ul>"

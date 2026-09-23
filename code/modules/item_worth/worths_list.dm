@@ -535,9 +535,9 @@ var/global/list/worths = list(
 					/obj/item/bee_pack = 200,
 					/obj/item/weedkiller = 30,
 					/obj/item/sign/medipolma = 1500,
-// [SIERRA-ADD]
+					// [SIERRA-ADD],
 					/obj/item/paper = 0,
-// [/SIERRA-ADD]
+					// [/SIERRA-ADD],
 					/obj/item = 5,
 //STRUCTURES,
 					/obj/structure/dogbed = 15,
@@ -712,7 +712,7 @@ var/global/list/worths = list(
 					/obj/machinery/beehive = -500,
 					/obj/machinery/portable_atmospherics/hydroponics/soil = 1, //its dirt,
 					/obj/machinery/portable_atmospherics/hydroponics = -2300,
-// [SIERRA-ADD]
+					// [SIERRA-ADD],
 					/obj/machinery/portable_atmospherics/canister/empty = 400,
 					/obj/machinery/portable_atmospherics/canister/phoron = 3500,
 					/obj/machinery/portable_atmospherics/canister/sleeping_agent = 1600,
@@ -720,7 +720,7 @@ var/global/list/worths = list(
 					/obj/machinery/portable_atmospherics/canister = 800,
 					/obj/machinery/portable_atmospherics/powered = 1500,
 					/obj/machinery/portable_atmospherics = 1000,
-// [/SIERRA-ADD]
+					// [/SIERRA-ADD],
 					/obj/machinery/libraryscanner = -1000,
 					/obj/machinery/bookbinder = -1200,
 					/obj/machinery = -1000,
