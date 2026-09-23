@@ -237,6 +237,10 @@
 		next_action_at = world.time + trade_window_min
 		return
 
+	if(world.time < next_action_at)
+		StopMovement()
+		return
+
 	if(caravan_state == "docked" || !istype(route_destination))
 		if(!SelectNextRoute())
 			StopMovement()
@@ -511,6 +515,7 @@
 /obj/overmap/trade_beacon/caravan/proc/BeginTransit()
 	caravan_state = "in_transit"
 	trade_window_end = 0
+	next_action_at = world.time
 
 /obj/overmap/trade_beacon/caravan/proc/BeginTradeWindow(duration = null)
 	caravan_state = "docked"

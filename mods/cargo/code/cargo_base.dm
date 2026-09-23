@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 /datum/computer_file/program/supply_base/proc/SetInShopList(good_id, amount, limit, station_ref = station, target_category = chosen_category)
 	if(!good_id || !isnum(amount) || isnan(amount))
 		return
-	if(amount <= 0)
+	if(amount <= 0 || (isnum(limit) && limit <= 0))
 		RemoveFromShopList(good_id, 999999, station_ref, target_category)
 		return
 	var/station_key = GetStationKey(station_ref)
@@ -194,8 +194,9 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 		shopping_list[station_key] = list()
 	var/list/cart = shopping_list[station_key]
 	var/target_amount = round(amount)
-	if(limit && target_amount > limit)
+	if(isnum(limit) && target_amount > limit)
 		target_amount = limit
+	target_amount = clamp(target_amount, 1, 1000)
 	cart[good_id] = target_amount
 
 /datum/computer_file/program/supply_base/proc/ResetShopList()

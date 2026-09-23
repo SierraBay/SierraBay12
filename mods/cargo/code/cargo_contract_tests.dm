@@ -98,6 +98,8 @@
 	var/list/original_visible_stations
 	var/list/original_all_stations
 	var/list/original_contracts
+	var/list/original_contract_log
+	var/list/original_shipping_log
 	var/source_shared_good
 	var/source_unmatched_good
 	var/destination_shared_good
@@ -107,28 +109,52 @@
 	original_visible_stations = SSsupply.visible_trading_stations
 	original_all_stations = SSsupply.all_trading_stations
 	original_contracts = SSsupply.trade_contracts
+	original_contract_log = SSsupply.contract_log ? SSsupply.contract_log.Copy() : null
+	original_shipping_log = SSsupply.shipping_log ? SSsupply.shipping_log.Copy() : null
 	SSsupply.trade_contracts = list()
 
 /datum/cargo_contract_test_fixture/Destroy()
-	SSsupply.visible_trading_stations = original_visible_stations
-	SSsupply.all_trading_stations = original_all_stations
-	SSsupply.trade_contracts = original_contracts
-	original_visible_stations = null
-	original_all_stations = null
-	original_contracts = null
+	if(islist(SSsupply.trade_contracts))
+		for(var/datum/trade_contract/contract as anything in SSsupply.trade_contracts)
+			if(istype(contract))
+				contract.status = CONTRACT_STATUS_COMPLETED
+				if(istype(contract.assigned_crate) && !QDELETED(contract.assigned_crate))
+					contract.assigned_crate.allow_contract_disposal = TRUE
+					qdel(contract.assigned_crate)
+				var/datum/trade_contract/caravan_rendezvous/caravan_contract = contract
+				if(istype(caravan_contract) && istype(caravan_contract.assigned_disk) && !QDELETED(caravan_contract.assigned_disk))
+					caravan_contract.assigned_disk.allow_contract_disposal = TRUE
+					qdel(caravan_contract.assigned_disk)
+				contract.linked_account = null
+				qdel(contract)
+		SSsupply.trade_contracts.Cut()
+
+	for(var/obj/structure/closet/crate/trade_contract/crate as anything in spawned_crates)
+		if(!QDELETED(crate))
+			crate.allow_contract_disposal = TRUE
+			qdel(crate)
+	spawned_crates = null
 
 	if(receiver)
 		for(var/atom/movable/AM in range(2, receiver))
 			if(!AM.anchored && AM != receiver)
+				if(istype(AM, /obj/structure/closet/crate/trade_contract))
+					var/obj/structure/closet/crate/trade_contract/TC = AM
+					TC.allow_contract_disposal = TRUE
+				else if(istype(AM, /obj/item/disk/trade_data))
+					var/obj/item/disk/trade_data/TD = AM
+					TD.allow_contract_disposal = TRUE
 				qdel(AM)
 	if(sender)
 		for(var/atom/movable/AM in range(2, sender))
 			if(!AM.anchored && AM != sender)
+				if(istype(AM, /obj/structure/closet/crate/trade_contract))
+					var/obj/structure/closet/crate/trade_contract/TC = AM
+					TC.allow_contract_disposal = TRUE
+				else if(istype(AM, /obj/item/disk/trade_data))
+					var/obj/item/disk/trade_data/TD = AM
+					TD.allow_contract_disposal = TRUE
 				qdel(AM)
-	for(var/obj/structure/closet/crate/trade_contract/crate as anything in spawned_crates)
-		if(!QDELETED(crate))
-			qdel(crate)
-	spawned_crates = null
 
 	QDEL_NULL(receiver)
 	QDEL_NULL(sender)
@@ -139,6 +165,19 @@
 	QDEL_NULL(destination_beacon)
 	QDEL_NULL(source_station)
 	QDEL_NULL(destination_station)
+
+	SSsupply.visible_trading_stations = original_visible_stations
+	SSsupply.all_trading_stations = original_all_stations
+	SSsupply.trade_contracts = original_contracts
+	if(islist(original_contract_log))
+		SSsupply.contract_log = original_contract_log
+	if(islist(original_shipping_log))
+		SSsupply.shipping_log = original_shipping_log
+	original_visible_stations = null
+	original_all_stations = null
+	original_contracts = null
+	original_contract_log = null
+	original_shipping_log = null
 	return ..()
 
 /datum/cargo_contract_test_fixture/proc/setup_route(datum/unit_test/test, source_station_type = /datum/trading_station/unit_test_contract_source, dest_station_type = /datum/trading_station/unit_test_contract_destination)
@@ -483,8 +522,8 @@
 			crate.toggle(null)
 			if(contract.status != CONTRACT_STATUS_FAILED)
 				fail_reason = "Tampering did not mark the contract as failed."
-			else if(account.money != max(0, 1000 - round(contract.base_value * 2)))
-				fail_reason = "Tampering penalty was [account.money], expected [max(0, 1000 - round(contract.base_value * 2))]."
+			else if(account.money != max(0, 1000 - contract.penalty))
+				fail_reason = "Tampering penalty was [account.money], expected [max(0, 1000 - contract.penalty)]."
 			else if(fixture.destination_station.GetGoodAmount("Demand", destination_good_id) != starting_destination_stock)
 				fail_reason = "Failed contract changed destination market stock."
 			else if(fixture.destination_station.GetLiveMarketDemandScore("Demand", destination_good_id) != starting_destination_demand)

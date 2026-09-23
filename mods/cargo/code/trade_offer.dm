@@ -5,6 +5,8 @@
 	var/desc
 	var/category
 	var/base_price = 1
+	var/has_custom_price = FALSE
+	var/pack_size = 1
 	var/stock = 0
 	var/baseline_stock = 1
 	var/demand = 0
@@ -46,12 +48,20 @@
 	return ..()
 
 /datum/trade_offer/proc/InitPricing(new_base_price, new_item_path)
+	if(ispath(new_item_path, /obj/item/stack))
+		var/obj/item/stack/S = new_item_path
+		pack_size = max(1, initial(S.amount))
+	else
+		pack_size = 1
 	if(isnum(new_base_price) && new_base_price > 0)
+		has_custom_price = TRUE
 		base_price = max(1, round(new_base_price))
 	else if(ispath(new_item_path, /atom/movable))
+		has_custom_price = FALSE
 		var/cost = get_value(new_item_path)
 		base_price = (isnum(cost) && cost > 0) ? max(1, round(cost)) : 1
 	else
+		has_custom_price = FALSE
 		base_price = 1
 
 /datum/trade_offer/proc/InitStockAndDemand(new_stock, new_baseline, new_demand)
@@ -82,6 +92,8 @@
 		new_station || station,
 		hidden
 	)
+	dup.has_custom_price = has_custom_price
+	dup.pack_size = pack_size
 	return dup
 
 /datum/trade_offer/proc/ResolveItemName(path)
@@ -172,7 +184,8 @@
 	return GetBuyUnitPrice(markup, modifier_mult, use_market)
 
 /datum/trade_offer/proc/GetBuyUnitPrice(markup = 1.0, modifier_mult = 1.0, use_market = TRUE)
-	var/base = base_price * (isnum(markup) ? markup : 1.0)
+	var/applied_markup = has_custom_price ? 1.0 : (isnum(markup) ? markup : 1.0)
+	var/base = base_price * applied_markup
 	if(!use_market)
 		return max(1, round(base))
 	var/multiplier = 1.0

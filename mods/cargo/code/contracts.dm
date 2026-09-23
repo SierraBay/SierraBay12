@@ -87,7 +87,7 @@
 	locked = FALSE
 	open()
 
-	contract.Fail(reason, 2, user_name)
+	contract.Fail(reason, null, user_name)
 	return TRUE
 
 /obj/structure/closet/crate/trade_contract/proc/AttemptTamper(mob/user, reason, cancel_message = null)
@@ -140,7 +140,7 @@
 	var/datum/trade_contract/contract = GetLinkedContract()
 	if(istype(contract))
 		if(!allow_contract_disposal && contract.status == CONTRACT_STATUS_ACTIVE)
-			contract.Fail("Contract cargo was destroyed or lost in transit.", 2)
+			contract.Fail("Contract cargo was destroyed or lost in transit.", null)
 		if(contract.assigned_crate == src)
 			contract.assigned_crate = null
 	linked_contract = null
@@ -341,7 +341,7 @@
 		return crate
 	return null
 
-/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null)
+/datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null, buyer_faction = null)
 	if(status != CONTRACT_STATUS_AVAILABLE)
 		return FALSE
 	if(deposit > 0 && istype(account) && account.money < deposit)
@@ -354,6 +354,9 @@
 		return FALSE
 	if(destination_station.GetAvailabilityBlockReason())
 		return FALSE
+	if(buyer_faction)
+		if(SSsupply.GetStationTradeRelationMultiplier(source_station, buyer_faction) <= 0 || SSsupply.GetStationTradeRelationMultiplier(destination_station, buyer_faction) <= 0)
+			return FALSE
 	if(receiver_beacon && (QDELETED(receiver_beacon) || SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)))
 		return FALSE
 	return CanFulfillCargoRequirements(source_station)
@@ -366,7 +369,7 @@
 			return FALSE
 	return TRUE
 
-/datum/trade_contract/proc/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null)
+/datum/trade_contract/proc/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null, buyer_faction = null)
 	if(!istype(receiver_beacon))
 		return "Select a receiving beacon first."
 	if(status != CONTRACT_STATUS_AVAILABLE)
@@ -377,6 +380,11 @@
 	var/datum/trading_station/destination_station = GetDestinationStation()
 	if(!istype(source_station) || !istype(destination_station))
 		return "Contract route data is invalid."
+	if(buyer_faction)
+		if(SSsupply.GetStationTradeRelationMultiplier(source_station, buyer_faction) <= 0)
+			return "[source_station.name] refuses trade relations with your faction."
+		if(SSsupply.GetStationTradeRelationMultiplier(destination_station, buyer_faction) <= 0)
+			return "[destination_station.name] refuses trade relations with your faction."
 	if(!(source_station in SSsupply.visible_trading_stations))
 		return "[source_station.name] is out of communication range."
 	if(!(destination_station in SSsupply.visible_trading_stations))
@@ -395,8 +403,8 @@
 			return "The source station cannot assemble this cargo right now."
 	return null
 
-/datum/trade_contract/proc/Accept(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account)
-	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon, account) || !istype(account))
+/datum/trade_contract/proc/Accept(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account, buyer_faction = null)
+	if(!istype(receiver_beacon) || !CanAccept(receiver_beacon, account, buyer_faction) || !istype(account))
 		return FALSE
 	if(deposit > 0)
 		if(account.money < deposit || !account.withdraw(deposit, "Trade Contract Deposit", "Trade Network"))
@@ -661,7 +669,7 @@
 	var/datum/trade_contract/contract = GetLinkedContract()
 	if(istype(contract))
 		if(!allow_contract_disposal && contract.status == CONTRACT_STATUS_ACTIVE)
-			contract.Fail("Market intelligence disk was destroyed before transmission.", 2)
+			contract.Fail("Market intelligence disk was destroyed before transmission.", null)
 		var/datum/trade_contract/caravan_rendezvous/caravan_contract = contract
 		if(istype(caravan_contract) && caravan_contract.assigned_disk == src)
 			caravan_contract.assigned_disk = null
@@ -732,7 +740,7 @@
 /datum/trade_contract/caravan_rendezvous/HandleActiveTargetLoss()
 	Fail("Target caravan departed before data handoff.", 0)
 
-/datum/trade_contract/caravan_rendezvous/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null)
+/datum/trade_contract/caravan_rendezvous/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null, buyer_faction = null)
 	if(status != CONTRACT_STATUS_AVAILABLE)
 		return FALSE
 	if(deposit > 0 && istype(account) && account.money < deposit)
@@ -743,11 +751,16 @@
 		return FALSE
 	if(!(source_station in SSsupply.visible_trading_stations) || !(destination_station in SSsupply.visible_trading_stations))
 		return FALSE
+	if(destination_station.GetAvailabilityBlockReason())
+		return FALSE
+	if(buyer_faction)
+		if(SSsupply.GetStationTradeRelationMultiplier(source_station, buyer_faction) <= 0 || SSsupply.GetStationTradeRelationMultiplier(destination_station, buyer_faction) <= 0)
+			return FALSE
 	if(receiver_beacon && (QDELETED(receiver_beacon) || SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)))
 		return FALSE
 	return TRUE
 
-/datum/trade_contract/caravan_rendezvous/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null)
+/datum/trade_contract/caravan_rendezvous/GetAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/money_account/account = null, buyer_faction = null)
 	if(!istype(receiver_beacon))
 		return "Select a receiving beacon first."
 	if(status != CONTRACT_STATUS_AVAILABLE)
@@ -762,6 +775,14 @@
 		return "[source_station.name] is out of communication range."
 	if(!(destination_station in SSsupply.visible_trading_stations))
 		return "[destination_station.name] is out of communication range."
+	var/dest_block = destination_station.GetAvailabilityBlockReason()
+	if(dest_block)
+		return "[destination_station.name]: [dest_block]"
+	if(buyer_faction)
+		if(SSsupply.GetStationTradeRelationMultiplier(source_station, buyer_faction) <= 0)
+			return "[source_station.name] refuses trade relations with [buyer_faction]."
+		if(SSsupply.GetStationTradeRelationMultiplier(destination_station, buyer_faction) <= 0)
+			return "[destination_station.name] refuses trade relations with [buyer_faction]."
 	var/range_block = SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
 	if(range_block)
 		return "[source_station.name]: [range_block]"
@@ -802,9 +823,11 @@
 		if(!sender_beacon || (assigned_disk in sender_beacon.GetObjects()))
 			return assigned_disk
 	if(sender_beacon)
-		for(var/obj/item/disk/trade_data/disk as anything in sender_beacon.GetObjects())
-			if(disk.contract_id == id)
-				return disk
+		for(var/atom/movable/AM as anything in sender_beacon.GetObjects())
+			if(istype(AM, /obj/item/disk/trade_data))
+				var/obj/item/disk/trade_data/disk = AM
+				if(disk.contract_id == id)
+					return disk
 	return null
 
 /datum/trade_contract/caravan_rendezvous/CanFulfillDeliveryPayload(obj/machinery/trade_beacon/sending/sender_beacon)

@@ -30,12 +30,24 @@
 
 	var/trade_screen = GOODS_SCREEN
 	var/log_screen = LOG_SHIPPING
+	var/account_linked_from_card = FALSE
 
 	var/obj/machinery/trade_beacon/sending/sending
 	var/obj/machinery/trade_beacon/receiving/receiving
 
 	var/list/known_market_intel = list()
 	var/save_order_id
+
+/datum/computer_file/program/supply/proc/ValidateLinkedAccount()
+	if(!account)
+		return FALSE
+	if(account_linked_from_card)
+		var/obj/item/card/id/id_card = GetInsertedIdCard()
+		if(!istype(id_card) || id_card.associated_account_number != account.account_number)
+			account = null
+			account_linked_from_card = FALSE
+			return FALSE
+	return TRUE
 
 /datum/computer_file/program/supply/can_run(mob/living/user, loud = FALSE, access_to_check)
 	if(!requires_access_to_run)
@@ -238,8 +250,8 @@
 		"trade_window_remaining" = isnum(trade_window_remaining) ? FormatCountdown(trade_window_remaining) : ""
 	)
 
-/datum/computer_file/program/supply/proc/SerializeCrateExportItem(obj/structure/closet/crate, datum/trading_station/target_station, list/sold_counts)
-	var/list/breakdown = SSsupply.GetCrateExportBreakdown(crate, target_station, faction, sold_counts)
+/datum/computer_file/program/supply/proc/SerializeCrateExportItem(obj/structure/closet/crate, datum/trading_station/target_station, list/sold_counts, list/seen_strains = null)
+	var/list/breakdown = SSsupply.GetCrateExportBreakdown(crate, target_station, faction, sold_counts, seen_strains)
 	return list(
 		"name" = breakdown["display_name"],
 		"amount" = 1,
@@ -256,15 +268,16 @@
 	var/datum/trading_station/target_station = EnsureSelectedStation()
 	var/list/grouped = list()
 	var/list/sold_counts = list()
+	var/list/seen_strains = list()
 	for(var/atom/movable/exported as anything in sending.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
 			continue
 		if(!SSsupply.CanExportAtom(exported))
 			continue
 		if(istype(exported, /obj/structure/closet) && istype(target_station))
-			result.Add(list(SerializeCrateExportItem(exported, target_station, sold_counts)))
+			result.Add(list(SerializeCrateExportItem(exported, target_station, sold_counts, seen_strains)))
 			continue
-		var/cost = SSsupply.GetExportValue(exported, target_station, faction, sold_counts)
+		var/cost = SSsupply.GetExportValue(exported, target_station, faction, sold_counts, seen_strains)
 		if(!cost)
 			continue
 		var/item_name = exported.name
@@ -322,7 +335,7 @@
 		return "Contract data is unavailable."
 	if(!account)
 		return "Link an account before accepting contracts."
-	return contract.GetAcceptBlockReason(receiving, account)
+	return contract.GetAcceptBlockReason(receiving, account, faction)
 
 /datum/computer_file/program/supply/proc/GetContractDeliverBlockReason(datum/trade_contract/contract)
 	if(!istype(contract))
@@ -620,6 +633,8 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/PromptLinkAccount(list/href_list)
+	if(!can_run(usr, TRUE))
+		return TRUE
 	var/account_number = text2num(href_list["PRG_link_account_number"])
 	var/account_pin = text2num(href_list["PRG_link_account_pin"])
 	if(!isnum(account_number) || !isnum(account_pin))
@@ -635,10 +650,13 @@
 		to_chat(usr, SPAN_WARNING("Unable to link account: access denied."))
 	else
 		account = linked_account
+		account_linked_from_card = FALSE
 	CloseCartForm()
 	return TRUE
 
 /datum/computer_file/program/supply/proc/LinkInsertedIdAccount(list/href_list)
+	if(!can_run(usr, TRUE))
+		return TRUE
 	var/obj/item/card/id/id_card = GetInsertedIdCard()
 	if(!istype(id_card))
 		to_chat(usr, SPAN_WARNING("Insert an ID card first."))
@@ -655,6 +673,7 @@
 		to_chat(usr, SPAN_WARNING("Unable to link the ID-linked account: access denied."))
 	else
 		account = linked_account
+		account_linked_from_card = TRUE
 	CloseCartForm()
 	return TRUE
 
@@ -665,6 +684,7 @@
 		return LinkInsertedIdAccount(href_list)
 	if("PRG_account_unlink" in href_list)
 		account = null
+		account_linked_from_card = FALSE
 		current_order = null
 		return TRUE
 	return FALSE
@@ -832,7 +852,9 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/PurchaseCart()
-	if(!account)
+	if(!can_run(usr, TRUE))
+		return TRUE
+	if(!ValidateLinkedAccount())
 		to_chat(usr, SPAN_WARNING("Link an account before purchasing goods."))
 		return TRUE
 	if(!receiving)
@@ -852,7 +874,9 @@
 	return TRUE
 
 /datum/computer_file/program/supply/proc/ExecuteExport()
-	if(!account)
+	if(!can_run(usr, TRUE))
+		return TRUE
+	if(!ValidateLinkedAccount())
 		to_chat(usr, SPAN_WARNING("Link an account before exporting goods."))
 		return TRUE
 	if(!sending)
@@ -880,7 +904,9 @@
 	return FALSE
 
 /datum/computer_file/program/supply/proc/AcceptContract(contract_id)
-	if(!account)
+	if(!can_run(usr, TRUE))
+		return TRUE
+	if(!ValidateLinkedAccount())
 		to_chat(usr, SPAN_WARNING("Link an account before accepting contracts."))
 		return TRUE
 	if(!receiving)
@@ -891,12 +917,14 @@
 	if(accept_block)
 		to_chat(usr, SPAN_WARNING(accept_block))
 		return TRUE
-	if(!SSsupply.AcceptTradeContract(receiving, account, contract_id))
+	if(!SSsupply.AcceptTradeContract(receiving, account, contract_id, faction))
 		var/fail_msg = contract_to_accept ? contract_to_accept.GetAcceptFailureMessage() : "Contract acceptance failed. Check source stock and the receiving area."
 		to_chat(usr, SPAN_WARNING(fail_msg))
 	return TRUE
 
 /datum/computer_file/program/supply/proc/DeliverContract(contract_id)
+	if(!can_run(usr, TRUE))
+		return TRUE
 	if(!sending)
 		to_chat(usr, SPAN_WARNING("Select a sending beacon first."))
 		return TRUE
@@ -919,10 +947,12 @@
 
 /datum/computer_file/program/supply/proc/BuildOrderFromForm(raw_reason)
 	CloseCartForm()
+	if(!can_run(usr, TRUE))
+		return TRUE
 	if(world.time < order_cooldown_until)
 		to_chat(usr, SPAN_WARNING("Wait a few seconds before submitting another order."))
 		return TRUE
-	if(!account)
+	if(!ValidateLinkedAccount())
 		to_chat(usr, SPAN_WARNING("Link an account before building an order."))
 		return TRUE
 	if(!length(shopping_list) || SSsupply.CollectCountsFrom(shopping_list) <= 0)

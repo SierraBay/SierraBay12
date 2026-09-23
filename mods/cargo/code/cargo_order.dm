@@ -414,8 +414,10 @@
 		else
 			var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_set_form"])
 			var/amount = text2num(href_list["PRG_cart_set_amount"])
-			if(good_id && isnum(amount) && !isnan(amount))
+			if(good_id && is_valid_cargo_quantity(amount))
 				SetInShopList(good_id, amount, station.GetGoodAmount(chosen_category, good_id))
+			else if(good_id && isnum(amount) && amount <= 0)
+				RemoveFromShopList(good_id, 999999)
 		goods_quantity_target = null
 		return TRUE
 	return FALSE

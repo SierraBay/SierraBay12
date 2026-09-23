@@ -554,7 +554,7 @@
 				station.SetGoodAmount("Materials", mat_id, 10)
 				station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
 				var/obj/item/stack/material/steel/ten/bundle = new mat_path(get_turf(beacon))
-				var/expected_bundle_val = SSsupply.GetStationSellPrice(mat_id, station, null, "Materials", bundle.get_amount())
+				var/expected_bundle_val = SSsupply.GetStationSellPrice(mat_id, station, null, "Materials", bundle.get_amount() / initial(bundle.amount))
 				if(!SSsupply.Export(beacon, account, station))
 					fail_reason = "Export of stack bundle failed."
 				else if(account.money != expected_bundle_val)

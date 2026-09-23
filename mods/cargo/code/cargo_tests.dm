@@ -573,7 +573,9 @@
 
 	var/obj/machinery/trade_beacon/receiving/beacon = new(safe_turf)
 	var/list/shop_list = list()
-	shop_list[station] = list("Alpha" = list(good_id = 1))
+	var/list/goods = list()
+	goods[good_id] = 1
+	shop_list[station] = list("Alpha" = goods)
 
 	var/order_id = SSsupply.BuildOrder(customer_account, "Personal tool", shop_list, FACTION_INDEPENDENT)
 	var/list/order_data = SSsupply.order_queue[order_id]
@@ -587,6 +589,8 @@
 		fail_reason = "Customer account balance is [customer_account.money], expected 0."
 	else if(cargo_account.money != 1500)
 		fail_reason = "Cargo account balance is [cargo_account.money], expected fee of 1500."
+	else if(order_id in SSsupply.order_queue)
+		fail_reason = "Successful order [order_id] was not removed from order_queue."
 
 	department_accounts["Supply"] = old_supply
 	all_money_accounts -= cargo_account
@@ -637,7 +641,9 @@
 
 	var/obj/machinery/trade_beacon/receiving/beacon = new(safe_turf)
 	var/list/shop_list = list()
-	shop_list[station] = list("Alpha" = list(good_id = 1))
+	var/list/goods = list()
+	goods[good_id] = 1
+	shop_list[station] = list("Alpha" = goods)
 
 	var/order_id = SSsupply.BuildOrder(customer_account, "Sold out item", shop_list, FACTION_INDEPENDENT)
 	var/list/order_data = SSsupply.order_queue[order_id]
@@ -651,6 +657,8 @@
 		fail_reason = "Customer account was not refunded after failed Buy(). Balance: [customer_account.money]."
 	else if(cargo_account.money != 0)
 		fail_reason = "Cargo account retained funds after failed Buy(). Balance: [cargo_account.money]."
+	else if(!(order_id in SSsupply.order_queue))
+		fail_reason = "Failed order [order_id] was prematurely removed from order_queue."
 
 	department_accounts["Supply"] = old_supply
 	all_money_accounts -= cargo_account
@@ -917,7 +925,7 @@
 		return "Duplicate() failed."
 	var/list/data = clone.Serialize()
 	qdel(clone)
-	if(!islist(data) || data["id"] != "offer_test_2" || data["price"] != 50)
+	if(!islist(data) || data["id"] != "offer_test_2" || data["base_price"] != 50)
 		return "Serialize() did not return valid offer data."
 	return null
 
@@ -954,6 +962,9 @@
 /datum/unit_test/cargo_2level_cart_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
 	station.AssembleInventory()
+	var/already_registered = (station in SSsupply.all_trading_stations)
+	if(!already_registered)
+		SSsupply.all_trading_stations += station
 	var/good_id = station.inventory["Alpha"][1]
 	var/list/cart = list()
 	var/datum/computer_file/program/supply/prog = new
@@ -969,6 +980,8 @@
 		var/list/items = SSsupply.ExtractCartItems(cart)
 		if(!length(items) || items[1]["count"] != 3 || items[1]["station"] != station)
 			fail_reason = "ExtractCartItems() failed to normalize 2-level cart entry."
+	if(!already_registered)
+		SSsupply.all_trading_stations -= station
 	qdel(prog)
 	qdel(station)
 	if(fail_reason)
@@ -985,7 +998,9 @@
 	station.AssembleInventory()
 	var/good_id = station.inventory["Alpha"][1]
 	var/list/cart = list()
-	cart[station] = list("Alpha" = list(good_id = 1))
+	var/list/goods = list()
+	goods[good_id] = 1
+	cart[station] = list("Alpha" = goods)
 	var/list/snap = SSsupply.BuildMarketSnapshot(cart, FACTION_INDEPENDENT)
 	var/fail_reason = null
 	var/valid_price = SSsupply.GetSnapshotUnitPrice(snap, station, "Alpha", good_id)
@@ -1090,3 +1105,39 @@
 	else
 		pass("Cooperative destruction cleanly severed circular references between contracts and crates/disks.")
 	return 1
+
+/datum/unit_test/cargo_loose_storage_export_dumps_contents_test
+	name = "CARGO: Exporting loose storage container dumps unpurchased contents to turf"
+
+/datum/unit_test/cargo_loose_storage_export_dumps_contents_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
+	var/obj/item/storage/backpack/backpack = new(safe_turf)
+	var/obj/item/pen/pen = new(backpack)
+
+	var/datum/money_account/account = new
+	account.owner_name = "Unit Test Storage"
+	account.money = 0
+
+	var/export_result = SSsupply.Export(beacon, account, null, FACTION_INDEPENDENT)
+	var/fail_reason = null
+	if(!export_result)
+		fail_reason = "Export of loose storage container failed."
+	else if(!QDELETED(backpack))
+		fail_reason = "Exported backpack was not deleted."
+	else if(QDELETED(pen))
+		fail_reason = "Item inside exported backpack was destroyed instead of dumped."
+	else if(pen.loc != safe_turf)
+		fail_reason = "Item inside exported backpack was not dumped onto the beacon turf."
+
+	QDEL_NULL(pen)
+	QDEL_NULL(backpack)
+	QDEL_NULL(beacon)
+	QDEL_NULL(account)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Loose storage export successfully emptied child contents onto turf before container disposal.")
+	return 1
+

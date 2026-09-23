@@ -73,7 +73,7 @@
 	var/list/commodity_state = category_state[good_id]
 	if(islist(commodity_state) || !autocreate)
 		return commodity_state
-	var/base_price = max(1, round(SSsupply.GetBasicImportCost(good_id, src, category_name)))
+	var/base_price = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name)))
 	var/baseline_stock = max(1, round(GetGoodAmount(category_name, good_id)))
 	commodity_state = list(
 		"base_price" = base_price,
@@ -92,7 +92,7 @@
 	if(isnum(base_price))
 		commodity_state["base_price"] = max(1, round(base_price))
 	else if(!isnum(commodity_state["base_price"]))
-		commodity_state["base_price"] = max(1, round(SSsupply.GetBasicImportCost(good_id, src, category_name)))
+		commodity_state["base_price"] = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name)))
 	if(isnum(baseline_stock))
 		commodity_state["baseline_stock"] = max(1, round(baseline_stock))
 	else if(!isnum(commodity_state["baseline_stock"]))
@@ -117,7 +117,7 @@
 	var/list/commodity_state = GetLiveMarketState(category_name, good_id, TRUE)
 	if(islist(commodity_state) && isnum(commodity_state["base_price"]))
 		return max(1, round(commodity_state["base_price"]))
-	return max(1, round(SSsupply.GetBasicImportCost(good_id, src, category_name)))
+	return max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name)))
 
 /datum/trading_station/proc/GetLiveMarketBaseline(category_name, good_id)
 	var/list/commodity_state = GetLiveMarketState(category_name, good_id, TRUE)
@@ -486,10 +486,10 @@
 		return 0
 
 	if(!station.live_market_enabled)
-		return max(1, round(base_price * faction_mult)) * amount
+		return max(1, round(base_price * faction_mult * amount))
 
 	if(!istext(category_name) || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return max(1, round(base_price * 0.55 * faction_mult)) * amount
+		return max(1, round(base_price * 0.55 * faction_mult * amount))
 
 	var/baseline = max(1, station.GetLiveMarketBaseline(category_name, good_ref))
 	var/initial_stock = max(0, station.GetGoodAmount(category_name, good_ref))
@@ -499,8 +499,48 @@
 
 	var/total_price = 0
 	if(amount <= 50)
-		for(var/k in 1 to amount)
-			var/units_sold_before = (k - 1) + sold_offset
+		var/full_units = floor(amount)
+		var/fraction = amount - full_units
+		if(full_units > 0)
+			for(var/k in 1 to full_units)
+				var/units_sold_before = (k - 1) + sold_offset
+				var/sim_stock = initial_stock + units_sold_before
+				var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
+
+				var/sim_pressure = 0
+				if(sim_stock < baseline)
+					sim_pressure = min((baseline - sim_stock) / baseline, 1)
+				else if(sim_stock > baseline)
+					sim_pressure = -min((sim_stock - baseline) / baseline, 1)
+
+				var/unit_mult = 0.62
+				if(sim_pressure > 0)
+					unit_mult += min(sim_pressure * 0.35, 0.28)
+				else if(sim_pressure < 0)
+					unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
+
+				if(sim_demand > 0)
+					unit_mult += min(sim_demand * 0.18, 0.25)
+				else if(sim_demand < 0)
+					unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
+
+				unit_mult *= event_mult
+				unit_mult = clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
+
+				var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
+				if(buy_price_cap > 0)
+					unit_price = min(unit_price, buy_price_cap)
+				total_price += unit_price
+
+				if(unit_mult <= station.live_market_min_sell_multiplier)
+					var/remaining = full_units - k
+					if(remaining > 0)
+						total_price += remaining * unit_price
+					fraction = 0
+					break
+
+		if(fraction > 0)
+			var/units_sold_before = full_units + sold_offset
 			var/sim_stock = initial_stock + units_sold_before
 			var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
 
@@ -527,13 +567,7 @@
 			var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
 			if(buy_price_cap > 0)
 				unit_price = min(unit_price, buy_price_cap)
-			total_price += unit_price
-
-			if(unit_mult <= station.live_market_min_sell_multiplier)
-				var/remaining = amount - k
-				if(remaining > 0)
-					total_price += remaining * unit_price
-				break
+			total_price += max(1, round(unit_price * fraction))
 	else
 		var/buckets = 25
 		var/bucket_size = amount / buckets
@@ -573,14 +607,27 @@
 
 			total_price += round(bucket_size * unit_price)
 
-	return total_price
+	return max(1, round(total_price))
 
 /datum/controller/subsystem/supply/proc/GetStationRestockCost(good_ref, datum/trading_station/station, category_name = null)
-	var/base_price = GetBasicImportCost(good_ref, station, category_name)
-	if(!base_price || !istype(station) || !istext(category_name) || !station.live_market_enabled || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return max(1, round(base_price))
-	var/base_market_price = station.GetLiveMarketBasePrice(category_name, good_ref)
-	return max(1, round(base_market_price))
+	if(!istype(station))
+		return 1
+	var/datum/trade_offer/offer = station.GetOffer(good_ref)
+	var/cat = category_name || (offer ? offer.category : null)
+	if(istext(cat) && station.live_market_enabled && station.HasLiveMarketCommodity(cat, good_ref))
+		var/base_market_price = station.GetLiveMarketBasePrice(cat, good_ref)
+		if(base_market_price > 0)
+			return max(1, round(base_market_price))
+	if(istype(offer))
+		return max(1, round(offer.base_price))
+	var/price = station.GetGoodPrice(cat, good_ref)
+	if(price > 0)
+		return max(1, round(price))
+	var/item_path = station.GetGoodPath(cat, good_ref)
+	if(ispath(item_path))
+		var/raw_val = get_value(item_path)
+		return max(1, round(raw_val))
+	return 1
 
 /datum/controller/subsystem/supply/proc/GetStationMarketQuote(datum/trading_station/station, category_name, good_id, buyer_faction = null)
 	if(!istype(station) || !istext(category_name) || !good_id)
@@ -671,22 +718,56 @@
 /datum/controller/subsystem/supply/proc/FindLegacyCommodityForExport(atom/movable/exported, datum/trading_station/station)
 	if(!islist(station.inventory))
 		return null
+	var/target_mat = null
+	if(istype(exported, /obj/item/stack/material))
+		var/obj/item/stack/material/mat_stack = exported
+		target_mat = mat_stack.material ? mat_stack.material.name : mat_stack.default_type
+
 	for(var/cat_name in station.inventory)
 		var/list/cat = station.inventory[cat_name]
 		if(!islist(cat))
 			continue
 		for(var/good_id in cat)
 			var/item_path = station.GetGoodPath(cat_name, good_id)
-			if(item_path && istype(exported, item_path))
-				return list("category" = cat_name, "good_id" = good_id, "amount" = GetExportStackAmount(exported))
+			if(!item_path)
+				continue
+			var/matched = FALSE
+			if(istype(exported, item_path))
+				matched = TRUE
+			else if(target_mat && ispath(item_path, /obj/item/stack/material))
+				var/obj/item/stack/material/dummy = item_path
+				if(initial(dummy.default_type) == target_mat)
+					matched = TRUE
+			if(matched)
+				var/pack_size = 1
+				if(ispath(item_path, /obj/item/stack))
+					var/obj/item/stack/S = item_path
+					pack_size = max(1, initial(S.amount))
+				var/packages = GetExportStackAmount(exported) / pack_size
+				return list("category" = cat_name, "good_id" = good_id, "amount" = packages)
 	return null
 
 /datum/controller/subsystem/supply/proc/FindCommodityForExport(atom/movable/exported, datum/trading_station/station)
 	if(!istype(exported) || !istype(station))
 		return null
 	var/datum/trade_offer/offer = station.GetOfferByPath(exported.type)
+	if(!offer && istype(exported, /obj/item/stack/material))
+		var/obj/item/stack/material/mat_stack = exported
+		var/target_mat = mat_stack.material ? mat_stack.material.name : mat_stack.default_type
+		if(target_mat && islist(station.offers))
+			for(var/id in station.offers)
+				var/datum/trade_offer/candidate = station.offers[id]
+				if(!istype(candidate) || !ispath(candidate.item_path, /obj/item/stack/material))
+					continue
+				var/obj/item/stack/material/dummy = candidate.item_path
+				var/offer_mat = initial(dummy.default_type)
+				if(offer_mat == target_mat)
+					offer = candidate
+					break
 	if(offer)
-		return list("category" = offer.category, "good_id" = offer.id, "amount" = GetExportStackAmount(exported))
+		var/pack_size = offer.pack_size || 1
+		var/packages = GetExportStackAmount(exported) / pack_size
+		return list("category" = offer.category, "good_id" = offer.id, "amount" = packages)
 	return FindLegacyCommodityForExport(exported, station)
 
 
@@ -722,13 +803,35 @@
 		"quotes" = quotes
 	)
 
+/datum/controller/subsystem/supply/proc/GetSnapshotTotalCost(list/snapshot, list/shop_list, buyer_faction = null)
+	. = 0
+	if(!islist(shop_list))
+		return
+	for(var/list/item as anything in ExtractCartItems(shop_list))
+		var/datum/trading_station/station = item["station"]
+		var/gid = item["good_id"]
+		var/cat = item["cat"]
+		var/count = item["count"]
+		var/unit_price = null
+		if(islist(snapshot))
+			unit_price = GetSnapshotUnitPrice(snapshot, station, cat, gid)
+		if(isnull(unit_price))
+			unit_price = GetImportCost(gid, station, buyer_faction, cat)
+		. += unit_price * count
+
 /datum/controller/subsystem/supply/BuildOrder(requesting_account, reason, list/shopping_list, buyer_faction = null)
 	. = ..(requesting_account, reason, shopping_list, buyer_faction)
 	if(!. || !(. in order_queue))
 		return
 	var/list/order_data = order_queue[.]
 	if(islist(order_data))
-		order_data["price_snapshot"] = BuildMarketSnapshot(shopping_list, buyer_faction)
+		var/list/snapshot = BuildMarketSnapshot(shopping_list, buyer_faction)
+		order_data["price_snapshot"] = snapshot
+		var/snapshot_cost = GetSnapshotTotalCost(snapshot, shopping_list, buyer_faction)
+		order_data["cost"] = snapshot_cost
+		var/datum/money_account/master_account = get_supply_department_account()
+		var/is_requestor_master = master_account && (requesting_account == master_account)
+		order_data["fee"] = is_requestor_master ? 0 : round(snapshot_cost * handling_fee, 0.01)
 
 #undef MARKET_MOD_BOOM
 #undef MARKET_MOD_SHORTAGE
