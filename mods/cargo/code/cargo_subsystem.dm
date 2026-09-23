@@ -423,105 +423,120 @@
 		if(!islist(source_category))
 			continue
 		for(var/source_good_id in source_category)
-			var/source_available = source_station.GetGoodAmount(source_category_name, source_good_id)
-			if(source_available < 1)
-				continue
-
-			var/item_path = source_station.GetGoodPath(source_category_name, source_good_id)
-			if(!ispath(item_path, /atom/movable))
-				continue
-
-			var/source_unit_cost = GetStationRestockCost(source_good_id, source_station, source_category_name)
-			if(source_unit_cost < 1)
-				continue
-
-			var/list/destination_match = FindStationCommodityByPath(destination_station, item_path)
-			var/is_shared = islist(destination_match)
-
-			var/destination_category_name = null
-			var/destination_good_id = null
-			var/destination_sell_snapshot = 0
-			var/destination_shortage = 0
-			var/destination_demand = 0
-			var/source_surplus = max(0, -source_station.GetLiveMarketStockPressure(source_category_name, source_good_id))
-			var/spread_ratio = 1.0
-			var/market_reason = "procurement"
-			var/score = 0
-			var/desired_amount = max(1, round(target_value / source_unit_cost))
-			var/amount = 0
-
-			if(is_shared)
-				destination_category_name = destination_match["category"]
-				destination_good_id = destination_match["good_id"]
-				destination_sell_snapshot = GetStationSellPrice(destination_good_id, destination_station, destination_category_name)
-				if(destination_sell_snapshot < 1)
-					continue
-
-				destination_shortage = max(0, destination_station.GetLiveMarketStockPressure(destination_category_name, destination_good_id))
-				destination_demand = max(0, destination_station.GetLiveMarketDemandScore(destination_category_name, destination_good_id))
-				spread_ratio = destination_sell_snapshot / max(1, source_unit_cost)
-				if(destination_shortage < 0.2 && destination_demand < 0.25 && spread_ratio < 1.2)
-					continue
-
-				market_reason = GetTradeContractMarketReason(destination_shortage, destination_demand, spread_ratio)
-				// Shared arbitrage has high baseline priority so it always outranks generic procurement
-				score = 3.0 + (destination_shortage * 4) + (destination_demand * 2) + (max(0, spread_ratio - 1) * 2) + source_surplus + min(route_distance / 10, 1)
-
-				if(destination_shortage > 0)
-					var/shortage_units = max(1, GetTradeContractShortageUnits(destination_station, destination_category_name, destination_good_id))
-					amount = min(source_available, desired_amount, shortage_units)
-				else
-					amount = min(source_available, desired_amount)
-			else
-				market_reason = (source_surplus >= 0.2) ? "surplus_export" : "procurement"
-				destination_sell_snapshot = round(source_unit_cost * 1.35)
-				amount = min(source_available, desired_amount)
-				var/base_val_candidate = source_unit_cost * amount
-				var/value_fit = max(0, 1 - (abs(base_val_candidate - target_value) / max(target_value, 1)))
-				var/diversity_salt = ((length(destination_station.name) * 7) + (length(source_good_id) * 13) + (trade_contract_id * 11)) % 23 / 100
-				// Unmatched freight score remains in range [0.3, 1.9], strictly below valid shared arbitrage (>= 3.0)
-				score = 0.3 + (source_surplus * 0.6) + (value_fit * 0.3) + min(route_distance / 30, 0.3) + diversity_salt
-
-			if(amount < 1)
-				continue
-
-			var/base_value = source_unit_cost * amount
-			if(base_value < min_trade_contract_value)
-				continue
-
-			var/value_commission = round(base_value * 0.2)
-			var/distance_pay = round(route_distance * 35)
-			var/spread_pay = round(max(0, (destination_sell_snapshot - source_unit_cost) * amount) * 0.5)
-			var/calculated_reward = max(value_commission + distance_pay, value_commission + spread_pay)
-
-			var/list/candidate = list(
-				"score" = score,
-				"market_reason" = market_reason,
-				"source_category" = source_category_name,
-				"source_good_id" = source_good_id,
-				"destination_category" = destination_category_name,
-				"destination_good_id" = destination_good_id,
-				"source_unit_cost" = source_unit_cost,
-				"destination_sell_price" = destination_sell_snapshot,
-				"distance" = route_distance,
-				"base_value" = base_value,
-				"reward" = max(100, calculated_reward),
-				"deposit" = round(base_value * 0.3),
-				"penalty" = round(base_value * 1.5),
-				"content" = list(
-					"category" = source_category_name,
-					"good_id" = source_good_id,
-					"destination_category" = destination_category_name,
-					"destination_good_id" = destination_good_id,
-					"item_path" = item_path,
-					"name" = source_station.GetGoodName(source_category_name, source_good_id),
-					"amount" = amount
-				)
-			)
-			if(!islist(best_candidate) || candidate["score"] > best_candidate["score"] || (candidate["score"] == best_candidate["score"] && candidate["base_value"] > best_candidate["base_value"]))
+			var/list/candidate = BuildTradeContractCommodityCandidate(source_station, destination_station, route_distance, target_value, source_category_name, source_good_id)
+			if(IsBetterTradeContractCandidate(candidate, best_candidate))
 				best_candidate = candidate
 
 	return best_candidate
+
+/datum/controller/subsystem/supply/proc/IsBetterTradeContractCandidate(list/candidate, list/current_best)
+	if(!islist(candidate))
+		return FALSE
+	if(!islist(current_best))
+		return TRUE
+	return candidate["score"] > current_best["score"] || (candidate["score"] == current_best["score"] && candidate["base_value"] > current_best["base_value"])
+
+/datum/controller/subsystem/supply/proc/BuildTradeContractCommodityCandidate(datum/trading_station/source_station, datum/trading_station/destination_station, route_distance, target_value, source_category_name, source_good_id)
+	var/source_available = source_station.GetGoodAmount(source_category_name, source_good_id)
+	if(source_available < 1)
+		return null
+	var/item_path = source_station.GetGoodPath(source_category_name, source_good_id)
+	if(!ispath(item_path, /atom/movable))
+		return null
+	var/source_unit_cost = GetStationRestockCost(source_good_id, source_station, source_category_name)
+	if(source_unit_cost < 1)
+		return null
+
+	var/source_surplus = max(0, -source_station.GetLiveMarketStockPressure(source_category_name, source_good_id))
+	var/desired_amount = max(1, round(target_value / source_unit_cost))
+	var/list/destination_match = FindStationCommodityByPath(destination_station, item_path)
+	var/list/market
+	if(islist(destination_match))
+		market = GetSharedContractMarket(destination_station, destination_match, source_unit_cost, source_available, desired_amount, source_surplus, route_distance)
+	else
+		market = GetUnmatchedContractMarket(destination_station, source_good_id, source_unit_cost, source_available, desired_amount, source_surplus, route_distance, target_value)
+	if(!islist(market))
+		return null
+
+	var/amount = market["amount"]
+	if(amount < 1)
+		return null
+	var/base_value = source_unit_cost * amount
+	if(base_value < min_trade_contract_value)
+		return null
+
+	var/destination_sell_price = market["sell_price"]
+	var/value_commission = round(base_value * 0.2)
+	var/distance_pay = round(route_distance * 35)
+	var/spread_pay = round(max(0, (destination_sell_price - source_unit_cost) * amount) * 0.5)
+	var/calculated_reward = max(value_commission + distance_pay, value_commission + spread_pay)
+	return list(
+		"score" = market["score"],
+		"market_reason" = market["reason"],
+		"source_category" = source_category_name,
+		"source_good_id" = source_good_id,
+		"destination_category" = market["category"],
+		"destination_good_id" = market["good_id"],
+		"source_unit_cost" = source_unit_cost,
+		"destination_sell_price" = destination_sell_price,
+		"distance" = route_distance,
+		"base_value" = base_value,
+		"reward" = max(100, calculated_reward),
+		"deposit" = round(base_value * 0.3),
+		"penalty" = round(base_value * 1.5),
+		"content" = list(
+			"category" = source_category_name,
+			"good_id" = source_good_id,
+			"destination_category" = market["category"],
+			"destination_good_id" = market["good_id"],
+			"item_path" = item_path,
+			"name" = source_station.GetGoodName(source_category_name, source_good_id),
+			"amount" = amount
+		)
+	)
+
+/datum/controller/subsystem/supply/proc/GetSharedContractMarket(datum/trading_station/destination_station, list/destination_match, source_unit_cost, source_available, desired_amount, source_surplus, route_distance)
+	var/category_name = destination_match["category"]
+	var/good_id = destination_match["good_id"]
+	var/sell_price = GetStationSellPrice(good_id, destination_station, category_name)
+	if(sell_price < 1)
+		return null
+	var/shortage = max(0, destination_station.GetLiveMarketStockPressure(category_name, good_id))
+	var/demand = max(0, destination_station.GetLiveMarketDemandScore(category_name, good_id))
+	var/spread_ratio = sell_price / max(1, source_unit_cost)
+	if(shortage < 0.2 && demand < 0.25 && spread_ratio < 1.2)
+		return null
+
+	// Shared arbitrage must outrank generic procurement.
+	var/score = 3.0 + (shortage * 4) + (demand * 2) + (max(0, spread_ratio - 1) * 2) + source_surplus + min(route_distance / 10, 1)
+	var/amount = min(source_available, desired_amount)
+	if(shortage > 0)
+		var/shortage_units = max(1, GetTradeContractShortageUnits(destination_station, category_name, good_id))
+		amount = min(amount, shortage_units)
+	return list(
+		"category" = category_name,
+		"good_id" = good_id,
+		"sell_price" = sell_price,
+		"reason" = GetTradeContractMarketReason(shortage, demand, spread_ratio),
+		"score" = score,
+		"amount" = amount
+	)
+
+/datum/controller/subsystem/supply/proc/GetUnmatchedContractMarket(datum/trading_station/destination_station, source_good_id, source_unit_cost, source_available, desired_amount, source_surplus, route_distance, target_value)
+	var/amount = min(source_available, desired_amount)
+	var/base_value = source_unit_cost * amount
+	var/value_fit = max(0, 1 - (abs(base_value - target_value) / max(target_value, 1)))
+	var/diversity_salt = ((length(destination_station.name) * 7) + (length(source_good_id) * 13) + (trade_contract_id * 11)) % 23 / 100
+	// Unmatched freight stays below the shared arbitrage score of at least 3.0.
+	var/score = 0.3 + (source_surplus * 0.6) + (value_fit * 0.3) + min(route_distance / 30, 0.3) + diversity_salt
+	return list(
+		"category" = null,
+		"good_id" = null,
+		"sell_price" = round(source_unit_cost * 1.35),
+		"reason" = (source_surplus >= 0.2) ? "surplus_export" : "procurement",
+		"score" = score,
+		"amount" = amount
+	)
 
 /datum/controller/subsystem/supply/proc/CreateTradeContract(datum/trading_station/source_station)
 	if(!istype(source_station) || !source_station.supports_contracts || !(source_station in visible_trading_stations) || GetPendingTradeContract(source_station.uid, "delivery"))
@@ -536,9 +551,7 @@
 		if(!isnum(route_distance) || route_distance < min_trade_contract_distance)
 			continue
 		var/list/candidate = BuildTradeContractCandidate(source_station, candidate_destination, route_distance)
-		if(!islist(candidate))
-			continue
-		if(!islist(best_candidate) || candidate["score"] > best_candidate["score"] || (candidate["score"] == best_candidate["score"] && candidate["base_value"] > best_candidate["base_value"]))
+		if(IsBetterTradeContractCandidate(candidate, best_candidate))
 			best_candidate = candidate
 			destination_station = candidate_destination
 
@@ -1331,15 +1344,7 @@
 		return FALSE
 
 	var/list/rejected = list()
-	var/list/candidate_items = list()
-	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
-		if(istype(exported, /obj/structure/closet/crate/trade_contract))
-			continue
-		if(!CanExportAtom(exported))
-			rejected += exported
-			continue
-		candidate_items += exported
-
+	var/list/candidate_items = GetExportCandidates(sender_beacon, rejected)
 	if(!length(candidate_items))
 		return FALSE
 
@@ -1393,23 +1398,7 @@
 	if(main_account_total > 0)
 		payouts_by_account[money_account] += main_account_total
 
-	var/list/successful_deposits = list()
-	var/deposit_failed = FALSE
-	for(var/datum/money_account/acc as anything in payouts_by_account)
-		var/amount = payouts_by_account[acc]
-		if(amount <= 0)
-			continue
-		var/desc = (acc == money_account) ? "Trade Network Export" : "R&D Invoice sale"
-		if(!acc.deposit(amount, desc, "Trade Network"))
-			deposit_failed = TRUE
-			break
-		successful_deposits += list(list(acc, amount))
-
-	if(deposit_failed || !sender_beacon.StartExport())
-		for(var/list/dep in successful_deposits)
-			var/datum/money_account/acc = dep[1]
-			var/amount = dep[2]
-			acc.withdraw(amount, "Export Transaction Rollback", "Trade Network")
+	if(!DepositExportPayouts(sender_beacon, money_account, payouts_by_account))
 		return FALSE
 
 	for(var/atom/movable/rejected_atom as anything in rejected)
@@ -1417,27 +1406,61 @@
 	if(istype(target_station))
 		target_station.SubtractFromWealth(total_export_value)
 
-	var/invoice_contents_info = ""
+	RecordConfirmedExports(sender_beacon, money_account, target_station, seller_faction, confirmed_exports, main_account_total)
+	return unpurchased_due_to_budget ? TRADE_EXPORT_PARTIAL : TRADE_EXPORT_SUCCESS
+
+/datum/controller/subsystem/supply/proc/GetExportCandidates(obj/machinery/trade_beacon/sending/sender_beacon, list/rejected)
+	var/list/candidates = list()
+	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
+		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+			continue
+		if(!CanExportAtom(exported))
+			rejected += exported
+			continue
+		candidates += exported
+	return candidates
+
+/datum/controller/subsystem/supply/proc/DepositExportPayouts(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, list/payouts_by_account)
+	var/list/successful_deposits = list()
+	var/deposit_failed = FALSE
+	for(var/datum/money_account/account as anything in payouts_by_account)
+		var/amount = payouts_by_account[account]
+		if(amount <= 0)
+			continue
+		var/description = (account == money_account) ? "Trade Network Export" : "R&D Invoice sale"
+		if(!account.deposit(amount, description, "Trade Network"))
+			deposit_failed = TRUE
+			break
+		successful_deposits += list(list(account, amount))
+
+	if(!deposit_failed && sender_beacon.StartExport())
+		return TRUE
+	for(var/list/deposit in successful_deposits)
+		var/datum/money_account/account = deposit[1]
+		var/amount = deposit[2]
+		account.withdraw(amount, "Export Transaction Rollback", "Trade Network")
+	return FALSE
+
+/datum/controller/subsystem/supply/proc/RecordConfirmedExports(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station, seller_faction, list/confirmed_exports, main_account_total)
+	var/invoice_contents = ""
 	for(var/atom/movable/exported as anything in confirmed_exports)
 		var/export_value = confirmed_exports[exported]
 		if(istype(exported, /obj/structure/closet))
 			var/obj/structure/closet/crate = exported
 			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(crate)
 			var/target_account_number = rnd_slip ? rnd_slip.target_account_number : null
-			var/crate_info = ProcessExportCrate(crate, target_station, seller_faction, rnd_slip)
+			var/crate_contents = ProcessExportCrate(crate, target_station, seller_faction, rnd_slip)
 			if(target_account_number && export_value > 0 && get_account(target_account_number))
 				var/datum/money_account/target = get_account(target_account_number)
-				CreateLogEntry("Export", target.owner_name, crate_info, export_value, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
+				CreateLogEntry("Export", target.owner_name, crate_contents, export_value, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 			else
-				invoice_contents_info += crate_info
+				invoice_contents += crate_contents
 		else
-			invoice_contents_info += "<li>[exported.name]</li>"
+			invoice_contents += "<li>[exported.name]</li>"
 			ProcessExportItem(exported, target_station, seller_faction)
 
-	if(main_account_total > 0 && invoice_contents_info)
-		CreateLogEntry("Export", money_account.owner_name, invoice_contents_info, main_account_total, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
-
-	return unpurchased_due_to_budget ? TRADE_EXPORT_PARTIAL : TRADE_EXPORT_SUCCESS
+	if(main_account_total > 0 && invoice_contents)
+		CreateLogEntry("Export", money_account.owner_name, invoice_contents, main_account_total, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null, faction_name = null, station_name = null)
 	var/log_id

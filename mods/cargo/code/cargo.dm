@@ -49,30 +49,51 @@
 			return FALSE
 	return TRUE
 
+/datum/computer_file/program/supply/proc/CheckCardAccess(obj/item/card/id/I, access_to_check)
+	if(!istype(I))
+		return FALSE
+	var/list/card_access = I.GetAccess()
+	if(!card_access)
+		return FALSE
+	if(islist(access_to_check))
+		for(var/acc in access_to_check)
+			if(islist(acc))
+				var/matched = TRUE
+				for(var/subacc in acc)
+					if(!(subacc in card_access))
+						matched = FALSE
+						break
+				if(matched)
+					return TRUE
+			else if(acc in card_access)
+				return TRUE
+		return FALSE
+	return (access_to_check in card_access)
+
 /datum/computer_file/program/supply/can_run(mob/living/user, loud = FALSE, access_to_check)
 	if(!requires_access_to_run)
 		return TRUE
-	if(!access_to_check)
-		access_to_check = required_access
-	if(!access_to_check)
+	if(!access_to_check && !(access_to_check = required_access))
 		return TRUE
 	if(isghost(user) && check_rights(R_ADMIN, 0, user))
 		return TRUE
 	if(!istype(user))
 		return FALSE
-	var/obj/item/card/id/I = user.GetIdCard()
-	if(!I)
+
+	var/atom/host = computer?.get_physical_host()
+	var/obj/item/card/id/inserted = GetInsertedIdCard()
+	var/obj/item/card/id/user_id = user.GetIdCard()
+
+	if(!inserted && !user_id)
 		if(loud)
-			to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+			to_chat(user, SPAN_NOTICE("\The [host || "computer"] flashes an \"RFID Error - Unable to scan ID\" warning."))
 		return FALSE
-	if(islist(access_to_check))
-		for(var/acc in access_to_check)
-			if(acc in I.access)
-				return TRUE
-	else if(access_to_check in I.access)
+
+	if((inserted && CheckCardAccess(inserted, access_to_check)) || (user_id && CheckCardAccess(user_id, access_to_check)))
 		return TRUE
+
 	if(loud)
-		to_chat(user, SPAN_NOTICE("\The [computer] flashes an \"Access Denied\" warning."))
+		to_chat(user, SPAN_NOTICE("\The [host || "computer"] flashes an \"Access Denied\" warning."))
 	return FALSE
 
 /datum/computer_file/program/supply/Destroy()
@@ -113,10 +134,14 @@
 	return get_supply_department_account()
 
 /datum/computer_file/program/supply/proc/HasCargoApprovalAccess(mob/user)
-	var/obj/item/card/id/id_card = user ? user.GetIdCard() : null
-	if(!istype(id_card))
-		return FALSE
-	return (access_cargo in id_card.access) || (access_qm in id_card.access) || (access_bridge in id_card.access)
+	var/obj/item/card/id/inserted = GetInsertedIdCard()
+	if(istype(inserted) && CheckCardAccess(inserted, required_access))
+		return TRUE
+	if(istype(user))
+		var/obj/item/card/id/user_id = user.GetIdCard()
+		if(istype(user_id) && CheckCardAccess(user_id, required_access))
+			return TRUE
+	return FALSE
 
 /datum/computer_file/program/supply/proc/GetLogCollection()
 	switch(log_screen)
@@ -482,14 +507,15 @@
 	data["export_cooldown_remaining"] = cooldown_sec
 	data["export_cooldown_text"] = cooldown_sec ? "[cooldown_sec]s" : "Ready"
 	var/user_greeting = ""
-	if(istype(user))
-		var/obj/item/card/id/I = user.GetIdCard()
-		if(istype(I))
-			user_greeting = "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)]"
-			if(I.military_branch)
-				user_greeting += " ([uppertext(I.military_branch)])"
-		else
-			user_greeting = "WELCOME, [uppertext(user.name)]"
+	var/obj/item/card/id/I = GetInsertedIdCard()
+	if(!istype(I) && istype(user))
+		I = user.GetIdCard()
+	if(istype(I))
+		user_greeting = "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)]"
+		if(I.military_branch)
+			user_greeting += " ([uppertext(I.military_branch)])"
+	else if(istype(user))
+		user_greeting = "WELCOME, [uppertext(user.name)]"
 	data["user_greeting"] = user_greeting
 	data["available_receiving_beacons"] = SerializeLocalBeacons("receiving")
 	data["available_sending_beacons"] = SerializeLocalBeacons("sending")

@@ -304,8 +304,8 @@
 /datum/computer_file/program/supply_order/proc/SerializeOrders(mob/user)
 	var/list/result = list()
 	var/user_acct_num = account ? account.account_number : null
-	if(!user_acct_num && istype(user))
-		var/obj/item/card/id/id_card = user.GetIdCard()
+	if(!user_acct_num)
+		var/obj/item/card/id/id_card = GetAvailableIdCard(user)
 		if(istype(id_card))
 			user_acct_num = id_card.associated_account_number
 	var/total_serialized = 0
