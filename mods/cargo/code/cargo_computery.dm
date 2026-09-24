@@ -3,9 +3,9 @@
 		/obj/item/stock_parts/computer/card_slot
 		)
 	default_software = list(
-		/datum/computer_file/program/supply
+		/datum/computer_file/program/supply_order
 	)
-	autorun_program = /datum/computer_file/program/supply
+	autorun_program = /datum/computer_file/program/supply_order
 
 
 /obj/machinery/computer/modular/preset/dock

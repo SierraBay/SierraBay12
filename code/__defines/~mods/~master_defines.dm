@@ -169,6 +169,13 @@
 #endif
 //New aways testing mod
 
+// CARGO_CONTRACTS - Start
+#define CONTRACT_STATUS_AVAILABLE "available"
+#define CONTRACT_STATUS_ACTIVE "active"
+#define CONTRACT_STATUS_COMPLETED "completed"
+#define CONTRACT_STATUS_FAILED "failed"
+// CARGO_CONTRACTS - End
+
 // CARDIAC_OVERHAUL - Start
 // Cardiac rhythm states — electrical activity of the heart.
 #define RHYTHM_NSR       "Normal Sinus Rhythm"  // Normal heart function
@@ -183,3 +190,4 @@
 // Helper — does this rhythm produce a mechanical pulse (pump blood)?
 #define RHYTHM_HAS_PULSE(r) ((r) == RHYTHM_NSR || (r) == RHYTHM_TACHY || (r) == RHYTHM_BRADY || (r) == RHYTHM_BLOCK || (r) == RHYTHM_STEMI)
 // CARDIAC_OVERHAUL - End
+

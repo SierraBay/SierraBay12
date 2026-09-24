@@ -24,21 +24,25 @@
 
 
 /obj/item/clothing/accessory/leg_guards/blue
+	name = "blue leg guards"
 	desc = "A pair of armored leg pads in blue. Attaches to a plate carrier."
 	icon_state = "legguards_blue"
 
 
 /obj/item/clothing/accessory/leg_guards/navy
+	name = "navy blue leg guards"
 	desc = "A pair of armored leg pads in navy blue. Attaches to a plate carrier."
 	icon_state = "legguards_navy"
 
 
 /obj/item/clothing/accessory/leg_guards/green
+	name = "green leg guards"
 	desc = "A pair of armored leg pads in green. Attaches to a plate carrier."
 	icon_state = "legguards_green"
 
 
 /obj/item/clothing/accessory/leg_guards/tan
+	name = "tan leg guards"
 	desc = "A pair of armored leg pads in tan. Attaches to a plate carrier."
 	icon_state = "legguards_tan"
 
@@ -68,21 +72,25 @@
 	)
 
 /obj/item/clothing/accessory/leg_guards/heavy/blue
+	name = "heavy blue leg guards"
 	desc = "A pair of heavily armored leg pads in blue. Attaches to a plate carrier."
 	icon_state = "legguards_blue"
 
 
 /obj/item/clothing/accessory/leg_guards/heavy/navy
+	name = "heavy navy blue leg guards"
 	desc = "A pair of heavily armored leg pads in navy blue. Attaches to a plate carrier."
 	icon_state = "legguards_navy"
 
 
 /obj/item/clothing/accessory/leg_guards/heavy/green
+	name = "heavy green leg guards"
 	desc = "A pair of heavily armored leg pads in green. Attaches to a plate carrier."
 	icon_state = "legguards_green"
 
 
 /obj/item/clothing/accessory/leg_guards/heavy/tan
+	name = "heavy tan leg guards"
 	desc = "A pair of heavily armored leg pads in tan. Attaches to a plate carrier."
 	icon_state = "legguards_tan"
 

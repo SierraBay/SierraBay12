@@ -49,10 +49,27 @@ function nanoDiffNodes(oldNode, newNode) {
         oldChild.nodeValue = newChild.nodeValue
       continue
     }
+    if (oldChild.nodeType === 8) { // Comment node
+      continue
+    }
     if (oldChild.nodeType === 1) { // Element node
       if (oldChild.tagName !== newChild.tagName) {
         oldNode.replaceChild(newChild.cloneNode(true), oldChild)
         continue
+      }
+      // Skip <style> tags completely once rendered — CSS is static
+      if (oldChild.tagName === 'STYLE') {
+        continue
+      }
+      // If elements have distinct data-view / data-key (e.g. switching tabs or view panels),
+      // replace the whole element cleanly instead of morphing mismatched trees
+      var oldKey = oldChild.getAttribute ? (oldChild.getAttribute('data-view') || oldChild.getAttribute('data-key')) : null
+      var newKey = newChild.getAttribute ? (newChild.getAttribute('data-view') || newChild.getAttribute('data-key')) : null
+      if (oldKey || newKey) {
+        if (oldKey !== newKey) {
+          oldNode.replaceChild(newChild.cloneNode(true), oldChild)
+          continue
+        }
       }
       nanoDiffAttrs(oldChild, newChild)
       nanoDiffNodes(oldChild, newChild)
@@ -70,7 +87,7 @@ function nanoDiffAttrs(oldEl, newEl) {
   var $old = $(oldEl)
   for (i = oldEl.attributes.length - 1; i >= 0; i--) {
     attr = oldEl.attributes[i]
-    if (!newEl.hasAttribute(attr.name)) {
+    if (newEl.hasAttribute ? !newEl.hasAttribute(attr.name) : (newEl.getAttribute(attr.name) === null)) {
       oldEl.removeAttribute(attr.name)
       if (attr.name.indexOf('data-') === 0)
         $old.removeData(attr.name.slice(5))
@@ -99,6 +116,19 @@ function nanoPatchHtml(container, newHtml) {
     var sid = scrollEls[si].getAttribute('data-scroll-id')
     scrollSaves[sid] = scrollEls[si].scrollTop
   }
+  if (el.getAttribute && el.getAttribute('data-scroll-id')) {
+    scrollSaves[el.getAttribute('data-scroll-id')] = el.scrollTop
+  }
+
+  // Preserve container and window scroll positions
+  var winScrollY = window.pageYOffset || (document.documentElement ? document.documentElement.scrollTop : 0) || (document.body ? document.body.scrollTop : 0)
+  var winScrollX = window.pageXOffset || (document.documentElement ? document.documentElement.scrollLeft : 0) || (document.body ? document.body.scrollLeft : 0)
+  var elScrollTop = el.scrollTop
+  var elScrollLeft = el.scrollLeft
+
+  var oldScreenEl = el.querySelector('[data-view-screen]')
+  var oldScreen = oldScreenEl ? oldScreenEl.getAttribute('data-view-screen') : null
+
   if (!el.hasChildNodes()) {
     el.innerHTML = newHtml
   } else {
@@ -106,15 +136,42 @@ function nanoPatchHtml(container, newHtml) {
     scratch.innerHTML = newHtml
     nanoDiffNodes(el, scratch)
   }
+
+  var newScreenEl = el.querySelector('[data-view-screen]')
+  var newScreen = newScreenEl ? newScreenEl.getAttribute('data-view-screen') : null
+  var screenChanged = oldScreen && newScreen && (oldScreen !== newScreen)
+
   function restoreScrolls() {
     var els = el.querySelectorAll('[data-scroll-id]')
     for (var ri = 0; ri < els.length; ri++) {
       var rsid = els[ri].getAttribute('data-scroll-id')
-      if (scrollSaves[rsid] > 0) els[ri].scrollTop = scrollSaves[rsid]
+      if (scrollSaves[rsid] !== undefined && scrollSaves[rsid] > 0)
+        els[ri].scrollTop = scrollSaves[rsid]
+    }
+    if (el.getAttribute && el.getAttribute('data-scroll-id')) {
+      var elSid = el.getAttribute('data-scroll-id')
+      if (scrollSaves[elSid] !== undefined && scrollSaves[elSid] > 0)
+        el.scrollTop = scrollSaves[elSid]
+    } else if (elScrollTop > 0) {
+      el.scrollTop = elScrollTop
+    }
+    if (elScrollLeft > 0) {
+      el.scrollLeft = elScrollLeft
+    }
+    if (!screenChanged) {
+      if (winScrollY > 0 || winScrollX > 0) {
+        window.scrollTo(winScrollX, winScrollY)
+      }
+    } else {
+      window.scrollTo(0, 0)
     }
   }
   restoreScrolls()
-  requestAnimationFrame(restoreScrolls)
+  if (typeof requestAnimationFrame !== 'undefined') {
+    requestAnimationFrame(restoreScrolls)
+  } else {
+    setTimeout(restoreScrolls, 0)
+  }
 }
 //[/SIERRA-ADD]
 
