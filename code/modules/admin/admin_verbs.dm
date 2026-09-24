@@ -325,7 +325,6 @@ var/global/list/admin_verbs_hideable = list(
 	// [SIERRA-ADD-END],
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
-	/datum/admins/proc/toggleobserverjoin,
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
 	/datum/admins/proc/adrev,
