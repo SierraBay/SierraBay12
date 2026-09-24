@@ -1,6 +1,6 @@
 /singleton/psionic_power/consciousness/revelation
 	name =            "Revelate fear"
-	cost =            20
+	cost =            50
 	cooldown =        50
 	use_ranged =      TRUE
 	min_rank =        PSI_RANK_APPRENTICE
