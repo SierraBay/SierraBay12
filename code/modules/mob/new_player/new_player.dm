@@ -172,7 +172,7 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		if(!config.observer_spawn_allowed && !client.holder)
-			to_chat(src, SPAN_WARNING("Observer joining has been disabled by an administrator."))
+			to_chat(src, SPAN_WARNING("There is an administrative lock on joining as an observer!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
 

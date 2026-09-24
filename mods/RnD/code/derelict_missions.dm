@@ -48,7 +48,7 @@ var/global/list/derelict_mission_objects = list()        // Registry of all miss
 	var/require_antibodies = FALSE      // If TRUE, submitted reagent container must contain antibodies
 	var/away_z = 0                      // Z-level of the derelict (0 = unknown, skip z-check)
 	/// Set of mob types that were present on the derelict at map-load time.
-	/// Only these types are eligible for ghost invasion offers.
+	/// Only these types are eligible for the ghost invasion pool.
 	/// Populated by build_derelict_z_mapping() after the map loads.
 	var/list/initial_mob_types = list()
 
@@ -173,7 +173,7 @@ var/global/list/derelict_mission_objects = list()        // Registry of all miss
 	var/require_antibodies = FALSE      // If TRUE, submitted container must contain antibodies
 	// Objectives to create (list of lists with keys: type, description, target_type, count)
 	var/list/objective_templates = list()
-	var/ghost_mob_count = 0                     // How many mobs to offer ghosts on first visit (0 = all)
+	var/ghost_mob_count = 0                     // How many mobs to add to the ghost invasion pool on first visit (0 = all)
 
 /datum/derelict_mission_config/proc/create_mission()
 	var/datum/derelict_mission/M = new()

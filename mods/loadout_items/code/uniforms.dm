@@ -776,3 +776,12 @@
 	rolled_down = 0
 	rolled_sleeves = 0
 	gender_icons = 1
+
+/obj/item/clothing/under/tattered_clothes
+	name = "tattered clothes"
+	desc = "This outfit is definitely not suitable for formal affairs, and in fact belongs in a moshpit."
+	icon = 'maps/sierra/icons/obj/clothing/obj_under.dmi'
+	item_icons = list(slot_w_uniform_str = 'maps/sierra/icons/mob/onmob/onmob_under.dmi')
+	icon_state = "edgy"
+	item_state = "edgy"
+	worn_state = "edgy"

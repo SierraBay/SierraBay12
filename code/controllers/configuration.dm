@@ -56,6 +56,9 @@
 	//[SIERRA-ADD]
 	/// log signals messages
 	var/static/log_signals = FALSE
+
+	// Disable observer
+	var/static/observer_spawn_allowed = TRUE
 	//[/SIERRA-ADD]
 
 	/// log computer commands
