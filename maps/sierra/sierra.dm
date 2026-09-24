@@ -29,6 +29,7 @@
 	#include "datums/uniforms_civilian.dm"
 	#include "datums/uniforms_contractor.dm"
 	#include "datums/uniforms_employee.dm"
+	#include "datums/uniforms_scgec.dm"
 
 	#include "datums/reports/command.dm"
 	#include "datums/reports/deck.dm"
@@ -80,12 +81,14 @@
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
+	#include "items/clothing/scgec_solgov.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"
 	#include "job/access.dm"
 	#include "job/jobs.dm"
 	#include "job/outfits.dm"
+	#include "job/outfits_scgec.dm"
 	#include "job/infinity.dm"
 
 	#include "job/jobs_cargo.dm"

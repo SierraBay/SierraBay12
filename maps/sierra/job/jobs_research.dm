@@ -86,13 +86,18 @@
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist
 	allowed_branches = list(
 			/datum/mil_branch/employee,
-			/datum/mil_branch/contractor
+			/datum/mil_branch/contractor,
+			/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist/scgec_enlisted
 		)
 	allowed_ranks = list(
 			/datum/mil_rank/civ/nt,
 			/datum/mil_rank/civ/contractor,
 			/datum/mil_rank/civ/probation_employee,
-			/datum/mil_rank/civ/probation_contractor
+			/datum/mil_rank/civ/probation_contractor,
+			/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist/scgec_enlisted,
+			/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist/scgec_enlisted,
+			/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist/scgec_enlisted,
+			/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/research/scientist/scgec_officer
 		)
 
 	access = list(
@@ -140,13 +145,18 @@
 	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/research/assist
 	allowed_branches = list(
 			/datum/mil_branch/employee,
-			/datum/mil_branch/contractor
+			/datum/mil_branch/contractor,
+			/datum/mil_branch/scgec = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/scgec_enlisted
 		)
 	allowed_ranks = list(
 			/datum/mil_rank/civ/nt,
 			/datum/mil_rank/civ/contractor,
 			/datum/mil_rank/civ/probation_employee,
-			/datum/mil_rank/civ/probation_contractor
+			/datum/mil_rank/civ/probation_contractor,
+			/datum/mil_rank/scgec/e3 = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/scgec_enlisted,
+			/datum/mil_rank/scgec/e5 = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/scgec_enlisted,
+			/datum/mil_rank/scgec/e7 = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/scgec_enlisted,
+			/datum/mil_rank/scgec/o1 = /singleton/hierarchy/outfit/job/sierra/crew/research/assist/scgec_officer
 		)
 
 	access = list(
