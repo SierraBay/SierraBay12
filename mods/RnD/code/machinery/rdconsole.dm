@@ -110,8 +110,11 @@
 		return TRUE
 
 	// Мультитул - сохранить консоль в буфер для привязки к трекеру
-	if(istype(D, /obj/item/device/multitool))
+	if(isMultitool(D))
 		var/obj/item/device/multitool/M = D
+		if(!istype(M))
+			to_chat(user, SPAN_WARNING("\The [D] has no data buffer to save to."))
+			return TRUE
 		M.set_buffer(src)
 		to_chat(user, SPAN_NOTICE("Вы сохранили [src.name] в буфер мультитула."))
 		return TRUE
