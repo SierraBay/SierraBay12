@@ -81,7 +81,8 @@
 		var/css_class = (M.state == RND_MISSION_STATE_AVAILABLE) ? "available" : "rewarded"
 		var/state_text = (M.state == RND_MISSION_STATE_AVAILABLE) ? "AVAILABLE" : "REWARDED"
 		dat += "<div class='mission [css_class]'>"
-		dat += "<b>[M.title]</b> &mdash; [M.away_site_name] | [state_text] (z=[M.away_z])<br>"
+		dat += "<b>[M.title]</b> &mdash; [M.away_site_name] | [state_text] (z=[M.away_z]) "
+		dat += "<a class='btn btn-green' href='byond://?src=\ref[src];start_ghost_invasion=\ref[M]'>Start Ghost Invasion</a><br>"
 
 		// Artifact (complex missions)
 		if(M.mission_type == DERELICT_MISSION_COMPLEX && M.target_artifact_type)
@@ -211,6 +212,32 @@
 			if(console && console_files)
 				M.finalize(console_files)
 		to_chat(C.mob, SPAN_NOTICE("All missions completed and finalized!"))
+
+	else if(href_list["reset_visits"])
+		derelict_z_visited.Cut()
+		var/datum/ghosttrap/derelict_crew/trap = get_ghost_trap("derelict crew")
+		for(var/mob/living/M as anything in derelict_ghost_invasion_pool.Copy())
+			if(trap)
+				trap.cleanup_invasion_slot(M)
+			else
+				derelict_ghost_invasion_pool -= M
+		to_chat(C.mob, SPAN_NOTICE("Reset all derelict visit flags and cleared the ghost invasion pool."))
+
+	else if(href_list["start_ghost_invasion"])
+		var/datum/derelict_mission/M = locate(href_list["start_ghost_invasion"])
+		if(!istype(M))
+			to_chat(C.mob, SPAN_WARNING("Mission not found."))
+		else if(M.away_z <= 0)
+			to_chat(C.mob, SPAN_WARNING("Mission [M.title] has no away_z mapped."))
+		else
+			var/before = length(derelict_ghost_invasion_pool)
+			// Mark this derelict's z-levels visited so first-visit won't double-fire.
+			for(var/z_key in derelict_z_to_mission)
+				if(derelict_z_to_mission[z_key] == M)
+					derelict_z_visited[z_key] = TRUE
+			trigger_derelict_ghost_invasion(M)
+			var/added = length(derelict_ghost_invasion_pool) - before
+			to_chat(C.mob, SPAN_NOTICE("Ghost invasion for [M.away_site_name]: +[added] slot(s) (pool now [length(derelict_ghost_invasion_pool)])."))
 
 	// Auto-refresh after any action
 	show(C)
