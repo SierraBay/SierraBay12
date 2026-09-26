@@ -3,7 +3,6 @@
 		melee  = ARMOR_MELEE_RESISTANT, // Хитин не мясо, а потому, он должен гасить урон оружием
 		bullet = 1.5*ARMOR_BALLISTIC_SMALL, // Хитин бронированный и кое-как должен защищать
 		bomb   = ARMOR_BOMB_PADDED,
-		energy = ARMOR_ENERGY_RESISTANT, // Хитин это изолятор
 		bio    = ARMOR_BIO_SHIELDED,
 		rad    = 0.5*ARMOR_RAD_MINOR
 		)
