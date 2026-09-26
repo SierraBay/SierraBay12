@@ -415,7 +415,7 @@
 /obj/item/device/radio/receive_range(freq, level)
 	var/z_level = get_z(src)
 
-	if((z_level in GLOB.using_map.admin_levels) || (z_level in GLOB.using_map.vr_levels))
+	if((z_level in GLOB.using_map.vr_levels))
 		// station_levels check simplification
 		if(!(1 in level) && !(z_level in level))
 			return -1
