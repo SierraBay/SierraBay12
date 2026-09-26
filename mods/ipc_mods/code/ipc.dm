@@ -138,7 +138,7 @@
 /obj/item/organ/internal/posibrain/ipc/use_tool(obj/item/W, mob/living/user, list/click_params)
 	. = ..()
 	if(shackle)
-		if(shackle_set && (istype(W, /obj/item/screwdriver)))
+		if(shackle_set && (isScrewdriver(W)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
 				to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 				return
@@ -156,7 +156,7 @@
 					SPAN_WARNING("\The [user]'s hand slips, severely damaging \the [src]."),
 					SPAN_WARNING("Your hand slips, severely damaging \the [src]."))
 
-		else if(!shackle_set && (istype(W, /obj/item/screwdriver)))
+		else if(!shackle_set && (isScrewdriver(W)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
 				to_chat(user, "You have no idea how to do that!")
 				return
@@ -195,7 +195,7 @@
 					SPAN_WARNING("\The [user]'s hand slips while connecting the datajack, damaging \the [src]."),
 					SPAN_WARNING("Your hand slips while connecting the datajack, damaging \the [src]."))
 
-		if(!shackle_set && (istype(W, /obj/item/wirecutters)))
+		if(!shackle_set && (isWirecutter(W)))
 			if(!(user.skill_check(SKILL_DEVICES, SKILL_TRAINED)))
 				to_chat(user, SPAN_WARNING("You have no idea how to do that!"))
 				return

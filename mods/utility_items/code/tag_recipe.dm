@@ -1,6 +1,6 @@
 /obj/item/paper/use_tool(obj/item/P, mob/living/user, list/click_params)
 	. = ..()
-	if(istype(P, /obj/item/stack/cable_coil))
+	if(isCoil(P))
 		to_chat(user, "You made a tag using \the [src] and \the [P].")
 		qdel(src)
 		var/tag = new /obj/item/tag
