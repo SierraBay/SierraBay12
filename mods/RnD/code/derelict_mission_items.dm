@@ -234,7 +234,7 @@
 
 /obj/structure/derelict_mission_artifact/bio_cell/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	// Wrench — connect to cable node or disconnect
-	if(istype(tool, /obj/item/wrench))
+	if(isWrench(tool))
 		if(anchored)
 			to_chat(user, SPAN_NOTICE("Вы откручиваете [src] от кабельного узла..."))
 			if(!do_after(user, 2 SECONDS, src))
