@@ -94,6 +94,8 @@
 				result = aura.aura_check_bullet(arglist(newargs))
 			if(AURA_TYPE_THROWN)
 				result = aura.aura_check_thrown(arglist(newargs))
+			if(AURA_TYPE_UNARMED)
+				result = aura.aura_check_unarmed(arglist(newargs))
 			if(AURA_TYPE_LIFE)
 				result = aura.aura_check_life()
 		if(result & AURA_FALSE)

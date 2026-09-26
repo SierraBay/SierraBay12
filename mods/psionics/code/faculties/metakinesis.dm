@@ -2,7 +2,7 @@
 	id = PSI_METAKINESIS
 	name = "Metakinesis"
 	associated_intent = I_GRAB
-	armour_types = list("laser", "melee")
+	armour_types = list("energy", "melee")
 
 /singleton/psionic_power/metakinesis
 	faculty = PSI_METAKINESIS

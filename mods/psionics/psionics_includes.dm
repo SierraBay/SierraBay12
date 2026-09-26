@@ -9,6 +9,7 @@
 #include "code/misc/psi_plane.dm"
 #include "code/misc/psi_structures.dm"
 #include "code/misc/background.dm"
+#include "code/misc/armour.dm"
 
 #include "code/complexus/complexus_helpers.dm"
 #include "code/complexus/complexus_latency.dm"
@@ -113,6 +114,7 @@
 
 #include "code/preferences/01_basic.dm"
 #include "code/preferences/02_abilities.dm"
+#include "code/preferences/prefs.dm"
 
 #include "code/override.dm"
 
