@@ -114,6 +114,7 @@
 
 #include "code/preferences/01_basic.dm"
 #include "code/preferences/02_abilities.dm"
+#include "code/preferences/prefs.dm"
 
 #include "code/override.dm"
 
