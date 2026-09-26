@@ -10,7 +10,10 @@
 	icon_state = "farmbot0"
 	health = 50
 	maxHealth = 50
-	req_access = list(list(access_hydroponics, access_robotics))
+
+	//req_access = list(list(access_hydroponics, access_robotics))	[SIERRA-REMOVE]
+	req_access = list(list(access_hydroponics, access_robotics, access_research, access_engine))	//[SIERRA-ADD]
+
 
 	var/action = "" // Used to update icon
 	var/waters_trays = 1
