@@ -454,6 +454,7 @@
 #define MARKING_TARGET_SKIN 0 // Draw a datum/sprite_accessory/marking to the mob's body, eg. tattoos
 #define MARKING_TARGET_HAIR 1 // Draw a datum/sprite_accessory/marking to the mob's hair, eg. color fades
 #define MARKING_TARGET_HEAD 2 // Draw a datum/sprite_accessory/marking to the mob's head after their hair, eg. ears, horns
+#define MARKING_TARGET_EYES 3 // Draw a datum/sprite_accessory/marking with the eyes, under glasses
 
 // used in /mob/living/carbon/human/can_inject, and by various callers of that proc
 #define CAN_INJECT 1
