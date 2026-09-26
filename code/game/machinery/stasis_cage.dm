@@ -324,8 +324,8 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 	if (!isanimal(target) || !target.is_species(SPECIES_NABBER))
 		if(safety)
 	// [/SIERRA-EDIT]
-		to_chat(user, SPAN_WARNING("\The [src] smartly refuses \the [target]."))
-		return
+			to_chat(user, SPAN_WARNING("\The [src] smartly refuses \the [target]."))
+			return
 	if (!allowed(user))
 		to_chat(user, "\The [src] blinks, refusing access.")
 		return
