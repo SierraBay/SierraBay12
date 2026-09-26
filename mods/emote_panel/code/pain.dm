@@ -38,6 +38,9 @@
 /mob/living/proc/agony_moan()
 	if(stat || is_species(SPECIES_MONKEY))
 		return
+	if(is_species(SPECIES_NABBER))
+		emote(pick("chitter", "buzz", "hiss"))
+		return
 	var/moan_sound = null
 	var/message = null
 
