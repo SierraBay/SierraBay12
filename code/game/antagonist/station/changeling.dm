@@ -20,9 +20,14 @@ GLOBAL_TYPED_NEW(changelings, /datum/antagonist/changeling)
 /datum/antagonist/changeling/get_special_objective_text(datum/mind/player)
 	return "<br><b>Changeling ID:</b> [player.changeling.changelingID].<br><b>Genomes Absorbed:</b> [player.changeling.absorbedcount]"
 
-/datum/antagonist/changeling/update_antag_mob(datum/mind/player)
-	..()
-	player.current.make_changeling()
+/datum/antagonist/changeling/update_antag_mob(datum/mind/player, preserve_appearance)
+	. = ..()
+	prepare_changeling_body(player, preserve_appearance)
+
+
+/datum/antagonist/changeling/proc/prepare_changeling_body(datum/mind/player, preserve_appearance)
+	if (istype(player.current))
+		player.current.make_changeling()
 
 /datum/antagonist/changeling/remove_antagonist(datum/mind/player, show_message, implanted)
 	. = ..()

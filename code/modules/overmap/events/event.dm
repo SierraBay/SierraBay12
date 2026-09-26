@@ -26,10 +26,12 @@ var/global/singleton/overmap_event_handler/overmap_event_handler = new()
 		var/seed = rand(1, SHORT_REAL_LIMIT - 1)
 		for(var/event_turf in event_turfs)
 			var/type = pick(datum_spawn.hazards)
+			var/obj/overmap/event/spawned
 			if (datum_spawn.coordinated)
-				new type(event_turf, seed)
+				spawned = new type(event_turf, seed)
 			else
-				new type(event_turf)
+				spawned = new type(event_turf)
+			spawned.odyssey_replaceable = TRUE
 
 		qdel(datum_spawn)//idk help how do I do this better?
 

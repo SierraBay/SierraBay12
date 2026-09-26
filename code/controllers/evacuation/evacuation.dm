@@ -60,6 +60,12 @@ var/global/datum/evacuation_controller/evacuation_controller
 	if(state != EVAC_IDLE)
 		return 0
 
+	if(!_emergency_evac && odyssey_blocks_classic_bluespace_jump(user))
+		return 0
+
+	if(!_emergency_evac && !odyssey_can_prepare_jump(user))
+		return 0
+
 	if(!can_evacuate(user, forced))
 		return 0
 
@@ -97,9 +103,12 @@ var/global/datum/evacuation_controller/evacuation_controller
 		//[/SIERRA-EDIT]
 	else
 		if(!skip_announce)
-			// [SIERRA-EDIT] - ERIS_ANNOUNCER
+			// [SIERRA-EDIT] - ERIS_ANNOUNCER + ODYSSEY sector name
 			// priority_announcement.Announce(replacetext(replacetext(GLOB.using_map.shuttle_called_message, "%dock_name%", "[GLOB.using_map.dock_name]"),  "%ETA%", "[round(get_eta()/60,0.5)] minute\s")) // SIERRA-EDIT - ORIGINAL
-			priority_announcement.Announce(replacetext(replacetext(GLOB.using_map.shuttle_called_message, "%dock_name%", "[GLOB.using_map.dock_name]"),  "%ETA%", "[round(get_eta()/60,0.5)] minute\s"), new_sound = GLOB.using_map.shuttle_called_sound)
+			var/called_message = replacetext(GLOB.using_map.shuttle_called_message, "%dock_name%", "[GLOB.using_map.dock_name]")
+			called_message = replacetext(called_message, "%ETA%", "[round(get_eta()/60,0.5)] minute\s")
+			called_message = replacetext(called_message, "%SECTOR%", odyssey_jump_destination_text())
+			priority_announcement.Announce(called_message, new_sound = GLOB.using_map.shuttle_called_sound)
 			// [/SIERRA-EDIT]
 
 	return 1

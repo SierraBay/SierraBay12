@@ -103,6 +103,8 @@
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	odyssey_drive_append_ui(linked_drive, data)
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bluespace_drive.tmpl", "Bluespace Drive Control", 500, 700)
@@ -147,6 +149,15 @@
 		var/success = linked_drive.initiate_jump(user)
 		if(!success)
 			to_chat(user, SPAN_WARNING("Unable to initiate jump! Check fuel levels ([linked_drive.fuel_gas.total_moles]/[linked_drive.minimum_phoron_moles_per_jump] moles phoron required), destination validity, cooldown, or if a jump is already in progress."))
+		return TOPIC_REFRESH
+
+	if(href_list["odyssey_jump"])
+		if(!linked_drive.energized)
+			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
+			return TOPIC_HANDLED
+		var/odyssey_success = linked_drive.initiate_odyssey_jump(user)
+		if(!odyssey_success)
+			to_chat(user, SPAN_WARNING("Unable to initiate Odyssey jump! Check Sector Map course, fuel, energize state, and cooldown."))
 		return TOPIC_REFRESH
 
 	if(href_list["abort"])
