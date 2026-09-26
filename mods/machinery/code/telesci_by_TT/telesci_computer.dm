@@ -66,9 +66,9 @@
 			user.unEquip(W)
 			W.forceMove(src)
 			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
-	else if(istype(W, /obj/item/device/multitool))
+	else if(isMultitool(W))
 		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
+		if(istype(M) && M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
 			M.buffer = null
 			to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
