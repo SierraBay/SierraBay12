@@ -61,11 +61,7 @@ sierra specific items
 	starts_with = list(/datum/reagent/kelotane = 5)
 
 // Containers
-
-/obj/item/storage/backpack/dufflebag/syndie_kit/plastique
-	startswith = list(
-		/obj/item/plastique = 6
-		)
+// syndie_kit/plastique lives in code/game/objects/items/weapons/storage/uplink_kits.dm
 
 /***********
 Unique items
@@ -285,22 +281,7 @@ Passports
 	desc = "A passport issued by the Republic of Asranda, an isolated colony resembling long-gone Resomi Republic."
 
 
-// xeno passports
-/obj/item/passport/xeno
-	name = "\improper Xeno passport"
-	icon = 'maps/sierra/icons/obj/passports.dmi'
-	icon_state = "passport"
-	desc = "A passport for Xenos."
-
-/obj/item/passport/xeno/resomi
-	name = "\improper Resomi registration document"
-	icon_state = "passport"
-	desc = "Something like a passport for Resomi."
-
-/obj/item/passport/xeno/unathi
-	name = "\improper Unathi registration document"
-	icon_state = "passport"
-	desc = "Passport, belongs to Unathi species."
+// xeno passports live in mods/expanded_culture_descriptor/code/passport.dm
 
 
 /obj/item/storage/backpack/sci

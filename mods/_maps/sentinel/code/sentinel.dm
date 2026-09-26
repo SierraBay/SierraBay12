@@ -47,6 +47,7 @@
 	spawn_cost = 0.5
 	player_cost = 7
 	spawn_weight = 1
+	votable_as_main_ship = TRUE
 	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/reaper)
 
 	area_usage_test_exempted_areas = list(

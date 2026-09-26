@@ -1,6 +1,7 @@
 // Submap datum and archetype.
 /datum/job/submap/merchant_leader
 	title = "Merchant"
+	crew_records_auth = CREW_RECORDS_AUTH_COMMAND
 
 	info = "Вы свободные торговцы, которых в поисках выгоды занесло в неизведанные дали. Путешествуйте, торгуйте, make profit! \
 	\

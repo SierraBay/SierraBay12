@@ -14,6 +14,7 @@
 	#else
 		//#include "example\map.dm"
 		//#include "torch\map.dm"
-		#include "sierra\map.dm"
+		//#include "sierra\map.dm"
+		#include "lobby_host\map.dm"
 	#endif
 #endif

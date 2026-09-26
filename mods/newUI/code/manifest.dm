@@ -11,34 +11,30 @@ GLOBAL_TYPED_NEW(manifest_state, /datum/topic_state/manifest)
 
 /datum/nano_module/manifest/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.manifest_state)
 	var/data[0]
+	var/atom/host_atom = nano_host()
+	// OOC / lobby views are global; in-game views follow the host vessel.
+	var/atom/scope_host = ooc ? null : host_atom
 
-	var/list/dept_data = list(
-		list("names" = list(), "header" = "Heads of Staff", "flag" = COM, "color" = MANIFEST_COLOR_COMMAND),
-		list("names" = list(), "header" = "Command Support", "flag" = SPT, "color" = MANIFEST_COLOR_SUPPORT),
-		list("names" = list(), "header" = "Research", "flag" = SCI, "color" = MANIFEST_COLOR_SCIENCE),
-		list("names" = list(), "header" = "Security", "flag" = SEC, "color" = MANIFEST_COLOR_SECURITY),
-		list("names" = list(), "header" = "Medical", "flag" = MED, "color" = MANIFEST_COLOR_MEDICAL),
-		list("names" = list(), "header" = "Engineering", "flag" = ENG, "color" = MANIFEST_COLOR_ENGINEER),
-		list("names" = list(), "header" = "Supply", "flag" = SUP, "color" = MANIFEST_COLOR_SUPPLY),
-		list("names" = list(), "header" = "Exploration", "flag" = EXP, "color" = MANIFEST_COLOR_EXPLORER),
-		list("names" = list(), "header" = "Service", "flag" = SRV, "color" = MANIFEST_COLOR_SERVICE),
-		list("names" = list(), "header" = "Civilian", "flag" = CIV, "color" = MANIFEST_COLOR_CIVILIAN),
-		list("names" = list(), "header" = "Miscellaneous", "flag" = MSC, "color" = MANIFEST_COLOR_MISC),
-		list("names" = list(), "header" = "Silicon", "color" = MANIFEST_COLOR_SILICON),
-	)
+	var/list/dept_data = get_crew_manifest_departments(scope_host)
+	var/list/record_source = crew_records_for_host(scope_host)
+	var/obj/overmap/visitable/host_sector = get_overmap_sector_for_atom(scope_host)
+	var/flat_vessel_roster = host_sector && !HAS_FLAGS(host_sector.sector_flags, OVERMAP_SECTOR_BASE)
 
 	var/list/misc //Special departments for easier access
 	var/list/bot
+	var/list/vessel_crew
 	for(var/list/department in dept_data)
 		if(department["flag"] == MSC)
 			misc = department["names"]
+			if(flat_vessel_roster)
+				vessel_crew = misc
 		if(isnull(department["flag"]))
 			bot = department["names"]
 
 	var/list/isactive = new()
 	var/list/mil_ranks = list() // HTML to prepend to name
 	// sort mobs
-	for(var/datum/computer_file/report/crew_record/CR in GLOB.all_crew_records)
+	for(var/datum/computer_file/report/crew_record/CR in record_source)
 		var/status = CR.get_status()
 		if (status == "Stored")
 			continue
@@ -55,6 +51,10 @@ GLOBAL_TYPED_NEW(manifest_state, /datum/topic_state/manifest)
 
 		isactive[name] = status
 
+		if(flat_vessel_roster && vessel_crew)
+			vessel_crew[LIST_PRE_INC(vessel_crew)] = list("name" = name, "rank" = rank, "active" = isactive[name])
+			continue
+
 		var/datum/job/job = SSjobs.get_by_title(rank)
 		var/found_place = 0
 		if(job)
@@ -68,13 +68,17 @@ GLOBAL_TYPED_NEW(manifest_state, /datum/topic_state/manifest)
 
 	// Synthetics don't have actual records, so we will pull them from here.
 	for(var/mob/living/silicon/ai/ai in SSmobs.mob_list)
-		bot[LIST_PRE_INC(bot)] = list("name" = ai.name, "rank" = "Artificial Intelligence", "active" = isactive[name])
+		if(!atom_on_host_vessel(ai, scope_host))
+			continue
+		bot[LIST_PRE_INC(bot)] = list("name" = ai.name, "rank" = "Artificial Intelligence", "active" = "Active")
 
 	for(var/mob/living/silicon/robot/robot in SSmobs.mob_list)
 		// No combat/syndicate cyborgs, no drones.
 		if(robot.module && robot.module.hide_on_manifest)
 			continue
-		bot[LIST_PRE_INC(bot)] = list("name" = robot.name, "rank" = "[robot.modtype] [robot.braintype]", "active" = isactive[name])
+		if(!atom_on_host_vessel(robot, scope_host))
+			continue
+		bot[LIST_PRE_INC(bot)] = list("name" = robot.name, "rank" = "[robot.modtype] [robot.braintype]", "active" = "Active")
 
 	data["manifest"] = dept_data
 	data["ooc"] = ooc

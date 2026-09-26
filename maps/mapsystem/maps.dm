@@ -107,6 +107,19 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/away_site_budget = 0
 	var/min_offmap_players = 0
 
+	/// If TRUE, pregame runs a ship vote and loads the winner via away-site templates.
+	var/ship_vote_enabled = FALSE
+	/// Set after the voted (or fallback) main ship finishes loading.
+	var/ship_loaded = FALSE
+	/// Template id used when ship vote is skipped / fails (lobby_host).
+	var/default_main_ship_id
+	/// Currently selected main away-site template, if any.
+	var/datum/map_template/ruin/away_site/selected_main_ship
+	/// Archetype descriptor of the loaded main ship (Occupation section label).
+	var/active_main_ship_descriptor
+	/// Runtime submap for the loaded main ship (concrete jobs / spawnpoints).
+	var/datum/submap/active_main_submap
+
 	var/list/loadout_blacklist	//list of types of loadout items that will not be pickable
 
 	//Economy stuff
