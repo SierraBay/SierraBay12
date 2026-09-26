@@ -320,7 +320,10 @@ var/global/const/STASISCAGE_WIRE_LOCK      = 4
 		return
 	if (istype(target, /obj/energy_net))
 		target = astype(target, /obj/energy_net).captured
-	if (!isanimal(target) && safety)
+	// [SIERRA-EDIT]
+	if (!isanimal(target) || !target.is_species(SPECIES_NABBER))
+		if(safety)
+	// [/SIERRA-EDIT]
 		to_chat(user, SPAN_WARNING("\The [src] smartly refuses \the [target]."))
 		return
 	if (!allowed(user))

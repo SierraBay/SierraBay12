@@ -63,3 +63,8 @@
 /singleton/species/nabber/handle_post_spawn(mob/living/carbon/human/H)
 	..()
 	H.pass_flags |= PASS_FLAG_TABLE
+
+/obj/item/gun/special_check(mob/user)
+	if(user.is_species(SPECIES_NABBER))
+		return 0
+	..()
