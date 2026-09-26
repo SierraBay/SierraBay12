@@ -504,7 +504,11 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 			station_departments |= dept
 
 	for(var/department in station_departments)
-		department_accounts[department] = create_account("[department] Account", "[department]", department_money, ACCOUNT_TYPE_DEPARTMENT)
+		// [SIERRA-EDIT] - CHICHNOMICS
+		// department_accounts[department] = create_account("[department] Account", "[department]", department_money, ACCOUNT_TYPE_DEPARTMENT)
+		var/rand_money = department_money + rand(-department_money / 7, department_money / 7)
+		department_accounts[department] = create_account("[department] Account", "[department]", rand_money, ACCOUNT_TYPE_DEPARTMENT)
+		// [/SIERRA-EDIT]
 
 	department_accounts["Vendor"] = create_account("Vendor Account", "Vendor", 0, ACCOUNT_TYPE_DEPARTMENT)
 	vendor_account = department_accounts["Vendor"]

@@ -13,6 +13,7 @@
 			/obj/item/device/flash = 4,
 			/obj/item/clothing/glasses/sunglasses = 4
 		)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 			/obj/item/device/assembly/prox_sensor = 400,
 			/obj/item/device/assembly/signaler = 200,
@@ -131,6 +132,7 @@
 		/obj/item/reagent_containers/glass/bottle/dye/polychromic/strong = 80,
 		/obj/item/storage/pill_bottle/tramadol = 80
 	)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/reagent_containers/food/drinks/bottle/absinthe = 200,
 		/obj/item/reagent_containers/food/drinks/bottle/baijiu = 200,
@@ -220,6 +222,7 @@
 		/obj/item/cell/high = 1,
 		/obj/item/clamp = 4
 	)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/clothing/glasses/meson = 850,
 		/obj/item/device/multitool = 400,
@@ -272,6 +275,7 @@
 		/obj/item/storage/secure/briefcase/money/fake = 1,
 		/obj/item/plastique = 0
 	)
+	// цены заданы в mods/chichnomics/code/vending.dm
 	prices = list(
 		/obj/item/clothing/suit/bio_suit = 100,
 		/obj/item/clothing/head/bio_hood = 100,
