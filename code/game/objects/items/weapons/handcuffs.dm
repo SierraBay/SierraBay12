@@ -67,6 +67,11 @@
 	if(!istype(H))
 		return 0
 
+	// [SIERRA-ADD]
+	if(H.species == /singleton/species/nabber)
+		to_chat(user, SPAN_DANGER("\The [H] has no thumbs to cuff!"))
+	// [/SIERRA-ADD]
+
 	if (!H.has_organ_for_slot(slot_handcuffed))
 		to_chat(user, SPAN_DANGER("\The [H] needs at least two wrists before you can cuff them together!"))
 		return 0
