@@ -74,7 +74,7 @@
 		access_explorer, access_pathfinder, access_pilot, access_commissary, access_petrov, access_petrov_helm, access_petrov_analysis, access_petrov_phoron,
 		access_petrov_toxins, access_petrov_chemistry, access_petrov_control, access_petrov_maint, access_rd, access_petrov_rd, access_torch_fax, access_torch_helm,
 		access_radio_comm, access_radio_eng, access_radio_med, access_radio_sec, access_radio_sup, access_radio_serv, access_radio_exp, access_radio_sci, access_research_storage,
-		access_fabrication
+		access_fabrication, access_employment_records, access_medical_records, access_security_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -121,7 +121,8 @@
 		access_petrov_analysis, access_petrov_phoron, access_petrov_toxins, access_petrov_chemistry, access_petrov_rd,
 		access_petrov_control, access_petrov_maint, access_pathfinder, access_explorer, access_eva, access_solgov_crew,
 		access_expedition_shuttle, access_expedition_shuttle_helm, access_maint_tunnels, access_torch_fax, access_radio_comm,
-		access_radio_sci, access_radio_exp, access_research_storage, access_fabrication
+		access_radio_sci, access_radio_exp, access_research_storage, access_fabrication,
+		access_employment_records, access_medical_records, access_security_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -166,7 +167,7 @@
 		access_chapel_office, access_crematorium, access_chemistry, access_virology, access_aquila,
 		access_cmo, access_surgery, access_RC_announce, access_keycard_auth, access_psychiatrist,
 		access_medical_equip, access_solgov_crew, access_senmed, access_hangar, access_torch_fax, access_radio_comm,
-		access_radio_med
+		access_radio_med, access_employment_records, access_medical_records, access_security_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -214,7 +215,7 @@
 		access_tech_storage, access_robotics, access_atmospherics, access_janitor, access_construction,
 		access_network, access_network_admin, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat,
 		access_solgov_crew, access_aquila, access_seneng, access_hangar, access_torch_fax, access_torch_helm, access_radio_comm,
-		access_radio_eng
+		access_radio_eng, access_employment_records, access_medical_records, access_security_records
 		)
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -265,7 +266,7 @@
 		access_teleporter, access_eva, access_bridge, access_heads, access_aquila,
 		access_hos, access_RC_announce, access_keycard_auth, access_sec_doors,
 		access_solgov_crew, access_gun, access_emergency_armory, access_hangar, access_torch_fax,
-		access_radio_comm, access_radio_sec
+		access_radio_comm, access_radio_sec, access_employment_records, access_medical_records, access_security_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/comm,
@@ -297,7 +298,8 @@
 	access = list(
 		access_representative, access_security, access_medical,
 		access_bridge, access_cargo, access_solgov_crew,
-		access_hangar, access_torch_fax, access_radio_comm
+		access_hangar, access_torch_fax, access_radio_comm,
+		access_employment_records, access_medical_records, access_security_records
 	)
 
 	software_on_spawn = list(/datum/computer_file/program/reports)

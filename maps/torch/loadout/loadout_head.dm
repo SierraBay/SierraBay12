@@ -56,9 +56,6 @@
 	)
 	flags = GEAR_HAS_NO_CUSTOMIZATION
 
-/datum/gear/head/surgical
-	allowed_roles = STERILE_ROLES
-
 /datum/gear/head/beret
 	allowed_branches = CIVILIAN_BRANCHES
 
@@ -77,9 +74,6 @@
 
 /datum/gear/head/hairflower
 	allowed_branches = CIVILIAN_BRANCHES
-
-/datum/gear/head/hardhat
-	allowed_roles = TECHNICAL_ROLES
 
 /datum/gear/head/formalhat
 	allowed_roles = FORMAL_ROLES

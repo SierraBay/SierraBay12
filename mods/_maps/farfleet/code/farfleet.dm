@@ -12,8 +12,8 @@
 	known_ships = list(/obj/overmap/visitable/ship/landable/snz)
 	vessel_size = SHIP_SIZE_SMALL
 	hide_from_reports = TRUE
-	start_x = 39
-	start_y = 39
+	start_x = 34
+	start_y = 34
 
 	initial_generic_waypoints = list(
 		"nav_farfleet_1",
@@ -42,7 +42,7 @@
 	description = "Garibaldi-class Gunboat, ICCG Pioneer Corps Reconnaissance Craft."
 	prefix = "mods/_maps/farfleet/maps/"
 	suffixes = list("farfleet-1.dmm", "farfleet-2.dmm")
-	#ifndef DEV_MODE
+	#if !defined(DEV_MODE) && defined(FARFLEET_SIERRA_EXTRAS)
 	ban_ruins = list(/datum/map_template/ruin/away_site/patrol, /datum/map_template/ruin/away_site/phobos)
 	#endif
 	spawn_cost = 0.5

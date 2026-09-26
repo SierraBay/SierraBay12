@@ -530,7 +530,10 @@
 			for(var/obj/item/device/radio/R in loc)
 				if(!R.subspace_transmission)
 					return R.talk_into(M, message, channel, verb, speaking)
-			return FALSE
+			return Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
+							  src, message, displayname, jobname, real_name, M.voice_name,
+							  , 0, GetConnectedZlevels(position.z), connection.frequency, verb, speaking,
+							  "[connection.frequency]", channel_color_presets["Menacing Maroon"])
 
   /* ###### Intercoms and station-bounced radios ###### */
 

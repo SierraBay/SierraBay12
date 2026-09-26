@@ -129,14 +129,12 @@
 /obj/item/clothing/head/beret/solgov/equipped(mob/user, slot)
 	..()
 	switch(slot)
-		if(slot_belt)
-			sprite_sheets = list()
 		if(slot_head)
-			sprite_sheets = list(
-				SPECIES_VOX = 'icons/mob/species/vox/onmob_head_vox.dmi',
-				SPECIES_UNATHI = 'maps/torch/icons/mob/unathi/onmob_head_solgov_unathi.dmi',
-				SPECIES_NABBER = 'icons/mob/species/nabber/onmob_head_gas.dmi'
-				)
+			var/list/base_sheets = base_sprite_sheets
+			sprite_sheets = base_sheets.Copy()
+			sprite_sheets[SPECIES_VOX] = 'icons/mob/species/vox/onmob_head_vox.dmi'
+			sprite_sheets[SPECIES_UNATHI] = 'maps/torch/icons/mob/unathi/onmob_head_solgov_unathi.dmi'
+			sprite_sheets[SPECIES_NABBER] = 'icons/mob/species/nabber/onmob_head_gas.dmi'
 	return
 
 /obj/item/clothing/head/beret/solgov/homeguard

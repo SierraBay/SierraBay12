@@ -1,6 +1,3 @@
-/datum/gear/suit/medcoat
-	allowed_roles = MEDICAL_ROLES
-
 /datum/gear/suit/sierra_medcoat
 	allowed_roles = MEDICAL_ROLES
 
@@ -34,7 +31,7 @@
 /datum/gear/suit/cargo_poncho
 	allowed_roles = list(/datum/job/qm, /datum/job/cargo_tech, /datum/job/cargo_assistant,   )
 
-/datum/gear/suit/wintercoat/engineering
+/datum/gear/suit/wintercoat/engineering/expedition
 	display_name = "expeditionary winter coat"
 	path = /obj/item/clothing/suit/storage/hooded/wintercoat/solgov
 	allowed_roles = EXPLORATION_ROLES

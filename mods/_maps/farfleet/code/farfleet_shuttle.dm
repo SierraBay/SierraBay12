@@ -50,6 +50,7 @@
 	name = "Dock PRSD-3"
 	landmark_tag = "nav_snz_dock"
 	docking_controller = "rescue_shuttle_dock_airlock"
+	flags = SLANDMARK_FLAG_AUTOSET
 
 /obj/shuttle_landmark/snz/transit
 	name = "In transit"
