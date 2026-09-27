@@ -168,11 +168,15 @@
 /datum/computer_file/program/supply_order/proc/CanUserCancelOrder(mob/user, datum/money_account/req_acct)
 	if(!istype(req_acct))
 		return FALSE
-	if(account && req_acct == account)
+	if(account && (req_acct == account || (account.account_number && req_acct.account_number == account.account_number)))
 		return TRUE
-	var/obj/item/card/id/id_card = user ? user.GetIdCard() : null
-	if(istype(id_card) && id_card.associated_account_number == req_acct.account_number)
+	var/obj/item/card/id/inserted_id = GetInsertedIdCard()
+	if(istype(inserted_id) && inserted_id.associated_account_number && inserted_id.associated_account_number == req_acct.account_number)
 		return TRUE
+	if(istype(user))
+		var/obj/item/card/id/held_id = user.GetIdCard()
+		if(istype(held_id) && held_id.associated_account_number && held_id.associated_account_number == req_acct.account_number)
+			return TRUE
 	return FALSE
 
 /datum/computer_file/program/supply_order/proc/SubmitOrder(mob/user, raw_reason)
@@ -222,16 +226,21 @@
 	to_chat(user, SPAN_NOTICE("Order [order_id] has been cancelled."))
 	return TRUE
 
-/datum/computer_file/program/supply_order/proc/GetMyOrderCount(user_acct_num)
-	if(!user_acct_num)
-		return 0
+/datum/computer_file/program/supply_order/proc/GetMyOrderCount(user_or_acct = null)
 	var/count = 0
+	var/filter_acct_num = isnum(user_or_acct) ? user_or_acct : null
+	var/mob/user = istype(user_or_acct, /mob) ? user_or_acct : null
 	for(var/order_id as anything in SSsupply.order_queue)
 		var/list/order_data = SSsupply.order_queue[order_id]
 		if(!islist(order_data))
 			continue
 		var/datum/money_account/req_acct = order_data["requesting_acct"]
-		if(req_acct && req_acct.account_number == user_acct_num)
+		if(!istype(req_acct))
+			continue
+		if(filter_acct_num)
+			if(req_acct.account_number == filter_acct_num)
+				count++
+		else if(CanUserCancelOrder(user, req_acct))
 			count++
 	return count
 
@@ -239,9 +248,6 @@
 	CheckAccountValidity()
 	var/obj/item/card/id/available_id = GetAvailableIdCard(user)
 	var/list/totals = GetCartTotals()
-	var/user_acct_num = account ? account.account_number : null
-	if(!user_acct_num && istype(available_id))
-		user_acct_num = available_id.associated_account_number
 
 	data["src"] = ref(src)
 	data["screen"] = current_tab
@@ -263,7 +269,7 @@
 	data["cart_total"] = totals["total"]
 	data["handling_fee_percent"] = "[round(SSsupply.handling_fee * 100)]%"
 	data["order_count"] = length(SSsupply.order_queue)
-	data["my_order_count"] = GetMyOrderCount(user_acct_num)
+	data["my_order_count"] = GetMyOrderCount(user)
 	data["orders_locked"] = (world.time < order_cooldown_until)
 	data["cart_form_mode"] = cart_form_mode
 	data["saved_carts"] = SerializeSavedCarts()
@@ -303,11 +309,6 @@
 
 /datum/computer_file/program/supply_order/proc/SerializeOrders(mob/user)
 	var/list/result = list()
-	var/user_acct_num = account ? account.account_number : null
-	if(!user_acct_num)
-		var/obj/item/card/id/id_card = GetAvailableIdCard(user)
-		if(istype(id_card))
-			user_acct_num = id_card.associated_account_number
 	var/total_serialized = 0
 	for(var/order_id as anything in SSsupply.order_queue)
 		if(total_serialized >= 50)
@@ -316,7 +317,7 @@
 		if(!islist(order_data))
 			continue
 		var/datum/money_account/requestor = order_data["requesting_acct"]
-		var/is_mine = requestor && user_acct_num && (requestor.account_number == user_acct_num)
+		var/is_mine = istype(requestor) && CanUserCancelOrder(user, requestor)
 		if(orders_filter == "mine" && !is_mine)
 			continue
 		var/is_processing = (order_data["processing"] || order_data["status"] == "processing")
