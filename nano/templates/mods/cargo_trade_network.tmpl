@@ -2240,6 +2240,13 @@
 		{{else data.screen == 'export'}}
 			<div class="tn-screen-view" data-view="screen-export" data-view-screen="export">
 				<div class="tn-panel">
+					<div class="tn-panel-title">Export Payment Account</div>
+					<div class="tn-panel-subtitle">Proceeds go to: {{>data.export_account_owner}}</div>
+					{{:helper.link('Cargo Account', null, {'PRG_export_account' : 'cargo'}, data.export_to_cargo_account ? 'selected' : null, 'tn-btn tn-inlineLink')}}
+					{{:helper.link('Linked Account', null, {'PRG_export_account' : 'linked'}, data.export_to_cargo_account ? null : 'selected', 'tn-btn tn-inlineLink')}}
+					{{:helper.link('Link Account', null, {'PRG_trade_screen' : 'settings'}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}
+				</div>
+				<div class="tn-panel">
 					<div class="tn-panel-header">
 						<div>
 							<div class="tn-panel-title">Sending Beacon Range Appraisal</div>

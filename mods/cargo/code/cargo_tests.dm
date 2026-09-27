@@ -895,10 +895,14 @@
 	name = "CARGO: Trade offer datum lifecycle and operations"
 
 /datum/unit_test/cargo_trade_offer_datum_test/start_test()
-	var/datum/trade_offer/offer = new("offer_test_1", /obj/item/pen, "Test Pen", "A pen", "Tools", 50, 10, 10, 0, list("writing" = TRUE))
+	var/datum/trade_offer/offer = new("offer_test_1", /obj/item/pen, "Test Pen", "A pen", "Tools", 50, 10, 10, 100, list("writing" = TRUE))
 	var/fail_reason = null
-	if(offer.id != "offer_test_1" || offer.base_price != 50 || offer.stock != 10)
+	if(offer.id != "offer_test_1" || offer.base_price != 50 || offer.stock != 10 || offer.demand != 2.5)
 		fail_reason = "Offer fields not initialized correctly."
+	else if(offer.CanFulfill(0) || offer.ConsumeStock(-1) || offer.stock != 10)
+		fail_reason = "Offer accepted an invalid stock quantity."
+	else if(offer.Restock(-1) != 10)
+		fail_reason = "Restock() accepted a negative amount."
 	else if(!offer.CanFulfill(5) || offer.CanFulfill(15))
 		fail_reason = "CanFulfill() logic incorrect."
 	else if(!offer.ConsumeStock(4) || offer.stock != 6)
@@ -1107,13 +1111,14 @@
 	return 1
 
 /datum/unit_test/cargo_loose_storage_export_dumps_contents_test
-	name = "CARGO: Exporting loose storage container dumps unpurchased contents to turf"
+	name = "CARGO: Exporting loose storage container sells priced contents"
 
 /datum/unit_test/cargo_loose_storage_export_dumps_contents_test/start_test()
 	var/turf/safe_turf = get_safe_turf()
 	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
 	var/obj/item/storage/backpack/backpack = new(safe_turf)
 	var/obj/item/pen/pen = new(backpack)
+	var/expected = SSsupply.GetExportValue(backpack)
 
 	var/datum/money_account/account = new
 	account.owner_name = "Unit Test Storage"
@@ -1125,10 +1130,10 @@
 		fail_reason = "Export of loose storage container failed."
 	else if(!QDELETED(backpack))
 		fail_reason = "Exported backpack was not deleted."
-	else if(QDELETED(pen))
-		fail_reason = "Item inside exported backpack was destroyed instead of dumped."
-	else if(pen.loc != safe_turf)
-		fail_reason = "Item inside exported backpack was not dumped onto the beacon turf."
+	else if(!QDELETED(pen))
+		fail_reason = "Priced item inside exported backpack was left unsold."
+	else if(account.money != expected)
+		fail_reason = "The backpack and its contents paid [account.money] instead of [expected]."
 
 	QDEL_NULL(pen)
 	QDEL_NULL(backpack)
@@ -1138,6 +1143,6 @@
 	if(fail_reason)
 		fail(fail_reason)
 	else
-		pass("Loose storage export successfully emptied child contents onto turf before container disposal.")
+		pass("Loose storage export sells its contents as separate items.")
 	return 1
 

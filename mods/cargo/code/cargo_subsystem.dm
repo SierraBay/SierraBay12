@@ -1118,12 +1118,12 @@
 		if(!isnum(price) || price < 1)
 			return null
 		total_price += price * data["count"]
-		if(ispath(good_path, /obj/item))
+		if(CanPackPurchase(good_path))
 			packable += data["count"]
 	return list("price" = total_price, "packable" = packable)
 
 /datum/controller/subsystem/supply/proc/CreateOrderLocker(obj/machinery/trade_beacon/receiving/beacon, is_order, buyer_name)
-	var/obj/structure/closet/secure_closet/personal/trade/locker = beacon.DropItem(/obj/structure/closet/secure_closet/personal/trade)
+	var/obj/structure/closet/crate/trade/locker = beacon.DropItem(/obj/structure/closet/crate/trade)
 	if(locker && is_order)
 		locker.locked = TRUE
 		locker.registered_name = buyer_name
@@ -1131,8 +1131,17 @@
 		locker.update_icon()
 	return locker
 
+/datum/controller/subsystem/supply/proc/CanPackPurchase(path, remaining_capacity = null)
+	if(!ispath(path, /obj/item))
+		return FALSE
+	var/obj/item/item_type = path
+	var/obj/structure/closet/crate/crate_type = /obj/structure/closet/crate
+	var/capacity = isnull(remaining_capacity) ? initial(crate_type.storage_capacity) : remaining_capacity
+	return initial(item_type.w_class) < ITEM_SIZE_NO_CONTAINER && initial(item_type.w_class) / 2 <= capacity
+
 /datum/controller/subsystem/supply/proc/SpawnPurchasedItems(obj/machinery/trade_beacon/receiving/beacon, list/cart_items, obj/structure/closet/locker)
 	var/list/spawned = list()
+	var/remaining_capacity = locker ? locker.storage_capacity : 0
 	if(locker)
 		spawned += locker
 	for(var/list/data as anything in cart_items)
@@ -1140,8 +1149,9 @@
 		var/datum/trade_offer/offer = data["offer"] || ResolveCartOffer(station, data["cat"], data["good_id"])
 		var/path = offer ? offer.item_path : station.GetGoodPath(data["cat"], data["good_id"])
 		for(var/i in 1 to data["count"])
-			if(locker && ispath(path, /obj/item))
-				new path(locker)
+			if(locker && CanPackPurchase(path, remaining_capacity))
+				var/obj/item/item = new path(locker)
+				remaining_capacity -= locker.content_size(item)
 			else
 				var/atom/movable/item = beacon.DropItem(path)
 				if(!item)
@@ -1214,200 +1224,149 @@
 	TrackLiveMarketSales(shop_list)
 	return TRUE
 
-/datum/controller/subsystem/supply/proc/FindRnDInvoice(obj/structure/closet/crate/crate)
-	if(!istype(crate))
+/datum/controller/subsystem/supply/proc/FindRnDInvoice(atom/movable/container)
+	if(!istype(container))
 		return null
-	for(var/obj/item/paper/manifest/rnd_invoice/invoice in crate)
+	for(var/atom/movable/item as anything in GetExportTree(container))
+		if(!istype(item, /obj/item/paper/manifest/rnd_invoice))
+			continue
+		var/obj/item/paper/manifest/rnd_invoice/invoice = item
 		if(!invoice.is_copy && LAZYLEN(invoice.stamped) && invoice.target_account_number)
 			return invoice
 	return null
 
-/datum/controller/subsystem/supply/proc/ExportCrateItem(atom/movable/item, datum/trading_station/target_station = null, seller_faction = null)
-	if(istype(target_station))
-		var/list/match = FindCommodityForExport(item, target_station)
-		if(islist(match))
-			ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
-			qdel(item)
-			return TRUE
+/datum/controller/subsystem/supply/proc/GetExportTree(atom/movable/root)
+	var/list/ordered = list()
+	var/list/seen = list()
+	var/list/pending = list(root)
+	var/index = 1
+	while(index <= length(pending))
+		var/atom/movable/item = pending[index++]
+		if(!istype(item) || QDELETED(item) || seen[item])
+			continue
+		seen[item] = TRUE
+		ordered += item
+		for(var/atom/movable/child as anything in item.contents)
+			if(!seen[child])
+				pending += child
+	return ordered
 
-	if(istype(item, /obj/item/disk/research_report))
-		var/obj/item/disk/research_report/report = item
-		if(report.cargo_value > 0)
-			qdel(report)
-			return TRUE
-
-	if(istype(item, /obj/item/virusdish))
-		var/obj/item/virusdish/dish = item
-		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
-			if(!(dish.virus2.uniqueID in sold_virus_strains))
-				sold_virus_strains += dish.virus2.uniqueID
-				qdel(dish)
-				return TRUE
-		return FALSE
-
-	if(istype(item, /obj/item/paper/manifest))
-		var/obj/item/paper/manifest/slip = item
-		if(!slip.is_copy && LAZYLEN(slip.stamped))
-			qdel(slip)
-			return TRUE
-
-	var/item_value = round(istype(item, /obj/item/storage) ? get_value(item.type) : get_value(item))
-	if(istype(item, /obj/item/stack/material) || istype(item, /obj/item/disk/survey) || istype(item, /obj/item/artefact) || istype(item, /obj/item/collector) || item_value > 0)
-		if(istype(item, /obj/item/artefact))
-			var/obj/item/artefact/A = item
-			if(SSanom)
-				SSanom.earned_cargo_points += A.cargo_price
-		else if(istype(item, /obj/item/collector))
-			var/obj/item/collector/C = item
-			if(SSanom && C.stored_artefact)
-				SSanom.earned_cargo_points += C.stored_artefact.cargo_price
-		qdel(item)
-		return TRUE
-
-	return FALSE
-
-/datum/controller/subsystem/supply/proc/ProcessExportItem(atom/movable/exported, datum/trading_station/target_station, seller_faction)
-	if(istype(target_station))
-		var/list/match = FindCommodityForExport(exported, target_station)
-		if(islist(match))
-			if(istype(exported, /obj/machinery/portable_atmospherics/canister) && !istype(exported, /obj/machinery/portable_atmospherics/canister/empty))
-				var/obj/machinery/portable_atmospherics/canister/C = exported
-				if(C.return_pressure() < 10 * ONE_ATMOSPHERE)
-					match = null
+/datum/controller/subsystem/supply/proc/GetExportItemQuote(atom/movable/item, datum/trading_station/station, seller_faction, find_manifest, list/sold_counts, list/seen_strains)
+	var/special_item = istype(item, /obj/item/virusdish) || istype(item, /obj/item/paper) || istype(item, /obj/item/disk/research_report) || istype(item, /obj/item/artefact) || istype(item, /obj/item/collector) || istype(item, /obj/item/disk/survey)
+	var/list/match = special_item ? null : FindCommodityForExport(item, station)
+	if(istype(item, /obj/machinery/portable_atmospherics/canister) && !istype(item, /obj/machinery/portable_atmospherics/canister/empty))
+		var/obj/machinery/portable_atmospherics/canister/canister = item
+		if(canister.return_pressure() < 10 * ONE_ATMOSPHERE)
+			var/empty_price = round(get_value(canister))
 			if(islist(match))
-				ApplyTradeTransaction(target_station, match["category"], match["good_id"], match["amount"], "sell", seller_faction)
-	if(istype(exported, /obj/item/virusdish))
-		var/obj/item/virusdish/dish = exported
-		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
-			if(!(dish.virus2.uniqueID in sold_virus_strains))
-				sold_virus_strains += dish.virus2.uniqueID
-	if(istype(exported, /obj/item/artefact))
-		var/obj/item/artefact/A = exported
-		if(SSanom)
-			SSanom.earned_cargo_points += A.cargo_price
-	else if(istype(exported, /obj/item/collector))
-		var/obj/item/collector/C = exported
-		if(SSanom && C.stored_artefact)
-			SSanom.earned_cargo_points += C.stored_artefact.cargo_price
-	if(istype(exported, /obj/item/storage))
-		var/obj/item/storage/S = exported
-		S.DoQuickEmpty()
-	else if(length(exported.contents))
-		var/turf/T = get_turf(exported)
-		if(T)
-			for(var/atom/movable/child in exported.contents)
-				child.forceMove(T)
-	qdel(exported)
+				var/good_id = match["good_id"]
+				var/amount = match["amount"]
+				var/offset = sold_counts[good_id] || 0
+				var/full_price = GetStationSellPrice(good_id, station, seller_faction, match["category"], amount, offset)
+				empty_price = min(empty_price, max(0, full_price - 1))
+			return list("price" = empty_price, "match" = null, "amount" = 1)
+	if(islist(match))
+		var/good_id = match["good_id"]
+		var/amount = match["amount"]
+		if(!isnum(amount) || amount <= 0)
+			amount = 1
+		var/offset = sold_counts[good_id] || 0
+		return list("price" = GetStationSellPrice(good_id, station, seller_faction, match["category"], amount, offset), "match" = match, "amount" = amount)
+	var/price = 0
+	if(istype(item, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/crate = item
+		price = initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER
+	else
+		price = GetCrateItemLegacyValue(item, find_manifest, seen_strains)
+	return list("price" = round(price, 0.01), "match" = null, "amount" = isstack(item) ? GetExportStackAmount(item) : 1)
 
-/datum/controller/subsystem/supply/proc/ProcessExportCrate(obj/structure/closet/crate, datum/trading_station/target_station, seller_faction, obj/item/paper/manifest/rnd_invoice/rnd_slip)
-	var/crate_contents_info = ""
-	var/crate_sold_any = FALSE
-	var/list/all_items = crate.GetAllContents(10)
-	for(var/i = length(all_items) to 1 step -1)
-		var/atom/movable/item = all_items[i]
-		if(!istype(item) || QDELETED(item) || item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item) || item == rnd_slip)
+/datum/controller/subsystem/supply/proc/BuildExportPlan(list/roots, datum/trading_station/station = null, seller_faction = null, budget = INFINITY, list/rejected = null, list/sold_counts = null, list/seen_strains = null)
+	var/list/entries = list()
+	var/list/visited = list()
+	var/list/counts = islist(sold_counts) ? sold_counts : list()
+	var/list/strains = islist(seen_strains) ? seen_strains : list()
+	var/total = 0
+	var/budget_limited = FALSE
+	if(istype(station) && seller_faction && GetStationTradeRelationMultiplier(station, seller_faction) <= 0)
+		return list("entries" = entries, "total" = 0, "budget_limited" = FALSE)
+	for(var/atom/movable/root as anything in roots)
+		if(visited[root])
 			continue
-		if(length(item.contents))
-			for(var/atom/movable/child in item.contents)
-				child.forceMove(crate)
-		var/item_name = item.name
-		if(ExportCrateItem(item, target_station, seller_faction))
-			crate_contents_info += "<li>[item_name]</li>"
-			crate_sold_any = TRUE
-	crate_contents_info += crate_sold_any ? "<li>[crate.name] (packaging)</li>" : "<li>[crate.name]</li>"
-	QDEL_NULL(rnd_slip)
-	crate.dump_contents()
-	qdel(crate)
-	return crate_contents_info
-
-/datum/controller/subsystem/supply/proc/CollectExportables(obj/machinery/trade_beacon/sending/sender_beacon, datum/trading_station/target_station, seller_faction, list/rejected)
-	var/list/exportables = list()
-	var/list/sold_counts = list()
-	var/list/seen_strains = list()
-	if(istype(target_station) && seller_faction && GetStationTradeRelationMultiplier(target_station, seller_faction) <= 0)
-		return exportables
-	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
-		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+		if(istype(root, /obj/structure/closet/crate/trade_contract))
 			continue
-		if(!CanExportAtom(exported))
-			rejected += exported
+		if(!CanExportAtom(root))
+			if(islist(rejected))
+				rejected += root
 			continue
-		var/export_value = GetExportValue(exported, target_station, seller_faction, sold_counts, seen_strains)
-		if(export_value > 0)
-			exportables[exported] = export_value
-	return exportables
+		var/find_manifest = istype(root, /obj/structure/closet)
+		for(var/atom/movable/item as anything in GetExportTree(root))
+			if(visited[item] || QDELETED(item))
+				continue
+			visited[item] = TRUE
+			var/list/trial_counts = counts.Copy()
+			var/list/trial_strains = strains.Copy()
+			var/list/quote = GetExportItemQuote(item, station, seller_faction, find_manifest, trial_counts, trial_strains)
+			var/price = quote["price"]
+			var/sell = price > 0 && price <= budget - total
+			if(price > budget - total)
+				budget_limited = TRUE
+			if(sell)
+				var/list/match = quote["match"]
+				if(islist(match))
+					var/good_id = match["good_id"]
+					counts[good_id] = (counts[good_id] || 0) + quote["amount"]
+				strains = trial_strains
+				if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
+					find_manifest = FALSE
+				total += price
+			entries.Add(list(list("item" = item, "root" = root, "sell" = sell, "price" = price, "match" = quote["match"], "amount" = quote["amount"])))
+	if(islist(seen_strains))
+		seen_strains |= strains
+	return list("entries" = entries, "total" = round(total, 0.01), "budget_limited" = budget_limited)
 
 /datum/controller/subsystem/supply/proc/Export(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station = null, seller_faction = null)
 	if(QDELETED(sender_beacon) || !istype(money_account) || money_account.suspended || !sender_beacon.CanExport())
 		return FALSE
 	if(istype(target_station) && (target_station.wealth <= 0 || GetTradeRangeBlockReason(sender_beacon, target_station) || (seller_faction && GetStationTradeRelationMultiplier(target_station, seller_faction) <= 0)))
 		return FALSE
-
 	var/list/rejected = list()
-	var/list/candidate_items = GetExportCandidates(sender_beacon, rejected)
-	if(!length(candidate_items))
+	var/list/roots = GetExportCandidates(sender_beacon, rejected)
+	if(!length(roots))
 		return FALSE
-
-	var/remaining_station_wealth = istype(target_station) ? target_station.wealth : INFINITY
-	var/unpurchased_due_to_budget = FALSE
-	var/list/confirmed_exports = list()
-	var/list/active_sold_counts = list()
-	var/list/active_seen_strains = list()
-	var/total_export_value = 0
-	var/main_account_total = 0
-	var/export_count = 0
-
-	for(var/atom/movable/exported as anything in candidate_items)
-		var/list/temp_sold_counts = active_sold_counts.Copy()
-		var/list/temp_seen_strains = active_seen_strains.Copy()
-		var/export_value = GetExportValue(exported, target_station, seller_faction, temp_sold_counts, temp_seen_strains)
-		if(export_value <= 0)
-			continue
-
-		if(export_value > remaining_station_wealth)
-			unpurchased_due_to_budget = TRUE
-			continue
-
-		if(istype(target_station))
-			remaining_station_wealth -= export_value
-		total_export_value += export_value
-		active_sold_counts = temp_sold_counts
-		active_seen_strains = temp_seen_strains
-		confirmed_exports[exported] = export_value
-		export_count++
-		if(export_count > 100)
-			break
-
-	if(!length(confirmed_exports) || total_export_value <= 0)
+	var/list/plan = BuildExportPlan(roots, target_station, seller_faction, istype(target_station) ? target_station.wealth : INFINITY, rejected)
+	if(plan["total"] <= 0)
 		return FALSE
-
 	var/list/payouts_by_account = list()
-	for(var/atom/movable/exported as anything in confirmed_exports)
-		var/export_value = confirmed_exports[exported]
-		if(istype(exported, /obj/structure/closet))
-			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(exported)
-			var/target_account_number = rnd_slip ? rnd_slip.target_account_number : null
-			if(target_account_number)
-				var/datum/money_account/target = get_account(target_account_number)
-				if(!istype(target) || target.suspended)
-					return FALSE
-				payouts_by_account[target] += export_value
-				continue
-		main_account_total += export_value
-
-	if(main_account_total > 0)
-		payouts_by_account[money_account] += main_account_total
-
+	var/list/root_accounts = list()
+	var/list/invoices = list()
+	var/list/plan_entries = plan["entries"]
+	for(var/list/entry as anything in plan_entries)
+		if(!entry["sell"])
+			continue
+		var/atom/movable/root = entry["root"]
+		var/datum/money_account/payee = root_accounts[root]
+		if(!payee)
+			payee = money_account
+			if(istype(root, /obj/structure/closet))
+				var/obj/item/paper/manifest/rnd_invoice/slip = FindRnDInvoice(root)
+				if(slip)
+					invoices += slip
+					payee = get_account(slip.target_account_number)
+					if(!istype(payee) || payee.suspended)
+						return FALSE
+			root_accounts[root] = payee
+		entry["account"] = payee
+		payouts_by_account[payee] += entry["price"]
+	plan["payouts"] = payouts_by_account
+	plan["invoices"] = invoices
 	if(!DepositExportPayouts(sender_beacon, money_account, payouts_by_account))
 		return FALSE
-
 	for(var/atom/movable/rejected_atom as anything in rejected)
 		HandleRejectedExport(rejected_atom)
 	if(istype(target_station))
-		target_station.SubtractFromWealth(total_export_value)
-
-	RecordConfirmedExports(sender_beacon, money_account, target_station, seller_faction, confirmed_exports, main_account_total)
-	return unpurchased_due_to_budget ? TRADE_EXPORT_PARTIAL : TRADE_EXPORT_SUCCESS
+		target_station.SubtractFromWealth(plan["total"])
+	RecordExportPlan(sender_beacon, money_account, target_station, seller_faction, plan)
+	return plan["budget_limited"] ? TRADE_EXPORT_PARTIAL : TRADE_EXPORT_SUCCESS
 
 /datum/controller/subsystem/supply/proc/GetExportCandidates(obj/machinery/trade_beacon/sending/sender_beacon, list/rejected)
 	var/list/candidates = list()
@@ -1441,26 +1400,48 @@
 		account.withdraw(amount, "Export Transaction Rollback", "Trade Network")
 	return FALSE
 
-/datum/controller/subsystem/supply/proc/RecordConfirmedExports(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station, seller_faction, list/confirmed_exports, main_account_total)
-	var/invoice_contents = ""
-	for(var/atom/movable/exported as anything in confirmed_exports)
-		var/export_value = confirmed_exports[exported]
-		if(istype(exported, /obj/structure/closet))
-			var/obj/structure/closet/crate = exported
-			var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(crate)
-			var/target_account_number = rnd_slip ? rnd_slip.target_account_number : null
-			var/crate_contents = ProcessExportCrate(crate, target_station, seller_faction, rnd_slip)
-			if(target_account_number && export_value > 0 && get_account(target_account_number))
-				var/datum/money_account/target = get_account(target_account_number)
-				CreateLogEntry("Export", target.owner_name, crate_contents, export_value, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
-			else
-				invoice_contents += crate_contents
-		else
-			invoice_contents += "<li>[exported.name]</li>"
-			ProcessExportItem(exported, target_station, seller_faction)
-
-	if(main_account_total > 0 && invoice_contents)
-		CreateLogEntry("Export", money_account.owner_name, invoice_contents, main_account_total, TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
+/datum/controller/subsystem/supply/proc/RecordExportPlan(obj/machinery/trade_beacon/sending/sender_beacon, datum/money_account/money_account, datum/trading_station/target_station, seller_faction, list/plan)
+	var/list/items_by_account = list()
+	var/list/entries = plan["entries"]
+	for(var/list/entry as anything in entries)
+		if(!entry["sell"])
+			continue
+		var/datum/money_account/payee = entry["account"] || money_account
+		var/atom/movable/logged_item = entry["item"]
+		items_by_account[payee] = "[items_by_account[payee] || ""]<li>[logged_item.name]</li>"
+	var/list/invoices = plan["invoices"]
+	for(var/obj/item/paper/manifest/rnd_invoice/slip as anything in invoices)
+		qdel(slip)
+	for(var/i = length(entries) to 1 step -1)
+		var/list/entry = entries[i]
+		if(!entry["sell"])
+			continue
+		var/atom/movable/item = entry["item"]
+		if(QDELETED(item))
+			continue
+		var/list/match = entry["match"]
+		if(islist(match))
+			ApplyTradeTransaction(target_station, match["category"], match["good_id"], entry["amount"], "sell", seller_faction)
+		if(istype(item, /obj/item/virusdish))
+			var/obj/item/virusdish/dish = item
+			if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
+				sold_virus_strains += dish.virus2.uniqueID
+		if(istype(item, /obj/item/artefact))
+			var/obj/item/artefact/artefact = item
+			if(SSanom)
+				SSanom.earned_cargo_points += artefact.cargo_price
+		else if(istype(item, /obj/item/collector))
+			var/obj/item/collector/collector = item
+			if(SSanom && collector.stored_artefact)
+				SSanom.earned_cargo_points += collector.stored_artefact.cargo_price
+		var/turf/floor = get_turf(item)
+		if(floor)
+			for(var/atom/movable/child as anything in item.contents)
+				child.forceMove(floor)
+		qdel(item)
+	for(var/datum/money_account/payee as anything in items_by_account)
+		var/list/payouts = plan["payouts"]
+		CreateLogEntry("Export", payee.owner_name, items_by_account[payee], payouts[payee], TRUE, get_turf(sender_beacon), seller_faction, target_station ? target_station.name : null)
 
 /datum/controller/subsystem/supply/proc/CreateLogEntry(type, ordering_account, contents, total_paid, create_invoice = FALSE, invoice_location = null, faction_name = null, station_name = null)
 	var/log_id
@@ -1554,15 +1535,9 @@
 		return FALSE
 	if(isliving(exported))
 		return TRUE
-	var/list/processing = list(exported)
-	var/index = 1
-	while(index <= length(processing))
-		var/atom/current = processing[index++]
-		for(var/atom/movable/content in current.contents)
-			if(isliving(content))
-				return TRUE
-			if(length(content.contents))
-				processing += content
+	for(var/atom/movable/content as anything in GetExportTree(exported))
+		if(isliving(content))
+			return TRUE
 	return FALSE
 
 /datum/controller/subsystem/supply/proc/CanExportAtom(atom/movable/exported)
@@ -1580,20 +1555,15 @@
 		to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter with a painful electric shock!"))
 		living_mob.apply_damage(15, DAMAGE_BURN)
 		return
-	var/list/processing = list(exported)
-	var/index = 1
-	while(index <= length(processing))
-		var/atom/current = processing[index++]
-		for(var/atom/movable/content in current.contents)
-			if(isliving(content))
-				var/mob/living/living_mob = content
-				to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter inside the container with a buzzing jolt!"))
-				living_mob.apply_damage(5, DAMAGE_BURN)
-			else if(length(content.contents))
-				processing += content
+	for(var/atom/movable/content as anything in GetExportTree(exported))
+		if(!isliving(content))
+			continue
+		var/mob/living/living_mob = content
+		to_chat(living_mob, SPAN_DANGER("The export beacon rejects biological matter inside the container with a buzzing jolt!"))
+		living_mob.apply_damage(5, DAMAGE_BURN)
 
 /datum/controller/subsystem/supply/proc/GetCrateItemLegacyValue(atom/movable/item, find_manifest = FALSE, list/seen_strains = null)
-	if(!istype(item) || !CanExportAtom(item))
+	if(!istype(item) || QDELETED(item))
 		return 0
 	if(istype(item, /obj/item/paper/manifest/rnd_invoice))
 		return 0
@@ -1640,90 +1610,26 @@
 	return round(get_value(item))
 
 /datum/controller/subsystem/supply/proc/GetCrateExportBreakdown(obj/structure/closet/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null, list/seen_strains = null)
-	if(istype(target_station) && seller_faction && GetStationTradeRelationMultiplier(target_station, seller_faction) <= 0)
-		return list(
-			"base_value" = 0,
-			"contents_value" = 0,
-			"total_value" = 0,
-			"display_name" = crate ? crate.name : "Crate",
-			"sub_items" = list()
-		)
-
-	var/list/grouped_sub = list()
+	if(!istype(crate))
+		return list("base_value" = 0, "contents_value" = 0, "total_value" = 0, "display_name" = "Crate", "sub_items" = list())
+	var/list/plan = BuildExportPlan(list(crate), target_station, seller_faction, INFINITY, null, sold_counts, seen_strains)
 	var/list/sub_items = list()
-	var/contents_total = 0
-	var/find_manifest = TRUE
-	var/list/local_seen_strains = islist(seen_strains) ? seen_strains : list()
-
-	if(istype(crate))
-		for(var/atom/movable/item as anything in crate.GetAllContents(10))
-			if(item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item))
-				continue
-			var/item_val = 0
-			var/amount = 1
-			var/list/match = FindCommodityForExport(item, target_station)
-			if(islist(match))
-				var/good_id = match["good_id"]
-				amount = match["amount"]
-				if(!isnum(amount) || amount <= 0)
-					amount = 1
-				var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
-				item_val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
-				if(islist(sold_counts))
-					sold_counts[good_id] = offset + amount
-			else
-				item_val = GetCrateItemLegacyValue(item, find_manifest, local_seen_strains)
-				if(!item_val)
-					continue
-				if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
-					find_manifest = FALSE
-				if(isstack(item))
-					var/obj/item/stack/S = item
-					amount = S.get_amount()
-
-			var/sub_name = item.name
-			if(!grouped_sub[sub_name])
-				grouped_sub[sub_name] = list(
-					"name" = sub_name,
-					"amount" = amount,
-					"unit_value" = round(item_val / amount, 0.01),
-					"value" = round(item_val, 0.01)
-				)
-			else
-				var/list/sub_entry = grouped_sub[sub_name]
-				sub_entry["amount"] += amount
-				sub_entry["value"] = round(sub_entry["value"] + item_val, 0.01)
-				sub_entry["unit_value"] = round(sub_entry["value"] / sub_entry["amount"], 0.01)
-
-		for(var/sub_name in grouped_sub)
-			var/list/sub_entry = grouped_sub[sub_name]
-			contents_total += sub_entry["value"]
-			sub_items.Add(list(sub_entry))
-
-	var/base_crate_val = round(get_value(crate))
-	if(istype(crate, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/CR = crate
-		base_crate_val = initial(CR.points_per_crate) * CARGO_POINT_TO_THALLER
-
-	if(length(sub_items))
-		sub_items.Add(list(list(
-			"name" = "[crate ? crate.name : "Crate"] (packaging)",
-			"amount" = 1,
-			"unit_value" = base_crate_val,
-			"value" = base_crate_val
-		)))
-
-	var/obj/item/paper/manifest/rnd_invoice/rnd_slip = FindRnDInvoice(crate)
-	var/crate_display_name = (rnd_slip && istype(crate)) ? "[crate.name] (R&D #[rnd_slip.target_account_number])" : (crate ? crate.name : "Crate")
-	var/total_crate_val = round(base_crate_val + contents_total, 0.01)
-
-	return list(
-		"base_value" = base_crate_val,
-		"contents_value" = round(contents_total, 0.01),
-		"total_value" = total_crate_val,
-		"display_name" = crate_display_name,
-		"sub_items" = sub_items
-	)
+	var/base_value = 0
+	var/contents_value = 0
+	var/list/entries = plan["entries"]
+	for(var/list/entry as anything in entries)
+		if(!entry["sell"])
+			continue
+		var/atom/movable/item = entry["item"]
+		var/amount = max(1, entry["amount"])
+		if(item == crate)
+			base_value = entry["price"]
+		else
+			contents_value += entry["price"]
+		sub_items.Add(list(list("name" = item == crate ? "[item.name] (packaging)" : item.name, "amount" = amount, "unit_value" = round(entry["price"] / amount, 0.01), "value" = entry["price"])))
+	var/obj/item/paper/manifest/rnd_invoice/slip = FindRnDInvoice(crate)
+	var/display_name = slip ? "[crate.name] (R&D #[slip.target_account_number])" : crate.name
+	return list("base_value" = base_value, "contents_value" = contents_value, "total_value" = plan["total"], "display_name" = display_name, "sub_items" = sub_items)
 
 /datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null)
 	if(!istype(crate) || !istype(target_station))
@@ -1732,64 +1638,5 @@
 	return breakdown["contents_value"]
 
 /datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null, seller_faction = null, list/sold_counts = null, list/seen_strains = null)
-	if(!CanExportAtom(exported))
-		return 0
-	if(istype(target_station) && seller_faction && GetStationTradeRelationMultiplier(target_station, seller_faction) <= 0)
-		return 0
-	if(istype(target_station))
-		if(istype(exported, /obj/structure/closet))
-			var/list/breakdown = GetCrateExportBreakdown(exported, target_station, seller_faction, sold_counts, seen_strains)
-			return breakdown["total_value"]
-		var/list/match = FindCommodityForExport(exported, target_station)
-		if(islist(match))
-			if(istype(exported, /obj/machinery/portable_atmospherics/canister) && !istype(exported, /obj/machinery/portable_atmospherics/canister/empty))
-				var/obj/machinery/portable_atmospherics/canister/C = exported
-				if(C.return_pressure() < 10 * ONE_ATMOSPHERE)
-					match = null
-			if(islist(match))
-				var/good_id = match["good_id"]
-				var/amount = match["amount"]
-				if(!isnum(amount) || amount <= 0)
-					amount = 1
-				var/offset = (islist(sold_counts) && isnum(sold_counts[good_id])) ? sold_counts[good_id] : 0
-				var/val = GetStationSellPrice(good_id, target_station, seller_faction, match["category"], amount, offset)
-				if(islist(sold_counts))
-					sold_counts[good_id] = offset + amount
-				return val
-	if(istype(exported, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/crate = exported
-		return round(GetLegacyCrateExportValue(crate, seen_strains))
-	if(istype(exported, /obj/item/disk/research_report))
-		var/obj/item/disk/research_report/report = exported
-		return max(0, report.cargo_value)
-	if(istype(exported, /obj/item/virusdish))
-		var/obj/item/virusdish/dish = exported
-		if(dish.analysed && istype(dish.virus2) && dish.virus2.uniqueID)
-			var/strain_id = dish.virus2.uniqueID
-			if(!(strain_id in sold_virus_strains) && (!islist(seen_strains) || !(strain_id in seen_strains)))
-				if(islist(seen_strains))
-					seen_strains += strain_id
-				return 5 * CARGO_POINT_TO_THALLER
-		return 0
-	if(istype(exported, /obj/item/paper))
-		return 0
-	if(istype(exported, /obj/item/storage) || length(exported.contents))
-		return round(get_value(exported.type))
-	return round(get_value(exported))
-
-/datum/controller/subsystem/supply/proc/GetLegacyCrateExportValue(obj/structure/closet/crate/crate, list/seen_strains = null)
-	. = 0
-	if(!istype(crate))
-		return 0
-	. += initial(crate.points_per_crate) * CARGO_POINT_TO_THALLER
-	var/find_manifest = TRUE
-	var/list/local_seen_strains = islist(seen_strains) ? seen_strains : list()
-	for(var/atom/movable/item as anything in crate.GetAllContents(10))
-		if(item == crate || istype(item, /obj/structure/closet) || !CanExportAtom(item))
-			continue
-		var/legacy_val = GetCrateItemLegacyValue(item, find_manifest, local_seen_strains)
-		if(legacy_val > 0)
-			if(find_manifest && istype(item, /obj/item/paper/manifest) && !istype(item, /obj/item/paper/manifest/rnd_invoice))
-				find_manifest = FALSE
-			. += legacy_val
-	. = round(.)
+	var/list/plan = BuildExportPlan(list(exported), target_station, seller_faction, INFINITY, null, sold_counts, seen_strains)
+	return plan["total"]

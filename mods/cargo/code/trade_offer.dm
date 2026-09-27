@@ -28,46 +28,46 @@
 	datum/trading_station/new_station = null,
 	new_hidden = FALSE
 )
+	. = ..()
 	id = new_id
 	item_path = new_item_path
 	station = new_station
-	hidden = new_hidden
-	category = new_category || "General"
-	name = new_name ? new_name : ResolveItemName(new_item_path)
-	desc = new_desc ? new_desc : ResolveItemDesc(new_item_path)
+	hidden = !!new_hidden
+	category = (istext(new_category) && length(new_category)) ? new_category : "General"
+	name = (istext(new_name) && length(new_name)) ? new_name : ResolveItemName(new_item_path)
+	desc = istext(new_desc) ? new_desc : ResolveItemDesc(new_item_path)
 	InitPricing(new_base_price, new_item_path)
 	InitStockAndDemand(new_stock, new_baseline, new_demand)
 	InitTags(new_tags)
 
 /datum/trade_offer/Destroy()
-	if(islist(tags))
-		tags.Cut()
-		tags = null
+	tags?.Cut()
+	tags = null
 	item_path = null
 	station = null
 	return ..()
 
 /datum/trade_offer/proc/InitPricing(new_base_price, new_item_path)
-	if(ispath(new_item_path, /obj/item/stack))
-		var/obj/item/stack/S = new_item_path
-		pack_size = max(1, initial(S.amount))
-	else
-		pack_size = 1
+	pack_size = ResolvePackSize(new_item_path)
 	if(isnum(new_base_price) && new_base_price > 0)
 		has_custom_price = TRUE
 		base_price = max(1, round(new_base_price))
-	else if(ispath(new_item_path, /atom/movable))
-		has_custom_price = FALSE
-		var/cost = get_value(new_item_path)
-		base_price = (isnum(cost) && cost > 0) ? max(1, round(cost)) : 1
-	else
-		has_custom_price = FALSE
-		base_price = 1
+		return
+	has_custom_price = FALSE
+	var/item_value = ispath(new_item_path, /atom/movable) ? get_value(new_item_path) : null
+	base_price = (isnum(item_value) && item_value > 0) ? max(1, round(item_value)) : 1
+
+/datum/trade_offer/proc/ResolvePackSize(path)
+	if(!ispath(path, /obj/item/stack))
+		return 1
+	var/obj/item/stack/stack_type = path
+	var/initial_amount = initial(stack_type.amount)
+	return isnum(initial_amount) ? max(1, initial_amount) : 1
 
 /datum/trade_offer/proc/InitStockAndDemand(new_stock, new_baseline, new_demand)
 	stock = isnum(new_stock) ? max(0, round(new_stock)) : 0
 	baseline_stock = isnum(new_baseline) ? max(1, round(new_baseline)) : max(1, stock)
-	demand = isnum(new_demand) ? new_demand : 0
+	demand = isnum(new_demand) ? clamp(new_demand, -2.0, 2.5) : 0
 
 /datum/trade_offer/proc/InitTags(list/new_tags)
 	if(islist(new_tags) && length(new_tags))
@@ -78,7 +78,7 @@
 		tags = BuildDefaultTags()
 
 /datum/trade_offer/proc/Duplicate(new_id = null, datum/trading_station/new_station = null)
-	var/datum/trade_offer/dup = new(
+	var/datum/trade_offer/duplicate = new(
 		new_id || id,
 		item_path,
 		name,
@@ -92,9 +92,9 @@
 		new_station || station,
 		hidden
 	)
-	dup.has_custom_price = has_custom_price
-	dup.pack_size = pack_size
-	return dup
+	duplicate.has_custom_price = has_custom_price
+	duplicate.pack_size = pack_size
+	return duplicate
 
 /datum/trade_offer/proc/ResolveItemName(path)
 	if(!ispath(path, /atom/movable))
@@ -104,18 +104,19 @@
 	if(ispath(path, /obj/item/reagent_containers/chem_disp_cartridge))
 		return ResolveCartridgeName(path)
 	var/atom/movable/item_type = path
-	return initial(item_type.name) || "[id]"
+	return initial(item_type.name) || id || "Unknown Commodity"
 
 /datum/trade_offer/proc/ResolveSeedName(path)
 	var/obj/item/seeds/seed_item = path
 	var/seed_key = initial(seed_item.seed_type)
 	if(!seed_key)
 		return initial(seed_item.name) || "packet of seeds"
-	if(!isnull(SSplants?.seeds) && SSplants.seeds[seed_key])
-		var/datum/seed/seed_datum = SSplants.seeds[seed_key]
+	var/list/seed_registry = SSplants?.seeds
+	if(seed_registry?[seed_key])
+		var/datum/seed/seed_datum = seed_registry[seed_key]
 		if(seed_datum.seed_name && seed_datum.seed_noun)
-			var/prefix = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
-			return "[prefix] of [seed_datum.seed_name] [seed_datum.seed_noun]"
+			var/container_name = (seed_datum.seed_noun in list(SEED_NOUN_SEEDS, SEED_NOUN_PITS, SEED_NOUN_NODES)) ? "packet" : "sample"
+			return "[container_name] of [seed_datum.seed_name] [seed_datum.seed_noun]"
 		return "packet of [seed_datum.seed_name || seed_key] seeds"
 	return "packet of [seed_key] seeds"
 
@@ -143,21 +144,21 @@
 /datum/trade_offer/proc/PopulateCategoryTags(list/built_tags)
 	if(!istext(category))
 		return
-	var/lower_cat = lowertext(category)
-	built_tags[lower_cat] = TRUE
-	if(findtext(lower_cat, "material"))
+	var/normalized_category = lowertext(category)
+	built_tags[normalized_category] = TRUE
+	if(findtext(normalized_category, "material"))
 		built_tags["materials"] = TRUE
 		built_tags["industrial"] = TRUE
-	if(findtext(lower_cat, "medical") || findtext(lower_cat, "chemical") || findtext(lower_cat, "surgery"))
+	if(findtext(normalized_category, "medical") || findtext(normalized_category, "chemical") || findtext(normalized_category, "surgery"))
 		built_tags["medical"] = TRUE
-	if(findtext(lower_cat, "science") || findtext(lower_cat, "research"))
+	if(findtext(normalized_category, "science") || findtext(normalized_category, "research"))
 		built_tags["science"] = TRUE
-	if(findtext(lower_cat, "service") || findtext(lower_cat, "food") || findtext(lower_cat, "leisure"))
+	if(findtext(normalized_category, "service") || findtext(normalized_category, "food") || findtext(normalized_category, "leisure"))
 		built_tags["consumer"] = TRUE
-	if(findtext(lower_cat, "engineering") || findtext(lower_cat, "power") || findtext(lower_cat, "tools"))
+	if(findtext(normalized_category, "engineering") || findtext(normalized_category, "power") || findtext(normalized_category, "tools"))
 		built_tags["industrial"] = TRUE
 		built_tags["parts"] = TRUE
-	if(findtext(lower_cat, "weapons") || findtext(lower_cat, "security") || findtext(lower_cat, "ammo"))
+	if(findtext(normalized_category, "weapons") || findtext(normalized_category, "security") || findtext(normalized_category, "ammo"))
 		built_tags["security"] = TRUE
 		built_tags["military"] = TRUE
 
@@ -184,44 +185,53 @@
 	return GetBuyUnitPrice(markup, modifier_mult, use_market)
 
 /datum/trade_offer/proc/GetBuyUnitPrice(markup = 1.0, modifier_mult = 1.0, use_market = TRUE)
-	var/applied_markup = has_custom_price ? 1.0 : (isnum(markup) ? markup : 1.0)
-	var/base = base_price * applied_markup
+	var/applied_markup = (!has_custom_price && isnum(markup) && markup > 0) ? markup : 1.0
+	var/marked_up_price = base_price * applied_markup
 	if(!use_market)
-		return max(1, round(base))
+		return max(1, round(marked_up_price))
+	var/market_multiplier = GetBuyMarketMultiplier()
+	market_multiplier *= NormalizePriceModifier(modifier_mult)
+	return max(1, round(marked_up_price * clamp(market_multiplier, 0.8, 1.75)))
+
+/datum/trade_offer/proc/GetBuyMarketMultiplier()
 	var/multiplier = 1.0
 	var/baseline = max(1, baseline_stock)
 	if(stock < baseline)
-		var/pressure = min((baseline - stock) / baseline, 1.0)
-		multiplier += min(pressure * 0.6, 0.45)
+		var/stock_pressure = min((baseline - stock) / baseline, 1.0)
+		multiplier += min(stock_pressure * 0.6, 0.45)
 	else if(stock > baseline)
-		var/pressure = min((stock - baseline) / baseline, 1.0)
-		multiplier -= min(pressure * 0.2, 0.15)
+		var/stock_pressure = min((stock - baseline) / baseline, 1.0)
+		multiplier -= min(stock_pressure * 0.2, 0.15)
 	if(demand > 0)
 		multiplier += min(demand * 0.22, 0.32)
 	else if(demand < 0)
 		multiplier -= min(abs(demand) * 0.08, 0.12)
-	multiplier *= modifier_mult
-	multiplier = clamp(multiplier, 0.8, 1.75)
-	return max(1, round(base * multiplier))
+	return multiplier
 
 /datum/trade_offer/proc/GetSellUnitPrice(modifier_mult = 1.0, use_market = TRUE)
 	if(!use_market)
 		return max(1, round(base_price * 0.62))
+	var/market_multiplier = GetSellMarketMultiplier()
+	market_multiplier *= NormalizePriceModifier(modifier_mult)
+	return max(1, round(base_price * clamp(market_multiplier, 0.35, 1.15)))
+
+/datum/trade_offer/proc/GetSellMarketMultiplier()
 	var/multiplier = 0.62
 	var/baseline = max(1, baseline_stock)
 	if(stock < baseline)
-		var/pressure = min((baseline - stock) / baseline, 1.0)
-		multiplier += min(pressure * 0.35, 0.28)
+		var/stock_pressure = min((baseline - stock) / baseline, 1.0)
+		multiplier += min(stock_pressure * 0.35, 0.28)
 	else if(stock > baseline)
-		var/pressure = min((stock - baseline) / baseline, 1.0)
-		multiplier -= min(pressure * 0.18, 0.18)
+		var/stock_pressure = min((stock - baseline) / baseline, 1.0)
+		multiplier -= min(stock_pressure * 0.18, 0.18)
 	if(demand > 0)
 		multiplier += min(demand * 0.18, 0.25)
 	else if(demand < 0)
 		multiplier -= min(abs(demand) * 0.12, 0.2)
-	multiplier *= modifier_mult
-	multiplier = clamp(multiplier, 0.35, 1.15)
-	return max(1, round(base_price * multiplier))
+	return multiplier
+
+/datum/trade_offer/proc/NormalizePriceModifier(modifier_mult)
+	return (isnum(modifier_mult) && modifier_mult > 0) ? modifier_mult : 1.0
 
 /datum/trade_offer/proc/AdjustStock(delta)
 	if(!isnum(delta))
@@ -230,6 +240,8 @@
 	return stock
 
 /datum/trade_offer/proc/Restock(amount)
+	if(!isnum(amount) || amount <= 0)
+		return stock
 	return AdjustStock(amount)
 
 /datum/trade_offer/proc/AdjustDemand(delta)
@@ -240,14 +252,20 @@
 	return demand
 
 /datum/trade_offer/proc/CanFulfill(amount = 1)
-	return stock >= max(1, round(amount))
+	var/quantity = NormalizeQuantity(amount)
+	return !isnull(quantity) && stock >= quantity
 
 /datum/trade_offer/proc/ConsumeStock(amount = 1)
-	var/qty = max(1, round(amount))
-	if(stock < qty)
+	var/quantity = NormalizeQuantity(amount)
+	if(isnull(quantity) || stock < quantity)
 		return FALSE
-	stock -= qty
+	stock -= quantity
 	return TRUE
+
+/datum/trade_offer/proc/NormalizeQuantity(amount)
+	if(!isnum(amount) || amount <= 0)
+		return null
+	return max(1, round(amount))
 
 /datum/trade_offer/proc/HasTag(tag_name)
 	return islist(tags) && tags[tag_name]

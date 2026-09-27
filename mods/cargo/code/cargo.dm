@@ -31,6 +31,7 @@
 	var/trade_screen = GOODS_SCREEN
 	var/log_screen = LOG_SHIPPING
 	var/account_linked_from_card = FALSE
+	var/export_to_cargo_account = TRUE
 
 	var/obj/machinery/trade_beacon/sending/sending
 	var/obj/machinery/trade_beacon/receiving/receiving
@@ -275,57 +276,36 @@
 		"trade_window_remaining" = isnum(trade_window_remaining) ? FormatCountdown(trade_window_remaining) : ""
 	)
 
-/datum/computer_file/program/supply/proc/SerializeCrateExportItem(obj/structure/closet/crate, datum/trading_station/target_station, list/sold_counts, list/seen_strains = null)
-	var/list/breakdown = SSsupply.GetCrateExportBreakdown(crate, target_station, faction, sold_counts, seen_strains)
-	return list(
-		"name" = breakdown["display_name"],
-		"amount" = 1,
-		"unit_value" = breakdown["total_value"],
-		"value" = breakdown["total_value"],
-		"target_station" = target_station ? target_station.name : "Trade Network",
-		"sub_items" = breakdown["sub_items"]
-	)
-
 /datum/computer_file/program/supply/proc/SerializeExportItems()
 	var/list/result = list()
 	if(!IsSendingSelected())
 		return result
 	var/datum/trading_station/target_station = EnsureSelectedStation()
+	var/list/plan = SSsupply.BuildExportPlan(sending.GetObjects(), target_station, faction, target_station ? target_station.wealth : INFINITY)
 	var/list/grouped = list()
-	var/list/sold_counts = list()
-	var/list/seen_strains = list()
-	for(var/atom/movable/exported as anything in sending.GetObjects())
-		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+	var/list/entries = plan["entries"]
+	for(var/list/entry as anything in entries)
+		if(!entry["sell"])
 			continue
-		if(!SSsupply.CanExportAtom(exported))
+		var/atom/movable/item = entry["item"]
+		var/atom/movable/root = entry["root"]
+		var/list/root_data = grouped[root]
+		if(!islist(root_data))
+			var/display_name = root.name
+			if(istype(root, /obj/structure/closet))
+				var/obj/item/paper/manifest/rnd_invoice/slip = SSsupply.FindRnDInvoice(root)
+				if(slip)
+					display_name = "[root.name] (R&D #[slip.target_account_number])"
+			root_data = list("name" = display_name, "amount" = 1, "unit_value" = 0, "value" = 0, "target_station" = target_station ? target_station.name : "Trade Network", "sub_items" = list())
+			grouped[root] = root_data
+			result.Add(list(root_data))
+		root_data["value"] += entry["price"]
+		root_data["unit_value"] = root_data["value"]
+		if(item == root && !length(root.contents))
 			continue
-		if(istype(exported, /obj/structure/closet) && istype(target_station))
-			result.Add(list(SerializeCrateExportItem(exported, target_station, sold_counts, seen_strains)))
-			continue
-		var/cost = SSsupply.GetExportValue(exported, target_station, faction, sold_counts, seen_strains)
-		if(!cost)
-			continue
-		var/item_name = exported.name
-		var/item_amount = 1
-		if(isstack(exported))
-			var/obj/item/stack/S = exported
-			item_amount = S.get_amount()
-		if(!grouped[item_name])
-			grouped[item_name] = list(
-				"name" = item_name,
-				"amount" = item_amount,
-				"unit_value" = round(cost / item_amount, 0.01),
-				"value" = round(cost, 0.01),
-				"target_station" = target_station ? target_station.name : "Trade Network"
-			)
-		else
-			var/list/entry = grouped[item_name]
-			entry["amount"] += item_amount
-			entry["value"] = round(entry["value"] + cost, 0.01)
-			entry["unit_value"] = round(entry["value"] / entry["amount"], 0.01)
-
-	for(var/item_name in grouped)
-		result.Add(list(grouped[item_name]))
+		var/amount = max(1, entry["amount"])
+		var/list/sub_items = root_data["sub_items"]
+		sub_items.Add(list(list("name" = item == root ? "[item.name] (packaging)" : item.name, "amount" = amount, "unit_value" = round(entry["price"] / amount, 0.01), "value" = entry["price"])))
 	return result
 
 /datum/computer_file/program/supply/proc/SerializeOrders()
@@ -554,10 +534,13 @@
 
 /datum/computer_file/program/supply/proc/BuildExportScreenData(list/data)
 	var/datum/trading_station/selected_station = EnsureSelectedStation()
+	var/datum/money_account/export_account = GetExportAccount()
+	data["export_to_cargo_account"] = export_to_cargo_account
+	data["export_account_owner"] = export_account ? export_account.owner_name : "Unavailable"
 	var/list/export_items = SerializeExportItems()
 	var/export_block_reason = null
-	if(!istype(account))
-		export_block_reason = "Link an account before exporting goods."
+	if(!istype(export_account) || export_account.suspended)
+		export_block_reason = "Select an active account for export proceeds."
 	else if(!GetBeaconDisplayId(sending))
 		export_block_reason = "Select a sending beacon first."
 	else if(sending && sending.export_cooldown > world.time)
@@ -599,7 +582,6 @@
 		data["selected_order"] = selected_order_data
 
 /datum/computer_file/program/supply/proc/BuildContractsScreenData(list/data)
-	SSsupply.EnsureVisibleContractOffers()
 	var/list/available_contracts = SerializeContracts(CONTRACT_STATUS_AVAILABLE)
 	var/list/active_contracts = SerializeContracts(CONTRACT_STATUS_ACTIVE)
 	var/list/completed_contracts = SerializeContracts(CONTRACT_STATUS_COMPLETED)
@@ -902,8 +884,9 @@
 /datum/computer_file/program/supply/proc/ExecuteExport()
 	if(!can_run(usr, TRUE))
 		return TRUE
-	if(!ValidateLinkedAccount())
-		to_chat(usr, SPAN_WARNING("Link an account before exporting goods."))
+	var/datum/money_account/export_account = GetExportAccount()
+	if(!istype(export_account) || export_account.suspended)
+		to_chat(usr, SPAN_WARNING("Select an active account for export proceeds."))
 		return TRUE
 	if(!sending)
 		to_chat(usr, SPAN_WARNING("Select a sending beacon first."))
@@ -915,7 +898,7 @@
 	if(istype(target_station) && target_station.wealth <= 0)
 		to_chat(usr, SPAN_WARNING("Export failed: Station trade budget is depleted."))
 		return TRUE
-	var/export_result = SSsupply.Export(sending, account, target_station, faction)
+	var/export_result = SSsupply.Export(sending, export_account, target_station, faction)
 	if(!export_result)
 		to_chat(usr, SPAN_WARNING("Export failed. The beacon may still be on cooldown or goods could not be sold."))
 	else if(export_result == TRADE_EXPORT_PARTIAL)
@@ -923,11 +906,21 @@
 	return TRUE
 
 /datum/computer_file/program/supply/proc/HandleTradeTopic(list/href_list)
+	if("PRG_export_account" in href_list)
+		export_to_cargo_account = href_list["PRG_export_account"] != "linked"
+		return TRUE
 	if("PRG_receive" in href_list)
 		return PurchaseCart()
 	if("PRG_export" in href_list)
 		return ExecuteExport()
 	return FALSE
+
+/datum/computer_file/program/supply/proc/GetExportAccount()
+	if(export_to_cargo_account)
+		return GetMasterAccount()
+	if(ValidateLinkedAccount())
+		return account
+	return null
 
 /datum/computer_file/program/supply/proc/AcceptContract(contract_id)
 	if(!can_run(usr, TRUE))

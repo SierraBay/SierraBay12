@@ -620,7 +620,7 @@
 			return max(1, round(base_market_price))
 	if(istype(offer))
 		return max(1, round(offer.base_price))
-	var/price = station.GetGoodPrice(cat, good_ref)
+	var/price = station.GetGoodPrice(good_ref, cat)
 	if(price > 0)
 		return max(1, round(price))
 	var/item_path = station.GetGoodPath(cat, good_ref)

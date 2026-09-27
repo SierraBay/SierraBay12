@@ -2,15 +2,21 @@
 	return department_accounts["Supply"] || department_accounts["Cargo"]
 
 /obj/structure/closet/secure_closet/personal/trade
-	name = "trade locker"
-	desc = "A secure locker used to deliver trade network orders."
+	parent_type = /obj/structure/closet/crate/trade
+
+/obj/structure/closet/crate/trade
+	parent_type = /obj/structure/closet/crate/secure
+	name = "trade crate"
+	desc = "A secure crate used to deliver trade network orders."
+	closet_appearance = /singleton/closet_appearance/crate/secure
 	req_access = null
 	locked = FALSE
+	var/registered_name
 
-/obj/structure/closet/secure_closet/personal/trade/WillContain()
+/obj/structure/closet/crate/trade/WillContain()
 	return
 
-/obj/structure/closet/secure_closet/personal/trade/CanToggleLock(mob/user, obj/item/card/id/id_card)
+/obj/structure/closet/crate/trade/CanToggleLock(mob/user, obj/item/card/id/id_card)
 	if(!id_card && user)
 		id_card = user.GetIdCard()
 	if(istype(id_card))

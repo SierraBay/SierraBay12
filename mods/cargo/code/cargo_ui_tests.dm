@@ -308,3 +308,52 @@
 	else
 		pass("Supply Order program handles presets and cart state correctly.")
 	return 1
+
+/datum/computer_file/program/supply_order/unit_test_card
+	var/obj/item/card/id/test_inserted_id
+
+/datum/computer_file/program/supply_order/unit_test_card/GetInsertedIdCard()
+	return test_inserted_id
+
+/datum/unit_test/cargo_supply_order_ownership_test
+	name = "CARGO: Supply order ownership matches cancellation access"
+
+/datum/unit_test/cargo_supply_order_ownership_test/start_test()
+	var/datum/computer_file/program/supply_order/unit_test_card/program = new
+	var/datum/money_account/linked_account = new
+	var/datum/money_account/card_account = new
+	var/obj/item/card/id/id_card = new
+	var/list/queue = SSsupply.order_queue
+	var/linked_order_id = "unit_test_linked_order_[ref(program)]"
+	var/card_order_id = "unit_test_card_order_[ref(program)]"
+	linked_account.account_number = -710001
+	card_account.account_number = -710002
+	id_card.associated_account_number = card_account.account_number
+	program.account = linked_account
+	program.test_inserted_id = id_card
+	program.orders_filter = "mine"
+	queue[linked_order_id] = list("requesting_acct" = linked_account, "cost" = 0, "fee" = 0, "contents" = list())
+	queue[card_order_id] = list("requesting_acct" = card_account, "cost" = 0, "fee" = 0, "contents" = list())
+
+	var/list/orders = program.SerializeOrders(null)
+	var/fail_reason = null
+	if(!program.CanUserCancelOrder(null, card_account))
+		fail_reason = "An inserted ID card did not authorize cancelling its account's order."
+	else if(program.GetMyOrderCount(null) != 2 || length(orders) != 2)
+		fail_reason = "The order count or list excluded an account available to this terminal."
+	else if(!orders[1]["can_cancel"] || !orders[2]["can_cancel"])
+		fail_reason = "A visible owned order did not expose the cancel action."
+
+	queue -= linked_order_id
+	queue -= card_order_id
+	program.test_inserted_id = null
+	program.account = null
+	qdel(id_card)
+	qdel(card_account)
+	qdel(linked_account)
+	qdel(program)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Linked and inserted-card accounts use the same ownership check in the queue and cancellation.")
+	return 1
