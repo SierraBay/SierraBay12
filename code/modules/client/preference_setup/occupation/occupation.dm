@@ -422,7 +422,7 @@
 		send_rsc(user, job.get_job_icon(), "job[ckey(rank)].png")
 		dat += "<img src=job[ckey(rank)].png width=96 height=96 style='float:left;'>"
 		if(job.department)
-			dat += "<b>Department:</b> [job.department]."
+			dat += "<b>Department:</b> [job.get_department_display_name()]."
 			if(job.head_position)
 				dat += "You are in charge of this department."
 
