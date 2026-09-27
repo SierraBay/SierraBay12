@@ -8,6 +8,7 @@
 	wealth = 100000
 	live_market_remote_quote_limit = 3
 	live_market_auto_events = FALSE
+	metabolism_enabled = FALSE
 
 /datum/trading_station/unit_test_live_market/AssembleInventory()
 	inventory = list(
@@ -601,4 +602,194 @@
 		fail(fail_reason)
 	else
 		pass("Intra-station arbitrage loops are guaranteed impossible.")
+	return 1
+
+/datum/unit_test/cargo_market_metabolic_production_test
+	name = "CARGO MARKET: Metabolic production creates stock, consumes wealth, and respects limits"
+
+/datum/unit_test/cargo_market_metabolic_production_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/mat_id = station.inventory["Materials"][1]
+	if(!mat_id)
+		fail_reason = "Failed to locate materials good for metabolic production test."
+	else
+		station.metabolism_enabled = TRUE
+		station.metabolic_production_tags = list("materials")
+		station.wealth = 10000
+		station.SetGoodAmount("Materials", mat_id, 8)
+		station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
+		var/initial_wealth = station.wealth
+		var/initial_stock = station.GetGoodAmount("Materials", mat_id)
+		var/initial_demand = station.GetLiveMarketDemandScore("Materials", mat_id)
+
+		var/produced = station.ProduceMetabolicCommodity("Materials", mat_id)
+		var/cost = max(1, round(80 * station.metabolic_production_cost_ratio))
+
+		if(!produced)
+			fail_reason = "ProduceMetabolicCommodity returned FALSE when production conditions were valid."
+		else if(station.GetGoodAmount("Materials", mat_id) != initial_stock + 1)
+			fail_reason = "Stock did not increase by 1 (expected [initial_stock + 1], got [station.GetGoodAmount("Materials", mat_id)])."
+		else if(station.wealth != initial_wealth - cost)
+			fail_reason = "Wealth was not deducted properly (expected [initial_wealth - cost], got [station.wealth])."
+		else if(station.GetLiveMarketDemandScore("Materials", mat_id) >= initial_demand)
+			fail_reason = "Demand was not relieved after metabolic production."
+		else
+			// Verify production cap (max_production_multiplier * baseline)
+			station.SetGoodAmount("Materials", mat_id, 20)
+			if(station.ProduceMetabolicCommodity("Materials", mat_id))
+				fail_reason = "ProduceMetabolicCommodity succeeded even when stock reached the production ceiling."
+			else if(station.GetGoodAmount("Materials", mat_id) != 20)
+				fail_reason = "Stock changed despite exceeding production cap."
+			else
+				// Verify wealth exhaustion stalls production
+				station.wealth = 0
+				station.SetGoodAmount("Materials", mat_id, 8)
+				if(station.ProduceMetabolicCommodity("Materials", mat_id))
+					fail_reason = "ProduceMetabolicCommodity succeeded with zero wealth."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Metabolic production generates stock, deducts production cost, and adheres to caps and wealth limits.")
+	return 1
+
+/datum/unit_test/cargo_market_metabolic_consumption_test
+	name = "CARGO MARKET: Metabolic consumption drains stock, generates station wealth without favor, and increases demand"
+
+/datum/unit_test/cargo_market_metabolic_consumption_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/mat_id = station.inventory["Materials"][1]
+	if(!mat_id)
+		fail_reason = "Failed to locate materials good for metabolic consumption test."
+	else
+		station.metabolism_enabled = TRUE
+		station.metabolic_consumption_tags = list("materials")
+		station.wealth = 1000
+		station.favor = 0
+		station.SetGoodAmount("Materials", mat_id, 10)
+		station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
+		var/initial_wealth = station.wealth
+		var/initial_stock = station.GetGoodAmount("Materials", mat_id)
+		var/initial_demand = station.GetLiveMarketDemandScore("Materials", mat_id)
+
+		var/consumed = station.ConsumeMetabolicCommodity("Materials", mat_id)
+		var/revenue = max(1, round(80 * station.metabolic_consumption_wealth_ratio))
+
+		if(!consumed)
+			fail_reason = "ConsumeMetabolicCommodity returned FALSE when stock was available."
+		else if(station.GetGoodAmount("Materials", mat_id) != initial_stock - 1)
+			fail_reason = "Stock was not decremented (expected [initial_stock - 1], got [station.GetGoodAmount("Materials", mat_id)])."
+		else if(station.wealth != initial_wealth + revenue)
+			fail_reason = "Station wealth did not gain expected internal consumption revenue (expected [initial_wealth + revenue], got [station.wealth])."
+		else if(station.favor != 0)
+			fail_reason = "Internal metabolic consumption improperly granted player favor ([station.favor])."
+		else if(station.GetLiveMarketDemandScore("Materials", mat_id) <= initial_demand)
+			fail_reason = "Commodity demand did not increase after consumption."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Metabolic consumption consumes inventory, funds station budget without inflating player favor, and drives demand.")
+	return 1
+
+/datum/unit_test/cargo_market_metabolic_reserve_floor_test
+	name = "CARGO MARKET: Metabolic consumption respects reserve floor and flags severe shortage"
+
+/datum/unit_test/cargo_market_metabolic_reserve_floor_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/mat_id = station.inventory["Materials"][1]
+	if(!mat_id)
+		fail_reason = "Failed to locate materials good for metabolic reserve floor test."
+	else
+		station.metabolism_enabled = TRUE
+		station.min_consumption_reserve = 1
+		station.SetGoodAmount("Materials", mat_id, 1)
+		station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
+		var/initial_wealth = station.wealth
+		var/initial_demand = station.GetLiveMarketDemandScore("Materials", mat_id)
+
+		var/consumed = station.ConsumeMetabolicCommodity("Materials", mat_id)
+
+		if(consumed)
+			fail_reason = "ConsumeMetabolicCommodity returned TRUE when stock was at reserve floor."
+		else if(station.GetGoodAmount("Materials", mat_id) != 1)
+			fail_reason = "Stock fell below reserve floor (expected 1, got [station.GetGoodAmount("Materials", mat_id)])."
+		else if(station.wealth != initial_wealth)
+			fail_reason = "Station wealth changed when consumption failed at reserve floor."
+		else if(station.GetLiveMarketDemandScore("Materials", mat_id) < initial_demand + (1.0 / station.GetLiveMarketBaseline("Materials", mat_id)))
+			fail_reason = "Shortage demand spike was not applied when consumption failed at reserve floor."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Reserve floor protects minimum stock and spikes shortage demand when unfulfilled.")
+	return 1
+
+/datum/unit_test/cargo_market_metabolic_arbitrage_immunity_test
+	name = "CARGO MARKET: Intra-station arbitrage remains impossible across metabolism cycles"
+
+/datum/unit_test/cargo_market_metabolic_arbitrage_immunity_test/start_test()
+	var/datum/trading_station/unit_test_live_market/station = new
+	var/fail_reason = null
+
+	station.AssembleInventory()
+	station.InitGoods()
+	var/mat_id = station.inventory["Materials"][1]
+	if(!mat_id)
+		fail_reason = "Failed to locate materials good for arbitrage immunity test."
+	else
+		station.metabolism_enabled = TRUE
+		station.metabolic_production_tags = list("materials")
+		station.metabolic_consumption_tags = list("materials")
+		station.wealth = 50000
+		station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
+
+		// Simulate multiple cycles of extreme consumption (driving demand and prices up)
+		for(var/i in 1 to 15)
+			station.ConsumeMetabolicCommodity("Materials", mat_id)
+
+		var/buy_price = SSsupply.GetStationBuyPrice(mat_id, station, FACTION_INDEPENDENT, "Materials")
+		var/sell_price = SSsupply.GetStationSellPrice(mat_id, station, FACTION_INDEPENDENT, "Materials", 1)
+
+		if(sell_price >= buy_price)
+			fail_reason = "After consumption pressure, sell price [sell_price] reached or exceeded buy price [buy_price]."
+		else if(sell_price > round(buy_price * 0.90))
+			fail_reason = "After consumption pressure, sell price [sell_price] breached 90% cap of buy price [buy_price]."
+		else
+			// Now simulate aggressive production cycles (pushing stock up and demand down)
+			for(var/i in 1 to 15)
+				station.ProduceMetabolicCommodity("Materials", mat_id)
+
+			buy_price = SSsupply.GetStationBuyPrice(mat_id, station, FACTION_INDEPENDENT, "Materials")
+			sell_price = SSsupply.GetStationSellPrice(mat_id, station, FACTION_INDEPENDENT, "Materials", 1)
+
+			if(sell_price >= buy_price)
+				fail_reason = "After production pressure, sell price [sell_price] reached or exceeded buy price [buy_price]."
+			else if(sell_price > round(buy_price * 0.90))
+				fail_reason = "After production pressure, sell price [sell_price] breached 90% cap of buy price [buy_price]."
+
+	qdel(station)
+
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Intra-station arbitrage remains mathematically impossible through extreme metabolic cycles.")
 	return 1

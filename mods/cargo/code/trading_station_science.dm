@@ -13,6 +13,8 @@
 	markup = 1.2
 	thematic_cores = list("Peer Review", "Synapse", "Observatory", "Collider", "Spectra", "Hypothesis", "Quark", "Prism", "Archimedes", "Cipher")
 	role_summary = "scientific consumables, laboratory apparatus, and research provisions"
+	metabolic_production_tags = list("components", "parts")
+	metabolic_consumption_tags = list("research", "equipment")
 	inventory = list(
 		TRADE_CAT_COMPONENTS = list(
 			/obj/item/stock_parts/manipulator = GOODS_DEFAULT,

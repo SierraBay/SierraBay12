@@ -13,6 +13,8 @@
 	markup = 1.2
 	thematic_cores = list("Mess Hall", "Wardrobe", "Pantry Post", "Cornucopia", "Hydro-Haven", "Bazaar", "Comfort Line", "Mercantile", "Haven")
 	role_summary = "crew provisions, leisure goods, commissary wares, and textiles"
+	metabolic_production_tags = list("clothing", "consumer")
+	metabolic_consumption_tags = list("clothing", "consumer")
 	inventory = list(
 		TRADE_CAT_CLOTHING = list(
 			/obj/item/clothing/under/color/blackjumpshorts = GOODS_DEFAULT,

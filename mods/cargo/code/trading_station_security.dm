@@ -11,6 +11,8 @@
 	faction = FACTION_INDIE_CONFED
 	spawn_always = TRUE
 	markup = 1.3
+	metabolic_production_tags = list("security")
+	metabolic_consumption_tags = list("armor", "security")
 	thematic_cores = list("Telum", "Aegis", "Glaive", "Ballista", "Centurion", "Castellan", "Bulwark", "Palisade", "Hoplon", "Redoubt", "Iron Gate", "Vanguard")
 	role_summary = "defensive surplus, tactical weaponry, and munitions logistics"
 	inventory = list(

@@ -13,6 +13,8 @@
 	markup = 1.2
 	thematic_cores = list("Mess Hall", "Wardrobe", "Pantry Post", "Cornucopia", "Hydro-Haven", "Bazaar", "Comfort Line", "Mercantile", "Haven")
 	role_summary = "crew provisions, leisure goods, commissary wares, and textiles"
+	metabolic_production_tags = list("botany", "food")
+	metabolic_consumption_tags = list("food", "janitorial")
 	inventory = list(
 		TRADE_CAT_BOTANY = list(
 			/obj/item/seeds/tomatoseed = GOODS_DEFAULT,

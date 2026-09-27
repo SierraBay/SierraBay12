@@ -15,6 +15,8 @@
 	markup = 1.5
 	thematic_cores = list("Jacarta", "Steel Deck", "Crucible", "Foundry", "Slag Peak", "Anvil Point", "Bulkhead", "Bauxite Drift", "Ferrous Gate", "Cobalt Ridge")
 	role_summary = "raw ore refining, structural alloys, and mineral distribution"
+	metabolic_production_tags = list("materials", "industrial")
+	metabolic_consumption_tags = list("materials", "industrial")
 	inventory = list(
 		TRADE_CAT_MATERIALS = list(
 			/obj/item/stack/material/steel/ten = CUSTOM_GOODS_NAME("steel (x10)"),

@@ -13,6 +13,8 @@
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE
 	markup = 1.2
+	metabolic_production_tags = list("eva", "equipment")
+	metabolic_consumption_tags = list("consumer", "equipment")
 	thematic_cores = list("Oxyta", "Spacer", "Voidstrider", "Airlock Zero", "Cold Drift", "Vacuum Verge", "Blue Lung", "Zephyr", "Vortex", "Aero Wells")
 	role_summary = "extravehicular life support, void suits, and gas replenishment"
 	inventory = list(

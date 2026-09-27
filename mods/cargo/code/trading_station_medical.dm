@@ -13,6 +13,8 @@
 	markup = 1.2
 	thematic_cores = list("Trauma Bay", "Caduceus", "Hygeia", "Panacea", "Triage Point", "Bio-Pulse", "Sanctuary", "Vitalis", "Remedy", "Helix")
 	role_summary = "pharmaceutical stock, triage medical replenishments, and sterile supplies"
+	metabolic_production_tags = list("chemical", "medkits")
+	metabolic_consumption_tags = list("medical", "surgery")
 	inventory = list(
 		TRADE_CAT_MEDKIT = list(
 			/obj/item/storage/firstaid/regular = GOODS_DEFAULT,

@@ -9,6 +9,7 @@
 	base_income = 1100
 	supports_contracts = FALSE
 	can_host_caravans = FALSE
+	metabolism_enabled = FALSE
 	is_mobile = TRUE
 	icon_states = list("unknown", "trade")
 	random_factions = list(

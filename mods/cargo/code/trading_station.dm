@@ -37,6 +37,14 @@
 	var/base_income = 1600
 	var/wealth = 0
 
+	var/metabolism_enabled = TRUE
+	var/max_production_multiplier = 2.0
+	var/min_consumption_reserve = 1
+	var/metabolic_consumption_wealth_ratio = 0.75
+	var/metabolic_production_cost_ratio = 0.40
+	var/list/metabolic_production_tags = list()
+	var/list/metabolic_consumption_tags = list()
+
 	var/update_time = 0
 	var/update_timer_start = 0
 	var/update_timer_id = null
@@ -68,6 +76,8 @@
 /datum/trading_station/proc/CopyConfigurationLists()
 	whitelist_factions = islist(whitelist_factions) ? whitelist_factions.Copy() : list()
 	blacklist_factions = islist(blacklist_factions) ? blacklist_factions.Copy() : list()
+	metabolic_production_tags = islist(metabolic_production_tags) ? metabolic_production_tags.Copy() : list()
+	metabolic_consumption_tags = islist(metabolic_consumption_tags) ? metabolic_consumption_tags.Copy() : list()
 	if(islist(thematic_cores))
 		thematic_cores = thematic_cores.Copy()
 	else
@@ -674,10 +684,126 @@
 
 /datum/trading_station/proc/GoodsTick()
 	wealth += base_income
+	ProcessMetabolism()
 	var/budget = unique_good_count ? round(wealth / unique_good_count) : 0
 	var/list/restock_candidates = CollectRestockCandidates(budget)
 	ApplyRestockCandidates(restock_candidates)
 	TryUnlockHiddenInv()
+
+/datum/trading_station/proc/ProcessMetabolism()
+	if(!metabolism_enabled)
+		return
+	ProcessMetabolicProduction()
+	ProcessMetabolicConsumption()
+
+/datum/trading_station/proc/ProcessMetabolicProduction()
+	var/list/candidates = GetMetabolicCandidates(metabolic_production_tags)
+	if(!length(candidates))
+		return
+	var/batch_size = clamp(rand(1, 2), 1, length(candidates))
+	for(var/i in 1 to batch_size)
+		if(!length(candidates))
+			break
+		var/list/chosen = pick(candidates)
+		candidates -= list(chosen)
+		ProduceMetabolicCommodity(chosen["category"], chosen["good_id"])
+
+/datum/trading_station/proc/ProduceMetabolicCommodity(category_name, good_id)
+	var/baseline = max(1, GetLiveMarketBaseline(category_name, good_id))
+	var/max_stock = max(baseline + 1, round(baseline * max_production_multiplier))
+	var/current_stock = GetGoodAmount(category_name, good_id)
+	if(current_stock >= max_stock)
+		return FALSE
+
+	var/base_price = max(1, round(GetLiveMarketBasePrice(category_name, good_id)))
+	var/prod_cost = max(1, round(base_price * metabolic_production_cost_ratio))
+	if(wealth < prod_cost)
+		return FALSE
+
+	SubtractFromWealth(prod_cost)
+	SetGoodAmount(category_name, good_id, current_stock + 1)
+	AdjustLiveMarketDemand(category_name, good_id, -0.2)
+	return TRUE
+
+/datum/trading_station/proc/ProcessMetabolicConsumption()
+	var/list/candidates = GetMetabolicCandidates(metabolic_consumption_tags)
+	if(!length(candidates))
+		return
+	var/batch_size = clamp(rand(1, 2), 1, length(candidates))
+	for(var/i in 1 to batch_size)
+		if(!length(candidates))
+			break
+		var/list/chosen = pick(candidates)
+		candidates -= list(chosen)
+		ConsumeMetabolicCommodity(chosen["category"], chosen["good_id"])
+
+/datum/trading_station/proc/ConsumeMetabolicCommodity(category_name, good_id)
+	var/current_stock = GetGoodAmount(category_name, good_id)
+	var/base_price = max(1, round(GetLiveMarketBasePrice(category_name, good_id)))
+
+	if(current_stock > min_consumption_reserve)
+		SetGoodAmount(category_name, good_id, current_stock - 1)
+		var/revenue = max(1, round(base_price * metabolic_consumption_wealth_ratio))
+		AddToWealth(revenue, FALSE, FALSE)
+		AdjustLiveMarketDemand(category_name, good_id, 0.6)
+		return TRUE
+
+	AdjustLiveMarketDemand(category_name, good_id, 1.0)
+	return FALSE
+
+/datum/trading_station/proc/GetMetabolicCandidates(list/filter_tags)
+	var/list/candidates = list()
+	if(!islist(inventory) || !length(inventory) || !islist(filter_tags) || !length(filter_tags))
+		return candidates
+
+	for(var/category_name in inventory)
+		var/list/category = inventory[category_name]
+		if(!islist(category))
+			continue
+		for(var/good_id in category)
+			var/datum/trade_offer/offer = GetOffer(good_id)
+			if(istype(offer) && offer.hidden && !hidden_inv_unlocked)
+				continue
+			var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
+			var/list/tags = islist(comm_state) ? comm_state["tags"] : null
+			var/matched = FALSE
+			if(islist(tags))
+				for(var/tag in filter_tags)
+					if(tags[tag])
+						matched = TRUE
+						break
+			if(!matched && (lowertext(category_name) in filter_tags))
+				matched = TRUE
+			if(!matched)
+				continue
+			candidates += list(list("category" = category_name, "good_id" = good_id))
+	return candidates
+
+/datum/trading_station/proc/IsMetabolicProductionGood(category_name, good_id)
+	if(!length(metabolic_production_tags))
+		return FALSE
+	var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
+	var/list/tags = islist(comm_state) ? comm_state["tags"] : null
+	if(islist(tags))
+		for(var/tag in metabolic_production_tags)
+			if(tags[tag])
+				return TRUE
+	if(lowertext(category_name) in metabolic_production_tags)
+		return TRUE
+	return FALSE
+
+/datum/trading_station/proc/IsMetabolicConsumptionGood(category_name, good_id)
+	if(!length(metabolic_consumption_tags))
+		return FALSE
+	var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
+	var/list/tags = islist(comm_state) ? comm_state["tags"] : null
+	if(islist(tags))
+		for(var/tag in metabolic_consumption_tags)
+			if(tags[tag])
+				return TRUE
+	if(lowertext(category_name) in metabolic_consumption_tags)
+		return TRUE
+	return FALSE
 
 /datum/trading_station/proc/CollectRestockCandidates(budget)
 	var/list/candidates = list()
@@ -687,6 +813,9 @@
 			continue
 		for(var/good_id in category)
 			var/current_amount = GetGoodAmount(category_name, good_id)
+			var/baseline = max(1, GetLiveMarketBaseline(category_name, good_id))
+			if(metabolism_enabled && current_amount >= baseline && IsMetabolicProductionGood(category_name, good_id))
+				continue
 			var/chance = current_amount < 5 ? 100 : (current_amount > 20 ? 0 : 15)
 			if(!prob(chance))
 				continue
@@ -788,12 +917,13 @@
 	var/good_id = isnum(good_ref) ? category[good_ref] : good_ref
 	goods[good_id] = stock
 
-/datum/trading_station/proc/AddToWealth(income, is_offer = FALSE)
+/datum/trading_station/proc/AddToWealth(income, is_offer = FALSE, add_favor = TRUE)
 	if(!isnum(income))
 		return
 	wealth += income
-	favor += income * (is_offer ? 1 : 0.25)
-	TryUnlockHiddenInv()
+	if(add_favor)
+		favor += income * (is_offer ? 1 : 0.25)
+		TryUnlockHiddenInv()
 
 /datum/trading_station/proc/SubtractFromWealth(cost)
 	if(isnum(cost) && cost > 0)
@@ -816,6 +946,12 @@
 		SSsupply.all_trading_stations -= src
 		SSsupply.visible_trading_stations -= src
 		SSsupply.hidden_trading_stations -= src
+	if(islist(metabolic_production_tags))
+		metabolic_production_tags.Cut()
+		metabolic_production_tags = null
+	if(islist(metabolic_consumption_tags))
+		metabolic_consumption_tags.Cut()
+		metabolic_consumption_tags = null
 	DestroyOfferRegistries()
 	return ..()
 

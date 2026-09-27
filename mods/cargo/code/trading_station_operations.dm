@@ -12,6 +12,8 @@
 	faction = FACTION_INDEPENDENT
 	spawn_always = TRUE
 	markup = 1.2
+	metabolic_production_tags = list("supply", "crates", "equipment")
+	metabolic_consumption_tags = list("tools", "equipment")
 	thematic_cores = list("Quartermaster", "Longhaul", "Crossroads", "Waypoint", "Cargo Core", "Freightline", "Manifest", "Tranship", "Dockside")
 	role_summary = "freight handling, expedition logistics, and mining equipment"
 	inventory = list(

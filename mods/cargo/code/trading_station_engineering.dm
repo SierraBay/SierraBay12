@@ -14,6 +14,8 @@
 	markup = 1.2
 	thematic_cores = list("Arc Weld", "Gridline", "Dyno Relay", "Conduit Point", "Scaffold", "Transformer", "Riveter", "Circuit", "Gantry")
 	role_summary = "power grid machinery, structural materials, and technical field repair goods"
+	metabolic_production_tags = list("tools", "parts", "equipment")
+	metabolic_consumption_tags = list("power", "industrial")
 	inventory = list(
 		TRADE_CAT_TOOLS = list(
 			/obj/item/screwdriver = GOODS_DEFAULT,

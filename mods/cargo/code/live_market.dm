@@ -29,37 +29,67 @@
 	return storage[category_name]
 
 /datum/trading_station/proc/BuildLiveMarketCommodityTags(category_name, good_id)
+	var/static/list/category_tag_rules = list(
+		"material" = list("materials", "industrial"),
+		"medical" = list("medical"),
+		"medkit" = list("medical", "medkits"),
+		"medical kit" = list("medkits"),
+		"surgery" = list("medical"),
+		"science" = list("science"),
+		"research" = list("science"),
+		"service" = list("consumer"),
+		"janitor" = list("consumer"),
+		"engineering" = list("industrial", "parts", "tools"),
+		"tool" = list("industrial", "parts", "tools"),
+		"power" = list("power", "industrial"),
+		"food" = list("food", "consumer"),
+		"botany" = list("food", "consumer"),
+		"cloth" = list("clothing", "consumer"),
+		"chem" = list("chemical", "medical"),
+		"munit" = list("munitions", "industrial"),
+		"ammo" = list("munitions", "industrial"),
+		"weapon" = list("weaponry", "security"),
+		"secur" = list("security"),
+		"armor" = list("security"),
+		"atmos" = list("atmospherics", "industrial"),
+		"gas" = list("atmospherics", "industrial"),
+		"eva" = list("eva", "consumer"),
+		"voidsuit" = list("eva", "consumer"),
+		"rig" = list("eva", "consumer"),
+		"crate" = list("crates", "supply"),
+		"packag" = list("crates", "supply")
+	)
+	var/static/list/item_tag_rules = list(
+		/obj/item/stack/material = list("materials", "industrial"),
+		/obj/item/reagent_containers/food = list("food", "consumer"),
+		/obj/item/clothing = list("clothing", "consumer"),
+		/obj/item/reagent_containers = list("medical"),
+		/obj/item/stack/medical = list("medical"),
+		/obj/item/storage/firstaid = list("medical"),
+		/obj/item/device = list("parts", "industrial"),
+		/obj/item/stock_parts = list("parts", "industrial"),
+		/obj/item/cell = list("power", "industrial"),
+		/obj/item/stack/cable_coil = list("power", "industrial"),
+		/obj/item/light = list("power", "industrial"),
+		/obj/item/gun = list("munitions", "security"),
+		/obj/item/ammobox = list("munitions", "security"),
+		/obj/item/ammo_magazine = list("munitions", "security")
+	)
+
 	var/list/tags = list()
 	if(istext(category_name))
 		var/lower_category = lowertext(category_name)
 		tags[lower_category] = TRUE
-		if(findtext(lower_category, "material"))
-			tags["materials"] = TRUE
-			tags["industrial"] = TRUE
-		if(findtext(lower_category, "medical"))
-			tags["medical"] = TRUE
-		if(findtext(lower_category, "science"))
-			tags["science"] = TRUE
-		if(findtext(lower_category, "service"))
-			tags["consumer"] = TRUE
-		if(findtext(lower_category, "engineering"))
-			tags["industrial"] = TRUE
-			tags["parts"] = TRUE
+		for(var/fragment in category_tag_rules)
+			if(findtext(lower_category, fragment))
+				for(var/tag in category_tag_rules[fragment])
+					tags[tag] = TRUE
 
 	var/item_path = GetGoodPath(category_name, good_id)
-	if(ispath(item_path, /obj/item/stack/material))
-		tags["materials"] = TRUE
-		tags["industrial"] = TRUE
-	if(ispath(item_path, /obj/item/reagent_containers/food))
-		tags["food"] = TRUE
-		tags["consumer"] = TRUE
-	if(ispath(item_path, /obj/item/clothing))
-		tags["consumer"] = TRUE
-	if(ispath(item_path, /obj/item/reagent_containers) || ispath(item_path, /obj/item/stack/medical))
-		tags["medical"] = TRUE
-	if(ispath(item_path, /obj/item/device) || ispath(item_path, /obj/item/stock_parts))
-		tags["parts"] = TRUE
-		tags["industrial"] = TRUE
+	for(var/item_type in item_tag_rules)
+		if(ispath(item_path, item_type))
+			for(var/tag in item_tag_rules[item_type])
+				tags[tag] = TRUE
 	if(!length(tags))
 		tags["general"] = TRUE
 	return tags
