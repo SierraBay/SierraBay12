@@ -7,7 +7,7 @@
 		if(user.skill_check(SKILL_DEVICES , SKILL_TRAINED) && user.skill_check(SKILL_ELECTRICAL , SKILL_TRAINED))
 			mech_id_hack(user)
 			return
-	else if(istype(tool, /obj/item/device/multitool))
+	else if(isMultitool(tool))
 		if(user.skill_check(SKILL_DEVICES , SKILL_EXPERIENCED))
 			mech_id_hack(user)
 			return

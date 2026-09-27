@@ -842,7 +842,7 @@
 /obj/item/cell/super,
 /obj/floor_decal/corner/red/mono,
 /turf/simulated/floor/tiled/dark/monotile,
-/area/space)
+/area/map_template/merc_spawn)
 "jb" = (
 /obj/machinery/airlock_sensor/airlock_exterior{
 	frequency = 1380;
@@ -1680,9 +1680,6 @@
 	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/merc_spawn)
-"rb" = (
-/turf/simulated/wall/titanium/bunker_map,
-/area/space)
 "rt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -2188,7 +2185,7 @@
 /obj/item/rig/merc/heavy/empty,
 /obj/floor_decal/corner/red/mono,
 /turf/simulated/floor/tiled/dark/monotile,
-/area/space)
+/area/map_template/merc_spawn)
 "xT" = (
 /obj/machinery/door/airlock/multi_tile/glass/civilian{
 	dir = 4;
@@ -3595,7 +3592,7 @@
 /obj/item/rig/merc/empty,
 /obj/floor_decal/corner/red/mono,
 /turf/simulated/floor/tiled/dark/monotile,
-/area/space)
+/area/map_template/merc_spawn)
 "XL" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor/plating,
@@ -7787,8 +7784,8 @@ Mt
 zJ
 Yq
 YU
-rb
-rb
+YU
+YU
 Zl
 aa
 aa
@@ -7890,7 +7887,7 @@ GQ
 Mp
 Lc
 XK
-rb
+YU
 Zl
 Zl
 aa
@@ -7992,7 +7989,7 @@ Gl
 KK
 Jd
 iQ
-rb
+YU
 Zl
 Zl
 aa
@@ -8094,7 +8091,7 @@ Vt
 oK
 dy
 xM
-rb
+YU
 Zl
 Zl
 Zl
@@ -8195,8 +8192,8 @@ tS
 lg
 DH
 YU
-rb
-rb
+YU
+YU
 Zl
 Zl
 Zl

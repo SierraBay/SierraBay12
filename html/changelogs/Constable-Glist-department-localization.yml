@@ -1,0 +1,5 @@
+author: Constable Glist
+delete-after: True
+changes:
+  - tweak: "Standardized internal job department identifiers to English while preserving localized Russian display names."
+  - bugfix: "Fixed department bank accounts registration and compatibility with modular subsystems."

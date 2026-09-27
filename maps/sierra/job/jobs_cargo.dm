@@ -1,6 +1,6 @@
 /datum/job/qm
 	title = "Quartermaster"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	head_position = 1
 	total_positions = 1
@@ -45,7 +45,7 @@
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 2
 	spawn_positions = 2
@@ -79,7 +79,7 @@
 
 /datum/job/mining
 	title = "Prospector"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 4
 	spawn_positions = 4
@@ -115,7 +115,7 @@
 
 /datum/job/cargo_assistant
 	title = "Cargo Assistant"
-	department = "Снабжения"
+	department = "Supply"
 	department_flag = SUP
 	total_positions = 1
 	spawn_positions = 1

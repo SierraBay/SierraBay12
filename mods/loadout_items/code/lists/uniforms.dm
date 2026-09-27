@@ -293,3 +293,7 @@
 	pants += /obj/item/clothing/under/westernpants
 	pants += /obj/item/clothing/under/westernpants/black
 	gear_tweaks += new/datum/gear_tweak/path/specified_types_list(pants)
+
+/datum/gear/uniform/tattered_clothes
+	display_name = "tattered clothes"
+	path = /obj/item/clothing/under/tattered_clothes

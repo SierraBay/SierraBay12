@@ -506,6 +506,29 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	for(var/department in station_departments)
 		department_accounts[department] = create_account("[department] Account", "[department]", department_money, ACCOUNT_TYPE_DEPARTMENT)
 
+	// Backward compatibility aliases for legacy systems/mods
+	if(department_accounts["Science"])
+		department_accounts["Research"] ||= department_accounts["Science"]
+		department_accounts["Научный"] ||= department_accounts["Science"]
+	if(department_accounts["Supply"])
+		department_accounts["Cargo"] ||= department_accounts["Supply"]
+		department_accounts["Снабжения"] ||= department_accounts["Supply"]
+		department_accounts["Снабжение"] ||= department_accounts["Supply"]
+	if(department_accounts["Security"])
+		department_accounts["Охранный"] ||= department_accounts["Security"]
+	if(department_accounts["Engineering"])
+		department_accounts["Инженерный"] ||= department_accounts["Engineering"]
+	if(department_accounts["Medical"])
+		department_accounts["Медицинский"] ||= department_accounts["Medical"]
+	if(department_accounts["Service"])
+		department_accounts["Обслуживания"] ||= department_accounts["Service"]
+	if(department_accounts["Exploration"])
+		department_accounts["Экспедиционный"] ||= department_accounts["Exploration"]
+	if(department_accounts["Command"])
+		department_accounts["Командный"] ||= department_accounts["Command"]
+	if(department_accounts["Civilian"])
+		department_accounts["Гражданский"] ||= department_accounts["Civilian"]
+
 	department_accounts["Vendor"] = create_account("Vendor Account", "Vendor", 0, ACCOUNT_TYPE_DEPARTMENT)
 	vendor_account = department_accounts["Vendor"]
 

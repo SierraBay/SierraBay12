@@ -90,10 +90,12 @@
 	icon_state = "damaged_cable"
 	density =  FALSE
 
-/obj/structure/aurora/cable/Crossed(mob/living/M)
+/obj/structure/aurora/cable/Crossed(atom/movable/AM)
 	..()
-	if(waked_up)
-		M.electrocute_act(20, src, 1.0, ran_zone())
+	if(!waked_up || !isliving(AM))
+		return
+	var/mob/living/M = AM
+	M.electrocute_act(20, src, 1.0, ran_zone())
 
 /obj/structure/aurora/cable_angle
 	density =  FALSE
