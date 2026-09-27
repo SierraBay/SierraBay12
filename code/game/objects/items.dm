@@ -794,12 +794,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	if(user.hud_used.hud_shown)
 		user.toggle_zoom_hud()	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
-	if(istype(H))
-		H.handle_vision()
 
 	user.client.view = viewsize
 	zoom = 1
 	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
+	if(istype(H))
+		H.handle_vision()
+	user.check_fov() //[SIERRA-ADD]
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
@@ -842,11 +843,11 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	user.client.pixel_x = 0
 	user.client.pixel_y = 0
 
+	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
 		H.handle_vision()
 	user.visible_message("[zoomdevicename ? "\The [user] looks up from [src]" : "\The [user] lowers [src]"].")
-	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 	user.client.reload_fov() //[SIERRA-ADD] - FOV
 
 /obj/item/proc/pwr_drain()
