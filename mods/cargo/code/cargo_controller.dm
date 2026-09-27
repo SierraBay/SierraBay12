@@ -11,14 +11,6 @@
 				if(dept && department_accounts[dept])
 					return department_accounts[dept]
 
-	var/qm_dept = initial(/datum/job/qm.department)
-	if(qm_dept && department_accounts[qm_dept])
-		return department_accounts[qm_dept]
-
-	var/cargo_tech_dept = initial(/datum/job/cargo_tech.department)
-	if(cargo_tech_dept && department_accounts[cargo_tech_dept])
-		return department_accounts[cargo_tech_dept]
-
 	for(var/dept_key in department_accounts)
 		var/datum/money_account/candidate = department_accounts[dept_key]
 		if(!istype(candidate))
