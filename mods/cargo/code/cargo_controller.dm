@@ -1,5 +1,32 @@
 /proc/get_supply_department_account()
-	return department_accounts["Supply"] || department_accounts["Cargo"]
+	var/datum/money_account/dept_account = department_accounts["Supply"] || department_accounts["Cargo"] || department_accounts["Снабжения"] || department_accounts["Снабжение"]
+	if(dept_account)
+		return dept_account
+
+	if(GLOB.using_map?.allowed_jobs)
+		for(var/job_type in GLOB.using_map.allowed_jobs)
+			var/datum/job/job_datum = job_type
+			if(initial(job_datum.department_flag) & SUP)
+				var/dept = initial(job_datum.department)
+				if(dept && department_accounts[dept])
+					return department_accounts[dept]
+
+	var/qm_dept = initial(/datum/job/qm.department)
+	if(qm_dept && department_accounts[qm_dept])
+		return department_accounts[qm_dept]
+
+	var/cargo_tech_dept = initial(/datum/job/cargo_tech.department)
+	if(cargo_tech_dept && department_accounts[cargo_tech_dept])
+		return department_accounts[cargo_tech_dept]
+
+	for(var/dept_key in department_accounts)
+		var/datum/money_account/candidate = department_accounts[dept_key]
+		if(!istype(candidate))
+			continue
+		if(findtext(dept_key, "Снабжен") || findtext(dept_key, "Supply") || findtext(dept_key, "Cargo"))
+			return candidate
+
+	return null
 
 /obj/structure/closet/secure_closet/personal/trade
 	parent_type = /obj/structure/closet/crate/trade
