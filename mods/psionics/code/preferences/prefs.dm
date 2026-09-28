@@ -2,7 +2,7 @@
 	description = "Allow psi screamers?"
 	key = "SCREAMERS"
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
-	default_value = GLOB.PREF_NO
+	default_value = GLOB.PREF_YES
 
 var/global/datum/scarythings_prompt/scarythings_prompt = new
 /datum/scarythings_prompt/proc/offer(mob/user)
