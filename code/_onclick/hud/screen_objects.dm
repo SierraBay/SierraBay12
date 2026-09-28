@@ -185,16 +185,25 @@
 		var/clicked_loc_pixel_X = text2num(clicked_loc_X[2])
 
 		var/clicked_loc_x = clicked_loc_tile_X * WORLD_ICON_SIZE + clicked_loc_pixel_X
-
+		/*[SIERRA-REMOVE]
 		for (var/i in 1 to length(containing_ui.space_obj_x_start))
 			var/obj/item/stored = master.contents[i]
 			if (!istype(stored, /obj/item))
 				continue
+		*///[SIERRA-REMOVE]
+		//[SIERRA-ADD]
+		// Positions are recorded only for /obj/item. Contents can shrink before the UI refreshes.
+		var/i = 0
+		for(var/obj/item/stored in master.contents)
+			i++
+			if(i > length(containing_ui.space_obj_x_start) || i > length(containing_ui.space_obj_x_end))
+				break
 
 			if (!(containing_ui.space_obj_x_start[i] <= clicked_loc_x && clicked_loc_x <= containing_ui.space_obj_x_end[i]))
 				continue
 
 			return stored
+		//[/SIERRA-ADD]
 
 	return null
 

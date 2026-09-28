@@ -31,6 +31,10 @@
 	..()
 
 /obj/machinery/anomaly_container/attack_hand(mob/user)
+	//[SIERRA-ADD]
+	if(take_paper(user))
+		return
+	//[/SIERRA-ADD]
 	if(!contained)
 		to_chat(user, SPAN_WARNING("There's nothing inside \the [src]."))
 		return
@@ -61,6 +65,10 @@
 		return ..()
 
 /obj/machinery/anomaly_container/attack_robot(mob/user)
+	//[SIERRA-ADD]
+	if(take_paper(user))
+		return
+	//[/SIERRA-ADD]
 	if(!contained)
 		to_chat(user, SPAN_WARNING("There's nothing inside \the [src]."))
 		return
@@ -155,7 +163,21 @@
 	GLOB.empd_event.raise_event(src, severity)
 
 
+//[SIERRA-ADD]
+/obj/machinery/anomaly_container/proc/take_paper(mob/living/user)
+	if(!attached_paper || !istype(user) || !Adjacent(user) || user.stat)
+		return FALSE
+	var/obj/item/paper/old_paper = attached_paper
+	attached_paper = null
+	old_paper.forceMove(get_turf(src))
+	user.put_in_hands(old_paper)
+	to_chat(user, SPAN_NOTICE("You take \the [old_paper] off \the [src]."))
+	update_icon()
+	return TRUE
+//[/SIERRA-ADD]
+
 /obj/machinery/anomaly_container/use_tool(obj/item/P, mob/living/user, list/click_params)
+	/*[SIERRA-REMOVE]
 	if (istype(P, /obj/item/paper))
 		if(attached_paper)
 			to_chat(user, SPAN_NOTICE("You swap the reports on \the [src]."))
@@ -172,6 +194,24 @@
 			P.forceMove(src)
 		update_icon()
 		return TRUE
+	*///[SIERRA-REMOVE]
+	//[SIERRA-ADD]
+	if (istype(P, /obj/item/paper))
+		var/obj/item/paper/new_paper = P
+		var/obj/item/paper/old_paper = attached_paper
+		if(!user.unEquip(new_paper, src))
+			to_chat(user, SPAN_WARNING("\The [new_paper] is stuck to your hand."))
+			return TRUE
+		attached_paper = new_paper
+		if(old_paper)
+			old_paper.forceMove(get_turf(src))
+			user.put_in_hands(old_paper)
+			to_chat(user, SPAN_NOTICE("You swap the reports on \the [src]."))
+		else
+			to_chat(user, SPAN_NOTICE("You clip \the [new_paper] to \the [src]'s side."))
+		update_icon()
+		return TRUE
+	//[/SIERRA-ADD]
 
 	if (istype(P, /obj/item/stack/material))
 		if (!health_dead())

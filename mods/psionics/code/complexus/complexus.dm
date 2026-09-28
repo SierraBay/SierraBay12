@@ -72,12 +72,14 @@
 /datum/psi_complexus/New(mob/_owner)
 	owner = _owner
 	START_PROCESSING(SSpsi, src)
-	set_extension(src, /datum/extension/armor/psionic)
+	owner.add_aura(new /obj/aura/psi(owner))
 
 /datum/psi_complexus/Destroy()
 	destroy_aura_image(_aura_image)
 	STOP_PROCESSING(SSpsi, src)
 	if(owner)
+		for(var/obj/aura/psi/A in owner.auras)
+			owner.remove_aura(A)
 		cancel()
 		if(owner.client)
 			owner.client.screen -= list(ui, ui?.components)
