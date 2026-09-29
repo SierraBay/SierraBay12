@@ -1,10 +1,11 @@
 /*
  * GAMEMODE_JOB_REQUIREMENTS
  *
- * Lets a game mode demand that some number of lobby players have readied up as
- * a job from a given department before the mode is allowed to start. Counting
- * only cares about the job a player readied *as*, not about how many slots that
- * job has.
+ * Lets a game mode demand that some number of ready players will spawn in a job
+ * from a given department before the mode is allowed to start. Once the job
+ * controller has run, what counts is the job each player was actually given, so
+ * slot caps, job bans and age limits are all respected. Before that, the job a
+ * player readied up as is the best estimate there is.
  *
  * Departments are matched by flag rather than by a list of job types on purpose.
  * Job types are per-map - /datum/job/security_assistant, for instance, exists
@@ -17,7 +18,7 @@
  */
 
 /datum/game_mode
-	/// Department flags whose readied players count toward `required_ready_job_count`. 0 disables the requirement entirely.
+	/// Department flags whose jobs count toward `required_ready_job_count`. 0 disables the requirement entirely.
 	var/required_ready_job_departments = 0
 	/// How many ready players from `required_ready_job_departments` the mode needs before it may start.
 	var/required_ready_job_count = 0
@@ -75,6 +76,9 @@
  * SSjobs.divide_occupations() - so assigned_job is still null and the lists
  * never match. Before jobs exist, the only thing that says what a player came to
  * do is the job they readied up as.
+ *
+ * A job with more players readied as it than it has roundstart slots cannot take
+ * them all, so the surplus is let through - see has_spare_ready_players().
  */
 /datum/antagonist/proc/check_ready_job_exclusion(datum/mind/player)
 	if(!excluded_ready_job_departments)
@@ -84,29 +88,73 @@
 	var/mob/new_player/lobby_player = player?.current
 	if(!istype(lobby_player))
 		return
+	// Already drafted for this role, so this check passed at draft time. It must
+	// not run again from finalize_spawn(): by then the rest of the lobby has
+	// spawned, the surplus count is gone, and a drafted surplus player would be
+	// refused the role they were drafted for.
+	if(player.special_role == role_text)
+		return
 	var/title = lobby_player.get_ready_job_title()
 	if(!title)
 		return
 	var/datum/job/job = SSjobs.get_by_title(title)
 	if(!job || !(job.department_flag & excluded_ready_job_departments))
 		return
+	if(has_spare_ready_players(job, lobby_player))
+		return
 	return "Player readied as [job.title], which is excluded from this antagonist role."
 
 /*
- * How many of `ready_players` readied up as a job from `department_flags`.
+ * TRUE if enough other ready, undrafted players readied as `job` to fill every
+ * one of its roundstart slots without `candidate`, so drafting `candidate` cannot
+ * leave the job short.
  *
- * Matches on job title because that is what a readied job is stored as. Alt
- * titles need no handling here - preferences keep job_high as the job's base
- * title and stash the chosen alt title separately, so someone readied as
- * "Junior Guard" already counts as a Security Guard.
+ * With six players readied as a four-slot job, the first two to come up in the
+ * draft may be taken and the last four are kept. Drafted players already carry a
+ * special_role, so they drop out of the count as the draft goes on.
+ *
+ * Other players' bans and age limits are not checked here, so a job can still end
+ * up short. check_ready_job_requirement() counts assigned jobs after the draft,
+ * so a mode that needs this department fails safe in that case.
+ */
+/datum/antagonist/proc/has_spare_ready_players(datum/job/job, mob/new_player/candidate)
+	// Unlimited slots take everyone, so nobody readied as the job is surplus.
+	if(job.spawn_positions < 0)
+		return FALSE
+	var/others = 0
+	for(var/mob/new_player/player as anything in SSticker.ready_players())
+		if(player == candidate || player.mind?.special_role)
+			continue
+		if(player.get_ready_job_title() == job.title)
+			others++
+	return others >= job.spawn_positions
+
+/*
+ * How many of `ready_players` will spawn in a job from `department_flags`.
+ *
+ * SSticker.choose_gamemode() calls check_startable() after divide_occupations(),
+ * so each player's assigned job is used when there is one. Players drafted as a
+ * job-replacing antagonist have an assigned_role but no assigned_job, so they are
+ * not counted. The earlier get_runnable_modes() pass runs before jobs are given
+ * out, and there the readied job is used instead.
  */
 /datum/game_mode/proc/count_ready_for_departments(list/ready_players, department_flags)
-	var/list/titles = get_department_job_titles(department_flags)
-	if(!length(titles))
-		return 0
-
 	var/count = 0
 	for(var/mob/new_player/player in ready_players)
-		if(player.get_ready_job_title() in titles)
+		var/datum/job/job = get_expected_job(player)
+		if(job && (job.department_flag & department_flags))
 			count++
 	return count
+
+/*
+ * The job `player` will spawn in: their assigned job once the job controller has
+ * run, otherwise the job they readied up as. Alt titles need no handling, because
+ * preferences keep job_high as the base title.
+ */
+/datum/game_mode/proc/get_expected_job(mob/new_player/player)
+	if(player.mind?.assigned_role)
+		return player.mind.assigned_job
+	var/title = player.get_ready_job_title()
+	if(!title)
+		return null
+	return SSjobs.get_by_title(title)
