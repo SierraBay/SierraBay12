@@ -47,18 +47,3 @@
 	allowed_factions = list(FACTION_ASSAMBLEE)
 	custom_setup_proc = /obj/item/card/assamblee_card/proc/set_info
 	slot = slot_in_backpack
-
-/datum/gear/scg_expeditionary_kit
-	display_name = "SCG Expeditionary Corps uniform"
-	description = "A complete SCG Expeditionary Corps uniform, tailored to your assignment."
-	path = /obj/item/clothing/suit/storage/solgov/service/expeditionary/scg_kit
-	slot = slot_wear_suit
-	allowed_branches = list(/datum/mil_branch/contractor)
-	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
-	custom_setup_proc = /obj/item/clothing/suit/storage/solgov/service/expeditionary/scg_kit/proc/setup_kit
-
-/datum/gear/scg_expeditionary_kit/New()
-	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_rank(list("E-3 (Explorer)", "E-5 (Senior Explorer)", "E-7 (Chief Explorer)", "O-1 (Ensign)"))
-	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_patch(list("Observatory patch", "Field Operations patch", "Cultural Exchange patch"))
-	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_scarf(list("Observatory scarf", "Field Operations scarf"))
-	..()
