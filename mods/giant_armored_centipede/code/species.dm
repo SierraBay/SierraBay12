@@ -65,5 +65,5 @@
 
 /obj/item/gun/special_check(mob/user)
 	if(user.is_species(SPECIES_NABBER))
-		return 0
-	..()
+		return FALSE
+	return ..()

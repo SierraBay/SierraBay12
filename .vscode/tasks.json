@@ -10,6 +10,50 @@
         "isDefault": true
       },
       "label": "dm: build - baystation12.dme"
+    },
+    {
+      "label": "dm: build unit tests",
+      "detail": "Builds baystation12.dmb with -DUNIT_TEST through scripts/dm.sh for the chosen map, the same way CI does.",
+      "type": "shell",
+      "command": "bash",
+      "windows": {
+        "command": "${env:ProgramFiles}\\Git\\bin\\bash.exe"
+      },
+      "args": ["scripts/dm.sh", "-DUNIT_TEST", "-M${input:mapPath}", "baystation12.dme"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": ["$dreammaker"],
+      "group": "build"
+    },
+    {
+      "label": "dm: show unit test results",
+      "detail": "Prints failures, runtimes and the final tally from the newest round log under data/logs.",
+      "type": "shell",
+      "command": "bash",
+      "windows": {
+        "command": "${env:ProgramFiles}\\Git\\bin\\bash.exe"
+      },
+      "args": [".vscode/show-test-results.sh"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "focus": false
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "mapPath",
+      "type": "pickString",
+      "description": "Which map to build the unit tests against",
+      "options": ["sierra", "example", "torch", "away_sites_testing"],
+      "default": "sierra"
     }
   ]
 }
