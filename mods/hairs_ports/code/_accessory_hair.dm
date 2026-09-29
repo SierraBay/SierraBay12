@@ -32,9 +32,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/aurora_80s_ponytail_alt
 	name = "80s Ponytail Alt"
 	icon_state = "hair_80s_ponytail_alt"
-/datum/sprite_accessory/hair/modpack_hairs_port/aurora_amanita_long_alt
-	name = "Amanita Long Alt"
-	icon_state = "hair_amanita_long_alt"
 /datum/sprite_accessory/hair/modpack_hairs_port/aurora_bangs_veryshort
 	name = "Bangs Very Short"
 	icon_state = "hair_bangs_veryshort"
@@ -92,9 +89,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_hairhinobu
 	name = "Shinobu"
 	icon_state = "hair_hairhinobu"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_hairidetail3
-	name = "Hairs Detail 3"
-	icon_state = "hair_hairidetail3"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_harley
 	name = "Harley"
 	icon_state = "hair_harley"
@@ -135,9 +129,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_bun_odango2
 	name = "Bunodango 2"
 	icon_state = "hair_bun_odango2"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_cotton_hair
-	name = "Cotton Hair"
-	icon_state = "hair_cotton_hair"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_encoder
 	name = "Encoder"
 	icon_state = "hair_encoder"
@@ -157,9 +148,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_messy_rightcut
 	name = "Messy Right Cut"
 	icon_state = "hair_messy_rightcut"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_pigtails_low
-	name = "Pigtail Slow"
-	icon_state = "hair_pigtails_low"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_toph
 	name = "Toph"
 	icon_state = "hair_toph"
@@ -204,9 +192,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_pais
 	name = "Pais"
 	icon_state = "hair_pais"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_pigtails_twintail_ombre
-	name = "Pigtails Twin Tail Ombre"
-	icon_state = "hair_pigtails_twintail_ombre"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_protagonist
 	name = "Protagonist"
 	icon_state = "hair_protagonist"
@@ -230,19 +215,9 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_big_bow
 	name = "Bigbow"
 	icon_state = "hair_big_bow"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_bun_odango4
-	name = "Bunodango 4"
-	icon_state = "hair_bun_odango4"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_drills_celes
 	name = "Drillsceles"
 	icon_state = "hair_drills_celes"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_hairchierke
-	name = "Chierke"
-	icon_state = "hair_hairchierke"
-
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_hairquare
-	name = "Quare"
-	icon_state = "hair_hairquare"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_judge
 	name = "Judge"
 	icon_state = "hair_judge"
@@ -255,9 +230,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_pigtails_belle
 	name = "Pigtails Belle"
 	icon_state = "hair_pigtails_belle"
-/datum/sprite_accessory/hair/modpack_hairs_port/inf_pigtails_twintail_ombre_alt
-	name = "Pigtails Twin Tail Ombre Alt"
-	icon_state = "hair_pigtails_twintail_ombre_alt"
 /datum/sprite_accessory/hair/modpack_hairs_port/inf_rosa
 	name = "Rosa"
 	icon_state = "hair_rosa"
@@ -571,24 +543,15 @@
 */
 
 
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_80_ponytail
-	name = "80 Ponytail"
-	icon_state = "hair_80_ponytail"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_hipbraid_beads
 	name = "Hipbraid Beads"
 	icon_state = "hair_hipbraid_beads"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_long
-	name = "Long"
-	icon_state = "hair_long"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_low_twins
 	name = "Low Twins"
 	icon_state = "hair_low_twins"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_ponytailm
 	name = "Ponytail M"
 	icon_state = "hair_ponytailm"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_sailor
-	name = "Sailor"
-	icon_state = "hair_sailor"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_shortflip
 	name = "Short Flip"
 	icon_state = "hair_shortflip"
@@ -601,9 +564,6 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_unshavenmohawk
 	name = "Unshaven Mohawk"
 	icon_state = "hair_unshavenmohawk"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_80_ponytail_alt
-	name = "80 Ponytail Alt"
-	icon_state = "hair_80_ponytail_alt"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_bedhead_alt
 	name = "Bedhead Alt"
 	icon_state = "hair_bedhead_alt"
@@ -625,21 +585,9 @@
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_schierke
 	name = "Schierke"
 	icon_state = "hair_schierke"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_shorthair3
-	name = "Shorthair3"
-	icon_state = "hair_shorthair3"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_slightlymessy
-	name = "Slightlymessy"
-	icon_state = "hair_hairlightlymessy"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_twincurl2
-	name = "Twincurl2"
-	icon_state = "hair_twincurl2"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_zone_alt
 	name = "Zone Alt"
 	icon_state = "hair_zone_alt"
-/datum/sprite_accessory/hair/modpack_hairs_port/rs666_buns
-	name = "Buns"
-	icon_state = "hair_buns"
 /datum/sprite_accessory/hair/modpack_hairs_port/rs666_floorbraid
 	name = "Floor Braid"
 	icon_state = "hair_floorbraid"

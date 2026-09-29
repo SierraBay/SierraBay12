@@ -1,6 +1,14 @@
 /mob/proc/can_emote(emote_type)
 	return (stat == CONSCIOUS)
 
+/mob/proc/use_emote_cooldown()
+	if(world.time < next_emote_time)
+		if(usr == src)
+			to_chat(src, SPAN_WARNING("You can't emote that often."))
+		return FALSE
+	next_emote_time = world.time + emote_cooldown
+	return TRUE
+
 /mob/living/can_emote(emote_type)
 	return (..() && !(silent && emote_type == AUDIBLE_MESSAGE))
 
@@ -49,6 +57,9 @@
 		return
 
 	if(m_type != use_emote.message_type && use_emote.conscious && stat != CONSCIOUS)
+		return
+
+	if(act != "deathgasp" && !use_emote_cooldown())
 		return
 
 	if(use_emote.message_type == AUDIBLE_MESSAGE && is_muzzled())
@@ -134,6 +145,8 @@
 		return
 	message = process_chat_markup(message)
 	if (message)
+		if(!use_emote_cooldown())
+			return
 		log_emote("[name]/[key] : [message]")
 	//do not show NPC animal emotes to ghosts, it turns into hellscape
 	var/check_ghosts = client ? /datum/client_preference/ghost_sight : null

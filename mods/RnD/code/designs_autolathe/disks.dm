@@ -105,6 +105,7 @@
 	designs = list(
 		/datum/design/autolathe/general,
 		/datum/design/autolathe/general/datacrystal,
+		/datum/design/autolathe/general/design_disk,
 		/datum/design/autolathe/general/flashlight,
 		/datum/design/autolathe/general/floor_light,
 		/datum/design/autolathe/general/extinguisher,

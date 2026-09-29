@@ -1,0 +1,4 @@
+author: AttHawk
+changes:
+  - bugfix: Пофиксил баг с синаптизином
+delete-after: true

@@ -288,6 +288,7 @@
 		if("Mech Equipment", "Mech armour", "Mech cockpit", \
 		   "Mech left arm", "Mech left leg", "Mech main", \
 		   "Mech right arm", "Mech right leg", "Mech sensors", \
+		   "Mech manipulators", "Mech propulsion", \
 		   "Doubled legs", "Exosuit Equipment", "Exosuit", "Hardsuits")
 			return "Exosuit"
 		// ── Electronics ──────────────────────────────────────────────────────
