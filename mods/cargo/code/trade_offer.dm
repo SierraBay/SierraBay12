@@ -8,8 +8,8 @@
 	var/has_custom_price = FALSE
 	var/pack_size = 1
 	var/stock = 0
+	var/export_stock_remainder = 0
 	var/baseline_stock = 1
-	var/demand = 0
 	var/list/tags = list()
 	var/hidden = FALSE
 	var/datum/trading_station/station
@@ -23,7 +23,6 @@
 	new_base_price = 0,
 	new_stock = 0,
 	new_baseline = null,
-	new_demand = 0,
 	list/new_tags = null,
 	datum/trading_station/new_station = null,
 	new_hidden = FALSE
@@ -37,7 +36,7 @@
 	name = (istext(new_name) && length(new_name)) ? new_name : ResolveItemName(new_item_path)
 	desc = istext(new_desc) ? new_desc : ResolveItemDesc(new_item_path)
 	InitPricing(new_base_price, new_item_path)
-	InitStockAndDemand(new_stock, new_baseline, new_demand)
+	InitStock(new_stock, new_baseline)
 	InitTags(new_tags)
 
 /datum/trade_offer/Destroy()
@@ -64,10 +63,9 @@
 	var/initial_amount = initial(stack_type.amount)
 	return isnum(initial_amount) ? max(1, initial_amount) : 1
 
-/datum/trade_offer/proc/InitStockAndDemand(new_stock, new_baseline, new_demand)
+/datum/trade_offer/proc/InitStock(new_stock, new_baseline)
 	stock = isnum(new_stock) ? max(0, round(new_stock)) : 0
 	baseline_stock = isnum(new_baseline) ? max(1, round(new_baseline)) : max(1, stock)
-	demand = isnum(new_demand) ? clamp(new_demand, -2.0, 2.5) : 0
 
 /datum/trade_offer/proc/InitTags(list/new_tags)
 	if(islist(new_tags) && length(new_tags))
@@ -87,13 +85,13 @@
 		base_price,
 		stock,
 		baseline_stock,
-		demand,
 		islist(tags) ? tags.Copy() : null,
 		new_station || station,
 		hidden
 	)
 	duplicate.has_custom_price = has_custom_price
 	duplicate.pack_size = pack_size
+	duplicate.export_stock_remainder = export_stock_remainder
 	return duplicate
 
 /datum/trade_offer/proc/ResolveItemName(path)
@@ -179,60 +177,6 @@
 		built_tags["security"] = TRUE
 		built_tags["military"] = TRUE
 
-/datum/trade_offer/proc/GetUnitPrice(markup = 1.0, is_selling = FALSE, modifier_mult = 1.0, use_market = TRUE)
-	if(is_selling)
-		return GetSellUnitPrice(modifier_mult, use_market)
-	return GetBuyUnitPrice(markup, modifier_mult, use_market)
-
-/datum/trade_offer/proc/GetBuyUnitPrice(markup = 1.0, modifier_mult = 1.0, use_market = TRUE)
-	var/applied_markup = (!has_custom_price && isnum(markup) && markup > 0) ? markup : 1.0
-	var/marked_up_price = base_price * applied_markup
-	if(!use_market)
-		return max(1, round(marked_up_price))
-	var/market_multiplier = GetBuyMarketMultiplier()
-	market_multiplier *= NormalizePriceModifier(modifier_mult)
-	return max(1, round(marked_up_price * clamp(market_multiplier, 0.8, 1.75)))
-
-/datum/trade_offer/proc/GetBuyMarketMultiplier()
-	var/multiplier = 1.0
-	var/baseline = max(1, baseline_stock)
-	if(stock < baseline)
-		var/stock_pressure = min((baseline - stock) / baseline, 1.0)
-		multiplier += min(stock_pressure * 0.6, 0.45)
-	else if(stock > baseline)
-		var/stock_pressure = min((stock - baseline) / baseline, 1.0)
-		multiplier -= min(stock_pressure * 0.2, 0.15)
-	if(demand > 0)
-		multiplier += min(demand * 0.22, 0.32)
-	else if(demand < 0)
-		multiplier -= min(abs(demand) * 0.08, 0.12)
-	return multiplier
-
-/datum/trade_offer/proc/GetSellUnitPrice(modifier_mult = 1.0, use_market = TRUE)
-	if(!use_market)
-		return max(1, round(base_price * 0.62))
-	var/market_multiplier = GetSellMarketMultiplier()
-	market_multiplier *= NormalizePriceModifier(modifier_mult)
-	return max(1, round(base_price * clamp(market_multiplier, 0.35, 1.15)))
-
-/datum/trade_offer/proc/GetSellMarketMultiplier()
-	var/multiplier = 0.62
-	var/baseline = max(1, baseline_stock)
-	if(stock < baseline)
-		var/stock_pressure = min((baseline - stock) / baseline, 1.0)
-		multiplier += min(stock_pressure * 0.35, 0.28)
-	else if(stock > baseline)
-		var/stock_pressure = min((stock - baseline) / baseline, 1.0)
-		multiplier -= min(stock_pressure * 0.18, 0.18)
-	if(demand > 0)
-		multiplier += min(demand * 0.18, 0.25)
-	else if(demand < 0)
-		multiplier -= min(abs(demand) * 0.12, 0.2)
-	return multiplier
-
-/datum/trade_offer/proc/NormalizePriceModifier(modifier_mult)
-	return (isnum(modifier_mult) && modifier_mult > 0) ? modifier_mult : 1.0
-
 /datum/trade_offer/proc/AdjustStock(delta)
 	if(!isnum(delta))
 		return stock
@@ -243,13 +187,6 @@
 	if(!isnum(amount) || amount <= 0)
 		return stock
 	return AdjustStock(amount)
-
-/datum/trade_offer/proc/AdjustDemand(delta)
-	if(!isnum(delta))
-		return demand
-	var/baseline = max(1, baseline_stock)
-	demand = clamp(demand + (delta / baseline), -2.0, 2.5)
-	return demand
 
 /datum/trade_offer/proc/CanFulfill(amount = 1)
 	var/quantity = NormalizeQuantity(amount)
@@ -270,26 +207,3 @@
 /datum/trade_offer/proc/HasTag(tag_name)
 	return islist(tags) && tags[tag_name]
 
-/datum/trade_offer/proc/Serialize(markup = 1.0, in_cart = 0, can_add = TRUE, is_target = FALSE, icon_ref = null)
-	var/buy_price = GetUnitPrice(markup, FALSE)
-	var/sell_price = GetUnitPrice(1.0, TRUE)
-	var/list/data = list(
-		"id" = id,
-		"item_path" = "[item_path]",
-		"name" = name,
-		"desc" = desc,
-		"category" = category,
-		"base_price" = base_price,
-		"price" = buy_price,
-		"sell_price" = sell_price,
-		"stock" = stock,
-		"baseline_stock" = baseline_stock,
-		"demand" = demand,
-		"can_add" = can_add && (stock > 0),
-		"in_cart_amount" = in_cart,
-		"quantity_form_open" = is_target,
-		"tags" = islist(tags) ? tags.Copy() : list()
-	)
-	if(icon_ref)
-		data["icon"] = icon_ref
-	return data

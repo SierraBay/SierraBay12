@@ -510,9 +510,6 @@
 /obj/overmap/trade_beacon/caravan/proc/EstimateRouteHeuristic(turf/start, turf/goal)
 	return abs(start.x - goal.x) + abs(start.y - goal.y)
 
-/obj/overmap/trade_beacon/caravan/proc/RouteNodeKey(turf/node)
-	return "[node.x],[node.y],[node.z]"
-
 /obj/overmap/trade_beacon/caravan/proc/BeginTransit()
 	caravan_state = "in_transit"
 	trade_window_end = 0

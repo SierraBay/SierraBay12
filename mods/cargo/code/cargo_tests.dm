@@ -895,9 +895,9 @@
 	name = "CARGO: Trade offer datum lifecycle and operations"
 
 /datum/unit_test/cargo_trade_offer_datum_test/start_test()
-	var/datum/trade_offer/offer = new("offer_test_1", /obj/item/pen, "Test Pen", "A pen", "Tools", 50, 10, 10, 100, list("writing" = TRUE))
+	var/datum/trade_offer/offer = new("offer_test_1", /obj/item/pen, "Test Pen", "A pen", "Tools", 50, 10, 10, list("writing" = TRUE))
 	var/fail_reason = null
-	if(offer.id != "offer_test_1" || offer.base_price != 50 || offer.stock != 10 || offer.demand != 2.5)
+	if(offer.id != "offer_test_1" || offer.base_price != 50 || offer.stock != 10)
 		fail_reason = "Offer fields not initialized correctly."
 	else if(offer.CanFulfill(0) || offer.ConsumeStock(-1) || offer.stock != 10)
 		fail_reason = "Offer accepted an invalid stock quantity."
@@ -914,7 +914,7 @@
 		if(offer.stock != 11)
 			fail_reason = "AdjustStock() failed."
 		else
-			fail_reason = VerifyOfferCloningAndSerial(offer)
+			fail_reason = VerifyOfferCloning(offer)
 	qdel(offer)
 	if(fail_reason)
 		fail(fail_reason)
@@ -922,15 +922,15 @@
 		pass("Trade offer datum lifecycle and operations function correctly.")
 	return 1
 
-/datum/unit_test/cargo_trade_offer_datum_test/proc/VerifyOfferCloningAndSerial(datum/trade_offer/offer)
+/datum/unit_test/cargo_trade_offer_datum_test/proc/VerifyOfferCloning(datum/trade_offer/offer)
 	var/datum/trade_offer/clone = offer.Duplicate("offer_test_2")
 	if(!clone || clone.id != "offer_test_2" || clone.stock != offer.stock)
 		qdel(clone)
 		return "Duplicate() failed."
-	var/list/data = clone.Serialize()
+	var/valid_clone = clone.base_price == offer.base_price && clone.pack_size == offer.pack_size && clone.export_stock_remainder == offer.export_stock_remainder
 	qdel(clone)
-	if(!islist(data) || data["id"] != "offer_test_2" || data["base_price"] != 50)
-		return "Serialize() did not return valid offer data."
+	if(!valid_clone)
+		return "Duplicate() did not preserve price and package data."
 	return null
 
 /datum/unit_test/cargo_station_offer_registry_test

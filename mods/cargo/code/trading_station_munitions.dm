@@ -12,7 +12,7 @@
 	spawn_always = TRUE
 	markup = 1.35
 	metabolic_production_tags = list("munitions", "industrial")
-	metabolic_consumption_tags = list("ammunition", "munitions")
+	metabolic_consumption_tags = list("ammunition")
 	thematic_cores = list("Telum", "Aegis", "Glaive", "Ballista", "Centurion", "Castellan", "Bulwark", "Palisade", "Hoplon", "Redoubt", "Iron Gate", "Vanguard")
 	role_summary = "defensive surplus, tactical weaponry, and munitions logistics"
 	inventory = list(

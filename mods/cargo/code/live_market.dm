@@ -37,8 +37,10 @@
 		"surgery" = list("medical"),
 		"science" = list("science"),
 		"research" = list("science"),
+		"component" = list("components"),
 		"service" = list("consumer"),
 		"janitor" = list("consumer"),
+		"leisure" = list("consumer"),
 		"engineering" = list("industrial", "parts", "tools"),
 		"tool" = list("industrial", "parts", "tools"),
 		"power" = list("power", "industrial"),
@@ -109,8 +111,7 @@
 		"base_price" = base_price,
 		"baseline_stock" = baseline_stock,
 		"demand" = 0,
-		"tags" = BuildLiveMarketCommodityTags(category_name, good_id),
-		"remote_visible" = FALSE
+		"tags" = BuildLiveMarketCommodityTags(category_name, good_id)
 	)
 	category_state[good_id] = commodity_state
 	return commodity_state
@@ -372,13 +373,28 @@
 					if(current > 1)
 						SetGoodAmount(category_name, good_id, max(1, current - 1))
 				else if(stock_shift > 0 && prob(round(stock_shift * weight * 100)))
-					SetGoodAmount(category_name, good_id, GetGoodAmount(category_name, good_id) + 1)
+					var/current = GetGoodAmount(category_name, good_id)
+					if(metabolism_enabled && MatchesMetabolicTags(category_name, good_id, metabolic_production_tags))
+						if(current >= GetMetabolicProductionLimit(category_name, good_id))
+							continue
+					SetGoodAmount(category_name, good_id, current + 1)
 
 /datum/trading_station/proc/EnsureLiveMarketActivity()
 	if(!live_market_enabled || !live_market_auto_events || length(live_market_modifiers))
 		return
 	if(prob(35))
 		AddLiveMarketModifier(pick(MARKET_MOD_BOOM, MARKET_MOD_SHORTAGE, MARKET_MOD_INDUSTRIAL_DEMAND, MARKET_MOD_BLOCKADE), rand(3, 5))
+
+/datum/trading_station/proc/ApplyLiveMarketModifierDemandEffects()
+	for(var/list/modifier as anything in live_market_modifiers)
+		var/shift = modifier["demand_shift"]
+		if(!isnum(shift) || !shift)
+			continue
+		for(var/category_name in inventory)
+			var/list/category = inventory[category_name]
+			for(var/good_id in category)
+				var/weight = GetLiveMarketTagWeight(category_name, good_id, modifier["tag_weights"])
+				AdjustLiveMarketDemand(category_name, good_id, shift * weight * GetLiveMarketBaseline(category_name, good_id))
 
 /datum/trading_station/proc/GetLiveMarketStatusLabel()
 	var/list/modifier = GetPrimaryLiveMarketModifier()
@@ -406,6 +422,7 @@
 	DecayLiveMarketModifiers()
 	EnsureLiveMarketActivity()
 	ApplyLiveMarketModifierStockEffects()
+	ApplyLiveMarketModifierDemandEffects()
 	..()
 	RecordLiveMarketBaselines()
 
@@ -566,7 +583,6 @@
 					var/remaining = full_units - k
 					if(remaining > 0)
 						total_price += remaining * unit_price
-					fraction = 0
 					break
 
 		if(fraction > 0)
@@ -727,7 +743,7 @@
 			station.AdjustLiveMarketDemand(category_name, good_id, amount)
 		if(MARKET_TRANS_SELL)
 			station.AdjustLiveMarketDemand(category_name, good_id, -amount)
-			station.SetGoodAmount(category_name, good_id, station.GetGoodAmount(category_name, good_id) + amount)
+			station.AddExportStock(category_name, good_id, amount)
 
 /datum/controller/subsystem/supply/proc/TrackLiveMarketSales(list/shop_list, buyer_faction = null)
 	if(!islist(shop_list))

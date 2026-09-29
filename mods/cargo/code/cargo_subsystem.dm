@@ -347,19 +347,6 @@
 			return contract
 	return null
 
-/datum/controller/subsystem/supply/proc/PickContractDestination(datum/trading_station/source_station)
-	var/list/candidates = list()
-	for(var/datum/trading_station/destination_station as anything in visible_trading_stations)
-		if(destination_station == source_station)
-			continue
-		var/distance = GetTradeDistance(source_station.overmap_object, destination_station)
-		if(isnum(distance) && distance < min_trade_contract_distance)
-			continue
-		candidates += destination_station
-	if(!length(candidates))
-		return null
-	return pick(candidates)
-
 /datum/controller/subsystem/supply/proc/FindStationCommodityByPath(datum/trading_station/station, item_path)
 	if(!istype(station) || !ispath(item_path, /atom/movable))
 		return null
@@ -864,13 +851,6 @@
 	for(var/list/item as anything in ExtractCartItems(shop_list))
 		. += item["count"]
 
-/datum/controller/subsystem/supply/proc/CollectPriceForCategory(list/category, datum/trading_station/station, buyer_faction = null, category_name = null)
-	. = 0
-	if(!islist(category) || !istype(station) || !istext(category_name))
-		return
-	for(var/good_id in category)
-		. += GetImportCost(good_id, station, buyer_faction, category_name) * category[good_id]
-
 /datum/controller/subsystem/supply/proc/CollectPriceForList(list/shop_list, buyer_faction = null)
 	. = 0
 	if(!islist(shop_list))
@@ -1253,7 +1233,8 @@
 
 /datum/controller/subsystem/supply/proc/GetExportItemQuote(atom/movable/item, datum/trading_station/station, seller_faction, find_manifest, list/sold_counts, list/seen_strains)
 	var/special_item = istype(item, /obj/item/virusdish) || istype(item, /obj/item/paper) || istype(item, /obj/item/disk/research_report) || istype(item, /obj/item/artefact) || istype(item, /obj/item/collector) || istype(item, /obj/item/disk/survey)
-	var/list/match = special_item ? null : FindCommodityForExport(item, station)
+	var/is_container = istype(item, /obj/item/storage) || istype(item, /obj/structure/closet) || length(item.contents)
+	var/list/match = (special_item || is_container) ? null : FindCommodityForExport(item, station)
 	if(istype(item, /obj/machinery/portable_atmospherics/canister) && !istype(item, /obj/machinery/portable_atmospherics/canister/empty))
 		var/obj/machinery/portable_atmospherics/canister/canister = item
 		if(canister.return_pressure() < 10 * ONE_ATMOSPHERE)
@@ -1430,10 +1411,11 @@
 			var/obj/item/artefact/artefact = item
 			if(SSanom)
 				SSanom.earned_cargo_points += artefact.cargo_price
-		else if(istype(item, /obj/item/collector))
-			var/obj/item/collector/collector = item
-			if(SSanom && collector.stored_artefact)
-				SSanom.earned_cargo_points += collector.stored_artefact.cargo_price
+			if(istype(item.loc, /obj/item/collector))
+				var/obj/item/collector/collector = item.loc
+				if(collector.stored_artefact == item)
+					collector.stored_artefact = null
+					collector.update_icon()
 		var/turf/floor = get_turf(item)
 		if(floor)
 			for(var/atom/movable/child as anything in item.contents)
@@ -1601,13 +1583,22 @@
 		var/obj/item/artefact/artefact = item
 		return artefact.cargo_price * CARGO_POINT_TO_THALLER
 	if(istype(item, /obj/item/collector))
-		var/obj/item/collector/collector = item
-		if(collector.stored_artefact)
-			return collector.stored_artefact.cargo_price * CARGO_POINT_TO_THALLER
+		// The recursive export plan values and disposes of the contained artefact.
 		return 0
 	if(istype(item, /obj/item/storage) || length(item.contents))
-		return round(get_value(item.type))
+		return GetExportContainerValue(item)
 	return round(get_value(item))
+
+/datum/controller/subsystem/supply/proc/GetExportContainerValue(atom/movable/item)
+	var/value = get_value(item)
+	var/atom/priced_type = item.type
+	while(priced_type && !(priced_type in worths))
+		priced_type = type2parent(priced_type)
+	// Fixed prices already describe the object itself. Dynamic obj.Value includes contents.
+	if(priced_type && worths[priced_type] < 0)
+		for(var/atom/movable/child as anything in item.contents)
+			value -= get_value(child)
+	return max(0, round(value))
 
 /datum/controller/subsystem/supply/proc/GetCrateExportBreakdown(obj/structure/closet/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null, list/seen_strains = null)
 	if(!istype(crate))
@@ -1630,12 +1621,6 @@
 	var/obj/item/paper/manifest/rnd_invoice/slip = FindRnDInvoice(crate)
 	var/display_name = slip ? "[crate.name] (R&D #[slip.target_account_number])" : crate.name
 	return list("base_value" = base_value, "contents_value" = contents_value, "total_value" = plan["total"], "display_name" = display_name, "sub_items" = sub_items)
-
-/datum/controller/subsystem/supply/proc/GetStationCrateExportValue(obj/structure/closet/crate/crate, datum/trading_station/target_station, seller_faction = null, list/sold_counts = null)
-	if(!istype(crate) || !istype(target_station))
-		return 0
-	var/list/breakdown = GetCrateExportBreakdown(crate, target_station, seller_faction, sold_counts)
-	return breakdown["contents_value"]
 
 /datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null, seller_faction = null, list/sold_counts = null, list/seen_strains = null)
 	var/list/plan = BuildExportPlan(list(exported), target_station, seller_faction, INFINITY, null, sold_counts, seen_strains)

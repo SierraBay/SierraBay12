@@ -24,6 +24,8 @@
 
 	var/current_tab = SUPPLY_ORDER_TAB_GOODS
 	var/authenticated_via_card = FALSE
+	var/weakref/authenticated_user
+	var/weakref/authenticated_card
 	var/order_reason = ""
 	var/orders_filter = "all"
 
@@ -35,7 +37,11 @@
 		ui_header = "supply_idle.gif"
 
 /datum/computer_file/program/supply_order/Destroy()
-	authenticated_via_card = FALSE
+	ClearAccountSession()
+	return ..()
+
+/datum/computer_file/program/supply_order/on_shutdown(forced = 0)
+	ClearAccountSession()
 	return ..()
 
 /datum/computer_file/program/supply_order/GetDefaultSavedCartName()
@@ -58,12 +64,22 @@
 			return id_card
 	return null
 
-/datum/computer_file/program/supply_order/proc/CheckAccountValidity()
+/datum/computer_file/program/supply_order/proc/ClearAccountSession()
+	account = null
+	authenticated_via_card = FALSE
+	authenticated_user = null
+	authenticated_card = null
+
+/datum/computer_file/program/supply_order/proc/CheckAccountValidity(mob/user)
 	if(!account)
 		return
-	if(QDELETED(account) || account.suspended)
-		account = null
-		authenticated_via_card = FALSE
+	if(QDELETED(account) || account.suspended || (authenticated_user && authenticated_user.resolve() != user))
+		ClearAccountSession()
+		return
+	if(authenticated_via_card)
+		var/obj/item/card/id/id_card = authenticated_card?.resolve()
+		if(!istype(id_card) || QDELETED(id_card) || GetAvailableIdCard(user) != id_card || id_card.associated_account_number != account.account_number)
+			ClearAccountSession()
 
 /datum/computer_file/program/supply_order/proc/PromptLinkAccount(mob/user, list/href_list)
 	var/account_number = text2num(href_list["PRG_link_account_number"])
@@ -95,6 +111,8 @@
 		return TRUE
 	account = linked_account
 	authenticated_via_card = card_check ? TRUE : FALSE
+	authenticated_user = weakref(user)
+	authenticated_card = card_check ? weakref(id_card) : null
 	to_chat(user, SPAN_NOTICE("Account #[account.account_number] linked successfully."))
 	CloseCartForm()
 	return TRUE
@@ -127,13 +145,14 @@
 		return TRUE
 	account = linked_account
 	authenticated_via_card = TRUE
+	authenticated_user = weakref(user)
+	authenticated_card = weakref(id_card)
 	to_chat(user, SPAN_NOTICE("Account #[account.account_number] linked successfully."))
 	CloseCartForm()
 	return TRUE
 
 /datum/computer_file/program/supply_order/proc/UnlinkAccount(mob/user)
-	account = null
-	authenticated_via_card = FALSE
+	ClearAccountSession()
 	if(user)
 		to_chat(user, SPAN_NOTICE("Account unlinked."))
 	else if(usr)
@@ -166,6 +185,7 @@
 	return null
 
 /datum/computer_file/program/supply_order/proc/CanUserCancelOrder(mob/user, datum/money_account/req_acct)
+	CheckAccountValidity(user)
 	if(!istype(req_acct))
 		return FALSE
 	if(account && (req_acct == account || (account.account_number && req_acct.account_number == account.account_number)))
@@ -180,7 +200,7 @@
 	return FALSE
 
 /datum/computer_file/program/supply_order/proc/SubmitOrder(mob/user, raw_reason)
-	CheckAccountValidity()
+	CheckAccountValidity(user)
 	var/list/totals = GetCartTotals()
 	var/block = GetSubmitBlockReason(totals)
 	if(block)
@@ -245,7 +265,7 @@
 	return count
 
 /datum/computer_file/program/supply_order/proc/PopulateBaseUiData(list/data, mob/user)
-	CheckAccountValidity()
+	CheckAccountValidity(user)
 	var/obj/item/card/id/available_id = GetAvailableIdCard(user)
 	var/list/totals = GetCartTotals()
 
@@ -490,6 +510,7 @@
 /datum/computer_file/program/supply_order/Topic(href, href_list)
 	if(..() || href_list["close"])
 		return TRUE
+	CheckAccountValidity(usr)
 	if(HandleTabTopic(href_list))
 		SSnano.update_uis(src)
 		return TRUE

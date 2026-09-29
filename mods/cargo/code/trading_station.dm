@@ -40,14 +40,13 @@
 	var/metabolism_enabled = TRUE
 	var/max_production_multiplier = 2.0
 	var/min_consumption_reserve = 1
-	var/metabolic_consumption_wealth_ratio = 0.75
+	var/metabolic_consumption_wealth_ratio = 0.35
 	var/metabolic_production_cost_ratio = 0.40
 	var/list/metabolic_production_tags = list()
 	var/list/metabolic_consumption_tags = list()
 
 	var/update_time = 0
 	var/update_timer_start = 0
-	var/update_timer_id = null
 	var/next_update_at = 0
 
 	var/obj/overmap/overmap_object
@@ -517,14 +516,6 @@
 			result += offers[id]
 	return result
 
-/datum/trading_station/proc/BuildCommodityPathIndex()
-	commodity_by_path = list()
-	for(var/id in offers)
-		var/datum/trade_offer/offer = offers[id]
-		if(istype(offer) && ispath(offer.item_path, /atom/movable))
-			if(!(offer.item_path in commodity_by_path))
-				commodity_by_path[offer.item_path] = offer
-
 /datum/trading_station/proc/NormalizeInventory(list/target_inventory)
 	if(!islist(target_inventory))
 		return
@@ -627,17 +618,6 @@
 		offer_id = "good_[++next_good_offer_id]"
 	return offer_id
 
-/datum/trading_station/proc/BuildGoodPacket(item_path, list/source_packet = null)
-	var/list/good_packet = islist(source_packet) ? source_packet.Copy() : list()
-	good_packet["item_path"] = item_path
-	if(!("name" in good_packet))
-		good_packet["name"] = null
-	if(!("amount_range" in good_packet))
-		good_packet["amount_range"] = null
-	if(!("price" in good_packet))
-		good_packet["price"] = null
-	return good_packet
-
 /datum/trading_station/proc/InitGoods()
 	SyncAmountsOfGoods()
 	UpdateVisibleGoodCount()
@@ -659,10 +639,6 @@
 		cat_amounts[offer.id] = offer.stock
 	hidden_offers.Cut()
 	UpdateVisibleGoodCount()
-
-/datum/trading_station/proc/SpendTradeStationsBudget(budget = spawn_cost)
-	if(!spawn_always)
-		SSsupply.trade_stations_budget -= budget
 
 /datum/trading_station/proc/RegainTradeStationsBudget(budget = spawn_cost)
 	if(!spawn_always)
@@ -702,26 +678,34 @@
 		return
 	var/batch_size = clamp(rand(1, 2), 1, length(candidates))
 	for(var/i in 1 to batch_size)
+		for(var/list/candidate as anything in candidates.Copy())
+			if(!CanProduceMetabolicCommodity(candidate["category"], candidate["good_id"]))
+				candidates -= list(candidate)
 		if(!length(candidates))
 			break
 		var/list/chosen = pick(candidates)
 		candidates -= list(chosen)
 		ProduceMetabolicCommodity(chosen["category"], chosen["good_id"])
 
-/datum/trading_station/proc/ProduceMetabolicCommodity(category_name, good_id)
+/datum/trading_station/proc/CanProduceMetabolicCommodity(category_name, good_id)
+	if(GetGoodAmount(category_name, good_id) >= GetMetabolicProductionLimit(category_name, good_id))
+		return FALSE
+	var/base_price = max(1, round(GetLiveMarketBasePrice(category_name, good_id)))
+	var/prod_cost = max(1, round(base_price * metabolic_production_cost_ratio))
+	return wealth >= prod_cost
+
+/datum/trading_station/proc/GetMetabolicProductionLimit(category_name, good_id)
 	var/baseline = max(1, GetLiveMarketBaseline(category_name, good_id))
-	var/max_stock = max(baseline + 1, round(baseline * max_production_multiplier))
-	var/current_stock = GetGoodAmount(category_name, good_id)
-	if(current_stock >= max_stock)
+	return max(baseline + 1, round(baseline * max_production_multiplier))
+
+/datum/trading_station/proc/ProduceMetabolicCommodity(category_name, good_id)
+	if(!CanProduceMetabolicCommodity(category_name, good_id))
 		return FALSE
 
 	var/base_price = max(1, round(GetLiveMarketBasePrice(category_name, good_id)))
 	var/prod_cost = max(1, round(base_price * metabolic_production_cost_ratio))
-	if(wealth < prod_cost)
-		return FALSE
-
 	SubtractFromWealth(prod_cost)
-	SetGoodAmount(category_name, good_id, current_stock + 1)
+	SetGoodAmount(category_name, good_id, GetGoodAmount(category_name, good_id) + 1)
 	AdjustLiveMarketDemand(category_name, good_id, -0.2)
 	return TRUE
 
@@ -764,44 +748,21 @@
 			var/datum/trade_offer/offer = GetOffer(good_id)
 			if(istype(offer) && offer.hidden && !hidden_inv_unlocked)
 				continue
-			var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
-			var/list/tags = islist(comm_state) ? comm_state["tags"] : null
-			var/matched = FALSE
-			if(islist(tags))
-				for(var/tag in filter_tags)
-					if(tags[tag])
-						matched = TRUE
-						break
-			if(!matched && (lowertext(category_name) in filter_tags))
-				matched = TRUE
-			if(!matched)
+			if(!MatchesMetabolicTags(category_name, good_id, filter_tags))
 				continue
 			candidates += list(list("category" = category_name, "good_id" = good_id))
 	return candidates
 
-/datum/trading_station/proc/IsMetabolicProductionGood(category_name, good_id)
-	if(!length(metabolic_production_tags))
+/datum/trading_station/proc/MatchesMetabolicTags(category_name, good_id, list/filter_tags)
+	if(!islist(filter_tags) || !length(filter_tags))
 		return FALSE
 	var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
 	var/list/tags = islist(comm_state) ? comm_state["tags"] : null
 	if(islist(tags))
-		for(var/tag in metabolic_production_tags)
+		for(var/tag in filter_tags)
 			if(tags[tag])
 				return TRUE
-	if(lowertext(category_name) in metabolic_production_tags)
-		return TRUE
-	return FALSE
-
-/datum/trading_station/proc/IsMetabolicConsumptionGood(category_name, good_id)
-	if(!length(metabolic_consumption_tags))
-		return FALSE
-	var/list/comm_state = GetLiveMarketState(category_name, good_id, TRUE)
-	var/list/tags = islist(comm_state) ? comm_state["tags"] : null
-	if(islist(tags))
-		for(var/tag in metabolic_consumption_tags)
-			if(tags[tag])
-				return TRUE
-	if(lowertext(category_name) in metabolic_consumption_tags)
+	if(istext(category_name) && (lowertext(category_name) in filter_tags))
 		return TRUE
 	return FALSE
 
@@ -814,19 +775,18 @@
 		for(var/good_id in category)
 			var/current_amount = GetGoodAmount(category_name, good_id)
 			var/baseline = max(1, GetLiveMarketBaseline(category_name, good_id))
-			if(metabolism_enabled && current_amount >= baseline && IsMetabolicProductionGood(category_name, good_id))
+			if(metabolism_enabled && current_amount >= baseline && MatchesMetabolicTags(category_name, good_id, metabolic_production_tags))
 				continue
 			var/chance = current_amount < 5 ? 100 : (current_amount > 20 ? 0 : 15)
 			if(!prob(chance))
 				continue
-			var/cost = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name) / 2))
+			var/cost = max(1, round(SSsupply.GetStationRestockCost(good_id, src, category_name) * live_market_restock_discount))
 			var/amount_to_add = budget ? max(1, rand(1, max(1, round(budget / cost)))) : 1
 			candidates += list(list(
 				"category" = category_name,
 				"good_id" = good_id,
 				"unit_cost" = cost,
-				"amount" = amount_to_add,
-				"current_amount" = current_amount
+				"amount" = amount_to_add
 			))
 	return candidates
 
@@ -837,9 +797,18 @@
 		var/idx = rand(1, length(restock_candidates))
 		var/list/good_packet = restock_candidates[idx]
 		restock_candidates.Cut(idx, idx + 1)
-		var/total_cost = good_packet["unit_cost"] * good_packet["amount"]
+		var/category_name = good_packet["category"]
+		var/good_id = good_packet["good_id"]
+		var/current_amount = GetGoodAmount(category_name, good_id)
+		var/amount_to_add = good_packet["amount"]
+		if(metabolism_enabled && MatchesMetabolicTags(category_name, good_id, metabolic_production_tags))
+			var/max_stock = GetMetabolicProductionLimit(category_name, good_id)
+			amount_to_add = min(amount_to_add, max(0, max_stock - current_amount))
+		if(amount_to_add <= 0)
+			continue
+		var/total_cost = good_packet["unit_cost"] * amount_to_add
 		if(total_cost <= wealth)
-			SetGoodAmount(good_packet["category"], good_packet["good_id"], good_packet["amount"] + good_packet["current_amount"])
+			SetGoodAmount(category_name, good_id, current_amount + amount_to_add)
 			SubtractFromWealth(total_cost)
 
 /datum/trading_station/proc/GetGoodPacket(category_name, good_ref)
@@ -917,6 +886,16 @@
 	var/good_id = isnum(good_ref) ? category[good_ref] : good_ref
 	goods[good_id] = stock
 
+/datum/trading_station/proc/AddExportStock(category_name, good_id, amount)
+	var/datum/trade_offer/offer = ResolveOffer(category_name, good_id)
+	if(!istype(offer) || !isnum(amount) || amount <= 0)
+		return
+	// Keep partial packages until enough individual units arrive for a full package.
+	var/units = round((offer.export_stock_remainder + amount) * offer.pack_size + 0.5)
+	var/packages = floor(units / offer.pack_size)
+	offer.export_stock_remainder = (units - packages * offer.pack_size) / offer.pack_size
+	SetGoodAmount(category_name, good_id, offer.stock + packages)
+
 /datum/trading_station/proc/AddToWealth(income, is_offer = FALSE, add_favor = TRUE)
 	if(!isnum(income))
 		return
@@ -930,9 +909,6 @@
 		wealth = max(0, wealth - cost)
 
 /datum/trading_station/Destroy()
-	if(update_timer_id)
-		deltimer(update_timer_id)
-		update_timer_id = null
 	if(overmap_location)
 		GLOB.entered_event.unregister(overmap_location, src, .proc/Discovered)
 		overmap_location = null
