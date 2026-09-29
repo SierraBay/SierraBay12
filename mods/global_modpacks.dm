@@ -13,6 +13,7 @@
 #include "giant_armored_centipede/_giant_armored_centipede_includes.dm"
 #include "escpodinf/_escpodinf_includes.dm"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
+#include "gamemode_job_requirements/_gamemode_job_requirements_includes.dm"
 #include "gliding/_gliding_includes.dm"
 #include "guns/_guns_includes.dm"
 #include "height_system/_heights_includes.dm"

@@ -1,0 +1,6 @@
+author: Aigamuxa
+changes:
+  - balance: Добавил требование в 4 сотрудника охраны для выпадения режима 
+      mercenary
+  - balance: Запретил сотрудникам охраны становиться мерками
+delete-after: true
