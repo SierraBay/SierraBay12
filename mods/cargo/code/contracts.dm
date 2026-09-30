@@ -90,10 +90,13 @@
 	name = "breached contract crate"
 	desc = "A freight crate whose trade-network security seal was forcefully breached."
 
+	contract.Fail(reason, null, user_name)
+	if(contract.actual_penalty < contract.penalty)
+		visible_message(SPAN_WARNING("The unpaid cargo penalty triggers automatic freight disposal."))
+		qdel(src)
+		return TRUE
 	locked = FALSE
 	open()
-
-	contract.Fail(reason, null, user_name)
 	return TRUE
 
 /obj/structure/closet/crate/trade_contract/proc/AttemptTamper(mob/user, reason, force_open = FALSE)
@@ -143,6 +146,13 @@
 		return
 	return ..()
 
+/obj/structure/closet/crate/trade_contract/on_death()
+	if(IsActiveContractCrate())
+		HandleTamper(null, "Contract cargo was destroyed before delivery.")
+		if(QDELETED(src))
+			return
+	return ..()
+
 /obj/structure/closet/crate/trade_contract/Destroy()
 	var/datum/trade_contract/contract = GetLinkedContract()
 	if(istype(contract) && contract.assigned_crate == src)
@@ -171,6 +181,7 @@
 	var/deposit = 0
 	var/deposit_paid = 0
 	var/pending_refund = 0
+	var/pending_payout = 0
 	var/distance = 0
 	var/status = CONTRACT_STATUS_AVAILABLE
 	var/list/contents = list()
@@ -294,6 +305,8 @@
 /datum/trade_contract/proc/GetResolvedNote()
 	var/currency = GetCurrencyName()
 	if(status == CONTRACT_STATUS_COMPLETED)
+		if(HasPendingPayout())
+			return "Delivery complete. [round(pending_payout)] [currency] payment is pending account reactivation."
 		var/note = "[round(reward)] [currency] paid."
 		if(deposit > 0)
 			note += " [round(deposit)] [currency] deposit returned."
@@ -352,6 +365,8 @@
 /datum/trade_contract/proc/CanAccept(obj/machinery/trade_beacon/receiving/receiver_beacon = null, datum/money_account/account = null, buyer_faction = null)
 	if(status != CONTRACT_STATUS_AVAILABLE)
 		return FALSE
+	if(istype(account) && account.suspended)
+		return FALSE
 	if(deposit > 0 && istype(account) && account.money < deposit)
 		return FALSE
 	var/datum/trading_station/source_station = GetSourceStation()
@@ -362,6 +377,8 @@
 		if(QDELETED(receiver_beacon) || !receiver_beacon.anchored || receiver_beacon.inoperable())
 			return FALSE
 		if(SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station))
+			return FALSE
+		if(!length(receiver_beacon.GetValidDropTurfs()))
 			return FALSE
 	return CanFulfillCargoRequirements(source_station)
 
@@ -387,6 +404,8 @@
 		return "Select a receiving beacon first."
 	if(status != CONTRACT_STATUS_AVAILABLE)
 		return "This contract is no longer available."
+	if(istype(account) && account.suspended)
+		return "Linked payment account is suspended."
 	if(deposit > 0 && istype(account) && account.money < deposit)
 		return "Insufficient funds for security deposit ([round(deposit)] [GetCurrencyName()] required)."
 	var/datum/trading_station/source_station = GetSourceStation()
@@ -398,6 +417,8 @@
 		return route_block
 	if(QDELETED(receiver_beacon) || !receiver_beacon.anchored || receiver_beacon.inoperable())
 		return "The receiving beacon is unavailable."
+	if(!length(receiver_beacon.GetValidDropTurfs()))
+		return "Clear a floor tile within receiving beacon range for the contract cargo."
 	var/range_block = SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
 	if(range_block)
 		return "[source_station.name]: [range_block]"
@@ -490,8 +511,6 @@
 /datum/trade_contract/proc/CanDeliver(obj/machinery/trade_beacon/sending/sender_beacon)
 	if(status != CONTRACT_STATUS_ACTIVE || QDELETED(sender_beacon) || !istype(linked_account))
 		return FALSE
-	if(linked_account.suspended)
-		return FALSE
 	if(!sender_beacon.CanExport())
 		return FALSE
 	var/datum/trading_station/destination_station = GetDestinationStation()
@@ -530,8 +549,6 @@
 		return "This contract is not active."
 	if(!istype(linked_account))
 		return "Linked payment account is invalid or missing."
-	if(linked_account.suspended)
-		return "Linked payment account is suspended."
 	if(QDELETED(sender_beacon) || !sender_beacon.anchored || sender_beacon.inoperable())
 		return "The sending beacon is unavailable."
 	var/datum/trading_station/destination_station = GetDestinationStation()
@@ -576,6 +593,20 @@
 
 /datum/trade_contract/proc/HasPendingRefund()
 	return pending_refund > 0
+
+/datum/trade_contract/proc/HasPendingPayout()
+	return pending_payout > 0
+
+/datum/trade_contract/proc/TrySettlePendingPayout()
+	if(!HasPendingPayout())
+		return TRUE
+	if(!istype(linked_account) || linked_account.suspended)
+		return FALSE
+	if(!linked_account.deposit(pending_payout, "Trade Contract Delivery", "Trade Network"))
+		return FALSE
+	pending_payout = 0
+	linked_account = null
+	return TRUE
 
 /datum/trade_contract/proc/TrySettlePendingRefund()
 	if(!HasPendingRefund())
@@ -637,16 +668,17 @@
 	status = CONTRACT_STATUS_COMPLETED
 	resolved_at = world.time
 	LogContractCompletion(sender_beacon)
-	linked_account = null
+	if(!HasPendingPayout())
+		linked_account = null
 	SSsupply?.TrimResolvedContracts()
 	return TRUE
 
 /datum/trade_contract/proc/PayoutReward()
-	if(!istype(linked_account) || linked_account.suspended)
+	if(!istype(linked_account))
 		return FALSE
 	var/total_payout = reward + deposit_paid
 	if(!linked_account.deposit(total_payout, "Trade Contract Delivery", "Trade Network"))
-		return FALSE
+		pending_payout = total_payout
 	deposit_paid = 0
 	return TRUE
 
@@ -688,7 +720,9 @@
 		"<li>Status: Completed</li>",
 		GetCompletionLogPayload()
 	)
-	SSsupply.CreateLogEntry("Contract", linked_account.owner_name, jointext(log_lines, ""), reward, TRUE, get_turf(sender_beacon))
+	if(HasPendingPayout())
+		log_lines += "<li>Payment: [round(pending_payout)] [GetCurrencyName()] pending account reactivation.</li>"
+	SSsupply.CreateLogEntry("Contract", linked_account.owner_name, jointext(log_lines, ""), HasPendingPayout() ? 0 : reward, TRUE, get_turf(sender_beacon))
 
 /datum/trade_contract/proc/GetCompletionLogPayload()
 	return ""

@@ -538,6 +538,49 @@
 		pass("R&D invoice correctly redirected all crate earnings to science account.")
 	return 1
 
+/datum/unit_test/cargo_export_invalid_rnd_invoice_test
+	name = "CARGO EXPORT: Invalid R&D invoice blocks sale before payment"
+
+/datum/unit_test/cargo_export_invalid_rnd_invoice_test/start_test()
+	var/turf/safe_turf = get_safe_turf()
+	if(!safe_turf)
+		skip("Safe turf unavailable.")
+		return 1
+
+	for(var/atom/movable/AM in range(2, safe_turf))
+		if(!AM.anchored)
+			qdel(AM)
+
+	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
+	var/datum/money_account/seller_account = new
+	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	station.AssembleInventory()
+	station.wealth = 10000
+	var/obj/structure/closet/crate/crate = new(safe_turf)
+	var/obj/item/paper/manifest/rnd_invoice/invoice = new(crate)
+	invoice.target_account_number = 99999999
+	invoice.stamped = list("Science")
+	invoice.is_copy = FALSE
+
+	var/list/plan = SSsupply.BuildExportPlan(list(crate), station)
+	var/fail_reason = null
+	if(!SSsupply.GetExportInvoiceBlockReason(plan))
+		fail_reason = "Invalid invoice was not detected in the export plan."
+	else if(SSsupply.Export(beacon, seller_account, station))
+		fail_reason = "Export succeeded with an invalid R&D invoice."
+	else if(seller_account.money || QDELETED(crate) || beacon.export_cooldown > world.time)
+		fail_reason = "Failed export changed money, freight, or beacon cooldown."
+
+	qdel(crate)
+	qdel(station)
+	qdel(beacon)
+	qdel(seller_account)
+	if(fail_reason)
+		fail(fail_reason)
+	else
+		pass("Invalid R&D invoice blocks sale before payment or freight removal.")
+	return 1
+
 /datum/unit_test/cargo_order_escrow_low_cargo_budget_test
 	name = "CARGO: Order approval succeeds with zero cargo funds via escrow"
 

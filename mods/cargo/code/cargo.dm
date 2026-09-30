@@ -276,12 +276,16 @@
 		"trade_window_remaining" = isnum(trade_window_remaining) ? FormatCountdown(trade_window_remaining) : ""
 	)
 
-/datum/computer_file/program/supply/proc/SerializeExportItems()
+/datum/computer_file/program/supply/proc/GetExportPlan(datum/trading_station/target_station)
+	if(!IsSendingSelected() || !istype(target_station))
+		return null
+	return SSsupply.BuildExportPlan(sending.GetObjects(), target_station, faction, target_station.wealth)
+
+/datum/computer_file/program/supply/proc/SerializeExportItems(list/plan)
 	var/list/result = list()
-	if(!IsSendingSelected())
+	if(!islist(plan))
 		return result
-	var/datum/trading_station/target_station = EnsureSelectedStation()
-	var/list/plan = SSsupply.BuildExportPlan(sending.GetObjects(), target_station, faction, target_station ? target_station.wealth : INFINITY)
+	var/datum/trading_station/target_station = station
 	var/list/grouped = list()
 	var/list/entries = plan["entries"]
 	for(var/list/entry as anything in entries)
@@ -338,8 +342,10 @@
 /datum/computer_file/program/supply/proc/GetContractAcceptBlockReason(datum/trade_contract/contract)
 	if(!istype(contract))
 		return "Contract data is unavailable."
-	if(!account)
+	if(!istype(account))
 		return "Link an account before accepting contracts."
+	if(account.suspended)
+		return "Linked payment account is suspended."
 	return contract.GetAcceptBlockReason(receiving, account, faction)
 
 /datum/computer_file/program/supply/proc/GetContractDeliverBlockReason(datum/trade_contract/contract)
@@ -537,18 +543,25 @@
 	var/datum/money_account/export_account = GetExportAccount()
 	data["export_to_cargo_account"] = export_to_cargo_account
 	data["export_account_owner"] = export_account ? export_account.owner_name : "Unavailable"
-	var/list/export_items = SerializeExportItems()
+	var/list/plan = GetExportPlan(selected_station)
+	var/list/export_items = SerializeExportItems(plan)
 	var/export_block_reason = null
 	if(!istype(export_account) || export_account.suspended)
 		export_block_reason = "Select an active account for export proceeds."
 	else if(!GetBeaconDisplayId(sending))
 		export_block_reason = "Select a sending beacon first."
+	else if(!istype(selected_station))
+		export_block_reason = "No trading station is available for export."
+	else if(selected_station.wealth <= 0)
+		export_block_reason = "Station trade budget is depleted."
 	else if(sending && sending.export_cooldown > world.time)
 		export_block_reason = "The sending beacon is on cooldown."
-	else if(istype(selected_station))
+	else
 		export_block_reason = SSsupply.GetTradeRangeBlockReason(sending, selected_station)
-	else if(!length(export_items))
+	if(!export_block_reason && !length(export_items))
 		export_block_reason = "No exportable objects are inside the sending beacon range."
+	if(!export_block_reason)
+		export_block_reason = SSsupply.GetExportInvoiceBlockReason(plan)
 
 	data["export_items"] = export_items
 	var/export_total = 0
@@ -625,6 +638,11 @@
 		if(LOG_SCREEN)
 			BuildLogsScreenData(data)
 	if(trade_screen != CONTRACT_SCREEN)
+		var/available_contract_count = 0
+		for(var/datum/trade_contract/contract as anything in SSsupply.trade_contracts)
+			if(contract.status == CONTRACT_STATUS_AVAILABLE && contract.ShouldDisplayAvailable())
+				available_contract_count++
+		data["available_contract_count"] = available_contract_count
 		data["active_contract_count"] = GetActiveContractCount()
 	return data
 
@@ -891,12 +909,20 @@
 	if(!sending)
 		to_chat(usr, SPAN_WARNING("Select a sending beacon first."))
 		return TRUE
-	if(!length(SerializeExportItems()))
+	var/datum/trading_station/target_station = EnsureSelectedStation()
+	if(!istype(target_station))
+		to_chat(usr, SPAN_WARNING("No trading station is available for export."))
+		return TRUE
+	if(target_station.wealth <= 0)
+		to_chat(usr, SPAN_WARNING("Export failed: Station trade budget is depleted."))
+		return TRUE
+	var/list/plan = GetExportPlan(target_station)
+	if(!length(SerializeExportItems(plan)))
 		to_chat(usr, SPAN_WARNING("No exportable objects were found near the sending beacon."))
 		return TRUE
-	var/datum/trading_station/target_station = EnsureSelectedStation()
-	if(istype(target_station) && target_station.wealth <= 0)
-		to_chat(usr, SPAN_WARNING("Export failed: Station trade budget is depleted."))
+	var/invoice_block_reason = SSsupply.GetExportInvoiceBlockReason(plan)
+	if(invoice_block_reason)
+		to_chat(usr, SPAN_WARNING(invoice_block_reason))
 		return TRUE
 	var/export_result = SSsupply.Export(sending, export_account, target_station, faction)
 	if(!export_result)

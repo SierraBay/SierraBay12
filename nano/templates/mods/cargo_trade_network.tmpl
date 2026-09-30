@@ -2092,16 +2092,24 @@
 											<span class="tn-panel-label">Instructions:</span>
 											<div class="tn-muted" style="margin-top: 2px;">{{>contract_entry.instruction_text}}</div>
 										</div>
-										<div>
-											<span class="tn-panel-label">Base Value:</span>
-											<div class="font-mono" style="color: #ffaa22; margin-top: 2px;">{{:contract_entry.base_value}} {{:data.currency_short}}</div>
+									<div>
+										<span class="tn-panel-label">Base Value:</span>
+										<div class="font-mono" style="color: #ffaa22; margin-top: 2px;">{{:contract_entry.base_value}} {{:data.currency_short}}</div>
+									</div>
+									<div>
+										<span class="tn-panel-label">Contract Reward:</span>
+										<div class="font-mono" style="color: #55cc55; font-size: 12px; font-weight: bold; margin-top: 2px;">
+											{{:contract_entry.reward}} {{:data.currency_short}}
 										</div>
-										<div>
-											<span class="tn-panel-label">Contract Reward:</span>
-											<div class="font-mono" style="color: #55cc55; font-size: 12px; font-weight: bold; margin-top: 2px;">
-												{{:contract_entry.reward}} {{:data.currency_short}}
-											</div>
-										</div>
+									</div>
+									<div>
+										<span class="tn-panel-label">Security Deposit (Charged on Accept):</span>
+										<div class="font-mono">{{:contract_entry.deposit}} {{:data.currency_short}}</div>
+									</div>
+									<div>
+										<span class="tn-panel-label">Failure Penalty:</span>
+										<div class="font-mono">{{:contract_entry.penalty}} {{:data.currency_short}}</div>
+									</div>
 									</div>
 
 									{{if contract_entry.block_reason}}
@@ -2115,7 +2123,7 @@
 											{{/if}}
 										</div>
 										<div>
-											{{:helper.link('Accept: ' + contract_entry.reward + ' ' + data.currency_short, 'check', {'PRG_contract_accept' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+										{{:helper.link('Accept Contract', 'check', {'PRG_contract_accept' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
 										</div>
 									</div>
 								</div>

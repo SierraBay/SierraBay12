@@ -93,14 +93,19 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/trade_beacon/receiving/proc/DropItem(drop_type)
-	if(inoperable() || !anchored || QDELETED(src) || !drop_type)
-		return null
+/obj/machinery/trade_beacon/receiving/proc/GetValidDropTurfs()
 	var/list/valid_turfs = list()
+	if(inoperable() || !anchored || QDELETED(src))
+		return valid_turfs
 	for(var/turf/tile in range(2, src))
-		if(!CanDropOnTurf(tile))
-			continue
-		valid_turfs += tile
+		if(CanDropOnTurf(tile))
+			valid_turfs += tile
+	return valid_turfs
+
+/obj/machinery/trade_beacon/receiving/proc/DropItem(drop_type)
+	if(!drop_type)
+		return null
+	var/list/valid_turfs = GetValidDropTurfs()
 	if(!length(valid_turfs))
 		return null
 	Activate()

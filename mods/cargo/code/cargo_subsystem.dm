@@ -286,7 +286,7 @@
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
 		if(contract.status == CONTRACT_STATUS_COMPLETED || contract.status == CONTRACT_STATUS_FAILED)
 			resolved_count++
-			if(contract.HasPendingRefund())
+			if(contract.HasPendingRefund() || contract.HasPendingPayout())
 				continue
 			if(!oldest_resolved || contract.resolved_at < oldest_resolved.resolved_at)
 				oldest_resolved = contract
@@ -295,11 +295,13 @@
 		qdel(oldest_resolved)
 
 /datum/controller/subsystem/supply/proc/ProcessPendingContractRefunds()
-	var/settled_refund = FALSE
+	var/settled_payment = FALSE
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
 		if(contract.HasPendingRefund() && contract.TrySettlePendingRefund())
-			settled_refund = TRUE
-	if(settled_refund)
+			settled_payment = TRUE
+		if(contract.HasPendingPayout() && contract.TrySettlePendingPayout())
+			settled_payment = TRUE
+	if(settled_payment)
 		TrimResolvedContracts()
 
 /datum/controller/subsystem/supply/proc/GetVisibleContractBySource(source_uid)
@@ -470,7 +472,7 @@
 		"base_value" = base_value,
 		"reward" = max(100, calculated_reward),
 		"deposit" = round(base_value * 0.3),
-		"penalty" = round(base_value * 1.5),
+		"penalty" = round(max(base_value, destination_sell_price * amount) * 1.5),
 		"content" = list(
 			"category" = source_category_name,
 			"good_id" = source_good_id,
@@ -1213,6 +1215,25 @@
 		var/obj/item/paper/manifest/rnd_invoice/invoice = item
 		if(!invoice.is_copy && LAZYLEN(invoice.stamped) && invoice.target_account_number)
 			return invoice
+	return null
+
+/datum/controller/subsystem/supply/proc/GetExportInvoiceBlockReason(list/plan)
+	if(!islist(plan))
+		return null
+	var/list/checked_roots = list()
+	for(var/list/entry as anything in plan["entries"])
+		if(!entry["sell"])
+			continue
+		var/atom/movable/root = entry["root"]
+		if(checked_roots[root] || !istype(root, /obj/structure/closet))
+			continue
+		checked_roots[root] = TRUE
+		var/obj/item/paper/manifest/rnd_invoice/slip = FindRnDInvoice(root)
+		if(!slip)
+			continue
+		var/datum/money_account/payee = get_account(slip.target_account_number)
+		if(!istype(payee) || payee.suspended)
+			return "R&D invoice in [root.name] targets an unavailable or suspended account."
 	return null
 
 /datum/controller/subsystem/supply/proc/GetExportTree(atom/movable/root)
