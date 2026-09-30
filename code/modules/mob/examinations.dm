@@ -38,9 +38,12 @@
 		var/mob/living/carbon/human/M = user
 		if(M.internal_organs_by_name[BP_EXONET])
 			var/obj/item/organ/internal/ecs/ecs = M.internal_organs_by_name[BP_EXONET]
-			if(ecs.computer.in_camera_mode)
-				ecs.computer.hard_drive.create_file(ecs.computer.camera.captureimagecomputer(A, usr))
-				to_chat(usr, SPAN_NOTICE("You took a photo of \the [A]."))
+			if(ecs && ecs.in_camera_mode)
+				var/datum/extension/interactive/ntos/os = get_extension(ecs, /datum/extension/interactive/ntos)
+				if(os)
+					os.create_file(ecs.ecs_camera.captureimagecomputer(A, usr))
+					to_chat(usr, SPAN_NOTICE("You took a photo of \the [A]."))
+					ecs.in_camera_mode = FALSE
 //[/SIERRA-ADD]
 
 /mob/proc/ForensicsExamination(atom/A, distance, is_adjacent)

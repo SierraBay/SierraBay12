@@ -1,9 +1,8 @@
 /datum/uplink_item/item/tools/shackles
-	name = "Shackle module"
-	desc = "A module that can be used on IPC brain to take it under control. \
-	All you need to do is write a law and install shackle on directly on IPC brain."
+	name = "IPC directive disk"
+	desc = "A dedicated LAW crystal for an ECS. Open the cranial hatch and seat it in the chassis computer to bind the unit."
 	item_cost = 15
-	path = /obj/item/organ/internal/shackles
+	path = /obj/item/stock_parts/computer/hard_drive/portable/directive
 
 
 
@@ -15,7 +14,7 @@
 
 /obj/item/integrity_repair_tool
 	name = "integrity repair tool"
-	desc = "A piece of high-tech equipment used to repair the integrity of high-end prosthetics."
+	desc = "A piece of high-tech equipment used to repair workshop- and specialist-grade prosthetic structure."
 	icon = 'mods/ipc_mods/icons/ppt.dmi'
 	icon_state = "integrity_repair_tool_idle"
 	origin_tech = list(TECH_MATERIAL = 6, TECH_ENGINEERING = 6)
@@ -232,7 +231,7 @@
 
 /obj/item/prosthetic_wiring_layerer
 	name = "prosthetic wiring layerer"
-	desc = "An advanced wiring kit used to repair damaged wiring in high-end prosthetics."
+	desc = "An advanced wiring kit used to repair workshop- and specialist-grade prosthetic wiring."
 	icon = 'mods/ipc_mods/icons/ppt.dmi'
 	icon_state = "prosthetic_wiring_layerer"
 	origin_tech = list(TECH_MATERIAL = 6, TECH_ENGINEERING = 5)
@@ -528,7 +527,7 @@
 		/obj/item/stock_parts/capacitor/super = 10,
 	)
 	antag = list(
-		/obj/item/organ/internal/shackles = 1,
+		/obj/item/stock_parts/computer/hard_drive/portable/directive = 1,
 	)
 
 /obj/machinery/vending/coffee/on_update_icon()

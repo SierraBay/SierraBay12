@@ -704,6 +704,8 @@ The slots that you can use are found in items_clothing.dm and are the inventory 
 			return
 
 	var/randn = rand(1, 100) + state_mod
+	if(istype(target))
+		randn += target.get_prosthetic_disarm_resistance()
 	if(!(check_no_slip(target)) && randn <= push_threshold)
 		var/armor_check = 100 * target.get_blocked_ratio(affecting, DAMAGE_BRUTE, damage = 20)
 		target.apply_effect(2, EFFECT_WEAKEN, armor_check)

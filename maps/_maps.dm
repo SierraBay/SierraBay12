@@ -8,7 +8,7 @@
 #include "unit_tests\unit_testing.dm"
 
 #include "example\example_define.dm" // Always included because tests. May be fixable later.
-
+#define DEV_MODE
 #include "using.dm"
 
 GLOBAL_TYPED_AS(using_map, /datum/map, new using_map_DATUM)

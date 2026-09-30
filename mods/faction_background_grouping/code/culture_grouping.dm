@@ -344,9 +344,8 @@
 /singleton/cultural_info/culture/unathi_space/faction = FACTION_UNATHI_INDEPENDENT
 
 // IPC
-/singleton/cultural_info/culture/ipc/faction = FACTION_OTHER
-/singleton/cultural_info/culture/ipc/gen2/faction = FACTION_OTHER
-/singleton/cultural_info/culture/ipc/gen3/faction = FACTION_OTHER
+/singleton/cultural_info/culture/ipc/faction = FACTION_POSITRONICS
+/singleton/cultural_info/location/root/faction = FACTION_POSITRONICS
 
 // Vox
 /singleton/cultural_info/culture/vox/faction = FACTION_VOX_CREW

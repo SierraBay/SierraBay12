@@ -185,6 +185,7 @@ var/global/list/STARMAP_HOMEWORLD_CULT_MAP
 		HOME_SYSTEM_NYX_ROANOK         = CULTURE_HUMAN_NYXIAN,
 		HOME_SYSTEM_NYX_YUKLIT         = CULTURE_HUMAN_NYXIAN,
 		HOME_SYSTEM_NYX_CASSER         = CULTURE_HUMAN_NYXIAN,
+		HOME_SYSTEM_ROOT               = CULTURE_ROOT,
 	)
 
 // Fix faction for independent/lawless worlds.

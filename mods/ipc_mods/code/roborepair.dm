@@ -19,6 +19,16 @@
 		use(use_amount)
 		return TRUE
 
+/obj/item/gun/energy/plasmacutter/use_before(mob/living/target, mob/living/user, click_parameters)
+	if (!ishuman(target) || user.a_intent != I_HELP)
+		return FALSE
+	var/mob/living/carbon/human/H = target
+	var/obj/item/organ/external/S = H.organs_by_name[user.zone_sel.selecting]
+	if (!S || !BP_IS_ROBOTIC(S) || !S.expensive)
+		return FALSE
+	to_chat(user, SPAN_WARNING(S.get_repair_grade_hint(DAMAGE_BRUTE)))
+	return TRUE
+
 /obj/item/weldingtool/use_before(mob/living/target, mob/living/user, click_parameters)
 	if (!ishuman(target))
 		return FALSE
@@ -31,7 +41,7 @@
 		return FALSE
 
 	if(S.expensive)
-		to_chat(user, SPAN_WARNING("\The [target]'s [S.name] cannot be repaired with such simple tools - \the [src] cannot repair it."))
+		to_chat(user, SPAN_WARNING(S.get_repair_grade_hint(DAMAGE_BRUTE)))
 		return TRUE
 
 	var/list/all_surgeries = GET_SINGLETON_SUBTYPE_MAP(/singleton/surgery_step)
@@ -131,13 +141,16 @@
 			if(istype(tool, /obj/item/prosthetic_wiring_layerer) || istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
 				robo_heal(damage_amount, damage_type, damage_desc, tool, user)
 				return TRUE
+			to_chat(user, SPAN_WARNING(get_repair_grade_hint(damage_type)))
+			return
 
-		else if(expensive != 2)
-			robo_heal(damage_amount, damage_type, damage_desc, tool, user)
-			return TRUE
+		robo_heal(damage_amount, damage_type, damage_desc, tool, user)
+		return TRUE
 
 	else
 		to_chat(user, SPAN_DANGER("The damage is far too severe to patch over externally."))
+		if(expensive)
+			to_chat(user, SPAN_NOTICE("Open the hatch and use [get_repair_grade_name()]-grade tools."))
 		return
 
 

@@ -1,4 +1,9 @@
 /singleton/species/machine
+	default_cultural_info = list(
+		TAG_CULTURE = CULTURE_ROOT,
+		TAG_HOMEWORLD = HOME_SYSTEM_ROOT,
+		TAG_FACTION = FACTION_POSITRONICS
+	)
 	extended_cultural_info = list(
 		TAG_HOMEWORLD = list(
 			HOME_SYSTEM_ROOT,

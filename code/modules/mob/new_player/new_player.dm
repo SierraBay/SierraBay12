@@ -549,9 +549,11 @@
 			spawning = 0 //abort
 			return null
 		new_character = new(spawn_turf, chosen_species.name)
-		if(chosen_species.has_organ[BP_POSIBRAIN] && client && client.prefs.is_shackled)
+		if(chosen_species.has_organ[BP_POSIBRAIN] && client && client.prefs.has_ipc_shackles())
 			var/obj/item/organ/internal/posibrain/B = new_character.internal_organs_by_name[BP_POSIBRAIN]
-			if(B)	B.shackle(client.prefs.get_lawset())
+			var/datum/ai_laws/lawset = client.prefs.get_lawset()
+			if(B && lawset)
+				B.shackle(lawset)
 
 	if(!new_character)
 		new_character = new(spawn_turf)

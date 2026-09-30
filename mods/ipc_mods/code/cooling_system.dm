@@ -20,6 +20,12 @@
 	var/heating_modificator
 	var/list/coolant_reagents_efficiency = list()
 	var/coolant_reagent_water
+	// Целевая температура, к которой система охлаждения стремится приблизить тело
+	var/thermostat = 80 CELSIUS
+	// Полное отключение активного охлаждения через IPC Diagnostics
+	var/cooling_enabled = TRUE
+	// Последний расход заряда батареи за тик активного охлаждения (0 если неактивно)
+	var/last_cooling_drain = 0
 
 /obj/item/organ/internal/cooling_system/Initialize()
 	. = ..()
@@ -36,8 +42,11 @@
 	reagents.add_reagent(/datum/reagent/water, 30)
 
 /obj/item/organ/internal/cooling_system/emp_act(severity)
+	severity = ipc_try_surge_protect(severity)
+	if(!severity)
+		return
 	damage += rand(15 - severity * 5, 20 - severity * 5)
-	..()
+	..(severity)
 // Коэффицент эффективности работы смеси
 /obj/item/organ/internal/cooling_system/proc/coolant_purity()
 	var/total_purity = 0
@@ -101,21 +110,46 @@
 
 /obj/item/organ/internal/cooling_system/proc/get_tempgain()
 	var/obj/item/organ/internal/posibrain/ipc/posibrain = owner.internal_organs_by_name[BP_POSIBRAIN]
-	var/total_cooling_efficiency = 0
+	var/total_limb_heat = 0
 	if(!posibrain)
 		return 0
 	if(owner.bodytemperature > 550 CELSIUS)
 		return 0
 	for(var/obj/item/organ/external/part in owner.organs)
-		total_cooling_efficiency += part.coolingefficiency
+		total_limb_heat += part.coolingefficiency
 
-	refrigerant_rate = total_cooling_efficiency
+	refrigerant_rate = total_limb_heat
+
+	// Активное охлаждение: когда температура выше целевой, система откачивает тепло
+	if(cooling_enabled && owner.bodytemperature > thermostat && reagents.total_volume > 0)
+		var/delta = owner.bodytemperature - thermostat
+		var/efficiency = 1 - (damage / max_damage) * 0.7
+		var/cooling_power = min(delta * 1.5, 15) * efficiency
+		// Расход заряда батареи: чем больше охлаждаем, тем больше потребляем
+		var/obj/item/organ/internal/cell/AC = owner.internal_organs_by_name[BP_CELL]
+		if(AC && AC.cell)
+			var/drain = cooling_power * 2
+			AC.cell.charge = max(0, AC.cell.charge - drain)
+			last_cooling_drain = drain
+		refrigerant_rate -= cooling_power
+	else
+		last_cooling_drain = 0
+
 	return refrigerant_rate
 
 /obj/item/organ/internal/cooling_system/proc/get_coolant_remaining()
 	if(status & ORGAN_DEAD)
 		return 0
 	return round(reagents.total_volume)
+
+/obj/item/organ/internal/cooling_system/Topic(href, list/href_list)
+	if(href_list["set_thermostat"])
+		if(!owner || owner != usr || !owner.is_species(SPECIES_IPC))
+			return
+		var/new_temp = input(usr, "Set thermostat target temperature (20–140°C):", "Thermostat", round(thermostat - T0C)) as num
+		if(!isnull(new_temp))
+			thermostat = clamp(new_temp, 20, 140) + T0C
+			to_chat(owner, SPAN_NOTICE("Thermostat set to [round(thermostat - T0C)]°C."))
 
 /obj/item/organ/internal/cooling_system/examine(mob/user, distance)
 	. = ..()
@@ -149,3 +183,77 @@
 		amount = src.reagents.trans_to_obj(beaker, refrigerant_max)
 		to_chat(user, SPAN_NOTICE("You fill \the [beaker] with [amount] units from \the [src]."))
 		playsound(src.loc, 'sound/effects/pour.ogg', 25, 1)
+
+// ── SURGE PROTECTOR ──────────────────────────────────────────────────────────
+// Дополнительный орган. Поглощает ЭМИ/электрический урон, принимая его на себя.
+// Опциональный апгрейд — не выдаётся по умолчанию, доступен через орган принтер.
+/obj/item/organ/internal/surge_protector
+	name = "surge protector"
+	desc = "An electromagnetic surge absorption module. Intercepts and dissipates electrical discharge before it reaches delicate internal systems."
+	icon = 'mods/ipc_mods/icons/ipc_icons.dmi'
+	icon_state = "cooling1"
+	organ_tag = BP_SURGE_PROTECTOR
+	parent_organ = BP_CHEST
+	status = ORGAN_ROBOTIC
+	damage_reduction = 0.9
+	max_damage = 50
+	surface_accessible = TRUE
+	var/last_absorb_time
+	var/last_absorb_result
+
+/obj/item/organ/proc/ipc_try_surge_protect(severity)
+	if(!severity || !owner)
+		return severity
+	if(!(owner.is_species(SPECIES_IPC) || owner.is_species(SPECIES_FBP)))
+		return severity
+	var/obj/item/organ/internal/surge_protector/SP = owner.internal_organs_by_name[BP_SURGE_PROTECTOR]
+	if(!istype(SP) || (SP.status & ORGAN_DEAD))
+		return severity
+	if(src == SP)
+		return 0
+	return SP.filter_severity(severity)
+
+/obj/item/organ/internal/surge_protector/proc/filter_severity(severity)
+	if(!severity || (status & ORGAN_DEAD))
+		return severity
+	if(last_absorb_time == world.time)
+		return last_absorb_result
+	last_absorb_time = world.time
+	take_internal_damage(rand(5, 12) * max(3 - severity, 1))
+	if(status & ORGAN_DEAD)
+		if(owner)
+			to_chat(owner, SPAN_DANGER("WARNING: Surge protector overloaded and destroyed!"))
+		last_absorb_result = severity
+		return severity
+	if(severity == EMP_ACT_HEAVY)
+		last_absorb_result = EMP_ACT_LIGHT
+		if(owner)
+			to_chat(owner, SPAN_WARNING("Surge protector partially absorbs electromagnetic pulse."))
+		return last_absorb_result
+	last_absorb_result = 0
+	if(owner)
+		to_chat(owner, SPAN_WARNING("Surge protector absorbs electromagnetic pulse."))
+	return 0
+
+/obj/item/organ/internal/emp_act(severity)
+	if(BP_IS_ROBOTIC(src))
+		severity = ipc_try_surge_protect(severity)
+		if(!severity)
+			return
+	if(!BP_IS_ROBOTIC(src))
+		return
+	var/rand_modifier = rand(1, 3)
+	switch (severity)
+		if (EMP_ACT_HEAVY)
+			take_internal_damage(5 * rand_modifier)
+		if (EMP_ACT_LIGHT)
+			take_internal_damage(2 * rand_modifier)
+	..(severity)
+
+/obj/item/organ/internal/cell/emp_act(severity)
+	severity = ipc_try_surge_protect(severity)
+	if(!severity)
+		return
+	..(severity)
+	if(cell)
+		cell.emp_act(severity)

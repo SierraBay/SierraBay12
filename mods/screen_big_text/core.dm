@@ -2,7 +2,7 @@
 	icon = null
 	icon_state = ""
 	name = ""
-	screen_loc = "CENTER-9, CENTER"
+	screen_loc = "WEST+1, SOUTH+3"
 	layer = HUD_BASE_LAYER+0.02
 	plane = HUD_PLANE
 	alpha = 0
@@ -27,10 +27,10 @@
 	T.delay_between_inputing_words = delay_between_words
 	T.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	screen += T
-	T.maptext_width = 500
-	T.maptext_height = 200
-	T.maptext_x = 64
-	T.maptext_y = 32
+	T.maptext_width = 700
+	T.maptext_height = 220
+	T.maptext_x = 0
+	T.maptext_y = 0
 
 	animate(T, alpha = 255, time = 10, easing = EASE_IN)
 	if(need_output_every_word)
@@ -41,10 +41,10 @@
 		for(var/word in words_list)
 			LAZYADD(T.current_words_list, word)
 			T.result_phrase = T.current_words_list.Join(T.current_words_list, "")
-			T.maptext = "<span style='vertical-align:top; text-align:center; color: [T.text_color]; font-size: 300%; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [T.shrift], \"Pterra\";'>[T.result_phrase]</span>"
+			T.maptext = "<span style='vertical-align:top; text-align:left; color: [T.text_color]; font-size: 150%; letter-spacing: 1px; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [T.shrift], \"Pterra\";'>[T.result_phrase]</span>"
 			sleep(delay_between_words)
 	else
-		T.maptext = "<span style='vertical-align:top; text-align:center; color: [T.text_color]; font-size: 300%; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [T.shrift], \"Pterra\";'>[input_text]</span>"
+		T.maptext = "<span style='vertical-align:top; text-align:left; color: [T.text_color]; font-size: 150%; letter-spacing: 1px; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [T.shrift], \"Pterra\";'>[input_text]</span>"
 
 	addtimer(new Callback(src, PROC_REF(smooth_delete_screentext_from_client_screen), T, TRUE), holding_on_screen_time)
 
@@ -58,7 +58,7 @@
 				break
 			input_screen.current_words_list.Cut(i)
 			input_screen.result_phrase = input_screen.current_words_list.Join("")
-			input_screen.maptext = "<span style='vertical-align:top; text-align:center; color: [input_screen.text_color]; font-size: 300%; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [input_screen.shrift], \"Pterra\";'>[input_screen.result_phrase]</span>"
+			input_screen.maptext = "<span style='vertical-align:top; text-align:left; color: [input_screen.text_color]; font-size: 150%; letter-spacing: 1px; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [input_screen.shrift], \"Pterra\";'>[input_screen.result_phrase]</span>"
 			sleep(input_screen.delay_between_erasing_words)
 	else
 		animate(input_screen, alpha = 0, time = 10, easing = EASE_OUT)
@@ -94,8 +94,8 @@
 
 	T.maptext_width = 500
 	T.maptext_height = 200
-	T.maptext_x = 64
-	T.maptext_y = 32
+	T.maptext_x = 0
+	T.maptext_y = 0
 
 	screen += T
 	animate(T, alpha = 255, time = 5, easing = EASE_IN)
@@ -115,7 +115,7 @@
 		var/mins_text = mins < 10 ? "0[mins]" : "[mins]"
 		var/secs_text = secs < 10 ? "0[secs]" : "[secs]"
 
-		T.maptext = "<span style='vertical-align:top; text-align:center; color: [text_color]; font-size: 300%; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [input_shrift], \"Pterra\";'>[mins_text]:[secs_text]</span>"
+		T.maptext = "<span style='vertical-align:top; text-align:left; color: [text_color]; font-size: 150%; letter-spacing: 1px; text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black; font-family: [input_shrift], \"Pterra\";'>[mins_text]:[secs_text]</span>"
 
 		sleep(1 SECOND)
 

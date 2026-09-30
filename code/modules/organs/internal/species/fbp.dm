@@ -54,12 +54,29 @@
 	if(world.time - owner.l_move_time < 15)
 		cost *= 2
 	if(!checked_use(cost) && owner.isSynthetic())
+		if(istype(owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner
+			if(H.ipc_handle_brain_reroute_tick())
+				return
+			// Trace uses a trickle of positronic reserve: stay down, but keep the ECS window usable.
+			if(H.ipc_reroute_session_open())
+				H.Weaken(3)
+				return
 		if(!owner.lying && !owner.buckled)
 			to_chat(owner, SPAN_WARNING("You don't have enough energy to function!"))
 		owner.Weaken(3)
 		owner.Paralyse(3)
 	if(percent() < 10 && prob(1))
 		to_chat(owner, SPAN_WARNING("Your internal battery beeps an alert code, it is low on charge!"))
+	if(ishuman(owner) && owner.is_species(SPECIES_IPC))
+		var/mob/living/carbon/human/H = owner
+		var/obj/item/organ/internal/cooling_system/cooling_organ = H.internal_organs_by_name[BP_COOLING]
+		if(!cooling_organ)
+			H.ipc_temp_gain = (H.bodytemperature > 950 CELSIUS) ? 0 : 30
+		else
+			H.ipc_temp_gain = cooling_organ.get_tempgain()
+		if(!cell || !get_charge())
+			H.ipc_temp_gain = 0
 
 /obj/item/organ/internal/cell/emp_act(severity)
 	..()

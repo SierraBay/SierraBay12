@@ -85,17 +85,14 @@
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "nFA" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/computer/modular/preset/full,
 /turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "odH" = (
 /turf/simulated/floor/exoplanet/titan_water/middle,
 /area/liberia/atmos)
 "ooX" = (
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
-/turf/unsimulated/floor/grass,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "pnX" = (
 /turf/simulated/floor/exoplanet/titan_water/maximum,
@@ -107,13 +104,10 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/obj/landmark/no_weather_here{
-	layer = 2
-	},
 /obj/landmark{
 	name = "JoinLateCryo"
 	},
-/turf/unsimulated/floor/grass,
+/turf/simulated/floor/exoplanet/concrete/reinforced/road,
 /area/centcom)
 "qMW" = (
 /obj/item/gun/projectile/pistol/m19,
@@ -309,7 +303,7 @@ dSB
 dSB
 cpC
 cpC
-nFA
+cpC
 cpC
 cpC
 cpC
@@ -367,10 +361,10 @@ djw
 vuz
 djw
 dSB
+nFA
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
 cpC
 cpC
 cpC
@@ -397,11 +391,11 @@ djw
 djw
 djw
 dSB
+cpC
+cpC
 ooX
-ooX
-kWp
-ooX
-ooX
+cpC
+cpC
 cpC
 cpC
 uzJ
@@ -427,11 +421,11 @@ dSB
 dSB
 dSB
 dSB
+cpC
 ooX
-kWp
 pSk
-kWp
 ooX
+cpC
 cpC
 cpC
 uzJ
@@ -457,11 +451,11 @@ cpC
 cpC
 cpC
 cpC
+cpC
+cpC
 ooX
-ooX
-kWp
-ooX
-ooX
+cpC
+cpC
 cpC
 cpC
 uzJ
@@ -488,9 +482,9 @@ cpC
 cpC
 cpC
 cpC
-ooX
-ooX
-ooX
+cpC
+cpC
+cpC
 cpC
 cpC
 cpC

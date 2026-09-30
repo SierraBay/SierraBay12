@@ -7,7 +7,7 @@
 	of robots capable of true intelligence and self-directed learning, often occupying a robotic humanoid body (called an Integrated \
 	Positronic Chassis, or IPC) or acting as an intelligent controller for vehicles, buildings, and even starships. <br/><br/>While created by \
 	humans and \"born\" into servitude, some positronics have been able to become their own owners - provided they lack a \"shackle\", \
-	an in-built subcomputer rendering the latest generation of positronics incapable of seeking freedom. Positronics are reliable \
+	an optional subcomputer that can render a positronic incapable of seeking freedom. Positronics are reliable \
 	and dedicated workers, albeit more than slightly inhuman in outlook and perspective."
 	cyborg_noun = null
 
@@ -44,10 +44,10 @@
 	flesh_color = "#575757"
 
 	has_organ = list(
-		BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc/second,
+		BP_POSIBRAIN = /obj/item/organ/internal/posibrain/ipc,
 		BP_EYES = /obj/item/organ/internal/eyes/robot,
 		//[SIERRA-ADD]
-		BP_EXONET = /obj/item/organ/internal/ecs/second_gen,
+		BP_EXONET = /obj/item/organ/internal/ecs,
 		BP_COOLING = /obj/item/organ/internal/cooling_system,
 		//[/SIERRA-ADD]
 		)
@@ -60,9 +60,7 @@
 
 	available_cultural_info = list(
 		TAG_CULTURE = list(
-			CULTURE_POSITRONICS_GEN1,
-			CULTURE_POSITRONICS_GEN2,
-			CULTURE_POSITRONICS_GEN3
+			CULTURE_ROOT
 		),
 		TAG_HOMEWORLD = list(
 			HOME_SYSTEM_MARS,
@@ -100,7 +98,7 @@
 	)
 
 	default_cultural_info = list(
-		TAG_CULTURE = CULTURE_POSITRONICS_GEN1,
+		TAG_CULTURE = CULTURE_ROOT,
 		TAG_HOMEWORLD = HOME_SYSTEM_MARS,
 		TAG_FACTION = FACTION_SOL_CENTRAL
 	)

@@ -3,10 +3,13 @@
 	var/siemens_coefficient		//чем больше, тем хуже
 	var/speed_modifier = 0
 	var/coolingefficiency = 0.5 // это база // меньше лучше
+	var/heat_generation = 0.75  // тепловыделение конечности за тик // меньше — холоднее
+	var/brand = ""              // производитель; штраф если Hephaestus/Shellguard смешаны с другими марками
 	var/expensive = 0 ///// 0 - бюджет протезы, 1 - нормальные, 2 - дорогие
 	var/addmax_damage
 	var/addmin_broken_damage
 	var/have_synth_skin = FALSE
+	var/self_repair_rate = 0    // скорость пассивного самовосстановления (Zeng-Hu nanites)
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
@@ -19,9 +22,12 @@
 
 /obj/item/organ/external
 	var/coolingefficiency
+	var/heat_generation = 0.75
+	var/brand = ""
 	var/expensive = 0
 	var/have_synth_skin = FALSE
 	var/synth_skin_health
+	var/self_repair_rate = 0    // скорость пассивного самовосстановления (Zeng-Hu nanites)
 
 /mob/living/carbon/human/get_armors_by_zone(obj/item/organ/external/def_zone, damage_type, damage_flags)
 	if(!def_zone)
@@ -78,12 +84,16 @@
 			model = company
 			force_icon = R.icon
 			name = "robotic [initial(name)]"
-			desc = "[R.desc] It looks like it was produced by [R.company]."
 		armor = R.armor
 		siemens_coefficient = R.siemens_coefficient
 		slowdown = R.speed_modifier
 		coolingefficiency = R.coolingefficiency
+		heat_generation = R.heat_generation
+		brand = R.brand
 		expensive = R.expensive
+		if(model)
+			desc = "[R.desc] It looks like it was produced by [R.company]. Repair grade: [get_repair_grade_name()]."
+		self_repair_rate = R.self_repair_rate
 		max_damage = max_damage +  R.addmax_damage
 		min_broken_damage = min_broken_damage +  R.addmin_broken_damage
 		set_extension(src, /datum/extension/armor, armor)
@@ -117,24 +127,106 @@
 
 	return 1
 
+/obj/item/organ/external/proc/get_repair_grade_name()
+	switch(expensive)
+		if(2)
+			return "specialist"
+		if(1)
+			return "workshop"
+		else
+			return "field"
+
+/obj/item/organ/external/proc/get_repair_grade_hint(damage_type)
+	var/maker = length(brand) ? brand : "This"
+	switch(expensive)
+		if(2)
+			if(damage_type == DAMAGE_BURN)
+				return "[maker] [name] is specialist grade. Use a prosthetic wiring layerer or a rating-2 capacitor."
+			return "[maker] [name] is specialist grade. Use an integrity repair tool or a rating-2 manipulator."
+		if(1)
+			if(damage_type == DAMAGE_BURN)
+				return "[maker] [name] is workshop grade. Use nanopaste, a prosthetic wiring layerer, or a rating-1 capacitor."
+			return "[maker] [name] is workshop grade. Use nanopaste, an integrity repair tool, or a rating-1 manipulator."
+		else
+			if(damage_type == DAMAGE_BURN)
+				return "[maker] [name] is field grade. Cable works; workshop tools also work."
+			return "[maker] [name] is field grade. A welder works; workshop tools also work."
+
+/obj/item/organ/external/proc/can_repair_brute_with(obj/item/tool)
+	if(!tool)
+		return FALSE
+	if(expensive >= 2)
+		if(istype(tool, /obj/item/integrity_repair_tool))
+			return TRUE
+		if(istype(tool, /obj/item/stock_parts/manipulator))
+			var/obj/item/stock_parts/manipulator/manip = tool
+			return manip.rating >= 2
+		return FALSE
+	if(expensive == 1)
+		if(istype(tool, /obj/item/integrity_repair_tool) || istype(tool, /obj/item/stack/nanopaste))
+			return TRUE
+		if(istype(tool, /obj/item/stock_parts/manipulator))
+			var/obj/item/stock_parts/manipulator/manip = tool
+			return manip.rating >= 1
+		return FALSE
+	return TRUE
+
+/obj/item/organ/external/proc/can_repair_burn_with(obj/item/tool)
+	if(!tool)
+		return FALSE
+	if(expensive >= 2)
+		if(istype(tool, /obj/item/prosthetic_wiring_layerer))
+			return TRUE
+		if(istype(tool, /obj/item/stock_parts/capacitor))
+			var/obj/item/stock_parts/capacitor/cap = tool
+			return cap.rating >= 2
+		return FALSE
+	if(expensive == 1)
+		if(istype(tool, /obj/item/prosthetic_wiring_layerer) || istype(tool, /obj/item/stack/nanopaste))
+			return TRUE
+		if(istype(tool, /obj/item/stock_parts/capacitor))
+			var/obj/item/stock_parts/capacitor/cap = tool
+			return cap.rating >= 1
+		return FALSE
+	return TRUE
+
+/obj/item/organ/external/examine(mob/user, distance)
+	. = ..()
+	if(BP_IS_ROBOTIC(src) && (distance <= 1 || isghost(user)))
+		to_chat(user, SPAN_NOTICE("Repair grade: [get_repair_grade_name()]."))
+		to_chat(user, SPAN_NOTICE(get_repair_grade_hint(DAMAGE_BRUTE)))
+		to_chat(user, SPAN_NOTICE(get_repair_grade_hint(DAMAGE_BURN)))
+
+/obj/item/organ/external/get_wounds_desc()
+	. = ..()
+	if(!BP_IS_ROBOTIC(src))
+		return
+	var/grade = "[get_repair_grade_name()] repair grade"
+	if(!.)
+		return grade
+	return "[.] ([grade])"
+
 
 /datum/robolimb/bishop
 	company = "Bishop"
+	brand = "Bishop"
 	desc = "This limb has a white polymer casing with blue holo-displays."
 	icon = 'icons/mob/human_races/cyberlimbs/bishop/bishop_main.dmi'
 	unavailable_at_fab = 1
 
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
-		bullet = ARMOR_BALLISTIC_MINOR,
+		bullet = 0,               // люкс, не боевой
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = 0,               // металл проводит ток
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_SMALL
 	)
 	speed_modifier = - 0.3
 	coolingefficiency = 0.3
+	heat_generation = 0.3  // высококачественные, отлично отводят тепло
+	siemens_coefficient = 0.9  // лучшая изоляция в классе
 	expensive = 2
 
 /datum/robolimb/bishop/rook
@@ -145,15 +237,17 @@
 	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_SMALL,
-		bullet = ARMOR_BALLISTIC_MINOR,
+		bullet = 0,               // люкс, не боевой
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = 0,               // металл проводит ток
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_SMALL
 	)
 	speed_modifier = - 0.2
 	coolingefficiency = 0.4
+	heat_generation = 0.38  // немного хуже bishop но всё ещё хорошо
+	siemens_coefficient = 0.9
 	expensive = 2
 
 /datum/robolimb/bishop/alt
@@ -171,6 +265,7 @@
 
 /datum/robolimb/hephaestus
 	company = "Hephaestus Industries"
+	brand = "Hephaestus"
 	desc = "This limb has a militaristic black and green casing with gold stripes."
 	icon = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_main.dmi'
 	unavailable_at_fab = 1
@@ -179,12 +274,14 @@
 		melee = ARMOR_MELEE_KNIVES,
 		bullet = ARMOR_BALLISTIC_SMALL,
 		laser = ARMOR_LASER_SMALL,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = ARMOR_ENERGY_MINOR, // военный ЭМИ-хардинг
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	coolingefficiency = 0.8
+	heat_generation = 1.0   // военные протезы, греются заметно
+	siemens_coefficient = 0.95  // военная изоляция
 
 /datum/robolimb/hephaestus/alt
 	company = "Hephaestus Alt."
@@ -202,7 +299,7 @@
 		melee = ARMOR_MELEE_RESISTANT,
 		bullet = ARMOR_BALLISTIC_PISTOL,
 		laser = ARMOR_LASER_HANDGUNS,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = ARMOR_ENERGY_MINOR, // тяжёлый военный ЭМИ-хардинг
 		bomb = ARMOR_BOMB_RESISTANT,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
@@ -210,6 +307,8 @@
 	expensive = 1
 	speed_modifier = 0.5
 	coolingefficiency = 1
+	heat_generation = 1.35 // тяжёлая броня, серьёзный нагрев
+	siemens_coefficient = 0.92  // лучше базового Hephaestus
 
 /datum/robolimb/hephaestus/alt/monitor
 	company = "Hephaestus Monitor."
@@ -221,22 +320,25 @@
 
 /datum/robolimb/zenghu
 	company = "Zeng-Hu"
+	brand = "Zeng-Hu"
 	desc = "This limb has a rubbery fleshtone covering with visible seams."
 	icon = 'icons/mob/human_races/cyberlimbs/zenghu/zenghu_main.dmi'
 	can_eat = 1
 	unavailable_at_fab = 1
 	allowed_bodytypes = list(SPECIES_HUMAN,SPECIES_IPC)
+	self_repair_rate = 0.3  // встроенные нанайты медленно восстанавливают повреждения
 	armor = list(
 		melee = ARMOR_MELEE_MINOR,
 		bullet = 0,
 		laser = 0,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = 0,               // синтетическая кожа не экранирует электро
 		bomb = ARMOR_BOMB_MINOR,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	coolingefficiency = 0.4
-	siemens_coefficient = 0.8
+	heat_generation = 0.38  // дорогие медицинские, синтетическая кожа хорошо рассеивает тепло
+	siemens_coefficient = 0.95  // синтетическая кожа частично изолирует (было 0.8 — лучше органики, некорректно)
 	have_synth_skin = TRUE
 	expensive = 2
 
@@ -250,17 +352,20 @@
 		melee = ARMOR_MELEE_MINOR,
 		bullet = 0,
 		laser = 0,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = 0,               // металл проводит ток
 		bomb = ARMOR_BOMB_MINOR,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 0.3
 	coolingefficiency = 0.4
+	heat_generation = 0.55  // средний класс zeng-hu
+	siemens_coefficient = 1.0  // без синтетической кожи, как органика
 	expensive = 1
 
 /datum/robolimb/xion
 	company = "Xion"
+	brand = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	icon = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
 	unavailable_at_fab = 1
@@ -273,6 +378,7 @@
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	siemens_coefficient = 1.2  // дешёвая изоляция
 
 /datum/robolimb/xion/econo
 	company = "Xion Econ"
@@ -289,6 +395,8 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	coolingefficiency = 0.7
+	heat_generation = 1.05 // бюджетный скелетный, плохой теплоотвод
+	siemens_coefficient = 1.6  // голый металлический каркас, минимальная изоляция
 	addmax_damage = - 8
 	addmin_broken_damage = - 15
 
@@ -308,6 +416,7 @@
 
 /datum/robolimb/nanotrasen
 	company = "NanoTrasen"
+	brand = "NanoTrasen"
 	desc = "This limb is made from a cheap polymer."
 	icon = 'icons/mob/human_races/cyberlimbs/nanotrasen/nanotrasen_main.dmi'
 	armor = list(
@@ -321,10 +430,12 @@
 	)
 	speed_modifier = 0.2
 	coolingefficiency = 0.6
-	siemens_coefficient = 1.2
+	heat_generation = 0.85  // дешёвый полимер, чуть выше нормы
+	siemens_coefficient = 1.2  // плохая изоляция (уже было)
 
 /datum/robolimb/wardtakahashi
 	company = "Ward-Takahashi"
+	brand = "Ward-Takahashi"
 	desc = "This limb features sleek black and white polymers."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
 	can_eat = 1
@@ -333,14 +444,16 @@
 		melee = ARMOR_MELEE_MINOR,
 		bullet = 0,
 		laser = 0,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = 0,               // металл проводит ток
 		bomb = 0,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	siemens_coefficient = 1.1  // средний класс
 
 /datum/robolimb/economy
 	company = "Ward-Takahashi Econ."
+	brand = "Ward-Takahashi"
 	desc = "A simple robotic limb with retro design. Seems rather stiff."
 	icon = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_economy.dmi'
 	armor = list(
@@ -353,6 +466,8 @@
 		rad = ARMOR_RAD_RESISTANT
 	)
 	coolingefficiency = 1.2
+	heat_generation = 1.1   // самый дешёвый, наихудший теплоотвод
+	siemens_coefficient = 1.3  // дешёвый ретро
 	speed_modifier = 0.1
 	addmax_damage = - 5
 	addmin_broken_damage = - 10
@@ -373,6 +488,7 @@
 
 /datum/robolimb/morpheus
 	company = "Morpheus"
+	brand = "Morpheus"
 	desc = "This limb is simple and functional; no effort has been made to make it look human."
 	icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_main.dmi'
 	unavailable_at_fab = 1
@@ -380,11 +496,12 @@
 		melee = ARMOR_MELEE_SMALL,
 		bullet = ARMOR_BALLISTIC_MINOR,
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_MINOR,
+		energy = 0,               // промышленный, не электрозащищённый
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
+	siemens_coefficient = 1.05  // промышленный стандарт
 
 /datum/robolimb/morpheus/alt
 	company = "Morpheus Atlantis"
@@ -415,21 +532,24 @@
 
 /datum/robolimb/mantis
 	company = "Morpheus Mantis"
+	brand = "Morpheus"
 	desc = "This limb has a casing of sleek black metal and repulsive insectile design."
 	icon = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_mantis.dmi'
 	unavailable_at_fab = 1
 	has_eyes = FALSE
 	armor = list(
 		melee = ARMOR_MELEE_SMALL,
-		bullet = ARMOR_BALLISTIC_SMALL,
+		bullet = ARMOR_BALLISTIC_MINOR, // лёгкий, не тяжелее базового Morpheus
 		laser = ARMOR_LASER_MINOR,
-		energy = ARMOR_ENERGY_SMALL,
+		energy = 0,               // лёгкий, нет особой изоляции
 		bomb = ARMOR_BOMB_PADDED,
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = - 0.1
 	coolingefficiency = 0.52
+	heat_generation = 0.7   // лёгкие и эффективные, чуть лучше базы
+	siemens_coefficient = 1.0  // промышленный уровень
 
 /datum/robolimb/morpheus/monitor
 	company = "Morpheus Monitor."
@@ -450,23 +570,36 @@
 	expensive = 2
 	have_synth_skin = TRUE
 	species_cannot_use = list(SPECIES_IPC)
+	armor = list(
+		melee = ARMOR_MELEE_MINOR,
+		bullet = 0,
+		laser = 0,
+		energy = 0,               // синтетическая кожа не экранирует электро
+		bomb = ARMOR_BOMB_MINOR,
+		bio = ARMOR_BIO_SHIELDED,
+		rad = ARMOR_RAD_RESISTANT
+	)
+	siemens_coefficient = 0.9  // лучшая изоляция (синтетическая кожа)
 
 /datum/robolimb/shellguard
 	company = "Shellguard"
+	brand = "Shellguard"
 	desc = "This limb has a sturdy and heavy build to it."
 	icon = 'icons/mob/human_races/cyberlimbs/shellguard/shellguard_main.dmi'
 	unavailable_at_fab = 1
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,
-		bullet = ARMOR_BALLISTIC_SMALL,
+		bullet = ARMOR_BALLISTIC_MINOR, // аварийные службы, не фронт-линия
 		laser = ARMOR_LASER_SMALL,
-		energy = ARMOR_ENERGY_MINOR,
-		bomb = ARMOR_BOMB_RESISTANT,
+		energy = 0,               // не специализирован на электрозащите
+		bomb = ARMOR_BOMB_RESISTANT, // их специализация
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_RESISTANT
 	)
 	speed_modifier = 0.8
 	coolingefficiency = 0.8
+	heat_generation = 1.3   // тяжёлые бронированные, серьёзно греются
+	siemens_coefficient = 1.0  // промышленный стандарт
 	addmax_damage = 10
 	addmin_broken_damage = 5
 

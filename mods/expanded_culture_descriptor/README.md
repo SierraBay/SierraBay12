@@ -88,8 +88,6 @@ ID мода: EXPANDED_CULTURE_DESCRIPTOR
   - `/singleton/cultural_info/culture/human/vatgrown`
 - `mods/_master_files/code/modules/culture_descriptor/culture/cultures_ipc.dm`:
   - `/singleton/cultural_info/culture/ipc`
-  - `/singleton/cultural_info/culture/ipc/gen2`
-  - `/singleton/cultural_info/culture/ipc/gen3`
 - `mods/_master_files/code/modules/culture_descriptor/culture/cultures_serpentid.dm`:
   - `/singleton/cultural_info/culture/nabber`
   - `/singleton/cultural_info/culture/nabber/c`

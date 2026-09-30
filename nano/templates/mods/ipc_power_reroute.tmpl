@@ -1,0 +1,197 @@
+<style type="text/css">
+	.rr-root {
+		font-family: "Courier New", Courier, monospace;
+		background: #0a0e14;
+		color: #c8d8e8;
+		padding: 6px;
+	}
+	.rr-title {
+		color: #1e9dc8;
+		font-size: 11px;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		border-bottom: 1px solid #1e3a4a;
+		padding-bottom: 3px;
+		margin-bottom: 6px;
+	}
+	.rr-flags { font-size: 11px; margin-bottom: 6px; }
+	.rr-flag { display: flex; justify-content: space-between; padding: 1px 0; }
+	.rr-k { color: #607d8b; }
+	.ok { color: #00c97a; }
+	.warn { color: #ffb829; }
+	.bad { color: #f44336; }
+	.muted { color: #37474f; }
+	.ecs-active { color: #4fc3f7; }
+	.rr-status {
+		border: 1px solid #1e3a4a;
+		background: #0d1520;
+		padding: 4px 6px;
+		font-size: 11px;
+		letter-spacing: 1px;
+		margin-bottom: 6px;
+		text-align: center;
+	}
+	.rr-path {
+		color: #546e7a;
+		font-size: 10px;
+		text-align: center;
+		margin-bottom: 6px;
+		letter-spacing: 1px;
+	}
+	.rr-schem {
+		display: grid;
+		grid-template-columns: 78px 16px 100px 16px 78px;
+		grid-template-rows: 34px 12px 34px 12px 38px 12px 34px 12px 38px 12px 38px;
+		grid-template-areas:
+			".    .  core .    ."
+			".    .  v1   .    ."
+			".    .  head .    ."
+			".    .  v2   .    ."
+			"larm hl chest hr  rarm"
+			"al   .  v3   .    ar"
+			".    .  groin .   ."
+			"gl   .  .    .    gr"
+			"lleg .  .    .    rleg"
+			"bl   .  .    .    br"
+			".    .  bus  .    .";
+		justify-items: stretch;
+		align-items: stretch;
+		margin: 4px 8px 8px 8px;
+	}
+	.rr-core { grid-area: core; }
+	.rr-head { grid-area: head; }
+	.rr-chest { grid-area: chest; }
+	.rr-larm { grid-area: larm; }
+	.rr-rarm { grid-area: rarm; }
+	.rr-groin { grid-area: groin; }
+	.rr-lleg { grid-area: lleg; }
+	.rr-rleg { grid-area: rleg; }
+	.rr-bus { grid-area: bus; }
+	.rr-v1 { grid-area: v1; }
+	.rr-v2 { grid-area: v2; }
+	.rr-v3 { grid-area: v3; }
+	.rr-hl { grid-area: hl; }
+	.rr-hr { grid-area: hr; }
+	.rr-al { grid-area: al; }
+	.rr-ar { grid-area: ar; }
+	.rr-gl { grid-area: gl; }
+	.rr-gr { grid-area: gr; }
+	.rr-bl { grid-area: bl; }
+	.rr-br { grid-area: br; }
+
+	.rr-node, a.rr-node {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid #1e3a4a;
+		background: #0d1520;
+		color: #546e7a;
+		font-size: 10px;
+		letter-spacing: 1px;
+		text-decoration: none;
+		text-transform: uppercase;
+		padding: 0;
+	}
+	a.rr-node:hover { text-decoration: none; color: #b9eaff; border-color: #4fc3f7; }
+	.rr-node .sub { font-size: 8px; letter-spacing: 0; opacity: 0.8; }
+	.rr-node.idle { color: #546e7a; }
+	.rr-node.live { border-color: #1e9dc8; color: #4fc3f7; background: #0d1f2a; }
+	.rr-node.ready { border-color: #00c97a; color: #00c97a; background: #041a0e; }
+	.rr-node.dead { border: 1px dashed #6e1a14; color: #f44336; background: #1a0808; }
+	.rr-line {
+		background: #1e3a4a;
+		min-width: 2px;
+		min-height: 2px;
+	}
+	.rr-line.live { background: #4fc3f7; }
+	.rr-line.dead { background: #6e1a14; }
+	.rr-v1, .rr-v2, .rr-v3, .rr-al, .rr-ar, .rr-gl, .rr-gr {
+		width: 2px;
+		justify-self: center;
+	}
+	.rr-hl, .rr-hr { height: 2px; align-self: center; }
+	.rr-bl, .rr-br { height: 2px; align-self: center; width: 100%; }
+	.rr-btns { display: flex; gap: 4px; justify-content: center; margin-top: 4px; }
+	.ecs-btn {
+		display: inline-block;
+		padding: 3px 8px;
+		border: 1px solid #1e9dc8;
+		background: #0d1f2a;
+		color: #4fc3f7;
+		font-size: 10px;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+	.ecs-btn:hover { border-color: #4fc3f7; color: #b9eaff; background: #123247; text-decoration: none; }
+	.ecs-btn.off { border-color: #1e3a4a; color: #37474f; background: #0a0e14; }
+	.ecs-btn.abort { border-color: #6e1a14; color: #f44336; }
+	.rr-help { color: #37474f; font-size: 10px; text-align: center; margin-top: 6px; }
+</style>
+
+<div class="rr-root">
+	<div class="rr-title">Alternate Power Trace</div>
+	<div class="rr-flags">
+		<div class="rr-flag"><span class="rr-k">PRIMARY CELL</span><span class="bad">OFFLINE</span></div>
+		<div class="rr-flag"><span class="rr-k">PRIMARY BUS</span><span class="bad">NO RESPONSE</span></div>
+		<div class="rr-flag"><span class="rr-k">RESERVE POWER</span><span class="warn">POSITRONIC</span></div>
+		<div class="rr-flag"><span class="rr-k">MATRIX INTEGRITY</span><span class="ok">{{:data.posi_pct}}%</span></div>
+	</div>
+	<div class="rr-status {{:data.status_class}}">{{:data.status}}</div>
+	<div class="rr-path">{{:data.path_str}}</div>
+
+	<div class="rr-schem">
+		{{if data.nodes.core.clickable}}<a class="rr-core {{:data.nodes.core.class}}" href="?src={{:data.src}};pick=core">{{:data.nodes.core.label}}<span class="sub">{{:data.nodes.core.hint}}</span></a>
+		{{else}}<div class="rr-core {{:data.nodes.core.class}}">{{:data.nodes.core.label}}<span class="sub">{{:data.nodes.core.hint}}</span></div>{{/if}}
+		<div class="rr-v1 {{:data.line_core_head}}"></div>
+
+		{{if data.nodes.head.clickable}}<a class="rr-head {{:data.nodes.head.class}}" href="?src={{:data.src}};pick=head">{{:data.nodes.head.label}}<span class="sub">{{:data.nodes.head.hint}}</span></a>
+		{{else}}<div class="rr-head {{:data.nodes.head.class}}">{{:data.nodes.head.label}}<span class="sub">{{:data.nodes.head.hint}}</span></div>{{/if}}
+		<div class="rr-v2 {{:data.line_head_chest}}"></div>
+
+		{{if data.nodes.l_arm.clickable}}<a class="rr-larm {{:data.nodes.l_arm.class}}" href="?src={{:data.src}};pick=l_arm">{{:data.nodes.l_arm.label}}<span class="sub">{{:data.nodes.l_arm.hint}}</span></a>
+		{{else}}<div class="rr-larm {{:data.nodes.l_arm.class}}">{{:data.nodes.l_arm.label}}<span class="sub">{{:data.nodes.l_arm.hint}}</span></div>{{/if}}
+		<div class="rr-hl {{:data.line_chest_larm}}"></div>
+
+		{{if data.nodes.chest.clickable}}<a class="rr-chest {{:data.nodes.chest.class}}" href="?src={{:data.src}};pick=chest">{{:data.nodes.chest.label}}<span class="sub">{{:data.nodes.chest.hint}}</span></a>
+		{{else}}<div class="rr-chest {{:data.nodes.chest.class}}">{{:data.nodes.chest.label}}<span class="sub">{{:data.nodes.chest.hint}}</span></div>{{/if}}
+		<div class="rr-hr {{:data.line_chest_rarm}}"></div>
+
+		{{if data.nodes.r_arm.clickable}}<a class="rr-rarm {{:data.nodes.r_arm.class}}" href="?src={{:data.src}};pick=r_arm">{{:data.nodes.r_arm.label}}<span class="sub">{{:data.nodes.r_arm.hint}}</span></a>
+		{{else}}<div class="rr-rarm {{:data.nodes.r_arm.class}}">{{:data.nodes.r_arm.label}}<span class="sub">{{:data.nodes.r_arm.hint}}</span></div>{{/if}}
+
+		<div class="rr-al {{:data.line_larm_bus}}"></div>
+		<div class="rr-v3 {{:data.line_chest_groin}}"></div>
+		<div class="rr-ar {{:data.line_rarm_bus}}"></div>
+
+		{{if data.nodes.groin.clickable}}<a class="rr-groin {{:data.nodes.groin.class}}" href="?src={{:data.src}};pick=groin">{{:data.nodes.groin.label}}<span class="sub">{{:data.nodes.groin.hint}}</span></a>
+		{{else}}<div class="rr-groin {{:data.nodes.groin.class}}">{{:data.nodes.groin.label}}<span class="sub">{{:data.nodes.groin.hint}}</span></div>{{/if}}
+
+		<div class="rr-gl {{:data.line_groin_lleg}}"></div>
+		<div class="rr-gr {{:data.line_groin_rleg}}"></div>
+
+		{{if data.nodes.l_leg.clickable}}<a class="rr-lleg {{:data.nodes.l_leg.class}}" href="?src={{:data.src}};pick=l_leg">{{:data.nodes.l_leg.label}}<span class="sub">{{:data.nodes.l_leg.hint}}</span></a>
+		{{else}}<div class="rr-lleg {{:data.nodes.l_leg.class}}">{{:data.nodes.l_leg.label}}<span class="sub">{{:data.nodes.l_leg.hint}}</span></div>{{/if}}
+
+		{{if data.nodes.r_leg.clickable}}<a class="rr-rleg {{:data.nodes.r_leg.class}}" href="?src={{:data.src}};pick=r_leg">{{:data.nodes.r_leg.label}}<span class="sub">{{:data.nodes.r_leg.hint}}</span></a>
+		{{else}}<div class="rr-rleg {{:data.nodes.r_leg.class}}">{{:data.nodes.r_leg.label}}<span class="sub">{{:data.nodes.r_leg.hint}}</span></div>{{/if}}
+
+		<div class="rr-bl {{:data.line_lleg_bus}}"></div>
+		<div class="rr-br {{:data.line_rleg_bus}}"></div>
+
+		{{if data.nodes.bus.clickable}}<a class="rr-bus {{:data.nodes.bus.class}}" href="?src={{:data.src}};pick=bus">{{:data.nodes.bus.label}}<span class="sub">{{:data.nodes.bus.hint}}</span></a>
+		{{else}}<div class="rr-bus {{:data.nodes.bus.class}}">{{:data.nodes.bus.label}}<span class="sub">{{:data.nodes.bus.hint}}</span></div>{{/if}}
+	</div>
+
+	<div class="rr-btns">
+		{{if data.can_engage}}
+		<a class="ecs-btn" href="?src={{:data.src}};engage=1">Engage</a>
+		{{else}}
+		<span class="ecs-btn off">Engage</span>
+		{{/if}}
+		<a class="ecs-btn" href="?src={{:data.src}};reset=1">Reset Trace</a>
+		<a class="ecs-btn abort" href="?src={{:data.src}};abort=1">Abort</a>
+	</div>
+	<div class="rr-help">Primary chest bus is dark. Click a highlighted node to extend the trace. Click the last live node to backtrack. Broken or overloaded limbs are FAULT.</div>
+</div>
