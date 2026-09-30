@@ -151,6 +151,8 @@ The Appraise verb. Used on objects to estimate their value.
 		return
 	return 1
 
+// [SIERRA-EDIT] - CHICHNOMICS
+/*
 /mob/proc/appraise(obj/item as obj in get_equipped_items(1))
 	set category = "IC"
 	set name = "Appraise"
@@ -187,6 +189,41 @@ The Appraise verb. Used on objects to estimate their value.
 			return 20
 		else
 			return 50
+*/
+/mob/proc/appraise(obj/item as obj in get_equipped_items(1))
+	set category = "IC"
+	set name = "Appraise"
+	set src = usr
+	set popup_menu = 0
+
+	if(incapacitated() || !istype(item))
+		return
+	var/value = get_value(item)
+	var/message
+	if(!value)
+		message = "\The [item] seems worthless."
+	else
+		var/multiple = get_appraise_level(get_skill_value(SKILL_FINANCE))
+		var/max = value / multiple
+		var/min = max / 2.5
+		var/low = value - rand(min, max)
+		var/high = value + rand(min, max)
+		if (low >= high)
+			low = high - 1
+		message = "You appraise the item to be worth between [low] and [high] [GLOB.using_map.local_currency_name]."
+	to_chat(src, message)
+
+/proc/get_appraise_level(skill)
+	switch(skill)
+		if(SKILL_MAX)
+			return 10
+		if(SKILL_EXPERIENCED)
+			return 6
+		if(SKILL_TRAINED)
+			return 3.5
+		else
+			return 1.5
+// [/SIERRA-EDIT]
 
 /datum/skill_verb/noirvision
 	the_verb = /mob/proc/noirvision
