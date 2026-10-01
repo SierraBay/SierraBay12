@@ -22,6 +22,8 @@ var/global/captain_access_claimed = FALSE
 	to_chat(event_triggered_by, SPAN_NOTICE("\The [src] grants you full captain access!"))
 	visible_message(SPAN_NOTICE("\The [src] flashes green and prints a confirmation chit."))
 	log_and_message_admins("claimed captain access through [src] with ID [ID.registered_name] ([ID.type]).", event_triggered_by)
+	var/area/request_area = get_area(src)
+	command_announcement.Announce("Emergency captain-level access request approved for [event_triggered_by.real_name] from [request_area ? request_area.name : "an unknown location"].", "Emergency Access Granted")
 
 /obj/machinery/keycard_auth/interact(mob/user)
 	user.set_machine(src)
