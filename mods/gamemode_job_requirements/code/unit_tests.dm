@@ -288,6 +288,18 @@
 	qdel(dummy)
 
 
+/*
+ * Forcing TRYEQUIP_INSTANT removes the sleep. Opting out of SSD works too.
+ */
+/mob/living/carbon/human/merc_test_dummy
+
+/mob/living/carbon/human/merc_test_dummy/equip_to_slot_if_possible(obj/item/I, slot, equip_flags = TRYEQUIP_REDRAW)
+	return ..(I, slot, equip_flags | TRYEQUIP_INSTANT)
+
+/mob/living/carbon/human/merc_test_dummy/ssd_check()
+	return FALSE
+
+
 /datum/unit_test/mercenary_draft_and_finalize_spawn
 	name = "MERCENARY: Drafted candidates are equipped, factioned and objectived correctly"
 
@@ -310,7 +322,7 @@
 
 	// A couple extra candidates to prove attempt_spawn() stops at spawn_target.
 	for(var/i in 1 to (spawn_target + 2))
-		var/list/result = create_test_mob_with_mind(null, /mob/living/carbon/human)
+		var/list/result = create_test_mob_with_mind(null, /mob/living/carbon/human/merc_test_dummy)
 		if(isnull(result) || result["result"] != SUCCESS)
 			problems += "Could not create test mob #[i]: [result ? result["msg"] : "runtime"]"
 			continue
