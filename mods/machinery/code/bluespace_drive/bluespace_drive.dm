@@ -133,6 +133,9 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// TRUE while the rift is open (between open_rift and close_rift).
 	var/rift_open = FALSE
 
+	/// TRUE while an Odyssey campaign sector-transition jump is running (no ballistic overmap target).
+	var/odyssey_campaign_jump = FALSE
+
 	/// BSD state flags used by endgame/event systems
 	var/const/STATE_BROKEN = FLAG_01
 	var/const/STATE_UNSTABLE = FLAG_02
@@ -450,7 +453,7 @@ var/global/list/bluespace_gas_power_factor = list(
  * Initiates the jump sequence.
  * Returns FALSE if the jump cannot be performed, TRUE otherwise.
  */
-/obj/machinery/bluespace_drive/proc/initiate_jump(mob/user = null)
+/obj/machinery/bluespace_drive/proc/initiate_jump(mob/user = null, odyssey_mode = FALSE)
 	// Already jumping
 	if(jump_timer_id)
 		return FALSE
@@ -467,12 +470,22 @@ var/global/list/bluespace_gas_power_factor = list(
 			return FALSE
 		emergency_jump = TRUE
 
-	// No valid destination (checked at nominal rotation before scatter is applied)
-	if(!get_jump_destination())
+	odyssey_campaign_jump = FALSE
+	if(odyssey_mode)
+		if(!odyssey_drive_can_campaign_jump(src, user))
+			return FALSE
+		odyssey_campaign_jump = TRUE
+	else if(!get_jump_destination())
+		// No valid ballistic destination (checked at nominal rotation before scatter is applied)
 		return FALSE
 
 	rotation_error = 0
-	if(emergency_jump)
+	if(odyssey_campaign_jump)
+		// Campaign jumps use Sector Map course, not ballistic scatter.
+		rotation_error = 0
+		if(emergency_jump && user?.client)
+			to_chat(user, SPAN_DANGER("WARNING: Insufficient phoron for a stable Odyssey jump! Corridor lock may still succeed, but systems are stressed."))
+	else if(emergency_jump)
 		// Emergency jump: navigation is unreliable regardless of operator skill
 		rotation_error = rand(-45, 45)
 		if(user?.client)
@@ -500,10 +513,12 @@ var/global/list/bluespace_gas_power_factor = list(
 	jumping = TRUE
 
 	// Admin logging
-	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
 
 	// Announce the jump
-	if(emergency_jump)
+	if(odyssey_campaign_jump)
+		odyssey_drive_announce_jump(src, emergency_jump)
+	else if(emergency_jump)
 		command_announcement.Announce("EMERGENCY ALERT! Bluespace drive is initiating an emergency jump with insufficient fuel. \
 			Navigation accuracy cannot be guaranteed. All hands brace for uncontrolled bluespace transition. \
 			[jump_delay / 10] seconds to space warping.", \
@@ -576,6 +591,11 @@ var/global/list/bluespace_gas_power_factor = list(
  * Executes the actual jump after the countdown.
  */
 /obj/machinery/bluespace_drive/proc/execute_jump()
+	if(odyssey_campaign_jump)
+		odyssey_drive_execute_campaign_jump(src)
+		exit_bluespace()
+		return
+
 	if(!linked)
 		exit_bluespace()
 		return
@@ -637,6 +657,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	jumping = FALSE
 	jump_locked = FALSE
 	rotation_error = 0
+	odyssey_campaign_jump = FALSE
 	// Close the rift — may pull any crew still in the danger zone, then clean up rift mobs
 	close_rift()
 	// Apply gas modifier effects before purging (uses gas_consumed_totals)
@@ -679,19 +700,23 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(jump_timer_id)
 		deltimer(jump_timer_id)
 		jump_timer_id = null
+	var/was_odyssey = odyssey_campaign_jump
 	jumping = FALSE
 	rotation_error = 0
 	overcharged = FALSE
 	emergency_jump = FALSE
+	odyssey_campaign_jump = FALSE
 	if(power_from_gas > 0 || internal_gas.total_moles || fuel_gas.total_moles)
 		purge_charge(forced = TRUE)
 	// Play decons_orb animation before removing the orb
 	orb_start_decons()
-	log_admin("BSD [src] ([x],[y],[z]): jump ABORTED by [user ? "[user.name]([user.ckey])" : "automated"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump ABORTED by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[was_odyssey ? "YES" : "no"]")
 	visible_message(SPAN_DANGER("\The [src]'s bluespace warp bubble falters, discharging!"))
-	command_announcement.Announce("Bluespace jump sequence has been aborted. Bluespace field is dissipating.", \
-		"Bluespace Drive Jump Aborted")
-
+	if(was_odyssey)
+		odyssey_drive_announce_abort(src)
+	else
+		command_announcement.Announce("Bluespace jump sequence has been aborted. Bluespace field is dissipating.", \
+			"Bluespace Drive Jump Aborted")
 /**
  * Apply visual and gameplay effects to a mob during bluespace travel.
  */
@@ -761,6 +786,8 @@ var/global/list/bluespace_gas_power_factor = list(
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	odyssey_drive_append_ui(src, data)
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bluespace_drive.tmpl", "Bluespace Drive Control", 700, 800)
@@ -802,6 +829,15 @@ var/global/list/bluespace_gas_power_factor = list(
 		var/success = initiate_jump(user)
 		if(!success)
 			to_chat(user, SPAN_WARNING("Unable to initiate jump! Check fuel levels, destination, cooldown status, or if a jump is already in progress."))
+		return TOPIC_REFRESH
+
+	if(href_list["odyssey_jump"])
+		if(!energized)
+			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
+			return TOPIC_HANDLED
+		var/odyssey_success = initiate_odyssey_jump(user)
+		if(!odyssey_success)
+			to_chat(user, SPAN_WARNING("Unable to initiate Odyssey jump! Check Sector Map course, fuel, energize state, and cooldown."))
 		return TOPIC_REFRESH
 
 	if(href_list["abort"])
