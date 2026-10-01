@@ -59,7 +59,6 @@
 	if(length(turfs))
 		return pick(turfs)
 
-/*[SIERRA-REMOVE]
 /proc/screen_loc2turf(text, turf/origin)
 	RETURN_TYPE(/turf)
 	if(!origin)
@@ -73,37 +72,6 @@
 	tX = max(1, min(origin.x + 7 - tX, world.maxx))
 	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
-*///[SIERRA-REMOVE]
-//[SIERRA-ADD]
-// Wide view is larger than 15x15, so the old fixed radius of 7 points at the wrong turf.
-/proc/screen_loc2turf(text, turf/origin, client/viewer)
-	RETURN_TYPE(/turf)
-	if(!origin)
-		return null
-	var/list/parts = splittext(text, ",")
-	if(length(parts) < 2)
-		return null
-	// Catchers are "NORTH-[row],EAST-[col]" from the map's northeast corner.
-	var/list/y_parts = splittext(parts[1], "-")
-	var/list/x_parts = splittext(parts[2], "-")
-	var/y_offset = length(y_parts) >= 2 ? text2num(y_parts[2]) : 0
-	var/x_offset = length(x_parts) >= 2 ? text2num(x_parts[2]) : 0
-	if(isnull(y_offset))
-		y_offset = 0
-	if(isnull(x_offset))
-		x_offset = 0
-
-	if(!viewer)
-		viewer = usr?.client
-	var/view = viewer?.view
-	if(!view)
-		view = world.view
-	var/x_radius = round((get_view_size_x(view) - 1) / 2)
-	var/y_radius = round((get_view_size_y(view) - 1) / 2)
-	var/tX = max(1, min(origin.x + x_radius - x_offset, world.maxx))
-	var/tY = max(1, min(origin.y + y_radius - y_offset, world.maxy))
-	return locate(tX, tY, origin.z)
-//[/SIERRA-ADD]
 
 /*
 	Predicate helpers
