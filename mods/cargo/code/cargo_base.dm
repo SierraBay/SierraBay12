@@ -256,12 +256,10 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 			var/name = saved_shopping_lists[index]
 			var/list/loaded = LoadShopList(name)
 			if(islist(loaded))
-				var/count_before = SSsupply ? SSsupply.CollectCountsFrom(loaded) : 0
 				var/list/backup = shopping_list
 				shopping_list = loaded
 				SanitizeShopList()
-				var/count_after = SSsupply ? SSsupply.CollectCountsFrom(shopping_list) : 0
-				if(!length(shopping_list) || count_after != count_before)
+				if(!length(shopping_list))
 					shopping_list = backup
 					return FALSE
 				if(backup != shopping_list)
@@ -553,52 +551,57 @@ GLOBAL_LIST_EMPTY(cargo_item_icon_cache)
 	if(!istype(target_station) || !chosen_category)
 		return result
 	var/list/category = target_station.inventory[chosen_category]
-	if(!islist(category))
+	if(!islist(category) || GetStationTradeBlockReason(target_station))
 		return result
 
-	var/block_reason = GetStationTradeBlockReason(target_station)
-	if(block_reason)
-		return result
 	var/can_add_goods = CanAddGoodsToCart()
 	var/station_key = target_station.uid || "[target_station.type]"
 	var/list/station_cart = islist(shopping_list[station_key]) ? shopping_list[station_key] : (islist(shopping_list[target_station]) ? shopping_list[target_station] : null)
 	var/list/assets_to_send = list()
 	for(var/good_id in category)
-		var/datum/trade_offer/offer = target_station.GetOffer(good_id)
-		var/path = offer ? offer.item_path : target_station.GetGoodPath(chosen_category, good_id)
-		if(!ispath(path, /atom/movable))
-			continue
-		var/stock = offer ? offer.stock : target_station.GetGoodAmount(chosen_category, good_id)
-		var/basic_price = offer ? offer.base_price : SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
-		var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
-		var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, faction, chosen_category)
-		var/in_cart = 0
-		if(islist(station_cart))
-			if(isnum(station_cart[good_id]))
-				in_cart = station_cart[good_id]
-			else if(islist(station_cart[chosen_category]))
-				in_cart = station_cart[chosen_category][good_id] || 0
-		var/atom/movable/item_type = path
-		var/desc_text = initial(item_type.desc) || ""
-		var/icon_asset = GetGoodIconAsset(path)
-		if(icon_asset)
-			assets_to_send |= icon_asset
-		result.Add(list(list(
-			"id" = good_id,
-			"name" = offer ? offer.name : target_station.GetGoodName(chosen_category, good_id),
-			"desc" = desc_text,
-			"stock" = stock,
-			"price" = round(price, 0.01),
-			"sell_price" = round(sell_price, 0.01),
-			"markup_text" = GetGoodMarkupText(basic_price, price),
-			"can_add" = can_add_goods && stock > 0,
-			"quantity_form_open" = ("[goods_quantity_target]" == "[good_id]"),
-			"icon" = icon_asset,
-			"in_cart_amount" = in_cart
-		)))
+		var/list/entry = SerializeGoodEntry(target_station, good_id, station_cart, can_add_goods, assets_to_send)
+		if(islist(entry))
+			result.Add(list(entry))
 	if(user && user.client && length(assets_to_send))
 		send_asset_list(user.client, assets_to_send, FALSE)
 	return result
+
+/datum/computer_file/program/supply_base/proc/SerializeGoodEntry(datum/trading_station/target_station, good_id, list/station_cart, can_add_goods, list/assets_to_send)
+	var/datum/trade_offer/offer = target_station.GetOffer(good_id)
+	var/path = offer ? offer.item_path : target_station.GetGoodPath(chosen_category, good_id)
+	if(!ispath(path, /atom/movable))
+		return null
+	var/stock = offer ? offer.stock : target_station.GetGoodAmount(chosen_category, good_id)
+	var/basic_price = offer ? offer.base_price : SSsupply.GetStationTradeBasePrice(good_id, target_station, faction, chosen_category)
+	var/price = SSsupply.GetStationBuyPrice(good_id, target_station, faction, chosen_category)
+	var/sell_price = SSsupply.GetStationSellPrice(good_id, target_station, faction, chosen_category)
+	var/in_cart = GetGoodCartQuantity(station_cart, good_id)
+	var/atom/movable/item_type = path
+	var/icon_asset = GetGoodIconAsset(path)
+	if(icon_asset)
+		assets_to_send |= icon_asset
+	return list(
+		"id" = good_id,
+		"name" = offer ? offer.name : target_station.GetGoodName(chosen_category, good_id),
+		"desc" = initial(item_type.desc) || "",
+		"stock" = stock,
+		"price" = round(price, 0.01),
+		"sell_price" = round(sell_price, 0.01),
+		"markup_text" = GetGoodMarkupText(basic_price, price),
+		"can_add" = can_add_goods && stock > 0,
+		"quantity_form_open" = ("[goods_quantity_target]" == "[good_id]"),
+		"icon" = icon_asset,
+		"in_cart_amount" = in_cart
+	)
+
+/datum/computer_file/program/supply_base/proc/GetGoodCartQuantity(list/station_cart, good_id)
+	if(!islist(station_cart))
+		return 0
+	if(isnum(station_cart[good_id]))
+		return station_cart[good_id]
+	if(islist(station_cart[chosen_category]))
+		return station_cart[chosen_category][good_id] || 0
+	return 0
 
 /datum/computer_file/program/supply_base/proc/SerializeShopListGroups(list/shop_list, buyer_faction = null, list/price_snapshot = null)
 	var/list/result = list()

@@ -46,7 +46,8 @@
 	var/notifications_enabled = FALSE
 	var/admin_access = list(access_cargo, access_mailsorting)
 
-/* [SIERRA-REMOVE] - Cargo ушло в мод
+// [SIERRA-REMOVE] - CARGO - Handled by cargo mod
+/*
 /datum/nano_module/program/supply/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
 	var/is_admin = emagged || check_access(user, admin_access)
@@ -120,13 +121,15 @@
 		ui.set_initial_data(data)
 		ui.open()
 */
+// [/SIERRA-REMOVE]
 // Supply the order ID and where to look. This is just to reduce copypaste code.
 /datum/nano_module/program/supply/proc/find_order_by_id(order_id, list/find_in)
 	for(var/datum/supply_order/SO in find_in)
 		if(SO.ordernum == order_id)
 			return SO
 
-/* [SIERRA-REMOVE] - Cargo топики конфликтуют, нужно комментить
+// [SIERRA-REMOVE] - CARGO - Handled by cargo mod
+/*
 /datum/nano_module/program/supply/Topic(href, href_list)
 	var/mob/user = usr
 	if(..())
@@ -315,6 +318,7 @@
 		notifications_enabled = !notifications_enabled
 		return 1
 */
+// [/SIERRA-REMOVE]
 /datum/nano_module/program/supply/proc/generate_categories()
 	category_names.Cut()
 	category_contents.Cut()

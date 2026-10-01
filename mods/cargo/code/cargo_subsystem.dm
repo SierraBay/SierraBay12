@@ -282,27 +282,30 @@
 
 /datum/controller/subsystem/supply/proc/TrimResolvedContracts()
 	var/resolved_count = 0
-	var/datum/trade_contract/oldest_resolved = null
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
 		if(contract.status == CONTRACT_STATUS_COMPLETED || contract.status == CONTRACT_STATUS_FAILED)
 			resolved_count++
-			if(contract.HasPendingRefund() || contract.HasPendingPayout())
-				continue
-			if(!oldest_resolved || contract.resolved_at < oldest_resolved.resolved_at)
-				oldest_resolved = contract
-	if(resolved_count > max_resolved_trade_contracts && oldest_resolved)
+	while(resolved_count > max_resolved_trade_contracts)
+		var/datum/trade_contract/oldest_resolved = null
+		for(var/datum/trade_contract/contract as anything in trade_contracts)
+			if(contract.status == CONTRACT_STATUS_COMPLETED || contract.status == CONTRACT_STATUS_FAILED)
+				if(contract.HasPendingRefund() || contract.HasPendingPayout())
+					continue
+				if(!oldest_resolved || contract.resolved_at < oldest_resolved.resolved_at)
+					oldest_resolved = contract
+		if(!oldest_resolved)
+			break
 		trade_contracts -= oldest_resolved
 		qdel(oldest_resolved)
+		resolved_count--
 
 /datum/controller/subsystem/supply/proc/ProcessPendingContractRefunds()
-	var/settled_payment = FALSE
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
-		if(contract.HasPendingRefund() && contract.TrySettlePendingRefund())
-			settled_payment = TRUE
-		if(contract.HasPendingPayout() && contract.TrySettlePendingPayout())
-			settled_payment = TRUE
-	if(settled_payment)
-		TrimResolvedContracts()
+		if(contract.HasPendingRefund())
+			contract.TrySettlePendingRefund()
+		if(contract.HasPendingPayout())
+			contract.TrySettlePendingPayout()
+	TrimResolvedContracts()
 
 /datum/controller/subsystem/supply/proc/GetVisibleContractBySource(source_uid)
 	for(var/datum/trade_contract/contract as anything in trade_contracts)
@@ -427,10 +430,8 @@
 
 /datum/controller/subsystem/supply/proc/BuildTradeContractCommodityCandidate(datum/trading_station/source_station, datum/trading_station/destination_station, route_distance, target_value, source_category_name, source_good_id)
 	var/source_available = source_station.GetGoodAmount(source_category_name, source_good_id)
-	if(source_available < 1)
-		return null
 	var/item_path = source_station.GetGoodPath(source_category_name, source_good_id)
-	if(!ispath(item_path, /atom/movable))
+	if(source_available < 1 || !ispath(item_path, /atom/movable))
 		return null
 	var/source_unit_cost = GetStationRestockCost(source_good_id, source_station, source_category_name)
 	if(source_unit_cost < 1)
@@ -439,26 +440,22 @@
 	var/source_surplus = max(0, -source_station.GetLiveMarketStockPressure(source_category_name, source_good_id))
 	var/desired_amount = max(1, round(target_value / source_unit_cost))
 	var/list/destination_match = FindStationCommodityByPath(destination_station, item_path)
-	var/list/market
-	if(islist(destination_match))
-		market = GetSharedContractMarket(destination_station, destination_match, source_unit_cost, source_available, desired_amount, source_surplus, route_distance)
-	else
-		market = GetUnmatchedContractMarket(destination_station, source_good_id, source_unit_cost, source_available, desired_amount, source_surplus, route_distance, target_value)
-	if(!islist(market))
+	var/list/market = islist(destination_match) \
+		? GetSharedContractMarket(destination_station, destination_match, source_unit_cost, source_available, desired_amount, source_surplus, route_distance) \
+		: GetUnmatchedContractMarket(destination_station, source_good_id, source_unit_cost, source_available, desired_amount, source_surplus, route_distance, target_value)
+	if(!islist(market) || market["amount"] < 1)
 		return null
 
 	var/amount = market["amount"]
-	if(amount < 1)
-		return null
 	var/base_value = source_unit_cost * amount
 	if(base_value < min_trade_contract_value)
 		return null
 
+	return BuildCandidatePayload(source_station, market, source_category_name, source_good_id, item_path, source_unit_cost, amount, base_value, route_distance)
+
+/datum/controller/subsystem/supply/proc/BuildCandidatePayload(datum/trading_station/source_station, list/market, source_category_name, source_good_id, item_path, source_unit_cost, amount, base_value, route_distance)
 	var/destination_sell_price = market["sell_price"]
-	var/value_commission = round(base_value * 0.2)
-	var/distance_pay = round(route_distance * 35)
-	var/spread_pay = round(max(0, (destination_sell_price - source_unit_cost) * amount) * 0.5)
-	var/calculated_reward = max(value_commission + distance_pay, value_commission + spread_pay)
+	var/reward = CalculateContractReward(base_value, route_distance, destination_sell_price, source_unit_cost, amount)
 	return list(
 		"score" = market["score"],
 		"market_reason" = market["reason"],
@@ -470,7 +467,7 @@
 		"destination_sell_price" = destination_sell_price,
 		"distance" = route_distance,
 		"base_value" = base_value,
-		"reward" = max(100, calculated_reward),
+		"reward" = reward,
 		"deposit" = round(base_value * 0.3),
 		"penalty" = round(max(base_value, destination_sell_price * amount) * 1.5),
 		"content" = list(
@@ -483,6 +480,12 @@
 			"amount" = amount
 		)
 	)
+
+/datum/controller/subsystem/supply/proc/CalculateContractReward(base_value, route_distance, destination_sell_price, source_unit_cost, amount)
+	var/value_commission = round(base_value * 0.2)
+	var/distance_pay = round(route_distance * 35)
+	var/spread_pay = round(max(0, (destination_sell_price - source_unit_cost) * amount) * 0.5)
+	return max(100, max(value_commission + distance_pay, value_commission + spread_pay))
 
 /datum/controller/subsystem/supply/proc/GetSharedContractMarket(datum/trading_station/destination_station, list/destination_match, source_unit_cost, source_available, desired_amount, source_surplus, route_distance)
 	var/category_name = destination_match["category"]
@@ -921,55 +924,68 @@
 		if(!islist(order))
 			order_queue.Remove(order_id)
 			continue
-		var/list/contents = order["contents"]
-		var/changed = FALSE
-		if(islist(contents))
-			var/list/station_keys = list()
-			if(station in contents)
-				station_keys += station
-			if(st_uid && (st_uid in contents))
-				station_keys += st_uid
-			for(var/station_key in station_keys)
-				var/list/station_cart = contents[station_key]
-				if(islist(station_cart))
-					for(var/entry in station_cart)
-						var/list/inner = station_cart[entry]
-						if(islist(inner))
-							inner.Cut()
-					station_cart.Cut()
-				contents -= station_key
-				changed = TRUE
-		var/list/price_snapshot = order["price_snapshot"]
-		if(islist(price_snapshot))
-			var/list/snap_keys = list()
-			if(station in price_snapshot)
-				snap_keys += station
-			if(st_uid && (st_uid in price_snapshot))
-				snap_keys += st_uid
-			for(var/snap_key in snap_keys)
-				var/list/station_snap = price_snapshot[snap_key]
-				if(islist(station_snap))
-					for(var/cat in station_snap)
-						var/list/cat_snap = station_snap[cat]
-						if(islist(cat_snap))
-							for(var/gid in cat_snap)
-								var/list/gsnap = cat_snap[gid]
-								if(islist(gsnap))
-									gsnap.Cut()
-							cat_snap.Cut()
-					station_snap.Cut()
-				price_snapshot -= snap_key
-				changed = TRUE
-		if(changed)
-			if(CollectCountsFrom(contents) <= 0)
-				DismantleOrder(order_id)
-			else
-				var/new_cost = GetSnapshotTotalCost(order["price_snapshot"], contents, order["buyer_faction"])
-				order["cost"] = new_cost
-				var/datum/money_account/master_account = get_supply_department_account()
-				var/is_master = master_account && (order["requesting_acct"] == master_account)
-				order["fee"] = is_master ? 0 : round(new_cost * handling_fee, 0.01)
-				order["viewable_contents"] = BuildOrderViewableContents(contents)
+		var/changed_contents = PurgeStationFromOrderContents(order["contents"], station, st_uid)
+		var/changed_snap = PurgeStationFromOrderSnapshot(order["price_snapshot"], station, st_uid)
+		if(changed_contents || changed_snap)
+			UpdatePurgedOrder(order, order_id)
+
+/datum/controller/subsystem/supply/proc/PurgeStationFromOrderContents(list/contents, datum/trading_station/station, st_uid)
+	if(!islist(contents))
+		return FALSE
+	var/changed = FALSE
+	var/list/station_keys = list()
+	if(station in contents)
+		station_keys += station
+	if(st_uid && (st_uid in contents))
+		station_keys += st_uid
+	for(var/station_key in station_keys)
+		var/list/station_cart = contents[station_key]
+		if(islist(station_cart))
+			for(var/entry in station_cart)
+				var/list/inner = station_cart[entry]
+				if(islist(inner))
+					inner.Cut()
+			station_cart.Cut()
+		contents -= station_key
+		changed = TRUE
+	return changed
+
+/datum/controller/subsystem/supply/proc/PurgeStationFromOrderSnapshot(list/price_snapshot, datum/trading_station/station, st_uid)
+	if(!islist(price_snapshot))
+		return FALSE
+	var/changed = FALSE
+	var/list/snap_keys = list()
+	if(station in price_snapshot)
+		snap_keys += station
+	if(st_uid && (st_uid in price_snapshot))
+		snap_keys += st_uid
+	for(var/snap_key in snap_keys)
+		var/list/station_snap = price_snapshot[snap_key]
+		if(islist(station_snap))
+			for(var/cat in station_snap)
+				var/list/cat_snap = station_snap[cat]
+				if(islist(cat_snap))
+					for(var/gid in cat_snap)
+						var/list/gsnap = cat_snap[gid]
+						if(islist(gsnap))
+							gsnap.Cut()
+					cat_snap.Cut()
+			station_snap.Cut()
+		price_snapshot -= snap_key
+		changed = TRUE
+	return changed
+
+/datum/controller/subsystem/supply/proc/UpdatePurgedOrder(list/order, order_id)
+	var/list/contents = order["contents"]
+	if(CollectCountsFrom(contents) <= 0)
+		DismantleOrder(order_id)
+		return
+	var/new_cost = GetSnapshotTotalCost(order["price_snapshot"], contents, order["buyer_faction"])
+	order["cost"] = new_cost
+	var/datum/money_account/master_account = get_supply_department_account()
+	var/is_master = master_account && (order["requesting_acct"] == master_account)
+	order["fee"] = is_master ? 0 : round(new_cost * handling_fee, 0.01)
+	order["viewable_contents"] = BuildOrderViewableContents(contents)
 
 /datum/controller/subsystem/supply/proc/BuildOrderViewableContents(list/shopping_list)
 	. = ""
@@ -1296,6 +1312,8 @@
 			continue
 		if(istype(root, /obj/structure/closet/crate/trade_contract))
 			continue
+		if(istype(root, /obj/item/disk/trade_data))
+			continue
 		if(!CanExportAtom(root))
 			if(islist(rejected))
 				rejected += root
@@ -1303,6 +1321,8 @@
 		var/find_manifest = istype(root, /obj/structure/closet)
 		for(var/atom/movable/item as anything in GetExportTree(root))
 			if(visited[item] || QDELETED(item))
+				continue
+			if(istype(item, /obj/item/disk/trade_data))
 				continue
 			visited[item] = TRUE
 			var/list/trial_counts = counts.Copy()
@@ -1374,6 +1394,8 @@
 	var/list/candidates = list()
 	for(var/atom/movable/exported as anything in sender_beacon.GetObjects())
 		if(istype(exported, /obj/structure/closet/crate/trade_contract))
+			continue
+		if(istype(exported, /obj/item/disk/trade_data))
 			continue
 		if(!CanExportAtom(exported))
 			rejected += exported
@@ -1646,3 +1668,5 @@
 /datum/controller/subsystem/supply/proc/GetExportValue(atom/movable/exported, datum/trading_station/target_station = null, seller_faction = null, list/sold_counts = null, list/seen_strains = null)
 	var/list/plan = BuildExportPlan(list(exported), target_station, seller_faction, INFINITY, null, sold_counts, seen_strains)
 	return plan["total"]
+
+#undef MAX_SUPPLY_LOG_ENTRIES

@@ -19,17 +19,7 @@
 	var/live_market_remote_quote_limit = 6
 	var/live_market_auto_events = TRUE
 
-/datum/trading_station/proc/OpenLiveMarketCategory(list/storage, category_name, autocreate = TRUE)
-	if(!islist(storage) || !istext(category_name))
-		return null
-	if(!islist(storage[category_name]))
-		if(!autocreate)
-			return null
-		storage[category_name] = list()
-	return storage[category_name]
-
-/datum/trading_station/proc/BuildLiveMarketCommodityTags(category_name, good_id)
-	var/static/list/category_tag_rules = list(
+	var/static/list/live_market_category_tag_rules = list(
 		"material" = list("materials", "industrial"),
 		"medical" = list("medical"),
 		"medkit" = list("medical", "medkits"),
@@ -61,7 +51,7 @@
 		"crate" = list("crates", "supply"),
 		"packag" = list("crates", "supply")
 	)
-	var/static/list/item_tag_rules = list(
+	var/static/list/live_market_item_tag_rules = list(
 		/obj/item/stack/material = list("materials", "industrial"),
 		/obj/item/reagent_containers/food = list("food", "consumer"),
 		/obj/item/clothing = list("clothing", "consumer"),
@@ -78,19 +68,29 @@
 		/obj/item/ammo_magazine = list("munitions", "security")
 	)
 
+/datum/trading_station/proc/OpenLiveMarketCategory(list/storage, category_name, autocreate = TRUE)
+	if(!islist(storage) || !istext(category_name))
+		return null
+	if(!islist(storage[category_name]))
+		if(!autocreate)
+			return null
+		storage[category_name] = list()
+	return storage[category_name]
+
+/datum/trading_station/proc/BuildLiveMarketCommodityTags(category_name, good_id)
 	var/list/tags = list()
 	if(istext(category_name))
 		var/lower_category = lowertext(category_name)
 		tags[lower_category] = TRUE
-		for(var/fragment in category_tag_rules)
+		for(var/fragment in live_market_category_tag_rules)
 			if(findtext(lower_category, fragment))
-				for(var/tag in category_tag_rules[fragment])
+				for(var/tag in live_market_category_tag_rules[fragment])
 					tags[tag] = TRUE
 
 	var/item_path = GetGoodPath(category_name, good_id)
-	for(var/item_type in item_tag_rules)
+	for(var/item_type in live_market_item_tag_rules)
 		if(ispath(item_path, item_type))
-			for(var/tag in item_tag_rules[item_type])
+			for(var/tag in live_market_item_tag_rules[item_type])
 				tags[tag] = TRUE
 	if(!length(tags))
 		tags["general"] = TRUE
@@ -204,49 +204,63 @@
 		"tone" = "average",
 		"tag_weights" = islist(target_tags) ? target_tags.Copy() : list()
 	)
+	ApplyLiveMarketModifierPreset(modifier, type)
+	return modifier
 
+/datum/trading_station/proc/ApplyLiveMarketModifierPreset(list/modifier, type)
 	switch(type)
 		if(MARKET_MOD_BOOM)
-			modifier["name"] = "Economic Boom"
-			modifier["desc"] = "Civilian demand is strong and the station is paying well for finished goods."
-			modifier["buy_shift"] = -0.08
-			modifier["sell_shift"] = 0.1
-			modifier["demand_shift"] = -0.05
-			modifier["stock_shift"] = 0.15
-			modifier["tone"] = "good"
-			if(!length(modifier["tag_weights"]))
-				modifier["tag_weights"] = list("consumer" = 1, "food" = 0.8, "service" = 1, "general" = 0.4)
+			ApplyBoomModifierPreset(modifier)
 		if(MARKET_MOD_SHORTAGE)
-			modifier["name"] = "Acute Shortage"
-			modifier["desc"] = "Stocks are strained and the station is bidding aggressively for replacements."
-			modifier["buy_shift"] = 0.18
-			modifier["sell_shift"] = 0.24
-			modifier["demand_shift"] = 0.22
-			modifier["stock_shift"] = -0.2
-			modifier["tone"] = "bad"
-			if(!length(modifier["tag_weights"]))
-				modifier["tag_weights"] = list("*" = 0.55)
+			ApplyShortageModifierPreset(modifier)
 		if(MARKET_MOD_INDUSTRIAL_DEMAND)
-			modifier["name"] = "Industrial Demand"
-			modifier["desc"] = "Manufacturing demand is spiking for parts and raw materials."
-			modifier["buy_shift"] = 0.1
-			modifier["sell_shift"] = 0.18
-			modifier["demand_shift"] = 0.16
-			modifier["stock_shift"] = -0.1
-			modifier["tone"] = "average"
-			if(!length(modifier["tag_weights"]))
-				modifier["tag_weights"] = list("materials" = 1, "industrial" = 1, "parts" = 0.9)
+			ApplyIndustrialModifierPreset(modifier)
 		if(MARKET_MOD_BLOCKADE)
-			modifier["name"] = "Shipping Blockade"
-			modifier["desc"] = "Logistics disruption is tightening supply and pushing import prices up."
-			modifier["buy_shift"] = 0.22
-			modifier["sell_shift"] = 0.12
-			modifier["demand_shift"] = 0.1
-			modifier["stock_shift"] = -0.18
-			modifier["tone"] = "bad"
-			if(!length(modifier["tag_weights"]))
-				modifier["tag_weights"] = list("*" = 0.8)
-	return modifier
+			ApplyBlockadeModifierPreset(modifier)
+
+/datum/trading_station/proc/ApplyBoomModifierPreset(list/modifier)
+	modifier["name"] = "Economic Boom"
+	modifier["desc"] = "Civilian demand is strong and the station is paying well for finished goods."
+	modifier["buy_shift"] = -0.08
+	modifier["sell_shift"] = 0.1
+	modifier["demand_shift"] = -0.05
+	modifier["stock_shift"] = 0.15
+	modifier["tone"] = "good"
+	if(!length(modifier["tag_weights"]))
+		modifier["tag_weights"] = list("consumer" = 1, "food" = 0.8, "service" = 1, "general" = 0.4)
+
+/datum/trading_station/proc/ApplyShortageModifierPreset(list/modifier)
+	modifier["name"] = "Acute Shortage"
+	modifier["desc"] = "Stocks are strained and the station is bidding aggressively for replacements."
+	modifier["buy_shift"] = 0.18
+	modifier["sell_shift"] = 0.24
+	modifier["demand_shift"] = 0.22
+	modifier["stock_shift"] = -0.2
+	modifier["tone"] = "bad"
+	if(!length(modifier["tag_weights"]))
+		modifier["tag_weights"] = list("*" = 0.55)
+
+/datum/trading_station/proc/ApplyIndustrialModifierPreset(list/modifier)
+	modifier["name"] = "Industrial Demand"
+	modifier["desc"] = "Manufacturing demand is spiking for parts and raw materials."
+	modifier["buy_shift"] = 0.1
+	modifier["sell_shift"] = 0.18
+	modifier["demand_shift"] = 0.16
+	modifier["stock_shift"] = -0.1
+	modifier["tone"] = "average"
+	if(!length(modifier["tag_weights"]))
+		modifier["tag_weights"] = list("materials" = 1, "industrial" = 1, "parts" = 0.9)
+
+/datum/trading_station/proc/ApplyBlockadeModifierPreset(list/modifier)
+	modifier["name"] = "Shipping Blockade"
+	modifier["desc"] = "Logistics disruption is tightening supply and pushing import prices up."
+	modifier["buy_shift"] = 0.22
+	modifier["sell_shift"] = 0.12
+	modifier["demand_shift"] = 0.1
+	modifier["stock_shift"] = -0.18
+	modifier["tone"] = "bad"
+	if(!length(modifier["tag_weights"]))
+		modifier["tag_weights"] = list("*" = 0.8)
 
 /datum/trading_station/proc/AddLiveMarketModifier(type, duration = null, list/target_tags = null)
 	if(!live_market_enabled)
@@ -472,64 +486,68 @@
 	else if(!istext(seller_name))
 		return 1
 
+	if(IsFactionTradeBlocked(station, station_faction, seller_name))
+		return 0
+
+	var/rel = GetFactionRelationshipState(station_faction, seller_name)
+	var/multiplier = GetRelationStateMultiplier(rel)
+	if(multiplier && (seller_name in station_faction.trade_markup))
+		var/markup = station_faction.trade_markup[seller_name]
+		if(isnum(markup) && markup > 1)
+			multiplier /= markup
+	return multiplier
+
+/datum/controller/subsystem/supply/proc/IsFactionTradeBlocked(datum/trading_station/station, datum/trade_faction/station_faction, seller_name)
 	if(islist(station_faction.embargo) && (seller_name in station_faction.embargo))
-		return 0
+		return TRUE
 	if(length(station.blacklist_factions) && (seller_name in station.blacklist_factions))
-		return 0
+		return TRUE
 	if(length(station.whitelist_factions) && !(seller_name in station.whitelist_factions))
-		return 0
+		return TRUE
+	return FALSE
 
+/datum/controller/subsystem/supply/proc/GetFactionRelationshipState(datum/trade_faction/station_faction, seller_name)
 	var/rel = station_faction.relationship[seller_name]
-	if(isnull(rel))
-		var/datum/trade_faction/seller_datum = GetFaction(seller_name)
-		if(istype(seller_datum) && isnum(station_faction.relationship[seller_datum.name]))
-			rel = station_faction.relationship[seller_datum.name]
-		else
-			rel = FACTION_STATE_NEUTRAL
+	if(!isnull(rel))
+		return rel
+	var/datum/trade_faction/seller_datum = GetFaction(seller_name)
+	if(istype(seller_datum) && isnum(station_faction.relationship[seller_datum.name]))
+		return station_faction.relationship[seller_datum.name]
+	return FACTION_STATE_NEUTRAL
 
-	var/multiplier = 1
+/datum/controller/subsystem/supply/proc/GetRelationStateMultiplier(rel)
 	switch(rel)
 		if(FACTION_STATE_WAR)
 			return 0
 		if(FACTION_STATE_ENEMY)
-			multiplier = 0.5
+			return 0.5
 		if(FACTION_STATE_RIVAL)
-			multiplier = 0.7
+			return 0.7
 		if(FACTION_STATE_ANIMOSITY)
-			multiplier = 0.85
+			return 0.85
 		if(FACTION_STATE_NEUTRAL)
-			multiplier = 0.95
+			return 0.95
 		if(FACTION_STATE_WELCOMING)
-			multiplier = 1.05
+			return 1.05
 		if(FACTION_STATE_FRIEND)
-			multiplier = 1.1
+			return 1.1
 		if(FACTION_STATE_ALLY)
-			multiplier = 1.2
+			return 1.2
 		if(FACTION_STATE_PROTECTORATE)
-			multiplier = 1.25
-
-	if(seller_name in station_faction.trade_markup)
-		var/markup = station_faction.trade_markup[seller_name]
-		if(isnum(markup) && markup > 1)
-			multiplier /= markup
-
-	return multiplier
+			return 1.25
+	return 1
 
 /datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, seller_faction = null, category_name = null, amount = 1, sold_offset = 0)
-	if(istype(station) && istext(seller_faction) && isnull(category_name))
-		if(seller_faction in station.inventory)
-			category_name = seller_faction
-			seller_faction = null
+	if(istype(station) && istext(seller_faction) && isnull(category_name) && (seller_faction in station.inventory))
+		category_name = seller_faction
+		seller_faction = null
 
-	if(!isnum(amount) || amount <= 0)
+	if(!isnum(amount) || amount <= 0 || !istype(station))
 		return 0
 
 	var/base_price = GetStationTradeBasePrice(good_ref, station, null, category_name)
-	if(!base_price || !istype(station))
-		return 0
-
 	var/faction_mult = GetStationTradeRelationMultiplier(station, seller_faction)
-	if(!faction_mult)
+	if(!base_price || !faction_mult)
 		return 0
 
 	if(!station.live_market_enabled)
@@ -538,122 +556,92 @@
 	if(!istext(category_name) || !station.HasLiveMarketCommodity(category_name, good_ref))
 		return max(1, round(base_price * 0.55 * faction_mult * amount))
 
+	return CalculateSimulatedSellPrice(good_ref, station, category_name, amount, sold_offset, base_price, faction_mult, seller_faction)
+
+/datum/controller/subsystem/supply/proc/CalculateSimulatedSellPrice(good_ref, datum/trading_station/station, category_name, amount, sold_offset, base_price, faction_mult, seller_faction)
 	var/baseline = max(1, station.GetLiveMarketBaseline(category_name, good_ref))
 	var/initial_stock = max(0, station.GetGoodAmount(category_name, good_ref))
 	var/initial_demand = station.GetLiveMarketDemandScore(category_name, good_ref)
 	var/event_mult = station.GetLiveMarketEventPriceMultiplier(category_name, good_ref, "sell_shift")
 	var/buy_price_cap = round(GetStationBuyPrice(good_ref, station, seller_faction, category_name) * 0.9)
 
-	var/total_price = 0
-	if(amount <= 50)
-		var/full_units = floor(amount)
-		var/fraction = amount - full_units
-		if(full_units > 0)
-			for(var/k in 1 to full_units)
-				var/units_sold_before = (k - 1) + sold_offset
-				var/sim_stock = initial_stock + units_sold_before
-				var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
-
-				var/sim_pressure = 0
-				if(sim_stock < baseline)
-					sim_pressure = min((baseline - sim_stock) / baseline, 1)
-				else if(sim_stock > baseline)
-					sim_pressure = -min((sim_stock - baseline) / baseline, 1)
-
-				var/unit_mult = 0.62
-				if(sim_pressure > 0)
-					unit_mult += min(sim_pressure * 0.35, 0.28)
-				else if(sim_pressure < 0)
-					unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
-
-				if(sim_demand > 0)
-					unit_mult += min(sim_demand * 0.18, 0.25)
-				else if(sim_demand < 0)
-					unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
-
-				unit_mult *= event_mult
-				unit_mult = clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
-
-				var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
-				if(buy_price_cap > 0)
-					unit_price = min(unit_price, buy_price_cap)
-				total_price += unit_price
-
-				if(unit_mult <= station.live_market_min_sell_multiplier)
-					var/remaining = full_units - k
-					if(remaining > 0)
-						total_price += remaining * unit_price
-					break
-
-		if(fraction > 0)
-			var/units_sold_before = full_units + sold_offset
-			var/sim_stock = initial_stock + units_sold_before
-			var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
-
-			var/sim_pressure = 0
-			if(sim_stock < baseline)
-				sim_pressure = min((baseline - sim_stock) / baseline, 1)
-			else if(sim_stock > baseline)
-				sim_pressure = -min((sim_stock - baseline) / baseline, 1)
-
-			var/unit_mult = 0.62
-			if(sim_pressure > 0)
-				unit_mult += min(sim_pressure * 0.35, 0.28)
-			else if(sim_pressure < 0)
-				unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
-
-			if(sim_demand > 0)
-				unit_mult += min(sim_demand * 0.18, 0.25)
-			else if(sim_demand < 0)
-				unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
-
-			unit_mult *= event_mult
-			unit_mult = clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
-
-			var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
-			if(buy_price_cap > 0)
-				unit_price = min(unit_price, buy_price_cap)
-			total_price += max(1, round(unit_price * fraction))
-	else
-		var/buckets = 25
-		var/bucket_size = amount / buckets
-		for(var/b in 1 to buckets)
-			var/units_sold_before = ((b - 0.5) * bucket_size) + sold_offset
-			var/sim_stock = initial_stock + units_sold_before
-			var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
-
-			var/sim_pressure = 0
-			if(sim_stock < baseline)
-				sim_pressure = min((baseline - sim_stock) / baseline, 1)
-			else if(sim_stock > baseline)
-				sim_pressure = -min((sim_stock - baseline) / baseline, 1)
-
-			var/unit_mult = 0.62
-			if(sim_pressure > 0)
-				unit_mult += min(sim_pressure * 0.35, 0.28)
-			else if(sim_pressure < 0)
-				unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
-
-			if(sim_demand > 0)
-				unit_mult += min(sim_demand * 0.18, 0.25)
-			else if(sim_demand < 0)
-				unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
-
-			unit_mult *= event_mult
-			unit_mult = clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
-
-			var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
-			if(buy_price_cap > 0)
-				unit_price = min(unit_price, buy_price_cap)
-
-			if(unit_mult <= station.live_market_min_sell_multiplier)
-				var/remaining_buckets = buckets - b + 1
-				total_price += round(remaining_buckets * bucket_size * unit_price)
-				break
-
-			total_price += round(bucket_size * unit_price)
-
+	var/total_price = (amount <= 50) \
+		? SimulateDirectSellPrice(station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap) \
+		: SimulateBucketedSellPrice(station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
 	return max(1, round(total_price))
+
+/datum/controller/subsystem/supply/proc/CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, datum/trading_station/station)
+	var/sim_pressure = 0
+	if(sim_stock < baseline)
+		sim_pressure = min((baseline - sim_stock) / baseline, 1)
+	else if(sim_stock > baseline)
+		sim_pressure = -min((sim_stock - baseline) / baseline, 1)
+
+	var/unit_mult = 0.62
+	if(sim_pressure > 0)
+		unit_mult += min(sim_pressure * 0.35, 0.28)
+	else if(sim_pressure < 0)
+		unit_mult -= min(abs(sim_pressure) * 0.18, 0.18)
+
+	if(sim_demand > 0)
+		unit_mult += min(sim_demand * 0.18, 0.25)
+	else if(sim_demand < 0)
+		unit_mult -= min(abs(sim_demand) * 0.12, 0.2)
+
+	unit_mult *= event_mult
+	return clamp(unit_mult, station.live_market_min_sell_multiplier, station.live_market_max_sell_multiplier)
+
+/datum/controller/subsystem/supply/proc/CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
+	var/unit_price = max(1, round(base_price * unit_mult * faction_mult))
+	if(buy_price_cap > 0)
+		unit_price = min(unit_price, buy_price_cap)
+	return unit_price
+
+/datum/controller/subsystem/supply/proc/SimulateDirectSellPrice(datum/trading_station/station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
+	var/full_units = floor(amount)
+	var/fraction = amount - full_units
+	var/total_price = full_units > 0 ? SimulateFullUnitsSellPrice(station, full_units, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap) : 0
+	if(fraction > 0)
+		var/units_sold_before = full_units + sold_offset
+		var/sim_stock = initial_stock + units_sold_before
+		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
+		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
+		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
+		total_price += max(1, round(unit_price * fraction))
+	return total_price
+
+/datum/controller/subsystem/supply/proc/SimulateFullUnitsSellPrice(datum/trading_station/station, full_units, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
+	var/total_price = 0
+	for(var/k in 1 to full_units)
+		var/units_sold_before = (k - 1) + sold_offset
+		var/sim_stock = initial_stock + units_sold_before
+		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
+		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
+		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
+		total_price += unit_price
+		if(unit_mult <= station.live_market_min_sell_multiplier)
+			var/remaining = full_units - k
+			if(remaining > 0)
+				total_price += remaining * unit_price
+			break
+	return total_price
+
+/datum/controller/subsystem/supply/proc/SimulateBucketedSellPrice(datum/trading_station/station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
+	var/total_price = 0
+	var/buckets = 25
+	var/bucket_size = amount / buckets
+	for(var/b in 1 to buckets)
+		var/units_sold_before = ((b - 0.5) * bucket_size) + sold_offset
+		var/sim_stock = initial_stock + units_sold_before
+		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
+		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
+		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
+		if(unit_mult <= station.live_market_min_sell_multiplier)
+			var/remaining_buckets = buckets - b + 1
+			total_price += round(remaining_buckets * bucket_size * unit_price)
+			break
+		total_price += round(bucket_size * unit_price)
+	return total_price
 
 /datum/controller/subsystem/supply/proc/GetStationRestockCost(good_ref, datum/trading_station/station, category_name = null)
 	if(!istype(station))

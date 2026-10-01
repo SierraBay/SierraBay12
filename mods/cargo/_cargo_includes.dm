@@ -3,6 +3,7 @@
 
 #include "_cargo.dm"
 #include "code/cargo_computery.dm"
+#include "code/cargo_items.dm"
 #include "code/cargo_base.dm"
 #include "code/cargo.dm"
 #include "code/cargo_order.dm"

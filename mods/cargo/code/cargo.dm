@@ -38,6 +38,7 @@
 
 	var/list/known_market_intel = list()
 	var/save_order_id
+	var/message
 
 /datum/computer_file/program/supply/proc/ValidateLinkedAccount()
 	if(!account)
@@ -205,6 +206,11 @@
 /datum/computer_file/program/supply/proc/IsLocalTradeBeacon(obj/machinery/trade_beacon/beacon)
 	if(!istype(beacon) || QDELETED(beacon) || !beacon.loc)
 		return FALSE
+	if(!GLOB.using_map?.use_overmap)
+		var/atom/host = GetTradeSource()
+		if(!host && istype(computer, /atom))
+			host = computer
+		return host && (beacon.z == host.z)
 	var/obj/overmap/visitable/source_sector = GetTradeSourceSector()
 	if(!istype(source_sector))
 		return FALSE
@@ -454,24 +460,41 @@
 	return count
 
 /datum/computer_file/program/supply/proc/PopulateBaseTradeUiData(list/data, mob/user = null)
-	var/receiving_id = GetBeaconDisplayId(receiving)
-	var/sending_id = GetBeaconDisplayId(sending)
 	data["src"] = ref(src)
 	data["screen"] = trade_screen
 	data["log_screen"] = log_screen
+	data["message"] = message || ""
 	data["currency"] = GLOB.using_map.local_currency_name
 	data["currency_short"] = GLOB.using_map.local_currency_name_short
 	data["faction"] = faction
+	data["goods_quantity_target"] = goods_quantity_target || ""
+	data["cart_form_mode"] = cart_form_mode || ""
+	data["save_order_id"] = save_order_id
+	data["user_greeting"] = GetUserGreeting(user)
+	PopulateAccountUiData(data)
+	PopulateBeaconUiData(data)
+	PopulateCartSummaryUiData(data)
+
+/datum/computer_file/program/supply/proc/PopulateAccountUiData(list/data)
 	data["has_account"] = istype(account)
 	data["account_owner_name"] = account ? account.owner_name : ""
 	data["account_number"] = account ? account.account_number : 0
 	data["account_money"] = account ? round(account.money, 0.01) : 0
+
+/datum/computer_file/program/supply/proc/PopulateBeaconUiData(list/data)
+	var/receiving_id = GetBeaconDisplayId(receiving)
+	var/sending_id = GetBeaconDisplayId(sending)
 	data["receiving"] = receiving_id || ""
 	data["has_receiving"] = !!receiving_id
 	data["sending"] = sending_id || ""
 	data["has_sending"] = !!sending_id
-	data["goods_quantity_target"] = goods_quantity_target || ""
-	data["cart_form_mode"] = cart_form_mode || ""
+	var/cooldown_sec = (sending && sending.export_cooldown > world.time) ? round((sending.export_cooldown - world.time) / 10) : 0
+	data["export_cooldown_remaining"] = cooldown_sec
+	data["export_cooldown_text"] = cooldown_sec ? "[cooldown_sec]s" : "Ready"
+	data["available_receiving_beacons"] = SerializeLocalBeacons("receiving")
+	data["available_sending_beacons"] = SerializeLocalBeacons("sending")
+
+/datum/computer_file/program/supply/proc/PopulateCartSummaryUiData(list/data)
 	data["cart_count"] = SSsupply.CollectCountsFrom(shopping_list)
 	var/cart_total = SSsupply.CollectPriceForList(shopping_list, faction)
 	data["cart_total"] = round(cart_total, 0.01)
@@ -480,7 +503,7 @@
 	data["cart_trade_block_reason"] = cart_range_block || ""
 	var/orders_locked = (world.time < order_cooldown_until)
 	data["orders_locked"] = orders_locked
-	data["can_purchase_cart"] = istype(account) && !!receiving_id && length(shopping_list) && !cart_range_block
+	data["can_purchase_cart"] = istype(account) && !!data["has_receiving"] && length(shopping_list) && !cart_range_block
 	data["can_build_order"] = istype(account) && length(shopping_list) && !orders_locked
 	data["order_count"] = length(SSsupply.order_queue)
 	var/pending_total = 0
@@ -489,23 +512,17 @@
 		if(islist(order_entry))
 			pending_total += (order_entry["cost"] + order_entry["fee"])
 	data["pending_orders_total"] = round(pending_total, 0.01)
-	var/cooldown_sec = (sending && sending.export_cooldown > world.time) ? round((sending.export_cooldown - world.time) / 10) : 0
-	data["export_cooldown_remaining"] = cooldown_sec
-	data["export_cooldown_text"] = cooldown_sec ? "[cooldown_sec]s" : "Ready"
-	var/user_greeting = ""
+
+/datum/computer_file/program/supply/proc/GetUserGreeting(mob/user)
 	var/obj/item/card/id/I = GetInsertedIdCard()
 	if(!istype(I) && istype(user))
 		I = user.GetIdCard()
 	if(istype(I))
-		user_greeting = "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)]"
-		if(I.military_branch)
-			user_greeting += " ([uppertext(I.military_branch)])"
-	else if(istype(user))
-		user_greeting = "WELCOME, [uppertext(user.name)]"
-	data["user_greeting"] = user_greeting
-	data["available_receiving_beacons"] = SerializeLocalBeacons("receiving")
-	data["available_sending_beacons"] = SerializeLocalBeacons("sending")
-	data["save_order_id"] = save_order_id
+		var/branch = I.military_branch ? " ([uppertext(I.military_branch)])" : ""
+		return "WELCOME, [uppertext(I.registered_name)], [uppertext(I.assignment)][branch]"
+	if(istype(user))
+		return "WELCOME, [uppertext(user.name)]"
+	return ""
 
 /datum/computer_file/program/supply/proc/BuildSettingsScreenData(list/data)
 	var/datum/money_account/master_account = GetMasterAccount()
@@ -540,6 +557,12 @@
 
 /datum/computer_file/program/supply/proc/BuildExportScreenData(list/data)
 	var/datum/trading_station/selected_station = EnsureSelectedStation()
+	var/list/stations = SerializeVisibleStations()
+	data["has_visible_stations"] = length(stations) ? TRUE : FALSE
+	data["stations"] = stations
+	data["has_selected_station"] = istype(selected_station)
+	if(istype(selected_station))
+		data["selected_station"] = SerializeSelectedStation(selected_station)
 	var/datum/money_account/export_account = GetExportAccount()
 	data["export_to_cargo_account"] = export_to_cargo_account
 	data["export_account_owner"] = export_account ? export_account.owner_name : "Unavailable"
@@ -652,6 +675,7 @@
 		if(trade_screen == LOG_SCREEN && !log_screen)
 			log_screen = LOG_SHIPPING
 		ResetUiForms()
+		message = null
 		return TRUE
 	if("PRG_log_screen" in href_list)
 		log_screen = href_list["PRG_log_screen"]
@@ -803,8 +827,20 @@
 	return TRUE
 
 /datum/computer_file/program/supply/LoadSavedCartDirect(raw_index)
+	message = null
+	var/index = isnum(raw_index) ? raw_index : text2num(raw_index)
+	var/list/loaded
+	if(isnum(index))
+		var/numeric_index = round(index)
+		if(numeric_index >= 1 && numeric_index <= length(saved_shopping_lists))
+			var/name = saved_shopping_lists[numeric_index]
+			loaded = LoadShopList(name)
+	var/count_before = (islist(loaded) && SSsupply) ? SSsupply.CollectCountsFrom(loaded) : 0
 	. = ..()
 	if(.)
+		var/count_after = (islist(shopping_list) && SSsupply) ? SSsupply.CollectCountsFrom(shopping_list) : 0
+		if(count_before && count_after != count_before)
+			message = "Some items from the saved template were unavailable and have been excluded."
 		trade_screen = CART_SCREEN
 		ResetUiForms()
 
@@ -837,30 +873,7 @@
 				RemoveFromShopList(good_id, 1, station, chosen_category)
 		return TRUE
 	if("PRG_cart_set_form" in href_list)
-		if(!istype(station) || !chosen_category)
-			return TRUE
-		var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_set_form"])
-		if(!good_id)
-			return TRUE
-		var/set_amount = text2num(href_list["PRG_cart_set_amount"])
-		if(isnum(set_amount) && set_amount >= 0)
-			var/stock = station.GetGoodAmount(chosen_category, good_id)
-			var/current_in_cart = 0
-			var/station_key = GetStationKey(station)
-			var/list/station_cart = islist(shopping_list[station_key]) ? shopping_list[station_key] : shopping_list[station]
-			if(islist(station_cart))
-				if(isnum(station_cart[good_id]))
-					current_in_cart = station_cart[good_id]
-				else if(islist(station_cart[chosen_category]))
-					var/list/category_cart = station_cart[chosen_category]
-					current_in_cart = category_cart[good_id] || 0
-			var/clamped = min(stock, round(set_amount))
-			if(clamped > current_in_cart)
-				AddToShopList(good_id, clamped - current_in_cart, stock)
-			else if(clamped < current_in_cart)
-				RemoveFromShopList(good_id, current_in_cart - clamped, station, chosen_category)
-			CloseGoodsQuantityForm()
-		return TRUE
+		return HandleCartSetAmount(href_list)
 	if("PRG_cart_remove_direct" in href_list)
 		return HandleCartRemove(href_list)
 	if("PRG_cart_reset" in href_list)
@@ -876,6 +889,32 @@
 	if(("PRG_cart_save" in href_list) || ("PRG_cart_save_form" in href_list) || ("PRG_cart_load" in href_list) || ("PRG_cart_load_direct" in href_list) || ("PRG_cart_delete" in href_list))
 		return HandleSavedCartTopic(href_list)
 	return FALSE
+
+/datum/computer_file/program/supply/proc/HandleCartSetAmount(list/href_list)
+	if(!istype(station) || !chosen_category)
+		return TRUE
+	var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_set_form"])
+	if(!good_id)
+		return TRUE
+	var/set_amount = text2num(href_list["PRG_cart_set_amount"])
+	if(isnum(set_amount) && set_amount >= 0)
+		var/stock = station.GetGoodAmount(chosen_category, good_id)
+		var/station_key = GetStationKey(station)
+		var/list/station_cart = islist(shopping_list[station_key]) ? shopping_list[station_key] : shopping_list[station]
+		var/current_in_cart = 0
+		if(islist(station_cart))
+			if(isnum(station_cart[good_id]))
+				current_in_cart = station_cart[good_id]
+			else if(islist(station_cart[chosen_category]))
+				var/list/category_cart = station_cart[chosen_category]
+				current_in_cart = category_cart[good_id] || 0
+		var/clamped = min(stock, round(set_amount))
+		if(clamped > current_in_cart)
+			AddToShopList(good_id, clamped - current_in_cart, stock)
+		else if(clamped < current_in_cart)
+			RemoveFromShopList(good_id, current_in_cart - clamped, station, chosen_category)
+		CloseGoodsQuantityForm()
+	return TRUE
 
 /datum/computer_file/program/supply/proc/PurchaseCart()
 	if(!can_run(usr, TRUE))

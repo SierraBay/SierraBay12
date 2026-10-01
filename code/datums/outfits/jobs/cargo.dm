@@ -10,6 +10,9 @@
 	l_hand = /obj/item/material/clipboard
 	id_types = list(/obj/item/card/id/cargo/head)
 	pda_type = /obj/item/modular_computer/pda/cargo
+	// [SIERRA-ADD] - CARGO - Cargo account card for QM
+	r_pocket = /obj/item/card/cargo_account
+	// [/SIERRA-ADD]
 
 /singleton/hierarchy/outfit/job/cargo/cargo_tech
 	name = OUTFIT_JOB_NAME("Cargo technician")

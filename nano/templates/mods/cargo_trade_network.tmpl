@@ -1468,6 +1468,10 @@
 					</div>
 					<div class="tn-flex-row-lg">
 						<div>
+							<span class="tn-panel-label">Station:</span>
+							<strong style="color: #ffaa22; margin-left: 4px;">{{if data.has_selected_station && data.selected_station}}{{>data.selected_station.name}}{{else}}<span class="tn-empty">None</span>{{/if}}</strong>
+						</div>
+						<div>
 							<span class="tn-panel-label">Beacon:</span>
 							<strong style="color: #ffaa22; margin-left: 4px;">{{if data.has_sending}}{{>data.sending}}{{else}}<span class="tn-empty">None</span>{{/if}}</strong>
 						</div>
@@ -1541,6 +1545,9 @@
 					</div>
 				</div>
 			</div>
+		{{/if}}
+		{{if data.message}}
+			<div class="notice average" style="margin: 6px 0;">{{>data.message}}</div>
 		{{/if}}
 
 		<!-- =================================================================== -->
@@ -2247,6 +2254,48 @@
 		<!-- =================================================================== -->
 		{{else data.screen == 'export'}}
 			<div class="tn-screen-view" data-view="screen-export" data-view-screen="export">
+				<!-- Stations Panel -->
+				<div class="tn-panel">
+					<div class="tn-panel-title">Target Trade Station</div>
+					<div class="tn-panel-subtitle">Sensor-linked beacons &amp; buyer station</div>
+					<hr class="tn-section-divider">
+					{{if !data.has_visible_stations}}
+						<div class="tn-empty" style="font-size: 11px; padding: 2px;">No trade stations in sensor range.</div>
+					{{else}}
+						<div class="tn-station-select-wrap">
+							<select class="tn-station-select" onchange="if(this.value){ var fn = window.NanoUtility &amp;&amp; window.NanoUtility.generateHref; window.location.href = fn ? fn({'PRG_station': this.value}) : ('?src={{:data.src}};PRG_station=' + this.value); }">
+								{{for data.stations:station_entry:station_index}}
+									<option value="{{:station_entry.uid}}" {{if station_entry.selected}}selected{{/if}}>
+										{{>station_entry.name}} [{{:station_entry.status_label}} | {{:station_entry.market_label}}]
+									</option>
+								{{/for}}
+							</select>
+						</div>
+						{{if data.has_selected_station && data.selected_station}}
+							<div class="tn-station-card">
+								<div style="display: flex; justify-content: space-between; align-items: baseline;">
+									<strong class="tn-station-name">{{>data.selected_station.name}}</strong>
+									<span class="tn-station-faction" style="color: {{:data.selected_station.faction_color}}; margin-left: 4px;">
+										{{>data.selected_station.faction}}
+									</span>
+								</div>
+								<div class="tn-station-meta-row">
+									<span class="font-mono">
+										<span class="tn-status-dot tn-dot-{{:data.selected_station.status_tone}}"></span>{{:data.selected_station.status_label}}
+									</span>
+									<span class="tn-tag tn-tag-{{:data.selected_station.market_tone}}">
+										[{{:data.selected_station.market_label}}]
+									</span>
+								</div>
+								{{if data.selected_station.block_reason}}
+									<div style="font-size: 10px; margin-top: 3px; font-style: italic; color: #ff7777;">
+										{{>data.selected_station.block_reason}}
+									</div>
+								{{/if}}
+							</div>
+						{{/if}}
+					{{/if}}
+				</div>
 				<div class="tn-panel">
 					<div class="tn-panel-title">Export Payment Account</div>
 					<div class="tn-panel-subtitle">Proceeds go to: {{>data.export_account_owner}}</div>

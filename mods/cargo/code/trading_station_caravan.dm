@@ -222,71 +222,85 @@
 
 /obj/overmap/trade_beacon/caravan/Process()
 	. = ..()
+	if(!CanProcessCaravan() || !CheckCaravanRouteState())
+		return
+	var/turf/destination = istype(route_destination) ? route_destination.overmap_location : null
+	if(!istype(destination))
+		AbortCaravanRoute()
+		return
+	if(CheckDestinationArrival(destination) || !AcquireCaravanRoute(destination))
+		return
+	UpdateRouteProgress()
+	if(route_index > length(current_route))
+		ResetAndSearchRoute(destination)
+		return
+	AdvanceCaravanStep(destination)
+
+/obj/overmap/trade_beacon/caravan/proc/AbortCaravanRoute()
+	ClearRoute()
+	StopMovement()
+	next_action_at = world.time + repath_cooldown
+
+/obj/overmap/trade_beacon/caravan/proc/ResetAndSearchRoute(turf/destination)
+	current_route = null
+	route_index = 1
+	if(!BeginRouteSearch(destination))
+		AbortCaravanRoute()
+
+/obj/overmap/trade_beacon/caravan/proc/CanProcessCaravan()
 	if(!istype(linked_station) || QDELETED(linked_station))
 		qdel(src)
-		return
+		return FALSE
 	if(!istype(loc, /turf))
-		return
+		return FALSE
 	linked_station.UpdateOvermapLocation(loc)
-
 	if(world.time < next_action_at)
 		StopMovement()
-		return
-
+		return FALSE
 	if(!TryAdoptStartStation())
 		StopMovement()
 		next_action_at = world.time + trade_window_min
-		return
-
+		return FALSE
 	if(world.time < next_action_at)
 		StopMovement()
-		return
+		return FALSE
+	return TRUE
 
+/obj/overmap/trade_beacon/caravan/proc/CheckCaravanRouteState()
 	if(caravan_state == "docked" || !istype(route_destination))
 		if(!SelectNextRoute())
 			StopMovement()
 			BeginTradeWindow(1 MINUTE)
-			return
-		return
+			return FALSE
+		return FALSE
+	return TRUE
 
-	var/turf/destination = istype(route_destination) ? route_destination.overmap_location : null
-	if(!istype(destination))
-		ClearRoute()
-		StopMovement()
-		next_action_at = world.time + repath_cooldown
-		return
-
+/obj/overmap/trade_beacon/caravan/proc/CheckDestinationArrival(turf/destination)
 	if(loc == destination)
 		StopMovement()
 		current_stop = route_destination
 		ClearRoute()
 		BeginTradeWindow()
-		return
+		return TRUE
+	return FALSE
 
-	if(!length(current_route))
-		var/list/completed_route = ContinueRouteSearch(destination)
-		if(isnull(completed_route))
-			StopMovement()
-			return
-		if(!islist(completed_route))
-			ClearRoute()
-			StopMovement()
-			next_action_at = world.time + repath_cooldown
-			return
-		current_route = completed_route
-		route_index = 2
+/obj/overmap/trade_beacon/caravan/proc/AcquireCaravanRoute(turf/destination)
+	if(length(current_route))
+		return TRUE
+	var/list/completed_route = ContinueRouteSearch(destination)
+	if(isnull(completed_route))
+		StopMovement()
+		return FALSE
+	if(!islist(completed_route))
+		ClearRoute()
+		StopMovement()
+		next_action_at = world.time + repath_cooldown
+		return FALSE
+	current_route = completed_route
+	route_index = 2
+	return TRUE
 
-	UpdateRouteProgress()
-
-	if(route_index > length(current_route))
-		current_route = null
-		route_index = 1
-		if(!BeginRouteSearch(destination))
-			ClearRoute()
-			StopMovement()
-			next_action_at = world.time + repath_cooldown
-		return
-
+/obj/overmap/trade_beacon/caravan/proc/AdvanceCaravanStep(turf/destination)
 	var/turf/next_step = current_route[route_index]
 	if(!istype(next_step) || !CanTraverseTurf(next_step, destination))
 		current_route = null
@@ -296,7 +310,6 @@
 			StopMovement()
 			next_action_at = world.time + repath_cooldown
 		return
-
 	if(world.time >= next_nav_update)
 		SetCruiseHeading(next_step)
 		next_nav_update = world.time + nav_update_rate

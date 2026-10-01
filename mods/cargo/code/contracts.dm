@@ -75,6 +75,18 @@
 	if(!istype(contract) || contract.status != CONTRACT_STATUS_ACTIVE || contract.assigned_crate != src)
 		return FALSE
 	var/user_name = user ? (user.real_name || user.name) : null
+	TriggerTamperEffects()
+	DetachFromContract(contract)
+	contract.Fail(reason, null, user_name)
+	if(contract.actual_penalty < contract.penalty)
+		visible_message(SPAN_WARNING("The unpaid cargo penalty triggers automatic freight disposal."))
+		qdel(src)
+		return TRUE
+	locked = FALSE
+	open()
+	return TRUE
+
+/obj/structure/closet/crate/trade_contract/proc/TriggerTamperEffects()
 	visible_message(
 		SPAN_DANGER("\The [src] security seal is breached! Alarm sirens blare and emergency locks disengage!"),
 		SPAN_DANGER("A sharp alarm sounds from \the [src] as its security seal is breached!")
@@ -84,20 +96,13 @@
 	sparks.start()
 	playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 
-	contract.assigned_crate = null
+/obj/structure/closet/crate/trade_contract/proc/DetachFromContract(datum/trade_contract/contract)
+	if(istype(contract))
+		contract.assigned_crate = null
 	linked_contract = null
 	contract_id = null
 	name = "breached contract crate"
 	desc = "A freight crate whose trade-network security seal was forcefully breached."
-
-	contract.Fail(reason, null, user_name)
-	if(contract.actual_penalty < contract.penalty)
-		visible_message(SPAN_WARNING("The unpaid cargo penalty triggers automatic freight disposal."))
-		qdel(src)
-		return TRUE
-	locked = FALSE
-	open()
-	return TRUE
 
 /obj/structure/closet/crate/trade_contract/proc/AttemptTamper(mob/user, reason, force_open = FALSE)
 	if(opened || !IsActiveContractCrate())
@@ -415,6 +420,10 @@
 	var/route_block = GetRouteAcceptBlockReason(source_station, destination_station, buyer_faction)
 	if(route_block)
 		return route_block
+	var/beacon_block = GetBeaconAcceptBlockReason(receiver_beacon, source_station)
+	return beacon_block || GetCargoAcceptBlockReason(source_station)
+
+/datum/trade_contract/proc/GetBeaconAcceptBlockReason(obj/machinery/trade_beacon/receiving/receiver_beacon, datum/trading_station/source_station)
 	if(QDELETED(receiver_beacon) || !receiver_beacon.anchored || receiver_beacon.inoperable())
 		return "The receiving beacon is unavailable."
 	if(!length(receiver_beacon.GetValidDropTurfs()))
@@ -422,7 +431,7 @@
 	var/range_block = SSsupply.GetTradeRangeBlockReason(receiver_beacon, source_station)
 	if(range_block)
 		return "[source_station.name]: [range_block]"
-	return GetCargoAcceptBlockReason(source_station)
+	return null
 
 /datum/trade_contract/proc/GetRouteAcceptBlockReason(datum/trading_station/source_station, datum/trading_station/destination_station, buyer_faction = null)
 	if(buyer_faction)
@@ -600,7 +609,7 @@
 /datum/trade_contract/proc/TrySettlePendingPayout()
 	if(!HasPendingPayout())
 		return TRUE
-	if(!istype(linked_account) || linked_account.suspended)
+	if(!CanDepositToLinkedAccount())
 		return FALSE
 	if(!linked_account.deposit(pending_payout, "Trade Contract Delivery", "Trade Network"))
 		return FALSE
@@ -611,7 +620,7 @@
 /datum/trade_contract/proc/TrySettlePendingRefund()
 	if(!HasPendingRefund())
 		return TRUE
-	if(!istype(linked_account) || linked_account.suspended)
+	if(!CanDepositToLinkedAccount())
 		return FALSE
 	if(!linked_account.deposit(pending_refund, "Trade Contract Deposit Refund", "Trade Network"))
 		return FALSE
@@ -620,6 +629,9 @@
 	if(status == CONTRACT_STATUS_FAILED)
 		linked_account = null
 	return TRUE
+
+/datum/trade_contract/proc/CanDepositToLinkedAccount()
+	return istype(linked_account) && !QDELETED(linked_account) && !linked_account.suspended
 
 /datum/trade_contract/proc/DeductPenalty(penalty_multiplier)
 	if(isnum(penalty_multiplier) && penalty_multiplier == 0)

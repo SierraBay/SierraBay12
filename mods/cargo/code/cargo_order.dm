@@ -445,26 +445,45 @@
 
 /datum/computer_file/program/supply_order/proc/HandleCartTopic(list/href_list)
 	if("PRG_cart_add_good" in href_list)
-		EnsureSelectedStation()
-		var/block_reason = GetStationTradeBlockReason(station)
-		if(block_reason)
-			to_chat(usr, SPAN_WARNING(block_reason))
-			return TRUE
-		var/amount = text2num(href_list["PRG_cart_add_amount"]) || 1
-		TryAddToCart(href_list["PRG_cart_add_good"], amount)
-		return TRUE
+		return HandleCartAddGood(href_list)
 	if("PRG_cart_remove_good" in href_list)
-		EnsureSelectedStation()
-		var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_remove_good"])
-		if(good_id)
-			RemoveFromShopList(good_id, 1, station, chosen_category)
-		return TRUE
+		return HandleCartRemoveGood(href_list)
 	if("PRG_cart_form" in href_list)
 		cart_form_mode = href_list["PRG_cart_form"]
 		return TRUE
 	if("PRG_cart_form_cancel" in href_list)
 		cart_form_mode = null
 		return TRUE
+	if(("PRG_cart_save_form" in href_list) || ("PRG_cart_load_direct" in href_list) || ("PRG_cart_delete" in href_list))
+		return HandleCartPresetTopic(href_list)
+	if(HandleCartFormTopic(href_list))
+		return TRUE
+	if("PRG_cart_remove_direct" in href_list)
+		return HandleCartRemove(href_list)
+	if("PRG_cart_reset" in href_list)
+		ResetShopList()
+		cart_form_mode = null
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/supply_order/proc/HandleCartAddGood(list/href_list)
+	EnsureSelectedStation()
+	var/block_reason = GetStationTradeBlockReason(station)
+	if(block_reason)
+		to_chat(usr, SPAN_WARNING(block_reason))
+		return TRUE
+	var/amount = text2num(href_list["PRG_cart_add_amount"]) || 1
+	TryAddToCart(href_list["PRG_cart_add_good"], amount)
+	return TRUE
+
+/datum/computer_file/program/supply_order/proc/HandleCartRemoveGood(list/href_list)
+	EnsureSelectedStation()
+	var/good_id = ResolveGoodId(chosen_category, href_list["PRG_cart_remove_good"])
+	if(good_id)
+		RemoveFromShopList(good_id, 1, station, chosen_category)
+	return TRUE
+
+/datum/computer_file/program/supply_order/proc/HandleCartPresetTopic(list/href_list)
 	if("PRG_cart_save_form" in href_list)
 		var/preset_name = sanitize(href_list["PRG_cart_save_name"], 32)
 		if(SaveShopList(preset_name))
@@ -483,14 +502,6 @@
 	if("PRG_cart_delete" in href_list)
 		DeleteShopList(href_list["PRG_cart_delete"])
 		to_chat(usr, SPAN_NOTICE("Cart preset removed."))
-		return TRUE
-	if(HandleCartFormTopic(href_list))
-		return TRUE
-	if("PRG_cart_remove_direct" in href_list)
-		return HandleCartRemove(href_list)
-	if("PRG_cart_reset" in href_list)
-		ResetShopList()
-		cart_form_mode = null
 		return TRUE
 	return FALSE
 

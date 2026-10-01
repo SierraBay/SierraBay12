@@ -1,5 +1,5 @@
 /proc/get_supply_department_account()
-	var/datum/money_account/dept_account = department_accounts["Supply"] || department_accounts["Cargo"] || department_accounts["Снабжения"] || department_accounts["Снабжение"]
+	var/datum/money_account/dept_account = department_accounts["Supply"] || department_accounts["Cargo"]
 	if(dept_account)
 		return dept_account
 
@@ -15,7 +15,7 @@
 		var/datum/money_account/candidate = department_accounts[dept_key]
 		if(!istype(candidate))
 			continue
-		if(findtext(dept_key, "Снабжен") || findtext(dept_key, "Supply") || findtext(dept_key, "Cargo"))
+		if(findtext(dept_key, "Supply") || findtext(dept_key, "Cargo"))
 			return candidate
 
 	return null
