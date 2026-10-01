@@ -12,6 +12,8 @@ GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 	size = 2
 	var/icon/photo_front = null
 	var/icon/photo_side = null
+	/// Stable per-round key of the overmap vessel this record belongs to (see get_vessel_key_for_sector).
+	var/vessel_key
 	//More variables below.
 
 /datum/computer_file/report/crew_record/New()
@@ -150,6 +152,7 @@ GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 /proc/CreateModularRecord(mob/living/carbon/human/H)
 	var/datum/computer_file/report/crew_record/CR = new/datum/computer_file/report/crew_record()
 	CR.load_from_mob(H)
+	CR.vessel_key = resolve_vessel_key_for_human(H)
 
 	//ensure we don't get duplicated records
 	for (var/datum/computer_file/report/crew_record/record as anything in GLOB.all_crew_records)
@@ -159,11 +162,84 @@ GLOBAL_VAR_AS(arrest_security_status, "Arrest")
 	GLOB.all_crew_records.Add(CR)
 	return CR
 
+/// Whether this human should receive a modular crew record (manifest / Crew Records).
+/proc/should_create_crew_record(mob/living/carbon/human/H)
+	if(!istype(H) || !H.mind)
+		return FALSE
+	var/datum/job/job = H.mind.assigned_job || SSjobs.get_by_title(H.mind.assigned_role)
+	if(!job)
+		return FALSE
+	if(job.create_record)
+		return TRUE
+	// Playable ship (submap) crew — records are scoped to that vessel's computers.
+	if(istype(job, /datum/job/submap))
+		var/datum/job/submap/sjob = job
+		if(sjob.owner)
+			return TRUE
+	return FALSE
+
+/// Overmap sector that owns this atom (ship, station sector, landable shuttle, etc).
+/proc/get_overmap_sector_for_atom(atom/A)
+	RETURN_TYPE(/obj/overmap/visitable)
+	if(!A)
+		return null
+	var/obj/overmap/visitable/sector = get_owning_sector_recursive(A)
+	if(istype(sector))
+		return sector
+	return map_sectors["[get_z(A)]"]
+
+/// Stable vessel id for filtering crew records within a round.
+/proc/get_vessel_key_for_sector(obj/overmap/visitable/sector)
+	if(!istype(sector) || !length(sector.map_z))
+		return null
+	return "z[sector.map_z[1]]"
+
+/proc/get_vessel_key_for_atom(atom/A)
+	return get_vessel_key_for_sector(get_overmap_sector_for_atom(A))
+
+/proc/resolve_vessel_key_for_human(mob/living/carbon/human/H)
+	var/key = get_vessel_key_for_atom(H)
+	if(key)
+		return key
+	if(istype(H?.mind?.assigned_job, /datum/job/submap))
+		var/datum/job/submap/sjob = H.mind.assigned_job
+		if(sjob.owner?.associated_z)
+			return get_vessel_key_for_sector(map_sectors["[sjob.owner.associated_z]"])
+	return null
+
+/// Crew records visible to computers / programs on the given host atom's vessel.
+/proc/crew_records_for_host(atom/host)
+	RETURN_TYPE(/list)
+	if(!host)
+		return GLOB.all_crew_records.Copy()
+	var/vessel_key = get_vessel_key_for_atom(host)
+	if(!vessel_key)
+		return GLOB.all_crew_records.Copy()
+	var/obj/overmap/visitable/sector = get_overmap_sector_for_atom(host)
+	var/allow_unkeyed = sector && HAS_FLAGS(sector.sector_flags, OVERMAP_SECTOR_BASE)
+	var/list/matches = list()
+	for(var/datum/computer_file/report/crew_record/CR as anything in GLOB.all_crew_records)
+		if(CR.vessel_key == vessel_key)
+			matches += CR
+		else if(allow_unkeyed && !CR.vessel_key)
+			matches += CR
+	return matches
+
+/proc/atom_on_host_vessel(atom/A, atom/host)
+	if(!host)
+		return TRUE
+	var/host_z = get_z(host)
+	var/atom_z = get_z(A)
+	if(!host_z || !atom_z)
+		return FALSE
+	return AreConnectedZLevels(atom_z, host_z)
+
 // Gets crew records filtered by set of positions
-/proc/department_crew_manifest(list/filter_positions, blacklist = FALSE)
+/proc/department_crew_manifest(list/filter_positions, blacklist = FALSE, list/record_source)
 	RETURN_TYPE(/list)
 	var/list/matches = list()
-	for(var/datum/computer_file/report/crew_record/CR in GLOB.all_crew_records)
+	var/list/source = record_source || GLOB.all_crew_records
+	for(var/datum/computer_file/report/crew_record/CR in source)
 		var/rank = CR.get_job()
 		if(blacklist)
 			if(!(rank in filter_positions))

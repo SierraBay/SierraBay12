@@ -18,7 +18,7 @@
 /datum/nano_module/program/crew_manifest/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
 
-	data["crew_manifest"] = html_crew_manifest(TRUE)
+	data["crew_manifest"] = html_crew_manifest(TRUE, FALSE, nano_host())
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)

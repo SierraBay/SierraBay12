@@ -121,6 +121,11 @@ SUBSYSTEM_DEF(jobs)
 			player.mind.special_role = null
 	for(var/datum/job/job in primary_job_datums)
 		job.current_positions = 0
+	if(GLOB.using_map.active_main_submap)
+		for(var/title in GLOB.using_map.active_main_submap.jobs)
+			var/datum/job/job = GLOB.using_map.active_main_submap.jobs[title]
+			if(job)
+				job.current_positions = 0
 	unassigned_roundstart = list()
 
 /datum/controller/subsystem/jobs/proc/get_by_title(rank)
@@ -290,6 +295,11 @@ SUBSYSTEM_DEF(jobs)
 	if(length(unassigned_roundstart) == 0)	return 0
 	//Shuffle players and jobs
 	unassigned_roundstart = shuffle(unassigned_roundstart)
+
+	// Lobby-host main ship: station jobs are empty; assign concrete submap crew instead.
+	if(GLOB.using_map.ship_vote_enabled && GLOB.using_map.ship_loaded)
+		return divide_offmap_occupations(mode)
+
 	//People who wants to be assistants, sure, go on.
 	var/datum/job/assist = new DEFAULT_JOB_TYPE ()
 	var/list/assistant_candidates = find_occupation_candidates(assist, 3)
@@ -352,6 +362,117 @@ SUBSYSTEM_DEF(jobs)
 			player.new_player_panel()
 			unassigned_roundstart -= player
 	return TRUE
+
+/// Assign roundstart crew from the loaded main-ship submap using Occupation prefs.
+/datum/controller/subsystem/jobs/proc/divide_offmap_occupations(datum/game_mode/mode)
+	var/datum/submap/submap = GLOB.using_map.active_main_submap
+	if(!submap)
+		if(istype(GLOB.using_map, /datum/map/lobby_host))
+			var/datum/map/lobby_host/host = GLOB.using_map
+			host.bind_active_main_submap()
+			submap = host.active_main_submap
+	if(!submap || !LAZYLEN(submap.jobs))
+		log_error("divide_offmap_occupations: no active main-ship submap/jobs; players will stay unassigned.")
+		for(var/mob/new_player/player in unassigned_roundstart)
+			player.ready = 0
+			player.new_player_panel()
+			unassigned_roundstart -= player
+		return FALSE
+
+	var/list/offmap_jobs = list()
+	for(var/title in submap.jobs)
+		offmap_jobs += submap.jobs[title]
+	offmap_jobs = shuffle(offmap_jobs)
+	// Prefer scarce/leader slots first so supervisor-gated roles can open.
+	sortTim(offmap_jobs, GLOBAL_PROC_REF(cmp_offmap_job_priority))
+
+	for(var/level = 1 to 3)
+		for(var/mob/new_player/player in unassigned_roundstart)
+			for(var/datum/job/submap/job in offmap_jobs)
+				if(job.title in mode.disabled_jobs)
+					continue
+				if(attempt_offmap_role_assignment(player, job, level, mode))
+					break
+
+	for(var/mob/new_player/player in unassigned_roundstart)
+		if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
+			give_random_offmap_job(player, submap, mode)
+
+	for(var/mob/new_player/player in unassigned_roundstart)
+		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY || player.client.prefs.alternate_option == BE_ASSISTANT)
+			player.ready = 0
+			player.new_player_panel()
+			unassigned_roundstart -= player
+	return TRUE
+
+/proc/cmp_offmap_job_priority(datum/job/a, datum/job/b)
+	var/a_pos = a.total_positions
+	var/b_pos = b.total_positions
+	if(a_pos == -1)
+		a_pos = 999
+	if(b_pos == -1)
+		b_pos = 999
+	return a_pos - b_pos
+
+/datum/controller/subsystem/jobs/proc/attempt_offmap_role_assignment(mob/new_player/player, datum/job/submap/job, level, datum/game_mode/mode)
+	if(!istype(job) || !player?.client)
+		return FALSE
+	if(jobban_isbanned(player, job.title) || jobban_isbanned(player, "Offstation Roles"))
+		return FALSE
+	if(job.is_semi_antagonist && jobban_isbanned(player, MODE_MISC_AGITATOR))
+		return FALSE
+	if(!job.is_position_available() || !job.player_old_enough(player.client))
+		return FALSE
+	if(job.is_restricted(player.client.prefs))
+		return FALSE
+	if(!LAZYLEN(job.spawnpoints))
+		return FALSE
+
+	if(player.client.prefs.use_slot_priority_list)
+		for(var/datum/preferences_slot/prefs in player.client.prefs.slot_priority_list)
+			if(prefs.CorrectLevel(job, level))
+				player.client.prefs.load_character(prefs.slot)
+				return assign_offmap_role(player, job, mode)
+	else if(player.client.prefs.CorrectLevel(job, level))
+		return assign_offmap_role(player, job, mode)
+	return FALSE
+
+/datum/controller/subsystem/jobs/proc/assign_offmap_role(mob/new_player/player, datum/job/submap/job, datum/game_mode/mode = SSticker.mode)
+	if(!player?.mind || !istype(job))
+		return FALSE
+	if(job.title in mode.disabled_jobs)
+		return FALSE
+	if(!job.is_position_available())
+		return FALSE
+
+	player.mind.assigned_job = job
+	player.mind.assigned_role = job.title
+	player.mind.role_alt_title = job.get_alt_title_for(player.client)
+	player.faction = job.owner?.name
+	job.current_positions++
+	unassigned_roundstart -= player
+	return TRUE
+
+/datum/controller/subsystem/jobs/proc/give_random_offmap_job(mob/new_player/player, datum/submap/submap, datum/game_mode/mode = SSticker.mode)
+	var/list/candidates = list()
+	for(var/title in submap.jobs)
+		candidates += submap.jobs[title]
+	candidates = shuffle(candidates)
+	sortTim(candidates, GLOBAL_PROC_REF(cmp_offmap_job_priority))
+	for(var/datum/job/submap/job in candidates)
+		if(!job || (job.title in mode.disabled_jobs))
+			continue
+		if(job.is_restricted(player.client.prefs))
+			continue
+		if(jobban_isbanned(player, job.title) || jobban_isbanned(player, "Offstation Roles"))
+			continue
+		if(!job.player_old_enough(player.client))
+			continue
+		if(!job.is_position_available() || !LAZYLEN(job.spawnpoints))
+			continue
+		if(assign_offmap_role(player, job, mode))
+			return TRUE
+	return FALSE
 
 /datum/controller/subsystem/jobs/proc/attempt_role_assignment(mob/new_player/player, datum/job/job, level, datum/game_mode/mode)
 	if(!jobban_isbanned(player, job.title) && job.is_position_available() && job.player_old_enough(player.client))
@@ -443,6 +564,11 @@ SUBSYSTEM_DEF(jobs)
 		return
 
 	var/datum/job/job = get_by_title(rank)
+	// Prefer the concrete submap instance assigned at roundstart / latejoin offmap.
+	if(istype(H.mind?.assigned_job, /datum/job/submap))
+		var/datum/job/submap/assigned_submap_job = H.mind.assigned_job
+		if(assigned_submap_job.owner)
+			job = assigned_submap_job
 	var/list/spawn_in_storage
 
 	if(job)
@@ -451,9 +577,19 @@ SUBSYSTEM_DEF(jobs)
 				H.char_branch = GLOB.mil_branches.get_branch(H.client.prefs.branches[rank])
 			if(GLOB.using_map.flags & MAP_HAS_RANK)
 				H.char_rank = GLOB.mil_branches.get_rank(H.client.prefs.branches[rank], H.client.prefs.ranks[rank])
+			// Submap jobs may carry explicit branch/rank when map flags are off.
+			if(istype(job, /datum/job/submap) && !H.char_branch)
+				var/datum/job/submap/sjob = job
+				if(H.client.prefs.branches[job.title])
+					H.char_branch = GLOB.mil_branches.get_branch(H.client.prefs.branches[job.title])
+					H.char_rank = GLOB.mil_branches.get_rank(H.client.prefs.branches[job.title], H.client.prefs.ranks[job.title])
+				else if(sjob.branch && GLOB.mil_branches)
+					H.char_branch = GLOB.mil_branches.get_branch(sjob.branch)
+					H.char_rank = GLOB.mil_branches.get_rank(sjob.branch, sjob.rank)
 
-		// Transfers the skill settings for the job to the mob
-		H.skillset.obtain_from_client(job, H.client)
+		// Transfers the skill settings for the job to the mob (abstract instance for prefs keys).
+		var/datum/job/skill_job = get_by_path(job.type) || job
+		H.skillset.obtain_from_client(skill_job, H.client)
 
 		//Equip job items.
 		job.setup_account(H)
@@ -489,16 +625,22 @@ SUBSYSTEM_DEF(jobs)
 		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
 
 	H.job = rank
+	var/datum/job/submap/submap_job = job
+	if(istype(submap_job) && submap_job.owner)
+		H.faction = submap_job.owner.name
 
-	if(!joined_late || job.latejoin_at_spawnpoints)
-		var/obj/S = job.get_roundstart_spawnpoint()
-
-		if(istype(S, /obj/landmark/start) && istype(S.loc, /turf))
-			H.forceMove(S.loc)
+	if(job && (!joined_late || job.latejoin_at_spawnpoints))
+		if(istype(submap_job) && LAZYLEN(submap_job.spawnpoints))
+			H.forceMove(get_turf(pick(submap_job.spawnpoints)))
 		else
-			var/datum/spawnpoint/spawnpoint = job.get_spawnpoint(H.client)
-			H.forceMove(pick(spawnpoint.turfs))
-			spawnpoint.after_join(H)
+			var/obj/S = job.get_roundstart_spawnpoint()
+
+			if(istype(S, /obj/landmark/start) && istype(S.loc, /turf))
+				H.forceMove(S.loc)
+			else
+				var/datum/spawnpoint/spawnpoint = job.get_spawnpoint(H.client)
+				H.forceMove(pick(spawnpoint.turfs))
+				spawnpoint.after_join(H)
 
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
@@ -542,12 +684,19 @@ SUBSYSTEM_DEF(jobs)
 			W.buckle_mob(H)
 			W.add_fingerprint(H)
 
-	to_chat(H, FONT_LARGE("<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank].</B>"))
+	if(istype(submap_job) && submap_job.owner)
+		to_chat(H, FONT_LARGE("<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank] of the [submap_job.owner.name].</B>"))
+	else
+		to_chat(H, FONT_LARGE("<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank].</B>"))
 
 	if(job.supervisors)
 		to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 
-	to_chat(H, "<b>To speak on your department's radio channel use :h. For the use of other channels, examine your headset.</b>")
+	if(istype(submap_job) && submap_job.info)
+		to_chat(H, submap_job.info)
+
+	if(!istype(submap_job))
+		to_chat(H, "<b>To speak on your department's radio channel use :h. For the use of other channels, examine your headset.</b>")
 
 	if(job.req_admin_notify)
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")

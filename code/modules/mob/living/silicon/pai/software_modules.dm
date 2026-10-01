@@ -104,7 +104,7 @@
 
 /datum/pai_software/crew_manifest/on_ui_interact(mob/living/silicon/pai/user, datum/nanoui/ui, force_open = TRUE)
 	var/data[0]
-	data["crew_manifest"] = html_crew_manifest()
+	data["crew_manifest"] = html_crew_manifest(FALSE, FALSE, user)
 	ui = SSnano.try_update_ui(user, user, id, ui, data, force_open)
 	if (!ui)
 		ui = new(user, user, id, "crew_manifest.tmpl", "Crew Manifest", 450, 600)
