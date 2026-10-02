@@ -21,15 +21,16 @@ GLOBAL_TYPED_NEW(mercs, /datum/antagonist/mercenary)
 	no_prior_faction = TRUE
 
 	base_to_load = /datum/map_template/ruin/antag_spawn/mercenary
-/* [SIERRA-DELETE]
+
 /datum/antagonist/mercenary/create_global_objectives()
 	if(!..())
 		return 0
+	// [SIERRA-EDIT global_objectives |= new /datum/objective/nuclear]
 	global_objectives = list()
-	global_objectives |= new /datum/objective/nuclear
+	global_objectives |= new /datum/objective/survive
 	return 1
-[SIERRA-DELETE-END]
-*/
+	// [SIERRA-EDIT-END]
+
 /datum/antagonist/mercenary/equip(mob/living/carbon/human/player)
 	if(!..())
 		return 0
