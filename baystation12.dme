@@ -3517,6 +3517,7 @@
 #include "mods\_master_files\code\controllers\subsystems\lighting.dm"
 #include "mods\_master_files\code\game\world.dm"
 #include "mods\_master_files\code\game\antagonist\antagonist_panel.dm"
+#include "mods\_master_files\code\game\antagonist\outsider\ninja.dm"
 #include "mods\_master_files\code\game\antagonist\station\changeling.dm"
 #include "mods\_master_files\code\game\gamemodes\antag_maps.dm"
 #include "mods\_master_files\code\game\gamemodes\cult\runes.dm"

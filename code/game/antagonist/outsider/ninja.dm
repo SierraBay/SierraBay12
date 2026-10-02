@@ -19,7 +19,6 @@ GLOBAL_TYPED_NEW(ninjas, /datum/antagonist/ninja)
 	no_prior_faction = TRUE
 	base_to_load = /datum/map_template/ruin/antag_spawn/ninja
 
-/* [SIERRA-DELETE]
 /datum/antagonist/ninja/create_objectives(datum/mind/ninja)
 	if (!..())
 		return
@@ -67,8 +66,6 @@ GLOBAL_TYPED_NEW(ninjas, /datum/antagonist/ninja)
 	var/datum/objective/survive/ninja_objective = new
 	ninja_objective.owner = ninja
 	ninja.objectives += ninja_objective
-[SIERRA-DELETE-END]
-*/
 
 /datum/antagonist/ninja/greet(datum/mind/player)
 	if (!..())
