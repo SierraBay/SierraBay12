@@ -287,6 +287,13 @@
 		return null
 	return SSsupply.BuildExportPlan(sending.GetObjects(), target_station, faction, target_station.wealth)
 
+/datum/computer_file/program/supply/proc/HasRejectedExportCandidates()
+	if(!IsSendingSelected())
+		return FALSE
+	var/list/rejected = list()
+	SSsupply.GetExportCandidates(sending, rejected)
+	return length(rejected) > 0
+
 /datum/computer_file/program/supply/proc/SerializeExportItems(list/plan)
 	var/list/result = list()
 	if(!islist(plan))
@@ -298,7 +305,7 @@
 		if(!entry["sell"])
 			continue
 		var/atom/movable/item = entry["item"]
-		var/atom/movable/root = entry["root"]
+		var/atom/movable/root = entry["scope"] || entry["root"]
 		var/list/root_data = grouped[root]
 		if(!islist(root_data))
 			var/display_name = root.name
@@ -313,7 +320,7 @@
 		root_data["unit_value"] = root_data["value"]
 		if(item == root && !length(root.contents))
 			continue
-		var/amount = max(1, entry["amount"])
+		var/amount = max(0.000001, entry["amount"])
 		var/list/sub_items = root_data["sub_items"]
 		sub_items.Add(list(list("name" = item == root ? "[item.name] (packaging)" : item.name, "amount" = amount, "unit_value" = round(entry["price"] / amount, 0.01), "value" = entry["price"])))
 	return result
@@ -581,10 +588,12 @@
 		export_block_reason = "The sending beacon is on cooldown."
 	else
 		export_block_reason = SSsupply.GetTradeRangeBlockReason(sending, selected_station)
-	if(!export_block_reason && !length(export_items))
+	if(!export_block_reason && !length(export_items) && !HasRejectedExportCandidates())
 		export_block_reason = "No exportable objects are inside the sending beacon range."
 	if(!export_block_reason)
 		export_block_reason = SSsupply.GetExportInvoiceBlockReason(plan)
+	if(!export_block_reason && islist(plan))
+		export_block_reason = SSsupply.GetExportCompletionBlockReason(plan)
 
 	data["export_items"] = export_items
 	var/export_total = 0
@@ -956,10 +965,12 @@
 		to_chat(usr, SPAN_WARNING("Export failed: Station trade budget is depleted."))
 		return TRUE
 	var/list/plan = GetExportPlan(target_station)
-	if(!length(SerializeExportItems(plan)))
+	if(!length(SerializeExportItems(plan)) && !HasRejectedExportCandidates())
 		to_chat(usr, SPAN_WARNING("No exportable objects were found near the sending beacon."))
 		return TRUE
 	var/invoice_block_reason = SSsupply.GetExportInvoiceBlockReason(plan)
+	if(!invoice_block_reason)
+		invoice_block_reason = SSsupply.GetExportCompletionBlockReason(plan)
 	if(invoice_block_reason)
 		to_chat(usr, SPAN_WARNING(invoice_block_reason))
 		return TRUE
@@ -967,7 +978,7 @@
 	if(!export_result)
 		to_chat(usr, SPAN_WARNING("Export failed. The beacon may still be on cooldown or goods could not be sold."))
 	else if(export_result == TRADE_EXPORT_PARTIAL)
-		to_chat(usr, SPAN_NOTICE("Station trade budget exhausted; remaining items left on beacon."))
+		to_chat(usr, SPAN_NOTICE("Some goods exceeded the station's remaining trade budget and were left on the beacon."))
 	return TRUE
 
 /datum/computer_file/program/supply/proc/HandleTradeTopic(list/href_list)

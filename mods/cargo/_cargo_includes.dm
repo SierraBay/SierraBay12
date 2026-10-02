@@ -35,6 +35,8 @@
 #include "code/cargo_contract_tests.dm"
 #include "code/beacons/trade_circuitboards.dm"
 #include "code/live_market.dm"
+#include "code/export_matching.dm"
+#include "code/export_execution.dm"
 #include "code/live_market_tests.dm"
 
 #endif

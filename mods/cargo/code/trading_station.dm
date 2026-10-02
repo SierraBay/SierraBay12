@@ -890,10 +890,12 @@
 	var/datum/trade_offer/offer = ResolveOffer(category_name, good_id)
 	if(!istype(offer) || !isnum(amount) || amount <= 0)
 		return
-	// Keep partial packages until enough individual units arrive for a full package.
-	var/units = round((offer.export_stock_remainder + amount) * offer.pack_size + 0.5)
-	var/packages = floor(units / offer.pack_size)
-	offer.export_stock_remainder = (units - packages * offer.pack_size) / offer.pack_size
+	// Compensate float rounding so repeated small exports still form a full package.
+	var/adjusted_amount = amount - offer.export_stock_compensation
+	var/total_packages = offer.export_stock_remainder + adjusted_amount
+	offer.export_stock_compensation = (total_packages - offer.export_stock_remainder) - adjusted_amount
+	var/packages = floor(total_packages)
+	offer.export_stock_remainder = total_packages - packages
 	SetGoodAmount(category_name, good_id, offer.stock + packages)
 
 /datum/trading_station/proc/AddToWealth(income, is_offer = FALSE, add_favor = TRUE)

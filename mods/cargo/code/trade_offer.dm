@@ -9,6 +9,7 @@
 	var/pack_size = 1
 	var/stock = 0
 	var/export_stock_remainder = 0
+	var/export_stock_compensation = 0
 	var/baseline_stock = 1
 	var/list/tags = list()
 	var/hidden = FALSE
@@ -92,6 +93,7 @@
 	duplicate.has_custom_price = has_custom_price
 	duplicate.pack_size = pack_size
 	duplicate.export_stock_remainder = export_stock_remainder
+	duplicate.export_stock_compensation = export_stock_compensation
 	return duplicate
 
 /datum/trade_offer/proc/ResolveItemName(path)

@@ -551,24 +551,24 @@
 		return 0
 
 	if(!station.live_market_enabled)
-		return max(1, round(base_price * faction_mult * amount))
+		return round(base_price * faction_mult * (sold_offset + amount), 0.01) - round(base_price * faction_mult * sold_offset, 0.01)
 
 	if(!istext(category_name) || !station.HasLiveMarketCommodity(category_name, good_ref))
-		return max(1, round(base_price * 0.55 * faction_mult * amount))
+		return round(base_price * 0.55 * faction_mult * (sold_offset + amount), 0.01) - round(base_price * 0.55 * faction_mult * sold_offset, 0.01)
 
 	return CalculateSimulatedSellPrice(good_ref, station, category_name, amount, sold_offset, base_price, faction_mult, seller_faction)
 
 /datum/controller/subsystem/supply/proc/CalculateSimulatedSellPrice(good_ref, datum/trading_station/station, category_name, amount, sold_offset, base_price, faction_mult, seller_faction)
 	var/baseline = max(1, station.GetLiveMarketBaseline(category_name, good_ref))
-	var/initial_stock = max(0, station.GetGoodAmount(category_name, good_ref))
+	var/datum/trade_offer/offer = station.ResolveOffer(category_name, good_ref)
+	var/initial_stock = max(0, station.GetGoodAmount(category_name, good_ref)) + (offer?.export_stock_remainder || 0)
 	var/initial_demand = station.GetLiveMarketDemandScore(category_name, good_ref)
 	var/event_mult = station.GetLiveMarketEventPriceMultiplier(category_name, good_ref, "sell_shift")
 	var/buy_price_cap = round(GetStationBuyPrice(good_ref, station, seller_faction, category_name) * 0.9)
 
-	var/total_price = (amount <= 50) \
-		? SimulateDirectSellPrice(station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap) \
-		: SimulateBucketedSellPrice(station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
-	return max(1, round(total_price))
+	var/end_price = SimulateDirectSellPrice(station, sold_offset + amount, 0, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
+	var/start_price = SimulateDirectSellPrice(station, sold_offset, 0, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
+	return round(end_price, 0.01) - round(start_price, 0.01)
 
 /datum/controller/subsystem/supply/proc/CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, datum/trading_station/station)
 	var/sim_pressure = 0
@@ -607,7 +607,7 @@
 		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
 		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
 		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
-		total_price += max(1, round(unit_price * fraction))
+		total_price += unit_price * fraction
 	return total_price
 
 /datum/controller/subsystem/supply/proc/SimulateFullUnitsSellPrice(datum/trading_station/station, full_units, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
@@ -619,7 +619,7 @@
 		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
 		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
 		total_price += unit_price
-		if(unit_mult <= station.live_market_min_sell_multiplier)
+		if(unit_mult <= station.live_market_min_sell_multiplier || (sim_stock >= 2 * baseline && sim_demand <= -2))
 			var/remaining = full_units - k
 			if(remaining > 0)
 				total_price += remaining * unit_price
@@ -627,21 +627,7 @@
 	return total_price
 
 /datum/controller/subsystem/supply/proc/SimulateBucketedSellPrice(datum/trading_station/station, amount, sold_offset, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
-	var/total_price = 0
-	var/buckets = 25
-	var/bucket_size = amount / buckets
-	for(var/b in 1 to buckets)
-		var/units_sold_before = ((b - 0.5) * bucket_size) + sold_offset
-		var/sim_stock = initial_stock + units_sold_before
-		var/sim_demand = clamp(initial_demand - (units_sold_before / baseline), -2, 2.5)
-		var/unit_mult = CalculateLiveMarketSellUnitMult(sim_stock, baseline, sim_demand, event_mult, station)
-		var/unit_price = CalculateLiveMarketSellUnitPrice(base_price, unit_mult, faction_mult, buy_price_cap)
-		if(unit_mult <= station.live_market_min_sell_multiplier)
-			var/remaining_buckets = buckets - b + 1
-			total_price += round(remaining_buckets * bucket_size * unit_price)
-			break
-		total_price += round(bucket_size * unit_price)
-	return total_price
+	return SimulateDirectSellPrice(station, amount + sold_offset, 0, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap) - SimulateDirectSellPrice(station, sold_offset, 0, baseline, initial_stock, initial_demand, event_mult, base_price, faction_mult, buy_price_cap)
 
 /datum/controller/subsystem/supply/proc/GetStationRestockCost(good_ref, datum/trading_station/station, category_name = null)
 	if(!istype(station))
@@ -752,58 +738,35 @@
 /datum/controller/subsystem/supply/proc/FindLegacyCommodityForExport(atom/movable/exported, datum/trading_station/station)
 	if(!islist(station.inventory))
 		return null
-	var/target_mat = null
-	if(istype(exported, /obj/item/stack/material))
-		var/obj/item/stack/material/mat_stack = exported
-		target_mat = mat_stack.material ? mat_stack.material.name : mat_stack.default_type
-
-	for(var/cat_name in station.inventory)
-		var/list/cat = station.inventory[cat_name]
-		if(!islist(cat))
-			continue
-		for(var/good_id in cat)
-			var/item_path = station.GetGoodPath(cat_name, good_id)
-			if(!item_path)
+	for(var/category_name in station.inventory)
+		var/list/category = station.inventory[category_name]
+		for(var/good_id in category)
+			var/atom/movable/path = station.GetGoodPath(category_name, good_id)
+			if(!path)
 				continue
-			var/matched = FALSE
-			if(istype(exported, item_path))
-				matched = TRUE
-			else if(target_mat && ispath(item_path, /obj/item/stack/material))
-				var/obj/item/stack/material/dummy = item_path
-				if(initial(dummy.default_type) == target_mat)
-					matched = TRUE
-			if(matched)
-				var/pack_size = 1
-				if(ispath(item_path, /obj/item/stack))
-					var/obj/item/stack/S = item_path
-					pack_size = max(1, initial(S.amount))
-				var/packages = GetExportStackAmount(exported) / pack_size
-				return list("category" = cat_name, "good_id" = good_id, "amount" = packages)
+			var/obj/item/stack/stack_type = path
+			var/pack_size = ispath(path, /obj/item/stack) ? max(1, initial(stack_type.amount)) : 1
+			var/amount = GetExportCommodityAmount(exported, path, pack_size)
+			if(amount > 0)
+				return list("category" = category_name, "good_id" = good_id, "amount" = amount)
 	return null
 
 /datum/controller/subsystem/supply/proc/FindCommodityForExport(atom/movable/exported, datum/trading_station/station)
 	if(!istype(exported) || !istype(station))
 		return null
-	var/datum/trade_offer/offer = station.GetOfferByPath(exported.type)
-	if(!offer && istype(exported, /obj/item/stack/material))
-		var/obj/item/stack/material/mat_stack = exported
-		var/target_mat = mat_stack.material ? mat_stack.material.name : mat_stack.default_type
-		if(target_mat && islist(station.offers))
-			for(var/id in station.offers)
-				var/datum/trade_offer/candidate = station.offers[id]
-				if(!istype(candidate) || !ispath(candidate.item_path, /obj/item/stack/material))
-					continue
-				var/obj/item/stack/material/dummy = candidate.item_path
-				var/offer_mat = initial(dummy.default_type)
-				if(offer_mat == target_mat)
-					offer = candidate
-					break
-	if(offer)
-		var/pack_size = offer.pack_size || 1
-		var/packages = GetExportStackAmount(exported) / pack_size
-		return list("category" = offer.category, "good_id" = offer.id, "amount" = packages)
+	var/datum/trade_offer/offer = FindExportOfferByPath(station, exported.type)
+	var/amount = offer ? GetExportCommodityAmount(exported, offer.item_path, offer.pack_size) : 0
+	if(amount > 0)
+		return list("category" = offer.category, "good_id" = offer.id, "amount" = amount)
+	if(istype(exported, /obj/item/stack/material))
+		for(var/id in station.offers)
+			var/datum/trade_offer/candidate = station.offers[id]
+			if(!ispath(candidate.item_path, /obj/item/stack/material))
+				continue
+			amount = GetExportCommodityAmount(exported, candidate.item_path, candidate.pack_size)
+			if(amount > 0)
+				return list("category" = candidate.category, "good_id" = candidate.id, "amount" = amount)
 	return FindLegacyCommodityForExport(exported, station)
-
 
 /datum/controller/subsystem/supply/proc/BuildStationMarketIntel(datum/trading_station/station, buyer_faction = null)
 	if(!istype(station))
