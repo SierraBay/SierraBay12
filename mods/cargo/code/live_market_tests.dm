@@ -16,7 +16,6 @@
 		"Materials" = list(/obj/item/stack/material/steel/ten = GOODS_DATA("Steel Bundle", null, 80))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	live_market_state = list()
@@ -28,11 +27,12 @@
 
 /datum/unit_test/cargo_market_buy_price_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create buy-price test inventory."
 	else
@@ -57,11 +57,12 @@
 
 /datum/unit_test/cargo_market_sell_price_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create sell-price test inventory."
 	else
@@ -90,11 +91,12 @@
 
 /datum/unit_test/cargo_market_restock_cost_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create restock-cost test inventory."
 	else
@@ -124,25 +126,26 @@
 /datum/unit_test/cargo_market_order_quote_test/start_test()
 	var/datum/computer_file/program/supply/program = new
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/list/original_order_queue = SSsupply.order_queue
 	var/original_order_queue_id = SSsupply.order_queue_id
 	var/fail_reason = null
+	var/datum/money_account/account
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create quoted-order test inventory."
 	else
 		station.SetGoodAmount("Alpha", good_id, 10)
 		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 10)
-		var/datum/money_account/account = new
+		account = new
 		account.owner_name = "Unit Test"
 		SSsupply.order_queue = list()
 		var/list/shop_list = list()
-		var/list/categories = list("Alpha" = list())
-		shop_list[station] = categories
-		var/list/alpha_goods = categories["Alpha"]
+		var/list/alpha_goods = list()
+		shop_list[station.uid] = alpha_goods
 		alpha_goods[good_id] = 1
 		var/quoted_price = SSsupply.GetStationBuyPrice(good_id, station, FACTION_INDEPENDENT, "Alpha")
 		var/order_id = SSsupply.BuildOrder(account, "Quote test", shop_list, FACTION_INDEPENDENT)
@@ -169,6 +172,10 @@
 				else if(item["price"] != quoted_price)
 					fail_reason = "Serialized quote price was [item["price"]] instead of [quoted_price]."
 
+	if(SSsupply.order_queue != original_order_queue)
+		for(var/order_id in SSsupply.order_queue.Copy())
+			SSsupply.DismantleOrder(order_id)
+	qdel(account)
 	SSsupply.order_queue = original_order_queue
 	SSsupply.order_queue_id = original_order_queue_id
 	qdel(program)
@@ -185,6 +192,7 @@
 
 /datum/unit_test/cargo_market_export_arbitrage_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/datum/money_account/account = new
 	var/obj/machinery/trade_beacon/sending/beacon = new(get_safe_turf())
 	var/fail_reason = null
@@ -193,7 +201,7 @@
 	account.money = 0
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	var/good_path = station.GetGoodPath("Alpha", good_id)
 	if(!good_id || !ispath(good_path, /atom/movable))
 		fail_reason = "Failed to create export-arbitrage inventory."
@@ -227,11 +235,12 @@
 
 /datum/unit_test/cargo_market_modifier_decay_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Materials"][1]
+	var/good_id = station.offers_by_category["Materials"][1]
 	if(!good_id)
 		fail_reason = "Failed to create modifier test inventory."
 	else
@@ -262,6 +271,7 @@
 /datum/unit_test/cargo_market_intel_snapshot_test/start_test()
 	var/datum/computer_file/program/supply/program = new
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/list/original_visible_stations = SSsupply.visible_trading_stations
 	var/fail_reason = null
 
@@ -298,7 +308,9 @@
 
 /datum/unit_test/cargo_market_isolated_state_test/start_test()
 	var/datum/trading_station/station_a = new
+	RegisterCargoTestStation(station_a)
 	var/datum/trading_station/station_b = new
+	RegisterCargoTestStation(station_b)
 	var/fail_reason = null
 
 	station_a.live_market_auto_events = FALSE
@@ -341,6 +353,7 @@
 
 /datum/unit_test/cargo_market_auto_event_test/start_test()
 	var/datum/trading_station/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.live_market_auto_events = FALSE
@@ -371,6 +384,7 @@
 
 /datum/unit_test/cargo_market_single_demand_accounting_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/obj/machinery/trade_beacon/receiving/beacon = new(get_safe_turf())
 	var/datum/money_account/account = new
 	var/fail_reason = null
@@ -380,7 +394,7 @@
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create test inventory."
 	else
@@ -388,15 +402,14 @@
 		station.EnsureLiveMarketCommodity("Alpha", good_id, 100, 20)
 
 		var/list/shop_list = list()
-		var/list/categories = list("Alpha" = list())
-		shop_list[station] = categories
-		var/list/alpha_goods = categories["Alpha"]
+		var/list/alpha_goods = list()
+		shop_list[station.uid] = alpha_goods
 		alpha_goods[good_id] = 2
 
 		var/list/price_snapshot = SSsupply.BuildMarketSnapshot(shop_list, FACTION_INDEPENDENT)
 		var/initial_demand = station.GetLiveMarketDemandScore("Alpha", good_id)
 
-		if(!SSsupply.Buy(beacon, account, shop_list, FALSE, null, FACTION_INDEPENDENT, price_snapshot))
+		if(!SSsupply.Buy(beacon, account, shop_list, FACTION_INDEPENDENT, price_snapshot))
 			fail_reason = "Buy() with price snapshot failed."
 		else
 			var/new_demand = station.GetLiveMarketDemandScore("Alpha", good_id)
@@ -418,11 +431,12 @@
 
 /datum/unit_test/cargo_market_demand_decay_rebalance_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create test inventory."
 	else if(abs(station.live_market_demand_decay - 0.85) > 0.001)
@@ -453,6 +467,7 @@
 
 /datum/unit_test/cargo_market_faction_sell_price_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/datum/money_account/account = new
 	var/obj/machinery/trade_beacon/sending/beacon = new(get_safe_turf())
 	var/fail_reason = null
@@ -463,7 +478,7 @@
 	station.faction = FACTION_NANOTRASEN
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	var/good_path = station.GetGoodPath("Alpha", good_id)
 	if(!good_id || !ispath(good_path, /atom/movable))
 		fail_reason = "Failed to create test inventory."
@@ -512,6 +527,7 @@
 
 /datum/unit_test/cargo_market_volume_slippage_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/datum/money_account/account = new
 	var/obj/machinery/trade_beacon/sending/beacon = new(get_safe_turf())
 	var/fail_reason = null
@@ -521,7 +537,7 @@
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	var/good_path = station.GetGoodPath("Alpha", good_id)
 	if(!good_id || !ispath(good_path, /atom/movable))
 		fail_reason = "Failed to create test inventory."
@@ -550,7 +566,7 @@
 					if(AM != beacon && !AM.anchored)
 						qdel(AM)
 
-				var/mat_id = station.inventory["Materials"][1]
+				var/mat_id = station.offers_by_category["Materials"][1]
 				var/mat_path = station.GetGoodPath("Materials", mat_id)
 				station.SetGoodAmount("Materials", mat_id, 10)
 				station.EnsureLiveMarketCommodity("Materials", mat_id, 80, 10)
@@ -576,11 +592,12 @@
 
 /datum/unit_test/cargo_market_intra_station_arbitrage_prevention_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail_reason = "Failed to create test inventory."
 	else
@@ -609,11 +626,12 @@
 
 /datum/unit_test/cargo_market_metabolic_production_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/mat_id = station.inventory["Materials"][1]
+	var/mat_id = station.offers_by_category["Materials"][1]
 	if(!mat_id)
 		fail_reason = "Failed to locate materials good for metabolic production test."
 	else
@@ -664,11 +682,12 @@
 
 /datum/unit_test/cargo_market_metabolic_consumption_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/mat_id = station.inventory["Materials"][1]
+	var/mat_id = station.offers_by_category["Materials"][1]
 	if(!mat_id)
 		fail_reason = "Failed to locate materials good for metabolic consumption test."
 	else
@@ -709,11 +728,12 @@
 
 /datum/unit_test/cargo_market_metabolic_reserve_floor_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/mat_id = station.inventory["Materials"][1]
+	var/mat_id = station.offers_by_category["Materials"][1]
 	if(!mat_id)
 		fail_reason = "Failed to locate materials good for metabolic reserve floor test."
 	else
@@ -748,11 +768,12 @@
 
 /datum/unit_test/cargo_market_metabolic_arbitrage_immunity_test/start_test()
 	var/datum/trading_station/unit_test_live_market/station = new
+	RegisterCargoTestStation(station)
 	var/fail_reason = null
 
 	station.AssembleInventory()
 	station.InitGoods()
-	var/mat_id = station.inventory["Materials"][1]
+	var/mat_id = station.offers_by_category["Materials"][1]
 	if(!mat_id)
 		fail_reason = "Failed to locate materials good for arbitrage immunity test."
 	else

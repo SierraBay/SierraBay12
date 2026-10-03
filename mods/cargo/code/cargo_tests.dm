@@ -37,7 +37,7 @@
 		fail("No trade stations were initialized.")
 		return 1
 	for(var/datum/trading_station/trading_station as anything in SSsupply.all_trading_stations)
-		if(!trading_station.name || !length(trading_station.inventory))
+		if(!trading_station.name || !length(trading_station.offers_by_category))
 			fail("[trading_station.type] did not initialize correctly.")
 			return 1
 	pass("Trade stations initialized with inventory.")
@@ -64,7 +64,7 @@
 		if(!istype(trading_station))
 			fail("Trading station [station_uid] was not initialized.")
 			return 1
-		if(!length(trading_station.inventory) && !length(trading_station.hidden_inventory))
+		if(!length(trading_station.offers_by_category) && !length(trading_station.hidden_offers))
 			fail("Trading station [station_uid] has no inventory.")
 			return 1
 	pass("Native stations initialized with catalog contents.")
@@ -79,8 +79,8 @@
 		fail("Medicine station was not initialized.")
 		return 1
 
-	for(var/cat_name in med_station.inventory)
-		var/list/goods = med_station.inventory[cat_name]
+	for(var/cat_name in med_station.offers_by_category)
+		var/list/goods = med_station.offers_by_category[cat_name]
 		if(!islist(goods))
 			continue
 		for(var/good_id in goods)
@@ -98,8 +98,8 @@
 		fail("Service station was not initialized.")
 		return 1
 
-	for(var/cat_name in service_station.inventory)
-		var/list/goods = service_station.inventory[cat_name]
+	for(var/cat_name in service_station.offers_by_category)
+		var/list/goods = service_station.offers_by_category[cat_name]
 		if(!islist(goods))
 			continue
 		for(var/good_id in goods)
@@ -117,8 +117,8 @@
 		fail("Security station was not initialized.")
 		return 1
 
-	for(var/cat_name in sec_station.inventory)
-		var/list/goods = sec_station.inventory[cat_name]
+	for(var/cat_name in sec_station.offers_by_category)
+		var/list/goods = sec_station.offers_by_category[cat_name]
 		if(!islist(goods))
 			continue
 		for(var/good_id in goods)
@@ -147,7 +147,6 @@
 		"Beta" = list(/obj/item/pen = GOODS_DATA("Beta Pen", null, 20))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	NormalizeGoodsRecords()
@@ -157,10 +156,11 @@
 
 /datum/unit_test/cargo_duplicate_offer_price_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 
-	var/alpha_offer = station.inventory["Alpha"][1]
-	var/beta_offer = station.inventory["Beta"][1]
+	var/alpha_offer = station.offers_by_category["Alpha"][1]
+	var/beta_offer = station.offers_by_category["Beta"][1]
 	if(!alpha_offer || !beta_offer)
 		fail("Failed to create duplicate-offer test inventory.")
 		return 1
@@ -168,15 +168,10 @@
 	var/alpha_price = SSsupply.GetBasicImportCost(alpha_offer, station, "Alpha")
 	var/beta_price = SSsupply.GetBasicImportCost(beta_offer, station, "Beta")
 	var/list/shop_list = list()
-	var/list/categories = list(
-		"Alpha" = list(),
-		"Beta" = list()
-	)
-	shop_list[station] = categories
-	var/list/alpha_goods = categories["Alpha"]
-	var/list/beta_goods = categories["Beta"]
-	alpha_goods[alpha_offer] = 1
-	beta_goods[beta_offer] = 1
+	var/list/goods = list()
+	shop_list[station.uid] = goods
+	goods[alpha_offer] = 1
+	goods[beta_offer] = 1
 	var/total_price = SSsupply.CollectPriceForList(shop_list, FACTION_INDEPENDENT)
 
 	if(alpha_price != 10)
@@ -196,10 +191,11 @@
 
 /datum/unit_test/cargo_buy_revalidates_stock_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 	station.InitGoods()
 
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	if(!good_id)
 		fail("Failed to create stock-validation test inventory.")
 		return 1
@@ -212,12 +208,11 @@
 
 	var/obj/machinery/trade_beacon/receiving/beacon = new(get_safe_turf())
 	var/list/shop_list = list()
-	var/list/categories = list("Alpha" = list())
-	shop_list[station] = categories
-	var/list/alpha_goods = categories["Alpha"]
+	var/list/alpha_goods = list()
+	shop_list[station.uid] = alpha_goods
 	alpha_goods[good_id] = 2
 
-	if(SSsupply.Buy(beacon, account, shop_list, FALSE, null, FACTION_INDEPENDENT))
+	if(SSsupply.Buy(beacon, account, shop_list, FACTION_INDEPENDENT))
 		fail("Purchase succeeded with stale stock.")
 	else if(station.GetGoodAmount("Alpha", good_id) != 1)
 		fail("Stock changed after a rejected stale-stock purchase.")
@@ -242,7 +237,9 @@
 		return 1
 
 	var/datum/trading_station/unit_test_duplicate_pricing/anchor_station = new
+	RegisterCargoTestStation(anchor_station)
 	var/datum/trading_station/unit_test_duplicate_pricing/test_station = new
+	RegisterCargoTestStation(test_station)
 	test_station.min_overmap_station_spacing = 5
 	test_station.preferred_distance_from_base = 8
 	test_station.max_distance_from_base = 20
@@ -304,6 +301,7 @@
 		return 1
 
 	var/datum/trading_station/unit_test_duplicate_pricing/test_station = new
+	RegisterCargoTestStation(test_station)
 	test_station.hazard_buffer = 1
 
 	var/turf/hazard_turf = null
@@ -554,6 +552,7 @@
 	var/obj/machinery/trade_beacon/sending/beacon = new(safe_turf)
 	var/datum/money_account/seller_account = new
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 	station.wealth = 10000
 	var/obj/structure/closet/crate/crate = new(safe_turf)
@@ -585,136 +584,46 @@
 	name = "CARGO: Order approval succeeds with zero cargo funds via escrow"
 
 /datum/unit_test/cargo_order_escrow_low_cargo_budget_test/start_test()
-	var/turf/safe_turf = get_safe_turf()
-	if(!safe_turf)
-		skip("Safe turf unavailable.")
-		return 1
 
-	for(var/atom/movable/AM in range(2, safe_turf))
-		if(!AM.anchored)
-			qdel(AM)
-
-	var/datum/money_account/old_supply = department_accounts["Supply"]
-	var/datum/money_account/cargo_account = new
-	cargo_account.owner_name = "Supply Account"
-	cargo_account.account_number = 777001
-	cargo_account.money = 0
-	department_accounts["Supply"] = cargo_account
-	all_money_accounts += cargo_account
-
-	var/datum/money_account/customer_account = new
-	customer_account.owner_name = "Customer"
-	customer_account.account_number = 777002
-	customer_account.money = 16500
-	all_money_accounts += customer_account
-
-	var/datum/trading_station/unit_test_duplicate_pricing/station = new
-	station.AssembleInventory()
-	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
-	station.SetGoodAmount("Alpha", good_id, 5)
-
-	var/obj/machinery/trade_beacon/receiving/beacon = new(safe_turf)
-	var/list/shop_list = list()
-	var/list/goods = list()
-	goods[good_id] = 1
-	shop_list[station] = list("Alpha" = goods)
-
-	var/order_id = SSsupply.BuildOrder(customer_account, "Personal tool", shop_list, FACTION_INDEPENDENT)
-	var/list/order_data = SSsupply.order_queue[order_id]
-	order_data["cost"] = 15000
-	order_data["fee"] = 1500
-
+	var/datum/cargo_test_context/context = new(get_safe_turf())
+	context.customer_account.money = 16500
+	var/datum/cargo_order/order = context.BuildTestOrder()
+	var/list/packet = order.price_snapshot[context.station.uid][context.good_id]
+	packet["unit_price"] = 15000
+	order.Recalculate()
+	var/order_id = order.id
 	var/fail_reason = null
-	if(!SSsupply.PurchaseOrder(beacon, order_id))
-		fail_reason = "PurchaseOrder() failed when cargo account had 0 funds."
-	else if(customer_account.money != 0)
-		fail_reason = "Customer account balance is [customer_account.money], expected 0."
-	else if(cargo_account.money != 1500)
-		fail_reason = "Cargo account balance is [cargo_account.money], expected fee of 1500."
-	else if(order_id in SSsupply.order_queue)
-		fail_reason = "Successful order [order_id] was not removed from order_queue."
-
-	department_accounts["Supply"] = old_supply
-	all_money_accounts -= cargo_account
-	all_money_accounts -= customer_account
-	qdel(cargo_account)
-	qdel(customer_account)
-	qdel(beacon)
-	qdel(station)
-
-	for(var/atom/movable/AM in range(2, safe_turf))
-		if(!AM.anchored)
-			qdel(AM)
-
+	if(!SSsupply.PurchaseOrder(context.beacon, order_id))
+		fail_reason = "PurchaseOrder failed when cargo had zero funds."
+	else if(context.customer_account.money || context.cargo_account.money != 1500 || SSsupply.GetCargoOrder(order_id))
+		fail_reason = "Successful escrow purchase retained the wrong balances or queue entry."
+	qdel(context)
 	if(fail_reason)
 		fail(fail_reason)
 	else
-		pass("Escrow orders succeed even when cargo has 0 balance, correctly retaining fee.")
+		pass("Escrow covers a zero cargo budget and leaves the fee with cargo.")
 	return 1
 
 /datum/unit_test/cargo_order_escrow_refund_on_failure_test
 	name = "CARGO: Failed order approval refunds customer escrow payment in full"
 
 /datum/unit_test/cargo_order_escrow_refund_on_failure_test/start_test()
-	var/turf/safe_turf = get_safe_turf()
-	if(!safe_turf)
-		skip("Safe turf unavailable.")
-		return 1
 
-	var/datum/money_account/old_supply = department_accounts["Supply"]
-	var/datum/money_account/cargo_account = new
-	cargo_account.owner_name = "Supply Account"
-	cargo_account.account_number = 777003
-	cargo_account.money = 0
-	department_accounts["Supply"] = cargo_account
-	all_money_accounts += cargo_account
-
-	var/datum/money_account/customer_account = new
-	customer_account.owner_name = "Customer"
-	customer_account.account_number = 777004
-	customer_account.money = 16500
-	all_money_accounts += customer_account
-
-	var/datum/trading_station/unit_test_duplicate_pricing/station = new
-	station.AssembleInventory()
-	station.InitGoods()
-	var/good_id = station.inventory["Alpha"][1]
-	station.SetGoodAmount("Alpha", good_id, 0)
-
-	var/obj/machinery/trade_beacon/receiving/beacon = new(safe_turf)
-	var/list/shop_list = list()
-	var/list/goods = list()
-	goods[good_id] = 1
-	shop_list[station] = list("Alpha" = goods)
-
-	var/order_id = SSsupply.BuildOrder(customer_account, "Sold out item", shop_list, FACTION_INDEPENDENT)
-	var/list/order_data = SSsupply.order_queue[order_id]
-	order_data["cost"] = 15000
-	order_data["fee"] = 1500
-
+	var/datum/cargo_test_context/context = new(get_safe_turf())
+	context.cargo_account.reject_withdrawal = TRUE
+	var/datum/cargo_order/order = context.BuildTestOrder()
 	var/fail_reason = null
-	if(SSsupply.PurchaseOrder(beacon, order_id))
-		fail_reason = "PurchaseOrder() succeeded despite out-of-stock item."
-	else if(customer_account.money != 16500)
-		fail_reason = "Customer account was not refunded after failed Buy(). Balance: [customer_account.money]."
-	else if(cargo_account.money != 0)
-		fail_reason = "Cargo account retained funds after failed Buy(). Balance: [cargo_account.money]."
-	else if(!(order_id in SSsupply.order_queue))
-		fail_reason = "Failed order [order_id] was prematurely removed from order_queue."
-
-	department_accounts["Supply"] = old_supply
-	all_money_accounts -= cargo_account
-	all_money_accounts -= customer_account
-	qdel(cargo_account)
-	qdel(customer_account)
-	qdel(beacon)
-	qdel(station)
-
+	if(SSsupply.PurchaseOrder(context.beacon, order.id))
+		fail_reason = "Purchase succeeded despite rejected payment."
+	else if(context.cargo_account.withdrawal_attempts != 1)
+		fail_reason = "Test did not reach the withdrawal after funding escrow."
+	else if(context.customer_account.money != 1000 || context.cargo_account.money || order.status != CARGO_ORDER_PENDING)
+		fail_reason = "Failed payment did not refund escrow and restore the pending order."
+	qdel(context)
 	if(fail_reason)
 		fail(fail_reason)
 	else
-		pass("Escrow payment is refunded in full upon purchase failure.")
+		pass("Rejected withdrawal refunds escrow in full.")
 	return 1
 
 /datum/unit_test/cargo_station_wealth_bounds_test
@@ -722,6 +631,7 @@
 
 /datum/unit_test/cargo_station_wealth_bounds_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.wealth = 100
 
 	station.SubtractFromWealth(250)
@@ -758,6 +668,7 @@
 	all_money_accounts += seller_account
 
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 	station.wealth = 15
 
@@ -820,6 +731,7 @@
 
 	if(!fail_reason)
 		var/datum/trading_station/unit_test_duplicate_pricing/station = new
+		RegisterCargoTestStation(station)
 		station.AssembleInventory()
 		station.wealth = 0
 		var/obj/item/pen/pen = new(safe_turf)
@@ -866,15 +778,15 @@
 	var/obj/machinery/trade_beacon/sending/sender = new(safe_turf)
 
 	var/datum/trading_station/unit_test_duplicate_pricing/source_station = new
+	RegisterCargoTestStation(source_station)
 	source_station.name = "Source Station"
 	source_station.uid = "source_station_test"
-	SSsupply.all_trading_stations += source_station
 	SSsupply.visible_trading_stations += source_station
 
 	var/datum/trading_station/caravan/caravan_station = new(FALSE)
+	RegisterCargoTestStation(caravan_station)
 	caravan_station.name = "Caravan Test"
 	caravan_station.uid = "caravan_station_test"
-	SSsupply.all_trading_stations += caravan_station
 	SSsupply.visible_trading_stations += caravan_station
 
 	var/datum/trade_contract/caravan_rendezvous/contract = new
@@ -981,12 +893,13 @@
 
 /datum/unit_test/cargo_station_offer_registry_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 	var/fail_reason = null
 	if(!length(station.offers) || !length(station.offers_by_category))
 		fail_reason = "Offers registry empty after AssembleInventory()."
 	else
-		var/good_id = station.inventory["Alpha"][1]
+		var/good_id = station.offers_by_category["Alpha"][1]
 		var/datum/trade_offer/offer = station.GetOffer(good_id)
 		if(!offer || offer.id != good_id)
 			fail_reason = "GetOffer() failed to retrieve offer by ID."
@@ -1008,11 +921,12 @@
 
 /datum/unit_test/cargo_2level_cart_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
 	var/already_registered = (station in SSsupply.all_trading_stations)
 	if(!already_registered)
 		SSsupply.all_trading_stations += station
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	var/list/cart = list()
 	var/datum/computer_file/program/supply/prog = new
 	prog.shopping_list = cart
@@ -1042,12 +956,13 @@
 
 /datum/unit_test/cargo_snapshot_security_test/start_test()
 	var/datum/trading_station/unit_test_duplicate_pricing/station = new
+	RegisterCargoTestStation(station)
 	station.AssembleInventory()
-	var/good_id = station.inventory["Alpha"][1]
+	var/good_id = station.offers_by_category["Alpha"][1]
 	var/list/cart = list()
 	var/list/goods = list()
 	goods[good_id] = 1
-	cart[station] = list("Alpha" = goods)
+	cart[station.uid] = goods
 	var/list/snap = SSsupply.BuildMarketSnapshot(cart, FACTION_INDEPENDENT)
 	var/fail_reason = null
 	var/valid_price = SSsupply.GetSnapshotUnitPrice(snap, station, "Alpha", good_id)
@@ -1189,3 +1104,9 @@
 		pass("Loose storage export sells its contents as separate items.")
 	return 1
 
+/datum/unit_test/proc/RegisterCargoTestStation(datum/trading_station/target_station)
+	ASSERT(istype(target_station))
+	if(target_station in SSsupply.all_trading_stations)
+		return
+	target_station.uid = "cargo_test_[ref(target_station)]"
+	SSsupply.all_trading_stations += target_station

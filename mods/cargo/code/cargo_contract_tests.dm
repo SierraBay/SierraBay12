@@ -13,7 +13,6 @@
 		"Tools" = list(/obj/item/crowbar = GOODS_DATA("Source Crowbar", null, 20))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	live_market_state = list()
@@ -35,7 +34,6 @@
 		"Beta" = list(/obj/item/paper = GOODS_DATA("Destination Paper", null, 5))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	live_market_state = list()
@@ -56,7 +54,6 @@
 		"Alpha" = list(/obj/item/pen = GOODS_DATA("Stable Pen", null, 10))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	live_market_state = list()
@@ -77,7 +74,6 @@
 		"Demand" = list(/obj/item/pen = GOODS_DATA("Stable Pen", null, 15))
 	)
 	hidden_inventory = list()
-	amounts_of_goods = list()
 	unique_good_count = 0
 	next_good_offer_id = 0
 	live_market_state = list()
@@ -235,9 +231,9 @@
 	if(!istype(source_station) || !istype(destination_station))
 		return FALSE
 
-	source_shared_good = source_station.inventory["Alpha"][1]
-	source_unmatched_good = source_station.inventory["Tools"][1]
-	destination_shared_good = destination_station.inventory["Demand"][1]
+	source_shared_good = source_station.offers_by_category["Alpha"][1]
+	source_unmatched_good = source_station.offers_by_category["Tools"][1]
+	destination_shared_good = destination_station.offers_by_category["Demand"][1]
 	if(!source_shared_good || !source_unmatched_good || !destination_shared_good)
 		return FALSE
 
@@ -337,8 +333,8 @@
 		skip("Overmap sector unavailable for no-market trade contract test.")
 		return 1
 
-	var/source_good_id = fixture.source_station.inventory["Alpha"][1]
-	var/destination_good_id = fixture.destination_station.inventory["Demand"][1]
+	var/source_good_id = fixture.source_station.offers_by_category["Alpha"][1]
+	var/destination_good_id = fixture.destination_station.offers_by_category["Demand"][1]
 	fixture.source_station.SetGoodAmount("Alpha", source_good_id, 10)
 	fixture.source_station.EnsureLiveMarketCommodity("Alpha", source_good_id, 10, 10)
 	fixture.destination_station.SetGoodAmount("Demand", destination_good_id, 10)
