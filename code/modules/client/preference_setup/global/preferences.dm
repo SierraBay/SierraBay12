@@ -112,6 +112,9 @@ var/global/list/_client_preferences_by_type
 
 	mob_client.view = new_value
 	mob_client.update_skybox(TRUE)
+	//[SIERRA-ADD]
+	mob_client.update_click_catcher()
+	//[/SIERRA-ADD]
 
 /datum/client_preference/play_admin_midis
 	description = "Play admin midis"
