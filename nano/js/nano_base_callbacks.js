@@ -41,7 +41,10 @@ NanoBaseCallbacks = function () {
         })
       // [SIERRA-ADD]
       if (updateData['config'].hasOwnProperty('uiScale')) {
-        document.body.style.zoom = updateData['config']['uiScale']
+        var newScale = updateData['config']['uiScale']
+        if (document.body.style.zoom != newScale) {
+          document.body.style.zoom = newScale
+        }
       }
       // [/SIERRA-ADD]
       return updateData
