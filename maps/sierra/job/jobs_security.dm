@@ -1,6 +1,6 @@
 /datum/job/warden
 	title = "Warden"
-	department = "Охранный"
+	department = "Security"
 	department_flag = SEC
 	total_positions = 1
 	spawn_positions = 1
@@ -48,7 +48,7 @@
 
 /datum/job/detective
 	title = "Criminal Investigator"
-	department = "Охранный"
+	department = "Security"
 	department_flag = SEC
 	hud_icon = "huddetective"
 	total_positions = 2
@@ -92,7 +92,7 @@
 
 /datum/job/officer
 	title = "Security Guard"
-	department = "Охранный"
+	department = "Security"
 	department_flag = SEC
 	total_positions = 4
 	spawn_positions = 4
@@ -135,7 +135,7 @@
 
 /datum/job/security_assistant
 	title = "Security Cadet"
-	department = "Охранный"
+	department = "Security"
 	department_flag = SEC
 
 	total_positions = 2
