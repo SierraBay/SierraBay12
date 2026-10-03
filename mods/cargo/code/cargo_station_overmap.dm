@@ -61,11 +61,11 @@
 		PlaceOvermap(spawn_turf.x, spawn_turf.y, spawn_turf.z)
 
 /datum/trading_station/proc/RegisterStation()
-	SSsupply.all_trading_stations += src
+	SSsupply.all_trading_stations |= src
 	if(start_hidden)
-		SSsupply.hidden_trading_stations += src
+		SSsupply.hidden_trading_stations |= src
 	else
-		SSsupply.visible_trading_stations += src
+		SSsupply.visible_trading_stations |= src
 
 /datum/trading_station/proc/ResolveOvermapSpawnLocation(turf/station_loc = null)
 	if(!GLOB.using_map?.overmap_z)
