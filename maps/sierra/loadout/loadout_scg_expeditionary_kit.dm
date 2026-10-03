@@ -24,14 +24,14 @@
 		"Field Operations scarf" = /obj/item/clothing/accessory/solgov/ec_scarf/fieldops
 	)
 	var/static/list/department_insignia_by_word = list(
-		"command" = /obj/item/clothing/accessory/solgov/department/command/service,
-		"engineering" = /obj/item/clothing/accessory/solgov/department/engineering/service,
-		"security" = /obj/item/clothing/accessory/solgov/department/security/service,
-		"medical" = /obj/item/clothing/accessory/solgov/department/medical/service,
-		"research" = /obj/item/clothing/accessory/solgov/department/research/service,
-		"supply" = /obj/item/clothing/accessory/solgov/department/supply/service,
-		"exploration" = /obj/item/clothing/accessory/solgov/department/exploration/service,
-		"service" = /obj/item/clothing/accessory/solgov/department/service/service
+		"command" = /obj/item/clothing/accessory/solgov/department/command,
+		"engineering" = /obj/item/clothing/accessory/solgov/department/engineering,
+		"security" = /obj/item/clothing/accessory/solgov/department/security,
+		"medical" = /obj/item/clothing/accessory/solgov/department/medical,
+		"research" = /obj/item/clothing/accessory/solgov/department/research,
+		"supply" = /obj/item/clothing/accessory/solgov/department/supply,
+		"exploration" = /obj/item/clothing/accessory/solgov/department/exploration,
+		"service" = /obj/item/clothing/accessory/solgov/department/service
 	)
 	var/static/list/gloves_by_department = list(
 		"command" = /obj/item/clothing/gloves/thick/duty/solgov/cmd,
