@@ -1969,6 +1969,7 @@
 								<div style="font-size: 11px; margin-top: 3px;">
 									<span class="tn-panel-label">Reason:</span>
 									<span style="font-style: italic; color: #e0d5c1; margin-left: 4px;">{{>order_entry.reason}}</span>
+									{{if !order_entry.can_cancel}}<span class="tn-tag tn-tag-{{:order_entry.status_tone}}">{{:order_entry.status}}</span>{{/if}}
 								</div>
 
 								<div class="tn-flex-row-lg" style="font-size: 10px; margin-top: 4px; color: #8c602a;">
@@ -1996,8 +1997,8 @@
 								<!-- Card Actions Footer -->
 								<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
 									<div class="tn-flex-row-sm">
-										{{:helper.link('Approve', 'check', {'PRG_approve_order' : order_entry.id}, (data.can_approve_orders && data.has_receiving) ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
-										{{:helper.link('Reject', 'close', {'PRG_remove_order' : order_entry.id}, data.can_manage_orders ? null : 'disabled', 'tn-btn tn-btn-danger tn-inlineLink')}}
+										{{:helper.link('Approve', 'check', {'PRG_approve_order' : order_entry.id}, (data.can_approve_orders && data.has_receiving && order_entry.can_cancel) ? null : 'disabled', 'tn-btn tn-btn-primary tn-inlineLink')}}
+										{{:helper.link('Reject', 'close', {'PRG_remove_order' : order_entry.id}, (data.can_manage_orders && order_entry.can_cancel) ? null : 'disabled', 'tn-btn tn-btn-danger tn-inlineLink')}}
 									</div>
 									<div>
 										{{:helper.link('Save as Template', 'clipboard', {'PRG_save_order' : order_entry.id}, null, 'tn-btn tn-btn-outline tn-inlineLink')}}

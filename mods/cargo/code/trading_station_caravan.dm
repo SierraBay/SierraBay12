@@ -57,8 +57,6 @@
 /datum/trading_station/caravan/AssembleInventory()
 	ResetOfferRegistries()
 	BuildCaravanInventory()
-	inventory = offers_by_category
-	SyncAmountsOfGoods()
 
 /datum/trading_station/caravan/proc/BuildCaravanInventory()
 	var/list/available_stations = caravan_station_types.Copy()

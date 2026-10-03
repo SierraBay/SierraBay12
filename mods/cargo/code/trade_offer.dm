@@ -209,3 +209,7 @@
 /datum/trade_offer/proc/HasTag(tag_name)
 	return islist(tags) && tags[tag_name]
 
+/datum/trade_offer/proc/SetStock(amount)
+	if(isnum(amount) && !isnan(amount))
+		stock = max(0, round(amount))
+	return stock

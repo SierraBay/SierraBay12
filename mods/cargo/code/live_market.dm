@@ -137,8 +137,8 @@
 /datum/trading_station/proc/RecordLiveMarketBaselines()
 	if(!live_market_enabled)
 		return
-	for(var/category_name in inventory)
-		var/list/category = inventory[category_name]
+	for(var/category_name in offers_by_category)
+		var/list/category = offers_by_category[category_name]
 		if(!istext(category_name) || !islist(category))
 			continue
 		for(var/good_id in category)
@@ -374,8 +374,8 @@
 		var/stock_shift = modifier["stock_shift"]
 		if(!isnum(stock_shift) || !stock_shift)
 			continue
-		for(var/category_name in inventory)
-			var/list/category = inventory[category_name]
+		for(var/category_name in offers_by_category)
+			var/list/category = offers_by_category[category_name]
 			if(!islist(category))
 				continue
 			for(var/good_id in category)
@@ -404,8 +404,8 @@
 		var/shift = modifier["demand_shift"]
 		if(!isnum(shift) || !shift)
 			continue
-		for(var/category_name in inventory)
-			var/list/category = inventory[category_name]
+		for(var/category_name in offers_by_category)
+			var/list/category = offers_by_category[category_name]
 			for(var/good_id in category)
 				var/weight = GetLiveMarketTagWeight(category_name, good_id, modifier["tag_weights"])
 				AdjustLiveMarketDemand(category_name, good_id, shift * weight * GetLiveMarketBaseline(category_name, good_id))
@@ -538,7 +538,7 @@
 	return 1
 
 /datum/controller/subsystem/supply/proc/GetStationSellPrice(good_ref, datum/trading_station/station, seller_faction = null, category_name = null, amount = 1, sold_offset = 0)
-	if(istype(station) && istext(seller_faction) && isnull(category_name) && (seller_faction in station.inventory))
+	if(istype(station) && istext(seller_faction) && isnull(category_name) && (seller_faction in station.offers_by_category))
 		category_name = seller_faction
 		seller_faction = null
 
@@ -661,24 +661,16 @@
 		"stock" = max(0, station.GetGoodAmount(category_name, good_id))
 	)
 
-/datum/controller/subsystem/supply/proc/SnapshotCartItem(list/result, list/item, buyer_faction)
+/datum/controller/subsystem/supply/proc/SnapshotCartItem(list/result, list/item, buyer_faction, unit_price = null)
 	var/datum/trading_station/station = item["station"]
-	var/datum/trade_offer/offer = item["offer"] || station.GetOffer(item["good_id"])
-	var/cat = item["cat"] || (offer ? offer.category : null)
-	var/gid = offer ? offer.id : item["good_id"]
-	var/unit_price = GetStationBuyPrice(gid, station, buyer_faction, cat)
-	var/list/packet = list("unit_price" = unit_price, "station_uid" = station.uid, "amount" = item["count"], "timestamp" = world.time)
-	var/list/snap = result[station]
-	if(!islist(snap))
-		snap = list("station_uid" = station.uid, "timestamp" = world.time, "quality" = "quoted")
-		result[station] = snap
-		if(station.uid)
-			result["[station.uid]"] = snap
-	snap[gid] = packet
-	if(istext(cat))
-		var/list/cat_snap = snap[cat] || list()
-		cat_snap[gid] = packet
-		snap[cat] = cat_snap
+	var/datum/trade_offer/offer = item["offer"]
+	var/list/goods = result[station.uid]
+	if(!islist(goods))
+		goods = list()
+		result[station.uid] = goods
+	if(isnull(unit_price))
+		unit_price = GetStationBuyPrice(offer.id, station, buyer_faction, offer.category)
+	goods[offer.id] = list("unit_price" = unit_price, "amount" = item["count"], "timestamp" = world.time)
 
 /datum/controller/subsystem/supply/proc/BuildMarketSnapshot(list/shop_list, buyer_faction = null)
 	var/list/result = list()
@@ -689,22 +681,13 @@
 	return result
 
 /datum/controller/subsystem/supply/proc/GetSnapshotUnitPrice(list/price_snapshot, datum/trading_station/station, category_name, good_id)
-	if(!islist(price_snapshot) || !istype(station) || !good_id)
+	if(!islist(price_snapshot) || !istype(station) || !istext(good_id))
 		return null
-	var/list/station_snapshot = price_snapshot[station]
-	if(!islist(station_snapshot) && istext(station.uid))
-		station_snapshot = price_snapshot["[station.uid]"]
-	if(!islist(station_snapshot))
+	var/list/goods = price_snapshot[station.uid]
+	if(!islist(goods))
 		return null
-	var/value = station_snapshot[good_id]
-	if(isnull(value) && istext(category_name) && islist(station_snapshot[category_name]))
-		var/list/category_snapshot = station_snapshot[category_name]
-		value = category_snapshot[good_id]
-	if(isnum(value))
-		return value
-	if(islist(value) && isnum(value["unit_price"]))
-		return value["unit_price"]
-	return null
+	var/list/packet = goods[good_id]
+	return is_valid_cargo_quote_packet(packet) ? packet["unit_price"] : null
 
 /datum/controller/subsystem/supply/proc/ApplyTradeTransaction(datum/trading_station/station, category_name, good_id, amount, mode, faction = null)
 	if(!istype(station) || !istext(category_name) || !good_id || !isnum(amount) || amount <= 0)
@@ -736,10 +719,10 @@
 	return 1
 
 /datum/controller/subsystem/supply/proc/FindLegacyCommodityForExport(atom/movable/exported, datum/trading_station/station)
-	if(!islist(station.inventory))
+	if(!islist(station.offers_by_category))
 		return null
-	for(var/category_name in station.inventory)
-		var/list/category = station.inventory[category_name]
+	for(var/category_name in station.offers_by_category)
+		var/list/category = station.offers_by_category[category_name]
 		for(var/good_id in category)
 			var/atom/movable/path = station.GetGoodPath(category_name, good_id)
 			if(!path)
@@ -772,8 +755,8 @@
 	if(!istype(station))
 		return null
 	var/list/quotes = list()
-	for(var/category_name in station.inventory)
-		var/list/category = station.inventory[category_name]
+	for(var/category_name in station.offers_by_category)
+		var/list/category = station.offers_by_category[category_name]
 		if(!islist(category))
 			continue
 		for(var/good_id in category)
@@ -802,33 +785,17 @@
 
 /datum/controller/subsystem/supply/proc/GetSnapshotTotalCost(list/snapshot, list/shop_list, buyer_faction = null)
 	. = 0
-	if(!islist(shop_list))
-		return
+	if(!is_valid_cargo_cart(shop_list) || !is_valid_cargo_quote(snapshot))
+		return null
 	for(var/list/item as anything in ExtractCartItems(shop_list))
 		var/datum/trading_station/station = item["station"]
 		var/gid = item["good_id"]
 		var/cat = item["cat"]
 		var/count = item["count"]
-		var/unit_price = null
-		if(islist(snapshot))
-			unit_price = GetSnapshotUnitPrice(snapshot, station, cat, gid)
+		var/unit_price = GetSnapshotUnitPrice(snapshot, station, cat, gid)
 		if(isnull(unit_price))
-			unit_price = GetImportCost(gid, station, buyer_faction, cat)
+			return null
 		. += unit_price * count
-
-/datum/controller/subsystem/supply/BuildOrder(requesting_account, reason, list/shopping_list, buyer_faction = null)
-	. = ..(requesting_account, reason, shopping_list, buyer_faction)
-	if(!. || !(. in order_queue))
-		return
-	var/list/order_data = order_queue[.]
-	if(islist(order_data))
-		var/list/snapshot = BuildMarketSnapshot(shopping_list, buyer_faction)
-		order_data["price_snapshot"] = snapshot
-		var/snapshot_cost = GetSnapshotTotalCost(snapshot, shopping_list, buyer_faction)
-		order_data["cost"] = snapshot_cost
-		var/datum/money_account/master_account = get_supply_department_account()
-		var/is_requestor_master = master_account && (requesting_account == master_account)
-		order_data["fee"] = is_requestor_master ? 0 : round(snapshot_cost * handling_fee, 0.01)
 
 #undef MARKET_MOD_BOOM
 #undef MARKET_MOD_SHORTAGE
@@ -837,4 +804,3 @@
 
 #undef MARKET_TRANS_BUY
 #undef MARKET_TRANS_SELL
-
