@@ -1,8 +1,8 @@
 /datum/pipeline
 	var/datum/gas_mixture/air
 
-	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/members = list()
+	var/list/obj/machinery/atmospherics/pipe/edges = list() //Used for building networks
 
 	var/datum/pipe_network/network
 	// Leaking nodes
@@ -22,9 +22,9 @@
 		QDEL_NULL(air)
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
-	leaks.Cut()
-	members.Cut()
-	edges.Cut()
+	leaks?.Cut()
+	members?.Cut()
+	edges?.Cut()
 	. = ..()
 
 /datum/pipeline/Process()//This use to be called called from the pipe networks
@@ -126,27 +126,37 @@
 	return network
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
+	if(!air || !air.volume || !mingle_volume || !target)
+		return
+
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
+	if(!air_sample)
+		return
 	air_sample.volume = mingle_volume
 
-	if(istype(target) && target.zone)
+	if(istype(target) && target.zone && !target.zone.invalid)
 		//Have to consider preservation of group statuses
-		var/datum/gas_mixture/turf_copy = new
+		var/datum/gas_mixture/turf_copy = new(CELL_VOLUME, target.zone.air.temperature, 1)
 
 		turf_copy.copy_from(target.zone.air)
-		turf_copy.volume = target.zone.air.volume //Copy a good representation of the turf from parent group
+		turf_copy.group_multiplier = 1
+		turf_copy.volume = CELL_VOLUME
 
 		equalize_gases(list(air_sample, turf_copy))
 		air.merge(air_sample)
 
-		turf_copy.subtract(target.zone.air)
+		for(var/g in (turf_copy.gas | target.zone.air.gas))
+			var/delta = (turf_copy.gas[g] || 0) - (target.zone.air.gas[g] || 0)
+			if(delta != 0)
+				target.zone.air.adjust_gas_temp(g, delta, turf_copy.temperature, update = 0)
 
-		target.zone.air.merge(turf_copy)
+		target.zone.air.update_values()
+		SSair.mark_zone_update(target.zone)
 
 	else
 		var/datum/gas_mixture/turf_air = target.return_air()
-
-		equalize_gases(list(air_sample, turf_air))
+		if(turf_air)
+			equalize_gases(list(air_sample, turf_air))
 		air.merge(air_sample)
 		//turf_air already modified by equalize_gases()
 
@@ -197,7 +207,8 @@
 			air.temperature += self_temperature_delta
 
 			if(modeled_location.zone)
-				modeled_location.zone.air.temperature += sharer_temperature_delta/modeled_location.zone.air.group_multiplier
+				modeled_location.zone.air.temperature += sharer_temperature_delta
+				SSair.mark_zone_update(modeled_location.zone)
 			else
 				modeled_location.air.temperature += sharer_temperature_delta
 
