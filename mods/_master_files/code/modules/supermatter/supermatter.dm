@@ -24,13 +24,12 @@
 				if(T && (T.z == detonation_turf.z) && (get_dist(T, detonation_turf) <= 14) && !isdeaf(M))
 					sound_to(M, 'mods/utility_items/sounds/smcombined.ogg')
 
-			spawn(3 SECONDS)
-				var/list/affected_z = GetConnectedZlevels(detonation_turf.z)
-				for(var/mob/M in GLOB.player_list)
-					if(!M || !M.client)
-						continue
-					var/turf/T = get_turf(M)
-					if(T && (T.z in affected_z) && !istype(M, /mob/new_player) && !isdeaf(M))
-						sound_to(M, 'mods/utility_items/sounds/sm_delam_echo.ogg')
+			var/list/affected_z = GetConnectedZlevels(detonation_turf.z)
+			for(var/mob/M in GLOB.player_list)
+				if(!M || !M.client)
+					continue
+				var/turf/T = get_turf(M)
+				if(T && (T.z in affected_z) && !istype(M, /mob/new_player) && !isdeaf(M))
+					sound_to(M, 'mods/utility_items/sounds/sm_delam_echo.ogg')
 
 	return ..()

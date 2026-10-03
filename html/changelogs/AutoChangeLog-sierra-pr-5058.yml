@@ -1,0 +1,4 @@
+author: veeqies
+changes:
+  - bugfix: Smartfridges can now be (un)secured when depowered
+delete-after: true
