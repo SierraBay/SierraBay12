@@ -2,6 +2,7 @@
 	name = "electric whip"
 	force = 10
 	maintain_cost = 4
+	damtype = DAMAGE_SHOCK
 
 	item_icons = list(
 		slot_l_hand_str = 'mods/psionics/icons/psi_fd/lefthand.dmi',

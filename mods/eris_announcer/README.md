@@ -28,6 +28,7 @@ ID мода: ERIS_ANNOUNCER
 ### Изменения *кор кода*
 
 - `code/game/objects/items/devices/radio/radio.dm`: `/obj/item/device/radio/proc/autosay()`
+- `code/game/machinery/telecomms/broadcaster.dm`: `/obj/machinery/telecomms/broadcaster/receive_information()`
 - `code/procs/announce.dm`: `/datum/announcement/proc/Announce()`
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,

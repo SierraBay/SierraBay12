@@ -148,8 +148,9 @@
 	fovangle = 0
 
 /client/proc/hide_mask()
-	fov_shadow = mob.clear_fullscreen("FOV_shadow")
-	fov_mask = mob.clear_fullscreen("FOV_mask")
+	// Instant. The default fade leaves a blurry cone over a scope or binoculars.
+	fov_shadow = mob.clear_fullscreen("FOV_shadow", FALSE)
+	fov_mask = mob.clear_fullscreen("FOV_mask", FALSE)
 	hasmask = FALSE
 
 /client/proc/reload_fov()

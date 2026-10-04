@@ -1,0 +1,4 @@
+author: Roche Hendson
+changes:
+  - bugfix: Стазис клетки снова работают
+delete-after: true

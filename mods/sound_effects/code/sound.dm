@@ -12,16 +12,6 @@
 /mob/living/turf_collision(turf/T,speed)
 	playsound(T, pick(GLOB.smash_sound), 50, 1, 1)
 
-//fracture
-/obj/item/organ/external/fracture()
-	. = ..()
-	if(owner)
-		if(can_feel_pain())
-			//owner.emote("scream")
-			owner.agony_scream()
-			playsound(src.loc, pick(GLOB.trauma_sound), 100, 1, -2)
-		//playsound(src.loc, "fracture", 100, 1, -2)
-
 //падение
 /mob/living/carbon/human/handle_fall_effect(/turf/landing)
 	. = ..()

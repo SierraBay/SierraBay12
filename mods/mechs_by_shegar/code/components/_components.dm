@@ -176,6 +176,10 @@
 /obj/item/mech_component/proc/prebuild()
 	update_components()
 
+/obj/item/mech_component/PostFabrication()
+	..()
+	prebuild()
+
 /obj/item/mech_component/proc/install_component(obj/item/thing, mob/user)
 	if(user.unEquip(thing, src))
 		user.visible_message(SPAN_NOTICE("\The [user] installs \the [thing] in \the [src]."))

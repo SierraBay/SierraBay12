@@ -1,5 +1,7 @@
 /obj/item/clothing/gloves/insulated/psi
 	name = "psychokinetic gloves"
+	item_icons = list(slot_gloves_str = 'mods/psionics/icons/psi.dmi')
+	item_state = "FISTS"
 
 	var/maintain_cost = 2
 	var/mob/living/carbon/human/owner

@@ -14,6 +14,9 @@
 	build_path = /obj/item/gun/energy/gun/small
 	sort_string = "TADAF"
 
+/datum/design/item/weapon/missile_payload
+	build_type = PROTOLATHE
+
 // Al-Maliki & Mosley weapons
 /datum/design/item/weapon/revolver
 	id = "revolver"
