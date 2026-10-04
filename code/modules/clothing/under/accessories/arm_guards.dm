@@ -27,21 +27,25 @@
 
 
 /obj/item/clothing/accessory/arm_guards/blue
+	name = "blue arm guards"
 	desc = "A pair of blue arm pads reinforced with armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_blue"
 
 
 /obj/item/clothing/accessory/arm_guards/navy
+	name = "navy blue arm guards"
 	desc = "A pair of navy blue arm pads reinforced with armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_navy"
 
 
 /obj/item/clothing/accessory/arm_guards/green
+	name = "green arm guards"
 	desc = "A pair of green arm pads reinforced with armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_green"
 
 
 /obj/item/clothing/accessory/arm_guards/tan
+	name = "tan arm guards"
 	desc = "A pair of tan arm pads reinforced with armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_tan"
 
@@ -71,18 +75,22 @@
 	)
 
 /obj/item/clothing/accessory/arm_guards/heavy/blue
+	name = "heavy blue arm guards"
 	desc = "A pair of blue arm pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_blue"
 
 /obj/item/clothing/accessory/arm_guards/heavy/navy
+	name = "heavy navy blue arm guards"
 	desc = "A pair of navy blue arm pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_navy"
 
 /obj/item/clothing/accessory/arm_guards/heavy/green
+	name = "heavy green arm guards"
 	desc = "A pair of green pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_green"
 
 /obj/item/clothing/accessory/arm_guards/heavy/tan
+	name = "heavy tan arm guards"
 	desc = "A pair of tan arm pads reinforced with heavy armor plating. Attaches to a plate carrier."
 	icon_state = "armguards_tan"
 

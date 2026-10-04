@@ -9,5 +9,8 @@
 #include "code/cargo_clothes.dm"
 #include "code/cargo_atmospherics.dm"
 #include "code/cargo_operations.dm"
+#include "code/beacons/trade_beacon.dm"
+#include "code/beacons/overmap_beacon.dm"
+#include "code/beacons/trade_circuitboards.dm"
 
 #endif
