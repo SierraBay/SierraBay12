@@ -19,6 +19,7 @@
 
 	if (torch) //If the overmap is disabled, it's possible for there to be no torch.
 		var/list/space_things = list()
+		var/list/trade_stations = SSsupply.GetVisibleTradeStationsReportData()
 		welcome_text += "Current Coordinates:<br /><b>[torch.x]:[torch.y]</b><br /><br>"
 		welcome_text += "Next system targeted for jump:<br /><b>[generate_system_name()]</b><br /><br>"
 		welcome_text += "Travel time to Sol:<br /><b>[rand(15,45)] days</b><br /><br>"
@@ -41,6 +42,15 @@
 				var/bearing = get_bearing(torch, O)
 				location_desc = ", bearing [bearing]."
 			welcome_text += "<li>\A <b>[O.name]</b>[location_desc]</li>"
+
+		if(length(trade_stations))
+			welcome_text += "<br><b>Accessible trade beacons:</b><br />"
+			for(var/list/station_entry in trade_stations)
+				var/station_name = station_entry["name"]
+				var/station_desc = station_entry["desc"]
+				var/station_x = station_entry["x"]
+				var/station_y = station_entry["y"]
+				welcome_text += "<li><b>[station_name]</b> ([station_x]:[station_y]) - [station_desc]</li>"
 
 		welcome_text += "<hr>"
 
