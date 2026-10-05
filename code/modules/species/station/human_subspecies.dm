@@ -15,7 +15,7 @@
 	breath_pressure = 18
 	radiation_mod = 0.5
 	brute_mod =     0.85
-	slowdown =      0.2
+	slowdown =      1
 	strength = STR_HIGH
 
 	descriptors = list(
@@ -106,7 +106,7 @@
 	it difficult to move quickly on land due to their bulk."
 	icobase =     'icons/mob/human_races/species/human/subspecies/tritonian_body.dmi'
 	preview_icon= 'icons/mob/human_races/species/human/subspecies/tritonian_preview.dmi'
-	slowdown = 0.2
+	slowdown =      1
 
 	oxy_mod =             0.5
 	brute_mod =           0.8
