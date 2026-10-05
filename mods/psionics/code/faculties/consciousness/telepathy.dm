@@ -114,7 +114,7 @@
 		if(target.psi)
 			var/con_rank_target = target.psi.get_rank(PSI_CONSCIOUSNESS)
 			if(con_rank_target >= con_rank_user)
-				to_chat(target, SPAN_OCCULT("<b>Я слышите отчётливый голос [user] в своей голове, он говорит мне: <i>[phrase]</i></b>"))
+				to_chat(target, SPAN_OCCULT("<b>Я слышу отчётливый голос [user] в своей голове, он говорит мне: <i>[phrase]</i></b>"))
 				if(con_rank_target > con_rank_user)
 					var/option =  alert(target, "Вы хотите ответить?", "Обратная связь", "Да", "Нет")
 					switch(option)

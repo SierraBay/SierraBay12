@@ -1,0 +1,5 @@
+author: Chichmuch
+changes:
+  - maptweak: Повара и стюарды теперь могут открыть шаттеры в баре и 
+      пользоваться бузо- и гласоматом
+delete-after: true

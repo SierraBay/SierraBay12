@@ -68,8 +68,9 @@
 		return 0
 
 	// [SIERRA-ADD]
-	if(H.species == /singleton/species/nabber)
+	if(H.is_species(SPECIES_NABBER))
 		to_chat(user, SPAN_DANGER("\The [H] has no thumbs to cuff!"))
+		return 0
 	// [/SIERRA-ADD]
 
 	if (!H.has_organ_for_slot(slot_handcuffed))
