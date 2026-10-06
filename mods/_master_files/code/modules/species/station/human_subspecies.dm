@@ -8,7 +8,7 @@
 	BP_BRAIN =    /obj/item/organ/internal/brain,
 	BP_EYES =     /obj/item/organ/internal/eyes
 	)
-	slowdown =      0.2
+	slowdown =      0.5
 
 /singleton/species/human/gravworlder
-	slowdown =      0.2
+	slowdown =      0.5
