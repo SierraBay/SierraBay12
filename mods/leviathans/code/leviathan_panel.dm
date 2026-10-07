@@ -2,7 +2,8 @@
 	var/list/leviathan_spawn_types = list(
 		"Medusa" = /obj/overmap/event/leviathan/medusa,
 		"Dragon" = /obj/overmap/event/leviathan/dragon,
-		"Swarm"  = /obj/overmap/event/leviathan/swarm
+		"Swarm"  = /obj/overmap/event/leviathan/swarm,
+		"Brethren Moon" = /obj/overmap/event/leviathan/brethren_moon
 	)
 
 /datum/leviathan_panel/proc/main_interact()

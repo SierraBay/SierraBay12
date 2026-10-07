@@ -8,7 +8,8 @@
 	var/list/leviathan_types = list(
 		/obj/overmap/event/leviathan/medusa,
 		/obj/overmap/event/leviathan/dragon,
-		/obj/overmap/event/leviathan/swarm
+		/obj/overmap/event/leviathan/swarm,
+		/obj/overmap/event/leviathan/brethren_moon
 	)
 	var/spawn_radius = 5 // Минимум в 5 квадратах от Сьерры
 	announceWhen = 50
