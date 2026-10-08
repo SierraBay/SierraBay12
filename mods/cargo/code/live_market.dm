@@ -743,8 +743,8 @@
 		return list("category" = offer.category, "good_id" = offer.id, "amount" = amount)
 	if(istype(exported, /obj/item/stack/material))
 		for(var/id in station.offers)
-			var/datum/trade_offer/candidate = station.offers[id]
-			if(!ispath(candidate.item_path, /obj/item/stack/material))
+			var/datum/trade_offer/candidate = station.GetOffer(id)
+			if(!candidate || !ispath(candidate.item_path, /obj/item/stack/material))
 				continue
 			amount = GetExportCommodityAmount(exported, candidate.item_path, candidate.pack_size)
 			if(amount > 0)

@@ -1,7 +1,7 @@
 /datum/controller/subsystem/supply/proc/FindExportOfferByPath(datum/trading_station/station, path)
 	while(path && path != /atom/movable)
 		var/datum/trade_offer/offer = station.commodity_by_path?[path]
-		if(istype(offer))
+		if(istype(offer) && station.GetOffer(offer.id))
 			return offer
 		path = type2parent(path)
 	return null
@@ -12,7 +12,7 @@
 	if(!component)
 		return cargo
 	for(var/atom/movable/child as anything in component.GetContents())
-		if(istype(child) && !QDELETED(child) && child.loc == item)
+		if(istype(child) && !QDELETED(child) && component.Owns(child))
 			cargo += child
 	return cargo
 
@@ -86,9 +86,60 @@
 	if(ispath(offer_type, /obj/item/storage))
 		if(ispath(offer_type, /obj/item/storage/box/glasses))
 			return GetExportGlassRecipe(offer_type)
-		var/obj/item/storage/storage_type = offer_type
-		return initial(storage_type.startswith) || list()
+		return GetExportItemRecipe(offer_type)
+	if(ispath(offer_type, /obj/item/clothing))
+		return GetExportItemRecipe(offer_type)
 	return list()
+
+/// Cache only recipe data; never retain a live reference item or trust the sold item's mutable list.
+/datum/controller/subsystem/supply/proc/GetExportItemRecipe(atom/movable/offer_type)
+	var/static/list/recipes = list()
+	if(!(offer_type in recipes))
+		var/atom/movable/reference = new offer_type
+		if(QDELETED(reference))
+			return null
+		var/obj/item/storage/storage = reference
+		recipes[offer_type] = istype(storage) && length(storage.startswith) ? storage.startswith.Copy() : DescribeExportContents(reference)
+		qdel(reference)
+	return recipes[offer_type]
+
+/datum/controller/subsystem/supply/proc/GetExportReagentRecipes(obj/item/reagent_containers/offer_type)
+	var/static/list/recipes = list()
+	if(!(offer_type in recipes))
+		var/obj/item/reagent_containers/reference = new offer_type
+		if(QDELETED(reference))
+			return null
+		recipes[offer_type] = reference.GetExportReagentRecipes()
+		qdel(reference)
+	return recipes[offer_type]
+
+/datum/controller/subsystem/supply/proc/DescribeExportReagents(datum/reagents/reagents)
+	var/list/recipe = list()
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		recipe[reagent.type] = reagent.volume
+	return recipe
+
+/datum/controller/subsystem/supply/proc/MatchExportReagents(datum/reagents/reagents, list/expected)
+	if(!islist(expected) || length(reagents?.reagent_list) != length(expected))
+		return FALSE
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		if(!(reagent.type in expected) || abs(reagent.volume - expected[reagent.type]) > 0.00001)
+			return FALSE
+	return TRUE
+
+/// Storage filled procedurally has the same recipe format as startswith, including stack sizes.
+/datum/controller/subsystem/supply/proc/DescribeExportContents(atom/movable/item)
+	ASSERT(istype(item))
+	var/list/recipe = list()
+	for(var/atom/movable/child as anything in GetExportCargoContents(item))
+		if(isstack(child))
+			var/obj/item/stack/stack = child
+			var/list/configuration = recipe[child.type] || list(0, stack.get_amount())
+			configuration[1]++
+			recipe[child.type] = configuration
+		else
+			recipe[child.type] = (recipe[child.type] || 0) + 1
+	return recipe
 
 /datum/controller/subsystem/supply/proc/GetExportGlassRecipe(obj/item/storage/box/glasses/offer_type)
 	var/list/glasses = list()
@@ -178,6 +229,8 @@
 		return GetExportCanisterAmount(item, path)
 	if(istype(item, /obj/item/storage) || istype(item, /obj/structure/closet))
 		return item.type == path && IsCompleteExportBundle(item, path) ? 1 : 0
+	if(istype(item, /obj/item/clothing))
+		return IsCompleteExportBundle(item, path) ? 1 : 0
 	if(length(GetExportCargoContents(item)))
 		return 0
 	return GetExportStackAmount(item) / pack_size

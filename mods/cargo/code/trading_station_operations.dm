@@ -20,7 +20,7 @@
 		TRADE_CAT_EQUIPMENT = list(
 			/obj/vehicle/train/cargo/engine = GOODS_DEFAULT,
 			/obj/vehicle/train/cargo/trolley = GOODS_DEFAULT,
-			/obj/item/stack/package_wrap = GOODS_DEFAULT,
+			/obj/item/stack/package_wrap/cargo_wrap = GOODS_DEFAULT,
 			/obj/item/hand_labeler = GOODS_DEFAULT,
 			/obj/item/device/destTagger = GOODS_DEFAULT
 		),

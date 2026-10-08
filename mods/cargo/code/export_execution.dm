@@ -34,7 +34,7 @@
 
 /datum/controller/subsystem/supply/proc/CreateExportPlanEntry(atom/movable/item, atom/movable/root, datum/trading_station/station)
 	var/list/owned
-	if((istype(item, /obj/item/storage) || istype(item, /obj/structure/closet)) && !HasNestedExportInvoice(item))
+	if((istype(item, /obj/item/storage) || istype(item, /obj/structure/closet) || istype(item, /obj/item/clothing)) && !HasNestedExportInvoice(item))
 		var/list/match = FindCommodityForExport(item, station)
 		if(islist(match) && length(GetExportCargoContents(item)))
 			owned = GetExportTree(item, TRUE)

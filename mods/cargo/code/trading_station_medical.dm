@@ -43,7 +43,7 @@
 		TRADE_CAT_SURGERY = list(
 			/obj/item/storage/firstaid/surgery = GOODS_DEFAULT,
 			/obj/item/storage/belt/medical = GOODS_DEFAULT,
-			/obj/item/scalpel = GOODS_DEFAULT,
+			/obj/item/scalpel/basic = GOODS_DEFAULT,
 			/obj/item/hemostat = GOODS_DEFAULT,
 			/obj/item/retractor = GOODS_DEFAULT,
 			/obj/item/cautery = GOODS_DEFAULT,

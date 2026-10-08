@@ -33,7 +33,7 @@
 			/obj/item/light/bulb = GOODS_DEFAULT,
 			/obj/item/frame/apc = GOODS_DEFAULT,
 			/obj/item/airlock_electronics = GOODS_DEFAULT,
-			/obj/item/cell = GOODS_DEFAULT,
+			/obj/item/cell/standard = GOODS_DEFAULT,
 			/obj/item/cell/high = GOODS_DEFAULT,
 			/obj/item/cell/super = GOODS_DEFAULT
 		),
