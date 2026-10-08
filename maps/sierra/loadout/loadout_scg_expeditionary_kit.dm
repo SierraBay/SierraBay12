@@ -19,19 +19,15 @@
 		"Field Operations patch" = /obj/item/clothing/accessory/solgov/ec_patch/fieldops,
 		"Cultural Exchange patch" = /obj/item/clothing/accessory/solgov/cultex_patch
 	)
-	var/static/list/scarf_type_by_label = list(
-		"Observatory scarf" = /obj/item/clothing/accessory/solgov/ec_scarf/observatory,
-		"Field Operations scarf" = /obj/item/clothing/accessory/solgov/ec_scarf/fieldops
-	)
 	var/static/list/department_insignia_by_word = list(
-		"command" = /obj/item/clothing/accessory/solgov/department/command/service,
-		"engineering" = /obj/item/clothing/accessory/solgov/department/engineering/service,
-		"security" = /obj/item/clothing/accessory/solgov/department/security/service,
-		"medical" = /obj/item/clothing/accessory/solgov/department/medical/service,
-		"research" = /obj/item/clothing/accessory/solgov/department/research/service,
-		"supply" = /obj/item/clothing/accessory/solgov/department/supply/service,
-		"exploration" = /obj/item/clothing/accessory/solgov/department/exploration/service,
-		"service" = /obj/item/clothing/accessory/solgov/department/service/service
+		"command" = /obj/item/clothing/accessory/solgov/department/command,
+		"engineering" = /obj/item/clothing/accessory/solgov/department/engineering,
+		"security" = /obj/item/clothing/accessory/solgov/department/security,
+		"medical" = /obj/item/clothing/accessory/solgov/department/medical,
+		"research" = /obj/item/clothing/accessory/solgov/department/research,
+		"supply" = /obj/item/clothing/accessory/solgov/department/supply,
+		"exploration" = /obj/item/clothing/accessory/solgov/department/exploration,
+		"service" = /obj/item/clothing/accessory/solgov/department/service
 	)
 	var/static/list/gloves_by_department = list(
 		"command" = /obj/item/clothing/gloves/thick/duty/solgov/cmd,
@@ -47,7 +43,6 @@
 	// Sensible defaults for anyone who never touched the loadout tweaks.
 	var/rank_type = rank_type_by_label[chosen_rank_label] || rank_type_by_label["E-3 (Explorer)"]
 	var/patch_type = patch_type_by_label[chosen_patch_label] || patch_type_by_label["Observatory patch"]
-	var/scarf_type = scarf_type_by_label[chosen_scarf_label] || scarf_type_by_label["Observatory scarf"]
 	var/is_officer = (chosen_rank_label == "O-1 (Ensign)")
 
 	if (is_officer)
@@ -60,7 +55,6 @@
 	attach_accessory(null, new insignia_type(src))
 	attach_accessory(null, new patch_type(src))
 	attach_accessory(null, new rank_type(src))
-	attach_accessory(null, new scarf_type(src))
 
 	// The undersuit also gets its own copy of the department insignia - it's the piece players
 	// actually see worn day to day, and other SolGov uniform families tag it the same way.
@@ -107,10 +101,6 @@
 	content_text = "Patch"
 	input_message = "Choose your patch."
 
-/datum/gear_tweak/custom_var/scg_kit_scarf
-	var_to_tweak = "chosen_scarf_label"
-	content_text = "Scarf"
-	input_message = "Choose your scarf."
 
 /datum/gear/scg_expeditionary_kit
 	display_name = "SCG Expeditionary Corps uniform"
@@ -124,5 +114,4 @@
 /datum/gear/scg_expeditionary_kit/New()
 	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_rank(list("E-3 (Explorer)", "E-5 (Senior Explorer)", "E-7 (Chief Explorer)", "O-1 (Ensign)"))
 	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_patch(list("Observatory patch", "Field Operations patch", "Cultural Exchange patch"))
-	gear_tweaks += new /datum/gear_tweak/custom_var/scg_kit_scarf(list("Observatory scarf", "Field Operations scarf"))
 	..()
