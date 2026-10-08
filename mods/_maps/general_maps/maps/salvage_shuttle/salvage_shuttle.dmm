@@ -128,6 +128,7 @@
 /obj/floor_decal/techfloor/hole{
 	dir = 4
 	},
+/obj/machinery/fabricator/hacked,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/maintenance)
 "bI" = (
@@ -226,10 +227,12 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/handrail{
-	dir = 4
-	},
 /obj/structure/catwalk,
+/obj/machinery/computer/modular/preset/merchant{
+	dir = 4;
+	default_software = list(/datum/computer_file/program/merchant)
+	},
+/obj/item/card/id/merchant,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "cG" = (
@@ -253,6 +256,7 @@
 	pixel_x = 6
 	},
 /obj/structure/catwalk,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "cH" = (
@@ -385,11 +389,13 @@
 /area/derelict_cargo_ship/quarters)
 "dY" = (
 /obj/structure/bed/chair/padded/black,
-/obj/structure/closet/medical_wall/filled{
-	pixel_y = 32
-	},
 /obj/floor_decal/borderfloorblack{
 	dir = 1
+	},
+/obj/structure/hygiene/sink{
+	dir = 1;
+	pixel_y = 26;
+	pixel_x = 5
 	},
 /turf/simulated/floor/lino,
 /area/salvage_shuttle/lounge)
@@ -432,7 +438,13 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/random/junk,
+/obj/machinery/merchant_pad,
+/obj/structure/railing/mapped,
+/obj/item/spacecash/bundle/c20,
+/obj/item/spacecash/bundle/c1,
+/obj/item/spacecash/bundle/c1,
+/obj/item/spacecash/bundle/c1000,
+/obj/item/spacecash/bundle/c10,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "eL" = (
@@ -852,6 +864,10 @@
 /area/derelict_cargo_ship/maintenance)
 "kg" = (
 /obj/structure/handrail,
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
 /turf/simulated/floor/plating{
 	initial_gas = null
 	},
@@ -861,7 +877,6 @@
 /turf/simulated/wall/titanium,
 /area/derelict_cargo_ship/quarters)
 "kr" = (
-/obj/structure/table/rack,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
@@ -872,6 +887,7 @@
 /obj/random/toolbox,
 /obj/item/crowbar/prybar,
 /obj/item/device/flashlight,
+/obj/structure/table/mag,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "kE" = (
@@ -883,7 +899,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump"
 	},
-/obj/structure/table/rack,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
@@ -892,6 +907,7 @@
 /obj/random/loot,
 /obj/random/loot,
 /obj/random/soap,
+/obj/structure/table/mag,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "kX" = (
@@ -1185,6 +1201,18 @@
 	initial_gas = null
 	},
 /area/salvage_shuttle/airlock)
+"oc" = (
+/obj/structure/handrail{
+	dir = 1
+	},
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
+/turf/simulated/floor/plating{
+	initial_gas = null
+	},
+/area/salvage_shuttle/maintenance)
 "og" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -1467,6 +1495,9 @@
 	},
 /obj/floor_decal/borderfloorblack{
 	dir = 5
+	},
+/obj/structure/handrail{
+	dir = 2
 	},
 /turf/simulated/floor/tiled/dark,
 /area/salvage_shuttle/cockpit)
@@ -1987,6 +2018,9 @@
 	icon_state = "4-8"
 	},
 /obj/structure/catwalk,
+/obj/structure/railing/mapped{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "zo" = (
@@ -2021,6 +2055,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/catwalk,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "zM" = (
@@ -2656,7 +2691,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump"
 	},
-/obj/structure/table/rack,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -2671,6 +2705,7 @@
 /obj/random/technology_scanner,
 /obj/random/firstaid,
 /obj/random/firstaid,
+/obj/structure/table/mag,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Hp" = (
@@ -2940,6 +2975,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/catwalk,
+/obj/structure/railing/mapped,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/maintenance)
 "Km" = (
@@ -2976,7 +3012,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump_out_internal"
 	},
-/obj/structure/table/rack,
 /obj/floor_decal/techfloor{
 	dir = 1
 	},
@@ -2984,6 +3019,7 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/random/loot,
 /obj/random/tech_supply,
+/obj/structure/table/mag,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Lm" = (
@@ -3199,6 +3235,11 @@
 /area/derelict_cargo_ship/cockpit)
 "OC" = (
 /obj/machinery/shipsensors,
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
+/obj/structure/railing/mapped,
 /turf/simulated/floor/plating{
 	initial_gas = null
 	},
@@ -3235,6 +3276,9 @@
 	frequency = 1331;
 	pixel_x = 10
 	},
+/obj/structure/handrail{
+	dir = 2
+	},
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pg" = (
@@ -3262,6 +3306,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
+/obj/random/junk,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pv" = (
@@ -3297,9 +3342,14 @@
 "PS" = (
 /obj/structure/table/standard,
 /obj/machinery/appliance/cooker/microwave{
-	pixel_y = 6
+	pixel_y = 13;
+	pixel_x = 0
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
+/obj/structure/closet/medical_wall/filled{
+	pixel_x = -24;
+	pixel_y = 17
+	},
 /turf/simulated/floor/tiled/dark/monotile,
 /area/salvage_shuttle/lounge)
 "PV" = (
@@ -3471,6 +3521,13 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
 	},
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
+/obj/structure/railing/mapped{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
 	initial_gas = null
 	},
@@ -3605,6 +3662,9 @@
 	},
 /area/derelict_cargo_ship/cockpit)
 "TA" = (
+/obj/floor_decal/borderfloor{
+	dir = 4
+	},
 /obj/machinery/embedded_controller/radio/airlock/docking_port{
 	dir = 8;
 	display_name = "Crab - Dock";
@@ -3612,9 +3672,6 @@
 	id_tag = "crab_dock";
 	pixel_x = 22;
 	pixel_y = 0
-	},
-/obj/floor_decal/borderfloor{
-	dir = 4
 	},
 /turf/simulated/floor/tiled,
 /area/salvage_shuttle/airlock)
@@ -3811,9 +3868,6 @@
 	},
 /area/salvage_shuttle/net)
 "WI" = (
-/obj/floor_decal/industrial/warning{
-	dir = 1
-	},
 /obj/machinery/computer/modular/preset/helm{
 	dir = 1
 	},
@@ -4010,7 +4064,6 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/shuttle{
 	id_tag = "crab_cargo_pump"
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/airlock_sensor{
 	id_tag = "crab_cargo_sensor";
 	frequency = 1331;
@@ -4023,6 +4076,7 @@
 /obj/floor_decal/techfloor,
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/floor_decal/techfloor/hole/right,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "Yv" = (
@@ -9580,7 +9634,7 @@ Qr
 Qr
 Qr
 Qr
-IK
+oc
 wm
 eN
 zs

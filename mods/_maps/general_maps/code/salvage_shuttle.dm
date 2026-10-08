@@ -20,3 +20,34 @@
 		/area/derelict_cargo_ship/maintenance = NO_SCRUBBER|NO_VENT,
 		/area/derelict_cargo_ship/cockpit = NO_VENT
 	)
+
+
+/datum/job/submap/independent_salvager
+	// title = "Independent Salvager"
+	// total_positions = 2
+	// outfit_type = /singleton/hierarchy/outfit/job/independent_salvager
+	// supervisors = "your fellow crew"
+	// info = "You're an independent salvager on board the ISV Crab. \
+	// Fly through the sector, salvaging what materials and valuables you can find. \
+	// You're a travelling merchant at heart. Make friends and trade your spoils to turn a profit!"
+	// whitelisted_species = list(
+	// 	SPECIES_HUMAN,
+	// 	SPECIES_IPC,
+	// 	SPECIES_SPACER,
+	// 	SPECIES_GRAVWORLDER,
+	// 	SPECIES_VATGROWN,
+	// 	SPECIES_TRITONIAN,
+	// 	SPECIES_MULE
+	// )
+	min_skill = list(
+		SKILL_HAULING = SKILL_TRAINED,
+		SKILL_PILOT = SKILL_BASIC,
+		SKILL_EVA = SKILL_EXPERIENCED,
+		SKILL_CONSTRUCTION = SKILL_TRAINED,
+		SKILL_ELECTRICAL = SKILL_BASIC,
+		SKILL_ATMOS = SKILL_BASIC,
+		SKILL_MEDICAL = SKILL_BASIC,
+		SKILL_ENGINES = SKILL_BASIC,
+	)
+
+	skill_points = 21
