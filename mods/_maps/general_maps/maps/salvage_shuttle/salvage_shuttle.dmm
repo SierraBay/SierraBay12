@@ -228,11 +228,9 @@
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
-/obj/machinery/computer/modular/preset/merchant{
-	dir = 4;
-	default_software = list(/datum/computer_file/program/merchant)
+/obj/structure/handrail{
+	dir = 4
 	},
-/obj/item/card/id/merchant,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "cG" = (
@@ -438,13 +436,7 @@
 /obj/floor_decal/techfloor{
 	dir = 9
 	},
-/obj/machinery/merchant_pad,
-/obj/structure/railing/mapped,
-/obj/item/spacecash/bundle/c20,
-/obj/item/spacecash/bundle/c1,
-/obj/item/spacecash/bundle/c1,
-/obj/item/spacecash/bundle/c1000,
-/obj/item/spacecash/bundle/c10,
+/obj/random/junk,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "eL" = (
@@ -908,6 +900,7 @@
 /obj/random/loot,
 /obj/random/soap,
 /obj/structure/table/mag,
+/obj/item/card/id/merchant,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/salvage_shuttle/cargo)
 "kX" = (
@@ -3306,7 +3299,6 @@
 	icon_state = "2-4"
 	},
 /obj/structure/catwalk,
-/obj/random/junk,
 /turf/simulated/floor/plating,
 /area/salvage_shuttle/cargo)
 "Pv" = (
