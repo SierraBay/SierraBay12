@@ -459,6 +459,17 @@ nanoui is used to open and update nano browser uis
 	//onclose(user, window_id)
 	SSnano.ui_opened(src)
 
+
+/datum/nanoui/proc/set_window_size(nwidth, nheight)
+	if (!nwidth || !nheight || !user?.client)
+		return
+	if (width == nwidth && height == nheight)
+		return
+	width = nwidth
+	height = nheight
+	var/multiplier = (text2num(user.client.prefs?.window_size) || 100) / 100
+	winset(user, window_id, "size=[round(width * multiplier)]x[round(height * multiplier)]")
+
  /**
   * Reinitialise this UI, potentially with a different template and/or initial data
   *

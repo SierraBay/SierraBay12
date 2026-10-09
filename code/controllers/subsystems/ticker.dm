@@ -118,6 +118,11 @@ SUBSYSTEM_DEF(ticker)
 		Master.SetRunLevel(RUNLEVEL_SETUP)
 		return
 
+	// [SIERRA-ADD] - ODYSSEY
+	if(pregame_timeleft <= (config.vote_autogamemode_timeleft SECONDS + config.vote_period + 5 SECONDS))
+		odyssey_pregame_consider_vote()
+	// [/SIERRA-ADD]
+
 	if(!bypass_gamemode_vote && (pregame_timeleft <= config.vote_autogamemode_timeleft SECONDS) && !gamemode_vote_results)
 #ifndef UNIT_TEST
 		var/list/lobby = lobby_players()
@@ -462,16 +467,16 @@ Helpers
 	if(mode.explosion_in_progress)
 		return 0
 	if(config.continous_rounds)
-		return evacuation_controller.round_over() || mode.station_was_nuked
+		return evacuation_controller.round_over() || mode.station_was_nuked || odyssey_transition_ready_to_end()
 	else
-		return mode.check_finished() || (evacuation_controller.round_over() && evacuation_controller.emergency_evacuation) || game_over
+		return mode.check_finished() || (evacuation_controller.round_over() && evacuation_controller.emergency_evacuation) || odyssey_transition_ready_to_end() || game_over
 
 /datum/controller/subsystem/ticker/proc/mode_finished()
 	if (forced_end)
 		return TRUE
 
 	if(config.continous_rounds)
-		return mode.check_finished()
+		return mode.check_finished() || odyssey_transition_ready_to_end()
 	else
 		return game_finished()
 

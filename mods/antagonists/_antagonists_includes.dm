@@ -5,6 +5,7 @@
 
 #include "code/_gamemodes.dm"
 #include "code/blackout.dm"
+#include "code/changeling.dm"
 #include "code/cult.dm"
 #include "code/ert.dm"
 #include "code/mercenary.dm"
