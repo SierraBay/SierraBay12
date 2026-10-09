@@ -1,8 +1,8 @@
 /obj/machinery/trade_beacon
 	name = "trade beacon"
 	desc = "An automated subspace transponder used by the supply network."
-	icon = 'icons/obj/machines/beacon.dmi'
-	icon_state = "beacon"
+	icon = 'mods/cargo/icons/trade_beacon.dmi'
+	icon_state = "sending"
 	anchored = TRUE
 	density = TRUE
 	use_power = POWER_USE_OFF
@@ -32,7 +32,7 @@
 /obj/machinery/trade_beacon/sending
 	name = "sending trade beacon"
 	desc = "Scans and de-materializes unanchored cargo within 2 tiles for export."
-	icon_state = "beacon"
+	icon_state = "sending"
 	var/export_cooldown = 0
 	var/export_cooldown_time = 120 SECONDS
 
@@ -74,6 +74,7 @@
 /obj/machinery/trade_beacon/receiving
 	name = "receiving trade beacon"
 	desc = "Materializes incoming deliveries onto valid surrounding floor tiles within 2 tiles."
+	icon_state = "receiving"
 
 /obj/machinery/trade_beacon/receiving/Initialize(mapload)
 	. = ..()
