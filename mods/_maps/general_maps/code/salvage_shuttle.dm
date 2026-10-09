@@ -20,3 +20,18 @@
 		/area/derelict_cargo_ship/maintenance = NO_SCRUBBER|NO_VENT,
 		/area/derelict_cargo_ship/cockpit = NO_VENT
 	)
+
+
+/datum/job/submap/independent_salvager
+	min_skill = list(
+		SKILL_HAULING = SKILL_TRAINED,
+		SKILL_PILOT = SKILL_BASIC,
+		SKILL_EVA = SKILL_EXPERIENCED,
+		SKILL_CONSTRUCTION = SKILL_TRAINED,
+		SKILL_ELECTRICAL = SKILL_BASIC,
+		SKILL_ATMOS = SKILL_BASIC,
+		SKILL_MEDICAL = SKILL_BASIC,
+		SKILL_ENGINES = SKILL_BASIC,
+	)
+
+	skill_points = 21
