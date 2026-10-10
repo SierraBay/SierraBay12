@@ -796,6 +796,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.toggle_zoom_hud()	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
 
 	user.client.view = viewsize
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	zoom = 1
 	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
 	if(istype(H))
@@ -837,6 +840,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 
 	user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	if(!user.hud_used.hud_shown)
 		user.toggle_zoom_hud()
 
