@@ -297,6 +297,9 @@ SUBSYSTEM_DEF(virtual_reality)
 	if (!vir_mob)
 		return FALSE
 
+	for (var/obj/I in vir_mob.contents)
+		vir_mob.unzoom(I)
+
 	var/list/pre_vr_buffs = vir_mob.fetch_buffs_of_type(/datum/skill_buff/virtual_reality)
 	if (LAZYLEN(pre_vr_buffs))
 		for (var/datum/skill_buff/virtual_reality/VRB in pre_vr_buffs)
