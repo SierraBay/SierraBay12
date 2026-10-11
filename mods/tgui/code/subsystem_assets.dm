@@ -45,8 +45,12 @@ SUBSYSTEM_DEF(assets)
 		var/resource_path = "[resource]"
 		if(client_resources[resource])
 			continue
+		var/source = resource
+		var/replacement = "mods/tgui/resources/[resource_path]"
+		if(copytext(resource_path, 1, 6) == "html/" && fexists(replacement))
+			resource = fcopy_rsc(replacement)
 		var/asset_name = copytext(resource_path, findlasttext(resource_path, "/") + 1)
-		client_resources[resource] = register_asset(asset_name, resource)
+		client_resources[source] = register_asset(asset_name, resource)
 
 /datum/controller/subsystem/assets/proc/load_assets()
 	for(var/datum/asset/asset_type as anything in typesof(/datum/asset))

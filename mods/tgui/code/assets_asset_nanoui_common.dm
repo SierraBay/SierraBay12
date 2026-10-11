@@ -13,6 +13,7 @@
 	for (var/path in asset_dirs)
 		for(var/filename in flist(path))
 			var/is_directory = copytext(filename, length(filename)) == "/"
+			// Sierra's helpers, styles and callbacks take priority over donor copies.
 			if(is_directory || assets[filename])
 				continue
 

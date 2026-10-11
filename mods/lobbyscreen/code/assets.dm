@@ -3,8 +3,8 @@
 	legacy = TRUE
 	keep_local_name = TRUE
 	assets = list(
-		"courierprime-code.woff" = 'mods/lobbyscreen/html/fonts/courierprime-code.woff',
-		"round-control.woff"     = 'mods/lobbyscreen/html/fonts/round-control.woff',
+		"courierprime-code.woff" = 'mods/tgui/resources/html/fonts/courierprime-code.woff',
+		"round-control.woff"     = 'mods/tgui/resources/html/fonts/round-control.woff',
 
 		"light_left.png"  = 'mods/lobbyscreen/html/assets/light_left.png',
 		"light_right.png" = 'mods/lobbyscreen/html/assets/light_right.png',
