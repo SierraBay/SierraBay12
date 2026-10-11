@@ -35,7 +35,8 @@ GLOBAL_TYPED_AS(is_http_protocol, /regex, regex("^https?://"))
 			var/name = "[generate_asset_name(thing)].png"
 			register_asset(name, thing)
 			for (var/thing2 in targets)
-				send_asset(thing2, key, FALSE)
+				// [SIERRA-EDIT] - TGUI - Send the registered file through the shared asset cache.
+				send_asset(thing2, name, FALSE)
 			return "<img class='icon icon-misc [class]' src=\"[url_encode(name)]\">"
 		if (ispath(thing))
 			var/atom/A = thing

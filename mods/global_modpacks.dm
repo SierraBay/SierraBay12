@@ -89,3 +89,6 @@
 #include "medical/medical_includes.dm"
 #include "case_dossier/_case_dossier_includes.dm"
 #include "advanced_landing/_advanced_landing_includes.dm"
+// [SIERRA-ADD] - TGUI - Load UI overrides after existing modpacks.
+#include "tgui/_tgui_includes.dm"
+// [/SIERRA-ADD]

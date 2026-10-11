@@ -405,23 +405,15 @@ window "outputwindow"
 		is-pane = true
 		outer-size = 672x464
 		inner-size = 658x450
-	elem "browseroutput"
-		type = BROWSER
+	elem "legacy_output_selector"
+		type = CHILD
 		pos = 0,0
 		size = 658x424
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
-		is-visible = false
-		saved-params = ""
-	elem "output"
-		type = OUTPUT
-		pos = 0,0
-		size = 658x424
-		anchor1 = 0,0
-		anchor2 = 100,100
-		is-default = true
-		saved-params = ""
+		saved-params = "splitter"
+		left = "output_legacy"
+		is-vert = false
 	elem "input"
 		type = INPUT
 		pos = 0,430
@@ -459,6 +451,44 @@ window "outputwindow"
 		command = "ToggleHotkeyMode"
 		button-type = pushbox
 		is-checked = true
+
+window "output_legacy"
+	elem "output_legacy"
+		type = MAIN
+		pos = 0,0
+		size = 658x424
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		saved-params = ""
+		is-pane = true
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 658x424
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		saved-params = ""
+
+window "output_browser"
+	elem "output_browser"
+		type = MAIN
+		pos = 0,0
+		size = 658x424
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		saved-params = ""
+		is-pane = true
+	elem "browseroutput"
+		type = BROWSER
+		pos = 0,0
+		size = 658x424
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffffff
+		saved-params = ""
 
 window "rpane"
 	elem "rpane"
