@@ -3,7 +3,7 @@
 /world/New()
 	SetupLogs()
 	SSassets.load_assets()
-	var/list/tests = list(/datum/unit_test/tgui_lifecycle, /datum/unit_test/tgui_inputs, /datum/unit_test/tgui_message, /datum/unit_test/tgui_assets, /datum/unit_test/tgui_nanoui)
+	var/list/tests = list(/datum/unit_test/tgui_lifecycle, /datum/unit_test/tgui_inputs, /datum/unit_test/tgui_message, /datum/unit_test/tgui_assets)
 	for(var/test_type in tests)
 		var/datum/unit_test/test = new test_type
 		test.test_start_time = uptime()

@@ -63,7 +63,6 @@
 #include "../_master_files/code/modules/power/apc.dm"
 #include "../_master_files/code/game/machinery/_machines_base/machinery.dm"
 #include "../_master_files/code/controllers/subsystems/processing/nano.dm"
-#include "../_master_files/code/modules/nano/nanoui.dm"
 #include "../_master_files/code/game/machinery/kitchen/smartfridge.dm"
 #include "../_master_files/code/game/machinery/suit_storage.dm"
 #include "../_master_files/code/modules/reagents/dispenser/dispenser2.dm"
@@ -91,6 +90,5 @@
 #include "../_master_files/code/datums/components/_component.dm"
 #include "tests/lifecycle.dm"
 #include "tests/assets.dm"
-#include "tests/nanoui.dm"
 #include "tests/headless.dm"
 #endif

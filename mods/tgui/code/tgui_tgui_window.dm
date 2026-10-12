@@ -80,7 +80,8 @@
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
 	// Build window options
-	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
+	// Keep WebView2's exposed surface dark while the page repaints during resize.
+	var/options = "file=[id].html;can_minimize=0;auto_format=0;inner-background-color=#252525;"
 	// Remove titlebar and resize handles for a fancy window
 	if(fancy)
 		options += "titlebar=0;can_resize=0;"
