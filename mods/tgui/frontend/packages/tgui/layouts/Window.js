@@ -49,6 +49,7 @@ export class Window extends Component {
     if (
       resumed ||
       config.window?.key !== this.geometryKey ||
+      config.window?.scale !== this.geometryScale ||
       this.props.width !== prevProps.width ||
       this.props.height !== prevProps.height
     ) {
@@ -67,6 +68,7 @@ export class Window extends Component {
       return;
     }
     this.geometryKey = config.window?.key;
+    this.geometryScale = config.window?.scale;
     const revision = ++this.geometryRevision;
     const isCurrent = () => {
       const backend = useBackend(this.context);

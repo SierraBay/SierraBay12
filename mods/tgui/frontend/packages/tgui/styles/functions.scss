@@ -76,3 +76,8 @@
     color.alpha($color-rgba) * 100%
   );
 }
+
+// Keep viewport units consistent when a window opts out of display DPI scaling.
+@function vp($viewport-unit) {
+  @return calc(var(--scaling-amount, 1) * $viewport-unit);
+}

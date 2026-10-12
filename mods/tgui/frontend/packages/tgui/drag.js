@@ -167,7 +167,8 @@ export const recallWindowGeometry = async (
   let pos = geometry?.pos || options.pos;
   let size = options.size;
   // Ported from tgstation #65686: default dimensions arrive in CSS pixels.
-  if (size) {
+  const scale = options.scale !== false;
+  if (scale && size) {
     size = vecScale(size, pixelRatio);
   }
   // Wait until screen offset gets resolved
@@ -175,6 +176,12 @@ export const recallWindowGeometry = async (
   if (!isCurrent()) {
     return;
   }
+  // Aurora #20734: allow physical-size windows independently of Windows DPI.
+  document.body.style.setProperty('zoom', scale ? '' : `${100 / pixelRatio}%`);
+  document.documentElement.style.setProperty(
+    '--scaling-amount',
+    scale ? '1' : pixelRatio.toString()
+  );
   const areaAvailable = getScreenSize();
   // Set window size
   if (size) {

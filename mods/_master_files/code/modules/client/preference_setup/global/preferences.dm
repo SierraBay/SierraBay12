@@ -25,3 +25,11 @@
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 	default_value = GLOB.PREF_NO
 
+/datum/client_preference/ui_scale
+	description = "Scale interface with display DPI"
+	key = "UI_SCALE"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+
+/datum/client_preference/ui_scale/changed(mob/user, new_value)
+	SStgui.update_user_uis(user)
+

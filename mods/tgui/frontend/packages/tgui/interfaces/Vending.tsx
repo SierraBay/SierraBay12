@@ -161,7 +161,11 @@ const Vend = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
   return data.mode && data.vend_ready ? (
     <Dimmer textAlign="center">
-      <Stack vertical width="calc(100vw - 2rem)" height="calc(100vh - 4rem)">
+      <Stack
+        vertical
+        width="calc(100vw * var(--scaling-amount, 1) - 2rem)"
+        height="calc(100vh * var(--scaling-amount, 1) - 4rem)"
+      >
         <Stack.Item>
           <NoticeBox color={data.message_err ? 'bad' : undefined}>
             {data.message_err

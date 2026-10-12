@@ -51,6 +51,7 @@
 #include "code/sierra_helpers.dm"
 #include "../_master_files/code/controllers/configuration.dm"
 #include "../_master_files/code/datums/datum.dm"
+#include "../_master_files/code/datums/browser.dm"
 #include "../_master_files/code/modules/client/client_procs.dm"
 #include "../_master_files/code/modules/client/preference_setup/global/preferences.dm"
 #include "../_master_files/code/modules/mob/logout.dm"

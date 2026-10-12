@@ -1,10 +1,17 @@
 // TGUI
 /client
 	var/connection_time
+	/// Native window dimensions use display pixels rather than CSS pixels.
+	var/window_scaling = 1
 
 /client/New(TopicData)
 	connection_time = world.time
-	return ..()
+	. = ..()
+	invoke_async(src, PROC_REF(acquire_dpi))
+
+/client/proc/acquire_dpi()
+	var/scaling = text2num(winget(src, null, "dpi"))
+	window_scaling = scaling > 0 ? scaling : 1
 
 /client/getFiles()
 	var/list/assets = list()

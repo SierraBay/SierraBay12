@@ -58,9 +58,12 @@ window.addEventListener('beforeunload', () => {
  */
 const getBoundingBox = (element) => {
   const rect = element.getBoundingClientRect();
+  const pixelRatio = window.devicePixelRatio ?? 1;
   return {
-    pos: [rect.left, rect.top],
-    size: [rect.right - rect.left, rect.bottom - rect.top],
+    pos: [rect.left, rect.top].map((value) => Math.round(value * pixelRatio)),
+    size: [rect.right - rect.left, rect.bottom - rect.top].map((value) =>
+      Math.round(value * pixelRatio)
+    ),
   };
 };
 

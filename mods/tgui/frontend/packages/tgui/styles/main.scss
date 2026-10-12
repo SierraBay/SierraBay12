@@ -6,6 +6,10 @@
 @use 'sass:meta';
 @use './base.scss';
 
+:root {
+  --scaling-amount: 1;
+}
+
 // Core styles
 @include meta.load-css('./reset.scss');
 
