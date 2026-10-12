@@ -91,6 +91,7 @@
 
 /obj/item/gun/projectile/pistol/sec
 	name = "NT Mk58 pistol"
+	icon = 'mods/guns/icons/obj/pistol.dmi'
 
 /obj/item/gun/projectile/pistol/holdout
 	name = "P3 holdout pistol"

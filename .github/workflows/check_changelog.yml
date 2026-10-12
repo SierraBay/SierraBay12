@@ -6,8 +6,8 @@ permissions:
   issues: write
 
 on:
-  pull_request_target:
-    types: [opened, reopened, edited]
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review]
 
 jobs:
   CheckCL:
