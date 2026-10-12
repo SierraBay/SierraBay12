@@ -81,7 +81,10 @@ const InputArea = (props, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
   const { min_value, max_value, init_value, round_value } = data;
   const { input, onClick, onChange } = props;
-  const split = Math.min(max_value ?? 10000, Math.max(min_value ?? 0, input / 2));
+  const split = Math.min(
+    max_value ?? 10000,
+    Math.max(min_value ?? 0, input / 2)
+  );
   const split_value = round_value ? Math.round(split) : split;
   const split_disabled = split_value === input;
   return (

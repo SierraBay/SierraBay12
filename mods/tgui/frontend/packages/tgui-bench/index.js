@@ -31,7 +31,15 @@ const setup = async () => {
     .readFileSync(path.join(publicDir, 'tgui.html'), 'utf-8')
     .replace('<!-- tgui:assets -->\n', assets);
 
-  server.register(require('@fastify/static'), {
+  const fastifyStatic = require('@fastify/static');
+  const metaSym = Object.getOwnPropertySymbols(fastifyStatic).find((s) =>
+    s.toString().includes('plugin-meta')
+  );
+  if (metaSym && fastifyStatic[metaSym]) {
+    fastifyStatic[metaSym].fastify = '>=3.x';
+  }
+
+  server.register(fastifyStatic, {
     root: publicDir,
   });
 

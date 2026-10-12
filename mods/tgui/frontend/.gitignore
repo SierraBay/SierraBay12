@@ -12,6 +12,8 @@
 /public/*.bundle.js.LICENSE.txt
 /public/.tmp/
 /.yarn/install-target
+/.yarn/webpack/
+/.yarn/build-state.yml
 /packages/tgfont/dist/
 /public/*.chunk.*
 /public/*.hot-update.*

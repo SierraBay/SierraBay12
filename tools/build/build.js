@@ -277,6 +277,11 @@ export const TguiDevTarget = new Juke.Target({
   executes: ({ args }) => yarn("tgui:dev", ...args),
 });
 
+export const DevTarget = new Juke.Target({
+  dependsOn: [YarnTarget],
+  executes: ({ args }) => yarn("tgui:dev", ...args),
+});
+
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   executes: () => yarn("tgui:analyze"),

@@ -9411,6 +9411,8 @@ __metadata:
     "@fastify/static": "npm:^6.12.0"
     common: "workspace:*"
     fastify: "npm:^3.29.5"
+    inferno: "npm:^7.4.11"
+    inferno-vnode-flags: "npm:^7.4.11"
     lodash: "npm:^4.17.21"
     platform: "npm:^1.3.6"
     react: "npm:^18.2.0"
