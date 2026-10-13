@@ -18,12 +18,20 @@
 
 	var/list/bodyscans = list()
 	var/selected = 0
+	var/active_tab = "vitals" 	//[SIERRA-ADD]
 
 /obj/machinery/body_scan_display/proc/add_new_scan(list/scan)
 	bodyscans += list(scan.Copy())
 	updateUsrDialog()
 
 /obj/machinery/body_scan_display/OnTopic(mob/user as mob, href_list)
+	//[SIERRA-ADD]
+	if(href_list["set_tab"])
+		if(href_list["set_tab"] in list("vitals", "organs", "reagents", "trauma"))
+			active_tab = href_list["set_tab"]
+			return TOPIC_REFRESH
+		return TOPIC_HANDLED
+	//[/SIERRA-ADD]
 	if(href_list["view"])
 		var/selection = text2num(href_list["view"])
 		if(is_valid_index(selection, bodyscans))
@@ -49,6 +57,7 @@
 	var/list/data = list()
 	data["scans"] = bodyscans
 	data["selected"] = selected
+	data["active_tab"] = active_tab		//[SIERRA-ADD]
 
 	if(selected > 0)
 		data["scan_header"] = display_medical_data_header(bodyscans[selected], user.get_skill_value(SKILL_MEDICAL))

@@ -214,7 +214,7 @@ SUBSYSTEM_DEF(virtual_reality)
 		var/mob/living/carbon/human/H = simulated_mob
 		var/mob/living/carbon/human/H_original = new_occupant
 
-		new_occupant.client.prefs.copy_to(simulated_mob)
+		new_occupant.client.prefs.copy_to(simulated_mob, apply_persist = FALSE)
 		H.set_nutrition(400)
 		H.set_hydration(400)
 		H.job = new_occupant.job
@@ -296,6 +296,9 @@ SUBSYSTEM_DEF(virtual_reality)
 
 	if (!vir_mob)
 		return FALSE
+
+	for (var/obj/I in vir_mob.contents)
+		vir_mob.unzoom(I)
 
 	var/list/pre_vr_buffs = vir_mob.fetch_buffs_of_type(/datum/skill_buff/virtual_reality)
 	if (LAZYLEN(pre_vr_buffs))

@@ -212,7 +212,7 @@
 
 /obj/structure/casino/oh_bandit/use_tool(obj/item/tool, mob/user, list/click_params)
 	SHOULD_CALL_PARENT(FALSE)
-	if (istype(tool, /obj/item/device/multitool))
+	if (isMultitool(tool))
 		var/choices = list("jade", "casino", "pharaoh")
 		var/choice = input(user, "Choose a theme:", "Theme Selection") in choices
 		if(choice)

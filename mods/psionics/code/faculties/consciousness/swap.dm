@@ -20,6 +20,10 @@
 
 	. = ..()
 	if(.)
+		var/distance = get_dist(get_turf(user), get_turf(target))
+		if(distance > (user.psi.get_rank(PSI_CONSCIOUSNESS) - 1) * 5)
+			to_chat(user, SPAN_WARNING("Я не могу сконцентрироватся настолько далеко."))
+			return FALSE
 		if(!do_after(user, 5 SECONDS / user.psi.get_rank(PSI_CONSCIOUSNESS)))
 			return FALSE
 		var/turf/target_turf = get_turf(target)

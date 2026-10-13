@@ -2,7 +2,7 @@
 	id = PSI_CONSCIOUSNESS
 	name = "Consciousness"
 	associated_intent = I_HELP
-	armour_types = list(DAMAGE_PSIONIC)
+	armour_types = list(DAMAGE_PSIONIC, "melee")
 
 /singleton/psionic_power/consciousness
 	faculty = PSI_CONSCIOUSNESS
@@ -20,5 +20,5 @@
 		to_chat(user, SPAN_WARNING("Я не могу пробиться в сознание [target]."))
 		return FALSE
 
-	if(. && target.deflect_psionic_attack(user) && target != user)
+	if(. && target.psi?.deflect_psionic_attack(user) && target != user)
 		return FALSE

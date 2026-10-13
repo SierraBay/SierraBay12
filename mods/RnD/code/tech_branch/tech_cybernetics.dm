@@ -84,6 +84,7 @@
 		"dronecontrol",
 		"robofab",
 		"recharge_station",
+		"recharger",
 		"robot_scanner",
 		"scan_robotic",
 		"sflash",
@@ -195,8 +196,10 @@
 		"mech_control_module",
 		"powerloader_head",
 		"powerloader_body",
-		"powerloader_arms",
-		"powerloader_legs",
+		"left_powerloader_arm",
+		"right_powerloader_arm",
+		"left_powerloader_leg",
+		"right_powerloader_leg",
 		"light_head",
 		"light_body",
 		"right_light_arm",
@@ -573,8 +576,6 @@
 	unlocks_designs = list(
 		"heavy_head",
 		"heavy_body",
-		"heavy_arms",
-		"heavy_legs",
 		"right_heavy_arm",
 		"left_heavy_arm",
 		"right_heavy_leg",
@@ -812,6 +813,5 @@
 		"pcpu_normal",
 		"tesla_link",
 		"hdd_cluster",
-		"data_disk",
 		"bat_ultra"
 	)

@@ -297,6 +297,11 @@ var/global/list/valid_bloodtypes = list("A+", "A-", "B+", "B-", "AB+", "AB-", "O
 
 /datum/category_item/player_setup_item/physical/body/OnTopic(href,list/href_list, mob/user)
 	var/singleton/species/mob_species = GLOB.species_by_name[pref.species]
+	// [SIERRA-ADD] CHARACTER_PERSIST
+	if(pref.character_persist_is_locked() && !href_list["toggle_species_verbose"] && !href_list["show_species"])
+		to_chat(user, SPAN_WARNING("Внешность заблокирована: у персонажа есть сохранённое состояние с прошлой смены. Отключите персистентность, чтобы сбросить его."))
+		return TOPIC_NOACTION
+	// [/SIERRA-ADD]
 
 	if(href_list["toggle_species_verbose"])
 		hide_species = !hide_species

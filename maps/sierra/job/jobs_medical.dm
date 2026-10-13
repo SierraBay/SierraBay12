@@ -1,7 +1,7 @@
 /datum/job/senior_doctor
 	title = "Surgeon"
 	supervisors = "Главному врачу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 
 	minimal_player_age = 14
@@ -61,7 +61,7 @@
 /datum/job/doctor
 	title = "Paramedic"
 	supervisors = "Главному Врачу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 	total_positions = 3
 	spawn_positions = 3
@@ -112,7 +112,7 @@
 /datum/job/doctor_trainee
 	title = "Trainee Paramedic"
 	supervisors = "Главному Врачу и остальному медицинскому персоналу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 
 	minimum_character_age = list(SPECIES_HUMAN = 18)
@@ -163,7 +163,7 @@
 /datum/job/chemist
 	title = "Chemist"
 	supervisors = "Главному Врачу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 
 	minimum_character_age = list(SPECIES_HUMAN = 24)
@@ -202,7 +202,7 @@
 /datum/job/psychiatrist
 	title = "Counselor"
 	supervisors = "Главному Врачу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 
 	minimum_character_age = list(SPECIES_HUMAN = 24)
@@ -267,7 +267,7 @@
 /datum/job/biomech
 	title = "Biomechanical Engineer"
 	supervisors = "Главному врачу"
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED
 
 	minimal_player_age = 14
@@ -315,6 +315,6 @@
 	// SIERRA TODO: need_exp_to_play
 	// need_exp_to_play = 2
 
-/datum/job/senior_doctor/get_description_blurb()
+/datum/job/biomech/get_description_blurb()
 	return "Биомеханический инженер - специалист по киберпротезам. В его ведение входит обслуживание, ремонт и установка всевозможных аугментов и имплантов, которые широко распространены среди членов экипажа. \
 	Будучи частью медицинского отдела, оказывайте помощь пострадавшему персоналу, отдавая предпочтение пациентам с киберимплантами и протезами, а также пациентам с полным протезом тела."

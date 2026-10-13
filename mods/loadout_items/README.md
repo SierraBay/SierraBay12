@@ -76,6 +76,10 @@ ID мода: LOADOUT_ITEMS
 - `maps\torch\icons\obj\obj_under_solgov.dmi`
 - `maps\torch\icons\mob\onmob_under_solgov.dmi`
 - `maps\torch\icons\mob\unathi\onmob_under_solgov_unathi.dmi`
+- `maps\sierra\icons\obj\clothing\obj_under.dmi`
+- `maps\sierra\icons\mob\onmob\onmob_under.dmi`
+- `maps\sierra\icons\obj\clothing\obj_suit.dmi`
+- `maps\sierra\icons\mob\onmob\onmob_suit.dmi`
 
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,

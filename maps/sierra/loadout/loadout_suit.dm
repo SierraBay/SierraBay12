@@ -224,7 +224,6 @@
 	gear_tweaks += new/datum/gear_tweak/path(options)
 
 
-
 //Nasrano Remission
 
 /datum/gear/suit/eng_bomber

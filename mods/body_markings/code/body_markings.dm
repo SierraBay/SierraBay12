@@ -8,7 +8,7 @@
 	name = "Heterochromia"
 	icon_state = "heterochromia"
 	do_coloration = DO_COLORATION_USER
-	draw_target = MARKING_TARGET_HEAD
+	draw_target = MARKING_TARGET_EYES
 	body_parts = list(BP_HEAD)
 	species_allowed = list(SPECIES_HUMAN, SPECIES_TAJARA)
 

@@ -3,6 +3,8 @@
 	. = args.Copy(2)
 	for(var/armor in armors)
 		var/datum/extension/armor/armor_datum = armor
+		if(QDELETED(armor_datum))
+			continue
 		. = armor_datum.apply_damage_modifications(arglist(.))
 
 /mob/living/proc/get_blocked_ratio(def_zone, damage_type, damage_flags, armor_pen, damage)
@@ -10,6 +12,8 @@
 	. = 0
 	for(var/armor in armors)
 		var/datum/extension/armor/armor_datum = armor
+		if(QDELETED(armor_datum))
+			continue
 		. = 1 - (1 - .) * (1 - armor_datum.get_blocked(damage_type, damage_flags, armor_pen, damage)) // multiply the amount we let through
 	. = min(1, .)
 
@@ -19,7 +23,9 @@
 	if(natural_armor)
 		. += natural_armor
 	if(psi)
-		. += get_extension(psi, /datum/extension/armor)
+		var/datum/extension/armor/psi_armor = get_extension(psi, /datum/extension/armor)
+		if(!QDELETED(psi_armor))
+			. += psi_armor
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if (status_flags & GODMODE)
@@ -94,6 +100,8 @@
 				result = aura.aura_check_bullet(arglist(newargs))
 			if(AURA_TYPE_THROWN)
 				result = aura.aura_check_thrown(arglist(newargs))
+			if(AURA_TYPE_UNARMED)
+				result = aura.aura_check_unarmed(arglist(newargs))
 			if(AURA_TYPE_LIFE)
 				result = aura.aura_check_life()
 		if(result & AURA_FALSE)

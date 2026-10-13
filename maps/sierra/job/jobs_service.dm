@@ -1,6 +1,6 @@
 /datum/job/chief_steward
 	title = "Chief Steward"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 	head_position = 1
 	total_positions = 1
@@ -48,7 +48,7 @@
 
 /datum/job/chaplain
 	title = "Chaplain"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 
 	total_positions = 1
@@ -77,7 +77,7 @@
 
 /datum/job/janitor
 	title = "Janitor"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 
 	total_positions = 2
@@ -109,7 +109,7 @@
 
 /datum/job/cook
 	title = "Cook"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 
 	total_positions = 1
@@ -144,7 +144,7 @@
 
 /datum/job/steward
 	title = "Steward"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 
 	total_positions = 2
@@ -175,7 +175,7 @@
 	title = "Bartender"
 	total_positions = 1
 	spawn_positions = 1
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 	ideal_character_age = 30
 	alt_titles = list("Barista")
@@ -206,7 +206,7 @@
 
 /datum/job/actor
 	title = "Actor"
-	department = "Обслуживания"
+	department = "Service"
 	department_flag = SRV
 
 	total_positions = 2

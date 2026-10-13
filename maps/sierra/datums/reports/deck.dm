@@ -61,25 +61,3 @@
 	add_field(/datum/report_field/time, "Время отстыковки")
 	add_field(/datum/report_field/pencode_text,"Дополнительные заметки во время отстыковки")
 	set_access(access_security, override = 0)
-
-/datum/computer_file/report/recipient/request
-	form_name = "NT-DEC-34"
-	title = "Запрос в отдел поставок"
-	available_on_ntnet = 1
-
-/datum/computer_file/report/recipient/request/generate_fields()
-	..()
-	var/list/cargo_fields = list()
-	add_field(/datum/report_field/text_label/header, "ИКН Сьерра - Департамент снабжения")
-	add_field(/datum/report_field/simple_text, "Наименование отдела, запрашивающего предметы или материалы", required = 1)
-	add_field(/datum/report_field/people/from_manifest, "Имя и должность запрашивающего", required = 1)
-	add_field(/datum/report_field/signature, "Подпись запрашивающего", required = 1)
-	add_field(/datum/report_field/date, "Дата заполнения")
-	add_field(/datum/report_field/time, "Время заполнения")
-	add_field(/datum/report_field/pencode_text, "Список запрашиваемых предметов или материалов", required = 1)
-	add_field(/datum/report_field/text_label/instruction, "При необходимости - вписать дополнительные пункты в списке. Пустые графы заполнить, как N/A.")
-	add_field(/datum/report_field/simple_text, "Причина запроса", required = 1)
-	add_field(/datum/report_field/signature, "Подпись запрашивающего")
-	cargo_fields+= add_field(/datum/report_field/signature, "Подпись квартирмейстера или работника карго", required = 1)
-	for(var/datum/report_field/field in cargo_fields)
-		field.set_access(access_edit = access_cargo)

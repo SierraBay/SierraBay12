@@ -69,6 +69,7 @@
 #include "code/derelict_mission_configs.dm"
 #include "code/derelict_mission_virology.dm"
 #include "code/derelict_ghost_invasion.dm"
+#include "code/simple_animal_player_combat.dm"
 
 // Эксперименты и научные приборы
 #include "code/experiment.dm"

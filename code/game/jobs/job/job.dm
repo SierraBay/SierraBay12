@@ -16,6 +16,7 @@
 	var/req_admin_notify                  // If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/minimal_player_age = 0            // If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/department = null                 // Does this position have a department tag?
+	var/department_display_name = null    // Localized display name for UI/manifest (e.g. "Снабжения")
 	var/head_position = 0                 // Is this position Command?
 	var/minimum_character_age			  // List of species = age, if species is not here, it's auto-pass
 	var/ideal_character_age = 30
@@ -490,3 +491,32 @@
 		. = min_skill[S.type]
 	if(!.)
 		. = SKILL_MIN
+
+/datum/job/proc/get_department_display_name()
+	if(department_display_name)
+		return department_display_name
+	return get_default_department_display_name(department)
+
+/proc/get_default_department_display_name(dept)
+	switch(dept)
+		if("Supply", "Cargo")
+			return "Снабжения"
+		if("Security")
+			return "Охранный"
+		if("Engineering")
+			return "Инженерный"
+		if("Medical")
+			return "Медицинский"
+		if("Science", "Research")
+			return "Научный"
+		if("Command")
+			return "Командный"
+		if("Service")
+			return "Обслуживания"
+		if("Exploration")
+			return "Экспедиционный"
+		if("Civilian")
+			return "Гражданский"
+		if("Support")
+			return "Поддержка"
+	return dept

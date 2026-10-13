@@ -27,7 +27,7 @@ ID мода: OOC_NOTES
 
 ### Изменения *кор кода*
 
-- `code\modules\mob\living\carbon\human\examine.dm` : `/datum/species/proc/hug(mob/living/carbon/human/H,mob/living/target)`
+- `code/modules/mob/living/carbon/human/examine.dm` : `/mob/living/carbon/human/examine()` - ссылка `OOC Notes: [View]` в описании персонажа.
 <!--
   Если вы редактировали какие-либо процедуры или переменные в кор коде,
   они должны быть указаны здесь.
@@ -38,7 +38,13 @@ ID мода: OOC_NOTES
 
 ### Оверрайды
 
-- Отсутствуют
+- `mods/_master_files/code/modules/nano/interaction/base.dm` `/mob/CanUseTopic()` - пропускает
+  запрос `ooc_notes` мимо проверки состояния, иначе призрак (и любой, кто стоит дальше одной
+  клетки) получает `STATUS_UPDATE` и ссылка не срабатывает.
+- `/datum/preferences/copy_to()`
+- `/mob/OnTopic()`
+- `/datum/category_item/player_setup_item/physical/flavor/content()`
+- `/datum/category_item/player_setup_item/physical/flavor/OnTopic()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`

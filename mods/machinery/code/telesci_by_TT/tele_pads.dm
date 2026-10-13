@@ -23,8 +23,11 @@
 /obj/machinery/telepad/use_tool(obj/item/tool, mob/living/user, list/click_params)
 	//if(component_attackby(tool, user)) return TRUE
 	if(panel_open)
-		if(istype(tool, /obj/item/device/multitool))
+		if(isMultitool(tool))
 			var/obj/item/device/multitool/M = tool
+			if(!istype(M))
+				to_chat(user, SPAN_WARNING("\The [tool] has no data buffer to save to."))
+				return TRUE
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You save the data in the [tool.name]'s buffer.</span>")
 			return
@@ -39,7 +42,7 @@
 			return
 
 	else
-		if(istype(tool, /obj/item/device/multitool))
+		if(isMultitool(tool))
 			to_chat(user, "<span class='caution'>You should open [src]'s maintenance panel first.</span>")
 			return
 	//.=..()

@@ -197,11 +197,13 @@
 			user.anchored = TRUE
 			currently_casting = TRUE
 			user.client.view = world.view + 6
+			user.client.update_click_catcher()
 			sleep(20 SECONDS)
 			user.mutations.Remove(MUTATION_XRAY)
 			user.anchored = FALSE
 			currently_casting = FALSE
 			user.client.view = org_view
+			user.client.update_click_catcher()
 
 /obj/decal/cleanable/psychic/eversee/Destroy()
 	if(currently_casting)

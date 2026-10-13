@@ -91,7 +91,7 @@
 	if(B.chemicals >= 100)
 		B.chemicals -= 100
 
-		if(M.deflect_psionic_attack())
+		if(M.psi?.deflect_psionic_attack()) // [SIERRA-EDIT - M.deflect_psionic_attack() to M.psi?.deflect_psionic_attack()]
 			return
 
 		sound_to(src, sound('sound/effects/psi/power_evoke.ogg'))

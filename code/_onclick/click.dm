@@ -501,6 +501,7 @@
 	if(direction != dir)
 		facedir(direction)
 
+/*[SIERRA-REMOVE]
 GLOBAL_LIST_INIT(click_catchers)
 	click_catchers = list()
 	var/obj/screen/click_catcher/catcher
@@ -509,18 +510,63 @@ GLOBAL_LIST_INIT(click_catchers)
 			catcher = new
 			catcher.screen_loc = "NORTH-[i],EAST-[j]"
 			click_catchers += catcher
+*///[SIERRA-REMOVE]
+//[SIERRA-ADD]
+// One catcher per screen tile. A single stretched icon does not get the mouse on unseen tiles.
+// Catchers past the current view are kept off the screen, or BYOND shifts the map to include them.
+/client
+	var/list/click_catcher_tiles
+
+/client/proc/update_click_catcher()
+	var/view_to_use = view
+	if(!view_to_use)
+		view_to_use = world.view
+	var/view_x = min(get_view_size_x(view_to_use), 31)
+	var/view_y = min(get_view_size_y(view_to_use), 31)
+	if(!click_catcher_tiles)
+		click_catcher_tiles = list()
+
+	var/list/have = list()
+	for(var/obj/screen/click_catcher/catcher in click_catcher_tiles)
+		have["[catcher.catcher_x],[catcher.catcher_y]"] = catcher
+
+	for(var/tile_x in 1 to view_x)
+		for(var/tile_y in 1 to view_y)
+			var/key = "[tile_x],[tile_y]"
+			if(have[key])
+				continue
+			var/obj/screen/click_catcher/catcher = new
+			catcher.catcher_x = tile_x
+			catcher.catcher_y = tile_y
+			catcher.screen_loc = "[tile_x],[tile_y]"
+			click_catcher_tiles += catcher
+			have[key] = catcher
+
+	screen -= click_catcher_tiles
+	for(var/obj/screen/click_catcher/catcher in click_catcher_tiles)
+		if(catcher.catcher_x <= view_x && catcher.catcher_y <= view_y)
+			screen += catcher
+//[/SIERRA-ADD]
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
+	/*[SIERRA-REMOVE]
 	screen_loc = "CENTER-7,CENTER-7"
+	*///[SIERRA-REMOVE]
+	//[SIERRA-ADD]
+	screen_loc = "1,1"
+	var/catcher_x
+	var/catcher_y
+	//[/SIERRA-ADD]
 
+/*[SIERRA-REMOVE]
 /obj/screen/click_catcher/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
-
+*///[SIERRA-REMOVE]
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -528,7 +574,17 @@ GLOBAL_LIST_INIT(click_catchers)
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
+		/*[SIERRA-REMOVE]
 		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		*///[SIERRA-REMOVE]
+		//[SIERRA-ADD]
+		var/client/viewer = usr?.client
+		var/turf/origin = get_turf(usr)
+		var/turf/eye_turf = viewer ? get_turf(viewer.eye) : null
+		if(eye_turf)
+			origin = eye_turf
+		var/turf/T = screen_params_turf(modifiers[MOUSE_SCREEN_LOC], origin, viewer)
+		//[/SIERRA-ADD]
 		if(T)
 			T.Click(location, control, params)
 	. = 1

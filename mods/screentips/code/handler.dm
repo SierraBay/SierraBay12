@@ -1,8 +1,12 @@
 /client
 	var/list/mouse_move_handlers = list()
 
-/client/MouseEntered(atom/hoverOn)
-	. = ..()
+/client/MouseEntered(atom/hoverOn, location, control, params)
+	if(usr && hoverOn)
+		var/datum/click_handler/click_handler = usr.GetClickHandler()
+		click_handler.OnMouseEntered(hoverOn, location, control, params)
+	else
+		. = ..()
 
 	if (GAME_STATE <= RUNLEVEL_SETUP || !screentip || !screentip.show)
 		return

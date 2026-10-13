@@ -1,0 +1,4 @@
+author: Lexanx
+changes:
+  - bugfix: Фикс обновления сеток 19х15 и 17х15
+delete-after: true

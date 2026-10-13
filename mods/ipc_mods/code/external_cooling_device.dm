@@ -136,11 +136,12 @@
 
 /obj/machinery/external_cooling_device/use_tool(obj/item/W, mob/living/user, list/click_params)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(isScrewdriver(W))
 		closed = !closed
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("You [closed ? "tighten" : "unscrew"] ECD panel"))
 		on_update_icon()
+		return TRUE
 	if(!closed)
 		if (istype(W, /obj/item/cell))
 			if(!isnull(src.cell))

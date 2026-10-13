@@ -500,15 +500,13 @@
 ///ICE ORB///
 
 //ATOM related things, that cannot be putted in orb itself
-/obj/item/projectile/bullet/pellet/ice
-	damage = 20
-	pellets = 4
-	range_step = 1
-	spread_step = 50
+/obj/item/projectile/bullet/ice
+	damage = 15
 	armor_penetration = 20
 	icon = 'mods/psionics/icons/psi_fd/projectiles.dmi'
 	icon_state = "ice_spikes"
 	color = "#9ee0dd"
+	muzzle_type = null
 
 /obj/structure/girder/ice_wall
 	anchored = TRUE
@@ -690,24 +688,26 @@
 	var/cryo_rank = user.psi.get_rank(PSI_METAKINESIS)
 
 	if(cooldown > 0)
-		to_chat(user, SPAN_WARNING("Ты не можешь использовать данную способность настолько часто!"))
+		to_chat(user, SPAN_WARNING("Ты не можешь делать это так часто!"))
 		return
 
 	if(!proximity && cryo_rank >= PSI_RANK_OPERANT && structure_attack == "ICE SPIKES")
 		var/obj/item/projectile/pew
 		var/pew_sound
-		cooldown += 2
+		cooldown += 5
 		user.visible_message(SPAN_DANGER("[user] запускает вперёд град ледяных пик!"))
-		pew = new /obj/item/projectile/bullet/pellet/ice(get_turf(user))
-		pew.name = "stack of ice spikes"
-		pew_sound = 'sound/weapons/guns/ricochet4.ogg'
-		if(istype(pew))
-			playsound(pew.loc, pew_sound, 25, 1)
-			pew.original = A
-			pew.current = A
-			pew.starting = get_turf(user)
-			pew.shot_from = user
-			pew.launch(A, user.zone_sel.selecting, (A.x-user.x), (A.y-user.y))
+		for(var/i = cryo_rank, i > 1, i--)
+			pew = new /obj/item/projectile/bullet/ice(get_turf(user))
+			pew_sound = 'sound/weapons/guns/ricochet4.ogg'
+			if(istype(pew))
+				playsound(pew.loc, pew_sound, 25, 1)
+				pew.icon_state = "ice_spikes[rand(1,4)]"
+				pew.original = A
+				pew.current = A
+				pew.starting = get_turf(user)
+				pew.shot_from = user
+				pew.launch(A, user.zone_sel.selecting, (A.x-user.x), (A.y-user.y))
+				sleep(rand(1, 5))
 
 //TURFS
 

@@ -94,10 +94,6 @@
 /area/map_template/ert/shuttle/airlock)
 "aU" = (
 /obj/structure/closet/crate,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
-/obj/item/mech_external_armor/laserproof,
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/ert/ship/hangar)
 "aW" = (
@@ -266,7 +262,9 @@
 	dir = 4;
 	id_tag = "ert_heavy_weaponry";
 	name = "Heavy Weaponry";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -675,7 +673,9 @@
 	dir = 4;
 	id_tag = "ert_esoteric";
 	name = "Esoteric Equipment";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -977,7 +977,9 @@
 	id_tag = "ert_insane_weaponry";
 	name = "Ludicrous Weaponry";
 	desc = "Behind this door lies unseen levels of destruction. Which most likely will continue to be unseen, now go to your shuttle, hurry!";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -1721,7 +1723,9 @@
 	dir = 4;
 	id_tag = "ert_blackops";
 	name = "Black Ops";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -2346,7 +2350,9 @@
 	dir = 4;
 	id_tag = "ert_nukeops";
 	name = "Self-Destruction Tools";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -5249,7 +5255,9 @@
 /obj/machinery/door/blast/shutters{
 	name = "Secure Storage";
 	id_tag = "ert_secure_storage";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /obj/floor_decal/industrial/warning/fulltile,
 /turf/simulated/floor/tiled/monotile,
@@ -6812,6 +6820,8 @@
 	dir = 4;
 	id_tag = "ert_misc";
 	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0;
 	name = "Miscellaneous"
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -8219,14 +8229,6 @@
 /obj/item/gun/projectile/pistol/m22f,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/ert/shuttle/armory)
-"Wd" = (
-/obj/structure/closet/crate,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/obj/item/mech_external_armor/buletproof,
-/turf/simulated/floor/tiled/techmaint,
-/area/map_template/ert/ship/hangar)
 "Wf" = (
 /obj/machinery/hologram/holopad/longrange/remoteship,
 /obj/floor_decal/industrial/outline,
@@ -8529,24 +8531,6 @@
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/map_template/ert/ship/officer)
-"Yk" = (
-/obj/floor_decal/industrial/warning/fulltile,
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "ert_insane_weaponry";
-	name = "Ludicrous Weaponry";
-	health_min_damage = 9999;
-	health_max = 9999999999
-	},
-/obj/machinery/door/blast/regular{
-	dir = 4;
-	id_tag = "ert_insane_weaponry";
-	name = "Ludicrous Weaponry";
-	desc = "Behind this door lies unseen levels of destruction. Which most likely will continue to be unseen, now go to your shuttle, hurry!";
-	health_flags = 0
-	},
-/turf/simulated/floor/tiled/monotile,
-/area/map_template/ert/ship/armory)
 "Yt" = (
 /obj/structure/bed/chair/padded/black{
 	dir = 1
@@ -8596,7 +8580,9 @@
 /obj/machinery/door/blast/shutters{
 	name = "Secure Storage";
 	id_tag = "ert_secure_storage";
-	health_flags = 0
+	health_flags = 0;
+	emag_proof = 1;
+	health_max = 0
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/ert/ship/armory)
@@ -11446,7 +11432,7 @@ dN
 oO
 oO
 fV
-Yk
+fV
 oO
 oO
 oO
@@ -11664,7 +11650,7 @@ oe
 br
 qo
 En
-Wd
+aU
 aU
 mR
 qo

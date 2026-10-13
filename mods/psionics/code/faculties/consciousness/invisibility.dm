@@ -5,10 +5,17 @@
 	use_ranged =     TRUE
 	use_melee =      TRUE
 	min_rank =        PSI_RANK_OPERANT
-	use_description = "Выберите глаза на зелёном интенте, и затем нажмите по себе, чтобы временно сделать его невидимым для остальных."
+	use_description = "Выберите глаза на зелёном интенте, и затем нажмите по себе, чтобы временно сделать себя невидимым для остальных."
 
-/mob/living/carbon/human/attack_hand() // Увы, у мобья мало проков на атаку, поэтому инвиз будет себя проявлять только ударом кулаком
+/mob/living/carbon/human/attack_hand()
 	var/mob/living/carbon/human/user = usr
+	if(user.psi?.is_invisible)
+		animate(usr, alpha = 255, time = 3, easing = BOUNCE_EASING)
+		sleep(3)
+		animate(usr, alpha = 0, time = 5, easing = EASE_IN | BOUNCE_EASING)
+	. = ..()
+
+/mob/living/carbon/human/use_weapon(obj/item/weapon, mob/living/user, list/click_params)
 	if(user.psi?.is_invisible)
 		animate(usr, alpha = 255, time = 3, easing = BOUNCE_EASING)
 		sleep(3)
@@ -40,6 +47,9 @@
 	user.visible_message(SPAN_WARNING("[user] внезапно проявляется!"))
 	animate(user, alpha = 255, time = 3 SECONDS, easing = EASE_IN | BOUNCE_EASING)
 	is_invisible = FALSE
+	sleep(5)
+	if(!is_invisible)
+		animate(user, alpha = 255, time = 0.5, easing = EASE_IN | BOUNCE_EASING)
 
 /singleton/psionic_power/consciousness/invis/invoke(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)

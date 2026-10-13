@@ -10,6 +10,9 @@
 /datum/category_item/player_setup_item/background/records
 	name = "Records"
 	sort_order = 3
+	// [SIERRA-ADD] - CHARACTER_PERSIST
+	var/show_persist_med_record = FALSE
+	// [/SIERRA-ADD]
 
 /datum/category_item/player_setup_item/background/records/load_character(datum/pref_record_reader/R)
 	pref.public_record = R.read("public_record")
@@ -56,7 +59,17 @@
 	// . += TBTN("set_email_pass", pref.email_pass ? pref.email_pass : "(random)", "Email Password") // SIERRA-EDIT - ORIGINAL
 	else
 		.+= TBTN("set_public_record", TextPreview(pref.public_record, 40), "Публичные записи")
-		.+= TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения")
+		// [SIERRA-EDIT] - CHARACTER_PERSIST
+		// .+= TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения") // SIERRA-EDIT - ORIGINAL
+		var/med_line = TBTN("set_medical_records", TextPreview(pref.med_record, 40), "Записи здравоохранения")
+		if (pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
+			med_line += " <a href='?src=\ref[src];toggle_persist_med_record=1'>[show_persist_med_record ? "Скрыть" : "Расширить"]</a>"
+		.+= med_line
+		if (show_persist_med_record && pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
+			var/live_med = html_encode(character_persist_pencode_to_text(pref.character_persist_snapshot["med_record"]))
+			live_med = replacetext(live_med, "\n", "<br>")
+			.+= "<div style='margin-left:1em;max-width:42em'><i>Снимок записи здравоохранения:</i><br>[live_med]</div>"
+		// [/SIERRA-EDIT]
 		.+= TBTN("set_general_records", TextPreview(pref.gen_record, 40), "Записи трудоустройства")
 		.+= TBTN("set_security_records", TextPreview(pref.sec_record, 40), "Записи защиты активов")
 		.+= TBTN("set_memory", TextPreview(pref.memory, 40), "Воспоминания")
@@ -80,7 +93,18 @@
 			pref.public_record = new_public
 		return TOPIC_REFRESH
 
+	else if (href_list["toggle_persist_med_record"])
+		// [SIERRA-ADD] - CHARACTER_PERSIST
+		show_persist_med_record = !show_persist_med_record
+		return TOPIC_REFRESH
+		// [/SIERRA-ADD]
+
 	else if(href_list["set_medical_records"])
+		// [SIERRA-ADD] - CHARACTER_PERSIST
+		if(pref.character_persist_med_locked())
+			to_chat(user, SPAN_WARNING("Медицинские записи заблокированы: у персонажа есть сохранённое состояние. Живая запись переносится и дополняется автоматически. Откройте снимок рядом с полем, отключите автозаполнение мед. записей или отключите персистентность, чтобы снова править исходный текст."))
+			return TOPIC_NOACTION
+		// [/SIERRA-ADD]
 		// [SIERRA-EDIT] - EXPANDED_CULTURE_DESCRIPTOR - Перевод
 		// var/new_medical = sanitize(input(user,"Enter medical information here.",CHARACTER_PREFERENCE_INPUT_TITLE, html_decode(pref.med_record)) as message|null, MAX_PAPER_MESSAGE_LEN, extra = 0) // SIERRA-EDIT - ORIGINAL
 		var/new_medical = sanitize(input(user,"Введите записи о персонаже для отдела здравоохранения.",CHARACTER_PREFERENCE_INPUT_TITLE, html_decode(pref.med_record)) as message|null, MAX_PAPER_MESSAGE_LEN, extra = 0)

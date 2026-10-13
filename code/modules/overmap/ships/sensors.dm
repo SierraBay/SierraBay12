@@ -19,6 +19,7 @@
 	base_type = /obj/machinery/shipsensors
 	maximum_component_parts = list(/obj/item/stock_parts = 10) // Circuit, 5 manipulators, 3 subspace shit and 1 tesla coil
 
+	uncreated_component_parts = null	//[SIERRA-ADD]
 
 /obj/machinery/shipsensors/upgraded
 	uncreated_component_parts = list(/obj/item/stock_parts/manipulator/nano = 2)

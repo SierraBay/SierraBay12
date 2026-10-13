@@ -59,6 +59,7 @@
 	if(length(turfs))
 		return pick(turfs)
 
+/*[SIERRA-REMOVE]
 /proc/screen_loc2turf(text, turf/origin)
 	RETURN_TYPE(/turf)
 	if(!origin)
@@ -72,6 +73,33 @@
 	tX = max(1, min(origin.x + 7 - tX, world.maxx))
 	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
+*///[SIERRA-REMOVE]
+//[SIERRA-ADD]
+// Mouse params use "tile_x:pixel_x,tile_y:pixel_y" from the bottom-left of the map.
+/proc/screen_params_turf(screen_loc, turf/origin, client/viewer)
+	RETURN_TYPE(/turf)
+	if(!origin || !screen_loc)
+		return null
+	var/list/parts = splittext(screen_loc, ",")
+	if(length(parts) < 2)
+		return null
+	var/list/x_parts = splittext(parts[1], ":")
+	var/list/y_parts = splittext(parts[2], ":")
+	var/tile_x = text2num(x_parts[1])
+	var/tile_y = text2num(y_parts[1])
+	if(isnull(tile_x) || isnull(tile_y))
+		return null
+	if(!viewer)
+		viewer = usr?.client
+	var/view = viewer?.view
+	if(!view)
+		view = world.view
+	var/x_radius = round((get_view_size_x(view) - 1) / 2)
+	var/y_radius = round((get_view_size_y(view) - 1) / 2)
+	var/tX = max(1, min(origin.x + (tile_x - 1) - x_radius, world.maxx))
+	var/tY = max(1, min(origin.y + (tile_y - 1) - y_radius, world.maxy))
+	return locate(tX, tY, origin.z)
+//[/SIERRA-ADD]
 
 /*
 	Predicate helpers
@@ -162,18 +190,23 @@
 			transport_turf_contents(source, target)
 	//change the old turfs
 	for(var/turf/source in translation)
-//[SIERRA-EDIT] Advanced Landing
+		// [SIERRA-EDIT] - ADVANCED_LANDING - (Restore what the shuttle covered, not the map's base turf)
+		// source.ChangeTurf(base_turf || get_base_turf_by_area(source)) // SIERRA-EDIT - ORIGINAL
 		var/old_turf = source.prev_type || base_turf || get_base_turf_by_area(source)
 		source.ChangeTurf(old_turf)
-//[/SIERRA-EDIT] Advanced Landing
+		// [/SIERRA-EDIT]
 
 //Transports a turf from a source turf to a target turf, moving all of the turf's contents and making the target a copy of the source.
 /proc/transport_turf_contents(turf/source, turf/target)
 	RETURN_TYPE(/turf)
-	var/target_type = target.type //[/SIERRA-ADD] Advanced Landing
+	// [SIERRA-ADD] - ADVANCED_LANDING - (Remember what was here so the shuttle can put it back)
+	var/target_type = target.type
+	// [/SIERRA-ADD]
 	var/turf/new_turf = target.ChangeTurf(source.type, 1, 1)
 	new_turf.transport_properties_from(source)
-	new_turf.prev_type = target_type //[/SIERRA-ADD] Advanced Landing
+	// [SIERRA-ADD] - ADVANCED_LANDING
+	new_turf.prev_type = target_type
+	// [/SIERRA-ADD]
 	for(var/obj/O in source)
 		if (QDELETED(O))
 			testing("Failed to translate [O] to new turf as it was qdel'd.")

@@ -26,7 +26,6 @@
 #include "code/ert_maint_helmet.dm"
 #include "code/tag_recipe.dm"
 #include "code/dodge_animation.dm"
-#include "code/shuttles/advanced_landing.dm"
 #include "code/shuttles/pods_landing.dm"
 #include "code/languages.dm"
 #include "code/chemistry.dm"
@@ -67,4 +66,5 @@
 #include "code/coat_rack/can_be_added.dm"
 #include "code/coat_rack/coat_rack.dm"
 #include "code/coat_rack/removing.dm"
+#include "code/trash_casings_scatter.dm"
 #endif
