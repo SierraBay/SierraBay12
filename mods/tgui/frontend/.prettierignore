@@ -1,4 +1,5 @@
 # Ignore built packages:
 public
+.yarn/sdks
 **.cjs
 packages/tgui-dev-server

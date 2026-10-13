@@ -1,7 +1,8 @@
 import Juke from '../juke/index.js';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const frontend = path.resolve('mods/tgui/frontend');
+const frontend = fileURLToPath(new URL('../../../mods/tgui/frontend/', import.meta.url));
 const yarnPath = path.join(frontend, '.yarn/releases/yarn-4.0.2.cjs');
 
 export const yarn = (...args) => {
