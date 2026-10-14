@@ -1,5 +1,5 @@
 /datum/keybinding/carbon
-	category = CATEGORY_CARBON
+	category = KEYBINDING_CATEGORY_CARBON
 
 
 /datum/keybinding/carbon/can_use(client/user)
@@ -8,6 +8,7 @@
 
 /datum/keybinding/carbon/toggle_throw_mode
 	hotkey_keys = list("R", "Southwest") // PAGEDOWN
+	classic_keys = list("Southwest")
 	name = "toggle_throw_mode"
 	full_name = "Toggle Throw Mode"
 	description = "Toggle throwing the current item or not"
@@ -21,6 +22,7 @@
 
 /datum/keybinding/carbon/select_help_intent
 	hotkey_keys = list("1")
+	classic_keys = list("None")
 	name = "select_help_intent"
 	full_name = "Select Help Intent"
 	description = ""
@@ -33,6 +35,7 @@
 
 /datum/keybinding/carbon/select_disarm_intent
 	hotkey_keys = list("2")
+	classic_keys = list("None")
 	name = "select_disarm_intent"
 	full_name = "Select Disarm Intent"
 	description = ""
@@ -45,6 +48,7 @@
 
 /datum/keybinding/carbon/select_grab_intent
 	hotkey_keys = list("3")
+	classic_keys = list("None")
 	name = "select_grab_intent"
 	full_name = "Select Grab Intent"
 	description = ""
@@ -57,6 +61,7 @@
 
 /datum/keybinding/carbon/select_harm_intent
 	hotkey_keys = list("4")
+	classic_keys = list("None")
 	name = "select_harm_intent"
 	full_name = "Select Harm Intent"
 	description = ""
@@ -69,6 +74,7 @@
 
 /datum/keybinding/carbon/swap_hands
 	hotkey_keys = list("X", "Northeast") // PAGEUP
+	classic_keys = list("Northeast")
 	name = "swap_hands"
 	full_name = "Swap Hands"
 	description = ""

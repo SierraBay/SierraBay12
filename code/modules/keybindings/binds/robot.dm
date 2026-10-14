@@ -1,5 +1,5 @@
 /datum/keybinding/robot
-	category = CATEGORY_ROBOT
+	category = KEYBINDING_CATEGORY_ROBOT
 
 
 /datum/keybinding/robot/can_use(client/user)
@@ -8,6 +8,7 @@
 
 /datum/keybinding/robot/moduleone
 	hotkey_keys = list("1")
+	classic_keys = list("None")
 	name = "module_one"
 	full_name = "Toggle Module 1"
 	description = "Equips or unequips the first module"
@@ -21,6 +22,7 @@
 
 /datum/keybinding/robot/moduletwo
 	hotkey_keys = list("2")
+	classic_keys = list("None")
 	name = "module_two"
 	full_name = "Toggle Module 2"
 	description = "Equips or unequips the second module"
@@ -34,6 +36,7 @@
 
 /datum/keybinding/robot/modulethree
 	hotkey_keys = list("3")
+	classic_keys = list("None")
 	name = "module_three"
 	full_name = "Toggle Module 3"
 	description = "Equips or unequips the third module"
@@ -47,6 +50,7 @@
 
 /datum/keybinding/robot/intent_cycle
 	hotkey_keys = list("4")
+	classic_keys = list("None")
 	name = "cycle_intent"
 	full_name = "Cycle Intent Left"
 	description = "Cycles the intent left"
@@ -60,6 +64,7 @@
 
 /datum/keybinding/robot/module_cycle
 	hotkey_keys = list("X")
+	classic_keys = list("None")
 	name = "cycle_modules"
 	full_name = "Cycle Modules"
 	description = "Cycles your modules"
@@ -73,6 +78,7 @@
 
 /datum/keybinding/robot/unequip_module
 	hotkey_keys = list("Q")
+	classic_keys = list("None")
 	name = "unequip_module"
 	full_name = "Unequip Module"
 	description = "Unequips the active module"

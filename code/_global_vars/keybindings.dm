@@ -1,3 +1,7 @@
+var/global/list/hotkey_keybinding_list_by_key = list()
+var/global/list/hotkey_keybinding_list_by_key_focused = list()
+var/global/list/keybindings_by_name = list()
+
 /// This is a mapping from JS keys to Byond - ref: https://keycode.info/
 var/global/list/_kbMap = list(
 	"UP" = "North",
@@ -13,7 +17,10 @@ var/global/list/_kbMap = list(
 	"SPACEBAR" = "Space",
 	"ALT" = "Alt",
 	"SHIFT" = "Shift",
-	"CONTROL" = "Ctrl"
+	"CONTROL" = "Ctrl",
+	"ENTER" = "Return",
+	"TAB" = "Tab",
+	"BACKSPACE" = "Back"
 )
 
 /// Without alt, shift, ctrl and etc because its not necessary

@@ -1,23 +1,75 @@
-/datum/preferences
-	/// Custom Keybindings
-	var/list/key_bindings = list()
-	var/hotkeys = TRUE
-
-
-
 /datum/category_group/player_setup_category/controls
 	name = "Controls"
 	sort_order = 9
 	category_item_type = /datum/category_item/player_setup_item/controls
 
-/datum/category_group/player_setup_category/psionics_preferences
-	name = "Psionics"
-	sort_order = 10
-	category_item_type = /datum/category_item/player_setup_item/psionics
+
+/datum/category_group/player_setup_category/controls/content(mob/user)
+	. = ""
+	for(var/datum/category_item/player_setup_item/item as anything in items)
+		. += "[item.content(user)]<br>"
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode
+	name = "Hotkey Mode"
+	sort_order = 1
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode/load_preferences(datum/pref_record_reader/R)
+	pref.hotkeys = R.read("hotkey_mode")
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode/save_preferences(datum/pref_record_writer/W)
+	W.write("hotkey_mode", pref.hotkeys)
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode/sanitize_preferences()
+	pref.hotkeys = sanitize_bool(pref.hotkeys, TRUE)
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode/content(mob/user)
+	return "<center><b>Hotkey Mode:</b> <a href='?src=\ref[src];toggle_hotkeys=1'>[pref.hotkeys ? "Hotkeys" : "Focus Chat"]</a></center>"
+
+
+/datum/category_item/player_setup_item/controls/hotkey_mode/OnTopic(href, list/href_list, mob/user)
+	if(href_list["toggle_hotkeys"])
+		pref.hotkeys = !pref.hotkeys
+		user.client.set_macros()
+		return TOPIC_REFRESH
+	return ..()
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag
+	name = "Masked Hotkey Warning"
+	sort_order = 2
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag/load_preferences(datum/pref_record_reader/R)
+	pref.focus_chat_hotkey_nag = R.read("focus_chat_hotkey_nag")
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag/save_preferences(datum/pref_record_writer/W)
+	W.write("focus_chat_hotkey_nag", pref.focus_chat_hotkey_nag)
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag/sanitize_preferences()
+	pref.focus_chat_hotkey_nag = sanitize_bool(pref.focus_chat_hotkey_nag, TRUE)
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag/content(mob/user)
+	return "<center><b>Masked Hotkey Warning:</b> <a href='?src=\ref[src];toggle_warning=1'>[pref.focus_chat_hotkey_nag ? "Enabled" : "Disabled"]</a></center>"
+
+
+/datum/category_item/player_setup_item/controls/focus_chat_hotkey_nag/OnTopic(href, list/href_list, mob/user)
+	if(href_list["toggle_warning"])
+		pref.focus_chat_hotkey_nag = !pref.focus_chat_hotkey_nag
+		return TOPIC_REFRESH
+	return ..()
+
 
 /datum/category_item/player_setup_item/controls/keybindings
 	name = "Keybindings"
-	sort_order = 1
+	sort_order = 3
 
 
 /datum/category_item/player_setup_item/controls/keybindings/load_preferences(datum/pref_record_reader/R)
@@ -179,6 +231,9 @@
 
 			if(global._kbMap[new_key])
 				new_key = global._kbMap[new_key]
+			if(!validate_keybinding(user, "[numpad][new_key]"))
+				close_browser(user, "window=capturekeypress")
+				return TOPIC_REFRESH
 
 			var/full_key
 			switch(new_key)
@@ -204,7 +259,7 @@
 			return TOPIC_REFRESH
 
 		if("keybindings_reset")
-			pref.key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key)
+			pref.key_bindings = deepCopyList(pref.get_default_keybindings())
 			user.client.set_macros()
 			return TOPIC_REFRESH
 
@@ -220,7 +275,8 @@
 					pref.key_bindings -= old_key
 
 			var/datum/keybinding/kb = global.keybindings_by_name[kb_name]
-			for(var/key in kb.hotkey_keys)
+			var/list/default_keys = pref.hotkeys ? kb.hotkey_keys : kb.classic_keys
+			for(var/key in default_keys)
 				pref.key_bindings[key] += list(kb_name)
 				pref.key_bindings[key] = sortTim(pref.key_bindings[key], GLOBAL_PROC_REF(cmp_text_asc))
 			user.client.set_macros()
@@ -229,13 +285,32 @@
 	return ..()
 
 
+/datum/category_item/player_setup_item/controls/keybindings/proc/validate_keybinding(mob/user, key)
+	if(SSinput.blacklisted_keys[key])
+		alert(user, "[key] cannot be rebound: [SSinput.blacklisted_keys[key]]", "Bind Error", "Cancel")
+		return FALSE
+	if(SSinput.warn_keys[key])
+		if(alert(user, "Binding [key]: [SSinput.warn_keys[key]]", "Bind Warning", "Cancel", "Bind Anyway") != "Bind Anyway")
+			return FALSE
+	if(!pref.hotkeys && SSinput.is_printable_key(key))
+		if(alert(user, "[key] will be ignored in Focus Chat mode.", "Bind Warning", "Cancel", "Bind Anyway") != "Bind Anyway")
+			return FALSE
+	return TRUE
+
+
 /proc/sanitize_keybindings(value)
 	var/list/base_bindings = sanitize_islist(value,list())
+	var/list/bindings = list()
 	for(var/key in base_bindings)
-		base_bindings[key] = base_bindings[key] & global.keybindings_by_name
-		if(!length(base_bindings[key]))
-			base_bindings -= key
-	return base_bindings
+		if(!istext(key) || !islist(base_bindings[key]))
+			continue
+		var/list/actions = base_bindings[key] & global.keybindings_by_name
+		if(!length(actions))
+			continue
+		// Older preferences used the mouse modifier name "shift" for sprinting.
+		var/normalized_key = global._kbMap[uppertext(key)] || key
+		bindings[normalized_key] = (bindings[normalized_key] || list()) | actions
+	return bindings
 
 /proc/sanitize_islist(value, default)
 	if(islist(value) && length(value))

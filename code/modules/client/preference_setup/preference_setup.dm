@@ -285,3 +285,10 @@ var/global/const/CHARACTER_PREFERENCE_INPUT_TITLE = "Character Preference"
 
 /datum/category_item/player_setup_item/proc/preference_species()
 	return GLOB.species_by_name[pref.species] || GLOB.species_by_name[SPECIES_HUMAN]
+
+// [SIERRA-ADD] - Psionics preference category
+/datum/category_group/player_setup_category/psionics_preferences
+	name = "Psionics"
+	sort_order = 10
+	category_item_type = /datum/category_item/player_setup_item/psionics
+// [/SIERRA-ADD]

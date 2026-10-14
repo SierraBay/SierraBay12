@@ -4,7 +4,7 @@
 	var/name
 	var/full_name
 	var/description = ""
-	var/category = CATEGORY_MISC
+	var/category = KEYBINDING_CATEGORY_MISC
 
 
 /datum/keybinding/New()

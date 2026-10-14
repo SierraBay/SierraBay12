@@ -1,4 +1,10 @@
 macro "default"
+	elem "PROTECTED-Shift"
+		name = "SHIFT"
+		command = "KeyDown Shift"
+	elem "PROTECTED-ShiftUp"
+		name = "SHIFT+UP"
+		command = "KeyUp Shift"
 
 macro "macro"
 	elem

@@ -1,5 +1,5 @@
 /datum/keybinding/admin
-	category = CATEGORY_ADMIN
+	category = KEYBINDING_CATEGORY_ADMIN
 
 
 /datum/keybinding/admin/can_use(client/user)

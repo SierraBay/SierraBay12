@@ -1,19 +1,3 @@
-// Я срал, Глист, на читаемость и отладку
-// Это уже протестировано и мы просто ждём пока на оффбей зальют эти кейбинды вонючие
-// Ну а если не зальют - так уж и быть, в коркод суну
-
-// SIERRA TODO: ПЕРЕНЕСТИ В КОР КОД ЕСЛИ ОФФЫ НЕ ЗАЛЬЮТ
-/datum/preferences/setup()
-	// give them default keybinds too
-	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key)
-
-	. = ..()
-
-	if(client)
-		client.set_macros()
-
-
-
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!client)
@@ -22,7 +6,7 @@
 	// When loading from savefile key_binding can be null
 	// This happens when player had savefile created before new kb system, but hotkeys was not saved
 	if(!length(key_bindings))
-		key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
+		key_bindings = deepCopyList(get_default_keybindings())
 
 	var/list/user_binds = list()
 	for (var/key in key_bindings)
@@ -60,3 +44,7 @@
 		var/datum/keybinding/conflicted = item
 		to_chat(client, SPAN_DANGER("[conflicted.category]: [conflicted.full_name] needs updating."))
 		LAZYADD(key_bindings["None"], conflicted.name) // set it to unbound to prevent this from opening up again in the future
+
+
+/datum/preferences/proc/get_default_keybindings()
+	return hotkeys ? global.hotkey_keybinding_list_by_key : global.hotkey_keybinding_list_by_key_focused

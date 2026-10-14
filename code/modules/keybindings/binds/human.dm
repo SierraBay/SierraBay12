@@ -1,5 +1,5 @@
 /datum/keybinding/human
-	category = CATEGORY_HUMAN
+	category = KEYBINDING_CATEGORY_HUMAN
 
 
 /datum/keybinding/human/can_use(client/user)
@@ -8,6 +8,7 @@
 
 /datum/keybinding/human/quick_equip
 	hotkey_keys = list("E")
+	classic_keys = list("None")
 	name = "quick_equip"
 	full_name = "Quick Equip"
 	description = "Quickly puts an item in the best slot available"
@@ -21,6 +22,7 @@
 
 /datum/keybinding/human/holster
 	hotkey_keys = list("H")
+	classic_keys = list("None")
 	name = "holster"
 	full_name = "Holster"
 	description = "Draw or holster weapon"
@@ -75,6 +77,7 @@
 
 /datum/keybinding/human/look_up
 	hotkey_keys = list("Ctrl,", "Ctrl=")
+	classic_keys = list("None")
 	name = "look_up"
 	full_name = "Look up"
 	description = "You look up"
@@ -87,6 +90,7 @@
 
 /datum/keybinding/human/look_down
 	hotkey_keys = list("Ctrl.", "Ctrl-")
+	classic_keys = list("None")
 	name = "look_down"
 	full_name = "Look down"
 	description = "You look down"

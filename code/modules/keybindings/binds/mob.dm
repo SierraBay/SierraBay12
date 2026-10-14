@@ -1,5 +1,5 @@
 /datum/keybinding/mob
-	category = CATEGORY_HUMAN
+	category = KEYBINDING_CATEGORY_HUMAN
 
 
 /datum/keybinding/mob/can_use(client/user)
@@ -8,6 +8,7 @@
 
 /datum/keybinding/mob/cycle_intent_right
 	hotkey_keys = list("}")
+	classic_keys = list("None")
 	name = "cycle_intent_right"
 	full_name = "Сycle Intent: Right"
 	description = ""
@@ -21,6 +22,7 @@
 
 /datum/keybinding/mob/cycle_intent_left
 	hotkey_keys = list("{")
+	classic_keys = list("None")
 	name = "cycle_intent_left"
 	full_name = "Сycle Intent: Left"
 	description = ""
@@ -34,6 +36,7 @@
 
 /datum/keybinding/mob/activate_inhand
 	hotkey_keys = list("Z", "Y","Southeast") // Southeast = PAGEDOWN
+	classic_keys = list("Southeast")
 	name = "activate_inhand"
 	full_name = "Activate In-Hand"
 	description = "Uses whatever item you have inhand"
@@ -148,6 +151,7 @@
 
 /datum/keybinding/mob/move_up
 	hotkey_keys = list(",", "=")
+	classic_keys = list("None")
 	name = "move_up"
 	full_name = "Move Up"
 	description = "Makes you go up"
@@ -160,6 +164,7 @@
 
 /datum/keybinding/mob/move_down
 	hotkey_keys = list(".", "-")
+	classic_keys = list("None")
 	name = "move_down"
 	full_name = "Move Down"
 	description = "Makes you go down"
@@ -172,6 +177,7 @@
 
 /datum/keybinding/mob/toggle_gun_mode
 	hotkey_keys = list("J")
+	classic_keys = list("None")
 	name = "toggle_gun_mode"
 	full_name = "Toggle Gun Mode"
 
@@ -182,6 +188,7 @@
 
 /datum/keybinding/mob/activate_world_object
 	hotkey_keys = list("CtrlF", "CtrlG")
+	classic_keys = list("None")
 	name = "activate_object_in_world"
 	full_name = "Activate Object In World"
 
@@ -197,6 +204,7 @@
 
 /datum/keybinding/mob/stop_pulling
 	hotkey_keys = list("C", "Delete")
+	classic_keys = list("Delete")
 	name = "stop_pulling"
 	full_name = "Stop Pulling"
 	description = "Let go of the object and stop pulling"

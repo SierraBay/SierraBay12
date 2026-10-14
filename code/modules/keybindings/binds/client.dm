@@ -1,5 +1,5 @@
 /datum/keybinding/client
-	category = CATEGORY_CLIENT
+	category = KEYBINDING_CATEGORY_CLIENT
 
 
 /datum/keybinding/client/admin_help
