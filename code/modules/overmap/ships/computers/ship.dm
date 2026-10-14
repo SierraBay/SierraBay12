@@ -53,6 +53,9 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 		user.reset_view(linked)
 	if(user.client)
 		user.client.view = world.view + extra_view
+		//[SIERRA-ADD]
+		user.client.update_click_catcher()
+		//[/SIERRA-ADD]
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.reveal_contacts(user)
@@ -67,6 +70,9 @@ somewhere on that shuttle. Subtypes of these can be then used to perform ship ov
 	user.reset_view(null, FALSE)
 	if(user.client)
 		user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+		//[SIERRA-ADD]
+		user.client.update_click_catcher()
+		//[/SIERRA-ADD]
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.hide_contacts(user)

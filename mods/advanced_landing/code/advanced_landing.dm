@@ -126,9 +126,11 @@
 	var/extra_view = 4
 	switch(alert("Set view scale", "Set view scale", "Normal", "Big"))
 		if("Normal")
-			return usr.client.view = usr.get_preference_value(/datum/client_preference/client_view)
+			usr.client.view = usr.get_preference_value(/datum/client_preference/client_view)
 		if("Big")
-			return user.client.view = world.view + extra_view
+			user.client.view = world.view + extra_view
+	if(user.client)
+		user.client.update_click_catcher()
 
 
 //______________________________________________________________
@@ -268,6 +270,7 @@
 	if(eyeobj.type == /mob/observer/eye/landeye)
 		eyeobj.release(src)
 	usr.client.view = usr.get_preference_value(/datum/client_preference/client_view)
+	usr.client.update_click_catcher()
 
 /mob/living/proc/cancel_landeye_view()
 	set name = "Cancel View"

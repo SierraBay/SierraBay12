@@ -1,8 +1,10 @@
 /mob/living
 	/// If TRUE, the mob faces the atom under the player's mouse and does not turn while walking.
 	var/combat_mode = FALSE
-	/// Last map atom, or click catcher, the mouse hovered while combat mode was on.
+	/// Last map atom the mouse hovered while combat mode was on.
 	var/atom/combat_look_target
+	/// Last mouse position on the map, used when the tile under the cursor is not sent to the client.
+	var/combat_look_screen_loc
 
 /mob/living/verb/toggle_combat_mode()
 	set name = "Toggle Combat Mode"
@@ -30,6 +32,7 @@
 	else
 		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		combat_look_target = null
+		combat_look_screen_loc = null
 		facing_dir = null
 		face_dir_click = null
 		combat_update_neck_grabs(TRUE)
@@ -39,7 +42,7 @@
 	SIGNAL_HANDLER
 	combat_face_mouse(combat_look_target)
 
-/mob/living/proc/combat_face_mouse(atom/A)
+/mob/living/proc/combat_face_mouse(atom/A, params)
 	if(!combat_mode)
 		return
 	if(!canface() || lying)
@@ -50,38 +53,36 @@
 			face_dir_click = null
 		return
 
-	// Tiles the mob cannot see are not sent to the client. The mouse hits a click catcher there instead.
+	// Unseen tiles are not sent to the client. The catcher on that screen tile still is.
 	if(istype(A, /obj/screen/click_catcher))
-		combat_look_target = A
-	else if(istype(A, /obj/screen))
-		A = null
-	else if(A && (!A.x || !A.y || A.z != z))
-		A = get_turf(A)
-
-	if(A && A.x && A.y && !istype(A, /obj/screen/click_catcher))
-		combat_look_target = A
-	if(QDELETED(combat_look_target))
-		combat_look_target = null
-		return
+		var/obj/screen/click_catcher/catcher = A
+		if(catcher.catcher_x && catcher.catcher_y)
+			combat_look_screen_loc = "[catcher.catcher_x],[catcher.catcher_y]"
+	else if(params)
+		var/list/modifiers = params2list(params)
+		if(modifiers[MOUSE_SCREEN_LOC])
+			combat_look_screen_loc = modifiers[MOUSE_SCREEN_LOC]
+	if(A && !istype(A, /obj/screen))
+		if(!A.x || !A.y || A.z != z)
+			A = get_turf(A)
+		if(A && A.x && A.y)
+			combat_look_target = A
 
 	var/atom/target
-	if(istype(combat_look_target, /obj/screen/click_catcher))
-		target = combat_turf_under_catcher(combat_look_target)
+	if(combat_look_screen_loc && client)
+		var/turf/origin = get_turf(src)
+		var/turf/eye_turf = get_turf(client.eye)
+		if(eye_turf && eye_turf.z == z)
+			origin = eye_turf
+		target = screen_params_turf(combat_look_screen_loc, origin, client)
 	else
 		target = combat_look_target
 	if(!target || !target.x || !target.y || !x || !y)
 		return
 
-	var/dx = target.x - x
-	var/dy = target.y - y
-	if(!dx && !dy)
+	var/direction = get_dir(src, target)
+	if(!direction)
 		return
-
-	var/direction
-	if(abs(dx) < abs(dy))
-		direction = dy > 0 ? NORTH : SOUTH
-	else
-		direction = dx > 0 ? EAST : WEST
 
 	facing_dir = direction
 	face_dir_click = direction
@@ -89,27 +90,18 @@
 		set_dir(direction)
 	combat_update_neck_grabs()
 
-/mob/living/proc/combat_turf_under_catcher(obj/screen/click_catcher/catcher)
-	if(!client || !catcher)
-		return null
-	var/turf/origin = get_turf(src)
-	var/turf/eye_turf = get_turf(client.eye)
-	if(eye_turf && eye_turf.z == z)
-		origin = eye_turf
-	return screen_loc2turf(catcher.screen_loc, origin, client)
+// Each unseen tile is its own catcher, so entering it updates facing.
+/obj/screen/click_catcher/MouseMove(location, control, params)
+	..()
 
-// Core catchers cover 15x15. Widen the grid to the 19-wide client view.
-/hook/startup/proc/combat_extend_click_catchers()
-	for(var/i in 0 to 14)
-		for(var/j in 15 to 18)
-			var/obj/screen/click_catcher/catcher = new
-			catcher.screen_loc = "NORTH-[i],EAST-[j]"
-			GLOB.click_catchers += catcher
-	return TRUE
+/client/MouseMove(object, location, control, params)
+	var/mob/living/L = mob
+	if(istype(L) && L.combat_mode)
+		L.combat_face_mouse(object, params)
 
 /datum/click_handler/OnMouseEntered(atom/object, location, control, params)
 	hovered_atom = object
 	object.MouseEntered(location, control, params)
 	var/mob/living/L = user
 	if(istype(L) && L.combat_mode)
-		L.combat_face_mouse(object)
+		L.combat_face_mouse(object, params)

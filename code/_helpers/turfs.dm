@@ -75,24 +75,20 @@
 	return locate(tX, tY, tZ)
 *///[SIERRA-REMOVE]
 //[SIERRA-ADD]
-// Wide view is larger than 15x15, so the old fixed radius of 7 points at the wrong turf.
-/proc/screen_loc2turf(text, turf/origin, client/viewer)
+// Mouse params use "tile_x:pixel_x,tile_y:pixel_y" from the bottom-left of the map.
+/proc/screen_params_turf(screen_loc, turf/origin, client/viewer)
 	RETURN_TYPE(/turf)
-	if(!origin)
+	if(!origin || !screen_loc)
 		return null
-	var/list/parts = splittext(text, ",")
+	var/list/parts = splittext(screen_loc, ",")
 	if(length(parts) < 2)
 		return null
-	// Catchers are "NORTH-[row],EAST-[col]" from the map's northeast corner.
-	var/list/y_parts = splittext(parts[1], "-")
-	var/list/x_parts = splittext(parts[2], "-")
-	var/y_offset = length(y_parts) >= 2 ? text2num(y_parts[2]) : 0
-	var/x_offset = length(x_parts) >= 2 ? text2num(x_parts[2]) : 0
-	if(isnull(y_offset))
-		y_offset = 0
-	if(isnull(x_offset))
-		x_offset = 0
-
+	var/list/x_parts = splittext(parts[1], ":")
+	var/list/y_parts = splittext(parts[2], ":")
+	var/tile_x = text2num(x_parts[1])
+	var/tile_y = text2num(y_parts[1])
+	if(isnull(tile_x) || isnull(tile_y))
+		return null
 	if(!viewer)
 		viewer = usr?.client
 	var/view = viewer?.view
@@ -100,8 +96,8 @@
 		view = world.view
 	var/x_radius = round((get_view_size_x(view) - 1) / 2)
 	var/y_radius = round((get_view_size_y(view) - 1) / 2)
-	var/tX = max(1, min(origin.x + x_radius - x_offset, world.maxx))
-	var/tY = max(1, min(origin.y + y_radius - y_offset, world.maxy))
+	var/tX = max(1, min(origin.x + (tile_x - 1) - x_radius, world.maxx))
+	var/tY = max(1, min(origin.y + (tile_y - 1) - y_radius, world.maxy))
 	return locate(tX, tY, origin.z)
 //[/SIERRA-ADD]
 
