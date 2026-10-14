@@ -14,6 +14,7 @@
 #include "code/modules.dm"
 #include "code/module_override.dm"
 #include "code/xeno_rigs.dm"
+#include "code/industrial.dm"
 
 
 #endif
