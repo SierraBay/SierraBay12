@@ -76,7 +76,7 @@
 #include "code/credits_datums.dm"
 #include "code/credits.dm"
 #include "../_master_files/mods/client_verbs/code/credits.dm"
-#include "../_master_files/mods/ssinput/code/general/bindings_setup.dm"
+#include "code/keybindings.dm"
 #include "../_master_files/code/modules/reagents/Chemistry-Machinery.dm"
 #include "../_master_files/mods/RnD/code/machinery/autolathe.dm"
 #include "../_master_files/code/modules/client/preference_setup/general/01_basic.dm"

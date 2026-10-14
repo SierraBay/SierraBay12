@@ -96,8 +96,11 @@ const handlePassthrough = (key: KeyEvent) => {
   // Macro
   const macro = byondMacros[byondKeyCode];
   if (macro) {
-    logger.debug('macro', macro);
-    return Byond.command(macro);
+    if (key.isDown()) {
+      logger.debug('macro', macro);
+      return Byond.command(macro);
+    }
+    return;
   }
   // Key_Down
   if (key.isDown() && !keyState[byondKeyCode]) {
@@ -174,7 +177,12 @@ export const setupHotKeys = () => {
     for (let ref of Object.keys(groupedByRef)) {
       const macro = groupedByRef[ref];
       const byondKeyName = unescape(macro.name);
-      byondMacros[byondKeyName] = unescape(macro.command);
+      const command = unescape(macro.command);
+      // SSInput installs explicit KeyDown/KeyUp macros (Nebula #5446).
+      // Keep these in tracked passthrough so keyup and blur release them.
+      if (!/^key(?:Down|Up)\s/i.test(command)) {
+        byondMacros[byondKeyName] = command;
+      }
     }
     logger.debug('loaded macros', byondMacros);
   });
