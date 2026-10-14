@@ -6,6 +6,9 @@
 	name = "transfer"
 	question = "End the shift?"
 
+/datum/vote/transfer/proc/get_transfer_choice()
+	return CHOICE_TRANSFER
+
 /datum/vote/transfer/can_run(mob/creator, automatic)
 	if(!(. = ..()))
 		return
@@ -24,7 +27,7 @@
 		return FALSE
 
 /datum/vote/transfer/setup_vote(mob/creator, automatic)
-	choices = list(CHOICE_TRANSFER, CHOICE_EXTEND)
+	choices = list(get_transfer_choice(), CHOICE_EXTEND)
 	if (config.allow_extra_antags && SSvote.is_addantag_allowed(creator, automatic))
 		choices += CHOICE_ADD_ANTAG
 	..()
@@ -44,13 +47,14 @@
 			factor = 1.2
 		else
 			factor = 1.4
-	choices[CHOICE_TRANSFER] = round(choices[CHOICE_TRANSFER] * factor)
-	to_world(SPAN_COLOR("purple", "Bluespace Jump Factor: [factor]"))
+	var/transfer_choice = get_transfer_choice()
+	choices[transfer_choice] = round(choices[transfer_choice] * factor)
+	to_world(SPAN_COLOR("purple", "[transfer_choice] Factor: [factor]"))
 
 /datum/vote/transfer/report_result()
 	if(..())
 		return 1
-	if(result[1] == CHOICE_TRANSFER)
+	if(result[1] == get_transfer_choice() || result[1] == CHOICE_TRANSFER)
 		init_autotransfer()
 	else if(result[1] == CHOICE_ADD_ANTAG)
 		SSvote.queued_auto_vote = /datum/vote/add_antagonist
