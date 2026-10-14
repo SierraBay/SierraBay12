@@ -8,10 +8,14 @@
 	var/list/obstacles = list()			// Things A* will try to avoid.
 	var/astar_adjacent_proc = TYPE_PROC_REF(/turf, CardinalTurfsWithAccess) // Proc to use when A* pathfinding.  Default makes them bound to cardinals.
 	var/failed_steps = 0				// If move_once() fails to move the mob onto the correct tile, this increases. When it reaches 3, the path is recalc'd since they're probably stuck.
+	var/datum/pathfinding_request/pending_path
+	var/path_failed = FALSE
 
 // This clears the stored A* path.
 /datum/ai_holder/proc/forget_path()
 	ai_log("forget_path() : Entering.", AI_LOG_DEBUG)
+	QDEL_NULL(pending_path)
+	path_failed = FALSE
 	if (path_display)
 		for (var/turf/T in path)
 			T.CutOverlays(path_overlay)
@@ -39,20 +43,21 @@
 	ai_log("calculate_path() : Exiting.", AI_LOG_DEBUG)
 
 ///A* now, try to a path to a target
-/datum/ai_holder/proc/get_path(turf/target,get_to = 1, max_distance = world.view*6)
+/datum/ai_holder/proc/get_path(turf/target, get_to = 1, max_distance = world.view*6)
 	ai_log("get_path() : Entering.",AI_LOG_DEBUG)
+	if (pending_path && pending_path.end == target && pending_path.min_target_dist == get_to)
+		return
 	forget_path()
-	var/list/new_path = AStar(get_turf(holder.loc), target, astar_adjacent_proc, TYPE_PROC_REF(/turf, Distance), min_target_dist = get_to, max_node_depth = max_distance, id = holder.IGetID(), exclude = obstacles)
+	if (QDELETED(holder) || !target)
+		return
+	pending_path = SSpathfinding.request_path(get_turf(holder), target, new /datum/callback(src, TYPE_PROC_REF(/datum/ai_holder, path_found)), adjacent = astar_adjacent_proc, min_target_dist = get_to, max_node_depth = max_distance, id = holder.IGetID(), exclude = obstacles)
 
-	if (new_path && length(new_path))
-		path = new_path
-		ai_log("get_path() : Made new path.", AI_LOG_DEBUG)
-		if (path_display)
-			for(var/turf/T in path)
-				T.AddOverlays(path_overlay)
-	else
-		ai_log("get_path() : Failed to make new path. Exiting.", AI_LOG_DEBUG)
-		return 0
-
-	ai_log("get_path() : Exiting.", AI_LOG_DEBUG)
-	return length(path)
+/datum/ai_holder/proc/path_found(list/new_path)
+	pending_path = null
+	path_failed = !length(new_path)
+	if (path_failed || QDELETED(holder))
+		return
+	path = new_path
+	if (path_display)
+		for (var/turf/T in path)
+			T.AddOverlays(path_overlay)

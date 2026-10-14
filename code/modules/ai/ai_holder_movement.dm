@@ -115,11 +115,18 @@
 	ai_log("walk_path() : Entering.", AI_LOG_TRACE)
 
 	if (use_astar)
-		if (!length(path)) // If we're missing a path, make a new one.
+		if (pending_path)
+			if (pending_path.end == get_turf(A) && pending_path.min_target_dist == get_to)
+				return
+			forget_path()
+		if (!length(path) && !path_failed) // If we're missing a path, make a new one.
 			ai_log("walk_path() : No path. Attempting to calculate path.", AI_LOG_DEBUG)
 			calculate_path(A, get_to)
+			if (pending_path)
+				return
 
 		if (!length(path)) // If we still don't have one, then the target's probably somewhere inaccessible to us. Get as close as we can.
+			path_failed = FALSE // Retry after taking one fallback step.
 			ai_log("walk_path() : Failed to obtain path to target. Using get_step_to() instead.", AI_LOG_INFO)
 			if (holder.IMove(get_step_to(holder, A)) == MOVEMENT_FAILED)
 				if (!holder.canClick())

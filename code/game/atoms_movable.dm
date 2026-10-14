@@ -203,6 +203,7 @@
 
 
 /atom/movable/Destroy()
+	QDEL_NULL(waiting_for_path)
 	if(!(atom_flags & ATOM_FLAG_INITIALIZED))
 		crash_with("\A [src] was deleted before initalization")
 	walk(src, 0)

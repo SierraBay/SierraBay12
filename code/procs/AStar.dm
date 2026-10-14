@@ -60,47 +60,107 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return a.estimated_cost - b.estimated_cost
 
 
-/proc/AStar(start, end, adjacent, dist, max_nodes, max_node_depth = 30, min_target_dist = 0, min_node_dist, id, datum/exclude)
-	var/PriorityQueue/open = new /PriorityQueue(GLOBAL_PROC_REF(PathWeightCompare))
-	var/list/closed = list()
-	var/list/path
+// Synchronous compatibility entrypoint. Queued callers use SSpathfinding.request_path().
+/proc/AStar(start, end, adjacent, dist, max_nodes, max_node_depth = 30, min_target_dist = 0, min_node_dist, id, exclude, check_tick = FALSE)
+	var/datum/pathfinding_request/request = new(start, end, adjacent, dist, max_nodes, max_node_depth, min_target_dist, min_node_dist, id, exclude)
+	while (!request.advance())
+		if (check_tick)
+			CHECK_TICK
+	. = request.path
+	qdel(request)
+
+/datum/pathfinding_request
+	var/turf/end
+	var/adjacent
+	var/dist
+	var/max_nodes
+	var/max_node_depth
+	var/min_target_dist
+	var/min_node_dist
+	var/id
+	var/exclude
+	var/PriorityQueue/open
 	var/list/path_node_by_position = list()
-	start = get_turf(start)
-	if(!start)
-		return 0
-	open.Enqueue(new /PathNode(start, null, 0, call(start, dist)(end), 0))
-	while(!open.IsEmpty() && !path)
-		var/PathNode/current = open.Dequeue()
-		closed.Add(current.position)
-		if(current.position == end || call(current.position, dist)(end) <= min_target_dist)
-			path = new (current.nodes_traversed + 1)
-			path[length(path)] = current.position
-			var/index = length(path) - 1
-			while(current.previous_node)
-				current = current.previous_node
-				path[index--] = current.position
-			break
-		if(min_node_dist && max_node_depth)
-			if(call(current.position, min_node_dist)(end) + current.nodes_traversed >= max_node_depth)
-				continue
-		if(max_node_depth)
-			if(current.nodes_traversed >= max_node_depth)
-				continue
-		for(var/datum/datum in call(current.position, adjacent)(id))
-			if(datum == exclude)
-				continue
-			var/best_estimated_cost = current.estimated_cost + call(current.position, dist)(datum)
-			//handle removal of sub-par positions
-			if(datum in path_node_by_position)
-				var/PathNode/target = path_node_by_position[datum]
-				if(target.best_estimated_cost)
-					if(best_estimated_cost + call(datum, dist)(end) < target.best_estimated_cost)
-						open.Remove(target)
-					else
-						continue
-			var/PathNode/next_node = new (datum, current, best_estimated_cost, call(datum, dist)(end), current.nodes_traversed + 1)
-			path_node_by_position[datum] = next_node
-			open.Enqueue(next_node)
-			if(max_nodes && open.Length() > max_nodes)
-				open.Remove(open.Length())
-	return path
+	var/list/path
+	var/datum/callback/on_complete
+
+/datum/pathfinding_request/New(start, target, adjacency_call, distance_call, node_limit, depth_limit, target_distance, node_distance, access_id, excluded)
+	..()
+	end = get_turf(target)
+	adjacent = adjacency_call
+	dist = distance_call
+	max_nodes = node_limit
+	max_node_depth = depth_limit
+	min_target_dist = target_distance
+	min_node_dist = node_distance
+	id = access_id
+	exclude = excluded
+	if (islist(excluded))
+		var/list/excluded_positions = excluded
+		exclude = excluded_positions.Copy()
+	initialize_search(start)
+
+/datum/pathfinding_request/proc/initialize_search(start)
+	open = new /PriorityQueue(GLOBAL_PROC_REF(PathWeightCompare))
+	var/turf/origin = get_turf(start)
+	if (origin && end && origin.z == end.z)
+		var/PathNode/first = new(origin, null, 0, call(origin, dist)(end), 0)
+		path_node_by_position[origin] = first
+		open.Enqueue(first)
+
+/datum/pathfinding_request/Destroy()
+	SSpathfinding.pending -= src
+	SSpathfinding.processing -= src
+	QDEL_NULL(on_complete)
+	open.L.Cut()
+	QDEL_NULL(open)
+	path_node_by_position = null
+	path = null
+	end = null
+	id = null
+	exclude = null
+	return ..()
+
+// Returns TRUE when finished; one call expands at most one node.
+/datum/pathfinding_request/proc/advance()
+	if (open.IsEmpty() || QDELETED(end))
+		return TRUE
+	var/PathNode/current = open.Dequeue()
+	if (current.position == end || call(current.position, dist)(end) <= min_target_dist)
+		build_path(current)
+		return TRUE
+	if (min_node_dist && max_node_depth && call(current.position, min_node_dist)(end) + current.nodes_traversed >= max_node_depth)
+		return FALSE
+	if (max_node_depth && current.nodes_traversed >= max_node_depth)
+		return FALSE
+	for (var/datum/neighbor in call(current.position, adjacent)(id))
+		if (neighbor == exclude || (islist(exclude) && (neighbor in exclude)))
+			continue
+		add_neighbor(current, neighbor)
+	return FALSE
+
+/datum/pathfinding_request/proc/add_neighbor(PathNode/current, datum/neighbor)
+	var/known_cost = current.known_cost + call(current.position, dist)(neighbor)
+	var/estimated_cost = call(neighbor, dist)(end)
+	var/PathNode/previous = path_node_by_position[neighbor]
+	if (previous)
+		if (known_cost + estimated_cost >= previous.best_estimated_cost)
+			return
+		open.Remove(previous)
+	var/PathNode/next = new(neighbor, current, known_cost, estimated_cost, current.nodes_traversed + 1)
+	path_node_by_position[neighbor] = next
+	open.Enqueue(next)
+	if (max_nodes && open.Length() > max_nodes)
+		open.Remove(open.Get(open.Length()))
+
+/datum/pathfinding_request/proc/build_path(PathNode/current)
+	path = new/list(current.nodes_traversed + 1)
+	var/index = length(path)
+	while (current)
+		path[index--] = current.position
+		current = current.previous_node
+
+/datum/pathfinding_request/proc/complete()
+	set waitfor = FALSE
+	if (on_complete)
+		invoke(on_complete, path)

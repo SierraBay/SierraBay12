@@ -20,6 +20,7 @@
 	last_turf_overlay = new(path_icon, last_turf_icon_state)
 
 /datum/ai_holder/Destroy()
+	forget_path()
 	path_overlay = null
 	last_turf_overlay = null
 	return ..()

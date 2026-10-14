@@ -120,6 +120,7 @@ if (!(datum.process_flags & AI_FASTPROCESSING)) { \
 	..()
 
 /datum/ai_holder/Destroy()
+	forget_path()
 	holder = null
 	manage_processing(AI_NO_PROCESS)
 	home_turf = null
