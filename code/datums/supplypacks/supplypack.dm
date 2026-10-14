@@ -38,7 +38,8 @@
 		return TRUE
 	return security_state.current_security_level_is_same_or_higher_than(security_level)
 
-/singleton/hierarchy/supply_pack/proc/spawn_contents(location)
+/singleton/hierarchy/supply_pack/proc/spawn_contents(location, datum/supply_order/order)	// SIERRA-EDIT - , datum/supply_order/order) added
+
 	var/singleton/supply_method/sm = get_supply_method(supply_method)
 	return sm.spawn_contents(src, location)
 

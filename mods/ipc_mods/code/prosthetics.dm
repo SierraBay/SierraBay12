@@ -65,15 +65,18 @@
 
 	dislocated = -1
 	remove_splint()
-	update_icon(1)
 	unmutate()
 
 	slowdown = 0
 	if(company)
 		var/datum/robolimb/R = all_robolimbs[company]
-		if(!istype(R) || (species && (species.name in R.species_cannot_use)) || \
-			(species && !(species.get_bodytype(owner) in R.allowed_bodytypes)) || \
-			(length(R.applies_to_part) && !(organ_tag in R.applies_to_part)))
+		var/use_basic = !istype(R)
+		if (!use_basic && length(R.applies_to_part) && !(organ_tag in R.applies_to_part))
+			use_basic = TRUE
+		if (!use_basic && owner && species)
+			if ((species.name in R.species_cannot_use) || !(species.get_bodytype(owner) in R.allowed_bodytypes))
+				use_basic = TRUE
+		if (use_basic)
 			R = basic_robolimb
 		else
 			model = company
@@ -91,6 +94,8 @@
 		have_synth_skin = R.have_synth_skin
 		if(have_synth_skin)
 			synth_skin_health = max_damage
+
+	update_icon(1)
 
 	for(var/obj/item/organ/external/T in children)
 		T.robotize(company, 1)
