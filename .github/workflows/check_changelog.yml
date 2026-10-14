@@ -28,5 +28,5 @@ jobs:
           pip install ruamel.yaml PyGithub
       - name: Проверка чейнджлога
         env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
         run: python sierra_check_changelog.py
