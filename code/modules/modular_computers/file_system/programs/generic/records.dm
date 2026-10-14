@@ -17,23 +17,46 @@
 	var/datum/computer_file/report/crew_record/active_record
 	var/message = null
 
+/datum/nano_module/program/records/proc/get_record_access(mob/user)
+	var/list/user_access = using_access || list()
+	if(istype(user))
+		user_access = user_access.Copy()
+		user_access |= user.GetAccess()
+
+	var/obj/PC = nano_host()
+	var/datum/extension/interactive/ntos/os = get_extension(PC, /datum/extension/interactive/ntos)
+	if(os && os.emagged())
+		user_access |= access_syndicate
+
+	return augment_vessel_crew_record_access(user, user_access, nano_host())
+
+/datum/nano_module/program/records/proc/has_record_access(mob/user, access)
+	if(!access)
+		return TRUE
+	if(!islist(access))
+		access = list(access)
+	return has_access(access, get_record_access(user))
+
 /datum/nano_module/program/records/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, state = GLOB.default_state)
 	var/list/data = host.initial_data(program)
 	var/list/user_access = get_record_access(user)
+	var/list/local_records = crew_records_for_host(nano_host())
 
 	data["message"] = message
+	if(active_record)
+		if(!(active_record in local_records))
+			active_record = null
 	if(active_record)
 		send_rsc(user, active_record.photo_front, "front_[active_record.uid].png")
 		send_rsc(user, active_record.photo_side, "side_[active_record.uid].png")
 		// [/SIERRA-EDIT] CREW_RECORDS_ACCESS
-		// data["pic_edit"] = check_access(user, access_bridge) || check_access(user, access_security) // SIERRA-EDIT - ORIGINAL
-		data["pic_edit"] = check_access(user, access_employment_records) || check_access(user, access_security_records)
+		data["pic_edit"] = has_record_access(user, access_employment_records) || has_record_access(user, access_security_records)
 		// [SIERRA-EDIT]
 		data += active_record.generate_nano_data(user_access)
 	else
 		var/list/all_records = list()
 
-		for(var/datum/computer_file/report/crew_record/R in GLOB.all_crew_records)
+		for(var/datum/computer_file/report/crew_record/R in local_records)
 			all_records.Add(list(list(
 				"name" = R.get_name(),
 				"rank" = R.get_job(),
@@ -42,12 +65,9 @@
 			)))
 		data["all_records"] = all_records
 		// [/SIERRA-EDIT] CREW_RECORDS_ACCESS
-		// data["creation"] = check_access(user, access_bridge) // SIERRA-EDIT - ORIGINAL
-		// data["dnasearch"] = check_access(user, access_medical) || check_access(user, access_forensics_lockers) // SIERRA-EDIT - ORIGINAL
-		// data["fingersearch"] = check_access(user, access_security) // SIERRA-EDIT - ORIGINAL
-		data["creation"] = check_access(user, access_employment_records)
-		data["dnasearch"] = check_access(user, access_medical_records) || check_access(user, access_forensics_lockers)
-		data["fingersearch"] = check_access(user, access_security_records)
+		data["creation"] = has_record_access(user, access_employment_records) || has_record_access(user, access_bridge)
+		data["dnasearch"] = has_record_access(user, access_medical_records) || has_record_access(user, access_forensics_lockers)
+		data["fingersearch"] = has_record_access(user, access_security_records)
 		// [SIERRA-EDIT]
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -56,18 +76,6 @@
 		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
 		ui.open()
-
-
-/datum/nano_module/program/records/proc/get_record_access(mob/user)
-	var/list/user_access = using_access || user.GetAccess()
-
-	var/obj/PC = nano_host()
-	var/datum/extension/interactive/ntos/os = get_extension(PC, /datum/extension/interactive/ntos)
-	if(os && os.emagged())
-		user_access = user_access.Copy()
-		user_access |= access_syndicate
-
-	return user_access
 
 /datum/nano_module/program/records/proc/edit_field(mob/user, field_ID)
 	var/datum/computer_file/report/crew_record/R = active_record
@@ -92,16 +100,17 @@
 		return 1
 	if(href_list["set_active"])
 		var/ID = text2num(href_list["set_active"])
-		for(var/datum/computer_file/report/crew_record/R in GLOB.all_crew_records)
+		for(var/datum/computer_file/report/crew_record/R in crew_records_for_host(nano_host()))
 			if(R.uid == ID)
 				active_record = R
 				break
 		return 1
 	if(href_list["new_record"])
-		if(!check_access(usr, access_bridge))
+		if(!has_record_access(usr, access_employment_records) && !has_record_access(usr, access_bridge))
 			to_chat(usr, "Access Denied.")
 			return
 		active_record = new/datum/computer_file/report/crew_record()
+		active_record.vessel_key = get_vessel_key_for_atom(nano_host())
 		GLOB.all_crew_records.Add(active_record)
 		return 1
 	if(href_list["print_active"])
@@ -114,7 +123,7 @@
 		var/search = sanitize(input("Enter the value for search for.") as null|text)
 		if(!search)
 			return
-		for(var/datum/computer_file/report/crew_record/R in GLOB.all_crew_records)
+		for(var/datum/computer_file/report/crew_record/R in crew_records_for_host(nano_host()))
 			var/datum/report_field/field = R.field_from_name(field_name)
 			if(findtext(lowertext(field.get_value()), lowertext(search)))
 				active_record = R
@@ -126,11 +135,17 @@
 	if(!istype(R))
 		return 1
 	if(href_list["edit_photo_front"])
+		if(!has_record_access(usr, access_employment_records) && !has_record_access(usr, access_security_records))
+			to_chat(usr, "Access Denied.")
+			return
 		var/photo = get_photo(usr)
 		if(photo && active_record)
 			active_record.photo_front = photo
 		return 1
 	if(href_list["edit_photo_side"])
+		if(!has_record_access(usr, access_employment_records) && !has_record_access(usr, access_security_records))
+			to_chat(usr, "Access Denied.")
+			return
 		var/photo = get_photo(usr)
 		if(photo && active_record)
 			active_record.photo_side = photo

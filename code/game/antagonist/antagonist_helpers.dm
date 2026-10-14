@@ -8,7 +8,7 @@
 		if(jobban_isbanned(player.current, id))
 			return "Player is banned from this antagonist role."
 
-	if(is_type_in_list(player.assigned_job, blacklisted_jobs) && !isghostmind(player))
+	if(is_job_blacklisted(player.assigned_job) && !isghostmind(player))
 		return "Player's assigned job ([player.assigned_job]) is blacklisted from this antagonist role."
 
 	if(!ignore_role)
@@ -21,6 +21,19 @@
 			return "Player's assigned job ([player.assigned_job]) is restricted from this antagonist role."
 		if(player.current && (player.current.status_flags & NO_ANTAG) && !isghostmind(player))
 			return "Player's mob has the NO_ANTAG flag set."
+	return FALSE
+
+/// TRUE if this job type is blocked from this antagonist role.
+/datum/antagonist/proc/is_job_blacklisted(datum/job/job)
+	if(!job || !is_type_in_list(job, blacklisted_jobs))
+		return FALSE
+	// Lobby-host main vessel crew are /datum/job/submap; allow selected station antags for them.
+	if(allows_main_ship_submap_crew() && GLOB.using_map.ship_vote_enabled && istype(job, /datum/job/submap))
+		return FALSE
+	return TRUE
+
+/// When TRUE, /datum/job/submap is ignored in blacklisted_jobs on ship-vote maps.
+/datum/antagonist/proc/allows_main_ship_submap_crew()
 	return FALSE
 
 /// Checks if the given player is able to become an antagonist or not. Simplified version of `can_become_antag_detailed()`.

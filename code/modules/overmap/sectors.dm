@@ -51,11 +51,17 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 		var/map_high = GLOB.using_map.overmap_size - OVERMAP_EDGE
 		var/turf/home
 		if (place_near_main)
-			var/obj/overmap/visitable/main = map_sectors["1"]
-			if (islist(place_near_main))
-				place_near_main = Roundm(frand(place_near_main[1], place_near_main[2]), 0.1)
-			home = CircularRandomTurfAround(main, abs(place_near_main), map_low, map_low, map_high, map_high)
-			log_debug("place_near_main moving [src] near [main] ([main.x],[main.y]) with radius [place_near_main], got ([home.x],[home.y])")
+			var/obj/overmap/visitable/main = get_overmap_main_sector()
+			if (main)
+				if (islist(place_near_main))
+					place_near_main = Roundm(frand(place_near_main[1], place_near_main[2]), 0.1)
+				home = CircularRandomTurfAround(main, abs(place_near_main), map_low, map_low, map_high, map_high)
+				log_debug("place_near_main moving [src] near [main] ([main.x],[main.y]) with radius [place_near_main], got ([home?.x],[home?.y])")
+			else
+				start_x = start_x || rand(map_low, map_high)
+				start_y = start_y || rand(map_low, map_high)
+				home = locate(start_x, start_y, GLOB.using_map.overmap_z)
+				log_debug("place_near_main: no main sector yet; placing [src] randomly at ([home?.x],[home?.y])")
 		else
 			start_x = start_x || rand(map_low, map_high)
 			start_y = start_y || rand(map_low, map_high)
@@ -185,6 +191,18 @@ GLOBAL_LIST_EMPTY(known_overmap_sectors)
 // Because of the way these are spawned, they will potentially have their invisibility adjusted by the turfs they are mapped on
 // prior to being moved to the overmap. This blocks that. Use set_invisibility to adjust invisibility as needed instead.
 /obj/overmap/visitable/sector/hide()
+
+/// Main vessel overmap sector. On classic maps this is z1; on lobby_host it is the voted ship's first station z.
+/proc/get_overmap_main_sector()
+	RETURN_TYPE(/obj/overmap/visitable)
+	var/obj/overmap/visitable/main = map_sectors["1"]
+	if (main)
+		return main
+	for (var/z_level in GLOB.using_map.station_levels)
+		main = map_sectors["[z_level]"]
+		if (main)
+			return main
+	return null
 
 /proc/build_overmap()
 	if(!GLOB.using_map.use_overmap)

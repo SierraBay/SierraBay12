@@ -1,3 +1,10 @@
+// Base /obj/item/passport/xeno is defined by mods/resomi (always loaded with Sierra/lobby_host).
+/obj/item/passport/xeno/unathi
+	name = "\improper Unathi registration document"
+	icon = 'maps/sierra/icons/obj/passports.dmi'
+	icon_state = "passport"
+	desc = "Passport, belongs to Unathi species."
+
 /obj/item/passport/independent/avalon
 	icon_state = "passport"
 	desc = "A passport from the Star Kingdom of Avalon, an independent nation established upon Claude III."

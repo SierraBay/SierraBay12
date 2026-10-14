@@ -17,6 +17,11 @@
 
 	var/list/votes = list()        // Format is list(ckey = list(a, b, ...)); a, b, ... are ordered by order of preference and are numbers, referring to the index in choices
 
+	/// When TRUE, admins see A-VOTE; if any A-VOTE is cast, player votes are ignored at tally.
+	var/admin_priority_voting = FALSE
+	/// Admin priority votes: list(ckey = list(choice_index, ...)) same preference format as votes.
+	var/list/list/admin_votes = list()
+
 	var/win_x = 450
 	var/win_y = 740                // Vote window size.
 
@@ -64,6 +69,10 @@
 		return length(GLOB.clients) - length(votes) //Number of non-voters (might not be active, though; should be revisited if the config option is used. This is legacy code.)
 
 /datum/vote/proc/tally_result()
+	if(admin_priority_voting && length(admin_votes))
+		tally_admin_priority_result()
+		return
+
 	handle_default_votes()
 
 	result = list()
@@ -85,12 +94,41 @@
 				var/loser = remaining_choices[length(remaining_choices)]
 				remove_candidate(remaining_choices, remaining_votes, loser)
 
+/// IRV tally using only admin_votes; player votes are discarded.
+/datum/vote/proc/tally_admin_priority_result()
+	for(var/choice in choices)
+		choices[choice] = 0
+	for(var/ckey in admin_votes)
+		if(length(admin_votes[ckey]))
+			var/first = admin_votes[ckey][1]
+			choices[choices[first]] += 1
+
+	result = list()
+	var/list/remaining_choices = choices.Copy()
+	var/list/remaining_votes = list()
+	for(var/ckey in admin_votes)
+		remaining_votes[ckey] = admin_votes[ckey].Copy()
+
+	while(length(result) < result_length)
+		remaining_choices = shuffle(remaining_choices)
+		sortTim(remaining_choices, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
+		if(!length(remaining_votes) || !length(remaining_choices))
+			result += remaining_choices.Copy(1, clamp(result_length - length(result) + 1, 0, length(remaining_choices) + 1))
+			break
+		else if(remaining_choices[remaining_choices[1]] > length(remaining_votes) / 2 || length(remaining_choices) <= result_length - length(result))
+			var/winner = remaining_choices[1]
+			result[winner] = remaining_choices[remaining_choices[1]]
+			remove_candidate(remaining_choices, remaining_votes, winner)
+		else
+			var/loser = remaining_choices[length(remaining_choices)]
+			remove_candidate(remaining_choices, remaining_votes, loser)
+
 // Remove candidate from choice_list and any votes for it from vote_list, transfering first choices to second
 /datum/vote/proc/remove_candidate(list/choice_list, list/vote_list, candidate)
 	var/candidate_index = choices.Find(candidate) // use choices instead of choice_list because we need the original indexing
 	choice_list -= candidate
 	for(var/ckey in vote_list)
-		if(length(votes[ckey]) && vote_list[ckey][1] == candidate_index && length(vote_list[ckey]) > 1)
+		if(length(vote_list[ckey]) && vote_list[ckey][1] == candidate_index && length(vote_list[ckey]) > 1)
 			var/new_first_choice = choices[vote_list[ckey][2]]
 			choice_list[new_first_choice] += 1
 		vote_list[ckey] -= candidate_index
@@ -128,6 +166,9 @@
 				runner_ups += display_choices[runner_up]
 			text += english_list(runner_ups)
 
+	if(admin_priority_voting && length(admin_votes))
+		text.Insert(1, "<b>Admin priority vote ([length(admin_votes)] A-VOTE[length(admin_votes) == 1 ? "" : "s"]) — player votes ignored.</b>\n")
+
 	return JOINTEXT(text)
 
 /datum/vote/proc/get_vote_statistics()
@@ -138,6 +179,13 @@
 	for(var/R in result)
 		if (result[R] > 0)
 			text += "\n[R]: [result[R]]"
+	if(admin_priority_voting && length(admin_votes))
+		text += "\n\n<b>Admin A-VOTEs ([length(admin_votes)]):</b>"
+		for(var/ckey in admin_votes)
+			var/list/order_labels = list()
+			for(var/idx in admin_votes[ckey])
+				order_labels += display_choices[choices[idx]]
+			text += "\n[ckey]: [english_list(order_labels)]"
 	return JOINTEXT(text)
 
 
@@ -214,7 +262,9 @@
 
 		. += "<tr><td><a href='byond://?src=\ref[src];choice=[i]'[voted_for ? " style='font-weight: bold'" : ""]>"
 		. += "[display_choices[choice]]"
-		. += "</a></td>"
+		. += "</a>"
+		. += interface_choice_buttons(user, i)
+		. += "</td>"
 
 		. += "<td style='text-align: center;'>"
 		if(voted_for)
@@ -226,10 +276,38 @@
 			. += "[additional_text[choice]]" //Note lack of cell wrapper, to allow for dynamic formatting.
 		. += "</tr>"
 	. += "</table><hr>"
+	. += interface_footer(user)
+
+/// Extra controls after the choice name (e.g. admin A-VOTE).
+/datum/vote/proc/interface_choice_buttons(mob/user, choice_index)
+	if(!admin_priority_voting)
+		return ""
+	if(!user?.client || !check_rights(R_ADMIN, FALSE, user.client))
+		return ""
+	var/admin_voted = admin_votes[user.ckey] && (choice_index in admin_votes[user.ckey])
+	var/label = admin_voted ? "A-VOTE ✓" : "A-VOTE"
+	var/style = admin_voted ? " style='font-weight: bold; color: #cc5555;'" : " style='color: #aa4444;'"
+	return " <a href='byond://?src=\ref[src];admin_choice=[choice_index]'[style] title='Admin priority vote. If any A-VOTE is cast, player votes are ignored.'>[label]</a>"
+
+/datum/vote/proc/interface_footer(mob/user)
+	if(!admin_priority_voting || !length(admin_votes))
+		return ""
+	. = "<b>Admin priority votes active ([length(admin_votes)]):</b> player votes will be ignored.<br>"
+	if(user?.client && check_rights(R_ADMIN, FALSE, user.client) && admin_votes[user.ckey])
+		. += "Your A-VOTE order: "
+		var/list/order_labels = list()
+		for(var/idx in admin_votes[user.ckey])
+			order_labels += display_choices[choices[idx]]
+		. += english_list(order_labels)
+		. += "<br>"
 
 /datum/vote/Topic(href, href_list, hsrc)
 	var/mob/user = usr
 	if(!istype(user) || !user.client)
+		return
+
+	if(href_list["admin_choice"])
+		handle_admin_choice(user, text2num(href_list["admin_choice"]))
 		return
 
 	if(!href_list["choice"])
@@ -240,3 +318,30 @@
 		return
 
 	submit_vote(user, choice)
+
+/datum/vote/proc/handle_admin_choice(mob/user, choice)
+	if(!admin_priority_voting)
+		return
+	if(!user?.client || !check_rights(R_ADMIN, FALSE, user.client))
+		return
+	if(!is_valid_index(choice, choices))
+		return
+	submit_admin_vote(user, choice)
+
+/// Same preference-toggle behaviour as submit_vote, but stored in admin_votes.
+/datum/vote/proc/submit_admin_vote(mob/voter, vote)
+	var/ckey = voter.ckey
+	if(!admin_votes[ckey])
+		admin_votes[ckey] = list()
+
+	if(vote in admin_votes[ckey])
+		admin_votes[ckey] -= vote
+		if(!length(admin_votes[ckey]))
+			admin_votes -= ckey
+		to_chat(voter, SPAN_NOTICE("Admin vote for [display_choices[choices[vote]]] removed."))
+	else
+		admin_votes[ckey] += vote
+		to_chat(voter, SPAN_NOTICE("Admin vote cast for [display_choices[choices[vote]]] (A-VOTE). Player votes will be ignored if any A-VOTE remains."))
+
+	log_admin("[key_name(voter)] A-VOTE [name]: [choices[vote]] (admin votes: [length(admin_votes)])")
+	SSvote.show_panel(voter)

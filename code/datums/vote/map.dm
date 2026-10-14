@@ -1,5 +1,6 @@
 /datum/vote/map
 	name = "map"
+	admin_priority_voting = TRUE
 
 /datum/vote/map/can_run(mob/creator, automatic)
 	if(!config.allow_map_switching)

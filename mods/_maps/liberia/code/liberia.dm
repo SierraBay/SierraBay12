@@ -9,6 +9,7 @@
 	suffixes = list("liberia.dmm")
 	spawn_cost = 0
 	player_cost = 0
+	votable_as_main_ship = TRUE
 	template_flags = TEMPLATE_FLAG_SPAWN_GUARANTEED
 	spawn_weight = 50 // Нельзя ставить 0, иначе подбор авеек сломается
 	shuttles_to_initialise = list(
