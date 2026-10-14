@@ -1,14 +1,25 @@
+#define MISSILE_GUIDANCE_ACQUIRE_ANGLE 15
+#define MISSILE_GUIDANCE_REACQUIRE_ANGLE 60
+#define MISSILE_GUIDANCE_ROUTE_MARGIN 0.9
+#define MISSILE_GUIDANCE_MAX_TURN 179
+
 /datum/missile_guidance
 	var/weakref/target_ref
 	var/turf/last_known_position
 	var/list/last_known_coordinates
 	var/target_set_time = 0
 	var/coasting = FALSE
+	/// Pure PN is used after acquiring a closing interception course.
+	var/navigation_constant = 3
+	var/navigation_locked = FALSE
+	/// Relative position of the selected target image, in map cells.
+	var/list/navigation_offset
 
 /datum/missile_guidance/Destroy()
 	target_ref = null
 	last_known_position = null
 	last_known_coordinates = null
+	reset_navigation()
 	return ..()
 
 /datum/missile_guidance/proc/get_target()
@@ -23,6 +34,11 @@
 	target_set_time = world.time
 	remember_target(new_target)
 	coasting = FALSE
+	reset_navigation()
+
+/datum/missile_guidance/proc/reset_navigation()
+	navigation_locked = FALSE
+	navigation_offset = null
 
 /// Remember numerical coordinates without owning the target's movement history.
 /datum/missile_guidance/proc/remember_target(atom/target)
@@ -34,19 +50,21 @@
 	last_known_coordinates = istype(object) ? object.get_map_position() : list(last_known_position.x, last_known_position.y, last_known_position.z)
 
 /// Null preserves velocity; a zero vector stops. Other vectors supply a continuous bearing.
-/datum/missile_guidance/proc/get_course(obj/overmap/projectile/projectile, pursuit_speed = 0)
+/datum/missile_guidance/proc/get_course(obj/overmap/projectile/projectile, elapsed = 0, pursuit_speed = 0, turn_rate = 0)
 	ASSERT(istype(projectile))
 	var/atom/target = get_target()
 	if (!last_known_position)
 		return null
 	if (coasting)
+		reset_navigation()
 		return get_coasting_course(projectile)
 	if (!target && has_reached_last_position(projectile))
 		coasting = TRUE
+		reset_navigation()
 		return get_coasting_course(projectile)
 	if (isturf(target) && get_turf(projectile) == target)
 		return list(0, 0)
-	return get_pursuit_offset(projectile, target, pursuit_speed)
+	return get_pursuit_offset(projectile, target, elapsed, pursuit_speed, turn_rate)
 
 /datum/missile_guidance/proc/has_reached_last_position(obj/overmap/projectile/projectile)
 	if (projectile.z != last_known_position.z)
@@ -59,15 +77,97 @@
 		return null
 	return list(SIGN((projectile.dir & EAST) - (projectile.dir & WEST)), SIGN((projectile.dir & NORTH) - (projectile.dir & SOUTH)))
 
-/datum/missile_guidance/proc/get_pursuit_offset(obj/overmap/projectile/projectile, atom/target, pursuit_speed)
+/datum/missile_guidance/proc/get_pursuit_offset(obj/overmap/projectile/projectile, atom/target, elapsed, pursuit_speed, turn_rate)
 	var/list/offset = get_target_offset(projectile, last_known_position, last_known_coordinates)
-	var/obj/overmap/moving_target = target
-	if (!istype(moving_target) || !moving_target.movable || moving_target.halted || !moving_target.is_moving())
+	// Propulsion queries must not acquire, reset, or switch an interception route.
+	if (elapsed <= 0)
 		return offset
-	var/list/intercept = get_intercept_offset(projectile, moving_target, min(pursuit_speed, projectile.max_speed))
-	if (intercept && (intercept[1] || intercept[2]))
+	var/obj/overmap/moving_target = target
+	if (!istype(moving_target) || !moving_target.movable || moving_target.halted || !moving_target.is_moving() || moving_target.z != projectile.z)
+		reset_navigation()
+		return offset
+	if (!offset[1] && !offset[2])
+		reset_navigation()
+		return list(0, 0)
+	return get_navigation_course(projectile, moving_target, offset, elapsed, min(pursuit_speed, projectile.max_speed), turn_rate)
+
+/datum/missile_guidance/proc/get_navigation_course(obj/overmap/projectile/projectile, obj/overmap/target, list/offset, elapsed, pursuit_speed, turn_rate)
+	var/period = get_wrap_period(projectile, get_turf(target))
+	var/list/velocity = get_map_velocity(target)
+	var/list/retained_offset = get_retained_offset(offset, period)
+	var/list/solution = get_intercept_solution(projectile, offset, velocity, pursuit_speed / 2, turn_rate, period, get_prediction_limit(target, period), retained_offset)
+	if (!solution)
+		reset_navigation()
+		return offset
+	var/list/selected_offset = list(solution[4], solution[5])
+	if (retained_offset && (abs(selected_offset[1] - retained_offset[1]) > 0.001 || abs(selected_offset[2] - retained_offset[2]) > 0.001))
+		navigation_locked = FALSE
+	navigation_offset = selected_offset
+	return get_proportional_navigation_course(projectile, selected_offset, velocity, list(solution[2], solution[3]), elapsed, turn_rate)
+
+/// Compute LOS rate from relative velocity, never from two different periodic images.
+/datum/missile_guidance/proc/get_proportional_navigation_course(obj/overmap/projectile/projectile, list/offset, list/target_velocity, list/intercept, elapsed, turn_rate)
+	var/distance_squared = offset[1] ** 2 + offset[2] ** 2
+	if (!distance_squared)
+		reset_navigation()
+		return list(0, 0)
+	var/list/relative_velocity = get_map_velocity(projectile)
+	relative_velocity[1] = target_velocity[1] - relative_velocity[1]
+	relative_velocity[2] = target_velocity[2] - relative_velocity[2]
+	if (!update_navigation_lock(projectile, offset, relative_velocity, intercept))
 		return intercept
-	return offset
+	var/los_rate = (offset[1] * relative_velocity[2] - offset[2] * relative_velocity[1]) / distance_squared
+	var/turn = navigation_constant * los_rate * (180 / M_PI) * elapsed
+	return get_turn_course(projectile, turn, max(0, turn_rate * elapsed))
+
+/datum/missile_guidance/proc/update_navigation_lock(obj/overmap/projectile/projectile, list/offset, list/relative_velocity, list/intercept)
+	var/closing = offset[1] * relative_velocity[1] + offset[2] * relative_velocity[2] < 0
+	var/error = abs(get_angle_delta(Atan2(intercept[1], intercept[2]), get_projectile_heading(projectile)))
+	if (!projectile.is_moving() || !closing)
+		navigation_locked = FALSE
+	else if (navigation_locked)
+		navigation_locked = error <= MISSILE_GUIDANCE_REACQUIRE_ANGLE
+	else
+		navigation_locked = error <= MISSILE_GUIDANCE_ACQUIRE_ANGLE
+	return navigation_locked
+
+/// Clamp the signed command before converting it to a bearing, which loses full turns.
+/datum/missile_guidance/proc/get_turn_course(obj/overmap/projectile/projectile, turn, maximum_turn)
+	var/limit = clamp(maximum_turn, 0, MISSILE_GUIDANCE_MAX_TURN)
+	var/angle = get_projectile_heading(projectile) + clamp(turn, -limit, limit)
+	return list(cos(angle), sin(angle))
+
+/datum/missile_guidance/proc/get_angle_delta(desired_angle, current_angle)
+	var/original_delta = desired_angle - current_angle
+	// DM's % operator truncates fractional angles; use floating-point arithmetic.
+	var/delta = original_delta - round(original_delta / 360) * 360
+	if (delta > 180)
+		delta -= 360
+	if (delta == 180 && original_delta < 0)
+		delta = -180
+	return delta
+
+/// Rendering and movement advance each active speed component by speed / 2 cells.
+/datum/missile_guidance/proc/get_map_velocity(obj/overmap/object)
+	if (!object.movable || object.halted)
+		return list(0, 0)
+	return list(abs(object.speed[1]) >= object.min_speed ? object.speed[1] / 2 : 0, abs(object.speed[2]) >= object.min_speed ? object.speed[2] / 2 : 0)
+
+/// Keep the same physical target image through both object wraparound and the half-period cut.
+/datum/missile_guidance/proc/get_retained_offset(list/offset, period)
+	if (!navigation_offset || !period)
+		return null
+	var/list/retained = offset.Copy()
+	for (var/axis in 1 to 2)
+		retained[axis] += round((navigation_offset[axis] - retained[axis]) / period + 0.5) * period
+	return retained
+
+/datum/missile_guidance/proc/get_projectile_heading(obj/overmap/projectile/projectile)
+	if (projectile.is_moving())
+		return Atan2(projectile.speed[1], projectile.speed[2])
+	var/heading_x = SIGN((projectile.dir & EAST) - (projectile.dir & WEST))
+	var/heading_y = SIGN((projectile.dir & NORTH) - (projectile.dir & SOUTH))
+	return Atan2(heading_x, heading_y)
 
 /// The edge turfs are skipped by handle_wraparound(): playable coordinates are 2..size-1.
 /datum/missile_guidance/proc/get_wrap_period(obj/overmap/projectile/projectile, turf/destination)
@@ -96,64 +196,68 @@
 		return -delta
 	return delta
 
-/// Check neighbouring images of the target so a meeting may also occur across an edge.
-/datum/missile_guidance/proc/get_intercept_offset(obj/overmap/projectile/projectile, obj/overmap/target, pursuit_speed)
-	if (projectile.z != target.z || pursuit_speed <= 0)
+/// Solutions contain turn-adjusted time, aim X/Y, and the selected image's offset X/Y.
+/datum/missile_guidance/proc/get_intercept_solution(obj/overmap/projectile/projectile, list/offset, list/velocity, pursuit_speed, turn_rate, period, time_limit, list/retained_offset)
+	if (pursuit_speed <= 0)
 		return null
-	var/list/offset = get_target_offset(projectile, get_turf(target), target.get_map_position())
-	var/period = get_wrap_period(projectile, get_turf(target))
+	var/current_angle = get_projectile_heading(projectile)
+	var/list/retained = retained_offset ? get_intercept_candidate(retained_offset[1], retained_offset[2], velocity, pursuit_speed, turn_rate, current_angle, time_limit) : null
 	var/list/images = period ? list(0, -period, period) : list(0)
-	var/list/velocity = list(abs(target.speed[1]) >= target.min_speed ? target.speed[1] / 2 : 0, abs(target.speed[2]) >= target.min_speed ? target.speed[2] / 2 : 0)
-	var/time_limit = get_prediction_limit(target, period)
-	var/list/best
+	var/list/best = retained
 	for (var/image_x in images)
 		for (var/image_y in images)
-			var/list/candidate = get_intercept_candidate(offset[1] + image_x, offset[2] + image_y, velocity[1], velocity[2], pursuit_speed / 2, time_limit)
+			var/list/candidate = get_intercept_candidate(offset[1] + image_x, offset[2] + image_y, velocity, pursuit_speed, turn_rate, current_angle, time_limit)
 			if (candidate && (!best || candidate[1] < best[1]))
 				best = candidate
-	return best ? list(best[2], best[3]) : null
+	// A small apparent gain must not reverse a turn already in progress.
+	return retained && best && best[1] >= retained[1] * MISSILE_GUIDANCE_ROUTE_MARGIN ? retained : best
 
-/datum/missile_guidance/proc/get_intercept_candidate(delta_x, delta_y, velocity_x, velocity_y, pursuit_speed, time_limit)
-	var/meeting_time = get_intercept_time(delta_x, delta_y, velocity_x, velocity_y, pursuit_speed, time_limit)
+/datum/missile_guidance/proc/get_intercept_candidate(delta_x, delta_y, list/velocity, pursuit_speed, turn_rate, current_angle, time_limit)
+	var/meeting_time = get_intercept_time(delta_x, delta_y, velocity[1], velocity[2], pursuit_speed)
 	if (isnull(meeting_time))
 		return null
-	return list(meeting_time, delta_x + velocity_x * meeting_time, delta_y + velocity_y * meeting_time)
+	var/aim_x = delta_x + velocity[1] * meeting_time
+	var/aim_y = delta_y + velocity[2] * meeting_time
+	var/turn_time = turn_rate > 0 ? abs(get_angle_delta(Atan2(aim_x, aim_y), current_angle)) / turn_rate : 0
+	if (!isnull(time_limit) && meeting_time + turn_time > time_limit)
+		return null
+	return list(meeting_time + turn_time, aim_x, aim_y, delta_x, delta_y)
 
-/// Straight-line interception uses the same scalar speed as normalized propulsion.
-/datum/missile_guidance/proc/get_intercept_time(delta_x, delta_y, velocity_x, velocity_y, pursuit_speed, time_limit)
+/datum/missile_guidance/proc/get_intercept_time(delta_x, delta_y, velocity_x, velocity_y, pursuit_speed)
 	var/a = velocity_x ** 2 + velocity_y ** 2 - pursuit_speed ** 2
 	var/b = 2 * (delta_x * velocity_x + delta_y * velocity_y)
 	var/c = delta_x ** 2 + delta_y ** 2
-	var/meeting_time = c ? positive_intercept_root(a, b, c) : 0
-	if (!isnull(time_limit) && !isnull(meeting_time) && meeting_time > time_limit)
-		return null
-	return meeting_time
+	return c ? positive_intercept_root(a, b, c) : 0
 
+/// Use q/a and c/q to avoid cancellation when the target and missile have similar speeds.
 /datum/missile_guidance/proc/positive_intercept_root(a, b, c)
-	if (abs(a) < 0.000000001)
+	if (!a)
 		return b < 0 ? -c / b : null
 	var/discriminant = b ** 2 - 4 * a * c
 	if (discriminant < 0)
 		return null
 	var/root = sqrt(discriminant)
-	var/first = (-b - root) / (2 * a)
-	var/second = (-b + root) / (2 * a)
+	var/q = -0.5 * (b + (b >= 0 ? root : -root))
+	if (!q)
+		return null
+	var/first = q / a
+	var/second = c / q
 	if (first < 0)
 		return second >= 0 ? second : null
 	return second >= 0 ? min(first, second) : first
 
-/// Do not extrapolate a non-wrapping or disposable target beyond its map edge.
+/// A disposable or non-wrapping target cannot be intercepted beyond its map edge.
 /datum/missile_guidance/proc/get_prediction_limit(obj/overmap/target, allow_wrap)
 	if (allow_wrap && target.wraparound && !target.delete_on_edge)
 		return null
 	var/time_limit
 	var/list/coordinates = target.get_map_position()
+	var/list/velocity = get_map_velocity(target)
 	for (var/axis in 1 to 2)
-		var/velocity = target.speed[axis]
-		if (abs(velocity) < target.min_speed)
+		if (!velocity[axis])
 			continue
-		var/edge = velocity > 0 ? GLOB.using_map.overmap_size - 0.5 : 1.5
-		var/edge_time = max(0, (edge - coordinates[axis]) / (velocity / 2))
+		var/edge = velocity[axis] > 0 ? GLOB.using_map.overmap_size - 0.5 : 1.5
+		var/edge_time = max(0, (edge - coordinates[axis]) / velocity[axis])
 		time_limit = isnull(time_limit) ? edge_time : min(time_limit, edge_time)
 	return time_limit
 
@@ -288,3 +392,8 @@
 	if (isnull(target_x) || isnull(target_y) || target_x < min_x || target_x >= max_x || target_y < min_y || target_y >= max_y)
 		return null
 	return locate(target_x, target_y, target_z)
+
+#undef MISSILE_GUIDANCE_ACQUIRE_ANGLE
+#undef MISSILE_GUIDANCE_REACQUIRE_ANGLE
+#undef MISSILE_GUIDANCE_ROUTE_MARGIN
+#undef MISSILE_GUIDANCE_MAX_TURN

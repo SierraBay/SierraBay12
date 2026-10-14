@@ -20,7 +20,7 @@
 	guidance.set_target(new_target)
 
 /obj/item/missile_equipment/thruster/proc/requires_propulsion(obj/overmap/projectile/projectile)
-	var/list/course = guidance.get_course(projectile, overmap_speed)
+	var/list/course = guidance.get_course(projectile)
 	return !isnull(course) && (course[1] || course[2])
 
 /// Replace the core booster algorithm; calling it would spend fuel twice.
@@ -30,7 +30,7 @@
 	next_work = world.time + cooldown
 	var/elapsed = isnull(last_course_update) ? SSobj.wait : max(0, world.time - last_course_update)
 	last_course_update = world.time
-	var/list/course = guidance.get_course(projectile, overmap_speed)
+	var/list/course = guidance.get_course(projectile, elapsed, overmap_speed, turn_rate)
 	if (isnull(course) || (!course[1] && !course[2]))
 		apply_course(projectile, course, elapsed)
 		return TRUE
@@ -43,6 +43,7 @@
 /obj/item/missile_equipment/thruster/on_touch_map_edge(obj/overmap/projectile/projectile)
 	// Local flight time does not grant an instantaneous turn on returning to the overmap.
 	last_course_update = null
+	guidance.reset_navigation()
 	return ..()
 
 /obj/item/missile_equipment/thruster/should_enter(obj/overmap/site)
@@ -82,18 +83,8 @@
 	projectile.set_flight_velocity(magnitude * cos(angle), magnitude * sin(angle))
 
 /obj/item/missile_equipment/thruster/proc/get_course_angle(obj/overmap/projectile/projectile, list/course, elapsed)
-	var/current_angle
-	if (projectile.is_moving())
-		current_angle = Atan2(projectile.speed[1], projectile.speed[2])
-	else
-		var/heading_x = SIGN((projectile.dir & EAST) - (projectile.dir & WEST))
-		var/heading_y = SIGN((projectile.dir & NORTH) - (projectile.dir & SOUTH))
-		current_angle = Atan2(heading_x, heading_y)
-	var/delta = Atan2(course[1], course[2]) - current_angle
-	if (delta > 180)
-		delta -= 360
-	else if (delta < -180)
-		delta += 360
+	var/current_angle = guidance.get_projectile_heading(projectile)
+	var/delta = guidance.get_angle_delta(Atan2(course[1], course[2]), current_angle)
 	var/maximum_turn = max(0, turn_rate * elapsed)
 	return current_angle + clamp(delta, -maximum_turn, maximum_turn)
 
