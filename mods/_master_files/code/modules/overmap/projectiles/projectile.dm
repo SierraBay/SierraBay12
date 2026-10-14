@@ -45,14 +45,15 @@
 		return
 	if (!moving)
 		return process_movement()
+	update_motion_target()
+	get_motion()
+	// Resolve arrival from the previous burn before requiring fuel for another one.
+	if (check_enter())
+		qdel_self()
+		return
 	var/obj/item/missile_equipment/thruster/thruster = actual_missile.equipment[MISSILE_PART_THRUSTER]
 	if (!thruster || (!thruster.has_fuel() && thruster.requires_propulsion(src)))
 		actual_missile.self_destruct()
-		return
-	update_motion_target()
-	get_motion()
-	if (check_enter())
-		qdel_self()
 		return
 	if (process_equipment())
 		advance_flight()
