@@ -4,6 +4,18 @@
 	icon_state = "collector_empty"
 	var/closed = FALSE
 	var/obj/item/artefact/stored_artefact
+	var/artefact_type
+
+/obj/item/collector/Initialize(mapload)
+	. = ..()
+	if(ispath(artefact_type, /obj/item/artefact))
+		stored_artefact = new artefact_type(src)
+		stored_artefact.react_to_insert_in_collector()
+		update_icon()
+
+/obj/item/collector/Destroy()
+	QDEL_NULL(stored_artefact)
+	return ..()
 
 
 /obj/item/collector/examine(mob/user, distance, is_adjacent)
@@ -101,22 +113,22 @@
 
 /obj/item/collector/pruzhina_inside
 	icon_state = "collector_pruzhina"
-	stored_artefact = new /obj/item/artefact/pruzhina
+	artefact_type = /obj/item/artefact/pruzhina
 
 
 /obj/item/collector/zjar_inside
 	icon_state = "collector_zjar"
-	stored_artefact = new /obj/item/artefact/zjar
+	artefact_type = /obj/item/artefact/zjar
 
 
 /obj/item/collector/svetlyak_inside
 	icon_state = "collector_svetlyak"
-	stored_artefact = new /obj/item/artefact/svetlyak
+	artefact_type = /obj/item/artefact/svetlyak
 
 
 /obj/item/collector/gravi_inside
 	icon_state = "collector_gravi"
-	stored_artefact = new /obj/item/artefact/gravi
+	artefact_type = /obj/item/artefact/gravi
 
 
 /datum/design/item/bluespace/collector

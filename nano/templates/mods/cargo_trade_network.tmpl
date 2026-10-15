@@ -1,0 +1,1588 @@
+{{var uiSrc = $('body').data('urlParameters').src;}}
+{{var formatTradeAmount = function(value) { var amount = Math.round((Number(value) || 0) * 100) / 100; var parts = amount.toFixed(amount % 1 ? 2 : 0).split('.'); parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ','); return parts.join('.'); };}}
+{{##def.contract_row:
+	<div class="tn-contract-row" data-key="{{:contractActive ? 'active-' : 'offer-'}}{{:contract_entry.id}}" data-index="{{:contract_index}}" data-type="{{>contract_entry.type_label}}" data-ready="{{:contract_entry.can_act ? 1 : 0}}" data-reward="{{:contract_entry.reward}}" data-deposit="{{:contract_entry.deposit}}" data-distance="{{:contract_entry.distance}}" data-search="{{>contract_entry.serial + ' ' + contract_entry.type_label + ' ' + contract_entry.source_name + ' ' + contract_entry.destination_name + ' ' + contract_entry.cargo}}">
+		<div class="tn-contract-heading">
+			<div class="tn-contract-identity">
+				<span class="font-mono tn-muted">#{{>contract_entry.serial}}</span>
+				<span class="tn-muted">{{>contract_entry.type_label}}</span>
+				{{if contractActive}}<span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{>contract_entry.status}}</span>{{/if}}
+			</div>
+			<button type="button" class="tn-contract-toggle" aria-label="Details for #{{>contract_entry.serial}}" aria-expanded="false" aria-controls="tn-contract-details-{{:contractActive ? 'active-' : 'offer-'}}{{:contract_entry.id}}" onclick="window.cargoToggleContractDetails &amp;&amp; window.cargoToggleContractDetails(this)"><span class="tn-contract-marker" aria-hidden="true">+</span> Details</button>
+		</div>
+		<div class="tn-contract-route">{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</div>
+		<div class="tn-contract-cargo">{{>contract_entry.cargo}}</div>
+		{{if contractActive}}
+			<div class="tn-contract-next"><span class="tn-panel-label">Next step:</span> {{>contract_entry.instruction_text || contract_entry.action_hint}}</div>
+		{{/if}}
+		<div id="tn-contract-details-{{:contractActive ? 'active-' : 'offer-'}}{{:contract_entry.id}}" class="tn-contract-details tn-hidden">
+			{{if !contractActive}}<p>{{>contract_entry.instruction_text}}</p>{{/if}}
+			{{if contract_entry.action_hint && contract_entry.action_hint != contract_entry.instruction_text}}<p class="tn-muted">{{>contract_entry.action_hint}}</p>{{/if}}
+			<div class="tn-labeled-row"><span>Cargo value</span><span class="font-mono">{{>formatTradeAmount(contract_entry.base_value)}} {{>data.currency_short}}</span></div>
+			<div class="tn-labeled-row"><span>Distance</span><span class="font-mono">{{:contract_entry.distance}}</span></div>
+			{{if contractActive && contract_entry.accepted_by}}<div class="tn-labeled-row"><span>Accepted by</span><span>{{>contract_entry.accepted_by}}</span></div>{{/if}}
+			{{if contract_entry.deposit > 0}}<p class="tn-contract-terms">The deposit is debited on acceptance and returned after successful completion.</p>{{/if}}
+		</div>
+		<div class="tn-contract-footer">
+			<div class="tn-contract-money">
+				<span>Reward <strong class="font-mono">{{>formatTradeAmount(contract_entry.reward)}} {{>data.currency_short}}</strong></span>
+				<span>{{if contractActive}}Deposit{{else}}Deposit now{{/if}} <span class="font-mono">{{>formatTradeAmount(contract_entry.deposit)}} {{>data.currency_short}}</span></span>
+				<span>Penalty <span class="font-mono{{if contract_entry.penalty > 0}} tn-bad{{/if}}">{{>formatTradeAmount(contract_entry.penalty)}} {{>data.currency_short}}</span></span>
+			</div>
+			<div class="tn-contract-action">
+				{{if contract_entry.block_reason}}
+					<div class="tn-contract-feedback tn-bad">{{>contract_entry.block_reason}}</div>
+				{{else contract_entry.status_text && contract_entry.status_text != contract_entry.status && contract_entry.status_text != contract_entry.instruction_text}}
+					<div class="tn-contract-feedback">{{>contract_entry.status_text}}</div>
+				{{/if}}
+				{{if contractActive}}
+					{{:helper.link(contract_entry.action_label || 'Deliver', 'check', {'PRG_contract_deliver' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+				{{else}}
+					{{:helper.link('Accept', 'check', {'PRG_contract_accept' : contract_entry.id}, contract_entry.can_act ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+				{{/if}}
+			</div>
+		</div>
+	</div>
+#}}
+{{##def.contract_history_row:
+	<div class="tn-contract-history-row" data-key="history-{{:contract_entry.id}}" data-outcome="{{:historyOutcome}}">
+		<div class="tn-contract-heading">
+			<div class="tn-contract-identity"><span class="font-mono tn-muted">#{{>contract_entry.serial}}</span><span class="tn-muted">{{>contract_entry.type_label}}</span></div>
+			<span class="tn-tag tn-tag-{{:contract_entry.status_tone}}">{{>contract_entry.status}}</span>
+		</div>
+		<div class="tn-contract-route">{{>contract_entry.source_name}} &rarr; {{>contract_entry.destination_name}}</div>
+		{{if contract_entry.accepted_by}}<div class="tn-muted">Accepted by {{>contract_entry.accepted_by}}</div>{{/if}}
+		<div class="tn-contract-resolution{{if historyOutcome == 'failed'}} tn-bad{{/if}}">{{>contract_entry.resolved_note}}</div>
+	</div>
+#}}
+<style>
+	/* Amber theme. Literal colors and flex margins support the NanoUI browser. */
+	.tn-wrap {
+		padding: 8px;
+		background: #171614;
+		color: #e8e2d6;
+		font: 13px/1.4 Arial, sans-serif;
+		min-height: 100%;
+		box-sizing: border-box;
+	}
+	.tn-wrap *, .tn-wrap *:before, .tn-wrap *:after { box-sizing: border-box; }
+	.tn-wrap .font-mono { font-style: normal; font-family: Consolas, "Lucida Console", monospace; font-variant-numeric: tabular-nums; }
+	.tn-wrap .tn-stack > * + * { margin-top: 8px; }
+	.tn-wrap .tn-muted, .tn-wrap .tn-subtle, .tn-wrap .tn-empty, .tn-wrap .tn-panel-label { color: #b5aa97; }
+	.tn-wrap .tn-good, .tn-wrap .tn-dot-good { color: #9fc58a; }
+	.tn-wrap .tn-bad { color: #ed9c92; }
+	.tn-wrap .tn-price { color: #e8e2d6; font-weight: bold; white-space: nowrap; }
+	.tn-wrap .tn-panel-title, .tn-wrap .tn-catalog-title { font-size: 14px; font-weight: bold; color: #e8e2d6; }
+	.tn-wrap .tn-panel-subtitle, .tn-wrap .tn-item-sub, .tn-wrap .tn-export-meta { color: #b5aa97; font-size: 12px; margin-top: 4px; }
+	.tn-wrap .tn-section-divider { margin: 8px 0; border: 0; border-top: 1px solid #3a3529; background: transparent; height: 0; }
+
+	/* Shared controls override NanoUI's float, fixed height and blue backgrounds. */
+	.tn-wrap .tn-btn, .tn-wrap .tn-nav-btn, .tn-wrap .tn-category-item,
+	.tn-wrap .tn-pillnav-link, .tn-wrap .tn-table-stepper-btn, .tn-wrap .tn-quantity-value {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		float: none;
+		height: auto;
+		min-height: 28px;
+		min-width: 28px;
+		padding: 4px 8px;
+		margin: 0;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		background: #4a3b22;
+		color: #e8e2d6;
+		font: inherit;
+		line-height: 18px;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		user-select: none;
+		transition: background-color 0.1s, color 0.1s;
+	}
+	.tn-wrap .tn-btn:hover, .tn-wrap .tn-table-stepper-btn:hover, .tn-wrap .tn-quantity-value:hover { background: #65502b; }
+	.tn-wrap .tn-btn:active, .tn-wrap .tn-table-stepper-btn:active { background: #3b2f1e; }
+	.tn-wrap .tn-btn .uiIcon16, .tn-wrap .tn-nav-btn .uiIcon16 { float: none; margin-right: 4px; }
+	.tn-wrap .tn-btn-primary, .tn-wrap .tn-btn.selected { background: #d9a441; color: #171614; font-weight: bold; }
+	.tn-wrap .tn-btn-primary:hover, .tn-wrap .tn-btn.selected:hover { background: #e8b955; color: #171614; }
+	.tn-wrap .tn-btn-outline { background: #363025; }
+	.tn-wrap .tn-btn-danger { background: #442b28; color: #ed9c92; }
+	.tn-wrap .tn-btn-danger:hover { background: #5b3530; }
+	.tn-wrap .tn-btn.disabled, .tn-wrap .tn-nav-btn.disabled,
+	.tn-wrap .tn-table-stepper-btn.disabled, .tn-wrap input[type='submit']:disabled {
+		background: #2c2923;
+		color: #a59a88;
+		border-color: transparent;
+		cursor: not-allowed;
+	}
+	.tn-wrap .tn-btn.inactive, .tn-wrap .tn-table-stepper-btn.inactive { opacity: 0.6; }
+	.tn-wrap .uiLinkPendingIcon { display: none; }
+	.tn-wrap .linkPending { opacity: 0.65; }
+	.tn-wrap .tn-btn:focus, .tn-wrap .tn-nav-btn:focus, .tn-wrap .tn-category-item:focus,
+	.tn-wrap .tn-pillnav-link:focus, .tn-wrap .tn-table-stepper-btn:focus,
+	.tn-wrap .tn-quantity-value:focus, .tn-wrap .tn-history-toggle:focus,
+	.tn-wrap .tn-item-toggle:focus, .tn-wrap .tn-contract-toggle:focus { outline: 1px solid #d9a441; outline-offset: 1px; }
+
+	.tn-wrap .tn-nav-bar { display: flex; flex-wrap: wrap; justify-content: space-between; border-bottom: 1px solid #3a3529; padding-bottom: 4px; }
+	.tn-wrap .tn-nav-tabs, .tn-wrap .tn-pillnav { display: flex; flex-wrap: wrap; }
+	.tn-wrap .tn-nav-tabs { width: 100%; }
+	.tn-wrap .tn-settings-tab { margin-left: auto; }
+	.tn-wrap .tn-nav-btn, .tn-wrap .tn-pillnav-link { background: transparent; color: #b5aa97; border-radius: 0; border-bottom: 2px solid transparent; }
+	.tn-wrap .tn-nav-btn:hover, .tn-wrap .tn-pillnav-link:hover { background: #29251e; color: #e8e2d6; }
+	.tn-wrap .tn-nav-btn.selected, .tn-wrap .tn-pillnav-link.selected { background: #30271b; border-bottom-color: #d9a441; color: #d9a441; }
+	.tn-wrap .tn-nav-badge { padding: 0 4px; margin-left: 4px; border-radius: 3px; background: #3d3527; color: #e8e2d6; font-size: 12px; }
+	.tn-wrap .tn-pillnav { margin-bottom: 8px; }
+
+	.tn-wrap .tn-grid { display: flex; flex-wrap: wrap; margin: -4px; }
+	.tn-wrap .tn-col { flex: 1 1 300px; min-width: 0; margin: 4px; }
+	.tn-wrap .tn-market-sidebar { flex: 0 0 160px; }
+	.tn-wrap .tn-market-main { flex: 1 1 440px; min-width: 0; background: #22201b; border-radius: 3px; padding: 12px; }
+	.tn-wrap .tn-panel { padding: 12px; background: #22201b; border-radius: 3px; }
+	.tn-wrap .tn-panel + .tn-panel { margin-top: 8px; }
+	.tn-wrap .tn-panel-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+	.tn-wrap .tn-workspace-header { padding: 8px 0; border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-workspace-header .tn-panel-header { margin-bottom: 0; }
+	.tn-wrap .tn-empty-panel { padding: 24px 12px; text-align: center; color: #b5aa97; }
+	.tn-wrap .tn-empty-panel .tn-panel-title { font-size: 13px; }
+	.tn-wrap .tn-flex-row, .tn-wrap .tn-flex-row-sm, .tn-wrap .tn-flex-row-lg,
+	.tn-wrap .tn-basket-actions, .tn-wrap .tn-filter-controls, .tn-wrap .tn-station-meta-row { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-flex-row > * + *, .tn-wrap .tn-flex-row-sm > * + *,
+	.tn-wrap .tn-basket-actions > * + *, .tn-wrap .tn-filter-controls > * + *, .tn-wrap .tn-station-meta-row > * + * { margin-left: 4px; }
+	.tn-wrap .tn-flex-row-lg > * + * { margin-left: 12px; }
+	.tn-wrap .tn-flex-col-sm > * + * { margin-top: 4px; }
+	.tn-wrap .tn-flex-col-sm .tn-btn { display: flex; width: 100%; }
+	.tn-wrap .tn-summary { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-summary-meta { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-summary-meta > * { margin-right: 12px; padding: 4px 0; }
+	.tn-wrap .tn-basket-summary-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-basket-lead { margin-right: 12px; }
+	.tn-wrap .tn-basket-total { font-weight: bold; }
+	.tn-wrap .tn-cart-footer { padding: 12px; background: #22201b; border-top: 1px solid #3a3529; border-radius: 3px; }
+	.tn-wrap .tn-cart-group { padding: 8px 0; }
+	.tn-wrap .tn-cart-group + .tn-cart-group { border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-labeled-row, .tn-wrap .tn-item-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 4px 0; }
+	.tn-wrap .tn-labeled-row > :first-child { color: #b5aa97; margin-right: 12px; }
+	.tn-wrap .tn-item-row { border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-item-row > :first-child { flex: 1 1 160px; min-width: 0; margin-right: 8px; }
+	.tn-wrap .tn-checkout-total { margin: 8px 0; border-top: 1px solid #3a3529; font-weight: bold; }
+
+	.tn-wrap .tn-tag { display: inline-block; padding: 1px 4px; border-radius: 3px; font-size: 12px; background: #363025; color: #b5aa97; white-space: nowrap; }
+	.tn-wrap .tn-tag-good { background: #293425; color: #9fc58a; }
+	.tn-wrap .tn-tag-average { background: #3e321f; color: #d9a441; }
+	.tn-wrap .tn-tag-bad { background: #442b28; color: #ed9c92; }
+	.tn-wrap .tn-tag-disabled { background: #2c2923; color: #b5aa97; }
+	.tn-wrap .tn-status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
+	.tn-wrap .tn-dot-good { background: #9fc58a; }
+	.tn-wrap .tn-dot-average { background: #d9a441; }
+	.tn-wrap .tn-dot-bad { background: #ed9c92; }
+	.tn-wrap .notice { margin: 8px 0; padding: 8px 12px; border: 0; border-left: 3px solid #b5aa97; border-radius: 3px; background: #2c2923; color: #e8e2d6; }
+	.tn-wrap .notice.good { border-left-color: #9fc58a; background: #293425; }
+	.tn-wrap .notice.average { border-left-color: #d9a441; background: #30271b; }
+	.tn-wrap .notice.bad { border-left-color: #ed9c92; background: #382724; }
+
+	.tn-wrap .tn-form-shell { margin-top: 8px; padding: 8px 0; border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-form { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-form > * { margin: 2px 0; }
+	.tn-wrap input[type='text'], .tn-wrap input[type='number'], .tn-wrap input[type='password'],
+	.tn-wrap textarea, .tn-wrap select {
+		min-width: 0; max-width: 100%; height: 28px; padding: 4px 8px;
+		border: 1px solid #514735; border-radius: 3px;
+		background: #171614; color: #e8e2d6; font: inherit; line-height: 18px;
+	}
+	.tn-wrap input:focus, .tn-wrap textarea:focus, .tn-wrap select:focus { outline: none; border-color: #d9a441; }
+	.tn-wrap textarea { width: 100%; min-height: 64px; resize: vertical; }
+	.tn-wrap input::placeholder, .tn-wrap textarea::placeholder { color: #b5aa97; }
+	.tn-wrap input:-ms-input-placeholder, .tn-wrap textarea:-ms-input-placeholder { color: #b5aa97; }
+	.tn-wrap select { cursor: pointer; }
+	.tn-wrap .tn-station-select { width: 100%; }
+	.tn-wrap .tn-station-card { margin-top: 8px; }
+	.tn-wrap .tn-station-name { font-weight: bold; overflow-wrap: break-word; }
+	.tn-wrap .tn-station-faction { color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-station-meta-row { margin-top: 4px; font-size: 12px; }
+	.tn-wrap .tn-market-trader { display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 8px; padding: 8px 12px; background: #22201b; border-radius: 3px; }
+	.tn-wrap .tn-market-trader label { margin-right: 8px; color: #b5aa97; }
+	.tn-wrap .tn-market-trader .tn-station-select { flex: 1 1 260px; width: auto; }
+	.tn-wrap .tn-trader-meta { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-trader-meta > * { margin-left: 8px; }
+	.tn-wrap .tn-category-vertical-list { margin-top: 8px; max-height: 55vh; }
+	.tn-wrap .tn-category-item { display: block; width: 100%; margin-bottom: 2px; padding: 4px 8px; text-align: left; white-space: normal; overflow-wrap: break-word; background: transparent; color: #b5aa97; }
+	.tn-wrap .tn-category-item:hover { background: #302b21; color: #e8e2d6; }
+	.tn-wrap .tn-category-item.selected { background: #3e321f; color: #d9a441; }
+	.tn-wrap .tn-catalog-header-bar { margin-bottom: 8px; }
+	.tn-wrap .tn-catalog-title { margin-bottom: 8px; }
+	.tn-wrap .tn-filter-controls > * { margin-top: 4px; }
+	.tn-wrap .tn-search-box { position: relative; flex: 1 1 180px; min-width: 140px; }
+	.tn-wrap .tn-search-icon { position: absolute; left: 8px; top: 6px; opacity: 0.7; }
+	.tn-wrap input.tn-search-input { width: 100%; padding-left: 28px; padding-right: 28px; }
+	.tn-wrap .tn-search-clear { position: absolute; right: 1px; top: 1px; height: 26px; width: 26px; border: 0; border-radius: 3px; background: transparent; color: #b5aa97; cursor: pointer; }
+	.tn-wrap .tn-search-clear:hover { background: #363025; color: #e8e2d6; }
+	.tn-wrap .tn-search-clear .uiIcon16 { display: block; margin: 0 auto; }
+	.tn-wrap .tn-cards-counter { color: #b5aa97; font-size: 12px; white-space: nowrap; }
+	.tn-wrap .tn-scroll-box { overflow-y: auto; overflow-x: auto; }
+	.tn-wrap .tn-goods-scroll { max-height: 65vh; }
+	.tn-wrap .tn-goods-scroll .tn-empty-panel { min-height: 160px; }
+	.tn-wrap .tn-catalog-table, .tn-wrap .tn-table { width: 100%; border-collapse: collapse; }
+	.tn-wrap .tn-catalog-table { table-layout: fixed; }
+	.tn-wrap .tn-catalog-table th, .tn-wrap .tn-table th { padding: 8px 4px; color: #b5aa97; font-size: 12px; font-weight: normal; border-bottom: 1px solid #514735; text-align: left; }
+	.tn-wrap .tn-catalog-table td, .tn-wrap .tn-table td { padding: 8px 4px; border-bottom: 1px solid #3a3529; vertical-align: middle; overflow-wrap: break-word; }
+	.tn-wrap .tn-catalog-table .tn-th-right, .tn-wrap .tn-catalog-table .tn-number { text-align: right; }
+	.tn-wrap .tn-catalog-table .tn-icon-col { width: 40px; }
+	.tn-wrap .tn-catalog-table .tn-stock-col { width: 56px; }
+	.tn-wrap .tn-catalog-table .tn-price-col { width: 88px; }
+	.tn-wrap .tn-catalog-table .tn-quantity-col { width: 120px; text-align: right; }
+	.tn-wrap .tn-good-row:nth-child(even) { background: #25221c; }
+	.tn-wrap .tn-good-row.tn-in-cart { background: #30271b; }
+	.tn-wrap .tn-good-row:hover { background: #363025; }
+	.tn-wrap .tn-good-row.tn-expanded > td { vertical-align: top; }
+	.tn-wrap .tn-sprite-box { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+	.tn-wrap .tn-sprite-img { width: 32px; height: 32px; image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor; }
+	.tn-wrap .tn-sprite-placeholder { color: #b5aa97; }
+	.tn-wrap .tn-item-title { display: block; font-weight: bold; overflow-wrap: break-word; }
+	.tn-wrap .tn-item-toggle { width: 100%; padding: 0; border: 0; background: transparent; color: #e8e2d6; font: inherit; text-align: left; cursor: pointer; }
+	.tn-wrap .tn-item-toggle:hover { color: #d9a441; }
+	.tn-wrap .tn-item-marker { color: #d9a441; margin-right: 4px; }
+	.tn-wrap .tn-item-details { margin-top: 8px; color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-item-details p { margin: 0 0 8px; }
+	.tn-wrap .tn-item-details .tn-labeled-row { padding: 2px 0; }
+	.tn-wrap .tn-item-sub { display: block; }
+	.tn-wrap .tn-table-stepper { display: inline-flex; align-items: center; }
+	.tn-wrap .tn-table-stepper-btn{ width: 28px; padding: 4px 0; }
+	.tn-wrap .tn-quantity-value { background: #171614; border: 1px solid #514735; min-width: 32px; padding: 4px; margin: 0 2px; }
+	.tn-wrap .tn-actions-wrap { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+	.tn-wrap .tn-actions-wrap > * + * { margin-left: 4px; }
+	.tn-wrap .tn-popover-form { margin-top: 4px; }
+	.tn-wrap .tn-popover-form .tn-form { justify-content: flex-end; }
+	.tn-wrap .tn-popover-input { width: 52px; }
+	.tn-wrap .tn-popover-form .tn-btn { margin-left: 2px; padding: 4px; }	.tn-wrap .tn-contract-route { font-weight: bold; }
+	.tn-wrap .tn-contract-beacons, .tn-wrap .tn-contract-filters { display: flex; flex-wrap: wrap; align-items: center; margin: 4px -4px 0; }
+	.tn-wrap .tn-contract-beacons > *, .tn-wrap .tn-contract-filters > * { min-width: 0; margin: 4px; }
+	.tn-wrap .tn-contract-beacons > div { flex: 1 1 260px; }
+	.tn-wrap .tn-contract-beacons .tn-muted { overflow-wrap: break-word; }
+	.tn-wrap .tn-contract-filters select { flex: 1 1 140px; }
+	.tn-wrap .tn-contract-filter-summary, .tn-wrap .tn-contract-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+	.tn-wrap .tn-contract-filter-summary { margin-top: 8px; }
+	.tn-wrap .tn-contract-filter-summary > * + * { margin-left: 8px; }
+	.tn-wrap .tn-contract-row, .tn-wrap .tn-contract-history-row { padding: 12px 0; border-bottom: 1px solid #3a3529; overflow-wrap: break-word; }
+	.tn-wrap .tn-contract-row:first-child, .tn-wrap .tn-contract-history-row:first-child { padding-top: 0; }
+	.tn-wrap .tn-contract-row:last-child, .tn-wrap .tn-contract-history-row:last-child { border-bottom: 0; padding-bottom: 0; }
+	.tn-wrap .tn-contract-identity { display: flex; flex-wrap: wrap; align-items: center; min-width: 0; font-size: 12px; }
+	.tn-wrap .tn-contract-identity > * { margin-right: 8px; }
+	.tn-wrap .tn-contract-toggle { min-height: 28px; padding: 4px; border: 0; border-radius: 3px; background: transparent; color: #d9a441; font: inherit; font-size: 12px; cursor: pointer; }
+	.tn-wrap .tn-contract-toggle:hover { background: #363025; }
+	.tn-wrap .tn-contract-cargo, .tn-wrap .tn-contract-next, .tn-wrap .tn-contract-resolution { margin-top: 4px; }
+	.tn-wrap .tn-contract-money { display: flex; flex-wrap: wrap; flex: 1 1 300px; min-width: 0; font-size: 12px; color: #b5aa97; }
+	.tn-wrap .tn-contract-money > span { margin: 4px 16px 4px 0; }
+	.tn-wrap .tn-contract-money strong { color: #e8e2d6; }
+	.tn-wrap .tn-contract-money .font-mono { white-space: nowrap; }
+	.tn-wrap .tn-contract-next { padding-top: 4px; }
+	.tn-wrap .tn-contract-details { margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-contract-details p { margin: 0 0 8px; }
+	.tn-wrap .tn-contract-details .tn-contract-terms { margin: 8px 0 0; color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-contract-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 8px; }
+	.tn-wrap .tn-contract-action { display: flex; align-items: center; justify-content: flex-end; max-width: 100%; margin-left: auto; }
+	.tn-wrap .tn-contract-feedback { flex: 1 1 220px; min-width: 0; max-width: 380px; margin: 4px 12px 4px 0; font-size: 12px; }
+	.tn-wrap .tn-contract-footer .tn-btn { flex-shrink: 0; margin-left: auto; }
+	.tn-wrap .tn-history-toggle { display: block; width: 100%; padding: 0; border: 0; background: transparent; color: #e8e2d6; font: inherit; font-size: 14px; font-weight: bold; text-align: left; cursor: pointer; }
+	.tn-wrap .tn-history-body { margin-top: 8px; }	.tn-wrap .tn-list-scroll { max-height: 65vh; }
+	.tn-wrap .tn-contract-scroll { max-height: 55vh; }
+	.tn-wrap .tn-scroll-box { scrollbar-face-color: #514735; scrollbar-track-color: #171614; scrollbar-arrow-color: #b5aa97; scrollbar-shadow-color: #514735; scrollbar-highlight-color: #514735; scrollbar-darkshadow-color: #171614; scrollbar-3dlight-color: #171614; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar { width: 8px; height: 8px; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-track { background: #171614; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-thumb { background: #514735; border-radius: 3px; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-thumb:hover { background: #65502b; }
+	.tn-wrap .tn-history-scroll { max-height: 30vh; }
+	.tn-wrap .tn-preset-scroll { max-height: 30vh; }
+	.tn-wrap .tn-list-filters { margin-bottom: 12px; }
+	.tn-wrap input.tn-list-search { width: 100%; padding-right: 28px; }
+	.tn-wrap .tn-order-row, .tn-wrap .tn-log-row, .tn-wrap .tn-export-row { padding: 12px 0; border-bottom: 1px solid #3a3529; overflow-wrap: break-word; }
+	.tn-wrap .tn-order-row:first-child, .tn-wrap .tn-log-row:first-child, .tn-wrap .tn-export-row:first-child { padding-top: 0; }
+	.tn-wrap .tn-order-row:last-child, .tn-wrap .tn-log-row:last-child, .tn-wrap .tn-export-row:last-child { border-bottom: 0; padding-bottom: 0; }
+	.tn-wrap .tn-order-row.tn-selected { border-left: 2px solid #d9a441; padding-left: 8px; }
+	.tn-wrap .tn-record-heading, .tn-wrap .tn-record-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-record-heading > :first-child, .tn-wrap .tn-record-footer > :first-child { flex: 1 1 180px; min-width: 0; margin-right: 8px; }
+	.tn-wrap .tn-record-identity, .tn-wrap .tn-record-finance, .tn-wrap .tn-record-actions { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-record-identity > *, .tn-wrap .tn-record-finance > * { margin-right: 8px; }
+	.tn-wrap .tn-record-actions { flex-wrap: nowrap; justify-content: flex-end; margin-left: auto; max-width: 100%; min-width: 0; }
+	.tn-wrap .tn-record-actions > * { margin: 4px 0 4px 4px; }
+	.tn-wrap .tn-record-actions .tn-btn { flex-shrink: 0; }
+	.tn-wrap .tn-action-reason { flex: 1 1 180px; min-width: 0; max-width: 240px; font-size: 12px; }
+	.tn-wrap .tn-order-reason { margin: 4px 0; }
+	.tn-wrap .tn-record-details { margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-cart-line { display: flex; flex-wrap: wrap; align-items: center; padding: 8px 0; border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-cart-line-name { flex: 1 1 160px; min-width: 0; margin-right: 8px; overflow-wrap: break-word; }
+	.tn-wrap .tn-cart-line-controls { display: flex; align-items: center; margin-left: auto; }
+	.tn-wrap .tn-cart-quantity { width: 44px; text-align: center; }
+	.tn-wrap .tn-cart-line-price { width: 100px; margin: 0 8px; text-align: right; overflow-wrap: break-word; }
+	.tn-wrap .tn-checkout-action { margin-top: 8px; }
+	.tn-wrap .tn-checkout-action .tn-btn { display: flex; width: 100%; }
+	.tn-wrap .tn-checkout-action .tn-action-reason { margin-bottom: 4px; }
+	.tn-wrap .tn-setting-note { margin: 4px 0 8px; color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-export-checkout { margin-top: 12px; padding-top: 8px; border-top: 1px solid #514735; }
+
+	/* Reused layout helpers for forms, summaries and item lists. */
+	.tn-wrap .tn-full { width: 100%; }
+	.tn-wrap .tn-space-top { margin-top: 8px; }
+	.tn-wrap .tn-space-bottom { margin-bottom: 8px; }
+	.tn-wrap .tn-space-left { margin-left: 4px; }
+	.tn-wrap .tn-no-bottom { margin-bottom: 0; }
+	.tn-wrap .tn-hidden { display: none; }
+	.tn-wrap .tn-empty-description { max-width: 480px; margin: 8px auto 0; }
+	.tn-wrap .tn-number { text-align: right; }
+	.tn-wrap .tn-bold { font-weight: bold; }
+	.tn-wrap .tn-cart-items { flex: 2 1 440px; }
+	.tn-wrap .tn-checkout-column { flex: 1 1 280px; }
+
+	@media (max-width: 760px) {
+		.tn-wrap .tn-settings-tab { margin-left: 0; }
+		.tn-wrap .tn-market-sidebar { flex: 1 1 100%; }
+		.tn-wrap .tn-market-main { flex-basis: 100%; }
+		.tn-wrap .tn-category-vertical-list { display: flex; flex-wrap: wrap; max-height: 140px; }
+		.tn-wrap .tn-category-item { width: auto; margin: 2px 4px 2px 0; }
+		.tn-wrap .tn-market-sidebar .tn-panel + .tn-panel { margin-top: 4px; }
+		.tn-wrap .tn-trader-meta { width: 100%; margin-top: 4px; }
+		.tn-wrap .tn-trader-meta > * { margin: 4px 8px 0 0; }
+		.tn-wrap .tn-contract-filters .tn-search-box { flex-basis: 100%; }
+	}
+	@media (max-width: 520px) {
+		.tn-wrap { padding: 4px; }
+		.tn-wrap .tn-panel, .tn-wrap .tn-market-main { padding: 8px; }
+		.tn-wrap .tn-catalog-table .tn-icon-col, .tn-wrap .tn-catalog-table .tn-icon-cell { display: none; }
+		.tn-wrap .tn-catalog-table .tn-stock-col { width: 40px; }
+		.tn-wrap .tn-catalog-table .tn-price-col { width: 64px; }
+		.tn-wrap .tn-catalog-table .tn-quantity-col { width: 108px; }
+		.tn-wrap .tn-catalog-table td, .tn-wrap .tn-catalog-table th { padding-left: 2px; padding-right: 2px; }
+		.tn-wrap .tn-basket-actions { margin-top: 8px; }
+		.tn-wrap .tn-basket-actions > * { margin-bottom: 4px; }
+	}
+</style>
+
+<div class="tn-wrap" data-scroll-id="tn-wrap">
+	<div class="tn-stack">
+		<div class="tn-nav-bar">
+			<div class="tn-nav-tabs">
+				{{:helper.link('Market', 'search', {'PRG_trade_screen' : 'goods'}, data.screen == 'goods' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Cart' + (data.cart_count ? ' <span class="tn-nav-badge">' + data.cart_count + '</span>' : ''), 'cart', {'PRG_trade_screen' : 'cart'}, data.screen == 'cart' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Orders' + (data.order_count ? ' <span class="tn-nav-badge">' + data.order_count + '</span>' : ''), 'tag', {'PRG_trade_screen' : 'orders'}, data.screen == 'orders' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Contracts' + ((data.available_contract_count || data.active_contract_count) ? ' <span class="tn-nav-badge">' + (data.available_contract_count + data.active_contract_count) + '</span>' : ''), 'clipboard', {'PRG_trade_screen' : 'contracts'}, data.screen == 'contracts' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Export', 'refresh', {'PRG_trade_screen' : 'export'}, data.screen == 'export' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('History', 'document', {'PRG_trade_screen' : 'logs'}, data.screen == 'logs' ? 'selected' : null, 'tn-nav-btn')}}
+				{{:helper.link('Settings', 'gear', {'PRG_trade_screen' : 'settings'}, data.screen == 'settings' ? 'selected' : null, 'tn-nav-btn tn-settings-tab')}}
+			</div>
+		</div>
+
+		{{if data.screen == 'goods'}}
+			<div class="tn-summary">
+				<div class="tn-summary-meta">
+					<span><span class="tn-panel-label">Account:</span> {{if data.has_account}}{{>data.account_owner_name}} <span class="font-mono">({{>formatTradeAmount(data.account_money)}} {{:data.currency_short}})</span>{{else}}<span class="tn-muted">Not linked</span>{{/if}}</span>
+					<span><span class="tn-panel-label">Receiving:</span> {{if data.has_receiving}}{{>data.receiving}}{{else}}<span class="tn-muted">Not selected</span>{{/if}}</span>
+				</div>
+				{{:helper.link('View cart', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline')}}
+			</div>
+			{{if !data.has_account || !data.has_receiving}}
+				<div class="notice average">
+					{{if !data.has_account}}Link an account to add items.{{else}}Select a receiving beacon to purchase items.{{/if}}
+					{{:helper.link('Settings', 'gear', {'PRG_trade_screen' : 'settings'}, null, 'tn-btn tn-btn-outline')}}
+				</div>
+			{{/if}}
+
+		{{else data.screen == 'orders'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header tn-no-bottom">
+					<div>
+						<div class="tn-panel-title">Orders</div>
+					</div>
+					<div class="tn-flex-row-lg">
+						<div>
+							<span class="tn-panel-label">Requests:</span>
+							<strong class="font-mono tn-space-left">{{:data.order_count}}</strong>
+						</div>
+						<div>
+							<span class="tn-panel-label">Total:</span>
+							<strong class="font-mono tn-space-left">{{>formatTradeAmount(data.pending_orders_total)}} {{:data.currency_short}}</strong>
+						</div>
+						<div>
+							{{:helper.link('Receiving beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline')}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{{else data.screen == 'contracts'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header tn-no-bottom">
+					<div class="tn-panel-title">Contracts</div>
+					<div class="tn-summary-meta">
+						{{if data.has_account}}<span>Account: <strong>{{>data.account_owner_name}}</strong> <span class="font-mono">({{>formatTradeAmount(data.account_money)}} {{>data.currency_short}})</span></span>
+						{{else}}<span class="tn-muted">No account linked</span>{{:helper.link('Settings', 'gear', {'PRG_trade_screen' : 'settings'}, null, 'tn-btn tn-btn-outline')}}{{/if}}
+					</div>
+				</div>
+				<div class="tn-contract-beacons">
+					<div>{{:helper.link('Inbound beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline')}} <span class="tn-muted">{{if data.has_receiving}}{{>data.receiving}}{{else}}None selected{{/if}}</span></div>
+					<div>{{:helper.link('Outbound beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline')}} <span class="tn-muted">{{if data.has_sending}}{{>data.sending}}{{else}}None selected{{/if}}</span></div>
+				</div>
+			</div>
+
+		{{else data.screen == 'export'}}
+			<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">Export</div><span class="tn-muted">{{if data.has_sending}}{{>data.sending}}{{else}}No sending beacon selected{{/if}}</span></div></div>
+
+		{{else data.screen == 'logs'}}
+			<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">History</div><span class="tn-muted">{{if data.has_printer}}Printer connected{{else}}No printer connected{{/if}}</span></div></div>
+
+		{{else data.screen == 'cart'}}
+			<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">Cart <span class="tn-muted font-mono">({{:data.cart_count}} items)</span></div>{{:helper.link('Back to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline')}}</div></div>
+
+		{{else data.screen == 'settings'}}
+			<div class="tn-workspace-header">
+				<div class="tn-panel-header tn-no-bottom">
+					<div>
+						<div class="tn-panel-title">Settings</div>
+					</div>
+					<div>
+						{{:helper.link('Back to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline')}}
+					</div>
+				</div>
+			</div>
+		{{/if}}
+		{{if data.message}}
+			<div class="notice average">{{>data.message}}</div>
+		{{/if}}
+		{{if data.screen == 'goods'}}
+			<div class="tn-screen-view" data-view="screen-goods" data-view-screen="market">
+				<div class="tn-market-trader">
+					{{if !data.has_visible_stations}}
+						<div class="tn-empty">No trade stations in sensor range.</div>
+					{{else}}
+						<label for="cargo-trader-select">Trader</label>
+						<select id="cargo-trader-select" class="tn-station-select" onchange="if(this.value){ var fn = window.NanoUtility &amp;&amp; window.NanoUtility.generateHref; window.location.href = fn ? fn({'PRG_station': this.value}) : ('?src={{:uiSrc}};PRG_station=' + encodeURIComponent(this.value)); }">
+							{{for data.stations:station_entry:station_index}}
+								<option value="{{:station_entry.uid}}" {{if station_entry.selected}}selected{{/if}}>{{>station_entry.name}} &mdash; {{>station_entry.status_label}}</option>
+							{{/for}}
+						</select>
+						{{if data.has_selected_station && data.selected_station}}
+							<div class="tn-trader-meta">
+								<span class="tn-station-faction" style="color: {{:data.selected_station.faction_color}}">{{>data.selected_station.faction}}</span>
+								<span class="tn-tag tn-tag-{{:data.selected_station.market_tone}}">{{>data.selected_station.market_label}}</span>
+							</div>
+						{{/if}}
+					{{/if}}
+				</div>
+				<div class="tn-grid">
+					{{if data.has_selected_station}}
+						<div class="tn-col tn-market-sidebar">
+							<div class="tn-panel">
+								<div class="tn-panel-title">Categories</div>
+								<hr class="tn-section-divider">
+								{{if data.selected_station && data.selected_station.block_reason}}
+									<div class="tn-empty">Catalog blocked.</div>
+								{{else data.categories && data.categories.length}}
+									<div class="tn-category-vertical-list tn-scroll-box" data-scroll-id="tn-category-list">
+										{{for data.categories:category_entry:category_index}}
+											{{:helper.link(category_entry.name, null, {'PRG_goods_category' : category_entry.name}, category_entry.selected ? 'selected' : null, 'tn-category-item ')}}
+										{{/for}}
+									</div>
+								{{else}}
+									<div class="tn-empty">No categories available.</div>
+								{{/if}}
+							</div>
+						</div>
+					{{/if}}
+					<div class="tn-col tn-market-main">
+						{{if data.has_selected_station}}
+							<div class="tn-catalog-header-bar">
+								<div class="tn-catalog-title">
+									{{if data.selected_category && !data.selected_station.block_reason}}{{>data.selected_category}}{{else}}Catalog{{/if}}
+								</div>
+								<div class="tn-filter-controls">
+									<div class="tn-search-box">
+										<span class="tn-search-icon uiIcon16 icon-search" aria-hidden="true"></span>
+										<input type="text" id="cargo-search-input" class="tn-search-input font-mono" placeholder="Search this category" aria-label="Search this category" oninput="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onpropertychange="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onkeyup="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()">
+										<button type="button" class="tn-search-clear" title="Clear search" onclick="var inp=document.getElementById('cargo-search-input'); if(inp){ inp.value=''; window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter(); inp.focus(); }" aria-label="Clear search"><span class="uiIcon16 icon-close" aria-hidden="true"></span></button>
+									</div>
+									<select id="cargo-sort-select" aria-label="Sort items" class="tn-sort-select" onchange="window.cargoLiveSort &amp;&amp; window.cargoLiveSort()">
+										<option value="default">Default order</option>
+										<option value="price_asc">Price: Low &rarr; High</option>
+										<option value="price_desc">Price: High &rarr; Low</option>
+										<option value="name_asc">Name: A &rarr; Z</option>
+										<option value="name_desc">Name: Z &rarr; A</option>
+									</select>
+									<div id="cargo-cards-counter" class="tn-cards-counter font-mono"></div>
+								</div>
+							</div>
+
+							<div id="cargo-current-category" data-station="{{:data.selected_station.uid}}" data-cat="{{:data.selected_category}}" class="tn-hidden"></div>
+
+							{{if data.selected_station.block_reason}}
+								<div class="notice bad">{{>data.selected_station.block_reason}}</div>
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Trader unavailable</div>
+									<div class="tn-panel-subtitle tn-muted tn-empty-description">
+										Move into sensor range or clear radio interference to view this inventory.
+									</div>
+								</div>
+							{{else}}
+								<div class="tn-scroll-box tn-goods-scroll" data-scroll-id="tn-goods-table">
+									{{if data.goods && data.goods.length}}
+										<table class="tn-catalog-table">
+											<thead>
+												<tr>
+													<th class="tn-icon-col"></th>
+													<th>Item</th>
+													<th class="tn-stock-col tn-th-right">Stock</th>
+													<th class="tn-price-col tn-th-right">Price</th>
+													<th class="tn-quantity-col">Quantity</th>
+												</tr>
+											</thead>
+											<tbody id="cargo-goods-tbody">
+												{{for data.goods:good_entry:good_index}}
+													<tr class="tn-good-row{{if good_entry.in_cart_amount > 0}} tn-in-cart{{/if}}{{if !good_entry.can_add}} tn-restricted{{/if}}" data-key="{{>data.selected_station.uid + '::' + data.selected_category + '::' + good_entry.id}}" data-name="{{>good_entry.name}}" data-price="{{:good_entry.price}}" data-stock="{{:good_entry.stock}}" data-id="{{:good_entry.id}}" data-index="{{:good_index}}">
+														<td class="tn-icon-cell">
+															<div class="tn-sprite-box">
+																{{if good_entry.icon}}
+																	<img class="tn-sprite-img" src="{{:good_entry.icon}}" alt="{{>good_entry.name}}">
+																{{else}}
+																		<span class="tn-sprite-placeholder uiIcon16 icon-cart" aria-hidden="true"></span>
+																{{/if}}
+															</div>
+														</td>
+														<td>
+															<button type="button" class="tn-item-toggle" aria-expanded="false" aria-controls="cargo-good-details-{{:good_index}}" onclick="window.cargoToggleGoodDetails &amp;&amp; window.cargoToggleGoodDetails(this)">
+																<span class="tn-item-title"><span class="tn-item-marker" aria-hidden="true">+</span>{{>good_entry.name}}</span>
+															</button>
+															<div id="cargo-good-details-{{:good_index}}" class="tn-item-details tn-hidden">
+																{{if good_entry.desc}}<p>{{>good_entry.desc}}</p>{{/if}}
+																<div class="tn-labeled-row"><span>Buyback</span><span class="font-mono">{{>formatTradeAmount(good_entry.sell_price)}} {{:data.currency_short}}</span></div>
+																{{if good_entry.markup_text}}<div class="tn-labeled-row"><span>Markup</span><span class="font-mono">{{>good_entry.markup_text}}</span></div>{{/if}}
+															</div>
+														</td>
+														<td class="tn-number">
+															{{if good_entry.stock <= 0}}
+																<span class="font-mono tn-bad tn-bold">0</span>
+															{{else}}
+																<strong class="font-mono">{{:good_entry.stock}}</strong>
+															{{/if}}
+														</td>
+														<td class="tn-number">
+															<span class="font-mono tn-bold">
+																{{>formatTradeAmount(good_entry.price)}} {{:data.currency_short}}
+															</span>
+														</td>
+														<td class="tn-number">
+															{{if !good_entry.can_add && !good_entry.in_cart_amount}}
+																<span class="tn-muted">{{if good_entry.stock <= 0}}Out of stock{{else !data.has_account}}Link account{{else}}Unavailable{{/if}}</span>
+															{{else}}
+																<div class="tn-actions-wrap">
+																	{{if good_entry.in_cart_amount > 0}}
+																		<div class="tn-table-stepper">
+																			{{:helper.link('-', null, {'PRG_cart_remove_direct' : data.selected_station.uid, 'PRG_cart_category_name' : data.selected_category, 'PRG_cart_good_id' : good_entry.id, 'PRG_cart_remove_amount' : 1}, null, 'tn-table-stepper-btn')}}
+																			{{:helper.link(good_entry.in_cart_amount, null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-quantity-value font-mono')}}
+																			{{:helper.link('+', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, (!good_entry.can_add || good_entry.in_cart_amount >= good_entry.stock) ? 'disabled' : null, 'tn-table-stepper-btn')}}
+																		</div>
+																	{{else}}
+																		{{:helper.link('Add', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, null, 'tn-btn tn-btn-outline')}}
+																	{{/if}}
+																	{{if !good_entry.in_cart_amount}}{{:helper.link('Qty', null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-btn tn-btn-outline')}}{{/if}}
+																</div>
+
+																{{if good_entry.quantity_form_open}}
+																	<div class="tn-popover-form">
+																		<form class="tn-form" method="get" action="?src={{:uiSrc}}" onsubmit="return window.cargoValidateQuantityForm(this)">
+																			<input type="hidden" name="src" value="{{:uiSrc}}">
+																			<input type="hidden" name="PRG_cart_set_form" value="{{:good_entry.id}}">
+																			<input type="number" name="PRG_cart_set_amount" aria-label="Item quantity" min="0" max="{{:good_entry.can_add ? good_entry.stock : Math.min(good_entry.in_cart_amount, good_entry.stock)}}" value="{{:Math.min(good_entry.in_cart_amount || 1, good_entry.stock)}}" class="tn-popover-input font-mono" required oninput="window.cargoClearFormError(this)">
+																			<div class="tn-form-error tn-bad tn-full tn-hidden" role="alert"></div>
+																			<input type="submit" value="Set" class="tn-btn tn-btn-primary">
+																			{{:helper.link('Cancel', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+																		</form>
+																	</div>
+																{{/if}}
+															{{/if}}
+														</td>
+													</tr>
+												{{/for}}
+											</tbody>
+										</table>
+										<div id="cargo-search-no-results" class="tn-empty-panel tn-hidden">
+											<div class="tn-panel-title">No matching items</div>
+											<div class="tn-panel-subtitle tn-muted">Try adjusting your filter query or clearing the search.</div>
+										</div>
+									{{else}}
+										<div class="tn-empty-panel">
+											<div class="tn-panel-title">No goods in this category</div>
+											<div class="tn-panel-subtitle tn-muted">Choose another category or trader.</div>
+										</div>
+									{{/if}}
+								</div>
+							{{/if}}
+						{{else}}
+							<div class="tn-empty-panel">
+								<div class="tn-panel-title">Select a trader</div>
+								<div class="tn-panel-subtitle tn-muted">Choose a trader to view its inventory.</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{if data.cart_count > 0}}
+				<div class="tn-cart-footer">
+					<div class="tn-basket-summary-row">
+						<div class="tn-basket-lead">Cart: {{:data.cart_count}} items &middot; <span class="tn-basket-total font-mono">{{>formatTradeAmount(data.cart_total)}} {{:data.currency_short}}</span></div>
+						<div class="tn-basket-actions">
+							{{:helper.link('Purchase', 'check', {'PRG_receive' : 1}, data.can_purchase_cart ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+							{{:helper.link('Request order', 'clipboard', {'PRG_cart_form' : 'order'}, data.can_build_order ? null : 'disabled', 'tn-btn tn-btn-outline')}}
+							{{:helper.link('Details', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline')}}
+							{{:helper.link('Clear', 'close', {'PRG_cart_reset' : 1}, null, 'tn-btn tn-btn-danger tn-confirm-clear')}}
+						</div>
+					</div>
+					{{if data.cart_trade_block_reason}}<div class="notice bad">{{>data.cart_trade_block_reason}}</div>{{/if}}
+					{{if data.orders_locked}}<div class="tn-muted">Order requests are on cooldown.</div>{{/if}}
+					{{if data.cart_form_mode == 'order'}}
+						<div class="tn-form-shell">
+							<form class="tn-form" method="get" action="?src={{:uiSrc}}" onsubmit="return window.cargoValidateOrderForm(this)">
+								<input type="hidden" name="src" value="{{:uiSrc}}">
+								<input type="hidden" name="PRG_build_order_form" value="1">
+								<label class="tn-panel-label tn-full" for="cargo-field-PRG_order_reason">Reason (required)</label>
+								<textarea id="cargo-field-PRG_order_reason" name="PRG_order_reason" required placeholder="Department or reason for this order" oninput="window.cargoClearFormError(this)"></textarea>
+								<div class="tn-form-error tn-bad tn-full tn-hidden" role="alert">Enter a reason for this order.</div>
+								<div class="tn-flex-row-sm tn-full tn-space-top">
+									<input type="submit" value="Submit order" class="tn-btn tn-btn-primary">
+									{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
+				</div>
+			{{/if}}
+
+			<script id="cargo-market-script">
+			window.cargoLiveFilter = function() {
+				var searchInput = document.getElementById('cargo-search-input');
+				var rawQuery = searchInput ? searchInput.value.toLowerCase().replace(/^\s+|\s+$/g, '') : '';
+				var filterTokens = rawQuery ? rawQuery.split(/\s+/) : [];
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				var visibleCount = 0;
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					var name = row.getAttribute('data-name') || '';
+					if (!name) {
+						var nameEl = row.querySelector ? row.querySelector('.tn-item-title') : (window.jQuery ? $(row).find('.tn-item-title')[0] : null);
+						name = nameEl ? (nameEl.textContent || nameEl.innerText || '') : '';
+					}
+					name = name.toLowerCase();
+					var match = true;
+					for (var t = 0; t < filterTokens.length; t++) {
+						if (name.indexOf(filterTokens[t]) === -1) {
+							match = false;
+							break;
+						}
+					}
+					if (match) {
+						row.style.display = '';
+						visibleCount++;
+					} else {
+						row.style.display = 'none';
+					}
+				}
+				var noResults = document.getElementById('cargo-search-no-results');
+				if (noResults) {
+					noResults.style.display = (visibleCount === 0 && rows.length > 0) ? 'block' : 'none';
+				}
+				var counter = document.getElementById('cargo-cards-counter');
+				if (counter) {
+					counter.innerHTML = visibleCount + (rawQuery ? ' / ' + rows.length : '') + ' items';
+				}
+				window._cargoSearchQuery = rawQuery;
+			};
+
+			window.cargoLiveSort = function(sortOverride) {
+				var sortSelect = document.getElementById('cargo-sort-select');
+				var sortVal = sortOverride || (sortSelect ? sortSelect.value : 'default');
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var focused = document.activeElement;
+				var scrollBox = document.querySelector('.tn-goods-scroll');
+				var scrollTop = scrollBox ? scrollBox.scrollTop : 0;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				if (!rows.length) return;
+
+				rows.sort(function(a, b) {
+					if (sortVal === 'price_asc') {
+						return (parseFloat(a.getAttribute('data-price')) || 0) - (parseFloat(b.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'price_desc') {
+						return (parseFloat(b.getAttribute('data-price')) || 0) - (parseFloat(a.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'name_asc' || sortVal === 'name_desc') {
+						var nameA = (a.getAttribute('data-name') || '').toLowerCase();
+						var nameB = (b.getAttribute('data-name') || '').toLowerCase();
+						var cmp = nameA.localeCompare ? nameA.localeCompare(nameB) : (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
+						return sortVal === 'name_asc' ? cmp : -cmp;
+					} else {
+						return (parseInt(a.getAttribute('data-index'), 10) || 0) - (parseInt(b.getAttribute('data-index'), 10) || 0);
+					}
+				});
+
+				for (var i = 0; i < rows.length; i++) {
+					if (tbody.children[i] !== rows[i]) {
+						tbody.insertBefore(rows[i], tbody.children[i] || null);
+					}
+				}
+				if (focused && document.activeElement !== focused && window.jQuery && $.contains(tbody, focused)) {
+					focused.focus();
+				}
+				if (scrollBox) scrollBox.scrollTop = scrollTop;
+				if (!sortOverride) window._cargoSortVal = sortVal;
+			};
+
+			window.cargoApplyFilterAndSort = function() {
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+
+				var catEl = document.getElementById('cargo-current-category');
+				var currentCatKey = catEl ? ((catEl.getAttribute('data-station') || '') + '::' + (catEl.getAttribute('data-cat') || '')) : '';
+				if (window._cargoLastCategoryKey !== undefined && window._cargoLastCategoryKey !== currentCatKey) {
+					window._cargoSearchQuery = '';
+					var searchInput = document.getElementById('cargo-search-input');
+					if (searchInput) searchInput.value = '';
+				}
+				window._cargoLastCategoryKey = currentCatKey;
+
+				var searchInput = document.getElementById('cargo-search-input');
+				if (searchInput && window._cargoSearchQuery !== undefined && window._cargoSearchQuery !== '') {
+					searchInput.value = window._cargoSearchQuery;
+				}
+				var sortSelect = document.getElementById('cargo-sort-select');
+				if (sortSelect && window._cargoSortVal !== undefined) {
+					sortSelect.value = window._cargoSortVal;
+				}
+				if (window.cargoLiveSort) window.cargoLiveSort();
+				if (window.cargoLiveFilter) window.cargoLiveFilter();
+			};
+
+			if (window.NanoStateManager && window.NanoStateManager.addBeforeUpdateCallback) {
+				/* Restore server order before NanoUI compares rows by position. */
+				window.NanoStateManager.addBeforeUpdateCallback('cargo_trade_market', function(data) {
+					if (window.cargoLiveSort) window.cargoLiveSort('default');
+					return data;
+				});
+			}
+
+			if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+				window.NanoStateManager.addAfterUpdateCallback('cargo_trade_market', function(data) {
+					if (window.cargoApplyFilterAndSort) {
+						window.cargoApplyFilterAndSort();
+					}
+					return data;
+				});
+			}
+
+			if (window.cargoApplyFilterAndSort) {
+				window.cargoApplyFilterAndSort();
+			}
+			</script>
+			<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" onerror="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" class="tn-hidden">
+		{{else data.screen == 'orders'}}
+			<div class="tn-screen-view" data-view="screen-orders" data-view-screen="orders">
+				{{if data.cart_form_mode == 'select_receiving'}}
+					<div class="tn-form-shell tn-space-bottom">
+						<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+							<input type="hidden" name="src" value="{{:uiSrc}}">
+							<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Receiving beacon</label>
+							<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+								<option value="none">None (clear selection)</option>
+								{{for data.available_receiving_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.ref}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{>beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm tn-full tn-space-top">
+								<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+							</div>
+						</form>
+					</div>
+				{{/if}}
+				{{if !data.order_count}}
+					<div class="tn-empty-panel"><div class="tn-panel-title">No pending orders</div><div class="tn-panel-subtitle">Crew requests will appear here.</div></div>
+				{{else}}
+					<div class="tn-panel">
+						<div class="tn-filter-controls tn-list-filters">
+							<div class="tn-search-box"><input type="text" id="cargo-orders-search" class="tn-list-search" aria-label="Search orders" placeholder="Search number, requester or reason" oninput="window.cargoFilterList &amp;&amp; window.cargoFilterList('orders')" onkeyup="window.cargoFilterList &amp;&amp; window.cargoFilterList('orders')"><button type="button" class="tn-search-clear" aria-label="Clear order search" onclick="document.getElementById('cargo-orders-search').value='';window.cargoFilterList('orders')">&times;</button></div>
+							<select id="cargo-orders-filter" aria-label="Filter orders" onchange="window.cargoFilterList &amp;&amp; window.cargoFilterList('orders')"><option value="">All requests</option><option value="pending">Awaiting decision</option><option value="locked">Locked requests</option></select>
+							<span id="cargo-orders-counter" class="tn-muted font-mono tn-hidden" aria-live="polite"></span>
+						</div>
+						<div id="cargo-orders-list" class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-orders-list">
+							{{for data.orders:order_entry:order_index}}
+								<div class="tn-order-row{{if order_entry.selected}} tn-selected{{/if}}" data-key="order-{{:order_entry.id}}" data-detail-key="order-{{:order_entry.id}}" data-detail-group="orders" data-filter="{{if order_entry.can_cancel}}pending{{else}}locked{{/if}}" data-search="{{>order_entry.id + ' ' + order_entry.requestor_name + ' ' + order_entry.buyer_faction + ' ' + order_entry.reason}}">
+									<div class="tn-record-heading">
+										<div class="tn-record-identity"><span class="font-mono tn-muted">#{{:order_entry.id}}</span><strong>{{>order_entry.requestor_name}}</strong><span class="tn-muted">{{>order_entry.buyer_faction}}</span></div>
+										<span class="tn-tag tn-tag-{{:order_entry.status_tone}}">{{>order_entry.status}}</span>
+									</div>
+									<div class="tn-order-reason">{{>order_entry.reason}}</div>
+									<div class="tn-record-footer">
+										<div class="tn-record-finance"><strong class="font-mono">{{>formatTradeAmount(order_entry.total)}} {{>data.currency_short}}</strong><span class="tn-muted">{{:order_entry.item_count}} {{if order_entry.item_count == 1}}item{{else}}items{{/if}}</span><button type="button" class="tn-contract-toggle tn-detail-toggle" aria-expanded="false" aria-controls="tn-order-details-{{:order_entry.id}}" aria-label="Contents of order #{{:order_entry.id}}" onclick="window.cargoToggleDetails &amp;&amp; window.cargoToggleDetails(this)"><span class="tn-detail-marker" aria-hidden="true">+</span> Contents</button></div>
+										<div class="tn-record-actions">
+											{{if !order_entry.can_cancel}}<span class="tn-action-reason tn-bad">This request is locked.</span>{{else !data.can_approve_orders || !data.can_manage_orders}}<span class="tn-action-reason tn-muted">Cargo approval access required.</span>{{else !data.has_receiving}}<span class="tn-action-reason tn-muted">Select a receiving beacon to approve.</span>{{/if}}
+											{{:helper.link('Approve', 'check', {'PRG_approve_order' : order_entry.id}, (data.can_approve_orders && data.has_receiving && order_entry.can_cancel) ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+											{{:helper.link('Reject', 'close', {'PRG_remove_order' : order_entry.id}, (data.can_manage_orders && order_entry.can_cancel) ? null : 'disabled', 'tn-btn tn-btn-danger')}}
+										</div>
+									</div>
+									<div id="tn-order-details-{{:order_entry.id}}" class="tn-record-details tn-hidden">
+										<div class="tn-summary-meta"><span>Items <span class="font-mono">{{>formatTradeAmount(order_entry.cost)}} {{>data.currency_short}}</span></span><span>Fee <span class="font-mono">{{>formatTradeAmount(order_entry.fee)}} {{>data.currency_short}}</span></span></div>
+										{{for order_entry.contents:order_group:order_group_index}}
+											<div class="tn-bold tn-space-top">{{>order_group.station_name}}</div>
+											{{for order_group.categories:order_category:order_category_index}}
+												{{for order_category.items:order_item:order_item_index}}
+													<div class="tn-item-row"><span>{{>order_item.name}} &times; <span class="font-mono">{{:order_item.amount}}</span></span><span class="font-mono">{{>formatTradeAmount(order_item.price)}} {{>data.currency_short}}</span></div>
+												{{/for}}
+											{{/for}}
+										{{/for}}
+										<div class="tn-space-top">{{:helper.link('Save preset', 'clipboard', {'PRG_save_order' : order_entry.id}, null, 'tn-btn tn-btn-outline')}}</div>
+									</div>
+								{{if data.cart_form_mode == 'save_order' && data.save_order_id == order_entry.id}}
+									<div class="tn-form-shell tn-space-top">
+										<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+											<input type="hidden" name="src" value="{{:uiSrc}}">
+											<input type="hidden" name="PRG_save_order_form" value="1">
+											<label class="tn-panel-label tn-full" for="cargo-field-PRG_save_name">Preset name for order #{{:order_entry.id}}:</label>
+											<input id="cargo-field-PRG_save_name" type="text" name="PRG_save_name" value="" placeholder="Preset name" required class="tn-full">
+											<div class="tn-flex-row-sm tn-full tn-space-top">
+												<input type="submit" value="Save preset" class="tn-btn tn-btn-primary">
+												{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+											</div>
+										</form>
+									</div>
+								{{/if}}
+								</div>
+							{{/for}}
+						</div>
+						<div id="cargo-orders-empty" class="tn-empty tn-hidden">No matching requests.</div>
+					</div>
+				{{/if}}
+			</div>
+		{{else data.screen == 'contracts'}}
+			<div class="tn-screen-view" data-view="screen-contracts" data-view-screen="contracts">
+				{{if data.cart_form_mode == 'select_receiving'}}
+					<div class="tn-form-shell tn-space-bottom">
+						<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+							<input type="hidden" name="src" value="{{:uiSrc}}">
+							<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Inbound beacon</label>
+							<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+								<option value="none">None (clear selection)</option>
+								{{for data.available_receiving_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.ref}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{>beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm tn-full tn-space-top">
+								<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+							</div>
+						</form>
+					</div>
+				{{else data.cart_form_mode == 'select_sending'}}
+					<div class="tn-form-shell tn-space-bottom">
+						<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+							<input type="hidden" name="src" value="{{:uiSrc}}">
+							<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Outbound beacon</label>
+							<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+								<option value="none">None (clear selection)</option>
+								{{for data.available_sending_beacons:beacon:beacon_index}}
+									<option value="{{:beacon.ref}}" {{if beacon.id == data.sending}}selected{{/if}}>{{>beacon.id}}</option>
+								{{/for}}
+							</select>
+							<div class="tn-flex-row-sm tn-full tn-space-top">
+								<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+								{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+							</div>
+						</form>
+					</div>
+				{{/if}}
+				<div class="tn-panel tn-space-bottom" id="tn-contracts-active-panel">
+					<div class="tn-panel-header"><div class="tn-panel-title">Active <span class="tn-muted font-mono">({{:data.active_contract_count}})</span></div></div>
+					{{if !data.active_contracts || !data.active_contracts.length}}
+						<div class="tn-empty">No active contracts.</div>
+					{{else}}
+						<div class="tn-scroll-box tn-contract-scroll" data-scroll-id="tn-contracts-active">
+							{{var contractActive = true;}}
+							{{for data.active_contracts:contract_entry:contract_index}}{{#def.contract_row}}{{/for}}
+						</div>
+					{{/if}}
+				</div>
+				<div class="tn-panel tn-space-bottom" id="tn-contracts-offers-panel">
+					<div class="tn-panel-header"><div class="tn-panel-title">Available <span class="tn-muted font-mono">({{:data.available_contract_count}})</span></div></div>
+					{{if !data.available_contracts || !data.available_contracts.length}}
+						<div class="tn-empty">No contracts available.</div>
+					{{else}}
+						<div class="tn-contract-filters">
+							<div class="tn-search-box">
+								<span class="tn-search-icon uiIcon16 icon-search" aria-hidden="true"></span>
+								<input type="text" id="cargo-contract-search" class="tn-search-input" placeholder="Search offers" aria-label="Search contract offers" oninput="window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts()" onpropertychange="window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts()" onkeyup="window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts()">
+								<button type="button" class="tn-search-clear" aria-label="Clear contract search" title="Clear search" onclick="var input=document.getElementById('cargo-contract-search'); if(input){input.value='';window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts();input.focus();}"><span class="uiIcon16 icon-close" aria-hidden="true"></span></button>
+							</div>
+							{{var contractTypes = []; for(var contractTypeIndex = 0; contractTypeIndex < data.available_contracts.length; contractTypeIndex++) { var contractType = data.available_contracts[contractTypeIndex].type_label; if(contractTypes.indexOf(contractType) < 0) contractTypes.push(contractType); } contractTypes.sort();}}
+							<select id="cargo-contract-type" aria-label="Contract type" onchange="window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts()"><option value="">All types</option>{{for contractTypes:contractType:contractTypeIndex}}<option value="{{>contractType}}">{{>contractType}}</option>{{/for}}</select>
+							<select id="cargo-contract-availability" aria-label="Contract availability" onchange="window.cargoFilterContracts &amp;&amp; window.cargoFilterContracts()"><option value="">All offers</option><option value="ready">Ready to accept</option><option value="blocked">Unavailable</option></select>
+							<select id="cargo-contract-sort" aria-label="Sort contract offers" onchange="window.cargoSortContracts &amp;&amp; window.cargoSortContracts()"><option value="ready">Ready first</option><option value="reward">Highest reward</option><option value="deposit">Lowest deposit</option><option value="distance">Shortest distance</option></select>
+						</div>
+						<div id="cargo-contract-filter-summary" class="tn-contract-filter-summary tn-hidden"><span id="cargo-contract-counter" class="tn-muted font-mono" aria-live="polite"></span><button type="button" id="cargo-contract-reset" class="tn-contract-toggle tn-hidden" onclick="window.cargoResetContractFilters &amp;&amp; window.cargoResetContractFilters()">Reset filters</button></div>
+						<div id="cargo-contract-offers" class="tn-scroll-box tn-contract-scroll" data-scroll-id="tn-contracts-available">
+							{{var contractActive = false;}}
+							{{for data.available_contracts:contract_entry:contract_index}}{{#def.contract_row}}{{/for}}
+						</div>
+						<div id="cargo-contract-no-results" class="tn-empty tn-space-top tn-hidden">No offers match these filters.</div>
+					{{/if}}
+				</div>
+				<div class="tn-panel">
+					<button type="button" class="tn-history-toggle" aria-expanded="false" aria-controls="tn-contract-history" onclick="window.cargoToggleHistory &amp;&amp; window.cargoToggleHistory()">History <span class="tn-muted font-mono">({{:data.resolved_contract_count}})</span> <span class="tn-muted" id="tn-history-marker">+</span></button>
+					<div id="tn-contract-history" class="tn-history-body tn-hidden">
+						{{if !data.resolved_contract_count}}
+							<div class="tn-empty">No resolved contracts.</div>
+						{{else}}
+							<div class="tn-contract-filter-summary"><select id="cargo-contract-history-filter" aria-label="Filter contract history" onchange="window.cargoFilterContractHistory &amp;&amp; window.cargoFilterContractHistory()"><option value="">All outcomes</option><option value="completed">Completed</option><option value="failed">Failed</option></select><span id="cargo-contract-history-counter" class="tn-muted font-mono" aria-live="polite"></span></div>
+							<div class="tn-scroll-box tn-history-scroll" data-scroll-id="tn-contracts-history">
+								{{var historyOutcome = 'completed';}}
+								{{for data.completed_contracts:contract_entry:contract_index}}{{#def.contract_history_row}}{{/for}}
+								{{var historyOutcome = 'failed';}}
+								{{for data.failed_contracts:contract_entry:contract_index}}{{#def.contract_history_row}}{{/for}}
+							</div>
+							<div id="cargo-contract-history-empty" class="tn-empty tn-space-top tn-hidden">No contracts with this outcome.</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		{{else data.screen == 'export'}}
+			<div class="tn-screen-view" data-view="screen-export" data-view-screen="export">
+				<div class="tn-market-trader">
+					{{if !data.has_visible_stations}}<span class="tn-muted">No trade stations in sensor range.</span>{{else}}
+						<label for="cargo-export-trader">Trader</label>
+						<select id="cargo-export-trader" class="tn-station-select" onchange="if(this.value){var fn=window.NanoUtility &amp;&amp; window.NanoUtility.generateHref;window.location.href=fn?fn({'PRG_station':this.value}):('?src={{:uiSrc}};PRG_station='+encodeURIComponent(this.value));}">
+							{{for data.stations:station_entry:station_index}}<option value="{{:station_entry.uid}}" {{if station_entry.selected}}selected{{/if}}>{{>station_entry.name}} &mdash; {{>station_entry.status_label}}</option>{{/for}}
+						</select>
+						{{if data.has_selected_station && data.selected_station}}<div class="tn-trader-meta"><span class="tn-muted">{{>data.selected_station.faction}}</span><span class="tn-tag tn-tag-{{:data.selected_station.market_tone}}">{{>data.selected_station.market_label}}</span></div>{{/if}}
+					{{/if}}
+				</div>
+				<div class="tn-panel">
+					<div class="tn-panel-header"><div class="tn-panel-title">Proceeds</div><span>{{>data.export_account_owner}}</span></div>
+					<div class="tn-flex-row-sm">
+						{{:helper.link('Cargo account', null, {'PRG_export_account' : 'cargo'}, data.export_to_cargo_account ? 'selected' : null, 'tn-btn')}}
+						{{:helper.link('Linked account', null, {'PRG_export_account' : 'linked'}, data.export_to_cargo_account ? null : 'selected', 'tn-btn')}}
+						{{:helper.link('Link account', null, {'PRG_trade_screen' : 'settings'}, null, 'tn-btn tn-btn-outline')}}
+					</div>
+					<div class="tn-setting-note">Cargo with an R&amp;D invoice pays the account named on that invoice.</div>
+				</div>
+				<div class="tn-panel">
+					<div class="tn-panel-header"><div class="tn-panel-title">Quoted cargo <span class="tn-muted font-mono">({{:data.export_items ? data.export_items.length : 0}})</span></div>{{:helper.link('Sending beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline')}}</div>
+					{{if data.cart_form_mode == 'select_sending'}}
+						<div class="tn-form-shell tn-space-bottom">
+							<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+								<input type="hidden" name="src" value="{{:uiSrc}}">
+								<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Sending beacon</label>
+								<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+									<option value="none">None (clear selection)</option>
+									{{for data.available_sending_beacons:beacon:beacon_index}}
+										<option value="{{:beacon.ref}}" {{if beacon.id == data.sending}}selected{{/if}}>{{>beacon.id}}</option>
+									{{/for}}
+								</select>
+								<div class="tn-flex-row-sm tn-full tn-space-top">
+									<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+									{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+								</div>
+							</form>
+						</div>
+					{{/if}}
+					{{if !data.export_items || !data.export_items.length}}
+						<div class="tn-empty-panel"><div class="tn-panel-title">No cargo quoted</div><div class="tn-panel-subtitle">Place sellable cargo within sending beacon range.</div></div>
+					{{else}}
+						<div class="tn-setting-note">The quote lists items included in the sale. Expand containers to inspect their quoted contents.</div>
+						<div class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-export-list">
+							{{for data.export_items:export_item:export_index}}
+								<div class="tn-export-row" data-key="{{>JSON.stringify([export_item.name, export_item.target_station, export_index])}}" data-detail-key="{{>JSON.stringify([export_item.name, export_item.target_station, export_index])}}" data-detail-group="export">
+									<div class="tn-record-heading"><strong>{{>export_item.name}}{{if export_item.amount > 1}} &times; <span class="font-mono">{{:export_item.amount}}</span>{{/if}}</strong><strong class="font-mono">{{>formatTradeAmount(export_item.value)}} {{>data.currency_short}}</strong></div>
+									{{if export_item.amount > 1}}<div class="tn-muted">{{>formatTradeAmount(export_item.unit_value)}} {{>data.currency_short}} each</div>{{/if}}
+									{{if export_item.sub_items && export_item.sub_items.length}}
+										<button type="button" class="tn-contract-toggle tn-detail-toggle" aria-expanded="false" aria-controls="tn-export-details-{{:export_index}}" aria-label="Quoted contents of {{>export_item.name}}" onclick="window.cargoToggleDetails &amp;&amp; window.cargoToggleDetails(this)"><span class="tn-detail-marker" aria-hidden="true">+</span> Contents <span class="font-mono">({{:export_item.sub_items.length}})</span></button>
+										<div id="tn-export-details-{{:export_index}}" class="tn-record-details tn-hidden">
+											{{for export_item.sub_items:sub_entry:sub_index}}
+												<div class="tn-item-row"><span>{{>sub_entry.name}} &times; <span class="font-mono">{{:sub_entry.amount}}</span>{{if sub_entry.amount > 1}} <span class="tn-muted">({{>formatTradeAmount(sub_entry.unit_value)}} {{>data.currency_short}} each)</span>{{/if}}</span><span class="font-mono">{{>formatTradeAmount(sub_entry.value)}} {{>data.currency_short}}</span></div>
+											{{/for}}
+										</div>
+									{{/if}}
+								</div>
+							{{/for}}
+						</div>
+					{{/if}}
+					<div class="tn-record-footer tn-export-checkout">
+						<div><span class="tn-panel-label">Estimated proceeds</span> <strong class="font-mono">{{>formatTradeAmount(data.export_total)}} {{>data.currency_short}}</strong>{{if data.export_cooldown_remaining}}<div class="tn-muted">Beacon cooldown: {{>data.export_cooldown_text}}</div>{{/if}}</div>
+						<div class="tn-record-actions">{{if data.export_block_reason}}<span class="tn-action-reason tn-bad">{{>data.export_block_reason}}</span>{{/if}}{{:helper.link('Export', 'refresh', {'PRG_export' : 1}, data.can_export ? null : 'disabled', 'tn-btn tn-btn-primary')}}</div>
+					</div>
+				</div>
+			</div>
+		{{else data.screen == 'logs'}}
+			<div class="tn-screen-view" data-view="screen-logs" data-view-screen="logs" data-log-stream="{{>data.log_screen}}">
+				<div class="tn-pillnav">
+					{{:helper.link('Shipping', null, {'PRG_log_screen' : 'Shipping'}, data.log_screen == 'Shipping' ? 'selected' : null, 'tn-pillnav-link ')}}
+					{{:helper.link('Export', null, {'PRG_log_screen' : 'Export'}, data.log_screen == 'Export' ? 'selected' : null, 'tn-pillnav-link ')}}
+					{{:helper.link('Orders', null, {'PRG_log_screen' : 'Order'}, data.log_screen == 'Order' ? 'selected' : null, 'tn-pillnav-link ')}}
+					{{:helper.link('Contracts', null, {'PRG_log_screen' : 'Contract'}, data.log_screen == 'Contract' ? 'selected' : null, 'tn-pillnav-link ')}}
+				</div>
+				<div class="tn-panel">
+					{{if !data.log_entries || !data.log_entries.length}}
+						<div class="tn-empty-panel"><div class="tn-panel-title">No entries</div><div class="tn-panel-subtitle">No activity recorded in this history.</div></div>
+					{{else}}
+						<div class="tn-filter-controls tn-list-filters"><div class="tn-search-box"><input type="text" id="cargo-logs-search" class="tn-list-search" aria-label="Search history" placeholder="Search invoice, time or account" oninput="window.cargoFilterList &amp;&amp; window.cargoFilterList('logs')" onkeyup="window.cargoFilterList &amp;&amp; window.cargoFilterList('logs')"><button type="button" class="tn-search-clear" aria-label="Clear history search" onclick="document.getElementById('cargo-logs-search').value='';window.cargoFilterList('logs')">&times;</button></div><span id="cargo-logs-counter" class="tn-muted font-mono tn-hidden" aria-live="polite"></span></div>
+						{{if !data.has_printer}}<div class="tn-muted tn-space-bottom">Connect a printer to print invoices.</div>{{/if}}
+						<div id="cargo-logs-list" class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-logs-list-{{:data.log_screen}}">
+							{{for data.log_entries:log_entry:log_entry_index}}
+								<div class="tn-log-row" data-key="log-{{>data.log_screen}}-{{:log_entry.id}}" data-search="{{>log_entry.id + ' ' + log_entry.time + ' ' + log_entry.ordering_acct}}">
+									<div class="tn-record-heading"><div class="tn-record-identity"><strong class="font-mono">#{{:log_entry.id}}</strong><span class="font-mono tn-muted">{{>log_entry.time}}</span></div><strong class="font-mono">{{>formatTradeAmount(log_entry.total_paid)}} {{>data.currency_short}}</strong></div>
+									<div class="tn-record-footer"><span>{{>log_entry.ordering_acct}}</span><div class="tn-record-actions">{{:helper.link('Print', 'clipboard', {'PRG_print' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-btn tn-btn-outline')}}{{:helper.link('Internal copy', null, {'PRG_print_internal' : log_entry.id}, data.has_printer ? null : 'disabled', 'tn-btn tn-btn-outline')}}</div></div>
+								</div>
+							{{/for}}
+						</div>
+						<div id="cargo-logs-empty" class="tn-empty tn-hidden">No matching entries.</div>
+					{{/if}}
+				</div>
+			</div>
+		{{else data.screen == 'cart'}}
+			<div class="tn-screen-view" data-view="screen-cart" data-view-screen="cart">
+				<div class="tn-grid">
+					<div class="tn-col tn-cart-items">
+						<div class="tn-panel">
+							<div class="tn-panel-header">
+								<div>
+									<div class="tn-panel-title">Items</div>
+								</div>
+								<div>
+									{{:helper.link('Clear cart', 'close', {'PRG_cart_reset' : 1}, data.cart_count ? null : 'disabled', 'tn-btn tn-btn-danger tn-confirm-clear')}}
+								</div>
+							</div>
+
+							{{if !data.cart_count}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Cart is empty</div>
+									<div class="tn-panel-subtitle tn-muted">Add items from the market.</div>
+									<div class="tn-space-top">
+										{{:helper.link('Go to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-primary')}}
+									</div>
+								</div>
+							{{else}}
+								<div class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-cart-list">
+									{{for data.cart_groups:cart_group:cart_group_index}}
+										<div class="tn-cart-group">
+											<div class="tn-bold tn-space-bottom">{{>cart_group.station_name}}</div>
+											{{for cart_group.categories:cart_category:cart_category_index}}
+												<div class="tn-panel-label tn-space-top">{{>cart_category.name}}</div>
+												{{for cart_category.items:cart_item:cart_item_index}}
+													<div class="tn-cart-line" data-key="{{>cart_item.station_uid + '::' + cart_item.category_name + '::' + cart_item.good_id}}">
+														<strong class="tn-cart-line-name">{{>cart_item.name}}</strong>
+														<div class="tn-cart-line-controls">
+															{{:helper.link('-', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : 1}, null, 'tn-table-stepper-btn tn-cart-decrement')}}
+															<span class="font-mono tn-cart-quantity" aria-label="Quantity">{{:cart_item.amount}}</span>
+															<strong class="font-mono tn-cart-line-price">{{>formatTradeAmount(cart_item.price)}} {{>data.currency_short}}</strong>
+															{{:helper.link('Remove', 'close', {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : cart_item.amount, 'PRG_cart_remove_all' : 1}, null, 'tn-btn tn-btn-danger tn-cart-remove')}}
+														</div>
+													</div>
+													{{/for}}
+											{{/for}}
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+					<div class="tn-col tn-checkout-column">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Checkout</div>
+							<hr class="tn-section-divider">
+							<div class="tn-labeled-row"><span>Account</span><span>{{if data.has_account}}{{>data.account_owner_name}}{{else}}Not linked{{/if}}</span></div>
+							<div class="tn-labeled-row"><span>Balance</span><span class="font-mono">{{>formatTradeAmount(data.account_money)}} {{:data.currency_short}}</span></div>
+							<div class="tn-labeled-row"><span>Receiving</span><span>{{if data.has_receiving}}{{>data.receiving}}{{else}}Not selected{{/if}}</span></div>
+							<div class="tn-labeled-row tn-checkout-total"><span>Purchase total</span><span class="font-mono">{{>formatTradeAmount(data.cart_total)}} {{:data.currency_short}}</span></div>
+							{{if data.cart_count && data.cart_fee > 0}}
+								<div class="tn-labeled-row"><span>Estimated order fee</span><span class="font-mono">{{>formatTradeAmount(data.cart_fee)}} {{:data.currency_short}}</span></div>
+								<div class="tn-labeled-row"><span>Order estimate</span><span class="font-mono">{{>formatTradeAmount(data.cart_total + data.cart_fee)}} {{:data.currency_short}}</span></div>
+							{{/if}}
+							{{if data.cart_count && (!data.has_account || !data.has_receiving)}}<div class="tn-space-top">{{:helper.link('Settings', 'gear', {'PRG_trade_screen' : 'settings'}, null, 'tn-btn tn-btn-outline')}}</div>{{/if}}
+							<div class="tn-checkout-action">
+								{{if data.cart_count && !data.has_account}}<div class="tn-action-reason tn-muted">Link an account to purchase.</div>{{else data.cart_count && !data.has_receiving}}<div class="tn-action-reason tn-muted">Select a receiving beacon to purchase.</div>{{else data.cart_trade_block_reason}}<div class="tn-action-reason tn-bad">{{>data.cart_trade_block_reason}}</div>{{/if}}
+								{{:helper.link('Purchase', 'check', {'PRG_receive' : 1}, data.can_purchase_cart ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+							</div>
+							<div class="tn-checkout-action">
+								{{if data.cart_count && !data.has_account}}<div class="tn-action-reason tn-muted">Link an account to request an order.</div>{{else data.orders_locked}}<div class="tn-action-reason tn-muted">Order requests are on cooldown.</div>{{/if}}
+								{{:helper.link('Request order', 'clipboard', {'PRG_cart_form' : 'order'}, data.can_build_order ? null : 'disabled', 'tn-btn tn-btn-outline')}}
+							</div>
+							<div class="tn-checkout-action">{{:helper.link('Save preset', null, {'PRG_cart_form' : 'save'}, data.can_save_cart ? null : 'disabled', 'tn-btn tn-btn-outline')}}</div>
+
+							{{if data.cart_form_mode == 'order'}}
+								<div class="tn-form-shell">
+									<form class="tn-form" method="get" action="?src={{:uiSrc}}" onsubmit="return window.cargoValidateOrderForm(this)">
+										<input type="hidden" name="src" value="{{:uiSrc}}">
+										<input type="hidden" name="PRG_build_order_form" value="1">
+										<label class="tn-panel-label tn-full" for="cargo-field-PRG_order_reason">Reason (required)</label>
+										<textarea id="cargo-field-PRG_order_reason" name="PRG_order_reason" required placeholder="Department or reason for this order" oninput="window.cargoClearFormError(this)"></textarea>
+								<div class="tn-form-error tn-bad tn-full tn-hidden" role="alert">Enter a reason for this order.</div>
+										<div class="tn-flex-row-sm tn-full tn-space-top">
+											<input type="submit" value="Submit order" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+										</div>
+									</form>
+								</div>
+							{{else data.cart_form_mode == 'save'}}
+								<div class="tn-form-shell">
+									<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+										<input type="hidden" name="src" value="{{:uiSrc}}">
+										<input type="hidden" name="PRG_cart_save_form" value="1">
+										<label class="tn-panel-label tn-full" for="cargo-field-PRG_cart_save_name">Preset name</label>
+										<input id="cargo-field-PRG_cart_save_name" type="text" name="PRG_cart_save_name" value="" placeholder="Medbay restock" required class="tn-full">
+										<div class="tn-flex-row-sm tn-full tn-space-top">
+											<input type="submit" value="Save preset" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+										</div>
+									</form>
+								</div>
+							{{/if}}
+						</div>
+						<div class="tn-panel tn-space-top">
+							<div class="tn-panel-title">Presets</div>
+							<hr class="tn-section-divider">
+							{{if !data.saved_carts || !data.saved_carts.length}}
+								<div class="tn-empty">No saved presets available.</div>
+							{{else}}
+								<div class="tn-scroll-box tn-preset-scroll" data-scroll-id="tn-saved-table">
+									{{for data.saved_carts:saved_cart:saved_cart_index}}
+										<div class="tn-item-row">
+											<div>
+												<strong>{{>saved_cart.name}}</strong>
+												<div class="font-mono tn-muted">{{:saved_cart.count}} items &bull; {{>formatTradeAmount(saved_cart.total)}} {{:data.currency_short}}</div>
+											</div>
+											<div class="tn-flex-row-sm">
+												{{:helper.link('Load', null, {'PRG_cart_load_direct' : saved_cart.index}, null, 'tn-btn tn-btn-outline')}}
+												{{:helper.link('Delete', 'close', {'PRG_cart_delete' : saved_cart.index}, null, 'tn-btn tn-btn-danger ')}}
+											</div>
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+		{{else data.screen == 'settings'}}
+			<div class="tn-screen-view" data-view="screen-settings" data-view-screen="settings">
+				<div class="tn-grid">
+					<div class="tn-col">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Account</div>
+							<hr class="tn-section-divider">
+							{{if data.has_account}}
+								<div class="tn-labeled-row"><span>Owner</span><strong>{{>data.account_owner_name}}</strong></div>
+								<div class="tn-labeled-row"><span>Account number</span><span class="font-mono">#{{:data.account_number}}</span></div>
+								<div class="tn-labeled-row"><span>Balance</span><strong class="font-mono">{{>formatTradeAmount(data.account_money)}} {{>data.currency_short}}</strong></div>
+							{{else}}
+								<div class="tn-muted">No account linked.</div><p class="tn-setting-note">Link an account to purchase goods and request orders.</p>
+							{{/if}}
+							{{if data.has_master_budget}}<div class="tn-labeled-row tn-space-top"><span>Supply budget</span><span class="font-mono">{{>formatTradeAmount(data.master_budget)}} {{>data.currency_short}}</span></div>{{/if}}
+							<hr class="tn-section-divider">
+							<div class="tn-flex-row-sm">
+								{{if data.has_account}}
+									{{:helper.link('Unlink account', 'close', {'PRG_account_unlink' : 1}, null, 'tn-btn tn-btn-danger ')}}
+								{{else}}
+									{{if data.can_link_id_account}}
+										{{:helper.link('Use ID card', 'check', {'PRG_account_id' : 1}, null, 'tn-btn tn-btn-primary')}}
+									{{/if}}
+									{{:helper.link('Account number and PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline')}}
+								{{/if}}
+							</div>
+							{{if data.cart_form_mode == 'link_account'}}
+								<div class="tn-form-shell tn-space-top">
+									<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+										<input type="hidden" name="src" value="{{:uiSrc}}">
+										<label class="tn-panel-label tn-full" for="cargo-field-PRG_link_account_number">Account number</label>
+										<input id="cargo-field-PRG_link_account_number" type="number" name="PRG_link_account_number" value="{{if data.can_link_id_account}}{{:data.inserted_id_account_number}}{{/if}}" placeholder="Account #" required class="tn-full">
+										<label class="tn-panel-label tn-full tn-space-top" for="cargo-field-PRG_link_account_pin">PIN:</label>
+										<input id="cargo-field-PRG_link_account_pin" type="password" name="PRG_link_account_pin" value="" placeholder="PIN" required class="tn-full">
+										<div class="tn-flex-row-sm tn-full tn-space-top">
+											<input type="submit" value="Link account" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+										</div>
+									</form>
+								</div>
+							{{else data.cart_form_mode == 'link_id_account'}}
+								<div class="tn-form-shell tn-space-top">
+									<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+										<input type="hidden" name="src" value="{{:uiSrc}}">
+										<label class="tn-panel-label tn-full" for="cargo-field-PRG_link_id_pin">PIN for ID card account (#{{:data.inserted_id_account_number}}):</label>
+										<input id="cargo-field-PRG_link_id_pin" type="password" name="PRG_link_id_pin" value="" placeholder="PIN" required class="tn-full">
+										<div class="tn-flex-row-sm tn-full tn-space-top">
+											<input type="submit" value="Verify PIN" class="tn-btn tn-btn-primary">
+											{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+										</div>
+									</form>
+								</div>
+							{{/if}}
+						</div>
+					</div>
+
+					<div class="tn-col">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Beacons</div>
+							<hr class="tn-section-divider">
+							<div>
+								<div class="tn-space-bottom">
+									<div class="tn-panel-label">Receiving</div><div class="tn-setting-note">Receives purchases and contract cargo.</div>
+									<div class="tn-summary tn-space-top">
+										<strong>{{if data.has_receiving}}{{>data.receiving}}{{else}}<span class="tn-empty">None selected</span>{{/if}}</strong>
+										{{:helper.link('Select beacon', null, {'PRG_receiving' : 1}, null, 'tn-btn tn-btn-outline')}}
+									</div>
+									{{if data.cart_form_mode == 'select_receiving'}}
+										<div class="tn-form-shell tn-space-top">
+											<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+												<input type="hidden" name="src" value="{{:uiSrc}}">
+												<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Receiving beacon</label>
+												<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+													<option value="none">None (clear selection)</option>
+													{{for data.available_receiving_beacons:beacon:beacon_index}}
+														<option value="{{:beacon.ref}}" {{if beacon.id == data.receiving}}selected{{/if}}>{{>beacon.id}}</option>
+													{{/for}}
+												</select>
+												<div class="tn-flex-row-sm tn-full tn-space-top">
+													<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+													{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+												</div>
+											</form>
+										</div>
+									{{/if}}
+								</div>
+								<div>
+									<div class="tn-panel-label">Sending</div><div class="tn-setting-note">Sends exports, contract deliveries and data handoffs.</div>
+									<div class="tn-summary tn-space-top">
+										<strong>{{if data.has_sending}}{{>data.sending}}{{else}}<span class="tn-empty">None selected</span>{{/if}}</strong>
+										{{:helper.link('Select beacon', null, {'PRG_sending' : 1}, null, 'tn-btn tn-btn-outline')}}
+									</div>
+									{{if data.cart_form_mode == 'select_sending'}}
+										<div class="tn-form-shell tn-space-top">
+											<form class="tn-form" method="get" action="?src={{:uiSrc}}">
+												<input type="hidden" name="src" value="{{:uiSrc}}">
+												<label class="tn-panel-label tn-full" for="cargo-field-PRG_beacon_id">Sending beacon</label>
+												<select id="cargo-field-PRG_beacon_id" name="PRG_beacon_id" class="tn-full">
+													<option value="none">None (clear selection)</option>
+													{{for data.available_sending_beacons:beacon:beacon_index}}
+														<option value="{{:beacon.ref}}" {{if beacon.id == data.sending}}selected{{/if}}>{{>beacon.id}}</option>
+													{{/for}}
+												</select>
+												<div class="tn-flex-row-sm tn-full tn-space-top">
+													<input type="submit" value="Set beacon" class="tn-btn tn-btn-primary">
+													{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+												</div>
+											</form>
+										</div>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</div>
+
+<script id="cargo-controls-script">
+window.cargoClearFormError = function(input) {
+	input.removeAttribute('aria-invalid');
+	$(input.form).find('.tn-form-error').hide();
+};
+window.cargoValidateQuantityForm = function(form) {
+	var input = form.elements['PRG_cart_set_amount'];
+	var amount = Number(input.value);
+	var maximum = Number(input.getAttribute('max'));
+	var error = '';
+	if (!input.value.replace(/^\s+|\s+$/g, '') || !isFinite(amount) || amount < 0 || amount % 1) error = 'Enter a whole quantity of zero or more.';
+	else if (amount > maximum) error = 'Maximum quantity: ' + maximum + '.';
+	$(form).find('.tn-form-error').text(error).toggle(!!error);
+	if (error) {
+		input.setAttribute('aria-invalid', 'true');
+		input.focus();
+	}
+	return !error;
+};
+window.cargoValidateOrderForm = function(form) {
+	var input = form.PRG_order_reason;
+	var valid = !!input.value.replace(/^\s+|\s+$/g, '');
+	$(form).find('.tn-form-error').toggle(!valid);
+	if (!valid) {
+		input.setAttribute('aria-invalid', 'true');
+		input.focus();
+	}
+	return valid;
+};
+window.cargoToggleDetails = function(button) {
+	var row = $(button).closest('[data-detail-key]');
+	var group = row.attr('data-detail-group');
+	var key = row.attr('data-detail-key');
+	window._cargoDetails = window._cargoDetails || {};
+	window._cargoDetails[group] = window._cargoDetails[group] === key ? null : key;
+	window.cargoApplyDetails();
+};
+window.cargoApplyDetails = function() {
+	var state = window._cargoDetails || {};
+	$('.tn-wrap [data-detail-key]').each(function() {
+		var row = $(this);
+		var expanded = state[row.attr('data-detail-group')] === row.attr('data-detail-key');
+		row.find('.tn-detail-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
+		row.find('.tn-detail-marker').text(expanded ? '-' : '+');
+		row.find('.tn-record-details').toggle(expanded);
+	});
+};
+window.cargoListState = function(name) {
+	var key = name === 'logs' ? name + '-' + ($('[data-log-stream]').attr('data-log-stream') || '') : name;
+	window._cargoLists = window._cargoLists || {};
+	return window._cargoLists[key] || (window._cargoLists[key] = {query: '', filter: ''});
+};
+window.cargoFilterList = function(name) {
+	var list = document.getElementById('cargo-' + name + '-list');
+	if (!list) return;
+	var state = window.cargoListState(name);
+	state.query = $('#cargo-' + name + '-search').val() || '';
+	state.filter = $('#cargo-' + name + '-filter').val() || '';
+	var query = state.query.toLowerCase().replace(/^\s+|\s+$/g, '');
+	var tokens = query ? query.split(/\s+/) : [];
+	var rows = $(list).children('[data-search]');
+	var count = 0;
+	rows.each(function() {
+		var row = $(this);
+		var match = !state.filter || row.attr('data-filter') === state.filter;
+		var text = (row.attr('data-search') || '').toLowerCase();
+		for (var i = 0; match && i < tokens.length; i++) match = text.indexOf(tokens[i]) !== -1;
+		row.toggle(match);
+		if (match) count++;
+	});
+	$('#cargo-' + name + '-counter').text(count + ' / ' + rows.length).toggle(!!(query || state.filter));
+	$('#cargo-' + name + '-empty').toggle(count === 0);
+};
+window.cargoInitLists = function() {
+	var names = ['orders', 'logs'];
+	for (var i = 0; i < names.length; i++) {
+		var name = names[i];
+		if (!document.getElementById('cargo-' + name + '-list')) continue;
+		var state = window.cargoListState(name);
+		var search = $('#cargo-' + name + '-search');
+		if (search.val() !== state.query) search.val(state.query);
+		$('#cargo-' + name + '-filter').val(state.filter);
+		window.cargoFilterList(name);
+	}
+};
+window.cargoContractState = function() {
+	if (!window._cargoContractUi) {
+		window._cargoContractUi = {query: '', type: '', availability: '', sort: 'ready', history: '', activeDetails: null, offerDetails: null};
+	}
+	return window._cargoContractUi;
+};
+window.cargoApplyContractDetails = function() {
+	var state = window.cargoContractState();
+	$('.tn-wrap .tn-contract-row').each(function() {
+		var key = $(this).attr('data-key');
+		var expanded = key === state.activeDetails || key === state.offerDetails;
+		$(this).find('.tn-contract-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
+		$(this).find('.tn-contract-marker').text(expanded ? '-' : '+');
+		$(this).find('.tn-contract-details').toggle(expanded);
+	});
+};
+window.cargoToggleContractDetails = function(button) {
+	var state = window.cargoContractState();
+	var key = $(button).closest('.tn-contract-row').attr('data-key');
+	var field = key.indexOf('active-') === 0 ? 'activeDetails' : 'offerDetails';
+	state[field] = state[field] === key ? null : key;
+	window.cargoApplyContractDetails();
+};
+window.cargoFilterContracts = function() {
+	var list = document.getElementById('cargo-contract-offers');
+	if (!list) return;
+	var state = window.cargoContractState();
+	state.query = $('#cargo-contract-search').val() || '';
+	state.type = $('#cargo-contract-type').val() || '';
+	state.availability = $('#cargo-contract-availability').val() || '';
+	var query = state.query.toLowerCase().replace(/^\s+|\s+$/g, '');
+	var tokens = query ? query.split(/\s+/) : [];
+	var count = 0;
+	var rows = $(list).children('.tn-contract-row');
+	rows.each(function() {
+		var row = $(this);
+		var ready = row.attr('data-ready') === '1';
+		var match = (!state.type || row.attr('data-type') === state.type) &&
+			(!state.availability || (state.availability === 'ready' ? ready : !ready));
+		var text = (row.attr('data-search') || '').toLowerCase();
+		for (var i = 0; match && i < tokens.length; i++) match = text.indexOf(tokens[i]) !== -1;
+		row.toggle(match);
+		if (match) count++;
+	});
+	$('#cargo-contract-counter').text(count + ' / ' + rows.length + ' offers');
+	$('#cargo-contract-no-results').toggle(count === 0);
+	var filtered = !!(query || state.type || state.availability || state.sort !== 'ready');
+	$('#cargo-contract-reset, #cargo-contract-filter-summary').toggle(filtered);
+};
+window.cargoSortContracts = function(sortOverride) {
+	var list = document.getElementById('cargo-contract-offers');
+	if (!list) return;
+	var state = window.cargoContractState();
+	var sort = sortOverride || $('#cargo-contract-sort').val() || 'ready';
+	var focused = document.activeElement;
+	var scroll = list.scrollTop;
+	var rows = $(list).children('.tn-contract-row').get();
+	rows.sort(function(a, b) {
+		var difference = 0;
+		if (sort === 'ready') difference = Number(b.getAttribute('data-ready')) - Number(a.getAttribute('data-ready'));
+		else if (sort === 'reward') difference = Number(b.getAttribute('data-reward')) - Number(a.getAttribute('data-reward'));
+		else if (sort === 'deposit') difference = Number(a.getAttribute('data-deposit')) - Number(b.getAttribute('data-deposit'));
+		else if (sort === 'distance') difference = Number(a.getAttribute('data-distance')) - Number(b.getAttribute('data-distance'));
+		return difference || Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+	});
+	for (var i = 0; i < rows.length; i++) {
+		if (list.children[i] !== rows[i]) list.insertBefore(rows[i], list.children[i] || null);
+	}
+	if (focused && document.activeElement !== focused && $.contains(list, focused)) focused.focus();
+	list.scrollTop = scroll;
+	if (!sortOverride) {
+		state.sort = sort;
+		window.cargoFilterContracts();
+	}
+};
+window.cargoResetContractFilters = function() {
+	var state = window.cargoContractState();
+	state.query = state.type = state.availability = '';
+	state.sort = 'ready';
+	window.cargoContractInit();
+};
+window.cargoFilterContractHistory = function() {
+	var filter = document.getElementById('cargo-contract-history-filter');
+	if (!filter) return;
+	var state = window.cargoContractState();
+	state.history = filter.value;
+	var count = 0;
+	var rows = $('.tn-wrap .tn-contract-history-row');
+	rows.each(function() {
+		var match = !state.history || $(this).attr('data-outcome') === state.history;
+		$(this).toggle(match);
+		if (match) count++;
+	});
+	$('#cargo-contract-history-counter').text(count + ' / ' + rows.length + ' contracts');
+	$('#cargo-contract-history-counter').toggle(!!state.history);
+	$('#cargo-contract-history-empty').toggle(count === 0);
+};
+window.cargoContractInit = function() {
+	if (!document.getElementById('tn-contracts-active-panel')) return;
+	var state = window.cargoContractState();
+	$('#cargo-contract-search').val(state.query);
+	$('#cargo-contract-type').val(state.type);
+	if (!$('#cargo-contract-type').val()) {
+		state.type = '';
+		$('#cargo-contract-type').val('');
+	}
+	$('#cargo-contract-availability').val(state.availability);
+	$('#cargo-contract-sort').val(state.sort);
+	$('#cargo-contract-history-filter').val(state.history);
+	window.cargoApplyContractDetails();
+	window.cargoSortContracts();
+	window.cargoFilterContractHistory();
+	if (window.NanoStateManager && window.NanoStateManager.addBeforeUpdateCallback) {
+		window.NanoStateManager.addBeforeUpdateCallback('cargo_trade_contracts', function(data) {
+			window.cargoSortContracts('default');
+			return data;
+		});
+	}
+};
+window.cargoToggleGoodDetails = function(button) {
+	var key = $(button).closest('.tn-good-row').attr('data-key');
+	window._cargoExpandedGoodKey = window._cargoExpandedGoodKey === key ? null : key;
+	window.cargoTradeInit();
+};
+window.cargoToggleHistory = function() {
+	window._cargoHistoryOpen = !window._cargoHistoryOpen;
+	window.cargoTradeInit();
+};
+window.cargoTradeInit = function() {
+	if (!window.jQuery) return;
+	window.cargoContractInit();
+	window.cargoApplyDetails();
+	window.cargoInitLists();
+	$('.tn-wrap .tn-good-row').each(function() {
+		var expanded = $(this).attr('data-key') === window._cargoExpandedGoodKey;
+		$(this).toggleClass('tn-expanded', expanded);
+		$(this).find('.tn-item-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
+		$(this).find('.tn-item-marker').text(expanded ? '-' : '+');
+		$(this).find('.tn-item-details').toggle(expanded);
+	});
+	var history = document.getElementById('tn-contract-history');
+	if (history) {
+		history.style.display = window._cargoHistoryOpen ? 'block' : 'none';
+		$('.tn-history-toggle').attr('aria-expanded', window._cargoHistoryOpen ? 'true' : 'false');
+		$('#tn-history-marker').text(window._cargoHistoryOpen ? '-' : '+');
+	}
+	$('.tn-wrap .linkActive').attr('role', 'button').attr('tabindex', '0');
+	$('.tn-nav-bar, .tn-pillnav').attr('role', 'tablist');
+	$('.tn-wrap .tn-nav-btn, .tn-wrap .tn-pillnav-link').each(function() {
+		$(this).attr('role', 'tab').attr('aria-selected', $(this).hasClass('selected') ? 'true' : 'false');
+	});
+	$('.tn-wrap .tn-quantity-value').attr('title', 'Set quantity').attr('aria-label', 'Set item quantity');
+	$('.tn-wrap .tn-cart-line').each(function() {
+		var name = $(this).find('.tn-cart-line-name').text();
+		$(this).find('.tn-cart-decrement').attr('aria-label', 'Remove one ' + name);
+		$(this).find('.tn-cart-remove').attr('aria-label', 'Remove all ' + name);
+	});
+	$('.tn-wrap .disabled').attr('aria-disabled', 'true');
+	$('.tn-wrap .linkActive').off('keydown.cargo').on('keydown.cargo', function(event) {
+		if (event.which === 13 || event.which === 32) {
+			event.preventDefault();
+			this.click();
+		}
+	});
+	if (window._cargoClearArmedUntil > new Date().getTime()) {
+		$('.tn-wrap .tn-confirm-clear.linkActive').text('Confirm clear');
+	}
+	if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+		window.NanoStateManager.addAfterUpdateCallback('cargo_trade_controls', function(data) {
+			window.cargoTradeInit();
+			return data;
+		});
+	}
+	if (!window._cargoConfirmRegistered && document.addEventListener) {
+		window._cargoConfirmRegistered = true;
+		document.addEventListener('click', function(event) {
+			var target = event.target;
+			while (target && target !== document) {
+				if ((' ' + target.className + ' ').indexOf(' tn-confirm-clear ') !== -1 && (' ' + target.className + ' ').indexOf(' linkActive ') !== -1) {
+				if (!(window._cargoClearArmedUntil > new Date().getTime())) {
+					event.preventDefault();
+					event.stopPropagation();
+					window._cargoClearArmedUntil = new Date().getTime() + 5000;
+					$(target).text('Confirm clear');
+					window.clearTimeout(window._cargoClearTimer);
+					window._cargoClearTimer = window.setTimeout(function() {
+						window._cargoClearArmedUntil = 0;
+						$('.tn-wrap .tn-confirm-clear.linkActive').text('Clear cart');
+					}, 5000);
+				} else {
+					window._cargoClearArmedUntil = 0;
+					window.clearTimeout(window._cargoClearTimer);
+				}
+				return;
+			}
+				target = target.parentNode;
+			}
+		}, true);
+	}
+};
+window.cargoTradeInit();
+</script>
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none;" onload="var s=document.getElementById('cargo-controls-script'); if(s &amp;&amp; !window.cargoTradeInit){ (window.execScript || function(c){window.eval(c);})(s.innerHTML); } else if(window.cargoTradeInit){window.cargoTradeInit();}">

@@ -33,4 +33,6 @@
 		/obj/item/clothing/mask/gas,
 		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/head/soft,
+		/obj/item/card/cargo_account // [SIERRA-ADD] - CARGO - Spare cargo account card
+		// [/SIERRA-ADD]
 	)

@@ -1,0 +1,929 @@
+{{var uiSrc = $('body').data('urlParameters').src;}}
+{{var formatTradeAmount = function(value) { var amount = Math.round((Number(value) || 0) * 100) / 100; var parts = amount.toFixed(amount % 1 ? 2 : 0).split('.'); parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ','); return parts.join('.'); };}}
+{{var selectedTrader = null; var traders = data.stations || []; for (var traderIndex = 0; traderIndex < traders.length; traderIndex++) { if (data.selected_station && traders[traderIndex].uid == data.selected_station.uid) selectedTrader = traders[traderIndex]; } }}
+{{var canOpenOrderForm = data.has_account && data.cart_count > 0 && !data.orders_locked && data.account_money >= data.cart_total;}}
+{{##def.order_request_form:
+	<div class="tn-form-shell"><form class="tn-form" method="get" action="?src={{:uiSrc}}" onsubmit="return window.cargoValidateOrderForm(this)">
+		<input type="hidden" name="src" value="{{:uiSrc}}"><input type="hidden" name="PRG_build_order_form" value="1">
+		<label class="tn-panel-label tn-full" for="cargo-field-PRG_order_reason">Reason (required)</label>
+		<textarea id="cargo-field-PRG_order_reason" name="PRG_order_reason" required placeholder="Department or reason for this order" oninput="window.cargoClearFormError(this)" {{if !requestReady}}disabled{{/if}}>{{>data.order_reason || ''}}</textarea>
+		<div class="tn-form-error tn-bad tn-full tn-hidden" role="alert">Enter a reason for this order.</div>
+		{{if data.submit_block_reason}}<div class="tn-action-reason tn-bad tn-full">{{>data.submit_block_reason}}</div>{{/if}}
+		<div class="tn-flex-row-sm tn-full tn-space-top"><input type="submit" value="Submit order" class="tn-btn tn-btn-primary" {{if !requestReady}}disabled{{/if}}>{{if data.screen == 'goods'}}{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}{{/if}}</div>
+	</form></div>
+#}}
+{{##def.order_account:
+	<div class="tn-panel-title">Account</div><hr class="tn-section-divider">
+	{{if data.has_account}}
+		<div class="tn-labeled-row"><span>Owner</span><strong>{{>data.account_owner_name}}</strong></div>
+		<div class="tn-labeled-row"><span>Account number</span><span class="font-mono">#{{:data.account_number}}</span></div>
+		<div class="tn-labeled-row"><span>Balance</span><strong class="font-mono">{{>formatTradeAmount(data.account_money)}} {{>data.currency_short}}</strong></div>
+		{{if data.screen == 'account'}}<div class="tn-labeled-row"><span>Authentication</span><span>{{if data.account_verified}}ID card{{else}}Account number and PIN{{/if}}</span></div>{{/if}}
+		<div class="tn-space-top">{{:helper.link('Unlink account', 'close', {'PRG_account_unlink' : 1}, null, 'tn-btn tn-btn-danger')}}</div>
+	{{else}}
+		<div class="tn-muted">No account linked.</div><p class="tn-setting-note">Link an account to submit supply orders.</p>
+		<div class="tn-flex-row-sm">{{if data.can_link_id_account}}{{:helper.link('Use ID card', 'check', {'PRG_account_id' : 1}, null, 'tn-btn tn-btn-primary')}}{{/if}}{{:helper.link('Account number and PIN', null, {'PRG_account' : 1}, null, 'tn-btn tn-btn-outline')}}</div>
+	{{/if}}
+	{{if data.cart_form_mode == 'link_account'}}
+		<div class="tn-form-shell"><form class="tn-form" method="get" action="?src={{:uiSrc}}">
+			<input type="hidden" name="src" value="{{:uiSrc}}">
+			<label class="tn-panel-label tn-full" for="cargo-field-PRG_link_account_number">Account number</label><input id="cargo-field-PRG_link_account_number" type="number" name="PRG_link_account_number" value="{{if data.can_link_id_account}}{{:data.available_id_account_number}}{{/if}}" placeholder="Account #" required class="tn-full">
+			<label class="tn-panel-label tn-full tn-space-top" for="cargo-field-PRG_link_account_pin">PIN</label><input id="cargo-field-PRG_link_account_pin" type="password" name="PRG_link_account_pin" value="" placeholder="PIN" required class="tn-full">
+			<div class="tn-flex-row-sm tn-full tn-space-top"><input type="submit" value="Link account" class="tn-btn tn-btn-primary">{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}</div>
+		</form></div>
+	{{else data.cart_form_mode == 'link_id_account'}}
+		<div class="tn-form-shell"><form class="tn-form" method="get" action="?src={{:uiSrc}}">
+			<input type="hidden" name="src" value="{{:uiSrc}}">
+			<label class="tn-panel-label tn-full" for="cargo-field-PRG_link_id_pin">PIN for ID card account (#{{:data.available_id_account_number}})</label><input id="cargo-field-PRG_link_id_pin" type="password" name="PRG_link_id_pin" value="" placeholder="PIN" required class="tn-full">
+			<div class="tn-flex-row-sm tn-full tn-space-top"><input type="submit" value="Verify PIN" class="tn-btn tn-btn-primary">{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}</div>
+		</form></div>
+	{{/if}}
+#}}
+<style>
+	/* Amber theme. Literal colors and flex margins support the NanoUI browser. */
+	.tn-wrap {
+		padding: 8px;
+		background: #171614;
+		color: #e8e2d6;
+		font: 13px/1.4 Arial, sans-serif;
+		min-height: 100%;
+		box-sizing: border-box;
+	}
+	.tn-wrap *, .tn-wrap *:before, .tn-wrap *:after { box-sizing: border-box; }
+	.tn-wrap .font-mono { font-style: normal; font-family: Consolas, "Lucida Console", monospace; font-variant-numeric: tabular-nums; }
+	.tn-wrap .tn-stack > * + * { margin-top: 8px; }
+	.tn-wrap .tn-muted, .tn-wrap .tn-subtle, .tn-wrap .tn-empty, .tn-wrap .tn-panel-label { color: #b5aa97; }
+	.tn-wrap .tn-good, .tn-wrap .tn-dot-good { color: #9fc58a; }
+	.tn-wrap .tn-bad { color: #ed9c92; }
+	.tn-wrap .tn-price { color: #e8e2d6; font-weight: bold; white-space: nowrap; }
+	.tn-wrap .tn-panel-title, .tn-wrap .tn-catalog-title { font-size: 14px; font-weight: bold; color: #e8e2d6; }
+	.tn-wrap .tn-panel-subtitle, .tn-wrap .tn-item-sub { color: #b5aa97; font-size: 12px; margin-top: 4px; }
+	.tn-wrap .tn-section-divider { margin: 8px 0; border: 0; border-top: 1px solid #3a3529; background: transparent; height: 0; }
+
+	/* Shared controls override NanoUI's float, fixed height and blue backgrounds. */
+	.tn-wrap .tn-btn, .tn-wrap .tn-nav-btn, .tn-wrap .tn-category-item,
+	.tn-wrap .tn-pillnav-link, .tn-wrap .tn-table-stepper-btn, .tn-wrap .tn-quantity-value {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		float: none;
+		height: auto;
+		min-height: 28px;
+		min-width: 28px;
+		padding: 4px 8px;
+		margin: 0;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		background: #4a3b22;
+		color: #e8e2d6;
+		font: inherit;
+		line-height: 18px;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+		user-select: none;
+		transition: background-color 0.1s, color 0.1s;
+	}
+	.tn-wrap .tn-btn:hover, .tn-wrap .tn-table-stepper-btn:hover, .tn-wrap .tn-quantity-value:hover { background: #65502b; }
+	.tn-wrap .tn-btn:active, .tn-wrap .tn-table-stepper-btn:active { background: #3b2f1e; }
+	.tn-wrap .tn-btn .uiIcon16, .tn-wrap .tn-nav-btn .uiIcon16 { float: none; margin-right: 4px; }
+	.tn-wrap .tn-btn-primary, .tn-wrap .tn-btn.selected { background: #d9a441; color: #171614; font-weight: bold; }
+	.tn-wrap .tn-btn-primary:hover, .tn-wrap .tn-btn.selected:hover { background: #e8b955; color: #171614; }
+	.tn-wrap .tn-btn-outline { background: #363025; }
+	.tn-wrap .tn-btn-danger { background: #442b28; color: #ed9c92; }
+	.tn-wrap .tn-btn-danger:hover { background: #5b3530; }
+	.tn-wrap .tn-btn.disabled, .tn-wrap .tn-nav-btn.disabled,
+	.tn-wrap .tn-table-stepper-btn.disabled, .tn-wrap input[type='submit']:disabled {
+		background: #2c2923;
+		color: #a59a88;
+		border-color: transparent;
+		cursor: not-allowed;
+	}
+	.tn-wrap .tn-btn.inactive, .tn-wrap .tn-table-stepper-btn.inactive { opacity: 0.6; }
+	.tn-wrap .uiLinkPendingIcon { display: none; }
+	.tn-wrap .linkPending { opacity: 0.65; }
+	.tn-wrap .tn-btn:focus, .tn-wrap .tn-nav-btn:focus, .tn-wrap .tn-category-item:focus,
+	.tn-wrap .tn-pillnav-link:focus, .tn-wrap .tn-table-stepper-btn:focus, .tn-wrap .tn-quantity-value:focus,
+	.tn-wrap .tn-item-toggle:focus, .tn-wrap .tn-detail-toggle:focus { outline: 1px solid #d9a441; outline-offset: 1px; }
+
+	.tn-wrap .tn-nav-bar { display: flex; flex-wrap: wrap; justify-content: space-between; border-bottom: 1px solid #3a3529; padding-bottom: 4px; }
+	.tn-wrap .tn-nav-tabs, .tn-wrap .tn-pillnav { display: flex; flex-wrap: wrap; }
+	.tn-wrap .tn-nav-tabs { width: 100%; }
+	.tn-wrap .tn-settings-tab { margin-left: auto; }
+	.tn-wrap .tn-nav-btn, .tn-wrap .tn-pillnav-link { background: transparent; color: #b5aa97; border-radius: 0; border-bottom: 2px solid transparent; }
+	.tn-wrap .tn-nav-btn:hover, .tn-wrap .tn-pillnav-link:hover { background: #29251e; color: #e8e2d6; }
+	.tn-wrap .tn-nav-btn.selected, .tn-wrap .tn-pillnav-link.selected { background: #30271b; border-bottom-color: #d9a441; color: #d9a441; }
+	.tn-wrap .tn-nav-badge { padding: 0 4px; margin-left: 4px; border-radius: 3px; background: #3d3527; color: #e8e2d6; font-size: 12px; }
+	.tn-wrap .tn-pillnav { margin-bottom: 8px; }
+
+	.tn-wrap .tn-grid { display: flex; flex-wrap: wrap; margin: -4px; }
+	.tn-wrap .tn-col { flex: 1 1 300px; min-width: 0; margin: 4px; }
+	.tn-wrap .tn-market-sidebar { flex: 0 0 160px; }
+	.tn-wrap .tn-market-main { flex: 1 1 440px; min-width: 0; background: #22201b; border-radius: 3px; padding: 12px; }
+	.tn-wrap .tn-panel { padding: 12px; background: #22201b; border-radius: 3px; }
+	.tn-wrap .tn-panel + .tn-panel { margin-top: 8px; }
+	.tn-wrap .tn-panel-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+	.tn-wrap .tn-workspace-header { padding: 8px 0; border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-workspace-header .tn-panel-header { margin-bottom: 0; }
+	.tn-wrap .tn-empty-panel { padding: 24px 12px; text-align: center; color: #b5aa97; }
+	.tn-wrap .tn-empty-panel .tn-panel-title { font-size: 13px; }
+	.tn-wrap .tn-flex-row, .tn-wrap .tn-flex-row-sm, .tn-wrap .tn-flex-row-lg,
+	.tn-wrap .tn-basket-actions, .tn-wrap .tn-filter-controls, .tn-wrap .tn-station-meta-row { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-flex-row > * + *, .tn-wrap .tn-flex-row-sm > * + *,
+	.tn-wrap .tn-basket-actions > * + *, .tn-wrap .tn-filter-controls > * + *, .tn-wrap .tn-station-meta-row > * + * { margin-left: 4px; }
+	.tn-wrap .tn-flex-row-lg > * + * { margin-left: 12px; }
+	.tn-wrap .tn-flex-col-sm > * + * { margin-top: 4px; }
+	.tn-wrap .tn-flex-col-sm .tn-btn { display: flex; width: 100%; }
+	.tn-wrap .tn-summary { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-summary-meta { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-summary-meta > * { margin-right: 12px; padding: 4px 0; }
+	.tn-wrap .tn-basket-summary-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-basket-lead { margin-right: 12px; }
+	.tn-wrap .tn-basket-total { font-weight: bold; }
+	.tn-wrap .tn-cart-footer { padding: 12px; background: #22201b; border-top: 1px solid #3a3529; border-radius: 3px; }
+	.tn-wrap .tn-cart-group { padding: 8px 0; }
+	.tn-wrap .tn-cart-group + .tn-cart-group { border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-labeled-row, .tn-wrap .tn-item-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 4px 0; }
+	.tn-wrap .tn-labeled-row > :first-child { color: #b5aa97; margin-right: 12px; }
+	.tn-wrap .tn-item-row { border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-item-row > :first-child { flex: 1 1 160px; min-width: 0; margin-right: 8px; }
+	.tn-wrap .tn-checkout-total { margin: 8px 0; border-top: 1px solid #3a3529; font-weight: bold; }
+
+	.tn-wrap .tn-tag { display: inline-block; padding: 1px 4px; border-radius: 3px; font-size: 12px; background: #363025; color: #b5aa97; white-space: nowrap; }
+	.tn-wrap .tn-tag-good { background: #293425; color: #9fc58a; }
+	.tn-wrap .tn-tag-average { background: #3e321f; color: #d9a441; }
+	.tn-wrap .tn-tag-bad { background: #442b28; color: #ed9c92; }
+	.tn-wrap .tn-tag-disabled { background: #2c2923; color: #b5aa97; }
+	.tn-wrap .tn-status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; vertical-align: middle; margin-right: 4px; }
+	.tn-wrap .tn-dot-good { background: #9fc58a; }
+	.tn-wrap .tn-dot-average { background: #d9a441; }
+	.tn-wrap .tn-dot-bad { background: #ed9c92; }
+	.tn-wrap .notice { margin: 8px 0; padding: 8px 12px; border: 0; border-left: 3px solid #b5aa97; border-radius: 3px; background: #2c2923; color: #e8e2d6; }
+	.tn-wrap .notice.good { border-left-color: #9fc58a; background: #293425; }
+	.tn-wrap .notice.average { border-left-color: #d9a441; background: #30271b; }
+	.tn-wrap .notice.bad { border-left-color: #ed9c92; background: #382724; }
+
+	.tn-wrap .tn-form-shell { margin-top: 8px; padding: 8px 0; border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-form { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-form > * { margin: 2px 0; }
+	.tn-wrap input[type='text'], .tn-wrap input[type='number'], .tn-wrap input[type='password'],
+	.tn-wrap textarea, .tn-wrap select {
+		min-width: 0; max-width: 100%; height: 28px; padding: 4px 8px;
+		border: 1px solid #514735; border-radius: 3px;
+		background: #171614; color: #e8e2d6; font: inherit; line-height: 18px;
+	}
+	.tn-wrap input:focus, .tn-wrap textarea:focus, .tn-wrap select:focus { outline: none; border-color: #d9a441; }
+	.tn-wrap textarea { width: 100%; min-height: 64px; resize: vertical; }
+	.tn-wrap input::placeholder, .tn-wrap textarea::placeholder { color: #b5aa97; }
+	.tn-wrap input:-ms-input-placeholder, .tn-wrap textarea:-ms-input-placeholder { color: #b5aa97; }
+	.tn-wrap select { cursor: pointer; }
+	.tn-wrap .tn-station-select { width: 100%; }
+	.tn-wrap .tn-station-card { margin-top: 8px; }
+	.tn-wrap .tn-station-name { font-weight: bold; overflow-wrap: break-word; }
+	.tn-wrap .tn-station-faction { color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-station-meta-row { margin-top: 4px; font-size: 12px; }
+	.tn-wrap .tn-market-trader { display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 8px; padding: 8px 12px; background: #22201b; border-radius: 3px; }
+	.tn-wrap .tn-market-trader label { margin-right: 8px; color: #b5aa97; }
+	.tn-wrap .tn-market-trader .tn-station-select { flex: 1 1 260px; width: auto; }
+	.tn-wrap .tn-trader-meta { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-trader-meta > * { margin-left: 8px; }
+	.tn-wrap .tn-category-vertical-list { margin-top: 8px; max-height: 55vh; }
+	.tn-wrap .tn-category-item { display: block; width: 100%; margin-bottom: 2px; padding: 4px 8px; text-align: left; white-space: normal; overflow-wrap: break-word; background: transparent; color: #b5aa97; }
+	.tn-wrap .tn-category-item:hover { background: #302b21; color: #e8e2d6; }
+	.tn-wrap .tn-category-item.selected { background: #3e321f; color: #d9a441; }
+	.tn-wrap .tn-catalog-header-bar { margin-bottom: 8px; }
+	.tn-wrap .tn-catalog-title { margin-bottom: 8px; }
+	.tn-wrap .tn-filter-controls > * { margin-top: 4px; }
+	.tn-wrap .tn-search-box { position: relative; flex: 1 1 180px; min-width: 140px; }
+	.tn-wrap .tn-search-icon { position: absolute; left: 8px; top: 6px; opacity: 0.7; }
+	.tn-wrap input.tn-search-input { width: 100%; padding-left: 28px; padding-right: 28px; }
+	.tn-wrap .tn-search-clear { position: absolute; right: 1px; top: 1px; height: 26px; width: 26px; border: 0; border-radius: 3px; background: transparent; color: #b5aa97; cursor: pointer; }
+	.tn-wrap .tn-search-clear:hover { background: #363025; color: #e8e2d6; }
+	.tn-wrap .tn-search-clear .uiIcon16 { display: block; margin: 0 auto; }
+	.tn-wrap .tn-cards-counter { color: #b5aa97; font-size: 12px; white-space: nowrap; }
+	.tn-wrap .tn-scroll-box { overflow-y: auto; overflow-x: auto; }
+	.tn-wrap .tn-goods-scroll { max-height: 65vh; }
+	.tn-wrap .tn-goods-scroll .tn-empty-panel { min-height: 160px; }
+	.tn-wrap .tn-catalog-table, .tn-wrap .tn-table { width: 100%; border-collapse: collapse; }
+	.tn-wrap .tn-catalog-table { table-layout: fixed; }
+	.tn-wrap .tn-catalog-table th, .tn-wrap .tn-table th { padding: 8px 4px; color: #b5aa97; font-size: 12px; font-weight: normal; border-bottom: 1px solid #514735; text-align: left; }
+	.tn-wrap .tn-catalog-table td, .tn-wrap .tn-table td { padding: 8px 4px; border-bottom: 1px solid #3a3529; vertical-align: middle; overflow-wrap: break-word; }
+	.tn-wrap .tn-catalog-table .tn-th-right, .tn-wrap .tn-catalog-table .tn-number { text-align: right; }
+	.tn-wrap .tn-catalog-table .tn-icon-col { width: 40px; }
+	.tn-wrap .tn-catalog-table .tn-stock-col { width: 56px; }
+	.tn-wrap .tn-catalog-table .tn-price-col { width: 88px; }
+	.tn-wrap .tn-catalog-table .tn-quantity-col { width: 120px; text-align: right; }
+	.tn-wrap .tn-good-row:nth-child(even) { background: #25221c; }
+	.tn-wrap .tn-good-row.tn-in-cart { background: #30271b; }
+	.tn-wrap .tn-good-row:hover { background: #363025; }
+	.tn-wrap .tn-good-row.tn-expanded > td { vertical-align: top; }
+	.tn-wrap .tn-sprite-box { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+	.tn-wrap .tn-sprite-img { width: 32px; height: 32px; image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor; }
+	.tn-wrap .tn-sprite-placeholder { color: #b5aa97; }
+	.tn-wrap .tn-item-title { display: block; font-weight: bold; overflow-wrap: break-word; }
+	.tn-wrap .tn-item-toggle { width: 100%; padding: 0; border: 0; background: transparent; color: #e8e2d6; font: inherit; text-align: left; cursor: pointer; }
+	.tn-wrap .tn-item-toggle:hover { color: #d9a441; }
+	.tn-wrap .tn-item-marker { color: #d9a441; margin-right: 4px; }
+	.tn-wrap .tn-item-details { margin-top: 8px; color: #b5aa97; font-size: 12px; }
+	.tn-wrap .tn-item-details p { margin: 0 0 8px; }
+	.tn-wrap .tn-item-details .tn-labeled-row { padding: 2px 0; }
+	.tn-wrap .tn-item-sub { display: block; }
+	.tn-wrap .tn-table-stepper { display: inline-flex; align-items: center; }
+	.tn-wrap .tn-table-stepper-btn{ width: 28px; padding: 4px 0; }
+	.tn-wrap .tn-quantity-value { background: #171614; border: 1px solid #514735; min-width: 32px; padding: 4px; margin: 0 2px; }
+	.tn-wrap .tn-actions-wrap { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+	.tn-wrap .tn-actions-wrap > * + * { margin-left: 4px; }
+	.tn-wrap .tn-popover-form { margin-top: 4px; }
+	.tn-wrap .tn-popover-form .tn-form { justify-content: flex-end; }
+	.tn-wrap .tn-popover-input { width: 52px; }
+	.tn-wrap .tn-detail-toggle { min-height: 28px; padding: 4px; border: 0; border-radius: 3px; background: transparent; color: #d9a441; font: inherit; font-size: 12px; cursor: pointer; }
+	.tn-wrap .tn-detail-toggle:hover { background: #363025; }
+	.tn-wrap .tn-scroll-box { scrollbar-face-color: #514735; scrollbar-track-color: #171614; scrollbar-arrow-color: #b5aa97; scrollbar-shadow-color: #514735; scrollbar-highlight-color: #514735; scrollbar-darkshadow-color: #171614; scrollbar-3dlight-color: #171614; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar { width: 8px; height: 8px; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-track { background: #171614; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-thumb { background: #514735; border-radius: 3px; }
+	.tn-wrap .tn-scroll-box::-webkit-scrollbar-thumb:hover { background: #65502b; }
+	.tn-wrap .tn-preset-scroll { max-height: 30vh; }
+	.tn-wrap .tn-list-filters { margin-bottom: 12px; }
+	.tn-wrap input.tn-list-search { width: 100%; padding-right: 28px; }
+	.tn-wrap .tn-order-row { padding: 12px 0; border-bottom: 1px solid #3a3529; overflow-wrap: break-word; }
+	.tn-wrap .tn-order-row:first-child { padding-top: 0; }
+	.tn-wrap .tn-order-row:last-child { border-bottom: 0; padding-bottom: 0; }
+	.tn-wrap .tn-order-row.tn-selected { border-left: 2px solid #d9a441; padding-left: 8px; }
+	.tn-wrap .tn-record-heading, .tn-wrap .tn-record-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+	.tn-wrap .tn-record-heading > :first-child, .tn-wrap .tn-record-footer > :first-child { flex: 1 1 180px; min-width: 0; margin-right: 8px; }
+	.tn-wrap .tn-record-identity, .tn-wrap .tn-record-finance, .tn-wrap .tn-record-actions { display: flex; flex-wrap: wrap; align-items: center; }
+	.tn-wrap .tn-record-identity > *, .tn-wrap .tn-record-finance > * { margin-right: 8px; }
+	.tn-wrap .tn-record-actions { flex-wrap: nowrap; justify-content: flex-end; margin-left: auto; max-width: 100%; min-width: 0; }
+	.tn-wrap .tn-record-actions > * { margin: 4px 0 4px 4px; }
+	.tn-wrap .tn-record-actions .tn-btn { flex-shrink: 0; }
+	.tn-wrap .tn-action-reason { flex: 1 1 180px; min-width: 0; max-width: 240px; font-size: 12px; }
+	.tn-wrap .tn-order-reason { margin: 4px 0; }
+	.tn-wrap .tn-record-details { margin-top: 8px; padding-top: 8px; border-top: 1px solid #3a3529; }
+	.tn-wrap .tn-cart-line { display: flex; flex-wrap: wrap; align-items: center; padding: 8px 0; border-bottom: 1px solid #3a3529; }
+	.tn-wrap .tn-cart-line-name { flex: 1 1 160px; min-width: 0; margin-right: 8px; overflow-wrap: break-word; }
+	.tn-wrap .tn-cart-line-controls { display: flex; align-items: center; margin-left: auto; }
+	.tn-wrap .tn-cart-quantity { width: 44px; text-align: center; }
+	.tn-wrap .tn-cart-line-price { width: 100px; margin: 0 8px; text-align: right; overflow-wrap: break-word; }
+	.tn-wrap .tn-checkout-action { margin-top: 8px; }
+	.tn-wrap .tn-checkout-action .tn-btn { display: flex; width: 100%; }
+	.tn-wrap .tn-checkout-action .tn-action-reason { margin-bottom: 4px; }
+	.tn-wrap .tn-setting-note { margin: 4px 0 8px; color: #b5aa97; font-size: 12px; }
+
+	/* Reused layout helpers for forms, summaries and item lists. */
+	.tn-wrap .tn-full { width: 100%; }
+	.tn-wrap .tn-space-top { margin-top: 8px; }
+	.tn-wrap .tn-space-bottom { margin-bottom: 8px; }
+	.tn-wrap .tn-space-left { margin-left: 4px; }
+	.tn-wrap .tn-no-bottom { margin-bottom: 0; }
+	.tn-wrap .tn-hidden { display: none; }
+	.tn-wrap .tn-empty-description { max-width: 480px; margin: 8px auto 0; }
+	.tn-wrap .tn-number { text-align: right; }
+	.tn-wrap .tn-bold { font-weight: bold; }
+	.tn-wrap .tn-cart-items { flex: 2 1 440px; }
+	.tn-wrap .tn-checkout-column { flex: 1 1 280px; }
+
+	@media (max-width: 760px) {
+		.tn-wrap .tn-settings-tab { margin-left: 0; }
+		.tn-wrap .tn-market-sidebar { flex: 1 1 100%; }
+		.tn-wrap .tn-market-main { flex-basis: 100%; }
+		.tn-wrap .tn-category-vertical-list { display: flex; flex-wrap: wrap; max-height: 140px; }
+		.tn-wrap .tn-category-item { width: auto; margin: 2px 4px 2px 0; }
+		.tn-wrap .tn-market-sidebar .tn-panel + .tn-panel { margin-top: 4px; }
+		.tn-wrap .tn-trader-meta { width: 100%; margin-top: 4px; }
+		.tn-wrap .tn-trader-meta > * { margin: 4px 8px 0 0; }
+	}
+	@media (max-width: 520px) {
+		.tn-wrap { padding: 4px; }
+		.tn-wrap .tn-panel, .tn-wrap .tn-market-main { padding: 8px; }
+		.tn-wrap .tn-catalog-table .tn-icon-col, .tn-wrap .tn-catalog-table .tn-icon-cell { display: none; }
+		.tn-wrap .tn-catalog-table .tn-stock-col { width: 40px; }
+		.tn-wrap .tn-catalog-table .tn-price-col { width: 64px; }
+		.tn-wrap .tn-catalog-table .tn-quantity-col { width: 108px; }
+		.tn-wrap .tn-catalog-table td, .tn-wrap .tn-catalog-table th { padding-left: 2px; padding-right: 2px; }
+		.tn-wrap .tn-basket-actions { margin-top: 8px; }
+		.tn-wrap .tn-basket-actions > * { margin-bottom: 4px; }
+	}
+</style>
+
+<div class="tn-wrap" data-scroll-id="tn-wrap"><div class="tn-stack">
+	<div class="tn-nav-bar"><div class="tn-nav-tabs">
+		{{:helper.link('Market', 'search', {'PRG_trade_screen' : 'goods'}, data.screen == 'goods' ? 'selected' : null, 'tn-nav-btn')}}
+		{{:helper.link('Cart' + (data.cart_count ? ' <span class="tn-nav-badge">' + data.cart_count + '</span>' : ''), 'cart', {'PRG_trade_screen' : 'cart'}, data.screen == 'cart' ? 'selected' : null, 'tn-nav-btn')}}
+		{{:helper.link('Orders' + (data.order_count ? ' <span class="tn-nav-badge">' + data.order_count + '</span>' : ''), 'tag', {'PRG_trade_screen' : 'orders'}, data.screen == 'orders' ? 'selected' : null, 'tn-nav-btn')}}
+		{{:helper.link('Account', 'gear', {'PRG_trade_screen' : 'account'}, data.screen == 'account' ? 'selected' : null, 'tn-nav-btn tn-settings-tab')}}
+	</div></div>
+	{{if data.screen == 'goods'}}
+		<div class="tn-summary"><div class="tn-summary-meta"><span><span class="tn-panel-label">Account:</span> {{if data.has_account}}{{>data.account_owner_name}} <span class="font-mono">({{>formatTradeAmount(data.account_money)}} {{>data.currency_short}})</span>{{else}}Not linked{{/if}}</span></div><div class="tn-flex-row-sm">{{if !data.has_account}}{{if data.can_link_id_account}}{{:helper.link('Use ID card', 'check', {'PRG_account_id' : 1}, null, 'tn-btn tn-btn-outline')}}{{else}}{{:helper.link('Link account', 'gear', {'PRG_trade_screen' : 'account'}, null, 'tn-btn tn-btn-outline')}}{{/if}}{{/if}}{{:helper.link('View cart', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline')}}</div></div>
+			<div class="tn-screen-view" data-view="screen-goods" data-view-screen="market">
+				<div class="tn-market-trader">
+					{{if !data.has_visible_stations}}
+						<div class="tn-empty">No trade stations in sensor range.</div>
+					{{else}}
+						<label for="cargo-trader-select">Trader</label>
+						<select id="cargo-trader-select" class="tn-station-select" onchange="if(this.value){ var fn = window.NanoUtility &amp;&amp; window.NanoUtility.generateHref; window.location.href = fn ? fn({'PRG_station': this.value}) : ('?src={{:uiSrc}};PRG_station=' + encodeURIComponent(this.value)); }">
+							{{for data.stations:station_entry:station_index}}
+								<option value="{{:station_entry.uid}}" {{if station_entry.selected}}selected{{/if}}>{{>station_entry.name}} &mdash; {{>station_entry.status_label}}</option>
+							{{/for}}
+						</select>
+						{{if selectedTrader}}<div class="tn-trader-meta"><span class="tn-muted">{{>selectedTrader.faction}}</span><span class="tn-tag tn-tag-{{:selectedTrader.market_tone}}">{{>selectedTrader.market_label}}</span></div>{{/if}}
+					{{/if}}
+				</div>
+				<div class="tn-grid">
+					{{if data.has_selected_station}}
+						<div class="tn-col tn-market-sidebar">
+							<div class="tn-panel">
+								<div class="tn-panel-title">Categories</div>
+								<hr class="tn-section-divider">
+								{{if data.selected_station && data.selected_station.block_reason}}
+									<div class="tn-empty">Catalog blocked.</div>
+								{{else data.categories && data.categories.length}}
+									<div class="tn-category-vertical-list tn-scroll-box" data-scroll-id="tn-category-list">
+										{{for data.categories:category_entry:category_index}}
+											{{:helper.link(category_entry.name, null, {'PRG_goods_category' : category_entry.name}, category_entry.selected ? 'selected' : null, 'tn-category-item ')}}
+										{{/for}}
+									</div>
+								{{else}}
+									<div class="tn-empty">No categories available.</div>
+								{{/if}}
+							</div>
+						</div>
+					{{/if}}
+					<div class="tn-col tn-market-main">
+						{{if data.has_selected_station}}
+							<div class="tn-catalog-header-bar">
+								<div class="tn-catalog-title">
+									{{if data.selected_category && !data.selected_station.block_reason}}{{>data.selected_category}}{{else}}Catalog{{/if}}
+								</div>
+								<div class="tn-filter-controls">
+									<div class="tn-search-box">
+										<span class="tn-search-icon uiIcon16 icon-search" aria-hidden="true"></span>
+										<input type="text" id="cargo-search-input" class="tn-search-input font-mono" placeholder="Search this category" aria-label="Search this category" oninput="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onpropertychange="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()" onkeyup="window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter()">
+										<button type="button" class="tn-search-clear" title="Clear search" onclick="var inp=document.getElementById('cargo-search-input'); if(inp){ inp.value=''; window.cargoLiveFilter &amp;&amp; window.cargoLiveFilter(); inp.focus(); }" aria-label="Clear search"><span class="uiIcon16 icon-close" aria-hidden="true"></span></button>
+									</div>
+									<select id="cargo-sort-select" aria-label="Sort items" class="tn-sort-select" onchange="window.cargoLiveSort &amp;&amp; window.cargoLiveSort()">
+										<option value="default">Default order</option>
+										<option value="price_asc">Price: Low &rarr; High</option>
+										<option value="price_desc">Price: High &rarr; Low</option>
+										<option value="name_asc">Name: A &rarr; Z</option>
+										<option value="name_desc">Name: Z &rarr; A</option>
+									</select>
+									<div id="cargo-cards-counter" class="tn-cards-counter font-mono"></div>
+								</div>
+							</div>
+
+							<div id="cargo-current-category" data-station="{{:data.selected_station.uid}}" data-cat="{{:data.selected_category}}" class="tn-hidden"></div>
+
+							{{if data.selected_station.block_reason}}
+								<div class="notice bad">{{>data.selected_station.block_reason}}</div>
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Trader unavailable</div>
+									<div class="tn-panel-subtitle tn-muted tn-empty-description">
+										Move into sensor range or clear radio interference to view this inventory.
+									</div>
+								</div>
+							{{else}}
+								<div class="tn-scroll-box tn-goods-scroll" data-scroll-id="tn-goods-table">
+									{{if data.goods && data.goods.length}}
+										<table class="tn-catalog-table">
+											<thead>
+												<tr>
+													<th class="tn-icon-col"></th>
+													<th>Item</th>
+													<th class="tn-stock-col tn-th-right">Stock</th>
+													<th class="tn-price-col tn-th-right">Price</th>
+													<th class="tn-quantity-col">Quantity</th>
+												</tr>
+											</thead>
+											<tbody id="cargo-goods-tbody">
+												{{for data.goods:good_entry:good_index}}
+													<tr class="tn-good-row{{if good_entry.in_cart_amount > 0}} tn-in-cart{{/if}}{{if !good_entry.can_add}} tn-restricted{{/if}}" data-key="{{>data.selected_station.uid + '::' + data.selected_category + '::' + good_entry.id}}" data-name="{{>good_entry.name}}" data-price="{{:good_entry.price}}" data-stock="{{:good_entry.stock}}" data-id="{{:good_entry.id}}" data-index="{{:good_index}}">
+														<td class="tn-icon-cell">
+															<div class="tn-sprite-box">
+																{{if good_entry.icon}}
+																	<img class="tn-sprite-img" src="{{:good_entry.icon}}" alt="{{>good_entry.name}}">
+																{{else}}
+																		<span class="tn-sprite-placeholder uiIcon16 icon-cart" aria-hidden="true"></span>
+																{{/if}}
+															</div>
+														</td>
+														<td>
+															<button type="button" class="tn-item-toggle" aria-expanded="false" aria-controls="cargo-good-details-{{:good_index}}" onclick="window.cargoToggleGoodDetails &amp;&amp; window.cargoToggleGoodDetails(this)">
+																<span class="tn-item-title"><span class="tn-item-marker" aria-hidden="true">+</span>{{>good_entry.name}}</span>
+															</button>
+															<div id="cargo-good-details-{{:good_index}}" class="tn-item-details tn-hidden">
+																{{if good_entry.desc}}<p>{{>good_entry.desc}}</p>{{/if}}
+																																{{if good_entry.markup_text}}<div class="tn-labeled-row"><span>Markup</span><span class="font-mono">{{>good_entry.markup_text}}</span></div>{{/if}}
+															</div>
+														</td>
+														<td class="tn-number">
+															{{if good_entry.stock <= 0}}
+																<span class="font-mono tn-bad tn-bold">0</span>
+															{{else}}
+																<strong class="font-mono">{{:good_entry.stock}}</strong>
+															{{/if}}
+														</td>
+														<td class="tn-number">
+															<span class="font-mono tn-bold">
+																{{>formatTradeAmount(good_entry.price)}} {{:data.currency_short}}
+															</span>
+														</td>
+														<td class="tn-number">
+															{{if !good_entry.can_add && !good_entry.in_cart_amount}}
+																<span class="tn-muted">{{if good_entry.stock <= 0}}Out of stock{{else}}Unavailable{{/if}}</span>
+															{{else}}
+																<div class="tn-actions-wrap">
+																	{{if good_entry.in_cart_amount > 0}}
+																		<div class="tn-table-stepper">
+																			{{:helper.link('-', null, {'PRG_cart_remove_direct' : data.selected_station.uid, 'PRG_cart_category_name' : data.selected_category, 'PRG_cart_good_id' : good_entry.id, 'PRG_cart_remove_amount' : 1}, null, 'tn-table-stepper-btn')}}
+																			{{:helper.link(good_entry.in_cart_amount, null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-quantity-value font-mono')}}
+																			{{:helper.link('+', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, (!good_entry.can_add || good_entry.in_cart_amount >= good_entry.stock) ? 'disabled' : null, 'tn-table-stepper-btn')}}
+																		</div>
+																	{{else}}
+																		{{:helper.link('Add', null, {'PRG_cart_add_good' : good_entry.id, 'PRG_cart_add_amount' : 1}, null, 'tn-btn tn-btn-outline')}}
+																	{{/if}}
+																	{{if !good_entry.in_cart_amount}}{{:helper.link('Qty', null, {'PRG_goods_quantity_target' : good_entry.id}, null, 'tn-btn tn-btn-outline')}}{{/if}}
+																</div>
+
+																{{if good_entry.quantity_form_open}}
+																	<div class="tn-popover-form">
+																		<form class="tn-form" method="get" action="?src={{:uiSrc}}" onsubmit="return window.cargoValidateQuantityForm(this)">
+																			<input type="hidden" name="src" value="{{:uiSrc}}">
+																			<input type="hidden" name="PRG_cart_set_form" value="{{:good_entry.id}}">
+																			<input type="number" name="PRG_cart_set_amount" aria-label="Item quantity" min="0" max="{{:good_entry.can_add ? good_entry.stock : Math.min(good_entry.in_cart_amount, good_entry.stock)}}" value="{{:Math.min(good_entry.in_cart_amount || 1, good_entry.stock)}}" class="tn-popover-input font-mono" required oninput="window.cargoClearFormError(this)">
+																			<div class="tn-form-error tn-bad tn-full tn-hidden" role="alert"></div>
+																			<input type="submit" value="Set" class="tn-btn tn-btn-primary">
+																			{{:helper.link('Cancel', null, {'PRG_goods_quantity_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}
+																		</form>
+																	</div>
+																{{/if}}
+															{{/if}}
+														</td>
+													</tr>
+												{{/for}}
+											</tbody>
+										</table>
+										<div id="cargo-search-no-results" class="tn-empty-panel tn-hidden">
+											<div class="tn-panel-title">No matching items</div>
+											<div class="tn-panel-subtitle tn-muted">Try adjusting your filter query or clearing the search.</div>
+										</div>
+									{{else}}
+										<div class="tn-empty-panel">
+											<div class="tn-panel-title">No goods in this category</div>
+											<div class="tn-panel-subtitle tn-muted">Choose another category or trader.</div>
+										</div>
+									{{/if}}
+								</div>
+							{{/if}}
+						{{else}}
+							<div class="tn-empty-panel">
+								<div class="tn-panel-title">Select a trader</div>
+								<div class="tn-panel-subtitle tn-muted">Choose a trader to view its inventory.</div>
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+			{{if data.cart_count > 0}}
+				<div class="tn-cart-footer">
+					<div class="tn-basket-summary-row">
+						<div class="tn-basket-lead">Cart: {{:data.cart_count}} items &middot; <span class="tn-basket-total font-mono">{{>formatTradeAmount(data.cart_total)}} {{:data.currency_short}}</span></div>
+						<div class="tn-basket-actions">
+							{{:helper.link('Request order', 'clipboard', {'PRG_cart_form' : 'order'}, canOpenOrderForm ? null : 'disabled', 'tn-btn tn-btn-primary')}}
+							{{:helper.link('Details', 'cart', {'PRG_trade_screen' : 'cart'}, null, 'tn-btn tn-btn-outline')}}
+							{{:helper.link('Clear', 'close', {'PRG_cart_reset' : 1}, null, 'tn-btn tn-btn-danger tn-confirm-clear')}}
+						</div>
+					</div>
+					{{if !data.has_account}}<div class="tn-muted tn-space-top">Link an account to submit an order.</div>{{else data.account_money < data.cart_total}}<div class="tn-bad tn-space-top">Insufficient balance for items and handling fee.</div>{{/if}}
+					{{if data.orders_locked}}<div class="tn-muted">Order requests are on cooldown.</div>{{/if}}
+					{{if data.cart_form_mode == 'order'}}{{var requestReady = canOpenOrderForm;}}{{#def.order_request_form}}{{/if}}
+				</div>
+			{{/if}}
+
+			<script id="cargo-market-script">
+			window.cargoLiveFilter = function() {
+				var searchInput = document.getElementById('cargo-search-input');
+				var rawQuery = searchInput ? searchInput.value.toLowerCase().replace(/^\s+|\s+$/g, '') : '';
+				var filterTokens = rawQuery ? rawQuery.split(/\s+/) : [];
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				var visibleCount = 0;
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					var name = row.getAttribute('data-name') || '';
+					if (!name) {
+						var nameEl = row.querySelector ? row.querySelector('.tn-item-title') : (window.jQuery ? $(row).find('.tn-item-title')[0] : null);
+						name = nameEl ? (nameEl.textContent || nameEl.innerText || '') : '';
+					}
+					name = name.toLowerCase();
+					var match = true;
+					for (var t = 0; t < filterTokens.length; t++) {
+						if (name.indexOf(filterTokens[t]) === -1) {
+							match = false;
+							break;
+						}
+					}
+					if (match) {
+						row.style.display = '';
+						visibleCount++;
+					} else {
+						row.style.display = 'none';
+					}
+				}
+				var noResults = document.getElementById('cargo-search-no-results');
+				if (noResults) {
+					noResults.style.display = (visibleCount === 0 && rows.length > 0) ? 'block' : 'none';
+				}
+				var counter = document.getElementById('cargo-cards-counter');
+				if (counter) {
+					counter.innerHTML = visibleCount + (rawQuery ? ' / ' + rows.length : '') + ' items';
+				}
+				window._cargoSearchQuery = rawQuery;
+			};
+
+			window.cargoLiveSort = function(sortOverride) {
+				var sortSelect = document.getElementById('cargo-sort-select');
+				var sortVal = sortOverride || (sortSelect ? sortSelect.value : 'default');
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+				var focused = document.activeElement;
+				var scrollBox = document.querySelector('.tn-goods-scroll');
+				var scrollTop = scrollBox ? scrollBox.scrollTop : 0;
+				var rows = [];
+				if (window.jQuery) {
+					rows = $(tbody).find('.tn-good-row').get();
+				} else if (tbody.querySelectorAll) {
+					var nodeList = tbody.querySelectorAll('.tn-good-row');
+					for (var k = 0; k < nodeList.length; k++) rows.push(nodeList[k]);
+				}
+				if (!rows.length) return;
+
+				rows.sort(function(a, b) {
+					if (sortVal === 'price_asc') {
+						return (parseFloat(a.getAttribute('data-price')) || 0) - (parseFloat(b.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'price_desc') {
+						return (parseFloat(b.getAttribute('data-price')) || 0) - (parseFloat(a.getAttribute('data-price')) || 0);
+					} else if (sortVal === 'name_asc' || sortVal === 'name_desc') {
+						var nameA = (a.getAttribute('data-name') || '').toLowerCase();
+						var nameB = (b.getAttribute('data-name') || '').toLowerCase();
+						var cmp = nameA.localeCompare ? nameA.localeCompare(nameB) : (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
+						return sortVal === 'name_asc' ? cmp : -cmp;
+					} else {
+						return (parseInt(a.getAttribute('data-index'), 10) || 0) - (parseInt(b.getAttribute('data-index'), 10) || 0);
+					}
+				});
+
+				for (var i = 0; i < rows.length; i++) {
+					if (tbody.children[i] !== rows[i]) {
+						tbody.insertBefore(rows[i], tbody.children[i] || null);
+					}
+				}
+				if (focused && document.activeElement !== focused && window.jQuery && $.contains(tbody, focused)) {
+					focused.focus();
+				}
+				if (scrollBox) scrollBox.scrollTop = scrollTop;
+				if (!sortOverride) window._cargoSortVal = sortVal;
+			};
+
+			window.cargoApplyFilterAndSort = function() {
+				var tbody = document.getElementById('cargo-goods-tbody');
+				if (!tbody) return;
+
+				var catEl = document.getElementById('cargo-current-category');
+				var currentCatKey = catEl ? ((catEl.getAttribute('data-station') || '') + '::' + (catEl.getAttribute('data-cat') || '')) : '';
+				if (window._cargoLastCategoryKey !== undefined && window._cargoLastCategoryKey !== currentCatKey) {
+					window._cargoSearchQuery = '';
+					var searchInput = document.getElementById('cargo-search-input');
+					if (searchInput) searchInput.value = '';
+				}
+				window._cargoLastCategoryKey = currentCatKey;
+
+				var searchInput = document.getElementById('cargo-search-input');
+				if (searchInput && window._cargoSearchQuery !== undefined && window._cargoSearchQuery !== '') {
+					searchInput.value = window._cargoSearchQuery;
+				}
+				var sortSelect = document.getElementById('cargo-sort-select');
+				if (sortSelect && window._cargoSortVal !== undefined) {
+					sortSelect.value = window._cargoSortVal;
+				}
+				if (window.cargoLiveSort) window.cargoLiveSort();
+				if (window.cargoLiveFilter) window.cargoLiveFilter();
+			};
+
+			if (window.NanoStateManager && window.NanoStateManager.addBeforeUpdateCallback) {
+				/* Restore server order before NanoUI compares rows by position. */
+				window.NanoStateManager.addBeforeUpdateCallback('cargo_order_market', function(data) {
+					if (window.cargoLiveSort) window.cargoLiveSort('default');
+					return data;
+				});
+			}
+
+			if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+				window.NanoStateManager.addAfterUpdateCallback('cargo_order_market', function(data) {
+					if (window.cargoApplyFilterAndSort) {
+						window.cargoApplyFilterAndSort();
+					}
+					return data;
+				});
+			}
+
+			if (window.cargoApplyFilterAndSort) {
+				window.cargoApplyFilterAndSort();
+			}
+			</script>
+			<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" onerror="var s = document.getElementById('cargo-market-script'); if(s &amp;&amp; !window.cargoLiveFilter) { try { (window.execScript || function(c){ window.eval(c); })(s.innerHTML); } catch(e){} } else if(window.cargoApplyFilterAndSort) { window.cargoApplyFilterAndSort(); }" class="tn-hidden">
+
+	{{else data.screen == 'cart'}}
+		<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">Cart <span class="tn-muted font-mono">({{:data.cart_count}} items)</span></div>{{:helper.link('Back to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline')}}</div></div>
+			<div class="tn-screen-view" data-view="screen-cart" data-view-screen="cart">
+				<div class="tn-grid">
+					<div class="tn-col tn-cart-items">
+						<div class="tn-panel">
+							<div class="tn-panel-header">
+								<div>
+									<div class="tn-panel-title">Items</div>
+								</div>
+								<div>
+									{{:helper.link('Clear cart', 'close', {'PRG_cart_reset' : 1}, data.cart_count ? null : 'disabled', 'tn-btn tn-btn-danger tn-confirm-clear')}}
+								</div>
+							</div>
+
+							{{if !data.cart_count}}
+								<div class="tn-empty-panel">
+									<div class="tn-panel-title">Cart is empty</div>
+									<div class="tn-panel-subtitle tn-muted">Add items from the market.</div>
+									<div class="tn-space-top">
+										{{:helper.link('Go to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-primary')}}
+									</div>
+								</div>
+							{{else}}
+								<div class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-cart-list">
+									{{for data.cart_groups:cart_group:cart_group_index}}
+										<div class="tn-cart-group">
+											<div class="tn-bold tn-space-bottom">{{>cart_group.station_name}}</div>
+											{{for cart_group.categories:cart_category:cart_category_index}}
+												<div class="tn-panel-label tn-space-top">{{>cart_category.name}}</div>
+												{{for cart_category.items:cart_item:cart_item_index}}
+													<div class="tn-cart-line" data-key="{{>cart_item.station_uid + '::' + cart_item.category_name + '::' + cart_item.good_id}}">
+														<strong class="tn-cart-line-name">{{>cart_item.name}}</strong>
+														<div class="tn-cart-line-controls">
+															{{:helper.link('-', null, {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : 1}, null, 'tn-table-stepper-btn tn-cart-decrement')}}
+															<span class="font-mono tn-cart-quantity" aria-label="Quantity">{{:cart_item.amount}}</span>
+															<strong class="font-mono tn-cart-line-price">{{>formatTradeAmount(cart_item.price)}} {{>data.currency_short}}</strong>
+															{{:helper.link('Remove', 'close', {'PRG_cart_remove_direct' : cart_item.station_uid, 'PRG_cart_category_name' : cart_item.category_name, 'PRG_cart_good_id' : cart_item.good_id, 'PRG_cart_remove_amount' : cart_item.amount, 'PRG_cart_remove_all' : 1}, null, 'tn-btn tn-btn-danger tn-cart-remove')}}
+														</div>
+													</div>
+													{{/for}}
+											{{/for}}
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+					<div class="tn-col tn-checkout-column">
+						<div class="tn-panel">
+							<div class="tn-panel-title">Request order</div><hr class="tn-section-divider">
+							<div class="tn-labeled-row"><span>Items</span><span class="font-mono">{{>formatTradeAmount(data.cart_subtotal)}} {{>data.currency_short}}</span></div>
+							<div class="tn-labeled-row"><span>Handling fee ({{>data.handling_fee_percent}})</span><span class="font-mono">{{>formatTradeAmount(data.cart_fee)}} {{>data.currency_short}}</span></div>
+							<div class="tn-labeled-row tn-checkout-total"><span>Order total</span><strong class="font-mono">{{>formatTradeAmount(data.cart_total)}} {{>data.currency_short}}</strong></div>
+							{{var requestReady = data.can_submit_order;}}{{#def.order_request_form}}
+							<div class="tn-space-top">{{:helper.link('Save preset', null, {'PRG_cart_form' : 'save'}, data.cart_count ? null : 'disabled', 'tn-btn tn-btn-outline')}}</div>
+							{{if data.cart_form_mode == 'save'}}
+								<div class="tn-form-shell"><form class="tn-form" method="get" action="?src={{:uiSrc}}">
+									<input type="hidden" name="src" value="{{:uiSrc}}"><input type="hidden" name="PRG_cart_save_form" value="1">
+									<label class="tn-panel-label tn-full" for="cargo-field-PRG_cart_save_name">Preset name</label><input id="cargo-field-PRG_cart_save_name" type="text" name="PRG_cart_save_name" value="" placeholder="Medbay restock" required class="tn-full" maxlength="32">
+									<div class="tn-flex-row-sm tn-full tn-space-top"><input type="submit" value="Save preset" class="tn-btn tn-btn-primary">{{:helper.link('Cancel', null, {'PRG_cart_form_cancel' : 1}, null, 'tn-btn tn-btn-outline')}}</div>
+								</form></div>
+							{{/if}}
+						</div>
+						<div class="tn-panel tn-space-top">{{#def.order_account}}</div>
+						<div class="tn-panel tn-space-top">
+							<div class="tn-panel-title">Presets</div>
+							<hr class="tn-section-divider">
+							{{if !data.saved_carts || !data.saved_carts.length}}
+								<div class="tn-empty">No saved presets available.</div>
+							{{else}}
+								<div class="tn-scroll-box tn-preset-scroll" data-scroll-id="tn-saved-table">
+									{{for data.saved_carts:saved_cart:saved_cart_index}}
+										<div class="tn-item-row">
+											<div>
+												<strong>{{>saved_cart.name}}</strong>
+												<div class="font-mono tn-muted">{{:saved_cart.count}} items &bull; {{>formatTradeAmount(saved_cart.total)}} {{:data.currency_short}}</div>
+											</div>
+											<div class="tn-flex-row-sm">
+												{{:helper.link('Load', null, {'PRG_cart_load_direct' : saved_cart.name}, null, 'tn-btn tn-btn-outline')}}
+												{{:helper.link('Delete', 'close', {'PRG_cart_delete' : saved_cart.name}, null, 'tn-btn tn-btn-danger ')}}
+											</div>
+										</div>
+									{{/for}}
+								</div>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+
+	{{else data.screen == 'orders'}}
+		<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">Orders</div><span class="tn-muted">Cargo reviews and delivers these requests.</span></div></div>
+		<div class="tn-screen-view" data-view="screen-orders" data-view-screen="orders" data-orders-filter="{{>data.orders_filter}}">
+			<div class="tn-pillnav">{{:helper.link('All orders (' + data.order_count + ')', null, {'PRG_orders_filter' : 'all'}, data.orders_filter != 'mine' ? 'selected' : null, 'tn-pillnav-link')}}{{:helper.link('My orders (' + data.my_order_count + ')', null, {'PRG_orders_filter' : 'mine'}, data.orders_filter == 'mine' ? 'selected' : null, 'tn-pillnav-link')}}</div>
+			{{if !data.orders || !data.orders.length}}
+				<div class="tn-empty-panel"><div class="tn-panel-title">{{if data.orders_filter == 'mine'}}No orders of yours in the queue{{else}}No pending orders{{/if}}</div><div class="tn-space-top">{{:helper.link('Go to Market', 'cart', {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-primary')}}</div></div>
+			{{else}}
+				<div class="tn-panel">
+					<div class="tn-filter-controls tn-list-filters"><div class="tn-search-box"><input type="text" id="cargo-orders-search" class="tn-list-search" aria-label="Search orders" placeholder="Search number, requester or reason" oninput="window.cargoFilterList &amp;&amp; window.cargoFilterList('orders')" onkeyup="window.cargoFilterList &amp;&amp; window.cargoFilterList('orders')"><button type="button" class="tn-search-clear" aria-label="Clear order search" onclick="document.getElementById('cargo-orders-search').value='';window.cargoFilterList('orders')">&times;</button></div><span id="cargo-orders-counter" class="tn-muted font-mono tn-hidden" aria-live="polite"></span></div>
+					{{if (data.orders_filter == 'mine' ? data.my_order_count : data.order_count) > data.orders.length}}<div class="tn-setting-note">Showing {{:data.orders.length}} of {{:data.orders_filter == 'mine' ? data.my_order_count : data.order_count}} queued orders.</div>{{/if}}
+					<div id="cargo-orders-list" class="tn-scroll-box tn-list-scroll" data-scroll-id="tn-orders-list">
+						{{for data.orders:order_entry:order_index}}
+							<div class="tn-order-row{{if order_entry.selected}} tn-selected{{/if}}" data-key="order-{{:order_entry.id}}" data-detail-key="order-{{:order_entry.id}}" data-detail-group="orders" data-search="{{>order_entry.id + ' ' + order_entry.requestor_name + ' ' + order_entry.reason}}">
+								<div class="tn-record-heading"><div class="tn-record-identity"><span class="font-mono tn-muted">#{{:order_entry.id}}</span><strong>{{>order_entry.requestor_name}}</strong>{{if order_entry.is_mine}}<span class="tn-tag tn-tag-good">Your order</span>{{/if}}</div><span class="tn-tag tn-tag-{{:order_entry.status_tone}}">{{>order_entry.status}}</span></div>
+								<div class="tn-order-reason">{{>order_entry.reason}}</div>
+								<div class="tn-record-footer"><div class="tn-record-finance"><strong class="font-mono">{{>formatTradeAmount(order_entry.total)}} {{>data.currency_short}}</strong><span class="tn-muted">{{:order_entry.item_count}} {{if order_entry.item_count == 1}}item{{else}}items{{/if}}</span><button type="button" class="tn-detail-toggle" aria-expanded="false" aria-controls="tn-order-details-{{:order_entry.id}}" aria-label="Contents of order #{{:order_entry.id}}" onclick="window.cargoToggleDetails &amp;&amp; window.cargoToggleDetails(this)"><span class="tn-detail-marker" aria-hidden="true">+</span> Contents</button></div><div class="tn-record-actions">{{if order_entry.can_cancel}}{{:helper.link('Cancel order', 'close', {'PRG_cancel_order' : order_entry.id}, null, 'tn-btn tn-btn-danger')}}{{else order_entry.is_mine}}<span class="tn-action-reason tn-muted">This order is locked and cannot be cancelled.</span>{{/if}}</div></div>
+								<div id="tn-order-details-{{:order_entry.id}}" class="tn-record-details tn-hidden">
+									<div class="tn-summary-meta"><span>Items <span class="font-mono">{{>formatTradeAmount(order_entry.cost)}} {{>data.currency_short}}</span></span><span>Fee <span class="font-mono">{{>formatTradeAmount(order_entry.fee)}} {{>data.currency_short}}</span></span><span>Account <span class="font-mono">#{{:order_entry.requestor_account_number}}</span></span></div>
+									{{for order_entry.contents:order_group:order_group_index}}<div class="tn-bold tn-space-top">{{>order_group.station_name}}</div>{{for order_group.categories:order_category:order_category_index}}{{for order_category.items:order_item:order_item_index}}<div class="tn-item-row"><span>{{>order_item.name}} &times; <span class="font-mono">{{:order_item.amount}}</span></span><span class="font-mono">{{>formatTradeAmount(order_item.price)}} {{>data.currency_short}}</span></div>{{/for}}{{/for}}{{/for}}
+								</div>
+							</div>
+						{{/for}}
+					</div><div id="cargo-orders-empty" class="tn-empty tn-hidden">No matching orders.</div>
+				</div>
+			{{/if}}
+		</div>
+	{{else data.screen == 'account'}}
+		<div class="tn-workspace-header"><div class="tn-panel-header tn-no-bottom"><div class="tn-panel-title">Account</div>{{:helper.link('Back to Market', null, {'PRG_trade_screen' : 'goods'}, null, 'tn-btn tn-btn-outline')}}</div></div>
+		<div class="tn-screen-view" data-view="screen-account" data-view-screen="account"><div class="tn-grid">
+			<div class="tn-col"><div class="tn-panel">{{#def.order_account}}</div></div>
+			<div class="tn-col"><div class="tn-panel"><div class="tn-panel-title">ID cards</div><hr class="tn-section-divider"><div class="tn-labeled-row"><span>Terminal slot</span><span>{{>data.inserted_id}}</span></div><div class="tn-labeled-row"><span>Carried or equipped</span><span>{{>data.carried_id}}</span></div></div>
+				<div class="tn-panel"><div class="tn-panel-title">Ordering</div><p class="tn-setting-note">Cargo approves orders and arranges delivery. Your account is charged when the order is approved, not when you submit the request.</p><p class="tn-setting-note">Pending orders belonging to your linked account or ID card can be cancelled from Orders.</p><div class="tn-muted">Handling fee: {{>data.handling_fee_percent}}</div></div>
+			</div>
+		</div></div>
+	{{/if}}
+</div></div>
+
+<script id="cargo-controls-script">
+window.cargoClearFormError = function(input) {
+	input.removeAttribute('aria-invalid');
+	$(input.form).find('.tn-form-error').hide();
+};
+window.cargoValidateQuantityForm = function(form) {
+	var input = form.elements['PRG_cart_set_amount'];
+	var amount = Number(input.value);
+	var maximum = Number(input.getAttribute('max'));
+	var error = '';
+	if (!input.value.replace(/^\s+|\s+$/g, '') || !isFinite(amount) || amount < 0 || amount % 1) error = 'Enter a whole quantity of zero or more.';
+	else if (amount > maximum) error = 'Maximum quantity: ' + maximum + '.';
+	$(form).find('.tn-form-error').text(error).toggle(!!error);
+	if (error) {
+		input.setAttribute('aria-invalid', 'true');
+		input.focus();
+	}
+	return !error;
+};
+window.cargoValidateOrderForm = function(form) {
+	var input = form.PRG_order_reason;
+	var valid = !!input.value.replace(/^\s+|\s+$/g, '');
+	$(form).find('.tn-form-error').toggle(!valid);
+	if (!valid) {
+		input.setAttribute('aria-invalid', 'true');
+		input.focus();
+	}
+	return valid;
+};
+window.cargoToggleDetails = function(button) {
+	var row = $(button).closest('[data-detail-key]');
+	var group = row.attr('data-detail-group');
+	var key = row.attr('data-detail-key');
+	window._cargoDetails = window._cargoDetails || {};
+	window._cargoDetails[group] = window._cargoDetails[group] === key ? null : key;
+	window.cargoApplyDetails();
+};
+window.cargoApplyDetails = function() {
+	var state = window._cargoDetails || {};
+	$('.tn-wrap [data-detail-key]').each(function() {
+		var row = $(this);
+		var expanded = state[row.attr('data-detail-group')] === row.attr('data-detail-key');
+		row.find('.tn-detail-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
+		row.find('.tn-detail-marker').text(expanded ? '-' : '+');
+		row.find('.tn-record-details').toggle(expanded);
+	});
+};
+window.cargoListState = function(name) {
+	var key = name + '-' + ($('[data-orders-filter]').attr('data-orders-filter') || 'all');
+	window._cargoLists = window._cargoLists || {};
+	return window._cargoLists[key] || (window._cargoLists[key] = {query: '', filter: ''});
+};
+window.cargoFilterList = function(name) {
+	var list = document.getElementById('cargo-' + name + '-list');
+	if (!list) return;
+	var state = window.cargoListState(name);
+	state.query = $('#cargo-' + name + '-search').val() || '';
+	state.filter = $('#cargo-' + name + '-filter').val() || '';
+	var query = state.query.toLowerCase().replace(/^\s+|\s+$/g, '');
+	var tokens = query ? query.split(/\s+/) : [];
+	var rows = $(list).children('[data-search]');
+	var count = 0;
+	rows.each(function() {
+		var row = $(this);
+		var match = !state.filter || row.attr('data-filter') === state.filter;
+		var text = (row.attr('data-search') || '').toLowerCase();
+		for (var i = 0; match && i < tokens.length; i++) match = text.indexOf(tokens[i]) !== -1;
+		row.toggle(match);
+		if (match) count++;
+	});
+	$('#cargo-' + name + '-counter').text(count + ' / ' + rows.length).toggle(!!(query || state.filter));
+	$('#cargo-' + name + '-empty').toggle(count === 0);
+};
+window.cargoInitLists = function() {
+	var names = ['orders'];
+	for (var i = 0; i < names.length; i++) {
+		var name = names[i];
+		if (!document.getElementById('cargo-' + name + '-list')) continue;
+		var state = window.cargoListState(name);
+		var search = $('#cargo-' + name + '-search');
+		if (search.val() !== state.query) search.val(state.query);
+		$('#cargo-' + name + '-filter').val(state.filter);
+		window.cargoFilterList(name);
+	}
+};
+window.cargoToggleGoodDetails = function(button) {
+	var key = $(button).closest('.tn-good-row').attr('data-key');
+	window._cargoExpandedGoodKey = window._cargoExpandedGoodKey === key ? null : key;
+	window.cargoTradeInit();
+};
+window.cargoTradeInit = function() {
+	if (!window.jQuery) return;
+	window.cargoApplyDetails();
+	window.cargoInitLists();
+	$('.tn-wrap .tn-good-row').each(function() {
+		var expanded = $(this).attr('data-key') === window._cargoExpandedGoodKey;
+		$(this).toggleClass('tn-expanded', expanded);
+		$(this).find('.tn-item-toggle').attr('aria-expanded', expanded ? 'true' : 'false');
+		$(this).find('.tn-item-marker').text(expanded ? '-' : '+');
+		$(this).find('.tn-item-details').toggle(expanded);
+	});
+	$('.tn-wrap .linkActive').attr('role', 'button').attr('tabindex', '0');
+	$('.tn-nav-bar, .tn-pillnav').attr('role', 'tablist');
+	$('.tn-wrap .tn-nav-btn, .tn-wrap .tn-pillnav-link').each(function() {
+		$(this).attr('role', 'tab').attr('aria-selected', $(this).hasClass('selected') ? 'true' : 'false');
+	});
+	$('.tn-wrap .tn-quantity-value').attr('title', 'Set quantity').attr('aria-label', 'Set item quantity');
+	$('.tn-wrap .tn-cart-line').each(function() {
+		var name = $(this).find('.tn-cart-line-name').text();
+		$(this).find('.tn-cart-decrement').attr('aria-label', 'Remove one ' + name);
+		$(this).find('.tn-cart-remove').attr('aria-label', 'Remove all ' + name);
+	});
+	$('.tn-wrap .disabled').attr('aria-disabled', 'true');
+	$('.tn-wrap .linkActive').off('keydown.cargo').on('keydown.cargo', function(event) {
+		if (event.which === 13 || event.which === 32) {
+			event.preventDefault();
+			this.click();
+		}
+	});
+	if (window._cargoClearArmedUntil > new Date().getTime()) {
+		$('.tn-wrap .tn-confirm-clear.linkActive').text('Confirm clear');
+	}
+	if (window.NanoStateManager && window.NanoStateManager.addAfterUpdateCallback) {
+		window.NanoStateManager.addAfterUpdateCallback('cargo_order_controls', function(data) {
+			window.cargoTradeInit();
+			return data;
+		});
+	}
+	if (!window._cargoConfirmRegistered && document.addEventListener) {
+		window._cargoConfirmRegistered = true;
+		document.addEventListener('click', function(event) {
+			var target = event.target;
+			while (target && target !== document) {
+				if ((' ' + target.className + ' ').indexOf(' tn-confirm-clear ') !== -1 && (' ' + target.className + ' ').indexOf(' linkActive ') !== -1) {
+				if (!(window._cargoClearArmedUntil > new Date().getTime())) {
+					event.preventDefault();
+					event.stopPropagation();
+					window._cargoClearArmedUntil = new Date().getTime() + 5000;
+					$(target).text('Confirm clear');
+					window.clearTimeout(window._cargoClearTimer);
+					window._cargoClearTimer = window.setTimeout(function() {
+						window._cargoClearArmedUntil = 0;
+						$('.tn-wrap .tn-confirm-clear.linkActive').text('Clear cart');
+					}, 5000);
+				} else {
+					window._cargoClearArmedUntil = 0;
+					window.clearTimeout(window._cargoClearTimer);
+				}
+				return;
+			}
+				target = target.parentNode;
+			}
+		}, true);
+	}
+};
+window.cargoTradeInit();
+</script>
+<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="display:none;" onload="var s=document.getElementById('cargo-controls-script'); if(s &amp;&amp; !window.cargoTradeInit){ (window.execScript || function(c){window.eval(c);})(s.innerHTML); } else if(window.cargoTradeInit){window.cargoTradeInit();}">

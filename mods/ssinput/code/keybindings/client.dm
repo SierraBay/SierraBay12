@@ -10,7 +10,9 @@
 
 
 /datum/keybinding/client/admin_help/down(client/user)
-	user.adminhelp()
+	var/message = input(user, "What do you need help with?", "Adminhelp") as text|null
+	if(!isnull(message))
+		user.adminhelp(message)
 	return TRUE
 
 
