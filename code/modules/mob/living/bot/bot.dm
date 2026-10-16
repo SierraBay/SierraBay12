@@ -316,7 +316,10 @@
 /mob/living/bot/proc/startPatrol()
 	var/turf/T = getPatrolTurf()
 	if(T)
-		patrol_path = AStar(get_turf(loc), T, TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_patrol_dist, id = botcard, exclude = obstacle)
+		// [SIERRA-EDIT] - JPS_PATHFINDING
+		// patrol_path = AStar(get_turf(loc), T, TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_patrol_dist, id = botcard, exclude = obstacle) // SIERRA-EDIT - ORIGINAL
+		patrol_path = get_path_to(src, T, max_patrol_dist, id = botcard, exclude = obstacle)
+		// [/SIERRA-EDIT]
 		if(!patrol_path)
 			patrol_path = list()
 		obstacle = null
@@ -348,8 +351,11 @@
 	return
 
 /mob/living/bot/proc/calcTargetPath()
-	target_path = AStar(get_turf(loc), get_turf(target), TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_target_dist, id = botcard, exclude = obstacle)
-	if(!target_path)
+	// [SIERRA-EDIT] - JPS_PATHFINDING
+	// target_path = AStar(get_turf(loc), get_turf(target), TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_target_dist, id = botcard, exclude = obstacle) // SIERRA-EDIT - ORIGINAL
+	target_path = get_path_to(src, target, max_target_dist, id = botcard, exclude = obstacle)
+	// [/SIERRA-EDIT]
+	if(!length(target_path)) // [SIERRA-EDIT] - JPS_PATHFINDING - Failed searches return an empty list.
 		if(target && target.loc)
 			ignore_list |= target
 		resetTarget()
@@ -406,7 +412,10 @@
 	for(var/d in GLOB.cardinal)
 		var/turf/simulated/T = get_step(src, d)
 		if(istype(T) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
+			// [SIERRA-EDIT] - JPS_PATHFINDING - Keep legacy A* checks distinct from the JPS turf member.
+			// if(!LinkBlockedWithAccess(src, T, ID)) // SIERRA-EDIT - ORIGINAL
+			if(!call(GLOBAL_PROC_REF(LinkBlockedWithAccess))(src, T, ID))
+			// [/SIERRA-EDIT]
 				L.Add(T)
 	return L
 
