@@ -2,6 +2,11 @@
 	Consistent "randomness" overrides.
 */
 
+// [SIERRA-ADD] - This dungeon has no automatic spawn in normal Sierra rounds.
+/datum/map_template/ruin/deepmaint
+	skip_main_unit_tests = "Unused by normal Sierra generation; deferred procedural generation needs a separate integration test."
+// [/SIERRA-ADD]
+
 // The following overrides ensures random object spawners always select the most space consuming objects
 /datum/proc/unit_test_get_weight()
 	CRASH("Unhandled atom: [type]")

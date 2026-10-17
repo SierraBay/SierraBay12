@@ -72,6 +72,13 @@
 /obj/machinery/power/apc/hyper
 	cell_type = /obj/item/cell/hyper
 
+// [SIERRA-ADD] - Used by Bearcat and shared ruin templates.
+/obj/machinery/power/apc/derelict
+	cell_type = /obj/item/cell/crap/empty
+	locked = 0
+	coverlocked = 0
+// [/SIERRA-ADD]
+
 // APC that barely has any juice
 /obj/machinery/power/apc/near_empty
 	cell_type = /obj/item/cell/crap/discharged
