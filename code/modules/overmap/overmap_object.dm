@@ -154,7 +154,7 @@
 	return res
 
 ///Perform any movement, as applicable
-/obj/overmap/proc/process_movement()
+/obj/overmap/proc/process_movement(elapsed = world.time - SSobj.last_fire) // [SIERRA-EDIT] - Allow missiles to limit their first movement interval.
 	if (halted || !is_moving())
 		return
 
@@ -162,7 +162,7 @@
 	for(var/i = 1 to 2)
 		if(abs(speed[i]) >= min_speed)
 			// Speed is turfs/second, so multiply by the time passed since the last time SSobj fired
-			position[i] += speed[i] * (world.time - SSobj.last_fire)
+			position[i] += speed[i] * elapsed // [SIERRA-EDIT] - Use the same interval as the recorded trajectory.
 			if(position[i] < 0)
 				deltas[i] = ceil(position[i])
 			else if(position[i] > 0)
