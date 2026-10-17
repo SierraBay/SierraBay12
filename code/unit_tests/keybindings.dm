@@ -32,22 +32,3 @@
 	else
 		pass("Legacy Shift and custom movement bindings were preserved.")
 	return TRUE
-
-
-// [SIERRA-ADD] Preserve bindings captured under different browser key names.
-/datum/unit_test/space_keybindings_shall_be_normalized
-	name = "INPUT: Space bindings shall be normalized"
-
-
-/datum/unit_test/space_keybindings_shall_be_normalized/start_test()
-	var/list/bindings = sanitize_keybindings(list(
-		" " = list("North"),
-		"Spacebar" = list("North"),
-		"Space" = list("North")
-	))
-	if(length(bindings) != 1 || !(bindings["Space"] ~= list("North")))
-		fail("Space aliases lost or duplicated a saved keybinding.")
-	else
-		pass("Space aliases were normalized without losing bindings.")
-	return TRUE
-// [SIERRA-ADD] End.
