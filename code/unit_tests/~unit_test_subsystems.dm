@@ -54,11 +54,22 @@ SUBSYSTEM_DEF(unit_tests)
 		required_height = max(required_height, template.height + 2)
 	if(required_width == world.maxx && required_height == world.maxy)
 		return
+	resize_template_bounds(required_width, required_height)
+
+/datum/controller/subsystem/unit_tests/proc/resize_template_bounds(width, height)
+	var/old_width = world.maxx
+	var/old_height = world.maxy
 	// Defer turf initialization until all Z levels have their new dimensions.
 	SSatoms.map_loader_begin()
-	world.maxx = required_width
-	world.maxy = required_height
+	world.maxx = width
+	world.maxy = height
 	SSatoms.map_loader_stop()
+	// Older BYOND versions can lose queued turf references while expanding both axes.
+	for(var/z in 1 to world.maxz)
+		if(width > old_width)
+			SSatoms.init_queue |= block(locate(old_width + 1, 1, z), locate(width, height, z))
+		if(height > old_height)
+			SSatoms.init_queue |= block(locate(1, old_height + 1, z), locate(old_width, height, z))
 	SSatoms.InitializeAtoms()
 // [/SIERRA-ADD]
 
