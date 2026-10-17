@@ -11,6 +11,9 @@ SUBSYSTEM_DEF(unit_tests)
 	var/list/current_async
 	var/stage = 1
 	var/end_unit_tests
+	// [SIERRA-ADD] - Keep packed template fixtures alive for subsequent map tests.
+	var/datum/unit_test_map_allocator/template_allocator = new
+	// [/SIERRA-ADD]
 
 /datum/controller/subsystem/unit_tests/Initialize(start_uptime)
 
@@ -43,16 +46,23 @@ SUBSYSTEM_DEF(unit_tests)
 			report_progress("Skipping template '[map_template]' ([map_template.type]): [map_template.skip_main_unit_tests]")
 			continue
 
-		// Suggestion: Do smart things here to squeeze as many templates as possible into the same Z-level
+		// [SIERRA-EDIT] - Shiptest allocation keeps single-Z fixtures in separate rectangles.
+		var/loaded
+		var/load_count = map_template.loaded
 		if(map_template.tallness == 1)
-			INCREMENT_WORLD_Z_SIZE
-			GLOB.using_map.sealed_levels += world.maxz
-			var/corner = locate(world.maxx/2, world.maxy/2, world.maxz)
+			// One space turf on each side isolates neighboring fixtures.
+			var/datum/unit_test_map_region/region = template_allocator.create_virtual_level(map_template.width + 2, map_template.height + 2)
+			if(!region)
+				CRASH("[map_template.type]: template plus isolation margin does not fit.")
+			var/corner = locate(region.low_x + 1, region.low_y + 1, region.parent_level.z_value)
 			log_unit_test("Loading template '[map_template]' ([map_template.type]) at [log_info_line(corner)]")
-			map_template.load(corner)
+			loaded = map_template.load(corner)
 		else // Multi-Z templates are loaded using different means
 			log_unit_test("Loading template '[map_template]' ([map_template.type]) at Z-level [world.maxz+1] with a tallness of [map_template.tallness]")
-			map_template.load_new_z()
+			loaded = map_template.load_new_z()
+		if(!loaded || map_template.loaded != load_count + 1)
+			CRASH("[map_template.type]: loading failed.")
+		// [/SIERRA-EDIT]
 	log_unit_test("Map Templates Loaded")
 
 /datum/controller/subsystem/unit_tests/proc/start_game()

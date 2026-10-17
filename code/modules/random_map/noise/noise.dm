@@ -18,6 +18,10 @@
 	..()
 
 /datum/random_map/noise/set_map_size()
+	// [SIERRA-ADD] - Padding is needed for calculation, not turf placement.
+	apply_width = limit_x
+	apply_height = limit_y
+	// [/SIERRA-ADD]
 	// Make sure the grid is a square with limits that are
 	// (n^2)+1, otherwise diamond-square won't work.
 	if(!IsPowerOfTwo((limit_x-1)))
@@ -124,7 +128,6 @@
 		for(var/x = 1 to limit_x)
 			for(var/y = 1 to limit_y)
 				var/current_cell = TRANSLATE_COORD(x,y)
-				next_map[current_cell] = map[current_cell]
 				var/val_count = 1
 				var/total = map[current_cell]
 
@@ -161,39 +164,47 @@
 
 				total = round(total/val_count)
 
-				if(abs(map[current_cell]-total) <= cell_smooth_amt)
-					map[current_cell] = total
-				else if(map[current_cell] < total)
-					map[current_cell]+=cell_smooth_amt
-				else if(map[current_cell] < total)
-					map[current_cell]-=cell_smooth_amt
-				map[current_cell] = max(0,min(cell_range,map[current_cell]))
+				// [SIERRA-EDIT] - Read the previous pass and retain the smoothed result.
+				next_map[current_cell] = clamp(total, map[current_cell] - cell_smooth_amt, map[current_cell] + cell_smooth_amt)
+				next_map[current_cell] = clamp(next_map[current_cell], 0, cell_range)
+				// [/SIERRA-EDIT]
 		map = next_map
 
 	if(smooth_single_tiles)
-		var/list/buddies = list()
+		// [SIERRA-EDIT] - Only the existence of an equal neighbor matters.
 		for(var/x in 1 to limit_x - 1)
 			for(var/y in 1 to limit_y - 1)
 				var/mapcell = get_map_cell(x,y)
 				var/list/neighbors = get_neighbors(x, y)
-				buddies.Cut()
+				var/has_matching_neighbor = FALSE
+				var/current_value = noise2value(map[mapcell])
 				for(var/cell in neighbors)
-					if(noise2value(map[cell]) == noise2value(map[mapcell]))
-						buddies |= cell
-				if(!length(buddies))
+					if(noise2value(map[cell]) == current_value)
+						has_matching_neighbor = TRUE
+						break
+				if(!has_matching_neighbor && length(neighbors))
 					map[mapcell] = map[pick(neighbors)]
+		// [/SIERRA-EDIT]
 
 /datum/random_map/noise/proc/get_neighbors(x, y, include_diagonals)
 	. = list()
 	if(!include_diagonals)
 		var/static/list/ortho_offsets = list(list(-1, 0), list(1, 0), list(0, 1), list(0,-1))
 		for(var/list/offset in ortho_offsets)
+			// [SIERRA-ADD] - Flat indices alone allow wrapping into another row.
+			if(x + offset[1] < 1 || x + offset[1] > limit_x || y + offset[2] < 1 || y + offset[2] > limit_y)
+				continue
+			// [/SIERRA-ADD]
 			var/tmp_cell = get_map_cell(x+offset[1],y+offset[2])
 			if(tmp_cell)
 				. += tmp_cell
 	else
 		for(var/dx in -1 to 1)
 			for(var/dy in -1 to 1)
+				// [SIERRA-ADD]
+				if(x + dx < 1 || x + dx > limit_x || y + dy < 1 || y + dy > limit_y)
+					continue
+				// [/SIERRA-ADD]
 				var/tmp_cell = get_map_cell(x+dx,y+dy)
 				if(tmp_cell)
 					. += tmp_cell

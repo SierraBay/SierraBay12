@@ -64,23 +64,19 @@
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_map()
 	..()
-	//После создания карты, разместим камушки
-	var/list/list_of_turfs =  get_area_turfs(planetary_area)
-	//Соберём все подходящие для нас турфы льда
-	for(var/turf/picked_turf in list_of_turfs)
-		if(density)
-			LAZYREMOVE(list_of_turfs, picked_turf)
-		else if(!istype(picked_turf, /turf/simulated/floor/exoplanet/ice/ice_planet))
-			LAZYREMOVE(list_of_turfs, picked_turf)
-	var/ice_block_ammount = rand(500, 1000)
-	//Спавним камушки на льду
-	while(ice_block_ammount > 0)
-		var/turf/current_turf = pick(list_of_turfs)
-		new /obj/structure/ice_rock(current_turf)
-		LAZYREMOVE(list_of_turfs, current_turf)
-		if(!LAZYLEN(list_of_turfs))
-			ice_block_ammount = 0
-		ice_block_ammount--
+	spawn_ice_rocks(rand(500, 1000))
+
+/obj/overmap/visitable/sector/exoplanet/ice/proc/spawn_ice_rocks(amount)
+	var/list/candidates = list()
+	for(var/turf/simulated/floor/exoplanet/ice/ice_planet/ice_turf in planetary_area)
+		if(!ice_turf.density)
+			candidates += ice_turf
+	amount = min(amount, length(candidates))
+	for(var/i in 1 to amount)
+		var/index = rand(1, length(candidates))
+		new /obj/structure/ice_rock(candidates[index])
+		candidates[index] = candidates[length(candidates)]
+		LIST_DEC(candidates)
 
 
 /obj/overmap/visitable/sector/exoplanet/ice/generate_atmosphere()

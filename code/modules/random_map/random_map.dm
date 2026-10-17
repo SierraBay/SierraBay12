@@ -17,6 +17,10 @@ var/global/list/map_count = list()
 	var/origin_z = 1                // Target Z-level.
 	var/limit_x = 128               // Default x size.
 	var/limit_y = 128               // Default y size.
+	// [SIERRA-ADD] - Keep padded calculation grids inside the requested map bounds.
+	var/apply_width
+	var/apply_height
+	// [/SIERRA-ADD]
 	var/auto_apply = 1
 	var/preserve_map = 1
 
@@ -160,11 +164,15 @@ var/global/list/map_count = list()
 	if(!origin_y) origin_y = 1
 	if(!origin_z) origin_z = 1
 
-	for(var/x = 1, x <= limit_x, x++)
-		for(var/y = 1, y <= limit_y, y++)
+	// [SIERRA-EDIT] - Noise grids may be larger than the requested terrain.
+	var/width = apply_width || limit_x
+	var/height = apply_height || limit_y
+	for(var/x in 1 to width)
+		for(var/y in 1 to height)
 			if(!priority_process)
 				CHECK_TICK
 			apply_to_turf(x,y)
+	// [/SIERRA-EDIT]
 
 /datum/random_map/proc/apply_to_turf(x,y)
 	var/current_cell = get_map_cell(x,y)
