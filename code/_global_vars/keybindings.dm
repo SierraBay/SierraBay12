@@ -15,6 +15,10 @@ var/global/list/_kbMap = list(
 	"END" = "Southwest",
 	"PAGEDOWN" = "Southeast",
 	"SPACEBAR" = "Space",
+	// [SIERRA-ADD] Normalize modern browser and saved Space key names.
+	" " = "Space",
+	"SPACE" = "Space",
+	// [SIERRA-ADD] End.
 	"ALT" = "Alt",
 	"SHIFT" = "Shift",
 	"CONTROL" = "Ctrl",

@@ -156,6 +156,7 @@
 	return jointext(keys, "+")
 
 
+// [SIERRA-EDIT] Capture Space consistently across browsers.
 /datum/category_item/player_setup_item/controls/keybindings/proc/capture_keybinding(mob/user, datum/keybinding/kb, old_key)
 	var/HTML = {"
 	<div class='Section fill'id='focus' style="outline: 0; text-align:center;" tabindex=0>
@@ -173,13 +174,18 @@
 		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
 		var escPressed = e.keyCode == 27 ? 1 : 0;
 		var sanitizedKey = e.key;
-		if (47 < e.keyCode && e.keyCode < 58) {
+		// Normalize Space independently of browser key names.
+		if (e.keyCode == 32) {
+			sanitizedKey = 'Spacebar';
+		}
+		else if (47 < e.keyCode && e.keyCode < 58) {
 			sanitizedKey = String.fromCharCode(e.keyCode);
 		}
 		else if (64 < e.keyCode && e.keyCode < 91) {
 			sanitizedKey = String.fromCharCode(e.keyCode);
 		}
-		var url = 'byond://?src=\ref[src];preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+sanitizedKey+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
+		// Preserve key characters in the Topic query.
+		var url = 'byond://?src=\ref[src];preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+encodeURIComponent(sanitizedKey)+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
 		deedDone = true;
 	}
@@ -190,6 +196,7 @@
 	var/datum/browser/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300)
 	popup.set_content(HTML)
 	popup.open(FALSE)
+// [SIERRA-EDIT] End.
 
 
 /datum/category_item/player_setup_item/controls/keybindings/OnTopic(href, list/href_list, mob/user)
