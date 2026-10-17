@@ -101,6 +101,9 @@
 #include "code\__defines\~mods\misc.dm"
 #include "code\__defines\~mods\mobs.dm"
 #include "code\__defines\~mods\rust_g.dm"
+// [SIERRA-ADD] - TGUI - Shared defines must precede UI consumers.
+#include "code\__defines\~mods\tgui.dm"
+// [/SIERRA-ADD]
 #include "code\__defines\~mods\tg_signals.dm"
 #include "code\__defines\~mods\ui_buttons.dm"
 #include "code\__defines\~mods\~master_defines.dm"
@@ -1621,7 +1624,9 @@
 #include "code\modules\blob\blob.dm"
 #include "code\modules\butchery\butchery.dm"
 #include "code\modules\butchery\remains.dm"
-#include "code\modules\client\asset_cache.dm"
+// [SIERRA-REMOVE] - TGUI - Replaced by mods/tgui donor asset transport.
+// #include "code\modules\client\asset_cache.dm"
+// [/SIERRA-REMOVE]
 #include "code\modules\client\client_color.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_helpers.dm"

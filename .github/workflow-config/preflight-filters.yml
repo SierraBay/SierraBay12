@@ -5,3 +5,6 @@ dm:
   - '**/*.dme'
   - 'test/check-paths.sh'
   - 'test/run-test.sh'
+  - 'mods/tgui/frontend/**'
+  - 'scripts/build-tgui.cjs'
+  - '.github/actions/build-tgui/**'

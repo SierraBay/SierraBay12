@@ -2,8 +2,20 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "tgui: build",
+      "detail": "Builds the frontend assets before compiling or debugging the game.",
+      "type": "process",
+      "command": "node",
+      "args": ["${workspaceFolder}/tools/build/build.js", "tgui", "--ci"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
       "type": "dreammaker",
       "dme": "baystation12.dme",
+      "dependsOn": ["tgui: build"],
       "problemMatcher": ["$dreammaker"],
       "group": {
         "kind": "build",
@@ -14,6 +26,7 @@
     {
       "label": "dm: build unit tests",
       "detail": "Builds baystation12.dmb with -DUNIT_TEST through scripts/dm.sh for the chosen map, the same way CI does.",
+      "dependsOn": ["tgui: build"],
       "type": "shell",
       "command": "bash",
       "windows": {

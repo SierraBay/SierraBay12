@@ -312,8 +312,9 @@ var/global/list/_client_preferences_by_type
 			C.chatOutput.start()
 		else
 			C.force_white_theme()
-			winset(C, "output", "is-visible=true;is-disabled=false")
-			winset(C, "browseroutput", "is-visible=false")
+			// [SIERRA-EDIT] - TGUI - Select the legacy chat pane.
+			C.set_chat_output(FALSE)
+			// [/SIERRA-EDIT]
 
 /datum/client_preference/notify_ghost_trap
 	description = "Notify when ghost-trap roles are available."
