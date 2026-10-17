@@ -65,11 +65,10 @@ SUBSYSTEM_DEF(unit_tests)
 	world.maxy = height
 	SSatoms.map_loader_stop()
 	// Older BYOND versions can lose queued turf references while expanding both axes.
-	for(var/z in 1 to world.maxz)
-		if(width > old_width)
-			SSatoms.init_queue |= block(locate(old_width + 1, 1, z), locate(width, height, z))
-		if(height > old_height)
-			SSatoms.init_queue |= block(locate(1, old_height + 1, z), locate(old_width, height, z))
+	if(width > old_width)
+		SSatoms.init_queue |= block(locate(old_width + 1, 1, 1), locate(width, height, world.maxz))
+	if(height > old_height)
+		SSatoms.init_queue |= block(locate(1, old_height + 1, 1), locate(old_width, height, world.maxz))
 	SSatoms.InitializeAtoms()
 // [/SIERRA-ADD]
 
