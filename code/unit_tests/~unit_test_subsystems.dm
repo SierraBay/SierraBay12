@@ -28,6 +28,9 @@ SUBSYSTEM_DEF(unit_tests)
 	log_unit_test("Initializing Unit Testing")
 
 	// Load Map Templates
+	// [SIERRA-ADD] - Small test maps must still fit every template and its isolation margin.
+	prepare_template_bounds()
+	// [/SIERRA-ADD]
 	load_map_templates()
 
 	//
@@ -38,6 +41,26 @@ SUBSYSTEM_DEF(unit_tests)
 		queue += new test_datum_type
 	log_unit_test("[length(queue)] unit tests loaded.")
 
+
+// [SIERRA-ADD]
+/datum/controller/subsystem/unit_tests/proc/prepare_template_bounds()
+	var/required_width = world.maxx
+	var/required_height = world.maxy
+	for(var/template_name in SSmapping.map_templates)
+		var/datum/map_template/template = SSmapping.map_templates[template_name]
+		if(template.skip_main_unit_tests)
+			continue
+		required_width = max(required_width, template.width + 2)
+		required_height = max(required_height, template.height + 2)
+	if(required_width == world.maxx && required_height == world.maxy)
+		return
+	// Defer turf initialization until all Z levels have their new dimensions.
+	SSatoms.map_loader_begin()
+	world.maxx = required_width
+	world.maxy = required_height
+	SSatoms.map_loader_stop()
+	SSatoms.InitializeAtoms()
+// [/SIERRA-ADD]
 
 /datum/controller/subsystem/unit_tests/proc/load_map_templates()
 	for(var/map_template_name in (SSmapping.map_templates))

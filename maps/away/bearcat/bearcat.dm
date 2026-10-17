@@ -94,11 +94,6 @@
 	base_area = /area/ship/scrap/cargo/lower
 	base_turf = /turf/simulated/floor
 
-/obj/machinery/power/apc/derelict
-	cell_type = /obj/item/cell/crap/empty
-	locked = 0
-	coverlocked = 0
-
 /obj/machinery/door/airlock/autoname/command
 	door_color = COLOR_COMMAND_BLUE
 
