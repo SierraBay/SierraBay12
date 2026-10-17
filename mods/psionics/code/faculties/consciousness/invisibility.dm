@@ -47,7 +47,7 @@
 	user.visible_message(SPAN_WARNING("[user] внезапно проявляется!"))
 	animate(user, alpha = 255, time = 3 SECONDS, easing = EASE_IN | BOUNCE_EASING)
 	is_invisible = FALSE
-	sleep(5)
+	sleep(6 SECONDS)
 	if(!is_invisible)
 		animate(user, alpha = 255, time = 0.5, easing = EASE_IN | BOUNCE_EASING)
 

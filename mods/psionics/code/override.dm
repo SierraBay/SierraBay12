@@ -56,12 +56,13 @@
 	if(affected)
 		affected.implants += imp
 		imp.part = affected
-		switch(H.mind.assigned_job.department)
+		switch(H.mind.assigned_job.get_department_display_name())
 			if("Охранный")
 				if(H.mind.assigned_job.title == "Criminal Investigator" || H.mind.assigned_job.title == "Forensic Technician")
 					return
-				imp.psi_mode = "Issue Reprimand"
-	to_chat(H, SPAN_DANGER("As a registered psionic, you are fitted with a psi-dampening control implant. Using psi-power while the implant is active will result in neural shocks and your violation being reported."))
+				imp.psi_mode = "Security Level Derived"
+				to_chat(H, SPAN_DANGER("Ваш имплант подавитель активен в не-чрезвычайной ситуации"))
+	to_chat(H, SPAN_DANGER("Как зарегистрированный псионик, вам выдан имплант подавления, для вашего контроля."))
 
 /datum/job/proc/create_psi_list(disciples, psi_abilities_by_name)
 	for(var/faculty_name in disciples)
@@ -226,7 +227,8 @@
 	..()
 
 /datum/reagent/drugs/three_eye/process_overdose(mob/living/carbon/M)
-	..()
+	M.add_chemical_effect(CE_TOXIN, 1)
+	M.adjustToxLoss(REM)
 	M.adjustBrainLoss(rand(1, 5))
 	if(ishuman(M) && prob(10))
 		var/mob/living/carbon/human/H = M

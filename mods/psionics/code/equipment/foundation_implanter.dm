@@ -7,9 +7,6 @@
 #ifndef PSI_IMPLANT_WARN
 #define PSI_IMPLANT_WARN      "Issue Reprimand"
 #endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
 #ifndef PSI_IMPLANT_DISABLED
 #define PSI_IMPLANT_DISABLED  "Disabled"
 #endif
@@ -20,7 +17,7 @@
 	var/implanter_mode = PSI_IMPLANT_AUTOMATIC
 
 /obj/item/implanter/psi/attack_self(mob/user)
-	var/choice = input("Select a new implant mode.", "Psi Dampener") as null|anything in list(PSI_IMPLANT_AUTOMATIC, PSI_IMPLANT_SHOCK, PSI_IMPLANT_WARN, PSI_IMPLANT_LOG, PSI_IMPLANT_DISABLED)
+	var/choice = input("Select a new implant mode.", "Psi Dampener") as null|anything in list(PSI_IMPLANT_AUTOMATIC, PSI_IMPLANT_SHOCK, PSI_IMPLANT_WARN, PSI_IMPLANT_DISABLED)
 	if(!choice || user != loc) return
 	var/obj/item/implant/psi_control/implant = imp
 	if(!istype(implant))
@@ -37,5 +34,4 @@
 #undef PSI_IMPLANT_AUTOMATIC
 #undef PSI_IMPLANT_SHOCK
 #undef PSI_IMPLANT_WARN
-#undef PSI_IMPLANT_LOG
 #undef PSI_IMPLANT_DISABLED

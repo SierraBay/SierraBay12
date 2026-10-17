@@ -9,12 +9,17 @@
 	abstract_type = /singleton/psionic_power/coercion
 
 /singleton/psionic_power/coercion/invoke(mob/living/user, atom/target)
+	if (!istype(target))
+		return FALSE
+
 	. = ..()
 	if (!.)
 		return FALSE
 
-	if (!istype(target))
-		return FALSE
+	var/mob/living/carbon/human/V
+	if(istype(V) && V != user)
+		if(V.psi.deflect_psionic_attack(user))
+			return FALSE
 
 /singleton/psionic_power/coercion/blindstrike
 	name =           "Blindstrike"
@@ -77,8 +82,6 @@
 		return FALSE
 	if(isrobot(target))
 		return FALSE
-	if(target.psi?.deflect_psionic_attack(user))
-		return TRUE
 	. = ..()
 	if(.)
 
@@ -145,8 +148,6 @@
 		return FALSE
 	if(user.zone_sel.selecting != BP_GROIN)
 		return FALSE
-	if(target.psi?.deflect_psionic_attack(user))
-		return TRUE
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("\ [target] дотрагивается к [user]"))
@@ -170,9 +171,6 @@
 
 	if(!(user.zone_sel.selecting in list(BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND)))
 		return FALSE
-
-	if(target.psi?.deflect_psionic_attack(user))
-		return TRUE
 
 	. = ..()
 

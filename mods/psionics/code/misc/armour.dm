@@ -10,7 +10,7 @@
 	if(owner.disrupts_psionics() || proj.disrupts_psionics())
 		return FLAGS_OFF
 	if(owner.psi.check_armour("energy"))
-		if(istype(proj, /obj/item/projectile/beam)) // Из-за того что у тазеров нет флага ЛАЗЕР, зато есть у остальных лазеров, я вынужден проверять тип, а не флаг
+		if(istype(proj, /obj/item/projectile/beam) || istype(proj, /obj/item/projectile/energy)) // Из-за того что у тазеров нет флага ЛАЗЕР, зато есть у остальных лазеров, я вынужден проверять тип, а не флаг
 			var/psi_spend_amount = proj.damage * (1 - (owner.psi.check_armour("energy") * 0.1))
 			var/energy_rank = owner.psi.get_rank(PSI_ENERGISTICS) - 1
 			if(prob(energy_rank * 25) && owner.psi.stamina >= psi_spend_amount)
@@ -65,7 +65,7 @@
 	return FLAGS_OFF
 
 /obj/aura/psi/aura_check_unarmed(mob/living/carbon/human/H)
-	if(owner.disrupts_psionics() || H.disrupts_psionics())
+	if(owner.disrupts_psionics() || H.disrupts_psionics() || owner == H)
 		return FLAGS_OFF
 	if(owner.psi.check_armour("melee"))
 		var/con_rank = owner.psi.get_rank(PSI_CONSCIOUSNESS) - 1
@@ -90,7 +90,7 @@
 	return FLAGS_OFF
 
 /obj/aura/psi/aura_check_weapon(obj/item/weapon, mob/attacker, click_params)
-	if(owner.disrupts_psionics() || attacker.disrupts_psionics())
+	if(owner.disrupts_psionics() || attacker.disrupts_psionics() || owner == attacker)
 		return FLAGS_OFF
 	if(owner.psi.check_armour("melee"))
 		var/coercion_rank = owner.psi.get_rank(PSI_COERCION) - 1

@@ -7,9 +7,6 @@
 #ifndef PSI_IMPLANT_WARN
 #define PSI_IMPLANT_WARN      "Issue Reprimand"
 #endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
 #ifndef PSI_IMPLANT_DISABLED
 #define PSI_IMPLANT_DISABLED  "Disabled"
 #endif
@@ -55,7 +52,7 @@
 	light_color_alarm = COLOR_VIOLET
 	light_color_status_display = COLOR_VIOLET
 
-	psionic_control_level = PSI_IMPLANT_LOG
+	psionic_control_level = PSI_IMPLANT_WARN
 
 	overlay_alarm = "alarm_violet"
 	overlay_status_display = "status_display_violet"
@@ -88,7 +85,7 @@
 	overlay_alarm = "alarm_orange"
 	overlay_status_display = "status_display_orange"
 	alert_border = "alert_border_orange"
-	psionic_control_level = PSI_IMPLANT_LOG
+	psionic_control_level = PSI_IMPLANT_WARN
 
 /singleton/security_level/default/sierradept/code_orange/switching_up_to()
 	security_announcement_up.Announce("Тяжелые нарушения в работе оборудования и повреждение переборок. \
@@ -118,7 +115,7 @@
 	overlay_alarm = "alarm_blue"
 	overlay_status_display = "status_display_blue"
 	alert_border = "alert_border_blue"
-	psionic_control_level = PSI_IMPLANT_LOG
+	psionic_control_level = PSI_IMPLANT_WARN
 
 /singleton/security_level/default/sierradept/code_blue/switching_up_to()
 	security_announcement_up.Announce("Согласно полученной информации на судне может присутствовать угроза для безопасности экипажа. \
