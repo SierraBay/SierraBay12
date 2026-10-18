@@ -106,6 +106,7 @@
 /obj/overmap/proc/make_stationary()
 	if (!movable)
 		return FALSE
+
 	speed[1] = 0
 	speed[2] = 0
 	movable = FALSE
@@ -153,48 +154,80 @@
 		res = (round(Atan2(speed[1], -speed[2])) + 450)%360
 	return res
 
-///Perform any movement, as applicable
-/obj/overmap/proc/process_movement(elapsed = world.time - SSobj.last_fire) // [SIERRA-EDIT] - Allow missiles to limit their first movement interval.
-	if (halted || !is_moving())
-		return
+// [SIERRA-EDIT] - Integrate in half-cell units and visit every crossed turf.
+#define OVERMAP_MOVEMENT_BOUNDARY_EPSILON 0.000001
 
-	var/list/deltas = list(0, 0)
-	for(var/i = 1 to 2)
-		if(abs(speed[i]) >= min_speed)
-			// Speed is turfs/second, so multiply by the time passed since the last time SSobj fired
-			position[i] += speed[i] * elapsed // [SIERRA-EDIT] - Use the same interval as the recorded trajectory.
-			if(position[i] < 0)
-				deltas[i] = ceil(position[i])
-			else if(position[i] > 0)
-				deltas[i] = floor(position[i])
-
-			if(deltas[i] != 0)
-				position[i] -= deltas[i]
-				// carry spillover movement to the next turf
-				position[i] += (deltas[i] > 0) ? -1 : 1
+/obj/overmap/proc/process_movement(elapsed = world.time - SSobj.last_fire, timestamp = world.time)
+	if (halted || !is_moving() || elapsed <= 0)
+		return 0
 
 	dir = get_heading()
-	update_icon()
-	var/new_x = x + deltas[1]
-	var/new_y = y + deltas[2]
-	var/turf/newloc = locate(new_x, new_y, z)
-	if(newloc && loc != newloc)
-		Move(newloc)
+	while (elapsed > 0 && is_moving())
+		var/step_time = get_movement_step(elapsed)
+		elapsed = max(0, elapsed - step_time)
+		if (!advance_map_position(step_time) || QDELETED(src))
+			return elapsed
 
-		if(istype(newloc, /turf/unsimulated/map/edge))
-			if (delete_on_edge)
-				qdel(src)
-			else if (wraparound)
-				handle_wraparound(new_x, new_y)
-			else
-				// we're not being deleted, and we're not wrapping around, so just stop where we are
-				speed[1] = 0
-				speed[2] = 0
-				for(var/i = 1 to 2)
-					if(deltas[i] != 0)
-						position[i] -= (deltas[i] > 0) ? -1 : 1
-						position[i] += deltas[i]
-						position[i] = clamp(position[i], -1, 1)
+	if (is_moving())
+		dir = get_heading()
+	update_icon()
+	return 0
+
+/// Stop precisely at the next cell boundary, including simultaneous corner crossings.
+/obj/overmap/proc/get_movement_step(elapsed)
+	for (var/axis in 1 to 2)
+		if (abs(speed[axis]) >= min_speed && speed[axis])
+			elapsed = min(elapsed, max(0, (SIGN(speed[axis]) - position[axis]) / speed[axis]))
+	return elapsed
+
+/obj/overmap/proc/advance_map_position(elapsed)
+	var/list/delta = list(0, 0)
+	for (var/axis in 1 to 2)
+		if (abs(speed[axis]) < min_speed || !speed[axis])
+			continue
+
+		position[axis] += speed[axis] * elapsed
+		if (position[axis] * SIGN(speed[axis]) >= 1 - OVERMAP_MOVEMENT_BOUNDARY_EPSILON)
+			delta[axis] = SIGN(speed[axis])
+			position[axis] -= 2 * delta[axis]
+	if (!delta[1] && !delta[2])
+		return TRUE
+
+	return move_map_cell(delta)
+
+/obj/overmap/proc/move_map_cell(list/delta)
+	var/turf/destination = locate(x + delta[1], y + delta[2], z)
+	// Edge turfs are dense markers. Core movement already bypassed their Enter check when wrapping.
+	if (istype(destination, /turf/unsimulated/map/edge))
+		return move_map_edge(destination, delta)
+
+	if (destination && Move(destination))
+		return TRUE
+
+	return stop_map_movement(delta)
+
+/obj/overmap/proc/move_map_edge(turf/destination, list/delta)
+	if (delete_on_edge)
+		qdel(src)
+		return FALSE
+
+	if (wraparound)
+		forceMove(destination)
+		// Move() may have set dir to the last single-axis crossing of a diagonal path.
+		dir = get_heading()
+		handle_wraparound(x, y)
+		return TRUE
+
+	return stop_map_movement(delta)
+
+/obj/overmap/proc/stop_map_movement(list/delta)
+	for (var/axis in 1 to 2)
+		position[axis] += 2 * delta[axis]
+	speed = list(0, 0)
+	update_icon()
+	return FALSE
+#undef OVERMAP_MOVEMENT_BOUNDARY_EPSILON
+// [/SIERRA-EDIT]
 
 /obj/overmap/proc/handle_wraparound(nx, ny)
 	var/low_edge = 2
