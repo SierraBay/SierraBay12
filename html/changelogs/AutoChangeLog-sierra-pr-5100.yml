@@ -1,5 +1,0 @@
-author: Aigamuxa
-changes:
-  - bugfix: immune to weakening bodies no longer spam falling sound when 
-      weakened
-delete-after: true
