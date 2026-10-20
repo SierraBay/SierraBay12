@@ -1,0 +1,11 @@
+<div class="item">Vendors: {{:helper.link('All', null, {'cart_station':'All'}, !data.cart_station ? 'selected' : null)}}{{for data.cart_stations}}{{:helper.link(value.name, null, {'cart_station':value.id}, data.cart_station == value.id ? 'selected' : null)}}{{/for}}</div>
+<div class="item">Categories: {{:helper.link('All', null, {'cart_category':'All'}, !data.cart_category ? 'selected' : null)}}{{for data.cart_categories}}{{:helper.link(value.name, null, {'cart_category':value.id}, data.cart_category == value.id ? 'selected' : null)}}{{/for}}</div>
+<table style="width:100%"><tr><th>Vendor / category</th><th>Goods</th><th>Quantity</th><th>Unit price</th><th>Subtotal</th></tr>
+{{for data.cart}}
+ <tr class="candystripe"><td>{{:value.station}}<br>{{:value.category}}</td><td>{{:value.name}}{{if value.stack_size}} ({{:value.stack_size}} units per stack){{/if}}{{if value.restricted}}<br><span class="notice">Department authorization required for personal purchase.</span>{{/if}}</td><td>{{:helper.link('-', 'minus', {'remove':value.id})}}{{:helper.link(value.quantity, null, {'quantity':value.id})}}{{:helper.link('+', 'plus', {'add':value.id})}}{{if value.stack_size}}<br>{{:value.stack_size * value.quantity}} units{{/if}}</td><td>{{:value.unit_price}}</td><td>{{:value.price}}</td></tr>
+{{/for}}</table>
+<div class="notice">Goods: {{:data.total}}; personal handling: {{:data.fee}}; personal total: {{:data.total + data.fee}} {{:data.currency}}.</div>
+<div class="item">{{:helper.link('Pay with inserted ID', 'check', {'purchase':1}, data.card_inserted && data.receiver_ready ? null : 'disabled')}}</div>
+<div class="item">{{:helper.link(data.request_wait ? 'Requisition cooldown: ' + data.request_wait + 's' : 'Request department funding', 'note', {'request':1}, data.request_wait ? 'disabled' : null)}}</div>
+{{if data.manager}}<div class="item">{{:helper.link('Pay from supply budget', 'check', {'department':1}, data.receiver_ready ? null : 'disabled')}}</div>{{/if}}
+{{:helper.link('Save cart', 'disk', {'save':1})}}{{:helper.link('Clear cart', 'trash', {'clear':1})}}

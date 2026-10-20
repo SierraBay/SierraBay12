@@ -1,0 +1,2 @@
+<div class="notice">Saved carts retain quantities. Availability and prices are checked again at checkout.</div>
+{{for data.saved}}<div class="item">{{:value.name}} {{:helper.link('Load', 'disk', {'load':value.id})}}{{:helper.link('Delete', 'trash', {'delete_saved':value.id})}}</div>{{/for}}

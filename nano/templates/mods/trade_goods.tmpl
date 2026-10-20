@@ -1,0 +1,6 @@
+<div class="item">Categories: {{:helper.link('All', 'folder-open', {'category':'All'}, !data.category ? 'selected' : null)}}{{for data.categories}}{{:helper.link(value.name, 'folder-collapsed', {'category':value.id}, data.category == value.id ? 'selected' : null)}}{{/for}}</div>
+<table style="width:100%"><tr><th>Category</th><th>Goods</th><th>Stock</th><th>Price</th>{{if !data.read_only}}<th>Cart quantity</th>{{/if}}</tr>
+{{for data.goods}}
+ <tr class="candystripe"><td>{{:value.category}}</td><td>{{:value.name}}{{if value.stack_size}} ({{:value.stack_size}} units per stack){{/if}}{{if value.floor_delivery}}<br><span class="notice">Delivered on the receiving floor.</span>{{/if}}{{if !data.read_only && value.restricted}}<br><span class="notice">Department authorization required for personal purchase.</span>{{/if}}</td><td>{{:value.stock}}</td><td>{{:value.price}} {{:data.currency}}</td>
+ {{if !data.read_only}}<td>{{:helper.link('-', 'minus', {'remove':value.id}, value.cart_count ? null : 'disabled')}}{{:helper.link(value.cart_count, null, {'quantity':value.id})}}{{:helper.link('+', 'plus', {'add':value.id}, value.stock > value.cart_count ? null : 'disabled')}}</td>{{/if}}</tr>
+{{/for}}</table>

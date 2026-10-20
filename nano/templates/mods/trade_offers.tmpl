@@ -1,0 +1,7 @@
+<div class="notice">Place requested goods beside the sending beacon. Reagent offers require 60u per container; remaining contents stay behind; material offers require full stacks. Live fauna must be secured in stasis cages.</div>
+<table style="width:100%"><tr><th>Bounty</th><th>Quantity</th><th>Reward</th><th></th></tr>
+{{for data.offers}}
+ <tr class="candystripe"><td>{{:value.name}}{{if value.requirements}}<br><span class="notice">{{:value.requirements}}</span>{{/if}}</td><td>{{:value.amount}}</td><td>{{:value.price}} {{:data.currency}}</td><td>
+ {{if value.completed}}Completed{{else}}{{if data.can_export}}{{:helper.link('Fulfill', 'check', {'fulfill':value.id}, data.export_ready ? null : 'disabled')}}{{/if}}{{/if}}
+ </td></tr>
+{{/for}}</table>
