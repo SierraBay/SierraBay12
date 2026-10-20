@@ -78,7 +78,6 @@
 #include "../_master_files/mods/client_verbs/code/credits.dm"
 #include "code/keybindings.dm"
 #include "../_master_files/code/modules/reagents/Chemistry-Machinery.dm"
-#include "../_master_files/mods/RnD/code/machinery/autolathe.dm"
 #include "../_master_files/code/modules/client/preference_setup/general/01_basic.dm"
 #include "../_master_files/code/modules/client/preference_setup/general/02_body.dm"
 #include "../_master_files/code/modules/client/preference_setup/general/03_equipment.dm"

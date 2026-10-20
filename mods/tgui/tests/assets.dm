@@ -23,6 +23,8 @@
 	var/datum/asset/simple/templates = get_asset_datum(/datum/asset/simple/nanoui_templates)
 	if(!length(common.assets) || !length(templates.assets))
 		fail("NanoUI assets were not registered.")
+	check_nanoui_sources()
+	check_modular_templates(templates)
 	var/datum/asset/simple/maps = get_asset_datum(/datum/asset/simple/nanomaps)
 	for(var/asset_name in maps.assets)
 		if(!text_ends_with(asset_name, ".png"))
@@ -53,3 +55,28 @@
 	if(!reported)
 		pass("TGUI, NanoUI and existing chat share registered assets.")
 	return TRUE
+
+/datum/unit_test/tgui_assets/proc/check_nanoui_sources()
+	var/list/paths = list(
+		"nano/js/libraries.min.js", "nano/js/nano_base_helpers.js", "nano/js/nano_base_callbacks.js", "nano/js/nano_state.js",
+		"nano/css/icons.css", "nano/css/shared.css", "nano/css/layout_default.css",
+		"nano/images/uiBackground-NTengi.png", "nano/images/uiBackground-NTmed.png", "nano/images/uiBackground-NTsci.png",
+		"nano/templates/geoscanner.tmpl", "nano/templates/rdservercontrol.tmpl"
+	)
+	for(var/path in paths)
+		var/filename = copytext(path, findlasttext(path, "/") + 1)
+		var/datum/asset_cache_item/item = SSassets.cache[filename]
+		if(!item?.resource || item.hash != md5(fcopy_rsc(path)))
+			fail("NanoUI resource [filename] does not use Sierra's version of [path].")
+		if(!item?.legacy || !item.keep_local_name)
+			fail("NanoUI resource [filename] lost its fixed browser filename or CDN fallback.")
+
+/datum/unit_test/tgui_assets/proc/check_modular_templates(datum/asset/simple/templates)
+	for(var/filename in flist("nano/templates/mods/"))
+		if(copytext(filename, -1) == "/")
+			continue
+		var/datum/asset_cache_item/item = templates.assets["mods-[filename]"]
+		if(!item?.resource || item.hash != md5(fcopy_rsc("nano/templates/mods/[filename]")))
+			fail("Modular NanoUI template [filename] is missing or has incorrect content.")
+		if(!item?.legacy || !item.keep_local_name)
+			fail("Modular NanoUI template [filename] lost its mods- browser filename or CDN fallback.")
