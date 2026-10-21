@@ -42,6 +42,8 @@
 		return
 
 	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	if (click_handler.SkipClick(src, params))
+		return
 	click_handler.OnClick(src, params)
 
 /atom/DblClick(location, control, params)
@@ -581,6 +583,18 @@ GLOBAL_LIST_INIT(click_catchers)
 	var/catcher_y
 	//[/SIERRA-ADD]
 
+//[SIERRA-ADD]
+/// The turf this catcher covers on `user`'s screen, seen from the client's eye as in `Click()`.
+/obj/screen/click_catcher/proc/get_covered_turf(mob/user)
+	RETURN_TYPE(/turf)
+	var/client/viewer = user?.client
+	var/turf/origin = get_turf(user)
+	var/turf/eye_turf = viewer ? get_turf(viewer.eye) : null
+	if(eye_turf)
+		origin = eye_turf
+	return screen_params_turf(screen_loc, origin, viewer)
+//[/SIERRA-ADD]
+
 /*[SIERRA-REMOVE]
 /obj/screen/click_catcher/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
@@ -646,6 +660,25 @@ GLOBAL_LIST_INIT(click_catchers)
 
 /obj/item/gun/CanItemAutoclick(object, location, params)
 	return can_autofire
+
+/// Whether a press of the left mouse button on `object` is clicked at once, without waiting for the release. See `/datum/click_handler/default/OnMouseDown()`.
+/mob/proc/CanMobClickOnPress(atom/object, location, params)
+	return FALSE
+
+/mob/living/carbon/CanMobClickOnPress(atom/object, location, params)
+	var/obj/item/held = get_active_hand()
+	if (!held?.CanItemClickOnPress(object, location, params))
+		return FALSE
+	// Only a click from the map on something out of reach. Anything at hand, and a mob inside something, waits for the release as usual.
+	if (!isturf(loc) || !(isturf(object) || isturf(object.loc)))
+		return FALSE
+	return !object.Adjacent(src)
+
+/obj/item/proc/CanItemClickOnPress(atom/object, location, params)
+	return FALSE
+
+/obj/item/gun/CanItemClickOnPress(atom/object, location, params)
+	return TRUE
 
 /atom/proc/IsAutoclickable()
 	return TRUE

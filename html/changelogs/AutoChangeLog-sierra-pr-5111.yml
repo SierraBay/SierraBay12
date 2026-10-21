@@ -1,0 +1,5 @@
+author: Aigamuxa
+changes:
+  - bugfix: pain from rubber bullets and beanbags now goes to the limb that was 
+      hit, instead of random one
+delete-after: true
