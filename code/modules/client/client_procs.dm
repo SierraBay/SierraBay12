@@ -399,7 +399,14 @@
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-	getFiles(
+	// [SIERRA-EDIT] - TGUI - Share the startup resource manifest with SSassets.
+	getFiles(arglist(client_resource_files()))
+	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
+	// [/SIERRA-EDIT]
+
+// [SIERRA-ADD] - TGUI - Immutable for the lifetime of this compiled world.
+/proc/client_resource_files()
+	return list(
 		'html/search.js',
 		'html/panels.css',
 		'html/spacemag.css',
@@ -455,7 +462,7 @@
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)
-	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
+// [/SIERRA-ADD]
 
 
 /client/proc/after_send_resources()

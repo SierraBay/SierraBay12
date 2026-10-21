@@ -17,6 +17,10 @@
 	var/list/assets = list()
 	for(var/resource in args)
 		var/resource_path = "[resource]"
+		var/datum/asset_cache_item/prepared = SSassets.client_resources[resource]
+		if(prepared)
+			assets[prepared.name] = prepared
+			continue
 		var/replacement = "mods/tgui/resources/[resource_path]"
 		if(copytext(resource_path, 1, 6) == "html/" && fexists(replacement))
 			resource = fcopy_rsc(replacement)

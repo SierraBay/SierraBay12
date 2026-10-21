@@ -4,15 +4,22 @@ SUBSYSTEM_DEF(assets)
 	flags = SS_NO_FIRE
 	var/list/datum/asset_cache_item/cache = list()
 	var/list/preload = list()
+	/// Only the explicit connection manifest, keyed by compiled resource identity (not basename).
+	/// Rebuilt on world restart; mutable paths and generated assets are not cached here.
+	var/list/client_resources = list()
 	var/datum/asset_transport/transport = new()
 
 /datum/controller/subsystem/assets/Initialize(timeofday)
 	load_assets()
 	apply_configuration()
+	prepare_client_resources()
+	transport.preload = cache.Copy()
+	log_debug("Asset transport active: [transport.type] (requested: [config.asset_transport])")
 
 /datum/controller/subsystem/assets/Recover()
 	cache = SSassets.cache
 	preload = SSassets.preload
+	client_resources = SSassets.client_resources
 	qdel(transport)
 	transport = SSassets.transport
 
@@ -32,6 +39,18 @@ SUBSYSTEM_DEF(assets)
 		qdel(newtransport)
 
 	transport.Initialize(cache)
+
+/datum/controller/subsystem/assets/proc/prepare_client_resources()
+	for(var/resource in client_resource_files() + changelog_resource_files())
+		var/resource_path = "[resource]"
+		if(client_resources[resource])
+			continue
+		var/source = resource
+		var/replacement = "mods/tgui/resources/[resource_path]"
+		if(copytext(resource_path, 1, 6) == "html/" && fexists(replacement))
+			resource = fcopy_rsc(replacement)
+		var/asset_name = copytext(resource_path, findlasttext(resource_path, "/") + 1)
+		client_resources[source] = register_asset(asset_name, resource)
 
 /datum/controller/subsystem/assets/proc/load_assets()
 	for(var/datum/asset/asset_type as anything in typesof(/datum/asset))

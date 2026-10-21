@@ -1,6 +1,8 @@
 /// CDN Webroot asset transport.
 /datum/asset_transport/webroot
 	name = "CDN Webroot asset transport"
+	/// Successful checks, scoped to this transport and full destination path.
+	var/list/verified_assets = list()
 
 /datum/asset_transport/webroot/Load()
 	if(validate_config(log = FALSE))
@@ -8,9 +10,11 @@
 
 /// Processes thru any assets that were registered before we were loaded as a transport.
 /datum/asset_transport/webroot/proc/load_existing_assets()
+	verified_assets.Cut()
 	for(var/asset_name in SSassets.cache)
 		var/datum/asset_cache_item/ACI = SSassets.cache[asset_name]
 		save_asset_to_webroot(ACI)
+		CHECK_TICK
 
 /// Register a browser asset with the asset cache system
 /// We also save it to the CDN webroot at this step instead of waiting for send_assets()
@@ -26,12 +30,22 @@
 /// Saves the asset to the webroot taking into account namespaces and hashes.
 /datum/asset_transport/webroot/proc/save_asset_to_webroot(datum/asset_cache_item/ACI)
 	var/webroot = config.asset_cdn_webroot
-	var/newpath = "[webroot][get_asset_suffex(ACI)]"
+	var/suffix = get_asset_suffex(ACI)
+	if(!suffix)
+		log_debug("ERROR: Webroot rejected an invalid asset path for [ACI?.name]")
+		return FALSE
+	var/newpath = "[webroot][suffix]"
 	if(fexists(newpath))
-		return
-	if(fexists("[newpath].gz")) //its a common pattern in webhosting to save gzip'ed versions of text files and let the webserver serve them up as gzip compressed normal files, sometimes without keeping the original version.
-		return
-	return fcopy(ACI.resource, newpath)
+		if(verified_assets[newpath] == ACI.hash || md5(file(newpath)) == ACI.hash)
+			verified_assets[newpath] = ACI.hash
+			return TRUE
+	// A gzip sidecar alone does not guarantee delivery to clients requesting identity.
+	if(!fcopy(ACI.resource, newpath))
+		verified_assets -= newpath
+		log_debug("ERROR: Webroot could not publish [ACI.name] to [newpath]")
+		return FALSE
+	verified_assets[newpath] = ACI.hash
+	return TRUE
 
 /// Returns a url for a given asset.
 /// asset_name - Name of the asset.
@@ -40,16 +54,28 @@
 	if(!istype(asset_cache_item))
 		asset_cache_item = SSassets.cache[asset_name]
 	var/url = config.asset_cdn_url //config loading will handle making sure this ends in a /
-	return "[url][get_asset_suffex(asset_cache_item)]"
+	var/suffix = get_asset_suffex(asset_cache_item)
+	return suffix ? "[url][suffix]" : null
 
 /datum/asset_transport/webroot/proc/get_asset_suffex(datum/asset_cache_item/asset_cache_item)
+	if(!istype(asset_cache_item) || !asset_cache_item.hash)
+		return null
 	var/base = ""
 	var/filename = "asset.[asset_cache_item.hash][asset_cache_item.ext]"
 	if(length(asset_cache_item.namespace))
+		if(!safe_path_component(asset_cache_item.namespace))
+			return null
 		base = "namespaces/[asset_cache_item.namespace]/"
 		if(!asset_cache_item.namespace_parent)
 			filename = "[asset_cache_item.name]"
+	if(!safe_path_component(filename))
+		return null
 	return base + filename
+
+/// Published components are literal URL-safe filenames, never relative paths.
+/datum/asset_transport/webroot/proc/safe_path_component(component)
+	var/static/regex/safe_component = regex("^\[a-zA-Z0-9_.-]+$")
+	return istext(component) && component != "." && component != ".." && safe_component.Find(component)
 
 
 /// webroot asset sending - does nothing unless passed legacy assets

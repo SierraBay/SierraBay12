@@ -37,6 +37,8 @@
 	// Accept only cache entries known to this server; executable resources reload.
 	for(var/asset_name in SSassets.cache)
 		var/datum/asset_cache_item/item = SSassets.cache[asset_name]
+		if(istype(SSassets.transport, /datum/asset_transport/webroot) && !item.legacy)
+			continue
 		if(lowertext(item.ext) in list(".js", ".jsm", ".htm", ".html"))
 			continue
 		var/local_name = (item.legacy || item.keep_local_name || (item.namespace && !item.namespace_parent) || SSassets.transport.dont_mutate_filenames) ? item.name : "asset.[item.hash][item.ext]"
@@ -47,10 +49,13 @@
 
 /// Updates the client side stored html/json combo file used to keep track of what assets the client has between restarts/reconnects.
 /client/proc/asset_cache_update_json(verify = FALSE, list/new_assets = list())
-	if (world.time - connection_time < 10 SECONDS) //don't override the existing data file on a new connection
-		return
 	if (!islist(new_assets))
-		new_assets = list("[new_assets]" = md5(SSassets.cache[new_assets]))
+		var/datum/asset_cache_item/item = SSassets.cache[new_assets]
+		new_assets = item ? list("[new_assets]" = item.hash) : list()
+	var/delay = connection_time + 10 SECONDS - world.time
+	if(delay > 0) // Preserve the old file for preload, but do not lose the pending write.
+		addtimer(new Callback(src, PROC_REF(asset_cache_update_json), verify, new_assets), delay, TIMER_UNIQUE|TIMER_OVERRIDE)
+		return
 
 	// JSON must bypass show_browser's UTF-8 HTML wrapper.
 	to_target(src, browse(json_encode(new_assets|sent_assets), "file=asset_data.json&display=0"))
