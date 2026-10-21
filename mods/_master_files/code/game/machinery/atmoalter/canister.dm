@@ -48,9 +48,13 @@
 		return TRUE
 	switch(action)
 		if("toggle", "remove_tank")
-			Topic(null, list(action = "1"), GLOB.default_state)
+			var/list/href_list = list()
+			href_list[action] = "1"
+			Topic(null, href_list, GLOB.default_state)
 		if("pressure")
-			var/pressure = params["pressure"] == "reset" ? ONE_ATMOSPHERE : text2num(params["pressure"])
+			var/pressure = params["pressure"]
+			if(istext(pressure))
+				pressure = pressure == "reset" ? ONE_ATMOSPHERE : text2num(pressure)
 			if(!isnum(pressure))
 				return FALSE
 			release_pressure = clamp(round(pressure), ONE_ATMOSPHERE / 10, ONE_ATMOSPHERE * 10)
