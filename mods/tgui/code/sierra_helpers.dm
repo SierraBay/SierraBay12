@@ -79,6 +79,6 @@
 		var/atom/item_type = item_path
 		if(!initial(item_type.icon))
 			return null
-		product_images[item_path] = icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), SOUTH))
+		product_images[item_path] = icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), SOUTH, 1))
 	return product_images[item_path]
 

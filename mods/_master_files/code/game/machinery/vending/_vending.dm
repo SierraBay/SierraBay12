@@ -63,7 +63,7 @@
 	var/static/list/product_image_cache = list()
 	if(!product_image_cache[product.item_path])
 		var/atom/item_type = product.item_path
-		product_image_cache[product.item_path] = icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), SOUTH))
+		product_image_cache[product.item_path] = icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), SOUTH, 1))
 	return product_image_cache[product.item_path]
 
 /obj/machinery/vending/tgui_act(action, list/params)
