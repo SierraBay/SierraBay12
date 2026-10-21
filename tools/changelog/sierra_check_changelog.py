@@ -33,8 +33,7 @@ pr = repo.get_pull(event_data['number'])
 
 # pull_request runs from forks get a read-only token, so they only validate.
 # Labelling is done by check_changelog_labels.yml, which has a write token.
-MODE = os.getenv("CL_MODE", "check")
-CHECK_ONLY = MODE != "label"
+CHECK_ONLY = os.getenv("CL_MODE", "check") != "label"
 
 
 def update_labels(remove=(), add=()):
@@ -83,7 +82,7 @@ if cl.group(2) is not None:
 else:
     if pr_is_mirror:
         print("No author specified in mirror PR!")
-        exit(0 if MODE == "label" else 1)
+        exit(0 if not CHECK_ONLY else 1)
     write_cl['author'] = pr_author
 
 if not write_cl['author']:
@@ -109,7 +108,7 @@ if has_invalid_tag:
     print("CL has invalid tags!")
     print("Valid tags are:")
     print(*tags['tags'].keys(), sep=", ")
-    exit(0 if MODE == "label" else 1)
+    exit(0 if not CHECK_ONLY else 1)
 
 if write_cl['changes']:
     print("CL OK!")
@@ -126,4 +125,4 @@ else:
         remove=[CL_VALID] if has_valid_label else [],
         add=[CL_INVALID] if not has_invalid_label else [],
     )
-    exit(0 if MODE == "label" else 1)
+    exit(0 if not CHECK_ONLY else 1)
