@@ -243,11 +243,25 @@
 
   var loadedAssetByUrl = {};
 
+  var hasStyleSheetRules = function (styleSheet) {
+    try {
+      var rules = styleSheet.cssRules || styleSheet.rules;
+      return rules.length > 0;
+    }
+    catch (err) {
+      // Called after onload: CDN CSS can load while its rules stay opaque.
+      if (err.name === 'SecurityError' || err.code === 18) {
+        return true;
+      }
+      throw err;
+    }
+  };
+
   var isStyleSheetLoaded = function (node, url) {
     // Method #1 (works on IE10+)
     var styleSheet = node.sheet;
     if (styleSheet) {
-      return styleSheet.rules.length > 0;
+      return hasStyleSheetRules(styleSheet);
     }
     // Method #2
     var styleSheets = document.styleSheets;
@@ -257,7 +271,7 @@
       if(styleSheet.href === undefined)
         continue;
       if (styleSheet.href.indexOf(url) !== -1) {
-        return styleSheet.rules.length > 0;
+        return hasStyleSheetRules(styleSheet);
       }
     }
     // All methods failed
