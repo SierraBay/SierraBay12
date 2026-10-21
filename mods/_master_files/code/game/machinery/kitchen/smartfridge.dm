@@ -47,8 +47,8 @@
 		return TRUE
 	if(action != "vend")
 		return FALSE
-	var/index = text2num(params["vend"])
-	var/amount = text2num(params["amount"])
+	var/index = text2num("[params["vend"]]")
+	var/amount = text2num("[params["amount"]]")
 	if(!isnum(index) || index != round(index) || index < 1 || index > length(item_records) || !isnum(amount) || amount < 1)
 		return FALSE
 	var/datum/stored_items/record = item_records[index]

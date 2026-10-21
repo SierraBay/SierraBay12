@@ -58,7 +58,7 @@
 	var/list/topic_params
 	switch(action)
 		if("amount")
-			var/new_amount = text2num(params["amount"])
+			var/new_amount = text2num("[params["amount"]]")
 			if(!isnum(new_amount))
 				return FALSE
 			topic_params = list("amount" = "[new_amount]")

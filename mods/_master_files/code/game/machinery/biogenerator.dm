@@ -72,8 +72,8 @@
 		if("create")
 			var/category = params["type"]
 			var/list/sub_products = products[category]
-			var/index = text2num(params["product_index"])
-			var/amount = text2num(params["amount"])
+			var/index = text2num("[params["product_index"]]")
+			var/amount = text2num("[params["amount"]]")
 			if(!islist(sub_products) || !isnum(index) || index != round(index) || index < 1 || index > length(sub_products) || !isnum(amount) || amount < 1)
 				return FALSE
 			amount = min(round(amount), 100)

@@ -111,22 +111,24 @@
 		if("analyze")
 			topic_params = list("analyze" = params["name"])
 		if("add", "remove")
-			var/amount = text2num(params["amount"])
+			var/amount = text2num("[params["amount"]]")
 			if(!isnum(amount) || amount <= 0 || !beaker)
 				return FALSE
-			topic_params = list(action = params["reagent"], "amount" = "[amount]")
+			topic_params = list("amount" = "[amount]")
+			topic_params[action] = params["reagent"]
 		if("eject", "toggle", "dissolve_pill", "dissolve_until_full")
-			topic_params = list(action = "1")
+			topic_params = list()
+			topic_params[action] = "1"
 		if("toggleSloppy")
 			topic_params = list("toggle_sloppy" = "1")
 		if("pillCount")
-			var/count = text2num(params["pillCount"])
+			var/count = text2num("[params["pillCount"]]")
 			if(!isnum(count))
 				return FALSE
 			pillamount = clamp(round(count), 1, max_pill_count)
 			return TRUE
 		if("pillDosage", "bottleDosage", "blisterDosage")
-			var/dosage = text2num(params["newDosage"])
+			var/dosage = text2num("[params["newDosage"]]")
 			if(!isnum(dosage) || dosage <= 0)
 				return FALSE
 			switch(action)
@@ -138,7 +140,7 @@
 					blister_dosage = clamp(dosage, 0.1, initial(blister_dosage))
 			return TRUE
 		if("blisterType")
-			var/slots = text2num(params["slots"])
+			var/slots = text2num("[params["slots"]]")
 			if(!(slots in list(2, 4, 6)))
 				return FALSE
 			blister_type = slots
@@ -153,7 +155,7 @@
 			create_bottle(usr)
 			return TRUE
 		if("changePillStyle")
-			var/style = text2num(params["style"])
+			var/style = text2num("[params["style"]]")
 			if(!isnum(style) || style != round(style) || style < 1 || style > 25)
 				return FALSE
 			pillsprite = "[style]"

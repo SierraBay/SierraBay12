@@ -38,7 +38,7 @@
 		if("max")
 			target_pressure = max_pressure_setting
 		if("set")
-			var/new_pressure = text2num(params["rate"])
+			var/new_pressure = text2num("[params["rate"]]")
 			if(isnull(new_pressure))
 				return FALSE
 			target_pressure = clamp(new_pressure, 0, max_pressure_setting)

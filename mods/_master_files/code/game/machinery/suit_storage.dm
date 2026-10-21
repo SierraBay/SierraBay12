@@ -40,5 +40,7 @@
 		return TRUE
 	if(!(action in list("dispense_helmet", "dispense_suit", "dispense_boots", "dispense_tank", "dispense_mask", "toggle_open", "toggle_lock", "start_UV", "toggleUV", "togglesafeties", "eject_guy")))
 		return FALSE
-	Topic(null, list(action = "1"), GLOB.default_state)
+	var/list/href_list = list()
+	href_list[action] = "1"
+	Topic(null, href_list, GLOB.default_state)
 	return TRUE
