@@ -29,4 +29,6 @@ jobs:
       - name: Проверка чейнджлога
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          # Метки ставит check_changelog_labels.yml: у PR из форков нет токена на запись
+          CL_MODE: check
         run: python sierra_check_changelog.py

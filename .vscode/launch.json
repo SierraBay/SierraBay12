@@ -11,7 +11,7 @@
     {
       "type": "byond",
       "request": "launch",
-      "name": "Build & Debug in DD",
+      "name": "Build & DD Debug",
       "preLaunchTask": "dm: build - ${command:CurrentDME}",
       "dmb": "${workspaceFolder}/${command:CurrentDMB}",
       "dreamDaemon": true
