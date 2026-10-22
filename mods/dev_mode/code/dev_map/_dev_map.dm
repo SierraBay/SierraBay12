@@ -2,6 +2,7 @@
 
 	// --- MAP MAINTENANCE --- //
 	#include "dev_setup.dm"
+	#include "dev_dummies.dm"
 	#include "dev_turfs.dm"
 
 	//Всякая байда для совместимости с модом и прочим

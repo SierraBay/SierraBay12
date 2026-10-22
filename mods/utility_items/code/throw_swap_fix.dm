@@ -14,3 +14,4 @@
 
 	else if(in_throw_mode)//Если новая рука ПУСТА - зачем нам вообще оставлять бросок активным
 		throw_mode_off()
+	update_mouse_pointer()

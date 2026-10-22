@@ -1,6 +1,6 @@
-/proc/get_mech_image(decal, cache_key, cache_icon, image_colour, overlay_layer = FLOAT_LAYER)
+/proc/get_mech_image(decal, cache_key, cache_icon, image_colour, armour, overlay_layer = FLOAT_LAYER)
 	RETURN_TYPE(/image)
-	var/use_key = "[cache_key]-[cache_icon]-[overlay_layer]-[decal ? decal : "none"]-[image_colour ? image_colour : "none"]"
+	var/use_key = "[cache_key]-[cache_icon]-[overlay_layer]-[decal ? decal : "none"]-[image_colour ? image_colour : "none"]-[armour ? armour : "none"]"
 	if(!GLOB.mech_image_cache[use_key])
 		var/image/I = image(icon = cache_icon, icon_state = cache_key)
 		if(image_colour)
@@ -20,6 +20,12 @@
 			var/image/decal_image = get_mech_image(null, decal_key, GLOB.mech_icon_cache[decal_key])
 			decal_image.blend_mode = BLEND_MULTIPLY
 			I.AddOverlays(decal_image)
+		//Внешний бронеэлемент рисуется поверх части, своим цветом
+		if(armour)
+			var/armour_key = "[armour]-[cache_key]"
+			if(!GLOB.mech_icon_cache[armour_key])
+				GLOB.mech_icon_cache[armour_key] = icon('mods/mechs_by_shegar/icons/external_armour.dmi', armour)
+			I.AddOverlays(get_mech_image(null, armour_key, GLOB.mech_icon_cache[armour_key]))
 		I.appearance_flags |= RESET_COLOR
 		I.layer = overlay_layer
 		I.plane = FLOAT_PLANE
@@ -30,7 +36,7 @@
 	RETURN_TYPE(/list)
 	var/list/all_images = list()
 	for(var/obj/item/mech_component/comp in components)
-		all_images += get_mech_image(comp.decal, comp.icon_state, comp.on_mech_icon, comp.color, overlay_layer)
+		all_images += get_mech_image(comp.decal, comp.icon_state, comp.on_mech_icon, comp.color, comp.get_external_armour_state(), overlay_layer)
 	return all_images
 
 /mob/living/exosuit/on_update_icon()
@@ -45,15 +51,16 @@
 	if(LAZYLEN(pilot_overlays))
 		new_overlays += pilot_overlays
 	if(body)
-		new_overlays += get_mech_image(body.decal, "[body.icon_state]_overlay[hatch_closed ? "" : "_open"]", body.on_mech_icon, body.color, MECH_COCKPIT_LAYER)
+		var/hatch_state = "[body.icon_state]_overlay[hatch_closed ? "" : "_open"]"
+		new_overlays += get_mech_image(body.decal, hatch_state, body.on_mech_icon, body.color, body.get_external_armour_state(hatch_state), MECH_COCKPIT_LAYER)
 	if(L_leg)
-		new_overlays += get_mech_image(L_leg.decal, L_leg.icon_state, L_leg.on_mech_icon, L_leg.color, MECH_LEG_LAYER)
+		new_overlays += get_mech_image(L_leg.decal, L_leg.icon_state, L_leg.on_mech_icon, L_leg.color, L_leg.get_external_armour_state(), MECH_LEG_LAYER)
 	if(R_leg)
-		new_overlays += get_mech_image(R_leg.decal, R_leg.icon_state, R_leg.on_mech_icon, R_leg.color, MECH_LEG_LAYER)
+		new_overlays += get_mech_image(R_leg.decal, R_leg.icon_state, R_leg.on_mech_icon, R_leg.color, R_leg.get_external_armour_state(), MECH_LEG_LAYER)
 	if(L_arm)
-		new_overlays += get_mech_image(L_arm.decal, L_arm.icon_state, L_arm.on_mech_icon, L_arm.color, MECH_ARM_LAYER)
+		new_overlays += get_mech_image(L_arm.decal, L_arm.icon_state, L_arm.on_mech_icon, L_arm.color, L_arm.get_external_armour_state(), MECH_ARM_LAYER)
 	if(R_arm)
-		new_overlays += get_mech_image(R_arm.decal, R_arm.icon_state, R_arm.on_mech_icon, R_arm.color, MECH_ARM_LAYER)
+		new_overlays += get_mech_image(R_arm.decal, R_arm.icon_state, R_arm.on_mech_icon, R_arm.color, R_arm.get_external_armour_state(), MECH_ARM_LAYER)
 
 	for(var/hardpoint in hardpoints)
 		var/obj/item/mech_equipment/hardpoint_object = hardpoints[hardpoint]
@@ -93,7 +100,7 @@
 					decal = head.decal
 //Если мех ВЫКЛЮЧЕН - модули имеют другие спрайты
 				if(power == MECH_POWER_ON)
-					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, hardpoint_object.mech_layer )
+					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays.dmi', color, null, hardpoint_object.mech_layer )
 				else
 					new_overlays += get_mech_image(decal, use_icon_state, 'mods/mechs_by_shegar/icons/mech_weapon_overlays_off.dmi', color, null, hardpoint_object.mech_layer )
 

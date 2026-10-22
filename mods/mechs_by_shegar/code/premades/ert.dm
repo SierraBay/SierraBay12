@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/ert
 	name = "Nanotrasen special combat mech"
 	desc = "A sleek, modern combat mech."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/ert/Initialize()
 	if(!head)
@@ -31,9 +32,7 @@
 /obj/item/mech_component/chassis/combat/ert/prebuild()
 	. = ..()
 	QDEL_NULL(cell)
-	QDEL_NULL(m_armour)
 	cell = new /obj/item/cell/hyper(src)
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/em(src)
 
 
 /mob/living/exosuit/premade/ert/spawn_mech_equipment()

@@ -23,7 +23,7 @@
 	damage = 25
 	agony = 60
 
-/* PISTOL - 10mm
+/* PISTOL - .45 Auto
  * =============
  */
 

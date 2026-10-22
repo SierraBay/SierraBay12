@@ -21,6 +21,7 @@
 	if (..())
 		var/mob/living/L = target
 		shake_camera(L, 3, 2)
+// [/SIERRA-EDIT]
 
 /obj/item/projectile/bullet/attack_mob(mob/living/target_mob, distance, miss_modifier)
 	if(penetrating > 0 && damage > 20 && prob(damage))

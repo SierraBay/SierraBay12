@@ -14,9 +14,9 @@
 	if(exosuit)
 		name = "wreckage of \the [exosuit.name]"
 		if(!gibbed)
-			for(var/obj/item/thing in list(exosuit.head, exosuit.body, exosuit.L_arm, exosuit.R_arm, exosuit.L_leg, exosuit.R_leg))
-				if(thing && prob(40))
-					thing.forceMove(src)
+			for(var/obj/item/mech_component/part in exosuit.get_salvageable_parts())
+				if(prob(40))
+					take_part(part)
 			for(var/hardpoint in exosuit.hardpoints)
 				if(exosuit.hardpoints[hardpoint])
 					if(prob(40))
@@ -30,6 +30,14 @@
 							E.wreck()
 
 	..()
+
+///Забирает часть меха в обломки. Сдвоенные ноги приходят своим держателем, и обе ноги ложатся в него, как у снятых с каркаса
+/obj/structure/mech_wreckage/proc/take_part(obj/item/mech_component/part)
+	var/obj/item/mech_component/doubled_legs/holder = part
+	if(istype(holder))
+		holder.R_stored_leg.forceMove(holder)
+		holder.L_stored_leg.forceMove(holder)
+	part.forceMove(src)
 
 /obj/structure/mech_wreckage/powerloader/New(newloc)
 	..(newloc, new /mob/living/exosuit/premade/powerloader(newloc), FALSE)

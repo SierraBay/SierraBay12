@@ -1,4 +1,8 @@
 /mob/living/exosuit/Destroy()
+	//Пассажиров сбрасываем первыми: всё, что останется внутри меха, удалится вместе с ним,
+	//а отрисовке оставшихся пассажиров нужен ещё не удалённый корпус
+	if(passenger_compartment)
+		external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS)
 
 	selected_system = null
 
@@ -32,7 +36,6 @@
 		qdel(H)
 	// SIERRA-REMOVE hardpoint_hud_elements.Cut() //Это место из-за мода рантаймит, в целом бесполезный кусок кода ибо удаление всё само сделает
 	hardpoint_hud_elements = null
-	external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS) // Перед смертью меха, сбросим всех пассажиров
 	. = ..()
 
 
@@ -58,7 +61,32 @@
 	else
 		//Иначе просто развалиться
 		src.visible_message(message = SPAN_BAD("[src] grinds to a halt before collapsing!"), range = 7)
+	//Пассажиры слезают, пока корпус ещё числится за мехом: он нужен отрисовке тех, кто ещё сидит
+	if(passenger_compartment)
+		external_leaving_passenger(mode = MECH_DROP_ALL_PASSENGERS)
+	//Части, которые забрали обломки, мех с собой не удаляет
+	release_salvaged_parts()
 	qdel(src)
+
+///Части меха так, как их находят в обломках: сдвоенные ноги — одним предметом, своим держателем
+/mob/living/exosuit/proc/get_salvageable_parts()
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/obj/item/mech_component/part in list(head, body, L_arm, R_arm))
+		. += part
+	if(R_leg && L_leg && R_leg.doubled_owner && R_leg.doubled_owner == L_leg.doubled_owner)
+		. += R_leg.doubled_owner
+		return
+	for(var/obj/item/mech_component/leg in list(L_leg, R_leg))
+		. += leg
+
+///Мех отпускает части, которые лежат уже не в нём: `Destroy()` удаляет только то, что осталось при мехе
+/mob/living/exosuit/proc/release_salvaged_parts()
+	for(var/part_var in list("head", "body", "L_arm", "R_arm", "L_leg", "R_leg"))
+		var/obj/item/mech_component/part = vars[part_var]
+		if(part && part.loc != src)
+			vars[part_var] = null
+			part.update_component_owner()
 
 /mob/living/exosuit/gib()
 	death(gibbed = TRUE)

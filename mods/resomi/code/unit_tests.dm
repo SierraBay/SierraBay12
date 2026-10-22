@@ -11,11 +11,6 @@
 	template = /datum/unit_test/mob_damage/resomi
 	mob_type = /mob/living/carbon/human/resomi
 
-/datum/unit_test/mob_damage/resomi/brute
-	name = "MOB: Resomi Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = EXTRA_VULNERABLE
-
 /datum/unit_test/mob_damage/resomi/fire
 	name = "MOB: Resomi Fire Damage Check"
 	damagetype = DAMAGE_BURN

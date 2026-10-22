@@ -27,6 +27,20 @@
 
 	refresh_hud()
 
+///Работает ли система диагностики: меху нужны питание и исправный блок диагностики
+/mob/living/exosuit/proc/has_working_diagnostics()
+	var/obj/item/cell/cell = get_cell()
+	if(!body || !cell || cell.charge <= 0)
+		return FALSE
+	return body.diagnostics?.is_functional() ? TRUE : FALSE
+
+///Сообщение пилотам от системы диагностики. Без неё мех молчит
+/mob/living/exosuit/proc/diagnostics_alert(message)
+	if(!has_working_diagnostics())
+		return
+	for(var/mob/living/pilot in pilots)
+		to_chat(pilot, SPAN_WARNING("Diagnostics: [message]"))
+
 /mob/living/exosuit/handle_hud_icons_health()
 
 	hud_health.ClearOverlays()

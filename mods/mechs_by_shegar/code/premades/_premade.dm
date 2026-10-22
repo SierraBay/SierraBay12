@@ -10,6 +10,8 @@
 /mob/living/exosuit/premade
 	name = "impossible mech"
 	desc = "Убейте меня"
+	///Внешний бронеэлемент, который навешивается на каждую часть готового меха. null — без брони
+	var/external_armor_type = /obj/item/mech_external_armor/civil
 	var/decal
 
 /mob/living/exosuit/premade/Initialize()
@@ -55,6 +57,10 @@
 		L_leg.prebuild()
 		L_leg.side = LEFT
 		L_leg.setup_side()
+	//Готовый мех получает броню и на те части, на которые её потом не навесить
+	if(external_armor_type)
+		for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+			part.install_external_armour(new external_armor_type(part))
 
 	if(!material)
 		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
