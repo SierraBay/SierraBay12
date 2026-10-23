@@ -57,6 +57,7 @@
 	var/weapon2 = /obj/item/melee/energy/machete/activated
 	min_gas = null
 	max_gas = null
+	minbodytemp = 0
 	environment_smash = 1
 	faction = "space_pirates"
 	status_flags = FLAGS_OFF
