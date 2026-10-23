@@ -8,6 +8,7 @@
 #include "code/cult.dm"
 #include "code/ert.dm"
 #include "code/mercenary.dm"
+#include "code/mobs.dm"
 #include "code/renegade.dm"
 #include "code/revolutionary.dm"
 #include "code/rouge_ai.dm"

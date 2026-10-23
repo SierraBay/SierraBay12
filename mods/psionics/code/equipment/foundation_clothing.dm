@@ -183,6 +183,7 @@
 	uniform =  /obj/item/clothing/under/color/black/foundation
 	back = /obj/item/tank/jetpack/carbondioxide
 	gloves = /obj/item/clothing/gloves/thick/swat
+	shoes = /obj/item/clothing/shoes/magboots
 	suit = /obj/item/clothing/suit/space/void/foundation
 	head = /obj/item/clothing/head/helmet/space/void/foundation
 	l_hand =   null
