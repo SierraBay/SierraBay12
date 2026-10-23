@@ -33,4 +33,9 @@
 	if(worth in denominations)
 		src.SetName("[worth] [GLOB.using_map.local_currency_name]")
 	else
-		src.SetName("pile of [worth] [GLOB.using_map.local_currency_name]")
+		// CHICHNOMICS - добавляем таллерам центы
+		var/thaler = round(worth)
+		var/cent = worth - thaler
+		cent *= 100
+		cent = round(cent)
+		src.SetName("[thaler] [GLOB.using_map.local_currency_name][cent ? " and [cent] cent\s" : null]")
