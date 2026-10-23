@@ -10,6 +10,7 @@
 	uniform =  /obj/item/clothing/under/color/black
 	back = /obj/item/tank/jetpack/carbondioxide
 	gloves = /obj/item/clothing/gloves/thick
+	shoes = /obj/item/clothing/shoes/magboots
 	suit = /obj/item/clothing/suit/space/void/pirate
 	head = /obj/item/clothing/head/helmet/space/void/pirate
 	l_hand =   null
@@ -19,6 +20,9 @@
 	r_pocket = null
 	holster =  null
 	belt =     null
+
+/obj/item/melee/energy/machete/activated
+	active = TRUE
 
 /mob/living/simple_animal/hostile/human/pirate/space
 	name = "\improper Space Pirate"
@@ -45,12 +49,12 @@
 	maxHealth = 150
 	health = 150
 	harm_intent_damage = 5
-	natural_weapon = /obj/item/melee/energy/machete
+	natural_weapon = /obj/item/melee/energy/machete/activated
 	can_escape = TRUE
 	a_intent = I_HURT
 	corpse = null
 	weapon1 = /obj/item/shield/energy
-	var/weapon2 = /obj/item/melee/energy/machete
+	var/weapon2 = /obj/item/melee/energy/machete/activated
 	min_gas = null
 	max_gas = null
 	environment_smash = 1
@@ -193,6 +197,7 @@
 /* AI */
 
 /datum/ai_holder/simple_animal/humanoid/hostile/pirate/space
+	intelligence_level = AI_NORMAL
 	threaten_delay = 2 SECOND
 	threaten_timeout = 30 SECONDS
 	violent_breakthrough = FALSE
