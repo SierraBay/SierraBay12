@@ -121,16 +121,46 @@
 	return F?.value
 
 
-/proc/character_persist_current_med_record(mob/living/carbon/human/H)
-	if (!istype(H))
+/proc/character_persist_normalize_record(text)
+	text = character_persist_pencode_to_text(text)
+	if (!text || text == "No record supplied")
 		return ""
+	return text
+
+
+/proc/character_persist_current_record_text(mob/living/carbon/human/H, field_type, fallback)
+	if (!istype(H))
+		return character_persist_normalize_record(fallback)
 	var/datum/computer_file/report/crew_record/CR = get_crewmember_record(H.real_name)
 	if (CR)
-		var/raw = character_persist_crew_field_raw(CR, /datum/report_field/pencode_text/crew_record/medRecord)
-		raw = character_persist_pencode_to_text(raw)
-		if (raw && raw != "No record supplied")
+		var/raw = character_persist_normalize_record(character_persist_crew_field_raw(CR, field_type))
+		if (raw)
 			return raw
-	return H.med_record || ""
+	return character_persist_normalize_record(fallback)
+
+
+/proc/character_persist_current_med_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/medRecord, H?.med_record)
+
+
+/proc/character_persist_current_sec_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/secRecord, H?.sec_record)
+
+
+/proc/character_persist_current_gen_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/emplRecord, H?.gen_record)
+
+
+/proc/character_persist_current_criminal_status(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/datum/computer_file/report/crew_record/CR = get_crewmember_record(H.real_name)
+	if (!CR)
+		return null
+	var/status = CR.get_criminalStatus()
+	if (!status || !(status in GLOB.security_statuses))
+		return null
+	return status
 
 
 /proc/character_persist_crew_physical_status(mob/living/carbon/human/H)
@@ -154,11 +184,19 @@
 	var/list/snapshot = prefs.character_persist_snapshot
 	if (!islist(snapshot))
 		return
-	if (prefs.character_persist_med_autofill && snapshot["med_record"])
+	if (prefs.character_persist_med_autofill && !isnull(snapshot["med_record"]))
 		CR.set_medRecord(snapshot["med_record"])
+	if (!isnull(snapshot["sec_record"]))
+		CR.set_secRecord(snapshot["sec_record"])
+	if (!isnull(snapshot["gen_record"]))
+		CR.set_emplRecord(snapshot["gen_record"])
 	var/status = snapshot["physical_status"]
 	if (status && (status in GLOB.physical_statuses))
 		CR.set_status(status)
+	var/sec_status = snapshot["criminal_status"]
+	if (sec_status && (sec_status in GLOB.security_statuses))
+		CR.set_criminalStatus(sec_status)
+	odyssey_apply_roster_records_to_crew_record(CR, H)
 
 
 /proc/character_persist_med_cutpoint(text)

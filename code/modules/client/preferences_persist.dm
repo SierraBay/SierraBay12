@@ -74,6 +74,10 @@
 
 	if(slot != SAVE_RESET) // SAVE_RESET will reset the slot as though it does not exist, but keep the current slot for saving purposes.
 		slot = sanitize_integer(slot, 1, config.character_slots, initial(default_slot))
+		if(odyssey_slot_locked(client_ckey, slot))
+			if(client?.mob)
+				to_chat(client.mob, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее и недоступен до завершения кампании."))
+			return FALSE
 		if(slot != default_slot)
 			default_slot = slot
 			SScharacter_setup.queue_preferences_save(src)
@@ -87,6 +91,7 @@
 		if(!R)
 			R = new /datum/pref_record_reader/null(PREF_SER_VERSION)
 		player_setup.load_character(R)
+	return TRUE
 
 /datum/preferences/proc/save_character(override_key=null)
 	var/datum/pref_record_writer/json_list/W = new(PREF_SER_VERSION)
