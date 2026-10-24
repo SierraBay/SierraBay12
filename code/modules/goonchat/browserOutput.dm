@@ -62,7 +62,12 @@ GLOBAL_TYPED_AS(iconCache, /savefile, new("data/iconCache.sav"))
 		if (owner.mob)
 			alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		return FALSE
-	if (owner && winget(owner, "browseroutput", "is-visible") == "true")
+	// [SIERRA-EDIT] - TGUI - Determine visibility from the selected chat pane.
+	var/chat_visible = winexists(owner, "legacy_output_selector") \
+		? winget(owner, "legacy_output_selector", "left") == "output_browser" \
+		: winget(owner, "browseroutput", "is-visible") == "true"
+	// [/SIERRA-EDIT]
+	if (chat_visible)
 		doneLoading()
 	else
 		load()
@@ -130,8 +135,9 @@ GLOBAL_TYPED_AS(iconCache, /savefile, new("data/iconCache.sav"))
 
 
 /datum/chatOutput/proc/showChat()
-	winset(owner, "output", "is-visible=false")
-	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+	// [SIERRA-EDIT] - TGUI - Switch panes to avoid BYOND 516 chat flicker.
+	owner.set_chat_output(TRUE)
+	// [/SIERRA-EDIT]
 
 
 /datum/chatOutput/proc/updatePing()

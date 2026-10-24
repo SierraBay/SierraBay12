@@ -165,9 +165,9 @@
 	if(ref)
 		param = "\ref[ref]"
 
-	spawn(2)
-		if(!user.client) return
-		winset(user, windowid, "on-close=\".windowclose [param]\"")
+	// [SIERRA-EDIT] TGUI: Aurora #20734 installs the handler without a delayed thread.
+	winset(user, windowid, "on-close=\".windowclose [param]\"")
+	// [/SIERRA-EDIT]
 
 //	log_debug("OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
@@ -185,7 +185,7 @@
 //	log_debug("windowclose: [atomref]")
 
 	if(atomref!="null")				// if passed a real atomref
-		var/hsrc = locate(atomref)	// find the reffed atom
+		var/atom/hsrc = locate(atomref)	// SIERRA-EDIT: typed close callback target.
 		if(hsrc)
 //			log_debug("[src] Topic [href] [hsrc]")
 
