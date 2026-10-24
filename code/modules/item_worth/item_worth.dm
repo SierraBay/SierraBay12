@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(price_cache)
-/proc/get_value(atom/A) // A can be either type *or* instance; ie get_value(/obj) is valid, as is get_value(new /obj)
+/proc/get_value(atom/A, include_contents = TRUE) // [SIERRA-EDIT] TRADE: optional appraisal of the object alone.
+	if(!A || (!ispath(A, /atom) && !istype(A))) // [SIERRA-EDIT] TRADE: reject non-atom catalog metadata.
+		return 0
 	var/atom/t = ispath(A) ? A : A.type
 	while(!(t in worths)) // Find the first parent that is in the list
 		t = PARENT(t)
@@ -11,10 +13,17 @@ GLOBAL_LIST_EMPTY(price_cache)
 	else 
 		if(ispath(A)) // Build a cache for tricky pricing types
 			t = A
+			// [SIERRA-ADD] TRADE: never put an incomplete valuation in the shared cache.
+			if(!include_contents)
+				A = new A
+				var/result = A.Value(-value, FALSE)
+				qdel(A)
+				return result
+			// [/SIERRA-ADD]
 			if(!GLOB.price_cache[A])
 				A = new A
 				GLOB.price_cache[A.type] = A.Value(-value)
 				qdel(A)
 			return GLOB.price_cache[t]
 		else
-			return A.Value(-value)
+			return A.Value(-value, include_contents) // [SIERRA-EDIT] TRADE

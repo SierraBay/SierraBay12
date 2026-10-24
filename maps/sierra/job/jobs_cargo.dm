@@ -33,7 +33,7 @@
 
 
 
-	software_on_spawn = list(/datum/computer_file/program/supply,
+	software_on_spawn = list(/datum/computer_file/program/trade, // [SIERRA-EDIT] TRADE
 							 /datum/computer_file/program/deck_management,
 							 /datum/computer_file/program/reports)
 	// SIERRA TODO: need_exp_to_play
@@ -67,7 +67,7 @@
 
 
 
-	software_on_spawn = list(/datum/computer_file/program/supply,
+	software_on_spawn = list(/datum/computer_file/program/trade, // [SIERRA-EDIT] TRADE
 							 /datum/computer_file/program/deck_management,
 							 /datum/computer_file/program/reports)
 
@@ -136,7 +136,7 @@
 
 
 
-	software_on_spawn = list(/datum/computer_file/program/supply,
+	software_on_spawn = list(/datum/computer_file/program/trade, // [SIERRA-EDIT] TRADE
 							 /datum/computer_file/program/deck_management,
 							 /datum/computer_file/program/reports)
 

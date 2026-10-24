@@ -1,0 +1,20 @@
+<div class="item">Filter:
+ {{:helper.link('All', null, {'log_filter':'All'}, data.log_filter == 'All' ? 'selected' : null)}}
+ {{:helper.link('Requests', null, {'log_filter':'Request'}, data.log_filter == 'Request' ? 'selected' : null)}}
+ {{:helper.link('Purchases', null, {'log_filter':'Purchase'}, data.log_filter == 'Purchase' ? 'selected' : null)}}
+ {{:helper.link('Deliveries', null, {'log_filter':'Delivery'}, data.log_filter == 'Delivery' ? 'selected' : null)}}
+ {{:helper.link('Exports', null, {'log_filter':'Export'}, data.log_filter == 'Export' ? 'selected' : null)}}
+ {{:helper.link('Bounties', null, {'log_filter':'Bounty'}, data.log_filter == 'Bounty' ? 'selected' : null)}}
+ {{:helper.link('Refunds', null, {'log_filter':'Refund'}, data.log_filter == 'Refund' ? 'selected' : null)}}
+ {{:helper.link('Cancelled', null, {'log_filter':'Cancelled'}, data.log_filter == 'Cancelled' ? 'selected' : null)}}
+</div>
+<table style="width:100%"><tr><th>Invoice</th><th>Time</th><th>Action</th><th>Goods/order</th><th>Account</th><th>Amount</th></tr>
+{{for data.logs}}<tr class="candystripe"><td>{{:helper.link(value.id, 'search', {'view_log':value.id})}}</td><td>{{:value.time}}</td><td>{{:value.kind}}</td><td>{{:value.title}}</td><td>{{:value.account}}</td><td>{{:value.amount}} {{:data.currency}}</td></tr>{{/for}}</table>
+{{if data.log_detail}}
+ <h3>Invoice #{{:data.log_detail.id}}: {{:data.log_detail.kind}}</h3><p>{{:data.log_detail.time}}. Account: {{:data.log_detail.account}}.</p>
+ <table style="width:100%"><tr><th>Vendor</th><th>Goods</th><th>Quantity</th><th>Unit price</th><th>Subtotal</th></tr>
+ {{for data.log_detail.contents}}<tr class="candystripe"><td>{{:value.station}}</td><td>{{:value.name}}</td><td>{{:value.quantity}}{{if value.stack_size}} stacks ({{:value.stack_size * value.quantity}} units){{/if}}</td><td>{{:value.unit_price}}</td><td>{{:value.subtotal}}</td></tr>{{/for}}</table>
+ <div class="notice">Total: {{:data.log_detail.amount}} {{:data.currency}}. Cargo commission/handling: {{:data.log_detail.fee}}.</div>
+ {{:helper.link('Receipt', 'print', {'log_receipt':data.log_detail.id})}}
+ {{if data.manager}}{{:helper.link('Internal receipt', 'print', {'log_receipt':data.log_detail.id, 'internal':1})}}{{/if}}
+{{/if}}
