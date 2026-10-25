@@ -8,7 +8,7 @@
 	overdose = REAGENTS_OVERDOSE / 2
 	scannable = 1
 	flags = IGNORE_MOB_SIZE
-	value = 6.7
+	value = 6.8
 
 /datum/reagent/metorapan/affect_blood(mob/living/carbon/M, removed)
 	if(M.has_reagent(/datum/reagent/bicaridine))
@@ -38,7 +38,6 @@
 /datum/reagent/cortolin
 	name = "Cortolin"
 	description = "Cortolin is an advanced organ-regenerative medication used in treating cardiac damage."
-	taste_description = "rotten bandaids"
 	reagent_state = LIQUID
 	color = "#008000"
 	metabolism = REM
