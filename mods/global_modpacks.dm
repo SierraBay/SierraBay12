@@ -50,6 +50,7 @@
 #include "character_traits/_character_traits_includes.dm"
 #include "character_persist/_character_persist_includes.dm"
 #include "chemtweaks/_chemtweaks_includes.dm"
+#include "chemistry_additions/_chemistry_additions_includes.dm"
 #include "diona/_diona_includes.dm"
 #include "simplangs/simplangs_includes.dm"
 #include "makeshift_sword_overhaul/makeshift_sword_overhaul_includes.dm"
