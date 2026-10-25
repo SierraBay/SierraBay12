@@ -1,5 +1,6 @@
 // SIERRA TODO: GET RID OF IT!!!
 #include "ai/_ai_includes.dm"
+#include "jps_pathfinding/_jps_pathfinding_includes.dm"
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
 #include "cargo/_cargo_includes.dm"
@@ -13,6 +14,7 @@
 #include "giant_armored_centipede/_giant_armored_centipede_includes.dm"
 #include "escpodinf/_escpodinf_includes.dm"
 #include "expanded_culture_descriptor/_expanded_culture_descriptor_includes.dm"
+#include "gamemode_job_requirements/_gamemode_job_requirements_includes.dm"
 #include "gliding/_gliding_includes.dm"
 #include "guns/_guns_includes.dm"
 #include "height_system/_heights_includes.dm"
@@ -32,7 +34,6 @@
 #include "hivemind/_hivemind_includes.dm"
 #include "nyc_posters/_nyc_posters_includes.dm"
 #include "pixelshift/_pixelshift_includes.dm"
-#include "ssinput/_ssinput_includes.dm"
 #include "statusbar/_statusbar_includes.dm"
 #include "unathi/_unathi_includes.dm"
 #include "utf8/_utf8_includes.dm"

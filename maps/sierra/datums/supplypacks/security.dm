@@ -181,7 +181,9 @@
 					/obj/item/clothing/accessory/glassesmod/nvg,
 					/obj/item/storage/belt/holster/security/tactical,
 					/obj/item/clothing/shoes/tactical,
-					/obj/item/clothing/gloves/tactical)
+					/obj/item/clothing/gloves/tactical,
+					/obj/item/clothing/accessory/arm_guards/tactical,
+					/obj/item/clothing/accessory/leg_guards/tactical)
 	cost = 45
 	containertype = /obj/structure/closet/crate/secure
 	containername = "tactical armor crate"

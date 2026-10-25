@@ -163,6 +163,8 @@ var/global/list/string_slot_flags = list(
 		if(length(instance.hotkey_keys))
 			for(var/bound_key in instance.hotkey_keys)
 				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+		for(var/bound_key in instance.classic_keys)
+			global.hotkey_keybinding_list_by_key_focused[bound_key] += list(instance.name)
 	//Трейты
 	paths = typesof(/datum/mod_trait) - /datum/mod_trait
 	for(var/path in paths)

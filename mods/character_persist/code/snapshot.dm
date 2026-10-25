@@ -103,10 +103,23 @@
 	return TRUE
 
 
+/datum/evacuation_controller
+	var/emergency_called // emergency evacuation was announced this round; recall does not clear this
+
+/proc/character_persist_in_announced_evac_pod(mob/living/carbon/human/H)
+	if (!istype(H) || !evacuation_controller?.emergency_called)
+		return FALSE
+	return istype(get_area(H), /area/shuttle/escape_pod)
+
+
 /proc/character_persist_can_save_here(mob/living/carbon/human/H)
 	if (character_persist_on_sierra(H))
 		return TRUE
-	return character_persist_evac_active() && character_persist_on_ship(H)
+	if (character_persist_evac_active() && character_persist_on_ship(H))
+		return TRUE
+	// A recalled evacuation clears emergency_evacuation. A pod that already left
+	// is still an evacuation, not an abandonment.
+	return character_persist_in_announced_evac_pod(H)
 
 
 /proc/character_persist_is_offstation_antag(mob/living/carbon/human/H)

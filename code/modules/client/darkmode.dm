@@ -135,3 +135,14 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "asset_cache_browser", "text-color = #000000;text-color = [COLOR_DARKMODE_TEXT]")
 
 	update_hotkey_mode()
+
+// [SIERRA-ADD] - Client theme state and refresh
+/datum/preferences
+	var/dark_theme = FALSE
+
+/client/proc/update_client_theme()
+	if (prefs.dark_theme)
+		force_dark_theme()
+	else
+		force_white_theme()
+// [/SIERRA-ADD]

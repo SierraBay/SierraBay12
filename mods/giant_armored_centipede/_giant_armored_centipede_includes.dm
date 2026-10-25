@@ -4,5 +4,6 @@
 #include "_giant_armored_centipede.dm"
 #include "code/wings.dm"
 #include "code/emotes.dm"
+#include "code/species.dm"
 
 #endif

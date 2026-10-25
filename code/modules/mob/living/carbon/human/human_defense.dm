@@ -144,11 +144,15 @@ meteor_act
 
 /mob/living/carbon/human/proc/check_shields(damage = 0, atom/damage_source = null, mob/attacker = null, def_zone = null, attack_text = "the attack")
 
+	// [SIERRA-REMOVE] - PSIONICS
+	/*
 	var/obj/item/projectile/P = damage_source
 	if(istype(P) && !P.disrupts_psionics() && psi && P.starting && prob(psi.get_armour(get_armor_key(P.damage_type, P.damage_flags())) * 0.5) && psi.spend_power(round(damage/10)))
 		visible_message(SPAN_DANGER("\The [src] deflects [attack_text]!"))
 		P.redirect(P.starting.x + rand(-2,2), P.starting.y + rand(-2,2), get_turf(src), src)
 		return PROJECTILE_FORCE_MISS
+	*/
+	// [/SIERRA-REMOVE]
 
 	for(var/obj/item/shield in list(l_hand, r_hand, wear_suit))
 		if(!shield) continue
@@ -166,7 +170,8 @@ meteor_act
 
 	if (!hit_zone)
 		return
-	if (check_shields(damage, null, user, hit_zone, user.name))
+	// if (check_shields(damage, null, user, hit_zone, user.name)) [SIERRA-EDIT]
+	if (check_shields(damage, null, user, hit_zone, user.name) || !aura_check(AURA_TYPE_UNARMED, user))
 		return
 
 	var/obj/item/organ/external/affecting = get_organ(hit_zone)

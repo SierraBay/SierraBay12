@@ -1,6 +1,6 @@
 /datum/job/exploration_leader
 	title = "Exploration Leader"
-	department = "Экспедиционный"
+	department = "Exploration"
 	department_flag = EXP
 	head_position = 1
 
@@ -64,7 +64,7 @@
 
 /datum/job/explorer
 	title = "Explorer"
-	department = "Экспедиционный"
+	department = "Exploration"
 	department_flag = EXP
 	total_positions = 3
 	spawn_positions = 3
@@ -122,7 +122,7 @@
 
 /datum/job/explorer_pilot
 	title = "Expeditionary Pilot"
-	department = "Экспедиционный"
+	department = "Exploration"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1
@@ -181,7 +181,7 @@
 
 /datum/job/explorer_medic
 	title = "Field Medic"
-	department = "Экспедиционный"
+	department = "Exploration"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1
@@ -237,7 +237,7 @@
 
 /datum/job/explorer_engineer
 	title = "Field Engineer"
-	department = "Экспедиционный"
+	department = "Exploration"
 	department_flag = EXP
 	total_positions = 1
 	spawn_positions = 1

@@ -136,7 +136,8 @@
 			return
 
 		if (I_GRAB)
-			if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name))
+			// if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name)) [SIERA-EDIT]
+			if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name) || !aura_check(AURA_TYPE_UNARMED, H))
 				H.do_attack_animation(src)
 				return
 			return H.species.attempt_grab(H, src)
@@ -197,7 +198,8 @@
 
 		if (I_DISARM)
 			if (H.species)
-				if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name))
+				//if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name)) [SIERRA-EDIT]
+				if (H != src && check_shields(0, null, H, H.zone_sel.selecting, H.name) || !aura_check(AURA_TYPE_UNARMED, H))
 					H.do_attack_animation(src)
 					return
 				admin_attack_log(M, src, "Disarmed their victim.", "Was disarmed.", "disarmed")

@@ -23,7 +23,8 @@
 		"basic_micro_laser",
 		"basic_capacitor",
 		"basic_cell",
-		"device_cell_standard"
+		"device_cell_standard",
+		"data_disk"
 	)
 
 /datum/technology/engineering/research_tech_nt

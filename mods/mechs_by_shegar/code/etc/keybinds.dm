@@ -23,6 +23,7 @@
 //Кейбинд на переключение стрейфа//
 /datum/keybinding/mech/toggle_strafe
 	hotkey_keys = list("Space")
+	classic_keys = list("None")
 	name = "toggle_strafe"
 	full_name = "Toggle Strafe status"
 	description = "Turn on/off strafe in mechs"

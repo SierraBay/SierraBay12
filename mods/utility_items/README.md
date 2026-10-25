@@ -41,6 +41,7 @@ ID мода: UTILITY_ITEMS
 
 - `code/modules/clothing/masks/smokable.dm` `/obj/item/clothing/mask/smokable/proc/smoke` `/obj/item/clothing/mask/smokable/proc/light` 
 - `code/game/objects/items/weapons/cards_ids.dm` `/obj/item/card/id/proc/get_display_name()`
+- `code/modules/mob/living/carbon/carbon.dm` `/mob/living/carbon/swap_hand()`
 
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.

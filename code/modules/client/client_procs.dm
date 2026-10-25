@@ -21,6 +21,11 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	// [SIERRA-ADD] - Reset keybindings (BYOND bug 2694120)
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+	// [/SIERRA-ADD]
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 	if(!user_acted(src))

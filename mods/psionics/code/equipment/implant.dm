@@ -7,9 +7,6 @@
 #ifndef PSI_IMPLANT_WARN
 #define PSI_IMPLANT_WARN      "Issue Reprimand"
 #endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
 #ifndef PSI_IMPLANT_DISABLED
 #define PSI_IMPLANT_DISABLED  "Disabled"
 #endif
@@ -47,7 +44,7 @@
 /obj/item/implant/psi_control/Topic(href, href_list)
 	..()
 	if (href_list["mode"])
-		var/mod = input("Установить режим подавления", "Режим подавления") as null|anything in list(PSI_IMPLANT_DISABLED, PSI_IMPLANT_LOG, PSI_IMPLANT_WARN, PSI_IMPLANT_SHOCK, PSI_IMPLANT_AUTOMATIC)
+		var/mod = input("Установить режим подавления", "Режим подавления") as null|anything in list(PSI_IMPLANT_DISABLED, PSI_IMPLANT_WARN, PSI_IMPLANT_SHOCK, PSI_IMPLANT_AUTOMATIC)
 		if(mod)
 			psi_mode = mod
 		interact(usr)
@@ -133,19 +130,15 @@
 			for(var/thing in SSpsi.psi_monitors)
 				var/obj/machinery/psi_monitor/monitor = thing
 				monitor.report_violation(src, stress)
-			if(use_psi_mode == PSI_IMPLANT_LOG)
-				return stress
-			else if(use_psi_mode == PSI_IMPLANT_SHOCK)
-				to_chat(imp_in, SPAN_DANGER("Your psi dampener punishes you with a violent neural shock!"))
+			if(use_psi_mode == PSI_IMPLANT_SHOCK)
+				to_chat(imp_in, SPAN_DANGER("Пси-подавитель выносит вам заряд электроэнергии!"))
 				imp_in.flash_eyes()
 				imp_in.Weaken(5)
 				if(isliving(imp_in))
 					var/mob/living/M = imp_in
 					if(M.psi) M.psi.stunned(5)
 			else if(use_psi_mode == PSI_IMPLANT_WARN)
-				to_chat(imp_in, SPAN_WARNING("Your psi dampener primly informs you it has reported this violation."))
-				//FD PSIONICS//
-				//Probably fixing problem with no actual logs coming to computer, dunno why it even have to be on the top of this block//
+				to_chat(imp_in, SPAN_WARNING("Пси-подавитель вибрирует."))
 				for(var/report in SSpsi.psi_monitors)
 					var/obj/machinery/psi_monitor/monitor = report
 					monitor.report_violation(src, stress)
@@ -153,5 +146,4 @@
 #undef PSI_IMPLANT_AUTOMATIC
 #undef PSI_IMPLANT_SHOCK
 #undef PSI_IMPLANT_WARN
-#undef PSI_IMPLANT_LOG
 #undef PSI_IMPLANT_DISABLED

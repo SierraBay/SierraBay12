@@ -112,6 +112,9 @@ var/global/list/_client_preferences_by_type
 
 	mob_client.view = new_value
 	mob_client.update_skybox(TRUE)
+	//[SIERRA-ADD]
+	mob_client.update_click_catcher()
+	//[/SIERRA-ADD]
 
 /datum/client_preference/play_admin_midis
 	description = "Play admin midis"
@@ -242,6 +245,13 @@ var/global/list/_client_preferences_by_type
 /datum/client_preference/safety_toggle_on_intent
 	description = "Ignore safety on harm intent"
 	key = "SAFETY_ON_INTENT"
+
+/datum/client_preference/gun_crosshair
+	description = "Gun crosshair"
+	key = "GUN_CROSSHAIR"
+
+/datum/client_preference/gun_crosshair/changed(mob/preference_mob, new_value)
+	preference_mob.update_mouse_pointer()
 
 /datum/client_preference/show_credits
 	description = "Show End Titles"

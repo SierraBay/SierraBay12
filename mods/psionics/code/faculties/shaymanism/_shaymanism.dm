@@ -2,7 +2,7 @@
 	id = PSI_SHAYMANISM
 	name = "Shaymanism"
 	associated_intent = I_HELP
-	armour_types = list("psi")
+	armour_types = list(DAMAGE_PSIONIC, "melee")
 
 /singleton/psionic_power/shaymanism
 	faculty = PSI_SHAYMANISM

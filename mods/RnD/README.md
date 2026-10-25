@@ -84,6 +84,9 @@ ID мода: MODPACK_RND
 
 ### Оверрайды
 
+- `mods/_master_files/code/_onclick/hud/action.dm`: `/obj/screen/movable/action_button/UpdateIcon()` рисует надпись поверх кнопки действия (обратный отсчёт, заряды). Новые процедуры: `/obj/item/proc/get_action_button_label()`, `/datum/action/proc/get_button_label()`, `/proc/create_action_button_label()`
+- `mods/_master_files/code/_onclick/click.dm`: `/mob/living/carbon/human/CtrlClickOn()` стреляет из глазного лазера (`bale_eye`)
+- `mods/RnD/code/augments/nanounit.dm`: `/obj/item/organ/internal/augment/active/nanounit/activate()`, `catastrophic_failure()`, `get_action_button_label()`; `/obj/aura/nanoaura/aura_check_bullet()`
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`

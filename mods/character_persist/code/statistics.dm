@@ -21,6 +21,31 @@ var/global/character_persist_roundend_done = FALSE
 	)
 
 
+/proc/character_persist_record_skip(mob/living/carbon/human/H, notify = FALSE)
+	if (!istype(H))
+		return
+	var/ckey = character_persist_ckey_of(H)
+	var/slot = character_persist_slot_of(H)
+	if (!ckey || !slot)
+		return
+	var/key = character_persist_stat_key(ckey, slot)
+	var/list/existing = character_persist_round_stats[key]
+	if (islist(existing) && existing["outcome"] == "skipped")
+		if (notify && H.client)
+			to_chat(H, SPAN_NOTICE("Смена не засчитана: эвакуация была объявлена. Прежнее состояние тела сохранено."))
+		return
+	if (islist(existing) && existing["outcome"] != "abandoned")
+		return
+	var/shifts = 0
+	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
+	if (islist(prefs?.character_persist_snapshot))
+		shifts = character_persist_num(prefs.character_persist_snapshot["shifts_survived"])
+	character_persist_record_stat(ckey, slot, H.real_name, "skipped", shifts, null, null)
+	log_game("CHARACTER_PERSIST: skipped [ckey] slot [slot] ([H.real_name]) shifts=[shifts]")
+	if (notify && H.client)
+		to_chat(H, SPAN_NOTICE("Смена не засчитана: эвакуация была объявлена. Прежнее состояние тела сохранено."))
+
+
 /proc/character_persist_farewell(char_name, shifts, reason)
 	if (reason == "gibbed")
 		if (shifts)
@@ -85,10 +110,16 @@ var/global/character_persist_roundend_done = FALSE
 		if (character_persist_is_offstation_antag(H))
 			continue
 		if (H.stat == DEAD)
+			if (H.character_persist_round_hold || character_persist_in_announced_evac_pod(H))
+				character_persist_record_skip(H, TRUE)
+				continue
 			character_persist_try_clear(H, "death")
 			continue
 		if (character_persist_can_save_here(H) || istype(H.loc, /obj/machinery/cryopod))
 			character_persist_try_save(H, "roundend")
+			continue
+		if (H.character_persist_round_hold)
+			character_persist_record_skip(H, TRUE)
 			continue
 		character_persist_try_clear(H, "abandoned")
 
@@ -113,6 +144,8 @@ var/global/character_persist_roundend_done = FALSE
 			card += "<i>[html_encode("[entry["farewell"] || character_persist_farewell(entry["name"], shifts, "death")]")]</i>"
 		else if (entry["outcome"] == "abandoned")
 			card += "<i>[char_name] покинул Сьерру. Состояние тела не сохранено.</i>"
+		else if (entry["outcome"] == "skipped")
+			card += "<i>Смена не засчитана: эвакуация была объявлена. Прежнее состояние тела сохранено.</i>"
 		else
 			card += character_persist_format_stats_med(entry["med_record"])
 		card += "</div>"

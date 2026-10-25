@@ -9,6 +9,7 @@
 // Аугменты
 #include "code/augments/active.dm"
 #include "code/augments/clicker.dm"
+#include "code/augments/nanounit.dm"
 #include "code/augments/sonar.dm"
 #include "code/augments/vampire.dm"
 #include "code/augments/sandevistan.dm"

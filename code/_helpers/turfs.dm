@@ -59,6 +59,7 @@
 	if(length(turfs))
 		return pick(turfs)
 
+/*[SIERRA-REMOVE]
 /proc/screen_loc2turf(text, turf/origin)
 	RETURN_TYPE(/turf)
 	if(!origin)
@@ -72,6 +73,33 @@
 	tX = max(1, min(origin.x + 7 - tX, world.maxx))
 	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
+*///[SIERRA-REMOVE]
+//[SIERRA-ADD]
+// Mouse params use "tile_x:pixel_x,tile_y:pixel_y" from the bottom-left of the map.
+/proc/screen_params_turf(screen_loc, turf/origin, client/viewer)
+	RETURN_TYPE(/turf)
+	if(!origin || !screen_loc)
+		return null
+	var/list/parts = splittext(screen_loc, ",")
+	if(length(parts) < 2)
+		return null
+	var/list/x_parts = splittext(parts[1], ":")
+	var/list/y_parts = splittext(parts[2], ":")
+	var/tile_x = text2num(x_parts[1])
+	var/tile_y = text2num(y_parts[1])
+	if(isnull(tile_x) || isnull(tile_y))
+		return null
+	if(!viewer)
+		viewer = usr?.client
+	var/view = viewer?.view
+	if(!view)
+		view = world.view
+	var/x_radius = round((get_view_size_x(view) - 1) / 2)
+	var/y_radius = round((get_view_size_y(view) - 1) / 2)
+	var/tX = max(1, min(origin.x + (tile_x - 1) - x_radius, world.maxx))
+	var/tY = max(1, min(origin.y + (tile_y - 1) - y_radius, world.maxy))
+	return locate(tX, tY, origin.z)
+//[/SIERRA-ADD]
 
 /*
 	Predicate helpers

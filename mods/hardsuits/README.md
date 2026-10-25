@@ -47,6 +47,10 @@ ID мода: HARDSUITS
   - `/obj/item/rig/exploration/var/chest_type`
   - `/obj/item/rig/exploration/var/boot_type`
   - `/obj/item/rig/exploration/var/glove_type`
+- `mods/hardsuits/code/module_cooldown_label.dm`: обратный отсчёт перезарядки на кнопках модулей
+  - `/obj/item/rig_module/engage()`, `/obj/item/rig_module/Destroy()`
+  - `/obj/item/rig_module/personal_shield/deactivate()`
+  - `/obj/item/rig_module/get_action_button_label()` (процедура из `mods/_master_files/code/_onclick/hud/action.dm`)
 
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.

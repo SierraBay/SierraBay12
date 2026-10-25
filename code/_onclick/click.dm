@@ -6,6 +6,25 @@
 // 1 decisecond click delay (above and beyond mob/next_move)
 /mob/var/next_click = 0
 
+// [SIERRA-ADD] - Client input and administrative click selection
+/client/Click(atom/A)
+	if(!user_acted(src))
+		return
+
+	if(holder && holder.callproc && holder.callproc.waiting_for_click)
+		if(alert("Do you want to select \the [A] as the [length(holder.callproc.arguments)+1]\th argument?",, "Yes", "No") == "Yes")
+			holder.callproc.arguments += A
+
+		holder.callproc.waiting_for_click = 0
+		verbs -= /client/proc/cancel_callproc_select
+		holder.callproc.do_args()
+		return
+
+	update_hotkey_mode()
+
+	return ..()
+// [/SIERRA-ADD]
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -23,6 +42,8 @@
 		return
 
 	var/datum/click_handler/click_handler = usr.GetClickHandler()
+	if (click_handler.SkipClick(src, params))
+		return
 	click_handler.OnClick(src, params)
 
 /atom/DblClick(location, control, params)
@@ -501,6 +522,7 @@
 	if(direction != dir)
 		facedir(direction)
 
+/*[SIERRA-REMOVE]
 GLOBAL_LIST_INIT(click_catchers)
 	click_catchers = list()
 	var/obj/screen/click_catcher/catcher
@@ -509,18 +531,75 @@ GLOBAL_LIST_INIT(click_catchers)
 			catcher = new
 			catcher.screen_loc = "NORTH-[i],EAST-[j]"
 			click_catchers += catcher
+*///[SIERRA-REMOVE]
+//[SIERRA-ADD]
+// One catcher per screen tile. A single stretched icon does not get the mouse on unseen tiles.
+// Catchers past the current view are kept off the screen, or BYOND shifts the map to include them.
+/client
+	var/list/click_catcher_tiles
+
+/client/proc/update_click_catcher()
+	var/view_to_use = view
+	if(!view_to_use)
+		view_to_use = world.view
+	var/view_x = min(get_view_size_x(view_to_use), 31)
+	var/view_y = min(get_view_size_y(view_to_use), 31)
+	if(!click_catcher_tiles)
+		click_catcher_tiles = list()
+
+	var/list/have = list()
+	for(var/obj/screen/click_catcher/catcher in click_catcher_tiles)
+		have["[catcher.catcher_x],[catcher.catcher_y]"] = catcher
+
+	for(var/tile_x in 1 to view_x)
+		for(var/tile_y in 1 to view_y)
+			var/key = "[tile_x],[tile_y]"
+			if(have[key])
+				continue
+			var/obj/screen/click_catcher/catcher = new
+			catcher.catcher_x = tile_x
+			catcher.catcher_y = tile_y
+			catcher.screen_loc = "[tile_x],[tile_y]"
+			click_catcher_tiles += catcher
+			have[key] = catcher
+
+	screen -= click_catcher_tiles
+	for(var/obj/screen/click_catcher/catcher in click_catcher_tiles)
+		if(catcher.catcher_x <= view_x && catcher.catcher_y <= view_y)
+			screen += catcher
+//[/SIERRA-ADD]
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
+	/*[SIERRA-REMOVE]
 	screen_loc = "CENTER-7,CENTER-7"
+	*///[SIERRA-REMOVE]
+	//[SIERRA-ADD]
+	screen_loc = "1,1"
+	var/catcher_x
+	var/catcher_y
+	//[/SIERRA-ADD]
 
+//[SIERRA-ADD]
+/// The turf this catcher covers on `user`'s screen, seen from the client's eye as in `Click()`.
+/obj/screen/click_catcher/proc/get_covered_turf(mob/user)
+	RETURN_TYPE(/turf)
+	var/client/viewer = user?.client
+	var/turf/origin = get_turf(user)
+	var/turf/eye_turf = viewer ? get_turf(viewer.eye) : null
+	if(eye_turf)
+		origin = eye_turf
+	return screen_params_turf(screen_loc, origin, viewer)
+//[/SIERRA-ADD]
+
+/*[SIERRA-REMOVE]
 /obj/screen/click_catcher/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
-
+*///[SIERRA-REMOVE]
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -528,7 +607,17 @@ GLOBAL_LIST_INIT(click_catchers)
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
+		/*[SIERRA-REMOVE]
 		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		*///[SIERRA-REMOVE]
+		//[SIERRA-ADD]
+		var/client/viewer = usr?.client
+		var/turf/origin = get_turf(usr)
+		var/turf/eye_turf = viewer ? get_turf(viewer.eye) : null
+		if(eye_turf)
+			origin = eye_turf
+		var/turf/T = screen_params_turf(modifiers[MOUSE_SCREEN_LOC], origin, viewer)
+		//[/SIERRA-ADD]
 		if(T)
 			T.Click(location, control, params)
 	. = 1
@@ -571,6 +660,25 @@ GLOBAL_LIST_INIT(click_catchers)
 
 /obj/item/gun/CanItemAutoclick(object, location, params)
 	return can_autofire
+
+/// Whether a press of the left mouse button on `object` is clicked at once, without waiting for the release. See `/datum/click_handler/default/OnMouseDown()`.
+/mob/proc/CanMobClickOnPress(atom/object, location, params)
+	return FALSE
+
+/mob/living/carbon/CanMobClickOnPress(atom/object, location, params)
+	var/obj/item/held = get_active_hand()
+	if (!held?.CanItemClickOnPress(object, location, params))
+		return FALSE
+	// Only a click from the map on something out of reach. Anything at hand, and a mob inside something, waits for the release as usual.
+	if (!isturf(loc) || !(isturf(object) || isturf(object.loc)))
+		return FALSE
+	return !object.Adjacent(src)
+
+/obj/item/proc/CanItemClickOnPress(atom/object, location, params)
+	return FALSE
+
+/obj/item/gun/CanItemClickOnPress(atom/object, location, params)
+	return TRUE
 
 /atom/proc/IsAutoclickable()
 	return TRUE

@@ -31,14 +31,3 @@
 	build_path = /obj/item/mech_component/propulsion/heavy/right
 	req_tech = list(TECH_COMBAT = 4)
 	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
-
-/datum/design/item/mechfab/mech_legs_heavy
-	category = list("Mech propulsion")
-
-/datum/design/item/mechfab/mech_legs_heavy/heavy
-	name = "left heavy mech motivator"
-	id = "heavy_legs"
-	time = 45
-	build_path = /obj/item/mech_component/propulsion/heavy
-	req_tech = list(TECH_COMBAT = 4)
-	materials = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)

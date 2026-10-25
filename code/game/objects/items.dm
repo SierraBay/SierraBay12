@@ -331,6 +331,7 @@
 	if(user)
 		for (var/obj/item/item as anything in user.GetAllHeld())
 			item.update_twohanding()
+		user.update_mouse_pointer()
 	GLOB.mob_unequipped_event.raise_event(user, src)
 	GLOB.item_unequipped_event.raise_event(src, user)
 
@@ -367,6 +368,7 @@ note this isn't called during the initial dressing of a player
 	if(user.client)	user.client.screen |= src
 	if(user.pulling == src)
 		user.stop_pulling()
+	user.update_mouse_pointer()
 	var/mob/M = loc
 	if(!istype(M))
 		return
@@ -794,12 +796,16 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	if(user.hud_used.hud_shown)
 		user.toggle_zoom_hud()	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
-	if(istype(H))
-		H.handle_vision()
 
 	user.client.view = viewsize
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	zoom = 1
 	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
+	if(istype(H))
+		H.handle_vision()
+	user.check_fov() //[SIERRA-ADD]
 
 	GLOB.destroyed_event.register(src, src, TYPE_PROC_REF(/obj/item, unzoom))
 	GLOB.moved_event.register(user, src, TYPE_PROC_REF(/obj/item, unzoom))
@@ -836,17 +842,20 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 
 	user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	if(!user.hud_used.hud_shown)
 		user.toggle_zoom_hud()
 
 	user.client.pixel_x = 0
 	user.client.pixel_y = 0
 
+	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
 		H.handle_vision()
 	user.visible_message("[zoomdevicename ? "\The [user] looks up from [src]" : "\The [user] lowers [src]"].")
-	user.client.viewoffset = FALSE //[SIERRA-ADD] - FOV
 	user.client.reload_fov() //[SIERRA-ADD] - FOV
 
 /obj/item/proc/pwr_drain()
