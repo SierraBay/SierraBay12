@@ -123,6 +123,12 @@
 	return out
 
 
+/proc/character_persist_safe_resolve_path(path_text)
+	if (!istext(path_text))
+		return null
+	return text2path(path_text)
+
+
 /proc/character_persist_safe_apply_reagents(obj/item/reagent_containers/container, list/entries)
 	if (!istype(container) || !islist(entries) || !container.reagents)
 		return
@@ -130,7 +136,7 @@
 	for (var/list/entry in entries)
 		if (!islist(entry))
 			continue
-		var/path = text2path(entry["type"])
+		var/path = character_persist_safe_resolve_path(entry["type"])
 		var/amount = text2num(entry["amount"])
 		if (!ispath(path, /datum/reagent) || amount <= 0)
 			continue
@@ -181,7 +187,7 @@
 /proc/character_persist_safe_deserialize_item(list/entry, turf/T, savefile/photos)
 	if (!islist(entry) || !T)
 		return null
-	var/path = text2path(entry["type"])
+	var/path = character_persist_safe_resolve_path(entry["type"])
 	if (!ispath(path, /obj/item))
 		return null
 	if (ispath(path, /obj/item/storage))

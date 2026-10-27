@@ -242,6 +242,5 @@
 		ODYSSEY_CHRONICLE_VIS_PUBLIC,
 		list("kind" = "campaign_stats", "status" = status)
 	)
-	to_world(SPAN_NOTICE("<b>[replacetext(text, "\n", "<br>")]</b>"))
 	priority_announcement.Announce("Odyssey campaign closed. Full expedition statistics have been entered into the public chronicle.", "Odyssey Command")
 	return stats

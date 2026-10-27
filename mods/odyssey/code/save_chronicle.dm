@@ -253,4 +253,4 @@
 
 /proc/odyssey_announce_continue_briefing()
 	var/text = odyssey_continue_briefing(null, FALSE)
-	to_world(SPAN_NOTICE("<b>[replacetext(text, "\n", "<br>")]</b>"))
+	to_chat(world, SPAN_NOTICE("<b>[replacetext(text, "\n", "<br>")]</b>"))

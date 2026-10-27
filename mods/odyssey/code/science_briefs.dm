@@ -15,26 +15,26 @@
 
 /proc/odyssey_science_slime_pool(prefer_high = FALSE)
 	var/list/tier3 = list(
-		"/obj/item/slime_extract/yellow",
-		"/obj/item/slime_extract/silver",
-		"/obj/item/slime_extract/darkblue",
-		"/obj/item/slime_extract/darkpurple"
+		/obj/item/slime_extract/yellow,
+		/obj/item/slime_extract/silver,
+		/obj/item/slime_extract/darkblue,
+		/obj/item/slime_extract/darkpurple
 	)
 	var/list/tier4 = list(
-		"/obj/item/slime_extract/pink",
-		"/obj/item/slime_extract/red",
-		"/obj/item/slime_extract/gold",
-		"/obj/item/slime_extract/green",
-		"/obj/item/slime_extract/sepia",
-		"/obj/item/slime_extract/bluespace",
-		"/obj/item/slime_extract/cerulean",
-		"/obj/item/slime_extract/pyrite"
+		/obj/item/slime_extract/pink,
+		/obj/item/slime_extract/red,
+		/obj/item/slime_extract/gold,
+		/obj/item/slime_extract/green,
+		/obj/item/slime_extract/sepia,
+		/obj/item/slime_extract/bluespace,
+		/obj/item/slime_extract/cerulean,
+		/obj/item/slime_extract/pyrite
 	)
 	var/list/tier5 = list(
-		"/obj/item/slime_extract/lightpink",
-		"/obj/item/slime_extract/oil",
-		"/obj/item/slime_extract/adamantine",
-		"/obj/item/slime_extract/black"
+		/obj/item/slime_extract/lightpink,
+		/obj/item/slime_extract/oil,
+		/obj/item/slime_extract/adamantine,
+		/obj/item/slime_extract/black
 	)
 	if (prefer_high)
 		return tier4 + tier5
@@ -58,12 +58,11 @@
 	return "[genetype]"
 
 
-/proc/odyssey_science_extract_label(type_path_text)
-	var/path = text2path(type_path_text)
-	if (!path)
-		return type_path_text
+/proc/odyssey_science_extract_label(path)
+	if (!ispath(path, /obj/item/slime_extract))
+		return "[path]"
 	var/obj/item/slime_extract/sample = path
-	return initial(sample.name) || type_path_text
+	return initial(sample.name) || "[path]"
 
 
 /proc/odyssey_science_pick_from_list(list/pool, seed_key)
@@ -130,14 +129,14 @@
 
 
 /proc/odyssey_science_make_slime_brief(seed_key, prefer_high = FALSE)
-	var/type_text = odyssey_science_pick_from_list(odyssey_science_slime_pool(prefer_high), "sci_slime:[seed_key]")
-	var/label = odyssey_science_extract_label(type_text)
+	var/extract_path = odyssey_science_pick_from_list(odyssey_science_slime_pool(prefer_high), "sci_slime:[seed_key]")
+	var/label = odyssey_science_extract_label(extract_path)
 	return odyssey_science_make_brief(
 		ODYSSEY_SCI_BRIEF_SLIME,
 		"Ксенобиология: ядро слизня",
 		"Добудьте и проанализируйте «[label]» (деконструкция в DA или активация extract). Награда: [ODYSSEY_SCI_REWARD_SLIME] кредитов НИО.",
 		1,
-		list("target_type" = type_text)
+		list("target_type" = "[extract_path]")
 	)
 
 
