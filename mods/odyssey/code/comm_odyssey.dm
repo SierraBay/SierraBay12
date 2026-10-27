@@ -6,6 +6,8 @@
 /datum/nano_module/program/comm/odyssey
 	/// Sector currently opened in the dossier panel.
 	var/viewed_sector_id
+	/// When TRUE, the right-hand sector dossier is collapsed so it does not cover the map.
+	var/dossier_collapsed = FALSE
 
 
 /datum/nano_module/program/comm/odyssey/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = GLOB.default_state)
@@ -87,6 +89,7 @@
 
 	data["odyssey_active"] = state.active
 	data["odyssey"] = odyssey_build_map_ui_data(viewed_sector_id, data["authenticated"] && !data["isAI"])
+	data["odyssey"]["dossier_collapsed"] = dossier_collapsed
 	if (islist(current_sector))
 		data["odyssey"]["terminal"] = !!current_sector["terminal"]
 
@@ -100,10 +103,14 @@
 /datum/nano_module/program/comm/odyssey/Topic(href, href_list)
 	var/mob/user = usr
 	switch (href_list["action"])
+		if ("odyssey_toggle_dossier")
+			dossier_collapsed = !dossier_collapsed
+			return TOPIC_REFRESH
 		if ("odyssey_inspect")
 			var/sector_id = href_list["target"]
 			if (odyssey_get_sector(sector_id))
 				viewed_sector_id = sector_id
+				dossier_collapsed = FALSE
 			return TOPIC_REFRESH
 		if ("odyssey_select")
 			if (!is_authenticated(user) || issilicon(user))

@@ -28,5 +28,6 @@
 	if (!viewed_sector_id && state.current_sector_id)
 		viewed_sector_id = state.current_sector_id
 	data["odyssey"] = odyssey_build_map_ui_data(viewed_sector_id, FALSE)
+	data["odyssey"]["dossier_collapsed"] = dossier_collapsed
 	data["odyssey_chronicle"] = odyssey_chronicle_ui_entries(ODYSSEY_CHRONICLE_VIS_PUBLIC)
 	data["odyssey_briefing"] = odyssey_build_briefing_ui(ODYSSEY_CHRONICLE_VIS_PUBLIC)

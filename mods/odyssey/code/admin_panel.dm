@@ -306,9 +306,9 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "<h3>Экономика (live)</h3>"
 	dat += "<div class='statusDisplay'>"
 	if (istype(station_account))
-		dat += "SEV Sierra #[station_account.account_number]: <b>[station_account.money]</b><br>"
+		dat += "NSV Sierra #[station_account.account_number]: <b>[station_account.money]</b><br>"
 	else
-		dat += "Счёт судна (SEV Sierra): нет<br>"
+		dat += "Счёт судна (NSV Sierra): нет<br>"
 	var/list/unique_depts = odyssey_unique_department_accounts()
 	for (var/dept in unique_depts)
 		var/datum/money_account/A = unique_depts[dept]

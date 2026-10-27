@@ -118,7 +118,7 @@
 		owner_slot = slot
 		owner_name = H.real_name || ckey
 		bound_odyssey = character_persist_use_odyssey_lane()
-		to_chat(H, SPAN_NOTICE("Биометрия принята. Сейф привязан к вашему профилю непрерывности."))
+		to_chat(H, SPAN_NOTICE("Биометрия принята. Сейф привязан к вашему профилю."))
 
 	locked = FALSE
 	ensure_contents_loaded()

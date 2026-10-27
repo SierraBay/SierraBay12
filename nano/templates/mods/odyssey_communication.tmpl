@@ -64,7 +64,7 @@
 		{{if data.odyssey_briefing}}
 		<div class="odBrief">
 			<div class="odBriefHead">
-				<div class="ship"><b>SEV SIERRA</b></div>
+				<div class="ship"><b>NSV SIERRA</b></div>
 				<div class="title"><b>Брифинг экспедиции «Одиссея»</b></div>
 				<div class="classif">Секретно · для командного состава</div>
 			</div>
@@ -348,6 +348,7 @@
 	}
 	.odysseyTitle { position: absolute; z-index: 4; top: 10px; left: 14px; font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 3px 3px 0 #000; }
 	.odysseyStatus { position: absolute; z-index: 4; top: 40px; left: 14px; right: 260px; font-size: 11px; color: #c8c0b8; }
+	.odysseyShell--dossierCollapsed .odysseyStatus { right: 14px; }
 	.odysseyMap { position: absolute; z-index: 1; left: 8px; right: 8px; top: 70px; bottom: 48px; overflow: hidden; }
 	.odysseySvg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
 	.odysseyNode {
@@ -401,6 +402,18 @@
 		box-sizing: border-box; border: 1px solid #9a9a9a; border-radius: 8px; background: rgba(10,8,8,.94);
 		overflow: auto; font-size: 12px; line-height: 1.4;
 	}
+	.odysseyDossier--collapsed {
+		top: 64px; bottom: auto; width: auto; max-width: 200px; height: auto; padding: 6px 8px;
+		white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+	}
+	.odysseyDossierHead {
+		display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;
+	}
+	.odysseyDossierHead h3 { margin: 0; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.odysseyDossierToggle .link, .odysseyDossierToggle a {
+		color: #d7d0c8 !important; background: transparent !important; border: 1px solid #9a9a9a !important;
+		padding: 1px 6px !important; margin: 0 !important; border-radius: 4px;
+	}
 	.odysseyDossier h3 { margin: 0 0 6px 0; font-size: 13px; color: #fff; }
 	.odysseyDossierMeta { margin-bottom: 8px; color: #c8c0b8; }
 	.odysseyDossierBody { margin-bottom: 10px; color: #ece6de; }
@@ -428,7 +441,7 @@
 		{{if !data.odyssey.active}}
 			<div class="odysseyInactive">Навигационная сеть Одиссеи неактивна.</div>
 		{{else}}
-			<div class="odysseyShell">
+			<div class="odysseyShell{{if data.odyssey.dossier_collapsed}} odysseyShell--dossierCollapsed{{/if}}">
 				<div class="odysseyTitle">SECTOR MAP</div>
 				<div class="odysseyStatus">Эшелон {{:data.odyssey.shift}}/{{:data.odyssey.max_shifts}} · Текущий сектор: {{:data.odyssey.current_name}}</div>
 				{{if data.odyssey.can_access}}
@@ -462,30 +475,44 @@
 						</div>
 					{{/for}}
 				</div>
-				<div class="odysseyDossier">
-					{{if data.odyssey.has_view}}
-						<h3>{{:data.odyssey.view.name}}</h3>
-						<div class="odysseyDossierMeta">
-							Класс: {{:data.odyssey.view.danger_label}} · Эшелон {{:data.odyssey.view.depth}}
-							{{if data.odyssey.view.terminal}} · Финал{{/if}}
-							{{if data.odyssey.view.current}} · Здесь{{/if}}
-							{{if data.odyssey.view.selected}} · Курс{{/if}}
+				{{if data.odyssey.dossier_collapsed}}
+					<div class="odysseyDossier odysseyDossier--collapsed">
+						<span class="odysseyDossierToggle">{{:helper.link("◀ Досье", '', {'action': 'odyssey_toggle_dossier'})}}</span>
+						{{if data.odyssey.has_view}} · {{:data.odyssey.view.name}}{{/if}}
+					</div>
+				{{else}}
+					<div class="odysseyDossier">
+						<div class="odysseyDossierHead">
+							{{if data.odyssey.has_view}}
+								<h3>{{:data.odyssey.view.name}}</h3>
+							{{else}}
+								<h3>Досье сектора</h3>
+							{{/if}}
+							<span class="odysseyDossierToggle">{{:helper.link("▶", '', {'action': 'odyssey_toggle_dossier'})}}</span>
 						</div>
-						<div class="odysseyDossierBody">{{:data.odyssey.view.summary}}</div>
-						<div class="odysseyDossierExits">Коридоры: {{:data.odyssey.view.exits}}</div>
-						{{if data.odyssey.view.available && data.odyssey.can_access}}
-							{{:helper.link("Проложить курс", '', {'action': 'odyssey_select', 'target': data.odyssey.view.id})}}
-						{{else data.odyssey.view.available}}
-							<div class="odysseyDossierHint">Сектор доступен. Нужен доступ командования.</div>
-						{{else data.odyssey.view.current}}
-							<div class="odysseyDossierHint">Сьерра находится в этом секторе.</div>
+						{{if data.odyssey.has_view}}
+							<div class="odysseyDossierMeta">
+								Класс: {{:data.odyssey.view.danger_label}} · Эшелон {{:data.odyssey.view.depth}}
+								{{if data.odyssey.view.terminal}} · Финал{{/if}}
+								{{if data.odyssey.view.current}} · Здесь{{/if}}
+								{{if data.odyssey.view.selected}} · Курс{{/if}}
+							</div>
+							<div class="odysseyDossierBody">{{:data.odyssey.view.summary}}</div>
+							<div class="odysseyDossierExits">Коридоры: {{:data.odyssey.view.exits}}</div>
+							{{if data.odyssey.view.available && data.odyssey.can_access}}
+								{{:helper.link("Проложить курс", '', {'action': 'odyssey_select', 'target': data.odyssey.view.id})}}
+							{{else data.odyssey.view.available}}
+								<div class="odysseyDossierHint">Сектор доступен. Нужен доступ командования.</div>
+							{{else data.odyssey.view.current}}
+								<div class="odysseyDossierHint">Сьерра находится в этом секторе.</div>
+							{{else}}
+								<div class="odysseyDossierHint">Нет прямого коридора из текущего положения.</div>
+							{{/if}}
 						{{else}}
-							<div class="odysseyDossierHint">Нет прямого коридора из текущего положения.</div>
+							<div class="odysseyDossierHint">Выберите сектор на карте.</div>
 						{{/if}}
-					{{else}}
-						<div class="odysseyDossierHint">Выберите сектор на карте.</div>
-					{{/if}}
-				</div>
+					</div>
+				{{/if}}
 				<div class="odysseyFooter">
 					<span class="odysseyFooterLeft">
 						<span class="odysseyDot odysseyDot--civilian"></span>Гражданский

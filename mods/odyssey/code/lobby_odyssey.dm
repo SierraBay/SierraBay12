@@ -88,7 +88,7 @@
 		return "На борту есть незавершённый маршрут Одиссеи. Командование может возобновить экспедицию на этой смене."
 	if (islist(meta))
 		return "Последняя Одиссея закрыта в бортовом журнале. Новый маршрут пока не открыт."
-	return "Одиссея не объявлена. SEV Sierra следует обычному расписанию, пока командование не утвердит экспедицию."
+	return "Одиссея не объявлена. NSV Sierra следует обычному расписанию, пока командование не утвердит экспедицию."
 
 
 /proc/odyssey_lobby_outcome_ic(status)
@@ -120,7 +120,7 @@
 	var/list/dat = list()
 	dat += "<div style='font-family:Verdana,Geneva,sans-serif; line-height:1.5; color:#c8d4d0;'>"
 	dat += "<div style='text-align:center; margin:0 0 12px 0;'>"
-	dat += "<div style='font-size:1.35em; letter-spacing:0.08em; color:#85bab6;'><b>SEV SIERRA</b></div>"
+	dat += "<div style='font-size:1.35em; letter-spacing:0.08em; color:#85bab6;'><b>NSV SIERRA</b></div>"
 	dat += "<div style='font-size:1.1em; color:#dce8e4;'><b>Брифинг экспедиции «Одиссея»</b></div>"
 	dat += "<div style='font-size:0.9em; color:#7a9a96; margin-top:4px;'>Секретно · для личного состава</div>"
 	dat += "</div>"

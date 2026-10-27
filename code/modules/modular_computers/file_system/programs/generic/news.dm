@@ -24,6 +24,8 @@
 	var/datum/feed_network/connected_group
 	/// Sector currently opened in the optional Sector Map panel.
 	var/viewed_sector_id
+	/// When TRUE, the Sector Map dossier panel is collapsed.
+	var/dossier_collapsed = FALSE
 
 /datum/nano_module/program/newscast/proc/news_alert(announcement)
 	if (!notifs_enabled || !announcement)
@@ -111,7 +113,14 @@
 		var/sector_id = href_list["odyssey_inspect"] || href_list["target"]
 		if (sector_id)
 			viewed_sector_id = sector_id
+			dossier_collapsed = FALSE
 			prog_state = NEWSCAST_SECTOR_MAP
+		return TRUE
+
+	else if (href_list["odyssey_toggle_dossier"] || href_list["action"] == "odyssey_toggle_dossier")
+		if (!newscast_has_sector_map())
+			return TRUE
+		dossier_collapsed = !dossier_collapsed
 		return TRUE
 
 	return FALSE
