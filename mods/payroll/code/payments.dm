@@ -76,7 +76,7 @@
 	stats["salary"] += amount
 	track_departments(statement)
 	if(amount)
-		record.notify("Period [statement.period]: salary [amount] [GLOB.using_map.local_currency_name_short]; balance [record.account.money].")
+		record.notify("Period [statement.period]: salary [amount] [GLOB.using_map.local_currency_name_short]; balance [record.account.money].", "Salary payment: period [statement.period]")
 
 /datum/payroll_controller/proc/fund_salary(datum/payroll_record/record, datum/payroll_statement/statement, amount)
 	if(!payroll_valid_amount(amount) || !account_ready(fund) || record.account.money + amount > 8000000)
@@ -126,7 +126,7 @@
 	var/list/stats = period_stats(item.period)
 	stats["bonus"] += item.amount
 	department_totals[item.department] += item.amount
-	record.notify("Bonus [item.amount] [GLOB.using_map.local_currency_name_short] paid: [item.reason].")
+	record.notify("Bonus [item.amount] [GLOB.using_map.local_currency_name_short] paid: [item.reason].", "Bonus payment")
 	return TRUE
 
 /datum/payroll_controller/proc/refund_bonus(datum/payroll_adjustment/item)

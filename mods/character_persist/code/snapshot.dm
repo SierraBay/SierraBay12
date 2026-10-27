@@ -379,7 +379,7 @@
 	character_persist_record_stat(ckey, slot, H.real_name, "saved", shifts, snapshot["med_record"], null)
 	log_game("CHARACTER_PERSIST: saved [ckey] slot [slot] ([H.real_name]) reason=[reason] shifts=[shifts]")
 	if (H.client)
-		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [shifts * CHARACTER_PERSIST_SHIFT_PAY] таллеров."))
+		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [character_persist_shift_bonus(shifts)] таллеров."))
 	return TRUE
 
 

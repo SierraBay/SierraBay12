@@ -19,11 +19,6 @@
 /datum/payroll_record/proc/current_rate()
 	return max(0, base_rate + adjustment)
 
-/datum/payroll_record/proc/notify(message)
-	var/datum/mind/mind = employee?.resolve()
-	if(mind?.current)
-		to_chat(mind.current, SPAN_NOTICE("Payroll: [message]"))
-
 /datum/payroll_record/Destroy()
 	employee = null
 	account = null

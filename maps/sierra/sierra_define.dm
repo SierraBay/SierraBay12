@@ -3,6 +3,7 @@
 	full_name = "\improper NSV Sierra"
 	path = "sierra"
 	config_path = "config/sierra_config.txt"
+	salary_modifier = 0.25
 	flags = MAP_HAS_BRANCH | MAP_HAS_RANK
 
 	welcome_sound = ANNOUNCER_WELCOME

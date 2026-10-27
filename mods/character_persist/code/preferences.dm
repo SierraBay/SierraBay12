@@ -25,7 +25,7 @@
 	if (character_persist_med_autofill && character_persist_snapshot["med_record"])
 		character.med_record = character_persist_snapshot["med_record"]
 	var/shifts = character_persist_num(character_persist_snapshot["shifts_survived"])
-	character.character_persist_bonus_money = max(shifts, 0) * CHARACTER_PERSIST_SHIFT_PAY
+	character.character_persist_bonus_money = character_persist_shift_bonus(shifts)
 	if (shifts)
 		to_chat(character, SPAN_NOTICE("Состояние тела перенесено с прошлой смены. Пережито смен: [shifts]."))
 	else

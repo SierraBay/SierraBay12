@@ -1,19 +1,20 @@
-/datum/payroll_controller/proc/operator_record(mob/user)
+/datum/payroll_controller/proc/operator_record(mob/user, datum/extension/interactive/ntos/computer = null)
 	RETURN_TYPE(/datum/payroll_record)
 	if(!ishuman(user) || !user.mind || user.mind.current != user || user.incapacitated())
 		return
 	var/datum/payroll_record/record = find_record(user.mind)
 	if(!record?.active || user.mind.assigned_job != record.job || user.mind.assigned_role != record.job.title)
 		return
-	var/obj/item/card/id/card = user.GetIdCard()
+	// Finance Management authenticates against its device; ID-console hooks use the operator ID.
+	var/obj/item/card/id/card = computer ? computer.get_inserted_id() : user.GetIdCard()
 	if(!card || card.associated_account_number != record.account?.account_number)
 		return
 	if(!has_access(record.job.access, card.GetAccess()))
 		return
 	return record
 
-/datum/payroll_controller/proc/can_manage(mob/user, datum/payroll_record/target)
-	var/datum/payroll_record/actor = operator_record(user)
+/datum/payroll_controller/proc/can_manage(mob/user, datum/payroll_record/target, datum/extension/interactive/ntos/computer = null)
+	var/datum/payroll_record/actor = operator_record(user, computer)
 	if(!actor || !target || records[target.id] != target || actor == target)
 		return FALSE
 	if(istype(actor.job, /datum/job/captain))
@@ -24,14 +25,14 @@
 	var/list/reports = settings.head_reports["[actor.job.type]"]
 	return !target.job.head_position || ("[target.job.type]" in reports)
 
-/datum/payroll_controller/proc/can_transfer(mob/user, datum/payroll_record/target)
-	var/datum/payroll_record/actor = operator_record(user)
+/datum/payroll_controller/proc/can_transfer(mob/user, datum/payroll_record/target, datum/extension/interactive/ntos/computer = null)
+	var/datum/payroll_record/actor = operator_record(user, computer)
 	if(!actor || !target || records[target.id] != target || actor == target)
 		return FALSE
 	return istype(actor.job, /datum/job/captain) || (istype(actor.job, /datum/job/hop) && !target.job.head_position)
 
-/datum/payroll_controller/proc/change_rate(mob/user, datum/payroll_record/record, amount, reason, revision)
-	if(!can_manage(user, record) || revision != record.revision || !isnum(amount) || !payroll_valid_amount(abs(amount), TRUE))
+/datum/payroll_controller/proc/change_rate(mob/user, datum/payroll_record/record, amount, reason, revision, datum/extension/interactive/ntos/computer = null)
+	if(!can_manage(user, record, computer) || revision != record.revision || !isnum(amount) || !payroll_valid_amount(abs(amount), TRUE))
 		return FALSE
 	if(abs(amount) > record.base_rate * settings.raise_limit || record.base_rate + amount > 1000000 || !valid_reason(reason))
 		return FALSE
@@ -39,7 +40,7 @@
 	record.adjustment = amount
 	record.revision++
 	log_decision(record, key_name(user), "Salary adjustment set to [amount]", reason, user.real_name)
-	record.notify("Your salary rate is now [record.current_rate()] per period: [reason].")
+	record.notify("Your salary rate is now [record.current_rate()] per period: [reason].", "Salary rate changed")
 	return TRUE
 
 /datum/payroll_controller/proc/valid_reason(reason)
@@ -52,8 +53,8 @@
 			total += item.amount
 	return total
 
-/datum/payroll_controller/proc/request_adjustment(mob/user, datum/payroll_record/record, kind, amount, reason, revision)
-	if(!can_manage(user, record) || revision != record.revision || !payroll_valid_amount(amount) || !valid_reason(reason))
+/datum/payroll_controller/proc/request_adjustment(mob/user, datum/payroll_record/record, kind, amount, reason, revision, datum/extension/interactive/ntos/computer = null)
+	if(!can_manage(user, record, computer) || revision != record.revision || !payroll_valid_amount(amount) || !valid_reason(reason))
 		return FALSE
 	var/period = period_at(elapsed())
 	if(kind == "bonus")
@@ -114,8 +115,8 @@
 	record.revision++
 	return item
 
-/datum/payroll_controller/proc/cancel_adjustment(mob/user, datum/payroll_record/record, id, reason, revision)
-	if(!can_manage(user, record) || revision != record.revision || !valid_reason(reason))
+/datum/payroll_controller/proc/cancel_adjustment(mob/user, datum/payroll_record/record, id, reason, revision, datum/extension/interactive/ntos/computer = null)
+	if(!can_manage(user, record, computer) || revision != record.revision || !valid_reason(reason))
 		return FALSE
 	for(var/datum/payroll_adjustment/item as anything in record.adjustments)
 		if(item.id != id || item.status != "pending")
@@ -133,10 +134,10 @@
 	if(item.kind == "bonus")
 		refund_bonus(item)
 
-/datum/payroll_controller/proc/transfer_employee(mob/user, datum/payroll_record/record, datum/job/job, reason, revision)
-	if(!can_transfer(user, record) || record.revision != revision || !job || !(job.type in GLOB.using_map.allowed_jobs) || !valid_reason(reason))
+/datum/payroll_controller/proc/transfer_employee(mob/user, datum/payroll_record/record, datum/job/job, reason, revision, datum/extension/interactive/ntos/computer = null)
+	if(!can_transfer(user, record, computer) || record.revision != revision || !job || !(job.type in GLOB.using_map.allowed_jobs) || !valid_reason(reason))
 		return FALSE
-	var/datum/payroll_record/actor = operator_record(user)
+	var/datum/payroll_record/actor = operator_record(user, computer)
 	if(job.head_position && !istype(actor.job, /datum/job/captain))
 		return FALSE
 	set_employment(record, job)
@@ -157,7 +158,7 @@
 	if(mind)
 		mind.assigned_job = job
 		mind.assigned_role = job.title
-	record.notify("Employment changed to [job.title]; salary rate [record.current_rate()].")
+	record.notify("Employment changed to [job.title]; salary rate [record.current_rate()].", "Employment changed")
 
 /datum/payroll_controller/proc/end_employment(datum/payroll_record/record, reason)
 	if(!record?.active)
@@ -181,8 +182,8 @@
 	message_admins("[key_name_admin(user)] corrected [record.name]'s payroll rate to [rate]: [html_encode(reason)]")
 	return TRUE
 
-/datum/payroll_controller/proc/bind_card(mob/user, datum/payroll_record/record, obj/item/card/id/card, reason, revision)
-	if(!can_transfer(user, record) || revision != record.revision || !card || !valid_reason(reason))
+/datum/payroll_controller/proc/bind_card(mob/user, datum/payroll_record/record, obj/item/card/id/card, reason, revision, datum/extension/interactive/ntos/computer = null)
+	if(!can_transfer(user, record, computer) || revision != record.revision || !card || !valid_reason(reason))
 		return FALSE
 	if(card.registered_name != record.name || card.associated_account_number != record.account?.account_number)
 		return FALSE

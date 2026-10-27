@@ -23,7 +23,7 @@
 	var/datum/nanoui/payroll/window = ui
 	ASSERT(istype(window))
 	var/list/data = host.initial_data(program)
-	SSpayroll.ledger.finance_data(user, data)
+	SSpayroll.ledger.finance_data(user, data, program.computer)
 	window.view.apply(data)
 	if(opening)
 		ui.set_initial_data(data)
@@ -86,7 +86,7 @@
 		expanded[section] = TRUE
 	return TRUE
 
-/datum/payroll_controller/proc/finance_data(mob/user, list/data)
+/datum/payroll_controller/proc/finance_data(mob/user, list/data, datum/extension/interactive/ntos/computer = null)
 	var/datum/payroll_record/personal = find_record(user.mind)
 	data["personal"] = personal ? record_data(personal) : null
 	data["next_payment"] = max(0, round((period_end(period_at(elapsed())) - elapsed()) / 10))
@@ -94,16 +94,16 @@
 	data["staff"] = list()
 	for(var/id in records)
 		var/datum/payroll_record/record = records[id]
-		if(can_manage(user, record) || can_transfer(user, record))
-			data["staff"] += list(staff_data(user, record))
+		if(can_manage(user, record, computer) || can_transfer(user, record, computer))
+			data["staff"] += list(staff_data(user, record, computer))
 	data["staff_groups"] = group_staff(data["staff"])
-	add_audit_data(user, data)
-	add_authority_data(user, data)
+	add_audit_data(user, data, computer)
+	add_authority_data(user, data, computer)
 	if(data["captain"])
 		add_overview(data)
 
-/datum/payroll_controller/proc/add_authority_data(mob/user, list/data)
-	var/datum/payroll_record/actor = operator_record(user)
+/datum/payroll_controller/proc/add_authority_data(mob/user, list/data, datum/extension/interactive/ntos/computer = null)
+	var/datum/payroll_record/actor = operator_record(user, computer)
 	data["captain"] = actor && istype(actor.job, /datum/job/captain)
 	data["can_view_staff"] = actor && (data["captain"] || istype(actor.job, /datum/job/hop) || length(settings.scopes["[actor.job.type]"]))
 
@@ -133,10 +133,10 @@
 	data["statements"] = include_statements ? statement_data(record) : list()
 	return data
 
-/datum/payroll_controller/proc/staff_data(mob/user, datum/payroll_record/record)
+/datum/payroll_controller/proc/staff_data(mob/user, datum/payroll_record/record, datum/extension/interactive/ntos/computer = null)
 	var/list/data = record_data(record, FALSE)
-	data["can_transfer"] = can_transfer(user, record)
-	data["can_manage"] = can_manage(user, record)
+	data["can_transfer"] = can_transfer(user, record, computer)
+	data["can_manage"] = can_manage(user, record, computer)
 	var/datum/money_account/budget = department_accounts[record.department]
 	data["budget"] = account_valid(budget) ? budget.money : 0
 	return data
@@ -164,13 +164,13 @@
 			total += item.amount
 	return total
 
-/datum/payroll_controller/proc/add_audit_data(mob/user, list/data)
+/datum/payroll_controller/proc/add_audit_data(mob/user, list/data, datum/extension/interactive/ntos/computer = null)
 	var/list/rows = list()
 	var/show_actor_keys = check_rights(R_ADMIN, FALSE, user)
 	for(var/i = length(audit) to 1 step -1)
 		var/list/entry = audit[i]
 		var/datum/payroll_record/record = records[entry["id"]]
-		if(!record || (record != find_record(user.mind) && !can_manage(user, record)))
+		if(!record || (record != find_record(user.mind) && !can_manage(user, record, computer)))
 			continue
 		var/list/row = list()
 		for(var/key in list("id", "time", "employee", "department", "action", "reason"))
@@ -223,7 +223,7 @@
 		return FALSE
 	var/datum/payroll_controller/ledger = SSpayroll.ledger
 	var/datum/payroll_record/record = ledger.records[href_list["employee"]]
-	if(!ledger.can_manage(usr, record) && !ledger.can_transfer(usr, record))
+	if(!ledger.can_manage(usr, record, program.computer) && !ledger.can_transfer(usr, record, program.computer))
 		return TRUE
 	var/revision = text2num(href_list["revision"])
 	if(revision != record.revision)
@@ -237,7 +237,7 @@
 	if(!istype(window))
 		return FALSE
 	var/list/data = list()
-	SSpayroll.ledger.finance_data(user, data)
+	SSpayroll.ledger.finance_data(user, data, program.computer)
 	if(params["payroll_tab"])
 		window.view.select_tab(params["payroll_tab"], data)
 	if(params["payroll_toggle"])
@@ -280,15 +280,15 @@
 	var/datum/payroll_controller/ledger = SSpayroll.ledger
 	switch(action)
 		if("rate")
-			return ledger.change_rate(user, record, amount, reason, revision)
+			return ledger.change_rate(user, record, amount, reason, revision, program.computer)
 		if("reset")
-			return ledger.change_rate(user, record, 0, reason, revision)
+			return ledger.change_rate(user, record, 0, reason, revision, program.computer)
 		if("bonus", "deduction")
-			return ledger.request_adjustment(user, record, action, amount, reason, revision)
+			return ledger.request_adjustment(user, record, action, amount, reason, revision, program.computer)
 		if("cancel")
-			return ledger.cancel_adjustment(user, record, decision, reason, revision)
+			return ledger.cancel_adjustment(user, record, decision, reason, revision, program.computer)
 		if("transfer")
-			return ledger.transfer_employee(user, record, job, reason, revision)
+			return ledger.transfer_employee(user, record, job, reason, revision, program.computer)
 		if("bind")
-			return ledger.bind_card(user, record, program.computer.get_inserted_id(), reason, revision)
+			return ledger.bind_card(user, record, program.computer.get_inserted_id(), reason, revision, program.computer)
 	return FALSE
