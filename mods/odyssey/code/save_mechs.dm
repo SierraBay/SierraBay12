@@ -18,6 +18,7 @@
 		ordinals[base_key] = ordinal
 		M.odyssey_persist_id = "mapped:mech:[base_key]#[ordinal]"
 		baseline[M.odyssey_persist_id] = list("x" = T.x, "y" = T.y, "z" = T.z, "type" = "[M.type]")
+		CHECK_TICK
 	state.mech_baseline = baseline
 	return TRUE
 
@@ -40,6 +41,7 @@
 			if (islist(baseline) && (baseline["x"] != entry["x"] || baseline["y"] != entry["y"] || baseline["z"] != entry["z"]))
 				entry["action"] = "moved"
 			entries += list(entry)
+		CHECK_TICK
 	for (var/id in state.mech_baseline)
 		if (!live_ids[id])
 			entries += list(list("id" = id, "action" = "destroyed"))
@@ -186,9 +188,11 @@
 	for (var/list/entry in entries)
 		if (odyssey_apply_mech_destroy_entry(entry))
 			applied++
+		CHECK_TICK
 	for (var/list/entry in entries)
 		if (odyssey_apply_mech_entry(entry))
 			applied++
+		CHECK_TICK
 	log_debug("ODYSSEY: apply_mechs applied=[applied]/[length(entries)]")
 
 

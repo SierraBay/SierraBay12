@@ -8,9 +8,9 @@
 	var/list/baseline = list()
 	for (var/z in GLOB.using_map.station_levels)
 		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
-			if (!odyssey_turf_persistable(T))
-				continue
-			baseline[odyssey_coord_key(T.x, T.y, T.z)] = "[T.type]"
+			if (odyssey_turf_persistable(T))
+				baseline[odyssey_coord_key(T.x, T.y, T.z)] = "[T.type]"
+			CHECK_TICK
 	state.turf_baseline = baseline
 	log_debug("ODYSSEY: turf baseline captured ([length(baseline)] tiles) force=[force]")
 	return TRUE
@@ -26,15 +26,14 @@
 
 	for (var/z in GLOB.using_map.station_levels)
 		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
-			if (!odyssey_turf_persistable(T))
-				continue
-			var/key = odyssey_coord_key(T.x, T.y, T.z)
-			var/baseline_type = baseline[key]
-			if (!baseline_type)
-				continue
-			var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
-			if (entry)
-				entries += list(entry)
+			if (odyssey_turf_persistable(T))
+				var/key = odyssey_coord_key(T.x, T.y, T.z)
+				var/baseline_type = baseline[key]
+				if (baseline_type)
+					var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
+					if (entry)
+						entries += list(entry)
+			CHECK_TICK
 	return entries
 
 
@@ -99,4 +98,5 @@
 	for (var/list/entry in entries)
 		if (odyssey_apply_turf_entry(entry))
 			applied++
+		CHECK_TICK
 	log_debug("ODYSSEY: apply_turfs applied=[applied]/[length(entries)]")

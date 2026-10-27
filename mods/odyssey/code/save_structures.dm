@@ -51,12 +51,15 @@
 			var/obj/structure/catwalk/C = S
 			changed = changed || !!baseline["hatch_open"] != !!C.hatch_open || "[baseline["plated_tile"]]" != "[odyssey_catwalk_plated_type(C)]"
 		if (!changed)
+			CHECK_TICK
 			continue
 		var/list/entry = odyssey_structure_snapshot(S)
 		if (!entry)
+			CHECK_TICK
 			continue
 		entry["action"] = action
 		entries += list(entry)
+		CHECK_TICK
 	for (var/id in state.structure_baseline)
 		if (live_ids[id])
 			continue
@@ -119,9 +122,11 @@
 	for (var/list/entry in entries)
 		if (odyssey_apply_structure_destroy_entry(entry))
 			applied++
+		CHECK_TICK
 	for (var/list/entry in entries)
 		if (odyssey_apply_structure_entry(entry))
 			applied++
+		CHECK_TICK
 	log_debug("ODYSSEY: apply_structures applied=[applied]/[length(entries)]")
 
 

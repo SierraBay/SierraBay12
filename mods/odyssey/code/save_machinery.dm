@@ -12,6 +12,7 @@
 		var/list/entry = odyssey_machinery_entry(M, baseline)
 		if (entry)
 			entries += list(entry)
+		CHECK_TICK
 	for (var/id in state.machinery_baseline)
 		if (!live_ids[id])
 			entries += list(list("id" = id, "action" = "destroyed"))
@@ -166,9 +167,11 @@
 	for (var/list/entry in entries)
 		if (odyssey_apply_machinery_destroy_entry(entry))
 			applied++
+		CHECK_TICK
 	for (var/list/entry in entries)
 		if (odyssey_apply_machinery_entry(entry))
 			applied++
+		CHECK_TICK
 	log_debug("ODYSSEY: apply_machinery applied=[applied]/[length(entries)]")
 
 

@@ -18,6 +18,11 @@
 		message_admins("ODYSSEY: campaign aborted because save validation/apply failed: [json_encode(state.validation_errors)]")
 		return TRUE
 	odyssey_apply_sector_threats()
+	odyssey_ensure_campaign_contract()
+	odyssey_generate_shift_objectives()
+	odyssey_science_enabled = TRUE
+	odyssey_generate_science_briefs()
+	odyssey_generate_dept_briefs()
 	return TRUE
 
 

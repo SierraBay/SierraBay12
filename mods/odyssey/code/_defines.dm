@@ -28,9 +28,6 @@
 #define ODYSSEY_DANGER_DANGEROUS "dangerous"
 #define ODYSSEY_DANGER_HOSTILE "hostile"
 
-/// Pregame: start Odyssey vote this many seconds before round start (same window idea as gamemode vote).
-#define ODYSSEY_VOTE_TIMELEFT 90
-
 /// After Transfer wins End the shift, wait this long before actually ending the round.
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
 
@@ -39,6 +36,53 @@
 
 /// Command and Communications Program submenu state for the sector map.
 #define ODYSSEY_COMM_STATE 6
+/// Command submenu: campaign chronicle (public + command entries).
+#define ODYSSEY_COMM_CHRONICLE_STATE 7
+/// Command submenu: expedition briefing for command staff.
+#define ODYSSEY_COMM_BRIEFING_STATE 8
+
+#define ODYSSEY_CHRONICLE_MAX 200
+#define ODYSSEY_CHRONICLE_VIS_PUBLIC "public"
+#define ODYSSEY_CHRONICLE_VIS_COMMAND "command"
+#define ODYSSEY_CHRONICLE_VIS_ADMIN "admin"
+
+#define ODYSSEY_CHRONICLE_KIND_START "campaign_start"
+#define ODYSSEY_CHRONICLE_KIND_CONTINUE "campaign_continue"
+#define ODYSSEY_CHRONICLE_KIND_COURSE "course_set"
+#define ODYSSEY_CHRONICLE_KIND_JUMP "jump"
+#define ODYSSEY_CHRONICLE_KIND_SHIFT_END "shift_end"
+#define ODYSSEY_CHRONICLE_KIND_SHUTTLE "shuttle_lost"
+#define ODYSSEY_CHRONICLE_KIND_SHUTTLE_DAMAGED "shuttle_damaged"
+#define ODYSSEY_CHRONICLE_KIND_DEATH "crew_death"
+#define ODYSSEY_CHRONICLE_KIND_LOSSES "crew_losses"
+#define ODYSSEY_CHRONICLE_KIND_MERC "antag_merc"
+#define ODYSSEY_CHRONICLE_KIND_HOSTILE "antag_hostile"
+#define ODYSSEY_CHRONICLE_KIND_OUTCOME "outcome"
+#define ODYSSEY_CHRONICLE_KIND_ADMIN "admin"
+#define ODYSSEY_CHRONICLE_KIND_OBJECTIVE "objective"
+#define ODYSSEY_CHRONICLE_KIND_CONTRACT "contract"
+
+#define ODYSSEY_OBJ_STATUS_ACTIVE "active"
+#define ODYSSEY_OBJ_STATUS_COMPLETED "completed"
+#define ODYSSEY_OBJ_STATUS_FAILED "failed"
+#define ODYSSEY_OBJ_STATUS_EXPIRED "expired"
+
+#define ODYSSEY_OBJ_KIND_REACH_FINAL "reach_final"
+#define ODYSSEY_OBJ_KIND_RETURN_HOME "return_home"
+#define ODYSSEY_OBJ_KIND_SHIP_INTACT "ship_intact"
+#define ODYSSEY_OBJ_KIND_HOLD_SECTOR "hold_sector"
+#define ODYSSEY_OBJ_KIND_JUMP_ONWARD "jump_onward"
+#define ODYSSEY_OBJ_KIND_NO_SHUTTLE_LOSS "no_shuttle_loss"
+#define ODYSSEY_OBJ_KIND_LIMIT_CASUALTIES "limit_casualties"
+#define ODYSSEY_OBJ_KIND_SURVIVE_HOSTILE "survive_hostile"
+#define ODYSSEY_OBJ_KIND_SURVIVE_SHIFT "survive_shift"
+
+#define ODYSSEY_OBJ_VIS_PUBLIC "public"
+#define ODYSSEY_OBJ_VIS_COMMAND "command"
+
+#define ODYSSEY_SHIFT_OBJECTIVE_MAX 2
+#define ODYSSEY_CASUALTY_SOFT_LIMIT 3
+#define ODYSSEY_CASUALTY_HARD_LIMIT 5
 
 /// Roundstart new sleeper traitors per Odyssey shift (persisted sleepers reapply separately).
 #define ODYSSEY_SLEEPER_ROUNDSTART_COUNT 1
@@ -74,3 +118,41 @@
 #define ODYSSEY_OUTSIDER_DECISION_MISS "miss"
 #define ODYSSEY_OUTSIDER_DECISION_SKIP_CANDIDATES "skip_candidates"
 #define ODYSSEY_OUTSIDER_DECISION_WRONG_SECTOR "wrong_sector"
+
+/// Tracked shuttle returned to Sierra with at least this damage score → "damaged" report.
+#define ODYSSEY_SHUTTLE_DAMAGE_THRESHOLD 8
+/// Credits charged to Engineering per damage point when fee_pending.
+#define ODYSSEY_SHUTTLE_REPAIR_CREDITS_PER_POINT 50
+/// Re-bill only if damage rose by more than this since the last paid report.
+#define ODYSSEY_SHUTTLE_REPAIR_REBILL_DELTA 8
+#define ODYSSEY_SHUTTLE_STATUS_ABANDONED "abandoned"
+#define ODYSSEY_SHUTTLE_STATUS_DAMAGED "damaged"
+
+/// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
+#ifndef ODYSSEY_SCI_BRIEF_SPECTRUM
+#define ODYSSEY_SCI_BRIEF_SPECTRUM "spectrum"
+#define ODYSSEY_SCI_BRIEF_CATALOG "catalog"
+#define ODYSSEY_SCI_BRIEF_FLORA "flora"
+#define ODYSSEY_SCI_BRIEF_SLIME "slime"
+#endif
+
+#define ODYSSEY_SCI_REWARD_SPECTRUM 2000
+#define ODYSSEY_SCI_REWARD_CATALOG 2500
+#define ODYSSEY_SCI_REWARD_FLORA 2500
+#define ODYSSEY_SCI_REWARD_SLIME 3000
+
+#define ODYSSEY_SCI_BRIEFS_MAX 2
+#ifndef ODYSSEY_CHRONICLE_KIND_SCIENCE
+#define ODYSSEY_CHRONICLE_KIND_SCIENCE "science"
+#endif
+
+/// Department sector briefs (Cargo / Medical). Stored alongside science in research.json.
+#define ODYSSEY_DEPT_BRIEF_CARGO "cargo_sales"
+#define ODYSSEY_DEPT_BRIEF_MEDICAL "medical_exam"
+#define ODYSSEY_DEPT_REWARD_MEDICAL 2500
+#define ODYSSEY_DEPT_BRIEFS_MAX 2
+/// Cargo export quota in thallers (supply sale points × 15 via cargo mod).
+#define ODYSSEY_DEPT_CARGO_THALLERS_MIN 750
+#define ODYSSEY_DEPT_CARGO_THALLERS_MAX 2700
+#define ODYSSEY_DEPT_MEDICAL_COUNT_MIN 2
+#define ODYSSEY_DEPT_MEDICAL_COUNT_MAX 4

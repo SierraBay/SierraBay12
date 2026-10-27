@@ -103,12 +103,40 @@
 	choices = list(ODYSSEY_CHOICE_YES, ODYSSEY_CHOICE_NO)
 	var/list/meta = odyssey_load_meta()
 	if (islist(meta))
-		var/next_sector = (meta["transition_committed"] && meta["selected_sector_id"]) ? meta["selected_sector_id"] : meta["current_sector_id"]
-		var/list/graph = meta["sector_graph"]
-		var/list/sector = graph?[next_sector]
-		var/echelon = odyssey_sector_echelon(next_sector, graph)
-		question = "Продолжить Одиссею: эшелон [echelon]/[meta["max_shifts"] || ODYSSEY_MAX_SHIFTS], сектор «[sector?["name"] || next_sector]»? (нужно ≥ [ODYSSEY_MIN_YES_VOTES] голосов «За»)"
+		question = odyssey_continue_briefing(meta, TRUE)
+		// Full IC briefing lives on the lobby Odyssey button; only spam chat on legacy auto-start.
+		if (automatic)
+			odyssey_announce_continue_briefing()
 	..()
+
+
+/// Starts start/continue vote from lobby UI. Returns TRUE if the vote began.
+/proc/odyssey_try_start_lobby_vote(mob/user)
+	if (!odyssey_lobby_votes_allowed())
+		if (user)
+			to_chat(user, SPAN_WARNING("Голосование по Одиссее доступно только в лобби, пока экспедиция ещё не включена."))
+		return FALSE
+	if (SSvote?.active_vote)
+		if (user)
+			to_chat(user, SPAN_WARNING("Уже идёт другое голосование."))
+		return FALSE
+
+	var/has_campaign = odyssey_campaign_exists()
+	var/list/lobby = SSticker?.lobby_players()
+	var/players = length(lobby)
+	if (has_campaign && players < ODYSSEY_MIN_CONTINUE_PLAYERS && !isadmin(user))
+		if (user)
+			to_chat(user, SPAN_WARNING("Для голосования о продолжении нужно минимум [ODYSSEY_MIN_CONTINUE_PLAYERS] игроков в лобби (сейчас [players])."))
+		return FALSE
+
+	var/vote_path = has_campaign ? /datum/vote/odyssey_continue : /datum/vote/odyssey_start
+	var/started = SSvote.initiate_vote(vote_path, user, automatic = 0)
+	if (!started)
+		if (user)
+			to_chat(user, SPAN_WARNING("Не удалось начать голосование (задержка между vote или условия не выполнены)."))
+		return FALSE
+	log_game("ODYSSEY: lobby vote started by [user?.ckey || "unknown"] type=[vote_path]")
+	return TRUE
 
 /datum/vote/odyssey_continue/report_result()
 	. = ..()

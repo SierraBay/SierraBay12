@@ -74,6 +74,7 @@
 		if (islist(uniform))
 			entry["uniform"] = uniform
 		entries += list(entry)
+		CHECK_TICK
 	return entries
 
 
@@ -83,6 +84,7 @@
 		if (QDELETED(M) || !odyssey_atom_persistable(M))
 			continue
 		morgues += M
+		CHECK_TICK
 	return morgues
 
 
@@ -152,4 +154,5 @@
 			index += 1
 			if (index > length(morgues))
 				index = 1
+		CHECK_TICK
 	log_debug("ODYSSEY: apply_corpses applied=[applied]/[length(entries)] morgues=[length(morgues)]")

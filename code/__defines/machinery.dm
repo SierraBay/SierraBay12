@@ -163,6 +163,8 @@ var/global/const/NETWORK_HELMETS       = "Helmet Cameras"
 #define FAB_DISABLED    FLAG_02
 #define FAB_SHOCKED     FLAG_03
 #define FAB_BUSY        FLAG_04
+/// Print log / NTNet telemetry disabled (Hack wire cut on fabricators).
+#define FAB_OFFLINE     FLAG_05
 
 #define  PART_CPU  		/obj/item/stock_parts/computer/processor_unit				// CPU. Without it the computer won't run. Better CPUs can run more programs at once.
 #define  PART_NETWORK  	/obj/item/stock_parts/computer/network_card					// Network Card component of this computer. Allows connection to NTNet

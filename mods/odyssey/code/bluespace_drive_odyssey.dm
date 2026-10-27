@@ -41,6 +41,9 @@
 	var/fuel_ok = fuel_moles >= D.emergency_jump_min_moles
 	var/fuel_full = fuel_moles >= D.minimum_phoron_moles_per_jump
 	var/course_ok = !!(state.selected_sector_id && odyssey_sector_is_available(state.selected_sector_id, state))
+	var/bsu_now = round(D.power_from_gas / 1000, 0.1)
+	var/bsu_need = round(D.odyssey_min_jump_power / 1000, 0.1)
+	var/bsu_ok = D.power_from_gas >= D.odyssey_min_jump_power
 	var/nominal_fuel = D.minimum_phoron_moles_per_jump
 	var/emergency_fuel = D.emergency_jump_min_moles
 
@@ -85,6 +88,9 @@
 	else if (!fuel_ok)
 		label = "Insufficient fuel"
 		block_reason = "Phoron fuel is below the emergency minimum of [emergency_fuel] mol (currently [round(fuel_moles, 0.1)] mol). Charge the drive tank before attempting a jump."
+	else if (!bsu_ok)
+		label = "Insufficient field charge"
+		block_reason = "Sector transition needs at least [bsu_need] BSU of bluespace field charge (currently [bsu_now] BSU). Feed moderator gas into the energized drive."
 	else if (!course_ok)
 		label = "No Sector Map course"
 		block_reason = "No valid Odyssey corridor is plotted. Select an available sector on the Sector Map tab. The last authorized command selection is used."
@@ -95,7 +101,7 @@
 		label = "Ready for Odyssey jump"
 		block_reason = null
 
-	var/can_odyssey = state.active && !D.jumping && !D.on_cooldown && D.energized && course_ok && fuel_ok
+	var/can_odyssey = state.active && !D.jumping && !D.on_cooldown && D.energized && course_ok && fuel_ok && bsu_ok
 	return list(
 		"present" = TRUE,
 		"label" = label,
@@ -128,6 +134,10 @@
 	if (!state.selected_sector_id || !odyssey_sector_is_available(state.selected_sector_id, state))
 		if (user)
 			to_chat(user, SPAN_WARNING("Одиссея: сначала выберите следующий сектор на Sector Map."))
+		return FALSE
+	if (D.power_from_gas < D.odyssey_min_jump_power)
+		if (user)
+			to_chat(user, SPAN_WARNING("Одиссея: для перехода в другой сектор нужно минимум [round(D.odyssey_min_jump_power / 1000, 0.1)] BSU (сейчас [round(D.power_from_gas / 1000, 0.1)]). Зарядите привод модератором."))
 		return FALSE
 	return TRUE
 
@@ -179,6 +189,13 @@
 	if (!state.active)
 		return
 	state.odyssey_bsd_jump_done = TRUE
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_JUMP,
+		"Переход: [odyssey_sector_display_name(state.current_sector_id)] → [odyssey_sector_display_name(state.selected_sector_id)]",
+		"Odyssey Jump выполнен. Коридор зафиксирован.",
+		ODYSSEY_CHRONICLE_VIS_PUBLIC,
+		list("from" = state.current_sector_id, "to" = state.selected_sector_id)
+	)
 	priority_announcement.Announce("Odyssey bluespace corridor locked. Ship systems entering transition shutdown — prepare for shift change.", "Odyssey Transition", new_sound = GLOB.using_map.shuttle_leaving_dock_sound)
 	log_game("ODYSSEY: BSD jump complete, round end armed for sector=[state.selected_sector_id]")
 
@@ -196,6 +213,8 @@
 	data["odyssey_jump"] = D.odyssey_campaign_jump
 	data["odyssey_course"] = state.selected_sector_id ? odyssey_sector_display_name(state.selected_sector_id) : null
 	data["odyssey_can_jump"] = state.active && odyssey_drive_can_campaign_jump(D, null) && D.energized && !D.jumping && !D.on_cooldown && (fuel_moles >= D.emergency_jump_min_moles)
+	data["odyssey_min_bsu"] = round(D.odyssey_min_jump_power / 1000, 0.1)
+	data["odyssey_bsu_ok"] = D.power_from_gas >= D.odyssey_min_jump_power
 	if (state.active && state.selected_sector_id)
 		data["odyssey_dest_label"] = odyssey_jump_destination_text()
 	if (D.odyssey_campaign_jump)

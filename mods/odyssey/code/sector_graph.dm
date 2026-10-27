@@ -240,6 +240,13 @@
 	state.selected_sector_id = sector_id
 	state.selected_by = user ? odyssey_actor_ic_name(user) : "системный оператор"
 	log_game("ODYSSEY: destination selected [sector_id] by [user ? key_name(user) : "admin/system"] (IC: [state.selected_by])")
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_COURSE,
+		"Проложен курс: [odyssey_sector_display_name(sector_id)]",
+		"Назначил: [state.selected_by].",
+		ODYSSEY_CHRONICLE_VIS_PUBLIC,
+		list("to" = sector_id, "by" = state.selected_by)
+	)
 	return TRUE
 
 

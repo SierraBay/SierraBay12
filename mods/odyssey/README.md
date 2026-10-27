@@ -15,7 +15,7 @@ ID мода: ODYSSEY
 
 **Цикл**
 
-1. В лобби проходит голосование о старте или продолжении. Нужно минимум **10 голосов «За»**, и их должно быть больше, чем «Против». Если на continue «Против» набирает 10+ и больше «За» — кампания архивируется. Если никто не набрал 10 — сейв остаётся.
+1. В лобби голосование о старте/продолжении запускается из кнопки **Odyssey** (не автоматически). Нужно минимум **10 голосов «За»**, и их должно быть больше, чем «Против». Если на continue «Против» набирает 10+ и больше «За» — кампания архивируется. Если никто не набрал 10 — сейв остаётся.
 2. При старте по seed создаётся ветвящийся граф с перекрёстными коридорами и финальными маршрутами длиной 3, 4 и 5 прыжков (эшелон сектора). Смена экипажа в том же секторе эшелон не тратит.
 3. На консолях командования в программе **Command and Communications** вкладка **Sector Map** открывает карту секторов. Клик по сектору открывает досье; авторизованный командный состав может проложить курс. Действует последний выбор.
 4. Классический bluespace jump из эвакуационного меню **недоступен**. Переход в другой сектор: energize Bluespace Drive → **Odyssey Jump** с консоли привода или Command (отсчёт, abort до `jump_locked`) → commit курса, сохранение и reboot.
@@ -24,7 +24,17 @@ ID мода: ODYSSEY
 7. После успешного continue загружается сохранённое состояние Сьерры; сектор меняется только если был Odyssey Jump.
 8. Финальный сектор завершает кампанию успешно. Выбор возвращения, emergency abandon ship, уничтожение Сьерры или гибель всего roster завершают её с соответствующим outcome.
 
-Публичный **Sector Map** также доступен экипажу в программе **Newscast** (только просмотр; курс прокладывает командование).
+Публичный **Sector Map**, **Briefing** и **Chronicle** доступны экипажу в **Newscast** (просмотр; курс прокладывает командование). Command: вкладки Briefing и Chronicle.
+
+В лобби кнопка **Odyssey** (нижнее меню рядом с Changelog): зелёная, если кампания активна в раунде или на диске есть continue-сейв; тусклая, если сейва нет. По клику — блок голосования (старт/continue) и IC-брифинг. У админов с доступом к Odyssey Panel — ссылка на панель (OOC).
+
+**Контракты и цели**
+
+- В `campaign.json`: `contracts` (на всю кампанию) и `objectives` (на смену).
+- При старте: контракт «Дойти до конечного сектора».
+- На roundstart: 1–2 цели смены от danger сектора (удержать сектор / прыжок / не терять шаттлы / лимит потерь / выжить в hostile и т.п.).
+- На roundend цели оцениваются автоматически; успех смены даёт небольшой депозит на счет станции. Контракт закрывается по исходу кампании.
+- Всё видно в Briefing и пишется в хронику.
 
 **Спящие агенты (traitor)**
 
@@ -65,9 +75,12 @@ ID мода: ODYSSEY
 - счета Сьерры и отделов;
 - каналы и сюжеты Newscast, включая фото (savefile рядом с JSON);
 - roster участников, погибшие слоты;
-- шаттлы, брошенные вне Сьерры (Guppy, Charon, Petrov, Phaethon, эскейп-поды): пустой док на следующих сменах;
-- тело через `character_persist`; личный счёт и привязка снимка к `campaign_id` — в этом моде поверх persist;
-- employment / security / medical записи экипажа (включая правки с консолей в течение смены) и criminal status — в roster кампании и в persist-снимке;
+- шаттлы (Guppy, Charon, Petrov, Phaethon, эскейп-поды):
+  - вне Сьерры → `abandoned` (пустой док на следующих сменах);
+  - на Сьерре, но с повреждениями выше порога → `damaged` + оценка ремонта; при continue с `fee_pending` списываются таллеры со счёта Engineering (иначе станции);
+- `shuttle_reports` в `campaign.json` (legacy `abandoned_shuttles` по-прежнему пишется как список имён);
+- тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; смерть в Одиссее сбрасывает только его;
+- employment / security / medical записи, `criminal_status` и `physical_status` (включая правки с консолей в течение смены) — в roster кампании; при спавне в активной Одиссее применяются всегда. Persist-снимок дублирует их, если персистентность включена;
 - трупы экипажа на Сьерре (включая лежащих в морге или шкафу): внешность, раны, только униформа. На следующей смене тела появляются в моргах, не на месте смерти.
 
 **Не сохраняется в MVP**
@@ -97,38 +110,46 @@ Overmap не сериализуется: он воспроизводимо со�
 - `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json` — части снимка;
 - `newscast_photos.sav` — иконки фотографий Newscast;
 - `roster.json` — участники и погибшие слоты;
-- `corpses.json` — трупы для моргов (тело + униформа).
+- `corpses.json` — трупы для моргов (тело + униформа);
+- `chronicle.json` — журнал кампании (прыжки, потери, шаттлы, контакты, исходы; visibility public/command/admin).
 
 ### Статус
 
 Реализовано:
 
-- версия формата 2 и миграция метаданных v1;
-- процедурный секторный граф, навигационный компьютер и переход через штатный BSJ;
+- версия формата 2 (`campaign.json` и части снимка; сейвы иной версии не загружаются);
+- процедурный секторный граф, навигационный компьютер и переход через Bluespace Drive (Odyssey Jump);
 - детерминированные профили угроз;
 - хуки: baseline турфов/объектов → apply → roundend save/finalize;
 - **турфы**: diff относительно roundstart baseline (смена типа, урон стен, broken/burnt полов);
 - **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones;
 - **мехи**: тип, компоненты, заряд, оборудование — patch или spawn;
-- **экономика**: station + departments;
+- **экономика**: счёт судна + отделы (баланс и лог транзакций, до 100 записей на счёт); личные счета — в снимке character_persist (`account_money` + `account_transactions`);
 - **newscast**: каналы, авторы, цензура, сюжеты, wanted issue и фото в `newscast_photos.sav`;
-- **шаттлы**: Guppy/Charon/Petrov/Phaethon и эскейп-поды, которых не было на Сьерре в сейве, на следующих сменах отсутствуют (пустой док);
+- **шаттлы**: abandoned (пустой док) и damaged (score + repair_cost, списание с Engineering при continue, без повторного списания пока урон не вырос заметно);
 - **персонаж**: roster по `campaign_id + ckey + slot`; погибший слот блокируется до конца кампании;
+- **хроника**: `chronicle.json` + UI в Newscast/Command; continue-vote briefing в чат;
+- **контракты/цели**: `contracts` + `objectives` в meta; Briefing UI (Newscast + Command);
+- **наука (НИО)**: `research.json` — секторные брифы смены (spectrum / catalog / flora / slime), notes; награда — кредиты на счёт Science; в Briefing (консоль RnD контракты удалены);
+- **брифы отделов**: в том же `research.json` (`dept_briefs`) — карго (экспорт на N таллеров, без денежной награды) и мед (body scan N человек из отдела X; награда на Medical);
+- **итоги кампании**: при завершении Одиссеи — сводка (маршрут, задачи, потери) в хронике, анонсе и лобби;
+
+- **записи экипажа**: sec/gen/med текст, `criminal_status` и `physical_status` из roster применяются при активной Одиссее всегда (не только при включённой персистентности);
 - **трупы**: мёртвые human на корабле → `corpses.json`; apply раскладывает их по `/obj/structure/morgue`;
-- **снимок persist**: тег `odyssey_campaign_id`, абсолютный баланс счёта, записи sec/gen; снимок другой кампании не применяется.
+- **снимок persist** (opt-in): отдельный файл на кампанию (`…_odyssey.json`), тег `odyssey_campaign_id`, абсолютный баланс счёта; обычный persist-файл не читается и не пишется, пока Одиссея активна; снимок другой кампании не применяется.
 
 ### Админка
 
-Вкладка **Admin → Odyssey Panel**: runtime/диск, граф и roster, validation, превью снапшотов, force destination/save/apply, regenerate до первого перехода, finish/archive, baseline и ручной старт голосов.
+Вкладка **Admin → Odyssey Panel**: статус раунда/диска, граф и roster, validation и превью снапшотов; лобби-vote (start/continue по сейву), force begin new/continue, reactivate архива, finish/archive, сброс курса, queue shift end, regenerate графа, force save/apply/baseline.
 
 ### Изменения кора
 
 - `code/modules/modular_computers/file_system/programs/generic/news.dm` — опциональный режим Sector Map и хуки для модов;
 - `nano/templates/crew_manifest.tmpl` — архив экипажа прошлых смен Одиссеи;
 - `mods/global_modpacks.dm` — подключение модпака;
-- `code/controllers/subsystems/ticker.dm` — вызов `odyssey_pregame_consider_vote()` в pregame;
-- `code/controllers/evacuation/evacuation.dm` — запрет обычного BSJ без выбранного сектора;
-- `code/controllers/evacuation/evacuation_pods.dm` — commit перехода при запуске BSJ;
+- `code/controllers/subsystems/ticker.dm` — хук `odyssey_pregame_consider_vote()` (no-op; vote из кнопки Odyssey);
+- `code/controllers/evacuation/evacuation.dm` — запрет классического BSJ из эвакуационного меню во время Одиссеи;
+- `mods/machinery/.../bluespace_drive.dm` + `mods/odyssey/code/bluespace_drive_odyssey.dm` — Odyssey Jump, commit перехода и конец смены;
 - `code/modules/client/preferences_persist.dm` — блок загрузки погибшего слота (`load_character` возвращает FALSE);
 - `code/modules/mob/new_player/new_player.dm` — блок Ready/Join за погибший слот;
 - `code/controllers/subsystems/jobs.dm` — пропуск слота из приоритетного списка, если загрузка отклонена;

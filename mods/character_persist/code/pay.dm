@@ -5,6 +5,9 @@
 		var/amount = max(0, H.odyssey_account_money)
 		H.mind.initial_account.money = amount
 		H.odyssey_account_money = null
+		if (islist(H.odyssey_account_transactions))
+			odyssey_apply_transaction_log(H.mind.initial_account, H.odyssey_account_transactions)
+			H.odyssey_account_transactions = null
 		to_chat(H, SPAN_NOTICE("Баланс счёта восстановлен: [amount] таллеров."))
 	if (H.character_persist_bonus_money <= 0)
 		return

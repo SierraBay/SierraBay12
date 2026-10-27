@@ -1,13 +1,13 @@
+/// Body snapshots are split into normal vs Odyssey files. A campaign-tagged snapshot
+/// only applies while that Odyssey is active; a normal snapshot never applies during Odyssey.
 /proc/odyssey_snapshot_valid(list/snapshot)
 	if (!islist(snapshot))
 		return FALSE
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/snapshot_campaign = snapshot["odyssey_campaign_id"]
-	if (!snapshot_campaign)
-		return TRUE
 	if (state.active)
-		return snapshot_campaign == state.campaign_id
-	return odyssey_campaign_matches(snapshot_campaign)
+		return !!snapshot_campaign && snapshot_campaign == state.campaign_id
+	return !snapshot_campaign
 
 
 /datum/preferences/character_persist_is_locked()
@@ -40,6 +40,8 @@
 	if (!isnull(character_persist_snapshot["account_money"]))
 		character.character_persist_bonus_money = CHARACTER_PERSIST_SHIFT_PAY
 		character.odyssey_account_money = character_persist_num(character_persist_snapshot["account_money"])
+		if (islist(character_persist_snapshot["account_transactions"]))
+			character.odyssey_account_transactions = character_persist_snapshot["account_transactions"]
 	else
 		character.character_persist_bonus_money = max(shifts, 0) * CHARACTER_PERSIST_SHIFT_PAY
 	if (shifts)
@@ -56,7 +58,7 @@
 	. += BTN("toggle_persist_help", show_persist_help ? "Скрыть" : "Подробнее")
 	. += "<br>"
 	if (show_persist_help)
-		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает его. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, генокрад, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был.</i></div>"
+		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает снимок текущей линии (обычной или Одиссеи). Обычный и одиссейный снимки хранятся отдельно и не перезаписывают друг друга. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, генокрад, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был.</i></div>"
 	. += "<b>Автозаполнение мед. записей:</b> "
 	. += BTN("toggle_character_persist_med_autofill", pref.character_persist_med_autofill ? "Включена" : "Выключена")
 	. += " "
@@ -68,7 +70,8 @@
 		var/lock_bits = "Внешность и кибернетика"
 		if (pref.character_persist_med_autofill)
 			lock_bits = "Внешность, кибернетика и медицинские записи"
-		. += "<b><span style='color:#cc5555'>Есть сохранённое состояние с прошлой смены. [lock_bits] заблокированы, пока персонаж не умрёт, не будет брошен или пока вы не выключите опцию.</span></b><br>"
+		var/lane_label = character_persist_use_odyssey_lane() ? "Одиссеи" : "обычных смен"
+		. += "<b><span style='color:#cc5555'>Есть сохранённое состояние ([lane_label]). [lock_bits] заблокированы, пока персонаж не умрёт, не будет брошен или пока вы не выключите опцию.</span></b><br>"
 		if (pref.character_persist_snapshot["saved_at"])
 			. += "Снимок: [pref.character_persist_snapshot["saved_at"]]<br>"
 		var/shifts = character_persist_num(pref.character_persist_snapshot["shifts_survived"])

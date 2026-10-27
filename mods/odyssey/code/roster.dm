@@ -94,7 +94,7 @@
 	entry["status"] = "dead"
 	entry["death_shift"] = state.shift_number
 	entry["death_reason"] = reason
-	entry["died_at"] = time2text(world.realtime, "YYYY-MM-DD hh:mm")
+	entry["died_at"] = odyssey_ic_timestamp()
 	entry["name"] = H.real_name || entry["name"]
 	var/job_title = H.mind?.role_alt_title || H.mind?.assigned_role || H.job || entry["job"]
 	if (job_title)
@@ -112,6 +112,7 @@
 	entry["seen_shifts"] = seen
 	state.roster[key] = entry
 	odyssey_mark_sleeper_dead(player_ckey, slot, reason)
+	odyssey_chronicle_note_death(H, reason, job_title)
 	log_game("ODYSSEY: character died [player_ckey] slot=[slot] name=[H.real_name] shift=[state.shift_number]")
 	// Journal the tombstone immediately so a crash cannot resurrect the slot.
 	odyssey_write_json(odyssey_snapshot_path("roster", state.save_generation), list(

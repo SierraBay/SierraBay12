@@ -92,6 +92,13 @@
 	state.merc_used = TRUE
 	state.merc_used_shift = state.shift_number
 	state.merc_used_reason = reason
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_MERC,
+		"Контакт с наёмниками",
+		"Зафиксирована высадка враждебного отряда (причина учёта: [reason], состав: [spawned]).",
+		ODYSSEY_CHRONICLE_VIS_PUBLIC,
+		list("reason" = reason, "spawned" = spawned)
+	)
 	log_and_message_admins("ODYSSEY: mercenaries locked for campaign (reason=[reason], spawned=[spawned], shift=[state.shift_number]).")
 	log_game("ODYSSEY: merc_used reason=[reason] spawned=[spawned] shift=[state.shift_number]")
 

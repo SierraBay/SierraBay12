@@ -1,4 +1,4 @@
-/// Admin debug/info panel for Odyssey campaign state and on-disk saves.
+/// Admin panel for Odyssey campaign state, disk saves, and lifecycle actions.
 var/global/datum/odyssey_panel/odyssey_panel
 
 /datum/odyssey_panel
@@ -25,7 +25,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 /client/proc/odyssey_panel()
 	set category = "Admin"
 	set name = "Odyssey Panel"
-	set desc = "Просмотр состояния Одиссеи и отладочные действия."
+	set desc = "Состояние Одиссеи, сейвы и управление кампанией."
 
 	if (!check_rights(R_ADMIN|R_DEBUG|R_SERVER))
 		return
@@ -42,6 +42,9 @@ var/global/datum/odyssey_panel/odyssey_panel
 	var/list/lobby = SSticker?.lobby_players()
 	var/lobby_count = length(lobby)
 	var/has_campaign = odyssey_campaign_exists()
+	var/disk_exists = islist(meta)
+	var/disk_archived = disk_exists && !meta["active"]
+	var/in_lobby = (GAME_STATE == RUNLEVEL_LOBBY)
 	var/map_key = odyssey_map_key()
 
 	var/list/dat = list()
@@ -49,49 +52,84 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "<a href='?src=\ref[src];refresh=1'>Обновить</a>"
 	dat += "<hr>"
 
-	dat += "<h3>Раунд (runtime)</h3>"
+	// --- Runtime ---
+	dat += "<h3>Раунд</h3>"
 	dat += "<div class='statusDisplay'>"
-	dat += "Карта: <b>[html_encode(map_key)]</b><br>"
-	dat += "active: <b>[state.active ? "ДА" : "нет"]</b> | "
-	dat += "continued: <b>[state.continued ? "ДА" : "нет"]</b> | "
-	dat += "pregame_vote_done: <b>[state.pregame_vote_done ? "да" : "нет"]</b><br>"
-	dat += "campaign_id: <code>[html_encode("[state.campaign_id]")]</code><br>"
-	dat += "status: <b>[state.status]</b> | outcome: <b>[html_encode("[state.outcome_reason]")]</b><br>"
-	dat += "эшелон: <b>[odyssey_campaign_echelon(state)]/[state.max_shifts]</b> | crew shift: <b>[state.shift_number]</b> | save_version: <b>[state.save_version]</b><br>"
-	dat += "sector: <b>[html_encode("[state.current_sector_id]")]</b> → selected: <b>[html_encode("[state.selected_sector_id]")]</b> | committed: <b>[state.transition_committed]</b> | bsd jump: <b>[state.odyssey_bsd_jump_done]</b><br>"
-	dat += "seed: <code>[html_encode("[state.campaign_seed]")]</code><br>"
-	dat += "turf_baseline: <b>[length(state.turf_baseline)]</b> ключей<br>"
-	dat += "machinery baseline: <b>[length(state.machinery_baseline)]</b> | structures: <b>[length(state.structure_baseline)]</b><br>"
-	dat += "abandoned shuttles: <b>[length(state.abandoned_shuttles)]</b> <code>[html_encode(english_list(state.abandoned_shuttles) || "—")]</code><br>"
-	dat += "Лобби сейчас: <b>[lobby_count]</b> (continue нужен ≥ [ODYSSEY_MIN_CONTINUE_PLAYERS] игроков; старт/continue — ≥ [ODYSSEY_MIN_YES_VOTES] голосов «За»)<br>"
-	dat += "GAME_STATE: <b>[GAME_STATE]</b>"
+	dat += "Карта: <b>[html_encode(map_key)]</b> | GAME_STATE: <b>[GAME_STATE]</b><br>"
+	if (state.active)
+		dat += "Кампания: <b><font color='55aa55'>АКТИВНА</font></b>"
+		dat += state.continued ? " (продолжение)" : " (новая)"
+		dat += "<br>"
+		dat += "ID: <code>[html_encode(state.campaign_id)]</code><br>"
+		dat += "Эшелон: <b>[odyssey_campaign_echelon(state)]/[state.max_shifts]</b> | "
+		dat += "смена экипажа: <b>[state.shift_number]</b> | status: <b>[state.status]</b><br>"
+		dat += "Сектор: <b>[html_encode(state.current_sector_id)]</b>"
+		if (state.selected_sector_id)
+			dat += " → курс: <b>[html_encode(state.selected_sector_id)]</b>"
+			if (state.selected_by)
+				dat += " ([html_encode(state.selected_by)])"
+		dat += "<br>"
+		dat += "transition committed: <b>[state.transition_committed ? "да" : "нет"]</b> | "
+		dat += "BSD jump: <b>[state.odyssey_bsd_jump_done ? "да" : "нет"]</b> | "
+		dat += "shift end queued: <b>[state.shift_end_queued ? "да" : "нет"]</b><br>"
+		dat += "Abandoned shuttles: <b>[length(state.abandoned_shuttles)]</b>"
+		if (length(state.abandoned_shuttles))
+			dat += " <code>[html_encode(english_list(state.abandoned_shuttles))]</code>"
+		dat += "<br>"
+		dat += "Shuttle reports: <b>[length(state.shuttle_reports)]</b><br>"
+		for (var/shuttle_name in state.shuttle_reports)
+			var/list/report = state.shuttle_reports[shuttle_name]
+			if (!islist(report))
+				continue
+			dat += " — <b>[html_encode(shuttle_name)]</b>: [report["status"]]"
+			if (report["status"] == ODYSSEY_SHUTTLE_STATUS_DAMAGED)
+				dat += " damage=[report["damage"]] cost=[report["repair_cost"]] fee_pending=[report["fee_pending"] ? "да" : "нет"]"
+			dat += "<br>"
+	else
+		dat += "Кампания: <b>не активна</b> в этом раунде<br>"
+		if (state.campaign_id)
+			dat += "Последний ID: <code>[html_encode(state.campaign_id)]</code> | status: <b>[state.status]</b>"
+			if (state.outcome_reason)
+				dat += " ([html_encode(state.outcome_reason)])"
+			dat += "<br>"
+	dat += "Лобби: <b>[lobby_count]</b> (vote из кнопки Odyssey; порог ≥ [ODYSSEY_MIN_YES_VOTES] «За»)"
 	dat += "</div>"
 
+	// --- Disk ---
 	dat += "<h3>Диск (campaign.json)</h3>"
 	dat += "<div class='statusDisplay'>"
-	if (!islist(meta))
-		dat += "<i>Нет meta / файл отсутствует.</i><br>"
+	if (!disk_exists)
+		dat += "<i>Нет файла — следующему лобби предложат <b>start</b>.</i><br>"
 		dat += "Путь: <code>[html_encode(odyssey_meta_path())]</code>"
 	else
-		dat += "exists/active для continue: <b>[has_campaign ? "ДА" : "нет"]</b><br>"
-		dat += "version: <b>[meta["version"]]</b> | disk active: <b>[meta["active"] ? "ДА" : "нет"]</b><br>"
-		dat += "campaign_id: <code>[html_encode("[meta["campaign_id"]]")]</code><br>"
-		dat += "status: <b>[meta["status"]]</b> | shift: <b>[meta["shift_number"]]/[meta["max_shifts"]]</b><br>"
-		dat += "sector: <b>[meta["current_sector_id"]]</b> → <b>[meta["selected_sector_id"]]</b><br>"
-		dat += "map: <b>[html_encode("[meta["map"]]")]</b><br>"
-		dat += "saved_at: <b>[html_encode("[meta["saved_at"]]")]</b><br>"
+		dat += "Continue в лобби: <b>[has_campaign ? "<font color='55aa55'>ДА</font>" : "<font color='cc5555'>нет</font>"]</b>"
+		if (disk_archived)
+			dat += " — архив ([html_encode(meta["status"])]"
+			var/archive_why = meta["archive_reason"] || meta["outcome_reason"]
+			if (archive_why)
+				dat += ": [html_encode(archive_why)]"
+			dat += ")"
+		dat += "<br>"
+		dat += "ID: <code>[html_encode(meta["campaign_id"])]</code> | v[meta["version"]] | gen [meta["generation"] || "—"]<br>"
+		dat += "Эшелон/смена: <b>[meta["shift_number"]]/[meta["max_shifts"]]</b> | "
+		dat += "сектор: <b>[html_encode(meta["current_sector_id"])]</b>"
+		if (meta["selected_sector_id"])
+			dat += " → <b>[html_encode(meta["selected_sector_id"])]</b>"
+			if (meta["transition_committed"])
+				dat += " <i>(committed)</i>"
+		dat += "<br>"
+		dat += "saved_at: <b>[html_encode(meta["saved_at"] || "—")]</b><br>"
 		if (meta["archived_at"])
-			dat += "archived_at: <b>[html_encode("[meta["archived_at"]]")]</b> "
-			dat += "reason: <b>[html_encode("[meta["archive_reason"]]")]</b><br>"
-		dat += "parts: <code>[html_encode(json_encode(meta["parts"]))]</code><br>"
+			dat += "archived_at: <b>[html_encode(meta["archived_at"])]</b><br>"
 		dat += "Путь: <code>[html_encode(odyssey_meta_path())]</code>"
 	dat += "</div>"
 
+	// --- Snapshots ---
 	dat += "<h3>Снапшоты</h3>"
 	dat += "<div class='statusDisplay'>"
 	dat += "<table width='100%'>"
 	dat += "<tr><th>Файл</th><th>Есть</th><th>Версия</th><th>Записей</th><th></th></tr>"
-	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses"))
+	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "chronicle"))
 		var/list/summary = odyssey_snapshot_summary(kind)
 		dat += "<tr>"
 		dat += "<td><code>[kind].json</code></td>"
@@ -106,20 +144,33 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "</table>"
 	dat += "</div>"
 
-	dat += "<h3>Маршрут и roster</h3><div class='statusDisplay'>"
-	if (islist(state.sector_graph))
+	// --- Route / roster ---
+	dat += "<h3>Маршрут, roster, антаги</h3><div class='statusDisplay'>"
+	if (islist(state.sector_graph) && length(state.sector_graph))
+		if (state.selected_sector_id && !state.transition_committed)
+			dat += "<a href='?src=\ref[src];clear_destination=1'>Сбросить курс</a><br><br>"
 		for (var/id in state.sector_graph)
 			var/list/node = state.sector_graph[id]
-			dat += "<b>[id]</b>: [html_encode(node["name"])] depth=[node["depth"]] danger=[node["danger"]] links=[html_encode(json_encode(node["links"]))] "
-			dat += "<a href='?src=\ref[src];force_destination=[url_encode(id)]'>force destination</a><br>"
-	dat += "<hr>Участники: <b>[length(state.roster)]</b><br>"
+			var/is_current = (id == state.current_sector_id)
+			var/is_selected = (id == state.selected_sector_id)
+			dat += "<b>[id]</b>"
+			if (is_current)
+				dat += " <font color='55aa55'>(текущий)</font>"
+			if (is_selected)
+				dat += " <font color='5588cc'>(курс)</font>"
+			dat += ": [html_encode(node["name"])] depth=[node["depth"]] danger=[node["danger"]]"
+			if (state.active && !state.transition_committed)
+				dat += " <a href='?src=\ref[src];force_destination=[url_encode(id)]'>назначить курс</a>"
+			dat += "<br>"
+		dat += "<hr>"
+	dat += "Участники: <b>[length(state.roster)]</b><br>"
 	for (var/key in state.roster)
 		var/list/member = state.roster[key]
 		dat += "[html_encode(member["name"])] ([key]): <b>[member["status"]]</b>"
 		if (member["death_shift"])
 			dat += " — смерть в смене [member["death_shift"]] ([member["death_reason"]])"
 		dat += "<br>"
-	dat += "<hr>Спящие агенты: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround done: <b>[state.sleeper_midround_done ? "да" : "нет"]</b><br>"
+	dat += "<hr>Спящие: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround: <b>[state.sleeper_midround_done ? "уже был" : "ещё нет"]</b><br>"
 	for (var/skey in state.sleepers)
 		var/list/sleeper = state.sleepers[skey]
 		if (!islist(sleeper))
@@ -128,59 +179,199 @@ var/global/datum/odyssey_panel/odyssey_panel
 		if (sleeper["death_shift"])
 			dat += " — снят в смене [sleeper["death_shift"]] ([sleeper["death_reason"]])"
 		dat += "<br>"
-	dat += "<hr>Mercenaries (nuke): <b>[state.merc_used ? "уже были" : "ещё нет"]</b>"
+	dat += "<hr>Mercenaries: <b>[state.merc_used ? "уже были" : "ещё нет"]</b>"
 	if (state.merc_used)
-		dat += " — смена [state.merc_used_shift] ([html_encode("[state.merc_used_reason]")])"
+		dat += " — смена [state.merc_used_shift] ([html_encode(state.merc_used_reason)])"
 	else if (state.merc_shift_decision)
 		dat += " | решение смены: <b>[html_encode(state.merc_shift_decision)]</b>"
 	dat += "<br>"
-	dat += "Hostile outsiders: raiders=<b>[html_encode("[state.raider_shift_decision || "—"]")]</b> | ninja=<b>[html_encode("[state.ninja_shift_decision || "—"]")]</b> | sector danger=<b>[html_encode(odyssey_current_sector_danger())]</b><br>"
+	dat += "Hostile: raiders=<b>[html_encode(state.raider_shift_decision || "—")]</b> | "
+	dat += "ninja=<b>[html_encode(state.ninja_shift_decision || "—")]</b> | "
+	dat += "danger=<b>[html_encode(odyssey_current_sector_danger())]</b><br>"
 	if (length(state.validation_errors))
 		dat += "<hr><font color='cc5555'>Ошибки: [html_encode(json_encode(state.validation_errors))]</font>"
 	dat += "</div>"
 
+	// --- Objectives ---
+	dat += "<h3>Контракты и цели</h3><div class='statusDisplay'>"
+	dat += "Контракты: <b>[length(state.contracts)]</b> | Цели: <b>[length(state.objectives)]</b>"
+	if (state.active)
+		dat += " | <a href='?src=\ref[src];objectives_regen=1'>Пересоздать цели смены</a>"
+	dat += "<br>"
+	for (var/list/entry in state.contracts)
+		if (!islist(entry))
+			continue
+		dat += "<b>CTR</b> [html_encode(entry["title"] || "?")] — <b>[entry["status"]]</b> ([entry["kind"]])<br>"
+	for (var/list/entry in state.objectives)
+		if (!islist(entry))
+			continue
+		if (entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE && entry["shift_issued"] != state.shift_number)
+			continue
+		dat += "<b>OBJ</b> [html_encode(entry["title"] || "?")] — <b>[entry["status"]]</b>"
+		if (!isnull(entry["progress"]))
+			dat += " [entry["progress"]]/[entry["target"]]"
+		dat += " ([entry["kind"]])<br>"
+	dat += "</div>"
+
+	// --- Science briefs (RnD) ---
+	dat += "<h3>Наука (НИО / research.json)</h3><div class='statusDisplay'>"
+	var/list/R = odyssey_research_ensure()
+	dat += "flag <code>odyssey_science_enabled</code>: <b>[odyssey_science_enabled ? "TRUE" : "FALSE"]</b>"
+	if (state.active)
+		dat += " | <a href='?src=\ref[src];sci_regen=1'>Пересоздать брифы</a>"
+		dat += " | <a href='?src=\ref[src];sci_pay_test=1'>Тест +1000 Science</a>"
+		dat += " | <a href='?src=\ref[src];preview=research'>Превью research</a>"
+	dat += "<br>"
+	dat += "Samples: <b>[length(R["samples_collected"])]</b> | Anomalies: <b>[length(R["anomalies_catalogued"])]</b><br>"
+	dat += "<b>Брифы:</b><br>"
+	var/brief_shown = 0
+	for (var/list/entry in R["active_briefs"])
+		if (!islist(entry))
+			continue
+		if (entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE && entry["shift_issued"] != state.shift_number)
+			continue
+		brief_shown++
+		dat += "• <b>[html_encode(entry["title"] || "?")]</b> — <b>[entry["status"]]</b> "
+		dat += "[entry["progress"]]/[entry["target"]] ([entry["kind"]])"
+		if (entry["reward_credits"])
+			dat += " reward=<b>[entry["reward_credits"]]</b>cr"
+		if (entry["target_gene"])
+			dat += " gene=<code>[html_encode(entry["target_gene"])]</code>"
+		if (entry["target_type"])
+			dat += " type=<code>[html_encode(entry["target_type"])]</code>"
+		if (entry["status"] == ODYSSEY_OBJ_STATUS_ACTIVE)
+			dat += " <a href='?src=\ref[src];sci_progress=[html_encode(entry["id"])]'> +1 progress</a>"
+			dat += " <a href='?src=\ref[src];sci_complete=[html_encode(entry["id"])]'><font color='55aa55'>Complete+pay</font></a>"
+		dat += "<br>"
+	if (!brief_shown)
+		dat += "<i>Нет брифов этой смены.</i><br>"
+	if (state.active)
+		dat += "<br><b>Симулировать сдачу:</b> "
+		dat += "<a href='?src=\ref[src];sci_sim=spectrum'>spectrum</a> | "
+		dat += "<a href='?src=\ref[src];sci_sim=catalog'>catalog</a> | "
+		dat += "<a href='?src=\ref[src];sci_sim=flora'>flora</a> | "
+		dat += "<a href='?src=\ref[src];sci_sim=slime'>slime</a>"
+	dat += "</div>"
+
+	// --- Department briefs (Cargo / Medical) ---
+	dat += "<h3>Отделы (Карго / Мед)</h3><div class='statusDisplay'>"
+	if (state.active)
+		dat += "<a href='?src=\ref[src];dept_regen=1'>Пересоздать брифы отделов</a><br>"
+	var/dept_shown = 0
+	for (var/list/dentry in R["dept_briefs"])
+		if (!islist(dentry))
+			continue
+		if (dentry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE && dentry["shift_issued"] != state.shift_number)
+			continue
+		dept_shown++
+		dat += "• <b>[html_encode(dentry["title"] || "?")]</b> — <b>[dentry["status"]]</b> "
+		dat += "[dentry["progress"]]/[dentry["target"]] ([dentry["kind"]])"
+		if (dentry["reward_credits"])
+			dat += " reward=<b>[dentry["reward_credits"]]</b>cr"
+		if (dentry["target_dept"])
+			dat += " dept=<code>[html_encode(dentry["target_dept_label"] || dentry["target_dept"])]</code>"
+		if (dentry["status"] == ODYSSEY_OBJ_STATUS_ACTIVE)
+			dat += " <a href='?src=\ref[src];dept_progress=[html_encode(dentry["id"])]'>+progress</a>"
+			dat += " <a href='?src=\ref[src];dept_complete=[html_encode(dentry["id"])]'><font color='55aa55'>Complete+pay</font></a>"
+		dat += "<br>"
+	if (!dept_shown)
+		dat += "<i>Нет брифов отделов этой смены.</i><br>"
+	dat += "</div>"
+
+	// --- Chronicle ---
+	dat += "<h3>Хроника</h3><div class='statusDisplay'>"
+	dat += "Записей: <b>[length(state.chronicle)]</b>"
+	if (state.active)
+		dat += " | <a href='?src=\ref[src];chronicle_add=1'>Добавить запись</a>"
+		dat += " | <a href='?src=\ref[src];show_briefing=1'>Сводка continue</a>"
+		dat += " | <a href='?src=\ref[src];show_stats=1'>Итоги (preview)</a>"
+	else
+		dat += " | <a href='?src=\ref[src];show_stats=1'>Итоги кампании</a>"
+	dat += "<br>"
+	var/shown = 0
+	for (var/i = length(state.chronicle); i >= 1 && shown < 12; i--)
+		var/list/entry = state.chronicle[i]
+		if (!islist(entry))
+			continue
+		dat += "<b>[html_encode(entry["title"] || "?")]</b> "
+		dat += "<font size=1>(смена [entry["shift"]], [entry["visibility"]], [entry["at"]])</font><br>"
+		if (entry["body"])
+			dat += "<i>[html_encode(entry["body"])]</i><br>"
+		shown++
+	if (!length(state.chronicle))
+		dat += "<i>Пусто.</i>"
+	dat += "</div>"
+
+	// --- Economy ---
 	dat += "<h3>Экономика (live)</h3>"
 	dat += "<div class='statusDisplay'>"
 	if (istype(station_account))
-		dat += "Станция #[station_account.account_number]: <b>[station_account.money]</b><br>"
+		dat += "SEV Sierra #[station_account.account_number]: <b>[station_account.money]</b><br>"
 	else
-		dat += "Станционный счёт: нет<br>"
-	for (var/dept in department_accounts)
-		var/datum/money_account/A = department_accounts[dept]
-		if (!istype(A))
-			continue
-		dat += "[html_encode("[dept]")]: <b>[A.money]</b><br>"
+		dat += "Счёт судна (SEV Sierra): нет<br>"
+	var/list/unique_depts = odyssey_unique_department_accounts()
+	for (var/dept in unique_depts)
+		var/datum/money_account/A = unique_depts[dept]
+		dat += "[html_encode(dept)]: <b>[A.money]</b><br>"
 	dat += "</div>"
 
+	// --- Actions ---
 	dat += "<h3>Действия</h3>"
 	dat += "<div class='statusDisplay'>"
-	dat += "<b>Флаги раунда:</b><br>"
-	dat += "<a href='?src=\ref[src];toggle_active=1'>Toggle active</a> | "
-	dat += "<a href='?src=\ref[src];toggle_continued=1'>Toggle continued</a> | "
-	dat += "<a href='?src=\ref[src];reset_vote_flag=1'>Сбросить pregame_vote_done</a><br><br>"
 
-	dat += "<b>Кампания:</b><br>"
-	dat += "<a href='?src=\ref[src];begin_new=1'>Начать новую (active, не continued)</a> | "
-	dat += "<a href='?src=\ref[src];begin_continue=1'>Пометить продолжение (active+continued)</a><br>"
-	dat += "<a href='?src=\ref[src];archive=1'><font color='cc5555'>Архивировать кампанию на диске</font></a><br><br>"
-	dat += "<a href='?src=\ref[src];validate=1'>Validate save (dry-run)</a> | "
-	dat += "<a href='?src=\ref[src];regenerate=1'>Regenerate graph</a> | "
-	dat += "<a href='?src=\ref[src];finish=1'><font color='cc5555'>Finish campaign</font></a><br><br>"
+	dat += "<b>Лобби</b> — голосование через кнопку Odyssey у игроков или здесь (≥ [ODYSSEY_MIN_YES_VOTES] «За» и больше «Против»). Авто-vote в pregame отключён.<br>"
+	if (in_lobby)
+		if (has_campaign)
+			dat += "<a href='?src=\ref[src];vote_continue=1'><b>Голосование: продолжить</b></a>"
+			dat += " <i>(чтобы предложить start — сначала архивируйте сейв)</i>"
+		else if (disk_archived)
+			dat += "<a href='?src=\ref[src];vote_start=1'><b>Голосование: начать новую</b></a>"
+			dat += " <i>(continue недоступен: сейв архивирован — сначала «Восстановить архив»)</i>"
+		else
+			dat += "<a href='?src=\ref[src];vote_start=1'><b>Голосование: начать новую</b></a>"
+	else
+		dat += "<i>Раунд уже идёт — лобби-голосования недоступны.</i>"
+	dat += "<br><br>"
 
-	dat += "<b>Сейв / apply:</b><br>"
+	dat += "<b>Кампания</b><br>"
+	if (!state.active)
+		dat += "<a href='?src=\ref[src];begin_new=1'>Включить новую Одиссею в этом раунде</a><br>"
+		if (disk_exists)
+			dat += "<a href='?src=\ref[src];begin_continue=1'>Включить продолжение из сейва</a>"
+			dat += " <i>(apply на roundstart; mid-round — Force apply)</i><br>"
+	else
+		dat += "<i>Раунд уже в Одиссее.</i><br>"
+		dat += "<a href='?src=\ref[src];finish=1'><font color='cc5555'>Завершить кампанию (runtime + архив)</font></a><br>"
+		if (!state.shift_end_queued)
+			dat += "<a href='?src=\ref[src];queue_shift_end=1'>Назначить End the shift ([ODYSSEY_SHIFT_END_DELAY / (1 MINUTE)] мин)</a><br>"
+		else
+			dat += "<i>Shift end уже в очереди.</i><br>"
+	if (has_campaign)
+		dat += "<a href='?src=\ref[src];archive=1'><font color='cc5555'>Архивировать сейв на диске</font></a>"
+		dat += " <i>(следующий лобби предложит start)</i><br>"
+	else if (disk_archived)
+		dat += "<a href='?src=\ref[src];reactivate=1'>Восстановить архив на диске (active)</a>"
+		dat += " <i>(без старта раунда — только чтобы лобби снова предложило continue)</i><br>"
+	dat += "<br>"
+
+	dat += "<b>Навигация</b><br>"
+	if (state.active)
+		dat += "<a href='?src=\ref[src];regenerate=1'>Пересоздать граф секторов</a>"
+		dat += " <i>(только до первого перехода)</i><br>"
+		if (state.selected_sector_id && !state.transition_committed)
+			dat += "<a href='?src=\ref[src];clear_destination=1'>Сбросить выбранный курс</a><br>"
+	else
+		dat += "<i>Нужна активная кампания.</i><br>"
+	dat += "<br>"
+
+	dat += "<b>Сейв / отладка</b><br>"
+	dat += "<a href='?src=\ref[src];validate=1'>Validate save</a> | "
 	dat += "<a href='?src=\ref[src];force_save=1'>Force save</a> | "
 	dat += "<a href='?src=\ref[src];force_apply=1'><font color='cc5555'>Force apply</font></a> | "
-	dat += "<a href='?src=\ref[src];capture_baseline=1'>Capture turf baseline</a><br><br>"
-
-	dat += "<b>Голосование:</b> только лобби, до старта раунда.<br>"
-	if (GAME_STATE == RUNLEVEL_LOBBY)
-		dat += "<a href='?src=\ref[src];vote_start=1'>Initiate start vote</a> | "
-		dat += "<a href='?src=\ref[src];vote_continue=1'>Initiate continue vote</a>"
-	else
-		dat += "<i>Start / Continue недоступны: раунд уже идёт.</i>"
+	dat += "<a href='?src=\ref[src];capture_baseline=1'>Capture baseline</a>"
 	dat += "</div>"
 
-	var/datum/browser/popup = new(C.mob, "odyssey_panel", "Odyssey Panel", 720, 780, src)
+	var/datum/browser/popup = new(C.mob, "odyssey_panel", "Odyssey Panel", 780, 920, src)
 	popup.set_content(jointext(dat, null))
 	popup.open()
 
@@ -200,29 +391,167 @@ var/global/datum/odyssey_panel/odyssey_panel
 		show_preview(C, href_list["preview"])
 		return
 
-	if (href_list["toggle_active"])
-		var/datum/odyssey_state/state = odyssey_ensure_state()
-		state.active = !state.active
-		log_and_message_admins("toggled Odyssey active=[state.active]", usr)
+	if (href_list["show_briefing"])
+		var/brief = odyssey_continue_briefing(odyssey_load_meta(), FALSE)
+		to_chat(usr, SPAN_NOTICE("<b>[replacetext(brief, "\n", "<br>")]</b>"))
 		show(C)
 		return
 
-	if (href_list["toggle_continued"])
-		var/datum/odyssey_state/state = odyssey_ensure_state()
-		state.continued = !state.continued
-		log_and_message_admins("toggled Odyssey continued=[state.continued]", usr)
+	if (href_list["show_stats"])
+		var/list/meta = odyssey_load_meta()
+		var/list/stats = meta?["campaign_stats"]
+		if (!islist(stats))
+			var/datum/odyssey_state/state = odyssey_ensure_state()
+			if (state.active)
+				stats = odyssey_build_campaign_stats(state.status, state.outcome_reason)
+		if (islist(stats))
+			to_chat(usr, SPAN_NOTICE("<b>[replacetext(odyssey_campaign_stats_text(stats, FALSE), "\n", "<br>")]</b>"))
+		else
+			to_chat(usr, SPAN_WARNING("Нет сохранённой статистики Одиссеи."))
 		show(C)
 		return
 
-	if (href_list["reset_vote_flag"])
+	if (href_list["objectives_regen"])
 		var/datum/odyssey_state/state = odyssey_ensure_state()
-		state.pregame_vote_done = FALSE
-		log_and_message_admins("reset Odyssey pregame_vote_done", usr)
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey не активна."))
+			show(C)
+			return
+		odyssey_ensure_campaign_contract()
+		odyssey_generate_shift_objectives()
+		log_and_message_admins("regenerated Odyssey shift objectives", usr)
+		show(C)
+		return
+
+	if (href_list["sci_regen"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey не активна."))
+			show(C)
+			return
+		odyssey_science_enabled = TRUE
+		odyssey_generate_science_briefs()
+		log_and_message_admins("regenerated Odyssey science briefs", usr)
+		to_chat(usr, SPAN_NOTICE("Научные брифы пересозданы."))
+		show(C)
+		return
+
+	if (href_list["sci_pay_test"])
+		odyssey_science_admin_pay_test(1000, usr)
+		log_and_message_admins("test-paid Odyssey science credits", usr)
+		show(C)
+		return
+
+	if (href_list["sci_progress"])
+		var/brief_id = href_list["sci_progress"]
+		var/list/R = odyssey_research_ensure()
+		for (var/i = 1 to length(R["active_briefs"]))
+			var/list/entry = R["active_briefs"][i]
+			if (!islist(entry) || entry["id"] != brief_id || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
+				continue
+			var/evidence = entry["target_gene"] || entry["target_type"] || "admin-progress-[world.time]"
+			odyssey_science_progress(entry["kind"], 1, evidence, usr, usr)
+			to_chat(usr, SPAN_NOTICE("Progress [entry["title"]] simulated."))
+			break
+		show(C)
+		return
+
+	if (href_list["sci_complete"])
+		if (odyssey_science_admin_complete(href_list["sci_complete"], usr))
+			log_and_message_admins("force-completed Odyssey science brief [href_list["sci_complete"]]", usr)
+			to_chat(usr, SPAN_NOTICE("Бриф выполнен, кредиты зачислены."))
+		else
+			to_chat(usr, SPAN_WARNING("Бриф не найден или уже закрыт."))
+		show(C)
+		return
+
+	if (href_list["sci_sim"])
+		var/kind = href_list["sci_sim"]
+		var/evidence = "admin-sim-[kind]-[world.time]"
+		var/list/R = odyssey_research_ensure()
+		for (var/list/entry in R["active_briefs"])
+			if (!islist(entry) || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE || entry["kind"] != kind)
+				continue
+			if (entry["target_gene"])
+				evidence = entry["target_gene"]
+			else if (entry["target_type"])
+				evidence = entry["target_type"]
+			break
+		switch (kind)
+			if (ODYSSEY_SCI_BRIEF_SPECTRUM)
+				odyssey_science_progress(ODYSSEY_SCI_BRIEF_SPECTRUM, 1, evidence, usr, usr)
+			if (ODYSSEY_SCI_BRIEF_CATALOG)
+				odyssey_science_note_anomaly(evidence)
+				odyssey_science_progress(ODYSSEY_SCI_BRIEF_CATALOG, 1, evidence, usr, usr)
+			if (ODYSSEY_SCI_BRIEF_FLORA)
+				odyssey_science_progress(ODYSSEY_SCI_BRIEF_FLORA, 1, evidence, usr, usr)
+			if (ODYSSEY_SCI_BRIEF_SLIME)
+				odyssey_science_progress(ODYSSEY_SCI_BRIEF_SLIME, 1, evidence, usr, usr)
+			else
+				to_chat(usr, SPAN_WARNING("Неизвестный kind."))
+				show(C)
+				return
+		log_and_message_admins("simulated Odyssey science progress kind=[kind]", usr)
+		to_chat(usr, SPAN_NOTICE("Симуляция сдачи: [kind]."))
+		show(C)
+		return
+
+	if (href_list["dept_regen"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey не активна."))
+			show(C)
+			return
+		odyssey_generate_dept_briefs()
+		log_and_message_admins("regenerated Odyssey dept briefs", usr)
+		to_chat(usr, SPAN_NOTICE("Брифы отделов пересозданы."))
+		show(C)
+		return
+
+	if (href_list["dept_progress"])
+		if (odyssey_dept_admin_progress(href_list["dept_progress"], usr))
+			log_and_message_admins("progressed Odyssey dept brief [href_list["dept_progress"]]", usr)
+		else
+			to_chat(usr, SPAN_WARNING("Бриф отдела не найден."))
+		show(C)
+		return
+
+	if (href_list["dept_complete"])
+		if (odyssey_dept_admin_complete(href_list["dept_complete"], usr))
+			log_and_message_admins("force-completed Odyssey dept brief [href_list["dept_complete"]]", usr)
+			to_chat(usr, SPAN_NOTICE("Бриф отдела выполнен, кредиты зачислены."))
+		else
+			to_chat(usr, SPAN_WARNING("Бриф отдела не найден или уже закрыт."))
+		show(C)
+		return
+
+	if (href_list["chronicle_add"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey не активна."))
+			show(C)
+			return
+		var/title = input(usr, "Заголовок записи хроники:", "Odyssey Chronicle") as text|null
+		if (!title)
+			show(C)
+			return
+		var/body = input(usr, "Текст (можно пусто):", "Odyssey Chronicle") as message|null
+		var/vis = input(usr, "Видимость:", "Odyssey Chronicle") as null|anything in list(ODYSSEY_CHRONICLE_VIS_PUBLIC, ODYSSEY_CHRONICLE_VIS_COMMAND, ODYSSEY_CHRONICLE_VIS_ADMIN)
+		if (!vis)
+			show(C)
+			return
+		odyssey_chronicle_append(ODYSSEY_CHRONICLE_KIND_ADMIN, title, body || "", vis, list("admin" = usr.key))
+		log_and_message_admins("added Odyssey chronicle entry '[title]' ([vis])", usr)
 		show(C)
 		return
 
 	if (href_list["begin_new"])
-		if (alert(usr, "Пометить раунд как новую Одиссею (без apply)?", "Odyssey", "Да", "Нет") != "Да")
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey уже активна в этом раунде."))
+			show(C)
+			return
+		if (alert(usr, "Включить новую Одиссею в этом раунде без голосования?", "Odyssey", "Да", "Нет") != "Да")
 			return
 		if (!odyssey_begin_campaign(FALSE, FALSE))
 			to_chat(usr, SPAN_WARNING("Odyssey: не удалось начать новую кампанию."))
@@ -234,11 +563,18 @@ var/global/datum/odyssey_panel/odyssey_panel
 		return
 
 	if (href_list["begin_continue"])
-		if (alert(usr, "Пометить раунд как продолжение? Apply сам не запустится — используйте Force apply.", "Odyssey", "Да", "Нет") != "Да")
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey уже активна в этом раунде."))
+			show(C)
+			return
+		if (alert(usr, "Включить продолжение из сейва? Apply выполнится на roundstart (или Force apply mid-round).", "Odyssey", "Да", "Нет") != "Да")
 			return
 		var/list/meta = odyssey_load_meta()
 		if (islist(meta) && !meta["active"])
-			if (alert(usr, "На диске кампания неактивна (status=[meta["status"]], reason=[meta["archive_reason"] || meta["outcome_reason"] || "—"]). Восстановить active и продолжить?", "Odyssey", "Восстановить", "Отмена") != "Восстановить")
+			var/disk_status = meta["status"]
+			var/disk_reason = meta["archive_reason"] || meta["outcome_reason"] || "—"
+			if (alert(usr, "На диске кампания неактивна (status=[disk_status], reason=[disk_reason]). Восстановить active и продолжить?", "Odyssey", "Восстановить", "Отмена") != "Восстановить")
 				return
 			if (!odyssey_reactivate_campaign_meta())
 				to_chat(usr, SPAN_WARNING("Odyssey: не удалось записать campaign.json."))
@@ -254,6 +590,26 @@ var/global/datum/odyssey_panel/odyssey_panel
 		show(C)
 		return
 
+	if (href_list["reactivate"])
+		var/list/meta = odyssey_load_meta()
+		if (!islist(meta))
+			to_chat(usr, SPAN_WARNING("Odyssey: нет campaign.json."))
+			show(C)
+			return
+		if (meta["active"])
+			to_chat(usr, SPAN_NOTICE("Odyssey: сейв уже active."))
+			show(C)
+			return
+		if (alert(usr, "Пометить архив как active? Следующий лобби предложит continue.", "Odyssey", "Восстановить", "Отмена") != "Восстановить")
+			return
+		if (!odyssey_reactivate_campaign_meta())
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось записать campaign.json."))
+			show(C)
+			return
+		log_and_message_admins("reactivated archived Odyssey campaign on disk", usr)
+		show(C)
+		return
+
 	if (href_list["validate"])
 		var/datum/odyssey_state/state = odyssey_ensure_state()
 		state.validation_errors = odyssey_validate_save()
@@ -263,6 +619,9 @@ var/global/datum/odyssey_panel/odyssey_panel
 
 	if (href_list["regenerate"])
 		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Нужна активная кампания."))
+			return
 		if (state.shift_number > 1 || length(state.route_history) > 1)
 			to_chat(usr, SPAN_WARNING("Граф можно пересоздать только до первого перехода."))
 			return
@@ -272,14 +631,54 @@ var/global/datum/odyssey_panel/odyssey_panel
 		state.sector_graph = odyssey_generate_sector_graph(state.campaign_seed)
 		state.current_sector_id = ODYSSEY_SECTOR_START
 		state.selected_sector_id = null
+		state.selected_by = null
 		state.validation_errors = odyssey_validate_graph(state.sector_graph)
 		log_and_message_admins("regenerated Odyssey sector graph", usr)
 		show(C)
 		return
 
 	if (href_list["force_destination"])
-		if (odyssey_select_sector(href_list["force_destination"], usr, TRUE))
-			log_and_message_admins("forced Odyssey destination [href_list["force_destination"]]", usr)
+		var/dest = href_list["force_destination"]
+		if (!odyssey_select_sector(dest, usr, TRUE))
+			to_chat(usr, SPAN_WARNING("Odyssey: failed to set course (inactive or jump already committed)."))
+			show(C)
+			return
+		log_and_message_admins("forced Odyssey destination [dest]", usr)
+		show(C)
+		return
+
+	if (href_list["clear_destination"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Нужна активная кампания."))
+			show(C)
+			return
+		if (state.transition_committed)
+			to_chat(usr, SPAN_WARNING("Переход уже committed — курс сбросить нельзя."))
+			show(C)
+			return
+		state.selected_sector_id = null
+		state.selected_by = null
+		log_and_message_admins("cleared Odyssey destination", usr)
+		show(C)
+		return
+
+	if (href_list["queue_shift_end"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Нужна активная кампания."))
+			show(C)
+			return
+		if (state.shift_end_queued)
+			to_chat(usr, SPAN_NOTICE("Shift end уже в очереди."))
+			show(C)
+			return
+		if (alert(usr, "Запланировать End the shift через [ODYSSEY_SHIFT_END_DELAY / (1 MINUTE)] мин (как после Transfer vote)?", "Odyssey", "Да", "Нет") != "Да")
+			return
+		if (odyssey_try_end_shift())
+			log_and_message_admins("queued Odyssey shift end via panel", usr)
+		else
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось назначить shift end."))
 		show(C)
 		return
 
@@ -372,7 +771,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "<i>Не удалось прочитать.</i>"
 	else
 		var/preview
-		if (kind == "economy")
+		if (kind == "economy" || kind == "research")
 			preview = json_encode(data["data"] || data)
 		else
 			var/list/entries = data["entries"]
@@ -386,7 +785,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 				preview = "entries=[length(entries)], first [limit]:\n[json_encode(slice)]"
 		dat += "<pre style='white-space:pre-wrap; word-break:break-all;'>[html_encode(preview)]</pre>"
 
-	var/datum/browser/popup = new(C.mob, "odyssey_panel", "Odyssey Panel", 720, 780, src)
+	var/datum/browser/popup = new(C.mob, "odyssey_panel", "Odyssey Panel", 760, 820, src)
 	popup.set_content(jointext(dat, null))
 	popup.open()
 
@@ -408,9 +807,14 @@ var/global/datum/odyssey_panel/odyssey_panel
 		if (islist(econ?["departments"]))
 			dept_count = length(econ["departments"])
 		out["count"] = (econ?["station"] ? 1 : 0) + dept_count
+	else if (kind == "research")
+		var/list/research = data["data"]
+		out["count"] = islist(research?["active_briefs"]) ? length(research["active_briefs"]) : 0
 	else if (kind == "newscast")
 		var/list/news = data["data"]
 		out["count"] = islist(news?["channels"]) ? length(news["channels"]) : 0
+	else if (kind == "chronicle")
+		out["count"] = islist(data["entries"]) ? length(data["entries"]) : 0
 	else if (islist(data["entries"]))
 		out["count"] = length(data["entries"])
 	return out

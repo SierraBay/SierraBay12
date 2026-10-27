@@ -64,8 +64,26 @@ var/global/datum/odyssey_state/odyssey
 	var/ninja_shift_decision
 	/// Rolled changeling count for this lobby (1-2) while Odyssey is active.
 	var/changeling_shift_count
-	/// Shuttle names left behind off Sierra (Guppy/Charon/Petrov/Phaethon/escape pods).
+	/// Shuttle names left behind off Sierra (Guppy/Charon/Petrov/Phaethon/escape pods). Derived from shuttle_reports.
 	var/list/abandoned_shuttles
+	/// Tracked shuttle reports: name = {status=abandoned|damaged, damage, repair_cost, fee_pending}.
+	var/list/shuttle_reports
+	/// Campaign chronicle entries (list of assoc lists).
+	var/list/chronicle
+	/// Next chronicle event id suffix.
+	var/next_chronicle_id = 1
+	/// Deaths recorded into chronicle this shift (for public aggregate).
+	var/chronicle_deaths_this_shift = 0
+	/// Outcome already written to chronicle (avoid duplicate on save+finish).
+	var/outcome_chronicled = FALSE
+	/// Campaign-long contracts.
+	var/list/contracts
+	/// Per-shift objectives (history kept; active ones evaluated each roundend).
+	var/list/objectives
+	/// Next id suffix for contracts/objectives.
+	var/next_objective_id = 1
+	/// Campaign research progress (science briefs, notes) — research.json.
+	var/list/research
 	/// Last validation errors shown in the admin panel.
 	var/list/validation_errors
 	/// Temporary id → atom maps used during apply. Cleared after apply.
@@ -81,6 +99,11 @@ var/global/datum/odyssey_state/odyssey
 	roster = list()
 	sleepers = list()
 	abandoned_shuttles = list()
+	shuttle_reports = list()
+	chronicle = list()
+	contracts = list()
+	objectives = list()
+	research = null
 	validation_errors = list()
 
 
@@ -110,10 +133,12 @@ var/global/datum/odyssey_state/odyssey
 			machines[O.odyssey_persist_id] = O
 		else if (istype(O, /obj/structure))
 			structures[O.odyssey_persist_id] = O
+		CHECK_TICK
 	for (var/mob/living/exosuit/M in world)
 		if (QDELETED(M) || !M.odyssey_persist_id)
 			continue
 		mechs[M.odyssey_persist_id] = M
+		CHECK_TICK
 	state.persist_index_machinery = machines
 	state.persist_index_structures = structures
 	state.persist_index_mechs = mechs

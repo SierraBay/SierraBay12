@@ -65,11 +65,9 @@
 
 	odyssey_append_comm_ui_data(data, user)
 
-	var/width = 550
-	var/height = 420
-	if (current_status == ODYSSEY_COMM_STATE)
-		width = 1200
-		height = 820
+	// Fixed size for all tabs so the window does not jump when switching Command / Map / Briefing / Chronicle.
+	var/width = 1200
+	var/height = 820
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (ui)
 		ui.set_window_size(width, height)
@@ -95,6 +93,8 @@
 	var/list/drive_status = odyssey_bluespace_drive_status()
 	data["odyssey_drive"] = drive_status
 	data["odyssey_course"] = state.selected_sector_id ? odyssey_sector_display_name(state.selected_sector_id) : null
+	data["odyssey_chronicle"] = odyssey_chronicle_ui_entries(ODYSSEY_CHRONICLE_VIS_COMMAND)
+	data["odyssey_briefing"] = odyssey_build_briefing_ui(ODYSSEY_CHRONICLE_VIS_COMMAND)
 
 
 /datum/nano_module/program/comm/odyssey/Topic(href, href_list)

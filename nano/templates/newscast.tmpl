@@ -1,10 +1,171 @@
-{{if data.show_sector_map}}
+{{if data.show_briefing}}
+	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
+	<hr>
+<style>
+	.odBrief {
+		font-family: Verdana, Geneva, sans-serif;
+		line-height: 1.5;
+		color: #c8d4d0;
+		max-width: 52em;
+	}
+	.odBriefHead {
+		text-align: center;
+		margin: 0 0 12px 0;
+	}
+	.odBriefHead .ship {
+		font-size: 1.2em;
+		letter-spacing: 0.08em;
+		color: #85bab6;
+	}
+	.odBriefHead .title {
+		font-size: 1.05em;
+		color: #dce8e4;
+	}
+	.odBriefHead .classif {
+		font-size: 0.85em;
+		color: #7a9a96;
+		margin-top: 4px;
+	}
+	.odBrief h4 {
+		color: #85bab6;
+		border-bottom: 1px solid #335555;
+		padding-bottom: 4px;
+		margin: 14px 0 8px 0;
+	}
+	.odBrief .quote {
+		font-style: italic;
+		color: #a8c0bc;
+	}
+	.odBrief .note {
+		font-size: 0.9em;
+		color: #889999;
+	}
+	.odBrief .clip {
+		margin: 0 0 10px 0;
+		padding: 6px 8px;
+		background: rgba(0,0,0,0.2);
+		border-left: 3px solid #5588aa;
+	}
+	.odBriefFoot {
+		margin-top: 14px;
+		font-size: 0.85em;
+		color: #667777;
+		text-align: center;
+	}
+</style>
+	{{if data.odyssey_briefing}}
+	<div class="odBrief">
+		<div class="odBriefHead">
+			<div class="ship"><b>SEV SIERRA</b></div>
+			<div class="title"><b>Брифинг экспедиции «Одиссея»</b></div>
+			<div class="classif">Секретно · для личного состава</div>
+		</div>
+
+		<h4>Обстановка</h4>
+		<p>
+			Смена экспедиции: <b>{{:data.odyssey_briefing.shift}}</b><br>
+			Глубина маршрута (эшелон): <b>{{:data.odyssey_briefing.echelon}}</b> из <b>{{:data.odyssey_briefing.max_shifts}}</b><br>
+			Текущий сектор: <b>«{{:data.odyssey_briefing.sector_name}}»</b>
+			{{if data.odyssey_briefing.danger_label}} — класс угрозы: <b>{{:data.odyssey_briefing.danger_label}}</b>{{/if}}
+		</p>
+		{{if data.odyssey_briefing.summary}}<p class="quote">«{{:data.odyssey_briefing.summary}}»</p>{{/if}}
+		<p>{{:data.odyssey_briefing.course}}</p>
+
+		<h4>Задание</h4>
+		<p><b>Контракт экспедиции:</b></p>
+		{{for data.odyssey_briefing.contracts}}
+			<p><b>{{:value.title}}</b><br>
+			{{if value.brief}}<span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Активный контракт экспедиции не указан.</i></p>
+		{{/for}}
+		<p><b>Цели текущей смены:</b></p>
+		{{for data.odyssey_briefing.objectives}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — исполнение: {{:value.progress}} из {{:value.target}}{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Отдельных целей смены в брифинге нет.</i></p>
+		{{/for}}
+		<p><b>Научный бриф сектора:</b></p>
+		{{for data.odyssey_briefing.science_briefs}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> cr{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Научных брифов на эту смену нет.</i></p>
+		{{/for}}
+		<p><b>Брифы отделов:</b></p>
+		{{for data.odyssey_briefing.dept_briefs}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
+			{{if value.target_dept_label}} · отдел: {{:value.target_dept_label}}{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> cr{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Брифов отделов на эту смену нет.</i></p>
+		{{/for}}
+
+		<h4>Личный состав</h4>
+		<p>{{:data.odyssey_briefing.personnel}}</p>
+		{{if data.odyssey_briefing.dead}}
+			<p><b>Потери, зафиксированные в журнале:</b></p>
+			{{for data.odyssey_briefing.dead_roster}}
+				• {{:value.name}} — {{:value.job}}{{if value.death_shift}} <span class="note">(смена {{:value.death_shift}})</span>{{/if}}<br>
+			{{/for}}
+			<p class="note">Места погибших членов экипажа закрыты до конца экспедиции.</p>
+		{{/if}}
+
+		<h4>Флот и техника</h4>
+		<p><b>Шаттлы, не вернувшиеся на Сьерру:</b></p>
+		{{for data.odyssey_briefing.abandoned_shuttles}}
+			• <b>{{:value}}</b><br>
+		{{empty}}
+			<p>Потерь вспомогательного флота не отмечено.</p>
+		{{/for}}
+		<p><b>Повреждённые единицы:</b></p>
+		{{for data.odyssey_briefing.damaged_shuttles}}
+			• {{:value.line}}<br>
+		{{empty}}
+			<p>Критических повреждений шаттлов в отчёте нет.</p>
+		{{/for}}
+
+		<h4>Из бортового журнала</h4>
+		{{for data.odyssey_briefing.headlines}}
+			<div class="clip">
+				<b>{{:value.title}}</b><br>
+				<span class="note">Смена {{:value.shift}} · {{:value.at}}</span>
+				{{if value.body}}<br>{{:value.body}}{{/if}}
+			</div>
+		{{empty}}
+			<p class="note"><i>Публичных записей пока нет.</i></p>
+		{{/for}}
+
+		<div class="odBriefFoot">— Конец брифинга. Полный журнал: вкладка Chronicle —</div>
+	</div>
+	{{/if}}
+{{else data.show_chronicle}}
+	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
+	<hr>
+	<h3>Бортовой журнал экспедиции</h3>
+	{{for data.odyssey_chronicle}}
+		<div style="margin:0 0 12px 0; padding:8px; border-left:3px solid #5588aa; background:rgba(0,0,0,0.15);">
+			<b>{{:value.title}}</b><br>
+			<font size=1>Смена {{:value.shift}} · {{:value.at}}</font><br>
+			{{if value.body}}{{:value.body}}{{/if}}
+		</div>
+	{{empty}}
+		<p><i>В журнале пока нет записей.</i></p>
+	{{/for}}
+{{else data.show_sector_map}}
 	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
 	<hr>
 	<!-- Odyssey Sector Map (public read-only in Newscast) -->
 <style>
 	.odysseyShell {
 		position: relative;
+		width: 100%;
 		height: 560px;
 		overflow: hidden;
 		box-sizing: border-box;
@@ -24,9 +185,9 @@
 		background: repeating-linear-gradient(to bottom, rgba(255,255,255,.04) 0px, rgba(255,255,255,.04) 1px, transparent 1px, transparent 3px);
 	}
 	.odysseyTitle { position: absolute; z-index: 4; top: 10px; left: 14px; font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 3px 3px 0 #000; }
-	.odysseyStatus { position: absolute; z-index: 4; top: 40px; left: 14px; font-size: 11px; color: #c8c0b8; }
-	.odysseyMap { position: absolute; z-index: 1; left: 0; right: 260px; top: 0; bottom: 48px; }
-	.odysseySvg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+	.odysseyStatus { position: absolute; z-index: 4; top: 40px; left: 14px; right: 260px; font-size: 11px; color: #c8c0b8; }
+	.odysseyMap { position: absolute; z-index: 1; left: 8px; right: 8px; top: 70px; bottom: 48px; overflow: hidden; }
+	.odysseySvg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
 	.odysseyNode {
 		position: absolute; z-index: 2; width: 16px; height: 16px; margin-left: -8px; margin-bottom: -8px;
 		border-radius: 50%; box-sizing: border-box; border: 1px solid rgba(0,0,0,.55); pointer-events: none;
@@ -59,7 +220,8 @@
 	}
 	.odysseyLabel {
 		position: absolute; z-index: 5; margin-left: 18px; margin-bottom: -10px; padding: 3px 7px;
-		white-space: nowrap; border: 1px solid #d8d8d8; background: #0a0a0a; color: #fff; font-size: 11px;
+		max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+		border: 1px solid #d8d8d8; background: #0a0a0a; color: #fff; font-size: 11px;
 	}
 	.odysseyLabel .link, .odysseyLabel a {
 		color: #fff !important; background: transparent !important; border: 0 !important;
@@ -71,7 +233,7 @@
 		pointer-events: none;
 	}
 	.odysseyDossier {
-		position: absolute; z-index: 4; top: 64px; right: 8px; bottom: 48px; width: 240px; padding: 10px;
+		position: absolute; z-index: 7; top: 64px; right: 8px; bottom: 48px; width: 240px; padding: 10px;
 		box-sizing: border-box; border: 1px solid #9a9a9a; border-radius: 8px; background: rgba(10,8,8,.94);
 		overflow: auto; font-size: 12px; line-height: 1.4;
 	}
@@ -183,6 +345,12 @@
 				<tr>
 				<td>{{:helper.link("Sector Map", "image", {'view_sector_map' : 1})}}
 				<td><i>Live navigational brief for Sierra's current expedition.</i>
+				<tr>
+				<td>{{:helper.link("Briefing", "clipboard", {'view_briefing' : 1})}}
+				<td><i>Expedition status, objectives, losses, shuttles.</i>
+				<tr>
+				<td>{{:helper.link("Chronicle", "book", {'view_chronicle' : 1})}}
+				<td><i>Бортовой журнал экспедиции.</i>
 			</table>
 		{{/if}}
 		<h3><u>Connected channels</u></h3>

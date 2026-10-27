@@ -47,6 +47,13 @@
 		state.ninja_shift_decision = null
 		state.changeling_shift_count = 0
 		state.abandoned_shuttles = list()
+		state.shuttle_reports = list()
+		state.chronicle = list()
+		state.next_chronicle_id = 1
+		state.chronicle_deaths_this_shift = 0
+		state.contracts = list()
+		state.objectives = list()
+		state.next_objective_id = 1
 		state.next_object_id = 1
 		state.validation_errors = odyssey_validate_graph(state.sector_graph)
 		if (length(state.validation_errors))
@@ -56,6 +63,26 @@
 	if (announce)
 		to_world(SPAN_NOTICE("<b>Одиссея [continued ? "продолжается" : "начинается"]. Смена [state.shift_number].</b>"))
 	log_game("ODYSSEY: begin active=[state.active] continued=[continued] shift=[state.shift_number] id=[state.campaign_id]")
+	// Switch prefs to the Odyssey persist lane so lobby locks/UI match the campaign file.
+	character_persist_reload_connected_snapshots()
+	if (continued)
+		odyssey_chronicle_append(
+			ODYSSEY_CHRONICLE_KIND_CONTINUE,
+			"Кампания продолжается",
+			"Смена [state.shift_number]. Сектор: [odyssey_sector_display_name(state.current_sector_id)].",
+			ODYSSEY_CHRONICLE_VIS_PUBLIC,
+			list("sector" = state.current_sector_id, "shift" = state.shift_number)
+		)
+	else
+		odyssey_chronicle_append(
+			ODYSSEY_CHRONICLE_KIND_START,
+			"Одиссея началась",
+			"Кампания [state.campaign_id]. Маршруты эшелона [state.min_shifts]–[state.max_shifts].",
+			ODYSSEY_CHRONICLE_VIS_PUBLIC,
+			list("campaign_id" = state.campaign_id)
+		)
+		odyssey_ensure_campaign_contract()
+	odyssey_refresh_lobby_titlescreens()
 	return TRUE
 
 
@@ -95,9 +122,17 @@
 	state.raider_shift_decision = null
 	state.ninja_shift_decision = null
 	state.changeling_shift_count = 0
-	var/list/saved_abandoned = meta["abandoned_shuttles"]
-	state.abandoned_shuttles = islist(saved_abandoned) ? saved_abandoned.Copy() : list()
+	odyssey_load_shuttle_reports(meta)
 	state.next_object_id = max(1, meta["next_object_id"] || 1)
+	state.next_chronicle_id = max(1, meta["next_chronicle_id"] || 1)
+	state.next_objective_id = max(1, meta["next_objective_id"] || 1)
+	state.chronicle_deaths_this_shift = 0
+	var/list/saved_contracts = meta["contracts"]
+	state.contracts = islist(saved_contracts) ? saved_contracts.Copy() : list()
+	var/list/saved_objectives = meta["objectives"]
+	state.objectives = islist(saved_objectives) ? saved_objectives.Copy() : list()
+	var/list/chronicle_data = odyssey_read_json(odyssey_snapshot_path("chronicle", state.save_generation))
+	odyssey_apply_chronicle(chronicle_data?["entries"], TRUE)
 	state.validation_errors = odyssey_validate_graph(state.sector_graph)
 	if (length(state.validation_errors))
 		state.active = FALSE
@@ -156,7 +191,12 @@
 		"merc_used_shift" = state.merc_used_shift,
 		"merc_used_reason" = state.merc_used_reason,
 		"abandoned_shuttles" = state.abandoned_shuttles,
-		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses")
+		"shuttle_reports" = state.shuttle_reports,
+		"next_chronicle_id" = state.next_chronicle_id,
+		"next_objective_id" = state.next_objective_id,
+		"contracts" = state.contracts,
+		"objectives" = state.objectives,
+		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses", "chronicle")
 	)
 
 
@@ -272,19 +312,60 @@
 			errors += "corpses.json повреждён"
 		else if (expected_generation && corpses_data["generation"] != expected_generation)
 			errors += "corpses.json относится к другой генерации"
+	var/chronicle_path = odyssey_snapshot_path("chronicle", expected_generation)
+	if (fexists(chronicle_path))
+		var/list/chronicle_data = odyssey_read_json(chronicle_path)
+		if (!islist(chronicle_data))
+			errors += "chronicle.json повреждён"
+		else if (expected_generation && chronicle_data["generation"] != expected_generation)
+			errors += "chronicle.json относится к другой генерации"
+	var/research_path = odyssey_snapshot_path("research", expected_generation)
+	if (fexists(research_path))
+		var/list/research_data = odyssey_read_json(research_path)
+		if (!islist(research_data))
+			errors += "research.json повреждён"
+		else if (expected_generation && research_data["generation"] != expected_generation)
+			errors += "research.json относится к другой генерации"
 	return errors
+
+
+/proc/odyssey_chronicle_campaign_outcome(status, reason)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (state.outcome_chronicled)
+		return
+	state.outcome_chronicled = TRUE
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_OUTCOME,
+		"Кампания завершена: [status]",
+		"Причина: [reason || "не указана"].",
+		ODYSSEY_CHRONICLE_VIS_PUBLIC,
+		list("status" = status, "reason" = reason)
+	)
 
 
 /proc/odyssey_finish_campaign(status, reason)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/list/stats = null
+	if (state.active)
+		odyssey_chronicle_note_shift_losses()
+		odyssey_evaluate_objectives(list("status" = status, "reason" = reason))
+		odyssey_science_expire_active_briefs("campaign_end")
+		odyssey_dept_expire_active_briefs("campaign_end")
+		odyssey_chronicle_campaign_outcome(status, reason)
+		stats = odyssey_publish_campaign_stats(status, reason)
 	state.status = status
 	state.outcome_reason = reason
 	state.active = FALSE
 	var/list/meta = odyssey_state_meta(FALSE)
 	meta["archived_at"] = time2text(world.realtime, "YYYY-MM-DD hh:mm")
 	meta["archive_reason"] = reason
+	if (islist(stats))
+		meta["campaign_stats"] = stats
 	odyssey_write_meta(meta)
 	log_game("ODYSSEY: campaign finished status=[status] reason=[reason]")
+	// Back to the normal persist lane; Odyssey body file is left on disk untouched.
+	character_persist_reload_connected_snapshots()
+	odyssey_refresh_lobby_titlescreens()
 	return TRUE
 
 
@@ -325,14 +406,34 @@
 	odyssey_sync_roster_for_save()
 	odyssey_collect_abandoned_shuttles()
 	odyssey_ensure_data_dir()
+
+	// Chronicle shift closure before generation bump / sector hop bookkeeping.
+	var/list/outcome = force ? null : odyssey_roundend_outcome()
+	if (!force)
+		odyssey_evaluate_objectives(outcome)
+		odyssey_chronicle_note_shift_losses()
+		if (outcome)
+			odyssey_chronicle_campaign_outcome(outcome["status"], outcome["reason"])
+		else if (!state.transition_committed)
+			// Jump chronicle entry is written at BSD commit when transition_committed.
+			odyssey_chronicle_append(
+				ODYSSEY_CHRONICLE_KIND_SHIFT_END,
+				"Смена экипажа в секторе",
+				"Корабль остаётся в «[odyssey_sector_display_name(state.current_sector_id)]». Смена [state.shift_number] → [state.shift_number + 1].",
+				ODYSSEY_CHRONICLE_VIS_PUBLIC,
+				list("sector" = state.current_sector_id)
+			)
+
 	var/generation = "[state.campaign_id]-[world.realtime]-[world.time]"
 	var/list/turfs = odyssey_collect_turfs()
 	var/list/machinery = odyssey_collect_machinery()
 	var/list/structures = odyssey_collect_structures()
 	var/list/mechs = odyssey_collect_mechs()
 	var/list/economy = odyssey_collect_economy()
+	var/list/research = odyssey_collect_research()
 	var/list/newscast = odyssey_collect_newscast(generation)
 	var/list/corpses = odyssey_collect_corpses()
+	var/list/chronicle = odyssey_collect_chronicle()
 	var/list/common = list("version" = ODYSSEY_VERSION, "campaign_id" = state.campaign_id, "generation" = generation)
 	var/success = TRUE
 	success = odyssey_write_json(odyssey_snapshot_path("turfs", generation), common + list("entries" = turfs)) && success
@@ -340,16 +441,18 @@
 	success = odyssey_write_json(odyssey_snapshot_path("structures", generation), common + list("entries" = structures)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("mechs", generation), common + list("entries" = mechs)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("economy", generation), common + list("data" = economy)) && success
+	success = odyssey_write_json(odyssey_snapshot_path("research", generation), common + list("data" = research)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("roster", generation), common + list("entries" = state.roster)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("newscast", generation), common + list("data" = newscast)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("corpses", generation), common + list("entries" = corpses)) && success
+	success = odyssey_write_json(odyssey_snapshot_path("chronicle", generation), common + list("entries" = chronicle)) && success
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
 		return FALSE
 
 	// Transfer/shift-end stays in the current sector and does not consume a graph hop.
 	// Odyssey Jump still increments shift_number on continue via transition_committed.
-	if (!force && !state.transition_committed && !odyssey_roundend_outcome())
+	if (!force && !state.transition_committed && !outcome)
 		state.shift_number++
 		log_game("ODYSSEY: same-sector crew shift=[state.shift_number] echelon=[odyssey_campaign_echelon(state)] sector=[state.current_sector_id]")
 
@@ -358,7 +461,7 @@
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
 		return FALSE
 	state.save_generation = generation
-	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] corpses=[length(corpses)] force=[force]")
+	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] corpses=[length(corpses)] chronicle=[length(chronicle)] force=[force]")
 	to_world(SPAN_NOTICE("<b>Состояние Одиссеи сохранено (смена [state.shift_number]).</b>"))
 	return TRUE
 
@@ -384,8 +487,10 @@
 	var/list/structures = odyssey_read_json(odyssey_snapshot_path("structures", generation))
 	var/list/mechs = odyssey_read_json(odyssey_snapshot_path("mechs", generation))
 	var/list/economy = odyssey_read_json(odyssey_snapshot_path("economy", generation))
+	var/list/research = odyssey_read_json(odyssey_snapshot_path("research", generation))
 	var/list/newscast = odyssey_read_json(odyssey_snapshot_path("newscast", generation))
 	var/list/corpses = odyssey_read_json(odyssey_snapshot_path("corpses", generation))
+	var/list/chronicle = odyssey_read_json(odyssey_snapshot_path("chronicle", generation))
 
 	odyssey_apply_turfs(turfs?["entries"])
 	odyssey_build_persist_index()
@@ -394,33 +499,17 @@
 	odyssey_apply_mechs(mechs?["entries"])
 	odyssey_clear_persist_index()
 	odyssey_apply_economy(economy?["data"])
+	odyssey_apply_research(research?["data"])
+	// After economy restore: charge pending shuttle repair fees once per continue.
+	odyssey_apply_shuttle_repair_fees()
 	odyssey_apply_newscast(newscast?["data"], state.save_generation)
 	odyssey_apply_corpses(corpses?["entries"])
+	odyssey_apply_chronicle(chronicle?["entries"], force)
 
 	log_game("ODYSSEY: applied save campaign=[state.campaign_id] shift=[state.shift_number] force=[force]")
 	return TRUE
 
 
-/// Called from SSticker pregame. Starts start/continue vote once per lobby.
+/// Legacy hook from SSticker pregame. Odyssey votes are started from the lobby Odyssey button / admin panel.
 /proc/odyssey_pregame_consider_vote()
-	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (state.pregame_vote_done)
-		return
-	if (GAME_STATE >= RUNLEVEL_SETUP)
-		return
-	if (SSvote?.active_vote)
-		return
-
-	var/list/lobby = SSticker?.lobby_players()
-	var/players = length(lobby)
-	if (players < ODYSSEY_MIN_YES_VOTES)
-		return
-
-	var/has_campaign = odyssey_campaign_exists()
-	var/started = FALSE
-	if (has_campaign)
-		started = SSvote.initiate_vote(/datum/vote/odyssey_continue, automatic = 1)
-	else
-		started = SSvote.initiate_vote(/datum/vote/odyssey_start, automatic = 1)
-	if (started)
-		state.pregame_vote_done = TRUE
+	return

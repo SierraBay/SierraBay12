@@ -75,6 +75,24 @@
 		if (state.vars[decision_var] == ODYSSEY_OUTSIDER_DECISION_SPAWN)
 			log_game("ODYSSEY: [antag_id] queued but none spawned")
 		return
+	var/already_noted = FALSE
+	for (var/list/entry in state.chronicle)
+		if (!islist(entry) || entry["kind"] != ODYSSEY_CHRONICLE_KIND_HOSTILE)
+			continue
+		if (entry["shift"] != state.shift_number)
+			continue
+		var/list/refs = entry["refs"]
+		if (islist(refs) && refs["antag"] == antag_id)
+			already_noted = TRUE
+			break
+	if (!already_noted)
+		odyssey_chronicle_append(
+			ODYSSEY_CHRONICLE_KIND_HOSTILE,
+			"Враждебный контакт: [antag.role_text_plural]",
+			"Сектор «[odyssey_sector_display_name(state.current_sector_id)]». Отмечено прибытие: [spawned].",
+			ODYSSEY_CHRONICLE_VIS_PUBLIC,
+			list("antag" = antag_id, "spawned" = spawned, "sector" = state.current_sector_id)
+		)
 	log_and_message_admins("ODYSSEY: [antag.role_text_plural] spawned ([spawned]) on hostile sector [state.current_sector_id].")
 	log_game("ODYSSEY: [antag_id] spawned=[spawned] sector=[state.current_sector_id] decision=[state.vars[decision_var]]")
 

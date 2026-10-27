@@ -1,3 +1,8 @@
+/// Station-relative date/time for IC surfaces (chronicle, briefing, lobby).
+/proc/odyssey_ic_timestamp()
+	return "[stationdate2text()] [stationtime2text()]"
+
+
 /proc/odyssey_area_persistable(area/A)
 	if (!istype(A))
 		return FALSE
@@ -107,25 +112,24 @@
 	var/list/structures = list()
 	var/list/ordinals = list()
 	for (var/obj/O in world)
-		if (!odyssey_atom_persistable(O))
-			continue
 		var/kind
-		if (istype(O, /obj/machinery) && odyssey_machinery_whitelisted(O))
-			kind = "machinery"
-		else if (istype(O, /obj/structure) && odyssey_structure_whitelisted(O))
-			kind = "structure"
-		else
-			continue
-		var/turf/T = get_turf(O)
-		var/base_key = "[kind]:[O.type]@[odyssey_coord_key(T.x, T.y, T.z)]"
-		var/ordinal = (ordinals[base_key] || 0) + 1
-		ordinals[base_key] = ordinal
-		O.odyssey_persist_id = "mapped:[base_key]#[ordinal]"
-		var/list/entry = kind == "structure" ? odyssey_structure_snapshot(O) : odyssey_base_object_entry(O)
-		if (kind == "machinery")
-			machines[O.odyssey_persist_id] = entry
-		else
-			structures[O.odyssey_persist_id] = entry
+		if (odyssey_atom_persistable(O))
+			if (istype(O, /obj/machinery) && odyssey_machinery_whitelisted(O))
+				kind = "machinery"
+			else if (istype(O, /obj/structure) && odyssey_structure_whitelisted(O))
+				kind = "structure"
+		if (kind)
+			var/turf/T = get_turf(O)
+			var/base_key = "[kind]:[O.type]@[odyssey_coord_key(T.x, T.y, T.z)]"
+			var/ordinal = (ordinals[base_key] || 0) + 1
+			ordinals[base_key] = ordinal
+			O.odyssey_persist_id = "mapped:[base_key]#[ordinal]"
+			var/list/entry = kind == "structure" ? odyssey_structure_snapshot(O) : odyssey_base_object_entry(O)
+			if (kind == "machinery")
+				machines[O.odyssey_persist_id] = entry
+			else
+				structures[O.odyssey_persist_id] = entry
+		CHECK_TICK
 	state.machinery_baseline = machines
 	state.structure_baseline = structures
 	log_debug("ODYSSEY: object baseline machinery=[length(machines)] structures=[length(structures)]")

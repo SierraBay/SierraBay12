@@ -40,40 +40,10 @@
 	var/list/meta = odyssey_read_json(odyssey_meta_path())
 	if (!islist(meta))
 		return null
-	var/version = meta["version"] || 1
-	if (version == ODYSSEY_VERSION)
-		return meta
-	if (version == 1)
-		return odyssey_migrate_meta_v1(meta)
-	log_error("ODYSSEY: unsupported save version [version] (current [ODYSSEY_VERSION])")
-	return null
-
-
-/proc/odyssey_migrate_meta_v1(list/old_meta)
-	var/list/meta = old_meta.Copy()
-	var/seed = "[old_meta["campaign_id"] || odyssey_map_key()]"
-	var/list/graph = odyssey_generate_sector_graph(seed)
-	var/shift = clamp(old_meta["shift_number"] || 1, 1, ODYSSEY_MAX_SHIFTS)
-	var/current_id = ODYSSEY_SECTOR_START
-	if (shift == 2)
-		current_id = "route_2_long"
-	else if (shift == 3)
-		current_id = "route_3_long"
-	else if (shift == 4)
-		current_id = "route_4_long"
-	else if (shift >= 5)
-		current_id = "finish_5"
-	meta["version"] = ODYSSEY_VERSION
-	meta["status"] = old_meta["active"] ? ODYSSEY_STATUS_ACTIVE : ODYSSEY_STATUS_ADMIN_ABORTED
-	meta["campaign_seed"] = seed
-	meta["min_shifts"] = ODYSSEY_MIN_SHIFTS
-	meta["max_shifts"] = ODYSSEY_MAX_SHIFTS
-	meta["sector_graph"] = graph
-	meta["current_sector_id"] = current_id
-	meta["selected_sector_id"] = null
-	meta["transition_committed"] = FALSE
-	meta["route_history"] = list(ODYSSEY_SECTOR_START)
-	meta["migrated_from"] = 1
+	var/version = meta["version"] || 0
+	if (version != ODYSSEY_VERSION)
+		log_error("ODYSSEY: unsupported save version [version] (current [ODYSSEY_VERSION])")
+		return null
 	return meta
 
 
@@ -92,6 +62,7 @@
 	meta["archive_reason"] = reason
 	odyssey_write_meta(meta)
 	log_game("ODYSSEY: campaign archived status=[status] reason=[reason]")
+	odyssey_refresh_lobby_titlescreens()
 
 
 /// Admin-only: mark an archived campaign active again so continue can load it.
@@ -107,6 +78,7 @@
 	if (!odyssey_write_meta(meta))
 		return FALSE
 	log_game("ODYSSEY: campaign reactivated id=[meta["campaign_id"]]")
+	odyssey_refresh_lobby_titlescreens()
 	return TRUE
 
 

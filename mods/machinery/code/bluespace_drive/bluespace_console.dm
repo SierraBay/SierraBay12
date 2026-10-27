@@ -103,6 +103,7 @@
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	linked_drive.append_operator_ui(user, data)
 	odyssey_drive_append_ui(linked_drive, data)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -140,6 +141,21 @@
 		var/new_ang = input(user, "Enter jump angle (1-89 degrees):", "Set Angle", linked_drive.angle) as num|null
 		if(!isnull(new_ang))
 			linked_drive.set_angle(new_ang)
+		return TOPIC_REFRESH
+
+	if(href_list["set_coords"])
+		linked_drive.prompt_jump_coordinates(user)
+		return TOPIC_REFRESH
+
+	if(href_list["clear_coords"])
+		if(!linked_drive.can_set_jump_coordinates(user))
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+			return TOPIC_HANDLED
+		if(linked_drive.jumping || linked_drive.jump_locked)
+			to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+			return TOPIC_HANDLED
+		linked_drive.clear_manual_destination()
+		to_chat(user, SPAN_NOTICE("Coordinate lock cleared. Drive will use ballistic rotation/angle."))
 		return TOPIC_REFRESH
 
 	if(href_list["jump"])

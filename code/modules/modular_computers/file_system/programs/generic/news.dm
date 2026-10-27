@@ -1,6 +1,8 @@
 #define NEWSCAST_HOME 1
 #define NEWSCAST_VIEW_CHANNEL 2
 #define NEWSCAST_SECTOR_MAP 3
+#define NEWSCAST_CHRONICLE 4
+#define NEWSCAST_BRIEFING 5
 
 /datum/computer_file/program/newscast
 	filename = "newscast"
@@ -31,6 +33,12 @@
 
 /// Mods may override to expose an expedition / sector map tab.
 /datum/nano_module/program/newscast/proc/newscast_has_sector_map()
+	return FALSE
+
+/datum/nano_module/program/newscast/proc/newscast_has_chronicle()
+	return FALSE
+
+/datum/nano_module/program/newscast/proc/newscast_has_briefing()
 	return FALSE
 
 /datum/nano_module/program/newscast/proc/newscast_append_sector_data(list/data, mob/user)
@@ -75,6 +83,20 @@
 		if (!newscast_has_sector_map())
 			return TRUE
 		prog_state = NEWSCAST_SECTOR_MAP
+		active_channel = null
+		return TRUE
+
+	else if (href_list["view_chronicle"])
+		if (!newscast_has_chronicle())
+			return TRUE
+		prog_state = NEWSCAST_CHRONICLE
+		active_channel = null
+		return TRUE
+
+	else if (href_list["view_briefing"])
+		if (!newscast_has_briefing())
+			return TRUE
+		prog_state = NEWSCAST_BRIEFING
 		active_channel = null
 		return TRUE
 
@@ -156,24 +178,26 @@
 
 	data["prog_state"] = prog_state
 	newscast_append_sector_data(data, user)
-	if (prog_state == NEWSCAST_SECTOR_MAP && !data["odyssey_active"])
+	if ((prog_state == NEWSCAST_SECTOR_MAP || prog_state == NEWSCAST_CHRONICLE || prog_state == NEWSCAST_BRIEFING) && !data["odyssey_active"])
 		prog_state = NEWSCAST_HOME
 		data["prog_state"] = NEWSCAST_HOME
 	data["show_sector_map"] = (prog_state == NEWSCAST_SECTOR_MAP && data["odyssey_active"])
+	data["show_chronicle"] = (prog_state == NEWSCAST_CHRONICLE && data["odyssey_active"])
+	data["show_briefing"] = (prog_state == NEWSCAST_BRIEFING && data["odyssey_active"])
 	var/compact_map = FALSE
 	if (program?.computer)
 		compact_map = !!(program.computer.get_hardware_flag() & (PROGRAM_PDA | PROGRAM_TABLET))
 	data["odyssey_compact"] = compact_map
 
-	var/width = compact_map ? 540 : 450
-	var/height = compact_map ? 680 : 600
-	if (prog_state == NEWSCAST_SECTOR_MAP)
-		if (compact_map)
-			width = 560
-			height = 740
-		else
-			width = 1000
-			height = 720
+	// Keep a stable window size across Odyssey tabs so the UI does not jump.
+	var/width = 450
+	var/height = 600
+	if (compact_map)
+		width = 560
+		height = 740
+	else if (data["odyssey_active"] || prog_state == NEWSCAST_SECTOR_MAP || prog_state == NEWSCAST_CHRONICLE || prog_state == NEWSCAST_BRIEFING)
+		width = 1000
+		height = 720
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (ui)

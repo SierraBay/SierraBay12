@@ -179,23 +179,22 @@
 	if (!istype(CR) || !istype(H))
 		return
 	var/datum/preferences/prefs = character_persist_prefs_of(H.character_persist_ckey)
-	if (!prefs || !prefs.character_persist_is_locked())
-		return
-	var/list/snapshot = prefs.character_persist_snapshot
-	if (!islist(snapshot))
-		return
-	if (prefs.character_persist_med_autofill && !isnull(snapshot["med_record"]))
-		CR.set_medRecord(snapshot["med_record"])
-	if (!isnull(snapshot["sec_record"]))
-		CR.set_secRecord(snapshot["sec_record"])
-	if (!isnull(snapshot["gen_record"]))
-		CR.set_emplRecord(snapshot["gen_record"])
-	var/status = snapshot["physical_status"]
-	if (status && (status in GLOB.physical_statuses))
-		CR.set_status(status)
-	var/sec_status = snapshot["criminal_status"]
-	if (sec_status && (sec_status in GLOB.security_statuses))
-		CR.set_criminalStatus(sec_status)
+	if (prefs && prefs.character_persist_is_locked())
+		var/list/snapshot = prefs.character_persist_snapshot
+		if (islist(snapshot))
+			if (prefs.character_persist_med_autofill && !isnull(snapshot["med_record"]))
+				CR.set_medRecord(snapshot["med_record"])
+			if (!isnull(snapshot["sec_record"]))
+				CR.set_secRecord(snapshot["sec_record"])
+			if (!isnull(snapshot["gen_record"]))
+				CR.set_emplRecord(snapshot["gen_record"])
+			var/status = snapshot["physical_status"]
+			if (status && (status in GLOB.physical_statuses))
+				CR.set_status(status)
+			var/sec_status = snapshot["criminal_status"]
+			if (sec_status && (sec_status in GLOB.security_statuses))
+				CR.set_criminalStatus(sec_status)
+	// Odyssey roster wins over defaults from load_from_mob even without character_persist.
 	odyssey_apply_roster_records_to_crew_record(CR, H)
 
 

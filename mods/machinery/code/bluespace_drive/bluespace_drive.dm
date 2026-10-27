@@ -106,6 +106,10 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// Default: 150000 = 150 BSU (Bluespace Units) displayed in the UI.
 	var/overcharge_threshold = 150000
 
+	/// Minimum accumulated power for an Odyssey sector-transition jump. UI BSU = this / 1000.
+	/// Ballistic overmap hops do not use this; they only need fuel and a valid path.
+	var/odyssey_min_jump_power = 10000
+
 	/// Whether the current/last jump was an overcharge jump
 	var/overcharged = FALSE
 
@@ -146,6 +150,10 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	/// TRUE while the drive is passively draining stored gas after de-energizing
 	var/draining = FALSE
+
+	/// Direct overmap target locked by a Master engines operator. Null = ballistic rotation/angle.
+	var/manual_dest_x
+	var/manual_dest_y
 
 	pixel_x = -80
 	pixel_y = -80
@@ -199,7 +207,7 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	if(!powered())
 		if(energized)
-			toggle_energized()
+			toggle_energized(power_loss = TRUE)
 		return
 
 	// Pull gases from connected atmos network via adjacent pipes
@@ -303,40 +311,128 @@ var/global/list/bluespace_gas_power_factor = list(
 /obj/machinery/bluespace_drive/proc/get_jump_destination()
 	if(!linked)
 		return null
-	if(!fuel_gas.total_moles || !power_from_gas)
+	if(!fuel_gas.total_moles)
 		return null
 
 	var/turf/ship_turf = get_turf(linked)
-	var/jump_power = power_from_gas / 1000
+	var/turf/target_turf
+	if(!isnull(manual_dest_x) && !isnull(manual_dest_y))
+		target_turf = locate(manual_dest_x, manual_dest_y, linked.z)
+	else
+		// Moderator gas adds BSU range; phoron-only jumps still lock a short ballistic path.
+		var/jump_power = max(power_from_gas / 1000, 1)
+		var/effective_rotation = ((rotation + rotation_error) % 360 + 360) % 360
+		var/datum/projectile_data/proj_data = projectile_trajectory(linked.x, linked.y, effective_rotation, angle, jump_power)
+		var/osize = GLOB.using_map.overmap_size
+		var/dest_x = round(proj_data.dest_x)
+		var/dest_y = round(proj_data.dest_y)
+		dest_x = ((dest_x - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
+		dest_y = ((dest_y - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
+		target_turf = locate(dest_x, dest_y, linked.z)
 
-	var/effective_rotation = ((rotation + rotation_error) % 360 + 360) % 360
-	var/datum/projectile_data/proj_data = projectile_trajectory(linked.x, linked.y, effective_rotation, angle, max(jump_power, 1))
-
-	// Wrap-around: space is toroidal — coordinates wrap within 2..osize-1 (non-edge tiles).
-	var/osize = GLOB.using_map.overmap_size
-	var/dest_x = round(proj_data.dest_x)
-	var/dest_y = round(proj_data.dest_y)
-	dest_x = ((dest_x - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
-	dest_y = ((dest_y - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
-
-	var/turf/target_turf = locate(dest_x, dest_y, linked.z)
-
-	// Validate destination
-	if(!target_turf)
+	if(!is_valid_jump_turf(target_turf, ship_turf))
 		return null
-	if(!istype(target_turf, /turf/unsimulated/map))
-		return null
-	if(istype(target_turf, /turf/unsimulated/map/edge))
-		return null
-	if(target_turf == ship_turf)
-		return null
-
 	return target_turf
 
+
+/obj/machinery/bluespace_drive/proc/is_valid_jump_turf(turf/target_turf, turf/ship_turf)
+	if(!target_turf)
+		return FALSE
+	if(!istype(target_turf, /turf/unsimulated/map))
+		return FALSE
+	if(istype(target_turf, /turf/unsimulated/map/edge))
+		return FALSE
+	if(target_turf == ship_turf)
+		return FALSE
+	return TRUE
+
+
+/obj/machinery/bluespace_drive/proc/overmap_coord_min()
+	return 2
+
+
+/obj/machinery/bluespace_drive/proc/overmap_coord_max()
+	return max(2, (GLOB.using_map.overmap_size || 20) - 1)
+
+
+/obj/machinery/bluespace_drive/proc/can_set_jump_coordinates(mob/user)
+	return istype(user) && user.skill_check(SKILL_ENGINES, SKILL_MASTER)
+
+
+/obj/machinery/bluespace_drive/proc/clear_manual_destination()
+	manual_dest_x = null
+	manual_dest_y = null
+
+
+/obj/machinery/bluespace_drive/proc/set_manual_destination(new_x, new_y, mob/user)
+	if(jumping)
+		return FALSE
+	if(!can_set_jump_coordinates(user))
+		if(user)
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+		return FALSE
+	if(!linked)
+		if(user)
+			to_chat(user, SPAN_WARNING("The drive is not linked to a ship."))
+		return FALSE
+	var/min_c = overmap_coord_min()
+	var/max_c = overmap_coord_max()
+	if(!isnum(new_x) || !isnum(new_y))
+		return FALSE
+	new_x = round(new_x)
+	new_y = round(new_y)
+	if(new_x < min_c || new_x > max_c || new_y < min_c || new_y > max_c)
+		if(user)
+			to_chat(user, SPAN_WARNING("Coordinates must be inside the overmap ([min_c]–[max_c])."))
+		return FALSE
+	var/turf/target_turf = locate(new_x, new_y, linked.z)
+	if(!is_valid_jump_turf(target_turf, get_turf(linked)))
+		if(user)
+			to_chat(user, SPAN_WARNING("Those coordinates are not a valid jump path (edge, invalid turf, or current ship tile)."))
+		return FALSE
+	manual_dest_x = new_x
+	manual_dest_y = new_y
+	rotation_error = 0
+	if(user)
+		to_chat(user, SPAN_NOTICE("Jump coordinates locked: ([new_x], [new_y]). Ballistic rotation/angle is overridden until cleared."))
+	return TRUE
+
+
+/obj/machinery/bluespace_drive/proc/prompt_jump_coordinates(mob/user)
+	if(!can_set_jump_coordinates(user))
+		to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+		return
+	if(jumping || jump_locked)
+		to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+		return
+	var/min_c = overmap_coord_min()
+	var/max_c = overmap_coord_max()
+	var/default_x = !isnull(manual_dest_x) ? manual_dest_x : (linked ? linked.x : min_c)
+	var/default_y = !isnull(manual_dest_y) ? manual_dest_y : (linked ? linked.y : min_c)
+	var/new_x = input(user, "Overmap X ([min_c]–[max_c]):", "Set Jump Coordinates", default_x) as num|null
+	if(isnull(new_x) || QDELETED(src) || QDELETED(user))
+		return
+	var/new_y = input(user, "Overmap Y ([min_c]–[max_c]):", "Set Jump Coordinates", default_y) as num|null
+	if(isnull(new_y) || QDELETED(src) || QDELETED(user))
+		return
+	set_manual_destination(new_x, new_y, user)
+
+
+/obj/machinery/bluespace_drive/proc/append_operator_ui(mob/user, list/data)
+	if(!islist(data))
+		return
+	data["can_set_coords"] = can_set_jump_coordinates(user)
+	data["manual_dest"] = !isnull(manual_dest_x) && !isnull(manual_dest_y)
+	data["manual_dest_x"] = manual_dest_x
+	data["manual_dest_y"] = manual_dest_y
+	data["overmap_min"] = overmap_coord_min()
+	data["overmap_max"] = overmap_coord_max()
+
 /**
- * Toggles the energized state of the drive
+ * Toggles the energized state of the drive.
+ * Power loss de-energizes the coils but keeps stored fuel/moderator — blackouts should not vent the tanks.
  */
-/obj/machinery/bluespace_drive/proc/toggle_energized()
+/obj/machinery/bluespace_drive/proc/toggle_energized(power_loss = FALSE)
 	// Cannot power down while jump is locked (final 5 seconds before execution)
 	if(energized && jump_locked)
 		return
@@ -350,18 +446,27 @@ var/global/list/bluespace_gas_power_factor = list(
 	else
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		QDEL_NULL(drive_sound)
-		visible_message(SPAN_NOTICE("\The [src] powers down, the hum fading away."))
+		if(power_loss)
+			visible_message(SPAN_WARNING("\The [src] loses power. Field coils shut down; stored fuel remains in the tanks."))
+		else
+			visible_message(SPAN_NOTICE("\The [src] powers down, the hum fading away."))
 		set_light(0)
 
 		// If we're jumping, abort first (instant purge on abort is intentional)
 		if(jump_timer_id)
 			abort_jump()
-		// Otherwise, passively drain stored gas over time
-		else if(internal_gas.total_moles || fuel_gas.total_moles || power_from_gas > 0)
+		// Manual shutdown vents unused charge. Station blackout must not.
+		else if(!power_loss && (internal_gas.total_moles || fuel_gas.total_moles || power_from_gas > 0))
 			if(!draining)
 				invoke_async(src, PROC_REF(start_gradual_drain))
 
 	update_icon()
+
+
+/obj/machinery/bluespace_drive/power_change()
+	. = ..()
+	if(!powered() && energized)
+		toggle_energized(power_loss = TRUE)
 
 /**
  * Passively drains stored gas and accumulated power at 2% per 2 seconds after de-energizing.
@@ -432,6 +537,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(!isnum(new_rotation) || new_rotation < 0 || new_rotation > 359)
 		return
 	rotation = new_rotation
+	clear_manual_destination()
 
 /**
  * Sets the angle for the jump power
@@ -442,6 +548,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(!isnum(new_angle) || new_angle < 1 || new_angle > 89)
 		return
 	angle = new_angle
+	clear_manual_destination()
 
 /*
  * ===========================
@@ -485,6 +592,10 @@ var/global/list/bluespace_gas_power_factor = list(
 		rotation_error = 0
 		if(emergency_jump && user?.client)
 			to_chat(user, SPAN_DANGER("WARNING: Insufficient phoron for a stable Odyssey jump! Corridor lock may still succeed, but systems are stressed."))
+	else if(!isnull(manual_dest_x) && !isnull(manual_dest_y))
+		rotation_error = 0
+		if(emergency_jump && user?.client)
+			to_chat(user, SPAN_DANGER("WARNING: Insufficient phoron. Direct coordinate lock remains, but the field is stressed."))
 	else if(emergency_jump)
 		// Emergency jump: navigation is unreliable regardless of operator skill
 		rotation_error = rand(-45, 45)
@@ -513,7 +624,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	jumping = TRUE
 
 	// Admin logging
-	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Manual dest=[(!isnull(manual_dest_x) && !isnull(manual_dest_y)) ? "([manual_dest_x],[manual_dest_y])" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
 
 	// Announce the jump
 	if(odyssey_campaign_jump)
@@ -786,6 +897,7 @@ var/global/list/bluespace_gas_power_factor = list(
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	append_operator_ui(user, data)
 	odyssey_drive_append_ui(src, data)
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -820,6 +932,21 @@ var/global/list/bluespace_gas_power_factor = list(
 		var/new_ang = input(user, "Enter jump angle (1-89 degrees):", "Set Angle", angle) as num|null
 		if(!isnull(new_ang))
 			set_angle(new_ang)
+		return TOPIC_REFRESH
+
+	if(href_list["set_coords"])
+		prompt_jump_coordinates(user)
+		return TOPIC_REFRESH
+
+	if(href_list["clear_coords"])
+		if(!can_set_jump_coordinates(user))
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+			return TOPIC_HANDLED
+		if(jumping || jump_locked)
+			to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+			return TOPIC_HANDLED
+		clear_manual_destination()
+		to_chat(user, SPAN_NOTICE("Coordinate lock cleared. Drive will use ballistic rotation/angle."))
 		return TOPIC_REFRESH
 
 	if(href_list["jump"])

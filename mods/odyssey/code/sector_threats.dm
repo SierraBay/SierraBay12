@@ -120,6 +120,7 @@
 		var/turf/event_turf = get_turf(E)
 		if (E.odyssey_replaceable && event_turf && event_turf.z == z)
 			qdel(E)
+		CHECK_TICK
 
 	var/list/candidate_turfs = block(locate(OVERMAP_EDGE, OVERMAP_EDGE, z), locate(size - OVERMAP_EDGE, size - OVERMAP_EDGE, z))
 	candidate_turfs = where(candidate_turfs, GLOBAL_PROC_REF(can_not_locate), /obj/overmap/visitable)
@@ -148,6 +149,7 @@
 			hazard.odyssey_replaceable = TRUE
 			tiles_spawned++
 		clouds_spawned++
+		CHECK_TICK
 
 	var/event_delay = profile["event_delay"]
 	if (SSevent && event_delay)

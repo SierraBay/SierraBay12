@@ -11,6 +11,8 @@
 	var/character_persist_bonus_money
 	/// Absolute bank balance restored after setup_account when set (skips stacked shift bonuses).
 	var/odyssey_account_money
+	var/list/odyssey_account_transactions
+
 	/// Roster/corpse identity for Odyssey body persist.
 	var/odyssey_corpse_key
 	/// True while this body was spawned from Odyssey corpse save; skips death persist hooks.
