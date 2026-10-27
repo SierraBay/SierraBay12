@@ -39,7 +39,8 @@ GLOBAL_TYPED(error_cache, /datum/error_viewer/error_cache)
 /datum/error_viewer/proc/browse_to(client/user, html)
 	var/datum/browser/browser = new(user.mob, "error_viewer", null, 600, 400)
 	browser.set_content(html)
-	browser.add_head_content({"
+	// [SIERRA-EDIT] Aurora #20734 separates append and replace.
+	browser.set_head_content({"
 	<style>
 	.runtime
 	{
@@ -56,6 +57,7 @@ GLOBAL_TYPED(error_cache, /datum/error_viewer/error_cache)
 	}
 	</style>
 	"})
+	// [/SIERRA-EDIT]
 	browser.open()
 
 /datum/error_viewer/proc/build_header(datum/error_viewer/back_to, linear)
