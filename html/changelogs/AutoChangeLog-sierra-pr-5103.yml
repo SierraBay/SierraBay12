@@ -1,0 +1,13 @@
+author: Sirofsirs11
+changes:
+  - maptweak: Expeditionary Command has sent a checkers box to the Mess Hall to 
+      go with the board already there.
+  - bugfix: The checkers board now properly assigns itself as a machine to 
+      anyone who interacts with it. Or, in layman's terms, it automatically 
+      updates now.
+  - tweak: You now open the chess board with shift-click instead of alt-click.
+  - tweak: The SCG has reminded everyone that eating chess pieces is bad for 
+      your health. As such eating them is now impossible.
+  - rscadd: You can now draw multiple cards at once with the new Draw Multiple 
+      verb.
+delete-after: true
