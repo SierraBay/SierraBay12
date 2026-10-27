@@ -1,0 +1,17 @@
+<table style="width:100%"><tr><th>Order</th><th>Buyer / reason</th><th>Status</th><th>Total</th><th></th></tr>
+{{for data.orders}}
+ <tr class="candystripe"><td>{{:helper.link(value.id, 'search', {'view_order':value.id})}}</td><td>{{:value.buyer}}<br>{{:value.reason}}</td><td>{{:value.state}}</td><td>{{:value.total}} {{:data.currency}}</td><td>
+ {{if value.pending && data.manager}}{{:helper.link('Approve', 'check', {'approve':value.id})}}{{/if}}
+ {{if value.cancellable}}{{:helper.link('Cancel', 'trash', {'cancel':value.id})}}{{/if}}
+ {{:helper.link('Receipt', 'print', {'print':value.id})}}</td></tr>
+{{/for}}</table>
+{{if data.order_detail}}
+ <h3>Order {{:data.order_detail.id}}: {{:data.order_detail.state}}</h3><p>Buyer: {{:data.order_detail.buyer}}<br>Reason: {{:data.order_detail.reason}}</p>
+ <table style="width:100%"><tr><th>Vendor / category</th><th>Goods</th><th>Quantity</th><th>Unit price</th><th>Subtotal</th></tr>
+ {{for data.order_detail.items}}<tr class="candystripe"><td>{{:value.station}}<br>{{:value.category}}</td><td>{{:value.name}}</td><td>{{:value.quantity}}{{if value.stack_size}} stacks ({{:value.stack_size * value.quantity}} units){{/if}}</td><td>{{:value.unit_price}}</td><td>{{:value.subtotal}}</td></tr>{{/for}}</table>
+ <div class="notice">Goods: {{:data.order_detail.total}}; handling: {{:data.order_detail.fee}}; total: {{:data.order_detail.total + data.order_detail.fee}} {{:data.currency}}.</div>
+ {{:helper.link('Save as cart', 'disk', {'save_order':data.order_detail.id})}}
+ {{if data.order_detail.pending}}{{:helper.link('Edit reason', 'pencil', {'edit_reason':data.order_detail.id})}}{{/if}}
+ {{if data.order_detail.paid}}{{:helper.link('Deliver to selected receiver', 'suitcase', {'reroute':data.order_detail.id})}}{{/if}}
+ {{if data.manager}}{{:helper.link('Internal receipt', 'print', {'print':data.order_detail.id, 'internal':1})}}{{/if}}
+{{else}}<div class="notice">Select an order to review its goods, quantities and prices before approval.</div>{{/if}}

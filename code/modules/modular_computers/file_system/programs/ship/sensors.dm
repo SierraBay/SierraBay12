@@ -178,7 +178,7 @@
 					continue
 				potential_contacts |= nearby
 
-		for (var/obj/overmap/visitable/contact in sensors.objects_in_view)
+		for (var/obj/overmap/contact in sensors.objects_in_view) // [SIERRA-EDIT] TRADE: relays do not own visitable z-levels.
 			if (contact.scannable)
 				if (contact in sensors.contact_datums)
 					potential_contacts |= contact

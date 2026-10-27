@@ -1,0 +1,83 @@
+<style>
+ #tradeTreeContainer { position: relative; height: 500px; background: #111; border: 1px solid #40628a; overflow: hidden; }
+ .tradeTreeIconBox { position: relative; width: 64px; height: 46px; box-sizing: border-box; padding: 4px !important; text-align: center; border: 2px solid #7799bb; background: #263849; z-index: 2; }
+ .tradeTreeIcon { float: none; display: block; margin: 0 auto 4px; }
+ .tradeDiscovered { border-color: #66bb88; }
+ .tradeNotDiscovered { border-color: #777; background: #222; color: #aaa; }
+ .tradeSelected { border-color: #ffcc66; background: #4b4025; }
+ .tradeNodeName { font-size: 9px; line-height: 10px; display: block; white-space: normal; }
+ .tradeDossier { padding: 12px; vertical-align: top; }
+ .tradeHeader td { padding: 6px; vertical-align: middle; }
+ .tradeDossier .displayBar, .tradeHeader .displayBar { float: none; width: auto; margin: 6px 0; }
+ .tradeUnlink { color: #ff7777; }
+</style>
+<table class="tradeHeader" style="width:100%; background:#111; border:1px solid #40628a"><tr>
+ <td>{{:helper.link(data.prg_screen ? 'To Merchants' : 'To Trade Screen', null, {'PRG_prg_screen':1})}}</td>
+ <td>{{if data.read_only}}Read-only mobile catalog{{else}}
+  {{if data.account}}{{:data.account}}: {{:data.balance}} {{:data.currency}} {{:helper.link('', 'circle-close', {'PRG_account_unlink':1}, null, 'link tradeUnlink')}}
+  {{else}}{{:helper.link('Account', 'person', {'PRG_account':1})}}{{/if}}
+ {{/if}}</td>
+ {{if !data.read_only}}<td style="width:35%">
+  Exporter: {{if !data.sender_present}}No beacon{{else !data.sender_ready}}Offline or unstable{{else !data.export_ready}}Recharging: {{:data.export_seconds}}s{{else}}Ready{{/if}}
+  {{if data.export_ready}}{{:helper.displayBar(1, 0, 1, 'good')}}{{else}}{{:helper.displayBar(data.export_time_elapsed, 0, data.export_time_max, data.sender_ready ? 'average' : 'bad')}}{{/if}}
+  {{if data.can_export}}{{:helper.link('Export', 'arrowthick-1-n', {'export':1}, data.export_ready ? null : 'disabled')}} {{:helper.link('Fulfill All', 'suitcase', {'PRG_offer_fulfill_all':1}, data.export_ready && data.sender_ready ? null : 'disabled')}}{{/if}}
+ </td>{{/if}}
+</tr>
+{{if !data.read_only}}<tr><td>Mode: {{:data.program_type}}</td><td>{{:helper.link('Sender: ' + data.sender_label, 'link', {'PRG_sending':1})}}{{:helper.link('Receiver: ' + data.receiver_label, 'link', {'PRG_receiving':1})}}</td><td>Entropy: {{:data.sender_entropy}} / 20{{if data.program_type == 'slave'}}<br>Local beacons only. Bounty commission: 20%.{{/if}}</td></tr>{{/if}}</table>
+{{if !data.read_only}}<div class="notice">Supply budget: {{:data.budget}} {{:data.currency}}. Personal handling fee: 20%. Receiver: {{:data.receiver_ready ? 'Ready' : 'Offline, unstable or landing blocked'}}.</div>{{/if}}
+{{if data.message}}<div class="notice">{{:data.message}}</div>{{/if}}
+{{if !data.prg_screen}}
+ <table style="width:100%; table-layout:fixed"><tr><td style="width:70%; vertical-align:top">
+  <div class="nanoMap" id="tradeTreeContainer">
+   {{for data.tree_lines}}<div style="position:absolute; border-{{:value.istop ? 'top' : 'bottom'}}:1px solid {{:value.unlocked ? '#66bb88' : '#7799bb'}}; border-{{:value.isright ? 'right' : 'left'}}:1px solid {{:value.unlocked ? '#66bb88' : '#7799bb'}}; width:{{:value.width}}%; height:{{:value.height}}%; left:{{:value.line_x}}%; bottom:{{:value.line_y}}%;"></div>{{/for}}
+   {{for data.trade_tree}}<div style="position:absolute; left:{{:value.x}}%; bottom:{{:value.y}}%; margin-left:-32px; margin-bottom:-23px;" title="{{:value.name}}">
+    {{:helper.link("<span class='uiIcon16 tradeTreeIcon icon-" + value.icon + "'></span><span class='tradeNodeName'>" + value.label + "</span>", null, {'PRG_station':value.id}, null, 'link tradeTreeIconBox ' + (value.is_discovered ? 'tradeDiscovered' : 'tradeNotDiscovered') + (value.id == data.station_id ? ' tradeSelected' : ''))}}
+   </div>{{/for}}
+  </div>
+  <div class="notice">Green: discovered. Grey: identify by sensors or obtain recommendations. Gold: selected.</div>
+ </td><td class="tradeDossier" style="width:30%">
+  {{if data.station_name}}
+   <h3>{{:data.station_name}}</h3><p>{{:data.station_desc}}</p>
+   <p>{{:data.station_discovered ? 'Contact established' : 'Contact not yet discovered'}}</p>
+   <b>Recommendations received</b><p>{{:data.station_recommendations_received}} / {{:data.station_recommendations_needed}}</p>
+   <b>Favor</b>{{:helper.displayBar(data.station_favor, 0, data.station_favor_needed, data.station_favor < 0.25 * data.station_favor_needed ? 'bad' : data.station_favor < 0.5 * data.station_favor_needed ? 'average' : 'good', data.station_favor + ' / ' + data.station_favor_needed)}}
+   <p>{{if data.station_recommended}}Recommendations unlocked.{{else data.station_hidden}}Next: recommendations.{{else}}Next: preferred inventory.{{/if}}</p>
+   {{if data.station_recommendations}}<b>Recommends</b><p>{{:data.station_recommendations}}</p>{{/if}}
+   {{:helper.link('Browse goods', 'cart', {'PRG_prg_screen':1, 'screen':'goods'}, data.station_discovered ? null : 'disabled')}}
+  {{else}}Select a frontier contact.{{/if}}
+ </td></tr></table>
+{{else}}
+ <div class="item">
+  {{:helper.link('Goods', 'cart', {'screen':'goods'}, data.screen == 'goods' ? 'selected' : null)}}
+  {{:helper.link('Offers', 'tag', {'screen':'offers'}, data.screen == 'offers' ? 'selected' : null)}}
+  {{if !data.read_only}}
+   {{:helper.link('Cart', 'cart', {'screen':'cart'}, data.screen == 'cart' ? 'selected' : null)}}
+   {{:helper.link('Saved', 'disk', {'screen':'saved'}, data.screen == 'saved' ? 'selected' : null)}}
+   {{:helper.link('Orders', 'check', {'screen':'orders'}, data.screen == 'orders' ? 'selected' : null)}}
+   {{if data.can_logs}}{{:helper.link('Logs', 'note', {'screen':'logs'}, data.screen == 'logs' ? 'selected' : null)}}{{/if}}
+  {{/if}}
+ </div>
+ {{if data.screen == 'goods' || data.screen == 'offers'}}
+  <div class="item">{{for data.stations}}{{:helper.link(value.name, 'tag', {'PRG_station':value.id}, value.id == data.station_id ? 'selected' : null)}}{{/for}}</div>
+  {{if data.station_name}}<h3>{{:data.station_name}}</h3>
+   <div class="notice">{{:data.station_discovered ? 'Stock and offers refresh in ' + data.offer_time : 'Identify this relay with ship sensors or obtain recommendations.'}}</div>
+   {{:helper.displayBar(data.station_favor, 0, data.station_favor_needed, data.station_favor < 0.25 * data.station_favor_needed ? 'bad' : data.station_favor < 0.5 * data.station_favor_needed ? 'average' : 'good', 'Favor: ' + data.station_favor + ' / ' + data.station_favor_needed)}}
+  {{/if}}
+ {{/if}}
+ <hr>
+ {{if data.screen == 'goods'}}{{#def._goods}}
+ {{else data.screen == 'cart'}}{{#def._cart}}
+ {{else data.screen == 'offers'}}{{#def._offers}}
+ {{else data.screen == 'orders'}}{{#def._orders}}
+ {{else data.screen == 'saved'}}{{#def._saved}}
+ {{else data.screen == 'logs'}}{{#def._logs}}{{/if}}
+ {{if data.page_count > 1}}<div class="item">
+  {{:helper.link('First', null, {'PRG_page':1}, data.page > 1 ? null : 'disabled')}}
+  {{:helper.link('-10', null, {'PRG_page':data.page - 10}, data.page > 1 ? null : 'disabled')}}
+  {{:helper.link('Previous', 'triangle-1-w', {'PRG_page':data.page - 1}, data.page > 1 ? null : 'disabled')}}
+  Page {{:helper.link(data.page, null, {'page_input':1})}} / {{:data.page_count}} ({{:data.row_count}} entries)
+  {{:helper.link('Next', 'triangle-1-e', {'PRG_page':data.page + 1}, data.page < data.page_count ? null : 'disabled')}}
+  {{:helper.link('+10', null, {'PRG_page':data.page + 10}, data.page < data.page_count ? null : 'disabled')}}
+  {{:helper.link('Last', null, {'PRG_page':data.page_count}, data.page < data.page_count ? null : 'disabled')}}
+ </div>{{/if}}
+{{/if}}
