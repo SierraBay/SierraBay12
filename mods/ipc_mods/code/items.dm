@@ -501,7 +501,7 @@
 		/obj/item/prosthetic_wiring_layerer = 400,
 		/obj/item/synthskinsplayer = 1500,
 		/obj/item/liquid_skin_tank = 500,
-		/obj/item/stack/nanopaste = 600,
+		/obj/item/stack/nanopaste = 150,
 		/obj/item/stack/cable_coil = 50,
 		/obj/item/weldingtool = 100,
 		/obj/item/stock_parts/manipulator = 150,

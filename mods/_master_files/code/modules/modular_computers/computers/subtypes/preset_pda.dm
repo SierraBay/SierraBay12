@@ -1,0 +1,5 @@
+/obj/item/modular_computer/pda/install_default_programs()
+	. = ..()
+	var/datum/extension/interactive/ntos/os = get_extension(src, /datum/extension/interactive/ntos)
+	if(os)
+		os.create_file(new /datum/computer_file/program/payroll)

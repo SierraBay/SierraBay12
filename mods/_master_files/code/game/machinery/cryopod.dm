@@ -1,0 +1,5 @@
+/obj/machinery/cryopod/despawn_occupant()
+	var/datum/payroll_record/record = SSpayroll?.ledger?.find_record(occupant?.mind)
+	if(record)
+		SSpayroll.ledger.end_employment(record, "Employee entered long-term cryogenic storage")
+	return ..()

@@ -1,3 +1,7 @@
+/proc/character_persist_shift_bonus(shifts)
+	return min(max(shifts, 0) * CHARACTER_PERSIST_SHIFT_PAY, CHARACTER_PERSIST_MAX_PAY)
+
+
 /proc/character_persist_apply_pay(mob/living/carbon/human/H)
 	if (!istype(H) || H.character_persist_bonus_money <= 0)
 		return

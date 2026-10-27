@@ -11,7 +11,7 @@
 					/obj/item/paimod/memory/advanced			=	3,
 					/obj/item/paimod/memory/lambda			=	1
 					)
-	prices = list(/obj/item/device/paicard = 500,
+	prices = list(/obj/item/device/paicard = 400,
 					/obj/item/paimod/special/advanced_holo		=	150,
 					/obj/item/paimod/holoskins/paiwoman		=	50,
 					/obj/item/paimod/memory/standard			=	120,

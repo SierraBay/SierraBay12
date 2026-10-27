@@ -1,0 +1,171 @@
+<style>
+.payroll .block { margin: 10px 0; padding: 10px; }
+.payroll .payroll-toolbar { width: 100%; margin-bottom: 8px; }
+.payroll .payroll-toolbar td { padding: 0; vertical-align: middle; }
+.payroll .payroll-toolbar .payroll-refresh { width: 80px; }
+.payroll .payroll-refresh .link { float: right; margin: 0; }
+.payroll .payroll-tabs { overflow: hidden; padding-bottom: 6px; border-bottom: 1px solid #40628a; }
+.payroll h3 { padding: 0 0 8px; }
+.payroll .payroll-muted { color: #98b0c3; }
+.payroll .payroll-identity { margin-bottom: 8px; }
+.payroll .payroll-table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.payroll .payroll-table th { text-align: left; color: #98b0c3; font-weight: normal; }
+.payroll .payroll-table th, .payroll .payroll-table td { padding: 6px 8px; vertical-align: top; word-wrap: break-word; }
+.payroll .payroll-table tbody tr { border-top: 1px solid #363636; }
+.payroll .payroll-table .payroll-number { text-align: right; }
+.payroll .payroll-summary td { padding: 5px 8px; }
+.payroll .payroll-summary .payroll-label { color: #e9c183; width: 32%; }
+.payroll .payroll-summary .payroll-number { width: 18%; }
+.payroll .payroll-empty { padding: 8px 0; color: #98b0c3; }
+.payroll .payroll-section-toggle, .payroll .payroll-actions { overflow: hidden; }
+.payroll .payroll-section-toggle { margin-top: 8px; }
+.payroll .payroll-section-content { clear: both; padding-top: 8px; }
+.payroll .payroll-staff-name { width: 39%; }
+.payroll .payroll-staff-rate { width: 19%; }
+.payroll .payroll-staff-actions { width: 42%; }
+.payroll .payroll-actions + .payroll-actions { padding-top: 3px; }
+.payroll .payroll-staff-toggle { overflow: hidden; margin-top: 5px; }
+.payroll .payroll-details td { background: #272727; }
+.payroll .payroll-decision { padding: 6px 0; overflow: hidden; }
+.payroll .payroll-decision + .payroll-decision { border-top: 1px solid #363636; }
+.payroll .payroll-decision .payroll-actions { float: right; margin-left: 8px; }
+.payroll .payroll-reason { clear: both; padding-top: 3px; word-wrap: break-word; }
+.payroll .payroll-status { color: #e9c183; }
+</style>
+<div class="payroll">
+	<table class="payroll-toolbar"><tr>
+		<td><span class="payroll-muted">Period</span> <b>{{:data.period}}</b> &nbsp; | &nbsp; <span class="payroll-muted">Next payment</span> <b>{{:Math.floor(data.next_payment / 60)}}:{{:data.next_payment % 60 < 10 ? '0' : ''}}{{:data.next_payment % 60}}</b></td>
+		<td class="payroll-refresh">{{:helper.link('Refresh', 'refresh', {'payroll_refresh':1})}}</td>
+	</tr></table>
+	<div class="payroll-tabs">
+		{{:helper.link('My payroll', null, {'payroll_tab':'personal'}, data.active_tab == 'personal' ? 'selected' : null)}}
+		{{if data.can_view_staff}}{{:helper.link('Staff', null, {'payroll_tab':'staff'}, data.active_tab == 'staff' ? 'selected' : null)}}{{/if}}
+		{{if data.captain}}{{:helper.link('Overview', null, {'payroll_tab':'overview'}, data.active_tab == 'overview' ? 'selected' : null)}}{{/if}}
+		{{:helper.link('Decisions', null, {'payroll_tab':'audit'}, data.active_tab == 'audit' ? 'selected' : null)}}
+	</div>
+
+	{{if data.active_tab == 'personal'}}
+	<div class="block">
+		<h3>My payroll</h3>
+		{{if data.personal}}
+		<div class="payroll-identity"><b>{{:data.personal.name}}</b><br><span class="payroll-muted">{{:data.personal.job}}</span>{{if !data.personal.active}} &mdash; <span class="payroll-status">Employment ended</span>{{/if}}</div>
+		<table class="payroll-table payroll-summary"><tbody>
+			<tr><td class="payroll-label">Account balance</td><td class="payroll-number"><b>{{:helper.formatNumber(data.personal.balance)}}</b></td><td class="payroll-label">Current rate / period</td><td class="payroll-number"><b>{{:helper.formatNumber(data.personal.rate)}}</b></td></tr>
+			<tr><td class="payroll-label">Base rate</td><td class="payroll-number">{{:helper.formatNumber(data.personal.base)}}</td><td class="payroll-label">Rate adjustment</td><td class="payroll-number">{{:data.personal.adjustment > 0 ? '+' : ''}}{{:helper.formatNumber(data.personal.adjustment)}}</td></tr>
+		</tbody></table>
+		<div class="payroll-section-toggle">{{:helper.link(data.expanded.help ? 'Hide pay information' : 'How pay is calculated', null, {'payroll_toggle':'help'})}}</div>
+		{{if data.expanded.help}}<div class="payroll-section-content payroll-muted">Rates are per configured interval. First pay and transfers are prorated. Pending amounts retry after account service is restored.</div>{{/if}}
+		{{else}}<div class="payroll-empty">No registered personal employment.</div>{{/if}}
+	</div>
+	{{if data.personal}}
+	<div class="block">
+		<h3>Pending decisions</h3>
+		{{for data.personal.adjustments}}
+		<div class="payroll-decision"><b>{{:value.kind == 'bonus' ? 'Bonus' : 'Deduction'}} {{:helper.formatNumber(value.amount)}}</b> &nbsp; <span class="payroll-muted">Period {{:value.period}} &middot; {{:value.status}}</span><div class="payroll-reason">{{:value.reason}}</div></div>
+		{{empty}}<div class="payroll-empty">No pending bonuses or deductions.</div>{{/for}}
+	</div>
+	<div class="block">
+		<h3>Payment history</h3>
+		{{if data.personal.statements.length}}
+		<table class="payroll-table"><thead><tr><th style="width:10%">Period</th><th class="payroll-number" style="width:18%">Earned</th><th class="payroll-number" style="width:18%">Salary paid</th><th class="payroll-number" style="width:18%">Bonus paid</th><th style="width:36%">Status</th></tr></thead><tbody>
+		{{for data.personal.statements}}<tr><td>{{:value.period}}</td><td class="payroll-number">{{:helper.formatNumber(value.gross)}}</td><td class="payroll-number">{{:helper.formatNumber(value.salary)}}</td><td class="payroll-number">{{:helper.formatNumber(value.bonus)}}</td><td class="{{:value.status == 'paid' ? 'payroll-muted' : 'payroll-status'}}">{{:value.status}}</td></tr>{{/for}}
+		</tbody></table>
+		{{else}}<div class="payroll-empty">No completed pay periods yet.</div>{{/if}}
+	</div>
+	{{/if}}
+	{{/if}}
+
+	{{if data.active_tab == 'staff' && data.can_view_staff}}
+	{{for data.staff_groups :group:groupIndex}}
+	<div class="block">
+		<h3>{{:group.name}}</h3>
+		<div class="payroll-muted">Available bonus budget: <b>{{:helper.formatNumber(group.budget)}}</b></div>
+		<table class="payroll-table"><thead><tr><th class="payroll-staff-name">Employee / position</th><th class="payroll-number payroll-staff-rate">Rate / period</th><th class="payroll-staff-actions">Actions</th></tr></thead><tbody>
+		{{for group.staff :employee:employeeIndex}}
+		<tr class="payroll-staff-row" data-employee="{{:employee.id}}">
+			<td><b>{{:employee.name}}</b><br><span class="payroll-muted">{{:employee.job}}</span>{{if !employee.active}}<br><span class="payroll-status">Employment ended</span>{{/if}}
+				{{if employee.adjustments.length}}<div class="payroll-staff-toggle">{{:helper.link((data.expanded['staff-' + employee.id] ? 'Hide decisions' : 'Decisions') + ' (' + employee.adjustments.length + ')', null, {'payroll_toggle':'staff-' + employee.id})}}</div>{{/if}}
+			</td>
+			<td class="payroll-number"><b>{{:helper.formatNumber(employee.rate)}}</b><br><span class="payroll-muted">Base {{:helper.formatNumber(employee.base)}}</span></td>
+			<td>
+				{{if employee.can_manage}}
+				<div class="payroll-actions">
+					{{:helper.link('Rate', null, {'payroll_action':'rate','employee':employee.id,'revision':employee.revision})}}
+					{{:helper.link('Reset', null, {'payroll_action':'reset','employee':employee.id,'revision':employee.revision})}}
+					{{:helper.link('Bonus', null, {'payroll_action':'bonus','employee':employee.id,'revision':employee.revision})}}
+					{{:helper.link('Deduction', null, {'payroll_action':'deduction','employee':employee.id,'revision':employee.revision})}}
+				</div>
+				{{/if}}
+				{{if employee.can_transfer}}
+				<div class="payroll-actions">
+					{{:helper.link('Transfer', null, {'payroll_action':'transfer','employee':employee.id,'revision':employee.revision})}}
+					{{:helper.link('Bind ID', null, {'payroll_action':'bind','employee':employee.id,'revision':employee.revision})}}
+				</div>
+				{{/if}}
+			</td>
+		</tr>
+		{{if data.expanded['staff-' + employee.id] && employee.adjustments.length}}
+		<tr class="payroll-details"><td colspan="3">
+			{{for employee.adjustments :decision:decisionIndex}}
+			<div class="payroll-decision">
+				{{if employee.can_manage && decision.status == 'pending'}}<div class="payroll-actions">{{:helper.link('Cancel', null, {'payroll_action':'cancel','employee':decision.employee,'revision':decision.revision,'decision':decision.id})}}</div>{{/if}}
+				<b>{{:decision.kind == 'bonus' ? 'Bonus' : 'Deduction'}} {{:helper.formatNumber(decision.amount)}}</b> &nbsp; <span class="payroll-muted">Period {{:decision.period}} &middot; {{:decision.status}}</span>
+				<div class="payroll-reason">{{:decision.reason}}</div>
+			</div>
+			{{/for}}
+		</td></tr>
+		{{/if}}
+		{{/for}}
+		</tbody></table>
+	</div>
+	{{empty}}<div class="block"><div class="payroll-empty">No employees available to manage.</div></div>{{/for}}
+	{{/if}}
+
+	{{if data.active_tab == 'overview' && data.captain}}
+	<div class="block">
+		<h3>Payroll overview</h3>
+		<table class="payroll-table payroll-summary"><tbody>
+			<tr><td class="payroll-label">Wage bill / full period</td><td class="payroll-number"><b>{{:helper.formatNumber(data.wage_bill)}}</b></td><td class="payroll-label">Corporate funding issued</td><td class="payroll-number">{{:helper.formatNumber(data.subsidy)}}</td></tr>
+			<tr><td class="payroll-label">Salaries paid</td><td class="payroll-number">{{:helper.formatNumber(data.salary_paid)}}</td><td class="payroll-label">Salary fund balance</td><td class="payroll-number">{{:helper.formatNumber(data.fund_balance)}}</td></tr>
+			<tr><td class="payroll-label">Bonuses paid</td><td class="payroll-number">{{:helper.formatNumber(data.bonus_paid)}}</td><td class="payroll-label">Reserved bonuses</td><td class="payroll-number">{{:helper.formatNumber(data.escrow_balance)}}</td></tr>
+		</tbody></table>
+	</div>
+	<div class="block">
+		<div class="payroll-section-toggle">{{:helper.link((data.expanded.budgets ? 'Hide' : 'Show') + ' department budgets', null, {'payroll_toggle':'budgets'})}}</div>
+		{{if data.expanded.budgets}}
+		<div class="payroll-section-content">
+			{{if data.budgets.length}}<table class="payroll-table"><thead><tr><th>Account</th><th class="payroll-number" style="width:25%">Balance</th></tr></thead><tbody>
+			{{for data.budgets}}<tr><td>{{:value.name}}</td><td class="payroll-number">{{:helper.formatNumber(value.balance)}}</td></tr>{{/for}}
+			</tbody></table>{{else}}<div class="payroll-empty">No department budgets available.</div>{{/if}}
+		</div>
+		{{/if}}
+		<div class="payroll-section-toggle">{{:helper.link((data.expanded.departments ? 'Hide' : 'Show') + ' payments by department', null, {'payroll_toggle':'departments'})}}</div>
+		{{if data.expanded.departments}}
+		<div class="payroll-section-content">
+			{{if data.departments.length}}<table class="payroll-table"><thead><tr><th>Department</th><th class="payroll-number" style="width:25%">Paid</th></tr></thead><tbody>
+			{{for data.departments}}<tr><td>{{:value.name}}</td><td class="payroll-number">{{:helper.formatNumber(value.paid)}}</td></tr>{{/for}}
+			</tbody></table>{{else}}<div class="payroll-empty">No department payments yet.</div>{{/if}}
+		</div>
+		{{/if}}
+		<div class="payroll-section-toggle">{{:helper.link((data.expanded.periods ? 'Hide' : 'Show') + ' period history', null, {'payroll_toggle':'periods'})}}</div>
+		{{if data.expanded.periods}}
+		<div class="payroll-section-content">
+			{{if data.periods.length}}<table class="payroll-table"><thead><tr><th style="width:16%">Period</th><th class="payroll-number" style="width:28%">Funding issued</th><th class="payroll-number" style="width:28%">Salaries paid</th><th class="payroll-number" style="width:28%">Bonuses paid</th></tr></thead><tbody>
+			{{for data.periods.slice().reverse()}}<tr><td>{{:value.period}}</td><td class="payroll-number">{{:helper.formatNumber(value.subsidy)}}</td><td class="payroll-number">{{:helper.formatNumber(value.salary)}}</td><td class="payroll-number">{{:helper.formatNumber(value.bonus)}}</td></tr>{{/for}}
+			</tbody></table>{{else}}<div class="payroll-empty">No completed pay periods yet.</div>{{/if}}
+		</div>
+		{{/if}}
+	</div>
+	{{/if}}
+
+	{{if data.active_tab == 'audit'}}
+	<div class="block">
+		<h3>Recent financial decisions</h3>
+		{{if data.audit.length}}
+		<table class="payroll-table"><thead><tr><th style="width:12%">Time</th><th style="width:28%">Employee / actor</th><th style="width:60%">Decision / reason</th></tr></thead><tbody>
+		{{for data.audit}}<tr><td>{{:value.time}}</td><td><b>{{:value.employee}}</b><br><span class="payroll-muted">{{:value.actor}}</span></td><td>{{:value.action}}<br><span class="payroll-muted">{{:value.reason}}</span></td></tr>{{/for}}
+		</tbody></table>
+		{{else}}<div class="payroll-empty">No financial decisions to display.</div>{{/if}}
+	</div>
+	{{/if}}
+</div>
