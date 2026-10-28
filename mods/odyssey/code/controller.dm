@@ -54,6 +54,7 @@
 		state.chronicle = list()
 		state.next_chronicle_id = 1
 		state.chronicle_deaths_this_shift = 0
+		state.pending_chronicle_deaths = list()
 		state.contracts = list()
 		state.objectives = list()
 		state.next_objective_id = 1
@@ -130,6 +131,7 @@
 	state.next_chronicle_id = max(1, meta["next_chronicle_id"] || 1)
 	state.next_objective_id = max(1, meta["next_objective_id"] || 1)
 	state.chronicle_deaths_this_shift = 0
+	state.pending_chronicle_deaths = list()
 	var/list/saved_contracts = meta["contracts"]
 	state.contracts = islist(saved_contracts) ? saved_contracts.Copy() : list()
 	var/list/saved_objectives = meta["objectives"]

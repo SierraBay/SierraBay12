@@ -89,7 +89,10 @@
 			<p><b>Цели текущей смены:</b></p>
 			{{for data.odyssey_briefing.objectives}}
 				<p>• <b>{{:value.title}}</b>
-				{{if value.target}} — исполнение: {{:value.progress}} из {{:value.target}}{{/if}}
+				{{if value.status}} <span class="note">[{{:value.status}}]</span>{{/if}}
+				{{if value.progress_label}} — {{:value.progress_label}}
+				{{else value.target}} — исполнение: {{:value.progress}} из {{:value.target}}{{/if}}
+				{{if value.result_reason}}<br><span class="note">{{:value.result_reason}}</span>{{/if}}
 				{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
 			{{empty}}
 				<p class="note"><i>Отдельных целей смены в брифинге нет.</i></p>
@@ -97,6 +100,7 @@
 			<p><b>Научный бриф сектора:</b></p>
 			{{for data.odyssey_briefing.science_briefs}}
 				<p>• <b>{{:value.title}}</b>
+				{{if value.status}} <span class="note">[{{:value.status}}]</span>{{/if}}
 				{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
 				{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
 				{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
@@ -106,6 +110,7 @@
 			<p><b>Брифы отделов:</b></p>
 			{{for data.odyssey_briefing.dept_briefs}}
 				<p>• <b>{{:value.title}}</b>
+				{{if value.status}} <span class="note">[{{:value.status}}]</span>{{/if}}
 				{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
 				{{if value.target_dept_label}} · отдел: {{:value.target_dept_label}}{{/if}}
 				{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
@@ -117,7 +122,7 @@
 			<h4>Личный состав</h4>
 			<p>{{:data.odyssey_briefing.personnel}}</p>
 			{{if data.odyssey_briefing.dead}}
-				<p><b>Потери, зафиксированные в журнале:</b></p>
+				<p><b>Потери прошлых смен (журнал экспедиции):</b></p>
 				{{for data.odyssey_briefing.dead_roster}}
 					• {{:value.name}} — {{:value.job}}{{if value.death_shift}} <span class="note">(смена {{:value.death_shift}})</span>{{/if}}<br>
 				{{/for}}

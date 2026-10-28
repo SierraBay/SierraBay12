@@ -236,10 +236,71 @@
 	entry["reward_paid"] = amount
 
 
+/// Live progress for briefing UI (does not resolve end-of-shift binary goals early).
+/proc/odyssey_sync_shift_objective_progress(list/entry)
+	if (!islist(entry) || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
+		return
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (text2num(entry["shift_issued"]) != state.shift_number)
+		return
+	switch (entry["kind"])
+		if (ODYSSEY_OBJ_KIND_LIMIT_CASUALTIES)
+			var/limit = text2num(entry["target"]) || ODYSSEY_CASUALTY_SOFT_LIMIT
+			entry["progress"] = odyssey_count_shift_deaths(state.shift_number)
+			entry["target"] = limit
+		if (ODYSSEY_OBJ_KIND_NO_SHUTTLE_LOSS)
+			var/list/baseline = entry["baseline_abandoned"]
+			if (!islist(baseline))
+				baseline = list()
+			var/list/now = odyssey_abandoned_shuttle_names()
+			var/lost = 0
+			for (var/name in now)
+				if (!(name in baseline))
+					lost++
+			// Show kept baseline size as target; progress = baseline - new losses (clamped).
+			entry["target"] = max(1, length(baseline))
+			entry["progress"] = max(0, length(baseline) - lost)
+		if (ODYSSEY_OBJ_KIND_JUMP_ONWARD)
+			if (state.transition_committed && state.selected_sector_id && state.selected_sector_id != ODYSSEY_SECTOR_RETURN)
+				entry["progress"] = 1
+
+
+/proc/odyssey_objective_progress_label(list/entry)
+	if (!islist(entry))
+		return null
+	var/status = entry["status"]
+	if (status == ODYSSEY_OBJ_STATUS_COMPLETED)
+		return "выполнено"
+	if (status == ODYSSEY_OBJ_STATUS_FAILED)
+		return "провалено"
+	if (status == ODYSSEY_OBJ_STATUS_EXPIRED)
+		return "истекло"
+	var/kind = entry["kind"]
+	switch (kind)
+		if (ODYSSEY_OBJ_KIND_HOLD_SECTOR)
+			return "засчитывается в конце смены, если не было Odyssey Jump"
+		if (ODYSSEY_OBJ_KIND_JUMP_ONWARD)
+			if (text2num(entry["progress"]) >= 1)
+				return "переход выполнен — ожидает фиксации смены"
+			return "нужен Odyssey Jump до конца смены"
+		if (ODYSSEY_OBJ_KIND_SURVIVE_HOSTILE, ODYSSEY_OBJ_KIND_SURVIVE_SHIFT)
+			return "засчитывается в конце смены при успешном исходе"
+		if (ODYSSEY_OBJ_KIND_LIMIT_CASUALTIES)
+			return "[entry["progress"] || 0] / [entry["target"] || 0] потерь (лимит)"
+		if (ODYSSEY_OBJ_KIND_NO_SHUTTLE_LOSS)
+			return "новых потерь шаттлов: следим до конца смены"
+	if (!isnull(entry["target"]) && text2num(entry["target"]) > 0)
+		return "[entry["progress"] || 0] из [entry["target"]]"
+	return null
+
+
 /proc/odyssey_evaluate_shift_objective(list/entry, list/outcome)
 	if (!islist(entry) || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
 		return
 	var/datum/odyssey_state/state = odyssey_ensure_state()
+	// Only resolve goals issued this shift.
+	if (!isnull(entry["shift_issued"]) && text2num(entry["shift_issued"]) != state.shift_number)
+		return
 	var/kind = entry["kind"]
 	switch (kind)
 		if (ODYSSEY_OBJ_KIND_HOLD_SECTOR)
@@ -265,11 +326,12 @@
 			for (var/name in now)
 				if (!(name in baseline))
 					new_lost += name
-			entry["progress"] = length(baseline)
-			entry["target"] = length(baseline)
+			entry["target"] = max(1, length(baseline))
+			entry["progress"] = max(0, length(baseline) - length(new_lost))
 			if (length(new_lost))
 				odyssey_set_objective_status(entry, ODYSSEY_OBJ_STATUS_FAILED, "Утеряны шаттлы: [english_list(new_lost)].")
 			else
+				entry["progress"] = entry["target"]
 				odyssey_set_objective_status(entry, ODYSSEY_OBJ_STATUS_COMPLETED, "Новых потерь шаттлов нет.")
 		if (ODYSSEY_OBJ_KIND_LIMIT_CASUALTIES)
 			var/limit = text2num(entry["target"]) || ODYSSEY_CASUALTY_SOFT_LIMIT
@@ -294,6 +356,27 @@
 				odyssey_set_objective_status(entry, ODYSSEY_OBJ_STATUS_COMPLETED, "Смена завершена без потери корабля.")
 		else
 			odyssey_set_objective_status(entry, ODYSSEY_OBJ_STATUS_EXPIRED, "Неизвестный тип цели.")
+
+
+/// Resolve jump-tied goals as soon as the BSD corridor locks (before reboot).
+/proc/odyssey_evaluate_objectives_after_jump()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !islist(state.objectives))
+		return
+	var/resolved = 0
+	for (var/i = 1 to length(state.objectives))
+		var/list/entry = state.objectives[i]
+		if (!islist(entry) || entry["scope"] != "shift" || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
+			continue
+		if (text2num(entry["shift_issued"]) != state.shift_number)
+			continue
+		if (!(entry["kind"] in list(ODYSSEY_OBJ_KIND_HOLD_SECTOR, ODYSSEY_OBJ_KIND_JUMP_ONWARD)))
+			continue
+		odyssey_evaluate_shift_objective(entry, null)
+		state.objectives[i] = entry
+		resolved++
+	if (resolved)
+		log_game("ODYSSEY: post-jump objective resolve touched=[resolved] shift=[state.shift_number]")
 
 
 /proc/odyssey_evaluate_contract(list/entry, list/outcome)
@@ -333,13 +416,20 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active)
 		return
+	var/resolved = 0
 	if (islist(state.objectives))
 		for (var/i = 1 to length(state.objectives))
 			var/list/entry = state.objectives[i]
 			if (!islist(entry) || entry["scope"] != "shift")
 				continue
+			if (entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
+				continue
+			if (!isnull(entry["shift_issued"]) && text2num(entry["shift_issued"]) != state.shift_number)
+				continue
 			odyssey_evaluate_shift_objective(entry, outcome)
 			state.objectives[i] = entry
+			resolved++
+		log_game("ODYSSEY: evaluated [resolved] active shift objective(s) shift=[state.shift_number] jumped=[state.transition_committed]")
 	if (islist(outcome) && islist(state.contracts))
 		for (var/i = 1 to length(state.contracts))
 			var/list/contract = state.contracts[i]
@@ -363,6 +453,8 @@
 			var/vis = entry["visibility"] || ODYSSEY_OBJ_VIS_PUBLIC
 			if (vis == ODYSSEY_OBJ_VIS_COMMAND && !allow_command)
 				continue
+			if (entry["scope"] == "shift" && entry["status"] == ODYSSEY_OBJ_STATUS_ACTIVE)
+				odyssey_sync_shift_objective_progress(entry)
 			out += list(list(
 				"id" = entry["id"],
 				"scope" = entry["scope"],
@@ -372,6 +464,8 @@
 				"status" = entry["status"],
 				"progress" = entry["progress"],
 				"target" = entry["target"],
-				"shift_issued" = entry["shift_issued"]
+				"shift_issued" = entry["shift_issued"],
+				"progress_label" = odyssey_objective_progress_label(entry),
+				"result_reason" = entry["result_reason"]
 			))
 	return out

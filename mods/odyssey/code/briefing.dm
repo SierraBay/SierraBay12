@@ -5,11 +5,15 @@
 	var/list/out = list()
 	if (!islist(state.chronicle))
 		return out
+	var/current_shift = state.shift_number
 	for (var/i = length(state.chronicle); i >= 1 && length(out) < limit; i--)
 		var/list/entry = state.chronicle[i]
 		if (!islist(entry))
 			continue
 		if ((entry["visibility"] || ODYSSEY_CHRONICLE_VIS_PUBLIC) != ODYSSEY_CHRONICLE_VIS_PUBLIC)
+			continue
+		// Do not surface live-shift named deaths in briefing headlines.
+		if (entry["kind"] == ODYSSEY_CHRONICLE_KIND_DEATH && text2num(entry["shift"]) >= current_shift)
 			continue
 		out += list(list(
 			"title" = entry["title"],
@@ -20,24 +24,55 @@
 	return out
 
 
+/// Campaign journal of losses from *previous* shifts only — current-shift deaths are live meta.
 /proc/odyssey_briefing_dead_roster(limit = 24)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/out = list()
 	if (!islist(state.roster))
 		return out
+	var/current_shift = state.shift_number
 	for (var/key in state.roster)
 		var/list/entry = state.roster[key]
 		if (!islist(entry) || entry["status"] != "dead")
 			continue
+		var/death_shift = text2num(entry["death_shift"])
+		// No closed journal entry yet for deaths that happened this shift.
+		if (!death_shift || death_shift >= current_shift)
+			continue
 		out += list(list(
 			"name" = entry["name"] || "Unknown",
 			"job" = entry["job"] || "Unknown",
-			"death_shift" = entry["death_shift"],
-			"death_reason" = entry["death_reason"]
+			"death_shift" = death_shift
 		))
 		if (length(out) >= limit)
 			break
 	return out
+
+
+/proc/odyssey_briefing_prior_loss_counts()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/alive = 0
+	var/prior_dead = 0
+	var/prior_dead_command = 0
+	if (!islist(state.roster))
+		return list("alive" = 0, "dead" = 0, "dead_command" = 0)
+	var/current_shift = state.shift_number
+	for (var/key in state.roster)
+		var/list/entry = state.roster[key]
+		if (!islist(entry))
+			continue
+		if (entry["status"] == "dead")
+			var/death_shift = text2num(entry["death_shift"])
+			if (death_shift && death_shift < current_shift)
+				prior_dead++
+				if (odyssey_job_is_command(entry["job"]))
+					prior_dead_command++
+			else
+				// Died this shift — journal not closed; still "on the books" as living for briefing.
+				alive++
+		else
+			alive++
+	return list("alive" = alive, "dead" = prior_dead, "dead_command" = prior_dead_command)
 
 
 /proc/odyssey_briefing_shuttles()
@@ -66,7 +101,8 @@
 /proc/odyssey_build_briefing_ui(min_visibility = ODYSSEY_CHRONICLE_VIS_PUBLIC)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/sector = odyssey_get_sector(state.current_sector_id, state)
-	var/list/counts = odyssey_roster_counts(state.roster)
+	// Briefing is an IC expedition journal: do not leak current-shift deaths (live meta).
+	var/list/counts = odyssey_briefing_prior_loss_counts()
 	var/list/shuttles = odyssey_briefing_shuttles()
 	var/list/active_contracts = list()
 	for (var/list/entry in odyssey_objectives_ui_entries(min_visibility))
@@ -74,7 +110,12 @@
 			active_contracts += list(entry)
 	var/list/active_objectives = list()
 	for (var/list/entry in odyssey_objectives_ui_entries(min_visibility))
-		if (entry["scope"] == "shift" && entry["status"] == ODYSSEY_OBJ_STATUS_ACTIVE)
+		if (entry["scope"] != "shift")
+			continue
+		// Current shift: show active plus already resolved this shift (so 1/1 is visible).
+		if (text2num(entry["shift_issued"]) != state.shift_number)
+			continue
+		if (entry["status"] in list(ODYSSEY_OBJ_STATUS_ACTIVE, ODYSSEY_OBJ_STATUS_COMPLETED, ODYSSEY_OBJ_STATUS_FAILED))
 			active_objectives += list(entry)
 
 	var/course
@@ -89,10 +130,10 @@
 	else
 		course = "Курс не выбран: смена, скорее всего, пройдёт в текущем секторе."
 
-	var/personnel = "В журнале экспедиции: живых [counts["alive"]], погибших [counts["dead"]]"
+	var/personnel = "В журнале экспедиции: на учёте [counts["alive"]], потери прошлых смен: [counts["dead"]]"
 	if (counts["dead_command"])
 		personnel += " (в т.ч. командный состав: [counts["dead_command"]])"
-	personnel += "."
+	personnel += ". Потери текущей смены в журнал не заносятся до её закрытия."
 
 	var/list/damaged_ui = list()
 	for (var/list/row in shuttles["damaged"])

@@ -202,6 +202,7 @@
 	if (!state.active)
 		return
 	state.odyssey_bsd_jump_done = TRUE
+	odyssey_evaluate_objectives_after_jump()
 	odyssey_chronicle_append(
 		ODYSSEY_CHRONICLE_KIND_JUMP,
 		"Переход: [odyssey_sector_display_name(state.current_sector_id)] → [odyssey_sector_display_name(state.selected_sector_id)]",

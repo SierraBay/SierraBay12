@@ -76,6 +76,8 @@ var/global/datum/odyssey_state/odyssey
 	var/next_chronicle_id = 1
 	/// Deaths recorded into chronicle this shift (for public aggregate).
 	var/chronicle_deaths_this_shift = 0
+	/// Named deaths buffered until shift close — live public chronicle would be meta.
+	var/list/pending_chronicle_deaths
 	/// Outcome already written to chronicle (avoid duplicate on save+finish).
 	var/outcome_chronicled = FALSE
 	/// Campaign-long contracts.
@@ -104,6 +106,7 @@ var/global/datum/odyssey_state/odyssey
 	abandoned_shuttles = list()
 	shuttle_reports = list()
 	chronicle = list()
+	pending_chronicle_deaths = list()
 	contracts = list()
 	objectives = list()
 	research = null

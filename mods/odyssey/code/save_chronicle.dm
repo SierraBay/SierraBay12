@@ -80,25 +80,48 @@
 /proc/odyssey_chronicle_note_death(mob/living/carbon/human/H, reason, job_title)
 	if (!istype(H))
 		return
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active)
+		return
 	var/name = H.real_name || "Неизвестный"
 	var/job = job_title || H.mind?.role_alt_title || H.mind?.assigned_role || H.job || "Unknown"
-	var/vis = odyssey_job_is_command(job) ? ODYSSEY_CHRONICLE_VIS_PUBLIC : ODYSSEY_CHRONICLE_VIS_COMMAND
-	odyssey_chronicle_append(
-		ODYSSEY_CHRONICLE_KIND_DEATH,
-		"Погиб: [name]",
-		"[job]. Причина: [reason || "death"].",
-		vis,
-		list("name" = name, "job" = job, "reason" = reason)
-	)
-	var/datum/odyssey_state/state = odyssey_ensure_state()
+	// Buffer only — publishing a named death mid-shift is live meta for IC journal readers.
+	if (!islist(state.pending_chronicle_deaths))
+		state.pending_chronicle_deaths = list()
+	state.pending_chronicle_deaths += list(list(
+		"name" = name,
+		"job" = job,
+		"reason" = reason || "death",
+		"command" = odyssey_job_is_command(job)
+	))
 	state.chronicle_deaths_this_shift = (state.chronicle_deaths_this_shift || 0) + 1
+	log_debug("ODYSSEY: death buffered for chronicle shift=[state.shift_number] [name] ([job])")
 
 
 /proc/odyssey_chronicle_note_shift_losses()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/deaths = state.chronicle_deaths_this_shift || 0
-	if (deaths < 1)
+	var/list/pending = state.pending_chronicle_deaths
+	if (!islist(pending))
+		pending = list()
+	if (deaths < 1 && !length(pending))
 		return
+
+	// Close the shift journal: named entries + public aggregate (no longer meta).
+	for (var/list/row in pending)
+		if (!islist(row))
+			continue
+		var/vis = row["command"] ? ODYSSEY_CHRONICLE_VIS_PUBLIC : ODYSSEY_CHRONICLE_VIS_COMMAND
+		odyssey_chronicle_append(
+			ODYSSEY_CHRONICLE_KIND_DEATH,
+			"Погиб: [row["name"]]",
+			"[row["job"]]. Причина: [row["reason"]].",
+			vis,
+			list("name" = row["name"], "job" = row["job"], "reason" = row["reason"])
+		)
+
+	if (deaths < 1)
+		deaths = length(pending)
 	odyssey_chronicle_append(
 		ODYSSEY_CHRONICLE_KIND_LOSSES,
 		"Потери экипажа за смену",
@@ -107,6 +130,7 @@
 		list("count" = deaths)
 	)
 	state.chronicle_deaths_this_shift = 0
+	state.pending_chronicle_deaths = list()
 
 
 /proc/odyssey_chronicle_ui_entries(min_visibility = ODYSSEY_CHRONICLE_VIS_PUBLIC)
@@ -116,6 +140,7 @@
 		return out
 	var/allow_command = (min_visibility == ODYSSEY_CHRONICLE_VIS_COMMAND || min_visibility == ODYSSEY_CHRONICLE_VIS_ADMIN)
 	var/allow_admin = (min_visibility == ODYSSEY_CHRONICLE_VIS_ADMIN)
+	var/current_shift = state.shift_number
 	for (var/list/entry in state.chronicle)
 		if (!islist(entry))
 			continue
@@ -123,6 +148,9 @@
 		if (vis == ODYSSEY_CHRONICLE_VIS_ADMIN && !allow_admin)
 			continue
 		if (vis == ODYSSEY_CHRONICLE_VIS_COMMAND && !allow_command)
+			continue
+		// Safety net for older saves: hide live-shift death lines from IC readers.
+		if (!allow_admin && entry["kind"] == ODYSSEY_CHRONICLE_KIND_DEATH && text2num(entry["shift"]) >= current_shift)
 			continue
 		out += list(list(
 			"id" = entry["id"],

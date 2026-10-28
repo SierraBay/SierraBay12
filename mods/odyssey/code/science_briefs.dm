@@ -215,16 +215,22 @@
 
 
 /proc/odyssey_science_active_briefs_ui()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/out = list()
 	var/list/R = odyssey_research_ensure()
 	for (var/list/entry in R["active_briefs"])
-		if (!islist(entry) || entry["status"] != ODYSSEY_OBJ_STATUS_ACTIVE)
+		if (!islist(entry))
+			continue
+		if (text2num(entry["shift_issued"]) != state.shift_number)
+			continue
+		if (!(entry["status"] in list(ODYSSEY_OBJ_STATUS_ACTIVE, ODYSSEY_OBJ_STATUS_COMPLETED)))
 			continue
 		out += list(list(
 			"id" = entry["id"],
 			"kind" = entry["kind"],
 			"title" = entry["title"],
 			"brief" = entry["brief"],
+			"status" = entry["status"],
 			"progress" = entry["progress"],
 			"target" = entry["target"],
 			"reward_credits" = entry["reward_credits"],
@@ -275,8 +281,11 @@
 			entry["seen_ids"] = seen
 		entry["progress"] = min(text2num(entry["target"]) || 1, (text2num(entry["progress"]) || 0) + amount)
 		R["active_briefs"][i] = entry
+		log_game("ODYSSEY: science brief progress id=[entry["id"]] kind=[kind] [entry["progress"]]/[entry["target"]] evidence=[evidence_id]")
 		if (entry["progress"] >= (text2num(entry["target"]) || 1))
 			odyssey_science_complete_brief(entry, source, user)
+		else if (user)
+			to_chat(user, SPAN_NOTICE("Научный бриф «[entry["title"]]»: [entry["progress"]]/[entry["target"]]."))
 		return
 
 
@@ -286,8 +295,15 @@
 	entry["status"] = ODYSSEY_OBJ_STATUS_COMPLETED
 	entry["result_reason"] = "completed"
 	entry["resolved_shift"] = odyssey_ensure_state().shift_number
+	entry["progress"] = text2num(entry["target"]) || 1
 	var/list/R = odyssey_research_ensure()
 	R["completed_brief_ids"] |= entry["id"]
+	// Ensure the list slot reflects completion (JSON save / UI).
+	for (var/i = 1 to length(R["active_briefs"]))
+		var/list/slot = R["active_briefs"][i]
+		if (islist(slot) && slot["id"] == entry["id"])
+			R["active_briefs"][i] = entry
+			break
 
 	odyssey_chronicle_append(
 		ODYSSEY_CHRONICLE_KIND_SCIENCE,
@@ -299,6 +315,7 @@
 
 	var/paid = odyssey_science_pay_credits(entry)
 	entry["reward_paid"] = paid
+	log_game("ODYSSEY: science brief completed id=[entry["id"]] kind=[entry["kind"]] paid=[paid]")
 
 	if (user)
 		to_chat(user, SPAN_NOTICE("Научный бриф «[entry["title"]]» выполнен. На счёт Научного отдела зачислено [paid] таллеров."))
