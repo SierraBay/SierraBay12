@@ -102,7 +102,7 @@
 	return odyssey_science_make_brief(
 		ODYSSEY_SCI_BRIEF_SPECTRUM,
 		"Спектр аномального фона",
-		"Проведите [n] полных спектральных анализов (разные типы образцов, perfect). Награда: [ODYSSEY_SCI_REWARD_SPECTRUM] кредитов НИО.",
+		"Проведите [n] полных спектральных анализов (разные типы образцов, perfect). Награда: [ODYSSEY_SCI_REWARD_SPECTRUM] таллеров Научному отделу.",
 		n
 	)
 
@@ -111,7 +111,7 @@
 	return odyssey_science_make_brief(
 		ODYSSEY_SCI_BRIEF_CATALOG,
 		"Каталог обломков",
-		"Каталогизируйте 2 артефакта через консоль RnD (для каждого — минимум две верные классификации). Награда: [ODYSSEY_SCI_REWARD_CATALOG] кредитов НИО.",
+		"Каталогизируйте 2 артефакта через консоль RnD (для каждого — минимум две верные классификации). Награда: [ODYSSEY_SCI_REWARD_CATALOG] таллеров Научному отделу.",
 		2
 	)
 
@@ -122,7 +122,7 @@
 	return odyssey_science_make_brief(
 		ODYSSEY_SCI_BRIEF_FLORA,
 		"Ксеноботаника: экзотический ген",
-		"Выделите ген «[label]» из мутировавшего сорта на lysis-isolation centrifuge (нужен выраженный экзотический признак). Награда: [ODYSSEY_SCI_REWARD_FLORA] кредитов НИО.",
+		"Выделите ген «[label]» из мутировавшего сорта на lysis-isolation centrifuge (нужен выраженный экзотический признак). Награда: [ODYSSEY_SCI_REWARD_FLORA] таллеров Научному отделу.",
 		1,
 		list("target_gene" = genetype)
 	)
@@ -134,7 +134,7 @@
 	return odyssey_science_make_brief(
 		ODYSSEY_SCI_BRIEF_SLIME,
 		"Ксенобиология: ядро слизня",
-		"Добудьте и проанализируйте «[label]» (деконструкция в DA или активация extract). Награда: [ODYSSEY_SCI_REWARD_SLIME] кредитов НИО.",
+		"Добудьте и проанализируйте «[label]» (деконструкция в DA или активация extract). Награда: [ODYSSEY_SCI_REWARD_SLIME] таллеров Научному отделу.",
 		1,
 		list("target_type" = "[extract_path]")
 	)
@@ -301,8 +301,8 @@
 	entry["reward_paid"] = paid
 
 	if (user)
-		to_chat(user, SPAN_NOTICE("Научный бриф «[entry["title"]]» выполнен. На счёт Science зачислено [paid] кредитов."))
-	priority_announcement.Announce("Research sector brief completed: [entry["title"]]. Science department account credited [paid] credits.", "Odyssey Science Net")
+		to_chat(user, SPAN_NOTICE("Научный бриф «[entry["title"]]» выполнен. На счёт Научного отдела зачислено [paid] таллеров."))
+	priority_announcement.Announce("Research sector brief completed: [entry["title"]]. Science department account credited [paid] thallers.", "Odyssey Science Net")
 
 
 /proc/odyssey_science_pay_credits(list/entry)
@@ -343,5 +343,5 @@
 	)
 	var/paid = odyssey_science_pay_credits(fake)
 	if (user)
-		to_chat(user, SPAN_NOTICE("Тестовая выплата Science: [paid] кредитов."))
+		to_chat(user, SPAN_NOTICE("Тестовая выплата Научному отделу: [paid] таллеров."))
 	return paid

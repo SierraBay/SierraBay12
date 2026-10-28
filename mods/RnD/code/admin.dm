@@ -43,7 +43,7 @@
 				dat += "<b>[entry["title"]]</b> ([entry["kind"]]) — [entry["progress"]]/[entry["target"]]<br>"
 				dat += "<i>[entry["brief"]]</i><br>"
 				if (entry["reward_credits"])
-					dat += "reward: <b>[entry["reward_credits"]]</b> cr"
+					dat += "reward: <b>[entry["reward_credits"]]</b> ₮"
 				if (entry["target_gene"])
 					dat += " · gene=<code>[entry["target_gene"]]</code>"
 				if (entry["target_type"])

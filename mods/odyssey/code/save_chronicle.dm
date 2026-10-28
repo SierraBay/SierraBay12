@@ -102,7 +102,7 @@
 	odyssey_chronicle_append(
 		ODYSSEY_CHRONICLE_KIND_LOSSES,
 		"Потери экипажа за смену",
-		"Зафиксировано погибших по roster: [deaths].",
+		"Зафиксировано погибших за смену: [deaths].",
 		ODYSSEY_CHRONICLE_VIS_PUBLIC,
 		list("count" = deaths)
 	)
@@ -229,7 +229,7 @@
 	lines += "Смена экипажа: [shift] | Эшелон: [echelon]/[max_shifts]"
 	lines += "Сектор: «[sector_name]»[danger ? " ([danger])" : ""]"
 	lines += "Курс: [course_text]"
-	lines += "Roster: живых [counts["alive"]], погибших [counts["dead"]][counts["dead_command"] ? " (командный состав: [counts["dead_command"]])" : ""]"
+	lines += "Экипаж: живых [counts["alive"]], погибших [counts["dead"]][counts["dead_command"] ? " (командный состав: [counts["dead_command"]])" : ""]"
 	lines += "Утерянные шаттлы: [shuttle_text]"
 	lines += "Повреждённые шаттлы (ремонт): [damaged_text]"
 	var/list/contracts = meta["contracts"]

@@ -91,7 +91,7 @@
 		{{for data.odyssey_briefing.science_briefs}}
 			<p>• <b>{{:value.title}}</b>
 			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
-			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> cr{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
 			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
 		{{empty}}
 			<p class="note"><i>Научных брифов на эту смену нет.</i></p>
@@ -101,7 +101,7 @@
 			<p>• <b>{{:value.title}}</b>
 			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
 			{{if value.target_dept_label}} · отдел: {{:value.target_dept_label}}{{/if}}
-			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> cr{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
 			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
 		{{empty}}
 			<p class="note"><i>Брифов отделов на эту смену нет.</i></p>

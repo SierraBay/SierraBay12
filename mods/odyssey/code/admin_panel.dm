@@ -170,7 +170,10 @@ var/global/datum/odyssey_panel/odyssey_panel
 		if (member["death_shift"])
 			dat += " — смерть в смене [member["death_shift"]] ([member["death_reason"]])"
 		dat += "<br>"
-	dat += "<hr>Спящие: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround: <b>[state.sleeper_midround_done ? "уже был" : "ещё нет"]</b><br>"
+	dat += "<hr>Спящие: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround: <b>[state.sleeper_midround_done ? "уже был" : "ещё нет"]</b>"
+	if (state.active)
+		dat += " | <a href='?src=\ref[src];make_sleeper=1'>назначить спящего</a>"
+	dat += "<br>"
 	for (var/skey in state.sleepers)
 		var/list/sleeper = state.sleepers[skey]
 		if (!islist(sleeper))
@@ -178,6 +181,18 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "[html_encode(sleeper["name"])] ([skey]): <b>[sleeper["status"]]</b> shift=[sleeper["assigned_shift"]] source=[sleeper["source"]]"
 		if (sleeper["death_shift"])
 			dat += " — снят в смене [sleeper["death_shift"]] ([sleeper["death_reason"]])"
+		dat += "<br>"
+	dat += "<hr>Генокрады: <b>[length(state.changelings)]</b> (active [odyssey_count_active_changelings()])"
+	if (state.active)
+		dat += " | <a href='?src=\ref[src];make_changeling=1'>назначить генокрада</a>"
+	dat += "<br>"
+	for (var/ckey_slot in state.changelings)
+		var/list/cling = state.changelings[ckey_slot]
+		if (!islist(cling))
+			continue
+		dat += "[html_encode(cling["name"])] ([ckey_slot]): <b>[cling["status"]]</b> shift=[cling["assigned_shift"]] source=[cling["source"]]"
+		if (cling["lost_shift"])
+			dat += " — снят в смене [cling["lost_shift"]] ([cling["lost_reason"]])"
 		dat += "<br>"
 	dat += "<hr>Mercenaries: <b>[state.merc_used ? "уже были" : "ещё нет"]</b>"
 	if (state.merc_used)
@@ -234,7 +249,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "• <b>[html_encode(entry["title"] || "?")]</b> — <b>[entry["status"]]</b> "
 		dat += "[entry["progress"]]/[entry["target"]] ([entry["kind"]])"
 		if (entry["reward_credits"])
-			dat += " reward=<b>[entry["reward_credits"]]</b>cr"
+			dat += " reward=<b>[entry["reward_credits"]]</b>₮"
 		if (entry["target_gene"])
 			dat += " gene=<code>[html_encode(entry["target_gene"])]</code>"
 		if (entry["target_type"])
@@ -267,7 +282,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "• <b>[html_encode(dentry["title"] || "?")]</b> — <b>[dentry["status"]]</b> "
 		dat += "[dentry["progress"]]/[dentry["target"]] ([dentry["kind"]])"
 		if (dentry["reward_credits"])
-			dat += " reward=<b>[dentry["reward_credits"]]</b>cr"
+			dat += " reward=<b>[dentry["reward_credits"]]</b>₮"
 		if (dentry["target_dept"])
 			dat += " dept=<code>[html_encode(dentry["target_dept_label"] || dentry["target_dept"])]</code>"
 		if (dentry["status"] == ODYSSEY_OBJ_STATUS_ACTIVE)
@@ -459,7 +474,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 	if (href_list["sci_complete"])
 		if (odyssey_science_admin_complete(href_list["sci_complete"], usr))
 			log_and_message_admins("force-completed Odyssey science brief [href_list["sci_complete"]]", usr)
-			to_chat(usr, SPAN_NOTICE("Бриф выполнен, кредиты зачислены."))
+			to_chat(usr, SPAN_NOTICE("Бриф выполнен, таллеры зачислены."))
 		else
 			to_chat(usr, SPAN_WARNING("Бриф не найден или уже закрыт."))
 		show(C)
@@ -519,7 +534,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 	if (href_list["dept_complete"])
 		if (odyssey_dept_admin_complete(href_list["dept_complete"], usr))
 			log_and_message_admins("force-completed Odyssey dept brief [href_list["dept_complete"]]", usr)
-			to_chat(usr, SPAN_NOTICE("Бриф отдела выполнен, кредиты зачислены."))
+			to_chat(usr, SPAN_NOTICE("Бриф отдела выполнен, таллеры зачислены."))
 		else
 			to_chat(usr, SPAN_WARNING("Бриф отдела не найден или уже закрыт."))
 		show(C)
@@ -696,6 +711,80 @@ var/global/datum/odyssey_panel/odyssey_panel
 		odyssey_archive_campaign("admin_panel:[usr.ckey]")
 		odyssey_announce_admin_campaign("archive")
 		log_and_message_admins("archived Odyssey campaign via panel", usr)
+		show(C)
+		return
+
+	if (href_list["make_sleeper"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey: кампания не активна."))
+			return
+		var/list/choices = list()
+		for (var/mob/living/carbon/human/H in GLOB.player_list)
+			if (!istype(H) || H.stat == DEAD || !H.mind || !H.client)
+				continue
+			if (!character_persist_ckey_of(H) || !character_persist_slot_of(H))
+				continue
+			choices["[H.real_name] ([H.ckey])"] = H.mind
+		if (!length(choices))
+			to_chat(usr, SPAN_WARNING("Odyssey: нет подходящих людей для спящего."))
+			return
+		var/pick = input(usr, "Кого сделать спящим агентом?", "Odyssey sleeper") as null|anything in choices
+		if (!pick)
+			return
+		var/datum/mind/target = choices[pick]
+		if (!istype(target) || !ishuman(target.current))
+			to_chat(usr, SPAN_WARNING("Odyssey: цель недоступна."))
+			return
+		var/ok = FALSE
+		if (target in GLOB.traitors.current_antagonists)
+			ok = odyssey_register_sleeper(target.current, "admin")
+			if (ok)
+				odyssey_greet_sleeper(target.current, TRUE)
+		else
+			ok = odyssey_make_sleeper(target, "admin", FALSE)
+		if (ok)
+			to_chat(usr, SPAN_NOTICE("Odyssey: спящий записан — [target.current.real_name]."))
+		else
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось назначить спящего."))
+		log_and_message_admins("assigned Odyssey sleeper via panel: [pick]", usr)
+		show(C)
+		return
+
+	if (href_list["make_changeling"])
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (!state.active)
+			to_chat(usr, SPAN_WARNING("Odyssey: кампания не активна."))
+			return
+		var/list/choices = list()
+		for (var/mob/living/carbon/human/H in GLOB.player_list)
+			if (!istype(H) || H.stat == DEAD || !H.mind || !H.client)
+				continue
+			if (!character_persist_ckey_of(H) || !character_persist_slot_of(H))
+				continue
+			choices["[H.real_name] ([H.ckey])"] = H.mind
+		if (!length(choices))
+			to_chat(usr, SPAN_WARNING("Odyssey: нет подходящих людей для генокрада."))
+			return
+		var/pick = input(usr, "Кого сделать генокрадом?", "Odyssey changeling") as null|anything in choices
+		if (!pick)
+			return
+		var/datum/mind/target = choices[pick]
+		if (!istype(target) || !ishuman(target.current))
+			to_chat(usr, SPAN_WARNING("Odyssey: цель недоступна."))
+			return
+		var/ok = FALSE
+		if (target in GLOB.changelings.current_antagonists)
+			ok = odyssey_register_changeling(target.current, "admin")
+			if (ok)
+				odyssey_greet_changeling(target.current, TRUE)
+		else
+			ok = odyssey_make_changeling(target, "admin", FALSE)
+		if (ok)
+			to_chat(usr, SPAN_NOTICE("Odyssey: генокрад записан — [target.current.real_name]."))
+		else
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось назначить генокрада."))
+		log_and_message_admins("assigned Odyssey changeling via panel: [pick]", usr)
 		show(C)
 		return
 

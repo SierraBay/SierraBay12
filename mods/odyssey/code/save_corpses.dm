@@ -29,18 +29,6 @@
 	return FALSE
 
 
-/proc/odyssey_corpse_uniform_entry(mob/living/carbon/human/H)
-	var/obj/item/clothing/under/uniform = H.w_uniform
-	if (!istype(uniform))
-		return null
-	var/list/entry = list("type" = "[uniform.type]")
-	if (uniform.name != initial(uniform.name))
-		entry["name"] = uniform.name
-	if (uniform.color)
-		entry["color"] = "[uniform.color]"
-	return entry
-
-
 /proc/odyssey_collect_corpses()
 	var/list/entries = list()
 	var/list/seen = list()
@@ -63,17 +51,13 @@
 			continue
 		seen[key] = TRUE
 		H.odyssey_corpse_key = key
-		var/list/entry = list(
+		entries += list(list(
 			"id" = key,
 			"name" = H.real_name,
 			"species" = H.species?.name,
 			"body" = body,
 			"husked" = !!(MUTATION_HUSK in H.mutations)
-		)
-		var/list/uniform = odyssey_corpse_uniform_entry(H)
-		if (islist(uniform))
-			entry["uniform"] = uniform
-		entries += list(entry)
+		))
 		CHECK_TICK
 	return entries
 
@@ -88,22 +72,6 @@
 	return morgues
 
 
-/proc/odyssey_apply_corpse_uniform(mob/living/carbon/human/H, list/uniform)
-	if (!istype(H) || !islist(uniform))
-		return
-	var/path = text2path(uniform["type"])
-	if (!ispath(path, /obj/item/clothing/under))
-		return
-	var/obj/item/clothing/under/item = new path(H)
-	if (uniform["name"])
-		item.SetName(uniform["name"])
-	if (uniform["color"])
-		item.color = uniform["color"]
-	if (!H.equip_to_slot_if_possible(item, slot_w_uniform, TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE | TRYEQUIP_INSTANT | TRYEQUIP_DESTROY))
-		if (!QDELETED(item))
-			qdel(item)
-
-
 /proc/odyssey_find_restored_corpse(id)
 	if (!id)
 		return null
@@ -113,12 +81,43 @@
 	return null
 
 
+/// Strip personal gear and put the body in a blue hospital patient gown.
+/proc/odyssey_dress_corpse_as_patient(mob/living/carbon/human/H)
+	if (!istype(H) || QDELETED(H))
+		return
+	for (var/obj/item/I in H.get_equipped_items(TRUE))
+		H.drop_from_inventory(I)
+		if (!QDELETED(I))
+			qdel(I)
+	var/obj/item/clothing/suit/hospital/blue/gown = new /obj/item/clothing/suit/hospital/blue(H)
+	if (!H.equip_to_slot_if_possible(gown, slot_wear_suit, TRYEQUIP_REDRAW | TRYEQUIP_SILENT | TRYEQUIP_FORCE | TRYEQUIP_INSTANT | TRYEQUIP_DESTROY))
+		if (!QDELETED(gown))
+			qdel(gown)
+
+
+/proc/odyssey_sanitize_corpse_appearance(mob/living/carbon/human/H)
+	if (!istype(H))
+		return
+	if (H.pronouns && !GLOB.pronouns.by_key[H.pronouns])
+		H.pronouns = null
+	if (!H.dna)
+		H.dna = new /datum/dna(null)
+	H.dna.ready_dna(H)
+	H.dna.real_name = H.real_name
+	H.sync_organ_dna()
+	H.force_update_limbs()
+	H.update_body(0)
+	H.update_hair(0)
+	H.update_icons()
+
+
 /proc/odyssey_apply_corpse_entry(list/entry, obj/structure/morgue/M)
 	if (!islist(entry) || !istype(M))
 		return FALSE
 	if (odyssey_find_restored_corpse(entry["id"]))
 		return FALSE
-	var/mob/living/carbon/human/H = new /mob/living/carbon/human(M, entry["species"])
+	var/species_name = entry["species"]
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human(M, species_name)
 	H.odyssey_corpse_restored = TRUE
 	H.odyssey_corpse_key = entry["id"]
 	if (entry["name"])
@@ -130,7 +129,8 @@
 	if (entry["husked"])
 		H.ChangeToHusk()
 	H.death(FALSE)
-	odyssey_apply_corpse_uniform(H, entry["uniform"])
+	odyssey_dress_corpse_as_patient(H)
+	odyssey_sanitize_corpse_appearance(H)
 	if (get_turf(H) != get_turf(M) && H.loc != M)
 		H.forceMove(M)
 	M.update()

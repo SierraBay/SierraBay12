@@ -17,7 +17,7 @@
 	return data["entries"]
 
 
-/proc/odyssey_register_character(mob/living/carbon/human/H)
+/proc/odyssey_register_character(mob/living/carbon/human/H, try_sleeper = TRUE)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active || !istype(H))
 		return FALSE
@@ -52,13 +52,32 @@
 	shift_jobs["[state.shift_number]"] = job_title
 	entry["shift_jobs"] = shift_jobs
 	state.roster[key] = entry
-	odyssey_try_reapply_sleeper_for(H)
+	// copy_to/apply_persist runs before mind.transfer_to — defer antag reapply.
+	if (try_sleeper)
+		odyssey_schedule_sleeper_reapply(H)
+		odyssey_schedule_changeling_reapply(H)
 	return TRUE
+
+
+/// copy_to registers the roster entry before mind exists; retry until mind is ready.
+/proc/odyssey_schedule_sleeper_reapply(mob/living/carbon/human/H, attempt = 0)
+	if (!istype(H) || QDELETED(H))
+		return
+	if (H.mind)
+		odyssey_try_reapply_sleeper_for(H)
+		return
+	if (attempt >= 20)
+		log_game("ODYSSEY: sleeper reapply gave up waiting for mind on [H.real_name] ([character_persist_ckey_of(H)])")
+		return
+	addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_schedule_sleeper_reapply), H, attempt + 1), 1)
 
 
 /proc/odyssey_try_reapply_sleeper_for(mob/living/carbon/human/H)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (!state.active || !istype(H) || !H.mind || H.stat == DEAD)
+	if (!state.active || !istype(H) || QDELETED(H) || H.stat == DEAD)
+		return FALSE
+	if (!H.mind)
+		odyssey_schedule_sleeper_reapply(H)
 		return FALSE
 	var/player_ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
@@ -69,6 +88,9 @@
 	if (!islist(entry) || entry["status"] != ODYSSEY_SLEEPER_STATUS_ACTIVE)
 		return FALSE
 	if (H.mind in GLOB.traitors.current_antagonists)
+		return FALSE
+	if (player_is_antag(H.mind))
+		log_game("ODYSSEY: skip latejoin sleeper reapply for [key], already antag")
 		return FALSE
 	return odyssey_make_sleeper(H.mind, "latejoin_reapply", TRUE)
 
@@ -112,6 +134,7 @@
 	entry["seen_shifts"] = seen
 	state.roster[key] = entry
 	odyssey_mark_sleeper_dead(player_ckey, slot, reason)
+	odyssey_mark_changeling_lost(player_ckey, slot, reason)
 	odyssey_chronicle_note_death(H, reason, job_title)
 	log_game("ODYSSEY: character died [player_ckey] slot=[slot] name=[H.real_name] shift=[state.shift_number]")
 	// Journal the tombstone immediately so a crash cannot resurrect the slot.
@@ -299,5 +322,5 @@
 			continue
 		if (character_persist_is_offstation_antag(H))
 			continue
-		odyssey_register_character(H)
+		odyssey_register_character(H, FALSE)
 		odyssey_capture_records_to_roster(H)

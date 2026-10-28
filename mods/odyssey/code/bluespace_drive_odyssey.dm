@@ -1,5 +1,17 @@
 /// Odyssey helpers wired into the physical bluespace drive from bluespace_drive.dm.
 
+/obj/machinery/bluespace_drive
+	odyssey_jump_delay = ODYSSEY_BSD_JUMP_DELAY
+
+
+/proc/odyssey_jump_delay_text(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return "unknown"
+	var/seconds = max(1, round(D.odyssey_jump_delay / (1 SECOND)))
+	if (seconds >= 60)
+		return "[round(seconds / 60, 0.1)] minutes"
+	return "[seconds] seconds"
+
 
 /proc/odyssey_find_ship_bluespace_drive()
 	var/list/drives = SSmachines.get_machinery_of_type(/obj/machinery/bluespace_drive)
@@ -146,10 +158,11 @@
 	if (!istype(D))
 		return
 	var/dest_name = odyssey_jump_destination_text()
+	var/eta = odyssey_jump_delay_text(D)
 	if (emergency)
-		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final lock if unauthorized. [D.jump_delay / 10] seconds to space warping.", "EMERGENCY ODYSSEY JUMP")
+		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final lock if unauthorized. [eta] to space warping.", "EMERGENCY ODYSSEY JUMP")
 	else
-		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final lock. [D.jump_delay / 10] seconds to space warping.", "Odyssey Jump Sequence Initiated")
+		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final lock. [eta] to space warping.", "Odyssey Jump Sequence Initiated")
 
 
 /proc/odyssey_drive_announce_abort(obj/machinery/bluespace_drive/D)

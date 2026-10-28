@@ -17,6 +17,8 @@
 			log_error("ODYSSEY: continuation rejected and archived")
 			return FALSE
 	else
+		odyssey_last_campaign_stats = null
+		odyssey_show_roundend_stats = FALSE
 		state.active = TRUE
 		state.continued = FALSE
 		state.status = ODYSSEY_STATUS_ACTIVE
@@ -38,6 +40,7 @@
 		state.route_history = list(ODYSSEY_SECTOR_START)
 		state.roster = list()
 		state.sleepers = list()
+		state.changelings = list()
 		state.sleeper_midround_done = FALSE
 		state.merc_used = FALSE
 		state.merc_used_shift = 0
@@ -112,8 +115,8 @@
 	var/list/saved_route_history = meta["route_history"]
 	state.route_history = islist(saved_route_history) ? saved_route_history.Copy() : list(state.current_sector_id)
 	state.roster = odyssey_load_roster()
-	var/list/saved_sleepers = meta["sleepers"]
-	state.sleepers = islist(saved_sleepers) ? saved_sleepers.Copy() : list()
+	state.sleepers = odyssey_normalize_sleepers(meta["sleepers"])
+	state.changelings = odyssey_normalize_changelings(meta["changelings"])
 	state.sleeper_midround_done = FALSE
 	state.merc_used = !!meta["merc_used"]
 	state.merc_used_shift = meta["merc_used_shift"] || 0
@@ -187,6 +190,7 @@
 		"route_history" = state.route_history,
 		"next_object_id" = state.next_object_id,
 		"sleepers" = state.sleepers,
+		"changelings" = state.changelings,
 		"merc_used" = state.merc_used,
 		"merc_used_shift" = state.merc_used_shift,
 		"merc_used_reason" = state.merc_used_reason,
@@ -403,6 +407,7 @@
 		state.meta_path = odyssey_meta_path()
 
 	odyssey_sync_sleepers_for_save()
+	odyssey_sync_changelings_for_save()
 	odyssey_sync_roster_for_save()
 	odyssey_collect_abandoned_shuttles()
 	odyssey_ensure_data_dir()

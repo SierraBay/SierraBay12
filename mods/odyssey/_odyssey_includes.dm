@@ -26,6 +26,7 @@
 #include "code/crew_manifest.dm"
 #include "code/persist.dm"
 #include "code/sleepers.dm"
+#include "code/changelings.dm"
 #include "code/mercs.dm"
 #include "code/hostile_antags.dm"
 #include "code/controller.dm"

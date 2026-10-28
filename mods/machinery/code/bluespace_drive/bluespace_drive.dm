@@ -78,6 +78,9 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// Seconds before jump executes after initiation
 	var/jump_delay = 30 SECONDS
 
+	/// Countdown for Odyssey sector-transition jumps (overmap ballistic hops keep jump_delay).
+	var/odyssey_jump_delay = 10 MINUTES
+
 	/// Whether jump is locked in final 5 seconds before execution (abort disabled)
 	var/jump_locked = FALSE
 
@@ -623,8 +626,10 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	jumping = TRUE
 
+	var/active_delay = odyssey_campaign_jump ? odyssey_jump_delay : jump_delay
+
 	// Admin logging
-	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Manual dest=[(!isnull(manual_dest_x) && !isnull(manual_dest_y)) ? "([manual_dest_x],[manual_dest_y])" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Manual dest=[(!isnull(manual_dest_x) && !isnull(manual_dest_y)) ? "([manual_dest_x],[manual_dest_y])" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]. Delay=[active_delay / 10]s")
 
 	// Announce the jump
 	if(odyssey_campaign_jump)
@@ -632,13 +637,13 @@ var/global/list/bluespace_gas_power_factor = list(
 	else if(emergency_jump)
 		command_announcement.Announce("EMERGENCY ALERT! Bluespace drive is initiating an emergency jump with insufficient fuel. \
 			Navigation accuracy cannot be guaranteed. All hands brace for uncontrolled bluespace transition. \
-			[jump_delay / 10] seconds to space warping.", \
+			[active_delay / 10] seconds to space warping.", \
 			"EMERGENCY JUMP SEQUENCE INITIATED")
 	else
 		command_announcement.Announce("Attention all hands! Bluespace field generation arrays are being energized. \
 			Assume jump action stations - bluespace transition procedures are now in effect. \
 			Severe risk of death or serious injury to all personnel outside of the vessel. \
-			[jump_delay / 10] seconds to space warping.", \
+			[active_delay / 10] seconds to space warping.", \
 			"Bluespace Drive Jump Sequence Initiated")
 
 	// Play create_orb animation (0.5s), then switch to looping drive_orb
@@ -648,11 +653,11 @@ var/global/list/bluespace_gas_power_factor = list(
 	orb_timer_id = addtimer(new Callback(src, PROC_REF(orb_set_active)), 0.5 SECONDS, TIMER_STOPPABLE)
 
 	// Start jump countdown
-	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), jump_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
+	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), active_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	// 5 seconds before jump: apply overlay to all crew and lock abort
-	if(jump_delay > 5 SECONDS)
-		pre_jump_timer_id = addtimer(new Callback(src, PROC_REF(pre_jump_prepare)), jump_delay - 5 SECONDS, TIMER_STOPPABLE)
+	if(active_delay > 5 SECONDS)
+		pre_jump_timer_id = addtimer(new Callback(src, PROC_REF(pre_jump_prepare)), active_delay - 5 SECONDS, TIMER_STOPPABLE)
 	else
 		pre_jump_prepare()
 

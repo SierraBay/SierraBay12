@@ -30,6 +30,8 @@
 
 /// After Transfer wins End the shift, wait this long before actually ending the round.
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
+/// Countdown from Odyssey Jump initiate to sector transition (BSD).
+#define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
 
 #define ODYSSEY_CHOICE_YES "За"
 #define ODYSSEY_CHOICE_NO "Против"
@@ -113,6 +115,8 @@
 
 #define ODYSSEY_CHANGELING_MIN 1
 #define ODYSSEY_CHANGELING_MAX 2
+#define ODYSSEY_CHANGELING_STATUS_ACTIVE "active"
+#define ODYSSEY_CHANGELING_STATUS_LOST "lost"
 
 #define ODYSSEY_OUTSIDER_DECISION_SPAWN "spawn"
 #define ODYSSEY_OUTSIDER_DECISION_MISS "miss"
@@ -149,7 +153,7 @@
 /// Department sector briefs (Cargo / Medical). Stored alongside science in research.json.
 #define ODYSSEY_DEPT_BRIEF_CARGO "cargo_sales"
 #define ODYSSEY_DEPT_BRIEF_MEDICAL "medical_exam"
-#define ODYSSEY_DEPT_REWARD_MEDICAL 2500
+#define ODYSSEY_DEPT_REWARD_MEDICAL 1250
 #define ODYSSEY_DEPT_BRIEFS_MAX 2
 /// Cargo export quota in thallers (supply sale points × 15 via cargo mod).
 #define ODYSSEY_DEPT_CARGO_THALLERS_MIN 750

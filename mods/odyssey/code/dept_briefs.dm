@@ -96,7 +96,7 @@
 	return odyssey_dept_make_brief(
 		ODYSSEY_DEPT_BRIEF_MEDICAL,
 		"Медотсек: осмотр персонала",
-		"Проведите полное сканирование (body scanner) [count] членов экипажа из отдела «[label]». Каждый человек учитывается один раз. Награда: [ODYSSEY_DEPT_REWARD_MEDICAL] кредитов Медицинскому отделу.",
+		"Проведите полное сканирование (body scanner) [count] членов экипажа из отдела «[label]». Каждый человек учитывается один раз. Награда: [ODYSSEY_DEPT_REWARD_MEDICAL] таллеров Медицинскому отделу.",
 		count,
 		list("target_dept" = dept, "target_dept_label" = label)
 	)
@@ -196,11 +196,11 @@
 
 	if (user)
 		if (paid > 0)
-			to_chat(user, SPAN_NOTICE("Бриф «[entry["title"]]» выполнен. Зачислено [paid] кредитов."))
+			to_chat(user, SPAN_NOTICE("Бриф «[entry["title"]]» выполнен. Зачислено [paid] таллеров."))
 		else
 			to_chat(user, SPAN_NOTICE("Бриф «[entry["title"]]» выполнен."))
 	if (paid > 0)
-		priority_announcement.Announce("Sector department brief completed: [entry["title"]]. Account credited [paid] credits.", "Odyssey Logistics Net")
+		priority_announcement.Announce("Sector department brief completed: [entry["title"]]. Account credited [paid] thallers.", "Odyssey Logistics Net")
 	else
 		priority_announcement.Announce("Sector department brief completed: [entry["title"]].", "Odyssey Logistics Net")
 
