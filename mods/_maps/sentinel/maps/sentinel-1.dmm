@@ -3356,7 +3356,7 @@
 /obj/floor_decal/corner/blue{
 	dir = 10
 	},
-/obj/machinery/computer/modular/preset/munitions{
+/obj/machinery/computer/modular/preset/munitions/patrol{
 	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
