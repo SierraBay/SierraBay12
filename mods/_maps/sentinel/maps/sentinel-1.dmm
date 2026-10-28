@@ -2183,6 +2183,13 @@
 /obj/floor_decal/corner/blue{
 	dir = 5
 	},
+/obj/machinery/button/alternate/door/bolts{
+	id_tag = "cannon_2";
+	name = "Torpedo launcher bolts";
+	pixel_x = -6;
+	pixel_y = 34;
+	req_access = list("ACCESS_CAVALRY")
+	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
 "ea" = (
@@ -3340,9 +3347,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/modular/preset/civilian{
-	dir = 1
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -3351,6 +3355,9 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/floor_decal/corner/blue{
 	dir = 10
+	},
+/obj/machinery/computer/modular/preset/munitions{
+	dir = 1
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
@@ -7651,9 +7658,9 @@
 "nA" = (
 /obj/machinery/atmospherics/unary/vent_pump/on,
 /obj/structure/table/rack,
-/obj/item/shield/riot/metal,
-/obj/item/shield/riot/metal,
 /obj/floor_decal/industrial/outline/yellow,
+/obj/item/shield/riot/metal,
+/obj/item/shield/riot/metal,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "nB" = (
@@ -9031,6 +9038,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/ship/patrol/command/hangar)
+"sF" = (
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
+	},
+/obj/structure/ship_munition/disperser_charge/mining,
+/obj/floor_decal/industrial/outline/green,
+/turf/simulated/floor/tiled/techfloor/grid,
+/area/ship/patrol/command/cannon)
 "sJ" = (
 /obj/paint/black,
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -9676,8 +9692,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/ship/patrol/command/bridge)
 "Gd" = (
-/obj/structure/table/steel_reinforced,
 /obj/machinery/light,
+/obj/structure/table/rack,
+/obj/floor_decal/industrial/outline/yellow,
+/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
+/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
+/obj/item/clothing/accessory/armband/bluegold/away_solpatrol,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/ship/patrol/barracks)
 "Gj" = (
@@ -15816,7 +15836,7 @@ up
 ha
 hP
 BY
-wf
+sF
 gY
 hM
 FP
