@@ -247,6 +247,14 @@ GLOBAL_TYPED_NEW(ipc_emergency_state, /datum/topic_state/ipc_emergency_state)
 	var/mob/living/carbon/human/H = get_ipc()
 	if(!H || usr != H)
 		return TOPIC_NOACTION
+	if(href_list["close"])
+		if(session_open && !H.ipc_brain_reroute_active)
+			H.ipc_drop_emergency_power("Alternate power trace closed. Chassis bus offline.")
+			H.ipc_brain_reroute_cooldown_until = world.time + 80
+		else
+			session_open = FALSE
+			SSnano.close_uis(src)
+		return TOPIC_HANDLED
 	if(href_list["pick"])
 		var/id = href_list["pick"]
 		if(!(id in neighbors))
@@ -266,8 +274,8 @@ GLOBAL_TYPED_NEW(ipc_emergency_state, /datum/topic_state/ipc_emergency_state)
 			return TOPIC_HANDLED
 		if(!H.ipc_can_start_brain_reroute())
 			to_chat(H, SPAN_WARNING("Reroute conditions changed. Trace cancelled."))
-			session_open = FALSE
-			SSnano.close_uis(src)
+			H.ipc_drop_emergency_power("Alternate power trace cancelled. Chassis bus offline.")
+			H.ipc_brain_reroute_cooldown_until = world.time + 80
 			return TOPIC_HANDLED
 		if(H.ipc_engage_brain_reroute())
 			session_open = FALSE

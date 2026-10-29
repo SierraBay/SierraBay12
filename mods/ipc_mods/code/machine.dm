@@ -15,61 +15,6 @@
 	var/ipc_brain_reroute_next_drain = 0
 	var/ipc_brain_reroute_cooldown_until = 0
 	var/ipc_brain_reroute_last_report_bucket = 100
-	// Terminator-style HUD text overlay toggle/state
-	var/ipc_hud_overlay_enabled = TRUE
-	var/ipc_overlay_next_temp_alert = 0
-	var/list/ipc_overlay_critical_queue = list()
-	var/ipc_overlay_critical_flush_scheduled = FALSE
-
-/mob/living/carbon/human/proc/ipc_overlay_text(text, color = "#ff3333", hold_time = 3 SECONDS, typing = TRUE, delay_between_words = 0.04 SECONDS)
-	if(!ipc_hud_overlay_enabled || !client || !text)
-		return
-	var/formatted_text = "\[[uppertext(trimtext(text))]\]"
-	client.play_screentext_on_client_screen(
-		input_text = formatted_text,
-		holding_on_screen_time = hold_time,
-		need_output_every_word = typing,
-		delay_between_words = delay_between_words,
-		text_color = color,
-		input_shrift = "Bank Gothic",
-		clear_screen = TRUE
-	)
-
-/mob/living/carbon/human/proc/ipc_queue_critical_alert(text)
-	if(!ipc_hud_overlay_enabled || !text)
-		return
-	if(!(text in ipc_overlay_critical_queue))
-		ipc_overlay_critical_queue += text
-	if(!ipc_overlay_critical_flush_scheduled)
-		ipc_overlay_critical_flush_scheduled = TRUE
-		addtimer(new Callback(src, PROC_REF(ipc_flush_critical_alerts)), 2)
-
-/mob/living/carbon/human/proc/ipc_flush_critical_alerts()
-	ipc_overlay_critical_flush_scheduled = FALSE
-	if(!ipc_hud_overlay_enabled || !length(ipc_overlay_critical_queue))
-		ipc_overlay_critical_queue.Cut()
-		return
-	if(length(ipc_overlay_critical_queue) == 1)
-		ipc_overlay_text("CRITICAL DAMAGE // [ipc_overlay_critical_queue[1]]", "#ff3333", 2.8 SECONDS)
-	else
-		var/list/parts = ipc_overlay_critical_queue.Copy()
-		ipc_overlay_text("CRITICAL DAMAGE // [jointext(parts, " | ")]", "#ff3333", 3.2 SECONDS)
-	ipc_overlay_critical_queue.Cut()
-
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone, damage_flags = FLAGS_OFF, obj/used_weapon, armor_pen, silent = FALSE, obj/item/organ/external/given_organ)
-	. = ..()
-	if(!(is_species(SPECIES_IPC) || is_species(SPECIES_FBP)))
-		return
-	if(!(damagetype in list(DAMAGE_BRUTE, DAMAGE_BURN)) || damage <= 0)
-		return
-	var/obj/item/organ/external/organ = given_organ
-	if(!organ && def_zone)
-		organ = isorgan(def_zone) ? def_zone : get_organ(check_zone(def_zone))
-	if(!organ)
-		return
-	var/total_pct = round(((organ.brute_dam + organ.burn_dam) / max(1, organ.max_damage)) * 100)
-	if(total_pct >= 70 || organ.is_broken() || (organ.status & ORGAN_BROKEN))
-		ipc_queue_critical_alert(uppertext(organ.name))
 
 /mob/living/carbon/human/proc/ipc_can_start_brain_reroute()
 	if(!(is_species(SPECIES_IPC) || is_species(SPECIES_FBP)))
@@ -112,7 +57,6 @@
 	if(!had_emergency && !message)
 		ipc_apply_power_failure()
 		return
-	ipc_overlay_text("POWER REROUTING // DISENGAGED", "#ff9933", 2.2 SECONDS)
 	if(message)
 		to_chat(src, SPAN_WARNING(message))
 	ipc_apply_power_failure()
@@ -185,7 +129,6 @@
 	ipc_brain_reroute_active = TRUE
 	ipc_brain_reroute_next_drain = world.time + 40
 	ipc_brain_reroute_last_report_bucket = 100
-	ipc_overlay_text("POWER REROUTING // ENGAGED", "#ff3333", 3 SECONDS)
 	to_chat(src, SPAN_WARNING("Emergency power rerouting engaged. Positronic matrix now feeding chassis bus."))
 	return TRUE
 
@@ -241,26 +184,28 @@
 			if(brand_conflict && base_limb_heat)
 				bodytemperature += base_limb_heat * 0.15
 			if(sprinting && total_limb_heat)
-				// нарастающий перегрев: чем дольше бежишь без стамины, тем интенсивнее нагрев
+				// Базовый heat_generation уже в ipc_temp_gain. Здесь только надбавка от спринта.
 				ipc_sprint_heat_buildup = min(ipc_sprint_heat_buildup + 0.1, 2.0)
-				total_limb_heat *= (1 + ipc_sprint_heat_buildup)
+				var/sprint_extra = total_limb_heat * ipc_sprint_heat_buildup
 				if(brand_conflict)
-					total_limb_heat *= 1.15
+					sprint_extra *= 1.15
 					if(prob(2))
 						to_chat(src, SPAN_WARNING("Thermal mismatch detected — combat-grade prosthetic interfaces are conflicting with the rest of the chassis."))
-				bodytemperature += total_limb_heat
+				bodytemperature += sprint_extra
 			else if(ipc_sprint_heat_buildup)
 				// при остановке или восстановлении стамины нагрузка спадает постепенно
 				ipc_sprint_heat_buildup = max(ipc_sprint_heat_buildup - 0.05, 0)
-			// сбой протезов: шанс растёт вместе со Sprint Heat Load (0–2 → 0–10%)
+			// сбой протезов: шанс lock-up = Sprint Heat Load % (та же шкала, что в Diagnostics)
 			if(ipc_sprint_heat_buildup > 0)
 				var/has_cheap_limb = FALSE
 				for(var/obj/item/organ/external/limb in organs)
 					if(BP_IS_ROBOTIC(limb) && limb.expensive == 0)
 						has_cheap_limb = TRUE
 						break
-				var/overload_chance = round(ipc_sprint_heat_buildup * (has_cheap_limb ? 6 : 4))
-				if(overload_chance && prob(overload_chance))
+				var/sprint_pct = ipc_sprint_heat_buildup * 50 // 0–100, как в IPC Diagnostics
+				// 0% → 0 шанс; 100% → 40% (field limbs) / 30% (остальные) за тик температуры
+				var/lockup_chance = sprint_pct * (has_cheap_limb ? 0.40 : 0.30)
+				if(lockup_chance > 0 && prob(lockup_chance))
 					if(prob(50))
 						to_chat(src, SPAN_WARNING("Your prosthetic arms stutter from thermal overload!"))
 						if(prob(50)) drop_l_hand(force = TRUE)
@@ -270,9 +215,6 @@
 						Weaken(3)
 		else
 			ipc_brand_siemens_penalty = 0
-		if(bodytemperature >= getSpeciesOrSynthTemp(HEAT_LEVEL_1) && world.time >= ipc_overlay_next_temp_alert)
-			ipc_overlay_next_temp_alert = world.time + 80
-			ipc_overlay_text("CORE TEMP WARNING // [round(bodytemperature - T0C)]C", "#ff3333", 2.5 SECONDS)
 		return
 	. = ..()
 

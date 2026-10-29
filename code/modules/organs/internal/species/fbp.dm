@@ -68,15 +68,15 @@
 		owner.Paralyse(3)
 	if(percent() < 10 && prob(1))
 		to_chat(owner, SPAN_WARNING("Your internal battery beeps an alert code, it is low on charge!"))
-	if(ishuman(owner) && owner.is_species(SPECIES_IPC))
+	if(ishuman(owner) && (owner.is_species(SPECIES_IPC) || owner.is_species(SPECIES_FBP)))
 		var/mob/living/carbon/human/H = owner
 		var/obj/item/organ/internal/cooling_system/cooling_organ = H.internal_organs_by_name[BP_COOLING]
 		if(!cooling_organ)
+			// Нет охлаждения — заметный пассивный нагрев шасси, пока не упрёмся в потолок
 			H.ipc_temp_gain = (H.bodytemperature > 950 CELSIUS) ? 0 : 30
 		else
+			// Нагрев идёт всегда; пустая батарея лишь отключает активную откачку тепла внутри get_tempgain()
 			H.ipc_temp_gain = cooling_organ.get_tempgain()
-		if(!cell || !get_charge())
-			H.ipc_temp_gain = 0
 
 /obj/item/organ/internal/cell/emp_act(severity)
 	..()

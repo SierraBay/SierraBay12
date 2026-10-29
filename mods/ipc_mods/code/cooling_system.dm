@@ -7,7 +7,7 @@
 	status = ORGAN_ROBOTIC
 	desc = "The internal liquid cooling system consists of a weighty humming cylinder and a small ribbed block connected by flexible tubes through which clear liquid flows."
 	var/refrigerant_max = 90	// Максимальное количество охладителя
-	var/refrigerant_rate = 0	// Чем больше это значение, тем сильнее будет идти нагрев владельца. / теперь складывается от протезов
+	var/refrigerant_rate = 0	// Текущий вклад в ipc_temp_gain за тик (+ нагрев / − охлаждение)
 	var/durability_factor = 30	// Чем больше это значение, тем сильнее будет идти нагрев владельца при повреждениях
 	var/safety = 1
 	damage_reduction = 0.8
@@ -47,7 +47,8 @@
 		return
 	damage += rand(15 - severity * 5, 20 - severity * 5)
 	..(severity)
-// Коэффицент эффективности работы смеси
+
+// Коэффицент эффективности работы смеси (ниже — лучше для охлаждения)
 /obj/item/organ/internal/cooling_system/proc/coolant_purity()
 	var/total_purity = 0
 	fresh_coolant = 0
@@ -66,75 +67,83 @@
 		coolant_purity = total_purity / fresh_coolant
 		heating_modificator = coolant_purity
 
-
-
-
 /obj/item/organ/internal/cooling_system/proc/get_coolant_drain()
-	var/damage_factor = (damage*durability_factor)/max_damage
+	var/damage_factor = (damage * durability_factor) / max_damage
 	return damage_factor
 
 /obj/item/organ/internal/cooling_system/Process()
-
 	if(!owner || owner.stat == DEAD || owner.bodytemperature < 32)
 		return
-	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
-	if(!C)
-		owner.ipc_temp_gain = 0
-		return
 	coolant_purity()
-	handle_cooling()
+	handle_coolant_upkeep()
 	..()
 
-/obj/item/organ/internal/cooling_system/proc/handle_cooling()
-
+// Расход/порча хладагента. Нагрев считается только в get_tempgain().
+/obj/item/organ/internal/cooling_system/proc/handle_coolant_upkeep()
 	var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
-	refrigerant_rate = heating_modificator
-	if (!C || C.get_charge() < 10)
+	if(!C || C.get_charge() < 10)
 		return
-	if(reagents.total_volume > 0)
-		var/bruised_cost = get_coolant_drain()
-
-		if(is_bruised())
-			var/reagents_remove = bruised_cost/durability_factor
-			reagents.remove_any(reagents_remove)
-
-		if(is_damaged())
-			refrigerant_rate += bruised_cost     // Нагрев владельца при повреждениях высчитывается тут.
-
-		if(reagents.get_reagent_amount(/datum/reagent/water) <= (0.3 * reagents.total_volume))
-			var/need_more_water = ((refrigerant_max - reagents.get_reagent_amount(/datum/reagent/water))/100)
-			take_internal_damage(need_more_water)
-
 	if(reagents.total_volume <= 0)
-		refrigerant_rate += 40
+		return
+	var/bruised_cost = get_coolant_drain()
+	if(is_bruised())
+		reagents.remove_any(bruised_cost / durability_factor)
+	if(reagents.get_reagent_amount(/datum/reagent/water) <= (0.3 * reagents.total_volume))
+		var/need_more_water = ((refrigerant_max - reagents.get_reagent_amount(/datum/reagent/water)) / 100)
+		take_internal_damage(need_more_water)
 
 /obj/item/organ/internal/cooling_system/proc/get_tempgain()
-	var/obj/item/organ/internal/posibrain/ipc/posibrain = owner.internal_organs_by_name[BP_POSIBRAIN]
-	var/total_limb_heat = 0
-	if(!posibrain)
+	if(!owner)
 		return 0
 	if(owner.bodytemperature > 550 CELSIUS)
 		return 0
+
+	// Базовый нагрев шасси — тепловыделение протезов, не coolingefficiency
+	var/heat = 0
+	var/cooling_eff_sum = 0
+	var/robotic_limbs = 0
 	for(var/obj/item/organ/external/part in owner.organs)
-		total_limb_heat += part.coolingefficiency
+		if(!BP_IS_ROBOTIC(part))
+			continue
+		heat += part.heat_generation
+		cooling_eff_sum += part.coolingefficiency
+		robotic_limbs++
 
-	refrigerant_rate = total_limb_heat
+	if(is_damaged())
+		heat += get_coolant_drain()
 
-	// Активное охлаждение: когда температура выше целевой, система откачивает тепло
-	if(cooling_enabled && owner.bodytemperature > thermostat && reagents.total_volume > 0)
-		var/delta = owner.bodytemperature - thermostat
-		var/efficiency = 1 - (damage / max_damage) * 0.7
-		var/cooling_power = min(delta * 1.5, 15) * efficiency
-		// Расход заряда батареи: чем больше охлаждаем, тем больше потребляем
-		var/obj/item/organ/internal/cell/AC = owner.internal_organs_by_name[BP_CELL]
-		if(AC && AC.cell)
-			var/drain = cooling_power * 2
-			AC.cell.charge = max(0, AC.cell.charge - drain)
-			last_cooling_drain = drain
-		refrigerant_rate -= cooling_power
-	else
-		last_cooling_drain = 0
+	if(reagents.total_volume <= 0)
+		heat += 40
 
+	refrigerant_rate = heat
+	last_cooling_drain = 0
+
+	// Активное охлаждение только если включено и есть хладагент
+	if(!(cooling_enabled && reagents.total_volume > 0 && owner.bodytemperature > thermostat))
+		return refrigerant_rate
+
+	var/obj/item/organ/internal/cell/AC = owner.internal_organs_by_name[BP_CELL]
+	if(!AC || !AC.cell || AC.get_charge() <= 0)
+		return refrigerant_rate
+
+	var/delta = owner.bodytemperature - thermostat
+	var/organ_efficiency = 1 - (damage / max_damage) * 0.7
+	// coolingefficiency: меньше = лучше теплоотвод → сильнее охлаждение
+	var/avg_limb_eff = robotic_limbs ? (cooling_eff_sum / robotic_limbs) : 0.5
+	var/limb_cooling_factor = clamp(1.2 / max(0.25, avg_limb_eff), 0.4, 2.5)
+	// purity: ниже = лучше смесь (coolant ~0.1, dirty water ~17)
+	var/purity = heating_modificator
+	var/coolant_factor = 1
+	if(purity)
+		coolant_factor = clamp(5 / max(0.5, purity), 0.25, 2)
+	var/cooling_power = min(delta * 1.5, 15) * organ_efficiency * limb_cooling_factor * coolant_factor
+
+	var/drain = cooling_power * 2
+	if(!AC.cell.checked_use(drain))
+		return refrigerant_rate
+
+	last_cooling_drain = drain
+	refrigerant_rate -= cooling_power
 	return refrigerant_rate
 
 /obj/item/organ/internal/cooling_system/proc/get_coolant_remaining()
@@ -142,9 +151,9 @@
 		return 0
 	return round(reagents.total_volume)
 
-/obj/item/organ/internal/cooling_system/Topic(href, list/href_list)
+/obj/item/organ/internal/cooling_system/Topic(href, href_list)
 	if(href_list["set_thermostat"])
-		if(!owner || owner != usr || !owner.is_species(SPECIES_IPC))
+		if(!owner || owner != usr || !(owner.is_species(SPECIES_IPC) || owner.is_species(SPECIES_FBP)))
 			return
 		var/new_temp = input(usr, "Set thermostat target temperature (20–140°C):", "Thermostat", round(thermostat - T0C)) as num
 		if(!isnull(new_temp))
@@ -161,7 +170,6 @@
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The injection is [safety ? "on" : "off"]."
 	to_chat(user, "The injection is [safety ? "on" : "off"].")
-
 
 /obj/item/organ/internal/cooling_system/afterattack(atom/target, mob/user, flag)
 	var/obj/item/reagent_containers/glass/beaker = target

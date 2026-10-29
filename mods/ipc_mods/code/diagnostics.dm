@@ -64,14 +64,21 @@
 	if(CS)
 		data["thermostat"]           = round(CS.thermostat - T0C)
 		data["cooling_enabled"]      = CS.cooling_enabled ? TRUE : FALSE
-		data["cooling_mode"]         = CS.cooling_enabled ? "ACTIVE" : "DISABLED"
-		data["cooling_mode_class"]   = CS.cooling_enabled ? "ok" : "warn"
+		data["cooling_active"]       = (CS.cooling_enabled && CS.last_cooling_drain > 0) ? TRUE : FALSE
+		if(!CS.cooling_enabled)
+			data["cooling_mode"] = "DISABLED"
+			data["cooling_mode_class"] = "warn"
+		else if(data["cooling_active"])
+			data["cooling_mode"] = "ACTIVE"
+			data["cooling_mode_class"] = "ok"
+		else
+			data["cooling_mode"] = "STANDBY"
+			data["cooling_mode_class"] = "muted"
 		data["cooling_toggle_label"] = CS.cooling_enabled ? "Disable Cooling" : "Enable Cooling"
 		data["coolant_pct"]          = round(CS.get_coolant_remaining() / CS.refrigerant_max * 100)
 		data["coolant_class"]        = _pct_class(data["coolant_pct"], 60, 30)
 		data["cooling_health_pct"]   = round((1 - CS.damage / CS.max_damage) * 100)
 		data["cooling_health_class"] = _pct_class(data["cooling_health_pct"], 70, 40)
-		data["cooling_active"]       = (CS.cooling_enabled && H.bodytemperature > CS.thermostat && CS.reagents.total_volume > 0) ? TRUE : FALSE
 		data["cooling_drain"]        = round(CS.last_cooling_drain, 0.1)
 		// Оставшееся время работы батареи при текущем расходе охлаждения
 		var/obj/item/organ/internal/cell/CC = H.internal_organs_by_name[BP_CELL]
@@ -135,10 +142,6 @@
 		data["overdrive_label"] = H.ipc_overdrive_enabled ? "Restore Safety" : "Disable Safety"
 		data["overdrive_state"] = H.ipc_overdrive_enabled ? "OVERRIDE ACTIVE" : "PROTOCOLS ACTIVE"
 		data["overdrive_class"] = H.ipc_overdrive_enabled ? "warn" : "ok"
-		data["hud_overlay_enabled"] = H.ipc_hud_overlay_enabled ? TRUE : FALSE
-		data["hud_overlay_label"] = H.ipc_hud_overlay_enabled ? "Disable HUD" : "Enable HUD"
-		data["hud_overlay_state"] = H.ipc_hud_overlay_enabled ? "ONLINE" : "OFFLINE"
-		data["hud_overlay_class"] = H.ipc_hud_overlay_enabled ? "ok" : "muted"
 		data["reroute_active"] = H.ipc_brain_reroute_active ? TRUE : FALSE
 		data["reroute_state"] = H.ipc_brain_reroute_active ? "ACTIVE" : "INACTIVE"
 		data["reroute_class"] = H.ipc_brain_reroute_active ? "warn" : "muted"
@@ -223,12 +226,6 @@
 			to_chat(H, SPAN_WARNING("Safety protocols disabled. Overdrive mode enabled."))
 		else
 			to_chat(H, SPAN_NOTICE("Safety protocols restored. Overdrive mode disabled."))
-	else if(href_list["toggle_hud_overlay"])
-		var/mob/living/carbon/human/H = get_ipc_owner()
-		if(!H || H != usr)
-			return TOPIC_NOACTION
-		H.ipc_hud_overlay_enabled = !H.ipc_hud_overlay_enabled
-		to_chat(H, SPAN_NOTICE("HUD overlay [H.ipc_hud_overlay_enabled ? "enabled" : "disabled"]."))
 	else if(href_list["toggle_brain_reroute"])
 		var/mob/living/carbon/human/H = get_ipc_owner()
 		if(!H || H != usr)

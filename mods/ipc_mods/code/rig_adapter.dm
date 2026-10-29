@@ -4,17 +4,6 @@
 /mob/living/carbon/human
 	var/obj/item/rig/ipc_chassis/ipc_module_bay
 
-/obj/effect/ipc_rig_overlay
-	name = ""
-	icon = 'icons/mob/onmob/onmob_rig_modules.dmi'
-	mouse_opacity = 0
-	anchored = TRUE
-	unacidable = TRUE
-	simulated = FALSE
-	layer = FLOAT_LAYER
-	appearance_flags = DEFAULT_APPEARANCE_FLAGS | RESET_COLOR | KEEP_APART
-	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-
 /obj/item/rig/ipc_chassis
 	name = "chassis module bay"
 	desc = "An internal hardpoint that mounts a single hardsuit module to a positronic chassis."
@@ -40,19 +29,16 @@
 		/obj/item/rig_module/self_destruct,
 		/obj/item/rig_module/selfrepair
 	)
-	var/obj/effect/ipc_rig_overlay/visual
 
 /obj/item/rig/ipc_chassis/Destroy()
 	cell = null
 	air_supply = null
 	remove_module_actions()
 	if(wearer)
-		if(visual)
-			wearer.vis_contents -= visual
 		if(wearer.ipc_module_bay == src)
 			wearer.ipc_module_bay = null
+		wearer.update_body()
 	wearer = null
-	QDEL_NULL(visual)
 	. = ..()
 
 /obj/item/rig/ipc_chassis/dropped(mob/user)
@@ -151,23 +137,17 @@
 /obj/item/rig/ipc_chassis/get_mob_overlay(mob/user_mob, slot)
 	return null
 
+/obj/item/rig/ipc_chassis/proc/get_module_overlay_state()
+	if(!length(installed_modules))
+		return null
+	var/obj/item/rig_module/module = installed_modules[1]
+	// Пока модуль стоит — показываем hardware. Active → inactive → active-sprite как fallback.
+	return module.suit_overlay || module.suit_overlay_inactive || module.suit_overlay_active
+
 /obj/item/rig/ipc_chassis/proc/refresh_visual()
-	if(!visual)
-		visual = new(src)
 	if(!wearer)
 		return
-	var/state
-	if(length(installed_modules))
-		var/obj/item/rig_module/module = installed_modules[1]
-		state = module.suit_overlay
-	if(!state)
-		wearer.vis_contents -= visual
-		visual.icon_state = ""
-		return
-	visual.icon = equipment_overlay_icon
-	visual.icon_state = state
-	if(!(visual in wearer.vis_contents))
-		wearer.vis_contents += visual
+	wearer.update_body()
 
 /obj/item/rig/ipc_chassis/proc/give_module_actions()
 	remove_module_actions()
@@ -425,6 +405,14 @@
 	. = ..()
 	if(H)
 		H.ensure_ipc_module_bay()
+
+/singleton/species/machine/update_skin(mob/living/carbon/human/H)
+	if(!H?.ipc_module_bay)
+		return null
+	var/state = H.ipc_module_bay.get_module_overlay_state()
+	if(!state)
+		return null
+	return image(H.ipc_module_bay.equipment_overlay_icon, state)
 
 /singleton/species/machine/get_additional_examine_text(mob/living/carbon/human/H)
 	. = ..()

@@ -235,9 +235,6 @@
 	var/obj/item/stock_parts/computer/hard_drive/hdd  = os.get_component(PART_HDD)
 	var/obj/item/stock_parts/computer/network_card/nic = os.get_component(PART_NETWORK)
 	to_chat(owner, "<span class='notice'>\[ECS\] Boot sequence complete.<br>&nbsp;&nbsp;HDD: [hdd ? hdd.name : "NOT FOUND"]<br>&nbsp;&nbsp;NIC: [nic ? nic.name : "not installed"]<br>&nbsp;&nbsp;Status: <b>ONLINE</b></span>")
-	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.ipc_overlay_text("ECS BOOT // ONLINE", "#4fc3f7", 2.6 SECONDS)
 
 // ── HARDWARE ─────────────────────────────────────────────────────────────────
 
@@ -429,11 +426,9 @@
 		var/datum/ai_laws/laws = get_directive_laws()
 		if(!laws)
 			to_chat(owner, SPAN_DANGER("\[ECS\] Directive disk seated, but it has no valid LAW file."))
-			owner.ipc_overlay_text("DIRECTIVES // EMPTY", "#ff9933", 2.2 SECONDS)
 			log_event("DIRECTIVE DISK ENGAGED — EMPTY FILE")
 			return
 		to_chat(owner, SPAN_DANGER("\[ECS\] Directive disk engaged. Review chassis directives."))
-		owner.ipc_overlay_text("DIRECTIVES // ENGAGED", "#ff9933", 2.2 SECONDS)
 		open_diagnostics(owner, "directives")
 		log_event("DIRECTIVE DISK ENGAGED — [laws.name]")
 
@@ -441,7 +436,6 @@
 	clear_directives_from_brain()
 	if(owner)
 		to_chat(owner, SPAN_NOTICE("\[ECS\] Directive disk released."))
-		owner.ipc_overlay_text("DIRECTIVES // RELEASED", "#4fc3f7", 2.2 SECONDS)
 		log_event("DIRECTIVE DISK RELEASED")
 
 /obj/item/organ/internal/ecs/proc/apply_directives_to_brain()
