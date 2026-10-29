@@ -3,7 +3,7 @@
 	flags = ANTAG_OVERRIDE_JOB | ANTAG_OVERRIDE_MOB | ANTAG_RANDSPAWN | ANTAG_VOTABLE
 	no_prior_faction = TRUE
 	base_to_load = /datum/map_template/ruin/antag_spawn/changeling
-	welcome_text = "You awaken in a hidden nest away from the Sierra. Use the salvage shuttle, tug, or landing pod to reach the ship, take a crew identity, and grow the brood. Use say \"%LANGUAGE_PREFIX%g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them."
+	welcome_text = "You awaken in a hidden nest away from the Sierra. Use the tug, landing pod, or droppod to reach the ship, take a crew identity, and grow the brood. Use say \"%LANGUAGE_PREFIX%g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them."
 
 
 /datum/antagonist/changeling/prepare_changeling_body(datum/mind/player, preserve_appearance)
@@ -33,13 +33,12 @@
 	prefix = "mods/antagonists/maps/"
 	suffixes = list("changeling_nest.dmm")
 	shuttles_to_initialise = list(
-		/datum/shuttle/autodock/overmap/changeling_crab,
 		/datum/shuttle/autodock/overmap/changeling_pod,
-		/datum/shuttle/autodock/overmap/changeling_tug
+		/datum/shuttle/autodock/overmap/changeling_tug,
+		/datum/shuttle/autodock/overmap/changeling_droppod
 	)
 	apc_test_exempt_areas = list(
-		/area/map_template/changeling_nest = NO_SCRUBBER|NO_VENT|NO_APC,
-		/area/map_template/changeling_nest/crab/net = NO_SCRUBBER|NO_VENT|NO_APC
+		/area/map_template/changeling_nest = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 
 
@@ -51,16 +50,17 @@
 	hide_from_reports = TRUE
 	sensor_visibility = 10
 	scannable = FALSE
+	color = "#fc1100"
 	sector_flags = OVERMAP_SECTOR_UNTARGETABLE | OVERMAP_SECTOR_IN_SPACE
 	initial_generic_waypoints = list(
-		"nav_changeling_crab",
 		"nav_changeling_pod",
-		"nav_changeling_tug"
+		"nav_changeling_tug",
+		"nav_changeling_droppod"
 	)
 	initial_restricted_waypoints = list(
-		"ISV Crab" = list("nav_changeling_crab"),
 		"EE S-class 18-24" = list("nav_changeling_pod"),
-		"Hyena GM Tug" = list("nav_changeling_tug")
+		"Hyena GM Tug" = list("nav_changeling_tug"),
+		"Unregistered Droppod" = list("nav_changeling_droppod")
 	)
 
 
@@ -153,38 +153,18 @@
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED | AREA_FLAG_IS_NOT_PERSISTENT
 
 
-/area/map_template/changeling_nest/crab
-	name = "ISV Crab"
-	icon_state = "shuttlegrn"
+/area/map_template/changeling_nest/pod
+	name = "EE S-class 18-24"
+	icon_state = "shuttlered"
 	requires_power = TRUE
 	dynamic_lighting = TRUE
 	base_turf = /turf/space
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED | AREA_FLAG_IS_NOT_PERSISTENT
 
-/area/map_template/changeling_nest/crab/cockpit
-	name = "ISV Crab - Cockpit"
 
-/area/map_template/changeling_nest/crab/cargo
-	name = "ISV Crab - Cargo"
-
-/area/map_template/changeling_nest/crab/net
-	name = "ISV Crab - Salvage Net"
-	requires_power = FALSE
-	turfs_airless = TRUE
-	has_gravity = FALSE
-
-/area/map_template/changeling_nest/crab/airlock
-	name = "ISV Crab - Airlock"
-
-/area/map_template/changeling_nest/crab/lounge
-	name = "ISV Crab - Lounge"
-
-/area/map_template/changeling_nest/crab/maintenance
-	name = "ISV Crab - Maintenance"
-
-/area/map_template/changeling_nest/pod
-	name = "EE S-class 18-24"
-	icon_state = "shuttlered"
+/area/map_template/changeling_nest/droppod
+	name = "\improper Unregistered Droppod"
+	icon_state = "yellow"
 	requires_power = TRUE
 	dynamic_lighting = TRUE
 	base_turf = /turf/space
@@ -198,27 +178,6 @@
 	base_turf = /turf/space
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED | AREA_FLAG_IS_NOT_PERSISTENT
 
-
-/datum/shuttle/autodock/overmap/changeling_crab
-	name = "ISV Crab"
-	move_time = 45
-	shuttle_area = list(
-		/area/map_template/changeling_nest/crab/cockpit,
-		/area/map_template/changeling_nest/crab/maintenance,
-		/area/map_template/changeling_nest/crab/airlock,
-		/area/map_template/changeling_nest/crab/lounge,
-		/area/map_template/changeling_nest/crab/cargo,
-		/area/map_template/changeling_nest/crab/net
-	)
-	dock_target = "crab_dock"
-	current_location = "nav_changeling_crab"
-	landmark_transition = "nav_changeling_crab_transit"
-	range = 2
-	fuel_consumption = 3
-	logging_home_tag = "nav_changeling_crab"
-	ceiling_type = /turf/simulated/floor/shuttle_ceiling
-	flags = SHUTTLE_FLAGS_PROCESS
-	defer_initialisation = TRUE
 
 /datum/shuttle/autodock/overmap/changeling_pod
 	name = "EE S-class 18-24"
@@ -245,10 +204,18 @@
 	skill_needed = SKILL_MIN
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
 
+/datum/shuttle/autodock/overmap/changeling_droppod
+	name = "Unregistered Droppod"
+	shuttle_area = list(/area/map_template/changeling_nest/droppod)
+	current_location = "nav_changeling_droppod"
+	landmark_transition = "nav_changeling_droppod_transit"
+	range = 1
+	fuel_consumption = 4
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	defer_initialisation = TRUE
+	flags = SHUTTLE_FLAGS_PROCESS
+	skill_needed = SKILL_BASIC
 
-/obj/machinery/computer/shuttle_control/explore/changeling_crab
-	name = "crab control console"
-	shuttle_tag = "ISV Crab"
 
 /obj/machinery/computer/shuttle_control/explore/changeling_pod
 	name = "pod control console"
@@ -258,17 +225,11 @@
 	name = "tug control console"
 	shuttle_tag = "Hyena GM Tug"
 
+/obj/machinery/computer/shuttle_control/explore/changeling_droppod
+	name = "droppod control console"
+	shuttle_tag = "Unregistered Droppod"
+	skill_req = SKILL_BASIC
 
-/obj/overmap/visitable/ship/landable/changeling_crab
-	name = "ISV Crab"
-	desc = "A Firex SX5-B salvage shuttle, broadcasting the callsign \"Crab\"."
-	shuttle = "ISV Crab"
-	max_speed = 1/(5 SECONDS)
-	burn_delay = 2 SECONDS
-	vessel_mass = 4000
-	fore_dir = WEST
-	skill_needed = SKILL_BASIC
-	vessel_size = SHIP_SIZE_SMALL
 
 /obj/overmap/visitable/ship/landable/changeling_pod
 	shuttle = "EE S-class 18-24"
@@ -288,19 +249,14 @@
 	vessel_mass = 2500
 	vessel_size = SHIP_SIZE_TINY
 
+/obj/overmap/visitable/ship/landable/changeling_droppod
+	name = "Unregistered Droppod"
+	shuttle = "Unregistered Droppod"
+	desc = "A small, unmarked drop vessel."
+	fore_dir = NORTH
+	vessel_size = SHIP_SIZE_SMALL
+	vessel_mass = 2500
 
-/obj/shuttle_landmark/changeling/crab
-	name = "Uncharted Salvage Dock"
-	landmark_tag = "nav_changeling_crab"
-	docking_controller = "crab_dock"
-	base_turf = /turf/space
-	base_area = /area/space
-
-/obj/shuttle_landmark/changeling/crab_transit
-	name = "In transit"
-	landmark_tag = "nav_changeling_crab_transit"
-	base_turf = /turf/space
-	base_area = /area/space
 
 /obj/shuttle_landmark/changeling/pod
 	name = "Uncharted Pod Dock"
@@ -326,3 +282,67 @@
 	landmark_tag = "nav_changeling_tug_transit"
 	base_turf = /turf/space
 	base_area = /area/space
+
+/obj/shuttle_landmark/changeling/droppod
+	name = "Unregistered Droppod Nest"
+	landmark_tag = "nav_changeling_droppod"
+	base_area = /area/map_template/changeling_nest/droppod
+	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/changeling/droppod_transit
+	name = "In transit"
+	landmark_tag = "nav_changeling_droppod_transit"
+	base_turf = /turf/space
+	base_area = /area/space
+
+// Leftover landmark still present on the nest map.
+/obj/shuttle_landmark/changeling/crab_transit
+	name = "In transit"
+	landmark_tag = "nav_changeling_crab_transit"
+	base_turf = /turf/space
+	base_area = /area/space
+
+
+/obj/machinery/light/changeling
+	name = "meat chunk"
+	color = COLOR_RED_LIGHT
+	icon = 'packs/infinity/icons/obj/changeling.dmi'
+	icon_state = "lingarmorhelmet"
+	light_type = /obj/item/light/bulb/red
+
+/obj/floor_decal/flesh
+	name = "ripped flesh"
+	icon = 'packs/infinity/icons/obj/changeling.dmi'
+	icon_state = "flesh"
+
+/obj/structure/changelingcoocon
+	name = "cocoon"
+	icon = 'packs/infinity/icons/obj/changeling.dmi'
+	icon_state = "Bonus?"
+	anchored = TRUE
+	density = FALSE
+
+/obj/structure/changelingcoocon/Initialize()
+	. = ..()
+	icon_state = pick("Bonus?", "1", "2")
+
+/obj/structure/closet/changeling
+	name = "flesh container"
+	icon = 'packs/infinity/icons/obj/changeling.dmi'
+	icon_state = "cocoon_progress"
+	closet_appearance = null
+
+/obj/structure/closet/changeling/on_update_icon()
+	if(opened)
+		icon_state = "cocoon_opened"
+	else
+		icon_state = "cocoon_progress"
+
+/turf/simulated/floor/flesh
+	name = "flesh"
+	icon = 'icons/turf/flooring/flesh.dmi'
+	icon_state = "flesh0"
+
+/turf/simulated/floor/flesh/Initialize()
+	. = ..()
+	icon_state = "flesh[rand(0,3)]"
