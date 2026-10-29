@@ -73,14 +73,15 @@ ID мода: ODYSSEY
 **Сохраняется**
 
 - разрушенные / изменённые тайлы на `station_levels`;
-- whitelist машин/компьютеров и мебели как `created / modified / moved / destroyed`;
+- whitelist машин/компьютеров и мебели как `created / modified / moved / destroyed` (у fabricator — ещё ресурсы в бункере);
+- листовые материалы на Сьерре (`materials.json`: тип, количество, клетка; при необходимости обратно в шкаф/ящик). На **continue** сначала снимаются стаки с DMM, затем восстанавливается снимок прошлой смены — купленное и не потраченное остаётся, бесплатный респаун складов нет. Инвентарь на мобах не пишется. Первая смена — карта как обычно;
 - мехи;
 - счета Сьерры и отделов;
 - каналы и сюжеты Newscast, включая фото (savefile рядом с JSON);
 - roster участников, погибшие слоты;
 - шаттлы (Guppy, Charon, Petrov, Phaethon, эскейп-поды):
   - вне Сьерры → `abandoned` (пустой док на следующих сменах);
-  - на Сьерре, но с повреждениями выше порога → `damaged` + оценка ремонта; при continue с `fee_pending` списываются таллеры со счёта Engineering (иначе станции);
+  - на Сьерре, но с повреждениями выше порога → `damaged` + ориентировочная оценка ремонта (информативно, без списания со счетов);
 - `shuttle_reports` в `campaign.json` (legacy `abandoned_shuttles` по-прежнему пишется как список имён);
 - тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; смерть в Одиссее сбрасывает только его;
 - employment / security / medical записи, `criminal_status` и `physical_status` (включая правки с консолей в течение смены) — в roster кампании; при спавне в активной Одиссее применяются всегда. Persist-снимок дублирует их, если персистентность включена;
@@ -88,8 +89,9 @@ ID мода: ODYSSEY
 
 **Не сохраняется в MVP**
 
-- атмос, предметы на полу и содержимое шкафов, провода/трубы, away sites;
-- инвентарь персонажа кроме униформы на трупе; импланты/аугменты (живое тело — в `character_persist`).
+- атмос, провода/трубы, away sites;
+- предметы на полу и содержимое шкафов, кроме листовых `/obj/item/stack/material`;
+- инвентарь персонажа кроме униформы на трупе; импланты/аугменты (живое тело — в `character_persist`);
 
 Overmap не сериализуется: он воспроизводимо создаётся из seed текущего сектора. Уровень опасности меняет число облаков hazards (как ванильный `overmap_event_areas`), их типы, задержку случайных событий и шанс Левиафана.
 
@@ -97,7 +99,8 @@ Overmap не сериализуется: он воспроизводимо со�
 
 - `/obj/machinery/computer`;
 - `/obj/machinery/vending`;
-- `/obj/machinery/fabricator`;
+- `/obj/machinery/fabricator` — в том числе `stored_material` (ресурсы в бункере; диски/бикер/очередь печати — нет);
+- листовые `/obj/item/stack/material` на станции (отдельно от бункера фабрикатора);
 - `/obj/machinery/sleeper`;
 - `/obj/machinery/door/airlock` — HP, поломка панели, сварка, болты, открытая панель, открыт/закрыт; полностью разбитый шлюз остаётся как `/obj/structure/broken_door`;
 - столы, кровати/стулья, шкафы и баррикады;
@@ -110,7 +113,7 @@ Overmap не сериализуется: он воспроизводимо со�
 `data/odyssey_<map.path>_<part>.json`
 
 - `campaign.json` — seed, граф, маршрут, статус/outcome и метаданные кампании;
-- `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json` — части снимка;
+- `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json`, `materials.json` — части снимка;
 - `newscast_photos.sav` — иконки фотографий Newscast;
 - `roster.json` — участники и погибшие слоты;
 - `corpses.json` — трупы для моргов (тело + униформа);
@@ -125,11 +128,12 @@ Overmap не сериализуется: он воспроизводимо со�
 - детерминированные профили угроз;
 - хуки: baseline турфов/объектов → apply → roundend save/finalize;
 - **турфы**: diff относительно roundstart baseline (смена типа, урон стен, broken/burnt полов);
-- **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones;
+- **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones; у `/obj/machinery/fabricator` — `stored_material`;
+- **материалы**: `materials.json` — стаки на станции; continue = strip DMM + apply снимка;
 - **мехи**: тип, компоненты, заряд, оборудование — patch или spawn;
 - **экономика**: счёт судна + отделы (баланс и лог транзакций, до 100 записей на счёт); личные счета — в снимке character_persist (`account_money` + `account_transactions`);
 - **newscast**: каналы, авторы, цензура, сюжеты, wanted issue и фото в `newscast_photos.sav`;
-- **шаттлы**: abandoned (пустой док) и damaged (score + repair_cost, списание с Engineering при continue, без повторного списания пока урон не вырос заметно);
+- **шаттлы**: abandoned (пустой док) и damaged (score + ориентировочный repair_cost без списания; повторная запись в хронику при заметном росте урона);
 - **персонаж**: roster по `campaign_id + ckey + slot`; погибший слот блокируется до конца кампании;
 - **хроника**: `chronicle.json` + UI в Newscast/Command; continue-vote briefing в чат;
 - **контракты/цели**: `contracts` + `objectives` в meta; Briefing UI (Newscast + Command);

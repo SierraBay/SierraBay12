@@ -125,10 +125,10 @@
 
 /// Tracked shuttle returned to Sierra with at least this damage score → "damaged" report.
 #define ODYSSEY_SHUTTLE_DAMAGE_THRESHOLD 8
-/// Credits charged to Engineering per damage point when fee_pending.
-#define ODYSSEY_SHUTTLE_REPAIR_CREDITS_PER_POINT 50
-/// Re-bill only if damage rose by more than this since the last paid report.
-#define ODYSSEY_SHUTTLE_REPAIR_REBILL_DELTA 8
+/// Approximate repair estimate (thalers) per damage point — display only, not charged.
+#define ODYSSEY_SHUTTLE_REPAIR_CREDITS_PER_POINT 40
+/// Re-log damage in chronicle if score rose by more than this since the last report.
+#define ODYSSEY_SHUTTLE_DAMAGE_REPORT_DELTA 8
 #define ODYSSEY_SHUTTLE_STATUS_ABANDONED "abandoned"
 #define ODYSSEY_SHUTTLE_STATUS_DAMAGED "damaged"
 

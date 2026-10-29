@@ -202,7 +202,7 @@
 		"next_objective_id" = state.next_objective_id,
 		"contracts" = state.contracts,
 		"objectives" = state.objectives,
-		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses", "chronicle")
+		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses", "materials", "chronicle")
 	)
 
 
@@ -332,6 +332,13 @@
 			errors += "research.json повреждён"
 		else if (expected_generation && research_data["generation"] != expected_generation)
 			errors += "research.json относится к другой генерации"
+	var/materials_path = odyssey_snapshot_path("materials", expected_generation)
+	if (fexists(materials_path))
+		var/list/materials_data = odyssey_read_json(materials_path)
+		if (!islist(materials_data))
+			errors += "materials.json повреждён"
+		else if (expected_generation && materials_data["generation"] != expected_generation)
+			errors += "materials.json относится к другой генерации"
 	return errors
 
 
@@ -440,6 +447,7 @@
 	var/list/research = odyssey_collect_research()
 	var/list/newscast = odyssey_collect_newscast(generation)
 	var/list/corpses = odyssey_collect_corpses()
+	var/list/materials = odyssey_collect_materials()
 	var/list/chronicle = odyssey_collect_chronicle()
 	var/list/common = list("version" = ODYSSEY_VERSION, "campaign_id" = state.campaign_id, "generation" = generation)
 	var/success = TRUE
@@ -452,6 +460,7 @@
 	success = odyssey_write_json(odyssey_snapshot_path("roster", generation), common + list("entries" = state.roster)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("newscast", generation), common + list("data" = newscast)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("corpses", generation), common + list("entries" = corpses)) && success
+	success = odyssey_write_json(odyssey_snapshot_path("materials", generation), common + list("entries" = materials)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("chronicle", generation), common + list("entries" = chronicle)) && success
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
@@ -468,7 +477,7 @@
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
 		return FALSE
 	state.save_generation = generation
-	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] corpses=[length(corpses)] chronicle=[length(chronicle)] force=[force]")
+	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] materials=[length(materials)] corpses=[length(corpses)] chronicle=[length(chronicle)] force=[force]")
 	to_world(SPAN_NOTICE("<b>Состояние Одиссеи сохранено (смена [state.shift_number]).</b>"))
 	return TRUE
 
@@ -485,6 +494,8 @@
 
 	odyssey_apply_abandoned_shuttles()
 	odyssey_ensure_persist_baselines()
+	// Fresh DMM would refill sheet stacks every shift; wipe, then restore last shift's stacks.
+	odyssey_strip_map_materials()
 	var/list/meta = odyssey_load_meta()
 	var/generation = islist(meta) ? meta["generation"] : state.save_generation
 	if (generation)
@@ -497,6 +508,7 @@
 	var/list/research = odyssey_read_json(odyssey_snapshot_path("research", generation))
 	var/list/newscast = odyssey_read_json(odyssey_snapshot_path("newscast", generation))
 	var/list/corpses = odyssey_read_json(odyssey_snapshot_path("corpses", generation))
+	var/list/materials = odyssey_read_json(odyssey_snapshot_path("materials", generation))
 	var/list/chronicle = odyssey_read_json(odyssey_snapshot_path("chronicle", generation))
 
 	odyssey_apply_turfs(turfs?["entries"])
@@ -507,10 +519,10 @@
 	odyssey_clear_persist_index()
 	odyssey_apply_economy(economy?["data"])
 	odyssey_apply_research(research?["data"])
-	// After economy restore: charge pending shuttle repair fees once per continue.
-	odyssey_apply_shuttle_repair_fees()
 	odyssey_apply_newscast(newscast?["data"], state.save_generation)
 	odyssey_apply_corpses(corpses?["entries"])
+	// After structures (closets) exist again: place saved sheet stacks.
+	odyssey_apply_materials(materials?["entries"])
 	odyssey_apply_chronicle(chronicle?["entries"], force)
 
 	log_game("ODYSSEY: applied save campaign=[state.campaign_id] shift=[state.shift_number] force=[force]")

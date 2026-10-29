@@ -42,6 +42,9 @@
 		if (!stop_messages && user)
 			to_chat(user, SPAN_NOTICE("\The [src] is full."))
 		return 0
+	// Pocket loot must not ride into the safe; drop it at the user/turf first.
+	if (istype(W, /obj/item/clothing))
+		character_persist_safe_empty_clothing_storage(W, user || get_turf(src))
 	return ..()
 
 

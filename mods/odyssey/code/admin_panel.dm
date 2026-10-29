@@ -83,7 +83,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 				continue
 			dat += " — <b>[html_encode(shuttle_name)]</b>: [report["status"]]"
 			if (report["status"] == ODYSSEY_SHUTTLE_STATUS_DAMAGED)
-				dat += " damage=[report["damage"]] cost=[report["repair_cost"]] fee_pending=[report["fee_pending"] ? "да" : "нет"]"
+				dat += " damage=[report["damage"]] cost=[report["repair_cost"]] (оценка, без списания)"
 			dat += "<br>"
 	else
 		dat += "Кампания: <b>не активна</b> в этом раунде<br>"

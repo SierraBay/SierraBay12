@@ -90,8 +90,7 @@
 				damaged += list(list(
 					"name" = name,
 					"damage" = report["damage"],
-					"repair_cost" = report["repair_cost"],
-					"fee_pending" = !!report["fee_pending"]
+					"repair_cost" = report["repair_cost"]
 				))
 	else if (islist(state.abandoned_shuttles))
 		abandoned = state.abandoned_shuttles.Copy()
@@ -140,8 +139,6 @@
 		if (!islist(row))
 			continue
 		var/line = "[row["name"]] — оценка ремонта [row["repair_cost"] || "?"] T"
-		if (row["fee_pending"])
-			line += " (списание с бюджета ожидает)"
 		damaged_ui += list(list("name" = row["name"], "line" = line))
 
 	return list(

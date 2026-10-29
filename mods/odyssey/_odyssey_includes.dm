@@ -16,6 +16,7 @@
 #include "code/save_newscast.dm"
 #include "code/save_shuttles.dm"
 #include "code/save_corpses.dm"
+#include "code/save_materials.dm"
 #include "code/save_chronicle.dm"
 #include "code/objectives.dm"
 #include "code/science_briefs.dm"

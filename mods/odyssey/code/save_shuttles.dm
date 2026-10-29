@@ -137,27 +137,23 @@
 			continue
 		var/cost = odyssey_shuttle_repair_cost(damage)
 		var/list/prev = previous_reports[S.name]
-		var/fee_pending = TRUE
-		if (islist(prev) && prev["status"] == ODYSSEY_SHUTTLE_STATUS_DAMAGED && !prev["fee_pending"])
-			var/prev_damage = text2num(prev["damage"]) || 0
-			if (damage <= prev_damage + ODYSSEY_SHUTTLE_REPAIR_REBILL_DELTA)
-				fee_pending = FALSE
+		var/was_damaged = islist(prev) && prev["status"] == ODYSSEY_SHUTTLE_STATUS_DAMAGED
+		var/prev_damage = was_damaged ? (text2num(prev["damage"]) || 0) : 0
 		state.shuttle_reports[S.name] = list(
 			"status" = ODYSSEY_SHUTTLE_STATUS_DAMAGED,
 			"damage" = damage,
-			"repair_cost" = cost,
-			"fee_pending" = fee_pending
+			"repair_cost" = cost
 		)
-		var/was_damaged = islist(prev) && prev["status"] == ODYSSEY_SHUTTLE_STATUS_DAMAGED
-		if (!was_damaged || fee_pending)
+		// Informational only — no budget charge. Re-log if newly damaged or damage rose a lot.
+		if (!was_damaged || damage > prev_damage + ODYSSEY_SHUTTLE_DAMAGE_REPORT_DELTA)
 			odyssey_chronicle_append(
 				ODYSSEY_CHRONICLE_KIND_SHUTTLE_DAMAGED,
 				"Шаттл повреждён: [S.name]",
-				"Оценка повреждений: [damage]. Ориентировочный ремонт: [cost] таллеров (Engineering).",
+				"Оценка повреждений: [damage]. Ориентировочный ремонт: [cost] таллеров.",
 				ODYSSEY_CHRONICLE_VIS_PUBLIC,
 				list("shuttle" = S.name, "damage" = damage, "repair_cost" = cost)
 			)
-		log_game("ODYSSEY: shuttle damaged name=[S.name] damage=[damage] cost=[cost] fee_pending=[fee_pending]")
+		log_game("ODYSSEY: shuttle damaged name=[S.name] damage=[damage] cost=[cost]")
 		CHECK_TICK
 	odyssey_sync_abandoned_shuttle_names()
 
@@ -168,80 +164,6 @@
 	for (var/obj/overmap/visitable/ship/landable/landable in world)
 		if (landable.shuttle == S.name)
 			qdel(landable)
-
-
-/proc/odyssey_shuttle_repair_account()
-	var/datum/money_account/A = department_accounts["Engineering"]
-	if (istype(A))
-		return A
-	if (istype(station_account))
-		return station_account
-	return null
-
-
-/proc/odyssey_apply_shuttle_repair_fees()
-	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (!islist(state.shuttle_reports) || !length(state.shuttle_reports))
-		return
-	var/datum/money_account/account = odyssey_shuttle_repair_account()
-	var/total_charged = 0
-	var/list/charged_names = list()
-	for (var/shuttle_name in state.shuttle_reports)
-		var/list/report = state.shuttle_reports[shuttle_name]
-		if (!islist(report) || report["status"] != ODYSSEY_SHUTTLE_STATUS_DAMAGED)
-			continue
-		if (!report["fee_pending"])
-			continue
-		var/cost = text2num(report["repair_cost"]) || 0
-		var/damage = text2num(report["damage"]) || 0
-		if (cost < 1)
-			report["fee_pending"] = FALSE
-			state.shuttle_reports[shuttle_name] = report
-			continue
-		var/charged = 0
-		if (!istype(account))
-			report["fee_pending"] = FALSE
-			report["fee_charged"] = 0
-			state.shuttle_reports[shuttle_name] = report
-			log_game("ODYSSEY: shuttle repair fee skipped (no account) name=[shuttle_name] cost=[cost]")
-			continue
-		charged = min(cost, max(0, account.money))
-		if (charged < 1)
-			report["fee_pending"] = FALSE
-			report["fee_charged"] = 0
-			state.shuttle_reports[shuttle_name] = report
-			log_game("ODYSSEY: shuttle repair fee skipped (empty account) name=[shuttle_name] cost=[cost]")
-			continue
-		var/purpose = "Odyssey deck: shuttle repair / spare parts — [shuttle_name] (damage [damage], assessed [cost])"
-		if (!account.withdraw(charged, purpose, "Odyssey Campaign Systems"))
-			log_error("ODYSSEY: shuttle repair withdraw failed name=[shuttle_name] charged=[charged] money=[account.money]")
-			continue // leave fee_pending so a later continue can retry
-		report["fee_pending"] = FALSE
-		report["fee_charged"] = charged
-		state.shuttle_reports[shuttle_name] = report
-		total_charged += charged
-		charged_names += shuttle_name
-		log_game("ODYSSEY: shuttle repair fee name=[shuttle_name] cost=[cost] charged=[charged]")
-	if (!length(charged_names))
-		return
-	var/account_label = istype(account) ? (account == station_account ? "счёта станции" : "счёта Engineering") : "резерва (счёт недоступен)"
-	priority_announcement.Announce(
-		"Deck reports: shuttle damage assessment for [english_list(charged_names)]. Spare parts / repair allocation: [total_charged] thaler drawn from the [account_label].",
-		"Odyssey Deck Report"
-	)
-	odyssey_chronicle_append(
-		ODYSSEY_CHRONICLE_KIND_SHUTTLE_DAMAGED,
-		"Списание на ремонт шаттлов",
-		"Списано [total_charged] таллеров ([account_label]): [english_list(charged_names)].",
-		ODYSSEY_CHRONICLE_VIS_COMMAND,
-		list("charged" = total_charged, "shuttles" = charged_names)
-	)
-	// Persist cleared fee_pending so a crash/rejoin cannot double-bill the same report.
-	var/list/meta = odyssey_load_meta()
-	if (islist(meta))
-		meta["shuttle_reports"] = state.shuttle_reports
-		meta["abandoned_shuttles"] = state.abandoned_shuttles
-		odyssey_write_meta(meta)
 
 
 /proc/odyssey_apply_abandoned_shuttles()

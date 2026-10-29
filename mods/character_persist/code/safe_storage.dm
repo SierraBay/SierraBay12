@@ -56,6 +56,45 @@
 	return TRUE
 
 
+/// Combat / EVA / nested-storage clothing that must not persist in personal safes.
+/proc/character_persist_safe_clothing_block_reason(obj/item/clothing/C)
+	if (!istype(C))
+		return "не одежда"
+	if (istype(C, /obj/item/clothing/suit/space) || istype(C, /obj/item/clothing/head/helmet/space))
+		return "скафандры запрещены"
+	if (istype(C, /obj/item/clothing/suit/armor) || istype(C, /obj/item/clothing/suit/storage/vest) || istype(C, /obj/item/clothing/head/helmet))
+		return "броня и шлемы запрещены"
+	if (istype(C, /obj/item/clothing/suit/bio_suit) || istype(C, /obj/item/clothing/head/bio_hood) || istype(C, /obj/item/clothing/suit/fire))
+		return "защитные костюмы запрещены"
+	if (istype(C, /obj/item/clothing/accessory/storage) || istype(C, /obj/item/clothing/accessory/storage/holster))
+		return "разгрузка и кобуры запрещены"
+	return null
+
+
+/// Drops or deletes items hidden in suit pockets / storage accessories so they cannot ride along.
+/proc/character_persist_safe_empty_clothing_storage(obj/item/clothing/C, atom/drop_loc = null)
+	if (!istype(C))
+		return
+	if (istype(C, /obj/item/clothing/suit/storage))
+		var/obj/item/clothing/suit/storage/S = C
+		if (istype(S.pockets))
+			for (var/obj/item/P in S.pockets)
+				if (drop_loc)
+					P.forceMove(drop_loc)
+				else
+					qdel(P)
+	if (!islist(C.accessories))
+		return
+	for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+		if (!istype(A) || !istype(A.container))
+			continue
+		for (var/obj/item/P in A.container)
+			if (drop_loc)
+				P.forceMove(drop_loc)
+			else
+				qdel(P)
+
+
 /// Returns null if allowed, otherwise a short Russian reason string.
 /proc/character_persist_safe_item_block_reason(obj/item/I)
 	if (!istype(I))
@@ -74,7 +113,9 @@
 	if (istype(I, /obj/item/gun) || istype(I, /obj/item/ammo_casing) || istype(I, /obj/item/ammo_magazine) || istype(I, /obj/item/material/knife) || istype(I, /obj/item/melee))
 		return "оружие запрещено"
 	if (istype(I, /obj/item/clothing) && !istype(I, /obj/item/clothing/mask/smokable))
-		return "одежда и броня запрещены"
+		var/clothing_deny = character_persist_safe_clothing_block_reason(I)
+		if (clothing_deny)
+			return clothing_deny
 	if (istype(I, /obj/item/reagent_containers/syringe) || istype(I, /obj/item/reagent_containers/pill) || istype(I, /obj/item/reagent_containers/glass) || istype(I, /obj/item/storage/pill_bottle) || istype(I, /obj/item/storage/firstaid))
 		return "медицина и химическая посуда запрещены"
 	if (istype(I, /obj/item/crowbar) || istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench) || istype(I, /obj/item/wirecutters) || istype(I, /obj/item/weldingtool) || istype(I, /obj/item/device/multitool))
@@ -87,7 +128,8 @@
 		allowed = TRUE
 	else if (istype(I, /obj/item/clothing/mask/smokable/cigarette) || istype(I, /obj/item/flame))
 		allowed = TRUE
-
+	else if (istype(I, /obj/item/clothing) && !character_persist_safe_clothing_block_reason(I))
+		allowed = TRUE
 	else if (istype(I, /obj/item/toy))
 		allowed = TRUE
 	else if (istype(I, /obj/item/lipstick) || istype(I, /obj/item/haircomb) || istype(I, /obj/item/soap))
@@ -177,6 +219,11 @@
 			var/obj/item/spacecash/ewallet/E = cash
 			entry["owner_name"] = E.owner_name || ""
 
+	else if (istype(I, /obj/item/clothing))
+		character_persist_safe_empty_clothing_storage(I)
+		if (I.color)
+			entry["color"] = "[I.color]"
+
 	else if (istype(I, /obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/F = I
 		entry["reagents"] = character_persist_safe_serialize_reagents(F)
@@ -230,6 +277,11 @@
 		I = new path(T)
 		if (entry["name"])
 			I.SetName(entry["name"])
+		if (istype(I, /obj/item/clothing))
+			character_persist_safe_empty_clothing_storage(I)
+			if (entry["color"])
+				I.color = entry["color"]
+				I.update_icon()
 		if (istype(I, /obj/item/reagent_containers/food) && islist(entry["reagents"]))
 			character_persist_safe_apply_reagents(I, entry["reagents"])
 			if (!character_persist_safe_reagents_ok(I))

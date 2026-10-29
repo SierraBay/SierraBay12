@@ -68,7 +68,7 @@ var/global/datum/odyssey_state/odyssey
 	var/changeling_shift_count
 	/// Shuttle names left behind off Sierra (Guppy/Charon/Petrov/Phaethon/escape pods). Derived from shuttle_reports.
 	var/list/abandoned_shuttles
-	/// Tracked shuttle reports: name = {status=abandoned|damaged, damage, repair_cost, fee_pending}.
+	/// Tracked shuttle reports: name = {status=abandoned|damaged, damage, repair_cost}.
 	var/list/shuttle_reports
 	/// Campaign chronicle entries (list of assoc lists).
 	var/list/chronicle

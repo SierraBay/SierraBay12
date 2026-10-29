@@ -35,9 +35,12 @@
 	var/list/airlock_state
 	if (istype(M, /obj/machinery/door/airlock))
 		airlock_state = odyssey_airlock_state(M)
+	var/list/fabricator_materials
+	if (istype(M, /obj/machinery/fabricator))
+		fabricator_materials = odyssey_fabricator_materials_state(M)
 	var/changed = action != "modified" || damaged || broken || M.emagged || M.panel_open \
 		|| baseline["dir"] != M.dir || baseline["name"] != M.name || baseline["anchored"] != M.anchored \
-		|| islist(airlock_state)
+		|| islist(airlock_state) || islist(fabricator_materials)
 	if (!changed)
 		return null
 	var/list/entry = odyssey_base_object_entry(M)
@@ -54,7 +57,40 @@
 	)
 	if (islist(airlock_state))
 		entry["airlock"] = airlock_state
+	if (islist(fabricator_materials))
+		entry["stored_material"] = fabricator_materials
 	return entry
+
+
+/// Non-empty fabricator bunkers as mat_name = amount. Keys are material name strings (RnD lathe).
+/proc/odyssey_fabricator_materials_state(obj/machinery/fabricator/F)
+	if (!istype(F) || !islist(F.stored_material) || !length(F.stored_material))
+		return null
+	var/list/materials = list()
+	for (var/mat in F.stored_material)
+		var/amount = F.stored_material[mat]
+		if (!isnum(amount) || amount <= 0)
+			continue
+		materials["[mat]"] = amount
+	if (!length(materials))
+		return null
+	return materials
+
+
+/proc/odyssey_apply_fabricator_materials(obj/machinery/fabricator/F, list/data)
+	if (!istype(F) || !islist(data))
+		return
+	F.stored_material = list()
+	var/capacity = F.storage_capacity
+	for (var/mat in data)
+		var/amount = data[mat]
+		if (!isnum(amount))
+			amount = text2num(amount)
+		if (!isnum(amount) || amount <= 0)
+			continue
+		if (isnum(capacity) && capacity > 0)
+			amount = min(amount, capacity)
+		F.stored_material[mat] = amount
 
 
 /proc/odyssey_airlock_state(obj/machinery/door/airlock/A)
@@ -155,7 +191,9 @@
 			M.set_broken(want, cause)
 	if (istype(M, /obj/machinery/door/airlock) && islist(entry["airlock"]))
 		odyssey_apply_airlock_state(M, entry["airlock"])
-	else
+	if (istype(M, /obj/machinery/fabricator) && islist(entry["stored_material"]))
+		odyssey_apply_fabricator_materials(M, entry["stored_material"])
+	if (!istype(M, /obj/machinery/door/airlock) || !islist(entry["airlock"]))
 		M.update_icon()
 	return TRUE
 
