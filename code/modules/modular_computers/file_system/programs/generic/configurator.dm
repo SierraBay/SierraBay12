@@ -56,6 +56,21 @@
 
 	data["receives_updates"] = program.computer.receives_updates
 
+	// [SIERRA-ADD] - PDA camera resolution
+	data["has_camera"] = FALSE
+	data["camera_size"] = 3
+	var/atom/config_host = program.computer.get_physical_host()
+	if(istype(config_host, /obj/item/modular_computer))
+		var/obj/item/modular_computer/portable = config_host
+		if(portable.camera)
+			data["has_camera"] = TRUE
+			var/cam_size = portable.camera.size
+			if(!(cam_size in list(1, 3, 5)))
+				cam_size = 3
+				portable.camera.size = cam_size
+			data["camera_size"] = cam_size
+	// [/SIERRA-ADD]
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "laptop_configuration.tmpl", "NTOS Configuration Utility", 575, 700, state = state)
@@ -82,3 +97,18 @@
 			return TOPIC_HANDLED
 		nano_printer.print_language = new_language
 		return TOPIC_REFRESH
+
+	// [SIERRA-ADD] - PDA camera resolution
+	if (href_list["camera_size"])
+		var/new_size = text2num(href_list["camera_size"])
+		if (!(new_size in list(1, 3, 5)))
+			return TOPIC_HANDLED
+		var/atom/config_host = program.computer.get_physical_host()
+		if (!istype(config_host, /obj/item/modular_computer))
+			return TOPIC_HANDLED
+		var/obj/item/modular_computer/portable = config_host
+		if (!portable.camera)
+			return TOPIC_HANDLED
+		portable.camera.size = new_size
+		return TOPIC_REFRESH
+	// [/SIERRA-ADD]

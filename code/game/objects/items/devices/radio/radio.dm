@@ -1,4 +1,5 @@
 /obj/item/device/radio
+	parent_type = /obj/item/clothing/accessory
 	icon = 'icons/obj/machines/radio.dmi'
 	name = "shortwave radio"
 	suffix = "\[3\]"
@@ -21,7 +22,7 @@
 	var/syndie = 0//Holder to see if it's a syndicate encrypted radio
 	var/intercept = 0 //can intercept other channels
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_BELT | SLOT_TIE
 	throw_speed = 2
 	throw_range = 9
 	w_class = ITEM_SIZE_SMALL
@@ -39,6 +40,18 @@
 	var/last_radio_sound = -INFINITY
 
 	var/intercom_handling = FALSE
+
+	// [SIERRA-ADD] - clip onto clothing like other accessories
+	species_restricted = null
+	slot = ACCESSORY_SLOT_DECOR
+	accessory_flags = ACCESSORY_REMOVABLE | ACCESSORY_HIGH_VISIBILITY
+	action_button_name = "Use Radio"
+	overlay_state = "onmobe_radio"
+	accessory_icons = list(
+		slot_w_uniform_str = 'mods/utility_items/icons/radio_accessory.dmi',
+		slot_wear_suit_str = 'mods/utility_items/icons/radio_accessory.dmi'
+	)
+	// [/SIERRA-ADD]
 
 
 /obj/item/device/radio/hailing
@@ -403,8 +416,10 @@
 	if(!radio_connection)
 		set_frequency(frequency)
 
-	if(loc == M)
-		playsound(loc, 'sound/effects/walkietalkie.ogg', 20, 0, -1)
+	// [SIERRA-EDIT] - clipped radios on clothing also count as held
+	if(loc == M || (istype(loc, /obj/item/clothing) && loc.loc == M))
+		playsound(get_turf(src), 'sound/effects/walkietalkie.ogg', 20, 0, -1)
+	// [/SIERRA-EDIT]
 
 
 	/* Quick introduction:

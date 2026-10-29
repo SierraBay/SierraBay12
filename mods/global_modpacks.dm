@@ -27,6 +27,7 @@
 #include "lobbyscreen/_lobbyscreen_includes.dm"
 #include "music_player/_music_player_includes.dm"
 #include "ntnet/_ntnet_includes.dm"
+#include "mars_messenger/_mars_messenger_includes.dm"
 #include "virusology/_virusology_includes.dm"
 #include "RnD/_RnD_includes.dm"
 #include "hivemind/_hivemind_includes.dm"

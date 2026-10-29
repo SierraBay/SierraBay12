@@ -36,6 +36,9 @@
 		if(os && os.active_program && os.active_program.NM && istype(os.active_program, /datum/computer_file/program/email_client))
 			var/datum/nano_module/program/email_client/NME = os.active_program.NM
 			NME.log_in()
+	// [SIERRA-ADD] - MARS keys from job headset, not PDA colour subtype
+	item.mars_apply_job_keys(H)
+	// [/SIERRA-ADD]
 
 	if(H.equip_to_slot_if_possible(item, slot, equip_flags = TRYEQUIP_REDRAW))
 		. = item
@@ -81,6 +84,9 @@
 		if(os && os.active_program && os.active_program.NM && istype(os.active_program, /datum/computer_file/program/email_client))
 			var/datum/nano_module/program/email_client/NME = os.active_program.NM
 			NME.log_in()
+	// [SIERRA-ADD] - MARS keys from job headset, not PDA colour subtype
+	item.mars_apply_job_keys(H)
+	// [/SIERRA-ADD]
 	if(H.equip_to_slot_if_possible(item, slot, equip_flags = TRYEQUIP_REDRAW))
 		. = item
 

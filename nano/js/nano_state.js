@@ -96,8 +96,13 @@ function nanoPatchHtml(container, newHtml) {
   var scrollSaves = {}
   var scrollEls = el.querySelectorAll('[data-scroll-id]')
   for (var si = 0; si < scrollEls.length; si++) {
-    var sid = scrollEls[si].getAttribute('data-scroll-id')
-    scrollSaves[sid] = scrollEls[si].scrollTop
+    var sEl = scrollEls[si]
+    var sid = sEl.getAttribute('data-scroll-id')
+    var distBottom = sEl.scrollHeight - sEl.scrollTop - sEl.clientHeight
+    scrollSaves[sid] = {
+      top: sEl.scrollTop,
+      stick: sEl.getAttribute('data-scroll-tail') && distBottom < 48
+    }
   }
   if (!el.hasChildNodes()) {
     el.innerHTML = newHtml
@@ -109,8 +114,14 @@ function nanoPatchHtml(container, newHtml) {
   function restoreScrolls() {
     var els = el.querySelectorAll('[data-scroll-id]')
     for (var ri = 0; ri < els.length; ri++) {
-      var rsid = els[ri].getAttribute('data-scroll-id')
-      if (scrollSaves[rsid] > 0) els[ri].scrollTop = scrollSaves[rsid]
+      var rEl = els[ri]
+      var rsid = rEl.getAttribute('data-scroll-id')
+      var saved = scrollSaves[rsid]
+      if (rEl.getAttribute('data-scroll-tail') && (!saved || saved.stick)) {
+        rEl.scrollTop = rEl.scrollHeight
+      } else if (saved && saved.top > 0) {
+        rEl.scrollTop = saved.top
+      }
     }
   }
   restoreScrolls()

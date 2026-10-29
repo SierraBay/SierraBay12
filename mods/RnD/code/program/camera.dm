@@ -1,6 +1,7 @@
 /obj/item/device/camera/computer
 	name = "device camera"
 	var/photo_num = 0
+	size = 3
 
 /obj/item/modular_computer
 	var/obj/item/device/camera/computer/camera = new /obj/item/device/camera/computer
@@ -14,6 +15,8 @@
 		in_camera_mode = 0
 
 /obj/item/device/camera/computer/proc/captureimagecomputer(atom/target, mob/living/user, flag)
+	if(!(size in list(1, 3, 5)))
+		size = 3
 	set_light(3, 3, light_color)
 	var/obj/item/photo/p = createpicture(get_turf(target), user, flag)
 	addtimer(new Callback(src, PROC_REF(finish)), 5)

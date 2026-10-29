@@ -50,6 +50,19 @@
 		<span class="bad">No printer installed</span>
 	{{/if}}
 </div>
+<h2>Camera</h2>
+<div class="itemLabel">
+	Photo Size:
+</div>
+<div class="itemContent">
+	{{if data.has_camera}}
+		{{:helper.link("1x1", null, {'camera_size' : 1}, data.camera_size == 1 ? 'selected' : null)}}
+		{{:helper.link("3x3", null, {'camera_size' : 3}, data.camera_size == 3 ? 'selected' : null)}}
+		{{:helper.link("5x5", null, {'camera_size' : 5}, data.camera_size == 5 ? 'selected' : null)}}
+	{{else}}
+		<span class="bad">No camera installed</span>
+	{{/if}}
+</div>
 <h2>Computer Components</h2>
 {{for data.hardware}}
 	<h3>{{:value.name}}</h3>

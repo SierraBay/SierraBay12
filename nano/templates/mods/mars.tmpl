@@ -1,0 +1,402 @@
+<style>
+.mars-app { color: #e8eef5; }
+.mars-app a.link, .mars-app a.linkOn, .mars-app a {
+	float: none;
+	display: inline-block;
+	border-radius: 12px;
+	padding: 4px 10px 5px 10px;
+	margin: 0 4px 0 0;
+}
+.mars-top {
+	background: #123a73;
+	border: 1px solid #2a6ebd;
+	border-radius: 10px;
+	padding: 8px 10px;
+	margin: 0 0 8px 0;
+	overflow: hidden;
+}
+.mars-brand {
+	float: left;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 3px;
+	color: #ff8a2a;
+	line-height: 28px;
+}
+.mars-brand span { color: #7ec8ff; }
+.mars-user {
+	float: right;
+	text-align: right;
+	line-height: 130%;
+}
+.mars-user b { color: #ffffff; }
+.mars-job { color: #9bb7d4; font-size: 11px; }
+.mars-status {
+	clear: both;
+	padding-top: 6px;
+	color: #9bb7d4;
+	font-size: 11px;
+}
+.mars-dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 8px;
+	margin-right: 4px;
+}
+.mars-dot-on { background: #3dce6a; }
+.mars-dot-off { background: #d94c4c; }
+.mars-nav { margin: 0 0 8px 0; overflow: hidden; }
+.mars-list { clear: both; }
+.mars-card {
+	overflow: hidden;
+	clear: both;
+	background: #1d1d1d;
+	border: 1px solid #3a3a3a;
+	border-radius: 10px;
+	margin: 0 0 6px 0;
+	padding: 0;
+}
+.mars-stripe {
+	float: left;
+	width: 6px;
+	height: 52px;
+}
+.mars-ava {
+	float: left;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	text-align: center;
+	border-radius: 34px;
+	margin: 9px 8px 0 8px;
+	font-weight: bold;
+	color: #ffffff;
+	background: #2a6ebd;
+	overflow: hidden;
+}
+.mars-ava img {
+	width: 34px;
+	height: 34px;
+	border-radius: 34px;
+	display: block;
+}
+.mars-ava-self {
+	float: right;
+	margin: 0 0 0 8px;
+}
+.mars-meta { overflow: hidden; padding: 8px 10px 8px 0; }
+.mars-title {
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 13px;
+}
+.mars-preview { color: #8f8f8f; font-size: 11px; }
+.mars-badge {
+	float: right;
+	background: #ff8a2a;
+	color: #1a1a1a;
+	font-weight: bold;
+	border-radius: 10px;
+	padding: 0 7px;
+	margin-top: 2px;
+	font-size: 11px;
+}
+.mars-thread {
+	background: #161616;
+	border: 1px solid #333;
+	border-radius: 10px;
+	height: 430px;
+	overflow: auto;
+	padding: 8px;
+	clear: both;
+}
+.mars-empty {
+	color: #777;
+	text-align: center;
+	padding: 40px 10px;
+}
+.mars-msg { overflow: hidden; margin: 0 0 8px 0; }
+.mars-msg .mars-ava {
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 12px;
+	margin: 4px 6px 0 0;
+}
+.mars-msg .mars-ava img { width: 28px; height: 28px; border-radius: 28px; }
+.mars-own .mars-ava { float: right; margin: 4px 0 0 6px; }
+.mars-bubble {
+	display: inline-block;
+	max-width: 78%;
+	background: #2a2a2a;
+	border: 1px solid #444;
+	border-radius: 12px 12px 12px 4px;
+	padding: 6px 10px;
+	line-height: 145%;
+}
+.mars-own { text-align: right; }
+.mars-own .mars-bubble {
+	background: #1a4f8c;
+	border-color: #2a6ebd;
+	border-radius: 12px 12px 4px 12px;
+	text-align: left;
+}
+.mars-who { color: #ffb060; font-size: 11px; font-weight: bold; }
+.mars-own .mars-who { color: #b9dcff; }
+.mars-when { color: #888; font-size: 10px; }
+.mars-hint { color: #6e6e6e; font-size: 11px; margin-top: 8px; }
+.mars-send { margin-top: 8px; }
+.mars-send a.link {
+	display: block;
+	width: 96%;
+	text-align: center;
+	background: #e07020;
+	border: 1px solid #ff8a2a;
+	padding: 8px 0;
+	font-weight: bold;
+	font-size: 13px;
+}
+.mars-file {
+	margin-top: 6px;
+	padding: 6px 8px;
+	background: #111;
+	border: 1px solid #444;
+	border-radius: 8px;
+	font-size: 11px;
+}
+.mars-file img {
+	display: block;
+	max-width: 160px;
+	max-height: 160px;
+	margin: 4px 0;
+	border-radius: 6px;
+}
+.mars-headbar {
+	overflow: hidden;
+	padding: 4px 2px 8px 2px;
+}
+.mars-headbar .mars-title { font-size: 15px; }
+.mars-picks { overflow: hidden; margin-top: 6px; }
+.mars-pick {
+	float: left;
+	width: 76px;
+	text-align: center;
+	margin: 0 6px 10px 0;
+}
+.mars-pick .mars-ava {
+	float: none;
+	display: inline-block;
+	margin: 0 0 4px 0;
+}
+.mars-pick-on .mars-ava { box-shadow: 0 0 0 2px #ff8a2a; }
+</style>
+
+<div class="mars-app">
+{{if !data.logged_in}}
+	<div class="mars-top">
+		<div class="mars-brand">МА<span>РС</span></div>
+		<div class="mars-status">Вход по почте NTNet</div>
+	</div>
+	{{if data.login_error}}
+		<div class="mars-empty">{{:data.login_error}}</div>
+	{{/if}}
+	<div class="mars-card">
+		<div class="mars-meta" style="padding: 10px;">
+			<div class="mars-title">Почта</div>
+			<div class="mars-preview">{{:data.stored_login}}</div>
+			{{:helper.link("Ввести логин", "pencil", {'PRG_edit_login' : 1})}}
+			<div class="mars-title" style="margin-top: 8px;">Пароль</div>
+			<div class="mars-preview">{{:data.stored_password}}</div>
+			{{:helper.link("Ввести пароль", "locked", {'PRG_edit_password' : 1})}}
+		</div>
+	</div>
+	<div class="mars-send">{{:helper.link("Войти", "key", {'PRG_login' : 1})}}</div>
+	<div class="mars-hint">Используйте ту же почту и пароль, что и в Email Client. При наличии ID сессия может подтянуться автоматически. Данные входа сохраняются на этом устройстве, пока вы не выйдете.</div>
+{{else}}
+	<div class="mars-top">
+		<div class="mars-brand">МА<span>РС</span></div>
+		{{if data.photo_src}}
+			<div class="mars-ava mars-ava-self"><img src="{{:data.photo_src}}"></div>
+		{{else}}
+			<div class="mars-ava mars-ava-self" style="background-color: {{:data.av_color}};">{{:data.glyph}}</div>
+		{{/if}}
+		<div class="mars-user">
+			<b>{{:data.username}}</b><br>
+			<span class="mars-job">{{:data.job}}</span>
+		</div>
+		<div class="mars-status">
+			{{if data.online}}
+				<span class="mars-dot mars-dot-on"></span>на связи
+			{{else}}
+				<span class="mars-dot mars-dot-off"></span>нет NTNet — пишите в наушник
+			{{/if}}
+			{{if data.unread}}
+				&nbsp;· непрочитано {{:data.unread}}
+			{{/if}}
+			<br>{{:data.login}}
+			<br>ключи: {{:data.keys}}
+		</div>
+	</div>
+
+	<div class="mars-nav">
+		{{:helper.link(data.muted ? "Звук выкл" : "Звук вкл", data.muted ? "volume-off" : "volume-on", {'PRG_mute' : 1})}}
+		{{:helper.link("Выйти", "key", {'PRG_logout' : 1})}}
+		{{if data.title}}
+			{{:helper.link("Чаты", "arrowreturn-1-w", {'PRG_back' : 1})}}
+		{{else data.contacts_view}}
+			{{:helper.link("Чаты", "arrowreturn-1-w", {'PRG_back' : 1})}}
+		{{else data.settings_view}}
+			{{:helper.link("Чаты", "arrowreturn-1-w", {'PRG_back' : 1})}}
+		{{else}}
+			{{:helper.link("Контакты", "mail-closed", {'PRG_contacts' : 1})}}
+			{{:helper.link("Профиль", "gear", {'PRG_settings' : 1})}}
+		{{/if}}
+	</div>
+
+{{if data.title}}
+	<div class="mars-headbar">
+		{{if data.chan_photo_src}}
+			<div class="mars-ava"><img src="{{:data.chan_photo_src}}"></div>
+		{{else}}
+			<div class="mars-ava" style="background-color: {{:data.color}};">{{:data.chan_initial}}</div>
+		{{/if}}
+		<div class="mars-meta">
+			<div class="mars-title">{{:data.title}}</div>
+			<div class="mars-preview">{{if data.direct}}личное сообщение{{else}}канальный чат{{/if}}</div>
+		</div>
+	</div>
+	<div class="mars-thread" data-scroll-id="mars-thread-{{:data.channel_id}}" data-scroll-tail="1">
+		{{for data.messages}}
+			{{if value.own}}
+				<div class="mars-msg mars-own">
+					{{if value.photo_src}}
+						<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+					{{else}}
+						<div class="mars-ava" style="background-color: {{:value.av_color}};">{{:value.glyph}}</div>
+					{{/if}}
+					<div class="mars-bubble">
+						<div class="mars-who">{{:value.author}} <span class="mars-when">{{:value.time}}</span></div>
+						{{:value.text}}
+						{{if value.file_name}}
+							<div class="mars-file">
+								{{:value.file_name}}.{{:value.file_type}} · {{:value.file_size}}GQ
+								{{if value.file_photo}}
+									<img src="{{:value.file_photo}}">
+								{{/if}}
+								{{:helper.link("Сохранить", "disk", {'PRG_savefile' : value.file_uid})}}
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			{{else}}
+				<div class="mars-msg">
+					{{if value.photo_src}}
+						<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+					{{else}}
+						<div class="mars-ava" style="background-color: {{:value.av_color}};">{{:value.glyph}}</div>
+					{{/if}}
+					<div class="mars-bubble">
+						<div class="mars-who">{{:value.author}} <span class="mars-when">{{:value.time}}</span></div>
+						{{:value.text}}
+						{{if value.file_name}}
+							<div class="mars-file">
+								{{:value.file_name}}.{{:value.file_type}} · {{:value.file_size}}GQ
+								{{if value.file_photo}}
+									<img src="{{:value.file_photo}}">
+								{{/if}}
+								{{:helper.link("Сохранить", "disk", {'PRG_savefile' : value.file_uid})}}
+							</div>
+						{{/if}}
+					</div>
+				</div>
+			{{/if}}
+		{{empty}}
+			<div class="mars-empty">Пока тихо.<br>Самое время написать первым.</div>
+		{{/for}}
+	</div>
+	<div class="mars-send">{{:helper.link("Написать сообщение", "comment", {'PRG_send' : 1})}}</div>
+	<div class="mars-nav">{{:helper.link("Отправить файл", "arrowthickstop-1-s", {'PRG_sendfile' : 1})}}</div>
+
+{{else data.contacts_view}}
+	<div class="mars-title" style="margin-bottom: 6px;">Кто сейчас в МАРС</div>
+	<div class="mars-list">
+		{{for data.contacts}}
+			<div class="mars-card">
+				{{if value.photo_src}}
+					<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+				{{else}}
+					<div class="mars-ava" style="background-color: {{:value.av_color}};">{{:value.glyph}}</div>
+				{{/if}}
+				<div class="mars-meta">
+					<div class="mars-title">{{:value.name}}</div>
+					<div class="mars-preview">{{:value.job}}</div>
+					{{:helper.link("Написать", "mail-closed", {'PRG_dm' : value.id})}}
+				</div>
+			</div>
+		{{empty}}
+			<div class="mars-empty">Никого нет в сети.<br>Или все ещё в наушниках.</div>
+		{{/for}}
+	</div>
+
+{{else data.settings_view}}
+	<div class="mars-title" style="margin-bottom: 6px;">Аватар</div>
+	<div class="mars-picks">
+		{{for data.avatars}}
+			<div class="mars-pick {{if value.selected}}mars-pick-on{{/if}}">
+				{{if value.photo_src}}
+					<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+				{{else}}
+					<div class="mars-ava" style="background-color: {{:value.av_color}};">{{:value.glyph}}</div>
+				{{/if}}
+				{{:helper.link(value.name, null, {'PRG_avatar' : value.id})}}
+			</div>
+		{{/for}}
+	</div>
+	<div class="mars-nav">{{:helper.link("Обновить снимок", "image", {'PRG_photo' : 1})}}</div>
+	<div class="mars-title" style="margin: 10px 0 6px 0;">Файлы на устройстве</div>
+	<div class="mars-picks">
+		{{for data.disk_photos}}
+			<div class="mars-pick">
+				<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+				{{:helper.link(value.filename, null, {'PRG_filephoto' : value.filename})}}
+			</div>
+		{{empty}}
+			<div class="mars-empty">На диске нет фото. Снимите цель камерой КПК — файл DNG появится в файловом менеджере.</div>
+		{{/for}}
+	</div>
+	<div class="mars-hint">Инициал — буква имени. Снимок — фото персонажа с устройства в руках. Либо выберите DNG-файл с жёсткого диска или флешки. Свой файл с компьютера игрока загрузить нельзя.</div>
+
+{{else}}
+	<div class="mars-title" style="margin-bottom: 6px;">Чаты</div>
+	<div class="mars-list">
+		{{for data.chats}}
+			<div class="mars-card">
+				<div class="mars-stripe" style="background-color: {{:value.av_color}};"></div>
+				{{if value.photo_src}}
+					<div class="mars-ava"><img src="{{:value.photo_src}}"></div>
+				{{else}}
+					<div class="mars-ava" style="background-color: {{:value.av_color}};">{{:value.glyph}}</div>
+				{{/if}}
+				<div class="mars-meta">
+					{{if value.unread}}
+						<span class="mars-badge">{{:value.unread}}</span>
+					{{/if}}
+					<div class="mars-title">{{:helper.link(value.title, null, {'PRG_open' : value.id})}}</div>
+					<div class="mars-preview">
+						{{if value.last_author}}
+							{{:value.last_author}}: {{:value.last}}
+						{{else}}
+							{{:value.last}}
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		{{empty}}
+			<div class="mars-empty">Нет доступных каналов.</div>
+		{{/for}}
+	</div>
+	<div class="mars-hint">ЛС, общий и развлечения идут по NTNet. Отделы — только пока жив telecomms-сервер этой частоты. Ключ шифрования в устройстве; выкрутить отвёрткой в меню компонентов. ; общий, .c командование, .s СБ, .m медотсек, .e инженерия.</div>
+{{/if}}
+{{/if}}
+</div>
