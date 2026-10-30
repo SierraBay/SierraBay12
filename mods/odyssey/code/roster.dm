@@ -278,10 +278,10 @@
 	if (!state.active || state.shift_number <= 1 || !length(state.roster))
 		return ""
 
-	var/border = monochrome ? "black" : "#013D3B"
+	var/border = monochrome ? "black" : "#013d3b"
 	var/cell_border = monochrome ? "black" : "black; background-color:#272727; color:white"
 	var/th_style = monochrome ? "border-top-width:3px" : "background-color:#40628a; color:white"
-	var/toggle_style = "display:block;width:100%;box-sizing:border-box;padding:0.45em 0.6em;font-weight:bold;color:white;background:#013D3B;text-decoration:none;border:0;text-align:left"
+	var/toggle_style = "display:block;width:100%;box-sizing:border-box;padding:0.45em 0.6em;font-weight:bold;color:white;background:#013d3b;text-decoration:none;border:0;text-align:left"
 	var/dat = "<h3>Previous Odyssey Shifts</h3>"
 	dat += "<table width='100%' style='border-collapse:collapse;margin:0;padding:0;'>"
 	var/any_shift = FALSE
