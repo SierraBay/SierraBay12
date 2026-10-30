@@ -31,21 +31,15 @@
 
 
 /repository/uplink_purchases/print_entries()
-	var/list/visible = purchases_by_mind
 	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (state.active)
-		visible = list()
-		for (var/datum/mind/ply in purchases_by_mind)
-			if (odyssey_antag_dead_for_roundend(ply))
-				visible[ply] = purchases_by_mind[ply]
-	if (!length(visible))
-		return
-	to_world("<b>The following went shopping:</b>")
-	var/list/pur_log = list()
-	for (var/datum/mind/ply in visible)
-		pur_log.Cut()
-		var/uplink_purchase_entry/upe = visible[ply]
-		to_world("<b>[ply.name]</b> (used [upe.total_cost] TC\s):")
-		for (var/datum/uplink_item/UI in upe.purchased_items)
-			pur_log += "[upe.purchased_items[UI]]x[UI.log_icon()][UI.name]"
-		to_world(english_list(pur_log, nothing_text = ""))
+	if (!state.active)
+		return ..()
+	// Living persist antags must not be meta'd — temporarily narrow the list and reuse vanilla output.
+	var/list/original = purchases_by_mind
+	var/list/filtered = list()
+	for (var/datum/mind/ply in original)
+		if (odyssey_antag_dead_for_roundend(ply))
+			filtered[ply] = original[ply]
+	purchases_by_mind = filtered
+	. = ..()
+	purchases_by_mind = original

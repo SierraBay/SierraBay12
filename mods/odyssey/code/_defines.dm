@@ -32,7 +32,7 @@
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
 /// Countdown from Odyssey Jump initiate to sector transition (BSD).
 #define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
-/// Last-minute FX window before Odyssey jump climax (brace cues / local sounds).
+/// Last-minute FX window before Odyssey jump climax (bluespace lights, brace cues / local sounds).
 #define ODYSSEY_JUMP_FX_BUILDUP (60 SECONDS)
 
 /// status_display mode: Odyssey / sector BSD jump ETA (see status_display_odyssey.dm).

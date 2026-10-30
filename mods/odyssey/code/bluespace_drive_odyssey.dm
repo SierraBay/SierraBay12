@@ -89,6 +89,8 @@
 		if (D.jump_locked)
 			label += " — abort locked"
 			block_reason = "The drive is in final approach. Abort is disabled; the corridor cannot be cancelled from this console."
+		else if (D.odyssey_campaign_jump)
+			block_reason = "A jump sequence is already charging. Abort remains available until final approach; ship lighting will signal the lock."
 		else
 			block_reason = "A jump sequence is already charging. Abort remains available until final lock."
 	else if (D.on_cooldown)
@@ -160,9 +162,9 @@
 	var/dest_name = odyssey_jump_destination_text()
 	var/eta = odyssey_jump_delay_text(D)
 	if (emergency)
-		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final lock if unauthorized. [eta] to space warping.", "EMERGENCY ODYSSEY JUMP")
+		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final approach if unauthorized. [eta] to space warping.", "EMERGENCY ODYSSEY JUMP")
 	else
-		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final lock. [eta] to space warping.", "Odyssey Jump Sequence Initiated")
+		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final approach. [eta] to space warping.", "Odyssey Jump Sequence Initiated")
 	odyssey_post_status_jump_countdown()
 
 
@@ -238,14 +240,16 @@
 		data["has_destination"] = TRUE
 
 
-/// Cancel pending Odyssey jump atmosphere timers.
+/// Cancel pending Odyssey jump atmosphere timers and restore normal lighting.
 /proc/odyssey_drive_clear_jump_fx(obj/machinery/bluespace_drive/D)
-	if (!istype(D) || !islist(D.odyssey_fx_timer_ids))
+	if (!istype(D))
 		return
-	for (var/timer_id in D.odyssey_fx_timer_ids)
-		if (timer_id)
-			deltimer(timer_id)
-	D.odyssey_fx_timer_ids = null
+	if (islist(D.odyssey_fx_timer_ids))
+		for (var/timer_id in D.odyssey_fx_timer_ids)
+			if (timer_id)
+				deltimer(timer_id)
+		D.odyssey_fx_timer_ids = null
+	odyssey_drive_set_bluespace_lighting(D, FALSE)
 
 
 /proc/odyssey_drive_track_fx_timer(obj/machinery/bluespace_drive/D, timer_id)
@@ -254,7 +258,24 @@
 	LAZYADD(D.odyssey_fx_timer_ids, timer_id)
 
 
-/// Schedule last-minute brace cues for an Odyssey jump (announcements + local sounds).
+/// Ship lighting → bluespace spectrum (or restore). Areas on the drive Z-stack only; skips transient roots.
+/// Enabling also locks Odyssey abort (`jump_locked`) for the rest of the sequence.
+/proc/odyssey_drive_set_bluespace_lighting(obj/machinery/bluespace_drive/D, enable)
+	if (!istype(D))
+		return
+	if (enable && D.jumping && D.odyssey_campaign_jump)
+		D.jump_locked = TRUE
+	for (var/area/A in world)
+		if (!A.z || !AreConnectedZLevels(A.z, D.z))
+			continue
+		if (odyssey_area_excluded_from_snapshot(A))
+			continue
+		if (A.area_flags & AREA_FLAG_IS_NOT_PERSISTENT)
+			continue
+		A.set_bluespace_lighting(enable)
+
+
+/// Schedule last-minute brace cues for an Odyssey jump (announcements + local sounds + bluespace lights).
 /proc/odyssey_drive_schedule_jump_fx(obj/machinery/bluespace_drive/D, active_delay)
 	if (!istype(D) || active_delay <= 0)
 		return
@@ -267,6 +288,7 @@
 
 	var/start_in = active_delay - buildup
 	// Wave schedule inside the buildup window (seconds before jump ≈ buildup - offset).
+	odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_set_bluespace_lighting), D, TRUE), start_in, TIMER_STOPPABLE))
 	odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 1), start_in, TIMER_STOPPABLE))
 	if (buildup >= 40 SECONDS)
 		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 2), start_in + 20 SECONDS, TIMER_STOPPABLE))
@@ -285,7 +307,7 @@
 	switch (wave)
 		if (1)
 			command_announcement.Announce(
-				"Bluespace field density is rising. Brace for sector transition.",
+				"Final approach. Abort is now locked. Ship lighting has shifted to bluespace spectrum. Brace for sector transition.",
 				"Odyssey Jump"
 			)
 			for (var/mob/living/L in GLOB.player_list)
@@ -308,7 +330,7 @@
 				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 45)
 		if (4)
 			command_announcement.Announce(
-				"Final approach. Abort is about to lock. All hands brace for Odyssey transition.",
+				"Final approach. Abort remains locked. All hands brace for Odyssey transition.",
 				"Odyssey Jump"
 			)
 			for (var/mob/living/L in GLOB.player_list)
@@ -317,10 +339,11 @@
 				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 55)
 
 
-/// Moment-of-jump hit: flash, camera shake, shipwide sound.
+/// Moment-of-jump hit: flash, camera shake, shipwide sound; restore normal lighting.
 /proc/odyssey_drive_jump_climax(obj/machinery/bluespace_drive/D)
 	if (!istype(D))
 		return
+	odyssey_drive_set_bluespace_lighting(D, FALSE)
 	playsound(D, 'sound/magic/ethereal_exit.ogg', 100, TRUE)
 	playsound(D, 'sound/effects/EMPulse.ogg', 60, TRUE)
 	for (var/mob/living/L in GLOB.player_list)

@@ -264,6 +264,7 @@
                 {{:helper.link('Clear',       'trash', {'action' : 'setstatus', 'target' : 'blank'})}}
 		        {{:helper.link('Local Time',  'gear', {'action' : 'setstatus', 'target' : 'time'})}}
 		        {{:helper.link('Evacuation ETA', 'gear', {'action' : 'setstatus', 'target' : 'shuttle'})}}
+		        {{:helper.link('Odyssey Jump ETA', 'gear', {'action' : 'setstatus', 'target' : 'bluespace'}, !data.odyssey_active ? 'disabled' : null)}}
 		        {{:helper.link('Message',     'gear', {'action' : 'setstatus', 'target' : 'message'})}}
              </div>
          </div>

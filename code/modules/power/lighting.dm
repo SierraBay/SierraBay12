@@ -13,6 +13,7 @@
 
 
 #define LIGHTMODE_EMERGENCY "emergency_lighting"
+#define LIGHTMODE_BLUESPACE "bluespace_lighting"
 #define LIGHTMODE_READY "ready"
 
 #define LIGHT_PHORON_EXPLODE_THRESHOLD 5 // This many units of phoron have to be in the bulb for it to explode
@@ -386,6 +387,20 @@
 			set_mode(null)
 			update_power_channel(initial(power_channel))
 
+/// Toggles bluespace-spectrum lighting (`LIGHTMODE_BLUESPACE`). Does not override emergency/ready modes.
+/obj/machinery/light/proc/set_bluespace_lighting(enable)
+	if(!lightbulb)
+		return
+
+	if(enable)
+		if(!(LIGHTMODE_BLUESPACE in lightbulb.lighting_modes))
+			return
+		if(current_mode && current_mode != LIGHTMODE_BLUESPACE)
+			return
+		set_mode(LIGHTMODE_BLUESPACE)
+	else if(current_mode == LIGHTMODE_BLUESPACE)
+		set_mode(null)
+
 /// Sets the light's `on` state, if there's a functional light bulb installed.
 /obj/machinery/light/proc/seton(state)
 	on = (state && get_status() == LIGHT_OK)
@@ -710,6 +725,7 @@
 	b_range = 5
 	lighting_modes = list(
 		LIGHTMODE_EMERGENCY = list(l_range = 4, l_power = 1, l_color = LIGHT_COLOUR_E_RED),
+		LIGHTMODE_BLUESPACE = list(l_range = 5, l_power = 1, l_color = LIGHT_COLOUR_SKRELL),
 	)
 	sound_on = 'sound/machines/lightson.ogg'
 
@@ -768,7 +784,8 @@
 	b_power = 0.7
 	b_range = 4
 	lighting_modes = list(
-		LIGHTMODE_EMERGENCY = list(l_range = 3, l_power = 1, l_color = LIGHT_COLOUR_E_RED)
+		LIGHTMODE_EMERGENCY = list(l_range = 3, l_power = 1, l_color = LIGHT_COLOUR_E_RED),
+		LIGHTMODE_BLUESPACE = list(l_range = 4, l_power = 1, l_color = LIGHT_COLOUR_SKRELL),
 	)
 
 /obj/item/light/bulb/warm

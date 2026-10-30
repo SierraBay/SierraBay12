@@ -1,4 +1,4 @@
-/// Odyssey sector-jump countdown on station status displays (same radio channel as shuttle ETA).
+/// Odyssey sector-jump countdown on station status displays (same radio channel / console path as shuttle ETA).
 
 /proc/odyssey_status_display_jump_timeleft()
 	var/obj/machinery/bluespace_drive/D = odyssey_find_ship_bluespace_drive()
@@ -47,10 +47,15 @@
 
 	var/timeleft = odyssey_status_display_jump_timeleft()
 	if (timeleft < 0)
-		mode = STATUS_DISPLAY_BLANK
-		return ..()
+		// Match shuttle ETA: keep console-selected mode, but nothing to show until a jump is charging.
+		var/obj/machinery/bluespace_drive/D = odyssey_find_ship_bluespace_drive()
+		if (istype(D) && D.jumping && D.odyssey_campaign_jump)
+			message1 = "-ETA-"
+			message2 = "--:--"
+			update_display(message1, message2)
+		return 1
 
-	message1 = "JUMP"
+	message1 = "-ETA-"
 	message2 = timeleft > 0 ? odyssey_status_display_format_timer(timeleft) : "NOW"
 	update_display(message1, message2)
 	return 1

@@ -634,6 +634,8 @@ var/global/list/bluespace_gas_power_factor = list(
 	jumping = TRUE
 
 	var/active_delay = odyssey_campaign_jump ? odyssey_jump_delay : jump_delay
+	// Must be set before Odyssey status_display broadcast — displays blank if ETA is missing.
+	jump_end_time = world.time + active_delay
 
 	// Admin logging
 	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Manual dest=[(!isnull(manual_dest_x) && !isnull(manual_dest_y)) ? "([manual_dest_x],[manual_dest_y])" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]. Delay=[active_delay / 10]s")
@@ -659,8 +661,6 @@ var/global/list/bluespace_gas_power_factor = list(
 		deltimer(orb_timer_id)
 	orb_timer_id = addtimer(new Callback(src, PROC_REF(orb_set_active)), 0.5 SECONDS, TIMER_STOPPABLE)
 
-	// Start jump countdown
-	jump_end_time = world.time + active_delay
 	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), active_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	// 5 seconds before jump: apply overlay to all crew and lock abort
