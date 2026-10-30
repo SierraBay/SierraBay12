@@ -339,6 +339,13 @@
 			errors += "materials.json повреждён"
 		else if (expected_generation && materials_data["generation"] != expected_generation)
 			errors += "materials.json относится к другой генерации"
+	var/papers_path = odyssey_snapshot_path("papers", expected_generation)
+	if (fexists(papers_path))
+		var/list/papers_data = odyssey_read_json(papers_path)
+		if (!islist(papers_data))
+			errors += "papers.json повреждён"
+		else if (expected_generation && papers_data["generation"] != expected_generation)
+			errors += "papers.json относится к другой генерации"
 	return errors
 
 
@@ -448,6 +455,7 @@
 	var/list/newscast = odyssey_collect_newscast(generation)
 	var/list/corpses = odyssey_collect_corpses()
 	var/list/materials = odyssey_collect_materials()
+	var/list/papers = odyssey_collect_papers(generation)
 	var/list/chronicle = odyssey_collect_chronicle()
 	var/list/common = list("version" = ODYSSEY_VERSION, "campaign_id" = state.campaign_id, "generation" = generation)
 	var/success = TRUE
@@ -461,6 +469,7 @@
 	success = odyssey_write_json(odyssey_snapshot_path("newscast", generation), common + list("data" = newscast)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("corpses", generation), common + list("entries" = corpses)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("materials", generation), common + list("entries" = materials)) && success
+	success = odyssey_write_json(odyssey_snapshot_path("papers", generation), common + list("entries" = papers)) && success
 	success = odyssey_write_json(odyssey_snapshot_path("chronicle", generation), common + list("entries" = chronicle)) && success
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
@@ -477,7 +486,7 @@
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
 		return FALSE
 	state.save_generation = generation
-	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] materials=[length(materials)] corpses=[length(corpses)] chronicle=[length(chronicle)] force=[force]")
+	log_game("ODYSSEY: saved campaign=[state.campaign_id] shift=[state.shift_number] turfs=[length(turfs)] machinery=[length(machinery)] mechs=[length(mechs)] materials=[length(materials)] papers=[length(papers)] corpses=[length(corpses)] chronicle=[length(chronicle)] force=[force]")
 	to_world(SPAN_NOTICE("<b>Состояние Одиссеи сохранено (смена [state.shift_number]).</b>"))
 	return TRUE
 
@@ -509,6 +518,7 @@
 	var/list/newscast = odyssey_read_json(odyssey_snapshot_path("newscast", generation))
 	var/list/corpses = odyssey_read_json(odyssey_snapshot_path("corpses", generation))
 	var/list/materials = odyssey_read_json(odyssey_snapshot_path("materials", generation))
+	var/list/papers = odyssey_read_json(odyssey_snapshot_path("papers", generation))
 	var/list/chronicle = odyssey_read_json(odyssey_snapshot_path("chronicle", generation))
 
 	odyssey_apply_turfs(turfs?["entries"])
@@ -516,6 +526,10 @@
 	odyssey_apply_machinery(machinery?["entries"])
 	odyssey_apply_structures(structures?["entries"])
 	odyssey_apply_mechs(mechs?["entries"])
+	// Only strip when a papers snapshot exists — otherwise we'd wipe cabinets on legacy saves.
+	if (islist(papers))
+		odyssey_strip_filing_papers()
+		odyssey_apply_papers(papers["entries"], state.save_generation)
 	odyssey_clear_persist_index()
 	odyssey_apply_economy(economy?["data"])
 	odyssey_apply_research(research?["data"])

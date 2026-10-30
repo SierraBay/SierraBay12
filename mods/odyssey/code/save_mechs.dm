@@ -51,13 +51,19 @@
 /proc/odyssey_mech_component_entry(obj/item/mech_component/C)
 	if (!istype(C))
 		return null
-	return list(
+	var/list/entry = list(
+		"type" = "[C.type]",
 		"brute" = C.brute_damage,
 		"burn" = C.burn_damage,
 		"current_hp" = C.current_hp,
 		"max_hp" = C.max_hp,
 		"unrepairable_damage" = C.unrepairable_damage
 	)
+	if (C.color)
+		entry["color"] = "[C.color]"
+	if (C.decal)
+		entry["decal"] = C.decal
+	return entry
 
 
 /proc/odyssey_mech_entry(mob/living/exosuit/M)
@@ -91,6 +97,7 @@
 		"z" = T.z,
 		"type" = "[M.type]",
 		"name" = M.name,
+		"material" = M.material?.name,
 		"hatch_closed" = M.hatch_closed,
 		"hatch_locked" = M.hatch_locked,
 		"power" = M.power,
@@ -108,7 +115,98 @@
 	C.burn_damage = max(0, data["burn"] || 0)
 	if (!isnull(data["unrepairable_damage"]))
 		C.unrepairable_damage = max(0, data["unrepairable_damage"])
+	if (!isnull(data["max_hp"]))
+		C.max_hp = max(1, data["max_hp"])
 	C.update_health()
+	if (data["color"])
+		C.color = data["color"]
+	if (data["decal"])
+		C.decal = data["decal"]
+
+
+/// Instantiates a shegar mech part with internals (prebuild) and correct left/right side.
+/proc/odyssey_make_mech_component(list/data, side = null)
+	if (!islist(data))
+		return null
+	var/path = text2path(data["type"])
+	if (!ispath(path, /obj/item/mech_component))
+		return null
+	var/obj/item/mech_component/C = new path(null)
+	if (QDELETED(C))
+		return null
+	if (!isnull(side))
+		if (istype(C, /obj/item/mech_component/manipulators))
+			var/obj/item/mech_component/manipulators/arms = C
+			arms.side = side
+			arms.setup_side()
+		else if (istype(C, /obj/item/mech_component/propulsion))
+			var/obj/item/mech_component/propulsion/legs = C
+			legs.side = side
+			legs.setup_side()
+	if (data["color"])
+		C.color = data["color"]
+	if (data["decal"])
+		C.decal = data["decal"]
+	C.prebuild()
+	return C
+
+
+/// Player-built mechs are /mob/living/exosuit without premade parts — must spawn via heavy_vehicle_frame.
+/proc/odyssey_spawn_mech_from_entry(turf/T, list/entry)
+	if (!T || !islist(entry))
+		return null
+	var/list/components = entry["components"]
+	if (!islist(components))
+		log_error("ODYSSEY: cannot recreate mech [entry["id"]] — missing component types (old save?)")
+		return null
+	var/obj/item/mech_component/head = odyssey_make_mech_component(components["head"])
+	var/obj/item/mech_component/body = odyssey_make_mech_component(components["body"])
+	var/obj/item/mech_component/L_arm = odyssey_make_mech_component(components["L_arm"], LEFT)
+	var/obj/item/mech_component/R_arm = odyssey_make_mech_component(components["R_arm"], RIGHT)
+	var/obj/item/mech_component/L_leg = odyssey_make_mech_component(components["L_leg"], LEFT)
+	var/obj/item/mech_component/R_leg = odyssey_make_mech_component(components["R_leg"], RIGHT)
+	if (!(head && body && L_arm && R_arm && L_leg && R_leg))
+		QDEL_NULL(head)
+		QDEL_NULL(body)
+		QDEL_NULL(L_arm)
+		QDEL_NULL(R_arm)
+		QDEL_NULL(L_leg)
+		QDEL_NULL(R_leg)
+		log_error("ODYSSEY: cannot recreate mech [entry["id"]] — incomplete component set")
+		return null
+
+	var/obj/structure/heavy_vehicle_frame/frame = new(T)
+	frame.head = head
+	frame.body = body
+	frame.L_arm = L_arm
+	frame.R_arm = R_arm
+	frame.L_leg = L_leg
+	frame.R_leg = R_leg
+	head.forceMove(frame)
+	body.forceMove(frame)
+	L_arm.forceMove(frame)
+	R_arm.forceMove(frame)
+	L_leg.forceMove(frame)
+	R_leg.forceMove(frame)
+	if (entry["name"])
+		frame.set_name = entry["name"]
+	var/mat_name = entry["material"] || MATERIAL_STEEL
+	frame.material = SSmaterials.get_material_by_name(mat_name)
+	if (!frame.material)
+		frame.material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
+
+	var/mob/living/exosuit/M = new /mob/living/exosuit(T, frame)
+	frame.head = null
+	frame.body = null
+	frame.L_arm = null
+	frame.R_arm = null
+	frame.L_leg = null
+	frame.R_leg = null
+	qdel(frame)
+	if (QDELETED(M) || !M.body || !M.head)
+		log_error("ODYSSEY: mech recreate failed for [entry["id"]]")
+		return null
+	return M
 
 
 /proc/odyssey_apply_mech_destroy_entry(list/entry)
@@ -135,7 +233,10 @@
 	if (!M && !entry["action"])
 		M = locate(path) in T
 	if (!M && entry["action"] == "created")
-		M = new path(T)
+		if (ispath(path, /mob/living/exosuit/premade))
+			M = new path(T)
+		else
+			M = odyssey_spawn_mech_from_entry(T, entry)
 	if (!istype(M))
 		return FALSE
 	if (entry["id"])
@@ -176,8 +277,11 @@
 				continue
 			var/obj/item/mech_equipment/EQ = new eq_path(M)
 			M.install_system(EQ, slot, null)
-	M.updatehealth()
-	M.queue_icon_update()
+	if (M.head && M.body && M.L_arm && M.R_arm && M.L_leg && M.R_leg)
+		M.updatehealth()
+		M.on_update_icon()
+		if (hascall(M, "generate_icons"))
+			M.generate_icons()
 	return TRUE
 
 

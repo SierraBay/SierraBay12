@@ -164,6 +164,71 @@
 	return islist(entry) && entry["status"] == "dead"
 
 
+/// Admin: clear Odyssey death tombstone so the same ckey|slot can join again.
+/proc/odyssey_admin_clear_roster_death(roster_key, mob/user)
+	if (!roster_key)
+		return FALSE
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/list/roster
+	var/generation
+	var/campaign_id
+	if (state.active && state.campaign_id)
+		roster = state.roster
+		generation = state.save_generation
+		campaign_id = state.campaign_id
+	else
+		var/list/meta = odyssey_load_meta()
+		if (!islist(meta) || !meta["active"])
+			return FALSE
+		generation = meta["generation"]
+		campaign_id = meta["campaign_id"]
+		roster = odyssey_load_roster()
+		if (!islist(roster))
+			return FALSE
+	var/list/entry = roster[roster_key]
+	if (!islist(entry) || entry["status"] != "dead")
+		return FALSE
+	var/char_name = entry["name"] || roster_key
+	entry["status"] = "alive"
+	entry["death_shift"] = null
+	entry["death_reason"] = null
+	entry["died_at"] = null
+	roster[roster_key] = entry
+	if (state.active)
+		state.roster = roster
+		odyssey_admin_restore_antags_after_revive(roster_key)
+	if (generation)
+		odyssey_write_json(odyssey_snapshot_path("roster", generation), list(
+			"version" = ODYSSEY_VERSION,
+			"campaign_id" = campaign_id,
+			"generation" = generation,
+			"entries" = roster
+		))
+	log_and_message_admins("cleared Odyssey death for [char_name] ([roster_key])", user)
+	log_game("ODYSSEY: admin cleared roster death key=[roster_key] by=[user?.ckey]")
+	return TRUE
+
+
+/proc/odyssey_admin_restore_antags_after_revive(roster_key)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !roster_key)
+		return
+	var/list/sleeper = state.sleepers?[roster_key]
+	if (islist(sleeper) && sleeper["status"] == ODYSSEY_SLEEPER_STATUS_DEAD)
+		sleeper["status"] = ODYSSEY_SLEEPER_STATUS_ACTIVE
+		sleeper["death_shift"] = null
+		sleeper["death_reason"] = null
+		state.sleepers[roster_key] = sleeper
+		log_game("ODYSSEY: admin restored sleeper [roster_key] after roster revive")
+	var/list/cling = state.changelings?[roster_key]
+	if (islist(cling) && cling["status"] == ODYSSEY_CHANGELING_STATUS_LOST)
+		cling["status"] = ODYSSEY_CHANGELING_STATUS_ACTIVE
+		cling["lost_shift"] = null
+		cling["lost_reason"] = null
+		state.changelings[roster_key] = cling
+		log_game("ODYSSEY: admin restored changeling [roster_key] after roster revive")
+
+
 /proc/odyssey_campaign_crew_lost()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active || !length(state.roster))
@@ -205,22 +270,20 @@
 	return entry["job"] || "Unknown"
 
 
-/proc/odyssey_html_past_crew_manifest(monochrome)
+/// Past-shift accordion for the crew manifest program.
+/// open_shifts / nano_src keep expansion across NanoUI auto-refresh (HTML <details> cannot).
+/// Layout uses a flat table + inline styles — nested div/head CSS inside NanoUI becomes a staircase.
+/proc/odyssey_html_past_crew_manifest(monochrome, list/open_shifts, datum/nano_module/nano_src)
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active || state.shift_number <= 1 || !length(state.roster))
 		return ""
 
-	var/dat = {"
-	<head><style>
-		.manifest {border-collapse:collapse;width:100%;}
-		.manifest td, th {border:1px solid [monochrome?"black":"black; background-color:#272727; color:white"]; padding:.25em}
-		.manifest th {height: 2em; [monochrome?"border-top-width: 3px":"background-color: #40628a; color:white"]}
-		.manifest tr.head th { background-color: #013D3B; }
-		.manifest td:first-child {text-align:right}
-		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #373737; color:white"]}
-	</style></head>
-	"}
-	dat += "<h3>Previous Odyssey Shifts</h3>"
+	var/border = monochrome ? "black" : "#013D3B"
+	var/cell_border = monochrome ? "black" : "black; background-color:#272727; color:white"
+	var/th_style = monochrome ? "border-top-width:3px" : "background-color:#40628a; color:white"
+	var/toggle_style = "display:block;width:100%;box-sizing:border-box;padding:0.45em 0.6em;font-weight:bold;color:white;background:#013D3B;text-decoration:none;border:0;text-align:left"
+	var/dat = "<h3>Previous Odyssey Shifts</h3>"
+	dat += "<table width='100%' style='border-collapse:collapse;margin:0;padding:0;'>"
 	var/any_shift = FALSE
 	for (var/shift = 1 to state.shift_number - 1)
 		var/list/rows = list()
@@ -230,24 +293,36 @@
 				continue
 			if (!(shift in odyssey_roster_seen_shifts(entry)))
 				continue
-			rows += entry
+			rows += list(entry)
 		if (!length(rows))
 			continue
 		any_shift = TRUE
-		dat += "<table class='manifest' width='350px'>"
-		dat += "<tr class='head'><th colspan='3'>Shift [shift]</th></tr>"
-		dat += "<tr><th>Name</th><th>Position</th><th>Status</th></tr>"
-		for (var/list/entry in rows)
-			var/status = "Active"
-			var/death_shift = text2num(entry["death_shift"])
-			if (entry["status"] == "dead" && death_shift && death_shift <= shift)
-				status = "Deceased"
-			dat += "<tr class='candystripe'><td>[html_encode("[entry["name"] || "Unknown"]")]</td><td>[html_encode("[odyssey_roster_job_for_shift(entry, shift)]")]</td><td>[status]</td></tr>"
-		dat += "</table><br>"
+		var/is_open = islist(open_shifts) && open_shifts["[shift]"]
+		var/label = "[is_open ? "▼" : "▶"] Shift [shift] ([length(rows)])"
+		dat += "<tr><td style='padding:0 0 0.6em 0;border:1px solid [border];background:[monochrome ? "transparent" : "#1a1a1a"];'>"
+		if (istype(nano_src))
+			dat += "<a style='[toggle_style]' href='?src=\ref[nano_src];odyssey_toggle_past=[shift]'>[label]</a>"
+		else
+			dat += "<div style='[toggle_style]'>[label]</div>"
+			is_open = TRUE
+		if (is_open)
+			dat += "<table class='manifest' width='100%' style='border-collapse:collapse;margin:0;'>"
+			dat += "<tr><th style='border:1px solid [cell_border];padding:0.25em;[th_style]'>Name</th>"
+			dat += "<th style='border:1px solid [cell_border];padding:0.25em;[th_style]'>Position</th>"
+			dat += "<th style='border:1px solid [cell_border];padding:0.25em;[th_style]'>Status</th></tr>"
+			for (var/list/entry in rows)
+				var/status = "Active"
+				var/death_shift = text2num(entry["death_shift"])
+				if (entry["status"] == "dead" && death_shift && death_shift <= shift)
+					status = "Deceased"
+				dat += "<tr class='candystripe'><td style='border:1px solid [cell_border];padding:0.25em'>[html_encode("[entry["name"] || "Unknown"]")]</td>"
+				dat += "<td style='border:1px solid [cell_border];padding:0.25em'>[html_encode("[odyssey_roster_job_for_shift(entry, shift)]")]</td>"
+				dat += "<td style='border:1px solid [cell_border];padding:0.25em'>[status]</td></tr>"
+			dat += "</table>"
+		dat += "</td></tr>"
+	dat += "</table>"
 	if (!any_shift)
 		return ""
-	dat = replacetext(dat, "\n", "")
-	dat = replacetext(dat, "\t", "")
 	return dat
 
 

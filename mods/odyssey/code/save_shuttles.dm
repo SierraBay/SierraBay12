@@ -1,7 +1,3 @@
-/// Sierra shuttles that must be on the ship at save or they are left behind.
-#define ODYSSEY_TRACKED_SHUTTLE_NAMES list("Guppy", "Charon", "Petrov", "Phaethon")
-
-
 /proc/odyssey_shuttle_is_tracked(datum/shuttle/S)
 	if (!istype(S))
 		return FALSE
@@ -189,6 +185,3 @@
 		odyssey_hide_abandoned_overmap(S)
 		moved++
 	log_debug("ODYSSEY: apply_abandoned_shuttles moved=[moved]/[length(state.abandoned_shuttles)]")
-
-
-#undef ODYSSEY_TRACKED_SHUTTLE_NAMES

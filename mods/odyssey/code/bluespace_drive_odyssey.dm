@@ -163,9 +163,11 @@
 		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final lock if unauthorized. [eta] to space warping.", "EMERGENCY ODYSSEY JUMP")
 	else
 		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final lock. [eta] to space warping.", "Odyssey Jump Sequence Initiated")
+	odyssey_post_status_jump_countdown()
 
 
 /proc/odyssey_drive_announce_abort(obj/machinery/bluespace_drive/D)
+	odyssey_clear_status_jump_countdown()
 	command_announcement.Announce("Odyssey jump sequence aborted. Plotted course remains on the Sector Map.", "Odyssey Jump Aborted")
 
 
@@ -189,6 +191,7 @@
 			to_chat(L, SPAN_DANGER("Space completely warps around you, turning your body into something that a mind can barely comprehend..."))
 			L.death()
 
+	odyssey_drive_jump_climax(D)
 	D.open_rift()
 
 	var/datum/odyssey_state/state = odyssey_ensure_state()
@@ -233,3 +236,99 @@
 		data["odyssey_dest_label"] = odyssey_jump_destination_text()
 	if (D.odyssey_campaign_jump)
 		data["has_destination"] = TRUE
+
+
+/// Cancel pending Odyssey jump atmosphere timers.
+/proc/odyssey_drive_clear_jump_fx(obj/machinery/bluespace_drive/D)
+	if (!istype(D) || !islist(D.odyssey_fx_timer_ids))
+		return
+	for (var/timer_id in D.odyssey_fx_timer_ids)
+		if (timer_id)
+			deltimer(timer_id)
+	D.odyssey_fx_timer_ids = null
+
+
+/proc/odyssey_drive_track_fx_timer(obj/machinery/bluespace_drive/D, timer_id)
+	if (!istype(D) || !timer_id)
+		return
+	LAZYADD(D.odyssey_fx_timer_ids, timer_id)
+
+
+/// Schedule last-minute brace cues for an Odyssey jump (announcements + local sounds).
+/proc/odyssey_drive_schedule_jump_fx(obj/machinery/bluespace_drive/D, active_delay)
+	if (!istype(D) || active_delay <= 0)
+		return
+	odyssey_drive_clear_jump_fx(D)
+	D.odyssey_fx_timer_ids = list()
+
+	var/buildup = min(ODYSSEY_JUMP_FX_BUILDUP, active_delay - 1)
+	if (buildup < 15 SECONDS)
+		return
+
+	var/start_in = active_delay - buildup
+	// Wave schedule inside the buildup window (seconds before jump ≈ buildup - offset).
+	odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 1), start_in, TIMER_STOPPABLE))
+	if (buildup >= 40 SECONDS)
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 2), start_in + 20 SECONDS, TIMER_STOPPABLE))
+	if (buildup >= 55 SECONDS)
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 3), start_in + 40 SECONDS, TIMER_STOPPABLE))
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 4), start_in + 50 SECONDS, TIMER_STOPPABLE))
+
+
+/proc/odyssey_drive_jump_fx_active(obj/machinery/bluespace_drive/D)
+	return istype(D) && D.jumping && D.odyssey_campaign_jump && !QDELETED(D)
+
+
+/proc/odyssey_drive_jump_fx_wave(obj/machinery/bluespace_drive/D, wave)
+	if (!odyssey_drive_jump_fx_active(D))
+		return
+	switch (wave)
+		if (1)
+			command_announcement.Announce(
+				"Bluespace field density is rising. Brace for sector transition.",
+				"Odyssey Jump"
+			)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				if (!istype(get_area(L), /area/hallway))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 35)
+		if (2)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				if (!istype(get_area(L), /area/hallway))
+					continue
+				L.playsound_local(L, 'sound/machines/BSD_interact.ogg', 40)
+		if (3)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 45)
+		if (4)
+			command_announcement.Announce(
+				"Final approach. Abort is about to lock. All hands brace for Odyssey transition.",
+				"Odyssey Jump"
+			)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 55)
+
+
+/// Moment-of-jump hit: flash, camera shake, shipwide sound.
+/proc/odyssey_drive_jump_climax(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return
+	playsound(D, 'sound/magic/ethereal_exit.ogg', 100, TRUE)
+	playsound(D, 'sound/effects/EMPulse.ogg', 60, TRUE)
+	for (var/mob/living/L in GLOB.player_list)
+		if (!AreConnectedZLevels(L.z, D.z))
+			continue
+		L.playsound_local(L, 'sound/magic/ethereal_exit.ogg', 80)
+		if (!L.client)
+			continue
+		L.flash_eyes(FLASH_PROTECTION_MAJOR)
+		shake_camera(L, 8, 2)
+		to_chat(L, SPAN_NOTICE("The hull lurches as bluespace folds around the ship — for a heartbeat the corridors are not quite here."))

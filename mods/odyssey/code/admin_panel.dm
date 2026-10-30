@@ -164,11 +164,18 @@ var/global/datum/odyssey_panel/odyssey_panel
 			dat += "<br>"
 		dat += "<hr>"
 	dat += "Участники: <b>[length(state.roster)]</b><br>"
-	for (var/key in state.roster)
-		var/list/member = state.roster[key]
-		dat += "[html_encode(member["name"])] ([key]): <b>[member["status"]]</b>"
-		if (member["death_shift"])
-			dat += " — смерть в смене [member["death_shift"]] ([member["death_reason"]])"
+	var/list/panel_roster = state.roster
+	if ((!islist(panel_roster) || !length(panel_roster)) && odyssey_campaign_exists())
+		panel_roster = odyssey_load_roster()
+	for (var/key in panel_roster)
+		var/list/member = panel_roster[key]
+		if (!islist(member))
+			continue
+		dat += "[html_encode(member["name"])] ([html_encode(key)]): <b>[member["status"]]</b>"
+		if (member["status"] == "dead")
+			if (member["death_shift"])
+				dat += " — смерть в смене [member["death_shift"]] ([html_encode("[member["death_reason"]]")])"
+			dat += " <a href='?src=\ref[src];revive_roster=[url_encode(key)]'><font color='55aa55'>вернуть слот</font></a>"
 		dat += "<br>"
 	dat += "<hr>Спящие: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround: <b>[state.sleeper_midround_done ? "уже был" : "ещё нет"]</b>"
 	if (state.active)
@@ -711,6 +718,17 @@ var/global/datum/odyssey_panel/odyssey_panel
 		odyssey_archive_campaign("admin_panel:[usr.ckey]")
 		odyssey_announce_admin_campaign("archive")
 		log_and_message_admins("archived Odyssey campaign via panel", usr)
+		show(C)
+		return
+
+	if (href_list["revive_roster"])
+		var/roster_key = href_list["revive_roster"]
+		if (!roster_key)
+			return
+		if (odyssey_admin_clear_roster_death(roster_key, usr))
+			to_chat(usr, SPAN_NOTICE("Odyssey: слот [roster_key] снова жив — игрок может зайти той же куклой."))
+		else
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось вернуть слот [roster_key] (нет tombstone / нет активного сейва)."))
 		show(C)
 		return
 

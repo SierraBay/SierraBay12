@@ -46,6 +46,9 @@ var/global/datum/odyssey_state/odyssey
 	var/list/mech_baseline
 	/// TRUE after the clean-map persist baselines were taken this round. Blocks recapture after apply.
 	var/persist_baselines_ready = FALSE
+	/// Areas present on station_levels at baseline capture (excl. space/ship/map_template). Persist only these.
+	var/list/persistable_areas
+	var/persistable_areas_ready = FALSE
 	var/next_object_id = 1
 	/// Campaign sleeper traitors keyed by "ckey|slot".
 	var/list/sleepers
@@ -101,6 +104,7 @@ var/global/datum/odyssey_state/odyssey
 	sector_graph = list()
 	route_history = list()
 	roster = list()
+	persistable_areas = list()
 	sleepers = list()
 	changelings = list()
 	abandoned_shuttles = list()

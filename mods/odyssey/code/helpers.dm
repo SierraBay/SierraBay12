@@ -3,12 +3,65 @@
 	return "[stationdate2text()] [stationtime2text()]"
 
 
+/// Visitor / transient roots that must never enter the area snapshot (or persist even if somehow listed).
+/proc/odyssey_area_excluded_from_snapshot(area/A)
+	return istype(A, /area/space) \
+		|| istype(A, /area/ship) \
+		|| istype(A, /area/map_template) \
+		|| istype(A, /area/supply) // cargo supply drone — docks onto hangar midround
+
+
+/// Freeze areas present on station_levels at baseline time. Midround visitors are not included.
+/// Tracked Sierra fleet areas are always unioned in — roundstart may run after abandon-apply
+/// moved a craft off-station, and the craft can still return later the same shift.
+/// Call before turf/object baselines (they consult this set).
+/proc/odyssey_capture_persistable_areas(force = FALSE)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (state.persistable_areas_ready && !force)
+		return TRUE
+	var/list/areas = list()
+	for (var/z in GLOB.using_map.station_levels)
+		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
+			var/area/A = get_area(T)
+			if (!istype(A))
+				continue
+			if (odyssey_area_excluded_from_snapshot(A))
+				continue
+			if (A.area_flags & AREA_FLAG_IS_NOT_PERSISTENT)
+				continue
+			areas[A] = TRUE
+			CHECK_TICK
+	// Guppy/Charon/Petrov/Phaethon — keep allowlisted even if already moved off for abandon.
+	if (SSshuttle)
+		for (var/shuttle_name in ODYSSEY_TRACKED_SHUTTLE_NAMES)
+			var/datum/shuttle/S = SSshuttle.shuttles[shuttle_name]
+			if (!istype(S) || !islist(S.shuttle_area))
+				continue
+			for (var/area/shuttle_area in S.shuttle_area)
+				if (!istype(shuttle_area))
+					continue
+				if (odyssey_area_excluded_from_snapshot(shuttle_area))
+					continue
+				if (shuttle_area.area_flags & AREA_FLAG_IS_NOT_PERSISTENT)
+					continue
+				areas[shuttle_area] = TRUE
+	state.persistable_areas = areas
+	state.persistable_areas_ready = TRUE
+	log_debug("ODYSSEY: persistable areas captured ([length(areas)])")
+	return TRUE
+
+
 /proc/odyssey_area_persistable(area/A)
 	if (!istype(A))
 		return FALSE
 	if (A.area_flags & AREA_FLAG_IS_NOT_PERSISTENT)
 		return FALSE
-	return TRUE
+	if (odyssey_area_excluded_from_snapshot(A))
+		return FALSE
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.persistable_areas_ready)
+		return FALSE
+	return !!(state.persistable_areas[A])
 
 
 /proc/odyssey_turf_persistable(turf/T)
@@ -58,6 +111,7 @@
 		|| istype(S, /obj/structure/bed) \
 		|| istype(S, /obj/structure/bed/chair) \
 		|| istype(S, /obj/structure/closet) \
+		|| istype(S, /obj/structure/filingcabinet) \
 		|| istype(S, /obj/structure/barricade) \
 		|| istype(S, /obj/structure/broken_door) \
 		|| istype(S, /obj/structure/catwalk)
@@ -94,6 +148,7 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (state.persist_baselines_ready && !overwrite)
 		return TRUE
+	odyssey_capture_persistable_areas(TRUE)
 	odyssey_capture_turf_baseline(TRUE)
 	odyssey_capture_object_baselines(TRUE)
 	odyssey_capture_mech_baseline(TRUE)

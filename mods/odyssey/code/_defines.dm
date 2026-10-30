@@ -32,6 +32,11 @@
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
 /// Countdown from Odyssey Jump initiate to sector transition (BSD).
 #define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
+/// Last-minute FX window before Odyssey jump climax (brace cues / local sounds).
+#define ODYSSEY_JUMP_FX_BUILDUP (60 SECONDS)
+
+/// status_display mode: Odyssey / sector BSD jump ETA (see status_display_odyssey.dm).
+#define STATUS_DISPLAY_BLUESPACE_JUMP 6
 
 #define ODYSSEY_CHOICE_YES "За"
 #define ODYSSEY_CHOICE_NO "Против"
@@ -123,6 +128,9 @@
 #define ODYSSEY_OUTSIDER_DECISION_SKIP_CANDIDATES "skip_candidates"
 #define ODYSSEY_OUTSIDER_DECISION_WRONG_SECTOR "wrong_sector"
 
+/// Sierra fleet craft for abandon/damage reports; their areas are always kept in the persist allowlist.
+#define ODYSSEY_TRACKED_SHUTTLE_NAMES list("Guppy", "Charon", "Petrov", "Phaethon")
+
 /// Tracked shuttle returned to Sierra with at least this damage score → "damaged" report.
 #define ODYSSEY_SHUTTLE_DAMAGE_THRESHOLD 8
 /// Approximate repair estimate (thalers) per damage point — display only, not charged.
@@ -131,6 +139,11 @@
 #define ODYSSEY_SHUTTLE_DAMAGE_REPORT_DELTA 8
 #define ODYSSEY_SHUTTLE_STATUS_ABANDONED "abandoned"
 #define ODYSSEY_SHUTTLE_STATUS_DAMAGED "damaged"
+
+/// Filing-cabinet paperwork caps (grief / runaway size). Soft: stop adding, log, still save what fits.
+#define ODYSSEY_PAPERS_MAX_ITEMS 500
+#define ODYSSEY_PAPERS_MAX_PHOTOS 100
+#define ODYSSEY_PAPERS_MAX_INFO_BYTES 2000000
 
 /// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
 #ifndef ODYSSEY_SCI_BRIEF_SPECTRUM

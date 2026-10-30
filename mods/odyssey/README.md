@@ -72,9 +72,10 @@ ID мода: ODYSSEY
 
 **Сохраняется**
 
-- разрушенные / изменённые тайлы на `station_levels`;
+- разрушенные / изменённые тайлы на `station_levels` только в зонах из снимка при baselines (зоны, уже лежавшие на Сьерре; `/area/space`, `/area/ship`, `/area/map_template`, `/area/supply` в снимок не входят). Флот Сьерры на ангарах в T=0 попадает сам; midround-гости и supply drone — нет;
 - whitelist машин/компьютеров и мебели как `created / modified / moved / destroyed` (у fabricator — ещё ресурсы в бункере);
 - листовые материалы на Сьерре (`materials.json`: тип, количество, клетка; при необходимости обратно в шкаф/ящик). На **continue** сначала снимаются стаки с DMM, затем восстанавливается снимок прошлой смены — купленное и не потраченное остаётся, бесплатный респаун складов нет. Инвентарь на мобах не пишется. Первая смена — карта как обычно;
+- документы в **картотеках** (`papers.json`: paper / folder / bundle / photo; фото — `papers_photos.sav`). На continue содержимое картотек на persistable-зонах strip + restore. Лимиты: 500 items / 100 photos / ~2 MB текста. Шкафы и бумага на полу не пишутся;
 - мехи;
 - счета Сьерры и отделов;
 - каналы и сюжеты Newscast, включая фото (savefile рядом с JSON);
@@ -89,8 +90,8 @@ ID мода: ODYSSEY
 
 **Не сохраняется в MVP**
 
-- атмос, провода/трубы, away sites;
-- предметы на полу и содержимое шкафов, кроме листовых `/obj/item/stack/material`;
+- атмос, провода/трубы, away sites и любые пристыкованные чужие корабли/шаттлы (даже на Z Сьерры);
+- предметы на полу и содержимое шкафов (кроме листовых `/obj/item/stack/material`); документы вне картотек;
 - инвентарь персонажа кроме униформы на трупе; импланты/аугменты (живое тело — в `character_persist`);
 
 Overmap не сериализуется: он воспроизводимо создаётся из seed текущего сектора. Уровень опасности меняет число облаков hazards (как ванильный `overmap_event_areas`), их типы, задержку случайных событий и шанс Левиафана.
@@ -103,7 +104,7 @@ Overmap не сериализуется: он воспроизводимо со�
 - листовые `/obj/item/stack/material` на станции (отдельно от бункера фабрикатора);
 - `/obj/machinery/sleeper`;
 - `/obj/machinery/door/airlock` — HP, поломка панели, сварка, болты, открытая панель, открыт/закрыт; полностью разбитый шлюз остаётся как `/obj/structure/broken_door`;
-- столы, кровати/стулья, шкафы и баррикады;
+- столы, кровати/стулья, шкафы, картотеки (`/obj/structure/filingcabinet`) и баррикады;
 - `/obj/structure/catwalk` — срез/постройка, plating и открытый люк внутри персистентных зон корабля; мостики в `/area/space` и на обшивке не сохраняются.
 
 Добавлять новые корневые типы следует только после проверки безопасного `new path(turf)` и нужных полей сериализации.
@@ -113,8 +114,9 @@ Overmap не сериализуется: он воспроизводимо со�
 `data/odyssey_<map.path>_<part>.json`
 
 - `campaign.json` — seed, граф, маршрут, статус/outcome и метаданные кампании;
-- `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json`, `materials.json` — части снимка;
+- `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json`, `materials.json`, `papers.json` — части снимка;
 - `newscast_photos.sav` — иконки фотографий Newscast;
+- `papers_photos.sav` — иконки фото из картотек;
 - `roster.json` — участники и погибшие слоты;
 - `corpses.json` — трупы для моргов (тело + униформа);
 - `chronicle.json` — журнал кампании (прыжки, потери, шаттлы, контакты, исходы; visibility public/command/admin).
@@ -130,6 +132,7 @@ Overmap не сериализуется: он воспроизводимо со�
 - **турфы**: diff относительно roundstart baseline (смена типа, урон стен, broken/burnt полов);
 - **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones; у `/obj/machinery/fabricator` — `stored_material`;
 - **материалы**: `materials.json` — стаки на станции; continue = strip DMM + apply снимка;
+- **документы**: `papers.json` + `papers_photos.sav` — содержимое `/obj/structure/filingcabinet` (paper/folder/bundle/photo); continue = strip + restore; бюджет 500/100/~2MB;
 - **мехи**: тип, компоненты, заряд, оборудование — patch или spawn;
 - **экономика**: счёт судна + отделы (баланс и лог транзакций, до 100 записей на счёт); личные счета — в снимке character_persist (`account_money` + `account_transactions`);
 - **newscast**: каналы, авторы, цензура, сюжеты, wanted issue и фото в `newscast_photos.sav`;
@@ -147,7 +150,7 @@ Overmap не сериализуется: он воспроизводимо со�
 
 ### Админка
 
-Вкладка **Admin → Odyssey Panel**: статус раунда/диска, граф и roster, validation и превью снапшотов; лобби-vote (start/continue по сейву), force begin new/continue, reactivate архива, finish/archive, сброс курса, queue shift end, regenerate графа, force save/apply/baseline.
+Вкладка **Admin → Odyssey Panel**: статус раунда/диска, граф и roster, validation и превью снапшотов; лобби-vote (start/continue по сейву), force begin new/continue, reactivate архива, finish/archive, сброс курса, queue shift end, regenerate графа, force save/apply/baseline; у погибших в roster — **вернуть слот** (снимает tombstone, пишет `roster.json`, при активной кампании восстанавливает sleeper/changeling если они были сняты смертью).
 
 ### Изменения кора
 

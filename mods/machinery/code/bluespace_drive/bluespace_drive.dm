@@ -72,6 +72,9 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// Timer ID for jump countdown
 	var/jump_timer_id
 
+	/// world.time when the active jump executes (for status display countdown)
+	var/jump_end_time = 0
+
 	/// Whether a jump is currently in progress
 	var/jumping = FALSE
 
@@ -86,6 +89,9 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	/// Timer ID for pre-jump overlay application (fires 5s before jump)
 	var/pre_jump_timer_id
+
+	/// Odyssey jump atmosphere timers (buildup flickers / cues). Cleared on abort/exit.
+	var/list/odyssey_fx_timer_ids
 
 	/// Current orb overlay phase: null / "create_orb" / "drive_orb" / "decons_orb"
 	var/orb_state = null
@@ -190,6 +196,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(cooldown_timer_id)
 		deltimer(cooldown_timer_id)
 		cooldown_timer_id = null
+	odyssey_drive_clear_jump_fx(src)
 	QDEL_NULL(drive_sound)
 	if(energized)
 		energized = FALSE
@@ -653,6 +660,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	orb_timer_id = addtimer(new Callback(src, PROC_REF(orb_set_active)), 0.5 SECONDS, TIMER_STOPPABLE)
 
 	// Start jump countdown
+	jump_end_time = world.time + active_delay
 	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), active_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	// 5 seconds before jump: apply overlay to all crew and lock abort
@@ -660,6 +668,9 @@ var/global/list/bluespace_gas_power_factor = list(
 		pre_jump_timer_id = addtimer(new Callback(src, PROC_REF(pre_jump_prepare)), active_delay - 5 SECONDS, TIMER_STOPPABLE)
 	else
 		pre_jump_prepare()
+
+	if(odyssey_campaign_jump)
+		odyssey_drive_schedule_jump_fx(src, active_delay)
 
 	update_icon()
 	return TRUE
@@ -769,11 +780,16 @@ var/global/list/bluespace_gas_power_factor = list(
 			continue
 		L.playsound_local(L, 'sound/magic/ethereal_exit.ogg', 60)
 
+	var/was_odyssey = odyssey_campaign_jump
+	odyssey_drive_clear_jump_fx(src)
 	jump_timer_id = null
+	jump_end_time = 0
 	jumping = FALSE
 	jump_locked = FALSE
 	rotation_error = 0
 	odyssey_campaign_jump = FALSE
+	if (was_odyssey)
+		odyssey_clear_status_jump_countdown()
 	// Close the rift — may pull any crew still in the danger zone, then clean up rift mobs
 	close_rift()
 	// Apply gas modifier effects before purging (uses gas_consumed_totals)
@@ -817,7 +833,9 @@ var/global/list/bluespace_gas_power_factor = list(
 		deltimer(jump_timer_id)
 		jump_timer_id = null
 	var/was_odyssey = odyssey_campaign_jump
+	odyssey_drive_clear_jump_fx(src)
 	jumping = FALSE
+	jump_end_time = 0
 	rotation_error = 0
 	overcharged = FALSE
 	emergency_jump = FALSE
