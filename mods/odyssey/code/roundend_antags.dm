@@ -1,4 +1,4 @@
-/// During Odyssey, living sleepers/changelings carry into the next shift — do not meta them at roundend.
+/// During Odyssey, living persist antags carry into the next shift — do not meta them at roundend.
 
 /proc/odyssey_antag_dead_for_roundend(datum/mind/P)
 	if (!istype(P))
@@ -24,6 +24,20 @@
 
 
 /datum/antagonist/changeling/roundend_listed_antagonists()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active)
+		return ..()
+	return odyssey_filter_dead_antags(current_antagonists)
+
+
+/datum/antagonist/revolutionary/roundend_listed_antagonists()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active)
+		return ..()
+	return odyssey_filter_dead_antags(current_antagonists)
+
+
+/datum/antagonist/loyalists/roundend_listed_antagonists()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active)
 		return ..()

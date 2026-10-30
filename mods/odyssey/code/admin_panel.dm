@@ -71,6 +71,17 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "<br>"
 		dat += "transition committed: <b>[state.transition_committed ? "да" : "нет"]</b> | "
 		dat += "BSD jump: <b>[state.odyssey_bsd_jump_done ? "да" : "нет"]</b> | "
+		dat += "BSD post-jump cool: <b>"
+		if (state.bsd_post_jump_cooling)
+			if (state.bsd_cooling_until > world.time)
+				dat += "[odyssey_drive_cooldown_label(state.bsd_cooling_until - world.time)]"
+			else if (state.bsd_cooling_until)
+				dat += "истекло"
+			else
+				dat += "ожидает roundstart"
+		else
+			dat += "—"
+		dat += "</b> | "
 		dat += "shift end queued: <b>[state.shift_end_queued ? "да" : "нет"]</b><br>"
 		dat += "Abandoned shuttles: <b>[length(state.abandoned_shuttles)]</b>"
 		if (length(state.abandoned_shuttles))
@@ -129,7 +140,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "<div class='statusDisplay'>"
 	dat += "<table width='100%'>"
 	dat += "<tr><th>Файл</th><th>Есть</th><th>Версия</th><th>Записей</th><th></th></tr>"
-	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "chronicle"))
+	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "materials", "papers", "chronicle"))
 		var/list/summary = odyssey_snapshot_summary(kind)
 		dat += "<tr>"
 		dat += "<td><code>[kind].json</code></td>"
@@ -176,6 +187,11 @@ var/global/datum/odyssey_panel/odyssey_panel
 			if (member["death_shift"])
 				dat += " — смерть в смене [member["death_shift"]] ([html_encode("[member["death_reason"]]")])"
 			dat += " <a href='?src=\ref[src];revive_roster=[url_encode(key)]'><font color='55aa55'>вернуть слот</font></a>"
+		if (member["custody"] == ODYSSEY_CUSTODY_BRIG)
+			dat += " — <font color='cc8844'>custody</font>"
+			if (member["custody_shift"])
+				dat += " (смена [member["custody_shift"]])"
+			dat += " <a href='?src=\ref[src];clear_custody=[url_encode(key)]'><font color='55aa55'>снять custody</font></a>"
 		dat += "<br>"
 	dat += "<hr>Спящие: <b>[length(state.sleepers)]</b> (active [odyssey_count_active_sleepers()]) | midround: <b>[state.sleeper_midround_done ? "уже был" : "ещё нет"]</b>"
 	if (state.active)
@@ -200,6 +216,24 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += "[html_encode(cling["name"])] ([ckey_slot]): <b>[cling["status"]]</b> shift=[cling["assigned_shift"]] source=[cling["source"]]"
 		if (cling["lost_shift"])
 			dat += " — снят в смене [cling["lost_shift"]] ([cling["lost_reason"]])"
+		dat += "<br>"
+	dat += "<hr>Революционеры: <b>[length(state.revolutionaries)]</b> (active [odyssey_count_active_faction(state.revolutionaries)], heads [odyssey_count_active_faction_heads(state.revolutionaries)])<br>"
+	for (var/rkey in state.revolutionaries)
+		var/list/rev = state.revolutionaries[rkey]
+		if (!islist(rev))
+			continue
+		dat += "[html_encode(rev["name"])] ([rkey]): <b>[rev["status"]]</b> rank=[rev["rank"]] shift=[rev["assigned_shift"]] source=[rev["source"]]"
+		if (rev["lost_shift"])
+			dat += " — снят в смене [rev["lost_shift"]] ([rev["lost_reason"]])"
+		dat += "<br>"
+	dat += "<hr>Лоялисты: <b>[length(state.loyalists)]</b> (active [odyssey_count_active_faction(state.loyalists)], heads [odyssey_count_active_faction_heads(state.loyalists)])<br>"
+	for (var/lkey in state.loyalists)
+		var/list/loy = state.loyalists[lkey]
+		if (!islist(loy))
+			continue
+		dat += "[html_encode(loy["name"])] ([lkey]): <b>[loy["status"]]</b> rank=[loy["rank"]] shift=[loy["assigned_shift"]] source=[loy["source"]]"
+		if (loy["lost_shift"])
+			dat += " — снят в смене [loy["lost_shift"]] ([loy["lost_reason"]])"
 		dat += "<br>"
 	dat += "<hr>Mercenaries: <b>[state.merc_used ? "уже были" : "ещё нет"]</b>"
 	if (state.merc_used)
@@ -732,6 +766,17 @@ var/global/datum/odyssey_panel/odyssey_panel
 		show(C)
 		return
 
+	if (href_list["clear_custody"])
+		var/roster_key = href_list["clear_custody"]
+		if (!roster_key)
+			return
+		if (odyssey_admin_clear_roster_custody(roster_key, usr))
+			to_chat(usr, SPAN_NOTICE("Odyssey: custody снят с [roster_key] — при входе не будет брига."))
+		else
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось снять custody у [roster_key]."))
+		show(C)
+		return
+
 	if (href_list["make_sleeper"])
 		var/datum/odyssey_state/state = odyssey_ensure_state()
 		if (!state.active)
@@ -821,6 +866,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 		if (alert(usr, "Наложить сейв на текущую карту? Это необратимо для тайлов/машин/меха/экономики.", "Odyssey", "Apply", "Отмена") != "Apply")
 			return
 		if (odyssey_apply_save(force = TRUE))
+			odyssey_apply_bsd_post_jump_cooldown()
 			to_chat(usr, SPAN_NOTICE("Odyssey: apply OK."))
 			log_and_message_admins("forced Odyssey apply", usr)
 		else

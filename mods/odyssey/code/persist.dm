@@ -22,6 +22,12 @@
 	character.character_persist_ckey = client_ckey
 	character.character_persist_slot = default_slot
 	odyssey_register_character(character)
+	// Lobby may still hold a normal-lane snapshot from before the continue vote.
+	// Always re-read the Odyssey file at spawn so body damage is not gated off by stale RAM.
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (state.active && client_ckey && default_slot)
+		var/list/fresh = character_persist_read(client_ckey, default_slot, TRUE)
+		character_persist_snapshot = fresh
 	if (character_persist && character_persist_is_locked())
 		character_persist_apply_snapshot(character, character_persist_snapshot)
 		if (!isnull(character_persist_snapshot["sec_record"]))
@@ -30,7 +36,6 @@
 			character.gen_record = character_persist_snapshot["gen_record"]
 		if (!isnull(character_persist_snapshot["med_record"]))
 			character.med_record = character_persist_snapshot["med_record"]
-	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (state.active)
 		odyssey_apply_roster_records_to_human(character, state.roster[odyssey_roster_key(character.character_persist_ckey, character.character_persist_slot)])
 	if (!character_persist || !character_persist_is_locked())

@@ -94,10 +94,15 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!ispath(path, /obj/structure) || !T)
 		return FALSE
+	// Refuse before new() — stairs Initialize can ChangeTurf the deck above.
+	if (odyssey_structure_path_denylisted(path))
+		return FALSE
 	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
 	if (!S && entry["action"] == "created")
 		S = new path(T)
 	if (!S || !odyssey_structure_whitelisted(S))
+		if (S && entry["action"] == "created" && !QDELETED(S))
+			qdel(S)
 		return FALSE
 	S.odyssey_persist_id = entry["id"]
 	odyssey_index_put(odyssey_ensure_state().persist_index_structures, entry["id"], S)

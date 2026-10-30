@@ -4,6 +4,7 @@
 	. = ..()
 	odyssey_setup_sleepers()
 	odyssey_setup_changelings()
+	odyssey_setup_revolution()
 	odyssey_confirm_mercenaries()
 	odyssey_confirm_hostile_outsiders()
 

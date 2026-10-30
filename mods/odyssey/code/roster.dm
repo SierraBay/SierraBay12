@@ -52,10 +52,12 @@
 	shift_jobs["[state.shift_number]"] = job_title
 	entry["shift_jobs"] = shift_jobs
 	state.roster[key] = entry
-	// copy_to/apply_persist runs before mind.transfer_to — defer antag reapply.
+	// copy_to/apply_persist runs before mind.transfer_to — defer antag/custody reapply.
 	if (try_sleeper)
 		odyssey_schedule_sleeper_reapply(H)
 		odyssey_schedule_changeling_reapply(H)
+		odyssey_schedule_faction_reapply(H)
+		odyssey_schedule_custody_apply(H)
 	return TRUE
 
 
@@ -77,7 +79,7 @@
 	if (!state.active || !istype(H) || QDELETED(H) || H.stat == DEAD)
 		return FALSE
 	if (!H.mind)
-		odyssey_schedule_sleeper_reapply(H)
+		// Do not restart the attempt counter — the schedule_* waiter owns retries.
 		return FALSE
 	var/player_ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
@@ -135,6 +137,8 @@
 	state.roster[key] = entry
 	odyssey_mark_sleeper_dead(player_ckey, slot, reason)
 	odyssey_mark_changeling_lost(player_ckey, slot, reason)
+	odyssey_mark_revolutionary_dead(player_ckey, slot, reason)
+	odyssey_mark_loyalist_dead(player_ckey, slot, reason)
 	odyssey_chronicle_note_death(H, reason, job_title)
 	log_game("ODYSSEY: character died [player_ckey] slot=[slot] name=[H.real_name] shift=[state.shift_number]")
 	// Journal the tombstone immediately so a crash cannot resurrect the slot.
@@ -227,6 +231,27 @@
 		cling["lost_reason"] = null
 		state.changelings[roster_key] = cling
 		log_game("ODYSSEY: admin restored changeling [roster_key] after roster revive")
+	// Prefer revolutionary over loyalist if both tombstones exist for the same key.
+	var/restored_faction = null
+	for (var/store_name in list("revolutionaries", "loyalists"))
+		var/list/store = odyssey_faction_store(store_name)
+		var/list/faction_entry = store?[roster_key]
+		if (!islist(faction_entry))
+			continue
+		if (faction_entry["status"] != ODYSSEY_FACTION_STATUS_DEAD && faction_entry["status"] != ODYSSEY_FACTION_STATUS_LOST)
+			continue
+		if (restored_faction)
+			faction_entry["status"] = ODYSSEY_FACTION_STATUS_LOST
+			faction_entry["lost_reason"] = "admin_revive_other_faction"
+			faction_entry["lost_shift"] = state.shift_number
+			store[roster_key] = faction_entry
+			continue
+		faction_entry["status"] = ODYSSEY_FACTION_STATUS_ACTIVE
+		faction_entry["lost_shift"] = null
+		faction_entry["lost_reason"] = null
+		store[roster_key] = faction_entry
+		restored_faction = store_name
+		log_game("ODYSSEY: admin restored [store_name] [roster_key] after roster revive")
 
 
 /proc/odyssey_campaign_crew_lost()
@@ -399,3 +424,4 @@
 			continue
 		odyssey_register_character(H, FALSE)
 		odyssey_capture_records_to_roster(H)
+		odyssey_capture_custody_to_roster(H)

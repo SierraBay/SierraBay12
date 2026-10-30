@@ -3,6 +3,7 @@
 /datum/game_mode/create_antagonists()
 	odyssey_prepare_station_antags(src)
 	odyssey_prepare_changelings(src)
+	odyssey_prepare_revolution(src)
 	odyssey_consider_mercenaries(src)
 	odyssey_consider_raiders(src)
 	odyssey_consider_ninja(src)

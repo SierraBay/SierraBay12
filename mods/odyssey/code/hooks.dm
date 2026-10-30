@@ -7,6 +7,8 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active)
 		return TRUE
+	// Ensure prefs hold the Odyssey body lane before latejoins / any remaining spawns.
+	character_persist_reload_connected_snapshots()
 	if (state.continued)
 		odyssey_apply_abandoned_shuttles()
 	// Baseline from the freshly loaded DMM, after abandoned shuttles have left their hangars.
@@ -17,6 +19,7 @@
 		to_world(SPAN_DANGER("<b>Одиссея остановлена: сохранение не прошло проверку. Администраторы уведомлены.</b>"))
 		message_admins("ODYSSEY: campaign aborted because save validation/apply failed: [json_encode(state.validation_errors)]")
 		return TRUE
+	odyssey_apply_bsd_post_jump_cooldown()
 	odyssey_apply_sector_threats()
 	odyssey_ensure_campaign_contract()
 	odyssey_generate_shift_objectives()

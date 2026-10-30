@@ -197,7 +197,7 @@
 	if (!state.active || !istype(H) || QDELETED(H) || H.stat == DEAD)
 		return FALSE
 	if (!H.mind)
-		odyssey_schedule_changeling_reapply(H)
+		// Do not restart the attempt counter — the schedule_* waiter owns retries.
 		return FALSE
 	var/player_ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)

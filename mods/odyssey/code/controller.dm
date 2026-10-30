@@ -36,11 +36,15 @@
 		state.selected_by = null
 		state.transition_committed = FALSE
 		state.odyssey_bsd_jump_done = FALSE
+		state.bsd_post_jump_cooling = FALSE
+		state.bsd_cooling_until = 0
 		state.shift_end_queued = FALSE
 		state.route_history = list(ODYSSEY_SECTOR_START)
 		state.roster = list()
 		state.sleepers = list()
 		state.changelings = list()
+		state.revolutionaries = list()
+		state.loyalists = list()
 		state.sleeper_midround_done = FALSE
 		state.merc_used = FALSE
 		state.merc_used_shift = 0
@@ -87,6 +91,9 @@
 		)
 		odyssey_ensure_campaign_contract()
 	odyssey_refresh_lobby_titlescreens()
+	// Mid-round admin continue: start cooling now (lobby continue waits for roundstart).
+	if (continued && state.bsd_post_jump_cooling && GAME_STATE >= RUNLEVEL_GAME)
+		odyssey_apply_bsd_post_jump_cooldown()
 	return TRUE
 
 
@@ -112,12 +119,16 @@
 	state.selected_by = meta["selected_by"]
 	state.transition_committed = !!meta["transition_committed"]
 	state.odyssey_bsd_jump_done = FALSE
+	state.bsd_post_jump_cooling = FALSE
+	state.bsd_cooling_until = 0
 	state.shift_end_queued = FALSE
 	var/list/saved_route_history = meta["route_history"]
 	state.route_history = islist(saved_route_history) ? saved_route_history.Copy() : list(state.current_sector_id)
 	state.roster = odyssey_load_roster()
 	state.sleepers = odyssey_normalize_sleepers(meta["sleepers"])
 	state.changelings = odyssey_normalize_changelings(meta["changelings"])
+	state.revolutionaries = odyssey_normalize_faction_map(meta["revolutionaries"])
+	state.loyalists = odyssey_normalize_faction_map(meta["loyalists"])
 	state.sleeper_midround_done = FALSE
 	state.merc_used = !!meta["merc_used"]
 	state.merc_used_shift = meta["merc_used_shift"] || 0
@@ -163,6 +174,7 @@
 		state.selected_by = null
 		state.transition_committed = FALSE
 		state.odyssey_bsd_jump_done = FALSE
+		state.bsd_post_jump_cooling = TRUE
 	return state.active
 
 
@@ -193,6 +205,8 @@
 		"next_object_id" = state.next_object_id,
 		"sleepers" = state.sleepers,
 		"changelings" = state.changelings,
+		"revolutionaries" = state.revolutionaries,
+		"loyalists" = state.loyalists,
 		"merc_used" = state.merc_used,
 		"merc_used_shift" = state.merc_used_shift,
 		"merc_used_reason" = state.merc_used_reason,
@@ -202,7 +216,7 @@
 		"next_objective_id" = state.next_objective_id,
 		"contracts" = state.contracts,
 		"objectives" = state.objectives,
-		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "roster", "newscast", "corpses", "materials", "chronicle")
+		"parts" = list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "materials", "papers", "chronicle")
 	)
 
 
@@ -424,6 +438,7 @@
 
 	odyssey_sync_sleepers_for_save()
 	odyssey_sync_changelings_for_save()
+	odyssey_sync_revolutionaries_for_save()
 	odyssey_sync_roster_for_save()
 	odyssey_collect_abandoned_shuttles()
 	odyssey_ensure_data_dir()

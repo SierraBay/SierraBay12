@@ -32,6 +32,8 @@
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
 /// Countdown from Odyssey Jump initiate to sector transition (BSD).
 #define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
+/// After a continued shift that just arrived via Odyssey Jump: drive thermal lock from previous transition.
+#define ODYSSEY_BSD_POST_JUMP_COOLDOWN (90 MINUTES)
 /// Last-minute FX window before Odyssey jump climax (bluespace lights, brace cues / local sounds).
 #define ODYSSEY_JUMP_FX_BUILDUP (60 SECONDS)
 
@@ -123,6 +125,13 @@
 #define ODYSSEY_CHANGELING_STATUS_ACTIVE "active"
 #define ODYSSEY_CHANGELING_STATUS_LOST "lost"
 
+/// Persisted revolutionaries / loyalists (heads and converted members).
+#define ODYSSEY_FACTION_RANK_HEAD "head"
+#define ODYSSEY_FACTION_RANK_MEMBER "member"
+#define ODYSSEY_FACTION_STATUS_ACTIVE "active"
+#define ODYSSEY_FACTION_STATUS_DEAD "dead"
+#define ODYSSEY_FACTION_STATUS_LOST "lost"
+
 #define ODYSSEY_OUTSIDER_DECISION_SPAWN "spawn"
 #define ODYSSEY_OUTSIDER_DECISION_MISS "miss"
 #define ODYSSEY_OUTSIDER_DECISION_SKIP_CANDIDATES "skip_candidates"
@@ -144,6 +153,20 @@
 #define ODYSSEY_PAPERS_MAX_ITEMS 500
 #define ODYSSEY_PAPERS_MAX_PHOTOS 100
 #define ODYSSEY_PAPERS_MAX_INFO_BYTES 2000000
+
+/// Roster custody: detained on Sierra brig territory carries into the next shift.
+#define ODYSSEY_CUSTODY_BRIG "brig"
+#define ODYSSEY_CUSTODY_CRIMINAL_STATUSES list("Incarcerated", "Arrest")
+#define ODYSSEY_CUSTODY_AREAS list(\
+	/area/security/sierra/prison,\
+	/area/security/sierra/brig,\
+	/area/security/sierra/hallway/port,\
+	/area/security/sierra/hallway/aft,\
+	/area/security/sierra/interrogation,\
+	/area/security/sierra/interrogation/second,\
+	/area/security/prison\
+)
+#define ODYSSEY_CUSTODY_SPAWN_AREAS list(/area/security/sierra/brig, /area/security/sierra/prison)
 
 /// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
 #ifndef ODYSSEY_SCI_BRIEF_SPECTRUM

@@ -337,10 +337,11 @@
 				var/scale = max_keep / total
 				brute *= scale
 				burn *= scale
+			// surgical=TRUE disables autoheal_cutoff so persisted injuries survive Life ticks.
 			if (brute > 0)
-				O.createwound(INJURY_TYPE_BRUISE, brute)
+				O.createwound(INJURY_TYPE_BRUISE, brute, TRUE)
 			if (burn > 0)
-				O.createwound(INJURY_TYPE_BURN, burn)
+				O.createwound(INJURY_TYPE_BURN, burn, TRUE)
 			if (entry["broken"])
 				O.status |= ORGAN_BROKEN
 				if (!O.broken_description)

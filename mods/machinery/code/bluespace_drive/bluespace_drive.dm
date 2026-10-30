@@ -1036,6 +1036,12 @@ var/global/list/bluespace_gas_power_factor = list(
 	update_icon()
 
 /**
+ * Starts cooldown for an explicit duration (ignores jump_cooldown_duration / gas reductions).
+ */
+/obj/machinery/bluespace_drive/proc/start_cooldown_duration(duration)
+	start_cooldown(jump_cooldown_duration - max(30 SECONDS, duration))
+
+/**
  * Clears the post-jump cooldown.
  */
 /obj/machinery/bluespace_drive/proc/end_cooldown()

@@ -104,17 +104,34 @@
 		|| istype(M, /obj/machinery/door/airlock)
 
 
+/// Structures that must not be snapshotted: powernet / disposal / multiz links need rebuild, not a blind new(turf).
+/// Atmospheric pipes are /obj/machinery/atmospherics — outside structure persist entirely.
+/proc/odyssey_structure_path_denylisted(path)
+	if (!ispath(path, /obj/structure))
+		return TRUE
+	return ispath(path, /obj/structure/cable) \
+		|| ispath(path, /obj/structure/disposalpipe) \
+		|| ispath(path, /obj/structure/disposalholder) \
+		|| ispath(path, /obj/structure/disposaloutlet) \
+		|| ispath(path, /obj/structure/ladder) \
+		|| ispath(path, /obj/structure/stairs) \
+		|| ispath(path, /obj/structure/transit_tube) \
+		|| ispath(path, /obj/structure/transit_tube_pod)
+
+
+/proc/odyssey_structure_denylisted(obj/structure/S)
+	if (!istype(S))
+		return TRUE
+	return odyssey_structure_path_denylisted(S.type)
+
+
+/// Persist all ship structures in persistable areas, except denylisted types.
 /proc/odyssey_structure_whitelisted(obj/structure/S)
 	if (!istype(S))
 		return FALSE
-	return istype(S, /obj/structure/table) \
-		|| istype(S, /obj/structure/bed) \
-		|| istype(S, /obj/structure/bed/chair) \
-		|| istype(S, /obj/structure/closet) \
-		|| istype(S, /obj/structure/filingcabinet) \
-		|| istype(S, /obj/structure/barricade) \
-		|| istype(S, /obj/structure/broken_door) \
-		|| istype(S, /obj/structure/catwalk)
+	if (odyssey_structure_denylisted(S))
+		return FALSE
+	return TRUE
 
 
 /proc/odyssey_assign_runtime_id(obj/O)

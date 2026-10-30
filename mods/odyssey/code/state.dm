@@ -26,6 +26,10 @@ var/global/datum/odyssey_state/odyssey
 	var/transition_committed = FALSE
 	/// TRUE after a successful Odyssey bluespace-drive campaign jump this round.
 	var/odyssey_bsd_jump_done = FALSE
+	/// TRUE this shift if we arrived via previous-shift Odyssey Jump (post-arrival drive cooling).
+	var/bsd_post_jump_cooling = FALSE
+	/// world.time when post-jump BSD cooling ends; 0 until first apply after shift start.
+	var/bsd_cooling_until = 0
 	/// TRUE while the 5-minute End the shift countdown is running.
 	var/shift_end_queued = FALSE
 	var/list/route_history
@@ -54,6 +58,10 @@ var/global/datum/odyssey_state/odyssey
 	var/list/sleepers
 	/// Campaign changelings keyed by "ckey|slot". Persist only if alive on Sierra at save.
 	var/list/changelings
+	/// Campaign revolutionaries keyed by "ckey|slot" (head or converted member).
+	var/list/revolutionaries
+	/// Campaign loyalists keyed by "ckey|slot" (head or converted member).
+	var/list/loyalists
 	/// True after the optional midround +1 sleeper for this shift was handled or skipped permanently.
 	var/sleeper_midround_done = FALSE
 	/// True after mercenaries successfully spawned once this campaign (persisted).
@@ -107,6 +115,8 @@ var/global/datum/odyssey_state/odyssey
 	persistable_areas = list()
 	sleepers = list()
 	changelings = list()
+	revolutionaries = list()
+	loyalists = list()
 	abandoned_shuttles = list()
 	shuttle_reports = list()
 	chronicle = list()

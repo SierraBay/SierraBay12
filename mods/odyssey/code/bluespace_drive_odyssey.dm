@@ -13,6 +13,69 @@
 	return "[seconds] seconds"
 
 
+/proc/odyssey_drive_cooldown_label(remaining_ds)
+	var/seconds = max(0, round(remaining_ds / (1 SECOND)))
+	if (seconds >= 3600)
+		var/hours = round(seconds / 3600, 0.1)
+		return "[hours]h remaining"
+	if (seconds >= 60)
+		var/minutes = round(seconds / 60, 0.1)
+		return "[minutes] min remaining"
+	return "[seconds]s remaining"
+
+
+/proc/odyssey_clear_expired_bsd_cooling(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return
+	// until==0 means "pending apply" — still cooling, do not clear.
+	if (!state.bsd_cooling_until || world.time < state.bsd_cooling_until)
+		return
+	state.bsd_post_jump_cooling = FALSE
+	state.bsd_cooling_until = 0
+
+
+/// TRUE while post-jump cooling is armed (including before until is stamped at roundstart).
+/proc/odyssey_bsd_post_jump_cooling_active(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return FALSE
+	if (!state.bsd_cooling_until)
+		return TRUE
+	return world.time < state.bsd_cooling_until
+
+
+/proc/odyssey_bsd_post_jump_cooling_remaining(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return 0
+	if (!state.bsd_cooling_until)
+		return ODYSSEY_BSD_POST_JUMP_COOLDOWN
+	return max(0, state.bsd_cooling_until - world.time)
+
+
+/// Sync ship BSD cooldown to post-arrival cooling (call after persist apply / roundstart).
+/proc/odyssey_apply_bsd_post_jump_cooldown()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !state.bsd_post_jump_cooling)
+		return FALSE
+	if (!state.bsd_cooling_until)
+		state.bsd_cooling_until = world.time + ODYSSEY_BSD_POST_JUMP_COOLDOWN
+	odyssey_clear_expired_bsd_cooling(state)
+	if (!state.bsd_post_jump_cooling)
+		return FALSE
+	var/remaining = state.bsd_cooling_until - world.time
+	var/obj/machinery/bluespace_drive/D = odyssey_find_ship_bluespace_drive()
+	if (!istype(D))
+		return FALSE
+	D.start_cooldown_duration(remaining)
+	log_game("ODYSSEY: BSD post-jump cooling synced remaining=[round(remaining / (1 MINUTE), 0.1)]m shift=[state.shift_number] sector=[state.current_sector_id]")
+	return TRUE
+
+
 /proc/odyssey_find_ship_bluespace_drive()
 	var/list/drives = SSmachines.get_machinery_of_type(/obj/machinery/bluespace_drive)
 	for (var/obj/machinery/bluespace_drive/D as anything in drives)
@@ -49,6 +112,7 @@
 		)
 
 	var/datum/odyssey_state/state = odyssey_ensure_state()
+	odyssey_clear_expired_bsd_cooling(state)
 	var/fuel_moles = D.fuel_gas ? D.fuel_gas.total_moles : 0
 	var/fuel_ok = fuel_moles >= D.emergency_jump_min_moles
 	var/fuel_full = fuel_moles >= D.minimum_phoron_moles_per_jump
@@ -75,8 +139,11 @@
 	else
 		course_label = "None plotted (open Sector Map)"
 
-	var/cooldown_seconds = D.on_cooldown ? max(0, round((D.cooldown_end_time - world.time) / 10)) : 0
-	var/cooldown_label = D.on_cooldown ? "[cooldown_seconds]s remaining" : "Ready"
+	var/cooldown_remaining = D.on_cooldown ? max(0, D.cooldown_end_time - world.time) : 0
+	if (odyssey_bsd_post_jump_cooling_active(state))
+		cooldown_remaining = max(cooldown_remaining, odyssey_bsd_post_jump_cooling_remaining(state))
+	var/on_cooling = D.on_cooldown || cooldown_remaining > 0
+	var/cooldown_label = on_cooling ? odyssey_drive_cooldown_label(cooldown_remaining) : "Ready"
 	var/energized_label = D.energized ? "Energized" : "Standby"
 
 	var/label = "Ready"
@@ -93,7 +160,7 @@
 			block_reason = "A jump sequence is already charging. Abort remains available until final approach; ship lighting will signal the lock."
 		else
 			block_reason = "A jump sequence is already charging. Abort remains available until final lock."
-	else if (D.on_cooldown)
+	else if (on_cooling)
 		label = "Cooling down"
 		block_reason = "The drive is thermally locked after the previous jump. Wait [cooldown_label] before initiating another sequence."
 	else if (!D.energized)
@@ -115,7 +182,7 @@
 		label = "Ready for Odyssey jump"
 		block_reason = null
 
-	var/can_odyssey = state.active && !D.jumping && !D.on_cooldown && D.energized && course_ok && fuel_ok && bsu_ok
+	var/can_odyssey = state.active && !D.jumping && !on_cooling && D.energized && course_ok && fuel_ok && bsu_ok
 	return list(
 		"present" = TRUE,
 		"label" = label,
@@ -128,7 +195,7 @@
 		"course_ok" = course_ok,
 		"course_label" = course_label,
 		"cooldown_label" = cooldown_label,
-		"on_cooldown" = D.on_cooldown,
+		"on_cooldown" = on_cooling,
 		"jumping" = D.jumping,
 		"jump_locked" = D.jump_locked,
 		"odyssey_jump" = D.odyssey_campaign_jump,
@@ -144,6 +211,12 @@
 	if (!state.active || state.status != ODYSSEY_STATUS_ACTIVE)
 		if (user)
 			to_chat(user, SPAN_WARNING("Одиссея не активна."))
+		return FALSE
+	odyssey_clear_expired_bsd_cooling(state)
+	if (D.on_cooldown || odyssey_bsd_post_jump_cooling_active(state))
+		if (user)
+			var/remaining = max(D.on_cooldown ? (D.cooldown_end_time - world.time) : 0, odyssey_bsd_post_jump_cooling_remaining(state))
+			to_chat(user, SPAN_WARNING("Одиссея: Bluespace Drive на охлаждении после предыдущего перехода ([odyssey_drive_cooldown_label(remaining)])."))
 		return FALSE
 	if (!state.selected_sector_id || !odyssey_sector_is_available(state.selected_sector_id, state))
 		if (user)
@@ -231,7 +304,9 @@
 	data["odyssey_active"] = state.active
 	data["odyssey_jump"] = D.odyssey_campaign_jump
 	data["odyssey_course"] = state.selected_sector_id ? odyssey_sector_display_name(state.selected_sector_id) : null
-	data["odyssey_can_jump"] = state.active && odyssey_drive_can_campaign_jump(D, null) && D.energized && !D.jumping && !D.on_cooldown && (fuel_moles >= D.emergency_jump_min_moles)
+	odyssey_clear_expired_bsd_cooling(state)
+	var/cooling = D.on_cooldown || odyssey_bsd_post_jump_cooling_active(state)
+	data["odyssey_can_jump"] = state.active && odyssey_drive_can_campaign_jump(D, null) && D.energized && !D.jumping && !cooling && (fuel_moles >= D.emergency_jump_min_moles)
 	data["odyssey_min_bsu"] = round(D.odyssey_min_jump_power / 1000, 0.1)
 	data["odyssey_bsu_ok"] = D.power_from_gas >= D.odyssey_min_jump_power
 	if (state.active && state.selected_sector_id)
