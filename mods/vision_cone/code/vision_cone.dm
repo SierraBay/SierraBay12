@@ -177,27 +177,32 @@
 			return TRUE //Also checks if both are 0 to stop division by zero
 
 		// Get the vector length so we can create a good directional vector
-		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
+		var/vector_len = sqrt(rel_x ** 2 + rel_y ** 2)
 
-		/// Getting a direction vector
-		var/dir_x
-		var/dir_y
-		switch(dir)
-			if(SOUTH)
-				dir_x = 0
-				dir_y = -vector_len
-			if(NORTH)
-				dir_x = 0
-				dir_y = vector_len
-			if(EAST)
-				dir_x = vector_len
-				dir_y = 0
-			if(WEST)
-				dir_x = -vector_len
-				dir_y = 0
+		/// Direction vector via dir bit flags (cardinals and diagonals)
+		var/dir_x = 0
+		var/dir_y = 0
+		if(dir & NORTH)
+			dir_y = 1
+		if(dir & SOUTH)
+			dir_y = -1
+		if(dir & EAST)
+			dir_x = 1
+		if(dir & WEST)
+			dir_x = -1
+
+		var/dir_len = sqrt(dir_x ** 2 + dir_y ** 2)
+		if(!dir_len)
+			return TRUE
+		dir_x = (dir_x / dir_len) * vector_len
+		dir_y = (dir_y / dir_len) * vector_len
+
+		var/magnitudes = vector_len * vector_len // both vectors share length after normalize
+		if(!magnitudes)
+			return TRUE
 
 		///Calculate angle
-		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
+		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / magnitudes)
 
 		/// Calculate vision angle and compare
 		var/vision_angle = (360 - client.fovangle) / 2
