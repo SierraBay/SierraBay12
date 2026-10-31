@@ -4,11 +4,20 @@
 /mob/living/carbon/human/var/odyssey_custody_applied = FALSE
 
 
+/proc/odyssey_resolve_area_path(entry)
+	if (ispath(entry, /area))
+		return entry
+	if (istext(entry))
+		return text2path(entry)
+	return null
+
+
 /proc/odyssey_area_is_custody(area/A)
 	if (!istype(A))
 		return FALSE
-	for (var/path in ODYSSEY_CUSTODY_AREAS)
-		if (istype(A, path))
+	for (var/entry in ODYSSEY_CUSTODY_AREAS)
+		var/path = odyssey_resolve_area_path(entry)
+		if (path && istype(A, path))
 			return TRUE
 	return FALSE
 
@@ -53,7 +62,10 @@
 
 /proc/odyssey_pick_custody_spawn_turf()
 	var/list/candidates = list()
-	for (var/area_path in ODYSSEY_CUSTODY_SPAWN_AREAS)
+	for (var/entry in ODYSSEY_CUSTODY_SPAWN_AREAS)
+		var/area_path = odyssey_resolve_area_path(entry)
+		if (!area_path)
+			continue
 		for (var/area/A in world)
 			if (!istype(A, area_path))
 				continue
