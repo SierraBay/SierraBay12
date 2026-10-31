@@ -95,7 +95,7 @@ ID мода: ODYSSEY
 - `shuttle_reports` в `campaign.json` (legacy `abandoned_shuttles` по-прежнему пишется как список имён);
 - тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; смерть в Одиссее сбрасывает только его;
 - employment / security / medical записи, `criminal_status` и `physical_status` (включая правки с консолей в течение смены) — в roster кампании; при спавне в активной Одиссее применяются всегда. Persist-снимок дублирует их, если персистентность включена;
-- **custody**: если на конец смены живой участник с `criminal_status` Incarcerated/Arrest находится в бриге/тюрьме/допросе (Sierra security areas) — в roster пишется `custody=brig`; на следующей смене после экипа — оранжевая форма, без ID, спавн в бриге/тюрьме (стартовый лут работы снимается);
+- **custody**: если на конец смены живой участник с `criminal_status` Incarcerated/Arrest находится в бриге/тюрьме/допросе (Sierra security areas) — в roster пишется `custody=brig`; на следующей смене после экипа — оранжевая форма, без ID, спавн на случайный `/obj/landmark/odyssey_custody` (ставить в prison cells; fallback — свободный пол в `/area/security/sierra/prison`); стартовый гир работы снимается;
 - трупы экипажа на Сьерре (включая лежащих в морге или шкафу): внешность, раны, только униформа. На следующей смене тела появляются в моргах, не на месте смерти.
 
 **Не сохраняется в MVP**

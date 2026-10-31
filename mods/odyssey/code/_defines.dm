@@ -157,16 +157,17 @@
 /// Roster custody: detained on Sierra brig territory carries into the next shift.
 #define ODYSSEY_CUSTODY_BRIG "brig"
 #define ODYSSEY_CUSTODY_CRIMINAL_STATUSES list("Incarcerated", "Arrest")
-#define ODYSSEY_CUSTODY_AREAS list(\
-	/area/security/sierra/prison,\
-	/area/security/sierra/brig,\
-	/area/security/sierra/hallway/port,\
-	/area/security/sierra/hallway/aft,\
-	/area/security/sierra/interrogation,\
-	/area/security/sierra/interrogation/second,\
-	/area/security/prison\
+/// Area type suffixes under /area/ — resolved at runtime so map types need not exist at compile time.
+#define ODYSSEY_CUSTODY_AREA_SUFFIXES list(\
+	"security/sierra/prison",\
+	"security/sierra/brig",\
+	"security/sierra/hallway/port",\
+	"security/sierra/hallway/aft",\
+	"security/sierra/interrogation",\
+	"security/sierra/interrogation/second",\
+	"security/prison"\
 )
-#define ODYSSEY_CUSTODY_SPAWN_AREAS list(/area/security/sierra/brig, /area/security/sierra/prison)
+#define ODYSSEY_CUSTODY_SPAWN_AREA_SUFFIXES list("security/sierra/prison")
 
 /// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
 #ifndef ODYSSEY_SCI_BRIEF_SPECTRUM

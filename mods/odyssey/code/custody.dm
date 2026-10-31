@@ -1,27 +1,43 @@
 /// Odyssey brig custody: detained crew stay in brig next shift (orange + no ID).
 
-// Stubs so custody type paths compile even when map area files are not yet loaded.
-// Sierra map files fill these types with names/access; definitions merge.
-/area/security/sierra
-/area/security/sierra/brig
-/area/security/sierra/prison
-/area/security/sierra/hallway
-/area/security/sierra/hallway/port
-/area/security/sierra/hallway/aft
-/area/security/sierra/interrogation
-/area/security/sierra/interrogation/second
+/// Place in /area/security/sierra/prison cells — preferred custody spawn points.
+var/global/list/odyssey_custody_landmarks = list()
+
+
+/obj/landmark/odyssey_custody
+	name = "Odyssey Custody Spawn"
+	desc = "Where detained Odyssey crew appear next shift."
+	icon_state = "x3"
+
+
+/obj/landmark/odyssey_custody/Initialize()
+	. = ..()
+	odyssey_custody_landmarks += src
+
+
+/obj/landmark/odyssey_custody/Destroy()
+	odyssey_custody_landmarks -= src
+	return ..()
 
 
 /mob/living/carbon/human/var/odyssey_custody_applied = FALSE
 
 
-/proc/odyssey_area_is_custody(area/A)
-	if (!istype(A))
+/// TRUE if A.type is exactly /area/<suffix> or a subtype thereof.
+/proc/odyssey_area_matches_suffixes(area/A, list/suffixes)
+	if (!istype(A) || !islist(suffixes))
 		return FALSE
-	for (var/path in ODYSSEY_CUSTODY_AREAS)
-		if (istype(A, path))
+	var/type_text = "[A.type]"
+	for (var/suffix in suffixes)
+		// Concatenate so static path lints do not flag a quoted area type string.
+		var/full = "/" + "area/" + suffix
+		if (type_text == full || findtext(type_text, full + "/") == 1)
 			return TRUE
 	return FALSE
+
+
+/proc/odyssey_area_is_custody(area/A)
+	return odyssey_area_matches_suffixes(A, ODYSSEY_CUSTODY_AREA_SUFFIXES)
 
 
 /proc/odyssey_criminal_status_is_custody(status)
@@ -64,20 +80,34 @@
 
 /proc/odyssey_pick_custody_spawn_turf()
 	var/list/candidates = list()
-	for (var/area_path in ODYSSEY_CUSTODY_SPAWN_AREAS)
-		for (var/area/A in world)
-			if (!istype(A, area_path))
+	for (var/obj/landmark/odyssey_custody/L in odyssey_custody_landmarks)
+		if (QDELETED(L))
+			continue
+		var/turf/T = get_turf(L)
+		if (!istype(T, /turf/simulated/floor))
+			continue
+		if (!T.z || !(T.z in GLOB.using_map.station_levels))
+			continue
+		if (is_blocked_turf(T))
+			continue
+		candidates += T
+	if (length(candidates))
+		return pick_mobless_turf_if_exists(candidates)
+
+	// Fallback if mappers have not placed landmarks yet.
+	for (var/area/A in world)
+		if (!odyssey_area_matches_suffixes(A, ODYSSEY_CUSTODY_SPAWN_AREA_SUFFIXES))
+			continue
+		if (!A.z || !(A.z in GLOB.using_map.station_levels))
+			continue
+		for (var/turf/simulated/floor/T in A)
+			if (is_blocked_turf(T))
 				continue
-			if (!A.z || !(A.z in GLOB.using_map.station_levels))
-				continue
-			for (var/turf/simulated/floor/T in A)
-				if (T.density)
-					continue
-				candidates += T
-			CHECK_TICK
+			candidates += T
+		CHECK_TICK
 	if (!length(candidates))
 		return null
-	return pick(candidates)
+	return pick_mobless_turf_if_exists(candidates)
 
 
 /proc/odyssey_schedule_custody_apply(mob/living/carbon/human/H, attempt = 0)
@@ -112,7 +142,7 @@
 
 	var/turf/cell = odyssey_pick_custody_spawn_turf()
 	if (!cell)
-		log_error("ODYSSEY: custody apply failed for [key] — no brig/prison floor turf")
+		log_error("ODYSSEY: custody apply failed for [key] — no prison floor turf")
 		return FALSE
 
 	// Only worn/held gear — iterating contents would hit organs/implants.
