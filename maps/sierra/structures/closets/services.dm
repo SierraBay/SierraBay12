@@ -132,6 +132,7 @@
 /obj/structure/closet/secure_closet/chief_steward_sierra/WillContain()
 	return list(
 		/obj/item/storage/belt/general,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/clothing/head/chefhat,
 		/obj/item/clothing/suit/chef/classic,
 		/obj/item/clothing/suit/chef,

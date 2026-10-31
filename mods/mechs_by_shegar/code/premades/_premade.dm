@@ -10,6 +10,8 @@
 /mob/living/exosuit/premade
 	name = "impossible mech"
 	desc = "Убейте меня"
+	///Внешний бронеэлемент, который навешивается на каждую часть готового меха. null — без брони
+	var/external_armor_type = /obj/item/mech_external_armor/civil
 	var/decal
 
 /mob/living/exosuit/premade/Initialize()
@@ -30,19 +32,19 @@
 		L_arm.side = LEFT
 		L_arm.setup_side()
 	if(R_leg && L_leg && R_leg.should_have_doubled_owner && L_leg.should_have_doubled_owner)
-		var/obj/item/mech_component/doubled_legs/spawned_double_legs = new R_leg.doubled_owner_type (src)
-		qdel(R_leg)
-		qdel(L_leg)
-		R_leg = null
-		L_leg = null
-		R_leg = spawned_double_legs.R_stored_leg
-		spawned_double_legs.R_stored_leg.forceMove(src)
+		//Ноги, которые подтип уже взял из своего держателя, остаются при нём: второй держатель оставил бы первый пустым
+		if(!R_leg.doubled_owner || R_leg.doubled_owner != L_leg.doubled_owner)
+			var/obj/item/mech_component/doubled_legs/spawned_double_legs = new R_leg.doubled_owner_type (src)
+			qdel(R_leg)
+			qdel(L_leg)
+			R_leg = spawned_double_legs.R_stored_leg
+			L_leg = spawned_double_legs.L_stored_leg
+		R_leg.forceMove(src)
 		R_leg.decal = decal
 		R_leg.prebuild()
 		R_leg.side = RIGHT
 		R_leg.setup_side()
-		L_leg = spawned_double_legs.L_stored_leg
-		spawned_double_legs.L_stored_leg.forceMove(src)
+		L_leg.forceMove(src)
 		L_leg.decal = decal
 		L_leg.prebuild()
 	if(R_leg && !R_leg.should_have_doubled_owner)
@@ -55,6 +57,10 @@
 		L_leg.prebuild()
 		L_leg.side = LEFT
 		L_leg.setup_side()
+	//Готовый мех получает броню и на те части, на которые её потом не навесить
+	if(external_armor_type)
+		for(var/obj/item/mech_component/part in list(head, body, R_arm, L_arm, R_leg, L_leg))
+			part.install_external_armour(new external_armor_type(part))
 
 	if(!material)
 		material = SSmaterials.get_material_by_name(MATERIAL_STEEL)
@@ -168,68 +174,68 @@
 
 	var/mech_colour = super_random ? FALSE : pick(use_colours)
 	if(!head)
-		var/headtype = pick(typesof(/obj/item/mech_component/sensors)-/obj/item/mech_component/sensors)
+		var/headtype = pick(get_fabricated_part_types(/obj/item/mech_component/sensors))
 		head = new headtype(src)
 		head.color = mech_colour ? mech_colour : pick(use_colours)
 	if(!body)
-		var/bodytype = pick(typesof(/obj/item/mech_component/chassis)-/obj/item/mech_component/chassis)
+		var/bodytype = pick(get_fabricated_part_types(/obj/item/mech_component/chassis))
 		body = new bodytype(src)
 		body.color = mech_colour ? mech_colour : pick(use_colours)
 	if(!R_arm)
-		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
+		var/armstype = pick(get_fabricated_part_types(/obj/item/mech_component/manipulators))
 		R_arm = new armstype(src)
 		R_arm.color = mech_colour ? mech_colour : pick(use_colours)
 		R_arm.side = RIGHT
 		R_arm.setup_side()
 	if(!L_arm)
-		var/armstype = pick(typesof(/obj/item/mech_component/manipulators)-/obj/item/mech_component/manipulators)
+		var/armstype = pick(get_fabricated_part_types(/obj/item/mech_component/manipulators))
 		L_arm = new armstype(src)
 		L_arm.color = mech_colour ? mech_colour : pick(use_colours)
 		L_arm.side = LEFT
 		L_arm.setup_side()
 	if(!R_leg)
-		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
-		R_leg = new legstype(src)
-		//Если ноги сдвоенные по умолчанию, мы спавним его держателя, а уже держателя ставим в меха и коннектим к меху, рандомно его крася
-		if(R_leg.should_have_doubled_owner)
-			qdel(R_leg)
-			R_leg = null
-			var/doubled_legs_type = pick(typesof(/obj/item/mech_component/doubled_legs)-/obj/item/mech_component/doubled_legs)
-			var/obj/item/mech_component/doubled_legs/spawned_double_legs = new doubled_legs_type(src)
-			R_leg = spawned_double_legs.R_stored_leg
-			R_leg.forceMove(src)
-			L_leg = spawned_double_legs.L_stored_leg
-			L_leg.forceMove(src)
-			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
-			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
-		//Иначе спавн стандартный
-		else
-			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
-			R_leg.side = RIGHT
-			R_leg.setup_side()
+		put_random_leg(RIGHT, mech_colour, use_colours)
 	if(!L_leg)
-		var/legstype = pick(typesof(/obj/item/mech_component/propulsion)-/obj/item/mech_component/propulsion)
-		L_leg = new legstype(src)
-		//Если ноги сдвоенные по умолчанию, мы спавним его держателя, а уже держателя ставим в меха и коннектим к меху, рандомно его крася
-		if(L_leg.should_have_doubled_owner)
-			qdel(R_leg)
-			R_leg = null
-			qdel(L_leg)
-			L_leg = null
-			var/doubled_legs_type = pick(typesof(/obj/item/mech_component/doubled_legs)-/obj/item/mech_component/doubled_legs)
-			var/obj/item/mech_component/doubled_legs/spawned_double_legs = new doubled_legs_type(src)
-			R_leg = spawned_double_legs.R_stored_leg
-			R_leg.forceMove(src)
-			L_leg = spawned_double_legs.L_stored_leg
-			L_leg.forceMove(src)
-			R_leg.color = mech_colour ? mech_colour : pick(use_colours)
-			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
-		else
-		//Иначе спавн стандартный
-			L_leg.color = mech_colour ? mech_colour : pick(use_colours)
-			L_leg.side = LEFT
-			L_leg.setup_side()
+		put_random_leg(LEFT, mech_colour, use_colours)
 	. = ..()
+
+///Типы частей подтипа `part_type`, которые печатает фабрикатор мехов: из них собран случайный мех. Части
+///готовых мехов — эскадрона смерти, СБ, наёмников, ОБР — фабрикатор не печатает, и случайному меху они не достаются
+/mob/living/exosuit/premade/random/proc/get_fabricated_part_types(part_type)
+	RETURN_TYPE(/list)
+	var/static/list/fabricated_types
+	if(!fabricated_types)
+		fabricated_types = list()
+		for(var/datum/design/item/mechfab/design as anything in subtypesof(/datum/design/item/mechfab))
+			var/build_path = initial(design.build_path)
+			if(ispath(build_path, /obj/item/mech_component))
+				fabricated_types |= build_path
+	. = list()
+	for(var/fabricated_type in fabricated_types)
+		if(ispath(fabricated_type, part_type))
+			. += fabricated_type
+
+///Случайная нога на сторону `side`. Сдвоенные ноги — гусеницы и паучьи — фабрикатор печатает держателем, сразу
+///парой: держатель заменяет обе ноги
+/mob/living/exosuit/premade/random/proc/put_random_leg(side, mech_colour, list/use_colours)
+	var/legs_type = pick(get_fabricated_part_types(/obj/item/mech_component/propulsion) + get_fabricated_part_types(/obj/item/mech_component/doubled_legs))
+	if(ispath(legs_type, /obj/item/mech_component/doubled_legs))
+		QDEL_NULL(R_leg)
+		QDEL_NULL(L_leg)
+		var/obj/item/mech_component/doubled_legs/holder = new legs_type(src)
+		R_leg = holder.R_stored_leg
+		L_leg = holder.L_stored_leg
+		R_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		L_leg.color = mech_colour ? mech_colour : pick(use_colours)
+		return
+	var/obj/item/mech_component/propulsion/leg = new legs_type(src)
+	leg.color = mech_colour ? mech_colour : pick(use_colours)
+	leg.side = side
+	leg.setup_side()
+	if(side == RIGHT)
+		R_leg = leg
+	else
+		L_leg = leg
 
 // Used for spawning/debugging.
 /mob/living/exosuit/premade/random/normal

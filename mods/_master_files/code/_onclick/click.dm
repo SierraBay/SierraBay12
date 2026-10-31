@@ -62,3 +62,22 @@
 	if(eye_laser?.try_fire(A))
 		return
 	return ..()
+
+
+/*
+	COMBAT_EXTENDED — кольцо разброса (`mods/combat_extended/code/spread_ring.dm`) целится туда, куда
+	вошла мышь, и туда, куда её ведут с зажатой кнопкой. Здесь, а не в моде: модам и картам, которые
+	переопределяют эти обработчики без `..()`, — подсказкам экрана, боевому режиму — `_master_files`
+	идёт после них.
+*/
+/client/MouseEntered(object, location, control, params)
+	. = ..()
+	var/mob/living/carbon/shooter = mob
+	if(istype(shooter))
+		shooter.ce_note_spread_hover(object, params)
+
+/client/MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	var/mob/living/carbon/shooter = mob
+	if(istype(shooter))
+		shooter.ce_note_spread_hover(over_object, params)

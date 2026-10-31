@@ -8,9 +8,9 @@
 	move_delay = 5
 	turn_delay = 5
 	power_use = 50
-	max_hp = 250
-	min_damage = 150
-	max_repair = 75
+	max_hp = 150
+	min_damage = 100
+	max_repair = 40
 	repair_damage = 10
 	matter = list(MATERIAL_STEEL = 48000, MATERIAL_PLASTEEL = 20000, MATERIAL_ALUMINIUM = 20000)
 	bump_type = HARD_BUMP

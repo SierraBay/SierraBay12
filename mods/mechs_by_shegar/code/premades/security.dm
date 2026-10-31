@@ -47,6 +47,8 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/chassis/combat/security
 	icon_state = "combat_body"
@@ -66,6 +68,8 @@
 	weight = 300
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/manipulators/powerloader/security
 	icon_state = "combat_arm"
@@ -75,6 +79,8 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 /obj/item/mech_component/propulsion/powerloader/security
 	icon_state = "combat_leg"
@@ -84,6 +90,8 @@
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
+	can_have_external_armour = FALSE
+	armour_can_be_removed = FALSE
 
 
 //Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты

@@ -55,3 +55,38 @@
 		var/obj/item/organ/internal/heart/heart = internal_organs_by_name[BP_HEART]
 		if(istype(heart))
 			heart.infarct_progress = 0
+
+
+/*
+	COMBAT_EXTENDED — взрыв контузит, а не отключает (`mods/combat_extended/code/concussion.dm`).
+	Кор версия бросает на лёгком и тяжёлом взрыве `Paralyse(10)`; паралич после `..()` возвращается
+	к значению до взрыва, а вместо него — контузия, а незащищённого тяжёлый взрыв ещё и сбивает с
+	ног. Сила и защита считаются до `..()`: по целой броне и по позе до того, как взрыв отбросит
+	носителя.
+*/
+/mob/living/carbon/human/ex_act(severity)
+	if(!ce_concussion_enabled || (status_flags & GODMODE))
+		return ..()
+	var/strength = ce_get_concussion_strength(severity)
+	var/knockdown = ce_is_knocked_down_by_blast(severity)
+	var/paralysis_before = paralysis
+	. = ..()
+	SetParalysis(paralysis_before)
+	ce_concuss(strength, knockdown)
+
+
+/*
+	COMBAT_EXTENDED — уколы в броню (`mods/combat_extended/code/injections.dm`). Кор версия смотрит
+	только на толстую ткань одежды. Если вещь объявила укол, после неё проверяются движение цели и
+	броня зоны. Порт скафандра ведёт под броню, а свой отказ кор версия уже объяснила колющему, — в
+	обоих случаях правило мода не действует. Без объявления — жало генокрада, дротик — всё как в Bay.
+*/
+/mob/living/carbon/human/can_inject(mob/user, target_zone, ignore_thick_clothing)
+	var/obj/item/injector = ce_take_injector()
+	. = ..()
+	if(. != CAN_INJECT || !injector)
+		return
+	var/refusal = ce_get_injection_refusal(user, target_zone, injector)
+	if(refusal)
+		to_chat(user, SPAN_WARNING(refusal))
+		return 0

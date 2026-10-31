@@ -15,12 +15,12 @@
 /// Нечто внешнее насильно опустошает Одно/все места пассажиров
 /mob/living/exosuit/proc/external_leaving_passenger(place, mode)
 // MECH_DROP_ALL_PASSENGERS - полный выгруз,MECH_DROP_ANY_PASSENGER - рандомного одного, Отсутствие мода - ручной скид пассажира мехводом
-	if(mode == MECH_DROP_ALL_PASSENGERS) // Полная разгрузка
+	if(mode == MECH_DROP_ALL_PASSENGERS) // Полная разгрузка: каждое место, а не первое занятое
 		if(passenger_compartment.left_back_passenger)
 			leave_passenger(passenger_compartment.left_back_passenger)
-		else if(passenger_compartment.back_passenger)
+		if(passenger_compartment.back_passenger)
 			leave_passenger(passenger_compartment.back_passenger)
-		else if(passenger_compartment.right_back_passenger)
+		if(passenger_compartment.right_back_passenger)
 			leave_passenger(passenger_compartment.right_back_passenger)
 
 	else if(mode == MECH_DROP_ANY_PASSENGER) // Сброс по приоритету спина - левый бок - правый бок.
@@ -37,11 +37,11 @@
 	else //Определённое место что выбрал сам мехвод
 		switch(place)
 			if("Спина")
-				if(passenger_compartment.left_back_passenger)
-					leave_passenger(passenger_compartment.left_back_passenger)
-			if("Левый бок")
 				if(passenger_compartment.back_passenger)
 					leave_passenger(passenger_compartment.back_passenger)
+			if("Левый бок")
+				if(passenger_compartment.left_back_passenger)
+					leave_passenger(passenger_compartment.left_back_passenger)
 			if("Правый бок")
 				if(passenger_compartment.right_back_passenger)
 					leave_passenger(passenger_compartment.right_back_passenger)

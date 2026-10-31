@@ -11,6 +11,7 @@
 /obj/structure/closet/secure_closet/captains/sierra/WillContain()
 	return list(
 		/obj/item/clothing/suit/armor/pcarrier/medium,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/clothing/head/helmet,
 		/obj/item/clothing/glasses/sunglasses,
 		/obj/item/clothing/accessory/storage/holster/thigh,
@@ -23,6 +24,15 @@
 		/obj/item/device/flash,
 		/obj/item/device/megaphone,
 		/obj/item/device/remote_device/captain,
+		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/command, /obj/item/storage/backpack/messenger/com, /obj/item/storage/backpack/satchel/com))
+	)
+
+// Одежда капитана — отдельно: с ней в одном шкафу не помещался скрытый жилет.
+/obj/structure/closet/secure_closet/captains/sierra/wardrobe
+	name = "captain's wardrobe"
+
+/obj/structure/closet/secure_closet/captains/sierra/wardrobe/WillContain()
+	return list(
 		/obj/item/clothing/head/caphat/formal,
 		/obj/item/clothing/head/caphat/cap,
 		/obj/item/clothing/head/beret/infinity/captain,
@@ -38,8 +48,7 @@
 		/obj/item/clothing/under/captain_parade/female,
 		/obj/item/clothing/under/rank/captain/bluefleet,
 		/obj/item/clothing/shoes/laceup,
-		/obj/item/clothing/shoes/dressheels,
-		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/command, /obj/item/storage/backpack/messenger/com, /obj/item/storage/backpack/satchel/com))
+		/obj/item/clothing/shoes/dressheels
 	)
 
 /obj/structure/closet/secure_closet/hop/sierra
@@ -54,6 +63,7 @@
 	return list(
 		/obj/item/clothing/glasses/sunglasses,
 		/obj/item/clothing/suit/armor/pcarrier/medium,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/clothing/head/helmet,
 		/obj/item/device/radio/headset/heads/hop,
 		/obj/item/device/radio/headset/heads/hop/alt,

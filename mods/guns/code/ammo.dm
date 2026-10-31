@@ -23,7 +23,7 @@
 	damage = 25
 	agony = 60
 
-/* PISTOL - 10mm
+/* PISTOL - .45 Auto
  * =============
  */
 
@@ -66,7 +66,10 @@ Manstopper Rounds - Shotgun
 	name = "manstopper"
 	damage = 50
 	agony = 30
-	armor_penetration = 0
+	// Экспансивная пуля для цели без брони: высокий урон, по броне хуже обычной (COMBAT_EXTENDED, README,
+	// «Снаряды, которым нужна ручная правка `armor_penetration`»). Здесь, а не в моде: модпак подключается
+	// позже мода, и его значение перекрыло бы любое там.
+	armor_penetration = -5
 	penetration_modifier = 0
 
 /*

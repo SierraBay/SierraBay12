@@ -75,7 +75,7 @@
 	security_level = SUPPLY_SECURITY_ELEVATED
 
 /singleton/hierarchy/supply_pack/ammunition/p7_mag_carbine
-	name = "Magazines - 7mm C20A carbine, 8x"
+	name = "Magazines - 9x19mm C20A carbine, 8x"
 	contains = list(
 		/obj/item/ammo_magazine/smg_nt/empty = 8
 	)
@@ -83,12 +83,12 @@
 	containername = "C20A carbine magazines"
 
 /singleton/hierarchy/supply_pack/ammunition/p7_ap
-	name = "Ammunition - 7mm pistol, armor piercing, 200x"
+	name = "Ammunition - 9x19mm pistol, armor piercing, 200x"
 	contains = list(
 		/obj/item/ammobox/pistol/small_ap = 2
 	)
 	cost = 40
-	containername = "7mm pistol ap rounds (WARNING: LIVE AMMUNITION)"
+	containername = "9x19mm pistol ap rounds (WARNING: LIVE AMMUNITION)"
 	access = access_hos
 	security_level = SUPPLY_SECURITY_HIGH
 

@@ -37,7 +37,7 @@
 	build_path = /obj/item/ammo_casing/shotgun/flash
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_rubber
-	name = "ammunition (7mm carabine rubber)"
+	name = "ammunition (9x19mm carabine rubber)"
 	build_path = /obj/item/ammo_magazine/smg_nt/rubber
 	hidden = TRUE
 
@@ -97,12 +97,12 @@
 	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg
-	name = "ammunition (10mm submachine gun)"
+	name = "ammunition (.45 Auto submachine gun)"
 	build_path = /obj/item/ammo_magazine/smg
 	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt
-	name = "ammunition (7mm carabine)"
+	name = "ammunition (9x19mm carabine)"
 	build_path = /obj/item/ammo_magazine/smg_nt
 	hidden = TRUE
 
@@ -157,7 +157,7 @@
 	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg_nt_ap
-	name = "ammunition (7mm carabine AP)"
+	name = "ammunition (9x19mm carabine AP)"
 	build_path = /obj/item/ammo_magazine/smg_nt/ap
 	hidden = TRUE
 

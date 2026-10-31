@@ -193,7 +193,7 @@
 // CSS Anti-psionics stuff
 
 /obj/item/ammo_casing/pistol/nullglass
-	desc = "A 10mm bullet casing with a nullglass coating."
+	desc = "A .45 Auto bullet casing with a nullglass coating."
 	projectile_type = /obj/item/projectile/bullet/nullglass
 
 /obj/item/ammo_casing/pistol/nullglass/disrupts_psionics()
@@ -296,7 +296,7 @@
 //C-20A
 /obj/item/gun/projectile/automatic/sec_smg/c20a
 	name = "C-20A carabine"
-	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 7mm Usurpator rounds, the weapon trades bullet mass for muzzle velocity and superior ergonomics."
+	desc = "A licensed derivative of the infamous C-20r SMG, the C-20A is a lightweight carabine produced by NanoTrasen. Chambered in 9x19mm rounds, the weapon trades bullet mass for muzzle velocity and superior ergonomics."
 	icon_state = "c20a"
 	item_state = "c20a"
 	wielded_item_state = "c20a"
@@ -373,15 +373,15 @@
 	armor_penetration = 15
 
 /obj/item/storage/box/ammo/smg_nt
-	name = "box of 7mm box magazines - lethal"
+	name = "box of 9x19mm box magazines - lethal"
 	startswith = list(/obj/item/ammo_magazine/smg_nt = 7)
 
 /obj/item/storage/box/ammo/smg_nt/rubber
-	name = "box of 7mm box magazines - rubber"
+	name = "box of 9x19mm box magazines - rubber"
 	startswith = list(/obj/item/ammo_magazine/smg_nt/rubber = 7)
 
 /obj/item/storage/box/ammo/smg_nt/ap
-	name = "box of 7mm box magazines - armor piercing"
+	name = "box of 9x19mm box magazines - armor piercing"
 	startswith = list(/obj/item/ammo_magazine/smg_nt/ap = 4)
 
 // Ammo Box

@@ -7,10 +7,10 @@
 	action_delay = 20
 	power_use = 30
 	melee_damage = 40
-	max_repair = 75
-	max_hp = 250
-	min_damage = 150
-	repair_damage = 15
+	max_repair = 40
+	max_hp = 150
+	min_damage = 100
+	repair_damage = 10
 	req_material = MATERIAL_PLASTEEL
 	back_modificator_damage = 3
 	front_modificator_damage = 0.5

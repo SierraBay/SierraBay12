@@ -51,3 +51,17 @@
 
 	playsound(target.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	target.visible_message(SPAN_DANGER("[attacker] attempted to disarm \the [target]!"))
+
+
+/*
+	COMBAT_EXTENDED — выстрел при обезоруживании (`mods/combat_extended/code/disarm_gunfire.dm`).
+	Два броска мода идут до всего обезоруживания выше: нажатый спуск заканчивает попытку, иначе
+	обезоруживание идёт как обычно.
+*/
+/singleton/species/disarm_attackhand(mob/living/carbon/human/attacker, mob/living/carbon/human/target)
+	if(ce_disarm_gunfire_enabled && attacker != target)
+		var/obj/item/gun/gun = target.ce_get_disarm_gun()
+		if(gun?.ce_disarm_gunfire(target, attacker))
+			attacker.do_attack_animation(target)
+			return
+	return ..()

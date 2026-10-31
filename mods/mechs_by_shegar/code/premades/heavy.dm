@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/heavy
 	name = "Heavy mech"
 	desc = "A heavily armored combat mech."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/heavy/Initialize()
 	if(!head)

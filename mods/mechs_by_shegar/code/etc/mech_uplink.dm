@@ -32,41 +32,70 @@ GLOBAL_VAR_AS(war_declared, FALSE)
 /datum/uplink_item/item/structures_and_vehicles/combat_mech
 	name = "Combat Mech"
 	var/static/BOUGHT_MECH = 0
-	desc = "A terrible and at the same time beautiful combat mech to destroy all living things in your way. Comes with special plasma rifle, machinegun and shielding drone. Also, it is almoust EMP-proof!"
-	item_cost = 400
-	antag_roles = list(MODE_MERCENARY)
-
-
-/datum/uplink_item/item/structures_and_vehicles/heavy_mech
-	name = "Heavy mech"
-	desc = "Heavy variation of mercenary combat mech. This one equiped with electrolaser, heavy laser, energy shield drone and combat drone.  "
+	desc = "A terrible and at the same time beautiful combat mech to destroy all living things in your way. Comes with an SMG, an electrolaser carbine, a flash, floodlights and a shield droid! Has NO armour plates."
 	item_cost = 300
 	antag_roles = list(MODE_MERCENARY)
 
-/datum/uplink_item/item/structures_and_vehicles/combat_mech/get_goods(obj/item/device/uplink/U, loc)
+/datum/uplink_item/item/structures_and_vehicles/combat_mech/get_goods(obj/item/device/uplink/U, loc, mob/user)
 	if(!GLOB.war_declared)
-		U.visible_message("[U.loc] Война не обьявлена, бронетехника не может быть вызвана. Обьявите войну для получения доступа к бронетехнике.\"")
-		return new /obj/item/stack/telecrystal(loc, 400)
+		to_chat(user, SPAN_BAD("Запрос не оформлен, бронетехника не может быть вызвана. Запросите доп. средства для получения доступа к бронетехнике."))
+		return new /obj/item/stack/telecrystal(loc, cost(U.uses, U))
 	if(GLOB.max_mech <= 0)
-		U.visible_message("[U.loc] Превышен лимит бронетехники для данной миссии.\"")
-		return new /obj/item/stack/telecrystal(loc, 400)
+		to_chat(user, SPAN_BAD("Превышен лимит бронетехники для данной миссии."))
+		return new /obj/item/stack/telecrystal(loc, cost(U.uses, U))
 	GLOB.max_mech--
-	U.visible_message("[U.loc] Запрос на бронетехнику Горлекса обработан, единица телепортирована на ваше местоположение.\"")
+	to_chat(user, SPAN_GOOD("Запрос на бронетехнику Горлекса обработан, единица телепортирована на ваше местоположение."))
 	command_announcement.Announce("В секторе была замечена телепортация бронетехники Мародёров Горлекса.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
 	return new /mob/living/exosuit/premade/merc(loc)
-
-/datum/uplink_item/item/structures_and_vehicles/heavy_mech/get_goods(obj/item/device/uplink/U, loc)
-	if(!GLOB.war_declared)
-		U.visible_message("[U.loc] Запрос не выполнен, бронетехника не может быть вызвана. Запросите дополнительные ресурсы для получения доступа к бронетехнике.\"")
-		return new /obj/item/stack/telecrystal(loc, 300)
-	if(GLOB.max_mech <= 0)
-		U.visible_message("[U.loc] Превышен лимит бронетехники для данной миссии.\"")
-		return new /obj/item/stack/telecrystal(loc, 300)
-	GLOB.max_mech--
-	U.visible_message("[U.loc] Запрос на бронетехнику Горлекса обработан, единица телепортирована на ваше местоположение.\"")
-	command_announcement.Announce("В секторе была замечена телепортация бронетехники Мародёров Горлекса.", "Показания датчиков [station_name()]" , msg_sanitized = 1, zlevels = GLOB.using_map.station_levels)
-	return new /mob/living/exosuit/premade/heavy/merc(loc)
 //Вызов боевого меха
+
+
+
+//Броня мехов: сумки с внешними бронеэлементами
+/datum/uplink_item/item/structures_and_vehicles/armour_kit
+	antag_roles = list(MODE_MERCENARY)
+	item_cost = 100
+	///Сумки, которые приходят с покупкой
+	var/list/bag_types
+
+/datum/uplink_item/item/structures_and_vehicles/armour_kit/get_goods(obj/item/device/uplink/U, loc, mob/user)
+	if(!GLOB.war_declared)
+		to_chat(user, SPAN_BAD("Запрос не оформлен, снаряжение меха не доступно."))
+		return new /obj/item/stack/telecrystal(loc, cost(U.uses, U))
+	for(var/bag_type in bag_types)
+		. = new bag_type(loc)
+
+/datum/uplink_item/item/structures_and_vehicles/armour_kit/buletproof_mech
+	name = "Bag with buletproof armor plates for mechs"
+	desc = "Have 12 buletproof plates inside."
+	bag_types = list(
+		/obj/item/storage/backpack/dufflebag/syndie/buletproof_plates,
+		/obj/item/storage/backpack/dufflebag/syndie/buletproof_plates
+	)
+
+/datum/uplink_item/item/structures_and_vehicles/armour_kit/laserproof_mech
+	name = "Bag with laserproof armor plates for mechs"
+	desc = "Have 12 laserproof plates inside."
+	bag_types = list(
+		/obj/item/storage/backpack/dufflebag/syndie/laserproof_plates,
+		/obj/item/storage/backpack/dufflebag/syndie/laserproof_plates
+	)
+
+/datum/uplink_item/item/structures_and_vehicles/armour_kit/buletproof_and_laserproof_mech
+	name = "Bag with laser and bulet proof armor plates for mech"
+	desc = "Have 6 buletproof and 6 laserproof plates inside."
+	bag_types = list(
+		/obj/item/storage/backpack/dufflebag/syndie/buletproof_plates,
+		/obj/item/storage/backpack/dufflebag/syndie/laserproof_plates
+	)
+
+//Сами сумки с бронёй
+/obj/item/storage/backpack/dufflebag/syndie/buletproof_plates
+	startswith = list(/obj/item/mech_external_armor/buletproof = 6)
+
+/obj/item/storage/backpack/dufflebag/syndie/laserproof_plates
+	startswith = list(/obj/item/mech_external_armor/laserproof = 6)
+//Броня мехов
 
 
 

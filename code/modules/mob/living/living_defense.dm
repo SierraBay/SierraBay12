@@ -47,7 +47,11 @@
 		bullet_impact_visuals(P, def_zone, damaged)
 	if(damaged || P.nodamage) // Run the block computation if we did damage or if we only use armor for effects (nodamage)
 		. = get_blocked_ratio(def_zone, P.damage_type, flags, P.armor_penetration, P.damage)
-	P.on_hit(src, ., def_zone)
+	// [SIERRA-EDIT] - COMBAT_EXTENDED - (Эффекты снарядов, зависящие от пробития: /mods/combat_extended/code/projectile_effects.dm, боль против брони: /mods/combat_extended/code/agony_armor.dm)
+	// P.on_hit(src, ., def_zone) // SIERRA-EDIT - ORIGINAL
+	P.ce_apply_armor_to_effects(src, def_zone)
+	P.on_hit(src, P.ce_get_on_hit_blocked(.), def_zone)
+	// [/SIERRA-EDIT]
 
 	if(ai_holder && P.firer)
 		ai_holder.react_to_attack(P.firer)

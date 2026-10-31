@@ -47,7 +47,7 @@
 		/obj/item/taperoll/police,
 		/obj/item/device/hailer,
 		/obj/item/clothing/accessory/storage/black_vest,
-		/obj/item/clothing/accessory/armor_plate/sneaky/tactical,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/handcuffs,
 		/obj/item/gun/energy/gun,
 		/obj/item/clothing/gloves/thick,
