@@ -14,10 +14,6 @@
 	spawn_cost = 2
 	area_usage_test_exempted_root_areas = list(/area/lar_maria)
 
-/datum/map_template/ruin/away_site/lar_maria/after_load(z)
-	..()
-	spawn_derelict_mission_object(/obj/item/derelict_mission_artifact/virus_container, z)
-
 ///////////////////////////////////crew and prisoners
 /obj/landmark/corpse/lar_maria
 	eye_colors_per_species = list(SPECIES_HUMAN = list(COLOR_RED))//red eyes

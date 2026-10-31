@@ -103,6 +103,9 @@
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	linked_drive.append_operator_ui(user, data)
+	odyssey_drive_append_ui(linked_drive, data)
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bluespace_drive.tmpl", "Bluespace Drive Control", 500, 700)
@@ -140,6 +143,21 @@
 			linked_drive.set_angle(new_ang)
 		return TOPIC_REFRESH
 
+	if(href_list["set_coords"])
+		linked_drive.prompt_jump_coordinates(user)
+		return TOPIC_REFRESH
+
+	if(href_list["clear_coords"])
+		if(!linked_drive.can_set_jump_coordinates(user))
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+			return TOPIC_HANDLED
+		if(linked_drive.jumping || linked_drive.jump_locked)
+			to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+			return TOPIC_HANDLED
+		linked_drive.clear_manual_destination()
+		to_chat(user, SPAN_NOTICE("Coordinate lock cleared. Drive will use ballistic rotation/angle."))
+		return TOPIC_REFRESH
+
 	if(href_list["jump"])
 		if(!linked_drive.energized)
 			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
@@ -147,6 +165,15 @@
 		var/success = linked_drive.initiate_jump(user)
 		if(!success)
 			to_chat(user, SPAN_WARNING("Unable to initiate jump! Check fuel levels ([linked_drive.fuel_gas.total_moles]/[linked_drive.minimum_phoron_moles_per_jump] moles phoron required), destination validity, cooldown, or if a jump is already in progress."))
+		return TOPIC_REFRESH
+
+	if(href_list["odyssey_jump"])
+		if(!linked_drive.energized)
+			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
+			return TOPIC_HANDLED
+		var/odyssey_success = linked_drive.initiate_odyssey_jump(user)
+		if(!odyssey_success)
+			to_chat(user, SPAN_WARNING("Unable to initiate Odyssey jump! Check Sector Map course, fuel, energize state, and cooldown."))
 		return TOPIC_REFRESH
 
 	if(href_list["abort"])

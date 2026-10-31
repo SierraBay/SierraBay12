@@ -72,17 +72,26 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// Timer ID for jump countdown
 	var/jump_timer_id
 
+	/// world.time when the active jump executes (for status display countdown)
+	var/jump_end_time = 0
+
 	/// Whether a jump is currently in progress
 	var/jumping = FALSE
 
 	/// Seconds before jump executes after initiation
 	var/jump_delay = 30 SECONDS
 
+	/// Countdown for Odyssey sector-transition jumps (overmap ballistic hops keep jump_delay).
+	var/odyssey_jump_delay = 10 MINUTES
+
 	/// Whether jump is locked in final 5 seconds before execution (abort disabled)
 	var/jump_locked = FALSE
 
 	/// Timer ID for pre-jump overlay application (fires 5s before jump)
 	var/pre_jump_timer_id
+
+	/// Odyssey jump atmosphere timers (buildup flickers / cues). Cleared on abort/exit.
+	var/list/odyssey_fx_timer_ids
 
 	/// Current orb overlay phase: null / "create_orb" / "drive_orb" / "decons_orb"
 	var/orb_state = null
@@ -105,6 +114,10 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// Power level (in power_from_gas units) above which a jump is considered overcharged.
 	/// Default: 150000 = 150 BSU (Bluespace Units) displayed in the UI.
 	var/overcharge_threshold = 150000
+
+	/// Minimum accumulated power for an Odyssey sector-transition jump. UI BSU = this / 1000.
+	/// Ballistic overmap hops do not use this; they only need fuel and a valid path.
+	var/odyssey_min_jump_power = 10000
 
 	/// Whether the current/last jump was an overcharge jump
 	var/overcharged = FALSE
@@ -133,6 +146,9 @@ var/global/list/bluespace_gas_power_factor = list(
 	/// TRUE while the rift is open (between open_rift and close_rift).
 	var/rift_open = FALSE
 
+	/// TRUE while an Odyssey campaign sector-transition jump is running (no ballistic overmap target).
+	var/odyssey_campaign_jump = FALSE
+
 	/// BSD state flags used by endgame/event systems
 	var/const/STATE_BROKEN = FLAG_01
 	var/const/STATE_UNSTABLE = FLAG_02
@@ -143,6 +159,10 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	/// TRUE while the drive is passively draining stored gas after de-energizing
 	var/draining = FALSE
+
+	/// Direct overmap target locked by a Master engines operator. Null = ballistic rotation/angle.
+	var/manual_dest_x
+	var/manual_dest_y
 
 	pixel_x = -80
 	pixel_y = -80
@@ -176,6 +196,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(cooldown_timer_id)
 		deltimer(cooldown_timer_id)
 		cooldown_timer_id = null
+	odyssey_drive_clear_jump_fx(src)
 	QDEL_NULL(drive_sound)
 	if(energized)
 		energized = FALSE
@@ -196,7 +217,7 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	if(!powered())
 		if(energized)
-			toggle_energized()
+			toggle_energized(power_loss = TRUE)
 		return
 
 	// Pull gases from connected atmos network via adjacent pipes
@@ -300,40 +321,128 @@ var/global/list/bluespace_gas_power_factor = list(
 /obj/machinery/bluespace_drive/proc/get_jump_destination()
 	if(!linked)
 		return null
-	if(!fuel_gas.total_moles || !power_from_gas)
+	if(!fuel_gas.total_moles)
 		return null
 
 	var/turf/ship_turf = get_turf(linked)
-	var/jump_power = power_from_gas / 1000
+	var/turf/target_turf
+	if(!isnull(manual_dest_x) && !isnull(manual_dest_y))
+		target_turf = locate(manual_dest_x, manual_dest_y, linked.z)
+	else
+		// Moderator gas adds BSU range; phoron-only jumps still lock a short ballistic path.
+		var/jump_power = max(power_from_gas / 1000, 1)
+		var/effective_rotation = ((rotation + rotation_error) % 360 + 360) % 360
+		var/datum/projectile_data/proj_data = projectile_trajectory(linked.x, linked.y, effective_rotation, angle, jump_power)
+		var/osize = GLOB.using_map.overmap_size
+		var/dest_x = round(proj_data.dest_x)
+		var/dest_y = round(proj_data.dest_y)
+		dest_x = ((dest_x - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
+		dest_y = ((dest_y - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
+		target_turf = locate(dest_x, dest_y, linked.z)
 
-	var/effective_rotation = ((rotation + rotation_error) % 360 + 360) % 360
-	var/datum/projectile_data/proj_data = projectile_trajectory(linked.x, linked.y, effective_rotation, angle, max(jump_power, 1))
-
-	// Wrap-around: space is toroidal — coordinates wrap within 2..osize-1 (non-edge tiles).
-	var/osize = GLOB.using_map.overmap_size
-	var/dest_x = round(proj_data.dest_x)
-	var/dest_y = round(proj_data.dest_y)
-	dest_x = ((dest_x - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
-	dest_y = ((dest_y - 2) % (osize - 2) + (osize - 2)) % (osize - 2) + 2
-
-	var/turf/target_turf = locate(dest_x, dest_y, linked.z)
-
-	// Validate destination
-	if(!target_turf)
+	if(!is_valid_jump_turf(target_turf, ship_turf))
 		return null
-	if(!istype(target_turf, /turf/unsimulated/map))
-		return null
-	if(istype(target_turf, /turf/unsimulated/map/edge))
-		return null
-	if(target_turf == ship_turf)
-		return null
-
 	return target_turf
 
+
+/obj/machinery/bluespace_drive/proc/is_valid_jump_turf(turf/target_turf, turf/ship_turf)
+	if(!target_turf)
+		return FALSE
+	if(!istype(target_turf, /turf/unsimulated/map))
+		return FALSE
+	if(istype(target_turf, /turf/unsimulated/map/edge))
+		return FALSE
+	if(target_turf == ship_turf)
+		return FALSE
+	return TRUE
+
+
+/obj/machinery/bluespace_drive/proc/overmap_coord_min()
+	return 2
+
+
+/obj/machinery/bluespace_drive/proc/overmap_coord_max()
+	return max(2, (GLOB.using_map.overmap_size || 20) - 1)
+
+
+/obj/machinery/bluespace_drive/proc/can_set_jump_coordinates(mob/user)
+	return istype(user) && user.skill_check(SKILL_ENGINES, SKILL_MASTER)
+
+
+/obj/machinery/bluespace_drive/proc/clear_manual_destination()
+	manual_dest_x = null
+	manual_dest_y = null
+
+
+/obj/machinery/bluespace_drive/proc/set_manual_destination(new_x, new_y, mob/user)
+	if(jumping)
+		return FALSE
+	if(!can_set_jump_coordinates(user))
+		if(user)
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+		return FALSE
+	if(!linked)
+		if(user)
+			to_chat(user, SPAN_WARNING("The drive is not linked to a ship."))
+		return FALSE
+	var/min_c = overmap_coord_min()
+	var/max_c = overmap_coord_max()
+	if(!isnum(new_x) || !isnum(new_y))
+		return FALSE
+	new_x = round(new_x)
+	new_y = round(new_y)
+	if(new_x < min_c || new_x > max_c || new_y < min_c || new_y > max_c)
+		if(user)
+			to_chat(user, SPAN_WARNING("Coordinates must be inside the overmap ([min_c]–[max_c])."))
+		return FALSE
+	var/turf/target_turf = locate(new_x, new_y, linked.z)
+	if(!is_valid_jump_turf(target_turf, get_turf(linked)))
+		if(user)
+			to_chat(user, SPAN_WARNING("Those coordinates are not a valid jump path (edge, invalid turf, or current ship tile)."))
+		return FALSE
+	manual_dest_x = new_x
+	manual_dest_y = new_y
+	rotation_error = 0
+	if(user)
+		to_chat(user, SPAN_NOTICE("Jump coordinates locked: ([new_x], [new_y]). Ballistic rotation/angle is overridden until cleared."))
+	return TRUE
+
+
+/obj/machinery/bluespace_drive/proc/prompt_jump_coordinates(mob/user)
+	if(!can_set_jump_coordinates(user))
+		to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+		return
+	if(jumping || jump_locked)
+		to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+		return
+	var/min_c = overmap_coord_min()
+	var/max_c = overmap_coord_max()
+	var/default_x = !isnull(manual_dest_x) ? manual_dest_x : (linked ? linked.x : min_c)
+	var/default_y = !isnull(manual_dest_y) ? manual_dest_y : (linked ? linked.y : min_c)
+	var/new_x = input(user, "Overmap X ([min_c]–[max_c]):", "Set Jump Coordinates", default_x) as num|null
+	if(isnull(new_x) || QDELETED(src) || QDELETED(user))
+		return
+	var/new_y = input(user, "Overmap Y ([min_c]–[max_c]):", "Set Jump Coordinates", default_y) as num|null
+	if(isnull(new_y) || QDELETED(src) || QDELETED(user))
+		return
+	set_manual_destination(new_x, new_y, user)
+
+
+/obj/machinery/bluespace_drive/proc/append_operator_ui(mob/user, list/data)
+	if(!islist(data))
+		return
+	data["can_set_coords"] = can_set_jump_coordinates(user)
+	data["manual_dest"] = !isnull(manual_dest_x) && !isnull(manual_dest_y)
+	data["manual_dest_x"] = manual_dest_x
+	data["manual_dest_y"] = manual_dest_y
+	data["overmap_min"] = overmap_coord_min()
+	data["overmap_max"] = overmap_coord_max()
+
 /**
- * Toggles the energized state of the drive
+ * Toggles the energized state of the drive.
+ * Power loss de-energizes the coils but keeps stored fuel/moderator — blackouts should not vent the tanks.
  */
-/obj/machinery/bluespace_drive/proc/toggle_energized()
+/obj/machinery/bluespace_drive/proc/toggle_energized(power_loss = FALSE)
 	// Cannot power down while jump is locked (final 5 seconds before execution)
 	if(energized && jump_locked)
 		return
@@ -347,18 +456,27 @@ var/global/list/bluespace_gas_power_factor = list(
 	else
 		STOP_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		QDEL_NULL(drive_sound)
-		visible_message(SPAN_NOTICE("\The [src] powers down, the hum fading away."))
+		if(power_loss)
+			visible_message(SPAN_WARNING("\The [src] loses power. Field coils shut down; stored fuel remains in the tanks."))
+		else
+			visible_message(SPAN_NOTICE("\The [src] powers down, the hum fading away."))
 		set_light(0)
 
 		// If we're jumping, abort first (instant purge on abort is intentional)
 		if(jump_timer_id)
 			abort_jump()
-		// Otherwise, passively drain stored gas over time
-		else if(internal_gas.total_moles || fuel_gas.total_moles || power_from_gas > 0)
+		// Manual shutdown vents unused charge. Station blackout must not.
+		else if(!power_loss && (internal_gas.total_moles || fuel_gas.total_moles || power_from_gas > 0))
 			if(!draining)
 				invoke_async(src, PROC_REF(start_gradual_drain))
 
 	update_icon()
+
+
+/obj/machinery/bluespace_drive/power_change()
+	. = ..()
+	if(!powered() && energized)
+		toggle_energized(power_loss = TRUE)
 
 /**
  * Passively drains stored gas and accumulated power at 2% per 2 seconds after de-energizing.
@@ -429,6 +547,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(!isnum(new_rotation) || new_rotation < 0 || new_rotation > 359)
 		return
 	rotation = new_rotation
+	clear_manual_destination()
 
 /**
  * Sets the angle for the jump power
@@ -439,6 +558,7 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(!isnum(new_angle) || new_angle < 1 || new_angle > 89)
 		return
 	angle = new_angle
+	clear_manual_destination()
 
 /*
  * ===========================
@@ -450,7 +570,7 @@ var/global/list/bluespace_gas_power_factor = list(
  * Initiates the jump sequence.
  * Returns FALSE if the jump cannot be performed, TRUE otherwise.
  */
-/obj/machinery/bluespace_drive/proc/initiate_jump(mob/user = null)
+/obj/machinery/bluespace_drive/proc/initiate_jump(mob/user = null, odyssey_mode = FALSE)
 	// Already jumping
 	if(jump_timer_id)
 		return FALSE
@@ -467,12 +587,26 @@ var/global/list/bluespace_gas_power_factor = list(
 			return FALSE
 		emergency_jump = TRUE
 
-	// No valid destination (checked at nominal rotation before scatter is applied)
-	if(!get_jump_destination())
+	odyssey_campaign_jump = FALSE
+	if(odyssey_mode)
+		if(!odyssey_drive_can_campaign_jump(src, user))
+			return FALSE
+		odyssey_campaign_jump = TRUE
+	else if(!get_jump_destination())
+		// No valid ballistic destination (checked at nominal rotation before scatter is applied)
 		return FALSE
 
 	rotation_error = 0
-	if(emergency_jump)
+	if(odyssey_campaign_jump)
+		// Campaign jumps use Sector Map course, not ballistic scatter.
+		rotation_error = 0
+		if(emergency_jump && user?.client)
+			to_chat(user, SPAN_DANGER("WARNING: Insufficient phoron for a stable Odyssey jump! Corridor lock may still succeed, but systems are stressed."))
+	else if(!isnull(manual_dest_x) && !isnull(manual_dest_y))
+		rotation_error = 0
+		if(emergency_jump && user?.client)
+			to_chat(user, SPAN_DANGER("WARNING: Insufficient phoron. Direct coordinate lock remains, but the field is stressed."))
+	else if(emergency_jump)
 		// Emergency jump: navigation is unreliable regardless of operator skill
 		rotation_error = rand(-45, 45)
 		if(user?.client)
@@ -499,20 +633,26 @@ var/global/list/bluespace_gas_power_factor = list(
 
 	jumping = TRUE
 
+	var/active_delay = odyssey_campaign_jump ? odyssey_jump_delay : jump_delay
+	// Must be set before Odyssey status_display broadcast — displays blank if ETA is missing.
+	jump_end_time = world.time + active_delay
+
 	// Admin logging
-	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump initiated by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[odyssey_campaign_jump ? "YES" : "no"]. Manual dest=[(!isnull(manual_dest_x) && !isnull(manual_dest_y)) ? "([manual_dest_x],[manual_dest_y])" : "no"]. Power: [round(power_from_gas/1000,0.1)] BSU. Overcharged: [overcharged ? "YES" : "no"]. Emergency: [emergency_jump ? "YES" : "no"]. Delay=[active_delay / 10]s")
 
 	// Announce the jump
-	if(emergency_jump)
+	if(odyssey_campaign_jump)
+		odyssey_drive_announce_jump(src, emergency_jump)
+	else if(emergency_jump)
 		command_announcement.Announce("EMERGENCY ALERT! Bluespace drive is initiating an emergency jump with insufficient fuel. \
 			Navigation accuracy cannot be guaranteed. All hands brace for uncontrolled bluespace transition. \
-			[jump_delay / 10] seconds to space warping.", \
+			[active_delay / 10] seconds to space warping.", \
 			"EMERGENCY JUMP SEQUENCE INITIATED")
 	else
 		command_announcement.Announce("Attention all hands! Bluespace field generation arrays are being energized. \
 			Assume jump action stations - bluespace transition procedures are now in effect. \
 			Severe risk of death or serious injury to all personnel outside of the vessel. \
-			[jump_delay / 10] seconds to space warping.", \
+			[active_delay / 10] seconds to space warping.", \
 			"Bluespace Drive Jump Sequence Initiated")
 
 	// Play create_orb animation (0.5s), then switch to looping drive_orb
@@ -521,14 +661,16 @@ var/global/list/bluespace_gas_power_factor = list(
 		deltimer(orb_timer_id)
 	orb_timer_id = addtimer(new Callback(src, PROC_REF(orb_set_active)), 0.5 SECONDS, TIMER_STOPPABLE)
 
-	// Start jump countdown
-	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), jump_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
+	jump_timer_id = addtimer(new Callback(src, PROC_REF(execute_jump)), active_delay, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	// 5 seconds before jump: apply overlay to all crew and lock abort
-	if(jump_delay > 5 SECONDS)
-		pre_jump_timer_id = addtimer(new Callback(src, PROC_REF(pre_jump_prepare)), jump_delay - 5 SECONDS, TIMER_STOPPABLE)
+	if(active_delay > 5 SECONDS)
+		pre_jump_timer_id = addtimer(new Callback(src, PROC_REF(pre_jump_prepare)), active_delay - 5 SECONDS, TIMER_STOPPABLE)
 	else
 		pre_jump_prepare()
+
+	if(odyssey_campaign_jump)
+		odyssey_drive_schedule_jump_fx(src, active_delay)
 
 	update_icon()
 	return TRUE
@@ -576,6 +718,11 @@ var/global/list/bluespace_gas_power_factor = list(
  * Executes the actual jump after the countdown.
  */
 /obj/machinery/bluespace_drive/proc/execute_jump()
+	if(odyssey_campaign_jump)
+		odyssey_drive_execute_campaign_jump(src)
+		exit_bluespace()
+		return
+
 	if(!linked)
 		exit_bluespace()
 		return
@@ -633,10 +780,16 @@ var/global/list/bluespace_gas_power_factor = list(
 			continue
 		L.playsound_local(L, 'sound/magic/ethereal_exit.ogg', 60)
 
+	var/was_odyssey = odyssey_campaign_jump
+	odyssey_drive_clear_jump_fx(src)
 	jump_timer_id = null
+	jump_end_time = 0
 	jumping = FALSE
 	jump_locked = FALSE
 	rotation_error = 0
+	odyssey_campaign_jump = FALSE
+	if (was_odyssey)
+		odyssey_clear_status_jump_countdown()
 	// Close the rift — may pull any crew still in the danger zone, then clean up rift mobs
 	close_rift()
 	// Apply gas modifier effects before purging (uses gas_consumed_totals)
@@ -679,19 +832,25 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(jump_timer_id)
 		deltimer(jump_timer_id)
 		jump_timer_id = null
+	var/was_odyssey = odyssey_campaign_jump
+	odyssey_drive_clear_jump_fx(src)
 	jumping = FALSE
+	jump_end_time = 0
 	rotation_error = 0
 	overcharged = FALSE
 	emergency_jump = FALSE
+	odyssey_campaign_jump = FALSE
 	if(power_from_gas > 0 || internal_gas.total_moles || fuel_gas.total_moles)
 		purge_charge(forced = TRUE)
 	// Play decons_orb animation before removing the orb
 	orb_start_decons()
-	log_admin("BSD [src] ([x],[y],[z]): jump ABORTED by [user ? "[user.name]([user.ckey])" : "automated"]")
+	log_admin("BSD [src] ([x],[y],[z]): jump ABORTED by [user ? "[user.name]([user.ckey])" : "automated"]. Odyssey=[was_odyssey ? "YES" : "no"]")
 	visible_message(SPAN_DANGER("\The [src]'s bluespace warp bubble falters, discharging!"))
-	command_announcement.Announce("Bluespace jump sequence has been aborted. Bluespace field is dissipating.", \
-		"Bluespace Drive Jump Aborted")
-
+	if(was_odyssey)
+		odyssey_drive_announce_abort(src)
+	else
+		command_announcement.Announce("Bluespace jump sequence has been aborted. Bluespace field is dissipating.", \
+			"Bluespace Drive Jump Aborted")
 /**
  * Apply visual and gameplay effects to a mob during bluespace travel.
  */
@@ -761,6 +920,9 @@ var/global/list/bluespace_gas_power_factor = list(
 		data["dest_x"] = dest.x
 		data["dest_y"] = dest.y
 
+	append_operator_ui(user, data)
+	odyssey_drive_append_ui(src, data)
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bluespace_drive.tmpl", "Bluespace Drive Control", 700, 800)
@@ -795,6 +957,21 @@ var/global/list/bluespace_gas_power_factor = list(
 			set_angle(new_ang)
 		return TOPIC_REFRESH
 
+	if(href_list["set_coords"])
+		prompt_jump_coordinates(user)
+		return TOPIC_REFRESH
+
+	if(href_list["clear_coords"])
+		if(!can_set_jump_coordinates(user))
+			to_chat(user, SPAN_WARNING("Direct coordinate lock requires Master engines skill."))
+			return TOPIC_HANDLED
+		if(jumping || jump_locked)
+			to_chat(user, SPAN_WARNING("Cannot retarget during an active jump sequence."))
+			return TOPIC_HANDLED
+		clear_manual_destination()
+		to_chat(user, SPAN_NOTICE("Coordinate lock cleared. Drive will use ballistic rotation/angle."))
+		return TOPIC_REFRESH
+
 	if(href_list["jump"])
 		if(!energized)
 			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
@@ -802,6 +979,15 @@ var/global/list/bluespace_gas_power_factor = list(
 		var/success = initiate_jump(user)
 		if(!success)
 			to_chat(user, SPAN_WARNING("Unable to initiate jump! Check fuel levels, destination, cooldown status, or if a jump is already in progress."))
+		return TOPIC_REFRESH
+
+	if(href_list["odyssey_jump"])
+		if(!energized)
+			to_chat(user, SPAN_WARNING("The drive must be energized first!"))
+			return TOPIC_HANDLED
+		var/odyssey_success = initiate_odyssey_jump(user)
+		if(!odyssey_success)
+			to_chat(user, SPAN_WARNING("Unable to initiate Odyssey jump! Check Sector Map course, fuel, energize state, and cooldown."))
 		return TOPIC_REFRESH
 
 	if(href_list["abort"])
@@ -848,6 +1034,12 @@ var/global/list/bluespace_gas_power_factor = list(
 	cooldown_end_time = world.time + actual_duration
 	cooldown_timer_id = addtimer(new Callback(src, PROC_REF(end_cooldown)), actual_duration, TIMER_STOPPABLE)
 	update_icon()
+
+/**
+ * Starts cooldown for an explicit duration (ignores jump_cooldown_duration / gas reductions).
+ */
+/obj/machinery/bluespace_drive/proc/start_cooldown_duration(duration)
+	start_cooldown(jump_cooldown_duration - max(30 SECONDS, duration))
 
 /**
  * Clears the post-jump cooldown.

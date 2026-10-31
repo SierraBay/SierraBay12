@@ -17,6 +17,23 @@
 		char_name += C.prefs.job_high ? " ([C.prefs.job_high])" : null
 		// We encode it twice becase of special characters and `byond bug id: 2399401`
 		send_output(C, url_encode(url_encode(char_name)), "lobbybrowser:setCharacterName")
+	update_titlescreen_odyssey(C)
+
+/// Optional hook for Odyssey / other mods — default no-op.
+/datum/map/proc/update_titlescreen_odyssey(client/C)
+	return
+
+
+/mob/new_player/proc/lobby_show_odyssey()
+	to_chat(src, SPAN_NOTICE("Одиссея сейчас не подключена."))
+
+
+/mob/new_player/proc/lobby_open_odyssey_panel()
+	return
+
+
+/mob/new_player/proc/lobby_start_odyssey_vote()
+	return
 
 
 /mob/new_player/Topic(href, href_list)
@@ -39,6 +56,15 @@
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
 		client.prefs.open_load_dialog(src, TRUE)
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey"])
+		lobby_show_odyssey()
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey_panel"])
+		lobby_open_odyssey_panel()
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey_vote"])
+		lobby_start_odyssey_vote()
 		return TOPIC_HANDLED
 	if (href_list["lobby_wiki"])
 		client.link_wiki()

@@ -233,7 +233,8 @@
 		return
 
 	var/total_rep = spectral_correct
-	if(spectral_correct >= LAZYLEN(spectral_sequence))
+	var/perfect = spectral_correct >= LAZYLEN(spectral_sequence)
+	if(perfect)
 		total_rep += 3  // perfect bonus
 
 	var/datum/research/F = get_server_files()
@@ -252,6 +253,8 @@
 	if(linked_destroy.loaded_item && F)
 		F.spectral_analyzed_types += linked_destroy.loaded_item.type
 		F.experiments.do_research_object(linked_destroy.loaded_item)
+
+	odyssey_rnd_on_spectral_complete(src, user, linked_destroy.loaded_item, perfect)
 
 	linked_destroy.finish_spectral()
 	spectral_active = FALSE

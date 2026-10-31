@@ -1,0 +1,432 @@
+/// Odyssey helpers wired into the physical bluespace drive from bluespace_drive.dm.
+
+/obj/machinery/bluespace_drive
+	odyssey_jump_delay = ODYSSEY_BSD_JUMP_DELAY
+
+
+/proc/odyssey_jump_delay_text(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return "unknown"
+	var/seconds = max(1, round(D.odyssey_jump_delay / (1 SECOND)))
+	if (seconds >= 60)
+		return "[round(seconds / 60, 0.1)] minutes"
+	return "[seconds] seconds"
+
+
+/proc/odyssey_drive_cooldown_label(remaining_ds)
+	var/seconds = max(0, round(remaining_ds / (1 SECOND)))
+	if (seconds >= 3600)
+		var/hours = round(seconds / 3600, 0.1)
+		return "[hours]h remaining"
+	if (seconds >= 60)
+		var/minutes = round(seconds / 60, 0.1)
+		return "[minutes] min remaining"
+	return "[seconds]s remaining"
+
+
+/proc/odyssey_clear_expired_bsd_cooling(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return
+	// until==0 means "pending apply" — still cooling, do not clear.
+	if (!state.bsd_cooling_until || world.time < state.bsd_cooling_until)
+		return
+	state.bsd_post_jump_cooling = FALSE
+	state.bsd_cooling_until = 0
+
+
+/// TRUE while post-jump cooling is armed (including before until is stamped at roundstart).
+/proc/odyssey_bsd_post_jump_cooling_active(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return FALSE
+	if (!state.bsd_cooling_until)
+		return TRUE
+	return world.time < state.bsd_cooling_until
+
+
+/proc/odyssey_bsd_post_jump_cooling_remaining(datum/odyssey_state/state)
+	if (!istype(state))
+		state = odyssey_ensure_state()
+	if (!state.bsd_post_jump_cooling)
+		return 0
+	if (!state.bsd_cooling_until)
+		return ODYSSEY_BSD_POST_JUMP_COOLDOWN
+	return max(0, state.bsd_cooling_until - world.time)
+
+
+/// Sync ship BSD cooldown to post-arrival cooling (call after persist apply / roundstart).
+/proc/odyssey_apply_bsd_post_jump_cooldown()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !state.bsd_post_jump_cooling)
+		return FALSE
+	if (!state.bsd_cooling_until)
+		state.bsd_cooling_until = world.time + ODYSSEY_BSD_POST_JUMP_COOLDOWN
+	odyssey_clear_expired_bsd_cooling(state)
+	if (!state.bsd_post_jump_cooling)
+		return FALSE
+	var/remaining = state.bsd_cooling_until - world.time
+	var/obj/machinery/bluespace_drive/D = odyssey_find_ship_bluespace_drive()
+	if (!istype(D))
+		return FALSE
+	D.start_cooldown_duration(remaining)
+	log_game("ODYSSEY: BSD post-jump cooling synced remaining=[round(remaining / (1 MINUTE), 0.1)]m shift=[state.shift_number] sector=[state.current_sector_id]")
+	return TRUE
+
+
+/proc/odyssey_find_ship_bluespace_drive()
+	var/list/drives = SSmachines.get_machinery_of_type(/obj/machinery/bluespace_drive)
+	for (var/obj/machinery/bluespace_drive/D as anything in drives)
+		if (QDELETED(D))
+			continue
+		if (D.linked)
+			return D
+	for (var/obj/machinery/bluespace_drive/D as anything in drives)
+		if (!QDELETED(D) && isStationLevel(D.z))
+			return D
+	return null
+
+
+/proc/odyssey_bluespace_drive_status()
+	var/obj/machinery/bluespace_drive/D = odyssey_find_ship_bluespace_drive()
+	if (!istype(D))
+		return list(
+			"present" = FALSE,
+			"label" = "Drive not detected",
+			"block_reason" = "No shipboard Bluespace Drive is linked. Check engineering and the drive console.",
+			"energized" = FALSE,
+			"energized_label" = "—",
+			"fuel_label" = "—",
+			"fuel_ok" = FALSE,
+			"course_ok" = FALSE,
+			"course_label" = "—",
+			"cooldown_label" = "Ready",
+			"on_cooldown" = FALSE,
+			"jumping" = FALSE,
+			"jump_locked" = FALSE,
+			"odyssey_jump" = FALSE,
+			"can_odyssey_jump" = FALSE,
+			"can_abort" = FALSE
+		)
+
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	odyssey_clear_expired_bsd_cooling(state)
+	var/fuel_moles = D.fuel_gas ? D.fuel_gas.total_moles : 0
+	var/fuel_ok = fuel_moles >= D.emergency_jump_min_moles
+	var/fuel_full = fuel_moles >= D.minimum_phoron_moles_per_jump
+	var/course_ok = !!(state.selected_sector_id && odyssey_sector_is_available(state.selected_sector_id, state))
+	var/bsu_now = round(D.power_from_gas / 1000, 0.1)
+	var/bsu_need = round(D.odyssey_min_jump_power / 1000, 0.1)
+	var/bsu_ok = D.power_from_gas >= D.odyssey_min_jump_power
+	var/nominal_fuel = D.minimum_phoron_moles_per_jump
+	var/emergency_fuel = D.emergency_jump_min_moles
+
+	var/fuel_label
+	if (fuel_full)
+		fuel_label = "[round(fuel_moles, 0.1)] mol phoron (nominal, ≥ [nominal_fuel] mol)"
+	else if (fuel_ok)
+		fuel_label = "[round(fuel_moles, 0.1)] mol phoron (emergency reserve, ≥ [emergency_fuel] mol)"
+	else
+		fuel_label = "[round(fuel_moles, 0.1)] / [emergency_fuel] mol phoron — below emergency threshold"
+
+	var/course_label
+	if (course_ok)
+		course_label = odyssey_sector_display_name(state.selected_sector_id)
+	else if (state.selected_sector_id)
+		course_label = "[odyssey_sector_display_name(state.selected_sector_id)] — corridor unavailable"
+	else
+		course_label = "None plotted (open Sector Map)"
+
+	var/cooldown_remaining = D.on_cooldown ? max(0, D.cooldown_end_time - world.time) : 0
+	if (odyssey_bsd_post_jump_cooling_active(state))
+		cooldown_remaining = max(cooldown_remaining, odyssey_bsd_post_jump_cooling_remaining(state))
+	var/on_cooling = D.on_cooldown || cooldown_remaining > 0
+	var/cooldown_label = on_cooling ? odyssey_drive_cooldown_label(cooldown_remaining) : "Ready"
+	var/energized_label = D.energized ? "Energized" : "Standby"
+
+	var/label = "Ready"
+	var/block_reason = null
+	if (D.jumping)
+		if (D.odyssey_campaign_jump)
+			label = "Odyssey jump sequence in progress"
+		else
+			label = "Overmap jump sequence in progress"
+		if (D.jump_locked)
+			label += " — abort locked"
+			block_reason = "The drive is in final approach. Abort is disabled; the corridor cannot be cancelled from this console."
+		else if (D.odyssey_campaign_jump)
+			block_reason = "A jump sequence is already charging. Abort remains available until final approach; ship lighting will signal the lock."
+		else
+			block_reason = "A jump sequence is already charging. Abort remains available until final lock."
+	else if (on_cooling)
+		label = "Cooling down"
+		block_reason = "The drive is thermally locked after the previous jump. Wait [cooldown_label] before initiating another sequence."
+	else if (!D.energized)
+		label = "Standby"
+		block_reason = "The drive is not energized. Energize it from the Bluespace Drive console in engineering before a jump can be armed."
+	else if (!fuel_ok)
+		label = "Insufficient fuel"
+		block_reason = "Phoron fuel is below the emergency minimum of [emergency_fuel] mol (currently [round(fuel_moles, 0.1)] mol). Charge the drive tank before attempting a jump."
+	else if (!bsu_ok)
+		label = "Insufficient field charge"
+		block_reason = "Sector transition needs at least [bsu_need] BSU of bluespace field charge (currently [bsu_now] BSU). Feed moderator gas into the energized drive."
+	else if (!course_ok)
+		label = "No Sector Map course"
+		block_reason = "No valid Odyssey corridor is plotted. Select an available sector on the Sector Map tab. The last authorized command selection is used."
+	else if (!fuel_full)
+		label = "Emergency fuel reserve"
+		block_reason = "Fuel is below the nominal [nominal_fuel] mol charge. An Odyssey jump is still possible, but the drive will treat it as an emergency sequence and double post-jump cooldown."
+	else
+		label = "Ready for Odyssey jump"
+		block_reason = null
+
+	var/can_odyssey = state.active && !D.jumping && !on_cooling && D.energized && course_ok && fuel_ok && bsu_ok
+	return list(
+		"present" = TRUE,
+		"label" = label,
+		"block_reason" = block_reason,
+		"energized" = D.energized,
+		"energized_label" = energized_label,
+		"fuel_label" = fuel_label,
+		"fuel_ok" = fuel_ok,
+		"fuel_full" = fuel_full,
+		"course_ok" = course_ok,
+		"course_label" = course_label,
+		"cooldown_label" = cooldown_label,
+		"on_cooldown" = on_cooling,
+		"jumping" = D.jumping,
+		"jump_locked" = D.jump_locked,
+		"odyssey_jump" = D.odyssey_campaign_jump,
+		"can_odyssey_jump" = can_odyssey,
+		"can_abort" = D.jumping && !D.jump_locked
+	)
+
+
+/proc/odyssey_drive_can_campaign_jump(obj/machinery/bluespace_drive/D, mob/user)
+	if (!istype(D))
+		return FALSE
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || state.status != ODYSSEY_STATUS_ACTIVE)
+		if (user)
+			to_chat(user, SPAN_WARNING("Одиссея не активна."))
+		return FALSE
+	odyssey_clear_expired_bsd_cooling(state)
+	if (D.on_cooldown || odyssey_bsd_post_jump_cooling_active(state))
+		if (user)
+			var/remaining = max(D.on_cooldown ? (D.cooldown_end_time - world.time) : 0, odyssey_bsd_post_jump_cooling_remaining(state))
+			to_chat(user, SPAN_WARNING("Одиссея: Bluespace Drive на охлаждении после предыдущего перехода ([odyssey_drive_cooldown_label(remaining)])."))
+		return FALSE
+	if (!state.selected_sector_id || !odyssey_sector_is_available(state.selected_sector_id, state))
+		if (user)
+			to_chat(user, SPAN_WARNING("Одиссея: сначала выберите следующий сектор на Sector Map."))
+		return FALSE
+	if (D.power_from_gas < D.odyssey_min_jump_power)
+		if (user)
+			to_chat(user, SPAN_WARNING("Одиссея: для перехода в другой сектор нужно минимум [round(D.odyssey_min_jump_power / 1000, 0.1)] BSU (сейчас [round(D.power_from_gas / 1000, 0.1)]). Зарядите привод модератором."))
+		return FALSE
+	return TRUE
+
+
+/proc/odyssey_drive_announce_jump(obj/machinery/bluespace_drive/D, emergency)
+	if (!istype(D))
+		return
+	var/dest_name = odyssey_jump_destination_text()
+	var/eta = odyssey_jump_delay_text(D)
+	if (emergency)
+		command_announcement.Announce("EMERGENCY ALERT! Odyssey sector transition jump with insufficient fuel. Destination: [dest_name]. Cancel before final approach if unauthorized. [eta] to space warping.", "EMERGENCY ODYSSEY JUMP")
+	else
+		command_announcement.Announce("Attention all hands! Odyssey bluespace transition to [dest_name] is charging. Abort is available until final approach. [eta] to space warping.", "Odyssey Jump Sequence Initiated")
+	odyssey_post_status_jump_countdown()
+
+
+/proc/odyssey_drive_announce_abort(obj/machinery/bluespace_drive/D)
+	odyssey_clear_status_jump_countdown()
+	command_announcement.Announce("Odyssey jump sequence aborted. Plotted course remains on the Sector Map.", "Odyssey Jump Aborted")
+
+
+/proc/odyssey_drive_execute_campaign_jump(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return FALSE
+	if (!odyssey_drive_can_campaign_jump(D, null))
+		D.visible_message(SPAN_DANGER("\The [D] fails to lock the Odyssey corridor!"))
+		command_announcement.Announce("Odyssey jump failed: no valid Sector Map course.", "Bluespace Drive Fault")
+		return FALSE
+
+	if (!odyssey_commit_transition())
+		D.visible_message(SPAN_DANGER("\The [D] fails to lock the Odyssey corridor!"))
+		command_announcement.Announce("Odyssey jump failed: navigation corridor could not be committed.", "Bluespace Drive Fault")
+		return FALSE
+
+	for (var/mob/living/L in GLOB.player_list)
+		if (!AreConnectedZLevels(L.z, D.z))
+			continue
+		if (istype(get_area(L), /area/space))
+			to_chat(L, SPAN_DANGER("Space completely warps around you, turning your body into something that a mind can barely comprehend..."))
+			L.death()
+
+	odyssey_drive_jump_climax(D)
+	D.open_rift()
+
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	log_and_message_admins("Odyssey BSD jump committed to [state.selected_sector_id]")
+	odyssey_on_bsd_jump_complete()
+	return TRUE
+
+
+/proc/odyssey_on_bsd_jump_complete()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active)
+		return
+	state.odyssey_bsd_jump_done = TRUE
+	odyssey_evaluate_objectives_after_jump()
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_JUMP,
+		"Переход: [odyssey_sector_display_name(state.current_sector_id)] → [odyssey_sector_display_name(state.selected_sector_id)]",
+		"Odyssey Jump выполнен. Коридор зафиксирован.",
+		ODYSSEY_CHRONICLE_VIS_PUBLIC,
+		list("from" = state.current_sector_id, "to" = state.selected_sector_id)
+	)
+	priority_announcement.Announce("Odyssey bluespace corridor locked. Ship systems entering transition shutdown — prepare for shift change.", "Odyssey Transition", new_sound = GLOB.using_map.shuttle_leaving_dock_sound)
+	log_game("ODYSSEY: BSD jump complete, round end armed for sector=[state.selected_sector_id]")
+
+
+/obj/machinery/bluespace_drive/proc/initiate_odyssey_jump(mob/user = null)
+	return initiate_jump(user, TRUE)
+
+
+/proc/odyssey_drive_append_ui(obj/machinery/bluespace_drive/D, list/data)
+	if (!istype(D) || !islist(data))
+		return
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/fuel_moles = D.fuel_gas ? D.fuel_gas.total_moles : 0
+	data["odyssey_active"] = state.active
+	data["odyssey_jump"] = D.odyssey_campaign_jump
+	data["odyssey_course"] = state.selected_sector_id ? odyssey_sector_display_name(state.selected_sector_id) : null
+	odyssey_clear_expired_bsd_cooling(state)
+	var/cooling = D.on_cooldown || odyssey_bsd_post_jump_cooling_active(state)
+	data["odyssey_can_jump"] = state.active && odyssey_drive_can_campaign_jump(D, null) && D.energized && !D.jumping && !cooling && (fuel_moles >= D.emergency_jump_min_moles)
+	data["odyssey_min_bsu"] = round(D.odyssey_min_jump_power / 1000, 0.1)
+	data["odyssey_bsu_ok"] = D.power_from_gas >= D.odyssey_min_jump_power
+	if (state.active && state.selected_sector_id)
+		data["odyssey_dest_label"] = odyssey_jump_destination_text()
+	if (D.odyssey_campaign_jump)
+		data["has_destination"] = TRUE
+
+
+/// Cancel pending Odyssey jump atmosphere timers and restore normal lighting.
+/proc/odyssey_drive_clear_jump_fx(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return
+	if (islist(D.odyssey_fx_timer_ids))
+		for (var/timer_id in D.odyssey_fx_timer_ids)
+			if (timer_id)
+				deltimer(timer_id)
+		D.odyssey_fx_timer_ids = null
+	odyssey_drive_set_bluespace_lighting(D, FALSE)
+
+
+/proc/odyssey_drive_track_fx_timer(obj/machinery/bluespace_drive/D, timer_id)
+	if (!istype(D) || !timer_id)
+		return
+	LAZYADD(D.odyssey_fx_timer_ids, timer_id)
+
+
+/// Ship lighting → bluespace spectrum (or restore). Areas on the drive Z-stack only; skips transient roots.
+/// Enabling also locks Odyssey abort (`jump_locked`) for the rest of the sequence.
+/proc/odyssey_drive_set_bluespace_lighting(obj/machinery/bluespace_drive/D, enable)
+	if (!istype(D))
+		return
+	if (enable && D.jumping && D.odyssey_campaign_jump)
+		D.jump_locked = TRUE
+	for (var/area/A in world)
+		if (!A.z || !AreConnectedZLevels(A.z, D.z))
+			continue
+		if (odyssey_area_excluded_from_snapshot(A))
+			continue
+		if (A.area_flags & AREA_FLAG_IS_NOT_PERSISTENT)
+			continue
+		A.set_bluespace_lighting(enable)
+
+
+/// Schedule last-minute brace cues for an Odyssey jump (announcements + local sounds + bluespace lights).
+/proc/odyssey_drive_schedule_jump_fx(obj/machinery/bluespace_drive/D, active_delay)
+	if (!istype(D) || active_delay <= 0)
+		return
+	odyssey_drive_clear_jump_fx(D)
+	D.odyssey_fx_timer_ids = list()
+
+	var/buildup = min(ODYSSEY_JUMP_FX_BUILDUP, active_delay - 1)
+	if (buildup < 15 SECONDS)
+		return
+
+	var/start_in = active_delay - buildup
+	// Wave schedule inside the buildup window (seconds before jump ≈ buildup - offset).
+	odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_set_bluespace_lighting), D, TRUE), start_in, TIMER_STOPPABLE))
+	odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 1), start_in, TIMER_STOPPABLE))
+	if (buildup >= 40 SECONDS)
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 2), start_in + 20 SECONDS, TIMER_STOPPABLE))
+	if (buildup >= 55 SECONDS)
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 3), start_in + 40 SECONDS, TIMER_STOPPABLE))
+		odyssey_drive_track_fx_timer(D, addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_drive_jump_fx_wave), D, 4), start_in + 50 SECONDS, TIMER_STOPPABLE))
+
+
+/proc/odyssey_drive_jump_fx_active(obj/machinery/bluespace_drive/D)
+	return istype(D) && D.jumping && D.odyssey_campaign_jump && !QDELETED(D)
+
+
+/proc/odyssey_drive_jump_fx_wave(obj/machinery/bluespace_drive/D, wave)
+	if (!odyssey_drive_jump_fx_active(D))
+		return
+	switch (wave)
+		if (1)
+			command_announcement.Announce(
+				"Final approach. Abort is now locked. Ship lighting has shifted to bluespace spectrum. Brace for sector transition.",
+				"Odyssey Jump"
+			)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				if (!istype(get_area(L), /area/hallway))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 35)
+		if (2)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				if (!istype(get_area(L), /area/hallway))
+					continue
+				L.playsound_local(L, 'sound/machines/BSD_interact.ogg', 40)
+		if (3)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 45)
+		if (4)
+			command_announcement.Announce(
+				"Final approach. Abort remains locked. All hands brace for Odyssey transition.",
+				"Odyssey Jump"
+			)
+			for (var/mob/living/L in GLOB.player_list)
+				if (!AreConnectedZLevels(L.z, D.z))
+					continue
+				L.playsound_local(L, 'sound/magic/ethereal_enter.ogg', 55)
+
+
+/// Moment-of-jump hit: flash, camera shake, shipwide sound; restore normal lighting.
+/proc/odyssey_drive_jump_climax(obj/machinery/bluespace_drive/D)
+	if (!istype(D))
+		return
+	odyssey_drive_set_bluespace_lighting(D, FALSE)
+	playsound(D, 'sound/magic/ethereal_exit.ogg', 100, TRUE)
+	playsound(D, 'sound/effects/EMPulse.ogg', 60, TRUE)
+	for (var/mob/living/L in GLOB.player_list)
+		if (!AreConnectedZLevels(L.z, D.z))
+			continue
+		L.playsound_local(L, 'sound/magic/ethereal_exit.ogg', 80)
+		if (!L.client)
+			continue
+		L.flash_eyes(FLASH_PROTECTION_MAJOR)
+		shake_camera(L, 8, 2)
+		to_chat(L, SPAN_NOTICE("The hull lurches as bluespace folds around the ship — for a heartbeat the corridors are not quite here."))

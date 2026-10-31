@@ -136,6 +136,10 @@
 		)
 		playsound(connected.loc, 'sound/machines/medbayscanner.ogg', 50)
 		savescan() // SIERRA-ADD
+		// [SIERRA-ADD] Odyssey medical dept brief
+		if (odyssey_science_enabled && ishuman(connected.occupant))
+			odyssey_dept_on_bodyscan(connected.occupant, user, src)
+		// [/SIERRA-ADD]
 		return TOPIC_REFRESH
 
 	if (href_list["print"])

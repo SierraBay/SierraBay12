@@ -284,6 +284,8 @@
 	if(catalog_artifact_id && F)
 		F.catalogized_artifact_ids += catalog_artifact_id
 
+	odyssey_rnd_on_catalog_complete(src, user, catalog_artifact_id, catalog_correct)
+
 	catalog_active = FALSE
 	catalog_step = 0
 	catalog_artifact_id = null

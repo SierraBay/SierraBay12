@@ -214,7 +214,8 @@
 		if(!seed || !genes_processed)
 			return TRUE
 
-		var/datum/computer_file/binary/plantgene/P = seed.seed.get_gene(href_list["get_gene"])
+		var/genetype = href_list["get_gene"]
+		var/datum/computer_file/binary/plantgene/P = seed.seed.get_gene(genetype)
 		if(!P)
 			return TRUE
 		loaded_gene = P
@@ -223,6 +224,8 @@
 			seed.modified += rand(20,60) + user.skill_fail_chance(SKILL_BOTANY, 100, SKILL_TRAINED)
 			var/expertise = max(0, user.get_skill_value(SKILL_BOTANY) - SKILL_TRAINED)
 			seed.modified = max(0, seed.modified - 10*expertise)
+
+		odyssey_rnd_on_flora_gene(user, seed.seed, genetype, src)
 
 		if(seed.modified >= 100)
 			failed_task = TRUE
