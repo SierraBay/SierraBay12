@@ -18,13 +18,14 @@
 	var/turf/T = get_turf(H)
 	if (!T)
 		return FALSE
-	if (odyssey_atom_persistable(H))
+	// Same volume as items/materials: persistable areas including docked shuttles off station Z.
+	if (odyssey_atom_in_persistable_area(H))
 		return TRUE
 	// Closed morgue keeps the body in nullspace-like contents; still count it if the tray is on the ship.
 	var/atom/storage = H.loc
 	while (istype(storage) && !isturf(storage))
 		if (istype(storage, /obj/structure/morgue) || istype(storage, /obj/structure/m_tray) || istype(storage, /obj/structure/closet))
-			return odyssey_turf_persistable(get_turf(storage))
+			return odyssey_atom_in_persistable_area(storage)
 		storage = storage.loc
 	return FALSE
 
@@ -65,7 +66,7 @@
 /proc/odyssey_station_morgues()
 	var/list/morgues = list()
 	for (var/obj/structure/morgue/M in world)
-		if (QDELETED(M) || !odyssey_atom_persistable(M))
+		if (QDELETED(M) || !odyssey_atom_in_persistable_area(M))
 			continue
 		morgues += M
 		CHECK_TICK

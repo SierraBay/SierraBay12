@@ -3,6 +3,9 @@
 /// Flat filename prefix under data/ for campaign JSON files.
 #define ODYSSEY_DATA_DIR "data/odyssey"
 
+/// Min interval between Odyssey load/save progress browse refreshes.
+#define ODYSSEY_LOAD_UI_INTERVAL (0.5 SECONDS)
+
 /// Minimum lobby «За» votes required to start or continue Odyssey.
 #define ODYSSEY_MIN_YES_VOTES 10
 /// Minimum lobby players required to offer continuing an existing Odyssey.
@@ -30,6 +33,8 @@
 
 /// After Transfer wins End the shift, wait this long before actually ending the round.
 #define ODYSSEY_SHIFT_END_DELAY (5 MINUTES)
+/// Crew warning before campaign snapshot / roundend save (shift-end and Odyssey Jump).
+#define ODYSSEY_SAVE_WARN_BEFORE (2 MINUTES)
 /// Countdown from Odyssey Jump initiate to sector transition (BSD).
 #define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
 /// After a continued shift that just arrived via Odyssey Jump: drive thermal lock from previous transition.
@@ -149,6 +154,13 @@
 #define ODYSSEY_SHUTTLE_STATUS_ABANDONED "abandoned"
 #define ODYSSEY_SHUTTLE_STATUS_DAMAGED "damaged"
 
+/// End-of-campaign score. Map colors: green = civilian/safe, purple = nebula, red = hostile.
+#define ODYSSEY_SCORE_SECTOR_GREEN 1
+#define ODYSSEY_SCORE_SECTOR_PURPLE 2
+#define ODYSSEY_SCORE_SECTOR_RED 3
+#define ODYSSEY_SCORE_TASK_DONE 1
+#define ODYSSEY_SCORE_TASK_FAILED -1
+
 /// Filing-cabinet paperwork caps (grief / runaway size). Soft: stop adding, log, still save what fits.
 #define ODYSSEY_PAPERS_MAX_ITEMS 500
 #define ODYSSEY_PAPERS_MAX_PHOTOS 100
@@ -168,6 +180,19 @@
 	"security/prison"\
 )
 #define ODYSSEY_CUSTODY_SPAWN_AREA_SUFFIXES list("security/sierra/prison")
+
+/// Item persist snapshot buckets (each becomes items_<name>.json).
+#define ODYSSEY_ITEM_BUCKETS list(\
+	"weapons",\
+	"clothing",\
+	"tools",\
+	"medical",\
+	"food",\
+	"storage",\
+	"devices",\
+	"stacks",\
+	"misc"\
+)
 
 /// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
 #ifndef ODYSSEY_SCI_BRIEF_SPECTRUM

@@ -18,10 +18,10 @@ ID мода: ODYSSEY
 1. В лобби голосование о старте/продолжении запускается из кнопки **Odyssey** (не автоматически). Нужно минимум **10 голосов «За»**, и их должно быть больше, чем «Против». Если на continue «Против» набирает 10+ и больше «За» — кампания архивируется. Если никто не набрал 10 — сейв остаётся.
 2. При старте по seed создаётся ветвящийся граф с перекрёстными коридорами и финальными маршрутами длиной 3, 4 и 5 прыжков (эшелон сектора). Смена экипажа в том же секторе эшелон не тратит.
 3. На консолях командования в программе **Command and Communications** вкладка **Sector Map** открывает карту секторов. Клик по сектору открывает досье; авторизованный командный состав может проложить курс. Действует последний выбор.
-4. Классический bluespace jump из эвакуационного меню **недоступен**. Переход в другой сектор: energize Bluespace Drive → **Odyssey Jump** с консоли привода или Command (**~10 мин** отсчёт, abort до `jump_locked`) → commit курса, сохранение и reboot. После continue, если предыдущая смена прыгнула, BSD **~1.5 ч** на охлаждении (прыжки недоступны).
+4. Классический bluespace jump из эвакуационного меню **недоступен**. Переход в другой сектор: energize Bluespace Drive → **Odyssey Jump** с консоли привода или Command (**~10 мин** отсчёт, abort до `jump_locked`) → commit курса → **~2 мин** на подготовку экипажа → сохранение и reboot. После continue, если предыдущая смена прыгнула, BSD **~1.5 ч** на охлаждении (прыжки недоступны).
 5. Воут **Transfer / End the shift** не запускает прыжок: объявляется смена через **5 минут**, корабль остаётся в текущем секторе, сейв (crew shift +1, эшелон тот же) и reboot. Extend по-прежнему продлевает раунд.
 6. Обычный ballistic jump привода (overmap) остаётся доступным параллельно, если есть валидный путь.
-7. После успешного continue загружается сохранённое состояние Сьерры; сектор меняется только если был Odyssey Jump.
+7. После успешного continue, **до спавна экипажа**, идёт экран загрузки Одиссеи (полоса прогресса + статус каждого `*.json`); затем на карту накатывается сейв. Сектор меняется только если был Odyssey Jump. На **roundend** тот же UI показывает сохранение кампании по шагам. Предупреждение перед снимком — **OOC** (синий/красный чат, не IC-каналы): при Transfer — за 2 мин; после Odyssey Jump — 2 мин grace, затем сейв.
 8. Финальный сектор завершает кампанию успешно. Выбор возвращения, emergency abandon ship, уничтожение Сьерры или гибель всего roster завершают её с соответствующим outcome.
 
 Публичный **Sector Map**, **Briefing** и **Chronicle** доступны экипажу в **Newscast** (просмотр; курс прокладывает командование). Command: вкладки Briefing и Chronicle.
@@ -84,7 +84,12 @@ ID мода: ODYSSEY
 - разрушенные / изменённые тайлы на `station_levels` только в зонах из снимка при baselines (зоны, уже лежавшие на Сьерре; `/area/space`, `/area/ship`, `/area/map_template`, `/area/supply` в снимок не входят). Флот Сьерры на ангарах в T=0 попадает сам; midround-гости и supply drone — нет;
 - whitelist машин/компьютеров и **все структуры** кроме кабелей, disposal, ladder/stairs и transit tubes как `created / modified / moved / destroyed` (у fabricator — ещё ресурсы в бункере); атмосферные трубы — machinery, в снимок структур не входят;
 - листовые материалы на Сьерре (`materials.json`: тип, количество, клетка; при необходимости обратно в шкаф/ящик). На **continue** сначала снимаются стаки с DMM, затем восстанавливается снимок прошлой смены — купленное и не потраченное остаётся, бесплатный респаун складов нет. Инвентарь на мобах не пишется. Первая смена — карта как обычно;
-- документы в **картотеках** (`papers.json`: paper / folder / bundle / photo; фото — `papers_photos.sav`). На continue содержимое картотек на persistable-зонах strip + restore. Лимиты: 500 items / 100 photos / ~2 MB текста. Шкафы и бумага на полу не пишутся;
+- документы (`papers.json`: paper / folder / bundle / photo; фото — `papers_photos.sav`) — картотеки **и** бумажки/папки на полу и в шкафах, с текстом, штампами и языком. На continue strip + restore. Лимиты: 500 items / 100 photos / ~2 MB текста. Не в `items_*`;
+- предметы на полу / в шкафах (`items.json` lane-marker + `items_<bucket>.json`: weapons / clothing / tools / medical / food / storage / devices / stacks / misc). Пустой корабль всё равно пишет `items.json`, чтобы на continue снять DMM-лут. Denylist: trash, shard, casing, grenade, organ, material stacks, ID, grown/seeds, uplink, robot_parts/AI card, character_persist safe, paperwork, nuke disk, pinpointer, blueprints, bag of holding. Не с мобов. Nested через `storage_id`. Legacy без `items.json`/`items_*` — предметы карты не трогаем;
+- mechs / corpses — тот же объём зоны, что items (persistable areas, включая шаттлы off-station Z);
+- continue кампании только до старта раунда (лобби); mid-round admin continue запрещён (Force apply — отдельно, с предупреждением);
+- оторванные органы (`remains.json`: type, DNA compact, имя, урон, closet/morgue; связь с мёртвым roster по имени). Не в `items_*`. Apply после `corpses`;
+- грязь / кровь (`cleanables.json`: `/obj/decal/cleanable`, у крови amount/basecolor/blood_DNA). Отдельно от Bay `SSpersistence` filth;
 - мехи;
 - счета Сьерры и отделов;
 - каналы и сюжеты Newscast, включая фото (savefile рядом с JSON);
@@ -93,7 +98,7 @@ ID мода: ODYSSEY
   - вне Сьерры → `abandoned` (пустой док на следующих сменах);
   - на Сьерре, но с повреждениями выше порога → `damaged` + ориентировочная оценка ремонта (информативно, без списания со счетов);
 - `shuttle_reports` в `campaign.json` (legacy `abandoned_shuttles` по-прежнему пишется как список имён);
-- тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; смерть в Одиссее сбрасывает только его;
+- тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; хирургические аугменты и импланты на кукле (без uplink/explosive/antag и без psi-dampener — его ставит job.equip); смерть в Одиссее сбрасывает только его;
 - employment / security / medical записи, `criminal_status` и `physical_status` (включая правки с консолей в течение смены) — в roster кампании; при спавне в активной Одиссее применяются всегда. Persist-снимок дублирует их, если персистентность включена;
 - **custody**: если на конец смены живой участник с `criminal_status` Incarcerated/Arrest находится в бриге/тюрьме/допросе (Sierra security areas) — в roster пишется `custody=brig`; на следующей смене после экипа — оранжевая форма, без ID, спавн на случайный `/obj/landmark/odyssey_custody` (ставить в prison cells; fallback — свободный пол в `/area/security/sierra/prison`); стартовый гир работы снимается;
 - трупы экипажа на Сьерре (включая лежащих в морге или шкафу): внешность, раны, только униформа. На следующей смене тела появляются в моргах, не на месте смерти.
@@ -101,8 +106,9 @@ ID мода: ODYSSEY
 **Не сохраняется в MVP**
 
 - атмос, провода/трубы, away sites и любые пристыкованные чужие корабли/шаттлы (даже на Z Сьерры);
-- предметы на полу и содержимое шкафов (кроме листовых `/obj/item/stack/material`); документы вне картотек;
-- инвентарь персонажа кроме униформы на трупе; импланты/аугменты (живое тело — в `character_persist`);
+- реагенты в бутылках, заряд cell, магазины оружия, access на ID (фаза 2); grenade / ID / organ в generic items;
+- инвентарь на живых игроках; MMI / robot_parts / AI card; авто-приживление органов к трупу;
+- инвентарь персонажа кроме униформы на трупе; worn-инвентарь живых; antag/uplink импланты;
 
 Overmap не сериализуется: он воспроизводимо создаётся из seed текущего сектора. Уровень опасности меняет число облаков hazards (как ванильный `overmap_event_areas`), их типы, задержку случайных событий и шанс Левиафана.
 
@@ -125,6 +131,10 @@ Overmap не сериализуется: он воспроизводимо со�
 
 - `campaign.json` — seed, граф, маршрут, статус/outcome и метаданные кампании;
 - `turfs.json`, `machinery.json`, `structures.json`, `mechs.json`, `economy.json`, `newscast.json`, `materials.json`, `papers.json` — части снимка;
+- `items.json` — маркер lane предметов (`item_count`, список непустых bucket’ов);
+- `items_weapons.json` … `items_misc.json` — предметы по категориям (пустые bucket’ы не пишутся);
+- `remains.json` — detached organs;
+- `cleanables.json` — кровь / filth на тайлах;
 - `newscast_photos.sav` — иконки фотографий Newscast;
 - `papers_photos.sav` — иконки фото из картотек;
 - `roster.json` — участники и погибшие слоты;
@@ -142,7 +152,10 @@ Overmap не сериализуется: он воспроизводимо со�
 - **турфы**: diff относительно roundstart baseline (смена типа, урон стен, broken/burnt полов);
 - **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones; у `/obj/machinery/fabricator` — `stored_material`;
 - **материалы**: `materials.json` — стаки на станции; continue = strip DMM + apply снимка;
-- **документы**: `papers.json` + `papers_photos.sav` — содержимое `/obj/structure/filingcabinet` (paper/folder/bundle/photo); continue = strip + restore; бюджет 500/100/~2MB;
+- **документы**: `papers.json` + `papers_photos.sav` — картотеки + loose paper/folder/bundle/photo на полу/в шкафу; continue = strip + restore; бюджет 500/100/~2MB;
+- **предметы**: `items.json` + `items_*.json`; continue = strip всех persistable items если есть manifest/bucket этой generation, затем apply (корни → nested);
+- **останки**: `remains.json` — detached `/obj/item/organ` с DNA/именем; после corpses;
+- **грязь**: `cleanables.json` — `/obj/decal/cleanable` в persistable areas; strip+restore если файл есть;
 - **мехи**: тип, компоненты, заряд, оборудование — patch или spawn;
 - **экономика**: счёт судна + отделы (баланс и лог транзакций, до 100 записей на счёт); личные счета — в снимке character_persist (`account_money` + `account_transactions`);
 - **newscast**: каналы, авторы, цензура, сюжеты, wanted issue и фото в `newscast_photos.sav`;

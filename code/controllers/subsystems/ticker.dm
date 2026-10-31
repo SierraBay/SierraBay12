@@ -169,6 +169,9 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.using_map.setup_economy()
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
+	// Odyssey (and similar) may mutate the map here — before anyone spawns into it.
+	callHook("pre_characters")
+
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()

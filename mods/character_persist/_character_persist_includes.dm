@@ -7,6 +7,7 @@
 #include "code/preferences.dm"
 #include "code/snapshot.dm"
 #include "code/safe_storage.dm"
+#include "code/implants_augments.dm"
 #include "code/safe.dm"
 #include "code/pay.dm"
 #include "code/medical.dm"

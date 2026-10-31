@@ -60,8 +60,73 @@ var/global/odyssey_show_roundend_stats = FALSE
 			name = graph[id]["name"]
 		else
 			name = odyssey_sector_display_name(id)
-		out += list(list("id" = id, "name" = name))
+		var/danger = null
+		if (islist(graph) && islist(graph[id]))
+			danger = graph[id]["danger"]
+		out += list(list("id" = id, "name" = name, "danger" = danger))
 	return out
+
+
+/proc/odyssey_sector_score_points(danger)
+	switch (odyssey_danger_visual(danger))
+		if ("hostile")
+			return ODYSSEY_SCORE_SECTOR_RED
+		if ("nebula")
+			return ODYSSEY_SCORE_SECTOR_PURPLE
+	return ODYSSEY_SCORE_SECTOR_GREEN
+
+
+/proc/odyssey_score_task_points(list/tally)
+	if (!islist(tally))
+		return 0
+	var/done = tally["completed"] || 0
+	var/missed = (tally["failed"] || 0) + (tally["expired"] || 0)
+	return done * ODYSSEY_SCORE_TASK_DONE + missed * ODYSSEY_SCORE_TASK_FAILED
+
+
+/proc/odyssey_build_campaign_score(list/stats)
+	var/list/lines = list()
+	var/total = 0
+	var/green = 0
+	var/purple = 0
+	var/red = 0
+	if (islist(stats) && islist(stats["route"]))
+		for (var/list/node in stats["route"])
+			if (!islist(node))
+				continue
+			switch (odyssey_danger_visual(node["danger"]))
+				if ("hostile")
+					red++
+				if ("nebula")
+					purple++
+				else
+					green++
+	var/green_pts = green * ODYSSEY_SCORE_SECTOR_GREEN
+	var/purple_pts = purple * ODYSSEY_SCORE_SECTOR_PURPLE
+	var/red_pts = red * ODYSSEY_SCORE_SECTOR_RED
+	total += green_pts + purple_pts + red_pts
+	lines += list(list("label" = "Зелёные секторы ([green] × [ODYSSEY_SCORE_SECTOR_GREEN])", "points" = green_pts))
+	lines += list(list("label" = "Фиолетовые секторы ([purple] × [ODYSSEY_SCORE_SECTOR_PURPLE])", "points" = purple_pts))
+	lines += list(list("label" = "Красные секторы ([red] × [ODYSSEY_SCORE_SECTOR_RED])", "points" = red_pts))
+
+	var/list/task_groups = list(
+		"Контракты" = islist(stats) ? stats["contracts"] : null,
+		"Цели смен" = islist(stats) ? stats["objectives"] : null,
+		"Научные брифы" = islist(stats) ? stats["science_briefs"] : null,
+		"Брифы отделов" = islist(stats) ? stats["dept_briefs"] : null
+	)
+	for (var/label in task_groups)
+		var/list/tally = task_groups[label]
+		var/done = islist(tally) ? (tally["completed"] || 0) : 0
+		var/missed = islist(tally) ? ((tally["failed"] || 0) + (tally["expired"] || 0)) : 0
+		var/done_pts = done * ODYSSEY_SCORE_TASK_DONE
+		var/miss_pts = missed * ODYSSEY_SCORE_TASK_FAILED
+		total += done_pts + miss_pts
+		if (done)
+			lines += list(list("label" = "[label]: выполнено ([done] × [ODYSSEY_SCORE_TASK_DONE])", "points" = done_pts))
+		if (missed)
+			lines += list(list("label" = "[label]: провалено или истекло ([missed] × [ODYSSEY_SCORE_TASK_FAILED])", "points" = miss_pts))
+	return list("total" = total, "lines" = lines)
 
 
 /proc/odyssey_build_casualty_stats(list/roster)
@@ -276,6 +341,7 @@ var/global/odyssey_show_roundend_stats = FALSE
 		"chronicle_events" = islist(state.chronicle) ? length(state.chronicle) : 0,
 		"built_at" = time2text(world.realtime, "YYYY-MM-DD hh:mm")
 	)
+	stats["score"] = odyssey_build_campaign_score(stats)
 	return stats
 
 
@@ -389,6 +455,7 @@ var/global/odyssey_show_roundend_stats = FALSE
 	if (stats["dead_command"])
 		dat += " (командный: [stats["dead_command"]])"
 	dat += " · событий хроники: <b>[stats["chronicle_events"] || 0]</b>.</p>"
+	dat += odyssey_campaign_stats_html_score(stats["score"])
 
 	var/list/route = stats["route"]
 	if (islist(route) && length(route))
@@ -496,6 +563,23 @@ var/global/odyssey_show_roundend_stats = FALSE
 	else
 		dat += "<p><i>Потерь не зафиксировано.</i></p>"
 	dat += "</div>"
+	return jointext(dat, null)
+
+
+/proc/odyssey_campaign_stats_html_score(list/score)
+	if (!islist(score))
+		return ""
+	var/list/dat = list()
+	dat += "<h3 style='color:#9ab8b4; margin-bottom:4px;'>Очки: [score["total"] || 0]</h3>"
+	dat += "<ul style='margin-top:0;'>"
+	if (islist(score["lines"]))
+		for (var/list/row in score["lines"])
+			if (!islist(row))
+				continue
+			var/pts = row["points"] || 0
+			var/color = pts < 0 ? "#c09090" : "#a8c0bc"
+			dat += "<li style='color:[color];'>[pts > 0 ? "+" : ""][pts] — [html_encode("[row["label"]]")]</li>"
+	dat += "</ul>"
 	return jointext(dat, null)
 
 

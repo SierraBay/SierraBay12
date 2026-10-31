@@ -3,22 +3,31 @@
 	return TRUE
 
 
+/// Before create_characters: load continued save so nobody watches the map mutate.
+/hook/pre_characters/proc/odyssey_on_pre_characters()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active)
+		return TRUE
+	character_persist_reload_connected_snapshots()
+	if (state.continued)
+		if (!odyssey_bootstrap_continued_save())
+			odyssey_finish_campaign(ODYSSEY_STATUS_ADMIN_ABORTED, "save_validation_or_apply_failed")
+			to_world(SPAN_DANGER("<b>Одиссея остановлена: сохранение не прошло проверку. Администраторы уведомлены.</b>"))
+			message_admins("ODYSSEY: campaign aborted because save validation/apply failed: [json_encode(state.validation_errors)]")
+		return TRUE
+	// New campaign — baseline clean DMM before anyone can damage it.
+	odyssey_ensure_persist_baselines()
+	return TRUE
+
+
 /hook/roundstart/proc/odyssey_on_roundstart()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active)
 		return TRUE
-	// Ensure prefs hold the Odyssey body lane before latejoins / any remaining spawns.
+	// Prefs may have connected during pre_characters hitch — refresh Odyssey lane again.
 	character_persist_reload_connected_snapshots()
-	if (state.continued)
-		odyssey_apply_abandoned_shuttles()
-	// Baseline from the freshly loaded DMM, after abandoned shuttles have left their hangars.
-	// Never recapture after apply — that would treat loaded damage as the clean map.
-	odyssey_ensure_persist_baselines()
-	if (state.continued && !odyssey_apply_save())
-		odyssey_finish_campaign(ODYSSEY_STATUS_ADMIN_ABORTED, "save_validation_or_apply_failed")
-		to_world(SPAN_DANGER("<b>Одиссея остановлена: сохранение не прошло проверку. Администраторы уведомлены.</b>"))
-		message_admins("ODYSSEY: campaign aborted because save validation/apply failed: [json_encode(state.validation_errors)]")
-		return TRUE
+	if (!state.persist_baselines_ready)
+		odyssey_ensure_persist_baselines()
 	odyssey_apply_bsd_post_jump_cooldown()
 	odyssey_apply_sector_threats()
 	odyssey_ensure_campaign_contract()

@@ -8,9 +8,10 @@
 	if (!force && islist(state.mech_baseline) && length(state.mech_baseline))
 		return TRUE
 	var/list/baseline = list()
+	var/list/mech_index = list()
 	var/list/ordinals = list()
 	for (var/mob/living/exosuit/M in world)
-		if (!odyssey_atom_persistable(M))
+		if (!odyssey_atom_in_persistable_area(M))
 			continue
 		var/turf/T = get_turf(M)
 		var/base_key = "[M.type]@[odyssey_coord_key(T.x, T.y, T.z)]"
@@ -18,8 +19,10 @@
 		ordinals[base_key] = ordinal
 		M.odyssey_persist_id = "mapped:mech:[base_key]#[ordinal]"
 		baseline[M.odyssey_persist_id] = list("x" = T.x, "y" = T.y, "z" = T.z, "type" = "[M.type]")
+		mech_index[M.odyssey_persist_id] = M
 		CHECK_TICK
 	state.mech_baseline = baseline
+	state.persist_index_mechs = mech_index
 	return TRUE
 
 
@@ -28,7 +31,7 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/live_ids = list()
 	for (var/mob/living/exosuit/M in world)
-		if (QDELETED(M) || !odyssey_atom_persistable(M))
+		if (QDELETED(M) || !odyssey_atom_in_persistable_area(M))
 			continue
 		if (!M.odyssey_persist_id)
 			M.odyssey_persist_id = "runtime-mech-[state.campaign_id]-[state.next_object_id++]"

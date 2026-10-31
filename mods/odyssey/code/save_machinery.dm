@@ -3,15 +3,16 @@
 	var/list/entries = list()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/live_ids = list()
-	for (var/obj/machinery/M in world)
-		if (QDELETED(M) || !odyssey_atom_persistable(M) || !odyssey_machinery_whitelisted(M))
-			continue
-		var/id = M.odyssey_persist_id || odyssey_assign_runtime_id(M)
-		live_ids[id] = TRUE
-		var/list/baseline = state.machinery_baseline?[id]
-		var/list/entry = odyssey_machinery_entry(M, baseline)
-		if (entry)
-			entries += list(entry)
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		for (var/obj/machinery/M in T)
+			if (QDELETED(M) || !odyssey_machinery_whitelisted(M))
+				continue
+			var/id = M.odyssey_persist_id || odyssey_assign_runtime_id(M)
+			live_ids[id] = TRUE
+			var/list/baseline = state.machinery_baseline?[id]
+			var/list/entry = odyssey_machinery_entry(M, baseline)
+			if (entry)
+				entries += list(entry)
 		CHECK_TICK
 	for (var/id in state.machinery_baseline)
 		if (!live_ids[id])
@@ -40,6 +41,7 @@
 		fabricator_materials = odyssey_fabricator_materials_state(M)
 	var/changed = action != "modified" || damaged || broken || M.emagged || M.panel_open \
 		|| baseline["dir"] != M.dir || baseline["name"] != M.name || baseline["anchored"] != M.anchored \
+		|| (baseline["pixel_x"] || 0) != M.pixel_x || (baseline["pixel_y"] || 0) != M.pixel_y \
 		|| islist(airlock_state) || islist(fabricator_materials)
 	if (!changed)
 		return null
@@ -172,6 +174,7 @@
 		M.forceMove(T)
 	if (!isnull(entry["dir"]))
 		M.set_dir(entry["dir"])
+	odyssey_apply_pixel_offset(M, entry)
 	if (entry["name"])
 		M.SetName(entry["name"])
 	if (!isnull(entry["anchored"]))

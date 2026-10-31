@@ -26,12 +26,16 @@ var/global/datum/odyssey_state/odyssey
 	var/transition_committed = FALSE
 	/// TRUE after a successful Odyssey bluespace-drive campaign jump this round.
 	var/odyssey_bsd_jump_done = FALSE
+	/// TRUE after the post-jump grace window — round may end and save (jump path only).
+	var/post_jump_save_ready = FALSE
 	/// TRUE this shift if we arrived via previous-shift Odyssey Jump (post-arrival drive cooling).
 	var/bsd_post_jump_cooling = FALSE
 	/// world.time when post-jump BSD cooling ends; 0 until first apply after shift start.
 	var/bsd_cooling_until = 0
 	/// TRUE while the 5-minute End the shift countdown is running.
 	var/shift_end_queued = FALSE
+	/// addtimer id for save warning / post-jump save arm.
+	var/save_warn_timer_id
 	var/list/route_history
 	/// Campaign participant registry keyed by "ckey|slot".
 	var/list/roster
@@ -105,6 +109,10 @@ var/global/datum/odyssey_state/odyssey
 	var/list/persist_index_machinery
 	var/list/persist_index_structures
 	var/list/persist_index_mechs
+	/// Cached turf list for one save/load session (invalidated when areas are recaptured).
+	var/list/persistable_turfs_cache
+	/// TRUE after continued-campaign save was applied this round (pre_characters or force).
+	var/save_applied = FALSE
 
 
 /datum/odyssey_state/New()
@@ -141,23 +149,55 @@ var/global/datum/odyssey_state/odyssey
 	return "[ODYSSEY_DATA_DIR]_[odyssey_map_key()]_campaign.json"
 
 
+/// ChangeTurf drops mapped atoms. Drop dead refs and pick up whatever still has an id on this turf.
+/proc/odyssey_reindex_persist_turf(turf/T)
+	if (!istype(T))
+		return
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!islist(state.persist_index_machinery))
+		state.persist_index_machinery = list()
+	if (!islist(state.persist_index_structures))
+		state.persist_index_structures = list()
+	if (!islist(state.persist_index_mechs))
+		state.persist_index_mechs = list()
+	for (var/id in state.persist_index_machinery)
+		if (QDELETED(state.persist_index_machinery[id]))
+			state.persist_index_machinery -= id
+	for (var/id in state.persist_index_structures)
+		if (QDELETED(state.persist_index_structures[id]))
+			state.persist_index_structures -= id
+	for (var/id in state.persist_index_mechs)
+		if (QDELETED(state.persist_index_mechs[id]))
+			state.persist_index_mechs -= id
+	for (var/obj/machinery/M in T)
+		if (!QDELETED(M) && M.odyssey_persist_id)
+			state.persist_index_machinery[M.odyssey_persist_id] = M
+	for (var/obj/structure/S in T)
+		if (!QDELETED(S) && S.odyssey_persist_id)
+			state.persist_index_structures[S.odyssey_persist_id] = S
+	for (var/mob/living/exosuit/M in T)
+		if (!QDELETED(M) && M.odyssey_persist_id)
+			state.persist_index_mechs[M.odyssey_persist_id] = M
+
+
 /proc/odyssey_build_persist_index()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/machines = list()
 	var/list/structures = list()
 	var/list/mechs = list()
-	for (var/obj/O in world)
-		if (QDELETED(O) || !O.odyssey_persist_id)
-			continue
-		if (istype(O, /obj/machinery))
-			machines[O.odyssey_persist_id] = O
-		else if (istype(O, /obj/structure))
-			structures[O.odyssey_persist_id] = O
-		CHECK_TICK
-	for (var/mob/living/exosuit/M in world)
-		if (QDELETED(M) || !M.odyssey_persist_id)
-			continue
-		mechs[M.odyssey_persist_id] = M
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		for (var/obj/machinery/M in T)
+			if (QDELETED(M) || !M.odyssey_persist_id)
+				continue
+			machines[M.odyssey_persist_id] = M
+		for (var/obj/structure/S in T)
+			if (QDELETED(S) || !S.odyssey_persist_id)
+				continue
+			structures[S.odyssey_persist_id] = S
+		for (var/mob/living/exosuit/M in T)
+			if (QDELETED(M) || !M.odyssey_persist_id)
+				continue
+			mechs[M.odyssey_persist_id] = M
 		CHECK_TICK
 	state.persist_index_machinery = machines
 	state.persist_index_structures = structures

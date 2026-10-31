@@ -257,7 +257,9 @@
 		"base_skin" = H.base_skin,
 		"body_markings" = markings,
 		"organs" = organs,
-		"internals" = internals
+		"internals" = internals,
+		"augments" = character_persist_capture_augments(H),
+		"implants" = character_persist_capture_implants(H)
 	)
 
 
@@ -379,6 +381,12 @@
 			var/cap = I.max_damage * CHARACTER_PERSIST_DAMAGE_RATIO
 			I.damage = clamp(character_persist_num(entry["damage"]), 0, cap)
 
+	// Odyssey-only keys (stripped on normal-lane save). Missing keys = no-op.
+	if (islist(snapshot["augments"]))
+		character_persist_apply_augments(H, snapshot["augments"])
+	if (islist(snapshot["implants"]))
+		character_persist_apply_implants(H, snapshot["implants"])
+
 	H.force_update_limbs()
 	H.update_body(0)
 	H.update_hair(0)
@@ -436,6 +444,9 @@
 		snapshot["odyssey_campaign_id"] = odyssey_state.campaign_id
 	else
 		snapshot -= "odyssey_campaign_id"
+		// Implants/augments are Odyssey continuity only — keep normal lane lean.
+		snapshot -= "augments"
+		snapshot -= "implants"
 	if (H.mind?.initial_account)
 		snapshot["account_money"] = H.mind.initial_account.money
 		snapshot["account_transactions"] = odyssey_serialize_transaction_log(H.mind.initial_account)

@@ -242,6 +242,7 @@
 
 
 /proc/odyssey_drive_announce_abort(obj/machinery/bluespace_drive/D)
+	odyssey_clear_save_warn_timer()
 	odyssey_clear_status_jump_countdown()
 	command_announcement.Announce("Odyssey jump sequence aborted. Plotted course remains on the Sector Map.", "Odyssey Jump Aborted")
 
@@ -280,6 +281,7 @@
 	if (!state.active)
 		return
 	state.odyssey_bsd_jump_done = TRUE
+	state.post_jump_save_ready = FALSE
 	odyssey_evaluate_objectives_after_jump()
 	odyssey_chronicle_append(
 		ODYSSEY_CHRONICLE_KIND_JUMP,
@@ -288,8 +290,9 @@
 		ODYSSEY_CHRONICLE_VIS_PUBLIC,
 		list("from" = state.current_sector_id, "to" = state.selected_sector_id)
 	)
-	priority_announcement.Announce("Odyssey bluespace corridor locked. Ship systems entering transition shutdown — prepare for shift change.", "Odyssey Transition", new_sound = GLOB.using_map.shuttle_leaving_dock_sound)
-	log_game("ODYSSEY: BSD jump complete, round end armed for sector=[state.selected_sector_id]")
+	// Save/roundend after a short grace so crew can prepare — not mid-jump countdown.
+	odyssey_schedule_post_jump_save()
+	log_game("ODYSSEY: BSD jump complete, post-jump save grace started sector=[state.selected_sector_id]")
 
 
 /obj/machinery/bluespace_drive/proc/initiate_odyssey_jump(mob/user = null)

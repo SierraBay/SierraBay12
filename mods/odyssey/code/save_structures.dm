@@ -34,31 +34,28 @@
 	var/list/entries = list()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/live_ids = list()
-	for (var/obj/structure/S in world)
-		if (QDELETED(S) || !odyssey_atom_persistable(S) || !odyssey_structure_whitelisted(S))
-			continue
-		var/id = S.odyssey_persist_id || odyssey_assign_runtime_id(S)
-		live_ids[id] = TRUE
-		var/list/baseline = state.structure_baseline?[id]
-		var/turf/T = get_turf(S)
-		if (!T)
-			continue
-		var/action = islist(baseline) ? "modified" : "created"
-		if (islist(baseline) && (baseline["x"] != T.x || baseline["y"] != T.y || baseline["z"] != T.z))
-			action = "moved"
-		var/changed = action != "modified" || baseline["dir"] != S.dir || baseline["name"] != S.name || baseline["anchored"] != S.anchored
-		if (istype(S, /obj/structure/catwalk))
-			var/obj/structure/catwalk/C = S
-			changed = changed || !!baseline["hatch_open"] != !!C.hatch_open || "[baseline["plated_tile"]]" != "[odyssey_catwalk_plated_type(C)]"
-		if (!changed)
-			CHECK_TICK
-			continue
-		var/list/entry = odyssey_structure_snapshot(S)
-		if (!entry)
-			CHECK_TICK
-			continue
-		entry["action"] = action
-		entries += list(entry)
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		for (var/obj/structure/S in T)
+			if (QDELETED(S) || !odyssey_structure_whitelisted(S))
+				continue
+			var/id = S.odyssey_persist_id || odyssey_assign_runtime_id(S)
+			live_ids[id] = TRUE
+			var/list/baseline = state.structure_baseline?[id]
+			var/action = islist(baseline) ? "modified" : "created"
+			if (islist(baseline) && (baseline["x"] != T.x || baseline["y"] != T.y || baseline["z"] != T.z))
+				action = "moved"
+			var/changed = action != "modified" || baseline["dir"] != S.dir || baseline["name"] != S.name || baseline["anchored"] != S.anchored \
+				|| (baseline["pixel_x"] || 0) != S.pixel_x || (baseline["pixel_y"] || 0) != S.pixel_y
+			if (istype(S, /obj/structure/catwalk))
+				var/obj/structure/catwalk/C = S
+				changed = changed || !!baseline["hatch_open"] != !!C.hatch_open || "[baseline["plated_tile"]]" != "[odyssey_catwalk_plated_type(C)]"
+			if (!changed)
+				continue
+			var/list/entry = odyssey_structure_snapshot(S)
+			if (!entry)
+				continue
+			entry["action"] = action
+			entries += list(entry)
 		CHECK_TICK
 	for (var/id in state.structure_baseline)
 		if (live_ids[id])
@@ -110,6 +107,7 @@
 		S.forceMove(T)
 	if (!isnull(entry["dir"]))
 		S.set_dir(entry["dir"])
+	odyssey_apply_pixel_offset(S, entry)
 	if (entry["name"])
 		S.SetName(entry["name"])
 	if (!isnull(entry["anchored"]))

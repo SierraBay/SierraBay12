@@ -70,7 +70,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 				dat += " ([html_encode(state.selected_by)])"
 		dat += "<br>"
 		dat += "transition committed: <b>[state.transition_committed ? "да" : "нет"]</b> | "
-		dat += "BSD jump: <b>[state.odyssey_bsd_jump_done ? "да" : "нет"]</b> | "
+		dat += "BSD jump: <b>[state.odyssey_bsd_jump_done ? "да" : "нет"]</b> | post-jump save: <b>[state.post_jump_save_ready ? "armed" : (state.odyssey_bsd_jump_done ? "grace" : "—")]</b> | "
 		dat += "BSD post-jump cool: <b>"
 		if (state.bsd_post_jump_cooling)
 			if (state.bsd_cooling_until > world.time)
@@ -140,7 +140,10 @@ var/global/datum/odyssey_panel/odyssey_panel
 	dat += "<div class='statusDisplay'>"
 	dat += "<table width='100%'>"
 	dat += "<tr><th>Файл</th><th>Есть</th><th>Версия</th><th>Записей</th><th></th></tr>"
-	for (var/kind in list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "materials", "papers", "chronicle"))
+	var/list/snapshot_kinds = list("turfs", "machinery", "structures", "mechs", "economy", "research", "roster", "newscast", "corpses", "materials", "papers", "items", "remains", "cleanables", "chronicle")
+	for (var/bucket in ODYSSEY_ITEM_BUCKETS)
+		snapshot_kinds += odyssey_item_snapshot_kind(bucket)
+	for (var/kind in snapshot_kinds)
 		var/list/summary = odyssey_snapshot_summary(kind)
 		dat += "<tr>"
 		dat += "<td><code>[kind].json</code></td>"
@@ -624,7 +627,11 @@ var/global/datum/odyssey_panel/odyssey_panel
 			to_chat(usr, SPAN_WARNING("Odyssey уже активна в этом раунде."))
 			show(C)
 			return
-		if (alert(usr, "Включить продолжение из сейва? Apply выполнится на roundstart (или Force apply mid-round).", "Odyssey", "Да", "Нет") != "Да")
+		if (GAME_STATE >= RUNLEVEL_GAME)
+			to_chat(usr, SPAN_WARNING("Odyssey: continue mid-round запрещён (baselines должны сниматься с чистой карты). Используйте лобби до старта раунда. Для эксперта — Force apply отдельно."))
+			show(C)
+			return
+		if (alert(usr, "Включить продолжение из сейва? Загрузка пройдёт до спавна экипажа (только лобби / до старта раунда).", "Odyssey", "Да", "Нет") != "Да")
 			return
 		var/list/meta = odyssey_load_meta()
 		if (islist(meta) && !meta["active"])
@@ -638,7 +645,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 				return
 			log_and_message_admins("reactivated archived Odyssey campaign for continue", usr)
 		if (!odyssey_begin_campaign(TRUE, FALSE))
-			to_chat(usr, SPAN_WARNING("Odyssey: не удалось пометить продолжение: [odyssey_continue_fail_reason()]."))
+			to_chat(usr, SPAN_WARNING("Odyssey: не удалось пометить продолжение: [length(state.validation_errors) ? json_encode(state.validation_errors) : odyssey_continue_fail_reason()]."))
 			show(C)
 			return
 		odyssey_announce_admin_campaign("continue")
@@ -863,7 +870,10 @@ var/global/datum/odyssey_panel/odyssey_panel
 		return
 
 	if (href_list["force_apply"])
-		if (alert(usr, "Наложить сейв на текущую карту? Это необратимо для тайлов/машин/меха/экономики.", "Odyssey", "Apply", "Отмена") != "Apply")
+		if (GAME_STATE >= RUNLEVEL_GAME)
+			if (alert(usr, "Раунд уже идёт: baselines снимутся с ТЕКУЩЕЙ (грязной) карты — следующие сейвы могут врать. Всё равно Apply?", "Odyssey", "Apply всё равно", "Отмена") != "Apply всё равно")
+				return
+		else if (alert(usr, "Наложить сейв на текущую карту? Это необратимо для тайлов/машин/меха/экономики.", "Odyssey", "Apply", "Отмена") != "Apply")
 			return
 		if (odyssey_apply_save(force = TRUE))
 			odyssey_apply_bsd_post_jump_cooldown()

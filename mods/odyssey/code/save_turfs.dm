@@ -1,19 +1,7 @@
 /// Captures clean-map turf types so roundend can emit only deltas.
+/// Shares the object/index walk in [odyssey_capture_map_baseline].
 /proc/odyssey_capture_turf_baseline(force = FALSE)
-	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (!state.active && !force)
-		return FALSE
-	if (!force && islist(state.turf_baseline) && length(state.turf_baseline))
-		return TRUE
-	var/list/baseline = list()
-	for (var/z in GLOB.using_map.station_levels)
-		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
-			if (odyssey_turf_persistable(T))
-				baseline[odyssey_coord_key(T.x, T.y, T.z)] = "[T.type]"
-			CHECK_TICK
-	state.turf_baseline = baseline
-	log_debug("ODYSSEY: turf baseline captured ([length(baseline)] tiles) force=[force]")
-	return TRUE
+	return odyssey_capture_map_baseline(force)
 
 
 /proc/odyssey_collect_turfs()
@@ -24,16 +12,16 @@
 		log_error("ODYSSEY: no turf baseline; skipping turf save")
 		return entries
 
-	for (var/z in GLOB.using_map.station_levels)
-		for (var/turf/T in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
-			if (odyssey_turf_persistable(T))
-				var/key = odyssey_coord_key(T.x, T.y, T.z)
-				var/baseline_type = baseline[key]
-				if (baseline_type)
-					var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
-					if (entry)
-						entries += list(entry)
-			CHECK_TICK
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		if (!odyssey_turf_persistable(T))
+			continue
+		var/key = odyssey_coord_key(T.x, T.y, T.z)
+		var/baseline_type = baseline[key]
+		if (baseline_type)
+			var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
+			if (entry)
+				entries += list(entry)
+		CHECK_TICK
 	return entries
 
 
@@ -79,6 +67,7 @@
 		T = T.ChangeTurf(path, tell_universe = FALSE, force_lighting_update = TRUE, keep_air = TRUE)
 		if (!T)
 			return FALSE
+		odyssey_reindex_persist_turf(T)
 	if (istype(T, /turf/simulated/wall) && !isnull(entry["health"]))
 		T.set_health(entry["health"])
 	else if (istype(T, /turf/simulated/floor))
