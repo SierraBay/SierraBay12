@@ -106,9 +106,9 @@ var/global/datum/odyssey_state/odyssey
 	/// Last validation errors shown in the admin panel.
 	var/list/validation_errors
 	/// Temporary id → atom maps used during apply. Cleared after apply.
-	var/list/persist_index_machinery
-	var/list/persist_index_structures
-	var/list/persist_index_mechs
+	var/list/obj/machinery/persist_index_machinery
+	var/list/obj/structure/persist_index_structures
+	var/list/mob/living/exosuit/persist_index_mechs
 	/// Cached turf list for one save/load session (invalidated when areas are recaptured).
 	var/list/persistable_turfs_cache
 	/// TRUE after continued-campaign save was applied this round (pre_characters or force).
