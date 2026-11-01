@@ -113,7 +113,7 @@
 /proc/odyssey_apply_item_entry(list/entry, list/created_by_id)
 	if (!islist(entry) || !islist(created_by_id))
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = character_persist_safe_resolve_path(entry["type"])
 	if (odyssey_item_path_denylisted(path))
 		return FALSE
 	var/turf/T = odyssey_locate_turf(entry)

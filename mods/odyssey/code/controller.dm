@@ -271,9 +271,9 @@
 	if (!message)
 		return
 	if (urgent)
-		to_world(SPAN_DANGER("<b>[message]</b>"))
+		to_chat(world, SPAN_DANGER("<b>[message]</b>"))
 	else
-		to_world(SPAN_NOTICE("<b>[message]</b>"))
+		to_chat(world, SPAN_NOTICE("<b>[message]</b>"))
 
 
 /// After Odyssey Jump: open the save grace window, then arm roundend.
@@ -544,7 +544,7 @@
 	session.add_step("finish", "Завершение")
 
 	odyssey_load_ui_push(session)
-	to_world(SPAN_NOTICE("<b>Одиссея: сохранение состояния кампании…</b>"))
+	to_chat(world, SPAN_NOTICE("<b>Одиссея: сохранение состояния кампании…</b>"))
 	odyssey_invalidate_persistable_turfs_cache()
 
 	odyssey_load_step(session, "prepare", "active")

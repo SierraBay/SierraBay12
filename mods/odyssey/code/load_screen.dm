@@ -215,7 +215,7 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 	session.add_step("finish", "Завершение")
 
 	odyssey_load_ui_push(session, TRUE)
-	to_world(SPAN_NOTICE("<b>Одиссея: загрузка сохранения кампании…</b>"))
+	to_chat(world, SPAN_NOTICE("<b>Одиссея: загрузка сохранения кампании…</b>"))
 	odyssey_invalidate_persistable_turfs_cache()
 
 	odyssey_load_step(session, "validate", "active", "meta и части снимка", TRUE)
@@ -347,7 +347,7 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 	session.finished = TRUE
 	odyssey_load_step(session, "finish", "done", null, TRUE)
 	log_game("ODYSSEY: applied save campaign=[state.campaign_id] shift=[state.shift_number] force=[force]")
-	to_world(SPAN_NOTICE("<b>Одиссея: сохранение загружено.</b>"))
+	to_chat(world, SPAN_NOTICE("<b>Одиссея: сохранение загружено.</b>"))
 	odyssey_invalidate_persistable_turfs_cache()
 	if (session.ui_dirty)
 		odyssey_load_ui_push(session, TRUE)

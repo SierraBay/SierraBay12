@@ -42,7 +42,7 @@
 	for (var/list/entry in entries)
 		if (!islist(entry))
 			continue
-		var/path = text2path(entry["type"])
+		var/path = character_persist_safe_resolve_path(entry["type"])
 		var/amount = text2num(entry["amount"])
 		if (!ispath(path, /datum/reagent) || !(amount > 0))
 			continue
@@ -100,7 +100,7 @@
 	for (var/list/entry in entries)
 		if (!islist(entry))
 			continue
-		var/path = text2path(entry["type"])
+		var/path = character_persist_safe_resolve_path(entry["type"])
 		if (!ispath(path, /obj/item/organ/internal/augment))
 			continue
 		var/organ_tag = entry["organ_tag"]
@@ -135,7 +135,7 @@
 	for (var/list/entry in entries)
 		if (!islist(entry))
 			continue
-		var/path = text2path(entry["type"])
+		var/path = character_persist_safe_resolve_path(entry["type"])
 		if (character_persist_implant_denied(path))
 			continue
 		var/zone = entry["zone"]

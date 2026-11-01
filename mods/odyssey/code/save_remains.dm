@@ -158,7 +158,7 @@
 /proc/odyssey_apply_remain_entry(list/entry)
 	if (!islist(entry))
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = character_persist_safe_resolve_path(entry["type"])
 	if (!ispath(path, /obj/item/organ))
 		return FALSE
 	var/turf/T = odyssey_locate_turf(entry)

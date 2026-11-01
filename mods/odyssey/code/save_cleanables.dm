@@ -66,7 +66,7 @@
 /proc/odyssey_apply_cleanable_entry(list/entry)
 	if (!islist(entry))
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = character_persist_safe_resolve_path(entry["type"])
 	if (odyssey_cleanable_path_denylisted(path))
 		return FALSE
 	var/turf/T = odyssey_locate_turf(entry)

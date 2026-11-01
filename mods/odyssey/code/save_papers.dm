@@ -308,7 +308,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return null
-	var/want_path = text2path(entry["container_type"])
+	var/want_path = character_persist_safe_resolve_path(entry["container_type"])
 	var/obj/structure/filingcabinet/fallback
 	for (var/obj/structure/filingcabinet/C in T)
 		if (!odyssey_filingcabinet_persistable(C))
