@@ -153,6 +153,7 @@ var/global/list/odyssey_custody_landmarks = list()
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), slot_shoes)
+	odyssey_release_custody_from_container(H)
 	H.forceMove(cell)
 
 	entry["criminal_status"] = "Incarcerated"
@@ -165,6 +166,26 @@ var/global/list/odyssey_custody_landmarks = list()
 	to_chat(H, SPAN_WARNING("You remain in Security custody from the previous shift. Your belongings were not returned."))
 	log_game("ODYSSEY: applied custody for [key] name=[H.real_name] at [cell.x],[cell.y],[cell.z]")
 	return TRUE
+
+
+/// Spawn tubes keep an occupant ref. forceMove leaves it, and opening the tube pulls the mob back.
+/proc/odyssey_release_custody_from_container(mob/living/carbon/human/H)
+	if (!istype(H))
+		return
+	if (istype(H.loc, /obj/machinery/cryopod))
+		var/obj/machinery/cryopod/P = H.loc
+		if (P.occupant == H)
+			P.go_out()
+		return
+	if (istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+		var/obj/machinery/atmospherics/unary/cryo_cell/C = H.loc
+		if (C.occupant == H)
+			C.go_out()
+		return
+	if (istype(H.loc, /obj/machinery/sleeper))
+		var/obj/machinery/sleeper/S = H.loc
+		if (S.occupant == H)
+			S.go_out()
 
 
 /proc/odyssey_admin_clear_roster_custody(roster_key, mob/user)

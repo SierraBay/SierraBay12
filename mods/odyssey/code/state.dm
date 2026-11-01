@@ -170,10 +170,10 @@ var/global/datum/odyssey_state/odyssey
 		if (QDELETED(state.persist_index_mechs[id]))
 			state.persist_index_mechs -= id
 	for (var/obj/machinery/M in T)
-		if (!QDELETED(M) && M.odyssey_persist_id)
+		if (!QDELETED(M) && M.loc == T && M.odyssey_persist_id)
 			state.persist_index_machinery[M.odyssey_persist_id] = M
 	for (var/obj/structure/S in T)
-		if (!QDELETED(S) && S.odyssey_persist_id)
+		if (!QDELETED(S) && S.loc == T && S.odyssey_persist_id)
 			state.persist_index_structures[S.odyssey_persist_id] = S
 	for (var/mob/living/exosuit/M in T)
 		if (!QDELETED(M) && M.odyssey_persist_id)
@@ -187,11 +187,11 @@ var/global/datum/odyssey_state/odyssey
 	var/list/mechs = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
 		for (var/obj/machinery/M in T)
-			if (QDELETED(M) || !M.odyssey_persist_id)
+			if (QDELETED(M) || M.loc != T || !M.odyssey_persist_id)
 				continue
 			machines[M.odyssey_persist_id] = M
 		for (var/obj/structure/S in T)
-			if (QDELETED(S) || !S.odyssey_persist_id)
+			if (QDELETED(S) || S.loc != T || !S.odyssey_persist_id)
 				continue
 			structures[S.odyssey_persist_id] = S
 		for (var/mob/living/exosuit/M in T)

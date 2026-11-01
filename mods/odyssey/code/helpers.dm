@@ -433,6 +433,9 @@
 		if (odyssey_turf_persistable(T))
 			turf_baseline[odyssey_coord_key(T.x, T.y, T.z)] = "[T.type]"
 		for (var/obj/O in T)
+			// Multi-tile airlocks sit in two turfs. Only the real loc is the object.
+			if (O.loc != T)
+				continue
 			var/kind
 			if (istype(O, /obj/machinery) && odyssey_machinery_whitelisted(O))
 				kind = "machinery"

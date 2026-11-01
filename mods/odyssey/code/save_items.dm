@@ -27,8 +27,14 @@
 		"y" = T.y,
 		"z" = T.z,
 		"dir" = I.dir,
-		"in_closet" = !!istype(I.loc, /obj/structure/closet)
+		"in_closet" = FALSE
 	)
+	var/obj/structure/closet/host = I.loc
+	if (istype(host))
+		entry["in_closet"] = TRUE
+		if (!host.odyssey_persist_id)
+			odyssey_assign_runtime_id(host)
+		entry["closet_id"] = host.odyssey_persist_id
 	odyssey_write_pixel_offset(I, entry)
 	if (storage_id)
 		entry["storage_id"] = storage_id
@@ -110,6 +116,50 @@
 	return removed
 
 
+/proc/odyssey_resolve_item_closet(list/entry, turf/T)
+	if (!islist(entry) || !entry["in_closet"])
+		return null
+	var/closet_id = entry["closet_id"]
+	if (closet_id)
+		var/obj/structure/S = odyssey_find_structure_by_id(closet_id)
+		if (istype(S, /obj/structure/closet))
+			return S
+	if (!istype(T))
+		return null
+	var/obj/structure/closet/found
+	for (var/obj/structure/closet/C in T)
+		if (C.loc != T)
+			continue
+		if (found)
+			return found
+		found = C
+	return found
+
+
+/proc/odyssey_insert_item_into_closet(obj/item/I, obj/structure/closet/C)
+	if (!istype(I) || !istype(C))
+		return FALSE
+	if (I.loc != C)
+		I.forceMove(C)
+	// Floor spawns randomize pixel offset. Inside a closet that draws the item on top of it.
+	I.pixel_x = 0
+	I.pixel_y = 0
+	I.pixel_z = 0
+	return I.loc == C
+
+
+/proc/odyssey_clear_storage_autofill(obj/item/storage/S)
+	if (!istype(S))
+		return
+	// startswith fills the container during New. Saved contents are applied afterwards.
+	var/list/spawned = list()
+	for (var/obj/item/child in S)
+		if (odyssey_item_persistable(child))
+			spawned += child
+	for (var/obj/item/child in spawned)
+		qdel(child)
+
+
 /proc/odyssey_apply_item_entry(list/entry, list/created_by_id)
 	if (!islist(entry) || !islist(created_by_id))
 		return FALSE
@@ -119,6 +169,8 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
+	var/obj/structure/closet/host = odyssey_resolve_item_closet(entry, T)
+	var/atom/spawn_at = host || T
 	var/obj/item/I
 	if (ispath(path, /obj/item/stack))
 		var/amount = entry["amount"]
@@ -126,14 +178,19 @@
 			amount = text2num(amount)
 		if (!isnum(amount) || amount < 1)
 			amount = 1
-		I = new path(T, amount)
+		I = new path(spawn_at, amount)
 	else
-		I = new path(T)
+		I = new path(spawn_at)
 	if (QDELETED(I) || !istype(I))
 		return FALSE
+	if (istype(I, /obj/item/storage))
+		odyssey_clear_storage_autofill(I)
 	if (!isnull(entry["dir"]))
 		I.set_dir(entry["dir"])
-	odyssey_apply_pixel_offset(I, entry)
+	if (host)
+		odyssey_insert_item_into_closet(I, host)
+	else
+		odyssey_apply_pixel_offset(I, entry)
 	if (entry["name"])
 		I.SetName(entry["name"])
 	if (entry["id"])
@@ -143,14 +200,8 @@
 		var/obj/item/storage/parent = created_by_id[entry["storage_id"]]
 		if (istype(parent))
 			I.forceMove(parent)
-		else if (entry["in_closet"])
-			var/obj/structure/closet/C = locate() in T
-			if (istype(C))
-				I.forceMove(C)
-	else if (entry["in_closet"])
-		var/obj/structure/closet/C = locate() in T
-		if (istype(C))
-			I.forceMove(C)
+		else if (host)
+			odyssey_insert_item_into_closet(I, host)
 	return TRUE
 
 

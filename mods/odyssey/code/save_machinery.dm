@@ -5,7 +5,7 @@
 	var/list/live_ids = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
 		for (var/obj/machinery/M in T)
-			if (QDELETED(M) || !odyssey_machinery_whitelisted(M))
+			if (QDELETED(M) || M.loc != T || !odyssey_machinery_whitelisted(M))
 				continue
 			var/id = M.odyssey_persist_id || odyssey_assign_runtime_id(M)
 			live_ids[id] = TRUE
@@ -163,7 +163,8 @@
 	var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
 	if (!M && !entry["action"])
 		M = locate(path) in T
-	if (!M && entry["action"] == "created")
+	// A 2-tile airlock used to be saved twice and then deleted on load. Spawn it if the mapped one is gone.
+	if (!M && (entry["action"] == "created" || ispath(path, /obj/machinery/door/airlock/multi_tile)))
 		M = new path(T)
 	if (!istype(M))
 		return FALSE
@@ -171,7 +172,11 @@
 		M.odyssey_persist_id = entry["id"]
 		odyssey_index_put(odyssey_ensure_state().persist_index_machinery, entry["id"], M)
 	if (get_turf(M) != T)
-		M.forceMove(T)
+		// door/Move deconstructs the airlock. Place it without that path.
+		if (istype(M, /obj/machinery/door))
+			M.loc = T
+		else
+			M.forceMove(T)
 	if (!isnull(entry["dir"]))
 		M.set_dir(entry["dir"])
 	odyssey_apply_pixel_offset(M, entry)
@@ -198,6 +203,10 @@
 		odyssey_apply_fabricator_materials(M, entry["stored_material"])
 	if (!istype(M, /obj/machinery/door/airlock) || !islist(entry["airlock"]))
 		M.update_icon()
+	if (istype(M, /obj/machinery/door))
+		var/obj/machinery/door/D = M
+		if (D.width > 1)
+			D.update_bounds()
 	return TRUE
 
 

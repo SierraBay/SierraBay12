@@ -36,7 +36,7 @@
 	var/list/live_ids = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
 		for (var/obj/structure/S in T)
-			if (QDELETED(S) || !odyssey_structure_whitelisted(S))
+			if (QDELETED(S) || S.loc != T || !odyssey_structure_whitelisted(S))
 				continue
 			var/id = S.odyssey_persist_id || odyssey_assign_runtime_id(S)
 			live_ids[id] = TRUE
