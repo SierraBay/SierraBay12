@@ -15,7 +15,10 @@
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 0
-	var/static/denominations = list(1000,500,200,100,50,20,10,1)
+	// [SIERRA-EDIT] - CHICHNOMICS
+	// var/static/denominations = list(1000,500,200,100,50,20,10,1)
+	var/static/denominations = list(100,50,20,10,5,2,1)
+	// [/SIERRA-EDIT] - CHICHNOMICS
 
 /obj/item/spacecash/use_tool(obj/item/W, mob/living/user, list/click_params)
 	if(istype(W, /obj/item/spacecash))
@@ -97,6 +100,10 @@
 /obj/item/spacecash/bundle/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
 		var/amount = input(usr, "How many [GLOB.using_map.local_currency_name] do you want to take? (0 to [src.worth])", "Take Money", 20) as num
+		// [SIERRA-EDIT] - CHICHNOMICS
+		// amount = round(clamp(amount, 0, src.worth))
+		amount = round(clamp(amount, 0, src.worth) * 100) / 100
+		// [/SIERRA-EDIT] - CHICHNOMICS
 		// [SIERRA-ADD] Money dupe fix
 		if(!src || QDELETED(src))
 			return
@@ -109,7 +116,10 @@
 
 		src.worth -= amount
 		src.update_icon()
-		if (amount in list(1000,500,200,100,50,20,1))
+		// [SIERRA-EDIT] - CHICHNOMICS
+		// if (amount in list(1000,500,200,100,50,20,1))
+		if (amount in denominations)
+		// [/SIERRA-EDIT] - CHICHNOMICS
 			var/cashtype = text2path("/obj/item/spacecash/bundle/c[amount]")
 			var/obj/cash = new cashtype (usr.loc)
 			usr.put_in_hands(cash)
@@ -172,7 +182,10 @@
 	worth = 1000
 
 /proc/spawn_money(sum, spawnloc, mob/living/carbon/human/human_user as mob)
-	if(sum in list(1000,500,200,100,50,20,10,1))
+	// [SIERRA-EDIT] - CHICHNOMICS
+	// if(sum in list(1000,500,200,100,50,20,10,1))
+	if(sum in list(100,50,20,10,5,2,1))
+	// [/SIERRA-EDIT] - CHICHNOMICS
 		var/cash_type = text2path("/obj/item/spacecash/bundle/c[sum]")
 		var/obj/cash = new cash_type (spawnloc)
 		if(ishuman(human_user) && !human_user.get_active_hand())
