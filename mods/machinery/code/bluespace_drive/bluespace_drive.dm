@@ -826,20 +826,21 @@ var/global/list/bluespace_gas_power_factor = list(
 	if(jump_locked)
 		visible_message(SPAN_WARNING("\The [src]'s jump sequence is locked \u2014 too late to abort!"))
 		return
+	// Drop the charging flags before FX cleanup so a lighting timer that still fires will no-op.
+	var/was_odyssey = odyssey_campaign_jump
+	jumping = FALSE
+	odyssey_campaign_jump = FALSE
 	if(pre_jump_timer_id)
 		deltimer(pre_jump_timer_id)
 		pre_jump_timer_id = null
 	if(jump_timer_id)
 		deltimer(jump_timer_id)
 		jump_timer_id = null
-	var/was_odyssey = odyssey_campaign_jump
 	odyssey_drive_clear_jump_fx(src)
-	jumping = FALSE
 	jump_end_time = 0
 	rotation_error = 0
 	overcharged = FALSE
 	emergency_jump = FALSE
-	odyssey_campaign_jump = FALSE
 	if(power_from_gas > 0 || internal_gas.total_moles || fuel_gas.total_moles)
 		purge_charge(forced = TRUE)
 	// Play decons_orb animation before removing the orb

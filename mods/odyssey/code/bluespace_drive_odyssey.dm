@@ -338,12 +338,17 @@
 
 /// Ship lighting → bluespace spectrum (or restore). Areas on the drive Z-stack only; skips transient roots.
 /// Enabling also locks Odyssey abort (`jump_locked`) for the rest of the sequence.
+/// Enable is ignored once the jump is no longer charging, so a missed deltimer cannot paint the ship after abort.
 /proc/odyssey_drive_set_bluespace_lighting(obj/machinery/bluespace_drive/D, enable)
-	if (!istype(D))
+	if (!istype(D) || QDELETED(D))
 		return
-	if (enable && D.jumping && D.odyssey_campaign_jump)
+	if (enable)
+		if (!D.jumping || !D.odyssey_campaign_jump)
+			return
 		D.jump_locked = TRUE
 	for (var/area/A in world)
+		if (enable && (!D.jumping || !D.odyssey_campaign_jump))
+			return
 		if (!A.z || !AreConnectedZLevels(A.z, D.z))
 			continue
 		if (odyssey_area_excluded_from_snapshot(A))
