@@ -11,7 +11,7 @@
 
 /obj/item/organ/internal/augment/armor
 	// «Prevent tearing and puncturing»: мягкая сетка. 1.0 мм против пуль пропускает 77% пистолета,
-	// 0.4 мм против клинков — 74% ножа, 16 МПа — удар чуть слабее.
+	// 0.4 мм против клинков — 74% ножа, 1.6 МПа — удар чуть слабее.
 	armor = list(
 		melee = ARMOR_MELEE_SMALL,
 		bullet = ARMOR_BALLISTIC_SMALL
@@ -21,7 +21,7 @@
 	ce_density_rha = 0.2
 
 /obj/item/organ/internal/augment/armor/changeling
-	// Кость и хитин — жёсткая броня. 1.6 мм против клинков останавливают нож, 60 МПа гасят удар
+	// Кость и хитин — жёсткая броня. 1.6 мм против клинков останавливают нож, 6 МПа гасят удар
 	// как лёгкая плита, против пуль — те же 1.0 мм, что у сетки.
 	armor = list(
 		melee = ARMOR_MELEE_KNIVES,

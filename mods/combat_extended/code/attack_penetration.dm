@@ -49,11 +49,11 @@
 	return armor_pen * CE_AP_MM_PER_POINT_BULLET + CE_AP_EARLY_BONUS_MM_BULLET * (1 - unspent ** 2)
 
 
-/// Кубический корень для тупого урона CE: `(10 * bluntPen) ^ (1/3)`.
-/proc/ce_cbrt(value)
-	if(value <= 0)
+/// Тупой урон Bay от тупого пробития в МПа: формула CE `(10 * bluntPen) ^ (1/3)`, пересчитанная в урон Bay.
+/proc/ce_get_blunt_damage(blunt_pen)
+	if(blunt_pen <= 0)
 		return 0
-	return value ** (1 / 3)
+	return (10 * blunt_pen) ** (1 / 3) * CE_BLUNT_DAMAGE_BAY_MULT
 
 
 /**
@@ -76,7 +76,7 @@
 
 
 /**
- * Пробитие атаки в единицах CE: мм RHA для острых атак, Bay МПа для тупых. `damage` у холодного
+ * Пробитие атаки в единицах CE: мм RHA для острых атак, МПа для тупых. `damage` у холодного
  * оружия — `force`, `armor_pen` может быть отрицательным.
  *
  * Вызывается ОДИН раз на атаку, до прохода по слоям брони: дальше каждый слой расходует уже
@@ -99,7 +99,7 @@
 	return ce_evaluate_curve(ce_pen_curve_melee, damage) * ce_ap_multiplier(armor_pen, CE_AP_DIVISOR_MELEE)
 
 
-/// Тупое пробитие атаки, Bay МПа: то, чем она бьёт, когда её острую часть остановила броня.
+/// Тупое пробитие атаки, МПа: то, чем она бьёт, когда её острую часть остановила броня.
 /proc/ce_derive_blunt_penetration(damage, damage_flags, armor_pen = 0)
 	if(damage <= 0)
 		return 0
@@ -116,14 +116,14 @@
 
 
 /obj/item/projectile
-	/// Собственное тупое пробитие снаряда на полном уроне, Bay МПа. null — выводится из урона и AP
+	/// Собственное тупое пробитие снаряда на полном уроне, МПа. null — выводится из урона и AP
 	/// (`ce_derive_blunt_penetration()`). Задаётся патронам, у которых вывод далёк от импульса пули:
 	/// урон Bay с её весом почти не связан (`code/items/guns/bullets.dm`).
 	var/ce_blunt_penetration
 
 
 /**
- * Тупое пробитие атаки, Bay МПа: собственное у снаряда, чьё это попадание, иначе выведенное из
+ * Тупое пробитие атаки, МПа: собственное у снаряда, чьё это попадание, иначе выведенное из
  * урона. Снаряд узнаётся по `ce_hit_projectile` (`projectile_effects.dm`), так что консультационный
  * и боевой проходы одного попадания получают одно число.
  */
@@ -135,7 +135,7 @@
 
 
 /**
- * Собственное тупое пробитие снаряда на его текущем уроне, Bay МПа. Убывает вместе с уроном, как и
+ * Собственное тупое пробитие снаряда на его текущем уроне, МПа. Убывает вместе с уроном, как и
  * выведенное: пуля на излёте (`damage_falloff`) и прошедшая моба навылет несёт меньший импульс.
  */
 /obj/item/projectile/proc/ce_get_own_blunt_penetration()
@@ -144,3 +144,27 @@
 	if(full_damage <= 0)
 		return 0
 	return ce_blunt_penetration * damage / full_damage
+
+
+/**
+ * Прибавка AP оружия из материала сверх его собственного AP: формула Bay `2 × (brute_armor - 2)`,
+ * но отсчитанная от материала `ce_material_ap_baseline`, а не от `brute_armor` 2. Не меньше нуля.
+ */
+/proc/ce_get_material_ap_bonus(material/weapon_material)
+	var/material/baseline = SSmaterials.get_material_by_name(ce_material_ap_baseline)
+	ASSERT(baseline)
+	return 2 * max(0, weapon_material.brute_armor - max(2, baseline.brute_armor))
+
+
+/**
+ * AP оружия из материала считается заново от своего: сила сверх `max_force` плюс прибавка
+ * материала (`ce_get_material_ap_bonus()`), не выше `max_pen`. Сила считается как в кор `update_force()`.
+ *
+ * Кор не начинает с исходного AP, а ПРИБАВЛЯЕТ прибавку материала к прошлому: боевой складной нож
+ * с каждым раскрытием получал ещё +10 AP, пока не упирался в `max_pen` 30.
+ */
+/obj/item/material/update_force()
+	..()
+	var/full_force = round((edge || sharp ? material.get_edge_damage() : material.get_blunt_damage()) * force_multiplier)
+	var/excess_force = max(0, full_force - max_force)
+	armor_penetration = min(max_pen, initial(armor_penetration) + excess_force + ce_get_material_ap_bonus(material))

@@ -30,7 +30,7 @@
  * рукопашка обращается к броне дважды за удар. Если бы здесь тратился бюджет пробития или
  * изнашивалась броня, настоящее попадание приходило бы уже по испорченной броне.
  *
- * `pen` — остаток пробития: мм RHA для острых атак, Bay МПа для тупых. Три параметра `base_*`
+ * `pen` — остаток пробития: мм RHA для острых атак, МПа для тупых. Три параметра `base_*`
  * описывают атаку ЦЕЛИКОМ, до первого слоя: они нужны только конверсии по §7.2, где масштаб
  * берётся от исходных величин. Если их не передать, процедура считает себя единственным слоем —
  * в таком виде её и зовёт `get_blocked()`.
@@ -84,7 +84,7 @@
 	if(damage_flags & DAMAGE_FLAG_BULLET)
 		var/pen_multi = base_pen > 0 ? clamp(pen / base_pen, 0, 1) : 0
 		blunt_pen = base_blunt_pen * pen_multi
-		blunt_damage = ce_cbrt(10 * blunt_pen)
+		blunt_damage = ce_get_blunt_damage(blunt_pen)
 		// Аналог дробления атаки из CE (`attack.damage / damageAmountBase`): пуля, уже
 		// потерявшая часть урона на внешних слоях, несёт пропорционально меньший импульс.
 		if(base_damage > 0)
@@ -94,7 +94,7 @@
 		// пробития, ни по потерянному урону. Меч, остановленный латами, всё равно прилетает
 		// как тяжёлая железка на полной силе.
 		blunt_pen = base_blunt_pen
-		blunt_damage = ce_cbrt(10 * blunt_pen)
+		blunt_damage = ce_get_blunt_damage(blunt_pen)
 
 	blunt_pen *= blunt_impact_mult
 	var/blunt_armor = get_armor_blunt()

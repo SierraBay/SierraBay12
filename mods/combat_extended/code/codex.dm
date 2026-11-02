@@ -49,7 +49,7 @@
 		"<b>[label]:</b>",
 		"[round(ballistic, 0.1)] mm RHA vs. ballistics",
 		"[round(blade, 0.1)] mm RHA vs. blades",
-		"[round(blunt / CE_BLUNT_DISPLAY_DIVISOR, 0.1)] MPa vs. impacts"
+		"[round(blunt, 0.1)] MPa vs. impacts"
 	)
 	lines += laser_lines
 
@@ -62,7 +62,7 @@
  *
  * Для острых атак печатаются ОБА числа: острое пробитие и тот импульс, который прилетит, если
  * острую часть остановят. `damage` — урон снаряда либо `force` оружия. `blunt_pen` — собственное
- * тупое пробитие снаряда, Bay МПа; null — выводится из урона.
+ * тупое пробитие снаряда, МПа; null — выводится из урона.
  */
 /proc/ce_attack_codex_line(damage, damage_flags, armor_pen = 0, label = "Penetration", list/extra_lines, blunt_pen)
 	if(damage <= 0)
@@ -74,7 +74,7 @@
 
 	if(isnull(blunt_pen))
 		blunt_pen = ce_derive_blunt_penetration(damage, damage_flags, armor_pen)
-	lines += "[round(blunt_pen / CE_BLUNT_DISPLAY_DIVISOR, 0.1)] MPa impact"
+	lines += "[round(blunt_pen, 0.1)] MPa impact"
 
 	if(extra_lines)
 		lines += extra_lines

@@ -20,7 +20,7 @@
  * вторичная, и не пускает её к органам.
  */
 /datum/ce_explicit_pen
-	/// Тупое пробитие, Bay МПа.
+	/// Тупое пробитие, МПа.
 	var/pen = 0
 
 /datum/ce_explicit_pen/New(pen)
@@ -30,7 +30,7 @@
 
 /**
  * Остаточный тупой удар от острой атаки, которая пробила слои, но потеряла на них урон:
- * `list(урон, тупое пробитие в Bay МПа)` либо null. `pen` — остаток после брони И плотности тканей.
+ * `list(урон, тупое пробитие в МПа)` либо null. `pen` — остаток после брони И плотности тканей.
  *
  * Чистая процедура. Её зовёт `ce_walk_armor_layers()` на каждом проходе, включая
  * консультационный, а выключатель проверяет уже `modify_damage_by_armor()`.
@@ -43,7 +43,7 @@
 	var/pen_lost = clamp((base_pen - pen) / base_pen, 0, 1)
 	var/damage_lost = clamp((base_damage - damage) / base_damage, 0, 1)
 	var/blunt_pen = base_blunt_pen * pen_lost * damage_lost
-	var/blunt_damage = ce_cbrt(10 * blunt_pen)
+	var/blunt_damage = ce_get_blunt_damage(blunt_pen)
 	if(blunt_damage <= 0)
 		return null
 

@@ -201,7 +201,7 @@
 	return taken * ce_parry_damage_mult
 
 
-/// Прочность оружия в руках `holder`: `list(острая мм RHA, тупая Bay МПа)`.
+/// Прочность оружия в руках `holder`: `list(острая мм RHA, тупая МПа)`.
 /obj/item/proc/ce_get_parry_toughness(mob/living/holder)
 	RETURN_TYPE(/list)
 	var/material/material = ce_get_parry_material()

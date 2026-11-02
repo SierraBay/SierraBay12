@@ -42,7 +42,7 @@
 
 /**
  * Сколько HP снимает с брони одна проверка слоя, по §8 спеки. `pen` и `armor_value` — по оси
- * проверки: мм RHA для острой атаки, Bay МПа для тупой.
+ * проверки: мм RHA для острой атаки, МПа для тупой.
  */
 /proc/ce_armor_wear_amount(damage, new_damage, pen, armor_value, is_sharp, is_hard)
 	if(damage <= 0)

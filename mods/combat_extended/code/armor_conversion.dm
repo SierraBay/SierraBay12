@@ -12,7 +12,7 @@
 	var/armor_sharp_ballistic
 	/// Sharp против холодного оружия, мм RHA. Если задано — используется напрямую, минуя вывод по кривым.
 	var/armor_sharp_melee
-	/// Blunt, Bay МПа. Если задано — используется напрямую, минуя весь вывод по кривым.
+	/// Blunt, МПа. Если задано — используется напрямую, минуя весь вывод по кривым.
 	var/armor_blunt
 	/// Кеш `is_hard_armor()`. null — ещё не считали.
 	var/ce_hard_armor
@@ -138,7 +138,7 @@
 	return (damage_flags & DAMAGE_FLAG_BULLET) ? get_armor_sharp_ballistic() : get_armor_sharp_melee()
 
 
-/// Blunt, Bay МПа. Раскалённая броня держит меньше (`laser_heat.dm`).
+/// Blunt, МПа. Раскалённая броня держит меньше (`laser_heat.dm`).
 /datum/extension/armor/proc/get_armor_blunt()
 	return ce_get_cold_blunt() * ce_get_hot_kinetic_mult()
 
@@ -167,7 +167,7 @@
 	return ce_evaluate_curve(is_hard_armor() ? ce_sharp_melee_hard : ce_sharp_melee_soft, source)
 
 
-/// Blunt холодной брони, Bay МПа.
+/// Blunt холодной брони, МПа.
 /datum/extension/armor/proc/ce_get_cold_blunt()
 	if(!isnull(armor_blunt))
 		return armor_blunt

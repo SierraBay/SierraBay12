@@ -353,6 +353,8 @@
 		list("riot и pistol", riot_armor, /obj/item/projectile/bullet/pistol, CE_PROMISE_PENETRATES),
 		list("riot и энергомеч", riot_armor, esword, CE_PROMISE_PENETRATES)
 	)
+	promises += steel_blade_promises(/obj/item/material/knife, "ARMOR_MELEE_KNIVES", knives_armor)
+	promises += steel_blade_promises(/obj/item/material/sword, "ARMOR_MELEE_RESISTANT", resistant_armor)
 
 	var/list/failures = list()
 	for(var/list/promise in promises)
@@ -378,6 +380,24 @@
 	set_extension(plate, /datum/extension/armor, list("bullet" = bullet, "melee" = melee))
 	return get_extension(plate, /datum/extension/armor)
 
+/**
+ * Обещания на настоящих стальных клинках билда: каждый острый стальной подтип `blade_root` держит
+ * броня `armor`. Опорные нож и меч выше заданы числами без материала, а сталь в Bay прибавляет оружию
+ * AP. Складные ножи раскрываются.
+ */
+/datum/unit_test/combat_extended/define_promises/proc/steel_blade_promises(blade_root, define_name, datum/extension/armor/armor)
+	. = list()
+	for(var/path in typesof(blade_root))
+		var/obj/item/material/blade = new path(get_safe_turf())
+		spawned += blade
+		if(istype(blade, /obj/item/material/knife/folding))
+			var/obj/item/material/knife/folding/folding = blade
+			folding.open = TRUE
+			folding.update_force()
+		if(blade.material?.name != MATERIAL_STEEL || !ce_is_sharp_attack(blade.damage_flags()))
+			continue
+		. += list(list("[define_name] и [path]", armor, list(blade.force, blade.damage_flags(), blade.armor_penetration), CE_PROMISE_STOPS))
+
 /// Итог одного слоя для одной атаки: `CE_PROMISE_*`.
 /datum/unit_test/combat_extended/define_promises/proc/try_single_layer(datum/extension/armor/armor, damage, damage_flags, armor_pen)
 	var/pen = ce_derive_penetration(damage, damage_flags, armor_pen)
@@ -388,6 +408,35 @@
 	if(step[1] <= 0)
 		return CE_PROMISE_STOPS
 	return step[1] < damage ? CE_PROMISE_DAMPENS : CE_PROMISE_PENETRATES
+
+
+/*
+	AP оружия из материала считается заново при каждом `update_force()`: своё AP плюс прибавка
+	материала от стали. Кор прибавлял прибавку к прошлому AP, и боевой складной нож с каждым
+	раскрытием пробивал сильнее. Здесь титановое мачете: у стали прибавки нет, и копиться было бы
+	нечему, а сила титанового ножа выше `max_force`, и на этой ветке кор AP не копил.
+*/
+/datum/unit_test/combat_extended/material_ap_recount
+	name = "CE: AP оружия из материала не копится"
+
+/datum/unit_test/combat_extended/material_ap_recount/start_test()
+	var/obj/item/material/hatchet/machete/machete = new(get_safe_turf())
+	spawned += machete
+	var/bonus = ce_get_material_ap_bonus(machete.material)
+	var/overflows = machete.force >= machete.max_force
+	var/list/seen = list()
+	for(var/recount in 1 to 3)
+		machete.update_force()
+		seen += machete.armor_penetration
+
+	cleanup()
+	if(bonus <= 0 || overflows)
+		fail("У мачете из [machete.material?.name] нет прибавки AP или сила упирается в `max_force`: проверять нечего.")
+	else if(seen[1] != seen[3])
+		fail("AP при пересчётах [jointext(seen, ", ")]: растёт с каждым.")
+	else
+		pass("AP [seen[1]] при каждом из трёх пересчётов.")
+	return 1
 
 
 /*
@@ -2086,7 +2135,7 @@
 		var/list/hits = list(
 			list("пистолет", 45, pistol_flags, 0, 1),
 			list("ящик", 20, FLAGS_OFF, 0, ce_armor_melee_wear_mult),
-			list("остаточный удар", 10, FLAGS_OFF, new /datum/ce_explicit_pen(200), 1)
+			list("остаточный удар", 10, FLAGS_OFF, new /datum/ce_explicit_pen(20), 1)
 		)
 		for(var/list/hit in hits)
 			var/expected = expected_wear(armor, hit[2], hit[3], hit[4]) * hit[5]
@@ -3802,15 +3851,16 @@
 
 /*
 	Нульглас глушит псионику осколком, застрявшим в ране (`disrupts_psionics()` обходит всё
-	содержимое моба). Пробившая пуля застревает с шансом 100%. Остановленная тупым ударом режет
-	только с шансом `prob(brute)` и застрять не должна никогда — это ловится лишь иногда, а
-	наверняка — в `check_wounding()`.
+	содержимое моба). Пробившая пуля застревает с шансом 100%: medium-вставку нульглас пробивает
+	по замыслу, merc-плиту нет. Остановленная тупым ударом режет только с шансом `prob(brute)` и
+	застрять не должна никогда: здесь это ловится лишь иногда, а наверняка в `check_wounding()`.
 */
 /datum/unit_test/combat_extended/projectile_effects/proc/check_nullglass(list/failures)
 	// Название, пластины, глушит ли.
 	var/list/cases = list(
 		list("в голую грудь", null, TRUE),
-		list("в грудь за medium", list(/obj/item/clothing/accessory/armor_plate/medium), FALSE)
+		list("в грудь за medium", list(/obj/item/clothing/accessory/armor_plate/medium), TRUE),
+		list("в грудь за merc", list(/obj/item/clothing/accessory/armor_plate/merc), FALSE)
 	)
 	for(var/list/test_case as anything in cases)
 		var/mob/living/carbon/human/H = make_human(test_case[2])
@@ -3931,7 +3981,7 @@
 /// Кодекс патрона печатает собственный удар, а не выведенный.
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_codex(list/failures)
 	var/obj/item/projectile/pellet = /obj/item/projectile/bullet/pellet/shotgun
-	var/expected = "[round(initial(pellet.ce_blunt_penetration) / CE_BLUNT_DISPLAY_DIVISOR, 0.1)] MPa impact"
+	var/expected = "[round(initial(pellet.ce_blunt_penetration), 0.1)] MPa impact"
 	var/line = ce_projectile_codex_line(pellet)
 	if(!findtext(line, expected))
 		failures += "кодекс картечи: нет «[expected]» в «[line]»"
@@ -11380,8 +11430,8 @@
 	- без естественной брони урон меняет только `brute_mod` вида (Unathi, Tajara, Resomi);
 	- IPC меньше 4 только за счёт кинетической брони протезов из `ipc_mods`. Когда её заменит
 	  плотность, ожидание придётся поменять — README, «Протезы: плотность вместо брони»;
-	- GAS без урона: хитин — жёсткая броня с 60 Bay МПа тупой оси, а у удара силой 4 тупое
-	  пробитие 30. CE гасит его насухо.
+	- GAS без урона: хитин — жёсткая броня с 6 МПа тупой оси, а у удара силой 4 тупое
+	  пробитие 3. CE гасит его насухо.
 
 	`STANDARD`, `ARMORED` и `EXTRA_VULNERABLE` объявлены в `mob_tests.dm` и не сбрасываются,
 	а `IMMUNE` там сброшен через `#undef`, поэтому здесь своё имя.

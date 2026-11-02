@@ -12,6 +12,6 @@
 	name = null
 
 /datum/uplink_item/item/stealth_items/tactical_sneaky_armor
-	// Жёсткая броня с числами medium-вставки: держит holdout и 10-мм пистолет, магнум и винтовку — нет. Про
-	// ножи не сказано: стальные ножи билда её чуть пробивают (README, «TODO», «Стальные ножи»).
-	desc = "A hard armor vest that can be worn under a jacket. Stops most pistol rounds; magnums and rifles go through."
+	// Жёсткая броня с числами medium-вставки: держит holdout и 10-мм пистолет, но не магнум и винтовку.
+	// Держит и стальные ножи, но не мечи (README, «Нульглас и стальное холодное оружие»).
+	desc = "A hard armor vest that can be worn under a jacket. Stops most pistol rounds and knives; magnums, rifles and swords go through."
