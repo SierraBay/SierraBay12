@@ -97,8 +97,9 @@
 		D.build_type = bt
 	else
 		D.build_type = PROTOLATHE
-	if (islist(data["category"]))
-		D.category = data["category"].Copy()
+	var/list/saved_category = data["category"]
+	if (islist(saved_category))
+		D.category = saved_category.Copy()
 	else
 		D.category = list("Reverse Engineered")
 	var/q = data["quality"]
