@@ -15,6 +15,10 @@
 	ling.initial_spawn_target = new_slots
 	ling.hard_cap = ODYSSEY_CHANGELING_MAX
 	ling.hard_cap_round = ODYSSEY_CHANGELING_MAX
+	if (new_slots > 0)
+		additional_antag_types |= MODE_CHANGELING
+	else
+		additional_antag_types -= MODE_CHANGELING
 	log_game("ODYSSEY: changeling spawn target=[new_slots] (rolled=[state.changeling_shift_count] persisted=[persisted], cap [ODYSSEY_CHANGELING_MAX]) for [mode.config_tag]")
 
 

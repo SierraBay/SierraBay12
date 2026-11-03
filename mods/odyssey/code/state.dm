@@ -113,6 +113,8 @@ var/global/datum/odyssey_state/odyssey
 	var/list/persistable_turfs_cache
 	/// TRUE after continued-campaign save was applied this round (pre_characters or force).
 	var/save_applied = FALSE
+	/// Active load/save progress UI session (null when idle). Used so reconnects get push/close.
+	var/datum/odyssey_load_session/progress_session
 
 
 /datum/odyssey_state/New()

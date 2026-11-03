@@ -253,7 +253,7 @@
 				dat += "<li><i>…и другие.</i></li>"
 				break
 		dat += "</ul>"
-		dat += "<p style='font-size:0.9em; color:#889999;'>Места погибших членов экипажа закрыты до конца экспедиции.</p>"
+		dat += "<p style='font-size:0.9em; color:#889999;'>Слоты погибших членов экипажа закрыты до конца экспедиции.</p>"
 
 	// --- Assets ---
 	var/list/abandoned = list()

@@ -110,14 +110,18 @@
 #define ODYSSEY_SLEEPER_STATUS_ACTIVE "active"
 #define ODYSSEY_SLEEPER_STATUS_DEAD "dead"
 
-/// Flat per-shift chance to queue mercenaries while merc_used is false.
-#define ODYSSEY_MERC_CHANCE 40
+/// Merc chance scales with shift: (shift_number - 1) * step, clamped 0..100.
+/// Shift 1 = 0%, 2 = 20%, 3 = 40%, 4 = 60%, …
+#define ODYSSEY_MERC_CHANCE_STEP 20
+#define ODYSSEY_MERC_CHANCE_MAX 60
 /// Do not roll mercenaries unless at least this many eligible candidates exist.
 #define ODYSSEY_MERC_MIN_CANDIDATES 3
 
 #define ODYSSEY_MERC_DECISION_SPAWN "spawn"
 #define ODYSSEY_MERC_DECISION_MISS "miss"
 #define ODYSSEY_MERC_DECISION_SKIP_CANDIDATES "skip_candidates"
+/// Merc roll skipped: raiders/ninja already queued or present as gamemode tags.
+#define ODYSSEY_MERC_DECISION_BLOCKED_OUTSIDER "blocked_outsider"
 
 /// Hostile (red) sectors: independent flat chances for raiders and ninja.
 #define ODYSSEY_RAIDER_CHANCE 55
@@ -141,6 +145,8 @@
 #define ODYSSEY_OUTSIDER_DECISION_MISS "miss"
 #define ODYSSEY_OUTSIDER_DECISION_SKIP_CANDIDATES "skip_candidates"
 #define ODYSSEY_OUTSIDER_DECISION_WRONG_SECTOR "wrong_sector"
+/// Outsider roll skipped: mercenaries already queued or present as gamemode tags.
+#define ODYSSEY_OUTSIDER_DECISION_BLOCKED_MERC "blocked_merc"
 
 /// Sierra fleet craft for abandon/damage reports; their areas are always kept in the persist allowlist.
 #define ODYSSEY_TRACKED_SHUTTLE_NAMES list("Guppy", "Charon", "Petrov", "Phaethon")
@@ -193,6 +199,11 @@
 	"stacks",\
 	"misc"\
 )
+
+/// Cap for chemistry/medbay smartfridge item snapshots (bottles, beakers, pill bottles).
+#ifndef ODYSSEY_SMARTFRIDGE_MAX_ITEMS
+#define ODYSSEY_SMARTFRIDGE_MAX_ITEMS 300
+#endif
 
 /// Science sector briefs (RnD layer for Odyssey). Stored in research.json, not campaign objectives.
 #ifndef ODYSSEY_SCI_BRIEF_SPECTRUM

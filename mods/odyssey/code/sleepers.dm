@@ -16,20 +16,9 @@
 	return ..()
 
 
-/// Odyssey owns traitor rolls: drop vanilla traitor templates and autotraitor before they spawn.
+/// Legacy entry point; Odyssey antag claim now lives in create_antagonists().
 /proc/odyssey_prepare_station_antags(datum/game_mode/mode)
-	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (!state.active || !istype(mode))
-		return
-
-	additional_antag_types -= MODE_TRAITOR
-	if (MODE_TRAITOR in mode.antag_tags)
-		mode.antag_tags -= MODE_TRAITOR
-		log_game("ODYSSEY: stripped vanilla traitor from [mode.config_tag]; sleepers will assign instead")
-	if (MODE_TRAITOR in mode.latejoin_antag_tags)
-		mode.latejoin_antag_tags -= MODE_TRAITOR
-	if (!length(mode.latejoin_antag_tags))
-		mode.round_autoantag = FALSE
+	return
 
 
 /proc/odyssey_setup_sleepers()

@@ -225,6 +225,15 @@
 /obj/var/odyssey_persist_id
 
 
+/// Chemistry / medbay / virology refrigerated storage — contents saved on machinery entries.
+/proc/odyssey_smartfridge_chemistry_persistable(obj/machinery/smartfridge/F)
+	if (!istype(F))
+		return FALSE
+	return istype(F, /obj/machinery/smartfridge/chemistry) \
+		|| istype(F, /obj/machinery/smartfridge/secure/medbay) \
+		|| istype(F, /obj/machinery/smartfridge/secure/virology)
+
+
 /proc/odyssey_machinery_whitelisted(obj/machinery/M)
 	if (!istype(M))
 		return FALSE
@@ -232,10 +241,18 @@
 		|| istype(M, /obj/machinery/vending) \
 		|| istype(M, /obj/machinery/fabricator) \
 		|| istype(M, /obj/machinery/sleeper) \
-		|| istype(M, /obj/machinery/door/airlock)
+		|| istype(M, /obj/machinery/door/airlock) \
+		|| (istype(M, /obj/machinery/smartfridge) && odyssey_smartfridge_chemistry_persistable(M)) \
+		|| istype(M, /obj/machinery/anomaly_container) \
+		|| istype(M, /obj/machinery/artifact) \
+		|| istype(M, /obj/machinery/power/smes) \
+		|| istype(M, /obj/machinery/power/shield_generator) \
+		|| istype(M, /obj/machinery/atmospherics/unary/cryo_cell) \
+		|| (istype(M, /obj/machinery/portable_atmospherics) && !istype(M, /obj/machinery/portable_atmospherics/hydroponics/soil/invisible))
 
 
 /// Structures that must not be snapshotted: powernet / disposal / multiz links need rebuild, not a blind new(turf).
+/// Map furniture (tables/beds/chairs) — false «destroyed» tombstones + turf/type fallback wiped Charon/cargo tables on continue.
 /// Atmospheric pipes are /obj/machinery/atmospherics — outside structure persist entirely.
 /proc/odyssey_structure_path_denylisted(path)
 	if (!ispath(path, /obj/structure))
@@ -247,7 +264,9 @@
 		|| ispath(path, /obj/structure/ladder) \
 		|| ispath(path, /obj/structure/stairs) \
 		|| ispath(path, /obj/structure/transit_tube) \
-		|| ispath(path, /obj/structure/transit_tube_pod)
+		|| ispath(path, /obj/structure/transit_tube_pod) \
+		|| ispath(path, /obj/structure/table) \
+		|| ispath(path, /obj/structure/bed)
 
 
 /proc/odyssey_structure_denylisted(obj/structure/S)
@@ -329,7 +348,7 @@
 		return "clothing"
 	if (ispath(path, /obj/item/stack/cable_coil) || ispath(path, /obj/item/device/assembly) || ispath(path, /obj/item/weldingtool) || ispath(path, /obj/item/crowbar) || ispath(path, /obj/item/screwdriver) || ispath(path, /obj/item/wrench) || ispath(path, /obj/item/wirecutters) || ispath(path, /obj/item/device/multitool))
 		return "tools"
-	if (ispath(path, /obj/item/reagent_containers/syringe) || ispath(path, /obj/item/stack/medical) || ispath(path, /obj/item/reagent_containers/hypospray) || ispath(path, /obj/item/defibrillator) || ispath(path, /obj/item/reagent_containers/ivbag) || ispath(path, /obj/item/reagent_containers/glass/beaker) || ispath(path, /obj/item/reagent_containers/pill) || ispath(path, /obj/item/storage/pill_bottle))
+	if (ispath(path, /obj/item/reagent_containers/syringe) || ispath(path, /obj/item/stack/medical) || ispath(path, /obj/item/reagent_containers/hypospray) || ispath(path, /obj/item/defibrillator) || ispath(path, /obj/item/reagent_containers/ivbag) || ispath(path, /obj/item/reagent_containers/glass) || ispath(path, /obj/item/reagent_containers/pill) || ispath(path, /obj/item/storage/pill_bottle))
 		return "medical"
 	if (ispath(path, /obj/item/reagent_containers/food))
 		return "food"

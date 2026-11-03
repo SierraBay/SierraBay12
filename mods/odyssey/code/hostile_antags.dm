@@ -18,7 +18,13 @@
 
 	// Keep a successful roll across choose_gamemode retries this lobby.
 	if (current_decision == ODYSSEY_OUTSIDER_DECISION_SPAWN || (antag_id in additional_antag_types))
+		if (odyssey_merc_conflict_active(mode))
+			additional_antag_types -= antag_id
+			state.vars[decision_var] = ODYSSEY_OUTSIDER_DECISION_BLOCKED_MERC
+			log_game("ODYSSEY: [antag_id] queue dropped — mercenary conflict on [mode.config_tag]")
+			return
 		additional_antag_types |= antag_id
+		additional_antag_types -= MODE_MERCENARY
 		state.vars[decision_var] = ODYSSEY_OUTSIDER_DECISION_SPAWN
 		return
 
@@ -29,8 +35,10 @@
 		state.vars[decision_var] = ODYSSEY_OUTSIDER_DECISION_WRONG_SECTOR
 		return
 
-	if (antag_id in mode.antag_tags)
-		log_game("ODYSSEY: [antag_id] present in gamemode [mode.config_tag], waiting for spawn")
+	if (odyssey_merc_conflict_active(mode))
+		state.vars[decision_var] = ODYSSEY_OUTSIDER_DECISION_BLOCKED_MERC
+		additional_antag_types -= antag_id
+		log_game("ODYSSEY: [antag_id] skip — mercenary conflict on [mode.config_tag]")
 		return
 
 	var/datum/antagonist/antag = GLOB.all_antag_types_[antag_id]
@@ -51,6 +59,7 @@
 
 	state.vars[decision_var] = ODYSSEY_OUTSIDER_DECISION_SPAWN
 	additional_antag_types |= antag_id
+	additional_antag_types -= MODE_MERCENARY
 	log_and_message_admins("ODYSSEY: queuing [antag.role_text_plural] this hostile sector (candidates=[candidate_count], chance=[chance]%).")
 	log_game("ODYSSEY: [antag_id] roll hit candidates=[candidate_count] sector=[state.current_sector_id]")
 

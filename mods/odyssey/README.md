@@ -21,7 +21,7 @@ ID мода: ODYSSEY
 4. Классический bluespace jump из эвакуационного меню **недоступен**. Переход в другой сектор: energize Bluespace Drive → **Odyssey Jump** с консоли привода или Command (**~10 мин** отсчёт, abort до `jump_locked`) → commit курса → **~2 мин** на подготовку экипажа → сохранение и reboot. После continue, если предыдущая смена прыгнула, BSD **~1.5 ч** на охлаждении (прыжки недоступны).
 5. Воут **Transfer / End the shift** не запускает прыжок: объявляется смена через **5 минут**, корабль остаётся в текущем секторе, сейв (crew shift +1, эшелон тот же) и reboot. Extend по-прежнему продлевает раунд.
 6. Обычный ballistic jump привода (overmap) остаётся доступным параллельно, если есть валидный путь.
-7. После успешного continue, **до спавна экипажа**, идёт экран загрузки Одиссеи (полоса прогресса + статус каждого `*.json`); затем на карту накатывается сейв. Сектор меняется только если был Odyssey Jump. На **roundend** тот же UI показывает сохранение кампании по шагам. Предупреждение перед снимком — **OOC** (синий/красный чат, не IC-каналы): при Transfer — за 2 мин; после Odyssey Jump — 2 мин grace, затем сейв.
+7. После успешного continue, **до спавна экипажа**, идёт экран загрузки Одиссеи (полоса прогресса + статус каждого `*.json`); затем на карту накатывается сейв. Сектор меняется только если был Odyssey Jump. На **roundend** тот же UI показывает сохранение кампании по шагам. Предупреждение перед снимком — **OOC** (синий/красный чат, не IC-каналы): при Transfer — за 2 мин; после Odyssey Jump — 2 мин grace, затем сейв. DC во время прогресса: job-seat освобождается, окно закрывается на релогине (или снова показывается, если загрузка ещё идёт); join/ready заблокированы до конца UI.
 8. Финальный сектор завершает кампанию успешно. Выбор возвращения, emergency abandon ship, уничтожение Сьерры или гибель всего roster завершают её с соответствующим outcome.
 
 Публичный **Sector Map**, **Briefing** и **Chronicle** доступны экипажу в **Newscast** (просмотр; курс прокладывает командование). Command: вкладки Briefing и Chronicle.
@@ -36,9 +36,15 @@ ID мода: ODYSSEY
 - На roundend цели оцениваются автоматически; успех смены даёт небольшой депозит на счет станции. Контракт закрывается по исходу кампании.
 - Всё видно в Briefing и пишется в хронику.
 
+**Антагонисты (только правила Одиссеи)**
+
+- Пока кампания активна, голосование/secret за игровой режим **не выдаёт** ванильных антагов (культ, heist, crossfire, traitor-режим и т.д.). Раунд форсируется в **Extended**; объявление — «режим: Одиссея».
+- Шаблоны антагов собираются только из Odyssey-очереди (`additional_antag_types`): changeling / merc / raiders / ninja. Traitor-шаблон не используется — спящих назначает кампания.
+- Midround-события движка (wizard event и пр.) этим патчем не режутся.
+
 **Спящие агенты (traitor)**
 
-- В Одиссее ванильный roll/autotraitor отключён (в том числе у проголосованного Traitor); выдачей управляет кампания.
+- Ванильный roll/autotraitor полностью отключён; выдачей управляет кампания.
 - Пул: игроки экипажа Сьерры с pref traitor High/Low.
 - Каждую смену: сначала reapply живых sleepers с прошлой смены (тот же `ckey|slot`), затем **+1** новый.
 - Если живого экипажа на станции **> 20**, через ~12 минут — ещё **+1** midround (один раз за смену).
@@ -46,46 +52,44 @@ ID мода: ODYSSEY
 
 **Mercenaries (nuke)**
 
-- Дополнительный Odyssey-ролл — максимум **один раз за полёт** (`merc_used` в `campaign.json`).
-- Пока флаг не стоит: **каждую смену** плоский шанс **40%**, если есть ≥ **3** кандидата на Mercenary.
-- При проке мерки добавляются поверх текущего режима (`additional_antag_types`), вместе со спящими.
-- Если режим уже Mercenary / add-antag выдал мерков — это тоже засчитывается в `merc_used`.
-- Проголосованный **Mercenary** не вырезается: даже после `merc_used` nuke-режим спавнит отряд.
+- Odyssey-ролл — максимум **один раз за полёт** (`merc_used` в `campaign.json`).
+- Пока флаг не стоит: шанс растёт со сменой — **1-я = 0%**, далее **+20%** за смену (2→20%, 3→40%, 4+→**60%** кап), если есть ≥ **3** кандидата на Mercenary.
+- При проке мерки ставятся через `additional_antag_types`, вместе со спящими.
+- **Не совмещается** с Odyssey-роллом пиратов/ниндзя: при конфликте merc-ролл или outsider-ролл пропускается.
 - Кандидатов мало или бросок не прошёл — флаг не ставится, следующая смена снова роллит.
 
-**Changeling / Heist**
+**Changeling**
 
-- Вне Одиссеи генокрад спавнится штатно (скалирование режима).
-- В Одиссее: цель **1 или 2** генокрада на смену (бросок на лобби, кап 2). Сначала слоты занимают **перенесённые** с прошлой смены (тот же `ckey|slot`), остаток докидывает ванильный spawn.
+- Каждую смену Одиссея сама роллит цель **1 или 2** генокрада (кап 2), без голосования за режим.
+- Сначала слоты занимают **перенесённые** с прошлой смены (тот же `ckey|slot`), остаток — roundstart spawn.
 - Перенос только если на момент сейва генокрад **жив и на Сьерре** (`station_levels`). Смерть, уход со станции или отсутствие на сейве → статус `lost`, роль не вернётся.
 - Запись в `campaign.json` → `changelings`. DNA/силы между сменами не сохраняются — только роль.
 - Спящие не вешаются поверх уже назначенного антага.
-- Heist (raiders) как выбранный режим спавнится в любом секторе. Дополнительный Odyssey-ролл пиратов — только в `hostile`.
 
 **Революция / лоялисты**
 
-- Режим Revolution (и mixed с revs/loyalists) работает как обычно; Одиссея **не** вырезает эти теги.
-- Head Revolutionary / Head Loyalist и **конвертированные** члены пишутся в `campaign.json` → `revolutionaries` / `loyalists` (`rank=head|member`).
-- На следующей смене роль **reapply** на ту же куклу (`ckey|slot`), даже если режим раунда уже не Revolution.
-- При режиме Revolution ванильный spawn голов уменьшается на число уже перенесённых head.
+- Новый spawn революции из режима раунда в Одиссее **не** запускается.
+- Уже активные Head Revolutionary / Head Loyalist и **конвертированные** члены пишутся в `campaign.json` → `revolutionaries` / `loyalists` (`rank=head|member`) и на следующей смене **reapply** на ту же куклу (`ckey|slot`).
 - Смерть → `dead`; деконверсия к сейву → `lost`; отсутствие в раунде при активном статусе — статус сохраняется до следующего захода.
 - Живые не светятся в roundend-списке антагов (как sleepers/changelings). Uplink у returning head повторно не выдаётся.
 
 **Пираты / ниндзя (красные сектора)**
 
-- Только при `danger = hostile` у текущего сектора.
+- Только при `danger = hostile` у текущего сектора (на стартовом `safe` не роллятся).
 - Независимые броски **каждый** визит красного сектора (лимита на кампанию нет).
 - Raiders (пираты): **55%**, минимум **3** кандидата.
 - Ninja (operative): **50%**, минимум **1** кандидат.
-- Добавляются поверх режима через `additional_antag_types` (могут совпасть друг с другом, со спящими и с nuke).
+- Через `additional_antag_types` (могут совпасть друг с другом и со спящими).
+- **Не совмещаются** с mercenaries (nuke).
 
 **Сохраняется**
 
 - разрушенные / изменённые тайлы на `station_levels` только в зонах из снимка при baselines (зоны, уже лежавшие на Сьерре; `/area/space`, `/area/ship`, `/area/map_template`, `/area/supply` в снимок не входят). Флот Сьерры на ангарах в T=0 попадает сам; midround-гости и supply drone — нет;
-- whitelist машин/компьютеров и **все структуры** кроме кабелей, disposal, ladder/stairs и transit tubes как `created / modified / moved / destroyed` (у fabricator — ещё ресурсы в бункере); атмосферные трубы — machinery, в снимок структур не входят;
+- whitelist машин/компьютеров и **все структуры** кроме кабелей, disposal, ladder/stairs и transit tubes как `created / modified / moved / destroyed` (fabricator / chem-fridge / anomaly / SMES / shield / cryo / portable_atmospherics — своё состояние); атмосферные трубы — machinery, в снимок структур не входят (cryo_cell — исключение в machinery whitelist);
+
 - листовые материалы на Сьерре (`materials.json`: тип, количество, клетка; при необходимости обратно в шкаф/ящик). На **continue** сначала снимаются стаки с DMM, затем восстанавливается снимок прошлой смены — купленное и не потраченное остаётся, бесплатный респаун складов нет. Инвентарь на мобах не пишется. Первая смена — карта как обычно;
 - документы (`papers.json`: paper / folder / bundle / photo; фото — `papers_photos.sav`) — картотеки **и** бумажки/папки на полу и в шкафах, с текстом, штампами и языком. На continue strip + restore. Лимиты: 500 items / 100 photos / ~2 MB текста. Не в `items_*`;
-- предметы на полу / в шкафах (`items.json` lane-marker + `items_<bucket>.json`: weapons / clothing / tools / medical / food / storage / devices / stacks / misc). Пустой корабль всё равно пишет `items.json`, чтобы на continue снять DMM-лут. Denylist: trash, shard, casing, grenade, organ, material stacks, ID, grown/seeds, uplink, robot_parts/AI card, character_persist safe, paperwork, nuke disk, pinpointer, blueprints, bag of holding. Не с мобов. Nested через `storage_id`. Legacy без `items.json`/`items_*` — предметы карты не трогаем;
+- предметы на полу / в шкафах (`items.json` lane-marker + `items_<bucket>.json`: weapons / clothing / tools / medical / food / storage / devices / stacks / misc). Пустой корабль всё равно пишет `items.json`, чтобы на continue снять DMM-лут. Denylist: trash, shard, casing, grenade, organ, material stacks, ID, grown/seeds, uplink, robot_parts/AI card, character_persist safe, paperwork, nuke disk, pinpointer, blueprints, bag of holding. Не с мобов. Nested через `storage_id` (multi-pass: ИРП, firstaid→pill_bottle→pills, med_pouch, donut box, egg box и т.п.). Apply сносит весь `startswith` у storage и карманов `suit/storage`. У `/obj/item/reagent_containers` пишутся `reagents` (включая токсины — это лаборатория, не personal safe); пустой список = банка опустошена. Баночки/бикеры → bucket `medical`. Legacy без `items.json`/`items_*` — предметы карты не трогаем;
 - mechs / corpses — тот же объём зоны, что items (persistable areas, включая шаттлы off-station Z);
 - continue кампании только до старта раунда (лобби); mid-round admin continue запрещён (Force apply — отдельно, с предупреждением);
 - оторванные органы (`remains.json`: type, DNA compact, имя, урон, closet/morgue; связь с мёртвым roster по имени). Не в `items_*`. Apply после `corpses`;
@@ -98,7 +102,8 @@ ID мода: ODYSSEY
   - вне Сьерры → `abandoned` (пустой док на следующих сменах);
   - на Сьерре, но с повреждениями выше порога → `damaged` + ориентировочная оценка ремонта (информативно, без списания со счетов);
 - `shuttle_reports` в `campaign.json` (legacy `abandoned_shuttles` по-прежнему пишется как список имён);
-- тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; хирургические аугменты и импланты на кукле (без uplink/explosive/antag и без psi-dampener — его ставит job.equip); смерть в Одиссее сбрасывает только его;
+- тело через `character_persist` в **отдельном** файле `…_odyssey.json` (обычный снимок не трогается); личный счёт и `campaign_id` — в одиссейном снимке; хирургические аугменты и импланты на кукле (без uplink/explosive/antag и без psi-dampener — его ставит job essentials); смерть в Одиссее сбрасывает только его;
+- **инвентарь живого экипажа** (одиссейный persist): первая смена на кукле — обычный job+loadout; дальше restore worn/carried без нового outfit/loadout. Кукла залочена на `assigned_job` или `Crewman`. Свежие ID/PDA/headset каждый спавн. Denylist: ID, PDA, headset, nuke disk, pinpointer, blueprints, bag of holding. Бумага/фото/папки/бандлы в инвентаре переносятся. Оружие/броня/antag-гир в карманах — переносятся. Custody — без inventory;
 - employment / security / medical записи, `criminal_status` и `physical_status` (включая правки с консолей в течение смены) — в roster кампании; при спавне в активной Одиссее применяются всегда. Persist-снимок дублирует их, если персистентность включена;
 - **custody**: если на конец смены живой участник с `criminal_status` Incarcerated/Arrest находится в бриге/тюрьме/допросе (Sierra security areas) — в roster пишется `custody=brig`; на следующей смене после экипа — оранжевая форма, без ID, спавн на случайный `/obj/landmark/odyssey_custody` (ставить в prison cells; fallback — свободный пол в `/area/security/sierra/prison`); стартовый гир работы снимается;
 - трупы экипажа на Сьерре (включая лежащих в морге или шкафу): внешность, раны, только униформа. На следующей смене тела появляются в моргах, не на месте смерти.
@@ -106,9 +111,9 @@ ID мода: ODYSSEY
 **Не сохраняется в MVP**
 
 - атмос, провода/трубы, away sites и любые пристыкованные чужие корабли/шаттлы (даже на Z Сьерры);
-- реагенты в бутылках, заряд cell, магазины оружия, access на ID (фаза 2); grenade / ID / organ в generic items;
-- инвентарь на живых игроках; MMI / robot_parts / AI card; авто-приживление органов к трупу;
-- инвентарь персонажа кроме униформы на трупе; worn-инвентарь живых; antag/uplink импланты;
+- реагенты в бутылках (частично — в inventory containers пишутся), заряд cell, магазины оружия, access на ID; grenade / ID / organ в generic world items;
+- MMI / robot_parts / AI card; авто-приживление органов к трупу;
+- инвентарь персонажа кроме униформы на трупе; antag/uplink **импланты в теле** (в карманах uplink-предметы — да);
 
 Overmap не сериализуется: он воспроизводимо создаётся из seed текущего сектора. Уровень опасности меняет число облаков hazards (как ванильный `overmap_event_areas`), их типы, задержку случайных событий и шанс Левиафана.
 
@@ -117,10 +122,16 @@ Overmap не сериализуется: он воспроизводимо со�
 - `/obj/machinery/computer`;
 - `/obj/machinery/vending`;
 - `/obj/machinery/fabricator` — в том числе `stored_material` (ресурсы в бункере; диски/бикер/очередь печати — нет);
+- `/obj/machinery/smartfridge` chemistry / `secure/medbay` / `secure/virology` — всегда в снимке; `fridge_items` (до 300): type, name, reagents, nested `contents` у pill bottles;
+- `/obj/machinery/anomaly_container` + `/obj/machinery/artifact` — контейнер с артефактом (`anomaly.artifact`: эффекты, триггеры, icon/HP), свободные артефакты на полу, прикреплённая бумага и `broken`;
+- `/obj/machinery/power/smes` — заряд, input/output attempt+level, capacity, name_tag;
+- `/obj/machinery/power/shield_generator` — running/energy/radius/modes/input_cap (поле пересобирается при running);
+- `/obj/machinery/atmospherics/unary/cryo_cell` — on, stasis mult, бикер с реагентами (без пациента; atmos pipe не спавнится заново);
+- `/obj/machinery/portable_atmospherics` (canister / pump / scrubber / hydroponics / cracker / sublimator; без `hydroponics/soil/invisible`) — газ, holding tank, порт, use_power/cell; у канистр valve/release; у hydro — растение по `seed.name` + уровни воды/пита/вредителей;
 - листовые `/obj/item/stack/material` на станции (отдельно от бункера фабрикатора);
 - `/obj/machinery/sleeper`;
 - `/obj/machinery/door/airlock` — HP, поломка панели, сварка, болты, открытая панель, открыт/закрыт; полностью разбитый шлюз остаётся как `/obj/structure/broken_door`;
-- **все** `/obj/structure` в персистентных зонах корабля, кроме denylist: кабели, disposal pipe/holder/outlet, ladder / stairs (multiz), transit_tube / pod;
+- **все** `/obj/structure` в персистентных зонах корабля, кроме denylist: кабели, disposal pipe/holder/outlet, ladder / stairs (multiz), transit_tube / pod, **table / bed** (стулья — subtype bed; иначе ложные `destroyed` сносили мебель Харона/карго на continue);
 - атмосферные трубы (`/obj/machinery/atmospherics`) в structure-снимок не входят;
 - у catwalk дополнительно пишутся plating и открытый люк; мостики в `/area/space` и на обшивке по-прежнему вне снимка (зона не persistable);
 - сериализация базовая (`type/dir/name/anchored` + catwalk fields): HP окон и т.п. не восстанавливаются детально — только наличие/позиция/ориентация.
@@ -150,10 +161,10 @@ Overmap не сериализуется: он воспроизводимо со�
 - детерминированные профили угроз;
 - хуки: baseline турфов/объектов → apply → roundend save/finalize;
 - **турфы**: diff относительно roundstart baseline (смена типа, урон стен, broken/burnt полов);
-- **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones; у `/obj/machinery/fabricator` — `stored_material`;
+- **машинерия/компьютеры/мебель**: whitelist diff со стабильными id и tombstones; apply всегда `locate(type)` на клетке при смене id; fabricator / chem-fridge / anomaly / SMES / shield / cryo — своё состояние;
 - **материалы**: `materials.json` — стаки на станции; continue = strip DMM + apply снимка;
 - **документы**: `papers.json` + `papers_photos.sav` — картотеки + loose paper/folder/bundle/photo на полу/в шкафу; continue = strip + restore; бюджет 500/100/~2MB;
-- **предметы**: `items.json` + `items_*.json`; continue = strip всех persistable items если есть manifest/bucket этой generation, затем apply (корни → nested);
+- **предметы**: `items.json` + `items_*.json`; continue = strip всех persistable items если есть manifest/bucket этой generation, затем apply (корни → nested multi-pass; storage autofill wipe);
 - **останки**: `remains.json` — detached `/obj/item/organ` с DNA/именем; после corpses;
 - **грязь**: `cleanables.json` — `/obj/decal/cleanable` в persistable areas; strip+restore если файл есть;
 - **мехи**: тип, компоненты, заряд, оборудование — patch или spawn;
@@ -180,7 +191,7 @@ Overmap не сериализуется: он воспроизводимо со�
 - `code/modules/modular_computers/file_system/programs/generic/news.dm` — опциональный режим Sector Map и хуки для модов;
 - `nano/templates/crew_manifest.tmpl` — архив экипажа прошлых смен Одиссеи;
 - `mods/global_modpacks.dm` — подключение модпака;
-- `code/controllers/subsystems/ticker.dm` — хук `odyssey_pregame_consider_vote()` (no-op; vote из кнопки Odyssey);
+- `code/controllers/subsystems/ticker.dm` — хук `odyssey_pregame_consider_vote()` (no-op; vote из кнопки Odyssey); при активной кампании `choose_gamemode` форсирует `extended`;
 - `code/controllers/evacuation/evacuation.dm` — запрет классического BSJ из эвакуационного меню во время Одиссеи;
 - `mods/machinery/.../bluespace_drive.dm` + `mods/odyssey/code/bluespace_drive_odyssey.dm` — Odyssey Jump, commit перехода и конец смены;
 - `code/modules/client/preferences_persist.dm` — блок загрузки погибшего слота (`load_character` возвращает FALSE);

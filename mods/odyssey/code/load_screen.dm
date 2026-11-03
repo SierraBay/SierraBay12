@@ -131,30 +131,89 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 	return data
 
 
-/proc/odyssey_load_ui_push(datum/odyssey_load_session/session, force = FALSE)
-	if (!istype(session))
-		return
-	if (!force && session.last_ui_push && (world.time < session.last_ui_push + ODYSSEY_LOAD_UI_INTERVAL))
-		session.ui_dirty = TRUE
+/proc/odyssey_progress_ui_bind(datum/odyssey_load_session/session)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	state.progress_session = session
+
+
+/proc/odyssey_progress_ui_unbind(datum/odyssey_load_session/session = null)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!session || state.progress_session == session)
+		state.progress_session = null
+
+
+/// TRUE while Odyssey load/save progress UI owns the round (block join/ready).
+/proc/odyssey_progress_blocking()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	return istype(state.progress_session) && !state.progress_session.finished
+
+
+/proc/odyssey_load_ui_push_client(client/C, datum/odyssey_load_session/session)
+	if (!C || !istype(session))
 		return
 	var/html = session.build_html()
 	var/wid = session.window_id || "odyssey_progress"
+	show_browser(C, html, "window=[wid];size=720x560;can_close=0;can_minimize=0;can_resize=0;titlebar=1;focus=1")
+
+
+/proc/odyssey_load_ui_close_client(client/C, datum/odyssey_load_session/session = null)
+	if (!C)
+		return
+	var/wid = istype(session) ? (session.window_id || "odyssey_progress") : "odyssey_progress"
+	close_browser(C, "window=[wid]")
+	close_browser(C, "window=odyssey_load")
+
+
+/// Login/reconnect: re-show active progress, or dismiss a stuck can_close=0 window.
+/proc/odyssey_progress_ui_sync_client(client/C)
+	if (!C)
+		return
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	var/datum/odyssey_load_session/session = state.progress_session
+	if (istype(session) && !session.finished)
+		odyssey_load_ui_push_client(C, session)
+		return
+	odyssey_load_ui_close_client(C, session)
+
+
+/proc/odyssey_load_ui_push(datum/odyssey_load_session/session, force = FALSE)
+	if (!istype(session))
+		return
+	odyssey_progress_ui_bind(session)
+	if (!force && session.last_ui_push && (world.time < session.last_ui_push + ODYSSEY_LOAD_UI_INTERVAL))
+		session.ui_dirty = TRUE
+		return
 	for (var/client/C in GLOB.clients)
 		if (!C)
 			continue
-		show_browser(C, html, "window=[wid];size=720x560;can_close=0;can_minimize=0;can_resize=0;titlebar=1;focus=1")
+		odyssey_load_ui_push_client(C, session)
 	session.last_ui_push = world.time
 	session.ui_dirty = FALSE
 
 
 /proc/odyssey_load_ui_close(datum/odyssey_load_session/session = null)
-	var/wid = istype(session) ? (session.window_id || "odyssey_progress") : "odyssey_progress"
 	for (var/client/C in GLOB.clients)
 		if (!C)
 			continue
-		close_browser(C, "window=[wid]")
-		// Legacy window id from early load UI.
-		close_browser(C, "window=odyssey_load")
+		odyssey_load_ui_close_client(C, session)
+	odyssey_progress_ui_unbind(session)
+
+
+/// Roundstart assignment without a body: free the job seat so reconnect/latejoin works.
+/proc/odyssey_release_unspawned_assignment(mob/new_player/player)
+	if (!istype(player) || player.spawning || !player.mind)
+		return FALSE
+	var/rank = player.mind.assigned_role
+	if (!rank)
+		return FALSE
+	var/datum/job/job = SSjobs.get_by_title(rank)
+	if (job && job.current_positions > 0)
+		job.current_positions--
+	player.mind.assigned_job = null
+	player.mind.assigned_role = null
+	player.mind.role_alt_title = null
+	log_debug("ODYSSEY: released unspawned assignment [player.ckey || player.key] rank=[rank]")
+	return TRUE
 
 
 /proc/odyssey_load_step(datum/odyssey_load_session/session, id, status, detail = null, force_ui = FALSE)
@@ -189,6 +248,7 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 		return TRUE
 
 	var/datum/odyssey_load_session/session = new
+	odyssey_progress_ui_bind(session)
 	session.subtitle = "Загрузка сохранения кампании"
 	session.footer = "Пожалуйста, подождите. Экипаж появится после завершения загрузки."
 	session.idle_headline = "Загрузка…"
@@ -224,6 +284,7 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 		odyssey_load_step(session, "validate", "error", json_encode(state.validation_errors), TRUE)
 		log_error("ODYSSEY: save validation failed: [json_encode(state.validation_errors)]")
 		odyssey_invalidate_persistable_turfs_cache()
+		session.finished = TRUE
 		sleep(2 SECONDS)
 		odyssey_load_ui_close(session)
 		return FALSE

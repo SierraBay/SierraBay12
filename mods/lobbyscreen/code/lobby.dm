@@ -46,6 +46,22 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		if (GAME_STATE > RUNLEVEL_LOBBY)
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		if (odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот перед готовностью."))
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 		ready = !ready
 		GLOB.using_map.update_titlescreen(client)
 		return TOPIC_HANDLED
@@ -55,6 +71,11 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 		client.prefs.open_load_dialog(src, TRUE)
 		return TOPIC_HANDLED
 	if (href_list["lobby_odyssey"])

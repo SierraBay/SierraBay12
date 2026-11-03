@@ -52,22 +52,9 @@
 	return ODYSSEY_FACTION_RANK_HEAD
 
 
+/// Odyssey does not start new revolutions from gamemode; only persisted heads/members reapply in setup.
 /proc/odyssey_prepare_revolution(datum/game_mode/mode)
-	var/datum/odyssey_state/state = odyssey_ensure_state()
-	if (!state.active || !istype(mode))
-		return
-	if (istype(GLOB.revs) && ((MODE_REVOLUTIONARY in mode.antag_tags) || (MODE_REVOLUTIONARY in additional_antag_types)))
-		var/persisted_heads = odyssey_count_active_faction_heads(state.revolutionaries)
-		if (persisted_heads > 0)
-			GLOB.revs.initial_spawn_target = max(0, GLOB.revs.initial_spawn_target - persisted_heads)
-			GLOB.revs.initial_spawn_req = min(GLOB.revs.initial_spawn_req, max(0, GLOB.revs.initial_spawn_target))
-			log_game("ODYSSEY: revolutionary spawn reduced by [persisted_heads] persisted head(s); target=[GLOB.revs.initial_spawn_target]")
-	if (istype(GLOB.loyalists) && ((MODE_LOYALIST in mode.antag_tags) || (MODE_LOYALIST in additional_antag_types)))
-		var/persisted_heads = odyssey_count_active_faction_heads(state.loyalists)
-		if (persisted_heads > 0)
-			GLOB.loyalists.initial_spawn_target = max(0, GLOB.loyalists.initial_spawn_target - persisted_heads)
-			GLOB.loyalists.initial_spawn_req = min(GLOB.loyalists.initial_spawn_req, max(0, GLOB.loyalists.initial_spawn_target))
-			log_game("ODYSSEY: loyalist spawn reduced by [persisted_heads] persisted head(s); target=[GLOB.loyalists.initial_spawn_target]")
+	return
 
 
 /proc/odyssey_setup_revolution()

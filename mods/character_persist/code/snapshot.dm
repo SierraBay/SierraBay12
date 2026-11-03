@@ -91,9 +91,12 @@
 	var/photo_path = character_persist_safe_photos_path(ckey, slot, for_odyssey)
 	if (photo_path && fexists(photo_path))
 		fdel(photo_path)
+	var/inv_photo_path = character_persist_inventory_photos_path(ckey, slot, for_odyssey)
+	if (inv_photo_path && fexists(inv_photo_path))
+		fdel(inv_photo_path)
 
 
-/proc/character_persist_prefs_of(ckey)
+/proc/character_persist_prefs_of(ckey) as /datum/preferences
 	if (!ckey || !SScharacter_setup)
 		return null
 	return SScharacter_setup.preferences_datums[ckey]
@@ -442,8 +445,23 @@
 	if (for_odyssey)
 		var/datum/odyssey_state/odyssey_state = odyssey_ensure_state()
 		snapshot["odyssey_campaign_id"] = odyssey_state.campaign_id
+		var/job_title = H.mind?.assigned_role || H.job
+		if (job_title)
+			snapshot["assigned_job"] = job_title
+		else if (islist(previous) && previous["assigned_job"])
+			snapshot["assigned_job"] = previous["assigned_job"]
+		if (odyssey_human_should_be_detained(H))
+			snapshot -= "inventory"
+		else
+			var/list/inv = character_persist_capture_inventory(H)
+			if (islist(inv) && length(inv))
+				snapshot["inventory"] = inv
+			else
+				snapshot -= "inventory"
 	else
 		snapshot -= "odyssey_campaign_id"
+		snapshot -= "assigned_job"
+		snapshot -= "inventory"
 		// Implants/augments are Odyssey continuity only — keep normal lane lean.
 		snapshot -= "augments"
 		snapshot -= "implants"

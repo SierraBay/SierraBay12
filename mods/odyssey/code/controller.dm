@@ -702,6 +702,7 @@
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
 		odyssey_invalidate_persistable_turfs_cache()
+		session.finished = TRUE
 		sleep(2 SECONDS)
 		odyssey_load_ui_close(session)
 		return FALSE
@@ -718,6 +719,7 @@
 		odyssey_load_step(session, "meta", "error", "запись не удалась")
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
 		odyssey_invalidate_persistable_turfs_cache()
+		session.finished = TRUE
 		sleep(2 SECONDS)
 		odyssey_load_ui_close(session)
 		return FALSE

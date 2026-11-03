@@ -336,6 +336,19 @@ Helpers
 		log_debug("Could not find a valid game mode for [mode_to_try].")
 		return
 
+	// [SIERRA-ADD] - ODYSSEY
+	// Campaign owns antagonists; force Extended so vote/secret (cult, heist, …) cannot apply.
+	if (odyssey_ensure_state().active)
+		var/datum/game_mode/odyssey_forced = pick_mode("extended")
+		if (istype(odyssey_forced))
+			if (mode_datum.config_tag != "extended")
+				log_game("ODYSSEY: replacing gamemode [mode_datum.config_tag] with extended (campaign antag rules)")
+			mode_datum = odyssey_forced
+			mode_to_try = "extended"
+		else
+			log_error("ODYSSEY: failed to load extended for campaign gamemode override")
+	// [/SIERRA-ADD]
+
 	//Deal with jobs and antags, check that we can actually run the mode.
 	SSjobs.reset_occupations() // Clears all players' role assignments. Clean slate.
 	mode_datum.create_antagonists() // Init operation on the mode; sets up antag datums and such.

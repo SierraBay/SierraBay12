@@ -229,6 +229,11 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 
 		if(GAME_STATE != RUNLEVEL_GAME)
 			to_chat(usr, SPAN_WARNING("The round has either not started yet or already ended."))
@@ -288,6 +293,11 @@
 	if(odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
 		to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот."))
 		return 0
+	// [SIERRA-ADD] - ODYSSEY
+	if (odyssey_progress_blocking())
+		to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+		return 0
+	// [/SIERRA-ADD]
 	if(GAME_STATE == RUNLEVEL_GAME)
 		if(job.late_joinable == FALSE)
 			to_chat(usr, SPAN_WARNING("Вы не можете зайти за эту роль во время раунда."))

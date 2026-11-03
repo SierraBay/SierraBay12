@@ -74,10 +74,16 @@
 /proc/odyssey_apply_structure_destroy_entry(list/entry)
 	if (!islist(entry) || entry["action"] != "destroyed")
 		return FALSE
+	// Legacy saves may tombstone tables/beds; never wipe DMM furniture via turf/type fallback.
+	var/path = text2path(entry["type"])
+	if (odyssey_structure_path_denylisted(path))
+		return FALSE
 	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
 	if (!S)
 		S = odyssey_find_structure_for_entry(entry)
 	if (!S)
+		return FALSE
+	if (odyssey_structure_denylisted(S))
 		return FALSE
 	odyssey_index_remove(odyssey_ensure_state().persist_index_structures, entry["id"])
 	qdel(S)
@@ -91,12 +97,15 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!ispath(path, /obj/structure) || !T)
 		return FALSE
-	// Refuse before new() — stairs Initialize can ChangeTurf the deck above.
+	// Refuse before new() — stairs Initialize can ChangeTurf the deck above; tables self-destruct if doubled.
 	if (odyssey_structure_path_denylisted(path))
 		return FALSE
 	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
 	if (!S && entry["action"] == "created")
-		S = new path(T)
+		// Prefer mapped instance over new() when ids remapped across continue.
+		S = locate(path) in T
+		if (!S)
+			S = new path(T)
 	if (!S || !odyssey_structure_whitelisted(S))
 		if (S && entry["action"] == "created" && !QDELETED(S))
 			qdel(S)

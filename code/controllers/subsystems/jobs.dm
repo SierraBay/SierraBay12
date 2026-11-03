@@ -443,6 +443,11 @@ SUBSYSTEM_DEF(jobs)
 	if(!H)
 		return
 
+	// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY inventory restore
+	if (character_persist_should_restore_inventory(H))
+		return character_persist_equip_rank_restoring(H, rank, joined_late)
+	// [/SIERRA-ADD]
+
 	var/datum/job/job = get_by_title(rank)
 	var/list/spawn_in_storage
 

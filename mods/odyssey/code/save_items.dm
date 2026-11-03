@@ -46,7 +46,47 @@
 		if (!isnum(amount) || amount < 1)
 			return null
 		entry["amount"] = amount
+	if (istype(I, /obj/item/reagent_containers))
+		// Always write (even empty) so emptied beakers/bottles do not refill from type New().
+		entry["reagents"] = odyssey_serialize_reagents(I)
 	return entry
+
+
+/// World chemistry: keep toxins/drugs (unlike personal-safe gate).
+/proc/odyssey_serialize_reagents(obj/item/reagent_containers/container)
+	return character_persist_safe_serialize_reagents(container)
+
+
+/proc/odyssey_apply_reagents(obj/item/reagent_containers/container, list/entries)
+	if (!istype(container) || !container.reagents)
+		return
+	container.reagents.clear_reagents()
+	if (!islist(entries))
+		return
+	for (var/list/entry in entries)
+		if (!islist(entry))
+			continue
+		var/path = character_persist_safe_resolve_path(entry["type"])
+		var/amount = entry["amount"]
+		if (!isnum(amount))
+			amount = text2num(amount)
+		if (!ispath(path, /datum/reagent) || !isnum(amount) || amount <= 0)
+			continue
+		container.reagents.add_reagent(path, amount)
+
+
+/proc/odyssey_collect_nested_item_contents(obj/item/I, list/buckets, parent_id)
+	if (!istype(I) || !parent_id || !islist(buckets))
+		return
+	if (istype(I, /obj/item/storage))
+		for (var/obj/item/child in I)
+			odyssey_collect_item_into_buckets(child, buckets, parent_id)
+	// Suit pockets always exist after New; clothing accessories are not snapshotted in items_*.
+	if (istype(I, /obj/item/clothing/suit/storage))
+		var/obj/item/clothing/suit/storage/S = I
+		if (istype(S.pockets))
+			for (var/obj/item/child in S.pockets)
+				odyssey_collect_item_into_buckets(child, buckets, parent_id)
 
 
 /proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null)
@@ -61,13 +101,23 @@
 	if (!islist(buckets[bucket]))
 		buckets[bucket] = list()
 	buckets[bucket] += list(entry)
-	if (istype(I, /obj/item/storage))
-		var/obj/item/storage/ST = I
-		var/pid = entry["id"]
-		for (var/obj/item/child in ST)
-			odyssey_collect_item_into_buckets(child, buckets, pid)
+	odyssey_collect_nested_item_contents(I, buckets, entry["id"])
 
 
+/// Put restored nested item into storage or suit pockets (not loose on the clothing atom).
+/proc/odyssey_place_item_in_parent(obj/item/I, obj/item/parent)
+	if (!istype(I) || !istype(parent))
+		return FALSE
+	if (istype(parent, /obj/item/storage))
+		I.forceMove(parent)
+		return I.loc == parent
+	if (istype(parent, /obj/item/clothing/suit/storage))
+		var/obj/item/clothing/suit/storage/S = parent
+		if (istype(S.pockets))
+			I.forceMove(S.pockets)
+			return I.loc == S.pockets
+	I.forceMove(parent)
+	return I.loc == parent
 /proc/odyssey_collect_items_by_bucket()
 	var/list/buckets = list()
 	for (var/bucket in ODYSSEY_ITEM_BUCKETS)
@@ -151,13 +201,34 @@
 /proc/odyssey_clear_storage_autofill(obj/item/storage/S)
 	if (!istype(S))
 		return
-	// startswith fills the container during New. Saved contents are applied afterwards.
+	// startswith / WillContain fillers land during New/Initialize. Wipe all of them —
+	// filtering by persistable() left autofill in place (dupes) for pouches/MREs/firstaid.
 	var/list/spawned = list()
 	for (var/obj/item/child in S)
-		if (odyssey_item_persistable(child))
-			spawned += child
+		spawned += child
 	for (var/obj/item/child in spawned)
 		qdel(child)
+
+
+/proc/odyssey_clear_item_autofill(obj/item/I)
+	if (!istype(I))
+		return
+	if (istype(I, /obj/item/storage))
+		odyssey_clear_storage_autofill(I)
+	if (istype(I, /obj/item/clothing/suit/storage))
+		var/obj/item/clothing/suit/storage/S = I
+		if (istype(S.pockets))
+			odyssey_clear_storage_autofill(S.pockets)
+
+
+/// TRUE when nested entry's parent is already in created_by_id (or entry is a root).
+/proc/odyssey_item_entry_parent_ready(list/entry, list/created_by_id)
+	if (!islist(entry) || !islist(created_by_id))
+		return FALSE
+	var/storage_id = entry["storage_id"]
+	if (!storage_id)
+		return TRUE
+	return istype(created_by_id[storage_id], /obj/item)
 
 
 /proc/odyssey_apply_item_entry(list/entry, list/created_by_id)
@@ -169,8 +240,14 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
+	var/obj/item/parent
+	var/storage_id = entry["storage_id"]
+	if (storage_id)
+		parent = created_by_id[storage_id]
+		if (!istype(parent))
+			return FALSE
 	var/obj/structure/closet/host = odyssey_resolve_item_closet(entry, T)
-	var/atom/spawn_at = host || T
+	var/atom/spawn_at = parent || host || T
 	var/obj/item/I
 	if (ispath(path, /obj/item/stack))
 		var/amount = entry["amount"]
@@ -183,27 +260,23 @@
 		I = new path(spawn_at)
 	if (QDELETED(I) || !istype(I))
 		return FALSE
-	if (istype(I, /obj/item/storage))
-		odyssey_clear_storage_autofill(I)
+	odyssey_clear_item_autofill(I)
 	if (!isnull(entry["dir"]))
 		I.set_dir(entry["dir"])
-	if (host)
+	if (istype(parent))
+		odyssey_place_item_in_parent(I, parent)
+	else if (host)
 		odyssey_insert_item_into_closet(I, host)
 	else
 		odyssey_apply_pixel_offset(I, entry)
 	if (entry["name"])
 		I.SetName(entry["name"])
+	if (istype(I, /obj/item/reagent_containers) && ("reagents" in entry))
+		odyssey_apply_reagents(I, entry["reagents"])
 	if (entry["id"])
 		I.odyssey_persist_id = entry["id"]
 		created_by_id[entry["id"]] = I
-	if (entry["storage_id"])
-		var/obj/item/storage/parent = created_by_id[entry["storage_id"]]
-		if (istype(parent))
-			I.forceMove(parent)
-		else if (host)
-			odyssey_insert_item_into_closet(I, host)
 	return TRUE
-
 
 /// Apply one bucket file. Roots go into created_by_id; nested (storage_id) go to deferred.
 /proc/odyssey_apply_item_bucket_roots(list/entries, list/created_by_id, list/deferred)
@@ -227,22 +300,36 @@
 		created_by_id = list()
 	var/list/deferred = list()
 	var/applied = odyssey_apply_item_bucket_roots(entries, created_by_id, deferred)
-	for (var/list/entry in deferred)
-		if (odyssey_apply_item_entry(entry, created_by_id))
-			applied++
-		CHECK_TICK
+	applied += odyssey_apply_deferred_items(deferred, created_by_id)
 	log_debug("ODYSSEY: apply_items applied=[applied]/[length(entries)]")
 	return applied
 
 
+/// Nested items may reference parents from later buckets (food inside mrebag inside MRE).
+/// Multi-pass until parents exist; never spawn orphans into closets/turfs.
 /proc/odyssey_apply_deferred_items(list/deferred, list/created_by_id)
 	if (!islist(deferred) || !length(deferred) || !islist(created_by_id))
 		return 0
+	var/list/pending = deferred.Copy()
 	var/applied = 0
-	for (var/list/entry in deferred)
-		if (odyssey_apply_item_entry(entry, created_by_id))
-			applied++
-		CHECK_TICK
+	var/guard = 0
+	while (length(pending) && guard < 16)
+		guard++
+		var/list/next = list()
+		var/progress = 0
+		for (var/list/entry in pending)
+			if (!odyssey_item_entry_parent_ready(entry, created_by_id))
+				next += list(entry)
+				continue
+			if (odyssey_apply_item_entry(entry, created_by_id))
+				applied++
+				progress++
+			CHECK_TICK
+		if (!progress)
+			break
+		pending = next
+	if (length(pending))
+		log_debug("ODYSSEY: deferred items orphaned=[length(pending)] (missing storage parent)")
 	return applied
 
 
