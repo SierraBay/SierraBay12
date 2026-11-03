@@ -101,11 +101,11 @@
 	if (odyssey_structure_path_denylisted(path))
 		return FALSE
 	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
-	if (!S && entry["action"] == "created")
-		// Prefer mapped instance over new() when ids remapped across continue.
+	// Continue remaps persist ids — always try turf+type before spawning a duplicate.
+	if (!S)
 		S = locate(path) in T
-		if (!S)
-			S = new path(T)
+	if (!S && entry["action"] == "created")
+		S = new path(T)
 	if (!S || !odyssey_structure_whitelisted(S))
 		if (S && entry["action"] == "created" && !QDELETED(S))
 			qdel(S)
@@ -127,6 +127,28 @@
 	return TRUE
 
 
+/proc/odyssey_structure_needs_connection_refresh(obj/structure/S)
+	return istype(S, /obj/structure/window) \
+		|| istype(S, /obj/structure/grille) \
+		|| istype(S, /obj/structure/wall_frame) \
+		|| istype(S, /obj/structure/table) \
+		|| istype(S, /obj/structure/catwalk)
+
+
+/// Recompute visual joins after strip/spawn — mid-apply update_icon used stale neighbor state.
+/proc/odyssey_refresh_structure_connections()
+	var/refreshed = 0
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		for (var/obj/structure/S in T)
+			if (QDELETED(S) || !odyssey_structure_needs_connection_refresh(S))
+				continue
+			S.update_connections(FALSE)
+			S.update_icon()
+			refreshed++
+		CHECK_TICK
+	log_debug("ODYSSEY: refreshed structure connections=[refreshed]")
+
+
 /proc/odyssey_apply_structures(list/entries)
 	if (!islist(entries))
 		return
@@ -139,6 +161,7 @@
 		if (odyssey_apply_structure_entry(entry))
 			applied++
 		CHECK_TICK
+	odyssey_refresh_structure_connections()
 	log_debug("ODYSSEY: apply_structures applied=[applied]/[length(entries)]")
 
 

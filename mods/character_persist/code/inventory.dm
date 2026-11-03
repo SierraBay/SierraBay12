@@ -16,11 +16,25 @@
 	. = ..()
 	if (!.)
 		return
-	var/locked_job = character_persist_odyssey_locked_job(user)
-	if (!locked_job)
-		return
-	if (title != locked_job && title != CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
+	if (!character_persist_odyssey_job_allowed(user, title))
 		return FALSE
+
+
+/// Roundstart assign_role() uses this — must enforce the same Odyssey lock as is_available.
+/datum/job/is_restricted(datum/preferences/prefs, feedback)
+	. = ..()
+	if (.)
+		return
+	if (!istype(prefs))
+		return FALSE
+	var/locked_job = character_persist_odyssey_locked_job(prefs.client, prefs.default_slot)
+	if (!locked_job)
+		return FALSE
+	if (title == locked_job || title == CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
+		return FALSE
+	if (feedback)
+		to_chat(feedback, SPAN_CLASS("boldannounce", "Odyssey: this character is locked to [locked_job] or Crewman."))
+	return TRUE
 
 
 /proc/character_persist_inventory_path_denied(path)
@@ -67,21 +81,37 @@
 	return character_persist_inventory_path_denied(I.type)
 
 
-/proc/character_persist_odyssey_locked_job(client/user)
+/// Odyssey `assigned_job` for a prefs slot, or null if unlocked / first shift on this doll.
+/proc/character_persist_odyssey_locked_job(client/user, slot = null)
 	if (!istype(user) || !character_persist_use_odyssey_lane())
 		return null
 	var/datum/preferences/prefs = user.prefs
 	if (!istype(prefs) || !prefs.character_persist)
 		return null
-	var/list/snapshot = prefs.character_persist_snapshot
-	if (!islist(snapshot) || !odyssey_snapshot_valid(snapshot))
-		snapshot = character_persist_read(prefs.client_ckey, prefs.default_slot, TRUE)
+	if (!slot)
+		slot = prefs.default_slot
+	var/list/snapshot
+	if (slot == prefs.default_slot)
+		snapshot = prefs.character_persist_snapshot
+		if (!islist(snapshot) || !odyssey_snapshot_valid(snapshot))
+			snapshot = character_persist_read(prefs.client_ckey, slot, TRUE)
+	else
+		snapshot = character_persist_read(prefs.client_ckey, slot, TRUE)
 	if (!islist(snapshot))
 		return null
 	var/job_title = snapshot["assigned_job"]
 	if (!istext(job_title) || !length(job_title))
 		return null
 	return job_title
+
+
+/proc/character_persist_odyssey_job_allowed(client/user, job_title, slot = null)
+	if (!job_title)
+		return FALSE
+	var/locked_job = character_persist_odyssey_locked_job(user, slot)
+	if (!locked_job)
+		return TRUE
+	return job_title == locked_job || job_title == CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE
 
 
 /proc/character_persist_should_restore_inventory(mob/living/carbon/human/H)
@@ -224,14 +254,14 @@
 				character_persist_safe_write_photo(photos, "[pid]_tiny", Ph.tiny)
 	if (istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
-		if (islist(C.accessories) && length(C.accessories))
-			var/list/acc = list()
+		var/list/acc = list()
+		if (islist(C.accessories))
 			for (var/obj/item/clothing/accessory/A in C.accessories)
 				if (!istype(A) || character_persist_inventory_denied(A))
 					continue
 				acc += "[A.type]"
-			if (length(acc))
-				entry["accessories"] = acc
+		// Always write (even empty) so type-default plates/ties do not respawn.
+		entry["accessories"] = acc
 	return entry
 
 
@@ -379,13 +409,20 @@
 		character_persist_safe_apply_reagents(I, entry["reagents"])
 	if (islist(entry["accessories"]) && istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
+		// Drop type New() defaults so saved plate/tie/holster can occupy restricted slots.
+		if (length(C.accessories))
+			for (var/obj/item/clothing/accessory/old_acc in C.accessories.Copy())
+				C.remove_accessory(null, old_acc)
+				qdel(old_acc)
 		for (var/acc_text in entry["accessories"])
 			var/acc_path = character_persist_safe_resolve_path(acc_text)
 			if (!ispath(acc_path, /obj/item/clothing/accessory) || character_persist_inventory_path_denied(acc_path))
 				continue
 			var/obj/item/clothing/accessory/A = new acc_path(C)
-			if (!C.attempt_attach_accessory(A))
+			if (QDELETED(A) || !istype(A) || !C.can_attach_accessory(A))
 				qdel(A)
+				continue
+			C.attach_accessory(null, A)
 	return I
 
 
@@ -402,18 +439,34 @@
 	if (istype(parent, /obj/item/folder) || istype(parent, /obj/item/storage))
 		I.forceMove(parent)
 		return TRUE
-	if (istype(parent, /obj/item/clothing/suit/storage))
-		var/obj/item/clothing/suit/storage/S = parent
-		if (istype(S.pockets))
-			I.forceMove(S.pockets)
-			return TRUE
 	if (istype(parent, /obj/item/clothing))
 		var/obj/item/clothing/C = parent
 		if (islist(C.accessories))
 			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
 				if (!istype(A.container))
 					continue
+				var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
+				if (istype(H))
+					if (H.holstered || !H.can_holster(I))
+						continue
+					I.forceMove(A.container)
+					if (I.loc != A.container)
+						continue
+					H.holstered = I
+					A.SetName("occupied [H.empty_name]")
+					GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
+					GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
+					A.update_icon()
+					return TRUE
+				if (!A.container.can_be_inserted(I, null, TRUE))
+					continue
 				I.forceMove(A.container)
+				if (I.loc == A.container)
+					return TRUE
+		if (istype(C, /obj/item/clothing/suit/storage))
+			var/obj/item/clothing/suit/storage/S = C
+			if (istype(S.pockets))
+				I.forceMove(S.pockets)
 				return TRUE
 	I.forceMove(parent)
 	return TRUE

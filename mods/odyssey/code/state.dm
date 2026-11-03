@@ -101,7 +101,7 @@ var/global/datum/odyssey_state/odyssey
 	var/list/objectives
 	/// Next id suffix for contracts/objectives.
 	var/next_objective_id = 1
-	/// Campaign research progress (science briefs, notes) — research.json.
+	/// Campaign research progress (science briefs, notes, tech_tree) — research.json.
 	var/list/research
 	/// Last validation errors shown in the admin panel.
 	var/list/validation_errors

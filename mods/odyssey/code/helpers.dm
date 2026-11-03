@@ -325,6 +325,9 @@
 	// Paperwork has its own lane (papers.json) with text/photos.
 	if (ispath(path, /obj/item/paper) || ispath(path, /obj/item/photo) || ispath(path, /obj/item/folder) || ispath(path, /obj/item/paper_bundle))
 		return TRUE
+	// Office stamps stay on the map (DMM / relocated) — not strip+restore via items_*.
+	if (ispath(path, /obj/item/stamp))
+		return TRUE
 	// Round-critical uniques — must stay on the live map / respawn logic, not snapshot.
 	if (ispath(path, /obj/item/disk/nuclear))
 		return TRUE
@@ -335,7 +338,6 @@
 	if (ispath(path, /obj/item/storage/backpack/holding))
 		return TRUE
 	return FALSE
-
 
 /proc/odyssey_item_denylisted(obj/item/I)
 	if (!istype(I))

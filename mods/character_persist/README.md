@@ -32,8 +32,8 @@ ID мода: CHARACTER_PERSIST
 
 - **Первый заход** куклы (`ckey|slot`) в кампанию: обычный job outfit + loadout; в конце смены пишется `inventory` + `assigned_job`.
 - **Последующие заходы**: outfit и loadout **не** выдаются; восстанавливается сохранённый инвентарь; выдаются свежие ID / PDA / headset под выбранную должность.
-- Кукла может зайти только на **`assigned_job`** или **Crewman**.
-- Не сохраняются: ID, PDA, headset, nuke disk, pinpointer, blueprints, bag of holding. Бумага/фото/папки/бандлы в инвентаре — **да** (текст до 8k, фото в `_inventory_photos.sav`). Оружие, броня, antag-предметы в карманах — сохраняются.
+- Кукла может зайти только на **`assigned_job`** или **Crewman** (и roundstart `divide_occupations` / latejoin — через `is_restricted` + `is_available`; смена job priority в лобби не обходит лок).
+- Не сохраняются: ID, PDA, headset, nuke disk, pinpointer, blueprints, bag of holding. Бумага/фото/папки/бандлы в инвентаре — **да** (текст до 8k, фото в `_inventory_photos.sav`). Оружие, броня, antag-предметы в карманах — сохраняются. Аксессуары на одежде (галстук, пластина, кобура/подсумки + их содержимое) — **да**; пустой список сносит дефолты типа.
 - **Custody** (бриг): inventory не пишется и не восстанавливается.
 
 

@@ -218,6 +218,10 @@ SUBSYSTEM_DEF(jobs)
 				if(LAZYACCESS(job.minimum_character_age, species.get_bodytype()) && (slot.age < job.minimum_character_age[species.get_bodytype()]))
 					continue
 				if(slot.CorrectLevel(job, level))
+					// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY
+					if (!character_persist_odyssey_job_allowed(player.client, job.title, slot.slot))
+						continue
+					// [/SIERRA-ADD]
 					candidates += player
 					break
 		else if(prefs.CorrectLevel(job,level))
@@ -225,6 +229,10 @@ SUBSYSTEM_DEF(jobs)
 				continue
 			if(LAZYACCESS(job.minimum_character_age, species.get_bodytype()) && (prefs.age < job.minimum_character_age[species.get_bodytype()]))
 				continue
+			// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY
+			if (!character_persist_odyssey_job_allowed(player.client, job.title))
+				continue
+			// [/SIERRA-ADD]
 			candidates += player
 	return candidates
 
@@ -360,11 +368,15 @@ SUBSYSTEM_DEF(jobs)
 				if(prefs.CorrectLevel(job, level))
 					if(!player.client.prefs.load_character(prefs.slot))
 						continue
-					assign_role(player, job.title, mode = mode)
-					return TRUE
+					// [SIERRA-EDIT] - CHARACTER_PERSIST / ODYSSEY: honor assign_role failure (job lock / restrict)
+					if(assign_role(player, job.title, mode = mode))
+						return TRUE
+					// [/SIERRA-EDIT]
 		else if(player.client.prefs.CorrectLevel(job, level))
-			assign_role(player, job.title, mode = mode)
-			return TRUE
+			// [SIERRA-EDIT] - CHARACTER_PERSIST / ODYSSEY
+			if(assign_role(player, job.title, mode = mode))
+				return TRUE
+			// [/SIERRA-EDIT]
 	return FALSE
 
 /datum/controller/subsystem/jobs/proc/equip_custom_loadout(mob/living/carbon/human/H, datum/job/job)

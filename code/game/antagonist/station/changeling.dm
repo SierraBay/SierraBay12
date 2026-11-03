@@ -73,22 +73,31 @@ GLOBAL_TYPED_NEW(changelings, /datum/antagonist/changeling)
 				changeling.objectives += survive_objective
 	return
 
+/// Body/species checks must live here: draft_antagonist only calls can_become_antag_detailed.
+/// Putting them only in can_become_antag left special_role set after a failed finalize.
+/datum/antagonist/changeling/can_become_antag_detailed(datum/mind/player, ignore_role)
+	. = ..()
+	if (.)
+		return .
+	if (!player?.current)
+		return "Player has no mob."
+	if (ishuman(player.current))
+		var/mob/living/carbon/human/H = player.current
+		if (H.isSynthetic() || H.isFBP())
+			return "Player is synthetic or an FBP."
+		if (H.species?.species_flags & (SPECIES_FLAG_NO_SCAN | SPECIES_FLAG_NEED_DIRECT_ABSORB))
+			return "Species cannot be a changeling."
+		return FALSE
+	if (isnewplayer(player.current))
+		if (!player.current.client?.prefs)
+			return "No preferences available."
+		var/singleton/species/S = GLOB.species_by_name[player.current.client.prefs.species]
+		if (S?.species_flags & (SPECIES_FLAG_NO_SCAN | SPECIES_FLAG_NEED_DIRECT_ABSORB))
+			return "Species cannot be a changeling."
+		if (player.current.client.prefs.organ_data[BP_CHEST] == "cyborg") // Full synthetic.
+			return "Player prefs are full synthetic."
+		return FALSE
+	return "Player mob cannot be a changeling."
+
 /datum/antagonist/changeling/can_become_antag(datum/mind/player, ignore_role)
-	if(..())
-		if(player.current)
-			if(ishuman(player.current))
-				var/mob/living/carbon/human/H = player.current
-				if(H.isSynthetic() || H.isFBP())
-					return 0
-				if(H.species.species_flags & (SPECIES_FLAG_NO_SCAN|SPECIES_FLAG_NEED_DIRECT_ABSORB))
-					return 0
-				return 1
-			else if(isnewplayer(player.current))
-				if(player.current.client && player.current.client.prefs)
-					var/singleton/species/S = GLOB.species_by_name[player.current.client.prefs.species]
-					if(S?.species_flags & SPECIES_FLAG_NO_SCAN|SPECIES_FLAG_NEED_DIRECT_ABSORB)
-						return 0
-					if(player.current.client.prefs.organ_data[BP_CHEST] == "cyborg") // Full synthetic.
-						return 0
-					return 1
- 	return 0
+	return !can_become_antag_detailed(player, ignore_role)

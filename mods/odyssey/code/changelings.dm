@@ -28,8 +28,52 @@
 		return
 	odyssey_register_current_changelings("roundstart")
 	odyssey_reapply_changelings()
+	odyssey_repair_changeling_state()
 	addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_reapply_changelings)), 5 SECONDS)
+	addtimer(new Callback(GLOBAL_PROC, GLOBAL_PROC_REF(odyssey_repair_changeling_state)), 5 SECONDS)
 	log_game("ODYSSEY: changeling setup shift=[state.shift_number] active=[odyssey_count_active_changelings()] saved=[length(state.changelings)]")
+
+
+/// Fix lottery leftovers: special_role=Changeling without datum / not in current_antagonists.
+/proc/odyssey_repair_changeling_state()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !istype(GLOB.changelings))
+		return
+	var/repaired = 0
+	var/cleared = 0
+	for (var/datum/mind/M in GLOB.changelings.current_antagonists)
+		if (M.changeling || !istype(M.current))
+			continue
+		M.current.make_changeling()
+		repaired++
+		log_game("ODYSSEY: repaired missing changeling datum for [M.key]")
+	for (var/datum/mind/M in SSticker.minds)
+		if (M.special_role != GLOB.changelings.role_text)
+			continue
+		if (M in GLOB.changelings.current_antagonists)
+			if (!M.changeling && istype(M.current))
+				M.current.make_changeling()
+				repaired++
+				log_game("ODYSSEY: repaired missing changeling datum for [M.key]")
+			continue
+		// Failed draft/finalize leftover, or role stamp without make — drop unless roster reapply owns them.
+		var/roster_key
+		if (ishuman(M.current))
+			var/mob/living/carbon/human/H = M.current
+			var/player_ckey = character_persist_ckey_of(H)
+			var/slot = character_persist_slot_of(H)
+			if (player_ckey && slot)
+				roster_key = odyssey_roster_key(player_ckey, slot)
+		var/list/entry = roster_key ? state.changelings[roster_key] : null
+		if (islist(entry) && entry["status"] == ODYSSEY_CHANGELING_STATUS_ACTIVE)
+			if (odyssey_make_changeling(M, "repair_orphan", TRUE))
+				repaired++
+			continue
+		M.special_role = null
+		cleared++
+		log_game("ODYSSEY: cleared orphan Changeling special_role for [M.key]")
+	if (repaired || cleared)
+		log_game("ODYSSEY: changeling repair repaired=[repaired] cleared=[cleared]")
 
 
 /// JSON [] loads as a plain list; keep a keyed map of roster_key → entry.
@@ -136,8 +180,14 @@
 	if (!istype(player) || !ishuman(player.current))
 		log_game("ODYSSEY: make_changeling failed ([source]): invalid mind/mob")
 		return FALSE
-	if (!GLOB.changelings.add_antagonist(player, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE))
-		log_game("ODYSSEY: make_changeling failed ([source]): add_antagonist rejected [player.key]")
+	if (!(player in GLOB.changelings.current_antagonists))
+		if (!GLOB.changelings.add_antagonist(player, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE))
+			log_game("ODYSSEY: make_changeling failed ([source]): add_antagonist rejected [player.key]")
+			return FALSE
+	if (!player.changeling && istype(player.current))
+		player.current.make_changeling()
+	if (!player.changeling)
+		log_game("ODYSSEY: make_changeling failed ([source]): no changeling datum after make for [player.key]")
 		return FALSE
 	var/mob/living/carbon/human/H = player.current
 	if (!odyssey_register_changeling(H, source))

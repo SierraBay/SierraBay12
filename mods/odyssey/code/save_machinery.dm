@@ -591,13 +591,13 @@
 		want_running = text2num(want_running)
 	if (!isnum(want_running))
 		want_running = SHIELD_OFF
-	// Rebuild field after load if it was up; spinning/discharging collapse to off or running.
-	// regenerate_field() no-ops when running is falsy — set RUNNING first.
-	if (want_running >= SHIELD_RUNNING)
-		G.running = SHIELD_RUNNING
-		G.regenerate_field()
-	else
+	// OFF/DISCHARGING → down. RUNNING/IDLE kept; SPINNING_UP collapses to RUNNING.
+	// regenerate_field() no-ops when running is falsy — set a live state first.
+	if (want_running <= SHIELD_DISCHARGING)
 		G.shutdown_field()
+	else
+		G.running = (want_running == SHIELD_SPINNING_UP) ? SHIELD_RUNNING : want_running
+		G.regenerate_field()
 	G.update_icon()
 
 /proc/odyssey_serialize_cryo_cell(obj/machinery/atmospherics/unary/cryo_cell/C)

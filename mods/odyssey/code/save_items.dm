@@ -49,6 +49,9 @@
 	if (istype(I, /obj/item/reagent_containers))
 		// Always write (even empty) so emptied beakers/bottles do not refill from type New().
 		entry["reagents"] = odyssey_serialize_reagents(I)
+	if (istype(I, /obj/item/clothing))
+		// Always write (even empty) so type-default plates/ties do not respawn on continue.
+		entry["accessories"] = odyssey_serialize_clothing_accessories(I)
 	return entry
 
 
@@ -75,18 +78,60 @@
 		container.reagents.add_reagent(path, amount)
 
 
+/proc/odyssey_serialize_clothing_accessories(obj/item/clothing/C)
+	var/list/acc = list()
+	if (!istype(C) || !islist(C.accessories))
+		return acc
+	for (var/obj/item/clothing/accessory/A in C.accessories)
+		if (!istype(A) || odyssey_item_path_denylisted(A.type))
+			continue
+		acc += "[A.type]"
+	return acc
+
+
+/proc/odyssey_clear_clothing_accessories(obj/item/clothing/C)
+	if (!istype(C) || !length(C.accessories))
+		return
+	for (var/obj/item/clothing/accessory/A in C.accessories.Copy())
+		C.remove_accessory(null, A)
+		qdel(A)
+
+
+/// Wipe type New() defaults, then attach saved accessory types (null-user attach_accessory).
+/proc/odyssey_apply_clothing_accessories(obj/item/clothing/C, list/acc_types)
+	if (!istype(C) || !islist(acc_types))
+		return
+	odyssey_clear_clothing_accessories(C)
+	for (var/acc_text in acc_types)
+		var/acc_path = character_persist_safe_resolve_path(acc_text)
+		if (!ispath(acc_path, /obj/item/clothing/accessory) || odyssey_item_path_denylisted(acc_path))
+			continue
+		var/obj/item/clothing/accessory/A = new acc_path(C)
+		if (QDELETED(A) || !istype(A) || !C.can_attach_accessory(A))
+			qdel(A)
+			continue
+		C.attach_accessory(null, A)
+
+
 /proc/odyssey_collect_nested_item_contents(obj/item/I, list/buckets, parent_id)
 	if (!istype(I) || !parent_id || !islist(buckets))
 		return
 	if (istype(I, /obj/item/storage))
 		for (var/obj/item/child in I)
 			odyssey_collect_item_into_buckets(child, buckets, parent_id)
-	// Suit pockets always exist after New; clothing accessories are not snapshotted in items_*.
 	if (istype(I, /obj/item/clothing/suit/storage))
 		var/obj/item/clothing/suit/storage/S = I
 		if (istype(S.pockets))
 			for (var/obj/item/child in S.pockets)
 				odyssey_collect_item_into_buckets(child, buckets, parent_id)
+	if (istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if (islist(C.accessories))
+			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+				if (!istype(A.container))
+					continue
+				for (var/obj/item/child in A.container)
+					odyssey_collect_item_into_buckets(child, buckets, parent_id)
 
 
 /proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null)
@@ -104,18 +149,42 @@
 	odyssey_collect_nested_item_contents(I, buckets, entry["id"])
 
 
-/// Put restored nested item into storage or suit pockets (not loose on the clothing atom).
+/// Put restored nested item into storage, holster/pouch, or suit pockets (not loose on the clothing atom).
 /proc/odyssey_place_item_in_parent(obj/item/I, obj/item/parent)
 	if (!istype(I) || !istype(parent))
 		return FALSE
 	if (istype(parent, /obj/item/storage))
 		I.forceMove(parent)
 		return I.loc == parent
-	if (istype(parent, /obj/item/clothing/suit/storage))
-		var/obj/item/clothing/suit/storage/S = parent
-		if (istype(S.pockets))
-			I.forceMove(S.pockets)
-			return I.loc == S.pockets
+	if (istype(parent, /obj/item/clothing))
+		var/obj/item/clothing/C = parent
+		if (islist(C.accessories))
+			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+				if (!istype(A.container))
+					continue
+				var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
+				if (istype(H))
+					if (H.holstered || !H.can_holster(I))
+						continue
+					I.forceMove(A.container)
+					if (I.loc != A.container)
+						continue
+					H.holstered = I
+					A.SetName("occupied [H.empty_name]")
+					GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
+					GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
+					A.update_icon()
+					return TRUE
+				if (!A.container.can_be_inserted(I, null, TRUE))
+					continue
+				I.forceMove(A.container)
+				if (I.loc == A.container)
+					return TRUE
+		if (istype(C, /obj/item/clothing/suit/storage))
+			var/obj/item/clothing/suit/storage/S = C
+			if (istype(S.pockets))
+				I.forceMove(S.pockets)
+				return I.loc == S.pockets
 	I.forceMove(parent)
 	return I.loc == parent
 /proc/odyssey_collect_items_by_bucket()
@@ -263,6 +332,8 @@
 	odyssey_clear_item_autofill(I)
 	if (!isnull(entry["dir"]))
 		I.set_dir(entry["dir"])
+	if (istype(I, /obj/item/clothing) && ("accessories" in entry))
+		odyssey_apply_clothing_accessories(I, entry["accessories"])
 	if (istype(parent))
 		odyssey_place_item_in_parent(I, parent)
 	else if (host)

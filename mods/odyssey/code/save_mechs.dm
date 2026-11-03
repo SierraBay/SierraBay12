@@ -233,7 +233,8 @@
 	if (!ispath(path, /mob/living/exosuit))
 		return FALSE
 	var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
-	if (!M && !entry["action"])
+	// Continue remaps persist ids — always try turf+type before spawning a duplicate.
+	if (!M)
 		M = locate(path) in T
 	if (!M && entry["action"] == "created")
 		if (ispath(path, /mob/living/exosuit/premade))

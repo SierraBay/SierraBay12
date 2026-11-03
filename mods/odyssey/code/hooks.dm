@@ -33,6 +33,7 @@
 	odyssey_ensure_campaign_contract()
 	odyssey_generate_shift_objectives()
 	odyssey_science_enabled = TRUE
+	odyssey_rnd_sync_campaign_tech_tree()
 	odyssey_generate_science_briefs()
 	odyssey_generate_dept_briefs()
 	return TRUE

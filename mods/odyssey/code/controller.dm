@@ -454,6 +454,7 @@
 	state.status = status
 	state.outcome_reason = reason
 	state.active = FALSE
+	odyssey_science_enabled = FALSE
 	var/list/meta = odyssey_state_meta(FALSE)
 	meta["archived_at"] = time2text(world.realtime, "YYYY-MM-DD hh:mm")
 	meta["archive_reason"] = reason

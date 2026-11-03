@@ -282,6 +282,9 @@ var/global/datum/odyssey_panel/odyssey_panel
 		dat += " | <a href='?src=\ref[src];preview=research'>Превью research</a>"
 	dat += "<br>"
 	dat += "Samples: <b>[length(R["samples_collected"])]</b> | Anomalies: <b>[length(R["anomalies_catalogued"])]</b><br>"
+	var/list/tree = R["tech_tree"]
+	if (islist(tree))
+		dat += "tech_tree: researched=<b>[length(tree["researched"])]</b> designs=<b>[length(tree["designs"])]</b> re_designs=<b>[length(tree["re_designs"])]</b><br>"
 	dat += "<b>Брифы:</b><br>"
 	var/brief_shown = 0
 	for (var/list/entry in R["active_briefs"])
@@ -489,6 +492,7 @@ var/global/datum/odyssey_panel/odyssey_panel
 			show(C)
 			return
 		odyssey_science_enabled = TRUE
+		odyssey_rnd_sync_campaign_tech_tree()
 		odyssey_generate_science_briefs()
 		log_and_message_admins("regenerated Odyssey science briefs", usr)
 		to_chat(usr, SPAN_NOTICE("Научные брифы пересозданы."))

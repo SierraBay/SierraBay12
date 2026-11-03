@@ -1,4 +1,4 @@
-/// Campaign research progress for Odyssey (science briefs, dept briefs, notes).
+/// Campaign research progress for Odyssey (science briefs, dept briefs, notes, RnD tech_tree).
 
 /proc/odyssey_research_blank() as /list
 	return list(
@@ -10,7 +10,14 @@
 		"next_brief_id" = 1,
 		"dept_briefs" = list(),
 		"completed_dept_brief_ids" = list(),
-		"next_dept_brief_id" = 1
+		"next_dept_brief_id" = 1,
+		"tech_tree" = list(
+			"researched" = list(),
+			"levels" = list(),
+			"reputation" = list(),
+			"designs" = list(),
+			"re_designs" = list()
+		)
 	)
 
 
@@ -37,11 +44,36 @@
 		R["completed_dept_brief_ids"] = list()
 	if (isnull(R["next_dept_brief_id"]))
 		R["next_dept_brief_id"] = 1
+	if (!islist(R["tech_tree"]))
+		R["tech_tree"] = list(
+			"researched" = list(),
+			"levels" = list(),
+			"reputation" = list(),
+			"designs" = list(),
+			"re_designs" = list()
+		)
+	else
+		var/list/tree = R["tech_tree"]
+		if (!islist(tree["researched"]))
+			tree["researched"] = list()
+		if (!islist(tree["levels"]))
+			tree["levels"] = list()
+		if (!islist(tree["reputation"]))
+			tree["reputation"] = list()
+		if (!islist(tree["designs"]))
+			tree["designs"] = list()
+		if (!islist(tree["re_designs"]))
+			tree["re_designs"] = list()
 	return R
 
 
 /proc/odyssey_collect_research() as /list
 	var/list/R = odyssey_research_ensure()
+	var/obj/machinery/r_n_d/server/core/primary = odyssey_rnd_primary_core()
+	if (istype(primary))
+		var/list/tree = odyssey_rnd_build_tech_tree(primary)
+		if (islist(tree))
+			R["tech_tree"] = tree
 	return R.Copy()
 
 
@@ -52,4 +84,14 @@
 		return
 	state.research = data.Copy()
 	odyssey_research_ensure()
-	log_debug("ODYSSEY: research snapshot applied briefs=[length(state.research["active_briefs"])] dept=[length(state.research["dept_briefs"])]")
+	odyssey_rnd_sync_campaign_tech_tree()
+	log_debug("ODYSSEY: research snapshot applied briefs=[length(state.research["active_briefs"])] dept=[length(state.research["dept_briefs"])] tech_tree=yes")
+
+
+/// Push research.json tech_tree onto all core servers (HDD mirror only while Odyssey science is active).
+/proc/odyssey_rnd_sync_campaign_tech_tree()
+	var/list/R = odyssey_research_ensure()
+	var/list/tree = R["tech_tree"]
+	if (!islist(tree))
+		return 0
+	return odyssey_rnd_apply_tech_tree(tree)
