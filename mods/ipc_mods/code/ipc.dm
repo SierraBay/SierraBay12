@@ -27,12 +27,6 @@
 	status = ORGAN_ROBOTIC
 
 
-/obj/item/organ/internal/posibrain/ipc/emp_act(severity)
-	severity = ipc_try_surge_protect(severity)
-	if(!severity)
-		return
-	..(severity)
-
 /obj/item/organ/internal/posibrain/ipc/Initialize()
 	. = ..()
 	if(brainmob)
@@ -169,6 +163,20 @@
 			SPAN_NOTICE("You disconnect \the [removed] from the ECS.")
 		)
 	return TRUE
+
+/obj/item/device/multitool/use_after(atom/target, mob/living/user, click_parameters)
+	if(istype(src, /obj/item/device/multitool/multimeter/datajack))
+		return ..()
+	if(!ishuman(target) || !user || !user.zone_sel || user.zone_sel.selecting != BP_HEAD)
+		return ..()
+	var/mob/living/carbon/human/H = target
+	if(!(H.is_species(SPECIES_IPC) || H.is_species(SPECIES_FBP)))
+		return ..()
+	var/obj/item/organ/external/head = H.get_organ(BP_HEAD)
+	var/obj/item/organ/internal/ecs/ecs = H.internal_organs_by_name[BP_EXONET]
+	if(head && head.hatch_state == HATCH_OPENED && ecs && ecs.directive_disk)
+		return H.offer_ipc_directive_eject(user)
+	return ..()
 
 
 // robotize sensors are no longer damaged in the phoron atmosphere:

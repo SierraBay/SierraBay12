@@ -21,5 +21,4 @@
 #include "code/accessory_ipc.dm"
 #include "code/diagnostics.dm"
 #include "code/power_reroute.dm"
-#include "code/rig_adapter.dm"
 #endif

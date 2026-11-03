@@ -35,14 +35,13 @@
 		ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 		if(!ui)
 			ui = new(user, src, ui_key, "mods-ipc_diagnostics.tmpl", name, 460, 620, state = state)
+			ui.auto_update_layout = 1
 			ui.set_initial_data(data)
 			ui.open()
 		return
 
-	data["PC_hasheader"]  = FALSE  // ipc_diagnostics has its own winbar
 	data["no_ipc"]        = FALSE
 	data["src"]           = "\ref[src]"
-	data["program_ref"]   = program ? "\ref[program]" : null
 	data["name"]          = H.real_name
 	data["tab"]           = active_tab
 	data["tab_ov_class"]  = (active_tab == "overview")   ? "ecs-tab active" : "ecs-tab"
@@ -110,14 +109,6 @@
 		data["optical_pct"]    = round((1 - OS.damage / OS.max_damage) * 100)
 		data["optical_class"]  = _pct_class(data["optical_pct"], 60, 30)
 
-	// ── SURGE PROTECTOR ──
-	var/obj/item/organ/internal/surge_protector/SP = H.internal_organs_by_name[BP_SURGE_PROTECTOR]
-	data["has_sp"] = SP ? TRUE : FALSE
-	if(SP)
-		data["sp_failed"] = (SP.status & ORGAN_DEAD) ? TRUE : FALSE
-		data["sp_pct"]    = round((1 - SP.damage / SP.max_damage) * 100)
-		data["sp_class"]  = _pct_class(data["sp_pct"], 60, 30)
-
 	// ── ПОЗИТРОННАЯ МАТРИЦА ──
 	var/obj/item/organ/internal/posibrain/posi = H.internal_organs_by_name[BP_POSIBRAIN]
 	data["has_posi"] = posi ? TRUE : FALSE
@@ -127,21 +118,6 @@
 		data["posi_dead"]       = (posi.status & ORGAN_DEAD) ? TRUE : FALSE
 
 	if(active_tab == "overview")
-		// ── ТЕПЛОВАЯ НАГРУЗКА ──
-		var/sprint_pct = round(H.ipc_sprint_heat_buildup * 50)
-		data["sprint_heat"] = sprint_pct
-		var/sprint_class = "ok"
-		if(sprint_pct >= 40) sprint_class = "warn"
-		if(sprint_pct >= 70) sprint_class = "bad"
-		data["sprint_heat_class"] = sprint_class
-
-		// ── НЕСОВМЕСТИМОСТЬ БРЕНДОВ ──
-		data["has_brand_warn"]    = (H.ipc_brand_siemens_penalty > 0) ? TRUE : FALSE
-		data["brand_penalty_pct"] = round(H.ipc_brand_siemens_penalty * 100)
-		data["overdrive_enabled"] = H.ipc_overdrive_enabled ? TRUE : FALSE
-		data["overdrive_label"] = H.ipc_overdrive_enabled ? "Restore Safety" : "Disable Safety"
-		data["overdrive_state"] = H.ipc_overdrive_enabled ? "OVERRIDE ACTIVE" : "PROTOCOLS ACTIVE"
-		data["overdrive_class"] = H.ipc_overdrive_enabled ? "warn" : "ok"
 		data["reroute_active"] = H.ipc_brain_reroute_active ? TRUE : FALSE
 		data["reroute_state"] = H.ipc_brain_reroute_active ? "ACTIVE" : "INACTIVE"
 		data["reroute_class"] = H.ipc_brain_reroute_active ? "warn" : "muted"
@@ -173,11 +149,14 @@
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "mods-ipc_diagnostics.tmpl", "[name] — [H.real_name]", 460, 620, state = state)
+		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
 		ui.open()
 	ui.set_auto_update(1)
 
 /datum/nano_module/program/ipc_diagnostics/Topic(href, href_list)
+	if(..())
+		return TOPIC_HANDLED
 	if(href_list["tab"])
 		if(href_list["tab"] == "map")
 			active_tab = "map"
@@ -187,16 +166,6 @@
 			active_tab = "overview"
 	else if(href_list["broadcast_directives"])
 		broadcast_directives()
-	else if(href_list["close"] || href_list["close_program"])
-		if(program?.computer)
-			program.computer.minimize_program(program, null)
-		else
-			SSnano.close_uis(src)
-		return TOPIC_HANDLED
-	else if(href_list["minimize_program"])
-		if(program?.computer)
-			program.computer.minimize_program(program, usr)
-		return TOPIC_HANDLED
 	else if(href_list["set_thermostat_val"])
 		var/mob/living/carbon/human/H = get_ipc_owner()
 		if(!H || H != usr)
@@ -217,15 +186,6 @@
 		if(!CS.cooling_enabled)
 			CS.last_cooling_drain = 0
 		to_chat(H, SPAN_NOTICE("Cooling system is now [CS.cooling_enabled ? "active" : "disabled"]."))
-	else if(href_list["toggle_overdrive"])
-		var/mob/living/carbon/human/H = get_ipc_owner()
-		if(!H || H != usr)
-			return TOPIC_NOACTION
-		H.ipc_overdrive_enabled = !H.ipc_overdrive_enabled
-		if(H.ipc_overdrive_enabled)
-			to_chat(H, SPAN_WARNING("Safety protocols disabled. Overdrive mode enabled."))
-		else
-			to_chat(H, SPAN_NOTICE("Safety protocols restored. Overdrive mode disabled."))
 	else if(href_list["toggle_brain_reroute"])
 		var/mob/living/carbon/human/H = get_ipc_owner()
 		if(!H || H != usr)

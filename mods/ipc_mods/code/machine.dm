@@ -4,12 +4,6 @@
 // Per-mob heat gain for IPCs, replaces species singleton passive_temp_gain
 /mob/living/carbon/human
 	var/ipc_temp_gain = 0
-	// Штраф: Hephaestus/Shellguard (боевые) в миксе с любой другой маркой
-	var/ipc_brand_siemens_penalty = 0
-	// Накопленная тепловая нагрузка от длительного бега без стамины (0–2, множитель нагрева = 1 + это значение)
-	var/ipc_sprint_heat_buildup = 0
-	// Режим овердрайва: разрешает бег при нулевой стамине ценой ускоренного перегрева
-	var/ipc_overdrive_enabled = FALSE
 	// Emergency brain-power rerouting state (used when cell is missing/depleted)
 	var/ipc_brain_reroute_active = FALSE
 	var/ipc_brain_reroute_next_drain = 0
@@ -136,7 +130,7 @@
 	var/obj/item/organ/internal/ecs/ecs = internal_organs_by_name[BP_EXONET]
 	return istype(ecs) && ecs.reroute_ui && ecs.reroute_ui.session_open
 
-// ИПС не устаёт — стамина используется как "ресурс до перегрева", а не физическая усталость
+// ИПС не устаёт как органик — стамина только ограничивает спринт, без штрафов усталости
 /mob/living/carbon/human/adjust_stamina(amt)
 	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
 		var/last_stamina = stamina
@@ -146,157 +140,12 @@
 		return
 	. = ..()
 
-/mob/living/carbon/human/can_sprint()
-	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
-		if(ipc_overdrive_enabled)
-			return TRUE
-	. = ..()
-
-/mob/living/carbon/human/movement_delay(singleton/move_intent/using_intent = move_intent)
-	. = ..()
-	// убираем штраф к скорости от кончившейся стамины — синтеты бегают бесконечно
-	if((is_species(SPECIES_IPC) || is_species(SPECIES_FBP)) && ipc_overdrive_enabled && get_stamina() <= 0 && shock_stage < 10)
-		. -= 3
-
 /mob/living/carbon/human/stabilize_body_temperature()
 	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
 		if(ipc_temp_gain)
 			bodytemperature += ipc_temp_gain
-		if(robolimb_count)
-			var/list/brands = list()
-			var/total_limb_heat = 0
-			var/base_limb_heat = 0
-			var/sprinting = ipc_overdrive_enabled && istype(move_intent, /singleton/move_intent/run) && get_stamina() <= 0
-			for(var/obj/item/organ/external/limb in organs)
-				if(BP_IS_ROBOTIC(limb))
-					if(limb.brand)
-						brands |= limb.brand
-					base_limb_heat += limb.heat_generation
-					// нагрев только при беге с пустой стаминой
-					if(sprinting)
-						// повреждённые конечности греются сильнее (до +50% при максимальном уроне)
-						var/damage_factor = 1 + ((limb.brute_dam + limb.burn_dam) / max(1, limb.max_damage)) * 0.5
-						total_limb_heat += limb.heat_generation * damage_factor
-			// боевые марки не дружат с чужими интерфейсами (и друг с другом)
-			var/has_combat_brand = (("Hephaestus" in brands) || ("Shellguard" in brands))
-			var/brand_conflict = has_combat_brand && length(brands) > 1
-			ipc_brand_siemens_penalty = brand_conflict ? 0.1 : 0
-			if(brand_conflict && base_limb_heat)
-				bodytemperature += base_limb_heat * 0.15
-			if(sprinting && total_limb_heat)
-				// Базовый heat_generation уже в ipc_temp_gain. Здесь только надбавка от спринта.
-				ipc_sprint_heat_buildup = min(ipc_sprint_heat_buildup + 0.1, 2.0)
-				var/sprint_extra = total_limb_heat * ipc_sprint_heat_buildup
-				if(brand_conflict)
-					sprint_extra *= 1.15
-					if(prob(2))
-						to_chat(src, SPAN_WARNING("Thermal mismatch detected — combat-grade prosthetic interfaces are conflicting with the rest of the chassis."))
-				bodytemperature += sprint_extra
-			else if(ipc_sprint_heat_buildup)
-				// при остановке или восстановлении стамины нагрузка спадает постепенно
-				ipc_sprint_heat_buildup = max(ipc_sprint_heat_buildup - 0.05, 0)
-			// сбой протезов: шанс lock-up = Sprint Heat Load % (та же шкала, что в Diagnostics)
-			if(ipc_sprint_heat_buildup > 0)
-				var/has_cheap_limb = FALSE
-				for(var/obj/item/organ/external/limb in organs)
-					if(BP_IS_ROBOTIC(limb) && limb.expensive == 0)
-						has_cheap_limb = TRUE
-						break
-				var/sprint_pct = ipc_sprint_heat_buildup * 50 // 0–100, как в IPC Diagnostics
-				// 0% → 0 шанс; 100% → 40% (field limbs) / 30% (остальные) за тик температуры
-				var/lockup_chance = sprint_pct * (has_cheap_limb ? 0.40 : 0.30)
-				if(lockup_chance > 0 && prob(lockup_chance))
-					if(prob(50))
-						to_chat(src, SPAN_WARNING("Your prosthetic arms stutter from thermal overload!"))
-						if(prob(50)) drop_l_hand(force = TRUE)
-						else drop_r_hand(force = TRUE)
-					else
-						to_chat(src, SPAN_WARNING("Your prosthetic legs lock up momentarily!"))
-						Weaken(3)
-		else
-			ipc_brand_siemens_penalty = 0
 		return
 	. = ..()
-
-// Электропроводимость протеза: siemens марки и конфликт боевых (Hephaestus/Shellguard) с чужими
-/mob/living/carbon/human/get_siemens_coefficient_organ(obj/item/organ/external/def_zone)
-	. = ..()
-	if(!(is_species(SPECIES_IPC) || is_species(SPECIES_FBP)))
-		return
-	if(def_zone && BP_IS_ROBOTIC(def_zone) && def_zone.siemens_coefficient)
-		. *= def_zone.siemens_coefficient
-	. += ipc_brand_siemens_penalty
-
-// ── HEPHAESTUS: SERVO GRIP (дизарм) ──────────────────────────────────────────
-// Вызывается из species.dm на target (/mob/living/carbon/human) — безопасен для всех
-/mob/living/carbon/human/proc/get_prosthetic_disarm_resistance()
-	if(!(is_species(SPECIES_IPC) || is_species(SPECIES_FBP)))
-		return 0
-	var/obj/item/organ/external/active = get_organ(hand ? BP_L_HAND : BP_R_HAND)
-	var/obj/item/organ/external/inactive = get_organ(hand ? BP_R_HAND : BP_L_HAND)
-	for(var/obj/item/organ/external/H in list(active, inactive))
-		if(H && BP_IS_ROBOTIC(H) && H.brand == "Hephaestus")
-			return 15
-	return 0
-
-// ── HEPHAESTUS: LOCKOUT (ноги не ломаются до высокого порога) ────────────────
-/obj/item/organ/external/fracture()
-	if(BP_IS_ROBOTIC(src) && brand == "Hephaestus" && (brute_dam + burn_dam) < max_damage * 0.85)
-		return  // Hephaestus servo-joints resist fracture until near-destruction
-	. = ..()
-
-// ── XION ECON: ВЗРЫВ ПРИ ОТРЫВЕ ─────────────────────────────────────────────
-/obj/item/organ/external/attempt_dismemberment(brute, burn, sharp, edge, used_weapon, spillover, force_droplimb)
-	. = ..()
-	if(. && BP_IS_ROBOTIC(src) && brand == "Xion" && expensive == 0)
-		explosion(get_turf(src), 1, EX_ACT_LIGHT)
-
-// ── MORPHEUS MANTIS: QUICK STRIKE ────────────────────────────────────────────
-/mob/living/get_attack_speed(obj/item/item)
-	. = ..()
-	if(!istype(src, /mob/living/carbon/human))
-		return
-	var/mob/living/carbon/human/H = src
-	if(!(H.is_species(SPECIES_IPC) || H.is_species(SPECIES_FBP)))
-		return
-	var/obj/item/organ/external/l = H.get_organ(BP_L_ARM)
-	var/obj/item/organ/external/r = H.get_organ(BP_R_ARM)
-	if(l && r && BP_IS_ROBOTIC(l) && BP_IS_ROBOTIC(r) && l.model == "Morpheus Mantis" && r.model == "Morpheus Mantis")
-		. = max(1, . - 2)
-
-// ── XION/NT/W-T ECONOMY: АКУСТИЧЕСКИЙ ШУМ ───────────────────────────────────
-/mob/living/carbon/human/handle_footsteps()
-	. = ..()
-	if(!(is_species(SPECIES_IPC) || is_species(SPECIES_FBP)))
-		return
-	// step_count инкрементируется ПОСЛЕ вызова handle_footsteps, поэтому сдвигаем на 1
-	if(!MOVING_QUICKLY(src) || (step_count + 1) % 4)
-		return
-	for(var/part in list(BP_L_FOOT, BP_R_FOOT, BP_L_LEG, BP_R_LEG))
-		var/obj/item/organ/external/E = get_organ(part)
-		if(E && BP_IS_ROBOTIC(E) && E.expensive == 0 && (E.brand in list("Xion", "Ward-Takahashi", "NanoTrasen")))
-			var/turf/T = get_turf(src)
-			if(istype(T))
-				playsound(T, pick('sound/effects/footstep/plating1.ogg','sound/effects/footstep/plating2.ogg','sound/effects/footstep/plating3.ogg'), 85, 1, 3)
-			break
-
-// ── SURGE PROTECTOR: ЭМИ на конечностях и органах ────────────────────────────
-// Один импульс — одно срабатывание фильтра. Лёгкий ЭМИ глотается, тяжёлый слабеет до light.
-/obj/item/organ/external/emp_act(severity)
-	if(BP_IS_ROBOTIC(src))
-		severity = ipc_try_surge_protect(severity)
-		if(!severity)
-			return
-	. = ..(severity)
-
-/mob/living/carbon/human/local_emp(list/limbs, severity = 2)
-	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
-		var/obj/item/organ/internal/surge_protector/SP = internal_organs_by_name[BP_SURGE_PROTECTOR]
-		if(SP && !(SP.status & ORGAN_DEAD))
-			severity = SP.filter_severity(severity)
-			if(!severity)
-				return
-	. = ..(severity)
 
 /singleton/species/machine
 	var/list/valid_jobs = list(
@@ -337,7 +186,6 @@
 	LAZYINITLIST(products)
 	products[BP_COOLING] = list(/obj/item/organ/internal/cooling_system, 35)
 	products[BP_EXONET] = list(/obj/item/organ/internal/ecs, 35)
-	products[BP_SURGE_PROTECTOR] = list(/obj/item/organ/internal/surge_protector, 30)
 	. = ..()
 
 /obj/screen/bodytemp/Click(location, control, params)
@@ -351,11 +199,6 @@
 				to_chat(usr, SPAN_WARNING("Coolant remaining: [coolant.get_coolant_remaining()]/[coolant.refrigerant_max]"))
 				to_chat(usr, SPAN_WARNING("Thermostat: [round(coolant.thermostat - T0C)]&deg;C \
 					<a href='?src=\ref[coolant];set_thermostat=1'>\[Adjust\]</a>"))
-			var/obj/item/organ/internal/surge_protector/sp = machine.internal_organs_by_name[BP_SURGE_PROTECTOR]
-			if(sp)
-				var/sp_status = (sp.status & ORGAN_DEAD) ? "<font color='red'>FAILED</font>" : \
-					"[round((1 - sp.damage / sp.max_damage) * 100)]%"
-				to_chat(usr, SPAN_WARNING("Surge protector: [sp_status]"))
 
 /obj/screen/cell/Click(location, control, params)
 	. = ..()

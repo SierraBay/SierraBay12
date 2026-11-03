@@ -73,7 +73,6 @@
 // IPC_COOLING_UNIT - Start
 #define BP_COOLING "cooling system"
 #define BP_EXONET "exonet connection slot"
-#define BP_SURGE_PROTECTOR "surge protector"
 // IPC_COOLING_UNIT - End
 
 // RESOMI - Start

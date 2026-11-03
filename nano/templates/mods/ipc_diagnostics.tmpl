@@ -44,7 +44,6 @@
 	.ecs-destroyed { color: #f44336; font-weight: bold; letter-spacing: 1px; }
 	.ecs-active    { color: #4fc3f7; font-size: 11px; }
 	.ecs-alert { border: 1px solid #f44336; background: #1a0808; color: #ff6659; padding: 4px 6px; font-size: 12px; margin-bottom: 5px; }
-	.ecs-brand-warn { border: 1px solid #ffb829; background: #1a1200; color: #ffb829; padding: 3px 6px; font-size: 12px; margin-bottom: 5px; }
 	.ecs-link { color: #1e9dc8; font-size: 11px; text-decoration: none; margin-left: 5px; cursor: default; }
 	.ecs-link:hover { text-decoration: none; color: #1e9dc8; }
 	.ecs-btn {
@@ -156,35 +155,6 @@
 	.ecs-law-text { font-size: 11px; line-height: 1.4; }
 	.ecs-law-normal { color: #c8d8e8; }
 
-	/* ── CUSTOM WINDOW CONTROLS ── */
-	.ecs-winbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		background: #060a0f;
-		border-bottom: 1px solid #1e3a4a;
-		padding: 3px 6px;
-		margin: -6px -6px 6px -6px;
-		user-select: none;
-	}
-	.ecs-winbar-title { color: #1e9dc8; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
-	.ecs-winbar-unit  { color: #546e7a; font-size: 10px; margin-left: 6px; }
-	.ecs-winbar-right { display: flex; gap: 2px; align-items: center; }
-	.ecs-wbtn {
-		display: inline-block;
-		width: 20px; height: 16px;
-		line-height: 14px;
-		text-align: center;
-		font-size: 11px;
-		border: 1px solid #1e3a4a;
-		background: #0d1520;
-		color: #546e7a;
-		text-decoration: none;
-		cursor: default;
-	}
-	.ecs-wbtn:hover  { border-color: #1e9dc8; color: #4fc3f7; text-decoration: none; }
-	.ecs-wbtn.close:hover { border-color: #f44336; color: #f44336; }
-
 	/* ── THERMOSTAT SLIDER ── */
 	.thermo-row { display: flex; align-items: center; gap: 6px; }
 	.thermo-val { color: #4fc3f7; font-size: 12px; min-width: 32px; text-align: right; }
@@ -227,21 +197,6 @@
 </div>
 {{else}}
 
-<div class="ecs-winbar">
-	<div>
-		<span class="ecs-winbar-title">IPC Diagnostics</span>
-		<span class="ecs-winbar-unit">{{:data.name}}</span>
-	</div>
-	<div class="ecs-winbar-right">
-		<span class="{{:data.temp_class}}" style="font-size:11px;margin-right:4px">{{:data.temp}}°C</span>
-		{{if data.has_battery}}<span class="{{:data.battery_class}}" style="font-size:11px;margin-right:6px">{{:data.battery_pct}}%</span>{{/if}}
-		{{if data.program_ref}}
-		<a class="ecs-wbtn" href="?src={{:data.src}};minimize_program={{:data.program_ref}}" title="Minimize">_</a>
-		<a class="ecs-wbtn close" href="?src={{:data.src}};close_program={{:data.program_ref}}" title="Close">×</a>
-		{{/if}}
-	</div>
-</div>
-
 <div class="ecs-tabs">
 	<a class="{{:data.tab_ov_class}}"  href="?src={{:data.src}};tab=overview">Overview</a>
 	<a class="{{:data.tab_map_class}}" href="?src={{:data.src}};tab=map">Body Map</a>
@@ -250,10 +205,6 @@
 
 <!-- ═══════════════════════════════════════════════ OVERVIEW -->
 {{if data.tab=='overview'}}
-
-{{if data.has_brand_warn}}
-<div class="ecs-brand-warn">!! COMBAT LIMB MISMATCH — +{{:data.brand_penalty_pct}}% electrical conductivity</div>
-{{/if}}
 
 <!-- SYSTEM -->
 <div class="ecs-section">
@@ -285,20 +236,6 @@
 		</span>
 	</div>
 	{{/if}}
-	<div class="ecs-row">
-		<span class="ecs-label">Sprint Heat Load</span>
-		<span class="ecs-value">
-			{{:helper.displayBar(data.sprint_heat, 0, 100, data.sprint_heat_class)}}
-			<span class="{{:data.sprint_heat_class}}"><b>{{:data.sprint_heat}}%</b></span>
-		</span>
-	</div>
-	<div class="ecs-row">
-		<span class="ecs-label">Safety Protocols</span>
-		<span class="ecs-value">
-			<span class="{{:data.overdrive_class}}"><b>{{:data.overdrive_state}}</b></span>
-			<a class="ecs-btn" href="?src={{:data.src}};toggle_overdrive=1">{{:data.overdrive_label}}</a>
-		</span>
-	</div>
 	{{if data.reroute_available}}
 	<div class="ecs-row">
 		<span class="ecs-label">Power Rerouting</span>
@@ -369,21 +306,6 @@
 				{{else}}
 					{{:helper.displayBar(data.microbattery_pct, 0, 100, data.microbattery_class)}}
 					<span class="{{:data.microbattery_class}}"><b>{{:data.microbattery_pct}}%</b></span>
-				{{/if}}
-			{{else}}
-				<span class="muted">not installed</span>
-			{{/if}}
-		</span>
-	</div>
-	<div class="ecs-row">
-		<span class="ecs-label">Surge Protector</span>
-		<span class="ecs-value">
-			{{if data.has_sp}}
-				{{if data.sp_failed}}
-					<span class="ecs-destroyed">DESTROYED</span>
-				{{else}}
-					{{:helper.displayBar(data.sp_pct, 0, 100, data.sp_class)}}
-					<span class="{{:data.sp_class}}"><b>{{:data.sp_pct}}%</b></span>
 				{{/if}}
 			{{else}}
 				<span class="muted">not installed</span>
