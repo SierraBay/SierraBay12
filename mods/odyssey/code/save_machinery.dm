@@ -866,15 +866,17 @@
 		var/list/sdata = data["scrubber"]
 		if (isnum(sdata["volume_rate"]))
 			S.volume_rate = sdata["volume_rate"]
-		if (islist(sdata["scrubbing_gas"]))
-			S.scrubbing_gas = sdata["scrubbing_gas"].Copy()
+		var/list/scrub_gases = sdata["scrubbing_gas"]
+		if (islist(scrub_gases))
+			S.scrubbing_gas = scrub_gases.Copy()
 	if (islist(data["hydro"]) && istype(P, /obj/machinery/portable_atmospherics/hydroponics))
 		odyssey_apply_hydroponics(P, data["hydro"])
 	if (islist(data["cracker"]) && istype(P, /obj/machinery/portable_atmospherics/cracker))
 		var/obj/machinery/portable_atmospherics/cracker/cracker = P
 		var/list/cr = data["cracker"]
-		if (islist(cr["reagent_buffer"]))
-			cracker.reagent_buffer = cr["reagent_buffer"].Copy()
+		var/list/buffer = cr["reagent_buffer"]
+		if (islist(buffer))
+			cracker.reagent_buffer = buffer.Copy()
 	if (islist(data["sublimator_container"]) && istype(P, /obj/machinery/portable_atmospherics/reagent_sublimator))
 		var/obj/machinery/portable_atmospherics/reagent_sublimator/sub = P
 		if (sub.container)
