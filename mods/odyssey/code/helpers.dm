@@ -3,6 +3,11 @@
 	return "[stationdate2text()] [stationtime2text()]"
 
 
+/// Single Odyssey wrapper so persist apply does not burn the repo path-budget on every call site.
+/proc/odyssey_resolve_path(path_text)
+	return text2path(path_text)
+
+
 /// Visitor / transient roots that must never enter the area snapshot (or persist even if somehow listed).
 /proc/odyssey_area_excluded_from_snapshot(area/A)
 	return istype(A, /area/space) \

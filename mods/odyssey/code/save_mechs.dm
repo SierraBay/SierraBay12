@@ -131,7 +131,7 @@
 /proc/odyssey_make_mech_component(list/data, side = null)
 	if (!islist(data))
 		return null
-	var/path = text2path(data["type"])
+	var/path = odyssey_resolve_path(data["type"])
 	if (!ispath(path, /obj/item/mech_component))
 		return null
 	var/obj/item/mech_component/C = new path(null)
@@ -229,7 +229,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (!ispath(path, /mob/living/exosuit))
 		return FALSE
 	var/mob/living/exosuit/M = odyssey_find_mech_by_id(entry["id"])
@@ -275,7 +275,7 @@
 				M.remove_system(slot, null, TRUE)
 				qdel(old_eq)
 		for (var/slot in hardpoints)
-			var/eq_path = text2path(hardpoints[slot])
+			var/eq_path = odyssey_resolve_path(hardpoints[slot])
 			if (!ispath(eq_path, /obj/item/mech_equipment))
 				continue
 			var/obj/item/mech_equipment/EQ = new eq_path(M)

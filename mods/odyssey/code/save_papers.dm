@@ -325,7 +325,7 @@
 /proc/odyssey_spawn_paperwork_item(list/entry, savefile/photos)
 	if (!islist(entry))
 		return null
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (!odyssey_paperwork_type_allowed(path))
 		return null
 
@@ -339,7 +339,7 @@
 		P.stamped = list()
 		if (islist(stamped_raw))
 			for (var/stamp_text in stamped_raw)
-				var/stamp_path = text2path(stamp_text)
+				var/stamp_path = odyssey_resolve_path(stamp_text)
 				if (ispath(stamp_path))
 					P.stamped += stamp_path
 		var/lang_name = entry["language"]

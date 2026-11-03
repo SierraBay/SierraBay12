@@ -62,7 +62,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (ispath(path, /turf) && T.type != path)
 		T = T.ChangeTurf(path, tell_universe = FALSE, force_lighting_update = TRUE, keep_air = TRUE)
 		if (!T)

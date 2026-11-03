@@ -80,7 +80,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (!ispath(path, /obj/item/stack/material))
 		return FALSE
 	var/amount = entry["amount"]

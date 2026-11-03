@@ -332,7 +332,7 @@
 		var/datum/artifact_trigger/chemical/C = T
 		var/list/chems = list()
 		for (var/chem_text in data["required_chemicals"])
-			var/path = text2path(chem_text)
+			var/path = odyssey_resolve_path(chem_text)
 			if (ispath(path, /datum/reagent))
 				chems += path
 		if (length(chems))
@@ -366,7 +366,7 @@
 /proc/odyssey_spawn_artifact_effect(atom/holder, list/data)
 	if (!istype(holder) || !islist(data))
 		return null
-	var/path = text2path(data["type"])
+	var/path = odyssey_resolve_path(data["type"])
 	if (!ispath(path, /datum/artifact_effect))
 		return null
 	var/datum/artifact_effect/E = new path(holder)
@@ -392,7 +392,7 @@
 	E.toggled = !!data["toggled"]
 	QDEL_NULL(E.trigger)
 	if (islist(data["trigger"]))
-		var/tpath = text2path(data["trigger"]["type"])
+		var/tpath = odyssey_resolve_path(data["trigger"]["type"])
 		if (ispath(tpath, /datum/artifact_trigger))
 			E.trigger = new tpath
 			odyssey_apply_artifact_trigger(E.trigger, data["trigger"])
@@ -459,7 +459,7 @@
 		C.contain(A)
 	if (islist(data["paper"]))
 		var/list/paper = data["paper"]
-		var/ppath = text2path(paper["type"])
+		var/ppath = odyssey_resolve_path(paper["type"])
 		if (!ispath(ppath, /obj/item/paper))
 			ppath = /obj/item/paper
 		var/obj/item/paper/P = new ppath(C)
@@ -624,7 +624,7 @@
 		C.beaker = null
 	if (islist(data["beaker"]))
 		var/list/beaker_data = data["beaker"]
-		var/bpath = text2path(beaker_data["type"])
+		var/bpath = odyssey_resolve_path(beaker_data["type"])
 		if (ispath(bpath, /obj/item/reagent_containers/glass))
 			var/obj/item/reagent_containers/glass/B = new bpath(C)
 			if (beaker_data["name"])
@@ -692,7 +692,7 @@
 		P.holding = null
 	if (!islist(data))
 		return
-	var/path = text2path(data["type"])
+	var/path = odyssey_resolve_path(data["type"])
 	if (!ispath(path, /obj/item/tank))
 		return
 	var/obj/item/tank/tank = new path(P)
@@ -883,7 +883,7 @@
 			qdel(sub.container)
 			sub.container = null
 		var/list/cont = data["sublimator_container"]
-		var/cpath = text2path(cont["type"])
+		var/cpath = odyssey_resolve_path(cont["type"])
 		if (ispath(cpath, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/RC = new cpath(sub)
 			if (cont["name"])
@@ -965,7 +965,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (!ispath(path, /obj/machinery))
 		return FALSE
 	var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])

@@ -21,7 +21,7 @@
 	if ("hatch_open" in entry)
 		C.hatch_open = !!entry["hatch_open"]
 	if ("plated_tile" in entry)
-		var/plated_path = text2path(entry["plated_tile"])
+		var/plated_path = odyssey_resolve_path(entry["plated_tile"])
 		if (ispath(plated_path, /singleton/flooring))
 			C.plated_tile = GET_SINGLETON(plated_path)
 		else
@@ -75,7 +75,7 @@
 	if (!islist(entry) || entry["action"] != "destroyed")
 		return FALSE
 	// Legacy saves may tombstone tables/beds; never wipe DMM furniture via turf/type fallback.
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (odyssey_structure_path_denylisted(path))
 		return FALSE
 	var/obj/structure/S = odyssey_find_structure_by_id(entry["id"])
@@ -93,7 +93,7 @@
 /proc/odyssey_apply_structure_entry(list/entry)
 	if (!islist(entry) || entry["action"] == "destroyed")
 		return FALSE
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!ispath(path, /obj/structure) || !T)
 		return FALSE
@@ -160,7 +160,7 @@
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
 		return null
-	var/path = text2path(entry["type"])
+	var/path = odyssey_resolve_path(entry["type"])
 	if (ispath(path, /obj/structure/catwalk))
 		return locate(/obj/structure/catwalk) in T
 	if (ispath(path, /obj/structure))
