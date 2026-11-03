@@ -39,7 +39,7 @@
 		return key
 	if (!istext(key) || !length(key))
 		return null
-	var/path = text2path(key)
+	var/path = odyssey_resolve_path(key)
 	if (ispath(path))
 		return path
 	return key
@@ -76,7 +76,7 @@
 /proc/odyssey_rnd_restore_re_design(list/data)
 	if (!islist(data))
 		return null
-	var/build_path = text2path(data["build_path"])
+	var/build_path = odyssey_resolve_path(data["build_path"])
 	if (!ispath(build_path, /obj/item) && !ispath(build_path, /atom))
 		return null
 	var/datum/design/D = new /datum/design()
