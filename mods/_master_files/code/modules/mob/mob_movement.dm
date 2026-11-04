@@ -1,5 +1,5 @@
 /*
-	COMBAT_EXTENDED — тот, кто смотрит в прицел или бинокль, не бегает
+	COMBAT_EXTENDED. Тот, кто смотрит в прицел или бинокль, не бегает
 	(`mods/combat_extended/code/scopes.dm`): быстрый шаг не выбирается, пока прицел не снят.
 */
 /mob/living/set_move_intent(singleton/move_intent/next_intent)

@@ -1,8 +1,8 @@
 /*
-	COMBAT_EXTENDED — набор кузнеца.
+	COMBAT_EXTENDED. Набор кузнеца.
 
 	Правит любую жёсткую броню, керамику в том числе, и предел починки не опускает, а поднимает.
-	Числа — у его хлама, `/singleton/ce_armor_repair/blacksmith_kit` в `code/armor_repair.dm`. В игре
+	Числа: у его хлама, `/singleton/ce_armor_repair/blacksmith_kit` в `code/armor_repair.dm`. В игре
 	его продаёт аплинк, ниже.
 */
 
@@ -20,7 +20,7 @@
 	to_chat(user, "It has parts for [uses] repair\s.")
 
 
-/// Дорого, но дешевле новой брони: тяжёлый комплект аплинка — 16, скрытый тактический жилет — 25.
+/// Дорого, но дешевле новой брони: тяжёлый комплект аплинка 16, скрытый тактический жилет 25.
 /// Починка одна и возвращает пятую часть одной вещи, так что набор берут ради предела, а не HP.
 /datum/uplink_item/item/tools/ce_blacksmith_kit
 	name = "Blacksmith Kit"

@@ -41,6 +41,7 @@
 #include "code/disarm_gunfire.dm"
 #include "code/codex.dm"
 #include "code/concealed_accessories.dm"
+#include "code/ammo_sprites.dm"
 
 #include "code/items/armor/armor_plates.dm"
 #include "code/items/armor/augments.dm"
@@ -53,7 +54,9 @@
 #include "code/items/armor/suits.dm"
 #include "code/items/guns/beams.dm"
 #include "code/items/guns/bullets.dm"
+#include "code/items/guns/casings.dm"
 #include "code/items/guns/darts.dm"
+#include "code/items/guns/magazines.dm"
 #include "code/items/guns/payload_rounds.dm"
 #include "code/items/makeshift/armor_plate.dm"
 #include "code/items/medical/injectors.dm"

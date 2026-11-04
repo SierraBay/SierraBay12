@@ -1,6 +1,6 @@
 /*
-	COMBAT_EXTENDED — дротики: типы из `code/modules/projectiles/guns/projectile/dartgun.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов».
+	COMBAT_EXTENDED. Дротики: типы из `code/modules/projectiles/guns/projectile/dartgun.dm`.
+	Как устроена папка `code/items/`: README, раздел "Числа предметов".
 */
 
 /obj/item/projectile/bullet/chemdart

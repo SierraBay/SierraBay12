@@ -1,14 +1,14 @@
 /*
-	COMBAT_EXTENDED — самодельные пластины плитоноски и их крафт из стальных листов.
+	COMBAT_EXTENDED. Самодельные пластины плитоноски и их крафт из стальных листов.
 
 	Перенесены из `packs/infinity` (`clothing/accessories/armor.dm` и
 	`interactions/armorplates_craft.dm`). Там они лежали на
-	`/obj/item/clothing/accessory/armorplate/mainkraft` — без подчёркивания, то есть не пластинами,
+	`/obj/item/clothing/accessory/armorplate/mainkraft`: без подчёркивания, то есть не пластинами,
 	а голыми аксессуарами. От `armor_plate` они не брали закрытых частей тела, а у аксессуара
-	`body_parts_covered` по умолчанию пуст: броня пластин не закрывала ничего. Числа — прежние.
+	`body_parts_covered` по умолчанию пуст: броня пластин не закрывала ничего. Числа: прежние.
 */
 
-/// Голый стальной лист без подбоя: сдавшая сталь колется в носителя. Сама не создаётся — только
+/// Голый стальной лист без подбоя: сдавшая сталь колется в носителя. Сама не создаётся: только
 /// лёгкая, средняя и тяжёлая.
 /obj/item/clothing/accessory/armor_plate/makeshift
 	abstract_type = /obj/item/clothing/accessory/armor_plate/makeshift

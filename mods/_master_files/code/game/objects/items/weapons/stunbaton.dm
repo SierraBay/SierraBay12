@@ -1,9 +1,9 @@
 /*
-	COMBAT_EXTENDED — боль дубинки проходит броню (`mods/combat_extended/code/agony_armor.dm`).
+	COMBAT_EXTENDED. Боль дубинки проходит броню (`mods/combat_extended/code/agony_armor.dm`).
 */
 
 /**
- * Удар по намерению вреда проходит броню как удар силой `force`, и боль и оглушение — по доле урона,
+ * Удар по намерению вреда проходит броню как удар силой `force`, и боль и оглушение: по доле урона,
  * прошедшей броню. Тычок урона не наносит и касается брони с нулевым пробитием: его останавливает
  * любая броня против удара. Остановленный бронёй удар не причиняет боли и не оглушает.
  *
@@ -13,7 +13,7 @@
 /obj/item/melee/baton/apply_hit_effect(mob/living/target, mob/living/user, hit_zone)
 	if(!ce_agony_armor_enabled)
 		return ..()
-	// Урон наносит только удар по намерению вреда — то же условие, что в `..()`.
+	// Урон наносит только удар по намерению вреда: то же условие, что в `..()`.
 	var/damage = (user && user.a_intent == I_HURT) ? force : 0
 	var/pass_share = target.ce_get_armor_pass_share(hit_zone, damage, damtype, damage_flags(), armor_penetration)
 	var/full_agony = agonyforce

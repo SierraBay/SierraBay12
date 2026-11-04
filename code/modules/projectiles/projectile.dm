@@ -257,7 +257,7 @@
 		hit_zone = def_zone
 	else
 		var/target_zone = def_zone ? def_zone : BP_CHEST
-		// [SIERRA-EDIT] - COMBAT_EXTENDED - (Бросок попадания по модели Авроры, с выключенным выключателем — прежний: /mods/combat_extended/code/projectile_hits.dm)
+		// [SIERRA-EDIT] - COMBAT_EXTENDED - (Бросок попадания по модели Авроры, с выключенным выключателем, прежний: /mods/combat_extended/code/projectile_hits.dm)
 		// hit_zone = get_zone_with_miss_chance(target_zone, target_mob, miss_modifier, ranged_attack=(distance > 1 || original != target_mob)) //if the projectile hits a target we weren't originally aiming at then retain the chance to miss // SIERRA-EDIT - ORIGINAL
 		hit_zone = ce_get_projectile_hit_zone(target_zone, target_mob, miss_modifier, distance)
 		// [/SIERRA-EDIT]

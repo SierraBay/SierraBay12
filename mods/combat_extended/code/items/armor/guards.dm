@@ -1,7 +1,7 @@
 /*
-	COMBAT_EXTENDED — наручи и поножи: типы из `code/modules/clothing/under/accessories/arm_guards.dm`
+	COMBAT_EXTENDED. Наручи и поножи: типы из `code/modules/clothing/under/accessories/arm_guards.dm`
 	и `code/modules/clothing/under/accessories/leg_guards.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов».
+	Как устроена папка `code/items/`: README, раздел "Числа предметов".
 */
 
 /obj/item/clothing/accessory/arm_guards/ablative

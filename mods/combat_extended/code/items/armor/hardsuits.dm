@@ -1,7 +1,7 @@
 /*
-	COMBAT_EXTENDED — грудные секции РИГов и скафандры: типы из
+	COMBAT_EXTENDED. Грудные секции РИГов и скафандры: типы из
 	`code/modules/clothing/spacesuits/rig/rig_pieces.dm` и `code/modules/clothing/spacesuits/void/void.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов».
+	Как устроена папка `code/items/`: README, раздел "Числа предметов".
 */
 
 /obj/item/clothing/suit/space/rig

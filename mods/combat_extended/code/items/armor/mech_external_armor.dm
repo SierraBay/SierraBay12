@@ -1,7 +1,7 @@
 /*
-	COMBAT_EXTENDED — внешние бронеэлементы мехов: типы из
+	COMBAT_EXTENDED. Внешние бронеэлементы мехов: типы из
 	`mods/mechs_by_shegar/code/components/external_armor/_external_armour.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов». Механика —
+	Как устроена папка `code/items/`: README, раздел "Числа предметов". Механика:
 	`code/mech_plates.dm`.
 */
 

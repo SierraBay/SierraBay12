@@ -9,7 +9,7 @@
 /mob/living/carbon/human/dummy/mortal
 	real_name = "Test Dummy (mortal)"
 	status_flags = CANPUSH
-	/// Экипировка при появлении. null — голый.
+	/// Экипировка при появлении. null: голый.
 	var/singleton/hierarchy/outfit/outfit_type
 
 // Без клиента манекен засыпал бы как SSD и падал.

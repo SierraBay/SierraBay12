@@ -27,7 +27,7 @@
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/command, /obj/item/storage/backpack/messenger/com, /obj/item/storage/backpack/satchel/com))
 	)
 
-// Одежда капитана — отдельно: с ней в одном шкафу не помещался скрытый жилет.
+// Одежда капитана отдельно: с ней в одном шкафу не помещался скрытый жилет.
 /obj/structure/closet/secure_closet/captains/sierra/wardrobe
 	name = "captain's wardrobe"
 

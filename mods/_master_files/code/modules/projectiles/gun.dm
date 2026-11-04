@@ -1,6 +1,6 @@
 /*
-	COMBAT_EXTENDED — стрельба из-за щита (`mods/combat_extended/code/shields.dm`). Из стойки
-	«укрыться» стреляет только мастер, и выстрел раскрывает его голову и руку с оружием.
+	COMBAT_EXTENDED. Стрельба из-за щита (`mods/combat_extended/code/shields.dm`). Из стойки
+	"укрыться" стреляет только мастер, и выстрел раскрывает его голову и руку с оружием.
 */
 
 /obj/item/gun/Fire(atom/target, mob/living/user, clickparams, pointblank = 0, reflex = 0)
@@ -12,7 +12,7 @@
 
 
 /*
-	COMBAT_EXTENDED — выстрел при обезоруживании бросают два броска мода до обезоруживания
+	COMBAT_EXTENDED. Выстрел при обезоруживании бросают два броска мода до обезоруживания
 	(`mods/combat_extended/code/disarm_gunfire.dm`). Бросок Bay второй раз ружьё не стреляет.
 */
 /obj/item/gun/on_disarm_attempt(mob/target, mob/attacker)
@@ -22,7 +22,7 @@
 
 
 /*
-	COMBAT_EXTENDED — выстрел в упор помечает снаряд: по тому, в кого целились, он не промахивается
+	COMBAT_EXTENDED. Выстрел в упор помечает снаряд: по тому, в кого целились, он не промахивается
 	и летит без разброса (`mods/combat_extended/code/projectile_hits.dm`).
 */
 /obj/item/gun/process_point_blank(obj/projectile, mob/user, atom/target)
@@ -33,7 +33,7 @@
 
 
 /*
-	COMBAT_EXTENDED — снаряд, которому оружие посчитало точность, помечается выстрелом из оружия:
+	COMBAT_EXTENDED. Снаряд, которому оружие посчитало точность, помечается выстрелом из оружия:
 	в броске попадания он гасит `ce_gun_accuracy_points` шанса провала
 	(`mods/combat_extended/code/projectile_hits.dm`). И запоминает дугу разброса от отдачи, которая
 	накопилась у стрелка к этому выстрелу (`mods/combat_extended/code/recoil_spread.dm`). До кор
@@ -50,7 +50,7 @@
 
 
 /*
-	COMBAT_EXTENDED — после выстрела: стрелок из стойки «укрыться» раскрывается
+	COMBAT_EXTENDED. После выстрела: стрелок из стойки "укрыться" раскрывается
 	(`mods/combat_extended/code/shields.dm`), а отдача даёт ему стаки разброса
 	(`mods/combat_extended/code/recoil_spread.dm`), и кольцо разброса на курсоре расширяется по ним
 	(`mods/combat_extended/code/spread_ring.dm`).
@@ -67,7 +67,7 @@
 
 
 /*
-	COMBAT_EXTENDED — у другого режима огня другой разброс: кольцо разброса держащего оружие
+	COMBAT_EXTENDED. У другого режима огня другой разброс: кольцо разброса держащего оружие
 	пересчитывается (`mods/combat_extended/code/spread_ring.dm`).
 */
 /obj/item/gun/switch_firemodes()
@@ -78,7 +78,7 @@
 
 
 /*
-	COMBAT_EXTENDED — кнопка прицела (`mods/combat_extended/code/scopes.dm`): оружию с прицелом её
+	COMBAT_EXTENDED. Кнопка прицела (`mods/combat_extended/code/scopes.dm`): оружию с прицелом её
 	даёт `Initialize()`, а нажатие смотрит в прицел, как глагол `Use Scope`. Без прицела кнопка
 	оружия работает как в кор коде.
 */

@@ -1,10 +1,10 @@
 /*
-	COMBAT_EXTENDED — инъекторы: типы из `code/modules/reagents/reagent_containers/syringes.dm`,
-	`hypospray.dm` и `borghypo.dm`. Как устроена папка `code/items/` — README, раздел «Числа
-	предметов». Механика — `code/injections.dm`.
+	COMBAT_EXTENDED. Инъекторы: типы из `code/modules/reagents/reagent_containers/syringes.dm`,
+	`hypospray.dm` и `borghypo.dm`. Как устроена папка `code/items/`: README, раздел "Числа
+	предметов". Механика: `code/injections.dm`.
 
-	0.5 мм — между одеждой с подбоем и кевларом: униформу охраны (0.4 мм) укол проходит, кевларовую
-	вставку и скрытый жилет (0.6 мм), каски, плиты и наручи (от 1.1 мм) — нет.
+	0.5 мм лежит между одеждой с подбоем и кевларом: униформу охраны (0.4 мм) укол проходит, кевларовую
+	вставку и скрытый жилет (0.6 мм), каски, плиты и наручи (от 1.1 мм) нет.
 */
 
 /obj/item/reagent_containers/syringe

@@ -1,22 +1,22 @@
 /*
-	COMBAT_EXTENDED — лучи: типы из `code/modules/projectiles/projectile/beams.dm` и
+	COMBAT_EXTENDED. Лучи: типы из `code/modules/projectiles/projectile/beams.dm` и
 	`packs/infinity/items/projectile/guns/energy/laser_handmade.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов».
+	Как устроена папка `code/items/`: README, раздел "Числа предметов".
 
 	Множитель жара луча (`laser_heat.dm`): сколько жара несёт единица урона, остановленная жёсткой
 	бронёй. Пистолеты греют слабее карабинов: тяжёлую броню пистолет только греет, а печёт носителя
 	карабин. AP луча срезает жар и сам, поэтому у рентгена и импульса множитель полный.
 
-	Подтип без своего значения берёт значение родителя. Базовый луч — луч «Перуна», поэтому 0.6
+	Подтип без своего значения берёт значение родителя. Базовый луч: луч "Перуна", поэтому 0.6
 	достаётся и лучам, которых здесь нет.
 */
 
 /obj/item/projectile/beam
-	// LAEP90 «Перун», смартган, ретро-лазер, энергоревольвер: 40 урона без AP.
+	// LAEP90 "Перун", смартган, ретро-лазер, энергоревольвер: 40 урона без AP.
 	ce_laser_heat_mult = 0.6
 
 /obj/item/projectile/beam/smalllaser
-	// LAEP90-C «Стригой» — карманный: 35 урона и греет меньше всех.
+	// LAEP90-C "Стригой" карманный: 35 урона и греет меньше всех.
 	ce_laser_heat_mult = 0.45
 
 /obj/item/projectile/beam/midlaser
@@ -28,7 +28,7 @@
 	ce_laser_heat_mult = 1
 
 /obj/item/projectile/beam/pulse
-	// Импульсные пистолет, карабин и винтовка: AP 25–35.
+	// Импульсные пистолет, карабин и винтовка: AP 25-35.
 	ce_laser_heat_mult = 1
 
 /obj/item/projectile/beam/sniper

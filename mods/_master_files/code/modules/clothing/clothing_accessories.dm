@@ -1,5 +1,5 @@
 /*
-	COMBAT_EXTENDED — свечение раскалённой брони (`mods/combat_extended/code/laser_heat.dm`).
+	COMBAT_EXTENDED. Свечение раскалённой брони (`mods/combat_extended/code/laser_heat.dm`).
 
 	Горячую пластину видно через плитоноску, поэтому плитоноска перерисовывает свечение, когда
 	пластину пристёгивают или отстёгивают. Здесь, а не в `on_attached()` и `on_removed()`

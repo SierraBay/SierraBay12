@@ -54,7 +54,7 @@
 
 
 /*
-	COMBAT_EXTENDED — выстрел при обезоруживании (`mods/combat_extended/code/disarm_gunfire.dm`).
+	COMBAT_EXTENDED. Выстрел при обезоруживании (`mods/combat_extended/code/disarm_gunfire.dm`).
 	Два броска мода идут до всего обезоруживания выше: нажатый спуск заканчивает попытку, иначе
 	обезоруживание идёт как обычно.
 */

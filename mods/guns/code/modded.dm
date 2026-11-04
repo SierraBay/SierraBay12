@@ -366,7 +366,11 @@
 	desc = "An armor piercing pistol bullet casing."
 	label = "AP"
 	projectile_type = /obj/item/projectile/bullet/pistol/holdout/ap
-	icon_state = "smallcasing_f"
+	// Спрайт AP из COMBAT_EXTENDED (`code/items/guns/casings.dm`). Здесь, а не в моде: модпак
+	// подключается позже мода и перекрыл бы его своим `icon_state`.
+	icon_state = "7mm_ap"
+	ce_ammo_color = CE_AMMO_COLOR_AP
+	ce_box_sprite = "7mm_ap"
 
 /obj/item/projectile/bullet/pistol/holdout/ap
 	damage = 30

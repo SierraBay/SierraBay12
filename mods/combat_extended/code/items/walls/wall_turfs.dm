@@ -1,15 +1,15 @@
 /*
-	COMBAT_EXTENDED — клетки-стены без материала: типы из `code/game/turfs/simulated/wall_shuttle.dm`,
+	COMBAT_EXTENDED. Клетки-стены без материала: типы из `code/game/turfs/simulated/wall_shuttle.dm`,
 	`code/game/turfs/unsimulated/walls.dm` и `code/modules/mining/mine_turfs.dm`.
-	Как устроена папка `code/items/` — README, раздел «Числа предметов».
+	Как устроена папка `code/items/`: README, раздел "Числа предметов".
 
 	Шанс рикошета пули от клетки под 45° к ней, % (`projectile_ricochet.dm`). У стены
-	`/turf/simulated/wall` шанс даёт материал (`wall_materials.dm`); у этих клеток материала нет, и
+	`/turf/simulated/wall` шанс даёт материал (`wall_materials.dm`). У этих клеток материала нет, и
 	число стоит на самой клетке. Подтип без своего значения берёт значение родителя.
 */
 
 /turf/simulated/shuttle/wall
-	// Обшивка шаттла: как обычная армированная стена — сталь и пласталь.
+	// Обшивка шаттла: как обычная армированная стена, сталь и пласталь.
 	ce_ricochet_chance = 42
 
 /turf/unsimulated/wall

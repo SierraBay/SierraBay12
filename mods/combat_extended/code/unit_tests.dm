@@ -1,8 +1,8 @@
 /*
-	COMBAT_EXTENDED — юнит-тесты.
+	COMBAT_EXTENDED. Юнит-тесты.
 
 	Урон считается тем же проходом по слоям, что и в бою, а не своей копией формул. Проверяются
-	инварианты, а не конкретные числа: числа живут в README и меняются при балансе, инварианты —
+	инварианты, а не конкретные числа: числа живут в README и меняются при балансе, инварианты
 	нет.
 */
 
@@ -17,7 +17,7 @@
 	template = /datum/unit_test/combat_extended
 	/// Всё, что тест создал. Удаляется в `cleanup()`.
 	var/list/spawned = list()
-	/// Середина площадки — клетка космоса у метки `space_turf`.
+	/// Середина площадки: клетка космоса у метки `space_turf`.
 	var/turf/center
 	/// Клетки площадки, ставшие стенами.
 	var/list/walled = list()
@@ -38,7 +38,7 @@
 	RETURN_TYPE(/turf)
 	return locate(center.x + offset_x, center.y + offset_y, center.z)
 
-/// Чем площадка не годится, или null: все её клетки — пустой космос не на краю карты.
+/// Чем площадка не годится, или null: все её клетки это пустой космос не на краю карты.
 /datum/unit_test/combat_extended/proc/describe_arena_problem()
 	if(!center)
 		return "У площадки нет середины."
@@ -46,10 +46,10 @@
 		for(var/offset_y in -CE_ARENA_RADIUS to CE_ARENA_RADIUS)
 			var/turf/place = spot(offset_x, offset_y)
 			if(!is_free_space(place))
-				return "Клетка [offset_x],[offset_y] от середины площадки — [place ? place.type : "за краем карты"]: не пустой космос или край карты."
+				return "Клетка [offset_x],[offset_y] от середины площадки, [place ? place.type : "за краем карты"]: не пустой космос или край карты."
 	return null
 
-/// Клетка — пустой космос не на краю карты: в ней нет ничего плотного.
+/// Клетка это пустой космос не на краю карты: в ней нет ничего плотного.
 /datum/unit_test/combat_extended/proc/is_free_space(turf/place)
 	if(!istype(place, /turf/space))
 		return FALSE
@@ -61,8 +61,8 @@
 	return TRUE
 
 /**
- * Ставит площадку: её середина — ближайшая к метке `space_turf` клетка, вокруг которой все клетки
- * площадки — пустой космос. Сама метка на картах стоит и у края: на Сьерре — во второй клетке от
+ * Ставит площадку: её середина это ближайшая к метке `space_turf` клетка, вокруг которой все клетки
+ * площадки: пустой космос. Сама метка на картах стоит и у края: на Сьерре во второй клетке от
  * угла. Возвращает, почему площадку не поставить, или null.
  */
 /datum/unit_test/combat_extended/proc/place_arena()
@@ -87,8 +87,8 @@
 	return null
 
 /**
- * Занимает площадку для теста с настоящим полётом. FALSE — её нет, и тест уже отчитался: карта без
- * метки — провал, карта без места под площадку — пропуск. Так на карте `away_sites_testing`: космоса
+ * Занимает площадку для теста с настоящим полётом. FALSE значит, что её нет, и тест уже отчитался: карта без
+ * метки даёт провал, карта без места под площадку даёт пропуск. Так на карте `away_sites_testing`: космоса
  * там полоса в четыре клетки.
  */
 /datum/unit_test/combat_extended/proc/claim_arena()
@@ -144,7 +144,7 @@
 	for(var/obj/sparks/sparks in center)
 		qdel(sparks)
 
-/// Один шаг полёта, как в кор `Process()`. FALSE — снаряд на этом шаге кончился.
+/// Один шаг полёта, как в кор `Process()`. FALSE: снаряд на этом шаге кончился.
 /datum/unit_test/combat_extended/proc/fly_step(obj/item/projectile/projectile)
 	projectile.trajectory.increment()
 	projectile.location = projectile.trajectory.return_location(projectile.location)
@@ -157,7 +157,7 @@
 	return !!(locate(/obj/overlay/bullet_hole) in wall)
 
 
-/// Человек в плитоноске с заданными аксессуарами, без аксессуаров — голый. null — одеть не вышло.
+/// Человек в плитоноске с заданными аксессуарами, без аксессуаров голый. null значит, что одеть не вышло.
 /datum/unit_test/combat_extended/proc/make_human(list/accessory_types, mobtype = /mob/living/carbon/human)
 	var/list/made = create_test_mob_with_mind(null, mobtype)
 	var/mob/living/carbon/human/H = locate(made["mobref"])
@@ -174,7 +174,7 @@
 	return H.wear_suit == carrier ? H : null
 
 
-/// Ставит человеку навыки `list(путь навыка = уровень)`, остальные — по умолчанию.
+/// Ставит человеку навыки `list(путь навыка = уровень)`, остальные: по умолчанию.
 /datum/unit_test/combat_extended/proc/set_skills(mob/living/carbon/human/H, list/levels)
 	var/list/skills = list()
 	for(var/skill in levels)
@@ -199,7 +199,7 @@
 
 /**
  * Удар настоящим боевым проходом, с износом брони. Контекст, отложенный остаточный удар и осколки
- * убирает. `armor_pen` — число либо `/datum/ce_explicit_pen`.
+ * убирает. `armor_pen`: число либо `/datum/ce_explicit_pen`.
  */
 /datum/unit_test/combat_extended/proc/combat_hit(mob/living/carbon/human/H, def_zone, damage, damage_flags, armor_pen)
 	H.modify_damage_by_armor(def_zone, damage, DAMAGE_BRUTE, damage_flags, H, armor_pen, TRUE)
@@ -208,7 +208,7 @@
 	H.ce_pending_shards = null
 
 
-/// Броня новой вещи. С `ratings` она заменяется на заданную, с `material` — материал вещи.
+/// Броня новой вещи. С `ratings` она заменяется на заданную, с `material`: материал вещи.
 /datum/unit_test/combat_extended/proc/armor_of(path, list/ratings, material)
 	var/obj/item/thing = new path
 	spawned += thing
@@ -253,11 +253,11 @@
 
 /**
  * Лестница целей: голый человек и четыре жёсткие плиты по возрастанию тира. Названия тиров
- * дописываются в `tiers`. null — кого-то не удалось создать.
+ * дописываются в `tiers`. null: кого-то не удалось создать.
  *
- * Первые две — лёгкая стальная пластина и скрытый тактический жилет: числа Bay у них те же, что у
- * light- и medium-вставок. Сами вставки — мягкий кевлар с одной тупой осью на обе, и лестницы не
- * образуют: см. README, «Кевларовые вставки».
+ * Первые две лёгкая стальная пластина и скрытый тактический жилет: числа Bay у них те же, что у
+ * light- и medium-вставок. Сами вставки: мягкий кевлар с одной тупой осью на обе, и лестницы не
+ * образуют: см. README, "Кевларовые вставки".
  */
 /datum/unit_test/combat_extended/proc/make_plate_ladder(list/tiers)
 	var/list/plates = list(
@@ -317,9 +317,9 @@
 
 
 /*
-	Обещания из комментариев `code/__defines/armor.dm` — таблица «Проверка обещаний дефайнов»
-	в README. «Держит» для острой атаки значит «острая ось побеждена, атака срикошетила», а не
-	«урон ноль». Тупой урон броня гасит, но не отменяет — см. `CE_BLUNT_PEN_MELEE_MULT`.
+	Обещания из комментариев `code/__defines/armor.dm`: таблица "Проверка обещаний дефайнов"
+	в README. "Держит" для острой атаки значит "острая ось побеждена, атака срикошетила", а не
+	"урон ноль". Тупой урон броня гасит, но не отменяет, см. `CE_BLUNT_PEN_MELEE_MULT`.
 */
 /datum/unit_test/combat_extended/define_promises
 	name = "CE: Обещания дефайнов брони"
@@ -364,7 +364,7 @@
 			attack = list(initial(bullet.damage), initial(bullet.damage_flags), initial(bullet.armor_penetration))
 		var/outcome = try_single_layer(promise[2], attack[1], attack[2], attack[3])
 		if(outcome != promise[4])
-			failures += "[promise[1]]: ожидалось «[promise[4]]», вышло «[outcome]»"
+			failures += "[promise[1]]: ожидалось \"[promise[4]]\", вышло \"[outcome]\""
 
 	cleanup()
 	if(length(failures))
@@ -373,7 +373,7 @@
 		pass("Все [length(promises)] обещаний держатся.")
 	return 1
 
-/// Жёсткая пластина с заданными значениями брони. Не базовый `armor_plate`: тот — кевларовая вставка.
+/// Жёсткая пластина с заданными значениями брони. Не базовый `armor_plate`: тот это кевларовая вставка.
 /datum/unit_test/combat_extended/define_promises/proc/make_plate(bullet, melee)
 	var/obj/item/clothing/accessory/armor_plate/merc/plate = new
 	spawned += plate
@@ -440,10 +440,10 @@
 
 
 /*
-	Вещи без кинетической брони: `bullet` и `melee` нулевые, броня есть только по другим ключам —
+	Вещи без кинетической брони: `bullet` и `melee` нулевые, броня есть только по другим ключам,
 	хирургические маски, био-капюшоны, голые скафандры, `rig/zero`. У них все три кинетические
-	оси выводятся в ноль, и правка кривых не должна выдать им рейтинг пластины. README, «Мост
-	единиц».
+	оси выводятся в ноль, и правка кривых не должна выдать им рейтинг пластины. README, "Мост
+	единиц".
 
 	Идёт по настоящим вещам билда, поэтому каждая одежда и каждый РИГ создаются: список брони по
 	пути типа не прочитать, `initial()` для списков отдаёт null. Детали РИГа берут броню от блока,
@@ -451,7 +451,7 @@
 	костюм с капюшоном без `hoodtype` и пси-перчатки, которые без хозяина-псионика удаляют себя в
 	`New()`. Брони по кинетике нет ни у тех, ни у других.
 
-	Прочие носители — мобы, протезы, `holder` — читают те же четыре острые кривые. Жёсткие и мягкие
+	Прочие носители (мобы, протезы, `holder`) читают те же четыре острые кривые. Жёсткие и мягкие
 	вещи среди найденных обязательны, чтобы ни одна пара кривых не осталась без проверки.
 */
 /datum/unit_test/combat_extended/zero_kinetic_armor
@@ -487,7 +487,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("[hard_count + soft_count] вещей без кинетической брони, из них [hard_count] жёстких: все кинетические оси — ноль.")
+		pass("[hard_count + soft_count] вещей без кинетической брони, из них [hard_count] жёстких: все кинетические оси ноль.")
 	return 1
 
 
@@ -658,7 +658,7 @@
 		for(var/i in 1 to length(targets))
 			var/reach = hit_reach(targets[i], BP_CHEST, attack[2], attack[3], attack[4])
 			if(isnull(reach))
-				failures += "[attack[1]] по «[tiers[i]]»: острое попадание не записало контекст"
+				failures += "[attack[1]] по \"[tiers[i]]\": острое попадание не записало контекст"
 				continue
 			if(!isnull(previous) && reach > previous + 0.0001)
 				failures += "[attack[1]]: [tiers[i - 1]] [round(previous, 0.01)] -> [tiers[i]] [round(reach, 0.01)]"
@@ -687,12 +687,12 @@
 
 
 /*
-	Рикошет и остаточный удар до органов не доходят — байевский эквивалент переноса на внешнюю
+	Рикошет и остаточный удар до органов не доходят: байевский эквивалент переноса на внешнюю
 	часть тела из CE. В конце то же самое через весь `apply_damage()`: по правилу Bay рикошет
 	10-мм пистолета от medium задевал бы органы в 42% попаданий.
 
-	Износ на время теста выключен: одна и та же плита принимает серию попаданий, и «medium держит
-	пистолет» должно оставаться правдой до последнего.
+	Износ на время теста выключен: одна и та же плита принимает серию попаданий, и "medium держит
+	пистолет" должно оставаться правдой до последнего.
 */
 /datum/unit_test/combat_extended/organ_reach_secondary
 	name = "CE: Рикошет и остаточный удар не достают до органов"
@@ -763,7 +763,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Рикошет и остаточный удар пишут досягаемость 0, пробитие — по остатку, тупой удар — ничего.")
+		pass("Рикошет и остаточный удар пишут досягаемость 0, пробитие по остатку, тупой удар ничего.")
 	return 1
 
 /datum/unit_test/combat_extended/organ_reach_secondary/proc/check_context(mob/living/carbon/human/H, reach, what, list/failures)
@@ -777,7 +777,7 @@
 
 /*
 	Оверрайд `damage_internal_organs()`: без контекста, с контекстом чужой конечности и на добитой
-	конечности — кор версия как есть, иначе сначала бросок досягаемости.
+	конечности, кор версия как есть, иначе сначала бросок досягаемости.
 
 	Бросок кор версии делается детерминированным: при сломанных рёбрах и остром уроне 50 её шанс
 	задеть орган упирается в 100%. Остаётся только бросок досягаемости, а при 0 и 1 он тоже
@@ -829,9 +829,9 @@
 
 
 /*
-	Протез, у модели которого не задана `ce_density`, считается плотью владельца —
+	Протез, у модели которого не задана `ce_density`, считается плотью владельца:
 	ничего не меняется, пока плотность протезов не откалибрована. Проверяются все модели
-	`all_robolimbs`, а ветка с заданной плотностью — на временно выставленном значении.
+	`all_robolimbs`, а ветка с заданной плотностью: на временно выставленном значении.
 */
 /datum/unit_test/combat_extended/robolimb_density
 	name = "CE: Протез без плотности считается плотью"
@@ -882,15 +882,15 @@
 
 
 /*
-	Подкожная броня (`subdermal_armor.dm`) — самый внутренний слой на всём теле и прибавка к
+	Подкожная броня (`subdermal_armor.dm`): самый внутренний слой на всём теле и прибавка к
 	плотности тканей. Множитель Bay снят: `get_brute_mod()` с сеткой тот же, что без неё. Орган не
 	изнашивается. Обычная сетка мягкая и нож только гасит, хитин генокрада жёсткий и нож
-	останавливает. Пистолет пробивает обе, но теряет на них урон. Касание — тычок дубинкой — сетка
+	останавливает. Пистолет пробивает обе, но теряет на них урон. Касание (тычок дубинкой) сетка
 	не держит: она под кожей. Наручи на руке его держат, как и прежде.
 
-	Сетка ставится в грудь через `replaced()`, как её ставит сила генокрада. Левая рука — протез:
+	Сетка ставится в грудь через `replaced()`, как её ставит сила генокрада. Левая рука протез:
 	в Bay множитель действовал и на протезы. На руках наручи, чтобы порядок слоёв было с чем
-	сравнить: у голого человека сетка — единственный слой.
+	сравнить: у голого человека сетка это единственный слой.
 */
 /datum/unit_test/combat_extended/subdermal_armor
 	name = "CE: Подкожная броня"
@@ -909,7 +909,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Обе подкожные брони — внутренний слой на [length(zones)] зонах, с плотностью, без множителя Bay и без износа.")
+		pass("Обе подкожные брони: внутренний слой на [length(zones)] зонах, с плотностью, без множителя Bay и без износа.")
 	return 1
 
 
@@ -970,7 +970,7 @@
 
 
 /**
- * Плотность и множитель Bay по зонам — `list(плотность, множитель)` по ключу зоны, — и итоги
+ * Плотность и множитель Bay по зонам (`list(плотность, множитель)` по ключу зоны), и итоги
  * пистолета и ножа по груди по ключам `pistol` и `knife`.
  */
 /datum/unit_test/combat_extended/subdermal_armor/proc/measure(mob/living/carbon/human/H)
@@ -986,12 +986,12 @@
 
 /*
 	Контузия от взрыва (`concussion.dm`): бросок на паралич кор `human/ex_act()` откатывается, а
-	вместо него — замешательство, муть и сбитая речь. Тяжёлый взрыв бросает `prob(70)`, так что за
-	десять взрывов без отката паралич остался бы почти наверняка. Каждый взрыв — по новому человеку:
+	вместо него замешательство, муть и сбитая речь. Тяжёлый взрыв бросает `prob(70)`, так что за
+	десять взрывов без отката паралич остался бы почти наверняка. Каждый взрыв идёт по новому человеку:
 	тяжёлый взрыв калечит, а раны влияли бы на следующий.
 
-	Сила: лёгкий взрыв без защиты — 1, тяжёлый — 2, лёжа — вдвое меньше, каска со своей бронёй
-	`bomb` гасит часть, костюм сапёра — ещё больше. Выключенный мод контузию не накладывает.
+	Сила: лёгкий взрыв без защиты 1, тяжёлый 2, лёжа вдвое меньше, каска со своей бронёй
+	`bomb` гасит часть, костюм сапёра ещё больше. Выключенный мод контузию не накладывает.
 
 	С ног сбивает только тяжёлый взрыв и только незащищённого. Отказы проверяются по самому решению
 	(`ce_is_knocked_down_by_blast()`), а не по `weakened` после взрыва: урон взрыва может уронить
@@ -1014,7 +1014,7 @@
 		if(H.paralysis)
 			failures += "взрыв [i]: паралич [H.paralysis]"
 		if(!H.is_confused() || !H.eye_blurry || !H.stuttering)
-			failures += "взрыв [i]: не контузил — замешательство [H.is_confused()], муть [H.eye_blurry], речь [H.stuttering]"
+			failures += "взрыв [i]: не контузил, замешательство [H.is_confused()], муть [H.eye_blurry], речь [H.stuttering]"
 		if(!H.weakened)
 			failures += "взрыв [i]: незащищённого не сбил с ног"
 
@@ -1080,10 +1080,10 @@
 
 /*
 	Светошумовая граната (`flashbang_effects.dm`). `bang()` зовётся напрямую, по человеку на клетке
-	взрыва, — через весь оверрайд, с оверрайдом `mechs_by_shegar` снаружи.
+	взрыва: через весь оверрайд, с оверрайдом `mechs_by_shegar` снаружи.
 
 	- Звук не станит: в сварочных очках вспышка не действует, и стана нет, а замешательство и
-	  глухота от звука есть. Выключенный мод — стан Bay, так что проверка не пустая.
+	  глухота от звука есть. Выключенный мод: стан Bay, так что проверка не пустая.
 	- Каска и защита ушей снимают звуковую часть целиком: ни замешательства, ни глухоты.
 	- Вспышка без защиты глаз станит, как в Bay.
 	- Граната в левой руке бьёт и обжигает левую кисть, правую не трогает.
@@ -1115,8 +1115,8 @@
 
 
 /**
- * Взрыв по человеку с вещами `equipment` на его же клетке. Провал, если стан или звуковая часть —
- * замешательство либо глухота — не такие, как ждали. Отдаёт список провалов.
+ * Взрыв по человеку с вещами `equipment` на его же клетке. Провал, если стан или звуковая часть:
+ * замешательство либо глухота: не такие, как ждали. Отдаёт список провалов.
  */
 /datum/unit_test/combat_extended/flashbang/proc/check_bang(label, list/equipment, stun_expected, sound_expected)
 	var/mob/living/carbon/human/H = make_human()
@@ -1157,27 +1157,27 @@
 
 /*
 	Парирование с прочностью оружия (`weapon_parry.dm`). Износ и ответный удар зовутся напрямую,
-	удар, который оружие встречает слоем брони, — через `ce_on_parried()` и `apply_damage()`, а
-	настоящее парирование — через `handle_shield()` и `check_shields()`, с шансом крита 0.
+	удар, который оружие встречает слоем брони, через `ce_on_parried()` и `apply_damage()`, а
+	настоящее парирование через `handle_shield()` и `check_shields()`, с шансом крита 0.
 
-	- Прочность: сталь обычного размера с кромкой — опорные значения; острая растёт корнем из
-	  размера, тупая — прямо; лом без кромки вдвое прочнее ножа того же размера; мастер держит лучше
-	  неумехи. Материал вещи без своего — главный из `matter`, без него сталь, а HP — как у
+	- Прочность: сталь обычного размера с кромкой, опорные значения. Острая растёт корнем из
+	  размера, тупая: прямо. Лом без кромки вдвое прочнее ножа того же размера. Мастер держит лучше
+	  неумехи. Материал вещи без своего это главный из `matter`, без него сталь, а HP как у
 	  материального оружия.
-	- Износ от кухонного ножа тем меньше, чем больше оружие, ящик не изнашивается вовсе; энергомеч
-	  изнашивает клеймор, а кухонный нож — сильнее; ожог и кулак не изнашивают.
-	- Слой: ящик по кухонному ножу — в грудь ничего, в руку с ножом меньше половины удара, нож
-	  изношен; энергомеч пробивает нож и идёт в грудь слабее, чем без парирования, руке ничего; топор
-	  в двух руках делит волну между обеими поровну, вместе столько же, сколько одной; энергомеч волны
-	  не даёт. Через `check_shields()` парирование встречает удар слоем, выключенный мод — отбивает
+	- Износ от кухонного ножа тем меньше, чем больше оружие, ящик не изнашивается вовсе. Энергомеч
+	  изнашивает клеймор, а кухонный нож: сильнее. Ожог и кулак не изнашивают.
+	- Слой: ящик по кухонному ножу, в грудь ничего, в руку с ножом меньше половины удара, нож
+	  изношен. Энергомеч пробивает нож и идёт в грудь слабее, чем без парирования, руке ничего. Топор
+	  в двух руках делит волну между обеими поровну, вместе столько же, сколько одной. Энергомеч волны
+	  не даёт. Через `check_shields()` парирование встречает удар слоем, выключенный мод: отбивает
 	  целиком.
-	- Поломка: материальное — и нож, хотя в Bay он `unbreakable`, — копит дробный износ и
-	  раскалывается на нуле, хрупкое — от любого износа; лом до поломки показывает износ при осмотре
-	  и ломается на нуле; ящик высыпает содержимое.
+	- Поломка: материальное (и нож, хотя в Bay он `unbreakable`), копит дробный износ и
+	  раскалывается на нуле, хрупкое от любого износа. Лом до поломки показывает износ при осмотре
+	  и ломается на нуле. Ящик высыпает содержимое.
 	- Не изнашиваются энергомеч и клинок генокрада.
-	- Крит: шанс по навыку; при шансе 0 — износ без ответа, при 100 — ответ без износа: за атаку
-	  оружием — в зону парирующего, за безоружную — в кисть, которой били.
-	- Настоящее парирование энергомеча мечом меч изнашивает, выключенный мод — нет. Байевский бросок
+	- Крит: шанс по навыку. При шансе 0 износ без ответа, при 100 ответ без износа: за атаку
+	  оружием в зону парирующего, за безоружную в кисть, которой били.
+	- Настоящее парирование энергомеча мечом меч изнашивает, выключенный мод: нет. Байевский бросок
 	  на 1 HP против стального ножа выключен.
 	- Порез о вещь при обезоруживании выключен, выключенный мод его возвращает.
 	- На намерении помощи не парирует даже топор в двух руках, чей бонус Bay прибавляет поверх нуля.
@@ -1218,7 +1218,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Прочность, износ, поломка, исключения, криты, настоящее парирование и порез при обезоруживании — как задумано.")
+		pass("Прочность, износ, поломка, исключения, криты, настоящее парирование и порез при обезоруживании: как задумано.")
 	return 1
 
 
@@ -1251,16 +1251,16 @@
 	if(abs(reference[1] - reference_sharp) > 0.001 || abs(reference[2] - ce_parry_blunt_toughness) > 0.001)
 		. += "стальной кухонный нож: прочность [reference[1]] мм / [reference[2]], ожидалось [reference_sharp] / [ce_parry_blunt_toughness]"
 
-	// Боевой нож маленький, клеймор большой: острая — корень из 0.5 и 2, тупая — сами 0.5 и 2.
+	// Боевой нож маленький, клеймор большой: острая корень из 0.5 и 2, тупая сами 0.5 и 2.
 	var/list/small_toughness = small.ce_get_parry_toughness(null)
 	var/list/sword_toughness = sword.ce_get_parry_toughness(null)
 	if(abs(small_toughness[1] - reference[1] * sqrt(0.5)) > 0.001 || abs(sword_toughness[1] - reference[1] * sqrt(2)) > 0.001)
-		. += "острая прочность: боевой нож [small_toughness[1]], кухонный [reference[1]], клеймор [sword_toughness[1]] — должна расти корнем из размера"
+		. += "острая прочность: боевой нож [small_toughness[1]], кухонный [reference[1]], клеймор [sword_toughness[1]], должна расти корнем из размера"
 	if(abs(small_toughness[2] - reference[2] * 0.5) > 0.001 || abs(sword_toughness[2] - reference[2] * 2) > 0.001)
-		. += "тупая прочность: боевой нож [small_toughness[2]], кухонный [reference[2]], клеймор [sword_toughness[2]] — должна расти с размером прямо"
+		. += "тупая прочность: боевой нож [small_toughness[2]], кухонный [reference[2]], клеймор [sword_toughness[2]], должна расти с размером прямо"
 	var/list/crowbar_toughness = crowbar.ce_get_parry_toughness(null)
 	if(abs(crowbar_toughness[1] - reference[1] * ce_parry_blunt_weapon_mult) > 0.001 || abs(crowbar_toughness[2] - reference[2] * ce_parry_blunt_weapon_mult) > 0.001)
-		. += "лом без кромки: [crowbar_toughness[1]] / [crowbar_toughness[2]], а кухонный нож того же размера — [reference[1]] / [reference[2]]"
+		. += "лом без кромки: [crowbar_toughness[1]] / [crowbar_toughness[2]], а кухонный нож того же размера [reference[1]] / [reference[2]]"
 
 	var/mob/living/carbon/human/H = make_human()
 	set_combat_skill(H, SKILL_MASTER)
@@ -1282,7 +1282,7 @@
 		if(material?.name != entry[2])
 			. += "[label]: материал [material?.name], ожидался [entry[2]]"
 	if(crowbar.ce_get_parry_health_max() != knife.get_max_health())
-		. += "HP стального лома [crowbar.ce_get_parry_health_max()], а стального ножа — [knife.get_max_health()]"
+		. += "HP стального лома [crowbar.ce_get_parry_health_max()], а стального ножа: [knife.get_max_health()]"
 
 
 /// Износ от разных атак. Отдаёт список провалов.
@@ -1302,7 +1302,7 @@
 	var/sword_from_knife = sword.ce_get_parry_wear(null, attack_knife.force, attack_knife)
 	var/toolbox_from_knife = toolbox.ce_get_parry_wear(null, attack_knife.force, attack_knife)
 	if(!(small_from_knife > knife_from_knife && knife_from_knife > sword_from_knife && sword_from_knife > 0) || toolbox_from_knife != 0)
-		. += "кухонный нож: износ боевого ножа [small_from_knife], кухонного [knife_from_knife], клеймора [sword_from_knife], ящика [toolbox_from_knife] — должен падать с размером до нуля"
+		. += "кухонный нож: износ боевого ножа [small_from_knife], кухонного [knife_from_knife], клеймора [sword_from_knife], ящика [toolbox_from_knife], должен падать с размером до нуля"
 	var/sword_from_esword = sword.ce_get_parry_wear(null, esword.force, esword)
 	var/knife_from_esword = knife.ce_get_parry_wear(null, esword.force, esword)
 	if(!(0 < sword_from_esword && sword_from_esword < knife_from_esword))
@@ -1313,7 +1313,7 @@
 	var/burn_wear = knife.ce_get_parry_wear(null, hot_knife.force, hot_knife)
 	var/fist_wear = sword.ce_get_parry_wear(null, 5, null)
 	if(burn_wear || fist_wear)
-		. += "ожог износил нож на [burn_wear], кулак меч — на [fist_wear]"
+		. += "ожог износил нож на [burn_wear], кулак меч: на [fist_wear]"
 
 
 /// Дробный износ, поломка, осмотр и содержимое ящика. Отдаёт список провалов.
@@ -1327,7 +1327,7 @@
 	knife.ce_apply_parry_wear(0.4)
 	var/after_three = knife.get_current_health()
 	if(after_two != health_max || after_three != health_max - 1)
-		. += "дробный износ ножа: после 0.8 — [after_two], после 1.2 — [after_three] из [health_max]"
+		. += "дробный износ ножа: после 0.8 [after_two], после 1.2 [after_three] из [health_max]"
 	knife.ce_apply_parry_wear(health_max)
 	if(!QDELETED(knife))
 		. += "нож на нуле HP не раскололся"
@@ -1397,7 +1397,7 @@
 	riposting.ce_on_parried(defender, esword.force, esword, attacker)
 	var/obj/item/organ/external/aimed = attacker.get_organ(ce_get_riposte_zone(defender))
 	if(riposting.get_current_health() < riposting.get_max_health() || !aimed?.brute_dam)
-		. += "крит 100, атака оружием: меч [riposting.get_current_health()] из [riposting.get_max_health()], зона ответа [aimed?.organ_tag] — [aimed?.brute_dam]"
+		. += "крит 100, атака оружием: меч [riposting.get_current_health()] из [riposting.get_max_health()], зона ответа [aimed?.organ_tag], [aimed?.brute_dam]"
 
 	// Навык как у парирующего: у нового человека он выше, и разница срезала бы шанс крита со 100.
 	var/mob/living/carbon/human/boxer = make_human()
@@ -1434,7 +1434,7 @@
 	for(var/i in 1 to 10)
 		parry_once(steady, defender, small_knife, attacker)
 	if(steady.get_current_health() < steady.get_max_health())
-		. += "топор износился от стального ножа: [steady.get_current_health()] из [steady.get_max_health()] — остался бросок Bay"
+		. += "топор износился от стального ножа: [steady.get_current_health()] из [steady.get_max_health()], остался бросок Bay"
 
 	ce_parry_enabled = FALSE
 	var/obj/item/material/sword/bay_sword = new_item(/obj/item/material/sword, T)
@@ -1445,7 +1445,7 @@
 	ce_parry_enabled = TRUE
 
 
-/// Парирует атаку, пока не выйдет. TRUE — вышло.
+/// Парирует атаку, пока не выйдет. TRUE: вышло.
 /datum/unit_test/combat_extended/weapon_parry/proc/parry_once(obj/item/weapon, mob/living/carbon/human/defender, obj/item/attack_weapon, mob/living/carbon/human/attacker)
 	for(var/i in 1 to CE_PARRY_TEST_TRIES)
 		if(weapon.handle_shield(defender, attack_weapon.force, attack_weapon, attacker, BP_CHEST, "the test"))
@@ -1476,7 +1476,7 @@
 		if(chest || arm <= 0 || arm >= toolbox.force / 2 || brute_of(H, BP_L_ARM))
 			. += "ящик по кухонному ножу: грудь [chest], правая рука [arm], левая [brute_of(H, BP_L_ARM)]"
 		if(knife.get_current_health() >= knife.get_max_health() || H.ce_shield_hit)
-			. += "ящик по кухонному ножу: нож [knife.get_current_health()] из [knife.get_max_health()], попадание забрано — [!H.ce_shield_hit]"
+			. += "ящик по кухонному ножу: нож [knife.get_current_health()] из [knife.get_max_health()], попадание забрано, [!H.ce_shield_hit]"
 
 	// Сколько энергомеча доходит до груди, считает проход по слоям: урон груди сравнивать нельзя,
 	// без парирования клинок дотягивается до органов и часть урона оставляет там.
@@ -1489,7 +1489,7 @@
 		var/mob/living/carbon/human/H = pierced[1]
 		var/list/through = H.ce_walk_armor_layers(BP_CHEST, esword.force, esword.damtype, esword.damage_flags(), esword.armor_penetration)
 		if(!(through[1] > 0 && through[1] < bare[1]) || !ce_is_sharp_attack(through[2]))
-			. += "энергомеч сквозь кухонный нож: до груди доходит [through[1]] (острым — [ce_is_sharp_attack(through[2])]), без парирования [bare[1]]"
+			. += "энергомеч сквозь кухонный нож: до груди доходит [through[1]] (острым [ce_is_sharp_attack(through[2])]), без парирования [bare[1]]"
 		hit_chest(H, esword)
 		if(brute_of(H, BP_CHEST) <= 0 || brute_of(H, BP_R_ARM))
 			. += "энергомеч сквозь кухонный нож: грудь [brute_of(H, BP_CHEST)], правая рука [brute_of(H, BP_R_ARM)]"
@@ -1516,15 +1516,15 @@
 		var/mob/living/carbon/human/H = field[1]
 		hit_chest(H, toolbox)
 		if(brute_of(H, BP_R_ARM) || brute_of(H, BP_CHEST))
-			. += "ящик по энергомечу: правая рука [brute_of(H, BP_R_ARM)], грудь [brute_of(H, BP_CHEST)] — энергомеч волны не даёт"
+			. += "ящик по энергомечу: правая рука [brute_of(H, BP_R_ARM)], грудь [brute_of(H, BP_CHEST)], энергомеч волны не даёт"
 
 	. += check_layer_through_shields(toolbox)
 
 
 /**
  * Свежий человек держит оружие `weapon_path` в правой руке и парирует им удар `attack_weapon` в
- * грудь. `wielded` — в двух руках, `activate` — включить энергомеч. Отдаёт `list(человек, оружие)`,
- * null — оружие не встретило удар слоем.
+ * грудь. `wielded`: в двух руках, `activate`: включить энергомеч. Отдаёт `list(человек, оружие)`,
+ * null: оружие не встретило удар слоем.
  */
 /datum/unit_test/combat_extended/weapon_parry/proc/parry_layer(weapon_path, obj/item/attack_weapon, wielded = FALSE, activate = FALSE)
 	var/mob/living/carbon/human/H = make_human()
@@ -1554,13 +1554,13 @@
 	H.apply_damage(attack_weapon.force, attack_weapon.damtype, BP_CHEST, attack_weapon.damage_flags(), attack_weapon, attack_weapon.armor_penetration)
 
 
-/// Тупой урон органа `organ_tag` у человека, 0 — органа нет.
+/// Тупой урон органа `organ_tag` у человека, 0: органа нет.
 /datum/unit_test/combat_extended/weapon_parry/proc/brute_of(mob/living/carbon/human/H, organ_tag)
 	var/obj/item/organ/external/organ = H.get_organ(organ_tag)
 	return organ ? organ.brute_dam : 0
 
 
-/// Парирование через `check_shields()`: встречает удар слоем, выключенный мод — отбивает целиком.
+/// Парирование через `check_shields()`: встречает удар слоем, выключенный мод отбивает целиком.
 /datum/unit_test/combat_extended/weapon_parry/proc/check_layer_through_shields(obj/item/attack_weapon)
 	. = list()
 	var/mob/living/carbon/human/H = make_human()
@@ -1579,7 +1579,7 @@
 	ce_parry_enabled = FALSE
 	outcome = parry_through_shields(H, attack_weapon, attacker)
 	if(!outcome[1] || outcome[2] != 1 || H.ce_shield_hit)
-		. += "выключенный мод: check_shields() — парирование [outcome[1]], итог [outcome[2]], слой [H.ce_shield_hit]"
+		. += "выключенный мод: check_shields(), парирование [outcome[1]], итог [outcome[2]], слой [H.ce_shield_hit]"
 	H.ce_shield_hit = null
 	ce_parry_enabled = TRUE
 
@@ -1614,7 +1614,7 @@
 	ce_parry_enabled = TRUE
 
 /**
- * На намерении помощи оружие не парирует. Топор в двух руках — потому что Bay прибавляет его бонус
+ * На намерении помощи оружие не парирует. Топор в двух руках: потому что Bay прибавляет его бонус
  * к шансу уже после того, как намерение помощи его обнулило. Отдаёт список провалов.
  */
 /datum/unit_test/combat_extended/weapon_parry/proc/check_help_intent(turf/T)
@@ -1630,7 +1630,7 @@
 		. += "на намерении помощи топор в двух руках парирует"
 	ce_parry_enabled = FALSE
 	if(!parry_once(axe, H, attack_knife, attacker))
-		. += "выключенный мод: на намерении помощи топор в двух руках не парирует — проверять нечего"
+		. += "выключенный мод: на намерении помощи топор в двух руках не парирует, проверять нечего"
 	ce_parry_enabled = TRUE
 
 #undef CE_PARRY_TEST_TRIES
@@ -1638,16 +1638,16 @@
 
 /*
 	Выстрел при обезоруживании (`disarm_gunfire.dm`). Исходы бросков задаются шансами из настроек: 0
-	и 100, а для «реакция выиграна, борьба проиграна» — навыками при крутом сдвиге за уровень.
+	и 100, а для "реакция выиграна, борьба проиграна" навыками при крутом сдвиге за уровень.
 
-	- Шансы: при равных навыках — базовые, около половины; мастер обоих навыков против неумехи
-	  стреляет в него больше чем в 75% попыток, наоборот — меньше чем в 25%. Навык стрельбы
-	  держащего двигает только реакцию, его ближний бой — только борьбу.
-	- Исходы: реакция проиграна — спуск не нажат; обе выиграны — выстрел в упор, обезоруживающий
-	  ранен; борьба проиграна — ружьё отведено.
+	- Шансы: при равных навыках базовые, около половины. Мастер обоих навыков против неумехи
+	  стреляет в него больше чем в 75% попыток, наоборот: меньше чем в 25%. Навык стрельбы
+	  держащего двигает только реакцию, его ближний бой: только борьбу.
+	- Исходы: реакция проиграна, спуск не нажат. Обе выиграны: выстрел в упор, обезоруживающий
+	  ранен. Борьба проиграна: ружьё отведено.
 	- Не стреляет на намерении помощи и на предохранителе.
 	- Через `disarm_attackhand()` выстрел в упор заканчивает попытку: ружьё остаётся в руке.
-	- Бросок Bay на ружьё выключен; выключенный мод выстрел мода не бросает.
+	- Бросок Bay на ружьё выключен. Выключенный мод выстрел мода не бросает.
 */
 /datum/unit_test/combat_extended/disarm_gunfire
 	name = "CE: Выстрел при обезоруживании"
@@ -1676,7 +1676,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Шансы по навыкам, исходы бросков, намерение помощи, предохранитель и обезоруживание — как задумано.")
+		pass("Шансы по навыкам, исходы бросков, намерение помощи, предохранитель и обезоруживание: как задумано.")
 	return 1
 
 
@@ -1691,25 +1691,25 @@
 	set_skills(disarmer, list(SKILL_WEAPONS = SKILL_MASTER, SKILL_COMBAT = SKILL_MASTER))
 	var/list/equal = ce_get_disarm_gunfire_chances(holder, disarmer)
 	if(equal[1] != base || equal[2] != base || abs(base - 50) > 10)
-		. += "мастер против мастера: [equal[1]] и [equal[2]], база [base] — ожидалось около половины"
+		. += "мастер против мастера: [equal[1]] и [equal[2]], база [base], ожидалось около половины"
 
 	set_skills(disarmer, list(SKILL_WEAPONS = SKILL_UNSKILLED, SKILL_COMBAT = SKILL_UNSKILLED))
 	var/list/master = ce_get_disarm_gunfire_chances(holder, disarmer)
 	if(master[1] * master[2] <= 7500)
-		. += "мастер против неумехи: [master[1]] и [master[2]] — выстрел в обезоруживающего должен быть чаще 75%"
+		. += "мастер против неумехи: [master[1]] и [master[2]], выстрел в обезоруживающего должен быть чаще 75%"
 	var/list/novice = ce_get_disarm_gunfire_chances(disarmer, holder)
 	if(novice[1] * novice[2] >= 2500)
-		. += "неумеха против мастера: [novice[1]] и [novice[2]] — выстрел должен быть реже 25%"
+		. += "неумеха против мастера: [novice[1]] и [novice[2]], выстрел должен быть реже 25%"
 
 	set_skills(holder, list(SKILL_WEAPONS = SKILL_MASTER, SKILL_COMBAT = SKILL_TRAINED))
 	set_skills(disarmer, list(SKILL_WEAPONS = SKILL_TRAINED, SKILL_COMBAT = SKILL_TRAINED))
 	var/list/marksman = ce_get_disarm_gunfire_chances(holder, disarmer)
 	if(!(marksman[1] > base && marksman[2] == base))
-		. += "стрелок-мастер, в ближнем бою обученный: [marksman[1]] и [marksman[2]] — навык стрельбы должен двигать только реакцию"
+		. += "стрелок-мастер, в ближнем бою обученный: [marksman[1]] и [marksman[2]], навык стрельбы должен двигать только реакцию"
 	set_skills(holder, list(SKILL_WEAPONS = SKILL_TRAINED, SKILL_COMBAT = SKILL_MASTER))
 	var/list/brawler = ce_get_disarm_gunfire_chances(holder, disarmer)
 	if(!(brawler[1] == base && brawler[2] > base))
-		. += "боец-мастер, стрелок обученный: [brawler[1]] и [brawler[2]] — ближний бой держащего должен двигать только борьбу"
+		. += "боец-мастер, стрелок обученный: [brawler[1]] и [brawler[2]], ближний бой держащего должен двигать только борьбу"
 
 
 /// Исходы бросков, намерение помощи и предохранитель. Отдаёт список провалов.
@@ -1735,13 +1735,13 @@
 	var/safe = gun.ce_disarm_gunfire(holder, disarmer)
 	gun.safety_state = FALSE
 	if(helping != CE_DISARM_GUNFIRE_NONE || safe != CE_DISARM_GUNFIRE_NONE)
-		. += "на намерении помощи исход [helping], на предохранителе — [safe]: ружьё не должно стрелять"
+		. += "на намерении помощи исход [helping], на предохранителе [safe]: ружьё не должно стрелять"
 
 	var/won = gun.ce_disarm_gunfire(holder, disarmer)
 	if(won != CE_DISARM_GUNFIRE_DISARMER || disarmer.getFireLoss() <= 0)
 		. += "обе выиграны: исход [won], ожоги обезоруживающего [disarmer.getFireLoss()]"
 
-	// Реакция — стрельба мастера против обученного, борьба — ближний бой неумехи против обученного:
+	// Реакция это стрельба мастера против обученного, борьба это ближний бой неумехи против обученного:
 	// при сдвиге 50% за уровень это 100% и 0%.
 	ce_disarm_gunfire_chance = 50
 	ce_disarm_gunfire_chance_per_skill = 50
@@ -1774,7 +1774,7 @@
 	force_chances(100)
 	disarmer.species.disarm_attackhand(disarmer, holder)
 	if(disarmer.getFireLoss() <= 0 || holder.get_active_hand() != gun)
-		. += "обезоруживание при выигранных бросках: ожоги обезоруживающего [disarmer.getFireLoss()], ружьё в руке — [holder.get_active_hand() == gun]"
+		. += "обезоруживание при выигранных бросках: ожоги обезоруживающего [disarmer.getFireLoss()], ружьё в руке [holder.get_active_hand() == gun]"
 
 	// Обезоруживание Sierra читает выбранную зону, а у человека без клиента её нет.
 	ce_disarm_gunfire_enabled = FALSE
@@ -1790,7 +1790,7 @@
 
 /**
  * Держащий на намерении вреда с лазерной винтовкой без предохранителя в активной руке и
- * обезоруживающий рядом. Отдаёт `list(держащий, обезоруживающий, ружьё)`, null — не вышло.
+ * обезоруживающий рядом. Отдаёт `list(держащий, обезоруживающий, ружьё)`, null: не вышло.
  */
 /datum/unit_test/combat_extended/disarm_gunfire/proc/armed_pair()
 	var/mob/living/carbon/human/holder = make_human()
@@ -1814,7 +1814,7 @@
 
 /*
 	Форма формулы износа §8. Жёсткая броня теряет больше всего на попадании у самой
-	границы пробития: ниже неё износ растёт с пробитием, выше — падает, потому что атака уходит
+	границы пробития: ниже неё износ растёт с пробитием, выше падает, потому что атака уходит
 	навылет. Урон после слоя считается так же, как в `ce_try_penetrate()`.
 */
 /datum/unit_test/combat_extended/armor_wear_formula
@@ -1874,7 +1874,7 @@
 
 /*
 	Кривая состояния §4: рейтинг не растёт при потере HP, полный до 95% и неполный ниже.
-	Новая броня читается целой, изношенная — через кривую по всем ключам.
+	Новая броня читается целой, изношенная: через кривую по всем ключам.
 */
 /datum/unit_test/combat_extended/armor_wear_curve
 	name = "CE: Кривая состояния брони"
@@ -1914,7 +1914,7 @@
 			if(abs(armor.get_value(key) - armor.armor_values[key] * condition) > 0.0001)
 				failures += "[fraction * 100]% HP: [key] читается как [armor.get_value(key)], ожидалось [armor.armor_values[key] * condition]"
 		if(!!armor.ce_get_wear_state() != (condition < 1))
-			failures += "[fraction * 100]% HP: состояние «[armor.ce_get_wear_state()]» при множителе [condition]"
+			failures += "[fraction * 100]% HP: состояние \"[armor.ce_get_wear_state()]\" при множителе [condition]"
 
 	ce_armor_wear_enabled = old_switch
 	cleanup()
@@ -2018,11 +2018,11 @@
 
 /*
 	HP выводятся из рейтинга: плита потяжелее несёт не меньше, а выше излома HP растут медленнее.
-	Броня против холодного не хрупче medium-плиты — у неё сильна тупая ось. Нижняя граница стоит
+	Броня против холодного не хрупче medium-плиты: у неё сильна тупая ось. Нижняя граница стоит
 	до доли головного убора и до множителя материала: каска без брони и керамика без брони несут
 	долю от неё.
 
-	Лестница плит идёт на материале по умолчанию: tactical plate керамическая, light и medium —
+	Лестница плит идёт на материале по умолчанию: tactical plate керамическая, light и medium
 	кевларовые вставки, а лестница проверяет вывод HP из рейтинга, а не материал.
 */
 /datum/unit_test/combat_extended/armor_wear_health
@@ -2055,7 +2055,7 @@
 			if(health >= linear || health <= knee)
 				failures += "[path]: выше излома [health] HP, ожидалось между [knee] и линейными [linear]"
 	if(!flattened)
-		failures += "ни одна плита не выше излома — сглаживание не проверено"
+		failures += "ни одна плита не выше излома: сглаживание не проверено"
 
 	var/riot_health = health_with(/obj/item/clothing/suit/armor/riot)
 	var/medium_health = health_with(/obj/item/clothing/accessory/armor_plate/medium, null, /singleton/ce_armor_material)
@@ -2074,7 +2074,7 @@
 	var/bare_head_health = health_with(/obj/item/clothing/head/helmet, list())
 	var/expected_bare_head = ce_armor_health_min * ce_armor_health_head_mult
 	if(abs(bare_head_health - expected_bare_head) > 0.0001)
-		failures += "каска без брони: [bare_head_health] HP, ожидалось [expected_bare_head] — доля от нижней границы"
+		failures += "каска без брони: [bare_head_health] HP, ожидалось [expected_bare_head], доля от нижней границы"
 
 	var/singleton/ce_armor_material/ceramic = GET_SINGLETON(/singleton/ce_armor_material/ceramic)
 	var/ceramic_health = health_with(/obj/item/clothing/suit/armor/vest, ratings, /singleton/ce_armor_material/ceramic)
@@ -2083,7 +2083,7 @@
 	var/bare_ceramic_health = health_with(/obj/item/clothing/suit/armor/vest, list(), /singleton/ce_armor_material/ceramic)
 	var/expected_bare_ceramic = ce_armor_health_min * ceramic.health_mult
 	if(abs(bare_ceramic_health - expected_bare_ceramic) > 0.0001)
-		failures += "керамика без брони: [bare_ceramic_health] HP, ожидалось [expected_bare_ceramic] — доля от нижней границы"
+		failures += "керамика без брони: [bare_ceramic_health] HP, ожидалось [expected_bare_ceramic], доля от нижней границы"
 
 	cleanup()
 	if(length(failures))
@@ -2092,18 +2092,18 @@
 		pass("HP растут с тиром плиты и сглажены выше излома, riot не хрупче medium, каски и материал берут свою долю после нижней границы.")
 	return 1
 
-/// HP новой вещи. С `ratings` броня вещи заменяется на заданную, с `material` — материал вещи.
+/// HP новой вещи. С `ratings` броня вещи заменяется на заданную, с `material`: материал вещи.
 /datum/unit_test/combat_extended/armor_wear_health/proc/health_with(path, list/ratings, material)
 	var/datum/extension/armor/armor = armor_of(path, ratings, material)
 	return armor.ce_get_health_max()
 
 
 /*
-	Износ снимает только боевой путь: пуля — ровно по формуле, холодное — с множителем, остаточный
-	удар — без него. Выключенный износ не копится, а при включении накопленный возвращается.
+	Износ снимает только боевой путь: пуля ровно по формуле, холодное с множителем, остаточный
+	удар без него. Выключенный износ не копится, а при включении накопленный возвращается.
 
-	Плита — единственный слой на груди, так что ожидание считается одним `ce_try_penetrate()`. Она
-	жёсткая — скрытый тактический жилет с числами medium-вставки: мягкую броню удар не изнашивает
+	Плита: единственный слой на груди, так что ожидание считается одним `ce_try_penetrate()`. Она
+	жёсткая, скрытый тактический жилет с числами medium-вставки: мягкую броню удар не изнашивает
 	вовсе, и множителя холодного на ней не проверить.
 */
 /datum/unit_test/combat_extended/armor_wear_paths
@@ -2162,7 +2162,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Консультационный путь не изнашивает, боевой — по формуле с множителем холодного, выключатель работает.")
+		pass("Консультационный путь не изнашивает, боевой: по формуле с множителем холодного, выключатель работает.")
 	return 1
 
 /**
@@ -2188,7 +2188,7 @@
 
 /*
 	Исключения из износа: естественная броня моба, броня на органе, встроенная броня
-	экзокостюма, абляционная броня Ascent и нематериальная вещь (`ce_armor_nonphysical`) —
+	экзокостюма, абляционная броня Ascent и нематериальная вещь (`ce_armor_nonphysical`),
 	энергощит. Псионическая броня живёт на `/datum/psi_complexus`,
 	а не на вещи, и отсекается тем же правилом, что и естественная.
 */
@@ -2254,7 +2254,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Обычная плита изнашивается, все [length(exempt)] исключения — нет.")
+		pass("Обычная плита изнашивается, все [length(exempt)] исключения: нет.")
 	return 1
 
 
@@ -2292,10 +2292,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Торс, руки и ноги изнашиваются и читаются отдельно — пулей, лазером, в кодексе и при осмотре.")
+		pass("Торс, руки и ноги изнашиваются и читаются отдельно: пулей, лазером, в кодексе и при осмотре.")
 	return 1
 
-/// Человек в скафандре с рейтингами medium-плиты. null — одеть не вышло.
+/// Человек в скафандре с рейтингами medium-плиты. null: одеть не вышло.
 /datum/unit_test/combat_extended/armor_zones/proc/make_suited_human()
 	var/mob/living/carbon/human/H = make_human()
 	if(!H)
@@ -2377,7 +2377,7 @@
 		failures += "контекст зоны не вернулся после консультационного прохода"
 
 	if(armor.ce_get_wear_state(CE_ARMOR_ZONE_TORSO) != "ruined" || armor.ce_get_wear_state(CE_ARMOR_ZONE_ARMS))
-		failures += "словесное состояние: торс «[armor.ce_get_wear_state(CE_ARMOR_ZONE_TORSO)]», руки «[armor.ce_get_wear_state(CE_ARMOR_ZONE_ARMS)]»"
+		failures += "словесное состояние: торс \"[armor.ce_get_wear_state(CE_ARMOR_ZONE_TORSO)]\", руки \"[armor.ce_get_wear_state(CE_ARMOR_ZONE_ARMS)]\""
 
 /**
  * Кодекс и осмотр показывают каждую группу со своим износом. Зовётся после `check_reading()`:
@@ -2391,7 +2391,7 @@
 		ce_format_condition_line(CE_ARMOR_ZONE_LEGS, 50)
 	)
 	if(jointext(lines, " | ") != jointext(expected, " | "))
-		failures += "осмотр: «[jointext(lines, " | ")]», ожидалось «[jointext(expected, " | ")]»"
+		failures += "осмотр: \"[jointext(lines, " | ")]\", ожидалось \"[jointext(expected, " | ")]\""
 
 	ce_armor_wear_enabled = FALSE
 	var/list/intact_blocks = splittext(armor.ce_get_codex_line(), "<br><br>")
@@ -2403,7 +2403,7 @@
 		failures += "кодекс: блоков [length(worn_blocks)], ожидалось по одному на торс, руки и ноги"
 		return
 	if(!findtext(worn_blocks[1], "([CE_ARMOR_ZONE_TORSO])") || !findtext(worn_blocks[2], "([CE_ARMOR_ZONE_ARMS])") || !findtext(worn_blocks[3], "([CE_ARMOR_ZONE_LEGS])"))
-		failures += "кодекс: блоки не по группам зон — «[jointext(worn_blocks, " | ")]»"
+		failures += "кодекс: блоки не по группам зон: \"[jointext(worn_blocks, " | ")]\""
 	if(worn_blocks[1] == intact_blocks[1] || worn_blocks[3] == intact_blocks[3])
 		failures += "кодекс: изношенные торс или ноги показаны целыми"
 	if(worn_blocks[2] != intact_blocks[2])
@@ -2412,7 +2412,7 @@
 
 /*
 	Наручи и поножи берут ту же долю HP, что и вторичные группы зональной брони, а пластина на
-	торс — нет. Доля берётся от нижней границы HP и доходит до кривой состояния.
+	торс: нет. Доля берётся от нижней границы HP и доходит до кривой состояния.
 
 	Рейтинги тест ставит вещам сам, одинаковые, так что HP до доли у них равны.
 */
@@ -2459,22 +2459,22 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Наручи и поножи берут общую долю и свою долю вещи, пластина торса — нет, кривая читает долю.")
+		pass("Наручи и поножи берут общую долю и свою долю вещи, пластина торса: нет, кривая читает долю.")
 	return 1
 
 
 /*
-	Кевларовые вставки плитоноски и обычный скрытый жилет — баллистическое волокно (`ballistic_fiber`
+	Кевларовые вставки плитоноски и обычный скрытый жилет это баллистическое волокно (`ballistic_fiber`
 	у материала): мягкая броня, которая держит пули как жёсткая плита с теми же числами Bay, а нож и
-	удар — как одежда. Сверяются с жёсткой бронёй тех же чисел: у лёгкой стальной пластины
+	удар как одежда. Сверяются с жёсткой бронёй тех же чисел: у лёгкой стальной пластины
 	`armor_plate/makeshift/light` числа light-вставки и скрытого жилета, у скрытого тактического жилета
-	`sneaky/tactical` — medium.
+	`sneaky/tactical` medium.
 */
 /datum/unit_test/combat_extended/ballistic_fiber
 	name = "CE: Кевларовые вставки"
 	var/pistol_flags = DAMAGE_FLAG_BULLET | DAMAGE_FLAG_SHARP
 	var/pistol_damage = 45
-	/// Вещь из волокна — её жёсткий близнец с теми же числами Bay.
+	/// Вещь из волокна: её жёсткий близнец с теми же числами Bay.
 	var/list/twins = list(
 		/obj/item/clothing/accessory/armor_plate = /obj/item/clothing/accessory/armor_plate/makeshift/light,
 		/obj/item/clothing/accessory/armor_plate/medium = /obj/item/clothing/accessory/armor_plate/sneaky/tactical,
@@ -2500,20 +2500,20 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Вставки — мягкая броня: пули держат как жёсткая плита, нож и удар — как одежда, изнашиваются как мягкая, лучей не останавливают.\n[jointext(report, "\n")]")
+		pass("Вставки это мягкая броня: пули держат как жёсткая плита, нож и удар как одежда, изнашиваются как мягкая, лучей не останавливают.\n[jointext(report, "\n")]")
 	return 1
 
 /**
- * Рейтинги вставки против жёсткого близнеца: против пуль — те же миллиметры, против клинков и удара —
- * по мягким кривым, без нижней границы тупой оси от пулевого рейтинга. HP — из рейтингов самой
- * вставки, с множителем материала. `report` — числа вставки и близнеца для README.
+ * Рейтинги вставки против жёсткого близнеца: против пуль те же миллиметры, против клинков и удара
+ * по мягким кривым, без нижней границы тупой оси от пулевого рейтинга. HP: из рейтингов самой
+ * вставки, с множителем материала. `report`: числа вставки и близнеца для README.
  */
 /datum/unit_test/combat_extended/ballistic_fiber/proc/check_ratings(list/failures, list/report, insert_type, twin_type)
 	var/datum/extension/armor/insert = armor_of(insert_type)
 	var/datum/extension/armor/twin = armor_of(twin_type)
 	var/singleton/ce_armor_material/material = insert.ce_get_material()
 	if(!material.ballistic_fiber || insert.is_hard_armor())
-		failures += "[insert_type]: материал [material.type], жёсткая — [insert.is_hard_armor()]; ожидалось мягкое баллистическое волокно"
+		failures += "[insert_type]: материал [material.type], жёсткая [insert.is_hard_armor()]. Ожидалось мягкое баллистическое волокно"
 	if(!twin.is_hard_armor())
 		failures += "[twin_type]: не жёсткая броня, сверять вставку не с чем"
 	var/bullet = insert.get_value("bullet")
@@ -2538,10 +2538,10 @@
 	var/expected_health = max(ce_armor_health_min, ce_flatten_armor_health(linear_health)) * material.health_mult
 	if(material.health_mult <= 1 || abs(insert.ce_get_health_max() - expected_health) > 0.0001)
 		failures += "[insert_type]: [insert.ce_get_health_max()] HP при множителе материала [material.health_mult], ожидалось [expected_health]"
-	report += "[insert_type] ([material.name]): [sharp_ballistic] мм против пуль, [sharp_melee] мм против клинков, тупой [blunt], HP [insert.ce_get_health_max()]; [twin_type]: [twin.get_armor_sharp_ballistic()] мм, [twin.get_armor_sharp_melee()] мм, тупой [twin.get_armor_blunt()], HP [twin.ce_get_health_max()]"
+	report += "[insert_type] ([material.name]): [sharp_ballistic] мм против пуль, [sharp_melee] мм против клинков, тупой [blunt], HP [insert.ce_get_health_max()]. [twin_type]: [twin.get_armor_sharp_ballistic()] мм, [twin.get_armor_sharp_melee()] мм, тупой [twin.get_armor_blunt()], HP [twin.ce_get_health_max()]"
 
 /// Прочие пластины остались жёсткими: мягкими материал делает только две вставки и обычный скрытый
-/// жилет. Скрытый тактический жилет — среди жёстких.
+/// жилет. Скрытый тактический жилет: среди жёстких.
 /datum/unit_test/combat_extended/ballistic_fiber/proc/check_plates(list/failures)
 	var/hard_count = 0
 	for(var/plate_type in typesof_real(/obj/item/clothing/accessory/armor_plate))
@@ -2550,16 +2550,16 @@
 		var/datum/extension/armor/armor = armor_of(plate_type)
 		var/singleton/ce_armor_material/material = armor.ce_get_material()
 		if(material.ballistic_fiber || !armor.is_hard_armor())
-			failures += "[plate_type]: материал [material.type], жёсткая — [armor.is_hard_armor()]; ожидалась жёсткая пластина"
+			failures += "[plate_type]: материал [material.type], жёсткая [armor.is_hard_armor()]. Ожидалась жёсткая пластина"
 		hard_count++
 	if(!hard_count)
 		failures += "кроме вставок, пластин в билде нет"
 
 /**
  * Что вставка делает с атакой, чистым проходом по слоям: medium держит пистолеты, а винтовка её
- * пробивает; нож проходит вставку острым, а жёсткий близнец его останавливает; остановленный
+ * пробивает. Нож проходит вставку острым, а жёсткий близнец его останавливает. Остановленный
  * пистолет и ящик бьют через вставку сильнее, чем через близнеца. Обычный скрытый жилет бьётся как
- * light-вставка, тактический нож останавливает. `report` — доставленный урон для README.
+ * light-вставка, тактический нож останавливает. `report`: доставленный урон для README.
  */
 /datum/unit_test/combat_extended/ballistic_fiber/proc/check_attacks(list/failures, list/report)
 	var/list/targets = list()
@@ -2581,7 +2581,7 @@
 	var/mob/living/carbon/human/in_light_twin = targets[4]
 	var/mob/living/carbon/human/in_twin = targets[5]
 
-	// Снаряд — останавливает ли его medium-вставка.
+	// Снаряд: останавливает ли его medium-вставка.
 	var/list/bullets = list(
 		/obj/item/projectile/bullet/pistol/holdout = TRUE,
 		/obj/item/projectile/bullet/pistol = TRUE,
@@ -2591,7 +2591,7 @@
 		var/obj/item/projectile/bullet/bullet = bullet_type
 		var/stopped = is_stopped(in_medium, initial(bullet.damage), initial(bullet.damage_flags), initial(bullet.armor_penetration))
 		if(stopped != bullets[bullet_type])
-			failures += "атаки: [bullet_type] в medium-вставку — остановлен [stopped], ожидалось [bullets[bullet_type]]"
+			failures += "атаки: [bullet_type] в medium-вставку, остановлен [stopped], ожидалось [bullets[bullet_type]]"
 
 	var/knife_flags = DAMAGE_FLAG_SHARP | DAMAGE_FLAG_EDGE
 	if(is_stopped(in_light, 15, knife_flags, 5) || is_stopped(in_medium, 15, knife_flags, 5))
@@ -2599,13 +2599,13 @@
 	if(is_stopped(in_low_profile, 15, knife_flags, 5))
 		failures += "атаки: нож остановлен мягким скрытым жилетом"
 	if(!is_stopped(in_twin, 15, knife_flags, 5) || !is_stopped(in_light_twin, 15, knife_flags, 5))
-		failures += "атаки: нож не остановлен жёстким близнецом — сравнивать не с чем"
+		failures += "атаки: нож не остановлен жёстким близнецом, сравнивать не с чем"
 	// У обычного скрытого жилета числа и материал light-вставки: бьётся он так же.
 	for(var/list/attack in list(list("пистолет", pistol_damage, pistol_flags, 0), list("нож", 15, knife_flags, 5), list("ящик", 20, FLAGS_OFF, 0)))
 		var/through_vest = total_delivered(in_low_profile, attack[2], attack[3], attack[4])
 		var/through_light = total_delivered(in_light, attack[2], attack[3], attack[4])
 		if(abs(through_vest - through_light) > 0.0001)
-			failures += "атаки: [attack[1]] через скрытый жилет — [through_vest], через light-вставку — [through_light]; ожидалось поровну"
+			failures += "атаки: [attack[1]] через скрытый жилет [through_vest], через light-вставку [through_light]. Ожидалось поровну"
 	// Название, урон, флаги, AP.
 	var/list/softer = list(
 		list("остановленный пистолет", pistol_damage, pistol_flags, 0),
@@ -2615,7 +2615,7 @@
 		var/through_insert = total_delivered(in_medium, attack[2], attack[3], attack[4])
 		var/through_twin = total_delivered(in_twin, attack[2], attack[3], attack[4])
 		if(through_insert <= through_twin || through_insert >= attack[2])
-			failures += "атаки: [attack[1]] через medium-вставку — [through_insert], через жёсткого близнеца — [through_twin], без брони — [attack[2]]"
+			failures += "атаки: [attack[1]] через medium-вставку [through_insert], через жёсткого близнеца [through_twin], без брони [attack[2]]"
 
 	report += describe_delivered(in_light, "light-вставка")
 	report += describe_delivered(in_low_profile, "скрытый жилет")
@@ -2652,12 +2652,12 @@
 	var/list/parts = list()
 	for(var/list/attack in attacks)
 		var/stopped = ce_is_sharp_attack(attack[3]) && is_stopped(H, attack[2], attack[3], attack[4])
-		parts += "[attack[1]] ([attack[2]]) — [stopped ? "стоп " : ""][round(total_delivered(H, attack[2], attack[3], attack[4]), 0.1)]"
+		parts += "[attack[1]] ([attack[2]]): [stopped ? "стоп " : ""][round(total_delivered(H, attack[2], attack[3], attack[4]), 0.1)]"
 	return "[label]: [jointext(parts, ", ")]"
 
 /**
- * Износ по формуле мягкой брони: остановленная пуля снимает с вставки весь свой урон, а удар —
- * ничего; жёсткого близнеца тот же удар изнашивает. `report` — сколько пистолетных пуль подряд
+ * Износ по формуле мягкой брони: остановленная пуля снимает с вставки весь свой урон, а удар
+ * ничего. Жёсткого близнеца тот же удар изнашивает. `report`: сколько пистолетных пуль подряд
  * держат вставки и их близнецы.
  */
 /datum/unit_test/combat_extended/ballistic_fiber/proc/check_wear(list/failures, list/report)
@@ -2673,16 +2673,16 @@
 	combat_hit(H, BP_CHEST, pistol_damage, pistol_flags, 0)
 	var/pistol_wear = health_max - armor.ce_get_health()
 	if(abs(pistol_wear - pistol_damage) > 0.001)
-		failures += "износ: остановленный пистолет снял с medium-вставки [pistol_wear] HP, ожидался весь его урон — [pistol_damage]"
+		failures += "износ: остановленный пистолет снял с medium-вставки [pistol_wear] HP, ожидался весь его урон, [pistol_damage]"
 	var/worn_health = armor.ce_get_health()
 	combat_hit(H, BP_CHEST, 20, FLAGS_OFF, 0)
 	if(armor.ce_get_health() != worn_health)
 		failures += "износ: ящик снял с мягкой вставки [worn_health - armor.ce_get_health()] HP"
 	combat_hit(twin_human, BP_CHEST, 20, FLAGS_OFF, 0)
 	if(isnull(twin.ce_get_health()))
-		failures += "износ: ящик не износил жёсткого близнеца — сравнивать не с чем"
+		failures += "износ: ящик не износил жёсткого близнеца, сравнивать не с чем"
 
-	// Близнец у light-вставки и скрытого жилета общий: каждая пластина — один раз.
+	// Близнец у light-вставки и скрытого жилета общий: каждая пластина один раз.
 	var/list/series_types = list()
 	for(var/insert_type in twins)
 		series_types |= insert_type
@@ -2692,11 +2692,11 @@
 		if(!series)
 			failures += "износ: не удалось создать цель в [plate_type]"
 			continue
-		report += "[plate_type]: пистолет проходит с [series[1]]-го попадания, половина HP — после [series[2]]-го"
+		report += "[plate_type]: пистолет проходит с [series[1]]-го попадания, половина HP после [series[2]]-го"
 
 /**
  * Серия пистолетных пуль в новую пластину боевым проходом: `list(каким по счёту попаданием пуля
- * впервые проходит острой, после какого попадания остаётся не больше половины HP)`. null — цели нет.
+ * впервые проходит острой, после какого попадания остаётся не больше половины HP)`. null: цели нет.
  */
 /datum/unit_test/combat_extended/ballistic_fiber/proc/pistol_series(plate_type)
 	var/mob/living/carbon/human/H = make_human(list(plate_type))
@@ -2716,7 +2716,7 @@
 	return list(first_through, to_half)
 
 /**
- * Лучи: вставка их не останавливает и вычитанием не держит — слабый луч проходит её с полной долей,
+ * Лучи: вставка их не останавливает и вычитанием не держит, слабый луч проходит её с полной долей,
  * а жёсткого близнеца не проходит вовсе. От лазера она не греется, а обугливается.
  */
 /datum/unit_test/combat_extended/ballistic_fiber/proc/check_beams(list/failures)
@@ -2730,26 +2730,26 @@
 	if(armor.ce_can_stop(DAMAGE_BURN, DAMAGE_FLAG_LASER) || armor.ce_uses_laser_heat(DAMAGE_BURN, DAMAGE_FLAG_LASER))
 		failures += "лучи: вставка останавливает луч или держит его вычитанием"
 	if(!twin.ce_can_stop(DAMAGE_BURN, DAMAGE_FLAG_LASER) || !twin.ce_uses_laser_heat(DAMAGE_BURN, DAMAGE_FLAG_LASER))
-		failures += "лучи: жёсткий близнец луч не останавливает — сравнивать не с чем"
+		failures += "лучи: жёсткий близнец луч не останавливает, сравнивать не с чем"
 
 	// Луч слабее рейтинга `laser` обеих пластин: близнец держит его вычитанием целиком.
 	var/weak_damage = 15
 	var/share = H.ce_get_percent_pass_share(BP_CHEST, weak_damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, 0)
 	var/twin_share = twin_human.ce_get_percent_pass_share(BP_CHEST, weak_damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, 0)
 	if(share != 1 || twin_share != 0)
-		failures += "лучи: луч в [weak_damage] урона проходит вставку с долей [share], близнеца — с долей [twin_share]; ожидалось 1 и 0"
+		failures += "лучи: луч в [weak_damage] урона проходит вставку с долей [share], близнеца с долей [twin_share]. Ожидалось 1 и 0"
 
 	H.modify_damage_by_armor(BP_CHEST, 40, DAMAGE_BURN, DAMAGE_FLAG_LASER, H, 0, TRUE)
 	var/health = armor.ce_get_health()
 	if(armor.ce_heat || isnull(health) || health >= armor.ce_get_health_max())
-		failures += "лучи: от лазера вставка нагрелась — [armor.ce_heat ? "да" : "нет"], HP [health] из [armor.ce_get_health_max()]; ожидалось обугливание без нагрева"
+		failures += "лучи: от лазера вставка нагрелась [armor.ce_heat ? "да" : "нет"], HP [health] из [armor.ce_get_health_max()]. Ожидалось обугливание без нагрева"
 
 
 /*
 	Аксессуары под верхней одеждой (`concealed_accessories.dm`). Скрытый жилет и кобура на униформе
 	под халатом посторонним не видны ни в осмотре униформы, ни в строках о состоянии брони, ни в её
-	кодексе; носителю и призраку видны. Халат закрывает торс и руки, так что часы на запястье видно и
-	под ним. Без халата видно всё, на самой верхней одежде — тоже. Сам жилет на униформе не рисуется.
+	кодексе. Носителю и призраку видны. Халат закрывает торс и руки, так что часы на запястье видно и
+	под ним. Без халата видно всё, на самой верхней одежде: тоже. Сам жилет на униформе не рисуется.
 */
 /datum/unit_test/combat_extended/concealed_accessories
 	name = "CE: Аксессуары под верхней одеждой"
@@ -2768,10 +2768,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Аксессуары униформы под верхней одеждой видны носителю и призраку, посторонним и кодексу — нет; не закрытые и пристёгнутые к самой верхней одежде видны всем.")
+		pass("Аксессуары униформы под верхней одеждой видны носителю и призраку, посторонним и кодексу: нет. Не закрытые и пристёгнутые к самой верхней одежде видны всем.")
 	return 1
 
-/// Униформа с жилетом, кобурой и часами: что о них узнают посторонний, носитель, призрак и кодекс —
+/// Униформа с жилетом, кобурой и часами: что о них узнают посторонний, носитель, призрак и кодекс,
 /// без халата и под ним.
 /datum/unit_test/combat_extended/concealed_accessories/proc/check_uniform(list/failures)
 	var/mob/living/carbon/human/wearer = make_human()
@@ -2799,13 +2799,13 @@
 	if(length(uniform.ce_get_accessories_seen_by(stranger)) != length(attached))
 		failures += "без халата посторонний видит [length(uniform.ce_get_accessories_seen_by(stranger))] аксессуаров из [length(attached)]"
 	if(!findtext(uniform.ce_get_repair_codex(), vest_label))
-		failures += "без халата кодекс униформы молчит о жилете — сравнивать не с чем"
+		failures += "без халата кодекс униформы молчит о жилете: сравнивать не с чем"
 	if(vest.get_mob_overlay(wearer, slot_w_uniform_str))
 		failures += "жилет на униформе рисуется на носителе"
 	// Изношенный жилет: о состоянии его брони униформа рассказывает тем же, кому показывает его самого.
 	combat_hit(wearer, BP_CHEST, 45, DAMAGE_FLAG_BULLET | DAMAGE_FLAG_SHARP, 0)
 	if(!findtext(jointext(uniform.ce_get_accessory_armor_lines(stranger), "\n"), vest.name))
-		failures += "без халата посторонний не видит состояния брони изношенного жилета — сравнивать не с чем"
+		failures += "без халата посторонний не видит состояния брони изношенного жилета: сравнивать не с чем"
 
 	var/obj/item/clothing/suit/storage/toggle/labcoat/coat = new(wearer.loc)
 	spawned += coat
@@ -2814,11 +2814,11 @@
 		failures += "униформа: надеть халат поверх жилета не вышло"
 		return
 	if(!(coat.body_parts_covered & vest.body_location) || !(coat.body_parts_covered & holster.body_location) || (coat.body_parts_covered & watch.body_location))
-		failures += "халат должен закрывать жилет и кобуру и не закрывать часы — проверять не на чем"
+		failures += "халат должен закрывать жилет и кобуру и не закрывать часы: проверять не на чем"
 
 	var/list/seen_by_stranger = uniform.ce_get_accessories_seen_by(stranger)
 	if((vest in seen_by_stranger) || (holster in seen_by_stranger))
-		failures += "под халатом посторонний видит жилет — [(vest in seen_by_stranger) ? "да" : "нет"], кобуру — [(holster in seen_by_stranger) ? "да" : "нет"]"
+		failures += "под халатом посторонний видит жилет [(vest in seen_by_stranger) ? "да" : "нет"], кобуру [(holster in seen_by_stranger) ? "да" : "нет"]"
 	if(!(watch in seen_by_stranger))
 		failures += "под халатом посторонний не видит часы на запястье, которого халат не закрывает"
 	if(length(uniform.ce_get_accessories_seen_by(wearer)) != length(attached))
@@ -2836,7 +2836,7 @@
 	if(!findtext(jointext(uniform.ce_get_accessory_armor_lines(wearer), "\n"), vest.name))
 		failures += "под халатом носитель не видит состояния брони своего жилета"
 
-/// Пластина на плитоноске — аксессуар самой верхней одежды: её не закрывает ничего, видна всем.
+/// Пластина на плитоноске это аксессуар самой верхней одежды: её не закрывает ничего, видна всем.
 /datum/unit_test/combat_extended/concealed_accessories/proc/check_outer_clothing(list/failures)
 	var/mob/living/carbon/human/wearer = make_human(list(/obj/item/clothing/accessory/armor_plate/medium))
 	var/mob/living/carbon/human/stranger = make_human()
@@ -2851,7 +2851,7 @@
 
 
 /*
-	Зональные вещи в билде: каждая закрывает хотя бы две группы зон — иначе зональность ей ничего
+	Зональные вещи в билде: каждая закрывает хотя бы две группы зон, иначе зональность ей ничего
 	не даёт. Доли HP вторичных групп больше нуля: на них делится при чтении.
 */
 /datum/unit_test/combat_extended/armor_zoned_items
@@ -2874,7 +2874,7 @@
 			if(initial(item_path.body_parts_covered) & ce_armor_zone_groups[group])
 				covered_groups++
 		if(covered_groups < 2)
-			failures += "[item_type]: закрывает групп зон — [covered_groups]"
+			failures += "[item_type]: закрывает групп зон [covered_groups]"
 	if(!zoned_count)
 		failures += "в билде нет зональных вещей"
 
@@ -2896,8 +2896,8 @@
 
 
 /*
-	Осколки от поломки брони. Колющаяся вещь есть в билде, и её материал знает свой осколок; у
-	каждого материала осколок — материал Bay с осколками, а множитель и урон — числа.
+	Осколки от поломки брони. Колющаяся вещь есть в билде, и её материал знает свой осколок. У
+	каждого материала осколок это материал Bay с осколками, а множитель и урон это числа.
 
 	Шанс считается только по HP, снятым ниже точки поломки, и не колет вещь без флага или без
 	осколка у материала. Осколок бьёт конечность ровно на урон материала и застревает, даже когда
@@ -2928,7 +2928,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Шанс осколка — доля HP, снятых ниже точки поломки, осколок из материала брони бьёт на урон материала и застревает в ране.")
+		pass("Шанс осколка: доля HP, снятых ниже точки поломки, осколок из материала брони бьёт на урон материала и застревает в ране.")
 	return 1
 
 /datum/unit_test/combat_extended/armor_shards/proc/check_shard_materials(list/failures)
@@ -2936,7 +2936,7 @@
 	for(var/item_type in subtypesof(/obj/item))
 		var/obj/item/item_path = item_type
 		var/material_type = initial(item_path.ce_armor_material)
-		// Вещь без материала ловит тест «Материалы и точки поломки брони».
+		// Вещь без материала ловит тест "Материалы и точки поломки брони".
 		if(!initial(item_path.ce_armor_shards) || !ispath(material_type, /singleton/ce_armor_material))
 			continue
 		shard_items++
@@ -2950,7 +2950,7 @@
 		if(material.shard_material)
 			var/material/shard_source = SSmaterials.get_material_by_name(material.shard_material)
 			if(!shard_source?.shard_type)
-				failures += "[material.type]: осколок из [material.shard_material] — у такого материала Bay осколков нет"
+				failures += "[material.type]: осколок из [material.shard_material], у такого материала Bay осколков нет"
 		if(!isnum(material.shard_chance_mult) || material.shard_chance_mult < 0)
 			failures += "[material.type]: множитель шанса осколка [material.shard_chance_mult]"
 		if(!isnum(material.shard_damage) || material.shard_damage <= 0)
@@ -2999,7 +2999,7 @@
 		failures += "в руке осколков [length(find_shards(arm))], а не один"
 
 	// Прокол того же размера без осколка: прокол осколка Bay сольёт с ним и раны не отдаст. С
-	// осколком в ране он бы не слился — такая рана не заживает сама (`can_autoheal()`).
+	// осколком в ране он бы не слился: такая рана не заживает сама (`can_autoheal()`).
 	var/obj/item/organ/external/pierced_arm = H.get_organ(BP_R_ARM)
 	pierced_arm.take_external_damage(material.shard_damage, 0, DAMAGE_FLAG_SHARP)
 	H.ce_apply_shard(BP_R_ARM, vest)
@@ -3051,10 +3051,10 @@
 /*
 	Починка брони хламом (`armor_repair.dm`).
 
-	Числа тест берёт у самого хлама — сколько возвращает одна починка и сколько предела она съедает,
-	— а проверяет инварианты: починка не выходит за предел, предел падает на возвращённое ×
+	Числа тест берёт у самого хлама (сколько возвращает одна починка и сколько предела она съедает),
+	а проверяет инварианты: починка не выходит за предел, предел падает на возвращённое ×
 	множитель, изношенная в ноль и залатанная до упора броня получает `1 / (1 + множитель)` прежнего
-	предела, а кривая состояния читает HP от исходного максимума — залатанная броня слабее новой.
+	предела, а кривая состояния читает HP от исходного максимума, и залатанная броня слабее новой.
 	Набор кузнеца предел поднимает, навык строительства меняет, сколько его съедает хлам, а кодекс
 	пишет всё это в самом низу.
 
@@ -3102,7 +3102,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Хлам латает свою броню до падающего предела, набор кузнеца предел поднимает, навык меняет потерю, керамика хламом не латается, абляционную латают отражающими листами с покрытием, убранный РИГ — по детали в зоне прицела, пробоины скафандра — раньше брони.")
+		pass("Хлам латает свою броню до падающего предела, набор кузнеца предел поднимает, навык меняет потерю, керамика хламом не латается, абляционную латают отражающими листами с покрытием, убранный РИГ по детали в зоне прицела, пробоины скафандра раньше брони.")
 	return 1
 
 /// Новый предмет, который удалится после теста.
@@ -3128,7 +3128,7 @@
 		if(!junk.name || !ispath(junk.junk_type, /obj/item))
 			failures += "[junk.type]: без названия или предмета"
 		if(!(junk.repair_kind in list(CE_ARMOR_REPAIR_METAL, CE_ARMOR_REPAIR_FABRIC, CE_ARMOR_REPAIR_ABLATIVE, CE_ARMOR_REPAIR_HARD)))
-			failures += "[junk.type]: род брони «[junk.repair_kind]»"
+			failures += "[junk.type]: род брони \"[junk.repair_kind]\""
 		if(!isnum(junk.coating_restore_share) || junk.coating_restore_share < 0 || junk.coating_restore_share > 1)
 			failures += "[junk.type]: доля покрытия [junk.coating_restore_share]"
 		if(!isnum(junk.repair_share) || junk.repair_share <= 0 || junk.repair_share > 1)
@@ -3144,14 +3144,14 @@
 	for(var/material_type in typesof(/singleton/ce_armor_material))
 		var/singleton/ce_armor_material/material = GET_SINGLETON(material_type)
 		if(material.repair_kind && !(material.repair_kind in list(CE_ARMOR_REPAIR_METAL, CE_ARMOR_REPAIR_FABRIC, CE_ARMOR_REPAIR_ABLATIVE, CE_ARMOR_REPAIR_NONE)))
-			failures += "[material_type]: род починки «[material.repair_kind]»"
+			failures += "[material_type]: род починки \"[material.repair_kind]\""
 		else if(material.repair_kind && material.repair_kind != CE_ARMOR_REPAIR_NONE && !(material.repair_kind in kinds))
-			failures += "[material_type]: латается «[material.repair_kind]», а такого хлама нет"
+			failures += "[material_type]: латается \"[material.repair_kind]\", а такого хлама нет"
 		if(material_type != /singleton/ce_armor_material && !material.name)
 			failures += "[material_type]: без названия для кодекса"
 
-	// Один предмет бывает хламом разного рода: лист стали по стальной пластине — металл, по
-	// абляционному жилету — абляционный хлам.
+	// Один предмет бывает хламом разного рода: лист стали по стальной пластине металл, по
+	// абляционному жилету абляционный хлам.
 	var/datum/extension/armor/steel_plate = armor_of(/obj/item/clothing/accessory/armor_plate/merc)
 	var/datum/extension/armor/vest = armor_of(/obj/item/clothing/suit/armor/laserproof)
 	var/list/expected_junk = list(
@@ -3175,8 +3175,8 @@
 			failures += "[test_case[1]] по [target.holder.type]: хлам [found?.type], ожидался [test_case[3]]"
 
 /**
- * Чем латать, решает материал, а без своего — жёсткость. Кевларовая вставка — мягкая броня, её
- * латают тканью. Набор кузнеца берёт любую жёсткую броню, керамику в том числе, но не мягкую — ни
+ * Чем латать, решает материал, а без своего: жёсткость. Кевларовая вставка: мягкая броня, её
+ * латают тканью. Набор кузнеца берёт любую жёсткую броню, керамику в том числе, но не мягкую: ни
  * скафандр, ни кевлар.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_kinds(list/failures)
@@ -3191,13 +3191,13 @@
 	for(var/path in expected_kinds)
 		var/datum/extension/armor/armor = armor_of(path)
 		if(armor.ce_get_repair_kind() != expected_kinds[path])
-			failures += "[path]: латается «[armor.ce_get_repair_kind()]», ожидалось «[expected_kinds[path]]»"
+			failures += "[path]: латается \"[armor.ce_get_repair_kind()]\", ожидалось \"[expected_kinds[path]]\""
 	var/datum/extension/armor/soft_armor = armor_of(/obj/item/clothing/suit/space, list("melee" = ARMOR_MELEE_KNIVES))
 	if(soft_armor.is_hard_armor() || soft_armor.ce_get_repair_kind() != CE_ARMOR_REPAIR_FABRIC)
-		failures += "мягкий EVA-скафандр латается «[soft_armor.ce_get_repair_kind()]», ожидалась ткань"
+		failures += "мягкий EVA-скафандр латается \"[soft_armor.ce_get_repair_kind()]\", ожидалась ткань"
 	var/datum/extension/armor/kevlar_armor = armor_of(/obj/item/clothing/accessory/armor_plate/medium)
 	if(kevlar_armor.is_hard_armor() || kevlar_armor.ce_get_repair_kind() != CE_ARMOR_REPAIR_FABRIC)
-		failures += "кевларовая вставка латается «[kevlar_armor.ce_get_repair_kind()]», ожидалась ткань"
+		failures += "кевларовая вставка латается \"[kevlar_armor.ce_get_repair_kind()]\", ожидалась ткань"
 
 	var/singleton/ce_armor_repair/kit = GET_SINGLETON(/singleton/ce_armor_repair/blacksmith_kit)
 	for(var/path in expected_kinds)
@@ -3236,12 +3236,12 @@
 		failures += "починка поменяла максимум HP: [armor.ce_get_health_max()] вместо [health_max]"
 	var/expected_condition = ce_evaluate_curve(ce_armor_condition_curve, first_cap / health_max)
 	if(abs(armor.ce_get_condition() - expected_condition) > 0.0001 || armor.ce_get_condition() >= 1)
-		failures += "залатанная до упора броня читает множитель [armor.ce_get_condition()], ожидалось [expected_condition] — меньше новой"
+		failures += "залатанная до упора броня читает множитель [armor.ce_get_condition()], ожидалось [expected_condition]: меньше новой"
 
 	var/list/lines = armor.ce_get_condition_lines()
 	var/expected_line = "Armor condition: [armor.ce_get_health_percent()]%/[round(100 * first_cap / health_max)]%"
 	if(length(lines) != 1 || lines[1] != expected_line)
-		failures += "осмотр: «[jointext(lines, " | ")]», ожидалось «[expected_line]»"
+		failures += "осмотр: \"[jointext(lines, " | ")]\", ожидалось \"[expected_line]\""
 
 	armor.ce_health = 0
 	repair_to_cap(armor, steel)
@@ -3264,8 +3264,8 @@
 			return
 
 /**
- * Набор кузнеца: сперва поднимает предел на свою долю, потом возвращает HP до нового предела; до
- * упора доводит броню до максимума, но не выше; у брони с полным пределом просто возвращает HP; у
+ * Набор кузнеца: сперва поднимает предел на свою долю, потом возвращает HP до нового предела. До
+ * упора доводит броню до максимума, но не выше. У брони с полным пределом просто возвращает HP. У
  * целой брони ему делать нечего. Керамику тоже берёт.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_kit(list/failures)
@@ -3298,12 +3298,12 @@
 
 /**
  * Кодекс пишет в самом низу материал и хлам, которым броню латают, с долей HP и сдвигом предела
- * одной починки. Керамику — только набором кузнеца, и без строки о навыке: набор предел не съедает.
- * Плитоноска — по блоку на пластину.
+ * одной починки. Керамику латают только набором кузнеца, и без строки о навыке: набор предел не съедает.
+ * Плитоноска: по блоку на пластину.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_codex(list/failures)
 	if(ce_format_repair_share(0.1) != "+10%" || ce_format_repair_share(-0.025) != "-2.5%")
-		failures += "доля в кодексе: «[ce_format_repair_share(0.1)]» и «[ce_format_repair_share(-0.025)]», ожидалось «+10%» и «-2.5%»"
+		failures += "доля в кодексе: \"[ce_format_repair_share(0.1)]\" и \"[ce_format_repair_share(-0.025)]\", ожидалось \"+10%\" и \"-2.5%\""
 
 	var/list/expected_heads = list(
 		/obj/item/clothing/accessory/armor_plate/makeshift/medium = "<b>Repair:</b><br>Material: steel<br>Can be fixed with:<br>",
@@ -3323,7 +3323,7 @@
 			var/line = "[junk.get_codex_name()] ([ce_format_repair_share(junk.repair_share)], [ce_format_repair_share(junk.cap_restore_share - junk.repair_share * junk.max_loss_mult)] max)"
 			var/line_at = findtext(info, line, repair_at)
 			if(junk.can_repair(armor) != !!line_at)
-				failures += "[path]: строка «[line]» [junk.can_repair(armor) ? "не найдена" : "лишняя"]"
+				failures += "[path]: строка \"[line]\" [junk.can_repair(armor) ? "не найдена" : "лишняя"]"
 			if(line_at)
 				found_lines[line] = line_at
 			if(junk.can_repair(armor) && junk.max_loss_mult)
@@ -3332,7 +3332,7 @@
 		var/last_at = 0
 		for(var/line in sorted_lines)
 			if(found_lines[line] < last_at)
-				failures += "[path]: хлам в кодексе не по алфавиту — «[line]» раньше предыдущего"
+				failures += "[path]: хлам в кодексе не по алфавиту: \"[line]\" раньше предыдущего"
 			last_at = found_lines[line]
 		if(skill_matters != !!findtext(info, "Construction skill", repair_at))
 			failures += "[path]: строка о навыке [skill_matters ? "не найдена" : "лишняя"]"
@@ -3346,8 +3346,8 @@
 		failures += "плитоноска: блока починки пластины нет или он выше её рейтингов"
 
 /**
- * Что латает клик: плитоноска — аксессуар по зоне прицела, зональный скафандр — группу прицела и
- * только её, каска — себя, куда ни целься.
+ * Что латает клик: плитоноска аксессуар по зоне прицела, зональный скафандр группу прицела и
+ * только её, каска: себя, куда ни целься.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_targets(list/failures)
 	var/obj/item/clothing/suit/armor/pcarrier/carrier = make(/obj/item/clothing/suit/armor/pcarrier)
@@ -3388,10 +3388,10 @@
 		failures += "войдсьют: починка рук задела торс или общий предел"
 
 /**
- * Отказы настоящего клика. Неизношенная броня, чужой предмет и выключатель отдают клик дальше;
- * керамика, чужой хлам, набор кузнеца по мягкой броне и по кевлару, броня у предела и незажжённая сварка
- * разбирают его сами и ничего не меняют. Пропусти проверка отказ — ожидание без задержки пройдёт,
- * и броня поменяется.
+ * Отказы настоящего клика. Неизношенная броня, чужой предмет и выключатель отдают клик дальше.
+ * Керамика, чужой хлам, набор кузнеца по мягкой броне и по кевлару, броня у предела и незажжённая сварка
+ * Разбирают его сами и ничего не меняют. Пропусти проверка отказ: ожидание без задержки пройдёт,
+ * И броня поменяется.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_refusals(mob/living/carbon/human/H, list/failures)
 	var/obj/item/stack/material/steel/steel = make(/obj/item/stack/material/steel, 5)
@@ -3432,16 +3432,16 @@
 		if(!clicked.ce_try_armor_repair(refusal[3], H))
 			failures += "[refusal[1]]: отказ не разобран, клик ушёл дальше"
 		if(armor.ce_health != health || armor.ce_get_health_lost() != lost)
-			failures += "[refusal[1]]: броня поменялась — [health] → [armor.ce_health] HP"
+			failures += "[refusal[1]]: броня поменялась [health] → [armor.ce_health] HP"
 	if(steel.get_amount() != 5)
 		failures += "отказы потратили сталь: осталось [steel.get_amount()] из 5"
 	if(QDELETED(kit) || kit.uses != 1)
 		failures += "отказ потратил набор кузнеца"
 
 /**
- * Клик доходит до конца: по пластине — латает её и тратит лист, по плитоноске — `use_tool()`
+ * Клик доходит до конца: по пластине латает её и тратит лист, по плитоноске `use_tool()`
  * латает пластину в зоне прицела, набор кузнеца по керамике латает её и кончается. Прицела у
- * тестового человека нет, так что зона — торс.
+ * тестового человека нет, так что зона: торс.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_clicks(mob/living/carbon/human/H, list/failures)
 	var/obj/item/stack/material/steel/steel = make(/obj/item/stack/material/steel, 5)
@@ -3470,10 +3470,10 @@
 	ceramic_plate.forceMove(H.loc)
 	var/ceramic_health = ceramic_armor.ce_health
 	if(!ceramic_plate.ce_try_armor_repair(kit, H) || ceramic_armor.ce_health <= ceramic_health || !QDELETED(kit))
-		failures += "набор кузнеца по керамике: HP [ceramic_health] → [ceramic_armor.ce_health], набор [QDELETED(kit) ? "потрачен" : "остался"] — у него одна починка"
+		failures += "набор кузнеца по керамике: HP [ceramic_health] → [ceramic_armor.ce_health], набор [QDELETED(kit) ? "потрачен" : "остался"], у него одна починка"
 
 /**
- * Навык строительства меняет потерю предела, а не время: у обученного — ровно множитель хлама,
+ * Навык строительства меняет потерю предела, а не время: у обученного ровно множитель хлама,
  * неумеха теряет больше, мастер меньше. Клик настоящий, с навыком человека.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_skill(mob/living/carbon/human/H, list/failures)
@@ -3513,7 +3513,7 @@
 
 /**
  * Пока у скафандра пробоина, сталь идёт на неё, как в Бэй: кор код латает ожог тремя листами, а
- * броня не меняется. Без пробоин та же сталь латает броню — группу зон прицела, торс.
+ * броня не меняется. Без пробоин та же сталь латает броню: группу зон прицела, торс.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_breaches(mob/living/carbon/human/H, list/failures)
 	var/obj/item/clothing/suit/space/void/suit = make(/obj/item/clothing/suit/space/void)
@@ -3536,7 +3536,7 @@
 	var/obj/item/stack/material/steel/steel = make(/obj/item/stack/material/steel, 5)
 	suit.use_tool(steel, H)
 	if(steel.get_amount() != 2 || suit.ce_has_breaches())
-		failures += "сталь по скафандру с ожогом: осталось [steel.get_amount()] листов из 5, пробоин [length(suit.breaches)] — кор код ожог не залатал"
+		failures += "сталь по скафандру с ожогом: осталось [steel.get_amount()] листов из 5, пробоин [length(suit.breaches)], кор код ожог не залатал"
 	if(armor.ce_get_health(CE_ARMOR_ZONE_TORSO) != health)
 		failures += "сталь по скафандру с пробоиной залатала броню: [health] → [armor.ce_get_health(CE_ARMOR_ZONE_TORSO)] HP"
 
@@ -3554,7 +3554,7 @@
 /**
  * Абляционную броню латают отражающими листами, и лист возвращает и HP, и выгоревшее покрытие, на
  * свои доли: серебро больше всех, дальше алюминий, стекло и сталь. Мягкий и металлический хлам её не
- * латает. Покрытие латается и у брони с целыми HP — настоящим кликом, листом из стопки. Набор
+ * латает. Покрытие латается и у брони с целыми HP: настоящим кликом, листом из стопки. Набор
  * кузнеца латает HP, но не покрытие. Кодекс пишет, сколько покрытия вернёт лист.
  */
 /datum/unit_test/combat_extended/armor_repair/proc/check_ablative(mob/living/carbon/human/H, list/failures)
@@ -3604,9 +3604,9 @@
 	var/codex = intact.ce_get_repair_codex_block()
 	var/datum/extension/armor/steel_plate = armor_of(/obj/item/clothing/accessory/armor_plate/merc)
 	if(!findtext(codex, "Silver sheet ×1 (+10%, -5% max, +25% coating)") || findtext(codex, "Cloth") || findtext(steel_plate.ce_get_repair_codex_block(), "coating"))
-		failures += "кодекс починки абляционного жилета: «[codex]»"
+		failures += "кодекс починки абляционного жилета: \"[codex]\""
 
-/// Изнашивает все детали РИГа до половины HP, грудную секцию — каждую группу зон.
+/// Изнашивает все детали РИГа до половины HP, грудную секцию: каждую группу зон.
 /datum/unit_test/combat_extended/armor_repair/proc/wear_rig(obj/item/rig/rig)
 	for(var/obj/item/piece in list(rig.helmet, rig.gloves, rig.boots))
 		var/datum/extension/armor/armor = get_extension(piece, /datum/extension/armor)
@@ -3626,8 +3626,8 @@
 		.["[rig.chest.name] ([group])"] = chest.ce_get_health(group)
 
 /**
- * РИГ латают, не надевая: клик хламом по блоку управления латает деталь в зоне прицела — шлем,
- * перчатки, ботинки или группу зон грудной секции — и ни одну другую, набором кузнеца тоже.
+ * РИГ латают, не надевая: клик хламом по блоку управления латает деталь в зоне прицела, шлем,
+ * перчатки, ботинки или группу зон грудной секции: и ни одну другую, набором кузнеца тоже.
  * Починку убранной детали держит блок. Пока у грудной секции пробоина, сталь по блоку уходит на неё.
  * Осмотр блока молчит о новых деталях и говорит состояние каждой изношенной, с её названием.
  */
@@ -3637,7 +3637,7 @@
 	H.zone_sel = new /obj/screen/zone_sel(null)
 	spawned += H.zone_sel
 	if(length(rig.ce_get_examine_lines()))
-		failures += "осмотр нового РИГа: «[jointext(rig.ce_get_examine_lines(), "», «")]»"
+		failures += "осмотр нового РИГа: \"[jointext(rig.ce_get_examine_lines(), "», «")]\""
 	wear_rig(rig)
 	var/examine = jointext(rig.ce_get_examine_lines(), "\n")
 	var/list/labels = list(rig.helmet.name, rig.gloves.name, rig.boots.name)
@@ -3645,7 +3645,7 @@
 		labels += "[rig.chest.name], [group]"
 	for(var/label in labels)
 		if(!findtext(examine, "Armor condition ([label]): 50%/100%"))
-			failures += "осмотр изношенного РИГа без «[label]»: «[examine]»"
+			failures += "осмотр изношенного РИГа без \"[label]\": \"[examine]\""
 	if(length(rig.ce_get_examine_lines()) != length(labels))
 		failures += "осмотр изношенного РИГа: [length(rig.ce_get_examine_lines())] строк вместо [length(labels)]"
 	var/obj/item/stack/material/steel/steel = make(/obj/item/stack/material/steel, 10)
@@ -3670,7 +3670,7 @@
 			if(after[part] != before[part])
 				repaired += part
 		if(length(repaired) != 1 || repaired[1] != click[3])
-			failures += "[tool_name] по РИГу в [click[1]]: залатано «[jointext(repaired, "», «")]», ожидалось «[click[3]]»"
+			failures += "[tool_name] по РИГу в [click[1]]: залатано \"[jointext(repaired, "», «")]\", ожидалось \"[click[3]]\""
 	if(rig.helmet.ce_get_do_after_target() != rig)
 		failures += "починку убранного шлема держит [rig.helmet.ce_get_do_after_target()], а не блок РИГа"
 
@@ -3692,15 +3692,15 @@
 
 /*
 	Эффекты снарядов, зависящие от пробития (`projectile_effects.dm`). Дротик и нульглас летят
-	настоящим `bullet_act()`: так проверяется вся цепочка — обёртка, запись итога проходом по
+	настоящим `bullet_act()`: так проверяется вся цепочка: обёртка, запись итога проходом по
 	слоям и правка кор кода в вызове `on_hit()`.
 
 	Дротик бьёт в руку под наручами: `can_inject()` смотрит только одежду, не аксессуары, и
-	наручи ему не помеха — остановить укол может только броня. Грудь для этого не годится:
-	плитоноска — толстая ткань, и `can_inject()` не пустит дротик и без мода.
+	наручи ему не помеха. Остановить укол может только броня. Грудь для этого не годится:
+	плитоноска это толстая ткань, и `can_inject()` не пустит дротик и без мода.
 
-	Застревание от остановленной пули Bay разыгрывает двумя бросками — порез от тупого удара и
-	само застревание, — поэтому `after_wounding()` проверяется ещё и напрямую, с готовым порезом и
+	Застревание от остановленной пули Bay разыгрывает двумя бросками (порез от тупого удара и
+	само застревание), поэтому `after_wounding()` проверяется ещё и напрямую, с готовым порезом и
 	шансом застревания 100%.
 */
 /datum/unit_test/combat_extended/projectile_effects
@@ -3710,7 +3710,7 @@
 	var/old_enabled = ce_penetration_effects_enabled
 	var/old_wear = ce_armor_wear_enabled
 	ce_penetration_effects_enabled = TRUE
-	// Каждый случай бьёт одну плиту дважды — чужим проходом и своим, — и второй не должен
+	// Каждый случай бьёт одну плиту дважды (чужим проходом и своим), и второй не должен
 	// приходить по изношенной.
 	ce_armor_wear_enabled = FALSE
 	var/list/failures = list()
@@ -3725,7 +3725,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Остановленный бронёй снаряд не застревает, а помеченный не впрыскивает; пробивший — как в Bay.")
+		pass("Остановленный бронёй снаряд не застревает, а помеченный не впрыскивает. Пробивший: как в Bay.")
 	return 1
 
 /datum/unit_test/combat_extended/projectile_effects/proc/check_outcome(list/failures)
@@ -3755,7 +3755,7 @@
 
 		projectile_hit(H, projectile, projectile.damage)
 		if(projectile.ce_armor_stopped != test_case[4])
-			failures += "[test_case[1]]: остановлен — [projectile.ce_armor_stopped], ожидалось [test_case[4]]"
+			failures += "[test_case[1]]: остановлен [projectile.ce_armor_stopped], ожидалось [test_case[4]]"
 		if(H.ce_hit_projectile)
 			failures += "[test_case[1]]: после записи итога ссылка на снаряд осталась"
 		H.ce_hit_projectile = null
@@ -3802,7 +3802,7 @@
 			failures += "дротик [test_case[1]]: не удалось создать цель"
 			continue
 		if(H.can_inject(null, BP_L_ARM) != CAN_INJECT)
-			failures += "дротик [test_case[1]]: `can_inject()` не пускает укол и без брони — проверять нечего"
+			failures += "дротик [test_case[1]]: `can_inject()` не пускает укол и без брони, проверять нечего"
 			continue
 		var/obj/item/projectile/bullet/chemdart/dart = new(H.loc)
 		spawned += dart
@@ -3814,7 +3814,7 @@
 
 		var/injected = H.reagents.get_reagent_amount(/datum/reagent/water) > 0
 		if(injected != test_case[4])
-			failures += "дротик [test_case[1]]: впрыснул — [injected], ожидалось [test_case[4]]"
+			failures += "дротик [test_case[1]]: впрыснул [injected], ожидалось [test_case[4]]"
 		if(!isnull(dart.ce_armor_stopped) || H.ce_hit_projectile)
 			failures += "дротик [test_case[1]]: итог попадания пережил `bullet_act()`"
 
@@ -3837,7 +3837,7 @@
 			continue
 		var/obj/item/projectile/bullet/nullglass/bullet = new(H.loc)
 		spawned += bullet
-		// Шанс застревания `0.5 × урон раны × penetration_modifier` — здесь заведомо больше 100.
+		// Шанс застревания `0.5 × урон раны × penetration_modifier`: здесь заведомо больше 100.
 		bullet.penetration_modifier = 1000
 		bullet.ce_armor_stopped = test_case[3]
 
@@ -3847,7 +3847,7 @@
 
 		var/embedded = length(find_nullglass(organ)) > 0
 		if(embedded != test_case[5])
-			failures += "[test_case[1]]: застряла — [embedded], ожидалось [test_case[5]]"
+			failures += "[test_case[1]]: застряла [embedded], ожидалось [test_case[5]]"
 
 /*
 	Нульглас глушит псионику осколком, застрявшим в ране (`disrupts_psionics()` обходит всё
@@ -3879,7 +3879,7 @@
 		find_nullglass(chest)
 		var/disrupted = istype(H.disrupts_psionics(), /obj/item/material/shard/nullglass)
 		if(disrupted != test_case[3])
-			failures += "нульглас [test_case[1]]: глушит псионику — [disrupted], ожидалось [test_case[3]]"
+			failures += "нульглас [test_case[1]]: глушит псионику [disrupted], ожидалось [test_case[3]]"
 
 /// Осколки нульгласа, застрявшие в конечности. Удаляются вместе с тестом.
 /datum/unit_test/combat_extended/projectile_effects/proc/find_nullglass(obj/item/organ/external/organ)
@@ -3891,8 +3891,8 @@
 
 /*
 	Собственный удар снаряда (`ce_blunt_penetration`, `attack_penetration.dm`). Снаряд доходит до
-	прохода по слоям через `ce_hit_projectile`, как из `bullet_act()`, а ожидание — урон после той же
-	пластины от процедуры одного слоя с этим ударом. Числа патронов живут в README; здесь — что удар
+	прохода по слоям через `ce_hit_projectile`, как из `bullet_act()`, а ожидание: урон после той же
+	пластины от процедуры одного слоя с этим ударом. Числа патронов живут в README. Здесь: что удар
 	берётся у своего снаряда и только у него, убывает с уроном, печатается в кодексе и что штатный
 	7mmR отличается от 5mmR только ударом.
 */
@@ -3912,10 +3912,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Проход берёт собственный удар у своего снаряда и только у него; удар убывает с уроном и виден в кодексе; штатный 7mmR отличается от 5mmR только ударом.")
+		pass("Проход берёт собственный удар у своего снаряда и только у него. Удар убывает с уроном и виден в кодексе. Штатный 7mmR отличается от 5mmR только ударом.")
 	return 1
 
-/// Остановленная medium-вставкой дробина: со своим снарядом — собственный удар, без него и с чужим уроном — выведенный.
+/// Остановленная medium-вставкой дробина: со своим снарядом собственный удар, без него и с чужим уроном выведенный.
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_walk(list/failures)
 	var/mob/living/carbon/human/H = make_human(list(/obj/item/clothing/accessory/armor_plate/medium))
 	var/datum/extension/armor/plate = plate_armor(H)
@@ -3930,7 +3930,7 @@
 	var/own = pellet.ce_blunt_penetration
 	var/derived = ce_derive_blunt_penetration(damage, flags, armor_pen)
 	if(isnull(own) || abs(own - derived) <= CE_OWN_BLUNT_TOLERANCE)
-		failures += "проход: у картечи нет своего удара — [own], выведенный [derived]"
+		failures += "проход: у картечи нет своего удара, [own], выведенный [derived]"
 		return
 	if(ce_derive_penetration(damage, flags, armor_pen) >= plate.get_armor_sharp(flags))
 		failures += "проход: дробина пробивает medium-вставку, и удар остановленной не проверить"
@@ -3947,11 +3947,11 @@
 	var/expected_derived = layer_damage(plate, damage, flags, armor_pen, derived)
 	var/expected_foreign = layer_damage(plate, damage + 1, flags, armor_pen, ce_derive_blunt_penetration(damage + 1, flags, armor_pen))
 	if(abs(with_projectile - expected_own) > CE_OWN_BLUNT_TOLERANCE)
-		failures += "проход со снарядом: [with_projectile], ожидалось [expected_own] — собственный удар не взят"
+		failures += "проход со снарядом: [with_projectile], ожидалось [expected_own], собственный удар не взят"
 	if(abs(without_projectile - expected_derived) > CE_OWN_BLUNT_TOLERANCE)
-		failures += "проход без снаряда: [without_projectile], ожидалось [expected_derived] — удар не выведен"
+		failures += "проход без снаряда: [without_projectile], ожидалось [expected_derived], удар не выведен"
 	if(abs(foreign - expected_foreign) > CE_OWN_BLUNT_TOLERANCE)
-		failures += "проход с чужим уроном: [foreign], ожидалось [expected_foreign] — взят удар чужого снаряда"
+		failures += "проход с чужим уроном: [foreign], ожидалось [expected_foreign], взят удар чужого снаряда"
 	if(!kept_projectile)
 		failures += "проход: консультационный проход забрал ссылку на снаряд"
 
@@ -3974,7 +3974,7 @@
 	bullet.damage = initial(bullet.damage) / 2
 	var/half = bullet.ce_get_own_blunt_penetration()
 	if(abs(full - bullet.ce_blunt_penetration) > CE_OWN_BLUNT_TOLERANCE)
-		failures += "излёт: на полном уроне удар [full], а собственный — [bullet.ce_blunt_penetration]"
+		failures += "излёт: на полном уроне удар [full], а собственный [bullet.ce_blunt_penetration]"
 	if(abs(half - full / 2) > CE_OWN_BLUNT_TOLERANCE)
 		failures += "излёт: на половине урона удар [half], ожидалось [full / 2]"
 
@@ -3984,9 +3984,9 @@
 	var/expected = "[round(initial(pellet.ce_blunt_penetration), 0.1)] MPa impact"
 	var/line = ce_projectile_codex_line(pellet)
 	if(!findtext(line, expected))
-		failures += "кодекс картечи: нет «[expected]» в «[line]»"
+		failures += "кодекс картечи: нет \"[expected]\" в \"[line]\""
 
-/// Штатный 7mmR — пуля 5mmR со своим ударом; учебные и флешетта бьют выведенным.
+/// Штатный 7mmR: пуля 5mmR со своим ударом. Учебные и флешетта бьют выведенным.
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_rifle_rounds(list/failures)
 	var/obj/item/ammo_casing/casing = /obj/item/ammo_casing/rifle/military
 	var/standard_type = initial(casing.projectile_type)
@@ -4000,7 +4000,7 @@
 	spawned += rifle
 	for(var/var_name in list("damage", "armor_penetration", "damage_flags", "damage_type", "penetrating", "distance_falloff", "ce_ricochets_max"))
 		if(standard.vars[var_name] != rifle.vars[var_name])
-			failures += "7mmR: [var_name] штатной пули [standard.vars[var_name]], у 5mmR — [rifle.vars[var_name]]"
+			failures += "7mmR: [var_name] штатной пули [standard.vars[var_name]], у 5mmR [rifle.vars[var_name]]"
 	var/rifle_impact = ce_derive_blunt_penetration(rifle.damage, rifle.damage_flags(), rifle.armor_penetration)
 	if(isnull(standard.ce_blunt_penetration) || standard.ce_blunt_penetration <= rifle_impact)
 		failures += "7mmR: удар штатной пули [standard.ce_blunt_penetration] не тяжелее 5mmR ([rifle_impact])"
@@ -4013,14 +4013,14 @@
 
 /*
 	Боль и оглушение против брони (`agony_armor.dm`). Снаряды летят настоящим `bullet_act()`, а
-	дубинка бьёт настоящим `apply_hit_effect()`: так проверяется вся цепочка — запись доли урона
+	дубинка бьёт настоящим `apply_hit_effect()`: так проверяется вся цепочка: запись доли урона
 	проходом по слоям, правки кор кода в `on_hit()`, обёртка `bullet_act()` и оверрайд дубинки.
 
 	Боль меряется на входе в `stun_effect_act()` (`/mob/living/carbon/human/ce_unit_test`), до
-	сопротивления одежды току и множителя конечности. Ожидание — полная боль удара, умноженная на
+	сопротивления одежды току и множителя конечности. Ожидание: полная боль удара, умноженная на
 	множитель боли от доли урона, которую даёт чистый запрос `ce_get_armor_pass_share()`.
 	Остановленный удар не должен донести боли вовсе. Каждый случай бьёт ещё и с выключенным
-	выключателем: боль, которую донёс бы Bay, — проверка, что этот удар вообще причиняет боль.
+	выключателем: боль, которую донёс бы Bay, это проверка, что этот удар вообще причиняет боль.
 */
 #define CE_SHARE_STOPPED "остановлен"
 #define CE_SHARE_PARTIAL "частично"
@@ -4030,7 +4030,7 @@
 /// Оглушение, которое тест даёт снаряду и дубинке: своего у нелетального оружия почти нет.
 #define CE_TEST_STUN 3
 
-/// Человек, который копит боль и оглушение, дошедшие до `stun_effect_act()`, — до сопротивления
+/// Человек, который копит боль и оглушение, дошедшие до `stun_effect_act()`: до сопротивления
 /// одежды току и множителя конечности.
 /mob/living/carbon/human/ce_unit_test
 	var/ce_received_agony = 0
@@ -4041,7 +4041,7 @@
 	ce_received_stun += stun_amount
 	return ..()
 
-/// Beanbag, который запоминает боль и оглушение на входе в `on_hit()` — уже после брони.
+/// Beanbag, который запоминает боль и оглушение на входе в `on_hit()`: уже после брони.
 /obj/item/projectile/bullet/shotgun/beanbag/ce_unit_test
 	var/list/ce_on_hit_effects
 
@@ -4068,10 +4068,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Остановленный бронёй удар не причиняет боли и не оглушает, пробивший — меньше прямой доли урона; боль пули — в ту конечность и не отрицательная.")
+		pass("Остановленный бронёй удар не причиняет боли и не оглушает, пробивший: меньше прямой доли урона. Боль пули: в ту конечность и не отрицательная.")
 	return 1
 
-/// Цель теста: `outfit` — список аксессуаров плитоноски либо тип костюма. null — одеть не вышло.
+/// Цель теста: `outfit`: список аксессуаров плитоноски либо тип костюма. null значит, что одеть не вышло.
 /datum/unit_test/combat_extended/agony_armor/proc/make_target(outfit)
 	if(!ispath(outfit))
 		return make_human(outfit, /mob/living/carbon/human/ce_unit_test)
@@ -4092,26 +4092,26 @@
 		failures += "доля урона 0.7 даёт множитель боли [mult], ожидалось больше нуля и меньше прямой доли"
 
 /**
- * Жёсткость брони из случаев ниже. Войдсьют и грудь РИГа — жёсткая броня. Зимняя куртка СБ —
+ * Жёсткость брони из случаев ниже. Войдсьют и грудь РИГа: жёсткая броня. Зимняя куртка СБ:
  * мягкая, но с энергетической бронёй: иначе проверять, что мягкая броня лучи не останавливает,
  * было бы не на чем.
  */
 /datum/unit_test/combat_extended/agony_armor/proc/check_armor_hardness(list/failures)
 	var/datum/extension/armor/voidsuit = armor_of(/obj/item/clothing/suit/space/void)
 	if(!voidsuit?.is_hard_armor())
-		failures += "войдсьют `suit/space/void` — не жёсткая броня"
+		failures += "войдсьют `suit/space/void`: не жёсткая броня"
 	var/obj/item/rig/combat/rig = new
 	spawned += rig
 	var/datum/extension/armor/rig_chest = get_extension(rig.chest, /datum/extension/armor)
 	if(!rig_chest?.is_hard_armor())
-		failures += "грудь РИГа `rig/combat` — не жёсткая броня"
+		failures += "грудь РИГа `rig/combat`: не жёсткая броня"
 	var/datum/extension/armor/coat = armor_of(/obj/item/clothing/suit/storage/hooded/wintercoat/security)
 	if(!coat || coat.is_hard_armor() || coat.get_value("energy") <= 0)
-		failures += "зимняя куртка СБ — не мягкая броня с энергетической бронёй"
+		failures += "зимняя куртка СБ: не мягкая броня с энергетической бронёй"
 
 /datum/unit_test/combat_extended/agony_armor/proc/check_projectiles(list/failures)
-	// Кевларовые вставки и обычный скрытый жилет — мягкая броня. Лёгкая стальная пластина и скрытый
-	// тактический жилет — жёсткая с теми же числами Bay.
+	// Кевларовые вставки и обычный скрытый жилет: мягкая броня. Лёгкая стальная пластина и скрытый
+	// тактический жилет: жёсткая с теми же числами Bay.
 	var/list/light = list(/obj/item/clothing/accessory/armor_plate)
 	var/list/medium = list(/obj/item/clothing/accessory/armor_plate/medium)
 	var/list/low_profile = list(/obj/item/clothing/accessory/armor_plate/sneaky)
@@ -4162,7 +4162,7 @@
 /**
  * Выстрел настоящим `bullet_act()` по новой цели. Возвращает `list(дошедшая боль, доля урона по
  * чистому запросу, вернулись ли снаряду боль и оглушение, муть в глазах, полная боль снаряда)`,
- * null — цели нет.
+ * null: цели нет.
  */
 /datum/unit_test/combat_extended/agony_armor/proc/shoot(list/test_case, enabled)
 	var/mob/living/carbon/human/ce_unit_test/H = make_target(test_case[2])
@@ -4185,14 +4185,14 @@
 	return list(H.ce_received_agony, share, restored, H.eye_blurry, projectile.agony)
 
 /**
- * Боль после брони: `agony` — дошедшая с выключателем, `full_agony` — полная боль удара,
- * `bay_agony` — дошедшая без выключателя, `share` — доля урона по чистому запросу. Остановленный
+ * Боль после брони: `agony`: дошедшая с выключателем, `full_agony`: полная боль удара,
+ * `bay_agony`: дошедшая без выключателя, `share`: доля урона по чистому запросу. Остановленный
  * удар не доносит боли вовсе, остальные доносят полную боль, умноженную на множитель боли.
  */
 /datum/unit_test/combat_extended/agony_armor/proc/check_agony(list/failures, name, expected_share, share, agony, full_agony, bay_agony)
 	check_share(failures, name, expected_share, share)
 	if(bay_agony <= 0)
-		failures += "[name]: боль не дошла и без мода — проверять нечего"
+		failures += "[name]: боль не дошла и без мода, проверять нечего"
 		return
 	if(share <= 0)
 		if(agony != 0)
@@ -4210,12 +4210,12 @@
 	else if(share >= 1)
 		actual_share = CE_SHARE_FULL
 	if(actual_share != expected_share)
-		failures += "[name]: доля урона [share] — [actual_share], ожидалось [expected_share]"
+		failures += "[name]: доля урона [share], [actual_share], ожидалось [expected_share]"
 
 /*
 	Оглушение снаряда: оглушение, сбивание с ног и муть в глазах. Beanbag получает их от теста и
 	запоминает на входе в `on_hit()`. Там они должны быть полными, умноженными на тот же множитель,
-	что и боль, — остановленный снаряд не оглушает вовсе. Без выключателя — полные, как в Bay. Цель
+	что и боль: остановленный снаряд не оглушает вовсе. Без выключателя: полные, как в Bay. Цель
 	должна получить оглушение, только если оно дошло до `on_hit()`.
 */
 /datum/unit_test/combat_extended/agony_armor/proc/check_projectile_stun(list/failures)
@@ -4254,15 +4254,15 @@
 		var/list/passed = list("оглушение" = on_hit_effects[2], "сбивание с ног" = on_hit_effects[3], "муть в глазах" = on_hit_effects[6])
 		for(var/effect in passed)
 			if(abs(passed[effect] - expected) > CE_AGONY_TOLERANCE)
-				failures += "[name]: [effect] на входе в `on_hit()` — [passed[effect]], ожидалось [expected]"
+				failures += "[name]: [effect] на входе в `on_hit()`, [passed[effect]], ожидалось [expected]"
 		var/list/received = list("оглушение" = H.stunned, "сбивание с ног" = H.weakened, "муть в глазах" = H.eye_blurry)
 		for(var/effect in received)
 			if(!!received[effect] != (expected > 0))
-				failures += "[name]: [effect] у цели — [received[effect] || 0], ожидалось [expected > 0 ? "есть" : "нет"]"
+				failures += "[name]: [effect] у цели, [received[effect] || 0], ожидалось [expected > 0 ? "есть" : "нет"]"
 
 /*
-	Боль пули — в ту конечность, в которую она попала. Bay терял зону в `bullet/on_hit()`, и боль
-	доставалась случайной конечности; три разные зоны подряд так почти наверняка не угадать.
+	Боль пули: в ту конечность, в которую она попала. Bay терял зону в `bullet/on_hit()`, и боль
+	доставалась случайной конечности. Три разные зоны подряд так почти наверняка не угадать.
 */
 /datum/unit_test/combat_extended/agony_armor/proc/check_bullet_zone(list/failures)
 	for(var/def_zone in list(BP_L_ARM, BP_R_LEG, BP_HEAD))
@@ -4283,8 +4283,8 @@
 /*
 	Снаряд без боли не доносит отрицательной. Пистолет через light: плита снимает больше половины
 	урона, и Bay вычитал эту долю блока из нулевой боли. Долю Bay передаёт, только если попадание
-	оставило рану, поэтому снаряд — пуля, а не лазер: ожог рану не отдаёт. С выключенным
-	выключателем правило мода не работает, а исправление — работает.
+	оставило рану, поэтому снаряд это пуля, а не лазер: ожог рану не отдаёт. С выключенным
+	выключателем правило мода не работает, а исправление: работает.
 */
 /datum/unit_test/combat_extended/agony_armor/proc/check_negative_agony(list/failures)
 	for(var/enabled in list(TRUE, FALSE))
@@ -4302,8 +4302,8 @@
 
 /*
 	Дубинка бьёт настоящим `apply_hit_effect()`. Тычок урона не наносит и касается брони, удар по
-	намерению вреда проходит её как удар силой `force`. Полная боль дубинки — та, что доносит Bay:
-	при ударе он сам её половинит. Оглушения у дубинки по умолчанию нет — тест даёт его, чтобы было
+	намерению вреда проходит её как удар силой `force`. Полная боль дубинки та, что доносит Bay:
+	при ударе он сам её половинит. Оглушения у дубинки по умолчанию нет: тест даёт его, чтобы было
 	что гасить.
 */
 /datum/unit_test/combat_extended/agony_armor/proc/check_baton(list/failures)
@@ -4324,7 +4324,7 @@
 			continue
 		check_agony(failures, name, test_case[5], hit[2], hit[1], bay_hit[1], bay_hit[1])
 		if(bay_hit[3] <= 0)
-			failures += "[name]: оглушение не дошло и без мода — проверять нечего"
+			failures += "[name]: оглушение не дошло и без мода, проверять нечего"
 		var/expected_stun = bay_hit[3] * ce_get_agony_mult(hit[2])
 		if(abs(hit[3] - expected_stun) > CE_AGONY_TOLERANCE)
 			failures += "[name]: дошло оглушения [hit[3]], ожидалось [expected_stun] (без мода [bay_hit[3]])"
@@ -4333,7 +4333,7 @@
 
 /**
  * Удар дубинкой по новой цели. Возвращает `list(дошедшая боль, доля урона по чистому запросу,
- * дошедшее оглушение, вернулись ли дубинке боль и оглушение)`, null — цели нет.
+ * дошедшее оглушение, вернулись ли дубинке боль и оглушение)`, null: цели нет.
  */
 /datum/unit_test/combat_extended/agony_armor/proc/baton_hit(list/test_case, enabled)
 	var/mob/living/carbon/human/ce_unit_test/target = make_target(test_case[2])
@@ -4365,7 +4365,7 @@
 
 /*
 	Щиты через проход по слоям (`shields.dm`): покрытие зон по стойке и руке, дуга, когда щит не
-	прикрывает, проверки без урона и настоящие попадания — пули и лучи `bullet_act()`, удар
+	прикрывает, проверки без урона и настоящие попадания, пули и лучи `bullet_act()`, удар
 	`check_shields()` с `apply_damage()`, как в `resolve_item_attack()`. Щит держат в левой руке,
 	носитель смотрит на север.
 
@@ -4400,10 +4400,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Щит закрывает зоны стойки из дуги Bay; пробитый пропускает остаток, остановивший острое отдаёт тупую волну в руку мимо её брони; из стойки «укрыться» стреляет только мастер.")
+		pass("Щит закрывает зоны стойки из дуги Bay. Пробитый пропускает остаток, остановивший острое отдаёт тупую волну в руку мимо её брони. Из стойки \"укрыться\" стреляет только мастер.")
 	return 1
 
-/// Носитель щита `shield_path` в слоте `slot`, лицом на север. null — не вышло.
+/// Носитель щита `shield_path` в слоте `slot`, лицом на север. null: не вышло.
 /datum/unit_test/combat_extended/shields/proc/make_holder(shield_path, slot = slot_l_hand, list/outfit, mobtype = /mob/living/carbon/human)
 	var/mob/living/carbon/human/H = make_human(outfit, mobtype)
 	if(!H)
@@ -4449,7 +4449,7 @@
 		list("riot в левой руке, укрыться", /obj/item/shield/riot, slot_l_hand, CE_SHIELD_STANCE_COVER, list(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_HAND, BP_R_ARM, BP_R_HAND)),
 		list("riot в правой руке, целиться", /obj/item/shield/riot, slot_r_hand, CE_SHIELD_STANCE_AIM, list(BP_CHEST, BP_GROIN, BP_R_ARM, BP_R_HAND)),
 		list("buckler", /obj/item/shield/buckler, slot_l_hand, CE_SHIELD_STANCE_AIM, list(BP_CHEST, BP_L_ARM, BP_L_HAND)),
-		list("buckler со стойкой «укрыться», которой у него нет", /obj/item/shield/buckler, slot_l_hand, CE_SHIELD_STANCE_COVER, list(BP_CHEST, BP_L_ARM, BP_L_HAND)),
+		list("buckler со стойкой \"укрыться\", которой у него нет", /obj/item/shield/buckler, slot_l_hand, CE_SHIELD_STANCE_COVER, list(BP_CHEST, BP_L_ARM, BP_L_HAND)),
 		list("riot на спине", /obj/item/shield/riot, slot_back, CE_SHIELD_STANCE_COVER, list(BP_CHEST, BP_GROIN))
 	)
 	for(var/list/test_case as anything in cases)
@@ -4488,8 +4488,8 @@
 		var/obj/item/shield/shield = H.get_equipped_item(test_case[2])
 		if(!!shield.ce_faces_attack(H, null, attacker) != test_case[4])
 			failures += "[name]: [test_case[4] ? "не встречает" : "встречает"] атаку"
-	// Снаряд — по клетке выстрела, а не по стрелку, и по углу, а не по восьми направлениям:
-	// выстрел на 18° от взгляда встречен, на 72° — нет, хотя оба приходят с северо-востока.
+	// Снаряд встречается по клетке выстрела, а не по стрелку, и по углу, а не по восьми направлениям:
+	// выстрел на 18° от взгляда встречен, на 72° нет, хотя оба приходят с северо-востока.
 	var/mob/living/carbon/human/H = make_holder(/obj/item/shield/riot)
 	if(!H)
 		failures += "дуга снаряда: не удалось создать носителя"
@@ -4540,8 +4540,8 @@
 		list("обезоруживание спереди в грудь", NORTH, BP_CHEST, CE_SHIELD_STANCE_AIM, TRUE),
 		list("обезоруживание сзади в грудь", SOUTH, BP_CHEST, CE_SHIELD_STANCE_AIM, FALSE),
 		list("укол шприцем с текстом вместо зоны", NORTH, "the syringe", CE_SHIELD_STANCE_AIM, TRUE),
-		list("захват головы в стойке «целиться»", NORTH, BP_HEAD, CE_SHIELD_STANCE_AIM, FALSE),
-		list("захват головы в стойке «укрыться»", NORTH, BP_HEAD, CE_SHIELD_STANCE_COVER, TRUE)
+		list("захват головы в стойке \"целиться\"", NORTH, BP_HEAD, CE_SHIELD_STANCE_AIM, FALSE),
+		list("захват головы в стойке \"укрыться\"", NORTH, BP_HEAD, CE_SHIELD_STANCE_COVER, TRUE)
 	)
 	for(var/list/test_case as anything in cases)
 		var/name = "проверка без урона, [test_case[1]]"
@@ -4560,7 +4560,7 @@
 
 /datum/unit_test/combat_extended/shields/proc/check_bullets(list/failures)
 	var/rifle = /obj/item/projectile/bullet/rifle
-	// Пластасталевый щит останавливает винтовку, волна — в левую руку, мимо наручей.
+	// Пластасталевый щит останавливает винтовку, волна: в левую руку, мимо наручей.
 	for(var/guarded in list(FALSE, TRUE))
 		var/name = "винтовка в пластасталевый щит[guarded ? " с наручами" : ""]"
 		var/list/outfit = guarded ? list(/obj/item/clothing/accessory/arm_guards) : null
@@ -4599,7 +4599,7 @@
 		if(chest.brute_dam <= 0)
 			failures += "винтовка сзади в носителя пластасталевого щита: грудь цела"
 
-	// Пластиковый щит пули пропускает — с потерей урона, и волны нет.
+	// Пластиковый щит пули пропускает: с потерей урона, и волны нет.
 	var/mob/living/carbon/human/riot_holder = make_holder(/obj/item/shield/riot)
 	if(riot_holder)
 		var/list/walk = walk_with_shield(riot_holder, rifle, slot_l_hand, BP_L_ARM)
@@ -4616,7 +4616,7 @@
 			failures += "винтовка в riot: рука со щитом получила [arm.brute_dam]"
 
 	// Энергощит нематериален: пистолет, остановленный им, волны в руку не даёт. Без флага волна
-	// была бы — иначе проверять нечего.
+	// была бы: иначе проверять нечего.
 	var/mob/living/carbon/human/field_holder = make_holder(/obj/item/shield/energy)
 	if(field_holder)
 		var/obj/item/shield/field = field_holder.l_hand
@@ -4626,14 +4626,14 @@
 		field.ce_armor_nonphysical = TRUE
 		var/list/field_walk = walk_with_shield(field_holder, pistol, slot_l_hand, BP_L_ARM)
 		if(physical_walk[7] <= 0)
-			failures += "пистолет в энергощит: и без флага волны нет — проверять нечего"
+			failures += "пистолет в энергощит: и без флага волны нет, проверять нечего"
 		if(!field_walk[6] || field_walk[7] > 0)
 			failures += "пистолет в энергощит: проход даёт волну [field_walk[7]], остановлена [field_walk[6]]"
 		shoot(field_holder, pistol, NORTH)
 		var/obj/item/organ/external/chest = field_holder.get_organ(BP_CHEST)
 		var/obj/item/organ/external/arm = field_holder.get_organ(BP_L_ARM)
 		if(chest.brute_dam > 0 || arm.brute_dam > 0)
-			failures += "пистолет в энергощит: грудь получила [chest.brute_dam], рука со щитом — [arm.brute_dam]"
+			failures += "пистолет в энергощит: грудь получила [chest.brute_dam], рука со щитом [arm.brute_dam]"
 		var/datum/extension/armor/field_armor = get_extension(field, /datum/extension/armor)
 		if(!isnull(field_armor.ce_health))
 			failures += "пистолет в энергощит: нематериальный щит износился"
@@ -4724,14 +4724,14 @@
 		failures += "стрельба из-за щита: у тестового человека навык мастера, проверять нечего"
 		return
 	if(H.ce_shield_blocks_firing())
-		failures += "стрельба из-за щита: стойка «целиться» не даёт стрелять"
+		failures += "стрельба из-за щита: стойка \"целиться\" не даёт стрелять"
 	shield.ce_stance = CE_SHIELD_STANCE_COVER
 	if(!H.ce_shield_blocks_firing())
-		failures += "стрельба из-за щита: не мастер стреляет из стойки «укрыться»"
+		failures += "стрельба из-за щита: не мастер стреляет из стойки \"укрыться\""
 
 	ce_shield_cover_fire_skill = H.get_skill_value(SKILL_WEAPONS)
 	if(H.ce_shield_blocks_firing())
-		failures += "стрельба из-за щита: мастер не стреляет из стойки «укрыться»"
+		failures += "стрельба из-за щита: мастер не стреляет из стойки \"укрыться\""
 	H.ce_note_shot()
 	var/list/exposed = shield.ce_get_covered_zones(H)
 	if((BP_HEAD in exposed) || (BP_R_ARM in exposed) || !(BP_CHEST in exposed))
@@ -4753,10 +4753,10 @@
 	var/obj/item/shield/shield = H.l_hand
 	shield.attack_self(H)
 	if(shield.ce_stance != CE_SHIELD_STANCE_COVER)
-		failures += "стойка: использование в руке не переключает на «укрыться»"
+		failures += "стойка: использование в руке не переключает на \"укрыться\""
 	shield.attack_self(H)
 	if(shield.ce_stance != CE_SHIELD_STANCE_AIM)
-		failures += "стойка: использование в руке не переключает обратно на «целиться»"
+		failures += "стойка: использование в руке не переключает обратно на \"целиться\""
 
 	var/mob/living/carbon/human/E = make_holder(/obj/item/shield/energy)
 	if(!E)
@@ -4784,10 +4784,10 @@
 		failures += "стойка баклера: использование в руке переключает стойку, которой у него нет"
 
 /*
-	Спрайт в руке. Щит с `ce_cover_sprite_moves` в стойке «укрыться» сдвинут: лицом к зрителю
-	середина щита на середине тела и щит поднят, спиной к зрителю — нетронут. Смена стойки сразу
+	Спрайт в руке. Щит с `ce_cover_sprite_moves` в стойке "укрыться" сдвинут: лицом к зрителю
+	середина щита на середине тела и щит поднят, спиной к зрителю нетронут. Смена стойки сразу
 	перерисовывает руки: прежнего спрайта среди слоёв человека больше нет. У riot в правой руке
-	лицом на запад спрайт Bay отражён в любой стойке, у энергощита — нет. Спрайты сравниваются
+	лицом на запад спрайт Bay отражён в любой стойке, у энергощита: нет. Спрайты сравниваются
 	попиксельно: готовый `/icon` BYOND кладёт в кеш ресурсов, и по файлу его не узнать.
 */
 /datum/unit_test/combat_extended/shields/proc/check_sprite(list/failures)
@@ -4811,7 +4811,7 @@
 			if(flipped)
 				bay.Flip(EAST)
 			if(!same_sprite(icon(lowered.icon, lowered.icon_state, facing), bay))
-				failures += "[name], «целиться», [dir2text(facing)]: не [flipped ? "отражённый " : ""]спрайт Bay"
+				failures += "[name], \"целиться\", [dir2text(facing)]: не [flipped ? "отражённый " : ""]спрайт Bay"
 
 		shield.attack_self(H)
 		var/image/raised = shield.get_mob_overlay(H, slot_name)
@@ -4822,7 +4822,7 @@
 		var/bay_center = ce_get_sprite_center_x(icon(bay_file, bay_state, SOUTH))
 		var/expected_center = bay_center + round((raised_south.Width() / 2 - bay_center) * ce_shield_cover_sprite_pull, 1)
 		if(isnull(south_center) || abs(south_center - expected_center) > 0.5)
-			failures += "[name]: лицом к зрителю середина щита на [south_center] px, ожидалось [expected_center] — доля [ce_shield_cover_sprite_pull] пути к середине тела"
+			failures += "[name]: лицом к зрителю середина щита на [south_center] px, ожидалось [expected_center], доля [ce_shield_cover_sprite_pull] пути к середине тела"
 		if(abs(south_center - raised_south.Width() / 2) >= abs(bay_center - raised_south.Width() / 2))
 			failures += "[name]: лицом к зрителю щит не приблизился к середине тела"
 		if(sprite_top(raised_south) != sprite_top(icon(bay_file, bay_state, SOUTH)) + ce_shield_cover_sprite_rise)
@@ -4837,17 +4837,17 @@
 	var/obj/item/shield/energy/energy = E.r_hand
 	var/image/energy_lowered = energy.get_mob_overlay(E, slot_r_hand_str)
 	if(energy_lowered.icon != GLOB.default_onmob_icons[slot_r_hand_str])
-		failures += "спрайт энергощита в правой руке: в «целиться» не спрайт Bay — отражён или сдвинут"
+		failures += "спрайт энергощита в правой руке: в \"целиться\" не спрайт Bay, отражён или сдвинут"
 	energy.ce_stance = CE_SHIELD_STANCE_COVER
 	var/image/energy_raised = energy.get_mob_overlay(E, slot_r_hand_str)
 	if(energy_raised.icon == GLOB.default_onmob_icons[slot_r_hand_str])
-		failures += "спрайт энергощита: включённый в «укрыться» не поднят"
+		failures += "спрайт энергощита: включённый в \"укрыться\" не поднят"
 	energy.active = FALSE
 	var/image/energy_off = energy.get_mob_overlay(E, slot_r_hand_str)
 	if(energy_off.icon != GLOB.default_onmob_icons[slot_r_hand_str])
 		failures += "спрайт энергощита: выключенный рисуется поднятым"
 
-	// Щит без `ce_cover_sprite_moves` в «укрыться» не сдвигается — так у хитиновых щитов генокрада.
+	// Щит без `ce_cover_sprite_moves` в "укрыться" не сдвигается: так у хитиновых щитов генокрада.
 	var/mob/living/carbon/human/U = make_holder(/obj/item/shield/riot)
 	if(!U)
 		failures += "спрайт щита без флага: не удалось создать носителя"
@@ -4857,7 +4857,7 @@
 	unmoved.ce_stance = CE_SHIELD_STANCE_COVER
 	var/image/unmoved_overlay = unmoved.get_mob_overlay(U, slot_l_hand_str)
 	if(unmoved_overlay.icon != GLOB.default_onmob_icons[slot_l_hand_str])
-		failures += "спрайт щита без флага: в «укрыться» сдвинут"
+		failures += "спрайт щита без флага: в \"укрыться\" сдвинут"
 
 	var/mob/living/carbon/human/B = make_holder(/obj/item/shield/buckler)
 	if(!B)
@@ -4886,7 +4886,7 @@
 			return TRUE
 	return FALSE
 
-/// Верхний непрозрачный ряд спрайта, px от нижнего края. null — спрайт пуст.
+/// Верхний непрозрачный ряд спрайта, px от нижнего края. null: спрайт пуст.
 /datum/unit_test/combat_extended/shields/proc/sprite_top(icon/sprite)
 	for(var/y = sprite.Height() to 1 step -1)
 		for(var/x in 1 to sprite.Width())
@@ -4916,17 +4916,17 @@
 
 
 /*
-	Лазеры и нагрев брони (`laser_heat.dm`, `laser_coolant.dm`, `laser_scorch.dm`, блок РИГа —
+	Лазеры и нагрев брони (`laser_heat.dm`, `laser_coolant.dm`, `laser_scorch.dm`, блок РИГа:
 	`rig_armor.dm`).
 
 	Жар, остывание и ожоги считает тот же код, что и в игре, а время тест ведёт сам: между выстрелами
-	батареи зовёт остывание брони на задержку выстрела ствола, а ожоги — через `handle_fire()`, как
+	батареи зовёт остывание брони на задержку выстрела ствола, а ожоги через `handle_fire()`, как
 	тик Life. Стреляет он настоящими лучами через боевой проход, так что множитель жара и сторону
 	прожога проход берёт у снаряда.
 
-	Числа тест берёт у настроек и у самих вещей, а проверяет инварианты. Исключение — обещания плана:
-	G40E раскаляет тяжёлую сталь докрасна к третьему попаданию, торс crimson-хардсьюта — добела ровно
-	к концу батареи, EOD — позже, а пистолеты греют слабее карабина.
+	Числа тест берёт у настроек и у самих вещей, а проверяет инварианты. Исключение составляют обещания плана:
+	G40E раскаляет тяжёлую сталь докрасна к третьему попаданию, торс crimson-хардсьюта добела ровно
+	к концу батареи, EOD позже, а пистолеты греют слабее карабина.
 
 	Время полива на время теста обнулено: `do_after()` без задержки проходит сразу.
 */
@@ -4976,10 +4976,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Жёсткая броня держит луч вычитанием и греется от остановленного, остывает по расписанию, жжёт носителя подбоем и размягчается; хладагент, покрытие и прожоги работают по плану; блок убранного РИГа ведёт к деталям.")
+		pass("Жёсткая броня держит луч вычитанием и греется от остановленного, остывает по расписанию, жжёт носителя подбоем и размягчается. Хладагент, покрытие и прожоги работают по плану. Блок убранного РИГа ведёт к деталям.")
 	return 1
 
-/// Броня пластины в плитоноске человека. null — плитоноски или пластины нет.
+/// Броня пластины в плитоноске человека. null: плитоноски или пластины нет.
 /datum/unit_test/combat_extended/proc/plate_armor(mob/living/carbon/human/H)
 	var/obj/item/clothing/suit/armor/pcarrier/carrier = H?.wear_suit
 	if(!istype(carrier) || !length(carrier.accessories))
@@ -4990,7 +4990,7 @@
 /datum/unit_test/combat_extended/laser_heat/proc/suit_armor(mob/living/carbon/human/H)
 	return H?.wear_suit ? get_extension(H.wear_suit, /datum/extension/armor) : null
 
-/// Человек в развёрнутом риге `rig_type`. null — не вышло.
+/// Человек в развёрнутом риге `rig_type`. null: не вышло.
 /datum/unit_test/combat_extended/laser_heat/proc/make_rigged_human(rig_type)
 	var/mob/living/carbon/human/H = make_human()
 	if(!H)
@@ -5002,7 +5002,7 @@
 	rig.deploy(H)
 	return H.wear_suit == rig.chest ? H : null
 
-/// Человек в мягкой куртке, которая держит луч только рейтингом `laser`. null — не вышло.
+/// Человек в мягкой куртке, которая держит луч только рейтингом `laser`. null: не вышло.
 /datum/unit_test/combat_extended/laser_heat/proc/make_coated_human(laser)
 	var/mob/living/carbon/human/H = make_human()
 	if(!H)
@@ -5026,7 +5026,7 @@
 	var/datum/ce_armor_heat/heat = armor.ce_get_heat(group)
 	return heat ? heat.inner_temperature : 0
 
-/// Сколько жара хранит группа зон брони — кривая нагрева в обратную сторону.
+/// Сколько жара хранит группа зон брони: кривая нагрева в обратную сторону.
 /datum/unit_test/combat_extended/laser_heat/proc/stored_heat(datum/extension/armor/armor, group)
 	return armor.ce_get_heat_capacity(group) * armor.ce_get_temperature(group) ** (1 / ce_laser_heat_temperature_exponent)
 
@@ -5066,7 +5066,7 @@
 
 /**
  * Батарея по торсу нового рига `rig_type`: `list(ступени после каждого попадания, температура торса
- * в конце)`. null — одеть не вышло.
+ * в конце)`. null: одеть не вышло.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/fire_rig_cell(rig_type, gun_type, projectile_type)
 	var/mob/living/carbon/human/H = make_rigged_human(rig_type)
@@ -5076,7 +5076,7 @@
 	var/list/stages = fire_cell(H, BP_CHEST, gun_type, projectile_type, armor, CE_ARMOR_ZONE_TORSO)
 	return list(stages, armor.ce_get_temperature(CE_ARMOR_ZONE_TORSO))
 
-/// Один тик Life: ожоги от горячей брони через `handle_fire()`, по частям тела — `list(тег части = ожог)`.
+/// Один тик Life: ожоги от горячей брони через `handle_fire()`, по частям тела, `list(тег части = ожог)`.
 /datum/unit_test/combat_extended/laser_heat/proc/life_tick_burns(mob/living/carbon/human/H)
 	RETURN_TYPE(/list)
 	var/list/before = list()
@@ -5090,7 +5090,7 @@
 			burns[organ.organ_tag] = burn
 	return burns
 
-/// Совпадают ли ожоги `burns` с ожидаемыми `expected` — по частям тела и по числам.
+/// Совпадают ли ожоги `burns` с ожидаемыми `expected`: по частям тела и по числам.
 /datum/unit_test/combat_extended/laser_heat/proc/burns_match(list/burns, list/expected)
 	if(length(burns) != length(expected))
 		return FALSE
@@ -5130,7 +5130,7 @@
 
 /**
  * Жёсткая броня держит луч вычитанием: проходит урон сверх рейтинга минус AP, а лазерный флаг луч
- * не теряет. Жар — только от остановленной части луча, AP его срезает, множитель луча масштабирует,
+ * не теряет. Жар: только от остановленной части луча, AP его срезает, множитель луча масштабирует,
  * и снаряд доносит свой множитель до брони. Пистолеты греют слабее карабина. Мягкая броня и щиты
  * вычитанием не держат.
  */
@@ -5147,7 +5147,7 @@
 		var/expected = clamp(damage - max(0, laser - armor_pen), 0, damage)
 		var/list/walked = H.ce_walk_laser_layers(BP_CHEST, damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, armor_pen)
 		if(abs(walked[1] - expected) > CE_LASER_TOLERANCE)
-			failures += "вычитание: луч [damage] с AP [armor_pen] через рейтинг [laser] — прошло [walked[1]], ожидалось [expected]"
+			failures += "вычитание: луч [damage] с AP [armor_pen] через рейтинг [laser], прошло [walked[1]], ожидалось [expected]"
 		if(!(walked[2] & DAMAGE_FLAG_LASER))
 			failures += "вычитание: жёсткий слой снял с луча лазерный флаг"
 	if(armor.ce_heat)
@@ -5156,14 +5156,14 @@
 	var/list/stopped = armor.ce_try_burn_through(laser, 0)
 	var/list/overflowing = armor.ce_try_burn_through(laser + 30, 0)
 	if(stopped[2] <= 0 || abs(overflowing[2] - stopped[2]) > CE_LASER_TOLERANCE)
-		failures += "жар: луч [laser] даёт [stopped[2]], луч [laser + 30] — [overflowing[2]]; греть должна только остановленная часть"
+		failures += "жар: луч [laser] даёт [stopped[2]], луч [laser + 30] [overflowing[2]]. Греть должна только остановленная часть"
 	var/list/unstopped = armor.ce_try_burn_through(40, laser)
 	if(unstopped[2] != 0)
 		failures += "жар: луч, прошедший броню целиком, её греет"
 	var/list/plain = armor.ce_try_burn_through(20, 0)
 	var/list/pierced = armor.ce_try_burn_through(20, 30)
 	if(pierced[1] != 0 || abs(pierced[2] - plain[2] * (1 - 30 / ce_laser_heat_ap_divisor)) > CE_LASER_TOLERANCE)
-		failures += "жар: остановленные 20 с AP 30 дают [pierced[2]], без AP — [plain[2]]; AP должен срезать жар"
+		failures += "жар: остановленные 20 с AP 30 дают [pierced[2]], без AP [plain[2]]. AP должен срезать жар"
 	var/list/halved = armor.ce_try_burn_through(20, 0, 0.5)
 	if(abs(halved[2] - plain[2] / 2) > CE_LASER_TOLERANCE)
 		failures += "жар: множитель луча 0.5 даёт [halved[2]] вместо [plain[2] / 2]"
@@ -5180,7 +5180,7 @@
 	var/obj/item/projectile/perun = /obj/item/projectile/beam
 	var/obj/item/projectile/carbine = /obj/item/projectile/beam/midlaser
 	if(!(initial(strigoi.ce_laser_heat_mult) < initial(perun.ce_laser_heat_mult) && initial(perun.ce_laser_heat_mult) < initial(carbine.ce_laser_heat_mult)))
-		failures += "жар лучей: «Стригой» [initial(strigoi.ce_laser_heat_mult)], «Перун» [initial(perun.ce_laser_heat_mult)], G40E [initial(carbine.ce_laser_heat_mult)] — пистолеты должны греть слабее карабина"
+		failures += "жар лучей: \"Стригой\" [initial(strigoi.ce_laser_heat_mult)], \"Перун\" [initial(perun.ce_laser_heat_mult)], G40E [initial(carbine.ce_laser_heat_mult)], пистолеты должны греть слабее карабина"
 	for(var/obj/item/projectile/beam_path as anything in typesof(/obj/item/projectile/beam))
 		if(initial(beam_path.damage) > 0 && ce_is_laser_heat_attack(initial(beam_path.damage_type), initial(beam_path.damage_flags)) && initial(beam_path.ce_laser_heat_mult) <= 0)
 			failures += "жар лучей: [beam_path] не греет броню вовсе"
@@ -5194,7 +5194,7 @@
 
 /**
  * Граница Bay: луч, не пробивший мягкий слой, теряет лазерный флаг, и жёсткий слой под ним читает
- * его как `energy` — по процентной формуле и без нагрева. Без мягкого слоя тот же жёсткий слой
+ * его как `energy`: по процентной формуле и без нагрева. Без мягкого слоя тот же жёсткий слой
  * держит луч вычитанием и греется.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_bay_border(list/failures)
@@ -5227,9 +5227,9 @@
 
 /**
  * Обещания плана о кривой нагрева, настоящими стволами: батарея G40E раскаляет тяжёлую сталь
- * докрасна к третьему попаданию, торс crimson-хардсьюта — добела ровно на последнем, торс EOD к
- * концу батареи ещё не добела. Батарея «Перуна» оставляет crimson ниже белого каления, «Стригоя» —
- * холоднее, чем «Перуна».
+ * докрасна к третьему попаданию, торс crimson-хардсьюта: добела ровно на последнем, торс EOD к
+ * концу батареи ещё не добела. Батарея "Перуна" оставляет crimson ниже белого каления, "Стригоя":
+ * холоднее, чем "Перуна".
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_heat_curve(list/failures)
 	var/mob/living/carbon/human/plated = make_human(list(/obj/item/clothing/accessory/armor_plate/merc))
@@ -5239,7 +5239,7 @@
 	else
 		var/list/plate_stages = fire_cell(plated, BP_CHEST, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser, plate)
 		if(length(plate_stages) < 3 || plate_stages[3] < 2)
-			failures += "кривая нагрева: G40E по merc-пластине — ступени [jointext(plate_stages, " ")], красная не к третьему попаданию"
+			failures += "кривая нагрева: G40E по merc-пластине, ступени [jointext(plate_stages, " ")], красная не к третьему попаданию"
 
 	var/list/crimson = fire_rig_cell(/obj/item/rig/merc, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser)
 	var/list/eod = fire_rig_cell(/obj/item/rig/merc/heavy, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser)
@@ -5251,18 +5251,18 @@
 	var/list/stages = crimson[1]
 	var/shots = length(stages)
 	if(shots < 2 || stages[shots - 1] >= 4 || stages[shots] < 4)
-		failures += "кривая нагрева: G40E по crimson-хардсьюту — ступени [jointext(stages, " ")], добела не ровно к концу батареи"
+		failures += "кривая нагрева: G40E по crimson-хардсьюту, ступени [jointext(stages, " ")], добела не ровно к концу батареи"
 	stages = eod[1]
 	if(stages[length(stages)] >= 4)
-		failures += "кривая нагрева: G40E раскаляет EOD добела к концу батареи, как и crimson — ступени [jointext(stages, " ")]"
+		failures += "кривая нагрева: G40E раскаляет EOD добела к концу батареи, как и crimson, ступени [jointext(stages, " ")]"
 	stages = perun[1]
 	if(stages[length(stages)] >= 4)
-		failures += "кривая нагрева: батарея «Перуна» раскаляет crimson добела — ступени [jointext(stages, " ")]"
+		failures += "кривая нагрева: батарея \"Перуна\" раскаляет crimson добела, ступени [jointext(stages, " ")]"
 	if(strigoi[2] >= perun[2])
-		failures += "кривая нагрева: после батареи «Стригоя» crimson [strigoi[2]], «Перуна» — [perun[2]]; «Стригой» должен греть слабее"
+		failures += "кривая нагрева: после батареи \"Стригоя\" crimson [strigoi[2]], \"Перуна\" [perun[2]]. \"Стригой\" должен греть слабее"
 
 /**
- * Остывание: каждую полосу между ступенями накала броня проходит за свои секунды, в вакууме —
+ * Остывание: каждую полосу между ступенями накала броня проходит за свои секунды, в вакууме
  * медленнее. Подбой догоняет лицо тем быстрее, чем выше проводимость материала. Тёплая броня
  * остаётся на обработке, остывшая с неё снимается.
  */
@@ -5279,7 +5279,7 @@
 	if(ce_cool_temperature(1, total_seconds - 0.5) <= 0 || ce_cool_temperature(1, total_seconds) > CE_LASER_TOLERANCE)
 		failures += "расписание: с полного жара броня остывает не за [total_seconds] с"
 
-	// Вакуум — порогом давления выше давления воздуха: та же клетка с воздухом считается вакуумом.
+	// Вакуум задаётся порогом давления выше давления воздуха: та же клетка с воздухом считается вакуумом.
 	var/datum/extension/armor/in_air = armor_of(/obj/item/clothing/accessory/armor_plate/merc)
 	var/datum/extension/armor/in_vacuum = armor_of(/obj/item/clothing/accessory/armor_plate/merc)
 	var/obj/item/air_plate = in_air.holder
@@ -5297,7 +5297,7 @@
 	var/expected_air = ce_cool_temperature(0.95, 10)
 	var/expected_vacuum = ce_cool_temperature(0.95, 10 * ce_laser_vacuum_cooling_mult)
 	if(abs(in_air.ce_get_temperature() - expected_air) > CE_LASER_TOLERANCE || abs(in_vacuum.ce_get_temperature() - expected_vacuum) > CE_LASER_TOLERANCE)
-		failures += "вакуум: за 10 с на воздухе [in_air.ce_get_temperature()], в вакууме [in_vacuum.ce_get_temperature()]; ожидалось [expected_air] и [expected_vacuum]"
+		failures += "вакуум: за 10 с на воздухе [in_air.ce_get_temperature()], в вакууме [in_vacuum.ce_get_temperature()]. Ожидалось [expected_air] и [expected_vacuum]"
 
 	var/datum/extension/armor/ceramic = armor_of(/obj/item/clothing/accessory/armor_plate/tactical)
 	var/obj/item/ceramic_plate = ceramic.holder
@@ -5309,7 +5309,7 @@
 	var/steel_inner = inner_of(in_air, null)
 	var/ceramic_inner = inner_of(ceramic, null)
 	if(ceramic_inner <= 0 || steel_inner <= ceramic_inner || steel_inner > in_air.ce_get_temperature())
-		failures += "проводимость: за 2 с подбой стали [steel_inner], керамики [ceramic_inner]; сталь должна догонять лицо быстрее"
+		failures += "проводимость: за 2 с подбой стали [steel_inner], керамики [ceramic_inner]. Сталь должна догонять лицо быстрее"
 
 	set_heat(in_air, null, 0.3, 0.3)
 	if(!in_air.ce_process_heat(1))
@@ -5318,7 +5318,7 @@
 		failures += "обработка: остывшая броня осталась на обработке"
 
 /**
- * Охладитель на носителе — переносной на спине или модуль рига — остужает его броню вдвое быстрее
+ * Охладитель на носителе (переносной на спине или модуль рига) остужает его броню вдвое быстрее
  * за заряд своей батареи и ослабляет ожоги. Выключенный не делает ничего.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_coolers(list/failures)
@@ -5344,7 +5344,7 @@
 	var/list/cooled_burns = life_tick_burns(H)
 	var/expected = plain_burns[BP_CHEST] * ce_laser_cooler_burn_mult
 	if(!plain_burns[BP_CHEST] || abs(cooled_burns[BP_CHEST] - expected) > CE_LASER_TOLERANCE)
-		failures += "охладитель: грудь жжёт на [cooled_burns[BP_CHEST]], без охладителя — на [plain_burns[BP_CHEST]], ожидалось [expected]"
+		failures += "охладитель: грудь жжёт на [cooled_burns[BP_CHEST]], без охладителя на [plain_burns[BP_CHEST]], ожидалось [expected]"
 
 	var/mob/living/carbon/human/rigged = make_rigged_human(/obj/item/rig/merc)
 	var/datum/extension/armor/rig_armor = suit_armor(rigged)
@@ -5425,10 +5425,10 @@
 		failures += "ожоги: плитоноска в руках жжёт [describe_burns(burns)]"
 
 /**
- * Износ от луча — кубический: одинаковый жар изнашивает раскалённую броню во столько раз сильнее,
+ * Износ от луча кубический: одинаковый жар изнашивает раскалённую броню во столько раз сильнее,
  * во сколько куб её температуры после попадания больше. Раскалённая добела броня изнашивается от
  * пуль и клинков в `1 + ce_laser_hot_kinetic_wear` раз быстрее. Мягкая броня от луча обугливается:
- * на `ce_laser_soft_char_mult` износа от острой атаки с тем же уроном — и не греется.
+ * на `ce_laser_soft_char_mult` износа от острой атаки с тем же уроном: и не греется.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_wear(list/failures)
 	var/mob/living/carbon/human/cold_human = make_human(list(/obj/item/clothing/accessory/armor_plate/merc))
@@ -5449,7 +5449,7 @@
 	var/hot_loss = health_max - hot.ce_get_health()
 	var/expected_ratio = hot_burn[2] / cold_burn[2] * (hot.ce_get_temperature() / cold.ce_get_temperature()) ** ce_laser_wear_exponent
 	if(isnull(cold.ce_get_health()) || cold_loss <= 0 || abs(hot_loss / cold_loss - expected_ratio) > 0.01)
-		failures += "износ от луча: холодная пластина потеряла [cold_loss] HP, раскалённая — [hot_loss]; ожидалось в [expected_ratio] раз больше"
+		failures += "износ от луча: холодная пластина потеряла [cold_loss] HP, раскалённая [hot_loss]. Ожидалось в [expected_ratio] раз больше"
 
 	var/datum/extension/armor/kinetic = armor_of(/obj/item/clothing/accessory/armor_plate/merc)
 	var/list/tests = list(list(45, 0, 4, kinetic.get_armor_sharp_ballistic(), TRUE))
@@ -5461,7 +5461,7 @@
 	kinetic.ce_apply_wear(tests)
 	var/hot_kinetic = kinetic_max - kinetic.ce_get_health()
 	if(cold_kinetic <= 0 || abs(hot_kinetic / cold_kinetic - (1 + ce_laser_hot_kinetic_wear)) > CE_LASER_TOLERANCE)
-		failures += "износ от пуль: холодная пластина потеряла [cold_kinetic] HP, раскалённая добела — [hot_kinetic]; ожидалось в [1 + ce_laser_hot_kinetic_wear] раза больше"
+		failures += "износ от пуль: холодная пластина потеряла [cold_kinetic] HP, раскалённая добела [hot_kinetic]. Ожидалось в [1 + ce_laser_hot_kinetic_wear] раза больше"
 
 	var/mob/living/carbon/human/coated = make_coated_human(ARMOR_LASER_SMALL)
 	var/datum/extension/armor/coat_armor = suit_armor(coated)
@@ -5481,7 +5481,7 @@
 /**
  * Раскалённая броня теряет Sharp и Blunt на размягчение материала × квадрат температуры, а HP
  * выводятся из холодных рейтингов, даже если первый износ пришёл раскалённой. Керамика
- * размягчается меньше стали. Раскалённый добела скрытый тактический жилет — жёсткая плита на 6 мм —
+ * размягчается меньше стали. Раскалённый добела скрытый тактический жилет (жёсткая плита на 6 мм)
  * пропускает пистолетную пулю, которую холодный держит.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_softening(list/failures)
@@ -5494,11 +5494,11 @@
 		set_heat(armor, null, temperature, 0)
 		var/mult = 1 - material.heat_softening * temperature ** ce_laser_hot_kinetic_exponent
 		if(abs(armor.get_armor_sharp_ballistic() - cold_ballistic * mult) > CE_LASER_TOLERANCE || abs(armor.get_armor_sharp_melee() - cold_melee * mult) > CE_LASER_TOLERANCE || abs(armor.get_armor_blunt() - cold_blunt * mult) > CE_LASER_TOLERANCE)
-			failures += "размягчение при [temperature]: пули [armor.get_armor_sharp_ballistic()], клинки [armor.get_armor_sharp_melee()], тупое [armor.get_armor_blunt()]; ожидалось ×[mult] от [cold_ballistic], [cold_melee], [cold_blunt]"
+			failures += "размягчение при [temperature]: пули [armor.get_armor_sharp_ballistic()], клинки [armor.get_armor_sharp_melee()], тупое [armor.get_armor_blunt()]. Ожидалось ×[mult] от [cold_ballistic], [cold_melee], [cold_blunt]"
 	if(armor.ce_get_cold_sharp_ballistic() != cold_ballistic)
 		failures += "размягчение: жар поменял холодный рейтинг"
 
-	// У merc-пластины HP решает тупая ось, у скрытого тактического жилета — острая: проверяются обе.
+	// У merc-пластины HP решает тупая ось, у скрытого тактического жилета острая: проверяются обе.
 	for(var/path in list(/obj/item/clothing/accessory/armor_plate/merc, /obj/item/clothing/accessory/armor_plate/sneaky/tactical))
 		var/datum/extension/armor/cold_plate = armor_of(path)
 		var/datum/extension/armor/first_worn_hot = armor_of(path)
@@ -5522,7 +5522,7 @@
 /**
  * Абляционное покрытие забирает свою долю жара каждого попадания, пока не выгорит, и на броне
  * головы его меньше. Отражение жилета Bay сохраняет долю по остатку покрытия и холоду: холодный
- * целый жилет отражает, выгоревший — никогда.
+ * целый жилет отражает, выгоревший: никогда.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_coating(list/failures)
 	var/mob/living/carbon/human/H = make_human()
@@ -5553,7 +5553,7 @@
 	var/datum/ce_armor_heat/heat = armor.ce_get_heat(null)
 	var/expected_coating = hit[2] * material.coating_share
 	if(!heat || abs(heat.coating_spent - expected_coating) > CE_LASER_TOLERANCE || abs(stored_heat(armor, null) - (hit[2] - expected_coating)) > 0.01)
-		failures += "покрытие: из [hit[2]] жара забрало [heat?.coating_spent], броне досталось [stored_heat(armor, null)]; ожидалось [expected_coating] покрытию"
+		failures += "покрытие: из [hit[2]] жара забрало [heat?.coating_spent], броне досталось [stored_heat(armor, null)]. Ожидалось [expected_coating] покрытию"
 		return
 	var/expected_reflect = (1 - heat.coating_spent / coating_max) * (1 - heat.temperature)
 	if(abs(armor.ce_get_reflect_mult() - expected_reflect) > CE_LASER_TOLERANCE)
@@ -5581,10 +5581,10 @@
 		qdel(beam)
 
 /**
- * Хладагент. Снятую броню полив остужает насквозь, надетую — только с лица. Поливают самую горячую
- * броню, куда ни целься, кроме рта: рот — это напоить. На вреде и по холодной броне клик идёт
+ * Хладагент. Снятую броню полив остужает насквозь, надетую: только с лица. Поливают самую горячую
+ * броню, куда ни целься, кроме рта: рот это напоить. На вреде и по холодной броне клик идёт
  * дальше. Керамика трескается от полива с `ce_laser_quench_crack_stage`. Брызги остужают только лицо
- * и не чаще раза в `ce_laser_spray_interval`, хладагент — сильнее воды.
+ * и не чаще раза в `ce_laser_spray_interval`, хладагент: сильнее воды.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_coolant(list/failures)
 	var/mob/living/carbon/human/user = make_human()
@@ -5623,7 +5623,7 @@
 	loose_plate.use_tool(beaker, user)
 	var/expected = max(0, 0.9 - pour * ce_laser_coolant_cooling)
 	if(abs(loose.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || abs(inner_of(loose, null) - expected) > CE_LASER_TOLERANCE || ce_get_coolant_amount(beaker.reagents) != 100 - pour)
-		failures += "полив снятой брони: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], хладагента [ce_get_coolant_amount(beaker.reagents)]; ожидалось [expected], [expected], [100 - pour]"
+		failures += "полив снятой брони: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], хладагента [ce_get_coolant_amount(beaker.reagents)]. Ожидалось [expected], [expected], [100 - pour]"
 	if(!isnull(loose.ce_get_health()))
 		failures += "полив снятой брони: сталь треснула"
 	set_heat(loose, null, 0, 0)
@@ -5640,14 +5640,14 @@
 	H.wear_suit.use_tool(own, H)
 	var/expected_worn = 0.9 - pour * ce_laser_coolant_worn_cooling
 	if(abs(worn.ce_get_temperature() - expected_worn) > CE_LASER_TOLERANCE || inner_of(worn, null) != 0.9)
-		failures += "полив своей плитоноски: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]; ожидалось [expected_worn] и 0.9"
+		failures += "полив своей плитоноски: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]. Ожидалось [expected_worn] и 0.9"
 
 	set_heat(worn, null, 0.9, 0.9)
 	set_heat(helmet_armor, null, 0.5, 0.5)
 	user.zone_sel.selecting = BP_HEAD
 	beaker.use_before(H, user)
 	if(abs(worn.ce_get_temperature() - expected_worn) > CE_LASER_TOLERANCE || helmet_armor.ce_get_temperature() != 0.5)
-		failures += "полив другого человека, прицел в голову: пластина [worn.ce_get_temperature()], каска [helmet_armor.ce_get_temperature()]; поливать надо самую горячую броню"
+		failures += "полив другого человека, прицел в голову: пластина [worn.ce_get_temperature()], каска [helmet_armor.ce_get_temperature()]. Поливать надо самую горячую броню"
 
 	set_heat(worn, null, 0.9, 0.9)
 	H.a_intent = I_HELP
@@ -5678,8 +5678,8 @@
 	return beaker
 
 /**
- * Вода остужает броню как хладагент, но слабее на свою долю силы, — и снятую, и надетую. Из смеси
- * полив берёт сперва хладагент и не больше своих единиц на всё. Меньше полива в ёмкости — уходит
+ * Вода остужает броню как хладагент, но слабее на свою долю силы: и снятую, и надетую. Из смеси
+ * полив берёт сперва хладагент и не больше своих единиц на всё. Меньше полива в ёмкости: уходит
  * сколько есть, и остужает ровно на столько. Жидкость не из списка броню не поливает.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_water(mob/living/carbon/human/user, mob/living/carbon/human/H, datum/extension/armor/loose, datum/extension/armor/worn, list/failures)
@@ -5688,10 +5688,10 @@
 	for(var/coolant_type in ce_laser_coolant_strengths)
 		var/strength = ce_laser_coolant_strengths[coolant_type]
 		if(!ispath(coolant_type, /datum/reagent) || !isnum(strength) || strength <= 0 || strength > 1 || (!isnull(top) && strength > top))
-			failures += "сила жидкостей: [coolant_type] — [strength], после [top]; ожидались доли от сильной к слабой"
+			failures += "сила жидкостей: [coolant_type] [strength], после [top]. Ожидались доли от сильной к слабой"
 		top = strength
 	if(ce_laser_coolant_strengths[/datum/reagent/coolant] != 1 || !water || water >= 1)
-		failures += "сила жидкостей: хладагент [ce_laser_coolant_strengths[/datum/reagent/coolant]], вода [water]; ожидались 1 и меньше 1"
+		failures += "сила жидкостей: хладагент [ce_laser_coolant_strengths[/datum/reagent/coolant]], вода [water]. Ожидались 1 и меньше 1"
 		return
 	var/pour = ce_laser_coolant_pour_units
 	var/obj/item/loose_plate = loose.holder
@@ -5701,21 +5701,21 @@
 	loose_plate.use_tool(few, user)
 	var/expected = 0.9 - pour / 2 * ce_laser_coolant_cooling
 	if(expected <= 0 || abs(loose.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || abs(inner_of(loose, null) - expected) > CE_LASER_TOLERANCE || few.reagents.total_volume)
-		failures += "полив остатком хладагента: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], в ёмкости [few.reagents.total_volume]; ожидалось [expected], [expected] и 0"
+		failures += "полив остатком хладагента: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], в ёмкости [few.reagents.total_volume]. Ожидалось [expected], [expected] и 0"
 
 	var/obj/item/reagent_containers/bucket = make_beaker(user, /datum/reagent/water, 100)
 	set_heat(loose, null, 0.9, 0.9)
 	loose_plate.use_tool(bucket, user)
 	expected = 0.9 - pour * ce_laser_coolant_cooling * water
 	if(expected <= 0 || abs(loose.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || abs(inner_of(loose, null) - expected) > CE_LASER_TOLERANCE || bucket.reagents.total_volume != 100 - pour)
-		failures += "полив снятой брони водой: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], воды [bucket.reagents.total_volume]; ожидалось [expected], [expected] и [100 - pour]"
+		failures += "полив снятой брони водой: лицо [loose.ce_get_temperature()], подбой [inner_of(loose, null)], воды [bucket.reagents.total_volume]. Ожидалось [expected], [expected] и [100 - pour]"
 
 	var/obj/item/reagent_containers/own = make_beaker(H, /datum/reagent/water, 100)
 	set_heat(worn, null, 0.9, 0.9)
 	H.wear_suit.use_tool(own, H)
 	expected = 0.9 - pour * ce_laser_coolant_worn_cooling * water
 	if(abs(worn.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || inner_of(worn, null) != 0.9)
-		failures += "полив своей плитоноски водой: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]; ожидалось [expected] и 0.9"
+		failures += "полив своей плитоноски водой: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]. Ожидалось [expected] и 0.9"
 
 	var/coolant_part = pour * 0.4
 	var/obj/item/reagent_containers/mixed = make_beaker(user, /datum/reagent/water, pour * 2)
@@ -5726,19 +5726,19 @@
 	var/coolant_left = mixed.reagents.get_reagent_amount(/datum/reagent/coolant)
 	var/water_left = mixed.reagents.get_reagent_amount(/datum/reagent/water)
 	if(expected <= 0 || abs(loose.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || coolant_left || abs(water_left - (pour * 2 - (pour - coolant_part))) > CE_LASER_TOLERANCE)
-		failures += "полив смесью: лицо [loose.ce_get_temperature()], осталось хладагента [coolant_left] и воды [water_left]; ожидалось [expected], 0 и [pour * 2 - (pour - coolant_part)]"
+		failures += "полив смесью: лицо [loose.ce_get_temperature()], осталось хладагента [coolant_left] и воды [water_left]. Ожидалось [expected], 0 и [pour * 2 - (pour - coolant_part)]"
 
 	var/obj/item/reagent_containers/fuel = make_beaker(user, /datum/reagent/fuel, 100)
 	set_heat(loose, null, 0.9, 0.9)
 	if(loose.ce_try_pour_coolant(fuel, null, user, null) || loose.ce_get_temperature() != 0.9 || fuel.reagents.total_volume != 100)
-		failures += "полив топливом: лицо [loose.ce_get_temperature()], в ёмкости [fuel.reagents.total_volume]; топливо броню не остужает"
+		failures += "полив топливом: лицо [loose.ce_get_temperature()], в ёмкости [fuel.reagents.total_volume]. Топливо броню не остужает"
 	set_heat(loose, null, 0, 0)
 	set_heat(worn, null, 0, 0)
 
 /**
  * Блок управления убранного РИГа ведёт к деталям: осмотр говорит жар каждой горячей детали,
- * хладагент поливает самую горячую как снятую броню, насквозь, — и мимо модуля химикатов, который
- * забирает любую открытую ёмкость, — а брызги на блок остужают лицо деталей.
+ * хладагент поливает самую горячую как снятую броню, насквозь: и мимо модуля химикатов, который
+ * забирает любую открытую ёмкость: а брызги на блок остужают лицо деталей.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_rig_block(list/failures)
 	var/mob/living/carbon/human/user = make_human()
@@ -5757,7 +5757,7 @@
 	var/examine = jointext(rig.ce_get_examine_lines(), "\n")
 	for(var/line in list("Armor heat ([rig.chest.name], [CE_ARMOR_ZONE_ARMS]): [ce_describe_heat(0.9)].", "Armor heat ([rig.helmet.name]): [ce_describe_heat(0.5)]."))
 		if(!findtext(examine, line))
-			failures += "осмотр горячего РИГа без «[line]»: «[examine]»"
+			failures += "осмотр горячего РИГа без \"[line]\": \"[examine]\""
 
 	var/obj/item/reagent_containers/glass/beaker/large/beaker = new(user.loc)
 	spawned += beaker
@@ -5766,7 +5766,7 @@
 	rig.use_tool(beaker, user)
 	var/expected = max(0, 0.9 - ce_laser_coolant_pour_units * ce_laser_coolant_cooling)
 	if(abs(chest.ce_get_temperature(CE_ARMOR_ZONE_ARMS) - expected) > CE_LASER_TOLERANCE || abs(inner_of(chest, CE_ARMOR_ZONE_ARMS) - expected) > CE_LASER_TOLERANCE || helmet.ce_get_temperature() != 0.5)
-		failures += "полив убранного РИГа с модулем химикатов: рукава [chest.ce_get_temperature(CE_ARMOR_ZONE_ARMS)], их подбой [inner_of(chest, CE_ARMOR_ZONE_ARMS)], шлем [helmet.ce_get_temperature()]; ожидалось [expected], [expected] и 0.5"
+		failures += "полив убранного РИГа с модулем химикатов: рукава [chest.ce_get_temperature(CE_ARMOR_ZONE_ARMS)], их подбой [inner_of(chest, CE_ARMOR_ZONE_ARMS)], шлем [helmet.ce_get_temperature()]. Ожидалось [expected], [expected] и 0.5"
 
 	var/obj/item/reagent_containers/spray/sprayer = new(user.loc)
 	spawned += sprayer
@@ -5774,7 +5774,7 @@
 	sprayer.reagents.touch(rig)
 	var/expected_spray = 0.5 - ce_laser_spray_cooling
 	if(abs(helmet.ce_get_temperature() - expected_spray) > CE_LASER_TOLERANCE || inner_of(helmet, null) != 0.5)
-		failures += "брызги на блок РИГа: шлем [helmet.ce_get_temperature()], подбой [inner_of(helmet, null)]; ожидалось [expected_spray] и 0.5"
+		failures += "брызги на блок РИГа: шлем [helmet.ce_get_temperature()], подбой [inner_of(helmet, null)]. Ожидалось [expected_spray] и 0.5"
 
 /// Керамика трескается от полива с `ce_laser_quench_crack_stage` и не трескается ниже.
 /datum/unit_test/combat_extended/laser_heat/proc/check_quench_crack(obj/item/reagent_containers/beaker, mob/living/carbon/human/user, list/failures)
@@ -5794,8 +5794,8 @@
 	if(material.heat_quench_crack <= 0 || abs(ceramic.ce_get_health() - expected) > CE_LASER_TOLERANCE)
 		failures += "керамика от полива на ступени [ce_laser_quench_crack_stage]: HP [ceramic.ce_get_health()], ожидалось [expected]"
 
-/// Брызги на человека остужают лицо его брони не чаще раза в `ce_laser_spray_interval`: вода — на свою долю
-/// силы хладагента, смесь — по самой сильной жидкости.
+/// Брызги на человека остужают лицо его брони не чаще раза в `ce_laser_spray_interval`: вода на свою долю
+/// силы хладагента, смесь по самой сильной жидкости.
 /datum/unit_test/combat_extended/laser_heat/proc/check_sprays(mob/living/carbon/human/H, datum/extension/armor/worn, list/failures)
 	var/obj/item/reagent_containers/spray/sprayer = new(H.loc)
 	spawned += sprayer
@@ -5805,7 +5805,7 @@
 	sprayer.reagents.touch(H)
 	var/expected = 0.9 - ce_laser_spray_cooling
 	if(abs(worn.ce_get_temperature() - expected) > CE_LASER_TOLERANCE || inner_of(worn, null) != 0.9)
-		failures += "брызги хладагента дважды подряд: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]; ожидалось [expected] и 0.9"
+		failures += "брызги хладагента дважды подряд: лицо [worn.ce_get_temperature()], подбой [inner_of(worn, null)]. Ожидалось [expected] и 0.9"
 	worn.ce_spray_time -= ce_laser_spray_interval
 	sprayer.reagents.clear_reagents()
 	sprayer.reagents.add_reagent(/datum/reagent/water, 10)
@@ -5819,10 +5819,10 @@
 	sprayer.reagents.touch(H)
 	expected -= ce_laser_spray_cooling
 	if(abs(worn.ce_get_temperature() - expected) > CE_LASER_TOLERANCE)
-		failures += "брызги воды с хладагентом: лицо [worn.ce_get_temperature()], ожидалось [expected] — по самой сильной жидкости"
+		failures += "брызги воды с хладагентом: лицо [worn.ce_get_temperature()], ожидалось [expected], по самой сильной жидкости"
 
 /**
- * Консультационный проход — `get_blocked_ratio()` — отвечает так же, как боевой, а у жёсткой брони
+ * Консультационный проход (`get_blocked_ratio()`) отвечает так же, как боевой, а у жёсткой брони
  * и так же, как итог снаряда. Мягкая броня держит луч по формуле Bay: боевой урон с нагревом и без
  * него один и тот же.
  */
@@ -5843,7 +5843,7 @@
 			var/share = H.ce_get_percent_pass_share(BP_CHEST, damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, armor_pen)
 			var/list/result = H.modify_damage_by_armor(BP_CHEST, damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, H, armor_pen, TRUE)
 			if(abs(damage * (1 - blocked) - result[1]) > CE_LASER_TOLERANCE || abs(damage * share - result[1]) > CE_LASER_TOLERANCE)
-				failures += "проходы, [label], луч [damage] с AP [armor_pen]: консультационный пропускает [damage * (1 - blocked)], итог снаряда — [damage * share], боевой — [result[1]]"
+				failures += "проходы, [label], луч [damage] с AP [armor_pen]: консультационный пропускает [damage * (1 - blocked)], итог снаряда [damage * share], боевой [result[1]]"
 
 	var/mob/living/carbon/human/coated = make_coated_human(ARMOR_LASER_SMALL)
 	if(!coated)
@@ -5860,13 +5860,13 @@
 		var/list/bay_result = coated.modify_damage_by_armor(BP_CHEST, damage, DAMAGE_BURN, DAMAGE_FLAG_LASER, coated, armor_pen, TRUE)
 		ce_laser_heat_enabled = TRUE
 		if(abs(damage * (1 - blocked) - heated_result[1]) > CE_LASER_TOLERANCE || abs(heated_result[1] - bay_result[1]) > CE_LASER_TOLERANCE)
-			failures += "проходы, мягкая куртка, луч [damage] с AP [armor_pen]: консультационный пропускает [damage * (1 - blocked)], боевой — [heated_result[1]], по Bay — [bay_result[1]]"
+			failures += "проходы, мягкая куртка, луч [damage] с AP [armor_pen]: консультационный пропускает [damage * (1 - blocked)], боевой [heated_result[1]], по Bay [bay_result[1]]"
 	ce_armor_wear_enabled = TRUE
 
 /**
- * Свечение: пластина берёт ступень накала своей брони, плитоноска её показывает, свет — с
- * оранжевого. На носителе горячая вещь несёт слои жара, в руках — нет. Осмотр говорит, как раскалена
- * броня, кодекс — сколько луча она держит, сколько жара вмещает и сколько покрытия осталось.
+ * Свечение: пластина берёт ступень накала своей брони, плитоноска её показывает, свет с
+ * оранжевого. На носителе горячая вещь несёт слои жара, в руках: нет. Осмотр говорит, как раскалена
+ * броня, кодекс: сколько луча она держит, сколько жара вмещает и сколько покрытия осталось.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_glow(list/failures)
 	var/mob/living/carbon/human/H = make_human(list(/obj/item/clothing/accessory/armor_plate/merc))
@@ -5881,18 +5881,18 @@
 		var/temperature = stage ? edges[stage] : 0
 		set_heat(armor, null, temperature, 0)
 		if(plate.ce_heat_stage != stage || carrier.ce_glow_stage != stage)
-			failures += "свечение при [temperature]: пластина на ступени [plate.ce_heat_stage], плитоноска — [carrier.ce_glow_stage], ожидалась [stage]"
+			failures += "свечение при [temperature]: пластина на ступени [plate.ce_heat_stage], плитоноска [carrier.ce_glow_stage], ожидалась [stage]"
 		var/lit = stage && ce_laser_glow_light_range[stage] > 0
 		if(!plate.light_range != !lit)
 			failures += "свечение: на ступени [stage] свет [plate.light_range]"
 		if(!(carrier.z_flags & ZMM_MANGLE_PLANES) != !ce_glow_uses_planes(stage))
-			failures += "свечение: на ступени [stage] флаг плоскостей Z-Mimic у плитоноски — [carrier.z_flags & ZMM_MANGLE_PLANES]"
+			failures += "свечение: на ступени [stage] флаг плоскостей Z-Mimic у плитоноски [carrier.z_flags & ZMM_MANGLE_PLANES]"
 		var/list/lines = armor.ce_get_heat_lines()
 		var/description = ce_describe_heat(temperature)
 		if(description ? (length(lines) != 1 || !findtext(lines[1], description)) : length(lines))
-			failures += "осмотр при [temperature]: «[jointext(lines, " | ")]», ожидалось «[description]»"
+			failures += "осмотр при [temperature]: \"[jointext(lines, " | ")]\", ожидалось \"[description]\""
 	if(ce_describe_heat(0) || ce_describe_heat(0.01) != "hot to the touch" || ce_describe_heat(edges[2]) != "red-hot" || ce_describe_heat(1) != "white-hot")
-		failures += "осмотр: холодная «[ce_describe_heat(0)]», тёплая «[ce_describe_heat(0.01)]», красная «[ce_describe_heat(edges[2])]», добела «[ce_describe_heat(1)]»"
+		failures += "осмотр: холодная \"[ce_describe_heat(0)]\", тёплая \"[ce_describe_heat(0.01)]\", красная \"[ce_describe_heat(edges[2])]\", добела \"[ce_describe_heat(1)]\""
 
 	set_heat(armor, null, edges[2], 0)
 	carrier.get_mob_overlay(H, slot_wear_suit_str)
@@ -5903,16 +5903,16 @@
 	ce_laser_glow_tint_enabled = TRUE
 	carrier.get_mob_overlay(H, slot_l_hand_str)
 	if(tinted_layers != 2 || untinted_layers != 1 || carrier.ce_worn_heat_layers)
-		failures += "слои жара: на носителе [tinted_layers], без окраски [untinted_layers], в руках [length(carrier.ce_worn_heat_layers)]; ожидалось 2, 1 и 0"
+		failures += "слои жара: на носителе [tinted_layers], без окраски [untinted_layers], в руках [length(carrier.ce_worn_heat_layers)]. Ожидалось 2, 1 и 0"
 
 	set_heat(armor, null, 0, 0)
 	var/list/codex = armor.ce_get_laser_codex_lines()
 	if(length(codex) != 2 || !findtext(codex[1], "stops [round(armor.get_value("laser"), 0.1)] ") || !findtext(codex[2], "[round(armor.ce_get_heat_capacity(null))] heat"))
-		failures += "кодекс merc-пластины: «[jointext(codex, " | ")]»"
+		failures += "кодекс merc-пластины: \"[jointext(codex, " | ")]\""
 	var/datum/extension/armor/vest = armor_of(/obj/item/clothing/suit/armor/laserproof)
 	codex = vest.ce_get_laser_codex_lines()
 	if(length(codex) != 3 || !findtext(codex[3], "ablative coating"))
-		failures += "кодекс абляционного жилета: «[jointext(codex, " | ")]»"
+		failures += "кодекс абляционного жилета: \"[jointext(codex, " | ")]\""
 	var/datum/extension/armor/coat = armor_of(/obj/item/clothing/suit/storage/hooded/wintercoat/security, list("laser" = ARMOR_LASER_SMALL))
 	if(length(coat.ce_get_laser_codex_lines()))
 		failures += "кодекс мягкой куртки пишет строки о луче"
@@ -5923,7 +5923,7 @@
  * Горячий воздух: один на носителя, по самой горячей из вещей, которые на нём светятся, с
  * непрозрачностью её ступени, а на ступени с нулём его нет. Картинки вещей его не несут, флаг
  * плоскостей Z-Mimic вещь получает и за него, невидимку он не выдаёт. Списки ступеней тест на это
- * время ставит свои: воздух — с нулём и без одинаковых чисел, эмиссив — в ноль, чтобы флаг решал
+ * время ставит свои: воздух с нулём и без одинаковых чисел, эмиссив в ноль, чтобы флаг решал
  * только воздух.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_haze(list/failures)
@@ -5953,23 +5953,23 @@
 		var/list/hazes = get_haze_alphas(H.atom_overlay_cache)
 		var/expected = stage ? ce_laser_glow_haze_alpha[stage] : 0
 		if(expected ? (length(hazes) != 1 || hazes[1] != expected) : length(hazes))
-			failures += "горячий воздух на ступени [stage]: картинок [length(hazes)], непрозрачность «[jointext(hazes, ", ")]»; ожидалась [expected ? "одна на [expected]" : "ни одной"]"
+			failures += "горячий воздух на ступени [stage]: картинок [length(hazes)], непрозрачность \"[jointext(hazes, ", ")]\". Ожидалась [expected ? "одна на [expected]" : "ни одной"]"
 		if(!(carrier.z_flags & ZMM_MANGLE_PLANES) != !expected)
-			failures += "горячий воздух на ступени [stage]: флаг плоскостей Z-Mimic у плитоноски — [carrier.z_flags & ZMM_MANGLE_PLANES], воздух на [expected]"
+			failures += "горячий воздух на ступени [stage]: флаг плоскостей Z-Mimic у плитоноски [carrier.z_flags & ZMM_MANGLE_PLANES], воздух на [expected]"
 
-	// Горячие и каска, и пластина: воздух один и по той, что горячее, — какая бы из них это ни была.
+	// Горячие и каска, и пластина: воздух один и по той, что горячее, какая бы из них это ни была.
 	for(var/list/stages in list(list(top, top - 1), list(top - 1, top)))
 		set_heat(helmet_armor, null, edges[stages[1]], 0)
 		set_heat(armor, null, edges[stages[2]], 0)
 		H.update_icons()
 		var/list/hazes = get_haze_alphas(H.atom_overlay_cache)
 		if(length(hazes) != 1 || hazes[1] != ce_laser_glow_haze_alpha[top])
-			failures += "горячий воздух, каска на ступени [stages[1]], пластина на [stages[2]]: картинок [length(hazes)], непрозрачность «[jointext(hazes, ", ")]»; ожидалась одна на [ce_laser_glow_haze_alpha[top]]"
+			failures += "горячий воздух, каска на ступени [stages[1]], пластина на [stages[2]]: картинок [length(hazes)], непрозрачность \"[jointext(hazes, ", ")]\". Ожидалась одна на [ce_laser_glow_haze_alpha[top]]"
 
 	var/image/worn_carrier = carrier.get_mob_overlay(H, slot_wear_suit_str)
 	var/image/worn_helmet = helmet.get_mob_overlay(H, slot_head_str)
 	if(!worn_carrier || !worn_helmet || length(get_haze_alphas(worn_carrier.overlays)) || length(get_haze_alphas(worn_helmet.overlays)))
-		failures += "горячий воздух: на картинке плитоноски его [length(get_haze_alphas(worn_carrier?.overlays))], на картинке каски — [length(get_haze_alphas(worn_helmet?.overlays))]; ожидалось, что картинки вещей его не несут"
+		failures += "горячий воздух: на картинке плитоноски его [length(get_haze_alphas(worn_carrier?.overlays))], на картинке каски [length(get_haze_alphas(worn_helmet?.overlays))]. Ожидалось, что картинки вещей его не несут"
 
 	H.add_cloaking_source(src)
 	H.update_icons()
@@ -6008,7 +6008,7 @@
 	beam_hit(H, BP_CHEST, /obj/item/projectile/beam/midlaser, NORTH)
 	var/datum/ce_scorch_mark/first_mark = LAZYACCESS(plate.ce_scorch_marks, 1)
 	if(LAZYLEN(plate.ce_scorch_marks) != 1 || first_mark.visible_dir != NORTH || LAZYLEN(carrier.ce_scorch_marks))
-		failures += "прожоги: луч в спину — на пластине [LAZYLEN(plate.ce_scorch_marks)] прожогов, виден с [first_mark?.visible_dir], на плитоноске [LAZYLEN(carrier.ce_scorch_marks)]"
+		failures += "прожоги: луч в спину, на пластине [LAZYLEN(plate.ce_scorch_marks)] прожогов, виден с [first_mark?.visible_dir], на плитоноске [LAZYLEN(carrier.ce_scorch_marks)]"
 		return
 	for(var/shot in 1 to ce_laser_scorch_max + 1)
 		beam_hit(H, BP_CHEST, /obj/item/projectile/beam/midlaser)
@@ -6062,7 +6062,7 @@
 		if(copytext(state, 1, findtext(state, "_")) != "[stage]")
 			wrong += state
 	if(length(states) != ce_laser_scorch_max || length(wrong) || drawn[2] != (emissive ? length(states) : 0))
-		failures += "прожоги, [label]: нарисовано [length(states)], не на ступени [stage] — [jointext(wrong, " ")], эмиссивов [drawn[2]]"
+		failures += "прожоги, [label]: нарисовано [length(states)], не на ступени [stage] [jointext(wrong, " ")], эмиссивов [drawn[2]]"
 
 /**
  * Выключатель: лучи снова идут по формуле Bay, броня не греется, накопленный жар не жжёт и не
@@ -6078,7 +6078,7 @@
 	var/blocked = H.get_blocked_ratio(BP_CHEST, DAMAGE_BURN, DAMAGE_FLAG_LASER, 10, 40)
 	var/list/result = H.modify_damage_by_armor(BP_CHEST, 40, DAMAGE_BURN, DAMAGE_FLAG_LASER, H, 10, TRUE)
 	if(blocked >= 1 || result[1] <= 0 || armor.ce_heat)
-		failures += "выключатель: G40E через merc-пластину — держит [blocked], прошло [result[1]], нагрета [!!armor.ce_heat]; ожидалась формула Bay без нагрева"
+		failures += "выключатель: G40E через merc-пластину, держит [blocked], прошло [result[1]], нагрета [!!armor.ce_heat]. Ожидалась формула Bay без нагрева"
 
 	set_heat(armor, null, 1, 1)
 	var/list/burns = life_tick_burns(H)
@@ -6114,12 +6114,12 @@
 	влетело, на другой уровень (`touch_map_edge()`).
 
 	Время не идёт: шаг полёта делается вручную, теми же строками, что в кор `Process()`, так что
-	рикошет идёт настоящим путём — через `Move()` и `Bump()`. Шанс в полётных проверках заведомо
+	рикошет идёт настоящим путём, через `Move()` и `Bump()`. Шанс в полётных проверках заведомо
 	100% (`CE_RICOCHET_CERTAIN`), разброс выключен. Бросков в тесте нет, кроме самого разброса и
-	промаха по стрелку — их проверки от исхода броска не зависят.
+	промаха по стрелку: их проверки от исхода броска не зависят.
 */
 #define CE_RICOCHET_TOLERANCE 0.01
-/// Множитель шанса снаряда, с которым любой ненулевой шанс — 100%.
+/// Множитель шанса снаряда, с которым любой ненулевой шанс: 100%.
 #define CE_RICOCHET_CERTAIN 1000
 /// Сколько раз повторяются проверки со случайным исходом.
 #define CE_RICOCHET_TRIALS 40
@@ -6203,13 +6203,13 @@
 	projectile.ce_ricochet_chance_mult = chance_mult
 	return projectile
 
-/// Шанс поверхности: стена — по материалу, армированная — среднее геометрическое, остальное — ноль.
+/// Шанс поверхности: стена по материалу, армированная среднее геометрическое, остальное ноль.
 /datum/unit_test/combat_extended/ricochet/proc/check_surfaces(list/failures)
 	var/material/steel = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	var/material/plasteel = SSmaterials.get_material_by_name(MATERIAL_PLASTEEL)
 	var/material/glass = SSmaterials.get_material_by_name(MATERIAL_GLASS)
 	if(steel.ce_ricochet_chance <= 0 || plasteel.ce_ricochet_chance <= steel.ce_ricochet_chance || glass.ce_ricochet_chance != 0)
-		failures += "поверхности: сталь [steel.ce_ricochet_chance], пласталь [plasteel.ce_ricochet_chance], стекло [glass.ce_ricochet_chance]; ожидалось 0 < сталь < пласталь, стекло 0"
+		failures += "поверхности: сталь [steel.ce_ricochet_chance], пласталь [plasteel.ce_ricochet_chance], стекло [glass.ce_ricochet_chance]. Ожидалось 0 < сталь < пласталь, стекло 0"
 
 	var/turf/simulated/wall/plain = build_wall(1, 0)
 	var/turf/simulated/wall/reinforced = build_wall(-1, 0, /turf/simulated/wall/r_wall)
@@ -6226,12 +6226,12 @@
 	if(abs(reinforced_chance - expected_reinforced) > CE_RICOCHET_TOLERANCE)
 		failures += "поверхности: армированная стена даёт [reinforced_chance], ожидалось среднее геометрическое [expected_reinforced]"
 	if(wooden.ce_get_ricochet_surface_chance(projectile) != 0 || glazed.ce_get_ricochet_surface_chance(projectile) != 0)
-		failures += "поверхности: деревянная стена даёт [wooden.ce_get_ricochet_surface_chance(projectile)], стеклянная с арматурой — [glazed.ce_get_ricochet_surface_chance(projectile)]; ожидались нули"
+		failures += "поверхности: деревянная стена даёт [wooden.ce_get_ricochet_surface_chance(projectile)], стеклянная с арматурой [glazed.ce_get_ricochet_surface_chance(projectile)]. Ожидались нули"
 	if(center.ce_get_ricochet_surface_chance(projectile) != 0 || projectile.ce_get_ricochet_surface_chance(projectile) != 0)
 		failures += "поверхности: шанс есть у пола или у самого снаряда"
 	reset_arena()
 
-/// Двери: закрытая — по своему материалу, шлюз со стеклом — на долю, открытая и окошко раздачи — ноль.
+/// Двери: закрытая по своему материалу, шлюз со стеклом на долю, открытая и окошко раздачи ноль.
 /datum/unit_test/combat_extended/ricochet/proc/check_doors(list/failures)
 	var/material/steel = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	var/material/plasteel = SSmaterials.get_material_by_name(MATERIAL_PLASTEEL)
@@ -6255,7 +6255,7 @@
 		failures += "двери: открытый шлюз даёт [airlock.ce_get_ricochet_surface_chance(null)], ожидался 0"
 	reset_arena()
 
-/// Окна: рикошетит только армированное во всю клетку, и боросиликатное — охотнее обычного.
+/// Окна: рикошетит только армированное во всю клетку, и боросиликатное охотнее обычного.
 /datum/unit_test/combat_extended/ricochet/proc/check_windows(list/failures)
 	var/material/glass = SSmaterials.get_material_by_name(MATERIAL_GLASS)
 	var/material/boron = SSmaterials.get_material_by_name(MATERIAL_BORON_GLASS)
@@ -6275,7 +6275,7 @@
 		failures += "окна: армированное на краю клетки даёт [edge_pane.ce_get_ricochet_surface_chance(null)], ожидался 0"
 	reset_arena()
 
-/// Клетки без материала: несимулируемая стена и обшивка шаттла — как армированная стена, порода и камень культа — как их материалы, нарисованное окно и пол — ноль.
+/// Клетки без материала: несимулируемая стена и обшивка шаттла как армированная стена, порода и камень культа как их материалы, нарисованное окно и пол ноль.
 /datum/unit_test/combat_extended/ricochet/proc/check_bare_turfs(list/failures)
 	var/material/steel = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 	var/material/plasteel = SSmaterials.get_material_by_name(MATERIAL_PLASTEEL)
@@ -6303,7 +6303,7 @@
 	center.ce_ricochet_chance = 0
 	reset_arena()
 
-/// Шанс рикошета: в лоб — ноль, под 45° — шанс поверхности, дальше по тангенсу до 100%; множители и спад.
+/// Шанс рикошета: в лоб ноль, под 45° шанс поверхности, дальше по тангенсу до 100%. Множители и спад.
 /datum/unit_test/combat_extended/ricochet/proc/check_chance(list/failures)
 	var/turf/simulated/wall/wall = build_wall(1, 0)
 	var/obj/item/projectile/head_on = aim(3, 0, chance_mult = 1)
@@ -6335,7 +6335,7 @@
 	var/parallel_chance = parallel.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)
 	parallel.ce_ricochet_chance_mult = 0
 	if(parallel_chance != 100 || parallel.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X) != 0)
-		failures += "шанс: вдоль стены [parallel_chance], с нулевым множителем [parallel.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)]; ожидалось 100 и 0"
+		failures += "шанс: вдоль стены [parallel_chance], с нулевым множителем [parallel.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)]. Ожидалось 100 и 0"
 
 	diagonal.ce_ricochets = 2
 	var/decayed_chance = diagonal.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)
@@ -6345,16 +6345,16 @@
 	diagonal.ce_ricochet_chance_mult = 0.5
 	var/halved_chance = diagonal.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)
 	if(abs(halved_chance - surface * 0.5) > CE_RICOCHET_TOLERANCE)
-		failures += "шанс: с множителем снаряда 0.5 — [halved_chance], ожидалось [surface * 0.5]"
+		failures += "шанс: с множителем снаряда 0.5 [halved_chance], ожидалось [surface * 0.5]"
 	diagonal.ce_ricochet_chance_mult = 1
 	ce_ricochet_chance_scale = 0.5
 	var/scaled_chance = diagonal.ce_get_ricochet_chance(wall, CE_RICOCHET_AXIS_X)
 	if(abs(scaled_chance - surface * 0.5) > CE_RICOCHET_TOLERANCE)
-		failures += "шанс: с общим множителем 0.5 — [scaled_chance], ожидалось [surface * 0.5]"
+		failures += "шанс: с общим множителем 0.5 [scaled_chance], ожидалось [surface * 0.5]"
 	ce_ricochet_chance_scale = 1
 	reset_arena()
 
-/// Кто рикошетит: цельные пули — да, мягкие, взрывные, противоматериальные, пробивные и лучи — нет; отказы кор `Bump()`.
+/// Кто рикошетит: цельные пули да, мягкие, взрывные, противоматериальные, пробивные и лучи нет. Отказы кор `Bump()`.
 /datum/unit_test/combat_extended/ricochet/proc/check_eligibility(list/failures)
 	var/list/bouncing = list(
 		/obj/item/projectile/bullet/pistol,
@@ -6430,7 +6430,7 @@
 
 	bullet.bumped = TRUE
 	if(bullet.ce_can_ricochet(wall) || !bullet.ce_can_ricochet(wall, TRUE))
-		failures += "кто рикошетит: второе столкновение за шаг — [bullet.ce_can_ricochet(wall)], вызванное намеренно — [bullet.ce_can_ricochet(wall, TRUE)]; ожидалось наоборот"
+		failures += "кто рикошетит: второе столкновение за шаг [bullet.ce_can_ricochet(wall)], вызванное намеренно [bullet.ce_can_ricochet(wall, TRUE)]. Ожидалось наоборот"
 	bullet.bumped = FALSE
 	bullet.permutated += wall
 	if(bullet.ce_can_ricochet(wall))
@@ -6464,7 +6464,7 @@
 			reset_arena()
 			continue
 		if(projectile.ce_ricochets != 1 || projectile.loc != center || projectile.location.return_turf() != center)
-			failures += "[label]: рикошетов [projectile.ce_ricochets], пуля в своей клетке — [projectile.loc == center], точка вектора в ней — [projectile.location.return_turf() == center]"
+			failures += "[label]: рикошетов [projectile.ce_ricochets], пуля в своей клетке [projectile.loc == center], точка вектора в ней [projectile.location.return_turf() == center]"
 		if(abs(vector.offset_x - expected_x) > CE_RICOCHET_TOLERANCE || abs(vector.offset_y - expected_y) > CE_RICOCHET_TOLERANCE)
 			failures += "[label]: шаг [vector.offset_x],[vector.offset_y], ожидался [expected_x],[expected_y]"
 		if(!fly_step(projectile) || projectile.loc != spot(-shot[1], -shot[2]))
@@ -6472,7 +6472,7 @@
 		reset_arena()
 
 /**
- * Диагональный шаг в клетку (1, 1): грань решают соседние клетки, а в углу — граница клетки,
+ * Диагональный шаг в клетку (1, 1): грань решают соседние клетки, а в углу граница клетки,
  * пересечённая первой. Под 45° ровно границы пересекаются разом, поэтому в углы пуля летит под 34°
  * и 56°. Там, где стена продолжается вбок, порядок границ ничего не решает: пуля под 34° и 56°
  * проверяет это с обеих сторон.
@@ -6569,7 +6569,7 @@
 	var/share = (ce_ricochet_damage_keep_min + ce_ricochet_damage_keep_max) / 2
 	bullet.ce_ricochet(wall, CE_RICOCHET_AXIS_X, share * 100)
 	if(abs(bullet.damage - old_damage * share) > CE_RICOCHET_TOLERANCE || abs(bullet.agony - 10 * share) > CE_RICOCHET_TOLERANCE)
-		failures += "учёт: урон [bullet.damage], боль [bullet.agony]; ожидалось [old_damage * share] и [10 * share]"
+		failures += "учёт: урон [bullet.damage], боль [bullet.agony]. Ожидалось [old_damage * share] и [10 * share]"
 	if(old_penetration <= 0 || bullet.armor_penetration != old_penetration)
 		failures += "учёт: AP [bullet.armor_penetration], ожидался прежний [old_penetration]"
 	if(bullet.ce_ricochets != 1 || bullet.life_span != old_life_span - ce_ricochet_life_span_cost)
@@ -6605,7 +6605,7 @@
 		failures += "зона: [strayed] из [CE_RICOCHET_TRIALS] отскочивших пуль сменили зону прицела"
 	reset_arena()
 
-/// Стена получает урон, который пуля на ней потеряла, и след от неё. HP стены — целые, отсюда допуск в единицу.
+/// Стена получает урон, который пуля на ней потеряла, и след от неё. HP стены: целые, отсюда допуск в единицу.
 /datum/unit_test/combat_extended/ricochet/proc/check_wall_damage(list/failures)
 	var/turf/simulated/wall/struck = build_wall(1, 0)
 	var/turf/simulated/wall/grazed = build_wall(-1, 0)
@@ -6617,7 +6617,7 @@
 	var/direct_loss = struck.get_max_health() - struck.get_current_health()
 	var/bounce_loss = grazed.get_max_health() - grazed.get_current_health()
 	if(direct_loss <= 0 || abs(bounce_loss - direct_loss * (1 - share)) > 1)
-		failures += "стена: рикошет слага снял [bounce_loss] HP, прямое попадание — [direct_loss]; ожидалась доля [1 - share]"
+		failures += "стена: рикошет слага снял [bounce_loss] HP, прямое попадание [direct_loss]. Ожидалась доля [1 - share]"
 	if(!has_bullet_hole(grazed))
 		failures += "стена: рикошет не оставил следа"
 	reset_arena()
@@ -6636,7 +6636,7 @@
 		failures += "дробь: из [launched] до стены долетело [flown], после рикошета в облаке [cloud.pellets], считается [after]"
 	reset_arena()
 
-/// Предел рикошетов: пуля отскакивает раз, осколки — дважды, дальше стена их останавливает. Без шанса — ни разу.
+/// Предел рикошетов: пуля отскакивает раз, осколки дважды, дальше стена их останавливает. Без шанса: ни разу.
 /datum/unit_test/combat_extended/ricochet/proc/check_limits(list/failures)
 	build_wall(1, 0)
 	var/turf/simulated/wall/far_wall = build_wall(-1, 0)
@@ -6659,7 +6659,7 @@
 		failures += "предел: пуля с нулевым шансом отскочила"
 	reset_arena()
 
-/// Звук и искры: обычная пуля искрит, беззвучный снаряд — осколки гранаты — нет.
+/// Звук и искры: обычная пуля искрит, беззвучный снаряд (осколки гранаты) нет.
 /datum/unit_test/combat_extended/ricochet/proc/check_effects(list/failures)
 	var/turf/simulated/wall/wall = build_wall(1, 0)
 	var/obj/item/projectile/bullet = aim(2, 2)
@@ -6675,7 +6675,7 @@
 		failures += "эффекты: беззвучный осколок искрит"
 	reset_arena()
 
-/// Стрелок: от тел пуля не рикошетит, своя пуля его не задевает, а отскочившая — задевает.
+/// Стрелок: от тел пуля не рикошетит, своя пуля его не задевает, а отскочившая задевает.
 /datum/unit_test/combat_extended/ricochet/proc/check_firer(list/failures)
 	var/mob/living/carbon/human/shooter = make_human()
 	if(!shooter)
@@ -6753,7 +6753,7 @@
 	ce_ricochet_enabled = TRUE
 	reset_arena()
 
-/// Отладка: с ней столкновение со стеной идёт так же — и рикошет, и попадание.
+/// Отладка: с ней столкновение со стеной идёт так же, и рикошет, и попадание.
 /datum/unit_test/combat_extended/ricochet/proc/check_debug(list/failures)
 	build_wall(1, 0)
 	ce_ricochet_debug = TRUE
@@ -6770,36 +6770,36 @@
 
 
 /*
-	Внешние бронеэлементы мехов (`mech_plates.dm`) — обычная жёсткая броня: рейтинг, пробитие и
+	Внешние бронеэлементы мехов (`mech_plates.dm`) это обычная жёсткая броня: рейтинг, пробитие и
 	износ выводятся, своих чисел под снаряды нет.
 
 	- Вещи: у каждого бронеэлемента обычное расширение брони, жёсткое и изнашиваемое, с острым
 	  рейтингом против пуль.
 	- Готовые мехи: боевой несёт противопульный бронеэлемент на каждой из шести частей, мех
-	  наёмников — ни одного.
+	  наёмников ни одного.
 	- Встроенная броня: у каждого меха она есть, жёсткая и неизнашиваемая, лежит под
-	  бронеэлементом; пулю и луч не держит, а каждый опорный удар холодным оружием ослабляет.
-	  Внутренние бронеплиты — пустышки без брони, и корпус собран без них.
-	- Слои: бронеэлемент — внешний слой своей части и только для пуль и лучей; удар, клинок и
+	  бронеэлементом. Пулю и луч не держит, а каждый опорный удар холодным оружием ослабляет.
+	  Внутренние бронеплиты: пустышки без брони, и корпус собран без них.
+	- Слои: бронеэлемент это внешний слой своей части и только для пуль и лучей. Удар, клинок и
 	  взрыв идут мимо. Остаточный удар пробившей пули встречает тот же бронеэлемент.
 	- Числа: ни одна пуля билда не доставляет через тир выше больше, чем через тир ниже, а по меху
 	  без брони доставляет весь урон. Пистолет противопульный бронеэлемент не пробивает и почти не
 	  наносит урона, противоматериальная пуля пробивает.
 	- Сторона попадания: модификатор получает урон, прошедший броню, и забирается одним попаданием,
-	  остаточный удар его не получает; остановленное бронёй целиком так и остаётся нулём. Урон самого снаряда `bullet_act()` не
+	  остаточный удар его не получает. Остановленное бронёй целиком так и остаётся нулём. Урон самого снаряда `bullet_act()` не
 	  трогает, а попадание в спину бьёт сильнее попадания в лицо ровно на модификаторы части.
 	- Износ: попадание изнашивает бронеэлемент только той части, в которую пришлось. Попадания
 	  доводят его до порога `ce_mech_plate_break_condition`, и он отваливается прямо в проходе по
 	  слоям, ломается и больше ничего не держит.
-	- Лучи: бронеэлемент держит луч вычитанием и греется; ни один луч билда не проходит через
+	- Лучи: бронеэлемент держит луч вычитанием и греется. Ни один луч билда не проходит через
 	  ключ `laser` выше больше, чем через ключ ниже, а по меху без брони проходит целиком.
 	  Противолазерный бронеэлемент несёт абляционное покрытие и карабинный луч не пропускает.
 	  Настоящий луч свой тип урона сохраняет, а корпусу наносит физический урон. Раскалённый
 	  бронеэлемент хуже держит пули и остывает. Изнашивает его только остановленная часть луча,
 	  поэтому под непрерывным огнём он либо отваливается, либо перестаёт держать этот луч вовсе.
-	- Приборы: целостность — единица у целого бронеэлемента и ноль ровно на пороге отваливания,
+	- Приборы: целостность единица у целого бронеэлемента и ноль ровно на пороге отваливания,
 	  между ними идёт по HP и от попаданий только убывает. Строка для анализатора и меню несёт имя
-	  бронеэлемента, проценты и жар, без бронеэлемента — «none». Ступень состояния идёт за
+	  бронеэлемента, проценты и жар, без бронеэлемента: "none". Ступень состояния идёт за
 	  целостностью. Диагностика работает с питанием и блоком диагностики и сообщает пилотам о
 	  каждой ступени хуже.
 
@@ -6814,7 +6814,7 @@
 	RETURN_TYPE(/list)
 	return list(mech.head, mech.body, mech.L_arm, mech.R_arm, mech.L_leg, mech.R_leg)
 
-/// Боевой мех с бронеэлементами типа `plate_type` на всех частях, без типа — без брони.
+/// Боевой мех с бронеэлементами типа `plate_type` на всех частях, без типа: без брони.
 /datum/unit_test/combat_extended/mech_plates/proc/make_mech(plate_type)
 	var/mob/living/exosuit/premade/combat/mech = new(get_safe_turf() || locate(/turf/simulated/floor))
 	spawned += mech
@@ -6881,10 +6881,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Бронеэлементы — жёсткая изнашиваемая броня своей части, держат только пули и лучи, тиры не убывают, сторона попадания считается после брони.\n[jointext(report, "\n")]")
+		pass("Бронеэлементы: жёсткая изнашиваемая броня своей части, держат только пули и лучи, тиры не убывают, сторона попадания считается после брони.\n[jointext(report, "\n")]")
 	return 1
 
-/// `report` — рейтинги, HP и теплоёмкость каждого бронеэлемента, для таблицы в README.
+/// `report`: рейтинги, HP и теплоёмкость каждого бронеэлемента, для таблицы в README.
 /datum/unit_test/combat_extended/mech_plates/proc/check_items(list/failures, list/report)
 	for(var/plate_type in subtypesof(/obj/item/mech_external_armor))
 		var/datum/extension/armor/armor = armor_of(plate_type)
@@ -6894,7 +6894,7 @@
 		if(armor.type != /datum/extension/armor)
 			failures += "вещи: [plate_type] несёт [armor.type], а не обычное расширение брони"
 		if(!armor.is_hard_armor() || !armor.ce_can_wear())
-			failures += "вещи: [plate_type] жёсткая — [armor.is_hard_armor()], изнашивается — [armor.ce_can_wear()]"
+			failures += "вещи: [plate_type] жёсткая [armor.is_hard_armor()], изнашивается [armor.ce_can_wear()]"
 		if(armor.get_armor_sharp_ballistic() <= 0)
 			failures += "вещи: у [plate_type] острый рейтинг против пуль [armor.get_armor_sharp_ballistic()]"
 		report += "[plate_type]: [armor.get_armor_sharp_ballistic()] мм, тупой [armor.get_armor_blunt()], HP [round(armor.ce_get_health_max(), 0.1)], жара до белого каления [round(armor.ce_get_heat_capacity(), 0.1)], покрытие [round(armor.ce_get_coating_max(), 0.1)]"
@@ -6914,14 +6914,14 @@
 		if(part.installed_armor)
 			failures += "готовые мехи: на [part.name] меха наёмников [part.installed_armor.type]"
 
-/// `report` — урон опорных ударов холодным оружием через встроенную броню, для таблицы в README.
+/// `report`: урон опорных ударов холодным оружием через встроенную броню, для таблицы в README.
 /datum/unit_test/combat_extended/mech_plates/proc/check_base_armor(list/failures, list/report, mob/living/exosuit/bare, mob/living/exosuit/bulletproof)
 	var/datum/extension/armor/base = get_extension(bare, /datum/extension/armor)
 	if(!istype(base, /datum/extension/armor/mech))
 		failures += "встроенная броня: мех несёт [base ? base.type : "ничего"]"
 		return
 	if(!base.is_hard_armor() || base.ce_can_wear())
-		failures += "встроенная броня: жёсткая — [base.is_hard_armor()], изнашивается — [base.ce_can_wear()]"
+		failures += "встроенная броня: жёсткая [base.is_hard_armor()], изнашивается [base.ce_can_wear()]"
 	if(base.get_armor_sharp_ballistic() > 0 || base.get_value("laser") > 0)
 		failures += "встроенная броня держит пули ([base.get_armor_sharp_ballistic()] мм) или лучи ([base.get_value("laser")])"
 
@@ -6955,10 +6955,10 @@
 		var/plate_armor = get_extension(part.installed_armor, /datum/extension/armor)
 		var/list/armors = mech.get_armors_by_zone(zone, DAMAGE_BRUTE, DAMAGE_FLAG_BULLET | DAMAGE_FLAG_SHARP)
 		if(!length(armors) || armors[1] != plate_armor)
-			failures += "слои: в зоне [zone] первый слой для пули — не бронеэлемент своей части"
+			failures += "слои: в зоне [zone] первый слой для пули, не бронеэлемент своей части"
 		armors = mech.get_armors_by_zone(zone, DAMAGE_BURN, DAMAGE_FLAG_LASER)
 		if(!length(armors) || armors[1] != plate_armor)
-			failures += "слои: в зоне [zone] первый слой для луча — не бронеэлемент своей части"
+			failures += "слои: в зоне [zone] первый слой для луча, не бронеэлемент своей части"
 
 	var/body_armor = get_extension(mech.body.installed_armor, /datum/extension/armor)
 	var/list/other_attacks = list(
@@ -6978,7 +6978,7 @@
 	if(body_armor in mech.ce_order_armors(mech.get_armors_by_zone(BP_CHEST, DAMAGE_BRUTE, FLAGS_OFF), BP_CHEST))
 		failures += "слои: хук отдаёт бронеэлемент обычному удару"
 
-/// `report` — урон каждой пули через каждый тир, основной и остаточный, для таблицы в README.
+/// `report`: урон каждой пули через каждый тир, основной и остаточный, для таблицы в README.
 /datum/unit_test/combat_extended/mech_plates/proc/check_tiers(list/failures, list/mechs, list/report)
 	for(var/list/attack as anything in all_attacks())
 		if(!(attack[3] & DAMAGE_FLAG_BULLET))
@@ -6993,7 +6993,7 @@
 				if(abs(total - attack[2]) > 0.01)
 					failures += "числа: [attack[1]] по меху без брони доставляет [total] из [attack[2]]"
 			else if(total > previous + 0.01)
-				failures += "числа: [attack[1]] через [tier] доставляет [total], через тир ниже — [previous]"
+				failures += "числа: [attack[1]] через [tier] доставляет [total], через тир ниже [previous]"
 			previous = total
 		report += "[attack[1]] ([attack[2]], AP [attack[4]]): [jointext(line, ", ")]"
 
@@ -7018,8 +7018,8 @@
 	var/list/walk = bulletproof.ce_walk_armor_layers(BP_CHEST, shell_damage, DAMAGE_BRUTE, shell_flags, shell_pen)
 	var/passed = walk[1]
 
-	// Модификатор умножает и дополняет то, что прошло броню, а не урон до неё. Остаточный удар —
-	// вложенное попадание, и модификатора он не получает: разница без него и с ним — только от
+	// Модификатор умножает и дополняет то, что прошло броню, а не урон до неё. Остаточный удар это
+	// вложенное попадание, и модификатора он не получает: разница без него и с ним идёт только от
 	// основного урона.
 	var/plain = hit_body(bulletproof, shell_damage, shell_flags, shell_pen)
 	bulletproof.projectile_hit_modifier = list(3, 4)
@@ -7029,7 +7029,7 @@
 	if(bulletproof.projectile_hit_modifier)
 		failures += "сторона: модификатор пережил попадание"
 
-	// Остановленное бронёй целиком — ноль с любой стороны.
+	// Остановленное бронёй целиком: ноль с любой стороны.
 	var/obj/item/projectile/bullet/pistol/pistol = /obj/item/projectile/bullet/pistol
 	var/pistol_damage = initial(pistol.damage)
 	var/pistol_flags = initial(pistol.damage_flags)
@@ -7051,9 +7051,9 @@
 	var/obj/item/mech_component/body = bare.body
 	var/expected = pistol_damage * (body.back_modificator_damage - body.front_modificator_damage) + body.back_additional_damage - body.front_additional_damage
 	if(abs((back - front) - expected) > 0.01)
-		failures += "сторона: снаряд в спину нанёс [back], в лицо — [front], разница должна быть [expected]"
+		failures += "сторона: снаряд в спину нанёс [back], в лицо [front], разница должна быть [expected]"
 
-/// Сколько настоящих попаданий в грудь снимают бронеэлемент с корпуса. `limit` — не сняли.
+/// Сколько настоящих попаданий в грудь снимают бронеэлемент с корпуса. `limit`: не сняли.
 /datum/unit_test/combat_extended/mech_plates/proc/hits_to_strip(plate_type, bullet_type, limit = 500)
 	var/mob/living/exosuit/mech = make_mech(plate_type)
 	spawned += mech.body.installed_armor
@@ -7064,7 +7064,7 @@
 			return hits
 	return limit
 
-/// `report` — сколько попаданий снимают бронеэлемент, для таблицы в README.
+/// `report`: сколько попаданий снимают бронеэлемент, для таблицы в README.
 /datum/unit_test/combat_extended/mech_plates/proc/check_wear(list/failures, list/report)
 	for(var/plate_type in list(/obj/item/mech_external_armor/civil, /obj/item/mech_external_armor/buletproof))
 		var/list/line = list()
@@ -7072,7 +7072,7 @@
 			var/hits = hits_to_strip(plate_type, bullet_type)
 			if(hits >= 500)
 				failures += "износ: [bullet_type] не сняла [plate_type] за [hits] попаданий"
-			line += "[bullet_type] — [hits]"
+			line += "[bullet_type]: [hits]"
 		report += "[plate_type] отваливается: [jointext(line, ", ")]"
 
 	var/mob/living/exosuit/mech = make_mech(/obj/item/mech_external_armor/buletproof)
@@ -7105,7 +7105,7 @@
 	if(armor.ce_get_condition() >= ce_mech_plate_break_condition)
 		failures += "износ: бронеэлемент отвалился при состоянии [armor.ce_get_condition()], порог [ce_mech_plate_break_condition]"
 	if(!plate.broken || plate.owner || !isturf(plate.loc) || plate.icon_state != plate.broken_icon_state)
-		failures += "износ: отвалившийся бронеэлемент разбит — [plate.broken], лежит в [plate.loc], спрайт [plate.icon_state]"
+		failures += "износ: отвалившийся бронеэлемент разбит [plate.broken], лежит в [plate.loc], спрайт [plate.icon_state]"
 	if(armor in mech.get_armors_by_zone(BP_CHEST, DAMAGE_BRUTE, shell_flags))
 		failures += "износ: отвалившийся бронеэлемент остался слоем брони"
 	var/list/bare_walk = mech.ce_walk_armor_layers(BP_CHEST, shell_damage, DAMAGE_BRUTE, shell_flags, shell_pen)
@@ -7128,7 +7128,7 @@
 	var/health_max = armor.ce_get_health_max()
 	var/break_fraction = armor.ce_get_condition_health_fraction(ce_mech_plate_break_condition)
 
-	// Целостность: единица у целого, ноль ровно на пороге отваливания, между ними — по HP.
+	// Целостность: единица у целого, ноль ровно на пороге отваливания, между ними по HP.
 	// По `list(доля HP, целостность, ступень)`.
 	var/list/expectations = list(
 		list(1, 1, MECH_EXTERNAL_ARMOUR_INTACT),
@@ -7144,16 +7144,16 @@
 		if(abs(integrity - expected[2]) > 0.001 || condition != expected[3])
 			failures += "приборы: при доле HP [expected[1]] целостность [integrity] и ступень [condition], ожидались [expected[2]] и [expected[3]]"
 		if(!findtext(readout, plate.name) || !findtext(readout, ", [round(expected[2] * 100, 1)]%"))
-			failures += "приборы: строка при целостности [expected[2]] — «[readout]»"
+			failures += "приборы: строка при целостности [expected[2]], \"[readout]\""
 	if(abs(armor.ce_get_condition() - ce_mech_plate_break_condition) > 0.001)
 		failures += "приборы: на нуле целостности множитель рейтинга [armor.ce_get_condition()], порог отваливания [ce_mech_plate_break_condition]"
 
 	// Часть без бронеэлемента.
 	qdel(mech.head.remove_external_armour())
 	if(mech.head.get_external_armour_readout() != "External armour: none" || mech.head.get_external_armour_condition() != MECH_EXTERNAL_ARMOUR_NONE)
-		failures += "приборы: часть без бронеэлемента — «[mech.head.get_external_armour_readout()]», ступень [mech.head.get_external_armour_condition()]"
+		failures += "приборы: часть без бронеэлемента, \"[mech.head.get_external_armour_readout()]\", ступень [mech.head.get_external_armour_condition()]"
 
-	// Жар — заметкой в той же строке.
+	// Жар: заметкой в той же строке.
 	var/obj/item/mech_external_armor/arm_plate = mech.L_arm.installed_armor
 	var/datum/extension/armor/arm_armor = get_extension(arm_plate, /datum/extension/armor)
 	if(length(arm_plate.get_status_notes()))
@@ -7161,7 +7161,7 @@
 	arm_armor.ce_absorb_laser(100, mech, BP_L_ARM)
 	var/list/notes = arm_plate.get_status_notes()
 	if(!length(notes) || !findtext(mech.L_arm.get_external_armour_readout(), notes[1]))
-		failures += "приборы: жар не попал в строку — «[mech.L_arm.get_external_armour_readout()]»"
+		failures += "приборы: жар не попал в строку, \"[mech.L_arm.get_external_armour_readout()]\""
 
 	// Диагностика работает с питанием и блоком диагностики.
 	mech.power = MECH_POWER_ON
@@ -7218,7 +7218,7 @@
 			break
 	return list(stripped, beam_passed(mech, beam_type), armor.ce_get_condition())
 
-/// `report` — урон лучей через каждый бронеэлемент и число лучей до отваливания, для таблиц в README.
+/// `report`: урон лучей через каждый бронеэлемент и число лучей до отваливания, для таблиц в README.
 /datum/unit_test/combat_extended/mech_plates/proc/check_lasers(list/failures, list/report)
 	var/old_wear = ce_armor_wear_enabled
 	ce_armor_wear_enabled = FALSE
@@ -7244,7 +7244,7 @@
 				if(abs(passed - damage) > 0.01)
 					failures += "лучи: [beam_type] по меху без брони проходит на [passed] из [damage]"
 			else if(passed > previous + 0.01)
-				failures += "лучи: [beam_type] через [tier] проходит на [passed], через ключ ниже — на [previous]"
+				failures += "лучи: [beam_type] через [tier] проходит на [passed], через ключ ниже на [previous]"
 			previous = passed
 		report += "[beam_type] ([damage], AP [initial(beam.armor_penetration)]): [jointext(line, ", ")]"
 
@@ -7311,45 +7311,45 @@
 
 
 /*
-	Попиксельная стрельба, шаг 1 (README, «Попиксельная стрельба и физические промахи»): пиксель
+	Попиксельная стрельба, шаг 1 (README, "Попиксельная стрельба и физические промахи"): пиксель
 	клика, точка прицела и вектор. Шансы попадания шаг не меняет.
 
-	- Клик: параметры клика списком, как их отдаёт `ClickOn()`, и строкой дают один пиксель; без
+	- Клик: параметры клика списком, как их отдаёт `ClickOn()`, и строкой дают один пиксель. Без
 	  пикселя в параметрах и с выключенным выключателем его нет.
-	- Клетка: без клика — её середина, с кликом — щёлкнутый пиксель, хоть в самом углу.
-	- Предмет: сдвиг `pixel_x`/`pixel_y`, поворот и сдвиг `transform`, иконка больше клетки; точка
-	  не уходит дальше `ce_aim_tile_reach` от середины клетки; предмет не на карте точки не даёт.
-	- Моб: без клика — середина тела; клик в тело — сам пиксель, клик по краю спрайта — не дальше
-	  доли радиуса; сдвинутый и лежащий моб несут тело с собой; лежащий шире стоящего, мышь меньше
+	- Клетка: без клика её середина, с кликом щёлкнутый пиксель, хоть в самом углу.
+	- Предмет: сдвиг `pixel_x`/`pixel_y`, поворот и сдвиг `transform`, иконка больше клетки. Точка
+	  не уходит дальше `ce_aim_tile_reach` от середины клетки. Предмет не на карте точки не даёт.
+	- Моб: без клика середина тела. Клик в тело сам пиксель, клик по краю спрайта не дальше
+	  доли радиуса. Сдвинутый и лежащий моб несут тело с собой. Лежащий шире стоящего, мышь меньше
 	  человека, мех занимает клетку.
-	- Вектор: шаг по большей оси — клетка, направление — на точку, угол не округлён; вдоль оси и по
-	  диагонали шаг точный; отклонение поворачивает вектор; точка в начале вектора его не трогает.
+	- Вектор: шаг по большей оси клетка, направление на точку, угол не округлён. Вдоль оси и по
+	  диагонали шаг точный. Отклонение поворачивает вектор. Точка в начале вектора его не трогает.
 	- Дальность: на 30 клетках вектор в середину клетки входит в неё, а вектор в пиксель не уходит
 	  с линии прицела.
-	- Снаряд: `setup_trajectory()` нацеливает вектор в пиксель клика и поворачивает за ним эффекты;
-	  без клика вектор идёт в середину клетки без округления; клик по мобу целит в тело; повторный
-	  `setup_trajectory()` — `redirect()` — идёт как в Бэй; снаряд-трассировщик нацелен как выстрел
+	- Снаряд: `setup_trajectory()` нацеливает вектор в пиксель клика и поворачивает за ним эффекты.
+	  Без клика вектор идёт в середину клетки без округления. Клик по мобу целит в тело. Повторный
+	  `setup_trajectory()` (`redirect()`) идёт как в Бэй. Снаряд-трассировщик нацелен как выстрел
 	  без клика.
-	- Разброс: отклонение не шире дуги, занимает её всю и идёт не целыми градусами; без
+	- Разброс: отклонение не шире дуги, занимает её всю и идёт не целыми градусами. Без
 	  `dispersion` его нет.
-	- След выстрела: `p_x`/`p_y` — щёлкнутый пиксель, без клика — середина клетки, с разбросом —
+	- След выстрела: `p_x`/`p_y` щёлкнутый пиксель, без клика середина клетки, с разбросом
 	  уходит за отклонением.
-	- Выключатель возвращает вектор Бэй, отладка вектор не меняет; отладку меха читают его пилоты.
+	- Выключатель возвращает вектор Бэй, отладка вектор не меняет. Отладку меха читают его пилоты.
 	- Срез угла: стена в клетке, которую линия полёта проходит между двумя точками вектора,
-	  останавливает пулю, стена рядом с линией — нет; линия через сам угол проходит, глубже порога —
-	  нет; моба в срезанном углу пуля не задевает; стена в нём отбивает пулю рикошетом; трассировщик
-	  видит ту же линию; выключатель возвращает прыжок Бэй.
+	  останавливает пулю, стена рядом с линией нет. Линия через сам угол проходит, глубже порога:
+	  нет. Моба в срезанном углу пуля не задевает. Стена в нём отбивает пулю рикошетом. Трассировщик
+	  видит ту же линию. Выключатель возвращает прыжок Бэй.
 	- Вровень с полом: клик по пятну крови целит в клетку под ним, в щёлкнутый пиксель, и пуля в
-	  этой клетке не кончается — и без выключателя тоже; предмет и светильник в полу, который пуля
-	  разбивает, клеткой не становятся; правило смотрит на слой, плотность и запас прочности.
+	  этой клетке не кончается, и без выключателя тоже. Предмет и светильник в полу, который пуля
+	  разбивает, клеткой не становятся. Правило смотрит на слой, плотность и запас прочности.
 	- Мимо предмета: пуля по клику в предмет без запаса прочности летит дальше и `on_hit()` по нему
-	  не зовёт — и без выключателя тоже; то, что пуля ломает, предмет со своей реакцией на пулю и
-	  неплотная преграда, не пустившая пулю в свою клетку, остаются целью; выстрел себе под ноги
+	  не зовёт, и без выключателя тоже. То, что пуля ломает, предмет со своей реакцией на пулю и
+	  неплотная преграда, не пустившая пулю в свою клетку, остаются целью. Выстрел себе под ноги
 	  кончается сразу.
 
-	Всё, кроме среза угла и клика по лежащему вровень с полом, проверяется без полёта: вектор —
-	сразу после `setup_trajectory()` и своими шагами. Остальное — настоящим шагом полёта на
-	площадке, через `Move()` и `Bump()`, как рикошеты; рикошеты на это время выключены, кроме
+	Всё, кроме среза угла и клика по лежащему вровень с полом, проверяется без полёта: вектор
+	сразу после `setup_trajectory()` и своими шагами. Остальное: настоящим шагом полёта на
+	площадке, через `Move()` и `Bump()`, как рикошеты. Рикошеты на это время выключены, кроме
 	проверки самого рикошета.
 */
 #define CE_AIM_TOLERANCE 0.01
@@ -7456,7 +7456,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Пиксель клика доходит до снаряда, точка прицела считается от клетки, предмета и тела моба, вектор идёт в неё без округления угла, разброс — дробными градусами в пределах дуги, сквозь угол стены линия полёта не проходит, клик по пятну крови на полу — клик по полу под ним, а пуля по клику в предмет, которому она ничего не сделает, летит дальше.")
+		pass("Пиксель клика доходит до снаряда, точка прицела считается от клетки, предмета и тела моба, вектор идёт в неё без округления угла, разброс дробными градусами в пределах дуги, сквозь угол стены линия полёта не проходит, клик по пятну крови на полу это клик по полу под ним, а пуля по клику в предмет, которому она ничего не сделает, летит дальше.")
 	return 1
 
 /// Клетка со сдвигом от клетки стрелка.
@@ -7469,7 +7469,7 @@
 	RETURN_TYPE(/list)
 	return list(MOUSE_1 = "1", MOUSE_ICON_X = "[icon_x]", MOUSE_ICON_Y = "[icon_y]")
 
-/// Новый снаряд в клетке `start`, без неё — в клетке стрелка; ещё без вектора.
+/// Новый снаряд в клетке `start`, без неё: в клетке стрелка. Ещё без вектора.
 /datum/unit_test/combat_extended/pixel_aim/proc/make_projectile(projectile_type = /obj/item/projectile/bullet/pistol, turf/start)
 	RETURN_TYPE(/obj/item/projectile)
 	var/obj/item/projectile/projectile = new projectile_type(start || origin)
@@ -7480,8 +7480,8 @@
 	projectile.pixel_y = 0
 	return projectile
 
-/// Снаряд с вектором на `target`. `click` — пиксель клика по ней, `list(x, y)`, без него клика нет.
-/// `start` — клетка выстрела, без неё — клетка стрелка.
+/// Снаряд с вектором на `target`. `click`: пиксель клика по ней, `list(x, y)`, без него клика нет.
+/// `start`: клетка выстрела, без неё клетка стрелка.
 /datum/unit_test/combat_extended/pixel_aim/proc/aim(atom/target, list/click, dispersion = 0, turf/start)
 	RETURN_TYPE(/obj/item/projectile)
 	var/obj/item/projectile/projectile = make_projectile(/obj/item/projectile/bullet/pistol, start)
@@ -7507,7 +7507,7 @@
 	var/lengths = sqrt(vector.offset_x ** 2 + vector.offset_y ** 2) * sqrt(delta_x ** 2 + delta_y ** 2)
 	return dot > 0 && abs(cross) <= CE_AIM_DIRECTION_TOLERANCE * lengths
 
-/// Шаг вектора по большей оси — ровно клетка.
+/// Шаг вектора по большей оси: ровно клетка.
 /datum/unit_test/combat_extended/pixel_aim/proc/steps_by_tile(datum/plot_vector/vector)
 	return abs(max(abs(vector.offset_x), abs(vector.offset_y)) - world.icon_size) <= CE_AIM_TOLERANCE
 
@@ -7532,7 +7532,7 @@
 	return fly_step(projectile) && projectile.loc == projectile.location.return_turf()
 
 /// Шаг полёта с проверкой цели, как в кор `Process()`: снаряд, вошедший в клетку того, в кого
-/// целились, встречает его, даже неплотного. FALSE — снаряд на этом шаге кончился.
+/// целились, встречает его, даже неплотного. FALSE: снаряд на этом шаге кончился.
 /datum/unit_test/combat_extended/pixel_aim/proc/fly_at_target(obj/item/projectile/projectile)
 	if(!fly_step(projectile))
 		return FALSE
@@ -7541,17 +7541,17 @@
 		projectile.Bump(target, TRUE)
 	return !QDELETED(projectile)
 
-/// Параметры клика списком и строкой дают один пиксель; без пикселя и без выключателя его нет.
+/// Параметры клика списком и строкой дают один пиксель. Без пикселя и без выключателя его нет.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_click(list/failures)
 	var/obj/item/projectile/from_list = make_projectile()
 	from_list.set_clickpoint(click_at(5, 27))
 	if(from_list.p_x != 5 || from_list.p_y != 27 || from_list.ce_click_icon_x != 5 || from_list.ce_click_icon_y != 27)
-		failures += "клик списком: `p_x`/`p_y` [from_list.p_x],[from_list.p_y], пиксель клика [from_list.ce_click_icon_x],[from_list.ce_click_icon_y]; ожидалось 5,27"
+		failures += "клик списком: `p_x`/`p_y` [from_list.p_x],[from_list.p_y], пиксель клика [from_list.ce_click_icon_x],[from_list.ce_click_icon_y]. Ожидалось 5,27"
 
 	var/obj/item/projectile/from_text = make_projectile()
 	from_text.set_clickpoint("[MOUSE_1]=1;[MOUSE_ICON_X]=5;[MOUSE_ICON_Y]=27")
 	if(from_text.p_x != 5 || from_text.p_y != 27 || from_text.ce_click_icon_x != 5 || from_text.ce_click_icon_y != 27)
-		failures += "клик строкой: `p_x`/`p_y` [from_text.p_x],[from_text.p_y], пиксель клика [from_text.ce_click_icon_x],[from_text.ce_click_icon_y]; ожидалось 5,27"
+		failures += "клик строкой: `p_x`/`p_y` [from_text.p_x],[from_text.p_y], пиксель клика [from_text.ce_click_icon_x],[from_text.ce_click_icon_y]. Ожидалось 5,27"
 
 	var/obj/item/projectile/pixelless = make_projectile()
 	pixelless.set_clickpoint(list(MOUSE_1 = "1"))
@@ -7566,7 +7566,7 @@
 	if(!isnull(switched_off.ce_click_icon_x) || switched_off.p_x != initial(switched_off.p_x) || switched_off.p_y != initial(switched_off.p_y))
 		failures += "клик с выключенным выключателем: пиксель клика [switched_off.ce_click_icon_x], `p_x`/`p_y` [switched_off.p_x],[switched_off.p_y]"
 
-/// Клетка: без клика — её середина, с кликом — щёлкнутый пиксель, и в угол он не подтягивается.
+/// Клетка: без клика её середина, с кликом щёлкнутый пиксель, и в угол он не подтягивается.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_turf_point(list/failures)
 	var/turf/target = near(2, 1)
 	var/center_x = target.x * world.icon_size
@@ -7587,7 +7587,7 @@
 	thing.pixel_x = 4
 	thing.pixel_y = -3
 	expect_point(failures, "предмет со сдвигом без клика", thing.ce_get_aim_point(), center_x, center_y)
-	// Пиксель 16,16 — на полпикселя левее и ниже середины иконки.
+	// Пиксель 16,16: на полпикселя левее и ниже середины иконки.
 	expect_point(failures, "предмет со сдвигом", thing.ce_get_aim_point(16, 16), center_x + 3.5, center_y - 3.5)
 
 	thing.pixel_x = 0
@@ -7601,7 +7601,7 @@
 	thing.transform = shifted
 	expect_point(failures, "предмет со сдвигом `transform`", thing.ce_get_aim_point(16, 16), center_x + 2.5, center_y - 6.5)
 
-	// Иконка 64 на 64 стоит левым нижним углом в углу клетки и повёрнута вокруг своей середины —
+	// Иконка 64 на 64 стоит левым нижним углом в углу клетки и повёрнута вокруг своей середины:
 	// точки на 16 пикселей правее и выше середины клетки.
 	thing.icon = CE_AIM_BIG_ICON
 	thing.transform = matrix().Turn(180)
@@ -7633,14 +7633,14 @@
 	expect_point(failures, "моб без клика", H.ce_get_aim_point(), tile[1], tile[2])
 	expect_point(failures, "клик в тело", H.ce_get_aim_point(19, 14), tile[1] + 2.5, tile[2] - 2.5)
 
-	// Левый край спрайта — на 15.5 пикселя левее середины тела: дальше доли радиуса.
+	// Левый край спрайта на 15.5 пикселя левее середины тела: дальше доли радиуса.
 	var/list/edge = H.ce_get_aim_point(1, 16)
 	var/edge_x = edge[1] - tile[1]
 	var/edge_y = edge[2] - tile[2]
 	if(abs(sqrt(edge_x ** 2 + edge_y ** 2) - reach) > CE_AIM_TOLERANCE || edge_x >= 0 || abs(edge_x * 0.5 - edge_y * 15.5) > CE_AIM_TOLERANCE * world.icon_size)
 		failures += "клик по краю спрайта: точка [edge_x],[edge_y] от середины тела, ожидалась на [reach] в сторону -15.5,-0.5"
 
-	// Моб, сдвинутый со своего места, — на кровати — несёт тело с собой.
+	// Моб, сдвинутый со своего места (на кровати), несёт тело с собой.
 	H.pixel_y = H.default_pixel_y + 8
 	expect_point(failures, "сдвинутый моб без клика", H.ce_get_aim_point(), tile[1], tile[2] + 8)
 	expect_point(failures, "сдвинутый моб, клик в тело", H.ce_get_aim_point(19, 14), tile[1] + 2.5, tile[2] + 5.5)
@@ -7658,7 +7658,7 @@
 		failures += "лежащий: радиус тела [H.ce_get_hit_radius()], у стоящего [standing_radius]"
 	expect_point(failures, "лежащий без клика", H.ce_get_aim_point(), tile[1], tile[2] - 6)
 	expect_point(failures, "лежащий, клик в тело", H.ce_get_aim_point(16, 16), tile[1] - 0.5, tile[2] - 5.5)
-	// Голова — верх иконки — у лежащего смотрит на восток, на 13.5 пикселя от середины тела.
+	// Голова (верх иконки) у лежащего смотрит на восток, на 13.5 пикселя от середины тела.
 	var/list/head = H.ce_get_aim_point(16, 30)
 	var/head_x = head[1] - tile[1]
 	var/head_y = head[2] - (tile[2] - 6)
@@ -7667,7 +7667,7 @@
 	H.lying = FALSE
 	H.transform = matrix()
 
-/// Радиус тела: человек — в пределах полуклетки, мышь меньше, мех занимает клетку целиком.
+/// Радиус тела: человек в пределах полуклетки, мышь меньше, мех занимает клетку целиком.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_body_sizes(list/failures, mob/living/carbon/human/H)
 	var/human_radius = H.ce_get_hit_radius()
 	if(human_radius <= 0 || human_radius > world.icon_size / 2)
@@ -7680,10 +7680,10 @@
 
 	var/mob/living/exosuit/premade/combat/mech = new(near(-2, 3))
 	spawned += mech
-	// Дальний угол клетки — в 22.6 пикселя от её середины.
+	// Дальний угол клетки: в 22.6 пикселя от её середины.
 	if(mech.ce_get_hit_radius() < world.icon_size * 0.71)
 		failures += "размеры: радиус меха [mech.ce_get_hit_radius()] не закрывает клетку"
-	// Иконка меха шире клетки и стоит со сдвигом: его обычное место — не сдвиг тела.
+	// Иконка меха шире клетки и стоит со сдвигом: его обычное место не сдвиг тела.
 	var/list/mech_tile = mech.ce_get_tile_center()
 	expect_point(failures, "мех без клика", mech.ce_get_aim_point(), mech_tile[1], mech_tile[2])
 	// Из меха стреляют его пилоты: отладку прицела читают они.
@@ -7693,9 +7693,9 @@
 	LAZYREMOVE(mech.pilots, H)
 	var/list/own = H.ce_get_gunners()
 	if(length(unmanned) != 1 || unmanned[1] != mech || length(manned) != 1 || manned[1] != H || length(own) != 1 || own[1] != H)
-		failures += "стрелки: у меха без пилота — [length(unmanned)], с пилотом — [length(manned)] и пилот среди них — [H in manned], у человека — [length(own)]"
+		failures += "стрелки: у меха без пилота [length(unmanned)], с пилотом [length(manned)] и пилот среди них [H in manned], у человека [length(own)]"
 
-/// Вектор: шаг по большей оси — клетка, направление — на точку, угол не округлён.
+/// Вектор: шаг по большей оси клетка, направление на точку, угол не округлён.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_vector(list/failures)
 	var/start_x = 100 * world.icon_size
 	var/start_y = 100 * world.icon_size
@@ -7718,7 +7718,7 @@
 		if(vector.loc_x != start_x || vector.loc_y != start_y)
 			failures += "[label]: начало вектора сдвинулось в [vector.loc_x],[vector.loc_y]"
 
-	// Угол на точку 100,37 — 20.3°: до градуса он не округляется.
+	// Угол на точку 100,37 равен 20.3°: до градуса он не округляется.
 	var/datum/plot_vector/fine = new
 	fine.loc_x = start_x
 	fine.loc_y = start_y
@@ -7757,7 +7757,7 @@
 
 /**
  * На 30 клетках вектор в середину клетки входит в неё. Клетки подобраны так, что с углом,
- * округлённым до градуса, — 28.07° стали бы 29° — вектор вошёл бы в соседнюю. Вектор в пиксель
+ * округлённым до градуса (28.07° стали бы 29°) вектор вошёл бы в соседнюю. Вектор в пиксель
  * клетки с линии прицела не уходит.
  */
 /datum/unit_test/combat_extended/pixel_aim/proc/check_long_range(list/failures)
@@ -7790,11 +7790,11 @@
 	if(off_line > 0.5)
 		failures += "дальность: через [steps] шагов вектор в пиксель ушёл с линии прицела на [off_line] пикселя"
 
-/// Снаряд: `setup_trajectory()` нацеливает вектор, повторный вызов идёт как в Бэй, трассировщик —
+/// Снаряд: `setup_trajectory()` нацеливает вектор, повторный вызов идёт как в Бэй, трассировщик
 /// как выстрел без клика.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_projectile(list/failures, mob/living/carbon/human/H)
 	var/turf/target = near(2, 1)
-	// Пиксель 30,3 — на 13.5 правее и на 13.5 ниже середины клетки.
+	// Пиксель 30,3: на 13.5 правее и на 13.5 ниже середины клетки.
 	var/obj/item/projectile/clicked = aim(target, list(30, 3))
 	var/datum/plot_vector/vector = clicked.trajectory
 	if(!points_along(vector, 2 * world.icon_size + 13.5, world.icon_size - 13.5) || !steps_by_tile(vector))
@@ -7802,7 +7802,7 @@
 	if(!effects_follow(clicked))
 		failures += "снаряд: эффекты не повёрнуты за вектором"
 
-	// Без клика — в середину клетки, и без округления угла: 26.57°, а не 27°.
+	// Без клика в середину клетки, и без округления угла: 26.57°, а не 27°.
 	var/obj/item/projectile/centered = aim(target)
 	if(centered.trajectory.offset_x != world.icon_size || centered.trajectory.offset_y != world.icon_size / 2)
 		failures += "снаряд без клика: шаг вектора [centered.trajectory.offset_x],[centered.trajectory.offset_y], ожидался [world.icon_size],[world.icon_size / 2]"
@@ -7836,7 +7836,7 @@
 	var/widest = 0
 	var/fractional = FALSE
 	for(var/trial in 1 to CE_AIM_TRIALS)
-		// Цель строго на востоке: угол вектора — само отклонение.
+		// Цель строго на востоке: угол вектора это само отклонение.
 		var/obj/item/projectile/projectile = aim(target, null, 1)
 		var/deviation = projectile.trajectory.angle
 		widest = max(widest, abs(deviation))
@@ -7847,11 +7847,11 @@
 			break
 	if(widest > half_arc + CE_AIM_TOLERANCE)
 		failures += "разброс: отклонение [widest]° шире половины дуги [half_arc]°"
-	// Сорок бросков, уместившихся в половину своей половины дуги, — шанс 2 в минус сороковой.
+	// Сорок бросков, уместившихся в половину своей половины дуги: шанс 2 в минус сороковой.
 	if(widest < half_arc / 2)
-		failures += "разброс: наибольшее из [CE_AIM_TRIALS] отклонений — [widest]°, дуга [half_arc * 2]° не занята"
+		failures += "разброс: наибольшее из [CE_AIM_TRIALS] отклонений [widest]°, дуга [half_arc * 2]° не занята"
 	if(!fractional)
-		failures += "разброс: все [CE_AIM_TRIALS] отклонений — целые градусы"
+		failures += "разброс: все [CE_AIM_TRIALS] отклонений целые градусы"
 
 	widest = 0
 	for(var/trial in 1 to CE_AIM_TRIALS)
@@ -7864,7 +7864,7 @@
 	if(steady.trajectory.offset_x != world.icon_size || steady.trajectory.offset_y != 0)
 		failures += "разброс: без `dispersion` шаг вектора [steady.trajectory.offset_x],[steady.trajectory.offset_y]"
 
-/// След выстрела: `p_x`/`p_y` — пиксель точки прицела, без клика — середина, с разбросом — по линии.
+/// След выстрела: `p_x`/`p_y` пиксель точки прицела, без клика середина, с разбросом по линии.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_clickpoint(list/failures, mob/living/carbon/human/H)
 	var/turf/target = near(2, 1)
 	var/obj/item/projectile/clicked = aim(target, list(30, 3))
@@ -7874,7 +7874,7 @@
 	if(centered.p_x != initial(centered.p_x) || centered.p_y != initial(centered.p_y))
 		failures += "след без клика: `p_x`/`p_y` [centered.p_x],[centered.p_y], ожидалась середина клетки"
 
-	// Клик по краю спрайта моба: след — там, куда выстрел нацелен, а не где щёлкнули.
+	// Клик по краю спрайта моба: след там, куда выстрел нацелен, а не где щёлкнули.
 	H.forceMove(near(-2, 1))
 	var/list/tile = H.ce_get_tile_center()
 	var/list/body_point = H.ce_get_aim_point(1, 16)
@@ -7903,14 +7903,14 @@
 	if(!moved)
 		failures += "след с разбросом: все [CE_AIM_TRIALS] выстрелов легли в пиксель клика"
 
-/// Выключатель возвращает вектор Бэй: пиксель клика теряется, угол — целый градус.
+/// Выключатель возвращает вектор Бэй: пиксель клика теряется, угол целый градус.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_switch(list/failures)
 	ce_pixel_aim_enabled = FALSE
 	var/obj/item/projectile/bay = aim(near(2, 1), list(30, 3))
 	ce_pixel_aim_enabled = TRUE
 	// 26.57° Бэй округляет до 27°.
 	if(abs(bay.trajectory.angle - 27) > CE_AIM_TOLERANCE || abs(bay.trajectory.offset_y - tan(27) * world.icon_size) > CE_AIM_TOLERANCE)
-		failures += "выключатель: угол вектора [bay.trajectory.angle], шаг [bay.trajectory.offset_x],[bay.trajectory.offset_y]; ожидались 27° Бэй"
+		failures += "выключатель: угол вектора [bay.trajectory.angle], шаг [bay.trajectory.offset_x],[bay.trajectory.offset_y]. Ожидались 27° Бэй"
 	if(bay.p_x != initial(bay.p_x) || bay.p_y != initial(bay.p_y))
 		failures += "выключатель: `p_x`/`p_y` [bay.p_x],[bay.p_y], ожидалась середина клетки"
 
@@ -7927,9 +7927,9 @@
 		failures += "отладка: шаг вектора [projectile.trajectory.offset_x],[projectile.trajectory.offset_y], `p_x`/`p_y` [projectile.p_x],[projectile.p_y]"
 
 /**
- * Стена в клетке, которую линия полёта проходит, останавливает пулю, и попадание приходится в неё;
- * стена в соседней клетке, которую линия не задевает, — нет. Линия в цель 2,1 идёт через 1,0 и 1,1:
- * в один из них вектор входит своей точкой, угол другого срезает на диагональном шаге.
+ * Стена в клетке, которую линия полёта проходит, останавливает пулю, и попадание приходится в неё.
+ * Стена в соседней клетке, которую линия не задевает: нет. Линия в цель 2,1 идёт через 1,0 и 1,1:
+ * В один из них вектор входит своей точкой, угол другого срезает на диагональном шаге.
  */
 /datum/unit_test/combat_extended/pixel_aim/proc/check_corner_walls(list/failures)
 	// list(цель x, цель y, клетки на линии, клетки рядом с линией)
@@ -7949,7 +7949,7 @@
 			if(fly_step(projectile) && fly_step(projectile))
 				failures += "[label]: пуля прошла стену и стоит в [projectile.x - center.x],[projectile.y - center.y]"
 			else if(!has_bullet_hole(wall) || projectile.location?.return_turf() != wall)
-				failures += "[label]: пуля кончилась, след на стене — [has_bullet_hole(wall)], попадание в клетке стены — [projectile.location?.return_turf() == wall]"
+				failures += "[label]: пуля кончилась, след на стене [has_bullet_hole(wall)], попадание в клетке стены [projectile.location?.return_turf() == wall]"
 			reset_arena()
 		for(var/list/beside in shot[4])
 			var/label = "срез угла, выстрел в [shot[1]],[shot[2]], стена в стороне в [beside[1]],[beside[2]]"
@@ -7962,9 +7962,9 @@
 			reset_arena()
 
 /**
- * Клик по тому, что лежит вровень с полом, — клик по полу под ним: целью снаряда становится клетка,
+ * Клик по тому, что лежит вровень с полом, это клик по полу под ним: целью снаряда становится клетка,
  * точка прицела не подтягивается, и в этой клетке пуля не кончается. Предмет на полу и то, что пуля
- * ломает, клеткой не становятся; что с ними делает пуля — в `check_fly_past()`.
+ * ломает, клеткой не становятся. Что с ними делает пуля: в `check_fly_past()`.
  */
 /datum/unit_test/combat_extended/pixel_aim/proc/check_floor_target(list/failures)
 	var/turf/place = spot(1, 0)
@@ -7979,7 +7979,7 @@
 	if(!blood.ce_is_flush_with_floor())
 		failures += "вровень с полом: пятно крови не считается лежащим вровень с полом"
 	if(thing.ce_is_flush_with_floor() || lamp.ce_is_flush_with_floor() || place.ce_is_flush_with_floor())
-		failures += "вровень с полом: предмет — [thing.ce_is_flush_with_floor()], светильник в полу с запасом прочности — [lamp.ce_is_flush_with_floor()], клетка — [place.ce_is_flush_with_floor()]"
+		failures += "вровень с полом: предмет [thing.ce_is_flush_with_floor()], светильник в полу с запасом прочности [lamp.ce_is_flush_with_floor()], клетка [place.ce_is_flush_with_floor()]"
 	// Правило смотрит на слой и плотность, а не на тип.
 	thing.layer = MOUSETRAP_LAYER
 	var/low_thing = thing.ce_is_flush_with_floor()
@@ -7988,9 +7988,9 @@
 	var/dense_blood = blood.ce_is_flush_with_floor()
 	blood.set_density(FALSE)
 	if(!low_thing || dense_blood)
-		failures += "вровень с полом: предмет на слое мышеловки — [low_thing], плотное пятно — [dense_blood]"
+		failures += "вровень с полом: предмет на слое мышеловки [low_thing], плотное пятно [dense_blood]"
 
-	// Пиксель 1,1 пятна, сдвинутого на 4 пикселя вправо, — в 11.5 пикселя левее и в 15.5 ниже середины
+	// Пиксель 1,1 пятна, сдвинутого на 4 пикселя вправо, лежит в 11.5 пикселя левее и в 15.5 ниже середины
 	// клетки: дальше предела клика по предмету и не там, где пиксель 1,1 самой клетки.
 	blood.pixel_x = 4
 	var/obj/item/projectile/at_blood = aim(blood, list(1, 1), 0, center)
@@ -7998,32 +7998,32 @@
 	if(at_blood.original != place)
 		failures += "вровень с полом: клик по пятну крови целит в [at_blood.original], а не в клетку под ним"
 	if(!points_along(at_blood.trajectory, world.icon_size - 11.5, -15.5) || at_blood.p_x != 5 || at_blood.p_y != 1)
-		failures += "вровень с полом: клик по углу сдвинутого пятна — шаг вектора [at_blood.trajectory.offset_x],[at_blood.trajectory.offset_y], `p_x`/`p_y` [at_blood.p_x],[at_blood.p_y]; ожидался щёлкнутый пиксель пятна, без подтягивания к середине клетки"
+		failures += "вровень с полом: клик по углу сдвинутого пятна, шаг вектора [at_blood.trajectory.offset_x],[at_blood.trajectory.offset_y], `p_x`/`p_y` [at_blood.p_x],[at_blood.p_y]. Ожидался щёлкнутый пиксель пятна, без подтягивания к середине клетки"
 	var/obj/item/projectile/at_thing = aim(thing, list(16, 16), 0, center)
 	var/obj/item/projectile/at_lamp = aim(lamp, list(16, 16), 0, center)
 	if(at_thing.original != thing || at_lamp.original != lamp)
-		failures += "вровень с полом: клик по предмету целит в [at_thing.original], по светильнику в полу — в [at_lamp.original]"
-	// Без попиксельной стрельбы — то же: в пятне выстрел кончался и в Бэй.
+		failures += "вровень с полом: клик по предмету целит в [at_thing.original], по светильнику в полу в [at_lamp.original]"
+	// Без попиксельной стрельбы то же: в пятне выстрел кончался и в Бэй.
 	ce_pixel_aim_enabled = FALSE
 	var/obj/item/projectile/bay = aim(blood, list(1, 1), 0, center)
 	ce_pixel_aim_enabled = TRUE
 	if(bay.original != place || bay.trajectory.offset_y)
 		failures += "вровень с полом: с выключенным прицелом клик по пятну целит в [bay.original], шаг вектора [bay.trajectory.offset_x],[bay.trajectory.offset_y]"
 
-	// Пуля по клику в пятно идёт через его клетку дальше; по клику в светильник — кончается в нём
+	// Пуля по клику в пятно идёт через его клетку дальше. По клику в светильник: кончается в нём
 	// и разбивает его.
 	var/obj/item/projectile/past = aim(blood, null, 0, center)
 	if(!fly_at_target(past) || !fly_at_target(past) || past.loc != spot(2, 0))
-		failures += "вровень с полом: пуля по клику в пятно крови до клетки за ним не дошла — пуля цела — [!QDELETED(past)]"
+		failures += "вровень с полом: пуля по клику в пятно крови до клетки за ним не дошла, пуля цела [!QDELETED(past)]"
 	var/obj/item/projectile/into_lamp = aim(lamp, null, 0, center)
 	if(fly_at_target(into_lamp) || !lamp.get_damage_value())
-		failures += "вровень с полом: пуля по клику в светильник в полу — прошла — [!QDELETED(into_lamp)], урон светильнику [lamp.get_damage_value()]"
+		failures += "вровень с полом: пуля по клику в светильник в полу, прошла [!QDELETED(into_lamp)], урон светильнику [lamp.get_damage_value()]"
 	reset_arena()
 
 /**
  * Выстрел, нацеленный в неплотный предмет, которому пуля ничего не сделает, летит дальше, и
  * попаданием по предмету это не считается. Целью остаются то, что пуля ломает, предмет со своей
- * реакцией на пулю и неплотная преграда, не пустившая пулю в свою клетку; выстрел себе под ноги
+ * реакцией на пулю и неплотная преграда, не пустившая пулю в свою клетку. Выстрел себе под ноги
  * кончается сразу, как в Бэй.
  */
 /datum/unit_test/combat_extended/pixel_aim/proc/check_fly_past(list/failures)
@@ -8038,15 +8038,15 @@
 	var/dense_thing = thing.ce_has_nothing_to_hit()
 	thing.set_density(FALSE)
 	if(!thing.ce_has_nothing_to_hit() || dense_thing || lamp.ce_has_nothing_to_hit())
-		failures += "мимо предмета: задеть нечего в фонарике — [thing.ce_has_nothing_to_hit()], в плотном фонарике — [dense_thing], в светильнике с запасом прочности — [lamp.ce_has_nothing_to_hit()]"
+		failures += "мимо предмета: задеть нечего в фонарике [thing.ce_has_nothing_to_hit()], в плотном фонарике [dense_thing], в светильнике с запасом прочности [lamp.ce_has_nothing_to_hit()]"
 
 	// Пуля по клику в фонарик идёт через его клетку дальше, и `on_hit()` по нему не зовёт.
 	var/obj/item/projectile/bullet/pistol/ce_test_counting/past = make_projectile(counting_type, center)
 	past.original = thing
 	past.setup_trajectory(center, place)
 	if(!fly_at_target(past) || !fly_at_target(past) || past.loc != spot(2, 0) || past.ce_on_hits)
-		failures += "мимо предмета: пуля по клику в фонарик — цела — [!QDELETED(past)], `on_hit()` позван [past.ce_on_hits] раз; ожидалась пуля в клетке за ним без попаданий"
-	// Без попиксельной стрельбы — то же: на предмете выстрел кончался и в Бэй.
+		failures += "мимо предмета: пуля по клику в фонарик, цела [!QDELETED(past)], `on_hit()` позван [past.ce_on_hits] раз. Ожидалась пуля в клетке за ним без попаданий"
+	// Без попиксельной стрельбы то же: на предмете выстрел кончался и в Бэй.
 	ce_pixel_aim_enabled = FALSE
 	var/obj/item/projectile/bay = aim(thing, null, 0, center)
 	ce_pixel_aim_enabled = TRUE
@@ -8058,12 +8058,12 @@
 	into_lamp.original = lamp
 	into_lamp.setup_trajectory(center, place)
 	if(fly_at_target(into_lamp) || !lamp.get_damage_value() || into_lamp.ce_on_hits != 1)
-		failures += "мимо предмета: пуля по клику в светильник в полу — прошла — [!QDELETED(into_lamp)], урон светильнику [lamp.get_damage_value()], `on_hit()` позван [into_lamp.ce_on_hits] раз"
+		failures += "мимо предмета: пуля по клику в светильник в полу, прошла [!QDELETED(into_lamp)], урон светильнику [lamp.get_damage_value()], `on_hit()` позван [into_lamp.ce_on_hits] раз"
 	var/obj/item/projectile/into_reactive = aim(reactive, null, 0, center)
 	if(fly_at_target(into_reactive) || reactive.ce_hits != 1)
-		failures += "мимо предмета: пуля по клику в предмет со своей реакцией на пулю — прошла — [!QDELETED(into_reactive)], реакций [reactive.ce_hits]"
+		failures += "мимо предмета: пуля по клику в предмет со своей реакцией на пулю, прошла [!QDELETED(into_reactive)], реакций [reactive.ce_hits]"
 
-	// Неплотная преграда, не пустившая пулю в свою клетку, — преграда, даже когда целились в неё.
+	// Неплотная преграда, не пустившая пулю в свою клетку: преграда, даже когда целились в неё.
 	var/obj/item/projectile/blocked = aim(barrier, null, 0, center)
 	if(fly_at_target(blocked))
 		failures += "мимо предмета: пуля прошла неплотную преграду, не пустившую её в свою клетку"
@@ -8072,10 +8072,10 @@
 	var/obj/item/projectile/bullet/pistol/ce_test_counting/underfoot = make_projectile(counting_type, place)
 	underfoot.launch(thing, BP_CHEST)
 	if(!QDELETED(underfoot) || underfoot.ce_on_hits != 1)
-		failures += "мимо предмета: выстрел по фонарику в своей клетке — пуля цела — [!QDELETED(underfoot)], `on_hit()` позван [underfoot.ce_on_hits] раз"
+		failures += "мимо предмета: выстрел по фонарику в своей клетке, пуля цела [!QDELETED(underfoot)], `on_hit()` позван [underfoot.ce_on_hits] раз"
 	reset_arena()
 
-/// Линия через сам угол между двумя стенами проходит, как в Бэй; глубже порога — встречает стену.
+/// Линия через сам угол между двумя стенами проходит, как в Бэй. Глубже порога: встречает стену.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_corner_tolerance(list/failures)
 	var/turf/target = spot(1, 1)
 	build_wall(1, 0)
@@ -8083,11 +8083,11 @@
 	var/obj/item/projectile/diagonal = aim(target, null, 0, center)
 	if(!fly_along(diagonal) || diagonal.loc != target)
 		failures += "порог среза: выстрел точно по диагонали между двумя стенами не прошёл"
-	// Клик в пиксель 18,15 ведёт линию в полутора пикселях от угла: в клетке стены — 2 пикселя линии.
+	// Клик в пиксель 18,15 ведёт линию в полутора пикселях от угла: в клетке стены 2 пикселя линии.
 	var/obj/item/projectile/grazing = aim(target, list(18, 15), 0, center)
 	if(!fly_along(grazing) || grazing.loc != target)
 		failures += "порог среза: выстрел в двух пикселях от угла стены не прошёл"
-	// Клик в пиксель 22,11: в клетке стены — 8 пикселей линии.
+	// Клик в пиксель 22,11: в клетке стены 8 пикселей линии.
 	var/obj/item/projectile/clipping = aim(target, list(22, 11), 0, center)
 	if(fly_step(clipping))
 		failures += "порог среза: выстрел с 8 пикселями линии в клетке стены прошёл"
@@ -8152,7 +8152,7 @@
 	ce_ricochet_scatter_degrees = 0
 	build_wall(1, 0)
 	var/obj/item/projectile/projectile = aim(spot(2, 1), null, 0, center)
-	// С таким множителем любой ненулевой шанс рикошета — 100%.
+	// С таким множителем любой ненулевой шанс рикошета: 100%.
 	projectile.ce_ricochet_chance_mult = 1000
 	var/datum/plot_vector/vector = projectile.trajectory
 	var/before_x = vector.offset_x
@@ -8161,7 +8161,7 @@
 		failures += "рикошет в срезанном углу: пуля застряла в стене"
 	else
 		if(projectile.ce_ricochets != 1 || projectile.loc != center || !projectile.density)
-			failures += "рикошет в срезанном углу: рикошетов [projectile.ce_ricochets], пуля в своей клетке — [projectile.loc == center], плотная — [projectile.density]"
+			failures += "рикошет в срезанном углу: рикошетов [projectile.ce_ricochets], пуля в своей клетке [projectile.loc == center], плотная [projectile.density]"
 		if(abs(vector.offset_x + before_x) > CE_AIM_TOLERANCE || abs(vector.offset_y - before_y) > CE_AIM_TOLERANCE)
 			failures += "рикошет в срезанном углу: шаг [vector.offset_x],[vector.offset_y], ожидался [-before_x],[before_y]"
 		if(!fly_step(projectile) || projectile.x >= center.x)
@@ -8170,7 +8170,7 @@
 	ce_ricochet_scatter_degrees = old_scatter
 	reset_arena()
 
-/// Трассировщик видит ту же линию, что летит пуля: угол стены её закрывает, моб в срезанном углу — нет.
+/// Трассировщик видит ту же линию, что летит пуля: угол стены её закрывает, моб в срезанном углу нет.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_corner_trace(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/bystander)
 	H.forceMove(spot(2, 1))
 	var/obj/item/projectile/test/clear = make_projectile(/obj/item/projectile/test, center)
@@ -8189,7 +8189,7 @@
 		failures += "трассировщик: линия сквозь угол стены считается свободной"
 	reset_arena()
 
-/// С выключенным выключателем диагональный шаг — прыжок Бэй: срезанный угол не проверяется.
+/// С выключенным выключателем диагональный шаг это прыжок Бэй: срезанный угол не проверяется.
 /datum/unit_test/combat_extended/pixel_aim/proc/check_corner_switch(list/failures)
 	// Линия в цель 2,-1 идёт через 1,0 и срезает угол 1,-1.
 	var/turf/target = spot(2, -1)
@@ -8205,38 +8205,38 @@
 
 /*
 	Физические попадания (`projectile_hits.dm`). Тест включает выключатель сам: части модели
-	работают, а без выключателя бросок и вектор — прежние. Каждая проверка проверена поломкой
-	(README, «Попиксельная стрельба и физические промахи»).
+	работают, а без выключателя бросок и вектор прежние. Каждая проверка проверена поломкой
+	(README, "Попиксельная стрельба и физические промахи").
 
 	Проверяется:
-	- дуга навыка: неумелый расширяет дугу, умелый сужает, меньше нуля она не бывает; из орудий
-	  меха любой пилот стреляет как мастер; у снаряда без стрелка, простого моба, меха без пилота и
-	  удалённого стрелка дуги навыка нет; выстрел в упор и трассировщик летят без разброса;
-	- разброс в самом выстреле: вектор качается на дугу навыка и оружия, не шире её и не уже;
-	  снаряд без стрелка идёт в середину тела, выстрел обученного по клетке — в пиксель клика;
-	- шанс провала: зона, клетки после первой, точность гасит только поправки, выстрел из оружия
-	  гасит больше;
-	- бросок: провал — мимо или случайная зона по доле, глаза бросаются как голова, расстояние —
-	  до клетки цели; навык стрелка и движение цели в бросок не входят; без выключателя — бросок
-	  Бэй;
-	- выстрел в упор: оружие помечает снаряд, и по тому, в кого целились, вплотную броска нет;
-	- круг тела, настоящим полётом: мимо сдвинутого тела пуля летит дальше и попадает в стоящего
-	  за ним, через тело — попадает в него; радиус растёт с размером моба;
-	- пролёт мимо тела: урон с расстоянием не снимается, моб запоминается, сообщение — только у
-	  близкого пролёта небесшумного снаряда;
-	- лежащие: клик по клетке с точкой в теле делает целью лежащего, с точкой вне тела — нет, и
-	  клик по пятну крови под ним — так же; пуля над лежащим в цель за ним его не задевает, и в
-	  срезанном углу тоже;
-	- срезанный угол: меха и стоящего, сдвинутого к линии, пуля в нём встречает, человека посреди
-	  клетки — нет;
-	- живой щит: пуля, промахнувшаяся по щиту, не задевает и держащего; пуля через тело держащего
-	  достаётся щиту; после срезанного угла пуля смотрит по диагонали, которой летит; удалённая
-	  пуля больше ни в кого не попадает;
-	- дробь: пролёт мимо тела у облака один, а бросок — на каждую дробину;
-	- дальность: с 20 и 30 клеток выстрел без разброса доходит до тела, и проваленный бросок
+	- Дуга навыка: неумелый расширяет дугу, умелый сужает, меньше нуля она не бывает. Из орудий
+	  меха любой пилот стреляет как мастер. У снаряда без стрелка, простого моба, меха без пилота и
+	  удалённого стрелка дуги навыка нет. Выстрел в упор и трассировщик летят без разброса.
+	- Разброс в самом выстреле: вектор качается на дугу навыка и оружия, не шире её и не уже.
+	  Снаряд без стрелка идёт в середину тела, выстрел обученного по клетке: в пиксель клика.
+	- Шанс провала: зона, клетки после первой, точность гасит только поправки, выстрел из оружия
+	  гасит больше.
+	- Бросок: провал мимо или случайная зона по доле, глаза бросаются как голова, расстояние
+	  до клетки цели. Навык стрелка и движение цели в бросок не входят. Без выключателя: бросок
+	  Бэй.
+	- Выстрел в упор: оружие помечает снаряд, и по тому, в кого целились, вплотную броска нет.
+	- Круг тела, настоящим полётом: мимо сдвинутого тела пуля летит дальше и попадает в стоящего
+	  за ним, через тело попадает в него. Радиус растёт с размером моба.
+	- Пролёт мимо тела: урон с расстоянием не снимается, моб запоминается, сообщение только у
+	  близкого пролёта небесшумного снаряда.
+	- Лежащие: клик по клетке с точкой в теле делает целью лежащего, с точкой вне тела нет, и
+	  клик по пятну крови под ним так же. Пуля над лежащим в цель за ним его не задевает, и в
+	  срезанном углу тоже.
+	- Срезанный угол: меха и стоящего, сдвинутого к линии, пуля в нём встречает, человека посреди
+	  клетки нет.
+	- Живой щит: пуля, промахнувшаяся по щиту, не задевает и держащего. Пуля через тело держащего
+	  достаётся щиту. После срезанного угла пуля смотрит по диагонали, которой летит. Удалённая
+	  пуля больше ни в кого не попадает.
+	- Дробь: пролёт мимо тела у облака один, а бросок на каждую дробину.
+	- Дальность: с 20 и 30 клеток выстрел без разброса доходит до тела, и проваленный бросок
 	  оставляет долю случайной зоны.
 
-	Тест — подтип теста попиксельной стрельбы: ему нужны те же снаряды и та же площадка.
+	Тест это подтип теста попиксельной стрельбы: ему нужны те же снаряды и та же площадка.
 */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits
 	name = "CE: Физические попадания"
@@ -8312,17 +8312,17 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Навык стрелка идёт в дугу разброса, пуля мимо тела летит дальше без броска и без потери урона, бросок считает шанс зоны, расстояние и точность, выстрел в упор не промахивается, клик по клетке под лежащим целит в него, дробь бросает на каждую дробину, с тридцати клеток пуля доходит до тела, а без выключателя бросок — Бэй.")
+		pass("Навык стрелка идёт в дугу разброса, пуля мимо тела летит дальше без броска и без потери урона, бросок считает шанс зоны, расстояние и точность, выстрел в упор не промахивается, клик по клетке под лежащим целит в него, дробь бросает на каждую дробину, с тридцати клеток пуля доходит до тела, а без выключателя бросок: Бэй.")
 	return 1
 
-/// Дуга разброса у стрелка `shooter` с разбросом оружия `dispersion`; null — стрелка нет.
+/// Дуга разброса у стрелка `shooter` с разбросом оружия `dispersion`. Null: стрелка нет.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/arc_of(mob/shooter, dispersion = 0, projectile_type = /obj/item/projectile/bullet/pistol)
 	var/obj/item/projectile/projectile = make_projectile(projectile_type)
 	projectile.firer = shooter
 	projectile.dispersion = dispersion
 	return projectile.ce_get_spread_arc()
 
-/// Навык стрелка — дуга разброса: неумелый расширяет её, умелый сужает, меньше нуля она не бывает.
+/// Навык стрелка задаёт дугу разброса: неумелый расширяет её, умелый сужает, меньше нуля она не бывает.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_skill_arc(list/failures, mob/living/carbon/human/H)
 	var/level_arc = ce_skill_dispersion_arc_degrees
 	var/weapon_arc = 2 * ce_dispersion_arc_degrees
@@ -8341,7 +8341,7 @@
 		set_skills(H, list(SKILL_WEAPONS = entry[1]))
 		var/arc = arc_of(H, entry[2])
 		if(abs(arc - entry[3]) > CE_AIM_TOLERANCE)
-			failures += "дуга навыка: навык [entry[1]], разброс оружия [entry[2]] — дуга [arc], ожидалась [entry[3]]"
+			failures += "дуга навыка: навык [entry[1]], разброс оружия [entry[2]], дуга [arc], ожидалась [entry[3]]"
 
 	set_skills(H, list(SKILL_WEAPONS = SKILL_UNSKILLED))
 	if(abs(arc_of(null, 2) - weapon_arc) > CE_AIM_TOLERANCE)
@@ -8360,7 +8360,7 @@
 	var/master_arc = max(heavy_arc - (SKILL_MASTER - SKILL_TRAINED) * level_arc, 0)
 	LAZYADD(mech.pilots, H)
 	if(abs(arc_of(mech, 4) - master_arc) > CE_AIM_TOLERANCE || arc_of(H, 4) <= master_arc)
-		failures += "дуга навыка: у меха с неумелым пилотом дуга [arc_of(mech, 4)], ожидалась дуга мастера [master_arc]; у самого пилота [arc_of(H, 4)]"
+		failures += "дуга навыка: у меха с неумелым пилотом дуга [arc_of(mech, 4)], ожидалась дуга мастера [master_arc]. У самого пилота [arc_of(H, 4)]"
 	LAZYREMOVE(mech.pilots, H)
 
 	// Вектор нацеливается тиком позже выстрела: стрелка к тому времени может уже не быть, и набора
@@ -8371,7 +8371,7 @@
 		if(abs(arc_of(gone, 2) - weapon_arc) > CE_AIM_TOLERANCE)
 			failures += "дуга навыка: у удалённого стрелка дуга [arc_of(gone, 2)], ожидался разброс оружия [weapon_arc]"
 
-	// Выстрел в упор и трассировщик — без разброса.
+	// Выстрел в упор и трассировщик: без разброса.
 	var/obj/item/projectile/point_blank = make_projectile()
 	point_blank.firer = H
 	point_blank.dispersion = 2
@@ -8441,15 +8441,15 @@
 	var/obj/item/projectile/loose = make_projectile()
 	gun.process_accuracy(fired, H, H, 1, TRUE)
 	if(!fired.ce_gun_shot || loose.ce_gun_shot)
-		failures += "шанс провала: выстрел из оружия помечен — [fired.ce_gun_shot], снаряд без оружия помечен — [loose.ce_gun_shot]"
+		failures += "шанс провала: выстрел из оружия помечен [fired.ce_gun_shot], снаряд без оружия помечен [loose.ce_gun_shot]"
 
-/// Бросок: провал — мимо или случайная зона по доле; без выключателя — бросок Бэй.
+/// Бросок: провал мимо или случайная зона по доле. Без выключателя: бросок Бэй.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_roll(list/failures, mob/living/carbon/human/H)
 	H.forceMove(near(3, 0))
 	var/obj/item/projectile/projectile = make_projectile()
 	projectile.original = H
 	projectile.starting = origin
-	// Расстояние — до клетки цели, а не то, что насчитал кор `Bump()`.
+	// Расстояние: до клетки цели, а не то, что насчитал кор `Bump()`.
 	if(projectile.ce_get_hit_distance(H, 1) != 3)
 		failures += "бросок: расстояние до цели [projectile.ce_get_hit_distance(H, 1)], ожидалось 3"
 	projectile.starting = null
@@ -8473,7 +8473,7 @@
 		if(projectile.ce_get_projectile_hit_zone(BP_CHEST, H, -1000, 3) in organ_rel_size)
 			strayed++
 	if(passed != CE_AIM_TRIALS || strayed != CE_AIM_TRIALS)
-		failures += "бросок: из [CE_AIM_TRIALS] провалов с долей «мимо» 100 мимо прошло [passed], с долей 0 в зону тела попало [strayed]"
+		failures += "бросок: из [CE_AIM_TRIALS] провалов с долей \"мимо\" 100 мимо прошло [passed], с долей 0 в зону тела попало [strayed]"
 
 	// Кор `attack_mob()` бросает этот же бросок, а поправка вызвавшего доходит до него как есть: с
 	// такой поправкой бросок Бэй попал бы наверняка.
@@ -8482,7 +8482,7 @@
 	if(projectile.attack_mob(H, 3, -1000) || H.getBruteLoss() != damage_before)
 		failures += "бросок: кор `attack_mob()` попал там, где бросок провален наверняка, урон [H.getBruteLoss() - damage_before]"
 	if(projectile.ce_special_miss_modifier != -1000)
-		failures += "бросок: поправка вызвавшего до броска не дошла — запомнено [projectile.ce_special_miss_modifier]"
+		failures += "бросок: поправка вызвавшего до броска не дошла, запомнено [projectile.ce_special_miss_modifier]"
 
 	// Попадание наверняка, и глаза бросаются как голова.
 	ce_miss_per_tile = 0
@@ -8530,14 +8530,14 @@
 	var/obj/item/projectile/plain = make_projectile()
 	gun.process_point_blank(marked, bystander, H)
 	if(!marked.ce_point_blank || plain.ce_point_blank)
-		failures += "выстрел в упор: помечен — [marked.ce_point_blank], обычный снаряд помечен — [plain.ce_point_blank]"
+		failures += "выстрел в упор: помечен [marked.ce_point_blank], обычный снаряд помечен [plain.ce_point_blank]"
 	for(var/obj/item/projectile/projectile in list(marked, plain))
 		projectile.original = H
 		projectile.starting = origin
 	if(!marked.ce_is_sure_hit(H, 1))
 		failures += "выстрел в упор: по цели вплотную нужен бросок"
 	if(marked.ce_is_sure_hit(H, 2) || marked.ce_is_sure_hit(bystander, 1))
-		failures += "выстрел в упор: без броска с двух клеток — [marked.ce_is_sure_hit(H, 2)], по постороннему — [marked.ce_is_sure_hit(bystander, 1)]"
+		failures += "выстрел в упор: без броска с двух клеток [marked.ce_is_sure_hit(H, 2)], по постороннему [marked.ce_is_sure_hit(bystander, 1)]"
 	if(plain.ce_is_sure_hit(H, 1))
 		failures += "выстрел в упор: обычный выстрел по стоящему вплотную идёт без броска"
 	H.lying = TRUE
@@ -8553,15 +8553,15 @@
 	marked.original = H
 	plain.original = H
 	if(marked.ce_misses_body(H) || !plain.ce_misses_body(H))
-		failures += "выстрел в упор: линия мимо тела — выстрел в упор проходит мимо — [marked.ce_misses_body(H)], обычный — [plain.ce_misses_body(H)]"
+		failures += "выстрел в упор: линия мимо тела, выстрел в упор проходит мимо [marked.ce_misses_body(H)], обычный [plain.ce_misses_body(H)]"
 
-/// Круг тела: мимо сдвинутого тела пуля летит дальше и попадает в стоящего за ним, через тело —
+/// Круг тела: мимо сдвинутого тела пуля летит дальше и попадает в стоящего за ним, через тело
 /// попадает в него.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_body_circle(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/bystander)
 	var/turf/start = spot(-2, 0)
 	H.forceMove(spot(2, 0))
 	bystander.forceMove(spot(1, 0))
-	// Тело постороннего — в 14 пикселях от линии, дальше своего радиуса.
+	// Тело постороннего: в 14 пикселях от линии, дальше своего радиуса.
 	bystander.pixel_y = bystander.default_pixel_y + 14
 	var/target_damage = H.getBruteLoss()
 	var/bystander_damage = bystander.getBruteLoss()
@@ -8573,14 +8573,14 @@
 	var/missed_without = past.ce_misses_body(bystander)
 	ce_physical_hits_enabled = TRUE
 	if(missed_without || !past.ce_misses_body(bystander))
-		failures += "круг тела: мимо сдвинутого тела без выключателя — [missed_without], с ним — [past.ce_misses_body(bystander)]"
+		failures += "круг тела: мимо сдвинутого тела без выключателя [missed_without], с ним [past.ce_misses_body(bystander)]"
 	var/steps = 0
 	while(steps < 4 && fly_at_target(past))
 		steps++
 	if(bystander.getBruteLoss() != bystander_damage)
 		failures += "круг тела: пуля мимо тела задела его, урон [bystander.getBruteLoss() - bystander_damage]"
 	if(!QDELETED(past) || H.getBruteLoss() <= target_damage)
-		failures += "круг тела: пуля, прошедшая мимо тела, в стоящего за ним не попала — шагов [steps], пуля цела — [!QDELETED(past)]"
+		failures += "круг тела: пуля, прошедшая мимо тела, в стоящего за ним не попала, шагов [steps], пуля цела [!QDELETED(past)]"
 
 	// Тело на линии: пуля попадает в него и дальше не летит.
 	bystander.pixel_y = bystander.default_pixel_y
@@ -8591,12 +8591,12 @@
 	while(steps < 4 && fly_at_target(through))
 		steps++
 	if(!QDELETED(through) || bystander.getBruteLoss() <= bystander_damage || H.getBruteLoss() != target_damage)
-		failures += "круг тела: пуля через тело — шагов [steps], пуля цела — [!QDELETED(through)], урон телу [bystander.getBruteLoss() - bystander_damage], стоящему за ним [H.getBruteLoss() - target_damage]"
+		failures += "круг тела: пуля через тело, шагов [steps], пуля цела [!QDELETED(through)], урон телу [bystander.getBruteLoss() - bystander_damage], стоящему за ним [H.getBruteLoss() - target_damage]"
 	bystander.forceMove(spot(-2, -2))
 	H.forceMove(spot(-2, -2))
 	reset_arena()
 
-/// Лежащие: клик по клетке с точкой в теле делает целью лежащего, с точкой вне тела — нет.
+/// Лежащие: клик по клетке с точкой в теле делает целью лежащего, с точкой вне тела нет.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_prone(list/failures, mob/living/carbon/human/H)
 	var/turf/place = spot(1, 1)
 	H.forceMove(place)
@@ -8609,7 +8609,7 @@
 	var/obj/item/projectile/off_body = aim(place, list(16, 31), 0, center)
 	var/obj/item/projectile/no_click = aim(place, null, 0, center)
 	if(in_body.original != H || no_click.original != H)
-		failures += "лежащие: клик в тело целит в лежащего — [in_body.original == H], выстрел без клика — [no_click.original == H]"
+		failures += "лежащие: клик в тело целит в лежащего [in_body.original == H], выстрел без клика [no_click.original == H]"
 	if(off_body.original != place)
 		failures += "лежащие: клик по клетке мимо тела целит в [off_body.original]"
 	ce_physical_hits_enabled = FALSE
@@ -8623,17 +8623,17 @@
 	H.set_density(FALSE)
 	if(at_dense.original != place)
 		failures += "лежащие: клик по клетке под плотным мобом целит в [at_dense.original]"
-	// Пятно крови под лежащим — тот же пол (`ce_take_floor_target()`).
+	// Пятно крови под лежащим: тот же пол (`ce_take_floor_target()`).
 	var/obj/decal/cleanable/blood/blood = put(1, 1, /obj/decal/cleanable/blood)
 	var/obj/item/projectile/in_blood = aim(blood, list(16, 10), 0, center)
 	var/obj/item/projectile/off_blood = aim(blood, list(16, 31), 0, center)
 	if(in_blood.original != H || off_blood.original != place)
-		failures += "лежащие: клик по пятну крови в теле целит в [in_blood.original], мимо тела — в [off_blood.original]"
+		failures += "лежащие: клик по пятну крови в теле целит в [in_blood.original], мимо тела в [off_blood.original]"
 
 	var/damage_before = H.getBruteLoss()
 	fly_at_target(in_body)
 	if(!QDELETED(in_body) || H.getBruteLoss() <= damage_before)
-		failures += "лежащие: пуля по клику в тело в лежащего не попала — пуля цела — [!QDELETED(in_body)]"
+		failures += "лежащие: пуля по клику в тело в лежащего не попала, пуля цела [!QDELETED(in_body)]"
 	damage_before = H.getBruteLoss()
 	fly_at_target(off_body)
 	if(H.getBruteLoss() != damage_before)
@@ -8645,7 +8645,7 @@
 	H.forceMove(spot(-2, -2))
 	reset_arena()
 
-/// Срезанный угол: меха — он занимает клетку целиком — пуля в нём встречает, человека — нет.
+/// Срезанный угол: меха (он занимает клетку целиком) пуля в нём встречает, человека нет.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_corner_bodies(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/bystander)
 	// Линия в цель 2,1 входит в клетку 1,1 и срезает угол клетки 1,0.
 	var/turf/target = spot(2, 1)
@@ -8685,9 +8685,9 @@
 	reset_arena()
 
 /**
- * Живой щит решает за держащего: пуля, промахнувшаяся по щиту, не задевает и его; пуля, чья линия
+ * Живой щит решает за держащего: пуля, промахнувшаяся по щиту, не задевает и его. Пуля, чья линия
  * идёт через тело держащего, достаётся щиту, даже если мимо тела самого щита она проходит. Держащий
- * стоит лицом на запад, щит — в его клетке, сдвинут к стрелку на 10 пикселей, как его ставит захват.
+ * стоит лицом на запад, щит: в его клетке, сдвинут к стрелку на 10 пикселей, как его ставит захват.
  *
  * Люди здесь свои: раненый в прежних проверках падает, как только захват пересчитает его состояние.
  */
@@ -8724,7 +8724,7 @@
 		grab.current_grab = all_grabstates[NORM_PASSIVE]
 		var/covered_by_passive = probe.ce_get_living_shield(holder) || probe.ce_get_shield_holder(shield)
 		if(!covered || covered_from_behind || covered_by_passive)
-			failures += "живой щит: держащий прикрыт от выстрела в лицо — [covered], в спину — [!!covered_from_behind], простым захватом — [!!covered_by_passive]"
+			failures += "живой щит: держащий прикрыт от выстрела в лицо [covered], в спину [!!covered_from_behind], простым захватом [!!covered_by_passive]"
 	if(!QDELETED(grab))
 		qdel(grab)
 	QDEL_NULL(holder.zone_sel)
@@ -8749,7 +8749,7 @@
 	var/holder_damage = holder.getBruteLoss()
 	var/shield_damage = shield.getBruteLoss()
 	// Выстрел в упор по держащему: по нему самому он не промахнулся бы. Бросок по щиту провален, и
-	// провал — мимо: пуля летит дальше мимо обоих.
+	// провал мимо: пуля летит дальше мимо обоих.
 	ce_zone_miss_chances[BP_CHEST] = 100
 	ce_miss_pass_share = 100
 	var/obj/item/projectile/missed = aim(holder, null, 0, west)
@@ -8757,20 +8757,20 @@
 	face_away(missed)
 	fly_step(missed)
 	if(QDELETED(missed) || missed.loc != place || missed.ce_last_missed != shield || !(holder in missed.permutated))
-		failures += "живой щит: пуля, промахнувшаяся по щиту, мимо держащего не прошла — цела — [!QDELETED(missed)], промах по щиту записан — [missed.ce_last_missed == shield]"
+		failures += "живой щит: пуля, промахнувшаяся по щиту, мимо держащего не прошла, цела [!QDELETED(missed)], промах по щиту записан [missed.ce_last_missed == shield]"
 	if(holder.getBruteLoss() != holder_damage || shield.getBruteLoss() != shield_damage)
-		failures += "живой щит: пуля, промахнувшаяся по щиту, ранила — держащего на [holder.getBruteLoss() - holder_damage], щит на [shield.getBruteLoss() - shield_damage]"
+		failures += "живой щит: пуля, промахнувшаяся по щиту, ранила держащего на [holder.getBruteLoss() - holder_damage], щит на [shield.getBruteLoss() - shield_damage]"
 	ce_zone_miss_chances[BP_CHEST] = 0
 
 	// Линия из середины площадки через срезанный угол идёт в 5 пикселях от середины держащего и в 11
-	// от середины щита: мимо тела щита, но щит держат на её пути. Последний шаг пули — прямо на
+	// от середины щита: мимо тела щита, но щит держат на её пути. Последний шаг пули идёт прямо на
 	// север, а летит она на северо-восток, держащему в лицо: по направлению полёта кор `Bump()`
 	// решает, прикрыт ли держащий.
 	var/obj/item/projectile/skewed = aim(place, list(16, 10), 0, center)
 	var/beside_shield = !skewed.ce_crosses_body(shield) && skewed.ce_crosses_body(holder)
 	fly_step(skewed)
 	if(!beside_shield || !QDELETED(skewed) || shield.getBruteLoss() <= shield_damage || holder.getBruteLoss() != holder_damage)
-		failures += "живой щит: пуля через тело держащего мимо тела щита — линия такая — [beside_shield], цела — [!QDELETED(skewed)], урон щиту [shield.getBruteLoss() - shield_damage], держащему [holder.getBruteLoss() - holder_damage]"
+		failures += "живой щит: пуля через тело держащего мимо тела щита, линия такая [beside_shield], цела [!QDELETED(skewed)], урон щиту [shield.getBruteLoss() - shield_damage], держащему [holder.getBruteLoss() - holder_damage]"
 
 	// Бросок по щиту удался: пуля достаётся щиту.
 	shield_damage = shield.getBruteLoss()
@@ -8779,7 +8779,7 @@
 	face_away(blocked)
 	fly_step(blocked)
 	if(!QDELETED(blocked) || shield.getBruteLoss() <= shield_damage || holder.getBruteLoss() != holder_damage)
-		failures += "живой щит: пуля в щит — цела — [!QDELETED(blocked)], урон щиту [shield.getBruteLoss() - shield_damage], держащему [holder.getBruteLoss() - holder_damage]"
+		failures += "живой щит: пуля в щит, цела [!QDELETED(blocked)], урон щиту [shield.getBruteLoss() - shield_damage], держащему [holder.getBruteLoss() - holder_damage]"
 
 	// Пуля, которая уже попала и удалена, повтор столкновения не разбирает.
 	shield_damage = shield.getBruteLoss()
@@ -8816,8 +8816,8 @@
 		if(findtext(message, "misses"))
 			.++
 
-/// Снаряд типа `projectile_type` из клетки `start` (без неё — из клетки стрелка), нацеленный в
-/// `target`. `shooter` — стрелок, без него это выстрел автоматики.
+/// Снаряд типа `projectile_type` из клетки `start` (без неё: из клетки стрелка), нацеленный в
+/// `target`. `shooter`: стрелок, без него это выстрел автоматики.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/shoot(atom/target, turf/start, mob/shooter, projectile_type = /obj/item/projectile/bullet/pistol, dispersion = 0)
 	RETURN_TYPE(/obj/item/projectile)
 	var/obj/item/projectile/projectile = make_projectile(projectile_type, start)
@@ -8829,7 +8829,7 @@
 	projectile.setup_trajectory(start || origin, get_turf(target))
 	return projectile
 
-/// Ведёт снаряд шагами полёта, не больше `steps`. TRUE — снаряд цел.
+/// Ведёт снаряд шагами полёта, не больше `steps`. TRUE: снаряд цел.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/fly_steps(obj/item/projectile/projectile, steps)
 	for(var/index in 1 to steps)
 		if(!fly_at_target(projectile))
@@ -8838,7 +8838,7 @@
 
 /**
  * Убирает снаряд, который проверка уже отлетала. Снаряд плотен: пуля, прошедшая мимо моба, после
- * этого сталкивается с плотным предметом в той же клетке — повтор столкновения от BYOND, — и
+ * этого сталкивается с плотным предметом в той же клетке (повтор столкновения от BYOND), и
  * оставшийся там снаряд прошлого выстрела сошёл бы за такой предмет.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/spend(obj/item/projectile/projectile)
@@ -8869,16 +8869,16 @@
 		set_skills(H, list(SKILL_WEAPONS = entry[2]))
 		var/widest = 0
 		for(var/trial in 1 to CE_AIM_TRIALS)
-			// Цель строго на востоке: угол вектора — само отклонение.
+			// Цель строго на востоке: угол вектора это само отклонение.
 			var/obj/item/projectile/shot = shoot(target, null, H, /obj/item/projectile/bullet/pistol, entry[3])
 			widest = max(widest, abs(shot.trajectory.angle))
 		var/half_arc = entry[4] / 2
-		// Сорок бросков, уместившихся в половину своей половины дуги, — шанс 2 в минус сороковой.
+		// Сорок бросков, уместившихся в половину своей половины дуги: шанс 2 в минус сороковой.
 		if(widest > half_arc + CE_AIM_TOLERANCE || widest < half_arc / 2)
-			failures += "разброс в полёте, [entry[1]]: наибольшее из [CE_AIM_TRIALS] отклонений — [widest]°, дуга [entry[4]]°"
+			failures += "разброс в полёте, [entry[1]]: наибольшее из [CE_AIM_TRIALS] отклонений [widest]°, дуга [entry[4]]°"
 	set_skills(H, list())
 
-/// Точные выстрелы: снаряд без стрелка идёт в середину тела, выстрел обученного — в пиксель клика.
+/// Точные выстрелы: снаряд без стрелка идёт в середину тела, выстрел обученного в пиксель клика.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_exact_shots(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/bystander)
 	// Турель пускает снаряд без стрелка и без разброса: дуги навыка у автоматики нет.
 	var/turf/place = near(3, 1)
@@ -8889,7 +8889,7 @@
 	for(var/trial in 1 to CE_AIM_TRIALS)
 		var/obj/item/projectile/beam = shoot(bystander, null, null, /obj/item/projectile/beam)
 		if(beam.ce_get_spread_arc() || !points_along(beam.trajectory, body[1] - muzzle[1], body[2] - muzzle[2]))
-			failures += "точность: выстрел без стрелка — дуга [beam.ce_get_spread_arc()], шаг вектора [beam.trajectory.offset_x],[beam.trajectory.offset_y] не в середину тела"
+			failures += "точность: выстрел без стрелка, дуга [beam.ce_get_spread_arc()], шаг вектора [beam.trajectory.offset_x],[beam.trajectory.offset_y] не в середину тела"
 			break
 	bystander.forceMove(bystander_place)
 
@@ -8902,7 +8902,7 @@
 		shot.original = place
 		shot.setup_trajectory(origin, place)
 		if(shot.ce_get_spread_arc() || shot.p_x != 5 || shot.p_y != 27)
-			failures += "точность: выстрел обученного по клетке — дуга [shot.ce_get_spread_arc()], `p_x`/`p_y` [shot.p_x],[shot.p_y], ожидался пиксель клика 5,27"
+			failures += "точность: выстрел обученного по клетке, дуга [shot.ce_get_spread_arc()], `p_x`/`p_y` [shot.p_x],[shot.p_y], ожидался пиксель клика 5,27"
 			break
 	set_skills(H, list())
 
@@ -8919,7 +8919,7 @@
 	var/prone = H.ce_get_hit_radius()
 	H.lying = FALSE
 	if(radii[1] <= 0 || radii[1] >= radii[2] || radii[2] >= radii[3] || radii[3] >= radii[4] || abs(radii[3] - standing) > CE_AIM_TOLERANCE || prone <= standing)
-		failures += "радиусы тела: мелкий [radii[1]], небольшой [radii[2]], средний [radii[3]], крупный [radii[4]]; человек стоя [standing], лёжа [prone]"
+		failures += "радиусы тела: мелкий [radii[1]], небольшой [radii[2]], средний [radii[3]], крупный [radii[4]]. Человек стоя [standing], лёжа [prone]"
 
 /// Навык стрелка и движение цели в бросок не входят: кор `attack_mob()` считает их в поправку Бэй,
 /// а бросок её не смотрит.
@@ -8934,7 +8934,7 @@
 	for(var/level in list(SKILL_UNSKILLED, SKILL_MASTER))
 		set_skills(H, list(SKILL_WEAPONS = level))
 		for(var/stepped in list(FALSE, TRUE))
-			// Только что шагнувшей цели бросок Бэй прибавил бы 20 к промаху, стоящей — снял бы 5.
+			// Только что шагнувшей цели бросок Бэй прибавил бы 20 к промаху, стоящей: снял бы 5.
 			mark.l_move_time = stepped ? world.time : 0
 			var/obj/item/projectile/shot = make_projectile()
 			shot.firer = H
@@ -8951,14 +8951,14 @@
 				shot.attack_mob(mark, 3)
 			var/sure_misses = CE_AIM_TRIALS - (mark.ce_hits - hits_before)
 			if(sure_hits != CE_AIM_TRIALS || sure_misses != CE_AIM_TRIALS)
-				failures += "бросок, навык [level], цель шагнула — [stepped]: из [CE_AIM_TRIALS] бросков без промаха попало [sure_hits], из [CE_AIM_TRIALS] без попаданий мимо прошло [sure_misses]"
+				failures += "бросок, навык [level], цель шагнула [stepped]: из [CE_AIM_TRIALS] бросков без промаха попало [sure_hits], из [CE_AIM_TRIALS] без попаданий мимо прошло [sure_misses]"
 	ce_zone_miss_chances = real_zone_chances
 	ce_miss_per_tile = real_miss_per_tile
 	ce_miss_pass_share = real_pass_share
 	mark.l_move_time = 0
 	set_skills(H, list())
 
-/// Пролёт мимо тела: урон с расстоянием не снимается, моб запоминается, а сообщение — только у
+/// Пролёт мимо тела: урон с расстоянием не снимается, моб запоминается, а сообщение только у
 /// близкого пролёта небесшумного снаряда.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_flyby(list/failures, mob/living/carbon/human/ce_test_target/mark)
 	var/turf/start = spot(-2, 0)
@@ -8984,19 +8984,19 @@
 		fly_steps(shot, 3)
 		var/heard_misses = listener.count_misses()
 		if(QDELETED(shot) || mark.ce_hits != hits_before || shot.damage != damage || !(mark in shot.permutated) || shot.ce_last_missed != mark)
-			failures += "пролёт, [entry[1]]: пуля цела — [!QDELETED(shot)], попаданий [mark.ce_hits - hits_before], урон пули [shot.damage] из [damage], моб запомнен — [mark in shot.permutated], промах записан — [shot.ce_last_missed == mark]"
+			failures += "пролёт, [entry[1]]: пуля цела [!QDELETED(shot)], попаданий [mark.ce_hits - hits_before], урон пули [shot.damage] из [damage], моб запомнен [mark in shot.permutated], промах записан [shot.ce_last_missed == mark]"
 		if(heard_misses != entry[4])
 			failures += "пролёт, [entry[1]]: сообщений о пролёте [heard_misses], ожидалось [entry[4]]"
 
 	// Окно на северном краю клетки моба, вдоль полёта: пуля, прошедшая мимо тела, его не задевает.
-	// Столкновение с мобом повторяет BYOND — уже с любым плотным предметом в клетке.
+	// Столкновение с мобом повторяет BYOND: уже с любым плотным предметом в клетке.
 	var/obj/structure/window/pane = put(0, 0, /obj/structure/window/reinforced)
 	pane.set_dir(NORTH)
 	mark.pixel_y = mark.default_pixel_y + 14
 	var/obj/item/projectile/beside = shoot(beyond, start)
 	fly_steps(beside, 3)
 	if(QDELETED(beside) || pane.get_current_health() != pane.get_max_health())
-		failures += "пролёт: пуля мимо тела у окна вдоль полёта — цела — [!QDELETED(beside)], прочность окна [pane.get_current_health()] из [pane.get_max_health()]"
+		failures += "пролёт: пуля мимо тела у окна вдоль полёта, цела [!QDELETED(beside)], прочность окна [pane.get_current_health()] из [pane.get_max_health()]"
 	qdel(pane)
 	// Окно на восточном краю, поперёк полёта, пулю останавливает: выйти из клетки она может только
 	// сквозь него.
@@ -9005,7 +9005,7 @@
 	var/obj/item/projectile/stopped = shoot(beyond, start)
 	fly_steps(stopped, 3)
 	if(!QDELETED(stopped) || across.get_current_health() >= across.get_max_health())
-		failures += "пролёт: пуля мимо тела у окна поперёк полёта — цела — [!QDELETED(stopped)], прочность окна [across.get_current_health()] из [across.get_max_health()]"
+		failures += "пролёт: пуля мимо тела у окна поперёк полёта, цела [!QDELETED(stopped)], прочность окна [across.get_current_health()] из [across.get_max_health()]"
 	qdel(across)
 
 	// Двое в одной клетке: клетка сталкивает пулю только с первым, второго она встречает сама.
@@ -9017,7 +9017,7 @@
 		var/obj/item/projectile/shared = shoot(beyond, start)
 		fly_steps(shared, 3)
 		if(!QDELETED(shared) || mark.ce_hits != shared_before || second.getBruteLoss() <= second_damage)
-			failures += "пролёт: двое в клетке — пуля мимо первого цела — [!QDELETED(shared)], попаданий в первого [mark.ce_hits - shared_before], урон второму [second.getBruteLoss() - second_damage]"
+			failures += "пролёт: двое в клетке, пуля мимо первого цела [!QDELETED(shared)], попаданий в первого [mark.ce_hits - shared_before], урон второму [second.getBruteLoss() - second_damage]"
 		second.forceMove(spot(-2, -2))
 
 	// Попавшей пуле урон с расстоянием снимается: проверка выше не пустая.
@@ -9029,11 +9029,11 @@
 	var/struck_before = mark.ce_hits
 	fly_steps(struck, 3)
 	if(mark.ce_hits != struck_before + 1 || struck.damage > full_damage * 0.5 + CE_AIM_TOLERANCE)
-		failures += "пролёт: попавшая пуля — попаданий [mark.ce_hits - struck_before], урон [struck.damage] из [full_damage], ожидалось не больше половины"
+		failures += "пролёт: попавшая пуля, попаданий [mark.ce_hits - struck_before], урон [struck.damage] из [full_damage], ожидалось не больше половины"
 	mark.forceMove(spot(-2, -2))
 	reset_arena()
 
-/// Пуля, летящая над лежащим в цель за ним, его не задевает — ни на прямой, ни в срезанном углу.
+/// Пуля, летящая над лежащим в цель за ним, его не задевает: ни на прямой, ни в срезанном углу.
 /// Стоящего в том же углу, сдвинутого к линии, она встречает.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_overflight(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/ce_test_target/mark)
 	// Лежащий повёрнут, как в `update_icons()`, и неплотен.
@@ -9047,7 +9047,7 @@
 	var/obj/item/projectile/over = shoot(mark, spot(-2, 0))
 	fly_steps(over, 4)
 	if(H.getBruteLoss() != damage_before || mark.ce_hits != hits_before + 1)
-		failures += "лежащие: пуля над лежащим в цель за ним — урон лежащему [H.getBruteLoss() - damage_before], попаданий в цель [mark.ce_hits - hits_before]"
+		failures += "лежащие: пуля над лежащим в цель за ним, урон лежащему [H.getBruteLoss() - damage_before], попаданий в цель [mark.ce_hits - hits_before]"
 
 	// Линия в цель 2,1 срезает угол клетки 1,0 и идёт в 9 пикселях от середины тела, сдвинутого к
 	// ней на 6: через тело.
@@ -9059,7 +9059,7 @@
 	var/crosses = corner.ce_crosses_body(H)
 	fly_steps(corner, 2)
 	if(!crosses || H.getBruteLoss() != damage_before || mark.ce_hits != hits_before + 1)
-		failures += "лежащие: пуля над лежащим в срезанном углу — линия через его тело — [crosses], урон лежащему [H.getBruteLoss() - damage_before], попаданий в цель [mark.ce_hits - hits_before]"
+		failures += "лежащие: пуля над лежащим в срезанном углу, линия через его тело [crosses], урон лежащему [H.getBruteLoss() - damage_before], попаданий в цель [mark.ce_hits - hits_before]"
 
 	H.lying = FALSE
 	H.set_density(TRUE)
@@ -9068,13 +9068,13 @@
 	var/obj/item/projectile/blocked = shoot(mark, center)
 	fly_steps(blocked, 2)
 	if(H.getBruteLoss() <= damage_before || mark.ce_hits != hits_before)
-		failures += "срезанный угол: стоящего, сдвинутого к линии, пуля не встретила — урон ему [H.getBruteLoss() - damage_before], попаданий в цель за ним [mark.ce_hits - hits_before]"
+		failures += "срезанный угол: стоящего, сдвинутого к линии, пуля не встретила, урон ему [H.getBruteLoss() - damage_before], попаданий в цель за ним [mark.ce_hits - hits_before]"
 	H.pixel_y = H.default_pixel_y
 	H.forceMove(spot(-2, -2))
 	mark.forceMove(spot(-2, -2))
 	reset_arena()
 
-/// Дробь: облако — один снаряд. Пролёт мимо тела у него один, а бросок — на каждую дробину.
+/// Дробь: облако это один снаряд. Пролёт мимо тела у него один, а бросок: на каждую дробину.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_pellets(list/failures, mob/living/carbon/human/ce_test_target/mark)
 	var/turf/start = spot(-2, 0)
 	var/cloud_type = /obj/item/projectile/bullet/pellet/shotgun
@@ -9091,7 +9091,7 @@
 	var/hits_before = mark.ce_hits
 	fly_steps(cloud, 2)
 	if(total < 2 || mark.ce_hits - hits_before != total || !QDELETED(cloud))
-		failures += "дробь: при броске без промаха из [total] дробин попало [mark.ce_hits - hits_before], облако цело — [!QDELETED(cloud)]"
+		failures += "дробь: при броске без промаха из [total] дробин попало [mark.ce_hits - hits_before], облако цело [!QDELETED(cloud)]"
 
 	// Бросок без попаданий: дробины целы, облако летит дальше.
 	ce_zone_miss_chances = flat_zone_chances(100)
@@ -9099,12 +9099,12 @@
 	hits_before = mark.ce_hits
 	fly_steps(cloud, 2)
 	if(mark.ce_hits != hits_before || QDELETED(cloud) || cloud.pellets != initial(cloud.pellets))
-		failures += "дробь: при броске без попаданий попало [mark.ce_hits - hits_before], облако цело — [!QDELETED(cloud)], дробин осталось [cloud.pellets]"
-	// Облако, оставшееся в клетке мишени, — плотный предмет: о него разбилось бы следующее.
+		failures += "дробь: при броске без попаданий попало [mark.ce_hits - hits_before], облако цело [!QDELETED(cloud)], дробин осталось [cloud.pellets]"
+	// Облако, оставшееся в клетке мишени, это плотный предмет: о него разбилось бы следующее.
 	spend(cloud)
 
-	// Каждая дробина бросает сама: с шансом пополам облако попадает частью дробин, а всего — около
-	// половины. Треть и две трети — это пять стандартных отклонений от половины.
+	// Каждая дробина бросает сама: с шансом пополам облако попадает частью дробин, а всего около
+	// половины. Треть и две трети это пять стандартных отклонений от половины.
 	ce_zone_miss_chances = flat_zone_chances(50)
 	var/mixed = 0
 	var/hit_total = 0
@@ -9119,9 +9119,9 @@
 		spend(cloud)
 	var/rolled = total * CE_AIM_TRIALS
 	if(!mixed || hit_total < rolled / 3 || hit_total > rolled * 2 / 3)
-		failures += "дробь: с шансом пополам из [rolled] дробин попало [hit_total], облаков с частью попаданий — [mixed] из [CE_AIM_TRIALS]"
+		failures += "дробь: с шансом пополам из [rolled] дробин попало [hit_total], облаков с частью попаданий [mixed] из [CE_AIM_TRIALS]"
 
-	// Мимо тела: круг проверяет каждая дробина, а пролёт один — дробины целы, сообщение одно.
+	// Мимо тела: круг проверяет каждая дробина, а пролёт один, дробины целы, сообщение одно.
 	ce_zone_miss_chances = flat_zone_chances(0)
 	mark.pixel_y = mark.default_pixel_y + 14
 	listener.heard.Cut()
@@ -9130,7 +9130,7 @@
 	fly_steps(cloud, 3)
 	var/heard_misses = listener.count_misses()
 	if(mark.ce_hits != hits_before || QDELETED(cloud) || cloud.pellets != initial(cloud.pellets) || cloud.ce_last_missed != mark || heard_misses != 1)
-		failures += "дробь мимо тела: попало [mark.ce_hits - hits_before], облако цело — [!QDELETED(cloud)], дробин осталось [cloud.pellets], промах записан — [cloud.ce_last_missed == mark], сообщений о пролёте [heard_misses], ожидалось одно"
+		failures += "дробь мимо тела: попало [mark.ce_hits - hits_before], облако цело [!QDELETED(cloud)], дробин осталось [cloud.pellets], промах записан [cloud.ce_last_missed == mark], сообщений о пролёте [heard_misses], ожидалось одно"
 	mark.pixel_y = mark.default_pixel_y
 
 	ce_zone_miss_chances = staged_zone_chances
@@ -9140,7 +9140,7 @@
 
 /**
  * Дорожка для дальнего выстрела: ряд пустого космоса через середину площадки, с запада на восток,
- * не длиннее `wanted` клеток. Клетки вне площадки застилаются полом; убирает его `lift_lane()`.
+ * не длиннее `wanted` клеток. Клетки вне площадки застилаются полом. Убирает его `lift_lane()`.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/lay_lane(wanted)
 	RETURN_TYPE(/list)
@@ -9165,9 +9165,9 @@
 	lane_paved.Cut()
 
 /**
- * Дальность: с 20 и 30 клеток выстрел без разброса доходит до тела, а бросок там провален наверняка
- * — и всё же попадает на долю случайной зоны. С долей «мимо» 0 попадает каждый выстрел, с долей 100
- * — ни один. Броски здесь настоящие: `real_miss_per_tile` за клетку и таблица зон `real_zone_chances`.
+ * Дальность: с 20 и 30 клеток выстрел без разброса доходит до тела, а бросок там провален наверняка:
+ * и всё же попадает на долю случайной зоны. С долей "мимо" 0 попадает каждый выстрел, с долей 100:
+ * ни один. Броски здесь настоящие: `real_miss_per_tile` за клетку и таблица зон `real_zone_chances`.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_long_range_flight(list/failures, mob/living/carbon/human/H, mob/living/carbon/human/ce_test_target/mark, real_miss_per_tile, list/real_zone_chances)
 	var/list/lane = lay_lane(31)
@@ -9192,7 +9192,7 @@
 		var/sure_failure = probe.ce_get_miss_chance(BP_CHEST, distance) >= 100
 		if(distance >= 20 && !sure_failure)
 			failures += "дальность, [distance] клеток: шанс провала [probe.ce_get_miss_chance(BP_CHEST, distance)], ожидался провал наверняка"
-		// list(доля «мимо», сколько выстрелов попадает)
+		// list(доля "мимо", сколько выстрелов попадает)
 		for(var/list/entry as anything in list(list(0, trials), list(100, 0)))
 			if(entry[1] && !sure_failure)
 				continue
@@ -9210,7 +9210,7 @@
 				spend(shot)
 			var/hits = mark.ce_hits - hits_before
 			if(!steady || arrived != trials || hits != entry[2])
-				failures += "дальность, [distance] клеток, доля «мимо» [entry[1]]: из [trials] выстрелов до цели дошло [arrived], попало [hits], ожидалось [entry[2]]; без разброса — [steady]"
+				failures += "дальность, [distance] клеток, доля \"мимо\" [entry[1]]: из [trials] выстрелов до цели дошло [arrived], попало [hits], ожидалось [entry[2]]. Без разброса: [steady]"
 	ce_miss_per_tile = staged_miss_per_tile
 	ce_zone_miss_chances = staged_zone_chances
 	ce_miss_pass_share = staged_pass_share
@@ -9225,25 +9225,25 @@
 	кончаются на дальности точки прицела, если раньше ничего не встретили.
 
 	Проверяется:
-	- кто приземляется: ионное оружие, гироджет, ракеты РПГ и меха — да; пули, лучи, трассировщик и
-	  патроны с ионным зарядом — нет;
-	- клик по полу: заряд кончается в щёлкнутой клетке и бьёт в её пол — без клика, с кликом в
-	  середину и в угол клетки; пуля по тому же клику летит дальше;
-	- клик по предмету, которому заряд ничего не сделает, и по пятну крови: заряд кончается в их
-	  клетке и бьёт в пол, а не в предмет;
-	- выстрел в моба: попавший кончается в нём и в пол не бьёт, выстрел по клетке под мобом — тоже;
-	  прошедший мимо тела и посланный в отошедшего моба кончается в клетке моба;
-	- разброс: заряд ложится на дальности клика, и в стороне от щёлкнутой клетки тоже, а дальше не
-	  летит;
-	- срезанный угол: точка приземления в нём — заряд кончается в нём на том же шаге; угол срезан
-	  тоньше порога — на первом шаге за дальностью клика;
-	- без попиксельной стрельбы заряд приземляется так же;
-	- рикошет и `redirect()` приземление снимают;
-	- патрон с ионным зарядом по клику в пол летит дальше, как пуля;
-	- ракета РПГ по клику в пол ближе трёх клеток не взрывается, дальше — взрывается в щёлкнутой
+	- Кто приземляется: ионное оружие, гироджет, ракеты РПГ и меха да. Пули, лучи, трассировщик и
+	  патроны с ионным зарядом: нет.
+	- Клик по полу: заряд кончается в щёлкнутой клетке и бьёт в её пол, без клика, с кликом в
+	  середину и в угол клетки. Пуля по тому же клику летит дальше.
+	- Клик по предмету, которому заряд ничего не сделает, и по пятну крови: заряд кончается в их
+	  клетке и бьёт в пол, а не в предмет.
+	- Выстрел в моба: попавший кончается в нём и в пол не бьёт, выстрел по клетке под мобом тоже.
+	  Прошедший мимо тела и посланный в отошедшего моба кончается в клетке моба.
+	- Разброс: заряд ложится на дальности клика, и в стороне от щёлкнутой клетки тоже, а дальше не
+	  летит.
+	- Срезанный угол: точка приземления в нём, заряд кончается в нём на том же шаге. Угол срезан
+	  тоньше порога: на первом шаге за дальностью клика.
+	- Без попиксельной стрельбы заряд приземляется так же.
+	- Рикошет и `redirect()` приземление снимают.
+	- Патрон с ионным зарядом по клику в пол летит дальше, как пуля.
+	- Ракета РПГ по клику в пол ближе трёх клеток не взрывается, дальше: взрывается в щёлкнутой
 	  клетке, хоть та и в одной зоне со стрелком.
 
-	Тест — подтип теста физических попаданий: ему нужны те же площадка, мишень и шаги полёта.
+	Тест это подтип теста физических попаданий: ему нужны те же площадка, мишень и шаги полёта.
 */
 
 /// Ионный заряд, который вместо ЭМИ запоминает, во что попал и где кончился.
@@ -9329,11 +9329,11 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Ионный заряд, гироджет и ракеты кончаются на дальности клика: в щёлкнутой клетке, в клетке предмета и моба, мимо которого прошли, с разбросом — в стороне на той же дальности; попавший кончается в цели, рикошет и перенацеливание приземление снимают, патроны с ионным зарядом летят как пули, а ракета РПГ взводится по дальности до клетки.")
+		pass("Ионный заряд, гироджет и ракеты кончаются на дальности клика: в щёлкнутой клетке, в клетке предмета и моба, мимо которого прошли, с разбросом в стороне на той же дальности. Попавший кончается в цели, рикошет и перенацеливание приземление снимают, патроны с ионным зарядом летят как пули, а ракета РПГ взводится по дальности до клетки.")
 	return 1
 
 /**
- * Снаряд типа `projectile_type` из клетки `start`, нацеленный в `target`. `click` — пиксель клика по
+ * Снаряд типа `projectile_type` из клетки `start`, нацеленный в `target`. `click`: пиксель клика по
  * ней, `list(x, y)`, без него клика нет.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/fire_at(atom/target, turf/start, list/click, projectile_type = /obj/item/projectile/ion/ce_test_landing, dispersion = 0)
@@ -9349,7 +9349,7 @@
 	return projectile
 
 /// Ведёт снаряд шагами полёта, пока он не кончится, но не больше `max_steps`. На каком шаге он
-/// кончился; null — цел.
+/// кончился. Null: цел.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/fly_out(obj/item/projectile/projectile, max_steps = 6)
 	for(var/index in 1 to max_steps)
 		if(!fly_at_target(projectile))
@@ -9363,9 +9363,9 @@
 		return FALSE
 	return length(shot.ce_impacts) == 1 && shot.ce_impacts[1] == floor && length(shot.ce_hit_targets) == 1 && shot.ce_hit_targets[1] == floor
 
-/// Что сделал заряд — для строки провала.
+/// Что сделал заряд: для строки провала.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/describe_shot(obj/item/projectile/ion/ce_test_landing/shot)
-	return "заряд цел — [!QDELETED(shot)], кончился в клетке [describe_spot(shot.ce_impact_turf)], `on_impact()` по [jointext(shot.ce_impacts, ", ")], `on_hit()` по [jointext(shot.ce_hit_targets, ", ")]"
+	return "заряд цел: [!QDELETED(shot)], кончился в клетке [describe_spot(shot.ce_impact_turf)], `on_impact()` по [jointext(shot.ce_impacts, ", ")], `on_hit()` по [jointext(shot.ce_hit_targets, ", ")]"
 
 /// Клетка площадки сдвигом от её середины.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/describe_spot(turf/place)
@@ -9373,8 +9373,8 @@
 		return "нет"
 	return "[place.x - center.x],[place.y - center.y]"
 
-/// Приземляются ионное оружие, гироджет, ракеты РПГ и меха; пули, лучи, трассировщик и патроны с
-/// ионным зарядом — нет.
+/// Приземляются ионное оружие, гироджет, ракеты РПГ и меха. Пули, лучи, трассировщик и патроны с
+/// ионным зарядом: нет.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/check_landing_types(list/failures)
 	var/obj/item/gun/energy/ion_rifle = /obj/item/gun/energy/ionrifle
 	var/obj/item/gun/energy/ion_pistol = /obj/item/gun/energy/ionrifle/small
@@ -9411,7 +9411,7 @@
 		if(initial(path.ce_lands_at_aim))
 			failures += "кто приземляется: [path] приземляется"
 
-/// Клик по полу: заряд кончается в щёлкнутой клетке и бьёт в её пол; пуля по тому же клику летит
+/// Клик по полу: заряд кончается в щёлкнутой клетке и бьёт в её пол. Пуля по тому же клику летит
 /// дальше.
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/check_floor_landing(list/failures)
 	var/turf/start = spot(-2, 0)
@@ -9427,10 +9427,10 @@
 		var/obj/item/projectile/ion/ce_test_landing/shot = fire_at(floor, start, entry[2])
 		var/steps = fly_out(shot)
 		if(steps != 4 || !landed_on(shot, floor))
-			failures += "клик по полу, [entry[1]]: шагов [steps || "больше 6"], ожидалось 4; [describe_shot(shot)]"
+			failures += "клик по полу, [entry[1]]: шагов [steps || "больше 6"], ожидалось 4. [describe_shot(shot)]"
 	var/obj/item/projectile/bullet/pistol/ce_test_counting/bullet = fire_at(floor, start, null, /obj/item/projectile/bullet/pistol/ce_test_counting)
 	if(!fly_steps(bullet, 4) || bullet.loc != spot(2, 0))
-		failures += "клик по полу: пуля кончилась, не долетев до клетки за щёлкнутой — цела — [!QDELETED(bullet)]"
+		failures += "клик по полу: пуля кончилась, не долетев до клетки за щёлкнутой, цела [!QDELETED(bullet)]"
 	spend(bullet)
 	reset_arena()
 
@@ -9449,11 +9449,11 @@
 		var/obj/item/projectile/ion/ce_test_landing/shot = fire_at(target, start, list(16, 16))
 		var/steps = fly_out(shot)
 		if(steps != 3 || !landed_on(shot, place))
-			failures += "клик по предмету, [target]: шагов [steps || "больше 6"], ожидалось 3; [describe_shot(shot)]"
+			failures += "клик по предмету, [target]: шагов [steps || "больше 6"], ожидалось 3. [describe_shot(shot)]"
 	reset_arena()
 
 /**
- * Выстрел в моба: попавший кончается в нём и в пол не бьёт, выстрел по клетке под мобом — тоже.
+ * Выстрел в моба: попавший кончается в нём и в пол не бьёт, выстрел по клетке под мобом тоже.
  * Прошедший мимо тела и посланный в отошедшего моба кончается в клетке моба.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/check_mob_landing(list/failures, mob/living/carbon/human/ce_test_target/mark)
@@ -9465,23 +9465,23 @@
 		var/obj/item/projectile/ion/ce_test_landing/hit = fire_at(target, start)
 		var/hit_steps = fly_out(hit)
 		if(hit_steps != 3 || mark.ce_hits != hits_before + 1 || length(hit.ce_impacts) != 1 || hit.ce_impacts[1] != mark || length(hit.ce_hit_targets))
-			failures += "выстрел [target == mark ? "в моба" : "по клетке под мобом"]: шагов [hit_steps || "больше 6"], ожидалось 3; попаданий [mark.ce_hits - hits_before]; [describe_shot(hit)]"
+			failures += "выстрел [target == mark ? "в моба" : "по клетке под мобом"]: шагов [hit_steps || "больше 6"], ожидалось 3. Попаданий [mark.ce_hits - hits_before]. [describe_shot(hit)]"
 
-	// Тело сдвинуто от линии на 18 пикселей — дальше его радиуса: заряд проходит мимо.
+	// Тело сдвинуто от линии на 18 пикселей, дальше его радиуса: заряд проходит мимо.
 	var/hits_before_miss = mark.ce_hits
 	var/obj/item/projectile/ion/ce_test_landing/past = fire_at(mark, start)
 	mark.pixel_y = mark.default_pixel_y + 18
 	var/past_steps = fly_out(past)
 	mark.pixel_y = mark.default_pixel_y
 	if(past_steps != 4 || mark.ce_hits != hits_before_miss || !(mark in past.permutated) || !landed_on(past, place))
-		failures += "выстрел в моба мимо тела: шагов [past_steps || "больше 6"], ожидалось 4; попаданий [mark.ce_hits - hits_before_miss], моб пройден — [mark in past.permutated]; [describe_shot(past)]"
+		failures += "выстрел в моба мимо тела: шагов [past_steps || "больше 6"], ожидалось 4. Попаданий [mark.ce_hits - hits_before_miss], моб пройден: [mark in past.permutated]. [describe_shot(past)]"
 
 	// Моб отошёл, пока заряд летел: заряд кончается там, где моб стоял.
 	var/obj/item/projectile/ion/ce_test_landing/gone = fire_at(mark, start)
 	mark.forceMove(spot(-2, 2))
 	var/gone_steps = fly_out(gone)
 	if(gone_steps != 4 || !landed_on(gone, place))
-		failures += "выстрел в отошедшего моба: шагов [gone_steps || "больше 6"], ожидалось 4; [describe_shot(gone)]"
+		failures += "выстрел в отошедшего моба: шагов [gone_steps || "больше 6"], ожидалось 4. [describe_shot(gone)]"
 	reset_arena()
 
 /// Разброс: заряд ложится на дальности клика, и в стороне от щёлкнутой клетки тоже, а дальше не летит.
@@ -9496,7 +9496,7 @@
 		var/steps = fly_out(shot)
 		var/turf/landed = shot.ce_impact_turf
 		if(isnull(steps) || !landed || landed.x != floor.x || abs(landed.y - floor.y) > 1)
-			failures += "разброс: заряд кончился в клетке [describe_spot(landed)], ожидалась [describe_spot(floor)] или соседняя по вертикали; [describe_shot(shot)]"
+			failures += "разброс: заряд кончился в клетке [describe_spot(landed)], ожидалась [describe_spot(floor)] или соседняя по вертикали. [describe_shot(shot)]"
 			break
 		if(landed != floor)
 			aside++
@@ -9506,25 +9506,25 @@
 	reset_arena()
 
 /**
- * Срезанный угол: точка приземления в клетке, угол которой линия полёта только срезает, — заряд
+ * Срезанный угол: точка приземления в клетке, угол которой линия полёта только срезает, заряд
  * кончается в ней на том же шаге. С порогом длиннее среза угол не проверяется, и заряд кончается на
  * первом шаге за дальностью клика.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/check_corner_landing(list/failures)
-	// Клик в пиксель 4,29 клетки 1,0: точка прицела — в 19.5 пикселя восточнее и в 12.5 севернее
-	// середины клетки стрелка. Первая точка вектора — в клетке 1,1, а клетку 1,0 линия срезает на
+	// Клик в пиксель 4,29 клетки 1,0: точка прицела лежит в 19.5 пикселя восточнее и в 12.5 севернее
+	// середины клетки стрелка. Первая точка вектора: в клетке 1,1, а клетку 1,0 линия срезает на
 	// 10.6 пикселя.
 	var/turf/corner = spot(1, 0)
 	var/obj/item/projectile/ion/ce_test_landing/cut = fire_at(corner, center, list(4, 29))
 	var/cut_steps = fly_out(cut)
 	if(cut_steps != 1 || !landed_on(cut, corner))
-		failures += "срезанный угол: шагов [cut_steps || "больше 6"], ожидался 1; [describe_shot(cut)]"
+		failures += "срезанный угол: шагов [cut_steps || "больше 6"], ожидался 1. [describe_shot(cut)]"
 	ce_corner_cut_tolerance = 100
 	var/obj/item/projectile/ion/ce_test_landing/skipped = fire_at(corner, center, list(4, 29))
 	var/skipped_steps = fly_out(skipped)
 	ce_corner_cut_tolerance = 4
 	if(skipped_steps != 2 || !landed_on(skipped, spot(1, 1)))
-		failures += "срезанный угол тоньше порога: шагов [skipped_steps || "больше 6"], ожидалось 2 и клетка 1,1; [describe_shot(skipped)]"
+		failures += "срезанный угол тоньше порога: шагов [skipped_steps || "больше 6"], ожидалось 2 и клетка 1,1. [describe_shot(skipped)]"
 	reset_arena()
 
 /// Без попиксельной стрельбы заряд приземляется так же: в щёлкнутой клетке и в клетке предмета.
@@ -9539,9 +9539,9 @@
 	var/thing_steps = fly_out(at_thing)
 	ce_pixel_aim_enabled = TRUE
 	if(floor_steps != 4 || !landed_on(at_floor, floor))
-		failures += "без прицела, клик по полу: шагов [floor_steps || "больше 6"], ожидалось 4; [describe_shot(at_floor)]"
+		failures += "без прицела, клик по полу: шагов [floor_steps || "больше 6"], ожидалось 4. [describe_shot(at_floor)]"
 	if(thing_steps != 3 || !landed_on(at_thing, spot(0, 0)))
-		failures += "без прицела, клик по предмету: шагов [thing_steps || "больше 6"], ожидалось 3; [describe_shot(at_thing)]"
+		failures += "без прицела, клик по предмету: шагов [thing_steps || "больше 6"], ожидалось 3. [describe_shot(at_thing)]"
 	reset_arena()
 
 /// Рикошет и `redirect()` приземление снимают.
@@ -9552,7 +9552,7 @@
 	var/planned = redirected.ce_landing_turf == floor
 	redirected.redirect(start.x, start.y + 2, floor)
 	if(!planned || redirected.ce_landing_turf)
-		failures += "перенацеливание: приземление в щёлкнутой клетке намечено — [planned], осталось после `redirect()` — [!!redirected.ce_landing_turf]"
+		failures += "перенацеливание: приземление в щёлкнутой клетке намечено [planned], осталось после `redirect()` [!!redirected.ce_landing_turf]"
 	var/obj/item/projectile/ion/ce_test_landing/bounced = fire_at(floor, start)
 	bounced.ce_reflect_trajectory(CE_RICOCHET_AXIS_X)
 	if(bounced.ce_landing_turf)
@@ -9566,12 +9566,12 @@
 	var/obj/item/ammo_casing/haywire = /obj/item/ammo_casing/pistol/emp
 	var/obj/item/projectile/shot = fire_at(spot(0, 0), spot(-2, 0), null, initial(haywire.projectile_type))
 	if(!fly_steps(shot, 3) || shot.loc != spot(1, 0))
-		failures += "патрон с ионным зарядом: по клику в пол кончился, не долетев до клетки за щёлкнутой — цел — [!QDELETED(shot)]"
+		failures += "патрон с ионным зарядом: по клику в пол кончился, не долетев до клетки за щёлкнутой, цел [!QDELETED(shot)]"
 	spend(shot)
 	reset_arena()
 
 /**
- * Ракета РПГ по клику в пол ближе трёх клеток не взрывается, дальше — взрывается в щёлкнутой клетке,
+ * Ракета РПГ по клику в пол ближе трёх клеток не взрывается, дальше: взрывается в щёлкнутой клетке,
  * хоть та и в одной зоне со стрелком: дальность взведения считается до клетки.
  */
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing/proc/check_rocket_arming(list/failures)
@@ -9582,9 +9582,9 @@
 	var/obj/item/projectile/bullet/rpg_rocket/ce_test_landing/armed = fire_at(spot(2, 0), start, null, rocket_type)
 	var/armed_steps = fly_out(armed)
 	if(close_steps != 3 || close.ce_explosion_turf)
-		failures += "взведение ракеты, две клетки: шагов [close_steps || "больше 6"], ожидалось 3; взрыв в клетке [describe_spot(close.ce_explosion_turf)], ожидалось без взрыва"
+		failures += "взведение ракеты, две клетки: шагов [close_steps || "больше 6"], ожидалось 3. Взрыв в клетке [describe_spot(close.ce_explosion_turf)], ожидалось без взрыва"
 	if(armed_steps != 5 || armed.ce_explosion_turf != spot(2, 0))
-		failures += "взведение ракеты, четыре клетки: шагов [armed_steps || "больше 6"], ожидалось 5; взрыв в клетке [describe_spot(armed.ce_explosion_turf)], ожидался в 2,0"
+		failures += "взведение ракеты, четыре клетки: шагов [armed_steps || "больше 6"], ожидалось 5. Взрыв в клетке [describe_spot(armed.ce_explosion_turf)], ожидался в 2,0"
 	reset_arena()
 
 #undef CE_AIM_TOLERANCE
@@ -9596,7 +9596,7 @@
 /*
 	Уколы в броню (`injections.dm`). Правило проверяется трижды: чистым запросом слоя, который
 	останавливает укол, через `can_inject()` с объявленным уколом и настоящими процедурами шприца,
-	гипоспрея и гипоспрея борга — так проверяются оверрайды, которые укол объявляют, и правка кор
+	гипоспрея и гипоспрея борга, так проверяются оверрайды, которые укол объявляют, и правка кор
 	`syringestab()`.
 
 	Задержки инъекторов обнулены: человек без клиента засыпает на первом же тике `Life()`, и
@@ -9638,10 +9638,10 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Укол останавливает броня зоны: иглу — любая, струю — только надетая; в конечность идущего укол не попадает; игла на харме ломается о броню.")
+		pass("Укол останавливает броня зоны: иглу любая, струю только надетая. В конечность идущего укол не попадает. Игла на харме ломается о броню.")
 	return 1
 
-/// Человек в униформе с аксессуарами. null — одеть не вышло.
+/// Человек в униформе с аксессуарами. null: одеть не вышло.
 /datum/unit_test/combat_extended/injections/proc/make_dressed(uniform_type, list/accessory_types, mobtype = /mob/living/carbon/human)
 	var/mob/living/carbon/human/H = make_human(null, mobtype)
 	if(!H)
@@ -9661,7 +9661,7 @@
 /datum/unit_test/combat_extended/injections/proc/blood_amount(mob/living/carbon/human/H, reagent_type)
 	return H.reagents.get_reagent_amount(reagent_type)
 
-/// Числа инъекторов: каждый шприц и гипоспрей билда колет по правилам мода, струёй — только гипоспреи.
+/// Числа инъекторов: каждый шприц и гипоспрей билда колет по правилам мода, струёй колют только гипоспреи.
 /datum/unit_test/combat_extended/injections/proc/check_numbers(list/failures)
 	var/list/families = list(
 		/obj/item/reagent_containers/syringe = FALSE,
@@ -9674,7 +9674,7 @@
 			if(isnull(initial(injector.ce_injection_pen)))
 				failures += "числа: у [path] нет пробития укола"
 			if(initial(injector.ce_injection_jet) != families[family])
-				failures += "числа: [path] колет струёй — [initial(injector.ce_injection_jet)], ожидалось [families[family]]"
+				failures += "числа: [path] колет струёй [initial(injector.ce_injection_jet)], ожидалось [families[family]]"
 
 /// Слой, который останавливает укол, чистым запросом: иглу и струю по каждой цели.
 /datum/unit_test/combat_extended/injections/proc/check_blockers(list/failures)
@@ -9710,15 +9710,15 @@
 	mesh.replaced(meshed, meshed.get_organ(BP_CHEST))
 	var/datum/extension/armor/mesh_armor = get_extension(mesh, /datum/extension/armor)
 	if(!(mesh in meshed.internal_organs) || !mesh_armor || mesh_armor.get_armor_sharp_melee() < needle.ce_injection_pen)
-		failures += "слои: подкожная броня не встала или слабее иглы — проверять нечего"
+		failures += "слои: подкожная броня не встала или слабее иглы, проверять нечего"
 		return
 	var/datum/extension/armor/hide = get_extension(serpentid, /datum/extension/armor)
 	if(!hide || hide.get_armor_sharp_melee() < needle.ce_injection_pen)
-		failures += "слои: естественная броня GAS слабее иглы — проверять нечего"
+		failures += "слои: естественная броня GAS слабее иглы, проверять нечего"
 		return
 	var/datum/extension/armor/uniform_armor = get_extension(officer.w_uniform, /datum/extension/armor)
 	if(!uniform_armor || uniform_armor.get_armor_sharp_melee() <= 0)
-		failures += "слои: у униформы охраны нет острой брони — проверять нечего"
+		failures += "слои: у униформы охраны нет острой брони, проверять нечего"
 		return
 
 	// Название, цель, зона, остановлена ли игла, остановлена ли струя.
@@ -9737,11 +9737,11 @@
 		var/needle_stopped = !!H.ce_get_injection_blocker(test_case[3], needle)
 		var/jet_stopped = !!H.ce_get_injection_blocker(test_case[3], jet)
 		if(needle_stopped != test_case[4])
-			failures += "слои, [test_case[1]]: игла остановлена — [needle_stopped], ожидалось [test_case[4]]"
+			failures += "слои, [test_case[1]]: игла остановлена [needle_stopped], ожидалось [test_case[4]]"
 		if(jet_stopped != test_case[5])
-			failures += "слои, [test_case[1]]: струя остановлена — [jet_stopped], ожидалось [test_case[5]]"
+			failures += "слои, [test_case[1]]: струя остановлена [jet_stopped], ожидалось [test_case[5]]"
 
-	// Пробитие ровно в рейтинг слоя слой останавливает. Слой без острой брони — обычный халат — не
+	// Пробитие ровно в рейтинг слоя слой останавливает. Слой без острой брони (обычный халат) не
 	// останавливает и укол без пробития.
 	var/mob/living/carbon/human/plain = make_human()
 	var/obj/item/clothing/suit/storage/toggle/labcoat/plain_coat = new(plain.loc)
@@ -9749,7 +9749,7 @@
 	plain.equip_to_slot_or_del(plain_coat, slot_wear_suit)
 	var/datum/extension/armor/plain_armor = get_extension(plain_coat, /datum/extension/armor)
 	if(plain.wear_suit != plain_coat || !plain_armor || plain_armor.get_armor_sharp_melee() != 0)
-		failures += "слои: обычный халат не надет, без брони или с острой бронёй — проверять нечего"
+		failures += "слои: обычный халат не надет, без брони или с острой бронёй, проверять нечего"
 		return
 	var/full_pen = needle.ce_injection_pen
 	needle.ce_injection_pen = uniform_armor.get_armor_sharp_melee()
@@ -9783,7 +9783,7 @@
 	set_moving(suited, FALSE)
 
 	if(guarded.can_inject(medic, BP_L_ARM) != CAN_INJECT)
-		failures += "can_inject: без объявления кор версия не пускает укол в руку под наручами — проверять нечего"
+		failures += "can_inject: без объявления кор версия не пускает укол в руку под наручами, проверять нечего"
 		return
 	needle.ce_announce_injection(guarded)
 	if(guarded.can_inject(medic, BP_L_ARM))
@@ -9813,14 +9813,14 @@
 	spawned += voidsuit
 	suited.equip_to_slot_or_del(voidsuit, slot_wear_suit)
 	if(suited.wear_suit != voidsuit || !suited.ce_get_injection_blocker(BP_CHEST, needle))
-		failures += "can_inject: войдсьют не надет или иглу не останавливает — проверять нечего"
+		failures += "can_inject: войдсьют не надет или иглу не останавливает, проверять нечего"
 		return
 	needle.ce_announce_injection(suited)
 	var/allowed = suited.can_inject(medic, BP_CHEST)
 	if(allowed != INJECTION_PORT)
-		failures += "can_inject: объявленный укол в грудь войдсьюта — [allowed], ожидался порт ([INJECTION_PORT])"
+		failures += "can_inject: объявленный укол в грудь войдсьюта [allowed], ожидался порт ([INJECTION_PORT])"
 
-/// Движение цели: в конечность идущего не попасть, в корпус — можно; себя и лежащего это не касается.
+/// Движение цели: в конечность идущего не попасть, в корпус можно. Себя и лежащего это не касается.
 /datum/unit_test/combat_extended/injections/proc/check_dodging(list/failures)
 	var/mob/living/carbon/human/runner = make_human()
 	if(!runner)
@@ -9842,10 +9842,10 @@
 		needle.ce_announce_injection(runner)
 		var/allowed = !!runner.can_inject(test_case[3], test_case[4])
 		if(allowed != test_case[6])
-			failures += "движение, [test_case[1]]: укол прошёл — [allowed], ожидалось [test_case[6]]"
+			failures += "движение, [test_case[1]]: укол прошёл [allowed], ожидалось [test_case[6]]"
 	runner.lying = FALSE
 
-/// Настоящие процедуры инъекторов: в грудь под скрытым жилетом не вводят ничего, в голую — вводят.
+/// Настоящие процедуры инъекторов: в грудь под скрытым жилетом не вводят ничего, в голую вводят.
 /datum/unit_test/combat_extended/injections/proc/check_injectors(list/failures)
 	var/mob/living/carbon/human/bare = make_human()
 	var/mob/living/carbon/human/vested = make_dressed(/obj/item/clothing/under/color/grey, list(/obj/item/clothing/accessory/armor_plate/sneaky))
@@ -9856,7 +9856,7 @@
 	set_moving(vested, FALSE)
 	medic.zone_sel.selecting = BP_CHEST
 	if(vested.can_inject(medic, BP_CHEST) != CAN_INJECT)
-		failures += "инъекторы: кор версия не пускает укол в грудь под скрытым жилетом — проверять нечего"
+		failures += "инъекторы: кор версия не пускает укол в грудь под скрытым жилетом, проверять нечего"
 		return
 
 	var/obj/item/reagent_containers/syringe/syringe = new(medic.loc)
@@ -9880,25 +9880,25 @@
 		var/before = blood_amount(H, /datum/reagent/water)
 		syringe.injectMob(H, medic)
 		if((blood_amount(H, /datum/reagent/water) > before) != expected)
-			failures += "инъекторы, шприц [label]: ввёл — [!expected], ожидалось [expected]"
+			failures += "инъекторы, шприц [label]: ввёл [!expected], ожидалось [expected]"
 		syringe.reagents.clear_reagents()
 
 		drawer.drawReagents(H, medic)
 		if(drawer.reagents.has_reagent(/datum/reagent/blood) != expected)
-			failures += "инъекторы, забор крови [label]: кровь взята — [!expected], ожидалось [expected]"
+			failures += "инъекторы, забор крови [label]: кровь взята [!expected], ожидалось [expected]"
 		drawer.reagents.clear_reagents()
 
 		hypospray.reagents.add_reagent(/datum/reagent/water, 5)
 		before = blood_amount(H, /datum/reagent/water)
 		hypospray.inject_mob(H, medic)
 		if((blood_amount(H, /datum/reagent/water) > before) != expected)
-			failures += "инъекторы, гипоспрей [label]: ввёл — [!expected], ожидалось [expected]"
+			failures += "инъекторы, гипоспрей [label]: ввёл [!expected], ожидалось [expected]"
 		hypospray.reagents.clear_reagents()
 
 		before = blood_amount(H, borg_reagent)
 		borghypo.use_before(H, medic)
 		if((blood_amount(H, borg_reagent) > before) != expected)
-			failures += "инъекторы, гипоспрей борга [label]: ввёл — [!expected], ожидалось [expected]"
+			failures += "инъекторы, гипоспрей борга [label]: ввёл [!expected], ожидалось [expected]"
 
 		if(H.ce_injector)
 			failures += "инъекторы, [label]: после уколов осталось объявление"
@@ -9941,7 +9941,7 @@
 		var/landed = length(syringe.blood_DNA) > 0
 		var/broken = syringe.mode == SYRINGE_BROKEN
 		if(landed != test_case[5] || broken != test_case[6])
-			failures += "удар [test_case[1]]: попал — [landed], игла сломана — [broken]; ожидалось [test_case[5]] и [test_case[6]]"
+			failures += "удар [test_case[1]]: попал [landed], игла сломана [broken]. Ожидалось [test_case[5]] и [test_case[6]]"
 		if(!landed && syringe.reagents.total_volume != syringe.volume)
 			failures += "удар [test_case[1]]: сорванный удар ввёл [syringe.volume - syringe.reagents.total_volume] единиц"
 
@@ -9960,7 +9960,7 @@
 /*
 	Толчок вида от выстрела (`view_kick.dm`). Сколько оружие толкает вид и куда, проверяется
 	числами: длина по `screen_shake` и по штрафу за одну руку, хват двумя руками против одной,
-	направление от цели, выстрел в свою клетку, орудие меха. Числа — от настроек, а не свои.
+	направление от цели, выстрел в свою клетку, орудие меха. Числа: от настроек, а не свои.
 
 	Клиента у тестового человека нет, и толкать ему нечего. Поэтому цепочка анимации проигрывается
 	на предмете со своим сдвигом: после неё сдвиг должен остаться прежним. А что кор
@@ -9995,7 +9995,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Выстрел толкает вид от цели на пиксели по `screen_shake` и штрафу оружия за одну руку, без хвата двумя руками — ещё сильнее; орудие меха не толкает; после толчка вид на прежнем месте.")
+		pass("Выстрел толкает вид от цели на пиксели по `screen_shake` и штрафу оружия за одну руку, без хвата двумя руками: ещё сильнее. Орудие меха не толкает. После толчка вид на прежнем месте.")
 	return 1
 
 /// Длины толчка расходятся: дробные настройки не обязаны сходиться до последнего знака.
@@ -10028,7 +10028,7 @@
 	gun.one_hand_penalty = null
 	var/unset = gun.ce_get_view_kick_reach(shooter)
 	if(differs(unset, light))
-		failures += "две руки, штраф не задан: толчок [unset], ожидалось как без штрафа — [light]"
+		failures += "две руки, штраф не задан: толчок [unset], ожидалось как без штрафа [light]"
 	gun.one_hand_penalty = doubling / 2
 	var/medium = gun.ce_get_view_kick_reach(shooter)
 	if(differs(medium, 1.5 * light))
@@ -10036,7 +10036,7 @@
 	gun.one_hand_penalty = doubling
 	var/braced = gun.ce_get_view_kick_reach(shooter)
 	if(differs(braced, 2 * light))
-		failures += "две руки, штраф равен делителю: толчок [braced], ожидалось вдвое больше, чем без штрафа, — [2 * light]"
+		failures += "две руки, штраф равен делителю: толчок [braced], ожидалось вдвое больше, чем без штрафа, [2 * light]"
 
 	// Вторая рука занята: хвата двумя руками нет, и штраф считается несколько раз.
 	var/obj/item/pen/pen = new(shooter.loc)
@@ -10049,15 +10049,15 @@
 	var/one_handed = gun.ce_get_view_kick_reach(shooter)
 	var/expected = (1 + ce_view_kick_one_hand_penalty_mult) * light
 	if(differs(one_handed, expected) || one_handed <= braced)
-		failures += "одна рука, штраф равен делителю: толчок [one_handed], ожидалось [expected] — больше, чем с двух рук ([braced])"
+		failures += "одна рука, штраф равен делителю: толчок [one_handed], ожидалось [expected], больше, чем с двух рук ([braced])"
 	for(var/no_penalty in list(0, null))
 		gun.one_hand_penalty = no_penalty
 		var/unpunished = gun.ce_get_view_kick_reach(shooter)
 		if(differs(unpunished, light))
-			failures += "одна рука, штраф [isnull(no_penalty) ? "не задан" : "ноль"]: толчок [unpunished], ожидалось как с двух рук — [light]"
+			failures += "одна рука, штраф [isnull(no_penalty) ? "не задан" : "ноль"]: толчок [unpunished], ожидалось как с двух рук [light]"
 	shooter.drop_from_inventory(pen)
 
-/// Направление толчка: от цели, по каждой оси отдельно. Сторона — та, с которой у карты есть клетка.
+/// Направление толчка: от цели, по каждой оси отдельно. Сторона: та, с которой у карты есть клетка.
 /datum/unit_test/combat_extended/view_kick/proc/check_direction(list/failures)
 	gun.screen_shake = 1
 	gun.one_hand_penalty = 0
@@ -10090,7 +10090,7 @@
 		failures += "орудие меха: у модуля нет ружья с `screen_shake`, проверять нечего"
 		return
 	if(!mounted.ce_is_mech_mounted() || gun.ce_is_mech_mounted())
-		failures += "орудие меха: стоит на мехе — [mounted.ce_is_mech_mounted()], ружьё в руке — [gun.ce_is_mech_mounted()]"
+		failures += "орудие меха: стоит на мехе [mounted.ce_is_mech_mounted()], ружьё в руке [gun.ce_is_mech_mounted()]"
 	if(mounted.ce_get_view_kick_reach(shooter) != 0)
 		failures += "орудие меха толкает вид на [mounted.ce_get_view_kick_reach(shooter)]"
 	if(!mounted.ce_kick_view(shooter, get_turf(shooter)))
@@ -10139,12 +10139,12 @@
 
 
 /*
-	Разброс от отдачи (`recoil_spread.dm`). Стаки — числа на стрелке, а время им передаётся
-	аргументом: ждать тесту нечего. Проверяется, сколько стаков даёт выстрел — по силе отдачи оружия и
-	по навыку стрелка; как стаки убывают и где их потолок; что дуга от них ложится сверх навыка, а не
-	внутрь него; и что оружие запоминает дугу в снаряде раньше, чем начисляет стаки за тот же выстрел.
+	Разброс от отдачи (`recoil_spread.dm`). Стаки это числа на стрелке, а время им передаётся
+	аргументом: ждать тесту нечего. Проверяется, сколько стаков даёт выстрел: по силе отдачи оружия и
+	по навыку стрелка. Как стаки убывают и где их потолок. Что дуга от них ложится сверх навыка, а не
+	внутрь него. И что оружие запоминает дугу в снаряде раньше, чем начисляет стаки за тот же выстрел.
 
-	Срок стака и градусы на стак на время теста — не единицы: с единицей настройка, которую код
+	Срок стака и градусы на стак на время теста не единицы: с единицей настройка, которую код
 	забыл, давала бы те же числа.
 */
 /datum/unit_test/combat_extended/recoil_spread
@@ -10187,7 +10187,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Выстрел с отдачей даёт стрелку стаки по силе отдачи оружия и по навыку, без отдачи — ни одного; стаки убывают по одному за срок и выше потолка не копятся; дуга от них ложится сверх навыка; оружие запоминает её в снаряде раньше, чем начисляет стаки за тот же выстрел.")
+		pass("Выстрел с отдачей даёт стрелку стаки по силе отдачи оружия и по навыку, без отдачи: ни одного. Стаки убывают по одному за срок и выше потолка не копятся. Дуга от них ложится сверх навыка. Оружие запоминает её в снаряде раньше, чем начисляет стаки за тот же выстрел.")
 	return 1
 
 /// Числа расходятся: дробные настройки не обязаны сходиться до последнего знака.
@@ -10209,7 +10209,7 @@
 	shot.ce_recoil_arc = recoil_arc
 	return shot
 
-/// Стаки за выстрел: сила отдачи оружия на множитель навыка стрелка; без отдачи — ни одного.
+/// Стаки за выстрел: сила отдачи оружия на множитель навыка стрелка. Без отдачи: ни одного.
 /datum/unit_test/combat_extended/recoil_spread/proc/check_gain(list/failures)
 	var/skill_step = ce_recoil_spread_gain_per_skill
 	var/strength = gun.ce_get_recoil_strength(shooter)
@@ -10229,27 +10229,27 @@
 		var/gain = gun.ce_get_recoil_stack_gain(shooter)
 		var/expected = strength * max(entry[2], 0)
 		if(differs(gain, expected))
-			failures += "стаки за выстрел: навык [entry[1]] — [gain], ожидалось [expected]"
+			failures += "стаки за выстрел: навык [entry[1]] [gain], ожидалось [expected]"
 	if(ce_get_recoil_skill_mult(SKILL_MASTER + 100) < 0)
-		failures += "стаки за выстрел: множитель навыка ушёл ниже нуля — [ce_get_recoil_skill_mult(SKILL_MASTER + 100)]"
+		failures += "стаки за выстрел: множитель навыка ушёл ниже нуля [ce_get_recoil_skill_mult(SKILL_MASTER + 100)]"
 
-	// Стрелок без набора навыков — простой моб — получает стаки как обученный.
+	// Стрелок без набора навыков (простой моб) получает стаки как обученный.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_UNSKILLED))
 	var/mob/living/simple_animal/passive/mouse/mouse = new(shooter.loc)
 	spawned += mouse
 	var/unskilled_mob = gun.ce_get_recoil_stack_gain(mouse)
 	if(differs(unskilled_mob, strength))
-		failures += "стаки за выстрел: простой моб — [unskilled_mob], ожидалось как у обученного — [strength]"
+		failures += "стаки за выстрел: простой моб [unskilled_mob], ожидалось как у обученного [strength]"
 
-	// Тяжелее оружие в руках — больше стаков: со штрафом, равным делителю толчка вида, вдвое.
+	// Тяжелее оружие в руках, больше стаков: со штрафом, равным делителю толчка вида, вдвое.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_TRAINED))
 	gun.one_hand_penalty = ce_view_kick_penalty_divisor
 	var/heavy = gun.ce_get_recoil_stack_gain(shooter)
 	if(differs(heavy, 2 * strength))
-		failures += "стаки за выстрел: штраф за одну руку равен делителю — [heavy], ожидалось вдвое больше, чем без штрафа, — [2 * strength]"
+		failures += "стаки за выстрел: штраф за одну руку равен делителю [heavy], ожидалось вдвое больше, чем без штрафа, [2 * strength]"
 	gun.one_hand_penalty = 0
 
-	// Оружие без `screen_shake` — лучевое — стаков не даёт и не начисляет.
+	// Оружие без `screen_shake` (лучевое) стаков не даёт и не начисляет.
 	gun.screen_shake = 0
 	give_stacks(0)
 	gun.ce_build_recoil(shooter)
@@ -10287,7 +10287,7 @@
 		if(differs(stacks, entry[2]))
 			failures += "убывание: из 5.5 стака через [entry[1]] срока осталось [stacks], ожидалось [entry[2]]"
 	if(shooter.ce_recoil_stacks != 5.5 || shooter.ce_recoil_stacks_time != clock)
-		failures += "убывание: чтение стаков изменило их — [shooter.ce_recoil_stacks] с [shooter.ce_recoil_stacks_time], было 5.5 с [clock]"
+		failures += "убывание: чтение стаков изменило их [shooter.ce_recoil_stacks] с [shooter.ce_recoil_stacks_time], было 5.5 с [clock]"
 
 	// Выстрел через полтора срока: один стак уже снят, а следующий снимется через полсрока, как и
 	// без выстрела.
@@ -10296,7 +10296,7 @@
 	var/before_term = shooter.ce_get_recoil_stacks(clock + 1.75 * term)
 	var/at_term = shooter.ce_get_recoil_stacks(clock + 2 * term)
 	if(differs(after_shot, 6.5) || differs(before_term, 6.5) || differs(at_term, 5.5))
-		failures += "убывание: выстрел на 2 стака через полтора срока — [after_shot], за четверть срока до второго — [before_term], на втором сроке — [at_term]; ожидалось 6.5, 6.5 и 5.5"
+		failures += "убывание: выстрел на 2 стака через полтора срока [after_shot], за четверть срока до второго [before_term], на втором сроке [at_term]. Ожидалось 6.5, 6.5 и 5.5"
 
 	// У стрелка, с которого стаки уже сошли, отсчёт начинается с выстрела.
 	give_stacks(3)
@@ -10304,7 +10304,7 @@
 	var/fresh = shooter.ce_get_recoil_stacks(clock + 10.75 * term)
 	var/fresh_term = shooter.ce_get_recoil_stacks(clock + 11 * term)
 	if(differs(fresh, 2) || differs(fresh_term, 1))
-		failures += "убывание: выстрел на 2 стака после того, как прежние сошли, — через три четверти срока [fresh], через срок [fresh_term]; ожидалось 2 и 1"
+		failures += "убывание: выстрел на 2 стака после того, как прежние сошли, через три четверти срока [fresh], через срок [fresh_term]. Ожидалось 2 и 1"
 
 	// Нулевой срок: стаки не держатся, и делить на него никто не пытается.
 	give_stacks(5)
@@ -10324,7 +10324,7 @@
 	shooter.ce_add_recoil_stacks(2 * cap, clock)
 	var/flooded = shooter.ce_get_recoil_stacks(clock)
 	if(topped != cap || flooded != cap)
-		failures += "потолок: [cap - 1] стаков и ещё 5 — [topped], и ещё [2 * cap] — [flooded]; ожидался потолок [cap]"
+		failures += "потолок: [cap - 1] стаков и ещё 5 [topped], и ещё [2 * cap] [flooded]. Ожидался потолок [cap]"
 
 /// Дуга от отдачи: градусы на стак, сверх разброса оружия и навыка, а не внутри него.
 /datum/unit_test/combat_extended/recoil_spread/proc/check_arc(list/failures)
@@ -10332,7 +10332,7 @@
 	give_stacks(7)
 	var/shooter_arc = shooter.ce_get_recoil_arc(clock)
 	if(differs(shooter_arc, 7 * per_stack))
-		failures += "дуга: у стрелка с 7 стаками — [shooter_arc], ожидалось [7 * per_stack]"
+		failures += "дуга: у стрелка с 7 стаками [shooter_arc], ожидалось [7 * per_stack]"
 
 	var/hits_were_enabled = ce_physical_hits_enabled
 	var/aim_was_enabled = ce_pixel_aim_enabled
@@ -10354,7 +10354,7 @@
 		var/obj/item/projectile/shot = make_shot(entry[3], entry[4])
 		var/arc = shot.ce_get_spread_arc()
 		if(differs(arc, entry[5]))
-			failures += "дуга, [entry[1]]: разброс оружия [entry[3]], отдача [entry[4]]° — дуга [arc], ожидалась [entry[5]]"
+			failures += "дуга, [entry[1]]: разброс оружия [entry[3]], отдача [entry[4]]°, дуга [arc], ожидалась [entry[5]]"
 
 	// Выстрел в упор и трассировщик летят без разброса, сколько бы отдачи ни накопилось.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_TRAINED))
@@ -10373,10 +10373,10 @@
 	ce_physical_hits_enabled = hits_were_enabled
 	ce_pixel_aim_enabled = aim_was_enabled
 	if(differs(arc_without, weapon_arc + recoil_arc))
-		failures += "дуга: без физических попаданий дуга [arc_without], ожидались разброс оружия и отдача — [weapon_arc + recoil_arc]"
+		failures += "дуга: без физических попаданий дуга [arc_without], ожидались разброс оружия и отдача [weapon_arc + recoil_arc]"
 
 /// Оружие запоминает дугу в снаряде раньше, чем начисляет стаки за тот же выстрел: первый выстрел
-/// летит без отдачи, второй — с отдачей первого.
+/// летит без отдачи, второй с отдачей первого.
 /datum/unit_test/combat_extended/recoil_spread/proc/check_shot_order(list/failures)
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_TRAINED))
 	// Оружие читает часы мира, а не теста.
@@ -10393,7 +10393,7 @@
 		failures += "выстрел: первый выстрел запомнил дугу от отдачи [first.ce_recoil_arc], ожидался ноль"
 	var/expected_arc = gain * ce_recoil_spread_arc_per_stack
 	if(differs(second.ce_recoil_arc, expected_arc))
-		failures += "выстрел: второй выстрел запомнил дугу [second.ce_recoil_arc], ожидалась отдача первого — [expected_arc]"
+		failures += "выстрел: второй выстрел запомнил дугу [second.ce_recoil_arc], ожидалась отдача первого [expected_arc]"
 	var/stacks = shooter.ce_get_recoil_stacks()
 	var/expected_stacks = min(2 * gain, ce_recoil_spread_max_stacks)
 	if(differs(stacks, expected_stacks))
@@ -10402,9 +10402,9 @@
 
 /*
 	Кольцо разброса (`spread_ring.dm`). Дуга следующего выстрела сверяется с дугой настоящего снаряда
-	из `process_accuracy()`, радиус кольца — с тем, как далеко от точки прицела проходит выстрел,
-	отклонённый на половину дуги (`ce_aim_at()`), а курсор — по его пикселям. Клиента у теста нет:
-	стрелок — подтип, которому «есть кому показывать», масштаб экрана тест ставит сам, а как кольцо
+	из `process_accuracy()`, радиус кольца с тем, как далеко от точки прицела проходит выстрел,
+	отклонённый на половину дуги (`ce_aim_at()`), а курсор по его пикселям. Клиента у теста нет:
+	стрелок это подтип, которому "есть кому показывать", масштаб экрана тест ставит сам, а как кольцо
 	выглядит и успевает ли за мышью, видно только в игре.
 */
 /// Допуск на дробные градусы и пиксели расчёта.
@@ -10476,7 +10476,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Кольцо разброса — расстояние, ближе которого к точке прицела проходит выстрел с дугой следующего выстрела, той же, что получает снаряд, — переведено в экранные пиксели и нарисовано вокруг горячей точки курсора с перекрестием апстрима; пересчитывается при наведении, выстреле, сходе отдачи, шаге и смене режима огня; без разброса, над тем, что рядом, и без масштаба его нет, как нет с предохранителем на виду, без оружия в руке, с выключенной настройкой и без попиксельной стрельбы.")
+		pass("Кольцо разброса (расстояние, ближе которого к точке прицела проходит выстрел с дугой следующего выстрела, той же, что получает снаряд), переведено в экранные пиксели и нарисовано вокруг горячей точки курсора с перекрестием апстрима. Пересчитывается при наведении, выстреле, сходе отдачи, шаге и смене режима огня. Без разброса, над тем, что рядом, и без масштаба его нет, как нет с предохранителем на виду, без оружия в руке, с выключенной настройкой и без попиксельной стрельбы.")
 	return 1
 
 /// Клетка со сдвигом от клетки стрелка.
@@ -10509,14 +10509,14 @@
 		return
 	var/expected = expected_radius(aim, scale)
 	if(!expected)
-		failures += "[label]: ожидаемый радиус — ноль, проверять нечего"
+		failures += "[label]: ожидаемый радиус, ноль, проверять нечего"
 		return
 	if(ring.radius != expected)
 		failures += "[label]: радиус кольца [ring.radius], ожидался [expected]"
 	if(gun.get_mouse_pointer(shooter) != ce_get_spread_ring_cursor(expected, CE_RING_CROSSHAIR))
-		failures += "[label]: курсор оружия — не кольцо радиуса [expected] с перекрестием"
+		failures += "[label]: курсор оружия не кольцо радиуса [expected] с перекрестием"
 
-/// Кольца нет, и курсор оружия — перекрестие апстрима.
+/// Кольца нет, и курсор оружия: перекрестие апстрима.
 /datum/unit_test/combat_extended/spread_ring/proc/expect_no_ring(list/failures, label, datum/extension/ce_spread_ring/ring)
 	if(!ring)
 		failures += "[label]: кольца нет вовсе, ожидалось нулевое"
@@ -10524,10 +10524,10 @@
 	if(ring.radius)
 		failures += "[label]: радиус кольца [ring.radius], ожидался ноль"
 	if(gun.get_mouse_pointer(shooter) != CE_RING_CROSSHAIR)
-		failures += "[label]: курсор оружия — не перекрестие апстрима"
+		failures += "[label]: курсор оружия не перекрестие апстрима"
 
 
-/// Дуга следующего выстрела — та, что получил бы снаряд: оружие, хват, навык, отдача.
+/// Дуга следующего выстрела та, что получил бы снаряд: оружие, хват, навык, отдача.
 /datum/unit_test/combat_extended/spread_ring/proc/check_next_arc(list/failures)
 	var/weapon_arc = 0.5 * ce_dispersion_arc_degrees
 	var/level_arc = ce_skill_dispersion_arc_degrees
@@ -10545,7 +10545,7 @@
 		give_stacks(entry[3])
 		var/list/arcs = gun.ce_get_next_spread_arcs(shooter)
 		if(differs(arcs[1], entry[4]) || differs(arcs[2], entry[5]))
-			failures += "дуга следующего выстрела, [entry[1]]: [arcs[1]], без отдачи [arcs[2]]; ожидалось [entry[4]] и [entry[5]]"
+			failures += "дуга следующего выстрела, [entry[1]]: [arcs[1]], без отдачи [arcs[2]]. Ожидалось [entry[4]] и [entry[5]]"
 
 	// Настоящий снаряд из этого оружия получает ту же дугу.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_BASIC))
@@ -10556,9 +10556,9 @@
 	gun.process_accuracy(shot, shooter, near(3, 0), 1, shooter.can_wield_item(gun) && gun.is_held_twohanded(shooter))
 	var/list/basic = gun.ce_get_next_spread_arcs(shooter)
 	if(differs(basic[1], shot.ce_get_spread_arc()))
-		failures += "дуга следующего выстрела: базовый навык, 3 стака — [basic[1]], а снаряд из оружия получил [shot.ce_get_spread_arc()]"
+		failures += "дуга следующего выстрела: базовый навык, 3 стака [basic[1]], а снаряд из оружия получил [shot.ce_get_spread_arc()]"
 
-	// Тяжёлое оружие с одной руки разбрасывает сильнее, двумя руками — нет.
+	// Тяжёлое оружие с одной руки разбрасывает сильнее, двумя руками: нет.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_TRAINED))
 	give_stacks(0)
 	gun.one_hand_penalty = 6
@@ -10571,7 +10571,7 @@
 	gun.one_hand_penalty = 0
 	var/one_hand_expected = (0.5 + 6 * 0.5) * ce_dispersion_arc_degrees
 	if(differs(two_hands[1], weapon_arc) || differs(one_hand[1], one_hand_expected))
-		failures += "дуга следующего выстрела, штраф за одну руку 6: двумя руками [two_hands[1]], одной [one_hand[1]]; ожидалось [weapon_arc] и [one_hand_expected]"
+		failures += "дуга следующего выстрела, штраф за одну руку 6: двумя руками [two_hands[1]], одной [one_hand[1]]. Ожидалось [weapon_arc] и [one_hand_expected]"
 
 	// Без физических попаданий навык в дугу не идёт, а отдача идёт.
 	ce_physical_hits_enabled = FALSE
@@ -10580,7 +10580,7 @@
 	var/list/plain = gun.ce_get_next_spread_arcs(shooter)
 	ce_physical_hits_enabled = TRUE
 	if(differs(plain[1], weapon_arc + recoil_arc) || differs(plain[2], weapon_arc))
-		failures += "дуга следующего выстрела без физических попаданий: [plain[1]], без отдачи [plain[2]]; ожидалось [weapon_arc + recoil_arc] и [weapon_arc]"
+		failures += "дуга следующего выстрела без физических попаданий: [plain[1]], без отдачи [plain[2]]. Ожидалось [weapon_arc + recoil_arc] и [weapon_arc]"
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_TRAINED))
 	give_stacks(0)
 
@@ -10630,15 +10630,15 @@
 	for(var/list/entry as anything in cases)
 		var/scale = ce_get_screen_scale(entry[1], entry[2])
 		if(isnull(scale) || differs(scale, entry[3]))
-			failures += "масштаб: карта [entry[1]], вид [entry[2]] — [scale], ожидался [entry[3]]"
+			failures += "масштаб: карта [entry[1]], вид [entry[2]] [scale], ожидался [entry[3]]"
 	for(var/bad in list("", "0x0", "abc"))
 		if(!isnull(ce_get_screen_scale(bad, "19x15")))
-			failures += "масштаб: из размера карты «[bad]» вышел масштаб [ce_get_screen_scale(bad, "19x15")]"
+			failures += "масштаб: из размера карты \"[bad]\" вышел масштаб [ce_get_screen_scale(bad, "19x15")]"
 
 
 /**
  * Что не так с кольцом радиуса `radius` на строке пикселей над серединой курсора `cursor`, или null.
- * Правее перекрестия апстрима — его плечо доходит до 15 пикселей от середины — на строке должны
+ * Правее перекрестия апстрима (его плечо доходит до 15 пикселей от середины) на строке должны
  * быть белый пиксель кольца на радиусе, чёрный пиксель обводки сразу за ним и больше ничего. Кольцо
  * внутри перекрестия так не проверить: такой радиус не смотрится.
  */
@@ -10659,13 +10659,13 @@
 		else if(pixel == "#000000" && from_center >= radius + 1 && from_center <= radius + 2)
 			black_found = TRUE
 		else
-			return "пиксель [pixel] в [from_center] от середины, а кольцо — на [radius]"
+			return "пиксель [pixel] в [from_center] от середины, а кольцо: на [radius]"
 	if(!white_found || !black_found)
 		return "на строке над серединой [white_found ? "есть" : "нет"] белого кольца на [radius] и [black_found ? "есть" : "нет"] чёрной обводки за ним"
 	return null
 
-/// Курсор: наименьший квадрат, в который входит кольцо с обводкой; кольцо белое в чёрной обводке
-/// вокруг середины; перекрестие апстрима посередине, без него — точка; состояние "", один на радиус.
+/// Курсор: наименьший квадрат, в который входит кольцо с обводкой. Кольцо белое в чёрной обводке
+/// вокруг середины. Перекрестие апстрима посередине, без него: точка. Состояние "", один на радиус.
 /datum/unit_test/combat_extended/spread_ring/proc/check_cursor(list/failures)
 	// list(радиус, ожидаемый размер картинки)
 	var/list/sizes = list(list(10, 32), list(29, 64), list(30, 128), list(125, 256), list(253, 512))
@@ -10675,7 +10675,7 @@
 			failures += "курсор радиуса [entry[1]]: [cursor.Width()]x[cursor.Height()], ожидался [entry[2]]x[entry[2]]"
 		var/list/states = icon_states(cursor)
 		if(length(states) != 1 || states[1] != "")
-			failures += "курсор радиуса [entry[1]]: состояния [json_encode(states)], ожидалось одно — \"\""
+			failures += "курсор радиуса [entry[1]]: состояния [json_encode(states)], ожидалось одно \"\""
 		var/problem = describe_ring_row(cursor, entry[1])
 		if(problem)
 			failures += "курсор радиуса [entry[1]]: [problem]"
@@ -10697,7 +10697,7 @@
 				continue
 			checked++
 			if(cursor.GetPixel(x + shift, y + shift) != crosshair_pixel)
-				failures += "курсор: пиксель перекрестия [x],[y] ([crosshair_pixel]) на курсоре в [x + shift],[y + shift] — [cursor.GetPixel(x + shift, y + shift)]"
+				failures += "курсор: пиксель перекрестия [x],[y] ([crosshair_pixel]) на курсоре в [x + shift],[y + shift] [cursor.GetPixel(x + shift, y + shift)]"
 	if(!checked)
 		failures += "курсор: у перекрестия апстрима нет видимых пикселей, проверять нечего"
 	var/icon/dot_cursor = icon(ce_get_spread_ring_cursor(30, null))
@@ -10706,13 +10706,13 @@
 		failures += "курсор без перекрестия: посередине [dot_cursor.GetPixel(dot_center, dot_center)], ожидалась белая точка"
 
 
-/// Во что целится кольцо: клетка и то, что на ней, с пикселем входа мыши; клетка под сеткой под
-/// картой; ни панель интерфейса, ни вещь в инвентаре, ни удалённое.
+/// Во что целится кольцо: клетка и то, что на ней, с пикселем входа мыши. Клетка под сеткой под
+/// картой. Ни панель интерфейса, ни вещь в инвентаре, ни удалённое.
 /datum/unit_test/combat_extended/spread_ring/proc/check_hover(list/failures)
 	var/datum/extension/ce_spread_ring/ring = get_or_create_extension(shooter, /datum/extension/ce_spread_ring)
 	var/turf/east = near(3, 0)
 	if(!ring.note_hover(east, "icon-x=20;icon-y=9") || ring.get_aim_target() != east || ring.hover_icon_x != 20 || ring.hover_icon_y != 9)
-		failures += "наведение на клетку строкой параметров: цель [ring.get_aim_target()], пиксель [ring.hover_icon_x],[ring.hover_icon_y]; ожидались клетка и 20,9"
+		failures += "наведение на клетку строкой параметров: цель [ring.get_aim_target()], пиксель [ring.hover_icon_x],[ring.hover_icon_y]. Ожидались клетка и 20,9"
 	if(!ring.note_hover(east, list(MOUSE_ICON_X = "7", MOUSE_ICON_Y = "30")) || ring.hover_icon_x != 7 || ring.hover_icon_y != 30)
 		failures += "наведение на клетку списком параметров: пиксель [ring.hover_icon_x],[ring.hover_icon_y], ожидался 7,30"
 	if(!ring.note_hover(east) || !isnull(ring.hover_icon_x) || !isnull(ring.hover_icon_y))
@@ -10721,11 +10721,11 @@
 	var/obj/screen/panel = new
 	spawned += panel
 	if(ring.note_hover(panel, "icon-x=1;icon-y=1") || ring.get_aim_target() != east)
-		failures += "наведение на панель интерфейса: цель стала [ring.get_aim_target()], ожидалось — осталась клетка"
+		failures += "наведение на панель интерфейса: цель стала [ring.get_aim_target()], ожидалось: осталась клетка"
 	if(ring.note_hover(gun, "icon-x=1;icon-y=1") || ring.get_aim_target() != east)
-		failures += "наведение на оружие в руке: цель стала [ring.get_aim_target()], ожидалось — осталась клетка"
+		failures += "наведение на оружие в руке: цель стала [ring.get_aim_target()], ожидалось: осталась клетка"
 
-	// Сетка — своя у каждого клиента, клетка экрана от юго-западного угла: эта — у середины экрана.
+	// Сетка своя у каждого клиента, клетка экрана от юго-западного угла: эта у середины экрана.
 	var/obj/screen/click_catcher/catcher = new
 	spawned += catcher
 	catcher.screen_loc = "8,8"
@@ -10741,17 +10741,17 @@
 		failures += "наведение на предмет на полу: цель [ring.get_aim_target()], ожидался предмет"
 	lying.forceMove(null)
 	if(ring.get_aim_target())
-		failures += "предмет под мышью убрали с карты, а цель осталась — [ring.get_aim_target()]"
+		failures += "предмет под мышью убрали с карты, а цель осталась: [ring.get_aim_target()]"
 	lying.forceMove(near(2, 1))
 	qdel(lying)
 	if(ring.get_aim_target())
-		failures += "предмет под мышью удалён, а цель осталась — [ring.get_aim_target()]"
+		failures += "предмет под мышью удалён, а цель осталась: [ring.get_aim_target()]"
 	remove_extension(shooter, /datum/extension/ce_spread_ring)
 
 
 /// Кольцо появляется, когда снят предохранитель, и пересчитывается при наведении, выстреле, сходе
-/// отдачи, смене режима огня и шаге; без масштаба, над тем, что рядом, и без разброса его нет;
-/// шире курсора не растёт.
+/// отдачи, смене режима огня и шаге. Без масштаба, над тем, что рядом, и без разброса его нет.
+/// Шире курсора не растёт.
 /datum/unit_test/combat_extended/spread_ring/proc/check_wiring(list/failures)
 	shooter.a_intent = I_HELP
 	give_stacks(0)
@@ -10785,7 +10785,7 @@
 	if(shooter.ce_get_recoil_stacks() <= 2)
 		failures += "выстрел не прибавил стаков: ружьё без отдачи, проверять нечего"
 	if(shooter.ce_get_next_recoil_shed_time() != world.time + 3)
-		failures += "следующий стак сойдёт в [shooter.ce_get_next_recoil_shed_time()], ожидалось через 3 децисекунды — в [world.time + 3]"
+		failures += "следующий стак сойдёт в [shooter.ce_get_next_recoil_shed_time()], ожидалось через 3 децисекунды: в [world.time + 3]"
 	expect_ring(failures, "после выстрела", ring, target.ce_get_aim_point(), scale)
 	// Ещё пересчёт под отдачей: таймер у кольца остаётся один.
 	shooter.update_mouse_pointer()
@@ -10794,7 +10794,7 @@
 		if(timer.callback.target == ring && timer.callback.callable == TYPE_PROC_REF(/datum/extension/ce_spread_ring, on_recoil_tick))
 			recoil_timers += timer
 	if(length(recoil_timers) != 1)
-		failures += "после выстрела таймеров, которые сузят кольцо, — [length(recoil_timers)], ожидался один"
+		failures += "после выстрела таймеров, которые сузят кольцо: [length(recoil_timers)], ожидался один"
 	else
 		var/datum/timer/recoil_timer = recoil_timers[1]
 		if(recoil_timer.fire_time != shooter.ce_get_next_recoil_shed_time() || ring.recoil_tick_time != recoil_timer.fire_time)
@@ -10850,7 +10850,7 @@
 	shooter.ce_note_spread_hover(far)
 	expect_ring(failures, "мышь ушла со стрелка", ring, far.ce_get_aim_point(), scale)
 
-	// Разброса нет — мастер без отдачи с метким оружием: кольца нет; у обученного — снова есть.
+	// Разброса нет, мастер без отдачи с метким оружием: кольца нет. У обученного: снова есть.
 	set_skills(shooter, list(SKILL_WEAPONS = SKILL_MASTER))
 	shooter.update_mouse_pointer()
 	expect_no_ring(failures, "мастер без отдачи", ring)
@@ -10862,7 +10862,7 @@
 
 
 /// Кольцо пропадает: оружие брошено, предохранитель поставлен, настройка выключена, попиксельной
-/// стрельбы нет, в руке метательное оружие; сжимается в ноль, когда цель ушла с карты.
+/// стрельбы нет, в руке метательное оружие. Сжимается в ноль, когда цель ушла с карты.
 /datum/unit_test/combat_extended/spread_ring/proc/check_hiding(list/failures)
 	shooter.update_mouse_pointer()
 	var/datum/extension/ce_spread_ring/ring = get_ring()
@@ -10918,12 +10918,12 @@
 
 /*
 	Кислота против одежды и брони (`acid_armor.dm`). Проход всплеска по частям тела проверяется
-	чистым запросом `ce_trace_acid()`, а то, что кислота делает на самом деле, — на людях: её льют
+	чистым запросом `ce_trace_acid()`, а то, что кислота делает на самом деле, на людях: её льют
 	тем же путём, что спрей (`splash_mob()`), и дают коже один тик (`metabolize()`).
 
-	Ожидаемые числа — от настроек мода и от чисел самой кислоты в Бэй (`touch_met`, `power`,
-	`meltdose`, `max_damage`); своё здесь только 0.2 из формулы Бэй. Доля макушки и множитель износа на
-	время теста — не по умолчанию: с числом по умолчанию настройка, которую код забыл, давала бы те
+	Ожидаемые числа: от настроек мода и от чисел самой кислоты в Бэй (`touch_met`, `power`,
+	`meltdose`, `max_damage`). Своё здесь только 0.2 из формулы Бэй. Доля макушки и множитель износа на
+	время теста не по умолчанию: с числом по умолчанию настройка, которую код забыл, давала бы те
 	же числа.
 */
 #define CE_ACID_BURN_SLACK 0.05
@@ -10943,7 +10943,7 @@
 	var/wear_mult_was = ce_acid_armor_wear_mult
 	ce_acid_scalp_share = 0.4
 	ce_acid_armor_wear_mult = 2.5
-	// Ожог не меньше прочности части тела может сжечь её дотла (`attempt_dismemberment()`, шанс —
+	// Ожог не меньше прочности части тела может сжечь её дотла (`attempt_dismemberment()`, шанс
 	// треть ожога в процентах: 20% у полного ожога политриновой кислоты на руке, ноге, кисти или
 	// стопе). Ожогом человека тогда становится прочность потерянной части, а не то, что нанесла
 	// кислота. Тест мерит кислоту, поэтому на его время части тела не теряются.
@@ -10971,15 +10971,15 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Полный ожог кислоты даёт доза плавления, меньшая — свою долю; всплеск делится по частям тела; кислотостойкая и непроницаемая вещь, броня и очки на глазах защищают только то, что закрывают; одежда с рейтингом — не броня; броня теряет HP, а не плавится; вещи без защиты на голове плавятся от дозы плавления; лицо обезображивает доза плавления на открытых глазах или рту.")
+		pass("Полный ожог кислоты даёт доза плавления, меньшая: свою долю. Всплеск делится по частям тела. Кислотостойкая и непроницаемая вещь, броня и очки на глазах защищают только то, что закрывают. Одежда с рейтингом: не броня. Броня теряет HP, а не плавится. Вещи без защиты на голове плавятся от дозы плавления. Лицо обезображивает доза плавления на открытых глазах или рту.")
 	return 1
 
-/// Числа расходятся. Доли площади сходятся до тысячных; ожогу и HP нужен запас `CE_ACID_BURN_SLACK`:
+/// Числа расходятся. Доли площади сходятся до тысячных. Ожогу и HP нужен запас `CE_ACID_BURN_SLACK`:
 /// количество реагента округляется до сотых.
 /datum/unit_test/combat_extended/acid_armor/proc/differs(value, expected, tolerance = 0.001)
 	return abs(value - expected) > tolerance
 
-/// Надевает на человека новую вещь типа `path` в слот `slot`. null — надеть не вышло.
+/// Надевает на человека новую вещь типа `path` в слот `slot`. null: надеть не вышло.
 /datum/unit_test/combat_extended/acid_armor/proc/wear(mob/living/carbon/human/H, path, slot)
 	RETURN_TYPE(/obj/item/clothing)
 	var/obj/item/clothing/thing = new path(H)
@@ -10999,8 +10999,8 @@
 /datum/unit_test/combat_extended/acid_armor/proc/full_burn()
 	return min(initial(acid_type.touch_met) * initial(acid_type.power) * 0.2, initial(acid_type.max_damage))
 
-/// Ожог от всплеска в `splash` единиц на долю тела `skin_share`: полный — с дозы плавления, ниже неё
-/// — по количеству.
+/// Ожог от всплеска в `splash` единиц на долю тела `skin_share`: полный с дозы плавления, ниже неё
+/// по количеству.
 /datum/unit_test/combat_extended/acid_armor/proc/expected_burn(splash, skin_share = 1)
 	return full_burn() * min(splash / initial(acid_type.meltdose), 1) * skin_share
 
@@ -11023,11 +11023,11 @@
 	var/mob/living/carbon/human/H = make_human()
 	var/datum/ce_acid_trace/trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || length(trace.burned) != length(ce_acid_part_shares) || trace.face_exposure != 1)
-		failures += "голый: до кожи дошло [trace.skin_share] всплеска, частей тела [length(trace.burned)], лицо открыто на [trace.face_exposure]; ожидалось 1, [length(ce_acid_part_shares)] и 1"
+		failures += "голый: до кожи дошло [trace.skin_share] всплеска, частей тела [length(trace.burned)], лицо открыто на [trace.face_exposure]. Ожидалось 1, [length(ce_acid_part_shares)] и 1"
 	if(length(trace.armor_hits) || length(trace.soaked))
 		failures += "голый: кислота встретила броню [length(trace.armor_hits)] раз и вещей без защиты [length(trace.soaked)]"
 
-/// Голова: шлем закрывает макушку, очки — глаза, маска — рот; закрытое лицо — и глаза, и рот.
+/// Голова: шлем закрывает макушку, очки глаза, маска рот. Закрытое лицо: и глаза, и рот.
 /datum/unit_test/combat_extended/acid_armor/proc/check_trace_head(list/failures)
 	var/mob/living/carbon/human/H = make_human()
 	var/obj/item/clothing/helmet = wear(H, /obj/item/clothing/head/helmet, slot_head)
@@ -11038,9 +11038,9 @@
 	var/datum/extension/armor/helmet_armor = get_extension(helmet, /datum/extension/armor)
 	var/list/hit = length(trace.armor_hits) == 1 ? trace.armor_hits[1] : null
 	if(!hit || hit[1] != helmet_armor || hit[2] != HEAD || differs(hit[3], scalp_share))
-		failures += "голова, шлем: встреч с бронёй [length(trace.armor_hits)], первая — [hit ? "часть тела [hit[2]], доля [hit[3]]" : "нет"]; ожидалась одна, броня шлема на макушке с долей [scalp_share]"
+		failures += "голова, шлем: встреч с бронёй [length(trace.armor_hits)], первая [hit ? "часть тела [hit[2]], доля [hit[3]]" : "нет"]. Ожидалась одна, броня шлема на макушке с долей [scalp_share]"
 	if(differs(trace.skin_share, 1 - scalp_share) || trace.face_exposure != 1 || length(trace.soaked))
-		failures += "голова, шлем: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure], вещей без защиты [length(trace.soaked)]; ожидалось [1 - scalp_share], 1 и ни одной"
+		failures += "голова, шлем: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure], вещей без защиты [length(trace.soaked)]. Ожидалось [1 - scalp_share], 1 и ни одной"
 
 	// Очки, закрывающие глаза, глаза спасают, но лицо с открытым ртом ещё открыто.
 	var/obj/item/clothing/goggles = wear(H, /obj/item/clothing/glasses/sunglasses, slot_glasses)
@@ -11052,15 +11052,15 @@
 	trace = H.ce_trace_acid()
 	var/expected_share = 1 - scalp_share - face_part_share - face_part_share * 0.75
 	if(differs(trace.skin_share, expected_share) || differs(trace.face_exposure, 0.25))
-		failures += "голова, шлем, очки и маска с проницаемостью 0.25: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]; ожидалось [expected_share] и 0.25"
+		failures += "голова, шлем, очки и маска с проницаемостью 0.25: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]. Ожидалось [expected_share] и 0.25"
 	if(length(trace.armor_hits) != 1 || length(trace.soaked))
-		failures += "голова, шлем, очки и маска: встреч с бронёй [length(trace.armor_hits)], вещей без защиты [length(trace.soaked)]; ожидалась одна и ни одной"
+		failures += "голова, шлем, очки и маска: встреч с бронёй [length(trace.armor_hits)], вещей без защиты [length(trace.soaked)]. Ожидалась одна и ни одной"
 
 	// Кислотостойкая маска закрывает рот целиком: лицо закрыто.
 	mask.unacidable = TRUE
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1 - head_share) || trace.face_exposure != 0)
-		failures += "голова, шлем, очки и кислотостойкая маска: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]; ожидалось [1 - head_share] и 0"
+		failures += "голова, шлем, очки и кислотостойкая маска: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]. Ожидалось [1 - head_share] и 0"
 
 	// Броня за проницаемым слоем останавливает то, что он пропустил: до кожи доходит столько же,
 	// а износа ей достаётся меньше.
@@ -11068,7 +11068,7 @@
 	trace = H.ce_trace_acid()
 	hit = length(trace.armor_hits) == 1 ? trace.armor_hits[1] : null
 	if(!hit || differs(hit[3], scalp_share * 0.5) || differs(trace.skin_share, 1 - head_share))
-		failures += "голова, шлем с проницаемостью 0.5: броня остановила [hit ? hit[3] : "ничего"], до кожи дошло [trace.skin_share]; ожидалось [scalp_share * 0.5] и [1 - head_share]"
+		failures += "голова, шлем с проницаемостью 0.5: броня остановила [hit ? hit[3] : "ничего"], до кожи дошло [trace.skin_share]. Ожидалось [scalp_share * 0.5] и [1 - head_share]"
 	helmet.permeability_coefficient = 1
 
 	// Броня без HP кислоту не держит: шлем становится вещью без защиты.
@@ -11077,7 +11077,7 @@
 		helmet_armor.ce_set_health(null, 0)
 		trace = H.ce_trace_acid()
 		if(length(trace.armor_hits) || differs(trace.skin_share, 1 - head_share + scalp_share) || !(helmet in trace.soaked))
-			failures += "голова, шлем без HP: встреч с бронёй [length(trace.armor_hits)], до кожи дошло [trace.skin_share], шлем среди вещей без защиты — [(helmet in trace.soaked) ? "да" : "нет"]; ожидалось ноль, [1 - head_share + scalp_share] и да"
+			failures += "голова, шлем без HP: встреч с бронёй [length(trace.armor_hits)], до кожи дошло [trace.skin_share], шлем среди вещей без защиты [(helmet in trace.soaked) ? "да" : "нет"]. Ожидалось ноль, [1 - head_share + scalp_share] и да"
 
 /// Вещи без защиты: кепка, бандана и очки, не закрывающие глаз, кислоту не держат, а под забралом
 /// она до них не доходит.
@@ -11091,18 +11091,18 @@
 		return
 	var/datum/ce_acid_trace/trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || trace.face_exposure != 1)
-		failures += "кепка, бандана и очки без защиты: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]; ожидалось 1 и 1"
+		failures += "кепка, бандана и очки без защиты: до кожи дошло [trace.skin_share], лицо открыто на [trace.face_exposure]. Ожидалось 1 и 1"
 	for(var/obj/item/worn in list(cap, bandana, shades))
 		if(trace.soaked[worn] != 1)
-			failures += "кепка, бандана и очки без защиты: до вещи «[worn.name]» дошло [isnull(trace.soaked[worn]) ? "ничего" : trace.soaked[worn]], ожидалось 1"
+			failures += "кепка, бандана и очки без защиты: до вещи \"[worn.name]\" дошло [isnull(trace.soaked[worn]) ? "ничего" : trace.soaked[worn]], ожидалось 1"
 
 	// Кислотостойкая кепка макушку не закрывает и не защищает, но и не плавится.
 	cap.unacidable = TRUE
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || (cap in trace.soaked))
-		failures += "кислотостойкая кепка: до кожи дошло [trace.skin_share], кепка среди вещей без защиты — [(cap in trace.soaked) ? "да" : "нет"]; ожидалось 1 и нет"
+		failures += "кислотостойкая кепка: до кожи дошло [trace.skin_share], кепка среди вещей без защиты [(cap in trace.soaked) ? "да" : "нет"]. Ожидалось 1 и нет"
 
-	// Убор с бронёй, который ничего не закрывает, — то же самое.
+	// Убор с бронёй, который ничего не закрывает: то же самое.
 	qdel(cap)
 	var/obj/item/clothing/patch = wear(H, /obj/item/clothing/head/HoS/dermal, slot_head)
 	if(!patch || (patch.body_parts_covered & HEAD) || !patch.ce_get_kinetic_armor())
@@ -11110,7 +11110,7 @@
 		return
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || (patch in trace.soaked) || length(trace.armor_hits))
-		failures += "убор с бронёй, не закрывающий макушку: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)], убор среди вещей без защиты — [(patch in trace.soaked) ? "да" : "нет"]; ожидалось 1, ни одной и нет"
+		failures += "убор с бронёй, не закрывающий макушку: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)], убор среди вещей без защиты [(patch in trace.soaked) ? "да" : "нет"]. Ожидалось 1, ни одной и нет"
 
 	// Каска макушку закрывает, но она одежда с рейтингом, а не броня: кислоту не держит и не
 	// плавится.
@@ -11121,9 +11121,9 @@
 		return
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || (hardhat in trace.soaked) || length(trace.armor_hits))
-		failures += "каска: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)], каска среди вещей без защиты — [(hardhat in trace.soaked) ? "да" : "нет"]; ожидалось 1, ни одной и нет"
+		failures += "каска: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)], каска среди вещей без защиты [(hardhat in trace.soaked) ? "да" : "нет"]. Ожидалось 1, ни одной и нет"
 
-	// Закрывающая макушку шапка без брони — тоже не преграда.
+	// Закрывающая макушку шапка без брони: тоже не преграда.
 	qdel(hardhat)
 	var/obj/item/clothing/hat = wear(H, /obj/item/clothing/head/ushanka, slot_head)
 	if(!hat || !(hat.body_parts_covered & HEAD))
@@ -11131,13 +11131,13 @@
 		return
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1) || trace.soaked[hat] != 1)
-		failures += "шапка без брони: до кожи дошло [trace.skin_share], до шапки — [isnull(trace.soaked[hat]) ? "ничего" : trace.soaked[hat]]; ожидалось 1 и 1"
+		failures += "шапка без брони: до кожи дошло [trace.skin_share], до шапки [isnull(trace.soaked[hat]) ? "ничего" : trace.soaked[hat]]. Ожидалось 1 и 1"
 
 	// Кислотостойкая шапка закрывает только макушку, а не всё тело, как в Бэй.
 	hat.unacidable = TRUE
 	trace = H.ce_trace_acid()
 	if(differs(trace.skin_share, 1 - scalp_share) || (hat in trace.soaked))
-		failures += "кислотостойкая шапка: до кожи дошло [trace.skin_share], ожидалось [1 - scalp_share] — всё, кроме макушки"
+		failures += "кислотостойкая шапка: до кожи дошло [trace.skin_share], ожидалось [1 - scalp_share], всё, кроме макушки"
 
 	// Под шлемом с забралом кислота до банданы и очков не доходит.
 	qdel(hat)
@@ -11147,7 +11147,7 @@
 		return
 	trace = H.ce_trace_acid()
 	if(length(trace.soaked) || trace.face_exposure != 0 || length(trace.armor_hits) != 3 || differs(trace.skin_share, 1 - head_share))
-		failures += "шлем с забралом поверх банданы и очков: вещей без защиты [length(trace.soaked)], лицо открыто на [trace.face_exposure], встреч с бронёй [length(trace.armor_hits)], до кожи дошло [trace.skin_share]; ожидалось ни одной, 0, три и [1 - head_share]"
+		failures += "шлем с забралом поверх банданы и очков: вещей без защиты [length(trace.soaked)], лицо открыто на [trace.face_exposure], встреч с бронёй [length(trace.armor_hits)], до кожи дошло [trace.skin_share]. Ожидалось ни одной, 0, три и [1 - head_share]"
 
 /// Тело: непроницаемый скафандр и пластина плитоноски закрывают свои части тела, остальные открыты.
 /datum/unit_test/combat_extended/acid_armor/proc/check_trace_body(list/failures)
@@ -11159,10 +11159,10 @@
 		var/datum/ce_acid_trace/trace = sealed.ce_trace_acid()
 		var/open_share = 1 - covered_share(sealed, suit)
 		if(differs(trace.skin_share, open_share) || length(trace.armor_hits))
-			failures += "скафандр без шлема: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)]; ожидалось [open_share] и ни одной: кислоту он не пускает, и останавливать броне нечего"
+			failures += "скафандр без шлема: до кожи дошло [trace.skin_share], встреч с бронёй [length(trace.armor_hits)]. Ожидалось [open_share] и ни одной: кислоту он не пускает, и останавливать броне нечего"
 		for(var/obj/item/organ/external/organ in trace.burned)
 			if(suit.body_parts_covered & organ.body_part)
-				failures += "скафандр без шлема: кислота дошла до кожи под ним — [organ.name]"
+				failures += "скафандр без шлема: кислота дошла до кожи под ним, [organ.name]"
 
 	var/mob/living/carbon/human/plated = make_human(list(/obj/item/clothing/accessory/armor_plate/medium))
 	var/obj/item/clothing/carrier = plated?.wear_suit
@@ -11178,10 +11178,10 @@
 			failures += "плитоноска с пластиной: кислоту остановила не броня пластины"
 		stopped += hit[3]
 	if(plate_share <= 0 || differs(stopped, plate_share) || differs(plated_trace.skin_share, 1 - plate_share))
-		failures += "плитоноска с пластиной: броня остановила [stopped] всплеска, до кожи дошло [plated_trace.skin_share]; ожидалось [plate_share] и [1 - plate_share]"
+		failures += "плитоноска с пластиной: броня остановила [stopped] всплеска, до кожи дошло [plated_trace.skin_share]. Ожидалось [plate_share] и [1 - plate_share]"
 
 	// Одежда без защиты на теле кислоте не помеха, но и не плавится: плавится только то, что на
-	// голове. Униформа Бэй пускает девять десятых кислоты, здесь — всю.
+	// голове. Униформа Бэй пускает девять десятых кислоты, здесь: всю.
 	var/mob/living/carbon/human/dressed = make_human()
 	var/obj/item/clothing/uniform = wear(dressed, /obj/item/clothing/under/color/grey, slot_w_uniform)
 	if(uniform)
@@ -11191,13 +11191,13 @@
 		return
 	var/datum/ce_acid_trace/dressed_trace = dressed.ce_trace_acid()
 	if(differs(dressed_trace.skin_share, 1) || length(dressed_trace.soaked))
-		failures += "униформа: до кожи дошло [dressed_trace.skin_share], вещей, которые кислота может расплавить, — [length(dressed_trace.soaked)]; ожидалось 1 и ни одной"
+		failures += "униформа: до кожи дошло [dressed_trace.skin_share], вещей, которые кислота может расплавить, [length(dressed_trace.soaked)]. Ожидалось 1 и ни одной"
 	var/flood = 10 * initial(acid_type.meltdose)
 	douse(dressed, flood)
 	if(QDELETED(uniform) || dressed.w_uniform != uniform)
 		failures += "униформа: не пережила [flood] ед. кислоты"
 
-	// Форма охраны — одежда с рейтингом, а не броня: держит ту же десятую, что и любая униформа.
+	// Форма охраны это одежда с рейтингом, а не броня: держит ту же десятую, что и любая униформа.
 	var/mob/living/carbon/human/officer = make_human()
 	var/obj/item/clothing/duty = wear(officer, /obj/item/clothing/under/rank/security, slot_w_uniform)
 	if(!duty || !duty.ce_get_kinetic_armor() || !covered_share(officer, duty))
@@ -11206,9 +11206,9 @@
 	var/datum/ce_acid_trace/duty_trace = officer.ce_trace_acid()
 	var/duty_share = 1 - covered_share(officer, duty) * (1 - duty.permeability_coefficient)
 	if(differs(duty_trace.skin_share, duty_share) || length(duty_trace.armor_hits) || length(duty_trace.burned) != length(ce_acid_part_shares))
-		failures += "форма охраны: до кожи дошло [duty_trace.skin_share], встреч с бронёй [length(duty_trace.armor_hits)], частей тела [length(duty_trace.burned)]; ожидалось [duty_share], ни одной и [length(ce_acid_part_shares)]"
+		failures += "форма охраны: до кожи дошло [duty_trace.skin_share], встреч с бронёй [length(duty_trace.armor_hits)], частей тела [length(duty_trace.burned)]. Ожидалось [duty_share], ни одной и [length(ce_acid_part_shares)]"
 
-/// Доза: полный ожог даёт доза плавления, меньшая — свою долю, и любая капля — уже не 50 единиц.
+/// Доза: полный ожог даёт доза плавления, меньшая свою долю, и любая капля уже не 50 единиц.
 /datum/unit_test/combat_extended/acid_armor/proc/check_dose(list/failures)
 	var/meltdose = initial(acid_type.meltdose)
 	for(var/amount in list(meltdose / 8, meltdose / 2, meltdose, 3 * meltdose))
@@ -11226,14 +11226,14 @@
 	else
 		// Полный ожог этой кислоты упирается в её потолок: без него формула дала бы больше.
 		if(differs(acid.ce_get_full_burn(), full_burn()) || full_burn() != initial(acid_type.max_damage))
-			failures += "доза, формула: полный ожог [acid.ce_get_full_burn()], в тесте [full_burn()], потолок кислоты [initial(acid_type.max_damage)]; ожидался потолок"
+			failures += "доза, формула: полный ожог [acid.ce_get_full_burn()], в тесте [full_burn()], потолок кислоты [initial(acid_type.max_damage)]. Ожидался потолок"
 		// list(всплеск, доля полного действия)
 		for(var/list/entry as anything in list(list(0, 0), list(meltdose / 2, 0.5), list(meltdose, 1), list(1000, 1)))
 			if(differs(acid.ce_get_dose_share(entry[1]), entry[2]))
 				failures += "доза, формула, всплеск [entry[1]] ед.: доля полного действия [acid.ce_get_dose_share(entry[1])], ожидалась [entry[2]]"
 	qdel(source)
 
-/// Закрытая голова: шлем, очки и кислотостойкая маска целы, шлем теряет HP, ожог — только открытому
+/// Закрытая голова: шлем, очки и кислотостойкая маска целы, шлем теряет HP, ожог только открытому
 /// телу и только с открытой его доли.
 /datum/unit_test/combat_extended/acid_armor/proc/check_protected_head(list/failures)
 	var/mob/living/carbon/human/H = make_human()
@@ -11250,21 +11250,21 @@
 	douse(H, amount)
 
 	if(QDELETED(helmet) || QDELETED(goggles) || QDELETED(mask) || H.head != helmet || H.glasses != goggles || H.wear_mask != mask)
-		failures += "закрытая голова: после кислоты на голове не всё — шлем [QDELETED(helmet) ? "расплавлен" : "цел"], очки [QDELETED(goggles) ? "расплавлены" : "целы"], маска [QDELETED(mask) ? "расплавлена" : "цела"]"
+		failures += "закрытая голова: после кислоты на голове не всё, шлем [QDELETED(helmet) ? "расплавлен" : "цел"], очки [QDELETED(goggles) ? "расплавлены" : "целы"], маска [QDELETED(mask) ? "расплавлена" : "цела"]"
 	var/burn = H.getFireLoss()
 	var/skin_burn = expected_burn(amount, 1 - head_share)
 	var/obj/item/organ/external/head = H.get_organ(BP_HEAD)
 	if(differs(burn, skin_burn, CE_ACID_BURN_SLACK) || head.burn_dam)
-		failures += "закрытая голова, [amount] ед.: ожог [burn], из них голове [head.burn_dam]; ожидалось [skin_burn] открытому телу и ноль голове"
+		failures += "закрытая голова, [amount] ед.: ожог [burn], из них голове [head.burn_dam]. Ожидалось [skin_burn] открытому телу и ноль голове"
 	if(count_disfigured(H))
-		failures += "закрытая голова: обезображено частей тела — [count_disfigured(H)], ожидалось ни одной"
+		failures += "закрытая голова: обезображено частей тела [count_disfigured(H)], ожидалось ни одной"
 	if(ce_armor_wear_enabled)
 		var/wear = expected_burn(amount, scalp_share) * ce_acid_armor_wear_mult
 		var/health = helmet_armor.ce_get_health(null)
 		if(isnull(health) || differs(health_before - health, wear, CE_ACID_BURN_SLACK))
-			failures += "закрытая голова: шлем потерял [isnull(health) ? "ноль" : health_before - health] HP, ожидалось [wear] — ожог, который он не пустил к макушке"
+			failures += "закрытая голова: шлем потерял [isnull(health) ? "ноль" : health_before - health] HP, ожидалось [wear], ожог, который он не пустил к макушке"
 
-/// Плавление: вещи без защиты на голове плавит доза плавления, меньшая — нет; очки, закрывающие
+/// Плавление: вещи без защиты на голове плавит доза плавления, меньшая нет. Очки, закрывающие
 /// глаза, не плавятся вовсе.
 /datum/unit_test/combat_extended/acid_armor/proc/check_melting(list/failures)
 	var/meltdose = initial(acid_type.meltdose)
@@ -11284,7 +11284,7 @@
 				melted++
 		var/left = !isnull(H.head) + !isnull(H.wear_mask) + !isnull(H.glasses)
 		if(entry[2] ? (melted != 3 || left) : (melted || left != 3))
-			failures += "плавление, [entry[1]] ед. при дозе плавления [meltdose]: расплавилось вещей [melted], на голове осталось [left]; ожидалось [entry[2] ? "три и ни одной" : "ни одной и три"]"
+			failures += "плавление, [entry[1]] ед. при дозе плавления [meltdose]: расплавилось вещей [melted], на голове осталось [left]. Ожидалось [entry[2] ? "три и ни одной" : "ни одной и три"]"
 
 	// Под убором, который пускает половину кислоты, очкам достаётся половина всплеска.
 	// list(количество кислоты, плавятся ли очки)
@@ -11299,7 +11299,7 @@
 		hood.permeability_coefficient = 0.5
 		douse(H, entry[1])
 		if(QDELETED(hood) || !!QDELETED(shades) != entry[2])
-			failures += "плавление под убором с проницаемостью 0.5, [entry[1]] ед. при дозе плавления [meltdose]: убор [QDELETED(hood) ? "расплавлен" : "цел"], очки [QDELETED(shades) ? "расплавлены" : "целы"]; ожидались целый убор и [entry[2] ? "расплавленные" : "целые"] очки"
+			failures += "плавление под убором с проницаемостью 0.5, [entry[1]] ед. при дозе плавления [meltdose]: убор [QDELETED(hood) ? "расплавлен" : "цел"], очки [QDELETED(shades) ? "расплавлены" : "целы"]. Ожидались целый убор и [entry[2] ? "расплавленные" : "целые"] очки"
 
 	var/mob/living/carbon/human/guarded = make_human()
 	var/obj/item/clothing/goggles = wear(guarded, /obj/item/clothing/glasses/sunglasses, slot_glasses)
@@ -11314,7 +11314,7 @@
 	douse(bare, meltdose + 1)
 	var/obj/item/organ/external/bare_head = bare.get_organ(BP_HEAD)
 	if(!(bare_head.status & ORGAN_DISFIGURED) || count_disfigured(bare) != 1)
-		failures += "обезображивание, голый, [meltdose + 1] ед.: голова [(bare_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"], обезображено частей тела [count_disfigured(bare)]; ожидалась одна голова"
+		failures += "обезображивание, голый, [meltdose + 1] ед.: голова [(bare_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"], обезображено частей тела [count_disfigured(bare)]. Ожидалась одна голова"
 
 	// Половина дозы плавления, а не чуть меньше неё: голову с ожогом больше 40 кор обезображивает сам
 	// (`/obj/item/organ/external/head/take_external_damage()`), а ожог достаётся случайной части тела.
@@ -11323,7 +11323,7 @@
 	if(expected_burn(meltdose / 2) > 40)
 		failures += "обезображивание: половина дозы плавления жжёт на [expected_burn(meltdose / 2)], а проверке нужен ожог не больше 40"
 	if(count_disfigured(splashed))
-		failures += "обезображивание, голый, [meltdose / 2] ед. — меньше дозы плавления: обезображено частей тела [count_disfigured(splashed)], ожидалось ни одной"
+		failures += "обезображивание, голый, [meltdose / 2] ед., меньше дозы плавления: обезображено частей тела [count_disfigured(splashed)], ожидалось ни одной"
 
 	// Шлем закрывает макушку, а лицо открыто.
 	var/mob/living/carbon/human/helmeted = make_human()
@@ -11331,7 +11331,7 @@
 	douse(helmeted, meltdose + 1)
 	var/obj/item/organ/external/helmeted_head = helmeted.get_organ(BP_HEAD)
 	if(!helmeted.head || !(helmeted_head.status & ORGAN_DISFIGURED))
-		failures += "обезображивание, шлем без забрала, [meltdose + 1] ед.: шлем [helmeted.head ? "на голове" : "не надет"], голова [(helmeted_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"]; ожидалось обезображенное лицо"
+		failures += "обезображивание, шлем без забрала, [meltdose + 1] ед.: шлем [helmeted.head ? "на голове" : "не надет"], голова [(helmeted_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"]. Ожидалось обезображенное лицо"
 
 	// Очки закрывают глаза, а рот открыт: лицо закрыто, только когда закрыто и то, и другое.
 	var/mob/living/carbon/human/goggled = make_human()
@@ -11339,9 +11339,9 @@
 	douse(goggled, meltdose + 1)
 	var/obj/item/organ/external/goggled_head = goggled.get_organ(BP_HEAD)
 	if(!goggled.glasses || !(goggled_head.status & ORGAN_DISFIGURED))
-		failures += "обезображивание, очки без маски, [meltdose + 1] ед.: очки [goggled.glasses ? "на глазах" : "не надеты"], голова [(goggled_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"]; ожидалось обезображенное лицо"
+		failures += "обезображивание, очки без маски, [meltdose + 1] ед.: очки [goggled.glasses ? "на глазах" : "не надеты"], голова [(goggled_head.status & ORGAN_DISFIGURED) ? "обезображена" : "цела"]. Ожидалось обезображенное лицо"
 
-	// Доза плавления, восстановленная по проницаемости, — всё ещё доза плавления: 10 единиц серной
+	// Доза плавления, восстановленная по проницаемости, это всё ещё доза плавления: 10 единиц серной
 	// кислоты под скафандром без шлема доходят до кожи тремя.
 	var/datum/reagent/acid/acid_type_was = acid_type
 	acid_type = /datum/reagent/acid
@@ -11362,7 +11362,7 @@
 	wear(visored, /obj/item/clothing/head/helmet/riot, slot_head)
 	douse(visored, 10 * meltdose)
 	if(!visored.head || count_disfigured(visored))
-		failures += "обезображивание, шлем с забралом, [10 * meltdose] ед.: шлем [visored.head ? "на голове" : "не надет"], обезображено частей тела [count_disfigured(visored)]; ожидалось ни одной"
+		failures += "обезображивание, шлем с забралом, [10 * meltdose] ед.: шлем [visored.head ? "на голове" : "не надет"], обезображено частей тела [count_disfigured(visored)]. Ожидалось ни одной"
 
 /// Непроницаемое: под полным скафандром кислоты нет, а шлем без скафандра закрывает только голову
 /// и не плавится.
@@ -11375,7 +11375,7 @@
 	else
 		douse(suited, 30)
 		if(suited.getFireLoss() || !suited.head || !suited.wear_suit)
-			failures += "полный скафандр, 30 ед.: ожог [suited.getFireLoss()], шлем [suited.head ? "цел" : "расплавлен"], скафандр [suited.wear_suit ? "цел" : "расплавлен"]; ожидалось ничего"
+			failures += "полный скафандр, 30 ед.: ожог [suited.getFireLoss()], шлем [suited.head ? "цел" : "расплавлен"], скафандр [suited.wear_suit ? "цел" : "расплавлен"]. Ожидалось ничего"
 
 	var/mob/living/carbon/human/H = make_human()
 	var/obj/item/clothing/helmet = wear(H, /obj/item/clothing/head/helmet/space/void/security, slot_head)
@@ -11390,12 +11390,12 @@
 	var/skin_burn = expected_burn(amount, 1 - head_share)
 	var/obj/item/organ/external/head = H.get_organ(BP_HEAD)
 	if(H.head != helmet || differs(burn, skin_burn, CE_ACID_BURN_SLACK) || head.burn_dam)
-		failures += "шлем скафандра без скафандра, [amount] ед.: шлем [H.head == helmet ? "цел" : "расплавлен"], ожог [burn], из них голове [head.burn_dam]; ожидался целый шлем и [skin_burn] открытому телу"
+		failures += "шлем скафандра без скафандра, [amount] ед.: шлем [H.head == helmet ? "цел" : "расплавлен"], ожог [burn], из них голове [head.burn_dam]. Ожидался целый шлем и [skin_burn] открытому телу"
 
 /// Ожог достаётся только той части тела, до которой кислота дошла, а кислотостойкого человека она
 /// не жжёт вовсе.
 /datum/unit_test/combat_extended/acid_armor/proc/check_burned_part(list/failures)
-	// Скафандр закрывает всё, кроме головы: весь ожог — ей. Часть тела кислота выбирает случайно,
+	// Скафандр закрывает всё, кроме головы: весь ожог достаётся ей. Часть тела кислота выбирает случайно,
 	// поэтому попыток несколько.
 	for(var/attempt in 1 to 4)
 		var/mob/living/carbon/human/H = make_human()
@@ -11408,29 +11408,29 @@
 		var/burn = H.getFireLoss()
 		var/obj/item/organ/external/head = H.get_organ(BP_HEAD)
 		if(differs(burn, expected_burn(10, head_share), CE_ACID_BURN_SLACK) || differs(head.burn_dam, burn, CE_ACID_BURN_SLACK))
-			failures += "скафандр на всё тело без шлема, 10 ед.: ожог [burn], из них голове [head.burn_dam]; ожидалось [expected_burn(10, head_share)], и всё — голове"
+			failures += "скафандр на всё тело без шлема, 10 ед.: ожог [burn], из них голове [head.burn_dam]. Ожидалось [expected_burn(10, head_share)], и всё: голове"
 			break
 
 	var/mob/living/carbon/human/proofed = make_human()
 	proofed.unacidable = TRUE
 	douse(proofed, 10)
 	if(proofed.getFireLoss() || count_disfigured(proofed))
-		failures += "кислотостойкий человек, 10 ед.: ожог [proofed.getFireLoss()], обезображено частей тела [count_disfigured(proofed)]; ожидалось ничего"
+		failures += "кислотостойкий человек, 10 ед.: ожог [proofed.getFireLoss()], обезображено частей тела [count_disfigured(proofed)]. Ожидалось ничего"
 
 #undef CE_ACID_BURN_SLACK
 
 
 /*
 	Тесты урона по видам, перенесённые из `code/unit_tests/mob_tests.dm` и модпаков `tajara` и
-	`resomi`. Шаблон `/datum/unit_test/mob_damage` и шаблоны видов остались на своих местах —
+	`resomi`. Шаблон `/datum/unit_test/mob_damage` и шаблоны видов остались на своих местах,
 	сюда переехали только проверки `DAMAGE_BRUTE`: из шести типов урона через CE идёт только он.
 	Тест бьёт в грудь тупым уроном 4, без флагов.
 
-	Ожидания — такие, какие даёт CE:
-	- без естественной брони урон меняет только `brute_mod` вида (Unathi, Tajara, Resomi);
+	Ожидания такие, какие даёт CE:
+	- Без естественной брони урон меняет только `brute_mod` вида (Unathi, Tajara, Resomi).
 	- IPC меньше 4 только за счёт кинетической брони протезов из `ipc_mods`. Когда её заменит
-	  плотность, ожидание придётся поменять — README, «Протезы: плотность вместо брони»;
-	- GAS без урона: хитин — жёсткая броня с 6 МПа тупой оси, а у удара силой 4 тупое
+	  плотность, ожидание придётся поменять, см. README, "Протезы: плотность вместо брони".
+	- GAS без урона: хитин это жёсткая броня с 6 МПа тупой оси, а у удара силой 4 тупое
 	  пробитие 3. CE гасит его насухо.
 
 	`STANDARD`, `ARMORED` и `EXTRA_VULNERABLE` объявлены в `mob_tests.dm` и не сбрасываются,

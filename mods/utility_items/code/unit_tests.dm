@@ -1,12 +1,12 @@
 /*
-	UTILITY_ITEMS — юнит-тесты.
+	UTILITY_ITEMS: юнит-тесты.
 
 	Имплант адреналина: кнопка выдаётся и жмётся без сознания, рывок приводит в себя, держит
 	стан, отключку и сбивание с ног, гасит замешательство, шагает так, будто тело цело, и вдвое
 	быстрее, не валит на сломанных ногах, доливает опиаты до 30 в начале и в конце и возвращает
 	только те флаги, что снял. Тест синхронный: Life не идёт, нужные его части
 	(`handle_actions()`, `handle_regular_status_updates()`, `handle_stance()`) зовутся руками, а
-	конец рывка — `end_adrenalin_burst()` напрямую, без ожидания таймера.
+	конец рывка идёт через `end_adrenalin_burst()` напрямую, без ожидания таймера.
 
 	Звук падения из кор `human/Weaken()` тест не видит: `playsound()` слышат только мобы с
 	клиентом. Что `Weaken()` в рывке до него не доходит, держит только чтение кода.
@@ -87,7 +87,7 @@
 	var/obj/screen/movable/action_button/button = new(null, action)
 	action.button = button
 	action.UpdateName()
-	check(findtext(button.maptext, ">[implant.uses]<"), "Button: maptext '[button.maptext]' does not show [implant.uses] charges.")
+	check(findtext(button.maptext, ">[implant.uses]<"), "Button: maptext \"[button.maptext]\" does not show [implant.uses] charges.")
 	action.button = null
 	qdel(button)
 
@@ -158,12 +158,12 @@
 		return
 	var/obj/item/implant/adrenalin/implant = implant_into(host, 1)
 	host.handle_actions()
-	// Свежий человек держит `health` с создания, пока его не пересчитают: без этого «здоровая»
+	// Свежий человек держит `health` с создания, пока его не пересчитают: без этого "здоровая"
 	// задержка уже несёт слагаемое нехватки здоровья.
 	host.updatehealth()
 	var/healthy_delay = host.movement_delay()
 
-	// Брут даёт боль; нехватку здоровья даёт только мозг: `health = maxHealth - getBrainLoss()`.
+	// Брут даёт боль. Нехватку здоровья даёт только мозг: `health = maxHealth - getBrainLoss()`.
 	host.apply_damage(70, DAMAGE_BRUTE, BP_CHEST)
 	host.adjustBrainLoss(60)
 	host.updatehealth()
@@ -190,8 +190,8 @@
 	qdel(implant)
 	qdel(host)
 
-// Сломанные ноги и стопы дают `stance_damage` 4: стоящий падает каждый тик. В рывке — ни крика,
-// ни «collapses!», ни падения; после рывка — падает, как раньше. Бег: шагом стойка на 1 меньше.
+// Сломанные ноги и стопы дают `stance_damage` 4: стоящий падает каждый тик. В рывке: ни крика,
+// ни "collapses!", ни падения. После рывка: падает, как раньше. Бег: шагом стойка на 1 меньше.
 /datum/unit_test/adrenalin_implant/proc/check_broken_legs_hold()
 	var/list/made = create_test_mob_with_mind(null, /mob/living/carbon/human/adrenalin_test_dummy)
 	var/mob/living/carbon/human/adrenalin_test_dummy/host = locate(made["mobref"])

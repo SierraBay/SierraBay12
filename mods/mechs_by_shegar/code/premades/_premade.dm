@@ -10,7 +10,7 @@
 /mob/living/exosuit/premade
 	name = "impossible mech"
 	desc = "Убейте меня"
-	///Внешний бронеэлемент, который навешивается на каждую часть готового меха. null — без брони
+	///Внешний бронеэлемент, который навешивается на каждую часть готового меха. null: без брони
 	var/external_armor_type = /obj/item/mech_external_armor/civil
 	var/decal
 
@@ -200,7 +200,7 @@
 	. = ..()
 
 ///Типы частей подтипа `part_type`, которые печатает фабрикатор мехов: из них собран случайный мех. Части
-///готовых мехов — эскадрона смерти, СБ, наёмников, ОБР — фабрикатор не печатает, и случайному меху они не достаются
+///готовых мехов (эскадрона смерти, СБ, наёмников, ОБР) фабрикатор не печатает, и случайному меху они не достаются
 /mob/living/exosuit/premade/random/proc/get_fabricated_part_types(part_type)
 	RETURN_TYPE(/list)
 	var/static/list/fabricated_types
@@ -215,7 +215,7 @@
 		if(ispath(fabricated_type, part_type))
 			. += fabricated_type
 
-///Случайная нога на сторону `side`. Сдвоенные ноги — гусеницы и паучьи — фабрикатор печатает держателем, сразу
+///Случайная нога на сторону `side`. Сдвоенные ноги (гусеницы и паучьи) фабрикатор печатает держателем, сразу
 ///парой: держатель заменяет обе ноги
 /mob/living/exosuit/premade/random/proc/put_random_leg(side, mech_colour, list/use_colours)
 	var/legs_type = pick(get_fabricated_part_types(/obj/item/mech_component/propulsion) + get_fabricated_part_types(/obj/item/mech_component/doubled_legs))

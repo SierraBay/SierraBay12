@@ -65,9 +65,9 @@
 
 
 /*
-	COMBAT_EXTENDED — кольцо разброса (`mods/combat_extended/code/spread_ring.dm`) целится туда, куда
+	COMBAT_EXTENDED. Кольцо разброса (`mods/combat_extended/code/spread_ring.dm`) целится туда, куда
 	вошла мышь, и туда, куда её ведут с зажатой кнопкой. Здесь, а не в моде: модам и картам, которые
-	переопределяют эти обработчики без `..()`, — подсказкам экрана, боевому режиму — `_master_files`
+	переопределяют эти обработчики без `..()` (подсказкам экрана, боевому режиму), `_master_files`
 	идёт после них.
 */
 /client/MouseEntered(object, location, control, params)
