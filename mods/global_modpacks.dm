@@ -92,3 +92,4 @@
 #include "case_dossier/_case_dossier_includes.dm"
 #include "advanced_landing/_advanced_landing_includes.dm"
 #include "pencode_images/_pencode_images_includes.dm"
+#include "skrell_names/_skrell_names_includes.dm"
