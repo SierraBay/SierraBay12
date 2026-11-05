@@ -36,7 +36,8 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/security,
+		/obj/item/material/knife/folding/swiss/sec/sierra
 	)
 
 /obj/structure/closet/secure_closet/warden/sierra
@@ -110,7 +111,8 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/security,
+		/obj/item/material/knife/folding/swiss/sec/sierra
 	)
 
 /obj/structure/closet/secure_closet/security/sierra
@@ -142,7 +144,8 @@
 		/obj/item/crowbar/prybar,
 		/obj/item/device/radio/off,
 		/obj/item/clothing/mask/gas/half,
-		/obj/item/storage/firstaid/security
+		/obj/item/storage/firstaid/security,
+		/obj/item/material/knife/folding/swiss/sec/sierra
 	)
 
 /obj/structure/closet/secure_closet/security/sierra/cadet
@@ -191,6 +194,7 @@
 		/obj/item/clothing/under/blueshift_uniform,
 		/obj/item/gun/energy/taser,
 		/obj/item/device/holowarrant,
+		/obj/item/material/knife/folding/swiss/sec/sierra
 	)
 
 /obj/structure/closet/secure_closet/security/sierra/science/WillContain()

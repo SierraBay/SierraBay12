@@ -32,6 +32,7 @@
 		/obj/item/storage/firstaid/adv,
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/storage/fancy/vials,
+		/obj/item/material/knife/folding/swiss/medic
 	)
 
 /obj/structure/closet/secure_closet/medical_sierrasenior
@@ -52,6 +53,7 @@
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/hud/health,
 		/obj/item/storage/firstaid/adv,
+		/obj/item/material/knife/folding/swiss/medic
 	)
 
 /obj/structure/closet/secure_closet/biomech_sierra
@@ -93,6 +95,7 @@
 		/obj/item/clothing/accessory/stethoscope,
 		/obj/item/clothing/glasses/hud/health,
 		/obj/item/storage/firstaid/adv,
+		/obj/item/material/knife/folding/swiss/medic
 	)
 
 /obj/structure/closet/wardrobe/medic_sierra

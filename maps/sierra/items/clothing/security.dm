@@ -170,3 +170,6 @@
 /obj/item/clothing/suit/armor/pcarrier/iso
 	accessories = list(/obj/item/clothing/accessory/armor_plate/tactical, /obj/item/clothing/accessory/arm_guards/heavy, /obj/item/clothing/accessory/leg_guards/heavy, /obj/item/clothing/accessory/storage/pouches/large)
 	item_flags = ITEM_FLAG_THICKMATERIAL | ITEM_FLAG_INVALID_FOR_CHAMELEON
+
+/obj/item/material/knife/folding/swiss/sec/sierra
+	name = "Security Guard' combi-knife"
