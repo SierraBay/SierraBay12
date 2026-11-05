@@ -23,7 +23,10 @@
 	if(!message)	return
 	var/F = investigate_subject2file(subject)
 	if(!F)	return
-	to_chat(F, "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>")
+	// show_browser() passes a file through as-is, so the page carries its own header
+	if(!fexists(F))
+		to_file(F, "<!doctype html><meta charset=utf-8>")
+	to_file(F, "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>")
 
 //ADMINVERBS
 // [SIERRA-EDIT] - HALLUCINATION_OVERHAUL - (Added hallucination investigation log category)

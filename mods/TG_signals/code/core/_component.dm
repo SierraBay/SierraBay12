@@ -278,12 +278,12 @@
 	var/list/dc = _datum_components
 	if(!dc)
 		return null
-	var/datum/component/C = dc[c_type]
-	if(C)
-		if(length(C))
-			C = C[1]
-		if(C.type == c_type)
-			return C
+	var/found = dc[c_type]
+	if(length(found))
+		found = found[1]
+	var/datum/component/C = found
+	if(C?.type == c_type)
+		return C
 	return null
 
 /**

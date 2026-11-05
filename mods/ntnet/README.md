@@ -39,6 +39,8 @@ NTNet
 
 ### Оверрайды
 
+- `mods/ntnet/code/NTNet-core.dm`: `/obj/machinery/Destroy()` (убирает машину из реестра NTNet ID)
+- `mods/ntnet/code/NTNet-core.dm`: `Initialize()` у `/obj/machinery/door/airlock`, `/obj/machinery/firealarm`, `/obj/machinery/power/apc`, `/obj/machinery/alarm`, `/obj/machinery/camera` (выдают уникальный NTNet ID)
 <!--
   Если ты добавлял новый модульный оверрайд, его нужно указать здесь.
   Здесь указываются оверрайды в твоём моде и папке `_master_files`
