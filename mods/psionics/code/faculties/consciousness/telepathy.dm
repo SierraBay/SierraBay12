@@ -64,7 +64,7 @@
 						to_chat(user, SPAN_NOTICE("<b>[target] не поддается.</b>"))
 						return 0
 			if(option == "Отвязать")
-				if(user.psi.linked_souls == target)
+				if(target in user.psi.linked_souls)
 					user.psi.linked_souls -= target
 					if(LAZYLEN(user.psi.linked_souls) < 1)
 						user.verbs -= /mob/living/proc/ContactSoulmate

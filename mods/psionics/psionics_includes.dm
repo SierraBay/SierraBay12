@@ -50,9 +50,11 @@
 #include "code/faculties/_faculty.dm"
 #include "code/faculties/_power.dm"
 #include "code/faculties/coercion.dm"
-#include "code/faculties/manifestation.dm"
 #include "code/faculties/metakinesis.dm"
 
+#include "code/faculties/manifestation/_manifestation.dm"
+#include "code/faculties/manifestation/tools.dm"
+#include "code/faculties/manifestation/weapon.dm"
 
 #include "code/faculties/psychokinesis/_psychokinesis.dm"
 #include "code/faculties/psychokinesis/propel.dm"

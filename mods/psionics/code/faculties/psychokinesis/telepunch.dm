@@ -99,7 +99,7 @@
 
 
 		if(pk_rank_user == PSI_RANK_MASTER)
-			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item))
+			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item || istype(target, /turf/simulated/wall)))
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					user.visible_message(SPAN_DANGER("[user] с неестественной скоростью бьет кулаком по [target]!"))
@@ -169,7 +169,7 @@
 
 
 		if(pk_rank_user == PSI_RANK_GRANDMASTER)
-			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item))
+			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item || istype(target, /turf/simulated/wall)))
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					user.visible_message(SPAN_DANGER("[user] с сверхзвуковой скоростью бьет кулаком по [target]!"))
@@ -186,7 +186,7 @@
 			user.visible_message(SPAN_DANGER("[user] заносит руку назад и наносит удар с сверхзвуковой скоростью!"))
 
 			var/mob/living/M = target
-			if(get_dist(user, M) <= 6)
+			if(get_dist(user, M) <= 6 && !user.Adjacent(target))
 				var/turf/target_turf = get_step(get_turf(target), pick(GLOB.alldirs))
 				var/list/line_list = getline(user, target_turf)
 				for(var/i = 1 to length(line_list))
