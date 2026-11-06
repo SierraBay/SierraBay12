@@ -97,7 +97,7 @@
 	hidden = TRUE
 
 /datum/design/autolathe/arms_ammo/hidden/magazine_smg
-	name = "ammunition (.45 Auto submachine gun)"
+	name = "ammunition (10mm Auto submachine gun)"
 	build_path = /obj/item/ammo_magazine/smg
 	hidden = TRUE
 

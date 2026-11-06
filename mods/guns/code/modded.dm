@@ -193,7 +193,7 @@
 // CSS Anti-psionics stuff
 
 /obj/item/ammo_casing/pistol/nullglass
-	desc = "A .45 Auto bullet casing with a nullglass coating."
+	desc = "A 10mm Auto bullet casing with a nullglass coating."
 	projectile_type = /obj/item/projectile/bullet/nullglass
 
 /obj/item/ammo_casing/pistol/nullglass/disrupts_psionics()
@@ -374,7 +374,10 @@
 
 /obj/item/projectile/bullet/pistol/holdout/ap
 	damage = 30
-	armor_penetration = 15
+	// COMBAT_EXTENDED (README, "Патроны FMJ, AP и HP"): AP 25, 9.5 мм, как у AP 10mm Auto. С AP 15
+	// (7.3 мм) низкопрофильный жилет он пробивал на 12 урона, а остановленный FMJ бил через него
+	// на 10.
+	armor_penetration = 25
 
 /obj/item/storage/box/ammo/smg_nt
 	name = "box of 9x19mm box magazines - lethal"

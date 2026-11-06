@@ -96,7 +96,7 @@
 // Medium Silencer
 
 /datum/uplink_item/item/stealthy_weapons/medium_silencer
-	name = ".45 Auto Silencer"
-	desc = "Silencer fittable with barrel-threaded guns chambered in .45 Auto, such MP6 or MSI-220."
+	name = "10mm Auto Silencer"
+	desc = "Silencer fittable with barrel-threaded guns chambered in 10mm Auto, such MP6 or MSI-220."
 	item_cost = 8
 	path = /obj/item/silencer/medium

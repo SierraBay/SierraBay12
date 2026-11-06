@@ -43,6 +43,13 @@
 #include "code/concealed_accessories.dm"
 #include "code/ammo_sprites.dm"
 
+#include "code/items/ammo/10mm_auto.dm"
+#include "code/items/ammo/44_magnum.dm"
+#include "code/items/ammo/4mm.dm"
+#include "code/items/ammo/556x45.dm"
+#include "code/items/ammo/57x28.dm"
+#include "code/items/ammo/762x39.dm"
+#include "code/items/ammo/9x19.dm"
 #include "code/items/armor/armor_plates.dm"
 #include "code/items/armor/augments.dm"
 #include "code/items/armor/guards.dm"

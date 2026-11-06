@@ -145,7 +145,7 @@
 		initial(projectile.armor_penetration),
 		label,
 		extra_lines,
-		initial(projectile.ce_blunt_penetration)
+		ce_get_type_own_blunt_penetration(projectile_type)
 	)
 
 

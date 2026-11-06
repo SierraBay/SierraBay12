@@ -1,6 +1,6 @@
 // Calibers renamed after real-world rounds. Define names stay core so core code keeps working.
 #undef CALIBER_PISTOL
-#define CALIBER_PISTOL ".45 Auto"
+#define CALIBER_PISTOL "10mm Auto"
 #undef CALIBER_PISTOL_SMALL
 #define CALIBER_PISTOL_SMALL "9x19mm"
 #undef CALIBER_PISTOL_MAGNUM
@@ -17,7 +17,7 @@
 #define CALIBER_GYROJET "13mm Gyrojet"
 
 // Aliases named after the round, for mod code
-#define CALIBER_45_AUTO CALIBER_PISTOL
+#define CALIBER_10MM_AUTO CALIBER_PISTOL
 #define CALIBER_9X19 CALIBER_PISTOL_SMALL
 #define CALIBER_44_MAGNUM CALIBER_PISTOL_MAGNUM
 #define CALIBER_57X28 CALIBER_PISTOL_FAST

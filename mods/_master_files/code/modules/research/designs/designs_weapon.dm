@@ -3,4 +3,4 @@
 	name = "haywire 9x19mm"
 
 /datum/design/item/weapon/ammunition/ammo_emp_pistol
-	name = "haywire .45 Auto"
+	name = "haywire 10mm Auto"

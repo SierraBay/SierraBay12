@@ -10,8 +10,13 @@
 /obj/item/projectile/bullet/pellet/shotgun/flechette
 	name = "flechette"
 	icon_state = "flechette"
-	damage = 30
-	armor_penetration = 35
+	// COMBAT_EXTENDED (README, "Патроны FMJ, AP и HP"): флешетта берёт броню острым пробитием,
+	// слаг тупым ударом. С 30 / AP 35 она била сильнее слага везде, кроме rifle-плиты. Теперь
+	// 3 стрелки по 20 / AP 65, 15.8 мм: по голому как слаг в упор, сильнее слага через
+	// низкопрофильный жилет и tactical-плиту, а merc-плиту не берёт вовсе. Здесь, а не в моде:
+	// модпак подключается позже.
+	damage = 20
+	armor_penetration = 65
 	pellets = 3
 	range_step = 3
 	base_spread = 99
@@ -23,7 +28,7 @@
 	damage = 25
 	agony = 60
 
-/* PISTOL - .45 Auto
+/* PISTOL - 10mm Auto
  * =============
  */
 

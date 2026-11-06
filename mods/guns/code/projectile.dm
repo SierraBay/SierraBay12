@@ -1,6 +1,6 @@
 /obj/item/silencer/medium
 	name = "large silencer"
-	desc = "A long and wide silencer for .45 Auto weapons."
+	desc = "A long and wide silencer for 10mm Auto weapons."
 	icon = 'mods/guns/icons/obj/smg_sol.dmi'
 	caliber = CALIBER_PISTOL
 

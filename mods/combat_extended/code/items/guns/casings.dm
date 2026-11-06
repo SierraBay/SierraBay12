@@ -20,7 +20,7 @@
 */
 
 /obj/item/ammo_casing/pistol
-	// .45 Auto.
+	// 10mm Auto.
 	icon = CE_AMMO_ICON
 	icon_state = "10mm_fmj"
 	spent_icon = "10mm-spent"
@@ -66,7 +66,7 @@
 	ce_sprite_caliber = "15mmP"
 	ce_box_sprite = "15mmP_fmj"
 
-// Старинный ~10mm (`pistol/throwback`) только FMJ: спрайт и коробка .45 Auto, своего блока нет.
+// Старинный ~10mm (`pistol/throwback`) только FMJ: спрайт и коробка 10mm Auto, своего блока нет.
 
 /obj/item/ammo_casing/gyrojet
 	// Своей гильзы у гироджета нет: живая гильза 14.5 с кончиком. Стреляной не бывает, пистолет
@@ -191,7 +191,7 @@
 	ce_box_sprite = "5.7mmP_fmj"
 
 /obj/item/ammo_casing/pistol/nullglass
-	// Нульглас .45 Auto.
+	// Нульглас 10mm Auto.
 	ce_tinted_tip = TRUE
 	ce_ammo_color = CE_AMMO_COLOR_UNCHOSEN
 	ce_box_sprite = null

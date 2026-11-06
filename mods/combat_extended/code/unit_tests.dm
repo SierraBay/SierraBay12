@@ -251,6 +251,17 @@
 	return attacks
 
 
+/// `list(урон, острое пробитие в мм, удар на полном уроне в МПа)` снаряда типа `path`.
+/datum/unit_test/combat_extended/proc/round_numbers(obj/item/projectile/path)
+	var/damage = initial(path.damage)
+	var/flags = initial(path.damage_flags)
+	var/armor_pen = initial(path.armor_penetration)
+	var/impact = ce_get_type_own_blunt_penetration(path)
+	if(isnull(impact))
+		impact = ce_derive_blunt_penetration(damage, flags, armor_pen)
+	return list(damage, ce_derive_penetration(damage, flags, armor_pen), impact)
+
+
 /**
  * Лестница целей: голый человек и четыре жёсткие плиты по возрастанию тира. Названия тиров
  * дописываются в `tiers`. null: кого-то не удалось создать.
@@ -408,6 +419,108 @@
 	if(step[1] <= 0)
 		return CE_PROMISE_STOPS
 	return step[1] < damage ? CE_PROMISE_DAMPENS : CE_PROMISE_PENETRATES
+
+
+/*
+	Окна тиров патронов, README, "Патроны FMJ, AP и HP". Одним слоем жёсткой плиты каждый патрон
+	пробивает свой нижний тир, а верхний его держит. Так AP пробивает тир, который держит его FMJ,
+	а HP останавливается на тире, который FMJ пробивает. Урон AP ниже, чем у FMJ, у HP выше.
+	Остановленные AP и HP бьют как их FMJ, и HP не рикошетит.
+*/
+/datum/unit_test/combat_extended/define_promises/ammo_tiers
+	name = "CE: Окна тиров патронов"
+
+/datum/unit_test/combat_extended/define_promises/ammo_tiers/start_test()
+	var/list/plates = list()
+	for(var/rating in list(ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE, ARMOR_BALLISTIC_AP, ARMOR_BALLISTIC_HEAVY))
+		plates["[rating]"] = make_plate(rating, 0)
+	var/list/failures = list()
+	var/list/windows = ammo_windows()
+	for(var/list/window in windows)
+		check_window(window, plates, failures)
+	var/list/families = ammo_families()
+	for(var/list/family in families)
+		check_family(family, failures)
+
+	cleanup()
+	if(length(failures))
+		fail("Нарушено [length(failures)]:\n[jointext(failures, "\n")]")
+	else
+		pass("[length(windows)] патронов в своих окнах тиров, [length(families)] калибров с AP и HP.")
+	return 1
+
+/// `list(снаряд, рейтинг плиты, которую он пробивает, рейтинг плиты, которая его держит)`. Ноль: такой плиты нет.
+/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/ammo_windows()
+	return list(
+		list(/obj/item/projectile/bullet/pistol/holdout, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
+		list(/obj/item/projectile/bullet/pistol/holdout/ap, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/pistol/holdout/hp, 0, ARMOR_BALLISTIC_SMALL),
+		list(/obj/item/projectile/bullet/pistol, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
+		list(/obj/item/projectile/bullet/pistol/ap, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/pistol/hp, 0, ARMOR_BALLISTIC_SMALL),
+		list(/obj/item/projectile/bullet/pistol/strong, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/pistol/strong/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
+		list(/obj/item/projectile/bullet/pistol/strong/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
+		list(/obj/item/projectile/bullet/pistol/fast, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/pistol/fast/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
+		list(/obj/item/projectile/bullet/pistol/fast/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
+		list(/obj/item/projectile/bullet/flechette, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
+		list(/obj/item/projectile/bullet/flechette/ap, ARMOR_BALLISTIC_RIFLE, ARMOR_BALLISTIC_AP),
+		list(/obj/item/projectile/bullet/flechette/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
+		list(/obj/item/projectile/bullet/rifle, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/rifle/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
+		list(/obj/item/projectile/bullet/rifle/military_standard, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/rifle/military_standard/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
+		list(/obj/item/projectile/bullet/rifle/military, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/rifle/shell, ARMOR_BALLISTIC_AP, ARMOR_BALLISTIC_HEAVY),
+		list(/obj/item/projectile/bullet/rifle/shell/apds, ARMOR_BALLISTIC_HEAVY, 0),
+		list(/obj/item/projectile/bullet/shotgun, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
+		list(/obj/item/projectile/bullet/pellet/shotgun/flechette, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE)
+	)
+
+/// `list(FMJ, AP, HP)` калибров с новыми типами. null: такого типа у калибра нет.
+/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/ammo_families()
+	return list(
+		list(/obj/item/projectile/bullet/pistol/holdout, /obj/item/projectile/bullet/pistol/holdout/ap, /obj/item/projectile/bullet/pistol/holdout/hp),
+		list(/obj/item/projectile/bullet/pistol, /obj/item/projectile/bullet/pistol/ap, /obj/item/projectile/bullet/pistol/hp),
+		list(/obj/item/projectile/bullet/pistol/strong, /obj/item/projectile/bullet/pistol/strong/ap, /obj/item/projectile/bullet/pistol/strong/hp),
+		list(/obj/item/projectile/bullet/pistol/fast, /obj/item/projectile/bullet/pistol/fast/ap, /obj/item/projectile/bullet/pistol/fast/hp),
+		list(/obj/item/projectile/bullet/flechette, /obj/item/projectile/bullet/flechette/ap, /obj/item/projectile/bullet/flechette/hp),
+		list(/obj/item/projectile/bullet/rifle, /obj/item/projectile/bullet/rifle/ap, null),
+		list(/obj/item/projectile/bullet/rifle/military_standard, /obj/item/projectile/bullet/rifle/military_standard/ap, null)
+	)
+
+/// Пробивает ли патрон нижнюю плиту окна и держит ли его верхняя.
+/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/check_window(list/window, list/plates, list/failures)
+	var/obj/item/projectile/bullet = window[1]
+	var/damage = initial(bullet.damage)
+	var/flags = initial(bullet.damage_flags)
+	var/armor_pen = initial(bullet.armor_penetration)
+	var/pen = round(ce_derive_penetration(damage, flags, armor_pen), 0.1)
+	var/pierced = window[2]
+	var/stopper = window[3]
+	if(pierced && try_single_layer(plates["[pierced]"], damage, flags, armor_pen) != CE_PROMISE_PENETRATES)
+		failures += "[bullet], [pen] мм: не пробивает плиту [pierced]"
+	if(stopper && try_single_layer(plates["[stopper]"], damage, flags, armor_pen) != CE_PROMISE_STOPS)
+		failures += "[bullet], [pen] мм: пробивает плиту [stopper]"
+
+/// Урон AP и HP относительно FMJ, их удар на настоящем снаряде и рикошет HP.
+/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/check_family(list/family, list/failures)
+	var/list/fmj = round_numbers(family[1])
+	for(var/i in 2 to length(family))
+		var/variant_type = family[i]
+		if(!variant_type)
+			continue
+		var/obj/item/projectile/variant = new variant_type
+		spawned += variant
+		var/is_ap = i == 2
+		if(is_ap ? variant.damage >= fmj[1] : variant.damage <= fmj[1])
+			failures += "[variant_type]: урон [variant.damage], у FMJ [fmj[1]]"
+		var/impact = variant.ce_get_own_blunt_penetration()
+		if(abs(impact - fmj[3]) > 0.001)
+			failures += "[variant_type]: удар [impact] МПа, у FMJ [fmj[3]]"
+		if(!is_ap && variant.ce_ricochets_max)
+			failures += "[variant_type]: HP рикошетит [variant.ce_ricochets_max] раз"
 
 
 /*
@@ -3893,8 +4006,8 @@
 	Собственный удар снаряда (`ce_blunt_penetration`, `attack_penetration.dm`). Снаряд доходит до
 	прохода по слоям через `ce_hit_projectile`, как из `bullet_act()`, а ожидание: урон после той же
 	пластины от процедуры одного слоя с этим ударом. Числа патронов живут в README. Здесь: что удар
-	берётся у своего снаряда и только у него, убывает с уроном, печатается в кодексе и что штатный
-	7mmR отличается от 5mmR только ударом.
+	берётся у своего снаряда и только у него, убывает с уроном, печатается в кодексе и что числа
+	обоих 7.62x39 стоят по CE относительно 5.56.
 */
 /// Насколько урон и пробитие могут разойтись с ожиданием: только погрешность чисел.
 #define CE_OWN_BLUNT_TOLERANCE 0.001
@@ -3912,7 +4025,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Проход берёт собственный удар у своего снаряда и только у него. Удар убывает с уроном и виден в кодексе. Штатный 7mmR отличается от 5mmR только ударом.")
+		pass("Проход берёт собственный удар у своего снаряда и только у него. Удар убывает с уроном и виден в кодексе. Оба 7.62x39 стоят по CE относительно 5.56.")
 	return 1
 
 /// Остановленная medium-вставкой дробина: со своим снарядом собственный удар, без него и с чужим уроном выведенный.
@@ -3986,24 +4099,26 @@
 	if(!findtext(line, expected))
 		failures += "кодекс картечи: нет \"[expected]\" в \"[line]\""
 
-/// Штатный 7mmR: пуля 5mmR со своим ударом. Учебные и флешетта бьют выведенным.
+/**
+ * Штатный 7.62x39 стреляет своей пулей, и по CE у неё больше урона, меньше пробития и сильнее
+ * удар, чем у 5.56. Ослабленный 7.62x39 слабее штатного во всех трёх. Учебные и флешетта бьют
+ * выведенным.
+ */
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_rifle_rounds(list/failures)
 	var/obj/item/ammo_casing/casing = /obj/item/ammo_casing/rifle/military
 	var/standard_type = initial(casing.projectile_type)
-	var/rifle_type = /obj/item/projectile/bullet/rifle
-	if(standard_type == rifle_type)
-		failures += "7mmR: штатная гильза стреляет пулей 5mmR"
+	if(standard_type == /obj/item/projectile/bullet/rifle)
+		failures += "7.62x39: штатная гильза стреляет пулей 5.56"
 		return
-	var/obj/item/projectile/standard = new standard_type
-	var/obj/item/projectile/rifle = new rifle_type
-	spawned += standard
-	spawned += rifle
-	for(var/var_name in list("damage", "armor_penetration", "damage_flags", "damage_type", "penetrating", "distance_falloff", "ce_ricochets_max"))
-		if(standard.vars[var_name] != rifle.vars[var_name])
-			failures += "7mmR: [var_name] штатной пули [standard.vars[var_name]], у 5mmR [rifle.vars[var_name]]"
-	var/rifle_impact = ce_derive_blunt_penetration(rifle.damage, rifle.damage_flags(), rifle.armor_penetration)
-	if(isnull(standard.ce_blunt_penetration) || standard.ce_blunt_penetration <= rifle_impact)
-		failures += "7mmR: удар штатной пули [standard.ce_blunt_penetration] не тяжелее 5mmR ([rifle_impact])"
+	var/list/standard = round_numbers(standard_type)
+	var/list/rifle = round_numbers(/obj/item/projectile/bullet/rifle)
+	var/list/light = round_numbers(/obj/item/projectile/bullet/rifle/military)
+	if(standard[1] <= rifle[1] || standard[2] >= rifle[2] || standard[3] <= rifle[3])
+		failures += "7.62x39: урон, мм и МПа [jointext(standard, " / ")], у 5.56 [jointext(rifle, " / ")]. Ожидалось больше урона, меньше мм, больше МПа."
+	for(var/i in 1 to length(standard))
+		if(light[i] >= standard[i])
+			failures += "ослабленный 7.62x39: урон, мм и МПа [jointext(light, " / ")], у штатного [jointext(standard, " / ")]. Ожидалось меньше во всех трёх."
+			break
 	for(var/obj/item/projectile/path as anything in list(/obj/item/projectile/bullet/rifle/military/practice, /obj/item/projectile/bullet/pellet/shotgun/flechette))
 		if(!isnull(initial(path.ce_blunt_penetration)))
 			failures += "[path]: унаследовал собственный удар [initial(path.ce_blunt_penetration)]"
