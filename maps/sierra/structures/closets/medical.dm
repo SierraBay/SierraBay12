@@ -20,6 +20,7 @@
 		/obj/item/device/flash,
 		/obj/item/device/scanner/health,
 		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/device/megaphone,
 		/obj/item/reagent_containers/hypospray/vial,
 		/obj/item/device/flashlight/pen,

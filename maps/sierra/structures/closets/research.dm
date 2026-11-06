@@ -26,6 +26,7 @@
 		/obj/item/folder,
 		/obj/item/folder/envelope/preset/blanks,
 		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/device/taperecorder,
 		/obj/item/device/tape/random = 3,
 		/obj/item/device/camera,

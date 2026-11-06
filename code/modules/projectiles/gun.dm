@@ -395,7 +395,10 @@
 					if(8 to INFINITY)
 						to_chat(user, SPAN_WARNING("You struggle to hold \the [src] steady!"))
 
-		if(screen_shake)
+		// [SIERRA-EDIT] - COMBAT_EXTENDED - (Толчок вида на пиксели вместо тряски камеры на клетки: /mods/combat_extended/code/view_kick.dm)
+		// if(screen_shake) // SIERRA-EDIT - ORIGINAL
+		if(screen_shake && !ce_kick_view(user, target))
+		// [/SIERRA-EDIT]
 			spawn()
 				shake_camera(user, screen_shake+1, screen_shake)
 
@@ -498,7 +501,7 @@
 				else
 					acc_mod += bulk / 5
 					acc_mod += accuracy * 0.25
-		if(7) //machine gun, RPG
+		if(7 to INFINITY) //machine gun, RPG and heavier: AMR, L6, railguns // [SIERRA-EDIT] - COMBAT_EXTENDED - was if(7): bulk 8 and 10 fell out of every branch
 			if (user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_BASIC))
 				if(user.skill_check(SKILL_HAULING, SKILL_TRAINED) && user.skill_check(SKILL_WEAPONS, SKILL_TRAINED))
 					if(user.skill_check(SKILL_HAULING, SKILL_EXPERIENCED) && user.skill_check(SKILL_WEAPONS, SKILL_EXPERIENCED))

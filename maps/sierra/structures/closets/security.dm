@@ -9,6 +9,7 @@
 /obj/structure/closet/secure_closet/hos/sierra/WillContain()
 	return list(
 		/obj/item/clothing/suit/armor/pcarrier/medium/nt,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/clothing/suit/storage/hoscoat,
 		/obj/item/clothing/suit/armor/hos,
 		/obj/item/clothing/head/helmet/nt,
@@ -121,6 +122,7 @@
 /obj/structure/closet/secure_closet/security/sierra/WillContain()
 	return list(
 		/obj/item/clothing/suit/armor/pcarrier/medium/nt,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/clothing/head/helmet/nt,
 		/obj/item/device/radio/headset/headset_sec,
 		/obj/item/device/radio/headset/headset_sec/alt,

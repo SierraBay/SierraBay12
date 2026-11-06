@@ -7,6 +7,7 @@
 #include "cardiac_overhaul/_cardiac_overhaul_includes.dm"
 #include "client_verbs/_client_verbs_includes.dm"
 #include "colony_fractions/_colony_types_includes.dm"
+#include "combat_extended/_combat_extended_includes.dm"
 // #include "don_loadout/_don_loadout_includes.dm" // Не открывать до Рождества
 #include "220_cult/_220_cult_includes.dm"
 #include "eris_announcer/_eris_announcer_includes.dm"

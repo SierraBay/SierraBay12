@@ -1,6 +1,6 @@
 /obj/item/silencer/medium
 	name = "large silencer"
-	desc = "A long and wide silencer for 10mm caliber weapon."
+	desc = "A long and wide silencer for .45 Auto weapons."
 	icon = 'mods/guns/icons/obj/smg_sol.dmi'
 	caliber = CALIBER_PISTOL
 
@@ -154,7 +154,7 @@
 	initial_ammo = 0
 
 /obj/item/storage/box/ammo/nt41
-	name = "box of NT41 5.7x28 box magazines"
+	name = "box of NT41 box magazines"
 	startswith = list(/obj/item/ammo_magazine/n10mm = 7)
 
 // Ammo Box

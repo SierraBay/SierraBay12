@@ -239,9 +239,13 @@ var/global/default_mobloc = null
 // Human damage check.
 // =================================================================
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/brute
 	name = "MOB: Human Brute damage check"
 	damagetype = DAMAGE_BRUTE
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/burn
 	name = "MOB: Human Burn damage check"
@@ -272,10 +276,14 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/unathi
 	mob_type = /mob/living/carbon/human/unathi
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/unathi/brute
 	name = "MOB: Unathi Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
 	expected_vulnerability = ARMORED
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/unathi/fire
 	name = "MOB: Unathi Fire Damage Check"
@@ -306,9 +314,13 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/skrell
 	mob_type = /mob/living/carbon/human/skrell
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/skrell/brute
 	name = "MOB: Skrell Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/skrell/fire
 	name = "MOB: Skrell Fire Damage Check"
@@ -342,9 +354,13 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/vox
 	mob_type = /mob/living/carbon/human/vox
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/vox/brute
 	name = "MOB: Vox Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/vox/fire
 	name = "MOB: Vox Fire Damage Check"
@@ -377,9 +393,13 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/diona
 	mob_type = /mob/living/carbon/human/diona
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/diona/brute
 	name = "MOB: Diona Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/diona/fire
 	name = "MOB: Diona Fire Damage Check"
@@ -413,10 +433,14 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/nabber
 	mob_type = /mob/living/carbon/human/nabber
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/nabber/brute
 	name = "MOB: GAS Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
 	expected_vulnerability = ARMORED
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/nabber/fire
 	name = "MOB: GAS Fire Damage Check"
@@ -449,10 +473,14 @@ var/global/default_mobloc = null
 	template = /datum/unit_test/mob_damage/machine
 	mob_type = /mob/living/carbon/human/machine
 
+// [SIERRA-REMOVE] - COMBAT_EXTENDED - (Перемещено в /mods/combat_extended/code/unit_tests.dm)
+/*
 /datum/unit_test/mob_damage/machine/brute
 	name = "MOB: IPC Brute Damage Check"
 	damagetype = DAMAGE_BRUTE
 	expected_vulnerability = ARMORED
+*/
+// [/SIERRA-REMOVE]
 
 /datum/unit_test/mob_damage/machine/fire
 	name = "MOB: IPC Fire Damage Check"

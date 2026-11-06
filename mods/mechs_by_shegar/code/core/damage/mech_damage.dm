@@ -3,6 +3,7 @@
 		return 0
 	if(LAZYLEN(pilots) && (!hatch_closed || !prob(body.pilot_coverage)))
 		if(effect > 0 && effecttype == DAMAGE_RADIATION)
+			// строка ниже в теории рантаймит: get_armors_by_zone() возвращает список слоёв брони, а не число
 			effect = max((1-(get_armors_by_zone(null, DAMAGE_RADIATION)/100))*effect/(blocked+1),0)
 		var/mob/living/pilot = pick(pilots)
 		return pilot.apply_effect(effect, effecttype, blocked)
@@ -47,6 +48,19 @@
 		return pilot.hitby(AM, TT)
 	. = ..()
 
+//Слои брони меха, снаружи внутрь. Внешний бронеэлемент закрывает только свою часть и держит
+//только пули и лучи: остальное идёт мимо него
+/mob/living/exosuit/get_armors_by_zone(def_zone, damage_type, damage_flags)
+	. = ..()
+	var/armor_key = get_armor_key(damage_type, damage_flags)
+	if(armor_key != "bullet" && armor_key != "laser")
+		return
+	var/obj/item/mech_component/part = zoneToComponent(def_zone)
+	if(!part?.installed_armor)
+		return
+	var/plate_armor = get_extension(part.installed_armor, /datum/extension/armor)
+	if(plate_armor)
+		. = list(plate_armor) + .
 
 /mob/living/exosuit/adjustFireLoss(amount, obj/item/mech_component/MC = pick(list(head, body, L_arm, R_arm, L_leg, R_leg)))
 	if(MC)

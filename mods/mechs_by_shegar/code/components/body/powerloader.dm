@@ -5,10 +5,10 @@
 	exosuit_desc_string = "an industrial rollcage"
 	power_use = 0
 	climb_time = 6
-	max_hp = 80
-	min_damage = 75
-	max_repair = 50
-	repair_damage = 25
+	max_hp = 40
+	min_damage = 25
+	max_repair = 15
+	repair_damage = 10
 	front_modificator_damage = 1
 	matter = list(MATERIAL_STEEL = 20000)
 
@@ -51,8 +51,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/powerloader/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit(src)
-	update_parts_images()

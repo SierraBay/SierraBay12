@@ -1,3 +1,8 @@
+/mob/living/exosuit
+	///Идёт попадание снаряда: модификатор урона за его сторону, list(множитель, прибавка). Ставит bullet_act()
+	///на время попадания, забирает apply_damage()
+	var/list/projectile_hit_modifier
+
 /mob/living/exosuit/apply_damage(damage = 0, damagetype = DAMAGE_BRUTE, def_zone, damage_flags = FLAGS_OFF, used_weapon, armor_pen, silent = FALSE)
 	if(!damage)
 		return 0
@@ -28,9 +33,21 @@
 
 		def_zone = ran_zone(def_zone)
 
+	//Модификатор забирается до брони: удары, вложенные в её проход, к попаданию снаряда не относятся
+	var/list/hit_modifier = projectile_hit_modifier
+	projectile_hit_modifier = null
+
 	var/list/after_armor = modify_damage_by_armor(def_zone, damage, damagetype, damage_flags, src, armor_pen, TRUE)
 	damage = after_armor[1]
 	damagetype = after_armor[2]
+
+	if(hit_modifier)
+		//Броню снаряд встречает со своим типом урона, а корпусу любой снаряд наносит физический:
+		//каким образом можно починить ПРОВОДАМИ прожжёную обшивку?
+		damagetype = DAMAGE_BRUTE
+		//Сторона попадания меняет только то, что прошло броню. Остановленное бронёй целиком так и остаётся нулём
+		if(damage > 0)
+			damage = damage * hit_modifier[1] + hit_modifier[2]
 
 	//В случае если атакованная часть меха ВЫБИТА(Т.е в ней выбиты все внутренние модули и 0 состояний)
 	//то мы передаём урон в конечности меха
@@ -42,7 +59,7 @@
 			R_leg.take_brute_damage(damage)
 			L_arm.take_brute_damage(damage)
 			R_arm.take_brute_damage(damage)
-		else if(target == body && !body.m_armour && !body.diagnostics )
+		else if(target == body && !body.diagnostics )
 			head.take_brute_damage(damage)
 			L_leg.take_brute_damage(damage)
 			R_leg.take_brute_damage(damage)

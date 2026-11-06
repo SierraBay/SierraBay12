@@ -9,7 +9,7 @@
 	move_delay = 2 //Скорость на уровне лёгких ног
 	turn_delay = 10
 	power_use = 75
-	max_hp = 125
+	max_hp = 180
 	min_damage = 100
 	max_repair = 50
 	repair_damage = 20
