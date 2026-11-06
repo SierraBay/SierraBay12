@@ -1,0 +1,17 @@
+## Hosts that [img]link[/img] may load images from (mods/pencode_images). One host per line.
+## Without this file no host is allowed, and [img] stays plain text.
+##
+## Every reader's client downloads the image straight from the host, so the host sees the reader's IP.
+## Only add large image hosts that don't show uploaders who viewed a file,
+## with no open redirects and no subdomains that users can create.
+##
+## Write bare host names that match exactly: raw.githubusercontent.com allows neither githubusercontent.com nor other subdomains.
+## No https://, no paths, no comments after the host.
+i.imgur.com
+cdn.discordapp.com
+media.discordapp.net
+i.ibb.co
+i.postimg.cc
+files.catbox.moe
+cdn.imgchest.com
+raw.githubusercontent.com

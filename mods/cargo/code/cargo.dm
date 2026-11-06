@@ -29,9 +29,14 @@
 	t += "RANK: [O.orderedrank]<br>"
 	t += "REASON: [O.reason]<br>"
 	t += "SUPPLY CRATE TYPE: [O.object.name]<br>"
+	if(O.ordered_item_name)
+		t += "SELECTED PART: [O.ordered_item_name]<br>"
 	t += "ACCESS RESTRICTION: [get_access_desc(O.object.access)]<br>"
 	t += "CONTENTS:<br>"
-	t += O.object.manifest
+	if(O.ordered_item_name)
+		t += "<ul><li>[O.ordered_item_name]</li></ul>"
+	else
+		t += O.object.manifest
 	t += "<hr>"
 	print_text(t, user)
 
@@ -151,9 +156,11 @@
 
 	if(href_list["show_contents"])
 		generate_order_contents(href_list["show_contents"])
+		return 1
 
 	if(href_list["hide_contents"])
 		clear_order_contents()
+		return 1
 
 	if(href_list["order"])
 		clear_order_contents()
@@ -163,6 +170,19 @@
 
 		if(P.hidden && !emagged)
 			return 1
+
+		var/ordered_item
+		var/ordered_item_name
+		var/singleton/hierarchy/supply_pack/prosthesis/prosthetic_pack = P
+		if(istype(prosthetic_pack) && prosthetic_pack.select_part)
+			if(!href_list["order_part"])
+				generate_order_contents(href_list["order"])
+				to_chat(user, SPAN_NOTICE("Select which prosthetic part to order."))
+				return 1
+			ordered_item_name = href_list["order_part"]
+			ordered_item = prosthetic_pack.part_options[ordered_item_name]
+			if(!ispath(ordered_item, /obj/item))
+				return 1
 
 		var/reason = sanitize(input(user,"Reason:","Why do you require this item?","") as null|text,,0)
 		if(!reason)
@@ -190,7 +210,9 @@
 		O.orderedby = idname
 		O.reason = reason
 		O.orderedrank = idrank
-		O.comment = "#[O.ordernum]"
+		O.comment = ordered_item_name ? "[ordered_item_name] #[O.ordernum]" : "#[O.ordernum]"
+		O.ordered_item = ordered_item
+		O.ordered_item_name = ordered_item_name
 		O.accountnubmer = department_accounts["Снабжения"]
 		O.sum_money = P.cost * CARGO_POINT_TO_THALLER
 		O.payer = "None Provided"
@@ -356,10 +378,25 @@
 		for(var/singleton/hierarchy/supply_pack/spc in sp.get_descendents())
 			if((spc.hidden || spc.contraband || !spc.sec_available()) && !emagged)
 				continue
+			var/select_part = FALSE
+			var/list/parts
+			if(istype(spc, /singleton/hierarchy/supply_pack/prosthesis))
+				var/singleton/hierarchy/supply_pack/prosthesis/prosthetic_pack = spc
+				select_part = prosthetic_pack.select_part
+				if(select_part)
+					parts = list()
+					var/pack_ref = "\ref[spc]"
+					for(var/part_name in prosthetic_pack.part_options)
+						parts += list(list(
+							"name" = part_name,
+							"pack_ref" = pack_ref
+						))
 			category.Add(list(list(
 				"name" = spc.name,
 				"cost" = spc.cost * CARGO_POINT_TO_THALLER,
-				"ref" = "\ref[spc]"
+				"ref" = "\ref[spc]",
+				"select_part" = select_part,
+				"parts" = parts
 			)))
 		category_contents[sp.name] = category
 
@@ -369,7 +406,7 @@
 	return list(list(
 		"id" = SO.ordernum,
 		"time" = SO.timestamp,
-		"object" = SO.object.name,
+		"object" = SO.ordered_item_name ? "[SO.object.name] - [SO.ordered_item_name]" : SO.object.name,
 		"orderer" = SO.orderedby,
 		"cost" = SO.object.cost * CARGO_POINT_TO_THALLER,
 		"payer" = SO.payer,

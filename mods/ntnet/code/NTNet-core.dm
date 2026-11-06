@@ -1,49 +1,55 @@
 #include "terminal\terminal-core.dm"
-GLOBAL_LIST_EMPTY(NTNet_machines)
+
+#define NTNET_ID_MIN_NUMBER 1000
+#define NTNET_ID_MAX_NUMBER 9999
+
+/// NTNet ID (such as "AL1234") -> the machine that has it.
+GLOBAL_LIST_EMPTY(ntnet_machines_by_id)
 
 // modify core
 /obj/machinery
 	var/NTNet_id
 
-//generating ID
-/obj/machinery/proc/get_new_ntnet_id(A)
-	NTNet_id = A + num2text(rand(100,999))
-	var/list/IDS = list()
-	if(NTNet_id in IDS)
-		get_new_ntnet_id()
-	for(var/obj/machinery/i in GLOB.NTNet_machines)
-		if(i == src)
-			continue
-		IDS += i.NTNet_id
-	return
+/obj/machinery/Destroy()
+	if(NTNet_id && GLOB.ntnet_machines_by_id[NTNet_id] == src)
+		GLOB.ntnet_machines_by_id -= NTNet_id
+	return ..()
+
+/// Gives the machine a random NTNet ID, such as "AL1234": the prefix and a number no other machine with that prefix got.
+/// Once every number of a prefix has been handed out, random_id() logs an error and starts over, so IDs can repeat.
+/obj/machinery/proc/assign_ntnet_id(prefix)
+	NTNet_id = "[prefix][random_id(prefix, NTNET_ID_MIN_NUMBER, NTNET_ID_MAX_NUMBER)]"
+	GLOB.ntnet_machines_by_id[NTNet_id] = src
+
+/// Returns the machine with this NTNet ID, or null.
+/proc/get_ntnet_machine(ntnet_id)
+	RETURN_TYPE(/obj/machinery)
+	return GLOB.ntnet_machines_by_id[ntnet_id]
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	GLOB.NTNet_machines += src
-	get_new_ntnet_id("AL")
+	if(. != INITIALIZE_HINT_QDEL)
+		assign_ntnet_id("AL")
 
 /obj/machinery/firealarm/Initialize()
 	. = ..()
-	GLOB.NTNet_machines += src
-	get_new_ntnet_id("FA")
+	if(. != INITIALIZE_HINT_QDEL)
+		assign_ntnet_id("FA")
 
 /obj/machinery/power/apc/Initialize()
 	. = ..()
-	GLOB.NTNet_machines += src
-	get_new_ntnet_id("PC")
+	if(. != INITIALIZE_HINT_QDEL)
+		assign_ntnet_id("PC")
 
 /obj/machinery/alarm/Initialize()
 	. = ..()
-	GLOB.NTNet_machines += src
-	get_new_ntnet_id("AA")
+	if(. != INITIALIZE_HINT_QDEL)
+		assign_ntnet_id("AA")
 
 /obj/machinery/camera/Initialize()
 	. = ..()
-	GLOB.NTNet_machines += src
-	get_new_ntnet_id("CM")
+	if(. != INITIALIZE_HINT_QDEL)
+		assign_ntnet_id("CM")
 
-/datum/terminal/proc/get_remote_ID(ID)
-	for(var/obj/machinery/R as anything in SSmachines.get_all_machinery())
-		if(R.NTNet_id == ID)
-			return R
-	return null
+#undef NTNET_ID_MIN_NUMBER
+#undef NTNET_ID_MAX_NUMBER

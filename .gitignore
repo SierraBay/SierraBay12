@@ -21,6 +21,8 @@ atupdate
 config/*
 !config/hallucination/
 !config/hallucination/*
+!config/example/
+!config/example/*
 sql/test_db
 
 # VisualStudioCode

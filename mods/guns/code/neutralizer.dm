@@ -36,13 +36,6 @@
 	projectile_type = /obj/item/projectile/bullet/electrode
 	matter = list(MATERIAL_STEEL = 160)
 
-/obj/item/ammo_casing/battery/examine(mob/user)
-	. = ..()
-	if(caliber)
-		to_chat(user, "It is an [caliber] for .")
-	if (!BB)
-		to_chat(user, "This one is spent.")
-
 /obj/item/ammo_casing/battery/high
 	name = "high-power NT Mk20 electrode"
 	desc = "A NT Mk20 neutralizer one-use electrode. This one emits high-power electric pulse on hit and prolonged effect on synthetic targets."
