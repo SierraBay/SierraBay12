@@ -10,14 +10,14 @@
 	return "item-[state.campaign_id]-[state.next_object_id++]"
 
 
-/proc/odyssey_serialize_item(obj/item/I, storage_id = null, carried = FALSE)
+/proc/odyssey_serialize_item(obj/item/I, storage_id = null, carried = FALSE, already_checked = FALSE)
 	if (carried)
 		if (!istype(I) || QDELETED(I))
 			return null
 		// Organs ride the corpse into the morgue locker. Loose organs stay on remains.json.
 		if (odyssey_item_denylisted(I) && !istype(I, /obj/item/organ))
 			return null
-	else if (!odyssey_item_persistable(I))
+	else if (!already_checked && !odyssey_item_persistable(I))
 		return null
 	var/turf/T = get_turf(I)
 	if (!T && !carried)
@@ -134,12 +134,12 @@
 		return
 	if (istype(I, /obj/item/storage))
 		for (var/obj/item/child in I)
-			odyssey_collect_item_into_buckets(child, buckets, parent_id)
+			odyssey_collect_item_into_buckets(child, buckets, parent_id, null, null, TRUE)
 	if (istype(I, /obj/item/clothing/suit/storage))
 		var/obj/item/clothing/suit/storage/S = I
 		if (istype(S.pockets))
 			for (var/obj/item/child in S.pockets)
-				odyssey_collect_item_into_buckets(child, buckets, parent_id, "pockets")
+				odyssey_collect_item_into_buckets(child, buckets, parent_id, "pockets", null, TRUE)
 	if (istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
 		if (islist(C.accessories))
@@ -148,16 +148,16 @@
 					continue
 				var/acc_key = "[A.type]"
 				for (var/obj/item/child in A.container)
-					odyssey_collect_item_into_buckets(child, buckets, parent_id, "accessory", acc_key)
+					odyssey_collect_item_into_buckets(child, buckets, parent_id, "accessory", acc_key, TRUE)
 
 
-/proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null, storage_kind = null, storage_acc = null)
-	if (!odyssey_item_persistable(I))
+/proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null, storage_kind = null, storage_acc = null, on_ship = FALSE)
+	if (!odyssey_item_persistable(I, on_ship))
 		return
 	var/bucket = odyssey_item_persist_bucket(I.type)
 	if (!bucket)
 		return
-	var/list/entry = odyssey_serialize_item(I, storage_id)
+	var/list/entry = odyssey_serialize_item(I, storage_id, FALSE, TRUE)
 	if (!islist(entry))
 		return
 	if (storage_kind)
@@ -320,10 +320,10 @@
 	if (!istype(T) || !islist(buckets))
 		return
 	for (var/obj/item/I in T)
-		odyssey_collect_item_into_buckets(I, buckets, null)
+		odyssey_collect_item_into_buckets(I, buckets, null, null, null, TRUE)
 	for (var/obj/structure/closet/C in T)
 		for (var/obj/item/I in C)
-			odyssey_collect_item_into_buckets(I, buckets, null)
+			odyssey_collect_item_into_buckets(I, buckets, null, null, null, TRUE)
 
 
 /// Lane marker — always written on save so empty-ship continue still strips DMM loot.
@@ -339,25 +339,6 @@
 		if (fexists(odyssey_snapshot_path(odyssey_item_snapshot_kind(bucket), generation)))
 			return TRUE
 	return FALSE
-
-
-/proc/odyssey_strip_persistable_items()
-	var/removed = 0
-	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/item/I in T)
-			if (QDELETED(I) || !odyssey_item_persistable(I))
-				continue
-			qdel(I)
-			removed++
-		for (var/obj/structure/closet/C in T)
-			for (var/obj/item/I in C)
-				if (QDELETED(I) || !odyssey_item_persistable(I))
-					continue
-				qdel(I)
-				removed++
-		CHECK_TICK
-	log_debug("ODYSSEY: stripped [removed] persistable items")
-	return removed
 
 
 /proc/odyssey_resolve_item_closet(list/entry, turf/T)

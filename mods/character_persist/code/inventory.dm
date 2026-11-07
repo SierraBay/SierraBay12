@@ -448,25 +448,6 @@
 	return I
 
 
-/proc/character_persist_apply_inventory_portable_drive(obj/item/modular_computer/comp, list/data)
-	if (!istype(comp) || !islist(data))
-		return
-	if (istype(comp.portable_drive))
-		qdel(comp.portable_drive)
-		comp.portable_drive = null
-	var/path = odyssey_resolve_path(data["type"])
-	if (!ispath(path, /obj/item/stock_parts/computer/hard_drive/portable))
-		path = /obj/item/stock_parts/computer/hard_drive/portable
-	var/obj/item/stock_parts/computer/hard_drive/portable/D = new path(comp)
-	if (data["name"])
-		D.SetName(data["name"])
-	if (!isnull(data["read_only"]))
-		D.read_only = !!data["read_only"]
-	odyssey_apply_hdd_files(D, data["files"])
-	comp.portable_drive = D
-	comp.update_verbs()
-
-
 /proc/character_persist_place_inventory_child(obj/item/I, atom/parent, storage_kind = null, storage_acc = null)
 	if (!istype(I) || !parent)
 		return FALSE

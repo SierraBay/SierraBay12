@@ -147,7 +147,7 @@
 					qdel(I)
 					remain_n++
 					continue
-				if (strip_items && istype(I, /obj/item) && odyssey_item_persistable(I))
+				if (strip_items && odyssey_item_persistable(I, TRUE))
 					qdel(I)
 					item_n++
 		if (strip_materials || strip_items || strip_remains)
@@ -163,7 +163,7 @@
 						qdel(I)
 						remain_n++
 						continue
-					if (strip_items && odyssey_item_persistable(I))
+					if (strip_items && odyssey_item_persistable(I, TRUE))
 						qdel(I)
 						item_n++
 		if (strip_remains)
@@ -309,6 +309,9 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 			if (istype(T))
 				new /obj/item/disk/nuclear(T)
 			continue
+		if (!istype(T))
+			D.forceMove(odyssey_disk_safe_anchor())
+			continue
 		var/obj/item/storage/secure/briefcase/nukedisk/case = locate() in T
 		if (istype(case))
 			D.forceMove(case)
@@ -378,50 +381,39 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 	return TRUE
 
 
-/// Map-only types (Sierra closets, remotes, nuke envelope). Resolved at runtime so other maps still compile.
-/proc/odyssey_runtime_type_list(list/type_texts)
-	var/list/resolved = list()
-	for (var/type_text in type_texts)
-		var/path = text2path(type_text)
-		if (ispath(path))
-			resolved += path
-	return resolved
-
-
-/proc/odyssey_path_is_any(path, list/roots)
-	if (!ispath(path) || !islist(roots))
+/// Sierra-only paths are compared as text so other maps still compile, without another text2path.
+/proc/odyssey_type_text_matches(type_text, prefix)
+	if (!istext(type_text) || !prefix)
 		return FALSE
-	for (var/root in roots)
-		if (ispath(path, root))
+	if (type_text == prefix)
+		return TRUE
+	return copytext(type_text, 1, length(prefix) + 2) == "[prefix]/"
+
+
+/proc/odyssey_path_matches_any(path, list/prefixes)
+	if (!ispath(path) || !islist(prefixes))
+		return FALSE
+	var/type_text = "[path]"
+	for (var/prefix in prefixes)
+		if (odyssey_type_text_matches(type_text, prefix))
 			return TRUE
 	return FALSE
 
 
-var/global/list/odyssey_map_unique_types
+var/global/list/odyssey_map_unique_type_texts = list(
+	"/obj/item/folder/envelope/preset/nuke",
+	"/obj/item/device/remote_device"
+)
 
-/proc/odyssey_map_unique_types()
-	if (!islist(odyssey_map_unique_types))
-		odyssey_map_unique_types = odyssey_runtime_type_list(list(
-			"/obj/item/folder/envelope/preset/nuke",
-			"/obj/item/device/remote_device"
-		))
-	return odyssey_map_unique_types
-
-
-var/global/list/odyssey_head_closet_types
-
-/proc/odyssey_head_closet_types()
-	if (!islist(odyssey_head_closet_types))
-		odyssey_head_closet_types = odyssey_runtime_type_list(list(
-			"/obj/structure/closet/secure_closet/captains/sierra",
-			"/obj/structure/closet/secure_closet/hop/sierra",
-			"/obj/structure/closet/secure_closet/hos/sierra",
-			"/obj/structure/closet/secure_closet/CMO_sierra",
-			"/obj/structure/closet/secure_closet/RD_sierra",
-			"/obj/structure/closet/secure_closet/engineering_chief_sierra",
-			"/obj/structure/closet/secure_closet/quartermaster_sierra"
-		))
-	return odyssey_head_closet_types
+var/global/list/odyssey_head_closet_type_texts = list(
+	"/obj/structure/closet/secure_closet/captains/sierra",
+	"/obj/structure/closet/secure_closet/hop/sierra",
+	"/obj/structure/closet/secure_closet/hos/sierra",
+	"/obj/structure/closet/secure_closet/CMO_sierra",
+	"/obj/structure/closet/secure_closet/RD_sierra",
+	"/obj/structure/closet/secure_closet/engineering_chief_sierra",
+	"/obj/structure/closet/secure_closet/quartermaster_sierra"
+)
 
 
 /// Map-unique or job-issued. Fresh DMM / job equip is the source of truth on both lanes.
@@ -440,7 +432,7 @@ var/global/list/odyssey_head_closet_types
 		return TRUE
 	if (ispath(path, /obj/item/stamp))
 		return TRUE
-	if (odyssey_path_is_any(path, odyssey_map_unique_types()))
+	if (odyssey_path_matches_any(path, odyssey_map_unique_type_texts))
 		return TRUE
 	if (ispath(path, /obj/item/device/radio/headset/heads))
 		return TRUE
@@ -492,8 +484,9 @@ var/global/list/odyssey_head_closet_types
 /proc/odyssey_head_closet(obj/structure/closet/C)
 	if (!istype(C))
 		return FALSE
-	for (var/path in odyssey_head_closet_types())
-		if (istype(C, path))
+	var/type_text = "[C.type]"
+	for (var/prefix in odyssey_head_closet_type_texts)
+		if (odyssey_type_text_matches(type_text, prefix))
 			return TRUE
 	return FALSE
 
@@ -535,12 +528,12 @@ var/global/list/odyssey_head_closet_types
 	return "misc"
 
 
-/proc/odyssey_item_persistable(obj/item/I)
+/proc/odyssey_item_persistable(obj/item/I, skip_area = FALSE)
 	if (!istype(I) || QDELETED(I))
 		return FALSE
 	if (odyssey_item_denylisted(I))
 		return FALSE
-	if (!odyssey_atom_in_persistable_area(I))
+	if (!skip_area && !odyssey_atom_in_persistable_area(I))
 		return FALSE
 	if (odyssey_atom_in_mob_inventory(I))
 		return FALSE
