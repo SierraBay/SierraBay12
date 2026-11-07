@@ -378,6 +378,52 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 	return TRUE
 
 
+/// Map-only types (Sierra closets, remotes, nuke envelope). Resolved at runtime so other maps still compile.
+/proc/odyssey_runtime_type_list(list/type_texts)
+	var/list/resolved = list()
+	for (var/type_text in type_texts)
+		var/path = text2path(type_text)
+		if (ispath(path))
+			resolved += path
+	return resolved
+
+
+/proc/odyssey_path_is_any(path, list/roots)
+	if (!ispath(path) || !islist(roots))
+		return FALSE
+	for (var/root in roots)
+		if (ispath(path, root))
+			return TRUE
+	return FALSE
+
+
+var/global/list/odyssey_map_unique_types
+
+/proc/odyssey_map_unique_types()
+	if (!islist(odyssey_map_unique_types))
+		odyssey_map_unique_types = odyssey_runtime_type_list(list(
+			"/obj/item/folder/envelope/preset/nuke",
+			"/obj/item/device/remote_device"
+		))
+	return odyssey_map_unique_types
+
+
+var/global/list/odyssey_head_closet_types
+
+/proc/odyssey_head_closet_types()
+	if (!islist(odyssey_head_closet_types))
+		odyssey_head_closet_types = odyssey_runtime_type_list(list(
+			"/obj/structure/closet/secure_closet/captains/sierra",
+			"/obj/structure/closet/secure_closet/hop/sierra",
+			"/obj/structure/closet/secure_closet/hos/sierra",
+			"/obj/structure/closet/secure_closet/CMO_sierra",
+			"/obj/structure/closet/secure_closet/RD_sierra",
+			"/obj/structure/closet/secure_closet/engineering_chief_sierra",
+			"/obj/structure/closet/secure_closet/quartermaster_sierra"
+		))
+	return odyssey_head_closet_types
+
+
 /// Map-unique or job-issued. Fresh DMM / job equip is the source of truth on both lanes.
 /proc/odyssey_item_unique_path(path)
 	if (!ispath(path, /obj/item))
@@ -394,9 +440,7 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 		return TRUE
 	if (ispath(path, /obj/item/stamp))
 		return TRUE
-	if (ispath(path, /obj/item/folder/envelope/preset/nuke))
-		return TRUE
-	if (ispath(path, /obj/item/device/remote_device))
+	if (odyssey_path_is_any(path, odyssey_map_unique_types()))
 		return TRUE
 	if (ispath(path, /obj/item/device/radio/headset/heads))
 		return TRUE
@@ -446,13 +490,12 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 
 
 /proc/odyssey_head_closet(obj/structure/closet/C)
-	return istype(C, /obj/structure/closet/secure_closet/captains/sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/hop/sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/hos/sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/CMO_sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/RD_sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/engineering_chief_sierra) \
-		|| istype(C, /obj/structure/closet/secure_closet/quartermaster_sierra)
+	if (!istype(C))
+		return FALSE
+	for (var/path in odyssey_head_closet_types())
+		if (istype(C, path))
+			return TRUE
+	return FALSE
 
 
 /proc/odyssey_mark_head_service_weapons(obj/structure/closet/C)
