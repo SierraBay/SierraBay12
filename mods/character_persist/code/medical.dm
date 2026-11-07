@@ -121,16 +121,46 @@
 	return F?.value
 
 
-/proc/character_persist_current_med_record(mob/living/carbon/human/H)
-	if (!istype(H))
+/proc/character_persist_normalize_record(text)
+	text = character_persist_pencode_to_text(text)
+	if (!text || text == "No record supplied")
 		return ""
+	return text
+
+
+/proc/character_persist_current_record_text(mob/living/carbon/human/H, field_type, fallback)
+	if (!istype(H))
+		return character_persist_normalize_record(fallback)
 	var/datum/computer_file/report/crew_record/CR = get_crewmember_record(H.real_name)
 	if (CR)
-		var/raw = character_persist_crew_field_raw(CR, /datum/report_field/pencode_text/crew_record/medRecord)
-		raw = character_persist_pencode_to_text(raw)
-		if (raw && raw != "No record supplied")
+		var/raw = character_persist_normalize_record(character_persist_crew_field_raw(CR, field_type))
+		if (raw)
 			return raw
-	return H.med_record || ""
+	return character_persist_normalize_record(fallback)
+
+
+/proc/character_persist_current_med_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/medRecord, H?.med_record)
+
+
+/proc/character_persist_current_sec_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/secRecord, H?.sec_record)
+
+
+/proc/character_persist_current_gen_record(mob/living/carbon/human/H)
+	return character_persist_current_record_text(H, /datum/report_field/pencode_text/crew_record/emplRecord, H?.gen_record)
+
+
+/proc/character_persist_current_criminal_status(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/datum/computer_file/report/crew_record/CR = get_crewmember_record(H.real_name)
+	if (!CR)
+		return null
+	var/status = CR.get_criminalStatus()
+	if (!status || !(status in GLOB.security_statuses))
+		return null
+	return status
 
 
 /proc/character_persist_crew_physical_status(mob/living/carbon/human/H)
@@ -149,16 +179,23 @@
 	if (!istype(CR) || !istype(H))
 		return
 	var/datum/preferences/prefs = character_persist_prefs_of(H.character_persist_ckey)
-	if (!prefs || !prefs.character_persist_is_locked())
-		return
-	var/list/snapshot = prefs.character_persist_snapshot
-	if (!islist(snapshot))
-		return
-	if (prefs.character_persist_med_autofill && snapshot["med_record"])
-		CR.set_medRecord(snapshot["med_record"])
-	var/status = snapshot["physical_status"]
-	if (status && (status in GLOB.physical_statuses))
-		CR.set_status(status)
+	if (prefs && prefs.character_persist_is_locked())
+		var/list/snapshot = prefs.character_persist_snapshot
+		if (islist(snapshot))
+			if (prefs.character_persist_med_autofill && !isnull(snapshot["med_record"]))
+				CR.set_medRecord(snapshot["med_record"])
+			if (!isnull(snapshot["sec_record"]))
+				CR.set_secRecord(snapshot["sec_record"])
+			if (!isnull(snapshot["gen_record"]))
+				CR.set_emplRecord(snapshot["gen_record"])
+			var/status = snapshot["physical_status"]
+			if (status && (status in GLOB.physical_statuses))
+				CR.set_status(status)
+			var/sec_status = snapshot["criminal_status"]
+			if (sec_status && (sec_status in GLOB.security_statuses))
+				CR.set_criminalStatus(sec_status)
+	// Odyssey roster wins over defaults from load_from_mob even without character_persist.
+	odyssey_apply_roster_records_to_crew_record(CR, H)
 
 
 /proc/character_persist_med_cutpoint(text)
@@ -204,6 +241,81 @@
 			lines += "клинически значимых травм и протезов нет"
 	var/header = "[CHARACTER_PERSIST_MED_HEADER] ([stationdate2text()], [stationtime2text()]). [character_persist_reason_label(reason)]."
 	return "[header]\n— [jointext(lines, "\n— ")]"
+
+
+/proc/character_persist_type_name(type_text)
+	var/path = character_persist_safe_resolve_path(type_text)
+	if (!ispath(path, /atom))
+		return "[type_text]"
+	var/atom/prototype = path
+	return initial(prototype.name) || "[type_text]"
+
+
+/// Full exam from a saved body snapshot. Same wording as the end-of-shift note, without a live mob.
+/proc/character_persist_snapshot_med_lines(list/snapshot)
+	var/list/lines = list()
+	if (!islist(snapshot) || !islist(snapshot["organs"]))
+		lines += "нет данных осмотра"
+		return lines
+	var/list/organs = snapshot["organs"]
+	for (var/name in BP_BY_DEPTH)
+		var/list/entry = organs[name]
+		if (!islist(entry))
+			continue
+		var/label = character_persist_organ_label(name)
+		if (entry["status"] == "amputated")
+			lines += "ампутация: [label]"
+			continue
+		if (entry["status"] == "cyborg")
+			lines += "протез: [label][entry["model"] ? " ([entry["model"]])" : ""]"
+		if (entry["broken"])
+			lines += "перелом: [label]"
+		if (entry["disfigured"])
+			lines += "обезображивание: [label]"
+		var/brute = character_persist_num(entry["brute"])
+		var/burn = character_persist_num(entry["burn"])
+		if (brute >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE || burn >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+			lines += "повреждения [label]: [character_persist_brute_words(brute, 0)], [character_persist_burn_words(burn, 0)]"
+	var/list/internals = snapshot["internals"]
+	if (islist(internals))
+		for (var/tag in internals)
+			var/list/entry = internals[tag]
+			if (!islist(entry))
+				continue
+			var/label = character_persist_organ_label(tag)
+			if (entry["status"] == "missing")
+				lines += "отсутствует орган: [label]"
+				continue
+			if (entry["status"] == "mechanical")
+				lines += "механический орган: [label]"
+			else if (entry["status"] == "assisted")
+				lines += "ассистированный орган: [label]"
+			var/damage = character_persist_num(entry["damage"])
+			if (damage >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+				lines += "повреждения [label]: [character_persist_brute_words(damage, 0)]"
+	if (islist(snapshot["augments"]))
+		for (var/list/entry in snapshot["augments"])
+			if (!islist(entry))
+				continue
+			var/name = character_persist_type_name(entry["type"])
+			var/where = character_persist_organ_label(entry["parent_organ"] || entry["organ_tag"])
+			lines += "аугмент: [name] ([where])"
+			var/damage = character_persist_num(entry["damage"])
+			if (damage >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+				lines += "повреждения [name]: [character_persist_brute_words(damage, 0)]"
+	if (islist(snapshot["implants"]))
+		for (var/list/entry in snapshot["implants"])
+			if (!islist(entry))
+				continue
+			var/name = character_persist_type_name(entry["type"])
+			var/where = character_persist_organ_label(entry["zone"])
+			lines += "имплант: [name] ([where])"
+	var/status = snapshot["physical_status"]
+	if (status && status != GLOB.default_physical_status)
+		lines += "состояние: [character_persist_status_label(status)]"
+	if (!length(lines))
+		lines += "клинически значимых травм, протезов, аугментов и имплантов нет"
+	return lines
 
 
 /proc/character_persist_med_baseline(mob/living/carbon/human/H)

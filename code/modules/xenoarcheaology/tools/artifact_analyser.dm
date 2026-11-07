@@ -309,9 +309,6 @@
 			P.my_effect = A.my_effect.name
 		if(A.secondary_effect)
 			P.secondary_effect = A.secondary_effect.name
-		if(istype(A, /obj/machinery/artifact/mission))
-			var/obj/machinery/artifact/mission/MA = A
-			MA.on_analysis_complete()
 		//[/SIERRA-ADD] - MODPACK_RND
 		A.being_used = 0
 	stop_scanning()

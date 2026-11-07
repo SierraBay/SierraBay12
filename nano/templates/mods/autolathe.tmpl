@@ -18,6 +18,38 @@ Used In File(s): \code\game\machinery\autolathe.dm
 	</span>
 </div>
 
+<div class="fabSection">
+	<div class="fabSectionContent fabCategoryBar">
+		{{:helper.link('Производство', null, {'fab_tab' : 'main'}, data.fab_tab == 'main' ? 'selected' : null, 'fabCatBtn')}}
+		{{:helper.link('Журнал', null, {'fab_tab' : 'log'}, data.fab_tab == 'log' ? 'selected' : null, 'fabCatBtn')}}
+	</div>
+</div>
+
+{{if data.fab_tab == 'log'}}
+<!-- Print journal tab -->
+<div class="fabSection" style="flex:1; min-height:0; display:flex; flex-direction:column;">
+	<div class="fabSectionTitle">
+		Журнал печати
+		<span class="fabMuted" style="font-weight:normal; margin-left:8px;">
+			{{:data.print_log_status}}
+			{{if !data.print_log_network}} · телеметрия выкл.{{/if}}
+		</span>
+	</div>
+	<div class="fabSectionContent" style="flex:1; overflow:auto; font-size:0.9em;">
+		{{if data.print_log_corrupt}}
+			<div class="fabMuted" style="margin-bottom:6px;">Внимание: журнал повреждён или был очищен.</div>
+		{{/if}}
+		{{for data.print_log}}
+			<div style="margin:0 0 6px 0; padding:4px 6px; border-left:2px solid #3a6a9a; background:rgba(0,0,0,0.2);">
+				<b>{{:value.item}}</b> — {{:value.user}}<br>
+				<span class="fabMuted">{{:value.at}} · {{:value.materials}}</span>
+			</div>
+		{{empty}}
+			<span class="fabMuted">Записей пока нет.</span>
+		{{/for}}
+	</div>
+</div>
+{{else}}
 <div class="fabStatsBar">
 	<span class="fabStat">
 		Скорость печати:
@@ -129,6 +161,7 @@ Used In File(s): \code\game\machinery\autolathe.dm
 		{{#def._queue}}
 	</div>
 </div>
+{{/if}}
 
 </div>
 

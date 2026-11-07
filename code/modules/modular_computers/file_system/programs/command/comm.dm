@@ -350,6 +350,8 @@
 		log_and_message_admins("[user? key_name(user) : "Autotransfer"] has called the shuttle.")
 
 /proc/init_autotransfer()
+	if (odyssey_try_end_shift())
+		return TRUE
 
 	if (!evacuation_controller)
 		return

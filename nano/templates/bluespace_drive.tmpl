@@ -165,7 +165,13 @@
 <div class="item">
 	<div class="itemLabel">Destination:</div>
 	<div class="itemContent">
-		{{if data.has_destination}}
+		{{if data.odyssey_jump && data.odyssey_dest_label}}
+			<span class='good'>Odyssey course</span>
+			<span style="color:#666">&nbsp;&mdash;&nbsp;{{:data.odyssey_dest_label}}</span>
+		{{else data.manual_dest}}
+			<span class='good'>Coordinate lock</span>
+			<span style="color:#666">&nbsp;&mdash;&nbsp;({{:data.manual_dest_x}}, {{:data.manual_dest_y}})</span>
+		{{else data.has_destination}}
 			<span class='good'>Valid jump path</span>
 			<span style="color:#666">&nbsp;&mdash;&nbsp;({{:data.dest_x}}, {{:data.dest_y}})</span>
 		{{else}}
@@ -173,6 +179,26 @@
 		{{/if}}
 	</div>
 </div>
+
+{{if data.odyssey_active}}
+<div class="item">
+	<div class="itemLabel">Odyssey:</div>
+	<div class="itemContent">
+		{{if data.odyssey_course}}
+			<span class='good'>Course: {{:data.odyssey_course}}</span>
+		{{else}}
+			<span class='average'>No Sector Map course selected</span>
+		{{/if}}
+		<div style="margin-top:2px">
+			{{if data.odyssey_bsu_ok}}
+				<span class='good'>Field charge {{:data.jump_power}} / {{:data.odyssey_min_bsu}} BSU</span>
+			{{else}}
+				<span class='bad'>Need {{:data.odyssey_min_bsu}} BSU for sector jump (now {{:data.jump_power}})</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{/if}}
 
 <hr class="bsd-sep"/>
 <h3>Jump Parameters</h3>
@@ -195,6 +221,26 @@
 	</div>
 </div>
 
+{{if data.can_set_coords}}
+<div class="item">
+	<div class="itemLabel">Coordinates:</div>
+	<div class="itemContent">
+		{{if data.manual_dest}}
+			<b>({{:data.manual_dest_x}}, {{:data.manual_dest_y}})</b>
+		{{else}}
+			<span style="color:#888">Ballistic</span>
+		{{/if}}
+		&nbsp;
+		{{:helper.link('Set X/Y', 'pencil', {'set_coords' : 1}, (data.jumping || data.jump_locked) ? 'disabled' : null)}}
+		{{if data.manual_dest}}
+			&nbsp;
+			{{:helper.link('Clear', 'closethick', {'clear_coords' : 1}, (data.jumping || data.jump_locked) ? 'disabled' : null)}}
+		{{/if}}
+		<div style="color:#666; font-size:11px; margin-top:2px">Master engines: lock overmap tile ({{:data.overmap_min}}–{{:data.overmap_max}}). Overrides rotation/angle.</div>
+	</div>
+</div>
+{{/if}}
+
 <hr class="bsd-sep"/>
 <h3>Controls</h3>
 
@@ -205,7 +251,7 @@
 				{{:helper.link('ABORT JUMP', 'alert', {'abort' : 1}, 'disabled')}}
 				&nbsp;<span class='bad'>(abort sequence locked)</span>
 			{{else}}
-				{{:helper.link('ABORT JUMP', 'alert', {'abort' : 1}, 'redButton')}}
+				{{:helper.link('ABORT JUMP', 'alert', {'abort' : 1}, null, 'redButton')}}
 			{{/if}}
 		{{else}}
 			{{:helper.link(data.energized ? 'De-energize' : 'Energize', 'power', {'toggle_energized' : 1}, data.jump_locked ? 'disabled' : null)}}
@@ -220,7 +266,17 @@
 					data.fuel_total_moles < data.min_fuel ? 'EMERGENCY JUMP' : 'INITIATE JUMP',
 					'arrowthickstop-1-s',
 					{'jump' : 1},
-					(data.has_destination && data.fuel_total_moles >= data.emergency_min_fuel) ? (data.overcharged ? 'redButton' : (data.fuel_total_moles < data.min_fuel ? 'redButton' : null)) : 'disabled')}}
+					(data.has_destination && data.fuel_total_moles >= data.emergency_min_fuel) ? null : 'disabled',
+					(data.overcharged || data.fuel_total_moles < data.min_fuel) ? 'redButton' : null)}}
+					{{if data.odyssey_active}}
+						&nbsp;
+						{{:helper.link(
+						data.fuel_total_moles < data.min_fuel ? 'EMERGENCY ODYSSEY JUMP' : 'ODYSSEY JUMP',
+						'transferthick-e-w',
+						{'odyssey_jump' : 1},
+						data.odyssey_can_jump ? null : 'disabled',
+						(data.overcharged || data.fuel_total_moles < data.min_fuel) ? 'redButton' : null)}}
+					{{/if}}
 					{{if data.overcharged}}
 						&nbsp;<span class='bad'>(OVERCHARGE WARNING)</span>
 					{{else data.fuel_total_moles < data.min_fuel && data.fuel_total_moles >= data.emergency_min_fuel}}

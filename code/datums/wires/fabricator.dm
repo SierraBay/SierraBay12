@@ -7,7 +7,7 @@
 	holder_type = /obj/machinery/fabricator
 	wire_count = 6
 	descriptions = list(
-		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Access"),
+		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit and network telemetry.", "Access"),
 		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current.", "Shock"),
 		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", "Power", SKILL_EXPERIENCED)
 	)
@@ -21,7 +21,7 @@
 	holder_type = /obj/machinery/robotics_fabricator
 	wire_count = 6
 	descriptions = list(
-		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit.", "Access"),
+		new /datum/wire_description(AUTOLATHE_HACK_WIRE, "This wire appears to lead to an auxiliary data storage unit and network telemetry.", "Access"),
 		new /datum/wire_description(AUTOLATHE_SHOCK_WIRE, "This wire seems to be carrying a heavy current.", "Shock"),
 		new /datum/wire_description(AUTOLATHE_DISABLE_WIRE, "This wire is connected to the power switch.", "Power", SKILL_EXPERIENCED)
 	)
@@ -36,7 +36,7 @@
 	. += ..()
 	. += "<BR>The red light is [(A.fab_status_flags & FAB_DISABLED) ? "off" : "on"]."
 	. += "<BR>The green light is [(A.fab_status_flags & FAB_SHOCKED) ? "off" : "on"]."
-	. += "<BR>The blue light is [(A.fab_status_flags & FAB_HACKED) ? "off" : "on"].<BR>"
+	. += "<BR>The blue light is [(A.fab_status_flags & FAB_HACKED) || (A.fab_status_flags & FAB_OFFLINE) ? "off" : "on"].<BR>"
 
 /datum/wires/fabricator/CanUse()
 	var/obj/machinery/fabricator/A = holder
@@ -50,8 +50,11 @@
 		if(AUTOLATHE_HACK_WIRE)
 			if(mended)
 				A.fab_status_flags &= ~FAB_HACKED
+				A.set_print_log_network(TRUE)
 			else
 				A.fab_status_flags |= FAB_HACKED
+				A.set_print_log_network(FALSE)
+				A.wipe_print_log("Journal wiped / telemetry cut")
 		if(AUTOLATHE_SHOCK_WIRE)
 			if(mended)
 				A.fab_status_flags &= ~FAB_SHOCKED
@@ -73,9 +76,12 @@
 				A.fab_status_flags &= ~FAB_HACKED
 			else
 				A.fab_status_flags |= FAB_HACKED
+			var/was_net = A.print_log_network
+			A.set_print_log_network(!was_net)
 			spawn(50)
 				if(A && !IsIndexCut(index))
 					A.fab_status_flags &= ~FAB_HACKED
+					A.set_print_log_network(TRUE)
 					Interact(usr)
 		if(AUTOLATHE_SHOCK_WIRE)
 			if(A.fab_status_flags & FAB_SHOCKED)

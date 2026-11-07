@@ -672,6 +672,8 @@
 		return ..()
 
 	var/datum/pronouns/P = GLOB.pronouns.by_key[pronouns]
+	if (!P)
+		return ..()
 	if(P.types)
 		P = GLOB.pronouns.by_key[pick(P.types)]
 	return P

@@ -251,7 +251,10 @@
 
 	for(var/datum/mind/player in pending_antagonists)
 		pending_antagonists -= player
-		add_antagonist(player,0,0,1)
+		// draft_antagonist already stamped special_role — clear it if add fails so we do not
+		// leave a role label without the corresponding antag datum/powers.
+		if (!add_antagonist(player,0,0,1) && player.special_role == role_text && !(player in current_antagonists))
+			player.special_role = null
 
 	reset_antag_selection()
 
@@ -264,6 +267,8 @@
 //Existing antagonists are left untouched.
 /datum/antagonist/proc/reset_antag_selection()
 	for(var/datum/mind/player in pending_antagonists)
+		if (player.special_role == role_text)
+			player.special_role = null
 		if(flags & ANTAG_OVERRIDE_JOB)
 			player.assigned_job = null
 			player.assigned_role = null

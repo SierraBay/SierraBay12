@@ -1,14 +1,80 @@
-/proc/character_persist_path(ckey, slot)
+/// TRUE while an Odyssey campaign is active in this round — body snapshots use a separate file.
+/proc/character_persist_use_odyssey_lane()
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	return !!state?.active
+
+
+/proc/character_persist_path(ckey, slot, for_odyssey = FALSE)
 	if (!ckey || !slot)
 		return null
 	var/map_key = GLOB.using_map?.preferences_key()
 	if (!map_key)
 		return null
-	return "data/player_saves/[copytext_char(ckey, 1, 2)]/[ckey]/character_persist_[map_key]_[slot].json"
+	var/suffix = for_odyssey ? "_odyssey" : ""
+	return "data/player_saves/[copytext_char(ckey, 1, 2)]/[ckey]/character_persist_[map_key]_[slot][suffix].json"
 
 
-/proc/character_persist_read(ckey, slot)
-	var/path = character_persist_path(ckey, slot)
+/// Reloads prefs.character_persist_snapshot for the lane matching current Odyssey state.
+/proc/character_persist_reload_connected_snapshots()
+	if (!SScharacter_setup)
+		return
+	for (var/ckey in SScharacter_setup.preferences_datums)
+		var/datum/preferences/P = SScharacter_setup.preferences_datums[ckey]
+		if (!istype(P) || !P.client_ckey)
+			continue
+		P.character_persist_snapshot = character_persist_read(P.client_ckey, P.default_slot)
+
+
+/proc/character_persist_read(ckey, slot, for_odyssey = null)
+	if (isnull(for_odyssey))
+		for_odyssey = character_persist_use_odyssey_lane()
+	var/path = character_persist_path(ckey, slot, for_odyssey)
+	if (!path)
+		return null
+	var/list/data
+	if (fexists(path))
+		var/text = file2text(path)
+		if (text)
+			data = json_decode(text)
+	// Soft-migrate: older Odyssey saves lived in the normal file with odyssey_campaign_id.
+	if (!islist(data) && for_odyssey)
+		var/list/legacy = character_persist_read_raw(character_persist_path(ckey, slot, FALSE))
+		if (islist(legacy) && legacy["odyssey_campaign_id"])
+			var/datum/odyssey_state/migrate_state = odyssey_ensure_state()
+			// Migrate when lobby/normal, or when the live campaign matches the tagged id.
+			if (!migrate_state?.active || legacy["odyssey_campaign_id"] == migrate_state.campaign_id)
+				character_persist_write(ckey, slot, legacy, TRUE)
+				data = legacy
+	if (!islist(data) || !data["version"])
+		return null
+	if (for_odyssey)
+		if (!data["odyssey_campaign_id"])
+			return null
+		// Live Odyssey: only the matching campaign doll may spawn / apply.
+		// Lobby / other modes: Odyssey-lane file must still be readable (setup tab, preview).
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (state?.active && data["odyssey_campaign_id"] != state.campaign_id)
+			return null
+	else if (data["odyssey_campaign_id"])
+		// Polluted by a pre-split Odyssey save — do not treat as normal persist.
+		return null
+	return data
+
+
+/// Odyssey-lane file for setup UI — ignores whether a campaign is currently selected/active.
+/proc/character_persist_read_odyssey_disk(ckey, slot)
+	if (!ckey || !slot)
+		return null
+	var/list/data = character_persist_read_raw(character_persist_path(ckey, slot, TRUE))
+	if (islist(data) && data["odyssey_campaign_id"])
+		return data
+	var/list/legacy = character_persist_read_raw(character_persist_path(ckey, slot, FALSE))
+	if (islist(legacy) && legacy["odyssey_campaign_id"])
+		return legacy
+	return null
+
+
+/proc/character_persist_read_raw(path)
 	if (!path || !fexists(path))
 		return null
 	var/text = file2text(path)
@@ -20,8 +86,10 @@
 	return data
 
 
-/proc/character_persist_write(ckey, slot, list/data)
-	var/path = character_persist_path(ckey, slot)
+/proc/character_persist_write(ckey, slot, list/data, for_odyssey = null)
+	if (isnull(for_odyssey))
+		for_odyssey = character_persist_use_odyssey_lane()
+	var/path = character_persist_path(ckey, slot, for_odyssey)
 	if (!path || !islist(data))
 		return FALSE
 	var/text = json_encode(data)
@@ -35,14 +103,21 @@
 	return TRUE
 
 
-/proc/character_persist_delete(ckey, slot)
-	var/path = character_persist_path(ckey, slot)
-	if (!path || !fexists(path))
-		return
-	fdel(path)
+/proc/character_persist_delete(ckey, slot, for_odyssey = null)
+	if (isnull(for_odyssey))
+		for_odyssey = character_persist_use_odyssey_lane()
+	var/path = character_persist_path(ckey, slot, for_odyssey)
+	if (path && fexists(path))
+		fdel(path)
+	var/photo_path = character_persist_safe_photos_path(ckey, slot, for_odyssey)
+	if (photo_path && fexists(photo_path))
+		fdel(photo_path)
+	var/inv_photo_path = character_persist_inventory_photos_path(ckey, slot, for_odyssey)
+	if (inv_photo_path && fexists(inv_photo_path))
+		fdel(inv_photo_path)
 
 
-/proc/character_persist_prefs_of(ckey)
+/proc/character_persist_prefs_of(ckey) as /datum/preferences
 	if (!ckey || !SScharacter_setup)
 		return null
 	return SScharacter_setup.preferences_datums[ckey]
@@ -191,7 +266,7 @@
 			else
 				markings[entry] = E.markings[entry]
 
-	return list(
+	var/list/snap = list(
 		"version" = CHARACTER_PERSIST_VERSION,
 		"saved_at" = time2text(world.realtime, "YYYY-MM-DD hh:mm"),
 		"gender" = H.gender,
@@ -206,13 +281,25 @@
 		"base_skin" = H.base_skin,
 		"body_markings" = markings,
 		"organs" = organs,
-		"internals" = internals
+		"internals" = internals,
+		"augments" = character_persist_capture_augments(H),
+		"implants" = character_persist_capture_implants(H)
 	)
+	if (H.species?.name)
+		snap["species"] = H.species.name
+	return snap
 
 
 /proc/character_persist_apply_snapshot(mob/living/carbon/human/H, list/snapshot)
 	if (!istype(H) || !islist(snapshot))
 		return
+
+	// Species first — set_species rebuilds organs; damage/markings apply after.
+	var/species_name = snapshot["species"]
+	if (istext(species_name) && length(species_name) && GLOB.species_by_name[species_name])
+		if (!H.species || H.species.name != species_name)
+			// default_colour=FALSE keeps snapshot skin/hair colors instead of species defaults.
+			H.set_species(species_name, FALSE)
 
 	if (snapshot["gender"])
 		H.gender = snapshot["gender"]
@@ -286,10 +373,11 @@
 				var/scale = max_keep / total
 				brute *= scale
 				burn *= scale
+			// surgical=TRUE disables autoheal_cutoff so persisted injuries survive Life ticks.
 			if (brute > 0)
-				O.createwound(INJURY_TYPE_BRUISE, brute)
+				O.createwound(INJURY_TYPE_BRUISE, brute, TRUE)
 			if (burn > 0)
-				O.createwound(INJURY_TYPE_BURN, burn)
+				O.createwound(INJURY_TYPE_BURN, burn, TRUE)
 			if (entry["broken"])
 				O.status |= ORGAN_BROKEN
 				if (!O.broken_description)
@@ -327,6 +415,12 @@
 			var/cap = I.max_damage * CHARACTER_PERSIST_DAMAGE_RATIO
 			I.damage = clamp(character_persist_num(entry["damage"]), 0, cap)
 
+	// Odyssey-only keys (stripped on normal-lane save). Missing keys = no-op.
+	if (islist(snapshot["augments"]))
+		character_persist_apply_augments(H, snapshot["augments"])
+	if (islist(snapshot["implants"]))
+		character_persist_apply_implants(H, snapshot["implants"])
+
 	H.force_update_limbs()
 	H.update_body(0)
 	H.update_hair(0)
@@ -356,7 +450,9 @@
 	if (H.character_persist_saved)
 		return TRUE
 
-	var/list/previous = prefs.character_persist_snapshot
+	var/for_odyssey = character_persist_use_odyssey_lane()
+	// Always take previous from the active lane on disk — never mix Odyssey/normal counters.
+	var/list/previous = character_persist_read(ckey, slot, for_odyssey)
 	var/list/snapshot = character_persist_capture(H)
 	if (!islist(snapshot))
 		return FALSE
@@ -372,25 +468,73 @@
 		snapshot["med_record"] = character_persist_append_med_record(character_persist_current_med_record(H), note)
 	else
 		snapshot["med_record"] = character_persist_current_med_record(H)
-	if (!character_persist_write(ckey, slot, snapshot))
+	snapshot["sec_record"] = character_persist_current_sec_record(H)
+	snapshot["gen_record"] = character_persist_current_gen_record(H)
+	var/criminal_status = character_persist_current_criminal_status(H)
+	if (criminal_status)
+		snapshot["criminal_status"] = criminal_status
+	if (for_odyssey)
+		var/datum/odyssey_state/odyssey_state = odyssey_ensure_state()
+		snapshot["odyssey_campaign_id"] = odyssey_state.campaign_id
+		var/job_title = H.mind?.assigned_role || H.job
+		// Crewman must not lock the doll — keep a prior real job lock if any, else clear.
+		if (job_title && job_title != CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
+			snapshot["assigned_job"] = job_title
+		else if (islist(previous) && previous["assigned_job"] && previous["assigned_job"] != CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
+			snapshot["assigned_job"] = previous["assigned_job"]
+		else
+			snapshot -= "assigned_job"
+		if (odyssey_human_should_be_detained(H))
+			snapshot -= "inventory"
+		else
+			var/list/inv = character_persist_capture_inventory(H)
+			if (islist(inv) && length(inv))
+				snapshot["inventory"] = inv
+			else
+				snapshot -= "inventory"
+	else
+		snapshot -= "odyssey_campaign_id"
+		snapshot -= "assigned_job"
+		snapshot -= "inventory"
+		// Implants/augments are Odyssey continuity only — keep normal lane lean.
+		snapshot -= "augments"
+		snapshot -= "implants"
+	if (H.mind?.initial_account)
+		snapshot["account_money"] = H.mind.initial_account.money
+		snapshot["account_transactions"] = odyssey_serialize_transaction_log(H.mind.initial_account)
+	character_persist_safe_flush_owner(ckey, slot, for_odyssey)
+	var/list/live_safe = character_persist_safe_live_contents(ckey, slot, for_odyssey)
+	if (islist(live_safe))
+		snapshot["personal_safe"] = live_safe
+	else
+		var/list/fresh = character_persist_read(ckey, slot, for_odyssey)
+		if (islist(fresh) && islist(fresh["personal_safe"]))
+			snapshot["personal_safe"] = fresh["personal_safe"]
+		else if (islist(previous) && islist(previous["personal_safe"]))
+			snapshot["personal_safe"] = previous["personal_safe"]
+	if (!character_persist_write(ckey, slot, snapshot, for_odyssey))
 		return FALSE
 	prefs.character_persist_snapshot = snapshot
 	H.character_persist_saved = TRUE
 	character_persist_record_stat(ckey, slot, H.real_name, "saved", shifts, snapshot["med_record"], null)
-	log_game("CHARACTER_PERSIST: saved [ckey] slot [slot] ([H.real_name]) reason=[reason] shifts=[shifts]")
+	log_game("CHARACTER_PERSIST: saved [ckey] slot [slot] ([H.real_name]) reason=[reason] shifts=[shifts] lane=[for_odyssey ? "odyssey" : "normal"]")
 	if (H.client)
-		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason]). Пережито смен: [shifts]. На счёт будет начислено [shifts * CHARACTER_PERSIST_SHIFT_PAY] таллеров."))
+		var/pending_pay = for_odyssey ? CHARACTER_PERSIST_SHIFT_PAY : shifts * CHARACTER_PERSIST_SHIFT_PAY
+		var/lane_note = for_odyssey ? " (снимок Одиссеи)" : ""
+		to_chat(H, SPAN_NOTICE("Состояние тела сохранено для следующей смены ([reason])[lane_note]. Пережито смен: [shifts]. На счёт будет начислено [pending_pay] таллеров."))
 	return TRUE
 
 
 /proc/character_persist_clear_ckey(ckey, slot, reason)
 	if (!ckey || !slot)
 		return
-	character_persist_delete(ckey, slot)
+	var/for_odyssey = character_persist_use_odyssey_lane()
+	character_persist_safe_wipe_owner(ckey, slot, for_odyssey)
+	character_persist_delete(ckey, slot, for_odyssey)
 	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
 	if (prefs && prefs.default_slot == slot)
 		prefs.character_persist_snapshot = null
-	log_game("CHARACTER_PERSIST: cleared [ckey] slot [slot] reason=[reason]")
+	log_game("CHARACTER_PERSIST: cleared [ckey] slot [slot] reason=[reason] lane=[for_odyssey ? "odyssey" : "normal"]")
 
 
 /proc/character_persist_try_clear(mob/living/carbon/human/H, reason)
@@ -400,6 +544,7 @@
 		return
 	var/ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
+	var/for_odyssey = character_persist_use_odyssey_lane()
 	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
 	if (prefs?.character_persist && reason != "toggle_off")
 		var/shifts = 0
@@ -411,4 +556,7 @@
 			character_persist_record_stat(ckey, slot, H.real_name, "abandoned", shifts, null, null)
 	character_persist_clear_ckey(ckey, slot, reason)
 	if (H?.client)
-		to_chat(H, SPAN_WARNING("Состояние тела сброшено ([reason])."))
+		if (for_odyssey)
+			to_chat(H, SPAN_WARNING("Состояние тела Одиссеи сброшено ([reason]). Обычный снимок не затронут."))
+		else
+			to_chat(H, SPAN_WARNING("Состояние тела сброшено ([reason])."))

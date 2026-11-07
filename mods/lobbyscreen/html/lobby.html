@@ -289,6 +289,16 @@
     }
     .bottom-menu__item:hover { color: white; }
 
+    .bottom-menu__item.odyssey-active {
+      color: #6dcea0;
+      text-shadow: 0 0 0.8vmin rgba(109, 206, 160, 0.55);
+    }
+    .bottom-menu__item.odyssey-active i { opacity: 0.85; }
+    .bottom-menu__item.odyssey-inactive {
+      color: #4a6a68;
+      opacity: 0.75;
+    }
+
     .bottom-menu__item:hover i       { opacity: 1;  }
     .center-menu__item:hover::before { opacity: 1;  }
     .bottom-menu__item:hover::before { opacity: .8; }
@@ -324,6 +334,7 @@
         <a class="center-menu__item center-menu__item--br" href='?src=[player-ref];observe=1' id="observe"><span>Observe</span></a>
     </div>
     <div id="bottom-menu">
+      <a class="bottom-menu__item odyssey-inactive" href='?src=[player-ref];lobby_odyssey=1' id="odyssey"><span id="odyssey-text">Odyssey</span><i class="fas fa-compass"></i></a>
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_changelog=1' id="changelog"><span>Changelog</span><i class="far fa-list-alt"></i></a>
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_discord=1' id="discord"><span>Discord</span><i class="fab fa-discord"></i></a>
       <a class="bottom-menu__item" href='?src=[player-ref];lobby_wiki=1' id="wiki"><span>Wiki</span><i class="fas fa-book"></i></a>
@@ -364,6 +375,21 @@
       } else {
         readyBtn.classList.remove("active");
         readyText.innerText = "Not ready";
+      }
+    }
+
+    var odysseyBtn = document.getElementById("odyssey");
+    var odysseyText = document.getElementById("odyssey-text");
+    function setOdysseyStatus(active) {
+      if (!odysseyBtn) return;
+      if (Number(active)) {
+        odysseyBtn.classList.add("odyssey-active");
+        odysseyBtn.classList.remove("odyssey-inactive");
+        if (odysseyText) odysseyText.innerText = "Odyssey";
+      } else {
+        odysseyBtn.classList.add("odyssey-inactive");
+        odysseyBtn.classList.remove("odyssey-active");
+        if (odysseyText) odysseyText.innerText = "Odyssey";
       }
     }
 
