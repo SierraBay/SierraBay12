@@ -295,7 +295,7 @@
 		out += odyssey_setup_inventory_root_card_html(root, children_by_parent, "Без слота")
 
 	out += "</div>"
-	out += "<i style='color:#7a8a9a'>Слотов: [length(roots)]. Всего записей: [length(inv)]. Содержимое сумок — по клику.</i><br>"
+	out += "<span style='color:#7a8a9a'>Слотов: [length(roots)]. Всего записей: [length(inv)]. Содержимое сумок — по клику.</span><br>"
 	return jointext(out, null)
 
 
