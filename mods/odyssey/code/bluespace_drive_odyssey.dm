@@ -57,7 +57,7 @@
 	return max(0, state.bsd_cooling_until - world.time)
 
 
-/// Sync ship BSD cooldown to post-arrival cooling (call after persist apply / roundstart).
+/// Sync ship BSD cooldown to post-arrival cooling (call after persist apply / roundstart)
 /proc/odyssey_apply_bsd_post_jump_cooldown()
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	if (!state.active || !state.bsd_post_jump_cooling)
