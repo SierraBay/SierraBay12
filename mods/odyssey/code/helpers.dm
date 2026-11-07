@@ -280,7 +280,8 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 			"disk" = D,
 			"x" = T?.x,
 			"y" = T?.y,
-			"z" = T?.z
+			"z" = T?.z,
+			"in_case" = istype(D.loc, /obj/item/storage/secure/briefcase/nukedisk)
 		))
 		D.forceMove(anchor)
 	return lifted
@@ -312,13 +313,18 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 		if (!istype(T))
 			D.forceMove(odyssey_disk_safe_anchor())
 			continue
-		var/obj/item/storage/secure/briefcase/nukedisk/case = locate() in T
+		var/obj/item/storage/secure/briefcase/nukedisk/case
+		if (entry["in_case"])
+			case = locate() in T
+			if (!istype(case))
+				for (var/obj/structure/closet/closet in T)
+					case = locate() in closet
+					if (istype(case))
+						break
 		if (istype(case))
 			D.forceMove(case)
-		else if (istype(T))
-			D.forceMove(T)
 		else
-			D.forceMove(odyssey_disk_safe_anchor())
+			D.forceMove(T)
 	odyssey_disk_hold = FALSE
 
 
@@ -381,39 +387,33 @@ var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
 	return TRUE
 
 
-/// Sierra-only paths are compared as text so other maps still compile, without another text2path.
-/proc/odyssey_type_text_matches(type_text, prefix)
-	if (!istext(type_text) || !prefix)
-		return FALSE
-	if (type_text == prefix)
-		return TRUE
-	return copytext(type_text, 1, length(prefix) + 2) == "[prefix]/"
+/// Map code registers types that exist only on that map. Checked with ispath, no text paths.
+var/global/list/odyssey_registered_unique_items
+var/global/list/odyssey_registered_head_closets
+
+/proc/odyssey_register_unique_item_type(path)
+	if (!ispath(path, /obj/item))
+		return
+	if (!islist(odyssey_registered_unique_items))
+		odyssey_registered_unique_items = list()
+	odyssey_registered_unique_items |= path
 
 
-/proc/odyssey_path_matches_any(path, list/prefixes)
-	if (!ispath(path) || !islist(prefixes))
+/proc/odyssey_register_head_closet_type(path)
+	if (!ispath(path, /obj/structure/closet))
+		return
+	if (!islist(odyssey_registered_head_closets))
+		odyssey_registered_head_closets = list()
+	odyssey_registered_head_closets |= path
+
+
+/proc/odyssey_path_is_registered(path, list/roots)
+	if (!ispath(path) || !islist(roots))
 		return FALSE
-	var/type_text = "[path]"
-	for (var/prefix in prefixes)
-		if (odyssey_type_text_matches(type_text, prefix))
+	for (var/root in roots)
+		if (ispath(path, root))
 			return TRUE
 	return FALSE
-
-
-var/global/list/odyssey_map_unique_type_texts = list(
-	"/obj/item/folder/envelope/preset/nuke",
-	"/obj/item/device/remote_device"
-)
-
-var/global/list/odyssey_head_closet_type_texts = list(
-	"/obj/structure/closet/secure_closet/captains/sierra",
-	"/obj/structure/closet/secure_closet/hop/sierra",
-	"/obj/structure/closet/secure_closet/hos/sierra",
-	"/obj/structure/closet/secure_closet/CMO_sierra",
-	"/obj/structure/closet/secure_closet/RD_sierra",
-	"/obj/structure/closet/secure_closet/engineering_chief_sierra",
-	"/obj/structure/closet/secure_closet/quartermaster_sierra"
-)
 
 
 /// Map-unique or job-issued. Fresh DMM / job equip is the source of truth on both lanes.
@@ -432,7 +432,7 @@ var/global/list/odyssey_head_closet_type_texts = list(
 		return TRUE
 	if (ispath(path, /obj/item/stamp))
 		return TRUE
-	if (odyssey_path_matches_any(path, odyssey_map_unique_type_texts))
+	if (odyssey_path_is_registered(path, odyssey_registered_unique_items))
 		return TRUE
 	if (ispath(path, /obj/item/device/radio/headset/heads))
 		return TRUE
@@ -484,11 +484,7 @@ var/global/list/odyssey_head_closet_type_texts = list(
 /proc/odyssey_head_closet(obj/structure/closet/C)
 	if (!istype(C))
 		return FALSE
-	var/type_text = "[C.type]"
-	for (var/prefix in odyssey_head_closet_type_texts)
-		if (odyssey_type_text_matches(type_text, prefix))
-			return TRUE
-	return FALSE
+	return odyssey_path_is_registered(C.type, odyssey_registered_head_closets)
 
 
 /proc/odyssey_mark_head_service_weapons(obj/structure/closet/C)
