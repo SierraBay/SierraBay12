@@ -13,6 +13,8 @@
 		return FALSE
 	if (ispath(path, /obj/item/paper/admin))
 		return FALSE
+	if (odyssey_item_unique_path(path))
+		return FALSE
 	if (ispath(path, /obj/item/paper/cig))
 		return FALSE
 	return ispath(path, /obj/item/paper) \
@@ -204,6 +206,54 @@
 	return entry
 
 
+/proc/odyssey_collect_papers_turf(turf/T, list/ctx)
+	if (!istype(T) || !islist(ctx))
+		return
+	var/list/entries = ctx["entries"]
+	var/list/budget = ctx["budget"]
+	var/savefile/photos = ctx["photos"]
+	if (!islist(entries) || !islist(budget))
+		return
+	for (var/obj/structure/filingcabinet/C in T)
+		if (!odyssey_filingcabinet_persistable(C))
+			continue
+		ctx["cabinets_seen"]++
+		var/list/items = list()
+		ctx["cabinet_index"]++
+		var/prefix = "c[ctx["cabinet_index"]]"
+		for (var/atom/thing in C)
+			var/list/entry = odyssey_serialize_paperwork_item(thing, photos, budget, prefix)
+			if (islist(entry))
+				items += list(entry)
+		if (!length(items))
+			continue
+		var/id = C.odyssey_persist_id || odyssey_assign_runtime_id(C)
+		entries += list(list(
+			"placement" = "cabinet",
+			"container_id" = id,
+			"container_type" = "[C.type]",
+			"x" = T.x,
+			"y" = T.y,
+			"z" = T.z,
+			"items" = items
+		))
+	for (var/obj/item/I in T)
+		ctx["loose_index"]++
+		var/list/loose = odyssey_collect_loose_paperwork_entry(I, T, photos, budget, "f[ctx["loose_index"]]")
+		if (!islist(loose))
+			continue
+		entries += list(loose)
+		ctx["loose_count"]++
+	for (var/obj/structure/closet/Closet in T)
+		for (var/obj/item/I in Closet)
+			ctx["loose_index"]++
+			var/list/loose = odyssey_collect_loose_paperwork_entry(I, T, photos, budget, "k[ctx["loose_index"]]")
+			if (!islist(loose))
+				continue
+			entries += list(loose)
+			ctx["loose_count"]++
+
+
 /proc/odyssey_collect_papers(generation)
 	var/list/entries = list()
 	var/list/budget = list("items" = 0, "photos" = 0, "info_bytes" = 0)
@@ -213,58 +263,35 @@
 		fdel(photo_path)
 	photos = new /savefile(photo_path)
 
-	var/cabinet_index = 0
-	var/loose_index = 0
-	var/cabinets_seen = 0
-	var/loose_count = 0
+	var/list/ctx = list(
+		"entries" = entries,
+		"budget" = budget,
+		"photos" = photos,
+		"cabinet_index" = 0,
+		"loose_index" = 0,
+		"cabinets_seen" = 0,
+		"loose_count" = 0
+	)
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/structure/filingcabinet/C in T)
-			if (!odyssey_filingcabinet_persistable(C))
-				continue
-			cabinets_seen++
-			var/list/items = list()
-			cabinet_index++
-			var/prefix = "c[cabinet_index]"
-			for (var/atom/thing in C)
-				var/list/entry = odyssey_serialize_paperwork_item(thing, photos, budget, prefix)
-				if (islist(entry))
-					items += list(entry)
-			if (!length(items))
-				continue
-			var/id = C.odyssey_persist_id || odyssey_assign_runtime_id(C)
-			entries += list(list(
-				"placement" = "cabinet",
-				"container_id" = id,
-				"container_type" = "[C.type]",
-				"x" = T.x,
-				"y" = T.y,
-				"z" = T.z,
-				"items" = items
-			))
-		for (var/obj/item/I in T)
-			loose_index++
-			var/list/loose = odyssey_collect_loose_paperwork_entry(I, T, photos, budget, "f[loose_index]")
-			if (!islist(loose))
-				continue
-			entries += list(loose)
-			loose_count++
-		for (var/obj/structure/closet/Closet in T)
-			for (var/obj/item/I in Closet)
-				loose_index++
-				var/list/loose = odyssey_collect_loose_paperwork_entry(I, T, photos, budget, "k[loose_index]")
-				if (!islist(loose))
-					continue
-				entries += list(loose)
-				loose_count++
+		odyssey_collect_papers_turf(T, ctx)
 		CHECK_TICK
+	return odyssey_finish_papers(ctx, photo_path)
 
-	if (!budget["photos"] && fexists(photo_path))
+
+/proc/odyssey_finish_papers(list/ctx, photo_path)
+	if (!islist(ctx))
+		return list()
+	var/list/entries = ctx["entries"]
+	var/list/budget = ctx["budget"]
+	if (!islist(entries))
+		entries = list()
+	if (!islist(budget))
+		budget = list()
+	if (!budget["photos"] && photo_path && fexists(photo_path))
 		fdel(photo_path)
-
 	if (budget["items"] >= ODYSSEY_PAPERS_MAX_ITEMS || budget["photos"] >= ODYSSEY_PAPERS_MAX_PHOTOS || budget["info_bytes"] >= ODYSSEY_PAPERS_MAX_INFO_BYTES)
 		log_error("ODYSSEY: papers collect hit budget items=[budget["items"]] photos=[budget["photos"]] info_bytes=[budget["info_bytes"]]")
-
-	log_game("ODYSSEY: papers collect cabinets_seen=[cabinets_seen] loose=[loose_count] entries=[length(entries)] items=[budget["items"]] photos=[budget["photos"]] info_bytes=[budget["info_bytes"]]")
+	log_game("ODYSSEY: papers collect cabinets_seen=[ctx["cabinets_seen"]] loose=[ctx["loose_count"]] entries=[length(entries)] items=[budget["items"]] photos=[budget["photos"]] info_bytes=[budget["info_bytes"]]")
 	return entries
 
 

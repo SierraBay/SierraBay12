@@ -298,6 +298,8 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 	odyssey_ensure_persist_baselines()
 	odyssey_load_step(session, "baselines", "done")
 
+	var/list/sheltered_disks = odyssey_lift_nuke_disks()
+
 	var/list/meta = odyssey_load_meta()
 	var/generation = islist(meta) ? meta["generation"] : state.save_generation
 	if (generation)
@@ -366,6 +368,8 @@ ul{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;}
 	odyssey_load_step(session, "items_nested", "active")
 	var/nested = odyssey_apply_deferred_items(item_deferred, item_created)
 	odyssey_load_step(session, "items_nested", "done", "готово ([nested])")
+
+	odyssey_restore_nuke_disks(sheltered_disks)
 
 	odyssey_clear_persist_index()
 

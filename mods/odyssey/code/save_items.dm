@@ -10,11 +10,17 @@
 	return "item-[state.campaign_id]-[state.next_object_id++]"
 
 
-/proc/odyssey_serialize_item(obj/item/I, storage_id = null)
-	if (!odyssey_item_persistable(I))
+/proc/odyssey_serialize_item(obj/item/I, storage_id = null, carried = FALSE)
+	if (carried)
+		if (!istype(I) || QDELETED(I))
+			return null
+		// Organs ride the corpse into the morgue locker. Loose organs stay on remains.json.
+		if (odyssey_item_denylisted(I) && !istype(I, /obj/item/organ))
+			return null
+	else if (!odyssey_item_persistable(I))
 		return null
 	var/turf/T = get_turf(I)
-	if (!T)
+	if (!T && !carried)
 		return null
 	var/id = I.odyssey_persist_id
 	if (!id)
@@ -23,9 +29,9 @@
 	var/list/entry = list(
 		"id" = id,
 		"type" = "[I.type]",
-		"x" = T.x,
-		"y" = T.y,
-		"z" = T.z,
+		"x" = T ? T.x : 0,
+		"y" = T ? T.y : 0,
+		"z" = T ? T.z : 0,
 		"dir" = I.dir,
 		"in_closet" = FALSE
 	)
@@ -52,6 +58,11 @@
 	if (istype(I, /obj/item/clothing))
 		// Always write (even empty) so type-default plates/ties do not respawn on continue.
 		entry["accessories"] = odyssey_serialize_clothing_accessories(I)
+	if (istype(I, /obj/item/passport))
+		var/obj/item/passport/P = I
+		entry["passport_info"] = P.info || ""
+		entry["passport_fingerprint"] = P.fingerprint || ""
+	odyssey_write_item_extras(I, entry)
 	return entry
 
 
@@ -111,6 +122,11 @@
 			qdel(A)
 			continue
 		C.attach_accessory(null, A)
+		// Webbing/holster New() autofill would block nested restore (gun into holster).
+		if (istype(A, /obj/item/clothing/accessory/storage))
+			var/obj/item/clothing/accessory/storage/SA = A
+			if (istype(SA.container))
+				odyssey_clear_storage_autofill(SA.container)
 
 
 /proc/odyssey_collect_nested_item_contents(obj/item/I, list/buckets, parent_id)
@@ -123,18 +139,19 @@
 		var/obj/item/clothing/suit/storage/S = I
 		if (istype(S.pockets))
 			for (var/obj/item/child in S.pockets)
-				odyssey_collect_item_into_buckets(child, buckets, parent_id)
+				odyssey_collect_item_into_buckets(child, buckets, parent_id, "pockets")
 	if (istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
 		if (islist(C.accessories))
 			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
 				if (!istype(A.container))
 					continue
+				var/acc_key = "[A.type]"
 				for (var/obj/item/child in A.container)
-					odyssey_collect_item_into_buckets(child, buckets, parent_id)
+					odyssey_collect_item_into_buckets(child, buckets, parent_id, "accessory", acc_key)
 
 
-/proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null)
+/proc/odyssey_collect_item_into_buckets(obj/item/I, list/buckets, storage_id = null, storage_kind = null, storage_acc = null)
 	if (!odyssey_item_persistable(I))
 		return
 	var/bucket = odyssey_item_persist_bucket(I.type)
@@ -143,6 +160,10 @@
 	var/list/entry = odyssey_serialize_item(I, storage_id)
 	if (!islist(entry))
 		return
+	if (storage_kind)
+		entry["storage_kind"] = storage_kind
+	if (storage_acc)
+		entry["storage_acc"] = storage_acc
 	if (!islist(buckets[bucket]))
 		buckets[bucket] = list()
 	buckets[bucket] += list(entry)
@@ -150,7 +171,7 @@
 
 
 /// Put restored nested item into storage, holster/pouch, or suit pockets (not loose on the clothing atom).
-/proc/odyssey_place_item_in_parent(obj/item/I, obj/item/parent)
+/proc/odyssey_place_item_in_parent(obj/item/I, obj/item/parent, storage_kind = null, storage_acc = null)
 	if (!istype(I) || !istype(parent))
 		return FALSE
 	if (istype(parent, /obj/item/storage))
@@ -158,47 +179,151 @@
 		return I.loc == parent
 	if (istype(parent, /obj/item/clothing))
 		var/obj/item/clothing/C = parent
-		if (islist(C.accessories))
-			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
-				if (!istype(A.container))
-					continue
-				var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
-				if (istype(H))
-					if (H.holstered || !H.can_holster(I))
+		if (storage_kind == "pockets" && istype(C, /obj/item/clothing/suit/storage))
+			var/obj/item/clothing/suit/storage/pocket_suit = C
+			if (istype(pocket_suit.pockets))
+				I.forceMove(pocket_suit.pockets)
+				return I.loc == pocket_suit.pockets
+		if (storage_kind == "accessory" || !storage_kind)
+			if (islist(C.accessories))
+				for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+					if (!istype(A.container))
+						continue
+					if (storage_acc && "[A.type]" != storage_acc)
+						continue
+					var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
+					if (istype(H))
+						if (H.holstered || !H.can_holster(I))
+							continue
+						I.forceMove(A.container)
+						if (I.loc != A.container)
+							continue
+						H.holstered = I
+						A.SetName("occupied [H.empty_name]")
+						GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
+						GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
+						A.update_icon()
+						return TRUE
+					if (!A.container.can_be_inserted(I, null, TRUE))
 						continue
 					I.forceMove(A.container)
-					if (I.loc != A.container)
-						continue
-					H.holstered = I
-					A.SetName("occupied [H.empty_name]")
-					GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
-					GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
-					A.update_icon()
-					return TRUE
-				if (!A.container.can_be_inserted(I, null, TRUE))
-					continue
-				I.forceMove(A.container)
-				if (I.loc == A.container)
-					return TRUE
-		if (istype(C, /obj/item/clothing/suit/storage))
+					if (I.loc == A.container)
+						return TRUE
+		if (storage_kind != "accessory" && istype(C, /obj/item/clothing/suit/storage))
 			var/obj/item/clothing/suit/storage/S = C
 			if (istype(S.pockets))
 				I.forceMove(S.pockets)
 				return I.loc == S.pockets
 	I.forceMove(parent)
 	return I.loc == parent
+
+
+/proc/odyssey_spawn_saved_item(list/entry, atom/dest)
+	if (!islist(entry) || !dest)
+		return null
+	var/path = character_persist_safe_resolve_path(entry["type"])
+	if (!ispath(path, /obj/item))
+		return null
+	if (odyssey_item_path_denylisted(path) && !ispath(path, /obj/item/organ))
+		return null
+	var/obj/item/I
+	if (ispath(path, /obj/item/stack))
+		var/amount = entry["amount"]
+		if (!isnum(amount))
+			amount = text2num(amount)
+		if (!isnum(amount) || amount < 1)
+			amount = 1
+		I = new path(dest, amount)
+	else
+		I = new path(dest)
+	if (QDELETED(I) || !istype(I))
+		return null
+	odyssey_clear_item_autofill(I)
+	if (!isnull(entry["dir"]))
+		I.set_dir(entry["dir"])
+	if (istype(I, /obj/item/clothing) && ("accessories" in entry))
+		odyssey_apply_clothing_accessories(I, entry["accessories"])
+	if (istype(I, /obj/item/passport))
+		var/obj/item/passport/P = I
+		if (!isnull(entry["passport_info"]))
+			P.info = entry["passport_info"]
+		if (!isnull(entry["passport_fingerprint"]))
+			P.fingerprint = entry["passport_fingerprint"]
+	if (istype(I, /obj/item/reagent_containers) && ("reagents" in entry))
+		odyssey_apply_reagents(I, entry["reagents"])
+	odyssey_read_item_extras(I, entry)
+	I.forceMove(dest)
+	return I
+
+
+/proc/odyssey_apply_gear_list(list/entries, atom/dest)
+	if (!islist(entries) || !dest)
+		return 0
+	var/list/created = list()
+	var/list/deferred = list()
+	var/list/roots = list()
+	for (var/list/entry in entries)
+		if (!islist(entry))
+			continue
+		if (entry["storage_id"])
+			deferred += list(entry)
+		else
+			roots += list(entry)
+	var/applied = 0
+	for (var/list/entry in roots)
+		var/obj/item/I = odyssey_spawn_saved_item(entry, dest)
+		if (!istype(I))
+			continue
+		if (entry["id"])
+			created[entry["id"]] = I
+		applied++
+	var/list/pending = deferred.Copy()
+	var/guard = 0
+	while (length(pending) && guard < 16)
+		guard++
+		var/list/next = list()
+		var/progress = 0
+		for (var/list/entry in pending)
+			if (!islist(entry))
+				continue
+			var/obj/item/parent = created[entry["storage_id"]]
+			if (entry["storage_id"] && !istype(parent))
+				next += list(entry)
+				continue
+			var/atom/spawn_at = parent || dest
+			var/obj/item/I = odyssey_spawn_saved_item(entry, spawn_at)
+			if (!istype(I))
+				continue
+			if (entry["id"])
+				created[entry["id"]] = I
+			if (istype(parent))
+				odyssey_place_item_in_parent(I, parent, entry["storage_kind"], entry["storage_acc"])
+			applied++
+			progress++
+		if (!progress)
+			break
+		pending = next
+	return applied
+
+
 /proc/odyssey_collect_items_by_bucket()
 	var/list/buckets = list()
 	for (var/bucket in ODYSSEY_ITEM_BUCKETS)
 		buckets[bucket] = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/item/I in T)
-			odyssey_collect_item_into_buckets(I, buckets, null)
-		for (var/obj/structure/closet/C in T)
-			for (var/obj/item/I in C)
-				odyssey_collect_item_into_buckets(I, buckets, null)
+		odyssey_collect_item_turf(T, buckets)
 		CHECK_TICK
 	return buckets
+
+
+/proc/odyssey_collect_item_turf(turf/T, list/buckets)
+	if (!istype(T) || !islist(buckets))
+		return
+	for (var/obj/item/I in T)
+		odyssey_collect_item_into_buckets(I, buckets, null)
+	for (var/obj/structure/closet/C in T)
+		for (var/obj/item/I in C)
+			odyssey_collect_item_into_buckets(I, buckets, null)
 
 
 /// Lane marker — always written on save so empty-ship continue still strips DMM loot.
@@ -288,6 +413,12 @@
 		var/obj/item/clothing/suit/storage/S = I
 		if (istype(S.pockets))
 			odyssey_clear_storage_autofill(S.pockets)
+	if (istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if (islist(C.accessories))
+			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+				if (istype(A.container))
+					odyssey_clear_storage_autofill(A.container)
 
 
 /// TRUE when nested entry's parent is already in created_by_id (or entry is a root).
@@ -334,8 +465,14 @@
 		I.set_dir(entry["dir"])
 	if (istype(I, /obj/item/clothing) && ("accessories" in entry))
 		odyssey_apply_clothing_accessories(I, entry["accessories"])
+	if (istype(I, /obj/item/passport))
+		var/obj/item/passport/P = I
+		if (!isnull(entry["passport_info"]))
+			P.info = entry["passport_info"]
+		if (!isnull(entry["passport_fingerprint"]))
+			P.fingerprint = entry["passport_fingerprint"]
 	if (istype(parent))
-		odyssey_place_item_in_parent(I, parent)
+		odyssey_place_item_in_parent(I, parent, entry["storage_kind"], entry["storage_acc"])
 	else if (host)
 		odyssey_insert_item_into_closet(I, host)
 	else
@@ -344,6 +481,7 @@
 		I.SetName(entry["name"])
 	if (istype(I, /obj/item/reagent_containers) && ("reagents" in entry))
 		odyssey_apply_reagents(I, entry["reagents"])
+	odyssey_read_item_extras(I, entry)
 	if (entry["id"])
 		I.odyssey_persist_id = entry["id"]
 		created_by_id[entry["id"]] = I

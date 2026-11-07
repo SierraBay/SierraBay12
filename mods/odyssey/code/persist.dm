@@ -55,6 +55,37 @@
 		to_chat(character, SPAN_NOTICE("Состояние тела перенесено с прошлой смены."))
 
 
+/// Odyssey body + inventory on the mannequin only while the Odyssey setup tab is selected.
+/datum/preferences/dress_preview_mob(mob/living/carbon/human/mannequin)
+	. = ..()
+	if (!istype(mannequin))
+		return
+	if (!odyssey_prefs_preview_tab_active(src))
+		return
+	var/list/snap = odyssey_prefs_preview_body_snapshot(src)
+	if (!islist(snap) || !length(snap))
+		return
+	// Drop job/loadout gear so the mannequin matches the Odyssey snapshot, not High-job preview.
+	mannequin.delete_inventory(TRUE)
+	character_persist_apply_snapshot(mannequin, snap)
+	var/list/inv = snap["inventory"]
+	if (islist(inv) && length(inv))
+		mannequin.character_persist_ckey = client_ckey
+		mannequin.character_persist_slot = default_slot
+		character_persist_apply_inventory(mannequin, inv)
+	mannequin.force_update_limbs()
+	mannequin.update_body(0)
+	mannequin.update_hair(0)
+	mannequin.update_icons()
+
+
+/// Odyssey-lane body snapshot for setup preview — disk data, independent of mode selection.
+/proc/odyssey_prefs_preview_body_snapshot(datum/preferences/pref)
+	if (!istype(pref) || !pref.client_ckey || !pref.default_slot)
+		return null
+	return character_persist_read_odyssey_disk(pref.client_ckey, pref.default_slot)
+
+
 /datum/category_item/player_setup_item/physical/character_persist/content(mob/user)
 	. = list()
 	. += "<b>Персистентность:</b> "
@@ -63,7 +94,7 @@
 	. += BTN("toggle_persist_help", show_persist_help ? "Скрыть" : "Подробнее")
 	. += "<br>"
 	if (show_persist_help)
-		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает снимок текущей линии (обычной или Одиссеи). Обычный и одиссейный снимки хранятся отдельно и не перезаписывают друг друга. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, генокрад, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был.</i></div>"
+		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает снимок текущей линии (обычной или Одиссеи). Обычный и одиссейный снимки хранятся отдельно и не перезаписывают друг друга. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, генокрад, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был. Состояние кампании Одиссеи — во вкладке Odyssey.</i></div>"
 	. += "<b>Автозаполнение мед. записей:</b> "
 	. += BTN("toggle_character_persist_med_autofill", pref.character_persist_med_autofill ? "Включена" : "Выключена")
 	. += " "
@@ -84,6 +115,15 @@
 		if (shifts)
 			var/pending_pay = isnull(pref.character_persist_snapshot["account_money"]) ? shifts * CHARACTER_PERSIST_SHIFT_PAY : CHARACTER_PERSIST_SHIFT_PAY
 			. += "К выплате в следующей смене: [pending_pay] таллеров<br>"
+		if (character_persist_use_odyssey_lane())
+			. += "Личный сейф: доступен в раундах Одиссеи<br>"
+		else if (shifts >= CHARACTER_PERSIST_SAFE_MIN_SHIFTS)
+			. += "Личный сейф: доступен (биометрия)<br>"
+		else
+			. += "Личный сейф: откроется после [CHARACTER_PERSIST_SAFE_MIN_SHIFTS] пережитых смен (сейчас [shifts])<br>"
+		var/list/safe_items = pref.character_persist_snapshot["personal_safe"]
+		if (islist(safe_items) && length(safe_items))
+			. += "В сейфе сохранено предметов: [length(safe_items)] / [CHARACTER_PERSIST_SAFE_MAX_ITEMS]<br>"
 		if (pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
 			. += "<i>Медицинская запись переносится со снимком. Просмотреть её можно во вкладке Background рядом с «Записи здравоохранения».</i><br>"
 	. = jointext(., null)

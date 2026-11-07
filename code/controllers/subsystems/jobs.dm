@@ -579,6 +579,10 @@ SUBSYSTEM_DEF(jobs)
 
 	job.post_equip_rank(H, alt_title || rank)
 
+	// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY: implants need mind (copy_to is earlier).
+	character_persist_reapply_odyssey_body_extras(H)
+	// [/SIERRA-ADD]
+
 	H.client.show_location_blurb(3 SECONDS)
 
 	return H

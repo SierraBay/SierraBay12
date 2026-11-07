@@ -52,12 +52,14 @@
 			continue
 		seen[key] = TRUE
 		H.odyssey_corpse_key = key
+		var/list/gear = odyssey_capture_corpse_gear(H)
 		entries += list(list(
 			"id" = key,
 			"name" = H.real_name,
 			"species" = H.species?.name,
 			"body" = body,
-			"husked" = !!(MUTATION_HUSK in H.mutations)
+			"husked" = !!(MUTATION_HUSK in H.mutations),
+			"gear" = gear
 		))
 		CHECK_TICK
 	return entries
@@ -65,10 +67,11 @@
 
 /proc/odyssey_station_morgues()
 	var/list/morgues = list()
-	for (var/obj/structure/morgue/M in world)
-		if (QDELETED(M) || !odyssey_atom_in_persistable_area(M))
-			continue
-		morgues += M
+	for (var/turf/T in odyssey_get_persistable_turfs())
+		for (var/obj/structure/morgue/M in T)
+			if (QDELETED(M))
+				continue
+			morgues += M
 		CHECK_TICK
 	return morgues
 
@@ -80,6 +83,70 @@
 		if (!QDELETED(H) && H.odyssey_corpse_restored && H.odyssey_corpse_key == id)
 			return H
 	return null
+
+
+/proc/odyssey_capture_carried_tree(obj/item/I, list/entries, storage_id, storage_kind, storage_acc)
+	var/list/entry = odyssey_serialize_item(I, storage_id, TRUE)
+	if (!islist(entry))
+		return
+	if (storage_kind)
+		entry["storage_kind"] = storage_kind
+	if (storage_acc)
+		entry["storage_acc"] = storage_acc
+	entries += list(entry)
+	var/pid = entry["id"]
+	if (istype(I, /obj/item/storage))
+		for (var/obj/item/child in I)
+			odyssey_capture_carried_tree(child, entries, pid)
+	if (istype(I, /obj/item/clothing/suit/storage))
+		var/obj/item/clothing/suit/storage/S = I
+		if (istype(S.pockets))
+			for (var/obj/item/child in S.pockets)
+				odyssey_capture_carried_tree(child, entries, pid, "pockets")
+	if (istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if (islist(C.accessories))
+			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+				if (!istype(A.container))
+					continue
+				var/acc_key = "[A.type]"
+				for (var/obj/item/child in A.container)
+					odyssey_capture_carried_tree(child, entries, pid, "accessory", acc_key)
+
+
+/proc/odyssey_capture_corpse_gear(mob/living/carbon/human/H)
+	var/list/entries = list()
+	if (!istype(H))
+		return entries
+	for (var/obj/item/I in H.get_equipped_items(TRUE))
+		odyssey_capture_carried_tree(I, entries, null)
+	return entries
+
+
+/proc/odyssey_morgue_gear_closet(obj/structure/morgue/M)
+	var/turf/T = get_turf(M)
+	if (!istype(T))
+		return null
+	for (var/dir in GLOB.cardinal)
+		var/turf/neighbor = get_step(T, dir)
+		if (!istype(neighbor))
+			continue
+		for (var/obj/structure/closet/C in neighbor)
+			if (!QDELETED(C))
+				return C
+	var/area/here = get_area(M)
+	if (!istype(here))
+		return null
+	var/obj/structure/closet/best
+	var/best_dist = 999
+	for (var/obj/structure/closet/C in here)
+		if (QDELETED(C))
+			continue
+		var/dist = get_dist(T, C)
+		if (!istype(best) || dist < best_dist)
+			best = C
+			best_dist = dist
+	return best
 
 
 /// Strip personal gear and put the body in a blue hospital patient gown.
@@ -131,6 +198,9 @@
 		H.ChangeToHusk()
 	H.death(FALSE)
 	odyssey_dress_corpse_as_patient(H)
+	if (islist(entry["gear"]) && length(entry["gear"]))
+		var/atom/gear_dest = odyssey_morgue_gear_closet(M) || M
+		odyssey_apply_gear_list(entry["gear"], gear_dest)
 	odyssey_sanitize_corpse_appearance(H)
 	if (get_turf(H) != get_turf(M) && H.loc != M)
 		H.forceMove(M)

@@ -56,3 +56,48 @@
 	if (istype(H) && !H.odyssey_corpse_restored)
 		odyssey_mark_character_dead(H, gibbed ? "gibbed" : "death")
 	return TRUE
+
+
+/mob/living/carbon/human/set_stat(new_stat)
+	var/old_stat = stat
+	. = ..()
+	if (stat)
+		update_skin(1)
+	if (client && client.is_afk())
+		if (old_stat == UNCONSCIOUS && stat == CONSCIOUS)
+			playsound_local(null, 'sound/effects/bells.ogg', 100, is_global = TRUE)
+	if (old_stat == DEAD && stat != DEAD)
+		odyssey_mark_character_alive(src)
+
+
+/datum/mind/transfer_to(mob/living/new_character)
+	var/mob/living/old_body = current
+	if (!istype(new_character))
+		to_world_log("## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn.")
+	if (current)
+		if (changeling)
+			current.remove_changeling_powers()
+			current.verbs -= /datum/changeling/proc/EvolutionTree
+		current.mind = null
+		SSnano.user_transferred(current, new_character)
+	if (new_character.mind)
+		new_character.mind.current = null
+	var/datum/skillset/skillset = new_character.skillset
+	if (skillset && !ispath(skillset))
+		skillset.obtain_from_mob(current)
+	current = new_character
+	new_character.mind = src
+	if (learned_spells && length(learned_spells))
+		restore_spells(new_character)
+	if (active)
+		new_character.key = key
+	if (!ishuman(old_body) || !ishuman(new_character))
+		return
+	var/mob/living/carbon/human/old_human = old_body
+	var/mob/living/carbon/human/new_human = new_character
+	if (!new_human.character_persist_ckey && old_human.character_persist_ckey)
+		new_human.character_persist_ckey = old_human.character_persist_ckey
+	if (!new_human.character_persist_slot && old_human.character_persist_slot)
+		new_human.character_persist_slot = old_human.character_persist_slot
+	if (new_human.stat != DEAD)
+		odyssey_mark_character_alive(new_human)

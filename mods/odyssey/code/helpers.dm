@@ -13,7 +13,8 @@
 	return istype(A, /area/space) \
 		|| istype(A, /area/ship) \
 		|| istype(A, /area/map_template) \
-		|| istype(A, /area/supply) // cargo supply drone — docks onto hangar midround
+		|| istype(A, /area/supply) /* cargo supply drone — docks onto hangar midround */ \
+		|| istype(A, /area/turbolift) // cabin/shaft move between z; turf deltas wipe floors on continue
 
 
 /// Freeze areas present on station_levels at baseline time. Midround visitors are not included.
@@ -229,6 +230,94 @@
 
 /obj/var/odyssey_persist_id
 
+/// Spawned from a head locker. The map restocks it; snapshots must not keep a second copy.
+/obj/item
+	var/odyssey_map_unique = FALSE
+
+/// While TRUE, destroying the auth disk must not spawn a replacement in maintenance.
+var/global/odyssey_disk_hold = FALSE
+var/global/obj/odyssey_disk_anchor/odyssey_disk_anchor
+
+/obj/odyssey_disk_anchor
+	invisibility = INVISIBILITY_ABSTRACT
+	anchored = TRUE
+	mouse_opacity = FALSE
+
+
+/obj/item/disk/nuclear/Destroy()
+	GLOB.moved_event.unregister(src, src, TYPE_PROC_REF(/obj/item/disk/nuclear, check_z_level))
+	nuke_disks -= src
+	if (odyssey_disk_hold)
+		return ..()
+	if (!length(nuke_disks))
+		var/turf/T = pick_area_turf(/area/maintenance, list(GLOBAL_PROC_REF(is_station_turf), GLOBAL_PROC_REF(not_turf_contains_dense_objects)))
+		if (T)
+			var/obj/D = new /obj/item/disk/nuclear(T)
+			log_and_message_admins("[src], the last authentication disk, has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).", location = T)
+		else
+			log_and_message_admins("[src], the last authentication disk, has been destroyed. Failed to respawn disc!")
+	return ..()
+
+
+/proc/odyssey_disk_safe_anchor()
+	if (!istype(odyssey_disk_anchor) || QDELETED(odyssey_disk_anchor))
+		odyssey_disk_anchor = new
+	return odyssey_disk_anchor
+
+
+/// Pull every auth disk off the map before turf swaps and item strip qdel their container.
+/proc/odyssey_lift_nuke_disks()
+	odyssey_disk_hold = TRUE
+	var/list/lifted = list()
+	var/obj/anchor = odyssey_disk_safe_anchor()
+	if (!islist(nuke_disks))
+		return lifted
+	for (var/obj/item/disk/nuclear/D in nuke_disks.Copy())
+		if (QDELETED(D))
+			continue
+		var/turf/T = get_turf(D)
+		lifted += list(list(
+			"disk" = D,
+			"x" = T?.x,
+			"y" = T?.y,
+			"z" = T?.z
+		))
+		D.forceMove(anchor)
+	return lifted
+
+
+/proc/odyssey_restore_nuke_disks(list/lifted)
+	if (!islist(nuke_disks))
+		odyssey_disk_hold = FALSE
+		return
+	var/list/kept = list()
+	if (islist(lifted))
+		for (var/list/entry in lifted)
+			var/obj/item/disk/nuclear/D = entry["disk"]
+			if (istype(D) && !QDELETED(D))
+				kept += D
+	for (var/obj/item/disk/nuclear/other in nuke_disks.Copy())
+		if (other in kept)
+			continue
+		qdel(other)
+	for (var/list/entry in lifted)
+		if (!islist(entry))
+			continue
+		var/obj/item/disk/nuclear/D = entry["disk"]
+		var/turf/T = locate(entry["x"], entry["y"], entry["z"])
+		if (!istype(D) || QDELETED(D))
+			if (istype(T))
+				new /obj/item/disk/nuclear(T)
+			continue
+		var/obj/item/storage/secure/briefcase/nukedisk/case = locate() in T
+		if (istype(case))
+			D.forceMove(case)
+		else if (istype(T))
+			D.forceMove(T)
+		else
+			D.forceMove(odyssey_disk_safe_anchor())
+	odyssey_disk_hold = FALSE
+
 
 /// Chemistry / medbay / virology refrigerated storage — contents saved on machinery entries.
 /proc/odyssey_smartfridge_chemistry_persistable(obj/machinery/smartfridge/F)
@@ -289,9 +378,38 @@
 	return TRUE
 
 
+/// Map-unique or job-issued. Fresh DMM / job equip is the source of truth on both lanes.
+/proc/odyssey_item_unique_path(path)
+	if (!ispath(path, /obj/item))
+		return FALSE
+	if (ispath(path, /obj/item/disk/nuclear))
+		return TRUE
+	if (ispath(path, /obj/item/pinpointer))
+		return TRUE
+	if (ispath(path, /obj/item/blueprints))
+		return TRUE
+	if (ispath(path, /obj/item/storage/backpack/holding))
+		return TRUE
+	if (ispath(path, /obj/item/card/id))
+		return TRUE
+	if (ispath(path, /obj/item/stamp))
+		return TRUE
+	if (ispath(path, /obj/item/folder/envelope/preset/nuke))
+		return TRUE
+	if (ispath(path, /obj/item/device/remote_device))
+		return TRUE
+	if (ispath(path, /obj/item/device/radio/headset/heads))
+		return TRUE
+	if (ispath(path, /obj/item/storage/box/ids) || ispath(path, /obj/item/storage/box/PDAs))
+		return TRUE
+	return FALSE
+
+
 /// Item types that must never enter items_*.json (junk, other pipelines, unstable new()).
 /proc/odyssey_item_path_denylisted(path)
 	if (!ispath(path, /obj/item))
+		return TRUE
+	if (odyssey_item_unique_path(path))
 		return TRUE
 	// Other Odyssey / character_persist pipelines.
 	if (ispath(path, /obj/item/stack/material))
@@ -309,40 +427,46 @@
 		return TRUE
 	if (ispath(path, /obj/item/ammo_casing))
 		return TRUE
-	// Abstracts / dangerous / deferred.
+	// Abstracts.
 	if (ispath(path, /obj/item/grab))
-		return TRUE
-	if (ispath(path, /obj/item/grenade))
-		return TRUE
-	if (ispath(path, /obj/item/robot_parts) || ispath(path, /obj/item/aicard))
-		return TRUE
-	if (ispath(path, /obj/item/card/id))
 		return TRUE
 	if (ispath(path, /obj/item/reagent_containers/food/snacks/grown) || ispath(path, /obj/item/seeds))
 		return TRUE
-	if (ispath(path, /obj/item/device/uplink) || ispath(path, /obj/item/device/radio/uplink))
-		return TRUE
 	// Paperwork has its own lane (papers.json) with text/photos.
 	if (ispath(path, /obj/item/paper) || ispath(path, /obj/item/photo) || ispath(path, /obj/item/folder) || ispath(path, /obj/item/paper_bundle))
-		return TRUE
-	// Office stamps stay on the map (DMM / relocated) — not strip+restore via items_*.
-	if (ispath(path, /obj/item/stamp))
-		return TRUE
-	// Round-critical uniques — must stay on the live map / respawn logic, not snapshot.
-	if (ispath(path, /obj/item/disk/nuclear))
-		return TRUE
-	if (ispath(path, /obj/item/pinpointer))
-		return TRUE
-	if (ispath(path, /obj/item/blueprints))
-		return TRUE
-	if (ispath(path, /obj/item/storage/backpack/holding))
 		return TRUE
 	return FALSE
 
 /proc/odyssey_item_denylisted(obj/item/I)
 	if (!istype(I))
 		return TRUE
+	if (I.odyssey_map_unique)
+		return TRUE
 	return odyssey_item_path_denylisted(I.type)
+
+
+/proc/odyssey_head_closet(obj/structure/closet/C)
+	return istype(C, /obj/structure/closet/secure_closet/captains/sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/hop/sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/hos/sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/CMO_sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/RD_sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/engineering_chief_sierra) \
+		|| istype(C, /obj/structure/closet/secure_closet/quartermaster_sierra)
+
+
+/proc/odyssey_mark_head_service_weapons(obj/structure/closet/C)
+	if (!istype(C))
+		return
+	for (var/obj/item/gun/G in C.contents)
+		if (istype(G, /obj/item/gun/energy/stunrevolver/secure) || istype(G, /obj/item/gun/energy/gun/secure))
+			G.odyssey_map_unique = TRUE
+
+
+/obj/structure/closet/secure_closet/LateInitialize(mapload)
+	..()
+	if (odyssey_head_closet(src))
+		odyssey_mark_head_service_weapons(src)
 
 
 /// Bucket name for items_<bucket>.json, or null if not persisted here.

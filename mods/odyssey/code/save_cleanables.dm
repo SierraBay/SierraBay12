@@ -42,12 +42,18 @@
 /proc/odyssey_collect_cleanables()
 	var/list/entries = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/decal/cleanable/C in T)
-			var/list/entry = odyssey_serialize_cleanable(C)
-			if (entry)
-				entries += list(entry)
+		odyssey_collect_cleanable_turf(T, entries)
 		CHECK_TICK
 	return entries
+
+
+/proc/odyssey_collect_cleanable_turf(turf/T, list/entries)
+	if (!istype(T) || !islist(entries))
+		return
+	for (var/obj/decal/cleanable/C in T)
+		var/list/entry = odyssey_serialize_cleanable(C)
+		if (entry)
+			entries += list(entry)
 
 
 /proc/odyssey_strip_cleanables()

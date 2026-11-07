@@ -162,15 +162,8 @@ var/global/datum/odyssey_state/odyssey
 		state.persist_index_structures = list()
 	if (!islist(state.persist_index_mechs))
 		state.persist_index_mechs = list()
-	for (var/id in state.persist_index_machinery)
-		if (QDELETED(state.persist_index_machinery[id]))
-			state.persist_index_machinery -= id
-	for (var/id in state.persist_index_structures)
-		if (QDELETED(state.persist_index_structures[id]))
-			state.persist_index_structures -= id
-	for (var/id in state.persist_index_mechs)
-		if (QDELETED(state.persist_index_mechs[id]))
-			state.persist_index_mechs -= id
+	// Stale ids are dropped on lookup. Scanning every indexed object here made each
+	// ChangeTurf walk the whole ship index.
 	for (var/obj/machinery/M in T)
 		if (!QDELETED(M) && M.loc == T && M.odyssey_persist_id)
 			state.persist_index_machinery[M.odyssey_persist_id] = M

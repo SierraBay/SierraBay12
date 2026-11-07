@@ -14,42 +14,47 @@
 /proc/odyssey_collect_materials()
 	var/list/entries = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/item/stack/material/S in T.contents)
+		odyssey_collect_material_turf(T, entries)
+		CHECK_TICK
+	return entries
+
+
+/proc/odyssey_collect_material_turf(turf/T, list/entries)
+	if (!istype(T) || !islist(entries))
+		return
+	for (var/obj/item/stack/material/S in T.contents)
+		if (!odyssey_material_stack_persistable(S))
+			continue
+		var/amount = S.get_amount()
+		if (!isnum(amount) || amount < 1)
+			continue
+		var/list/floor_entry = list(
+			"type" = "[S.type]",
+			"amount" = amount,
+			"x" = T.x,
+			"y" = T.y,
+			"z" = T.z,
+			"in_closet" = !!istype(S.loc, /obj/structure/closet)
+		)
+		odyssey_write_pixel_offset(S, floor_entry)
+		entries += list(floor_entry)
+	for (var/obj/structure/closet/C in T)
+		for (var/obj/item/stack/material/S in C)
 			if (!odyssey_material_stack_persistable(S))
 				continue
 			var/amount = S.get_amount()
 			if (!isnum(amount) || amount < 1)
 				continue
-			var/list/floor_entry = list(
+			var/list/closet_entry = list(
 				"type" = "[S.type]",
 				"amount" = amount,
 				"x" = T.x,
 				"y" = T.y,
 				"z" = T.z,
-				"in_closet" = !!istype(S.loc, /obj/structure/closet)
+				"in_closet" = TRUE
 			)
-			odyssey_write_pixel_offset(S, floor_entry)
-			entries += list(floor_entry)
-		// Also stacks nested in closets/crates on this turf.
-		for (var/obj/structure/closet/C in T)
-			for (var/obj/item/stack/material/S in C)
-				if (!odyssey_material_stack_persistable(S))
-					continue
-				var/amount = S.get_amount()
-				if (!isnum(amount) || amount < 1)
-					continue
-				var/list/closet_entry = list(
-					"type" = "[S.type]",
-					"amount" = amount,
-					"x" = T.x,
-					"y" = T.y,
-					"z" = T.z,
-					"in_closet" = TRUE
-				)
-				odyssey_write_pixel_offset(S, closet_entry)
-				entries += list(closet_entry)
-		CHECK_TICK
-	return entries
+			odyssey_write_pixel_offset(S, closet_entry)
+			entries += list(closet_entry)
 
 
 /// Map DMM stacks would refill every continue; wipe persistable station stacks first.

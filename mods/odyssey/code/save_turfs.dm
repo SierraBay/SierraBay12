@@ -13,16 +13,23 @@
 		return entries
 
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		if (!odyssey_turf_persistable(T))
-			continue
-		var/key = odyssey_coord_key(T.x, T.y, T.z)
-		var/baseline_type = baseline[key]
-		if (baseline_type)
-			var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
-			if (entry)
-				entries += list(entry)
+		odyssey_collect_turf_into(T, entries, baseline)
 		CHECK_TICK
 	return entries
+
+
+/proc/odyssey_collect_turf_into(turf/T, list/entries, list/baseline)
+	if (!istype(T) || !islist(entries) || !islist(baseline))
+		return
+	if (!odyssey_turf_persistable(T))
+		return
+	var/key = odyssey_coord_key(T.x, T.y, T.z)
+	var/baseline_type = baseline[key]
+	if (!baseline_type)
+		return
+	var/list/entry = odyssey_turf_delta_entry(T, baseline_type)
+	if (entry)
+		entries += list(entry)
 
 
 /proc/odyssey_turf_delta_entry(turf/T, baseline_type)
@@ -61,6 +68,9 @@
 		return FALSE
 	var/turf/T = odyssey_locate_turf(entry)
 	if (!T)
+		return FALSE
+	// Skip lifts/excluded areas — old saves may still contain cabin/shaft deltas.
+	if (!odyssey_turf_persistable(T))
 		return FALSE
 	var/path = odyssey_resolve_path(entry["type"])
 	if (ispath(path, /turf) && T.type != path)

@@ -35,28 +35,41 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/live_ids = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/structure/S in T)
-			if (QDELETED(S) || S.loc != T || !odyssey_structure_whitelisted(S))
-				continue
-			var/id = S.odyssey_persist_id || odyssey_assign_runtime_id(S)
-			live_ids[id] = TRUE
-			var/list/baseline = state.structure_baseline?[id]
-			var/action = islist(baseline) ? "modified" : "created"
-			if (islist(baseline) && (baseline["x"] != T.x || baseline["y"] != T.y || baseline["z"] != T.z))
-				action = "moved"
-			var/changed = action != "modified" || baseline["dir"] != S.dir || baseline["name"] != S.name || baseline["anchored"] != S.anchored \
-				|| (baseline["pixel_x"] || 0) != S.pixel_x || (baseline["pixel_y"] || 0) != S.pixel_y
-			if (istype(S, /obj/structure/catwalk))
-				var/obj/structure/catwalk/C = S
-				changed = changed || !!baseline["hatch_open"] != !!C.hatch_open || "[baseline["plated_tile"]]" != "[odyssey_catwalk_plated_type(C)]"
-			if (!changed)
-				continue
-			var/list/entry = odyssey_structure_snapshot(S)
-			if (!entry)
-				continue
-			entry["action"] = action
-			entries += list(entry)
+		odyssey_collect_structure_turf(T, entries, live_ids, state)
 		CHECK_TICK
+	odyssey_finish_structure_destroyed(entries, live_ids, state)
+	return entries
+
+
+/proc/odyssey_collect_structure_turf(turf/T, list/entries, list/live_ids, datum/odyssey_state/state)
+	if (!istype(T) || !islist(entries) || !islist(live_ids))
+		return
+	for (var/obj/structure/S in T)
+		if (QDELETED(S) || S.loc != T || !odyssey_structure_whitelisted(S))
+			continue
+		var/id = S.odyssey_persist_id || odyssey_assign_runtime_id(S)
+		live_ids[id] = TRUE
+		var/list/baseline = state?.structure_baseline?[id]
+		var/action = islist(baseline) ? "modified" : "created"
+		if (islist(baseline) && (baseline["x"] != T.x || baseline["y"] != T.y || baseline["z"] != T.z))
+			action = "moved"
+		var/changed = action != "modified" || baseline["dir"] != S.dir || baseline["name"] != S.name || baseline["anchored"] != S.anchored \
+			|| (baseline["pixel_x"] || 0) != S.pixel_x || (baseline["pixel_y"] || 0) != S.pixel_y
+		if (istype(S, /obj/structure/catwalk))
+			var/obj/structure/catwalk/C = S
+			changed = changed || !!baseline["hatch_open"] != !!C.hatch_open || "[baseline["plated_tile"]]" != "[odyssey_catwalk_plated_type(C)]"
+		if (!changed)
+			continue
+		var/list/entry = odyssey_structure_snapshot(S)
+		if (!entry)
+			continue
+		entry["action"] = action
+		entries += list(entry)
+
+
+/proc/odyssey_finish_structure_destroyed(list/entries, list/live_ids, datum/odyssey_state/state)
+	if (!islist(entries) || !islist(live_ids) || !istype(state))
+		return
 	for (var/id in state.structure_baseline)
 		if (live_ids[id])
 			continue
@@ -83,7 +96,7 @@
 		S = odyssey_find_structure_for_entry(entry)
 	if (!S)
 		return FALSE
-	if (odyssey_structure_denylisted(S))
+	if (odyssey_structure_denylisted(S) || !odyssey_atom_persistable(S))
 		return FALSE
 	odyssey_index_remove(odyssey_ensure_state().persist_index_structures, entry["id"])
 	qdel(S)
@@ -95,7 +108,7 @@
 		return FALSE
 	var/path = odyssey_resolve_path(entry["type"])
 	var/turf/T = odyssey_locate_turf(entry)
-	if (!ispath(path, /obj/structure) || !T)
+	if (!ispath(path, /obj/structure) || !T || !odyssey_turf_persistable(T))
 		return FALSE
 	// Refuse before new() — stairs Initialize can ChangeTurf the deck above; tables self-destruct if doubled.
 	if (odyssey_structure_path_denylisted(path))

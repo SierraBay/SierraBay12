@@ -24,6 +24,8 @@
 	else
 		odyssey_last_campaign_stats = null
 		odyssey_show_roundend_stats = FALSE
+		// Drop prior campaign snapshot trees so generations do not accumulate on disk.
+		odyssey_purge_map_snapshots(null)
 		state.active = TRUE
 		state.continued = FALSE
 		state.status = ODYSSEY_STATUS_ACTIVE
@@ -31,6 +33,7 @@
 		state.save_version = ODYSSEY_VERSION
 		state.meta_path = odyssey_meta_path()
 		state.campaign_id = "[odyssey_map_key()]_[time2text(world.realtime, "YYYYMMDDhhmmss")]"
+		state.save_generation = null
 		state.campaign_seed = "[state.campaign_id]:[world.realtime]"
 		state.shift_number = 1
 		state.min_shifts = ODYSSEY_MIN_SHIFTS
@@ -594,20 +597,26 @@
 	var/list/cleanables
 	var/list/chronicle
 
-	odyssey_load_step(session, "turfs", "active", "сбор…")
-	turfs = odyssey_collect_turfs()
+	odyssey_load_step(session, "turfs", "active", "один обход карты…")
+	var/list/station = odyssey_collect_station(generation)
+	turfs = station["turfs"]
+	machinery = station["machinery"]
+	structures = station["structures"]
+	materials = station["materials"]
+	papers = station["papers"]
+	item_buckets = station["items"]
+	remains = station["remains"]
+	cleanables = station["cleanables"]
 	if (odyssey_save_part(session, "turfs", generation, common, turfs) < 0)
 		success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "machinery", "active", "сбор…")
-		machinery = odyssey_collect_machinery()
+		odyssey_load_step(session, "machinery", "active", "запись…")
 		if (odyssey_save_part(session, "machinery", generation, common, machinery) < 0)
 			success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "structures", "active", "сбор…")
-		structures = odyssey_collect_structures()
+		odyssey_load_step(session, "structures", "active", "запись…")
 		if (odyssey_save_part(session, "structures", generation, common, structures) < 0)
 			success = FALSE
 
@@ -647,20 +656,16 @@
 			success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "materials", "active", "сбор…")
-		materials = odyssey_collect_materials()
+		odyssey_load_step(session, "materials", "active", "запись…")
 		if (odyssey_save_part(session, "materials", generation, common, materials) < 0)
 			success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "papers", "active", "сбор…")
-		papers = odyssey_collect_papers(generation)
+		odyssey_load_step(session, "papers", "active", "запись…")
 		if (odyssey_save_part(session, "papers", generation, common, papers) < 0)
 			success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "items_collect", "active", "обход карты…")
-		item_buckets = odyssey_collect_items_by_bucket()
 		odyssey_load_step(session, "items_collect", "done", "собрано ([odyssey_count_item_bucket_entries(item_buckets)])")
 		for (var/bucket in ODYSSEY_ITEM_BUCKETS)
 			var/kind = odyssey_item_snapshot_kind(bucket)
@@ -683,14 +688,12 @@
 				odyssey_load_step(session, odyssey_items_manifest_kind(), "done", "item_count=[odyssey_count_item_bucket_entries(item_buckets)]")
 
 	if (success)
-		odyssey_load_step(session, "remains", "active", "сбор…")
-		remains = odyssey_collect_remains()
+		odyssey_load_step(session, "remains", "active", "запись…")
 		if (odyssey_save_part(session, "remains", generation, common, remains) < 0)
 			success = FALSE
 
 	if (success)
-		odyssey_load_step(session, "cleanables", "active", "сбор…")
-		cleanables = odyssey_collect_cleanables()
+		odyssey_load_step(session, "cleanables", "active", "запись…")
 		if (odyssey_save_part(session, "cleanables", generation, common, cleanables) < 0)
 			success = FALSE
 
@@ -702,6 +705,7 @@
 
 	if (!success)
 		log_error("ODYSSEY: snapshot write failed; campaign meta was not published")
+		odyssey_delete_generation(generation)
 		odyssey_invalidate_persistable_turfs_cache()
 		session.finished = TRUE
 		sleep(2 SECONDS)
@@ -719,6 +723,7 @@
 	if (!odyssey_write_meta(meta))
 		odyssey_load_step(session, "meta", "error", "запись не удалась")
 		log_error("ODYSSEY: meta write failed after snapshot generation [generation]")
+		odyssey_delete_generation(generation)
 		odyssey_invalidate_persistable_turfs_cache()
 		session.finished = TRUE
 		sleep(2 SECONDS)
@@ -727,6 +732,8 @@
 	odyssey_load_step(session, "meta", "done")
 
 	state.save_generation = generation
+	// Keep only the published generation — older trees (and failed orphans) are removed.
+	odyssey_purge_map_snapshots(generation)
 	odyssey_load_step(session, "finish", "active")
 	session.finished = TRUE
 	odyssey_load_step(session, "finish", "done")

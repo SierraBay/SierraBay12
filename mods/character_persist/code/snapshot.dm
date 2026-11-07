@@ -39,18 +39,39 @@
 	// Soft-migrate: older Odyssey saves lived in the normal file with odyssey_campaign_id.
 	if (!islist(data) && for_odyssey)
 		var/list/legacy = character_persist_read_raw(character_persist_path(ckey, slot, FALSE))
-		if (islist(legacy) && legacy["odyssey_campaign_id"] && odyssey_snapshot_valid(legacy))
-			character_persist_write(ckey, slot, legacy, TRUE)
-			data = legacy
+		if (islist(legacy) && legacy["odyssey_campaign_id"])
+			var/datum/odyssey_state/migrate_state = odyssey_ensure_state()
+			// Migrate when lobby/normal, or when the live campaign matches the tagged id.
+			if (!migrate_state?.active || legacy["odyssey_campaign_id"] == migrate_state.campaign_id)
+				character_persist_write(ckey, slot, legacy, TRUE)
+				data = legacy
 	if (!islist(data) || !data["version"])
 		return null
 	if (for_odyssey)
-		if (!data["odyssey_campaign_id"] || !odyssey_snapshot_valid(data))
+		if (!data["odyssey_campaign_id"])
+			return null
+		// Live Odyssey: only the matching campaign doll may spawn / apply.
+		// Lobby / other modes: Odyssey-lane file must still be readable (setup tab, preview).
+		var/datum/odyssey_state/state = odyssey_ensure_state()
+		if (state?.active && data["odyssey_campaign_id"] != state.campaign_id)
 			return null
 	else if (data["odyssey_campaign_id"])
 		// Polluted by a pre-split Odyssey save — do not treat as normal persist.
 		return null
 	return data
+
+
+/// Odyssey-lane file for setup UI — ignores whether a campaign is currently selected/active.
+/proc/character_persist_read_odyssey_disk(ckey, slot)
+	if (!ckey || !slot)
+		return null
+	var/list/data = character_persist_read_raw(character_persist_path(ckey, slot, TRUE))
+	if (islist(data) && data["odyssey_campaign_id"])
+		return data
+	var/list/legacy = character_persist_read_raw(character_persist_path(ckey, slot, FALSE))
+	if (islist(legacy) && legacy["odyssey_campaign_id"])
+		return legacy
+	return null
 
 
 /proc/character_persist_read_raw(path)
@@ -245,7 +266,7 @@
 			else
 				markings[entry] = E.markings[entry]
 
-	return list(
+	var/list/snap = list(
 		"version" = CHARACTER_PERSIST_VERSION,
 		"saved_at" = time2text(world.realtime, "YYYY-MM-DD hh:mm"),
 		"gender" = H.gender,
@@ -264,11 +285,21 @@
 		"augments" = character_persist_capture_augments(H),
 		"implants" = character_persist_capture_implants(H)
 	)
+	if (H.species?.name)
+		snap["species"] = H.species.name
+	return snap
 
 
 /proc/character_persist_apply_snapshot(mob/living/carbon/human/H, list/snapshot)
 	if (!istype(H) || !islist(snapshot))
 		return
+
+	// Species first — set_species rebuilds organs; damage/markings apply after.
+	var/species_name = snapshot["species"]
+	if (istext(species_name) && length(species_name) && GLOB.species_by_name[species_name])
+		if (!H.species || H.species.name != species_name)
+			// default_colour=FALSE keeps snapshot skin/hair colors instead of species defaults.
+			H.set_species(species_name, FALSE)
 
 	if (snapshot["gender"])
 		H.gender = snapshot["gender"]
@@ -446,10 +477,13 @@
 		var/datum/odyssey_state/odyssey_state = odyssey_ensure_state()
 		snapshot["odyssey_campaign_id"] = odyssey_state.campaign_id
 		var/job_title = H.mind?.assigned_role || H.job
-		if (job_title)
+		// Crewman must not lock the doll — keep a prior real job lock if any, else clear.
+		if (job_title && job_title != CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
 			snapshot["assigned_job"] = job_title
-		else if (islist(previous) && previous["assigned_job"])
+		else if (islist(previous) && previous["assigned_job"] && previous["assigned_job"] != CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
 			snapshot["assigned_job"] = previous["assigned_job"]
+		else
+			snapshot -= "assigned_job"
 		if (odyssey_human_should_be_detained(H))
 			snapshot -= "inventory"
 		else

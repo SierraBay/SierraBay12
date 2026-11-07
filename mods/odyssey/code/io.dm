@@ -3,6 +3,65 @@
 	return "data"
 
 
+/// Filename prefix for this map's Odyssey files inside data/ (e.g. odyssey_sierra_).
+/proc/odyssey_map_disk_prefix()
+	return "odyssey_[odyssey_map_key()]_"
+
+
+/// Deletes one generation's JSON + photo savefiles. Returns how many paths were removed.
+/proc/odyssey_delete_generation(generation)
+	if (!generation)
+		return 0
+	var/deleted = 0
+	var/list/kinds = list(
+		"turfs", "machinery", "structures", "mechs", "economy", "research",
+		"roster", "newscast", "corpses", "materials", "papers", "remains",
+		"cleanables", "chronicle", odyssey_items_manifest_kind()
+	)
+	for (var/bucket in ODYSSEY_ITEM_BUCKETS)
+		kinds += odyssey_item_snapshot_kind(bucket)
+	for (var/kind in kinds)
+		var/path = odyssey_snapshot_path(kind, generation)
+		if (fexists(path))
+			fdel(path)
+			deleted++
+	var/papers_photos = odyssey_papers_photos_path(generation)
+	if (fexists(papers_photos))
+		fdel(papers_photos)
+		deleted++
+	var/news_photos = odyssey_newscast_photos_path(generation)
+	if (fexists(news_photos))
+		fdel(news_photos)
+		deleted++
+	if (deleted)
+		log_game("ODYSSEY: deleted generation=[generation] files=[deleted]")
+	return deleted
+
+
+/// Removes Odyssey snapshot files for this map. Keeps campaign.json.
+/// If keep_generation is set, files belonging to that generation are retained.
+/proc/odyssey_purge_map_snapshots(keep_generation = null)
+	var/map_key = odyssey_map_key()
+	var/prefix = odyssey_map_disk_prefix()
+	var/meta_name = "[prefix]campaign.json"
+	var/deleted = 0
+	for (var/fname in flist("data/"))
+		if (!dd_hasprefix_case(fname, prefix))
+			continue
+		if (fname == meta_name)
+			continue
+		if (keep_generation && findtextEx(fname, keep_generation))
+			continue
+		var/full = "data/[fname]"
+		if (!fexists(full))
+			continue
+		fdel(full)
+		deleted++
+	if (deleted)
+		log_game("ODYSSEY: purged [deleted] snapshot file(s) map=[map_key] keep=[keep_generation || "none"]")
+	return deleted
+
+
 /proc/odyssey_read_json(path)
 	if (!path || !fexists(path))
 		return null

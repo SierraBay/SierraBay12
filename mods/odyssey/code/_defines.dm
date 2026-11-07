@@ -36,7 +36,7 @@
 /// Crew warning before campaign snapshot / roundend save (shift-end and Odyssey Jump).
 #define ODYSSEY_SAVE_WARN_BEFORE (2 MINUTES)
 /// Countdown from Odyssey Jump initiate to sector transition (BSD).
-#define ODYSSEY_BSD_JUMP_DELAY (10 MINUTES)
+#define ODYSSEY_BSD_JUMP_DELAY (20 MINUTES)
 /// After a continued shift that just arrived via Odyssey Jump: drive thermal lock from previous transition.
 #define ODYSSEY_BSD_POST_JUMP_COOLDOWN (90 MINUTES)
 /// Last-minute FX window before Odyssey jump climax (bluespace lights, brace cues / local sounds).

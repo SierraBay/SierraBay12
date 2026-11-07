@@ -40,10 +40,9 @@
 /proc/character_persist_inventory_path_denied(path)
 	if (!ispath(path, /obj/item))
 		return TRUE
-	if (ispath(path, /obj/item/card/id))
+	if (odyssey_item_unique_path(path))
 		return TRUE
-	if (ispath(path, /obj/item/modular_computer))
-		return TRUE
+	// Job hands out a fresh radio. Headsets of heads are also map-unique.
 	if (ispath(path, /obj/item/device/radio/headset))
 		return TRUE
 	if (ispath(path, /obj/item/storage/secure/safe/character_persist))
@@ -51,14 +50,6 @@
 	if (ispath(path, /obj/item/grab))
 		return TRUE
 	if (ispath(path, /obj/item/organ))
-		return TRUE
-	if (ispath(path, /obj/item/disk/nuclear))
-		return TRUE
-	if (ispath(path, /obj/item/pinpointer))
-		return TRUE
-	if (ispath(path, /obj/item/blueprints))
-		return TRUE
-	if (ispath(path, /obj/item/storage/backpack/holding))
 		return TRUE
 	if (ispath(path, /obj/item/paper/admin))
 		return TRUE
@@ -77,6 +68,8 @@
 
 /proc/character_persist_inventory_denied(obj/item/I)
 	if (!istype(I) || QDELETED(I))
+		return TRUE
+	if (I.odyssey_map_unique)
 		return TRUE
 	return character_persist_inventory_path_denied(I.type)
 
@@ -101,6 +94,9 @@
 		return null
 	var/job_title = snapshot["assigned_job"]
 	if (!istext(job_title) || !length(job_title))
+		return null
+	// Crewman is a free fallback — never treat it as a profession lock.
+	if (job_title == CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE)
 		return null
 	return job_title
 
@@ -181,6 +177,11 @@
 		return slot_r_hand
 	if (H.handcuffed == I)
 		return slot_handcuffed
+	// Accessories on worn clothing use slot_tie when equipped via equip_to_slot.
+	if (istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if (A.parent)
+			return slot_tie
 	return null
 
 
@@ -262,10 +263,15 @@
 				acc += "[A.type]"
 		// Always write (even empty) so type-default plates/ties do not respawn.
 		entry["accessories"] = acc
+	if (istype(I, /obj/item/passport))
+		var/obj/item/passport/P = I
+		entry["passport_info"] = P.info || ""
+		entry["passport_fingerprint"] = P.fingerprint || ""
+	odyssey_write_item_extras(I, entry)
 	return entry
 
 
-/proc/character_persist_collect_inventory_item(obj/item/I, list/entries, list/counter, storage_id, depth, list/item_count, savefile/photos, list/photo_counter)
+/proc/character_persist_collect_inventory_item(obj/item/I, list/entries, list/counter, storage_id, depth, list/item_count, savefile/photos, list/photo_counter, storage_kind = null, storage_acc = null)
 	if (!istype(I) || character_persist_inventory_denied(I))
 		return
 	if (item_count["n"] >= CHARACTER_PERSIST_INVENTORY_MAX_ITEMS)
@@ -273,6 +279,10 @@
 	var/list/entry = character_persist_serialize_inventory_item(I, storage_id, counter, depth, photos, photo_counter)
 	if (!islist(entry))
 		return
+	if (storage_kind)
+		entry["storage_kind"] = storage_kind
+	if (storage_acc)
+		entry["storage_acc"] = storage_acc
 	item_count["n"] = (item_count["n"] || 0) + 1
 	entries += list(entry)
 	var/pid = entry["id"]
@@ -291,15 +301,16 @@
 		var/obj/item/clothing/suit/storage/S = I
 		if (istype(S.pockets))
 			for (var/obj/item/child in S.pockets)
-				character_persist_collect_inventory_item(child, entries, counter, pid, depth + 1, item_count, photos, photo_counter)
+				character_persist_collect_inventory_item(child, entries, counter, pid, depth + 1, item_count, photos, photo_counter, "pockets")
 	if (istype(I, /obj/item/clothing))
 		var/obj/item/clothing/C = I
 		if (islist(C.accessories))
 			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
 				if (!istype(A.container))
 					continue
+				var/acc_key = "[A.type]"
 				for (var/obj/item/child in A.container)
-					character_persist_collect_inventory_item(child, entries, counter, pid, depth + 1, item_count, photos, photo_counter)
+					character_persist_collect_inventory_item(child, entries, counter, pid, depth + 1, item_count, photos, photo_counter, "accessory", acc_key)
 
 
 /proc/character_persist_capture_inventory(mob/living/carbon/human/H)
@@ -423,10 +434,40 @@
 				qdel(A)
 				continue
 			C.attach_accessory(null, A)
+			if (istype(A, /obj/item/clothing/accessory/storage))
+				var/obj/item/clothing/accessory/storage/SA = A
+				if (istype(SA.container))
+					odyssey_clear_storage_autofill(SA.container)
+	if (istype(I, /obj/item/passport))
+		var/obj/item/passport/P = I
+		if (!isnull(entry["passport_info"]))
+			P.info = entry["passport_info"]
+		if (!isnull(entry["passport_fingerprint"]))
+			P.fingerprint = entry["passport_fingerprint"]
+	odyssey_read_item_extras(I, entry)
 	return I
 
 
-/proc/character_persist_place_inventory_child(obj/item/I, atom/parent)
+/proc/character_persist_apply_inventory_portable_drive(obj/item/modular_computer/comp, list/data)
+	if (!istype(comp) || !islist(data))
+		return
+	if (istype(comp.portable_drive))
+		qdel(comp.portable_drive)
+		comp.portable_drive = null
+	var/path = odyssey_resolve_path(data["type"])
+	if (!ispath(path, /obj/item/stock_parts/computer/hard_drive/portable))
+		path = /obj/item/stock_parts/computer/hard_drive/portable
+	var/obj/item/stock_parts/computer/hard_drive/portable/D = new path(comp)
+	if (data["name"])
+		D.SetName(data["name"])
+	if (!isnull(data["read_only"]))
+		D.read_only = !!data["read_only"]
+	odyssey_apply_hdd_files(D, data["files"])
+	comp.portable_drive = D
+	comp.update_verbs()
+
+
+/proc/character_persist_place_inventory_child(obj/item/I, atom/parent, storage_kind = null, storage_acc = null)
 	if (!istype(I) || !parent)
 		return FALSE
 	if (istype(parent, /obj/item/paper_bundle))
@@ -441,35 +482,64 @@
 		return TRUE
 	if (istype(parent, /obj/item/clothing))
 		var/obj/item/clothing/C = parent
-		if (islist(C.accessories))
-			for (var/obj/item/clothing/accessory/storage/A in C.accessories)
-				if (!istype(A.container))
-					continue
-				var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
-				if (istype(H))
-					if (H.holstered || !H.can_holster(I))
+		// Prefer the tagged container so jacket pockets and webbing don't steal each other.
+		if (storage_kind == "pockets" && istype(C, /obj/item/clothing/suit/storage))
+			var/obj/item/clothing/suit/storage/pocket_suit = C
+			if (istype(pocket_suit.pockets))
+				I.forceMove(pocket_suit.pockets)
+				return I.loc == pocket_suit.pockets
+		if (storage_kind == "accessory" || !storage_kind)
+			if (islist(C.accessories))
+				for (var/obj/item/clothing/accessory/storage/A in C.accessories)
+					if (!istype(A.container))
+						continue
+					if (storage_acc && "[A.type]" != storage_acc)
+						continue
+					var/datum/extension/holster/H = get_extension(A, /datum/extension/holster)
+					if (istype(H))
+						if (H.holstered || !H.can_holster(I))
+							continue
+						I.forceMove(A.container)
+						if (I.loc != A.container)
+							continue
+						H.holstered = I
+						A.SetName("occupied [H.empty_name]")
+						GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
+						GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
+						A.update_icon()
+						return TRUE
+					if (!A.container.can_be_inserted(I, null, TRUE))
 						continue
 					I.forceMove(A.container)
-					if (I.loc != A.container)
-						continue
-					H.holstered = I
-					A.SetName("occupied [H.empty_name]")
-					GLOB.moved_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, check_holster))
-					GLOB.destroyed_event.register(I, H, TYPE_PROC_REF(/datum/extension/holster, clear_holster))
-					A.update_icon()
-					return TRUE
-				if (!A.container.can_be_inserted(I, null, TRUE))
-					continue
-				I.forceMove(A.container)
-				if (I.loc == A.container)
-					return TRUE
-		if (istype(C, /obj/item/clothing/suit/storage))
+					if (I.loc == A.container)
+						return TRUE
+		if (storage_kind != "accessory" && istype(C, /obj/item/clothing/suit/storage))
 			var/obj/item/clothing/suit/storage/S = C
 			if (istype(S.pockets))
 				I.forceMove(S.pockets)
-				return TRUE
+				return I.loc == S.pockets
 	I.forceMove(parent)
 	return TRUE
+
+
+/// Equip order so dependents (belt/pockets/tie/s_store) see uniform/suit first.
+/proc/character_persist_inventory_slot_priority(slot_id)
+	switch (slot_id)
+		if (slot_w_uniform)
+			return 10
+		if (slot_wear_suit)
+			return 20
+		if (slot_back)
+			return 30
+		if (slot_shoes, slot_gloves, slot_head, slot_wear_mask, slot_glasses, slot_l_ear, slot_r_ear)
+			return 40
+		if (slot_belt, slot_wear_id, slot_l_store, slot_r_store)
+			return 50
+		if (slot_s_store, slot_tie)
+			return 60
+		if (slot_l_hand, slot_r_hand, slot_handcuffed)
+			return 70
+	return 100
 
 
 /proc/character_persist_apply_inventory(mob/living/carbon/human/H, list/entries)
@@ -481,16 +551,30 @@
 	var/photo_path = character_persist_inventory_photos_path(ckey, slot, TRUE)
 	if (photo_path && fexists(photo_path))
 		photos = new /savefile(photo_path)
+	// Prefs mannequins live in nullspace — spawn on the mob itself, not H.loc.
+	var/atom/fallback_loc = H.loc || H
 	var/list/created_by_id = list()
 	var/list/deferred = list()
-	var/applied = 0
+	var/list/roots = list()
 	for (var/list/entry in entries)
 		if (!islist(entry))
 			continue
 		if (entry["storage_id"])
 			deferred += list(entry)
+		else
+			roots += list(entry)
+	for (var/i = 1 to length(roots))
+		for (var/j = i + 1 to length(roots))
+			var/list/a = roots[i]
+			var/list/b = roots[j]
+			if (character_persist_inventory_slot_priority(b["slot"]) < character_persist_inventory_slot_priority(a["slot"]))
+				roots[i] = b
+				roots[j] = a
+	var/applied = 0
+	for (var/list/entry in roots)
+		if (!islist(entry))
 			continue
-		var/obj/item/I = character_persist_spawn_inventory_item(entry, H.loc, photos)
+		var/obj/item/I = character_persist_spawn_inventory_item(entry, fallback_loc, photos)
 		if (!istype(I))
 			continue
 		if (entry["id"])
@@ -499,9 +583,9 @@
 		if (isnum(slot_id))
 			if (!H.equip_to_slot_if_possible(I, slot_id, TRYEQUIP_SILENT | TRYEQUIP_INSTANT | TRYEQUIP_FORCE))
 				if (!H.put_in_hands(I))
-					I.forceMove(H.loc)
+					I.forceMove(fallback_loc)
 		else if (!H.put_in_hands(I))
-			I.forceMove(H.loc)
+			I.forceMove(fallback_loc)
 		applied++
 	// Multi-pass: firstaid → pill bottle → pills (same as Odyssey items lane).
 	var/list/pending = deferred.Copy()
@@ -517,28 +601,28 @@
 			if (entry["storage_id"] && !istype(parent))
 				next += list(entry)
 				continue
-			var/atom/spawn_at = parent || H.loc
+			var/atom/spawn_at = parent || fallback_loc
 			var/obj/item/I = character_persist_spawn_inventory_item(entry, spawn_at, photos)
 			if (!istype(I))
 				continue
 			if (entry["id"])
 				created_by_id[entry["id"]] = I
 			if (parent)
-				character_persist_place_inventory_child(I, parent)
+				character_persist_place_inventory_child(I, parent, entry["storage_kind"], entry["storage_acc"])
 			else
-				I.forceMove(H.loc)
+				I.forceMove(fallback_loc)
 			applied++
 			progress++
 		if (!progress)
 			for (var/list/entry in next)
 				if (!islist(entry))
 					continue
-				var/obj/item/I = character_persist_spawn_inventory_item(entry, H.loc, photos)
+				var/obj/item/I = character_persist_spawn_inventory_item(entry, fallback_loc, photos)
 				if (!istype(I))
 					continue
 				if (entry["id"])
 					created_by_id[entry["id"]] = I
-				I.forceMove(H.loc)
+				I.forceMove(fallback_loc)
 				applied++
 			break
 		pending = next
@@ -550,10 +634,24 @@
 	var/singleton/hierarchy/outfit/outfit = job.get_outfit(H, alt_title, branch, grade)
 	if (!istype(outfit))
 		return
-	// Drop any accidental ID/PDA/headset that slipped through older snapshots.
-	for (var/obj/item/I in H.get_equipped_items(TRUE))
-		if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer) || istype(I, /obj/item/device/radio/headset))
-			H.drop_from_inventory(I)
+	// Keep one restored PDA/tablet; scrub extras plus stale ID cards and headsets.
+	var/obj/item/modular_computer/kept_pda
+	for (var/obj/item/I in H.GetAllContents())
+		if (istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/modular_computer/tablet))
+			if (!kept_pda)
+				kept_pda = I
+				continue
+			if (I.loc == H)
+				H.drop_from_inventory(I)
+			else
+				I.forceMove(get_turf(H) || H)
+			qdel(I)
+			continue
+		if (istype(I, /obj/item/card/id) || istype(I, /obj/item/device/radio/headset))
+			if (I.loc == H)
+				H.drop_from_inventory(I)
+			else
+				I.forceMove(get_turf(H) || H)
 			qdel(I)
 	if (outfit.l_ear)
 		H.equip_to_slot_or_del(new outfit.l_ear(H), slot_l_ear)
@@ -566,7 +664,10 @@
 		var/obj/item/card/id/W = id_cards[1]
 		rank = W.rank
 		assignment = W.assignment
-	outfit.equip_pda(H, rank, assignment, 0)
+	if (istype(kept_pda))
+		character_persist_bind_id_to_computer(kept_pda, id_cards)
+	else
+		outfit.equip_pda(H, rank, assignment, 0)
 	for (var/id_card in id_cards)
 		H.set_id_info(id_card)
 	if (job.give_psionic_implant_on_join && H.psi)
@@ -586,6 +687,26 @@
 				imp.part = affected
 
 
+/// Puts the primary job ID into a restored PDA/tablet card slot when possible.
+/proc/character_persist_bind_id_to_computer(obj/item/modular_computer/comp, list/id_cards)
+	if (!istype(comp) || !length(id_cards))
+		return
+	var/obj/item/card/id/id = id_cards[1]
+	if (!istype(id) || !istype(comp.card_slot))
+		return
+	if (istype(comp.card_slot.stored_card))
+		qdel(comp.card_slot.stored_card)
+		comp.card_slot.stored_card = null
+	if (id.loc == comp.loc || ismob(id.loc))
+		var/mob/holder = id.loc
+		if (istype(holder))
+			holder.u_equip(id)
+	id.forceMove(comp.card_slot)
+	comp.card_slot.stored_card = id
+	if (isobj(comp))
+		comp.verbs |= /obj/item/stock_parts/computer/card_slot/proc/verb_eject_id
+
+
 /// Full equip_rank path that restores inventory instead of outfit/loadout.
 /proc/character_persist_equip_rank_restoring(mob/living/carbon/human/H, rank, joined_late = 0)
 	if (!istype(H))
@@ -593,9 +714,11 @@
 	var/datum/job/job = SSjobs.get_by_title(rank)
 	var/ckey = character_persist_ckey_of(H)
 	var/slot = character_persist_slot_of(H)
-	var/list/snapshot = character_persist_read(ckey, slot, TRUE)
-	if (!islist(snapshot))
-		snapshot = character_persist_prefs_of(ckey)?.character_persist_snapshot
+	// Prefer RAM snapshot refreshed at copy_to; only hit disk if missing/stale.
+	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
+	var/list/snapshot = prefs?.character_persist_snapshot
+	if (!islist(snapshot) || !odyssey_snapshot_valid(snapshot))
+		snapshot = character_persist_read(ckey, slot, TRUE)
 
 	if (job)
 		if (H.client)
@@ -670,6 +793,7 @@
 		character_persist_equip_job_essentials(H, job, alt_title, H.char_branch, H.char_rank)
 		job.apply_fingerprints(H)
 		job.post_equip_rank(H, alt_title || rank)
+	character_persist_reapply_odyssey_body_extras(H)
 
 	if (istype(H))
 		var/obj/item/organ/external/l_foot = H.get_organ(BP_L_FOOT)

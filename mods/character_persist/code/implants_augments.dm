@@ -129,6 +129,24 @@
 		A.onRoundstart()
 
 
+/// Re-run implant/augment restore after mind.transfer_to (copy_to happens earlier).
+/proc/character_persist_reapply_odyssey_body_extras(mob/living/carbon/human/H)
+	if (!istype(H) || !character_persist_use_odyssey_lane())
+		return
+	var/ckey = character_persist_ckey_of(H)
+	var/slot = character_persist_slot_of(H)
+	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
+	var/list/snapshot = prefs?.character_persist_snapshot
+	if (!islist(snapshot) || !odyssey_snapshot_valid(snapshot))
+		snapshot = character_persist_read(ckey, slot, TRUE)
+	if (!islist(snapshot))
+		return
+	if (islist(snapshot["implants"]))
+		character_persist_apply_implants(H, snapshot["implants"])
+	if (islist(snapshot["augments"]))
+		character_persist_apply_augments(H, snapshot["augments"])
+
+
 /proc/character_persist_apply_implants(mob/living/carbon/human/H, list/entries)
 	if (!istype(H) || !islist(entries))
 		return
@@ -139,8 +157,15 @@
 		if (character_persist_implant_denied(path))
 			continue
 		var/zone = entry["zone"]
-		if (!zone || !H.get_organ(zone))
+		var/obj/item/organ/external/parent = H.get_organ(zone)
+		if (!istype(parent))
 			continue
+		// Replace an already-present copy of the same type in this limb (re-apply after mind transfer).
+		for (var/obj/item/implant/existing in parent.implants.Copy())
+			if (!istype(existing) || existing.type != path)
+				continue
+			parent.implants -= existing
+			qdel(existing)
 		var/obj/item/implant/imp = new path(null)
 		if (QDELETED(imp))
 			continue

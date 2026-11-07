@@ -243,6 +243,81 @@
 	return "[header]\n— [jointext(lines, "\n— ")]"
 
 
+/proc/character_persist_type_name(type_text)
+	var/path = character_persist_safe_resolve_path(type_text)
+	if (!ispath(path, /atom))
+		return "[type_text]"
+	var/atom/prototype = path
+	return initial(prototype.name) || "[type_text]"
+
+
+/// Full exam from a saved body snapshot. Same wording as the end-of-shift note, without a live mob.
+/proc/character_persist_snapshot_med_lines(list/snapshot)
+	var/list/lines = list()
+	if (!islist(snapshot) || !islist(snapshot["organs"]))
+		lines += "нет данных осмотра"
+		return lines
+	var/list/organs = snapshot["organs"]
+	for (var/name in BP_BY_DEPTH)
+		var/list/entry = organs[name]
+		if (!islist(entry))
+			continue
+		var/label = character_persist_organ_label(name)
+		if (entry["status"] == "amputated")
+			lines += "ампутация: [label]"
+			continue
+		if (entry["status"] == "cyborg")
+			lines += "протез: [label][entry["model"] ? " ([entry["model"]])" : ""]"
+		if (entry["broken"])
+			lines += "перелом: [label]"
+		if (entry["disfigured"])
+			lines += "обезображивание: [label]"
+		var/brute = character_persist_num(entry["brute"])
+		var/burn = character_persist_num(entry["burn"])
+		if (brute >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE || burn >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+			lines += "повреждения [label]: [character_persist_brute_words(brute, 0)], [character_persist_burn_words(burn, 0)]"
+	var/list/internals = snapshot["internals"]
+	if (islist(internals))
+		for (var/tag in internals)
+			var/list/entry = internals[tag]
+			if (!islist(entry))
+				continue
+			var/label = character_persist_organ_label(tag)
+			if (entry["status"] == "missing")
+				lines += "отсутствует орган: [label]"
+				continue
+			if (entry["status"] == "mechanical")
+				lines += "механический орган: [label]"
+			else if (entry["status"] == "assisted")
+				lines += "ассистированный орган: [label]"
+			var/damage = character_persist_num(entry["damage"])
+			if (damage >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+				lines += "повреждения [label]: [character_persist_brute_words(damage, 0)]"
+	if (islist(snapshot["augments"]))
+		for (var/list/entry in snapshot["augments"])
+			if (!islist(entry))
+				continue
+			var/name = character_persist_type_name(entry["type"])
+			var/where = character_persist_organ_label(entry["parent_organ"] || entry["organ_tag"])
+			lines += "аугмент: [name] ([where])"
+			var/damage = character_persist_num(entry["damage"])
+			if (damage >= CHARACTER_PERSIST_MED_DAMAGE_NOTICE)
+				lines += "повреждения [name]: [character_persist_brute_words(damage, 0)]"
+	if (islist(snapshot["implants"]))
+		for (var/list/entry in snapshot["implants"])
+			if (!islist(entry))
+				continue
+			var/name = character_persist_type_name(entry["type"])
+			var/where = character_persist_organ_label(entry["zone"])
+			lines += "имплант: [name] ([where])"
+	var/status = snapshot["physical_status"]
+	if (status && status != GLOB.default_physical_status)
+		lines += "состояние: [character_persist_status_label(status)]"
+	if (!length(lines))
+		lines += "клинически значимых травм, протезов, аугментов и имплантов нет"
+	return lines
+
+
 /proc/character_persist_med_baseline(mob/living/carbon/human/H)
 	var/list/lines = list()
 	for (var/name in BP_BY_DEPTH)

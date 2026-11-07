@@ -4,16 +4,29 @@
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/list/live_ids = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		for (var/obj/machinery/M in T)
-			if (QDELETED(M) || M.loc != T || !odyssey_machinery_whitelisted(M))
-				continue
-			var/id = M.odyssey_persist_id || odyssey_assign_runtime_id(M)
-			live_ids[id] = TRUE
-			var/list/baseline = state.machinery_baseline?[id]
-			var/list/entry = odyssey_machinery_entry(M, baseline)
-			if (entry)
-				entries += list(entry)
+		odyssey_collect_machinery_turf(T, entries, live_ids, state)
 		CHECK_TICK
+	odyssey_finish_machinery_destroyed(entries, live_ids, state)
+	return entries
+
+
+/proc/odyssey_collect_machinery_turf(turf/T, list/entries, list/live_ids, datum/odyssey_state/state)
+	if (!istype(T) || !islist(entries) || !islist(live_ids))
+		return
+	for (var/obj/machinery/M in T)
+		if (QDELETED(M) || M.loc != T || !odyssey_machinery_whitelisted(M))
+			continue
+		var/id = M.odyssey_persist_id || odyssey_assign_runtime_id(M)
+		live_ids[id] = TRUE
+		var/list/baseline = state?.machinery_baseline?[id]
+		var/list/entry = odyssey_machinery_entry(M, baseline)
+		if (entry)
+			entries += list(entry)
+
+
+/proc/odyssey_finish_machinery_destroyed(list/entries, list/live_ids, datum/odyssey_state/state)
+	if (!islist(entries) || !islist(live_ids) || !istype(state))
+		return
 	for (var/id in state.machinery_baseline)
 		if (!live_ids[id])
 			entries += list(list("id" = id, "action" = "destroyed"))
@@ -37,8 +50,20 @@
 	if (istype(M, /obj/machinery/door/airlock))
 		airlock_state = odyssey_airlock_state(M)
 	var/list/fabricator_materials
+	var/list/fab_disk
+	var/list/fab_disk2
 	if (istype(M, /obj/machinery/fabricator))
-		fabricator_materials = odyssey_fabricator_materials_state(M)
+		var/obj/machinery/fabricator/F = M
+		fabricator_materials = odyssey_fabricator_materials_state(F)
+		fab_disk = odyssey_serialize_portable_drive(F.disk)
+		fab_disk2 = odyssey_serialize_portable_drive(F.disk2)
+	var/list/computer_programs
+	var/list/console_drive
+	if (istype(M, /obj/machinery/computer/modular))
+		var/obj/machinery/computer/modular/console = M
+		computer_programs = odyssey_serialize_modular_computer_programs(console)
+		if (istype(console.portable_drive))
+			console_drive = odyssey_serialize_portable_drive(console.portable_drive)
 	var/list/fridge_items
 	var/is_chem_fridge = istype(M, /obj/machinery/smartfridge) && odyssey_smartfridge_chemistry_persistable(M)
 	if (is_chem_fridge)
@@ -67,7 +92,8 @@
 		|| islist(airlock_state) || islist(fabricator_materials) || is_chem_fridge \
 		|| islist(anomaly_state) || islist(artifact_state) \
 		|| islist(smes_state) || islist(shield_state) || islist(cryo_state) \
-		|| islist(portable_state)
+		|| islist(portable_state) || islist(fab_disk) || islist(fab_disk2) \
+		|| islist(computer_programs) || islist(console_drive)
 	if (!changed)
 		return null
 	var/list/entry = odyssey_base_object_entry(M)
@@ -86,6 +112,14 @@
 		entry["airlock"] = airlock_state
 	if (islist(fabricator_materials))
 		entry["stored_material"] = fabricator_materials
+	if (islist(fab_disk))
+		entry["fab_disk"] = fab_disk
+	if (islist(fab_disk2))
+		entry["fab_disk2"] = fab_disk2
+	if (islist(computer_programs))
+		entry["computer_programs"] = computer_programs
+	if (islist(console_drive))
+		entry["console_drive"] = console_drive
 	if (is_chem_fridge)
 		entry["fridge_items"] = fridge_items || list()
 	if (islist(anomaly_state))
@@ -502,6 +536,147 @@
 		if (isnum(capacity) && capacity > 0)
 			amount = min(amount, capacity)
 		F.stored_material[mat] = amount
+
+
+/proc/odyssey_serialize_hdd_files(obj/item/stock_parts/computer/hard_drive/HDD)
+	var/list/files = list()
+	if (!istype(HDD))
+		return files
+	for (var/datum/computer_file/F in HDD.stored_files)
+		if (!istype(F) || F.undeletable)
+			continue
+		if (istype(F, /datum/computer_file/program))
+			files += list(list(
+				"kind" = "program",
+				"type" = "[F.type]",
+				"filename" = F.filename
+			))
+			continue
+		if (istype(F, /datum/computer_file/binary/design))
+			var/datum/computer_file/binary/design/DF = F
+			if (!DF.design)
+				continue
+			if (DF.design.reverse_engineered)
+				var/list/payload = odyssey_rnd_serialize_re_design(DF.design)
+				if (islist(payload))
+					files += list(list(
+						"kind" = "re_design",
+						"filename" = F.filename,
+						"design" = payload
+					))
+				continue
+			files += list(list(
+				"kind" = "design",
+				"filename" = F.filename,
+				"id" = "[DF.design.id]"
+			))
+	return files
+
+
+/proc/odyssey_apply_hdd_files(obj/item/stock_parts/computer/hard_drive/HDD, list/files)
+	if (!istype(HDD) || !islist(files))
+		return
+	var/was_ro = HDD.read_only
+	HDD.read_only = FALSE
+	var/list/kept = list()
+	for (var/datum/computer_file/F in HDD.stored_files)
+		if (istype(F) && F.undeletable)
+			kept += F
+	HDD.stored_files = kept
+	HDD.recalculate_size()
+	for (var/entry in files)
+		if (!islist(entry))
+			continue
+		var/list/file_entry = entry
+		var/kind = file_entry["kind"]
+		if (kind == "program")
+			var/prog_path = odyssey_resolve_path(file_entry["type"])
+			if (!ispath(prog_path, /datum/computer_file/program))
+				continue
+			var/datum/computer_file/program/P = new prog_path()
+			if (file_entry["filename"])
+				P.filename = file_entry["filename"]
+			HDD.create_file(P)
+			continue
+		if (kind == "design")
+			var/datum/design/D = odyssey_rnd_find_catalog_design(file_entry["id"])
+			if (!D?.file)
+				continue
+			var/datum/computer_file/binary/design/DF = D.file.clone()
+			if (file_entry["filename"])
+				DF.filename = file_entry["filename"]
+			HDD.create_file(DF)
+			continue
+		if (kind == "re_design")
+			var/datum/design/RE = odyssey_rnd_restore_re_design(file_entry["design"])
+			if (!istype(RE) || !RE.file)
+				continue
+			var/datum/computer_file/binary/design/DF = RE.file.clone()
+			if (file_entry["filename"])
+				DF.filename = file_entry["filename"]
+			HDD.create_file(DF)
+	HDD.read_only = was_ro
+
+
+/proc/odyssey_serialize_portable_drive(obj/item/stock_parts/computer/hard_drive/portable/D)
+	if (!istype(D))
+		return null
+	return list(
+		"type" = "[D.type]",
+		"name" = D.name,
+		"read_only" = !!D.read_only,
+		"files" = odyssey_serialize_hdd_files(D)
+	)
+
+
+/proc/odyssey_apply_portable_drive_slot(obj/machinery/fabricator/F, slot, list/data)
+	if (!istype(F) || !islist(data))
+		return
+	var/obj/item/stock_parts/computer/hard_drive/portable/existing
+	if (slot == 2)
+		existing = F.disk2
+	else
+		existing = F.disk
+	if (istype(existing))
+		qdel(existing)
+		if (slot == 2)
+			F.disk2 = null
+		else
+			F.disk = null
+	var/path = odyssey_resolve_path(data["type"])
+	if (!ispath(path, /obj/item/stock_parts/computer/hard_drive/portable))
+		path = /obj/item/stock_parts/computer/hard_drive/portable
+	var/obj/item/stock_parts/computer/hard_drive/portable/D = new path(F)
+	if (data["name"])
+		D.SetName(data["name"])
+	if (!isnull(data["read_only"]))
+		D.read_only = !!data["read_only"]
+	odyssey_apply_hdd_files(D, data["files"])
+	if (slot == 2)
+		F.disk2 = D
+	else
+		F.disk = D
+
+
+/proc/odyssey_serialize_modular_computer_programs(obj/machinery/computer/modular/C)
+	if (!istype(C))
+		return null
+	var/obj/item/stock_parts/computer/hard_drive/HDD = C.get_component_of_type(/obj/item/stock_parts/computer/hard_drive)
+	if (!istype(HDD))
+		return null
+	var/list/files = odyssey_serialize_hdd_files(HDD)
+	if (!length(files))
+		return null
+	return files
+
+
+/proc/odyssey_apply_modular_computer_programs(obj/machinery/computer/modular/C, list/files)
+	if (!istype(C) || !islist(files))
+		return
+	var/obj/item/stock_parts/computer/hard_drive/HDD = C.get_component_of_type(/obj/item/stock_parts/computer/hard_drive)
+	if (!istype(HDD))
+		return
+	odyssey_apply_hdd_files(HDD, files)
 
 
 /proc/odyssey_serialize_smes(obj/machinery/power/smes/S)
@@ -954,6 +1129,8 @@
 	var/obj/machinery/M = odyssey_find_machine_by_id(entry["id"])
 	if (!M)
 		return FALSE
+	if (!odyssey_atom_persistable(M))
+		return FALSE
 	odyssey_index_remove(odyssey_ensure_state().persist_index_machinery, entry["id"])
 	qdel(M)
 	return TRUE
@@ -963,7 +1140,7 @@
 	if (!islist(entry) || entry["action"] == "destroyed")
 		return FALSE
 	var/turf/T = odyssey_locate_turf(entry)
-	if (!T)
+	if (!T || !odyssey_turf_persistable(T))
 		return FALSE
 	var/path = odyssey_resolve_path(entry["type"])
 	if (!ispath(path, /obj/machinery))
@@ -1010,8 +1187,17 @@
 			M.set_broken(want, cause)
 	if (istype(M, /obj/machinery/door/airlock) && islist(entry["airlock"]))
 		odyssey_apply_airlock_state(M, entry["airlock"])
-	if (istype(M, /obj/machinery/fabricator) && islist(entry["stored_material"]))
-		odyssey_apply_fabricator_materials(M, entry["stored_material"])
+	if (istype(M, /obj/machinery/fabricator))
+		if (islist(entry["stored_material"]))
+			odyssey_apply_fabricator_materials(M, entry["stored_material"])
+		if (islist(entry["fab_disk"]))
+			odyssey_apply_portable_drive_slot(M, 1, entry["fab_disk"])
+		if (islist(entry["fab_disk2"]))
+			odyssey_apply_portable_drive_slot(M, 2, entry["fab_disk2"])
+	if (istype(M, /obj/machinery/computer/modular) && islist(entry["computer_programs"]))
+		odyssey_apply_modular_computer_programs(M, entry["computer_programs"])
+	if (istype(M, /obj/machinery/computer/modular) && islist(entry["console_drive"]))
+		odyssey_apply_console_portable_drive(M, entry["console_drive"])
 	if (istype(M, /obj/machinery/smartfridge) && ("fridge_items" in entry))
 		odyssey_apply_smartfridge_items(M, entry["fridge_items"])
 	if (istype(M, /obj/machinery/anomaly_container) && islist(entry["anomaly"]))

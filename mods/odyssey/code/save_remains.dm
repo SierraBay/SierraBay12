@@ -111,13 +111,19 @@
 /proc/odyssey_collect_remains()
 	var/list/entries = list()
 	for (var/turf/T in odyssey_get_persistable_turfs())
-		odyssey_collect_organs_from(T, entries)
-		for (var/obj/structure/closet/C in T)
-			odyssey_collect_organs_from(C, entries)
-		for (var/obj/structure/morgue/M in T)
-			odyssey_collect_organs_from(M, entries)
+		odyssey_collect_remains_turf(T, entries)
 		CHECK_TICK
 	return entries
+
+
+/proc/odyssey_collect_remains_turf(turf/T, list/entries)
+	if (!istype(T) || !islist(entries))
+		return
+	odyssey_collect_organs_from(T, entries)
+	for (var/obj/structure/closet/C in T)
+		odyssey_collect_organs_from(C, entries)
+	for (var/obj/structure/morgue/M in T)
+		odyssey_collect_organs_from(M, entries)
 
 
 /proc/odyssey_strip_organs_from(atom/container)

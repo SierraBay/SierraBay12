@@ -154,18 +154,61 @@
 /proc/odyssey_slot_locked(player_ckey, slot)
 	if (!player_ckey || !slot)
 		return FALSE
-	var/key = odyssey_roster_key(player_ckey, slot)
+	// Only while an Odyssey round is actually running — do not block normal rounds
+	// just because campaign meta/roster on disk still mark the slot dead.
 	var/datum/odyssey_state/state = odyssey_ensure_state()
-	var/list/entry
-	if (state.active && state.campaign_id)
-		entry = state.roster?[key]
-	else
-		var/list/meta = odyssey_load_meta()
-		if (!islist(meta) || !meta["active"] || (meta["status"] && meta["status"] != ODYSSEY_STATUS_ACTIVE))
-			return FALSE
-		var/list/roster = odyssey_load_roster()
-		entry = roster[key]
+	if (!state.active || !state.campaign_id)
+		return FALSE
+	var/list/entry = state.roster?[odyssey_roster_key(player_ckey, slot)]
 	return islist(entry) && entry["status"] == "dead"
+
+
+/proc/odyssey_roster_key_of_human(mob/living/carbon/human/H)
+	if (!istype(H))
+		return null
+	var/player_ckey = character_persist_ckey_of(H)
+	var/slot = character_persist_slot_of(H)
+	if (player_ckey && slot)
+		return odyssey_roster_key(player_ckey, slot)
+	if (istext(H.odyssey_corpse_key) && findtext(H.odyssey_corpse_key, "|"))
+		return H.odyssey_corpse_key
+	return null
+
+
+/// Same-round defibrillator, clone or admin revive. The death chronicle line stays.
+/proc/odyssey_mark_character_alive(mob/living/carbon/human/H)
+	var/datum/odyssey_state/state = odyssey_ensure_state()
+	if (!state.active || !istype(H) || H.stat == DEAD)
+		return FALSE
+	var/key = odyssey_roster_key_of_human(H)
+	if (!key)
+		return FALSE
+	var/list/entry = state.roster?[key]
+	if (!islist(entry) || entry["status"] != "dead")
+		return FALSE
+	var/char_name = entry["name"] || H.real_name || key
+	entry["status"] = "alive"
+	entry["death_shift"] = null
+	entry["death_reason"] = null
+	entry["died_at"] = null
+	state.roster[key] = entry
+	odyssey_admin_restore_antags_after_revive(key)
+	if (state.save_generation)
+		odyssey_write_json(odyssey_snapshot_path("roster", state.save_generation), list(
+			"version" = ODYSSEY_VERSION,
+			"campaign_id" = state.campaign_id,
+			"generation" = state.save_generation,
+			"entries" = state.roster
+		))
+	odyssey_chronicle_append(
+		ODYSSEY_CHRONICLE_KIND_DEATH,
+		"Возвращение",
+		"[char_name] снова среди живых.",
+		ODYSSEY_CHRONICLE_VIS_COMMAND,
+		list("shift" = state.shift_number, "name" = char_name)
+	)
+	log_game("ODYSSEY: character revived key=[key] name=[char_name] shift=[state.shift_number]")
+	return TRUE
 
 
 /// Admin: clear Odyssey death tombstone so the same ckey|slot can join again.
