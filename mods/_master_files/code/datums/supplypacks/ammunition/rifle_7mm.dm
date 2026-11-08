@@ -12,9 +12,15 @@
 	containername = "7.62 rifle blank rounds (WARNING: LIVE AMMUNITION)"
 
 /singleton/hierarchy/supply_pack/ammunition/r7_heavy_mag
-	name = "Magazines - 7.62 heavy rifle, 6x"
-	containername = "7.62 heavy rifle magazines"
+	name = "Magazines - 7.62 rifle, 6x"
+	containername = "7.62 rifle magazines"
 
+// The mod stops the light magazine, see mods/combat_extended/code/items/guns/magazines.dm. Only
+// a hacked console shows this pack. Only a core edit can remove a pack, so this one sells the
+// standard magazine.
 /singleton/hierarchy/supply_pack/ammunition/r7_light_mag
-	name = "Magazines - 7.62 light rifle, 6x"
-	containername = "7.62 light rifle magazines"
+	name = "Magazines - 7.62 rifle, 6x"
+	contains = list(
+		/obj/item/ammo_magazine/mil_rifle/heavy/empty = 6
+	)
+	containername = "7.62 rifle magazines"

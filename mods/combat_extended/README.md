@@ -125,7 +125,7 @@ ID мода: COMBAT_EXTENDED
 - Калибры названы по реальным патронам: 10mm Auto, 9x19mm, .44 Magnum, 5.7x28mm, 5.56, 7.62,
   14.5x114mm, 13mm Gyrojet.
 - Новые спрайты гильз, магазинов и коробок от Honkemo. Цвет метки показывает тип патрона.
-- Новые типы патронов: бронебойные (AP) и экспансивные (HP). Пока их выдаёт только меню спавна.
+- Новые типы патронов: бронебойные (AP) и экспансивные (HP).
 - AP пробивает на тир брони выше своего FMJ, HP на тир ниже.
 - Пересчитаны числа: нульглас, флешетта 12g, 9x19 AP, менстоппер, оба 7.62x39, APDS.
 - Стальное холодное оружие получает прибавку к пробитию от материала.
@@ -287,6 +287,8 @@ ID мода: COMBAT_EXTENDED
 
 - `baystation12.dme`: строки `#include` для файлов мода из `_master_files` и для
   `code/__defines/~mods/combat_extended.dm`.
+- `code/modules/client/asset_cache.dm`: `/datum/asset/nanoui/register()`, иконка дизайна берётся
+  со спрайта `ui_sample`.
 - `code/modules/reagents/reagent_containers/syringes.dm`: `syringestab()`, бросок на отскок от
   брони заменён на `ce_fail_stab()`.
 - `code/modules/mob/living/living_defense.dm`: `bullet_act()`, доля блока для `on_hit()` из
@@ -313,6 +315,13 @@ ID мода: COMBAT_EXTENDED
 - `mods/mechs_by_shegar`: внешние бронеэлементы, встроенная броня, сторона попадания после брони,
   сумки в аплинке, пассажиры, обломки, случайный мех, параметры клика для орудий меха.
 - `mods/RnD`: три дизайна бронеэлементов вместо четырёх дизайнов внутренних бронеплит.
+- `mods/RnD/code/designs_autolathe/designs_arms_ammo.dm`: дизайны коробок патронов, имена дизайнов
+  магазинов. Удалены дизайны резиновых магазинов, магазина 9x19 AP и лёгкого магазина 7.62x39.
+- `mods/RnD/code/designs_autolathe/disks.dm`: диски "Arms and Ammo Designs" и "NanoTrasen Asset
+  Protection Designs" по калибрам, коробки после магазинов.
+- `mods/RnD/code/_designs.dm`: `take_item_sample()` и `ui_sample` у дизайна автолата.
+- `mods/RnD/code/program/design.dm`: `set_filename()` меняет точку и запятую в имени файла
+  дизайна на `_`.
 - `mods/rocket_launchers/code/rockets.dm`: `on_hit()`, дальность взведения до клетки цели.
 - `mods/hardsuits/code/module_override.dm`: `use_tool()` РИГа, полив хладагентом и починка хламом.
 - `mods/antagonists/code/uplink.dm`, `mods/RnD/code/designs_autolathe/designs_arms_ammo.dm`:
@@ -374,6 +383,9 @@ ID мода: COMBAT_EXTENDED
 - Названия калибров: `datums/supplypacks/ammunition/`, `datums/uplink/ammunition.dm`,
   `datums/uplink/highly_visible_and_dangerous_weapons.dm`,
   `modules/research/designs/designs_weapon.dm`, `modules/projectiles/guns/projectile/automatic.dm`.
+- `datums/uplink/ammunition.dm`: `/rifle` продаёт магазин STS-35, `/bullpup` без "heavy".
+- `datums/supplypacks/ammunition/rifle_7mm.dm`: скрытый пак `r7_light_mag` продаёт обычный
+  магазин.
 
 Оверрайды в самом моде:
 

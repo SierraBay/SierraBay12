@@ -1,7 +1,7 @@
 /*
 	COMBAT_EXTENDED: бронебойные (AP) патроны 7.62x39. Снаряд, гильза и коробка россыпи. HP
 	винтовкам нет: так задумано, спрайтов под него нет. Как подобраны числа: README, "Патроны FMJ,
-	AP и HP". Где взять в игре: пока нигде.
+	AP и HP".
 */
 
 /obj/item/projectile/bullet/rifle/military_standard/ap

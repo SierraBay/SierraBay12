@@ -40,6 +40,38 @@
 /obj/item/ammo_magazine/mil_rifle
 	icon = CE_AMMO_ICON
 
+/*
+	No player source gives the light 7.62x39 magazine now. It held 14 low-power rounds, the
+	heavy one holds 18 standard rounds, and the cost is the same. All 7.62x39 rifles take both.
+	The light types stay for admins. The one magazine left has no "heavy" label. The low-power
+	rounds stay: their crate is cheaper.
+*/
+
+/obj/item/ammo_magazine/mil_rifle/heavy
+	labels = null
+
+/obj/item/ammo_magazine/mil_rifle/heavy/practice
+	labels = list("practice")
+
+/obj/item/gun/projectile/automatic/bullpup_rifle/light
+	magazine_type = /obj/item/ammo_magazine/mil_rifle/heavy
+
+/obj/item/storage/box/ammo/heavy_bullpup
+	name = "box of bullpup magazines"
+
+// The ERT ship map places this box.
+/obj/item/storage/box/ammo/light_bullpup
+	name = "box of bullpup magazines"
+	startswith = list(/obj/item/ammo_magazine/mil_rifle/heavy = 6)
+
+/datum/fabricator_recipe/arms_ammo/hidden/magazine_bullpupheavy
+	name = "ammunition (bullpup rifle)"
+
+// SSfabrication skips a recipe with no name. Without a path, New() gives it no name.
+/datum/fabricator_recipe/arms_ammo/hidden/magazine_bullpuplight
+	name = null
+	path = null
+
 /obj/item/ammo_magazine/rifle/mech_machinegun
 	icon = 'icons/obj/weapons/ammo.dmi'
 

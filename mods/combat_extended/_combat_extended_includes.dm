@@ -65,6 +65,7 @@
 #include "code/items/guns/darts.dm"
 #include "code/items/guns/magazines.dm"
 #include "code/items/guns/payload_rounds.dm"
+#include "code/items/guns/printed_ammo.dm"
 #include "code/items/makeshift/armor_plate.dm"
 #include "code/items/medical/injectors.dm"
 #include "code/items/melee/parrying.dm"

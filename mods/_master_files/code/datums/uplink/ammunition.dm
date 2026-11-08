@@ -8,12 +8,16 @@
 /datum/uplink_item/item/ammo/speedloader
 	desc = "A 10mm Auto speedloader for standard revolvers like the Lumoco Solid. Contains 6 rounds."
 
-// Core defines /rifle twice, the light bullpup magazine wins
+// Core defines /rifle twice, and the light bullpup magazine replaced the STS-35 magazine.
+// The mod stops the light magazine, so /rifle sells the STS-35 magazine again.
 /datum/uplink_item/item/ammo/rifle
-	desc = "A 7.62 magazine for light bullpup assault rifles like the Z9 Pitbull. Contains 20 rounds."
+	name = "Rifle Magazine"
+	desc = "A 5.56 magazine for assault rifles like the STS-35. Contains 20 rounds."
+	path = /obj/item/ammo_magazine/rifle
 
 /datum/uplink_item/item/ammo/bullpup
-	desc = "A 7.62 magazine for heavy bullpup assault rifles like the Z8 Bulldog. Contains 15 rounds."
+	name = "Bullpup Rifle Magazine"
+	desc = "A 7.62 magazine for bullpup assault rifles like the Z8 Bulldog and the Z9 Pitbull. Contains 18 rounds."
 
 /datum/uplink_item/item/ammo/machine_pistol
 	desc = "A 10mm Auto magazine for standard machine pistols like the MP6 Vesper. Contains 16 rounds."

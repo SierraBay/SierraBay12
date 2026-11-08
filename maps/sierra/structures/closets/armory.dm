@@ -6,8 +6,8 @@
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/z9/WillContain()
 	return list(/obj/item/gun/projectile/automatic/bullpup_rifle/light = 2,
-				/obj/item/ammo_magazine/mil_rifle/light = 6,
-				/obj/item/ammo_magazine/mil_rifle/light/practice = 2)
+				/obj/item/ammo_magazine/mil_rifle/heavy = 6,
+				/obj/item/ammo_magazine/mil_rifle/heavy/practice = 2)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun
 	name = "shotgun guncabinet"

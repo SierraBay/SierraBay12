@@ -1,7 +1,6 @@
 /*
 	COMBAT_EXTENDED: бронебойные (AP) и экспансивные (HP) патроны .44 Magnum. Снаряд, гильза и
-	коробка россыпи. Как подобраны числа: README, "Патроны FMJ, AP и HP". Где взять в игре: пока
-	нигде.
+	коробка россыпи. Как подобраны числа: README, "Патроны FMJ, AP и HP".
 */
 
 /obj/item/projectile/bullet/pistol/strong/ap
@@ -35,8 +34,8 @@
 	ce_ammo_color = CE_AMMO_COLOR_HP
 	ce_box_sprite = "15mmP_hp"
 
-/obj/item/ammobox/pistol/magnum_ap
+/obj/item/ammobox/magnum/ap
 	ammo_type = /obj/item/ammo_casing/pistol/magnum/ap
 
-/obj/item/ammobox/pistol/magnum_hp
+/obj/item/ammobox/magnum/hp
 	ammo_type = /obj/item/ammo_casing/pistol/magnum/hp

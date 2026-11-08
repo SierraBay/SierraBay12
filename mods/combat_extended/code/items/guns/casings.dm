@@ -6,10 +6,11 @@
 	"Числа предметов".
 
 	Гильза калибра задаёт `icon`, `icon_state`, `spent_icon`, `ce_sprite_caliber`, цвет FMJ и коробку.
-	Подтип без своего спрайта (`ce_tinted_tip`) лежит на спрайте FMJ своего калибра с кончиком в свой
-	цвет, и своей коробки у него нет: `ce_box_sprite` сброшен. Кор задаёт таким подтипам свои
-	`icon_state` из кор файла, поэтому FMJ им прописан заново. Цвета, которые ещё не выбраны:
-	`CE_AMMO_COLOR_UNCHOSEN`.
+	A subtype with no sprite of its own (`ce_tinted_tip`) shows the FMJ sprite of its caliber with
+	the tip in its color. The core gives these subtypes an `icon_state` from the core file, so they
+	set the FMJ state again. A tinted subtype has no box of its own. The rubber 10mm Auto and 9x19
+	rounds show the FMJ box with the tips in their color (`<caliber>_tip`). The other tinted
+	subtypes clear `ce_box_sprite`. Colors that nobody chose yet: `CE_AMMO_COLOR_UNCHOSEN`.
 
 	Патроны 12g остаются на кор спрайтах. Здесь у них только коробка. У типа без своей коробки она
 	общая, `12g_base`, со слоем патронов `12g_shells` в цвет типа. Сборный патрон из `shell-base`,
@@ -32,7 +33,7 @@
 	icon_state = "10mm_fmj"
 	ce_tinted_tip = TRUE
 	ce_ammo_color = CE_AMMO_COLOR_RUBBER
-	ce_box_sprite = null
+	ce_box_tint_sprite = "10mm_tip"
 
 /obj/item/ammo_casing/pistol/practice
 	icon_state = "10mm_fmj"
@@ -51,7 +52,7 @@
 	icon_state = "7mm_fmj"
 	ce_tinted_tip = TRUE
 	ce_ammo_color = CE_AMMO_COLOR_RUBBER
-	ce_box_sprite = null
+	ce_box_tint_sprite = "7mm_tip"
 
 /obj/item/ammo_casing/pistol/small/practice
 	icon_state = "7mm_fmj"

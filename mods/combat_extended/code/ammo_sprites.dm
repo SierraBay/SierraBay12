@@ -12,9 +12,13 @@
 	  верхнего патрона, а пустой в цвет патрона, которым он снаряжается. Метка заменяет полосы резины
 	  и учебных, которые кор `on_update_icon()` перечисляет по типам и берёт по `ammo_type`, а не по
 	  тому, что в магазине лежит.
-	- Коробка россыпи показывает коробку своего типа патрона (`ce_box_sprite`) с кадром наполнения по
-	  доле `ammo_count / ammo_max`. Опустев, она остаётся коробкой последнего типа. Тип без своей
-	  коробки и стреляные гильзы лежат в кор коробке `ammo`.
+	- An ammo box shows the box of its round type (`ce_box_sprite`). The fill frame comes from
+	  `ammo_count / ammo_max`. An empty box keeps the box of the last type. A type with no box and
+	  spent casings use the core `ammo` box.
+	- A type with no box of its own can use the box of another type with a layer in its color
+	  (`ce_box_tint_sprite`): the rubber 10mm box is the FMJ box with the round tips in the rubber
+	  color. The layer is part of the box icon, not an overlay, because the fabricator UI shows
+	  only `icon` and `icon_state`.
 
 	Какой гильзе, магазину и коробке какой спрайт: `code/items/guns/casings.dm` и
 	`code/items/guns/magazines.dm`. Цвета: `code/__defines/~mods/combat_extended.dm`.
@@ -24,18 +28,19 @@
 	/// Метка калибра в именах спрайтов `ce_ammo.dmi`: "10mm" у `10mm_fmj`, `10mm_tip`, `10mm-spent`.
 	/// Просто метка, из `caliber` не собирается. null: у гильзы кор спрайт.
 	var/ce_sprite_caliber
-	/// Цвет типа патрона: кончик типа без своего спрайта, корпус патрона 12g, метка магазина, слой
-	/// коробки 12g.
+	/// The color of the round type: the tip of a type with no sprite of its own, the hull of a 12g
+	/// shell, the magazine mark and the box layer (`ce_box_tint_sprite`).
 	var/ce_ammo_color
 	/// Второй цвет двухцветных типов (AP-I, AP-HE): задняя половина кончика, поясок патрона 12g.
 	var/ce_ammo_color_2
 	/// У типа нет своего спрайта: он показан спрайтом FMJ с кончиком в свой цвет, патрон 12g собран
 	/// из частей.
 	var/ce_tinted_tip = FALSE
-	/// Коробка россыпи этого типа в `ce_ammo_boxes.dmi` без кадра наполнения: "10mm_fmj", "12g_slug",
-	/// "14mmR". null: кор коробка `ammo`.
+	/// The ammo box of this type in `ce_ammo_boxes.dmi`, with no fill frame: "10mm_fmj", "12g_slug",
+	/// "14mmR". Null: the core `ammo` box.
 	var/ce_box_sprite
-	/// Слой коробки в цвет типа поверх `ce_box_sprite`, с тем же кадром: "12g_shells".
+	/// A gray layer in `ce_ammo_boxes.dmi` that goes on `ce_box_sprite` in `ce_ammo_color`, with no
+	/// fill frame: "12g_shells", "10mm_tip". It must have the same fill frames as `ce_box_sprite`.
 	var/ce_box_tint_sprite
 
 
@@ -128,10 +133,8 @@
 
 
 /obj/item/ammobox
-	/// Тип патрона, чья коробка показана. Остаётся, когда коробка опустела.
+	/// The round type of the box that the box shows. It stays when the box becomes empty.
 	var/obj/item/ammo_casing/ce_shown_ammo_type
-	/// Слой в цвет типа, который сейчас лежит на коробке.
-	var/image/ce_box_tint
 
 
 /obj/item/ammobox/Initialize(mapload)
@@ -155,22 +158,19 @@
 /obj/item/ammobox/on_update_icon()
 	if(ammo_type)
 		ce_shown_ammo_type = ammo_type
-	if(ce_box_tint)
-		CutOverlays(ce_box_tint)
-		ce_box_tint = null
-	var/state = ce_get_box_state(ce_get_box_sprite())
+	var/box_sprite = ce_get_box_sprite()
+	var/state = ce_get_box_state(box_sprite)
 	if(!state)
 		icon = initial(icon)
 		icon_state = initial(icon_state)
 		return
-	icon = CE_AMMO_BOXES_ICON
 	icon_state = state
-	if(!ammo_count)
+	var/tint_sprite = initial(ce_shown_ammo_type.ce_box_tint_sprite)
+	// An empty box has no rounds, so it gets no layer.
+	if(!ammo_count || !tint_sprite)
+		icon = CE_AMMO_BOXES_ICON
 		return
-	var/tint_state = ce_get_box_state(initial(ce_shown_ammo_type.ce_box_tint_sprite))
-	if(tint_state)
-		ce_box_tint = ce_make_ammo_tint(CE_AMMO_BOXES_ICON, tint_state, initial(ce_shown_ammo_type.ce_ammo_color))
-		AddOverlays(ce_box_tint)
+	icon = ce_get_tinted_box_icon(box_sprite, tint_sprite, initial(ce_shown_ammo_type.ce_ammo_color))
 
 
 /// Коробка содержимого без кадра наполнения. null: своей коробки нет, у стреляных гильз тоже.
@@ -229,6 +229,32 @@
 		for(var/state_sprite in frames_by_sprite)
 			sortTim(frames_by_sprite[state_sprite], GLOBAL_PROC_REF(cmp_numeric_asc))
 	return frames_by_sprite[box_sprite]
+
+
+/**
+ * The loaded frames of the box `box_sprite`, each with its frame of the layer `tint_sprite` in the
+ * color `tint_color`. The frames keep the state names of `box_sprite`, so `ce_get_box_state()` finds
+ * them. The proc makes the icon one time for each set of arguments and keeps it as a cache file.
+ */
+/proc/ce_get_tinted_box_icon(box_sprite, tint_sprite, tint_color)
+	var/static/list/icons_by_key = list()
+	var/key = "[box_sprite]:[tint_sprite]:[tint_color]"
+	if(icons_by_key[key])
+		return icons_by_key[key]
+	var/list/tint_frames = ce_get_ammo_box_frames(tint_sprite) || list()
+	var/icon/result = new /icon()
+	for(var/frame in ce_get_ammo_box_frames(box_sprite))
+		if(!frame)
+			continue
+		var/icon/frame_icon = icon(CE_AMMO_BOXES_ICON, "[frame]_[box_sprite]")
+		if(frame in tint_frames)
+			var/icon/tint = icon(CE_AMMO_BOXES_ICON, "[frame]_[tint_sprite]")
+			tint.Blend(tint_color, ICON_MULTIPLY)
+			frame_icon.Blend(tint, ICON_OVERLAY)
+		result.Insert(frame_icon, "[frame]_[box_sprite]")
+	var/cached_icon = fcopy_rsc(result)
+	icons_by_key[key] = cached_icon
+	return cached_icon
 
 
 /// Слой спрайта патрона в цвет типа.
