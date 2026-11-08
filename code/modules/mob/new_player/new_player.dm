@@ -343,6 +343,8 @@
 		return 0
 
 	character = SSjobs.equip_rank(character, job.title, 1)					//equips the human
+	if (ishuman(character))
+		character_persist_latejoin_ensure_inventory(character)
 	SScustomitems.equip_custom_items(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core

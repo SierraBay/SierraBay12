@@ -286,8 +286,9 @@
 /obj/shuttle_landmark/changeling/droppod
 	name = "Unregistered Droppod Nest"
 	landmark_tag = "nav_changeling_droppod"
-	base_area = /area/map_template/changeling_nest/droppod
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+	// Must be the area left behind, not the droppod area. Otherwise vacated turfs stay in the shuttle and the hop out of transit fails.
+	base_turf = /turf/space
+	base_area = /area/space
 
 /obj/shuttle_landmark/changeling/droppod_transit
 	name = "In transit"

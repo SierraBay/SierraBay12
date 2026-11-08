@@ -110,24 +110,30 @@
 	return job_title == locked_job || job_title == CHARACTER_PERSIST_ODYSSEY_CREWMAN_TITLE
 
 
+/proc/character_persist_prefs_for_spawn(mob/living/carbon/human/H)
+	if (istype(H?.client?.prefs))
+		return H.client.prefs
+	return character_persist_prefs_of(character_persist_ckey_of(H) || H?.ckey)
+
+
 /proc/character_persist_should_restore_inventory(mob/living/carbon/human/H)
 	if (!istype(H) || !character_persist_use_odyssey_lane())
 		return FALSE
 	if (character_persist_is_virtual_body(H) || character_persist_is_offstation_antag(H))
 		return FALSE
-	var/ckey = character_persist_ckey_of(H)
-	var/slot = character_persist_slot_of(H)
-	if (!ckey || !slot)
+	var/datum/preferences/prefs = character_persist_prefs_for_spawn(H)
+	if (!prefs?.character_persist)
 		return FALSE
-	var/datum/preferences/prefs = character_persist_prefs_of(ckey)
-	if (!prefs || !prefs.character_persist)
+	var/ckey = character_persist_ckey_of(H) || prefs.client_ckey || H.ckey
+	var/slot = character_persist_slot_of(H) || prefs.default_slot
+	if (!ckey || !slot)
 		return FALSE
 	var/list/snapshot = prefs.character_persist_snapshot
 	if (!islist(snapshot) || !odyssey_snapshot_valid(snapshot))
 		snapshot = character_persist_read(ckey, slot, TRUE)
-	if (!islist(snapshot) || !islist(snapshot["inventory"]))
-		return FALSE
-	if (!length(snapshot["inventory"]))
+		if (islist(snapshot))
+			prefs.character_persist_snapshot = snapshot
+	if (!islist(snapshot) || !islist(snapshot["inventory"]) || !length(snapshot["inventory"]))
 		return FALSE
 	var/datum/odyssey_state/state = odyssey_ensure_state()
 	var/key = odyssey_roster_key(ckey, slot)
@@ -799,5 +805,36 @@
 	SET_BIT(H.hud_updateflag, IMPLOYAL_HUD)
 	SET_BIT(H.hud_updateflag, SPECIALROLE_HUD)
 	H.client?.show_location_blurb(3 SECONDS)
-	log_game("CHARACTER_PERSIST: inventory restore [ckey] slot=[slot] job=[rank] items=[applied]")
+	H.character_persist_inventory_restored = TRUE
+	log_game("CHARACTER_PERSIST: inventory restore [ckey] slot=[slot] job=[rank] late=[joined_late] items=[applied]")
 	return H
+
+
+/// Latejoin can finish the normal job.equip path before the snapshot is ready. Dress from it afterwards.
+/proc/character_persist_latejoin_ensure_inventory(mob/living/carbon/human/H)
+	if (!istype(H) || H.character_persist_inventory_restored)
+		return
+	if (!character_persist_should_restore_inventory(H))
+		return
+	var/datum/preferences/prefs = character_persist_prefs_for_spawn(H)
+	var/ckey = character_persist_ckey_of(H) || prefs?.client_ckey || H.ckey
+	var/slot = character_persist_slot_of(H) || prefs?.default_slot
+	var/list/snapshot = prefs?.character_persist_snapshot
+	if (!islist(snapshot) || !islist(snapshot["inventory"]))
+		snapshot = character_persist_read(ckey, slot, TRUE)
+	if (!islist(snapshot) || !length(snapshot["inventory"]))
+		return
+	for (var/obj/item/I in H.get_equipped_items(TRUE))
+		H.drop_from_inventory(I)
+		if (!QDELETED(I))
+			qdel(I)
+	var/applied = character_persist_apply_inventory(H, snapshot["inventory"])
+	var/datum/job/job = H.mind?.assigned_job || SSjobs.get_by_title(H.job)
+	if (istype(job))
+		var/alt_title = H.mind?.role_alt_title
+		character_persist_equip_job_essentials(H, job, alt_title, H.char_branch, H.char_rank)
+		job.apply_fingerprints(H)
+	character_persist_reapply_odyssey_body_extras(H)
+	H.character_persist_inventory_restored = TRUE
+	to_chat(H, SPAN_NOTICE("Экипировка перенесена с прошлой смены Одиссеи ([applied] предм.)."))
+	log_game("CHARACTER_PERSIST: latejoin inventory restore [ckey] slot=[slot] job=[H.job] items=[applied]")

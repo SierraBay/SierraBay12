@@ -17,3 +17,5 @@
 	var/odyssey_corpse_key
 	/// True while this body was spawned from Odyssey corpse save; skips death persist hooks.
 	var/odyssey_corpse_restored
+	/// True after Odyssey worn inventory was applied this spawn. Stops latejoin from dressing the job outfit over it.
+	var/character_persist_inventory_restored = FALSE
