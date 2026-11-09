@@ -67,6 +67,7 @@
 		D.forceMove(humanoid_gestalt)
 		to_chat(D, SPAN_NOTICE("\The [vote_source] has shaped the gestalt into a humanoid form."))
 	owner.nymphs.Cut()
+	humanoid_gestalt.sync_nymph_expression()
 	var/vote_source_instance_num = vote_source.instance_num
 	spawn
 		var/newname = sanitize(input(humanoid_gestalt, "You have become a humanoid gestalt. Choose a name for yourself.", "Gestalt Name") as null|text, MAX_NAME_LEN)

@@ -26,6 +26,10 @@
 	var/product_type
 	/// If mob, whether players can possess
 	var/possessable = FALSE
+	/// Set when a replicant pod has been spliced with a pigment a nymph should wear.
+	var/nymph_body_pigment = FALSE
+	/// Set when a replicant pod has been spliced with a light preference.
+	var/nymph_uses_ideal_light = FALSE
 
 	var/force_layer
 	var/req_CO2_moles    = 1.0// Moles of CO2 required for photosynthesis.
@@ -640,7 +644,13 @@
 //[SIERRA-REMOVE]/datum/seed/proc/apply_gene(datum/plantgene/gene)
 /datum/seed/proc/apply_gene(datum/computer_file/binary/plantgene/gene) //[SIERRA-ADD]/ RND
 
-	if(!gene || !gene.values || get_trait(TRAIT_IMMUTABLE) > 0) return
+	if(!gene || !gene.values)
+		return FALSE
+	// Replicant pods stay immutable, but a nymph can still express a few genes.
+	if(get_trait(TRAIT_IMMUTABLE) > 0)
+		if(product_type == /mob/living/carbon/alien/diona)
+			return apply_nymph_expression(gene)
+		return FALSE
 
 	// Splicing products has some detrimental effects on yield and lifespan.
 	// We handle this before we do the rest of the looping, as normal traits don't really include lists.
@@ -691,6 +701,76 @@
 		set_trait(trait,gene.values["[trait]"])
 
 	update_growth_stages()
+	return TRUE
+
+// Traits a replicant pod keeps. Yield, icons and pressure tolerance are ignored.
+/datum/seed/proc/nymph_gene_can_apply(datum/computer_file/binary/plantgene/gene)
+	if(!gene || !gene.values)
+		return FALSE
+	if(islist(gene.values["[TRAIT_CHEMS]"]) && length(gene.values["[TRAIT_CHEMS]"]))
+		return TRUE
+	for(var/trait in list(
+		TRAIT_POTENCY, TRAIT_JUICY, TRAIT_STINGS, TRAIT_EXPLOSIVE, TRAIT_CARNIVOROUS,
+		TRAIT_BIOLUM, TRAIT_BIOLUM_COLOUR, TRAIT_PLANT_COLOUR, TRAIT_PRODUCT_COLOUR,
+		TRAIT_LEAVES_COLOUR, TRAIT_FLESH_COLOUR, TRAIT_TELEPORTING,
+		TRAIT_MATURATION, TRAIT_PRODUCTION, TRAIT_SPREAD, TRAIT_ALTER_TEMP,
+		TRAIT_PARASITE, TRAIT_IDEAL_LIGHT, TRAIT_LIGHT_TOLERANCE,
+		TRAIT_PRODUCES_POWER, TRAIT_LARGE
+	))
+		if(!isnull(gene.values["[trait]"]))
+			return TRUE
+	if(islist(gene.values["[TRAIT_EXUDE_GASSES]"]) && length(gene.values["[TRAIT_EXUDE_GASSES]"]))
+		return TRUE
+	if(islist(gene.values["[TRAIT_CONSUME_GASSES]"]) && length(gene.values["[TRAIT_CONSUME_GASSES]"]))
+		return TRUE
+	return FALSE
+
+/datum/seed/proc/apply_nymph_expression(datum/computer_file/binary/plantgene/gene)
+	if(!nymph_gene_can_apply(gene))
+		return FALSE
+
+	var/list/incoming = gene.values["[TRAIT_CHEMS]"]
+	if(islist(incoming))
+		if(!chems)
+			chems = list()
+		for(var/rid in incoming)
+			var/list/chem_profile = incoming[rid]
+			if(islist(chem_profile))
+				chems[rid] = chem_profile.Copy()
+			else
+				chems[rid] = incoming[rid]
+
+	for(var/trait in list(
+		TRAIT_POTENCY, TRAIT_JUICY, TRAIT_STINGS, TRAIT_EXPLOSIVE, TRAIT_CARNIVOROUS,
+		TRAIT_BIOLUM, TRAIT_BIOLUM_COLOUR, TRAIT_PLANT_COLOUR, TRAIT_PRODUCT_COLOUR,
+		TRAIT_LEAVES_COLOUR, TRAIT_FLESH_COLOUR, TRAIT_TELEPORTING,
+		TRAIT_MATURATION, TRAIT_PRODUCTION, TRAIT_SPREAD, TRAIT_ALTER_TEMP,
+		TRAIT_PARASITE, TRAIT_IDEAL_LIGHT, TRAIT_LIGHT_TOLERANCE,
+		TRAIT_PRODUCES_POWER, TRAIT_LARGE
+	))
+		if(!isnull(gene.values["[trait]"]))
+			set_trait(trait, gene.values["[trait]"])
+
+	var/list/exuded = gene.values["[TRAIT_EXUDE_GASSES]"]
+	if(islist(exuded))
+		if(!exude_gasses)
+			exude_gasses = list()
+		for(var/gas in exuded)
+			exude_gasses[gas] = exuded[gas]
+	var/list/consumed = gene.values["[TRAIT_CONSUME_GASSES]"]
+	if(islist(consumed))
+		if(!consume_gasses)
+			consume_gasses = list()
+		for(var/gas in consumed)
+			consume_gasses[gas] = consumed[gas]
+	if(gene.genetype == GENE_ENVIRONMENT)
+		nymph_uses_ideal_light = TRUE
+
+	if(gene.genetype == GENE_PIGMENT)
+		for(var/trait in list(TRAIT_PRODUCT_COLOUR, TRAIT_PLANT_COLOUR, TRAIT_LEAVES_COLOUR, TRAIT_FLESH_COLOUR))
+			if(istext(gene.values["[trait]"]))
+				nymph_body_pigment = TRUE
+	return TRUE
 
 /* mods\RnD\code\xenobot\seedfile.dm overrided
 //Returns a list of the desired trait values.
@@ -804,6 +884,9 @@
 					product.visible_message(SPAN_NOTICE("The pod disgorges \a [product]!"))
 				else
 					product.visible_message(SPAN_NOTICE("\The [product] skitters away!"))
+				if(istype(product, /mob/living/carbon/alien/diona))
+					var/mob/living/carbon/alien/diona/nymph = product
+					nymph.inherit_plant_genome(src)
 				if(possessable)
 					handle_living_product(product)
 					if(istype(product,/mob/living/simple_animal/passive/mushroom)) // Gross.
@@ -815,7 +898,9 @@
 // be put into the global datum list until the product is harvested, though.
 /datum/seed/proc/diverge(modified)
 
-	if(get_trait(TRAIT_IMMUTABLE) > 0) return
+	// Replicant pods may branch so a spliced line does not rewrite every pod on the station.
+	if(get_trait(TRAIT_IMMUTABLE) > 0 && product_type != /mob/living/carbon/alien/diona)
+		return
 
 	//Set up some basic information.
 	var/datum/seed/new_seed = new
@@ -823,6 +908,7 @@
 	new_seed.uid =              0
 	new_seed.roundstart =       0
 	new_seed.can_self_harvest = can_self_harvest
+	new_seed.possessable = possessable
 	new_seed.kitchen_tag =      kitchen_tag
 	new_seed.trash_type =       trash_type
 	new_seed.product_type =  product_type
@@ -836,6 +922,8 @@
 	new_seed.display_name =         "[(roundstart ? "[(modified ? "modified" : "mutant")] " : "")][display_name]"
 	new_seed.seed_noun =            seed_noun
 	new_seed.traits = traits.Copy()
+	new_seed.nymph_body_pigment = nymph_body_pigment
+	new_seed.nymph_uses_ideal_light = nymph_uses_ideal_light
 	new_seed.update_growth_stages()
 	return new_seed
 

@@ -37,6 +37,8 @@
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)
+	if(!nymph_vine_allow_move(NewLoc))
+		return FALSE
 	. = ..()
 	if(!.)
 		return
