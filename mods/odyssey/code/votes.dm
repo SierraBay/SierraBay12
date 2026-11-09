@@ -20,7 +20,23 @@
 	if (GAME_STATE != RUNLEVEL_LOBBY)
 		to_world("<b>Голосование по Одиссее отменено: раунд уже начался.</b>")
 		return VOTE_PROCESS_ABORT
-	return ..()
+	if (status == VOTE_STATUS_ACTIVE)
+		if (time_remaining > 0)
+			time_remaining = round((start_time + ODYSSEY_VOTE_PERIOD - world.time) / 10)
+			return VOTE_PROCESS_ONGOING
+		status = VOTE_STATUS_COMPLETE
+		return VOTE_PROCESS_COMPLETE
+	return VOTE_PROCESS_ABORT
+
+
+/datum/vote/odyssey_lobby/start_vote()
+	start_time = world.time
+	status = VOTE_STATUS_ACTIVE
+	time_remaining = round(ODYSSEY_VOTE_PERIOD / 10)
+	var/text = get_start_text()
+	log_vote(text)
+	to_world(SPAN_COLOR("purple", "<b>[text]</b>\nType <b>vote</b> or click <a href='byond://?src=\ref[SSvote];vote_panel=1'>here</a> to place your votes.\nYou have [time_remaining] seconds to vote."))
+	sound_to(world, sound('mods/odyssey/sound/odyssey_vote_alert.wav', repeat = 0, wait = 0, volume = 80, channel = GLOB.vote_sound_channel))
 
 
 /datum/vote/odyssey_lobby/handle_default_votes()

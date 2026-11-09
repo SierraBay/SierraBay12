@@ -8,6 +8,8 @@
 
 /// Minimum lobby «За» votes required to start or continue Odyssey.
 #define ODYSSEY_MIN_YES_VOTES 10
+/// How long the lobby Odyssey start/continue vote stays open.
+#define ODYSSEY_VOTE_PERIOD (2 MINUTES)
 /// Minimum lobby players required to offer continuing an existing Odyssey.
 #define ODYSSEY_MIN_CONTINUE_PLAYERS ODYSSEY_MIN_YES_VOTES
 
