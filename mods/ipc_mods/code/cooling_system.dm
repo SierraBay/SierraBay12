@@ -92,31 +92,20 @@
 /obj/item/organ/internal/cooling_system/proc/get_tempgain()
 	if(!owner)
 		return 0
+	var/obj/item/organ/internal/posibrain/ipc/posibrain = owner.internal_organs_by_name[BP_POSIBRAIN]
+	if(!posibrain)
+		return 0
 	if(owner.bodytemperature > 550 CELSIUS)
 		return 0
 
-	// Базовый нагрев шасси — тепловыделение протезов, не coolingefficiency
-	var/heat = 0
-	var/cooling_eff_sum = 0
-	var/robotic_limbs = 0
+	var/total_limb_heat = 0
 	for(var/obj/item/organ/external/part in owner.organs)
-		if(!BP_IS_ROBOTIC(part))
-			continue
-		heat += part.heat_generation
-		cooling_eff_sum += part.coolingefficiency
-		robotic_limbs++
+		total_limb_heat += part.coolingefficiency
 
-	if(is_damaged())
-		heat += get_coolant_drain()
-
-	if(reagents.total_volume <= 0)
-		heat += 40
-
-	refrigerant_rate = heat
+	refrigerant_rate = total_limb_heat
 	last_cooling_drain = 0
 
-	// Активное охлаждение только если включено и есть хладагент
-	if(!(cooling_enabled && reagents.total_volume > 0 && owner.bodytemperature > thermostat))
+	if(!(cooling_enabled && owner.bodytemperature > thermostat && reagents.total_volume > 0))
 		return refrigerant_rate
 
 	var/obj/item/organ/internal/cell/AC = owner.internal_organs_by_name[BP_CELL]
@@ -124,21 +113,11 @@
 		return refrigerant_rate
 
 	var/delta = owner.bodytemperature - thermostat
-	var/organ_efficiency = 1 - (damage / max_damage) * 0.7
-	// coolingefficiency: меньше = лучше теплоотвод → сильнее охлаждение
-	var/avg_limb_eff = robotic_limbs ? (cooling_eff_sum / robotic_limbs) : 0.5
-	var/limb_cooling_factor = clamp(1.2 / max(0.25, avg_limb_eff), 0.4, 2.5)
-	// purity: ниже = лучше смесь (coolant ~0.1, dirty water ~17)
-	var/purity = heating_modificator
-	var/coolant_factor = 1
-	if(purity)
-		coolant_factor = clamp(5 / max(0.5, purity), 0.25, 2)
-	var/cooling_power = min(delta * 1.5, 15) * organ_efficiency * limb_cooling_factor * coolant_factor
-
+	var/efficiency = 1 - (damage / max_damage) * 0.7
+	var/cooling_power = min(delta * 1.5, 15) * efficiency
 	var/drain = cooling_power * 2
 	if(!AC.cell.checked_use(drain))
 		return refrigerant_rate
-
 	last_cooling_drain = drain
 	refrigerant_rate -= cooling_power
 	return refrigerant_rate

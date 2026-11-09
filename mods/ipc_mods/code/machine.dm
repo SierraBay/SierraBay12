@@ -130,16 +130,6 @@
 	var/obj/item/organ/internal/ecs/ecs = internal_organs_by_name[BP_EXONET]
 	return istype(ecs) && ecs.reroute_ui && ecs.reroute_ui.session_open
 
-// ИПС не устаёт как органик — стамина только ограничивает спринт, без штрафов усталости
-/mob/living/carbon/human/adjust_stamina(amt)
-	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
-		var/last_stamina = stamina
-		stamina = clamp(stamina + amt, 0, 100)
-		if(last_stamina != stamina && hud_used)
-			hud_used.update_stamina()
-		return
-	. = ..()
-
 /mob/living/carbon/human/stabilize_body_temperature()
 	if(is_species(SPECIES_IPC) || is_species(SPECIES_FBP))
 		if(ipc_temp_gain)

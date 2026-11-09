@@ -3,7 +3,6 @@
 	var/siemens_coefficient		//чем больше, тем хуже
 	var/speed_modifier = 0
 	var/coolingefficiency = 0.5 // это база // меньше лучше
-	var/heat_generation = 0.75  // базовое тепловыделение конечности для cooling
 	var/expensive = 0 ///// 0 - бюджет протезы, 1 - нормальные, 2 - дорогие
 	var/addmax_damage
 	var/addmin_broken_damage
@@ -20,7 +19,6 @@
 
 /obj/item/organ/external
 	var/coolingefficiency
-	var/heat_generation = 0.75
 	var/expensive = 0
 	var/have_synth_skin = FALSE
 	var/synth_skin_health
@@ -84,7 +82,6 @@
 		siemens_coefficient = R.siemens_coefficient
 		slowdown = R.speed_modifier
 		coolingefficiency = R.coolingefficiency
-		heat_generation = R.heat_generation
 		expensive = R.expensive
 		if(model)
 			desc = "[R.desc] It looks like it was produced by [R.company]. Repair grade: [get_repair_grade_name()]."

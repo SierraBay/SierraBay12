@@ -373,13 +373,6 @@
 			{{else}}<span class="{{:data.posi_class}}">{{:data.posi_health_pct}}%</span>{{/if}}
 		</div>
 		{{/if}}
-		{{if data.has_sp}}
-		<div class="bm-int-row">
-			<span class="bm-int-label">SURP</span>
-			{{if data.sp_failed}}<span class="bad">ERR</span>
-			{{else}}<span class="{{:data.sp_class}}">{{:data.sp_pct}}%</span>{{/if}}
-		</div>
-		{{/if}}
 		{{if data.has_battery}}
 		<div class="bm-int-row">
 			<span class="bm-int-label">CELL</span>

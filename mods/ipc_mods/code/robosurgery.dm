@@ -36,7 +36,7 @@
 		return !affected.expensive
 	if(istype(tool, /obj/item/stack/nanopaste) && affected.expensive >= 2)
 		return FALSE
-	return TRUE
+	return affected.can_repair_brute_with(tool)
 
 /singleton/surgery_step/robotics/repair_brute/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -177,7 +177,7 @@
 		return !affected.expensive
 	if(istype(tool, /obj/item/stack/nanopaste) && affected.expensive >= 2)
 		return FALSE
-	return TRUE
+	return affected.can_repair_burn_with(tool)
 
 /singleton/surgery_step/robotics/repair_burn/pre_surgery_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
