@@ -18,6 +18,7 @@
 	damage = 30
 	armor_penetration = 0
 	ce_blunt_penetration_of = /obj/item/projectile/bullet/flechette
+	ce_blunt_penetration_mult = 0.5
 	// Раскрывшаяся пуля не проходит цель навылет.
 	penetrating = 0
 	// Мягкая пуля плющится о стену.

@@ -15,6 +15,7 @@
 	damage = 65
 	armor_penetration = -5
 	ce_blunt_penetration_of = /obj/item/projectile/bullet/pistol/strong
+	ce_blunt_penetration_mult = 0.5
 	// Мягкая пуля плющится о стену.
 	ce_ricochets_max = 0
 

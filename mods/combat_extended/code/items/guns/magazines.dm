@@ -41,8 +41,8 @@
 	icon = CE_AMMO_ICON
 
 /*
-	No player source gives the light 7.62x39 magazine now. It held 14 low-power rounds, the
-	heavy one holds 18 standard rounds, and the cost is the same. All 7.62x39 rifles take both.
+	No player source gives the light 5.56x45 magazine now. It held 14 low-power rounds, the
+	heavy one holds 18 standard rounds, and the cost is the same. All 5.56x45 rifles take both.
 	The light types stay for admins. The one magazine left has no "heavy" label. The low-power
 	rounds stay: their crate is cheaper.
 */

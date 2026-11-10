@@ -9,13 +9,11 @@
 	пуль. Внутри семейства ноль снова получают мягкие пули, как в OnyxBay (`can_ricochet`), и
 	противоматериальные.
 
-	Собственный удар (`ce_blunt_penetration`, `attack_penetration.dm`) у патронов, чей удар,
-	выведенный из урона, далёк от CE: картечи и обоих патронов 7.62x39. Числа: из `Defs/Ammo` CE, в
-	МПа, без пересчёта. Пистолеты и остальное оставлены на выводе нарочно: их удар
-	откалиброван по бронеплитам (README, "Собственный удар патронов").
+	Own impact (`ce_blunt_penetration`, `attack_penetration.dm`) is set where the derived value is far
+	from CE: buckshot and standard 7.62x39. Other rounds use derived impact, calibrated against armor plates.
 
-	Урон и AP здесь меняются только у тех, у кого кор числа не сходились с калибром: оба 7.62x39 и
-	APDS. Новые типы патронов мода (AP, HP) лежат в `code/items/ammo/`.
+	The rifle families keep their core paths, but `rifle` is 7.62x39 and `mil_rifle` is 5.56x45.
+	New AP and HP rounds are in `code/items/ammo/`.
 
 	Подтип без своего значения берёт значение родителя: новый патрон в семействе рикошетит, пока ему
 	здесь не поставлен ноль, и бьёт ударом родителя, пока его не сбросить в null.
@@ -56,27 +54,23 @@
 	ce_blunt_penetration = null
 
 /obj/item/projectile/bullet/rifle
-	// Винтовочные пули обоих калибров.
-	ce_ricochets_max = 1
-
-/obj/item/projectile/bullet/rifle/military
-	// Ослабленный 7.62x39, "low-power": `Bullet_762x39mmSoviet_FMJ_SB` CE, короткий ствол. В коре
-	// он пробивал сильнее штатного (40 / AP 35, 12.2 мм против 10.5). Теперь он во всём слабее
-	// штатного, по соотношениям CE: урон 15 против 17, пробитие 4.5 против 5.5 мм, удар 29.56 МПа.
-	// 50 / AP 15: 8.6 мм, и tactical-плиту (11 мм) он не пробивает, как и штатный.
-	damage = 50
-	armor_penetration = 15
-	ce_blunt_penetration = 29.56
-
-/obj/item/projectile/bullet/rifle/military_standard
-	// Штатный 7.62x39. В коре он стреляет той же пулей, что и 5.56 (`bullet/rifle`). По CE
-	// (`Bullet_762x39mmSoviet_FMJ` против `Bullet_556x45mmNATO_FMJ`) у него больше урона (17
-	// против 14), меньше пробития (5.5 против 6 мм) и сильнее удар (41.08 против 34.18 МПа).
-	// 55 / AP 20: 10.0 мм против 10.5 у 5.56, tactical-плиту не пробивает. Выведенный удар
-	// дал бы 63 МПа, поэтому удар свой.
+	// Standard 7.62x39: 55 / AP 20 gives 10.0 mm RHA. CE impact is 41.08 MPa.
 	damage = 55
 	armor_penetration = 20
+	ce_ricochets_max = 1
 	ce_blunt_penetration = 41.08
+
+/obj/item/projectile/bullet/rifle/military
+	// Low-power 5.56x45: below the standard round in damage, sharp penetration, and impact.
+	damage = 40
+	armor_penetration = 15
+	ce_blunt_penetration = null
+
+/obj/item/projectile/bullet/rifle/military_standard
+	// Standard 5.56x45: 45 / AP 25 gives 10.5 mm RHA and derived impact.
+	damage = 45
+	armor_penetration = 25
+	ce_blunt_penetration = null
 
 /obj/item/projectile/bullet/rifle/shell
 	// Противоматериальная, а с ней APDS и хитскан-трассер: рикошет не трогает AP, и отскочившая
@@ -97,6 +91,7 @@
 
 /obj/item/projectile/bullet/rifle/practice
 	ce_ricochets_max = 0
+	ce_blunt_penetration = null
 
 /obj/item/projectile/bullet/rifle/military/practice
 	ce_ricochets_max = 0
@@ -124,6 +119,5 @@
 	ce_ricochets_max = 0
 
 /obj/item/ammo_casing/rifle/military
-	// Штатный 7.62x39: со своей пулей, см. `bullet/rifle/military_standard` выше. Ослабленный и
-	// учебный задают свою пулю сами.
+	// Standard 5.56x45. Low-power and practice casings select their own projectiles.
 	projectile_type = /obj/item/projectile/bullet/rifle/military_standard

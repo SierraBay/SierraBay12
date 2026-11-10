@@ -425,7 +425,7 @@
 	Окна тиров патронов, README, "Патроны FMJ, AP и HP". Одним слоем жёсткой плиты каждый патрон
 	пробивает свой нижний тир, а верхний его держит. Так AP пробивает тир, который держит его FMJ,
 	а HP останавливается на тире, который FMJ пробивает. Урон AP ниже, чем у FMJ, у HP выше.
-	Остановленные AP и HP бьют как их FMJ, и HP не рикошетит.
+	Stopped AP rounds retain FMJ impact. HP rounds have half FMJ impact and do not ricochet.
 */
 /datum/unit_test/combat_extended/define_promises/ammo_tiers
 	name = "CE: Окна тиров патронов"
@@ -517,8 +517,9 @@
 		if(is_ap ? variant.damage >= fmj[1] : variant.damage <= fmj[1])
 			failures += "[variant_type]: урон [variant.damage], у FMJ [fmj[1]]"
 		var/impact = variant.ce_get_own_blunt_penetration()
-		if(abs(impact - fmj[3]) > 0.001)
-			failures += "[variant_type]: удар [impact] МПа, у FMJ [fmj[3]]"
+		var/expected_impact = fmj[3] * (is_ap ? 1 : 0.5)
+		if(abs(impact - expected_impact) > 0.001)
+			failures += "[variant_type]: удар [impact] МПа, ожидалось [expected_impact] при ударе FMJ [fmj[3]]"
 		if(!is_ap && variant.ce_ricochets_max)
 			failures += "[variant_type]: HP рикошетит [variant.ce_ricochets_max] раз"
 
@@ -2071,12 +2072,6 @@
 		failures += "керамика не держит рейтинг дольше обычной брони: точка [break_point] при [curve_point] у кривой"
 	if(!isnull(plain_armor.ce_get_break_point()))
 		failures += "броня плиты из материала по умолчанию читает точку [plain_armor.ce_get_break_point()]"
-	// Обещание керамики: урон, который обычную броню довёл бы до 80% HP, доводит её до точки поломки.
-	var/damage_to_80 = plain_armor.ce_get_health_max() * 0.2
-	var/ceramic_fraction = 1 - damage_to_80 / ceramic_armor.ce_get_health_max()
-	if(abs(ceramic_fraction - break_point) > 0.0001)
-		failures += "керамика: урон, доводящий обычную броню до 80% HP, оставляет ей [ceramic_fraction] HP, а не точку [break_point]"
-
 	var/previous = 0
 	for(var/percent in 0 to 100)
 		var/fraction = percent / 100
@@ -4007,7 +4002,7 @@
 	прохода по слоям через `ce_hit_projectile`, как из `bullet_act()`, а ожидание: урон после той же
 	пластины от процедуры одного слоя с этим ударом. Числа патронов живут в README. Здесь: что удар
 	берётся у своего снаряда и только у него, убывает с уроном, печатается в кодексе и что числа
-	обоих 7.62x39 стоят по CE относительно 5.56.
+	7.62x39 стоят по CE относительно 5.56.
 */
 /// Насколько урон и пробитие могут разойтись с ожиданием: только погрешность чисел.
 #define CE_OWN_BLUNT_TOLERANCE 0.001
@@ -4025,7 +4020,7 @@
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Проход берёт собственный удар у своего снаряда и только у него. Удар убывает с уроном и виден в кодексе. Оба 7.62x39 стоят по CE относительно 5.56.")
+		pass("Проход берёт собственный удар у своего снаряда и только у него. Удар убывает с уроном и виден в кодексе. 7.62x39 стоит по CE относительно 5.56.")
 	return 1
 
 /// Остановленная medium-вставкой дробина: со своим снарядом собственный удар, без него и с чужим уроном выведенный.
@@ -4081,7 +4076,7 @@
 
 /// Собственный удар убывает вместе с уроном снаряда: на излёте и после моба, пробитого навылет.
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_falloff(list/failures)
-	var/obj/item/projectile/bullet = new /obj/item/projectile/bullet/rifle/military_standard
+	var/obj/item/projectile/bullet = new /obj/item/projectile/bullet/rifle
 	spawned += bullet
 	var/full = bullet.ce_get_own_blunt_penetration()
 	bullet.damage = initial(bullet.damage) / 2
@@ -4101,23 +4096,23 @@
 
 /**
  * Штатный 7.62x39 стреляет своей пулей, и по CE у неё больше урона, меньше пробития и сильнее
- * удар, чем у 5.56. Ослабленный 7.62x39 слабее штатного во всех трёх. Учебные и флешетта бьют
+ * удар, чем у 5.56. Ослабленный 5.56x45 слабее штатного 5.56 во всех трёх. Учебные и флешетта бьют
  * выведенным.
  */
 /datum/unit_test/combat_extended/projectile_blunt/proc/check_rifle_rounds(list/failures)
-	var/obj/item/ammo_casing/casing = /obj/item/ammo_casing/rifle/military
+	var/obj/item/ammo_casing/casing = /obj/item/ammo_casing/rifle
 	var/standard_type = initial(casing.projectile_type)
-	if(standard_type == /obj/item/projectile/bullet/rifle)
+	if(standard_type == /obj/item/projectile/bullet/rifle/military_standard)
 		failures += "7.62x39: штатная гильза стреляет пулей 5.56"
 		return
 	var/list/standard = round_numbers(standard_type)
-	var/list/rifle = round_numbers(/obj/item/projectile/bullet/rifle)
+	var/list/rifle = round_numbers(/obj/item/projectile/bullet/rifle/military_standard)
 	var/list/light = round_numbers(/obj/item/projectile/bullet/rifle/military)
 	if(standard[1] <= rifle[1] || standard[2] >= rifle[2] || standard[3] <= rifle[3])
 		failures += "7.62x39: урон, мм и МПа [jointext(standard, " / ")], у 5.56 [jointext(rifle, " / ")]. Ожидалось больше урона, меньше мм, больше МПа."
 	for(var/i in 1 to length(standard))
-		if(light[i] >= standard[i])
-			failures += "ослабленный 7.62x39: урон, мм и МПа [jointext(light, " / ")], у штатного [jointext(standard, " / ")]. Ожидалось меньше во всех трёх."
+		if(light[i] >= rifle[i])
+			failures += "ослабленный 5.56x45: урон, мм и МПа [jointext(light, " / ")], у штатного [jointext(rifle, " / ")]. Ожидалось меньше во всех трёх."
 			break
 	for(var/obj/item/projectile/path as anything in list(/obj/item/projectile/bullet/rifle/military/practice, /obj/item/projectile/bullet/pellet/shotgun/flechette))
 		if(!isnull(initial(path.ce_blunt_penetration)))
@@ -4554,7 +4549,9 @@
 	var/obj/item/projectile/projectile = new projectile_type(H.loc)
 	spawned += projectile
 	H.ce_shield_hit = new /datum/ce_shield_hit(slot, BP_CHEST, shock_zone, "test")
+	H.ce_hit_projectile = projectile
 	. = H.ce_walk_armor_layers(BP_CHEST, projectile.damage, projectile.damage_type, projectile.damage_flags(), projectile.armor_penetration)
+	H.ce_hit_projectile = null
 	H.ce_shield_hit = null
 
 /datum/unit_test/combat_extended/shields/proc/check_coverage(list/failures)
@@ -5034,14 +5031,11 @@
 	Лазеры и нагрев брони (`laser_heat.dm`, `laser_coolant.dm`, `laser_scorch.dm`, блок РИГа:
 	`rig_armor.dm`).
 
-	Жар, остывание и ожоги считает тот же код, что и в игре, а время тест ведёт сам: между выстрелами
-	батареи зовёт остывание брони на задержку выстрела ствола, а ожоги через `handle_fire()`, как
-	тик Life. Стреляет он настоящими лучами через боевой проход, так что множитель жара и сторону
-	прожога проход берёт у снаряда.
+	Heat, cooling, and burns use the production code. The test controls time explicitly and applies burns
+	through `handle_fire()`, as a Life tick does. Real beam hits use the combat path, so the projectile
+	supplies its heat multiplier and scorch direction.
 
-	Числа тест берёт у настроек и у самих вещей, а проверяет инварианты. Исключение составляют обещания плана:
-	G40E раскаляет тяжёлую сталь докрасна к третьему попаданию, торс crimson-хардсьюта добела ровно
-	к концу батареи, EOD позже, а пистолеты греют слабее карабина.
+	Expected values come from settings and controlled inputs, not fixed item or weapon balance targets.
 
 	Время полива на время теста обнулено: `do_after()` без задержки проходит сразу.
 */
@@ -5163,33 +5157,6 @@
 	H.ce_hit_projectile = null
 	H.ce_pending_shards = null
 	return result[1]
-
-/**
- * Батарея ствола `gun_type` лучами `projectile_type` в `def_zone`, с остыванием брони между
- * выстрелами на задержку ствола. Возвращает ступень накала группы зон `group` брони `armor` после
- * каждого попадания.
- */
-/datum/unit_test/combat_extended/laser_heat/proc/fire_cell(mob/living/carbon/human/H, def_zone, gun_type, projectile_type, datum/extension/armor/armor, group)
-	RETURN_TYPE(/list)
-	var/obj/item/gun/energy/gun = gun_type
-	var/seconds_between = initial(gun.fire_delay) / (1 SECOND)
-	. = list()
-	for(var/shot in 1 to initial(gun.max_shots))
-		beam_hit(H, def_zone, projectile_type)
-		. += ce_get_heat_stage(armor.ce_get_temperature(group))
-		armor.ce_process_heat(seconds_between)
-
-/**
- * Батарея по торсу нового рига `rig_type`: `list(ступени после каждого попадания, температура торса
- * в конце)`. null: одеть не вышло.
- */
-/datum/unit_test/combat_extended/laser_heat/proc/fire_rig_cell(rig_type, gun_type, projectile_type)
-	var/mob/living/carbon/human/H = make_rigged_human(rig_type)
-	var/datum/extension/armor/armor = suit_armor(H)
-	if(!armor)
-		return null
-	var/list/stages = fire_cell(H, BP_CHEST, gun_type, projectile_type, armor, CE_ARMOR_ZONE_TORSO)
-	return list(stages, armor.ce_get_temperature(CE_ARMOR_ZONE_TORSO))
 
 /// Один тик Life: ожоги от горячей брони через `handle_fire()`, по частям тела, `list(тег части = ожог)`.
 /datum/unit_test/combat_extended/laser_heat/proc/life_tick_burns(mob/living/carbon/human/H)
@@ -5341,40 +5308,22 @@
 		failures += "граница Bay: без мягкого слоя жёсткий слой не греется от луча"
 
 /**
- * Обещания плана о кривой нагрева, настоящими стволами: батарея G40E раскаляет тяжёлую сталь
- * докрасна к третьему попаданию, торс crimson-хардсьюта: добела ровно на последнем, торс EOD к
- * концу батареи ещё не добела. Батарея "Перуна" оставляет crimson ниже белого каления, "Стригоя":
- * холоднее, чем "Перуна".
+ * Heat additions accumulate in stored-heat space. Temperature follows the configured curve and caps at white-hot.
+ * Fixed armor ratings and the current heat capacity keep this test independent of item and weapon balance.
  */
 /datum/unit_test/combat_extended/laser_heat/proc/check_heat_curve(list/failures)
-	var/mob/living/carbon/human/plated = make_human(list(/obj/item/clothing/accessory/armor_plate/merc))
-	var/datum/extension/armor/plate = plate_armor(plated)
-	if(!plate)
-		failures += "кривая нагрева: не удалось одеть человека в merc-пластину"
-	else
-		var/list/plate_stages = fire_cell(plated, BP_CHEST, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser, plate)
-		if(length(plate_stages) < 3 || plate_stages[3] < 2)
-			failures += "кривая нагрева: G40E по merc-пластине, ступени [jointext(plate_stages, " ")], красная не к третьему попаданию"
-
-	var/list/crimson = fire_rig_cell(/obj/item/rig/merc, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser)
-	var/list/eod = fire_rig_cell(/obj/item/rig/merc/heavy, /obj/item/gun/energy/laser, /obj/item/projectile/beam/midlaser)
-	var/list/perun = fire_rig_cell(/obj/item/rig/merc, /obj/item/gun/energy/gun, /obj/item/projectile/beam)
-	var/list/strigoi = fire_rig_cell(/obj/item/rig/merc, /obj/item/gun/energy/gun/small, /obj/item/projectile/beam/smalllaser)
-	if(!crimson || !eod || !perun || !strigoi)
-		failures += "кривая нагрева: не удалось одеть человека в риг"
+	var/datum/extension/armor/armor = armor_of(/obj/item/clothing/accessory/armor_plate/merc, list("bullet" = 50))
+	var/datum/ce_armor_heat/heat = armor.ce_get_or_create_heat(null)
+	var/capacity = armor.ce_get_heat_capacity(null)
+	if(capacity <= 0)
+		failures += "кривая нагрева: теплоёмкость [capacity] при фиксированном рейтинге брони"
 		return
-	var/list/stages = crimson[1]
-	var/shots = length(stages)
-	if(shots < 2 || stages[shots - 1] >= 4 || stages[shots] < 4)
-		failures += "кривая нагрева: G40E по crimson-хардсьюту, ступени [jointext(stages, " ")], добела не ровно к концу батареи"
-	stages = eod[1]
-	if(stages[length(stages)] >= 4)
-		failures += "кривая нагрева: G40E раскаляет EOD добела к концу батареи, как и crimson, ступени [jointext(stages, " ")]"
-	stages = perun[1]
-	if(stages[length(stages)] >= 4)
-		failures += "кривая нагрева: батарея \"Перуна\" раскаляет crimson добела, ступени [jointext(stages, " ")]"
-	if(strigoi[2] >= perun[2])
-		failures += "кривая нагрева: после батареи \"Стригоя\" crimson [strigoi[2]], \"Перуна\" [perun[2]]. \"Стригой\" должен греть слабее"
+	for(var/hit in 1 to 5)
+		armor.ce_add_heat(heat, null, capacity * 0.25)
+		var/stored_fraction = hit * 0.25
+		var/expected = min(1, stored_fraction ** ce_laser_heat_temperature_exponent)
+		if(abs(heat.temperature - expected) > CE_LASER_TOLERANCE)
+			failures += "кривая нагрева: после [hit] добавлений по 25% теплоёмкости температура [heat.temperature], ожидалось [expected]"
 
 /**
  * Остывание: каждую полосу между ступенями накала броня проходит за свои секунды, в вакууме

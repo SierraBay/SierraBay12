@@ -124,16 +124,16 @@
 	ce_box_tint_sprite = "12g_shells"
 
 /obj/item/ammo_casing/rifle
-	// 5.56x45.
+	// 7.62x39.
 	icon = CE_AMMO_ICON
-	icon_state = "5mmR_fmj"
-	spent_icon = "5mmR-spent"
-	ce_sprite_caliber = "5mmR"
+	icon_state = "7mmR_fmj"
+	spent_icon = "7mmR-spent"
+	ce_sprite_caliber = "7mmR"
 	ce_ammo_color = CE_AMMO_COLOR_FMJ
-	ce_box_sprite = "5mmR_fmj"
+	ce_box_sprite = "7mmR_fmj"
 
 /obj/item/ammo_casing/rifle/practice
-	icon_state = "5mmR_fmj"
+	icon_state = "7mmR_fmj"
 	ce_tinted_tip = TRUE
 	ce_ammo_color = CE_AMMO_COLOR_PRACTICE
 	ce_box_sprite = null
@@ -153,14 +153,14 @@
 	ce_ammo_color = CE_AMMO_COLOR_AP
 
 /obj/item/ammo_casing/rifle/military
-	// 7.62x39, штатный. Ослабленный (`/light`) тот же FMJ: свой тип у него только в числах.
-	icon_state = "7mmR_fmj"
-	spent_icon = "7mmR-spent"
-	ce_sprite_caliber = "7mmR"
-	ce_box_sprite = "7mmR_fmj"
+	// Standard 5.56x45. The low-power /light round uses the same FMJ sprite.
+	icon_state = "5mmR_fmj"
+	spent_icon = "5mmR-spent"
+	ce_sprite_caliber = "5mmR"
+	ce_box_sprite = "5mmR_fmj"
 
 /obj/item/ammo_casing/rifle/military/practice
-	icon_state = "7mmR_fmj"
+	icon_state = "5mmR_fmj"
 	ce_tinted_tip = TRUE
 	ce_ammo_color = CE_AMMO_COLOR_PRACTICE
 	ce_box_sprite = null

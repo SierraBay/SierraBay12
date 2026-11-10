@@ -814,12 +814,12 @@ var/global/ce_laser_heat_ap_divisor = 100
 /// Насколько раскалённая броня теряет рейтинг `laser`: × (1 − спад × температура ^ степень). При
 /// 0.25 и степени 4 98% на красном, 92% на оранжевом, 80% добела: тяжёлая броня держит луч и
 /// платит жаром.
-var/global/ce_laser_heat_rating_drop = 0.25
-var/global/ce_laser_heat_rating_drop_exponent = 4
+var/global/ce_laser_heat_rating_drop = 0.6
+var/global/ce_laser_heat_rating_drop_exponent = 2
 
 /// Степень износа от луча: HP −= жар × износ материала × температура ^ степень. Кубическая, холодную
 /// броню луч почти не изнашивает, раскалённую добела быстро.
-var/global/ce_laser_wear_exponent = 3
+var/global/ce_laser_wear_exponent = 2
 
 /// Степень, с которой жар отнимает кинетическую броню и ускоряет её износ: × (1 − размягчение
 /// материала × температура ^ степень) для Sharp и Blunt, × (1 + ручка × температура ^ степень) для

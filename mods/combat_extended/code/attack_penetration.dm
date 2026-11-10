@@ -116,37 +116,41 @@
 
 
 /obj/item/projectile
-	/// Собственное тупое пробитие снаряда на полном уроне, МПа. null: выводится из урона и AP
-	/// (`ce_derive_blunt_penetration()`). Задаётся патронам, у которых вывод далёк от импульса пули:
-	/// урон Bay с её весом почти не связан (`code/items/guns/bullets.dm`).
+	/// Own blunt penetration at full damage, in MPa. Null: derive it from damage and AP.
 	var/ce_blunt_penetration
-	/// Тип снаряда, чей удар на полном уроне снаряд берёт себе, если своего `ce_blunt_penetration`
-	/// нет. AP и HP бьют остановленными как FMJ своего калибра: у CE удар один на калибр
-	/// (`code/items/ammo/`). Удар FMJ здесь не копия числа, а его вывод, и ручки баланса удара
-	/// двигают его вместе с FMJ.
+	/// Projectile type whose full-damage impact this projectile inherits when its own value is null.
+	/// Resolving the source type keeps AP and HP values linked to later FMJ balance changes.
 	var/obj/item/projectile/ce_blunt_penetration_of
+	/// Multiplier for own blunt penetration, including an inherited value.
+	var/ce_blunt_penetration_mult = 1
 
 
 /obj/item/projectile/Initialize()
 	. = ..()
-	if(isnull(ce_blunt_penetration) && ce_blunt_penetration_of)
+	if(!isnull(ce_blunt_penetration))
+		ce_blunt_penetration *= ce_blunt_penetration_mult
+	else if(ce_blunt_penetration_of)
 		ce_blunt_penetration = ce_get_type_own_blunt_penetration(type)
 
 
 /**
- * Собственный удар снаряда типа `projectile_type` на полном уроне, МПа: свой или удар типа
- * `ce_blunt_penetration_of`. null: собственного нет, удар выводится из урона попадания.
+ * Own impact of projectile_type at full damage, in MPa, after ce_blunt_penetration_mult.
+ * Uses either its own value or the value inherited from ce_blunt_penetration_of.
+ * Null: there is no own value, so the hit derives its impact from damage.
  */
 /proc/ce_get_type_own_blunt_penetration(projectile_type)
 	var/obj/item/projectile/projectile = projectile_type
 	var/own = initial(projectile.ce_blunt_penetration)
+	var/impact_mult = initial(projectile.ce_blunt_penetration_mult)
 	var/obj/item/projectile/source = initial(projectile.ce_blunt_penetration_of)
-	if(!isnull(own) || !source)
-		return own
+	if(!isnull(own))
+		return own * impact_mult
+	if(!source)
+		return null
 	own = ce_get_type_own_blunt_penetration(source)
 	if(!isnull(own))
-		return own
-	return ce_derive_blunt_penetration(initial(source.damage), initial(source.damage_flags), initial(source.armor_penetration))
+		return own * impact_mult
+	return ce_derive_blunt_penetration(initial(source.damage), initial(source.damage_flags), initial(source.armor_penetration)) * impact_mult
 
 
 /**

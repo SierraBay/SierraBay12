@@ -12,12 +12,12 @@
 // The mod stops the light magazine, so /rifle sells the STS-35 magazine again.
 /datum/uplink_item/item/ammo/rifle
 	name = "Rifle Magazine"
-	desc = "A 5.56 magazine for assault rifles like the STS-35. Contains 20 rounds."
+	desc = "A 7.62 magazine for assault rifles like the STS-35. Contains 20 rounds."
 	path = /obj/item/ammo_magazine/rifle
 
 /datum/uplink_item/item/ammo/bullpup
 	name = "Bullpup Rifle Magazine"
-	desc = "A 7.62 magazine for bullpup assault rifles like the Z8 Bulldog and the Z9 Pitbull. Contains 18 rounds."
+	desc = "A 5.56 magazine for bullpup assault rifles like the Z8 Bulldog and the Z9 Pitbull. Contains 18 rounds."
 
 /datum/uplink_item/item/ammo/machine_pistol
 	desc = "A 10mm Auto magazine for standard machine pistols like the MP6 Vesper. Contains 16 rounds."
