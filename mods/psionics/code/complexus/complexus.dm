@@ -36,6 +36,7 @@
 	var/image/_aura_image             // Client image
 
 	var/list/ranks_stat               // Assoc list of psi faculties to their state
+	var/list/selected_powers          // Assoc list of faculty id -> list of power ids chosen in preferences
 
 /datum/psi_complexus/proc/get_aura_image()
 	if(_aura_image && !istype(_aura_image))

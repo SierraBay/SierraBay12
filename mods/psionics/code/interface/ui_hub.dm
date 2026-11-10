@@ -87,13 +87,6 @@
 	// Немедленно обновляем видимость псионического плана.
 	owner.update_sight()
 	if(owner.psi.suppressed)
-		var/mob/living/carbon/human/A = owner
-		if(A.levitation)
-			A.levitation = FALSE
-			A.pass_flags &= ~PASS_FLAG_TABLE
-			A.pixel_y = 0
-			A.CutOverlays(image('mods/psionics/icons/psi.dmi', "levitation"))
-			A.stop_floating()
 		owner.psi.cancel()
 		owner.psi.hide_auras()
 		for(var/atom/O in range(5, owner))

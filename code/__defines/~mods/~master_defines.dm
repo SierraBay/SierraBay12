@@ -146,6 +146,10 @@
 #define PSI_REDACTION          "redaction"
 #define PSI_SHAYMANISM         "shaymanism"
 
+#define PSI_KINESIS            "kinesis"
+#define PSI_PATIA              "patia"
+#define PSI_PRAXIA             "praxia"
+
 #define PSI_RANK_BLUNT         0
 #define PSI_RANK_LATENT        1
 #define PSI_RANK_APPRENTICE    2

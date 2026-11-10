@@ -12,7 +12,12 @@
 			. = TRUE
 		if(href_list && href_list["trigger_psi_latencies"])
 			log_and_message_admins("triggered psi latencies for [key_name(owner)].")
-			check_latency_trigger(100, "outside intervention", redactive = TRUE)
+			check_latency_trigger(100, "влияния свыше", redactive = TRUE)
+			. = TRUE
+		if(href_list && href_list["trigger_psi_instability"])
+			log_and_message_admins("запустил нестабильность псионики у [key_name(owner)].")
+			start_instability(2 MINUTES, 2)
+			trigger_instability(2, "surge")
 			. = TRUE
 		if(.)
 			var/datum/admins/admin = GLOB.admins[usr.key]

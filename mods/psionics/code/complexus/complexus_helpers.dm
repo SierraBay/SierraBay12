@@ -15,9 +15,10 @@
 	cancel()
 
 /datum/psi_complexus/proc/get_rank(faculty)
-	return LAZYACCESS(ranks, faculty)
+	return LAZYACCESS(ranks, psi_normalize_faculty(faculty))
 
 /datum/psi_complexus/proc/set_rank(faculty, rank, defer_update, temporary)
+	faculty = psi_normalize_faculty(faculty)
 	if(get_rank(faculty) != rank)
 		LAZYSET(ranks, faculty, rank)
 		LAZYSET(ranks_stat, faculty, TRUE)

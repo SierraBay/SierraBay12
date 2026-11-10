@@ -346,8 +346,10 @@ var/global/floorIsLava = 0
 		for(var/i = 1 to LAZYLEN(GLOB.psychic_ranks_to_strings))
 			body += "<th>[GLOB.psychic_ranks_to_strings[i]]</th>"
 		body += "</tr></thead><tbody>"
-		for(var/faculty in list(PSI_COERCION, PSI_CONSCIOUSNESS, PSI_PSYCHOKINESIS, PSI_MANIFESTATION, PSI_ENERGISTICS, PSI_REDACTION, PSI_METAKINESIS, PSI_SHAYMANISM))
+		for(var/faculty in GLOB.psi_faculty_ids)
 			var/singleton/psionic_faculty/faculty_singleton = SSpsi.get_faculty(faculty)
+			if(!faculty_singleton)
+				continue
 			var/faculty_rank = psyker.psi ? psyker.psi.get_rank(faculty) : 0
 			body += "<tr><td><b>[faculty_singleton.name]</b></td>"
 			for(var/i = 1 to LAZYLEN(GLOB.psychic_ranks_to_strings))
@@ -357,7 +359,20 @@ var/global/floorIsLava = 0
 					psi_style = "background: rgba(52, 152, 219, 0.2); border-color: #3498db; color: #3498db; text-shadow: 0 0 4px #3498db;"
 				body += "<td><a href='byond://?src=\ref[psyker.mind];set_psi_faculty_rank=[i];set_psi_faculty=[faculty]' class='dna-link' style='[psi_style]'>[psi_title]</a></td>"
 			body += "</tr>"
-		body += "</tbody></table></div></details>"
+		body += "</tbody></table>"
+		body += "<div style='font-weight: bold; font-size: 11px; margin: 8px 0 4px 0; color: #3498db;'>Powers (click to add / remove):</div>"
+		for(var/faculty in GLOB.psi_faculty_ids)
+			var/singleton/psionic_faculty/power_faculty = SSpsi.get_faculty(faculty)
+			if(!power_faculty)
+				continue
+			var/list/owned_powers = psyker.psi ? psyker.psi.get_powers_by_faculty(faculty) : null
+			body += "<div style='margin-bottom: 6px;'><b>[power_faculty.name]:</b> "
+			for(var/singleton/psionic_power/power in get_selectable_psi_powers(faculty))
+				var/has_power = (power in owned_powers)
+				var/power_style = has_power ? "background: rgba(46, 204, 113, 0.2); border-color: #2ecc71; color: #2ecc71;" : ""
+				body += "<a href='byond://?src=\ref[psi_admin_panel];target=\ref[psyker];power=[power.get_id()];do=[has_power ? "remove" : "add"]' class='dna-link' style='[power_style]' title='[has_power ? "Remove" : "Add"] (min rank: [GLOB.psychic_ranks_to_strings[power.min_rank] || power.min_rank])'>[has_power ? "- " : "+ "][power.name]</a> "
+			body += "</div>"
+		body += "</div></details>"
 
 	// 8. Transformations & DNA blocks (if carbon)
 	if(M.client && !istype(M, /mob/new_player))
