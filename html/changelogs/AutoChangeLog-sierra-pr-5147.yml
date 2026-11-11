@@ -1,0 +1,5 @@
+author: Teteshnik
+changes:
+  - bugfix: Fixes a bug where 80 damage from a glass-breaker is retained after 
+      striking glass.
+delete-after: true
