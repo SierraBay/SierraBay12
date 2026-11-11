@@ -21,6 +21,8 @@
 	- Выстрел в упор не промахивается (оверрайд `process_point_blank()` помечает снаряд).
 	- Клик по клетке, где точка прицела легла в тело лежащего: выстрел по нему
 	  (`ce_take_prone_target()`).
+	- A body moved off its tile (pixel shift) reaches into the next tile. A projectile that
+	  crosses the body in that tile hits it (`ce_meet_reaching_bodies()`).
 
 	Выключатель работает только вместе с попиксельной стрельбой (`ce_physical_hits_active()`).
 */
@@ -216,6 +218,94 @@
 	body.visible_message(SPAN_NOTICE("\The [src] misses [body] narrowly!"))
 	if(LAZYLEN(miss_sounds))
 		playsound(body.loc, pick(miss_sounds), 60, 1)
+
+
+// ============================================================================================
+// Body outside its tile
+// ============================================================================================
+// A mob off its tile centre (pixel shift, a bed, a table) moves its body too, and the body can
+// reach into the next tile. That tile does not stop the projectile for the mob, so the projectile
+// finds such a body itself. Each body gets one check on one tile: the tile that holds the point
+// of the flight line closest to the body centre. When that tile is the tile of the mob, core
+// `Bump()` does the check as the projectile enters it.
+
+/**
+ * The point of the flight line closest to the centre of `body`, `list(x, y)` in vector pixels.
+ * null: the projectile has no line, or the mob is not on the map.
+ */
+/obj/item/projectile/proc/ce_get_closest_point(mob/living/body)
+	RETURN_TYPE(/list)
+	if(!trajectory)
+		return null
+	var/list/center = body.ce_get_body_center()
+	var/step_squared = trajectory.offset_x ** 2 + trajectory.offset_y ** 2
+	if(!center || !step_squared)
+		return null
+	var/to_body_x = center[1] - trajectory.loc_x
+	var/to_body_y = center[2] - trajectory.loc_y
+	var/steps = (to_body_x * trajectory.offset_x + to_body_y * trajectory.offset_y) / step_squared
+	return list(trajectory.loc_x + trajectory.offset_x * steps, trajectory.loc_y + trajectory.offset_y * steps)
+
+
+/// The body can reach out of its tile: its centre is nearer than its radius to a tile edge.
+/mob/living/proc/ce_body_leaves_tile()
+	var/list/center = ce_get_body_center()
+	if(!center)
+		return FALSE
+	var/list/tile = ce_get_tile_center()
+	var/inner_reach = world.icon_size / 2 - ce_get_hit_radius()
+	return abs(center[1] - tile[1]) > inner_reach || abs(center[2] - tile[2]) > inner_reach
+
+
+/// A mech fills its own tile and no other: its radius covers the tile, not the tiles around it.
+/mob/living/exosuit/ce_body_leaves_tile()
+	return FALSE
+
+
+/**
+ * The projectile meets `body` on the tile `place`: the mob stands on a tile next to `place`, it is
+ * dense, its body reaches across the flight line, and the point of the line closest to the body
+ * centre is in `place`. The projectile does not meet a mob twice, and does not meet its firer
+ * unless it ricochets (as in core `Bump()`).
+ */
+/obj/item/projectile/proc/ce_can_meet_reaching_body(mob/living/body, turf/place)
+	if(!body.density || get_turf(body) == place || (body in permutated))
+		return FALSE
+	if(body == firer && !ce_ricochets)
+		return FALSE
+	if(!body.ce_body_leaves_tile() || !ce_crosses_body(body))
+		return FALSE
+	var/list/closest = ce_get_closest_point(body)
+	if(!closest)
+		return FALSE
+	return round(closest[1] / world.icon_size, 1) == place.x && round(closest[2] / world.icon_size, 1) == place.y
+
+
+/**
+ * Meets the mobs on the tiles around `place` whose body reaches across the flight line in
+ * `place` (`ce_can_meet_reaching_body()`). Called after each step into `place`. FALSE: the
+ * projectile stopped in one of them.
+ *
+ * The body circle is checked before `Bump()`: the tracer (`/obj/item/projectile/test`) takes
+ * each `Bump()` with a mob as a hit. Core `Bump()` moves a projectile that passes a mob onto the
+ * tile of the mob, so the projectile goes back to its own tile after each pass.
+ */
+/obj/item/projectile/proc/ce_meet_reaching_bodies(turf/place)
+	if(!ce_physical_hits_active() || !istype(place))
+		return TRUE
+	for(var/mob/living/body in orange(1, place))
+		if(!ce_can_meet_reaching_body(body, place))
+			continue
+		var/turf/standing = loc
+		// Nested depth: the `Bump()` override then does not look for more mobs on the tile of the mob.
+		ce_bump_depth++
+		var/stopped = Bump(body, TRUE)
+		ce_bump_depth--
+		if(stopped || QDELETED(src))
+			return FALSE
+		if(loc != standing)
+			forceMove(standing)
+	return TRUE
 
 
 // ============================================================================================

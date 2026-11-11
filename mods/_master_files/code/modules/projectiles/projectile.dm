@@ -104,6 +104,10 @@
 		// У шага в срезанный угол столкновения свои.
 		ce_bump_resolved = FALSE
 		. = ..()
+		// A body shifted off the next tile can reach into this tile
+		// (`/mods/combat_extended/code/projectile_hits.dm`). The cut corner step does this check itself.
+		if(. && !ce_cutting_corner && !QDELETED(src) && !ce_meet_reaching_bodies(loc))
+			. = FALSE
 	ce_travel_dir = null
 
 

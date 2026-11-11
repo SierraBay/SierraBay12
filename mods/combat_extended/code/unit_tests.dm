@@ -8288,6 +8288,9 @@
 	  за ним, через тело попадает в него. Радиус растёт с размером моба.
 	- Пролёт мимо тела: урон с расстоянием не снимается, моб запоминается, сообщение только у
 	  близкого пролёта небесшумного снаряда.
+	- Body outside its tile: a bullet up the next column hits a body shifted into that column.
+	  With no shift, from its own firer and with the switch off, it does not. After a missed roll
+	  the bullet stays in its column. The tracer sees the shifted body.
 	- Лежащие: клик по клетке с точкой в теле делает целью лежащего, с точкой вне тела нет, и
 	  клик по пятну крови под ним так же. Пуля над лежащим в цель за ним его не задевает, и в
 	  срезанном углу тоже.
@@ -8353,6 +8356,7 @@
 	check_body_circle(failures, H, bystander)
 	check_prone(failures, H)
 	check_corner_bodies(failures, H, bystander)
+	check_reaching_body(failures)
 	check_living_shield(failures)
 	check_flyby(failures, mark)
 	check_overflight(failures, H, mark)
@@ -8747,6 +8751,91 @@
 		failures += "срезанный угол: без выключателя пуля встретила меха"
 	mech.forceMove(spot(-2, -2))
 	reset_arena()
+
+/**
+ * Body outside its tile. The bullet flies from 0,-2 up column 0 to the right edge of tile 0,2. On
+ * row 1 the line is 11.6 px right of the column centre. A human on 1,1 shifted 13 px west has its
+ * body centre 19 px right of it: 7.4 px from the line, inside the radius. The real hit comes last:
+ * a wounded human can fall and stop being dense.
+ */
+/datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/check_reaching_body(list/failures)
+	var/mob/living/carbon/human/H = make_human()
+	if(!H)
+		failures += "тело вне клетки: не удалось создать человека"
+		return
+	H.forceMove(spot(1, 1))
+
+	var/damage_before = H.getBruteLoss()
+	var/obj/item/projectile/unshifted = reaching_shot()
+	fly_reaching(unshifted)
+	if(H.getBruteLoss() != damage_before || (H in unshifted.permutated))
+		failures += "тело вне клетки: пуля встретила несдвинутого человека в соседней колонке, урон [H.getBruteLoss() - damage_before]"
+	spend(unshifted)
+
+	H.pixel_x = H.default_pixel_x - 13
+	var/obj/item/projectile/probe = reaching_shot()
+	var/pass_distance = probe.ce_get_pass_distance(H)
+	if(isnull(pass_distance) || pass_distance > H.ce_get_hit_radius())
+		failures += "тело вне клетки: линия идёт в [pass_distance] пикселях от тела, радиус [H.ce_get_hit_radius()]"
+	spend(probe)
+
+	var/obj/item/projectile/own = reaching_shot()
+	own.firer = H
+	fly_reaching(own)
+	if(H.getBruteLoss() != damage_before || QDELETED(own))
+		failures += "тело вне клетки: пуля задела своего стрелка, урон [H.getBruteLoss() - damage_before]"
+	spend(own)
+
+	ce_physical_hits_enabled = FALSE
+	var/obj/item/projectile/switched_off = reaching_shot()
+	fly_reaching(switched_off)
+	ce_physical_hits_enabled = TRUE
+	if(H.getBruteLoss() != damage_before || QDELETED(switched_off))
+		failures += "тело вне клетки: без выключателя пуля задела сдвинутого, урон [H.getBruteLoss() - damage_before]"
+	spend(switched_off)
+
+	// A failed roll that passes the body: the bullet goes on up its own column.
+	var/old_pass_share = ce_miss_pass_share
+	ce_miss_pass_share = 100
+	ce_zone_miss_chances[BP_CHEST] = 100
+	var/obj/item/projectile/rolled_past = reaching_shot()
+	var/steps = fly_reaching(rolled_past)
+	ce_zone_miss_chances[BP_CHEST] = 0
+	ce_miss_pass_share = old_pass_share
+	if(steps != 3 || rolled_past.loc != spot(0, 1) ||!(H in rolled_past.permutated) || H.getBruteLoss() != damage_before)
+		failures += "тело вне клетки: после промаха броском шагов [steps] из 3, пуля в [rolled_past.loc?.x - spot(0, 0).x],[rolled_past.loc?.y - spot(0, 0).y], человек пройден [(H in rolled_past.permutated)], урон [H.getBruteLoss() - damage_before]"
+	spend(rolled_past)
+
+	var/obj/item/projectile/test/trace = make_projectile(/obj/item/projectile/test, spot(0, -2))
+	trace.set_clickpoint(click_at(world.icon_size, world.icon_size / 2))
+	trace.original = spot(0, 2)
+	trace.setup_trajectory(spot(0, -2), spot(0, 2))
+	fly_reaching(trace)
+	if(trace.hit_thing != H)
+		failures += "тело вне клетки: трассировщик не увидел сдвинутого, увидел [trace.hit_thing || "ничего"]"
+	spend(trace)
+
+	var/obj/item/projectile/shot = reaching_shot()
+	steps = fly_reaching(shot)
+	if(!QDELETED(shot) || H.getBruteLoss() <= damage_before)
+		failures += "тело вне клетки: пуля через сдвинутое тело в него не попала, шагов [steps], пуля цела [!QDELETED(shot)]"
+	spend(shot)
+
+	H.pixel_x = H.default_pixel_x
+	H.forceMove(spot(-2, -2))
+	reset_arena()
+
+/// A bullet from 0,-2 at the right edge of tile 0,2 (`check_reaching_body()`).
+/datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/reaching_shot()
+	RETURN_TYPE(/obj/item/projectile)
+	return aim(spot(0, 2), list(world.icon_size, world.icon_size / 2), 0, spot(0, -2))
+
+/// Flies the bullet 3 steps at most: from 0,-2 up to 0,1, the row of the shifted body. Returns the
+/// steps that ended in the tile of its vector point.
+/datum/unit_test/combat_extended/pixel_aim/physical_hits/proc/fly_reaching(obj/item/projectile/projectile)
+	. = 0
+	while(. < 3 && fly_along(projectile))
+		.++
 
 /**
  * Живой щит решает за держащего: пуля, промахнувшаяся по щиту, не задевает и его. Пуля, чья линия

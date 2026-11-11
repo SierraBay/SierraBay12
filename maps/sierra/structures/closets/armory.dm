@@ -1,13 +1,14 @@
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory
 	name = "armory guncabinet"
 
-/obj/structure/closet/secure_closet/guncabinet/sierra_armory/z9
+/obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg
 	name = "carabine guncabinet"
 
-/obj/structure/closet/secure_closet/guncabinet/sierra_armory/z9/WillContain()
-	return list(/obj/item/gun/projectile/automatic/bullpup_rifle/light = 2,
-				/obj/item/ammo_magazine/mil_rifle/heavy = 6,
-				/obj/item/ammo_magazine/mil_rifle/heavy/practice = 2)
+/obj/structure/closet/secure_closet/guncabinet/sierra_armory/smg/WillContain()
+	return list(/obj/item/gun/projectile/automatic/sec_smg/c20a = 2,
+				/obj/item/ammo_magazine/smg_nt/rubber = 4,
+				/obj/item/ammo_magazine/smg_nt = 4,
+				/obj/item/ammo_magazine/smg_nt/ap = 2)
 
 /obj/structure/closet/secure_closet/guncabinet/sierra_armory/shotgun
 	name = "shotgun guncabinet"

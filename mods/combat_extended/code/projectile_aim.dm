@@ -195,6 +195,8 @@
  * навыка: умелый стрелок гасит разброс оружия, но не отдачу.
  */
 /obj/item/projectile/proc/ce_get_spread_arc()
+	if(istype(src, /obj/item/projectile/beam/emitter))
+		return 0
 	var/arc = dispersion * ce_dispersion_arc_degrees
 	if(ce_physical_hits_active())
 		if(ce_point_blank)
@@ -239,6 +241,9 @@
  * перенацеливает уже летящий снаряд в клетку, и пиксель клика к ней не относится.
  */
 /obj/item/projectile/proc/ce_aim_trajectory()
+	// Machinery beams retain their original trajectory, independent of CE aiming settings.
+	if(istype(src, /obj/item/projectile/beam/emitter))
+		return
 	if(ce_trajectory_aimed)
 		return
 	ce_trajectory_aimed = TRUE
@@ -419,7 +424,7 @@
 		return FALSE
 	// Дальше: прямой шаг из угла, а летит снаряд по диагонали (`ce_face_travel()`).
 	ce_travel_dir = step_dir
-	if(!ce_meet_corner_bodies(corner))
+	if(!ce_meet_corner_bodies(corner) || !ce_meet_reaching_bodies(corner))
 		return FALSE
 	// Точка приземления лежит в срезанном углу: снаряд кончается в нём (`projectile_landing.dm`).
 	if(ce_land_if_due())
