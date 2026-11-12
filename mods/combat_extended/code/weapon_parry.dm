@@ -40,9 +40,7 @@
 
 	Крит: два независимых броска, как в CE. Первый это чистое парирование: удар отбит целиком, ни
 	износа, ни волны. Второй это ответный удар: оружие бьёт атакующего своей силой, через его броню.
-	Безоружную атаку (удар рукой, захват, обезоруживание) ответ бьёт в руку, которой атаковали:
-	это бывший порез о вещь при обезоруживании, в Bay он бросался на каждую попытку. Атаку оружием:
-	в зону, которую выбрал парирующий.
+	Ripostes always target the chest, including counters to unarmed attacks.
 */
 
 /obj/item
@@ -359,8 +357,7 @@
 
 /**
  * Ответный удар оружием по атакующему: силой оружия, его типом урона и пробитием, через броню.
- * Безоружную атаку ответ бьёт в руку, которой атаковали, атаку оружием: в зону, которую выбрал
- * парирующий. Возвращает TRUE, если удар нанесён.
+ * Always targets the chest, including counters to unarmed attacks. Returns TRUE on a hit.
  */
 /obj/item/proc/ce_riposte(mob/living/user, mob/living/attacker, atom/damage_source)
 	if(!istype(user) || !istype(attacker) || attacker == user || attacker.stat == DEAD)
@@ -368,7 +365,6 @@
 	if(force < 1 || !user.Adjacent(attacker))
 		return FALSE
 	var/armed = isitem(damage_source)
-	var/zone = armed ? ce_get_riposte_zone(user) : ce_get_attacking_hand_zone(attacker)
 	user.do_attack_animation(attacker)
 	if(hitsound)
 		playsound(attacker, hitsound, 50, TRUE)
@@ -376,20 +372,7 @@
 		attacker.visible_message(SPAN_DANGER("\The [user] ripostes, striking \the [attacker] with \the [src]!"))
 	else
 		var/datum/pronouns/pronouns = attacker.choose_from_pronouns()
-		attacker.visible_message(SPAN_DANGER("\The [attacker] hurts [pronouns.his] hand on \the [src]!"))
+		attacker.visible_message(SPAN_DANGER("\The [user] counters, striking \the [attacker] in [pronouns.his] chest with \the [src]!"))
 	admin_attack_log(user, attacker, "Riposted with \a [src]", "Was hit by a riposte with \a [src]", "riposted with \a [src] at")
-	attacker.apply_damage(force, damtype, zone, damage_flags(), src, armor_penetration)
+	attacker.apply_damage(force, damtype, BP_CHEST, damage_flags(), src, armor_penetration)
 	return TRUE
-
-
-/// Зона ответного удара по атаке оружием: выбранная парирующим, глаза и рот считаются как голова.
-/proc/ce_get_riposte_zone(mob/living/user)
-	var/zone = user.zone_sel?.selecting
-	return zone ? check_zone(zone) : BP_CHEST
-
-
-/// Кисть, которой `attacker` атаковал без оружия: активная. null значит не человек.
-/proc/ce_get_attacking_hand_zone(mob/living/attacker)
-	if(!ishuman(attacker))
-		return null
-	return attacker.hand ? BP_L_HAND : BP_R_HAND

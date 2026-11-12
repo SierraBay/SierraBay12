@@ -37,6 +37,7 @@
 #include "code/concussion.dm"
 #include "code/flashbang_effects.dm"
 #include "code/weapon_parry.dm"
+#include "code/melee_accuracy.dm"
 #include "code/disarm_gunfire.dm"
 #include "code/codex.dm"
 #include "code/concealed_accessories.dm"

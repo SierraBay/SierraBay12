@@ -1290,7 +1290,7 @@
 	  и ломается на нуле. Ящик высыпает содержимое.
 	- Не изнашиваются энергомеч и клинок генокрада.
 	- Крит: шанс по навыку. При шансе 0 износ без ответа, при 100 ответ без износа: за атаку
-	  оружием в зону парирующего, за безоружную в кисть, которой били.
+	  both armed and unarmed counters target the chest regardless of selected zone.
 	- Настоящее парирование энергомеча мечом меч изнашивает, выключенный мод: нет. Байевский бросок
 	  на 1 HP против стального ножа выключен.
 	- Порез о вещь при обезоруживании выключен, выключенный мод его возвращает.
@@ -1507,9 +1507,14 @@
 		. += "крит 0: меч [worn.get_current_health()] из [worn.get_max_health()], атакующему [attacker.getBruteLoss()] урона"
 
 	ce_parry_crit_chance = 100
+	defender.zone_sel = new /obj/screen/zone_sel(null)
+	spawned += defender.zone_sel
+	defender.zone_sel.selecting = BP_L_FOOT
 	var/obj/item/material/sword/riposting = new_item(/obj/item/material/sword, T)
 	riposting.ce_on_parried(defender, esword.force, esword, attacker)
-	var/obj/item/organ/external/aimed = attacker.get_organ(ce_get_riposte_zone(defender))
+	var/obj/item/organ/external/aimed = attacker.get_organ(BP_CHEST)
+	if(brute_of(attacker, BP_L_FOOT))
+		. += "Armed riposte damaged the selected foot instead of the chest."
 	if(riposting.get_current_health() < riposting.get_max_health() || !aimed?.brute_dam)
 		. += "крит 100, атака оружием: меч [riposting.get_current_health()] из [riposting.get_max_health()], зона ответа [aimed?.organ_tag], [aimed?.brute_dam]"
 
@@ -1520,8 +1525,8 @@
 	riposting.ce_on_parried(defender, 5, null, boxer)
 	var/obj/item/organ/external/left = boxer.get_organ(BP_L_HAND)
 	var/obj/item/organ/external/right = boxer.get_organ(BP_R_HAND)
-	if(!left.brute_dam || right.brute_dam)
-		. += "крит 100, кулак левой: левая кисть [left.brute_dam], правая [right.brute_dam]"
+	if(left.brute_dam || right.brute_dam || brute_of(boxer, BP_L_FOOT) || !brute_of(boxer, BP_CHEST))
+		. += "Unarmed counter must damage the chest, leaving hands and selected foot unharmed."
 
 
 /// Настоящее парирование через `handle_shield()`, с шансом крита 0. Отдаёт список провалов.
@@ -1842,6 +1847,11 @@
 		. += "реакция проиграна: исход [lost_reaction], а спуск не должен быть нажат"
 
 	force_chances(100)
+	holder.lying = TRUE
+	var/prone = gun.ce_disarm_gunfire(holder, disarmer)
+	if(prone != CE_DISARM_GUNFIRE_NONE || disarmer.getFireLoss() > 0)
+		. += "A lying holder fired during disarm: outcome [prone]."
+	holder.lying = FALSE
 	holder.a_intent = I_HELP
 	var/helping = gun.ce_disarm_gunfire(holder, disarmer)
 	holder.a_intent = I_HURT

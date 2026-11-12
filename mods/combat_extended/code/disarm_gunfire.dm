@@ -47,7 +47,7 @@
  * спуск не нажат (0), ружьё отвели в сторону или держащий выстрелил в обезоруживающего.
  */
 /obj/item/gun/proc/ce_disarm_gunfire(mob/living/carbon/human/holder, mob/living/carbon/human/disarmer)
-	if(holder.a_intent == I_HELP || safety())
+	if(holder.lying || holder.a_intent == I_HELP || safety())
 		return CE_DISARM_GUNFIRE_NONE
 	var/list/chances = ce_get_disarm_gunfire_chances(holder, disarmer)
 	if(!prob(chances[1]))
