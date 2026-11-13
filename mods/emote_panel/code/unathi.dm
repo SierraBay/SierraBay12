@@ -1,4 +1,5 @@
 /singleton/species/unathi/default_emotes = list(
+	/singleton/emote/visible/flick,
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -17,6 +18,7 @@
 )
 
 /singleton/species/unathi/yeosa/default_emotes = list(
+	/singleton/emote/visible/flick,
 	/singleton/emote/human/swish,
 	/singleton/emote/human/wag,
 	/singleton/emote/human/sway,
@@ -82,6 +84,7 @@
 
 /singleton/species/unathi/proc/add_unathi_verbs()
 	var/list/unathi_verbs = list(
+		/mob/living/carbon/human/unathi/verb/lizard_flick,
 		/mob/living/carbon/human/unathi/verb/swish,
 		/mob/living/carbon/human/unathi/verb/wag,
 		/mob/living/carbon/human/unathi/verb/qwag,
@@ -99,6 +102,11 @@
 /singleton/species/unathi/New()
 	. = ..()
 	add_unathi_verbs()
+
+/mob/living/carbon/human/unathi/verb/lizard_flick()
+	set name = "S - Высунуть язык"
+	set category = "Emote"
+	sample_air()
 
 /mob/living/carbon/human/unathi/verb/lizard_bellow()
 	set name = "X - Рычать"
