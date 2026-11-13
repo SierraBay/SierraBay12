@@ -40,7 +40,7 @@
 			to_chat(user, "There is already a seed loaded.")
 			return TRUE
 		var/obj/item/seeds/S =W
-		if(S.seed && S.seed.get_trait(TRAIT_IMMUTABLE) > 0)
+		if(S.seed && S.seed.get_trait(TRAIT_IMMUTABLE) > 0 && S.seed.product_type != /mob/living/carbon/alien/diona)
 			to_chat(user, "That seed is not compatible with our genetics technology.")
 		else if(user.unEquip(W, src))
 			seed = W
@@ -266,6 +266,9 @@
 		if(!loaded_gene || !seed)
 			return TRUE
 
+		if(seed.seed && seed.seed.product_type == /mob/living/carbon/alien/diona && !seed.seed.nymph_gene_can_apply(loaded_gene))
+			to_chat(user, SPAN_WARNING("A replicant pod can only express sap chemistry, pigment, glow, thorns, stingers, slick sap, a volatile burst, a bluespace step, or maturation and production time."))
+			return TRUE
 
 		var/expertise = 0
 		if(user)
@@ -304,7 +307,10 @@
 			seed.update_seed()
 
 		if(!failed_task)
-			seed.seed.apply_gene(loaded_gene)
+			if(!seed.seed || !seed.seed.apply_gene(loaded_gene))
+				failed_task = TRUE
+			else
+				seed.update_appearance()
 
 		start_task()
 		return TRUE

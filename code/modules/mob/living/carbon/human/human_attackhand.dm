@@ -190,6 +190,8 @@
 			playsound(loc, attack.attack_sound, 25, 1, -1)
 			attack.apply_effects(H, src, real_damage, hit_zone)
 			apply_damage(real_damage, attack.get_damage_type(), hit_zone, damage_flags=attack.damage_flags())
+			nymph_expression_struck(H)
+			H.nymph_expression_strike(src)
 			if (attack.should_attack_log)
 				admin_attack_log(H, src, "Has [pick(attack.attack_verb)] their victim.", "was [pick(attack.attack_verb)] by their attacker", "has [pick(attack.attack_verb)]")
 
@@ -218,6 +220,10 @@
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(damage, damtype, affecting, dam_flags)
 	updatehealth()
+	nymph_expression_struck(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/attacker = user
+		attacker.nymph_expression_strike(src)
 
 //Breaks all grips and pulls that the mob currently has.
 /mob/living/carbon/human/proc/break_all_grabs(mob/living/carbon/user)

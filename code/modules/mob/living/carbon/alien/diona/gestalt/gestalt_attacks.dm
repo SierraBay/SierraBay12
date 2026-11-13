@@ -2,6 +2,8 @@
 	if(user.loc == src)
 		return
 
+	try_expression_retaliation(user)
+
 	if(istype(user, /mob/living/carbon/alien/diona) && user.a_intent != I_HURT)
 		can_roll_up_atom(user)
 		return

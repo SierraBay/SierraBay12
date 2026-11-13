@@ -51,7 +51,7 @@
 
 /obj/item/stock_parts/computer/scanner/flora/proc/flora_scan_results(obj/item/seeds, details = 0)
 	RETURN_TYPE(/list)
-	if(istype(seeds, /obj/item/reagent_containers/food/snacks/grown) || (istype(seeds,/obj/machinery/portable_atmospherics/hydroponics)|| istype(seeds,/obj/item/seeds)))
+	if(istype(seeds, /obj/item/reagent_containers/food/snacks/grown) || istype(seeds, /obj/machinery/portable_atmospherics/hydroponics) || istype(seeds, /obj/item/seeds) || istype(seeds, /obj/item/plant_pot))
 		return plant_scan_results(seeds)
 	return list("No significant flora genes found in [seeds].")
 
@@ -77,7 +77,13 @@
 		grown_seed = H.seed
 		grown_reagents = H.reagents
 
+	else if(istype(target, /obj/item/plant_pot))
+		var/obj/item/plant_pot/pot = target
+		grown_seed = pot.seed
+
 	if(!grown_seed)
+		if(istype(target, /obj/item/plant_pot) || istype(target, /obj/machinery/portable_atmospherics/hydroponics/plantpot))
+			return list("The pot is empty.")
 		return
 
 	if(grown_seed.mysterious && !grown_seed.scanned)
@@ -345,6 +351,21 @@
 		if(user_skill_level >= 5)
 			gene_info = "[SSplants.gene_tag_masks[GENE_SPECIAL] ||   "N/A"]"
 		dat += "<div style='margin-bottom: 6px; padding: 6px; background: rgba(150, 100, 200, 0.15); border-left: 3px solid rgba(150, 100, 200, 0.5);'>⛛ Temporal/spatially unstable. <span style='float:right;color:#888;font-size:0.85em;'>[gene_info]</span></div>"
+
+	var/plant_colour = grown_seed.get_trait(TRAIT_PLANT_COLOUR)
+	var/product_colour = grown_seed.get_trait(TRAIT_PRODUCT_COLOUR)
+	var/leaves_colour = grown_seed.get_trait(TRAIT_LEAVES_COLOUR)
+	var/pigment_text = "Pigment."
+	if(istext(plant_colour))
+		pigment_text += " Foliage [SPAN_COLOR(plant_colour, plant_colour)]."
+	if(istext(product_colour))
+		pigment_text += " Fruit [SPAN_COLOR(product_colour, product_colour)]."
+	if(istext(leaves_colour))
+		pigment_text += " Leaves [SPAN_COLOR(leaves_colour, leaves_colour)]."
+	gene_info = ""
+	if(user_skill_level >= 1)
+		gene_info = "[SSplants.gene_tag_masks[GENE_PIGMENT] || "N/A"]"
+	dat += "<div style='margin-bottom: 6px; padding: 6px; background: rgba(180, 140, 80, 0.15); border-left: 3px solid rgba(180, 140, 80, 0.5);'>[pigment_text] <span style='float:right;color:#888;font-size:0.85em;'>[gene_info]</span></div>"
 
 	if(grown_seed.get_trait(TRAIT_EXUDE_GASSES))
 		gene_info = ""

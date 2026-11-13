@@ -3,6 +3,8 @@
 
 #include "code/cultures_diona.dm"
 #include "code/station.dm"
+#include "code/plant_expression.dm"
+#include "code/plant_vine.dm"
 
 #endif
 // BEGIN_INTERNALS

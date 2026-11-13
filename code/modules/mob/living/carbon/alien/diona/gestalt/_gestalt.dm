@@ -33,6 +33,7 @@
 		SetTransform(scale = clamp(length(nymphs) * 0.1, 1, 2))
 	else
 		ClearTransform()
+	refresh_nymph_expression()
 
 
 /obj/structure/diona_gestalt/Destroy()
