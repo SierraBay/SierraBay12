@@ -9,9 +9,9 @@
 	matter = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
 
 	allow_passengers = FALSE
-	max_hp = 40
-	min_damage = 50
-	max_repair = 20
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
 	melee_damage = 30
 	repair_damage = 15
 	req_material = MATERIAL_ALUMINIUM

@@ -40,6 +40,9 @@ other types of metals and chemistry for reagents).
 	var/list/access = list()		//List of access groups that can use this design
 	var/quality = 100				// Quality of reverse-engineered design (0-100). 100 = perfect, < 50 = defective
 	var/reverse_engineered = FALSE	// Was this design created via reverse engineering?
+	/// A new item of `build_path`. The fabricator UI shows its sprite after `Initialize()`, because
+	/// an item can change its sprite there. Null: the UI shows the initial sprite of `build_path`.
+	var/obj/item/ui_sample
 
 
 /datum/design/New()
@@ -170,8 +173,13 @@ GLOBAL_LIST_AS(build_path_to_design_datum_path, populate_design_datum_index())
 	if(!build_path)
 		return
 	var/obj/item/A = new src.build_path
-	materials = A.matter
-	desc = A.desc
+	take_item_sample(A)
+
+/// Copies the data of a new item of `build_path` into the design.
+/datum/design/autolathe/proc/take_item_sample(obj/item/sample)
+	materials = sample.matter
+	desc = sample.desc
+	ui_sample = sample
 
 /datum/design/proc/autolathe_list_category()
 	for(var/datum/design/autolathe/P in subtypesof(/datum/design/autolathe))

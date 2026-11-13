@@ -12,10 +12,10 @@
 	power_use = 2.5
 	matter = list(MATERIAL_STEEL = 30000, MATERIAL_PLASTIC = 5000, MATERIAL_ALUMINIUM = 5000)
 
-	max_hp = 40
-	min_damage = 25
-	max_repair = 10
-	repair_damage = 7.5
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
+	repair_damage = 15
 	bump_type = MEDIUM_BUMP
 	req_material = MATERIAL_ALUMINIUM
 	front_modificator_damage = 1

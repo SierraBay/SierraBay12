@@ -48,6 +48,7 @@
 		/obj/item/device/remote_device/quartermaster,
 		/obj/item/device/megaphone,
 		/obj/item/clothing/suit/armor/pcarrier/light,
+		/obj/item/clothing/accessory/armor_plate/sneaky,
 		/obj/item/device/binoculars,
 		/obj/item/device/scanner/price,
 	)

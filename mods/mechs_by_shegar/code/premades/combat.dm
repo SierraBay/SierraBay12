@@ -1,6 +1,7 @@
 /mob/living/exosuit/premade/combat
 	name = "combat mech"
 	desc = "A sleek, modern combat mech."
+	external_armor_type = /obj/item/mech_external_armor/buletproof
 
 /mob/living/exosuit/premade/combat/Initialize()
 	if(!head)

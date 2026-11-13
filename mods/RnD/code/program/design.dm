@@ -20,6 +20,8 @@
 
 /datum/computer_file/binary/design/proc/set_filename(new_name)
 	filename = sanitizeFileName("[new_name]")
+	// The drive does not accept "." or "," in a file name (`validate_name()`).
+	filename = replace_characters(filename, list("." = "_", "," = "_"))
 	if(findtext(filename, "datum_design_") == 1)
 		filename = copytext(filename, 14)
 

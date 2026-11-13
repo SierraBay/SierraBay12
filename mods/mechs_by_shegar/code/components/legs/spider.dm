@@ -10,11 +10,11 @@
 	turn_delay = 1
 	power_use = 12.5
 	max_hp = 50
-	min_damage = 50
+	min_damage = 20
 	max_repair = 30
 	matter = list(MATERIAL_STEEL = 48000, MATERIAL_ALUMINIUM = 5000, MATERIAL_PLASTIC = 5000)
 
-	repair_damage = 25
+	repair_damage = 30
 	bump_type = MEDIUM_BUMP
 	can_strafe = TRUE
 	front_modificator_damage = 1

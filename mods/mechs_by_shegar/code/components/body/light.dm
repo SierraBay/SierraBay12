@@ -11,10 +11,10 @@
 	climb_time = 15
 	matter = list(MATERIAL_STEEL = 100000, MATERIAL_ALUMINIUM = 20000, MATERIAL_PLASTIC = 10000)
 
-	max_hp = 80
-	min_damage = 50
-	max_repair = 40
-	repair_damage = 20
+	max_hp = 75
+	min_damage = 30
+	max_repair = 50
+	repair_damage = 15
 	hide_pilot = TRUE
 	req_material = MATERIAL_ALUMINIUM
 	front_modificator_damage = 1
@@ -51,7 +51,3 @@
 			"[WEST]"  = list("x" = 16, "y" = 16)
 			)
 	. = ..()
-
-/obj/item/mech_component/chassis/light/prebuild()
-	. = ..()
-	m_armour = new /obj/item/robot_parts/robot_component/armour/exosuit/radproof(src)
