@@ -218,6 +218,10 @@ SUBSYSTEM_DEF(jobs)
 				if(LAZYACCESS(job.minimum_character_age, species.get_bodytype()) && (slot.age < job.minimum_character_age[species.get_bodytype()]))
 					continue
 				if(slot.CorrectLevel(job, level))
+					// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY
+					if (!character_persist_odyssey_job_allowed(player.client, job.title, slot.slot))
+						continue
+					// [/SIERRA-ADD]
 					candidates += player
 					break
 		else if(prefs.CorrectLevel(job,level))
@@ -225,6 +229,10 @@ SUBSYSTEM_DEF(jobs)
 				continue
 			if(LAZYACCESS(job.minimum_character_age, species.get_bodytype()) && (prefs.age < job.minimum_character_age[species.get_bodytype()]))
 				continue
+			// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY
+			if (!character_persist_odyssey_job_allowed(player.client, job.title))
+				continue
+			// [/SIERRA-ADD]
 			candidates += player
 	return candidates
 
@@ -358,12 +366,17 @@ SUBSYSTEM_DEF(jobs)
 		if(player.client.prefs.use_slot_priority_list)
 			for(var/datum/preferences_slot/prefs in player.client.prefs.slot_priority_list)
 				if(prefs.CorrectLevel(job, level))
-					player.client.prefs.load_character(prefs.slot)
-					assign_role(player, job.title, mode = mode)
-					return TRUE
+					if(!player.client.prefs.load_character(prefs.slot))
+						continue
+					// [SIERRA-EDIT] - CHARACTER_PERSIST / ODYSSEY: honor assign_role failure (job lock / restrict)
+					if(assign_role(player, job.title, mode = mode))
+						return TRUE
+					// [/SIERRA-EDIT]
 		else if(player.client.prefs.CorrectLevel(job, level))
-			assign_role(player, job.title, mode = mode)
-			return TRUE
+			// [SIERRA-EDIT] - CHARACTER_PERSIST / ODYSSEY
+			if(assign_role(player, job.title, mode = mode))
+				return TRUE
+			// [/SIERRA-EDIT]
 	return FALSE
 
 /datum/controller/subsystem/jobs/proc/equip_custom_loadout(mob/living/carbon/human/H, datum/job/job)
@@ -441,6 +454,11 @@ SUBSYSTEM_DEF(jobs)
 /datum/controller/subsystem/jobs/proc/equip_rank(mob/living/carbon/human/H, rank, joined_late = 0)
 	if(!H)
 		return
+
+	// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY inventory restore
+	if (character_persist_should_restore_inventory(H))
+		return character_persist_equip_rank_restoring(H, rank, joined_late)
+	// [/SIERRA-ADD]
 
 	var/datum/job/job = get_by_title(rank)
 	var/list/spawn_in_storage
@@ -560,6 +578,10 @@ SUBSYSTEM_DEF(jobs)
 	SET_BIT(H.hud_updateflag, SPECIALROLE_HUD)
 
 	job.post_equip_rank(H, alt_title || rank)
+
+	// [SIERRA-ADD] - CHARACTER_PERSIST / ODYSSEY: implants need mind (copy_to is earlier).
+	character_persist_reapply_odyssey_body_extras(H)
+	// [/SIERRA-ADD]
 
 	H.client.show_location_blurb(3 SECONDS)
 

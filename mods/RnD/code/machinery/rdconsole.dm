@@ -6,7 +6,6 @@
 #define SCREEN_LOCKED "locked"
 #define SCREEN_DISK_DESIGNS "disk_management_designs"
 #define SCREEN_DISK_TECH "disk_management_tech"
-#define SCREEN_MISSIONS "missions"
 #define SCREEN_CORPS "corps"
 
 /obj/machinery/computer/rdconsole
@@ -50,8 +49,6 @@
 	var/searched_disk_design_text
 	var/search_text
 	var/quick_deconstruct = FALSE
-	/// pad_id of the R&D mission drone pad linked to this console. 0 = not linked.
-	var/linked_drone_pad_id = 0
 	/// Set to TRUE when the player explicitly disconnects from a server, prevents auto-reconnect via fallback.
 	var/server_disconnected = FALSE
 
@@ -130,16 +127,6 @@
 		disk = D
 		to_chat(user, SPAN_NOTICE("You add \the [D] to the machine."))
 
-	// Physical photo — submit for photograph_object mission objective
-	else if(istype(D, /obj/item/photo))
-		submit_physical_photo(user, D)
-		return TRUE
-
-	// Artifact analysis report — submit for study_artifact mission objective
-	else if(istype(D, /obj/item/paper/anomaly_scan/mission))
-		submit_artifact_report(user, D)
-		return TRUE
-
 	SSnano.update_uis(src)
 	update_icon()
 	return ..()
@@ -160,8 +147,7 @@
 	if(!F)
 		return
 	F.check_item_for_tech(I)
-	// NOTE: Research points removed - new system uses money and missions instead
-	// Players can now extract designs to disk using "Extract Design" button
+	// Research points removed — extract designs to disk / corp reputation / Odyssey briefs.
 	F.experiments.do_research_object(I)
 
 /obj/machinery/computer/rdconsole/proc/get_science_account()
@@ -224,30 +210,6 @@
 		if(T.id == tech_id)
 			return T
 	return null
-
-/// Link this console to a drone pad by its pad_id. Called from settings UI.
-/obj/machinery/computer/rdconsole/proc/link_drone_pad(mob/user)
-	var/entered_id = input(user, "Введите ID дрон пада (задаётся мультитулом на самом паде):", "Привязка дрон пада", linked_drone_pad_id) as num|null
-	if(isnull(entered_id))
-		return
-	entered_id = round(entered_id)
-	if(!entered_id)
-		linked_drone_pad_id = 0
-		to_chat(user, SPAN_NOTICE("Привязка к дрон паду сброшена."))
-		SSnano.update_uis(src)
-		return
-	var/obj/machinery/drone_pad/rd_mission/found = null
-	for(var/obj/machinery/drone_pad/rd_mission/P in SSmachines.get_machinery_of_type(/obj/machinery/drone_pad/rd_mission))
-		if(P.pad_id == entered_id)
-			found = P
-			break
-	if(!found)
-		to_chat(user, SPAN_WARNING("Дрон пад с ID [entered_id] не найден."))
-		return
-	linked_drone_pad_id = entered_id
-	found.linked_console = src
-	to_chat(user, SPAN_NOTICE("Консоль привязана к дрон паду ID [entered_id]."))
-	SSnano.update_uis(src)
 
 /// Compile deconstructed tech levels into a sellable research report disk
 /obj/machinery/computer/rdconsole/proc/compile_research_report(mob/living/user)
@@ -437,11 +399,6 @@
 		linked_account_number = 0
 		department_account_key = null
 		to_chat(usr, SPAN_NOTICE("Счёт отвязан."))
-	if(href_list["link_drone_pad"])
-		if(allowed(usr) || emagged)
-			link_drone_pad(usr)
-		else
-			to_chat(usr, SPAN_WARNING("Unauthorized access."))
 	if(href_list["toggle_link_menu"]) // User wants to see the device linkage menu.
 		if(allowed(usr) || emagged)
 			show_link_menu = !show_link_menu
@@ -572,7 +529,7 @@
 				if(("[being_built.id]" in F_b.banned_designs) || is_design_banned_on_server("[being_built.id]"))
 					to_chat(usr, SPAN_WARNING("Производство этого дизайна запрещено."))
 				else
-					target_device.queue_design(being_built.file, amount)
+					target_device.queue_design(being_built.file, amount, usr)
 	if(href_list["clear_queue"]) // Clearing a queue
 		if(target_device)
 			target_device.clear_queue()
@@ -611,14 +568,6 @@
 			screen = SCREEN_MAIN
 		else
 			to_chat(usr, SPAN_WARNING("Unauthorized access."))
-
-	// Submit RDF scan file from disk for scan_object mission objective
-	if(href_list["submit_rdf"])
-		submit_rdf_file(usr, href_list["submit_rdf"], href_list["submit_rdf_mission"])
-
-	// Submit digital photo from disk for photograph_object mission objective
-	if(href_list["submit_photo"])
-		submit_digital_photo(usr, href_list["submit_photo"], href_list["submit_photo_mission"])
 
 	return TRUE
 
@@ -666,107 +615,6 @@
 			break
 
 	reset_screen()
-
-// --- Mission data submission procs ---
-
-/obj/machinery/computer/rdconsole/proc/submit_physical_photo(mob/user, obj/item/photo/P)
-	if(!LAZYLEN(P.captured_object_types))
-		to_chat(user, SPAN_WARNING("Фотография не содержит распознаваемых объектов."))
-		return
-	for(var/datum/derelict_mission/M in derelict_missions_list)
-		if(M.state != RND_MISSION_STATE_AVAILABLE)
-			continue
-		for(var/datum/derelict_mission_objective/O in M.objectives)
-			if(O.objective_type != "photograph_object" || O.completed)
-				continue
-			if(M.away_z && P.photo_z != M.away_z)
-				continue
-			for(var/captured_type in P.captured_object_types)
-				if(ispath(captured_type, O.target_type))
-					O.advance()
-					to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": фотография принята. ([O.get_status_text()])"))
-					user.drop_from_inventory(P)
-					qdel(P)
-					SSnano.update_uis(src)
-					return
-	to_chat(user, SPAN_WARNING("Фотография не соответствует ни одному активному контракту."))
-
-/obj/machinery/computer/rdconsole/proc/submit_artifact_report(mob/user, obj/item/paper/anomaly_scan/mission/report)
-	for(var/datum/derelict_mission/M in derelict_missions_list)
-		if(M.state != RND_MISSION_STATE_AVAILABLE)
-			continue
-		if(!M.target_artifact_report_type)
-			continue
-		for(var/datum/derelict_mission_objective/O in M.objectives)
-			if(O.objective_type != "study_artifact" || O.completed)
-				continue
-			if(istype(report, M.target_artifact_report_type))
-				O.advance()
-				to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": отчёт об артефакте принят. ([O.get_status_text()])"))
-				user.drop_from_inventory(report)
-				qdel(report)
-				SSnano.update_uis(src)
-				return
-	to_chat(user, SPAN_WARNING("Отчёт не соответствует ни одному активному контракту."))
-
-/obj/machinery/computer/rdconsole/proc/submit_rdf_file(mob/user, rdf_ref, mission_ref)
-	if(!disk)
-		return
-	var/datum/computer_file/data/rdf/rdf_file = locate(rdf_ref) in disk.stored_files
-	if(!istype(rdf_file))
-		return
-	var/target_type_str = rdf_file.metadata ? rdf_file.metadata["target_type"] : null
-	var/scan_z = text2num(rdf_file.metadata ? rdf_file.metadata["scan_z"] : "0")
-	if(!target_type_str)
-		to_chat(user, SPAN_WARNING("Файл RDF повреждён: нет данных о цели сканирования."))
-		return
-	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
-	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
-		to_chat(user, SPAN_WARNING("Контракт недоступен."))
-		return
-	for(var/datum/derelict_mission_objective/O in M.objectives)
-		if(O.objective_type != "scan_object" || O.completed)
-			continue
-		if(M.away_z && scan_z != M.away_z)
-			continue
-		var/type_str = "[O.target_type]"
-		if(target_type_str != type_str && !dd_hasprefix(target_type_str, "[type_str]/"))
-			continue
-		O.advance()
-		to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": данные сканирования приняты. ([O.get_status_text()])"))
-		disk.remove_file(rdf_file)
-		SSnano.update_uis(src)
-		return
-	to_chat(user, SPAN_WARNING("Данные сканирования не соответствуют целям выбранного контракта."))
-
-/obj/machinery/computer/rdconsole/proc/submit_digital_photo(mob/user, photo_ref, mission_ref)
-	if(!disk)
-		return
-	var/datum/computer_file/binary/photo/photo_file = locate(photo_ref) in disk.stored_files
-	if(!istype(photo_file) || !photo_file.photo)
-		return
-	var/datum/derelict_mission/M = locate(mission_ref) in derelict_missions_list
-	if(!M || M.state != RND_MISSION_STATE_AVAILABLE)
-		to_chat(user, SPAN_WARNING("Контракт недоступен."))
-		return
-	var/obj/item/photo/p = photo_file.photo
-	if(!LAZYLEN(p.captured_object_types))
-		to_chat(user, SPAN_WARNING("Фотография не содержит распознаваемых объектов."))
-		return
-	for(var/datum/derelict_mission_objective/O in M.objectives)
-		if(O.objective_type != "photograph_object" || O.completed)
-			continue
-		if(M.away_z && p.photo_z != M.away_z)
-			continue
-		for(var/captured_type in p.captured_object_types)
-			if(ispath(captured_type, O.target_type))
-				O.advance()
-				to_chat(user, SPAN_NOTICE("Контракт \"[M.title]\": фотография принята. ([O.get_status_text()])"))
-				disk.remove_file(photo_file)
-				SSnano.update_uis(src)
-				return
-	to_chat(user, SPAN_WARNING("Фотография не соответствует целям выбранного контракта."))
-
 
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
 	var/obj/machinery/r_n_d/server/S_gpd = get_server()
@@ -849,7 +697,6 @@
 		data["has_protolathe"] = !!linked_lathe
 		data["has_circuit_imprinter"] = !!linked_imprinter
 		data["can_research"] = can_research
-		data["linked_drone_pad_id"] = linked_drone_pad_id
 
 		var/list/tech_tree_list = list()
 		if(F)
@@ -1158,49 +1005,6 @@
 
 				data["selected_node"] = technology_data
 
-	// Derelict missions screen
-	if(screen == SCREEN_MISSIONS)
-		var/list/mission_list = list()
-		for(var/datum/derelict_mission/M in derelict_missions_list)
-			var/list/obj_list = list()
-			for(var/datum/derelict_mission_objective/O in M.objectives)
-				obj_list += list(list(
-					"description" = O.description,
-					"status" = O.get_status_text(),
-					"completed" = O.completed
-				))
-			mission_list += list(list(
-				"id" = M.id,
-				"ref" = "\ref[M]",
-				"title" = M.title,
-				"description" = M.description,
-				"corp_name" = get_rnd_mission_corporation_name(M.corporation_id),
-				"site_name" = M.away_site_name,
-				"mission_type" = M.mission_type,
-				"state" = M.state,
-				"objectives" = obj_list
-			))
-		data["missions"] = mission_list
-
-		// Disk file data for submission UI
-		data["has_disk"] = !!disk
-		if(disk)
-			var/list/rdf_files = list()
-			for(var/datum/computer_file/data/rdf/rdf_file in disk.stored_files)
-				rdf_files += list(list(
-					"id" = "\ref[rdf_file]",
-					"filename" = "[rdf_file.filename].[rdf_file.filetype]",
-					"scan_area" = (rdf_file.metadata ? rdf_file.metadata["scan_area"] : "???")
-				))
-			data["rdf_files"] = rdf_files
-			var/list/photo_files = list()
-			for(var/datum/computer_file/binary/photo/photo_file in disk.stored_files)
-				photo_files += list(list(
-					"id" = "\ref[photo_file]",
-					"filename" = "[photo_file.filename].[photo_file.filetype]"
-				))
-			data["photo_files"] = photo_files
-
 	// Corporation reputation screen
 	if(screen == SCREEN_CORPS)
 		var/list/corporations = get_rnd_mission_corporations()
@@ -1438,5 +1242,4 @@
 #undef SCREEN_LOCKED
 #undef SCREEN_DISK_DESIGNS
 #undef SCREEN_DISK_TECH
-#undef SCREEN_MISSIONS
 #undef SCREEN_CORPS

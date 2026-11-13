@@ -17,6 +17,23 @@
 		char_name += C.prefs.job_high ? " ([C.prefs.job_high])" : null
 		// We encode it twice becase of special characters and `byond bug id: 2399401`
 		send_output(C, url_encode(url_encode(char_name)), "lobbybrowser:setCharacterName")
+	update_titlescreen_odyssey(C)
+
+/// Optional hook for Odyssey / other mods — default no-op.
+/datum/map/proc/update_titlescreen_odyssey(client/C)
+	return
+
+
+/mob/new_player/proc/lobby_show_odyssey()
+	to_chat(src, SPAN_NOTICE("Одиссея сейчас не подключена."))
+
+
+/mob/new_player/proc/lobby_open_odyssey_panel()
+	return
+
+
+/mob/new_player/proc/lobby_start_odyssey_vote()
+	return
 
 
 /mob/new_player/Topic(href, href_list)
@@ -29,6 +46,22 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		if (GAME_STATE > RUNLEVEL_LOBBY)
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		if (odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот перед готовностью."))
+			ready = 0
+			GLOB.using_map.update_titlescreen(client)
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 		ready = !ready
 		GLOB.using_map.update_titlescreen(client)
 		return TOPIC_HANDLED
@@ -38,7 +71,21 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 		client.prefs.open_load_dialog(src, TRUE)
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey"])
+		lobby_show_odyssey()
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey_panel"])
+		lobby_open_odyssey_panel()
+		return TOPIC_HANDLED
+	if (href_list["lobby_odyssey_vote"])
+		lobby_start_odyssey_vote()
 		return TOPIC_HANDLED
 	if (href_list["lobby_wiki"])
 		client.link_wiki()

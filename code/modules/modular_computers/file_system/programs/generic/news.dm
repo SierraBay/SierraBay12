@@ -1,5 +1,8 @@
 #define NEWSCAST_HOME 1
 #define NEWSCAST_VIEW_CHANNEL 2
+#define NEWSCAST_SECTOR_MAP 3
+#define NEWSCAST_CHRONICLE 4
+#define NEWSCAST_BRIEFING 5
 
 /datum/computer_file/program/newscast
 	filename = "newscast"
@@ -19,12 +22,32 @@
 	var/notifs_enabled = TRUE
 	var/datum/feed_channel/active_channel
 	var/datum/feed_network/connected_group
+	/// Sector currently opened in the optional Sector Map panel.
+	var/viewed_sector_id
+	/// When TRUE, the Sector Map dossier panel is collapsed.
+	var/dossier_collapsed = FALSE
 
 /datum/nano_module/program/newscast/proc/news_alert(announcement)
 	if (!notifs_enabled || !announcement)
 		return
 	program.computer.visible_notification(announcement)
 	program.computer.audible_notification("sound/machines/twobeep.ogg")
+
+/// Mods may override to expose an expedition / sector map tab.
+/datum/nano_module/program/newscast/proc/newscast_has_sector_map()
+	return FALSE
+
+/datum/nano_module/program/newscast/proc/newscast_has_chronicle()
+	return FALSE
+
+/datum/nano_module/program/newscast/proc/newscast_has_briefing()
+	return FALSE
+
+/datum/nano_module/program/newscast/proc/newscast_append_sector_data(list/data, mob/user)
+	return
+
+/datum/nano_module/program/newscast/proc/newscast_ui_template()
+	return "newscast.tmpl"
 
 /datum/nano_module/program/newscast/Destroy()
 	if (connected_group)
@@ -58,9 +81,46 @@
 		notifs_enabled = !notifs_enabled
 		return TRUE
 
+	else if (href_list["view_sector_map"])
+		if (!newscast_has_sector_map())
+			return TRUE
+		prog_state = NEWSCAST_SECTOR_MAP
+		active_channel = null
+		return TRUE
+
+	else if (href_list["view_chronicle"])
+		if (!newscast_has_chronicle())
+			return TRUE
+		prog_state = NEWSCAST_CHRONICLE
+		active_channel = null
+		return TRUE
+
+	else if (href_list["view_briefing"])
+		if (!newscast_has_briefing())
+			return TRUE
+		prog_state = NEWSCAST_BRIEFING
+		active_channel = null
+		return TRUE
+
 	else if (href_list["return_to_home"])
 		active_channel = null
 		prog_state = NEWSCAST_HOME
+		return TRUE
+
+	else if (href_list["odyssey_inspect"] || href_list["action"] == "odyssey_inspect")
+		if (!newscast_has_sector_map())
+			return TRUE
+		var/sector_id = href_list["odyssey_inspect"] || href_list["target"]
+		if (sector_id)
+			viewed_sector_id = sector_id
+			dossier_collapsed = FALSE
+			prog_state = NEWSCAST_SECTOR_MAP
+		return TRUE
+
+	else if (href_list["odyssey_toggle_dossier"] || href_list["action"] == "odyssey_toggle_dossier")
+		if (!newscast_has_sector_map())
+			return TRUE
+		dossier_collapsed = !dossier_collapsed
 		return TRUE
 
 	return FALSE
@@ -125,13 +185,35 @@
 				story["story_ref"] = "\ref[message]"
 				data["active_stories"] += list(story)
 
+	data["prog_state"] = prog_state
+	newscast_append_sector_data(data, user)
+	if ((prog_state == NEWSCAST_SECTOR_MAP || prog_state == NEWSCAST_CHRONICLE || prog_state == NEWSCAST_BRIEFING) && !data["odyssey_active"])
+		prog_state = NEWSCAST_HOME
+		data["prog_state"] = NEWSCAST_HOME
+	data["show_sector_map"] = (prog_state == NEWSCAST_SECTOR_MAP && data["odyssey_active"])
+	data["show_chronicle"] = (prog_state == NEWSCAST_CHRONICLE && data["odyssey_active"])
+	data["show_briefing"] = (prog_state == NEWSCAST_BRIEFING && data["odyssey_active"])
+	var/compact_map = FALSE
+	if (program?.computer)
+		compact_map = !!(program.computer.get_hardware_flag() & (PROGRAM_PDA | PROGRAM_TABLET))
+	data["odyssey_compact"] = compact_map
+
+	// Keep a stable window size across Odyssey tabs so the UI does not jump.
+	var/width = 450
+	var/height = 600
+	if (compact_map)
+		width = 560
+		height = 740
+	else if (data["odyssey_active"] || prog_state == NEWSCAST_SECTOR_MAP || prog_state == NEWSCAST_CHRONICLE || prog_state == NEWSCAST_BRIEFING)
+		width = 1000
+		height = 720
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "newscast.tmpl", name, 450, 600, state = state)
+	if (ui)
+		ui.set_window_size(width, height)
+	else
+		ui = new(user, src, ui_key, newscast_ui_template(), name, width, height, state = state)
 		ui.auto_update_layout = 1
 		ui.set_auto_update(1)
 		ui.set_initial_data(data)
 		ui.open()
-
-#undef NEWSCAST_HOME
-#undef NEWSCAST_VIEW_CHANNEL

@@ -38,6 +38,10 @@
 		client.playtitlemusic()
 		if(client.get_preference_value(/datum/client_preference/goonchat) == GLOB.PREF_YES)
 			client.chatOutput.start()
+		// [SIERRA-ADD] - ODYSSEY
+		// Stuck can_close=0 progress window after DC mid-load, or re-show if load still running.
+		odyssey_progress_ui_sync_client(client)
+		// [/SIERRA-ADD]
 
 	var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
 	var/singleton/security_level/SL = security_state.current_security_level

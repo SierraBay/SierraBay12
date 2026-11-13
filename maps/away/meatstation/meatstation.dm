@@ -21,10 +21,6 @@
 	spawn_cost = 2
 	area_usage_test_exempted_root_areas = list(/area/meatstation)
 
-/datum/map_template/ruin/away_site/meatstation/after_load(z)
-	..()
-	spawn_derelict_mission_object(/obj/structure/derelict_mission_artifact/bio_cell, z)
-
 /obj/shuttle_landmark/nav_meatstation/nav1
 	name = "Navpoint #1"
 	landmark_tag = "nav_meatstation_1"

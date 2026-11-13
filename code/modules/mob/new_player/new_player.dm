@@ -161,6 +161,10 @@
 		client.link_url(config.lore_url, "Lore", TRUE)
 		return 1
 	if (href_list["ready"])
+		if (text2num(href_list["ready"]) && odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот перед готовностью."))
+			ready = 0
+			return TOPIC_HANDLED
 		ready = GAME_STATE > RUNLEVEL_LOBBY ? 0 : text2num(href_list["ready"])
 	if (href_list["refresh"])
 		panel.close()
@@ -225,6 +229,11 @@
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
 			return TOPIC_HANDLED
 		// [/SIERRA-EDIT]
+		// [SIERRA-ADD] - ODYSSEY
+		if (odyssey_progress_blocking())
+			to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+			return TOPIC_HANDLED
+		// [/SIERRA-ADD]
 
 		if(GAME_STATE != RUNLEVEL_GAME)
 			to_chat(usr, SPAN_WARNING("The round has either not started yet or already ended."))
@@ -244,6 +253,9 @@
 		LateChoices()
 
 	if(href_list["SelectedJob"])
+		if(odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+			to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот."))
+			return TOPIC_HANDLED
 		// [SIERRA-EDIT]
 		if(player_is_antag(mind, only_offstation_roles = 1))
 			to_chat(src, SPAN_WARNING("You are currently being prepared for a special role. Please wait for the round to begin!"))
@@ -278,6 +290,14 @@
 
 /mob/new_player/proc/AttemptLateSpawn(datum/job/job, spawning_at)
 
+	if(odyssey_slot_locked(client?.prefs?.client_ckey, client?.prefs?.default_slot))
+		to_chat(src, SPAN_WARNING("Этот персонаж погиб в текущей Одиссее. Выберите другой слот."))
+		return 0
+	// [SIERRA-ADD] - ODYSSEY
+	if (odyssey_progress_blocking())
+		to_chat(src, SPAN_WARNING("Одиссея ещё загружает/сохраняет кампанию. Подождите окончания окна прогресса."))
+		return 0
+	// [/SIERRA-ADD]
 	if(GAME_STATE == RUNLEVEL_GAME)
 		if(job.late_joinable == FALSE)
 			to_chat(usr, SPAN_WARNING("Вы не можете зайти за эту роль во время раунда."))
@@ -323,6 +343,8 @@
 		return 0
 
 	character = SSjobs.equip_rank(character, job.title, 1)					//equips the human
+	if (ishuman(character))
+		character_persist_latejoin_ensure_inventory(character)
 	SScustomitems.equip_custom_items(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core

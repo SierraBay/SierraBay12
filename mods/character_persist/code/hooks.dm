@@ -4,7 +4,7 @@
 
 
 /hook/death/proc/character_persist_death(mob/living/carbon/human/H, gibbed)
-	if (!istype(H))
+	if (!istype(H) || H.odyssey_corpse_restored)
 		return TRUE
 	if (character_persist_is_virtual_body(H) || character_persist_is_offstation_antag(H))
 		return TRUE

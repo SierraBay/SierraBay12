@@ -1,4 +1,365 @@
-{{if data.has_network}}
+{{if data.show_briefing}}
+	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
+	<hr>
+<style>
+	.odBrief {
+		font-family: Verdana, Geneva, sans-serif;
+		line-height: 1.5;
+		color: #c8d4d0;
+		max-width: 52em;
+	}
+	.odBriefHead {
+		text-align: center;
+		margin: 0 0 12px 0;
+	}
+	.odBriefHead .ship {
+		font-size: 1.2em;
+		letter-spacing: 0.08em;
+		color: #85bab6;
+	}
+	.odBriefHead .title {
+		font-size: 1.05em;
+		color: #dce8e4;
+	}
+	.odBriefHead .classif {
+		font-size: 0.85em;
+		color: #7a9a96;
+		margin-top: 4px;
+	}
+	.odBrief h4 {
+		color: #85bab6;
+		border-bottom: 1px solid #335555;
+		padding-bottom: 4px;
+		margin: 14px 0 8px 0;
+	}
+	.odBrief .quote {
+		font-style: italic;
+		color: #a8c0bc;
+	}
+	.odBrief .note {
+		font-size: 0.9em;
+		color: #889999;
+	}
+	.odBrief .clip {
+		margin: 0 0 10px 0;
+		padding: 6px 8px;
+		background: rgba(0,0,0,0.2);
+		border-left: 3px solid #5588aa;
+	}
+	.odBriefFoot {
+		margin-top: 14px;
+		font-size: 0.85em;
+		color: #667777;
+		text-align: center;
+	}
+</style>
+	{{if data.odyssey_briefing}}
+	<div class="odBrief">
+		<div class="odBriefHead">
+			<div class="ship"><b>NSV SIERRA</b></div>
+			<div class="title"><b>Брифинг экспедиции «Одиссея»</b></div>
+			<div class="classif">Секретно · для личного состава</div>
+		</div>
+
+		<h4>Обстановка</h4>
+		<p>
+			Смена экспедиции: <b>{{:data.odyssey_briefing.shift}}</b><br>
+			Глубина маршрута (эшелон): <b>{{:data.odyssey_briefing.echelon}}</b> из <b>{{:data.odyssey_briefing.max_shifts}}</b><br>
+			Текущий сектор: <b>«{{:data.odyssey_briefing.sector_name}}»</b>
+			{{if data.odyssey_briefing.danger_label}} — класс угрозы: <b>{{:data.odyssey_briefing.danger_label}}</b>{{/if}}
+		</p>
+		{{if data.odyssey_briefing.summary}}<p class="quote">«{{:data.odyssey_briefing.summary}}»</p>{{/if}}
+		<p>{{:data.odyssey_briefing.course}}</p>
+
+		<h4>Задание</h4>
+		<p><b>Контракт экспедиции:</b></p>
+		{{for data.odyssey_briefing.contracts}}
+			<p><b>{{:value.title}}</b><br>
+			{{if value.brief}}<span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Активный контракт экспедиции не указан.</i></p>
+		{{/for}}
+		<p><b>Цели текущей смены:</b></p>
+		{{for data.odyssey_briefing.objectives}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — исполнение: {{:value.progress}} из {{:value.target}}{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Отдельных целей смены в брифинге нет.</i></p>
+		{{/for}}
+		<p><b>Научный бриф сектора:</b></p>
+		{{for data.odyssey_briefing.science_briefs}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Научных брифов на эту смену нет.</i></p>
+		{{/for}}
+		<p><b>Брифы отделов:</b></p>
+		{{for data.odyssey_briefing.dept_briefs}}
+			<p>• <b>{{:value.title}}</b>
+			{{if value.target}} — {{:value.progress}} / {{:value.target}}{{/if}}
+			{{if value.target_dept_label}} · отдел: {{:value.target_dept_label}}{{/if}}
+			{{if value.reward_credits}} · награда: <b>{{:value.reward_credits}}</b> таллеров{{/if}}
+			{{if value.brief}}<br><span class="quote">{{:value.brief}}</span>{{/if}}</p>
+		{{empty}}
+			<p class="note"><i>Брифов отделов на эту смену нет.</i></p>
+		{{/for}}
+
+		<h4>Личный состав</h4>
+		<p>{{:data.odyssey_briefing.personnel}}</p>
+		{{if data.odyssey_briefing.dead}}
+			<p><b>Потери, зафиксированные в журнале:</b></p>
+			{{for data.odyssey_briefing.dead_roster}}
+				• {{:value.name}} — {{:value.job}}{{if value.death_shift}} <span class="note">(смена {{:value.death_shift}})</span>{{/if}}<br>
+			{{/for}}
+			<p class="note">Места погибших членов экипажа закрыты до конца экспедиции.</p>
+		{{/if}}
+
+		<h4>Флот и техника</h4>
+		<p><b>Шаттлы, не вернувшиеся на Сьерру:</b></p>
+		{{for data.odyssey_briefing.abandoned_shuttles}}
+			• <b>{{:value}}</b><br>
+		{{empty}}
+			<p>Потерь вспомогательного флота не отмечено.</p>
+		{{/for}}
+		<p><b>Повреждённые единицы:</b></p>
+		{{for data.odyssey_briefing.damaged_shuttles}}
+			• {{:value.line}}<br>
+		{{empty}}
+			<p>Критических повреждений шаттлов в отчёте нет.</p>
+		{{/for}}
+
+		<h4>Из бортового журнала</h4>
+		{{for data.odyssey_briefing.headlines}}
+			<div class="clip">
+				<b>{{:value.title}}</b><br>
+				<span class="note">Смена {{:value.shift}} · {{:value.at}}</span>
+				{{if value.body}}<br>{{:value.body}}{{/if}}
+			</div>
+		{{empty}}
+			<p class="note"><i>Публичных записей пока нет.</i></p>
+		{{/for}}
+
+		<div class="odBriefFoot">— Конец брифинга. Полный журнал: вкладка Chronicle —</div>
+	</div>
+	{{/if}}
+{{else data.show_chronicle}}
+	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
+	<hr>
+	<h3>Бортовой журнал экспедиции</h3>
+	{{for data.odyssey_chronicle}}
+		<div style="margin:0 0 12px 0; padding:8px; border-left:3px solid #5588aa; background:rgba(0,0,0,0.15);">
+			<b>{{:value.title}}</b><br>
+			<font size=1>Смена {{:value.shift}} · {{:value.at}}</font><br>
+			{{if value.body}}{{:value.body}}{{/if}}
+		</div>
+	{{empty}}
+		<p><i>В журнале пока нет записей.</i></p>
+	{{/for}}
+{{else data.show_sector_map}}
+	{{:helper.link("Return", 'arrowreturnthick-1-w', {'return_to_home' : 1})}}
+	<hr>
+	<!-- Odyssey Sector Map (public read-only in Newscast) -->
+<style>
+	.odysseyShell {
+		position: relative;
+		width: 100%;
+		height: 560px;
+		overflow: hidden;
+		box-sizing: border-box;
+		border: 2px solid #9a9a9a;
+		border-radius: 10px;
+		background: #14100f;
+		color: #f0f0f0;
+		font-family: "Lucida Console", "Courier New", monospace;
+	}
+	.odysseyShell::before {
+		content: "";
+		pointer-events: none;
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		z-index: 0;
+		opacity: .18;
+		background: repeating-linear-gradient(to bottom, rgba(255,255,255,.04) 0px, rgba(255,255,255,.04) 1px, transparent 1px, transparent 3px);
+	}
+	.odysseyTitle { position: absolute; z-index: 4; top: 10px; left: 14px; font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #fff; text-shadow: 3px 3px 0 #000; }
+	.odysseyStatus { position: absolute; z-index: 4; top: 40px; left: 14px; right: 260px; font-size: 11px; color: #c8c0b8; }
+	.odysseyShell--dossierCollapsed .odysseyStatus { right: 14px; }
+	.odysseyMap { position: absolute; z-index: 1; left: 8px; right: 8px; top: 70px; bottom: 48px; overflow: hidden; }
+	.odysseySvg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+	.odysseyNode {
+		position: absolute; z-index: 2; width: 16px; height: 16px; margin-left: -8px; margin-bottom: -8px;
+		border-radius: 50%; box-sizing: border-box; border: 1px solid rgba(0,0,0,.55); pointer-events: none;
+	}
+	.odysseyNode--civilian { background: #3fd03a; box-shadow: 0 0 6px #3fd03a; }
+	.odysseyNode--hostile { background: #e23b3b; box-shadow: 0 0 6px #e23b3b; }
+	.odysseyNode--nebula { background: #9b4fd6; box-shadow: 0 0 6px #9b4fd6; }
+	.odysseyNode--locked { opacity: .45; }
+	.odysseyNode--current { box-shadow: 0 0 0 2px #fff, 0 0 10px #fff; }
+	.odysseyNode--selected { box-shadow: 0 0 0 2px #ffe14a, 0 0 12px #ffe14a; }
+	.odysseyNode--viewed { box-shadow: 0 0 0 2px #9ad7ff, 0 0 10px #9ad7ff; }
+	.odysseyNode--terminal { box-shadow: 0 0 0 2px #ffe14a, 0 0 12px #ffe14a; }
+	.odysseyHit { position: absolute; z-index: 6; width: 30px; height: 30px; margin-left: -15px; margin-bottom: -15px; }
+	.odysseyHit .link, .odysseyHit a {
+		display: block; width: 30px; height: 30px; padding: 0 !important; margin: 0 !important;
+		border: 0 !important; background: transparent !important; box-shadow: none !important;
+		text-indent: -9999px; overflow: hidden;
+	}
+	.odysseyBracket {
+		position: absolute; z-index: 3; width: 28px; height: 28px; margin-left: -14px; margin-bottom: -14px; pointer-events: none;
+		background:
+			linear-gradient(#ffe14a,#ffe14a) left top / 8px 2px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) left top / 2px 8px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) right top / 8px 2px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) right top / 2px 8px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) left bottom / 8px 2px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) left bottom / 2px 8px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) right bottom / 8px 2px no-repeat,
+			linear-gradient(#ffe14a,#ffe14a) right bottom / 2px 8px no-repeat;
+	}
+	.odysseyLabel {
+		position: absolute; z-index: 5; margin-left: 18px; margin-bottom: -10px; padding: 3px 7px;
+		max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+		border: 1px solid #d8d8d8; background: #0a0a0a; color: #fff; font-size: 11px;
+	}
+	.odysseyLabel .link, .odysseyLabel a {
+		color: #fff !important; background: transparent !important; border: 0 !important;
+		padding: 0 !important; margin: 0 !important; box-shadow: none !important;
+	}
+	.odysseyShip {
+		position: absolute; z-index: 3; width: 0; height: 0; margin-left: -28px; margin-bottom: -6px;
+		border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 14px solid #3fd03a;
+		pointer-events: none;
+	}
+	.odysseyDossier {
+		position: absolute; z-index: 7; top: 64px; right: 8px; bottom: 48px; width: 240px; padding: 10px;
+		box-sizing: border-box; border: 1px solid #9a9a9a; border-radius: 8px; background: rgba(10,8,8,.94);
+		overflow: auto; font-size: 12px; line-height: 1.4;
+	}
+	.odysseyDossier--collapsed {
+		top: 64px; bottom: auto; width: auto; max-width: 200px; height: auto; padding: 6px 8px;
+		white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+	}
+	.odysseyDossierHead {
+		display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px;
+	}
+	.odysseyDossierHead h3 { margin: 0; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.odysseyDossierToggle .link, .odysseyDossierToggle a {
+		color: #d7d0c8 !important; background: transparent !important; border: 1px solid #9a9a9a !important;
+		padding: 1px 6px !important; margin: 0 !important; border-radius: 4px;
+	}
+	.odysseyDossier h3 { margin: 0 0 6px 0; font-size: 13px; color: #fff; }
+	.odysseyDossierMeta { margin-bottom: 8px; color: #c8c0b8; }
+	.odysseyDossierBody { margin-bottom: 10px; color: #ece6de; }
+	.odysseyDossierExits { margin-bottom: 10px; color: #b9d7ff; }
+	.odysseyDossierHint { color: #8f8680; font-size: 11px; }
+	.odysseyFooter {
+		position: absolute; z-index: 4; left: 8px; right: 8px; bottom: 6px; height: 34px; padding: 0 10px;
+		box-sizing: border-box; border: 1px solid #9a9a9a; border-radius: 8px; background: rgba(10,8,8,.92);
+		font-size: 11px; line-height: 34px;
+	}
+	.odysseyFooterLeft { float: left; }
+	.odysseyFooterRight { float: right; color: #d7d0c8; }
+	.odysseyDot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+	.odysseyDot--civilian { background: #3fd03a; }
+	.odysseyDot--hostile { background: #e23b3b; }
+	.odysseyDot--nebula { background: #9b4fd6; }
+	.odysseyDot--terminal { background: #ffe14a; box-shadow: 0 0 4px #ffe14a; }
+	.odysseyInactive { margin: 80px auto; width: 70%; padding: 20px; text-align: center; border: 1px solid #9a9a9a; border-radius: 8px; background: rgba(0,0,0,.55); }
+	.odysseyShell--compact { height: 520px; }
+	.odysseyShell--compact .odysseyTitle { font-size: 18px; top: 8px; left: 10px; }
+	.odysseyShell--compact .odysseyStatus { top: 32px; left: 10px; font-size: 10px; max-width: 92%; }
+	.odysseyShell--compact .odysseyMap { left: 4px; right: 4px; top: 52px; bottom: 156px; }
+	.odysseyShell--compact .odysseyDossier {
+		top: auto; left: 8px; right: 8px; bottom: 42px; width: auto; height: 108px; padding: 8px; font-size: 11px;
+	}
+	.odysseyShell--compact.odysseyShell--dossierCollapsed .odysseyMap { bottom: 48px; }
+	.odysseyShell--compact .odysseyDossier--collapsed {
+		left: auto; right: 8px; bottom: 42px; width: auto; height: auto; max-width: 200px;
+	}
+	.odysseyShell--compact .odysseyFooter { font-size: 10px; height: 30px; line-height: 30px; }
+	.odysseyShell--compact .odysseyLabel { font-size: 10px; padding: 2px 5px; }
+</style>
+	{{if !data.odyssey || !data.odyssey.active}}
+		<div class="odysseyInactive">Навигационная сеть Одиссеи неактивна.</div>
+	{{else}}
+		<div class="odysseyShell{{if data.odyssey_compact}} odysseyShell--compact{{/if}}{{if data.odyssey.dossier_collapsed}} odysseyShell--dossierCollapsed{{/if}}">
+			<div class="odysseyTitle">SECTOR MAP</div>
+			<div class="odysseyStatus">Эшелон {{:data.odyssey.shift}}/{{:data.odyssey.max_shifts}} · Текущий сектор: {{:data.odyssey.current_name}}</div>
+			<div class="odysseyMap">
+				<svg class="odysseySvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+					{{for data.odyssey.lines}}
+						<line x1="{{:value.x1}}" y1="{{:value.y1}}" x2="{{:value.x2}}" y2="{{:value.y2}}" stroke="#d8d8d8" stroke-width="0.35" vector-effect="non-scaling-stroke" />
+					{{/for}}
+				</svg>
+				{{for data.odyssey.nodes}}
+					{{if value.current}}
+						<div class="odysseyShip" style="left:{{:value.x}}%;bottom:{{:value.y}}%;"></div>
+					{{/if}}
+					<div class="odysseyNode odysseyNode--{{:value.visual}} {{:value.terminal ? 'odysseyNode--terminal' : ''}} {{:value.available || value.current ? '' : 'odysseyNode--locked'}} {{:value.current ? 'odysseyNode--current' : ''}} {{:value.selected ? 'odysseyNode--selected' : ''}} {{:value.viewed ? 'odysseyNode--viewed' : ''}}" style="left:{{:value.x}}%;bottom:{{:value.y}}%;"></div>
+					{{if value.available}}
+						<div class="odysseyBracket" style="left:{{:value.x}}%;bottom:{{:value.y}}%;"></div>
+						<div class="odysseyLabel" style="left:{{:value.x}}%;bottom:{{:value.y}}%;">
+							{{:helper.link(value.choice_label, '', {'odyssey_inspect': value.id})}}
+						</div>
+					{{/if}}
+					<div class="odysseyHit" style="left:{{:value.x}}%;bottom:{{:value.y}}%;">
+							{{:helper.link('.', '', {'odyssey_inspect': value.id})}}
+					</div>
+				{{/for}}
+			</div>
+			{{if data.odyssey.dossier_collapsed}}
+				<div class="odysseyDossier odysseyDossier--collapsed">
+					<span class="odysseyDossierToggle">{{:helper.link("◀ Досье", '', {'odyssey_toggle_dossier': 1})}}</span>
+					{{if data.odyssey.has_view}} · {{:data.odyssey.view.name}}{{/if}}
+				</div>
+			{{else}}
+				<div class="odysseyDossier">
+					<div class="odysseyDossierHead">
+						{{if data.odyssey.has_view}}
+							<h3>{{:data.odyssey.view.name}}</h3>
+						{{else}}
+							<h3>Досье сектора</h3>
+						{{/if}}
+						<span class="odysseyDossierToggle">{{:helper.link("▶", '', {'odyssey_toggle_dossier': 1})}}</span>
+					</div>
+					{{if data.odyssey.has_view}}
+						<div class="odysseyDossierMeta">
+							Класс: {{:data.odyssey.view.danger_label}} · Эшелон {{:data.odyssey.view.depth}}
+							{{if data.odyssey.view.terminal}} · Финал{{/if}}
+							{{if data.odyssey.view.current}} · Здесь{{/if}}
+							{{if data.odyssey.view.selected}} · Курс{{/if}}
+						</div>
+						<div class="odysseyDossierBody">{{:data.odyssey.view.summary}}</div>
+						<div class="odysseyDossierExits">Коридоры: {{:data.odyssey.view.exits}}</div>
+						{{if data.odyssey.view.available}}
+							<div class="odysseyDossierHint">Сектор доступен. Курс прокладывает командование.</div>
+						{{else data.odyssey.view.current}}
+							<div class="odysseyDossierHint">Сьерра находится в этом секторе.</div>
+						{{else}}
+							<div class="odysseyDossierHint">Нет прямого коридора из текущего положения.</div>
+						{{/if}}
+					{{else}}
+						<div class="odysseyDossierHint">Выберите сектор на карте.</div>
+					{{/if}}
+				</div>
+			{{/if}}
+			<div class="odysseyFooter">
+				<span class="odysseyFooterLeft">
+					<span class="odysseyDot odysseyDot--civilian"></span>Гражданский
+					&nbsp;<span class="odysseyDot odysseyDot--hostile"></span>Враждебный
+					&nbsp;<span class="odysseyDot odysseyDot--nebula"></span>Туманность
+					&nbsp;<span class="odysseyDot odysseyDot--terminal"></span>Финал
+				</span>
+				<span class="odysseyFooterRight">
+					Курс: {{:data.odyssey.selected_name}}{{if data.odyssey.selected_by}} · {{:data.odyssey.selected_by}}{{/if}}
+				</span>
+			</div>
+		</div>
+	{{/if}}
+{{else data.has_network}}
 	{{if data.prog_state == 1}} <!-- NEWSCAST_HOME - Display channels and date/time -->
 		<table style="width:100%">
 			<tr>
@@ -9,6 +370,20 @@
 			<td>{{:data.notifs_blurb}}
 			<td>{{:helper.link(data.notifs_enabled ? "Disable" : "Enable", data.notifs_enabled ? 'volume-off' : 'volume-o', {'toggle_notifs' : 1})}}
 		</table>
+		{{if data.odyssey_active}}
+			<h3><u>Expedition</u></h3>
+			<table style="width:100%">
+				<tr>
+				<td>{{:helper.link("Sector Map", "image", {'view_sector_map' : 1})}}
+				<td><i>Live navigational brief for Sierra's current expedition.</i>
+				<tr>
+				<td>{{:helper.link("Briefing", "clipboard", {'view_briefing' : 1})}}
+				<td><i>Expedition status, objectives, losses, shuttles.</i>
+				<tr>
+				<td>{{:helper.link("Chronicle", "book", {'view_chronicle' : 1})}}
+				<td><i>Бортовой журнал экспедиции.</i>
+			</table>
+		{{/if}}
 		<h3><u>Connected channels</u></h3>
 		<table style="width:100%">
 			{{for data.channels}}
@@ -51,4 +426,7 @@
 	{{/if}}
 {{else}}
 	<p><font color='red'><h2><b>NO NETWORK FOUND</b></h2>Couldn't fetch news data from a feed network. Ensure you have a connection to NTNet and there is a network broadcaster in your sector.</font></p>
+	{{if data.odyssey_active}}
+		<p>{{:helper.link("Open Sector Map", "image", {'view_sector_map' : 1})}}</p>
+	{{/if}}
 {{/if}}

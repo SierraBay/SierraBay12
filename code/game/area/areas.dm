@@ -245,6 +245,11 @@
 	for(var/obj/machinery/light/M in src)
 		M.set_emergency_lighting(enable)
 
+/// Calls `set_bluespace_lighting(enable)` on all `/obj/machinery/light` in src.
+/area/proc/set_bluespace_lighting(enable)
+	for(var/obj/machinery/light/M in src)
+		M.set_bluespace_lighting(enable)
+
 
 /area/Entered(A)
 	..()

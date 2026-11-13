@@ -149,6 +149,7 @@
 /obj/machinery/computer/shuttle_control/explore/pod_hand_two
 /obj/machinery/computer/shuttle_control/explore/graysontug/hand_two
 /obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod
+/obj/machinery/computer/shuttle_control/explore/changeling_droppod
 /obj/machinery/computer/shuttle_control/explore/graysontug
 /obj/machinery/computer/shuttle_control/explore/data_capsule
 /obj/machinery/computer/shuttle_control/explore/old_snz
@@ -182,6 +183,7 @@
 	/obj/machinery/computer/shuttle_control/explore/graysontug/hand_two,
 	/obj/machinery/computer/shuttle_control/explore/merc_shuttle,
 	/obj/machinery/computer/shuttle_control/explore/merc_shuttle/merc_drop_pod,
+	/obj/machinery/computer/shuttle_control/explore/changeling_droppod,
 	/obj/machinery/computer/shuttle_control/explore/graysontug,
 	/obj/machinery/computer/shuttle_control/explore/data_capsule,
 	/obj/machinery/computer/shuttle_control/explore/old_snz,

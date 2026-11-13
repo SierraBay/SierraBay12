@@ -71,6 +71,10 @@ SUBSYSTEM_DEF(supply)
 	points += amount
 	point_sources[source] += amount
 	point_sources["total"] += amount
+	// [SIERRA-ADD] Odyssey cargo dept brief (fallback if cargo mod is not loaded; cargo override replaces this proc).
+	if (odyssey_science_enabled && source != "time" && source != "total")
+		odyssey_dept_on_cargo_points(amount * 15, source)
+	// [/SIERRA-ADD]
 
 	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
 /datum/controller/subsystem/supply/proc/forbidden_atoms_check(atom/A)
