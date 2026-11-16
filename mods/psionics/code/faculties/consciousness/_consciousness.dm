@@ -9,16 +9,18 @@
 	abstract_type = /singleton/psionic_power/consciousness
 
 /singleton/psionic_power/consciousness/invoke(mob/living/user, mob/living/target)
-	. = ..()
-	if (!.)
+	if (!istype(target))
 		return FALSE
 
 	if(target.is_species(SPECIES_IPC) || target.is_species(SPECIES_ADHERENT))
 		return FALSE
 
-	if (!istype(target))
-		to_chat(user, SPAN_WARNING("Я не могу пробиться в сознание [target]."))
+	. = ..()
+	if (!.)
 		return FALSE
 
-	if(. && target.psi?.deflect_psionic_attack(user) && target != user)
-		return FALSE
+
+	var/mob/living/carbon/human/V
+	if(istype(V) && V != user)
+		if(V.psi.deflect_psionic_attack(user))
+			return FALSE

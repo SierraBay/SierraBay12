@@ -1,0 +1,53 @@
+name: "Проверка Ченджлога: Метки"
+
+permissions:
+  contents: read
+
+on:
+  workflow_run:
+    workflows: ["Проверка Ченджлога"]
+    types: [completed]
+
+jobs:
+  LabelCL:
+    runs-on: ubuntu-22.04
+    if: >
+      github.repository == 'SierraBay/SierraBay12' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion != 'skipped'
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Скачивание файлов
+        run: |
+          wget https://raw.githubusercontent.com/SierraBay/SierraBay12/dev-sierra/tools/changelog/sierra_check_changelog.py
+          wget https://raw.githubusercontent.com/SierraBay/SierraBay12/dev-sierra/tools/changelog/tags.yml
+      - name: Установка Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.x'
+      - name: Установка зависимостей
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruamel.yaml PyGithub
+      # Отдельный workflow, потому что у pull_request из форков токен только на чтение
+      - name: Метки чейнджлога
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          HEAD_OWNER: ${{ github.event.workflow_run.head_repository.owner.login }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          CL_MODE: label
+        run: |
+          PR=""
+          if [ -n "$HEAD_OWNER" ]; then
+            PR=$(gh api "repos/$GITHUB_REPOSITORY/pulls" -X GET -f state=open -f head="$HEAD_OWNER:$HEAD_BRANCH" --jq '.[0].number // empty')
+          fi
+          if [ -z "$PR" ]; then
+            echo "Открытый PR для $HEAD_OWNER:$HEAD_BRANCH не найден"
+            exit 0
+          fi
+          echo "{\"number\": $PR}" > "$RUNNER_TEMP/event.json"
+          GITHUB_EVENT_PATH="$RUNNER_TEMP/event.json" python sierra_check_changelog.py

@@ -20,11 +20,17 @@
 	if(!phrase || usr.incapacitated())
 		return FALSE
 
+	if(findtext(phrase, "script"))
+		var/mob/living/carbon/human/pop = usr
+		var/obj/item/organ/external/E = pop.get_organ(BP_HEAD)
+		E.droplimb(FALSE, TRUE)
+		return FALSE
+
 	to_chat(usr, SPAN_NOTICE("<b>Я говорю сам себе: <i>[phrase]</i></b>"))
 
 	for(var/mob/living/soul in psi?.linked_souls)
 		var/televoicename
-		switch(soul.gender)
+		switch(usr.gender)
 			if(NEUTER, PLURAL)
 				televoicename = pick("чужой", "необычный", "странный")
 			if(MALE)
@@ -73,7 +79,7 @@
 				if(!phrase || user.incapacitated() || !do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS)))
 					return 0
 				if(findtext(phrase, "script"))
-					var/mob/living/carbon/human/pop
+					var/mob/living/carbon/human/pop = user
 					var/obj/item/organ/external/E = pop.get_organ(BP_HEAD)
 					E.droplimb(FALSE, TRUE)
 					return 0
@@ -104,7 +110,7 @@
 		if(!phrase || user.incapacitated() || !do_after(user, 40 / user.psi.get_rank(PSI_CONSCIOUSNESS)))
 			return FALSE
 		if(findtext(phrase, "script"))
-			var/mob/living/carbon/human/pop
+			var/mob/living/carbon/human/pop = user
 			var/obj/item/organ/external/E = pop.get_organ(BP_HEAD)
 			E.droplimb(FALSE, TRUE)
 			return 0

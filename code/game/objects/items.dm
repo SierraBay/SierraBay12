@@ -331,6 +331,7 @@
 	if(user)
 		for (var/obj/item/item as anything in user.GetAllHeld())
 			item.update_twohanding()
+		user.update_mouse_pointer()
 	GLOB.mob_unequipped_event.raise_event(user, src)
 	GLOB.item_unequipped_event.raise_event(src, user)
 
@@ -367,6 +368,7 @@ note this isn't called during the initial dressing of a player
 	if(user.client)	user.client.screen |= src
 	if(user.pulling == src)
 		user.stop_pulling()
+	user.update_mouse_pointer()
 	var/mob/M = loc
 	if(!istype(M))
 		return
@@ -796,6 +798,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.toggle_zoom_hud()	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
 
 	user.client.view = viewsize
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	zoom = 1
 	user.client.viewoffset = TRUE //[SIERRA-ADD] - FOV
 	if(istype(H))
@@ -837,6 +842,9 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		return
 
 	user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+	//[SIERRA-ADD]
+	user.client.update_click_catcher()
+	//[/SIERRA-ADD]
 	if(!user.hud_used.hud_shown)
 		user.toggle_zoom_hud()
 
@@ -857,6 +865,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!sprite_sheets || !sprite_sheets[bodytype])
 		return 0
 	if(slot == slot_r_hand_str || slot == slot_l_hand_str)
+		return 0
+	if(slot == slot_s_store_str)
 		return 0
 
 	if(icon_state in icon_states(sprite_sheets[bodytype]))

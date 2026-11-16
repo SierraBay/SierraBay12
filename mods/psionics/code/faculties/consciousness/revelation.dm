@@ -1,7 +1,7 @@
 /singleton/psionic_power/consciousness/revelation
 	name =            "Revelate fear"
-	cost =            50
-	cooldown =        50
+	cost =            30
+	cooldown =        100
 	use_ranged =      TRUE
 	min_rank =        PSI_RANK_APPRENTICE
 	use_description = "На дистанции, нажмите на цель, целясь ей в глаза, на зеленом интенте, чтобы наслать на него ужасающий образ"
@@ -10,10 +10,13 @@
 	var/con_rank_user = user.psi.get_rank(PSI_CONSCIOUSNESS)
 	if(user.zone_sel.selecting != BP_EYES || user.a_intent != I_HELP)
 		return FALSE
+	if(con_rank_user != PSI_RANK_GRANDMASTER)
+		if(!do_after(user, 1 SECOND, target, DO_TARGET_CAN_MOVE | DO_TARGET_CAN_TURN | DO_SHOW_PROGRESS))
+			return FALSE
 	. = ..()
 	if(.)
 		var/distance = get_dist(get_turf(user), get_turf(target))
-		if(distance > (user.psi.get_rank(PSI_CONSCIOUSNESS) - 1) * 5)
+		if(distance > (con_rank_user - 1) * 5)
 			to_chat(user, SPAN_WARNING("Я не могу сконцентрироватся настолько далеко."))
 			return FALSE
 

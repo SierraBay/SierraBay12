@@ -21,6 +21,11 @@
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
+	// [SIERRA-ADD] - Reset keybindings (BYOND bug 2694120)
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+	// [/SIERRA-ADD]
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 	if(!user_acted(src))
@@ -78,7 +83,7 @@
 		ticket.close(client_repository.get_lite_client(usr.client))
 
 	if (GLOB.href_logfile)
-		to_chat(GLOB.href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		to_file(GLOB.href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][html_encode(href)]<br>")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -267,10 +272,7 @@
 		if (T.status == TICKET_OPEN && T.owner.ckey == ckey)
 			message_staff("[key_name_admin(src)] has left the game with an open ticket. Status: [length(T.assigned_admins) ? "Assigned to: [english_list(T.assigned_admin_ckeys())]" : SPAN_DANGER("Unassigned.")]")
 			break
-	if (atom_outline)
-		images -= atom_outline
-		atom_outline = null
-	outline_atom = null
+	SetOutlineAtom()
 	if (holder)
 		holder.owner = null
 		GLOB.admins -= src

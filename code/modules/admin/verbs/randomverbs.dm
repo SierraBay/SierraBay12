@@ -811,6 +811,9 @@ Ccomp's first proc.
 		view = get_preference_value(/datum/client_preference/client_view)
 		// [/SIERRA-EDIT]
 
+	//[SIERRA-ADD]
+	update_click_catcher()
+	//[/SIERRA-ADD]
 	log_and_message_admins("changed their view range to [view].")
 
 /client/proc/admin_call_shuttle()

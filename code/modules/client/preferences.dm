@@ -13,6 +13,13 @@
 	var/age
 
 /datum/preferences
+	// [SIERRA-ADD] - Keyboard preferences
+	/// Custom Keybindings
+	var/list/key_bindings = list()
+	var/hotkeys = TRUE
+	var/focus_chat_hotkey_nag = TRUE
+	// [/SIERRA-ADD]
+
 	//doohickeys for savefiles
 	var/is_guest = FALSE
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -56,6 +63,9 @@
 	..()
 
 /datum/preferences/proc/setup()
+	// [SIERRA-ADD] - Defaults must be available before loading saved bindings.
+	key_bindings = deepCopyList(get_default_keybindings())
+	// [/SIERRA-ADD]
 	if(!length(GLOB.skills))
 		GET_SINGLETON(/singleton/hierarchy/skill)
 	player_setup = new(src)
@@ -73,6 +83,11 @@
 	if(client && istype(client.mob, /mob/new_player))
 		var/mob/new_player/np = client.mob
 		np.new_player_panel(TRUE)
+
+	// [SIERRA-ADD] - Apply loaded and sanitized keybindings.
+	if(client)
+		client.set_macros()
+	// [/SIERRA-ADD]
 
 /datum/preferences/proc/load_data()
 	load_failed = null
