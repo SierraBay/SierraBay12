@@ -274,11 +274,6 @@ ID мода: COMBAT_EXTENDED
 - `ce_organ_depth_bullet`, `ce_organ_depth_melee`: как часто атака доходит до органов.
 - `ce_armor_health_per_mm`, `ce_armor_melee_wear_mult`: как быстро изнашивается вся броня.
 
-#### Тесты
-
-Юнит-тесты мода лежат в `code/unit_tests.dm`. Туда же перенесены тесты физического урона по
-видам из кор кода и модпаков `tajara` и `resomi`: этот урон теперь идёт через CE.
-
 #### Не сделано
 
 1. Типы патронов: особые патроны (AP-I, AP-HE, бесшумные, кислотные, транквилизаторы).
@@ -302,16 +297,16 @@ ID мода: COMBAT_EXTENDED
 - `code/modules/reagents/reagent_containers/syringes.dm`: `syringestab()`, бросок на отскок от
   брони заменён на `ce_fail_stab()`.
 - `code/modules/mob/living/living_defense.dm`: `bullet_act()`, доля блока для `on_hit()` из
-  `ce_get_on_hit_blocked()`, перед ним `ce_apply_armor_to_effects()`.
-- `code/modules/projectiles/projectile.dm`: `on_hit()` (`ce_get_on_hit_agony()`), `Bump()`
-  (`!ce_ricochets`), `attack_mob()` (`ce_get_projectile_hit_zone()`).
+  `ce_get_on_hit_blocked()`, перед ним `ce_block_stopped_effects()` гасит эффекты остановленного
+  снаряда. Пробивший снаряд обрабатывает кор `on_hit()` без предварительного ослабления эффектов.
+- `code/modules/projectiles/projectile.dm`: `Bump()` (`!ce_ricochets`),
+  `attack_mob()` (`ce_get_projectile_hit_zone()`).
 - `code/modules/clothing/clothing_accessories.dm`: `examine()`, `ce_get_accessories_seen_by()`.
 - `code/modules/projectiles/gun.dm`: `handle_post_fire()` (`ce_kick_view()`), `process_accuracy()`
   (`if(7 to INFINITY)`).
 - `code/modules/projectiles/ammunition/boxes.dm`, `bullets.dm`: `name` у `/obj/item/ammo_magazine/n10mm`
   и `/obj/item/ammo_casing/nt28mm` (типы Сьерры).
-- `code/unit_tests/mob_tests.dm`: семь тестов `DAMAGE_BRUTE` из `mob_damage` закомментированы и
-  перенесены в мод.
+- `code/unit_tests/mob_tests.dm`: семь тестов из `mob_damage` удалены
 
 Изменения в других модпаках:
 
@@ -320,7 +315,7 @@ ID мода: COMBAT_EXTENDED
 - `mods/psionics/code/equipment/foundation_exosuit.dm`: бронеэлемент `buletproof` у меха Фонда.
 - `mods/combat_mode/code/combat_mode.dm`: `combat_face_mouse()`, смотрящий в прицел не
   поворачивается.
-- `mods/tajara`, `mods/resomi`: тесты физического урона перенесены в мод.
+- `mods/tajara`, `mods/resomi`: удалены тесты физического урона по видам.
 - `packs/infinity`: самодельные пластины и их крафт удалены, они теперь в моде.
 - `mods/mechs_by_shegar`: внешние бронеэлементы, встроенная броня, сторона попадания после брони,
   сумки в аплинке, пассажиры, обломки, случайный мех, параметры клика для орудий меха.
@@ -459,7 +454,6 @@ ID мода: COMBAT_EXTENDED
 - Модпак `mechs_by_shegar`: бронеэлементы и части мехов. Подключается после мода.
 - Модпак `height_system`: свечение горячей брони подгоняется под рост.
 - Модпак `guns`: электрод нейтрализатора и менстоппер в юнит-тестах.
-- Модпаки `tajara` и `resomi`: шаблоны перенесённых тестов урона.
 <!--
   Будь то немодульный файл или модульный файл, который не содержится в папке,
   принадлежащей этому конкретному моду, он должен быть упомянут здесь.

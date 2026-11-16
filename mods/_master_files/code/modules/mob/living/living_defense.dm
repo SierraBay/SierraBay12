@@ -97,14 +97,9 @@
 
 
 /**
- * Попадание снаряда. Обёртка сообщает проходу по слоям, чьё это попадание, а сам проход пишет
- * снаряду, остановила ли его броня и какая доля урона её прошла (`projectile_effects.dm`). Итог
- * нужен снаряду внутри `..()` (в `after_wounding()` и `on_hit()`) и после неё стирается.
- * По нему же перед `on_hit()` гасятся боль и оглушение снаряда (`agony_armor.dm`), а после
- * `..()` обёртка их возвращает: снаряд, прошедший моба насквозь, бьёт следующего в полную силу.
- *
- * Внешний снаряд откладывается на время вызова, а не затирается: `on_hit()` может породить
- * вложенное попадание по тому же мобу: например, осколками взрыва.
+ * Track this projectile's armor outcome for after_wounding() and on_hit(). Stopped effects
+ * are gated before on_hit(), while penetrating effects retain upstream armor handling.
+ * Restore effects and the outer projectile after the call, including nested impacts.
  */
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/obj/item/projectile/outer_projectile = ce_hit_projectile

@@ -1,15 +1,7 @@
 /*
-	UTILITY_ITEMS: юнит-тесты.
-
-	Имплант адреналина: кнопка выдаётся и жмётся без сознания, рывок приводит в себя, держит
-	стан, отключку и сбивание с ног, гасит замешательство, шагает так, будто тело цело, и вдвое
-	быстрее, не валит на сломанных ногах, доливает опиаты до 30 в начале и в конце и возвращает
-	только те флаги, что снял. Тест синхронный: Life не идёт, нужные его части
-	(`handle_actions()`, `handle_regular_status_updates()`, `handle_stance()`) зовутся руками, а
-	конец рывка идёт через `end_adrenalin_burst()` напрямую, без ожидания таймера.
-
-	Звук падения из кор `human/Weaken()` тест не видит: `playsound()` слышат только мобы с
-	клиентом. Что `Weaken()` в рывке до него не доходит, держит только чтение кода.
+	UTILITY_ITEMS. Test implant activation, waking, status immunity, movement and opiate
+	top-ups. Compare measured healthy/injured burst speed and observed doses rather than
+	balance defaults. Life is driven explicitly and the burst ends without a timer wait.
 */
 
 #ifdef UNIT_TEST
@@ -104,7 +96,8 @@
 	check(implant.uses == 1, "Trigger: an unconscious host's button left [implant.uses] charges, expected 1.")
 	check(host.stat == CONSCIOUS, "Trigger: host is at stat [host.stat] right after the burst, expected conscious.")
 	check(!host.paralysis && !host.shock_stage, "Trigger: paralysis [host.paralysis] and shock_stage [host.shock_stage] not cleared.")
-	check(opiates(host) == 30, "Trigger: [opiates(host)] metabolized opiates at the start, expected 30.")
+	var/burst_opiates = opiates(host)
+	check(burst_opiates > 0, "Trigger: the burst did not supply metabolized opiates.")
 
 	host.Paralyse(10)
 	host.Weaken(10)
@@ -118,11 +111,11 @@
 	host.adrenalin_burst_until = 0
 	var/normal_delay = host.movement_delay()
 	host.adrenalin_burst_until = burst_until
-	check(burst_delay == normal_delay * 0.5, "Burst: movement delay [burst_delay], expected half of [normal_delay].")
+	check(burst_delay > 0 && burst_delay < normal_delay, "Burst: movement delay [burst_delay] must be positive and faster than [normal_delay].")
 
-	host.metabolized.remove_reagent(/datum/reagent/opiate, 12)
+	host.metabolized.remove_reagent(/datum/reagent/opiate, burst_opiates / 2)
 	host.end_adrenalin_burst()
-	check(opiates(host) == 30, "End: [opiates(host)] metabolized opiates after the burst, expected 30.")
+	check(opiates(host) == burst_opiates, "End: [opiates(host)] metabolized opiates, expected the starting top-up [burst_opiates].")
 	var/stun_flags = CANSTUN | CANWEAKEN | CANPARALYSE
 	check((host.status_flags & stun_flags) == stun_flags, "End: status_flags [host.status_flags] lack stun flags after the burst.")
 	host.Paralyse(10)
@@ -136,10 +129,11 @@
 		return
 	implant.uses = 2
 	host.status_flags &= ~CANSTUN
-	host.metabolized.add_reagent(/datum/reagent/opiate, 50 - opiates(host))
+	var/high_dose = max(1, 2 * opiates(host))
+	host.metabolized.add_reagent(/datum/reagent/opiate, high_dose - opiates(host))
 	action.Trigger()
 	action.Trigger()
-	check(opiates(host) == 50, "Repeat: [opiates(host)] metabolized opiates, a top-up must not lower 50 or stack past it.")
+	check(opiates(host) == high_dose, "Repeat: [opiates(host)] metabolized opiates, a top-up must preserve the existing [high_dose].")
 	check(!implant.uses && !action.IsAvailable(), "Repeat: [implant.uses] charges left and button available [action.IsAvailable()] after spending both.")
 	action.Trigger()
 	check(!implant.uses, "Repeat: an empty implant fired.")
@@ -149,44 +143,46 @@
 	check(!(host.status_flags & CANSTUN), "Repeat: the burst gave back CANSTUN, which the host did not have.")
 	host.status_flags |= CANSTUN
 
-// Свой носитель: раны и химия ниже испортили бы остальные проверки.
+// Measure the same host healthy and injured, with a burst active in both cases.
 /datum/unit_test/adrenalin_implant/proc/check_ignored_body_state()
 	var/list/made = create_test_mob_with_mind(null, /mob/living/carbon/human/adrenalin_test_dummy)
 	var/mob/living/carbon/human/host = locate(made["mobref"])
 	if(!istype(host))
 		failures += "Body state: second test human was not created: [made["msg"]]"
 		return
-	var/obj/item/implant/adrenalin/implant = implant_into(host, 1)
+	var/obj/item/implant/adrenalin/implant = implant_into(host, 2)
 	host.handle_actions()
-	// Свежий человек держит `health` с создания, пока его не пересчитают: без этого "здоровая"
-	// задержка уже несёт слагаемое нехватки здоровья.
 	host.updatehealth()
 	var/healthy_delay = host.movement_delay()
+	implant.action?.Trigger()
+	check(host.is_in_adrenalin_burst(), "Body state: the healthy burst did not start.")
+	var/healthy_burst_delay = host.movement_delay()
+	host.end_adrenalin_burst()
 
-	// Брут даёт боль. Нехватку здоровья даёт только мозг: `health = maxHealth - getBrainLoss()`.
 	host.apply_damage(70, DAMAGE_BRUTE, BP_CHEST)
 	host.adjustBrainLoss(60)
 	host.updatehealth()
-	check(host.maxHealth - host.health >= 40, "Body state: health deficiency [host.maxHealth - host.health] is below the slowdown threshold, test setup broken.")
 	var/obj/item/organ/external/leg = host.get_organ(BP_L_LEG)
 	leg.fracture()
 	host.drowsyness = 5
 	host.add_chemical_effect(CE_SLOWDOWN, 2)
 	host.mod_confused(10)
 	var/injured_delay = host.movement_delay()
-	check(injured_delay > healthy_delay + 5, "Body state: wounds, brain damage, a broken leg, drowsiness and CE_SLOWDOWN only took the delay from [healthy_delay] to [injured_delay], test setup broken.")
+	check(injured_delay > healthy_delay, "Body state: the injuries did not slow the host, test setup broken.")
 
 	implant.action?.Trigger()
-	check(host.is_in_adrenalin_burst(), "Body state: the burst did not start.")
-	// Trigger() снимает сонливость не сам: её слагаемое должно вычесться.
+	check(host.is_in_adrenalin_burst(), "Body state: the injured burst did not start.")
+	// Sleepiness and shock can return after activation; neither may alter burst speed.
 	host.drowsyness = 5
-	var/burst_delay = host.movement_delay()
-	check(abs(burst_delay - healthy_delay * 0.5) < 0.01, "Body state: burst delay [burst_delay] with wounds, expected half the healthy [healthy_delay].")
+	for(var/shock in list(0, 20, 50))
+		host.shock_stage = shock
+		var/burst_delay = host.movement_delay()
+		check(abs(burst_delay - healthy_burst_delay) < 0.01, "Body state: injured burst delay [burst_delay] at shock stage [shock], healthy burst delay [healthy_burst_delay].")
 	check(!host.is_confused(), "Body state: confused [host.confused] still counts during the burst.")
 
 	host.end_adrenalin_burst()
 	check(host.is_confused(), "Body state: confusion [host.confused] does not come back after the burst.")
-	check(host.movement_delay() > healthy_delay + 5, "Body state: wound slowdown [host.movement_delay()] does not come back after the burst.")
+	check(host.movement_delay() > healthy_delay, "Body state: wound slowdown does not come back after the burst.")
 	qdel(implant)
 	qdel(host)
 

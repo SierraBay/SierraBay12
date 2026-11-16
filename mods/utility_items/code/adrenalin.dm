@@ -174,8 +174,7 @@
 	var/health_deficiency = maxHealth - health
 	if(health_deficiency >= 40)
 		. += health_deficiency / 25
-	if(can_feel_pain() && get_shock() >= 10)
-		. += get_shock() / 10
+	. += get_pain_slowdown()
 	// `handle_stance()` даёт по 2 за каждую отсутствующую ногу или стопу: эту часть стойки оставляем.
 	var/missing_legs = 0
 	for(var/organ_name in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
@@ -184,7 +183,7 @@
 			missing_legs++
 		else if(!istype(buckled, /obj/structure/bed/chair/wheelchair))
 			. += leg.movement_delay(4)
-	if(shock_stage >= 10 || get_stamina() <= 0)
+	if(shock_stage >= 30 || get_stamina() <= 0)
 		. += 3
 	if(is_asystole())
 		. += 10

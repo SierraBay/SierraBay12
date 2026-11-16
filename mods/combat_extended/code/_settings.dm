@@ -53,8 +53,8 @@ var/global/ce_armor_repair_enabled = TRUE
 /// застревает и не перебивает артерию, а помеченный снаряд получает в `on_hit()` полный блок.
 var/global/ce_penetration_effects_enabled = TRUE
 
-/// Боль и оглушение проходят броню вместе с уроном (`agony_armor.dm`): снаряд и дубинка,
-/// остановленные бронёй, не причиняют боли и не оглушают, пробившие по доле прошедшего урона.
+/// Gate stopped projectile effects and scale baton effects against armor (agony_armor.dm).
+/// Penetrating projectiles retain upstream on_hit() armor handling.
 var/global/ce_agony_armor_enabled = TRUE
 
 /// Щиты через проход по слоям (`shields.dm`): щит в руке или на спине это внешний слой брони на
@@ -584,17 +584,12 @@ var/global/ce_armor_repair_loss_per_skill = 0.25
 // Боль и эффекты снарядов против брони (`agony_armor.dm`, `projectile_effects.dm`)
 // ============================================================================================
 
-/// Степень доли урона, прошедшей броню, на которую умножаются боль и оглушение: оглушение,
-/// сбивание с ног, муть в глазах и остальной набор `on_hit()` снаряда. 1: боль пропорциональна
-/// прошедшему урону. 2, ниже прямой доли: beanbag (60 боли) проходит light-плиту с 70% урона
-/// и причиняет 29 боли вместо 42, tactical с 49% и 14 боли вместо 29. Остановленный бронёй
-/// удар не причиняет боли при любой степени.
+/// Exponent of the armor pass share for baton pain and stun. Projectiles use upstream
+/// on_hit() instead; stopped projectiles have their effects suppressed in bullet_act().
 var/global/ce_agony_pass_exponent = 2
 
-/// Ключи брони лучей: снаряд по ним останавливает только жёсткая броня (`ce_hard_armor_*`), а не
-/// любая (`projectile_effects.dm`). Мягкая (скафандр, одежда, псионический барьер) урон луча
-/// ослабляет, как в Bay, но боль и оглушение пропускает: stun-луч (1-3 урона) не превышает
-/// никакой энергетической брони, и иначе его гасил бы любой скафандр.
+/// These beam armor keys require hard armor to mark a projectile as stopped. Soft armor
+/// can still reduce damage and effects through upstream's normal armor calculations.
 var/global/list/ce_hard_only_stop_keys = list("laser", "energy")
 
 

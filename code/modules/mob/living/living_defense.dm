@@ -49,7 +49,7 @@
 		. = get_blocked_ratio(def_zone, P.damage_type, flags, P.armor_penetration, P.damage)
 	// [SIERRA-EDIT] - COMBAT_EXTENDED - (Эффекты снарядов, зависящие от пробития: /mods/combat_extended/code/projectile_effects.dm, боль против брони: /mods/combat_extended/code/agony_armor.dm)
 	// P.on_hit(src, ., def_zone) // SIERRA-EDIT - ORIGINAL
-	P.ce_apply_armor_to_effects(src, def_zone)
+	P.ce_block_stopped_effects(src, def_zone)
 	P.on_hit(src, P.ce_get_on_hit_blocked(.), def_zone)
 	// [/SIERRA-EDIT]
 

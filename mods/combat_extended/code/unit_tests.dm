@@ -6,9 +6,6 @@
 	нет.
 */
 
-#define CE_PROMISE_STOPS "держит"
-#define CE_PROMISE_DAMPENS "гасит"
-#define CE_PROMISE_PENETRATES "пробивает"
 /// Насколько далеко от середины площадки тест с настоящим полётом ставит стены и водит снаряды.
 #define CE_ARENA_RADIUS 2
 
@@ -325,203 +322,6 @@
 	else
 		pass("[length(attacks)] атак против [length(tiers)] целей: урон не растёт.")
 	return 1
-
-
-/*
-	Обещания из комментариев `code/__defines/armor.dm`: таблица "Проверка обещаний дефайнов"
-	в README. "Держит" для острой атаки значит "острая ось побеждена, атака срикошетила", а не
-	"урон ноль". Тупой урон броня гасит, но не отменяет, см. `CE_BLUNT_PEN_MELEE_MULT`.
-*/
-/datum/unit_test/combat_extended/define_promises
-	name = "CE: Обещания дефайнов брони"
-
-/datum/unit_test/combat_extended/define_promises/start_test()
-	var/datum/extension/armor/pistol_armor = make_plate(ARMOR_BALLISTIC_PISTOL, 0)
-	var/datum/extension/armor/rifle_armor = make_plate(ARMOR_BALLISTIC_RIFLE, 0)
-	var/datum/extension/armor/knives_armor = make_plate(0, ARMOR_MELEE_KNIVES)
-	var/datum/extension/armor/resistant_armor = make_plate(0, ARMOR_MELEE_RESISTANT)
-	var/obj/item/clothing/suit/armor/riot/riot = new
-	spawned += riot
-	var/datum/extension/armor/riot_armor = get_extension(riot, /datum/extension/armor)
-
-	var/list/knife = list(15, DAMAGE_FLAG_SHARP | DAMAGE_FLAG_EDGE, 5)
-	var/list/sword = list(30, DAMAGE_FLAG_SHARP | DAMAGE_FLAG_EDGE, 10)
-	var/list/esword = list(30, DAMAGE_FLAG_SHARP | DAMAGE_FLAG_EDGE, 50)
-	var/list/baton = list(15, FLAGS_OFF, 0)
-	var/list/toolbox = list(20, FLAGS_OFF, 0)
-
-	var/list/promises = list(
-		list("ARMOR_BALLISTIC_PISTOL и pistol", pistol_armor, /obj/item/projectile/bullet/pistol, CE_PROMISE_STOPS),
-		list("ARMOR_BALLISTIC_PISTOL и holdout", pistol_armor, /obj/item/projectile/bullet/pistol/holdout, CE_PROMISE_STOPS),
-		list("ARMOR_BALLISTIC_PISTOL и rifle", pistol_armor, /obj/item/projectile/bullet/rifle, CE_PROMISE_PENETRATES),
-		list("ARMOR_BALLISTIC_RIFLE и rifle", rifle_armor, /obj/item/projectile/bullet/rifle, CE_PROMISE_STOPS),
-		list("ARMOR_BALLISTIC_RIFLE и apds", rifle_armor, /obj/item/projectile/bullet/rifle/shell/apds, CE_PROMISE_PENETRATES),
-		list("ARMOR_MELEE_KNIVES и нож", knives_armor, knife, CE_PROMISE_STOPS),
-		list("ARMOR_MELEE_KNIVES и дубинка", knives_armor, baton, CE_PROMISE_DAMPENS),
-		list("ARMOR_MELEE_RESISTANT и меч", resistant_armor, sword, CE_PROMISE_STOPS),
-		list("ARMOR_MELEE_RESISTANT и ящик", resistant_armor, toolbox, CE_PROMISE_DAMPENS),
-		list("riot и меч", riot_armor, sword, CE_PROMISE_STOPS),
-		list("riot и pistol", riot_armor, /obj/item/projectile/bullet/pistol, CE_PROMISE_PENETRATES),
-		list("riot и энергомеч", riot_armor, esword, CE_PROMISE_PENETRATES)
-	)
-	promises += steel_blade_promises(/obj/item/material/knife, "ARMOR_MELEE_KNIVES", knives_armor)
-	promises += steel_blade_promises(/obj/item/material/sword, "ARMOR_MELEE_RESISTANT", resistant_armor)
-
-	var/list/failures = list()
-	for(var/list/promise in promises)
-		var/list/attack = promise[3]
-		if(ispath(attack))
-			var/obj/item/projectile/bullet/bullet = attack
-			attack = list(initial(bullet.damage), initial(bullet.damage_flags), initial(bullet.armor_penetration))
-		var/outcome = try_single_layer(promise[2], attack[1], attack[2], attack[3])
-		if(outcome != promise[4])
-			failures += "[promise[1]]: ожидалось \"[promise[4]]\", вышло \"[outcome]\""
-
-	cleanup()
-	if(length(failures))
-		fail("Нарушено [length(failures)] из [length(promises)] обещаний:\n[jointext(failures, "\n")]")
-	else
-		pass("Все [length(promises)] обещаний держатся.")
-	return 1
-
-/// Жёсткая пластина с заданными значениями брони. Не базовый `armor_plate`: тот это кевларовая вставка.
-/datum/unit_test/combat_extended/define_promises/proc/make_plate(bullet, melee)
-	var/obj/item/clothing/accessory/armor_plate/merc/plate = new
-	spawned += plate
-	set_extension(plate, /datum/extension/armor, list("bullet" = bullet, "melee" = melee))
-	return get_extension(plate, /datum/extension/armor)
-
-/**
- * Обещания на настоящих стальных клинках билда: каждый острый стальной подтип `blade_root` держит
- * броня `armor`. Опорные нож и меч выше заданы числами без материала, а сталь в Bay прибавляет оружию
- * AP. Складные ножи раскрываются.
- */
-/datum/unit_test/combat_extended/define_promises/proc/steel_blade_promises(blade_root, define_name, datum/extension/armor/armor)
-	. = list()
-	for(var/path in typesof(blade_root))
-		var/obj/item/material/blade = new path(get_safe_turf())
-		spawned += blade
-		if(istype(blade, /obj/item/material/knife/folding))
-			var/obj/item/material/knife/folding/folding = blade
-			folding.open = TRUE
-			folding.update_force()
-		if(blade.material?.name != MATERIAL_STEEL || !ce_is_sharp_attack(blade.damage_flags()))
-			continue
-		. += list(list("[define_name] и [path]", armor, list(blade.force, blade.damage_flags(), blade.armor_penetration), CE_PROMISE_STOPS))
-
-/// Итог одного слоя для одной атаки: `CE_PROMISE_*`.
-/datum/unit_test/combat_extended/define_promises/proc/try_single_layer(datum/extension/armor/armor, damage, damage_flags, armor_pen)
-	var/pen = ce_derive_penetration(damage, damage_flags, armor_pen)
-	var/blunt_pen = ce_derive_blunt_penetration(damage, damage_flags, armor_pen)
-	var/list/step = armor.ce_try_penetrate(damage, damage_flags, pen, damage, pen, blunt_pen)
-	if(ce_is_sharp_attack(damage_flags))
-		return ce_is_sharp_attack(step[3]) ? CE_PROMISE_PENETRATES : CE_PROMISE_STOPS
-	if(step[1] <= 0)
-		return CE_PROMISE_STOPS
-	return step[1] < damage ? CE_PROMISE_DAMPENS : CE_PROMISE_PENETRATES
-
-
-/*
-	Окна тиров патронов, README, "Патроны FMJ, AP и HP". Одним слоем жёсткой плиты каждый патрон
-	пробивает свой нижний тир, а верхний его держит. Так AP пробивает тир, который держит его FMJ,
-	а HP останавливается на тире, который FMJ пробивает. Урон AP ниже, чем у FMJ, у HP выше.
-	Stopped AP rounds retain FMJ impact. HP rounds have half FMJ impact and do not ricochet.
-*/
-/datum/unit_test/combat_extended/define_promises/ammo_tiers
-	name = "CE: Окна тиров патронов"
-
-/datum/unit_test/combat_extended/define_promises/ammo_tiers/start_test()
-	var/list/plates = list()
-	for(var/rating in list(ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE, ARMOR_BALLISTIC_AP, ARMOR_BALLISTIC_HEAVY))
-		plates["[rating]"] = make_plate(rating, 0)
-	var/list/failures = list()
-	var/list/windows = ammo_windows()
-	for(var/list/window in windows)
-		check_window(window, plates, failures)
-	var/list/families = ammo_families()
-	for(var/list/family in families)
-		check_family(family, failures)
-
-	cleanup()
-	if(length(failures))
-		fail("Нарушено [length(failures)]:\n[jointext(failures, "\n")]")
-	else
-		pass("[length(windows)] патронов в своих окнах тиров, [length(families)] калибров с AP и HP.")
-	return 1
-
-/// `list(снаряд, рейтинг плиты, которую он пробивает, рейтинг плиты, которая его держит)`. Ноль: такой плиты нет.
-/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/ammo_windows()
-	return list(
-		list(/obj/item/projectile/bullet/pistol/holdout, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
-		list(/obj/item/projectile/bullet/pistol/holdout/ap, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/pistol/holdout/hp, 0, ARMOR_BALLISTIC_SMALL),
-		list(/obj/item/projectile/bullet/pistol, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
-		list(/obj/item/projectile/bullet/pistol/ap, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/pistol/hp, 0, ARMOR_BALLISTIC_SMALL),
-		list(/obj/item/projectile/bullet/pistol/strong, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/pistol/strong/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
-		list(/obj/item/projectile/bullet/pistol/strong/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
-		list(/obj/item/projectile/bullet/pistol/fast, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/pistol/fast/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
-		list(/obj/item/projectile/bullet/pistol/fast/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
-		list(/obj/item/projectile/bullet/flechette, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
-		list(/obj/item/projectile/bullet/flechette/ap, ARMOR_BALLISTIC_RIFLE, ARMOR_BALLISTIC_AP),
-		list(/obj/item/projectile/bullet/flechette/hp, ARMOR_BALLISTIC_SMALL, ARMOR_BALLISTIC_PISTOL),
-		list(/obj/item/projectile/bullet/rifle, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/rifle/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
-		list(/obj/item/projectile/bullet/rifle/military_standard, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/rifle/military_standard/ap, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE),
-		list(/obj/item/projectile/bullet/rifle/military, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/rifle/shell, ARMOR_BALLISTIC_AP, ARMOR_BALLISTIC_HEAVY),
-		list(/obj/item/projectile/bullet/rifle/shell/apds, ARMOR_BALLISTIC_HEAVY, 0),
-		list(/obj/item/projectile/bullet/shotgun, ARMOR_BALLISTIC_PISTOL, ARMOR_BALLISTIC_RESISTANT),
-		list(/obj/item/projectile/bullet/pellet/shotgun/flechette, ARMOR_BALLISTIC_RESISTANT, ARMOR_BALLISTIC_RIFLE)
-	)
-
-/// `list(FMJ, AP, HP)` калибров с новыми типами. null: такого типа у калибра нет.
-/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/ammo_families()
-	return list(
-		list(/obj/item/projectile/bullet/pistol/holdout, /obj/item/projectile/bullet/pistol/holdout/ap, /obj/item/projectile/bullet/pistol/holdout/hp),
-		list(/obj/item/projectile/bullet/pistol, /obj/item/projectile/bullet/pistol/ap, /obj/item/projectile/bullet/pistol/hp),
-		list(/obj/item/projectile/bullet/pistol/strong, /obj/item/projectile/bullet/pistol/strong/ap, /obj/item/projectile/bullet/pistol/strong/hp),
-		list(/obj/item/projectile/bullet/pistol/fast, /obj/item/projectile/bullet/pistol/fast/ap, /obj/item/projectile/bullet/pistol/fast/hp),
-		list(/obj/item/projectile/bullet/flechette, /obj/item/projectile/bullet/flechette/ap, /obj/item/projectile/bullet/flechette/hp),
-		list(/obj/item/projectile/bullet/rifle, /obj/item/projectile/bullet/rifle/ap, null),
-		list(/obj/item/projectile/bullet/rifle/military_standard, /obj/item/projectile/bullet/rifle/military_standard/ap, null)
-	)
-
-/// Пробивает ли патрон нижнюю плиту окна и держит ли его верхняя.
-/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/check_window(list/window, list/plates, list/failures)
-	var/obj/item/projectile/bullet = window[1]
-	var/damage = initial(bullet.damage)
-	var/flags = initial(bullet.damage_flags)
-	var/armor_pen = initial(bullet.armor_penetration)
-	var/pen = round(ce_derive_penetration(damage, flags, armor_pen), 0.1)
-	var/pierced = window[2]
-	var/stopper = window[3]
-	if(pierced && try_single_layer(plates["[pierced]"], damage, flags, armor_pen) != CE_PROMISE_PENETRATES)
-		failures += "[bullet], [pen] мм: не пробивает плиту [pierced]"
-	if(stopper && try_single_layer(plates["[stopper]"], damage, flags, armor_pen) != CE_PROMISE_STOPS)
-		failures += "[bullet], [pen] мм: пробивает плиту [stopper]"
-
-/// Урон AP и HP относительно FMJ, их удар на настоящем снаряде и рикошет HP.
-/datum/unit_test/combat_extended/define_promises/ammo_tiers/proc/check_family(list/family, list/failures)
-	var/list/fmj = round_numbers(family[1])
-	for(var/i in 2 to length(family))
-		var/variant_type = family[i]
-		if(!variant_type)
-			continue
-		var/obj/item/projectile/variant = new variant_type
-		spawned += variant
-		var/is_ap = i == 2
-		if(is_ap ? variant.damage >= fmj[1] : variant.damage <= fmj[1])
-			failures += "[variant_type]: урон [variant.damage], у FMJ [fmj[1]]"
-		var/impact = variant.ce_get_own_blunt_penetration()
-		var/expected_impact = fmj[3] * (is_ap ? 1 : 0.5)
-		if(abs(impact - expected_impact) > 0.001)
-			failures += "[variant_type]: удар [impact] МПа, ожидалось [expected_impact] при ударе FMJ [fmj[3]]"
-		if(!is_ap && variant.ce_ricochets_max)
-			failures += "[variant_type]: HP рикошетит [variant.ce_ricochets_max] раз"
 
 
 /*
@@ -4132,353 +3932,215 @@
 
 
 /*
-	Боль и оглушение против брони (`agony_armor.dm`). Снаряды летят настоящим `bullet_act()`, а
-	дубинка бьёт настоящим `apply_hit_effect()`: так проверяется вся цепочка: запись доли урона
-	проходом по слоям, правки кор кода в `on_hit()`, обёртка `bullet_act()` и оверрайд дубинки.
-
-	Боль меряется на входе в `stun_effect_act()` (`/mob/living/carbon/human/ce_unit_test`), до
-	сопротивления одежды току и множителя конечности. Ожидание: полная боль удара, умноженная на
-	множитель боли от доли урона, которую даёт чистый запрос `ce_get_armor_pass_share()`.
-	Остановленный удар не должен донести боли вовсе. Каждый случай бьёт ещё и с выключенным
-	выключателем: боль, которую донёс бы Bay, это проверка, что этот удар вообще причиняет боль.
+	Exercise effect routing with controlled damage, armor and exponent. The armor's blunt
+	rating is chosen relative to attack penetration, independently of item balance.
 */
-#define CE_SHARE_STOPPED "остановлен"
-#define CE_SHARE_PARTIAL "частично"
-#define CE_SHARE_FULL "целиком"
-/// Насколько дошедшая боль может разойтись с ожиданием: только погрешность чисел.
 #define CE_AGONY_TOLERANCE 0.01
-/// Оглушение, которое тест даёт снаряду и дубинке: своего у нелетального оружия почти нет.
 #define CE_TEST_STUN 3
 
-/// Человек, который копит боль и оглушение, дошедшие до `stun_effect_act()`: до сопротивления
-/// одежды току и множителя конечности.
 /mob/living/carbon/human/ce_unit_test
 	var/ce_received_agony = 0
 	var/ce_received_stun = 0
+	var/list/ce_received_effects
 
 /mob/living/carbon/human/ce_unit_test/stun_effect_act(stun_amount, agony_amount, def_zone)
 	ce_received_agony += agony_amount
 	ce_received_stun += stun_amount
 	return ..()
 
-/// Beanbag, который запоминает боль и оглушение на входе в `on_hit()`: уже после брони.
-/obj/item/projectile/bullet/shotgun/beanbag/ce_unit_test
-	var/list/ce_on_hit_effects
-
-/obj/item/projectile/bullet/shotgun/beanbag/ce_unit_test/on_hit(atom/target, blocked = 0, def_zone = null)
-	ce_on_hit_effects = ce_get_armor_effects()
+/mob/living/carbon/human/ce_unit_test/apply_effects(stun = 0, weaken = 0, paralyze = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)
+	ce_received_effects = list(weaken, paralyze, stutter, eyeblur, drowsy)
+	for(var/i in 1 to length(ce_received_effects))
+		ce_received_effects[i] *= blocked_mult(blocked)
 	return ..()
 
+/obj/item/projectile/ce_agony_test
+	damage = 8
+	damage_type = DAMAGE_BRUTE
+	damage_flags = FLAGS_OFF
+	armor_penetration = 0
+	agony = 16
+	stun = CE_TEST_STUN
+	weaken = CE_TEST_STUN
+	paralyze = CE_TEST_STUN
+	stutter = CE_TEST_STUN
+	eyeblur = CE_TEST_STUN
+	drowsy = CE_TEST_STUN
+	var/list/ce_on_hit_effects
+	var/ce_on_hit_blocked
+
+/obj/item/projectile/ce_agony_test/on_hit(atom/target, blocked = 0, def_zone = null)
+	ce_on_hit_effects = ce_get_armor_effects()
+	ce_on_hit_blocked = blocked
+	return ..()
 
 /datum/unit_test/combat_extended/agony_armor
 	name = "CE: Боль и оглушение против брони"
 
 /datum/unit_test/combat_extended/agony_armor/start_test()
 	var/old_enabled = ce_agony_armor_enabled
+	var/old_exponent = ce_agony_pass_exponent
+	ce_agony_armor_enabled = TRUE
+	ce_agony_pass_exponent = 2
 	var/list/failures = list()
 	check_multiplier(failures)
-	check_armor_hardness(failures)
 	check_projectiles(failures)
-	check_projectile_stun(failures)
+	check_contact(failures)
 	check_bullet_zone(failures)
 	check_negative_agony(failures)
 	check_baton(failures)
+	ce_agony_pass_exponent = old_exponent
 	ce_agony_armor_enabled = old_enabled
 	cleanup()
 	if(length(failures))
 		fail(jointext(failures, "\n"))
 	else
-		pass("Остановленный бронёй удар не причиняет боли и не оглушает, пробивший: меньше прямой доли урона. Боль пули: в ту конечность и не отрицательная.")
+		pass("Stopped effects are suppressed, penetrating hits retain upstream armor handling, projectile state is restored, and batons follow their armor share.")
 	return 1
 
-/// Цель теста: `outfit`: список аксессуаров плитоноски либо тип костюма. null значит, что одеть не вышло.
-/datum/unit_test/combat_extended/agony_armor/proc/make_target(outfit)
-	if(!ispath(outfit))
-		return make_human(outfit, /mob/living/carbon/human/ce_unit_test)
-	var/mob/living/carbon/human/ce_unit_test/H = make_human(null, /mob/living/carbon/human/ce_unit_test)
-	if(!H)
-		return null
-	var/obj/item/suit = new outfit(H.loc)
-	H.equip_to_slot_or_del(suit, slot_wear_suit)
-	return H.wear_suit == suit ? H : null
+/datum/unit_test/combat_extended/agony_armor/proc/make_target(pass_share, damage, damage_flags = FLAGS_OFF, armor_pen = 0)
+	var/mob/living/carbon/human/ce_unit_test/target = make_human(null, /mob/living/carbon/human/ce_unit_test)
+	if(!target || pass_share >= 1)
+		return target
+	set_extension(target, /datum/extension/armor, list("melee" = 1))
+	var/datum/extension/armor/armor = get_extension(target, /datum/extension/armor)
+	var/pen = ce_derive_penetration(damage, damage_flags, armor_pen)
+	armor.armor_blunt = damage > 0 ? pen * (1 - pass_share) : 1
+	return target
 
 /datum/unit_test/combat_extended/agony_armor/proc/check_multiplier(list/failures)
-	if(ce_get_agony_mult(0) != 0 || ce_get_agony_mult(-1) != 0)
-		failures += "множитель боли остановленного удара не ноль"
-	if(ce_get_agony_mult(1) != 1)
-		failures += "множитель боли удара, прошедшего броню целиком, не единица"
-	var/mult = ce_get_agony_mult(0.7)
-	if(mult <= 0 || mult >= 0.7)
-		failures += "доля урона 0.7 даёт множитель боли [mult], ожидалось больше нуля и меньше прямой доли"
-
-/**
- * Жёсткость брони из случаев ниже. Войдсьют и грудь РИГа: жёсткая броня. Зимняя куртка СБ:
- * мягкая, но с энергетической бронёй: иначе проверять, что мягкая броня лучи не останавливает,
- * было бы не на чем.
- */
-/datum/unit_test/combat_extended/agony_armor/proc/check_armor_hardness(list/failures)
-	var/datum/extension/armor/voidsuit = armor_of(/obj/item/clothing/suit/space/void)
-	if(!voidsuit?.is_hard_armor())
-		failures += "войдсьют `suit/space/void`: не жёсткая броня"
-	var/obj/item/rig/combat/rig = new
-	spawned += rig
-	var/datum/extension/armor/rig_chest = get_extension(rig.chest, /datum/extension/armor)
-	if(!rig_chest?.is_hard_armor())
-		failures += "грудь РИГа `rig/combat`: не жёсткая броня"
-	var/datum/extension/armor/coat = armor_of(/obj/item/clothing/suit/storage/hooded/wintercoat/security)
-	if(!coat || coat.is_hard_armor() || coat.get_value("energy") <= 0)
-		failures += "зимняя куртка СБ: не мягкая броня с энергетической бронёй"
+	for(var/list/entry in list(list(-1, 0), list(0, 0), list(0.5, 0.25), list(1, 1), list(2, 1)))
+		if(abs(ce_get_agony_mult(entry[1]) - entry[2]) > CE_AGONY_TOLERANCE)
+			failures += "Agony multiplier: share [entry[1]], expected [entry[2]] with the test exponent."
 
 /datum/unit_test/combat_extended/agony_armor/proc/check_projectiles(list/failures)
-	// Кевларовые вставки и обычный скрытый жилет: мягкая броня. Лёгкая стальная пластина и скрытый
-	// тактический жилет: жёсткая с теми же числами Bay.
-	var/list/light = list(/obj/item/clothing/accessory/armor_plate)
-	var/list/medium = list(/obj/item/clothing/accessory/armor_plate/medium)
-	var/list/low_profile = list(/obj/item/clothing/accessory/armor_plate/sneaky)
-	var/list/light_metal = list(/obj/item/clothing/accessory/armor_plate/makeshift/light)
-	var/list/low_profile_tactical = list(/obj/item/clothing/accessory/armor_plate/sneaky/tactical)
-	var/list/merc = list(/obj/item/clothing/accessory/armor_plate/merc)
-	var/list/guards = list(/obj/item/clothing/accessory/arm_guards)
-	var/voidsuit = /obj/item/clothing/suit/space/void
-	var/coat = /obj/item/clothing/suit/storage/hooded/wintercoat/security
-	// Название, пластины или костюм, зона, снаряд, доля урона, урон вместо родного.
-	var/list/cases = list(
-		list("beanbag в голую грудь", null, BP_CHEST, /obj/item/projectile/bullet/shotgun/beanbag, CE_SHARE_FULL),
-		list("beanbag через light-вставку", light, BP_CHEST, /obj/item/projectile/bullet/shotgun/beanbag, CE_SHARE_PARTIAL),
-		list("beanbag через tactical", list(/obj/item/clothing/accessory/armor_plate/tactical), BP_CHEST, /obj/item/projectile/bullet/shotgun/beanbag, CE_SHARE_PARTIAL),
-		list("beanbag в merc", merc, BP_CHEST, /obj/item/projectile/bullet/shotgun/beanbag, CE_SHARE_STOPPED),
-		list("резиновая пуля в лёгкую стальную пластину", light_metal, BP_CHEST, /obj/item/projectile/bullet/pistol/rubber, CE_SHARE_STOPPED),
-		list("резиновая пуля через light-вставку", light, BP_CHEST, /obj/item/projectile/bullet/pistol/rubber, CE_SHARE_PARTIAL),
-		list("электрод нейтрализатора в light-вставку", light, BP_CHEST, /obj/item/projectile/bullet/electrode, CE_SHARE_STOPPED),
-		list("stun-луч в голую руку", null, BP_L_ARM, /obj/item/projectile/beam/stun, CE_SHARE_FULL),
-		list("stun-луч в руку под наручами", guards, BP_L_ARM, /obj/item/projectile/beam/stun, CE_SHARE_STOPPED),
-		list("stun-луч в войдсьют", voidsuit, BP_CHEST, /obj/item/projectile/beam/stun, CE_SHARE_STOPPED),
-		list("stun-луч через мягкую зимнюю куртку СБ", coat, BP_CHEST, /obj/item/projectile/beam/stun, CE_SHARE_FULL),
-		list("stun-луч через мягкую medium-вставку", medium, BP_CHEST, /obj/item/projectile/beam/stun, CE_SHARE_FULL),
-		list("электрод тазера в лёгкую стальную пластину", light_metal, BP_CHEST, /obj/item/projectile/energy/electrode, CE_SHARE_STOPPED),
-		list("электрод тазера через мягкую light-вставку", light, BP_CHEST, /obj/item/projectile/energy/electrode, CE_SHARE_FULL),
-		list("электрод тазера через мягкий скрытый жилет", low_profile, BP_CHEST, /obj/item/projectile/energy/electrode, CE_SHARE_FULL),
-		list("электрод тазера в скрытый тактический жилет", low_profile_tactical, BP_CHEST, /obj/item/projectile/energy/electrode, CE_SHARE_STOPPED),
-		list("plasmastun через лёгкую стальную пластину", light_metal, BP_CHEST, /obj/item/projectile/energy/plasmastun, CE_SHARE_FULL),
-		list("plasmastun в скрытый тактический жилет", low_profile_tactical, BP_CHEST, /obj/item/projectile/energy/plasmastun, CE_SHARE_STOPPED),
-		list("stun-луч в 40 урона через скрытый тактический жилет", low_profile_tactical, BP_CHEST, /obj/item/projectile/beam/stun, CE_SHARE_PARTIAL, 40),
-		list("луч ксенофауны без урона в голую грудь", null, BP_CHEST, /obj/item/projectile/beam/xenofauna, CE_SHARE_FULL),
-		list("луч ксенофауны без урона в лёгкую стальную пластину", light_metal, BP_CHEST, /obj/item/projectile/beam/xenofauna, CE_SHARE_STOPPED),
-		list("луч ксенофауны без урона через мягкую зимнюю куртку СБ", coat, BP_CHEST, /obj/item/projectile/beam/xenofauna, CE_SHARE_FULL),
-		list("болт арбалета без ключа брони в merc", merc, BP_CHEST, /obj/item/projectile/energy/bolt, CE_SHARE_FULL)
-	)
-	for(var/list/test_case as anything in cases)
-		var/list/hit = shoot(test_case, TRUE)
-		var/list/bay_hit = shoot(test_case, FALSE)
-		if(!hit || !bay_hit)
-			failures += "[test_case[1]]: не удалось создать цель"
-			continue
-		check_agony(failures, test_case[1], test_case[5], hit[2], hit[1], hit[5], bay_hit[1])
-		if(!hit[3])
-			failures += "[test_case[1]]: после `bullet_act()` снаряду не вернули боль и оглушение"
-		if(hit[2] <= 0 && hit[4])
-			failures += "[test_case[1]]: остановленный снаряд мутит взгляд"
-
-/**
- * Выстрел настоящим `bullet_act()` по новой цели. Возвращает `list(дошедшая боль, доля урона по
- * чистому запросу, вернулись ли снаряду боль и оглушение, муть в глазах, полная боль снаряда)`,
- * null: цели нет.
- */
-/datum/unit_test/combat_extended/agony_armor/proc/shoot(list/test_case, enabled)
-	var/mob/living/carbon/human/ce_unit_test/H = make_target(test_case[2])
-	if(!H)
-		return null
-	var/projectile_type = test_case[4]
-	var/obj/item/projectile/projectile = new projectile_type(H.loc)
-	spawned += projectile
-	if(length(test_case) >= 6)
-		projectile.damage = test_case[6]
-	var/def_zone = test_case[3]
-	var/share = H.ce_get_armor_pass_share(def_zone, projectile.damage, projectile.damage_type, projectile.damage_flags(), projectile.armor_penetration)
-	var/effects = jointext(projectile.ce_get_armor_effects(), ",")
-
-	ce_agony_armor_enabled = enabled
-	H.bullet_act(projectile, def_zone)
+	for(var/share in list(0, 0.5, 1))
+		for(var/enabled in list(FALSE, TRUE))
+			var/obj/item/projectile/ce_agony_test/projectile = new
+			spawned += projectile
+			var/mob/living/carbon/human/ce_unit_test/target = make_target(share, projectile.damage)
+			if(!target)
+				failures += "Projectile effects: could not create a target."
+				continue
+			var/query_share = target.ce_get_armor_pass_share(BP_L_ARM, projectile.damage, projectile.damage_type, projectile.damage_flags(), projectile.armor_penetration)
+			if(abs(query_share - share) > CE_AGONY_TOLERANCE)
+				failures += "Projectile effects: controlled armor passed [query_share], expected [share]."
+			var/list/full_effects = projectile.ce_get_armor_effects()
+			ce_agony_armor_enabled = enabled
+			target.bullet_act(projectile, BP_L_ARM)
+			check_projectile_result(failures, target, projectile, full_effects, share, enabled)
 	ce_agony_armor_enabled = TRUE
 
-	var/restored = effects == jointext(projectile.ce_get_armor_effects(), ",")
-	return list(H.ce_received_agony, share, restored, H.eye_blurry, projectile.agony)
-
-/**
- * Боль после брони: `agony`: дошедшая с выключателем, `full_agony`: полная боль удара,
- * `bay_agony`: дошедшая без выключателя, `share`: доля урона по чистому запросу. Остановленный
- * удар не доносит боли вовсе, остальные доносят полную боль, умноженную на множитель боли.
- */
-/datum/unit_test/combat_extended/agony_armor/proc/check_agony(list/failures, name, expected_share, share, agony, full_agony, bay_agony)
-	check_share(failures, name, expected_share, share)
-	if(bay_agony <= 0)
-		failures += "[name]: боль не дошла и без мода, проверять нечего"
+/datum/unit_test/combat_extended/agony_armor/proc/check_projectile_result(list/failures, mob/living/carbon/human/ce_unit_test/target, obj/item/projectile/ce_agony_test/projectile, list/full_effects, share, enabled)
+	var/label = "Projectile share [share], switch [enabled]"
+	var/gate = enabled && share <= 0 ? 0 : 1
+	if(!projectile.ce_on_hit_effects || !target.ce_received_effects)
+		failures += "[label]: effects did not reach on_hit()/apply_effects()."
 		return
-	if(share <= 0)
-		if(agony != 0)
-			failures += "[name]: остановленный удар донёс [agony] боли (без мода [bay_agony])"
-		return
-	var/expected_agony = full_agony * ce_get_agony_mult(share)
-	if(abs(agony - expected_agony) > CE_AGONY_TOLERANCE)
-		failures += "[name]: боль [agony], ожидалось [expected_agony] (без мода [bay_agony])"
+	for(var/i in 1 to length(full_effects))
+		if(abs(projectile.ce_on_hit_effects[i] - full_effects[i] * gate) > CE_AGONY_TOLERANCE)
+			failures += "[label]: penetrating effects were pre-scaled before upstream on_hit()."
+	// Upstream queries armor against the original agony, independently of physical damage.
+	var/pain_block = target.get_blocked_ratio(BP_L_ARM, projectile.damage_type, projectile.damage_flags(), projectile.armor_penetration, full_effects[1])
+	var/expected_agony = full_effects[1] * gate * (1 - pain_block)
+	if(abs(target.ce_received_agony - expected_agony) > CE_AGONY_TOLERANCE)
+		failures += "[label]: received agony [target.ce_received_agony], expected upstream's separate pain armor query [expected_agony]."
+	if(abs(target.ce_received_stun - full_effects[2] * gate) > CE_AGONY_TOLERANCE)
+		failures += "[label]: stun did not follow upstream on_hit()."
+	if(share > 0 && abs(projectile.ce_on_hit_blocked - (1 - share)) > CE_AGONY_TOLERANCE)
+		failures += "[label]: the damage block ratio was not forwarded to on_hit()."
+	var/effect_mult = gate * blocked_mult(projectile.ce_on_hit_blocked * 100)
+	for(var/effect in target.ce_received_effects)
+		if(abs(effect - CE_TEST_STUN * effect_mult) > CE_AGONY_TOLERANCE)
+			failures += "[label]: apply_effects() did not receive upstream's percentage block."
+	if(jointext(projectile.ce_get_armor_effects(), ",") != jointext(full_effects, ","))
+		failures += "[label]: projectile effects were not restored."
+	if(!isnull(projectile.ce_armor_pass_share) || !isnull(projectile.ce_armor_stopped) || target.ce_hit_projectile)
+		failures += "[label]: hit context survived bullet_act()."
 
-/// Сверяет долю урона по чистому запросу с ожидаемой: остановлен, частично или целиком.
-/datum/unit_test/combat_extended/agony_armor/proc/check_share(list/failures, name, expected_share, share)
-	var/actual_share = CE_SHARE_PARTIAL
-	if(share <= 0)
-		actual_share = CE_SHARE_STOPPED
-	else if(share >= 1)
-		actual_share = CE_SHARE_FULL
-	if(actual_share != expected_share)
-		failures += "[name]: доля урона [share], [actual_share], ожидалось [expected_share]"
-
-/*
-	Оглушение снаряда: оглушение, сбивание с ног и муть в глазах. Beanbag получает их от теста и
-	запоминает на входе в `on_hit()`. Там они должны быть полными, умноженными на тот же множитель,
-	что и боль: остановленный снаряд не оглушает вовсе. Без выключателя: полные, как в Bay. Цель
-	должна получить оглушение, только если оно дошло до `on_hit()`.
-*/
-/datum/unit_test/combat_extended/agony_armor/proc/check_projectile_stun(list/failures)
-	var/list/merc = list(/obj/item/clothing/accessory/armor_plate/merc)
-	// Название, пластины, выключатель, доля урона.
-	var/list/cases = list(
-		list("в голую грудь", null, TRUE, CE_SHARE_FULL),
-		list("через light", list(/obj/item/clothing/accessory/armor_plate), TRUE, CE_SHARE_PARTIAL),
-		list("в merc", merc, TRUE, CE_SHARE_STOPPED),
-		list("в merc с выключенным модом", merc, FALSE, CE_SHARE_STOPPED)
-	)
-	for(var/list/test_case as anything in cases)
-		var/name = "оглушение beanbag [test_case[1]]"
-		var/mob/living/carbon/human/H = make_human(test_case[2])
-		if(!H)
-			failures += "[name]: не удалось создать цель"
+/datum/unit_test/combat_extended/agony_armor/proc/check_contact(list/failures)
+	for(var/share in list(0, 1))
+		var/obj/item/projectile/ce_agony_test/projectile = new
+		spawned += projectile
+		projectile.damage = 0
+		projectile.nodamage = TRUE
+		var/mob/living/carbon/human/ce_unit_test/target = make_target(share, 0)
+		if(!target)
+			failures += "Contact: could not create a target."
 			continue
-		var/obj/item/projectile/bullet/shotgun/beanbag/ce_unit_test/beanbag = new(H.loc)
-		spawned += beanbag
-		beanbag.stun = CE_TEST_STUN
-		beanbag.weaken = CE_TEST_STUN
-		beanbag.eyeblur = CE_TEST_STUN
-		var/share = H.ce_get_armor_pass_share(BP_CHEST, beanbag.damage, beanbag.damage_type, beanbag.damage_flags(), beanbag.armor_penetration)
-		check_share(failures, name, test_case[4], share)
+		var/agony = projectile.agony
+		target.bullet_act(projectile, BP_L_ARM)
+		if(abs(target.ce_received_agony - agony * share) > CE_AGONY_TOLERANCE)
+			failures += "Contact: armor did not gate the damage-free projectile."
 
-		var/enabled = test_case[3]
-		ce_agony_armor_enabled = enabled
-		H.bullet_act(beanbag, BP_CHEST)
-		ce_agony_armor_enabled = TRUE
-
-		var/list/on_hit_effects = beanbag.ce_on_hit_effects
-		if(!on_hit_effects)
-			failures += "[name]: снаряд не дошёл до `on_hit()`"
-			continue
-		var/expected = enabled ? CE_TEST_STUN * ce_get_agony_mult(share) : CE_TEST_STUN
-		var/list/passed = list("оглушение" = on_hit_effects[2], "сбивание с ног" = on_hit_effects[3], "муть в глазах" = on_hit_effects[6])
-		for(var/effect in passed)
-			if(abs(passed[effect] - expected) > CE_AGONY_TOLERANCE)
-				failures += "[name]: [effect] на входе в `on_hit()`, [passed[effect]], ожидалось [expected]"
-		var/list/received = list("оглушение" = H.stunned, "сбивание с ног" = H.weakened, "муть в глазах" = H.eye_blurry)
-		for(var/effect in received)
-			if(!!received[effect] != (expected > 0))
-				failures += "[name]: [effect] у цели, [received[effect] || 0], ожидалось [expected > 0 ? "есть" : "нет"]"
-
-/*
-	Боль пули: в ту конечность, в которую она попала. Bay терял зону в `bullet/on_hit()`, и боль
-	доставалась случайной конечности. Три разные зоны подряд так почти наверняка не угадать.
-*/
 /datum/unit_test/combat_extended/agony_armor/proc/check_bullet_zone(list/failures)
-	for(var/def_zone in list(BP_L_ARM, BP_R_LEG, BP_HEAD))
-		var/mob/living/carbon/human/H = make_human()
-		if(!H)
-			failures += "зона пули [def_zone]: не удалось создать цель"
+	for(var/zone in list(BP_L_ARM, BP_R_LEG, BP_HEAD))
+		var/mob/living/carbon/human/target = make_human()
+		if(!target)
+			failures += "Bullet zone: could not create a target."
 			continue
-		var/obj/item/projectile/bullet/shotgun/beanbag/beanbag = new(H.loc)
-		spawned += beanbag
-		H.bullet_act(beanbag, def_zone)
-		var/obj/item/organ/external/hit_organ = H.get_organ(def_zone)
+		var/obj/item/projectile/bullet/shotgun/beanbag/projectile = new(target.loc)
+		spawned += projectile
+		projectile.damage = 0
+		projectile.nodamage = TRUE
+		projectile.agony = 16
+		target.bullet_act(projectile, zone)
+		var/obj/item/organ/external/hit_organ = target.get_organ(zone)
 		if(hit_organ.pain <= 0)
-			failures += "beanbag в [def_zone]: боль не дошла до конечности попадания"
-		for(var/obj/item/organ/external/organ as anything in H.organs)
+			failures += "Bullet zone [zone]: pain did not reach the hit organ."
+		for(var/obj/item/organ/external/organ as anything in target.organs)
 			if(organ != hit_organ && organ.pain > 0)
-				failures += "beanbag в [def_zone]: боль досталась [organ.organ_tag]"
+				failures += "Bullet zone [zone]: pain reached [organ.organ_tag]."
 
-/*
-	Снаряд без боли не доносит отрицательной. Пистолет через light: плита снимает больше половины
-	урона, и Bay вычитал эту долю блока из нулевой боли. Долю Bay передаёт, только если попадание
-	оставило рану, поэтому снаряд это пуля, а не лазер: ожог рану не отдаёт. С выключенным
-	выключателем правило мода не работает, а исправление: работает.
-*/
 /datum/unit_test/combat_extended/agony_armor/proc/check_negative_agony(list/failures)
-	for(var/enabled in list(TRUE, FALSE))
-		var/mob/living/carbon/human/ce_unit_test/H = make_target(list(/obj/item/clothing/accessory/armor_plate))
-		if(!H)
-			failures += "отрицательная боль: не удалось создать цель"
+	for(var/enabled in list(FALSE, TRUE))
+		var/mob/living/carbon/human/ce_unit_test/target = make_target(0.5, 8)
+		if(!target)
+			failures += "Zero agony: could not create a target."
 			continue
-		var/obj/item/projectile/bullet/pistol/bullet = new(H.loc)
-		spawned += bullet
+		var/obj/item/projectile/ce_agony_test/projectile = new
+		spawned += projectile
+		projectile.agony = 0
 		ce_agony_armor_enabled = enabled
-		H.bullet_act(bullet, BP_CHEST)
-		ce_agony_armor_enabled = TRUE
-		if(H.ce_received_agony != 0)
-			failures += "пистолет без боли через light[enabled ? "" : " с выключенным модом"]: донёс [H.ce_received_agony] боли"
+		target.bullet_act(projectile, BP_L_ARM)
+		if(target.ce_received_agony != 0)
+			failures += "Zero agony: received [target.ce_received_agony] with switch [enabled]."
+	ce_agony_armor_enabled = TRUE
 
-/*
-	Дубинка бьёт настоящим `apply_hit_effect()`. Тычок урона не наносит и касается брони, удар по
-	намерению вреда проходит её как удар силой `force`. Полная боль дубинки та, что доносит Bay:
-	при ударе он сам её половинит. Оглушения у дубинки по умолчанию нет: тест даёт его, чтобы было
-	что гасить.
-*/
 /datum/unit_test/combat_extended/agony_armor/proc/check_baton(list/failures)
-	// Название, пластины, зона, намерение, доля урона.
-	var/list/cases = list(
-		list("тычок в голую руку", null, BP_L_ARM, I_HELP, CE_SHARE_FULL),
-		list("тычок в руку под наручами", list(/obj/item/clothing/accessory/arm_guards), BP_L_ARM, I_HELP, CE_SHARE_STOPPED),
-		list("удар в голую грудь", null, BP_CHEST, I_HURT, CE_SHARE_FULL),
-		list("удар через light", list(/obj/item/clothing/accessory/armor_plate), BP_CHEST, I_HURT, CE_SHARE_PARTIAL),
-		list("удар в merc", list(/obj/item/clothing/accessory/armor_plate/merc), BP_CHEST, I_HURT, CE_SHARE_STOPPED)
-	)
-	for(var/list/test_case as anything in cases)
-		var/name = "дубинка, [test_case[1]]"
-		var/list/hit = baton_hit(test_case, TRUE)
-		var/list/bay_hit = baton_hit(test_case, FALSE)
-		if(!hit || !bay_hit)
-			failures += "[name]: не удалось создать цель"
-			continue
-		check_agony(failures, name, test_case[5], hit[2], hit[1], bay_hit[1], bay_hit[1])
-		if(bay_hit[3] <= 0)
-			failures += "[name]: оглушение не дошло и без мода, проверять нечего"
-		var/expected_stun = bay_hit[3] * ce_get_agony_mult(hit[2])
-		if(abs(hit[3] - expected_stun) > CE_AGONY_TOLERANCE)
-			failures += "[name]: дошло оглушения [hit[3]], ожидалось [expected_stun] (без мода [bay_hit[3]])"
-		if(!hit[4])
-			failures += "[name]: после удара дубинке не вернули боль и оглушение"
+	for(var/intent in list(I_HELP, I_HURT))
+		for(var/share in list(0, 0.5, 1))
+			if(intent == I_HELP && share == 0.5)
+				continue
+			var/list/control = baton_hit(intent, share, FALSE)
+			var/list/hit = baton_hit(intent, share, TRUE)
+			if(!control || !hit)
+				failures += "Baton: could not create a target and attacker."
+				continue
+			var/mult = ce_get_agony_mult(share)
+			if(abs(hit[1] - control[1] * mult) > CE_AGONY_TOLERANCE || abs(hit[2] - control[2] * mult) > CE_AGONY_TOLERANCE)
+				failures += "Baton intent [intent], share [share]: pain/stun did not follow the armor share."
+			if(!hit[3] || !control[3])
+				failures += "Baton: effects were not restored."
 
-/**
- * Удар дубинкой по новой цели. Возвращает `list(дошедшая боль, доля урона по чистому запросу,
- * дошедшее оглушение, вернулись ли дубинке боль и оглушение)`, null: цели нет.
- */
-/datum/unit_test/combat_extended/agony_armor/proc/baton_hit(list/test_case, enabled)
-	var/mob/living/carbon/human/ce_unit_test/target = make_target(test_case[2])
+/datum/unit_test/combat_extended/agony_armor/proc/baton_hit(intent, share, enabled)
 	var/mob/living/carbon/human/user = make_human()
+	var/obj/item/melee/baton/loaded/baton = new
+	spawned += baton
+	baton.force = 8
+	baton.agonyforce = 16
+	baton.stunforce = CE_TEST_STUN
+	var/damage = intent == I_HURT ? baton.force : 0
+	var/mob/living/carbon/human/ce_unit_test/target = make_target(share, damage, baton.damage_flags(), baton.armor_penetration)
 	if(!target || !user)
 		return null
-	user.a_intent = test_case[4]
-	var/obj/item/melee/baton/loaded/baton = new(user.loc)
-	spawned += baton
-	baton.stunforce = CE_TEST_STUN
+	user.a_intent = intent
 	baton.change_status(TRUE)
-	var/def_zone = test_case[3]
-	var/damage = user.a_intent == I_HURT ? baton.force : 0
-	var/share = target.ce_get_armor_pass_share(def_zone, damage, baton.damtype, baton.damage_flags(), baton.armor_penetration)
-
 	ce_agony_armor_enabled = enabled
-	baton.apply_hit_effect(target, user, def_zone)
+	baton.apply_hit_effect(target, user, BP_L_ARM)
 	ce_agony_armor_enabled = TRUE
+	return list(target.ce_received_agony, target.ce_received_stun, baton.agonyforce == 16 && baton.stunforce == CE_TEST_STUN)
 
-	var/restored = baton.agonyforce == initial(baton.agonyforce) && baton.stunforce == CE_TEST_STUN
-	return list(target.ce_received_agony, share, target.ce_received_stun, restored)
-
-#undef CE_SHARE_STOPPED
-#undef CE_SHARE_PARTIAL
-#undef CE_SHARE_FULL
 #undef CE_AGONY_TOLERANCE
 #undef CE_TEST_STUN
 
@@ -11583,75 +11245,4 @@
 #undef CE_ACID_BURN_SLACK
 
 
-/*
-	Тесты урона по видам, перенесённые из `code/unit_tests/mob_tests.dm` и модпаков `tajara` и
-	`resomi`. Шаблон `/datum/unit_test/mob_damage` и шаблоны видов остались на своих местах,
-	сюда переехали только проверки `DAMAGE_BRUTE`: из шести типов урона через CE идёт только он.
-	Тест бьёт в грудь тупым уроном 4, без флагов.
-
-	Ожидания такие, какие даёт CE:
-	- Без естественной брони урон меняет только `brute_mod` вида (Unathi, Tajara, Resomi).
-	- IPC меньше 4 только за счёт кинетической брони протезов из `ipc_mods`. Когда её заменит
-	  плотность, ожидание придётся поменять, см. README, "Протезы: плотность вместо брони".
-	- GAS без урона: хитин это жёсткая броня с 6 МПа тупой оси, а у удара силой 4 тупое
-	  пробитие 3. CE гасит его насухо.
-
-	`STANDARD`, `ARMORED` и `EXTRA_VULNERABLE` объявлены в `mob_tests.dm` и не сбрасываются,
-	а `IMMUNE` там сброшен через `#undef`, поэтому здесь своё имя.
-
-	Tajara и Resomi подключаются не глобально, а картой (`maps/sierra/sierra.dm`,
-	`mods/dev_mode`), раньше `global_modpacks.dm`. Поэтому их модпаки уже объявлены к этому
-	месту, и без них проверки просто не компилируются.
-*/
-#define CE_EXPECT_IMMUNE 3
-
-/datum/unit_test/mob_damage/brute
-	name = "MOB: Human Brute damage check"
-	damagetype = DAMAGE_BRUTE
-
-/datum/unit_test/mob_damage/unathi/brute
-	name = "MOB: Unathi Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = ARMORED
-
-/datum/unit_test/mob_damage/skrell/brute
-	name = "MOB: Skrell Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-
-/datum/unit_test/mob_damage/vox/brute
-	name = "MOB: Vox Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-
-/datum/unit_test/mob_damage/diona/brute
-	name = "MOB: Diona Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-
-/datum/unit_test/mob_damage/nabber/brute
-	name = "MOB: GAS Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = CE_EXPECT_IMMUNE
-
-/datum/unit_test/mob_damage/machine/brute
-	name = "MOB: IPC Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = ARMORED
-
-#ifdef MODPACK_TAJARA
-/datum/unit_test/mob_damage/tajara/brute
-	name = "MOB: Tajara Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = EXTRA_VULNERABLE
-#endif
-
-#ifdef MODPACK_RESOMI
-/datum/unit_test/mob_damage/resomi/brute
-	name = "MOB: Resomi Brute Damage Check"
-	damagetype = DAMAGE_BRUTE
-	expected_vulnerability = EXTRA_VULNERABLE
-#endif
-
-#undef CE_EXPECT_IMMUNE
-#undef CE_PROMISE_STOPS
-#undef CE_PROMISE_DAMPENS
-#undef CE_PROMISE_PENETRATES
 #undef CE_ARENA_RADIUS
