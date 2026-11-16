@@ -71,14 +71,3 @@
 	host = null
 	return ..()
 
-/proc/tgui_product_image(item_path)
-	if(!ispath(item_path, /atom))
-		return null
-	var/static/list/product_images = list()
-	if(!product_images[item_path])
-		var/atom/item_type = item_path
-		if(!initial(item_type.icon))
-			return null
-		product_images[item_path] = icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), SOUTH, 1))
-	return product_images[item_path]
-

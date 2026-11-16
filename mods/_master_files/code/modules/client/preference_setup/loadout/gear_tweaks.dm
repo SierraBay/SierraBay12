@@ -171,4 +171,3 @@
 		return
 	entry = tgui_input_list(user, "Choose a tesla link.", CHARACTER_PREFERENCE_INPUT_TITLE, names, null)
 	. += names[entry]
-

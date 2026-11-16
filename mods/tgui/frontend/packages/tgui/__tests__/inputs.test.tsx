@@ -1,5 +1,6 @@
 import { render } from 'inferno';
 import '../backend';
+import { AlertModal } from '../interfaces/AlertModal';
 import { ListInputModal } from '../interfaces/ListInputModal';
 import { NumberInputModal } from '../interfaces/NumberInputModal';
 import {
@@ -78,6 +79,45 @@ describe('Ported input controls', () => {
     expect(mockAct).toHaveBeenCalledTimes(1);
     expect(mockAct).toHaveBeenCalledWith('submit', { entry: 42 });
   });
+
+  test.each([ListInputModal, NumberInputModal, TextInputModal])(
+    'Enter on an input Cancel button sends only cancellation (%p)',
+    (Modal) => {
+      mockData = {
+        items: ['One'],
+        init_value: 0,
+        min_value: 0,
+        max_value: 100,
+        placeholder: '',
+        max_length: 100,
+      };
+      render(<Modal />, container);
+      const cancel = Array.from(container.querySelectorAll('.Button')).find(
+        (element) => element.textContent === 'Cancel'
+      )!;
+      key(cancel, 13);
+      expect(mockAct).toHaveBeenCalledTimes(1);
+      expect(mockAct).toHaveBeenCalledWith('cancel');
+      mockAct.mockClear();
+      key(cancel, 27);
+      expect(mockAct).toHaveBeenCalledTimes(1);
+      expect(mockAct).toHaveBeenCalledWith('cancel');
+    }
+  );
+
+  test.each([13, 32])(
+    'alert keyboard action %s chooses the focused button once',
+    (keyCode) => {
+      mockData = { buttons: ['Yes', 'No'] };
+      render(<AlertModal />, container);
+      const button = Array.from(container.querySelectorAll('.Button')).find(
+        (element) => element.textContent === 'No'
+      )!;
+      key(button, keyCode);
+      expect(mockAct).toHaveBeenCalledTimes(1);
+      expect(mockAct).toHaveBeenCalledWith('choose', { choice: 'No' });
+    }
+  );
 
   test.each([true, false])(
     'split remains in range (integer: %s)',

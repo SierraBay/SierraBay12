@@ -136,6 +136,13 @@
 	qdel(number)
 	qdel(text)
 	qdel(choices)
+	var/list/alert_buttons = list("Yes", "No")
+	var/datum/tgui_alert/alert = new(null, "Test", "Test", alert_buttons, 0, TRUE, GLOB.tgui_always_state)
+	if(alert.buttons == alert_buttons)
+		fail("Alert shares its caller's button list.")
+	qdel(alert)
+	if(alert.buttons || length(alert_buttons) != 2)
+		fail("Alert cleanup retained buttons or modified the caller's list.")
 	if(!reported)
 		pass("Input edge cases preserved.")
 	return TRUE

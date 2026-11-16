@@ -59,6 +59,12 @@ export const AlertModal = (props, context) => {
       <Window.Content
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
+          if (
+            e.defaultPrevented &&
+            (keyCode === KEY_SPACE || keyCode === KEY_ENTER)
+          ) {
+            return;
+          }
           /**
            * Simulate a click when pressing space or enter,
            * allow keyboard navigation, override tab behavior

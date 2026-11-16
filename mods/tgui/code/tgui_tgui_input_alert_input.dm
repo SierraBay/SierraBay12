@@ -26,10 +26,12 @@
 	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(length(buttons) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many buttons. Use a list.", "TguiAlert")
-		return tgui_input_list(user, message, title, buttons, timeout)
+		return tgui_input_list(user, message, title, buttons, timeout = timeout, tgui_state = tgui_state)
 
 	// Client does NOT have tgui_input on: Returns regular input
 	if(user.get_preference_value(/datum/client_preference/tgui_input) == GLOB.PREF_NO)
+		if(length(buttons) == 1)
+			return alert(user, message, title, buttons[1])
 		if(length(buttons) == 2)
 			return alert(user, message, title, buttons[1], buttons[2])
 		if(length(buttons) == 3)
@@ -88,7 +90,7 @@
 	deletion_timer = null
 	SStgui.close_uis(src)
 	state = null
-	QDEL_NULL(buttons)
+	buttons = null
 	return ..()
 
 /**

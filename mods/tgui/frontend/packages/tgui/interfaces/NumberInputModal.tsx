@@ -44,6 +44,9 @@ export const NumberInputModal = (props, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
+          if (event.defaultPrevented && keyCode === KEY_ENTER) {
+            return;
+          }
           if (keyCode === KEY_ENTER) {
             act('submit', { entry: input });
           }

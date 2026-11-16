@@ -118,6 +118,9 @@ export const ListInputModal = (props, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
+          if (event.defaultPrevented && keyCode === KEY_ENTER) {
+            return;
+          }
           if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
             event.preventDefault();
             onArrowKey(keyCode);

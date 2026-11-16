@@ -63,6 +63,9 @@ export const TextInputModal = (props, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
+          if (event.defaultPrevented && keyCode === KEY_ENTER) {
+            return;
+          }
           if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
             act('submit', { entry: input });
           }
