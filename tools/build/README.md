@@ -28,7 +28,7 @@ tools/build/build --help
 
 ## Dependencies
 
-- On Windows, `build.bat` uses Node installed on PATH.
+- On Windows, `build.bat` (and VS Code's `tgui: build` task) uses a compatible Node.js (`>= 20`) from `PATH` if available, or automatically downloads portable Node `24.13.0` via `tools/bootstrap/` into `tools/bootstrap/.cache/`.
 - On Linux, install Node using your package manager or from <https://nodejs.org/en/download/>.
 - On Linux, unless using tgs4 or later you will need to compile rust-g on the server and obtain a .so file, for instructions see https://github.com/tgstation/rust-g
 

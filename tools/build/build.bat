@@ -1,6 +1,7 @@
 @echo off
 setlocal
 set "BUILD_SCRIPT=%~dp0build.js"
+set "NODE_RUNNER=%~dp0..\bootstrap\node_.bat"
 set "BUILD_WAIT_ON_ERROR="
 set "BUILD_CI="
 if "%~1"=="" set "BUILD_WAIT_ON_ERROR=1"
@@ -9,17 +10,11 @@ if "%~1"=="" set "BUILD_WAIT_ON_ERROR=1"
 if "%~1"=="" goto run
 if /i "%~1"=="--wait-on-error" set "BUILD_WAIT_ON_ERROR=1"
 if /i "%~1"=="--ci" set "BUILD_CI=1"
-shift
+shift /1
 goto options
 
 :run
-where node >nul 2>nul
-if errorlevel 1 (
-  echo ERROR: Node.js was not found on PATH. Install Node.js and reopen the terminal.
-  set "BUILD_EXIT_CODE=1"
-  goto finish
-)
-node "%BUILD_SCRIPT%" %*
+call "%NODE_RUNNER%" "%BUILD_SCRIPT%" %*
 set "BUILD_EXIT_CODE=%errorlevel%"
 
 :finish

@@ -7,6 +7,10 @@
       "type": "process",
       "command": "node",
       "args": ["${workspaceFolder}/tools/build/build.js", "tgui", "--ci"],
+      "windows": {
+        "command": "${env:ComSpec}",
+        "args": ["/d", "/c", "${workspaceFolder}\\tools\\build\\build.bat", "tgui", "--ci"]
+      },
       "options": {
         "cwd": "${workspaceFolder}"
       },
