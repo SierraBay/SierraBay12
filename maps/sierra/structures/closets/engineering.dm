@@ -36,7 +36,8 @@
 		/obj/item/storage/box/secret_project_disks,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/industrial, /obj/item/storage/backpack/satchel/eng)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag/eng, /obj/item/storage/backpack/messenger/engi)),
-		/obj/item/device/radio
+		/obj/item/device/radio,
+		/obj/item/material/knife/folding/swiss/engineer
 	)
 
 /obj/structure/closet/secure_closet/engineering_senior
@@ -63,7 +64,8 @@
 		/obj/item/clothing/gloves/insulated,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/industrial, /obj/item/storage/backpack/satchel/eng)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag/eng, /obj/item/storage/backpack/messenger/engi)),
-		/obj/item/device/radio
+		/obj/item/device/radio,
+		/obj/item/material/knife/folding/swiss/engineer
 	)
 
 /obj/structure/closet/secure_closet/engineering_sierra
@@ -87,7 +89,8 @@
 		/obj/item/clothing/gloves/insulated,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/industrial, /obj/item/storage/backpack/satchel/eng)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag/eng, /obj/item/storage/backpack/messenger/engi)),
-		/obj/item/device/radio
+		/obj/item/device/radio,
+		/obj/item/material/knife/folding/swiss/engineer
 	)
 
 /obj/structure/closet/secure_closet/engineering_sierra/junior
@@ -131,7 +134,8 @@
 		/obj/item/tank/oxygen_emergency_double,
 		/obj/item/clothing/mask/gas,
 		/obj/item/taperoll/atmos,
-		/obj/item/device/scanner/gas
+		/obj/item/device/scanner/gas,
+		/obj/item/material/knife/folding/swiss/engineer
 	)
 
 /obj/structure/closet/secure_closet/infotech_sierra
@@ -152,5 +156,6 @@
 		/obj/item/clothing/head/beret/engineering,
 		/obj/item/device/radio/headset/headset_eng,
 		/obj/item/device/radio/headset/headset_eng/alt,
-		/obj/item/stack/cable_coil = 2
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/material/knife/folding/swiss/engineer
 	)

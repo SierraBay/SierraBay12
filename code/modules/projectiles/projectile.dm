@@ -98,11 +98,13 @@
 
 	var/mob/living/L = target
 
-	L.apply_effects(0, weaken, paralyze, stutter, eyeblur, drowsy, 0, blocked)
-	// [SIERRA-EDIT] - COMBAT_EXTENDED - (Боль без вычета доли блока и без отрицательной боли: /mods/combat_extended/code/agony_armor.dm)
-	// L.stun_effect_act(stun, (agony - blocked), def_zone, src) // SIERRA-EDIT - ORIGINAL
-	L.stun_effect_act(stun, ce_get_on_hit_agony(blocked), def_zone, src)
-	// [/SIERRA-EDIT]
+	// blocked is a 0 to 1 ratio here, apply_effects() takes a percentage
+	L.apply_effects(0, weaken, paralyze, stutter, eyeblur, drowsy, 0, blocked * 100)
+	// Armor is blocking against the pain itself
+	var/agony_after_armor = agony
+	if(agony_after_armor)
+		agony_after_armor *= 1 - L.get_blocked_ratio(def_zone, damage_type, damage_flags(), armor_penetration, agony)
+	L.stun_effect_act(stun, agony_after_armor, def_zone, src)
 	//radiation protection is handled separately from other armour types.
 	L.apply_damage(irradiate, DAMAGE_RADIATION, damage_flags = DAMAGE_FLAG_DISPERSED)
 
