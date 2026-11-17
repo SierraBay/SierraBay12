@@ -11,8 +11,9 @@
 	var/use_grab         // This power has a variant invoked via grab.
 	var/use_manifest     // This power manifests an item in the user's hands.
 	var/use_description  // A short description of how to use this power, shown via assay.
-	var/use_intent       // Intent (I_HELP, I_DISARM, I_GRAB, I_HURT) on which this power is invoked.
-	var/use_sound = 'sound/effects/psi/power_used.ogg' // A sound effect to play when the power is used.
+	var/use_intent       // Intent (I_HELP, I_DISARM, I_GRAB, I_HURT) on which this power is invoked. Null - any intent.
+	// A sound effect to play when the power is used.
+	var/use_sound = 'sound/effects/psi/power_used.ogg'
 
 /singleton/psionic_power/proc/invoke(mob/living/user, atom/target)
 
@@ -42,6 +43,7 @@
 	return TRUE
 
 /singleton/psionic_power/proc/handle_post_power(mob/living/user, atom/target)
+	user.psi?.notify_brands()
 	if(cooldown)
 		user.psi.set_cooldown(cooldown)
 	if(admin_log && ismob(user) && ismob(target))

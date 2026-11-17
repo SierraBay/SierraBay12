@@ -152,18 +152,21 @@
 	name = "implanter"
 	desc = "Single time use implanter."
 	imp = null
+	icon_state = "cimplanter2"
 
 	var/psi_rank = PSI_RANK_APPRENTICE
-	var/list/psi_target_faculties
+	var/list/psi_target_faculties = list(PSI_KINESIS)
 	var/used = FALSE
+
+/obj/item/implanter/psionic/Initialize()
+	. = ..()
+	icon_state = "cimplanter2"
 
 /obj/item/implanter/psionic/examine(mob/user, distance)
 	. = ..()
 	if(used)
 		to_chat(user, SPAN_WARNING("It's spent."))
 		return
-	var/rank_name = GLOB.psychic_ranks_to_strings[psi_rank] || "[psi_rank]"
-	to_chat(user, SPAN_NOTICE("Настроен на ранг: [rank_name]. Направления: [get_faculty_names()]."))
 
 /obj/item/implanter/psionic/proc/get_target_faculties()
 	if(length(psi_target_faculties))
@@ -231,7 +234,7 @@
 		log_and_message_admins("использовал псионический имплантер ([GLOB.psychic_ranks_to_strings[psi_rank] || psi_rank], [get_faculty_names()]) на [key_name(H)].", user)
 		used = TRUE
 		name = "used implanter"
-		icon_state = "implanter0"
+		icon_state = "cimplanter1"
 
 /obj/item/implanter/psionic/proc/grant_psionics(mob/living/carbon/human/H)
 	var/list/choices = list() // faculty id -> ранг

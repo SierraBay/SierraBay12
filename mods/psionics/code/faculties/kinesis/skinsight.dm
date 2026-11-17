@@ -10,6 +10,8 @@
 /singleton/psionic_power/kinesis/redaction/skinsight/invoke(mob/living/user, mob/living/target)
 	if(user.zone_sel.selecting != BP_CHEST)
 		return FALSE
+	if(!istype(target))
+		return FALSE
 	. = ..()
 	if(.)
 		if(!do_after(user, 1 SECOND, target, DO_PUBLIC_UNIQUE))
