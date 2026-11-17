@@ -56,4 +56,3 @@
 #define TGUI_REF(D) "\ref[D]"
 #define SS_INIT_ASSETS SS_INIT_EARLY
 #define FIRE_PRIORITY_TGUI 750
-#define NANO_TEMPLATES_PATH "mods/tgui/resources/nano/templates/"

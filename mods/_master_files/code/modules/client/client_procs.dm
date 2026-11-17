@@ -21,9 +21,6 @@
 		if(prepared)
 			assets[prepared.name] = prepared
 			continue
-		var/replacement = "mods/tgui/resources/[resource_path]"
-		if(copytext(resource_path, 1, 6) == "html/" && fexists(replacement))
-			resource = fcopy_rsc(replacement)
 		var/list/path_parts = splittext(resource_path, "/")
 		var/asset_name = path_parts[length(path_parts)]
 		assets[asset_name] = register_asset(asset_name, resource)

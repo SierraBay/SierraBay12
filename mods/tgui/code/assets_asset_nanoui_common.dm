@@ -6,19 +6,13 @@
 		"nano/images/",
 		"nano/images/status_icons/",
 		"nano/images/modular_computers/",
-		"nano/js/",
-		"mods/tgui/resources/nano/css/",
-		"mods/tgui/resources/nano/images/",
-		"mods/tgui/resources/nano/images/status_icons/",
-		"mods/tgui/resources/nano/images/modular_computers/",
-		"mods/tgui/resources/nano/js/"
+		"nano/js/"
 	)
 
 /datum/asset/simple/nanoui_common/register()
 	for (var/path in asset_dirs)
 		for(var/filename in flist(path))
 			var/is_directory = copytext(filename, length(filename)) == "/"
-			// Sierra's helpers, styles and callbacks take priority over donor copies.
 			if(is_directory || assets[filename])
 				continue
 
