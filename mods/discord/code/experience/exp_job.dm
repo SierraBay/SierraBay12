@@ -67,7 +67,8 @@ GLOBAL_LIST_AS(security_positions, list(
 	"Warden",
 	"Criminal Investigator",
 	"Security Guard",
-	"Security Cadet"
+	"Security Cadet", //Когда-то эта ролька была. Лучше оставить.
+	"Mechanized Systems Operator"
 ))
 
 GLOBAL_LIST_AS(silicon_positions, list(

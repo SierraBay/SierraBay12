@@ -141,3 +141,11 @@ var/global/const/access_adjutants = "ACCESS_ADJUTANTS"
 
 /datum/access/network
 	region = ACCESS_REGION_COMMAND
+
+
+//Мехвод
+var/global/const/access_mech_security = "ACCESS_MECH_SECURITY"
+/datum/access/mech_security
+	id = access_mech_security
+	desc = "Mech Security Equipment"
+	region = ACCESS_REGION_SECURITY

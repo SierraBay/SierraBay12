@@ -115,7 +115,7 @@
 
 	// The command-tier and rank-and-file security jobs live in core, so they are
 	// safe to name on any map, and every one of them must be counted.
-	for(var/job_type in list(/datum/job/hos, /datum/job/officer, /datum/job/warden, /datum/job/detective))
+	for(var/job_type in list(/datum/job/hos, /datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_mech_pilot))
 		var/datum/job/job = SSjobs.get_by_path(job_type)
 		if(!job)
 			continue
