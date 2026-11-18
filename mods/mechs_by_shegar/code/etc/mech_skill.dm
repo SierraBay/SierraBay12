@@ -1,5 +1,6 @@
 //ЗАТЫЧКА ЧТОБ ЮНИТ ТЕСТ УСПОКОИЛСЯ, НЕ ТРОГАТь
 /datum/job/security_mech_pilot
+	hud_icon = "hudmechsec"
 
 
 /singleton/hierarchy/skill/general/EVA/mech
