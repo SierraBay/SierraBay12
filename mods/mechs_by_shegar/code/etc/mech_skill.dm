@@ -4,6 +4,7 @@
 	outfit_type = /singleton/hierarchy/outfit/job/security/officer
 	//Для нюк теста
 	department_flag = SEC
+	department = "Security"
 
 
 /singleton/hierarchy/skill/general/EVA/mech
