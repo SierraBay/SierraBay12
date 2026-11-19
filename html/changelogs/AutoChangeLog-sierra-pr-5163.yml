@@ -1,0 +1,4 @@
+author: Aigamuxa
+changes:
+  - bugfix: Heavy item impact no longer sends you flying over the deck.
+delete-after: true
