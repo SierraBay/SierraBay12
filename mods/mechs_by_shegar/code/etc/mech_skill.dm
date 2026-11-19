@@ -7,7 +7,8 @@
 	total_positions = 1
 	spawn_positions = 1
 	selection_color = "#601c1c"
-	hud_icon = "hudmechsec"
+	hud_icon = "hudblank"
+	outfit_type = /singleton/hierarchy/outfit/job/security/officer
 	supervisors = "Главе Службы безопасности и Смотрителю (сержанту)"
 	economic_power = 6
 	minimal_player_age = 10
