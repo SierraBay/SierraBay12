@@ -90,6 +90,7 @@
 		to_chat(user, SPAN_NOTICE("It is holding [icon2html(holding_item, user)] \a [holding_item]."))
 	if(hat)
 		to_chat(user, SPAN_NOTICE("It is wearing [icon2html(hat, user)] \a [hat]."))
+	describe_plant_genome(user)
 
 /mob/living/carbon/alien/diona/IsAdvancedToolUser()
 	return FALSE

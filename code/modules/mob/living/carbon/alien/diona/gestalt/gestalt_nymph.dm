@@ -40,6 +40,8 @@
 			shedding.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),rand(3,5))
 		if(update_nymphs)
 			check_nymphs()
+			if(!QDELETED(src))
+				queue_icon_update()
 
 // If there are less than two nymphs (or if none of the nymphs have players), it isn't a viable gestalt.
 /obj/structure/diona_gestalt/proc/check_nymphs()

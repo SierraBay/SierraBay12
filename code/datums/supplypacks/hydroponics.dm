@@ -4,7 +4,8 @@
 
 /singleton/hierarchy/supply_pack/hydroponics/hydroponics // -- Skie
 	name = "Gear - Hydroponics Supplies"
-	contains = list(/obj/item/reagent_containers/spray/plantbgone = 4,
+	contains = list(/obj/item/plant_pot = 4,
+					/obj/item/reagent_containers/spray/plantbgone = 4,
 					/obj/item/reagent_containers/glass/bottle/ammonia = 2,
 					/obj/item/material/hatchet,
 					/obj/item/material/minihoe,

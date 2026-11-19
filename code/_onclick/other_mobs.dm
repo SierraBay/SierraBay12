@@ -50,6 +50,9 @@
 	if(!..())
 		return
 
+	if(handle_guided_vine_click(A))
+		return
+
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
@@ -100,6 +103,10 @@
 		. = perform_maneuver(prepared_maneuver || available_maneuvers[1], A)
 
 /mob/living/carbon/human/RangedAttack(atom/A, params)
+	if(handle_guided_vine_click(A))
+		setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+		return TRUE
+
 	//Climbing up open spaces
 	if((istype(A, /turf/simulated/floor) || istype(A, /turf/unsimulated/floor) || istype(A, /obj/structure/lattice) || istype(A, /obj/structure/catwalk)) && isturf(loc) && bound_overlay && !is_physically_disabled()) //Climbing through openspace
 		return climb_up(A)

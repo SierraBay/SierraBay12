@@ -26,6 +26,8 @@
 	. = ..()
 	if(istype(A, /mob/living/carbon/alien/diona) && A.Adjacent(src)) // Combine...
 		roll_up_atom(A)
+		return
+	try_expression_slip(A)
 
 /obj/structure/diona_gestalt/Move()
 	. = ..()

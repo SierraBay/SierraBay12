@@ -5,6 +5,8 @@
 	H.status_flags |= PASSEMOTES
 	to_chat(src, "You feel your being twine with that of \the [H] as you merge with its biomass.")
 	forceMove(H)
+	rebind_guided_vine(H)
+	H.sync_nymph_expression()
 	return 1
 
 /mob/living/carbon/alien/diona/verb/split_away()
@@ -35,6 +37,7 @@
 				to_chat(H, "You feel a pang of loss as \the [src] splits away from your gestalt.")
 				H.visible_message("\The [src] wriggles out of the depths of \the [H] and plops to the ground.")
 				dropInto(loc)
+				H.sync_nymph_expression()
 			return
 
 	to_chat(src, "<span>You are not within a gestalt currently.</span>")
