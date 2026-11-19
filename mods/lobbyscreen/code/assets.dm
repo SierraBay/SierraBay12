@@ -1,6 +1,7 @@
-// In case upstream decides to make lobby use assets
+// [SIERRA-EDIT] - TGUI - Donor transport flags.
 /datum/asset/simple/mod_lobby
-	verify = FALSE
+	legacy = TRUE
+	keep_local_name = TRUE
 	assets = list(
 		"courierprime-code.woff" = 'mods/lobbyscreen/html/fonts/courierprime-code.woff',
 		"round-control.woff"     = 'mods/lobbyscreen/html/fonts/round-control.woff',
@@ -12,5 +13,7 @@
 	)
 
 /datum/asset/simple/mod_lobby_loop
-	verify = FALSE
+	legacy = TRUE
+	keep_local_name = TRUE
 	assets = list("loop.mp4" = 'mods/lobbyscreen/html/assets/loop.mp4')
+// [/SIERRA-EDIT]
