@@ -294,6 +294,7 @@
 	Модель показывает, где это правило вообще может нарушиться: холодное оружие силой до 16 с AP
 	от 85. Такого в билде нет.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/residual_monotonic
 	name = "CE: Доставленный урон не растёт с тиром плиты"
 
@@ -330,6 +331,7 @@
 	раскрытием пробивал сильнее. Здесь титановое мачете: у стали прибавки нет, и копиться было бы
 	нечему, а сила титанового ножа выше `max_force`, и на этой ветке кор AP не копил.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/material_ap_recount
 	name = "CE: AP оружия из материала не копится"
 
@@ -447,6 +449,7 @@
 	Износ на время теста выключен: ожидание считается по новым наручам, а основной проход
 	изнашивает их до остаточного удара.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/residual_human
 	name = "CE: Остаточный удар по человеку"
 
@@ -495,6 +498,7 @@
 	Остаточный удар у моба без органов: удар наносится сразу, из прохода по слоям основного.
 	Тем же путём идут экзокостюмы.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/residual_simple_mob
 	name = "CE: Остаточный удар по простому мобу"
 
@@ -535,6 +539,7 @@
 	Износ на время теста выключен: каждая плита получает сотни попаданий, и сравнивались бы уже
 	изношенные плиты.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/organ_reach_monotonic
 	name = "CE: Досягаемость органов не растёт с тиром плиты"
 
@@ -608,6 +613,7 @@
 	Износ на время теста выключен: одна и та же плита принимает серию попаданий, и "medium держит
 	пистолет" должно оставаться правдой до последнего.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/organ_reach_secondary
 	name = "CE: Рикошет и остаточный удар не достают до органов"
 
@@ -697,6 +703,7 @@
 	задеть орган упирается в 100%. Остаётся только бросок досягаемости, а при 0 и 1 он тоже
 	детерминирован.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/organ_reach_gate
 	name = "CE: Органы задеваются по досягаемости"
 
@@ -806,6 +813,7 @@
 	в Bay множитель действовал и на протезы. На руках наручи, чтобы порядок слоёв было с чем
 	сравнить: у голого человека сетка это единственный слой.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/subdermal_armor
 	name = "CE: Подкожная броня"
 	var/list/zones = list(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_FOOT)
@@ -911,6 +919,7 @@
 	(`ce_is_knocked_down_by_blast()`), а не по `weakened` после взрыва: урон взрыва может уронить
 	и болью.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/concussion
 	name = "CE: Контузия от взрыва"
 
@@ -1100,6 +1109,7 @@
 /// Сколько раз пробовать парировать, пока не выйдет. У меча шанс около половины.
 #define CE_PARRY_TEST_TRIES 50
 
+// Needs adjustments
 /datum/unit_test/combat_extended/weapon_parry
 	name = "CE: Парирование с прочностью оружия"
 
@@ -1568,6 +1578,7 @@
 	- Через `disarm_attackhand()` выстрел в упор заканчивает попытку: ружьё остаётся в руке.
 	- Бросок Bay на ружьё выключен. Выключенный мод выстрел мода не бросает.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/disarm_gunfire
 	name = "CE: Выстрел при обезоруживании"
 
@@ -1741,6 +1752,7 @@
 	границы пробития: ниже неё износ растёт с пробитием, выше падает, потому что атака уходит
 	навылет. Урон после слоя считается так же, как в `ce_try_penetrate()`.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_wear_formula
 	name = "CE: Форма формулы износа"
 
@@ -1800,6 +1812,7 @@
 	Кривая состояния §4: рейтинг не растёт при потере HP, полный до 95% и неполный ниже.
 	Новая броня читается целой, изношенная: через кривую по всем ключам.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_wear_curve
 	name = "CE: Кривая состояния брони"
 
@@ -1856,6 +1869,7 @@
 	Материал тест ставит плитам сам, а не берёт с предметов из `code/items/`: так он не зависит от
 	того, какие вещи сейчас керамические.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_break_points
 	name = "CE: Материалы и точки поломки брони"
 
@@ -1943,6 +1957,7 @@
 	Лестница плит идёт на материале по умолчанию: tactical plate керамическая, light и medium
 	кевларовые вставки, а лестница проверяет вывод HP из рейтинга, а не материал.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_wear_health
 	name = "CE: HP брони выводятся из рейтинга"
 
@@ -2024,6 +2039,7 @@
 	жёсткая, скрытый тактический жилет с числами medium-вставки: мягкую броню удар не изнашивает
 	вовсе, и множителя холодного на ней не проверить.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_wear_paths
 	name = "CE: Броню изнашивает только боевой путь"
 
@@ -2183,6 +2199,7 @@
 	Рейтинги тест ставит скафандру сам, так что он не зависит от чисел скафандров в билде. Руки
 	не бьются вовсе: по ним сверяется целая броня.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_zones
 	name = "CE: Зональная броня"
 	var/pistol_flags = DAMAGE_FLAG_BULLET | DAMAGE_FLAG_SHARP
@@ -2388,6 +2405,7 @@
 	`armor_plate/makeshift/light` числа light-вставки и скрытого жилета, у скрытого тактического жилета
 	`sneaky/tactical` medium.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/ballistic_fiber
 	name = "CE: Кевларовые вставки"
 	var/pistol_flags = DAMAGE_FLAG_BULLET | DAMAGE_FLAG_SHARP
@@ -2669,6 +2687,7 @@
 	кодексе. Носителю и призраку видны. Халат закрывает торс и руки, так что часы на запястье видно и
 	под ним. Без халата видно всё, на самой верхней одежде: тоже. Сам жилет на униформе не рисуется.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/concealed_accessories
 	name = "CE: Аксессуары под верхней одеждой"
 
@@ -2827,6 +2846,7 @@
 	На боевом пути множитель стали поднят так, что шанс выходит за 100%, или опущен в ноль.
 	Остаточный удар выключен: он изнашивает броню ещё раз и мог бы кольнуть второй раз.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_shards
 	name = "CE: Осколки от поломки брони"
 
@@ -2980,6 +3000,7 @@
 	обнулено: `do_after()` без задержки проходит сразу, так что клик доходит до конца, а отказ,
 	пропущенный проверкой, сразу меняет броню.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/armor_repair
 	name = "CE: Починка брони хламом"
 
@@ -3621,6 +3642,7 @@
 	само застревание), поэтому `after_wounding()` проверяется ещё и напрямую, с готовым порезом и
 	шансом застревания 100%.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/projectile_effects
 	name = "CE: Эффекты снарядов требуют пробития"
 
@@ -3817,6 +3839,7 @@
 /// Насколько урон и пробитие могут разойтись с ожиданием: только погрешность чисел.
 #define CE_OWN_BLUNT_TOLERANCE 0.001
 
+// Needs adjustments
 /datum/unit_test/combat_extended/projectile_blunt
 	name = "CE: Собственный удар снаряда"
 
@@ -4157,6 +4180,7 @@
 #define CE_SHIELD_TOLERANCE 0.01
 
 
+// Needs adjustments
 /datum/unit_test/combat_extended/shields
 	name = "CE: Щиты"
 
@@ -4714,6 +4738,7 @@
 #define CE_LASER_TOLERANCE 0.001
 #define CE_LASER_SCORCH_ICON 'mods/combat_extended/icons/laser_scorch.dmi'
 
+// Needs adjustments
 /datum/unit_test/combat_extended/laser_heat
 	name = "CE: Лазеры и нагрев"
 
@@ -5860,6 +5885,7 @@
 /// Сколько раз повторяются проверки со случайным исходом.
 #define CE_RICOCHET_TRIALS 40
 
+// Needs adjustments
 /datum/unit_test/combat_extended/ricochet
 	name = "CE: Рикошеты от стен"
 
@@ -6542,6 +6568,7 @@
 	Части тестовых мехов несут огромный запас HP: попадания здесь настоящие, а мех с выбитым
 	корпусом раздаёт урон остальным частям и умирает.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/mech_plates
 	name = "CE: Внешняя броня мехов"
 
@@ -7125,6 +7152,7 @@
 	ce_on_hits++
 	return ..()
 
+// Needs adjustments
 /datum/unit_test/combat_extended/pixel_aim
 	name = "CE: Попиксельная стрельба"
 	/// Клетка, из которой тест целится.
@@ -7977,6 +8005,7 @@
 
 	Тест это подтип теста попиксельной стрельбы: ему нужны те же снаряды и та же площадка.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/pixel_aim/physical_hits
 	name = "CE: Физические попадания"
 	/// Клетки космоса, застеленные полом под дорожку дальнего выстрела.
@@ -9095,6 +9124,7 @@
 /obj/item/projectile/bullet/rpg_rocket/ce_test_landing/on_explosion(turf/O)
 	ce_explosion_turf = O
 
+// Needs adjustments
 /datum/unit_test/combat_extended/pixel_aim/physical_hits/landing
 	name = "CE: Приземление снарядов с зарядом"
 
@@ -9428,6 +9458,7 @@
 	`do_after()` у него срывается. Попал ли удар шприцем, видно по крови на шприце: её оставляет
 	только удар, дошедший до тела.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/injections
 	name = "CE: Уколы в броню"
 	/// Кто колет.
@@ -9791,6 +9822,7 @@
 	на предмете со своим сдвигом: после неё сдвиг должен остаться прежним. А что кор
 	`handle_post_fire()` зовёт толчок, видно по ружью, которое эти вызовы считает.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/view_kick
 	name = "CE: Толчок вида от выстрела"
 	/// Стрелок с ружьём в активной руке, вторая рука пуста.
@@ -9972,6 +10004,7 @@
 	Срок стака и градусы на стак на время теста не единицы: с единицей настройка, которую код
 	забыл, давала бы те же числа.
 */
+// Needs adjustments
 /datum/unit_test/combat_extended/recoil_spread
 	name = "CE: Разброс от отдачи"
 	/// Стрелок с ружьём в активной руке, вторая рука пуста.
@@ -10241,6 +10274,7 @@
 /mob/living/carbon/human/ce_test_ring_viewer/ce_has_spread_ring_viewer()
 	return TRUE
 
+// Needs adjustments
 /datum/unit_test/combat_extended/spread_ring
 	name = "CE: Кольцо разброса"
 	/// Стрелок с ружьём в активной руке, вторая рука пуста.
@@ -10753,6 +10787,7 @@
 */
 #define CE_ACID_BURN_SLACK 0.05
 
+// Needs adjustments
 /datum/unit_test/combat_extended/acid_armor
 	name = "CE: Кислота против брони"
 	/// Кислота, которую льёт тест.

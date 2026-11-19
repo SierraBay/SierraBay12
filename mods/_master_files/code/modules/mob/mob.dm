@@ -1,3 +1,7 @@
+/mob/Destroy()
+	SStgui?.close_user_uis(src)
+	SSnano?.close_user_uis(src)
+	return ..()
 /*
 	COMBAT_EXTENDED. Тот, кто смотрит в прицел или бинокль, не поворачивается
 	(`mods/combat_extended/code/scopes.dm`): ни клавишами, ни щелчком по цели (`face_atom()` зовёт
