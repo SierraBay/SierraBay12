@@ -32,7 +32,8 @@
 		/obj/item/crowbar/prybar,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel/grey)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag, /obj/item/storage/backpack/messenger)),
-		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight/upgraded, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random))
+		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight/upgraded, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random)),
+		/obj/item/material/knife/folding/swiss/explorer
 	)
 
 /obj/structure/closet/secure_closet/explorer
@@ -55,7 +56,8 @@
 		/obj/item/crowbar/prybar,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel/grey)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag, /obj/item/storage/backpack/messenger)),
-		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random))
+		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random)),
+		/obj/item/material/knife/folding/swiss/explorer
 	)
 
 /obj/structure/closet/secure_closet/explorer/pilot
@@ -80,7 +82,8 @@
 		/obj/item/crowbar/prybar,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel/grey)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag, /obj/item/storage/backpack/messenger)),
-		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random))
+		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random)),
+		/obj/item/material/knife/folding/swiss/explorer
 	)
 
 /obj/structure/closet/secure_closet/explorer/medic
@@ -106,7 +109,8 @@
 		/obj/item/crowbar/prybar,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel/grey)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag, /obj/item/storage/backpack/messenger)),
-		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random))
+		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random)),
+		/obj/item/material/knife/folding/swiss/explorer
 	)
 
 /obj/structure/closet/secure_closet/explorer/engineer
@@ -132,7 +136,8 @@
 		/obj/item/clothing/gloves/thick,
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack, /obj/item/storage/backpack/satchel/grey)),
 		new /datum/atom_creator/weighted(list(/obj/item/storage/backpack/dufflebag, /obj/item/storage/backpack/messenger)),
-		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random))
+		new /datum/atom_creator/weighted(list(/obj/item/device/flashlight, /obj/item/device/flashlight/flare, /obj/item/device/flashlight/flare/glowstick/random)),
+		/obj/item/material/knife/folding/swiss/explorer
 	)
 
 /obj/structure/closet/wardrobe/exploration

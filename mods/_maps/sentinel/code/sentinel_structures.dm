@@ -300,3 +300,29 @@
 	tank = /obj/item/tank/oxygen
 	req_access = list(access_away_cavalry)
 	islocked = 1
+
+/datum/computer_file/program/munitions/patrol
+	filename = "munitionscontrol"
+	filedesc = "PC Munitions Control Program"
+	nanomodule_path = /datum/nano_module/program/munitions/patrol
+	program_icon_state = "munitions"
+	program_key_state = "security_key"
+	program_menu_icon = "bullet"
+	extended_desc = "SCGF Program for controlling munitions loading and arming systems."
+	requires_ntnet = FALSE
+	size = 8
+	category = PROG_COMMAND
+	usage_flags = PROGRAM_CONSOLE
+	requires_ntnet_feature = NTNET_SYSTEMCONTROL
+	available_on_ntnet = FALSE
+	available_on_syndinet = FALSE
+	required_access = access_away_cavalry_commander
+
+/datum/nano_module/program/munitions/patrol
+	name = "PC Munitions Control Program"
+	access_req = list(access_away_cavalry_commander)
+
+/obj/machinery/computer/modular/preset/munitions/patrol
+	default_software = list(
+		/datum/computer_file/program/munitions/patrol
+	)

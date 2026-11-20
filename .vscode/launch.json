@@ -20,6 +20,7 @@
       "type": "byond",
       "request": "launch",
       "name": "DS Debug",
+      "preLaunchTask": "tgui: build",
       "dmb": "${workspaceFolder}/${command:CurrentDMB}"
     },
     {

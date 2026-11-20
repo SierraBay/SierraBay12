@@ -44,7 +44,9 @@
 	if(href_list["asset_cache_confirm_arrival"])
 //		to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
-		completed_asset_jobs += job
+		// [SIERRA-EDIT] - TGUI - Donor validates job bounds and indexes jobs by text.
+		asset_cache_confirm_arrival("[job]")
+		// [/SIERRA-EDIT]
 		return
 
 	//search the href for script injection
@@ -81,7 +83,7 @@
 		ticket.close(client_repository.get_lite_client(usr.client))
 
 	if (GLOB.href_logfile)
-		to_chat(GLOB.href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		to_file(GLOB.href_logfile, "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][html_encode(href)]<br>")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -270,10 +272,7 @@
 		if (T.status == TICKET_OPEN && T.owner.ckey == ckey)
 			message_staff("[key_name_admin(src)] has left the game with an open ticket. Status: [length(T.assigned_admins) ? "Assigned to: [english_list(T.assigned_admin_ckeys())]" : SPAN_DANGER("Unassigned.")]")
 			break
-	if (atom_outline)
-		images -= atom_outline
-		atom_outline = null
-	outline_atom = null
+	SetOutlineAtom()
 	if (holder)
 		holder.owner = null
 		GLOB.admins -= src
@@ -402,7 +401,14 @@
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
-	getFiles(
+	// [SIERRA-EDIT] - TGUI - Share the startup resource manifest with SSassets.
+	getFiles(arglist(client_resource_files()))
+	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
+	// [/SIERRA-EDIT]
+
+// [SIERRA-ADD] - TGUI - Immutable for the lifetime of this compiled world.
+/proc/client_resource_files()
+	return list(
 		'html/search.js',
 		'html/panels.css',
 		'html/spacemag.css',
@@ -458,12 +464,15 @@
 		// [/SIERRA-ADD]
 		'html/images/zhlogo.png',
 	)
-	addtimer(new Callback(src, PROC_REF(after_send_resources)), 1 SECOND)
+// [/SIERRA-ADD]
 
 
 /client/proc/after_send_resources()
-	var/singleton/asset_cache/asset_cache = GET_SINGLETON(/singleton/asset_cache)
-	getFilesSlow(src, asset_cache.cache, register_asset = FALSE)
+	// [SIERRA-EDIT] - TGUI - Validate cached assets before donor transport preload.
+	show_browser(src, 'mods/tgui/resources/validate_assets.html', "window=asset_cache_browser")
+	if(config.asset_simple_preload)
+		addtimer(new Callback(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
+	// [/SIERRA-EDIT]
 
 
 /mob/proc/MayRespawn()

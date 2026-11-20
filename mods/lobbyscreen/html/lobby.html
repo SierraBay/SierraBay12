@@ -524,7 +524,9 @@
 
     setReadyStatus(0);
 
-    window.location = "?src=[player-ref]&lobby_init=1";
+    window.addEventListener("load", function () {
+      window.location = "?src=[player-ref]&lobby_init=1";
+    }, { once: true });
   </script>
 </body>
 </html>

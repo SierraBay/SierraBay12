@@ -1,0 +1,46 @@
+/**
+ * Copyright (c) 2021 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use './Divider.scss';
+
+$zebra-background-color: base.$color-bg-section !default;
+$zebra2-background-color: rgba(255, 255, 255, 0.05) !default;
+
+.Stack--fill {
+  height: 100%;
+}
+
+.Stack--horizontal > .Stack__item {
+  margin-left: 0.5em;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.Stack--vertical > .Stack__item {
+  margin-top: 0.5em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.Stack--zebra > .Stack__item:nth-child(even) {
+  background-color: $zebra-background-color;
+}
+
+.Stack--zebra > .Stack__item:nth-child(odd) {
+  background-color: $zebra2-background-color;
+}
+
+.Stack--horizontal > .Stack__divider:not(.Stack__divider--hidden) {
+  border-left: Divider.$thickness solid Divider.$color;
+}
+
+.Stack--vertical > .Stack__divider:not(.Stack__divider--hidden) {
+  border-top: Divider.$thickness solid Divider.$color;
+}

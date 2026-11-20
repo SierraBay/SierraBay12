@@ -423,7 +423,21 @@
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
-	getFiles(
+	// [SIERRA-EDIT] - TGUI - Reuse the optional connection resource manifest.
+	getFiles(arglist(changelog_resource_files()))
+	// [/SIERRA-EDIT]
+	show_browser(src, 'html/changelog.html', "window=changes;size=675x650")
+	if (GLOB.changelog_hash && prefs.lastchangelog != GLOB.changelog_hash)
+		prefs.lastchangelog = GLOB.changelog_hash
+		SScharacter_setup.queue_preferences_save(prefs)
+		// [SIERRA-EDIT] - Interface
+		// winset(src, "rpane.changelog", "background-color=none;font-style=;") // SIERRA-EDIT - ORIGINAL
+		winset(src, "rpane.changelog", "font-style=;")
+		// [/SIERRA-EDIT]
+
+// [SIERRA-ADD] - TGUI - May be displayed automatically on connection.
+/proc/changelog_resource_files()
+	return list(
 		'html/88x31.png',
 		'html/auction-hammer-gavel.png',
 		'html/bug-minus.png',
@@ -444,14 +458,7 @@
 		'html/changelog.css',
 		'html/changelog.html'
 		)
-	show_browser(src, 'html/changelog.html', "window=changes;size=675x650")
-	if (GLOB.changelog_hash && prefs.lastchangelog != GLOB.changelog_hash)
-		prefs.lastchangelog = GLOB.changelog_hash
-		SScharacter_setup.queue_preferences_save(prefs)
-		// [SIERRA-EDIT] - Interface
-		// winset(src, "rpane.changelog", "background-color=none;font-style=;") // SIERRA-EDIT - ORIGINAL
-		winset(src, "rpane.changelog", "font-style=;")
-		// [/SIERRA-EDIT]
+// [/SIERRA-ADD]
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"

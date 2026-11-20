@@ -102,6 +102,9 @@
 #include "code\__defines\~mods\mobs.dm"
 #include "code\__defines\~mods\pathing.dm"
 #include "code\__defines\~mods\rust_g.dm"
+// [SIERRA-ADD] - TGUI - Shared defines must precede UI consumers.
+#include "code\__defines\~mods\tgui.dm"
+// [/SIERRA-ADD]
 #include "code\__defines\~mods\tg_signals.dm"
 #include "code\__defines\~mods\ui_buttons.dm"
 #include "code\__defines\~mods\~master_defines.dm"
@@ -1623,7 +1626,9 @@
 #include "code\modules\blob\blob.dm"
 #include "code\modules\butchery\butchery.dm"
 #include "code\modules\butchery\remains.dm"
-#include "code\modules\client\asset_cache.dm"
+// [SIERRA-REMOVE] - TGUI - Replaced by mods/tgui donor asset transport.
+// #include "code\modules\client\asset_cache.dm"
+// [/SIERRA-REMOVE]
 #include "code\modules\client\client_color.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_helpers.dm"
@@ -3590,6 +3595,7 @@
 #include "mods\_master_files\code\modules\maps\mapsystem\maps.dm"
 #include "mods\_master_files\code\modules\materials\definitions\materials_organic.dm"
 #include "mods\_master_files\code\modules\mob\living\life.dm"
+#include "mods\_master_files\code\modules\mob\living\carbon\carbon.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\viruses.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\human\human_helpers.dm"
 #include "mods\_master_files\code\modules\mob\living\carbon\human\human.dm"
@@ -3609,6 +3615,7 @@
 #include "mods\_master_files\code\modules\projectiles\projectile\bullets.dm"
 #include "mods\_master_files\code\modules\psionics\events\mini_spasm.dm"
 #include "mods\_master_files\code\modules\psionics\psi.dm"
+#include "mods\_master_files\code\modules\reagents\Chemistry-Reagents\Chemistry-Reagents-Medicine.dm"
 #include "mods\_master_files\code\modules\reagents\reagent_containers\food\snacks.dm"
 #include "mods\_master_files\code\modules\security levels\keycard authentication.dm"
 #include "mods\_master_files\code\modules\species\species.dm"
