@@ -2311,9 +2311,7 @@
 /area/psistation/kitch)
 "iO" = (
 /obj/floor_decal/corner/mauve/mono,
-/obj/overmap/visitable/sector/psistation{
-	color = "#33CC33"
-	},
+/obj/overmap/visitable/sector/psistation,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/drip,
 /turf/simulated/floor/tiled/dark/monotile,

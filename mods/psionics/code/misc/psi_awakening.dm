@@ -119,7 +119,7 @@
 /datum/psi_awakening/proc/cancel()
 	if(owner)
 		owner.verbs -= /mob/living/proc/open_psi_awakening
-		owner << browse(null, "window=psi_awakening")
+		show_browser(owner, null, "window=psi[owner.name]")
 	if(psi && !QDELETED(psi))
 		psi.pending_awakening = null
 		psi.next_latency_trigger = world.time + rand(600, 1800)
@@ -245,7 +245,7 @@
 
 	awakened.pending_awakening = null
 	awakened_owner.verbs -= /mob/living/proc/open_psi_awakening
-	awakened_owner << browse(null, "window=psi_awakening")
+	show_browser(awakened_owner, null, "window=psi[awakened_owner.name]")
 	if(!job_rank)
 		awakened.start_instability(highest_rank * 60 SECONDS, clamp(highest_rank - 1, 1, 3))
 	awakened.next_latency_trigger = world.time + rand(600, 1800) * highest_rank
