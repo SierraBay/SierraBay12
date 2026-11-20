@@ -9,4 +9,4 @@
 
 #define SKRELL_BLACKLISTED_JOBS /datum/job/hos, /datum/job/hop, /datum/job/iaa, /datum/job/iso, /datum/job/psychiatrist,/datum/job/captain
 
-#define MACHINE_BLACKLISTED_JOBS /datum/job/hos, /datum/job/psychiatrist, /datum/job/captain, /datum/job/security_assistant
+#define MACHINE_BLACKLISTED_JOBS /datum/job/hos, /datum/job/psychiatrist, /datum/job/captain

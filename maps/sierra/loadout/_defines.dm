@@ -69,7 +69,7 @@
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer, /datum/job/hos, \
 	/datum/job/iaa, /datum/job/iso, \
 	/datum/job/senior_engineer, /datum/job/engineer, /datum/job/infsys, /datum/job/roboticist, \
-	/datum/job/officer, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant, \
+	/datum/job/officer, /datum/job/warden, /datum/job/detective, \
 	/datum/job/senior_doctor, /datum/job/doctor, /datum/job/doctor_trainee,/datum/job/chemist, \
 	/datum/job/psychiatrist, \
 	/datum/job/qm, /datum/job/cargo_tech, /datum/job/cargo_assistant,\
@@ -131,7 +131,7 @@
 	/datum/job/detective, \
 	/datum/job/officer, \
 	/datum/job/iso, \
-	/datum/job/security_assistant \
+	/datum/job/security_mech_pilot \
 )
 
 //For members of the supply department
@@ -163,7 +163,7 @@
 #define ARMED_ROLES list(\
 	/datum/job/captain, /datum/job/hop, /datum/job/hos,\
 	/datum/job/rd, /datum/job/cmo, /datum/job/chief_engineer,\
-	/datum/job/officer, /datum/job/iso, /datum/job/warden, /datum/job/detective, /datum/job/security_assistant \
+	/datum/job/officer, /datum/job/iso, /datum/job/warden, /datum/job/detective, /datum/job/security_mech_pilot \
 )
 
 //For jobs that spawn with armor in their lockers
@@ -171,7 +171,7 @@
 	/datum/job/captain, /datum/job/hop, /datum/job/rd, /datum/job/cmo,\
 	/datum/job/chief_engineer, /datum/job/hos, /datum/job/qm,\
 	/datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/iso, \
-	/datum/job/doctor \
+	/datum/job/doctor, /datum/job/security_mech_pilot \
 )
 
 #define CONTRACT_ROLES list(\

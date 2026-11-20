@@ -81,6 +81,7 @@
 	#include "items/clothing/override.dm"
 	#include "items/clothing/storages.dm"
 	#include "items/clothing/security.dm"
+	#include "items/clothing/mech_pilot_rig.dm"
 
 	// --- JOB SECTION --- //
 	#include "job\_job_defines.dm"

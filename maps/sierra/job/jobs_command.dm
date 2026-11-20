@@ -82,7 +82,7 @@
 	// exp_track_branch = COM
 
 	access = list(
-		access_seceva, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
+		access_seceva, access_mech_security, access_guard, access_security_records, access_security, access_brig, access_armory, access_warden,
 		access_forensics_lockers, access_heads, access_medical, access_morgue, access_biomech,
 		access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks,
 		access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter,
@@ -373,7 +373,7 @@
 	skill_points = 28
 
 	access = list(
-		access_seceva, access_guard, access_security, access_security_records,
+		access_seceva, access_mech_security, access_guard, access_security, access_security_records,
 		access_medical, access_medical_records, access_brig, access_armory,
 		access_forensics_lockers, access_maint_tunnels,
 		access_external_airlocks, access_emergency_storage,

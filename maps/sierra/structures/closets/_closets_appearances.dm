@@ -195,6 +195,16 @@
 		"security" = COLOR_CLOSET_GOLD
 	)
 
+/singleton/closet_appearance/secure_closet/sierra/security/mech_pilot
+	color = COLOR_GUNMETAL
+	decals = list(
+		"lower_holes"
+	)
+	extra_decals = list(
+		"stripe_vertical_mid_full" = COLOR_NT_RED,
+		"security" = COLOR_NT_RED
+	)
+
 /singleton/closet_appearance/secure_closet/sierra/command
 	color = COLOR_WALL_GUNMETAL
 	decals = list(

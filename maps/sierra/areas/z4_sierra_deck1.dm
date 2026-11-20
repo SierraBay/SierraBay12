@@ -244,6 +244,7 @@
 /area/security/sierra/mech_garage
 	name = "First Deck - Security - Mech garage"
 	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
+	req_access = list(access_mech_security)
 
 /area/security/sierra/forensic
 	name = "First Deck - Security - Forensic"

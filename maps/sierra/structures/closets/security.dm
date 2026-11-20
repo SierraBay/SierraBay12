@@ -170,6 +170,31 @@
 		/obj/item/clothing/glasses/hud/security
 	)
 
+
+/obj/structure/closet/secure_closet/security/sierra/mech_pilot
+	name = "Mechanized Systems Operator's locker"
+	req_access = list(access_mech_security)
+	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/security
+
+/obj/structure/closet/secure_closet/security/sierra/mech_pilot/WillContain()
+	return list(
+		/obj/item/device/flash,
+		/obj/item/device/radio/off,
+		/obj/item/device/flashlight/maglight,
+		/obj/item/device/holowarrant,
+		/obj/item/device/hailer,
+		/obj/item/device/radio/headset/headset_sec,
+		/obj/item/device/radio/headset/headset_sec/alt,
+		/obj/item/taperoll/police,
+		/obj/item/storage/belt/holster/security,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/crowbar/prybar,
+		/obj/item/gun/energy/confuseray/secure,
+		/obj/item/clothing/glasses/hud/security,
+		/obj/item/reagent_containers/food/snacks/candy/shegolad,
+		/obj/item/toy/prize/gygax
+	)
+
 /obj/structure/closet/secure_closet/security/sierra/science
 	name = "research guard locker"
 	req_access = list(access_security)
