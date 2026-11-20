@@ -255,6 +255,11 @@ var/global/list/asset_datums = list()
 		if(item in typesof(/obj/item/reagent_containers/food/drinks/glass2))
 			var/obj/item/reagent_containers/food/drinks/glass2/glass = item
 			icon_state = initial(glass.base_icon)
+		// [SIERRA-ADD] - COMBAT_EXTENDED - the sprite the item shows after Initialize()
+		else if(design.ui_sample)
+			icon_file = design.ui_sample.icon
+			icon_state = design.ui_sample.icon_state
+		// [/SIERRA-ADD]
 		else
 			icon_state = initial(item.icon_state)
 		if (!icon_file)

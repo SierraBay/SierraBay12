@@ -26,7 +26,7 @@
 	if(selected_system)
 		var/failed = FALSE
 		check_click_fail(A, user,failed)
-		mech_module_use_attempt(A, user,failed)
+		mech_module_use_attempt(A, user, failed, params)
 		return
 
 	//В случае если интент стоит на ХАРМ - переходим к попытке атаковать лапой
@@ -156,8 +156,12 @@
 		to_chat(pilot, SPAN_DANGER("The wiring sparks as you attempt to control the exosuit!"))
 		input_var_failed = TRUE
 
-/mob/living/exosuit/proc/mech_module_use_attempt(atom/movable/click_target, mob/living/pilot, input_failed_var)
+/mob/living/exosuit/proc/mech_module_use_attempt(atom/movable/click_target, mob/living/pilot, input_failed_var, params)
+	//Параметры клика идут модулю списком, как их отдаёт предметам обычный ClickOn()
+	var/list/click_params = islist(params) ? params : params2list(params)
 	if(input_failed_var)
+		//Цель сменится, и пиксель клика к ней уже не относится
+		click_params = null
 		var/list/other_atoms = orange(1, click_target)
 		click_target = null
 		while(LAZYLEN(other_atoms))
@@ -199,7 +203,7 @@
 	if(adj && !ME.have_specific_melee_attack())
 		resolved = temp_system.resolve_attackby(click_target, src)
 	if(!resolved && click_target && temp_system)
-		temp_system.afterattack(click_target, src, adj)
+		temp_system.afterattack(click_target, src, adj, click_params)
 	if(system_moved) //We are using a proxy system that may not have logging like mech equipment does
 		admin_attack_log(pilot, click_target, "Attacked using \a [temp_system] (MECH)", "Was attacked with \a [temp_system] (MECH)", "used \a [temp_system] (MECH) to attack")
 	//Mech equipment subtypes can add further click delays

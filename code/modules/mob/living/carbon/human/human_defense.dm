@@ -166,7 +166,10 @@ meteor_act
 
 	var/accuracy_penalty = user.melee_accuracy_mods()
 	accuracy_penalty += 5*get_skill_difference(SKILL_COMBAT, user)
-	var/hit_zone = get_zone_with_miss_chance(target_zone, src, accuracy_penalty)
+	// [SIERRA-EDIT] - COMBAT_EXTENDED - Separate contact from precision.
+	// var/hit_zone = get_zone_with_miss_chance(target_zone, src, accuracy_penalty)
+	var/hit_zone = ce_resolve_melee_zone(user, target_zone, accuracy_penalty)
+	// [/SIERRA-EDIT]
 
 	if (!hit_zone)
 		return
@@ -195,7 +198,10 @@ meteor_act
 	accuracy_penalty += 10*(I.w_class - ITEM_SIZE_NORMAL)
 	accuracy_penalty -= I.melee_accuracy_bonus
 
-	var/hit_zone = get_zone_with_miss_chance(target_zone, src, accuracy_penalty)
+	// [SIERRA-EDIT] - COMBAT_EXTENDED - Separate contact from precision.
+	// var/hit_zone = get_zone_with_miss_chance(target_zone, src, accuracy_penalty)
+	var/hit_zone = ce_resolve_melee_zone(user, target_zone, accuracy_penalty)
+	// [/SIERRA-EDIT]
 
 	if (!hit_zone)
 		visible_message(SPAN_DANGER("\The [user] misses [src] with \the [I]!"))

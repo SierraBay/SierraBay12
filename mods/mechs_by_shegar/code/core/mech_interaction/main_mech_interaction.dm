@@ -56,6 +56,10 @@
 	else if (istype(tool, /obj/item/mech_equipment))
 		install_equipment(tool, user)
 
+	// Внешний бронеэлемент - навесить на часть
+	else if (istype(tool, /obj/item/mech_external_armor))
+		install_external_armour(tool, user)
+
 	// Multitool - Remove component
 	//Персонаж пытающийся взаимодействовать мультитулом может открыть доп взаимодействие?
 	else if (istype(tool, /obj/item/device/multitool/multimeter) || isMultitool(tool))
@@ -89,6 +93,7 @@
 			return
 		var/list/options = list(
 			"Снять оборудование" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "unequip_equipment"),
+			"Снять бронеэлемент" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "external_armor"),
 			"Разобрать меха" = mutable_appearance('mods/mechs_by_shegar/icons/radial_menu.dmi', "dismantle")
 			)
 		var/choose = show_radial_menu(user, user, options, require_near = TRUE, radius = 42, tooltips = TRUE, check_locs = list(src))
@@ -96,6 +101,8 @@
 			start_dismantle_mech(tool, user)
 		else if(choose == "Снять оборудование")
 			deinstall_equipment(tool, user)
+		else if(choose == "Снять бронеэлемент")
+			deinstall_external_armour(tool, user)
 
 
 /mob/living/exosuit/attack_hand(mob/user)

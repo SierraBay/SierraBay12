@@ -281,9 +281,17 @@
 				to_chat(user, "You don't see any use for \the [S].")
 			return TRUE
 
+	// Coolant goes to the hottest piece, deployed or not, before the modules: the chem dispenser takes any open container (COMBAT_EXTENDED, rig_armor.dm).
+	if(ce_try_pour_coolant(W, user))
+		return TRUE
+
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.accepts_item(W,user)) //Item is handled in this proc
 			return TRUE
+
+	// Junk patches up the armor of the piece in the target zone, deployed or not (COMBAT_EXTENDED, rig_armor.dm).
+	if(ce_try_piece_repair(W, user))
+		return TRUE
 
 	// Pass repair items on to the chestpiece.
 	if(chest && (istype(W,/obj/item/stack/material) || isWelder(W)))

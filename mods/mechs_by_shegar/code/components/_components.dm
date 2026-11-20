@@ -165,6 +165,8 @@
 		to_chat(user, SPAN_NOTICE("It is ready for installation."))
 	else
 		show_missing_parts(user)
+	if(installed_armor)
+		to_chat(user, SPAN_NOTICE("It has \a [installed_armor] mounted."))
 
 //These icons have multiple directions but before they're attached we only want south.
 /obj/item/mech_component/set_dir()
@@ -244,6 +246,10 @@
 		welder_interacion(thing, user)
 		return TRUE
 
+	if (isWrench(thing))
+		wrench_interacion(thing, user)
+		return TRUE
+
 	if (isCoil(thing))
 		repair_burn_generic(thing, user)
 		return TRUE
@@ -321,6 +327,7 @@
 /obj/item/mech_component/proc/return_diagnostics(mob/user)
 	to_chat(user, SPAN_NOTICE("[capitalize(src.name)]:"))
 	to_chat(user, SPAN_NOTICE(" - Integrity: <b> [current_hp]/[max_hp]([round(((current_hp / max_hp)) * 100)]%)</b> Unrepairable damage: <b><font color = red>[unrepairable_damage]</font></b>" ))
+	to_chat(user, SPAN_NOTICE(" - [get_external_armour_readout()]"))
 
 /obj/item/mech_component
 	//Список изображений внутрянки в части меха

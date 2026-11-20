@@ -11,7 +11,7 @@
 
 /obj/screen/part_button/MouseEntered(location, control, params)
 	. = ..()
-	var/output_message = "Current HP: [memored_component.current_hp], Max HP: [memored_component.max_hp] <br> Current unrepaible damage: [memored_component.unrepairable_damage] <br>Heat capacity: [memored_component.max_heat] <br> Heat cooling: [memored_component.heat_cooling] <br> Front damage mod: [memored_component.front_modificator_damage], Back damage mod:[memored_component.back_modificator_damage] <br> Material for repair: [memored_component.req_material]"
+	var/output_message = "Current HP: [memored_component.current_hp], Max HP: [memored_component.max_hp] <br> Current unrepaible damage: [memored_component.unrepairable_damage] <br>Heat capacity: [memored_component.max_heat] <br> Heat cooling: [memored_component.heat_cooling] <br> Front damage mod: [memored_component.front_modificator_damage], Back damage mod:[memored_component.back_modificator_damage] <br> Material for repair: [memored_component.req_material] <br> [memored_component.get_external_armour_readout()]"
 	openToolTip(usr, src, params, title = output_message)
 
 /obj/screen/part_button/MouseExited(location, control, params)
