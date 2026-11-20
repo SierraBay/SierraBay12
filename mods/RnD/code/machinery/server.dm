@@ -150,8 +150,11 @@
 				HDD.rnd_category = "System"
 				HDD.name = "System R&D Drive"
 				rnd_drives["System"] = HDD
-				load_rnd_state()
-				to_chat(user, SPAN_NOTICE("Системный диск установлен. Данные сервера восстановлены."))
+				if (odyssey_rnd_active())
+					load_rnd_state()
+					to_chat(user, SPAN_NOTICE("Системный диск установлен. Данные сервера восстановлены."))
+				else
+					to_chat(user, SPAN_NOTICE("Системный диск установлен. Загрузка матрицы доступна только во время кампании Одиссеи."))
 				update_icon()
 				return TRUE
 		to_chat(user, SPAN_NOTICE("Установлен [I.name]. Назначьте категорию через интерфейс сервера."))
@@ -253,10 +256,16 @@
 		rnd_drives[choice] = HDD
 		to_chat(user, SPAN_NOTICE("Диск назначен категории \"[choice]\"."))
 		if(choice == "System")
-			load_rnd_state()
+			if (odyssey_rnd_active())
+				load_rnd_state()
+			else
+				to_chat(user, SPAN_WARNING("Загрузка матрицы с System HDD доступна только во время кампании Одиссеи."))
 		return TOPIC_REFRESH
 
 	if(href_list["load_rnd"])
+		if (!odyssey_rnd_active())
+			to_chat(user, SPAN_WARNING("Загрузка матрицы с System HDD доступна только во время кампании Одиссеи."))
+			return TOPIC_REFRESH
 		load_rnd_state()
 		to_chat(user, SPAN_NOTICE("Данные с системного диска загружены на сервер."))
 		return TOPIC_REFRESH

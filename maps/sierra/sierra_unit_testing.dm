@@ -78,6 +78,7 @@
 		/area/turbolift/thirddeck,
 		/area/turbolift/fourthdeck,
 		/area/turbolift/bridgedeck,
+		/area/turbolift/mainlift,
 		/area/beach,
 		/area/template_noop,
 		/area/bluespace_interlude,

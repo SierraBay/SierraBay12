@@ -1,0 +1,151 @@
+<div class="fabMon">
+	<div class="fabMonHeader">
+		<span class="fabMonTitle">&#9881; FABRICATOR TELEMETRY</span>
+		<span class="fabMonActions">
+			{{:helper.link('Обновить', 'refresh', {'refresh' : 1})}}
+			{{if data.active}}
+				{{:helper.link('К списку', 'arrowreturnthick-1-w', {'clear' : 1})}}
+			{{/if}}
+		</span>
+	</div>
+
+	{{if data.active}}
+		<div class="fabMonCard">
+			<div class="fabMonCardTitle">{{:data.active_name}}</div>
+			<div class="fabMonMeta">
+				<span>Зона: <b>{{:data.active_area}}</b></span>
+				<span>Статус: <b>{{:data.active_status}}</b></span>
+				<span>Телеметрия: <b>{{:data.active_network ? 'online' : 'offline'}}</b></span>
+			</div>
+			{{if data.active_corrupt}}
+				<div class="fabMonWarn">Журнал помечен как повреждённый / очищенный.</div>
+			{{/if}}
+			<div class="fabMonBtnRow">
+				{{:helper.link('Печать лога', 'print', {'print_log' : 1})}}
+				{{:helper.link('Сохранить на диск', 'disk', {'save_log' : 1})}}
+			</div>
+		</div>
+
+		<div class="fabMonCard">
+			<div class="fabMonCardTitle">Материалы на складе</div>
+			{{for data.materials}}
+				<div class="fabMonMat">{{:value.name}}: <b>{{:value.amount}}</b></div>
+			{{empty}}
+				<div class="fabMonMuted">Нет данных.</div>
+			{{/for}}
+		</div>
+
+		<div class="fabMonCard">
+			<div class="fabMonCardTitle">Журнал печати</div>
+			{{for data.active_log}}
+				<div class="fabMonEntry">
+					<div class="fabMonEntryItem">{{:value.item}}</div>
+					<div>{{:value.user}}</div>
+					<div class="fabMonMuted">{{:value.at}} · {{:value.materials}}</div>
+				</div>
+			{{empty}}
+				<div class="fabMonMuted">Журнал пуст.</div>
+			{{/for}}
+		</div>
+	{{else}}
+		<div class="fabMonIntro">
+			Фабрикаторы на сети. Offline / cut telemetry — недоступны удалённо.
+		</div>
+		{{for data.fabricators}}
+			<div class="fabMonCard">
+				<div class="fabMonCardTitle">{{:value.name}}</div>
+				<div class="fabMonMeta">
+					<span>{{:value.area}}</span>
+					<span>{{:value.status}}</span>
+					<span>записей: <b>{{:value.entries}}</b></span>
+				</div>
+				{{if value.online}}
+					{{:helper.link('Открыть журнал', 'clipboard', {'select' : value.ref})}}
+				{{else}}
+					<span class="fabMonWarn">Нет телеметрии</span>
+				{{/if}}
+			</div>
+		{{empty}}
+			<div class="fabMonMuted">Фабрикаторы не найдены.</div>
+		{{/for}}
+	{{/if}}
+</div>
+
+<style>
+.fabMon {
+	font-family: 'Consolas', 'Courier New', monospace;
+	color: #c8dae8;
+	padding: 4px;
+}
+.fabMonHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 8px 10px;
+	margin-bottom: 10px;
+	background: linear-gradient(90deg, rgba(20,48,78,0.95), rgba(12,28,48,0.85));
+	border: 1px solid #2a4e72;
+}
+.fabMonTitle {
+	font-weight: bold;
+	letter-spacing: 0.04em;
+	color: #9ec8ef;
+}
+.fabMonIntro {
+	margin: 0 0 10px 0;
+	padding: 8px 10px;
+	background: rgba(0,0,0,0.2);
+	border-left: 3px solid #3a6a9a;
+	color: #8aa4bc;
+	font-size: 0.92em;
+}
+.fabMonCard {
+	margin: 0 0 10px 0;
+	padding: 10px 12px;
+	background: rgba(10, 24, 40, 0.72);
+	border: 1px solid #264866;
+}
+.fabMonCardTitle {
+	font-weight: bold;
+	color: #b7d4ef;
+	margin-bottom: 6px;
+}
+.fabMonMeta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	margin-bottom: 8px;
+	font-size: 0.92em;
+	color: #9bb3c9;
+}
+.fabMonBtnRow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 4px;
+}
+.fabMonEntry {
+	margin: 0 0 8px 0;
+	padding: 6px 8px;
+	border-left: 3px solid #5588aa;
+	background: rgba(0,0,0,0.18);
+}
+.fabMonEntryItem {
+	font-weight: bold;
+	color: #d5e7f7;
+}
+.fabMonMat {
+	margin: 0 0 2px 0;
+	font-size: 0.92em;
+}
+.fabMonMuted {
+	color: #7f97ad;
+	font-size: 0.9em;
+}
+.fabMonWarn {
+	color: #d0a060;
+	font-size: 0.92em;
+	margin: 4px 0;
+}
+</style>

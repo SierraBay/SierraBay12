@@ -30,9 +30,9 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 {{/if}}
 
 <!-- ============================================================ -->
-<!-- MAIN NAVIGATION SCREENS (lab, tech_trees, missions, corps)   -->
+<!-- MAIN NAVIGATION SCREENS (lab, tech_trees, corps)             -->
 <!-- ============================================================ -->
-{{if !data.screen || data.screen == "main" || data.screen == "tech_trees" || data.screen == "missions" || data.screen == "corps"}}
+{{if !data.screen || data.screen == "main" || data.screen == "tech_trees" || data.screen == "corps"}}
 <div class="rndConsole rndTheme--{{:data.ui_theme || 'neutral'}}">
 
 	<!-- Top Navigation Bar -->
@@ -40,9 +40,6 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 		<div class="rndNavTabs">
 			{{:helper.link("Лаборатория", '', {'go_screen' : 'main'}, (!data.screen || data.screen == 'main') ? 'selected' : null, 'rndTab')}}
 			{{:helper.link("Технологии", '', {'go_screen' : 'tech_trees'}, data.screen == 'tech_trees' ? 'selected' : null, 'rndTab')}}
-			{{if !data.is_robotics_console}}
-				{{:helper.link("Контракты", '', {'go_screen' : 'missions'}, data.screen == 'missions' ? 'selected' : null, 'rndTab')}}
-			{{/if}}
 			{{:helper.link("Корпорации", '', {'go_screen' : 'corps'}, data.screen == 'corps' ? 'selected' : null, 'rndTab')}}
 		</div>
 		<div class="rndNavStatus">
@@ -374,9 +371,6 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 							{{:helper.link("Откл. протолат", 'close', {'disconnect' : "lathe"}, data.has_protolathe ? null : 'disabled')}}
 							{{:helper.link("Откл. импринтер", 'close', {'disconnect' : "imprinter"}, data.has_circuit_imprinter ? null : 'disabled')}}
 						</div>
-						<div class="rndBtnRow">
-							{{:helper.link(data.linked_drone_pad_id ? "Дрон пад ID: " + data.linked_drone_pad_id : "Привязать дрон пад", 'airplay', {'link_drone_pad' : 1})}}
-						</div>
 					</div>
 					{{/if}}
 				</div>
@@ -502,108 +496,6 @@ Used In File(s): \mods\RnD\code\machinery\rdconsole.dm
 					{{/if}}
 				</div>
 			</div>
-		</div>
-	</div>
-	{{/if}}
-
-	<!-- ======================== -->
-	<!-- CONTRACTS / MISSIONS     -->
-	<!-- ======================== -->
-	{{if !data.is_robotics_console && data.screen == "missions"}}
-	<div class="rndTwoCol">
-		<div class="rndCol" style="width: 100%;">
-
-			<div class="rndSection">
-				<div class="rndSectionTitle">Корпоративные контракты {{:helper.link("Печать", 'printer', {'print_missions': 1}, null, 'rndTab')}}</div>
-				<div class="rndSectionContent">
-					<p class="rndMuted" style="font-size: 11px; margin-bottom: 10px;"><i>Контракты на исследование объектов, обнаруженных на заброшенных объектах в системе. Выполнение контрактов открывает доступ к корпоративным технологиям.</i></p>
-
-					{{if data.missions && data.missions.length}}
-						{{for data.missions}}
-						<div class="rndMissionCard">
-							<div class="rndMissionHeader">
-								<span class="rndMissionTitle">{{:value.title}}</span>
-								<span class="rndMissionType rndMissionType--{{:value.state == 4 ? 'done' : (value.mission_type == 'complex' ? 'complex' : 'simple')}}">{{:value.state == 4 ? 'Выполнен' : (value.mission_type == 'complex' ? 'Сложный' : 'Простой')}}</span>
-							</div>
-							<table class="rndMissionTable">
-								<tr><td class="rndMissionLabel">Корпорация</td><td>{{:value.corp_name}}</td></tr>
-								<tr><td class="rndMissionLabel">Локация</td><td>{{:value.site_name}}</td></tr>
-								<tr><td class="rndMissionLabel">Статус</td><td>{{if value.state == 4}}<span style="color:#44ff44;">Выполнен</span>{{else}}<span class="rndMuted">В процессе</span>{{/if}}</td></tr>
-							</table>
-							<div class="rndMissionDesc">{{:value.description}}</div>
-							{{if value.state != 4}}
-							<div class="rndMissionObjectives">
-								{{for value.objectives :obj:obj_i}}
-								<div class="rndMissionObj {{:obj.completed ? 'rndMissionObj--done' : ''}}">
-									<span class="rndMissionObjIcon">{{:obj.completed ? '&#10003;' : '&#9744;'}}</span>
-									<span class="rndMissionObjText">{{:obj.description}}</span>
-									<span class="rndMissionObjStatus">{{:obj.status}}</span>
-								</div>
-								{{/for}}
-							</div>
-							{{/if}}
-						</div>
-						{{/for}}
-					{{else}}
-						<div class="rndEmptyNotice">Контрактов нет. Контракты генерируются при обнаружении заброшенных объектов в системе.</div>
-					{{/if}}
-				</div>
-			</div>
-
-			<!-- Data Submission (RDF & Photos) -->
-			{{if data.has_disk}}
-			<div class="rndSection">
-				<div class="rndSectionTitle">Подача данных сканирования</div>
-				<div class="rndSectionContent">
-					{{if data.rdf_files && data.rdf_files.length}}
-					<table class="rndDataTable">
-						<tr><th>Файл</th><th>Зона</th><th>Подать для контракта</th></tr>
-						{{for data.rdf_files}}
-						<tr>
-							<td>{{:value.filename}}</td>
-							<td>{{:value.scan_area}}</td>
-							<td>
-								{{for data.missions :mission:mi}}
-									{{if mission.state != 4}}
-										{{:helper.link(mission.title, 'transferthick-e-w', {'submit_rdf' : value.id, 'submit_rdf_mission' : mission.ref})}}
-									{{/if}}
-								{{/for}}
-							</td>
-						</tr>
-						{{/for}}
-					</table>
-					{{else}}
-						<span class="rndMuted"><i>На диске нет файлов RDF.</i></span>
-					{{/if}}
-				</div>
-			</div>
-			<div class="rndSection">
-				<div class="rndSectionTitle">Подача фотографий</div>
-				<div class="rndSectionContent">
-					{{if data.photo_files && data.photo_files.length}}
-					<table class="rndDataTable">
-						<tr><th>Файл</th><th>Подать для контракта</th></tr>
-						{{for data.photo_files}}
-						<tr>
-							<td>{{:value.filename}}</td>
-							<td>
-								{{for data.missions :mission:mi}}
-									{{if mission.state != 4}}
-										{{:helper.link(mission.title, 'transferthick-e-w', {'submit_photo' : value.id, 'submit_photo_mission' : mission.ref})}}
-									{{/if}}
-								{{/for}}
-							</td>
-						</tr>
-						{{/for}}
-					</table>
-					{{else}}
-						<span class="rndMuted"><i>На диске нет фотографий.</i></span>
-					{{/if}}
-				</div>
-			</div>
-			{{/if}}
-			<p class="rndMuted" style="font-size: 11px; margin-top: 4px;"><i>Физические фотографии и отчёты об артефактах можно подать, положив их на консоль.</i></p>
-
 		</div>
 	</div>
 	{{/if}}

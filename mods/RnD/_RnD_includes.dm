@@ -38,6 +38,7 @@
 
 // Машины
 #include "code/machinery/autolathe.dm"
+#include "code/machinery/autolathe_print_log.dm"
 #include "code/machinery/destructive_analyzer.dm"
 #include "code/machinery/food_replicator.dm"
 #include "code/machinery/recipe_analyzer.dm"
@@ -49,28 +50,25 @@
 #include "code/machinery/away_servers.dm"
 #include "code/machinery/autolathe_disk_cloner.dm"
 #include "code/machinery/rd_mission_drone_pad.dm"
-
-
 // Программы для модульных компьютеров
 #include "code/program/asset.dm"
 #include "code/program/binary.dm"
 #include "code/program/design.dm"
 #include "code/program/designownloader.dm"
-#include "code/program/mission_tracker.dm"
 #include "code/program/camera.dm"
 #include "code/program/filetypes.dm"
 #include "code/program/codeprocessor.dm"
 #include "code/program/itcommand.dm"
+#include "code/program/autolathe_monitor.dm"
 #include "code/program/rnd_console.dm"
 
-// Миссии и награды
+// Away sites / ghost invasion / Odyssey science
 #include "code/admin.dm"
 #include "code/derelict_missions.dm"
-#include "code/derelict_mission_items.dm"
-#include "code/derelict_mission_configs.dm"
-#include "code/derelict_mission_virology.dm"
 #include "code/derelict_ghost_invasion.dm"
+#include "code/tactical_terminal.dm"
 #include "code/simple_animal_player_combat.dm"
+#include "code/odyssey_science.dm"
 
 // Эксперименты и научные приборы
 #include "code/experiment.dm"

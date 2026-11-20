@@ -18,6 +18,7 @@
 	pref.character_persist = !!pref.character_persist
 	pref.character_persist_med_autofill = !!pref.character_persist_med_autofill
 	if (!pref.character_persist && pref.character_persist_is_locked())
+		character_persist_safe_wipe_owner(pref.client_ckey, pref.default_slot, character_persist_use_odyssey_lane())
 		character_persist_delete(pref.client_ckey, pref.default_slot)
 		pref.character_persist_snapshot = null
 
@@ -29,8 +30,9 @@
 	. += BTN("toggle_persist_help", show_persist_help ? "Скрыть" : "Подробнее")
 	. += "<br>"
 	if (show_persist_help)
-		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает его. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был.</i></div>"
+		. += "<div style='margin-left:1em;max-width:42em'><i>В конце смены состояние тела сохранится, если персонаж жив и находится на Сьерре. Во время эвакуации сохранение также срабатывает на спасательных капсулах, Хароне, Гуппи и любом другом корабле. Без эвакуации уход на шаттле со Сьерры сбрасывает состояние. Криосохранение тоже записывает состояние. Смерть или отключение опции сбрасывает снимок текущей линии (включая личный сейф). Обычные раунды и Одиссея используют разные файлы снимка. За каждую пережитую смену на счёт начисляется 500 таллеров. Роли вне Сьерры (наёмник, рейдер, маг и подобные) не сохраняют и не сбрасывают состояние: снимок экипажа остаётся как был.</i></div>"
 	. += "<b>Автозаполнение мед. записей:</b> "
+
 	. += BTN("toggle_character_persist_med_autofill", pref.character_persist_med_autofill ? "Включена" : "Выключена")
 	. += " "
 	. += BTN("toggle_med_help", show_med_help ? "Скрыть" : "Подробнее")
@@ -48,6 +50,13 @@
 		. += "Пережито смен: [shifts]<br>"
 		if (shifts)
 			. += "Накоплено к выплате: [shifts * CHARACTER_PERSIST_SHIFT_PAY] таллеров<br>"
+		if (shifts >= CHARACTER_PERSIST_SAFE_MIN_SHIFTS)
+			. += "Личный сейф: доступен (биометрия)<br>"
+		else
+			. += "Личный сейф: откроется после [CHARACTER_PERSIST_SAFE_MIN_SHIFTS] пережитых смен (сейчас [shifts])<br>"
+		var/list/safe_items = pref.character_persist_snapshot["personal_safe"]
+		if (islist(safe_items) && length(safe_items))
+			. += "В сейфе сохранено предметов: [length(safe_items)] / [CHARACTER_PERSIST_SAFE_MAX_ITEMS]<br>"
 		if (pref.character_persist_med_locked() && pref.character_persist_snapshot["med_record"])
 			. += "<i>Медицинская запись переносится со снимком. Просмотреть её можно во вкладке Background рядом с «Записи здравоохранения».</i><br>"
 	. = jointext(., null)

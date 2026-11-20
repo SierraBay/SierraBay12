@@ -20,6 +20,7 @@
 	#include "sierra_turfs.dm"
 	#include "sierra_unit_testing.dm"
 	#include "sierra_events.dm"
+	#include "sierra_odyssey.dm"
 
 	// --- INCLUDES FROM ANOTHER MAPS --- //
 	#include "sierra_snatch.dm"

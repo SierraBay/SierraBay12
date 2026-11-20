@@ -118,6 +118,11 @@ SUBSYSTEM_DEF(ticker)
 		Master.SetRunLevel(RUNLEVEL_SETUP)
 		return
 
+	// [SIERRA-ADD] - ODYSSEY
+	if(pregame_timeleft <= (config.vote_autogamemode_timeleft SECONDS + config.vote_period + 5 SECONDS))
+		odyssey_pregame_consider_vote()
+	// [/SIERRA-ADD]
+
 	if(!bypass_gamemode_vote && (pregame_timeleft <= config.vote_autogamemode_timeleft SECONDS) && !gamemode_vote_results)
 #ifndef UNIT_TEST
 		var/list/lobby = lobby_players()
@@ -163,6 +168,9 @@ SUBSYSTEM_DEF(ticker)
 	// This means we succeeded in picking a game mode.
 	GLOB.using_map.setup_economy()
 	Master.SetRunLevel(RUNLEVEL_GAME)
+
+	// Odyssey (and similar) may mutate the map here — before anyone spawns into it.
+	callHook("pre_characters")
 
 	create_characters() //Create player characters and transfer them
 	collect_minds()
@@ -328,6 +336,19 @@ Helpers
 		log_debug("Could not find a valid game mode for [mode_to_try].")
 		return
 
+	// [SIERRA-ADD] - ODYSSEY
+	// Campaign owns antagonists; force Extended so vote/secret (cult, heist, …) cannot apply.
+	if (odyssey_ensure_state().active)
+		var/datum/game_mode/odyssey_forced = pick_mode("extended")
+		if (istype(odyssey_forced))
+			if (mode_datum.config_tag != "extended")
+				log_game("ODYSSEY: replacing gamemode [mode_datum.config_tag] with extended (campaign antag rules)")
+			mode_datum = odyssey_forced
+			mode_to_try = "extended"
+		else
+			log_error("ODYSSEY: failed to load extended for campaign gamemode override")
+	// [/SIERRA-ADD]
+
 	//Deal with jobs and antags, check that we can actually run the mode.
 	SSjobs.reset_occupations() // Clears all players' role assignments. Clean slate.
 	mode_datum.create_antagonists() // Init operation on the mode; sets up antag datums and such.
@@ -462,16 +483,16 @@ Helpers
 	if(mode.explosion_in_progress)
 		return 0
 	if(config.continous_rounds)
-		return evacuation_controller.round_over() || mode.station_was_nuked
+		return evacuation_controller.round_over() || mode.station_was_nuked || odyssey_transition_ready_to_end()
 	else
-		return mode.check_finished() || (evacuation_controller.round_over() && evacuation_controller.emergency_evacuation) || game_over
+		return mode.check_finished() || (evacuation_controller.round_over() && evacuation_controller.emergency_evacuation) || odyssey_transition_ready_to_end() || game_over
 
 /datum/controller/subsystem/ticker/proc/mode_finished()
 	if (forced_end)
 		return TRUE
 
 	if(config.continous_rounds)
-		return mode.check_finished()
+		return mode.check_finished() || odyssey_transition_ready_to_end()
 	else
 		return game_finished()
 

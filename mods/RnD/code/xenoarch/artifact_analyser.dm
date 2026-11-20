@@ -228,13 +228,7 @@
 	else
 		results = get_scan_info(scanned_object)
 
-	// Determine paper type — mission artifacts may use a custom deliverable_paper_type
-	var/paper_type = /obj/item/paper/anomaly_scan
-	if(scanned_object && istype(scanned_object, /obj/machinery/artifact/mission))
-		var/obj/machinery/artifact/mission/MA = scanned_object
-		paper_type = MA.deliverable_paper_type || /obj/item/paper/anomaly_scan
-	var/obj/item/paper/anomaly_scan/P = new paper_type(src.loc)
-
+	var/obj/item/paper/anomaly_scan/P = new(src.loc)
 	P.SetName("[src] report #[++report_num]")
 	P.info = "<b>[src] analysis report #[report_num]</b><br>"
 	P.info += "<br>"
@@ -250,9 +244,6 @@
 			P.my_effect = A.my_effect.name
 		if(A.secondary_effect)
 			P.secondary_effect = A.secondary_effect.name
-		if(istype(A, /obj/machinery/artifact/mission))
-			var/obj/machinery/artifact/mission/MA = A
-			MA.on_analysis_complete()
 
 	release_scanned_object()
 	updateDialog()

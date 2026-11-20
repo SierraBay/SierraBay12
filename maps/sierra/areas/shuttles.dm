@@ -250,7 +250,8 @@
 /area/turbolift
 	icon_state = "shuttle"
 	dynamic_lighting = 1
-	area_flags = AREA_FLAG_ION_SHIELDED
+	// Cabin/shaft turfs move between decks — Odyssey turf deltas otherwise leave lifts without floors.
+	area_flags = AREA_FLAG_ION_SHIELDED | AREA_FLAG_IS_NOT_PERSISTENT
 	req_access = list(access_maint_tunnels)
 /*
 /area/turbolift/sierra_top
@@ -290,6 +291,10 @@
 /area/turbolift/bridgedeck
 	name = "bridge"
 	base_turf = /turf/simulated/open
+
+
+/area/turbolift/mainlift
+	name = "mainlift"
 
 /area/turbolift/firstdeck
 	name = "first deck"

@@ -340,6 +340,11 @@ var/global/list/additional_antag_types = list()
 	if(persist_output)
 		text += persist_output
 	//[SIERRA-ADD]
+	//[SIERRA-ADD] - ODYSSEY
+	var/odyssey_output = odyssey_roundend_text()
+	if(odyssey_output)
+		text += odyssey_output
+	//[SIERRA-ADD]
 
 	to_world(text)
 

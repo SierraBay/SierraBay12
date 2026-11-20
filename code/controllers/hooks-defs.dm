@@ -17,6 +17,13 @@
 /hook/game_ready
 
 /**
+ * Pre-characters hook.
+ * Called in ticker.dm after the gamemode is chosen, before create_characters().
+ * Use for world mutations that must finish before players spawn (e.g. Odyssey save apply).
+ */
+/hook/pre_characters
+
+/**
  * Roundstart hook.
  * Called in ticker.dm when a round starts.
  */

@@ -2,10 +2,15 @@
 	filetype = "CD" // Construction Design
 	size = 2
 	var/datum/design/design
+	/// Who queued this clone for printing (journal).
+	var/print_ordered_by
+	var/print_ordered_ckey
 
 /datum/computer_file/binary/design/clone()
 	var/datum/computer_file/binary/design/F = ..()
 	F.design = design
+	F.print_ordered_by = print_ordered_by
+	F.print_ordered_ckey = print_ordered_ckey
 	return F
 
 /datum/computer_file/binary/design/proc/setsize()
