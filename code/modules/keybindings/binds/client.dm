@@ -10,7 +10,9 @@
 
 
 /datum/keybinding/client/admin_help/down(client/user)
-	user.adminhelp()
+	var/msg = input(user, "", "adminhelp \"text\"") as text|null
+	if(msg && !QDELETED(user))
+		user.adminhelp(msg)
 	return TRUE
 
 

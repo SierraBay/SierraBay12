@@ -2,6 +2,14 @@
 // Duration scales with Athletics skill (3s × level) and installed augment count (+0.5s × level per augment).
 // Cooldown = 5× the actual time the Sandevistan was active.
 // Deals melee strikes when phasing through mobs on harm intent.
+// Every shutdown leaves the user drowsy, confused, slurring and out of stamina, like a spent changeling Enrage.
+// The action button shows the time left, the cooldown, an EMP lockout or a damaged (offline) implant.
+
+#define SANDEVISTAN_READY 1
+#define SANDEVISTAN_ACTIVE 2
+#define SANDEVISTAN_COOLDOWN 3
+#define SANDEVISTAN_EMP_LOCKOUT 4
+#define SANDEVISTAN_OFFLINE 5
 
 /obj/item/organ/internal/augment/active/sandevistan
 	name = "Sandevistan spine implant"
@@ -9,6 +17,7 @@
 	icon = 'mods/RnD/icons/augment.dmi'
 	icon_state = "sandevistan"
 	action_button_name = "Activate Sandevistan"
+	default_action_type = /datum/action/item_action/organ/augment/sandevistan
 	augment_slots = AUGMENT_CHEST
 	augment_flags = AUGMENT_BIOLOGICAL | AUGMENT_MECHANICAL | AUGMENT_SCANNABLE
 	origin_tech = list(TECH_COMBAT = 5, TECH_ESOTERIC = 5, TECH_BIO = 5)
@@ -29,6 +38,13 @@
 	var/aug_cooldown_multiplier = 5
 	/// If TRUE, deactivation applies zero cooldown
 	var/no_cooldown = FALSE
+
+	/// world.time when the forced cooldown from the last EMP ends
+	var/emp_lockout_until = 0
+	/// Status shown last time, to report changes in chat
+	var/last_status = SANDEVISTAN_READY
+	/// Timer that redraws the button countdown every second
+	var/display_timer
 
 /obj/item/device/augment_implanter/sandevistan
 	name = "augment implanter (Sandevistan)"
@@ -67,6 +83,9 @@
 // ---------------------------------------------------------------------------
 
 /obj/item/organ/internal/augment/active/sandevistan/can_activate()
+	if(owner && !is_usable())
+		to_chat(owner, SPAN_WARNING("Sandevistan is offline: the implant is too damaged to run."))
+		return FALSE
 	if(!..())
 		return FALSE
 	if(world.time < cooldown_until)
@@ -84,10 +103,23 @@
 	if(world.time <= next_tick)
 		return
 	next_tick = world.time + 1 SECOND
-	if(active && owner && istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		if(world.time >= activate_time + get_sandevistan_duration(H))
-			deactivate_sandevistan(H)
+	var/mob/living/carbon/human/H = owner
+	if(!istype(H))
+		return
+	// Also catches damage and repairs between activations
+	if(!check_shutdown(H))
+		update_status_display()
+
+/// Switches an active Sandevistan off once it is damaged or out of time. Returns TRUE if it did.
+/obj/item/organ/internal/augment/active/sandevistan/proc/check_shutdown(mob/living/carbon/human/H)
+	if(!active)
+		return FALSE
+	if(!is_usable())
+		to_chat(H, SPAN_DANGER("Your damaged Sandevistan sputters and shuts down!"))
+	else if(world.time < activate_time + get_sandevistan_duration(H))
+		return FALSE
+	deactivate_sandevistan(H)
+	return TRUE
 
 // ---------------------------------------------------------------------------
 // Activate / Deactivate
@@ -116,6 +148,8 @@
 		active = TRUE
 		var/dur = get_sandevistan_duration(H)
 		to_chat(H, SPAN_NOTICE("Sandevistan active. Maximum duration: [round(dur / 10, 0.1)]s."))
+		update_status_display()
+		schedule_display_tick()
 	else
 		deactivate_sandevistan(H)
 
@@ -137,6 +171,19 @@
 			trail.stop()
 		H.playsound_local(get_turf(H), 'mods/RnD/sounds/sandy_exit.ogg', 100, 1)
 		to_chat(H, SPAN_NOTICE("Sandevistan deactivated. Cooldown: [round((used * aug_cooldown_multiplier) / 10, 0.1)]s."))
+	apply_comedown(H)
+	update_status_display()
+	schedule_display_tick()
+
+/// Same crash as a changeling's Enrage running out (see ragecore.dm).
+/obj/item/organ/internal/augment/active/sandevistan/proc/apply_comedown(mob/living/carbon/human/H)
+	to_chat(H, SPAN_WARNING("Your overclocked nerves give out, leaving your body weak and sluggish."))
+	H.drowsyness = max(H.drowsyness, 15)
+	H.set_confused(15)
+	H.slurring = max(H.slurring, 30)
+	H.stamina = 0
+	if(MOVING_QUICKLY(H))
+		H.set_moving_slowly()
 
 // ---------------------------------------------------------------------------
 // Phasewalk melee strike
@@ -167,11 +214,129 @@
 		deactivate_sandevistan(H)
 
 	var/emp_cooldown = (severity == EMP_ACT_HEAVY) ? 120 SECONDS : 60 SECONDS
-	cooldown_until = max(cooldown_until, world.time + emp_cooldown)
+	emp_lockout_until = world.time + emp_cooldown
+	cooldown_until = max(cooldown_until, emp_lockout_until)
 	if(ishuman(owner))
 		to_chat(owner, SPAN_WARNING("Sandevistan system reports an EMP overload. Forced cooldown applied."))
 
 	..()
+	update_status_display()
+	schedule_display_tick()
+
+/obj/item/organ/internal/augment/active/sandevistan/Destroy()
+	if(display_timer)
+		deltimer(display_timer)
+		display_timer = null
+	return ..()
+
+// ---------------------------------------------------------------------------
+// Status display (action button and chat)
+// ---------------------------------------------------------------------------
+
+/obj/item/organ/internal/augment/active/sandevistan/proc/get_status()
+	if(!is_usable())
+		return SANDEVISTAN_OFFLINE
+	if(active)
+		return SANDEVISTAN_ACTIVE
+	if(world.time < cooldown_until)
+		return (world.time < emp_lockout_until && cooldown_until <= emp_lockout_until) ? SANDEVISTAN_EMP_LOCKOUT : SANDEVISTAN_COOLDOWN
+	return SANDEVISTAN_READY
+
+/// Seconds left on the current countdown, or 0 if nothing counts down.
+/obj/item/organ/internal/augment/active/sandevistan/proc/get_seconds_left(status)
+	switch(status)
+		if(SANDEVISTAN_ACTIVE)
+			var/mob/living/carbon/human/H = owner
+			if(istype(H))
+				return get_countdown_seconds(activate_time + get_sandevistan_duration(H))
+		if(SANDEVISTAN_COOLDOWN, SANDEVISTAN_EMP_LOCKOUT)
+			return get_countdown_seconds(cooldown_until)
+	return 0
+
+/obj/item/organ/internal/augment/active/sandevistan/proc/get_status_text()
+	var/status = get_status()
+	switch(status)
+		if(SANDEVISTAN_ACTIVE)
+			return "active, [get_seconds_left(status)]s left"
+		if(SANDEVISTAN_COOLDOWN)
+			return "cooling down, [get_seconds_left(status)]s"
+		if(SANDEVISTAN_EMP_LOCKOUT)
+			return "EMP lockout, [get_seconds_left(status)]s"
+		if(SANDEVISTAN_OFFLINE)
+			return "offline, too damaged"
+	return "ready"
+
+/// Redraws the button and reports status changes in chat.
+/obj/item/organ/internal/augment/active/sandevistan/proc/update_status_display()
+	var/status = get_status()
+	if(status != last_status)
+		announce_status_change(last_status, status)
+		last_status = status
+	refresh_action_button()
+
+/obj/item/organ/internal/augment/active/sandevistan/proc/announce_status_change(old_status, new_status)
+	if(!owner)
+		return
+	if(new_status == SANDEVISTAN_OFFLINE)
+		to_chat(owner, SPAN_WARNING("Sandevistan offline: the implant is too damaged to run."))
+	else if(old_status == SANDEVISTAN_OFFLINE)
+		to_chat(owner, SPAN_NOTICE("Sandevistan back online."))
+	else if(new_status == SANDEVISTAN_READY)
+		to_chat(owner, SPAN_NOTICE("Sandevistan ready."))
+
+/// Keeps the countdown ticking once a second while there is one to show.
+/obj/item/organ/internal/augment/active/sandevistan/proc/schedule_display_tick()
+	if(display_timer)
+		return
+	display_timer = addtimer(new Callback(src, PROC_REF(tick_display)), 1 SECOND, TIMER_STOPPABLE)
+
+/obj/item/organ/internal/augment/active/sandevistan/proc/tick_display()
+	display_timer = null
+	var/mob/living/carbon/human/H = owner
+	if(!istype(H))
+		return
+	// Shutting down redraws and reschedules on its own
+	if(check_shutdown(H))
+		return
+	update_status_display()
+	var/status = get_status()
+	if(status == SANDEVISTAN_ACTIVE || status == SANDEVISTAN_COOLDOWN || status == SANDEVISTAN_EMP_LOCKOUT)
+		schedule_display_tick()
+
+/// The tooltip carries the status text too
+/obj/item/organ/internal/augment/active/sandevistan/refresh_action_button()
+	. = ..()
+	if(. && action.button)
+		action.button.SetName(action.UpdateName())
+
+/obj/item/organ/internal/augment/active/sandevistan/get_action_button_label()
+	var/status = get_status()
+	switch(status)
+		if(SANDEVISTAN_ACTIVE)
+			return create_action_button_label("[get_seconds_left(status)]", COLOR_CYAN)
+		if(SANDEVISTAN_COOLDOWN)
+			return create_action_button_label("[get_seconds_left(status)]", COLOR_WHITE)
+		if(SANDEVISTAN_EMP_LOCKOUT)
+			return create_action_button_label("EMP<br>[get_seconds_left(status)]", COLOR_ORANGE_LIGHT)
+		if(SANDEVISTAN_OFFLINE)
+			return create_action_button_label("OFF", COLOR_RED_LIGHT)
+
+/datum/action/item_action/organ/augment/sandevistan
+	button_icon = 'mods/RnD/icons/augment.dmi'
+
+/// Red-tinted button while it can't be switched on.
+/datum/action/item_action/organ/augment/sandevistan/IsAvailable()
+	. = ..()
+	var/obj/item/organ/internal/augment/active/sandevistan/sandevistan = target
+	if(. && istype(sandevistan))
+		var/status = sandevistan.get_status()
+		return status == SANDEVISTAN_READY || status == SANDEVISTAN_ACTIVE
+
+/datum/action/item_action/organ/augment/sandevistan/UpdateName()
+	var/obj/item/organ/internal/augment/active/sandevistan/sandevistan = target
+	if(!istype(sandevistan))
+		return ..()
+	return "[name] ([sandevistan.get_status_text()])"
 
 // ---------------------------------------------------------------------------
 // Bullet dodge
@@ -357,3 +522,9 @@
 
 /datum/effect/trail/afterimage/sandevistan/effect(obj/effect/afterimage/sandevistan/T)
 	return
+
+#undef SANDEVISTAN_READY
+#undef SANDEVISTAN_ACTIVE
+#undef SANDEVISTAN_COOLDOWN
+#undef SANDEVISTAN_EMP_LOCKOUT
+#undef SANDEVISTAN_OFFLINE

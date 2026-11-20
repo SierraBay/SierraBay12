@@ -1,5 +1,6 @@
 // SIERRA TODO: GET RID OF IT!!!
 #include "ai/_ai_includes.dm"
+#include "jps_pathfinding/_jps_pathfinding_includes.dm"
 #include "adherent_discharge/_adherent_discharge_includes.dm"
 #include "body_markings/_body_markings_includes.dm"
 #include "cargo/_cargo_includes.dm"
@@ -49,6 +50,7 @@
 #include "character_traits/_character_traits_includes.dm"
 #include "character_persist/_character_persist_includes.dm"
 #include "chemtweaks/_chemtweaks_includes.dm"
+#include "chemistry_additions/_chemistry_additions_includes.dm"
 #include "diona/_diona_includes.dm"
 #include "simplangs/simplangs_includes.dm"
 #include "makeshift_sword_overhaul/makeshift_sword_overhaul_includes.dm"
@@ -88,4 +90,7 @@
 #include "medical/medical_includes.dm"
 #include "case_dossier/_case_dossier_includes.dm"
 #include "advanced_landing/_advanced_landing_includes.dm"
+#include "tgui/_tgui_includes.dm"
+#include "pencode_images/_pencode_images_includes.dm"
+#include "skrell_names/_skrell_names_includes.dm"
 #include "trade/_trade_includes.dm"

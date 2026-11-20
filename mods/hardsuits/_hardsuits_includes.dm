@@ -9,6 +9,7 @@
 #include "code/rigs.dm"
 
 #include "code/module_actions.dm"
+#include "code/module_cooldown_label.dm"
 #include "code/rig_ai.dm"
 #include "code/maincode.dm"
 #include "code/modules.dm"

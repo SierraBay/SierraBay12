@@ -457,6 +457,9 @@
 	// [/SIERRA-ADD]
 	t = replacetext(t, "\[zhlogo\]", "<img src = zhlogo.png>")
 	t = replacetext(t, "\[editorbr\]", "")
+	// [SIERRA-ADD] - PENCODE_IMAGES
+	t = pencode_images_to_html(t)
+	// [/SIERRA-ADD]
 	return t
 
 //pencode translation to html for tags exclusive to digital files (currently email, nanoword, report editor fields,
@@ -531,6 +534,9 @@
 	t = replacetext(t, "<img src = zhlogo.png", "\[zhlogo\]")
 	t = replacetext(t, "<span class=\"paper_field\"></span>", "\[field\]")
 	t = replacetext(t, "<span class=\"redacted\">R E D A C T E D</span>", "\[redacted\]")
+	// [SIERRA-ADD] - PENCODE_IMAGES
+	t = pencode_images_to_pencode(t)
+	// [/SIERRA-ADD]
 	t = strip_html_properly(t)
 	return t
 
