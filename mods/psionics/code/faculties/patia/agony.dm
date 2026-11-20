@@ -1,6 +1,6 @@
 /singleton/psionic_power/patia/coercion/agony
 	use_intent =     I_DISARM
-	name =          "Agony"
+	name =          "Агония"
 	cost =          8
 	cooldown =      60
 	use_melee =     TRUE

@@ -1,10 +1,10 @@
 /singleton/psionic_power/patia/coercion/emotions
-	use_intent =     I_DISARM
-	name =            "Emotion Amplifier"
+	use_intent =      I_DISARM
+	name =            "Принуждение эмоции"
 	cost =            20
 	cooldown =        30
-	use_melee =     TRUE
-	use_ranged =     TRUE
+	use_melee =       TRUE
+	use_ranged =      TRUE
 	min_rank =        PSI_RANK_OPERANT
 	use_description = "Выберите грудь и переключитесь на синий интент. Затем, нажмите по вашей цели, чтобы многократно усилить одну из её эмоций."
 
@@ -37,8 +37,6 @@
 				var/funny_option = pick("смеетесь над несмешной шуткой", "стараетесь не обидеть друга", "насмехаетесь над [user]")
 				to_chat(target, SPAN_WARNING("Внезапно, вы ощущаете принужденный смех. Как будто вы [funny_option]."))
 				var/mob/living/carbon/C = target
-				C.Weaken(5)
-				C.spin(32,2)
 				C.emote("giggle")
 				sleep(3 SECONDS)
 				C.emote("giggle")

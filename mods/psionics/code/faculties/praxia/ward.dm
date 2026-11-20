@@ -1,6 +1,6 @@
 /singleton/psionic_power/praxia/psionics/ward
 	use_intent =      I_HELP
-	name =            "Ward"
+	name =            "Укрепление обороны"
 	cost =            30
 	cooldown =        50
 	use_melee =       TRUE
@@ -18,8 +18,10 @@
 	. = ..()
 	if(.)
 		target.psi.ward_until = world.time + 60 SECONDS
-		new /obj/temporary(get_turf(target), 6, 'icons/effects/effects.dmi', "cyan_sparkles")
 		target.visible_message(
 			SPAN_NOTICE("Вокруг [target] на мгновение вспыхивает и гаснет прозрачная плёнка."),
 			SPAN_NOTICE("Ты окутываешь разум плотным барьером. Он продержится около минуты."))
 		return TRUE
+
+/datum/psi_complexus/proc/is_warded()
+	return world.time < ward_until

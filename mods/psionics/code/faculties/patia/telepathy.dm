@@ -1,6 +1,6 @@
 /singleton/psionic_power/patia/consciousness/telepathy
 	use_intent =     I_HELP
-	name =            "Психо-патия"
+	name =            "Телепатия"
 	cost =            2
 	cooldown =        50
 	use_ranged =     TRUE

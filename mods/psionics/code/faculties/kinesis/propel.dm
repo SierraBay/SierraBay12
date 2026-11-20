@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/psychokinesis/propel
 	use_intent =     I_GRAB
-	name =           "Самозапуск"
+	name =           "Рывок"
 	cost =           20
 	cooldown =       40
 	use_ranged =     TRUE

@@ -1,6 +1,6 @@
 /singleton/psionic_power/patia/coercion/blindstrike
 	use_intent =     I_DISARM
-	name =           "Blindstrike"
+	name =           "Массовое потрясение"
 	cost =           25
 	cooldown =       120
 	use_ranged =     TRUE
@@ -13,6 +13,7 @@
 	. = ..()
 	if(.)
 		user.visible_message(SPAN_DANGER("[user] закидывает голову назад, издавая пронзительный крик!"))
+		playsound(user, 'mods/psionics/sounds/screech.ogg', 100)
 		to_chat(user, SPAN_DANGER("Я издаю пронзительный крик, оглушая всех вокруг!"))
 		var/cn_rank = user.psi.get_rank(PSI_PATIA)
 		for(var/mob/living/M in range(user, user.psi.get_rank(PSI_PATIA)))

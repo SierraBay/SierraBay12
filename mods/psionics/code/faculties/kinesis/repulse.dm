@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/psychokinesis/gravigeddon
 	use_intent =     I_GRAB
-	name =           "Отталкивание"
+	name =           "Отбрасывание"
 	cost =           30
 	cooldown =       100
 	use_ranged =     TRUE

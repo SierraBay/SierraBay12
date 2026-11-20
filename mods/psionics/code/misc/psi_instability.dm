@@ -213,4 +213,3 @@
 		to_chat(owner, SPAN_NOTICE("Ты ощущаешь чужую силу, и она тебе слишком легко достаётся."))
 		if(ui)
 			ui.update_icon()
-	new /obj/temporary(get_turf(owner), 4, 'icons/effects/effects.dmi', "cyan_sparkles")

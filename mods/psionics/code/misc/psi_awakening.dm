@@ -98,9 +98,7 @@
 
 	calculate_budget()
 
-	if(job_rank)
-		to_chat(owner, SPAN_OCCULT("Годы подготовки не прошли даром: ты знаешь, на что способна твоя сила. Выбери, чем воспользоваться."))
-	else
+	if(!job_rank)
 		to_chat(owner, SPAN_OCCULT("Боль отступает, и на её месте остаётся понимание того, что ты можешь. Выбери, чем распорядиться силой."))
 	if(owner.client)
 		open(owner)

@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/psychokinesis/telekinesis
 	use_intent =     I_GRAB
-	name =            "Психокинез"
+	name =            "Телекинез"
 	cost =            10
 	cooldown =        15
 	use_ranged =      TRUE

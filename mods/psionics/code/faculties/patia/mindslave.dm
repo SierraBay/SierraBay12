@@ -1,6 +1,6 @@
 /singleton/psionic_power/patia/coercion/mindslave
 	use_intent =     I_DISARM
-	name =          "Mindslave"
+	name =          "Подчинение"
 	cost =          28
 	cooldown =      200
 	use_grab =      TRUE

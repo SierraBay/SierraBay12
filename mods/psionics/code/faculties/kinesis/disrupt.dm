@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/energistics/disrupt
 	use_intent =     I_HURT
-	name =            "Помеха"
+	name =            "Сбой"
 	cost =            10
 	cooldown =        60
 	use_melee =       TRUE

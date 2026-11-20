@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/projection/swap
 	use_intent =     I_HELP
-	name =           "Смена позиции"
+	name =           "Запутанность позиции"
 	cost =           30
 	cooldown =       100
 	use_ranged =     TRUE

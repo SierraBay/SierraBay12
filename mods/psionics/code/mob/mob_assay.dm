@@ -2,16 +2,9 @@
 
 	if(!viewer) viewer = usr
 
-	var/use_He_is =  "You are"
-	var/use_He_has = "You have"
-	if(istype(machine) || viewer != src)
-		var/datum/gender/G = GLOB.gender_datums[gender]
-		use_He_is =  "[G.He] [G.is]"
-		use_He_has = "[G.He] [G.has]"
-
 	var/list/dat = list()
 
-	dat += "<h2>Summary</h2>"
+	dat += "<h2>Сводка</h2>"
 	dat += "<hr>"
 
 	if(psi)
@@ -23,49 +16,49 @@
 		var/rating_descriptor
 		if(mind && !psi.suppressed)
 			if(GLOB.paramounts.is_antagonist(mind))
-				use_rating = SPAN_COLOR("#ff0000", "<b>POTENTIAL DEVIANT PSI-USER</b>")
+				use_rating = SPAN_COLOR(COLOR_ASSEMBLY_RED, "<b>ПОТЕНЦИАЛЬНЫЙ ПСИ-ДЕВИАНТ</b>")
 				rating_descriptor = "This indicates a completely deviant psi complexus, either beyond or outside anything currently recorded. Approach with care."
 			// This space intentionally left blank (for Omega-Minus psi vampires. todo)
 			if(viewer != usr && GLOB.thralls.is_antagonist(mind) && ishuman(viewer))
 				var/mob/living/H = viewer
 				if(H.psi && H.psi.get_rank(PSI_KINESIS) >= PSI_RANK_OPERANT)
-					dat += SPAN_COLOR("#ff0000", "<b>Their mind has been cored like an apple, and enslaved by another operant psychic.</b>")
+					dat += SPAN_COLOR(COLOR_ASSEMBLY_RED, "<b>Разум отдает признаки пси-подчинения</b>")
 
 		if(!use_rating)
 			switch(effective_rating)
 				if(1)
-					use_rating = "[num_of_disps-1]-Omicron"
-					rating_descriptor = "This indicates the presence of minor latent psi potential with little or no appentice capabilities."
+					use_rating = "[num_of_disps-1]-Омикрон"
+					rating_descriptor = "обозначает присутствие слабых психосил или латентность."
 				if(2)
-					use_rating = "[num_of_disps]-Omega"
-					rating_descriptor = "This indicates the presence of minor psi capabilities of the Appentice rank or higher."
+					use_rating = "[num_of_disps]-Омега"
+					rating_descriptor = "обозначает присутствие умеренных психосил, сравнимых с уровнем Омега или выше."
 				if(3)
-					use_rating = SPAN_COLOR("#f4f441", "[num_of_disps]-Lamed")
-					rating_descriptor = "This indicates the presence of minor psi capabilities of the Operant rank or higher."
+					use_rating = SPAN_COLOR("#f4f441", "[num_of_disps]-Ламед")
+					rating_descriptor = "обозначает присутствие психосил, сравнимых с уровнем Ламед или выше."
 				if(4)
-					use_rating = SPAN_COLOR("#f4bc42", "[num_of_disps]-Gimmel")
-					rating_descriptor = "This indicates the presence of significant psi capabilities of the Master rank or higher."
+					use_rating = SPAN_COLOR("#f4bc42", "[num_of_disps]-Гиммель")
+					rating_descriptor = "обозначает присутствие сильных психосил, сравнимых с уровнем Гиммель или выше."
 				if(5)
-					use_rating = SPAN_COLOR("#ff0000", "[num_of_disps]-Aleph")
-					rating_descriptor = "This indicates the presence of significant psi capabilities of the Grandmaster rank or higher."
+					use_rating = SPAN_COLOR("#ff0000", "[num_of_disps]-Алеф")
+					rating_descriptor = "обозначает присутствие мощных психосил, сравнимых с уровнем Алеф."
 				else
-					use_rating = "[num_of_disps]-Omicron"
-					rating_descriptor = "This indicates the presence of trace latent psi capabilities."
+					use_rating = "[num_of_disps]-Омикрон"
+					rating_descriptor = "обозначает присутствие латентных психосил."
 
-		dat += "[use_He_has] an overall psi rating of [use_rating].<br><i>[rating_descriptor]</i><hr>"
+		dat += "Обнаружается обладание рейтингом [use_rating].<br><i>Это [rating_descriptor]</i><hr>"
 
 		if(!istype(machine))
 
-			dat += "[use_He_is] currently <b>[psi.suppressed ? "suppressing" : "not suppressing"]</b> your psychic operancy.<br>"
-			dat += "[use_He_has] <b>[psi.stamina]/[psi.max_stamina]</b> psi stamina remaining.<br>"
+			dat += "Пси-силы <b>[psi.suppressed ? "подавляются" : "не подавляются"]</b> сейчас.<br>"
+			dat += "Остаётся <b>[psi.stamina]/[psi.max_stamina]</b> пси энергии.<br>"
 			dat += "<hr>"
 
 			for(var/faculty_id in psi.ranks)
 				var/singleton/psionic_faculty/faculty = SSpsi.get_faculty(faculty_id)
 				if(psi.ranks[faculty_id] > 0)
-					dat += "[use_He_is] assayed at the rank of <b>[GLOB.psychic_ranks_to_strings[psi.ranks[faculty.id]]]</b> for the <b>[faculty.name] discipline</b>.<br>"
+					dat += "Владение рангом <b>[GLOB.psychic_ranks_to_strings[psi.ranks[faculty.id]]]</b> для пси-направленности <b>Пси-[faculty.name]</b>.<br>"
 				else
-					dat += "[use_He_has] no notable power within the <b>[faculty.name] discipline</b>.<br>"
+					dat += "Не обладает пси-силами для Пси-<b>[faculty.name]</b>.<br>"
 			dat += "<hr>"
 
 			if(viewer == usr)
@@ -74,12 +67,12 @@
 					var/list/check_powers = psi.get_powers_by_faculty(faculty_id)
 					if(LAZYLEN(check_powers))
 						var/singleton/psionic_faculty/faculty = SSpsi.get_faculty(faculty_id)
-						dat += "<tr><td colspan = 2>[use_He_has] access to the following psi-powers within the <b>[faculty.name] discipline</b>:</td></tr>"
+						dat += "<tr><td colspan = 2>Владение соответствующими способностями <b>[faculty.name] </b>:</td></tr>"
 						for(var/singleton/psionic_power/power in check_powers)
 							dat += "<tr><td><b>[power.name]</b></td><td>[power.use_description]</td></tr>"
 				dat += "</table>"
 	else
-		dat += "[use_He_has] no notable psychic latency or operancy."
+		dat += "Не обладает фиксируемыми психонетическими способностями."
 
 	if(istype(machine))
 		dat += "<a href='?src=\ref[machine];print=1'>Print</a> <a href='?src=\ref[machine];clear=1'>Clear Buffer</a>"

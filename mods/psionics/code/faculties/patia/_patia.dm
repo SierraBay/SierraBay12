@@ -2,7 +2,7 @@
 
 /singleton/psionic_faculty/patia
 	id = PSI_PATIA
-	name = "Patia"
+	name = "Патия"
 	associated_intent = I_HELP
 	ui_icon_state = "consciousness"
 	armour_types = list(DAMAGE_PSIONIC, "melee")

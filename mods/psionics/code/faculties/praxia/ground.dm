@@ -1,6 +1,6 @@
 /singleton/psionic_power/praxia/psionics/ground
 	use_intent =      I_GRAB
-	name =            "Ground"
+	name =            "П-Стабильность"
 	cost =            15
 	cooldown =        150
 	use_grab =        TRUE

@@ -1,6 +1,6 @@
 /singleton/psionic_power/praxia/psionics/mirror
 	use_intent =      I_HELP
-	name =            "Mirror"
+	name =            "Зеркало"
 	cost =            20
 	cooldown =        200
 	use_melee =       TRUE
@@ -17,3 +17,6 @@
 		user.psi.mirror_until = world.time + ((30 SECONDS) * user.psi.get_rank(PSI_PRAXIA) - 1)
 		to_chat(user, SPAN_NOTICE("Ты выставляешь внутри разума зеркало. Следующий удар по нему вернётся хозяину."))
 		return TRUE
+
+/datum/psi_complexus/proc/is_mirroring()
+	return world.time < mirror_until

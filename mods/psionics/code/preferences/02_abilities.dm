@@ -1,8 +1,8 @@
 GLOBAL_LIST_AS(psi_level2cost, list(
-	"Blunt"       = 0,
-	"Latent"      = 2,
-	"Omega"       = 6,
-	"Lamed"       = 16
+	"Нет"       = 0,
+	"Латент"      = 2,
+	"Омега"       = 6,
+	"Ламед"       = 16
 ))
 
 GLOBAL_LIST_AS(psi_faculty2color, list(
@@ -14,7 +14,7 @@ GLOBAL_LIST_AS(psi_faculty2color, list(
 GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
 
 // Сколько способностей можно выбрать внутри школы, в зависимости от её уровня: Blunt, Latent, Omega, Lamed
-GLOBAL_LIST_AS(psi_level2power_slots, list(0, 0, 6, 4))
+GLOBAL_LIST_AS(psi_level2power_slots, list(0, 0, 5, 4))
 
 /datum/preferences
 	var/list/psi_abilities      // Школа (имя) -> уровень (индекс в psi_level2cost)
@@ -178,7 +178,7 @@ GLOBAL_LIST_AS(psi_level2power_slots, list(0, 0, 6, 4))
 
 		. += "<tt><center>"
 
-		. += FONT_LARGE("<b>Points remaining: [pref.calculate_free_points()]</b>")
+		. += FONT_LARGE("<b>Очки: [pref.calculate_free_points()]</b>")
 
 		. += "<table style='width: 100%' style='font-size: 15px; text-align: center' class='table'>"
 

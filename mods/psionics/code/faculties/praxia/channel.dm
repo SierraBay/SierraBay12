@@ -1,6 +1,6 @@
 /singleton/psionic_power/praxia/psionics/channel
 	use_intent =      I_GRAB
-	name =            "Channel"
+	name =            "Обмен"
 	cost =            5
 	cooldown =        100
 	use_grab =        TRUE

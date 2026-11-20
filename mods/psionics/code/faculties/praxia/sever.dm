@@ -1,6 +1,6 @@
 /singleton/psionic_power/praxia/psionics/sever
 	use_intent =      I_DISARM
-	name =            "Sever"
+	name =            "Отсечь путы"
 	cost =            40
 	cooldown =        600
 	use_grab =        TRUE

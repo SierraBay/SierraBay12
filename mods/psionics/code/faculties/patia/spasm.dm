@@ -1,6 +1,6 @@
 /singleton/psionic_power/patia/coercion/spasm
 	use_intent =     I_DISARM
-	name =           "Spasm"
+	name =           "Дрожь"
 	cost =           15
 	cooldown =       100
 	use_ranged =     TRUE
