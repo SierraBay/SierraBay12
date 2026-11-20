@@ -94,6 +94,7 @@
 
 /datum/psi_complexus/Process()
 	var/update_hud
+	process_disorders()
 	if(armor_cost)
 		var/value = max(1, ceil(armor_cost * cost_modifier))
 		if(value <= stamina)

@@ -65,6 +65,7 @@
 		for(var/faculty_id in chosen_powers)
 			H.psi.set_selected_powers(faculty_id, chosen_powers[faculty_id])
 		H.psi.update()
+		H.psi.apply_pref_disorders(P)
 		if(length(job_choices))
 			H.psi.queue_job_awakenings(job_choices, "профессия: [title]")
 
@@ -178,6 +179,7 @@
 	hitsound = 'sound/weapons/towelwhip.ogg'
 	var/info
 	var/use_rating
+	var/disorder
 
 
 /obj/item/card/operant_card/proc/set_info(mob/living/carbon/human/human)
@@ -185,27 +187,36 @@
 		return
 	switch(human.psi?.rating)
 		if(0)
-			use_rating = "[human.psi.rating]-Omicron"
+			use_rating = "Нет"
 		if(1)
-			use_rating = "[human.psi.rating]-Omicron"
+			use_rating = "[human.psi.rating]-Омикрон"
 		if(2)
-			use_rating = "[human.psi.rating]-Omega"
+			use_rating = "[human.psi.rating]-Омега"
 		if(3)
-			use_rating = "[human.psi.rating]-Lamed"
+			use_rating = "[human.psi.rating]-Ламед"
 		if(4)
-			use_rating = "[human.psi.rating]-Gimmel"
+			use_rating = "[human.psi.rating]-Гиммель"
 		if(5)
-			use_rating = "[human.psi.rating]-Aleph"
+			use_rating = "[human.psi.rating]-Алеф"
 		if (6 to INFINITY)
-			use_rating = "[human.psi.rating]-Post Aleph"
+			use_rating = "[human.psi.rating]-Пост Алеф"
 		else
-			use_rating = "Non-Psionic"
+			use_rating = "Нет"
+
+	disorder = ""
+	if(human.psi.disorders)
+		for(var/id in human.psi.disorders)
+			var/singleton/psi_disorder/D = get_psi_disorder(id)
+			if(!D)
+				continue
+			disorder += "<li>[D.name]</li>"
+
 
 	info = {"\
-		Name: [human.real_name]\n\
-		Species: [human.get_species()]\n\
-		Fingerprint: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "N/A"]\n\
-		Assessed Potential: [use_rating]\
+		Имя: [human.real_name]\n\
+		Отпечаток: [human.dna?.uni_identity ? md5(human.dna.uni_identity) : "Нет"]\n\
+		Рейтинг: [use_rating]\n\
+		Диагноз: <ul>[disorder ? disorder : "Нет"]</ul>\
 	"}
 
 /obj/item/card/operant_card/attack_self(mob/living/user)

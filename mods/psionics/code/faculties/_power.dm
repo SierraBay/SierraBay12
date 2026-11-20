@@ -23,6 +23,9 @@
 	if(!user.psi.ranks_stat[faculty])
 		return FALSE
 
+	if(user.psi.disorders_block_power(src))
+		return FALSE
+
 	if(faculty && min_rank)
 		var/user_rank = user.psi.get_rank(faculty)
 		if(user_rank < min_rank)
@@ -44,6 +47,7 @@
 
 /singleton/psionic_power/proc/handle_post_power(mob/living/user, atom/target)
 	user.psi?.notify_brands()
+	user.psi?.disorders_power_used(src)
 	if(cooldown)
 		user.psi.set_cooldown(cooldown)
 	if(admin_log && ismob(user) && ismob(target))

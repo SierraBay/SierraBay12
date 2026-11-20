@@ -1,9 +1,9 @@
 #define PSI_AWAKENING_PULSES 3
 #define PSI_AWAKENING_PULSE_DELAY (3 SECONDS)
-#define PSI_AWAKENING_BASE_POINTS 2        // Стартовые очки, когда пробуждение никто не видел
+#define PSI_AWAKENING_BASE_POINTS 2
 #define PSI_AWAKENING_MAX_POINTS 14
-#define PSI_AWAKENING_POINTS_PER_RANK 3    // Каждые столько очков открывают следующий ранг способностей
-#define PSI_AWAKENING_WITNESS_RANGE 7      // Радиус, в котором персонажи считаются свидетелями
+#define PSI_AWAKENING_POINTS_PER_RANK 3
+#define PSI_AWAKENING_WITNESS_RANGE 7
 
 /datum/psi_complexus
 	var/datum/psi_awakening/pending_awakening
@@ -149,6 +149,11 @@
 	if(job_rank)
 		html += "<div style='margin-bottom:8px'>Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br>"
 		html += "<small>Ранг и количество способностей определяются подготовкой, которую даёт должность.</small></div>"
+		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr>"
+		if(length(chosen))
+			html += "<a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br>"
+		else
+			html += "<span style='color:#777'>Выбери хотя бы одну способность</span><br>"
 	else
 		html += "<div style='margin-bottom:8px'>Источник: [html_encode(source)].<br>"
 		html += "Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br></div>"
