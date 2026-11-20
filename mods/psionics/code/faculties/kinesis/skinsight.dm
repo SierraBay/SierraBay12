@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/redaction/skinsight
 	use_intent =     I_HELP
-	name =            "Ощущение состояния"
+	name =            "Псиагноз"
 	cost =            3
 	cooldown =        30
 	use_melee =        TRUE

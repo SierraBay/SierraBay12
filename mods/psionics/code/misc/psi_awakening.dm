@@ -150,9 +150,14 @@
 		html += "<div style='margin-bottom:8px'>Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br>"
 		html += "<small>Ранг и количество способностей определяются подготовкой, которую даёт должность.</small></div>"
 	else
-		html += "<div style='margin-bottom:8px'>Источник: [html_encode(source)].</b>.<br>"
+		html += "<div style='margin-bottom:8px'>Источник: [html_encode(source)].<br>"
 		html += "Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br></div>"
-	html += "<table width='100%' cellspacing='0' cellpadding='3'>"
+		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr>"
+		if(length(chosen))
+			html += "<a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br>"
+		else
+			html += "<span style='color:#777'>Выбери хотя бы одну способность</span><br>"
+	html += "</center><table width='100%' cellspacing='0' cellpadding='3'>"
 	html += "<tr style='background:#2b2b3a'><th align='left'>Способность</th><th>Ранг</th><th>Цена</th><th></th></tr>"
 
 	for(var/singleton/psionic_power/power in get_selectable_psi_powers(faculty))
@@ -176,15 +181,10 @@
 		html += "<tr style='[row_style]'><td title='[description]'><b>[power.name]</b></td><td align='center'>[rank_text]</td><td align='center'>[cost]</td><td align='center'>[button]</td></tr>"
 		html += "<tr style='[row_style]'><td colspan='4'><small>[description]</small></td></tr>"
 
-	html += "</table><br><center>"
-	if(length(chosen))
-		html += "<a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a> &nbsp; "
-	else
-		html += "<span style='color:#777'>Выбери хотя бы одну способность</span> &nbsp; "
-	html += "<a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a>"
-	html += "</center></body></html>"
+	html += "</table><br>"
+	html += "</body></html>"
 
-	user << browse(jointext(html, null), "window=psi_awakening;size=620x680")
+	show_browser(user, jointext(html, null), "window=psi[user.name];size=620x680")
 
 /datum/psi_awakening/Topic(href, href_list)
 	if(!ready || !is_valid() || usr != owner)

@@ -532,8 +532,7 @@
 /obj/forcefield/blocker,
 /obj/machinery/shield{
 	icon = 'icons/obj/machines/shielding.dmi';
-	icon_state = "shield_normal";
-	color = "#CC4010"
+	icon_state = "shield_normal"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/psistation/reactor)
@@ -2223,8 +2222,7 @@
 /obj/forcefield/blocker,
 /obj/machinery/shield{
 	icon = 'icons/obj/machines/shielding.dmi';
-	icon_state = "shield_normal";
-	color = "#CC4010"
+	icon_state = "shield_normal"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/psistation/reactor)
@@ -3207,8 +3205,7 @@
 /obj/forcefield/blocker,
 /obj/machinery/shield{
 	icon = 'icons/obj/machines/shielding.dmi';
-	icon_state = "shield_normal";
-	color = "#CC4010"
+	icon_state = "shield_normal"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/psistation/reactor)
@@ -6641,8 +6638,7 @@
 /obj/forcefield/blocker,
 /obj/machinery/shield{
 	icon = 'icons/obj/machines/shielding.dmi';
-	icon_state = "shield_normal";
-	color = "#CC4010"
+	icon_state = "shield_normal"
 	},
 /turf/simulated/floor/bluegrid,
 /area/psistation/reactor)
@@ -9591,8 +9587,7 @@
 /obj/forcefield/blocker,
 /obj/machinery/shield{
 	icon = 'icons/obj/machines/shielding.dmi';
-	icon_state = "shield_normal";
-	color = "#CC4010"
+	icon_state = "shield_normal"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/psistation/reactor)

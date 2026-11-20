@@ -1,6 +1,6 @@
 /singleton/psionic_power/kinesis/energistics/zorch
 	use_intent =     I_HURT
-	name =             "Испуск заряженных волн"
+	name =             "Заряд электроволн"
 	cost =             20
 	cooldown =         10
 	use_ranged =       TRUE
