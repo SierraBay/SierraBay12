@@ -26,6 +26,11 @@
 	/// парировании (`weapon_parry.dm`). Нематериальный щит ещё и не передаёт тупой волны в руку
 	/// (`shields.dm`). Задаётся в блоке вещи в `code/items/`.
 	var/ce_armor_nonphysical = FALSE
+	/// Whether this item plays its armor material's break sound.
+	var/ce_play_armor_break_sound = TRUE
+
+/obj/item/clothing/under
+	ce_play_armor_break_sound = FALSE
 
 /// Броня вещи только что потеряла HP. `group`: группа зон зональной брони либо null. Сам износ
 /// с вещью ничего не делает: рейтинг падает по кривой состояния, а что делать с изношенной вещью,
@@ -216,7 +221,7 @@
 	var/obj/item/armor_item = holder
 	var/new_state = ce_get_wear_state(group)
 	// Словесное состояние есть только у неполного рейтинга: его появление и есть проход точки.
-	if(!old_state && new_state)
+	if(!old_state && new_state && armor_item.ce_play_armor_break_sound)
 		var/singleton/ce_armor_material/material = ce_get_material()
 		playsound(armor_item, material.break_sound, material.break_sound_volume, TRUE)
 

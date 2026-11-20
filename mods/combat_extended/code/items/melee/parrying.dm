@@ -7,6 +7,10 @@
 /obj/item/melee/energy
 	ce_armor_nonphysical = TRUE
 
+/obj/item/melee/energy/sword/ce_stops_parried_attack(atom/damage_source)
+	var/obj/item/melee/energy/sword/incoming_sword = damage_source
+	return active && istype(incoming_sword) && incoming_sword.active
+
 /obj/item/holo
 	ce_armor_nonphysical = TRUE
 

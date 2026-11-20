@@ -111,12 +111,19 @@
 		holder.ce_pending_shield_shock = list(shock_zones, shock, item_name)
 
 
+/// Whether a successful parry fully stops this attack before Combat Extended resolves it.
+/obj/item/proc/ce_stops_parried_attack(atom/damage_source)
+	return FALSE
+
+
 /**
  * Парирование удалось. Возвращает TRUE, если удар отбит целиком, FALSE: если оружие встречает его
  * первым слоем брони (`ce_register_parry()`). `damage_source`: оружие атакующего, null значит безоружная
  * атака.
  */
 /obj/item/proc/ce_on_parried(mob/living/user, damage, atom/damage_source, mob/living/attacker, def_zone, attack_text)
+	if(ce_stops_parried_attack(damage_source))
+		return TRUE
 	var/crit_chance = ce_get_parry_crit_chance(user, attacker)
 	var/clean = prob(crit_chance)
 	if(prob(crit_chance))

@@ -1,6 +1,9 @@
 // Contact uses torso difficulty; precision uses the selected zone's difficulty.
 // Both rolls retain Bay's skill, condition and weapon accuracy modifiers.
 /mob/living/carbon/human/proc/ce_resolve_melee_zone(mob/living/attacker, target_zone, accuracy_penalty)
+	if(lying)
+		return target_zone
+
 	var/contact_miss = clamp(base_miss_chance[BP_CHEST] + accuracy_penalty, 0, 100)
 	if(prob(contact_miss))
 		to_chat(attacker, SPAN_WARNING("Your swing goes wide."))

@@ -64,6 +64,7 @@
 #include "code/items/guns/bullets.dm"
 #include "code/items/guns/casings.dm"
 #include "code/items/guns/darts.dm"
+#include "code/items/guns/frag_grenades.dm"
 #include "code/items/guns/magazines.dm"
 #include "code/items/guns/payload_rounds.dm"
 #include "code/items/guns/printed_ammo.dm"
