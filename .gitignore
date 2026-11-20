@@ -21,6 +21,8 @@ atupdate
 config/*
 !config/hallucination/
 !config/hallucination/*
+!config/example/
+!config/example/*
 sql/test_db
 
 # VisualStudioCode
@@ -59,3 +61,6 @@ package-lock.json
 
 # ignore local selected map
 /maps/using.dm
+
+# bootstrapped tools cache
+tools/bootstrap/.cache/
