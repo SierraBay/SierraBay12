@@ -131,11 +131,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/blue{
+	dir = 9
+	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/blue{
-	dir = 9
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -1000,6 +1000,12 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
+"ei" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/atmospherics)
 "ek" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2125,13 +2131,13 @@
 /area/map_template/facolony/cargo)
 "js" = (
 /obj/paint/fleet/sfv_rook,
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 4
-	},
-/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_main_windows"
 	},
@@ -2905,14 +2911,14 @@
 /area/map_template/facolony/tradezone)
 "mY" = (
 /obj/paint/fleet/sfv_rook,
-/obj/machinery/atmospherics/pipe/simple/visible/red,
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 4
-	},
-/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_main_windows"
 	},
@@ -3724,6 +3730,14 @@
 	},
 /turf/simulated/floor/wood/bamboo,
 /area/map_template/facolony/messhall)
+"pY" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow{
+	dir = 6
+	},
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/atmospherics)
 "qa" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -3851,12 +3865,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "qv" = (
-/obj/machinery/atmospherics/pipe/simple/visible/blue{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/blue{
+	dir = 6
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -5190,13 +5204,13 @@
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/engineering)
 "vJ" = (
-/obj/machinery/atmospherics/pipe/simple/visible/blue,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 8;
 	target_pressure = 400
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/blue,
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
@@ -5590,12 +5604,6 @@
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/titanium,
 /area/map_template/facolony/cargo)
-"wY" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
-/turf/simulated/wall/r_titanium,
-/area/map_template/facolony/atmospherics)
 "xl" = (
 /obj/machinery/reagentgrinder/juicer{
 	pixel_y = 5
@@ -5682,13 +5690,13 @@
 /area/map_template/facolony/tradezone)
 "xF" = (
 /obj/paint/fleet/sfv_rook,
-/obj/machinery/atmospherics/pipe/simple/hidden/black{
-	dir = 5
-	},
-/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
+/obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_main_windows"
 	},
@@ -7660,13 +7668,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/blue{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/blue{
+	dir = 5
+	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
@@ -8600,14 +8608,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
-"Ll" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/obj/machinery/atmospherics/pipe/simple/hidden/yellow{
-	dir = 6
-	},
-/turf/simulated/wall/r_titanium,
-/area/map_template/facolony/atmospherics)
 "Lo" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped,
@@ -12480,12 +12480,12 @@ Wd
 Wd
 Qn
 Qn
-Ll
+pY
 UN
 UN
 UN
-wY
-wY
+ei
+ei
 wl
 Ep
 Ep
