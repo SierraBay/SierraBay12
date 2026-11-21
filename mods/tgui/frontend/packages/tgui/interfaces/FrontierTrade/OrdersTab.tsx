@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NoticeBox,
   Section,
@@ -15,44 +16,51 @@ export interface OrdersTabProps {
   onSaveAsCart: (orderId: string) => void;
 }
 
-type OrderFilter = 'all' | 'pending' | 'transit' | 'delivered' | 'cancelled';
-
-const stateColor = (order: TradeOrder): string => {
-  if (order.state === 'Delivered') {
-    return 'good';
-  }
-  if (order.state === 'Cancelled') {
-    return 'bad';
-  }
-  if (order.paid || order.state === 'Awaiting delivery') {
-    return 'teal';
-  }
-  return 'average';
+const orderStatuses = {
+  all: { label: 'All statuses', color: 'label' },
+  pending: { label: 'Awaiting approval', color: 'average' },
+  transit: { label: 'Awaiting delivery', color: 'teal' },
+  delivered: { label: 'Delivered', color: 'good' },
+  cancelled: { label: 'Cancelled', color: 'bad' },
 };
 
-const stateBadgeText = (order: TradeOrder): string => {
+type OrderFilter = keyof typeof orderStatuses;
+
+const statusOptions = Object.entries(orderStatuses).map(([value, status]) => ({
+  value,
+  displayText: status.label,
+}));
+
+const getOrderStatus = (
+  order: TradeOrder
+): Exclude<OrderFilter, 'all'> | undefined => {
+  if (order.state === 'Delivered') {
+    return 'delivered';
+  }
+  if (order.state === 'Cancelled') {
+    return 'cancelled';
+  }
   if (order.pending || order.state === 'Requested') {
-    return 'Awaiting Approval';
+    return 'pending';
   }
   if (order.paid || order.state === 'Awaiting delivery') {
-    return 'In Transit / Awaiting Delivery';
+    return 'transit';
   }
-  return order.state;
+};
+
+const getStatusDetails = (order: TradeOrder) => {
+  const status = getOrderStatus(order);
+  return status
+    ? orderStatuses[status]
+    : { label: order.state, color: 'label' };
 };
 
 export const OrdersTab = (props: OrdersTabProps, context) => {
   const { act, data } = useBackend<FrontierTradeData>(context);
   const { onEditReason, onSaveAsCart } = props;
-  const {
-    orders = [],
-    manager,
-    currency,
-    budget = 0,
-    has_printer: hasPrinterProp,
-    pending_orders_count: pendingOrdersCountProp,
-  } = data;
+  const { orders = [], manager, currency, has_printer: hasPrinterProp } = data;
 
-  const hasPrinter = hasPrinterProp !== false;
+  const hasPrinter = Boolean(hasPrinterProp ?? true);
 
   const [selectedId, setSelectedId] = useLocalState(
     context,
@@ -65,37 +73,15 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
     'all'
   );
 
-  const pendingCount =
-    pendingOrdersCountProp !== undefined
-      ? pendingOrdersCountProp
-      : orders.filter((o) => o.pending || o.state === 'Requested').length;
-  const transitCount = orders.filter(
-    (o) => o.paid || o.state === 'Awaiting delivery'
-  ).length;
-  const deliveredCount = orders.filter((o) => o.state === 'Delivered').length;
-  const cancelledCount = orders.filter((o) => o.state === 'Cancelled').length;
+  const filteredOrders =
+    statusFilter === 'all'
+      ? orders
+      : orders.filter((order) => getOrderStatus(order) === statusFilter);
+  const selectedOrder =
+    filteredOrders.find((order) => order.id === selectedId) ||
+    filteredOrders[0];
 
-  const filteredOrders = orders.filter((o) => {
-    if (statusFilter === 'pending') {
-      return o.pending || o.state === 'Requested';
-    }
-    if (statusFilter === 'transit') {
-      return o.paid || o.state === 'Awaiting delivery';
-    }
-    if (statusFilter === 'delivered') {
-      return o.state === 'Delivered';
-    }
-    if (statusFilter === 'cancelled') {
-      return o.state === 'Cancelled';
-    }
-    return true;
-  });
-
-  const selectedOrder: TradeOrder | undefined =
-    filteredOrders.find((o) => o.id === selectedId) ||
-    orders.find((o) => o.id === selectedId) ||
-    filteredOrders[0] ||
-    orders[0];
+  const selectedStatus = selectedOrder && getStatusDetails(selectedOrder);
 
   return (
     <Stack fill>
@@ -103,140 +89,44 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
         <Section
           fill
           scrollable
-          title={
-            pendingCount > 0
-              ? `Orders (${orders.length} · ${pendingCount} Pending Approval)`
-              : `Orders (${orders.length})`
+          title={'Orders (' + filteredOrders.length + ')'}
+          buttons={
+            <Dropdown
+              width="13em"
+              options={statusOptions}
+              selected={statusFilter}
+              displayText={orderStatuses[statusFilter].label}
+              onSelected={(status) => setStatusFilter(status as OrderFilter)}
+            />
           }
         >
-          <Stack mb={0.75} wrap>
-            <Stack.Item>
-              <Button
-                compact
-                selected={statusFilter === 'all'}
-                content={`All (${orders.length})`}
-                onClick={() => setStatusFilter('all')}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                selected={statusFilter === 'pending'}
-                color={pendingCount > 0 ? 'average' : undefined}
-                content={`Pending (${pendingCount})`}
-                onClick={() => setStatusFilter('pending')}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                selected={statusFilter === 'transit'}
-                content={`In Transit (${transitCount})`}
-                onClick={() => setStatusFilter('transit')}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                selected={statusFilter === 'delivered'}
-                content={`Delivered (${deliveredCount})`}
-                onClick={() => setStatusFilter('delivered')}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                selected={statusFilter === 'cancelled'}
-                content={`Cancelled (${cancelledCount})`}
-                onClick={() => setStatusFilter('cancelled')}
-              />
-            </Stack.Item>
-          </Stack>
           {filteredOrders.length === 0 ? (
-            <NoticeBox>No visible orders matching filter.</NoticeBox>
+            <NoticeBox>No orders match this filter.</NoticeBox>
           ) : (
             <Table>
               <Table.Row header>
-                <Table.Cell>Order</Table.Cell>
-                <Table.Cell>Buyer</Table.Cell>
+                <Table.Cell>Order / Buyer</Table.Cell>
                 <Table.Cell>Status</Table.Cell>
                 <Table.Cell textAlign="right">Total</Table.Cell>
-                <Table.Cell textAlign="right">Actions</Table.Cell>
               </Table.Row>
               {filteredOrders.map((order) => (
                 <Table.Row key={order.id} className="candystripe">
-                  <Table.Cell>
+                  <Table.Cell py={0.5}>
                     <Button
                       compact
                       selected={selectedOrder?.id === order.id}
                       content={order.id}
                       onClick={() => setSelectedId(order.id)}
                     />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Box bold>{order.buyer}</Box>
-                    <Box fontSize="11px" color="label">
-                      {order.reason}
+                    <Box mt={0.25} color="label">
+                      {order.buyer}
                     </Box>
                   </Table.Cell>
-                  <Table.Cell>
-                    <Box bold color={stateColor(order)}>
-                      {stateBadgeText(order)}
-                    </Box>
-                    {order.delivery_status && (
-                      <Box fontSize="10px" color="label">
-                        {order.delivery_status}
-                      </Box>
-                    )}
-                    {order.needed_tiles !== undefined &&
-                      order.needed_tiles > 0 && (
-                        <Box fontSize="10px" color="label">
-                          Needs {order.needed_tiles} pad tile(s)
-                        </Box>
-                      )}
+                  <Table.Cell color={getStatusDetails(order).color}>
+                    {getStatusDetails(order).label}
                   </Table.Cell>
                   <Table.Cell textAlign="right">
                     {order.total + order.fee} {currency}
-                  </Table.Cell>
-                  <Table.Cell textAlign="right">
-                    <Stack justify="flex-end">
-                      {order.pending && manager && (
-                        <Stack.Item>
-                          <Button
-                            compact
-                            color="good"
-                            icon="check"
-                            tooltip={`Approve from Supply Budget (${budget} ${currency} available)`}
-                            onClick={() =>
-                              act('approve_order', { id: order.id })
-                            }
-                          />
-                        </Stack.Item>
-                      )}
-                      {order.cancellable && (
-                        <Stack.Item>
-                          <Button
-                            compact
-                            color="bad"
-                            icon="trash"
-                            tooltip="Cancel"
-                            onClick={() =>
-                              act('cancel_order', { id: order.id })
-                            }
-                          />
-                        </Stack.Item>
-                      )}
-                      {hasPrinter && (
-                        <Stack.Item>
-                          <Button
-                            compact
-                            icon="print"
-                            tooltip="Print receipt"
-                            onClick={() => act('print_order', { id: order.id })}
-                          />
-                        </Stack.Item>
-                      )}
-                    </Stack>
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -255,15 +145,18 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Status"
-                    color={stateColor(selectedOrder)}
+                    color={selectedStatus?.color}
                   >
-                    {stateBadgeText(selectedOrder)}{' '}
-                    {selectedOrder.state !== stateBadgeText(selectedOrder) &&
-                      `(${selectedOrder.state})`}
+                    {selectedStatus?.label}
                   </LabeledList.Item>
                   {selectedOrder.delivery_status && (
-                    <LabeledList.Item label="Telemetry">
+                    <LabeledList.Item label="Delivery">
                       {selectedOrder.delivery_status}
+                    </LabeledList.Item>
+                  )}
+                  {Boolean(selectedOrder.needed_tiles) && (
+                    <LabeledList.Item label="Delivery slots">
+                      {selectedOrder.needed_tiles}
                     </LabeledList.Item>
                   )}
                   <LabeledList.Item label="Buyer">
@@ -309,7 +202,7 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Stack wrap>
-                  {selectedOrder.pending && manager && (
+                  {Boolean(selectedOrder.pending && manager) && (
                     <Stack.Item>
                       <Button
                         color="good"
@@ -321,6 +214,17 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
                       />
                     </Stack.Item>
                   )}
+                  {Boolean(selectedOrder.cancellable) && (
+                    <Stack.Item>
+                      <Button.Confirm
+                        icon="times"
+                        content="Cancel order"
+                        onClick={() =>
+                          act('cancel_order', { id: selectedOrder.id })
+                        }
+                      />
+                    </Stack.Item>
+                  )}
                   <Stack.Item>
                     <Button
                       icon="save"
@@ -328,7 +232,7 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
                       onClick={() => onSaveAsCart(selectedOrder.id)}
                     />
                   </Stack.Item>
-                  {selectedOrder.can_edit_reason && (
+                  {Boolean(selectedOrder.can_edit_reason) && (
                     <Stack.Item>
                       <Button
                         icon="edit"
@@ -339,7 +243,7 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {selectedOrder.paid && (
+                  {Boolean(selectedOrder.paid) && (
                     <Stack.Item>
                       <Button
                         icon="truck"
@@ -361,7 +265,7 @@ export const OrdersTab = (props: OrdersTabProps, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {manager && hasPrinter && (
+                  {Boolean(manager) && hasPrinter && (
                     <Stack.Item>
                       <Button
                         icon="print"

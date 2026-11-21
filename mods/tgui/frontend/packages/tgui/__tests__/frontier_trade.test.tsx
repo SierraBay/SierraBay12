@@ -1,4 +1,4 @@
-import { render } from 'inferno';
+﻿import { render } from 'inferno';
 import '../backend';
 import { FrontierTrade } from '../interfaces/FrontierTrade';
 import { FrontierTradeData } from '../interfaces/FrontierTrade/types';
@@ -371,14 +371,18 @@ describe('FrontierTrade TGUI interface', () => {
     mockData = buildSampleData();
     render(<FrontierTrade />, container);
     expect(container.textContent).toContain('Steel sheets');
-    expect(container.textContent).toContain('Supply:');
-    expect(container.textContent).toContain('All Relays (4)');
+    expect(container.textContent).toContain('Supply budget:');
+    expect(container.textContent).toContain('Goods (4)');
 
     const plusButton = container.querySelector('.fa-plus')!.closest('.Button')!;
     plusButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mockAct).toHaveBeenCalledWith('add_cart', { id: 'engineering-1' });
 
-    const plusFiveButton = findButton('+5')!;
+    container
+      .querySelector('[aria-label="Show Steel sheets details"]')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    render(<FrontierTrade />, container);
+    const plusFiveButton = findButton('Add 5 to cart')!;
     plusFiveButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mockAct).toHaveBeenCalledWith('add_cart', {
       id: 'engineering-1',
@@ -386,7 +390,7 @@ describe('FrontierTrade TGUI interface', () => {
     });
   });
 
-  test('hides transactional tabs in read-only catalog mode while keeping access and security level badges visible', () => {
+  test('hides transactional tabs in read-only catalog mode while surfacing access and alert restrictions', () => {
     mockData = buildSampleData({
       read_only: true,
       manager: false,
@@ -399,12 +403,15 @@ describe('FrontierTrade TGUI interface', () => {
     expect(findButton('Cart')).toBeFalsy();
     expect(findButton('Orders')).toBeFalsy();
     expect(findButton('Logs')).toBeFalsy();
-    // Access and Security Level badges must remain visible on read-only PDA!
-    expect(container.textContent).toContain('[Requires: Security]');
-    expect(container.textContent).toContain('[Alert: Blue / Elevated Alert]');
+    expect(container.textContent).toContain('Blue / Elevated Alert');
+    container
+      .querySelector('[aria-label="Show Armor vest details"]')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    render(<FrontierTrade />, container);
     expect(container.textContent).toContain(
-      'Department authorization required for personal purchase.'
+      'Personal purchase requires Security.'
     );
+    expect(findButton('Add 5 to cart')).toBeFalsy();
   });
 
   test('searches across all relays including pack contents_preview and expands pack manifest', () => {
@@ -414,19 +421,19 @@ describe('FrontierTrade TGUI interface', () => {
     // Finds Riot Control Crate on Shellguard via its contents_preview ("Flashbang")
     expect(container.textContent).toContain('Riot Control Crate');
     expect(container.textContent).not.toContain('Steel sheets');
-    expect(container.textContent).toContain('All Relays (1)');
-    expect(container.textContent).toContain('Shellguard (1)');
-    expect(container.textContent).toContain('4x Flashbang');
+    expect(container.textContent).toContain('Goods (1)');
+    expect(container.textContent).toContain('Shellguard');
+    expect(container.textContent).not.toContain('4 × Flashbang');
 
     // Expand full pack manifest drawer
-    findButton('Pack (6)')!.dispatchEvent(
-      new MouseEvent('click', { bubbles: true })
-    );
+    container
+      .querySelector('[aria-label="Show Riot Control Crate details"]')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
     render(<FrontierTrade />, container);
     expect(container.textContent).toContain(
       'Non-lethal tactical crowd control pack.'
     );
-    expect(container.textContent).toContain('2x Teargas Grenade');
+    expect(container.textContent).toContain('2 × Teargas Grenade');
   });
 
   test('filters by In Stock Only, Hide Restricted, and sorts catalog by price descending', () => {
@@ -442,20 +449,21 @@ describe('FrontierTrade TGUI interface', () => {
       },
     });
     render(<FrontierTrade />, container);
-    // Armor vest access is satisfied by card_access [1]
-    expect(container.textContent).toContain('[Access OK: Security]');
     // Surgical Starter Kit has stock 0 -> shows Out of Stock instead of 0/0 NumberInput
-    expect(container.textContent).toContain('Out of Stock');
+    expect(container.textContent).toContain('Out of stock');
 
-    // Toggle In Stock Only
-    findButton('In Stock Only')!.dispatchEvent(
+    findButton('Filters')!.dispatchEvent(
+      new MouseEvent('click', { bubbles: true })
+    );
+    render(<FrontierTrade />, container);
+    findButton('In stock')!.dispatchEvent(
       new MouseEvent('click', { bubbles: true })
     );
     render(<FrontierTrade />, container);
     expect(container.textContent).not.toContain('Surgical Starter Kit');
 
     // Toggle Hide Restricted (hides Riot Control Crate which is sec_locked and requires [1, 63])
-    findButton('Hide Restricted')!.dispatchEvent(
+    findButton('Hide restricted')!.dispatchEvent(
       new MouseEvent('click', { bubbles: true })
     );
     render(<FrontierTrade />, container);
@@ -464,9 +472,7 @@ describe('FrontierTrade TGUI interface', () => {
     expect(container.textContent).toContain('Steel sheets');
 
     // Sort by Price ↓ (Armor vest 660 before Steel sheets 300)
-    findButton('Price ↓')!.dispatchEvent(
-      new MouseEvent('click', { bubbles: true })
-    );
+    mockState.catalogSortBy = 'price_desc';
     render(<FrontierTrade />, container);
     const text = container.textContent || '';
     expect(text.indexOf('Armor vest')).toBeLessThan(
@@ -477,7 +483,7 @@ describe('FrontierTrade TGUI interface', () => {
   test('opens PIN modal, submits once on Enter (no double-submit), and closes cleanly on Escape', () => {
     mockData = buildSampleData();
     render(<FrontierTrade />, container);
-    findButton('Link John Doe')!.dispatchEvent(
+    findButton('Link ID')!.dispatchEvent(
       new MouseEvent('click', { bubbles: true })
     );
     expect(mockState.tradeModal).toEqual({ type: 'pin', purpose: 'link' });
@@ -498,7 +504,7 @@ describe('FrontierTrade TGUI interface', () => {
 
     // Open modal again and press Escape key — must close without firing act
     mockAct.mockClear();
-    findButton('Link John Doe')!.dispatchEvent(
+    findButton('Link ID')!.dispatchEvent(
       new MouseEvent('click', { bubbles: true })
     );
     expect(mockState.tradeModal).toEqual({ type: 'pin', purpose: 'link' });
@@ -562,8 +568,8 @@ describe('FrontierTrade TGUI interface', () => {
     render(<FrontierTrade />, container);
 
     expect(container.textContent).toContain('Short by 160 Thalers');
-    expect(container.textContent).toContain('Pad Tiles: 3 needed / 19 free');
-    expect(container.textContent).toContain('Entropy: 2/30');
+    expect(container.textContent).toContain('19 clear tiles, 3 needed');
+    expect(container.textContent).toContain('Entropy 2/30');
 
     // Fix Stock button
     findButton('Fix Stock')!.dispatchEvent(
@@ -581,31 +587,75 @@ describe('FrontierTrade TGUI interface', () => {
     });
 
     // Remove (×) button
-    findButton('×')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    container
+      .querySelector('[aria-label="Remove item from cart"]')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mockAct).toHaveBeenCalledWith('set_cart_qty', {
       id: 'engineering-1',
       quantity: 0,
     });
   });
 
+  test.each([
+    { ready: true, present: true, freeTiles: 1, cooldown: 0 },
+    { ready: false, present: true, freeTiles: 1, cooldown: 12 },
+    { ready: false, present: true, freeTiles: 0, cooldown: 0 },
+    { ready: false, present: false, freeTiles: 0, cooldown: 0 },
+  ])(
+    'checkout uses receiver availability (ready=$ready, present=$present, tiles=$freeTiles)',
+    ({ ready, present, freeTiles, cooldown }) => {
+      const sample = buildSampleData();
+      mockData = {
+        ...sample,
+        account: {
+          ...sample.account!,
+          balance: 5000,
+          card_requires_pin: false,
+        },
+        beacons: {
+          ...sample.beacons!,
+          receiver_ready: ready,
+          receiver_present: present,
+          receiver_free_tiles: freeTiles,
+          receiver_locked_seconds: cooldown,
+        },
+        cart_floor_needed: 3,
+      };
+      mockState.tradeTab = 'cart';
+      render(<FrontierTrade />, container);
+
+      for (const label of ['Pay with Inserted ID', 'Pay from Supply Budget']) {
+        findButton(label)!.dispatchEvent(
+          new MouseEvent('click', { bubbles: true })
+        );
+      }
+      if (present) {
+        expect(mockAct).toHaveBeenCalledWith('purchase');
+        expect(mockAct).toHaveBeenCalledWith('department');
+      } else {
+        expect(mockAct).not.toHaveBeenCalled();
+      }
+    }
+  );
+
   test('renders Bounties All Relays view with live pad match counts, requirements and export appraisal preview', () => {
     mockData = buildSampleData();
     mockState.tradeTab = 'bounties';
     render(<FrontierTrade />, container);
 
-    expect(container.textContent).toContain('All Active Frontier Bounties (2)');
+    expect(container.textContent).toContain('Bounties (2)');
     expect(container.textContent).toContain('Diamond ore');
     expect(container.textContent).toContain('3 / 3');
-    expect(container.textContent).toContain('[Ready on Pad!]');
+    expect(findButton('Fulfill all (1)')).toBeTruthy();
     expect(container.textContent).toContain('Dylovene synthesis');
     expect(container.textContent).toContain('1 / 2');
     expect(container.textContent).toContain('450 Thalers');
-    expect(container.textContent).toContain('Shared Export Cooldown (2m 0s)');
+    expect(container.textContent).toContain('Supply Budget');
   });
 
   test('supports lazy log pagination via load_logs and hides print buttons when !has_printer', () => {
     mockData = buildSampleData({
-      has_printer: false,
+      has_printer: 0,
       logs_page: 1,
       logs_page_size: 20,
       logs_total: 45,
@@ -660,9 +710,11 @@ describe('FrontierTrade TGUI interface', () => {
       budget: 0,
     });
     render(<FrontierTrade />, container);
-    expect(container.textContent).not.toContain('Supply:');
-    expect(container.textContent).not.toContain('Sender:');
-    expect(container.textContent).toContain('Pad Ready (19 tiles free)');
+    expect(container.textContent).not.toContain('Supply budget:');
+    expect(findButton('Export goods')).toBeFalsy();
+    mockState.tradeTab = 'cart';
+    render(<FrontierTrade />, container);
+    expect(container.textContent).toContain('19 clear tiles');
 
     // 2. Local room slave terminal (trade_local) without local beacon or linked ID
     mockData = buildSampleData({
@@ -676,12 +728,13 @@ describe('FrontierTrade TGUI interface', () => {
         local_room_name: 'Robotics Lab',
       },
     });
+    mockState.tradeTab = 'bounties';
     render(<FrontierTrade />, container);
-    expect(container.textContent).toContain('(Robotics Lab)');
+    expect(container.textContent).toContain('Robotics Lab');
+    expect(container.textContent).toContain('No sending beacon in this room');
     expect(container.textContent).toContain(
-      'No local trade beacon detected in this room'
+      'Insert and link an ID to claim local bounties.'
     );
-    expect(findButton('Link ID for Local Bounties (-20% fee)')).toBeTruthy();
   });
 
   test('shows pending orders count badge and black-market station on NetworkMap when hacked', () => {
@@ -735,19 +788,65 @@ describe('FrontierTrade TGUI interface', () => {
     render(<FrontierTrade />, container);
 
     expect(container.textContent).toContain('Orders (2 pending)');
-    expect(container.textContent).toContain('[BLACK MARKET]');
+    expect(container.textContent).toContain('Black market');
     expect(container.textContent).toContain(
       'Free Trade Syndicate Shadow Relay'
     );
     expect(container.textContent).toContain('Illicit encrypted link active');
   });
 
+  test('renders delivered orders without stray zeroes from BYOND flags', () => {
+    mockData = buildSampleData({
+      manager: 1,
+      hacked: 0,
+      has_printer: 1,
+      ntos: {
+        ...buildSampleData().ntos,
+        station_time: '10:53',
+        show_battery: 0,
+        show_shutdown: 0,
+      },
+      orders: [
+        {
+          id: 'T3',
+          buyer: 'Rebeckah Shirey',
+          reason: 'Direct purchase',
+          state: 'Delivered',
+          total: 72,
+          fee: 0,
+          pending: 0,
+          cancellable: 0,
+          paid: 0,
+          can_edit_reason: 0,
+          delivery_status: 'Delivered',
+          items: [],
+        },
+      ],
+    });
+    mockState.tradeTab = 'orders';
+    render(<FrontierTrade />, container);
+
+    expect(
+      container.querySelector('.fa-clock')?.closest('.Stack')?.textContent
+    ).toBe('10:53NTNet');
+    expect(container.textContent).toContain('Handling: 0');
+    expect(findButton('Save as Cart')?.closest('.Stack')?.textContent).toBe(
+      'Save as CartPrint ReceiptInternal Receipt'
+    );
+
+    mockData = { ...mockData, manager: 0, has_printer: 0 };
+    render(<FrontierTrade />, container);
+    expect(findButton('Save as Cart')?.closest('.Stack')?.textContent).toBe(
+      'Save as Cart'
+    );
+  });
+
   test('triggers NTOS exit action from header button', () => {
     mockData = buildSampleData();
     render(<FrontierTrade />, container);
-    findButton('Exit')!.dispatchEvent(
-      new MouseEvent('click', { bubbles: true })
-    );
+    container
+      .querySelector('[aria-label="Exit program"]')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mockAct).toHaveBeenCalledWith('pc_exit');
   });
 });

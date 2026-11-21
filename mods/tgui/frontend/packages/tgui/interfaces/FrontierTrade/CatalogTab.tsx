@@ -1,17 +1,18 @@
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  Dropdown,
+  Icon,
   Input,
   NoticeBox,
   NumberInput,
-  ProgressBar,
   Section,
   Stack,
   Table,
 } from '../../components';
 import {
-  DeliveryMode,
   formatDuration,
   FrontierTradeData,
   matchesCatalogSearch,
@@ -30,25 +31,50 @@ export interface CatalogTabProps {
   onOpenCart?: () => void;
 }
 
-const deliveryBadgeLabel = (good: ResolvedTradeGood): string => {
-  const mode: DeliveryMode = good.delivery_mode;
-  if (mode === 'livestock') {
-    return `Livestock (${good.container_label || 'Critter Crate'})`;
-  }
-  if (mode === 'large_crate') {
-    return good.container_label || 'Large Crate';
-  }
-  if (mode === 'secure_crate') {
-    return good.container_label || 'Secure Crate';
-  }
-  if (mode === 'crate') {
-    return good.container_label || 'Crate';
-  }
-  if (mode === 'floor' || good.floor_delivery) {
-    return 'Floor Delivery';
-  }
-  return good.container_label || 'Personal Locker';
-};
+const sortOptions: { value: SortMode; displayText: string }[] = [
+  { value: 'default', displayText: 'Default' },
+  { value: 'name', displayText: 'Name' },
+  { value: 'price_asc', displayText: 'Lowest price' },
+  { value: 'price_desc', displayText: 'Highest price' },
+  { value: 'stock_desc', displayText: 'Most in stock' },
+];
+
+const GoodDetails = ({ good }: { good: ResolvedTradeGood }) => (
+  <Box p={1}>
+    {good.desc && <Box mb={0.5}>{good.desc}</Box>}
+    <Box color="label">
+      Delivery: {good.container_label}
+      {good.floor_delivery && ' (requires clear space at the receiver)'}
+    </Box>
+    {good.has_access_req && (
+      <Box color={good.access_satisfied ? 'label' : 'average'}>
+        Personal purchase requires{' '}
+        {good.access_labels.join(', ') || 'department authorization'}.
+      </Box>
+    )}
+    {good.security_label && (
+      <Box color={good.sec_locked ? 'average' : 'label'}>
+        Alert level: {good.security_label}
+      </Box>
+    )}
+    {good.contents_preview.length > 0 && (
+      <Box mt={0.5}>
+        <Box bold>
+          {good.randomized_count > 0
+            ? 'Includes ' +
+              good.randomized_count +
+              ' of the following at random'
+            : 'Contents'}
+        </Box>
+        {good.contents_preview.map((row, idx) => (
+          <Box key={idx}>
+            {row.count} × {row.name}
+          </Box>
+        ))}
+      </Box>
+    )}
+  </Box>
+);
 
 export const CatalogTab = (props: CatalogTabProps, context) => {
   const { act, data } = useBackend<FrontierTradeData>(context);
@@ -59,7 +85,6 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
     currency,
     cart_count: cartCount = 0,
     cart_total: cartTotal = 0,
-    cart_fee: cartFee = 0,
     order_limit: orderLimit = 100,
   } = data;
 
@@ -101,6 +126,11 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
     'catalogSortBy',
     'default'
   );
+  const [showFilters, setShowFilters] = useLocalState(
+    context,
+    'catalogShowFilters',
+    false
+  );
   const [expandedGoodId, setExpandedGoodId] = useLocalState<string>(
     context,
     'catalogExpandedGoodId',
@@ -117,20 +147,6 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
 
   const allResolvedGoods = resolveCatalogGoods(data);
   const needle = search.trim().toLowerCase();
-
-  // Compute per-station search match counts when a search query is active
-  const matchCountByStation: Record<string, number> = {};
-  let totalSearchMatches = 0;
-  if (needle) {
-    for (let i = 0; i < allResolvedGoods.length; i++) {
-      const g = allResolvedGoods[i];
-      if (matchesCatalogSearch(g, needle)) {
-        matchCountByStation[g.station_id] =
-          (matchCountByStation[g.station_id] || 0) + 1;
-        totalSearchMatches++;
-      }
-    }
-  }
 
   const stationScopedGoods = isAllRelays
     ? allResolvedGoods
@@ -155,7 +171,7 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
     if (hideRestricted && good.restricted) {
       return false;
     }
-    if (inCartOnly && good.cart_count <= 0) {
+    if (!readOnly && inCartOnly && good.cart_count <= 0) {
       return false;
     }
     return matchesCatalogSearch(good, needle);
@@ -187,486 +203,264 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
     safePage * PAGE_SIZE
   );
 
-  const favorRatio = activeStation?.favor_needed
-    ? activeStation.favor / activeStation.favor_needed
-    : 0;
-  const favorColor =
-    favorRatio < 0.25 ? 'bad' : favorRatio < 0.5 ? 'average' : 'good';
-
   const remainingOrderLimit = Math.max(0, orderLimit - cartCount);
+  const extraFilters =
+    Number(inStockOnly) +
+    Number(hideRestricted) +
+    Number(inCartOnly && !readOnly);
 
   return (
     <Stack vertical fill>
       <Stack.Item>
         <Section>
-          <Stack wrap align="center">
-            <Stack.Item>
-              <Button
-                icon="globe"
-                selected={isAllRelays}
-                content={
-                  needle
-                    ? `All Relays (${totalSearchMatches})`
-                    : `All Relays (${allResolvedGoods.length})`
-                }
-                tooltip="Search and browse across all discovered frontier relays at once"
-                onClick={() => {
-                  onSelectStation('all');
+          <Stack align="center" wrap>
+            <Stack.Item grow minWidth="13em">
+              <Input
+                fluid
+                placeholder="Search goods or pack contents"
+                value={search}
+                onInput={(_, value) => {
+                  setSearch(value);
                   setPage(1);
                 }}
               />
             </Stack.Item>
-            {discovered.map((station) => {
-              const matchCount = matchCountByStation[station.id] || 0;
-              return (
-                <Stack.Item key={station.id}>
-                  <Button
-                    selected={!isAllRelays && station.id === activeStation?.id}
-                    color={station.black_market ? 'bad' : undefined}
-                    content={
-                      needle
-                        ? `${station.label} (${matchCount})`
-                        : station.label
-                    }
-                    tooltip={station.name}
-                    onClick={() => {
-                      onSelectStation(station.id);
-                      setCategory('All');
-                      setPage(1);
-                    }}
-                  />
-                </Stack.Item>
-              );
-            })}
-          </Stack>
-          <Stack mt={0.5} align="center" wrap>
-            <Stack.Item grow>
-              {activeStation ? (
-                <Stack align="center">
-                  <Stack.Item>
-                    <Box bold>
-                      {activeStation.name}
-                      {activeStation.black_market && (
-                        <Box as="span" ml={0.5} color="bad">
-                          [BLACK MARKET]
-                        </Box>
-                      )}
-                    </Box>
-                    <Box fontSize="11px" color="label">
-                      Restock in {formatDuration(activeStation.restock_seconds)}{' '}
-                      ({activeStation.restock_seconds}s)
-                    </Box>
-                  </Stack.Item>
-                </Stack>
-              ) : (
-                <Box>
-                  <Box bold>
-                    All Discovered Frontier Relays ({discovered.length} relays)
-                  </Box>
-                  <Box fontSize="11px" color="label">
-                    Showing {sorted.length} of {allResolvedGoods.length} catalog
-                    goods across all active relays
-                  </Box>
-                </Box>
-              )}
-            </Stack.Item>
-            {activeStation && (
-              <Stack.Item width="200px">
-                <ProgressBar
-                  value={activeStation.favor}
-                  minValue={0}
-                  maxValue={Math.max(1, activeStation.favor_needed)}
-                  color={favorColor}
-                >
-                  {activeStation.recommendation_unlocked
-                    ? `Favor: ${activeStation.favor} (Max Tier)`
-                    : `Favor: ${activeStation.favor} / ${activeStation.favor_needed}`}
-                </ProgressBar>
-              </Stack.Item>
-            )}
-            <Stack.Item width="240px">
-              <Stack align="center">
-                <Stack.Item grow>
-                  <Input
-                    fluid
-                    placeholder="Search goods, pack contents..."
-                    value={search}
-                    onInput={(_, value) => {
-                      setSearch(value);
-                      setPage(1);
-                    }}
-                  />
-                </Stack.Item>
-                {search.length > 0 && (
-                  <Stack.Item>
-                    <Button
-                      compact
-                      icon="times"
-                      color="bad"
-                      tooltip="Clear search"
-                      onClick={() => {
-                        setSearch('');
-                        setPage(1);
-                      }}
-                    />
-                  </Stack.Item>
-                )}
-              </Stack>
-            </Stack.Item>
-          </Stack>
-          <Stack mt={0.5} align="center" justify="space-between" wrap>
-            <Stack.Item>
-              <Stack align="center" wrap>
-                <Stack.Item>
-                  <Button
-                    compact
-                    icon="box-open"
-                    selected={inStockOnly}
-                    content="In Stock Only"
-                    onClick={() => {
-                      setInStockOnly(!inStockOnly);
-                      setPage(1);
-                    }}
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    compact
-                    icon="id-badge"
-                    selected={hideRestricted}
-                    content="Hide Restricted"
-                    tooltip="Only show items eligible for immediate personal ID purchase"
-                    onClick={() => {
-                      setHideRestricted(!hideRestricted);
-                      setPage(1);
-                    }}
-                  />
-                </Stack.Item>
-                {!readOnly && (
-                  <Stack.Item>
-                    <Button
-                      compact
-                      icon="shopping-basket"
-                      selected={inCartOnly}
-                      content="In Cart"
-                      onClick={() => {
-                        setInCartOnly(!inCartOnly);
-                        setPage(1);
-                      }}
-                    />
-                  </Stack.Item>
-                )}
-              </Stack>
-            </Stack.Item>
-            <Stack.Item>
-              <Stack align="center">
-                <Stack.Item color="label" fontSize="11px">
-                  Sort:
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    compact
-                    selected={sortBy === 'name'}
-                    content="Name"
-                    onClick={() =>
-                      setSortBy(sortBy === 'name' ? 'default' : 'name')
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    compact
-                    selected={sortBy === 'price_asc'}
-                    content="Price ↑"
-                    onClick={() =>
-                      setSortBy(
-                        sortBy === 'price_asc' ? 'default' : 'price_asc'
-                      )
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    compact
-                    selected={sortBy === 'price_desc'}
-                    content="Price ↓"
-                    onClick={() =>
-                      setSortBy(
-                        sortBy === 'price_desc' ? 'default' : 'price_desc'
-                      )
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    compact
-                    selected={sortBy === 'stock_desc'}
-                    content="Stock ↓"
-                    onClick={() =>
-                      setSortBy(
-                        sortBy === 'stock_desc' ? 'default' : 'stock_desc'
-                      )
-                    }
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          </Stack>
-          <Stack mt={0.5} wrap>
-            {categories.map((cat) => (
-              <Stack.Item key={cat}>
+            {search && (
+              <Stack.Item>
                 <Button
-                  compact
-                  selected={effectiveCategory === cat}
-                  content={cat}
+                  icon="times"
+                  tooltip="Clear search"
                   onClick={() => {
-                    setCategory(cat);
+                    setSearch('');
                     setPage(1);
                   }}
                 />
               </Stack.Item>
-            ))}
+            )}
+            <Stack.Item>
+              <Dropdown
+                width="11em"
+                options={[
+                  { value: 'all', displayText: 'All relays' },
+                  ...discovered.map((station) => ({
+                    value: station.id,
+                    displayText: station.label,
+                  })),
+                ]}
+                selected={activeStation?.id || 'all'}
+                displayText={activeStation?.label || 'All relays'}
+                onSelected={(id) => {
+                  onSelectStation(id);
+                  setCategory('All');
+                  setPage(1);
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Dropdown
+                width="14em"
+                options={categories.map((cat) => ({
+                  value: cat,
+                  displayText: cat === 'All' ? 'All categories' : cat,
+                }))}
+                selected={effectiveCategory}
+                displayText={
+                  effectiveCategory === 'All'
+                    ? 'All categories'
+                    : effectiveCategory
+                }
+                onSelected={(value) => {
+                  setCategory(value);
+                  setPage(1);
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="filter"
+                selected={showFilters}
+                content={
+                  extraFilters ? 'Filters (' + extraFilters + ')' : 'Filters'
+                }
+                onClick={() => setShowFilters(!showFilters)}
+              />
+            </Stack.Item>
           </Stack>
+          {showFilters && (
+            <Stack mt={0.75} align="center" wrap>
+              <Stack.Item>
+                <Button.Checkbox
+                  checked={inStockOnly}
+                  content="In stock"
+                  onClick={() => {
+                    setInStockOnly(!inStockOnly);
+                    setPage(1);
+                  }}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button.Checkbox
+                  checked={hideRestricted}
+                  content="Hide restricted"
+                  tooltip="Show goods available for personal purchase"
+                  onClick={() => {
+                    setHideRestricted(!hideRestricted);
+                    setPage(1);
+                  }}
+                />
+              </Stack.Item>
+              {!readOnly && (
+                <Stack.Item>
+                  <Button.Checkbox
+                    checked={inCartOnly}
+                    content="In cart"
+                    onClick={() => {
+                      setInCartOnly(!inCartOnly);
+                      setPage(1);
+                    }}
+                  />
+                </Stack.Item>
+              )}
+              <Stack.Item grow />
+              <Stack.Item color="label">Sort by</Stack.Item>
+              <Stack.Item>
+                <Dropdown
+                  width="11em"
+                  options={sortOptions}
+                  selected={sortBy}
+                  displayText={
+                    sortOptions.find((option) => option.value === sortBy)
+                      ?.displayText
+                  }
+                  onSelected={(value) => {
+                    setSortBy(value as SortMode);
+                    setPage(1);
+                  }}
+                />
+              </Stack.Item>
+            </Stack>
+          )}
+          {activeStation && (
+            <Box mt={0.75} color="label">
+              {activeStation.name} · Restock in{' '}
+              {formatDuration(activeStation.restock_seconds)}
+              {' · Favor '}
+              {activeStation.favor}
+              {!activeStation.recommendation_unlocked &&
+                ' / ' + activeStation.favor_needed}
+            </Box>
+          )}
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section fill scrollable>
+        <Section fill scrollable title={'Goods (' + sorted.length + ')'}>
           {visible.length === 0 ? (
             <NoticeBox>No matching goods found.</NoticeBox>
           ) : (
             <Table>
               <Table.Row header>
+                <Table.Cell>Item</Table.Cell>
                 <Table.Cell>
                   {isAllRelays ? 'Relay / Category' : 'Category'}
                 </Table.Cell>
-                <Table.Cell>Goods & Manifest</Table.Cell>
-                <Table.Cell textAlign="right">Stock</Table.Cell>
-                <Table.Cell textAlign="right">Price</Table.Cell>
-                {!readOnly && <Table.Cell textAlign="right">Cart</Table.Cell>}
+                <Table.Cell collapsing px={0.75} textAlign="right">
+                  Stock
+                </Table.Cell>
+                <Table.Cell collapsing px={0.75} textAlign="right">
+                  Price ({currency})
+                </Table.Cell>
+                {!readOnly && (
+                  <Table.Cell width="9em" textAlign="right">
+                    Cart
+                  </Table.Cell>
+                )}
               </Table.Row>
               {visible.map((good) => {
-                const hasContents =
-                  good.contents_preview && good.contents_preview.length > 0;
-                const totalPackItems = hasContents
-                  ? good.contents_preview.reduce(
-                      (acc, r) => acc + (r.count || 1),
-                      0
-                    )
-                  : 0;
-                const isExpanded = expandedGoodId === good.id;
+                const expanded = expandedGoodId === good.id;
                 const maxAddable = Math.min(
-                  Math.max(0, good.stock - good.cart_count),
+                  good.stock - good.cart_count,
                   remainingOrderLimit
                 );
-
+                const addOne = () => act('add_cart', { id: good.id });
+                const detailsLabel =
+                  (expanded ? 'Hide ' : 'Show ') + good.name + ' details';
                 return (
-                  <Table.Row
-                    key={good.id}
-                    className="candystripe"
-                    style={{
-                      opacity:
-                        good.stock <= 0 && good.cart_count <= 0 ? '0.55' : '1',
-                    }}
-                  >
-                    <Table.Cell>
-                      {isAllRelays && (
-                        <Box bold fontSize="11px">
-                          {good.station_label}
-                        </Box>
-                      )}
-                      <Box color="label" fontSize="11px">
-                        {good.category}
-                      </Box>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Stack align="center" wrap>
-                        <Stack.Item>
-                          <Box as="span" bold>
-                            {good.name}
-                            {good.stack_size > 0 &&
-                              ` (${good.stack_size}u stack)`}
-                          </Box>
-                        </Stack.Item>
-                        <Stack.Item>
-                          <Box
-                            as="span"
-                            fontSize="10px"
-                            color={
-                              good.delivery_mode === 'livestock' ||
-                              good.floor_delivery
-                                ? 'average'
-                                : 'label'
-                            }
-                          >
-                            [{deliveryBadgeLabel(good)}]
-                          </Box>
-                        </Stack.Item>
-                        {hasContents && (
+                  <Fragment key={good.id}>
+                    <Table.Row className="candystripe">
+                      <Table.Cell py={0.5}>
+                        <Stack align="center">
                           <Stack.Item>
                             <Button
                               compact
-                              icon={isExpanded ? 'chevron-up' : 'list'}
-                              content={
-                                good.randomized_count > 0
-                                  ? `Any ${good.randomized_count} of ${good.contents_preview.length}`
-                                  : `Pack (${totalPackItems})`
-                              }
-                              tooltip="Click to toggle full pack manifest and description"
+                              color="transparent"
+                              icon={expanded ? 'chevron-down' : 'chevron-right'}
+                              aria-label={detailsLabel}
+                              aria-expanded={expanded}
+                              tooltip={detailsLabel}
                               onClick={() =>
-                                setExpandedGoodId(isExpanded ? '' : good.id)
+                                setExpandedGoodId(expanded ? '' : good.id)
                               }
                             />
                           </Stack.Item>
-                        )}
-                        {good.security_label && (
                           <Stack.Item>
-                            <Box
-                              as="span"
-                              fontSize="10px"
-                              bold
-                              color={good.sec_locked ? 'bad' : 'good'}
-                            >
-                              [Alert: {good.security_label}]
+                            <Box bold>
+                              {good.name}
+                              {good.stack_size > 0 &&
+                                ' (' + good.stack_size + ')'}
                             </Box>
-                          </Stack.Item>
-                        )}
-                        {good.access_labels.length > 0 ? (
-                          <Stack.Item>
-                            <Box
-                              as="span"
-                              fontSize="10px"
-                              bold
-                              color={good.access_satisfied ? 'good' : 'average'}
-                            >
-                              [
-                              {good.access_satisfied ? 'Access OK' : 'Requires'}
-                              : {good.access_labels.join(', ')}]
-                            </Box>
-                          </Stack.Item>
-                        ) : (
-                          good.has_access_req && (
-                            <Stack.Item>
-                              <Box
-                                as="span"
-                                fontSize="10px"
-                                bold
-                                color={
-                                  good.access_satisfied ? 'good' : 'average'
-                                }
-                              >
-                                [
-                                {good.access_satisfied
-                                  ? 'Access OK'
-                                  : 'Dept. Auth Required'}
-                                ]
+                            {good.floor_delivery && (
+                              <Box color="label">Floor delivery</Box>
+                            )}
+                            {good.restricted && (
+                              <Box color="average">
+                                <Icon name="lock" mr={0.5} />
+                                {good.sec_locked
+                                  ? good.security_label ||
+                                    'Higher alert required'
+                                  : good.access_labels.join(', ') ||
+                                    'Department access'}
                               </Box>
-                            </Stack.Item>
-                          )
-                        )}
-                      </Stack>
-                      {hasContents && !isExpanded && (
-                        <Box fontSize="11px" color="label">
-                          {good.randomized_count > 0
-                            ? `Random ${good.randomized_count} of: `
-                            : 'Contains: '}
-                          {good.contents_preview
-                            .slice(0, 4)
-                            .map((r) =>
-                              r.count > 1 ? `${r.count}x ${r.name}` : r.name
-                            )
-                            .join(', ')}
-                          {good.contents_preview.length > 4 &&
-                            ` (+${good.contents_preview.length - 4} more)`}
-                        </Box>
-                      )}
-                      {isExpanded && (
-                        <Box
-                          mt={0.5}
-                          p={0.5}
-                          style={{
-                            background: 'rgba(0, 0, 0, 0.25)',
-                            border: '1px solid rgba(255, 255, 255, 0.12)',
-                          }}
+                            )}
+                          </Stack.Item>
+                        </Stack>
+                      </Table.Cell>
+                      <Table.Cell color="label">
+                        {isAllRelays && <Box>{good.station_label}</Box>}
+                        {good.category}
+                      </Table.Cell>
+                      <Table.Cell
+                        textAlign="right"
+                        px={0.75}
+                        color={good.stock <= 0 ? 'label' : undefined}
+                      >
+                        {good.stock}
+                      </Table.Cell>
+                      <Table.Cell px={0.75} textAlign="right">
+                        {good.price}
+                      </Table.Cell>
+                      {!readOnly && (
+                        <Table.Cell
+                          textAlign="right"
+                          style={{ whiteSpace: 'nowrap' }}
                         >
-                          {good.desc && (
-                            <Box fontSize="11px" mb={0.5}>
-                              {good.desc}
-                            </Box>
-                          )}
-                          <Box fontSize="11px" color="label">
-                            Delivery Container: {good.container_label}
-                            {good.randomized_count > 0 &&
-                              ` · Drops any ${good.randomized_count} from list:`}
-                          </Box>
-                          {good.contents_preview.map((row, idx) => (
-                            <Box key={idx} fontSize="11px">
-                              • {row.count}x {row.name}
-                            </Box>
-                          ))}
-                        </Box>
-                      )}
-                      {!hasContents && good.desc && (
-                        <Box fontSize="11px" color="label">
-                          {good.desc}
-                        </Box>
-                      )}
-                      {good.floor_delivery && (
-                        <Box fontSize="11px" color="average">
-                          Delivered onto receiving beacon floor.
-                        </Box>
-                      )}
-                      {good.restricted && (
-                        <Box fontSize="11px" color="average">
-                          {good.sec_locked
-                            ? `Requires ${
-                                good.security_label || 'higher security alert'
-                              } level.`
-                            : `Department authorization required for personal purchase.${
-                                good.access_labels.length > 0
-                                  ? ` (${good.access_labels.join(', ')})`
-                                  : ''
-                              }`}
-                        </Box>
-                      )}
-                    </Table.Cell>
-                    <Table.Cell
-                      textAlign="right"
-                      color={good.stock <= 0 ? 'bad' : undefined}
-                    >
-                      {good.stock}
-                    </Table.Cell>
-                    <Table.Cell textAlign="right">
-                      {good.price} {currency}
-                    </Table.Cell>
-                    {!readOnly && (
-                      <Table.Cell textAlign="right">
-                        {good.stock <= 0 && good.cart_count <= 0 ? (
-                          <Box color="bad" fontSize="11px" bold>
-                            Out of Stock
-                          </Box>
-                        ) : (
-                          <Stack justify="flex-end" align="center">
-                            <Stack.Item>
+                          {good.cart_count > 0 ? (
+                            <>
                               <Button
                                 compact
                                 icon="minus"
-                                disabled={good.cart_count <= 0}
+                                tooltip="Remove one from cart"
                                 onClick={() =>
                                   act('remove_cart', { id: good.id })
                                 }
                               />
-                            </Stack.Item>
-                            <Stack.Item>
                               <NumberInput
-                                width="44px"
+                                width="3.5em"
                                 step={1}
                                 value={good.cart_count}
                                 minValue={0}
-                                maxValue={Math.max(
-                                  1,
-                                  good.stock,
-                                  good.cart_count
-                                )}
+                                maxValue={
+                                  good.cart_count + Math.max(0, maxAddable)
+                                }
                                 onChange={(_, value) =>
                                   act('set_cart_qty', {
                                     id: good.id,
@@ -674,119 +468,112 @@ export const CatalogTab = (props: CatalogTabProps, context) => {
                                   })
                                 }
                               />
-                            </Stack.Item>
-                            <Stack.Item>
                               <Button
                                 compact
+                                ml={0.5}
                                 icon="plus"
+                                tooltip="Add one to cart"
                                 disabled={maxAddable <= 0}
-                                tooltip={
-                                  remainingOrderLimit <= 0
-                                    ? `Order limit (${orderLimit}) reached`
-                                    : 'Add 1 to cart'
-                                }
-                                onClick={() => act('add_cart', { id: good.id })}
+                                onClick={addOne}
                               />
-                            </Stack.Item>
-                            <Stack.Item>
-                              <Button
-                                compact
-                                content="+5"
-                                disabled={maxAddable <= 0}
-                                tooltip="Add up to 5 units to cart"
-                                onClick={() =>
-                                  act('add_cart', { id: good.id, amount: 5 })
-                                }
-                              />
-                            </Stack.Item>
-                          </Stack>
-                        )}
-                      </Table.Cell>
+                            </>
+                          ) : good.stock > 0 ? (
+                            <Button
+                              icon="plus"
+                              content="Add"
+                              disabled={maxAddable <= 0}
+                              tooltip={
+                                maxAddable <= 0
+                                  ? 'Order limit reached'
+                                  : undefined
+                              }
+                              onClick={addOne}
+                            />
+                          ) : (
+                            <Box color="label">Out of stock</Box>
+                          )}
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
+                    {expanded && (
+                      <Table.Row className="candystripe">
+                        <Table.Cell colSpan={readOnly ? 4 : 5}>
+                          <GoodDetails good={good} />
+                          {!readOnly && maxAddable > 1 && (
+                            <Button
+                              ml={1}
+                              mb={0.75}
+                              icon="cart-plus"
+                              content={
+                                'Add ' + Math.min(5, maxAddable) + ' to cart'
+                              }
+                              onClick={() =>
+                                act('add_cart', {
+                                  id: good.id,
+                                  amount: Math.min(5, maxAddable),
+                                })
+                              }
+                            />
+                          )}
+                        </Table.Cell>
+                      </Table.Row>
                     )}
-                  </Table.Row>
+                  </Fragment>
                 );
               })}
             </Table>
           )}
         </Section>
       </Stack.Item>
-      {pageCount > 1 && (
-        <Stack.Item>
-          <Stack justify="center" align="center">
-            <Stack.Item>
-              <Button
-                icon="angle-double-left"
-                disabled={safePage <= 1}
-                onClick={() => setPage(1)}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="chevron-left"
-                disabled={safePage <= 1}
-                onClick={() => setPage(safePage - 1)}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              Page {safePage} / {pageCount} ({sorted.length} entries)
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="chevron-right"
-                disabled={safePage >= pageCount}
-                onClick={() => setPage(safePage + 1)}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="angle-double-right"
-                disabled={safePage >= pageCount}
-                onClick={() => setPage(pageCount)}
-              />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      )}
-      {!readOnly && cartCount > 0 && (
+      {(pageCount > 1 || (!readOnly && cartCount > 0)) && (
         <Stack.Item>
           <Section fitted p={0.75}>
-            <Stack align="center" justify="space-between">
+            <Stack align="center" justify="space-between" wrap>
               <Stack.Item>
-                <Box as="span" bold>
-                  Cart: {cartCount} / {orderLimit} units
-                </Box>
-                <Box as="span" ml={1} color="good" bold>
-                  Subtotal: {cartTotal} {currency}
-                </Box>
-                <Box as="span" ml={0.5} color="label" fontSize="11px">
-                  (+{cartFee} {currency} personal handling fee ={' '}
-                  {cartTotal + cartFee} {currency})
-                </Box>
-              </Stack.Item>
-              <Stack.Item>
-                <Stack>
-                  {onOpenCart && (
-                    <Stack.Item>
-                      <Button
-                        compact
-                        color="good"
-                        icon="shopping-basket"
-                        content="Review Cart & Checkout"
-                        onClick={onOpenCart}
-                      />
-                    </Stack.Item>
-                  )}
-                  <Stack.Item>
+                {pageCount > 1 && (
+                  <>
                     <Button
-                      compact
-                      color="bad"
-                      icon="trash"
-                      content="Clear Cart"
-                      onClick={() => act('clear_cart')}
+                      icon="angle-double-left"
+                      tooltip="First page"
+                      disabled={safePage === 1}
+                      onClick={() => setPage(1)}
                     />
-                  </Stack.Item>
-                </Stack>
+                    <Button
+                      icon="chevron-left"
+                      tooltip="Previous page"
+                      disabled={safePage === 1}
+                      onClick={() => setPage(safePage - 1)}
+                    />
+                    <Box as="span" mx={0.75}>
+                      Page {safePage} / {pageCount}
+                    </Box>
+                    <Button
+                      icon="chevron-right"
+                      tooltip="Next page"
+                      disabled={safePage === pageCount}
+                      onClick={() => setPage(safePage + 1)}
+                    />
+                    <Button
+                      icon="angle-double-right"
+                      tooltip="Last page"
+                      disabled={safePage === pageCount}
+                      onClick={() => setPage(pageCount)}
+                    />
+                  </>
+                )}
               </Stack.Item>
+              {!readOnly && cartCount > 0 && (
+                <Stack.Item>
+                  <Box as="span" mr={1} color="label">
+                    Subtotal {cartTotal} {currency}
+                  </Box>
+                  <Button
+                    icon="shopping-basket"
+                    content="Review cart"
+                    onClick={onOpenCart}
+                  />
+                </Stack.Item>
+              )}
             </Stack>
           </Section>
         </Stack.Item>

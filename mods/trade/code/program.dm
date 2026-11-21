@@ -87,8 +87,6 @@
 	var/read_only = FALSE
 	var/datum/money_account/linked_account
 	var/obj/item/card/id/linked_card
-	var/last_catalog_version = 0
-	var/last_hacked = FALSE
 	var/active_tab = "catalog"
 	var/logs_page = 1
 	var/logs_page_size = TRADE_LOG_PAGE_SIZE

@@ -1,13 +1,24 @@
 /datum/tgui_module/trade/tgui_interact(mob/user, datum/tgui/ui = null)
-	var/hacked = is_hacked()
-	var/static_dirty = (last_catalog_version != SStrade.catalog_version) || (last_hacked != hacked)
-	last_catalog_version = SStrade.catalog_version
-	last_hacked = hacked
-	ui = SStgui.try_update_ui(user, src, ui, force_open = static_dirty)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "FrontierTrade", name)
+		ui = new /datum/tgui/frontier_trade(user, src, "FrontierTrade", name)
 		ui.set_autoupdate(TRUE)
 		ui.open()
+
+/datum/tgui/frontier_trade
+	var/catalog_version = 0
+	var/catalog_hacked = FALSE
+
+/datum/tgui/frontier_trade/get_payload(custom_data, with_data, with_static_data)
+	var/datum/tgui_module/trade/module = src_object
+	var/current_version = SStrade.catalog_version
+	var/hacked = module.is_hacked()
+	if(with_data && (catalog_version != current_version || catalog_hacked != hacked))
+		with_static_data = TRUE
+	. = ..(custom_data, with_data, with_static_data)
+	if(with_static_data)
+		catalog_version = current_version
+		catalog_hacked = hacked
 
 /datum/tgui_module/trade/tgui_static_data(mob/user)
 	var/hacked = is_hacked()

@@ -1,26 +1,28 @@
+type ByondFlag = boolean | 0 | 1;
+
 export interface NtosState {
   station_time: string;
-  show_battery: boolean;
+  show_battery: ByondFlag;
   battery_percent: string;
   ntnet_status: number;
-  show_shutdown: boolean;
+  show_shutdown: ByondFlag;
   active_program?: string;
 }
 
 export interface AccountState {
   owner: string | null;
   balance: number;
-  card_inserted: boolean;
+  card_inserted: ByondFlag;
   card_owner: string | null;
-  card_requires_pin: boolean;
-  card_linked: boolean;
+  card_requires_pin: ByondFlag;
+  card_linked: ByondFlag;
   card_access?: number[];
 }
 
 export interface BeaconOption {
   id: string;
   label: string;
-  ready: boolean;
+  ready: ByondFlag;
 }
 
 export interface ExportPreviewState {
@@ -35,16 +37,16 @@ export interface BeaconsState {
   receiver_id: string;
   sender_label: string;
   receiver_label: string;
-  sender_present: boolean;
-  sender_ready: boolean;
-  export_ready: boolean;
+  sender_present: ByondFlag;
+  sender_ready: ByondFlag;
+  export_ready: ByondFlag;
   export_time_max: number;
   export_time_elapsed: number;
   export_seconds: number;
   sender_entropy: number;
   entropy_limit: number;
-  receiver_ready: boolean;
-  receiver_present?: boolean;
+  receiver_ready: ByondFlag;
+  receiver_present?: ByondFlag;
   receiver_free_tiles?: number;
   receiver_entropy?: number;
   receiver_locked_seconds?: number;
@@ -76,22 +78,22 @@ export interface TradeGoodStatic {
   desc?: string;
   category: string;
   stack_size: number;
-  floor_delivery: boolean;
+  floor_delivery: ByondFlag;
   delivery_mode?: DeliveryMode;
   container_label?: string;
-  is_bundle?: boolean;
+  is_bundle?: ByondFlag;
   randomized_count?: number;
   contents_preview?: TradeGoodContentsRow[];
   req_access?: number[];
   access_labels?: string[];
   security_level?: string | null;
   security_label?: string | null;
-  hidden?: boolean;
+  hidden?: ByondFlag;
   // Optional fallback fields if merged or passed in test mocks
   stock?: number;
   cart_count?: number;
   price?: number;
-  restricted?: boolean;
+  restricted?: ByondFlag;
 }
 
 export interface TradeGood extends Omit<TradeGoodStatic, 'station_id'> {
@@ -99,7 +101,7 @@ export interface TradeGood extends Omit<TradeGoodStatic, 'station_id'> {
   stock: number;
   cart_count: number;
   price: number;
-  restricted: boolean;
+  restricted: ByondFlag;
 }
 
 export interface ResolvedTradeGood {
@@ -141,11 +143,11 @@ export interface TradeOffer {
   station_name?: string;
   favor_gain?: number;
   matched_count?: number;
-  can_fulfill?: boolean;
+  can_fulfill?: ByondFlag;
   reagent_volume?: number;
   stack_size?: number;
-  live_required?: boolean;
-  completed: boolean;
+  live_required?: ByondFlag;
+  completed: ByondFlag;
   requirements: string;
 }
 
@@ -158,12 +160,12 @@ export interface TradeStation {
   color: string;
   x: number;
   y: number;
-  discovered: boolean;
-  black_market: boolean;
+  discovered: ByondFlag;
+  black_market: ByondFlag;
   favor: number;
   favor_needed: number;
-  hidden_unlocked: boolean;
-  recommendation_unlocked: boolean;
+  hidden_unlocked: ByondFlag;
+  recommendation_unlocked: ByondFlag;
   recommendations_received: number;
   recommendations_needed: number;
   recommends: string[];
@@ -180,7 +182,7 @@ export interface TreeLine {
   y1: number;
   x2: number;
   y2: number;
-  unlocked: boolean;
+  unlocked: ByondFlag;
 }
 
 export interface CartItem {
@@ -194,8 +196,8 @@ export interface CartItem {
   unit_price: number;
   price: number;
   stack_size: number;
-  floor_delivery: boolean;
-  restricted: boolean;
+  floor_delivery: ByondFlag;
+  restricted: ByondFlag;
 }
 
 export interface SavedCartItemPreview {
@@ -232,10 +234,10 @@ export interface TradeOrder {
   state: string;
   total: number;
   fee: number;
-  pending: boolean;
-  cancellable: boolean;
-  paid: boolean;
-  can_edit_reason: boolean;
+  pending: ByondFlag;
+  cancellable: ByondFlag;
+  paid: ByondFlag;
+  can_edit_reason: ByondFlag;
   delivery_status?: string;
   needed_tiles?: number;
   items: OrderRow[];
@@ -254,12 +256,12 @@ export interface TradeLogEntry {
 
 export interface FrontierTradeData {
   catalog_version?: number;
-  read_only: boolean;
+  read_only: ByondFlag;
   program_type: string;
-  manager: boolean;
-  can_export: boolean;
-  hacked: boolean;
-  has_printer?: boolean;
+  manager: ByondFlag;
+  can_export: ByondFlag;
+  hacked: ByondFlag;
+  has_printer?: ByondFlag;
   currency: string;
   budget: number;
   handling_fee_rate?: number;
@@ -277,7 +279,7 @@ export interface FrontierTradeData {
   catalog?: TradeGoodStatic[];
   stocks?: Record<string, number>;
   prices?: Record<string, number>;
-  sec_locked?: Record<string, boolean>;
+  sec_locked?: Record<string, ByondFlag>;
   stations: TradeStation[];
   tree_lines: TreeLine[];
   cart: CartItem[];
@@ -388,7 +390,7 @@ const computeAccessSatisfied = (
       reqAccess.every((req) => cardAccess.includes(req))
     );
   }
-  if (typeof g.restricted === 'boolean') {
+  if (g.restricted !== undefined) {
     return !g.restricted;
   }
   return !(g.access_labels && g.access_labels.length > 0);

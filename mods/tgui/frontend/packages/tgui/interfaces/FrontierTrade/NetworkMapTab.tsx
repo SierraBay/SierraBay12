@@ -198,7 +198,7 @@ export const NetworkMapTab = (props: NetworkMapTabProps, context) => {
           <NoticeBox mt={1} info>
             Green: discovered relay. Grey: scan with ship sensors or earn
             recommendations from connected vendors.
-            {hacked && ' Red: emagged black-market syndicate relay.'}
+            {hacked ? ' Red: emagged black-market syndicate relay.' : null}
           </NoticeBox>
         </Section>
       </Stack.Item>
@@ -209,7 +209,7 @@ export const NetworkMapTab = (props: NetworkMapTabProps, context) => {
               <Stack.Item>
                 <Box fontSize="15px" bold color="label">
                   {selectedStation.name}
-                  {selectedStation.black_market && (
+                  {Boolean(selectedStation.black_market) && (
                     <Box as="span" ml={0.5} color="bad">
                       [BLACK MARKET]
                     </Box>
@@ -248,7 +248,7 @@ export const NetworkMapTab = (props: NetworkMapTabProps, context) => {
                       {formatMarkupLabel(selectedStation.markup)}
                     </LabeledList.Item>
                   )}
-                  {selectedStation.discovered && (
+                  {Boolean(selectedStation.discovered) && (
                     <LabeledList.Item label="Inventory">
                       {selectedGoodsCount} goods · {selectedActiveOffersCount}{' '}
                       active bounties
@@ -270,7 +270,7 @@ export const NetworkMapTab = (props: NetworkMapTabProps, context) => {
                       {selectedStation.recommends.join(', ')}
                     </LabeledList.Item>
                   )}
-                  {selectedStation.discovered && (
+                  {Boolean(selectedStation.discovered) && (
                     <LabeledList.Item label="Restock">
                       {formatDuration(selectedStation.restock_seconds)} (
                       {selectedStation.restock_seconds}s)

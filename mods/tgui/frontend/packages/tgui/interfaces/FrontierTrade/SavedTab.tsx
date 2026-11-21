@@ -20,17 +20,12 @@ export const SavedTab = (props: SavedTabProps, context) => {
 
   return (
     <Section fill scrollable title="Saved Carts">
-      <NoticeBox info>
-        Saved carts retain item quantities. Availability and current vendor
-        prices are validated again at checkout. Use Load to replace your current
-        cart, or Add to Cart to merge quantities.
-      </NoticeBox>
       {saved.length === 0 ? (
         <NoticeBox>No saved carts yet.</NoticeBox>
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell>Name & Manifest</Table.Cell>
+            <Table.Cell>Cart / Contents</Table.Cell>
             <Table.Cell textAlign="right">Items</Table.Cell>
             <Table.Cell textAlign="right">Total Units</Table.Cell>
             <Table.Cell textAlign="right">Est. Cost</Table.Cell>
@@ -68,7 +63,7 @@ export const SavedTab = (props: SavedTabProps, context) => {
                     <Button
                       compact
                       icon="upload"
-                      content="Load"
+                      content="Replace cart"
                       tooltip="Replace current cart with this saved cart"
                       onClick={() => {
                         act('load_saved', { id: entry.id });
@@ -80,7 +75,7 @@ export const SavedTab = (props: SavedTabProps, context) => {
                     <Button
                       compact
                       icon="cart-plus"
-                      content="Merge"
+                      content="Add to cart"
                       tooltip="Add items from this saved cart into your current cart"
                       onClick={() => {
                         act('load_saved', { id: entry.id, merge: true });
@@ -89,9 +84,8 @@ export const SavedTab = (props: SavedTabProps, context) => {
                     />
                   </Stack.Item>
                   <Stack.Item>
-                    <Button
+                    <Button.Confirm
                       compact
-                      color="bad"
                       icon="trash"
                       content="Delete"
                       onClick={() => act('delete_saved', { id: entry.id })}

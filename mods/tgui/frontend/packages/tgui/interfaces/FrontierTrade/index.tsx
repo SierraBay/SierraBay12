@@ -2,12 +2,10 @@ import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
-  Dropdown,
   Icon,
   Input,
   Modal,
   NoticeBox,
-  ProgressBar,
   Section,
   Stack,
   Tabs,
@@ -31,45 +29,34 @@ type TabId =
   | 'saved'
   | 'logs';
 
-const formatSenderBarText = (
-  beacons: FrontierTradeData['beacons'],
-  isSlave: boolean
-): string => {
-  if (!beacons.sender_present) {
-    return isSlave ? 'No Local Sending Beacon in Room' : 'No Sender Beacon';
-  }
-  if (!beacons.sender_ready) {
-    return 'Sender Offline / Unstable';
-  }
-  if (!beacons.export_ready) {
-    return `Recharging: ${beacons.export_seconds}s`;
-  }
-  return `Export Ready (Entropy ${beacons.sender_entropy}/${beacons.entropy_limit})`;
-};
-
 const TradeNtosBar = (props: {
   data: FrontierTradeData;
   act: (action: string, payload?: object) => void;
+  onLinkClick: () => void;
 }) => {
-  const { data, act } = props;
+  const { data, act, onLinkClick } = props;
   const {
     ntos,
     read_only: readOnly,
     program_type: programType,
     hacked,
     beacons,
+    account,
+    currency,
+    budget,
+    manager,
   } = data;
   const isSlave = programType === 'slave';
 
   return (
-    <Stack align="center" justify="space-between" mb={0.5}>
+    <Stack align="center" wrap>
       <Stack.Item>
         <Stack align="center">
           <Stack.Item>
             <Icon name="clock" mr={0.5} />
             {ntos?.station_time}
           </Stack.Item>
-          {ntos?.show_battery && (
+          {Boolean(ntos?.show_battery) && (
             <Stack.Item>
               <Icon name="battery-half" mr={0.5} />
               {ntos.battery_percent}
@@ -83,33 +70,64 @@ const TradeNtosBar = (props: {
             />
             NTNet
           </Stack.Item>
-          <Stack.Item>
-            <Box as="span" color="label">
-              Mode:{' '}
-            </Box>
-            <Box as="span" bold>
-              {readOnly ? 'catalog' : programType}
-            </Box>
-            {isSlave && beacons?.local_room_name && (
-              <Box as="span" ml={0.5} color="label">
-                ({beacons.local_room_name})
-              </Box>
-            )}
-            {hacked && (
-              <Box as="span" ml={0.5} color="bad" bold>
-                [BLACK MARKET]
-              </Box>
-            )}
-          </Stack.Item>
+          {readOnly || isSlave || hacked ? (
+            <Stack.Item color={hacked ? 'average' : 'label'}>
+              {readOnly ? 'Read only' : null}
+              {isSlave && (beacons?.local_room_name || 'Local terminal')}
+              {hacked ? ' · Black market' : null}
+            </Stack.Item>
+          ) : null}
         </Stack>
       </Stack.Item>
+      <Stack.Item grow />
+      {!readOnly && (
+        <Stack.Item>
+          <Stack align="center" wrap>
+            {(Boolean(manager) || programType === 'master') && (
+              <Stack.Item color="label">
+                Supply budget: {budget} {currency}
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              {account?.owner ? (
+                <>
+                  <Box as="span" mr={0.5}>
+                    {account.owner}: {account.balance} {currency}
+                  </Box>
+                  <Button
+                    compact
+                    icon="unlink"
+                    tooltip="Unlink account"
+                    onClick={() => act('unlink_account')}
+                  />
+                </>
+              ) : (
+                <Button
+                  icon="id-card"
+                  disabled={!account?.card_inserted}
+                  content={
+                    account?.card_inserted ? 'Link ID' : 'Insert ID card'
+                  }
+                  tooltip={
+                    isSlave
+                      ? 'Link an ID to claim local bounties'
+                      : 'Link an ID to make personal purchases'
+                  }
+                  onClick={onLinkClick}
+                />
+              )}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      )}
       <Stack.Item>
         <Stack>
           <Stack.Item>
             <Button
               compact
               icon="window-minimize"
-              content="Minimize"
+              aria-label="Minimize"
+              tooltip="Minimize"
               onClick={() => act('pc_minimize')}
             />
           </Stack.Item>
@@ -117,17 +135,18 @@ const TradeNtosBar = (props: {
             <Button
               compact
               icon="times"
-              content="Exit"
+              aria-label="Exit program"
+              tooltip="Exit program"
               onClick={() => act('pc_exit')}
             />
           </Stack.Item>
-          {ntos?.show_shutdown && (
+          {Boolean(ntos?.show_shutdown) && (
             <Stack.Item>
               <Button
                 compact
-                color="bad"
                 icon="power-off"
-                content="Shutdown"
+                aria-label="Shut down computer"
+                tooltip="Shut down computer"
                 onClick={() => act('pc_shutdown')}
               />
             </Stack.Item>
@@ -138,223 +157,12 @@ const TradeNtosBar = (props: {
   );
 };
 
-const TradeToolbar = (props: {
-  data: FrontierTradeData;
-  act: (action: string, payload?: object) => void;
-  onLinkClick: () => void;
-}) => {
-  const { data, act, onLinkClick } = props;
-  const {
-    program_type: programType,
-    manager,
-    can_export: canExport,
-    currency,
-    budget,
-    account,
-    beacons,
-  } = data;
-
-  const isSlave = programType === 'slave';
-  const isOrderingOnly = programType === 'ordering' && !manager && !canExport;
-  const showSupplyBudget = Boolean(manager || programType === 'master');
-  const showSenderToolbar = Boolean(
-    canExport || programType === 'master' || isSlave
-  );
-  const noLocalBeacon = Boolean(
-    isSlave &&
-      beacons &&
-      !beacons.sender_present &&
-      beacons.receiver_present === false
-  );
-
-  const senderOptions = (beacons?.senders || []).map((b) => ({
-    displayText: b.ready ? b.label : `${b.label} (Offline)`,
-    value: b.id,
-  }));
-  const receiverOptions = (beacons?.receivers || []).map((b) => ({
-    displayText: b.ready ? b.label : `${b.label} (Offline)`,
-    value: b.id,
-  }));
-  const exportPreview = beacons?.export_preview;
-
-  return (
-    <Stack align="center" wrap>
-      <Stack.Item>
-        {account?.owner ? (
-          <Stack align="center">
-            <Stack.Item>
-              <Button
-                compact
-                color="good"
-                icon="user"
-                content={`${account.owner}: ${account.balance} ${currency}`}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                color="bad"
-                icon="unlink"
-                tooltip="Unlink account"
-                onClick={() => act('unlink_account')}
-              />
-            </Stack.Item>
-          </Stack>
-        ) : (
-          <Button
-            compact
-            icon="id-card"
-            disabled={!account?.card_inserted}
-            tooltip={
-              isSlave
-                ? 'Insert and link an ID card to claim local bounties (80% to linked account, 20% Cargo commission).'
-                : 'Insert ID into this terminal/PDA for personal purchases. You can still Request Department Funding without inserting a card.'
-            }
-            content={
-              account?.card_inserted
-                ? `Link ${account.card_owner || 'ID'}`
-                : 'Insert ID Card'
-            }
-            onClick={onLinkClick}
-          />
-        )}
-      </Stack.Item>
-      {showSupplyBudget && (
-        <Stack.Item>
-          <Box px={0.5}>
-            <Box as="span" color="label">
-              Supply:{' '}
-            </Box>
-            <Box as="span" bold color="good">
-              {budget} {currency}
-            </Box>
-          </Box>
-        </Stack.Item>
-      )}
-      {showSenderToolbar && (
-        <Stack.Item>
-          <Dropdown
-            width="180px"
-            menuWidth="240px"
-            options={senderOptions}
-            selected={beacons?.sender_id}
-            displayText={`Sender: ${
-              noLocalBeacon
-                ? 'No local beacon'
-                : beacons?.sender_label || 'Automatic'
-            }`}
-            onSelected={(id) => act('select_sender', { id })}
-          />
-        </Stack.Item>
-      )}
-      <Stack.Item>
-        <Dropdown
-          width="180px"
-          menuWidth="240px"
-          options={receiverOptions}
-          selected={beacons?.receiver_id}
-          displayText={`Receiver: ${
-            noLocalBeacon
-              ? 'No local beacon'
-              : beacons?.receiver_label || 'Automatic'
-          }`}
-          onSelected={(id) => act('select_receiver', { id })}
-        />
-      </Stack.Item>
-      {isOrderingOnly && beacons && (
-        <Stack.Item>
-          <Box
-            px={0.5}
-            fontSize="11px"
-            color={beacons.receiver_ready ? 'good' : 'average'}
-          >
-            {beacons.receiver_ready
-              ? `Pad Ready${
-                  beacons.receiver_free_tiles !== undefined
-                    ? ` (${beacons.receiver_free_tiles} tiles free)`
-                    : ''
-                }`
-              : beacons.receiver_locked_seconds
-                ? `Pad Unstable (${beacons.receiver_locked_seconds}s)`
-                : 'Pad Offline'}
-          </Box>
-        </Stack.Item>
-      )}
-      {noLocalBeacon && (
-        <Stack.Item>
-          <Box px={0.5} fontSize="11px" color="bad" bold>
-            No local trade beacon detected in this room
-          </Box>
-        </Stack.Item>
-      )}
-      {showSenderToolbar && beacons && (
-        <Stack.Item grow>
-          <ProgressBar
-            value={beacons.export_ready ? 1 : beacons.export_time_elapsed}
-            minValue={0}
-            maxValue={beacons.export_ready ? 1 : beacons.export_time_max || 1}
-            color={
-              beacons.export_ready
-                ? 'good'
-                : beacons.sender_ready
-                  ? 'average'
-                  : 'bad'
-            }
-          >
-            {formatSenderBarText(beacons, isSlave)}
-          </ProgressBar>
-        </Stack.Item>
-      )}
-      {canExport ? (
-        <Stack.Item>
-          <Stack>
-            <Stack.Item>
-              <Button
-                compact
-                icon="upload"
-                content={
-                  isSlave
-                    ? 'Export → Cargo'
-                    : exportPreview && exportPreview.eligible_items > 0
-                      ? `Export (${exportPreview.estimated_payout} ${currency})`
-                      : 'Export'
-                }
-                disabled={!beacons?.export_ready || !beacons?.sender_ready}
-                onClick={() => act('export')}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                compact
-                icon="check-double"
-                content={isSlave ? 'Fulfill All (-20% fee)' : 'Fulfill All'}
-                disabled={!beacons?.export_ready || !beacons?.sender_ready}
-                onClick={() => act('fulfill_all')}
-              />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      ) : (
-        isSlave && (
-          <Stack.Item>
-            <Button
-              compact
-              disabled
-              icon="id-card"
-              content="Link ID for Local Bounties (-20% fee)"
-              tooltip="Link an inserted ID card to claim local bounties from this room's sending beacon (80% to linked account, 20% Cargo commission)."
-            />
-          </Stack.Item>
-        )
-      )}
-    </Stack>
-  );
-};
-
 export const FrontierTrade = (_props, context) => {
   const { act, data } = useBackend<FrontierTradeData>(context);
   const {
     read_only: readOnly,
+    program_type: programType,
+    can_export: canExport,
     message,
     message_type: messageType,
     account,
@@ -464,14 +272,11 @@ export const FrontierTrade = (_props, context) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section fitted p={1}>
-              <TradeNtosBar data={data} act={act} />
-              {!readOnly && (
-                <TradeToolbar
-                  data={data}
-                  act={act}
-                  onLinkClick={handleLinkClick}
-                />
-              )}
+              <TradeNtosBar
+                data={data}
+                act={act}
+                onLinkClick={handleLinkClick}
+              />
             </Section>
           </Stack.Item>
           {message && (
@@ -498,25 +303,11 @@ export const FrontierTrade = (_props, context) => {
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                icon="project-diagram"
-                selected={activeTab === 'network'}
-                onClick={() => setTab('network')}
-              >
-                Relay Network
-              </Tabs.Tab>
-              <Tabs.Tab
                 icon="shopping-cart"
                 selected={activeTab === 'catalog'}
                 onClick={() => setTab('catalog')}
               >
                 Catalog
-              </Tabs.Tab>
-              <Tabs.Tab
-                icon="tags"
-                selected={activeTab === 'bounties'}
-                onClick={() => setTab('bounties')}
-              >
-                Bounties
               </Tabs.Tab>
               {!readOnly && (
                 <>
@@ -540,12 +331,35 @@ export const FrontierTrade = (_props, context) => {
                       `Orders${orders.length > 0 ? ` (${orders.length})` : ''}`
                     )}
                   </Tabs.Tab>
+                </>
+              )}
+              <Tabs.Tab
+                icon="tags"
+                selected={activeTab === 'bounties'}
+                onClick={() => setTab('bounties')}
+              >
+                {!readOnly &&
+                (canExport ||
+                  programType === 'master' ||
+                  programType === 'slave')
+                  ? 'Bounties & Export'
+                  : 'Bounties'}
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="project-diagram"
+                selected={activeTab === 'network'}
+                onClick={() => setTab('network')}
+              >
+                Relay Network
+              </Tabs.Tab>
+              {!readOnly && (
+                <>
                   <Tabs.Tab
                     icon="save"
                     selected={activeTab === 'saved'}
                     onClick={() => setTab('saved')}
                   >
-                    Saved
+                    Saved carts
                   </Tabs.Tab>
                   <Tabs.Tab
                     icon="history"
@@ -555,7 +369,7 @@ export const FrontierTrade = (_props, context) => {
                       act('set_tab', { tab: 'logs' });
                     }}
                   >
-                    Logs
+                    Trade log
                   </Tabs.Tab>
                 </>
               )}

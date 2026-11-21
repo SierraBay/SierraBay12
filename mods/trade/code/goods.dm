@@ -90,10 +90,8 @@
 		return 0
 	if(ispath(pack.containertype, /obj/structure/largecrate/animal))
 		var/obj/structure/largecrate/animal/animal_crate = pack.containertype
-		var/held = initial(animal_crate.held_type)
-		if(ispath(held, /mob/living/simple_animal/hostile))
-			return 600
-		return 300
+		var/points = SStrade.get_animal_export_points(initial(animal_crate.held_type))
+		return max(300, points * initial(animal_crate.held_count) * TRADE_POINT_VALUE)
 	var/obj/item/storage/box/preview = new(null)
 	var/value = 0
 	if(pack.supply_method == /singleton/supply_method/randomized)

@@ -106,7 +106,6 @@
 		return "Delivered"
 	if(order.state == TRADE_CANCELLED)
 		return "Cancelled"
-	var/needed = order.get_floor_count()
 	var/obj/machinery/trade_beacon/receiving/beacon = SStrade.get_receiver(order, require_ready = TRUE)
 	if(beacon)
 		return "Ready for delivery (~2s)"
@@ -119,5 +118,5 @@
 		return "Waiting: Receiver cooling down ([rem]s)"
 	var/free_tiles = length(fallback.get_clear_turfs())
 	if(!free_tiles)
-		return "Blocked: Receiving pad is full (0 clear floor tiles; needs [needed])"
+		return "Waiting: Receiving pad has no clear floor tiles"
 	return "Queued for next delivery cycle"

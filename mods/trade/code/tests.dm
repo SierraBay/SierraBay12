@@ -105,6 +105,13 @@
 			if(quote.total >= price)
 				log_bad("Buy/export arbitrage on [id] ([good.name]): price [price] <= appraisal [quote.total].")
 				failures++
+			if(istype(spawned, /obj/structure/largecrate/animal))
+				var/animal_value = 0
+				for(var/mob/living/simple_animal/animal in spawned.contents)
+					animal_value += SStrade.get_animal_export_points(animal.type, animal.stat != DEAD) * TRADE_POINT_VALUE
+				if(animal_value >= price)
+					log_bad("Livestock buy/export arbitrage on [id] ([good.name]): price [price] <= payout [animal_value].")
+					failures++
 			if(istype(spawned, /obj/item/prosthetic_kit) && price <= 400)
 				log_bad("Prosthetic kit [id] priced at [price] <= unpacked organ worth 400.")
 				failures++
@@ -153,6 +160,29 @@
 		fail("[failures] trade catalog integrity error(s) found.")
 	else
 		pass("All 10 Frontier Trade stations, [active_legacy_packs] legacy packs, goods, and bounties passed integrity checks.")
+	return TRUE
+
+/datum/unit_test/frontier_trade_reserved_stock
+	name = "TRADE: Restocking respects reserved stock"
+
+/datum/unit_test/frontier_trade_reserved_stock/start_test()
+	var/datum/trade_station/station = new
+	var/datum/trade_good/good = new
+	good.station = station
+	good.reserved_stock = good.max_stock
+	station.goods = list("unit-test-reservation" = good)
+	station.update_tick()
+	station.restock(good, 0)
+	if(good.stock != 0)
+		fail("Restocking exceeded capacity when the entire stock was reserved.")
+	else
+		good.reserved_stock = 0
+		station.restock(good, 0)
+		if(good.stock == 1)
+			pass("Restocking respected the reservation and recovered an empty item when capacity was available.")
+		else
+			fail("Restocking did not recover an empty item with free capacity.")
+	qdel(station)
 	return TRUE
 
 /datum/unit_test/frontier_trade_orders_and_delivery

@@ -2,6 +2,8 @@ import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  Dropdown,
+  LabeledList,
   NoticeBox,
   NumberInput,
   Section,
@@ -50,20 +52,20 @@ const CartRow = (props: {
           {item.name}
           {item.stack_size > 0 && ` (${item.stack_size}u/stack)`}
         </Box>
-        {item.floor_delivery && (
+        {Boolean(item.floor_delivery) && (
           <Box fontSize="11px" color="label">
-            [Floor Delivery: requires {item.quantity} clear pad tile(s)]
+            Floor delivery · {item.quantity} clear{' '}
+            {item.quantity === 1 ? 'tile' : 'tiles'}
           </Box>
         )}
         {overstock && (
           <Box fontSize="11px" color="bad" bold>
-            Out of stock / stale quantity: {item.quantity} in cart, only{' '}
-            {liveStock} available!
+            Only {liveStock} available
           </Box>
         )}
         {restricted && (
           <Box fontSize="11px" color="average">
-            Department authorization required for personal purchase.
+            Department access required for personal purchase
           </Box>
         )}
       </Table.Cell>
@@ -102,14 +104,6 @@ const CartRow = (props: {
           <Stack.Item>
             <Button
               compact
-              content="+5"
-              disabled={!canAddMore}
-              onClick={() => act('add_cart', { id: item.id, amount: 5 })}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              compact
               content="Max"
               disabled={!canAddMore}
               tooltip={`Set to maximum available (${maxQty})`}
@@ -126,7 +120,7 @@ const CartRow = (props: {
               compact
               color="bad"
               icon="times"
-              content="×"
+              aria-label="Remove item from cart"
               tooltip="Remove item from cart"
               onClick={() =>
                 act('set_cart_qty', {
@@ -175,7 +169,6 @@ const CartCheckoutFooter = (props: {
   act: (action: string, payload?: object) => void;
   onPurchaseClick: () => void;
   onRequestClick: () => void;
-  onSaveClick: () => void;
 }) => {
   const {
     data,
@@ -185,7 +178,6 @@ const CartCheckoutFooter = (props: {
     act,
     onPurchaseClick,
     onRequestClick,
-    onSaveClick,
   } = props;
   const {
     cart = [],
@@ -215,7 +207,8 @@ const CartCheckoutFooter = (props: {
   const budgetShortfall = Math.max(0, cartTotal - budget);
 
   const freeTiles = beacons?.receiver_free_tiles;
-  const hasEnoughTiles = freeTiles === undefined || freeTiles >= neededTiles;
+  const canQueueDelivery = !!beacons?.receiver_present;
+  const receiverReady = !!beacons?.receiver_ready;
   const receiverEntropy = beacons?.receiver_entropy ?? 0;
   const entropyLimit = staticEntropyLimit || beacons?.entropy_limit || 30;
   const receiverLockedSeconds = beacons?.receiver_locked_seconds ?? 0;
@@ -224,65 +217,91 @@ const CartCheckoutFooter = (props: {
     (receiverLockedSeconds > 0 ? receiverLockedSeconds : 2);
 
   return (
-    <Section>
-      <NoticeBox info={!hasOverstock} danger={hasOverstock}>
-        <Stack vertical>
-          <Stack.Item>
-            Goods: {cartTotal} {currency}; Personal 20% handling: {cartFee}{' '}
-            {currency}; Personal total: {personalTotal} {currency}.
-          </Stack.Item>
-          <Stack.Item>
-            <Stack wrap align="center">
-              {accountKnown && (
-                <Stack.Item>
-                  <Box
-                    as="span"
-                    bold
-                    color={canAffordPersonal ? 'good' : 'bad'}
-                  >
-                    Personal Balance: {account?.balance ?? 0} {currency}{' '}
-                    {canAffordPersonal
-                      ? '(Sufficient funds)'
-                      : `(Short by ${personalShortfall} ${currency})`}
-                  </Box>
-                </Stack.Item>
-              )}
-              {manager && (
-                <Stack.Item>
-                  <Box as="span" bold color={canAffordBudget ? 'good' : 'bad'}>
-                    Supply Budget: {budget} {currency}{' '}
-                    {canAffordBudget
-                      ? '(Sufficient funds)'
-                      : `(Short by ${budgetShortfall} ${currency})`}
-                  </Box>
-                </Stack.Item>
-              )}
-              <Stack.Item>
-                <Box
-                  as="span"
-                  color={
-                    !beacons?.receiver_ready || !hasEnoughTiles
-                      ? 'bad'
-                      : receiverLockedSeconds > 0
-                        ? 'average'
-                        : 'good'
-                  }
-                >
-                  Receiver ({beacons?.receiver_label || 'Automatic'}):{' '}
-                  {beacons?.receiver_ready ? 'Ready' : 'Offline / Blocked'}
-                  {freeTiles !== undefined &&
-                    ` · Pad Tiles: ${neededTiles} needed / ${freeTiles} free`}
-                  {` · Entropy: ${receiverEntropy}/${entropyLimit}`}
-                  {receiverLockedSeconds > 0
-                    ? ` · Instability: ${receiverLockedSeconds}s remaining`
-                    : ` · Est. Delivery: ~${estDeliverySeconds}s`}
-                </Box>
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
+    <Section title="Checkout">
+      <LabeledList>
+        <LabeledList.Item label="Receiving beacon">
+          <Stack align="center" wrap>
+            <Stack.Item>
+              <Dropdown
+                width="21em"
+                options={(beacons?.receivers || []).map((beacon) => ({
+                  value: beacon.id,
+                  displayText:
+                    beacon.label + (beacon.ready ? '' : ' (Not ready)'),
+                }))}
+                selected={beacons?.receiver_id}
+                displayText={beacons?.receiver_label || 'Automatic'}
+                onSelected={(id) => act('select_receiver', { id })}
+              />
+            </Stack.Item>
+            <Stack.Item color={receiverReady ? 'label' : 'average'}>
+              {receiverReady
+                ? 'Ready'
+                : canQueueDelivery
+                  ? 'Accepting queued orders'
+                  : 'Unavailable'}
+              {canQueueDelivery &&
+                freeTiles !== undefined &&
+                ' · ' +
+                  freeTiles +
+                  ' clear tiles' +
+                  (neededTiles > 0 ? ', ' + neededTiles + ' needed' : '')}
+              {canQueueDelivery &&
+                ' · Entropy ' + receiverEntropy + '/' + entropyLimit}
+              {receiverLockedSeconds > 0
+                ? ' · Recharging (' + receiverLockedSeconds + 's)'
+                : receiverReady && ' · ETA ~' + estDeliverySeconds + 's'}
+            </Stack.Item>
+          </Stack>
+        </LabeledList.Item>
+        <LabeledList.Item label="Goods subtotal">
+          {cartTotal} {currency}
+          {Boolean(manager) && (
+            <Box as="span" ml={1} color={canAffordBudget ? 'label' : 'bad'}>
+              Supply budget: {budget} {currency}
+              {!canAffordBudget &&
+                ' (Short by ' + budgetShortfall + ' ' + currency + ')'}
+            </Box>
+          )}
+        </LabeledList.Item>
+        <LabeledList.Item label="Personal total">
+          {personalTotal} {currency} ({cartFee} {currency} handling)
+          {accountKnown && (
+            <Box as="span" ml={1} color={canAffordPersonal ? 'label' : 'bad'}>
+              Balance: {account?.balance ?? 0} {currency}
+              {!canAffordPersonal &&
+                ' (Short by ' + personalShortfall + ' ' + currency + ')'}
+            </Box>
+          )}
+        </LabeledList.Item>
+      </LabeledList>
+      {(hasRestricted || hasOverstock) && (
+        <Stack mt={0.75} wrap align="center">
+          {hasOverstock && (
+            <Stack.Item>
+              <Button
+                icon="wrench"
+                color="average"
+                content="Fix Stock"
+                tooltip="Reduce cart quantities to match available stock"
+                onClick={() => act('fix_cart_stock')}
+              />
+            </Stack.Item>
+          )}
+          {hasRestricted && (
+            <Stack.Item>
+              <Button
+                icon="filter"
+                color="average"
+                content="Remove Restricted"
+                tooltip="Remove items ineligible for personal purchase"
+                onClick={() => act('remove_restricted_cart')}
+              />
+            </Stack.Item>
+          )}
         </Stack>
-      </NoticeBox>
-      <Stack wrap align="center">
+      )}
+      <Stack mt={0.75} wrap align="center">
         <Stack.Item>
           <Button
             icon="credit-card"
@@ -290,38 +309,23 @@ const CartCheckoutFooter = (props: {
             disabled={
               cart.length === 0 ||
               !account?.card_inserted ||
-              !beacons?.receiver_ready ||
+              !canQueueDelivery ||
               hasRestricted ||
               hasOverstock ||
-              !hasEnoughTiles ||
               (accountKnown && !canAffordPersonal)
             }
             content="Pay with Inserted ID"
             onClick={onPurchaseClick}
           />
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            icon="file-alt"
-            disabled={cart.length === 0 || requestWait > 0 || hasOverstock}
-            content={
-              requestWait > 0
-                ? `Cooldown: ${requestWait}s`
-                : 'Request Department Funding'
-            }
-            onClick={onRequestClick}
-          />
-        </Stack.Item>
-        {manager && (
+        {Boolean(manager) && (
           <Stack.Item>
             <Button
               icon="check"
-              color="good"
               disabled={
                 cart.length === 0 ||
-                !beacons?.receiver_ready ||
+                !canQueueDelivery ||
                 hasOverstock ||
-                !hasEnoughTiles ||
                 !canAffordBudget
               }
               content="Pay from Supply Budget"
@@ -329,44 +333,16 @@ const CartCheckoutFooter = (props: {
             />
           </Stack.Item>
         )}
-        {hasOverstock && (
-          <Stack.Item>
-            <Button
-              icon="wrench"
-              color="average"
-              content="Fix Stock"
-              tooltip="Clamp all cart quantities to current available stock"
-              onClick={() => act('fix_cart_stock')}
-            />
-          </Stack.Item>
-        )}
-        {hasRestricted && (
-          <Stack.Item>
-            <Button
-              icon="filter"
-              color="average"
-              content="Remove Restricted"
-              tooltip="Remove items that require department authorization so you can pay personally"
-              onClick={() => act('remove_restricted_cart')}
-            />
-          </Stack.Item>
-        )}
-        <Stack.Item grow />
         <Stack.Item>
           <Button
-            icon="save"
-            disabled={cart.length === 0}
-            content="Save Cart"
-            onClick={onSaveClick}
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            icon="trash"
-            color="bad"
-            disabled={cart.length === 0}
-            content="Clear"
-            onClick={() => act('clear_cart')}
+            icon="file-alt"
+            disabled={cart.length === 0 || requestWait > 0 || hasOverstock}
+            content={
+              requestWait > 0
+                ? 'Request again in ' + requestWait + 's'
+                : 'Request Department Funding'
+            }
+            onClick={onRequestClick}
           />
         </Stack.Item>
       </Stack>
@@ -443,92 +419,101 @@ export const CartTab = (props: CartTabProps, context) => {
 
   return (
     <Stack vertical fill>
-      {cart.length > 0 && (
-        <Stack.Item>
-          <Section>
-            <Stack wrap align="center">
-              <Stack.Item color="label">Vendors:</Stack.Item>
-              <Stack.Item>
-                <Button
-                  compact
-                  selected={activeVendor === 'All'}
-                  content="All"
-                  onClick={() => {
-                    setVendorFilter('All');
-                    setCatFilter('All');
-                  }}
-                />
-              </Stack.Item>
-              {vendors.map((v) => (
-                <Stack.Item key={v.id}>
-                  <Button
-                    compact
-                    selected={activeVendor === v.id}
-                    content={v.name}
-                    onClick={() => {
-                      setVendorFilter(v.id);
-                      setCatFilter('All');
-                    }}
-                  />
-                </Stack.Item>
-              ))}
-            </Stack>
-            <Stack mt={0.5} wrap align="center">
-              <Stack.Item color="label">Categories:</Stack.Item>
-              {categories.map((cat) => (
-                <Stack.Item key={cat}>
-                  <Button
-                    compact
-                    selected={activeCat === cat}
-                    content={cat}
-                    onClick={() => setCatFilter(cat)}
-                  />
-                </Stack.Item>
-              ))}
-              {(activeVendor !== 'All' || activeCat !== 'All') && (
-                <Stack.Item>
-                  <Box as="span" ml={1} fontSize="11px" color="average">
-                    Showing {visible.length} of {cart.length} items — checkout
-                    applies to entire cart.
-                  </Box>
-                </Stack.Item>
-              )}
-            </Stack>
-          </Section>
-        </Stack.Item>
-      )}
       <Stack.Item grow>
         <Section
           fill
           scrollable
           title={`Shopping Cart (${cartCount} / ${orderLimit} units)`}
+          buttons={
+            cart.length > 0 && (
+              <>
+                <Button icon="save" content="Save Cart" onClick={onSaveClick} />
+                <Button.Confirm
+                  icon="trash"
+                  content="Clear cart"
+                  onClick={() => act('clear_cart')}
+                />
+              </>
+            )
+          }
         >
           {visible.length === 0 ? (
             <NoticeBox>
               Your cart is empty. Add items from the Catalog tab.
             </NoticeBox>
           ) : (
-            <Table>
-              <Table.Row header>
-                <Table.Cell>Vendor / Category</Table.Cell>
-                <Table.Cell>Goods</Table.Cell>
-                <Table.Cell textAlign="right">Quantity</Table.Cell>
-                <Table.Cell textAlign="right">Unit</Table.Cell>
-                <Table.Cell textAlign="right">Subtotal</Table.Cell>
-              </Table.Row>
-              {visible.map((item) => (
-                <CartRow
-                  key={item.id}
-                  item={item}
-                  liveStock={getLiveStock(item)}
-                  overstock={isItemOverstock(item)}
-                  restricted={isItemRestricted(item)}
-                  remainingOrderLimit={remainingOrderLimit}
-                  currency={currency}
-                  act={act}
-                />
-              ))}
-            </Table>
+            <>
+              {(vendors.length > 1 || categories.length > 2) && (
+                <Stack wrap align="center" mb={0.75}>
+                  {vendors.length > 1 && (
+                    <Stack.Item>
+                      <Dropdown
+                        width="16em"
+                        options={[
+                          { value: 'All', displayText: 'All relays' },
+                          ...vendors.map((vendor) => ({
+                            value: vendor.id,
+                            displayText: vendor.name,
+                          })),
+                        ]}
+                        selected={activeVendor}
+                        displayText={
+                          vendors.find((vendor) => vendor.id === activeVendor)
+                            ?.name || 'All relays'
+                        }
+                        onSelected={(id) => {
+                          setVendorFilter(id);
+                          setCatFilter('All');
+                        }}
+                      />
+                    </Stack.Item>
+                  )}
+                  {categories.length > 2 && (
+                    <Stack.Item>
+                      <Dropdown
+                        width="14em"
+                        options={categories.map((cat) => ({
+                          value: cat,
+                          displayText: cat === 'All' ? 'All categories' : cat,
+                        }))}
+                        selected={activeCat}
+                        displayText={
+                          activeCat === 'All' ? 'All categories' : activeCat
+                        }
+                        onSelected={setCatFilter}
+                      />
+                    </Stack.Item>
+                  )}
+                  {(activeVendor !== 'All' || activeCat !== 'All') && (
+                    <Stack.Item color="label">
+                      Showing {visible.length} of {cart.length} lines. Checkout
+                      covers the entire cart.
+                    </Stack.Item>
+                  )}
+                </Stack>
+              )}
+              <Table>
+                <Table.Row header>
+                  <Table.Cell>Vendor / Category</Table.Cell>
+                  <Table.Cell>Goods</Table.Cell>
+                  <Table.Cell textAlign="right">Quantity</Table.Cell>
+                  <Table.Cell textAlign="right">Unit</Table.Cell>
+                  <Table.Cell textAlign="right">Subtotal</Table.Cell>
+                </Table.Row>
+                {visible.map((item) => (
+                  <CartRow
+                    key={item.id}
+                    item={item}
+                    liveStock={getLiveStock(item)}
+                    overstock={isItemOverstock(item)}
+                    restricted={isItemRestricted(item)}
+                    remainingOrderLimit={remainingOrderLimit}
+                    currency={currency}
+                    act={act}
+                  />
+                ))}
+              </Table>
+            </>
           )}
         </Section>
       </Stack.Item>
@@ -541,7 +526,6 @@ export const CartTab = (props: CartTabProps, context) => {
           act={act}
           onPurchaseClick={onPurchaseClick}
           onRequestClick={onRequestClick}
-          onSaveClick={onSaveClick}
         />
       </Stack.Item>
     </Stack>

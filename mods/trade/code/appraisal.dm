@@ -134,15 +134,20 @@
 		var/mob/living/simple_animal/animal = cage.contained
 		if(!animal || is_protected(animal))
 			return 0
-		var/points = 10 * (istype(animal, /mob/living/simple_animal/hostile) ? 2 : 1) * (animal.stat != DEAD ? 2 : 1)
-		if(istype(animal, /mob/living/simple_animal/hostile/retaliate/beast))
-			points *= 2
-		return record_reward_value(quote, "animal", points)
+		return record_reward_value(quote, "animal", get_animal_export_points(animal.type, animal.stat != DEAD))
 	if(istype(item, /obj/machinery/anomaly_container))
 		var/obj/machinery/anomaly_container/cage = item
 		var/points = get_anomaly_value(cage)
 		return record_reward_value(quote, "anomaly", points)
 	return null
+
+/datum/controller/subsystem/trade/proc/get_animal_export_points(animal_type, alive = TRUE)
+	if(!ispath(animal_type, /mob/living/simple_animal) || ispath(animal_type, /mob/living/simple_animal/hostile/human))
+		return 0
+	var/points = 10 * (ispath(animal_type, /mob/living/simple_animal/hostile) ? 2 : 1) * (alive ? 2 : 1)
+	if(ispath(animal_type, /mob/living/simple_animal/hostile/retaliate/beast))
+		points *= 2
+	return points
 
 /datum/controller/subsystem/trade/proc/record_reward_value(datum/trade_appraisal/quote, source, points)
 	points = max(0, points)

@@ -187,7 +187,7 @@
 		var/cost = max(1, round(good.get_price() * 0.35))
 		var/need = max(0, good.min_stock - good.stock - good.reserved_stock)
 		var/add = min(need, floor(wealth / cost))
-		if(good.stock == 0 && good.min_stock >= 1 && add <= 0)
+		if(good.stock == 0 && good.min_stock >= 1 && add <= 0 && good.reserved_stock < good.max_stock)
 			add = 1
 		if(add > 0)
 			good.stock += add
@@ -212,8 +212,9 @@
 
 /datum/trade_station/proc/restock(datum/trade_good/good, budget)
 	var/cost = max(1, round(good.get_price() * 0.35))
-	var/count = min(good.max_stock - good.stock - good.reserved_stock, floor(min(wealth, budget) / cost))
-	if(count <= 0 && good.stock == 0 && good.min_stock >= 1)
+	var/room = good.max_stock - good.stock - good.reserved_stock
+	var/count = min(room, floor(min(wealth, budget) / cost))
+	if(count <= 0 && good.stock == 0 && good.min_stock >= 1 && room > 0)
 		count = 1
 	if(count <= 0)
 		return

@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  Dropdown,
   Input,
   LabeledList,
   NoticeBox,
@@ -36,7 +37,7 @@ export const LogsTab = (_props, context) => {
     currency,
   } = data;
 
-  const hasPrinter = hasPrinterProp !== false;
+  const hasPrinter = Boolean(hasPrinterProp ?? true);
 
   const [kindFilter, setKindFilter] = useLocalState(
     context,
@@ -93,26 +94,28 @@ export const LogsTab = (_props, context) => {
       <Stack.Item>
         <Section>
           <Stack align="center" wrap>
-            {LOG_KINDS.map((kind) => (
-              <Stack.Item key={kind}>
-                <Button
-                  compact
-                  selected={kindFilter === kind}
-                  content={kind}
-                  onClick={() => {
-                    setKindFilter(kind);
-                    setLocalPage(1);
-                  }}
-                />
-              </Stack.Item>
-            ))}
             <Stack.Item grow>
               <Input
                 fluid
-                placeholder="Filter invoices..."
+                placeholder="Search invoices"
                 value={search}
                 onInput={(_, value) => {
                   setSearch(value);
+                  setLocalPage(1);
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Dropdown
+                width="12em"
+                options={LOG_KINDS.map((kind) => ({
+                  value: kind,
+                  displayText: kind === 'All' ? 'All actions' : kind,
+                }))}
+                selected={kindFilter}
+                displayText={kindFilter === 'All' ? 'All actions' : kindFilter}
+                onSelected={(kind) => {
+                  setKindFilter(kind);
                   setLocalPage(1);
                 }}
               />
@@ -222,7 +225,7 @@ export const LogsTab = (_props, context) => {
                             }
                           />
                         </Stack.Item>
-                        {manager && (
+                        {Boolean(manager) && (
                           <Stack.Item>
                             <Button
                               icon="print"
