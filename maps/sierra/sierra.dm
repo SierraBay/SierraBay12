@@ -245,6 +245,7 @@
 	#include "../../packs/deepmaint/_pack.dm"
 
 
+	#define SIERRA_MAP // [SIERRA-ADD] TRADE
 	#define using_map_DATUM /datum/map/sierra
 
 #elif !defined(MAP_OVERRIDE)

@@ -1,8 +1,10 @@
-/atom/proc/Value(base)
+/atom/proc/Value(base, include_contents = TRUE) // [SIERRA-EDIT] TRADE
 	return base
 
-/obj/Value()
+/obj/Value(base, include_contents = TRUE) // [SIERRA-EDIT] TRADE
 	. = ..()
+	if(!include_contents) // [SIERRA-ADD] TRADE
+		return // [/SIERRA-ADD]
 	for(var/a in contents)
 		. += get_value(a)
 
