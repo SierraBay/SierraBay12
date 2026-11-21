@@ -495,6 +495,7 @@ SIERRA_ESCAPE_POD(11)
 	skill_needed = SKILL_UNSKILLED
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling/sierra
 	warmup_time = 5
+	range = 1
 
 /obj/shuttle_landmark/sierra/hangar/phaethon
 	name = "Phaethon Hangar"

@@ -336,9 +336,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/map_template/colony2/ship)
 "eY" = (
-/obj/floor_decal/corner/paleblue{
-	dir = 9
-	},
 /obj/machinery/alarm/server{
 	dir = 4;
 	locked = 0;
@@ -349,7 +346,8 @@
 /obj/item/device/encryptionkey/map_preset/playablecolony2,
 /obj/item/device/encryptionkey/map_preset/playablecolony2,
 /obj/item/device/encryptionkey/map_preset/playablecolony2,
-/obj/structure/table/rack,
+/obj/machinery/r_n_d/server/colony,
+/obj/floor_decal/corner/paleblue/mono,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/tcomms)
 "fp" = (
@@ -804,7 +802,8 @@
 	dir = 1
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/computer/rdconsole/core/colony{
+/obj/item/paper/manifest/rnd_invoice/colony,
+/obj/machinery/computer/rdconsole/colony{
 	req_access = list()
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -1382,6 +1381,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
 	},
+/obj/machinery/meter,
 /obj/catwalk_plated/dark,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
@@ -1544,9 +1544,8 @@
 	req_access = newlist()
 	},
 /obj/floor_decal/corner/paleblue/mono,
-/obj/machinery/atmospherics/valve/open,
-/obj/structure/table/steel_reinforced,
-/obj/item/paper/manifest/rnd_invoice/colony,
+/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor/tiled/dark/monotile,
 /area/map_template/colony2/engineering)
 "CJ" = (
@@ -2931,10 +2930,8 @@
 /turf/simulated/floor/tiled/dark,
 /area/map_template/colony2/Hallway)
 "Yv" = (
-/obj/machinery/atmospherics/pipe/simple/visible/red,
+/obj/machinery/atmospherics/valve/open,
 /obj/catwalk_plated/dark,
-/obj/machinery/meter,
-/obj/machinery/fabricator/rnd/robotics,
 /turf/simulated/floor/plating,
 /area/map_template/colony2/engineering)
 "YI" = (
