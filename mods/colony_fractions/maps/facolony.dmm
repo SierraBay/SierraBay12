@@ -1707,7 +1707,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/black,
 /obj/machinery/atmospherics/binary/pump/on,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -5591,6 +5590,12 @@
 /obj/paint_stripe/gunmetal,
 /turf/simulated/wall/titanium,
 /area/map_template/facolony/cargo)
+"wY" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/atmospherics)
 "xl" = (
 /obj/machinery/reagentgrinder/juicer{
 	pixel_y = 5
@@ -7484,12 +7489,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
-"Gq" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/obj/machinery/atmospherics/pipe/simple/hidden/yellow,
-/turf/simulated/wall/r_titanium,
-/area/map_template/facolony/atmospherics)
 "Gr" = (
 /obj/floor_decal/industrial/warning/dust{
 	dir = 4
@@ -8540,14 +8539,6 @@
 	},
 /turf/simulated/floor/reinforced/nitrogen,
 /area/map_template/facolony/atmospherics2)
-"KT" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/obj/machinery/atmospherics/pipe/simple/hidden/yellow{
-	dir = 6
-	},
-/turf/simulated/wall/r_titanium,
-/area/map_template/facolony/atmospherics)
 "KV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8609,6 +8600,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
+"Ll" = (
+/obj/paint/brown,
+/obj/paint_stripe/gunmetal,
+/obj/machinery/atmospherics/pipe/simple/hidden/yellow{
+	dir = 6
+	},
+/turf/simulated/wall/r_titanium,
+/area/map_template/facolony/atmospherics)
 "Lo" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped,
@@ -12481,12 +12480,12 @@ Wd
 Wd
 Qn
 Qn
-KT
+Ll
 UN
 UN
 UN
-Gq
-Gq
+wY
+wY
 wl
 Ep
 Ep
