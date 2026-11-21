@@ -6,9 +6,9 @@ GLOBAL_LIST_AS(psi_level2cost, list(
 ))
 
 GLOBAL_LIST_AS(psi_faculty2color, list(
-	"Kinesis"         = COLOR_YELLOW,
-	"Patia"           = COLOR_SURGERY_BLUE,
-	"Praxia"          = MANIFEST_COLOR_SERVICE
+	"Кинезис"         = COLOR_YELLOW,
+	"Патия"           = COLOR_SURGERY_BLUE,
+	"Праксия"          = MANIFEST_COLOR_SERVICE
 ))
 
 GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
@@ -210,7 +210,7 @@ GLOBAL_LIST_AS(psi_level2power_slots, list(0, 0, 5, 4))
 		var/slots = pref.get_psi_power_slots(faculty)
 		var/list/chosen = pref.get_chosen_psi_powers(faculty)
 		. += "<tr class='candystripe'><td colspan='[LAZYLEN(GLOB.psi_level2cost) + 1]' style='text-align: left'>"
-		. += "<small>Abilities: [length(chosen)]/[slots]</small><br>"
+		. += "<small>Доступно: [length(chosen)]/[slots]</small><br>"
 
 		var/index = GLOB.psi_faculty_names.Find(faculty)
 		for(var/singleton/psionic_power/power in get_selectable_psi_powers(GLOB.psi_faculty_ids[index]))

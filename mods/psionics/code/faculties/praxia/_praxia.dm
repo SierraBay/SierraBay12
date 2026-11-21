@@ -1,6 +1,6 @@
 /singleton/psionic_faculty/praxia
 	id = PSI_PRAXIA
-	name = "Патия"
+	name = "Праксия"
 	associated_intent = I_DISARM
 	ui_icon_state = "redaction"
 	armour_types = list(DAMAGE_PSIONIC)

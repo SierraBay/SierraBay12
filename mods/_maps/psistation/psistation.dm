@@ -187,7 +187,7 @@
 	if(D["psi"])
 		var/list/ranks = D["psi_ranks"]
 		for(var/faculty in ranks)
-			L += "<tr><td class='k'>[html_encode(capitalize("[faculty]"))]</td><td>[ranks[faculty]]</td></tr>"
+			L += "<tr><td class='k'>[html_encode(copytext(md5(faculty), 1, 5))]</td><td>[ranks[faculty]]</td></tr>"
 		if(!length(ranks))
 			L += "<tr><td colspan='2' class='warn'>Несформированный потенциал</td></tr>"
 		if(D["psi_stamina"])

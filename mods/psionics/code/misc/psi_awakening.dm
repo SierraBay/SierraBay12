@@ -149,20 +149,20 @@
 	if(job_rank)
 		html += "<div style='margin-bottom:8px'>Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br>"
 		html += "<small>Ранг и количество способностей определяются подготовкой, которую даёт должность.</small></div>"
-		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr>"
+		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr></center>"
 		if(length(chosen))
-			html += "<a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br>"
+			html += "<center><a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br></center>"
 		else
-			html += "<span style='color:#777'>Выбери хотя бы одну способность</span><br>"
+			html += "<center><span style='color:#777'>Выбери хотя бы одну способность</span><br></center>"
 	else
 		html += "<div style='margin-bottom:8px'>Источник: [html_encode(source)].<br>"
 		html += "Очков: <b>[left]</b> из [points]. Доступен ранг способностей до: <b>[rank_name]</b>.<br></div>"
-		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr>"
+		html += "<center><a href='?src=\ref[src];random=1' style='color:#aaa'>Довериться случаю</a><hr></center>"
 		if(length(chosen))
-			html += "<a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br>"
+			html += "<center><a href='?src=\ref[src];confirm=1' style='color:#fd8; font-size:14px'><b>Принять силу</b></a><br></center>"
 		else
-			html += "<span style='color:#777'>Выбери хотя бы одну способность</span><br>"
-	html += "</center><table width='100%' cellspacing='0' cellpadding='3'>"
+			html += "<center><span style='color:#777'>Выбери хотя бы одну способность</span><br></center>"
+	html += "<table width='100%' cellspacing='0' cellpadding='3'>"
 	html += "<tr style='background:#2b2b3a'><th align='left'>Способность</th><th>Ранг</th><th>Цена</th><th></th></tr>"
 
 	for(var/singleton/psionic_power/power in get_selectable_psi_powers(faculty))

@@ -1,7 +1,7 @@
 // Это вот это всё, чтобы не наебашить старые сейвы персонажей
 
 GLOBAL_LIST_AS(psi_faculty_ids, list(PSI_KINESIS, PSI_PATIA, PSI_PRAXIA))
-GLOBAL_LIST_AS(psi_faculty_names, list("Kinesis", "Patia", "Praxia")) // за что бог меня покарал за чувствительность к регистру
+GLOBAL_LIST_AS(psi_faculty_names, list("Кинезис", "Патия", "Праксия")) // за что бог меня покарал за чувствительность к регистру
 
 GLOBAL_LIST_AS(psi_legacy_faculty_ids, list(
 	PSI_COERCION      = PSI_PATIA,

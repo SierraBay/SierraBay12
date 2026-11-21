@@ -7,8 +7,8 @@
 	var/psi_custom_desc = ""
 
 /datum/preferences/proc/sanitize_psi_disorders()
-	psi_custom_name = copytext(sanitize_html(psi_custom_name || ""), 1, PSI_CUSTOM_NAME_MAX + 1)
-	psi_custom_desc = copytext(sanitize_html(psi_custom_desc || ""), 1, PSI_CUSTOM_DESC_MAX + 1)
+	psi_custom_name = copytext(sanitize(psi_custom_name || ""), 1, PSI_CUSTOM_NAME_MAX + 1)
+	psi_custom_desc = copytext(sanitize(psi_custom_desc || ""), 1, PSI_CUSTOM_DESC_MAX + 1)
 
 	var/list/fixed = list()
 	var/custom_used = FALSE
@@ -55,8 +55,8 @@
 		pref.sanitize_psi_disorders()
 
 	. += "<style>"
-	. += ".Current{background: #2f943c}"
-	. += ".Selectable{background: #40628a}"
+	. += ".Current{background-color: #0d1017}"
+	. += ".Selectable{background-color: #40628a}"
 	. += ".disorder { display: inline-block; margin: 2px; padding: 2px 8px; }"
 	. += "</style>"
 
@@ -81,6 +81,7 @@
 			var/singleton/psi_disorder/selected = get_psi_disorder(current)
 			if(selected)
 				. += "<br><i>[html_encode(selected.description)]</i>"
+		. += "<hr>"
 
 	. += "<hr><b>Своя:</b><br>"
 	. += "Название: <a href='?src=\ref[src];edit_custom_name=1'>[length(pref.psi_custom_name) ? html_encode(pref.psi_custom_name) : "задать"]</a><br>"
@@ -118,14 +119,14 @@
 	else if(href_list["edit_custom_name"])
 		var/new_name = input(user, "Название расстройства (до [PSI_CUSTOM_NAME_MAX] символов).", "Своя", pref.psi_custom_name) as null|text
 		if(!isnull(new_name))
-			pref.psi_custom_name = copytext(sanitize_html(new_name), 1, PSI_CUSTOM_NAME_MAX + 1)
+			pref.psi_custom_name = copytext(sanitize(new_name), 1, PSI_CUSTOM_NAME_MAX + 1)
 			pref.sanitize_psi_disorders()
 		return TOPIC_REFRESH
 
 	else if(href_list["edit_custom_desc"])
-		var/new_desc = input(user, "Описание расстройства (до [PSI_CUSTOM_DESC_MAX] символов). Игрок будет получать его в виде напоминаний.", "Своя", pref.psi_custom_desc) as null|message
+		var/new_desc = input(user, "Описание расстройства (до [PSI_CUSTOM_DESC_MAX] символов).", "Своя", pref.psi_custom_desc) as null|message
 		if(!isnull(new_desc))
-			pref.psi_custom_desc = copytext(sanitize_html(new_desc), 1, PSI_CUSTOM_DESC_MAX + 1)
+			pref.psi_custom_desc = copytext(sanitize(new_desc), 1, PSI_CUSTOM_DESC_MAX + 1)
 		return TOPIC_REFRESH
 
 	return ..()
