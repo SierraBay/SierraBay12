@@ -49,8 +49,8 @@
 	else
 		to_chat(victim, SPAN_DANGER("Неописуемый, пронзительный визг исходит из [icon2html(source, victim)] \the [source]. Тебя охватывают судороги!"))
 		victim.seizure()
-		var/new_latencies = rand(2,4)
-		var/list/faculties = list(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS)
+		var/new_latencies = rand(2, length(GLOB.psi_faculty_ids))
+		var/list/faculties = GLOB.psi_faculty_ids.Copy()
 		for(var/i = 1 to new_latencies)
 			to_chat(victim, SPAN_DANGER(FONT_LARGE(pick(psi_operancy_messages))))
 			victim.adjustBrainLoss(rand(10,20))

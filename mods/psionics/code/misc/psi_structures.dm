@@ -235,10 +235,7 @@
 				charged = FALSE
 				update_icon()
 				to_chat(H, SPAN_WARNING("You feel like shards of something beyond your reach try to get inside your head!"))
-				if(H.species.name in HUMAN_SPECIES)
-					H.set_psi_rank(pick(PSI_COERCION, PSI_REDACTION, PSI_ENERGISTICS, PSI_PSYCHOKINESIS, PSI_CONSCIOUSNESS, PSI_MANIFESTATION, PSI_METAKINESIS), 1, defer_update = TRUE)
-				if(H.species.name == SPECIES_TAJARA)
-					H.set_psi_rank(pick(PSI_COERCION, PSI_SHAYMANISM, PSI_METAKINESIS), 1, defer_update = TRUE)
+				H.set_psi_rank(pick(GLOB.psi_faculty_ids), 1, defer_update = TRUE)
 			else
 				to_chat(H, SPAN_DANGER("Suddenly, something meterialize around [src]!"))
 				charged = FALSE

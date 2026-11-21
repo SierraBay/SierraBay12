@@ -10,7 +10,7 @@
 	. = ..()
 
 /obj/item/psychic_power/telekinesis/Process()
-	if(!focus || !isturf(focus.loc) || get_dist(get_turf(focus), get_turf(owner)) > owner.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
+	if(!focus || !isturf(focus.loc) || get_dist(get_turf(focus), get_turf(owner)) > owner.psi.get_rank(PSI_KINESIS) * 3)
 		owner.drop_from_inventory(src)
 		return
 	. = ..()
@@ -30,7 +30,7 @@
 	else
 		return FALSE
 
-	if(check_weight && owner.psi.get_rank(PSI_PSYCHOKINESIS) < PSI_RANK_OPERANT)
+	if(check_weight && owner.psi.get_rank(PSI_KINESIS) < PSI_RANK_OPERANT)
 		focus = _focus
 		. = attack_self(owner)
 		if(!.)
@@ -48,7 +48,7 @@
 /obj/item/psychic_power/telekinesis/attack_self(mob/living/user)
 	if(world.time < cooldown)
 		return FALSE
-	cooldown = (5 SECONDS) / user.psi.get_rank(PSI_PSYCHOKINESIS) + world.time
+	cooldown = (5 SECONDS) / user.psi.get_rank(PSI_KINESIS) + world.time
 	user.visible_message(SPAN_NOTICE("\The [user] показывает странный жест."))
 	sparkle()
 	if (focus.do_simple_ranged_interaction(user))
@@ -74,7 +74,7 @@
 		return
 
 	var/distance = get_dist(get_turf(user), get_turf(focus ? focus : target))
-	if(distance > user.psi.get_rank(PSI_PSYCHOKINESIS) * 3)
+	if(distance > user.psi.get_rank(PSI_KINESIS) * 3)
 		to_chat(user, SPAN_WARNING("Ты не дотягиваешься."))
 		return FALSE
 
@@ -90,7 +90,7 @@
 				I.afterattack(target,user,1) // for splashing with beakers
 		else
 			if(!focus.anchored)
-				var/user_rank = owner.psi.get_rank(PSI_PSYCHOKINESIS)
+				var/user_rank = owner.psi.get_rank(PSI_KINESIS)
 				if(target == user && !ishuman(focus))
 					user.throw_mode_on()
 					focus.throw_at(target, user_rank*2, 1, owner)

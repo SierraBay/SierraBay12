@@ -26,7 +26,7 @@
 
 	max_boosted_faculties = 1
 	boosted_rank = PSI_RANK_MASTER
-	unboosted_rank = PSI_RANK_APPRENTICE
+	unboosted_rank = PSI_RANK_BLUNT
 	boosted_psipower = 125
 
 /obj/item/clothing/head/helmet/space/psi_amp/Initialize()
@@ -147,7 +147,7 @@
 
 	sleep(80)
 
-	for(var/faculty in list(PSI_COERCION, PSI_CONSCIOUSNESS, PSI_PSYCHOKINESIS, PSI_MANIFESTATION, PSI_METAKINESIS, PSI_ENERGISTICS, PSI_REDACTION))
+	for(var/faculty in GLOB.psi_faculty_ids)
 		if(faculty in boosted_faculties)
 			H.set_psi_rank(faculty, boosted_rank, take_larger = TRUE, temporary = TRUE)
 		else

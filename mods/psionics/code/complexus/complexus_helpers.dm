@@ -15,9 +15,10 @@
 	cancel()
 
 /datum/psi_complexus/proc/get_rank(faculty)
-	return LAZYACCESS(ranks, faculty)
+	return LAZYACCESS(ranks, psi_normalize_faculty(faculty))
 
 /datum/psi_complexus/proc/set_rank(faculty, rank, defer_update, temporary)
+	faculty = psi_normalize_faculty(faculty)
 	if(get_rank(faculty) != rank)
 		LAZYSET(ranks, faculty, rank)
 		LAZYSET(ranks_stat, faculty, TRUE)
@@ -135,9 +136,18 @@
 				return ranks[faculties]
 
 /datum/psi_complexus/proc/deflect_psionic_attack(mob/living/carbon/human/attacker)
+	if(attacker && owner && is_mirroring() && !suppressed)
+		mirror_until = 0
+		to_chat(attacker, SPAN_DANGER("Твоя атака ударяется о зеркало в разуме [owner] и разбивается об тебя!"))
+		to_chat(owner, SPAN_NOTICE("Зеркало в твоём разуме разбивается, вернув энергию отправителю."))
+		attacker.apply_damage(25, DAMAGE_PAIN, BP_HEAD)
+		attacker.psi?.stunned(20)
+		return TRUE
 	var/blocked = check_armour(DAMAGE_PSIONIC) * 20
 	if(istype(attacker))
 		blocked = 20 * (check_armour(DAMAGE_PSIONIC) - attacker.psi?.check_armour(DAMAGE_PSIONIC))
+	if(is_warded() && !suppressed)
+		blocked += 40
 	if(prob(blocked))
 		if(attacker)
 			to_chat(attacker, SPAN_WARNING("Твое ментальное воздействие отражено с помощью защиты [src]!"))

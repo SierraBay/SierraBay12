@@ -177,6 +177,7 @@
 	#include "../away/meatstation/meatstation.dm"
 	#include "../away/miningstation/miningstation.dm"
 	#include "../away/mininghome/mininghome.dm"
+	#include "../../mods/_maps/psistation/psistation.dm"
 	#include "../../mods/_maps/scavver/scavver_gantry.dm"
 	#include "../away/abandoned_hotel/abandoned_hotel.dm"
 	#include "../away/spy_station/spy_station.dm"

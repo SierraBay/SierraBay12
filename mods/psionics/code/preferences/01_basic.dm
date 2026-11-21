@@ -20,12 +20,12 @@
 /datum/category_item/player_setup_item/psionics/basic/content(mob/user)
 	. = list()
 	if(!whitelist_lookup(SPECIES_PSI, user.ckey))
-		. += "<b>You are not permitted to be Psionic</b><br>"
+		. += "<b>You are not permitted to be Psionic</b><br>Apply for a whitelist in a Discord server<br>"
 	else
-		. += "Power: <a href='?src=\ref[src];select_psi_threat_level=1'><b>[pref.psi_threat_level]</b></a><br>"
+		. += "Уровень: <a href='?src=\ref[src];select_psi_threat_level=1'><b>[pref.psi_threat_level]</b></a><br>"
 
 		if(pref.psi_threat_level)
-			. += "Implant: <a href='?src=\ref[src];toggle_psi_openness=1'><b>[pref.psi_openness ? "Yes" : "No"]</b></a><br>"
+			. += "Имплант: <a href='?src=\ref[src];toggle_psi_openness=1'><b>[pref.psi_openness ? "Да" : "Нет"]</b></a><br><small>Эта опция влияет только на профессии,<br>которые ставят имплант опциональными"
 
 	. = jointext(.,null)
 

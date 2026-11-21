@@ -96,7 +96,8 @@
 		"Random energy weapon" = /obj/random/renegade/energy,
 		"Random projectile weapon" = /obj/random/renegade/ballistic,
 		"Random melee weapon" = /obj/random/renegade/melee,
-		"Random restricted augment (CBM)" = /obj/random/renegade/augment
+		"Random restricted augment (CBM)" = /obj/random/renegade/augment,
+		"Psi emulator" = /obj/item/implanter/psionic
 	)
 
 /obj/random/renegade/energy
