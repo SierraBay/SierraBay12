@@ -15,10 +15,12 @@
 	)
 	apc_test_exempt_areas = list(
 		/area/map_template/facolony/mineralprocessing = NO_SCRUBBER|NO_VENT,
-		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT
+		/area/map_template/facolony/outsidewarehouse = NO_SCRUBBER|NO_VENT,
+		/area/map_template/facolony/dockingarea = NO_SCRUBBER|NO_VENT|NO_APC
 	)
 	spawn_weight = 1
 	skip_main_unit_tests = TRUE
+	shuttles_to_initialise = list(/datum/shuttle/autodock/overmap/celestehauler)
 
 /singleton/submap_archetype/facolony
 	descriptor = "FA Blockade Runners Outpost"
@@ -342,7 +344,13 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /// AREAS ///
 
 /area/map_template/facolony
+	area_flags = AREA_FLAG_RAD_SHIELDED | AREA_FLAG_ION_SHIELDED
 	req_access = list(access_facolony)
+
+/area/map_template/facolony/dockingarea
+	name = "\improper Docking Area"
+	icon_state = "shuttle2"
+	area_flags = AREA_FLAG_EXTERNAL
 
 /area/map_template/facolony/command
 	name = "\improper IPV Celeste Hauler - Bridge"
@@ -447,3 +455,69 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /area/map_template/facolony/tradezone
 	name = "\improper Unknown Base - Trade Zone"
 	icon_state = "shipping"
+
+/// SHUTTLE ///
+
+/datum/shuttle/autodock/overmap/celestehauler
+	name = "IPV Celeste Hauler"
+	current_location = "nav_celestehauler_start"
+	dock_target = "facolony"
+	landmark_transition = "nav_transit_celestehauler"
+	logging_home_tag = "nav_celestehauler_start"
+	defer_initialisation = TRUE
+	logging_access = access_facolony
+	range = 1
+	fuel_consumption = 10
+	warmup_time = 10
+	move_time = 110
+	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	shuttle_area = list(
+	/area/map_template/facolony/command,
+	/area/map_template/facolony/armory,
+	/area/map_template/facolony/engineering,
+	/area/map_template/facolony/atmospherics,
+	/area/map_template/facolony/cargo,
+	/area/map_template/facolony/cargo2,
+	/area/map_template/facolony/cargohatch,
+	/area/map_template/facolony/medbay,
+	/area/map_template/facolony/surgery,
+	/area/map_template/facolony/messhall
+	)
+
+/obj/machinery/computer/shuttle_control/explore/celestehauler
+	name = "Celeste Hauler control console"
+	shuttle_tag = "IPV Celeste Hauler"
+
+/obj/overmap/visitable/ship/landable/celestehauler
+	name = "IPV Celeste Hauler"
+	desc = "DESC"
+	shuttle = "IPV Celeste Hauler"
+	fore_dir = NORTH
+	color = "#e6f7ff"
+	vessel_size = SHIP_SIZE_SMALL
+	vessel_mass = 10000
+
+/obj/shuttle_landmark/facolony/celestehauler/start
+	name = "C-type Cargo Hatch Connector"
+	landmark_tag = "nav_celestehauler_start"
+	base_turf = /turf/simulated/floor/exoplanet/barren
+	base_area = /area/map_template/facolony/dockingarea
+
+/obj/shuttle_landmark/facolony/celestehauler/start/Initialize()
+	. = ..()
+	var/obj/overmap/visitable/sector = map_sectors["[z]"]
+	if(sector)
+		sector.add_landmark(src, "IPV Celeste Hauler")
+
+/obj/shuttle_landmark/facolony/transit/celestehauler
+	name = "In transit"
+	landmark_tag = "nav_transit_celestehauler"
+
+/obj/shuttle_landmark/facolony/celestehauler/sierra
+	name = "Dock STBD-3"
+	landmark_tag = "nav_celestehauler_sierra"
+	docking_controller = "admin_shuttle_dock"
+
+/obj/shuttle_landmark/facolony/celestehauler/sierracargo
+	name = "C-type Cargo Hatch Connector"
+	landmark_tag = "nav_celestehauler_sierracargo"

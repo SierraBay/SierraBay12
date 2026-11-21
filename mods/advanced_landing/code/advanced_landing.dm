@@ -157,6 +157,10 @@
 /obj/machinery/computer/shuttle_control/explore/utyug
 	skill_req = SKILL_MASTER + 10 // Лэндмарк не имеет базовой зоны ангара, как следствие подтягивает половину зоны за собой, отключение
 
+/obj/machinery/computer/shuttle_control/explore/celestehauler
+	skill_req = SKILL_MASTER + 10
+
+
 /area/mine
 	name = "Mine"
 
