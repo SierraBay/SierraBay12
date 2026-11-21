@@ -126,19 +126,16 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/outsidewarehouse)
 "aB" = (
-/obj/machinery/atmospherics/omni/mixer{
-	active_power_usage = 7500;
-	tag_east_con = 0.79;
-	tag_south = 1;
-	use_power = 1;
-	tag_east = 1;
-	tag_west = 2;
-	tag_south_con = 0.21
-	},
 /obj/structure/cable/cyan{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/red{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -965,9 +962,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/visible/blue,
+/obj/machinery/meter,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "dW" = (
@@ -1111,14 +1107,14 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/facolony/room_one)
 "eN" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/blue{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/floor_decal/industrial/outline/blue,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
+	dir = 6
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -1266,11 +1262,11 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
 "fx" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 5
+	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
@@ -1326,7 +1322,6 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 4
 	},
@@ -1712,8 +1707,15 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/visible/black{
+	dir = 10
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -1722,11 +1724,13 @@
 	req_access = list()
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /obj/machinery/door/blast/shutters{
 	id_tag = "facolony_aftport_blasts";
 	name = "Aft-Port Cargo Shutters"
@@ -1912,7 +1916,8 @@
 	id_tag = "facolony5_entryairlock";
 	name = "Connector Blasts Lockdown";
 	req_access = list("ACCESS_FACOLONY");
-	dir = 8
+	dir = 8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/airlock)
@@ -2003,9 +2008,6 @@
 /obj/item/stock_parts/circuitboard/tray,
 /obj/item/stock_parts/circuitboard/tray,
 /obj/structure/closet/crate/hydroponics/prespawned,
-/obj/machinery/atmospherics/binary/pump/on{
-	dir = 4
-	},
 /obj/machinery/light,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
@@ -2110,6 +2112,7 @@
 /area/map_template/facolony/tradezone)
 "jn" = (
 /obj/decal/cleanable/dirt,
+/mob/living/bot/farmbot,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "jo" = (
@@ -2336,16 +2339,15 @@
 /turf/simulated/floor/plating,
 /area/map_template/facolony/mineralprocessing)
 "kh" = (
-/obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/cyan{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/tiled/steel_grid,
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
+/obj/catwalk_plated,
+/turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
 "kk" = (
 /obj/floor_decal/industrial/hatch/yellow,
@@ -2994,6 +2996,12 @@
 	name = "Aft-Port Cargo Shutters"
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/atmospherics)
 "nn" = (
@@ -3009,6 +3017,8 @@
 	},
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "nq" = (
@@ -3082,11 +3092,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
 "nF" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
-	dir = 4
-	},
-/mob/living/bot/farmbot,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "nJ" = (
@@ -3152,7 +3160,9 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
-/obj/machinery/atmospherics/pipe/manifold4w/visible/red,
+/obj/machinery/atmospherics/pipe/manifold/visible/red{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "nQ" = (
@@ -3854,12 +3864,13 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "qv" = (
-/obj/machinery/atmospherics/binary/pump/high_power/on{
-	target_pressure = 400;
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
+	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
@@ -3957,6 +3968,7 @@
 	},
 /obj/decal/cleanable/blood/oil,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
 "ra" = (
@@ -3980,15 +3992,20 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
+/obj/machinery/atmospherics/omni/filter{
+	tag_east = 4;
+	tag_north = 2;
+	tag_south = 3;
+	tag_west = 1
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "rc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
@@ -4527,6 +4544,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/valve/shutoff/supply,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
 "tn" = (
@@ -4643,7 +4661,6 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/room_four)
 "tJ" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/blue,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/floor_decal/industrial/outline/blue,
 /obj/machinery/light,
@@ -4651,6 +4668,7 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
+/obj/machinery/atmospherics/pipe/manifold/visible/blue,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "tK" = (
@@ -5187,9 +5205,12 @@
 /turf/simulated/wall/r_titanium,
 /area/map_template/facolony/engineering)
 "vJ" = (
+/obj/machinery/atmospherics/pipe/simple/visible/blue,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/binary/pump/on{
+	dir = 8;
+	target_pressure = 400
 	},
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
@@ -6481,8 +6502,8 @@
 /obj/structure/catwalk,
 /obj/machinery/button/blast_door{
 	dir = 8;
-	id_tag = "facolony_external_warehouse";
-	name = "External Warehouse Exit";
+	id_tag = "facolony4_entryairlock";
+	name = "Landing Site Entry Blasts";
 	pixel_x = 24;
 	pixel_y = -6;
 	req_access = list("ACCESS_FACOLONY")
@@ -6650,12 +6671,17 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo)
 "Cj" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/tiled/steel_grid,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible/black{
+	dir = 8
+	},
+/obj/catwalk_plated,
+/turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
 "Cl" = (
 /obj/structure/table/woodentable_reinforced,
@@ -6731,13 +6757,13 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/warehouse)
 "CB" = (
-/obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
 /obj/structure/cable/cyan{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "CD" = (
@@ -7004,10 +7030,8 @@
 	req_access = list()
 	},
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/blast/shutters{
 	id_tag = "facolony_aftport_blasts";
 	name = "Aft-Port Cargo Shutters"
@@ -7638,19 +7662,20 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/room_three)
 "Hr" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
 /obj/structure/cable/cyan{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/visible/blue{
+	dir = 5
+	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/tiled/steel_grid,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/catwalk_plated,
+/turf/simulated/floor/plating,
 /area/map_template/facolony/atmospherics)
 "Hz" = (
 /obj/floor_decal/industrial/hatch/yellow,
@@ -9050,9 +9075,6 @@
 /obj/machinery/seed_storage/garden{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/universal{
-	dir = 4
-	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 8
 	},
@@ -9187,6 +9209,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
 "Oa" = (
@@ -9198,14 +9221,19 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
 "Oh" = (
-/obj/machinery/atmospherics/pipe/simple/visible/blue{
-	dir = 5
-	},
-/obj/machinery/meter,
 /obj/structure/cable/cyan{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/omni/mixer{
+	active_power_usage = 7500;
+	tag_south = 1;
+	use_power = 1;
+	tag_west = 2;
+	tag_south_con = 0.21;
+	tag_north = 1;
+	tag_north_con = 0.79
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
@@ -10727,8 +10755,8 @@
 /obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
@@ -10826,7 +10854,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 8;
-	target_pressure = 300
+	target_pressure = 400
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -10912,13 +10940,13 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/mineralprocessing)
 "UF" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/red,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/floor_decal/industrial/outline/red,
 /obj/structure/railing/mapped{
 	dir = 8;
 	icon_state = "railing0-1"
 	},
+/obj/machinery/atmospherics/pipe/manifold/visible/red,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "UH" = (
@@ -11911,7 +11939,8 @@
 	id_tag = "facolony5_entryairlock";
 	name = "Connector Blasts Lockdown";
 	req_access = list("ACCESS_FACOLONY");
-	dir = 4
+	dir = 4;
+	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
@@ -11926,7 +11955,9 @@
 /area/map_template/facolony/dorms)
 "ZI" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
+/obj/machinery/atmospherics/pipe/manifold/visible/cyan{
+	dir = 4
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "ZK" = (
@@ -12529,8 +12560,8 @@ DJ
 CB
 PY
 ZI
-Vs
 UU
+Vs
 Tr
 aw
 nh
