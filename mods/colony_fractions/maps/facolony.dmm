@@ -147,9 +147,10 @@
 	dir = 4
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/vending/medical/colony{
+/obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen/prechilled,
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/medbay)
 "aL" = (
@@ -2938,7 +2939,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/tradezone)
 "nf" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/machinery/atmospherics/pipe/manifold/hidden{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/medbay)
 "nh" = (
@@ -3751,7 +3754,8 @@
 /obj/machinery/door/airlock/hatch{
 	locked = 1;
 	id_tag = "facolony_eng_port_outer";
-	frequency = 1379
+	frequency = 1379;
+	name = "Engineering Port"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
@@ -3760,7 +3764,7 @@
 	id_tag = "facolony_eng_port_blast";
 	name = "Engineering Port"
 	},
-/turf/simulated/floor/reinforced,
+/turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/medbay)
 "ql" = (
 /obj/floor_decal/corner/yellow/border{
@@ -4195,12 +4199,12 @@
 /area/map_template/facolony/room_one)
 "rT" = (
 /obj/floor_decal/industrial/hatch/yellow,
+/obj/decal/cleanable/dirt,
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "facolony_left_cargo_blasts";
-	name = "Cargo Hatch"
+	name = "Port Cargo Hatch"
 	},
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
 "rV" = (
@@ -6134,6 +6138,13 @@
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/airlock)
+"zs" = (
+/obj/floor_decal/corner/b_green/diagonal,
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 5
+	},
+/turf/simulated/floor/tiled/white,
+/area/map_template/facolony/medbay)
 "zx" = (
 /obj/machinery/door/firedoor{
 	req_access = list()
@@ -7225,9 +7236,6 @@
 /turf/simulated/floor/away,
 /area/map_template/facolony/mineralprocessing)
 "EV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 6
-	},
 /obj/floor_decal/corner/b_green/half{
 	dir = 1
 	},
@@ -7645,10 +7653,6 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen/prechilled,
 /obj/machinery/button/blast_door{
 	pixel_y = 24;
 	name = "Engineering Port Access";
@@ -7660,7 +7664,11 @@
 	id_tag = "facolony_eng_port";
 	pixel_y = 24;
 	req_access = list("ACCESS_FACOLONY");
-	pixel_x = -6
+	pixel_x = -6;
+	name = "Engineering Port Access Controller"
+	},
+/obj/machinery/vending/medical/colony{
+	dir = 8
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/medbay)
@@ -10193,10 +10201,6 @@
 "RX" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/decal/cleanable/dirt,
-/obj/machinery/oxygen_pump{
-	dir = 1;
-	pixel_y = -32
-	},
 /obj/structure/handrail{
 	dir = 1
 	},
@@ -13059,7 +13063,7 @@ qo
 xq
 EV
 nf
-Zt
+zs
 aL
 Nr
 pz
