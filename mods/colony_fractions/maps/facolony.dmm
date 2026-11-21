@@ -4137,9 +4137,7 @@
 	dir = 8;
 	icon_state = "railing0-1"
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible/red{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/visible/red,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
 "rI" = (
