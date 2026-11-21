@@ -20,14 +20,24 @@
 #include "../_master_files/code/game/atoms_movable.dm"
 #include "../_master_files/code/modules/modular_computers/file_system/programs/generic/supply.dm"
 #include "../_master_files/code/modules/modular_computers/file_system/program.dm"
+#include "../_master_files/code/modules/modular_computers/ntos/ntos.dm"
 #include "../_master_files/code/modules/modular_computers/computers/subtypes/preset_console.dm"
 #include "../_master_files/code/modules/shuttles/shuttle_supply.dm"
 #include "../_master_files/maps/sierra/structures/closets/supply.dm"
 #include "../_master_files/mods/RnD/code/tech_branch/tech_engineering.dm"
+#ifdef UNIT_TEST
+#include "code/tests.dm"
+#endif
 #undef TRADE_NONEXPORTABLE
 #undef TRADE_JUNK
 #undef TRADE_EXPORTABLE
 #undef TRADE_HOCKABLE
+#undef TRADE_CATALOG_EXPORT_CAP
+#undef TRADE_VENDOR_EXPORT_CAP
+#undef TRADE_SALVAGE_MULT
+#undef TRADE_SALVAGE_CAP
+#undef TRADE_MACHINERY_SALVAGE_MULT
+#undef TRADE_MACHINERY_SALVAGE_CAP
 #undef TRADE_WHOLESALE
 #undef TRADE_COMMON
 #undef TRADE_UNCOMMON
@@ -43,7 +53,7 @@
 #undef TRADE_INSTABILITY_DURATION
 #undef TRADE_SAVED_CART_LIMIT
 #undef TRADE_LOG_LIMIT
-#undef TRADE_PAGE_SIZE
+#undef TRADE_LOG_PAGE_SIZE
 #undef TRADE_REQUEST_COOLDOWN
 #undef TRADE_SUPPLY_ACCOUNT
 #undef TRADE_TAG_NONEXPORTABLE
@@ -53,5 +63,6 @@
 #undef TRADE_PAID
 #undef TRADE_DELIVERED
 #undef TRADE_CANCELLED
+#undef TRADE_PACK_DATA
 
 #endif

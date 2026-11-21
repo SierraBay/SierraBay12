@@ -29,10 +29,19 @@
 	return count >= attach_count
 
 /datum/trade_offer/proc/get_requirements()
-	if(!attach_count)
-		return ""
-	var/list/names = list()
-	for(var/path in attachments)
-		var/atom/part = path
-		names += initial(part.name)
-	return "At least [attach_count] installed components from: [jointext(names, ", ")]."
+	var/list/details = list()
+	if(reagent_type)
+		var/datum/reagent/reagent = reagent_type
+		var/rname = initial(reagent.name) || "reagent"
+		details += "Requires [amount * reagent_volume]u total ([amount]x [reagent_volume]u [rname] in one or more reagent containers; containers returned)."
+	else if(live_required)
+		details += "Requires [amount]x live specimen inside a stasis cage (cage remains on pad)."
+	else if(native_stack_size > 1)
+		details += "Requires [amount]x full stack ([native_stack_size] units per stack)."
+	if(attach_count)
+		var/list/names = list()
+		for(var/path in attachments)
+			var/atom/part = path
+			names += initial(part.name)
+		details += "At least [attach_count] installed components from: [jointext(names, ", ")]."
+	return jointext(details, " ")

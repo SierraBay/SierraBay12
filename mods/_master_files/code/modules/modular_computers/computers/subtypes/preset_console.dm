@@ -6,6 +6,13 @@
 		default_software |= /datum/computer_file/program/trade
 	return ..()
 
+/obj/machinery/computer/modular/preset/civilian/Initialize(mapload)
+	if(GLOB.using_map.path == "sierra")
+		default_software = default_software.Copy()
+		default_software -= /datum/computer_file/program/supply
+		default_software |= /datum/computer_file/program/trade_orders
+	return ..()
+
 /obj/machinery/computer/modular/preset/supply_public/Initialize(mapload)
 	if(GLOB.using_map.path == "sierra")
 		default_software = list(/datum/computer_file/program/trade_orders)

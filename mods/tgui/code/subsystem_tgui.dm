@@ -156,7 +156,7 @@ SUBSYSTEM_DEF(tgui)
 	if(ui.status <= STATUS_CLOSE)
 		ui.close()
 		return null
-	ui.send_update()
+	ui.send_update(data)
 	return ui
 
 /**

@@ -23,13 +23,20 @@
 	unit_prices.Cut()
 	return ..()
 
+/datum/trade_order/proc/has_loose_items()
+	for(var/id in lines)
+		var/datum/trade_order_line/line = snapshots[id]
+		if(line && !line.needs_floor())
+			return TRUE
+	return FALSE
+
 /datum/trade_order/proc/get_floor_count()
-	var/count = 1
+	var/count = has_loose_items() ? 1 : 0
 	for(var/id in lines)
 		var/datum/trade_order_line/line = snapshots[id]
 		if(line?.needs_floor())
 			count += lines[id]
-	return count
+	return max(1, count)
 
 /datum/controller/subsystem/trade/proc/create_order(list/cart, buyer, reason, hacked = FALSE, mob/user = null, personal = FALSE, obj/item/card/id/card = null, request_key = null)
 	if(request_key && world.time < request_ready_at[request_key])
@@ -50,7 +57,9 @@
 	return order
 
 /datum/controller/subsystem/trade/proc/quote_order(datum/trade_order/order, list/cart, hacked, mob/user = null, personal = FALSE, obj/item/card/id/card = null)
-	if(!length(cart) || length(cart) > TRADE_ORDER_LIMIT)
+	if(!length(cart))
+		return FALSE
+	if(length(cart) > TRADE_ORDER_LIMIT)
 		return FALSE
 	var/count = 0
 	for(var/id in cart)
@@ -70,7 +79,7 @@
 	return count <= TRADE_ORDER_LIMIT && order.total > 0
 
 /datum/controller/subsystem/trade/proc/pay_order(datum/trade_order/order, datum/money_account/account, personal, hacked = FALSE, mob/user = null, obj/item/card/id/card = null)
-	if(transaction_busy || !order || order.state != TRADE_REQUEST || !account || account.suspended || !get_receiver(order))
+	if(transaction_busy || !order || order.state != TRADE_REQUEST || !account || account.suspended || !get_receiver(order, require_ready = FALSE))
 		return FALSE
 	if(personal && (!user || !card || get_account(card.associated_account_number) != account))
 		return FALSE
@@ -93,7 +102,7 @@
 		if(!good || !good.station.discovered || !good.is_available(hacked, user, personal, card) || good.stock < order.lines[id])
 			return FALSE
 		var/datum/trade_order_line/line = order.snapshots[id]
-		if(!line || line.item_type != good.item_type || line.stack_size != good.stack_size || line.quantity != order.lines[id])
+		if(!line || line.item_type != good.item_type || line.supply_pack_type != good.supply_pack_type || line.stack_size != good.stack_size || line.quantity != order.lines[id])
 			return FALSE
 		if(good.get_price() != order.unit_prices[id])
 			return FALSE
@@ -149,7 +158,7 @@
 /datum/controller/subsystem/trade/proc/deliver(datum/trade_order/order)
 	if(transaction_busy || order.state != TRADE_PAID)
 		return FALSE
-	var/obj/machinery/trade_beacon/receiving/beacon = get_receiver(order)
+	var/obj/machinery/trade_beacon/receiving/beacon = get_receiver(order, require_ready = TRUE)
 	var/list/floors = beacon?.get_landing_turfs(order.get_floor_count())
 	if(!length(floors))
 		return FALSE
@@ -163,26 +172,25 @@
 	return TRUE
 
 /datum/controller/subsystem/trade/proc/create_shipment(datum/trade_order/order, obj/machinery/trade_beacon/receiving/beacon, list/floors)
-	var/obj/structure/closet/secure_closet/personal/trade/crate = new(floors[1])
+	var/obj/structure/closet/secure_closet/personal/trade/crate
 	var/list/spawned = list()
+	var/floor_index = 1
 	try
-		crate.registered_name = order.personal ? order.buyer : null
-		crate.locked = order.personal
-		crate.SetName("Trade shipment [order.id]")
-		populate_order(order, crate, spawned)
-		unpack_shipment(spawned, floors)
+		if(order.has_loose_items())
+			crate = new(floors[floor_index])
+			crate.trade_export_tags |= TRADE_TAG_NONEXPORTABLE
+			crate.registered_name = order.personal ? order.buyer : null
+			crate.locked = order.personal
+			crate.SetName("Trade shipment [order.id] ([order.buyer])")
+			floor_index++
+		populate_order(order, crate, spawned, floors, floor_index)
 		beacon.activate()
 	catch(var/exception/error)
 		QDEL_NULL_LIST(spawned)
-		qdel(crate)
+		if(crate)
+			qdel(crate)
 		throw error
 	complete_delivery(order)
-
-/datum/controller/subsystem/trade/proc/unpack_shipment(list/spawned, list/floors)
-	var/index = 2
-	for(var/atom/movable/item as anything in spawned)
-		if(!istype(item, /obj/item))
-			item.forceMove(floors[index++])
 
 /datum/controller/subsystem/trade/proc/complete_delivery(datum/trade_order/order)
 	order.state = TRADE_DELIVERED
@@ -195,12 +203,39 @@
 		station?.add_to_wealth(line.unit_price * line.quantity)
 	log_transaction("Delivery", order.id, order.total + order.fee, order.buyer, order.get_rows(), order.account?.account_number, order.fee, order.requester_key)
 
-/datum/controller/subsystem/trade/proc/populate_order(datum/trade_order/order, obj/structure/closet/crate, list/spawned)
+/datum/controller/subsystem/trade/proc/populate_order(datum/trade_order/order, obj/structure/closet/crate, list/spawned, list/floors, floor_index = 1)
+	var/atom/invoice_holder = crate
 	for(var/id in order.snapshots)
 		var/datum/trade_order_line/line = order.snapshots[id]
 		for(var/count in 1 to line.quantity)
-			var/atom/movable/item = line.spawn_item(crate)
-			ASSERT(istype(item) && !QDELETED(item))
-			spawned += item
-	var/obj/item/paper/trade_invoice/invoice = new(crate)
-	invoice.info = order.get_receipt()
+			if(line.needs_floor())
+				var/turf/target_floor = floors[min(length(floors), max(1, floor_index))]
+				floor_index++
+				var/atom/movable/floor_item
+				if(!line.supply_pack_type && ispath(line.item_type, /mob/living))
+					var/obj/structure/closet/crate/critter/critter_crate = new(target_floor)
+					critter_crate.trade_export_tags |= TRADE_TAG_NONEXPORTABLE
+					var/atom/mob_type = line.item_type
+					critter_crate.SetName("[initial(mob_type.name)] crate ([order.buyer])")
+					new line.item_type(critter_crate)
+					floor_item = critter_crate
+				else
+					floor_item = line.spawn_item(target_floor, order.buyer)
+				ASSERT(istype(floor_item) && !QDELETED(floor_item))
+				if(istype(floor_item, /obj/structure/closet) || istype(floor_item, /obj/structure/largecrate))
+					floor_item.trade_export_tags |= TRADE_TAG_NONEXPORTABLE
+					if(!invoice_holder && istype(floor_item, /obj/structure/closet))
+						invoice_holder = floor_item
+				if(!invoice_holder)
+					invoice_holder = target_floor
+				spawned += floor_item
+			else
+				var/atom/target_loc = crate || floors[1]
+				var/atom/movable/item = line.spawn_item(target_loc, order.buyer)
+				ASSERT(istype(item) && !QDELETED(item))
+				spawned += item
+	if(!invoice_holder && length(floors))
+		invoice_holder = floors[1]
+	if(invoice_holder)
+		var/obj/item/paper/trade_invoice/invoice = new(invoice_holder)
+		invoice.info = order.get_receipt()
