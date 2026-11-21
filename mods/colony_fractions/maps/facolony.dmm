@@ -2752,11 +2752,11 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_aft_exit_blasts";
 	name = "Aft Exit Blasts"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden,
 /obj/machinery/access_button/airlock_exterior{
 	frequency = 1380;
 	master_tag = "facolony";
@@ -2765,7 +2765,6 @@
 	req_access = list("ACCESS_FACOLONY");
 	pixel_x = 24
 	},
-/obj/shuttle_landmark/facolony/celestehauler/start,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
 "mf" = (
@@ -4452,11 +4451,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
-"sW" = (
-/obj/paint/brown,
-/obj/paint_stripe/gunmetal,
-/turf/simulated/wall/titanium,
-/area/map_template/facolony/surgery)
 "sX" = (
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall,
@@ -5081,6 +5075,7 @@
 	dir = 10
 	},
 /obj/structure/catwalk,
+/obj/shuttle_landmark/facolony/celestehauler/start,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "vs" = (
@@ -7986,13 +7981,13 @@
 	id_tag = "facolony_exterior_door";
 	locked = 1
 	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_aft_exit_blasts";
 	name = "Aft Exit Blasts"
 	},
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/hidden,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargo2)
 "Ix" = (
@@ -12755,7 +12750,7 @@ yH
 iL
 oS
 tr
-Rq
+Xx
 Rq
 pG
 nq
@@ -12772,14 +12767,14 @@ Wc
 Tk
 ns
 ol
-Mx
+wX
 bA
 pm
 pm
 pm
 UY
 UY
-ww
+Th
 eH
 CR
 Pz
@@ -12884,17 +12879,17 @@ sP
 Mh
 re
 JK
-Sw
+Xx
 Sw
 pE
 gt
-sW
+qR
 PQ
 PQ
 Xh
 PQ
 PQ
-PQ
+qR
 QF
 Pu
 TM
