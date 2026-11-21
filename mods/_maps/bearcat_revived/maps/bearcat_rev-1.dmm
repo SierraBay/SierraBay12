@@ -2813,6 +2813,10 @@
 	},
 /turf/simulated/floor/usedup,
 /area/ship/scrap/maintenance/lower)
+"Qv" = (
+/obj/shuttle_landmark/facolony/celestehauler/bearcat,
+/turf/space,
+/area/space)
 "Ro" = (
 /obj/floor_decal/industrial/warning{
 	dir = 1
@@ -9846,7 +9850,7 @@ aa
 aa
 aa
 aa
-aa
+Qv
 ae
 ag
 ak

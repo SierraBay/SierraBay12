@@ -521,3 +521,21 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 /obj/shuttle_landmark/facolony/celestehauler/sierracargo
 	name = "C-type Cargo Hatch Connector"
 	landmark_tag = "nav_celestehauler_sierracargo"
+
+// Bearcat (mods/_maps/bearcat_revived/code/bearcat.dm) - bearcat_rev-1.dmm, bearcat_repaired-1.dmm
+/obj/shuttle_landmark/facolony/celestehauler/bearcat
+	name = "Dock"
+	landmark_tag = "nav_celestehauler_bearcat"
+	docking_controller = "cargo"
+
+// Farfleet (mods/_maps/farfleet/code/farfleet.dm) - farfleet-1.dmm
+/obj/shuttle_landmark/facolony/celestehauler/farfleet
+	name = "Dock"
+	landmark_tag = "nav_celestehauler_farfleet"
+	docking_controller = "recon_dock_airlock"
+
+// Sentinel (mods/_maps/sentinel/code/sentinel.dm) - sentinel-1.dmm
+/obj/shuttle_landmark/facolony/celestehauler/sentinel
+	name = "Dock"
+	landmark_tag = "nav_celestehauler_sentinel"
+	docking_controller = "patrol_dock_airlock"

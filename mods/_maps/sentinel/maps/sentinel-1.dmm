@@ -9930,6 +9930,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
+"KR" = (
+/obj/shuttle_landmark/facolony/celestehauler/sentinel,
+/turf/space,
+/area/space)
 "KT" = (
 /obj/structure/railing/mapped,
 /obj/structure/ship_munition/disperser_charge/emp/military,
@@ -18500,7 +18504,7 @@ aa
 aa
 aa
 aa
-aa
+KR
 ai
 an
 as
