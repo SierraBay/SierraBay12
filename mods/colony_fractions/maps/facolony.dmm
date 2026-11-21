@@ -944,7 +944,7 @@
 	icon_state = "railing0-1"
 	},
 /turf/template_noop,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "dD" = (
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall,
@@ -2244,7 +2244,7 @@
 	},
 /obj/landmark/clear,
 /turf/template_noop,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "jT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/floor_decal/corner/yellow/diagonal,
@@ -2483,7 +2483,7 @@
 /obj/landmark/clear,
 /obj/structure/catwalk,
 /turf/template_noop,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "kW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /obj/decal/cleanable/dirt,
@@ -2613,7 +2613,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/away,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "lG" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/decal/cleanable/dirt,
@@ -3114,7 +3114,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/away,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "nL" = (
 /obj/floor_decal/industrial/warning/dust,
 /obj/structure/cable/yellow{
@@ -3363,19 +3363,13 @@
 /area/map_template/facolony/tradezone)
 "ox" = (
 /obj/structure/catwalk,
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/structure/railing/mapped{
+	dir = 4;
+	icon_state = "railing0-1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/away,
-/area/map_template/facolony/dockingarea)
+/obj/landmark/clear,
+/turf/template_noop,
+/area/template_noop)
 "oy" = (
 /obj/structure/table/mag/facolony,
 /obj/machinery/airlock_sensor/airlock_interior{
@@ -6228,7 +6222,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/away,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "zO" = (
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/suit_storage_unit/mining/alt{
@@ -7700,7 +7694,7 @@
 	icon_state = "railing0-1"
 	},
 /turf/template_noop,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "HE" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/structure/cable/cyan{
@@ -8607,19 +8601,13 @@
 /area/map_template/facolony/atmospherics2)
 "LA" = (
 /obj/structure/catwalk,
-/obj/structure/cable/cyan{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/railing/mapped{
+	dir = 8;
+	icon_state = "railing0-1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/away,
-/area/map_template/facolony/dockingarea)
+/obj/landmark/clear,
+/turf/template_noop,
+/area/template_noop)
 "LC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10647,7 +10635,7 @@
 	icon_state = "railing0-1"
 	},
 /turf/template_noop,
-/area/map_template/facolony/dockingarea)
+/area/template_noop)
 "TT" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -12356,8 +12344,8 @@ uo
 uo
 uo
 uo
-bF
-bF
+dI
+dI
 Dz
 to
 to
@@ -12394,13 +12382,13 @@ uo
 uo
 uo
 TS
-jI
-Ep
-jI
-jI
-Ep
-Ep
-Ep
+LA
+pk
+LA
+LA
+pk
+pk
+pk
 et
 Kk
 Em
@@ -12434,9 +12422,9 @@ uo
 uo
 uo
 dB
-jI
-Ep
-Ep
+LA
+pk
+pk
 wM
 et
 et
@@ -12475,8 +12463,8 @@ HT
 uo
 jS
 dB
-bF
-bF
+dI
+dI
 Rq
 Rq
 Rq
@@ -12515,8 +12503,8 @@ uo
 "}
 (13,1,1) = {"
 Hh
-jI
-Ep
+LA
+pk
 Sc
 Sc
 PH
@@ -12558,7 +12546,7 @@ uo
 "}
 (14,1,1) = {"
 Hh
-Ep
+pk
 je
 Sc
 xt
@@ -12600,8 +12588,8 @@ Ep
 uo
 "}
 (15,1,1) = {"
-LA
-Ep
+TE
+pk
 je
 yl
 va
@@ -12643,7 +12631,7 @@ Ep
 Lo
 "}
 (16,1,1) = {"
-LA
+TE
 Xx
 Xx
 WA
@@ -12815,7 +12803,7 @@ mb
 Ep
 "}
 (20,1,1) = {"
-LA
+TE
 je
 sP
 Mh
@@ -12858,7 +12846,7 @@ ph
 Ep
 "}
 (21,1,1) = {"
-LA
+TE
 Xx
 Xx
 Ca
@@ -12902,7 +12890,7 @@ Lo
 "}
 (22,1,1) = {"
 zM
-ox
+sJ
 je
 ZM
 lu
@@ -12989,7 +12977,7 @@ uo
 (24,1,1) = {"
 uo
 zM
-ox
+sJ
 sY
 Sc
 Sc
@@ -13033,9 +13021,9 @@ uo
 uo
 uo
 nK
-Ep
-Ep
-bF
+pk
+pk
+dI
 Sw
 Sw
 Sw
@@ -13079,9 +13067,9 @@ TE
 uo
 uo
 HD
-gH
-gH
-Ep
+ox
+ox
+pk
 lo
 GV
 DT
@@ -13124,14 +13112,14 @@ uo
 uo
 uo
 uo
-bF
-bF
+dI
+dI
 kO
 kO
 kO
-bF
-Et
-Et
+dI
+lJ
+lJ
 DT
 vp
 Ij
@@ -13173,7 +13161,7 @@ uo
 uo
 uo
 uo
-Et
+lJ
 lF
 lB
 Ib
