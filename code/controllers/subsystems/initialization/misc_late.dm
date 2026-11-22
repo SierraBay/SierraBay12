@@ -15,8 +15,10 @@ SUBSYSTEM_DEF(init_misc_late)
 	GLOB.using_map.build_exoplanets()
 	generate_derelict_missions()
 	build_derelict_z_mapping()
-	var/singleton/asset_cache/asset_cache = GET_SINGLETON(/singleton/asset_cache)
-	asset_cache.load()
+	// [SIERRA-REMOVE] - TGUI - SSassets owns initialization after map and research setup.
+	// var/singleton/asset_cache/asset_cache = GET_SINGLETON(/singleton/asset_cache)
+	// asset_cache.load()
+	// [/SIERRA-REMOVE]
 	init_recipes()
 
 

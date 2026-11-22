@@ -539,7 +539,9 @@
 			return
 
 		SSnano.close_uis(H)
-		H.client.cache.Cut()
+		// [SIERRA-EDIT] - TGUI - Clear the single donor asset cache for this client.
+		H.client.sent_assets.Cut()
+		// [/SIERRA-EDIT]
 		var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
 		assets.send(H)
 

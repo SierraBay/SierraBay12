@@ -29,6 +29,10 @@
 
 /obj/item/organ/external/chest/robotize()
 	if(..())
+		// [SIERRA-EDIT] - IPC_MODS - торс из карго спавнится без owner
+		if(!owner)
+			return
+		// [/SIERRA-EDIT]
 		// Give them a new cell.
 		var/obj/item/organ/internal/cell/C = owner.internal_organs_by_name[BP_CELL]
 		if(!istype(C))

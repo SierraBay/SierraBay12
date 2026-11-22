@@ -54,7 +54,10 @@
 	anchored = TRUE
 	mouse_opacity = FALSE
 
-/atom/movable/openspace/can_fall()
+// [SIERRA-EDIT] - JPS_PATHFINDING - Match can_fall keyword arguments.
+// /atom/movable/openspace/can_fall() // SIERRA-EDIT - ORIGINAL
+/atom/movable/openspace/can_fall(anchor_bypass = FALSE, turf/location_override = loc)
+// [/SIERRA-EDIT]
 	return FALSE
 
 // No blowing up abstract objects.
