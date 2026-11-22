@@ -202,6 +202,10 @@
 /obj/wallframe_spawn/reinforced/hull,
 /turf/simulated/floor,
 /area/ship/farfleet/dock)
+"aB" = (
+/obj/shuttle_landmark/facolony/celestehauler/farfleet,
+/turf/space,
+/area/space)
 "aE" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -471,12 +475,6 @@
 	},
 /turf/simulated/wall/ocp_wall,
 /area/ship/farfleet/engineering/atmospherics)
-"be" = (
-/obj/floor_decal/industrial/warning/fulltile,
-/turf/simulated/floor/reinforced{
-	map_airless = 1
-	},
-/area/space)
 "bh" = (
 /obj/machinery/computer/modular/preset/helm{
 	dir = 4
@@ -7515,9 +7513,6 @@
 	icon_state = "1-4"
 	},
 /obj/floor_decal/industrial/warning/fulltile,
-/obj/structure/sign/iccg{
-	pixel_x = 32
-	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
 	},
@@ -8999,6 +8994,9 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/structure/sign/iccg{
+	pixel_x = 32
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -20367,7 +20365,7 @@ aa
 aa
 aa
 aa
-be
+Ig
 sY
 jq
 Nn
@@ -20597,7 +20595,7 @@ aa
 aa
 aa
 aa
-aa
+aB
 aa
 aa
 aa

@@ -3234,7 +3234,7 @@
 /obj/floor_decal/techfloor{
 	dir = 4
 	},
-/obj/machinery/r_n_d/server,
+/obj/machinery/r_n_d/server/verne,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/comms)
 "ue" = (
@@ -3862,10 +3862,9 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/catfish)
 "yM" = (
-/obj/machinery/computer/rdconsole/core{
-	req_access = list()
-	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/computer/rdconsole/verne,
+/obj/item/paper/manifest/rnd_invoice/verne,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/verne/engineering/workshop)
 "yO" = (

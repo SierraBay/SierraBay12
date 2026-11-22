@@ -35,7 +35,8 @@
 		"SRV Venerable Catfish" = list("nav_deck3_catfish"), //mods/_maps/verne/verne.dme shuttle
 		"Lepidopterax" = list("nav_ascent_lepido_sierra"), // mods/_maps/ascent_seedship/code/ascent_seedship_shuttles.dm
 		"Trichopterax" = list("nav_ascent_tricho_sierra"),
-		"Ascent Caulship" = list("nav_ascent_caulship_sierra")
+		"Ascent Caulship" = list("nav_ascent_caulship_sierra"),
+		"IPV Celeste Hauler" = list("nav_celestehauler_sierra", "nav_celestehauler_sierracargo") // /mods/colony_fractions/code/facolony.dm
 		)
 
 	initial_generic_waypoints = list(
