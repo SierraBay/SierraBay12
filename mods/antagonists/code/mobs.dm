@@ -198,7 +198,6 @@
 /* AI */
 
 /datum/ai_holder/simple_animal/humanoid/hostile/pirate/space
-	intelligence_level = AI_NORMAL
 	threaten_delay = 2 SECOND
 	threaten_timeout = 30 SECONDS
 	violent_breakthrough = FALSE
