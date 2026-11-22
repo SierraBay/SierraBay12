@@ -1,0 +1,5 @@
+author: Jojorwells
+changes:
+  - rscadd: Unathi now flick their tongues to actively sample nearby scents, 
+      instead of always smelling like humans do.
+delete-after: true
