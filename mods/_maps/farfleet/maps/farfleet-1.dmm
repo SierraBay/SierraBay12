@@ -753,6 +753,10 @@
 	pixel_x = 0;
 	pixel_y = -5
 	},
+/obj/item/tableflag/gcc{
+	pixel_x = 9;
+	pixel_y = -3
+	},
 /turf/simulated/floor/carpet/blue3,
 /area/ship/farfleet/command/bridge)
 "bQ" = (
