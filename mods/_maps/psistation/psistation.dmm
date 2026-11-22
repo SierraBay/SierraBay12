@@ -4526,9 +4526,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/psistation/brige)
 "qA" = (
-/obj/machinery/power/debug_items/infinite_generator{
-	power_generation_rate = 2e+006
-	},
 /obj/floor_decal/techfloor/corner{
 	dir = 1
 	},
@@ -4543,6 +4540,9 @@
 /obj/structure/cable/green{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/skrell_reactor{
+	name = "\improper Psi-kinetic fusion stack"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/psistation/reactor)
@@ -4760,6 +4760,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable/green{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/psistation/hall_lup)
@@ -5024,11 +5029,6 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/psistation/hall_r)
 "su" = (
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/floor_decal/corner_techfloor_grid{
 	dir = 6
 	},
@@ -5907,6 +5907,10 @@
 	dir = 1;
 	name = "north bump";
 	pixel_y = 24
+	},
+/obj/structure/cable/green{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/psistation/hall_lup)
@@ -8280,11 +8284,6 @@
 	dir = 4
 	},
 /obj/floor_decal/techfloor/orange/corner,
-/obj/structure/cable/green{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable/green{
 	d1 = 1;
 	d2 = 4;
