@@ -203,7 +203,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable/cyan{
 	d1 = 1;
 	d2 = 2;
@@ -650,16 +649,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/cap/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/door/blast/regular{
 	dir = 8;
 	id_tag = "facolony_unspecified_west";
 	name = "External Section"
-	},
-/obj/machinery/atmospherics/pipe/cap/hidden/scrubbers{
-	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/tradezone)
@@ -1454,9 +1447,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -1755,15 +1745,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable/cyan{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
 "hC" = (
@@ -2158,7 +2148,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/floor_decal/industrial/warning/dust{
 	dir = 9
 	},
@@ -2198,10 +2187,10 @@
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/surgery)
 "jL" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "jN" = (
@@ -3983,7 +3972,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor{
 	req_access = list()
 	},
@@ -4432,10 +4420,6 @@
 	name = "External Section";
 	dir = 4
 	},
-/obj/structure/sign/warning/internals_required{
-	pixel_y = -32;
-	dir = 1
-	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/unspecified)
 "sU" = (
@@ -4821,7 +4805,7 @@
 /obj/machinery/alarm/facolony{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark,
@@ -5269,6 +5253,20 @@
 /obj/paint/fleet/sfv_rook,
 /turf/simulated/wall/r_wall,
 /area/map_template/facolony/atmospherics2)
+"vQ" = (
+/obj/floor_decal/corner/b_green/border{
+	dir = 4
+	},
+/obj/machinery/power/rad_collector{
+	req_access = list()
+	},
+/obj/decal/cleanable/dirt,
+/obj/structure/sign/warning/nosmoking_burned{
+	dir = 1;
+	pixel_x = 32
+	},
+/turf/simulated/floor/tiled/steel_grid,
+/area/map_template/facolony/cargo2)
 "vR" = (
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/door/firedoor{
@@ -5428,6 +5426,7 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/science)
 "ws" = (
@@ -5530,7 +5529,9 @@
 /area/map_template/facolony/unspecified)
 "wH" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
 "wM" = (
@@ -5563,18 +5564,18 @@
 	dir = 1;
 	pixel_x = 8
 	},
-/obj/structure/inflatable/wall,
 /obj/structure/cable/cyan{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/atmospherics/pipe/cap/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/machinery/atmospherics/pipe/cap/hidden/supply{
+	dir = 1
 	},
+/obj/structure/inflatable/wall,
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/tradezone)
 "wU" = (
@@ -5935,10 +5936,10 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/airlock)
 "yG" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/machinery/atmospherics/binary/pump/on{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/atmospherics2)
 "yH" = (
@@ -6625,6 +6626,12 @@
 /obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
+/area/map_template/facolony/science)
+"BV" = (
+/obj/floor_decal/corner/yellow/diagonal,
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "BX" = (
 /obj/floor_decal/corner/b_green/border{
@@ -9536,14 +9543,12 @@
 	req_access = list("ACCESS_FACOLONY");
 	pixel_x = 6
 	},
-/obj/item/paper/sticky{
-	language = "Spacer";
-	info = "ВНИМАНИЕ! Этот экстренный выход ведет прямо на улицу. Открывать, только в КРАЙНЕМ случае. А еще он похож на вход, поэтому вряд ли посторонние додумаются о проходах в стенах. Да?";
-	pixel_y = -24;
-	pixel_x = -6;
-	color = "#c97b1c"
-	},
 /obj/machinery/door/window/brigdoor/northright,
+/obj/structure/sign/warning/internals_required{
+	pixel_y = -32;
+	dir = 1;
+	pixel_x = -6
+	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
 "Pg" = (
@@ -9844,6 +9849,9 @@
 	},
 /obj/structure/inflatable/wall,
 /obj/structure/catwalk,
+/obj/machinery/atmospherics/pipe/cap/hidden/supply{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/science)
 "Qr" = (
@@ -9998,6 +10006,11 @@
 /area/map_template/facolony/warehouse)
 "QY" = (
 /obj/floor_decal/corner/yellow/bordercorner,
+/obj/machinery/atmospherics/valve/shutoff/supply,
+/obj/floor_decal/steeldecal/steel_decals_central6{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "Ra" = (
@@ -10265,7 +10278,6 @@
 /obj/floor_decal/corner/yellow/border{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -10654,9 +10666,6 @@
 /obj/machinery/atmospherics/pipe/cap/visible/scrubbers{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/cap/visible/supply{
-	dir = 1
-	},
 /obj/floor_decal/industrial/warning/dust{
 	dir = 10
 	},
@@ -10771,7 +10780,7 @@
 /area/map_template/facolony/outsidewarehouse)
 "Ug" = (
 /obj/machinery/pipedispenser,
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 6
 	},
 /turf/simulated/floor/tiled/dark,
@@ -10813,9 +10822,6 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -11322,7 +11328,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
 "Ws" = (
@@ -11445,16 +11450,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/room_four)
 "WU" = (
-/obj/floor_decal/corner/yellow/border{
-	dir = 8
-	},
+/obj/floor_decal/corner/yellow/diagonal,
+/obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable/cyan{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/science)
 "Xa" = (
@@ -13078,7 +13076,7 @@ SN
 pq
 tD
 Ww
-Ww
+vQ
 Ww
 Jn
 BD
@@ -13932,7 +13930,7 @@ ew
 Ul
 aT
 Sn
-WU
+aT
 gp
 Wq
 ra
@@ -13973,9 +13971,9 @@ DZ
 Oa
 vj
 wH
-gy
-IO
-gy
+BV
+WU
+BV
 hB
 QY
 vR

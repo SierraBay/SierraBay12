@@ -57,7 +57,6 @@
 		/area/ship/scrap/crew/hallway/starboard= NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/maintenance/hallway = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/maintenance/lower = NO_SCRUBBER|NO_VENT,
-		/area/ship/scrap/maintenance/atmos = NO_SCRUBBER,
 		/area/ship/scrap/escape_port = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/escape_star = NO_SCRUBBER|NO_VENT,
 		/area/ship/scrap/shuttle/lift = NO_SCRUBBER|NO_VENT|NO_APC,
@@ -141,10 +140,12 @@
 	locked = 0
 	coverlocked = 0
 
-/obj/machinery/door/airlock/autoname/command
+/obj/machinery/door/airlock/autoname/bearcat
+
+/obj/machinery/door/airlock/autoname/bearcat/command/
 	door_color = COLOR_COMMAND_BLUE
 
-/obj/machinery/door/airlock/autoname/engineering
+/obj/machinery/door/airlock/autoname/bearcat/engineering/
 	door_color = COLOR_AMBER
 
 /obj/landmark/deadcap

@@ -333,6 +333,7 @@ MANTIDIFY(/obj/machinery/power/shield_generator, "mantid shield generator", "shi
 /obj/machinery/power/shield_generator/ascent
 	base_type = /obj/machinery/power/shield_generator/ascent
 	spinup_delay = 10
+	construct_state = /singleton/machine_construction/default/panel_closed/cannot_print
 
 /obj/item/stock_parts/circuitboard/shield_generator/ascent
 	name = "circuit board (mantid shield generator)"
