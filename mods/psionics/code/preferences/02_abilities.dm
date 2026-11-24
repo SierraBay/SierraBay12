@@ -13,13 +13,12 @@ GLOBAL_LIST_AS(psi_faculty2color, list(
 
 GLOBAL_LIST_AS(psi_threat_level2free_points, list(6, 8, 12, 16))
 
-// Сколько способностей можно выбрать внутри школы, в зависимости от её уровня: Blunt, Latent, Omega, Lamed
 GLOBAL_LIST_AS(psi_level2power_slots, list(0, 0, 5, 4))
 
 /datum/preferences
-	var/list/psi_abilities      // Школа (имя) -> уровень (индекс в psi_level2cost)
-	var/list/psi_powers         // Список id выбранных способностей (см. /singleton/psionic_power/proc/get_id)
-	var/psi_powers_set = FALSE  // Выбор способностей уже был сделан (или проставлен автоматически для старых персонажей)
+	var/list/psi_abilities
+	var/list/psi_powers
+	var/psi_powers_set = FALSE
 
 /datum/preferences/proc/get_psi_faculty_rank(faculty_name)
 	var/level = 1

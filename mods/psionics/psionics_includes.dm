@@ -74,6 +74,7 @@
 #include "code/faculties/kinesis/invisibility.dm"
 #include "code/faculties/kinesis/meditate.dm"
 #include "code/faculties/kinesis/metakinesis.dm"
+#include "code/faculties/kinesis/manifestation.dm"
 #include "code/faculties/kinesis/propel.dm"
 #include "code/faculties/kinesis/repulse.dm"
 #include "code/faculties/kinesis/retribute.dm"

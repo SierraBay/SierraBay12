@@ -270,7 +270,7 @@
 					new /obj/temporary(get_turf(target),3, 'icons/effects/effects.dmi', "electricity_constant")
 					playsound(D.loc, "sparks", 50, 1)
 			else
-				user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name], тебе нехватило [SPAN_INFO("знаний")] в этом."))
+				user.visible_message(SPAN_NOTICE("[user] прислоняет обе руки к [D.name]"), SPAN_NOTICE("Касаясь шлюза, ты понимаешь что тебе не хватает [SPAN_INFO("знаний")] в электрике."))
 				to_chat(SPAN_WARNING("Вы прислоняете свои руки к [D.name], пытаясь пропустить поток через его внутренние механизмы, но ничего не получается!"))
 				return
 

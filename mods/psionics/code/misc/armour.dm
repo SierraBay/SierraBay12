@@ -24,7 +24,7 @@
 				rebound.launch(targetturf, user.zone_sel.selecting)
 				// proj.redirect(proj.starting.x + rand(-2,2), proj.starting.x + rand(-2,2), get_turf(owner), owner) = Параша не работает, оставляю подсказку себе на потом
 				return AURA_FALSE|AURA_CANCEL
-			if(prob(kinesis_rank * 25) && owner.psi.stamina >= psi_spend_amount && owner.psi.has_power(/singleton/psionic_power/kinesis/metakinesis/element))
+			if(prob(kinesis_rank * 25) && owner.psi.stamina >= psi_spend_amount && owner.psi.has_power(/singleton/psionic_power/kinesis/metakinesis))
 				owner.psi.spend_power_armor(psi_spend_amount)
 				visible_message(SPAN_DANGER("\The [owner] поглощает [proj.name]!"))
 				new /obj/temporary(get_turf(src), 5, 'icons/effects/effects.dmi', "fire_goon")
