@@ -162,6 +162,12 @@
 	. = ..()
 	icon_state = "cimplanter2"
 
+/obj/item/implanter/psionic/on_update_icon()
+	if (!used)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter1"
+
 /obj/item/implanter/psionic/examine(mob/user, distance)
 	. = ..()
 	if(used)
