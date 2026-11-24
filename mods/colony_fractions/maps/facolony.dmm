@@ -1461,11 +1461,18 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "gq" = (
-/obj/paint/fleet/sfv_rook,
-/obj/machinery/door/blast/regular{
+/obj/machinery/button/blast_door{
+	name = "EMERGENCY EXIT";
 	id_tag = "facolony_base_emg_exit";
-	name = "Ventilation";
-	dir = 4
+	dir = 1;
+	pixel_y = -24;
+	req_access = list("ACCESS_FACOLONY");
+	pixel_x = 6
+	},
+/obj/structure/sign/warning/internals_required{
+	pixel_y = -32;
+	dir = 1;
+	pixel_x = -6
 	},
 /turf/simulated/floor/reinforced,
 /area/map_template/facolony/unspecified)
@@ -4414,10 +4421,9 @@
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/science)
 "sS" = (
-/obj/paint/fleet/sfv_rook,
 /obj/machinery/door/blast/regular{
 	id_tag = "facolony_base_emg_exit";
-	name = "External Section";
+	name = "Ventilation Shaft";
 	dir = 4
 	},
 /turf/simulated/floor/reinforced,
@@ -5284,6 +5290,10 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/structure/sign/warning/vacuum{
+	dir = 1;
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
@@ -9535,19 +9545,13 @@
 /obj/item/rig_module/vision/nvg,
 /obj/item/rig_module/voice,
 /obj/item/rig_module/cooling_unit,
-/obj/machinery/button/blast_door{
-	name = "EXTERNAL EMERGENCY EXIT";
-	id_tag = "facolony_base_emg_exit";
-	dir = 1;
-	pixel_y = -24;
-	req_access = list("ACCESS_FACOLONY");
-	pixel_x = 6
-	},
 /obj/machinery/door/window/brigdoor/northright,
-/obj/structure/sign/warning/internals_required{
-	pixel_y = -32;
-	dir = 1;
-	pixel_x = -6
+/obj/item/paper/sticky{
+	language = "Spacer";
+	info = "Меня тоже можно толкнуть";
+	pixel_y = -10;
+	pixel_x = 24;
+	color = "#c97b1c"
 	},
 /turf/simulated/floor/tiled/dark,
 /area/map_template/facolony/unspecified)
@@ -10214,6 +10218,10 @@
 	},
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/structure/sign/warning/vacuum{
+	dir = 1;
+	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/cargohatch)
@@ -11692,8 +11700,11 @@
 /area/map_template/facolony/engineering)
 "XX" = (
 /obj/structure/kitchenspike,
+/obj/machinery/atmospherics/valve/shutoff/fuel,
+/obj/floor_decal/steeldecal/steel_decals_central6{
+	dir = 8
+	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/cargo2)
 "XZ" = (
@@ -14435,7 +14446,7 @@ Ec
 Ec
 Ec
 Ec
-sS
+GO
 mo
 Es
 oz
@@ -14518,22 +14529,22 @@ QP
 QP
 QP
 QP
+uo
+uo
+Ec
+sS
+mo
+mo
+mo
+mo
+mo
+QP
+QP
+QP
+QP
 QP
 uo
-vW
 uo
-mo
-mo
-mo
-mo
-mo
-QP
-QP
-QP
-QP
-QP
-QP
-QP
 QP
 QP
 QP
