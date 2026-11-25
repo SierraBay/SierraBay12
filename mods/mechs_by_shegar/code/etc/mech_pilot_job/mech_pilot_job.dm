@@ -61,4 +61,3 @@
 	name = OUTFIT_JOB_NAME("Mechanized Systems Operator - Sierra")
 	uniform = /obj/item/clothing/under/rank/security/corp/mech_pilot
 	shoes = /obj/item/clothing/shoes/jackboots
-	id_types = list(/obj/item/card/id/sierra/crew/security/mech_pilot)
