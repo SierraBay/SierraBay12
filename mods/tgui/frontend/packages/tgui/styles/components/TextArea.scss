@@ -23,12 +23,17 @@ $border-radius: Input.$border-radius !default;
   line-height: base.em(17px);
   box-sizing: border-box;
   width: 100%;
+  overflow: hidden;
 }
 
 .TextArea--fluid {
   display: block;
   width: auto;
   height: auto;
+}
+
+.TextArea--noborder {
+  border: 0;
 }
 
 .TextArea__textarea {
@@ -54,6 +59,7 @@ $border-radius: Input.$border-radius !default;
   // Make sure the div and the textarea wrap words in the same way
   word-wrap: break-word;
   overflow: hidden;
+  resize: none;
 
   &::placeholder {
     font-style: italic;
@@ -65,4 +71,17 @@ $border-radius: Input.$border-radius !default;
     font-style: italic;
     color: rgba(125, 125, 125, 0.75);
   }
+}
+
+.TextArea__textarea--scrollable {
+  overflow-y: auto;
+}
+
+.TextArea__nowrap {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.TextArea__textarea_custom {
+  pointer-events: none;
 }
