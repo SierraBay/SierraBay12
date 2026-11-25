@@ -1,35 +1,3 @@
-//ЗАТЫЧКА ЧТОБ ЮНИТ ТЕСТ УСПОКОИЛСЯ, НЕ ТРОГАТь. Забейте ваще на поддержку кода ниже, он нужен один раз чтоб
-//юнит тест пропустил
-/datum/job/security_mech_pilot
-	title = "Mechanized Systems Operator"
-	department = "Security"
-	department_flag = SEC
-	total_positions = 1
-	spawn_positions = 1
-	selection_color = "#601c1c"
-	hud_icon = "hudblank"
-	outfit_type = /singleton/hierarchy/outfit/job/security/officer
-	supervisors = "Главе Службы безопасности и Смотрителю (сержанту)"
-	economic_power = 6
-	minimal_player_age = 10
-	minimum_character_age = list(SPECIES_HUMAN = 22)
-	ideal_character_age = 25
-	alt_titles = list("Combat Mech Pilot")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /singleton/hierarchy/skill/general/EVA/mech
 	name = "Пилотирование меха"
 	desc = "Позволяет управлять мехами - грозными боевыми единицами и незаменимой техникой в современном мире."

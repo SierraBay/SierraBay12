@@ -4,6 +4,7 @@
 	desc = "A security hardsuit designed for mech pilots."
 	icon = 'mods/hardsuits/icons/rigs/rig_modules.dmi'
 	item_icons = list(slot_back_str = 'mods/hardsuits/icons/rigs/onmob_rig_back.dmi')
+	on_turf_icon = 'mods/hardsuits/icons/rigs/on_floor.dmi'
 	icon_state = "mech_pilot"
 	offline_vision_restriction = TINT_NONE
 	item_icons = list(
@@ -29,16 +30,16 @@
 
 /obj/item/clothing/head/helmet/space/rig/mech_pilot
 	light_overlay = "helmet_light_dual"
-	camera = /obj/machinery/camera/network/helmet
+	camera = /obj/machinery/camera/network/security
 	icon = 'mods/hardsuits/icons/rigs/obj_head.dmi'
 	icon_state = "mech_pilot"
-	item_icons = list(slot_head_str = 'mods/hardsuits/icons/rigs/onmob_suit.dmi')
+	item_icons = list(slot_head_str = 'mods/hardsuits/icons/rigs/onmob_head.dmi')
 
 
 /obj/item/clothing/suit/space/rig/mech_pilot
 	icon = 'mods/hardsuits/icons/rigs/obj_suit.dmi'
 	icon_state = "mech_pilot"
-	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/rigs/onmob_head.dmi')
+	item_icons = list(slot_wear_suit_str = 'mods/hardsuits/icons/rigs/onmob_suit.dmi')
 	armor = list(
 		bio = ARMOR_BIO_SHIELDED,
 		rad = ARMOR_RAD_MINOR
@@ -64,7 +65,8 @@
 /obj/item/clothing/shoes/magboots/rig/mech_pilot
 	icon = 'mods/hardsuits/icons/rigs/obj_feet.dmi'
 	icon_state = "mech_pilot"
-	item_icons = list(slot_head_str = 'mods/hardsuits/icons/rigs/onmob_feet.dmi')
+	item_icons = list(slot_shoes_str = 'mods/hardsuits/icons/rigs/onmob_feet.dmi')
+
 
 
 

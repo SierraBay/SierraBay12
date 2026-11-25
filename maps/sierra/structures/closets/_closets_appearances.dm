@@ -196,14 +196,13 @@
 	)
 
 /singleton/closet_appearance/secure_closet/sierra/security/mech_pilot
-	color = COLOR_GUNMETAL
-	decals = list(
-		"lower_holes"
-	)
-	extra_decals = list(
-		"stripe_vertical_mid_full" = COLOR_NT_RED,
-		"security" = COLOR_NT_RED
-	)
+	color = null //Пёрнет рантаймом при инициализации. TODO Переработать код рендера.
+	base_icon = 'mods/sierra_resprite/icons/mech_closet.dmi'
+	decal_icon = 'mods/sierra_resprite/icons/mech_closet.dmi'
+	decals = null
+	extra_decals = null
+
+
 
 /singleton/closet_appearance/secure_closet/sierra/command
 	color = COLOR_WALL_GUNMETAL

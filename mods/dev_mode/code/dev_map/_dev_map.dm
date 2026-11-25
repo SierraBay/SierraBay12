@@ -57,6 +57,7 @@
 	#include "../../../../maps/sierra/items/clothing/override.dm"
 	#include "../../../../maps/sierra/items/clothing/storages.dm"
 	#include "../../../../maps/sierra/items/clothing/security.dm"
+	#include "../../../../maps/sierra/items/clothing/mech_pilot_rig.dm"
 	// --- JOB SECTION --- //
 	#include "../../../../maps/sierra/job/_job_defines.dm"
 	#include "../../../../maps/sierra/job/access.dm"

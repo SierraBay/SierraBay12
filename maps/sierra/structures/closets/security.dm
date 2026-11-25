@@ -174,7 +174,7 @@
 /obj/structure/closet/secure_closet/security/sierra/mech_pilot
 	name = "Mechanized Systems Operator's locker"
 	req_access = list(access_mech_security)
-	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/security
+	closet_appearance = /singleton/closet_appearance/secure_closet/sierra/security/mech_pilot
 
 /obj/structure/closet/secure_closet/security/sierra/mech_pilot/WillContain()
 	return list(

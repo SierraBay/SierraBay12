@@ -7,3 +7,4 @@
 #include "paint_kit.dm"
 #include "paint_override.dm"
 #include "roboscan.dm"
+#include "mech_pilot_job.dm"
