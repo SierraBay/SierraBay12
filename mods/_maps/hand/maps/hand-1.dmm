@@ -3407,7 +3407,8 @@
 /area/ship/hand/shuttle/pod_hand_one)
 "pD" = (
 /obj/machinery/atmospherics/binary/pump/high_power{
-	dir = 4
+	dir = 4;
+	name = "Shuttle CO2 Supply"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -4046,6 +4047,11 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine/port)
+"st" = (
+/obj/floor_decal/industrial/outline/red,
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/maintenance/atmos/fuel)
 "su" = (
 /obj/machinery/door/blast/regular{
 	id_tag = "carpod4"
@@ -16725,8 +16731,8 @@ Np
 zO
 wY
 QD
-Kg
-Kg
+st
+st
 uQ
 QR
 Lu

@@ -336,6 +336,13 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "Airlock"
 	stripe_color = COLOR_GRAY20
 
+/obj/machinery/door/airlock/multi_tile/facolony/glass
+	name = "Glass Airlock"
+	damage_hitsound = 'sound/effects/Glasshit.ogg'
+	glass = TRUE
+	opacity = 0
+	stripe_color = COLOR_GRAY20
+
 /obj/machinery/door/airlock/facolony/general
 	name = "Airlock"
 	stripe_color = COLOR_GRAY20
@@ -485,6 +492,7 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	warmup_time = 10
 	move_time = 110
 	ceiling_type = /turf/simulated/floor/shuttle_ceiling
+	flags = SHUTTLE_FLAGS_PROCESS
 	shuttle_area = list(
 	/area/map_template/facolony/command,
 	/area/map_template/facolony/armory,
