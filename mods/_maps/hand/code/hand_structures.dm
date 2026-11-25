@@ -1,3 +1,16 @@
+/obj/machinery/power/apc/hand
+	req_access = list(access_away_hand)
+
+/obj/machinery/power/apc/hand/high
+	cell_type = /obj/item/cell/high
+
+/obj/machinery/power/apc/hand/critical
+	is_critical = 1
+
+/obj/machinery/power/apc/hand/critical/high
+	is_critical = 1
+	cell_type = /obj/item/cell/high
+
 	///////////
 	//CLOSETS//
 	///////////

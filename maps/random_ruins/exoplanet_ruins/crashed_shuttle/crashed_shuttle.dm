@@ -22,7 +22,7 @@
 
 /datum/shuttle/autodock/overmap/graysontug
 	name = "GM Tug"
-	dock_target = "graysontug_shuttle"
+	dock_target = "graysontugrear_shuttle"
 	current_location = "nav_graysontug_start"
 	logging_home_tag = "nav_graysontug_start"
 	range = 1

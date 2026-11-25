@@ -103,11 +103,11 @@
 	dir = 1
 	},
 /obj/floor_decal/industrial/outline/yellow,
-/obj/machinery/power/apc/facolony{
+/obj/structure/cable/cyan,
+/obj/machinery/power/apc/facolony/critical/high{
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/cable/cyan,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/engineering)
 "az" = (
@@ -4576,13 +4576,13 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/facolony{
-	pixel_y = -24
-	},
 /obj/machinery/light_switch{
 	dir = 1;
 	pixel_y = -20;
 	pixel_x = 12
+	},
+/obj/machinery/power/apc/facolony/critical{
+	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)

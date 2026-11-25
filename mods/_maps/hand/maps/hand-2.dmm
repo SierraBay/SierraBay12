@@ -33,14 +33,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/structure/catwalk,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/power/apc/hand{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper)
 "aE" = (
@@ -123,9 +121,9 @@
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "hand_upper_sensor_chamber";
-	pixel_x = -12;
 	pixel_y = 24;
-	frequency = 1380
+	frequency = 1380;
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -688,7 +686,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -815,7 +812,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -960,11 +956,9 @@
 /obj/floor_decal/spline/fancy/wood{
 	dir = 5
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hand{
 	dir = 4;
-	name = "east bump";
-	pixel_x = 24;
-	req_access = list("ACCESS_HAND")
+	pixel_x = 24
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/hand/crew/bar)
@@ -1033,13 +1027,11 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "east bump";
-	pixel_x = 24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/floor_decal/industrial/outline/yellow,
+/obj/machinery/power/apc/hand{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/tiled/monotile,
 /area/ship/hand/crew/hydro)
 "iY" = (
@@ -1103,6 +1095,11 @@
 	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
+"ky" = (
+/obj/machinery/biogenerator,
+/obj/floor_decal/industrial/outline/green,
+/turf/simulated/floor/tiled,
+/area/ship/hand/crew/hydro)
 "kC" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 4
@@ -1350,19 +1347,16 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "north bump";
-	pixel_x = 0;
-	pixel_y = 24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/machinery/light_switch{
 	dir = 4;
 	pixel_x = -21;
 	pixel_y = -10
 	},
 /obj/random/soap,
+/obj/machinery/power/apc/hand{
+	dir = 1;
+	pixel_y = 24
+	},
 /turf/simulated/floor/tiled/freezer,
 /area/ship/hand/crew/toilet)
 "nJ" = (
@@ -1474,6 +1468,13 @@
 	dir = 4;
 	pixel_x = -22;
 	req_access = list("ACCESS_HAND")
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
@@ -1729,7 +1730,8 @@
 /obj/machinery/access_button/airlock_interior{
 	frequency = 1380;
 	master_tag = "hand_upper";
-	pixel_y = -23
+	pixel_y = -24;
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -1764,6 +1766,27 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/cargo)
+"rt" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/multi_tile/glass/civilian{
+	name = "Hallway"
+	},
+/obj/structure/catwalk,
+/obj/machinery/door/blast/regular/open{
+	name = "Bridge Blast Doors";
+	id_tag = "hand_hallway"
+	},
+/turf/simulated/floor/plating,
+/area/ship/hand/crew/hallway/upper)
 "rz" = (
 /obj/structure/table/rack{
 	dir = 8
@@ -2488,6 +2511,7 @@
 /area/ship/hand/crew/hallway/upper/aft)
 "zs" = (
 /obj/decal/cleanable/greenglow,
+/obj/floor_decal/corner/green/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hydro)
 "zz" = (
@@ -2541,11 +2565,12 @@
 /obj/machinery/embedded_controller/radio/airlock/airlock_controller{
 	frequency = 1380;
 	id_tag = "hand_upper";
-	pixel_y = 26;
+	pixel_y = 24;
 	tag_airpump = "hand_upper_pump";
 	tag_chamber_sensor = "hand_upper_sensor_chamber";
 	tag_exterior_door = "hand_upper_external_door";
-	tag_interior_door = "hand_upper_interior_door"
+	tag_interior_door = "hand_upper_interior_door";
+	req_access = list("ACCESS_HAND")
 	},
 /obj/floor_decal/industrial/warning/cee{
 	dir = 4
@@ -2701,11 +2726,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hand{
 	dir = 8;
-	name = "west bump";
-	pixel_x = -24;
-	req_access = list("ACCESS_HAND")
+	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew/kitchen)
@@ -2865,11 +2888,9 @@
 	icon_state = "0-2"
 	},
 /obj/floor_decal/industrial/outline/blue,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hand{
 	dir = 4;
-	name = "east bump";
-	pixel_x = 24;
-	req_access = list("ACCESS_HAND")
+	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay)
@@ -3109,6 +3130,11 @@
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/fore)
+"Er" = (
+/obj/machinery/seed_extractor,
+/obj/floor_decal/industrial/outline/green,
+/turf/simulated/floor/tiled,
+/area/ship/hand/crew/hydro)
 "Et" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -3170,18 +3196,16 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/item/inflatable_dispenser,
 /obj/structure/table/rack,
 /obj/item/storage/briefcase/inflatable,
 /obj/item/storage/briefcase/inflatable,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/power/apc/hand{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -3206,10 +3230,6 @@
 /obj/floor_decal/industrial/hatch/yellow,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/blast/regular/open{
-	name = "Bridge Blast Doors";
-	id_tag = "hand_hallway"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/multi_tile/glass/civilian{
 	name = "Hallway"
@@ -3448,13 +3468,6 @@
 	dir = 4
 	},
 /obj/structure/catwalk,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "north bump";
-	pixel_x = 0;
-	pixel_y = 24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -3464,6 +3477,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/power/apc/hand{
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/upper/aft)
@@ -3580,10 +3597,6 @@
 "LA" = (
 /obj/machinery/door/firedoor,
 /obj/floor_decal/industrial/hatch/yellow,
-/obj/machinery/door/blast/regular/open{
-	name = "Bridge Blast Doors";
-	id_tag = "hand_hallway"
-	},
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
 "LD" = (
@@ -3719,6 +3732,19 @@
 	},
 /turf/simulated/floor/wood/walnut,
 /area/ship/hand/crew/bar)
+"Na" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/ship/hand/crew/hallway/upper/aft)
 "Nf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -4158,6 +4184,15 @@
 /obj/paint/nt_white,
 /turf/simulated/wall/r_wall,
 /area/ship/hand/medbay/storage)
+"Sz" = (
+/obj/machinery/door/firedoor,
+/obj/floor_decal/industrial/hatch/yellow,
+/obj/machinery/door/blast/regular/open{
+	name = "Bridge Blast Doors";
+	id_tag = "hand_hallway"
+	},
+/turf/simulated/floor/tiled/techmaint,
+/area/ship/hand/crew/hallway/upper)
 "SD" = (
 /obj/structure/window/reinforced/polarized{
 	dir = 8;
@@ -4296,15 +4331,13 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/crew/hallway/upper/fore)
 "Un" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "west bump";
-	pixel_x = -24;
-	req_access = list("ACCESS_HAND")
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/hand{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/engineering/storage)
@@ -4320,6 +4353,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/reagent_containers/spray/plantbgone,
+/obj/item/material/minihoe,
 /turf/simulated/floor/tiled/monotile,
 /area/ship/hand/crew/hydro)
 "UE" = (
@@ -4478,8 +4513,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	name = "south bump";
+/obj/machinery/power/apc/hand{
 	pixel_y = -24
 	},
 /turf/simulated/floor/tiled/steel_grid,
@@ -4621,12 +4655,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hand{
 	dir = 1;
-	name = "north bump";
-	pixel_x = 0;
-	pixel_y = 24;
-	req_access = list("ACCESS_HAND")
+	pixel_y = 24
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/crew)
@@ -4656,6 +4687,19 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/ship/hand/airlock)
+"XR" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/structure/catwalk,
+/turf/simulated/floor/plating,
+/area/ship/hand/crew/hallway/upper/aft)
 "XU" = (
 /obj/machinery/appliance/cooker/grill,
 /obj/floor_decal/industrial/outline/yellow,
@@ -4687,6 +4731,10 @@
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
+/turf/simulated/floor/tiled,
+/area/ship/hand/crew/hydro)
+"YI" = (
+/obj/floor_decal/corner/green/diagonal,
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hydro)
 "YL" = (
@@ -4755,8 +4803,9 @@
 /obj/machinery/access_button/airlock_exterior{
 	frequency = 1380;
 	master_tag = "hand_upper";
-	pixel_y = -23;
-	pixel_z = 1
+	pixel_y = -24;
+	pixel_z = 1;
+	req_access = list("ACCESS_HAND")
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/airlock)
@@ -4789,6 +4838,12 @@
 "ZU" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/oil,
+/obj/machinery/vending/cigarette{
+	name = "hacked cigarette machine";
+	prices = list();
+	products = list(/obj/item/storage/fancy/smokable/transstellar=10,/obj/item/storage/fancy/matches/matchbox=10,/obj/item/flame/lighter/zippo/random=4,/obj/item/clothing/mask/smokable/cigarette/cigar/havana=2);
+	dir = 1
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/cargo)
 "ZW" = (
@@ -4808,11 +4863,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/hand{
 	dir = 4;
-	name = "east bump";
-	pixel_x = 24;
-	req_access = list("ACCESS_HAND")
+	pixel_x = 24
 	},
 /turf/simulated/floor/tiled/white,
 /area/ship/hand/medbay/storage)
@@ -11242,9 +11295,9 @@ Pg
 aw
 OQ
 mQ
-mQ
-mQ
-mQ
+YI
+ky
+YI
 bK
 OQ
 aw
@@ -11364,9 +11417,9 @@ UY
 aw
 OQ
 mQ
-mQ
+YI
 JR
-mQ
+YI
 mQ
 OQ
 aw
@@ -11487,8 +11540,8 @@ aw
 OQ
 mQ
 zs
-mQ
-mQ
+Er
+YI
 mQ
 aH
 aw
@@ -12098,8 +12151,8 @@ lc
 FR
 FR
 Ou
-BW
-aP
+Na
+XR
 Ej
 eS
 gH
@@ -12435,7 +12488,7 @@ Bq
 Bv
 vx
 LY
-wE
+rt
 Cd
 Cd
 qK
@@ -12557,7 +12610,7 @@ ce
 gQ
 gQ
 gQ
-bf
+Sz
 sH
 Vl
 zF

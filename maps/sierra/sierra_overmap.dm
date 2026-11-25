@@ -31,12 +31,15 @@
 		"SFV Arbiter" = list("nav_deck4_event_dock"), // maps/event/sfv_arbiter/sfv_arbiter.dm shuttle,
 		"ICGNV Hound" = list("nav_deck4_event_dock"), // maps/event/iccgn_ship/icgnv_hound.dm shuttle,
 		"SNZ-210 Personnel Carrier" = list("nav_deck4_skrellscout"), // maps/random_ruins/exoplanet_ruins/transshipment/transshipment.dm shuttle,
-		"GM Tug" = list("nav_merchant_out"), // maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
+		"GM Tug" = list("nav_merchant_out", "nav_admin_out"), // maps/random_ruins/exoplanet_ruins/crashed_shuttle/crashed_shuttle.dm shuttle
 		"SRV Venerable Catfish" = list("nav_deck3_catfish"), // mods/_maps/verne/verne.dme shuttle
 		"Lepidopterax" = list("nav_ascent_lepido_sierra"), // mods/_maps/ascent_seedship/code/ascent_seedship_shuttles.dm
 		"Trichopterax" = list("nav_ascent_tricho_sierra"), // mods/_maps/ascent_seedship/code/ascent_seedship_shuttles.dm
 		"Ascent Caulship" = list("nav_ascent_caulship_sierra"), // mods/_maps/ascent_caulship/code/ascent_caulship_shuttles.dm
-		"IPV Celeste Hauler" = list("nav_celestehauler_sierra", "nav_celestehauler_sierracargo") // mods/colony_fractions/code/facolony.dm
+		"IPV Celeste Hauler" = list("nav_celestehauler_sierra", "nav_celestehauler_sierracargo"), // mods/colony_fractions/code/facolony.dm
+		"EE S-class 18-24-1" = list("nav_handpodone_sierra_fore"), // mods/_maps/hand/code/hand_shuttles.dm
+		"Hyena GM Tug-1" = list("nav_handtugone_sierra_fore", "nav_handtugone_sierra_stbd_one", "nav_handtugone_sierra_stbd_three"), // mods/_maps/hand/code/hand_shuttles.dm
+		"Hyena GM Tug-2" = list("nav_handtugtwo_sierra_stbd_one", "nav_handtugtwo_sierra_stbd_three") // mods/_maps/hand/code/hand_shuttles.dm
 		)
 
 	initial_generic_waypoints = list(

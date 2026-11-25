@@ -56,6 +56,10 @@
 		/datum/shuttle/autodock/overmap/pod_hand_one,
 		/datum/shuttle/autodock/overmap/pod_hand_two
 		)
+	apc_test_exempt_areas = list(
+		/area/ship/hand/maintenance/solarport = NO_SCRUBBER|NO_VENT|NO_APC,
+		/area/ship/hand/maintenance/solarstarboard = NO_SCRUBBER|NO_VENT|NO_APC
+	)
 
 
 /obj/shuttle_landmark/nav_hand/nav1
