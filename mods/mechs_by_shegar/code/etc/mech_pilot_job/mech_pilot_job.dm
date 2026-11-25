@@ -13,6 +13,7 @@
 	minimum_character_age = list(SPECIES_HUMAN = 22)
 	ideal_character_age = 25
 	alt_titles = list("Combat Mech Pilot")
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/mech_pilot
 
 
 	skill_points = 10 //Почему 10 поинтов? 6 поинта за мехводство, 4 за пилотирование. 20 - 6 - 4
@@ -58,4 +59,6 @@
 
 /singleton/hierarchy/outfit/job/sierra/crew/security/mech_pilot
 	name = OUTFIT_JOB_NAME("Mechanized Systems Operator - Sierra")
+	uniform = /obj/item/clothing/under/rank/security/corp/mech_pilot
 	shoes = /obj/item/clothing/shoes/jackboots
+	id_types = list(/obj/item/card/id/sierra/crew/security/mech_pilot)
