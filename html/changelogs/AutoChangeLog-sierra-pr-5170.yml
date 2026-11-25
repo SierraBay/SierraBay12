@@ -1,0 +1,5 @@
+author: ImJustKisik
+changes:
+  - bugfix: Починил спам подсистемы опыта в логи каждые 0.5 секунды
+  - admin: В логи SAY, WHISPER и EMOTE теперь пишутся координаты
+delete-after: true
