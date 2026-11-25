@@ -10,7 +10,7 @@
     "highlight.js": "^11.9.0",
     "inferno": "^7.4.11",
     "inferno-vnode-flags": "^7.4.11",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.3.2",
     "prop-types": "^15.8.1",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
