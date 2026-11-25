@@ -6987,10 +6987,10 @@
 	name = "Troops Section";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/dark/monotile,
@@ -9930,6 +9930,10 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/ship/patrol/command/bridge)
+"KR" = (
+/obj/shuttle_landmark/facolony/celestehauler/sentinel,
+/turf/space,
+/area/space)
 "KT" = (
 /obj/structure/railing/mapped,
 /obj/structure/ship_munition/disperser_charge/emp/military,
@@ -18487,7 +18491,7 @@ aa
 aa
 aa
 aa
-aa
+KR
 aa
 aa
 aa

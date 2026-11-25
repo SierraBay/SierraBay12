@@ -22,7 +22,10 @@
 		message = sanitize(message)
 		if (!message)
 			return
-		log_say("[key_name(src)] : [message]")
+		// [SIERRA-EDIT]
+		// log_say("[key_name(src)] : [message]") // SIERRA-EDIT - ORIGINAL
+		log_say("[key_name(src)] : [message]", src)
+		// [/SIERRA-EDIT]
 		if (stat == 2)
 			return say_dead(message)
 

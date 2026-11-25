@@ -110,7 +110,7 @@
 /area/shuttle/petrov/monitoring
 	name = "Shuttle - Petrov - Control room"
 	icon_state = "shuttlered"
-	req_access = list(list(access_petrov, access_sec_doors))
+	req_access = list(list(access_petrov_helm, access_sec_doors))
 
 /area/shuttle/petrov/storage_primary
 	name = "Shuttle - Petrov - Primary Storage"

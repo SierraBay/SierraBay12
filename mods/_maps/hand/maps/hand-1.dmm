@@ -5623,6 +5623,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
+/obj/machinery/atmospherics/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine)
 "BV" = (

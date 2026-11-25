@@ -147,6 +147,7 @@
 "DF" = (/obj/machinery/door/airlock/external/bolted/cycling{id_tag = "cargo_in"},/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor,/area/ship/scrap/cargo/lower)
 "DH" = (/turf/simulated/floor/tiled,/area/ship/scrap/maintenance/storage)
 "Ec" = (/obj/machinery/door/airlock/autoname/bearcat,/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/cable/green{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/tiled/monotile,/area/ship/scrap/maintenance/techstorage)
+"EB" = (/obj/shuttle_landmark/facolony/celestehauler/bearcat,/turf/space,/area/space)
 "EN" = (/obj/paint/brown,/turf/simulated/wall/r_wall,/area/ship/scrap/crew/dorms1)
 "EY" = (/obj/machinery/door/airlock/autoname/bearcat,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/tiled/monotile,/area/ship/scrap/escape_star)
 "Fa" = (/obj/machinery/power/apc{dir = 1},/obj/structure/table/rack,/obj/item/tank/jetpack/oxygen,/obj/item/tank/jetpack/oxygen,/obj/structure/cable/green{d2 = 2; icon_state = "0-2"},/obj/item/device/suit_cooling_unit,/obj/item/device/suit_cooling_unit,/turf/simulated/floor/tiled,/area/ship/scrap/maintenance/eva)
@@ -301,7 +302,7 @@ lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
-lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
+lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzEBlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz
 lzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlzlz

@@ -36,10 +36,14 @@
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
+			var/raw_input
 			if(multiline)
-				return input(user, message, title, default) as message|null
+				raw_input = input(user, message, title, default) as message|null
 			else
-				return input(user, message, title, default) as text|null
+				raw_input = input(user, message, title, default) as text|null
+			if(isnull(raw_input))
+				return null
+			return max_length ? copytext_char(trimtext(raw_input), 1, max_length + 1) : trimtext(raw_input)
 
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, tgui_state)
 
@@ -150,6 +154,8 @@
 		if("submit")
 			if(!max_length)
 				return
+			if(!istext(params["entry"]))
+				CRASH("A non-text value was input into TGUI Input Text by [usr]")
 			if(length_char(params["entry"]) > max_length)
 				CRASH("[usr] typed a text string longer than the max length")
 			if(encode && (length_char(html_encode(params["entry"])) > max_length))
@@ -170,7 +176,7 @@
  * If the string is longer than the max length, it will be clipped.
  */
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(isnull(entry))
+	if(!istext(entry))
 		return
 
 	var/converted_entry = encode ? html_encode(entry) : entry

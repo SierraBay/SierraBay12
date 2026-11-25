@@ -60,6 +60,10 @@
 	department_account_key = ACCOUNT_VERNE
 	can_switch_account = TRUE
 
+/obj/machinery/r_n_d/server/verne
+	name = "Colony R&D Server"
+	server_id = 10
+
 // ── Colony console ────────────────────────────────────────────────────────────
 
 /obj/machinery/computer/rdconsole/colony
@@ -67,6 +71,10 @@
 	id = 11
 	department_account_key = ACCOUNT_COLONY
 	can_switch_account = TRUE
+
+/obj/machinery/r_n_d/server/colony
+	name = "Colony R&D Server"
+	server_id = 11
 
 // ── Pre-filled invoices for away sites ───────────────────────────────────────
 // Spawnable in the world (e.g. on Verne / colony) so crew knows the account
@@ -78,3 +86,4 @@
 
 /obj/item/paper/manifest/rnd_invoice/colony
 	name = "Colony R&D sales invoice"
+	language = LANGUAGE_SPACER
