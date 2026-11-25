@@ -879,7 +879,10 @@
 	else
 		target.show_message(SPAN_NOTICE("You hear a voice that seems to echo around the room: [say]"))
 	usr.show_message(SPAN_NOTICE("You project your mind into [target.real_name]: [say]"))
-	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]")
+	// [SIERRA-EDIT]
+	// log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]") // SIERRA-EDIT - ORIGINAL
+	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]", usr)
+	// [/SIERRA-EDIT]
 	for(var/mob/observer/ghost/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
 

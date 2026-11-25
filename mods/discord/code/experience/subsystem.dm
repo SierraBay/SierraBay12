@@ -43,8 +43,8 @@ SUBSYSTEM_DEF(experience)
 		if (SSEXP_STEP_WAIT)
 			populate_select_queue()
 		if (SSEXP_STEP_GET_EXP)
-			execute_select_queue()
-			get_player_exp()
+			if (execute_select_queue())
+				get_player_exp()
 		if (SSEXP_STEP_UPDATE_EXP)
 			populate_update_queue()
 
@@ -56,7 +56,6 @@ SUBSYSTEM_DEF(experience)
 	// Get a list of clients to process
 	// This is copied so that clients joining in the middle of this dont break things
 	clients_to_process = GLOB.clients.Copy()
-	log_debug("Starting EXP update for [LAZYLEN(clients_to_process)] clients. (Adding [minutes_to_add] minutes)")
 
 	select_queries_queue = list()
 	for (var/client/client as anything in clients_to_process)
@@ -68,6 +67,10 @@ SUBSYSTEM_DEF(experience)
 		var/sql_ckey = sql_sanitize_text(client.ckey)
 		select_queries_queue[client.ckey] = dbcon.NewQuery("SELECT `exp`, `species_exp` FROM `erro_player` WHERE `ckey` = '[sql_ckey]'")
 
+	if (!length(select_queries_queue))
+		return
+
+	log_debug("Starting EXP update for [length(clients_to_process)] clients. (Adding [minutes_to_add] minutes)")
 	step = SSEXP_STEP_GET_EXP
 
 
@@ -77,7 +80,7 @@ SUBSYSTEM_DEF(experience)
 	var/i = 1
 	for (var/ckey in select_queries_queue)
 		if (i++ > max_queries_per_tick)
-			return
+			return FALSE
 
 		var/DBQuery/query = select_queries_queue[ckey]
 		query.Execute()
@@ -88,6 +91,7 @@ SUBSYSTEM_DEF(experience)
 	// When all the queue was processed we can continue to updates
 	// Next will be called proc get_player_exp() and next tick - next step
 	step = SSEXP_STEP_UPDATE_EXP
+	return TRUE
 
 
 /datum/controller/subsystem/experience/proc/get_player_exp()
@@ -186,9 +190,10 @@ SUBSYSTEM_DEF(experience)
 
 		playtime_history_update_queries += update_query_history
 
-		execute_update_queue()
+	if (length(player_update_queries))
+		log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")
 
-	log_debug("Successfully requested update of all EXP data in [(world.realtime - last_check)/10]s")
+	execute_update_queue()
 
 /datum/controller/subsystem/experience/proc/execute_update_queue()
 
