@@ -1,6 +1,9 @@
 /datum/map_template/ruin/away_site/mininghome
 	prefix = "mods/_maps/mininghome/"
 	suffixes = list("mininghome.dmm")
+	apc_test_exempt_areas = list(
+		/area/map_template/mininghome_eva = NO_SCRUBBER|NO_VENT
+	)
 
 /mob/living/simple_animal/hostile/sand_lurker
 	name = "cosmopterid"

@@ -25,7 +25,7 @@
 	spawn_cost = 1
 	area_usage_test_exempted_root_areas = list(/area/ship)
 	apc_test_exempt_areas = list(
-		/area/ship/lost_truck/exterior = NO_SCRUBBER|NO_VENT
+		/area/ship/lost_truck/exterior = NO_SCRUBBER
 	)
 
 
