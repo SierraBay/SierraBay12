@@ -18,6 +18,7 @@
 	burn_delay = 5 SECONDS //было 10 секунд. нерезонно огромный кд для ускорения трастеров
 	initial_restricted_waypoints = list(
 		"Exploration Shuttle" = list("nav_bearcat_port_dock_shuttle"),
+		"IPV Celeste Hauler" = list("nav_celestehauler_bearcat") // mods/colony_fractions/code/facolony.dm
 	)
 
 /obj/overmap/visitable/ship/landable/bearcat

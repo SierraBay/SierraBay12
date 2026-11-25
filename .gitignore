@@ -61,3 +61,6 @@ package-lock.json
 
 # ignore local selected map
 /maps/using.dm
+
+# bootstrapped tools cache
+tools/bootstrap/.cache/

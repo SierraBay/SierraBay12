@@ -17,6 +17,7 @@
 	item_state = "device"
 
 	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/music_player/csplayer/on_update_icon()
 	if(tape && (mode == (1 || 2)))

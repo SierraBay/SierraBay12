@@ -45,8 +45,9 @@
 			else
 				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 				if (action == "Switch to old chat")
-					winset(src, "output", "is-visible=true;is-disabled=false")
-					winset(src, "browseroutput", "is-visible=false")
+					// [SIERRA-EDIT] - TGUI - Select the legacy chat pane.
+					set_chat_output(FALSE)
+					// [/SIERRA-EDIT]
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after recreating the chatOutput and forcing a load()")
 
 	else if (chatOutput.loaded)
@@ -66,8 +67,9 @@
 					else
 						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 						if (action == "Switch to old chat")
-							winset(src, "output", "is-visible=true;is-disabled=false")
-							winset(src, "browseroutput", "is-visible=false")
+							// [SIERRA-EDIT] - TGUI - Select the legacy chat pane.
+							set_chat_output(FALSE)
+							// [/SIERRA-EDIT]
 						log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window forcing a start() and forcing a load()")
 
 			if ("Refresh")
@@ -84,8 +86,9 @@
 					else
 						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 						if (action == "Switch to old chat")
-							winset(src, "output", "is-visible=true;is-disabled=false")
-							winset(src, "browseroutput", "is-visible=false")
+							// [SIERRA-EDIT] - TGUI - Select the legacy chat pane.
+							set_chat_output(FALSE)
+							// [/SIERRA-EDIT]
 						log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window forcing a show() and forcing a load()")
 		return
 
@@ -102,6 +105,7 @@
 			else
 				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
 				if (action == "Switch to old chat")
-					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
-					winset(src, "browseroutput", "is-disabled=true;is-visible=false")
+					// [SIERRA-EDIT] - TGUI - Select the legacy chat pane.
+					set_chat_output(FALSE)
+					// [/SIERRA-EDIT]
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after manually calling start() and forcing a load()")

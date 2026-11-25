@@ -160,10 +160,16 @@
 			return
 		var/atom/movable/speaking = get_object()
 		speaking.audible_message("\The [speaking][text]")
+		// [SIERRA-EDIT]
+		// if (assembly) // SIERRA-EDIT - ORIGINAL
+		// 	log_say("[assembly] \ref[assembly] : [text]")
+		// else
+		// 	log_say("[name] ([type]) : [text]")
 		if (assembly)
-			log_say("[assembly] \ref[assembly] : [text]")
+			log_say("[assembly] \ref[assembly] : [text]", speaking)
 		else
-			log_say("[name] ([type]) : [text]")
+			log_say("[name] ([type]) : [text]", speaking)
+		// [/SIERRA-EDIT]
 
 /obj/item/integrated_circuit/output/sound/on_data_written()
 	power_draw_per_use =  get_pin_data(IC_INPUT, 2) * 15
@@ -286,10 +292,16 @@
 		var/atom/movable/A = get_object()
 		var/sanitized_text = sanitize(text)
 		A.audible_message("\The [A] states, \"[sanitized_text]\"")
+		// [SIERRA-EDIT]
+		// if (assembly) // SIERRA-EDIT - ORIGINAL
+		// 	log_say("[assembly] \ref[assembly] : [sanitized_text]")
+		// else
+		// 	log_say("[name] ([type]) : [sanitized_text]")
 		if (assembly)
-			log_say("[assembly] \ref[assembly] : [sanitized_text]")
+			log_say("[assembly] \ref[assembly] : [sanitized_text]", A)
 		else
-			log_say("[name] ([type]) : [sanitized_text]")
+			log_say("[name] ([type]) : [sanitized_text]", A)
+		// [/SIERRA-EDIT]
 
 /obj/item/integrated_circuit/output/video_camera
 	name = "video camera circuit"

@@ -153,7 +153,7 @@
 			access_research,	access_mining_office,
 			access_petrov,		access_expedition_shuttle,
 			access_guppy,		access_hangar,
-			access_research_storage
+			access_research_storage,		access_xenoarch
 		)
 
 

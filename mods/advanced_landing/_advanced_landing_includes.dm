@@ -4,5 +4,6 @@
 #include "_advanced_landing.dm"
 
 #include "code/advanced_landing.dm"
+#include "code/shuttle_lighting.dm"
 
 #endif
