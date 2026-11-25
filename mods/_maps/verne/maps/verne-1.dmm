@@ -449,8 +449,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "cd" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible/fuel,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "ce" = (
@@ -1106,13 +1106,13 @@
 /turf/space,
 /area/space)
 "gt" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 9
-	},
 /obj/machinery/meter,
 /obj/machinery/light/spot{
 	dir = 4;
 	icon_state = "tube_map"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
@@ -1233,7 +1233,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/verne/engineering)
 "hX" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
 	},
 /turf/space,
@@ -2106,7 +2106,7 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/powergen)
 "qL" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "qS" = (
@@ -2457,7 +2457,7 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering/thrustgen)
 "tw" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
+/obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -2907,7 +2907,7 @@
 	},
 /area/verne/engineering/external)
 "xC" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible/fuel,
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "xE" = (
@@ -3054,7 +3054,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/thrusters)
 "zw" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
 /turf/simulated/floor/reinforced{
@@ -3170,7 +3170,7 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "AO" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel,
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "AP" = (
@@ -3305,7 +3305,7 @@
 	},
 /area/verne/engineering/external)
 "BZ" = (
-/obj/machinery/atmospherics/pipe/manifold/visible/fuel{
+/obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -3954,7 +3954,7 @@
 /turf/simulated/floor/plating,
 /area/verne/engineering)
 "HA" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
+/obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
 	},
 /turf/simulated/floor/tiled/techfloor,
@@ -4182,13 +4182,13 @@
 /turf/space,
 /area/space)
 "JI" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 4
-	},
 /obj/machinery/door/blast/regular{
 	dir = 8;
 	id_tag = "engineroomventverne";
 	name = "Engine room vent"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor/reinforced{
 	map_airless = 1
@@ -4759,12 +4759,12 @@
 /turf/simulated/floor/tiled/monotile,
 /area/verne/engineering)
 "Og" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/machinery/meter,
 /obj/machinery/light/spot{
 	dir = 4;
 	icon_state = "tube_map"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/tiled/techfloor,
 /area/verne/engineering/smresearch)
 "Ok" = (
@@ -4862,7 +4862,6 @@
 	},
 /area/verne/engineering/external)
 "Po" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
 /obj/paint_stripe/gunmetal,
 /obj/wallframe_spawn/reinforced_phoron,
 /obj/machinery/door/blast/regular{
@@ -4870,6 +4869,7 @@
 	id_tag = "SupermatterVerne";
 	name = "Reactor Blast Door"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/verne/engineering/smresearch)
 "Pr" = (

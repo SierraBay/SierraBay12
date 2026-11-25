@@ -187,9 +187,8 @@
 /turf/simulated/wall/titanium,
 /area/ship/hand/shuttle/pod_hand_two)
 "an" = (
-/obj/structure/catwalk,
 /obj/machinery/light,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_two)
 "ao" = (
 /obj/structure/bed/chair/padded/yellow,
@@ -280,9 +279,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/command/bridge)
 "az" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -297,6 +293,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -516,8 +515,8 @@
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light_switch{
 	dir = 4;
-	pixel_x = -21;
-	pixel_y = 8
+	pixel_x = -22;
+	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/cargo/maints)
@@ -716,12 +715,13 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/shuttle/pod_hand_two)
 "bF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/valve/shutoff/supply,
+/obj/floor_decal/steeldecal/steel_decals_central6{
+	dir = 8
 	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower)
@@ -1033,9 +1033,8 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/maintenance/atmos/fuel)
 "cZ" = (
-/obj/structure/catwalk,
 /obj/machinery/light,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_three)
 "db" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -1356,7 +1355,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/light_switch{
 	dir = 4;
-	pixel_x = -23;
+	pixel_x = -22;
 	pixel_y = 6
 	},
 /turf/simulated/floor/lino,
@@ -1762,9 +1761,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 6
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -2587,9 +2583,6 @@
 /turf/space,
 /area/space)
 "kS" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2604,6 +2597,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -2989,16 +2985,14 @@
 /area/ship/hand/maintenance/solarport)
 "nn" = (
 /obj/floor_decal/corner/b_green/diagonal,
-/obj/machinery/light_switch{
-	dir = 8;
-	pixel_x = 21;
-	pixel_y = -8
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
 /obj/floor_decal/industrial/outline/grey,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 22;
+	pixel_y = -6
+	},
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_one)
 "np" = (
@@ -3726,9 +3720,9 @@
 /obj/item/shield/riot,
 /obj/floor_decal/industrial/outline/yellow,
 /obj/machinery/light_switch{
-	pixel_x = 24;
+	pixel_x = 22;
 	dir = 8;
-	pixel_y = 9
+	pixel_y = 6
 	},
 /obj/item/shield/riot/metal,
 /turf/simulated/floor/tiled/techfloor,
@@ -3863,13 +3857,11 @@
 /obj/floor_decal/corner/yellow/diagonal,
 /obj/machinery/light_switch{
 	dir = 8;
-	pixel_x = 21;
-	pixel_y = -8
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
+	pixel_x = 22;
+	pixel_y = -6
 	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "rD" = (
@@ -4054,11 +4046,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine/port)
-"st" = (
-/obj/structure/catwalk,
-/obj/machinery/light/led/small,
-/turf/simulated/floor/plating,
-/area/ship/hand/crew/miner_one)
 "su" = (
 /obj/machinery/door/blast/regular{
 	id_tag = "carpod4"
@@ -4150,9 +4137,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 6
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -4338,9 +4322,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "tR" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 5
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -4361,12 +4342,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	pixel_x = 24;
-	dir = 8;
-	pixel_y = -5
-	},
 /obj/item/bedsheet/medical,
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = 22;
+	pixel_y = -6
+	},
 /turf/simulated/floor/lino,
 /area/ship/hand/command/medic)
 "tX" = (
@@ -4592,9 +4573,8 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "uX" = (
-/obj/structure/catwalk,
 /obj/machinery/light,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_four)
 "uZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/fuel{
@@ -5073,9 +5053,6 @@
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/hallway/lower)
 "xN" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -5386,10 +5363,11 @@
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower)
 "zt" = (
-/obj/item/cell/standard,
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/ship/hand/crew/miner_two)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor/tiled,
+/area/ship/hand/crew/hallway/lower)
 "zw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /obj/structure/cable{
@@ -5425,9 +5403,6 @@
 /turf/simulated/floor/tiled/dark,
 /area/ship/hand/shuttle/tug_one)
 "zH" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -5588,9 +5563,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 10
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -5792,21 +5764,15 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 9
-	},
-/obj/catwalk_plated,
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light,
+/obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/hallway/lower)
 "BD" = (
@@ -6353,13 +6319,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
-	dir = 6
-	},
 /obj/floor_decal/borderfloor/corner2{
 	dir = 10
 	},
 /obj/floor_decal/borderfloor/corner2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/valve/shutoff/fuel,
+/obj/floor_decal/steeldecal/steel_decals_central6{
 	dir = 8
 	},
 /turf/simulated/floor/tiled,
@@ -7031,13 +6998,11 @@
 /obj/floor_decal/corner/yellow/diagonal,
 /obj/machinery/light_switch{
 	dir = 4;
-	pixel_x = -21;
-	pixel_y = -8
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
+	pixel_x = -22;
+	pixel_y = -6
 	},
 /obj/floor_decal/industrial/outline/grey,
+/obj/machinery/atmospherics/portables_connector,
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_four)
 "HH" = (
@@ -7547,13 +7512,9 @@
 /area/ship/hand/maintenance/engine/port)
 "Kl" = (
 /obj/item/cell/standard,
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_four)
 "Kn" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -7850,16 +7811,14 @@
 /area/ship/hand/maintenance/atmos)
 "LY" = (
 /obj/floor_decal/corner/yellow/diagonal,
-/obj/machinery/light_switch{
-	dir = 4;
-	pixel_x = -21;
-	pixel_y = -8
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
 /obj/floor_decal/industrial/outline/grey,
 /obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/light_switch{
+	dir = 4;
+	pixel_x = -22;
+	pixel_y = -6
+	},
 /turf/simulated/floor/steel_dirty,
 /area/ship/hand/crew/miner_two)
 "Mb" = (
@@ -7927,9 +7886,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/tug_one)
 "Mt" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7941,6 +7897,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -8132,10 +8091,6 @@
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_four)
-"Nu" = (
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
-/area/ship/hand/crew/miner_three)
 "Nv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8369,8 +8324,8 @@
 	},
 /obj/machinery/light_switch{
 	dir = 4;
-	pixel_x = -21;
-	pixel_y = -10
+	pixel_x = -22;
+	pixel_y = 6
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine/starboard)
@@ -8430,8 +8385,7 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/crew/miner_three)
 "Pk" = (
-/obj/structure/catwalk,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_four)
 "Pm" = (
 /obj/machinery/mineral/unloading_machine,
@@ -9041,8 +8995,8 @@
 	dir = 4
 	},
 /obj/machinery/light_switch{
-	pixel_x = 8;
-	pixel_y = 24
+	pixel_x = 6;
+	pixel_y = 22
 	},
 /turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/maintenance/engine/port)
@@ -9353,6 +9307,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor/tiled,
 /area/ship/hand/crew/hallway/lower)
 "Uk" = (
@@ -9465,7 +9422,6 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/ship/hand/shuttle/pod_hand_one)
 "UP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -9480,7 +9436,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/fuel{
 	dir = 4
 	},
 /obj/catwalk_plated,
@@ -9663,10 +9620,9 @@
 /turf/simulated/floor/tiled/steel_grid,
 /area/ship/hand/engineering/hallway)
 "Wc" = (
-/obj/structure/catwalk,
 /obj/structure/table/woodentable/walnut,
 /obj/item/trash/candle,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood/ebony,
 /area/ship/hand/crew/miner_one)
 "We" = (
 /obj/structure/cable/cyan,
@@ -9731,9 +9687,8 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/ship/hand/cargo/maints)
 "Wy" = (
-/obj/structure/catwalk,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/tiled/steel_ridged,
 /area/ship/hand/crew/miner_two)
 "WC" = (
 /obj/floor_decal/corner/b_green/half,
@@ -10289,9 +10244,6 @@
 /turf/simulated/floor/tiled/techmaint,
 /area/ship/hand/maintenance/atmos/fuel)
 "Zk" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -10304,10 +10256,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
+	},
+/obj/structure/catwalk,
 /turf/simulated/floor/plating,
 /area/ship/hand/crew/miner_two)
 "Zp" = (
@@ -10413,9 +10368,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/fuel{
-	dir = 10
 	},
 /obj/structure/catwalk,
 /turf/simulated/floor/plating,
@@ -17237,8 +17189,8 @@ tp
 vm
 Fm
 Wc
-Fm
-st
+uO
+qJ
 sn
 ac
 ru
@@ -17247,8 +17199,8 @@ tR
 al
 jN
 oY
-Nu
-Nu
+Fp
+Fp
 cZ
 ug
 Sb
@@ -17863,7 +17815,7 @@ eO
 OL
 xA
 Ro
-Ro
+zt
 bF
 EI
 rR
@@ -18213,7 +18165,7 @@ XZ
 hG
 in
 Wy
-zt
+gw
 an
 Gr
 Gy
