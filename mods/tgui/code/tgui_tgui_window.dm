@@ -390,7 +390,11 @@
 		if("close")
 			close(can_be_suspended = FALSE)
 		if("openLink")
-			to_target(client, link(href_list["url"]))
+			var/url = href_list["url"]
+			if(istext(url))
+				var/lower_url = lowertext(url)
+				if(copytext(lower_url, 1, 8) == "http://" || copytext(lower_url, 1, 9) == "https://")
+					to_target(client, link(url))
 		if("cacheReloaded")
 			// Reinitialize
 			initialize(
@@ -423,7 +427,7 @@
 		return FALSE
 	if(!istext(message_type) || copytext(message_type, 1, 5) != "act/" || length(message_type) > 64)
 		return FALSE
-	if(!isnum(chunk_count) || chunk_count != round(chunk_count) || chunk_count < 1 || chunk_count > config.tgui_max_chunk_count)
+	if(!isfinite(chunk_count) || chunk_count != round(chunk_count) || chunk_count < 1 || chunk_count > config.tgui_max_chunk_count)
 		return FALSE
 	oversized_payloads[payload_id] = list("type" = message_type, "count" = chunk_count, "chunks" = list(), "owner" = locked_by)
 	renew_payload_timeout(payload_id)
@@ -439,7 +443,7 @@
 	if(!payload || payload["owner"] != locked_by || !istext(chunk) || !length(chunk) || length(chunk) > TGUI_PAYLOAD_CHUNK_SIZE)
 		return FALSE
 	var/list/chunks = payload["chunks"]
-	if(!isnum(chunk_index) || chunk_index != length(chunks))
+	if(!isfinite(chunk_index) || chunk_index != length(chunks))
 		return FALSE
 	chunks += chunk
 	if(length(chunks) >= payload["count"])
@@ -453,6 +457,9 @@
 	var/message_type = payload["type"]
 	var/combined = chunks.Join()
 	remove_oversized_payload(payload_id)
+	if(!rustg_json_is_valid(combined))
+		log_tgui(client, "Error: Invalid assembled JSON payload")
+		return FALSE
 	var/list/decoded
 	try
 		decoded = json_decode(combined)
@@ -474,3 +481,6 @@
 /datum/tgui_window/proc/clear_oversized_payloads()
 	for(var/payload_id in oversized_payloads.Copy())
 		remove_oversized_payload(payload_id)
+
+/datum/tgui_window/VV_static()
+	return ..() + list("id")

@@ -156,7 +156,7 @@
 
 	switch(action)
 		if("submit")
-			if(!(params["entry"] in items))
+			if(!istext(params["entry"]) || !(params["entry"] in items))
 				return
 			set_choice(items_map[params["entry"]])
 			closed = TRUE
