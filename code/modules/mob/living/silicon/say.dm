@@ -2,7 +2,10 @@
 	return ..(sanitize ? sanitize(message) : message)
 
 /mob/living/silicon/handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name)
-	log_say("[key_name(src)] : [message]")
+	// [SIERRA-EDIT]
+	// log_say("[key_name(src)] : [message]") // SIERRA-EDIT - ORIGINAL
+	log_say("[key_name(src)] : [message]", src)
+	// [/SIERRA-EDIT]
 
 /mob/living/silicon/robot/handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name)
 	..()
@@ -64,7 +67,10 @@
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, verb, datum/language/speaking)
 
-	log_say("[key_name(src)] : [message]")
+	// [SIERRA-EDIT]
+	// log_say("[key_name(src)] : [message]") // SIERRA-EDIT - ORIGINAL
+	log_say("[key_name(src)] : [message]", holo || src)
+	// [/SIERRA-EDIT]
 
 	message = trimtext(message)
 
@@ -118,7 +124,10 @@
 
 /mob/living/silicon/ai/proc/holopad_emote(message) //This is called when the AI uses the 'me' verb while using a holopad.
 
-	log_emote("[key_name(src)] : [message]")
+	// [SIERRA-EDIT]
+	// log_emote("[key_name(src)] : [message]") // SIERRA-EDIT - ORIGINAL
+	log_emote("[key_name(src)] : [message]", holo || src)
+	// [/SIERRA-EDIT]
 
 	message = trimtext(message)
 

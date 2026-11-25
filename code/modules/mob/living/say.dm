@@ -284,7 +284,10 @@ var/global/list/channel_to_radio_key = new
 				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
 
 		if (speaking.flags & SIGNLANG)
-			log_say("[name]/[key] : SIGN: [message]")
+			// [SIERRA-EDIT]
+			// log_say("[name]/[key] : SIGN: [message]") // SIERRA-EDIT - ORIGINAL
+			log_say("[name]/[key] : SIGN: [message]", T)
+			// [/SIERRA-EDIT]
 			return say_signlang(message, pick(speaking.signlang_verb), speaking)
 
 	if(T)
@@ -351,10 +354,16 @@ var/global/list/channel_to_radio_key = new
 	if(mind)
 		mind.last_words = message
 
+	// [SIERRA-EDIT]
+	// if(whispering) // SIERRA-EDIT - ORIGINAL
+	// 	log_whisper("[name]/[key] : [message]")
+	// else
+	// 	log_say("[name]/[key] : [message]")
 	if(whispering)
-		log_whisper("[name]/[key] : [message]")
+		log_whisper("[name]/[key] : [message]", T)
 	else
-		log_say("[name]/[key] : [message]")
+		log_say("[name]/[key] : [message]", T)
+	// [/SIERRA-EDIT]
 
 	if (length(speech_bubble_recipients))
 		var/speech_intent = say_test(message)

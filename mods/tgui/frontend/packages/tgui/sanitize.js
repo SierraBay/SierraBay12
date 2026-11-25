@@ -27,7 +27,8 @@ let defTag = [
   'u',
   'ul',
 ];
-let defAttr = ['class', 'style'];
+// Background is here because it accepts image urls
+let defAttr = ['class', 'style', 'background'];
 
 /**
  * Feed it a string and it should spit out a sanitized version.

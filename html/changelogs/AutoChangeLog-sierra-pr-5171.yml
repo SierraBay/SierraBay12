@@ -1,0 +1,5 @@
+author: Imjustkisik
+changes:
+  - bugfix: Закрыты уязвимости валидации ввода, JSON и ссылок в TGUI
+  - tweak: Обновлён DOMPurify до 3.5.0 и усилена фильтрация HTML в TGUI
+delete-after: true

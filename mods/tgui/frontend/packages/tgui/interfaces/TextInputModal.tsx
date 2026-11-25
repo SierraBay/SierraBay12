@@ -115,6 +115,7 @@ const InputArea = (props, context) => {
       autoSelect
       height={multiline || input.length >= 40 ? '100%' : '1.8rem'}
       maxLength={max_length}
+      scrollbar={visualMultiline}
       onEscape={(event) => {
         event.stopPropagation();
         act('cancel');
