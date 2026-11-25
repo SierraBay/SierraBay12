@@ -41,7 +41,10 @@
 
 	var/msg = sanitize(input("Message:", "Psychic Whisper") as text|null)
 	if(msg)
-		log_say("PsychicWhisper: [key_name(src)]->[M.key] : [msg]")
+		// [SIERRA-EDIT]
+		// log_say("PsychicWhisper: [key_name(src)]->[M.key] : [msg]") // SIERRA-EDIT - ORIGINAL
+		log_say("PsychicWhisper: [key_name(src)]->[M.key] : [msg]", src)
+		// [/SIERRA-EDIT]
 		to_chat(M, SPAN_CLASS("alium", "You hear a strange, alien voice in your head... <i>[msg]</i>"))
 		to_chat(src, SPAN_CLASS("alium", "You channel a message: \"[msg]\" to [M]"))
 	return

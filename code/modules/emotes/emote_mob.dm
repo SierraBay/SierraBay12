@@ -130,7 +130,10 @@
 	if (message)
 		if(!use_emote_cooldown())
 			return
-		log_emote("[name]/[key] : [message]")
+		// [SIERRA-EDIT]
+		// log_emote("[name]/[key] : [message]") // SIERRA-EDIT - ORIGINAL
+		log_emote("[name]/[key] : [message]", src)
+		// [/SIERRA-EDIT]
 	//do not show NPC animal emotes to ghosts, it turns into hellscape
 	var/check_ghosts = client ? /datum/client_preference/ghost_sight : null
 	if(m_type == VISIBLE_MESSAGE)
