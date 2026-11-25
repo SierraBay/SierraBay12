@@ -721,6 +721,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
+"cT" = (
+/obj/paint/fleet/sfv_rook,
+/obj/structure/sign/warning/docking_area{
+	dir = 8
+	},
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/airlock)
 "cW" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped,
@@ -961,6 +968,13 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
+"dU" = (
+/obj/paint/green,
+/obj/structure/sign/warning/docking_area{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/tradezone)
 "dW" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8;
@@ -3469,13 +3483,6 @@
 /obj/floor_decal/industrial/outline/grey,
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/command)
-"oW" = (
-/obj/paint/green,
-/obj/structure/sign/warning/docking_area{
-	dir = 4
-	},
-/turf/simulated/wall/r_wall,
-/area/map_template/facolony/tradezone)
 "pd" = (
 /obj/floor_decal/corner/b_green/border{
 	dir = 8
@@ -3960,13 +3967,6 @@
 	},
 /turf/simulated/floor/tiled/white,
 /area/map_template/facolony/surgery)
-"qY" = (
-/obj/paint/fleet/sfv_rook,
-/obj/structure/sign/warning/docking_area{
-	dir = 8
-	},
-/turf/simulated/wall/r_wall,
-/area/map_template/facolony/airlock)
 "qZ" = (
 /obj/floor_decal/industrial/warning/dust/corner{
 	dir = 4
@@ -4536,6 +4536,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/valve/shutoff/supply,
+/obj/random/toolbox{
+	pixel_y = 7
+	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
 "tn" = (
@@ -12457,14 +12460,14 @@ uo
 uo
 dI
 dI
-oW
+dU
 to
 to
 cq
 uC
 os
 wT
-oW
+dU
 bF
 bF
 uo
@@ -13274,14 +13277,14 @@ uo
 uo
 lJ
 lF
-qY
+cT
 Ib
 VN
 Fi
 Uk
 iu
 II
-qY
+cT
 Et
 Et
 uo
