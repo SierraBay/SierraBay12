@@ -17,9 +17,7 @@
 
 	skill_points = 10 //Почему 10 поинтов? 6 поинта за мехводство, 4 за пилотирование. 20 - 6 - 4
 
-	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/mech_pilot
 	allowed_branches = list(/datum/mil_branch/employee, /datum/mil_branch/contractor)
-	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
 	min_skill = list(   SKILL_BUREAUCRACY = SKILL_BASIC,
 						SKILL_EVA         = SKILL_BASIC,
 						SKILL_MECH        = SKILL_TRAINED,
@@ -37,9 +35,7 @@
 
 
 
-	access = list(access_mech_security, access_seceva, access_guard, access_security, access_brig, access_maint_tunnels,
-						access_external_airlocks, access_emergency_storage,
-			            access_eva, access_sec_doors, access_hangar, access_security_records)
+
 
 
 

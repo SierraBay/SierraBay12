@@ -133,3 +133,11 @@
 	 Со своими надежными дубинкой и тазером, охрана преследует различных нарушителей закона на судне и отправляет их в бриг отбывать заслуженное наказание. \
 	 Главной задачей офицеров СБ является предотвращение ущерба персоналу корабля и собственности корпорации, и охранник который не ставит эти обязанности для себя на первое место имеет мало шансов задержаться на этой работе."
 
+
+///Мехпилот разложен в разные файлы из-за действительно крутого кода юнит тестов
+/datum/job/security_mech_pilot
+	allowed_ranks = list(/datum/mil_rank/civ/nt, /datum/mil_rank/civ/contractor, /datum/mil_rank/civ/probation_employee, /datum/mil_rank/civ/probation_contractor)
+	outfit_type = /singleton/hierarchy/outfit/job/sierra/crew/security/mech_pilot
+	access = list(access_mech_security, access_seceva, access_guard, access_security, access_brig, access_maint_tunnels,
+						access_external_airlocks, access_emergency_storage,
+			            access_eva, access_sec_doors, access_hangar, access_security_records)
