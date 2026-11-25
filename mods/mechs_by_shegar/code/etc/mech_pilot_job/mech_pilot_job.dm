@@ -6,7 +6,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	selection_color = "#601c1c"
-	hud_icon = "hudmechsec"
 	supervisors = "Главе Службы безопасности и Смотрителю (сержанту)"
 	economic_power = 6
 	minimal_player_age = 10
