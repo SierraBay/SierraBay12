@@ -19,7 +19,7 @@
     "tgui:tsc": "tsc"
   },
   "dependencies": {
-    "@babel/core": "^7.23.3",
+    "@babel/core": "^7.29.6",
     "@babel/eslint-parser": "^7.23.3",
     "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-jscript": "^7.23.3",
