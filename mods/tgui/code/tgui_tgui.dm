@@ -359,8 +359,11 @@
 			process_status()
 			if(status != STATUS_INTERACTIVE)
 				return
+			var/key = href_list["key"]
+			if(!istext(key) || !length(key))
+				return
 			LAZYINITLIST(src_object.tgui_shared_states)
-			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
+			src_object.tgui_shared_states[key] = href_list["value"]
 			SStgui.update_uis(src_object)
 		if("fallback")
 			#ifdef TGUI_DEBUGGING

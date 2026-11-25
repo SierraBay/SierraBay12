@@ -31,7 +31,7 @@
 	// Client does NOT have tgui_input on: Returns regular input
 	if(user.get_preference_value(/datum/client_preference/tgui_input) == GLOB.PREF_NO)
 		var/input_number = input(user, message, title, default) as null|num
-		if(isnull(input_number))
+		if(isnull(input_number) || !isfinite(input_number))
 			return null
 		return clamp(round_value ? round(input_number) : input_number, min_value, max_value)
 
@@ -156,9 +156,11 @@
 
 	switch(action)
 		if("submit")
-			if(!isnum(params["entry"]))
-				CRASH("A non number was input into TGUI Input Number by [usr]")
+			if(!isfinite(params["entry"]))
+				CRASH("A non-finite or non-number value was input into TGUI Input Number by [usr]")
 			var/choice = round_value ? round(params["entry"]) : params["entry"]
+			if(!isfinite(choice))
+				CRASH("A non-finite number was input into TGUI Input Number by [usr]")
 			if(choice > max_value)
 				CRASH("A number greater than the max value was input into TGUI Input Number by [usr]")
 			if(choice < min_value)
@@ -173,4 +175,6 @@
 			return TRUE
 
 /datum/tgui_input_number/proc/set_entry(entry)
+	if(!isfinite(entry))
+		return
 	src.entry = entry
