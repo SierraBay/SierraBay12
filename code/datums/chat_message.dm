@@ -146,10 +146,13 @@ GLOBAL_LIST_EMPTY(runechat_image_cache)
 		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
 	// Calculate target color if not already present
+	// [SIERRA-EDIT] - Colorized runechat
+	var/mob/living/carbon/human/H = target
 	if (!target.chat_color || target.chat_color_name != target.name)
-		target.chat_color = colorize_string(target.name)
-		target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
+		target.chat_color = H.client.prefs.chat_color || colorize_string(target.name)
+		target.chat_color_darkened = H.client.prefs.chat_color || colorize_string(target.name, 0.85, 0.85)
 		target.chat_color_name = target.name
+	// [/SIERRA-EDIT]
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
@@ -182,6 +185,18 @@ GLOBAL_LIST_EMPTY(runechat_image_cache)
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = target.chat_color
+
+	// [SIERRA-EDIT] - Colorized runechat
+	var/list/check_gear = list(H.wear_mask, H.head)
+	for(var/obj/item/gear in check_gear)
+		if(!gear)
+			continue
+		var/obj/item/voice_changer/changer = locate() in gear
+		if(changer && changer.active && changer.voice)
+			tgt_color = colorize_string(changer.voice)
+			break
+	// [/SIERRA-EDIT] - Colorized runechat
+
 	if (extra_classes.Find("italics") || extra_classes.Find("emote"))
 		tgt_color = target.chat_color_darkened
 
