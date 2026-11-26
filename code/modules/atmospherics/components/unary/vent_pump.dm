@@ -22,6 +22,7 @@
 	identifier = "AVP"
 
 	var/hibernate = 0 //Do we even process?
+	var/datum/timer/hibernate_timer // [SIERRA-ADD] - Timer ID used to wake up without polling every tick
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = EXTERNAL_PRESSURE_BOUND
@@ -104,6 +105,9 @@
 	icon = null
 
 /obj/machinery/atmospherics/unary/vent_pump/Destroy()
+	if(hibernate_timer) // [SIERRA-ADD]
+		deltimer(hibernate_timer)
+		hibernate_timer = null
 	var/area/area = get_area(src)
 	if(area)
 		area.air_vent_info -= id_tag
@@ -174,16 +178,50 @@
 		return 0
 	return 1
 
-/obj/machinery/atmospherics/unary/vent_pump/Process()
+// [SIERRA-ADD] - Timer-backed hibernation and event wakeups
+/obj/machinery/atmospherics/unary/vent_pump/proc/wake_from_hibernation()
+	if(hibernate_timer)
+		deltimer(hibernate_timer)
+		hibernate_timer = null
+	hibernate = FALSE
+	START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/on_hibernate_timeout()
+	hibernate_timer = null
+	wake_from_hibernation()
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/hibernate_for(duration)
+	if(hibernate_timer)
+		deltimer(hibernate_timer)
+	hibernate_timer = addtimer(new Callback(src, PROC_REF(on_hibernate_timeout)), duration, return_handle = TRUE)
+
+/obj/machinery/atmospherics/unary/vent_pump/power_change()
+	. = ..()
+	if(. && is_powered())
+		wake_from_hibernation()
+
+/obj/machinery/atmospherics/unary/vent_pump/update_use_power(new_use_power)
 	..()
+	if(use_power)
+		wake_from_hibernation()
+// [/SIERRA-ADD]
+
+/obj/machinery/atmospherics/unary/vent_pump/Process()
+	// [SIERRA-EDIT] - Skip parent build_network() when already networked, and unqueue during hibernation/off states
+	last_flow_rate = 0
+	last_power_draw = 0
+	if(!network && node)
+		build_network()
 
 	if (hibernate > world.time)
-		return 1
+		hibernate_for(hibernate - world.time)
+		return PROCESS_KILL
 
 	if (!node)
 		update_use_power(POWER_USE_OFF)
 	if(!can_pump())
-		return 0
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -207,7 +245,8 @@
 		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
 		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
 		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL) //99% of all vents
-			hibernate = world.time + (rand(100,200))
+			hibernate_for(rand(100, 200)) // [SIERRA-EDIT]
+			return PROCESS_KILL
 
 
 	if (power_draw >= 0)
@@ -255,7 +294,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/refresh()
 	..()
-	hibernate = FALSE
+	wake_from_hibernation() // [SIERRA-EDIT]
 	toggle_input_toggle()
 
 /obj/machinery/atmospherics/unary/vent_pump/RefreshParts()
@@ -319,6 +358,8 @@
 			return TRUE
 
 		welded = !welded
+		if(!welded) // [SIERRA-ADD]
+			wake_from_hibernation()
 		update_icon()
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 		user.visible_message(
@@ -341,6 +382,7 @@
 		return
 	if(href_list["switchMode"])
 		pump_direction = !pump_direction
+		wake_from_hibernation() // [SIERRA-ADD]
 		to_chat(user, SPAN_NOTICE("The multitool emits a short beep confirming the change."))
 		queue_icon_update() //force the icon to refresh after changing directional mode.
 		return TOPIC_REFRESH
