@@ -455,8 +455,8 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	name = "\improper Unknown Base - Atmospherics"
 	icon_state = "shipping"
 
-/area/map_template/facolony/warehouse
-	name = "\improper Unknown Base - Warehouse"
+/area/map_template/facolony/storage
+	name = "\improper Unknown Base - Storage"
 	icon_state = "shipping"
 
 /area/map_template/facolony/unspecified
@@ -468,11 +468,15 @@ var/global/const/access_facolony = "ACCESS_FACOLONY"
 	icon_state = "B2"
 
 /area/map_template/facolony/outsidewarehouse
-	name = "\improper Unknown Base - Trade Zone Warehouse-Airlock"
+	name = "\improper Unknown Base - Warehouse-Airlock"
 	icon_state = "shipping"
 
-/area/map_template/facolony/tradezone
-	name = "\improper Unknown Base - Trade Zone"
+/area/map_template/facolony/warehouse
+	name = "\improper Unknown Base - Warehouse"
+	icon_state = "shipping"
+
+/area/map_template/facolony/secondarywarehouse
+	name = "\improper Unknown Base - Secondary Warehouse"
 	icon_state = "shipping"
 
 ////////////////
