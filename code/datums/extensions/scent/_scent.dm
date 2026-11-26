@@ -105,14 +105,18 @@ Scent intensity
 	return TRUE
 
 /datum/extension/scent/proc/emit_scent()
+	// [SIERRA-EDIT] - Check cooldown before species and breath/mask checks
+	var/now = world.time
 	for(var/mob/living/carbon/human/H in all_hearers(holder, range))
+		if(H.last_smelt >= now)
+			continue
 		if(H.species && !H.species.passive_scent_detection)
 			continue
 		if(!can_detect_scents(H))
 			continue
-		if(H.last_smelt < world.time)
-			intensity.PrintMessage(H, descriptor, scent)
-			H.last_smelt = world.time + intensity.cooldown
+		intensity.PrintMessage(H, descriptor, scent)
+		H.last_smelt = now + intensity.cooldown
+	// [/SIERRA-EDIT]
 
 /*****
 Custom subtype
