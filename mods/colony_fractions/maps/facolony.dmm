@@ -11834,7 +11834,7 @@
 	},
 /obj/machinery/atmospherics/binary/pump/high_power/on{
 	target_pressure = 10000;
-	name = "Chamber Output"
+	name = "CO2 Supply"
 	},
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/warehouse)
