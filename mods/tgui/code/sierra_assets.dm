@@ -84,20 +84,6 @@
 			. = SSassets.transport.send_assets(client, extra) || .
 	. = common.send(client) || .
 
-/// Sends only the requested registered R&D design icon filenames and flushes if any uncached files were queued.
-/proc/send_nanoui_design_icons(mob/user, list/icon_names)
-	if(!user?.client || !length(icon_names))
-		return FALSE
-	var/list/valid_icons = list()
-	for(var/icon_name in icon_names)
-		if(istext(icon_name) && SSassets.cache[icon_name])
-			valid_icons |= icon_name
-	if(!length(valid_icons))
-		return FALSE
-	. = SSassets.transport.send_assets(user.client, valid_icons)
-	if(. && winexists(user.client, "asset_cache_browser"))
-		user.client.browse_queue_flush()
-
 /datum/asset/simple/sierra_designs
 	legacy = TRUE
 	keep_local_name = TRUE

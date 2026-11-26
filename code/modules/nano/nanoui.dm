@@ -60,6 +60,13 @@ nanoui is used to open and update nano browser uis
 	var/datum/topic_state/state = null
 	// [SIERRA-ADD]
 	var/open_token = 0
+	var/is_registered = FALSE
+	var/is_open = FALSE
+	var/open_needs_flush = FALSE
+	var/asset_update_pending = FALSE
+	var/asset_update_needs_flush = FALSE
+	var/list/pending_update_data
+	var/pending_update_forced = FALSE
 	// [/SIERRA-ADD]
 
  /**
@@ -415,7 +422,7 @@ nanoui is used to open and update nano browser uis
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
-				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
+				if (window._nanoReadyForUpdates)
 				{
 					NanoStateManager.receiveUpdateData(jsonString);
 				}
@@ -447,7 +454,7 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/open()
+/datum/nanoui/proc/open(list/new_assets)
 	// [SIERRA-ADD]
 	// Opening uncached assets yields to flush the browse queue without blocking Initialize() or other callers.
 	set waitfor = FALSE
@@ -456,7 +463,9 @@ nanoui is used to open and update nano browser uis
 		stack_trace("Wrong type of nanoui user passed: [user], [user.type]")
 		return
 
-	if(!user?.client)
+	var/client/viewer = user?.client
+	if(!viewer)
+		close()
 		return
 
 	if(!src_object)
@@ -475,9 +484,21 @@ nanoui is used to open and update nano browser uis
 		return // Will be closed by update_status().
 
 	// [SIERRA-ADD]
+	var/awaiting_assets = asset_update_pending || (is_registered && !is_open)
+	if(!is_registered)
+		if(SSnano.get_open_ui(user, src_object, ui_key))
+			close()
+			return
+		is_registered = TRUE
+		SSnano.ui_opening(src)
+
 	var/my_token = ++open_token
+	asset_update_pending = FALSE
+	asset_update_needs_flush = FALSE
+	pending_update_data = null
+	pending_update_forced = FALSE
 	ensure_layout_assets()
-	var/list/ui_assets = list()
+	var/list/ui_assets = length(new_assets) ? new_assets.Copy() : list()
 	for(var/script_file in scripts)
 		ui_assets |= script_file
 	for(var/style_file in stylesheets)
@@ -492,15 +513,19 @@ nanoui is used to open and update nano browser uis
 			ui_assets |= map_file
 
 	var/datum/asset/nanoui/assets = get_asset_datum(/datum/asset/nanoui)
-	if(assets.send(user, ui_assets) && winexists(user.client, "asset_cache_browser"))
-		user.client.browse_queue_flush()
-
-	if(open_token != my_token || QDELETED(src) || !user?.client || !src_object || update_status(0))
-		return
-
-	var/datum/nanoui/existing = SSnano.get_open_ui(user, src_object, ui_key)
-	if(existing && existing != src)
+	open_needs_flush = assets.send(viewer, ui_assets) || awaiting_assets
+	while(open_needs_flush && winexists(viewer, "asset_cache_browser"))
+		open_needs_flush = FALSE
+		viewer.browse_queue_flush()
+		if(QDELETED(src) || open_token != my_token)
+			return
+		if(!viewer || user?.client != viewer)
+			break
+	open_needs_flush = FALSE
+	if(!viewer || user?.client != viewer || QDELETED(src_object))
 		close()
+		return
+	if(update_status(0))
 		return
 	// [/SIERRA-ADD]
 
@@ -508,19 +533,20 @@ nanoui is used to open and update nano browser uis
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
 	on_close_winset()
 	//onclose(user, window_id)
-	SSnano.ui_opened(src)
+	is_open = TRUE
+	START_PROCESSING(SSnano, src)
 
  /**
   * Reinitialise this UI, potentially with a different template and/or initial data
   *
   * @return nothing
   */
-/datum/nanoui/proc/reinitialise(template, new_initial_data)
+/datum/nanoui/proc/reinitialise(template, new_initial_data, list/new_assets)
 	if(template)
 		add_template("main", template)
 	if(new_initial_data)
 		set_initial_data(new_initial_data)
-	open()
+	open(new_assets)
 
  /**
   * Close this UI
@@ -529,13 +555,22 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/close()
 	is_auto_updating = 0
-	SSnano.ui_closed(src)
-	show_browser(user, null, "window=[window_id]")
-	for(var/datum/nanoui/child in children)
+	if(is_registered)
+		is_registered = FALSE
+		SSnano.ui_closed(src)
+	if(is_open)
+		is_open = FALSE
+		show_browser(user, null, "window=[window_id]")
+	while(length(children))
+		var/datum/nanoui/child = children[length(children)]
+		LIST_DEC(children)
+		child.master_ui = null
 		child.close()
-	children.Cut()
+	if(master_ui)
+		master_ui.children -= src
 	state = null
 	master_ui = null
+	pending_update_data = null // [SIERRA-ADD]
 	qdel(src)
 
  /**
@@ -559,17 +594,60 @@ nanoui is used to open and update nano browser uis
   *
   * @return nothing
   */
-/datum/nanoui/proc/push_data(data, force_push = 0)
-	if(update_status(0))
+/datum/nanoui/proc/push_data(data, force_push = 0, list/new_assets)
+	set waitfor = FALSE // [SIERRA-ADD] - Asset delivery must not block callers.
+	if(!is_registered || update_status(0))
 		return // Closed
 	if (status == STATUS_DISABLED && !force_push)
 		return // Cannot update UI, no visibility
 
+	// [SIERRA-ADD] - The registered window can receive updates before its first render.
+	if(!is_open)
+		if(!isnull(data))
+			set_initial_data(data)
+		if(length(new_assets) && user?.client)
+			open_needs_flush = SSassets.transport.send_assets(user.client, new_assets) || open_needs_flush
+		return
+
+	if(length(new_assets) || asset_update_pending)
+		var/client/viewer = user?.client
+		if(viewer)
+			var/sent = length(new_assets) && SSassets.transport.send_assets(viewer, new_assets)
+			if(asset_update_pending || (sent && winexists(viewer, "asset_cache_browser")))
+				if(!isnull(data))
+					pending_update_data = data
+				pending_update_forced ||= force_push
+				asset_update_needs_flush ||= sent
+				if(!asset_update_pending)
+					asset_update_pending = TRUE
+					flush_asset_update(viewer, open_token)
+				return
+	// [/SIERRA-ADD]
 	var/list/send_data = get_send_data(data)
 
 //	to_chat(user, list2json_usecache(send_data))// used for debugging //NANO DEBUG HOOK
 
 	to_target(user, output(list2params(list(strip_improper(json_encode(send_data)))),"[window_id].browser:receiveUpdateData"))
+
+// [SIERRA-ADD]
+/datum/nanoui/proc/flush_asset_update(client/viewer, generation)
+	set waitfor = FALSE
+	while(asset_update_needs_flush)
+		asset_update_needs_flush = FALSE
+		viewer.browse_queue_flush()
+		if(QDELETED(src) || generation != open_token)
+			return
+		if(!viewer || user?.client != viewer)
+			break
+	var/list/data = pending_update_data
+	var/force_push = pending_update_forced
+	pending_update_data = null
+	pending_update_forced = FALSE
+	asset_update_pending = FALSE
+	asset_update_needs_flush = FALSE
+	if(viewer && user?.client == viewer)
+		push_data(status == STATUS_DISABLED && force_push ? null : data, force_push)
+// [/SIERRA-ADD]
 
  /**
   * This Topic() proc is called whenever a user clicks on a link within a Nano UI

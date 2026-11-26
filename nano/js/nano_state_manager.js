@@ -15,6 +15,7 @@ NanoStateManager = function () { // Renders templates from server data.
     if (_data['config'].hasOwnProperty('stateKey') && _data['config']['stateKey'])
       stateKey = _data['config']['stateKey'].toLowerCase()
     NanoStateManager.setCurrentState(stateKey)
+    window._nanoReadyForUpdates = true
     if (window._pendingNanoUpdates && window._pendingNanoUpdates.length) {
       var queued = window._pendingNanoUpdates.splice(0, window._pendingNanoUpdates.length)
       for (var i = 0; i < queued.length; i++)
