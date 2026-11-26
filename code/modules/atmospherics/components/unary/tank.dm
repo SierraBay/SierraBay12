@@ -19,6 +19,10 @@
 	build_icon_state = "air"
 	colorable = TRUE
 	atom_flags = ATOM_FLAG_CAN_BE_PAINTED
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Static gas tanks have no periodic processing
+
+/obj/machinery/atmospherics/unary/tank/Process() // [SIERRA-ADD]
+	return PROCESS_KILL
 
 /obj/machinery/atmospherics/unary/tank/Initialize()
 	. = ..()

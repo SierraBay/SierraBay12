@@ -22,6 +22,7 @@
 	build_icon_state = "connector"
 
 	pipe_class = PIPE_CLASS_UNARY
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process while an active device is connected
 
 /obj/machinery/atmospherics/portables_connector/on_update_icon()
 	icon_state = "connector"
@@ -38,15 +39,16 @@
 	update_underlays()
 
 /obj/machinery/atmospherics/portables_connector/Process()
-	..()
-	if(!on)
-		return
-	if(!connected_device)
+	// [SIERRA-EDIT] - Build network only if missing, and stop processing when idle/disconnected
+	if(!network)
+		..()
+	if(!on || !connected_device)
 		on = 0
-		return
+		return PROCESS_KILL
 	if(network)
 		network.update = 1
 	return 1
+	// [/SIERRA-EDIT]
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
