@@ -898,6 +898,13 @@
 
 	area.power_change()
 
+	// [SIERRA-ADD] - Ensure battery backup resumes recharging once ENVIRON power returns
+	if(area.power_environ)
+		var/obj/item/stock_parts/power/battery/bat = cached_battery || (cached_battery = get_component_of_type(/obj/item/stock_parts/power/battery))
+		if(bat && bat.can_charge && !(bat.status & PART_STAT_PROCESSING) && bat.cell && !bat.cell.fully_charged())
+			bat.start_processing(src)
+	// [/SIERRA-ADD]
+
 	var/obj/item/cell/cell = get_cell()
 	if(!cell || cell.charge <= 0)
 		if(needs_powerdown_sound == TRUE)
