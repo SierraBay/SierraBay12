@@ -2354,14 +2354,14 @@ those devices access via linked_console.
 		data["can_compile"]      = (report_delta > 0)
 		data["report_collapsed"] = report_collapsed
 
-	send_rnd_possible_design_icons(user, data["possible_designs"])
+	var/list/design_icons = get_rnd_possible_design_icons(data["possible_designs"])
 
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open, design_icons)
 	if(!ui)
 		ui = new(user, src, ui_key, "mods-rdconsole.tmpl", "R&D Console", 1300, 800)
 		ui.auto_update_layout = 1
 		ui.set_initial_data(data)
-		ui.open()
+		ui.open(design_icons)
 		ui.set_auto_update(1)
 
 // ─────────────────────────────────────────────────────────────────────────────

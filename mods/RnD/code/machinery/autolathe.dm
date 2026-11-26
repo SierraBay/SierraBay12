@@ -262,9 +262,7 @@
 	for(var/list/qdata in data["queue"])
 		if(qdata["icon"])
 			design_icons |= qdata["icon"]
-	send_nanoui_design_icons(user, design_icons)
-
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open, design_icons)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
@@ -279,7 +277,7 @@
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
-		ui.open()
+		ui.open(design_icons)
 
 /obj/machinery/fabricator/use_tool(obj/item/I, mob/living/user, list/click_params)
 	if(fab_status_flags & FAB_SHOCKED)
