@@ -180,6 +180,15 @@
 		C = locate() in get_step(src, turn(dir,180))
 		if(C)
 			C.set_operable(turn(dir,180), id, 0)
+	// [SIERRA-ADD] - Resume belt processing when repaired while active
+	else if(!new_state && operating && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/conveyor/power_change()
+	. = ..()
+	if(operating && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	// [/SIERRA-ADD]
 
 //set the operable var if ID matches, propagating in the given direction
 
