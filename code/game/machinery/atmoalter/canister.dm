@@ -142,7 +142,7 @@
 	else
 		p_tier = 3
 
-	var/new_key = "[!!holding]|[!!connected_port]|[p_tier]"
+	var/new_key = "[canister_color]|[!!holding]|[!!connected_port]|[p_tier]"
 	if (new_key == last_icon_key)
 		return
 	last_icon_key = new_key
