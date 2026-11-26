@@ -15,6 +15,7 @@
 
 	var/canister_color = "yellow"
 	var/can_label = 1
+	var/last_icon_key // [SIERRA-ADD] - Skip ClearOverlays/AddOverlays when canister icon state is unchanged
 	start_pressure = 45 * ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
@@ -121,10 +122,30 @@
 
 
 /obj/machinery/portable_atmospherics/canister/on_update_icon()
+	// [SIERRA-EDIT] - Early out when canister visual key has not changed
 	if (destroyed)
+		if (last_icon_key == "dead")
+			return
+		last_icon_key = "dead"
 		ClearOverlays()
 		icon_state = "[canister_color]-1"
 		return
+
+	var/tank_pressure = return_pressure()
+	var/p_tier
+	if (tank_pressure <= CANISTER_PRESSURE_EMPTY)
+		p_tier = 0
+	else if (tank_pressure <= CANISTER_PRESSURE_LOW)
+		p_tier = 1
+	else if (tank_pressure <= CANISTER_PRESSURE_MID)
+		p_tier = 2
+	else
+		p_tier = 3
+
+	var/new_key = "[!!holding]|[!!connected_port]|[p_tier]"
+	if (new_key == last_icon_key)
+		return
+	last_icon_key = new_key
 
 	if (icon_state != "[canister_color]")
 		icon_state = "[canister_color]"
@@ -135,16 +156,8 @@
 		AddOverlays("can-open")
 	if (connected_port)
 		AddOverlays("can-connector")
-
-	var/tank_pressure = return_pressure()
-	if (tank_pressure <= CANISTER_PRESSURE_EMPTY)
-		AddOverlays("can-o0")
-	else if (tank_pressure <= CANISTER_PRESSURE_LOW)
-		AddOverlays("can-o1")
-	else if (tank_pressure <= CANISTER_PRESSURE_MID)
-		AddOverlays("can-o2")
-	else
-		AddOverlays("can-o3")
+	AddOverlays("can-o[p_tier]")
+	// [/SIERRA-EDIT]
 
 /obj/machinery/portable_atmospherics/canister/get_material_melting_point()
 	return temperature_resistance
@@ -191,7 +204,9 @@
 	else
 		can_label = 0
 
-	air_contents.react() //cooking up air cans - add phoron and oxygen, then heat above PHORON_MINIMUM_BURN_TEMPERATURE
+	// [SIERRA-EDIT] - Parent already calls react() when !connected_port; skip cold mixtures below burn threshold
+	if(connected_port && air_contents.temperature > PHORON_MINIMUM_BURN_TEMPERATURE)
+		air_contents.react() //cooking up air cans - add phoron and oxygen, then heat above PHORON_MINIMUM_BURN_TEMPERATURE
 
 /obj/machinery/portable_atmospherics/canister/proc/return_temperature()
 	var/datum/gas_mixture/GM = src.return_air()
