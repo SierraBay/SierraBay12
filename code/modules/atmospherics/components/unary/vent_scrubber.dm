@@ -231,6 +231,7 @@
 	for(var/gas_id in gases)
 		if((gas_id in scrubbing_gas) ^ gases[gas_id])
 			scrubbing_gas ^= gas_id
+	wake_from_hibernation() // [SIERRA-ADD]
 
 /obj/machinery/atmospherics/unary/vent_scrubber/cannot_transition_to(state_path, mob/user)
 	if(state_path == /singleton/machine_construction/default/deconstructed)
@@ -312,6 +313,7 @@
 		machine.scrubbing = new_value
 		if(new_value != SCRUBBER_SIPHON)
 			machine.panic = FALSE
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/panic
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber
@@ -335,6 +337,7 @@
 			machine.scrubbing = SCRUBBER_SIPHON
 		else
 			machine.scrubbing = SCRUBBER_EXCHANGE
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/scrubbing_gas
 	expected_type = /obj/machinery/atmospherics/unary/vent_scrubber

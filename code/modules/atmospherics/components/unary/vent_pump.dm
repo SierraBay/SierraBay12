@@ -291,6 +291,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/proc/purge()
 	pressure_checks &= ~PRESSURE_CHECK_EXTERNAL
 	pump_direction = 0
+	wake_from_hibernation() // [SIERRA-ADD]
 
 /obj/machinery/atmospherics/unary/vent_pump/refresh()
 	..()
@@ -404,6 +405,7 @@
 	. = ..()
 	if(.)
 		machine.pump_direction = (new_value == "release")
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/pump_checks
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -425,6 +427,7 @@
 	. = ..()
 	if(.)
 		machine.pressure_checks = new_value
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/pressure_bound
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -444,6 +447,7 @@
 	. = ..()
 	if(.)
 		machine.internal_pressure_bound = new_value
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_variable/pressure_bound/external
 	expected_type = /obj/machinery/atmospherics/unary/vent_pump
@@ -460,6 +464,7 @@
 	. = ..()
 	if(.)
 		machine.external_pressure_bound = new_value
+		machine.wake_from_hibernation() // [SIERRA-ADD]
 
 /singleton/public_access/public_method/purge_pump
 	name = "activate purge mode"
