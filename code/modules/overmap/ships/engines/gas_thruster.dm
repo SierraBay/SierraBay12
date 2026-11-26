@@ -69,6 +69,7 @@
 	use_power = POWER_USE_OFF
 	power_channel = EQUIP
 	idle_power_usage = 21600 //6 Wh per tick for default 2 capacitor. Gives them a reason to turn it off, really to nerf backup battery
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Engine nozzles have no self-processing loop
 
 	machine_name = "gas thruster"
 	machine_desc = "A heavy-duty spaceship thruster that throws gas out of its nozzle to allow propulsion."
@@ -95,6 +96,9 @@
 		if (dir != ship.fore_dir)
 			set_broken(TRUE)
 		break
+
+/obj/machinery/atmospherics/unary/engine/Process() // [SIERRA-ADD]
+	return PROCESS_KILL
 
 /obj/machinery/atmospherics/unary/engine/Destroy()
 	QDEL_NULL(controller)
