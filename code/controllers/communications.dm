@@ -371,9 +371,10 @@ var/global/datum/controller/radio/radio_controller
 
 //Sends a signal to all machines belonging to a given filter. Should be called by post_signal()
 /datum/radio_frequency/proc/send_to_filter(obj/source, datum/signal/signal, radio_filter, turf/start_point = null, range = null)
+	// [SIERRA-EDIT] - Use integer z-level list instead of string-keyed set to avoid per-device string allocations
 	var/list/z_levels
 	if(start_point)
-		z_levels = GetConnectedZlevelsSet(start_point.z)
+		z_levels = GetConnectedZlevels(start_point.z)
 
 	for(var/obj/device as anything in devices[radio_filter])
 		if(device == source)
@@ -381,12 +382,13 @@ var/global/datum/controller/radio/radio_controller
 		var/turf/end_point = get_turf(device)
 		if(!end_point)
 			continue
-		if(z_levels && !(z_levels["[end_point.z]"]))
+		if(z_levels && !(end_point.z in z_levels))
 			continue
 		if(range && get_dist(start_point, end_point) > range)
 			continue
 
 		device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+	// [/SIERRA-EDIT]
 
 /datum/radio_frequency/proc/add_listener(obj/device as obj, radio_filter as text|null)
 	if (!radio_filter)
