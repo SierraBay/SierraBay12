@@ -744,6 +744,7 @@
 	name = "Aft Segment Cargo Shutters";
 	id_tag = "facolony_aftsegment_blasts"
 	},
+/obj/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo2)
 "cZ" = (
@@ -2193,7 +2194,6 @@
 /area/map_template/facolony/secondarywarehouse)
 "jn" = (
 /obj/decal/cleanable/dirt,
-/mob/living/bot/farmbot,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
 "jo" = (
@@ -4740,6 +4740,7 @@
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/structure/catwalk,
+/obj/decal/cleanable/liquid_fuel,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
 "tb" = (
@@ -8589,6 +8590,7 @@
 	dir = 8;
 	pixel_x = 22
 	},
+/mob/living/bot/farmbot,
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/map_template/facolony/secondarywarehouse)
 "IF" = (
