@@ -143,6 +143,8 @@
 				var/turf/simulated/checksim = checking
 				if (istype(checksim))
 					checksim.update_external_atmos_participation()
+				else // [SIERRA-ADD]
+					checking.last_outside_check = OUTSIDE_UNCERTAIN
 				if(!checking.is_open())
 					break
 
