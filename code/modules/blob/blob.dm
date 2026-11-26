@@ -36,8 +36,14 @@
 /obj/blob/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	// [SIERRA-ADD]
+	SSai.special_targets |= src
+	// [/SIERRA-ADD]
 
 /obj/blob/Destroy()
+	// [SIERRA-ADD]
+	SSai.special_targets -= src
+	// [/SIERRA-ADD]
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 

@@ -337,8 +337,10 @@ if (!(datum.process_flags & AI_FASTPROCESSING)) { \
 				ai_log("handle_stance_strategical() : STANCE_IDLE, target still present. Getting ready to fight.", AI_LOG_TRACE)
 				set_stance(STANCE_FIGHT);
 
-			if (prob(speak_chance)) // In the long loop since otherwise it wont shut up.
+			// [SIERRA-EDIT] - Guard prob() when speak_chance is 0
+			if (speak_chance && prob(speak_chance)) // In the long loop since otherwise it wont shut up.
 				handle_idle_speaking()
+			// [/SIERRA-EDIT]
 
 			if (hostile)
 				ai_log("handle_stance_strategical() : STANCE_IDLE, going to find_target().", AI_LOG_TRACE)

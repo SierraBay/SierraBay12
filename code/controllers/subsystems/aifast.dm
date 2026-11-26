@@ -35,13 +35,18 @@ SUBSYSTEM_DEF(aifast)
 	var/queue_length = length(queue)
 	if (!queue_length)
 		return
+	// [SIERRA-EDIT] - Cache presence config flag and fast-path turf z lookup
+	var/check_presence = !config.run_empty_levels
 	var/datum/ai_holder/ai
 	for (var/i = saved_index to queue_length)
 		ai = queue[i]
 		if (QDELETED(ai) || ai.busy || !ai.holder)
 			continue
-		if (!config.run_empty_levels && !SSpresence.population(get_z(ai.holder)))
-			continue
+		if (check_presence)
+			var/az = ai.holder.z || get_z(ai.holder)
+			if (!SSpresence.population(az))
+				continue
+		// [/SIERRA-EDIT]
 		ai.handle_tactics()
 		if (no_mc_tick)
 			CHECK_TICK

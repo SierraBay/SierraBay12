@@ -143,8 +143,14 @@
 
 	// Build icon.
 	queue_icon_update()
+	// [SIERRA-ADD]
+	SSai.special_targets |= src
+	// [/SIERRA-ADD]
 
 /mob/living/exosuit/Destroy()
+	// [SIERRA-ADD]
+	SSai.special_targets -= src
+	// [/SIERRA-ADD]
 
 	selected_system = null
 
