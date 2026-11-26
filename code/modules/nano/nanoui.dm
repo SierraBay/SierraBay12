@@ -99,8 +99,7 @@ nanoui is used to open and update nano browser uis
 		ref = nsrc_object
 
 	add_common_assets()
-	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
-	assets.send(user, ntemplate_filename)
+	// [SIERRA-EDIT] Assets are sent in open() after UI-specific templates, scripts, and stylesheets are added. [/SIERRA-EDIT]
 
 //Do not qdel nanouis. Use close() instead.
 /datum/nanoui/Destroy()
@@ -360,6 +359,20 @@ nanoui is used to open and update nano browser uis
 /datum/nanoui/proc/use_on_close_logic(state)
 	on_close_logic = state
 
+// [SIERRA-ADD]
+ /**
+  * Ensure layout assets for this UI are registered once before asset delivery or HTML rendering
+  *
+  * @return nothing
+  */
+/datum/nanoui/proc/ensure_layout_assets()
+	if (layout_key)
+		stylesheets |= "layout_[layout_key].css"
+		add_template("layout", "layout_[layout_key].tmpl")
+	if (layout_header_key)
+		add_template("layoutHeader", "layout_[layout_header_key].tmpl")
+// [/SIERRA-ADD]
+
  /**
   * Return the HTML for this UI
   *
@@ -367,11 +380,9 @@ nanoui is used to open and update nano browser uis
   */
 /datum/nanoui/proc/get_html()
 
-	// before the UI opens, add the layout files based on the layout key
-	add_stylesheet("layout_[layout_key].css")
-	add_template("layout", "layout_[layout_key].tmpl")
-	if (layout_header_key)
-		add_template("layoutHeader", "layout_[layout_header_key].tmpl")
+	// [SIERRA-EDIT]
+	ensure_layout_assets()
+	// [/SIERRA-EDIT]
 
 	var/head_content = ""
 
@@ -382,13 +393,15 @@ nanoui is used to open and update nano browser uis
 		head_content += "<link rel='stylesheet' type='text/css' href='[filename]'> "
 
 	var/template_data_json = "{}" // An empty JSON object
+	// [SIERRA-EDIT]
 	if (length(templates) > 0)
-		template_data_json = strip_improper(json_encode(templates))
+		template_data_json = html_encode(strip_improper(json_encode(templates)))
 
 	var/list/send_data = get_send_data(initial_data)
 	var/initial_data_json = html_encode(strip_improper(json_encode(send_data)))
 
-	var/url_parameters_json = json_encode(list("src" = "\ref[src]"))
+	var/url_parameters_json = html_encode(json_encode(list("src" = "\ref[src]")))
+	// [/SIERRA-EDIT]
 
 	return {"
 <!DOCTYPE html>
@@ -399,16 +412,15 @@ nanoui is used to open and update nano browser uis
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
-				// We need both jQuery and NanoStateManager to be able to recieve data
-				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
 				{
 					NanoStateManager.receiveUpdateData(jsonString);
 				}
-				//else
-				//{
-				//	alert('browser.recieveUpdateData failed due to jQuery or NanoStateManager being unavailiable.');
-				//}
+				else
+				{
+					window._pendingNanoUpdates = window._pendingNanoUpdates || [];
+					window._pendingNanoUpdates.push(jsonString);
+				}
 			}
 		</script>
 		[head_content]
@@ -442,6 +454,9 @@ nanoui is used to open and update nano browser uis
 
 	if(!src_object)
 		close()
+		// [SIERRA-ADD]
+		return
+		// [/SIERRA-ADD]
 
 	var/window_size = ""
 	if (width && height)
@@ -451,6 +466,30 @@ nanoui is used to open and update nano browser uis
 		// [/SIERRA-ADD]
 	if(update_status(0))
 		return // Will be closed by update_status().
+
+	// [SIERRA-ADD]
+	ensure_layout_assets()
+	var/list/ui_assets = list()
+	for(var/script_file in scripts)
+		ui_assets |= script_file
+	for(var/style_file in stylesheets)
+		ui_assets |= style_file
+	for(var/template_key in templates)
+		var/template_file = templates[template_key]
+		if(template_file)
+			ui_assets |= template_file
+	if(show_map || templates["mapContent"])
+		var/map_file = map_image_file_name(map_z_level)
+		if(SSassets?.cache?[map_file])
+			ui_assets |= map_file
+
+	var/datum/asset/nanoui/assets = get_asset_datum(/datum/asset/nanoui)
+	if(assets.send(user, ui_assets) && winexists(user.client, "asset_cache_browser"))
+		user.client.browse_queue_flush()
+
+	if(QDELETED(src) || !user?.client || !src_object || update_status(0))
+		return
+	// [/SIERRA-ADD]
 
 	show_browser(user, get_html(), "window=[window_id];[window_size][window_options]")
 	winset(user, "mapwindow.map", "focus=true") // return keyboard focus to map
@@ -541,6 +580,13 @@ nanoui is used to open and update nano browser uis
 		var/map_z = text2num(href_list["mapZLevel"])
 		if(map_z in GLOB.using_map.map_levels)
 			set_map_z_level(map_z)
+			// [SIERRA-ADD]
+			var/map_file = map_image_file_name(map_z)
+			if(SSassets?.cache?[map_file] && user?.client && SSassets.transport.send_assets(user.client, map_file) && winexists(user.client, "asset_cache_browser"))
+				user.client.browse_queue_flush()
+			if(QDELETED(src) || !user?.client || !src_object)
+				return
+			// [/SIERRA-ADD]
 			map_update = 1
 
 	if ((src_object && src_object.Topic(href, href_list, state)) || map_update)

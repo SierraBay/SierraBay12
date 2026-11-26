@@ -63,19 +63,40 @@
 
 /datum/asset/nanoui
 	parent_type = /datum/asset/group
-	children = list(/datum/asset/simple/nanoui_common, /datum/asset/simple/nanoui_templates, /datum/asset/simple/sierra_designs)
+	children = list(/datum/asset/simple/nanoui_common, /datum/asset/simple/nanoui_templates)
 
 /datum/asset/nanoui/send(client, uncommon)
+	. = FALSE
 	var/datum/asset/simple/common = get_asset_datum(/datum/asset/simple/nanoui_common)
-	var/datum/asset/simple/templates = get_asset_datum(/datum/asset/simple/nanoui_templates)
-	var/datum/asset/simple/designs = get_asset_datum(/datum/asset/simple/sierra_designs)
 	if(length(uncommon))
-		if(!islist(uncommon))
-			uncommon = list(uncommon)
-		SSassets.transport.send_assets(client, uncommon)
-	common.send(client)
-	templates.send(client)
-	designs.send(client)
+		var/list/extra = uncommon
+		if(!islist(extra))
+			extra = list(extra)
+		if(common?.assets)
+			var/list/filtered = list()
+			for(var/asset_name in extra)
+				if(!common.assets[asset_name])
+					filtered |= asset_name
+			extra = filtered
+		else
+			extra = extra.Copy()
+		if(length(extra))
+			. = SSassets.transport.send_assets(client, extra) || .
+	. = common.send(client) || .
+
+/// Sends only the requested registered R&D design icon filenames and flushes if any uncached files were queued.
+/proc/send_nanoui_design_icons(mob/user, list/icon_names)
+	if(!user?.client || !length(icon_names))
+		return FALSE
+	var/list/valid_icons = list()
+	for(var/icon_name in icon_names)
+		if(istext(icon_name) && SSassets.cache[icon_name])
+			valid_icons |= icon_name
+	if(!length(valid_icons))
+		return FALSE
+	. = SSassets.transport.send_assets(user.client, valid_icons)
+	if(. && winexists(user.client, "asset_cache_browser"))
+		user.client.browse_queue_flush()
 
 /datum/asset/simple/sierra_designs
 	legacy = TRUE

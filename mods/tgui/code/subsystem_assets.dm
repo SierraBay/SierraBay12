@@ -13,8 +13,26 @@ SUBSYSTEM_DEF(assets)
 	load_assets()
 	apply_configuration()
 	prepare_client_resources()
-	transport.preload = cache.Copy()
+	transport.preload = build_preload_assets()
 	log_debug("Asset transport active: [transport.type] (requested: [config.asset_transport])")
+
+/// Builds the lightweight connection preload list, excluding on-demand design icons and non-layout UI templates.
+/datum/controller/subsystem/assets/proc/build_preload_assets()
+	var/list/excluded = list()
+	var/datum/asset/simple/designs = get_asset_datum(/datum/asset/simple/sierra_designs)
+	if(designs?.assets)
+		for(var/asset_name in designs.assets)
+			excluded[asset_name] = TRUE
+	var/datum/asset/simple/templates = get_asset_datum(/datum/asset/simple/nanoui_templates)
+	if(templates?.assets)
+		for(var/asset_name in templates.assets)
+			if(copytext(asset_name, 1, 8) != "layout_")
+				excluded[asset_name] = TRUE
+	var/list/preload_assets = list()
+	for(var/asset_name in cache)
+		if(!excluded[asset_name])
+			preload_assets[asset_name] = cache[asset_name]
+	return preload_assets
 
 /datum/controller/subsystem/assets/Recover()
 	cache = SSassets.cache

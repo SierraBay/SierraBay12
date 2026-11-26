@@ -768,6 +768,16 @@
 	to_chat(user, SPAN_WARNING("Фотография не соответствует целям выбранного контракта."))
 
 
+/proc/send_rnd_possible_design_icons(mob/user, list/possible_designs)
+	if(!length(possible_designs))
+		return
+	var/list/design_icons = list()
+	for(var/list/dentry in possible_designs)
+		var/list/dinfo = dentry["data"]
+		if(islist(dinfo) && dinfo["icon"])
+			design_icons |= dinfo["icon"]
+	send_nanoui_design_icons(user, design_icons)
+
 /obj/machinery/computer/rdconsole/proc/get_possible_designs_data(obj/machinery/fabricator/rnd/target_machine, category) // Builds the design list for the UI
 	var/obj/machinery/r_n_d/server/S_gpd = get_server()
 	if(!S_gpd)
@@ -1291,6 +1301,8 @@
 		data["report_value"] = report_value
 		data["can_compile"] = (report_delta > 0)
 		data["report_collapsed"] = report_collapsed
+
+	send_rnd_possible_design_icons(user, data["possible_designs"])
 
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
