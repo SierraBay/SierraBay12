@@ -331,6 +331,7 @@
 	desc = "And they said I was crazy."
 	door_color = COLOR_PAKISTAN_GREEN
 	mineral = MATERIAL_URANIUM
+	init_flags = INIT_MACHINERY_START_PROCESSING // [SIERRA-ADD] - Radiates continuously in Process()
 	var/last_event = 0
 	var/rad_power = 7.5
 
@@ -412,7 +413,12 @@
 	else if(electrified_until > 0 && world.time >= electrified_until)
 		electrify(0)
 
-	..()
+	// [SIERRA-EDIT] - Keep processing only while a power/electrify/close timer is active
+	. = ..()
+	if(main_power_lost_until > 0 || backup_power_lost_until > 0 || electrified_until > 0)
+		return null
+	return .
+	// [/SIERRA-EDIT]
 
 /obj/machinery/door/airlock/uranium/Process()
 	if(world.time > last_event+20)
@@ -420,6 +426,7 @@
 			SSradiation.radiate(src, rad_power)
 		last_event = world.time
 	..()
+	return null // [SIERRA-ADD] - Keep radiating even when parent timers are idle
 
 /obj/machinery/door/airlock/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -521,6 +528,9 @@ About the new airlock wires panel:
 	if(electrified_until && isAllPowerLoss())
 		electrify(0)
 
+	if(main_power_lost_until > 0 || backup_power_lost_until > 0) // [SIERRA-ADD]
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
 	update_icon()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
@@ -529,6 +539,9 @@ About the new airlock wires panel:
 	// Disable electricity if required
 	if(electrified_until && isAllPowerLoss())
 		electrify(0)
+
+	if(backup_power_lost_until > 0) // [SIERRA-ADD]
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 	update_icon()
 
@@ -568,6 +581,8 @@ About the new airlock wires panel:
 			shockedby += "\[[time_stamp()]\] - EMP)"
 		message = "The door is now electrified [duration == -1 ? "permanently" : "for [duration] second\s"]."
 		src.electrified_until = duration == -1 ? -1 : world.time + SecondsToTicks(duration)
+		if(electrified_until > 0) // [SIERRA-ADD]
+			START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 		. = 1
 
 	if(feedback && message)
@@ -1248,6 +1263,7 @@ About the new airlock wires panel:
 			for(var/atom/movable/AM in turf)
 				if(AM.blocks_airlock())
 					close_door_at = world.time + 6
+					START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF) // [SIERRA-ADD]
 					return
 
 	var/crushed = FALSE
