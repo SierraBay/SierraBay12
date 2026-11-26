@@ -25,6 +25,7 @@ Thus, the two variables affect pump operation are set in New():
 	//var/max_volume_transfer = 10000
 
 	use_power = POWER_USE_OFF
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Unqueue when off or inoperable
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 30000			// 30000 W ~ 40 HP
 	identifier = "AGP"
@@ -60,6 +61,20 @@ Thus, the two variables affect pump operation are set in New():
 	. = ..()
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
+	// [SIERRA-ADD]
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/binary/pump/power_change()
+	. = ..()
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/binary/pump/update_use_power(new_use_power)
+	..()
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	// [/SIERRA-ADD]
 
 /obj/machinery/atmospherics/binary/pump/AltClick()
 	Topic(src, list("power" = "1"))
@@ -93,7 +108,7 @@ Thus, the two variables affect pump operation are set in New():
 	last_flow_rate = 0
 
 	if((inoperable()) || !use_power)
-		return
+		return PROCESS_KILL // [SIERRA-EDIT]
 
 	var/power_draw = -1
 	var/pressure_delta = target_pressure - air2.return_pressure()

@@ -6,6 +6,7 @@
 	desc = "Passively injects air into its surroundings. Has a valve attached to it that can control flow rate."
 
 	use_power = POWER_USE_OFF
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Unqueue when off or inoperable
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 45000	//45000 W ~ 60 HP
 
@@ -32,6 +33,20 @@
 
 	set_frequency(frequency)
 	broadcast_status()
+	// [SIERRA-ADD]
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/outlet_injector/power_change()
+	. = ..()
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+
+/obj/machinery/atmospherics/unary/outlet_injector/update_use_power(new_use_power)
+	..()
+	if(use_power && !inoperable())
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
+	// [/SIERRA-ADD]
 
 
 /obj/machinery/atmospherics/unary/outlet_injector/Destroy()
@@ -116,13 +131,16 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/Process()
-	..()
+	// [SIERRA-EDIT] - Skip parent build_network() when already networked, and unqueue when off/inoperable
+	if(!network && node)
+		build_network()
 
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	if((inoperable()) || !use_power)
-		return
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 
 	var/power_draw = -1
 	var/datum/gas_mixture/environment = loc.return_air()
