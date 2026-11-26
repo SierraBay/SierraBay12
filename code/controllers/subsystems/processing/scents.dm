@@ -16,7 +16,8 @@ PROCESSING_SUBSYSTEM_DEF(scents)
 			return
 		var/now = world.time
 		var/max_z = world.maxz
-		var/list/by_z = new /list(max_z)
+		var/list/by_z = list()
+		LIST_RESIZE(by_z, max_z)
 		var/has_any = FALSE
 		for (var/mob/living/carbon/human/H as anything in GLOB.living_players)
 			if (!istype(H) || H.last_smelt >= now)
@@ -39,8 +40,8 @@ PROCESSING_SUBSYSTEM_DEF(scents)
 			has_any = TRUE
 		if (!has_any)
 			return
-		smellers_by_z = by_z
-		current_run = processing.Copy()
+		src.smellers_by_z = by_z
+		src.current_run = processing.Copy()
 
 	var/list/current_run = src.current_run
 	var/list/by_z = src.smellers_by_z
