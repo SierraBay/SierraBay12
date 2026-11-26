@@ -12,6 +12,7 @@ var/global/solar_gen_rate = 1500
 	idle_power_usage = 0
 	active_power_usage = 0
 	health_max = 10
+	init_flags = FLAGS_OFF // [SIERRA-ADD] - Only process while linked to a working control computer
 	var/id = 0
 	var/obscured = 0
 	var/sunfrac = 0
@@ -42,6 +43,8 @@ var/global/solar_gen_rate = 1500
 	if(SC && (get_dist(src, SC) > SOLAR_MAX_DIST))
 		return 0
 	control = SC
+	if(control && !MACHINE_IS_BROKEN(src)) // [SIERRA-ADD]
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 	return 1
 
 //set the control of the panel to null and removes it from the control list of the previous control computer if needed
@@ -107,10 +110,10 @@ var/global/solar_gen_rate = 1500
 	//isn't the power received from the incoming light proportional to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 
 /obj/machinery/power/solar/Process()
-	if(MACHINE_IS_BROKEN(src))
-		return
-	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
-		return
+	// [SIERRA-EDIT] - Stop processing when broken or unlinked
+	if(MACHINE_IS_BROKEN(src) || !control)
+		return PROCESS_KILL
+	// [/SIERRA-EDIT]
 
 	if(powernet)
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
@@ -126,6 +129,8 @@ var/global/solar_gen_rate = 1500
 	. = ..()
 	if(. && new_state && !health_dead())
 		kill_health()
+	else if(. && !new_state && control) // [SIERRA-ADD]
+		START_PROCESSING_MACHINE(src, MACHINERY_PROCESS_SELF)
 
 /obj/machinery/power/solar/on_death()
 	new /obj/item/material/shard(src.loc)
