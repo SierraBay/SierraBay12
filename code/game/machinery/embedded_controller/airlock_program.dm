@@ -40,7 +40,7 @@
 	memory["internal_sensor_pressure"] = ONE_ATMOSPHERE
 	memory["exterior_status"] = list(state = "closed", lock = "locked")		//assume closed and locked in case the doors dont report in
 	memory["interior_status"] = list(state = "closed", lock = "locked")
-	memory["pump_status"] = "unknown"
+	memory["pump_status"] = istype(M, /obj/machinery/embedded_controller/radio/airlock/access_controller) ? "off" : "unknown" // [SIERRA-EDIT]
 	memory["target_pressure"] = ONE_ATMOSPHERE
 	memory["purge"] = 0
 	memory["secure"] = 0
@@ -205,6 +205,7 @@
 		else
 			//make sure to return to a sane idle state
 			if(memory["pump_status"] != "off")	//send a signal to stop pumping
+				memory["pump_status"] = "off" // [SIERRA-ADD] - Avoid spamming radio every tick if pump is absent/unpowered
 				signalPump(tag_airpump, 0)
 				if(cycle_to_external_air)
 					signalPump(tag_pump_out_internal, 0)

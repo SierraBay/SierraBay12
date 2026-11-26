@@ -52,6 +52,7 @@
 	var/frequency = 1379
 	var/radio_filter = null
 	var/datum/radio_frequency/radio_connection
+	var/last_overlay_key // [SIERRA-ADD] - Skip ClearOverlays/AddOverlays when controller icon state is unchanged
 
 /obj/machinery/embedded_controller/radio/Initialize()
 	set_frequency(frequency)
@@ -63,26 +64,38 @@
 	..()
 
 /obj/machinery/embedded_controller/radio/on_update_icon()
-	ClearOverlays()
+	// [SIERRA-EDIT] - Early out when overlay key has not changed
 	if(!on || !istype(program))
+		if(last_overlay_key == "off")
+			return
+		last_overlay_key = "off"
+		ClearOverlays()
 		return
-	if(!program.memory["processing"])
+	var/proc_state = program.memory["processing"]
+	var/datum/computer/file/embedded_program/docking/airlock/docking_program = program
+	var/datum/computer/file/embedded_program/airlock/airlock_program = program
+	var/override_state = istype(docking_program) ? docking_program.override_enabled : 0
+	if(istype(docking_program))
+		airlock_program = docking_program.airlock_program
+	var/pump_state = (istype(airlock_program) && airlock_program.memory["processing"]) ? airlock_program.memory["pump_status"] : ""
+	var/new_key = "[!!proc_state]|[!!override_state]|[pump_state]"
+	if(new_key == last_overlay_key)
+		return
+	last_overlay_key = new_key
+	ClearOverlays()
+	if(!proc_state)
 		AddOverlays(image(icon, "screen_standby"))
 		AddOverlays(image(icon, "indicator_done"))
 	else
 		AddOverlays(image(icon, "indicator_active"))
-	var/datum/computer/file/embedded_program/docking/airlock/docking_program = program
-	var/datum/computer/file/embedded_program/airlock/airlock_program = program
-	if(istype(docking_program))
-		if(docking_program.override_enabled)
-			AddOverlays(image(icon, "indicator_forced"))
-		airlock_program = docking_program.airlock_program
-
-	if(istype(airlock_program) && airlock_program.memory["processing"])
-		if(airlock_program.memory["pump_status"] == "siphon")
+	if(override_state)
+		AddOverlays(image(icon, "indicator_forced"))
+	if(pump_state)
+		if(pump_state == "siphon")
 			AddOverlays(image(icon, "screen_drain"))
 		else
 			AddOverlays(image(icon, "screen_fill"))
+	// [/SIERRA-EDIT]
 
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal, radio_filter = null)
 	signal.transmission_method = TRANSMISSION_RADIO
