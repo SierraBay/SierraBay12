@@ -57,6 +57,8 @@
 	/// Color for headers, eg. "- ETA -"
 	var/header_text_color =  COLOR_DISPLAY_PURPLE
 	var/status_display_show_alert_border = FALSE
+	var/singleton/security_level/rendered_text_border // [SIERRA-ADD]
+	var/rendered_line_pair // [SIERRA-ADD]
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)
@@ -105,8 +107,8 @@
 	if (MACHINE_IS_BROKEN(src))
 		return PROCESS_KILL
 	if (!is_powered())
-		remove_display()
-		set_light(0)
+		if (length(overlays) || length(vis_contents)) // [SIERRA-ADD]
+			remove_display()
 		return
 	if (mode == STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME || mode == STATUS_DISPLAY_TIME || mode == STATUS_DISPLAY_CUSTOM)
 		update()
@@ -120,16 +122,17 @@
 
 // set what is displayed
 /obj/machinery/status_display/proc/update()
-	remove_display()
+	// [SIERRA-EDIT] - Defer remove_display() so unchanged text displays skip overlay/light rebuilds
 	if (MACHINE_IS_BROKEN(src))
-		return
+		remove_display()
+		return 0
 	if(friendc && !ignore_friendc)
 		set_picture("ai_friend")
 		return 1
 
 	switch(mode)
 		if(STATUS_DISPLAY_BLANK)	//blank
-			remove_messages()
+			remove_display()
 			return 1
 		if(STATUS_DISPLAY_TRANSFER_SHUTTLE_TIME)				//emergency shuttle timer
 			if(evacuation_controller.is_prepared())
@@ -143,6 +146,11 @@
 				message1 = "-ETA-"
 				message2 = get_shuttle_timer()
 				update_display(message1, message2)
+			else
+				message1 = ""
+				message2 = ""
+				if(length(overlays) || length(vis_contents))
+					remove_display()
 			return 1
 		if(STATUS_DISPLAY_MESSAGE)	//custom messages
 			update_display(message1, message2)
@@ -159,6 +167,7 @@
 			set_picture(picture_state)
 			return 1
 	return 0
+	// [/SIERRA-EDIT]
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
@@ -169,28 +178,33 @@
 		to_chat(user, "The current alert level is [security_state.current_security_level.name].")
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
-	if (message1_overlay?.message == line1 && message2_overlay?.message == line2)
+	// [SIERRA-EDIT] - Text and border can change independently.
+	var/singleton/security_level/border
+	if(status_display_show_alert_border)
+		var/singleton/security_state/security_state = GET_SINGLETON(GLOB.using_map.security_state)
+		border = security_state.current_security_level
+	if(!message1_overlay || !message2_overlay || rendered_text_border != border)
+		rendered_text_border = border
+		ClearOverlays()
+		var/list/pending_overlays = list(emissive_appearance(icon, "outline", src, alpha = src.alpha))
+		if(border)
+			pending_overlays += image(border.icon, border.alert_border)
+		AddOverlays(pending_overlays)
+		set_light(2, 0.5, COLOR_WHITE)
+	if(message1_overlay && message1_overlay.message == line1 && message2_overlay && message2_overlay.message == line2)
 		return
-
-	var/line1_metric
-	var/line2_metric
-	var/line_pair
 	var/singleton/font/display_font = GET_SINGLETON(/singleton/font/tiny_unicode/size_12pt)
-	line1_metric = display_font.get_metrics(line1)
-	line2_metric = display_font.get_metrics(line2)
-	line_pair = (line1_metric > line2_metric ? line1_metric : line2_metric)
-	var/overlay = update_message(message1_overlay, LINE1_Y, line1, LINE1_X, line_pair)
-	if (overlay)
-		message1_overlay = overlay
-	overlay = update_message(message2_overlay, LINE2_Y, line2, LINE2_X, line_pair)
-	if (overlay)
-		message2_overlay = overlay
-	var/pending_overlays = list()
-	pending_overlays += emissive_appearance(icon, "outline", src, alpha = src.alpha)
-	if (status_display_show_alert_border)
-		pending_overlays += get_alert_border()
-	AddOverlays(pending_overlays)
-	set_light(2, 0.5, COLOR_WHITE)
+	var/line_pair = max(display_font.get_metrics(line1), display_font.get_metrics(line2))
+	if(rendered_line_pair != line_pair)
+		remove_messages()
+		rendered_line_pair = line_pair
+	var/obj/overlay/status_display_text/line_overlay = update_message(message1_overlay, LINE1_Y, line1, LINE1_X, line_pair)
+	if(line_overlay)
+		message1_overlay = line_overlay
+	line_overlay = update_message(message2_overlay, LINE2_Y, line2, LINE2_X, line_pair)
+	if(line_overlay)
+		message2_overlay = line_overlay
+	// [/SIERRA-EDIT]
 
 /**
  * Remove both message objs and null the fields.
@@ -198,8 +212,10 @@
 /obj/machinery/status_display/proc/remove_messages()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (message1_overlay)
+		vis_contents -= message1_overlay
 		QDEL_NULL(message1_overlay)
 	if (message2_overlay)
+		vis_contents -= message2_overlay
 		QDEL_NULL(message2_overlay)
 
 /**
@@ -218,6 +234,7 @@
 		return null
 
 	if (overlay)
+		vis_contents -= overlay
 		qdel(overlay)
 
 	var/obj/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset, line_pair)
@@ -279,6 +296,8 @@
 	return ""
 
 /obj/machinery/status_display/proc/remove_display()
+	rendered_text_border = null // [SIERRA-ADD]
+	rendered_line_pair = null // [SIERRA-ADD]
 	if (length(overlays))
 		ClearOverlays()
 	vis_contents.Cut()
