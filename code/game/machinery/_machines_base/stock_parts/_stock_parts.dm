@@ -50,6 +50,12 @@
 	set_status(machine, PART_STAT_PROCESSING)
 
 /obj/item/stock_parts/proc/stop_processing(obj/machinery/machine)
+	// [SIERRA-ADD] - Default to loc if called without explicit machine
+	if(!machine)
+		machine = loc
+	if(!istype(machine))
+		return
+	// [/SIERRA-ADD]
 	LAZYREMOVE(machine.processing_parts, src)
 	if(!LAZYLEN(machine.processing_parts))
 		STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_COMPONENTS)

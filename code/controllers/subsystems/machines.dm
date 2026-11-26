@@ -218,7 +218,11 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/proc/process_machinery(resumed, no_mc_tick)
 	if (!resumed)
-		queue = processing.Copy()
+		src.queue = processing.Copy()
+	// [SIERRA-EDIT] - Cache queue and wait in locals to avoid repeated src lookups
+	var/list/queue = src.queue
+	var/wait = src.wait
+	// [/SIERRA-EDIT]
 	var/obj/machinery/machine
 	for (var/i = length(queue) to 1 step -1)
 		machine = queue[i]
@@ -228,10 +232,19 @@ SUBSYSTEM_DEF(machines)
 			processing -= machine
 			continue
 
+		// [SIERRA-ADD] - Prune stale entries that no longer have active processing flags
+		if (!machine.processing_flags)
+			if (machine.is_processing == "SSmachines")
+				STOP_PROCESSING(SSmachines, machine)
+			else
+				processing -= machine
+			continue
+		// [/SIERRA-ADD]
+
 		if(machine.processing_flags & MACHINERY_PROCESS_COMPONENTS)
 			for(var/obj/item/stock_parts/part as anything in machine.processing_parts)
 				if(part.machine_process(machine) == PROCESS_KILL)
-					part.stop_processing()
+					part.stop_processing(machine) // [SIERRA-EDIT] - Pass owning machine to stop_processing()
 
 		if((machine.processing_flags & MACHINERY_PROCESS_SELF) && machine.Process(wait) == PROCESS_KILL)
 			STOP_PROCESSING_MACHINE(machine, MACHINERY_PROCESS_SELF)
