@@ -5,44 +5,77 @@ var _compiledTemplates = {}
 var _helpers = {}
 
     var init = function () {
-    _templateData = $('body').data('templateData')
-    if (_templateData == null)
-      alert('Error: Template data did not load correctly.')
-    loadNextTemplate()
+      _templateData = $('body').data('templateData')
+      if (_templateData == null) {
+        alert('Error: Template data did not load correctly.')
+        return
+      }
+      loadAllTemplates()
     }
 
-    var loadNextTemplate = function () {
-      var templateCount = Object.size(_templateData)
-
-      if (!templateCount) {
-          $(document).trigger('templatesLoaded')
-          return
-      }
+    var loadAllTemplates = function () {
+      var keys = []
       for (var key in _templateData) {
-        if (!_templateData.hasOwnProperty(key))
-          continue
-        $.when($.ajax({
-          url: _templateData[key],
+        if (_templateData.hasOwnProperty(key))
+          keys.push(key)
+      }
+
+      if (!keys.length) {
+        $(document).trigger('templatesLoaded')
+        return
+      }
+
+      var remaining = keys.length
+      var failed = []
+      var finishOne = function () {
+        remaining--
+        if (remaining > 0)
+          return
+        if (failed.length) {
+          var layout = $('#uiLayout')
+          if (layout.length)
+            layout.html('<div class="notice" style="padding:12px;">Failed to load interface templates (' + failed.join(', ') + '). Please reopen this window.</div>')
+          return
+        }
+        $(document).trigger('templatesLoaded')
+      }
+
+      var loadTemplate = function (key, attempt) {
+        var url = _templateData[key]
+        $.ajax({
+          url: url,
           cache: false,
           dataType: 'text'
-        }))
-        .done(function(templateMarkup) {
+        })
+        .done(function (templateMarkup) {
           templateMarkup += '<div class="clearBoth"></div>'
           try {
             NanoTemplate.addTemplate(key, templateMarkup)
           }
-          catch(error) {
+          catch (error) {
             alert('ERROR: An error occurred while loading the UI: ' + error.message)
+            failed.push(key)
+            finishOne()
             return
           }
           delete _templateData[key]
-          loadNextTemplate()
+          finishOne()
         })
         .fail(function () {
-          alert('ERROR: Loading template ' + key + '(' + _templateData[key] + ') failed!')
+          if (attempt < 2) {
+            setTimeout(function () {
+              loadTemplate(key, attempt + 1)
+            }, 150)
+            return
+          }
+          alert('ERROR: Loading template ' + key + '(' + url + ') failed!')
+          failed.push(key)
+          finishOne()
         })
-        return
       }
+
+      for (var i = 0; i < keys.length; i++)
+        loadTemplate(keys[i], 0)
     }
 
     var compileTemplates = function () {
@@ -100,7 +133,7 @@ var _helpers = {}
     },
 
     removeHelper: function (helperName) {
-      if (helpers.hasOwnProperty(helperName))
+      if (_helpers.hasOwnProperty(helperName))
         delete _helpers[helperName]
     }
   }

@@ -78,28 +78,39 @@
 	return istext(component) && component != "." && component != ".." && safe_component.Find(component)
 
 
-/// webroot asset sending - does nothing unless passed legacy assets
-/datum/asset_transport/webroot/send_assets(client/client, list/asset_list)
-	. = FALSE
+/datum/asset_transport/webroot/proc/extract_legacy_assets(list/asset_list, include_missing = TRUE)
 	var/list/legacy_assets = list()
 	if(!islist(asset_list))
+		if(!length(asset_list))
+			return legacy_assets
 		asset_list = list(asset_list)
 	for(var/asset_name in asset_list)
 		var/datum/asset_cache_item/ACI = asset_list[asset_name]
 		if(!istype(ACI))
 			ACI = SSassets.cache[asset_name]
 		if(!ACI)
-			legacy_assets += asset_name //pass it on to base send_assets so it can output an error
+			if(include_missing)
+				legacy_assets += asset_name //pass it on to base send_assets so it can output an error
 			continue
 		if(ACI.legacy)
 			legacy_assets[asset_name] = ACI
+	return legacy_assets
+
+
+/// webroot asset sending - does nothing unless passed legacy assets
+/datum/asset_transport/webroot/send_assets(client/client, list/asset_list)
+	. = FALSE
+	var/list/legacy_assets = extract_legacy_assets(asset_list, include_missing = TRUE)
 	if(length(legacy_assets))
 		. = ..(client, legacy_assets)
 
 
-/// webroot slow asset sending - does nothing.
-/datum/asset_transport/webroot/send_assets_slow(client/client, list/files, filerate)
-	return FALSE
+/// webroot slow asset sending - preloads legacy assets only; CDN-served assets stay off send_rsc.
+/datum/asset_transport/webroot/send_assets_slow(client/client, list/files, filerate = 6)
+	var/list/legacy_files = extract_legacy_assets(files, include_missing = FALSE)
+	if(!length(legacy_files))
+		return FALSE
+	return ..(client, legacy_files, filerate)
 
 /datum/asset_transport/webroot/validate_config(log = TRUE)
 	if(!config.asset_cdn_url)

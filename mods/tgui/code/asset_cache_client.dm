@@ -70,10 +70,10 @@
 	var/timeout_time = timeout
 	show_browser(src, {"<script>window.location.href='?asset_cache_confirm_arrival=[job]'</script>"}, "window=asset_cache_browser")
 
-	while(src && completed_asset_jobs && !completed_asset_jobs["[job]"] && t < timeout_time) // Reception is handled in Topic()
+	while(src && completed_asset_jobs && !completed_asset_jobs["[job]"] && last_completed_asset_job < job && t < timeout_time) // Reception is handled in Topic()
 		stoplag(1) // Lock up the caller until this is received.
 		t++
-	var/confirmed = !!completed_asset_jobs?["[job]"]
+	var/confirmed = !!(completed_asset_jobs?["[job]"] || last_completed_asset_job >= job)
 	if(completed_asset_jobs)
 		completed_asset_jobs -= "[job]"
 	if(pending_asset_jobs)

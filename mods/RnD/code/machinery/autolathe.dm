@@ -253,6 +253,17 @@
 /obj/machinery/fabricator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	var/list/data = ui_data(user, ui_key)
 
+	var/list/design_icons = list()
+	for(var/list/ddata in data["designs"])
+		if(ddata["icon"])
+			design_icons |= ddata["icon"]
+	if(islist(data["current"]) && data["current"]["icon"])
+		design_icons |= data["current"]["icon"]
+	for(var/list/qdata in data["queue"])
+		if(qdata["icon"])
+			design_icons |= qdata["icon"]
+	send_nanoui_design_icons(user, design_icons)
+
 	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
