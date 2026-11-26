@@ -721,13 +721,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargohatch)
-"cT" = (
-/obj/paint/fleet/sfv_rook,
-/obj/structure/sign/warning/docking_area{
-	dir = 8
-	},
-/turf/simulated/wall/r_wall,
-/area/map_template/facolony/airlock)
 "cW" = (
 /obj/structure/catwalk,
 /obj/structure/railing/mapped,
@@ -968,13 +961,6 @@
 /obj/machinery/meter,
 /turf/simulated/floor/tiled/steel_grid,
 /area/map_template/facolony/atmospherics)
-"dU" = (
-/obj/paint/green,
-/obj/structure/sign/warning/docking_area{
-	dir = 4
-	},
-/turf/simulated/wall/r_wall,
-/area/map_template/facolony/tradezone)
 "dW" = (
 /obj/floor_decal/industrial/warning{
 	dir = 8;
@@ -1714,6 +1700,13 @@
 	},
 /turf/simulated/floor/tiled/monotile,
 /area/map_template/facolony/dorms)
+"hj" = (
+/obj/paint/fleet/sfv_rook,
+/obj/structure/sign/warning/docking_area{
+	dir = 8
+	},
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/airlock)
 "hr" = (
 /obj/structure/cable/cyan{
 	d1 = 1;
@@ -11880,6 +11873,13 @@
 /obj/catwalk_plated,
 /turf/simulated/floor/plating,
 /area/map_template/facolony/cargo)
+"YZ" = (
+/obj/paint/green,
+/obj/structure/sign/warning/docking_area{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/map_template/facolony/tradezone)
 "Zb" = (
 /obj/structure/catwalk,
 /obj/floor_decal/industrial/warning/dust{
@@ -12460,14 +12460,14 @@ uo
 uo
 dI
 dI
-dU
+YZ
 to
 to
 cq
 uC
 os
 wT
-dU
+YZ
 bF
 bF
 uo
@@ -13277,14 +13277,14 @@ uo
 uo
 lJ
 lF
-cT
+hj
 Ib
 VN
 Fi
 Uk
 iu
 II
-cT
+hj
 Et
 Et
 uo
