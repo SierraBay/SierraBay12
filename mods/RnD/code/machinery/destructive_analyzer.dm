@@ -121,19 +121,25 @@ Note: Must be placed within 3 tiles of the R&D Console
 	busy = FALSE
 	if(!loaded_item)
 		return
+	var/obj/item/analyzed = loaded_item
 	if(linked_console)
-		linked_console.handle_item_analysis(loaded_item)
+		linked_console.handle_item_analysis(analyzed)
+		var/mob/living/user
+		for (var/mob/living/L in viewers(src, 2))
+			user = L
+			break
+		odyssey_rnd_on_deconstruct(linked_console, user, analyzed)
 	for(var/mob/living/carbon/human/H in viewers(src))
-		SEND_SIGNAL(H, "destructive_analizer", loaded_item)
-	if(istype(loaded_item,/obj/item/stack))
-		var/obj/item/stack/S = loaded_item
+		SEND_SIGNAL(H, "destructive_analizer", analyzed)
+	if(istype(analyzed,/obj/item/stack))
+		var/obj/item/stack/S = analyzed
 		if(S.amount <= 1)
 			qdel(S)
 			loaded_item = null
 		else
 			S.use(1)
 	else
-		qdel(loaded_item)
+		qdel(analyzed)
 		loaded_item = null
 
 	use_power_oneoff(active_power_usage)

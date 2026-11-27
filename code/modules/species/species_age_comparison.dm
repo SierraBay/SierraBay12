@@ -28,6 +28,8 @@
 /singleton/species/proc/get_age_comparison_string(mob/living/carbon/human/observed, mob/living/carbon/human/observer)
 	if (!age_descriptors || !age_diff_descriptors || !istype(observed) || observed.isSynthetic())
 		return
+	if (!istype(observer))
+		return
 	if (!show_age_to_other_species && name != observer.get_species())
 		return
 
@@ -59,6 +61,8 @@
 		return "You are of [age_descriptor] age for \a [name]."
 
 	var/datum/pronouns/pronouns = observed.choose_from_pronouns()
+	if (!pronouns)
+		return
 	if (age_diff_descriptor)
 		return "[pronouns.He] [pronouns.is] of [age_descriptor] age for \a [name], [age_diff_descriptor] you."
 	else if (age_descriptor)

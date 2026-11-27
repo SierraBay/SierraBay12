@@ -38,6 +38,8 @@
 
 	var/unfolded
 	var/show_category
+	/// NanoUI tab: "main" (production) or "log" (print journal).
+	var/fab_tab = "main"
 	var/list/categories
 
 	var/list/special_actions
@@ -162,6 +164,14 @@
 	data["unfolded"] = unfolded
 
 	data["speed"] = speed
+	data["fab_tab"] = fab_tab || "main"
+	data["print_log_network"] = print_log_network
+	data["print_log_corrupt"] = print_log_corrupt
+	data["print_log_status"] = print_log_status_label()
+	if (fab_tab == "log")
+		data["print_log"] = print_log_ui_entries(25)
+	else
+		data["print_log"] = list()
 
 	if(disk)
 		data["disk"] = list(
@@ -358,6 +368,12 @@
 			insert_beaker(usr)
 		return TRUE
 
+	if(href_list["fab_tab"])
+		var/next_tab = href_list["fab_tab"]
+		if (next_tab == "main" || next_tab == "log")
+			fab_tab = next_tab
+		return TRUE
+
 	if(href_list["category"] && categories)
 		var/new_category = text2num(href_list["category"])
 
@@ -405,7 +421,7 @@
 				if(!CanUseTopic(usr) || !(design_file in DL))
 					return
 
-			queue_design(design_file, amount)
+			queue_design(design_file, amount, usr)
 
 		return TRUE
 
@@ -677,12 +693,17 @@
 	if(istype(new_state))
 		updateUsrDialog()
 
-/obj/machinery/fabricator/proc/queue_design(datum/computer_file/binary/design/design_file, amount=1)
+/obj/machinery/fabricator/proc/queue_design(datum/computer_file/binary/design/design_file, amount = 1, mob/user = null)
 	if(!design_file || !amount)
 		return
 
 	if(design_file)
 		design_file = design_file.clone()
+		if (istype(user))
+			design_file.print_ordered_by = print_log_user_label(user)
+			design_file.print_ordered_ckey = user.ckey
+		else if (!design_file.print_ordered_by)
+			design_file.print_ordered_by = "Remote queue"
 
 	while(amount && LAZYLEN(queue) < queue_max)
 		queue.Add(design_file)
@@ -965,7 +986,11 @@
 
 
 /obj/machinery/fabricator/proc/fabricate_design(datum/design/design)
+	var/ordered_by = "Unknown"
+	if (istype(current_file))
+		ordered_by = current_file.print_ordered_by || "Unknown"
 	consume_materials(design)
+	record_print_log(design, ordered_by)
 	var/obj/new_item = design.Fabricate(get_turf(loc), mat_efficiency, src)
 	// Reverse-engineered storage containers are printed empty.
 	// Contents spawned by Initialize() are free items the player didn't pay for.

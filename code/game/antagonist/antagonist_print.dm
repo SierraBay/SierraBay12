@@ -1,11 +1,17 @@
+/// Minds to show in roundend antag summary. Odyssey may hide living persist antags.
+/datum/antagonist/proc/roundend_listed_antagonists()
+	return current_antagonists
+
+
 /datum/antagonist/proc/print_player_summary()
 
-	if(!length(current_antagonists))
+	var/list/listed = roundend_listed_antagonists()
+	if(!length(listed))
 		return 0
 
 	var/text = list()
-	text += "<br><br>[FONT_NORMAL("<b>The [length(current_antagonists) == 1 ? "[role_text] was" : "[role_text_plural] were"]:</b>")]"
-	for(var/datum/mind/P in current_antagonists)
+	text += "<br><br>[FONT_NORMAL("<b>The [length(listed) == 1 ? "[role_text] was" : "[role_text_plural] were"]:</b>")]"
+	for(var/datum/mind/P in listed)
 		text += print_player(P)
 		text += get_special_objective_text(P)
 		var/datum/goal/ambition = SSgoals.ambitions[P]
@@ -20,7 +26,8 @@
 				text += print_objective(O, num)
 				num++
 
-	if(global_objectives && length(global_objectives))
+	// Skip shared objectives if some antags were hidden (Odyssey living persist).
+	if(global_objectives && length(global_objectives) && length(listed) >= length(current_antagonists))
 		text += "<BR>[FONT_NORMAL("Their objectives were:")]"
 		var/num = 1
 		for(var/datum/objective/O in global_objectives)
