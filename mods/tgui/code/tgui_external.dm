@@ -221,10 +221,7 @@
 		log_tgui(usr, href_list["message"])
 	// Reload all tgui windows
 	if(type == "cacheReloaded")
-		// Note: Find a solution for the below causing asset CDN to stop working
-		// which doesn't prevent players from using the dev server on prod
-		// whenever the asset CDN is actually used (currently using rsc only)
-		if(/* !check_rights(R_ADMIN) || */ usr.client.tgui_cache_reloaded)
+		if(!check_rights(R_ADMIN, FALSE) || usr.client.tgui_cache_reloaded)
 			return TRUE
 		// Mark as reloaded
 		usr.client.tgui_cache_reloaded = TRUE
@@ -249,8 +246,12 @@
 	// Decode payload
 	var/payload
 	if(href_list["payload"])
+		var/payload_text = href_list["payload"]
+		if(!istext(payload_text) || !rustg_json_is_valid(payload_text))
+			log_tgui(usr, "Error: Invalid JSON")
+			return TRUE
 		try
-			payload = json_decode(href_list["payload"])
+			payload = json_decode(payload_text)
 		catch(var/exception/error)
 			log_tgui(usr, "Invalid JSON payload: [error]")
 			return TRUE

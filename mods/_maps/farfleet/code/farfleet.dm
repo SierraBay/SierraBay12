@@ -24,7 +24,8 @@
 		)
 
 	initial_restricted_waypoints = list(
-	"SNZ" = list("nav_hangar_snz")
+	"SNZ" = list("nav_hangar_snz"),
+	"IPV Celeste Hauler" = list("nav_celestehauler_farfleet") // mods/colony_fractions/code/facolony.dm
 		)
 
 #define RECON_SHIP_PREFIX pick("Admiral Sobolev","Ivan Kozhedub","Sevastopol","Zirkel","Kurchatov","Gomel","Admiral Kolchak","Udaloi","Omsk","Krondstatt","Admiral Nakhimov","Iron Dmitry","Simbirsk","Apostle Peter","Admiral Chernavin","Proryv","Triumph","Besstrashnyi","Elisarov","Magnitogorsk")

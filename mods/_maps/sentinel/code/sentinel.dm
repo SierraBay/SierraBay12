@@ -23,7 +23,8 @@
 	)
 
 	initial_restricted_waypoints = list(
-		"Reaper" = list("nav_hangar_reaper")
+		"Reaper" = list("nav_hangar_reaper"),
+		"IPV Celeste Hauler" = list("nav_celestehauler_sentinel") // mods/colony_fractions/code/facolony.dm
 	)
 
 

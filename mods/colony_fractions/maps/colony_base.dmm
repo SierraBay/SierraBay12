@@ -155,7 +155,6 @@
 /turf/simulated/wall/r_wall,
 /area/map_template/colony/engineering)
 "as" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4313,7 +4312,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/alarm{
+	locked = 0;
+	pixel_y = 20;
+	req_access = list()
+	},
+/obj/structure/railing/mapped,
+/turf/simulated/floor/bluegrid,
 /area/map_template/colony/tcomms)
 "ie" = (
 /obj/floor_decal/industrial/warning{
@@ -4432,28 +4437,17 @@
 	req_access = list()
 	},
 /obj/structure/cable,
-/obj/structure/table/steel_reinforced,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/encryptionkey/map_preset/playablecolony{
-	pixel_x = 10
-	},
+/obj/structure/table/rack,
+/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /obj/item/device/encryptionkey/map_preset/playablecolony,
-/obj/item/device/encryptionkey/map_preset/playablecolony{
-	pixel_x = -10
-	},
-/obj/item/device/encryptionkey/map_preset/playablecolony{
-	pixel_x = 10;
-	pixel_y = 12
-	},
-/obj/item/device/encryptionkey/map_preset/playablecolony{
-	pixel_y = 12
-	},
-/obj/item/device/encryptionkey/map_preset/playablecolony{
-	pixel_x = -10;
-	pixel_y = 12
-	},
+/obj/item/device/encryptionkey/map_preset/playablecolony,
+/obj/item/device/encryptionkey/map_preset/playablecolony,
+/obj/item/device/encryptionkey/map_preset/playablecolony,
+/obj/item/device/encryptionkey/map_preset/playablecolony,
+/obj/item/device/encryptionkey/map_preset/playablecolony,
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/tcomms)
 "iq" = (
@@ -4545,6 +4539,9 @@
 /obj/item/implantcase/imprinting,
 /obj/item/implantpad,
 /obj/item/implanter,
+/obj/machinery/atmospherics/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/tcomms)
 "iz" = (
@@ -4889,9 +4886,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/railing/mapped{
-	dir = 4
-	},
 /obj/machinery/power/smes/buildable/preset/colony,
 /turf/simulated/floor/bluegrid,
 /area/map_template/colony/tcomms)
@@ -5172,7 +5166,7 @@
 /area/map_template/colony/tcomms)
 "jI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/tcomms)
@@ -7360,9 +7354,6 @@
 "nv" = (
 /obj/machinery/radio_beacon,
 /obj/structure/railing/mapped,
-/obj/structure/railing/mapped{
-	dir = 8
-	},
 /turf/simulated/floor/bluegrid,
 /area/map_template/colony/tcomms)
 "nw" = (
@@ -8201,9 +8192,9 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/engineering)
 "ql" = (
-/obj/machinery/computer/rdconsole/core/colony{
-	req_access = list();
-	dir = 1
+/obj/machinery/computer/rdconsole/colony{
+	dir = 1;
+	req_access = list()
 	},
 /turf/simulated/floor/tiled,
 /area/map_template/colony/science)
@@ -9065,20 +9056,14 @@
 /turf/simulated/floor/tiled/techfloor,
 /area/map_template/colony/hydroponics)
 "KM" = (
-/obj/structure/table/steel_reinforced,
-/obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/machinery/alarm{
-	locked = 0;
-	pixel_y = 20;
-	req_access = list()
-	},
-/obj/item/modular_computer/laptop/preset/custom_loadout/advanced,
 /obj/structure/cable/green{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/tiled/techfloor,
+/obj/machinery/r_n_d/server/colony,
+/obj/structure/railing/mapped,
+/turf/simulated/floor/bluegrid,
 /area/map_template/colony/tcomms)
 "KN" = (
 /obj/floor_decal/borderfloorblack{

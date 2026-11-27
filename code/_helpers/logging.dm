@@ -79,21 +79,40 @@ var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 	if (config.log_access)
 		game_log("ACCESS", text)
 
-/proc/log_say(text)
+// [SIERRA-ADD]
+/proc/format_log_location(text, atom/source)
+	if(!source)
+		return text
+	var/turf/T = get_turf(source)
+	if(!T)
+		return text
+	return "[text] \[[T.x], [T.y], [T.z]\]"
+// [/SIERRA-ADD]
+
+/proc/log_say(text, atom/source)
 	if (config.log_say)
-		game_log("SAY", text)
+		// [SIERRA-EDIT]
+		// game_log("SAY", text) // SIERRA-EDIT - ORIGINAL
+		game_log("SAY", format_log_location(text, source))
+		// [/SIERRA-EDIT]
 
 /proc/log_ooc(text)
 	if (config.log_ooc)
 		game_log("OOC", text)
 
-/proc/log_whisper(text)
+/proc/log_whisper(text, atom/source)
 	if (config.log_whisper)
-		game_log("WHISPER", text)
+		// [SIERRA-EDIT]
+		// game_log("WHISPER", text) // SIERRA-EDIT - ORIGINAL
+		game_log("WHISPER", format_log_location(text, source))
+		// [/SIERRA-EDIT]
 
-/proc/log_emote(text)
+/proc/log_emote(text, atom/source)
 	if (config.log_emote)
-		game_log("EMOTE", text)
+		// [SIERRA-EDIT]
+		// game_log("EMOTE", text) // SIERRA-EDIT - ORIGINAL
+		game_log("EMOTE", format_log_location(text, source))
+		// [/SIERRA-EDIT]
 
 /proc/log_attack(text)
 	if (config.log_attack)

@@ -396,3 +396,9 @@
 
 /obj/structure/sign/double/iccgflag/right
 	icon_state = "GCCflag-right"
+
+/obj/item/tableflag/gcc
+	name = "confederate table flag"
+	icon = 'maps/event/e14b_station/icons/gcc_tableflag.dmi'
+	icon_state = "tableflag_gcc"
+	desc = "A flag bearing the colours of the Gilgamesh Colonial Confederation. May the colonies prosper."

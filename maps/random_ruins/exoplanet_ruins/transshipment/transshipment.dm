@@ -45,6 +45,7 @@
 	name = "SNZ-210 Personnel Carrier"
 	dock_target = "oldsnz_shuttle"
 	current_location = "nav_oldsnz_start"
+	logging_home_tag = "nav_oldsnz_start"
 	range = 1
 	shuttle_area = /area/map_template/transshipment/old_snz
 	fuel_consumption = 4
@@ -71,7 +72,12 @@
 	landmark_tag = "nav_oldsnz_start"
 	base_area = /area/map_template/transshipment/airstrip
 	base_turf = /turf/simulated/floor/exoplanet/concrete
-	movable_flags = MOVABLE_FLAG_EFFECTMOVE
+
+/obj/shuttle_landmark/old_snz/start/Initialize()
+	. = ..()
+	var/obj/overmap/visitable/sector = map_sectors["[z]"]
+	if(sector)
+		sector.add_landmark(src, "SNZ-210 Personnel Carrier")
 
 /obj/item/paper/transshipment
 	language = LANGUAGE_SPACER

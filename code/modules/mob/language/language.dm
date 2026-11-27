@@ -134,7 +134,10 @@
 	return (copytext(message, -1) == "!") ? 2 : 1
 
 /datum/language/proc/broadcast(mob/living/speaker,message,speaker_mask)
-	log_say("[key_name(speaker)] : ([name]) [message]")
+	// [SIERRA-EDIT]
+	// log_say("[key_name(speaker)] : ([name]) [message]") // SIERRA-EDIT - ORIGINAL
+	log_say("[key_name(speaker)] : ([name]) [message]", speaker)
+	// [/SIERRA-EDIT]
 
 	if(!speaker_mask) speaker_mask = speaker.name
 	message = format_message(message, get_spoken_verb(message))
