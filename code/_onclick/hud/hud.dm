@@ -261,7 +261,12 @@
 	update_action_buttons()
 
 /mob/proc/add_click_catcher()
+	/*[SIERRA-REMOVE]
 	client.screen |= GLOB.click_catchers
+	*///[SIERRA-REMOVE]
+	//[SIERRA-ADD]
+	client.update_click_catcher()
+	//[/SIERRA-ADD]
 
 /mob/new_player/add_click_catcher()
 	return

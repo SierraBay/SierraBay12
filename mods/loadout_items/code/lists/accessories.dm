@@ -1,3 +1,5 @@
+// Cosmetics
+
 /datum/gear/brush
 	display_name = "hairbrush"
 	path = /obj/item/haircomb/brush

@@ -2,23 +2,24 @@
 	id = PSI_COERCION
 	name = "Coercion"
 	associated_intent = I_DISARM
-	armour_types = list(DAMAGE_PSIONIC)
+	armour_types = list(DAMAGE_PSIONIC, "melee")
 
 /singleton/psionic_power/coercion
 	faculty = PSI_COERCION
 	abstract_type = /singleton/psionic_power/coercion
 
-/singleton/psionic_power/coercion/invoke(mob/living/user, mob/living/target)
+/singleton/psionic_power/coercion/invoke(mob/living/user, atom/target)
+	if (!istype(target))
+		return FALSE
+
 	. = ..()
 	if (!.)
 		return FALSE
 
-	if (!istype(target))
-		to_chat(user, SPAN_WARNING("Вы не можете пробиться в сознание [target]."))
-		return FALSE
-
-	if(. && target.deflect_psionic_attack(user))
-		return FALSE
+	var/mob/living/carbon/human/V
+	if(istype(V) && V != user)
+		if(V.psi.deflect_psionic_attack(user))
+			return FALSE
 
 /singleton/psionic_power/coercion/blindstrike
 	name =           "Blindstrike"
@@ -28,7 +29,7 @@
 	min_rank =       PSI_RANK_OPERANT
 	use_description = "Выберите глаза и переключитесь на синий интент. Затем, нажмите куда угодно чтобы применить круговую атаку, слепящую и оглушающую всех, кто оказался поблизости."
 
-/singleton/psionic_power/coercion/blindstrike/invoke(mob/living/user, mob/living/target)
+/singleton/psionic_power/coercion/blindstrike/invoke(mob/living/user, atom/target)
 	if(user.zone_sel.selecting != BP_EYES)
 		return FALSE
 	. = ..()
@@ -40,6 +41,8 @@
 			if(M == user)
 				continue
 			if(M.disrupts_psionics())
+				return
+			if(M.psi?.deflect_psionic_attack(user))
 				return
 			if(prob(cn_rank * 20) && iscarbon(M))
 				var/mob/living/carbon/C = M

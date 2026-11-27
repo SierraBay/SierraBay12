@@ -1,6 +1,6 @@
 /datum/job/captain
 	title = "Captain"
-	department = "Командный"
+	department = "Command"
 	supervisors = "Центральному Командованию"
 	department_flag = COM
 	head_position = 1
@@ -45,7 +45,7 @@
 /datum/job/hop
 	title = "Head of Personnel"
 	supervisors = "Капитану"
-	department = "Командный"
+	department = "Command"
 	department_flag = COM
 
 	minimal_player_age = 14
@@ -117,7 +117,7 @@
 /datum/job/rd
 	title = "Research Director"
 	supervisors = "Капитану"
-	department = "Научный"
+	department = "Science"
 	department_flag = SCI|COM
 	head_position = 1
 	total_positions = 1
@@ -189,7 +189,7 @@
 	title = "Chief Medical Officer"
 	supervisors = "Капитану"
 	head_position = 1
-	department = "Медицинский"
+	department = "Medical"
 	department_flag = MED|COM
 	total_positions = 1
 	spawn_positions = 1
@@ -259,7 +259,7 @@
 	title = "Chief Engineer"
 	supervisors = "Капитану"
 	head_position = 1
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG|COM
 	total_positions = 1
 	spawn_positions = 1
@@ -342,7 +342,7 @@
 	title = "Head of Security"
 	supervisors = "Капитану"
 	head_position = 1
-	department = "Охранный"
+	department = "Security"
 	department_flag = SEC|COM
 	total_positions = 1
 	spawn_positions = 1
@@ -405,7 +405,7 @@
 
 /datum/job/iaa
 	title = "Internal Affairs Agent"
-	department = "Командный"
+	department = "Command"
 	department_flag = SPT
 	total_positions = 1
 	spawn_positions = 1
@@ -458,7 +458,7 @@
 
 /datum/job/iso
 	title = "Internal Security Operative"
-	department = "Командный"
+	department = "Command"
 	department_flag = SPT
 	total_positions = 1
 	spawn_positions = 1
@@ -513,7 +513,7 @@
 
 /datum/job/adjutant
 	title = "Adjutant"
-	department = "Командный"
+	department = "Command"
 	department_flag = SPT
 	total_positions = 3
 	spawn_positions = 3

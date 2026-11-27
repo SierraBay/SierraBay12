@@ -77,6 +77,11 @@ They should also be used for when you want to effect the ENTIRE mob, like having
 /obj/aura/proc/aura_check_thrown(atom/movable/thrown_atom, datum/thrownthing/thrown_datum)
 	return FLAGS_OFF
 
+//[SIERRA-ADD]
+/obj/aura/proc/aura_check_unarmed(mob/attacker)
+	return FLAGS_OFF
+//[/SIERRA-ADD]
+
 /obj/aura/debug
 	var/returning = FLAGS_OFF
 

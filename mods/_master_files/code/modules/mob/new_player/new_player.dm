@@ -1,3 +1,13 @@
+/// The job title this player is readying up as - their highest-priority occupation preference. Null if they have none, or no client.
+/mob/new_player/proc/get_ready_job_title()
+	if (!client?.prefs)
+		return null
+	var/datum/preferences/prefs = client.prefs
+	if (prefs.use_slot_priority_list && length(prefs.slot_priority_list))
+		var/datum/preferences_slot/slot = prefs.slot_priority_list[1]
+		return slot.job_high
+	return prefs.job_high
+
 /mob/new_player/ViewManifest()
 	if(usr.get_preference_value(/datum/client_preference/show_nanoui_start) == GLOB.PREF_NO)
 		return ..()

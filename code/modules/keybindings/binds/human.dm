@@ -1,0 +1,102 @@
+/datum/keybinding/human
+	category = KEYBINDING_CATEGORY_HUMAN
+
+
+/datum/keybinding/human/can_use(client/user)
+	return ishuman(user.mob)
+
+
+/datum/keybinding/human/quick_equip
+	hotkey_keys = list("E")
+	classic_keys = list("None")
+	name = "quick_equip"
+	full_name = "Quick Equip"
+	description = "Quickly puts an item in the best slot available"
+
+
+/datum/keybinding/human/quick_equip/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.quick_equip()
+	return TRUE
+
+
+/datum/keybinding/human/holster
+	hotkey_keys = list("H")
+	classic_keys = list("None")
+	name = "holster"
+	full_name = "Holster"
+	description = "Draw or holster weapon"
+
+
+/datum/keybinding/human/holster/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	if(H.incapacitated())
+		return
+
+	var/obj/item/clothing/under/U = H.w_uniform
+	for(var/obj/S in U.accessories)
+		if(istype(S, /obj/item/clothing/accessory/storage/holster))
+			var/datum/extension/holster/E = get_extension(S, /datum/extension/holster)
+			if(!E.holstered)
+				if(!H.get_active_hand())
+					to_chat(H, SPAN_WARNING("You're not holding anything to holster."))
+					return
+				E.holster(H.get_active_hand(), H)
+				return
+			else
+				E.unholster(H, TRUE)
+				return
+
+	if(istype(H.belt, /obj/item/storage/belt/holster))
+		var/obj/item/storage/belt/holster/B = H.belt
+		var/datum/extension/holster/E = get_extension(B, /datum/extension/holster)
+		if(!E.holstered)
+			if(!H.get_active_hand())
+				to_chat(H, SPAN_WARNING("You're not holding anything to holster."))
+				return
+			E.holster(H.get_active_hand(), H)
+			return
+		else
+			E.unholster(H, TRUE)
+			return
+
+	return TRUE
+
+
+/datum/keybinding/human/give
+	hotkey_keys = list("None")
+	name = "give_item"
+	full_name = "Give Item"
+	description = "Give the item you're currently holding"
+
+
+/datum/keybinding/human/give/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.give()
+	return TRUE
+
+/datum/keybinding/human/look_up
+	hotkey_keys = list("Ctrl,", "Ctrl=")
+	classic_keys = list("None")
+	name = "look_up"
+	full_name = "Look up"
+	description = "You look up"
+
+
+/datum/keybinding/human/look_up/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.lookup()
+	return TRUE
+
+/datum/keybinding/human/look_down
+	hotkey_keys = list("Ctrl.", "Ctrl-")
+	classic_keys = list("None")
+	name = "look_down"
+	full_name = "Look down"
+	description = "You look down"
+
+
+/datum/keybinding/human/look_down/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.lookdown()
+	return TRUE

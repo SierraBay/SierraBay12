@@ -7,9 +7,6 @@
 #ifndef PSI_IMPLANT_WARN
 #define PSI_IMPLANT_WARN      "Issue Reprimand"
 #endif
-#ifndef PSI_IMPLANT_LOG
-#define PSI_IMPLANT_LOG       "Log Incident"
-#endif
 #ifndef PSI_IMPLANT_DISABLED
 #define PSI_IMPLANT_DISABLED  "Disabled"
 #endif
@@ -75,7 +72,7 @@
 				if(!AreConnectedZLevels(z, implant.imp_in.z))
 					to_chat(usr, SPAN_WARNING("Signal to implant was lost"))
 					return 1
-				var/choice = input("Select a new implant mode.", "Psi Dampener") as null|anything in list(PSI_IMPLANT_AUTOMATIC, PSI_IMPLANT_SHOCK, PSI_IMPLANT_WARN, PSI_IMPLANT_LOG, PSI_IMPLANT_DISABLED)
+				var/choice = input("Select a new implant mode.", "Psi Dampener") as null|anything in list(PSI_IMPLANT_AUTOMATIC, PSI_IMPLANT_SHOCK, PSI_IMPLANT_WARN, PSI_IMPLANT_DISABLED)
 				if(choice && implant && implant.imp_in && !implant.malfunction)
 					implant.psi_mode = choice
 					implant.update_functionality()
@@ -135,10 +132,12 @@
 	psi_violations += SPAN_COLOR("#ff0000", "Неисправность - [implant.imp_in.name].")
 
 /obj/machinery/psi_monitor/proc/report_violation(obj/item/implant/psi_control/implant, stress)
-	psi_violations += "Использование со стрессом [round(stress)] - [implant.imp_in.name]."
+	if(implant.get_psi_mode() == PSI_IMPLANT_WARN)
+		psi_violations += "[SPAN_COLOR("#ff0000", "Попытка использования пси-сил")] - [implant.imp_in.name]."
+		return
+	psi_violations += "Применена пси-сила - [implant.imp_in.name]."
 
 #undef PSI_IMPLANT_AUTOMATIC
 #undef PSI_IMPLANT_SHOCK
 #undef PSI_IMPLANT_WARN
-#undef PSI_IMPLANT_LOG
 #undef PSI_IMPLANT_DISABLED

@@ -1,6 +1,14 @@
 /mob/proc/can_emote(emote_type)
 	return (stat == CONSCIOUS)
 
+/mob/proc/use_emote_cooldown()
+	if(world.time < next_emote_time)
+		if(usr == src)
+			to_chat(src, SPAN_WARNING("You can't emote that often."))
+		return FALSE
+	next_emote_time = world.time + emote_cooldown
+	return TRUE
+
 /mob/living/can_emote(emote_type)
 	return (..() && !(silent && emote_type == AUDIBLE_MESSAGE))
 
@@ -24,18 +32,6 @@
 		if(act == "me")
 			return custom_emote(m_type, message)
 
-		if(act == "custom")
-			if(!message)
-				message = sanitize(input("Enter an emote to display.") as text|null)
-			if(!message)
-				return
-			if (!m_type)
-				if(alert(src, "Is this an audible emote?", "Emote", "Yes", "No") == "No")
-					m_type = VISIBLE_MESSAGE
-				else
-					m_type = AUDIBLE_MESSAGE
-			return custom_emote(m_type, message)
-
 	var/splitpoint = findtext(act, " ")
 	if(splitpoint > 0)
 		var/tempstr = act
@@ -49,6 +45,9 @@
 		return
 
 	if(m_type != use_emote.message_type && use_emote.conscious && stat != CONSCIOUS)
+		return
+
+	if(act != "deathgasp" && !use_emote_cooldown())
 		return
 
 	if(use_emote.message_type == AUDIBLE_MESSAGE && is_muzzled())
@@ -122,25 +121,22 @@
 		to_chat(src, "You are unable to emote.")
 		return
 
-	var/input
-	if(!message)
-		input = sanitize(input(src,"Choose an emote to display.") as text|null)
-	else
-		input = message
-
-	if(input)
+	var/runemessage = message
+	if(message)
 		message = format_emote(src, message)
 	else
 		return
 	message = process_chat_markup(message)
 	if (message)
+		if(!use_emote_cooldown())
+			return
 		log_emote("[name]/[key] : [message]")
 	//do not show NPC animal emotes to ghosts, it turns into hellscape
 	var/check_ghosts = client ? /datum/client_preference/ghost_sight : null
 	if(m_type == VISIBLE_MESSAGE)
-		visible_message(message, checkghosts = check_ghosts, runemessage = input)
+		visible_message(message, checkghosts = check_ghosts, runemessage = runemessage)
 	else
-		audible_message(message, checkghosts = check_ghosts, runemessage = input)
+		audible_message(message, checkghosts = check_ghosts, runemessage = runemessage)
 
 // Specific mob type exceptions below.
 /mob/living/silicon/ai/emote(act, type, message)

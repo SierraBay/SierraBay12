@@ -6,6 +6,9 @@
 /datum/design/autolathe/general/datacrystal
 	build_path = /obj/item/stock_parts/computer/hard_drive/portable
 
+/datum/design/autolathe/general/design_disk
+	build_path = /obj/item/stock_parts/computer/hard_drive/portable/design/printable
+
 /datum/design/autolathe/general/flashlight
 	build_path = /obj/item/device/flashlight
 

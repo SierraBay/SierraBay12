@@ -148,7 +148,9 @@
 	name = "\improper SCGF-SO Leader command hardsuit control module"
 	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has blue highlights with SOL CENTRAL GOVERNMENT FLEET printed in gold lettering on the chest and displaying a SCG crest on the back."
 	suit_type = "\improper SCGF-SO Leader command combat hardsuit"
-	icon_state = "ert_commander_rig"
+	icon = 'mods/_maps/sentinel/icons/obj/rig.dmi'
+	icon_state = "cmd_fleet_rig"
+	item_icons = list(slot_back_str = 'mods/_maps/sentinel/icons/mob/onmob_rig.dmi')
 
 	req_access = list(access_away_cavalry_captain)
 
@@ -173,11 +175,18 @@
 		/obj/item/rig_module/datajack
 		)
 
+	chest_type = /obj/item/clothing/suit/space/rig/ert/fleet/fifth
+	helm_type = /obj/item/clothing/head/helmet/space/rig/ert/fleet/fifth
+	boot_type = /obj/item/clothing/shoes/magboots/rig/ert/fleet/fifth
+	glove_type = /obj/item/clothing/gloves/rig/ert/fleet/fifth
+
 /obj/item/rig/ert/fleet/combat/fifthfleet
 	name = "\improper SCGF-SO Trooper combat hardsuit control module"
 	desc = "A hardsuit utilized by Fifth Fleet combat teams. This one has red highlights with SOL CENTRAL GOVERNMENT FLEET written in silver lettering on the chest and a SCG crest displaying on the back."
 	suit_type = "\improper SCGF-SO Trooper combat hardsuit"
-	icon_state = "ert_security_rig"
+	icon = 'mods/_maps/sentinel/icons/obj/rig.dmi'
+	icon_state = "fleet_rig"
+	item_icons = list(slot_back_str = 'mods/_maps/sentinel/icons/mob/onmob_rig.dmi')
 
 	req_access = list(access_away_cavalry_ops)
 
@@ -199,6 +208,27 @@
 		/obj/item/rig_module/device/flash,
 		/obj/item/rig_module/datajack
 		)
+
+	chest_type = /obj/item/clothing/suit/space/rig/ert/fleet/fifth
+	helm_type = /obj/item/clothing/head/helmet/space/rig/ert/fleet/fifth
+	boot_type = /obj/item/clothing/shoes/magboots/rig/ert/fleet/fifth
+	glove_type = /obj/item/clothing/gloves/rig/ert/fleet/fifth
+
+/obj/item/clothing/suit/space/rig/ert/fleet/fifth
+	icon = 'mods/_maps/sentinel/icons/obj/rig_suit.dmi'
+	item_icons = list(slot_wear_suit_str = 'mods/_maps/sentinel/icons/mob/onmob_rig_suit.dmi')
+
+/obj/item/clothing/head/helmet/space/rig/ert/fleet/fifth
+	icon = 'mods/_maps/sentinel/icons/obj/rig_head.dmi'
+	item_icons = list(slot_head_str = 'mods/_maps/sentinel/icons/mob/onmob_rig_head.dmi')
+
+/obj/item/clothing/shoes/magboots/rig/ert/fleet/fifth
+	icon = 'mods/_maps/sentinel/icons/obj/rig_feet.dmi'
+	item_icons = list(slot_shoes_str = 'mods/_maps/sentinel/icons/mob/onmob_rig_feet.dmi')
+
+/obj/item/clothing/gloves/rig/ert/fleet/fifth
+	icon = 'mods/_maps/sentinel/icons/obj/rig_gloves.dmi'
+	item_icons = list(slot_gloves_str = 'mods/_maps/sentinel/icons/mob/onmob_rig_gloves.dmi')
 
 // AmmoBox
 

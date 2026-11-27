@@ -76,11 +76,14 @@
 				continue
 			if(!istype(L, /mob/living/carbon/human) && !istype(L, /mob/living/exosuit))
 				continue
-			if(!AStar(loc, L.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))
+			if(!length(get_path_to(src, L, 7, no_id = TRUE)))
 				continue // We can't reach this person anyways
 			possible_targets += L
 		if(length(possible_targets))
 			target = pick(possible_targets)
+
+		if(QDELETED(src) || IsBeingWatched()) // Pathfinding yields; recheck observers before moving.
+			return
 
 		if (target)	// NECK SNAP TIME
 			var/turf/spot
@@ -171,16 +174,16 @@
 				possible_turfs += T
 
 			if(length(possible_turfs))
-				var/attempts = 15 // Limit AStar attempts for performance
+				var/attempts = 15 // Limit pathfinding attempts for performance
 				while(attempts > 0 && length(possible_turfs))
 					attempts--
 					var/turf/T = pick(possible_turfs)
 					possible_turfs -= T
-					if(AStar(loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, max_nodes=25, max_node_depth=7))
+					if(length(get_path_to(src, T, 7, skip_first = FALSE, no_id = TRUE)))
 						turfs += T
 						if(length(turfs) >= 5) break // We found some good spots, that's enough
 
-			if(!length(turfs) || IsBeingWatched(our_view)) // no turfs to jump :(
+			if(QDELETED(src) || !length(turfs) || IsBeingWatched()) // no turfs to jump :(
 				return
 			var/turf/chosen_turf = pick(turfs)
 			dir = get_dir(src, chosen_turf)

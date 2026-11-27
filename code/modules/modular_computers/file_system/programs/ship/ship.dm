@@ -52,6 +52,9 @@
 		user.reset_view(linked)
 	if(user.client)
 		user.client.view = world.view + extra_view
+		//[SIERRA-ADD]
+		user.client.update_click_catcher()
+		//[/SIERRA-ADD]
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)
 			sensor.reveal_contacts(user)
@@ -67,6 +70,7 @@
 	if(user.client)
 		//[SIERRA-EDIT - Client View]
 		user.client.view = user.get_preference_value(/datum/client_preference/client_view)
+		user.client.update_click_catcher()
 		//[/SIERRA-EDIT - Client View]
 	if(linked)
 		for(var/obj/machinery/shipsensors/sensor in linked.sensors)

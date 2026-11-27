@@ -32,7 +32,7 @@
 	. = ..()
 	if(.)
 		if(pk_rank_user <= PSI_RANK_OPERANT)
-			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item))
+			if(istype(target, /obj/structure) || istype(target, /obj/machinery) || istype(target, /obj/item) && target.loc != user)
 				var/obj/O = target
 				if(O.anchored == TRUE)
 					user.visible_message(SPAN_DANGER("[user] с неестественной скоростью бьет кулаком по [target]!"))

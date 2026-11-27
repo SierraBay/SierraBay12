@@ -68,3 +68,12 @@
 			SSvirtual_reality.remove_virtual_mob(current)
 			return
 	..()
+
+/obj/item/organ/internal/posibrain/die()
+	var/mob/self = owner || brainmob
+
+	if (has_extension(self, /datum/extension/virtual_surrogate))
+		SSvirtual_reality.remove_virtual_mob(self)
+		return
+
+	. = ..()

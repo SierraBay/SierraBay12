@@ -27,12 +27,3 @@
 	. = ..()
 	if(psi && !psi.suppressed)
 		set_see_invisible(max(see_invisible, SEE_INVISIBLE_PSI_PLANE))
-
-/mob/living/proc/deflect_psionic_attack(attacker)
-	var/blocked = 80 * get_blocked_ratio(null, DAMAGE_PSIONIC)
-	if(prob(blocked))
-		if(attacker)
-			to_chat(attacker, SPAN_WARNING("Твое ментальное воздействие отражено с помощью защиты [src]!"))
-			to_chat(src, SPAN_DANGER("[attacker] ментально на тебя воздействует, но ты отражаешь его атаку!"))
-		return TRUE
-	return FALSE

@@ -25,9 +25,11 @@ GLOBAL_TYPED_NEW(mercs, /datum/antagonist/mercenary)
 /datum/antagonist/mercenary/create_global_objectives()
 	if(!..())
 		return 0
+	// [SIERRA-EDIT global_objectives |= new /datum/objective/nuclear]
 	global_objectives = list()
-	global_objectives |= new /datum/objective/nuclear
+	global_objectives |= new /datum/objective/survive
 	return 1
+	// [SIERRA-EDIT-END]
 
 /datum/antagonist/mercenary/equip(mob/living/carbon/human/player)
 	if(!..())

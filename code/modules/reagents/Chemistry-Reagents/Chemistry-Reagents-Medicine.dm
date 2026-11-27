@@ -366,7 +366,7 @@
 	reagent_state = LIQUID
 	color = "#99ccff"
 	metabolism = REM * 0.05
-	bioavailability = 0.5
+	bioavailability = 1 // [SIERRA-EDIT]
 	overdose = REAGENTS_OVERDOSE / 6 // 5
 	scannable = 1
 	value = 4.6

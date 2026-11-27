@@ -3,6 +3,7 @@
 
 #include "_body_markings.dm"
 #include "code/body_markings.dm"
+#include "code/eyes.dm"
 #include "code/disallows.dm"
 
 #endif

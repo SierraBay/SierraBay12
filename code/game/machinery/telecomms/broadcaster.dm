@@ -43,6 +43,14 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 			original.data["compression"] = signal.data["compression"]
 			original.data["level"] = signal.data["level"]
 
+		// [SIERRA-ADD] - ERIS_ANNOUNCER - Let optimized announcement probes test telecomms without broadcasting.
+		if(signal.data["type"] == 4)
+			signal.data["level"] |= listening_levels
+			if(original)
+				original.data["level"] = signal.data["level"]
+			return
+		// [/SIERRA-ADD]
+
 		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
 		if(signal_message in recentmessages)
 			return

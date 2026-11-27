@@ -167,9 +167,9 @@
 /obj/machinery/computer/rdconsole/proc/get_science_account()
 	if(linked_account_number)
 		return get_account(linked_account_number)
-	if(department_account_key)
+	if(department_account_key && department_accounts[department_account_key])
 		return department_accounts[department_account_key]
-	return null
+	return department_accounts["Science"] || department_accounts["Research"] || department_accounts["Научный"]
 
 /// Returns the research datum of the connected R&D server, or null if no server is reachable.
 /// The console no longer owns a local datum/research — the server is the sole authoritative storage.
@@ -1316,7 +1316,7 @@
 /obj/machinery/computer/rdconsole/core/sierra
 	name = "R&D Control Console"
 	id = 1
-	department_account_key = "Научный"
+	department_account_key = "Science"
 	can_switch_account = TRUE
 
 

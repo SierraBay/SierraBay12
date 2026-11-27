@@ -68,7 +68,7 @@
 		else
 			visible_message(SPAN_DANGER("\The [src] extends a writhing pseudopod towards \the [M]..."))
 
-			if(M.deflect_psionic_attack())
+			if(M.psi?.deflect_psionic_attack()) // [SIERRA-EDIT - M.deflect_psionic_attack() to M.psi?.deflect_psionic_attack()]
 				return TRUE
 
 			sound_to(src, sound('sound/effects/psi/power_evoke.ogg'))

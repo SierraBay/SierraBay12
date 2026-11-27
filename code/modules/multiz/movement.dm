@@ -396,7 +396,10 @@
 	owner = null
 	. = ..()
 
-/atom/movable/z_observer/can_fall()
+// [SIERRA-EDIT] - JPS_PATHFINDING - Match can_fall keyword arguments.
+// /atom/movable/z_observer/can_fall() // SIERRA-EDIT - ORIGINAL
+/atom/movable/z_observer/can_fall(anchor_bypass = FALSE, turf/location_override = loc)
+// [/SIERRA-EDIT]
 	return FALSE
 
 /atom/movable/z_observer/ex_act()

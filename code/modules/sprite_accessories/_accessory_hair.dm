@@ -615,10 +615,6 @@
 	name = "Shaved Mohawk"
 	icon_state = "hair_mohawkshaved"
 
-/datum/sprite_accessory/hair/mohawkshaved2
-	name = "Tight Shaved Mohawk"
-	icon_state = "hair_mohawkshaved2"
-
 /datum/sprite_accessory/hair/mohawkshavednaomi
 	name = "Naomi Mohawk"
 	icon_state = "hair_mohawkshavednaomi"
@@ -670,11 +666,6 @@
 	icon_state = "hair_gentle2long"
 	flags = HAIR_TIEABLE
 
-/datum/sprite_accessory/hair/trimrsidecut
-	name = "Trimmed Right Sidecut"
-	icon_state = "hair_rightside_trim"
-	flags = HAIR_TIEABLE
-
 /datum/sprite_accessory/hair/belenkotied
 	name = "Belenkotied"
 	icon_state = "hair_belenkotied"
@@ -694,10 +685,6 @@
 /datum/sprite_accessory/hair/bunovereye
 	name = "Overeye Bun"
 	icon_state = "hair_bun_overeye"
-
-/datum/sprite_accessory/hair/shortbun
-	name = "Short Bun"
-	icon_state = "hair_bun_short"
 
 /datum/sprite_accessory/hair/bigbun
 	name = "Big Bun"

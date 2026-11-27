@@ -71,6 +71,7 @@
 	#include "items/pouches.dm"
 	#include "items/backpack.dm"
 	#include "items/cargo.dm"
+	#include "items/coins.dm"
 	#include "items/snacks.dm"
 	#include "items/recipes_microwave.dm"
 	#include "items/weapons/storage/firstaids.dm"
@@ -144,9 +145,11 @@
 	#include "loadout/loadout_suit.dm"
 	#include "loadout/loadout_augments.dm"
 	#include "loadout/loadout_tactical.dm"
+	#include "loadout/loadout_trinkets.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
 	#include "../loadout_shared.dm"
+	#include "loadout/loadout_scg_expeditionary_kit.dm"
 	#include "loadout/~defines.dm"
 
 	// --- MAP FILES --- //

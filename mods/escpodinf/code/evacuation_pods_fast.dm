@@ -79,6 +79,8 @@
 
 
 	. = ..(user, _emergency_evac, forced, skip_announce, autotransfer)
+	if(. && _emergency_evac)
+		emergency_called = TRUE
 	emergency_prep_additional_delay = initial(emergency_prep_additional_delay)	// Reseting time shortcut
 	if(.)
 		evac_no_return = evac_ready_time + round(evac_launch_delay/2)

@@ -1,6 +1,6 @@
 /datum/job/senior_engineer
 	title = "Senior Engineer"
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG
 	supervisors = "Главному Инженеру"
 	selection_color = "#5b4d20"
@@ -53,7 +53,7 @@
 
 /datum/job/engineer
 	title = "Engineer"
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG
 	supervisors = "Главному и Старшему инженеру"
 	selection_color = "#5b4d20"
@@ -112,7 +112,7 @@
 
 /datum/job/engineer_trainee
 	title = "Engineer Trainee"
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG
 	supervisors = "Главному инженеру и остальным инженерам"
 	selection_color = "#5b4d20"
@@ -161,7 +161,7 @@
 
 /datum/job/infsys
 	title = "Information Technician"
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG
 	supervisors = "Главному и Старшему инженерам"
 	selection_color = "#5b4d20"
@@ -195,7 +195,7 @@
 
 /datum/job/roboticist
 	title = "Roboticist"
-	department = "Инженерный"
+	department = "Engineering"
 	department_flag = ENG|ROB
 
 	total_positions = 2

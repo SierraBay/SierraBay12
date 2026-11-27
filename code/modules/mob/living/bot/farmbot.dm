@@ -10,7 +10,10 @@
 	icon_state = "farmbot0"
 	health = 50
 	maxHealth = 50
-	req_access = list(list(access_hydroponics, access_robotics))
+
+	//req_access = list(list(access_hydroponics, access_robotics))	[SIERRA-REMOVE]
+	req_access = list(list(access_hydroponics, access_robotics, access_research, access_engine))	//[SIERRA-ADD]
+
 
 	var/action = "" // Used to update icon
 	var/waters_trays = 1
@@ -126,11 +129,10 @@
 				return
 
 /mob/living/bot/farmbot/calcTargetPath() // We need to land NEXT to the tray, because the tray itself is impassable
-	for(var/trayDir in list(NORTH, SOUTH, EAST, WEST))
-		target_path = AStar(get_turf(loc), get_step(get_turf(target), trayDir), TYPE_PROC_REF(/turf, CardinalTurfsWithAccess), TYPE_PROC_REF(/turf, Distance), 0, max_target_dist, id = botcard)
-		if(target_path)
-			break
-	if(!target_path)
+	// [SIERRA-EDIT] - JPS_PATHFINDING - Stop beside the impassable tray.
+	target_path = get_path_to(src, target, max_target_dist, min_target_dist = 1, id = botcard)
+	// [/SIERRA-EDIT]
+	if(!length(target_path))
 		ignore_list |= target
 		target = null
 		target_path = list()
