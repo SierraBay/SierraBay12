@@ -1,5 +1,7 @@
 #if !defined(using_map_DATUM)
 
+	#include "sierra_define.dm"
+
 	// --- MAP MAINTENANCE --- //
 	#include "sierra_setup.dm"
 	#include "sierra_announcements.dm"
@@ -196,6 +198,7 @@
 	#include "../../mods/_events/battlefield_event/_battlefield_event_includes.dme" // Одноразовый ивент.
 	#include "../../mods/_maps/liberia/_map_liberia.dme"
 	#include "../../mods/_maps/sentinel/_map_sentinel.dme"
+	#define FARFLEET_SIERRA_EXTRAS
 	#include "../../mods/_maps/farfleet/_map_farfleet.dme"
 	#include "../../mods/_maps/general_maps/_map_general_maps.dme"
 	#include "../../mods/_maps/hand/_map_hand.dme"
