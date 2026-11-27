@@ -26,6 +26,8 @@
 	allowed_spawns = list("Cryogenic Storage", "Cyborg Storage")
 	default_spawn = "Cryogenic Storage"
 
+	supply_department_key = "Снабжения"
+
 	station_name  = "NSV Sierra"
 	station_short = "Sierra"
 	dock_name     = "TBD"

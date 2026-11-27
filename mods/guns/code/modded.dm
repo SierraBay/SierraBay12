@@ -285,6 +285,14 @@
 	name = "box of SOLMAG SMG magazines"
 	startswith = list(/obj/item/ammo_magazine/smg_sol = 6)
 
+/obj/item/ammo_magazine/smg_sol/rubber
+	icon_state = "solrub"
+	ammo_type = /obj/item/ammo_casing/pistol/rubber
+
+/obj/item/storage/box/ammo/smg_sol/rubber
+	name = "box of SOLMAG SMG magazines rubber"
+	startswith = list(/obj/item/ammo_magazine/smg_sol/rubber = 6)
+
 /////////////////////////////////
 // Misc guns//
 /////////////////////////////////

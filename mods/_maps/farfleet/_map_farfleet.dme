@@ -11,5 +11,6 @@
 #include "code/farfleet_shuttle.dm"
 #include "code/farfleet_structures.dm"
 #include "code/farfleet_turbolift.dm"
+#include "code/farfleet_torch_compat.dm"
 
 #endif

@@ -36,9 +36,6 @@
 	generate_features()
 	for (var/datum/exoplanet_theme/T in themes)
 		T.after_map_generation(src)
-	//Спавним аномалии
-	if(LAZYLEN(big_artefacts_types))
-		generate_big_anomaly_artefacts()
 	planetary_area.deploy_new_weather_manager(weather_manager_type, deploy_weather = TRUE)
 	if(storyteller_path)
 		deploy_storyteller()
@@ -50,4 +47,3 @@
 	if(ispath(initial_weather_state))
 		generate_weather()
 	START_PROCESSING(SSobj, src)
-	generate_anomalies()

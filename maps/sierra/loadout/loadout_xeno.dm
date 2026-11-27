@@ -11,9 +11,6 @@
 
 // Skrell clothing
 
-/datum/gear/head/skrell_helmet
-	allowed_roles = ARMORED_ROLES
-
 /datum/gear/head/skrell_helmet/New()
 	..()
 	var/list/helmets = list()

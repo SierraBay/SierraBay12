@@ -62,7 +62,7 @@
 	display_name = "corporate press pass"
 	path = /obj/item/clothing/accessory/badge/press
 
-/datum/gear/accessory/pressbadge
+/datum/gear/accessory/pressbadge/independent
 	display_name = "freelance press pass"
 	path = /obj/item/clothing/accessory/badge/press/independent
 
@@ -140,4 +140,3 @@
 
 /datum/gear/tactical/kneepads
 	flags = GEAR_HAS_COLOR_SELECTION
-

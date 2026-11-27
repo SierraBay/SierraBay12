@@ -13,7 +13,7 @@
 		#warn Режим Sierra без авеек активен, не забудь выключить!
 	#else
 		//#include "example\map.dm"
-		//#include "torch\map.dm"
-		#include "sierra\map.dm"
+		#include "torch\map.dm"
+		//#include "sierra\map.dm"
 	#endif
 #endif

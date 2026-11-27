@@ -115,6 +115,10 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	var/salary_modifier	= 1			//Multiplier to starting character money
 	var/station_departments = list()//Gets filled automatically depending on jobs allowed
 
+	/// department_accounts[] key for the cargo/supply department account. Must match the
+	/// "department" var used by that map's cargo jobs (see maps/*/job/*cargo*.dm).
+	var/supply_department_key = "Supply"
+
 	var/supply_currency_name = "Credits"
 	var/supply_currency_name_short = "Cr."
 	var/local_currency_name = "thalers"
