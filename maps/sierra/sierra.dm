@@ -148,7 +148,9 @@
 	#include "loadout/loadout_trinkets.dm"
 	#include "loadout/loadout_uniform.dm"
 	#include "loadout/loadout_xeno.dm"
+
 	#include "../loadout_shared.dm"
+
 	#include "loadout/loadout_scg_expeditionary_kit.dm"
 	#include "loadout/~defines.dm"
 

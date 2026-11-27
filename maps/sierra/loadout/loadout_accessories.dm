@@ -79,6 +79,23 @@
 	allowed_branches = list(/datum/mil_branch/contractor)
 	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
 
+/datum/gear/accessory/stole
+	allowed_roles = list(/datum/job/chaplain)
+
+/datum/gear/accessory/ec_scarf
+	display_name = "Expeditionary Corps scarf"
+	description = "A section-specific scarf for Expeditionary Corps uniforms."
+	path = /obj/item/clothing/accessory/solgov/ec_scarf
+	allowed_branches = list(/datum/mil_branch/contractor)
+	allowed_factions = list(FACTION_EXPEDITIONARY, FACTION_CORPORATE)
+
+/datum/gear/accessory/ec_scarf/New()
+	..()
+	var/list/scarves = list()
+	scarves["Field Operations scarf"] = /obj/item/clothing/accessory/solgov/ec_scarf/fieldops
+	scarves["Observatory scarf"] = /obj/item/clothing/accessory/solgov/ec_scarf/observatory
+	gear_tweaks += new/datum/gear_tweak/path(scarves)
+
 /datum/gear/accessory/armband_corpsman
 	display_name = "medical armband"
 	path = /obj/item/clothing/accessory/armband/medblue
