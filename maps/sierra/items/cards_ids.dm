@@ -71,8 +71,13 @@
 	job_access_type = /datum/job/officer
 	detail_color = "#e00000"
 
+/*
 /obj/item/card/id/sierra/crew/security/cadet
 	job_access_type = /datum/job/security_assistant
+*/
+
+/obj/item/card/id/sierra/crew/security/mech_pilot
+	job_access_type = /datum/job/security_mech_pilot
 
 /obj/item/card/id/sierra/crew/security/warden
 	job_access_type = /datum/job/warden

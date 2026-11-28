@@ -7,6 +7,8 @@
 /obj/item/clothing/under/rank/security/corp/sierra1
 	name = "black security jumpsuit"
 
+
+
 /obj/item/clothing/under/rank/security/alt/sierra1
 	name = "blue security shirt"
 

@@ -29,10 +29,10 @@
 		R_arm.side = RIGHT
 		R_arm.setup_side()
 	if(!L_leg)
-		L_leg = new /obj/item/mech_component/propulsion/powerloader/security(src)
+		L_leg = new /obj/item/mech_component/propulsion/combat/security(src)
 		L_leg.color = "#1c1c1c"
 	if(!R_leg)
-		R_leg = new /obj/item/mech_component/propulsion/powerloader/security(src)
+		R_leg = new /obj/item/mech_component/propulsion/combat/security(src)
 		R_leg.color = "#1c1c1c"
 		R_leg.side = RIGHT
 		R_leg.setup_side()
@@ -76,15 +76,24 @@
 	max_heat = 200
 	heat_cooling = 8
 
-/obj/item/mech_component/propulsion/powerloader/security
-	icon_state = "combat_leg"
+/obj/item/mech_component/propulsion/combat/security
 	name = "old combat motivator"
 	exosuit_desc_string = "really old combat mech motivator"
 	whitelist_equipment_paths = SEC_WHITELIST_EQUIPMENT
 	component_tag = "SECURITY"
 	max_heat = 200
 	heat_cooling = 8
-
+	//Статы взяты с карго ножек
+	max_hp = 40
+	min_damage = 25
+	max_repair = 15
+	repair_damage = 10
+	bump_type = MEDIUM_BUMP
+	front_modificator_damage = 1
+	max_heat = 100
+	heat_cooling = 7
+	emp_heat_generation = 50
+	heat_generation = 2
 
 //Спавнер для камеры, ибо вы не поверите, камера руинит юнит тесты
 /obj/item/camera_package
