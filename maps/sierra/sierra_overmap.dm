@@ -19,7 +19,7 @@
 		"Guppy" = list("nav_hangar_guppy"),
 		"Phaethon" = list("nav_hangar_phaethon"),
 		"Crucian" = list("nav_hangar_crucian"),
-				"Petrov" = list("nav_petrov_start"),
+		"Petrov" = list("nav_petrov_start"),
 		"Cyclopes" = list("nav_merc_dock"), // maps/antag_spawn/mercenary/mercenary.dm shuttle
 		"Mule" = list("nav_merchant_out"), // ../mods/maps/liberia/_map_liberia.dme shuttle,
 		"Reaper Gunboat" = list("nav_reaper_dock"), // ../mods/maps/sentinel/_map_sentinel.dme shuttle,
