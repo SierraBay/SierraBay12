@@ -54,6 +54,14 @@
 		/area/turbolift/sentinel_first,
 		/area/turbolift/sentinel_second
 	)
+	apc_test_exempt_areas = list(
+		/area/ship/patrol/maintenance/lower = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/engineering/shield = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/engine/starboard = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/engine/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/upper/port = NO_SCRUBBER|NO_VENT,
+		/area/ship/patrol/maintenance/upper/aft = NO_SCRUBBER|NO_VENT
+	)
 
 /obj/shuttle_landmark/nav_patrol/nav1
 	name = "Patrol Ship Fore"
